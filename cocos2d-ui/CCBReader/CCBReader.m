@@ -110,139 +110,203 @@
     bytes = NULL;
 }
 
-- (unsigned char) readByte
+static inline unsigned char readByte(CCBReader *self)
 {
-    unsigned char byte = bytes[currentByte];
-    currentByte++;
+    unsigned char byte = self->bytes[self->currentByte];
+    self->currentByte++;
     return byte;
 }
 
-- (BOOL) readBool
+static inline BOOL readBool(CCBReader *self)
 {
-    return [self readByte];
+    return (BOOL)readByte(self);
 }
 
-- (NSString*) readUTF8
+static inline NSString *readUTF8(CCBReader *self)
 {
-    int b0 = [self readByte];
-    int b1 = [self readByte];
+    int b0 = readByte(self);
+    int b1 = readByte(self);
     
     int numBytes = b0 << 8 | b1;
     
-    NSString* str = [[NSString alloc] initWithBytes:bytes+currentByte length:numBytes encoding:NSUTF8StringEncoding];
+    NSString* str = [[NSString alloc] initWithBytes:self->bytes+self->currentByte length:numBytes encoding:NSUTF8StringEncoding];
     
-    currentByte += numBytes;
+    self->currentByte += numBytes;
     
     return str;
 }
 
-- (BOOL) getBit
+static inline BOOL getBit(CCBReader *self)
 {
     BOOL bit;
-    unsigned char byte = *(bytes+currentByte);
-    if (byte & (1 << currentBit)) bit = YES;
+    unsigned char byte = *(self->bytes+self->currentByte);
+    if (byte & (1 << self->currentBit)) bit = YES;
     else bit = NO;
     
-    currentBit++;
-    if (currentBit >= 8)
+    self->currentBit++;
+    if (self->currentBit >= 8)
     {
-        currentBit = 0;
-        currentByte++;
+        self->currentBit = 0;
+        self->currentByte++;
     }
     
     return bit;
 }
 
-- (void) alignBits
+static inline void alignBits(CCBReader *self)
 {
-    if (currentBit)
+    if (self->currentBit)
     {
-        currentBit = 0;
-        currentByte++;
+        self->currentBit = 0;
+        self->currentByte++;
     }
 }
 
-- (int) readIntWithSign:(BOOL)sign
+#define REVERSE_BYTE(b) (unsigned char)(((b * 0x0802LU & 0x22110LU) | (b * 0x8020LU & 0x88440LU)) * 0x10101LU >> 16)
+
+static inline int readIntWithSign(CCBReader *self, BOOL sign)
 {
-    // Read encoded int
-    int numBits = 0;
-    while (![self getBit])
-    {
-        numBits++;
-    }
+    // Good luck groking this!
+    // The basic idea is to do as little bit reading as possible and use everything in a byte contexts and avoid loops; espc ones that iterate 8 * bytes-read
+    // Note: this implementation is NOT the same encoding concept as the standard Elias Gamma, instead the real encoding is a byte flipped version of it.
+    // In order to optimize to little-endian devices, we have chosen to unflip the bytes before transacting upon them (excluding of course the "leading" zeros.
     
-    long long current = 0;
-    for (int a=numBits-1; a >= 0; a--)
-    {
-        if ([self getBit])
-        {
-            current |= 1 << a;
-        }
-    }
-    current |= 1 << numBits;
+    unsigned int v = *(unsigned int *)(self->bytes + self->currentByte);
+    int numBits = 32;
+    int extraByte = 0;
+    v &= -((int)v);
+    if (v) numBits--;
+    if (v & 0x0000FFFF) numBits -= 16;
+    if (v & 0x00FF00FF) numBits -= 8;
+    if (v & 0x0F0F0F0F) numBits -= 4;
+    if (v & 0x33333333) numBits -= 2;
+    if (v & 0x55555555) numBits -= 1;
     
-    int num;
-    if (sign)
+    if ((numBits & 0x00000007) == 0)
     {
-        int s = current%2;
-        if (s) num = (int)(current/2);
-        else num = (int)(-current/2);
+        extraByte = 1;
+        self->currentBit = 0;
+        self->currentByte += (numBits >> 3);
     }
     else
     {
-        num = (int)(current-1);
+        self->currentBit = numBits - (numBits >> 3) * 8;
+        self->currentByte += (numBits >> 3);
     }
     
-    [self alignBits];
+    static char prefixMask[] = {
+        0xFF,
+        0x7F,
+        0x3F,
+        0x1F,
+        0x0F,
+        0x07,
+        0x03,
+        0x01,
+    };
+    static unsigned int suffixMask[] = {
+        0x00,
+        0x80,
+        0xC0,
+        0xE0,
+        0xF0,
+        0xF8,
+        0xFC,
+        0xFE,
+        0xFF,
+    };
+    unsigned char prefix = REVERSE_BYTE(*(self->bytes + self->currentByte)) & prefixMask[self->currentBit];
+    long long current = prefix;
+    int numBytes = 0;
+    int suffixBits = (numBits - (8 - self->currentBit) + 1);
+    if (numBits >= 8)
+    {
+        suffixBits %= 8;
+        numBytes = (numBits - (8 - (int)(self->currentBit)) - suffixBits + 1) / 8;
+    }
+    if (suffixBits >= 0)
+    {
+        self->currentByte++;
+        for (int i = 0; i < numBytes; i++)
+        {
+            current <<= 8;
+            unsigned char byte = REVERSE_BYTE(*(self->bytes + self->currentByte));
+            current += byte;
+            self->currentByte++;
+        }
+        current <<= suffixBits;
+        unsigned char suffix = (REVERSE_BYTE(*(self->bytes + self->currentByte)) & suffixMask[suffixBits]) >> (8 - suffixBits);
+        current += suffix;
+    }
+    else
+    {
+        current >>= -suffixBits;
+    }
+    self->currentByte += extraByte;
+    int num;
+    
+    if (sign)
+    {
+        int s = current % 2;
+        if (s)
+        {
+            num = (int)(current / 2);
+        }
+        else
+        {
+            num = (int)(-current / 2);
+        }
+    }
+    else
+    {
+        num = (int)current - 1;
+    }
+    
+    alignBits(self);
     
     return num;
 }
 
-- (float) readFloat
+static inline float readFloat(CCBReader *self)
 {
-    unsigned char type = [self readByte];
-
-    switch (type) {
-        case kCCBFloat0:
-            return 0;
-        case kCCBFloat1:
-            return 1;
-        case kCCBFloatMinus1:
-            return -1;
-        case kCCBFloat05:
-            return 0.5f;
-        case kCCBFloatInteger:
-            return [self readIntWithSign:YES];
-        default: {
-            // Copy the float byte by byte
-            // memcpy dosn't work on latest Xcode (4.6)
-            union {
-                float f;
-                int i;
-            } t;
-            t.i = *(int *)(bytes + currentByte);
-            currentByte += 4;
-            return t.f;
-        }
+    unsigned char type = readByte(self);
+    
+    if (type == kCCBFloat0) return 0;
+    else if (type == kCCBFloat1) return 1;
+    else if (type == kCCBFloatMinus1) return -1;
+    else if (type == kCCBFloat05) return 0.5f;
+    else if (type == kCCBFloatInteger)
+    {
+        return readIntWithSign(self, YES);
+    }
+    else
+    {
+        // using a memcpy since the compiler isn't
+        // doing the float ptr math correctly on device.
+        float* pF = (float*)(self->bytes+self->currentByte);
+        float f = 0;
+        memcpy(&f, pF, sizeof(float));
+        self->currentByte+=4;
+        return f;
     }
 }
 
 - (NSString*) readCachedString
 {
-    int n = [self readIntWithSign:NO];
+    int n = readIntWithSign(self, NO);
     return [stringCache objectAtIndex:n];
 }
 
 - (void) readPropertyForNode:(CCNode*) node parent:(CCNode*)parent isExtraProp:(BOOL)isExtraProp
 {
     // Read type and property name
-    int type = [self readIntWithSign:NO];
+    int type = readIntWithSign(self, NO);
     NSString* name = [self readCachedString];
     
     // Check if the property can be set for this platform
     BOOL setProp = NO;
     
-    int platform = [self readByte];
+    int platform = readByte(self);
     if (platform == kCCBPlatformAll) setProp = YES;
 #ifdef __CC_PLATFORM_IOS
     if (platform == kCCBPlatformIOS) setProp = YES;
@@ -277,11 +341,11 @@
     
     if (type == kCCBPropTypePosition)
     {
-        float x = [self readFloat];
-        float y = [self readFloat];
-        int corner = [self readByte];
-        int xUnit = [self readByte];
-        int yUnit = [self readByte];
+        float x = readFloat(self);
+        float y = readFloat(self);
+        int corner = readByte(self);
+        int xUnit = readByte(self);
+        int yUnit = readByte(self);
 
         if (setProp)
         {
@@ -290,8 +354,8 @@
 #elif defined (__CC_PLATFORM_MAC)
             [node setValue:[NSValue valueWithPoint:ccp(x,y)] forKey:name];
 #endif
-            CCPositionType type = CCPositionTypeMake(xUnit, yUnit, corner);
-            [node setValue:[NSValue valueWithBytes:&type objCType:@encode(ccColor4B)] forKey:[name stringByAppendingString:@"Type"]];
+            CCPositionType pType = CCPositionTypeMake(xUnit, yUnit, corner);
+            [node setValue:[NSValue valueWithBytes:&pType objCType:@encode(ccColor4B)] forKey:[name stringByAppendingString:@"Type"]];
             
             
             if ([animatedProps containsObject:name])
@@ -310,8 +374,8 @@
     else if(type == kCCBPropTypePoint
             || type == kCCBPropTypePointLock)
     {
-        float x = [self readFloat];
-        float y = [self readFloat];
+        float x = readFloat(self);
+        float y = readFloat(self);
         
         if (setProp)
         {
@@ -325,10 +389,10 @@
     }
     else if (type == kCCBPropTypeSize)
     {
-        float w = [self readFloat];
-        float h = [self readFloat];
-        int xUnit = [self readByte];
-        int yUnit = [self readByte];
+        float w = readFloat(self);
+        float h = readFloat(self);
+        int xUnit = readByte(self);
+        int yUnit = readByte(self);
         
         if (setProp)
         {
@@ -345,22 +409,22 @@
     }
     else if (type == kCCBPropTypeScaleLock)
     {
-        float x = [self readFloat];
-        float y = [self readFloat];
-        int type = [self readByte];
+        float x = readFloat(self);
+        float y = readFloat(self);
+        int sType = readByte(self);
         
         if (setProp)
         {
             [node setValue:[NSNumber numberWithFloat:x] forKey:[name stringByAppendingString:@"X"]];
             [node setValue:[NSNumber numberWithFloat:y] forKey:[name stringByAppendingString:@"Y"]];
-            [node setValue:[NSNumber numberWithInt:type] forKey:[name stringByAppendingString:@"Type"]];
+            [node setValue:[NSNumber numberWithInt:sType] forKey:[name stringByAppendingString:@"Type"]];
             
             if ([animatedProps containsObject:name])
             {
                 id baseValue = [NSArray arrayWithObjects:
                                 [NSNumber numberWithFloat:x],
                                 [NSNumber numberWithFloat:y],
-                                [NSNumber numberWithInt:type],
+                                [NSNumber numberWithInt:sType],
                                 nil];
                 [actionManager setBaseValue:baseValue forNode:node propertyName:name];
             }
@@ -368,8 +432,8 @@
     }
     else if (type == kCCBPropTypeFloatXY)
     {
-        float xFloat = [self readFloat];
-        float yFloat = [self readFloat];
+        float xFloat = readFloat(self);
+        float yFloat = readFloat(self);
         
         if (setProp)
         {
@@ -382,7 +446,7 @@
     else if (type == kCCBPropTypeDegrees
              || type == kCCBPropTypeFloat)
     {
-        float f = [self readFloat];
+        float f = readFloat(self);
         
         if (setProp)
         {
@@ -397,19 +461,19 @@
     }
     else if (type == kCCBPropTypeFloatScale)
     {
-        float f = [self readFloat];
-        int type = [self readIntWithSign:NO];
+        float f = readFloat(self);
+        int sType = readIntWithSign(self, NO);
         
         if (setProp)
         {
-            if (type == 1) f *= [CCDirector sharedDirector].positionScaleFactor;
+            if (sType == 1) f *= [CCDirector sharedDirector].positionScaleFactor;
             [node setValue:[NSNumber numberWithFloat:f] forKey:name];
         }
     }
     else if (type == kCCBPropTypeInteger
              || type == kCCBPropTypeIntegerLabeled)
     {
-        int d = [self readIntWithSign:YES];
+        int d = readIntWithSign(self, YES);
         
         if (setProp)
         {
@@ -418,8 +482,8 @@
     }
     else if (type == kCCBPropTypeFloatVar)
     {
-        float f = [self readFloat];
-        float fVar = [self readFloat];
+        float f = readFloat(self);
+        float fVar = readFloat(self);
         
         if (setProp)
         {
@@ -430,7 +494,7 @@
     }
     else if (type == kCCBPropTypeCheck)
     {
-        BOOL b = [self readBool];
+        BOOL b = readBool(self);
         
         if (setProp)
         {
@@ -470,7 +534,7 @@
     }
     else if (type == kCCBPropTypeByte)
     {
-        int byte = [self readByte];
+        int byte = readByte(self);
         
         if (setProp)
         {
@@ -485,9 +549,9 @@
     }
     else if (type == kCCBPropTypeColor3)
     {
-        int r = [self readByte];
-        int g = [self readByte];
-        int b = [self readByte];
+        int r = readByte(self);
+        int g = readByte(self);
+        int b = readByte(self);
         
         if (setProp)
         {
@@ -503,10 +567,10 @@
     }
     else if (type == kCCBPropTypeColor4)
     {
-        int r = [self readByte];
-        int g = [self readByte];
-        int b = [self readByte];
-        int a = [self readByte];
+        int r = readByte(self);
+        int g = readByte(self);
+        int b = readByte(self);
+        int a = readByte(self);
         
         if (setProp)
         {
@@ -522,14 +586,14 @@
     }
     else if (type == kCCBPropTypeColor4FVar)
     {
-        float r = [self readFloat];
-        float g = [self readFloat];
-        float b = [self readFloat];
-        float a = [self readFloat];
-        float rVar = [self readFloat];
-        float gVar = [self readFloat];
-        float bVar = [self readFloat];
-        float aVar = [self readFloat];
+        float r = readFloat(self);
+        float g = readFloat(self);
+        float b = readFloat(self);
+        float a = readFloat(self);
+        float rVar = readFloat(self);
+        float gVar = readFloat(self);
+        float bVar = readFloat(self);
+        float aVar = readFloat(self);
         
         if (setProp)
         {
@@ -544,8 +608,8 @@
     }
     else if (type == kCCBPropTypeFlip)
     {
-        BOOL xFlip = [self readBool];
-        BOOL yFlip = [self readBool];
+        BOOL xFlip = readBool(self);
+        BOOL yFlip = readBool(self);
         
         if (setProp)
         {
@@ -557,8 +621,8 @@
     }
     else if (type == kCCBPropTypeBlendmode)
     {
-        int src = [self readIntWithSign:NO];
-        int dst = [self readIntWithSign:NO];
+        int src = readIntWithSign(self, NO);
+        int dst = readIntWithSign(self, NO);
         
         if (setProp)
         {
@@ -578,7 +642,7 @@
              || type == kCCBPropTypeString)
     {
         NSString* txt = [self readCachedString];
-        BOOL localized = [self readBool];
+        BOOL localized = readBool(self);
         
         if (localized)
         {
@@ -606,7 +670,7 @@
     else if (type == kCCBPropTypeBlock)
     {
         NSString* selectorName = [self readCachedString];
-        int selectorTarget = [self readIntWithSign:NO];
+        int selectorTarget = readIntWithSign(self, NO);
         
         if (setProp)
         {
@@ -700,9 +764,9 @@
 {
     CCBKeyframe* keyframe = [[CCBKeyframe alloc] init];
     
-    keyframe.time = [self readFloat];
+    keyframe.time = readFloat(self);
     
-    int easingType = [self readIntWithSign:NO];
+    int easingType = readIntWithSign(self, NO);
     float easingOpt = 0;
     id value = NULL;
     
@@ -713,38 +777,38 @@
         || easingType == kCCBKeyframeEasingElasticOut
         || easingType == kCCBKeyframeEasingElasticInOut)
     {
-        easingOpt = [self readFloat];
+        easingOpt = readFloat(self);
     }
     keyframe.easingType = easingType;
     keyframe.easingOpt = easingOpt;
     
     if (type == kCCBPropTypeCheck)
     {
-        value = [NSNumber numberWithBool:[self readBool]];
+        value = [NSNumber numberWithBool:readBool(self)];
     }
     else if (type == kCCBPropTypeByte)
     {
-        value = [NSNumber numberWithInt:[self readByte]];
+        value = [NSNumber numberWithInt:readBool(self)];
     }
     else if (type == kCCBPropTypeColor3)
     {
-        int r = [self readByte];
-        int g = [self readByte];
-        int b = [self readByte];
+        int r = readByte(self);
+        int g = readByte(self);
+        int b = readByte(self);
         
         ccColor3B c = ccc3(r,g,b);
         value = [NSValue value:&c withObjCType:@encode(ccColor3B)];
     }
     else if (type == kCCBPropTypeDegrees)
     {
-        value = [NSNumber numberWithFloat:[self readFloat]];
+        value = [NSNumber numberWithFloat:readFloat(self)];
     }
     else if (type == kCCBPropTypeScaleLock
              || type == kCCBPropTypePosition
              || type == kCCBPropTypeFloatXY)
     {
-        float a = [self readFloat];
-        float b = [self readFloat];
+        float a = readFloat(self);
+        float b = readFloat(self);
         
         value = [NSArray arrayWithObjects:
                  [NSNumber numberWithFloat:a],
@@ -774,7 +838,7 @@
     NSString* className = [self readCachedString];
     
     // Read assignment type and name
-    int memberVarAssignmentType = [self readIntWithSign:NO];
+    int memberVarAssignmentType = readIntWithSign(self, NO);
     NSString* memberVarAssignmentName = NULL;
     if (memberVarAssignmentType)
     {
@@ -796,23 +860,23 @@
     NSMutableDictionary* seqs = [NSMutableDictionary dictionary];
     animatedProps = [[NSMutableSet alloc] init];
     
-    int numSequences = [self readIntWithSign:NO];
+    int numSequences = readIntWithSign(self, NO);
     for (int i = 0; i < numSequences; i++)
     {
-        int seqId = [self readIntWithSign:NO];
+        int seqId = readIntWithSign(self, NO);
         NSMutableDictionary* seqNodeProps = [NSMutableDictionary dictionary];
         
-        int numProps = [self readIntWithSign:NO];
+        int numProps = readIntWithSign(self, NO);
         
         for (int j = 0; j < numProps; j++)
         {
             CCBSequenceProperty* seqProp = [[CCBSequenceProperty alloc] init];
             
             seqProp.name = [self readCachedString];
-            seqProp.type = [self readIntWithSign:NO];
+            seqProp.type = readIntWithSign(self, NO);
             [animatedProps addObject:seqProp.name];
             
-            int numKeyframes = [self readIntWithSign:NO];
+            int numKeyframes = readIntWithSign(self, NO);
             
             for (int k = 0; k < numKeyframes; k++)
             {
@@ -833,8 +897,8 @@
     }
     
     // Read properties
-    int numRegularProps = [self readIntWithSign:NO];
-    int numExtraProps = [self readIntWithSign:NO];
+    int numRegularProps = readIntWithSign(self, NO);
+    int numExtraProps = readIntWithSign(self, NO);
     int numProps = numRegularProps + numExtraProps;
     
     for (int i = 0; i < numProps; i++)
@@ -889,20 +953,20 @@
     animatedProps = NULL;
     
     // Read physics
-    BOOL hasPhysicsBody = [self readBool];
+    BOOL hasPhysicsBody = readBool(self);
     if (hasPhysicsBody)
     {
         // Read body shape
-        int bodyShape = [self readIntWithSign:NO];
-        float cornerRadius = [self readFloat];
+        int bodyShape = readIntWithSign(self, NO);
+        float cornerRadius = readFloat(self);
         
         // Read points
-        int numPoints = [self readIntWithSign:NO];
+        int numPoints = readIntWithSign(self, NO);
         CGPoint* points = malloc(sizeof(CGPoint)*numPoints);
         for (int i = 0; i < numPoints; i++)
         {
-            float x = [self readFloat];
-            float y = [self readFloat];
+            float x = readFloat(self);
+            float y = readFloat(self);
             
             points[i] = ccp(x, y);
         }
@@ -920,16 +984,16 @@
             body = [CCPhysicsBody bodyWithCircleOfRadius:cornerRadius andCenter:points[0]];
         }
         
-        BOOL dynamic = [self readBool];
-        BOOL affectedByGravity = [self readBool];
-        BOOL allowsRotation = [self readBool];
+        BOOL dynamic = readBool(self);
+        BOOL affectedByGravity = readBool(self);
+        BOOL allowsRotation = readBool(self);
         
         if (dynamic) body.type = CCPhysicsBodyTypeDynamic;
         else body.type = CCPhysicsBodyTypeStatic;
         
-        float density = [self readFloat];
-        float friction = [self readFloat];
-        float elasticity = [self readFloat];
+        float density = readFloat(self);
+        float friction = readFloat(self);
+        float elasticity = readFloat(self);
         
         //body.affectedByGravity = affectedByGravity;
         //body.allowsRotation = allowsRotation;
@@ -943,7 +1007,7 @@
     }
     
     // Read and add children
-    int numChildren = [self readIntWithSign:NO];
+    int numChildren = readIntWithSign(self, NO);
     for (int i = 0; i < numChildren; i++)
     {
         CCNode* child = [self readNodeGraphParent:node];
@@ -955,7 +1019,7 @@
 
 - (BOOL) readCallbackKeyframesForSeq:(CCBSequence*)seq
 {
-    int numKeyframes = [self readIntWithSign:0];
+    int numKeyframes = readIntWithSign(self, NO);
     
     if (!numKeyframes) return YES;
     
@@ -963,9 +1027,9 @@
     
     for (int i = 0; i < numKeyframes; i++)
     {
-        float time = [self readFloat];
+        float time = readFloat(self);
         NSString* callbackName = [self readCachedString];
-        int callbackType = [self readIntWithSign:NO];
+        int callbackType = readIntWithSign(self, NO);
         
         NSMutableArray* value = [NSMutableArray arrayWithObjects:
                                  callbackName,
@@ -987,7 +1051,7 @@
 
 - (BOOL) readSoundKeyframesForSeq:(CCBSequence*)seq
 {
-    int numKeyframes = [self readIntWithSign:0];
+    int numKeyframes = readIntWithSign(self, NO);
     
     if (!numKeyframes) return YES;
     
@@ -995,11 +1059,11 @@
     
     for (int i = 0; i < numKeyframes; i++)
     {
-        float time = [self readFloat];
+        float time = readFloat(self);
         NSString* soundFile = [self readCachedString];
-        float pitch = [self readFloat];
-        float pan = [self readFloat];
-        float gain = [self readFloat];
+        float pitch = readFloat(self);
+        float pan = readFloat(self);
+        float gain = readFloat(self);
         
         NSMutableArray* value = [NSMutableArray arrayWithObjects:
                                  soundFile,
@@ -1024,15 +1088,15 @@
 {
     NSMutableArray* sequences = actionManager.sequences;
     
-    int numSeqs = [self readIntWithSign:NO];
+    int numSeqs = readIntWithSign(self, NO);
     
     for (int i = 0; i < numSeqs; i++)
     {
         CCBSequence* seq = [[CCBSequence alloc] init];
-        seq.duration = [self readFloat];
+        seq.duration = readFloat(self);
         seq.name = [self readCachedString];
-        seq.sequenceId = [self readIntWithSign:NO];
-        seq.chainedSequenceId = [self readIntWithSign:YES];
+        seq.sequenceId = readIntWithSign(self, NO);
+        seq.chainedSequenceId = readIntWithSign(self, YES);
         
         if (![self readCallbackKeyframesForSeq:seq]) return NO;
         if (![self readSoundKeyframesForSeq:seq]) return NO;
@@ -1040,23 +1104,25 @@
         [sequences addObject:seq];
     }
     
-    actionManager.autoPlaySequenceId = [self readIntWithSign:YES];
+    actionManager.autoPlaySequenceId = readIntWithSign(self, YES);
     return YES;
 }
 
 - (BOOL) readStringCache
 {
-    int numStrings = [self readIntWithSign:NO];
+    int numStrings = readIntWithSign(self, NO);
     
     stringCache = [[NSMutableArray alloc] initWithCapacity:numStrings];
     
     for (int i = 0; i < numStrings; i++)
     {
-        [stringCache addObject:[self readUTF8]];
+        [stringCache addObject:readUTF8(self)];
     }
     
     return YES;
 }
+
+#define CHAR4(c0, c1, c2, c3) (((c0)<<24) | ((c1)<<16) | ((c2)<<8) | (c3))
 
 - (BOOL) readHeader
 {
@@ -1065,10 +1131,10 @@
     // Read magic
     int magic = *((int*)(bytes+currentByte));
     currentByte+=4;
-    if (magic != 'ccbi') return NO;
+    if (magic != CHAR4('c', 'c', 'b', 'i')) return NO;
     
     // Read version
-    int version = [self readIntWithSign:NO];
+    int version = readIntWithSign(self, NO);
     if (version != kCCBVersion)
     {
         NSLog(@"CCBReader: Incompatible ccbi file version (file: %d reader: %d)",version,kCCBVersion);
@@ -1076,7 +1142,7 @@
     }
     
     // Read JS check (ignored)
-    [self readBool];
+    readBool(self);
     
     return YES;
 }
