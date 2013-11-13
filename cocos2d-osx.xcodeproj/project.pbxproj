@@ -328,6 +328,55 @@
 			remoteGlobalIDString = A06430E613C1414300CC5554;
 			remoteInfo = kazmath;
 		};
+		D352099618340ECC00649117 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D352098D18340ECC00649117 /* Chipmunk7.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D3E5F0490AA32FDE004E361B;
+			remoteInfo = ChipmunkDemo;
+		};
+		D352099818340ECC00649117 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D352098D18340ECC00649117 /* Chipmunk7.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D34963BB0B56CAA300CAD239;
+			remoteInfo = ChipmunkStatic;
+		};
+		D352099A18340ECC00649117 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D352098D18340ECC00649117 /* Chipmunk7.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D3C3787A11063B1B003EF1D9;
+			remoteInfo = "ChipmunkStatic-iPhone";
+		};
+		D352099C18340ECC00649117 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D352098D18340ECC00649117 /* Chipmunk7.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D39ECD8617ED70D900319DBA;
+			remoteInfo = "Benchmark iPhone";
+		};
+		D352099E18340ECC00649117 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D352098D18340ECC00649117 /* Chipmunk7.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D309B21317EFE2EF00AA52C8;
+			remoteInfo = ObjectiveChipmunk;
+		};
+		D35209A018340ECC00649117 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D352098D18340ECC00649117 /* Chipmunk7.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D309B22017EFE2EF00AA52C8;
+			remoteInfo = ObjectiveChipmunkTests;
+		};
+		D35209A218340F1200649117 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D352098D18340ECC00649117 /* Chipmunk7.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D309B21217EFE2EF00AA52C8;
+			remoteInfo = ObjectiveChipmunk;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -534,6 +583,7 @@
 		B7EE69E91819EAAC00B983FE /* CCLayoutBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLayoutBox.m; sourceTree = "<group>"; };
 		B7EE6A32181B287300B983FE /* CCSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCSlider.h; path = "cocos2d-ui/CCSlider.h"; sourceTree = "<group>"; };
 		B7EE6A33181B287300B983FE /* CCSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSlider.m; path = "cocos2d-ui/CCSlider.m"; sourceTree = "<group>"; };
+		D352098D18340ECC00649117 /* Chipmunk7.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Chipmunk7.xcodeproj; path = external/Chipmunk/xcode/Chipmunk7.xcodeproj; sourceTree = "<group>"; };
 		E01E663D121CA00A001A484F /* libcocos2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		E02BBC79126CD870006E46A2 /* CCAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAnimation.m; sourceTree = "<group>"; };
@@ -1060,6 +1110,19 @@
 			name = Layouts;
 			sourceTree = "<group>";
 		};
+		D352098E18340ECC00649117 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D352099718340ECC00649117 /* ChipmunkDemo.app */,
+				D352099918340ECC00649117 /* libChipmunk.a */,
+				D352099B18340ECC00649117 /* libChipmunk-iPhone.a */,
+				D352099D18340ECC00649117 /* Benchmark iPhone.app */,
+				D352099F18340ECC00649117 /* libObjectiveChipmunk.a */,
+				D35209A118340ECC00649117 /* ObjectiveChipmunkTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		E0506A8413169AE100EAE33F /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
@@ -1375,6 +1438,7 @@
 		E076EF801225FF3E00DE0DA2 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				D352098D18340ECC00649117 /* Chipmunk7.xcodeproj */,
 				A0B5329713C141FF0072EDA4 /* kazmath */,
 				E076EF2D1225FEF600DE0DA2 /* libpng */,
 				B770601C1831B0810043CC67 /* ObjectAL */,
@@ -1613,6 +1677,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				D35209A318340F1200649117 /* PBXTargetDependency */,
 				A064312913C1418600CC5554 /* PBXTargetDependency */,
 			);
 			name = cocos2d;
@@ -1640,6 +1705,12 @@
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* cocos2d-mac */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = D352098E18340ECC00649117 /* Products */;
+					ProjectRef = D352098D18340ECC00649117 /* Chipmunk7.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				E076EB631225F7AB00DE0DA2 /* build all libs */,
@@ -1648,6 +1719,51 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		D352099718340ECC00649117 /* ChipmunkDemo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = ChipmunkDemo.app;
+			remoteRef = D352099618340ECC00649117 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D352099918340ECC00649117 /* libChipmunk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libChipmunk.a;
+			remoteRef = D352099818340ECC00649117 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D352099B18340ECC00649117 /* libChipmunk-iPhone.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libChipmunk-iPhone.a";
+			remoteRef = D352099A18340ECC00649117 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D352099D18340ECC00649117 /* Benchmark iPhone.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "Benchmark iPhone.app";
+			remoteRef = D352099C18340ECC00649117 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D352099F18340ECC00649117 /* libObjectiveChipmunk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libObjectiveChipmunk.a;
+			remoteRef = D352099E18340ECC00649117 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D35209A118340ECC00649117 /* ObjectiveChipmunkTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ObjectiveChipmunkTests.xctest;
+			remoteRef = D35209A018340ECC00649117 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A06430E413C1414300CC5554 /* Sources */ = {
@@ -1798,6 +1914,11 @@
 			isa = PBXTargetDependency;
 			target = A06430E613C1414300CC5554 /* kazmath */;
 			targetProxy = A064312813C1418600CC5554 /* PBXContainerItemProxy */;
+		};
+		D35209A318340F1200649117 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ObjectiveChipmunk;
+			targetProxy = D35209A218340F1200649117 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
