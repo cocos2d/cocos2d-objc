@@ -28,84 +28,17 @@
 
 @class CCBAnimationManager;
 
-#define kCCBVersion 6
-
-enum {
-    kCCBPropTypePosition = 0,
-    kCCBPropTypeSize,
-    kCCBPropTypePoint,
-    kCCBPropTypePointLock,
-    kCCBPropTypeScaleLock,
-    kCCBPropTypeDegrees,
-    kCCBPropTypeInteger,
-    kCCBPropTypeFloat,
-    kCCBPropTypeFloatVar,
-    kCCBPropTypeCheck,
-    kCCBPropTypeSpriteFrame,
-    kCCBPropTypeTexture,
-    kCCBPropTypeByte,
-    kCCBPropTypeColor3,
-    kCCBPropTypeColor4FVar,
-    kCCBPropTypeFlip,
-    kCCBPropTypeBlendmode,
-    kCCBPropTypeFntFile,
-    kCCBPropTypeText,
-    kCCBPropTypeFontTTF,
-    kCCBPropTypeIntegerLabeled,
-    kCCBPropTypeBlock,
-	kCCBPropTypeAnimation,
-    kCCBPropTypeCCBFile,
-    kCCBPropTypeString,
-    kCCBPropTypeBlockCCControl,
-    kCCBPropTypeFloatScale,
-    kCCBPropTypeFloatXY,
-    kCCBPropTypeColor4,
-};
-
-enum {
-    kCCBFloat0 = 0,
-    kCCBFloat1,
-    kCCBFloatMinus1,
-    kCCBFloat05,
-    kCCBFloatInteger,
-    kCCBFloatFull
-};
-
-enum {
-    kCCBPlatformAll = 0,
-    kCCBPlatformIOS,
-    kCCBPlatformMac
-};
-
-enum {
-    kCCBTargetTypeNone = 0,
-    kCCBTargetTypeDocumentRoot = 1,
-    kCCBTargetTypeOwner = 2,
-};
-
-enum
-{
-    kCCBKeyframeEasingInstant,
-    
-    kCCBKeyframeEasingLinear,
-    
-    kCCBKeyframeEasingCubicIn,
-    kCCBKeyframeEasingCubicOut,
-    kCCBKeyframeEasingCubicInOut,
-    
-    kCCBKeyframeEasingElasticIn,
-    kCCBKeyframeEasingElasticOut,
-    kCCBKeyframeEasingElasticInOut,
-    
-    kCCBKeyframeEasingBounceIn,
-    kCCBKeyframeEasingBounceOut,
-    kCCBKeyframeEasingBounceInOut,
-    
-    kCCBKeyframeEasingBackIn,
-    kCCBKeyframeEasingBackOut,
-    kCCBKeyframeEasingBackInOut,
-};
-
+/**
+ The CCBReader loads node graphs created by SpriteBuilder (or other editors using the same format). If you are using SpriteBuilder it's strongly recommended that you set up the CCFileUtils using the configureCCFileUtils method or use the Xcode project file created by SpriteBuilder.
+ 
+ Load your SpriteBuilder files using the load: method, if you are loading a scene use the loadAsScene: method, which will wrap the loaded node graph in a CCScene object.
+ 
+ You can optionally pass an owner object to the CCBReader. If you have assigned member variables in your ccb-files to the owner, they will be set on the owner object when the file is loaded.
+ 
+ When all loading is complete, the didLoadFromCCB method will be called on all loaded nodes (if it has been implemented).
+ 
+ If you are using animations a CCBAnimationManager will be assigned to all ccb-file root node's userObject properties. The top CCBAnimationManager is also assigned to the CCBReader's animationManager property.
+ */
 @interface CCBReader : NSObject
 {
     NSData* data;
@@ -118,59 +51,110 @@ enum
     
     id owner;
     
-    CCBAnimationManager* actionManager;
+    CCBAnimationManager* animationManager;
     NSMutableDictionary* actionManagers;
     NSMutableSet* animatedProps;
-    
-    // For JavaScript bindings
-    NSMutableArray* ownerOutletNames;
-    NSMutableArray* ownerOutletNodes;
-    
-    NSMutableArray* ownerCallbackNames;
-    NSMutableArray* ownerCallbackNodes;
-    
-    NSMutableArray* nodesWithAnimationManagers;
-    NSMutableArray* animationManagersForNodes;
 }
 
-@property (nonatomic,readonly) NSMutableArray* ownerOutletNames;
-@property (nonatomic,readonly) NSMutableArray* ownerOutletNodes;
-@property (nonatomic,readonly) NSMutableArray* ownerCallbackNames;
-@property (nonatomic,readonly) NSMutableArray* ownerCallbackNodes;
-@property (nonatomic,readonly) NSMutableArray* nodesWithAnimationManagers;
-@property (nonatomic,readonly) NSMutableArray* animationManagersForNodes;
+/// -----------------------------------------------------------------------
+/// @name Setup
+/// -----------------------------------------------------------------------
 
-@property (nonatomic,strong) CCBAnimationManager* actionManager;
-
-+ (NSString*) ccbDirectoryPath;
-
+/**
+ *  Call this method to configure the CCFileUtils to work correctly with SpriteBuilder. It will setup search paths for the resources to use with the current device and resolution. It assumes that the SpriteBuilder resources has been published to a directory named Published-iOS that has been added as a blue folder in Xcode.
+ */
 + (void) configureCCFileUtils;
 
+/// -----------------------------------------------------------------------
+/// @name Instantiation
+/// -----------------------------------------------------------------------
+
+/**
+ *  Creates a new CCBReader.
+ *
+ *  @return A new CCBReader.
+ */
 + (CCBReader*) reader;
 
-- (CCNode*) nodeGraphFromFile:(NSString*) file;
-- (CCNode*) nodeGraphFromFile:(NSString*) file owner:(id)owner;
-- (CCNode*) nodeGraphFromFile:(NSString*) file owner:(id)owner parentSize:(CGSize)parentSize;
+/// -----------------------------------------------------------------------
+/// @name Loading Files
+/// -----------------------------------------------------------------------
 
-- (CCNode*) nodeGraphFromData:(NSData*) data owner:(id)owner parentSize:(CGSize)parentSize;
+/**
+ *  Loads a ccbi-file with the specified name. Using the extension is optional, e.g. both MyNodeGraph and MyNodeGraph.ccbi will work.
+ *
+ *  @param file Name of the file to load.
+ *
+ *  @return The loaded node graph.
+ */
+- (CCNode*) load:(NSString*) file;
 
-+ (CCNode*) nodeGraphFromFile:(NSString*) file;
-+ (CCNode*) nodeGraphFromFile:(NSString*) file owner:(id)owner;
-+ (CCNode*) nodeGraphFromFile:(NSString*) file owner:(id)owner parentSize:(CGSize)parentSize;
+/**
+ *  Loads a ccbi-file with the specified name and owner. Using the extension is optional, e.g. both MyNodeGraph and MyNodeGraph.ccbi will work.
+ *
+ *  @param file Name of the file to load.
+ *  @param owner The owner object used to load the file.
+ *
+ *  @return The loaded node graph.
+ */
+- (CCNode*) load:(NSString*) file owner:(id)owner;
 
-+ (CCNode*) nodeGraphFromData:(NSData*) data owner:(id)owner parentSize:(CGSize)parentSize;
+/**
+ *  Loads a ccbi-file from the provided NSData object. This method is useful if you load ccbi-files from the internet. If you are not using the owner variable, pass NULL.
+ *
+ *  @param data       Data object to load the ccbi-file from.
+ *  @param owner      The owner object used to load the file, or NULL if not used.
+ *
+ *  @return The loaded node graph.
+ */
+- (CCNode*) loadWithData:(NSData*) data owner:(id)owner;
 
-+ (CCScene*) sceneWithNodeGraphFromFile:(NSString*) file;
-+ (CCScene*) sceneWithNodeGraphFromFile:(NSString *)file owner:(id)owner;
-+ (CCScene*) sceneWithNodeGraphFromFile:(NSString *)file owner:(id)owner parentSize:(CGSize)parentSize;
+/**
+ *  Loads a ccbi-file with the specified name. Using the extension is optional, e.g. both MyNodeGraph and MyNodeGraph.ccbi will work.
+ *
+ *  @param file Name of the file to load.
+ *
+ *  @return The loaded node graph.
+ */
++ (CCNode*) load:(NSString*) file;
 
-// XXX Hack. Sets a search resource path for utils. Instead it should relative to the ccbi file path.
-+ (void) setResourcePath:(NSString*)searchPath;
+/**
+ *  Loads a ccbi-file with the specified name and owner. Using the extension is optional, e.g. both MyNodeGraph and MyNodeGraph.ccbi will work.
+ *
+ *  @param file Name of the file to load.
+ *  @param owner The owner object used to load the file.
+ *
+ *  @return The loaded node graph.
+ */
++ (CCNode*) load:(NSString*) file owner:(id)owner;
 
+/**
+ *  Loads a ccbi-file with the specified name and wraps it in a CCScene node. Using the extension is optional, e.g. both MyNodeGraph and MyNodeGraph.ccbi will work.
+ *
+ *  @param file Name of the file to load.
+ *
+ *  @return The loaded node graph.
+ */
++ (CCScene*) loadAsScene:(NSString*) file;
 
-#ifdef CCB_ENABLE_UNZIP
-+ (BOOL) unzipResources:(NSString*)resPath;
-#endif
+/**
+ *  Loads a ccbi-file with the specified name and owner and wraps it in a CCScene node. Using the extension is optional, e.g. both MyNodeGraph and MyNodeGraph.ccbi will work.
+ *
+ *  @param file Name of the file to load.
+ *  @param owner The owner object used to load the file.
+ *
+ *  @return The loaded node graph.
+ */
++ (CCScene*) loadAsScene:(NSString *)file owner:(id)owner;
+
+/// -----------------------------------------------------------------------
+/// @name Animations
+/// -----------------------------------------------------------------------
+
+/**
+ *  Once a ccb-file has been loaded, the animationManager property will be set to contain the top level CCBAnimationManager
+ */
+@property (nonatomic,strong) CCBAnimationManager* animationManager;
 
 @end
 

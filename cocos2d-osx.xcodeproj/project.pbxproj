@@ -172,6 +172,7 @@
 		B770609A1831B0C40043CC67 /* OALTools.m in Sources */ = {isa = PBXBuildFile; fileRef = B770605D1831B0C40043CC67 /* OALTools.m */; };
 		B770609B1831B0C40043CC67 /* ObjectALMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = B770605E1831B0C40043CC67 /* ObjectALMacros.h */; };
 		B770609C1831B0C40043CC67 /* SynthesizeSingleton.h in Headers */ = {isa = PBXBuildFile; fileRef = B770605F1831B0C40043CC67 /* SynthesizeSingleton.h */; };
+		B77060DB18342E540043CC67 /* CCBReader_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B77060DA18342E540043CC67 /* CCBReader_Private.h */; };
 		B78AE64717E7BC9F0028BE0B /* CCButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE64017E7BA800028BE0B /* CCButton.m */; };
 		B78AE64817E7BCA30028BE0B /* CCControl.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE64217E7BA800028BE0B /* CCControl.m */; };
 		B78AE64917E7BCA60028BE0B /* CCControlTextureFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE64417E7BA800028BE0B /* CCControlTextureFactory.m */; };
@@ -537,6 +538,7 @@
 		B770605D1831B0C40043CC67 /* OALTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OALTools.m; sourceTree = "<group>"; };
 		B770605E1831B0C40043CC67 /* ObjectALMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectALMacros.h; sourceTree = "<group>"; };
 		B770605F1831B0C40043CC67 /* SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynthesizeSingleton.h; sourceTree = "<group>"; };
+		B77060DA18342E540043CC67 /* CCBReader_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBReader_Private.h; path = "cocos2d-ui/CCBReader/CCBReader_Private.h"; sourceTree = "<group>"; };
 		B78AE63F17E7BA800028BE0B /* CCButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCButton.h; path = "cocos2d-ui/CCButton.h"; sourceTree = "<group>"; };
 		B78AE64017E7BA800028BE0B /* CCButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCButton.m; path = "cocos2d-ui/CCButton.m"; sourceTree = "<group>"; };
 		B78AE64117E7BA800028BE0B /* CCControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCControl.h; path = "cocos2d-ui/CCControl.h"; sourceTree = "<group>"; };
@@ -1082,6 +1084,7 @@
 		B7D2731B1822F52E0054849B /* CCBReader */ = {
 			isa = PBXGroup;
 			children = (
+				B77060DA18342E540043CC67 /* CCBReader_Private.h */,
 				B7D2731C1822F5460054849B /* CCBAnimationManager.h */,
 				B7D2731D1822F5460054849B /* CCBAnimationManager.m */,
 				B7D2731E1822F5460054849B /* CCBKeyframe.h */,
@@ -1593,6 +1596,7 @@
 				A046E2B714C1E5000005BBF2 /* CCGLView.h in Headers */,
 				A046E2C014C1E5480005BBF2 /* CCGLProgram.h in Headers */,
 				A009FB83150EC87500897349 /* ccShader_Position_uColor_frag.h in Headers */,
+				B77060DB18342E540043CC67 /* CCBReader_Private.h in Headers */,
 				A009FB84150EC87500897349 /* ccShader_Position_uColor_vert.h in Headers */,
 				B7C6239D17F10F3600928F91 /* cocos2d-ui.h in Headers */,
 				A009FB85150EC87500897349 /* ccShader_PositionColor_frag.h in Headers */,
