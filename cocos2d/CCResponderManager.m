@@ -699,7 +699,6 @@
 }
 
 /** Moved, Entered and Exited is not supported
- @since v3.0
  */
 
 - (void)mouseMoved:(NSEvent *)theEvent
