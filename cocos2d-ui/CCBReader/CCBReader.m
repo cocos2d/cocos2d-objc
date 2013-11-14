@@ -299,15 +299,7 @@ static inline float readFloat(CCBReader *self)
     NSString* name = [self readCachedString];
     
     // Check if the property can be set for this platform
-    BOOL setProp = NO;
-    
-    int platform = readByte(self);
-    if (platform == kCCBPlatformAll) setProp = YES;
-#ifdef __CC_PLATFORM_IOS
-    if (platform == kCCBPlatformIOS) setProp = YES;
-#elif defined(__CC_PLATFORM_MAC)
-    if (platform == kCCBPlatformMac) setProp = YES;
-#endif
+    BOOL setProp = YES;
     
     // Forward properties for sub ccb files
     if ([node isKindOfClass:[CCBFile class]])
@@ -1130,9 +1122,6 @@ static inline float readFloat(CCBReader *self)
         NSLog(@"CCBReader: Incompatible ccbi file version (file: %d reader: %d)",version,kCCBVersion);
         return NO;
     }
-    
-    // Read JS check (ignored)
-    readBool(self);
     
     return YES;
 }
