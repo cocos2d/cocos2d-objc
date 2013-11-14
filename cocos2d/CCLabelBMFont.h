@@ -21,119 +21,197 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
- * Portions of this code are based and inspired on:
- *   http://www.71squared.co.uk/2009/04/iphone-game-programming-tutorial-4-bitmap-font-class
- *   by Michael Daley
- *
- * Use any of these editors to generate BMFonts:
- *   http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
- *   http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
- *   http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
- *   http://www.angelcode.com/products/bmfont/ (Free, Windows only)
  */
 
 #import "CCSpriteBatchNode.h"
 #import "Support/uthash.h"
 
-/** CCLabelBMFont is a subclass of CCSpriteBatchNode
+/**
+ CCLabelBMFont is a subclass of CCSpriteBatchNode
  
- Features:
- - Treats each character like a CCSprite. This means that each individual character can be:
- - rotated
- - scaled
- - translated
- - tinted
- - chage the opacity
- - It can be used as part of a menu item.
- - anchorPoint can be used to align the "label"
- - Supports AngelCode text format
+ *Features*
  
- Limitations:
+ - Treats each character like a CCSprite.
+ 
+ *Limitations*
+ 
  - All inner characters are using an anchorPoint of (0.5f, 0.5f) and it is not recommend to change it
  because it might affect the rendering
  
- CCLabelBMFont implements the protocol CCLabelProtocol, like CCLabel and CCLabelAtlas.
- CCLabelBMFont has the flexibility of CCLabel, the speed of CCLabelAtlas and all the features of CCSprite.
- If in doubt, use CCLabelBMFont instead of CCLabelAtlas / CCLabel.
+ CCLabelBMFont implements the protocol CCLabelProtocol, CCRGBAProtocol.
  
- Supported editors:
- - http://glyphdesigner.71squared.com/
- - http://www.bmglyph.com/
- - http://www.n4te.com/hiero/hiero.jnlp
- - http://slick.cokeandcode.com/demos/hiero.jnlp
- - http://www.angelcode.com/products/bmfont/
+ CCLabelBMFont has the flexibility of CCLabel, the speed of CCLabelAtlas and all the features of CCSprite.  If in doubt, use CCLabelBMFont instead of CCLabelAtlas / CCLabel.
  
- @since v0.8
+ *Supported editors*
+ 
+ - (Premium) http://www.71squared.com/glyphdesigner
+ - (Premium) http://www.bmglyph.com/
+ - (Free) http://www.n4te.com/hiero/hiero.jnlp
+ - (Free) http://www.angelcode.com/products/bmfont/
+ 
  */
 
 @class CCBMFontConfiguration;
 
-@interface CCLabelBMFont : CCSpriteBatchNode <CCLabelProtocol, CCRGBAProtocol>
-{
-	// string to render
-	NSString		*_string;
+@interface CCLabelBMFont : CCSpriteBatchNode <CCLabelProtocol, CCRGBAProtocol> {
     
-    // name of fntFile
-    NSString        *_fntFile;
+	/** The text displayed by the label. */
+	NSString *_string;
     
-    // initial string without line breaks
+    /** The font file of the text. */
+    NSString *_fntFile;
+    
+    /** The original text excluding line breaks. */
     NSString *_initialString;
-    // max width until a line break is added
+    
+    /** The maximum width allowed before a line break will be inserted. */
     float _width;
-    // alignment of all lines
+    
+    /** The technique used for horizontal aligning of the text. */
     CCTextAlignment _alignment;
     
+    /** Parsed configuration of the font file. */
 	CCBMFontConfiguration	*_configuration;
     
-	// texture RGBA
-	GLubyte		_displayedOpacity, _realOpacity;
-	ccColor3B	_displayedColor, _realColor;
-	BOOL		_cascadeOpacityEnabled, _cascadeColorEnabled;
+	/** Texture RGBA settings. */
+	GLubyte		_displayedOpacity;
+    GLubyte     _realOpacity;
+	ccColor3B	_displayedColor;
+    ccColor3B   _realColor;
+	BOOL		_cascadeOpacityEnabled;
+    BOOL        _cascadeColorEnabled;
 	BOOL		_opacityModifyRGB;
 	
-	// offset of the texture atlas
+    /** Offset of the texture atlas. */
 	CGPoint			_imageOffset;
 	
-	// reused char
+	/** Reused char. */
 	CCSprite		*_reusedChar;
 }
 
-/** Purges the cached data.
- Removes from memory the cached configurations and the atlas name dictionary.
- @since v0.99.3
- */
-+(void) purgeCachedData;
 
-/** alignment used for the label */
+/// -----------------------------------------------------------------------
+/// @name Accessing the Text Attributes
+/// -----------------------------------------------------------------------
+
+/** The technique to use for horizontal aligning of the text. */
 @property (nonatomic,assign,readonly) CCTextAlignment alignment;
-/** fntFile used for the font */
+
+/** The font file of the text. */
 @property (nonatomic,strong) NSString* fntFile;
-/** conforms to CCRGBAProtocol protocol */
+
+/** The opacity of the text. */
 @property (nonatomic,readwrite) GLubyte opacity;
-/** conforms to CCRGBAProtocol protocol */
+
+/** The color of the text. */
 @property (nonatomic,readwrite) ccColor3B color;
 
 
-/** creates a BMFont label with an initial string and the FNT file. */
+/// -----------------------------------------------------------------------
+/// @name Sizing the Label’s Text
+/// -----------------------------------------------------------------------
+
+/**
+ *  Set the maximum width allowed before a line break will be inserted.
+ *
+ *  @param width The maximum width.
+ */
+-(void) setWidth:(float)width;
+
+/**
+ *  Set the technique to use for horizontal aligning of the text.
+ *
+ *  @param alignment Horizontal alignment.
+ */
+-(void) setAlignment:(CCTextAlignment)alignment;
+
+
+/// -----------------------------------------------------------------------
+/// @name Creating a CCLabelBMFont Object
+/// -----------------------------------------------------------------------
+
+/**
+ *  Creates and returns a label object using the specified text and font file values.
+ *
+ *  @param string  Label text.
+ *  @param fntFile Label font file.
+ *
+ *  @return The CCLabelBMFont Object.
+ */
 +(id) labelWithString:(NSString*)string fntFile:(NSString*)fntFile;
-/** creates a BMFont label with an initial string, the FNT file, width, and alignment option */
+
+/**
+ *  Creates and returns a label object using the specified text, font file and alignment values.
+ *
+ *  @param string  Label text.
+ *  @param fntFile Label font file.
+ *  @param width   Label maximum width.
+ *  @param alignment Horizontal text alignment.
+ *
+ *  @return The CCLabelBMFont Object.
+ */
 +(id) labelWithString:(NSString*)string fntFile:(NSString*)fntFile width:(float)width alignment:(CCTextAlignment)alignment;
-/** creates a BMFont label with an initial string, the FNT file, width, alignment option and the offset of where the glyphs start on the .PNG image */
+
+/**
+ *  Creates and returns a label object using the specified text, font file, alignment and image offset values.
+ *
+ *  @param string  Label text.
+ *  @param fntFile Label font file.
+ *  @param width   Label maximum width.
+ *  @param alignment Horizontal text alignment.
+ *  @param offset Glyph offset on the font texture
+ *
+ *  @return The CCLabelBMFont Object.
+ */
 +(id) labelWithString:(NSString*)string fntFile:(NSString*)fntFile width:(float)width alignment:(CCTextAlignment)alignment imageOffset:(CGPoint)offset;
 
-/** init a BMFont label with an initial string and the FNT file */
+
+/// -----------------------------------------------------------------------
+/// @name Initializing a CCLabelBMFont Object
+/// -----------------------------------------------------------------------
+
+/**
+ *  Initializes and returns a label object using the specified text and font file values.
+ *
+ *  @param string  Label text.
+ *  @param fntFile Label font file.
+ *
+ *  @return An initialized CCLabelBMFont Object.
+ */
 -(id) initWithString:(NSString*)string fntFile:(NSString*)fntFile;
-/** init a BMFont label with an initial string and the FNT file, width, and alignment option*/
+
+/**
+ *  Initializes and returns a label object using the specified text, font file and alignment values.
+ *
+ *  @param string  Label text.
+ *  @param fntFile Label font file.
+ *  @param width   Label maximum width.
+ *  @param alignment Horizontal text alignment.
+ *
+ *  @return An initialized CCLabelBMFont Object.
+ */
 -(id) initWithString:(NSString*)string fntFile:(NSString*)fntFile width:(float)width alignment:(CCTextAlignment)alignment;
-/** init a BMFont label with an initial string and the FNT file, width, alignment option and the offset of where the glyphs start on the .PNG image */
+
+/**
+ *  Initializes and returns a label object using the specified text, font file, alignment and image offset values.
+ *
+ *  @param string  Label text.
+ *  @param fntFile Label font file.
+ *  @param width   Label maximum width.
+ *  @param alignment Horizontal text alignment.
+ *  @param offset Glyph offset on the font texture
+ *
+ *  @return An initialized CCLabelBMFont Object.
+ */
 -(id) initWithString:(NSString*)string fntFile:(NSString*)fntFile width:(float)width alignment:(CCTextAlignment)alignment imageOffset:(CGPoint)offset;
 
-/** set label width */
-- (void)setWidth:(float)width;
 
-/** set label alignment */
-- (void)setAlignment:(CCTextAlignment)alignment;
+/// -----------------------------------------------------------------------
+/// @name Memory Management
+/// -----------------------------------------------------------------------
+
+/** Removes from memory the cached configurations and the atlas name dictionary. */
++(void) purgeCachedData;
 
 @end
 
