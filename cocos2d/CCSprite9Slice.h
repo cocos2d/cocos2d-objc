@@ -28,26 +28,46 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
-/*
- * Implements a 9 slice sprite
- * The sprite can be scaled, by using scale, scaleX and scaleY
- * A margin will be kept unscaled
- */
-
 // ---------------------------------------------------------------------
 
+/**
+ *  CCSprite9Slice will render a single image as nine quads, keeping the margins fixed, and stretching the center quads, to fit the content size.
+ *  See CcSprite for how to create and use
+ */
 @interface CCSprite9Slice : CCSprite
 {
     
 }
 
 // ---------------------------------------------------------------------
+/**
+ *  @name Margin setup
+ */
 
-@property (nonatomic, assign) float margin;                           // normalized unstretched margin
+/**
+ *  Sets the margin as a normalized percentage of the total image size
+ *  If set to 0.25, 25% of the left, right, top and bottom of the image, will be unstratched
+ */
+@property (nonatomic, assign) float margin;
 
+/**
+ *  Sets the left margin exclusively
+ */
 @property (nonatomic, assign) float marginLeft;
+
+/**
+ *  Sets the right margin exclusively
+ */
 @property (nonatomic, assign) float marginRight;
+
+/**
+ *  Sets the top margin exclusively
+ */
 @property (nonatomic, assign) float marginTop;
+
+/**
+ *  Sets the bottom margin exclusively
+ */
 @property (nonatomic, assign) float marginBottom;
 
 // ---------------------------------------------------------------------
