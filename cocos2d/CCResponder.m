@@ -39,12 +39,7 @@
 }
 
 // -----------------------------------------------------------------
-/**
- *  Creates a new CCResponder instance
- *
- *  @return CCResponder
- *  @since v3.0
- */
+
 - (id)init
 {
     self = [super init];
@@ -75,14 +70,6 @@
 
 #if ( TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR )
 
-/**
- *  Touch callbacks
- *  If these functions are not overridden by a responder, the event will not be flagged as being processed, and thus be sent to next responder
- *  Likewise a responder can call the super callback, and force the event to next responder
- *
- *  @param touches A NSSet of touches, associated with the callback
- *  @param event   The event associated with the callback
- */
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {    
     [[CCDirector sharedDirector].responderManager discardCurrentEvent];
@@ -109,13 +96,6 @@
 #pragma mark - OSX
 // -----------------------------------------------------------------
 
-/**
- *  Mouse callbacks
- *  If these functions are not overridden by a responder, the event will not be flagged as being processed, and thus be sent to next responder
- *  Likewise a responder can call the super callback, and force the event to next responder
- *
- *  @param theEvent The event associated with the mouse callback
- */
 - (void)mouseDown:(NSEvent *)theEvent
 {
     [[CCDirector sharedDirector].responderManager discardCurrentEvent];
