@@ -449,10 +449,10 @@
 
 -(BOOL) saveToFile:(NSString*)name
 {
-	return [self saveToFile:name format:kCCImageFormatJPEG];
+	return [self saveToFile:name format:CCRenderTextureImageFormatJPEG];
 }
 
--(BOOL)saveToFile:(NSString*)fileName format:(tCCImageFormat)format
+-(BOOL)saveToFile:(NSString*)fileName format:(CCRenderTextureImageFormat)format
 {
 	BOOL success;
 	
@@ -470,10 +470,10 @@
 	UIImage* image	= [[UIImage alloc] initWithCGImage:imageRef scale:CC_CONTENT_SCALE_FACTOR() orientation:UIImageOrientationUp];
 	NSData *imageData = nil;
     
-	if( format == kCCImageFormatPNG )
+	if( format == CCRenderTextureImageFormatPNG )
 		imageData = UIImagePNGRepresentation( image );
     
-	else if( format == kCCImageFormatJPEG )
+	else if( format == CCRenderTextureImageFormatJPEG )
 		imageData = UIImageJPEGRepresentation(image, 0.9f);
     
 	else
@@ -489,10 +489,10 @@
 	
 	CGImageDestinationRef dest;
 
-	if( format == kCCImageFormatPNG )
+	if( format == CCRenderTextureImageFormatPNG )
 		dest = 	CGImageDestinationCreateWithURL(url, kUTTypePNG, 1, NULL);
 
-	else if( format == kCCImageFormatJPEG )
+	else if( format == CCRenderTextureImageFormatJPEG )
 		dest = 	CGImageDestinationCreateWithURL(url, kUTTypeJPEG, 1, NULL);
 
 	else
