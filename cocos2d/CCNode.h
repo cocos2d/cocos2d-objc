@@ -68,6 +68,7 @@
  
 A common user pattern in building a Cocos2d game is to subclass CCNode, add it to a CCScene and override the methods for handling user input.
  */
+
 @interface CCNode : CCResponder < CCSchedulerTarget > {
 	// rotation angle
 	float _rotationalSkewX, _rotationalSkewY;
@@ -229,7 +230,6 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 @property(nonatomic,readwrite,assign) float skewY;
 
 /** The untransformed size of the node in the unit specified by contentSizeType property. The contentSize remains the same no matter the node is scaled or rotated.
- @since v0.8
  */
 @property (nonatomic,readwrite,assign) CGSize contentSize;
 
@@ -244,7 +244,6 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  The anchorPoint is normalized, like a percentage. (0,0) means the bottom-left corner and (1,1) means the top-right corner.
  But you can use values higher than (1,1) and lower than (0,0) too.
  The default anchorPoint is (0,0). It starts in the bottom-left corner. CCSprite and other subclasses have a different default anchorPoint.
- @since v0.8
  */
 @property(nonatomic,readwrite) CGPoint anchorPoint;
 
@@ -257,7 +256,6 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  The returned box is relative only to its parent.
  The returned box is in Points.
  
- @since v0.8.2
  */
 - (CGRect) boundingBox;
 
@@ -265,93 +263,130 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 /// @name Adding, Removing and Sorting Children
 /// -----------------------------------------------------------------------
 
-/** Adds a child to the container with z-order as 0.
- If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
- @since v0.7.1
+/**
+ *  Adds a child to the container with z-order as 0.
+ *  If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
+ *
+ *  @param node CCNode to add as a child
  */
 -(void) addChild: (CCNode*)node;
 
-/** Adds a child to the container with a z-order.
- If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
- @since v0.7.1
+/**
+ *  Adds a child to the container with a z-order.
+ *  If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
+ *
+ *  @param node CCNode to add as a child
+ *  @param z    Z depth of node
  */
 -(void) addChild: (CCNode*)node z:(NSInteger)z;
 
-/** Adds a child to the container with z order and tag.
- If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
- @since v0.7.1
+/**
+ *  Adds a child to the container with z order and tag.
+ *  If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
+ *
+ *  @param node CCNode to add as a child
+ *  @param z    Z depth of node
+ *  @param name name tag
  */
 -(void) addChild: (CCNode*)node z:(NSInteger)z name:(NSString*)name;
 
-/** Remove itself from its parent node forcing a cleanup.
- If the node orphan, then nothing happens.
- @since v2.1
+/** 
+ *  Remove itself from its parent node forcing a cleanup.
+ *  If the node orphan, then nothing happens.
  */
 -(void) removeFromParent;
 
-/** Remove itself from its parent node. If cleanup is YES, then also remove all actions and callbacks.
- If the node orphan, then nothing happens.
- @since v0.99.3
+/**
+ *  Remove itself from its parent node. If cleanup is YES, then also remove all actions and callbacks.
+ *  If the node orphan, then nothing happens.
+ *
+ *  @param cleanup Stops all scheduled events and actions
  */
 -(void) removeFromParentAndCleanup:(BOOL)cleanup;
 
-/** Removes a child from the container forcing a cleanup
- @since v2.1
+/**
+ *  Removes a child from the container forcing a cleanup
+ *
+ *  @param child The child node to remove
  */
 -(void) removeChild:(CCNode*)child;
 
-/** Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.
- @since v0.7.1
+/**
+ *  Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.
+ *
+ *  @param node    The child node to remove
+ *  @param cleanup Stops all scheduled events and actions
  */
 -(void) removeChild: (CCNode*)node cleanup:(BOOL)cleanup;
 
-/** Removes a child from the container by tag value forcing a cleanup.
- @since v2.1
+/**
+ *  Removes a child from the container by tag value forcing a cleanup.
+ *
+ *  @param name Name of node to be removed
  */
 -(void) removeChildByName:(NSString*)name;
 
-/** Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
- @since v0.7.1
+/**
+ *  Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
+ *
+ *  @param name    Name of node to be removed
+ *  @param cleanup Stops all scheduled events and actions
  */
 -(void) removeChildByName:(NSString*)name cleanup:(BOOL)cleanup;
 
-/** Removes all children from the container forcing a cleanup.
- @since v2.1
+/** 
+ *  Removes all children from the container forcing a cleanup.
  */
 -(void) removeAllChildren;
 
-/** Removes all children from the container and do a cleanup all running actions depending on the cleanup parameter.
- @since v0.7.1
+/**
+ *  Removes all children from the container and do a cleanup all running actions depending on the cleanup parameter.
+ *
+ *  @param cleanup Stops all scheduled events and actions
  */
 -(void) removeAllChildrenWithCleanup:(BOOL)cleanup;
 
-/** A weak reference to the parent */
+/** 
+ *  A weak reference to the parent 
+ */
 @property(nonatomic,readwrite,unsafe_unretained) CCNode* parent;
 
-/** Array of children */
+/** 
+ *  Array of children 
+ */
 @property(nonatomic,readonly) NSArray *children;
 
-/** Gets a child from the container given its tag
- @return returns a CCNode object
- @since v0.7.1
+/**
+ *  Gets a child from the container given its name tag
+ *
+ *  @param name Name tag
+ *
+ *  @return Returns a CCNode
  */
 -(CCNode*) getChildByName:(NSString*) name;
 
-/** The z order of the node relative to its "siblings": children of the same parent */
+/** 
+ *  The z order of the node relative to its "siblings": children of the same parent 
+ */
 @property(nonatomic,assign) NSInteger zOrder;
 
 /// -----------------------------------------------------------------------
 /// @name Hit tests
 /// -----------------------------------------------------------------------
 
-/** check if a touch is inside the node
- to expand or shrink the touch area of a node, override this method
- @since v3.0
+/**
+ *  Check if a touch is inside the node.
+ *  To allow for custom detection, override this method
+ *
+ *  @param pos world position
+ *
+ *  @return returns true, if the position is inside the node
  */
 - (BOOL)hitTestWithWorldPos:(CGPoint)pos;
 
-/** Expands ( or contracts ) the hit area of the node, value is in points.
- @since v3.0
+/** 
+ *  Expands ( or contracts ) the hit area of the node.
+ *  The expansion is in normalized content size. Ie a hit area expansion of 2, will result in the hit area being double width, and double height.
  */
 @property (nonatomic, assign) float hitAreaExpansion;
 
@@ -369,7 +404,6 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 /** Event that is called when the CCNode enters in the 'stage'.
  If the CCNode enters the 'stage' with a transition, this event is called when the transition finishes.
  If you override onEnterTransitionDidFinish, you shall call [super onEnterTransitionDidFinish].
- @since v0.8
  */
 -(void) onEnterTransitionDidFinish;
 
@@ -402,28 +436,39 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 /// @name Actions
 /// -----------------------------------------------------------------------
 
-/** Executes an action, and returns the action that is executed.
- The node becomes the action's target.
- @warning Starting from v0.8 actions don't retain their target anymore.
- @since v0.7.1
- @return An Action pointer
+/**
+ *  Executes an action, and returns the action that is executed.
+ *  The node becomes the action's target.
+ *
+ *  @param action Action to run.
+ *
+ *  @return An Action pointer
  */
 -(CCAction*) runAction: (CCAction*) action;
 
 /** Removes all actions from the running action list */
 -(void) stopAllActions;
 
-/** Removes an action from the running action list */
+/**
+ *  Removes an action from the running action list
+ *
+ *  @param action Action to remove
+ */
 -(void) stopAction: (CCAction*) action;
 
-/** Removes an action from the running action list given its tag
- @since v0.7.1
+/**
+ *  Removes an action from the running action list given its tag
+ *
+ *  @param tag Tag to remove
  */
 -(void) stopActionByTag:(NSInteger) tag;
 
-/** Gets an action from the running action list given its tag
- @since v0.7.1
- @return the Action the with the given tag
+/**
+ *  Gets an action from the running action list given its tag
+ *
+ *  @param tag Tag to retrieve
+ *
+ *  @return the Action the with the given tag
  */
 -(CCAction*) getActionByTag:(NSInteger) tag;
 
@@ -438,29 +483,60 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 /// @name Scheduling Repeating Callbacks
 /// -----------------------------------------------------------------------
 
+/**
+ *  Schedules a block to run once, after a certain delay.
+ *
+ *  @param block Block to execute.
+ *  @param delay Delay in seconds.
+ *
+ *  @return A newly initialized CCTimer object
+ */
 -(CCTimer *) scheduleBlock:(CCTimerBlock)block delay:(CCTime)delay;
 
-/** schedules a custom selector with an interval time in seconds.
- If time is 0 it will be ticked every frame.
- If time is 0, it is recommended to use 'scheduleUpdate' instead.
- 
- If the selector is already scheduled, then the interval parameter will be updated without scheduling it again.
+/**
+ *  Schedules a custom selector with an interval time in seconds.
+ *  If time is 0 it will be ticked every frame. In that case, it is recommended to override update: in stead.
+ *  If the selector is already scheduled, then the interval parameter will be updated without scheduling it again.
+ *
+ *  @param s       Selector to execute.
+ *  @param seconds Interval between execution in seconds.
+ *
+ *  @return A newly initialized CCTimer object.
  */
 -(CCTimer *) schedule: (SEL) s interval:(CCTime)seconds;
 
 /**
- repeat will execute the action repeat + 1 times, for a continues action use kCCRepeatForever
- delay is the amount of time the action will wait before execution
+ *  Schedules a custom selector with an interval time in seconds.
+ *
+ *  @param selector Selector to execute.
+ *  @param interval Interval between execution in seconds.
+ *  @param repeat   Number of times to repeat.
+ *  @param delay    Initial delay in seconds.
+ *
+ *  @return A newly initialized CCTimer object.
  */
 -(CCTimer *) schedule:(SEL)selector interval:(CCTime)interval repeat: (uint) repeat delay:(CCTime) delay;
 
 /**
- Schedules a selector that runs only once, with a delay of 0 or larger
+ *  Schedules a selector that runs only once, with a delay of 0 or larger
+ *
+ *  @param selector Selector to execute.
+ *  @param delay    Initial delay in seconds.
+ *
+ *  @return A newly initialized CCTimer object.
  */
 - (CCTimer *) scheduleOnce:(SEL) selector delay:(CCTime) delay;
 
+/**
+ *  Unschedule a scheduled selector
+ *
+ *  @param selector Selector to unschedule.
+ */
 -(void)unschedule:(SEL)selector;
 
+/**
+ *  Unschedule all scheduled selectors.
+ */
 -(void)unscheduleAllSelectors;
 
 /// -----------------------------------------------------------------------
@@ -472,7 +548,6 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 
 /** Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
  The matrix is in Pixels.
- @since v0.7.1
  */
 - (CGAffineTransform)nodeToParentTransform;
 
@@ -484,39 +559,52 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 
 /** Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.
  The matrix is in Pixels.
- @since v0.7.1
  */
 - (CGAffineTransform)parentToNodeTransform;
 
 /** Returns the world affine transform matrix. The matrix is in Pixels.
- @since v0.7.1
  */
 - (CGAffineTransform)nodeToWorldTransform;
 
 /** Returns the inverse world affine transform matrix. The matrix is in Pixels.
- @since v0.7.1
  */
 - (CGAffineTransform)worldToNodeTransform;
 
-/** Converts a Point to node (local) space coordinates. The result is in Points.
- @since v0.7.1
+/**
+ *  Converts a Point to node (local) space coordinates. The result is in Points.
+ *
+ *  @param worldPoint World position in points.
+ *
+ *  @return Local position in points.
  */
 - (CGPoint)convertToNodeSpace:(CGPoint)worldPoint;
 
-/** Converts a Point to world space coordinates. The result is in Points.
- @since v0.7.1
+/**
+ *  Converts a Point to world space coordinates. The result is in Points.
+ *
+ *  @param nodePoint Local position in points.
+ *
+ *  @return World position in points.
  */
 - (CGPoint)convertToWorldSpace:(CGPoint)nodePoint;
 
-/** Converts a Point to node (local) space coordinates. The result is in Points.
- treating the returned/received node point as anchor relative.
- @since v0.7.1
+/**
+ *  Converts a Point to node (local) space coordinates. The result is in Points.
+ *  Treats the returned/received node point as anchor relative.
+ *
+ *  @param worldPoint World position in points.
+ *
+ *  @return Local position in points.
  */
 - (CGPoint)convertToNodeSpaceAR:(CGPoint)worldPoint;
 
-/** Converts a local Point to world space coordinates.The result is in Points.
- treating the returned/received node point as anchor relative.
- @since v0.7.1
+/**
+ *  Converts a local Point to world space coordinates.The result is in Points.
+ *  Treats the returned/received node point as anchor relative.
+ *
+ *  @param nodePoint Local position in points.
+ *
+ *  @return World position in points.
  */
 - (CGPoint)convertToWorldSpaceAR:(CGPoint)nodePoint;
 
@@ -546,7 +634,6 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  - RGB colors
 
  Opacity/Color propagates into children that conform to the CCRGBAProtocol if cascadeOpacity/cascadeColor is enabled.
- @since v2.1
  */
 @interface CCNodeRGBA : CCNode <CCRGBAProtocol>
 {
