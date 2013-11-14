@@ -31,7 +31,11 @@
  */
 @interface CCNode (Debug)
 
-/** prints on the debug console the scene graph */
+/**
+*  Prints on the debug console the scene graph
+*
+*  @param level Level of debug information.
+*/
 -(void) walkSceneGraph:(NSUInteger)level;
 
 @end
