@@ -644,9 +644,13 @@ void FNTConfigRemoveCache( void )
                 continue;
 			
             //Find position of last character on the line
-#warning Inefficient should not be done with strings
-            NSString* indexStr = [NSString stringWithFormat:@"%d",(int)index];
-            CCSprite *lastChar = (CCSprite *)[self getChildByName:indexStr];
+            CCSprite *lastChar;
+            for(CCSprite* child in [self children]) {
+                if([child atlasIndex]==index) {
+                    lastChar = child;
+                    break;
+                }
+            }
 			
             lineWidth = lastChar.position.x + lastChar.contentSize.width/2;
 			
