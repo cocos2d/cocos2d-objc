@@ -68,10 +68,6 @@ enum {
 #endif // __CC_PLATFORM_IOS
 
 // CCRenderTexture.h
-enum {
-	kCCImageFormatJPG DEPRECATED_ATTRIBUTE = kCCImageFormatJPEG,
-	kCCImageFormatRawData UNAVAILABLE_ATTRIBUTE,
-};
 
 // Free functions
 void ccGLUniformModelViewProjectionMatrix(CCGLProgram* program) DEPRECATED_ATTRIBUTE;
