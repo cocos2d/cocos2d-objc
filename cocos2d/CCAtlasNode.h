@@ -81,13 +81,40 @@
 /** how many quads to draw */
 @property (nonatomic,readwrite) NSUInteger quadsToDraw;
 
-/** creates a CCAtlasNode  with an Atlas file the width and height of each item measured in points and the quantity of items to render*/
+/**
+ *  creates a CCAtlasNode with an Atlas file the width and height of each item measured in points and the quantity of items to render
+ *
+ *  @param tile Tile filename.
+ *  @param w    Width of tile node.
+ *  @param h    Height of tile node.
+ *  @param c    Number of tiles to render.
+ *
+ *  @return A newly initialized CCAtlasNode.
+ */
 +(id) atlasWithTileFile:(NSString*)tile tileWidth:(NSUInteger)w tileHeight:(NSUInteger)h itemsToRender: (NSUInteger) c;
 
-/** initializes an CCAtlasNode  with an Atlas file the width and height of each item measured in points and the quantity of items to render*/
+/**
+ *  initializes an CCAtlasNode  with an Atlas file the width and height of each item measured in points and the quantity of items to render
+ *
+ *  @param tile Tile filename.
+ *  @param w    Width of tile node.
+ *  @param h    Height of tile node.
+ *  @param c    Number of tiles to render.
+ *
+ *  @return A newly initialized CCAtlasNode.
+ */
 -(id) initWithTileFile:(NSString*)tile tileWidth:(NSUInteger)w tileHeight:(NSUInteger)h itemsToRender: (NSUInteger) c;
 
-/** initializes an CCAtlasNode  with a texture the width and height of each item measured in points and the quantity of items to render*/
+/**
+ *  initializes an CCAtlasNode  with a texture the width and height of each item measured in points and the quantity of items to render
+ *
+ *  @param texture Texture.
+ *  @param w       Width of tile node.
+ *  @param h       Height of tile node.
+ *  @param c       Number of tiles to render.
+ *
+ *  @return A newly initialized CCAtlasNode.
+ */
 -(id) initWithTexture:(CCTexture*)texture tileWidth:(NSUInteger)w tileHeight:(NSUInteger)h itemsToRender: (NSUInteger) c;
 
 
