@@ -99,15 +99,6 @@ typedef struct _KerningHashElement
 -(id) initWithFNTfile:(NSString*)FNTfile;
 @end
 
-
-/** Free function that parses a FNT file a place it on the cache
- */
 CCBMFontConfiguration * FNTConfigLoadFile( NSString *file );
-/** Purges the FNT config cache
- */
+
 void FNTConfigRemoveCache( void );
-
-
-@interface CCLabelBMFont ()
-
-@end
