@@ -168,6 +168,19 @@
 			<key>TargetIndices</key>
 			<array />
          </dict>
+         <key>Libraries/CCBReader/CCBReader_Private.h</key>
+         <dict>
+            <key>Group</key>
+            <array>
+               <string>Libraries</string>
+               <string>cocos2d-ui</string>
+               <string>CCBReader</string>
+            </array>
+            <key>Path</key>
+            <string>Libraries/CCBReader/CCBReader_Private.h</string>
+         <key>TargetIndices</key>
+         <array />
+         </dict>
          <key>Libraries/LICENSE_CCBReader.txt</key>
          <dict>
             <key>Group</key>
@@ -193,6 +206,7 @@
          <string>Libraries/CCBReader/CCBLocalizationManager.h</string>
          <string>Libraries/CCBReader/CCBLocalizationManager.m</string>
          <string>Libraries/CCBReader/CCBuilderReader.h</string>
+         <string>Libraries/CCBReader/CCBReader_Private.h</string>
          <string>Libraries/LICENSE_CCBReader.txt</string>
       </array>
    </dict>
