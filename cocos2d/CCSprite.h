@@ -37,7 +37,6 @@
 
 #define CCSpriteIndexNotInitialized 0xffffffff 	/// CCSprite invalid index on the CCSpriteBatchode
 
-
 /** CCSprite is a 2d image ( http://en.wikipedia.org/wiki/Sprite_(computer_graphics) )
  *
  * CCSprite can be created with an image, or with a sub-rectangle of an image.
@@ -60,6 +59,7 @@
  *
  * The default anchorPoint in CCSprite is (0.5, 0.5).
  */
+
 @interface CCSprite : CCNodeRGBA <CCTextureProtocol>
 {
 
@@ -142,6 +142,11 @@
 
 #pragma mark CCSprite - Initializers
 
+// -----------------------------------------------------------------------
+/**
+ *  @name Initializers
+ */
+
 /**
  *  Creates a sprite with the name of an image. The name can be either a name in a sprite sheet or the name of a file.
  *
@@ -151,77 +156,143 @@
  */
 +(id)spriteWithImageNamed:(NSString*)imageName;
 
-/** Creates an sprite with a texture.
- The rect used will be the size of the texture.
- The offset will be (0,0).
+/**
+ *  Creates an sprite with a texture.
+ *  The rect used will be the size of the texture.
+ *  The offset will be (0,0).
+ *
+ *  @param texture Texture to use.
+ *
+ *  @return A newly initialized CCSprite object.
  */
 +(id) spriteWithTexture:(CCTexture*)texture;
 
-/** Creates an sprite with a texture and a rect.
- The offset will be (0,0).
+/**
+ *  Creates an sprite with a texture.
+ *  The offset will be (0,0).
+ *
+ *  @param texture Texture to use.
+ *  @param rect    Rect to use.
+ *
+ *  @return A newly initialized CCSprite object.
  */
 +(id) spriteWithTexture:(CCTexture*)texture rect:(CGRect)rect;
 
-/** Creates an sprite with an sprite frame.
+/**
+ *  Creates an sprite from a sprite frame.
+ *
+ *  @param spriteFrame Sprite frame to use
+ *
+ *  @return A newly initialized CCSprite object.
  */
 +(id) spriteWithSpriteFrame:(CCSpriteFrame*)spriteFrame;
 
-/** Creates an sprite with a CGImageRef and a key.
- The key is used by the CCTextureCache to know if a texture was already created with this CGImage.
- For example, a valid key is: @"_spriteframe_01".
- If key is nil, then a new texture will be created each time by the CCTextureCache.
- @since v0.99.0
+/**
+ *  Creates an sprite with a CGImageRef and a key.
+ *  The key is used by the CCTextureCache to know if a texture was already created with this CGImage.
+ *  For example, a valid key is: @"_spriteframe_01".
+ *  If key is nil, then a new texture will be created each time by the CCTextureCache.
+ *
+ *  @param image Image ref
+ *  @param key   Key description
+ *
+ *  @return A newly initialized CCSprite object.
  */
 +(id) spriteWithCGImage: (CGImageRef)image key:(NSString*)key;
 
 /**
  *  Initializes a sprite with the name of an image. The name can be either a name in a sprite sheet or the name of a file.
  *
- *  @param imageName name of the image to load
+ *  @param ImageName name of the image to load
  *
- *  @return a sprite
+ *  @return A newly initialized CCSprite object.
  */
 - (id) initWithImageNamed:(NSString*)imageName;
 
-/** Initializes an sprite with a texture.
- The rect used will be the size of the texture.
- The offset will be (0,0).
+/**
+ *  Initializes an sprite with a texture.
+ *  The rect used will be the size of the texture.
+ *  The offset will be (0,0).
+ *
+ *  @param texture The texture to use.
+ *
+ *  @return A newly initialized CCSprite object.
  */
 -(id) initWithTexture:(CCTexture*)texture;
 
-/** Initializes an sprite with a texture and a rect in points (unrotated)
- The offset will be (0,0).
+/**
+ *  Initializes an sprite with a texture and a rect in points (unrotated)
+ *  The offset will be (0,0).
+ *
+ *  @param texture The texture to use.
+ *  @param rect    The rect to use.
+ *
+ *  @return A newly initialized CCSprite object.
  */
 -(id) initWithTexture:(CCTexture*)texture rect:(CGRect)rect;
 
-/** Initializes an sprite with a texture and a rect in points, optionally rotated.
- The offset will be (0,0).
- IMPORTANT: This is the designated initializer.
- */
-- (id)initWithTexture:(CCTexture *)texture rect:(CGRect)rect rotated:(BOOL)rotated;
-
-
-/** Initializes an sprite with an sprite frame.
+/**
+ *  Initializes an sprite with an sprite frame.
+ *
+ *  @param spriteFrame Sprite frame to use
+ *
+ *  @return A newly initialized CCSprite object.
  */
 -(id) initWithSpriteFrame:(CCSpriteFrame*)spriteFrame;
 
-/** Initializes an sprite with a CGImageRef and a key
- The key is used by the CCTextureCache to know if a texture was already created with this CGImage.
- For example, a valid key is: @"_spriteframe_01".
- If key is nil, then a new texture will be created each time by the CCTextureCache.
- @since v0.99.0
+/**
+ *  Initializes an sprite with a CGImageRef and a key.
+ *  The key is used by the CCTextureCache to know if a texture was already created with this CGImage.
+ *  For example, a valid key is: @"_spriteframe_01".
+ *  If key is nil, then a new texture will be created each time by the CCTextureCache.
+ *
+ *  @param image Image ref
+ *  @param key   Key description
+ *
+ *  @return A newly initialized CCSprite object.
  */
 -(id) initWithCGImage:(CGImageRef)image key:(NSString*)key;
 
+// -----------------------------------------------------------------------
+/**
+ *  @name Designated initializer
+ */
+
+/**
+ *  Initializes an sprite with a texture and a rect in points, optionally rotated.
+ *  The offset will be (0,0).
+ *  IMPORTANT: This is the designated initializer.
+ *
+ *  @param texture The texture to use.
+ *  @param rect    The rect to use.
+ *  @param rotated YES if texture is rotated
+ *
+ *  @return A newly initialized CCSprite object.
+ */
+- (id)initWithTexture:(CCTexture *)texture rect:(CGRect)rect rotated:(BOOL)rotated;
+
 #pragma mark CCSprite - Texture methods
 
-/** set the texture rect of the CCSprite in points.
- It will call setTextureRect:rotated:untrimmedSize with rotated = NO, and utrimmedSize = rect.size.
+// -----------------------------------------------------------------------
+/**
+ *  @name Texture usage
+ */
+
+/**
+ *  Set the texture rect of the CCSprite in points.
+ *  It will call setTextureRect:rotated:untrimmedSize with rotated = NO, and utrimmedSize = rect.size.
+ *
+ *  @param rect Rect to use.
  */
 -(void) setTextureRect:(CGRect) rect;
 
-/** set the texture rect, rectRotated and untrimmed size of the CCSprite in points.
- It will update the texture coordinates and the vertex rectangle.
+/**
+ *  Set the texture rect, rectRotated and untrimmed size of the CCSprite in points.
+ *  It will update the texture coordinates and the vertex rectangle.
+ *
+ *  @param rect    Rect to use.
+ *  @param rotated YES if texture is rotated.
+ *  @param size    Untrimmed size.
  */
 -(void) setTextureRect:(CGRect)rect rotated:(BOOL)rotated untrimmedSize:(CGSize)size;
 
