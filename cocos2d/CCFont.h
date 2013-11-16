@@ -15,10 +15,8 @@
 @class CCGlyphDef;
 
 @interface CCFont : NSObject
-+ (instancetype) fontWithTTFFilePath:(NSString*)fontPath size:(CGFloat)fontSize glyphs:(CCGlyphCollection)glyphs customGlyphs:(NSString*)customGlyphs;
-
 - (CCFontAtlas*) makeFontAtlas;
-- (CGSize*) getAdvancesForText:(NSString*)text outLength:(int*)length;
+- (CGSize*) getAdvancesForText:(NSString*)text;
 
 @property (copy, readonly) NSString* currentGlyphCollection;
 @property (assign, readonly) CGFloat letterPadding;

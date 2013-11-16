@@ -12,7 +12,7 @@
 
 @implementation CCFontAtlasFactory
 
-+ (instancetype) sharedFontAtlasCache
++ (instancetype) sharedFontAtlasFactory
 {
     static id instance = nil;
     static dispatch_once_t onceToken;
@@ -38,7 +38,7 @@
 
 - (CCFontAtlas*) atlasFromTTF:(NSString*)fontFilePath size:(CGFloat)fontSize glyphs:(CCGlyphCollection)glyphs customGlyphs:(NSString*)customGlyphs
 {
-    CCFont* font = [CCFont fontWithTTFFilePath:fontFilePath size:fontSize glyphs:glyphs customGlyphs:customGlyphs];
+    CCFont* font = [CCFontCoreGraphics fontWithFontName:fontFilePath size:fontSize glyphs:glyphs customGlyphs:customGlyphs];
     if (!font) {
         NSAssert1(NO, @"Cannot load font `%@`", fontFilePath);
         return nil;

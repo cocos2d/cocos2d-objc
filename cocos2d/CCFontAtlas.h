@@ -10,29 +10,29 @@
 
 #import "cocos2d.h"
 
+@interface CCFontLetterDefinition : NSObject
+@property (assign) unichar letteCharUTF16;
+@property (assign) float U;
+@property (assign) float V;
+@property (assign) float width;
+@property (assign) float height;
+@property (assign) float offsetX;
+@property (assign) float offsetY;
+@property (assign) int textureID;
+@property (assign) float commonLineHeight;
+@property (assign) float anchorX;
+@property (assign) float anchorY;
+@property (assign) BOOL validDefinition;
+@end
 
-typedef struct {
-    unichar  letteCharUTF16;
-    float U;
-    float V;
-    float width;
-    float height;
-    float offsetX;
-    float offsetY;
-    int textureID;
-    float commonLineHeight;
-    float anchorX;
-    float anchorY;
-    BOOL validDefinition;
-} CCFontLetterDefinition;
 
 @class CCFont;
 @interface CCFontAtlas : NSObject
 
 - (instancetype) initWithFont:(CCFont*)font;
 
-- (void) addFontLetterDefinition:(const CCFontLetterDefinition*)letterDefinition;
-- (BOOL) getFontLetterDefinition:(CCFontLetterDefinition*)letterDefinition forCharacter:(unichar)theChar;
+- (void) addFontLetterDefinition:(CCFontLetterDefinition*)letterDefinition;
+- (CCFontLetterDefinition*) fontLetterDefinitionForCharacter:(unichar)theChar;
 - (BOOL) prepareLetterDefinitions:(NSString*)letters;
 
 - (void) addTexture:(CCTexture*)texture atSlot:(NSInteger)slot;

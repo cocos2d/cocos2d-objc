@@ -9,7 +9,10 @@
 #import "CCFont.h"
 
 @interface CCFontCoreGraphics : CCFont
++ (instancetype) fontWithFontName:(NSString*)fontName size:(CGFloat)fontSize glyphs:(CCGlyphCollection)glyphs customGlyphs:(NSString*)customGlyphs;
 - (instancetype) initWithFontName:(NSString*)fontName size:(CGFloat)fontSize glyphs:(CCGlyphCollection)glyphs customGlyphs:(NSString*)customGlyphs;
 
 - (BOOL) getBBOXForCharacter:(unichar)theChar rect:(CGRect*)outRect;
+
+@property (assign, readonly) BOOL isDynamicGlyphCollection;
 @end

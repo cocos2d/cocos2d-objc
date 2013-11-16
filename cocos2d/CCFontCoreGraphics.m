@@ -10,6 +10,8 @@
 
 #import <CoreText/CoreText.h>
 
+#import "CCFontAtlas.h"
+
 @implementation CCFontCoreGraphics
 {
     CTFontRef font_;
@@ -18,14 +20,40 @@
 }
 
 
+
++ (instancetype) fontWithFontName:(NSString*)fontName size:(CGFloat)fontSize glyphs:(CCGlyphCollection)glyphs customGlyphs:(NSString*)customGlyphs
+{
+    return [[self alloc] initWithFontName:fontName size:fontSize glyphs:glyphs customGlyphs:customGlyphs];
+}
+
 - (instancetype) initWithFontName:(NSString*)fontName size:(CGFloat)fontSize glyphs:(CCGlyphCollection)glyphs customGlyphs:(NSString*)customGlyphs
 {
     if (self = [super init]) {
         font_ = CTFontCreateWithName((__bridge CFStringRef)(fontName), fontSize, NULL);
+        _isDynamicGlyphCollection = glyphs == CCGlyphCollectionDynamic;
         fontName_ = fontName;
         fontSize_ = fontSize;
     }
     return self;
+}
+
+- (CCFontAtlas*) makeFontAtlas
+{
+    if (_isDynamicGlyphCollection) {
+        CCFontAtlas* atlas = [[CCFontAtlas alloc] initWithFont:self];
+        return atlas;
+    } else {
+        return nil;
+//    
+//        FontDefinitionTTF *def = FontDefinitionTTF::create(this);
+//        
+//        if (!def)
+//            return nullptr;
+//        
+//        FontAtlas *atlas = def->createFontAtlas();
+//        
+//        return atlas;
+    }
 }
 
 - (CGFloat) advanceForChar:(unichar)theChar

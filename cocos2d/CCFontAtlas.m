@@ -11,6 +11,10 @@
 #import "CCFont.h"
 #import "CCFontCoreGraphics.h"
 
+@implementation CCFontLetterDefinition
+
+@end
+
 @interface CCFontAtlas ()
 - (BOOL) renderCharacter:(unichar)theChar atX:(NSInteger)x atY:(NSInteger)y destination:(unsigned char*)destMemory destinationSize:(NSUInteger)destSize;
 @end
@@ -38,26 +42,37 @@
         // TODO!!!
         _atlasTextures = [[NSMutableDictionary alloc] initWithCapacity:1];
         _fontLetterDefinitions = [[NSMutableDictionary alloc] initWithCapacity:80];
+        
+        if ([_font isKindOfClass:[CCFontCoreGraphics class]]) {
+            CCFontCoreGraphics* fontCG = (CCFontCoreGraphics*)_font;
+            if ([fontCG isDynamicGlyphCollection]) {
+                _currentPageLineHeight = [_font fontMaxHeight];
+                _commonLineHeight = _currentPageLineHeight * 0.8f;
+                CCTexture* tex = [CCTexture alloc];
+                _currentPage = 0;
+                _currentPageOrigX = 0;
+                _currentPageOrigY = 0;
+                _letterPadding = 5;
+                _currentPageDataSize = (1024 * 1024 * 4);
+                
+                _currentPageData = malloc(_currentPageDataSize);
+                memset(_currentPageData, 0, _currentPageDataSize);
+                [self addTexture:tex atSlot:0];
+            }
+        }
     }
     return self;
 }
 
-// NSValue is probably not good solution
-// TODO: substitute with something faster
-- (void) addFontLetterDefinition:(const CCFontLetterDefinition*)letterDefinition
+
+- (void) addFontLetterDefinition:(CCFontLetterDefinition*)letterDefinition
 {
-    NSValue* v = [NSValue valueWithBytes:letterDefinition objCType:@encode(CCFontLetterDefinition)];
-    [_fontLetterDefinitions setObject:v forKey:@(letterDefinition->letteCharUTF16)];
+    [_fontLetterDefinitions setObject:letterDefinition forKey:@(letterDefinition.letteCharUTF16)];
 }
 
-- (BOOL) getFontLetterDefinition:(CCFontLetterDefinition*)letterDefinition forCharacter:(unichar)theChar
+- (CCFontLetterDefinition*) fontLetterDefinitionForCharacter:(unichar)theChar
 {
-    NSValue* value = [_fontLetterDefinitions objectForKey:@(theChar)];
-    if (value) {
-        [value getValue:letterDefinition];
-        return YES;
-    }
-    return NO;
+    return [_fontLetterDefinitions objectForKey:@(theChar)];
 }
 
 - (BOOL) prepareLetterDefinitions:(NSString*)letters
@@ -76,7 +91,7 @@
             
             CGRect tempRect;
 
-            CCFontLetterDefinition tempDef;
+            CCFontLetterDefinition* tempDef = [CCFontLetterDefinition new];
             tempDef.offsetX = 0;
             tempDef.anchorX = 0.0f;
             tempDef.anchorY = 1.0f;
@@ -100,8 +115,7 @@
                 tempDef.commonLineHeight = _currentPageLineHeight;
             }
             
-            NSValue* v = [NSValue valueWithBytes:&tempDef objCType:@encode(CCFontLetterDefinition)];
-            [fontDefs addObject:v];
+            [fontDefs addObject:tempDef];
         }
         
     }
@@ -111,10 +125,7 @@
     CGFloat glyphWidth;
     for (NSUInteger i = 0; i < newLetterCount; ++i)
     {
-        CCFontLetterDefinition letterDef;
-        NSValue* value = [fontDefs objectAtIndex:i];
-        [value getValue:&letterDef];
-            
+        CCFontLetterDefinition* letterDef = [fontDefs objectAtIndex:i];
         
         if (letterDef.validDefinition)
         {
@@ -157,13 +168,12 @@
             letterDef.U      =    letterDef.U      / scaleFactor;
             letterDef.V      =    letterDef.V      / scaleFactor;
             
-//            NSValue* v = [NSValue valueWithBytes:&letterDef objCType:@encode(CCFontLetterDefinition)];
-//            [fontDefs replaceObjectAtIndex:i withObject:v];
+
         }
         else
             glyphWidth = 0;
         
-        [self addFontLetterDefinition:&letterDef];
+        [self addFontLetterDefinition:letterDef];
         
         _currentPageOrigX += glyphWidth;
     }

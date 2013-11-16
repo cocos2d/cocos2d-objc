@@ -46,7 +46,7 @@
 
 - (CCFontAtlas*) fontAtlasTTFWithFilePath:(NSString*)fontPath size:(CGFloat)size glyphs:(CCGlyphCollection)glyphs customGlyphs:(NSString*)customGlyphs
 {
-    NSString* atlasName = [self generateFontNameWithFilePath:fontPath size:size andGlypsCollection:customGlyphs];
+    NSString* atlasName = [self generateFontNameWithFilePath:fontPath size:size andGlypsCollection:glyphs];
     
     CCFontAtlas* atlas = [_atlasMap objectForKey:atlasName];
     

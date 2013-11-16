@@ -21,10 +21,6 @@
     NSString* _customGlyphs;
 }
 
-+ (instancetype) fontWithTTFFilePath:(NSString*)fontPath size:(CGFloat)fontSize glyphs:(CCGlyphCollection)glyphs customGlyphs:(NSString*)customGlyphs
-{
-    return [CCFontCoreGraphics fontWithTTFFilePath:fontPath size:fontSize glyphs:glyphs customGlyphs:customGlyphs];
-}
 
 - (CCFontAtlas*) makeFontAtlas
 {
@@ -32,7 +28,7 @@
     return nil;
 }
 
-- (CGSize*) getAdvancesForText:(NSString*)text outLength:(int*)length
+- (CGSize*) getAdvancesForText:(NSString*)text
 {
     NSAssert(NO, @"Override me!");
     return nil;
