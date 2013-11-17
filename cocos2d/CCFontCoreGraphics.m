@@ -81,7 +81,13 @@
         return NO;
     }
     
+    CGSize translation;
+    
+    CTFontGetVerticalTranslationsForGlyphs(font_, &glyph, &translation, 1);
     CTFontGetBoundingRectsForGlyphs(font_, kCTFontOrientationDefault, &glyph, outRect, 1);
+    
+    outRect->origin.x = 0;
+    outRect->origin.y = translation.height;
     
     return YES;
 }
@@ -96,8 +102,8 @@
     
     CGRect bounds = CTFontGetBoundingRectsForGlyphs(font_, kCTFontOrientationDefault, &glyph, NULL, 1);
     
-    NSUInteger w = ceilf(bounds.size.width + bounds.origin.x) ;
-    NSUInteger h = ceilf(bounds.size.height + bounds.origin.y);
+    NSUInteger w = ceilf(bounds.size.width);
+    NSUInteger h = ceilf(bounds.size.height);
     
     unsigned char* data = malloc(w * h);
     memset(data, 0, w * h);
@@ -118,8 +124,8 @@
 
     UIGraphicsPushContext(context);
     
-    
-    CTFontDrawGlyphs(font_, &glyph, &CGPointZero, 1, context);
+    CGPoint p = ccp(-bounds.origin.x, -bounds.origin.y);
+    CTFontDrawGlyphs(font_, &glyph, &p, 1, context);
     
     UIGraphicsPopContext();
     
