@@ -14,4 +14,6 @@
 
 @interface CCLabel : CCSpriteBatchNode <CCLabelProtocol, CCRGBAProtocol, CCLabelTextFormatProtocol>
 - (instancetype) initWithString:(NSString*)label ttfFontName:(NSString*)fontName fontSize:(CGFloat)fontSize lineSize:(CGFloat)lineSize alignment:(CCTextAlignment)alignment glyphs:(CCGlyphCollection)glyphs customGlyphs:(NSString*)customGlyphs;
+
+- (instancetype) initWithFontAtlas:(CCFontAtlas*)atlas alignment:(CCTextAlignment)alignment;
 @end

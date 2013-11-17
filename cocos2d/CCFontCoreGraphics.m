@@ -131,6 +131,30 @@
     return data;
 }
 
+- (CGFloat) fontMaxHeight
+{
+    return CTFontGetBoundingBox(font_).size.height;
+}
+
+- (CGSize*) getAdvancesForText:(NSString *)text
+{
+    CGSize* advances = calloc([text length], sizeof(CGSize));
+    CGGlyph* glyphs = calloc([text length], sizeof(CGGlyph));
+    unichar* chars = calloc([text length], sizeof(unichar));
+    [text getCharacters:chars];
+    
+    if (!CTFontGetGlyphsForCharacters(font_, chars, glyphs, [text length])) {
+        NSAssert(NO, @"Cannot get glyphs for characters");
+        return NULL;
+    }
+
+    CTFontGetAdvancesForGlyphs(font_, kCTFontDefaultOrientation, glyphs, advances, [text length]);
+    free(glyphs);
+    free(chars);
+    
+    return (CGSize*)[[NSData dataWithBytesNoCopy:advances length:[text length] * sizeof(CGSize)] bytes];
+}
+
 - (void) dealloc
 {
     CFRelease(font_);

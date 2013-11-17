@@ -20,6 +20,10 @@
 @property (nonatomic, assign) BOOL visible;
 @end
 
+@implementation CCLetterInfo
+
+@end
+
 @interface CCLabel ()
 - (void) alignText;
 @end
@@ -58,6 +62,7 @@
 - (instancetype) initWithFontAtlas:(CCFontAtlas*)atlas alignment:(CCTextAlignment)alignment
 {
     if (self = [super init]) {
+        _lettersInfo = [[NSMutableArray alloc] initWithCapacity:30];
         _fontAtlas = atlas;
         _alignment = alignment;
         _lineBreakWithoutSpaces = NO;
@@ -207,30 +212,31 @@
     
     [_reusedLetter setBatchNode:nil];
    
-//    int vaildIndex = 0;
-//    Sprite* child = nullptr;
-//    Rect uvRect;
-//    for (int ctr = 0; ctr < strLen; ++ctr)
-//    {
-//        if (_lettersInfo[ctr].def.validDefinition)
-//        {
+    int vaildIndex = 0;
+   // CCSprite* child = nil;
+   // CGRect uvRect;
+    for (int ctr = 0; ctr < [_currentUTF16String length]; ++ctr)
+    {
+        CCLetterInfo* info = [_lettersInfo objectAtIndex:ctr];
+        if (info.definition.validDefinition)
+        {
 //            child = static_cast<Sprite*>( this->getChildByTag(ctr) );
 //            if (child)
 //            {
-//                uvRect.size.height = _lettersInfo[ctr].def.height;
-//                uvRect.size.width  = _lettersInfo[ctr].def.width;
-//                uvRect.origin.x    = _lettersInfo[ctr].def.U;
-//                uvRect.origin.y    = _lettersInfo[ctr].def.V;
+//                uvRect.size.height = info.definition.height;
+//                uvRect.size.width  = info.definition.width;
+//                uvRect.origin.x    = info.definition.U;
+//                uvRect.origin.y    = info.definition.V;
 //                
-//                child->setTexture(&_fontAtlas->getTexture(_lettersInfo[ctr].def.textureID));
-//                child->setTextureRect(uvRect);
+//                [child setTexture:[_fontAtlas textureAtSlot:info.definition.textureID]];
+//                [child setTextureRect:uvRect];
 //            }
-//            
-//            updateSpriteWithLetterDefinition(_reusedLetter,_lettersInfo[ctr].def,&_fontAtlas->getTexture(_lettersInfo[ctr].def.textureID));
-//            _reusedLetter->setPosition(_lettersInfo[ctr].position);
-//            insertQuadFromSprite(_reusedLetter,vaildIndex++);
-//        }
-//    }
+            
+            [self updateSprite:_reusedLetter withLetterDefinition:info.definition texture:[_fontAtlas textureAtSlot:info.definition.textureID]];
+            [_reusedLetter setPosition:info.position];
+            [self insertQuadFromSprite:_reusedLetter quadIndex:vaildIndex++];
+        }
+    }
 
 }
 
