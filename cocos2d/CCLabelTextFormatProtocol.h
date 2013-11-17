@@ -10,6 +10,8 @@
 
 #import "CCFontAtlas.h"
 
+
+
 //
 //
 //struct LetterInfo
@@ -25,7 +27,7 @@
 #pragma mark - CCLabelTextFormatProtocol
 @class CCSprite;
 @protocol CCLabelTextFormatProtocol <NSObject>
-- (BOOL) recordLetterInfo:(CGPoint)point character:(unsigned short int)theChar spriteIndex:(NSInteger)spriteIndex;
+- (BOOL) recordLetterInfo:(CGPoint)point character:(unichar)theChar spriteIndex:(NSInteger)spriteIndex;
 - (BOOL) recordPlaceholderInfo:(NSInteger)spriteIndex;
 - (NSArray*) lettersInfo;
 - (CGFloat) letterPosXLeft:(NSInteger)idx;
@@ -34,25 +36,25 @@
 - (CCSprite*) letter:(NSInteger)ID;
 
 // font related stuff
-- (NSInteger) commonLineHeight;
-- (NSInteger) kerningForCharsPairWithFirst:(unsigned short)first andSecond:(unsigned short)second;
-- (NSInteger) xOffsetForChar:(unsigned short)c;
-- (NSInteger) yOffsetForChar:(unsigned short)c;
-- (NSInteger) advanceForChar:(unsigned short)c hintPositionInString:(NSInteger)hintPos;
-- (CGRect)    rectForChar:(unsigned short)c;
+- (CGFloat) commonLineHeight;
+- (CGFloat) kerningForCharsPairWithFirst:(unichar)first andSecond:(unichar)second;
+- (CGFloat) xOffsetForChar:(unichar)c;
+- (CGFloat) yOffsetForChar:(unichar)c;
+- (CGFloat) advanceForChar:(unichar)c hintPositionInString:(NSInteger)hintPos;
+- (CGRect)    rectForChar:(unichar)c;
 
 // string related stuff
 - (NSInteger) stringNumLines;
 - (NSInteger) stringLength;
-- (unsigned short) charAtStringPosition:(NSInteger)position;
-- (unsigned short*) UTF8String;
-- (void) assignNewUTF8String:(unsigned short*)newString;
+- (unichar) charAtStringPosition:(NSInteger)position;
+- (const char*) UTF8String;
+- (void) assignNewUTF8String:(NSString*)newString;
 
-@property (assign, readonly) CCTextAlignment textAlignment;
+@property (nonatomic, assign, readonly) CCTextAlignment textAlignment;
 - (CCTextAlignment) textAlignment;
 // label related stuff
-@property (assign, readonly) CGFloat maxLineWidth;
-@property (assign, readonly) BOOL breakLineWithoutSpace;
+@property (nonatomic, assign, readonly) CGFloat maxLineWidth;
+@property (nonatomic, assign, readonly) BOOL breakLineWithoutSpace;
 
-@property (assign, readwrite) CGSize labelContentSize;
+@property (nonatomic, assign, readwrite) CGSize labelContentSize;
 @end

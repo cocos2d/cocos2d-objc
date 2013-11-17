@@ -18,13 +18,13 @@
 - (CCFontAtlas*) makeFontAtlas;
 - (CGSize*) getAdvancesForText:(NSString*)text;
 
-@property (copy, readonly) NSString* currentGlyphCollection;
-@property (assign, readonly) CGFloat letterPadding;
+@property (nonatomic, copy, readonly) NSString* currentGlyphCollection;
+@property (nonatomic, assign, readonly) CGFloat letterPadding;
 
 - (unsigned char*) glyphBitmapWithCharacter:(unichar)theChar outWidth:(NSUInteger*)width outHeight:(NSUInteger*)height;
 - (NSArray*) glyphDefintionsForText:(NSString*)text;
 
-@property (assign, readonly) CGFloat fontMaxHeight;
+@property (nonatomic, assign, readonly) CGFloat fontMaxHeight;
 
 - (CGRect) rectForCharacter:(unichar)theChar;
 

@@ -96,8 +96,8 @@
     
     CGRect bounds = CTFontGetBoundingRectsForGlyphs(font_, kCTFontOrientationDefault, &glyph, NULL, 1);
     
-    NSUInteger w = ceilf(bounds.size.width);
-    NSUInteger h = ceilf(bounds.size.height);
+    NSUInteger w = ceilf(bounds.size.width + bounds.origin.x) ;
+    NSUInteger h = ceilf(bounds.size.height + bounds.origin.y);
     
     unsigned char* data = malloc(w * h);
     memset(data, 0, w * h);
@@ -109,8 +109,7 @@
     CGContextRef context = CGBitmapContextCreate(data, w, h, 8, w, colorSpace, kCGImageAlphaNone);
     CGColorSpaceRelease(colorSpace);
     
-    if (!context)
-    {
+    if (!context) {
         free(data);
         return NULL;
     }
@@ -120,13 +119,7 @@
     UIGraphicsPushContext(context);
     
     
-    CGPoint p = {0, 0};
-    
-    CTFontDrawGlyphs(font_, &glyph, &p, 1, context);
-   // [str drawInRect:CGRectMake(0, 0, s.width, s.height) withFont:f];
-    CGContextShowGlyphsAtPoint(context, 0, 0, &glyph, 1);
-    
-    //CGContextShowGlyphs(context, &glyph, 1);
+    CTFontDrawGlyphs(font_, &glyph, &CGPointZero, 1, context);
     
     UIGraphicsPopContext();
     

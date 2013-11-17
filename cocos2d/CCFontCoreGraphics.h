@@ -14,5 +14,5 @@
 
 - (BOOL) getBBOXForCharacter:(unichar)theChar rect:(CGRect*)outRect;
 
-@property (assign, readonly) BOOL isDynamicGlyphCollection;
+@property (nonatomic, assign, readonly) BOOL isDynamicGlyphCollection;
 @end

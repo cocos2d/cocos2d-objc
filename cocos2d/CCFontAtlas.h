@@ -11,18 +11,18 @@
 #import "cocos2d.h"
 
 @interface CCFontLetterDefinition : NSObject
-@property (assign) unichar letteCharUTF16;
-@property (assign) float U;
-@property (assign) float V;
-@property (assign) float width;
-@property (assign) float height;
-@property (assign) float offsetX;
-@property (assign) float offsetY;
-@property (assign) int textureID;
-@property (assign) float commonLineHeight;
-@property (assign) float anchorX;
-@property (assign) float anchorY;
-@property (assign) BOOL validDefinition;
+@property (nonatomic, assign) unichar letteCharUTF16;
+@property (nonatomic, assign) float U;
+@property (nonatomic, assign) float V;
+@property (nonatomic, assign) float width;
+@property (nonatomic, assign) float height;
+@property (nonatomic, assign) float offsetX;
+@property (nonatomic, assign) float offsetY;
+@property (nonatomic, assign) int textureID;
+@property (nonatomic, assign) float commonLineHeight;
+@property (nonatomic, assign) float anchorX;
+@property (nonatomic, assign) float anchorY;
+@property (nonatomic, assign) BOOL validDefinition;
 @end
 
 
@@ -38,9 +38,9 @@
 - (void) addTexture:(CCTexture*)texture atSlot:(NSInteger)slot;
 - (CCTexture*) textureAtSlot:(NSInteger)slot;
 
-@property (assign) CGFloat commonLineHeight;
+@property (nonatomic, assign) CGFloat commonLineHeight;
 
 
-@property (retain, readonly) CCFont* font;
-@property (retain, readonly) CCTexture* texture;
+@property (nonatomic, retain, readonly) CCFont* font;
+@property (nonatomic, retain, readonly) CCTexture* texture;
 @end
