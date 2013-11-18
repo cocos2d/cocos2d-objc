@@ -470,25 +470,20 @@ int compareInts (const void * a, const void * b)
 
 -(NSUInteger) atlasIndexForExistantZ:(NSUInteger)z
 {
-#warning Needs to be improved (old solution below)
-    NSUInteger idx = 0;
-    for (NSNumber* zValue in _atlasIndexArray)
-    {
-        if ([zValue intValue] == z) return idx;
-        idx++;
-    }
-    /*
-	NSInteger key = z;
-	NSInteger *item = bsearch((void*)&key, (void*)&_atlasIndexArray->arr[0], _atlasIndexArray->num, sizeof(void*), compareInts);
-
-	NSAssert( item, @"TMX atlas index not found. Shall not happen");
-
-	NSUInteger index = ((NSInteger)item - (NSInteger)_atlasIndexArray->arr) / sizeof(void*);
-	return index;
-     */
+    NSUInteger indexResult = [_atlasIndexArray
+                              indexOfObject:[NSNumber numberWithInt:z]
+                              inSortedRange:NSMakeRange(0, [_atlasIndexArray count])
+                              options:0
+                              usingComparator:^(id a, id b) {
+                                  if ([a intValue] < [b intValue]) {
+                                      return (NSComparisonResult)NSOrderedAscending;
+                                  } else if([a intValue] > [b intValue]) {
+                                      return (NSComparisonResult)NSOrderedDescending;
+                                  }
+                                  return (NSComparisonResult)NSOrderedSame;
+                              }];
     
-    // Shouldn't happen
-    return 0;
+    return indexResult;
 }
 
 -(NSUInteger)atlasIndexForNewZ:(NSUInteger)z
