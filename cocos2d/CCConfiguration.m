@@ -134,14 +134,14 @@ static char * glExtensions;
 	
 	if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 	{
-		ret = (CC_CONTENT_SCALE_FACTOR() == 2) ? CCDeviceiPadRetinaDisplay : CCDeviceiPad;
+		ret = ([UIScreen mainScreen].scale == 2) ? CCDeviceiPadRetinaDisplay : CCDeviceiPad;
 	}
 	else if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone )
 	{
 		// From http://stackoverflow.com/a/12535566
 		BOOL isiPhone5 = CGSizeEqualToSize([[UIScreen mainScreen] preferredMode].size,CGSizeMake(640, 1136));
 		
-		if( CC_CONTENT_SCALE_FACTOR() == 2 ) {
+		if( [UIScreen mainScreen].scale == 2 ) {
 			ret = isiPhone5 ? CCDeviceiPhone5RetinaDisplay : CCDeviceiPhoneRetinaDisplay;
 		} else
 			ret = isiPhone5 ? CCDeviceiPhone5 : CCDeviceiPhone;

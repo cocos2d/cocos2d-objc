@@ -465,7 +465,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 #ifdef __CC_PLATFORM_IOS
 	// iPad ?
 	if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
-		if( CC_CONTENT_SCALE_FACTOR() == 2 )
+		if( [UIScreen mainScreen].scale == 2 )
 			[tex setResolutionType:CCResolutionTypeiPadRetinaDisplay];
 		else
 			[tex setResolutionType:CCResolutionTypeiPad];
@@ -473,7 +473,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 	// iPhone ?
 	else
 	{
-		if( CC_CONTENT_SCALE_FACTOR() == 2 )
+		if( [UIScreen mainScreen].scale == 2 )
 			[tex setResolutionType:CCResolutionTypeiPhoneRetinaDisplay];
 		else
 			[tex setResolutionType:CCResolutionTypeiPhone];
@@ -818,7 +818,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     }
     
     if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
-		if( CC_CONTENT_SCALE_FACTOR() == 2 )
+		if( [UIScreen mainScreen].scale == 2 )
 			[tex setResolutionType:CCResolutionTypeiPadRetinaDisplay];
 		else
 			[tex setResolutionType:CCResolutionTypeiPad];
@@ -826,7 +826,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 	// iPhone ?
 	else
 	{
-		if( CC_CONTENT_SCALE_FACTOR() == 2 )
+		if( [UIScreen mainScreen].scale == 2 )
 			[tex setResolutionType:CCResolutionTypeiPhoneRetinaDisplay];
 		else
 			[tex setResolutionType:CCResolutionTypeiPhone];
