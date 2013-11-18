@@ -16,6 +16,7 @@
 
 @interface CCFont : NSObject
 - (CCFontAtlas*) makeFontAtlas;
+
 - (CGSize*) getAdvancesForText:(NSString*)text;
 
 @property (nonatomic, copy, readonly) NSString* currentGlyphCollection;

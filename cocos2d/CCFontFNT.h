@@ -9,4 +9,6 @@
 #import "CCFont.h"
 
 @interface CCFontFNT : CCFont
+- (instancetype) initWithFNTFilePath:(NSString*)fntFilePath;
++ (instancetype) fontWithFNTFilePath:(NSString*)fntFilePath;
 @end

@@ -9,6 +9,7 @@
 #import "CCFontAtlasFactory.h"
 
 #import "CCFont.h"
+#import "CCFontFNT.h"
 
 @implementation CCFontAtlasFactory
 
@@ -41,6 +42,17 @@
     CCFont* font = [CCFontCoreGraphics fontWithFontName:fontFilePath size:fontSize glyphs:glyphs customGlyphs:customGlyphs];
     if (!font) {
         NSAssert1(NO, @"Cannot load font `%@`", fontFilePath);
+        return nil;
+    }
+    return [font makeFontAtlas];
+}
+
+
+- (CCFontAtlas*) atlasFromFNT:(NSString*)fntFilePath
+{
+    CCFont* font = [CCFontFNT fontWithFNTFilePath:fntFilePath];
+    if (!font) {
+        NSAssert1(NO, @"Cannot load font `%@`", fntFilePath);
         return nil;
     }
     return [font makeFontAtlas];

@@ -39,19 +39,34 @@
     return self;
 }
 
-- (CCFontAtlas*) fontAtlasTTFWithFilePath:(NSString*)fontPath size:(CGFloat)size glyphs:(CCGlyphCollection)glyphs
+- (CCFontAtlas*) fontAtlasTTFWithName:(NSString*)fontName size:(CGFloat)size glyphs:(CCGlyphCollection)glyphs
 {
-    return [self fontAtlasTTFWithFilePath:fontPath size:size glyphs:glyphs customGlyphs:nil];
+    return [self fontAtlasTTFWithName:fontName size:size glyphs:glyphs customGlyphs:nil];
 }
 
-- (CCFontAtlas*) fontAtlasTTFWithFilePath:(NSString*)fontPath size:(CGFloat)size glyphs:(CCGlyphCollection)glyphs customGlyphs:(NSString*)customGlyphs
+- (CCFontAtlas*) fontAtlasTTFWithName:(NSString*)fontName size:(CGFloat)size glyphs:(CCGlyphCollection)glyphs customGlyphs:(NSString*)customGlyphs
 {
-    NSString* atlasName = [self generateFontNameWithFilePath:fontPath size:size andGlypsCollection:glyphs];
+    NSString* atlasName = [self generateFontNameWithName:fontName size:size andGlypsCollection:glyphs];
     
     CCFontAtlas* atlas = [_atlasMap objectForKey:atlasName];
     
     if (atlas == nil) {
-        atlas = [[CCFontAtlasFactory sharedFontAtlasFactory] atlasFromTTF:fontPath size:size glyphs:glyphs customGlyphs:customGlyphs];
+        atlas = [[CCFontAtlasFactory sharedFontAtlasFactory] atlasFromTTF:fontName size:size glyphs:glyphs customGlyphs:customGlyphs];
+        if (atlas != nil)
+            [_atlasMap setObject:atlas forKey:atlasName];
+    }
+    
+    return atlas;
+}
+
+
+- (CCFontAtlas*) fontAtlasFNTWithFilePath:(NSString*)filePath
+{
+    NSString* atlasName = [self generateFontNameWithName:filePath size:0.0f andGlypsCollection:CCGlyphCollectionCustom];
+    
+    CCFontAtlas* atlas = [_atlasMap objectForKey:atlasName];
+    if (!atlas) {
+        atlas = [[CCFontAtlasFactory sharedFontAtlasFactory] atlasFromFNT:filePath];
         if (atlas != nil)
             [_atlasMap setObject:atlas forKey:atlasName];
     }
@@ -79,7 +94,7 @@
 
 #pragma mark - Helpers
 
-- (NSString*) generateFontNameWithFilePath:(NSString*)fontPath size:(CGFloat)size andGlypsCollection:(CCGlyphCollection)theGlyphs
+- (NSString*) generateFontNameWithName:(NSString*)fontPath size:(CGFloat)size andGlypsCollection:(CCGlyphCollection)theGlyphs
 {
     return [NSString stringWithFormat:@"%@%5.1f%u", fontPath, size, theGlyphs];
 }

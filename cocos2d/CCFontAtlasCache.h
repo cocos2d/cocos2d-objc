@@ -20,9 +20,9 @@
 + (instancetype) sharedFontAtlasCache;
 
 
-- (CCFontAtlas*) fontAtlasTTFWithFilePath:(NSString*)fontPath size:(CGFloat)size glyphs:(CCGlyphCollection)glyphs;
-- (CCFontAtlas*) fontAtlasTTFWithFilePath:(NSString*)fontPath size:(CGFloat)size glyphs:(CCGlyphCollection)glyphs customGlyphs:(NSString*)customGlyphs;
-
+- (CCFontAtlas*) fontAtlasTTFWithName:(NSString*)fontPath size:(CGFloat)size glyphs:(CCGlyphCollection)glyphs;
+- (CCFontAtlas*) fontAtlasTTFWithName:(NSString*)fontPath size:(CGFloat)size glyphs:(CCGlyphCollection)glyphs customGlyphs:(NSString*)customGlyphs;
+- (CCFontAtlas*) fontAtlasFNTWithFilePath:(NSString*)filePath;
 - (BOOL) releaseFontAtlas:(CCFontAtlas*)atlas;
 
 @end

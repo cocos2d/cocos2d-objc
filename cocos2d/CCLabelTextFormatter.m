@@ -7,6 +7,7 @@
 //
 
 #import "CCLabelTextFormatter.h"
+#import "CCLetterInfo.h"
 
 @implementation CCLabelTextFormatter
 + (BOOL) multilineText:(id<CCLabelTextFormatProtocol>)label
@@ -197,7 +198,72 @@
 
 + (BOOL) alignText:(id<CCLabelTextFormatProtocol>)label
 {
-    return NO;
+    NSUInteger i = 0;
+    
+    NSUInteger lineNumber = 0;
+    NSUInteger strLen =  [label stringLength];
+    
+    NSMutableString* lastLine = [NSMutableString string];
+    NSArray* lettersInfo = [label lettersInfo];
+    for (int ctr = 0; ctr < strLen; ++ctr) {
+        unichar currentChar = [label charAtStringPosition:ctr];
+        
+        if (currentChar == '\n') {
+            CGFloat lineWidth = 0.0f;
+            NSUInteger lineLength = [lastLine length];
+            
+            // if last line is empty we must just increase lineNumber and work with next line
+            if (lineLength == 0) {
+                lineNumber++;
+                continue;
+            }
+            int index = i + lineLength - 1 + lineNumber;
+            if (index < 0) continue;
+            
+            if(currentChar == 0)
+                continue;
+            
+            CCLetterInfo* info = [lettersInfo objectAtIndex:index];
+            if (!info.definition.validDefinition)
+                continue;
+            lineWidth = info.position.x + info.contentSize.width / 2.0f;
+            
+            CGFloat shift = 0;
+            switch ([label textAlignment]) {
+                case CCTextAlignmentCenter:
+                    shift = [label labelContentSize].width / 2.0f - lineWidth / 2.0f;
+                    break;
+                case CCTextAlignmentRight:
+                    shift = [label labelContentSize].width - lineWidth;
+                    break;
+                default:
+                    break;
+            }
+            
+            if (shift != 0) {
+                for (unsigned j = 0; j < lineLength; ++j) {
+                    index = i + j + lineNumber;
+                    if (index < 0)
+                        continue;
+                    
+                    info = [lettersInfo objectAtIndex:index];
+                    if(info) {
+                        info.position = ccpAdd(info.position, ccp(shift, 0.0f));
+                    }
+                }
+            }
+            
+            i += lineLength;
+            ++lineNumber;
+            
+            [lastLine setString:@""];
+            continue;
+        }
+        
+        [lastLine appendFormat:@"%C", currentChar];
+    }
+    
+    return YES;
 }
 
 + (BOOL) makeStringSprites:(id<CCLabelTextFormatProtocol>)label

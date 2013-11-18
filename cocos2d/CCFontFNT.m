@@ -19,6 +19,12 @@
     CCBMFontConfiguration* _configuration;
 }
 
+
++ (instancetype) fontWithFNTFilePath:(NSString*)fntFilePath
+{
+    return [[self alloc] initWithFNTFilePath:fntFilePath];
+}
+
 - (instancetype) initWithFNTFilePath:(NSString*)fntFilePath
 {
     if (self = [super init]) {

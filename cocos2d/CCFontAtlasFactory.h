@@ -17,4 +17,5 @@
 
 - (CCFontAtlas*) atlasFromTTF:(NSString*)fontFilePath size:(CGFloat)fontSize glyphs:(CCGlyphCollection)glyphs;
 - (CCFontAtlas*) atlasFromTTF:(NSString*)fontFilePath size:(CGFloat)fontSize glyphs:(CCGlyphCollection)glyphs customGlyphs:(NSString*)customGlyphs;
+- (CCFontAtlas*) atlasFromFNT:(NSString*)fntFilePath;
 @end

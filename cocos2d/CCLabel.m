@@ -11,18 +11,7 @@
 #import "CCLabelTextFormatter.h"
 #import "CCSprite_Private.h"
 #import "CCSpriteBatchNode_Private.h"
-
-
-@interface CCLetterInfo : NSObject
-@property (nonatomic, retain) CCFontLetterDefinition* definition;
-@property (nonatomic, assign) CGPoint position;
-@property (nonatomic, assign) CGSize contentSize;
-@property (nonatomic, assign) BOOL visible;
-@end
-
-@implementation CCLetterInfo
-
-@end
+#import "CCLetterInfo.h"
 
 @interface CCLabel ()
 - (void) alignText;
@@ -50,7 +39,7 @@
 @synthesize cascadeOpacityEnabled = _cascadeOpacityEnabled;
 @synthesize opacity = _realOpacity;
 @synthesize displayedOpacity = _displayedOpacity;
-
+@synthesize lettersInfo = _lettersInfo;
 
 - (instancetype) initWithString:(NSString*)label ttfFontName:(NSString*)fontName fontSize:(CGFloat)fontSize lineSize:(CGFloat)lineSize alignment:(CCTextAlignment)alignment glyphs:(CCGlyphCollection)glyphs customGlyphs:(NSString*)customGlyphs
 {

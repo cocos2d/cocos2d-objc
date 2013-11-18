@@ -29,7 +29,7 @@
 @protocol CCLabelTextFormatProtocol <NSObject>
 - (BOOL) recordLetterInfo:(CGPoint)point character:(unichar)theChar spriteIndex:(NSInteger)spriteIndex;
 - (BOOL) recordPlaceholderInfo:(NSInteger)spriteIndex;
-- (NSArray*) lettersInfo;
+@property (nonatomic, retain, readonly) NSArray* lettersInfo;
 - (CGFloat) letterPosXLeft:(NSInteger)idx;
 - (CGFloat) letterPosXRight:(NSInteger)idx;
 // sprite related stuff
