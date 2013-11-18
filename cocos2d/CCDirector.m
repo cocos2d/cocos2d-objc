@@ -316,7 +316,12 @@ static CCDirector *_sharedDirector = nil;
 		__view = view;
 
 		// set size
-		_winSizeInPixels = _winSizeInPoints = CCNSSizeToCGSize( [__view bounds].size );
+		CGSize size = CCNSSizeToCGSize(__view.bounds.size);
+		CGFloat scale = __view.layer.contentsScale;
+		
+		_winSizeInPixels = CGSizeMake(size.width*scale, size.height*scale);
+		_winSizeInPoints = size;
+		__ccContentScaleFactor = scale;
 
 		// it could be nil
 		if( view ) {

@@ -93,10 +93,6 @@ CGFloat	__ccContentScaleFactor = 1;
 #pragma mark -
 #pragma mark CCDirectorIOS
 
-@interface CCDirectorIOS ()
--(void) updateContentScaleFactor;
-@end
-
 @implementation CCDirectorIOS
 
 - (id) init
@@ -104,7 +100,6 @@ CGFloat	__ccContentScaleFactor = 1;
 	if( (self=[super init]) ) {
 
 		__ccContentScaleFactor = 1;
-		_isContentScaleSupported = NO;
 
         
         
@@ -192,7 +187,7 @@ CGFloat	__ccContentScaleFactor = 1;
 			kmGLLoadIdentity();
 
 			kmMat4 orthoMatrix;
-			kmMat4OrthographicProjection(&orthoMatrix, 0, size.width / CC_CONTENT_SCALE_FACTOR(), 0, size.height / CC_CONTENT_SCALE_FACTOR(), -1024, 1024 );
+			kmMat4OrthographicProjection(&orthoMatrix, 0, sizePoint.width, 0, sizePoint.height, -1024, 1024 );
 			kmGLMultMatrix( &orthoMatrix );
 
 			kmGLMatrixMode(KM_GL_MODELVIEW);
@@ -264,58 +259,22 @@ CGFloat	__ccContentScaleFactor = 1;
 	if( scaleFactor != __ccContentScaleFactor ) {
 
 		__ccContentScaleFactor = scaleFactor;
-		_winSizeInPixels = CGSizeMake( _winSizeInPoints.width * scaleFactor, _winSizeInPoints.height * scaleFactor );
-
-		if( __view )
-			[self updateContentScaleFactor];
+		_winSizeInPoints = CGSizeMake( _winSizeInPixels.width / scaleFactor, _winSizeInPixels.height / scaleFactor );
 
 		// update projection
 		[self setProjection:_projection];
+		
+		[[CCFileUtils sharedFileUtils] buildSearchResolutionsOrder];
+		[self createStatsLabel];
 	}
-}
-
--(void) updateContentScaleFactor
-{
-	NSAssert( [__view respondsToSelector:@selector(setContentScaleFactor:)], @"cocos2d v2.0+ runs on iOS 4 or later");
-
-	[__view setContentScaleFactor: __ccContentScaleFactor];
-	_isContentScaleSupported = YES;
-}
-
--(BOOL) enableRetinaDisplay:(BOOL)enabled
-{
-	// Already enabled ?
-	if( enabled && __ccContentScaleFactor == 2 )
-		return YES;
-
-	// Already disabled
-	if( ! enabled && __ccContentScaleFactor == 1 )
-		return NO;
-
-	// setContentScaleFactor is not supported
-	if (! [__view respondsToSelector:@selector(setContentScaleFactor:)])
-		return NO;
-
-	// SD device
-	if ([[UIScreen mainScreen] scale] == 1.0)
-		return NO;
-
-	float newScale = enabled ? 2 : 1;
-	[self setContentScaleFactor:newScale];
-
-	// Load Hi-Res FPS label
-	[[CCFileUtils sharedFileUtils] buildSearchResolutionsOrder];
-	[self createStatsLabel];
-
-	return YES;
 }
 
 // overriden, don't call super
 -(void) reshapeProjection:(CGSize)size
 {
-	_winSizeInPoints = [__view bounds].size;
-	_winSizeInPixels = CGSizeMake(_winSizeInPoints.width * __ccContentScaleFactor, _winSizeInPoints.height *__ccContentScaleFactor);
-
+	_winSizeInPixels = size;
+	_winSizeInPoints = CGSizeMake(size.width/__ccContentScaleFactor, size.height/__ccContentScaleFactor);
+	
 	[self setProjection:_projection];
   
 	if( [_delegate respondsToSelector:@selector(directorDidReshapeProjection:)] )
@@ -394,11 +353,9 @@ GLToClipTransform(kmMat4 *transformOut)
 
 		if( view ) {
 			// set size
-			_winSizeInPixels = CGSizeMake(_winSizeInPoints.width * __ccContentScaleFactor, _winSizeInPoints.height *__ccContentScaleFactor);
-
-			if( __ccContentScaleFactor != 1 )
-				[self updateContentScaleFactor];
-
+			CGFloat scale = view.contentScaleFactor;
+			CGSize size = view.bounds.size;
+			_winSizeInPixels = CGSizeMake(size.width * scale, size.height * scale);
 		}
 	}
 }
