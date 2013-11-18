@@ -112,7 +112,7 @@
     *height = h;
     
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceGray();
-    CGContextRef context = CGBitmapContextCreate(data, w, h, 8, w, colorSpace, kCGImageAlphaNone);
+    CGContextRef context = CGBitmapContextCreate(data, w, h, 8, w, colorSpace, (CGBitmapInfo)kCGImageAlphaNone);
     CGColorSpaceRelease(colorSpace);
     
     if (!context) {
@@ -129,11 +129,11 @@
     
     UIGraphicsPopContext();
     
-    for (int j=0; j < h; ++j) {
-        for (int i=0; i < w; ++i)
-            putchar(" .:ioVM@"[data[j*w+i]>>5]);
-        putchar('\n');
-    }
+//    for (int j=0; j < h; ++j) {
+//        for (int i=0; i < w; ++i)
+//            putchar(" .:ioVM@"[data[j*w+i]>>5]);
+//        putchar('\n');
+//    }
     return data;
 }
 
@@ -158,7 +158,8 @@
     free(glyphs);
     free(chars);
     
-    return (CGSize*)[[NSData dataWithBytesNoCopy:advances length:[text length] * sizeof(CGSize)] bytes];
+    // receiver should free result
+    return advances;
 }
 
 - (void) dealloc

@@ -217,7 +217,7 @@
     
     CGSize tmpSize              = CGSizeZero;
     
-    int longestLine             = 0;
+    CGFloat longestLine             = 0;
     unsigned int totalHeight    = 0;
     
     
@@ -241,7 +241,7 @@
         charAdvance         = [label advanceForChar:c hintPositionInString:i];
         charRect            = [label rectForChar:c];
         
-        int kerningAmount   = [label kerningForCharsPairWithFirst:prev andSecond:c];
+        CGFloat kerningAmount   = [label kerningForCharsPairWithFirst:prev andSecond:c];
         
         if (c == '\n') {
             nextFontPositionX  = 0;

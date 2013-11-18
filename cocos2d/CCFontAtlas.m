@@ -11,7 +11,18 @@
 #import "CCFont.h"
 #import "CCFontCoreGraphics.h"
 
+#import "CCConfiguration.h"
+
 @implementation CCFontLetterDefinition
+- (BOOL) isEqual:(CCFontLetterDefinition*)object
+{
+    return [object letteCharUTF16] == self.letteCharUTF16;
+}
+
+- (NSUInteger) hash
+{
+    return self.letteCharUTF16;
+}
 
 @end
 
@@ -35,11 +46,16 @@
     float _letterPadding;
 }
 
++ (NSUInteger) textureSize
+{
+    return [[CCConfiguration sharedConfiguration] maxTextureSize] / 4;
+}
+
 - (instancetype) initWithFont:(CCFont*)font
 {
     if (self = [super init]) {
         _font = font;
-        // TODO!!!
+
         _atlasTextures = [[NSMutableDictionary alloc] initWithCapacity:1];
         _fontLetterDefinitions = [[NSMutableDictionary alloc] initWithCapacity:80];
         
@@ -53,7 +69,7 @@
                 _currentPageOrigX = 0;
                 _currentPageOrigY = 0;
                 _letterPadding = 5;
-                _currentPageDataSize = (1024 * 1024 * 4);
+                _currentPageDataSize = ([CCFontAtlas textureSize] * [CCFontAtlas textureSize] * 4);
                 
                 _currentPageData = malloc(_currentPageDataSize);
                 memset(_currentPageData, 0, _currentPageDataSize);
@@ -80,9 +96,11 @@
     if(_currentPageData == NULL)
         return NO;
     
+    NSUInteger textureSize = [CCFontAtlas textureSize];
+    
     CCFontCoreGraphics* fontCG = (CCFontCoreGraphics*)_font;
     
-    NSMutableArray* fontDefs = [NSMutableArray arrayWithCapacity:16];
+    NSMutableOrderedSet* fontDefs = [NSMutableOrderedSet orderedSetWithCapacity:16];
     for (int i = 0; i < [letters length]; i++) {
         unichar currentCharacter = [letters characterAtIndex:i];
         
@@ -132,14 +150,14 @@
             _currentPageOrigX += _letterPadding;
             glyphWidth = letterDef.width - _letterPadding;
             
-            if (_currentPageOrigX + glyphWidth > 1024)
+            if (_currentPageOrigX + glyphWidth > textureSize)
             {
+                _currentPageOrigX = 0;
                 _currentPageOrigY += _currentPageLineHeight;
-                if(_currentPageOrigY >= 1024)
+                if(_currentPageOrigY >= textureSize)
                 {
                     CCTexture* atlasTexture = [_atlasTextures objectForKey:@(_currentPage)];
-                    atlasTexture = [atlasTexture initWithData:_currentPageData pixelFormat:CCTexturePixelFormat_RGBA8888 pixelsWide:1024 pixelsHigh:1024 contentSize:CGSizeMake(1024, 1024)];
-//                    _atlasTextures[_currentPage]->initWithData(_currentPageData, _currentPageDataSize, Texture2D::PixelFormat::RGBA8888, 1024, 1024, Size(1024, 1024) );
+                    atlasTexture = [atlasTexture initWithData:_currentPageData pixelFormat:CCTexturePixelFormat_RGBA8888 pixelsWide:textureSize pixelsHigh:textureSize contentSize:CGSizeMake(textureSize, textureSize)];
                     _currentPageOrigX = 0;
                     _currentPageOrigY = 0;
                     
@@ -155,7 +173,7 @@
                 }
             }
             
-            [self renderCharacter:letterDef.letteCharUTF16 atX:_currentPageOrigX atY:_currentPageOrigY destination:_currentPageData destinationSize:1024];
+            [self renderCharacter:letterDef.letteCharUTF16 atX:_currentPageOrigX atY:_currentPageOrigY destination:_currentPageData destinationSize:textureSize];
             
             
             
@@ -167,7 +185,6 @@
             letterDef.height =    letterDef.height / scaleFactor;
             letterDef.U      =    letterDef.U      / scaleFactor;
             letterDef.V      =    letterDef.V      / scaleFactor;
-            
 
         }
         else
@@ -177,9 +194,11 @@
         
         _currentPageOrigX += glyphWidth;
     }
+    
+    
     if (newLetterCount > 0) {
         CCTexture* atlasTexture = [_atlasTextures objectForKey:@(_currentPage)];
-        atlasTexture = [atlasTexture initWithData:_currentPageData pixelFormat:CCTexturePixelFormat_RGBA8888 pixelsWide:1024 pixelsHigh:1024 contentSize:CGSizeMake(1024, 1024)];
+        atlasTexture = [atlasTexture initWithData:_currentPageData pixelFormat:CCTexturePixelFormat_RGBA8888 pixelsWide:textureSize pixelsHigh:textureSize contentSize:CGSizeMake(textureSize, textureSize)];
     }
     return YES;
 }

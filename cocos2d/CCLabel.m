@@ -184,6 +184,7 @@
     if (_textureAtlas)
         [_textureAtlas removeAllQuads];
 
+    
     [_fontAtlas prepareLetterDefinitions:_currentUTF16String];
     
     [CCLabelTextFormatter makeStringSprites:self];
@@ -303,7 +304,7 @@
         if (frame) {
             [spriteToUpdate setBatchNode:self];
             [spriteToUpdate setTexture:theTexture];
-            [spriteToUpdate setDisplayFrame:frame];
+            [spriteToUpdate setSpriteFrame:frame];
             [spriteToUpdate setAnchorPoint:ccp(theDefinition.anchorX, theDefinition.anchorY)];
         }
         

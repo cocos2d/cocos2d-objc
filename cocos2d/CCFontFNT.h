@@ -9,5 +9,4 @@
 #import "CCFont.h"
 
 @interface CCFontFNT : CCFont
-
 @end
