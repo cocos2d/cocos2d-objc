@@ -21,28 +21,25 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
+ *
  */
 
 #import "CCSpriteBatchNode.h"
 #import "Support/uthash.h"
 
 /**
- CCLabelBMFont is a subclass of CCSpriteBatchNode
+ CCLabelBMFont displays a bitmap font label. The label is loaded from a fnt-file
+ created with an external editor. Each character in the label is represented by a
+ CCSprite and can be accessed through the children property.
  
- *Features*
+ CCLabelBMFont has the flexibility of CCLabel, the speed of CCLabelAtlas and all the features of CCSprite.  If in doubt, use CCLabelBMFont instead of CCLabelAtlas / CCLabel.
  
- - Treats each character like a CCSprite.
- 
- *Limitations*
+ ### Notes
  
  - All inner characters are using an anchorPoint of (0.5f, 0.5f) and it is not recommend to change it
  because it might affect the rendering
  
- CCLabelBMFont implements the protocol CCLabelProtocol, CCRGBAProtocol.
- 
- CCLabelBMFont has the flexibility of CCLabel, the speed of CCLabelAtlas and all the features of CCSprite.  If in doubt, use CCLabelBMFont instead of CCLabelAtlas / CCLabel.
- 
- *Supported editors*
+ ### Supported editors
  
  - (Premium) http://www.71squared.com/glyphdesigner
  - (Premium) http://www.bmglyph.com/
