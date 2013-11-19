@@ -14,6 +14,7 @@
 
 #import "CCFontDefinition.h"
 #import "CCTextImage.h"
+#import "CCFont_Internal.h"
 
 @implementation CCFontCoreGraphics
 {
@@ -38,6 +39,8 @@
         _isDynamicGlyphCollection = glyphs == CCGlyphCollectionDynamic;
         fontName_ = fontName;
         fontSize_ = fontSize;
+        
+        [self setCurrentGlyphCollection:glyphs customGlyphs:customGlyphs];
     }
     return self;
 }
