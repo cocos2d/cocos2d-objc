@@ -12,6 +12,9 @@
 
 #import "CCFontAtlas.h"
 
+#import "CCFontDefinition.h"
+#import "CCTextImage.h"
+
 @implementation CCFontCoreGraphics
 {
     CTFontRef font_;
@@ -29,7 +32,9 @@
 - (instancetype) initWithFontName:(NSString*)fontName size:(CGFloat)fontSize glyphs:(CCGlyphCollection)glyphs customGlyphs:(NSString*)customGlyphs
 {
     if (self = [super init]) {
+        _letterPadding = 5.0f;
         font_ = CTFontCreateWithName((__bridge CFStringRef)(fontName), fontSize, NULL);
+        _usedGlyphs = glyphs;
         _isDynamicGlyphCollection = glyphs == CCGlyphCollectionDynamic;
         fontName_ = fontName;
         fontSize_ = fontSize;
@@ -43,16 +48,8 @@
         CCFontAtlas* atlas = [[CCFontAtlas alloc] initWithFont:self];
         return atlas;
     } else {
-        return nil;
-//    
-//        FontDefinitionTTF *def = FontDefinitionTTF::create(this);
-//        
-//        if (!def)
-//            return nullptr;
-//        
-//        FontAtlas *atlas = def->createFontAtlas();
-//        
-//        return atlas;
+        CCFontDefinitionTTF* def = [[CCFontDefinitionTTF alloc] initWithFont:self];
+        return [def makeFontAtlas];
     }
 }
 
@@ -161,6 +158,53 @@
     // receiver should free result
     return advances;
 }
+
+- (NSArray*) glyphDefintionsForText:(NSString *)text
+{
+    //
+    if  (!text)
+        return nil;
+    
+    NSUInteger numChar = [text length];
+    if (!numChar)
+        return nil;
+    
+    // allocate the needed Glyphs
+    NSMutableArray* glyphs = [[NSMutableArray alloc] initWithCapacity:numChar];
+    for (NSUInteger i = 0; i < numChar; i++) {
+        [glyphs addObject:[CCGlyphDef new]];
+    }
+    
+    if (!glyphs)
+        return nil;
+    
+    // sore result as CCRect
+    for (int c = 0; c < numChar; ++c) {
+        unichar character = [text characterAtIndex:c];
+        CGRect tempRect;
+        if (![self getBBOXForCharacter:character rect:&tempRect]) {
+            CCLOGWARN(@"Cannot find definition for glyph: %C in font: %@", character, fontName_);
+        
+            
+            CCGlyphDef* glyph = [glyphs objectAtIndex:c];
+            glyph.rect = CGRectZero;
+            glyph.letter = character;
+            glyph.valid = NO;
+            glyph.padding = _letterPadding;
+            
+        } else {
+            CCGlyphDef* glyph = [glyphs objectAtIndex:c];
+            glyph.rect = tempRect;
+            glyph.letter = character;
+            glyph.valid = YES;
+            glyph.padding = _letterPadding;
+        }
+    }
+    
+    // done
+    return glyphs;
+}
+
 
 - (void) dealloc
 {

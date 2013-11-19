@@ -22,11 +22,11 @@
 - (instancetype) init;
 - (instancetype) initWithLetter:(unichar)letter andRect:(CGRect)rect;
 
-@property (assign) unichar letter;
-@property (assign) CGRect rect;
-@property (assign) CGFloat padding;
-@property (assign) CGFloat commonHeight;
-@property (assign, getter = isValid) BOOL valid;
+@property (nonatomic, assign) unichar letter;
+@property (nonatomic, assign) CGRect rect;
+@property (nonatomic, assign) CGFloat padding;
+@property (nonatomic, assign) CGFloat commonHeight;
+@property (nonatomic, assign, getter = isValid) BOOL valid;
 @end
 
 /** @brief CCTextLineDef define a line of text in a text image texture page
@@ -40,8 +40,8 @@
 - (void) addGlyph:(CCGlyphDef*)glyph;
 - (CCGlyphDef*) glyphAtIndex:(NSUInteger)idx;
 
-@property (assign, readonly) NSUInteger glyphCount;
-@property (assign, readonly) CGRect rect;
+@property (nonatomic, assign, readonly) NSUInteger glyphCount;
+@property (nonatomic, assign, readonly) CGRect rect;
 
 @end
 
@@ -57,13 +57,13 @@
 - (CCTextLineDef*) lineAtIndex:(NSUInteger)idx;
 
 
-@property (assign, readonly) CGSize size;
-@property (assign, readonly) NSUInteger pageNumber;
-@property (assign, readonly) NSUInteger lineCount;
+@property (nonatomic, assign, readonly) CGSize size;
+@property (nonatomic, assign, readonly) NSUInteger pageNumber;
+@property (nonatomic, assign, readonly) NSUInteger lineCount;
 
-@property (assign) unsigned char* pageData;
+@property (nonatomic, assign) unsigned char* pageData;
 
-@property (retain, readonly) CCTexture* pageTexture;
+@property (nonatomic, retain, readonly) CCTexture* pageTexture;
 
 - (void) preparePageTextureWithReleaseData:(BOOL)releaseData;
 - (void) preparePageTexture;
@@ -78,7 +78,7 @@
 
 - (void) addPage:(CCTextPageDef*)page;
 - (CCTextPageDef*) pageAtIndex:(NSUInteger)idx;
-@property (assign, readonly) NSUInteger pageCount;
+@property (nonatomic, assign, readonly) NSUInteger pageCount;
 
 @end
 
@@ -89,6 +89,6 @@
 - (instancetype) initWithString:(NSString*)text size:(CGSize)size font:(CCFont*)font;
 - (instancetype) initWithString:(NSString*)text size:(CGSize)size font:(CCFont*)font releaseData:(BOOL)releaseData;
 
-@property (retain, readonly) CCTextFontPages* pages;
-@property (retain, readonly) CCFont* font;
+@property (nonatomic, retain, readonly) CCTextFontPages* pages;
+@property (nonatomic, retain, readonly) CCFont* font;
 @end

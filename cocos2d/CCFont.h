@@ -15,6 +15,13 @@
 @class CCGlyphDef;
 
 @interface CCFont : NSObject
+{
+    CCGlyphCollection _usedGlyphs;
+    NSString* _customGlyphs;
+    
+    CGFloat _letterPadding;
+}
+
 - (CCFontAtlas*) makeFontAtlas;
 
 - (CGSize*) getAdvancesForText:(NSString*)text;

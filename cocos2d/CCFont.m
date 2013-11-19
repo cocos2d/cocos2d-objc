@@ -16,11 +16,8 @@
 
 
 @implementation CCFont
-{
-    CCGlyphCollection _usedGlyphs;
-    NSString* _customGlyphs;
-}
 
+@synthesize letterPadding = _letterPadding;
 
 - (CCFontAtlas*) makeFontAtlas
 {
