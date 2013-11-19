@@ -39,7 +39,7 @@
 
 - (CCFontAtlas*) atlasFromTTF:(NSString*)fontFilePath size:(CGFloat)fontSize glyphs:(CCGlyphCollection)glyphs customGlyphs:(NSString*)customGlyphs
 {
-    CCFont* font = [CCFontCoreGraphics fontWithFontName:fontFilePath size:fontSize glyphs:glyphs customGlyphs:customGlyphs];
+    CCFont* font = [CCFontCoreGraphics fontWithFontName:fontFilePath size:fontSize * CC_CONTENT_SCALE_FACTOR() glyphs:glyphs customGlyphs:customGlyphs];
     if (!font) {
         NSAssert1(NO, @"Cannot load font `%@`", fontFilePath);
         return nil;

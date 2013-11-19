@@ -47,8 +47,8 @@
 - (NSInteger) stringNumLines;
 - (NSInteger) stringLength;
 - (unichar) charAtStringPosition:(NSInteger)position;
-- (const char*) UTF8String;
-- (void) assignNewUTF8String:(NSString*)newString;
+
+@property (nonatomic, copy) NSString* labelString;
 
 @property (nonatomic, assign, readonly) CCTextAlignment textAlignment;
 - (CCTextAlignment) textAlignment;

@@ -44,6 +44,7 @@
 - (instancetype) initWithString:(NSString*)label ttfFontName:(NSString*)fontName fontSize:(CGFloat)fontSize lineSize:(CGFloat)lineSize alignment:(CCTextAlignment)alignment glyphs:(CCGlyphCollection)glyphs customGlyphs:(NSString*)customGlyphs
 {
     if (self = [super init])
+#warning TODO!
         return nil;
     return nil;
 }
@@ -74,7 +75,12 @@
 
 - (void) setString:(NSString *)label
 {
-    [self setText:label lineWidth:_width alignment:CCTextAlignmentCenter lineBreakWithoutSpaces:NO];
+    [self setText:label lineWidth:_width alignment:_alignment lineBreakWithoutSpaces:_lineBreakWithoutSpaces];
+}
+
+- (NSString*) string
+{
+    return _originalUTF16String;
 }
 
 - (BOOL) setText:(NSString*)text lineWidth:(CGFloat)lineWidth alignment:(CCTextAlignment)alignment lineBreakWithoutSpaces:(BOOL)lineBreakWithoutSpaces
@@ -459,14 +465,14 @@
     return [_currentUTF16String characterAtIndex:position];
 }
 
-- (const char*) UTF8String
+- (NSString*) labelString
 {
-    return [_currentUTF16String UTF8String];
+    return _currentUTF16String;
 }
 
-- (void) assignNewUTF8String:(NSString *)newString
+- (void) setLabelString:(NSString *)labelString
 {
-    [self setCurrentString:newString];
+    [self setCurrentString:labelString];
 }
 
 - (CCTextAlignment) textAlignment

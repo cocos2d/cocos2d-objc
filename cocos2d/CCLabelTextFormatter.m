@@ -9,190 +9,177 @@
 #import "CCLabelTextFormatter.h"
 #import "CCLetterInfo.h"
 
+
 @implementation CCLabelTextFormatter
 + (BOOL) multilineText:(id<CCLabelTextFormatProtocol>)label
 {
-    return NO;
     // to do if (m_fWidth > 0)
-//    if ([label maxLineWidth])
-//    {
-//        // Step 1: Make multiline
-//        vector<unsigned short> strWhole = cc_utf16_vec_from_utf16_str(theLabel->getUTF8String());
-//        unsigned int stringLength        = strWhole.size();
-//        
-//        vector<unsigned short> multiline_string;
-//        multiline_string.reserve( stringLength );
-//        
-//        vector<unsigned short> last_word;
-//        last_word.reserve( stringLength );
-//        
-//        unsigned int line = 1, i = 0;
-//        
-//        bool   isStartOfLine  = false, isStartOfWord = false;
-//        float  startOfLine = -1, startOfWord   = -1;
-//        
-//        int skip = 0;
-//        
-//        int strLen = theLabel->getStringLenght();
-//        std::vector<LetterInfo>  *leterInfo = theLabel->getLettersInfo();
-//        int tIndex = 0;
-//        
-//        for (int j = 0; j < strLen; j++)
-//        {
-//            LetterInfo* info = &leterInfo->at(j+skip);
-//            
-//            unsigned int justSkipped = 0;
-//            
-//            while (info->def.validDefinition == false)
-//            {
-//                justSkipped++;
-//                info = &leterInfo->at( j+skip+justSkipped );
-//            }
-//            skip += justSkipped;
-//            tIndex = j + skip;
-//            
-//            if (i >= stringLength)
-//                break;
-//            
-//            unsigned short character = strWhole[i];
-//            
-//            if (!isStartOfWord)
-//            {
-//                startOfWord = theLabel->getLetterPosXLeft( tIndex );
-//                isStartOfWord = true;
-//            }
-//            
-//            if (!isStartOfLine)
-//            {
-//                startOfLine = startOfWord;
-//                isStartOfLine  = true;
-//            }
-//            
-//            // Newline.
-//            if (character == '\n')
-//            {
-//                cc_utf8_trim_ws(&last_word);
-//                
-//                last_word.push_back('\n');
-//                multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
-//                last_word.clear();
-//                isStartOfWord = false;
-//                isStartOfLine = false;
-//                startOfWord = -1;
-//                startOfLine = -1;
-//                i += justSkipped;
-//                ++line;
-//                
-//                if (i >= stringLength)
-//                    break;
-//                
-//                character = strWhole[i];
-//                
-//                if (!startOfWord)
-//                {
-//                    startOfWord = theLabel->getLetterPosXLeft( tIndex );
-//                    isStartOfWord = true;
-//                }
-//                if (!startOfLine)
-//                {
-//                    startOfLine  = startOfWord;
-//                    isStartOfLine = true;
-//                }
-//            }
-//            
-//            // Whitespace.
-//            if (isspace_unicode(character))
-//            {
-//                last_word.push_back(character);
-//                multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
-//                last_word.clear();
-//                isStartOfWord = false;
-//                startOfWord = -1;
-//                ++i;
-//                continue;
-//            }
-//            
-//            // Out of bounds.
-//            if (theLabel->getLetterPosXRight( tIndex ) - startOfLine > theLabel->getMaxLineWidth())
-//            {
-//                if (!theLabel->breakLineWithoutSpace())
-//                {
-//                    last_word.push_back(character);
-//                    
-//                    int found = cc_utf8_find_last_not_char(multiline_string, ' ');
-//                    if (found != -1)
-//                        cc_utf8_trim_ws(&multiline_string);
-//                    else
-//                        multiline_string.clear();
-//                    
-//                    if (multiline_string.size() > 0)
-//                        multiline_string.push_back('\n');
-//                    
-//                    ++line;
-//                    isStartOfLine = false;
-//                    startOfLine = -1;
-//                    ++i;
-//                }
-//                else
-//                {
-//                    cc_utf8_trim_ws(&last_word);
-//                    
-//                    last_word.push_back('\n');
-//                    multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
-//                    last_word.clear();
-//                    isStartOfWord = false;
-//                    isStartOfLine = false;
-//                    startOfWord = -1;
-//                    startOfLine = -1;
-//                    ++line;
-//                    
-//                    if (i >= stringLength)
-//                        break;
-//                    
-//                    if (!startOfWord)
-//                    {
-//                        startOfWord = theLabel->getLetterPosXLeft( tIndex );
-//                        isStartOfWord = true;
-//                    }
-//                    if (!startOfLine)
-//                    {
-//                        startOfLine  = startOfWord;
-//                        isStartOfLine = true;
-//                    }
-//                    
-//                    --j;
-//                }
-//                
-//                continue;
-//            }
-//            else
-//            {
-//                // Character is normal.
-//                last_word.push_back(character);
-//                ++i;
-//                continue;
-//            }
-//        }
-//        
-//        multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
-//        
-//        int size = multiline_string.size();
-//        unsigned short* strNew = new unsigned short[size + 1];
-//        
-//        for (int j = 0; j < size; ++j)
-//        {
-//            strNew[j] = multiline_string[j];
-//        }
-//        
-//        strNew[size] = 0;
-//        theLabel->assignNewUTF8String(strNew);
-//        
-//        return true;
-//    }
-//    else
-//    {
-//        return false;
-//    }
+    if ([label maxLineWidth]) {
+        // Step 1: Make multiline
+        NSString* strWhole = [label labelString];
+        NSUInteger stringLength = [strWhole length];
+        
+        NSMutableString* multilineString = [NSMutableString stringWithCapacity:stringLength];
+        NSMutableString* lastWord = [NSMutableString stringWithCapacity:stringLength];
+        
+        NSUInteger line = 1;
+        NSUInteger i = 0;
+        
+        BOOL isStartOfLine  = NO;
+        BOOL isStartOfWord = NO;
+        CGFloat startOfLine = -1;
+        CGFloat startOfWord = -1;
+        
+        NSUInteger skip = 0;
+        
+        NSUInteger strLen = [label stringLength];
+        
+        NSArray* letterInfos = [label lettersInfo];
+        
+        NSUInteger tIndex = 0;
+        
+        for (int j = 0; j < strLen; j++)
+        {
+            CCLetterInfo* info = [letterInfos objectAtIndex:j + skip];
+            
+            NSUInteger justSkipped = 0;
+            
+            while (!info.definition.validDefinition) {
+                justSkipped++;
+                info = [letterInfos objectAtIndex:j + skip + justSkipped];
+            }
+            
+            skip += justSkipped;
+            tIndex = j + skip;
+            
+            if (i >= stringLength)
+                break;
+            
+            unichar character = [strWhole characterAtIndex:i];
+            
+            if (!isStartOfWord) {
+                startOfWord = [label letterPosXLeft:tIndex];
+                isStartOfWord = YES;
+            }
+            
+            if (!isStartOfLine) {
+                startOfLine = startOfWord;
+                isStartOfLine  = YES;
+            }
+            
+            // Newline.
+            if (character == '\n') {
+                lastWord = [[lastWord stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] mutableCopy];
+                [lastWord appendString:@"\n"];
+                
+                
+                [multilineString appendString:lastWord];
+                
+                [lastWord setString:@""];
+                
+                isStartOfWord = NO;
+                isStartOfLine = NO;
+                startOfWord = -1;
+                startOfLine = -1;
+                i += justSkipped;
+                ++line;
+                
+                if (i >= stringLength)
+                    break;
+                
+                character = [strWhole characterAtIndex:i];
+                
+                if (!startOfWord) {
+                    startOfWord = [label letterPosXLeft:tIndex];
+                    isStartOfWord = YES;
+                }
+                if (!startOfLine) {
+                    startOfLine  = startOfWord;
+                    isStartOfLine = YES;
+                }
+            }
+            
+            // Whitespace.
+            if ([[NSCharacterSet whitespaceCharacterSet] characterIsMember:character]) {
+                [lastWord appendFormat:@"%C", character];
+                [multilineString appendString:lastWord];
+                [lastWord setString:@""];
+                isStartOfWord = NO;
+                startOfWord = -1;
+                ++i;
+                continue;
+            }
+            
+            // Out of bounds.
+            if ([label letterPosXRight:tIndex] - startOfLine > [label maxLineWidth]) {
+                if (![label breakLineWithoutSpace]) {
+                    [lastWord appendFormat:@"%C", character];
+                    
+                    NSRange found = [multilineString rangeOfCharacterFromSet:[[NSCharacterSet whitespaceCharacterSet] invertedSet] options:NSBackwardsSearch];
+                    if (found.location == NSNotFound)
+                        multilineString = [[multilineString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] mutableCopy];
+                    else
+                        [multilineString setString:@""];
+                    
+                    if ([multilineString length] > 0)
+                        [multilineString appendString:@"\n"];
+                    
+                    ++line;
+                    isStartOfLine = NO;
+                    startOfLine = -1;
+                    ++i;
+                }
+                else
+                {
+                    lastWord = [[lastWord stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] mutableCopy];
+                    [lastWord appendString:@"\n"];
+                    
+                    [multilineString appendString:lastWord];
+                    
+                    [lastWord setString:@""];
+                    
+                    isStartOfWord = NO;
+                    isStartOfLine = NO;
+                    startOfWord = -1;
+                    startOfLine = -1;
+                    ++line;
+                    
+                    if (i >= stringLength)
+                        break;
+                    
+                    if (!startOfWord) {
+                        startOfWord = [label letterPosXLeft:tIndex];
+                        isStartOfWord = YES;
+                    }
+                    if (!startOfLine) {
+                        startOfLine  = startOfWord;
+                        isStartOfLine = YES;
+                    }
+                    
+                    --j;
+                }
+                
+                continue;
+            }
+            else
+            {
+                // Character is normal.
+                [lastWord appendFormat:@"%C", character];
+                ++i;
+                continue;
+            }
+        }
+        
+        
+        [multilineString appendString:lastWord];
+        
+        [label setLabelString:multilineString];
+    
+        
+        return YES;
+    } else {
+        return NO;
+    }
 
 }
 
@@ -275,10 +262,10 @@
     if (stringLen == 0)
         return NO;
     
-    int nextFontPositionX       = 0;
-    int nextFontPositionY       = 0;
+    CGFloat nextFontPositionX       = 0;
+    CGFloat nextFontPositionY       = 0;
     
-    unsigned short prev         = -1;
+    unichar prev         = -1;
     
     
     CGSize tmpSize              = CGSizeZero;

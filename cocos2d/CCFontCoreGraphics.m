@@ -86,7 +86,7 @@
     CTFontGetVerticalTranslationsForGlyphs(font_, &glyph, &translation, 1);
     CTFontGetBoundingRectsForGlyphs(font_, kCTFontOrientationDefault, &glyph, outRect, 1);
     
-    outRect->origin.x = 0;
+    outRect->origin.x = 0.0f;
     outRect->origin.y = translation.height;
     
     return YES;
