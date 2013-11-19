@@ -134,7 +134,8 @@
 //            putchar(" .:ioVM@"[data[j*w+i]>>5]);
 //        putchar('\n');
 //    }
-    return data;
+    
+    return [[NSMutableData dataWithBytesNoCopy:data length:w * h] mutableBytes];
 }
 
 - (CGFloat) fontMaxHeight

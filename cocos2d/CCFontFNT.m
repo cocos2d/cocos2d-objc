@@ -149,7 +149,7 @@
     HASH_ITER(hh, _configuration->_fontDefDictionary, currentElement, tmp)
     {
         
-        CCFontLetterDefinition* tempDefinition;
+        CCFontLetterDefinition* tempDefinition = [CCFontLetterDefinition new];
         
         fontDef = currentElement->fontDef;
         CGRect tempRect;

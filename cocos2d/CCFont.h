@@ -24,6 +24,7 @@
 
 - (CCFontAtlas*) makeFontAtlas;
 
+// caller should free return value
 - (CGSize*) getAdvancesForText:(NSString*)text;
 
 @property (nonatomic, copy, readonly) NSString* currentGlyphCollection;
