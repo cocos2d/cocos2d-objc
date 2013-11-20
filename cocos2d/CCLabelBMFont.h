@@ -27,6 +27,8 @@
 #import "CCSpriteBatchNode.h"
 #import "Support/uthash.h"
 
+@class CCBMFontConfiguration;
+
 /**
  CCLabelBMFont displays a bitmap font label. The label is loaded from a fnt-file
  created with an external editor. Each character in the label is represented by a
@@ -48,29 +50,27 @@
  
  */
 
-@class CCBMFontConfiguration;
-
 @interface CCLabelBMFont : CCSpriteBatchNode <CCLabelProtocol, CCRGBAProtocol> {
     
-	/** The text displayed by the label. */
+	// The text displayed by the label.
 	NSString *_string;
     
-    /** The font file of the text. */
+    // The font file of the text.
     NSString *_fntFile;
     
-    /** The original text excluding line breaks. */
+    // The original text excluding line breaks.
     NSString *_initialString;
     
-    /** The maximum width allowed before a line break will be inserted. */
+    // The maximum width allowed before a line break will be inserted.
     float _width;
     
-    /** The technique used for horizontal aligning of the text. */
+    // The technique used for horizontal aligning of the text.
     CCTextAlignment _alignment;
     
-    /** Parsed configuration of the font file. */
+    // Parsed configuration of the font file.
 	CCBMFontConfiguration	*_configuration;
     
-	/** Texture RGBA settings. */
+	// Texture RGBA settings.
 	GLubyte		_displayedOpacity;
     GLubyte     _realOpacity;
 	ccColor3B	_displayedColor;
@@ -78,11 +78,11 @@
 	BOOL		_cascadeOpacityEnabled;
     BOOL        _cascadeColorEnabled;
 	BOOL		_opacityModifyRGB;
-	
-    /** Offset of the texture atlas. */
+
+    // Offset of the texture atlas.
 	CGPoint			_imageOffset;
 	
-	/** Reused char. */
+	// Reused char.
 	CCSprite		*_reusedChar;
 }
 

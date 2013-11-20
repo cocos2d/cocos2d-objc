@@ -1,10 +1,27 @@
-//
-//  CCLabelBMFont_Private.h
-//  cocos2d-osx
-//
-//  Created by Viktor on 10/28/13.
-//
-//
+/*
+ * cocos2d for iPhone: http://www.cocos2d-iphone.org
+ *
+ * Copyright (c) 2013 Apportable Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ */
 
 #import "CCLabelBMFont.h"
 
@@ -12,26 +29,26 @@ enum {
 	kCCLabelAutomaticWidth = -1,
 };
 
-/** @struct ccBMFontDef
- BMFont definition
- */
+/** @struct ccBMFontDef BMFont definition. */
 typedef struct _BMFontDef {
 	//! ID of the character
 	unichar charID;
+    
 	//! origin and size of the font
 	CGRect rect;
+    
 	//! The X amount the image should be offset when drawing the image (in pixels)
 	short xOffset;
+    
 	//! The Y amount the image should be offset when drawing the image (in pixels)
 	short yOffset;
+    
 	//! The amount to move the current position after drawing the character (in pixels)
 	short xAdvance;
+    
 } ccBMFontDef;
 
-/** @struct ccBMFontPadding
- BMFont padding
- @since v0.8.2
- */
+/** @struct cBMFontPadding BMFont padding. */
 typedef struct _BMFontPadding {
 	/// padding left
 	int	left;
@@ -44,40 +61,41 @@ typedef struct _BMFontPadding {
 } ccBMFontPadding;
 
 #pragma mark - Hash Element
-typedef struct _FontDefHashElement
-{
-	NSUInteger		key;		// key. Font Unicode value
-	ccBMFontDef		fontDef;	// font definition
+/** @struct tCCFontDefHashElement. */
+typedef struct _FontDefHashElement {
+    // key. Font Unicode value.
+	NSUInteger		key;
+    
+    // font definition.
+	ccBMFontDef		fontDef;
+    
 	UT_hash_handle	hh;
 } tCCFontDefHashElement;
 
-// Equal function for targetSet.
-typedef struct _KerningHashElement
-{
-	int				key;		// key for the hash. 16-bit for 1st element, 16-bit for 2nd element
+/** @struct tCCKerningHashElement. */
+typedef struct _KerningHashElement {
+    // key for the hash. 16-bit for 1st element, 16-bit for 2nd element.
+	int				key;
+    
 	int				amount;
 	UT_hash_handle	hh;
 } tCCKerningHashElement;
-#pragma mark -
 
-/** CCBMFontConfiguration has parsed configuration of the the .fnt file
- @since v0.8
- */
-@interface CCBMFontConfiguration : NSObject
-{
-	// Character Set defines the letters that actually exist in the font
+/** CCBMFontConfiguration stores the parsed configuration of the specified .fnt file. */
+@interface CCBMFontConfiguration : NSObject {
+    
+	// The character set defines the letters that actually exist in the font.
 	NSCharacterSet *_characterSet;
     
-	// atlas name
+	// The atlas name.
 	NSString		*_atlasName;
     
-    // XXX: Creating a public interface so that the bitmapFontArray[] is accessible
 @public
     
 	// BMFont definitions
 	tCCFontDefHashElement	*_fontDefDictionary;
     
-	// FNTConfig: Common Height. Should be signed (issue #1343)
+	// FNTConfig: Common Height
 	NSInteger		_commonHeight;
     
 	// Padding
@@ -87,18 +105,48 @@ typedef struct _KerningHashElement
 	tCCKerningHashElement	*_kerningDictionary;
 }
 
-// Character set
+/// -----------------------------------------------------------------------
+/// @name Accessing the Configuration Attributes
+/// -----------------------------------------------------------------------
+
+/** The character set defines the letters that actually exist in the font. */
 @property (nonatomic, strong, readonly) NSCharacterSet *characterSet;
 
-// atlasName
+/** The atlas name. */
 @property (nonatomic, readwrite, strong) NSString *atlasName;
 
-/** allocates a CCBMFontConfiguration with a FNT file */
+
+/// -----------------------------------------------------------------------
+/// @name Initializing a CCLabelBMFont Object
+/// -----------------------------------------------------------------------
+
+/**
+ *  Creates and returns a CCBMFontConfiguration object from a specified font file value.
+ *
+ *  @param FNTfile Font configuration file.
+ *
+ *  @return The CCBMFontConfiguration Object.
+ */
 +(id) configurationWithFNTFile:(NSString*)FNTfile;
-/** initializes a CCBMFontConfiguration with a FNT file */
+
+/**
+ *  Initializes and returns a CCBMFontConfiguration object from a specified font file value.
+ *
+ *  @param FNTfile FNTfile Font configuration file.
+ *
+ *  @return An initialized CCBMFontConfiguration Object.
+ */
 -(id) initWithFNTfile:(NSString*)FNTfile;
+
 @end
 
-CCBMFontConfiguration * FNTConfigLoadFile( NSString *file );
 
-void FNTConfigRemoveCache( void );
+/// -----------------------------------------------------------------------
+/// @name Free Functions
+/// -----------------------------------------------------------------------
+
+/** Load/Cache font configuration file and return object. */
+CCBMFontConfiguration* FNTConfigLoadFile(NSString *file);
+
+/** Clear font configuration cache. */
+void FNTConfigRemoveCache(void);

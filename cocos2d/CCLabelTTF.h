@@ -44,9 +44,10 @@
 
 @interface CCLabelTTF : CCSprite <CCLabelProtocol> {
     
-    /** True if the label needs to be updated. */
+    // True if the label needs to be updated.
     BOOL _isTextureDirty;
 }
+
 
 /// -----------------------------------------------------------------------
 /// @name Accessing the Text Attributes
