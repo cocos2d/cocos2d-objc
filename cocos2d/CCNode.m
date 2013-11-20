@@ -1320,12 +1320,34 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		_transform = cpTransformMult(rigidTransform, cpTransformScale(_scaleX, _scaleY));
 	} else if ( _isTransformDirty ) {
         
-        // TODO: Make this more efficient
-        CGSize contentSizeInPoints = self.contentSizeInPoints;
+        // Get content size
+        CGSize contentSizeInPoints;
+        if (CCContentSizeTypeIsBasicPoints(_contentSizeType))
+        {
+            // Optimization for basic content sizes (most common case)
+            contentSizeInPoints = _contentSize;
+        }
+        else
+        {
+            contentSizeInPoints = self.contentSizeInPoints;
+        }
+        
+        // Calculate the anchor point in points
         _anchorPointInPoints = ccp( contentSizeInPoints.width * _anchorPoint.x, contentSizeInPoints.height * _anchorPoint.y );
         
         // Convert position to points
-        CGPoint positionInPoints = [self convertPositionToPoints:_position type:_positionType];
+        CGPoint positionInPoints;
+        if (CCPositionTypeIsBasicPoints(_positionType))
+        {
+            // Optimization for basic points (most common case)
+            positionInPoints = _position;
+        }
+        else
+        {
+            positionInPoints = [self convertPositionToPoints:_position type:_positionType];
+        }
+        
+        // Get x and y
 		float x = positionInPoints.x;
 		float y = positionInPoints.y;
         
