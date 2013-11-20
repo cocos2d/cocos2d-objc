@@ -355,6 +355,12 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
         CGSize contentSizeInPoints = self.contentSizeInPoints;
 		_anchorPointInPoints = ccp( contentSizeInPoints.width * _anchorPoint.x, contentSizeInPoints.height * _anchorPoint.y );
 		_isTransformDirty = _isInverseDirty = YES;
+        
+        if ([_parent isKindOfClass:[CCLayout class]])
+        {
+            CCLayout* layout = (CCLayout*)_parent;
+            [layout needsLayout];
+        }
 	}
 }
 
@@ -365,6 +371,12 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
     CGSize contentSizeInPoints = self.contentSizeInPoints;
     _anchorPointInPoints = ccp( contentSizeInPoints.width * _anchorPoint.x, contentSizeInPoints.height * _anchorPoint.y );
     _isTransformDirty = _isInverseDirty = YES;
+    
+    if ([_parent isKindOfClass:[CCLayout class]])
+    {
+        CCLayout* layout = (CCLayout*)_parent;
+        [layout needsLayout];
+    }
 }
 
 - (CGSize) convertContentSizeToPoints:(CGSize)contentSize type:(CCContentSizeType)type
