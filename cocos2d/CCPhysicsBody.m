@@ -45,7 +45,6 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 	
 	NSMutableArray *_chipmunkObjects;
 	
-	BOOL _allowsRotation;
 	BOOL _affectedByGravity;
 }
 
@@ -57,7 +56,6 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 		_body = [ChipmunkBody bodyWithMass:0.0 andMoment:0.0];
 		_body.userData = self;
 		
-		_allowsRotation = YES;
 		_affectedByGravity = YES;
 		
 		_chipmunkObjects = [NSMutableArray arrayWithCapacity:2];
@@ -179,12 +177,46 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 -(CCPhysicsNode *)physicsNode {return _body.space.userData;}
 -(BOOL)isRunning {return self.physicsNode != nil;}
 
-//-(BOOL)affectedByGravity {NYI(); return YES;}
-//-(void)setAffectedByGravity:(BOOL)affectedByGravity {NYI();}
+static void
+NotAffectedByGravity
+(cpBody *body, cpVect gravity, cpFloat damping, cpFloat dt)
+{
+	cpBodyUpdateVelocity(body, cpvzero, damping, dt);
+}
 
--(BOOL)allowsRotation {return _allowsRotation;}
+-(BOOL)affectedByGravity
+{
+	if(self.type == CCPhysicsBodyTypeDynamic){
+		return _affectedByGravity;
+	} else {
+		// Static and kinematic bodies are never affected by gravity.
+		return NO;
+	}
+}
+
+-(void)setAffectedByGravity:(BOOL)affectedByGravity
+{
+	NSAssert(self.type == CCPhysicsBodyTypeDynamic, @"Only dynamic bodies can be affected by gravity.");
+	
+	cpBodyVelocityFunc func = (affectedByGravity ? cpBodyUpdateVelocity : NotAffectedByGravity);
+	cpBodySetVelocityUpdateFunc(self.body.body, func);
+	
+	_affectedByGravity = affectedByGravity;
+}
+
+-(BOOL)allowsRotation {
+	if(self.type == CCPhysicsBodyTypeDynamic){
+		return (_body.moment < INFINITY);
+	} else {
+		// The allowsRotation property is only applicable to dynamic bodies.
+		return NO;
+	}
+}
+
 -(void)setAllowsRotation:(BOOL)allowsRotation
 {
+	NSAssert(self.type == CCPhysicsBodyTypeDynamic, @"CCPhysicsBody.allowsRotation only applies to dynamic bodies.");
+	
 	if(self.isRunning){
 		if(allowsRotation){
 			cpBodyAccumulateMassFromShapes(_body.body);
@@ -193,8 +225,6 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 			_body.angularVelocity = 0.0;
 		}
 	}
-	
-	_allowsRotation = allowsRotation;
 }
 
 static ccPhysicsBodyType ToCocosBodyType[] = {CCPhysicsBodyTypeDynamic, CCPhysicsBodyTypeKinematic, CCPhysicsBodyTypeStatic};
