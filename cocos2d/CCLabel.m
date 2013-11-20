@@ -41,13 +41,22 @@
 @synthesize displayedOpacity = _displayedOpacity;
 @synthesize lettersInfo = _lettersInfo;
 
-- (instancetype) initWithString:(NSString*)label ttfFontName:(NSString*)fontName fontSize:(CGFloat)fontSize lineSize:(CGFloat)lineSize alignment:(CCTextAlignment)alignment glyphs:(CCGlyphCollection)glyphs customGlyphs:(NSString*)customGlyphs
+- (instancetype) initWithString:(NSString*)label ttfFontName:(NSString*)fontName fontSize:(CGFloat)fontSize alignment:(CCTextAlignment)alignment glyphs:(CCGlyphCollection)glyphs customGlyphs:(NSString*)customGlyphs
 {
-    if (self = [super init])
-#warning TODO!
-        return nil;
-    return nil;
+    CCFontAtlas* atlas = [[CCFontAtlasCache sharedFontAtlasCache] fontAtlasTTFWithName:fontName size:fontSize glyphs:glyphs customGlyphs:customGlyphs];
+    return [self initWithFontAtlas:atlas alignment:alignment];
 }
+
+- (instancetype) initWithString:(NSString*)label ttfFontName:(NSString*)fontName alignment:(CCTextAlignment)alignment lineSize:(CGFloat)lineSize
+{
+    CCFontAtlas* atlas = [[CCFontAtlasCache sharedFontAtlasCache] fontAtlasFNTWithFilePath:fontName];
+    self = [self initWithFontAtlas:atlas alignment:alignment];
+    if (self) {
+        [self setText:label lineWidth:lineSize alignment:alignment lineBreakWithoutSpaces:NO];
+    }
+    return self;
+}
+
 
 - (instancetype) initWithFontAtlas:(CCFontAtlas*)atlas alignment:(CCTextAlignment)alignment
 {

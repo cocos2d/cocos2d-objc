@@ -12,16 +12,16 @@
 
 @interface CCFontLetterDefinition : NSObject
 @property (nonatomic, assign) unichar letteCharUTF16;
-@property (nonatomic, assign) float U;
-@property (nonatomic, assign) float V;
-@property (nonatomic, assign) float width;
-@property (nonatomic, assign) float height;
-@property (nonatomic, assign) float offsetX;
-@property (nonatomic, assign) float offsetY;
-@property (nonatomic, assign) int textureID;
-@property (nonatomic, assign) float commonLineHeight;
-@property (nonatomic, assign) float anchorX;
-@property (nonatomic, assign) float anchorY;
+@property (nonatomic, assign) CGFloat U;
+@property (nonatomic, assign) CGFloat V;
+@property (nonatomic, assign) CGFloat width;
+@property (nonatomic, assign) CGFloat height;
+@property (nonatomic, assign) CGFloat offsetX;
+@property (nonatomic, assign) CGFloat offsetY;
+@property (nonatomic, assign) NSUInteger textureID;
+@property (nonatomic, assign) CGFloat commonLineHeight;
+@property (nonatomic, assign) CGFloat anchorX;
+@property (nonatomic, assign) CGFloat anchorY;
 @property (nonatomic, assign) BOOL validDefinition;
 @end
 
