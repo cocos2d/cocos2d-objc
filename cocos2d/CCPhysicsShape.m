@@ -128,8 +128,12 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 -(BOOL)sensor {return self.shape.sensor;}
 -(void)setSensor:(BOOL)sensor {self.shape.sensor = sensor;}
 
--(id)collisionGroup {return self.shape.group;};
--(void)setCollisionGroup:(id)collisionGroup {self.shape.group = collisionGroup;}
+-(id)collisionGroup {return self.shape.filter.group;};
+-(void)setCollisionGroup:(id)collisionGroup {
+	cpShapeFilter filter = self.shape.filter;
+	filter.group = collisionGroup;
+	self.shape.filter = filter;
+}
 
 // TODO these need a reference to the space to intern the strings
 // Needs to be deferred?

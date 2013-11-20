@@ -24,9 +24,26 @@
 
 #import "CCNode.h"
 
+/// A set of contact points returned by CCPhysicsCollisionPair.contacts.
+typedef struct CCContactSet {
+	/// The number of contact points in the set.
+	/// The count will always be 1 or 2.
+	int count;
+	
+	/// The normal of the contact points.
+	CGPoint normal;
+	
+	/// The array of contact points.
+	struct {
+		/// The absolute position of the contact on the surface of each shape.
+		CGPoint point1, point2;
+		
+		/// Penetration distance of the two shapes.
+		/// The value will always be negative.
+		CGFloat distance;
+	} points[2];
+} CCContactSet;
 
-#warning TODO Need to remove dependency on this.
-#import "ObjectiveChipmunk/ObjectiveChipmunk.h"
 
 @class CCPhysicsBody;
 @class CCPhysicsShape;
@@ -37,7 +54,7 @@
 @interface CCPhysicsCollisionPair : NSObject
 
 /// The contact information from the two colliding bodies.
-@property(nonatomic, readonly) cpContactPointSet contacts;
+@property(nonatomic, readonly) CCContactSet contacts;
 
 /// The friction coefficient for this pair of colliding shapes.
 /// The default value is pair.bodyA.friction*pair.bodyB.friction.
