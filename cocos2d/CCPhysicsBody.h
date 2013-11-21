@@ -89,10 +89,9 @@ typedef enum ccPhysicsBodyType {
 
 //MARK: Simulation Properties:
 
-// Not yet implemented due to time constraints.
-///// Whether or not the physics body is affected by gravity.
-///// Defaults to YES.
-//@property(nonatomic, assign) BOOL affectedByGravity;
+/// Whether or not the physics body is affected by gravity.
+/// Defaults to YES.
+@property(nonatomic, assign) BOOL affectedByGravity;
 
 /// Whether or not the physics body should be allowed to rotate.
 /// Defaults to YES.

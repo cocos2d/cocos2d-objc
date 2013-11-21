@@ -49,8 +49,7 @@
     if (_needsLayout)
     {
         [self layout];
-#warning TODO: Invalidate layout when children changes size
-        //_needsLayout = NO;
+        _needsLayout = NO;
     }
     
     [super visit];
