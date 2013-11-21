@@ -60,8 +60,8 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 	CCPhysicsBody *bodyA = self.bodyA;
 	CGPoint anchor = cpTransformPoint(bodyA.node.nonRigidTransform, _anchor);
 	
-	_constraint.anchr1 = anchor;
-	_constraint.anchr2 = [_constraint.bodyB worldToLocal:[_constraint.bodyA localToWorld:anchor]];
+	_constraint.anchorA = anchor;
+	_constraint.anchorB = [_constraint.bodyB worldToLocal:[_constraint.bodyA localToWorld:anchor]];
 }
 
 @end
@@ -79,7 +79,7 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 -(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB
 {
 	if((self = [super init])){
-		_constraint = [ChipmunkPinJoint pinJointWithBodyA:bodyA.body bodyB:bodyB.body anchr1:anchorA anchr2:anchorB];
+		_constraint = [ChipmunkPinJoint pinJointWithBodyA:bodyA.body bodyB:bodyB.body anchorA:anchorA anchorB:anchorB];
 		_anchorA = anchorA;
 		_anchorB = anchorB;
 	}
@@ -92,8 +92,8 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 -(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
 {
 	CCPhysicsBody *bodyA = self.bodyA, *bodyB = self.bodyB;
-	_constraint.anchr1 = cpTransformPoint(bodyA.node.nonRigidTransform, _anchorA);
-	_constraint.anchr2 = cpTransformPoint(bodyB.node.nonRigidTransform, _anchorB);
+	_constraint.anchorA = cpTransformPoint(bodyA.node.nonRigidTransform, _anchorA);
+	_constraint.anchorB = cpTransformPoint(bodyB.node.nonRigidTransform, _anchorB);
 }
 
 @end
@@ -111,7 +111,7 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 -(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB minDistance:(CGFloat)min maxDistance:(CGFloat)max;
 {
 	if((self = [super init])){
-		_constraint = [ChipmunkSlideJoint slideJointWithBodyA:bodyA.body bodyB:bodyB.body anchr1:anchorA anchr2:anchorB min:min max:max];
+		_constraint = [ChipmunkSlideJoint slideJointWithBodyA:bodyA.body bodyB:bodyB.body anchorA:anchorA anchorB:anchorB min:min max:max];
 		_anchorA = anchorA;
 		_anchorB = anchorB;
 	}
@@ -124,8 +124,8 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 -(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
 {
 	CCPhysicsBody *bodyA = self.bodyA, *bodyB = self.bodyB;
-	_constraint.anchr1 = cpTransformPoint(bodyA.node.nonRigidTransform, _anchorA);
-	_constraint.anchr2 = cpTransformPoint(bodyB.node.nonRigidTransform, _anchorB);
+	_constraint.anchorA = cpTransformPoint(bodyA.node.nonRigidTransform, _anchorA);
+	_constraint.anchorB = cpTransformPoint(bodyB.node.nonRigidTransform, _anchorB);
 }
 
 @end
@@ -144,7 +144,7 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 
 {
 	if((self = [super init])){
-		_constraint = [ChipmunkDampedSpring dampedSpringWithBodyA:bodyA.body bodyB:bodyB.body anchr1:anchorA anchr2:anchorB restLength:restLength stiffness:stiffness damping:damping];
+		_constraint = [ChipmunkDampedSpring dampedSpringWithBodyA:bodyA.body bodyB:bodyB.body anchorA:anchorA anchorB:anchorB restLength:restLength stiffness:stiffness damping:damping];
 		_anchorA = anchorA;
 		_anchorB = anchorB;
 	}
@@ -157,8 +157,8 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 -(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
 {
 	CCPhysicsBody *bodyA = self.bodyA, *bodyB = self.bodyB;
-	_constraint.anchr1 = cpTransformPoint(bodyA.node.nonRigidTransform, _anchorA);
-	_constraint.anchr2 = cpTransformPoint(bodyB.node.nonRigidTransform, _anchorB);
+	_constraint.anchorA = cpTransformPoint(bodyA.node.nonRigidTransform, _anchorA);
+	_constraint.anchorB = cpTransformPoint(bodyB.node.nonRigidTransform, _anchorB);
 }
 
 @end
@@ -183,7 +183,7 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 	[physicsNode.space smartAdd:self];
 }
 
-+(CCPhysicsJoint *)connectedPivotJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB anchor:(CGPoint)anchorA
++(CCPhysicsJoint *)connectedPivotJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB anchorA:(CGPoint)anchorA
 {
 	CCPhysicsJoint *joint = [[CCPhysicsPivotJoint alloc] initWithBodyA:bodyA bodyB:bodyB anchor:anchorA];
 	[bodyA addJoint:joint];
