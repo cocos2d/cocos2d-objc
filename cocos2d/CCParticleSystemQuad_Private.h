@@ -1,25 +1,40 @@
-//
-//  CCParticleSystemQuad_Private.h
-//  cocos2d-osx
-//
-//  Created by Viktor on 10/29/13.
-//
-//
+/*
+ * cocos2d for iPhone: http://www.cocos2d-iphone.org
+ *
+ * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2013 Viktor
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ */
 
 #import "CCParticleSystemQuad.h"
 
 @interface CCParticleSystemQuad ()
 
-/** initialices the indices for the vertices */
+// Initialices the indices for the vertices.
 -(void) initIndices;
 
-/** initilizes the texture with a rectangle measured Points */
+// Initilizes the texture with a rectangle measured in points.
 -(void) initTexCoordsWithRect:(CGRect)rect;
 
-/** Sets a new CCSpriteFrame as particle.
- WARNING: this method is experimental. Use setTexture:withRect instead.
- @since v0.99.4
- */
+// Set sprite frame for system.
 -(void)setSpriteFrame:(CCSpriteFrame*)spriteFrame;
 
 @end

@@ -61,9 +61,9 @@
 }
 
 /**
- *  Set particle system texture using specified texture object and texture coords value.
+ *  Set particle system texture using specified texture and texture coords value.
  *
- *  @param texture Texture object.
+ *  @param texture Texture.
  *  @param rect    Texture coords.
  */
 -(void) setTexture:(CCTexture *)texture withRect:(CGRect)rect;

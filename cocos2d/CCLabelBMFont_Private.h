@@ -29,7 +29,7 @@ enum {
 	kCCLabelAutomaticWidth = -1,
 };
 
-/** @struct ccBMFontDef BMFont definition. */
+// ccBMFontDef BMFont definition.
 typedef struct _BMFontDef {
 	//! ID of the character
 	unichar charID;
@@ -48,20 +48,20 @@ typedef struct _BMFontDef {
     
 } ccBMFontDef;
 
-/** @struct cBMFontPadding BMFont padding. */
+// cBMFontPadding BMFont padding.
 typedef struct _BMFontPadding {
-	/// padding left
+	// padding left
 	int	left;
-	/// padding top
+	// padding top
 	int top;
-	/// padding right
+	// padding right
 	int right;
-	/// padding bottom
+	// padding bottom
 	int bottom;
 } ccBMFontPadding;
 
 #pragma mark - Hash Element
-/** @struct tCCFontDefHashElement. */
+// tCCFontDefHashElement.
 typedef struct _FontDefHashElement {
     // key. Font Unicode value.
 	NSUInteger		key;
@@ -72,16 +72,19 @@ typedef struct _FontDefHashElement {
 	UT_hash_handle	hh;
 } tCCFontDefHashElement;
 
-/** @struct tCCKerningHashElement. */
+// tCCKerningHashElement.
 typedef struct _KerningHashElement {
     // key for the hash. 16-bit for 1st element, 16-bit for 2nd element.
 	int				key;
     
+    // Kerning value
 	int				amount;
+    
+    // Had Handle
 	UT_hash_handle	hh;
 } tCCKerningHashElement;
 
-/** CCBMFontConfiguration stores the parsed configuration of the specified .fnt file. */
+// CCBMFontConfiguration stores the parsed configuration of the specified .fnt file.
 @interface CCBMFontConfiguration : NSObject {
     
 	// The character set defines the letters that actually exist in the font.
@@ -109,33 +112,26 @@ typedef struct _KerningHashElement {
 /// @name Accessing the Configuration Attributes
 /// -----------------------------------------------------------------------
 
-/** The character set defines the letters that actually exist in the font. */
+// The character set defines the letters that actually exist in the font.
 @property (nonatomic, strong, readonly) NSCharacterSet *characterSet;
 
-/** The atlas name. */
+// The atlas name.
 @property (nonatomic, readwrite, strong) NSString *atlasName;
+
+
+/// -----------------------------------------------------------------------
+/// @name Creating a CCParticleSystem Object
+/// -----------------------------------------------------------------------
+
+// Creates and returns a CCBMFontConfiguration object from a specified font file value.
++(id) configurationWithFNTFile:(NSString*)FNTfile;
 
 
 /// -----------------------------------------------------------------------
 /// @name Initializing a CCLabelBMFont Object
 /// -----------------------------------------------------------------------
 
-/**
- *  Creates and returns a CCBMFontConfiguration object from a specified font file value.
- *
- *  @param FNTfile Font configuration file.
- *
- *  @return The CCBMFontConfiguration Object.
- */
-+(id) configurationWithFNTFile:(NSString*)FNTfile;
-
-/**
- *  Initializes and returns a CCBMFontConfiguration object from a specified font file value.
- *
- *  @param FNTfile FNTfile Font configuration file.
- *
- *  @return An initialized CCBMFontConfiguration Object.
- */
+//  Initializes and returns a CCBMFontConfiguration object from a specified font file value.
 -(id) initWithFNTfile:(NSString*)FNTfile;
 
 @end
@@ -145,8 +141,8 @@ typedef struct _KerningHashElement {
 /// @name Free Functions
 /// -----------------------------------------------------------------------
 
-/** Load/Cache font configuration file and return object. */
+// Load/Cache font configuration file and return object.
 CCBMFontConfiguration* FNTConfigLoadFile(NSString *file);
 
-/** Clear font configuration cache. */
+// Clear font configuration cache.
 void FNTConfigRemoveCache(void);
