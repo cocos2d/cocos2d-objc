@@ -41,11 +41,9 @@
 /** The starting radius of the particle is equal to the ending radius */
 #define CCParticleSystemStartRadiusEqualToEndRadius -1
 
-/**
- @typedef CCParticleSystemMode
- Particle system mode
- */
+/** Particle system mode. */
 typedef NS_ENUM(NSUInteger, CCParticleSystemMode) {
+    
 	/** Gravity mode (A mode) */
 	CCParticleSystemModeGravity,
 
@@ -53,11 +51,9 @@ typedef NS_ENUM(NSUInteger, CCParticleSystemMode) {
 	CCParticleSystemModeRadius,
 };
 
-/**
- @typedef tCCParticlePositionType
- possible types of particle positions
- */
+/** Particle system position type. */
 typedef NS_ENUM(NSUInteger, CCParticleSystemPositionType) {
+    
 	/** Living particles are attached to the world and are unaffected by emitter repositioning. */
 	CCParticleSystemPositionTypeFree,
 
@@ -70,10 +66,7 @@ typedef NS_ENUM(NSUInteger, CCParticleSystemPositionType) {
 	CCParticleSystemPositionTypeGrouped,
 };
 
-/** 
- @struct tCCParticle
- Structure that contains the values of each particle
- */
+/** Contains the values of each individual particle. */
 typedef struct _sCCParticle {
     
 	CGPoint		pos;
@@ -93,14 +86,14 @@ typedef struct _sCCParticle {
 	NSUInteger	atlasIndex;
     
 	union {
-		// Mode A: gravity, direction, radial accel, tangential accel
+		// Mode A
 		struct {
 			CGPoint		dir;
 			float		radialAccel;
 			float		tangentialAccel;
 		} A;
         
-		// Mode B: radius mode
+		// Mode B
 		struct {
 			float		angle;
 			float		degreesPerSecond;
@@ -519,7 +512,7 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
 /**
  *  Initializes and returns a particle system object from the specified dictionary and texture directory path values.
  *
- *  @param dictionary Particle dictionary object.
+ *  @param path Particle dictionary file path.
  *
  *  @return An initialized CCParticleSystem Object.
  */
