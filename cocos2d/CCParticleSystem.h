@@ -325,14 +325,14 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
 
 
 /// -----------------------------------------------------------------------
-/// @name General Particle Attributes
+/// @name Accessing Particle Attributes
 /// -----------------------------------------------------------------------
 
 /** True if particle system active. */
 @property (nonatomic,readonly) BOOL active;
 
 /** Quantity of particles that are being simulated at the moment. */
-@property (nonatomic,readonly) NSUInteger	particleCount;
+@property (nonatomic,readonly) NSUInteger particleCount;
 
 /** How many seconds the emitter wil run. -1 means 'forever'. */
 @property (nonatomic,readwrite,assign) float duration;
@@ -423,7 +423,7 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
 
 
 /// -----------------------------------------------------------------------
-/// @name Gravity Mode Specific Attributes
+/// @name Accessing Gravity Mode Specific Attributes
 /// -----------------------------------------------------------------------
 
 /** Gravity value. Only available in 'Gravity' mode. */
@@ -449,7 +449,7 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
 
 
 /// -----------------------------------------------------------------------
-/// @name Radius Mode Specific Attributes
+/// @name Accessing Radius Mode Specific Attributes
 /// -----------------------------------------------------------------------
 
 /** The starting radius of the particles. Only available in 'Radius' mode. */
