@@ -26,6 +26,7 @@
 
 #import "CCParticleSystemQuad.h"
 
+// OS X
 @interface CCParticleSystemQuad ()
 
 // Initialices the indices for the vertices.

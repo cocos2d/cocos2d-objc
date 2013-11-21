@@ -110,11 +110,12 @@
 /**
  *  Creates and returns a particle batch node object from the specified texture and capacity values.
  *
- *  @param imageFile Image file path.
+ *  @param fileImage Image file path.
  *  @param capacity  Initial capacity.
  *
  *  @return The CCParticleBatchNode Object.
  */
+
 +(id)batchNodeWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity;
 
 
@@ -135,7 +136,7 @@
 /**
  *  Initializes and returns a particle batch node object from the specified texture and capacity values.
  *
- *  @param imageFile Image file path.
+ *  @param fileImage Image file path.
  *  @param capacity Initial capacity.
  *
  *  @return An initialized CCParticleBatchNode Object.
