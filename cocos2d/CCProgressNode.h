@@ -26,22 +26,37 @@
 #import <Foundation/Foundation.h>
 #import "CCSprite.h"
 
-/** Types of progress
- @since v0.99.1
- */
+/** Progress Node Type. */
 typedef NS_ENUM(NSUInteger, CCProgressNodeType) {
-	/// Radial Counter-Clockwise
+    
+	// Radial Counter-Clockwise
 	CCProgressNodeTypeRadial,
-	/// Bar
+    
+	// Bar
 	CCProgressNodeTypeBar,
 };
 
 /**
- CCProgresstimer is a subclass of CCNode.
- It renders the inner sprite according to the percentage.
- The progress can be Radial, Horizontal or vertical.
- @since v0.99.1
+ CCProgressNode displays a sprite with a progressive reveal.
+ 
+ ### Notes
+ 
+ - Progress type can currently be Radial, Horizontal or vertical.
+ - Midpoint is used to modify the start position:
+    - Radial type the mid point changes the center point.
+    - Bar type the midpoint changes the bar growth, it expands from the center but clamps to the sprites edge:
+        - Left  -> Right use (0,0)
+        - Right -> Left use (1,y)
+        - Bottom -> Top use (x,0)
+        - Top -> Bottom use (x,1)
+ 
+ - Progress percentage is 0 -> 100.
+ - Bar change rate allows the bar type to move the component at a specific rate.
+    - Set the rate to zero to make sure it stays at 100%
+    - Example: If you want a Left -> Right bar and also have the height grow set the rate to (0,1) and modpoint to (0,0.5f)
+  
  */
+
 @interface CCProgressNode : CCNodeRGBA {
 	CCProgressNodeType	_type;
 	float				_percentage;
@@ -53,38 +68,56 @@ typedef NS_ENUM(NSUInteger, CCProgressNodeType) {
 	CGPoint				_barChangeRate;
 	BOOL				_reverseDirection;
 }
-/**	Change the percentage to change progress. */
+
+
+/// -----------------------------------------------------------------------
+/// @name Accessing the Progress Node Attributes
+/// -----------------------------------------------------------------------
+
+/**	Progress type. */
 @property (nonatomic, readwrite) CCProgressNodeType type;
+
+/**	Reverse progress direction. */
 @property (nonatomic, readwrite) BOOL reverseDirection;
 
-/**
- *	Midpoint is used to modify the progress start position.
- *	If you're using radials type then the midpoint changes the center point
- *	If you're using bar type the the midpoint changes the bar growth
- *		it expands from the center but clamps to the sprites edge so:
- *		you want a left to right then set the midpoint all the way to ccp(0,y)
- *		you want a right to left then set the midpoint all the way to ccp(1,y)
- *		you want a bottom to top then set the midpoint all the way to ccp(x,0)
- *		you want a top to bottom then set the midpoint all the way to ccp(x,1)
- */
+/** Progress start position. */
 @property (nonatomic, readwrite) CGPoint midpoint;
 
-/**
- *	This allows the bar type to move the component at a specific rate
- *	Set the component to 0 to make sure it stays at 100%.
- *	For example you want a left to right bar but not have the height stay 100%
- *	Set the rate to be ccp(0,1); and set the midpoint to = ccp(0,.5f);
- */
+/** Bar change rate. */
 @property (nonatomic, readwrite) CGPoint barChangeRate;
 
-/** Percentages are from 0 to 100 */
+/** Progress percentage. */
 @property (nonatomic, readwrite) float percentage;
 
-/** The image to show the progress percentage */
+/** The Sprite to use. */
 @property (nonatomic, readwrite, strong) CCSprite *sprite;
 
-/** Creates a progress timer with the sprite as the shape the timer goes through */
+
+/// -----------------------------------------------------------------------
+/// @name Creating a CCProgressNode Object
+/// -----------------------------------------------------------------------
+
+/**
+ *  Creates and returns a progress node object using the specified sprite value.
+ *
+ *  @param sprite The CCSprite to use.
+ *
+ *  @return The CCProgressNode Object.
+ */
 + (id) progressWithSprite:(CCSprite*) sprite;
-/** Initializes a progress timer with the sprite as the shape the timer goes through */
+
+
+/// -----------------------------------------------------------------------
+/// @name Initializing a CCProgressNode Object
+/// -----------------------------------------------------------------------
+
+/**
+ *  Initializes and returns a progress node object using the specified sprite value.
+ *
+ *  @param sprite The CCSprite to use.
+ *
+ *  @return An initialized CCProgressNode Object.
+ */
 - (id) initWithSprite:(CCSprite*) sprite;
+
 @end
