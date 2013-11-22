@@ -269,7 +269,7 @@ int compareInts (const void * a, const void * b);
 	// if GID == 0, then no tile is present
 	if( gid ) {
 		int z = pos.x + pos.y * _layerSize.width;
-#warning Look over this implementation, may inefficient
+
         NSString* zStr = [NSString stringWithFormat:@"%d",z];
 		tile = (CCSprite*) [self getChildByName:zStr];
 
@@ -287,7 +287,7 @@ int compareInts (const void * a, const void * b);
 			[tile setOpacity:_opacity];
 
 			NSUInteger indexForZ = [self atlasIndexForExistantZ:z];
-			[self addSpriteWithoutQuad:tile z:indexForZ tag:z];
+			[self addSpriteWithoutQuad:tile z:indexForZ name:zStr];
 		}
 	}
 	return tile;
