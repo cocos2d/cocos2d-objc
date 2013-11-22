@@ -11,7 +11,7 @@
 @interface AppController : BaseAppController
 @end
 
-@interface MainLayer : CCLayer<CCPhysicsCollisionDelegate>
+@interface MainLayer : CCNode<CCPhysicsCollisionDelegate>
 @end
 
 @implementation MainLayer
@@ -178,7 +178,7 @@
 	// Set multiple touches on
 	[[director_ view] setMultipleTouchEnabled:YES];
 
-	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
+	[CCTexture setDefaultAlphaPixelFormat:CCTexturePixelFormat_RGBA8888];
 
 	CCFileUtils *sharedFileUtils = [CCFileUtils sharedFileUtils];
 	[sharedFileUtils setEnableFallbackSuffixes:YES];			// Default: NO. No fallback suffixes are going to be used

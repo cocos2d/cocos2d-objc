@@ -1903,6 +1903,9 @@
 		D35C0BF41808637C0071B674 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D35C0BF31808637C0071B674 /* XCTest.framework */; };
 		D35C0BF51808637C0071B674 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		D35C0BF61808637C0071B674 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		D395DB18183D60690024997E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3876C10446C6E00150883 /* AVFoundation.framework */; };
+		D395DB1D183D607C0024997E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3876E10446C6E00150883 /* AudioToolbox.framework */; };
+		D395DB1E183D60820024997E /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3877010446C6E00150883 /* OpenAL.framework */; };
 		DA5F0EC50FFE96D400C7C82E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		DA5F0EC60FFE96D400C7C82E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
 		DA5F0EC70FFE96D400C7C82E /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
@@ -4431,6 +4434,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D395DB1E183D60820024997E /* OpenAL.framework in Frameworks */,
+				D395DB1D183D607C0024997E /* AudioToolbox.framework in Frameworks */,
+				D395DB18183D60690024997E /* AVFoundation.framework in Frameworks */,
 				D355245C17F5E42500096CA3 /* libcocos2d.a in Frameworks */,
 				D355245D17F5E42500096CA3 /* Foundation.framework in Frameworks */,
 				D355245E17F5E42500096CA3 /* UIKit.framework in Frameworks */,
@@ -5345,7 +5351,7 @@
 				A02E260616A4EE00007F064C /* libbuild all libs.a */,
 				A02E260C16A4EE00007F064C /* libcocos2d.a */,
 				A02E261A16A4EE00007F064C /* libkazmath.a */,
-				D36F7E4C1815812000E94F72 /* cocos2d Tests.xctest */,
+				D36F7E4C1815812000E94F72 /* UnitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -6502,10 +6508,10 @@
 			remoteRef = A02E261916A4EE00007F064C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		D36F7E4C1815812000E94F72 /* cocos2d Tests.xctest */ = {
+		D36F7E4C1815812000E94F72 /* UnitTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = "cocos2d Tests.xctest";
+			path = UnitTests.xctest;
 			remoteRef = D36F7E4B1815812000E94F72 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};

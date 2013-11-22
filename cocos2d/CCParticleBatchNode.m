@@ -79,7 +79,7 @@
 }
 
 +(id)batchNodeWithTexture:(CCTexture *)tex capacity:(NSUInteger) capacity
-{
+{ 
 	return [[self alloc] initWithTexture:tex capacity:capacity];
 }
 
