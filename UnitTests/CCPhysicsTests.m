@@ -331,4 +331,66 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
 	TestBasicSequenceHelper(self, physicsNode, parent, node, body);
 }
 
+-(void)testCollisionGroups
+{
+	CCPhysicsNode *physicsNode = [CCPhysicsNode node];
+	
+	NSString *noCollide = @"nocollide";
+	
+	CCNode *node1 = [CCNode node];
+	node1.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1.0 andCenter:CGPointZero];
+	node1.physicsBody.collisionGroup = noCollide;
+	[physicsNode addChild:node1];
+	
+	CCNode *node2 = [CCNode node];
+	node2.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1.0 andCenter:CGPointZero];
+	node2.physicsBody.collisionGroup = noCollide;
+	[physicsNode addChild:node2];
+	
+	// Force entering the scene to set up the physics objects.
+	[physicsNode onEnter];
+	
+	// Step the physics for a while.
+	for(int i=0; i<100; i++){
+		[physicsNode fixedUpdate:1.0/60.0];
+	}
+	
+	// Both nodes should be at (0, 0)
+	XCTAssertTrue(CGPointEqualToPoint(node1.position, CGPointZero) , @"");
+	XCTAssertTrue(CGPointEqualToPoint(node2.position, CGPointZero) , @"");
+}
+
+-(void)testAffectedByGravity
+{
+	CCPhysicsNode *physicsNode = [CCPhysicsNode node];
+	physicsNode.gravity = ccp(0, -100);
+	
+	NSString *noCollide = @"nocollide";
+	
+	CCNode *node1 = [CCNode node];
+	node1.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1.0 andCenter:CGPointZero];
+	node1.physicsBody.collisionGroup = noCollide;
+	[physicsNode addChild:node1];
+	
+	CCNode *node2 = [CCNode node];
+	node2.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1.0 andCenter:CGPointZero];
+	node2.physicsBody.collisionGroup = noCollide;
+	node2.physicsBody.affectedByGravity = NO;
+	[physicsNode addChild:node2];
+	
+	// Force entering the scene to set up the physics objects.
+	[physicsNode onEnter];
+	
+	// Step the physics for a while.
+	for(int i=0; i<100; i++){
+		[physicsNode fixedUpdate:1.0/60.0];
+	}
+	
+	// Node1 should move down due to gravity
+	XCTAssertTrue(node1.position.y < 0.0, @"");
+	
+	// Node2 should stay at (0, 0)
+	XCTAssertTrue(node2.position.y == 0.0, @"");
+}
+
 @end

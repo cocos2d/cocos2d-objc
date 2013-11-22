@@ -219,7 +219,7 @@ typedef enum ccTMXTileFlags_ {
 +(id) formatWithXML:(NSString*)tmxString resourcePath:(NSString*)resourcePath;
 
 /** initializes a TMX format with a tmx file */
--(id) initWithTMXFile:(NSString*)tmxFile;
+-(id) initWithFile:(NSString*)tmxFile;
 
 /** initializes a TMX format with an XML string and a TMX resource path */
 -(id) initWithXML:(NSString*)tmxString resourcePath:(NSString*)resourcePath;

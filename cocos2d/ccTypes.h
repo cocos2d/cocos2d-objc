@@ -493,6 +493,19 @@ typedef NS_ENUM(char, CCScaleType) {
     CCScaleTypeScaled,
 };
     
+static inline BOOL CCPositionTypeIsBasicPoints(CCPositionType type)
+{
+    return (type.xUnit == CCPositionUnitPoints
+            && type.yUnit == CCPositionUnitPoints
+            && type.corner == CCPositionReferenceCornerBottomLeft);
+}
+
+static inline BOOL CCContentSizeTypeIsBasicPoints(CCContentSizeType type)
+{
+    return (type.widthUnit == CCContentSizeUnitPoints
+            && type.heightUnit == CCContentSizeUnitPoints);
+}
+    
 #ifdef __cplusplus
 }
 #endif
