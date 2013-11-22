@@ -175,7 +175,7 @@
 	return self;
 }
 
--(id) initWithTMXFile:(NSString*)tmxFile
+-(id) initWithFile:(NSString*)tmxFile
 {
 	if( (self=[super init])) {
 		[self internalInit:tmxFile resourcePath:nil];
