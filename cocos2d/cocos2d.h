@@ -87,7 +87,6 @@
 #import "CCTiledMapObjectGroup.h"
 #import "CCTMXXMLParser.h"
 
-#import "CCLayer.h"
 #import "CCDrawingPrimitives.h"
 #import "CCScene.h"
 //#import "CCScheduler.h"
