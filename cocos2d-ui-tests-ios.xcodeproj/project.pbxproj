@@ -10,6 +10,7 @@
 		758A690F1843E18700D1A8D2 /* ParallaxTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 758A690E1843E18700D1A8D2 /* ParallaxTest.m */; };
 		758A6C6C1843E5CB00D1A8D2 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 758A6C6A1843E5BE00D1A8D2 /* TileMaps */; };
 		758A6C6D1843E5CB00D1A8D2 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 758A6C6B1843E5C500D1A8D2 /* Images */; };
+		758A6C711844011E00D1A8D2 /* CCLabelTTFTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 758A6C701844011E00D1A8D2 /* CCLabelTTFTest.m */; };
 		B70AFC30180F2D7400516435 /* CCTransitionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B70AFC2F180F2D7400516435 /* CCTransitionTest.m */; };
 		B71B087C17EA5B490082EBC0 /* TestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = B71B087B17EA5B490082EBC0 /* TestBase.m */; };
 		B71B088217EA5B6A0082EBC0 /* CCScrollViewTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B71B088117EA5B6A0082EBC0 /* CCScrollViewTest.m */; };
@@ -99,6 +100,8 @@
 		758A690E1843E18700D1A8D2 /* ParallaxTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParallaxTest.m; path = "cocos2d-ui-tests/tests/ParallaxTest.m"; sourceTree = SOURCE_ROOT; };
 		758A6C6A1843E5BE00D1A8D2 /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TileMaps; path = Resources/TileMaps; sourceTree = SOURCE_ROOT; };
 		758A6C6B1843E5C500D1A8D2 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Images; path = Resources/Images; sourceTree = SOURCE_ROOT; };
+		758A6C6F1844011E00D1A8D2 /* CCLabelTTFTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCLabelTTFTest.h; path = "cocos2d-ui-tests/tests/CCLabelTTFTest.h"; sourceTree = SOURCE_ROOT; };
+		758A6C701844011E00D1A8D2 /* CCLabelTTFTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCLabelTTFTest.m; path = "cocos2d-ui-tests/tests/CCLabelTTFTest.m"; sourceTree = SOURCE_ROOT; };
 		B70AFC2E180F2D7400516435 /* CCTransitionTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTransitionTest.h; path = "cocos2d-ui-tests/tests/CCTransitionTest.h"; sourceTree = SOURCE_ROOT; };
 		B70AFC2F180F2D7400516435 /* CCTransitionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTransitionTest.m; path = "cocos2d-ui-tests/tests/CCTransitionTest.m"; sourceTree = SOURCE_ROOT; };
 		B71B087A17EA5B490082EBC0 /* TestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestBase.h; path = "cocos2d-ui-tests/TestBase.h"; sourceTree = SOURCE_ROOT; };
@@ -209,6 +212,8 @@
 				B77060AA1832E3310043CC67 /* CCTextureCacheTest.m */,
 				758A690D1843E18700D1A8D2 /* ParallaxTest.h */,
 				758A690E1843E18700D1A8D2 /* ParallaxTest.m */,
+				758A6C6F1844011E00D1A8D2 /* CCLabelTTFTest.h */,
+				758A6C701844011E00D1A8D2 /* CCLabelTTFTest.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -454,6 +459,7 @@
 				B772F69F1811C8D9005C069B /* CCResponderTest.m in Sources */,
 				B77060141831A17C0043CC67 /* ObjectALTest.m in Sources */,
 				B7EE69CF1819D82300B983FE /* CCLayoutTest.m in Sources */,
+				758A6C711844011E00D1A8D2 /* CCLabelTTFTest.m in Sources */,
 				758A690F1843E18700D1A8D2 /* ParallaxTest.m in Sources */,
 				B7E2622117E7D3B2007067F0 /* MainMenu.m in Sources */,
 				B70AFC30180F2D7400516435 /* CCTransitionTest.m in Sources */,
