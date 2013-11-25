@@ -190,7 +190,12 @@ and when to execute the Scenes.
  */
 @property (nonatomic, readwrite, unsafe_unretained) id<CCDirectorDelegate> delegate;
 
-/** Position scaling factor, default is 2 for tablets and 1 for phones. Positions and content sizes are scale by this factor if the position type is set to scale.
+/** Content scaling factor. Sets the ratio of Cocos2D "points" to pixels. Default value is initalized from the content scale of the GL view used by the director.
+ @since v3.0
+ */
+@property(nonatomic, assign) CGFloat contentScaleFactor;
+
+/** UI scaling factor, default value is 1. Positions and content sizes are scale by this factor if the position type is set to scale.
  @since v3.0
  */
 @property (nonatomic,readwrite,assign) float positionScaleFactor;
@@ -341,3 +346,5 @@ and when to execute the Scenes.
 - (void) setDepthTest: (BOOL) on;
 @end
 
+// optimization. Should only be used to read it. Never to write it.
+extern CGFloat	__ccContentScaleFactor;

@@ -60,11 +60,6 @@
 #import "CCDirector_Private.h"
 
 #pragma mark -
-#pragma mark Director - global variables (optimization)
-
-CGFloat	__ccContentScaleFactor = 1;
-
-#pragma mark -
 #pragma mark Director
 
 @interface CCDirector ()
@@ -98,26 +93,11 @@ CGFloat	__ccContentScaleFactor = 1;
 - (id) init
 {
 	if( (self=[super init]) ) {
-
-		__ccContentScaleFactor = 1;
-
-        
-        
-
 		// running thread is main thread on iOS
 		_runningThread = [NSThread currentThread];
 		
 		// Apparently it comes with a default view, and we don't want it
 //		[self setView:nil];
-        
-        if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        {
-            self.positionScaleFactor = 2;
-        }
-        else
-        {
-            self.positionScaleFactor = 1;
-        }
 	}
 
 	return self;
@@ -175,7 +155,6 @@ CGFloat	__ccContentScaleFactor = 1;
 
 -(void) setProjection:(CCDirectorProjection)projection
 {
-	CGSize size = _winSizeInPixels;
 	CGSize sizePoint = _winSizeInPoints;
     
 	[self setViewport];
@@ -204,7 +183,7 @@ CGFloat	__ccContentScaleFactor = 1;
 			kmGLLoadIdentity();
 
 			// issue #1334
-			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, zeye*2);
+			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)sizePoint.width/sizePoint.height, 0.1f, zeye*2);
 //			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
 
 			kmGLMultMatrix(&matrixPerspective);
@@ -247,28 +226,6 @@ CGFloat	__ccContentScaleFactor = 1;
 	[self performSelector:@selector(drawScene) onThread:thread withObject:nil waitUntilDone:YES];
 }
 
-#pragma mark Director - Retina Display
-
--(CGFloat) contentScaleFactor
-{
-	return __ccContentScaleFactor;
-}
-
--(void) setContentScaleFactor:(CGFloat)scaleFactor
-{
-	if( scaleFactor != __ccContentScaleFactor ) {
-
-		__ccContentScaleFactor = scaleFactor;
-		_winSizeInPoints = CGSizeMake( _winSizeInPixels.width / scaleFactor, _winSizeInPixels.height / scaleFactor );
-
-		// update projection
-		[self setProjection:_projection];
-		
-		[[CCFileUtils sharedFileUtils] buildSearchResolutionsOrder];
-		[self createStatsLabel];
-	}
-}
-
 // overriden, don't call super
 -(void) reshapeProjection:(CGSize)size
 {
@@ -281,6 +238,8 @@ CGFloat	__ccContentScaleFactor = 1;
 		[_delegate directorDidReshapeProjection:self];
 }
 
+#pragma mark Director Point Convertion
+
 static void
 GLToClipTransform(kmMat4 *transformOut)
 {
@@ -292,8 +251,6 @@ GLToClipTransform(kmMat4 *transformOut)
 	
 	kmMat4Multiply(transformOut, &projection, &modelview);
 }
-
-#pragma mark Director Point Convertion
 
 -(CGPoint)convertToGL:(CGPoint)uiPoint
 {
