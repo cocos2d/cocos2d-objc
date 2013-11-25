@@ -36,24 +36,6 @@
 /** CCDirector extensions for iPhone
  */
 @interface CCDirector (iOSExtension)
-
-/** The size in pixels of the surface. It could be different than the screen size.
- High-res devices might have a higher surface size than the screen size.
- In non High-res device the contentScale will be emulated.
-
- The recommend way to enable Retina Display is by using the "enableRetinaDisplay:(BOOL)enabled" method.
-
- @since v0.99.4
- */
--(void) setContentScaleFactor:(CGFloat)scaleFactor;
-
-/** Will enable Retina Display on devices that supports it.
- It will enable Retina Display on iPhone4 and iPod Touch 4.
- It will return YES, if it could enabled it, otherwise it will return NO.
-
-/** returns the content scale factor */
--(CGFloat) contentScaleFactor;
-
 /** converts a UITouch to a GL point */
 -(CGPoint)convertTouchToGL:(UITouch*)touch;
 @end
@@ -89,8 +71,5 @@
 }
 -(void) mainLoop:(id)sender;
 @end
-
-// optimization. Should only be used to read it. Never to write it.
-extern CGFloat	__ccContentScaleFactor;
 
 #endif // __CC_PLATFORM_IOS

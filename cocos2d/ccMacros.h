@@ -210,17 +210,10 @@ do {															\
 
 
 
-#if __CC_PLATFORM_IOS
-
-/****************************/
-/** RETINA DISPLAY ENABLED **/
-/****************************/
-
 /** @def CC_CONTENT_SCALE_FACTOR
- On Mac it returns 1;
- On iPhone it returns 2 if RetinaDisplay is On. Otherwise it returns 1
+ Factor relating pixel to point coordinates.
  */
-extern float __ccContentScaleFactor;
+extern CGFloat __ccContentScaleFactor;
 #define CC_CONTENT_SCALE_FACTOR() __ccContentScaleFactor
 
 
@@ -261,24 +254,6 @@ CGSizeMake( (__size_in_pixels__).width / CC_CONTENT_SCALE_FACTOR(), (__size_in_p
  */
 #define CC_SIZE_POINTS_TO_PIXELS(__size_in_points__)																		\
 CGSizeMake( (__size_in_points__).width * CC_CONTENT_SCALE_FACTOR(), (__size_in_points__).height * CC_CONTENT_SCALE_FACTOR())
-
-
-#elif defined(__CC_PLATFORM_MAC)
-
-/*****************************/
-/** RETINA DISPLAY DISABLED **/
-/*****************************/
-
-#define CC_CONTENT_SCALE_FACTOR() 1
-#define CC_RECT_PIXELS_TO_POINTS(__pixels__) __pixels__
-#define CC_RECT_POINTS_TO_PIXELS(__points__) __points__
-#define CC_SIZE_PIXELS_TO_POINTS(__pixels__) __pixels__
-#define CC_SIZE_POINTS_TO_PIXELS(__points__) __points__
-#define CC_POINT_PIXELS_TO_POINTS(__pixels__) __pixels__
-#define CC_POINT_POINTS_TO_PIXELS(__points__) __points__
-
-
-#endif // __CC_PLATFORM_MAC
 
 
 /**********************/

@@ -72,6 +72,8 @@
 #pragma mark -
 #pragma mark Director - global variables (optimization)
 
+CGFloat	__ccContentScaleFactor = 1;
+
 // XXX it shoul be a Director ivar. Move it there once support for multiple directors is added
 NSUInteger	__ccNumberOfDraws = 0;
 
@@ -176,7 +178,9 @@ static CCDirector *_sharedDirector = nil;
         _responderManager = [ CCResponderManager responderManager ];
 
 		_winSizeInPixels = _winSizeInPoints = CGSizeZero;
-                
+		
+		__ccContentScaleFactor = 1;
+		self.positionScaleFactor = 1;
 	}
 
 	return self;
@@ -317,7 +321,7 @@ static CCDirector *_sharedDirector = nil;
 
 		// set size
 		CGSize size = CCNSSizeToCGSize(__view.bounds.size);
-		CGFloat scale = __view.layer.contentsScale;
+		CGFloat scale = __view.layer.contentsScale ?: 1.0;
 		
 		_winSizeInPixels = CGSizeMake(size.width*scale, size.height*scale);
 		_winSizeInPoints = size;
@@ -344,6 +348,26 @@ static CCDirector *_sharedDirector = nil;
 
 #pragma mark Director Scene Landscape
 
+-(CGFloat) contentScaleFactor
+{
+	return __ccContentScaleFactor;
+}
+
+-(void) setContentScaleFactor:(CGFloat)scaleFactor
+{
+	if( scaleFactor != __ccContentScaleFactor ) {
+
+		__ccContentScaleFactor = scaleFactor;
+		_winSizeInPoints = CGSizeMake( _winSizeInPixels.width / scaleFactor, _winSizeInPixels.height / scaleFactor );
+
+		// update projection
+		[self setProjection:_projection];
+		
+		[[CCFileUtils sharedFileUtils] buildSearchResolutionsOrder];
+		[self createStatsLabel];
+	}
+}
+
 -(CGPoint)convertToGL:(CGPoint)uiPoint
 {
 	CCLOG(@"CCDirector#convertToGL: OVERRIDE ME.");
@@ -368,7 +392,9 @@ static CCDirector *_sharedDirector = nil;
 
 -(void) reshapeProjection:(CGSize)newWindowSize
 {
-	_winSizeInPixels = _winSizeInPoints = newWindowSize;
+	_winSizeInPixels = newWindowSize;
+	_winSizeInPoints = CGSizeMake( _winSizeInPixels.width / __ccContentScaleFactor, _winSizeInPixels.height / __ccContentScaleFactor );
+	
 	[self setProjection:_projection];
 }
 

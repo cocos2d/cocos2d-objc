@@ -53,7 +53,7 @@ enum  {
 	BOOL			_isFullScreen;
 	int				_resizeMode;
 	CGPoint			_winOffset;
-    CGSize			_originalWinSize;
+	CGSize			_originalWinSizeInPoints;
 
 	NSWindow		*_fullScreenWindow;
 
@@ -69,7 +69,7 @@ enum  {
 // resize mode: with or without scaling
 @property (nonatomic, readwrite) int resizeMode;
 
-@property (nonatomic, readwrite) CGSize originalWinSize;
+@property (nonatomic, readwrite) CGSize originalWinSizeInPoints;
 
 /** Sets the view in fullscreen or window mode */
 - (void) setFullScreen:(BOOL)fullscreen;
