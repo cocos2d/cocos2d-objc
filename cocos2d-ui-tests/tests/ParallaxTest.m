@@ -132,7 +132,7 @@
 
 #if ( TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR )
 
-// TODO: this method isn't being called! We are marked as userInteractionEnabled = YES, so....
+// TODO: this method isn't being called! We are marked as userInteractionEnabled = YES, so I guess this is a bug.
 - (void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
   UITouch* touch = [ touches anyObject ];
