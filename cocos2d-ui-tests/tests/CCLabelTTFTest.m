@@ -81,12 +81,18 @@ static int vAlignCount = sizeof(verticalAlignment) / sizeof(*verticalAlignment);
   
   [self.contentNode removeAllChildren ];
   
-  // TODO: Why aren't the vertical and horizontal alignments actually ever set?
-	CCLabelTTF *top = [CCLabelTTF labelWithString:aFont fontName:aFont fontSize:24];
+  CCLabelTTF *top = [CCLabelTTF labelWithString:aFont fontName:aFont fontSize:24];
 	CCLabelTTF *left = [CCLabelTTF labelWithString:@"alignment left" fontName:aFont fontSize:fontSize dimensions:blockSize];
 	CCLabelTTF *center = [CCLabelTTF labelWithString:@"alignment center" fontName:aFont fontSize:fontSize dimensions:blockSize];
 	CCLabelTTF *right = [CCLabelTTF labelWithString:@"alignment right" fontName:aFont fontSize:fontSize dimensions:blockSize];
   
+  [left setHorizontalAlignment:CCTextAlignmentLeft];
+  [center setHorizontalAlignment:CCTextAlignmentCenter];
+  [right setHorizontalAlignment:CCTextAlignmentRight];
+  
+  [left setVerticalAlignment:verticalAlignment[vAlignIdx]];
+  [center setVerticalAlignment:verticalAlignment[vAlignIdx]];
+  [right setVerticalAlignment:verticalAlignment[vAlignIdx]];
   
   CCLayerColor *leftColor = [CCLayerColor layerWithColor:ccc4(100, 100, 100, 255) width:blockSize.width height:blockSize.height];
   CCLayerColor *centerColor = [CCLayerColor layerWithColor:ccc4(200, 100, 100, 255) width:blockSize.width height:blockSize.height];
