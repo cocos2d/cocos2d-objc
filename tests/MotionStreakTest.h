@@ -8,7 +8,7 @@
 @interface AppController : BaseAppController
 @end
 
-@interface MotionStreakTest : CCLayer
+@interface MotionStreakTest : CCNode
 {
 	CCMotionStreak *streak_;
 }

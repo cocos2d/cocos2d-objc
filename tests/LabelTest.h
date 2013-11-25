@@ -5,7 +5,7 @@
 @interface AppController : BaseAppController
 @end
 
-@interface AtlasDemo: CCLayer
+@interface AtlasDemo: CCNode
 {
 }
 -(NSString*) title;
