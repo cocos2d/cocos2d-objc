@@ -56,29 +56,34 @@ Class restartAction()
 
 
 @implementation ParallaxDemo
--(id) init
+
+-(void)setup
 {
-	if( (self=[super init]) ) {
+  CGSize s = [[CCDirector sharedDirector] viewSize];
+  
+  CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
+  [self addChild: label z:1];
+  [label setPosition: ccp(s.width/2, s.height-50)];
+  
+//  CCMenuItemImage *item1 = [CCMenuItemImage itemWithNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
+//  CCMenuItemImage *item2 = [CCMenuItemImage itemWithNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
+//  CCMenuItemImage *item3 = [CCMenuItemImage itemWithNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
+//  
+//  CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
+//  
+//  menu.position = CGPointZero;
+//  item1.position = ccp( s.width/2 - item2.contentSize.width*2, item2.contentSize.height/2);
+//  item2.position = ccp( s.width/2, item2.contentSize.height/2);
+//  item3.position = ccp( s.width/2 + item2.contentSize.width*2, item2.contentSize.height/2);
+//  [self addChild: menu z:1];
+}
 
-		CGSize s = [[CCDirector sharedDirector] winSize];
-
-		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
-		[self addChild: label z:1];
-		[label setPosition: ccp(s.width/2, s.height-50)];
-
-		CCMenuItemImage *item1 = [CCMenuItemImage itemWithNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
-		CCMenuItemImage *item2 = [CCMenuItemImage itemWithNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
-		CCMenuItemImage *item3 = [CCMenuItemImage itemWithNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-
-		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
-
-		menu.position = CGPointZero;
-		item1.position = ccp( s.width/2 - item2.contentSize.width*2, item2.contentSize.height/2);
-		item2.position = ccp( s.width/2, item2.contentSize.height/2);
-		item3.position = ccp( s.width/2 + item2.contentSize.width*2, item2.contentSize.height/2);
-		[self addChild: menu z:1];
+-(id)init
+{
+	if((self = [super init])){
+		[self setup];
 	}
-
+	
 	return self;
 }
 
@@ -130,18 +135,15 @@ Class restartAction()
 
 
 		// Middle layer: a Tile map atlas
-		CCTileMapAtlas *tilemap = [CCTileMapAtlas tileMapAtlasWithTileFile:@"TileMaps/tiles.png" mapFile:@"TileMaps/levelmap.tga" tileWidth:16 tileHeight:16];
-		[tilemap releaseMap];
+		CCTiledMap *tilemap = [CCTiledMap tiledMapWithFile:@"TileMaps/orthogonal-test-movelayer.tmx" ];
+//                           tileMapAtlasWithTileFile:@"TileMaps/tiles.png" mapFile:@"TileMaps/levelmap.tga" tileWidth:16 tileHeight:16];
+//		[tilemap releaseMap];
 
 		// change the transform anchor to 0,0 (optional)
 		tilemap.anchorPoint = ccp(0, 0);
 
-		// Anti Aliased images
-		[tilemap.texture setAntiAliasTexParameters];
-
-
 		// background layer: another image
-		CCSprite *background = [CCSprite spriteWithFile:@"background.png"];
+		CCSprite *background = [CCSprite spriteWithImageNamed:@"background.png"];
 		// scale the image (optional)
 		background.scale = 1.5f;
 		// change the transform anchor point (optional)
@@ -166,17 +168,17 @@ Class restartAction()
 		// now create some actions that will move the 'void' node
 		// and the children of the 'void' node will move at different
 		// speed, thus, simulation the 3D environment
-		id goUp = [CCMoveBy actionWithDuration:4 position:ccp(0,-500)];
+		id goUp = [CCActionMoveBy actionWithDuration:4 position:ccp(0,-500)];
 		id goDown = [goUp reverse];
-		id go = [CCMoveBy actionWithDuration:8 position:ccp(-1000,0)];
+		id go = [CCActionMoveBy actionWithDuration:8 position:ccp(-1000,0)];
 		id goBack = [go reverse];
-		id seq = [CCSequence actions:
+		id seq = [CCActionSequence actions:
 				  goUp,
 				  go,
 				  goDown,
 				  goBack,
 				  nil];
-		[voidNode runAction: [CCRepeatForever actionWithAction:seq ] ];
+		[voidNode runAction: [CCActionRepeatForever actionWithAction:seq ] ];
 
 		[self addChild:voidNode];
 	}
@@ -199,7 +201,7 @@ Class restartAction()
 	if( (self=[super init] )) {
 
 		// Top Layer, a simple image
-		CCSprite *cocosImage = [CCSprite spriteWithFile:@"powered.png"];
+		CCSprite *cocosImage = [CCSprite spriteWithImageNamed:@"powered.png"];
 		// scale the image (optional)
 		cocosImage.scale = 2.5f;
 		// change the transform anchor point to 0,0 (optional)
@@ -207,19 +209,20 @@ Class restartAction()
 
 
 		// Middle layer: a Tile map atlas
-		CCTileMapAtlas *tilemap = [CCTileMapAtlas tileMapAtlasWithTileFile:@"TileMaps/tiles.png" mapFile:@"TileMaps/levelmap.tga" tileWidth:16 tileHeight:16];
-		[tilemap releaseMap];
+		CCTiledMap *tilemap = [CCTiledMap tiledMapWithFile:@"TileMaps/orthogonal-test-movelayer.tmx" ];
+//		CCTileMapAtlas *tilemap = [CCTileMapAtlas tileMapAtlasWithTileFile:@"TileMaps/tiles.png" mapFile:@"TileMaps/levelmap.tga" tileWidth:16 tileHeight:16];
+//		[tilemap releaseMap];
 
 		// change the transform anchor to 0,0 (optional)
 		tilemap.anchorPoint = ccp(0, 0);
 
 		// Anti Aliased images
-		[tilemap.texture setAntiAliasTexParameters];
+	//	[tilemap.texture setAntiAliasTexParameters];
 
 
 
 		// background layer: another image
-		CCSprite *background = [CCSprite spriteWithFile:@"background.png"];
+		CCSprite *background = [CCSprite spriteWithImageNamed:@"background.png"];
 		// scale the image (optional)
 		background.scale = 1.5f;
 		// change the transform anchor point (optional)
