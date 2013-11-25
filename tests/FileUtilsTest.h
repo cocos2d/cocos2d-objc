@@ -6,7 +6,7 @@
 @interface AppController : BaseAppController
 @end
 
-@interface FileUtilsDemo : CCLayer
+@interface FileUtilsDemo : CCNode
 {
     CCTextureAtlas	*atlas;
 }

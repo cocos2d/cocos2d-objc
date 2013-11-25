@@ -9,7 +9,7 @@
 @interface AppController : BaseAppController
 @end
 
-@interface Layer1 : CCLayer
+@interface Layer1 : CCNode
 {
 	CCLabelBMFont *label0;
 	CCLabelBMFont *label1;

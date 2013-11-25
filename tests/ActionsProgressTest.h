@@ -9,7 +9,7 @@
 }
 @end
 
-@interface SpriteDemo : CCLayer
+@interface SpriteDemo : CCNode
 {
 }
 -(NSString*) title;

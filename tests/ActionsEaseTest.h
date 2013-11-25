@@ -7,7 +7,7 @@
 @interface AppController : BaseAppController
 @end
 
-@interface SpriteDemo : CCLayer
+@interface SpriteDemo : CCNode
 {
 	CCSprite * grossini;
 	CCSprite *tamara;

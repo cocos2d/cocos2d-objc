@@ -433,7 +433,7 @@ Class restartAction()
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
-		CCLayer *sublayer = [CCLayer node];
+		CCNode *sublayer = [CCNode node];
 
 		CCSprite *sp1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
 		sp1.position = ccp(80, s.height/2);

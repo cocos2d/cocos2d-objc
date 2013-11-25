@@ -6,7 +6,7 @@
 @interface AppController : BaseAppController
 @end
 
-@interface SpriteDemo: CCLayer
+@interface SpriteDemo: CCNode
 {
     CCTextureAtlas	*atlas;
 }
