@@ -45,8 +45,9 @@
 #endif
             @"ObjectALTest",
             @"CCTextureCacheTest",
-            @"ParallaxTest",
             @"CCLabelTTFTest",
+            @"ParallaxTest",
+            @"ParticleTest",
             nil];
 }
 
