@@ -46,6 +46,7 @@
             @"ObjectALTest",
             @"CCTextureCacheTest",
             @"ParallaxTest",
+            @"CCLabelTTFTest",
             nil];
 }
 
