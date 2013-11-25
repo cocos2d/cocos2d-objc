@@ -27,38 +27,53 @@
 #import <Foundation/Foundation.h>
 #ifdef __CC_PLATFORM_IOS
 #import <CoreGraphics/CoreGraphics.h>
-#endif // IPHONE
+#endif
 
 @class CCSpriteFrame;
 @class CCTexture;
 @class CCSpriteFrame;
 
-/** CCAnimationFrame
- A frame of the animation. It contains information like:
-	- sprite frame name
-	- # of delay units.
-	- offset
- 
- @since v2.0
+/**
+ *  CCAnimationFrame contains core information relating to a single animation frame.
  */
-@interface CCAnimationFrame : NSObject <NSCopying>
-{
+@interface CCAnimationFrame : NSObject <NSCopying> {
     CCSpriteFrame* _spriteFrame;
     float _delayUnits;
     NSDictionary *_userInfo;
 }
-/** CCSpriteFrameName to be used */
+
+
+/// -----------------------------------------------------------------------
+/// @name Accessing the Animation Frame Attributes
+/// -----------------------------------------------------------------------
+
+/** CCSpriteFrame to be used. */
 @property (nonatomic, readwrite, strong) CCSpriteFrame* spriteFrame;
 
-/**  how many units of time the frame takes */
+/** Number of time units to display this frame. */
 @property (nonatomic, readwrite) float delayUnits;
 
 /**  A CCAnimationFrameDisplayedNotification notification will be broadcasted when the frame is displayed with this dictionary as UserInfo. If UserInfo is nil, then no notification will be broadcasted. */
 @property (nonatomic, readwrite, strong) NSDictionary *userInfo;
 
-/** initializes the animation frame with a spriteframe, number of delay units and a notification user info */
+
+/// -----------------------------------------------------------------------
+/// @name Initializing a CCAnimationFrame Object
+/// -----------------------------------------------------------------------
+
+/**
+ *  Initializes and returns an Animation Frame object using the specified frame name, delay units and user info values.
+ *
+ *  @param spriteFrame Sprite Frame
+ *  @param delayUnits  Delay time units
+ *  @param userInfo    Extra user info dictionary.
+ *
+ *  @return An initialized CCAnimationFrame Object.
+ */
 -(id) initWithSpriteFrame:(CCSpriteFrame*)spriteFrame delayUnits:(float)delayUnits userInfo:(NSDictionary*)userInfo;
+
 @end
+
 
 /** A CCAnimation object is used to perform animations on the CCSprite objects.
 
