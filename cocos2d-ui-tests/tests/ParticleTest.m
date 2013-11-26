@@ -19,8 +19,11 @@
             @"setupUpsideDown",
             @"setupTestPremultipliedAlpha",
             @"setupMultipleSystems",
+            @"setupCustomSpinTest",
+            @"setupRainbowEffect",
             @"setupGalaxy",
             @"setupLavaFlow",
+            @"setupRainbowEffect",
 
             nil];
 }
@@ -140,6 +143,8 @@
 
 -(void) setupGalaxy
 {
+  self.subTitle = @"Testing radial & tangential accel";
+  
 	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/Galaxy.plist"];
   self.emitter.texture = [[CCTextureCache sharedTextureCache] addImage: PARTICLE_FIRE_NAME];
 	[self.contentNode addChild:self.emitter z:10];
@@ -166,9 +171,78 @@
   // Issue 872
 	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/UpsideDown.plist"];
   self.subTitle = @"Particles should NOT be Upside Down. M should appear, not W.";
-
+  
 	[self.contentNode addChild:self.emitter z:10];
   [self createScene: @"Test Upside Down"];
+}
+
+
+-(void) setupCustomSpinTest
+{
+	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/SpookyPeas.plist"];
+  
+  self.emitter.startSpin = 0;
+  self.emitter.startSpinVar = 360;
+  self.emitter.endSpin = 720;
+  self.emitter.endSpinVar = 360;
+  
+	[self.contentNode addChild:self.emitter z:10];
+  [self createScene: @"Custom Spin Test"];
+}
+
+
+-(void) setupRainbowEffect
+{
+  // additive
+  self.emitter.blendAdditive = NO;
+  
+  // duration
+  self.emitter.duration = CCParticleSystemDurationInfinity;
+  
+  // Gravity Mode
+  self.emitter.emitterMode = CCParticleSystemModeGravity;
+  
+  // Gravity Mode: gravity
+  self.emitter.gravity = ccp(0,0);
+  
+  // Gravity mode: radial acceleration
+  self.emitter.radialAccel = 0;
+  self.emitter.radialAccelVar = 0;
+  
+  // Gravity mode: speed of particles
+  self.emitter.speed = 120;
+  self.emitter.speedVar = 0;
+  
+  
+  // angle
+  self.emitter.angle = 180;
+  self.emitter.angleVar = 0;
+  
+  // emitter position
+  CGSize winSize = [[CCDirector sharedDirector] viewSize];
+  self.emitter.position = ccp(winSize.width/2, winSize.height/2);
+  self.emitter.posVar = CGPointZero;
+  
+  // life of particles
+  self.emitter.life = 0.5f;
+  self.emitter.lifeVar = 0;
+  
+  // size, in pixels
+  self.emitter.startSize = 25.0f;
+  self.emitter.startSizeVar = 0;
+  self.emitter.endSize = CCParticleSystemStartSizeEqualToEndSize;
+  
+  // emits per seconds
+  self.emitter.emissionRate = self.emitter.totalParticles/self.emitter.life;
+  
+  // color of particles
+  self.emitter.startColor = ccc4f(1.0f, 1.0f, 1.0f, 1.0f);
+  self.emitter.endColor = ccc4f(0.0f, 0.0f, 0.0f, 1.0f);
+  
+  self.emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"particles.png"];
+
+	[self.contentNode addChild:self.emitter z:10];
+  [self createScene: @"Rainbow Effect, Issue 1201"];
 }
 
 
