@@ -153,7 +153,7 @@
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {
-	CCNode *node = [self getChildByTag:kTagNode];
+	CCNode *node = [self getChildByName:@"top"];
 	CGPoint currentPos = [node position];
 	[node setPosition: ccpAdd(currentPos, CGPointMake( theEvent.deltaX, -theEvent.deltaY) )];
 }

@@ -6,6 +6,7 @@
 //
 
 #import "ParticleTest.h"
+#import "CCTextureCache.h"
 
 @implementation ParticleTest
 
@@ -13,61 +14,191 @@
 {
     return [NSArray arrayWithObjects:
             @"setupComet",
-            nil];
-}
+            @"setupFlower",
+            @"setupBigFlower",
+            @"setupUpsideDown",
+            @"setupTestPremultipliedAlpha",
+            @"setupMultipleSystems",
+            @"setupGalaxy",
+            @"setupLavaFlow",
 
-- (void) setupAlignedTTFs{
-  [self pressedReset:nil];
+            nil];
 }
 
 -(void) setupComet
 {
-	[super onEnter];
-  
-//	[self setColor:ccBLACK];
-//	[self removeChild:background cleanup:YES];
-//	background = nil;
-  
 	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/Comet.plist"];
-	[self addChild:self.emitter z:10];
+	[self.contentNode addChild:self.emitter z:10];
+  [self createScene: @"Comet Particle System"];
+}
+
+-(void) setupFlower
+{
+	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/Flower.plist"];
+	self.emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
+	[self.contentNode addChild:self.emitter z:10];
+  [self createScene: @"Flower"];
+}
+
+-(void) setupBigFlower
+{
+  self.emitter = [[CCParticleSystemQuad alloc] initWithTotalParticles:50];
+	self.emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
+  
+	// duration
+	self.emitter.duration = CCParticleSystemDurationInfinity;
+  
+	// Gravity Mode: gravity
+	self.emitter.gravity = CGPointZero;
+  
+	// Set "Gravity" mode (default one)
+	self.emitter.emitterMode = CCParticleSystemModeGravity;
+  
+	// Gravity Mode: speed of particles
+	self.emitter.speed = 160;
+	self.emitter.speedVar = 20;
+  
+	// Gravity Mode: radial
+	self.emitter.radialAccel = -120;
+	self.emitter.radialAccelVar = 0;
+  
+	// Gravity Mode: tagential
+	self.emitter.tangentialAccel = 30;
+	self.emitter.tangentialAccelVar = 0;
+  
+	// angle
+	self.emitter.angle = 90;
+	self.emitter.angleVar = 360;
+  
+	// emitter position
+	self.emitter.position = ccp(160,240);
+	self.emitter.posVar = CGPointZero;
+  
+	// life of particles
+	self.emitter.life = 4;
+	self.emitter.lifeVar = 1;
+  
+	// spin of particles
+	self.emitter.startSpin = 0;
+	self.emitter.startSpinVar = 0;
+	self.emitter.endSpin = 0;
+	self.emitter.endSpinVar = 0;
+  
+	// color of particles
+	ccColor4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
+	self.emitter.startColor = startColor;
+  
+	ccColor4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
+	self.emitter.startColorVar = startColorVar;
+  
+	ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
+	self.emitter.endColor = endColor;
+  
+	ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};
+	self.emitter.endColorVar = endColorVar;
+  
+	// size, in pixels
+	self.emitter.startSize = 80.0f;
+	self.emitter.startSizeVar = 40.0f;
+	self.emitter.endSize = CCParticleSystemStartSizeEqualToEndSize;
+  
+	// emits per second
+	self.emitter.emissionRate = self.emitter.totalParticles/self.emitter.life;
+  
+	// additive
+	self.emitter.blendAdditive = YES;
+
+	[self.contentNode addChild:self.emitter z:10];
+
+  [self createScene: @"Big Flower, setup without plist"];
 }
 
 
-- (void)createScene
+#ifdef __CC_PLATFORM_IOS
+#define PARTICLE_FIRE_NAME @"fire.pvr"
+#elif defined(__CC_PLATFORM_MAC)
+#define PARTICLE_FIRE_NAME @"fire.png"
+#endif
+
+-(void) setupMultipleSystems
 {
-  self.subTitle = @"Test alignment and fonts (click next a bunch of times)";
+
+  CGSize s = [[CCDirector sharedDirector] viewSize];
+
+  for (int i = 0; i<5; i++) {
+    CCParticleSystemQuad *particleSystem = [CCParticleSystemQuad particleWithFile:@"Particles/Flower.plist"];
+    particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
+    
+    particleSystem.position = ccp(s.width/2 + i*150 - 300, s.height/2);
+    [self.contentNode addChild:particleSystem z:10];
+  }
+
+  [self createScene: @"Multiple Particle Systems"];
+}
+
+
+
+-(void) setupGalaxy
+{
+	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/Galaxy.plist"];
+  self.emitter.texture = [[CCTextureCache sharedTextureCache] addImage: PARTICLE_FIRE_NAME];
+	[self.contentNode addChild:self.emitter z:10];
+  [self createScene: @"Galaxy"];
+}
+
+-(void) setupLavaFlow
+{
+	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/LavaFlow.plist"];
+	[self.contentNode addChild:self.emitter z:10];
+  [self createScene: @"Lava Flow"];
+}
+
+-(void) setupTestPremultipliedAlpha
+{
+	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/TestPremultipliedAlpha.plist"];
+  self.subTitle = @"Arrows should be faded";
+	[self.contentNode addChild:self.emitter z:10];
+  [self createScene: @"Test Premultiplied Alpha"];
+}
+
+-(void) setupUpsideDown
+{
+  // Issue 872
+	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/UpsideDown.plist"];
+  self.subTitle = @"Particles should NOT be Upside Down. M should appear, not W.";
+
+	[self.contentNode addChild:self.emitter z:10];
+  [self createScene: @"Test Upside Down"];
+}
+
+
+- (void)createScene:(NSString *) title
+{
+  self.subTitle = title;
   
   self.userInteractionEnabled = TRUE;
   
   CGSize s = [[CCDirector sharedDirector] viewSize];
   
-//  CCMenuItemToggle *item4 = [CCMenuItemToggle itemWithTarget:self selector:@selector(toggleCallback:) items:
-//                             [CCMenuItemFont itemWithString: @"Free Movement"],
-//                             [CCMenuItemFont itemWithString: @"Relative Movement"],
-//                             [CCMenuItemFont itemWithString: @"Grouped Movement"],
-//                             
-//                             nil];
+  background = [CCSprite spriteWithImageNamed:@"Images/background3.png"];
+  [self.contentNode addChild:background z:5];
+  background.scale = 1.0f;
+  [background setPosition:ccp(s.width/2, s.height/2)];
   
+  self.emitter.position = ccp(s.width/2, s.height/2);
   
-  // moving background
-  background = [CCSprite spriteWithImageNamed:@"background3.png"];
-  [self addChild:background z:5];
-  [background setPosition:ccp(s.width/2, s.height-180)];
-  
-  id move = [CCActionMoveBy actionWithDuration:4 position:ccp(300,0)];
-  id move_back = [move reverse];
-  id seq = [CCActionSequence actions: move, move_back, nil];
-  [background runAction:[CCActionRepeatForever actionWithAction:seq]];
-  
+//  id move = [CCActionMoveBy actionWithDuration:4 position:ccp(300,0)];
+//  id move_back = [move reverse];
+//  id seq = [CCActionSequence actions: move, move_back, nil];
+//  [background runAction:[CCActionRepeatForever actionWithAction:seq]];
 
 }
-
 
 -(void) update:(CCTime) dt
 {
 //	CCLabelAtlas *atlas = (CCLabelAtlas*) [self getChildByTag:CCTagParticleCount];
 //  
-//	NSString *str = [NSString stringWithFormat:@"%4ld", (unsigned long)emitter_.particleCount];
+//	NSString *str = [NSString stringWithFormat:@"%4ld", (unsigned long)self.emitter.particleCount];
 //	[atlas setString:str];
 }
 -(void) restartCallback: (id) sender
@@ -76,8 +207,10 @@
   //	[s addChild: [restartAction() node]];
   //	[[Director sharedDirector] replaceScene: s];
   
-	[emitter resetSystem];
-  //	[emitter_ stopSystem];
+	[_emitter resetSystem];
+  [self.contentNode removeAllChildren ];
+
+  //	[self.emitter stopSystem];
 }
 
 #ifdef __CC_PLATFORM_IOS
@@ -99,11 +232,7 @@
 	CGPoint location = [touch locationInView: [touch view]];
 	CGPoint convertedLocation = [[CCDirector sharedDirector] convertToGL:location];
   
-	CGPoint pos = CGPointZero;
-  
-	if( background )
-		pos = [background convertToWorldSpace:CGPointZero];
-	emitter.position = ccpSub(convertedLocation, pos);
+	_emitter.position = convertedLocation;
 }
 
 #elif defined(__CC_PLATFORM_MAC)
@@ -120,7 +249,7 @@
   
 	if( background )
 		pos = [background convertToWorldSpace:CGPointZero];
-	emitter_.position = ccpSub(convertedLocation, pos);
+	self.emitter.position = ccpSub(convertedLocation, pos);
 }
 #endif // __CC_PLATFORM_MAC
 
