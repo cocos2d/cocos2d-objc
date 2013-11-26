@@ -2,7 +2,6 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (C) 2009 Matt Oswald
- *
  * Copyright (c) 2009-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
  *
@@ -26,66 +25,100 @@
  *
  */
 
-
 #import "CCNode.h"
 #import "CCProtocols.h"
 #import "CCTextureAtlas.h"
 #import "ccMacros.h"
 
-#pragma mark CCSpriteBatchNode
-
 @class CCSprite;
 
-/** CCSpriteBatchNode is like a batch node: if it contains children, it will draw them in 1 single OpenGL call
- * (often known as "batch draw").
- *
- * A CCSpriteBatchNode can reference one and only one texture (one image file, one texture atlas).
- * Only the CCSprites that are contained in that texture can be added to the CCSpriteBatchNode.
- * All CCSprites added to a CCSpriteBatchNode are drawn in one OpenGL ES draw call.
- * If the CCSprites are not added to a CCSpriteBatchNode then an OpenGL ES draw call will be needed for each one, which is less efficient.
- *
- *
- * Limitations:
- *  - The only object that is accepted as child (or grandchild, grand-grandchild, etc...) is CCSprite or any subclass of CCSprite. eg: particles, labels and layer can't be added to a CCSpriteBatchNode.
- *  - Either all its children are Aliased or Antialiased. It can't be a mix. This is because "alias" is a property of the texture, and all the sprites share the same texture.
- *
- * @since v0.7.1
+/**
+ A CCSpriteBatchNode offers improved rendering performance for multiple sprite rendering by utilising a single OpenGL call to render all sprites from one (and only one) texture (one image file, one texture atlas), often knows as a 'batch draw'.
+ 
+ ### Notes
+ 
+ - Only CCSprites or any subclass of CCSprite may be added to the CCSpriteBatchNode.
+ - All CCSprites must reference the same texture atlas.
+ - Default child capacity is 29 children and will be increased by 33% at runtime each time capacity is reached.
+ 
  */
-@interface CCSpriteBatchNode : CCNode <CCTextureProtocol>
-{
+@interface CCSpriteBatchNode : CCNode <CCTextureProtocol> {
+    
+    // Texture atlas for batch.
 	CCTextureAtlas	*_textureAtlas;
+    
+    // Blend mode.
 	ccBlendFunc		_blendFunc;
 
-	// all descendants: children, grandchildren, etc...
+	// Node children.
 	NSMutableArray *_descendants;
 }
 
-/** conforms to CCTextureProtocol protocol */
+/// -----------------------------------------------------------------------
+/// @name Accessing the Batch Node Attributes
+/// -----------------------------------------------------------------------
+
+/** The current blend mode. */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
-/** creates a CCSpriteBatchNode with a texture2d and a default capacity of 29 children.
- The capacity will be increased in 33% in runtime if it run out of space.
+
+/// -----------------------------------------------------------------------
+/// @name Creating a CCSpriteBatchNode Object
+/// -----------------------------------------------------------------------
+
+/**
+ *  Creates and returns a batch node with the specified texture value.
+ *
+ *  @param tex Texture to use.
+ *
+ *  @return The CCSpriteBatchNode Object.
  */
 +(id)batchNodeWithTexture:(CCTexture *)tex;
 
-/** creates a CCSpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) with a default capacity of 29 children.
- The capacity will be increased in 33% in runtime if it run out of space.
- The file will be loaded using the TextureMgr.
+/**
+ *  Creates and returns a batch node with the specified image file value.
+ *
+ *  @param fileImage Image file name.
+ *
+ *  @return The CCSpriteBatchNode Object.
  */
 +(id)batchNodeWithFile:(NSString*) fileImage;
 
-/** initializes a CCSpriteBatchNode with a texture2d and capacity of children.
- The capacity will be increased in 33% in runtime if it run out of space.
+
+/// -----------------------------------------------------------------------
+/// @name Initializing a CCSpriteBatchNode Object
+/// -----------------------------------------------------------------------
+
+/**
+ *  Creates and returns a batch node with the specified texture and capacity values.
+ *
+ *  @param tex      Texture to use.
+ *  @param capacity Initial capacity.
+ *
+ *  @return An initialized CCSpriteBatchNode Object.
  */
 -(id)initWithTexture:(CCTexture *)tex capacity:(NSUInteger)capacity;
-/** initializes a CCSpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and a capacity of children.
- The capacity will be increased in 33% in runtime if it run out of space.
- The file will be loaded using the TextureMgr.
+
+/**
+ *  Creates and returns a batch node with the specified texture and capacity values.
+ *
+ *  @param fileImage    Image file name.
+ *  @param capacity Initial capacity.
+ *
+ *  @return An initialized CCSpriteBatchNode Object.
  */
 -(id)initWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity;
 
-/** removes a child given a reference. It will also cleanup the running actions depending on the cleanup parameter.
- @warning Removing a child from a CCSpriteBatchNode is very slow
+
+/// -----------------------------------------------------------------------
+/// @name Managing the Batch Node
+/// -----------------------------------------------------------------------
+
+/**
+ *  Removes a sprite from the batch node.
+ *
+ *  @param sprite    Sprite reference.
+ *  @param doCleanup Perform additional cleanup.
  */
 -(void)removeChild: (CCSprite *)sprite cleanup:(BOOL)doCleanup;
 
