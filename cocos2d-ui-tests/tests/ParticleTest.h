@@ -9,7 +9,7 @@
 
 @interface ParticleTest : TestBase
 {
-  CCParticleSystem	*emitter;
+  CCParticleSystem	*_emitter;
   CCSprite			*background;
 }
 
