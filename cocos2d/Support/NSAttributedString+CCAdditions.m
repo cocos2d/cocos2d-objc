@@ -50,16 +50,20 @@
 {
     NSMutableAttributedString* copy = [self mutableCopy];
     
-#ifdef __CC_PLATFORM_IOS   
     NSRange fullRange = NSMakeRange(0, copy.length);
     
     // Update font size
     [copy enumerateAttribute:NSFontAttributeName inRange:fullRange options:0 usingBlock:^(id value, NSRange range, BOOL* stop){
         if (value)
         {
+#ifdef __CC_PLATFORM_IOS   
             UIFont* font = value;
-            [copy removeAttribute:NSFontAttributeName range:range];
             font = [UIFont fontWithName:font.fontName size:font.pointSize * CC_CONTENT_SCALE_FACTOR()];
+#elif defined(__CC_PLATFORM_MAC)
+            NSFont* font = value;
+            font = [NSFont fontWithName:font.fontName size:font.pointSize * CC_CONTENT_SCALE_FACTOR()];
+#endif						
+            [copy removeAttribute:NSFontAttributeName range:range];
             [copy addAttribute:NSFontAttributeName value:font range:range];
         }
     }];
@@ -76,7 +80,6 @@
             [copy addAttribute:NSShadowAttributeName value:shadow range:range];
         }
     }];
-#endif
     
     return copy;
 }
