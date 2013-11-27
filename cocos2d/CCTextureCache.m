@@ -378,17 +378,17 @@ static CCTextureCache *sharedTextureCache;
 
 -(void) removeUnusedTextures
 {
-	dispatch_sync(_dictQueue, ^{
-		NSArray *keys = [_textures allKeys];
-		for( id key in keys ) {
-			id value = [_textures objectForKey:key];
-			if( CFGetRetainCount((CFTypeRef) value) == 1 ) {
-				CCLOG(@"cocos2d: CCTextureCache: removing unused texture: %@", key);
-                NSLog(@"Remove!");
-				[_textures removeObjectForKey:key];
-			}
-		}
-	});
+//	dispatch_sync(_dictQueue, ^{
+//		NSArray *keys = [_textures allKeys];
+//		for( id key in keys ) {
+//			id value = [_textures objectForKey:key];
+//			if( CFGetRetainCount((CFTypeRef) value) == 1 ) {
+//				CCLOG(@"cocos2d: CCTextureCache: removing unused texture: %@", key);
+//                NSLog(@"Remove!");
+//				[_textures removeObjectForKey:key];
+//			}
+//		}
+//	});
 }
 
 -(void) removeTexture: (CCTexture*) tex

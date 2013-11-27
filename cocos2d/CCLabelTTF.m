@@ -496,10 +496,8 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     
     CGSize originalDimensions = _dimensions;
     
-#ifdef __CC_PLATFORM_IOS
     originalDimensions.width *= CC_CONTENT_SCALE_FACTOR();
     originalDimensions.height *= CC_CONTENT_SCALE_FACTOR();
-#endif
     
     CGSize dimensions = originalDimensions;
     
@@ -771,7 +769,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     if (fullColor)
     {
         // RGBA8888 format
-        texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_RGBA8888 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSize:dimensions];
+				texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_RGBA8888 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSize:dimensions];
         [texture setPremultipliedAlpha:YES];
     }
     else

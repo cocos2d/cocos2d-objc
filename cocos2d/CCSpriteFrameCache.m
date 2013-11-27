@@ -361,20 +361,20 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 
 -(void) removeUnusedSpriteFrames
 {
-	BOOL removed_ = NO;
-	NSArray *keys = [_spriteFrames allKeys];
-	for( id key in keys ) {
-		id value = [_spriteFrames objectForKey:key];
-		if( CFGetRetainCount((CFTypeRef) value) == 1 ) {
-			CCLOG(@"cocos2d: CCSpriteFrameCache: removing unused frame: %@", key);
-			[_spriteFrames removeObjectForKey:key];
-			removed_ = YES;
-		}
-	}
-	
-	// XXX. Since we don't know the .plist file that originated the frame, we must remove all .plist from the cache
-	if( removed_ )
-		[_loadedFilenames removeAllObjects];
+//	BOOL removed_ = NO;
+//	NSArray *keys = [_spriteFrames allKeys];
+//	for( id key in keys ) {
+//		id value = [_spriteFrames objectForKey:key];
+//		if( CFGetRetainCount((CFTypeRef) value) == 1 ) {
+//			CCLOG(@"cocos2d: CCSpriteFrameCache: removing unused frame: %@", key);
+//			[_spriteFrames removeObjectForKey:key];
+//			removed_ = YES;
+//		}
+//	}
+//	
+//	// XXX. Since we don't know the .plist file that originated the frame, we must remove all .plist from the cache
+//	if( removed_ )
+//		[_loadedFilenames removeAllObjects];
 }
 
 -(void) removeSpriteFrameByName:(NSString*)name
