@@ -58,7 +58,7 @@
 /// @name Accessing the Batch Node Attributes
 /// -----------------------------------------------------------------------
 
-/** The current blend mode. */
+/** Blend mode. */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
 
