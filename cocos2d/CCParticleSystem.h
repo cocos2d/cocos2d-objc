@@ -138,7 +138,7 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
 
  ### Supported editors
  
- - Particle Designer (http://particledesigner.71squared.com/)
+ - Particle Designer http://particledesigner.71squared.com/
  
  ### Notes
  

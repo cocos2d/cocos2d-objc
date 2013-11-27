@@ -2,9 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2009 Jason Booth
- *
  * Copyright (c) 2009 Robert J Payne
- *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
  *
@@ -29,46 +27,48 @@
  *
  */
 
-
-/*
- * To create sprite frames and texture atlas, use this tool:
- * http://zwoptex.zwopple.com/
- */
-
 #import <Foundation/Foundation.h>
-
 #import "CCSpriteFrame.h"
 
 @class CCSprite;
 @class CCTexture;
 
-/** Singleton that handles the loading of the sprite frames.
- It saves in a cache the sprite frames.
- @since v0.9
+/**
+ Singleton that manages the loading and caching of sprite frames.
+ 
+ ### Supported editors (Non exhaustive)
+ 
+ - Texture Packer http://www.codeandweb.com/texturepacker
+ - zwoptex http://www.zwopple.com/zwoptex/
  */
-@interface CCSpriteFrameCache : NSObject
-{
+
+@interface CCSpriteFrameCache : NSObject {
+    
+    // Sprite frame dictionary.
 	NSMutableDictionary *_spriteFrames;
+    
+    // Sprite frame alias dictionary.
 	NSMutableDictionary *_spriteFramesAliases;
+    
+    // Sprite frame plist file name set.
 	NSMutableSet		*_loadedFilenames;
     
+    // Sprite frame file lookup dictionary.
     NSMutableDictionary *_spriteFrameFileLookup;
 }
 
-/** Retruns ths shared instance of the Sprite Frame cache */
+/** Sprite frame cache shared instance. */
 + (CCSpriteFrameCache *) sharedSpriteFrameCache;
 
-/** Purges the cache. It releases all the Sprite Frames and the retained instance.
- */
-+(void)purgeSharedSpriteFrameCache;
 
-- (void) registerSpriteFramesFile:(NSString*)plist;
+/// -----------------------------------------------------------------------
+/// @name Sprite Frame Cache Management
+/// -----------------------------------------------------------------------
 
--(void) loadSpriteFrameLookupDictionaryFromFile:(NSString*)filename;
-
-/** Adds multiple Sprite Frames from a plist file.
- * A texture will be loaded automatically. The texture name will composed by replacing the .plist suffix with .png .
- * If you want to use another texture, you should use the addSpriteFramesWithFile:texture method.
+/**
+ *  Add Sprite Frames to the cache from the specified plist.
+ *
+ *  @param plist plist description
  */
 -(void) addSpriteFramesWithFile:(NSString*)plist;
 
@@ -122,5 +122,12 @@
  You should retain the returned copy if you are going to use it.
  */
 -(CCSpriteFrame*) spriteFrameByName:(NSString*)name;
+
+/** Purges the cache. It releases everything. */
++(void) purgeSharedSpriteFrameCache;
+
+-(void) registerSpriteFramesFile:(NSString*)plist;
+
+-(void) loadSpriteFrameLookupDictionaryFromFile:(NSString*)filename;
 
 @end
