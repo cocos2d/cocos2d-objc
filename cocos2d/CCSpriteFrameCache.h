@@ -60,74 +60,95 @@
 /** Sprite frame cache shared instance. */
 + (CCSpriteFrameCache *) sharedSpriteFrameCache;
 
+/** Purges the cache. It releases everything. */
++(void) purgeSharedSpriteFrameCache;
+
 
 /// -----------------------------------------------------------------------
-/// @name Sprite Frame Cache Management
+/// @name Sprite Frame Cache Addition
 /// -----------------------------------------------------------------------
 
 /**
- *  Add Sprite Frames to the cache from the specified plist.
+ *  Add Sprite frames to the cache from the specified plist.
  *
  *  @param plist plist description
  */
 -(void) addSpriteFramesWithFile:(NSString*)plist;
 
-/** Adds multiple Sprite Frames from a plist file. The texture filename will be associated with the created sprite frames.
+/**
+ *  Add sprite frames to the cache from the specified plist and texture file.
+ *
+ *  @param plist    Plist file to use.
+ *  @param filename Texture file to associate.
  */
 -(void) addSpriteFramesWithFile:(NSString*)plist textureFilename:(NSString*)filename;
 
-/** Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames.
+/**
+ *  Add sprite frames to the cache from the specified plist and texture.
+ *
+ *  @param plist   Plist file to use.
+ *  @param texture Texture to associate.
  */
 -(void) addSpriteFramesWithFile:(NSString*)plist texture:(CCTexture*)texture;
 
-/** Adds an sprite frame with a given name.
- If the name already exists, then the contents of the old name will be replaced with the new one.
+/**
+ *  Add a sprite frame to the cache with the specified sprite frame and name.  If name already exists, sprite frame will be overwritten.
+ *
+ *  @param frame     Sprite frame to use.
+ *  @param frameName Frame name to use.
  */
 -(void) addSpriteFrame:(CCSpriteFrame*)frame name:(NSString*)frameName;
 
+-(void) registerSpriteFramesFile:(NSString*)plist __deprecated;
+-(void) loadSpriteFrameLookupDictionaryFromFile:(NSString*)filename __deprecated;
 
-/** Purges the dictionary of loaded sprite frames.
- * Call this method if you receive the "Memory Warning".
- * In the short term: it will free some resources preventing your app from being killed.
- * In the medium term: it will allocate more resources.
- * In the long term: it will be the same.
+/// -----------------------------------------------------------------------
+/// @name Sprite Frame Cache Removal
+/// -----------------------------------------------------------------------
+
+/**
+ *  Remove all sprite frames.
  */
 -(void) removeSpriteFrames;
 
-/** Removes unused sprite frames.
- * Sprite Frames that have a retain count of 1 will be deleted.
- * It is convenient to call this method after when starting a new Scene.
+/**
+ *  Remove unused sprite frames e.g. Sprite frames that have a retain count of 1.
  */
 -(void) removeUnusedSpriteFrames;
 
-/** Deletes an sprite frame from the sprite frame cache.
+/**
+ *  Remove the specified sprite frame from the cache.
+ *
+ *  @param name Sprite frame name.
  */
 -(void) removeSpriteFrameByName:(NSString*)name;
 
-/** Removes multiple Sprite Frames from a plist file.
-* Sprite Frames stored in this file will be removed.
-* It is convenient to call this method when a specific texture needs to be removed.
-* @since v0.99.5
-*/
-- (void) removeSpriteFramesFromFile:(NSString*) plist;
-
-/** Removes all Sprite Frames associated with the specified textures.
- * It is convenient to call this method when a specific texture needs to be removed.
- * @since v0.995.
+/**
+ *  Remove sprite frames detailed in the specified plist.
+ *
+ *  @param plist list file to use.
  */
-- (void) removeSpriteFramesFromTexture:(CCTexture*) texture;
+-(void) removeSpriteFramesFromFile:(NSString*) plist;
 
-/** Returns an Sprite Frame that was previously added.
- If the name is not found it will return nil.
- You should retain the returned copy if you are going to use it.
+/**
+ *  Remove sprite frames associated with the specified texture.
+ *
+ *  @param texture Texture to reference.
+ */
+-(void) removeSpriteFramesFromTexture:(CCTexture*) texture;
+
+
+/// -----------------------------------------------------------------------
+/// @name Sprite Frame Cache Access
+/// -----------------------------------------------------------------------
+
+/**
+ *  Returns a CCSpriteFrame from the cache using the specified name.
+ *
+ *  @param name Name to lookup.
+ *
+ *  @return The CCSpriteFrame object.
  */
 -(CCSpriteFrame*) spriteFrameByName:(NSString*)name;
-
-/** Purges the cache. It releases everything. */
-+(void) purgeSharedSpriteFrameCache;
-
--(void) registerSpriteFramesFile:(NSString*)plist;
-
--(void) loadSpriteFrameLookupDictionaryFromFile:(NSString*)filename;
 
 @end
