@@ -64,7 +64,7 @@
 	NSPoint point = [[self view] convertPoint:[event locationInWindow] fromView:nil];
 	CGPoint p = NSPointToCGPoint(point);
 
-	return  [(CCDirectorMac*)self convertToLogicalCoordinates:p];
+	return  [(CCDirectorMac*)self convertToGL:p];
 }
 
 @end
@@ -331,63 +331,68 @@
 
 -(CGSize) winSizeInPixels
 {
-	return _winSizeInPoints;
+	return _winSizeInPixels;
 }
 
-- (CGPoint) convertToLogicalCoordinates:(CGPoint)coords
+-(CGFloat)flipY
 {
-	CGPoint ret;
-
-	if( _resizeMode == kCCDirectorResize_NoScale )
-		ret = coords;
-
-	else {
-
-		float x_diff = _originalWinSizeInPoints.width / (_winSizeInPixels.width - _winOffset.x * 2);
-		float y_diff = _originalWinSizeInPoints.height / (_winSizeInPixels.height - _winOffset.y * 2);
-
-		float adjust_x = (_winSizeInPixels.width * x_diff - _originalWinSizeInPoints.width ) / 2;
-		float adjust_y = (_winSizeInPixels.height * y_diff - _originalWinSizeInPoints.height ) / 2;
-
-		ret = CGPointMake( (x_diff * coords.x) - adjust_x, ( y_diff * coords.y ) - adjust_y );
-	}
-
-	return ret;
+	return 1.0;
 }
 
--(CGPoint)convertToGL:(CGPoint)uiPoint
-{
-    NSPoint point = [[self view] convertPoint:uiPoint fromView:nil];
-	CGPoint p = NSPointToCGPoint(point);
-    
-	return  [(CCDirectorMac*)self convertToLogicalCoordinates:p];
-}
-
-- (CGPoint) unConvertFromLogicalCoordinates:(CGPoint)coords
-{
-	CGPoint ret;
-	
-	if( _resizeMode == kCCDirectorResize_NoScale )
-		ret = coords;
-	
-	else {
-		
-		float x_diff = _originalWinSizeInPoints.width / (_winSizeInPixels.width - _winOffset.x * 2);
-		float y_diff = _originalWinSizeInPoints.height / (_winSizeInPixels.height - _winOffset.y * 2);
-		
-		float adjust_x = (_winSizeInPixels.width * x_diff - _originalWinSizeInPoints.width ) / 2;
-		float adjust_y = (_winSizeInPixels.height * y_diff - _originalWinSizeInPoints.height ) / 2;
-		
-		ret = CGPointMake(  (coords.x+ adjust_x)/x_diff, (coords.y +adjust_y)/y_diff );
-	}
-	
-	return ret;
-}
-
-- (CGPoint) convertToUI:(CGPoint)glPoint
-{
-	return [self unConvertFromLogicalCoordinates:glPoint];
-}
+//- (CGPoint) convertToLogicalCoordinates:(CGPoint)coords
+//{
+//	CGPoint ret;
+//
+//	if( _resizeMode == kCCDirectorResize_NoScale )
+//		ret = coords;
+//
+//	else {
+//
+//		float x_diff = _originalWinSizeInPoints.width / (_winSizeInPixels.width - _winOffset.x * 2);
+//		float y_diff = _originalWinSizeInPoints.height / (_winSizeInPixels.height - _winOffset.y * 2);
+//
+//		float adjust_x = (_winSizeInPixels.width * x_diff - _originalWinSizeInPoints.width ) / 2;
+//		float adjust_y = (_winSizeInPixels.height * y_diff - _originalWinSizeInPoints.height ) / 2;
+//
+//		ret = CGPointMake( (x_diff * coords.x) - adjust_x, ( y_diff * coords.y ) - adjust_y );
+//	}
+//
+//	return ret;
+//}
+//
+//-(CGPoint)convertToGL:(CGPoint)uiPoint
+//{
+//    NSPoint point = [[self view] convertPoint:uiPoint fromView:nil];
+//	CGPoint p = NSPointToCGPoint(point);
+//    
+//	return  [(CCDirectorMac*)self convertToLogicalCoordinates:p];
+//}
+//
+//- (CGPoint) unConvertFromLogicalCoordinates:(CGPoint)coords
+//{
+//	CGPoint ret;
+//	
+//	if( _resizeMode == kCCDirectorResize_NoScale )
+//		ret = coords;
+//	
+//	else {
+//		
+//		float x_diff = _originalWinSizeInPoints.width / (_winSizeInPixels.width - _winOffset.x * 2);
+//		float y_diff = _originalWinSizeInPoints.height / (_winSizeInPixels.height - _winOffset.y * 2);
+//		
+//		float adjust_x = (_winSizeInPixels.width * x_diff - _originalWinSizeInPoints.width ) / 2;
+//		float adjust_y = (_winSizeInPixels.height * y_diff - _originalWinSizeInPoints.height ) / 2;
+//		
+//		ret = CGPointMake(  (coords.x+ adjust_x)/x_diff, (coords.y +adjust_y)/y_diff );
+//	}
+//	
+//	return ret;
+//}
+//
+//- (CGPoint) convertToUI:(CGPoint)glPoint
+//{
+//	return [self unConvertFromLogicalCoordinates:glPoint];
+//}
 
 @end
 
