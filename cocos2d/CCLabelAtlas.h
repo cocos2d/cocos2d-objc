@@ -24,47 +24,98 @@
  *
  */
 
-
 #import "CCAtlasNode.h"
 #import "CCTextureAtlas.h"
 
-/** CCLabelAtlas is a subclass of CCAtlasNode.
+/** 
 
- It can be as a replacement of CCLabel since it is MUCH faster.
-
- CCLabelAtlas versus CCLabel:
+ CCLabelAtlas is the original alternative to CCLabel offering improved performance.  
+ 
+ ### Notes
+ 
  - CCLabelAtlas is MUCH faster than CCLabel
  - CCLabelAtlas "characters" have a fixed height and width
  - CCLabelAtlas "characters" can be anything you want since they are taken from an image file
 
  A more flexible class is CCLabelBMFont. It supports variable width characters and it also has a nice editor.
+ 
  */
+
 @interface CCLabelAtlas : CCAtlasNode  <CCLabelProtocol>
 {
-	// string to render
+	// The text to be rendered.
 	NSString		*_string;
 
-	// the first char in the charmap
+	// The first character index in the character map.
 	NSUInteger		_mapStartChar;
 }
 
 
-/** creates the CCLabelAtlas with a string, a char map file(the atlas), the width and height of each element in points and the starting char of the atlas */
+/// -----------------------------------------------------------------------
+/// @name Creating a CCLabelAtlas Object
+/// -----------------------------------------------------------------------
+
+/**
+ *  Creates and returns a label object using the specified text, character map bitmap file, element width, element height and the starting character index values.
+ 
+ *  @param string       Label text.
+ *  @param charmapfile  Character map bitmap file.
+ *  @param w            element width in points.
+ *  @param h            element height in points.
+ *  @param firstElement Starting character index.
+ *
+ *  @return The CCLabelAtlas Object.
+ */
 +(id) labelWithString:(NSString*) string charMapFile: (NSString*) charmapfile itemWidth:(NSUInteger)w itemHeight:(NSUInteger)h startCharMap:(NSUInteger)firstElement;
 
-/** creates the CCLabelAtlas with a string and a configuration file
- @since v2.0
+/**
+ *  Creates and returns a label object using the specified text and font configuration file values.
+ *
+ *  @param string   Label text.
+ *  @param fontFile Label font configuration file.
+ *
+ *  @return The CCLabelAtlas Object.
  */
 +(id) labelWithString:(NSString*) string fntFile:(NSString*)fontFile;
 
-/** initializes the CCLabelAtlas with a string, a char map file(the atlas), the width and height in points of each element and the starting char of the atlas */
+
+/// -----------------------------------------------------------------------
+/// @name Initializing a CCLabelAtlas Object
+/// -----------------------------------------------------------------------
+
+/**
+ *  Initializes and returns a label object using the specified text, character map bitmap file, element width, element height and the starting character index values.
+ *
+ *  @param string       Label text.
+ *  @param charmapfile  Character map bitmap file (the Atlas).
+ *  @param w            element width in points.
+ *  @param h            element height in points.
+ *  @param firstElement Starting character of the atlas.
+ *
+ *  @return An initialized CCLabelAtlas Object.
+ */
 -(id) initWithString:(NSString*) string charMapFile: (NSString*) charmapfile itemWidth:(NSUInteger)w itemHeight:(NSUInteger)h startCharMap:(NSUInteger)firstElement;
 
-/** initializes the CCLabelAtlas with a string, a texture, the width and height in points of each element and the starting char of the atlas */
+/**
+ *  Initializes and returns a label object using the specified text, texure, element width, element height and the starting character index values.
+ *
+ *  @param string       Label text.
+ *  @param charmapfile  Character map bitmap file (the Atlas).
+ *  @param w            element width in points.
+ *  @param h            element height in points.
+ *  @param firstElement Starting character of the atlas.
+ *
+ *  @return An initialized CCLabelAtlas Object.
+ */
 -(id) initWithString:(NSString*) theString texture:(CCTexture*)texture itemWidth:(NSUInteger)w itemHeight:(NSUInteger)h startCharMap:(NSUInteger)c;
 
-/** initializes the CCLabelAtlas with a string and a configuration file
- @since v2.0
+/**
+ *  Initializes and returns a label object using the specified text and font configuration file values.
+ *
+ *  @param string   Label text.
+ *  @param fontFile Label font configuration file.
+ *
+ *  @return An initialized CCLabelAtlas Object.
  */
 -(id) initWithString:(NSString*) string fntFile:(NSString*)fontFile;
 

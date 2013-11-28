@@ -45,7 +45,7 @@
 
 	// create scene
 	CCScene *scene = [CCScene node];
-	CCLayer *layer = [Layer1 node];
+	CCNode *layer = [Layer1 node];
 	[scene addChild:layer];
 
 	[director_ pushScene:scene];

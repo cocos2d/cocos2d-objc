@@ -8,7 +8,7 @@
 @end
 
 // HelloActions Layer
-@interface ActionsWithBlocks : CCLayer
+@interface ActionsWithBlocks : CCNode
 {
 }
 @end

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		758A690C1843DBAD00D1A8D2 /* ParallaxTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 758A690B1843DBAD00D1A8D2 /* ParallaxTest.m */; };
 		B73C129B17EA48CC0029B6AC /* TestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = B73C129A17EA48CC0029B6AC /* TestBase.m */; };
 		B770601A1831B0080043CC67 /* ObjectALTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B77060191831B0080043CC67 /* ObjectALTest.m */; };
 		B770609E1831B3F60043CC67 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B770609D1831B3F60043CC67 /* AVFoundation.framework */; };
@@ -66,6 +67,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		758A690A1843DBAD00D1A8D2 /* ParallaxTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParallaxTest.h; path = "cocos2d-ui-tests/tests/ParallaxTest.h"; sourceTree = SOURCE_ROOT; };
+		758A690B1843DBAD00D1A8D2 /* ParallaxTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParallaxTest.m; path = "cocos2d-ui-tests/tests/ParallaxTest.m"; sourceTree = SOURCE_ROOT; };
 		B73C129917EA48CC0029B6AC /* TestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestBase.h; path = "cocos2d-ui-tests/TestBase.h"; sourceTree = SOURCE_ROOT; };
 		B73C129A17EA48CC0029B6AC /* TestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestBase.m; path = "cocos2d-ui-tests/TestBase.m"; sourceTree = SOURCE_ROOT; };
 		B77060181831B0080043CC67 /* ObjectALTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectALTest.h; path = "cocos2d-ui-tests/tests/ObjectALTest.h"; sourceTree = SOURCE_ROOT; };
@@ -251,6 +254,8 @@
 				B77060191831B0080043CC67 /* ObjectALTest.m */,
 				B77060B01832EDF90043CC67 /* CCTextureCacheTest.h */,
 				B77060B11832EDF90043CC67 /* CCTextureCacheTest.m */,
+				758A690A1843DBAD00D1A8D2 /* ParallaxTest.h */,
+				758A690B1843DBAD00D1A8D2 /* ParallaxTest.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -359,6 +364,7 @@
 				B770601A1831B0080043CC67 /* ObjectALTest.m in Sources */,
 				B79DEE1718105B7C00A653C9 /* CCTransitionTest.m in Sources */,
 				B7C6239617F10F0600928F91 /* CCTableViewTest.m in Sources */,
+				758A690C1843DBAD00D1A8D2 /* ParallaxTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

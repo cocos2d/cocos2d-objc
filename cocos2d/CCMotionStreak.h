@@ -23,61 +23,137 @@
  *
  */
 
-
 #import <Foundation/Foundation.h>
 #import "CCTexture.h"
 #import "ccTypes.h"
 #import "CCNode.h"
 
-/** MotionStreak.
- Creates a trailing path.
+/**
+ CCMotionStreak creates a motion trail special effect.
+ 
+ ### Notes
+ - Segments controls how smooth the shape of the trail appears.
+ - Fast mode enables faster point addition and the cost of lower point precision.
  */
-@interface CCMotionStreak : CCNodeRGBA <CCTextureProtocol>
-{
+@interface CCMotionStreak : CCNodeRGBA <CCTextureProtocol> {
+    
+    // Texture.
     CCTexture *_texture;
+    
+    // Position.
     CGPoint _positionR;
+    
+    // Blend mode.
     ccBlendFunc _blendFunc;
+    
+    // Stroke width.
     float _stroke;
+    
+    // Fade time.
     float _fadeDelta;
+    
+    // Minimum segments.
     float _minSeg;
-
+    
+    // Point counters.
     NSUInteger _maxPoints;
     NSUInteger _nuPoints;
 	NSUInteger _previousNuPoints;
 
-    /** Pointers */
+    // Trail vertexes.
     CGPoint *_pointVertexes;
+    
+    // Trail vertex states.
     float *_pointState;
 
-    // Opengl
+    // OpenGL.
     ccVertex2F *_vertices;
     unsigned char *_colorPointer;
     ccTex2F *_texCoords;
 
+    // Toggle fast mode.
     BOOL	_fastMode;
 	
+    // Starting point.
 	BOOL	_startingPositionInitialized;
 }
-/** blending function */
+
+/// -----------------------------------------------------------------------
+/// @name Accessing Motion Streak Attributes
+/// -----------------------------------------------------------------------
+
+/** Blend method. */
 @property (nonatomic, readwrite, assign) ccBlendFunc blendFunc;
 
-/** When fast mode is enabled, new points are added faster but with lower precision */
+/** Fast mode toggle. */
 @property (nonatomic, readwrite, assign, getter = isFastMode) BOOL fastMode;
 
-/** texture used for the motion streak */
+/** Trail texture. */
 @property (nonatomic, strong) CCTexture *texture;
 
-/** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename */
-+ (id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color textureFilename:(NSString*)path;
-/** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture */
-+ (id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color texture:(CCTexture*)texture;
 
-/** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture filename */
-- (id) initWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color textureFilename:(NSString*)path;
-/** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture  */
-- (id) initWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color texture:(CCTexture*)texture;
+/// -----------------------------------------------------------------------
+/// @name Creating a CCMotionStreak Object
+/// -----------------------------------------------------------------------
 
-/** Remove all living segments of the ribbon */
-- (void) reset;
+/**
+ *  Creates and returns a motion streak object from the specified fade time, segments, stroke, color and texture file path values.
+ *
+ *  @param fade   Fade time.
+ *  @param minSeg Minimum segments.
+ *  @param stroke Stroke width.
+ *  @param color  Color.
+ *  @param path   Texture file path.
+ *
+ *  @return The CCMotionStreak object.
+ */
++(id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color textureFilename:(NSString*)path;
+
+/**
+ *  Creates and returns a motion streak object from the specified fade time, segments, stroke, color and texture values.
+ *
+ *  @param fade    Fade time.
+ *  @param minSeg  Minimum segments.
+ *  @param stroke  Stroke width.
+ *  @param color   Color.
+ *  @param texture Texture.
+ *
+ *  @return The CCMotionStreak object.
+ */
++(id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color texture:(CCTexture*)texture;
+
+
+/// -----------------------------------------------------------------------
+/// @name Initializing a CCMotionStreak Object
+/// -----------------------------------------------------------------------
+
+/**
+ *  Initializes and returns a motion streak object from the specified fade time, segments, stroke, color and texture file path values.
+ *
+ *  @param fade   Fade time.
+ *  @param minSeg Minimum segments.
+ *  @param stroke Stroke width.
+ *  @param color  Color.
+ *  @param path   Texture file path.
+ *
+ *  @return An initialized CCMotionStreak object.
+ */
+-(id) initWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color textureFilename:(NSString*)path;
+
+/**
+ *  Initializes and returns a motion streak object from the specified fade time, segments, stroke, color and texture values.
+ *
+ *  @param fade    Fade time.
+ *  @param minSeg  Minimum segments.
+ *  @param stroke  Stroke width.
+ *  @param color   Color.
+ *  @param texture Texture.
+ *
+ *  @return An initialized CCMotionStreak object.
+ */
+-(id) initWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color texture:(CCTexture*)texture;
+
+/** Remove all living segments. */
+-(void) reset;
 
 @end

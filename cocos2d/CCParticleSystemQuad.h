@@ -26,34 +26,45 @@
  *
  */
 
-
 #import "CCParticleSystem.h"
 #import "ccConfig.h"
 
 @class CCSpriteFrame;
 
-/** CCParticleSystemQuad is a subclass of CCParticleSystem
+/**
  
- It includes all the features of ParticleSystem.
+ CCParticleSystemQuad
 
- Special features and Limitations:
-  - Particle size can be any float number.
-  - The system can be scaled
-  - The particles can be rotated
-  - It supports subrects
-  - It supports batched rendering since 1.1
- @since v0.8
+ ### Special features and Limitations
+ 
+ - Particle size can be any float number.
+ - The system can be scaled.
+ - The particles can be rotated.
+ - It supports subrects.
+ - It supports batched rendering for improved performance.
+
  */
-@interface CCParticleSystemQuad : CCParticleSystem
-{
-	ccV3F_C4B_T2F_Quad	*_quads;		// quads to be rendered
-	GLushort			*_indices;		// indices
+
+@interface CCParticleSystemQuad : CCParticleSystem {
+    
+    // Quads to be rendered
+	ccV3F_C4B_T2F_Quad	*_quads;
+    
+    // Indices
+	GLushort			*_indices;
+    
+    // VAO
 	GLuint				_VAOname;
-	GLuint				_buffersVBO[2]; //0: vertex  1: indices
+    
+    //0: vertex  1: indices
+	GLuint				_buffersVBO[2];
 }
 
-/** Sets a new texture with a rect. The rect is in Points.
- @since v0.99.4
+/**
+ *  Set particle system texture using specified texture and texture coords value.
+ *
+ *  @param texture Texture.
+ *  @param rect    Texture coords.
  */
 -(void) setTexture:(CCTexture *)texture withRect:(CGRect)rect;
 

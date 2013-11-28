@@ -4,7 +4,7 @@
 @interface AppController : BaseAppController
 @end
 
-@interface SchedulerTest : CCLayer
+@interface SchedulerTest : CCNode
 {
 }
 -(NSString*) title;
