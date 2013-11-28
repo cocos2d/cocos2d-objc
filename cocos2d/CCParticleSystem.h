@@ -138,7 +138,7 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
 
  ### Supported editors
  
- - Particle Designer (http://particledesigner.71squared.com/)
+ - Particle Designer http://particledesigner.71squared.com/
  
  ### Notes
  
@@ -526,6 +526,11 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
  *  @return An initialized CCParticleSystem Object.
  */
 -(id) initWithTotalParticles:(NSUInteger) numberOfParticles;
+
+
+/// -----------------------------------------------------------------------
+/// @name Particle System Management
+/// -----------------------------------------------------------------------
 
 /** Stop emitting new particles, existing particles will die off. */
 -(void) stopSystem;
