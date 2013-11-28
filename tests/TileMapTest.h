@@ -4,7 +4,7 @@
 @interface AppController : BaseAppController
 @end
 
-@interface TileDemo: CCLayer
+@interface TileDemo: CCNode
 {
     CCTextureAtlas *atlas;
 }

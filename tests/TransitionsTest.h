@@ -4,13 +4,13 @@
 @interface AppController : BaseAppController
 @end
 
-@interface TextLayer: CCLayer
+@interface TextLayer: CCNode
 {
 }
 @end
 
 
-@interface TextLayer2: CCLayer
+@interface TextLayer2: CCNode
 {
 }
 @end

@@ -313,6 +313,12 @@
 		D36F7E37181580A000E94F72 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		D36F7E38181580A000E94F72 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		D36F7E3E181580A000E94F72 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D36F7E3C181580A000E94F72 /* InfoPlist.strings */; };
+		D395DB25183D73930024997E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3876C10446C6E00150883 /* AVFoundation.framework */; };
+		D395DB2B183D739E0024997E /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3877010446C6E00150883 /* OpenAL.framework */; };
+		D395DB2C183D73A70024997E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3876E10446C6E00150883 /* AudioToolbox.framework */; };
+		D395DB2D183D73F00024997E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3876C10446C6E00150883 /* AVFoundation.framework */; };
+		D395DB2E183D73F80024997E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3876E10446C6E00150883 /* AudioToolbox.framework */; };
+		D395DB2F183D73FD0024997E /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3877010446C6E00150883 /* OpenAL.framework */; };
 		D3A2E7D2181E12750033614C /* CCPhysicsShape.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A2E7D0181E12750033614C /* CCPhysicsShape.h */; };
 		D3A2E7D3181E12750033614C /* CCPhysicsShape.m in Sources */ = {isa = PBXBuildFile; fileRef = D3A2E7D1181E12750033614C /* CCPhysicsShape.m */; };
 		E01E6D8C121F130E001A484F /* CCLabelBMFont.h in Headers */ = {isa = PBXBuildFile; fileRef = E01E6D8A121F130E001A484F /* CCLabelBMFont.h */; };
@@ -823,6 +829,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D395DB2C183D73A70024997E /* AudioToolbox.framework in Frameworks */,
+				D395DB2B183D739E0024997E /* OpenAL.framework in Frameworks */,
+				D395DB25183D73930024997E /* AVFoundation.framework in Frameworks */,
 				D30B5D9817F5E5410058C11C /* libObjectiveChipmunk.a in Frameworks */,
 				A06D9C141728D5F600704732 /* CoreText.framework in Frameworks */,
 				A0CFE61E15BE3D0E00264229 /* CoreMotion.framework in Frameworks */,
@@ -854,6 +863,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D395DB2F183D73FD0024997E /* OpenAL.framework in Frameworks */,
+				D395DB2E183D73F80024997E /* AudioToolbox.framework in Frameworks */,
+				D395DB2D183D73F00024997E /* AVFoundation.framework in Frameworks */,
 				D3547A72181583D000FBE6FB /* libz.dylib in Frameworks */,
 				D3547A70181583A300FBE6FB /* libcocos2d.a in Frameworks */,
 				D36F7E36181580A000E94F72 /* XCTest.framework in Frameworks */,

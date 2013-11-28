@@ -11,7 +11,7 @@
 @interface AppController : BaseAppController
 @end
 
-@interface MainLayer : CCLayer<CCPhysicsCollisionDelegate>
+@interface MainLayer : CCNode<CCPhysicsCollisionDelegate>
 @end
 
 @implementation MainLayer
@@ -102,7 +102,7 @@
 	CCSprite *sprite1, *sprite2;
 	
 	{
-		CCSprite *sprite = [CCSprite spriteWithFile: @"blocks.png"];
+		CCSprite *sprite = [CCSprite spriteWithImageNamed: @"blocks.png"];
 		sprite.position = ccp(280, 140);
 		
 		CGSize size = sprite.contentSize;
@@ -113,7 +113,7 @@
 	}
 	
 	{
-		CCSprite *sprite = [CCSprite spriteWithFile: @"blocks.png"];
+		CCSprite *sprite = [CCSprite spriteWithImageNamed: @"blocks.png"];
 		sprite.position = ccp(200, 200);
 		sprite.rotation = 30;
 		sprite.scaleX = 1.5;
@@ -178,7 +178,7 @@
 	// Set multiple touches on
 	[[director_ view] setMultipleTouchEnabled:YES];
 
-	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
+	[CCTexture setDefaultAlphaPixelFormat:CCTexturePixelFormat_RGBA8888];
 
 	CCFileUtils *sharedFileUtils = [CCFileUtils sharedFileUtils];
 	[sharedFileUtils setEnableFallbackSuffixes:YES];			// Default: NO. No fallback suffixes are going to be used

@@ -51,6 +51,7 @@
 /* This is the opposite of "addQuadFromSprite".
  It adds the sprite to the children and descendants array, but it doesn't add it to the texture atlas.
  */
--(id) addSpriteWithoutQuad:(CCSprite*)child z:(NSUInteger)z tag:(NSInteger)aTag;
+-(id) addSpriteWithoutQuad:(CCSprite*)child z:(NSUInteger)z name:(NSString*)name;
+
 
 @end

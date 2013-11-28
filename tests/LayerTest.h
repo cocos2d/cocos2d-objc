@@ -5,7 +5,7 @@
 @interface AppController : BaseAppController
 @end
 
-@interface LayerTest: CCLayer
+@interface LayerTest: CCNode
 {
 }
 -(NSString*) title;

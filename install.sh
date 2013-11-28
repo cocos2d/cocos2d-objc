@@ -274,7 +274,7 @@ if $INSTALL ; then
 	check_status
 
 	echo -n "."
-	curl -L -# "https://github.com/slembcke/Chipmunk2D/archive/a51044feb5d2aa227941c2faa91271a312928ef3.zip" -o "$DOWNLOAD_DIR/Chipmunk_tarball.zip" 1>/dev/null 2>>"${ERROR_LOG}"
+	curl -L -# "https://github.com/slembcke/Chipmunk2D/archive/master.zip" -o "$DOWNLOAD_DIR/Chipmunk_tarball.zip" 1>/dev/null 2>>"${ERROR_LOG}"
 	check_status
 	echo -n "."
 	if [[ ! -d "${DOWNLOAD_DIR}/Chipmunk/" ]]; then
