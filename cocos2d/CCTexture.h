@@ -130,15 +130,42 @@ typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
 	CCGLProgram					*_shaderProgram;
 
 }
-+ (id) textureWithFile:(NSString*)file;
 
-/** Initializes with a texture2d with data */
-- (id) initWithData:(const void*)data pixelFormat:(CCTexturePixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size;
+/// -------------------------------------------------------
+/// @name Create texture.
+/// -------------------------------------------------------
+/**
+ *  Creates a new texture, based on a filename
+ *  If the texture has already been loaded, and resides in cache, the previously created texture is returned
+ *
+ *  @param file File to load (should not include any suffixes)
+ *
+ *  @return Returns a new initialized CCTexture
+ */
++ (instancetype) textureWithFile:(NSString*)file;
 
+/**
+ *  Initializes with a texture2d with data
+ *
+ *  @param data        Pointer to a buffer containing the raw data
+ *  @param pixelFormat Pixelformat of the data
+ *  @param width       Width if the texture
+ *  @param height      Height of the texture
+ *  @param size        The final contentsize of the texture
+ *
+ *  @return Returns a new initialized CCTexture
+ */
+- (instancetype) initWithData:(const void*)data pixelFormat:(CCTexturePixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size;
+
+/// -------------------------------------------------------
+/// @name Properties
+/// -------------------------------------------------------
 /** pixel format of the texture */
 @property(nonatomic,readonly) CCTexturePixelFormat pixelFormat;
+
 /** width in pixels */
 @property(nonatomic,readonly) NSUInteger pixelWidth;
+
 /** hight in pixels */
 @property(nonatomic,readonly) NSUInteger pixelHeight;
 
@@ -157,11 +184,8 @@ typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
  Is it a RetinaDisplay texture, an iPad texture, a Mac, a Mac RetinaDisplay or an standard texture ?
 
  Should be a readonly property. It is readwrite as a hack.
-
- @since v1.1
  */
 @property (nonatomic, readwrite) CCResolutionType resolutionType;
-
 
 /** returns the content size of the texture in points */
 -(CGSize) contentSize;
