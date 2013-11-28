@@ -193,7 +193,8 @@ Class restartAction()
 	if( (self=[super init]) ) {
 
 
-		CCTileMapAtlas *map = [CCTileMapAtlas tileMapAtlasWithTileFile:@"TileMaps/tiles.png" mapFile:@"TileMaps/levelmap.tga" tileWidth:16 tileHeight:16];
+    
+//		CCTileMapAtlas *map = [CCTileMapAtlas tileMapAtlasWithTileFile:@"TileMaps/tiles.png" mapFile:@"TileMaps/levelmap.tga" tileWidth:16 tileHeight:16];
 		// Convert it to "anti alias" (GL_LINEAR filtering)
 		[map.texture setAntiAliasTexParameters];
 
@@ -237,7 +238,7 @@ Class restartAction()
 	if( (self=[super init]) ) {
 
 
-		CCTileMapAtlas *map = [CCTileMapAtlas tileMapAtlasWithTileFile:@"TileMaps/tiles.png" mapFile:@"TileMaps/levelmap.tga" tileWidth:16 tileHeight:16];
+//		CCTileMapAtlas *map = [CCTileMapAtlas tileMapAtlasWithTileFile:@"TileMaps/tiles.png" mapFile:@"TileMaps/levelmap.tga" tileWidth:16 tileHeight:16];
 
 		// Create an Aliased Atlas
 		[map.texture setAliasTexParameters];
@@ -264,7 +265,7 @@ Class restartAction()
 	//   The only limitation is that you cannot change an empty, or assign an empty tile to a tile
 	//   The value 0 not rendered so don't assign or change a tile with value 0
 
-	CCTileMapAtlas *tilemap = (CCTileMapAtlas*) [self getChildByTag:kTagTileMap];
+//	CCTileMapAtlas *tilemap = (CCTileMapAtlas*) [self getChildByTag:kTagTileMap];
 
 	//
 	// For example you can iterate over all the tiles

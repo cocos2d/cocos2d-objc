@@ -102,7 +102,7 @@
 	CCSprite *sprite1, *sprite2;
 	
 	{
-		CCSprite *sprite = [CCSprite spriteWithFile: @"blocks.png"];
+		CCSprite *sprite = [CCSprite spriteWithImageNamed: @"blocks.png"];
 		sprite.position = ccp(280, 140);
 		
 		CGSize size = sprite.contentSize;
@@ -113,7 +113,7 @@
 	}
 	
 	{
-		CCSprite *sprite = [CCSprite spriteWithFile: @"blocks.png"];
+		CCSprite *sprite = [CCSprite spriteWithImageNamed: @"blocks.png"];
 		sprite.position = ccp(200, 200);
 		sprite.rotation = 30;
 		sprite.scaleX = 1.5;

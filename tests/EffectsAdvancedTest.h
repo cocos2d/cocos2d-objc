@@ -7,7 +7,7 @@
 @interface AppController : BaseAppController
 @end
 
-@interface TextLayer: CCLayer
+@interface TextLayer: CCNode
 {}
 -(NSString*) title;
 -(NSString*) subtitle;

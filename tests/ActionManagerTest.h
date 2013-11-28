@@ -5,7 +5,7 @@
 @interface AppController : BaseAppController
 @end
 
-@interface ActionManagerTest: CCLayer
+@interface ActionManagerTest: CCNode
 {
     CCTextureAtlas *atlas;
 }
