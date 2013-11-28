@@ -6,7 +6,7 @@
 @end
 
 
-@interface Layer1 : CCLayer
+@interface Layer1 : CCNode
 {
 }
 @end

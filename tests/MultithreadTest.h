@@ -6,7 +6,7 @@
 @interface AppController : BaseAppController
 @end
 
-@interface MultithreadDemo: CCLayer
+@interface MultithreadDemo: CCNode
 {
 }
 -(NSString*) title;

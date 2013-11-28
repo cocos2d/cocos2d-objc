@@ -6,17 +6,17 @@
 @interface AppController : BaseAppController
 @end
 
-@interface SpriteLayer: CCLayer
+@interface SpriteLayer: CCNode
 {
 }
 @end
 
-@interface TextLayer: CCLayer
+@interface TextLayer: CCNode
 {
 }
 @end
 
-@interface MainLayer : CCLayer
+@interface MainLayer : CCNode
 {
 }
 @end
