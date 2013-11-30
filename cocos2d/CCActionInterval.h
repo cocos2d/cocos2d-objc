@@ -419,7 +419,7 @@
  *
  *  @return New moveby action
  */
-(id) initWithDuration: (CCTime)duration position:(CGPoint)deltaPosition;
+-(id) initWithDuration: (CCTime)duration position:(CGPoint)deltaPosition;
 
 @end
 
