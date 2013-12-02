@@ -36,13 +36,14 @@
  
  CCTiledMapLayer represents the Tiled Map layer.
 
- If you modify a tile on runtime, then, that tile will become a CCSprite and all the additioanl benefits that entails.  Otherwise no CCSprite objects are created.
+ If you modify a tile on runtime, then that tile will become a CCSprite otherwise no CCSprite objects are initially created.
  
  ### Notes
  Tiles can have tile flags for additional properties. 
  At the moment only flip horizontal and flip vertical are used. These bit flags are defined in CCTMXXMLParser.h.
  
  */
+
 @interface CCTiledMapLayer : CCSpriteBatchNode {
     
     // Various Map data storage.
@@ -133,53 +134,79 @@
 /// @name Tile Map Layer Helpers
 /// -----------------------------------------------------------------------
 
-/** returns the tile (CCSprite) at a given a tile coordinate.
- The returned CCSprite will be already added to the CCTMXLayer. Don't add it again.
- The CCSprite can be treated like any other CCSprite: rotated, scaled, translated, opacity, color, etc.
- You can remove either by calling:
-	- [layer removeChild:sprite cleanup:cleanup];
-	- or [layer removeTileAt:ccp(x,y)];
+/**
+ *  Returns the tile at the specified tile coordinates.
+ *
+ *  @param tileCoordinate Tile Coordinate to use.
+ *
+ *  @return CCSprite tile object.
  */
 -(CCSprite*) tileAt:(CGPoint)tileCoordinate;
 
-/** returns the tile gid at a given tile coordinate.
- if it returns 0, it means that the tile is empty.
- This method requires the the tile map has not been previously released (eg. don't call [layer releaseMap])
+/**
+ *  Returns the tile GID at the specified tile coordinates.
+ *
+ *  @param tileCoordinate Tile Coordinate to use.
+ *
+ *  @return Tile GID value.
  */
 -(uint32_t) tileGIDAt:(CGPoint)tileCoordinate;
 
-/** returns the tile gid at a given tile coordinate. It also returns the tile flags.
- This method requires the the tile map has not been previously released (eg. don't call [layer releaseMap])
+/*
+ *  Returns the tile GID using the specified tile coordinates and flag options.
+ *
+ *  @param pos   Tile Coordinate to use.
+ *  @param flags Flags options to use.
+ *
+ *  @return Tile GID value.
  */
 -(uint32_t) tileGIDAt:(CGPoint)pos withFlags:(ccTMXTileFlags*)flags;
 
-/** sets the tile gid (gid = tile global id) at a given tile coordinate.
- The Tile GID can be obtained by using the method "tileGIDAt" or by using the TMX editor -> Tileset Mgr +1.
- If a tile is already placed at that position, then it will be removed.
+/**
+ *  Sets the tile GID using the specified tile coordinates and GID value.
+ *
+ *  @param gid            GID value to use.
+ *  @param tileCoordinate Tile Coordinate to use.
  */
 -(void) setTileGID:(uint32_t)gid at:(CGPoint)tileCoordinate;
 
-/** sets the tile gid (gid = tile global id) at a given tile coordinate.
- The Tile GID can be obtained by using the method "tileGIDAt" or by using the TMX editor -> Tileset Mgr +1.
- If a tile is already placed at that position, then it will be removed.
- 
- Use withFlags if the tile flags need to be changed as well
+/**
+ *  Sets the tile GID using the specified GID value, tile coordinates and flag option values.
+ *
+ *  @param gid   GID value to use.
+ *  @param pos   Tile Coordinate to use.
+ *  @param flags Flag options to use.
  */
-
 -(void) setTileGID:(uint32_t)gid at:(CGPoint)pos withFlags:(ccTMXTileFlags)flags;
 
-/** removes a tile at given tile coordinate */
+/**
+ *  Remove tile at specified tile coordinates.
+ *
+ *  @param tileCoordinate Tile Coordinate to use.
+ */
 -(void) removeTileAt:(CGPoint)tileCoordinate;
 
-/** returns the position in points of a given tile coordinate */
+/**
+ *  Return the position in points of the tile specified by the tile coordinates.
+ *
+ *  @param tileCoordinate Tile Coordinate to use.
+ *
+ *  @return Return position of tile.
+ */
 -(CGPoint) positionAt:(CGPoint)tileCoordinate;
 
-/** return the value for the specific property name */
+/**
+ *  Return the value for the specified property name value.
+ *
+ *  @param propertyName Propery name to lookup.
+ *
+ *  @return Property name value.
+ */
 -(id) propertyNamed:(NSString *)propertyName;
 
-/** CCTMXLayer doesn't support adding a CCSprite manually.
- @warning addchild:z:tag: is not supported on CCTMXLayer. Instead of setTileGID:at:/tileAt:
+/**
+ @warning addchild:z:tag: is not supported on CCTMXLayer.  Instead use setTileGID:at: and tileAt: methods.
  */
--(void) addChild: (CCNode*)node z:(NSInteger)z tag:(NSInteger)tag;
+-(void) addChild:(CCNode*)node z:(NSInteger)z tag:(NSInteger)tag;
 
 @end
