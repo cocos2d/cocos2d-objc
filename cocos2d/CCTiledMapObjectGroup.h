@@ -24,43 +24,58 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- *
- * TMX Tiled Map support:
- * http://www.mapeditor.org
- *
  */
 
 #import "CCNode.h"
 
-
 @class CCTiledMapObjectGroup;
 
+/**
+ *  CCTMXObjectGroup represents the TMX object group.
+ */
+@interface CCTiledMapObjectGroup : NSObject {
 
-/** CCTMXObjectGroup represents the TMX object group.
-@since v0.99.0
-*/
-@interface CCTiledMapObjectGroup : NSObject
-{
 	NSString			*_groupName;
+    
 	CGPoint				_positionOffset;
+    
 	NSMutableArray		*_objects;
+    
 	NSMutableDictionary	*_properties;
 }
 
-/** name of the group */
+
+/// -----------------------------------------------------------------------
+/// @name Accessing the Tile Map Object Group Attributes
+/// -----------------------------------------------------------------------
+
+/** Name of the object group. */
 @property (nonatomic,readwrite,strong) NSString *groupName;
-/** offset position of child objects */
+
+/** Offset position of child objects, */
 @property (nonatomic,readwrite,assign) CGPoint positionOffset;
-/** array of the objects */
+
+/** Array of the objects. */
 @property (nonatomic,readwrite,strong) NSMutableArray *objects;
-/** list of properties stored in a dictionary */
+
+/** List of properties stored in the dictionary. */
 @property (nonatomic,readwrite,strong) NSMutableDictionary *properties;
 
-/** return the value for the specific property name */
+/**
+ *  Return the value for the specified property name value.
+ *
+ *  @param propertyName Propery name to lookup.
+ *
+ *  @return Property name value.
+ */
 -(id) propertyNamed:(NSString *)propertyName;
 
-/** return the dictionary for the specific object name.
- It will return the 1st object found on the array for the given name.
+/**
+ *  Return the dictionary for the first entry of specified object namee.
+ *
+ *  @param objectName Object name to use.
+ *
+ *  @return Object dictionary.
  */
 -(NSMutableDictionary*) objectNamed:(NSString *)objectName;
 
