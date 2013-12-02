@@ -4,7 +4,7 @@
 @interface AppController : BaseAppController
 @end
 
-@interface TextureDemo : CCLayer
+@interface TextureDemo : CCNode
 {}
 
 -(NSString*) title;

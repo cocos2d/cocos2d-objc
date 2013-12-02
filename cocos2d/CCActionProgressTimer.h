@@ -28,32 +28,72 @@
 #import "CCProgressNode.h"
 #import "CCActionInterval.h"
 
+// -----------------------------------------------------------------
+/** @name CCActionProgressTo */
+
 /**
- Progress to percentage
-@since v0.99.1
+ *  Progress actions to a percentage.
 */
 @interface CCActionProgressTo : CCActionInterval <NSCopying>
 {
 	float _to;
 	float _from;
 }
-/** Creates and initializes with a duration and a percent */
-+(id) actionWithDuration:(CCTime)duration percent:(float)percent;
-/** Initializes with a duration and a percent */
--(id) initWithDuration:(CCTime)duration percent:(float)percent;
-@end
 
 /**
- Progress from a percentage to another percentage
- @since v0.99.1
+ *  Creates a progress action.
+ *
+ *  @param duration Action duration
+ *  @param percent  Percentage
+ *
+ *  @return New prgress action
+ */
++(id) actionWithDuration:(CCTime)duration percent:(float)percent;
+
+/**
+ *  Initializes a progress action.
+ *
+ *  @param duration Action duration
+ *  @param percent  Percentage
+ *
+ *  @return New progress action
+ */
+-(id) initWithDuration:(CCTime)duration percent:(float)percent;
+
+@end
+
+// -----------------------------------------------------------------
+/** @name CCActionProgressFromTo */
+
+/**
+ *  Progress actions from and to a percentage
  */
 @interface CCActionProgressFromTo : CCActionInterval <NSCopying>
 {
 	float _to;
 	float _from;
 }
-/** Creates and initializes the action with a duration, a "from" percentage and a "to" percentage */
+
+/**
+ *  Creates a progress action.
+ *
+ *  @param duration       Action duration
+ *  @param fromPercentage Percentage to start from
+ *  @param toPercentage   Percentage to end at
+ *
+ *  @return New progress action
+ */
 +(id) actionWithDuration:(CCTime)duration from:(float)fromPercentage to:(float) toPercentage;
-/** Initializes the action with a duration, a "from" percentage and a "to" percentage */
+
+/**
+ *  Initializes a progress action.
+ *
+ *  @param duration       Action duration
+ *  @param fromPercentage Percentage to start from
+ *  @param toPercentage   Percentage to end at
+ *
+ *  @return New progress action
+ */
 -(id) initWithDuration:(CCTime)duration from:(float)fromPercentage to:(float) toPercentage;
+
 @end

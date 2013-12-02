@@ -4,7 +4,7 @@
 @interface AppController : BaseAppController
 @end
 
-@interface ParallaxDemo: CCLayer
+@interface ParallaxDemo: CCNode
 {
     CCTextureAtlas *atlas;
 }
