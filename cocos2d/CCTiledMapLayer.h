@@ -205,7 +205,11 @@
 -(id) propertyNamed:(NSString *)propertyName;
 
 /**
- @warning addchild:z:tag: is not supported on CCTMXLayer.  Instead use setTileGID:at: and tileAt: methods.
+ *  @warning addchild:z:tag: is not supported on CCTMXLayer.  Instead use setTileGID:at: and tileAt: methods.
+ *
+ *  @param node Node to use.
+ *  @param z    Z value to use.
+ *  @param tag  Tag to use.
  */
 -(void) addChild:(CCNode*)node z:(NSInteger)z tag:(NSInteger)tag;
 
