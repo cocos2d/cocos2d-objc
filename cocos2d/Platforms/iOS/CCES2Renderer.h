@@ -36,6 +36,9 @@
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
 
+/**
+ *  ES2 renderer
+ */
 @interface CCES2Renderer : NSObject <CCESRenderer>
 {
     // The pixel dimensions of the CAEAGLLayer

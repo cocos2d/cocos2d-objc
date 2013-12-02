@@ -50,10 +50,10 @@
 /** loads the default shaders */
 -(void) loadDefaultShaders;
 
-/** returns a GL program for a given key */
+/* returns a GL program for a given key */
 -(CCGLProgram *) programForKey:(NSString*)key;
 
-/** adds a CCGLProgram to the cache for a given name */
+/* adds a CCGLProgram to the cache for a given name */
 - (void) addProgram:(CCGLProgram*)program forKey:(NSString*)key;
 
 @end

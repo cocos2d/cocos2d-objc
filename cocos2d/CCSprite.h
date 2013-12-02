@@ -203,7 +203,7 @@
 /**
  *  Initializes a sprite with the name of an image. The name can be either a name in a sprite sheet or the name of a file.
  *
- *  @param ImageName name of the image to load
+ *  @param imageName name of the image to load
  *
  *  @return A newly initialized CCSprite object.
  */

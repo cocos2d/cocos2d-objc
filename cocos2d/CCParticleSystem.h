@@ -512,7 +512,8 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
 /**
  *  Initializes and returns a particle system object from the specified dictionary and texture directory path values.
  *
- *  @param path Particle dictionary file path.
+ *  @param dictionary Particle dictionary object.
+ *  @param dirname    Path to dictionary
  *
  *  @return An initialized CCParticleSystem Object.
  */
