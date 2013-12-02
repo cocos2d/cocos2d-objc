@@ -73,4 +73,7 @@
  */
 -(void) transformAncestors;
 
+// Dummy method for use in CCSpriteBatchNode
+-(void) updateTransform;
+
 @end
