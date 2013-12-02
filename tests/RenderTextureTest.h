@@ -4,7 +4,7 @@
 @interface AppController : BaseAppController
 @end
 
-@interface RenderTextureTest : CCLayer
+@interface RenderTextureTest : CCNode
 {}
 -(NSString*) title;
 -(NSString*) subtitle;

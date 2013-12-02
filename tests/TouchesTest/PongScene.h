@@ -9,7 +9,7 @@
 
 @class Ball;
 
-@interface PongLayer: CCLayer {
+@interface PongLayer: CCNode {
 @private
 	Ball *ball;
 	NSArray *paddles;

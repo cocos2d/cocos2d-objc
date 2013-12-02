@@ -911,6 +911,9 @@
 		50FD7B3C0FFAA8AC004073B5 /* grossini_dance_atlas.png in Resources */ = {isa = PBXBuildFile; fileRef = 509A7A970F61A2400032F449 /* grossini_dance_atlas.png */; };
 		50FD7B3F0FFAA8BC004073B5 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C1959C0EE4B90800829067 /* background.png */; };
 		50FD7B450FFAA8C6004073B5 /* atlastest.png in Resources */ = {isa = PBXBuildFile; fileRef = 506882680E957C4A00F943E5 /* atlastest.png */; };
+		7590B6C918401DDC00593C0A /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3877010446C6E00150883 /* OpenAL.framework */; };
+		7590B6CE18401DE500593C0A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3876E10446C6E00150883 /* AudioToolbox.framework */; };
+		75B9F19118401E2800AB6DB9 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3876C10446C6E00150883 /* AVFoundation.framework */; };
 		8F2B79981637472500510E69 /* boundsTestFont.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F2B79961637458E00510E69 /* boundsTestFont.png */; };
 		8F2B79991637472500510E69 /* boundsTestFont.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 8F2B79971637458E00510E69 /* boundsTestFont.fnt */; };
 		A00942C915180C730029A5C6 /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
@@ -4273,6 +4276,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75B9F19118401E2800AB6DB9 /* AVFoundation.framework in Frameworks */,
+				7590B6CE18401DE500593C0A /* AudioToolbox.framework in Frameworks */,
+				7590B6C918401DDC00593C0A /* OpenAL.framework in Frameworks */,
 				A02E276216A5E169007F064C /* libcocos2d.a in Frameworks */,
 				50C195570EE4B57E00829067 /* Foundation.framework in Frameworks */,
 				50C195580EE4B57E00829067 /* UIKit.framework in Frameworks */,

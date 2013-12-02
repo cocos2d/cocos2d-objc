@@ -13,7 +13,7 @@
 // local import
 #import "EAGLViewTest.h"
 
-@interface LayerExample : CCLayer
+@interface LayerExample : CCNode
 {}
 @end
 

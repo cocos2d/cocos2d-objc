@@ -5,7 +5,7 @@
 @interface AppController : BaseAppController
 @end
 
-@interface ZwoptexTest: CCLayer
+@interface ZwoptexTest: CCNode
 {
     CCTextureAtlas	*atlas;
 }

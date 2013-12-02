@@ -135,7 +135,7 @@
 	CCScene *scene = [CCScene node];
 
 	// Create and initialize our HelloActions Layer
-	CCLayer *layer = [ActionsWithBlocks node];
+	CCNode *layer = [ActionsWithBlocks node];
 	// add our HelloWorld Layer as a child of the main scene
 	[scene addChild:layer];
 

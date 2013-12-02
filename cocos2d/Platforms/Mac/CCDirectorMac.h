@@ -33,19 +33,19 @@
 #import "../../CCDirector.h"
 
 enum  {
-	/// If the window is resized, it won't be autoscaled
+	// If the window is resized, it won't be autoscaled
 	kCCDirectorResize_NoScale,
-	/// If the window is resized, it will be autoscaled (default behavior)
+	// If the window is resized, it will be autoscaled (default behavior)
 	kCCDirectorResize_AutoScale,
 };
 
 @interface CCDirector (MacExtension)
 
-/** converts an NSEvent to GL coordinates (Mac only) */
+/* converts an NSEvent to GL coordinates (Mac only) */
 -(CGPoint) convertEventToGL:(NSEvent*)event;
 @end
 
-/** Base class of Mac directors
+/* Base class of Mac directors
  @since v0.99.5
  */
 @interface CCDirectorMac : CCDirector
@@ -71,10 +71,10 @@ enum  {
 
 @property (nonatomic, readwrite) CGSize originalWinSize;
 
-/** Sets the view in fullscreen or window mode */
+/* Sets the view in fullscreen or window mode */
 - (void) setFullScreen:(BOOL)fullscreen;
 
-/** Converts window size coordinates to logical coordinates.
+/* Converts window size coordinates to logical coordinates.
  Useful only if resizeMode is kCCDirectorResize_Scale.
  If resizeMode is kCCDirectorResize_NoScale, then no conversion will be done.
 */
@@ -82,7 +82,7 @@ enum  {
 @end
 
 
-/** DisplayLinkDirector is a Director that synchronizes timers with the refresh rate of the display.
+/* DisplayLinkDirector is a Director that synchronizes timers with the refresh rate of the display.
  *
  * Features and Limitations:
  * - Only available on 3.1+

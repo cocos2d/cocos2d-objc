@@ -230,7 +230,11 @@
 /// -----------------------------------------------------------------------
 
 #ifdef __CC_PLATFORM_MAC
-/** HTML text support. */
+/**
+ *  (OS X) HTML Label
+ *
+ *  @param html HTML Description.
+ */
 - (void) setHTML:(NSString*) html;
 #endif
 
@@ -239,7 +243,11 @@
 /// @name TTF Management
 /// -----------------------------------------------------------------------
 
-/** Register a TTF font resource. */
+/**
+ *  Register a TTF font resource.
+ *
+ *  @param fontFile Font file path.
+ */
 +(void) registerCustomTTF:(NSString*)fontFile;
 
 
