@@ -40,11 +40,12 @@
 #pragma mark -
 #pragma mark CCLayerColor
 
-/** CCLayerColor is a subclass of CCLayer that implements the CCRGBAProtocol protocol.
-
- All features from CCLayer are valid, plus the following new features:
- - opacity
- - RGB colors
+/** 
+ *  CCLayerColor is a subclass of CCLayer that implements the CCRGBAProtocol protocol.
+ *
+ *  All features from CCLayer are valid, plus the following new features:
+ *  - opacity
+ *  - RGB colors
  */
 @interface CCLayerColor : CCNodeRGBA <CCBlendProtocol>
 {
@@ -54,16 +55,24 @@
 	ccBlendFunc	_blendFunc;
 }
 
-/** creates a CCLayer with color, width and height in Points*/
+/**
+ *  Creates a CCLayer with color, width and height in Points.
+ *
+ *  @param color color of the layer
+ *  @param w     Width of 
+ *  @param h     <#h description#>
+ *
+ *  @return <#return value description#>
+ */
 + (id) layerWithColor: (ccColor4B)color width:(GLfloat)w height:(GLfloat)h;
-/** creates a CCLayer with color. Width and height are the window size. */
+/* creates a CCLayer with color. Width and height are the window size. */
 + (id) layerWithColor: (ccColor4B)color;
 
-/** initializes a CCLayer with color, width and height in Points.
+/* initializes a CCLayer with color, width and height in Points.
  This is the designated initializer.
  */
 - (id) initWithColor:(ccColor4B)color width:(GLfloat)w height:(GLfloat)h;
-/** initializes a CCLayer with color. Width and height are the window size. */
+/* initializes a CCLayer with color. Width and height are the window size. */
 - (id) initWithColor:(ccColor4B)color;
 
 /** BlendFunction. Conforms to CCBlendProtocol protocol */
@@ -102,14 +111,14 @@ the background.
 	BOOL	_compressedInterpolation;
 }
 
-/** Creates a full-screen CCLayer with a gradient between start and end. */
+/* Creates a full-screen CCLayer with a gradient between start and end. */
 + (id) layerWithColor: (ccColor4B) start fadingTo: (ccColor4B) end;
-/** Creates a full-screen CCLayer with a gradient between start and end in the direction of v. */
+/* Creates a full-screen CCLayer with a gradient between start and end in the direction of v. */
 + (id) layerWithColor: (ccColor4B) start fadingTo: (ccColor4B) end alongVector: (CGPoint) v;
 
-/** Initializes the CCLayer with a gradient between start and end. */
+/* Initializes the CCLayer with a gradient between start and end. */
 - (id) initWithColor: (ccColor4B) start fadingTo: (ccColor4B) end;
-/** Initializes the CCLayer with a gradient between start and end in the direction of v. */
+/* Initializes the CCLayer with a gradient between start and end in the direction of v. */
 - (id) initWithColor: (ccColor4B) start fadingTo: (ccColor4B) end alongVector: (CGPoint) v;
 
 /** The starting color. */

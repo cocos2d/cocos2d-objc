@@ -113,13 +113,13 @@ enum {
 	const ccPVRTexturePixelFormatInfo *_pixelFormatInfo;
 }
 
-/** initializes a CCTexturePVR with a path */
+/* initializes a CCTexturePVR with a path */
 - (id)initWithContentsOfFile:(NSString *)path;
-/** initializes a CCTexturePVR with an URL */
+/* initializes a CCTexturePVR with an URL */
 - (id)initWithContentsOfURL:(NSURL *)url;
-/** creates and initializes a CCTexturePVR with a path */
+/* creates and initializes a CCTexturePVR with a path */
 + (id)pvrTextureWithContentsOfFile:(NSString *)path;
-/** creates and initializes a CCTexturePVR with an URL */
+/* creates and initializes a CCTexturePVR with an URL */
 + (id)pvrTextureWithContentsOfURL:(NSURL *)url;
 
 /** texture id name */

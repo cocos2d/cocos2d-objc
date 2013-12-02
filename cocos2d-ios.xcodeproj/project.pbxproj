@@ -1226,11 +1226,11 @@
 				E0F924701224140400EF2362 /* CCTexturePVR.m */,
 				50E1357110ADEB1B00C9E7FA /* CCTexture.h */,
 				50E1357210ADEB1B00C9E7FA /* CCTexture.m */,
+				B706B19718209A8300B27A2C /* CCTexture_Private.h */,
 				50637A150E95397A000C9182 /* CCTextureAtlas.h */,
 				50637A160E95397A000C9182 /* CCTextureAtlas.m */,
 				5018F2670DFDEAFF00C013A5 /* CCTextureCache.h */,
 				5018F2680DFDEAFF00C013A5 /* CCTextureCache.m */,
-				B706B19718209A8300B27A2C /* CCTexture_Private.h */,
 			);
 			name = Textures;
 			sourceTree = "<group>";

@@ -37,7 +37,7 @@
  */
 @interface CCDirector (iOSExtension)
 
-/** The size in pixels of the surface. It could be different than the screen size.
+/* The size in pixels of the surface. It could be different than the screen size.
  High-res devices might have a higher surface size than the screen size.
  In non High-res device the contentScale will be emulated.
 
@@ -47,7 +47,7 @@
  */
 -(void) setContentScaleFactor:(CGFloat)scaleFactor;
 
-/** Will enable Retina Display on devices that supports it.
+/* Will enable Retina Display on devices that supports it.
  It will enable Retina Display on iPhone4 and iPod Touch 4.
  It will return YES, if it could enabled it, otherwise it will return NO.
 
@@ -56,17 +56,17 @@
  */
 -(BOOL) enableRetinaDisplay:(BOOL)enableRetina;
 
-/** returns the content scale factor */
+/* returns the content scale factor */
 -(CGFloat) contentScaleFactor;
 
-/** converts a UITouch to a GL point */
+/* converts a UITouch to a GL point */
 -(CGPoint)convertTouchToGL:(UITouch*)touch;
 @end
 
 #pragma mark -
 #pragma mark CCDirectorIOS
 
-/** CCDirectorIOS: Base class of iOS directors
+/* CCDirectorIOS: Base class of iOS directors
  @since v0.99.5
  */
 @interface CCDirectorIOS : CCDirector
@@ -81,7 +81,7 @@
 
 @end
 
-/** DisplayLinkDirector is a Director that synchronizes timers with the refresh rate of the display.
+/* DisplayLinkDirector is a Director that synchronizes timers with the refresh rate of the display.
  *
  * Features and Limitations:
  * - Only available on 3.1+
@@ -92,6 +92,7 @@
  *
  * @since v0.8.2
  */
+
 @interface CCDirectorDisplayLink : CCDirectorIOS
 {
 	CADisplayLink	*_displayLink;
