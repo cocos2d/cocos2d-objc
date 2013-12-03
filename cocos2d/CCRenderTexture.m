@@ -113,7 +113,7 @@
 		memset(data, 0, (int)(powW * powH * 4));
 		_pixelFormat=format;
 
-		_texture = [[CCTexture alloc] initWithData:data pixelFormat:_pixelFormat pixelsWide:powW pixelsHigh:powH contentSize:CGSizeMake(w, h)];
+		_texture = [[CCTexture alloc] initWithData:data pixelFormat:_pixelFormat pixelsWide:powW pixelsHigh:powH contentSizeInPixels:CGSizeMake(w, h) contentScale:[CCDirector sharedDirector].contentScaleFactor];
 		free( data );
 
 		GLint oldRBO;

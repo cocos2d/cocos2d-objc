@@ -462,24 +462,6 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
     }
 
-#ifdef __CC_PLATFORM_IOS
-	// iPad ?
-	if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
-		if( [UIScreen mainScreen].scale == 2 )
-			[tex setResolutionType:CCResolutionTypeiPadRetinaDisplay];
-		else
-			[tex setResolutionType:CCResolutionTypeiPad];
-	}
-	// iPhone ?
-	else
-	{
-		if( [UIScreen mainScreen].scale == 2 )
-			[tex setResolutionType:CCResolutionTypeiPhoneRetinaDisplay];
-		else
-			[tex setResolutionType:CCResolutionTypeiPhone];
-	}
-#endif
-	
     // Update texture and content size
 	[self setTexture:tex];
 	
@@ -769,7 +751,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     if (fullColor)
     {
         // RGBA8888 format
-				texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_RGBA8888 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSize:dimensions];
+				texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_RGBA8888 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSizeInPixels:dimensions contentScale:[CCDirector sharedDirector].contentScaleFactor];
         [texture setPremultipliedAlpha:YES];
     }
     else
@@ -781,7 +763,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         for(int i = 0; i<textureSize; i++)
             dst[i] = data[i*4+3];
         
-        texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_A8 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSize:dimensions];
+        texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_A8 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSizeInPixels:dimensions contentScale:[CCDirector sharedDirector].contentScaleFactor];
         self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureA8Color];
     }
     
@@ -814,22 +796,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     {
         self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureA8Color];
     }
-    
-    if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
-		if( [UIScreen mainScreen].scale == 2 )
-			[tex setResolutionType:CCResolutionTypeiPadRetinaDisplay];
-		else
-			[tex setResolutionType:CCResolutionTypeiPad];
-	}
-	// iPhone ?
-	else
-	{
-		if( [UIScreen mainScreen].scale == 2 )
-			[tex setResolutionType:CCResolutionTypeiPhoneRetinaDisplay];
-		else
-			[tex setResolutionType:CCResolutionTypeiPhone];
-	}
-    
+        
     // Update texture and content size
 	[self setTexture:tex];
 	

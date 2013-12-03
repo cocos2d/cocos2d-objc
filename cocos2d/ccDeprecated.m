@@ -255,11 +255,6 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 	return [[self sharedFileUtils] fullPathFromRelativePath:relPath];
 }
 
-+(NSString*) fullPathFromRelativePath:(NSString*)relPath resolutionType:(CCResolutionType*)resolutionType
-{
-	return [[self sharedFileUtils] fullPathFromRelativePath:relPath resolutionType:resolutionType];
-}
-
 #if __CC_PLATFORM_IOS
 +(void) setRetinaDisplaySuffix:(NSString*)suffix
 {

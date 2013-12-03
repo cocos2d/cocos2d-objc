@@ -164,7 +164,7 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
 /** Dictionary used to lookup filenames based on a key.
  It is used internally by the following methods:
 
-  *	-(NSString*) fullPathForFilename:(NSString*)key resolutionType:(ccResolutionType*)resolutionType;
+  *	-(NSString*) fullPathForFilename:(NSString*)key contentScale:(CGFloat *)contentScale;
   *	-(NSString*) fullPathForFilenameIgnoringResolutions:(NSString*)key;
 
  @since v2.1
@@ -196,6 +196,35 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  @since v2.0
  */
 -(void)setiPadRetinaDisplaySuffix:(NSString*)iPadRetinaDisplaySuffix;
+
+/** Sets the base contentScale of textures loaded on the iPhone.
+ Useful for when you manipulate CCDirector.contenScaleFactor.
+ Defaults to 1.0.
+ Only valid on iOS. Not valid for OS X.
+ 
+ @since v3.0
+ */
+-(void)setiPhoneContentScaleFactor:(CGFloat)scale;
+
+/** Sets the base contentScale of textures loaded on the iPad.
+ Useful for when you manipulate CCDirector.contenScaleFactor.
+ Defaults to 1.0.
+ Only valid on iOS. Not valid for OS X.
+ 
+ @since v3.0
+ */
+-(void)setiPadContentScaleFactor:(CGFloat)scale;
+
+#elif defined(__CC_PLATFORM_MAC)
+
+/** Sets the base contentScale of textures loaded on the Mac.
+ Useful for when you manipulate CCDirector.contenScaleFactor.
+ Defaults to 1.0.
+ Only valid on Mac. Not valid for iOS.
+ 
+ @since v3.0
+ */
+-(void)setMacContentScaleFactor:(CGFloat)scale;
 
 #endif // __CC_PLATFORM_IOS
 
@@ -246,7 +275,7 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  * In iPad RetinaDisplay mode: "image.png" -> "/full/path/image-ipadhd.png" (in case the -ipadhd file exists)
  
  */
--(NSString*) fullPathFromRelativePath:(NSString*)relPath resolutionType:(CCResolutionType*)resolutionType;
+-(NSString*) fullPathFromRelativePath:(NSString*)relPath contentScale:(CGFloat *)contentScale;
 
 /** Returns the fullpath of an filename without taking into account the screen resolution suffixes or directories.
 
@@ -301,7 +330,7 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  
  @since v2.1
  */
--(NSString*) fullPathForFilename:(NSString*)filename resolutionType:(CCResolutionType*)resolutionType;
+-(NSString*) fullPathForFilename:(NSString*)filename contentScale:(CGFloat *)contentScale;
 
 /** Returns the fullpath for a given filename, without taking into account device resolution.
  

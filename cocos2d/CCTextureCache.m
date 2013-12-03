@@ -281,8 +281,8 @@ static CCTextureCache *sharedTextureCache;
 
 	if( ! tex ) {
 
-		CCResolutionType resolution;
-		NSString *fullpath = [fileUtils fullPathForFilename:path resolutionType:&resolution];
+		CGFloat contentScale;
+		NSString *fullpath = [fileUtils fullPathForFilename:path contentScale:&contentScale];
 		if( ! fullpath ) {
 			CCLOG(@"cocos2d: Couldn't find file:%@", path);
 			return nil;
@@ -300,7 +300,7 @@ static CCTextureCache *sharedTextureCache;
 		else {
             
 			UIImage *image = [[UIImage alloc] initWithContentsOfFile:fullpath];
-			tex = [[CCTexture alloc] initWithCGImage:image.CGImage resolutionType:resolution];
+			tex = [[CCTexture alloc] initWithCGImage:image.CGImage contentScale:contentScale];
             
 			if( tex ){
 				dispatch_sync(_dictQueue, ^{
@@ -317,7 +317,7 @@ static CCTextureCache *sharedTextureCache;
 
 			NSData *data = [[NSData alloc] initWithContentsOfFile:fullpath];
 			NSBitmapImageRep *image = [[NSBitmapImageRep alloc] initWithData:data];
-			tex = [ [CCTexture alloc] initWithCGImage:[image CGImage] resolutionType:resolution];
+			tex = [ [CCTexture alloc] initWithCGImage:[image CGImage] contentScale:contentScale];
 
 
 			if( tex ){
@@ -354,7 +354,7 @@ static CCTextureCache *sharedTextureCache;
 			return tex;
 	}
 
-	tex = [[CCTexture alloc] initWithCGImage:imageref resolutionType:CCResolutionTypeUnknown];
+	tex = [[CCTexture alloc] initWithCGImage:imageref contentScale:1.0];
 
 	if(tex && key){
 		dispatch_sync(_dictQueue, ^{

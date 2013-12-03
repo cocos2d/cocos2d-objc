@@ -103,10 +103,10 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 
 @implementation CCTexture
 
-@synthesize contentSizeInPixels = _size, pixelFormat = _format, pixelWidth = _width, pixelHeight = _height, name = _name, maxS = _maxS, maxT = _maxT;
+@synthesize contentSizeInPixels = _sizeInPixels, pixelFormat = _format, pixelWidth = _width, pixelHeight = _height, name = _name, maxS = _maxS, maxT = _maxT;
 @synthesize premultipliedAlpha = _premultipliedAlpha;
 @synthesize shaderProgram = _shaderProgram;
-@synthesize resolutionType = _resolutionType;
+@synthesize contentScale = _contentScale;
 @synthesize antialiased = _antialiased;
 
 + (id) textureWithFile:(NSString*)file
@@ -115,7 +115,7 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 }
 
 
-- (id) initWithData:(const void*)data pixelFormat:(CCTexturePixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size
+- (id) initWithData:(const void*)data pixelFormat:(CCTexturePixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSizeInPixels:(CGSize)sizeInPixels contentScale:(CGFloat)contentScale
 {
 	if((self = [super init])) {
 		
@@ -164,12 +164,12 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 
 		}
 
-		_size  = size;
+		_sizeInPixels  = sizeInPixels;
 		_width = width;
 		_height = height;
 		_format = pixelFormat;
-		_maxS = size.width / (float)width;
-		_maxT = size.height / (float)height;
+		_maxS = sizeInPixels.width / (float)width;
+		_maxT = sizeInPixels.height / (float)height;
 
 		_premultipliedAlpha = NO;
 
@@ -177,7 +177,7 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
         
         _antialiased = YES;
 
-		_resolutionType = CCResolutionTypeUnknown;
+		_contentScale = contentScale;
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTexture];
 	}
 	return self;
@@ -213,8 +213,8 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 -(CGSize) contentSize
 {
 	CGSize ret;
-	ret.width = _size.width / CC_CONTENT_SCALE_FACTOR();
-	ret.height = _size.height / CC_CONTENT_SCALE_FACTOR();
+	ret.width = _sizeInPixels.width / _contentScale;
+	ret.height = _sizeInPixels.height / _contentScale;
 
 	return ret;
 }
@@ -239,7 +239,7 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 
 @implementation CCTexture (Image)
 
-- (id) initWithCGImage:(CGImageRef)cgImage resolutionType:(CCResolutionType)resolution
+- (id) initWithCGImage:(CGImageRef)cgImage contentScale:(CGFloat)contentScale
 {
 	NSUInteger				textureWidth, textureHeight;
 	CGContextRef			context = nil;
@@ -250,7 +250,7 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 	unsigned short*			outPixel16;
 	BOOL					hasAlpha;
 	CGImageAlphaInfo		info;
-	CGSize					imageSize;
+	CGSize					imageSizeInPixels;
 	CCTexturePixelFormat	pixelFormat;
 
 	if(cgImage == NULL) {
@@ -344,7 +344,7 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 	   return nil;
    }
    
-	imageSize = CGSizeMake(CGImageGetWidth(cgImage), CGImageGetHeight(cgImage));
+	imageSizeInPixels = CGSizeMake(CGImageGetWidth(cgImage), CGImageGetHeight(cgImage));
 
 	// Create the bitmap graphics context
 
@@ -372,7 +372,7 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 
 
 	CGContextClearRect(context, CGRectMake(0, 0, textureWidth, textureHeight));
-	CGContextTranslateCTM(context, 0, textureHeight - imageSize.height);
+	CGContextTranslateCTM(context, 0, textureHeight - imageSizeInPixels.height);
 	CGContextDrawImage(context, CGRectMake(0, 0, CGImageGetWidth(cgImage), CGImageGetHeight(cgImage)), cgImage);
 
 	// Repack the pixel data into the right format
@@ -450,16 +450,14 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 		free(data);
 		data = tempData;
 	}
-	self = [self initWithData:data pixelFormat:pixelFormat pixelsWide:textureWidth pixelsHigh:textureHeight contentSize:imageSize];
+	self = [self initWithData:data pixelFormat:pixelFormat pixelsWide:textureWidth pixelsHigh:textureHeight contentSizeInPixels:imageSizeInPixels contentScale:contentScale];
 
 	// should be after calling super init
 	_premultipliedAlpha = (info == kCGImageAlphaPremultipliedLast || info == kCGImageAlphaPremultipliedFirst);
 
 	CGContextRelease(context);
 	[self releaseData:data];
-
-	_resolutionType = resolution;
-
+	
 	return self;
 }
 @end
@@ -474,8 +472,8 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 
 -(id) initWithPVRFile: (NSString*) relPath
 {
-	CCResolutionType resolution;
-	NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathForFilename:relPath resolutionType:&resolution];
+	CGFloat contentScale;
+	NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathForFilename:relPath contentScale:&contentScale];
 
 	if( (self = [super init]) ) {
 		CCTexturePVR *pvr = [[CCTexturePVR alloc] initWithContentsOfFile:fullpath];
@@ -487,7 +485,7 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 			_maxT = 1;
 			_width = pvr.width;
 			_height = pvr.height;
-			_size = CGSizeMake(_width, _height);
+			_sizeInPixels = CGSizeMake(_width, _height);
 			_premultipliedAlpha = (pvr.forcePremultipliedAlpha) ? pvr.hasPremultipliedAlpha : _PVRHaveAlphaPremultiplied;
 			_format = pvr.format;
 
@@ -498,7 +496,7 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 			CCLOG(@"cocos2d: Couldn't load PVR image: %@", relPath);
 			return nil;
 		}
-		_resolutionType = resolution;
+		_contentScale = contentScale;
 	}
 	return self;
 }
