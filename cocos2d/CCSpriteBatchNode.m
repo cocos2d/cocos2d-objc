@@ -169,8 +169,11 @@ const NSUInteger defaultCapacity = 0;
 -(void) addChild:(CCSprite*)child z:(NSInteger)z name:(NSString*) name
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
-	NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSpriteBatchNode only supports CCSprites as children");
-	NSAssert( child.texture.name == _textureAtlas.texture.name, @"CCSprite is not using the same texture id");
+	NSAssert( [child isKindOfClass:[CCSprite class]] || [child isMemberOfClass:[CCNode class]] , @"CCSpriteBatchNode only supports CCSprites/CCNodes as children");
+    
+    if ([child conformsToProtocol:@protocol(CCTextureProtocol)]) {
+        NSAssert( child.texture.name == _textureAtlas.texture.name, @"CCSprite is not using the same texture id");
+    }
 
 	[super addChild:child z:z name:name];
 
@@ -271,6 +274,10 @@ const NSUInteger defaultCapacity = 0;
 
 -(void) updateAtlasIndex:(CCSprite*) sprite currentIndex:(NSInteger*) curIndex
 {
+    
+    if(![sprite isKindOfClass:[CCSprite class]])
+        return;
+    
 	NSMutableArray *array = (NSMutableArray*)[sprite children];
 	NSUInteger count = [array count];
 	NSInteger oldIndex;
@@ -505,25 +512,29 @@ const NSUInteger defaultCapacity = 0;
 // addChild helper, faster than insertChild
 -(void) appendChild:(CCSprite*)sprite
 {
-	_isReorderChildDirty=YES;
-	[sprite setBatchNode:self];
-	[sprite setDirty: YES];
-
-	if(_textureAtlas.totalQuads == _textureAtlas.capacity)
-		[self increaseAtlasCapacity];
-
+    
+    if(![sprite isKindOfClass:[CCSprite class]])
+        return;
+	
+    _isReorderChildDirty=YES;
+    [sprite setBatchNode:self];
+    [sprite setDirty: YES];
+    
+    if(_textureAtlas.totalQuads == _textureAtlas.capacity)
+        [self increaseAtlasCapacity];
+    
     [_descendants addObject:sprite];
+    
+    NSUInteger index=_descendants.count-1;
+    
+    sprite.atlasIndex=index;
+    
+    ccV3F_C4B_T2F_Quad quad = [sprite quad];
+    [_textureAtlas insertQuad:&quad atIndex:index];
+    
+    for(CCSprite* child in sprite.children)
+        [self appendChild:child];
 
-	NSUInteger index=_descendants.count-1;
-
-	sprite.atlasIndex=index;
-
-	ccV3F_C4B_T2F_Quad quad = [sprite quad];
-	[_textureAtlas insertQuad:&quad atIndex:index];
-
-	// add children recursively
-    for (CCSprite* child in sprite.children)
-		[self appendChild:child];
 }
 
 

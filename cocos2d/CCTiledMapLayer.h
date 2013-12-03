@@ -22,12 +22,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- *
- * TMX Tiled Map support:
- * http://www.mapeditor.org
- *
  */
-
 
 #import "CCAtlasNode.h"
 #import "CCSpriteBatchNode.h"
@@ -37,119 +32,185 @@
 @class CCTiledMapLayerInfo;
 @class CCTiledMapTilesetInfo;
 
-
-/** CCTMXLayer represents the TMX layer.
-
- It is a subclass of CCSpriteBatchNode. By default the tiles are rendered using a CCTextureAtlas.
- If you mofify a tile on runtime, then, that tile will become a CCSprite, otherwise no CCSprite objects are created.
- The benefits of using CCSprite objects as tiles are:
- - tiles (CCSprite) can be rotated/scaled/moved with a nice API
-
- cocos2d v2.0 doesn't support the cc_vertexz value. Whenever a the cc_vertexz property is found, it will raise an exception.
-
- "value" by default is 0, but you can change it from Tiled by adding the "cc_alpha_func" property to the layer.
- The value 0 should work for most cases, but if you have tiles that are semi-transparent, then you might want to use a differnt
- value, like 0.5.
-
- For further information, please see the programming guide:
-
-	http://www.cocos2d-iphone.org/wiki/doku.php/prog_guide:tiled_maps
-
- @since v0.8.1
+/** 
  
- Tiles can have tile flags for additional properties. At the moment only flip horizontal and flip vertical are used. These bit flags are defined in CCTMXXMLParser.h.
+ CCTiledMapLayer represents the Tiled Map layer.
+
+ If you modify a tile on runtime, then that tile will become a CCSprite otherwise no CCSprite objects are initially created.
  
- @since 1.1
+ ### Notes
+ Tiles can have tile flags for additional properties. 
+ At the moment only flip horizontal and flip vertical are used. These bit flags are defined in CCTMXXMLParser.h.
+ 
  */
-@interface CCTiledMapLayer : CCSpriteBatchNode
-{
+
+@interface CCTiledMapLayer : CCSpriteBatchNode {
+    
+    // Various Map data storage.
 	CCTiledMapTilesetInfo	*_tileset;
-	NSString			*_layerName;
-	CGSize				_layerSize;
-	CGSize				_mapTileSize;
-	uint32_t			*_tiles;			// GID are 32 bit
-	NSUInteger			_layerOrientation;
-	NSMutableDictionary	*_properties;
+	NSString                *_layerName;
+	CGSize                  _layerSize;
+	CGSize                  _mapTileSize;
+	uint32_t                *_tiles;
+	NSUInteger              _layerOrientation;
+	NSMutableDictionary     *_properties;
+    
+    // TMX Layer Opacity
+	unsigned char           _opacity;
 
-	unsigned char		_opacity; // TMX Layer supports opacity
+    // GID Range
+	NSUInteger              _minGID;
+	NSUInteger              _maxGID;
 
-	NSUInteger			_minGID;
-	NSUInteger			_maxGID;
+	// Only used when vertexZ is used.
+	NSInteger               _vertexZvalue;
+	BOOL                    _useAutomaticVertexZ;
 
-	// Only used when vertexZ is used
-	NSInteger			_vertexZvalue;
-	BOOL				_useAutomaticVertexZ;
-
-	// used for optimization
-	CCSprite		*_reusedTile;
-	NSMutableArray		*_atlasIndexArray;
+	// Used for optimization.
+	CCSprite                *_reusedTile;
+	NSMutableArray          *_atlasIndexArray;
 }
-/** name of the layer */
+
+
+/// -----------------------------------------------------------------------
+/// @name Accessing the Tile Map Layer Attributes
+/// -----------------------------------------------------------------------
+
+/** Name of the layer. */
 @property (nonatomic,readwrite,strong) NSString *layerName;
-/** size of the layer in tiles */
+
+/** Size of the layer in tiles. */
 @property (nonatomic,readwrite) CGSize layerSize;
-/** size of the map's tile (could be different from the tile's size) */
+
+/** Size of the Map's tile, could be different from the tile size. */
 @property (nonatomic,readwrite) CGSize mapTileSize;
-/** pointer to the map of tiles */
+
+/** Tile pointer. */
 @property (nonatomic,readonly) uint32_t *tiles;
-/** Tileset information for the layer */
+
+/** Tileset information for the layer. */
 @property (nonatomic,readwrite,strong) CCTiledMapTilesetInfo *tileset;
-/** Layer orientation, which is the same as the map orientation */
+
+/** Layer orientation method, which is the same as the map orientation method. */
 @property (nonatomic,readwrite) NSUInteger layerOrientation;
-/** properties from the layer. They can be added using Tiled */
+
+/** Properties from the layer. They can be added using tiled. */
 @property (nonatomic,readwrite,strong) NSMutableDictionary *properties;
 
-/** creates a CCTMXLayer with an tileset info, a layer info and a map info */
+
+/// -----------------------------------------------------------------------
+/// @name Creating a CCTiledMapLayer Object
+/// -----------------------------------------------------------------------
+
+/**
+ *  Create and return a CCTiledMapLayer using the specified tileset info, layerinfo and mapinfo values.
+ *
+ *  @param tilesetInfo Tileset Info to use.
+ *  @param layerInfo   Layer Info to use.
+ *  @param mapInfo     Map Info to use.
+ *
+ *  @return The CCTiledMapLayer Object.
+ */
 +(id) layerWithTilesetInfo:(CCTiledMapTilesetInfo*)tilesetInfo layerInfo:(CCTiledMapLayerInfo*)layerInfo mapInfo:(CCTiledMapInfo*)mapInfo;
-/** initializes a CCTMXLayer with a tileset info, a layer info and a map info */
+
+
+/// -----------------------------------------------------------------------
+/// @name Initializing a CCTiledMapLayer Object
+/// -----------------------------------------------------------------------
+
+/**
+ *  Initializes and returns a CCTiledMapLayer using the specified tileset info, layerinfo and mapinfo values.
+ *
+ *  @param tilesetInfo Tileset Info to use.
+ *  @param layerInfo   Layer Info to use.
+ *  @param mapInfo     Map Info to use.
+ *
+ *  @return An initialized CCTiledMapLayer Object.
+ */
 -(id) initWithTilesetInfo:(CCTiledMapTilesetInfo*)tilesetInfo layerInfo:(CCTiledMapLayerInfo*)layerInfo mapInfo:(CCTiledMapInfo*)mapInfo;
 
-/** returns the tile (CCSprite) at a given a tile coordinate.
- The returned CCSprite will be already added to the CCTMXLayer. Don't add it again.
- The CCSprite can be treated like any other CCSprite: rotated, scaled, translated, opacity, color, etc.
- You can remove either by calling:
-	- [layer removeChild:sprite cleanup:cleanup];
-	- or [layer removeTileAt:ccp(x,y)];
+
+/// -----------------------------------------------------------------------
+/// @name Tile Map Layer Helpers
+/// -----------------------------------------------------------------------
+
+/**
+ *  Returns the tile at the specified tile coordinates.
+ *
+ *  @param tileCoordinate Tile Coordinate to use.
+ *
+ *  @return CCSprite tile object.
  */
 -(CCSprite*) tileAt:(CGPoint)tileCoordinate;
 
-/** returns the tile gid at a given tile coordinate.
- if it returns 0, it means that the tile is empty.
- This method requires the the tile map has not been previously released (eg. don't call [layer releaseMap])
+/**
+ *  Returns the tile GID at the specified tile coordinates.
+ *
+ *  @param tileCoordinate Tile Coordinate to use.
+ *
+ *  @return Tile GID value.
  */
 -(uint32_t) tileGIDAt:(CGPoint)tileCoordinate;
 
-/** returns the tile gid at a given tile coordinate. It also returns the tile flags.
- This method requires the the tile map has not been previously released (eg. don't call [layer releaseMap])
+/*
+ *  Returns the tile GID using the specified tile coordinates and flag options.
+ *
+ *  @param pos   Tile Coordinate to use.
+ *  @param flags Flags options to use.
+ *
+ *  @return Tile GID value.
  */
 -(uint32_t) tileGIDAt:(CGPoint)pos withFlags:(ccTMXTileFlags*)flags;
 
-/** sets the tile gid (gid = tile global id) at a given tile coordinate.
- The Tile GID can be obtained by using the method "tileGIDAt" or by using the TMX editor -> Tileset Mgr +1.
- If a tile is already placed at that position, then it will be removed.
+/**
+ *  Sets the tile GID using the specified tile coordinates and GID value.
+ *
+ *  @param gid            GID value to use.
+ *  @param tileCoordinate Tile Coordinate to use.
  */
 -(void) setTileGID:(uint32_t)gid at:(CGPoint)tileCoordinate;
 
-/** sets the tile gid (gid = tile global id) at a given tile coordinate.
- The Tile GID can be obtained by using the method "tileGIDAt" or by using the TMX editor -> Tileset Mgr +1.
- If a tile is already placed at that position, then it will be removed.
- 
- Use withFlags if the tile flags need to be changed as well
+/**
+ *  Sets the tile GID using the specified GID value, tile coordinates and flag option values.
+ *
+ *  @param gid   GID value to use.
+ *  @param pos   Tile Coordinate to use.
+ *  @param flags Flag options to use.
  */
-
 -(void) setTileGID:(uint32_t)gid at:(CGPoint)pos withFlags:(ccTMXTileFlags)flags;
 
-/** removes a tile at given tile coordinate */
+/**
+ *  Remove tile at specified tile coordinates.
+ *
+ *  @param tileCoordinate Tile Coordinate to use.
+ */
 -(void) removeTileAt:(CGPoint)tileCoordinate;
 
-/** returns the position in points of a given tile coordinate */
+/**
+ *  Return the position in points of the tile specified by the tile coordinates.
+ *
+ *  @param tileCoordinate Tile Coordinate to use.
+ *
+ *  @return Return position of tile.
+ */
 -(CGPoint) positionAt:(CGPoint)tileCoordinate;
 
-/** return the value for the specific property name */
+/**
+ *  Return the value for the specified property name value.
+ *
+ *  @param propertyName Propery name to lookup.
+ *
+ *  @return Property name value.
+ */
 -(id) propertyNamed:(NSString *)propertyName;
 
-/** CCTMXLayer doesn't support adding a CCSprite manually.
- @warning addchild:z:tag: is not supported on CCTMXLayer. Instead of setTileGID:at:/tileAt:
+/**
+ *  @warning addchild:z:tag: is not supported on CCTMXLayer.  Instead use setTileGID:at: and tileAt: methods.
+ *
+ *  @param node Node to use.
+ *  @param z    Z value to use.
+ *  @param tag  Tag to use.
  */
--(void) addChild: (CCNode*)node z:(NSInteger)z tag:(NSInteger)tag;
+-(void) addChild:(CCNode*)node z:(NSInteger)z tag:(NSInteger)tag;
+
 @end
