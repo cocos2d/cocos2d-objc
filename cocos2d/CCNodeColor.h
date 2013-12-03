@@ -40,7 +40,7 @@
 #pragma mark -
 #pragma mark CCNodeColor
 
-/** 
+/**
  *  CCNodeColor is a subclass of CCNode that implements the CCRGBAProtocol protocol.
  *
  *  All features from CCNode are valid, plus the following new features:
@@ -58,21 +58,41 @@
 /**
  *  Creates a CCNode with color, width and height in Points.
  *
- *  @param color color of the layer
- *  @param w     Width of 
- *  @param h     <#h description#>
+ *  @param color Color of the node.
+ *  @param w     Width of the node.
+ *  @param h     Height of the node.
  *
- *  @return <#return value description#>
+ *  @return New CCNodeColor
  */
-+ (id) layerWithColor: (ccColor4B)color width:(GLfloat)w height:(GLfloat)h;
-/* creates a CCNode with color. Width and height are the window size. */
-+ (id) layerWithColor: (ccColor4B)color;
++ (id) nodeWithColor: (ccColor4B)color width:(GLfloat)w height:(GLfloat)h;
 
-/* initializes a CCNode with color, width and height in Points.
- This is the designated initializer.
+/**
+ *  Creates a CCNode with color. Width and height are the window size.
+ *
+ *  @param color Color of the node.
+ *
+ *  @return New CCNodeColor
+ */
++ (id) nodeWithColor: (ccColor4B)color;
+
+/**
+ *  Initializes a CCNode with color, width and height in Points.
+ *
+ *  @param color Color of the node.
+ *  @param w     Width of the node.
+ *  @param h     Height of the node.
+ *
+ *  @return New CCNodeColor
  */
 - (id) initWithColor:(ccColor4B)color width:(GLfloat)w height:(GLfloat)h;
-/* initializes a CCNode with color. Width and height are the window size. */
+
+/**
+ *  Inirializes a CCNode with color. Width and height are the window size.
+ *
+ *  @param color Color of the node.
+ *
+ *  @return New CCNodeColor
+ */
 - (id) initWithColor:(ccColor4B)color;
 
 /** BlendFunction. Conforms to CCBlendProtocol protocol */
@@ -82,25 +102,21 @@
 #pragma mark -
 #pragma mark CCNodeGradient
 
-/** CCNodeGradient is a subclass of CCNodeColor that draws gradients across
-the background.
-
- All features from CCNodeColor are valid, plus the following new features:
- - direction
- - final color
- - interpolation mode
-
- Color is interpolated between the startColor and endColor along the given
- vector (starting at the origin, ending at the terminus).  If no vector is
- supplied, it defaults to (0, -1) -- a fade from top to bottom.
-
- If 'compressedInterpolation' is disabled, you will not see either the start or end color for
- non-cardinal vectors; a smooth gradient implying both end points will be still
- be drawn, however.
-
- If ' compressedInterpolation' is enabled (default mode) you will see both the start and end colors of the gradient.
-
- @since v0.99.5
+/** 
+ *  CCNodeGradient is a subclass of CCNodeColor that draws gradients across the background.
+ *
+ *  All features from CCNodeColor are valid, plus the following new features:
+ *  - direction
+ *  - final color
+ *  - interpolation mode
+ *
+ *  Color is interpolated between the startColor and endColor along the given vector (starting at the origin, ending at the terminus).  
+ *
+ *  If no vector is supplied, it defaults to (0, -1) -- a fade from top to bottom.
+ *
+ *  If 'compressedInterpolation' is disabled, you will not see either the start or end color for non-cardinal vectors; a smooth gradient implying both end points will be still be drawn, however.
+ *
+ *  If ' compressedInterpolation' is enabled (default mode) you will see both the start and end colors of the gradient.
  */
 @interface CCNodeGradient : CCNodeColor
 {
@@ -112,9 +128,9 @@ the background.
 }
 
 /* Creates a full-screen CCNode with a gradient between start and end. */
-+ (id) layerWithColor: (ccColor4B) start fadingTo: (ccColor4B) end;
++ (id) nodeWithColor: (ccColor4B) start fadingTo: (ccColor4B) end;
 /* Creates a full-screen CCNode with a gradient between start and end in the direction of v. */
-+ (id) layerWithColor: (ccColor4B) start fadingTo: (ccColor4B) end alongVector: (CGPoint) v;
++ (id) nodeWithColor: (ccColor4B) start fadingTo: (ccColor4B) end alongVector: (CGPoint) v;
 
 /* Initializes the CCNode with a gradient between start and end. */
 - (id) initWithColor: (ccColor4B) start fadingTo: (ccColor4B) end;
@@ -131,39 +147,76 @@ the background.
 @property (nonatomic, readwrite) GLubyte endOpacity;
 /** The vector along which to fade color. */
 @property (nonatomic, readwrite) CGPoint vector;
-/** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors
- Default: YES
+/** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors.
+ *
+ *  Default: YES
  */
 @property (nonatomic, readwrite) BOOL compressedInterpolation;
 
 @end
 
 #pragma mark -
-#pragma mark CCLayerMultiplex
+#pragma mark CCNodeMultiplexer
 
-/** CCLayerMultiplex is a CCNode with the ability to multiplex its children.
- Features:
-   - It supports one or more children
-   - Only one children will be active a time
+/** CCNodeMultiplexer is a CCNode with the ability to multiplex its children.
+ *
+ *  Features:
+ *
+ *  - It supports one or more children
+ *  - Only one children will be active a time
  */
-@interface CCNodeMultiplex : CCNode
+@interface CCNodeMultiplexer : CCNode
 {
-	unsigned int _enabledLayer;
-	NSMutableArray *_layers;
+	unsigned int _enabledNode;
+	NSMutableArray *_nodes;
 }
 
-/** creates a CCMultiplexLayer with an array of layers.
- @since v2.1
+// ----------------------------------------------------------
+/** @name Factory methods */
+// ----------------------------------------------------------
+/**
+ *  Creates a CCNodeMultiplexer with an array of layers.
+ *
+ *  @param arrayOfNodes Array of nodes.
+ *
+ *  @return New CCNodeMultiplexer
  */
-+(id) nodeWithArray:(NSArray*)arrayOfLayers;
-/** creates a CCMultiplexLayer with one or more layers using a variable argument list. */
-+(id) nodeWithNodes: (CCNode*) layer, ... NS_REQUIRES_NIL_TERMINATION;
-/** initializes a CCMultiplexLayer with an array of layers
- @since v2.1
++(id) nodeWithArray:(NSArray*)arrayOfNodes;
+
+/** Creates a CCMultiplexLayer with one or more layers using a variable argument list.
+
+Example:
+
+    mux = [CCNodeMultiplexer nodeWithNodes:nodeA, nodeB, nodeC, nil];
+
+@param node List of nodes.
+@param ... nil terminated list of nodes.
+@return New CCNodeMultiplexer
  */
--(id) initWithArray:(NSArray*)arrayOfLayers;
-/** switches to a certain layer indexed by n.
- The current (old) layer will be removed from its parent with 'cleanup:YES'.
++(id) nodeWithNodes: (CCNode*) node, ... NS_REQUIRES_NIL_TERMINATION;
+
+// ----------------------------------------------------------
+/** @name Initializers */
+// ----------------------------------------------------------
+/**
+ *  Initializes a CCNodeMultiplexer with an array of layers.
+ *
+ *  @param arrayOfNodes Array of nodes.
+ *
+ *  @return New CCNodeMultiplexer
+ */
+
+-(id) initWithArray:(NSArray*)arrayOfNodes;
+
+// ----------------------------------------------------------
+/** @name Node activation */
+// ----------------------------------------------------------
+/**
+ *  Switches to a certain node indexed by n.
+ *
+ *  The current (old) node will be removed from its parent with 'cleanup:YES'.
+ *
+ *  @param n Index of node to switch to
  */
 -(void) switchTo: (unsigned int) n;
 
