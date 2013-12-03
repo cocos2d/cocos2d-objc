@@ -31,6 +31,11 @@
 
 // -----------------------------------------------------------------
 
+/**
+ *  Defines the direction the transition will move.
+ *
+ *  If the direction is upwards, an exiting scene will ex. slide out the top, and an entering scene will slide in the bottom.
+ */
 typedef NS_ENUM(NSInteger, CCTransitionDirection)
 {
     /** Transition moves upwards */
