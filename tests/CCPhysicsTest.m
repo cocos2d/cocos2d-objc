@@ -128,7 +128,8 @@
 	}
 	
 //	[CCPhysicsJoint connectedPivotJointWithBodyA:sprite1.physicsBody bodyB:sprite2.physicsBody anchor:CGPointMake(0, 0)];
-	CCPhysicsJoint *joint = [CCPhysicsJoint connectedPivotJointWithBodyA:sprite2.physicsBody bodyB:sprite1.physicsBody anchor:CGPointMake(sprite1.contentSize.width, sprite1.contentSize.height)];
+//	CCPhysicsJoint *joint = [CCPhysicsJoint connectedPivotJointWithBodyA:sprite2.physicsBody bodyB:sprite1.physicsBody anchorA:CGPointMake(sprite1.contentSize.width, sprite1.contentSize.height)];
+	CCPhysicsJoint *joint = [CCPhysicsJoint connectedDistanceJointWithBodyA:sprite2.physicsBody bodyB:sprite1.physicsBody anchorA:CGPointZero anchorB:CGPointZero];
 	
 	[self scheduleBlock:^(CCTimer *timer){
 		[sprite1 removeFromParent];
