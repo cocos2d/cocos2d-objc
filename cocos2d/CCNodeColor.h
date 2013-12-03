@@ -38,16 +38,16 @@
 #import "CCNode.h"
 
 #pragma mark -
-#pragma mark CCLayerColor
+#pragma mark CCNodeColor
 
 /** 
- *  CCLayerColor is a subclass of CCLayer that implements the CCRGBAProtocol protocol.
+ *  CCNodeColor is a subclass of CCNode that implements the CCRGBAProtocol protocol.
  *
- *  All features from CCLayer are valid, plus the following new features:
+ *  All features from CCNode are valid, plus the following new features:
  *  - opacity
  *  - RGB colors
  */
-@interface CCLayerColor : CCNodeRGBA <CCBlendProtocol>
+@interface CCNodeColor : CCNodeRGBA <CCBlendProtocol>
 {
 	ccVertex2F	_squareVertices[4];
 	ccColor4F	_squareColors[4];
@@ -56,7 +56,7 @@
 }
 
 /**
- *  Creates a CCLayer with color, width and height in Points.
+ *  Creates a CCNode with color, width and height in Points.
  *
  *  @param color color of the layer
  *  @param w     Width of 
@@ -65,14 +65,14 @@
  *  @return <#return value description#>
  */
 + (id) layerWithColor: (ccColor4B)color width:(GLfloat)w height:(GLfloat)h;
-/* creates a CCLayer with color. Width and height are the window size. */
+/* creates a CCNode with color. Width and height are the window size. */
 + (id) layerWithColor: (ccColor4B)color;
 
-/* initializes a CCLayer with color, width and height in Points.
+/* initializes a CCNode with color, width and height in Points.
  This is the designated initializer.
  */
 - (id) initWithColor:(ccColor4B)color width:(GLfloat)w height:(GLfloat)h;
-/* initializes a CCLayer with color. Width and height are the window size. */
+/* initializes a CCNode with color. Width and height are the window size. */
 - (id) initWithColor:(ccColor4B)color;
 
 /** BlendFunction. Conforms to CCBlendProtocol protocol */
@@ -80,12 +80,12 @@
 @end
 
 #pragma mark -
-#pragma mark CCLayerGradient
+#pragma mark CCNodeGradient
 
-/** CCLayerGradient is a subclass of CCLayerColor that draws gradients across
+/** CCNodeGradient is a subclass of CCNodeColor that draws gradients across
 the background.
 
- All features from CCLayerColor are valid, plus the following new features:
+ All features from CCNodeColor are valid, plus the following new features:
  - direction
  - final color
  - interpolation mode
@@ -102,7 +102,7 @@ the background.
 
  @since v0.99.5
  */
-@interface CCLayerGradient : CCLayerColor
+@interface CCNodeGradient : CCNodeColor
 {
 	ccColor3B _endColor;
 	GLubyte _startOpacity;
@@ -111,14 +111,14 @@ the background.
 	BOOL	_compressedInterpolation;
 }
 
-/* Creates a full-screen CCLayer with a gradient between start and end. */
+/* Creates a full-screen CCNode with a gradient between start and end. */
 + (id) layerWithColor: (ccColor4B) start fadingTo: (ccColor4B) end;
-/* Creates a full-screen CCLayer with a gradient between start and end in the direction of v. */
+/* Creates a full-screen CCNode with a gradient between start and end in the direction of v. */
 + (id) layerWithColor: (ccColor4B) start fadingTo: (ccColor4B) end alongVector: (CGPoint) v;
 
-/* Initializes the CCLayer with a gradient between start and end. */
+/* Initializes the CCNode with a gradient between start and end. */
 - (id) initWithColor: (ccColor4B) start fadingTo: (ccColor4B) end;
-/* Initializes the CCLayer with a gradient between start and end in the direction of v. */
+/* Initializes the CCNode with a gradient between start and end in the direction of v. */
 - (id) initWithColor: (ccColor4B) start fadingTo: (ccColor4B) end alongVector: (CGPoint) v;
 
 /** The starting color. */
@@ -141,7 +141,7 @@ the background.
 #pragma mark -
 #pragma mark CCLayerMultiplex
 
-/** CCLayerMultiplex is a CCLayer with the ability to multiplex its children.
+/** CCLayerMultiplex is a CCNode with the ability to multiplex its children.
  Features:
    - It supports one or more children
    - Only one children will be active a time

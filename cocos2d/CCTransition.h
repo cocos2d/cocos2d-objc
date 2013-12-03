@@ -33,10 +33,15 @@
 
 typedef NS_ENUM(NSInteger, CCTransitionDirection)
 {
+    /** Transition moves upwards */
     CCTransitionDirectionUp,
+    /** Transition moves downwards */
     CCTransitionDirectionDown,
+    /** Transition moves rightwards */
     CCTransitionDirectionRight,
+    /** Transition moves leftwards */
     CCTransitionDirectionLeft,
+    /** Invalid transition direction */
     CCTransitionDirectionInvalid = -1,
 };
 

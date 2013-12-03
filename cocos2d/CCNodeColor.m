@@ -29,7 +29,7 @@
 
 #import "Platforms/CCGL.h"
 
-#import "CCLayer.h"
+#import "CCNodeColor.h"
 #import "CCDirector.h"
 #import "ccMacros.h"
 #import "CCShaderCache.h"
@@ -58,11 +58,11 @@
 #pragma mark -
 #pragma mark LayerColor
 
-@interface CCLayerColor (Private)
+@interface CCNodeColor (Private)
 -(void) updateColor;
 @end
 
-@implementation CCLayerColor
+@implementation CCNodeColor
 
 // Opacity and RGB color protocol
 @synthesize blendFunc = _blendFunc;
@@ -75,7 +75,7 @@
 
 + (id) layerWithColor:(ccColor4B)color
 {
-	return [(CCLayerColor*)[self alloc] initWithColor:color];
+	return [(CCNodeColor*)[self alloc] initWithColor:color];
 }
 
 -(id) init
@@ -173,7 +173,7 @@
 #pragma mark -
 #pragma mark LayerGradient
 
-@implementation CCLayerGradient
+@implementation CCNodeGradient
 
 @synthesize startOpacity = _startOpacity;
 @synthesize endColor = _endColor, endOpacity = _endOpacity;
