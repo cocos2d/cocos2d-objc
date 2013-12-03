@@ -74,28 +74,28 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
  *  Possible texture pixel formats
  */
 typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
-	//! 32-bit texture: RGBA8888
+	///! 32-bit texture: RGBA8888
 	CCTexturePixelFormat_RGBA8888,
-	//! 32-bit texture without Alpha channel. Don't use it.
+	///! 32-bit texture without Alpha channel. Don't use it.
 	CCTexturePixelFormat_RGB888,
-	//! 16-bit texture without Alpha channel
+	///! 16-bit texture without Alpha channel
 	CCTexturePixelFormat_RGB565,
-	//! 8-bit textures used as masks
+	///! 8-bit textures used as masks
 	CCTexturePixelFormat_A8,
-	//! 8-bit intensity texture
+	///! 8-bit intensity texture
 	CCTexturePixelFormat_I8,
-	//! 16-bit textures used as masks
+	///! 16-bit textures used as masks
 	CCTexturePixelFormat_AI88,
-	//! 16-bit textures: RGBA4444
+	///! 16-bit textures: RGBA4444
 	CCTexturePixelFormat_RGBA4444,
-	//! 16-bit textures: RGB5A1
+	///! 16-bit textures: RGB5A1
 	CCTexturePixelFormat_RGB5A1,
-	//! 4-bit PVRTC-compressed texture: PVRTC4
+	///! 4-bit PVRTC-compressed texture: PVRTC4
 	CCTexturePixelFormat_PVRTC4,
-	//! 2-bit PVRTC-compressed texture: PVRTC2
+	///! 2-bit PVRTC-compressed texture: PVRTC2
 	CCTexturePixelFormat_PVRTC2,
 
-	//! Default texture format: RGBA8888
+	///! Default texture format: RGBA8888
 	CCTexturePixelFormat_Default = CCTexturePixelFormat_RGBA8888,
 };
 
