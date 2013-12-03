@@ -28,7 +28,7 @@
     self.userInteractionEnabled = YES;
 		
     // Top Layer, a simple image
-		CCSprite *cocosImage = [CCSprite spriteWithImageNamed:@"powered.png"];
+		CCSprite *cocosImage = [CCSprite spriteWithImageNamed:@"Images/powered.png"];
 		// scale the image (optional)
 		cocosImage.scale = 1.0f;
 		// change the transform anchor point to 0,0 (optional)
@@ -42,7 +42,7 @@
 		tilemap.anchorPoint = ccp(0, 0);
 
 		// background layer: another image
-		CCSprite *background = [CCSprite spriteWithImageNamed:@"background.png"];
+		CCSprite *background = [CCSprite spriteWithImageNamed:@"Images/background.png"];
 		// scale the image (optional)
 		background.scale = 1.5f;
 		// change the transform anchor point (optional)
