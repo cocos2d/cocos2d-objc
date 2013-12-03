@@ -355,6 +355,8 @@ static CCDirector *_sharedDirector = nil;
 
 -(void) setContentScaleFactor:(CGFloat)scaleFactor
 {
+	NSAssert(scaleFactor > 0.0, @"scaleFactor must be positive.");
+	
 	if( scaleFactor != __ccContentScaleFactor ) {
 		__ccContentScaleFactor = scaleFactor;
 		_winSizeInPoints = CGSizeMake( _winSizeInPixels.width / scaleFactor, _winSizeInPixels.height / scaleFactor );
