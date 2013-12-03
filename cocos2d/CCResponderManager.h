@@ -89,8 +89,11 @@
  */
 typedef NS_ENUM(NSInteger, CCMouseButton)
 {
+    /** Defines left mouse button, in mouse events on OSX */
     CCMouseButtonLeft,
+    /** Defines right mouse button, in mouse events on OSX */
     CCMouseButtonRight,
+    /** Defines other (middle) mouse button, in mouse events on OSX */
     CCMouseButtonOther,
 };
 

@@ -8,7 +8,7 @@
 
 Class nextAction();
 
-@interface PerformanceTextureTest : CCLayer
+@interface PerformanceTextureTest : CCNodeColor
 {
 }
 - (NSString*) title;
