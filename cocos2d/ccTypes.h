@@ -329,35 +329,6 @@ typedef struct _ccBlendFunc
 
 static const ccBlendFunc kCCBlendFuncDisable = {GL_ONE, GL_ZERO};
 
-//! ccResolutionType
-typedef NS_ENUM(NSUInteger, CCResolutionType)
-{
-	//! Unknown resolution type
-	CCResolutionTypeUnknown,
-#ifdef __CC_PLATFORM_IOS
-	//! iPhone resolution type
-	CCResolutionTypeiPhone,
-	//! iPhone RetinaDisplay resolution type
-	CCResolutionTypeiPhoneRetinaDisplay,
-	//! iPhone5 resolution type
-	CCResolutionTypeiPhone5,
-	//! iPhone 5 RetinaDisplay resolution type
-	CCResolutionTypeiPhone5RetinaDisplay,
-	//! iPad resolution type
-	CCResolutionTypeiPad,
-	//! iPad Retina Display resolution type
-	CCResolutionTypeiPadRetinaDisplay,
-	
-#elif defined(__CC_PLATFORM_MAC)
-	//! Mac resolution type
-	CCResolutionTypeMac,
-
-	//! Mac RetinaDisplay resolution type
-	CCResolutionTypeMacRetinaDisplay,
-#endif // platform
-
-};
-
 // XXX: If any of these enums are edited and/or reordered, update CCTexture2D.m
 //! Vertical text alignment type
 typedef NS_ENUM(NSUInteger, CCVerticalTextAlignment)

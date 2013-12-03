@@ -113,7 +113,8 @@ typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
 @interface CCTexture : NSObject
 {
 	GLuint						_name;
-	CGSize						_size;
+	CGSize						_sizeInPixels;
+	CGFloat _contentScale;
 	NSUInteger					_width,
 								_height;
 	CCTexturePixelFormat		_format;
@@ -124,8 +125,6 @@ typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
     
     BOOL                        _antialiased;
 
-	CCResolutionType			_resolutionType;
-
 	// needed for drawAtRect, drawInPoint
 	CCGLProgram					*_shaderProgram;
 
@@ -133,7 +132,7 @@ typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
 + (id) textureWithFile:(NSString*)file;
 
 /** Initializes with a texture2d with data */
-- (id) initWithData:(const void*)data pixelFormat:(CCTexturePixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size;
+- (id) initWithData:(const void*)data pixelFormat:(CCTexturePixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSizeInPixels:(CGSize)sizeInPixels contentScale:(CGFloat)contentScale;
 
 /** pixel format of the texture */
 @property(nonatomic,readonly) CCTexturePixelFormat pixelFormat;
@@ -153,15 +152,14 @@ typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
 /** shader program used by drawAtPoint and drawInRect */
 @property(nonatomic,readwrite,strong) CCGLProgram *shaderProgram;
 
-/** Returns the resolution type of the texture.
- Is it a RetinaDisplay texture, an iPad texture, a Mac, a Mac RetinaDisplay or an standard texture ?
+/** Returns the contentScale of the texture.
+ In general "HD" textures return a contentScale of 2.0, while non-HD textures return 1.0.
+ Loading behavior is changed by [CCFileUtils set*ContentScaleFactor:].
+ The value can be changed manually if you want to force a certain content scale.
 
- Should be a readonly property. It is readwrite as a hack.
-
- @since v1.1
+ @since v3.0
  */
-@property (nonatomic, readwrite) CCResolutionType resolutionType;
-
+@property(nonatomic, readwrite) CGFloat contentScale;
 
 /** returns the content size of the texture in points */
 -(CGSize) contentSize;
@@ -184,7 +182,7 @@ Note that RGBA type textures will have their alpha premultiplied - use the blend
 */
 @interface CCTexture (Image)
 /** Initializes a texture from a CGImage object */
-- (id) initWithCGImage:(CGImageRef)cgImage resolutionType:(CCResolutionType)resolution;
+- (id) initWithCGImage:(CGImageRef)cgImage contentScale:(CGFloat)contentScale;
 @end
 
 
