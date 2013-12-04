@@ -30,12 +30,12 @@
 
 @class CCScheduler;
 
-/// Targets are things that can have update: and fixedUpdate: methods called by the scheduler.
-/// Scheduled blocks (CCTimers) can be associated with a target to inherit their priority and paused state.
+// Targets are things that can have update: and fixedUpdate: methods called by the scheduler.
+// Scheduled blocks (CCTimers) can be associated with a target to inherit their priority and paused state.
 @protocol CCSchedulerTarget<NSObject>
 
-/// Used to break ties for scheduled blocks, updated: and fixedUpdate: methods.
-/// Targets are sorted by priority so lower priorities are called first.
+// Used to break ties for scheduled blocks, updated: and fixedUpdate: methods.
+// Targets are sorted by priority so lower priorities are called first.
 @property(nonatomic, readonly) NSInteger priority;
 
 @optional
@@ -47,47 +47,47 @@
 @end
 
 
-/// Wraps a block scheduled with a CCScheduler.
+// Wraps a block scheduled with a CCScheduler.
 @interface CCTimer : NSObject
 
-/// Number of times to repeat call the block.
+// Number of times to repeat call the block.
 @property(nonatomic, assign) NSUInteger repeatCount;
 
-/// Amount of time to wait between calls of the block.
-/// Defaults to the initial delay value.
+// Amount of time to wait between calls of the block.
+// Defaults to the initial delay value.
 @property(nonatomic, assign) CCTime repeatInterval;
 
-/// Is the timer paused or not.
+// Is the timer paused or not.
 @property(nonatomic, assign) BOOL paused;
 
-/// Elapsed time since the last invocation.
+// Elapsed time since the last invocation.
 @property(nonatomic, readonly) CCTime deltaTime;
 
-/// Absolute time the timer will invoke at.
+// Absolute time the timer will invoke at.
 @property(nonatomic, readonly) CCTime invokeTime;
 
-/// Scheduler this timer was invoked from.
-/// Useful if you need to schedule more timers, or access lastUpdate times, etc.
+// Scheduler this timer was invoked from.
+// Useful if you need to schedule more timers, or access lastUpdate times, etc.
 @property(nonatomic, readonly) CCScheduler *scheduler;
 
-/// Returns YES if the timer is no longer scheduled.
+// Returns YES if the timer is no longer scheduled.
 @property(nonatomic, readonly) BOOL invalid;
 
-/// Track an object along with the timer.
-/// [CCNode schedule:] methods use this to store the selector name.
+// Track an object along with the timer.
+// [CCNode schedule:] methods use this to store the selector name.
 @property(nonatomic, strong) id userData;
 
-/// Set the timer to repeat once with the given interval.
-/// Can be used from a timer block to make the timer run again.
+// Set the timer to repeat once with the given interval.
+// Can be used from a timer block to make the timer run again.
 -(void)repeatOnceWithInterval:(CCTime)interval;
 
-/// Cancel the timer.
+// Cancel the timer.
 -(void)invalidate;
 
 @end
 
 
-/// Block type to use with CCScheduler.
+// Block type to use with CCScheduler.
 typedef void (^CCTimerBlock)(CCTimer *timer);
 
 
@@ -97,7 +97,7 @@ typedef void (^CCTimerBlock)(CCTimer *timer);
 //
 // CCScheduler
 //
-/** CCScheduler is responsible of triggering the scheduled callbacks.
+/* CCScheduler is responsible of triggering the scheduled callbacks.
  You should not use NSTimer. Instead use this class.
 
  There are 2 different types of callbacks (selectors):
@@ -111,7 +111,7 @@ typedef void (^CCTimerBlock)(CCTimer *timer);
 
 @interface CCScheduler : NSObject
 
-/** Modifies the time of all scheduled callbacks.
+/* Modifies the time of all scheduled callbacks.
  You can use this property to create a 'slow motion' or 'fast forward' effect.
  Default is 1.0. To create a 'slow motion' effect, use values below 1.0.
  To create a 'fast forward' effect, use values higher than 1.0.
@@ -121,7 +121,7 @@ typedef void (^CCTimerBlock)(CCTimer *timer);
 @property (nonatomic,readwrite) CCTime	timeScale;
 
 
-/** Will pause / resume the CCScheduler.
+/* Will pause / resume the CCScheduler.
  It won't dispatch any message to any target/selector, block if it is paused.
 
  The difference between `pauseAllTargets` and `pause, is that `setPaused` will pause the CCScheduler,
@@ -132,23 +132,23 @@ typedef void (^CCTimerBlock)(CCTimer *timer);
  */
 @property (nonatomic, assign) BOOL paused;
 
-/// Current time the scheduler is calling a block for.
+// Current time the scheduler is calling a block for.
 @property(nonatomic, readonly) CCTime currentTime;
 
-/// Time of the most recent update: calls.
+// Time of the most recent update: calls.
 @property(nonatomic, readonly) CCTime lastUpdateTime;
 
-/// Time of the most recent fixedUpdate: calls.
+// Time of the most recent fixedUpdate: calls.
 @property(nonatomic, readonly) CCTime lastFixedUpdateTime;
 
-/// Maximum allowed time step.
-/// If the CPU can't keep up with the game, time will slow down.
+// Maximum allowed time step.
+// If the CPU can't keep up with the game, time will slow down.
 @property(nonatomic, assign) CCTime maxTimeStep;
 
-/// The time between fixedUpdate: calls.
+// The time between fixedUpdate: calls.
 @property(nonatomic, assign) CCTime fixedTimeStep;
 
-/** 'update' the scheduler.
+/* 'update' the scheduler.
  You should NEVER call this method, unless you know what you are doing.
  */
 -(void) update:(CCTime)dt;
@@ -157,7 +157,7 @@ typedef void (^CCTimerBlock)(CCTimer *timer);
 
 -(void) scheduleTarget:(NSObject<CCSchedulerTarget> *)target;
 
-/** Unschedules all selectors and blocks for a given target.
+/* Unschedules all selectors and blocks for a given target.
  This also includes the "update" selector.
  @since v0.99.3
  */

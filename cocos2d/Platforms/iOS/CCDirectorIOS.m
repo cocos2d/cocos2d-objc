@@ -40,7 +40,6 @@
 #import "../../CCScene.h"
 #import "../../CCGLProgram.h"
 #import "../../ccGLStateCache.h"
-#import "../../CCLayer.h"
 #import "../../ccFPSImages.h"
 #import "../../CCConfiguration.h"
 

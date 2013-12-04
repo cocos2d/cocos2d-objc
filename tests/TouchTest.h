@@ -6,7 +6,7 @@
 @interface AppController : BaseAppController
 @end
 
-@interface MainLayer : CCLayer
+@interface MainLayer : CCNode
 
 - (void)nextStep;
 

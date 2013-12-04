@@ -92,8 +92,10 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 -(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
 {
 	CCPhysicsBody *bodyA = self.bodyA, *bodyB = self.bodyB;
-	_constraint.anchorA = cpTransformPoint(bodyA.node.nonRigidTransform, _anchorA);
-	_constraint.anchorB = cpTransformPoint(bodyB.node.nonRigidTransform, _anchorB);
+	cpVect anchorA = _constraint.anchorA = cpTransformPoint(bodyA.node.nonRigidTransform, _anchorA);
+	cpVect anchorB = _constraint.anchorB = cpTransformPoint(bodyB.node.nonRigidTransform, _anchorB);
+	
+	_constraint.dist = cpvdist([bodyA.body localToWorld:anchorA], [bodyB.body localToWorld:anchorB]);
 }
 
 @end

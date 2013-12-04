@@ -102,7 +102,7 @@
 	CCSprite *sprite1, *sprite2;
 	
 	{
-		CCSprite *sprite = [CCSprite spriteWithFile: @"blocks.png"];
+		CCSprite *sprite = [CCSprite spriteWithImageNamed: @"blocks.png"];
 		sprite.position = ccp(280, 140);
 		
 		CGSize size = sprite.contentSize;
@@ -113,7 +113,7 @@
 	}
 	
 	{
-		CCSprite *sprite = [CCSprite spriteWithFile: @"blocks.png"];
+		CCSprite *sprite = [CCSprite spriteWithImageNamed: @"blocks.png"];
 		sprite.position = ccp(200, 200);
 		sprite.rotation = 30;
 		sprite.scaleX = 1.5;
@@ -128,7 +128,8 @@
 	}
 	
 //	[CCPhysicsJoint connectedPivotJointWithBodyA:sprite1.physicsBody bodyB:sprite2.physicsBody anchor:CGPointMake(0, 0)];
-	CCPhysicsJoint *joint = [CCPhysicsJoint connectedPivotJointWithBodyA:sprite2.physicsBody bodyB:sprite1.physicsBody anchor:CGPointMake(sprite1.contentSize.width, sprite1.contentSize.height)];
+//	CCPhysicsJoint *joint = [CCPhysicsJoint connectedPivotJointWithBodyA:sprite2.physicsBody bodyB:sprite1.physicsBody anchorA:CGPointMake(sprite1.contentSize.width, sprite1.contentSize.height)];
+	CCPhysicsJoint *joint = [CCPhysicsJoint connectedDistanceJointWithBodyA:sprite2.physicsBody bodyB:sprite1.physicsBody anchorA:CGPointZero anchorB:CGPointZero];
 	
 	[self scheduleBlock:^(CCTimer *timer){
 		[sprite1 removeFromParent];

@@ -276,9 +276,9 @@ inline CGPoint CCCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p
 }
 @end
 
-#pragma mark - CCCardinalSplineBy
+#pragma mark - CCActionCardinalSplineBy
 
-@implementation CCCardinalSplineBy
+@implementation CCActionCardinalSplineBy
 
 -(void) startWithTarget:(id)target
 {

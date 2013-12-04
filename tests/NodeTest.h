@@ -8,7 +8,7 @@
 @interface AppController : BaseAppController
 @end
 
-@interface TestDemo : CCLayer
+@interface TestDemo : CCNode
 {}
 -(NSString*) title;
 -(NSString*) subtitle;

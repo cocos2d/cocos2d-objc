@@ -4,7 +4,7 @@
 @interface AppController : BaseAppController
 @end
 
-@interface ShaderTest: CCLayer
+@interface ShaderTest: CCNode
 {
 }
 -(NSString*) title;

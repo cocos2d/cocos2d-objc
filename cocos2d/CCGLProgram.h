@@ -80,7 +80,7 @@ enum {
 
 struct _hashUniformEntry;
 
-/** CCGLProgram
+/* CCGLProgram
  Class that implements a glProgram
  
  
@@ -107,28 +107,28 @@ struct _hashUniformEntry;
 
 @property(nonatomic, readonly) GLuint program;
 
-/** creates the CCGLProgram with a vertex and fragment from byte arrays */
+/* creates the CCGLProgram with a vertex and fragment from byte arrays */
 + (id)programWithVertexShaderByteArray:(const GLchar*)vShaderByteArray fragmentShaderByteArray:(const GLchar*)fShaderByteArray;
 
-/** creates the CCGLProgram with a vertex and fragment with contents of filenames */
+/* creates the CCGLProgram with a vertex and fragment with contents of filenames */
 + (id)programWithVertexShaderFilename:(NSString *)vShaderFilename fragmentShaderFilename:(NSString *)fShaderFilename;
 
-/** Initializes the CCGLProgram with a vertex and fragment with bytes array */
+/* Initializes the CCGLProgram with a vertex and fragment with bytes array */
 - (id)initWithVertexShaderByteArray:(const GLchar*)vShaderByteArray fragmentShaderByteArray:(const GLchar*)fShaderByteArray;
 
-/** Initializes the CCGLProgram with a vertex and fragment with contents of filenames */
+/* Initializes the CCGLProgram with a vertex and fragment with contents of filenames */
 - (id)initWithVertexShaderFilename:(NSString *)vShaderFilename fragmentShaderFilename:(NSString *)fShaderFilename;
 
-/**  It will add a new attribute to the shader */
+/*  It will add a new attribute to the shader */
 - (void)addAttribute:(NSString *)attributeName index:(GLuint)index;
 
-/** links the glProgram */
+/* links the glProgram */
 - (BOOL)link;
 
-/** it will call glUseProgram() */
+/* it will call glUseProgram() */
 - (void)use;
 
-/** It will create 4 uniforms:
+/* It will create 4 uniforms:
 	- kCCUniformPMatrix
 	- kCCUniformMVMatrix
 	- kCCUniformMVPMatrix
@@ -138,48 +138,48 @@ struct _hashUniformEntry;
  */
 - (void) updateUniforms;
 
-/** calls retrieves the named uniform location for this shader program. */
+/* calls retrieves the named uniform location for this shader program. */
 - (GLint)uniformLocationForName:(NSString*)name;
 
-/** calls glUniform1i only if the values are different than the previous call for this same shader program. */
+/* calls glUniform1i only if the values are different than the previous call for this same shader program. */
 -(void) setUniformLocation:(GLint)location withI1:(GLint)i1;
 
-/** calls glUniform1f only if the values are different than the previous call for this same shader program. */
+/* calls glUniform1f only if the values are different than the previous call for this same shader program. */
 -(void) setUniformLocation:(GLint)location withF1:(GLfloat)f1;
 
-/** calls glUniform2f only if the values are different than the previous call for this same shader program. */
+/* calls glUniform2f only if the values are different than the previous call for this same shader program. */
 -(void) setUniformLocation:(GLint)location withF1:(GLfloat)f1 f2:(GLfloat)f2;
 
-/** calls glUniform3f only if the values are different than the previous call for this same shader program. */
+/* calls glUniform3f only if the values are different than the previous call for this same shader program. */
 -(void) setUniformLocation:(GLint)location withF1:(GLfloat)f1 f2:(GLfloat)f2 f3:(GLfloat)f3;
 
-/** calls glUniform4f only if the values are different than the previous call for this same shader program. */
+/* calls glUniform4f only if the values are different than the previous call for this same shader program. */
 -(void) setUniformLocation:(GLint)location withF1:(GLfloat)f1 f2:(GLfloat)f2 f3:(GLfloat)f3 f4:(GLfloat)f4;
 
-/** calls glUniform2fv only if the values are different than the previous call for this same shader program. */
+/* calls glUniform2fv only if the values are different than the previous call for this same shader program. */
 -(void) setUniformLocation:(GLint)location with2fv:(GLfloat*)floats count:(NSUInteger)numberOfArrays;
 
-/** calls glUniform3fv only if the values are different than the previous call for this same shader program. */
+/* calls glUniform3fv only if the values are different than the previous call for this same shader program. */
 -(void) setUniformLocation:(GLint)location with3fv:(GLfloat*)floats count:(NSUInteger)numberOfArrays;
 
-/** calls glUniform4fv only if the values are different than the previous call for this same shader program. */
+/* calls glUniform4fv only if the values are different than the previous call for this same shader program. */
 -(void) setUniformLocation:(GLint)location with4fv:(GLvoid*)floats count:(NSUInteger)numberOfArrays;
 
-/** calls glUniformMatrix4fv only if the values are different than the previous call for this same shader program. */
+/* calls glUniformMatrix4fv only if the values are different than the previous call for this same shader program. */
 -(void) setUniformLocation:(GLint)location withMatrix4fv:(GLvoid*)matrix_array count:(NSUInteger)numberOfMatrix;
 
-/** will update the builtin uniforms if they are different than the previous call for this same shader program. */
+/* will update the builtin uniforms if they are different than the previous call for this same shader program. */
 -(void) setUniformsForBuiltins;
 
-/** Deprecated alias for setUniformsForBuiltins */
+/* Deprecated alias for setUniformsForBuiltins */
 -(void)setUniformForModelViewProjectionMatrix __attribute__((__deprecated__));
 
-/** returns the vertexShader error log */
+/* returns the vertexShader error log */
 - (NSString *)vertexShaderLog;
 
-/** returns the fragmentShader error log */
+/* returns the fragmentShader error log */
 - (NSString *)fragmentShaderLog;
 
-/** returns the program error log */
+/* returns the program error log */
 - (NSString *)programLog;
 @end

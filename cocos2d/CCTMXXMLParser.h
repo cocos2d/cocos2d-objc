@@ -22,23 +22,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- *
- * TMX Tiled Map support:
- * http://www.mapeditor.org
- *
  */
-
-/*
- * Internal TMX parser
- *
- * IMPORTANT: These classed should not be documented using doxygen strings
- * since the user should not use them.
- *
- */
-
 
 #import <Foundation/Foundation.h>
-
 #import "ccMacros.h"
 
 enum {
@@ -57,6 +43,7 @@ enum {
 	TMXPropertyTile
 };
 
+// Bits on the far end of the 32-bit global tile ID (GID's) are used for tile flags.
 typedef enum ccTMXTileFlags_ {
 	kCCTMXTileHorizontalFlag		= 0x80000000,
 	kCCTMXTileVerticalFlag			= 0x40000000,
@@ -66,162 +53,198 @@ typedef enum ccTMXTileFlags_ {
 	kCCFlippedMask					= ~(kCCFlipedAll),
 } ccTMXTileFlags;
 
-// Bits on the far end of the 32-bit global tile ID (GID's) are used for tile flags
 
-/* CCTMXLayerInfo contains the information about the layers like:
- - Layer name
- - Layer size
- - Layer opacity at creation time (it can be modified at runtime)
- - Whether the layer is visible (if it is not visible, then the CCNode won't be created)
-
- This information is obtained from the TMX file.
+/**
+ *  CCTiledMapLayerInfo contains information about the Tile Map Layer. This information is obtained from the supplied Tile Map File (TMX).
  */
 @interface CCTiledMapLayerInfo : NSObject
-{
-	NSString			*_name;
-	CGSize				_layerSize;
-	unsigned int		*_tiles;
-	BOOL				_visible;
-	unsigned char		_opacity;
-	BOOL				_ownTiles;
-	unsigned int		_minGID;
-	unsigned int		_maxGID;
-	NSMutableDictionary	*_properties;
-	CGPoint				_offset;
-}
 
+/// -----------------------------------------------------------------------
+/// @name Accessing the Tile Map Layer Info Attributes
+/// -----------------------------------------------------------------------
+
+/** Layer name. */
 @property (nonatomic,readwrite,strong)	NSString *name;
+
+/** Layer size in tiles. */
 @property (nonatomic,readwrite)			CGSize layerSize;
+
+/** Layer tile array. */
 @property (nonatomic,readwrite)			unsigned int *tiles;
+
+/** Layer visibility. */
 @property (nonatomic,readwrite)			BOOL visible;
+
+/** Layer Opacity. */
 @property (nonatomic,readwrite)			unsigned char opacity;
+
+/** True to release ownership of layer tiles. */
 @property (nonatomic,readwrite)			BOOL ownTiles;
+
+/** Minimum GID. */
 @property (nonatomic,readwrite)			unsigned int minGID;
+
+/** Maximum GID. */
 @property (nonatomic,readwrite)			unsigned int maxGID;
+
+/** Properties dictionary. */
 @property (nonatomic,readwrite,strong) NSMutableDictionary *properties;
+
+/** Layer offset position. */
 @property (nonatomic,readwrite)			CGPoint offset;
+
 @end
 
-/* CCTMXTilesetInfo contains the information about the tilesets like:
- - Tileset name
- - Tilset spacing
- - Tileset margin
- - size of the tiles
- - Image used for the tiles
- - Image size
 
- This information is obtained from the TMX file.
+/**
+ *  CCTiledMapTilesetInfo contains information about the Tile Map's Tileset. This information is obtained from the supplied Tile Map File (TMX).
  */
 @interface CCTiledMapTilesetInfo : NSObject
-{
-	NSString		*_name;
-	unsigned int	_firstGid;
-	CGSize			_tileSize;
-	unsigned int	_spacing;
-	unsigned int	_margin;
-	
-	//	Offset of tiles. New TMX XML node introduced here: https://github.com/bjorn/tiled/issues/16 .
-	//	Node structure:
-	//	(...) <tileset firstgid="1" name="mytileset-ipad" tilewidth="40" tileheight="40" spacing="1" margin="1">
-	//			  <tileoffset x="0" y="10"/>
-	//			  <image source="mytileset-ipad.png" width="256" height="256"/>
-	//	(...)
-	CGPoint         _tileOffset;
-	CGPoint			_tileAnchorPoint; //normalized anchor point	
 
-	// filename containing the tiles (should be spritesheet / texture atlas)
-	NSString	*_sourceImage;
 
-	// size in pixels of the image
-	CGSize		_imageSize;
-}
+/// -----------------------------------------------------------------------
+/// @name Accessing the Tile Map Tileset Info Attributes
+/// -----------------------------------------------------------------------
+
+/** Tileset name. */
 @property (nonatomic,readwrite,strong) NSString *name;
-@property (nonatomic,readwrite,assign) unsigned int firstGid;
-@property (nonatomic,readwrite,assign) CGSize tileSize;
-@property (nonatomic,readwrite,assign) unsigned int spacing;
-@property (nonatomic,readwrite,assign) unsigned int margin;
-@property (nonatomic,readwrite,strong) NSString *sourceImage;
-@property (nonatomic,readwrite,assign) CGSize imageSize;
-@property (nonatomic,readwrite,assign) CGPoint tileOffset; //setter has a custom implementation
-@property (nonatomic,readonly,assign) CGPoint tileAnchorPoint; //set automatically when tileOffset changes
 
+/** First GID. */
+@property (nonatomic,readwrite,assign) unsigned int firstGid;
+
+/** Tileset size. */
+@property (nonatomic,readwrite,assign) CGSize tileSize;
+
+/** Tileset spacing. */
+@property (nonatomic,readwrite,assign) unsigned int spacing;
+
+/** Tileset margin. */
+@property (nonatomic,readwrite,assign) unsigned int margin;
+
+/** Tileset source texture, should be spritesheet. */
+@property (nonatomic,readwrite,strong) NSString *sourceImage;
+
+/** Size of image in pixels. */
+@property (nonatomic,readwrite,assign) CGSize imageSize;
+
+/** Tileset offset in pixels. */
+@property (nonatomic,readwrite,assign) CGPoint tileOffset;
+
+/** Auto set when tileOffset is modified. */
+@property (nonatomic,readonly,assign) CGPoint tileAnchorPoint;
+
+
+/// -----------------------------------------------------------------------
+/// @name Accessing the Tile Map Tileset Info Helpers
+/// -----------------------------------------------------------------------
+
+/**
+ *  Return rectange for GID value.
+ *
+ *  @param gid GID value to use.
+ *
+ *  @return CGRect.
+ */
 -(CGRect) rectForGID:(unsigned int)gid;
+
 @end
 
-/* CCTMXMapInfo contains the information about the map like:
- - Map orientation (hexagonal, isometric or orthogonal)
- - Tile size
- - Map size
 
- And it also contains:
- - Layers (an array of TMXLayerInfo objects)
- - Tilesets (an array of TMXTilesetInfo objects)
- - ObjectGroups (an array of TMXObjectGroupInfo objects)
-
- This information is obtained from the TMX file.
-
+/**
+ *  CCTiledMapInfo contains information regarding the Tile Map. This information is obtained from the supplied Tile Map File (TMX).
  */
-@interface CCTiledMapInfo : NSObject <NSXMLParserDelegate>
-{
+@interface CCTiledMapInfo : NSObject <NSXMLParserDelegate> {
+    
 	NSMutableString		*_currentString;
     BOOL				_storingCharacters;
 	int					_layerAttribs;
 	int					_parentElement;
 	unsigned int		_parentGID;
 	unsigned int		_currentFirstGID;
-
-	// tmx filename
-	NSString *_filename;
-
-	// tmx resource path
-	NSString *_resources;
-
-	// map orientation
-	int		_orientation;
-
-	// map width & height
-	CGSize	_mapSize;
-
-	// tiles width & height
-	CGSize	_tileSize;
-
-	// Layers
-	NSMutableArray *_layers;
-
-	// tilesets
-	NSMutableArray *_tilesets;
-
-	// ObjectGroups
-	NSMutableArray *_objectGroups;
-
-	// properties
-	NSMutableDictionary *_properties;
-
-	// tile properties
-	NSMutableDictionary *_tileProperties;
+    
 }
 
+
+/// -----------------------------------------------------------------------
+/// @name Accessing the Tile Map Info Attributes
+/// -----------------------------------------------------------------------
+
+/** Map orienatation method. */
 @property (nonatomic,readwrite,assign) int orientation;
+
+/** Map size. */
 @property (nonatomic,readwrite,assign) CGSize mapSize;
+
+/** Map tile size. */
 @property (nonatomic,readwrite,assign) CGSize tileSize;
+
+/** Map layers array. */
 @property (nonatomic,readwrite,strong) NSMutableArray *layers;
+
+/** Map tileset array. */
 @property (nonatomic,readwrite,strong) NSMutableArray *tilesets;
+
+/** Tile Map file path. */
 @property (nonatomic,readwrite,strong) NSString *filename;
+
+/** Tile Map resource file path. */
 @property (nonatomic,readwrite,strong) NSString *resources;
+
+/** Object groups. */
 @property (nonatomic,readwrite,strong) NSMutableArray *objectGroups;
+
+/** Properties dictionary. */
 @property (nonatomic,readwrite,strong) NSMutableDictionary *properties;
+
+// Tile properties dictionary. */
 @property (nonatomic,readwrite,strong) NSMutableDictionary *tileProperties;
 
-/** creates a TMX Format with a tmx file */
+
+/// -----------------------------------------------------------------------
+/// @name Creating a CCTiledMapInfo Object
+/// -----------------------------------------------------------------------
+
+/**
+ *  Creates and returns a CCTiledMapInfo object using the TMX format file specified.
+ *
+ *  @param tmxFile CCTiledMapInfo
+ *
+ *  @return The CCTiledMapInfo Object.
+ */
 +(id) formatWithTMXFile:(NSString*)tmxFile;
 
-/** creates a TMX Format with an XML string and a TMX resource path */
+/**
+ *  Creates and returns a CCTiledMapInfo object using the TMX XML and resource file path.
+ *
+ *  @param tmxString    TMX XML
+ *  @param resourcePath Resource file path.
+ *
+ *  @return The CCTiledMapInfo Object.
+ */
 +(id) formatWithXML:(NSString*)tmxString resourcePath:(NSString*)resourcePath;
 
-/** initializes a TMX format with a tmx file */
+
+/// -----------------------------------------------------------------------
+/// @name Initializing a CCTiledMapInfo Object
+/// -----------------------------------------------------------------------
+
+/**
+ *  Initializes and returns a CCTiledMapInfo object using the TMX format file specified.
+ *
+ *  @param tmxFile CCTiledMapInfo
+ *
+ *  @return An initialized CCTiledMapInfo Object.
+ */
 -(id) initWithFile:(NSString*)tmxFile;
 
-/** initializes a TMX format with an XML string and a TMX resource path */
+/**
+ *   Initializes and returns a  CCTiledMapInfo object using the TMX XML and resource file path.
+ *
+ *  @param tmxString    TMX XML
+ *  @param resourcePath Resource file path.
+ *
+ *  @return An initialized CCTiledMapInfo Object.
+ */
 -(id) initWithXML:(NSString*)tmxString resourcePath:(NSString*)resourcePath;
 
 @end

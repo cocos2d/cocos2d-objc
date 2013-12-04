@@ -57,7 +57,7 @@
 
 /**
  *  Creates and returns a label object using the specified text, character map bitmap file, element width, element height and the starting character index values.
- 
+ *
  *  @param string       Label text.
  *  @param charmapfile  Character map bitmap file.
  *  @param w            element width in points.
@@ -99,11 +99,11 @@
 /**
  *  Initializes and returns a label object using the specified text, texure, element width, element height and the starting character index values.
  *
- *  @param string       Label text.
- *  @param charmapfile  Character map bitmap file (the Atlas).
- *  @param w            element width in points.
- *  @param h            element height in points.
- *  @param firstElement Starting character of the atlas.
+ *  @param theString Label text.
+ *  @param texture   The texture to use.
+ *  @param w         Element width in points.
+ *  @param h         Element height in points.
+ *  @param c         Index of character.
  *
  *  @return An initialized CCLabelAtlas Object.
  */

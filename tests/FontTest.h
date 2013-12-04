@@ -5,7 +5,7 @@
 @interface AppController : BaseAppController
 @end
 
-@interface FontTest : CCLayer
+@interface FontTest : CCNode
 {
 }
 @end

@@ -8,7 +8,7 @@
 @end
 
 
-@interface DirectorTest: CCLayer
+@interface DirectorTest: CCNode
 {
     CCTextureAtlas	*atlas;
 }

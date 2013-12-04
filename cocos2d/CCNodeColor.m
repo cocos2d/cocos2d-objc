@@ -29,7 +29,7 @@
 
 #import "Platforms/CCGL.h"
 
-#import "CCLayer.h"
+#import "CCNodeColor.h"
 #import "CCDirector.h"
 #import "ccMacros.h"
 #import "CCShaderCache.h"
@@ -58,24 +58,24 @@
 #pragma mark -
 #pragma mark LayerColor
 
-@interface CCLayerColor (Private)
+@interface CCNodeColor (Private)
 -(void) updateColor;
 @end
 
-@implementation CCLayerColor
+@implementation CCNodeColor
 
 // Opacity and RGB color protocol
 @synthesize blendFunc = _blendFunc;
 
 
-+ (id) layerWithColor:(ccColor4B)color width:(GLfloat)w  height:(GLfloat) h
++ (id) nodeWithColor:(ccColor4B)color width:(GLfloat)w  height:(GLfloat) h
 {
 	return [[self alloc] initWithColor:color width:w height:h];
 }
 
-+ (id) layerWithColor:(ccColor4B)color
++ (id) nodeWithColor:(ccColor4B)color
 {
-	return [(CCLayerColor*)[self alloc] initWithColor:color];
+	return [(CCNodeColor*)[self alloc] initWithColor:color];
 }
 
 -(id) init
@@ -173,18 +173,18 @@
 #pragma mark -
 #pragma mark LayerGradient
 
-@implementation CCLayerGradient
+@implementation CCNodeGradient
 
 @synthesize startOpacity = _startOpacity;
 @synthesize endColor = _endColor, endOpacity = _endOpacity;
 @synthesize vector = _vector;
 
-+ (id) layerWithColor: (ccColor4B) start fadingTo: (ccColor4B) end
++ (id) nodeWithColor: (ccColor4B) start fadingTo: (ccColor4B) end
 {
     return [[self alloc] initWithColor:start fadingTo:end];
 }
 
-+ (id) layerWithColor: (ccColor4B) start fadingTo: (ccColor4B) end alongVector: (CGPoint) v
++ (id) nodeWithColor: (ccColor4B) start fadingTo: (ccColor4B) end alongVector: (CGPoint) v
 {
     return [[self alloc] initWithColor:start fadingTo:end alongVector:v];
 }
@@ -320,10 +320,10 @@
 #pragma mark -
 #pragma mark MultiplexLayer
 
-@implementation CCNodeMultiplex
-+(id) nodeWithArray:(NSArray *)arrayOfLayers
+@implementation CCNodeMultiplexer
++(id) nodeWithArray:(NSArray *)arrayOfNodes
 {
-	return [[self alloc] initWithArray:arrayOfLayers];
+	return [[self alloc] initWithArray:arrayOfNodes];
 }
 
 +(id) nodeWithNodes: (CCNode*) layer, ...
@@ -337,36 +337,36 @@
 	return s;
 }
 
--(id) initWithArray:(NSArray *)arrayOfLayers
+-(id) initWithArray:(NSArray *)arrayOfNodes
 {
 	if( (self=[super init])) {
-		_layers = [arrayOfLayers mutableCopy];
+		_nodes = [arrayOfNodes mutableCopy];
 
-		_enabledLayer = 0;
+		_enabledNode = 0;
 
-		[self addChild: [_layers objectAtIndex:_enabledLayer]];
+		[self addChild: [_nodes objectAtIndex:_enabledNode]];
 	}
 
 
 	return self;
 }
 
--(id) initWithLayers: (CCNode*) layer vaList:(va_list) params
+-(id) initWithLayers: (CCNode*) node vaList:(va_list) params
 {
 	if( (self=[super init]) ) {
 
-		_layers = [NSMutableArray arrayWithCapacity:5];
+		_nodes = [NSMutableArray arrayWithCapacity:5];
 
-		[_layers addObject: layer];
+		[_nodes addObject: node];
 
 		CCNode *l = va_arg(params,CCNode*);
 		while( l ) {
-			[_layers addObject: l];
+			[_nodes addObject: l];
 			l = va_arg(params,CCNode*);
 		}
 
-		_enabledLayer = 0;
-		[self addChild: [_layers objectAtIndex: _enabledLayer]];
+		_enabledNode = 0;
+		[self addChild: [_nodes objectAtIndex: _enabledNode]];
 	}
 
 	return self;
@@ -375,25 +375,25 @@
 
 -(void) switchTo: (unsigned int) n
 {
-	NSAssert( n < [_layers count], @"Invalid index in MultiplexLayer switchTo message" );
+	NSAssert( n < [_nodes count], @"Invalid index in MultiplexLayer switchTo message" );
 
-	[self removeChild: [_layers objectAtIndex:_enabledLayer] cleanup:YES];
+	[self removeChild: [_nodes objectAtIndex:_enabledNode] cleanup:YES];
 
-	_enabledLayer = n;
+	_enabledNode = n;
 
-	[self addChild: [_layers objectAtIndex:n]];
+	[self addChild: [_nodes objectAtIndex:n]];
 }
 
 -(void) switchToAndReleaseMe: (unsigned int) n
 {
-	NSAssert( n < [_layers count], @"Invalid index in MultiplexLayer switchTo message" );
+	NSAssert( n < [_nodes count], @"Invalid index in MultiplexLayer switchTo message" );
 
-	[self removeChild: [_layers objectAtIndex:_enabledLayer] cleanup:YES];
+	[self removeChild: [_nodes objectAtIndex:_enabledNode] cleanup:YES];
 
-	[_layers replaceObjectAtIndex:_enabledLayer withObject:[NSNull null]];
+	[_nodes replaceObjectAtIndex:_enabledNode withObject:[NSNull null]];
 
-	_enabledLayer = n;
+	_enabledNode = n;
 
-	[self addChild: [_layers objectAtIndex:n]];
+	[self addChild: [_nodes objectAtIndex:n]];
 }
 @end
