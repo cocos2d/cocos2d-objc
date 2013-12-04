@@ -2158,7 +2158,7 @@ Class restartAction()
 
 #pragma mark AppController - iOS
 
-@interface BootLayer : CCLayer
+@interface BootLayer : CCNode
 @end
 
 @implementation BootLayer

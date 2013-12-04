@@ -43,7 +43,7 @@
 #pragma mark -
 #pragma mark CCDirectorIOS
 
-/** CCDirectorIOS: Base class of iOS directors
+/* CCDirectorIOS: Base class of iOS directors
  @since v0.99.5
  */
 @interface CCDirectorIOS : CCDirector
@@ -53,7 +53,7 @@
 
 @end
 
-/** DisplayLinkDirector is a Director that synchronizes timers with the refresh rate of the display.
+/* DisplayLinkDirector is a Director that synchronizes timers with the refresh rate of the display.
  *
  * Features and Limitations:
  * - Only available on 3.1+
@@ -64,6 +64,7 @@
  *
  * @since v0.8.2
  */
+
 @interface CCDirectorDisplayLink : CCDirectorIOS
 {
 	CADisplayLink	*_displayLink;

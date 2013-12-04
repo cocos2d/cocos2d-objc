@@ -6,13 +6,13 @@
 @interface AppController : BaseAppController
 @end
 
-@interface LayerMainMenu : CCLayer
+@interface LayerMainMenu : CCNode
 {
 	CCMenuItem	*disabledItem;
 }
 @end
 
-@interface Layer2 : CCLayer
+@interface Layer2 : CCNode
 {
 	CGPoint	centeredMenu;
 	BOOL alignedH;
@@ -22,7 +22,7 @@
 -(void) menuCallbackAlign: (id) sender;
 @end
 
-@interface Layer3 : CCLayer
+@interface Layer3 : CCNode
 {
 	CCMenuItem	*disabledItem;
 }
@@ -30,24 +30,24 @@
 -(void) menuCallback2: (id) sender;
 @end
 
-@interface Layer4 : CCLayer
+@interface Layer4 : CCNode
 {
 }
 -(void) menuCallback: (id) sender;
 -(void) backCallback: (id) sender;
 @end
 
-@interface LayerPriorityTest : CCLayer
+@interface LayerPriorityTest : CCNode
 {
 }
 @end
 
-@interface BugsTest : CCLayer
+@interface BugsTest : CCNode
 {
 }
 @end
 
-@interface TouchAreaTest : CCLayer
+@interface TouchAreaTest : CCNode
 {
 }
 @end

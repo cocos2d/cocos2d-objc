@@ -74,7 +74,7 @@
 
 //	[CCParticleSystemQuad node];
 	
-	NSArray *classes = [NSArray arrayWithObjects:@"CCNode", @"CCLayer", @"CCScene", @"CCSprite", @"CCSpriteBatchNode",nil];
+	NSArray *classes = [NSArray arrayWithObjects:@"CCNode", @"CCNodeColor", @"CCScene", @"CCSprite", @"CCSpriteBatchNode",nil];
 
 	printf("^ Class ^ bytes ^\n" );
 

@@ -70,45 +70,43 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 @class CCSpriteFrame;
 
-//CONSTANTS:
-
-/** @typedef CCTexture2DPixelFormat
- Possible texture pixel formats
+/**
+ *  Possible texture pixel formats
  */
 typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
-	//! 32-bit texture: RGBA8888
+	///! 32-bit texture: RGBA8888
 	CCTexturePixelFormat_RGBA8888,
-	//! 32-bit texture without Alpha channel. Don't use it.
+	///! 32-bit texture without Alpha channel. Don't use it.
 	CCTexturePixelFormat_RGB888,
-	//! 16-bit texture without Alpha channel
+	///! 16-bit texture without Alpha channel
 	CCTexturePixelFormat_RGB565,
-	//! 8-bit textures used as masks
+	///! 8-bit textures used as masks
 	CCTexturePixelFormat_A8,
-	//! 8-bit intensity texture
+	///! 8-bit intensity texture
 	CCTexturePixelFormat_I8,
-	//! 16-bit textures used as masks
+	///! 16-bit textures used as masks
 	CCTexturePixelFormat_AI88,
-	//! 16-bit textures: RGBA4444
+	///! 16-bit textures: RGBA4444
 	CCTexturePixelFormat_RGBA4444,
-	//! 16-bit textures: RGB5A1
+	///! 16-bit textures: RGB5A1
 	CCTexturePixelFormat_RGB5A1,
-	//! 4-bit PVRTC-compressed texture: PVRTC4
+	///! 4-bit PVRTC-compressed texture: PVRTC4
 	CCTexturePixelFormat_PVRTC4,
-	//! 2-bit PVRTC-compressed texture: PVRTC2
+	///! 2-bit PVRTC-compressed texture: PVRTC2
 	CCTexturePixelFormat_PVRTC2,
 
-	//! Default texture format: RGBA8888
+	///! Default texture format: RGBA8888
 	CCTexturePixelFormat_Default = CCTexturePixelFormat_RGBA8888,
 };
-
 
 @class CCGLProgram;
 
 /** CCTexture2D class.
- * This class allows to easily create OpenGL 2D textures from images, text or raw data.
- * The created CCTexture2D object will always have power-of-two dimensions.
- * Depending on how you create the CCTexture2D object, the actual image area of the texture might be smaller than the texture dimensions i.e. "contentSize" != (pixelsWide, pixelsHigh) and (maxS, maxT) != (1.0, 1.0).
- * Be aware that the content of the generated textures will be upside-down!
+ *  This class allows to easily create OpenGL 2D textures from images, text or raw data.
+ *  The created CCTexture2D object will always have power-of-two dimensions.
+ *  Depending on how you create the CCTexture2D object, the actual image area of the texture might be smaller than the texture dimensions 
+ *  - i.e. "contentSize" != (pixelsWide, pixelsHigh) and (maxS, maxT) != (1.0, 1.0).
+ *  Be aware that the content of the generated textures will be upside-down!
  */
 @interface CCTexture : NSObject
 {
@@ -129,15 +127,45 @@ typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
 	CCGLProgram					*_shaderProgram;
 
 }
-+ (id) textureWithFile:(NSString*)file;
 
-/** Initializes with a texture2d with data */
+/// -------------------------------------------------------
+/// @name Create texture.
+/// -------------------------------------------------------
+
+/**
+ *  Initializes with a texture2d with data
+ *
+ *  @param data        Pointer to a buffer containing the raw data
+ *  @param pixelFormat Pixelformat of the data
+ *  @param width       Width if the texture
+ *  @param height      Height of the texture
+ *  @param size        The final contentsize of the texture
+ *
+ *  @return Returns a new initialized CCTexture
+ */
 - (id) initWithData:(const void*)data pixelFormat:(CCTexturePixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSizeInPixels:(CGSize)sizeInPixels contentScale:(CGFloat)contentScale;
 
+/**
+ *  Creates a new texture, based on a filename
+ *  If the texture has already been loaded, and resides in cache, the previously created texture is returned
+ *
+ *  @param file File to load (should not include any suffixes)
+ *
+ *  @return Returns a new initialized CCTexture
+ */
++ (instancetype) textureWithFile:(NSString*)file;
+
+
+
+/// -------------------------------------------------------
+/// @name Properties
+/// -------------------------------------------------------
 /** pixel format of the texture */
 @property(nonatomic,readonly) CCTexturePixelFormat pixelFormat;
+
 /** width in pixels */
 @property(nonatomic,readonly) NSUInteger pixelWidth;
+
 /** hight in pixels */
 @property(nonatomic,readonly) NSUInteger pixelHeight;
 
@@ -152,6 +180,7 @@ typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
 /** shader program used by drawAtPoint and drawInRect */
 @property(nonatomic,readwrite,strong) CCGLProgram *shaderProgram;
 
+
 /** Returns the contentScale of the texture.
  In general "HD" textures return a contentScale of 2.0, while non-HD textures return 1.0.
  Loading behavior is changed by [CCFileUtils set*ContentScaleFactor:].
@@ -164,7 +193,6 @@ typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
 /** returns the content size of the texture in points */
 -(CGSize) contentSize;
 
-
 /**
  *  Creates a sprite frame from the texture.
  *
@@ -173,46 +201,62 @@ typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
  */
 -(CCSpriteFrame*) createSpriteFrame;
 
-
 @end
 
 /**
-Extensions to make it easy to create a CCTexture2D object from an image file.
-Note that RGBA type textures will have their alpha premultiplied - use the blending mode (GL_ONE, GL_ONE_MINUS_SRC_ALPHA).
-*/
+ *  Extensions to make it easy to create a CCTexture2D object from an image file.
+ *  Note that RGBA type textures will have their alpha premultiplied - use the blending mode (GL_ONE, GL_ONE_MINUS_SRC_ALPHA).
+ */
 @interface CCTexture (Image)
-/** Initializes a texture from a CGImage object */
+
+/**
+ *  Initializes a texture from a CGImage object.
+ *
+ *  @param cgImage    CGImage to use for texture
+ *  @param resolution Resolution on image
+ *
+ *  @return New CCTexture
+ */
 - (id) initWithCGImage:(CGImageRef)cgImage contentScale:(CGFloat)contentScale;
+
 @end
 
+/// -------------------------------------------------------
+/// @name Texture pixelformat category
+/// -------------------------------------------------------
 
 @interface CCTexture (PixelFormat)
-/** sets the default pixel format for CGImages that contains alpha channel.
- If the CGImage contains alpha channel, then the options are:
-	- generate 32-bit textures: kCCTexture2DPixelFormat_RGBA8888 (default one)
-	- generate 16-bit textures: kCCTexture2DPixelFormat_RGBA4444
-	- generate 16-bit textures: kCCTexture2DPixelFormat_RGB5A1
-	- generate 24-bit textures: kCCTexture2DPixelFormat_RGB888 (no alpha)
-	- generate 16-bit textures: kCCTexture2DPixelFormat_RGB565 (no alpha)
-	- generate 8-bit textures: kCCTexture2DPixelFormat_A8 (only use it if you use just 1 color)
-
- How does it work ?
-   - If the image is an RGBA (with Alpha) then the default pixel format will be used (it can be a 8-bit, 16-bit or 32-bit texture)
-   - If the image is an RGB (without Alpha) then: If the default pixel format is RGBA8888 then a RGBA8888 (32-bit) will be used. Otherwise a RGB565 (16-bit texture) will be used.
-
- This parameter is not valid for PVR / PVR.CCZ images.
-
- @since v0.8
+/** 
+ *  sets the default pixel format for CGImages that contains alpha channel.
+ *  If the CGImage contains alpha channel, then the options are:
+ *  - generate 32-bit textures: kCCTexture2DPixelFormat_RGBA8888 (default one)
+ *  - generate 16-bit textures: kCCTexture2DPixelFormat_RGBA4444
+ *  - generate 16-bit textures: kCCTexture2DPixelFormat_RGB5A1
+ *  - generate 24-bit textures: kCCTexture2DPixelFormat_RGB888 (no alpha)
+ *  - generate 16-bit textures: kCCTexture2DPixelFormat_RGB565 (no alpha)
+ *  - generate 8-bit textures: kCCTexture2DPixelFormat_A8 (only use it if you use just 1 color)
+ *
+ *  How does it work ?
+ *  - If the image is an RGBA (with Alpha) then the default pixel format will be used (it can be a 8-bit, 16-bit or 32-bit texture)
+ *  - If the image is an RGB (without Alpha) then: If the default pixel format is RGBA8888 then a RGBA8888 (32-bit) will be used. Otherwise a RGB565 (16-bit texture) will be used.
+ *
+ *  This parameter is not valid for PVR / PVR.CCZ images.
+ *
+ *  @param format Format to use with texture
  */
 +(void) setDefaultAlphaPixelFormat:(CCTexturePixelFormat)format;
 
-/** returns the alpha pixel format
- @since v0.8
+/**
+ *  Returns the alpha pixel format.
+ *
+ *  @return Pixel format
  */
 +(CCTexturePixelFormat) defaultAlphaPixelFormat;
 
-/** returns the bits-per-pixel of the in-memory OpenGL texture
- @since v1.0
+/**
+ *  Returns the bits-per-pixel of the in-memory OpenGL texture.
+ *
+ *  @return Number of bits pr. pixel.
  */
 -(NSUInteger) bitsPerPixelForFormat;
 
@@ -221,9 +265,12 @@ Note that RGBA type textures will have their alpha premultiplied - use the blend
  */
 -(NSString*) stringForFormat;
 
-
-/** Helper functions that returns bits per pixels for a given format.
- @since v2.0
+/**
+ *  Helper functions that returns bits per pixels for a given format.
+ *
+ *  @param format Format to query for pixelsize
+ *
+ *  @return Number of bits for pixelformat.
  */
 +(NSUInteger) bitsPerPixelForFormat:(CCTexturePixelFormat)format;
 

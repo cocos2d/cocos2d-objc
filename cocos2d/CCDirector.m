@@ -41,7 +41,6 @@
 #import "CCSpriteFrameCache.h"
 #import "CCTexture.h"
 #import "CCLabelBMFont.h"
-#import "CCLayer.h"
 #import "ccGLStateCache.h"
 #import "CCShaderCache.h"
 #import "ccFPSImages.h"

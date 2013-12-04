@@ -1,8 +1,6 @@
 
 #import "BaseAppController.h"
 
-@class CCLayer;
-
 @class CCAction;
 
 @class CCNode;
@@ -13,7 +11,7 @@
 @interface AppController : BaseAppController
 @end
 
-@interface BaseClippingNodeTest : CCLayer
+@interface BaseClippingNodeTest : CCNode
 
 - (NSString *)title;
 - (NSString *)subtitle;

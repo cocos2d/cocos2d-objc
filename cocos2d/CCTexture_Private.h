@@ -10,37 +10,37 @@
 
 @interface CCTexture ()
 
-/** These functions are needed to create mutable textures */
+/* These functions are needed to create mutable textures */
 - (void) releaseData:(void*)data;
 - (void*) keepData:(void*)data length:(NSUInteger)length;
 
-/** texture name */
+/* texture name */
 @property(nonatomic,readonly) GLuint name;
 
-/** texture max S */
+/* texture max S */
 @property(nonatomic,readwrite) GLfloat maxS;
-/** texture max T */
+/* texture max T */
 @property(nonatomic,readwrite) GLfloat maxT;
 
 @end
 
-/**
+/*
  Drawing extensions to make it easy to draw basic quads using a CCTexture2D object.
  These functions require GL_TEXTURE_2D and both GL_VERTEX_ARRAY and GL_TEXTURE_COORD_ARRAY client states to be enabled.
  */
 @interface CCTexture (Drawing)
-/** draws a texture at a given point */
+/* draws a texture at a given point */
 - (void) drawAtPoint:(CGPoint)point;
-/** draws a texture inside a rect */
+/* draws a texture inside a rect */
 - (void) drawInRect:(CGRect)rect;
 @end
 
-/**
+/*
  Extensions to make it easy to create a CCTexture2D object from a PVRTC file
  Note that the generated textures don't have their alpha premultiplied - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
  */
 @interface CCTexture (PVRSupport)
-/** Initializes a texture from a PVR file.
+/* Initializes a texture from a PVR file.
  
  Supported PVR formats:
  - BGRA 8888
@@ -62,7 +62,7 @@
  */
 -(id) initWithPVRFile: (NSString*) file;
 
-/** treats (or not) PVR files as if they have alpha premultiplied.
+/* treats (or not) PVR files as if they have alpha premultiplied.
  Since it is impossible to know at runtime if the PVR images have the alpha channel premultiplied, it is
  possible load them as if they have (or not) the alpha channel premultiplied.
  
@@ -74,7 +74,7 @@
 
 @end
 
-/**
+/*
  Extension to set the Min / Mag filter
  */
 typedef struct _ccTexParams {
@@ -85,7 +85,7 @@ typedef struct _ccTexParams {
 } ccTexParams;
 
 @interface CCTexture (GLFilter)
-/** sets the min filter, mag filter, wrap s and wrap t texture parameters.
+/* sets the min filter, mag filter, wrap s and wrap t texture parameters.
  If the texture size is NPOT (non power of 2), then in can only use GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}.
  
  @warning Calling this method could allocate additional texture memory.
@@ -94,7 +94,7 @@ typedef struct _ccTexParams {
  */
 -(void) setTexParameters: (ccTexParams*) texParams;
 
-/** sets antialias texture parameters:
+/* sets antialias texture parameters:
  - GL_TEXTURE_MIN_FILTER = GL_LINEAR
  - GL_TEXTURE_MAG_FILTER = GL_LINEAR
  
@@ -104,7 +104,7 @@ typedef struct _ccTexParams {
  */
 - (void) setAntiAliasTexParameters;
 
-/** sets alias texture parameters:
+/* sets alias texture parameters:
  - GL_TEXTURE_MIN_FILTER = GL_NEAREST
  - GL_TEXTURE_MAG_FILTER = GL_NEAREST
  
@@ -115,7 +115,7 @@ typedef struct _ccTexParams {
 - (void) setAliasTexParameters;
 
 
-/** Generates mipmap images for the texture.
+/* Generates mipmap images for the texture.
  It only works if the texture size is POT (power of 2).
  @since v0.99.0
  */

@@ -13,7 +13,7 @@
 @interface AppController : BaseAppController
 @end
 
-@interface Bug1159 : CCLayer
+@interface Bug1159 : CCNode
 {
 }
 

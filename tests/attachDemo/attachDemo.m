@@ -25,7 +25,7 @@ enum {
 	kTagSprite = 1,
 };
 
-@interface LayerExample : CCLayer
+@interface LayerExample : CCNode
 {}
 @end
 

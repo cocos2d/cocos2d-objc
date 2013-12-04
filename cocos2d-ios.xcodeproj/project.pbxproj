@@ -39,8 +39,8 @@
 		5018F2720DFDEAFF00C013A5 /* CCActionInterval.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F25B0DFDEAFF00C013A5 /* CCActionInterval.m */; };
 		5018F2730DFDEAFF00C013A5 /* CCLabelTTF.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F25C0DFDEAFF00C013A5 /* CCLabelTTF.h */; };
 		5018F2740DFDEAFF00C013A5 /* CCLabelTTF.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F25D0DFDEAFF00C013A5 /* CCLabelTTF.m */; };
-		5018F2750DFDEAFF00C013A5 /* CCLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F25E0DFDEAFF00C013A5 /* CCLayer.h */; };
-		5018F2760DFDEAFF00C013A5 /* CCLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F25F0DFDEAFF00C013A5 /* CCLayer.m */; };
+		5018F2750DFDEAFF00C013A5 /* CCNodeColor.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F25E0DFDEAFF00C013A5 /* CCNodeColor.h */; };
+		5018F2760DFDEAFF00C013A5 /* CCNodeColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F25F0DFDEAFF00C013A5 /* CCNodeColor.m */; };
 		5018F2770DFDEAFF00C013A5 /* CCScene.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2600DFDEAFF00C013A5 /* CCScene.h */; };
 		5018F2780DFDEAFF00C013A5 /* CCScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F2610DFDEAFF00C013A5 /* CCScene.m */; };
 		5018F27D0DFDEAFF00C013A5 /* CCTextureCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2670DFDEAFF00C013A5 /* CCTextureCache.h */; };
@@ -454,8 +454,8 @@
 		5018F25B0DFDEAFF00C013A5 /* CCActionInterval.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCActionInterval.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5018F25C0DFDEAFF00C013A5 /* CCLabelTTF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelTTF.h; sourceTree = "<group>"; };
 		5018F25D0DFDEAFF00C013A5 /* CCLabelTTF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLabelTTF.m; sourceTree = "<group>"; };
-		5018F25E0DFDEAFF00C013A5 /* CCLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCLayer.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		5018F25F0DFDEAFF00C013A5 /* CCLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCLayer.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		5018F25E0DFDEAFF00C013A5 /* CCNodeColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCNodeColor.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		5018F25F0DFDEAFF00C013A5 /* CCNodeColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCNodeColor.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5018F2600DFDEAFF00C013A5 /* CCScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScene.h; sourceTree = "<group>"; };
 		5018F2610DFDEAFF00C013A5 /* CCScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCScene.m; sourceTree = "<group>"; };
 		5018F2670DFDEAFF00C013A5 /* CCTextureCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTextureCache.h; sourceTree = "<group>"; };
@@ -592,19 +592,6 @@
 		A034FF85149DC993009F11AA /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		A039EBFD155C686B0061EE37 /* CCNode+Debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCNode+Debug.h"; sourceTree = "<group>"; };
 		A039EBFE155C686B0061EE37 /* CCNode+Debug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCNode+Debug.m"; sourceTree = "<group>"; };
-		A0407E8A16A739AF00161E77 /* CDAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioManager.h; sourceTree = "<group>"; };
-		A0407E8B16A739AF00161E77 /* CDAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAudioManager.m; sourceTree = "<group>"; };
-		A0407E8C16A739AF00161E77 /* CDConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDConfig.h; sourceTree = "<group>"; };
-		A0407E8D16A739AF00161E77 /* CDOpenALSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDOpenALSupport.h; sourceTree = "<group>"; };
-		A0407E8E16A739AF00161E77 /* CDOpenALSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDOpenALSupport.m; sourceTree = "<group>"; };
-		A0407E8F16A739AF00161E77 /* CDXMacOSXSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDXMacOSXSupport.h; sourceTree = "<group>"; };
-		A0407E9016A739AF00161E77 /* CDXMacOSXSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDXMacOSXSupport.m; sourceTree = "<group>"; };
-		A0407E9116A739AF00161E77 /* CDXPropertyModifierAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDXPropertyModifierAction.h; sourceTree = "<group>"; };
-		A0407E9216A739AF00161E77 /* CDXPropertyModifierAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDXPropertyModifierAction.m; sourceTree = "<group>"; };
-		A0407E9316A739AF00161E77 /* CocosDenshion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosDenshion.h; sourceTree = "<group>"; };
-		A0407E9416A739AF00161E77 /* CocosDenshion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocosDenshion.m; sourceTree = "<group>"; };
-		A0407E9516A739AF00161E77 /* SimpleAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine.h; sourceTree = "<group>"; };
-		A0407E9616A739AF00161E77 /* SimpleAudioEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine.m; sourceTree = "<group>"; };
 		A046E28B14C1DB7D0005BBF2 /* CCDirectorMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDirectorMac.h; sourceTree = "<group>"; };
 		A046E28C14C1DB7D0005BBF2 /* CCDirectorMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDirectorMac.m; sourceTree = "<group>"; };
 		A046E28F14C1DB7D0005BBF2 /* CCGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGLView.h; sourceTree = "<group>"; };
@@ -909,7 +896,6 @@
 				A0707F6515F946E9001C1263 /* LICENSE_SpiderMonkey.txt */,
 				5018F2510DFDEAFF00C013A5 /* cocos2d */,
 				B78AE45917E7AF010028BE0B /* cocos2d-ui */,
-				5052213411B3D38A0061670F /* CocosDenshion */,
 				501756090F335CE900624901 /* external */,
 				D36F7E39181580A000E94F72 /* UnitTests */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -1068,31 +1054,9 @@
 			path = external/libpng;
 			sourceTree = "<group>";
 		};
-		5052213411B3D38A0061670F /* CocosDenshion */ = {
-			isa = PBXGroup;
-			children = (
-				A0407E8A16A739AF00161E77 /* CDAudioManager.h */,
-				A0407E8B16A739AF00161E77 /* CDAudioManager.m */,
-				A0407E8C16A739AF00161E77 /* CDConfig.h */,
-				A0407E8D16A739AF00161E77 /* CDOpenALSupport.h */,
-				A0407E8E16A739AF00161E77 /* CDOpenALSupport.m */,
-				A0407E8F16A739AF00161E77 /* CDXMacOSXSupport.h */,
-				A0407E9016A739AF00161E77 /* CDXMacOSXSupport.m */,
-				A0407E9116A739AF00161E77 /* CDXPropertyModifierAction.h */,
-				A0407E9216A739AF00161E77 /* CDXPropertyModifierAction.m */,
-				A0407E9316A739AF00161E77 /* CocosDenshion.h */,
-				A0407E9416A739AF00161E77 /* CocosDenshion.m */,
-				A0407E9516A739AF00161E77 /* SimpleAudioEngine.h */,
-				A0407E9616A739AF00161E77 /* SimpleAudioEngine.m */,
-			);
-			path = CocosDenshion;
-			sourceTree = "<group>";
-		};
 		506414C30F9C6769007A7B24 /* Layers, Scenes, Transitions Nodes */ = {
 			isa = PBXGroup;
 			children = (
-				5018F25E0DFDEAFF00C013A5 /* CCLayer.h */,
-				5018F25F0DFDEAFF00C013A5 /* CCLayer.m */,
 				5018F2600DFDEAFF00C013A5 /* CCScene.h */,
 				5018F2610DFDEAFF00C013A5 /* CCScene.m */,
 				A6DC4E0718055DCC00C280A6 /* CCTransition.h */,
@@ -1226,11 +1190,11 @@
 				E0F924701224140400EF2362 /* CCTexturePVR.m */,
 				50E1357110ADEB1B00C9E7FA /* CCTexture.h */,
 				50E1357210ADEB1B00C9E7FA /* CCTexture.m */,
+				B706B19718209A8300B27A2C /* CCTexture_Private.h */,
 				50637A150E95397A000C9182 /* CCTextureAtlas.h */,
 				50637A160E95397A000C9182 /* CCTextureAtlas.m */,
 				5018F2670DFDEAFF00C013A5 /* CCTextureCache.h */,
 				5018F2680DFDEAFF00C013A5 /* CCTextureCache.m */,
-				B706B19718209A8300B27A2C /* CCTexture_Private.h */,
 			);
 			name = Textures;
 			sourceTree = "<group>";
@@ -1238,6 +1202,8 @@
 		50EA8DA011354A6000746D2A /* Misc Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				5018F25E0DFDEAFF00C013A5 /* CCNodeColor.h */,
+				5018F25F0DFDEAFF00C013A5 /* CCNodeColor.m */,
 				2B192833163361B10049A044 /* CCClippingNode.h */,
 				2B192834163361B10049A044 /* CCClippingNode.m */,
 				50316AD21029A126003ACFE7 /* CCMotionStreak.h */,
@@ -1677,7 +1643,7 @@
 				5018F2710DFDEAFF00C013A5 /* CCActionInterval.h in Headers */,
 				5018F2730DFDEAFF00C013A5 /* CCLabelTTF.h in Headers */,
 				B798D14B182048A900E7BFCD /* CCSpriteBatchNode_Private.h in Headers */,
-				5018F2750DFDEAFF00C013A5 /* CCLayer.h in Headers */,
+				5018F2750DFDEAFF00C013A5 /* CCNodeColor.h in Headers */,
 				5018F2770DFDEAFF00C013A5 /* CCScene.h in Headers */,
 				5018F27D0DFDEAFF00C013A5 /* CCTextureCache.h in Headers */,
 				B77060051831A07B0043CC67 /* OALNotifications.h in Headers */,
@@ -2042,7 +2008,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#appledoc Xcode script\n# Start constants\ncompany=\"Cocos2d-iPhone.org\";\ncompanyID=\"org.cocos2d\";\ncompanyURL=\"http://cocos2d-iphone.org\";\ntarget=\"iphoneos\";\n#target=\"macosx\";\noutputPath=\"api-docs\";\n# End constants\ntools/appledoc \\\n--project-name \"Cocos2d\" \\\n--project-company \"${company}\" \\\n--company-id \"${companyID}\" \\\n--docset-atom-filename \"${company}.atom\" \\\n--docset-feed-url \"${companyURL}/${company}/%DOCSETATOMFILENAME\" \\\n--docset-package-url \"${companyURL}/${company}/%DOCSETPACKAGEFILENAME\" \\\n--docset-fallback-url \"${companyURL}/${company}\" \\\n--output \"${outputPath}\" \\\n--publish-docset \\\n--install-docset \\\n--docset-platform-family \"${target}\" \\\n--logformat xcode \\\n--no-keep-undocumented-members \\\n--no-search-undocumented-doc \\\n--keep-intermediate-files \\\n--no-repeat-first-par \\\n--no-warn-invalid-crossref \\\n--exit-threshold 2 \\\n--ignore .m \\\ncocos2d cocos2d-ui";
+			shellScript = "#appledoc Xcode script\n# Start constants\ncompany=\"Cocos2d-iPhone.org\";\ncompanyID=\"org.cocos2d\";\ncompanyURL=\"http://cocos2d-iphone.org\";\ntarget=\"iphoneos\";\n#target=\"macosx\";\noutputPath=\"api-docs\";\n# End constants\ntools/appledoc \\\n--project-name \"Cocos2d\" \\\n--project-company \"${company}\" \\\n--company-id \"${companyID}\" \\\n--docset-atom-filename \"${company}.atom\" \\\n--docset-feed-url \"${companyURL}/${company}/%DOCSETATOMFILENAME\" \\\n--docset-package-url \"${companyURL}/${company}/%DOCSETPACKAGEFILENAME\" \\\n--docset-fallback-url \"${companyURL}/${company}\" \\\n--output \"${outputPath}\" \\\n--publish-docset \\\n--install-docset \\\n--docset-platform-family \"${target}\" \\\n--logformat xcode \\\n--no-keep-undocumented-members \\\n--no-search-undocumented-doc \\\n--keep-intermediate-files \\\n--no-repeat-first-par \\\n--no-warn-invalid-crossref \\\n--exit-threshold 2 \\\n--ignore .m \\\n--ignore cocos2d.h \\\n--ignore CCNode_Private.h \\\n--ignore CCLabelBMFont_Private.h \\\n--ignore CCSprite_Private.h \\\n--ignore CCSpriteBatchNode_Private.h \\\n--ignore CCParticleSystem_Private.h \\\n--ignore CCParticleSystemQuad_Private.h \\\n--ignore CCTiledMapLayer_Private.h \\\n--ignore CCProgressNode_Private.h \\\n--ignore CCTexture_Private.h \\\n--ignore uthash.h \\\n--ignore utlist.h \\\n--ignore TGAlib.h \\\n--ignore CCVertex.h \\\n--ignore CGPointExtension.h \\\n--ignore TransformUtils.h \\\n--ignore OpenGL_Internal.h \\\n--ignore CCProfiling.h \\\n--ignore ccUtils.h \\\n--ignore CCFileUtils.h \\\n--ignore base64.h \\\n--ignore ZipUtils.h \\\n--ignore NSThread+performBlock.h \\\n--ignore NSAttributedString+CCAdditions.h \\\n--ignore ccShader_PositionColorLengthTexture_frag.h \\\n--ignore ccShader_PositionColorLengthTexture_vert.h \\\n--ignore ccShader_Position_uColor_frag.h \\\n--ignore ccShader_Position_uColor_vert.h \\\n--ignore ccShader_PositionColor_frag.h \\\n--ignore ccShader_PositionColor_vert.h \\\n--ignore ccShader_PositionTexture_uColor_frag.h \\\n--ignore ccShader_PositionTexture_uColor_vert.h \\\n--ignore ccShader_PositionTexture_frag.h \\\n--ignore ccShader_PositionTexture_vert.h \\\n--ignore ccShader_PositionTextureA8Color_frag.h \\\n--ignore ccShader_PositionTextureA8Color_vert.h \\\n--ignore ccShader_PositionTextureColor_frag.h \\\n--ignore ccShader_PositionTextureColor_vert.h \\\n--ignore ccShader_PositionTextureColorAlphaTest_frag.h \\\n--ignore ccShaders.h \\\n--ignore ccGLStateCache.h \\\n--ignore CCShaderCache.h \\\n--ignore CCGLProgram.h \\\n--ignore UITouch+CC.h \\\n--ignore CCDirectorIOS.h \\\n--ignore CCGLView.h \\\n--ignore CCES2Renderer.h \\\n--ignore CCESRenderer.h \\\n--ignore CCDirectorMac.h \\\n--ignore CCWindow.h \\\n--ignore CCGL.h \\\n--ignore CCNS.h \\\n--ignore ccFPSImages.h \\\n--ignore ccDeprecated.h \\\n--ignore ccConfig.h \\\n--ignore ccMacros.h \\\n--ignore CCConfiguration.h \\\n--ignore CCProtocols.h \\\n--ignore CCScheduler.h \\\n--ignore CCDirector_Private.h \\\n--ignore CCBAnimationManager.h \\\n--ignore CCBKeyFrame.h \\\n--ignore CCBLocalizationManager.h \\\n--ignore CCBReader.h \\\n--ignore CCBSequence.h \\\n--ignore CCBSequenceProperty.h \\\n--ignore CCBuilderReader.h \\\n--ignore CCBReader_Private.h \\\n--ignore cocos2d-ui.h \\\n--ignore ccTypes.h \\\n--ignore CCTextureAtlas.h \\\ncocos2d cocos2d-ui\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2063,7 +2029,7 @@
 				D33803EA180331A90072D8FE /* CCPhysicsJoint.m in Sources */,
 				B7705FE91831A07B0043CC67 /* ALDevice.m in Sources */,
 				5018F2740DFDEAFF00C013A5 /* CCLabelTTF.m in Sources */,
-				5018F2760DFDEAFF00C013A5 /* CCLayer.m in Sources */,
+				5018F2760DFDEAFF00C013A5 /* CCNodeColor.m in Sources */,
 				B77060001831A07B0043CC67 /* NSMutableArray+WeakReferences.m in Sources */,
 				5018F2780DFDEAFF00C013A5 /* CCScene.m in Sources */,
 				5018F27E0DFDEAFF00C013A5 /* CCTextureCache.m in Sources */,

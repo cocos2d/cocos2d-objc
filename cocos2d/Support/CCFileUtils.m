@@ -529,6 +529,8 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	}
 	else
 	{
+    // TODO: NSAssert here instead? Seems like whatever happens next will fail because of this.
+    // Better to stop now rather than later.
 		CCLOGWARN(@"cocos2d: Warning: File not found: %@", filename);
 		ret = nil;
 	}
