@@ -482,7 +482,6 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	CCCacheValue *value = [_fullPathCache objectForKey:filename];
 	if( value ) {
 		if(contentScale) *contentScale = value.contentScale;
-		NSLog(@"filename:%@, fullPath:%@, contentScale:%f", filename, value.fullpath, *contentScale);
 		return value.fullpath;
 	}
 
@@ -535,7 +534,6 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	}
 	
 	
-	NSLog(@"filename:%@, fullPath:%@, contentScale:%f", filename, filename, *contentScale);
 	return ret;
 }
 
