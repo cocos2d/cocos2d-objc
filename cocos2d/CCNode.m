@@ -394,7 +394,7 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
     }
     else if (widthUnit == CCContentSizeUnitScaled)
     {
-        size.width = director.positionScaleFactor * contentSize.width;
+        size.width = director.UIScaleFactor * contentSize.width;
     }
     else if (widthUnit == CCContentSizeUnitNormalized)
     {
@@ -406,7 +406,7 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
     }
     else if (widthUnit == CCContentSizeUnitInsetScaled)
     {
-        size.width = _parent.contentSizeInPoints.width - contentSize.width * director.positionScaleFactor;
+        size.width = _parent.contentSizeInPoints.width - contentSize.width * director.UIScaleFactor;
     }
     
     // Height
@@ -416,7 +416,7 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
     }
     else if (heightUnit == CCContentSizeUnitScaled)
     {
-        size.height = director.positionScaleFactor * contentSize.height;
+        size.height = director.UIScaleFactor * contentSize.height;
     }
     else if (heightUnit == CCContentSizeUnitNormalized)
     {
@@ -428,7 +428,7 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
     }
     else if (heightUnit == CCContentSizeUnitInsetScaled)
     {
-        size.height = _parent.contentSizeInPoints.height - contentSize.height * director.positionScaleFactor;
+        size.height = _parent.contentSizeInPoints.height - contentSize.height * director.UIScaleFactor;
     }
     
     return size;
@@ -450,7 +450,7 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
     }
     else if (widthUnit == CCContentSizeUnitScaled)
     {
-        size.width = pointSize.width / director.positionScaleFactor;
+        size.width = pointSize.width / director.UIScaleFactor;
     }
     else if (widthUnit == CCContentSizeUnitNormalized)
     {
@@ -471,7 +471,7 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
     }
     else if (widthUnit == CCContentSizeUnitInsetScaled)
     {
-        size.width = (_parent.contentSizeInPoints.width - pointSize.width) / director.positionScaleFactor;
+        size.width = (_parent.contentSizeInPoints.width - pointSize.width) / director.UIScaleFactor;
     }
     
     // Height
@@ -481,7 +481,7 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
     }
     else if (heightUnit == CCContentSizeUnitScaled)
     {
-        size.height = pointSize.height / director.positionScaleFactor;
+        size.height = pointSize.height / director.UIScaleFactor;
     }
     else if (heightUnit == CCContentSizeUnitNormalized)
     {
@@ -502,7 +502,7 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
     }
     else if (heightUnit == CCContentSizeUnitInsetScaled)
     {
-        size.height = (_parent.contentSizeInPoints.height - pointSize.height) / director.positionScaleFactor;
+        size.height = (_parent.contentSizeInPoints.height - pointSize.height) / director.UIScaleFactor;
     }
     
     return size;
@@ -517,7 +517,7 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 {
     if (_scaleType == CCScaleTypeScaled)
     {
-        return self.scale * [CCDirector sharedDirector].positionScaleFactor;
+        return self.scale * [CCDirector sharedDirector].UIScaleFactor;
     }
     return self.scale;
 }
@@ -526,7 +526,7 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 {
     if (_scaleType == CCScaleTypeScaled)
     {
-        return _scaleX * [CCDirector sharedDirector].positionScaleFactor;
+        return _scaleX * [CCDirector sharedDirector].UIScaleFactor;
     }
     return _scaleX;
 }
@@ -535,7 +535,7 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 {
     if (_scaleType == CCScaleTypeScaled)
     {
-        return _scaleY * [CCDirector sharedDirector].positionScaleFactor;
+        return _scaleY * [CCDirector sharedDirector].UIScaleFactor;
     }
     return _scaleY;
 }
@@ -1222,12 +1222,12 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
     // Convert position to points
     CCPositionUnit xUnit = type.xUnit;
     if (xUnit == CCPositionUnitPoints) x = position.x;
-    else if (xUnit == CCPositionUnitScaled) x = position.x * director.positionScaleFactor;
+    else if (xUnit == CCPositionUnitScaled) x = position.x * director.UIScaleFactor;
     else if (xUnit == CCPositionUnitNormalized) x = position.x * _parent.contentSizeInPoints.width;
     
     CCPositionUnit yUnit = type.yUnit;
     if (yUnit == CCPositionUnitPoints) y = position.y;
-    else if (yUnit == CCPositionUnitScaled) y = position.y * director.positionScaleFactor;
+    else if (yUnit == CCPositionUnitScaled) y = position.y * director.UIScaleFactor;
     else if (yUnit == CCPositionUnitNormalized) y = position.y * _parent.contentSizeInPoints.height;
     
     // Account for reference corner
@@ -1294,7 +1294,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
     // Convert position from points
     CCPositionUnit xUnit = type.xUnit;
     if (xUnit == CCPositionUnitPoints) position.x = x;
-    else if (xUnit == CCPositionUnitScaled) position.x = x / director.positionScaleFactor;
+    else if (xUnit == CCPositionUnitScaled) position.x = x / director.UIScaleFactor;
     else if (xUnit == CCPositionUnitNormalized)
     {
         float parentWidth = _parent.contentSizeInPoints.width;
@@ -1306,7 +1306,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
     
     CCPositionUnit yUnit = type.yUnit;
     if (yUnit == CCPositionUnitPoints) position.y = y;
-    else if (yUnit == CCPositionUnitScaled) position.y = y / director.positionScaleFactor;
+    else if (yUnit == CCPositionUnitScaled) position.y = y / director.UIScaleFactor;
     else if (yUnit == CCPositionUnitNormalized)
     {
         float parentHeight = _parent.contentSizeInPoints.height;
@@ -1379,7 +1379,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		BOOL needsSkewMatrix = ( _skewX || _skewY );
         
         float scaleFactor = 1;
-        if (_scaleType == CCScaleTypeScaled) scaleFactor = [CCDirector sharedDirector].positionScaleFactor;
+        if (_scaleType == CCScaleTypeScaled) scaleFactor = [CCDirector sharedDirector].UIScaleFactor;
 
 		// optimization:
 		// inline anchor point calculation if skew is not needed
