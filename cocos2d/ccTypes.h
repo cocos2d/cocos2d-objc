@@ -370,7 +370,7 @@ enum
     //! Position is set in points (this is the default)
     CCPositionUnitPoints,
     
-    //! Position is scaled by the global positionScaleFactor (as defined by CCDirector)
+    //! Position is scaled by the global UIScaleFactor (as defined by CCDirector)
     CCPositionUnitScaled,
     
     //! Position is a normalized value multiplied by the content size of the parent's container
@@ -384,7 +384,7 @@ enum
     //! Content size is set in points (this is the default)
     CCContentSizeUnitPoints,
     
-    //! Content size is scaled by the global positionScaleFactor (as defined by CCDirector)
+    //! Content size is scaled by the global UIScaleFactor (as defined by CCDirector)
     CCContentSizeUnitScaled,
     
     //! Content size is a normalized value multiplied by the content size of the parent's container
@@ -393,7 +393,7 @@ enum
     //! Content size is the size of the parents container inset by the supplied value
     CCContentSizeUnitInsetPoints,
     
-    //! Content size is the size of the parents container inset by the supplied value multiplied by the positionScaleFactor (as defined by CCDirector)
+    //! Content size is the size of the parents container inset by the supplied value multiplied by the UIScaleFactor (as defined by CCDirector)
     CCContentSizeUnitInsetScaled,
     
 };

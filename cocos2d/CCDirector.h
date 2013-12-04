@@ -198,7 +198,7 @@ and when to execute the Scenes.
 /** UI scaling factor, default value is 1. Positions and content sizes are scale by this factor if the position type is set to scale.
  @since v3.0
  */
-@property (nonatomic,readwrite,assign) float positionScaleFactor;
+@property (nonatomic,readwrite,assign) float UIScaleFactor;
 
 /** returns a shared instance of the director */
 +(CCDirector*)sharedDirector;

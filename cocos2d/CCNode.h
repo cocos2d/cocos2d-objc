@@ -51,16 +51,16 @@
  By using the positionType property you can specify how a node's position is interpreted. For instance, if you set the type to CCPositionTypeNormalized a position value of (0.5, 0.5) will place the node in the center of its parent's container. The container is specified by the parent's contentSize. It's also possible to set positions relative to the different corners of the parent's container. The CCPositionType has three components, xUnit, yUnit and corner. The corner can be any reference corner of the parent's container and the xUnit and yUnit can be any of the following:
  
  - CCPositionUnitPoints - This is the default, the position value will be in points.
- - CCPositionUnitScaled - The position is scaled by the positionScaleFactor as defined by CCDirector. This is very useful for scaling up game play without changing the game logic. E.g. if you want to support both phones and tablets in native resolutions.
+ - CCPositionUnitScaled - The position is scaled by the UIScaleFactor as defined by CCDirector. This is very useful for scaling up game play without changing the game logic. E.g. if you want to support both phones and tablets in native resolutions.
  - CCPositionUnitNormalized - Using the normalized type allows you to position object in relative to the parents container. E.g. it can be used to center nodes on the screen regardless of the device type your game is running on.
  
  Similarily to how you set a node's position and positionType you can also set it's contentSize and contentSizeType. However, some classes doesn't allow you to set these directly. For instance, the CCSprite sets its contentSize depending on the size of its texture and for descendants of CCControl you should set the preferredSize and preferredSizeType rather than changing their contentSize directly. The CCSizeType has two components widthUnit and heightUnit which can be any of the following:
  
  - CCSizeUnitPoints - This is the default, the size will be in points
- - CCSizeUnitScaled - The size is scaled by the positionScaleFactor.
+ - CCSizeUnitScaled - The size is scaled by the UIScaleFactor.
  - CCSizeUnitNormalized - The content size will be set as a normalized value of the parent's container.
  - CCSizeUnitInset - The content size will be the size of it's parent container, but inset by a number of points.
- - CCSizeUnitInsetScaled - The content size will be the size of it's parent container, but inset by a number of points multiplied by the positionScaleFactor.
+ - CCSizeUnitInsetScaled - The content size will be the size of it's parent container, but inset by a number of points multiplied by the UIScaleFactor.
  
  Even if the positions and content sizes are not set in points you can use actions to animate the nodes. See the examples and tests for more information on how to set positions and content sizes, or use SpriteBuilder to easily play around with the settings. There are also more positioning options available by using CCLayout and CCLayoutBox.
 

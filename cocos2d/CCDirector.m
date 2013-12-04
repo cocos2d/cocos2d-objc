@@ -180,7 +180,7 @@ static CCDirector *_sharedDirector = nil;
 		_winSizeInPixels = _winSizeInPoints = CGSizeZero;
 		
 		__ccContentScaleFactor = 1;
-		self.positionScaleFactor = 1;
+		self.UIScaleFactor = 1;
 	}
 
 	return self;

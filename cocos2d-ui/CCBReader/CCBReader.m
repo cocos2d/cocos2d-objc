@@ -453,7 +453,7 @@ static inline float readFloat(CCBReader *self)
         
         if (setProp)
         {
-            if (sType == 1) f *= [CCDirector sharedDirector].positionScaleFactor;
+            if (sType == 1) f *= [CCDirector sharedDirector].UIScaleFactor;
             [node setValue:[NSNumber numberWithFloat:f] forKey:name];
         }
     }
