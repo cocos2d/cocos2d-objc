@@ -206,6 +206,8 @@
 		B7E2603617E7C774007067F0 /* NSEvent+CC.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E2603417E7C774007067F0 /* NSEvent+CC.m */; };
 		B7E2603917E7C786007067F0 /* UITouch+CC.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E2603717E7C786007067F0 /* UITouch+CC.h */; };
 		B7E2603A17E7C786007067F0 /* UITouch+CC.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E2603817E7C786007067F0 /* UITouch+CC.m */; };
+		B7E7758C184FBA47004221AA /* CCNodeColor.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E7758A184FBA47004221AA /* CCNodeColor.h */; };
+		B7E7758D184FBA47004221AA /* CCNodeColor.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E7758B184FBA47004221AA /* CCNodeColor.m */; };
 		B7EE698918187F7200B983FE /* CCTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE698818187C0900B983FE /* CCTextField.m */; };
 		B7EE69EA1819EAAC00B983FE /* CCLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = B7EE69E61819EAAC00B983FE /* CCLayout.h */; };
 		B7EE69EB1819EAAC00B983FE /* CCLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69E71819EAAC00B983FE /* CCLayout.m */; };
@@ -248,8 +250,6 @@
 		E076E6FD1225EC7400DE0DA2 /* CCLabelBMFont.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6571225EC7400DE0DA2 /* CCLabelBMFont.m */; };
 		E076E6FE1225EC7400DE0DA2 /* CCLabelTTF.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6581225EC7400DE0DA2 /* CCLabelTTF.h */; };
 		E076E6FF1225EC7400DE0DA2 /* CCLabelTTF.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6591225EC7400DE0DA2 /* CCLabelTTF.m */; };
-		E076E7001225EC7400DE0DA2 /* CCLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E65A1225EC7400DE0DA2 /* CCLayer.h */; };
-		E076E7011225EC7400DE0DA2 /* CCLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E65B1225EC7400DE0DA2 /* CCLayer.m */; };
 		E076E7071225EC7400DE0DA2 /* CCMotionStreak.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6611225EC7400DE0DA2 /* CCMotionStreak.h */; };
 		E076E7081225EC7400DE0DA2 /* CCMotionStreak.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6621225EC7400DE0DA2 /* CCMotionStreak.m */; };
 		E076E7091225EC7400DE0DA2 /* CCNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6631225EC7400DE0DA2 /* CCNode.h */; };
@@ -577,6 +577,8 @@
 		B7E2603417E7C774007067F0 /* NSEvent+CC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSEvent+CC.m"; sourceTree = "<group>"; };
 		B7E2603717E7C786007067F0 /* UITouch+CC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITouch+CC.h"; sourceTree = "<group>"; };
 		B7E2603817E7C786007067F0 /* UITouch+CC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITouch+CC.m"; sourceTree = "<group>"; };
+		B7E7758A184FBA47004221AA /* CCNodeColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNodeColor.h; sourceTree = "<group>"; };
+		B7E7758B184FBA47004221AA /* CCNodeColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCNodeColor.m; sourceTree = "<group>"; };
 		B7EE698718187C0900B983FE /* CCTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTextField.h; path = "cocos2d-ui/CCTextField.h"; sourceTree = "<group>"; };
 		B7EE698818187C0900B983FE /* CCTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTextField.m; path = "cocos2d-ui/CCTextField.m"; sourceTree = "<group>"; };
 		B7EE69E61819EAAC00B983FE /* CCLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLayout.h; sourceTree = "<group>"; };
@@ -630,8 +632,6 @@
 		E076E6571225EC7400DE0DA2 /* CCLabelBMFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLabelBMFont.m; sourceTree = "<group>"; };
 		E076E6581225EC7400DE0DA2 /* CCLabelTTF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelTTF.h; sourceTree = "<group>"; };
 		E076E6591225EC7400DE0DA2 /* CCLabelTTF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLabelTTF.m; sourceTree = "<group>"; };
-		E076E65A1225EC7400DE0DA2 /* CCLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLayer.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		E076E65B1225EC7400DE0DA2 /* CCLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLayer.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		E076E65C1225EC7400DE0DA2 /* ccMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccMacros.h; sourceTree = "<group>"; };
 		E076E6611225EC7400DE0DA2 /* CCMotionStreak.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMotionStreak.h; sourceTree = "<group>"; };
 		E076E6621225EC7400DE0DA2 /* CCMotionStreak.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMotionStreak.m; sourceTree = "<group>"; };
@@ -1367,8 +1367,8 @@
 		E076E7781225ECC900DE0DA2 /* Layer, Scene & Transition Nodes */ = {
 			isa = PBXGroup;
 			children = (
-				E076E65A1225EC7400DE0DA2 /* CCLayer.h */,
-				E076E65B1225EC7400DE0DA2 /* CCLayer.m */,
+				B7E7758A184FBA47004221AA /* CCNodeColor.h */,
+				B7E7758B184FBA47004221AA /* CCNodeColor.m */,
 				E076E6761225EC7400DE0DA2 /* CCScene.h */,
 				E076E6771225EC7400DE0DA2 /* CCScene.m */,
 				E076E6961225EC7400DE0DA2 /* CCTransition.h */,
@@ -1515,7 +1515,6 @@
 				E076E6FA1225EC7400DE0DA2 /* CCLabelAtlas.h in Headers */,
 				E076E6FC1225EC7400DE0DA2 /* CCLabelBMFont.h in Headers */,
 				E076E6FE1225EC7400DE0DA2 /* CCLabelTTF.h in Headers */,
-				E076E7001225EC7400DE0DA2 /* CCLayer.h in Headers */,
 				B77060821831B0C40043CC67 /* ALSource.h in Headers */,
 				B77060911831B0C40043CC67 /* mach_timing.h in Headers */,
 				E076E7071225EC7400DE0DA2 /* CCMotionStreak.h in Headers */,
@@ -1594,6 +1593,7 @@
 				B7D273331822F5460054849B /* CCBSequenceProperty.h in Headers */,
 				A046E2B614C1E5000005BBF2 /* CCESRenderer.h in Headers */,
 				A046E2B714C1E5000005BBF2 /* CCGLView.h in Headers */,
+				B7E7758C184FBA47004221AA /* CCNodeColor.h in Headers */,
 				A046E2C014C1E5480005BBF2 /* CCGLProgram.h in Headers */,
 				A009FB83150EC87500897349 /* ccShader_Position_uColor_frag.h in Headers */,
 				B77060DB18342E540043CC67 /* CCBReader_Private.h in Headers */,
@@ -1811,7 +1811,6 @@
 				B770607C1831B0C40043CC67 /* ALDevice.m in Sources */,
 				E076E6FD1225EC7400DE0DA2 /* CCLabelBMFont.m in Sources */,
 				E076E6FF1225EC7400DE0DA2 /* CCLabelTTF.m in Sources */,
-				E076E7011225EC7400DE0DA2 /* CCLayer.m in Sources */,
 				B77060951831B0C40043CC67 /* NSMutableDictionary+WeakReferences.m in Sources */,
 				B770606A1831B0C40043CC67 /* OALAudioTrack.m in Sources */,
 				E076E7081225EC7400DE0DA2 /* CCMotionStreak.m in Sources */,
@@ -1830,6 +1829,7 @@
 				E076E71D1225EC7400DE0DA2 /* CCScene.m in Sources */,
 				B77060641831B0C40043CC67 /* OALActionManager.m in Sources */,
 				E076E7211225EC7400DE0DA2 /* CCSprite.m in Sources */,
+				B7E7758D184FBA47004221AA /* CCNodeColor.m in Sources */,
 				E076E7231225EC7400DE0DA2 /* CCSpriteBatchNode.m in Sources */,
 				E076E7251225EC7400DE0DA2 /* CCSpriteFrame.m in Sources */,
 				B770607A1831B0C40043CC67 /* ALContext.m in Sources */,
