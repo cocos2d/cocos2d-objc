@@ -64,7 +64,7 @@
     self.subTitle = @"Horizontal Scrolling - Layer should only scroll horizontally.";
     
     CCScrollView* scrollView = [[CCScrollView alloc] initWithContentNode:[self createScrollContent]];
-    scrollView.contentSizeType = CCContentSizeTypeNormalized;
+    scrollView.contentSizeType = CCSizeTypeNormalized;
     scrollView.flipYCoordinates = NO;
     scrollView.verticalScrollEnabled = NO;
     
@@ -118,7 +118,7 @@
     float h = 3;
     
     // Make it 3 times the width and height of the parents container
-    node.contentSizeType = CCContentSizeTypeNormalized;
+    node.contentSizeType = CCSizeTypeNormalized;
     node.contentSize = CGSizeMake(w, h);
     
     BOOL toggle = NO;
@@ -136,7 +136,7 @@
             if (toggle)
             {
                 CCNodeColor* layer = [CCNodeColor nodeWithColor:ccc4(127, 127, 127, 255)];
-                layer.contentSizeType = CCContentSizeTypeNormalized;
+                layer.contentSizeType = CCSizeTypeNormalized;
                 layer.contentSize = CGSizeMake(1.0f/w, 1.0f/h);
                 //layer.contentSize = CGSizeMake(100, 100);
                 

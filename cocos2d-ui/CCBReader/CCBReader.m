@@ -390,8 +390,8 @@ static inline float readFloat(CCBReader *self)
             [node setValue:[NSValue valueWithSize:size] forKey:name];
 #endif
             
-            CCContentSizeType sizeType = CCContentSizeTypeMake(xUnit, yUnit);
-            [node setValue:[NSValue valueWithBytes:&sizeType objCType:@encode(CCContentSizeType)] forKey:[name stringByAppendingString:@"Type"]];
+            CCSizeType sizeType = CCSizeTypeMake(xUnit, yUnit);
+            [node setValue:[NSValue valueWithBytes:&sizeType objCType:@encode(CCSizeType)] forKey:[name stringByAppendingString:@"Type"]];
         }
     }
     else if (type == kCCBPropTypeScaleLock)

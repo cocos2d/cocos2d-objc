@@ -36,7 +36,7 @@
 {
     CCTableViewCell* cell = [CCTableViewCell node];
     
-    cell.contentSizeType = CCContentSizeTypeMake(CCContentSizeUnitNormalized, CCContentSizeUnitPoints);
+    cell.contentSizeType = CCSizeTypeMake(CCSizeUnitNormalized, CCSizeUnitPoints);
     cell.contentSize = CGSizeMake(1, kSimpleTableViewRowHeight);
     
     // Color every other row differently
@@ -45,7 +45,7 @@
     else bg = [CCNodeColor nodeWithColor:ccc4(0, 255, 0, 127)];
     
     bg.userInteractionEnabled = NO;
-    bg.contentSizeType = CCContentSizeTypeNormalized;
+    bg.contentSizeType = CCSizeTypeNormalized;
     bg.contentSize = CGSizeMake(1, 1);
     [cell addChild:bg];
     
@@ -78,7 +78,7 @@
 {
     CCTableViewCell* cell = [CCTableViewCell node];
     
-    cell.contentSizeType = CCContentSizeTypeMake(CCContentSizeUnitNormalized, CCContentSizeUnitScaled);
+    cell.contentSizeType = CCSizeTypeMake(CCSizeUnitNormalized, CCSizeUnitUIPoints);
     cell.contentSize = CGSizeMake(1, kSimpleTableViewRowHeight);
     
     // Color every other row differently
@@ -87,7 +87,7 @@
     else bg = [CCNodeColor nodeWithColor:ccc4(0, 255, 0, 127)];
     
     bg.userInteractionEnabled = NO;
-    bg.contentSizeType = CCContentSizeTypeNormalized;
+    bg.contentSizeType = CCSizeTypeNormalized;
     bg.contentSize = CGSizeMake(1, 1);
     [cell addChild:bg];
     
@@ -120,7 +120,7 @@
 {
     CCTableViewCell* cell = [CCTableViewCell node];
     
-    cell.contentSizeType = CCContentSizeTypeMake(CCContentSizeUnitNormalized, CCContentSizeUnitScaled);
+    cell.contentSizeType = CCSizeTypeMake(CCSizeUnitNormalized, CCSizeUnitUIPoints);
     
     // Make every row have a different height
     cell.contentSize = CGSizeMake(1, 5 * index + 15);
@@ -131,7 +131,7 @@
     else bg = [CCNodeColor nodeWithColor:ccc4(0, 255, 0, 127)];
     
     bg.userInteractionEnabled = NO;
-    bg.contentSizeType = CCContentSizeTypeNormalized;
+    bg.contentSizeType = CCSizeTypeNormalized;
     bg.contentSize = CGSizeMake(1, 1);
     [cell addChild:bg];
     
@@ -175,7 +175,7 @@
     
     // Add a gray background box
     CCNodeColor* colorBg = [CCNodeColor nodeWithColor:ccc4(127, 127, 127, 255)];
-    colorBg.contentSizeType = CCContentSizeTypeMake(CCContentSizeUnitInsetPoints, CCContentSizeUnitInsetPoints);
+    colorBg.contentSizeType = CCSizeTypeMake(CCSizeUnitInsetPoints, CCSizeUnitInsetPoints);
     colorBg.contentSize = CGSizeMake(kSimpleTableViewInset * 2, kSimpleTableViewInset * 2);
     colorBg.userInteractionEnabled = NO;
     colorBg.position = ccp(kSimpleTableViewInset, kSimpleTableViewInset);
@@ -195,7 +195,7 @@
     
     // Add a gray background box
     CCNodeColor* colorBg = [CCNodeColor nodeWithColor:ccc4(127, 127, 127, 255)];
-    colorBg.contentSizeType = CCContentSizeTypeMake(CCContentSizeUnitInsetPoints, CCContentSizeUnitInsetPoints);
+    colorBg.contentSizeType = CCSizeTypeMake(CCSizeUnitInsetPoints, CCSizeUnitInsetPoints);
     colorBg.contentSize = CGSizeMake(kSimpleTableViewInset * 2, kSimpleTableViewInset * 2);
     colorBg.userInteractionEnabled = NO;
     colorBg.position = ccp(kSimpleTableViewInset, kSimpleTableViewInset);
@@ -203,7 +203,7 @@
     
     // Create the table view and add it to the box
     CCTableView* tableView = [[CCTableView alloc] init];
-    tableView.rowHeightUnit = CCContentSizeUnitScaled;
+    tableView.rowHeightUnit = CCSizeUnitUIPoints;
     tableView.rowHeight = kSimpleTableViewRowHeight;
     [colorBg addChild:tableView];
     
@@ -216,7 +216,7 @@
     
     // Add a gray background box
     CCNodeColor* colorBg = [CCNodeColor nodeWithColor:ccc4(127, 127, 127, 255)];
-    colorBg.contentSizeType = CCContentSizeTypeMake(CCContentSizeUnitInsetPoints, CCContentSizeUnitInsetPoints);
+    colorBg.contentSizeType = CCSizeTypeMake(CCSizeUnitInsetPoints, CCSizeUnitInsetPoints);
     colorBg.contentSize = CGSizeMake(kSimpleTableViewInset * 2, kSimpleTableViewInset * 2);
     colorBg.userInteractionEnabled = NO;
     colorBg.position = ccp(kSimpleTableViewInset, kSimpleTableViewInset);
@@ -224,7 +224,7 @@
     
     // Create the table view and add it to the box
     CCTableView* tableView = [[CCTableView alloc] init];
-    tableView.rowHeightUnit = CCContentSizeUnitScaled;
+    tableView.rowHeightUnit = CCSizeUnitUIPoints;
     tableView.rowHeight = kSimpleTableViewRowHeight;
     [colorBg addChild:tableView];
     

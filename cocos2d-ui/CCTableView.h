@@ -67,7 +67,7 @@
 
 @property (nonatomic,strong) id <CCTableViewDataSource> dataSource;
 @property (nonatomic,assign) CGFloat rowHeight;
-@property (nonatomic,assign) CCContentSizeUnit rowHeightUnit;
+@property (nonatomic,assign) CCSizeUnit rowHeightUnit;
 @property (nonatomic,readonly) CGFloat rowHeightInPoints;
 @property (nonatomic,assign) NSUInteger selectedRow;
 

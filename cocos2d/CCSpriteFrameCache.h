@@ -99,8 +99,19 @@
  */
 -(void) addSpriteFrame:(CCSpriteFrame*)frame name:(NSString*)frameName;
 
--(void) registerSpriteFramesFile:(NSString*)plist __deprecated;
--(void) loadSpriteFrameLookupDictionaryFromFile:(NSString*)filename __deprecated;
+/**
+ *  Registers a sprite sheet with the sprite frame cache so that the sprite frames can be loaded by name.
+ *
+ *  @param plist Sprite sheet file.
+ */
+-(void) registerSpriteFramesFile:(NSString*)plist;
+
+/**
+ *  Loads a sprite sheet lookup file and registers all the referenced sprite sheets with the sprite frame cache.
+ *
+ *  @param filename Sprite sheet lookup file
+ */
+-(void) loadSpriteFrameLookupDictionaryFromFile:(NSString*)filename;
 
 /// -----------------------------------------------------------------------
 /// @name Sprite Frame Cache Removal
