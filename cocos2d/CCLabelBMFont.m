@@ -549,7 +549,7 @@ void FNTConfigRemoveCache( void )
             int justSkipped = 0;
             int idx = j+skip+justSkipped;
             NSString* idxStr = [NSString stringWithFormat:@"%d", idx];
-            while(!(characterSprite = (CCSprite *)[self getChildByName:idxStr]))
+            while(!(characterSprite = (CCSprite *)[self getChildByName:idxStr recursively:NO]))
                 justSkipped++;
             skip += justSkipped;
 			
@@ -674,7 +674,7 @@ void FNTConfigRemoveCache( void )
                     if (index < 0)
                         continue;
                     NSString* indexStr1 = [NSString stringWithFormat:@"%d",(int)index];
-                    CCSprite *characterSprite = (CCSprite *)[self getChildByName:indexStr1];
+                    CCSprite *characterSprite = (CCSprite *)[self getChildByName:indexStr1 recursively:NO];
                     characterSprite.position = ccpAdd(characterSprite.position, ccp(shift, 0));
                 }
             }
@@ -772,7 +772,7 @@ void FNTConfigRemoveCache( void )
 
 		BOOL hasSprite = YES;
         NSString* iStr = [NSString stringWithFormat:@"%d",(int)i];
-		fontChar = (CCSprite*) [self getChildByName:iStr];
+		fontChar = (CCSprite*) [self getChildByName:iStr recursively:NO];
 		if( fontChar )
 		{
 			// Reusing previous Sprite
