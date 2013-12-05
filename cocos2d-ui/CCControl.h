@@ -65,13 +65,13 @@ typedef NS_ENUM(NSUInteger, CCControlState)
 @property (nonatomic,assign) CGSize preferredSize;
 
 /** The content size type that the preferredSize is using. Please refer to the CCNode documentation on how to use content size types. */
-@property (nonatomic,assign) CCContentSizeType preferredSizeType;
+@property (nonatomic,assign) CCSizeType preferredSizeType;
 
 /** The maximum size that the component will layout to, the component will not be larger than this size and will instead shrink its content if needed. */
 @property (nonatomic,assign) CGSize maxSize;
 
 /** The content size type that the preferredSize is using. Please refer to the CCNode documentation on how to use content size types. */
-@property (nonatomic,assign) CCContentSizeType maxSizeType;
+@property (nonatomic,assign) CCSizeType maxSizeType;
 
 
 /// -----------------------------------------------------------------------

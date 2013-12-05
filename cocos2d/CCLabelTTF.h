@@ -83,7 +83,7 @@
 @property (nonatomic,assign) CGSize dimensions;
 
 /** Dimension type of the label. */
-@property (nonatomic,assign) CCContentSizeType dimensionsType;
+@property (nonatomic,assign) CCSizeType dimensionsType;
 
 /** If true, the label will be scaled down to fit into the size provided by the dimensions property. Only has an effect if dimensions are set. */
 @property (nonatomic,assign) BOOL adjustsFontSizeToFit;

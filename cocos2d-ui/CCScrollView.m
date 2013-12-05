@@ -169,7 +169,7 @@
 - (id) init
 {
     self = [self initWithContentNode:[CCNode node]];
-    self.contentSizeType = CCContentSizeTypeNormalized;
+    self.contentSizeType = CCSizeTypeNormalized;
     return self;
 }
 
@@ -182,7 +182,7 @@
     
     // Setup content node
     self.contentSize = CGSizeMake(1, 1);
-    self.contentSizeType = CCContentSizeTypeNormalized;
+    self.contentSizeType = CCSizeTypeNormalized;
     self.contentNode = contentNode;
     
     // Default properties

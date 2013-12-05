@@ -340,7 +340,7 @@ typedef NS_ENUM(NSUInteger, CCVerticalTextAlignment)
 
 // XXX: If any of these enums are edited and/or reordered, update CCTexture2D.m
 //! Horizontal text alignment type
-typedef NS_ENUM(NSUInteger, CCTextAlignment)
+typedef NS_ENUM(unsigned char, CCTextAlignment)
 {
 	CCTextAlignmentLeft,
 	CCTextAlignmentCenter,
@@ -365,56 +365,53 @@ typedef double CCTime;
 
 //typedef float CCMat4[16];
     
-enum
+typedef NS_ENUM(unsigned char, CCPositionUnit)
 {
-    //! Position is set in points (this is the default)
+    /// Position is set in points (this is the default)
     CCPositionUnitPoints,
     
-    //! Position is scaled by the global UIScaleFactor (as defined by CCDirector)
-    CCPositionUnitScaled,
+    /// Position is UI points, on iOS this corresponds to the native point system
+    CCPositionUnitUIPoints,
     
-    //! Position is a normalized value multiplied by the content size of the parent's container
+    /// Position is a normalized value multiplied by the content size of the parent's container
     CCPositionUnitNormalized,
     
 };
-typedef unsigned char CCPositionUnit;
 
-enum
+typedef NS_ENUM(unsigned char, CCSizeUnit)
 {
-    //! Content size is set in points (this is the default)
-    CCContentSizeUnitPoints,
+    /// Content size is set in points (this is the default)
+    CCSizeUnitPoints,
     
-    //! Content size is scaled by the global UIScaleFactor (as defined by CCDirector)
-    CCContentSizeUnitScaled,
+    /// Position is UI points, on iOS this corresponds to the native point system
+    CCSizeUnitUIPoints,
     
-    //! Content size is a normalized value multiplied by the content size of the parent's container
-    CCContentSizeUnitNormalized,
+    /// Content size is a normalized value multiplied by the content size of the parent's container
+    CCSizeUnitNormalized,
     
-    //! Content size is the size of the parents container inset by the supplied value
-    CCContentSizeUnitInsetPoints,
+    /// Content size is the size of the parents container inset by the supplied value
+    CCSizeUnitInsetPoints,
     
-    //! Content size is the size of the parents container inset by the supplied value multiplied by the UIScaleFactor (as defined by CCDirector)
-    CCContentSizeUnitInsetScaled,
+    /// Content size is the size of the parents container inset by the supplied value multiplied by the UIScaleFactor (as defined by CCDirector)
+    CCSizeUnitInsetUIPoints,
     
 };
-typedef unsigned char CCContentSizeUnit;
     
-enum
+typedef NS_ENUM(unsigned char, CCPositionReferenceCorner)
 {
-    //! Position is relative to the bottom left corner of the parent container (this is the default)
+    /// Position is relative to the bottom left corner of the parent container (this is the default)
     CCPositionReferenceCornerBottomLeft,
     
-    //! Position is relative to the top left corner of the parent container
+    /// Position is relative to the top left corner of the parent container
     CCPositionReferenceCornerTopLeft,
     
-    //! Position is relative to the top right corner of the parent container
+    /// Position is relative to the top right corner of the parent container
     CCPositionReferenceCornerTopRight,
     
-    //! Position is relative to the bottom right corner of the parent container
+    /// Position is relative to the bottom right corner of the parent container
     CCPositionReferenceCornerBottomRight,
     
 };
-typedef unsigned char CCPositionReferenceCorner;
 
 typedef struct _CCPositionType
 {
@@ -423,11 +420,11 @@ typedef struct _CCPositionType
     CCPositionReferenceCorner corner;
 } CCPositionType;
 
-typedef struct _CCContentSizeType
+typedef struct _CCSizeType
 {
-    CCContentSizeUnit widthUnit;
-    CCContentSizeUnit heightUnit;
-} CCContentSizeType;
+    CCSizeUnit widthUnit;
+    CCSizeUnit heightUnit;
+} CCSizeType;
 
 //! helper that creates a CCPositionType type
 static inline CCPositionType CCPositionTypeMake(CCPositionUnit xUnit, CCPositionUnit yUnit, CCPositionReferenceCorner corner)
@@ -440,9 +437,9 @@ static inline CCPositionType CCPositionTypeMake(CCPositionUnit xUnit, CCPosition
 }
 
 //! helper that creates a CCContentSizeType type
-static inline CCContentSizeType CCContentSizeTypeMake(CCContentSizeUnit widthUnit, CCContentSizeUnit heightUnit)
+static inline CCSizeType CCSizeTypeMake(CCSizeUnit widthUnit, CCSizeUnit heightUnit)
 {
-    CCContentSizeType cst;
+    CCSizeType cst;
     cst.widthUnit = widthUnit;
     cst.heightUnit = heightUnit;
     return cst;
@@ -450,14 +447,14 @@ static inline CCContentSizeType CCContentSizeTypeMake(CCContentSizeUnit widthUni
 
 #define CCPositionTypePoints CCPositionTypeMake(CCPositionUnitPoints, CCPositionUnitPoints, CCPositionReferenceCornerBottomLeft)
 
-#define CCPositionTypeScaled CCPositionTypeMake(CCPositionUnitScaled, CCPositionUnitScaled, CCPositionReferenceCornerBottomLeft)
+#define CCPositionTypeUIPoints CCPositionTypeMake(CCPositionUnitUIPoints, CCPositionUnitUIPoints, CCPositionReferenceCornerBottomLeft)
 
 #define CCPositionTypeNormalized CCPositionTypeMake(CCPositionUnitNormalized, CCPositionUnitNormalized, CCPositionReferenceCornerBottomLeft)
 
 
-#define CCContentSizeTypePoints CCContentSizeTypeMake(CCContentSizeUnitPoints, CCContentSizeUnitPoints)
-#define CCContentSizeTypeScaled CCContentSizeTypeMake(CCContentSizeUnitScaled, CCContentSizeUnitScaled)
-#define CCContentSizeTypeNormalized CCContentSizeTypeMake(CCContentSizeUnitNormalized, CCContentSizeUnitNormalized)
+#define CCSizeTypePoints CCSizeTypeMake(CCSizeUnitPoints, CCSizeUnitPoints)
+#define CCSizeTypeUIPoints CCSizeTypeMake(CCSizeUnitUIPoints, CCSizeUnitUIPoints)
+#define CCSizeTypeNormalized CCSizeTypeMake(CCSizeUnitNormalized, CCSizeUnitNormalized)
 
 typedef NS_ENUM(char, CCScaleType) {
     CCScaleTypePoints,
@@ -471,10 +468,10 @@ static inline BOOL CCPositionTypeIsBasicPoints(CCPositionType type)
             && type.corner == CCPositionReferenceCornerBottomLeft);
 }
 
-static inline BOOL CCContentSizeTypeIsBasicPoints(CCContentSizeType type)
+static inline BOOL CCSizeTypeIsBasicPoints(CCSizeType type)
 {
-    return (type.widthUnit == CCContentSizeUnitPoints
-            && type.heightUnit == CCContentSizeUnitPoints);
+    return (type.widthUnit == CCSizeUnitPoints
+            && type.heightUnit == CCSizeUnitPoints);
 }
     
 #ifdef __cplusplus

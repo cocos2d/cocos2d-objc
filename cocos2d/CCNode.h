@@ -237,7 +237,7 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 @property (nonatomic,readonly) CGSize contentSizeInPoints;
 
 /** Defines the contentSize type used for the widht and height component of the contentSize property. */
-@property (nonatomic,readwrite,assign) CCContentSizeType contentSizeType;
+@property (nonatomic,readwrite,assign) CCSizeType contentSizeType;
 
 /** anchorPoint is the point around which all transformations and positioning manipulations take place.
  It's like a pin in the node where it is "attached" to its parent.
@@ -554,8 +554,8 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 - (CGPoint) convertPositionToPoints:(CGPoint)position type:(CCPositionType)type;
 - (CGPoint) convertPositionFromPoints:(CGPoint)positionInPoints type:(CCPositionType) type;
 
-- (CGSize) convertContentSizeToPoints:(CGSize)contentSize type:(CCContentSizeType) type;
-- (CGSize) convertContentSizeFromPoints:(CGSize)pointSize type:(CCContentSizeType) type;
+- (CGSize) convertContentSizeToPoints:(CGSize)contentSize type:(CCSizeType) type;
+- (CGSize) convertContentSizeFromPoints:(CGSize)pointSize type:(CCSizeType) type;
 
 /** Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.
  The matrix is in Pixels.
