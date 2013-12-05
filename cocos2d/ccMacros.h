@@ -28,6 +28,7 @@
 #import "ccConfig.h"
 
 #import <Foundation/Foundation.h>
+#import <CoreGraphics/CoreGraphics.h>
 #import <Availability.h>
 
 /**

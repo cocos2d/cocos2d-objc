@@ -470,10 +470,13 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 
 -(NSString*) fullPathForFilename:(NSString*)filename contentScale:(CGFloat *)contentScale
 {
+	CGFloat _contentScale = 1.0;
+	if(!contentScale) contentScale = &_contentScale;
+	
 	// fullpath? return it
 //	if ([filename isAbsolutePath]) {
 //		CCLOGWARN(@"cocos2d: WARNING fullPathForFilename:resolutionType: should not be called with absolute path. Instead call fullPathForFilenameIgnoringResolutions:");
-//		if(contentScale) *contentScale = 1.0;
+//		*contentScale = 1.0;
 //		NSLog(@"filename:%@, fullPath:%@, contentScale:%f", filename, filename, *contentScale);
 //		return filename;
 //	}
@@ -481,7 +484,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	// Already Cached ?
 	CCCacheValue *value = [_fullPathCache objectForKey:filename];
 	if( value ) {
-		if(contentScale) *contentScale = value.contentScale;
+		*contentScale = value.contentScale;
 		return value.fullpath;
 	}
 
@@ -504,12 +507,12 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 				// Search using suffixes
 				NSString *suffix = [_suffixesDict objectForKey:device];
 				ret = [self getPathForFilename:fileWithPath withSuffix:suffix];
-				if(contentScale) *contentScale = [self contentScaleForKey:suffix inDictionary:_suffixesDict];
+				*contentScale = [self contentScaleForKey:suffix inDictionary:_suffixesDict];
 			} else {
 				// Search in subdirectories
 				NSString *directory = [_directoriesDict objectForKey:device];
 				ret = [self getPathForFilename:newfilename withResourceDirectory:directory withSearchPath:path];
-				if(contentScale) *contentScale = [self contentScaleForKey:directory inDictionary:_directoriesDict];
+				*contentScale = [self contentScaleForKey:directory inDictionary:_directoriesDict];
 			}
 			
 			if( ret ) {

@@ -1013,7 +1013,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     if (useFullColor)
     {
         // RGBA8888 format
-        texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_RGBA8888 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSize:dimensions];
+        texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_RGBA8888 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSizeInPixels:dimensions contentScale:[CCDirector sharedDirector].contentScaleFactor];
         [texture setPremultipliedAlpha:YES];
     }
     else
@@ -1025,7 +1025,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         for(int i = 0; i<textureSize; i++)
             dst[i] = data[i*4+3];
         
-        texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_A8 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSize:dimensions];
+        texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_A8 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSizeInPixels:dimensions contentScale:[CCDirector sharedDirector].contentScaleFactor];
         self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureA8Color];
     }
 
