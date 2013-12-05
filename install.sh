@@ -12,7 +12,7 @@
 # ----------------------------------------------------
 # Variables setup
 # ----------------------------------------------------
-SCRIPT_VER="v0.9.3"
+SCRIPT_VER="v0.9.4"
 COCOS2D_VER="cocos2d-v3.0"
 COCOS2D_DST_DIR="cocos2d v3.x"
 SCRIPT_DIR="$(dirname $0)"
