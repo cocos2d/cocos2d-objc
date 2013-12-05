@@ -101,7 +101,7 @@
 							   numberOfSamples:0];
 	
 	// Enable "retina" mode.
-//	glView.contentScaleFactor = [UIScreen mainScreen].scale;
+	glView.contentScaleFactor = [UIScreen mainScreen].scale;
 	
 	director_ = (CCDirectorIOS*) [CCDirector sharedDirector];
 	
