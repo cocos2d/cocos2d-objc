@@ -28,6 +28,7 @@
  */
 
 #import "CCResponderManager.h"
+#import "CCResponder_Private.h"
 #import "CCNode.h"
 #import "CCDirector.h"
 #import "CCDirectorMac.h"
@@ -238,9 +239,18 @@
     
     if (_dirty) [self buildResponderList];
     
+    // if multiple touches exist, this set keeps track of nodes that need to be informed after touches have been grouped
+    NSMutableSet *nodesWithQueuedTouches = nil;
+    BOOL multipleTouches = [touches count] > 1;
+    
     // go through all touches
     for (UITouch *touch in touches)
     {
+        if (multipleTouches) {
+            // initialize with amount of touches, to ensure set is large enough
+            nodesWithQueuedTouches = [NSMutableSet setWithCapacity:[touches count]];
+        }
+        
         CGPoint worldTouchLocation = [[CCDirector sharedDirector] convertToGL:[touch locationInView:[CCDirector sharedDirector].view]];
         
         // scan backwards through touch responders
@@ -277,7 +287,18 @@
                 // begin the touch
                 _currentEventProcessed = YES;
                 if ([node respondsToSelector:@selector(touchesBegan:withEvent:)])
-                    [node touchesBegan:[NSSet setWithObject:touch] withEvent:event];
+                {
+                    if (!multipleTouches || (!node.multipleTouchEnabled))
+                    {
+                        // inform about touch instantly
+                        [node touchesBegan:[NSSet setWithObject:touch] withEvent:event];
+                    } else
+                    {
+                        // group touches and send them out together to enable multitouch functionality
+                        [node.queuedTouchesBegan addObject:touch];
+                        [nodesWithQueuedTouches addObject:node];
+                    }
+                }
  
                 // if touch was processed, add it and break
                 if (_currentEventProcessed)
@@ -286,6 +307,15 @@
                     break;
                 }
             }
+        }
+    }
+    
+    if (multipleTouches)
+    {
+        // in case of multiple touches, send all touch objects together now, to enable multitouch
+        for (CCNode *node in nodesWithQueuedTouches)
+        {
+            [node performQueuedTouchesWithEvent:event];
         }
     }
 }
@@ -297,9 +327,19 @@
     if (!_enabled) return;
     if (_dirty) [self buildResponderList];
 
+    // if multiple touches exist, this set keeps track of nodes that need to be informed after touches have been grouped
+    NSMutableSet *nodesWithQueuedTouches = nil;
+    BOOL multipleTouches = [touches count] > 1;
+    
     // go through all touches
     for (UITouch *touch in touches)
     {
+        if (multipleTouches)
+        {
+            // initialize with amount of touches, to ensure set is large enough
+            nodesWithQueuedTouches = [NSMutableSet setWithCapacity:[touches count]];
+        }
+        
         // get touch object
         CCRunningResponder *touchEntry = [self responderForTouch:touch];
         
@@ -313,7 +353,18 @@
             {
                 // move the touch
                 if ([node respondsToSelector:@selector(touchesMoved:withEvent:)])
-                    [node touchesMoved:[NSSet setWithObject:touch] withEvent:event];
+                {
+                    if (!multipleTouches || (!node.multipleTouchEnabled))
+                    {
+                        // inform about touch movement instantly
+                        [node touchesMoved:[NSSet setWithObject:touch] withEvent:event];
+                    } else
+                    {
+                        // group touches and send them out together to enable multitouch functionality
+                        [node.queuedTouchesMoved addObject:touch];
+                        [nodesWithQueuedTouches addObject:node];
+                    }
+                }
             }
             else
             {
@@ -322,7 +373,19 @@
                 {
                     // cancel the touch
                     if ([node respondsToSelector:@selector(touchesCancelled:withEvent:)])
-                        [node touchesCancelled:[NSSet setWithObject:touch] withEvent:event];
+                    {
+                        if (!multipleTouches || (!node.multipleTouchEnabled))
+                        {
+                            // inform about touch cancelling instantly
+                            [node touchesCancelled:[NSSet setWithObject:touch] withEvent:event];
+                        } else
+                        {
+                            // group touches and send them out together to enable multitouch functionality
+                            [node.queuedTouchesCancelled addObject:touch];
+                            [nodesWithQueuedTouches addObject:node];
+                        }
+                    }
+                    
                     // remove from list
                     [_runningResponderList removeObject:touchEntry];
 
@@ -333,7 +396,18 @@
                 {
                     // move the touch
                     if ([node respondsToSelector:@selector(touchesMoved:withEvent:)])
-                        [node touchesMoved:[NSSet setWithObject:touch] withEvent:event];
+                    {
+                        if (!multipleTouches || (!node.multipleTouchEnabled))
+                        {
+                            // inform about touch movement instantly
+                            [node touchesMoved:[NSSet setWithObject:touch] withEvent:event];
+                        } else
+                        {
+                            // group touches and send them out together to enable multitouch functionality
+                            [node.queuedTouchesMoved addObject:touch];
+                            [nodesWithQueuedTouches addObject:node];
+                        }
+                    }
                 }
             }
         }
@@ -359,7 +433,18 @@
                         // begin the touch
                         _currentEventProcessed = YES;
                         if ([node respondsToSelector:@selector(touchesBegan:withEvent:)])
-                            [node touchesBegan:[NSSet setWithObject:touch] withEvent:event];
+                        {
+                            if (!multipleTouches || (!node.multipleTouchEnabled))
+                            {
+                                // inform about touch begin instantly
+                                [node touchesBegan:[NSSet setWithObject:touch] withEvent:event];
+                            } else
+                            {
+                                // group touches and send them out together to enable multitouch functionality
+                                [node.queuedTouchesBegan addObject:touch];
+                                [nodesWithQueuedTouches addObject:node];
+                            }
+                        }
                         
                         // if touch was accepted, add it and break
                         if (_currentEventProcessed)
@@ -372,6 +457,15 @@
             }
         }
     }
+    
+    if (multipleTouches)
+    {
+        // in case of multiple touches, send all touch objects together now, to enable multitouch
+        for (CCNode *node in nodesWithQueuedTouches)
+        {
+            [node performQueuedTouchesWithEvent:event];
+        }
+    }
 }
 
 // -----------------------------------------------------------------
@@ -381,9 +475,19 @@
     if (!_enabled) return;
     if (_dirty) [self buildResponderList];
 
+    // if multiple touches exist, this set keeps track of nodes that need to be informed after touches have been grouped
+    NSMutableSet *nodesWithQueuedTouches = nil;
+    BOOL multipleTouches = [touches count] > 1;
+    
     // go through all touches
     for (UITouch *touch in touches)
     {
+        if (multipleTouches)
+        {
+            // initialize with amount of touches, to ensure set is large enough
+            nodesWithQueuedTouches = [NSMutableSet setWithCapacity:[touches count]];
+        }
+        
         // get touch object
         CCRunningResponder *touchEntry = [self responderForTouch:touch];
         
@@ -393,12 +497,32 @@
             
             // end the touch
             if ([node respondsToSelector:@selector(touchesEnded:withEvent:)])
-                [node touchesEnded:[NSSet setWithObject:touch] withEvent:event];
+            {
+                if (!multipleTouches || (!node.multipleTouchEnabled))
+                {
+                    // inform about touch ending instantly
+                    [node touchesEnded:[NSSet setWithObject:touch] withEvent:event];
+                } else
+                {
+                    // group touches and send them out together to enable multitouch functionality
+                    [node.queuedTouchesEnded addObject:touch];
+                    [nodesWithQueuedTouches addObject:node];
+                }
+            }
             // remove from list
             [_runningResponderList removeObject:touchEntry];
             
             // always end exclusive mode
             _exclusiveMode = NO;
+        }
+    }
+    
+    if (multipleTouches)
+    {
+        // in case of multiple touches, send all touch objects together now, to enable multitouch
+        for (CCNode *node in nodesWithQueuedTouches)
+        {
+            [node performQueuedTouchesWithEvent:event];
         }
     }
 }
@@ -410,9 +534,19 @@
     if (!_enabled) return;
     if (_dirty) [self buildResponderList];
 
+    // if multiple touches exist, this set keeps track of nodes that need to be informed after touches have been grouped
+    NSMutableSet *nodesWithQueuedTouches = nil;
+    BOOL multipleTouches = [touches count] > 1;
+    
     // go through all touches
     for (UITouch *touch in touches)
     {
+        if (multipleTouches)
+        {
+            // initialize with amount of touches, to ensure set is large enough
+            nodesWithQueuedTouches = [NSMutableSet setWithCapacity:[touches count]];
+        }
+        
         // get touch object
         CCRunningResponder *touchEntry = [self responderForTouch:touch];
         

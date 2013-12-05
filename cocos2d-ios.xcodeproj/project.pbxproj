@@ -560,6 +560,7 @@
 		50F9E8160E1AA34E000E7616 /* ccTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ccTypes.h; sourceTree = "<group>"; };
 		50FBB2D8117613F500150761 /* CCActionTween.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionTween.h; sourceTree = "<group>"; };
 		50FBB2D9117613F500150761 /* CCActionTween.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionTween.m; sourceTree = "<group>"; };
+		62EED1331850EE80008B17A7 /* CCResponder_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCResponder_Private.h; sourceTree = "<group>"; };
 		6F305B5D0FB9D2790052E700 /* TransformUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformUtils.h; sourceTree = "<group>"; };
 		6F305B5E0FB9D2790052E700 /* TransformUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransformUtils.m; sourceTree = "<group>"; };
 		A003AC8B1657071100C7B792 /* ccFPSImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccFPSImages.h; sourceTree = "<group>"; };
@@ -1343,6 +1344,7 @@
 				A6A0734917C78EF3004343C8 /* CCResponder.m */,
 				A6A0734317C788EB004343C8 /* CCResponderManager.h */,
 				A6A0734417C788EB004343C8 /* CCResponderManager.m */,
+				62EED1331850EE80008B17A7 /* CCResponder_Private.h */,
 			);
 			name = "Touch & Mouse Handling";
 			sourceTree = "<group>";

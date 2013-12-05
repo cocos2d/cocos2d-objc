@@ -28,6 +28,7 @@
  */
 
 #import "CCResponder.h"
+#import "CCResponder_Private.h"
 #import "CCDirector.h"
 #import "CCDirector_Private.h"
 
@@ -63,6 +64,7 @@
     _userInteractionEnabled = userInteractionEnabled;
     [[[CCDirector sharedDirector] responderManager] markAsDirty];
 }
+
 
 // -----------------------------------------------------------------
 #pragma mark - iOS
@@ -149,5 +151,70 @@
 #endif
 
 // -----------------------------------------------------------------
+#pragma mark - Touch Queueing
+// -----------------------------------------------------------------
+
+- (void)performQueuedTouchesWithEvent:(UIEvent*)event {
+    if (_queuedTouchesBegan && [_queuedTouchesBegan count] > 0)
+    {
+        [self touchesBegan:_queuedTouchesBegan withEvent:event];
+        [_queuedTouchesBegan removeAllObjects];
+    }
+    
+    if (_queuedTouchesMoved && [_queuedTouchesMoved count] > 0)
+    {
+        [self touchesMoved:_queuedTouchesMoved withEvent:event];
+        [_queuedTouchesMoved removeAllObjects];
+    }
+    
+    if (_queuedTouchesEnded && [_queuedTouchesEnded count] > 0)
+    {
+        [self touchesEnded:_queuedTouchesEnded withEvent:event];
+        [_queuedTouchesEnded removeAllObjects];
+    }
+    
+    if (_queuedTouchesCancelled && [_queuedTouchesCancelled count] > 0)
+    {
+        [self touchesCancelled:_queuedTouchesCancelled withEvent:event];
+        [_queuedTouchesCancelled removeAllObjects];
+    }
+}
+
+- (NSMutableSet*)queuedTouchesBegan {
+    if (_queuedTouchesBegan != nil) {
+        return _queuedTouchesBegan;
+    } else {
+        _queuedTouchesBegan = [[NSMutableSet alloc] init];
+        return _queuedTouchesBegan;
+    }
+}
+
+- (NSMutableSet*)queuedTouchesMoved {
+    if (_queuedTouchesMoved != nil) {
+        return _queuedTouchesMoved;
+    } else {
+        _queuedTouchesMoved = [[NSMutableSet alloc] init];
+        return _queuedTouchesMoved;
+    }
+}
+
+- (NSMutableSet*)queuedTouchesCancelled {
+    if (_queuedTouchesCancelled != nil) {
+        return _queuedTouchesCancelled;
+    } else {
+        _queuedTouchesCancelled = [[NSMutableSet alloc] init];
+        return _queuedTouchesCancelled;
+    }
+}
+
+- (NSMutableSet*)queuedTouchesEnded {
+    if (_queuedTouchesEnded != nil) {
+        return _queuedTouchesEnded;
+    } else {
+        _queuedTouchesEnded = [[NSMutableSet alloc] init];
+        return _queuedTouchesEnded;
+    }
+}
+
 
 @end
