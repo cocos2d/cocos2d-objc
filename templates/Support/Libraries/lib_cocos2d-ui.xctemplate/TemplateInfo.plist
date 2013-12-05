@@ -42,6 +42,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/cocos2d-ui/CCBReader/CCBAnimationManager.m</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
          </dict>
          <key>Libraries/cocos2d-ui/CCBReader/CCBKeyframe.h</key>
          <dict>
@@ -64,6 +68,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/cocos2d-ui/CCBReader/CCBKeyframe.m</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
          </dict>
          <key>Libraries/cocos2d-ui/CCBReader/CCBLocalizationManager.h</key>
          <dict>
@@ -86,6 +94,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/cocos2d-ui/CCBReader/CCBLocalizationManager.m</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
          </dict>
          <key>Libraries/cocos2d-ui/CCBReader/CCBReader.h</key>
          <dict>
@@ -108,6 +120,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/cocos2d-ui/CCBReader/CCBReader.m</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
          </dict>
          <key>Libraries/cocos2d-ui/CCBReader/CCBSequence.h</key>
          <dict>
@@ -130,6 +146,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/cocos2d-ui/CCBReader/CCBsequence.m</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
          </dict>
          <key>Libraries/cocos2d-ui/CCBReader/CCBSequenceProperty.h</key>
          <dict>
@@ -152,6 +172,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/cocos2d-ui/CCBReader/CCBSequenceProperty.m</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
          </dict>
          <key>Libraries/cocos2d-ui/CCBReader/CCBuilderReader.h</key>
          <dict>
@@ -186,6 +210,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/cocos2d-ui/CCButton.m</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
          </dict>
          <key>Libraries/cocos2d-ui/CCControl.h</key>
          <dict>
@@ -208,6 +236,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/cocos2d-ui/CCControl.m</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
          </dict>
          <key>Libraries/cocos2d-ui/CCControlSubclass.h</key>
          <dict>
@@ -242,6 +274,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/cocos2d-ui/CCControlTextureFactory.m</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
          </dict>
          <key>Libraries/cocos2d-ui/CCScrollView.h</key>
          <dict>
@@ -264,6 +300,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/cocos2d-ui/CCScrollView.m</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
          </dict>
          <key>Libraries/cocos2d-ui/CCSlider.h</key>
          <dict>
@@ -286,6 +326,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/cocos2d-ui/CCSlider.m</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
          </dict>
          <key>Libraries/cocos2d-ui/CCTableView.h</key>
          <dict>
@@ -308,6 +352,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/cocos2d-ui/CCTableView.m</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
          </dict>
          <key>Libraries/cocos2d-ui/CCTextField.h</key>
          <dict>
@@ -330,6 +378,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/cocos2d-ui/CCTextField.m</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
          </dict>
          <key>Libraries/cocos2d-ui/cocos2d-ui.h</key>
          <dict>

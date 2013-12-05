@@ -396,6 +396,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/Chipmunk/chipmunk/src/chipmunk.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>1</integer>
+            </array>
          </dict>
          <key>Libraries/Chipmunk/chipmunk/src/cpArbiter.c</key>
          <dict>
@@ -408,6 +412,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/Chipmunk/chipmunk/src/cpArbiter.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>1</integer>
+            </array>
          </dict>
          <key>Libraries/Chipmunk/chipmunk/src/cpArray.c</key>
          <dict>
@@ -420,6 +428,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/Chipmunk/chipmunk/src/cpArray.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>1</integer>
+            </array>
          </dict>
          <key>Libraries/Chipmunk/chipmunk/src/cpBBTree.c</key>
          <dict>
@@ -432,6 +444,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/Chipmunk/chipmunk/src/cpBBTree.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>1</integer>
+            </array>
          </dict>
          <key>Libraries/Chipmunk/chipmunk/src/cpBody.c</key>
          <dict>
@@ -444,6 +460,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/Chipmunk/chipmunk/src/cpBody.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>1</integer>
+            </array>
          </dict>
          <key>Libraries/Chipmunk/chipmunk/src/cpCollision.c</key>
          <dict>
@@ -456,6 +476,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/Chipmunk/chipmunk/src/cpCollision.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>1</integer>
+            </array>
          </dict>
          <key>Libraries/Chipmunk/chipmunk/src/cpConstraint.c</key>
          <dict>
@@ -468,6 +492,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/Chipmunk/chipmunk/src/cpConstraint.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>1</integer>
+            </array>
          </dict>
          <key>Libraries/Chipmunk/chipmunk/src/cpDampedRotarySpring.c</key>
          <dict>
@@ -480,6 +508,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/Chipmunk/chipmunk/src/cpDampedRotarySpring.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>1</integer>
+            </array>
          </dict>
          <key>Libraries/Chipmunk/chipmunk/src/cpDampedSpring.c</key>
          <dict>
@@ -492,6 +524,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/Chipmunk/chipmunk/src/cpDampedSpring.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>1</integer>
+            </array>
          </dict>
          <key>Libraries/Chipmunk/chipmunk/src/cpGearJoint.c</key>
          <dict>
@@ -504,6 +540,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/Chipmunk/chipmunk/src/cpGearJoint.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>1</integer>
+            </array>
          </dict>
          <key>Libraries/Chipmunk/chipmunk/src/cpGrooveJoint.c</key>
          <dict>
@@ -516,6 +556,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/Chipmunk/chipmunk/src/cpGrooveJoint.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>1</integer>
+            </array>
          </dict>
          <key>Libraries/Chipmunk/chipmunk/src/cpHashSet.c</key>
          <dict>
@@ -528,6 +572,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/Chipmunk/chipmunk/src/cpHashSet.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>1</integer>
+            </array>
          </dict>
          <key>Libraries/Chipmunk/chipmunk/src/cpPinJoint.c</key>
          <dict>
@@ -540,6 +588,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/Chipmunk/chipmunk/src/cpPinJoint.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>1</integer>
+            </array>
          </dict>
          <key>Libraries/Chipmunk/chipmunk/src/cpPivotJoint.c</key>
          <dict>
@@ -552,6 +604,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/Chipmunk/chipmunk/src/cpPivotJoint.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>1</integer>
+            </array>
          </dict>
          <key>Libraries/Chipmunk/chipmunk/src/cpPolyShape.c</key>
          <dict>
@@ -564,6 +620,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/Chipmunk/chipmunk/src/cpPolyShape.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>1</integer>
+            </array>
          </dict>
          <key>Libraries/Chipmunk/chipmunk/src/cpRatchetJoint.c</key>
          <dict>
@@ -576,6 +636,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/Chipmunk/chipmunk/src/cpRatchetJoint.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>1</integer>
+            </array>
          </dict>
          <key>Libraries/Chipmunk/chipmunk/src/cpRotaryLimitJoint.c</key>
          <dict>
@@ -588,6 +652,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/Chipmunk/chipmunk/src/cpRotaryLimitJoint.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>1</integer>
+            </array>
          </dict>
          <key>Libraries/Chipmunk/chipmunk/src/cpShape.c</key>
          <dict>
@@ -600,6 +668,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/Chipmunk/chipmunk/src/cpShape.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>1</integer>
+            </array>
          </dict>
          <key>Libraries/Chipmunk/chipmunk/src/cpSimpleMotor.c</key>
          <dict>
@@ -612,6 +684,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/Chipmunk/chipmunk/src/cpSimpleMotor.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>1</integer>
+            </array>
          </dict>
          <key>Libraries/Chipmunk/chipmunk/src/cpSlideJoint.c</key>
          <dict>
@@ -624,6 +700,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/Chipmunk/chipmunk/src/cpSlideJoint.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>1</integer>
+            </array>
          </dict>
          <key>Libraries/Chipmunk/chipmunk/src/cpSpace.c</key>
          <dict>
@@ -636,6 +716,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/Chipmunk/chipmunk/src/cpSpace.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>1</integer>
+            </array>
          </dict>
          <key>Libraries/Chipmunk/chipmunk/src/cpSpaceComponent.c</key>
          <dict>
@@ -648,6 +732,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/Chipmunk/chipmunk/src/cpSpaceComponent.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>1</integer>
+            </array>
          </dict>
          <key>Libraries/Chipmunk/chipmunk/src/cpSpaceDebug.c</key>
          <dict>
@@ -660,6 +748,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/Chipmunk/chipmunk/src/cpSpaceDebug.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>1</integer>
+            </array>
          </dict>
          <key>Libraries/Chipmunk/chipmunk/src/cpSpaceHash.c</key>
          <dict>
@@ -672,6 +764,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/Chipmunk/chipmunk/src/cpSpaceHash.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>1</integer>
+            </array>
          </dict>
          <key>Libraries/Chipmunk/chipmunk/src/cpSpaceQuery.c</key>
          <dict>
@@ -684,6 +780,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/Chipmunk/chipmunk/src/cpSpaceQuery.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>1</integer>
+            </array>
          </dict>
          <key>Libraries/Chipmunk/chipmunk/src/cpSpaceStep.c</key>
          <dict>
@@ -696,6 +796,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/Chipmunk/chipmunk/src/cpSpaceStep.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>1</integer>
+            </array>
          </dict>
          <key>Libraries/Chipmunk/chipmunk/src/cpSpatialIndex.c</key>
          <dict>
@@ -708,6 +812,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/Chipmunk/chipmunk/src/cpSpatialIndex.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>1</integer>
+            </array>
          </dict>
          <key>Libraries/Chipmunk/chipmunk/src/cpSweep1D.c</key>
          <dict>
@@ -720,6 +828,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/Chipmunk/chipmunk/src/cpSweep1D.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>1</integer>
+            </array>
          </dict>
          <key>Libraries/Chipmunk/chipmunk/src/prime.h</key>
          <dict>
@@ -840,18 +952,85 @@
             <key>TargetIndices</key>
             <array />
          </dict>
-         <key>Libraries/Chipmunk/objectivec/libObjectiveChipmunk.a</key>		 
+         <key>Libraries/Chipmunk/objectivec/src/ChipmunkBody.m</key>
          <dict>
             <key>Group</key>
             <array>
                <string>Libraries</string>
                <string>Chipmunk</string>
                <string>objectivec</string>
+               <string>src</string>
             </array>
             <key>Path</key>
-            <string>Libraries/Chipmunk/objectivec/libObjectiveChipmunk.a</string>
+            <string>Libraries/Chipmunk/objectivec/src/ChipmunkBody.m</string>
             <key>TargetIndices</key>
-            <array />
+            <array>
+               <integer>1</integer>
+            </array>
+         </dict>
+         <key>Libraries/Chipmunk/objectivec/src/ChipmunkConstraint.m</key>
+         <dict>
+            <key>Group</key>
+            <array>
+               <string>Libraries</string>
+               <string>Chipmunk</string>
+               <string>objectivec</string>
+               <string>src</string>
+            </array>
+            <key>Path</key>
+            <string>Libraries/Chipmunk/objectivec/src/ChipmunkConstraint.m</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>1</integer>
+            </array>
+         </dict>
+         <key>Libraries/Chipmunk/objectivec/src/ChipmunkMultiGrab.m</key>
+         <dict>
+            <key>Group</key>
+            <array>
+               <string>Libraries</string>
+               <string>Chipmunk</string>
+               <string>objectivec</string>
+               <string>src</string>
+            </array>
+            <key>Path</key>
+            <string>Libraries/Chipmunk/objectivec/src/ChipmunkMultiGrab.m</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>1</integer>
+            </array>
+         </dict>        
+         <key>Libraries/Chipmunk/objectivec/src/ChipmunkShape.m</key>
+         <dict>
+            <key>Group</key>
+            <array>
+               <string>Libraries</string>
+               <string>Chipmunk</string>
+               <string>objectivec</string>
+               <string>src</string>
+            </array>
+            <key>Path</key>
+            <string>Libraries/Chipmunk/objectivec/src/ChipmunkShape.m</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>1</integer>
+            </array>
+         </dict>
+         <key>Libraries/Chipmunk/objectivec/src/ChipmunkSpace.m</key>
+         <dict>
+            <key>Group</key>
+            <array>
+               <string>Libraries</string>
+               <string>Chipmunk</string>
+               <string>objectivec</string>
+               <string>src</string>
+            </array>
+            <key>Path</key>
+            <string>Libraries/Chipmunk/objectivec/src/ChipmunkSpace.m</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>1</integer>
+            </array>
          </dict>
          <key>Libraries/LICENSE_Chipmunk.txt</key>
          <dict>
@@ -926,7 +1105,11 @@
          <string>Libraries/Chipmunk/objectivec/include/ObjectiveChipmunk/ChipmunkShape.h</string>
          <string>Libraries/Chipmunk/objectivec/include/ObjectiveChipmunk/ChipmunkSpace.h</string>
          <string>Libraries/Chipmunk/objectivec/include/ObjectiveChipmunk/ObjectiveChipmunk.h</string>
-		 <string>Libraries/Chipmunk/objectivec/libObjectiveChipmunk.a</string>
+         <string>Libraries/Chipmunk/objectivec/src/ChipmunkBody.m</string>
+         <string>Libraries/Chipmunk/objectivec/src/ChipmunkConstraint.m</string>
+         <string>Libraries/Chipmunk/objectivec/src/ChipmunkMultiGrab.m</string>
+         <string>Libraries/Chipmunk/objectivec/src/ChipmunkShape.m</string>
+         <string>Libraries/Chipmunk/objectivec/src/ChipmunkSpace.m</string>
          <string>Libraries/LICENSE_Chipmunk.txt</string>
       </array>
       <key>Targets</key>
