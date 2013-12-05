@@ -218,6 +218,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/kazmath/src/aabb.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
          </dict>
          <key>Libraries/kazmath/src/ChangeLog</key>
          <dict>
@@ -241,6 +245,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/kazmath/src/GL/mat4stack.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
          </dict>
          <key>Libraries/kazmath/src/GL/matrix.c</key>
          <dict>
@@ -253,6 +261,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/kazmath/src/GL/matrix.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
          </dict>
          <key>Libraries/kazmath/src/mat3.c</key>
          <dict>
@@ -264,6 +276,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/kazmath/src/mat3.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
          </dict>
          <key>Libraries/kazmath/src/mat4.c</key>
          <dict>
@@ -275,6 +291,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/kazmath/src/mat4.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
          </dict>
          <key>Libraries/kazmath/src/neon_matrix_impl.c</key>
          <dict>
@@ -286,6 +306,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/kazmath/src/neon_matrix_impl.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
          </dict>
          <key>Libraries/kazmath/src/plane.c</key>
          <dict>
@@ -297,6 +321,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/kazmath/src/plane.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
          </dict>
          <key>Libraries/kazmath/src/quaternion.c</key>
          <dict>
@@ -308,6 +336,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/kazmath/src/quaternion.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
          </dict>
          <key>Libraries/kazmath/src/ray2.c</key>
          <dict>
@@ -319,6 +351,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/kazmath/src/ray2.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
          </dict>
          <key>Libraries/kazmath/src/utility.c</key>
          <dict>
@@ -330,6 +366,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/kazmath/src/utility.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
          </dict>
          <key>Libraries/kazmath/src/vec2.c</key>
          <dict>
@@ -341,6 +381,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/kazmath/src/vec2.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
          </dict>
          <key>Libraries/kazmath/src/vec3.c</key>
          <dict>
@@ -352,6 +396,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/kazmath/src/vec3.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
          </dict>
          <key>Libraries/kazmath/src/vec4.c</key>
          <dict>
@@ -363,6 +411,10 @@
             </array>
             <key>Path</key>
             <string>Libraries/kazmath/src/vec4.c</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
          </dict>
          <key>Libraries/LICENSE_Kazmath.txt</key>
          <dict>

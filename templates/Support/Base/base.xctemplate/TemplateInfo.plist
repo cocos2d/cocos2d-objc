@@ -111,6 +111,8 @@
 			<string>___PACKAGENAME___</string>
 			<key>SharedSettings</key>
 			<dict>
+				<key>ARCHS</key>
+				<string>$(ARCHS_STANDARD)</string>
 				<key>ALWAYS_SEARCH_USER_PATHS</key>
 				<string>NO</string>
 				<key>PRODUCT_NAME</key>
@@ -150,6 +152,39 @@
 			</dict>
 			<key>ProductType</key>
 			<string>com.apple.product-type.application</string>
+		</dict>
+		<dict>
+			<key>Name</key>
+			<string>ObjectiveChipmunk</string>
+			<key>ProductType</key>
+			<string>com.apple.product-type.library.static</string>
+			<key>SharedSettings</key>
+			<dict>
+				<key>ARCHS</key>
+				<string>$(ARCHS_STANDARD)</string>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>EXECUTABLE_PREFIX</key>
+				<string>lib</string>
+				<key>EXECUTABLE_EXTENSION</key>
+				<string>a</string>
+				<key>HEADER_SEARCH_PATHS</key>
+                <array>
+                	<string>"$(PROJECT_NAME)/Libraries/Chipmunk/chipmunk/include"</string>
+                	<string>"$(PROJECT_NAME)/Libraries/Chipmunk/objectivec/include"</string>
+                </array>
+                <key>CLANG_ENABLE_OBJC_ARC</key>
+                <string>NO</string>
+			</dict>
+			<key>BuildPhases</key>
+			<array>
+				<dict>
+					<key>Class</key>
+					<string>Sources</string>
+				</dict>
+			</array>
 		</dict>
 	</array>
 </dict>
