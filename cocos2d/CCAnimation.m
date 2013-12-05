@@ -177,16 +177,18 @@
 -(void) addSpriteFrameWithFilename:(NSString*)filename
 {
 	CCTexture *texture = [[CCTextureCache sharedTextureCache] addImage:filename];
-	CGRect rect = CGRectZero;
-	rect.size = texture.contentSize;
-	CCSpriteFrame *spriteFrame = [CCSpriteFrame frameWithTexture:texture rect:rect];
+	
+	CGSize sizeInPixels = texture.contentSizeInPixels;
+	CGRect rectInPixels = {CGPointZero, sizeInPixels};
+	CCSpriteFrame *spriteFrame = [CCSpriteFrame frameWithTexture:texture rectInPixels:rectInPixels rotated:NO offset:CGPointZero originalSize:sizeInPixels];
 
 	[self addSpriteFrame:spriteFrame];
 }
 
 -(void) addSpriteFrameWithTexture:(CCTexture*)texture rect:(CGRect)rect
 {
-	CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:texture rect:rect];
+	CGRect rectInPixels = CC_RECT_SCALE(rect, texture.contentScale);
+	CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:texture rectInPixels:rectInPixels rotated:NO offset:CGPointZero originalSize:rectInPixels.size];
 	[self addSpriteFrame:frame];
 }
 
