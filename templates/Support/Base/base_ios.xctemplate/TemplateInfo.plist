@@ -99,7 +99,7 @@
                     <string>-lz</string>
                     <string>-lsqlite3</string>
                     <string>-ObjC</string>
-					<string>-weak_library $PROJECT_NAME/Libraries/Chipmunk/objectivec/libObjectiveChipmunk.a</string>					
+					<string>-weak_library $BUILT_PRODUCTS_DIR/libObjectiveChipmunk.a</string>					
                 </array>
 			</dict>
 			<key>Configurations</key>
@@ -110,6 +110,10 @@
 					<string>YES</string>
 				</dict>
 			</dict>
+			<key>Dependencies</key>
+			<array>
+				<integer>1</integer>
+			</array>
 		</dict>
 	</array>
 	<key>Definitions</key>
