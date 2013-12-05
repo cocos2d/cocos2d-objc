@@ -46,12 +46,12 @@
     CCTextureCache* cache = [CCTextureCache sharedTextureCache];
     
     NSLog(@"BEFORE CLEAR texture: %@", [cache textureForKey:@"Sprites.png"]);
-    if ([cache textureForKey:@"Sprites.png"]) NSLog(@" - retain count: %d", (int)CFGetRetainCount((CFTypeRef)[cache textureForKey:@"Sprites.png"]));
+    if ([cache textureForKey:@"Sprites.png"]) NSLog(@" - retain count: %d", (int)CFGetRetainCount((__bridge CFTypeRef)[cache textureForKey:@"Sprites.png"]));
     
     [cache removeUnusedTextures];
     
     NSLog(@"AFTER  CLEAR texture: %@", [cache textureForKey:@"Sprites.png"]);
-    if ([cache textureForKey:@"Sprites.png"]) NSLog(@" - retain count: %d", (int)CFGetRetainCount((CFTypeRef)[cache textureForKey:@"Sprites.png"]));
+    if ([cache textureForKey:@"Sprites.png"]) NSLog(@" - retain count: %d", (int)CFGetRetainCount((__bridge CFTypeRef)[cache textureForKey:@"Sprites.png"]));
 }
 
 - (void) testCacheAdd:(id)sender
@@ -59,12 +59,12 @@
     CCTextureCache* cache = [CCTextureCache sharedTextureCache];
     
     NSLog(@"BEFORE ADD texture: %@", [cache textureForKey:@"Sprites.png"]);
-    if ([cache textureForKey:@"Sprites.png"]) NSLog(@" - retain count: %d", (int)CFGetRetainCount((CFTypeRef)[cache textureForKey:@"Sprites.png"]));
+    if ([cache textureForKey:@"Sprites.png"]) NSLog(@" - retain count: %d", (int)CFGetRetainCount((__bridge CFTypeRef)[cache textureForKey:@"Sprites.png"]));
     
     self.texture = [cache addImage:@"Sprites.png"];
     
     NSLog(@"AFTER  ADD texture: %@", [cache textureForKey:@"Sprites.png"]);
-    if ([cache textureForKey:@"Sprites.png"]) NSLog(@" - retain count: %d", (int)CFGetRetainCount((CFTypeRef)[cache textureForKey:@"Sprites.png"]));
+    if ([cache textureForKey:@"Sprites.png"]) NSLog(@" - retain count: %d", (int)CFGetRetainCount((__bridge CFTypeRef)[cache textureForKey:@"Sprites.png"]));
 }
 
 - (void) testRelease:(id)sender
@@ -72,12 +72,12 @@
     CCTextureCache* cache = [CCTextureCache sharedTextureCache];
     
     NSLog(@"BEFORE RELEASE texture: %@", [cache textureForKey:@"Sprites.png"]);
-    if ([cache textureForKey:@"Sprites.png"]) NSLog(@" - retain count: %d", (int)CFGetRetainCount((CFTypeRef)[cache textureForKey:@"Sprites.png"]));
+    if ([cache textureForKey:@"Sprites.png"]) NSLog(@" - retain count: %d", (int)CFGetRetainCount((__bridge CFTypeRef)[cache textureForKey:@"Sprites.png"]));
     
     self.texture = NULL;
     
     NSLog(@"AFTER  RELEASE texture: %@", [cache textureForKey:@"Sprites.png"]);
-    if ([cache textureForKey:@"Sprites.png"]) NSLog(@" - retain count: %d", (int)CFGetRetainCount((CFTypeRef)[cache textureForKey:@"Sprites.png"]));
+    if ([cache textureForKey:@"Sprites.png"]) NSLog(@" - retain count: %d", (int)CFGetRetainCount((__bridge CFTypeRef)[cache textureForKey:@"Sprites.png"]));
 }
 
 @end

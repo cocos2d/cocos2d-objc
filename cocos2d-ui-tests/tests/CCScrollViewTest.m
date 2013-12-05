@@ -127,7 +127,7 @@
     {
         for (int y = 0; y < h; y++)
         {
-            CCLabelTTF* lbl = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"(%d,%d)",x,y] fontName:@"HelveticaNeue-Light" fontSize:100 * dir.positionScaleFactor];
+            CCLabelTTF* lbl = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"(%d,%d)",x,y] fontName:@"HelveticaNeue-Light" fontSize:100 * dir.UIScaleFactor];
             lbl.positionType = CCPositionTypeNormalized;
             lbl.position = ccp((x + 0.5f)/w, (y + 0.5f)/h);
             [node addChild:lbl];
