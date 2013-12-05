@@ -29,7 +29,7 @@
     self.multipleTouchEnabled = YES;
     
     // Make the node fill the entire area
-    self.contentSizeType = CCContentSizeTypeNormalized;
+    self.contentSizeType = CCSizeTypeNormalized;
     self.contentSize = CGSizeMake(1, 1);
     
     // Setup a label that displays the number of current touches

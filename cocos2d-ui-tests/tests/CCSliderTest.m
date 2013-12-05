@@ -32,7 +32,7 @@
     slider.positionType = CCPositionTypeNormalized;
     slider.position = ccp(0.5f, 0.5f);
     
-    slider.preferredSizeType = CCContentSizeTypeMake(CCContentSizeUnitNormalized, CCContentSizeUnitPoints);
+    slider.preferredSizeType = CCSizeTypeMake(CCSizeUnitNormalized, CCSizeUnitPoints);
     slider.preferredSize = CGSizeMake(0.5f, 32);
     
     slider.anchorPoint = ccp(0.5f, 0.5f);
@@ -55,7 +55,7 @@
     slider.positionType = CCPositionTypeNormalized;
     slider.position = ccp(0.5f, 0.5f);
     
-    slider.preferredSizeType = CCContentSizeTypeMake(CCContentSizeUnitNormalized, CCContentSizeUnitPoints);
+    slider.preferredSizeType = CCSizeTypeMake(CCSizeUnitNormalized, CCSizeUnitPoints);
     slider.preferredSize = CGSizeMake(0.5f, 32);
     
     slider.anchorPoint = ccp(0.5f, 0.5f);

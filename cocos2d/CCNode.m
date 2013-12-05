@@ -364,7 +364,7 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 	}
 }
 
-- (void) setContentSizeType:(CCContentSizeType)contentSizeType
+- (void) setContentSizeType:(CCSizeType)contentSizeType
 {
     _contentSizeType = contentSizeType;
     
@@ -379,54 +379,54 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
     }
 }
 
-- (CGSize) convertContentSizeToPoints:(CGSize)contentSize type:(CCContentSizeType)type
+- (CGSize) convertContentSizeToPoints:(CGSize)contentSize type:(CCSizeType)type
 {
     CGSize size = CGSizeZero;
     CCDirector* director = [CCDirector sharedDirector];
     
-    CCContentSizeUnit widthUnit = type.widthUnit;
-    CCContentSizeUnit heightUnit = type.heightUnit;
+    CCSizeUnit widthUnit = type.widthUnit;
+    CCSizeUnit heightUnit = type.heightUnit;
     
     // Width
-    if (widthUnit == CCContentSizeUnitPoints)
+    if (widthUnit == CCSizeUnitPoints)
     {
         size.width = contentSize.width;
     }
-    else if (widthUnit == CCContentSizeUnitScaled)
+    else if (widthUnit == CCSizeUnitUIPoints)
     {
         size.width = director.UIScaleFactor * contentSize.width;
     }
-    else if (widthUnit == CCContentSizeUnitNormalized)
+    else if (widthUnit == CCSizeUnitNormalized)
     {
         size.width = contentSize.width * _parent.contentSizeInPoints.width;
     }
-    else if (widthUnit == CCContentSizeUnitInsetPoints)
+    else if (widthUnit == CCSizeUnitInsetPoints)
     {
         size.width = _parent.contentSizeInPoints.width - contentSize.width;
     }
-    else if (widthUnit == CCContentSizeUnitInsetScaled)
+    else if (widthUnit == CCSizeUnitInsetUIPoints)
     {
         size.width = _parent.contentSizeInPoints.width - contentSize.width * director.UIScaleFactor;
     }
     
     // Height
-    if (heightUnit == CCContentSizeUnitPoints)
+    if (heightUnit == CCSizeUnitPoints)
     {
         size.height = contentSize.height;
     }
-    else if (heightUnit == CCContentSizeUnitScaled)
+    else if (heightUnit == CCSizeUnitUIPoints)
     {
         size.height = director.UIScaleFactor * contentSize.height;
     }
-    else if (heightUnit == CCContentSizeUnitNormalized)
+    else if (heightUnit == CCSizeUnitNormalized)
     {
         size.height = contentSize.height * _parent.contentSizeInPoints.height;
     }
-    else if (heightUnit == CCContentSizeUnitInsetPoints)
+    else if (heightUnit == CCSizeUnitInsetPoints)
     {
         size.height = _parent.contentSizeInPoints.height - contentSize.height;
     }
-    else if (heightUnit == CCContentSizeUnitInsetScaled)
+    else if (heightUnit == CCSizeUnitInsetUIPoints)
     {
         size.height = _parent.contentSizeInPoints.height - contentSize.height * director.UIScaleFactor;
     }
@@ -434,25 +434,25 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
     return size;
 }
 
-- (CGSize) convertContentSizeFromPoints:(CGSize)pointSize type:(CCContentSizeType)type
+- (CGSize) convertContentSizeFromPoints:(CGSize)pointSize type:(CCSizeType)type
 {
     CGSize size = CGSizeZero;
     
     CCDirector* director = [CCDirector sharedDirector];
     
-    CCContentSizeUnit widthUnit = type.widthUnit;
-    CCContentSizeUnit heightUnit = type.heightUnit;
+    CCSizeUnit widthUnit = type.widthUnit;
+    CCSizeUnit heightUnit = type.heightUnit;
     
     // Width
-    if (widthUnit == CCContentSizeUnitPoints)
+    if (widthUnit == CCSizeUnitPoints)
     {
         size.width = pointSize.width;
     }
-    else if (widthUnit == CCContentSizeUnitScaled)
+    else if (widthUnit == CCSizeUnitUIPoints)
     {
         size.width = pointSize.width / director.UIScaleFactor;
     }
-    else if (widthUnit == CCContentSizeUnitNormalized)
+    else if (widthUnit == CCSizeUnitNormalized)
     {
         
         float parentWidthInPoints = _parent.contentSizeInPoints.width;
@@ -465,25 +465,25 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
             size.width = 0;
         }
     }
-    else if (widthUnit == CCContentSizeUnitInsetPoints)
+    else if (widthUnit == CCSizeUnitInsetPoints)
     {
         size.width = _parent.contentSizeInPoints.width - pointSize.width;
     }
-    else if (widthUnit == CCContentSizeUnitInsetScaled)
+    else if (widthUnit == CCSizeUnitInsetUIPoints)
     {
         size.width = (_parent.contentSizeInPoints.width - pointSize.width) / director.UIScaleFactor;
     }
     
     // Height
-    if (heightUnit == CCContentSizeUnitPoints)
+    if (heightUnit == CCSizeUnitPoints)
     {
         size.height = pointSize.height;
     }
-    else if (heightUnit == CCContentSizeUnitScaled)
+    else if (heightUnit == CCSizeUnitUIPoints)
     {
         size.height = pointSize.height / director.UIScaleFactor;
     }
-    else if (heightUnit == CCContentSizeUnitNormalized)
+    else if (heightUnit == CCSizeUnitNormalized)
     {
         
         float parentHeightInPoints = _parent.contentSizeInPoints.height;
@@ -496,11 +496,11 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
             size.height = 0;
         }
     }
-    else if (heightUnit == CCContentSizeUnitInsetPoints)
+    else if (heightUnit == CCSizeUnitInsetPoints)
     {
         size.height = _parent.contentSizeInPoints.height - pointSize.height;
     }
-    else if (heightUnit == CCContentSizeUnitInsetScaled)
+    else if (heightUnit == CCSizeUnitInsetUIPoints)
     {
         size.height = (_parent.contentSizeInPoints.height - pointSize.height) / director.UIScaleFactor;
     }
@@ -1225,12 +1225,12 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
     // Convert position to points
     CCPositionUnit xUnit = type.xUnit;
     if (xUnit == CCPositionUnitPoints) x = position.x;
-    else if (xUnit == CCPositionUnitScaled) x = position.x * director.UIScaleFactor;
+    else if (xUnit == CCPositionUnitUIPoints) x = position.x * director.UIScaleFactor;
     else if (xUnit == CCPositionUnitNormalized) x = position.x * _parent.contentSizeInPoints.width;
     
     CCPositionUnit yUnit = type.yUnit;
     if (yUnit == CCPositionUnitPoints) y = position.y;
-    else if (yUnit == CCPositionUnitScaled) y = position.y * director.UIScaleFactor;
+    else if (yUnit == CCPositionUnitUIPoints) y = position.y * director.UIScaleFactor;
     else if (yUnit == CCPositionUnitNormalized) y = position.y * _parent.contentSizeInPoints.height;
     
     // Account for reference corner
@@ -1297,7 +1297,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
     // Convert position from points
     CCPositionUnit xUnit = type.xUnit;
     if (xUnit == CCPositionUnitPoints) position.x = x;
-    else if (xUnit == CCPositionUnitScaled) position.x = x / director.UIScaleFactor;
+    else if (xUnit == CCPositionUnitUIPoints) position.x = x / director.UIScaleFactor;
     else if (xUnit == CCPositionUnitNormalized)
     {
         float parentWidth = _parent.contentSizeInPoints.width;
@@ -1309,7 +1309,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
     
     CCPositionUnit yUnit = type.yUnit;
     if (yUnit == CCPositionUnitPoints) position.y = y;
-    else if (yUnit == CCPositionUnitScaled) position.y = y / director.UIScaleFactor;
+    else if (yUnit == CCPositionUnitUIPoints) position.y = y / director.UIScaleFactor;
     else if (yUnit == CCPositionUnitNormalized)
     {
         float parentHeight = _parent.contentSizeInPoints.height;
@@ -1337,7 +1337,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
         
         // Get content size
         CGSize contentSizeInPoints;
-        if (CCContentSizeTypeIsBasicPoints(_contentSizeType))
+        if (CCSizeTypeIsBasicPoints(_contentSizeType))
         {
             // Optimization for basic content sizes (most common case)
             contentSizeInPoints = _contentSize;

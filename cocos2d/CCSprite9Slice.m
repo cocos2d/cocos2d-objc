@@ -77,7 +77,7 @@ typedef NS_ENUM(NSInteger, CCSprite9SliceSizes)
 - (void)setTextureRect:(CGRect)rect rotated:(BOOL)rotated untrimmedSize:(CGSize)untrimmedSize
 {
     CGSize oldContentSize = self.contentSize;
-    CCContentSizeType oldContentSizeType = self.contentSizeType;
+    CCSizeType oldContentSizeType = self.contentSizeType;
     
     [super setTextureRect:rect rotated:rotated untrimmedSize:untrimmedSize];
     

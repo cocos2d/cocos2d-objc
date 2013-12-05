@@ -76,7 +76,7 @@
     [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"Sprites.plist"];
     
     // Make the node the same size as the parent container (i.e. the screen)
-    self.contentSizeType = CCContentSizeTypeNormalized;
+    self.contentSizeType = CCSizeTypeNormalized;
     self.contentSize = CGSizeMake(1, 1);
     
     // Header background
@@ -84,7 +84,7 @@
     headerBg.positionType = CCPositionTypeMake(CCPositionUnitPoints, CCPositionUnitPoints, CCPositionReferenceCornerTopLeft);
     headerBg.position = ccp(0,0);
     headerBg.anchorPoint = ccp(0,1);
-    headerBg.contentSizeType = CCContentSizeTypeMake(CCContentSizeUnitNormalized, CCContentSizeUnitPoints);
+    headerBg.contentSizeType = CCSizeTypeMake(CCSizeUnitNormalized, CCSizeUnitPoints);
     headerBg.contentSize = CGSizeMake(1, kCCUITestHeaderHeight);
     
     [self addChild:headerBg];
@@ -98,7 +98,7 @@
     
     // Table view
     CCTableView* tableView = [[CCTableView alloc] init];
-    tableView.contentSizeType = CCContentSizeTypeMake(CCContentSizeUnitNormalized, CCContentSizeUnitInsetPoints);
+    tableView.contentSizeType = CCSizeTypeMake(CCSizeUnitNormalized, CCSizeUnitInsetPoints);
     tableView.contentSize = CGSizeMake(1, kCCUITestHeaderHeight);
     tableView.rowHeight = kCCTestMenuItemHeight;
     tableView.dataSource = self;
@@ -125,7 +125,7 @@
 - (CCTableViewCell*) tableView:(CCTableView*)tableView nodeForRowAtIndex:(NSUInteger) index
 {
     CCTableViewCell* cell = [[CCTableViewCell alloc] init];
-    cell.contentSizeType = CCContentSizeTypeMake(CCContentSizeUnitNormalized, CCContentSizeUnitPoints);
+    cell.contentSizeType = CCSizeTypeMake(CCSizeUnitNormalized, CCSizeUnitPoints);
     cell.contentSize = CGSizeMake(1, kCCTestMenuItemHeight);
     
     CCSpriteFrame* frameNormal = [CCSpriteFrame frameWithImageNamed:@"Interface/table-bg-normal.png"];

@@ -33,12 +33,12 @@
     self = [super init];
     if (!self) return NULL;
     
-    self.contentSizeType = CCContentSizeTypeNormalized;
+    self.contentSizeType = CCSizeTypeNormalized;
     self.contentSize = CGSizeMake(1, 1);
     
     // Create test content
     self.contentNode = [CCNode node];
-    self.contentNode.contentSizeType = CCContentSizeTypeMake(CCContentSizeUnitNormalized, CCContentSizeUnitInsetPoints);
+    self.contentNode.contentSizeType = CCSizeTypeMake(CCSizeUnitNormalized, CCSizeUnitInsetPoints);
     self.contentNode.contentSize = CGSizeMake(1, 44);
 	
     [self addChild:self.contentNode];
@@ -50,7 +50,7 @@
     headerBg.positionType = CCPositionTypeMake(CCPositionUnitPoints, CCPositionUnitPoints, CCPositionReferenceCornerTopLeft);
     headerBg.position = ccp(0,0);
     headerBg.anchorPoint = ccp(0,1);
-    headerBg.contentSizeType = CCContentSizeTypeMake(CCContentSizeUnitNormalized, CCContentSizeUnitPoints);
+    headerBg.contentSizeType = CCSizeTypeMake(CCSizeUnitNormalized, CCSizeUnitPoints);
     headerBg.contentSize = CGSizeMake(1, 44);
     
     [self addChild:headerBg];
