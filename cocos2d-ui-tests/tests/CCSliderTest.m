@@ -6,8 +6,10 @@
 //  Copyright (c) 2013 Cocos2d. All rights reserved.
 //
 
-#import "CCSliderTest.h"
+#import "TestBase.h"
 #import "CCSlider.h"
+
+@interface CCSliderTest : TestBase @end
 
 @implementation CCSliderTest
 

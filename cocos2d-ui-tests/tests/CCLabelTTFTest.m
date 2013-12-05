@@ -5,8 +5,10 @@
 //  Created by Andy Korth on November 25th, 2013.
 //
 
-#import "CCLabelTTFTest.h"
+#import "TestBase.h"
 #import "CCSlider.h"
+
+@interface CCLabelTTFTest : TestBase @end
 
 @implementation CCLabelTTFTest
 
