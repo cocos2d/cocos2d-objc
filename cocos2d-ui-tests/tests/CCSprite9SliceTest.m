@@ -6,7 +6,9 @@
 //  Copyright (c) 2013 Cocos2d. All rights reserved.
 //
 
-#import "CCSprite9SliceTest.h"
+#import "TestBase.h"
+
+@interface CCSprite9SliceTest : TestBase @end
 
 @implementation CCSprite9SliceTest
 
