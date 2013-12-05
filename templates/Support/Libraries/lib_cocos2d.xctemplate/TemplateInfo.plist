@@ -591,29 +591,29 @@
             <key>Path</key>
             <string>Libraries/cocos2d/CCLabelTTF.m</string>
          </dict>
-         <key>Libraries/cocos2d/CCLayer.h</key>
+         <key>Libraries/cocos2d/CCNodeColor.h</key>
          <dict>
             <key>Group</key>
             <array>
                <string>Libraries</string>
                <string>cocos2d</string>
-               <string>Layers, Scenes, Transition Nodes</string>
+               <string>Misc Nodes</string>
             </array>
             <key>Path</key>
-            <string>Libraries/cocos2d/CCLayer.h</string>
+            <string>Libraries/cocos2d/CCNodeColor.h</string>
             <key>TargetIndices</key>
             <array />
          </dict>
-         <key>Libraries/cocos2d/CCLayer.m</key>
+         <key>Libraries/cocos2d/CCNodeColor.m</key>
          <dict>
             <key>Group</key>
             <array>
                <string>Libraries</string>
                <string>cocos2d</string>
-               <string>Layers, Scenes, Transition Nodes</string>
+               <string>Misc Nodes</string>
             </array>
             <key>Path</key>
-            <string>Libraries/cocos2d/CCLayer.m</string>
+            <string>Libraries/cocos2d/CCNodeColor.m</string>
          </dict>
          <key>Libraries/cocos2d/CCLayout.h</key>
          <dict>
@@ -2472,8 +2472,8 @@
          <string>Libraries/cocos2d/CCLabelBMFont.m</string>
          <string>Libraries/cocos2d/CCLabelTTF.h</string>
          <string>Libraries/cocos2d/CCLabelTTF.m</string>
-         <string>Libraries/cocos2d/CCLayer.h</string>
-         <string>Libraries/cocos2d/CCLayer.m</string>
+         <string>Libraries/cocos2d/CCNodeColor.h</string>
+         <string>Libraries/cocos2d/CCNodeColor.m</string>
          <string>Libraries/cocos2d/CCLayout.h</string>
          <string>Libraries/cocos2d/CCLayout.m</string>
          <string>Libraries/cocos2d/CCLayoutBox.h</string>
