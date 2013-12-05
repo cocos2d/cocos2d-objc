@@ -133,7 +133,7 @@ CCParallaxNode *parallaxNode;
 		// top image is moved at a ratio of 3.0x, 2.5y
 		[parallaxNode addChild:cocosImage z:2 parallaxRatio:ccp(3.0f,2.5f) positionOffset:ccp(200,1000)];
   
-    [self.contentNode addChild:parallaxNode z:0 ];
+    [self.contentNode addChild:parallaxNode z:0];
 
 }
 
@@ -160,6 +160,7 @@ CCParallaxNode *parallaxNode;
   
 	CGPoint diff = ccpSub(touchLocation,prevLocation);
 	
+
 	CGPoint currentPos = [parallaxNode position];
 	[parallaxNode setPosition: ccpAdd(currentPos, diff)];
 }
@@ -168,9 +169,8 @@ CCParallaxNode *parallaxNode;
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {
-	CCNode *node = [self getChildByName:@"top"];
-	CGPoint currentPos = [node position];
-	[node setPosition: ccpAdd(currentPos, CGPointMake( theEvent.deltaX, -theEvent.deltaY) )];
+	CGPoint currentPos = [parallaxNode position];
+	[parallaxNode setPosition: ccpAdd(currentPos, CGPointMake( theEvent.deltaX, -theEvent.deltaY) )];
 }
 #endif
 
