@@ -79,7 +79,7 @@
     if (!self) return NULL;
     
     _button = [CCButton buttonWithTitle:NULL];
-    _button.contentSizeType = CCContentSizeTypeNormalized;
+    _button.contentSizeType = CCSizeTypeNormalized;
     _button.preferredSize = CGSizeMake(1, 1);
     _button.anchorPoint = ccp(0, 0);
     [_button setTarget:self selector:@selector(pressedCell:)];
@@ -117,9 +117,9 @@
     
     self.contentNode = [CCTableViewContentNode node];
     
-    self.contentNode.contentSizeType = CCContentSizeTypeMake(CCContentSizeUnitNormalized, CCContentSizeUnitPoints);
+    self.contentNode.contentSizeType = CCSizeTypeMake(CCSizeUnitNormalized, CCSizeUnitPoints);
     
-    _rowHeightUnit = CCContentSizeUnitPoints;
+    _rowHeightUnit = CCSizeUnitPoints;
     _rowHeight = 32;
     self.horizontalScrollEnabled = NO;
     
@@ -153,7 +153,7 @@
         {
             // Increase row position
             CGFloat rowHeight = [_dataSource tableView:self heightForRowAtIndex:currentRow];
-            if (_rowHeightUnit == CCContentSizeUnitScaled) rowHeight *= positionScale;
+            if (_rowHeightUnit == CCSizeUnitUIPoints) rowHeight *= positionScale;
             currentRowPos += rowHeight;
             
             // Check if we are within visible range
@@ -177,7 +177,7 @@
             
             // Increase row position
             CGFloat rowHeight = [_dataSource tableView:self heightForRowAtIndex:currentRow + 1];
-            if (_rowHeightUnit == CCContentSizeUnitScaled) rowHeight *= positionScale;
+            if (_rowHeightUnit == CCSizeUnitUIPoints) rowHeight *= positionScale;
             currentRowPos += rowHeight;
             
             numVisibleRows ++;
@@ -224,7 +224,7 @@
         location = idx * _rowHeight;
     }
     
-    if (_rowHeightUnit == CCContentSizeUnitScaled)
+    if (_rowHeightUnit == CCSizeUnitUIPoints)
     {
         location *= [CCDirector sharedDirector].UIScaleFactor;
     }
@@ -310,7 +310,7 @@
     }
     
     self.contentNode.contentSize = CGSizeMake(1, layerHeight);
-    self.contentNode.contentSizeType = CCContentSizeTypeMake(CCContentSizeUnitNormalized, _rowHeightUnit);
+    self.contentNode.contentSizeType = CCSizeTypeMake(CCSizeUnitNormalized, _rowHeightUnit);
     
     // Create empty placeholders for all rows
     _rows = [NSMutableArray arrayWithCapacity:numRows];
@@ -338,8 +338,8 @@
 
 - (CGFloat) rowHeightInPoints
 {
-    if (_rowHeightUnit == CCContentSizeUnitPoints) return _rowHeight;
-    else if (_rowHeightUnit == CCContentSizeUnitScaled)
+    if (_rowHeightUnit == CCSizeUnitPoints) return _rowHeight;
+    else if (_rowHeightUnit == CCSizeUnitUIPoints)
         return _rowHeight * [CCDirector sharedDirector].UIScaleFactor;
     else
     {
@@ -369,7 +369,7 @@
     [self markVisibleRowsDirty];
 }
 
-- (void) setContentSizeType:(CCContentSizeType)contentSizeType
+- (void) setContentSizeType:(CCSizeType)contentSizeType
 {
     [super setContentSizeType:contentSizeType];
     [self markVisibleRowsDirty];

@@ -317,7 +317,7 @@
     [super onEnter];
 }
 
-- (void) setContentSizeType:(CCContentSizeType)contentSizeType
+- (void) setContentSizeType:(CCSizeType)contentSizeType
 {
     [super setContentSizeType:contentSizeType];
     [self needsLayout];
@@ -335,22 +335,22 @@
     [self needsLayout];
 }
 
-- (void) setPreferredSizeType:(CCContentSizeType)preferredSizeType
+- (void) setPreferredSizeType:(CCSizeType)preferredSizeType
 {
     self.contentSizeType = preferredSizeType;
 }
 
-- (CCContentSizeType) preferredSizeType
+- (CCSizeType) preferredSizeType
 {
     return self.contentSizeType;
 }
 
-- (void) setMaxSizeType:(CCContentSizeType)maxSizeType
+- (void) setMaxSizeType:(CCSizeType)maxSizeType
 {
     self.contentSizeType = maxSizeType;
 }
 
-- (CCContentSizeType) maxSizeType
+- (CCSizeType) maxSizeType
 {
     return self.contentSizeType;
 }

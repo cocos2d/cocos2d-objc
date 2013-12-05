@@ -66,7 +66,7 @@ static float roundUpToEven(float f)
         width -= _spacing;
         if (width < 0) width = 0;
         
-        self.contentSizeType = CCContentSizeTypePoints;
+        self.contentSizeType = CCSizeTypePoints;
         self.contentSize = CGSizeMake(roundUpToEven(width), roundUpToEven(maxHeight));
     }
     else
@@ -100,7 +100,7 @@ static float roundUpToEven(float f)
         height -= _spacing;
         if (height < 0) height = 0;
         
-        self.contentSizeType = CCContentSizeTypePoints;
+        self.contentSizeType = CCSizeTypePoints;
         self.contentSize = CGSizeMake(roundUpToEven(maxWidth), roundUpToEven(height));
     }
 }
