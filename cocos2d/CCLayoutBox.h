@@ -24,15 +24,31 @@
 
 #import "CCLayout.h"
 
+/**
+ *  Declares the possible directions for laying out nodes in a CCLayoutBox.
+ */
 typedef NS_ENUM(NSUInteger, CCLayoutBoxDirection)
 {
+    /// The children will be layout out in a horizontal line
     CCLayoutBoxDirectionHorizontal,
+    
+    /// The children will be layout out in a vertical line
     CCLayoutBoxDirectionVertical,
 };
 
+/**
+ *  The box layout lays out its children in a horizontal or vertical row. Optionally you can set a spacing between the child nodes.
+ */
 @interface CCLayoutBox : CCLayout
 
+/**
+ *  The direction is either horizontal or vertical.
+ */
 @property (nonatomic,assign) CCLayoutBoxDirection direction;
+
+/**
+ *  The spacing in points between the child nodes.
+ */
 @property (nonatomic,assign) float spacing;
 
 @end
