@@ -24,12 +24,26 @@
 
 #import "CCNode.h"
 
+/**
+ *  A layout will take control of its childrens' positions. Any node added as a child will be position according to the rules of the specific layout type. If you are using a layout you should not set the position of the children manually.
+ 
+ ### Subclassing
+ 
+ CCLayout is an abstract super class of all layouts. You should subclass this class and implement the layout method if you want to create your own layout.
+ */
 @interface CCLayout : CCNode
 {
     BOOL _needsLayout;
 }
 
+/**
+ *  Called whenever the node needs to layout its children again. Normally, there is no need to call this method directly.
+ */
 - (void) needsLayout;
+
+/**
+ *  The layout method layouts the children according to the rules of the specific layout.
+ */
 - (void) layout;
 
 @end
