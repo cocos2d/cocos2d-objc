@@ -368,18 +368,6 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  */
 -(CCNode*) getChildByName:(NSString *)name recursively:(bool)isRecursive;
 
-/**
- *  Search recursively through the children of the container for one matching the name tag.
- *  The first matching node is returned, via a depth first search.
- *
- *  @param name Name tag
- *
- *  @return Returns a CCNode, or nil if no marching nodes are found.
- */
-
--(CCNode*) getChildByName:(NSString *)name;
-
-
 /** 
  *  The z order of the node relative to its "siblings": children of the same parent 
  */
