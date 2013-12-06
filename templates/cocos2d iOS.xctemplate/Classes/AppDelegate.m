@@ -103,19 +103,18 @@
 	// Display FSP and SPF
 	[_director setDisplayStats:YES];
 	
-	// set FPS at 60
+	// Set FPS at 60
 	[_director setAnimationInterval:1.0/60];
 	
-	// attach the openglView to the director
+	// Attach the openglView to the director
 	[_director setView:glView];
 	
 	// 2D projection
 	[_director setProjection:CCDirectorProjection2D];
-	//	[director setProjection:kCCDirectorProjection3D];
+	// [director setProjection:kCCDirectorProjection3D];
 	
-	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-	if(![_director enableRetinaDisplay:YES])
-    CCLOG(@"Retina Display Not supported");
+	// Enable "Retina" mode
+	glView.contentScaleFactor = [UIScreen mainScreen].scale;
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
