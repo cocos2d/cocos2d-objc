@@ -221,8 +221,8 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 
 -(CCSpriteFrame*) createSpriteFrame
 {
-    CGRect bounds = CGRectMake(0, 0, self.contentSize.width, self.contentSize.height);
-    return [CCSpriteFrame frameWithTexture:self rect:bounds];
+	CGRect rectInPixels = {CGPointZero, _sizeInPixels};
+	return [CCSpriteFrame frameWithTexture:self rectInPixels:rectInPixels rotated:NO offset:CGPointZero originalSize:_sizeInPixels];
 }
 
 - (void) setAntialiased:(BOOL)antialiased
