@@ -5,10 +5,18 @@
 //  Created by Andy Korth on November 25th, 2013.
 //
 
-#import "ParticleTest.h"
+#import "TestBase.h"
 #import "CCTextureCache.h"
 
+@interface ParticleTest : TestBase
+@property (readwrite, retain) CCParticleSystem *emitter;
+@end
+
+
 @implementation ParticleTest
+{
+  CCSprite			*background;
+}
 
 - (NSArray*) testConstructors
 {

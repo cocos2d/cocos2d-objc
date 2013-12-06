@@ -9,7 +9,9 @@
 #import "cocos2d.h"
 
 // local import
-#import "ParallaxTest.h"
+#import "TestBase.h"
+
+@interface ParallaxTest : TestBase @end
 
 @implementation ParallaxTest
 
