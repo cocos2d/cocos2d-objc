@@ -733,7 +733,9 @@ void FNTConfigRemoveCache( void )
 	nextFontPositionY = -(_configuration->_commonHeight - _configuration->_commonHeight*quantityOfLines);
     CGRect rect;
     ccBMFontDef fontDef;
-
+	
+	CGFloat contentScale = self.texture.contentScale;
+	
 	for(NSUInteger i = 0; i<stringLen; i++) {
 		unichar c = [_string characterAtIndex:i];
         
@@ -759,11 +761,10 @@ void FNTConfigRemoveCache( void )
 			CCLOGWARN(@"cocos2d: CCLabelBMFont: characer not found %c", c);
 			continue;
 		}
-        
-        fontDef = element->fontDef;
-        
-        rect = fontDef.rect;
-		rect = CC_RECT_PIXELS_TO_POINTS(rect);
+		
+		fontDef = element->fontDef;
+		
+		rect = CC_RECT_SCALE(fontDef.rect, contentScale);
 		
 		rect.origin.x += _imageOffset.x;
 		rect.origin.y += _imageOffset.y;
@@ -811,7 +812,7 @@ void FNTConfigRemoveCache( void )
 		NSInteger yOffset = _configuration->_commonHeight - fontDef.yOffset;
 		CGPoint fontPos = ccp( (CGFloat)nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width*0.5f + kerningAmount,
 							  (CGFloat)nextFontPositionY + yOffset - rect.size.height*0.5f * CC_CONTENT_SCALE_FACTOR() );
-        fontChar.position = CC_POINT_PIXELS_TO_POINTS(fontPos);
+		fontChar.position = ccpMult(fontPos, 1.0/contentScale);
 		
 		// update kerning
 		nextFontPositionX += fontDef.xAdvance + kerningAmount;
@@ -835,7 +836,7 @@ void FNTConfigRemoveCache( void )
     }
     tmpSize.height = totalHeight;
     
-	[self setContentSize:CC_SIZE_PIXELS_TO_POINTS(tmpSize)];
+	[self setContentSize:CC_SIZE_SCALE(tmpSize, contentScale)];
 }
 
 #pragma mark LabelBMFont - CCLabelProtocol protocol

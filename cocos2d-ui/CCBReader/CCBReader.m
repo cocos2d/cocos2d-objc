@@ -977,6 +977,9 @@ static inline float readFloat(CCBReader *self)
         float friction = readFloat(self);
         float elasticity = readFloat(self);
         
+        body.affectedByGravity = affectedByGravity;
+        body.allowsRotation = allowsRotation;
+        
         //body.affectedByGravity = affectedByGravity;
         //body.allowsRotation = allowsRotation;
         
