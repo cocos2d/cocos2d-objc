@@ -294,6 +294,8 @@ if $INSTALL ; then
 	copy_files "external/Chipmunk_download/Chipmunk/include" "$LIBS_DIR/Chipmunk/chipmunk"
 	copy_files "external/Chipmunk_download/Chipmunk/src" "$LIBS_DIR/Chipmunk/chipmunk"
 	copy_files "external/Chipmunk_download/Chipmunk/LICENSE.txt" "$LIBS_DIR/Chipmunk"
+	rm -rf "${DOWNLOAD_DIR}" 1>/dev/null 2>>"${ERROR_LOG}"
+    check_status
 	printf " ${GREEN}✔${COLOREND}\n"
 
 	# Copy ObjectAL files
