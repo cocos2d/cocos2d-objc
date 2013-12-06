@@ -114,6 +114,8 @@
 		50FBB2DB117613F500150761 /* CCActionTween.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FBB2D9117613F500150761 /* CCActionTween.m */; };
 		6F305B5F0FB9D2790052E700 /* TransformUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F305B5D0FB9D2790052E700 /* TransformUtils.h */; };
 		6F305B600FB9D2790052E700 /* TransformUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F305B5E0FB9D2790052E700 /* TransformUtils.m */; };
+		754076DB185272040083BC43 /* CCNodeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 754076DA185272040083BC43 /* CCNodeTests.m */; };
+		759B494318527D30007F099C /* CCFileUtilTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 759B494218527D30007F099C /* CCFileUtilTests.m */; };
 		A003AC8C1657071100C7B792 /* ccFPSImages.h in Headers */ = {isa = PBXBuildFile; fileRef = A003AC8B1657071100C7B792 /* ccFPSImages.h */; };
 		A003AC8F16572D6000C7B792 /* ccFPSImages.m in Sources */ = {isa = PBXBuildFile; fileRef = A003AC8E16572D6000C7B792 /* ccFPSImages.m */; };
 		A015BFCD13B826D800C73E76 /* aabb.h in Headers */ = {isa = PBXBuildFile; fileRef = A015BFAE13B826D800C73E76 /* aabb.h */; };
@@ -562,6 +564,8 @@
 		50FBB2D9117613F500150761 /* CCActionTween.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionTween.m; sourceTree = "<group>"; };
 		6F305B5D0FB9D2790052E700 /* TransformUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformUtils.h; sourceTree = "<group>"; };
 		6F305B5E0FB9D2790052E700 /* TransformUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransformUtils.m; sourceTree = "<group>"; };
+		754076DA185272040083BC43 /* CCNodeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCNodeTests.m; sourceTree = "<group>"; };
+		759B494218527D30007F099C /* CCFileUtilTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCFileUtilTests.m; sourceTree = "<group>"; };
 		A003AC8B1657071100C7B792 /* ccFPSImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccFPSImages.h; sourceTree = "<group>"; };
 		A003AC8E16572D6000C7B792 /* ccFPSImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccFPSImages.m; sourceTree = "<group>"; };
 		A015BFAE13B826D800C73E76 /* aabb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aabb.h; sourceTree = "<group>"; };
@@ -1515,6 +1519,8 @@
 		D36F7E39181580A000E94F72 /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
+				759B494218527D30007F099C /* CCFileUtilTests.m */,
+				754076DA185272040083BC43 /* CCNodeTests.m */,
 				D36F7E4D1815817E00E94F72 /* CCPhysicsTests.m */,
 				D3547A73181588D500FBE6FB /* CCSchedulerTests.m */,
 				D36F7E3A181580A000E94F72 /* Supporting Files */,
@@ -2171,6 +2177,8 @@
 			files = (
 				D3547A71181583A900FBE6FB /* CCPhysicsTests.m in Sources */,
 				D3547A74181588D500FBE6FB /* CCSchedulerTests.m in Sources */,
+				754076DB185272040083BC43 /* CCNodeTests.m in Sources */,
+				759B494318527D30007F099C /* CCFileUtilTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
