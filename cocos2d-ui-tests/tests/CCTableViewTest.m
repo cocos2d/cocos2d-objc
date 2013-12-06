@@ -22,7 +22,10 @@
  * THE SOFTWARE.
  */
 
-#import "CCTableViewTest.h"
+#import "TestBase.h"
+#import "cocos2d-ui.h"
+
+@interface CCTableViewTest : TestBase @end
 
 #define kSimpleTableViewRowHeight 24
 #define kSimpleTableViewInset 50

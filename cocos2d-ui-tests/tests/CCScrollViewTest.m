@@ -22,7 +22,9 @@
  * THE SOFTWARE.
  */
 
-#import "CCScrollViewTest.h"
+#import "TestBase.h"
+
+@interface CCScrollViewTest : TestBase @end
 
 @implementation CCScrollViewTest
 
