@@ -43,7 +43,7 @@ Do not use for new development";
     // Here is where custom code for the scene starts
     
     // create a colored background
-    CCLayerColor *background = [CCLayerColor layerWithColor:(ccColor4B){200, 200, 200, 255}];
+    CCNodeColor *background = [CCNodeColor nodeWithColor:(ccColor4B){200, 200, 200, 255}];
     [self addChild:background];
     
     // create a string with preview text

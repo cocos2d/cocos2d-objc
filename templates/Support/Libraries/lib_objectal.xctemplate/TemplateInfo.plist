@@ -47,7 +47,11 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/ObjectAL/Actions/OALAction.m</string>
-		</dict>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
+         </dict>
 		<key>Libraries/ObjectAL/Actions/OALActionManager.h</key>
 		<dict>
 			<key>Group</key>
@@ -71,7 +75,11 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/ObjectAL/Actions/OALActionManager.m</string>
-		</dict>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
+         </dict>
 		<key>Libraries/ObjectAL/Actions/OALAudioActions.h</key>
 		<dict>
 			<key>Group</key>
@@ -95,7 +103,11 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/ObjectAL/Actions/OALAudioActions.m</string>
-		</dict>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
+         </dict>
 		<key>Libraries/ObjectAL/Actions/OALUtilityActions.h</key>
 		<dict>
 			<key>Group</key>
@@ -119,7 +131,11 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/ObjectAL/Actions/OALUtilityActions.m</string>
-		</dict>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
+         </dict>
 		<key>Libraries/ObjectAL/AudioTrack/OALAudioTrack.h</key>
 		<dict>
 			<key>Group</key>
@@ -143,7 +159,11 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/ObjectAL/AudioTrack/OALAudioTrack.m</string>
-		</dict>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
+         </dict>
 		<key>Libraries/ObjectAL/AudioTrack/OALAudioTrackNotifications.h</key>
 		<dict>
 			<key>Group</key>
@@ -167,7 +187,11 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/ObjectAL/AudioTrack/OALAudioTrackNotifications.m</string>
-		</dict>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
+         </dict>
 		<key>Libraries/ObjectAL/AudioTrack/OALAudioTracks.h</key>
 		<dict>
 			<key>Group</key>
@@ -191,7 +215,11 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/ObjectAL/AudioTrack/OALAudioTracks.m</string>
-		</dict>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
+         </dict>
 		<key>Libraries/ObjectAL/OALSimpleAudio.h</key>
 		<dict>
 			<key>Group</key>
@@ -213,7 +241,11 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/ObjectAL/OALSimpleAudio.m</string>
-		</dict>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
+         </dict>
 		<key>Libraries/ObjectAL/ObjectAL.h</key>
 		<dict>
 			<key>Group</key>
@@ -261,7 +293,11 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/ObjectAL/OpenAL/ALBuffer.m</string>
-		</dict>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
+         </dict>
 		<key>Libraries/ObjectAL/OpenAL/ALCaptureDevice.h</key>
 		<dict>
 			<key>Group</key>
@@ -285,7 +321,11 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/ObjectAL/OpenAL/ALCaptureDevice.m</string>
-		</dict>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
+         </dict>
 		<key>Libraries/ObjectAL/OpenAL/ALChannelSource.h</key>
 		<dict>
 			<key>Group</key>
@@ -309,7 +349,11 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/ObjectAL/OpenAL/ALChannelSource.m</string>
-		</dict>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
+         </dict>
 		<key>Libraries/ObjectAL/OpenAL/ALContext.h</key>
 		<dict>
 			<key>Group</key>
@@ -333,7 +377,11 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/ObjectAL/OpenAL/ALContext.m</string>
-		</dict>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
+         </dict>
 		<key>Libraries/ObjectAL/OpenAL/ALDevice.h</key>
 		<dict>
 			<key>Group</key>
@@ -357,7 +405,11 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/ObjectAL/OpenAL/ALDevice.m</string>
-		</dict>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
+         </dict>
 		<key>Libraries/ObjectAL/OpenAL/ALListener.h</key>
 		<dict>
 			<key>Group</key>
@@ -381,7 +433,11 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/ObjectAL/OpenAL/ALListener.m</string>
-		</dict>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
+         </dict>
 		<key>Libraries/ObjectAL/OpenAL/ALSoundSource.h</key>
 		<dict>
 			<key>Group</key>
@@ -418,7 +474,11 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/ObjectAL/OpenAL/ALSoundSourcePool.m</string>
-		</dict>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
+         </dict>
 		<key>Libraries/ObjectAL/OpenAL/ALSource.h</key>
 		<dict>
 			<key>Group</key>
@@ -442,7 +502,11 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/ObjectAL/OpenAL/ALSource.m</string>
-		</dict>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
+         </dict>
 		<key>Libraries/ObjectAL/OpenAL/ALTypes.h</key>
 		<dict>
 			<key>Group</key>
@@ -479,7 +543,11 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/ObjectAL/OpenAL/ALWrapper.m</string>
-		</dict>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
+         </dict>
 		<key>Libraries/ObjectAL/OpenAL/OpenALManager.h</key>
 		<dict>
 			<key>Group</key>
@@ -503,7 +571,11 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/ObjectAL/OpenAL/OpenALManager.m</string>
-		</dict>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
+         </dict>
 		<key>Libraries/ObjectAL/Session/OALAudioSession.h</key>
 		<dict>
 			<key>Group</key>
@@ -527,7 +599,11 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/ObjectAL/Session/OALAudioSession.m</string>
-		</dict>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
+         </dict>
 		<key>Libraries/ObjectAL/Session/OALSuspendHandler.h</key>
 		<dict>
 			<key>Group</key>
@@ -551,7 +627,11 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/ObjectAL/Session/OALSuspendHandler.m</string>
-		</dict>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
+         </dict>
 		<key>Libraries/ObjectAL/Support/ARCSafe_MemMgmt.h</key>
 		<dict>
 			<key>Group</key>
@@ -588,7 +668,11 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/ObjectAL/Support/IOSVersion.m</string>
-		</dict>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
+         </dict>
 		<key>Libraries/ObjectAL/Support/mach_timing.c</key>
 		<dict>
 			<key>Group</key>
@@ -599,6 +683,10 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/ObjectAL/Support/mach_timing.c</string>
+			<key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
 		</dict>
 		<key>Libraries/ObjectAL/Support/mach_timing.h</key>
 		<dict>
@@ -636,7 +724,11 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/ObjectAL/Support/NSMutableArray+WeakReferences.m</string>
-		</dict>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
+         </dict>
 		<key>Libraries/ObjectAL/Support/NSMutableDictionary+WeakReferences.h</key>
 		<dict>
 			<key>Group</key>
@@ -660,7 +752,11 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/ObjectAL/Support/NSMutableDictionary+WeakReferences.m</string>
-		</dict>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
+         </dict>
 		<key>Libraries/ObjectAL/Support/OALAudioFile.h</key>
 		<dict>
 			<key>Group</key>
@@ -684,7 +780,11 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/ObjectAL/Support/OALAudioFile.m</string>
-		</dict>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
+         </dict>
 		<key>Libraries/ObjectAL/Support/OALNotifications.h</key>
 		<dict>
 			<key>Group</key>
@@ -721,7 +821,11 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/ObjectAL/Support/OALTools.m</string>
-		</dict>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
+         </dict>
 		<key>Libraries/ObjectAL/Support/ObjectALMacros.h</key>
 		<dict>
 			<key>Group</key>
