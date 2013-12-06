@@ -347,12 +347,13 @@
 
 -(void) setTextureCoords:(CGRect)rect
 {
-	rect = CC_RECT_POINTS_TO_PIXELS(rect);
-
 	CCTexture *tex	= (_batchNode) ? [_textureAtlas texture] : _texture;
 	if(!tex)
 		return;
-
+	
+	CGFloat scale = tex.contentScale;
+	rect = CC_RECT_SCALE(rect, scale);
+	
 	float atlasWidth = (float)tex.pixelWidth;
 	float atlasHeight = (float)tex.pixelHeight;
 
