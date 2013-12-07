@@ -6,8 +6,10 @@
 //  Copyright (c) 2013 Cocos2d. All rights reserved.
 //
 
-#import "ObjectALTest.h"
+#import "TestBase.h"
 #import "OALSimpleAudio.h"
+
+@interface ObjectALTest : TestBase @end
 
 @implementation ObjectALTest
 

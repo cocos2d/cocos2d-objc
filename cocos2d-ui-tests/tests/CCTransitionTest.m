@@ -6,9 +6,14 @@
 //  Copyright (c) 2013 Cocos2d. All rights reserved.
 //
 
-#import "CCTransitionTest.h"
+#import "TestBase.h"
+
+@interface CCTransitionTest : TestBase @end
 
 @implementation CCTransitionTest
+{
+    CCTransition* _nextTransition;
+}
 
 - (NSArray*) testConstructors
 {

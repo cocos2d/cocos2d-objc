@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Cocos2d. All rights reserved.
 //
 
-#import "CCResponderTest.h"
+#import "TestBase.h"
 
 @interface SimpleMultiTouchLayer : CCNode
 {
@@ -95,6 +95,8 @@
 @end
 
 // -----------------------------------------------------------------
+
+@interface CCResponderTest : TestBase @end
 
 @implementation CCResponderTest
 
