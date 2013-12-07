@@ -6,8 +6,12 @@
 //  Copyright (c) 2013 Cocos2d. All rights reserved.
 //
 
-#import "CCLayoutTest.h"
+#import "TestBase.h"
+#import "cocos2d.h"
+#import "cocos2d-ui.h"
 #import "CCLayoutBox.h"
+
+@interface CCLayoutTest : TestBase @end
 
 @implementation CCLayoutTest
 

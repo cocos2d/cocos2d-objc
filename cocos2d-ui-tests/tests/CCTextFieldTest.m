@@ -6,8 +6,10 @@
 //  Copyright (c) 2013 Cocos2d. All rights reserved.
 //
 
-#import "CCTextFieldTest.h"
+#import "TestBase.h"
 #import "CCTextField.h"
+
+@interface CCTextFieldTest : TestBase @end
 
 @implementation CCTextFieldTest
 
