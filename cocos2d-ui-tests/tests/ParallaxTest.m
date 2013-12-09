@@ -15,6 +15,8 @@
 
 @implementation ParallaxTest
 
+CCParallaxNode *parallaxNode;
+
 - (NSArray*) testConstructors
 {
   return [NSArray arrayWithObjects:
@@ -27,7 +29,7 @@
 -(void) setupParallaxTest1
 {
     self.subTitle = @"Parallax: parent and 3 children";
-    self.userInteractionEnabled = YES;
+    self.userInteractionEnabled = NO;
 		
     // Top Layer, a simple image
 		CCSprite *cocosImage = [CCSprite spriteWithImageNamed:@"Images/powered.png"];
@@ -89,6 +91,11 @@
 -(void) setupParallaxTest2
 {
     self.userInteractionEnabled = YES;
+  
+    // Make the node fill the entire area. Required for user interaction.
+    self.contentSizeType = CCSizeTypeNormalized;
+    self.contentSize = CGSizeMake(1, 1);
+    
     self.subTitle = @"Parallax: drag screen";
   
 		// Top Layer, a simple image
@@ -115,49 +122,57 @@
 
 
 		// create a void node, a parent node
-		CCParallaxNode *voidNode = [CCParallaxNode node];
+		parallaxNode = [CCParallaxNode node];
 
 		// NOW add the 3 layers to the 'void' node
 
 		// background image is moved at a ratio of 0.4x, 0.5y
-		[voidNode addChild:background z:-1 parallaxRatio:ccp(0.4f,0.5f) positionOffset:CGPointZero];
+		[parallaxNode addChild:background z:-1 parallaxRatio:ccp(0.4f,0.5f) positionOffset:CGPointZero];
 
 		// tiles are moved at a ratio of 1.0, 1.0y
-		[voidNode addChild:tilemap z:1 parallaxRatio:ccp(1.0f,1.0f) positionOffset:ccp(0,-200)];
+		[parallaxNode addChild:tilemap z:1 parallaxRatio:ccp(1.0f,1.0f) positionOffset:ccp(0,-200)];
 
 		// top image is moved at a ratio of 3.0x, 2.5y
-		[voidNode addChild:cocosImage z:2 parallaxRatio:ccp(3.0f,2.5f) positionOffset:ccp(200,1000)];
+		[parallaxNode addChild:cocosImage z:2 parallaxRatio:ccp(3.0f,2.5f) positionOffset:ccp(200,1000)];
   
-		[self.contentNode addChild:voidNode z:0 name:@"top"];
+    [self.contentNode addChild:parallaxNode z:0];
 
 }
 
 #if ( TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR )
 
-// TODO: this method isn't being called! We are marked as userInteractionEnabled = YES, so I guess this is a bug.
-- (void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+-(void) touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event
+{
+	[self touchesEnded:touches withEvent:event];
+}
+
+- (void)touchesMoved:(NSSet*)touches withEvent:(UIEvent *)event
+{
+	[self touchesEnded:touches withEvent:event];
+}
+
+- (void)touchesEnded:(NSSet*)touches withEvent:(UIEvent *)event
 {
   UITouch* touch = [ touches anyObject ];
 	CGPoint touchLocation = [touch locationInView: [touch view]];
 	CGPoint prevLocation = [touch previousLocationInView: [touch view]];
-
+  
 	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
 	prevLocation = [[CCDirector sharedDirector] convertToGL: prevLocation];
-
+  
 	CGPoint diff = ccpSub(touchLocation,prevLocation);
+	
 
-	CCNode *node = [self getChildByName:@"top"];
-	CGPoint currentPos = [node position];
-	[node setPosition: ccpAdd(currentPos, diff)];
+	CGPoint currentPos = [parallaxNode position];
+	[parallaxNode setPosition: ccpAdd(currentPos, diff)];
 }
 
 #else
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {
-	CCNode *node = [self getChildByName:@"top"];
-	CGPoint currentPos = [node position];
-	[node setPosition: ccpAdd(currentPos, CGPointMake( theEvent.deltaX, -theEvent.deltaY) )];
+	CGPoint currentPos = [parallaxNode position];
+	[parallaxNode setPosition: ccpAdd(currentPos, CGPointMake( theEvent.deltaX, -theEvent.deltaY) )];
 }
 #endif
 

@@ -596,14 +596,26 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 	_children = [[NSMutableArray alloc] init];
 }
 
--(CCNode*) getChildByName:(NSString *)name
+-(CCNode*) getChildByName:(NSString *)name recursively:(bool)isRecursive
 {
 	NSAssert(name, @"name is NULL");
-
-    for (CCNode* node in _children) {
-		if( [node.name isEqualToString:name] )
-			return node;
+	if([self.name isEqualToString:name]){
+		return self;
 	}
+	
+  for (CCNode* node in _children) {
+		if(isRecursive){
+			// Recurse:
+			CCNode* n = [node getChildByName:name recursively:isRecursive];
+			if(n)
+				return n;
+		}else{
+			if([node.name isEqualToString:name]){
+				return node;
+			}
+		}
+	}
+	
 	// not found
 	return nil;
 }
@@ -709,7 +721,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 {
 	NSAssert( !name, @"Invalid tag");
 
-	CCNode *child = [self getChildByName:name];
+	CCNode *child = [self getChildByName:name recursively:NO];
 
 	if (child == nil)
 		CCLOG(@"cocos2d: removeChildByTag: child not found!");
