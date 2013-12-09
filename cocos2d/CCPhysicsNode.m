@@ -448,7 +448,7 @@ DrawDot(cpFloat size, cpVect pos, cpSpaceDebugColor color, CCDrawNode *draw)
 
 static cpSpaceDebugColor
 ColorForShape(cpShape *shape, CCDrawNode *draw)
-{return (cpSpaceDebugColor){0.8, 0.0, 0.0, 0.75};}
+{return (cpSpaceDebugColor){0.8, 0.0, 0.0, 0.125};}
 
 -(void)draw
 {
@@ -463,10 +463,10 @@ ColorForShape(cpShape *shape, CCDrawNode *draw)
 		
 		CP_SPACE_DEBUG_DRAW_SHAPES | CP_SPACE_DEBUG_DRAW_CONSTRAINTS | CP_SPACE_DEBUG_DRAW_COLLISION_POINTS,
 		
-		{1.0, 1.0, 1.0, 1.0},
+		{1.0, 1.0, 1.0, 0.25},
 		(cpSpaceDebugDrawColorForShapeImpl)ColorForShape,
-		{0.0, 1.0, 0.0, 1.0},
-		{1.0, 0.0, 0.0, 1.0},
+		{0.0, 1.0, 0.0, 0.25},
+		{1.0, 0.0, 0.0, 0.25},
 		_debugDraw,
 	};
 	

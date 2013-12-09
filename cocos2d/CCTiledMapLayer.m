@@ -115,14 +115,16 @@ int compareInts (const void * a, const void * b);
 		// mapInfo
 		_mapTileSize = mapInfo.tileSize;
 		_layerOrientation = mapInfo.orientation;
-
+		
+		CGFloat pixelsToPoints = 1.0/tex.contentScale;
+		
 		// offset (after layer orientation is set);
 		CGPoint offset = [self calculateLayerOffset:layerInfo.offset];
-		[self setPosition:CC_POINT_PIXELS_TO_POINTS(offset)];
+		[self setPosition:ccpMult(offset, pixelsToPoints)];
 
 		_atlasIndexArray = [[NSMutableArray alloc] initWithCapacity:totalNumberOfTiles];
 
-		[self setContentSize:CC_SIZE_PIXELS_TO_POINTS(CGSizeMake( _layerSize.width * _mapTileSize.width, _layerSize.height * _mapTileSize.height ))];
+		[self setContentSize:CGSizeMake( _layerSize.width * _mapTileSize.width * pixelsToPoints, _layerSize.height * _mapTileSize.height * pixelsToPoints )];
 
 		_useAutomaticVertexZ= NO;
 		_vertexZvalue = 0;
@@ -275,8 +277,7 @@ int compareInts (const void * a, const void * b);
 
 		// tile not created yet. create it
 		if( ! tile ) {
-			CGRect rect = [_tileset rectForGID:gid];
-			rect = CC_RECT_PIXELS_TO_POINTS(rect);
+			CGRect rect = CC_RECT_SCALE([_tileset rectForGID:gid], 1.0/self.textureAtlas.texture.contentScale);
 			tile = [[CCSprite alloc] initWithTexture:self.texture rect:rect];
 			[tile setBatchNode:self];
 
@@ -379,8 +380,7 @@ int compareInts (const void * a, const void * b);
 
 -(CCSprite*) insertTileForGID:(uint32_t)gid at:(CGPoint)pos
 {
-	CGRect rect = [_tileset rectForGID:gid];
-	rect = CC_RECT_PIXELS_TO_POINTS(rect);
+	CGRect rect = CC_RECT_SCALE([_tileset rectForGID:gid], 1.0/self.textureAtlas.texture.contentScale);
 
 	NSInteger z = pos.x + pos.y * _layerSize.width;
 
@@ -411,8 +411,7 @@ int compareInts (const void * a, const void * b);
 
 -(CCSprite*) updateTileForGID:(uint32_t)gid at:(CGPoint)pos
 {
-	CGRect rect = [_tileset rectForGID:gid];
-	rect = CC_RECT_PIXELS_TO_POINTS(rect);
+	CGRect rect = CC_RECT_SCALE([_tileset rectForGID:gid], 1.0/self.textureAtlas.texture.contentScale);
 
 	int z = pos.x + pos.y * _layerSize.width;
 
@@ -436,8 +435,7 @@ int compareInts (const void * a, const void * b);
 // since lot's of assumptions are no longer true
 -(CCSprite*) appendTileForGID:(uint32_t)gid at:(CGPoint)pos
 {
-	CGRect rect = [_tileset rectForGID:gid];
-	rect = CC_RECT_PIXELS_TO_POINTS(rect);
+	CGRect rect = CC_RECT_SCALE([_tileset rectForGID:gid], 1.0/self.textureAtlas.texture.contentScale);
 
 	NSInteger z = pos.x + pos.y * _layerSize.width;
 
@@ -532,8 +530,7 @@ int compareInts (const void * a, const void * b)
             NSString* zStr = [NSString stringWithFormat:@"%d", z];
 			CCSprite *sprite = (CCSprite*)[self getChildByName:zStr recursively:NO];
 			if( sprite ) {
-				CGRect rect = [_tileset rectForGID:gid];
-				rect = CC_RECT_PIXELS_TO_POINTS(rect);
+			CGRect rect = CC_RECT_SCALE([_tileset rectForGID:gid], 1.0/self.textureAtlas.texture.contentScale);
 
 				[sprite setTextureRect:rect rotated:NO untrimmedSize:rect.size];
 
@@ -640,8 +637,7 @@ int compareInts (const void * a, const void * b)
 			break;
 	}
 
-	ret = CC_POINT_PIXELS_TO_POINTS( ret );
-	return ret;
+	return ccpMult(ret, 1.0/self.textureAtlas.texture.contentScale);
 }
 
 -(CGPoint) positionForOrthoAt:(CGPoint)pos

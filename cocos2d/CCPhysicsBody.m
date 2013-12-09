@@ -143,24 +143,24 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 	_shapeList.mass = mass;
 }
 
-//-(CGFloat)density
-//{
-//	return self.mass/self.area;
-//}
-//
-//-(void)setDensity:(CGFloat)density
-//{
-//	NSAssert(_shapeList.next == nil, @"Cannot set the density of a multi-shape body directly. Set the individual shape densities instead.");
-//	_shapeList.density = density;
-//}
-//
-//-(CGFloat)area
-//{
-//	CGFloat sum = 0.0;
-//	FOREACH_SHAPE(self, shape) sum += shape.area;
-//	
-//	return sum;
-//}
+-(CGFloat)density
+{
+	return self.mass/self.area;
+}
+
+-(void)setDensity:(CGFloat)density
+{
+	NSAssert(_shapeList.next == nil, @"Cannot set the density of a multi-shape body directly. Set the individual shape densities instead.");
+	_shapeList.density = density;
+}
+
+-(CGFloat)area
+{
+	CGFloat sum = 0.0;
+	FOREACH_SHAPE(self, shape) sum += shape.area;
+	
+	return sum;
+}
 
 -(CGFloat)friction {return _shapeList.friction;}
 -(void)setFriction:(CGFloat)friction {FOREACH_SHAPE(self, shape) shape.friction = friction;}
