@@ -29,6 +29,25 @@
 
 @implementation AppController
 
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    // Configure the file utils to work with SpriteBuilder, but use a custom resource path (Resources-shared instead of Published-iOS)
+    [CCBReader configureCCFileUtils];
+    
+    CCFileUtils* sharedFileUtils = [CCFileUtils sharedFileUtils];
+    
+    sharedFileUtils.searchPath =
+    [NSArray arrayWithObjects:
+     [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Resources-shared"],
+     [[NSBundle mainBundle] resourcePath],
+     nil];
+    
+    // Configure Cocos2d with default options
+    [self setupCocos2dWithOptions:NULL];
+    
+    return YES;
+}
+
 - (CCScene*) startScene
 {
     return [MainMenu scene];
