@@ -194,11 +194,41 @@
 		sprite2.position = ccp(300, 100);
 		
 		CCPhysicsBody *body2 = sprite2.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
-		body2.velocity = ccp(10, 500);
+		body2.velocity = ccp(10, 250);
 		
 		[physics addChild:sprite2];
 		
 		[CCPhysicsJoint connectedDistanceJointWithBodyA:body1 bodyB:body2 anchorA:ccp(rect.size.width/2.0, 0.0) anchorB:ccp(rect.size.width/2.0, rect.size.height) minDistance:20 maxDistance:70];
+	}
+}
+
+-(void) setupStackTest
+{
+	CCPhysicsNode *physics = [CCPhysicsNode node];
+	physics.gravity = ccp(0, -100);
+	physics.debugDraw = YES;
+	[self.contentNode addChild:physics];
+	
+	// Create the ground
+	{
+		CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/shape-0.png"];
+		sprite.position = ccp(240, 0);
+		
+		CGRect rect = {CGPointZero, sprite.contentSize};
+		CCPhysicsBody *body = sprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
+		body.type = CCPhysicsBodyTypeStatic;
+		
+		[physics addChild:sprite];
+	}
+	
+	for(int i=0; i<10; i++){
+		CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/shape-3.png"];
+		sprite.position = ccp(240, 50 + 1.5*sprite.contentSize.height*i);
+		
+		CGRect rect = {CGPointZero, sprite.contentSize};
+		sprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
+		
+		[physics addChild:sprite];
 	}
 }
 
