@@ -36,6 +36,11 @@
 static inline void NYI(){@throw @"Not Yet Implemented";}
 
 
+@interface CCNode()
+-(CGAffineTransform)nonRigidTransform;
+@end
+
+
 @interface CCPhysicsCircleShape : CCPhysicsShape
 -(id)initWithRadius:(CGFloat)radius center:(CGPoint)center;
 @end
@@ -80,33 +85,31 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 	return [[CCPhysicsPolyShape alloc] initWithPolygonFromPoints:points count:count cornerRadius:cornerRadius];
 }
 
-// Removed since the transform cannot be calculated until after the node enters an active scene.
-//-(cpTransform)shapeTransform
-//{
-//	// TODO Might be better to use the physics relative transform.
-//	// That's not available until the scene is set up though... hrm.
-//	CCNode *node = self.node;
-//	if(node){
-//		return [node nonRigidTransform];
-//	} else {
-//		return CGAffineTransformIdentity;
-//	}
-//}
-//
-//static cpFloat
-//Determinant(cpTransform t)
-//{
-//	return (t.a*t.d - t.c*t.b);
-//}
+-(cpTransform)shapeTransform
+{
+	// TODO Might be better to use the physics relative transform.
+	// That's not available until the scene is set up though... hrm.
+	CCNode *node = self.node;
+	if(node){
+		return [node nonRigidTransform];
+	} else {
+		return CGAffineTransformIdentity;
+	}
+}
+
+static cpFloat
+Determinant(cpTransform t)
+{
+	return (t.a*t.d - t.c*t.b);
+}
 
 -(CGFloat)mass {return self.shape.mass;}
 -(void)setMass:(CGFloat)mass {self.shape.mass = mass;}
 
-// See [CCPhysicsShape shapeTransform] for why this is removed.
-//-(CGFloat)density {return self.shape.density/Determinant(self.shapeTransform);}
-//-(void)setDensity:(CGFloat)density {self.shape.density = density*Determinant(self.shapeTransform);}
-//
-//-(CGFloat)area {return self.shape.area*Determinant(self.shapeTransform);}
+-(CGFloat)density {return self.shape.density/Determinant(self.shapeTransform);}
+-(void)setDensity:(CGFloat)density {self.shape.density = density*Determinant(self.shapeTransform);}
+
+-(CGFloat)area {return self.shape.area*Determinant(self.shapeTransform);}
 
 -(CGFloat)friction {return self.shape.friction;}
 -(void)setFriction:(CGFloat)friction {self.shape.friction = friction;}
