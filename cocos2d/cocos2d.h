@@ -137,6 +137,7 @@
 #import "Platforms/CCNS.h"
 
 #ifdef __CC_PLATFORM_IOS
+#import "CCAppDelegate.h"
 #import "Platforms/iOS/CCGLView.h"
 #import "Platforms/iOS/CCDirectorIOS.h"
 #import "Platforms/iOS/UITouch+CC.h"
