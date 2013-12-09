@@ -307,20 +307,9 @@
 		D33803E318032ECE0072D8FE /* CCPhysicsBody.m in Sources */ = {isa = PBXBuildFile; fileRef = D33803E218032ECE0072D8FE /* CCPhysicsBody.m */; };
 		D33803E618032F390072D8FE /* CCPhysicsNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D33803E518032F390072D8FE /* CCPhysicsNode.m */; };
 		D33803EA180331A90072D8FE /* CCPhysicsJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = D33803E9180331A90072D8FE /* CCPhysicsJoint.m */; };
-		D3547A70181583A300FBE6FB /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
-		D3547A71181583A900FBE6FB /* CCPhysicsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D36F7E4D1815817E00E94F72 /* CCPhysicsTests.m */; };
-		D3547A72181583D000FBE6FB /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
-		D3547A74181588D500FBE6FB /* CCSchedulerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D3547A73181588D500FBE6FB /* CCSchedulerTests.m */; };
-		D36F7E36181580A000E94F72 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D39A31BB17F227F500E94B3B /* XCTest.framework */; };
-		D36F7E37181580A000E94F72 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
-		D36F7E38181580A000E94F72 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
-		D36F7E3E181580A000E94F72 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D36F7E3C181580A000E94F72 /* InfoPlist.strings */; };
 		D395DB25183D73930024997E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3876C10446C6E00150883 /* AVFoundation.framework */; };
 		D395DB2B183D739E0024997E /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3877010446C6E00150883 /* OpenAL.framework */; };
 		D395DB2C183D73A70024997E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3876E10446C6E00150883 /* AudioToolbox.framework */; };
-		D395DB2D183D73F00024997E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3876C10446C6E00150883 /* AVFoundation.framework */; };
-		D395DB2E183D73F80024997E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3876E10446C6E00150883 /* AudioToolbox.framework */; };
-		D395DB2F183D73FD0024997E /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3877010446C6E00150883 /* OpenAL.framework */; };
 		D3A2E7D2181E12750033614C /* CCPhysicsShape.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A2E7D0181E12750033614C /* CCPhysicsShape.h */; };
 		D3A2E7D3181E12750033614C /* CCPhysicsShape.m in Sources */ = {isa = PBXBuildFile; fileRef = D3A2E7D1181E12750033614C /* CCPhysicsShape.m */; };
 		E01E6D8C121F130E001A484F /* CCLabelBMFont.h in Headers */ = {isa = PBXBuildFile; fileRef = E01E6D8A121F130E001A484F /* CCLabelBMFont.h */; };
@@ -358,27 +347,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = A04A1FEA13B826B300ABAFB7;
 			remoteInfo = kazmath;
-		};
-		A02E25E416A4EDE8007F064C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
-			remoteInfo = cocos2d;
-		};
-		A02E25F216A4EDE8007F064C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = A04A1FEA13B826B300ABAFB7;
-			remoteInfo = kazmath;
-		};
-		D36F7E42181580A000E94F72 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
-			remoteInfo = cocos2d;
 		};
 		D39A31D917F2284700E94B3B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -494,7 +462,6 @@
 		506887D80E96C90000F943E5 /* CCAtlasNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCAtlasNode.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		508A4A2310B47A46004B9CC3 /* RELEASE_NOTES */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = RELEASE_NOTES; sourceTree = "<group>"; };
 		508EAC2F1193F8B0007F058D /* utlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utlist.h; sourceTree = "<group>"; };
-		509807081175041800EA7266 /* libbuild all libs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libbuild all libs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		509A79950F6188420032F449 /* CCSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCSprite.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		509A79960F6188420032F449 /* CCSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCSprite.m; sourceTree = "<group>"; };
 		509D0816101E4FCE007E1749 /* CCTiledMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTiledMap.h; sourceTree = "<group>"; };
@@ -771,12 +738,6 @@
 		D33803E718032F4A0072D8FE /* CCPhysicsNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPhysicsNode.h; sourceTree = "<group>"; };
 		D33803E81803319F0072D8FE /* CCPhysicsJoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPhysicsJoint.h; sourceTree = "<group>"; };
 		D33803E9180331A90072D8FE /* CCPhysicsJoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsJoint.m; sourceTree = "<group>"; };
-		D3547A73181588D500FBE6FB /* CCSchedulerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSchedulerTests.m; sourceTree = "<group>"; };
-		D36F7E35181580A000E94F72 /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D36F7E3B181580A000E94F72 /* UnitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UnitTests-Info.plist"; sourceTree = "<group>"; };
-		D36F7E3D181580A000E94F72 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		D36F7E41181580A000E94F72 /* UnitTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UnitTests-Prefix.pch"; sourceTree = "<group>"; };
-		D36F7E4D1815817E00E94F72 /* CCPhysicsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsTests.m; sourceTree = "<group>"; };
 		D39A31BB17F227F500E94B3B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		D39A31D017F2284600E94B3B /* Chipmunk7.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Chipmunk7.xcodeproj; path = external/Chipmunk/xcode/Chipmunk7.xcodeproj; sourceTree = "<group>"; };
 		D3A2E7D0181E12750033614C /* CCPhysicsShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsShape.h; sourceTree = "<group>"; };
@@ -836,32 +797,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		509807061175041800EA7266 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		A04A1FE913B826B300ABAFB7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D36F7E32181580A000E94F72 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D395DB2F183D73FD0024997E /* OpenAL.framework in Frameworks */,
-				D395DB2E183D73F80024997E /* AudioToolbox.framework in Frameworks */,
-				D395DB2D183D73F00024997E /* AVFoundation.framework in Frameworks */,
-				D3547A72181583D000FBE6FB /* libz.dylib in Frameworks */,
-				D3547A70181583A300FBE6FB /* libcocos2d.a in Frameworks */,
-				D36F7E36181580A000E94F72 /* XCTest.framework in Frameworks */,
-				D36F7E38181580A000E94F72 /* UIKit.framework in Frameworks */,
-				D36F7E37181580A000E94F72 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -872,9 +811,7 @@
 			isa = PBXGroup;
 			children = (
 				5018F24D0DFDEAC400C013A5 /* libcocos2d.a */,
-				509807081175041800EA7266 /* libbuild all libs.a */,
 				A04A1FEB13B826B300ABAFB7 /* libkazmath.a */,
-				D36F7E35181580A000E94F72 /* UnitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -901,13 +838,11 @@
 				5018F2510DFDEAFF00C013A5 /* cocos2d */,
 				B78AE45917E7AF010028BE0B /* cocos2d-ui */,
 				501756090F335CE900624901 /* external */,
-				D36F7E39181580A000E94F72 /* UnitTests */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
-			tabWidth = 2;
 		};
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
@@ -1517,26 +1452,6 @@
 			name = Layouts;
 			sourceTree = "<group>";
 		};
-		D36F7E39181580A000E94F72 /* UnitTests */ = {
-			isa = PBXGroup;
-			children = (
-				D36F7E4D1815817E00E94F72 /* CCPhysicsTests.m */,
-				D3547A73181588D500FBE6FB /* CCSchedulerTests.m */,
-				D36F7E3A181580A000E94F72 /* Supporting Files */,
-			);
-			path = UnitTests;
-			sourceTree = "<group>";
-		};
-		D36F7E3A181580A000E94F72 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				D36F7E3B181580A000E94F72 /* UnitTests-Info.plist */,
-				D36F7E3C181580A000E94F72 /* InfoPlist.strings */,
-				D36F7E41181580A000E94F72 /* UnitTests-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		D39A31D117F2284600E94B3B /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1801,13 +1716,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		509807041175041800EA7266 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		A04A1FE713B826B300ABAFB7 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -1851,25 +1759,6 @@
 			productReference = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		509807071175041800EA7266 /* build all libs */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 509807671175045700EA7266 /* Build configuration list for PBXNativeTarget "build all libs" */;
-			buildPhases = (
-				509807041175041800EA7266 /* Headers */,
-				509807051175041800EA7266 /* Sources */,
-				509807061175041800EA7266 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				A02E25E516A4EDE8007F064C /* PBXTargetDependency */,
-				A02E25F316A4EDE8007F064C /* PBXTargetDependency */,
-			);
-			name = "build all libs";
-			productName = "build all tests";
-			productReference = 509807081175041800EA7266 /* libbuild all libs.a */;
-			productType = "com.apple.product-type.library.static";
-		};
 		A04A1FEA13B826B300ABAFB7 /* kazmath */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A04A1FF213B826B800ABAFB7 /* Build configuration list for PBXNativeTarget "kazmath" */;
@@ -1887,24 +1776,6 @@
 			productReference = A04A1FEB13B826B300ABAFB7 /* libkazmath.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		D36F7E34181580A000E94F72 /* UnitTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D36F7E46181580A000E94F72 /* Build configuration list for PBXNativeTarget "UnitTests" */;
-			buildPhases = (
-				D36F7E31181580A000E94F72 /* Sources */,
-				D36F7E32181580A000E94F72 /* Frameworks */,
-				D36F7E33181580A000E94F72 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				D36F7E43181580A000E94F72 /* PBXTargetDependency */,
-			);
-			name = UnitTests;
-			productName = "cocos2d Tests";
-			productReference = D36F7E35181580A000E94F72 /* UnitTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1912,11 +1783,6 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0500;
-				TargetAttributes = {
-					D36F7E34181580A000E94F72 = {
-						TestTargetID = 5018F24C0DFDEAC400C013A5;
-					};
-				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "cocos2d-ios" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1939,11 +1805,9 @@
 			);
 			projectRoot = "";
 			targets = (
-				509807071175041800EA7266 /* build all libs */,
 				5018F24C0DFDEAC400C013A5 /* cocos2d */,
 				A04A1FEA13B826B300ABAFB7 /* kazmath */,
 				B772F6B118120CC9005C069B /* appledoc */,
-				D36F7E34181580A000E94F72 /* UnitTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1992,17 +1856,6 @@
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
-
-/* Begin PBXResourcesBuildPhase section */
-		D36F7E33181580A000E94F72 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D36F7E3E181580A000E94F72 /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		B772F6B518120CDF005C069B /* ShellScript */ = {
@@ -2147,13 +2000,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		509807051175041800EA7266 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		A04A1FE813B826B300ABAFB7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2174,15 +2020,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D36F7E31181580A000E94F72 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D3547A71181583A900FBE6FB /* CCPhysicsTests.m in Sources */,
-				D3547A74181588D500FBE6FB /* CCSchedulerTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -2191,38 +2028,12 @@
 			target = A04A1FEA13B826B300ABAFB7 /* kazmath */;
 			targetProxy = A015BFF713B829D700C73E76 /* PBXContainerItemProxy */;
 		};
-		A02E25E516A4EDE8007F064C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
-			targetProxy = A02E25E416A4EDE8007F064C /* PBXContainerItemProxy */;
-		};
-		A02E25F316A4EDE8007F064C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = A04A1FEA13B826B300ABAFB7 /* kazmath */;
-			targetProxy = A02E25F216A4EDE8007F064C /* PBXContainerItemProxy */;
-		};
-		D36F7E43181580A000E94F72 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
-			targetProxy = D36F7E42181580A000E94F72 /* PBXContainerItemProxy */;
-		};
 		D39A31E617F2285000E94B3B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = ObjectiveChipmunk;
 			targetProxy = D39A31E517F2285000E94B3B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		D36F7E3C181580A000E94F72 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D36F7E3D181580A000E94F72 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		5018F24E0DFDEAC500C013A5 /* Debug */ = {
@@ -2278,43 +2089,6 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = cocos2d;
 				SKIP_INSTALL = YES;
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
-		509807091175041B00EA7266 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_THUMB_SUPPORT = NO;
-				HEADER_SEARCH_PATHS = (
-					external/kazmath/include,
-					external/Box2d,
-					"\"$(SRCROOT)/external/Chipmunk/objectivec/include\"",
-					"\"$(SRCROOT)/external/Chipmunk/include\"",
-				);
-				PRODUCT_NAME = "build all libs";
-			};
-			name = Debug;
-		};
-		5098070A1175041B00EA7266 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_THUMB_SUPPORT = NO;
-				HEADER_SEARCH_PATHS = (
-					external/kazmath/include,
-					external/Box2d,
-					"\"$(SRCROOT)/external/Chipmunk/objectivec/include\"",
-					"\"$(SRCROOT)/external/Chipmunk/include\"",
-				);
-				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_NAME = "build all libs";
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -2457,70 +2231,6 @@
 			};
 			name = Release;
 		};
-		D36F7E44181580A000E94F72 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "UnitTests/UnitTests-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				INFOPLIST_FILE = "UnitTests/UnitTests-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		D36F7E45181580A000E94F72 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				COPY_PHASE_STRIP = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "UnitTests/UnitTests-Prefix.pch";
-				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				INFOPLIST_FILE = "UnitTests/UnitTests-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALIDATE_PRODUCT = YES;
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2529,15 +2239,6 @@
 			buildConfigurations = (
 				5018F24E0DFDEAC500C013A5 /* Debug */,
 				5018F24F0DFDEAC500C013A5 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		509807671175045700EA7266 /* Build configuration list for PBXNativeTarget "build all libs" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				509807091175041B00EA7266 /* Debug */,
-				5098070A1175041B00EA7266 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2565,15 +2266,6 @@
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				C01FCF5008A954540054247B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		D36F7E46181580A000E94F72 /* Build configuration list for PBXNativeTarget "UnitTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D36F7E44181580A000E94F72 /* Debug */,
-				D36F7E45181580A000E94F72 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

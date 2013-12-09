@@ -15,7 +15,9 @@
 
 -(void) setupTilemapTest
 {
-	CCTiledMap *tmap = [CCTiledMap tiledMapWithFile:<#(NSString *)#>
+	CCTiledMap *tmap = [CCTiledMap tiledMapWithFile:@"TileMaps/orthogonal-test1.tmx"];
+	
+	[self.contentNode addChild:tmap];
 }
 
 @end

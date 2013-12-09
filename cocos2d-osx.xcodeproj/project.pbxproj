@@ -6,19 +6,6 @@
 	objectVersion = 46;
 	objects = {
 
-/* Begin PBXAggregateTarget section */
-		E076EB631225F7AB00DE0DA2 /* build all libs */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = E076EB701225F7E000DE0DA2 /* Build configuration list for PBXAggregateTarget "build all libs" */;
-			buildPhases = (
-			);
-			dependencies = (
-			);
-			name = "build all libs";
-			productName = "build-all";
-		};
-/* End PBXAggregateTarget section */
-
 /* Begin PBXBuildFile section */
 		2B19285F163379400049A044 /* CCClippingNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B19285D163379400049A044 /* CCClippingNode.h */; };
 		2B192860163379400049A044 /* CCClippingNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B19285E163379400049A044 /* CCClippingNode.m */; };
@@ -1717,7 +1704,6 @@
 			);
 			projectRoot = "";
 			targets = (
-				E076EB631225F7AB00DE0DA2 /* build all libs */,
 				E01E663C121CA00A001A484F /* cocos2d */,
 				A06430E613C1414300CC5554 /* kazmath */,
 			);
@@ -2039,42 +2025,6 @@
 			};
 			name = Release;
 		};
-		E076EB641225F7AB00DE0DA2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				HEADER_SEARCH_PATHS = (
-					external/Box2d,
-					external/Chipmunk/include,
-					external/kazmath/include,
-					external/Chipmunk/objectivec/include,
-					external/Chipmunk/objectivec/include,
-				);
-				PRODUCT_NAME = "build all libs";
-			};
-			name = Debug;
-		};
-		E076EB651225F7AB00DE0DA2 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				HEADER_SEARCH_PATHS = (
-					external/Box2d,
-					external/Chipmunk/include,
-					external/kazmath/include,
-					external/Chipmunk/objectivec/include,
-					external/Chipmunk/objectivec/include,
-				);
-				PRODUCT_NAME = "build all libs";
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2101,15 +2051,6 @@
 			buildConfigurations = (
 				E01E663E121CA00A001A484F /* Debug */,
 				E01E663F121CA00A001A484F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E076EB701225F7E000DE0DA2 /* Build configuration list for PBXAggregateTarget "build all libs" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E076EB641225F7AB00DE0DA2 /* Debug */,
-				E076EB651225F7AB00DE0DA2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
