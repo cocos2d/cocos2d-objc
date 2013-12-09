@@ -5,15 +5,15 @@
       location = "group:cocos2d-ios.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:cocos2d-tests-ios.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:tests/PerformanceTests/cocos2d-ios-PerformanceTests.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:cocos2d-osx.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:cocos2d-ui-tests-ios.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:cocos2d-ui-tests-osx.xcodeproj">
+      location = "group:cocos2d-tests-osx.xcodeproj">
    </FileRef>
 </Workspace>
