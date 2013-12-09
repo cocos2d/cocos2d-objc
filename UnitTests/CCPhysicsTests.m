@@ -393,4 +393,20 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
 	XCTAssertTrue(node2.position.y == 0.0, @"");
 }
 
+-(void)testDefaultBodyType
+{
+	CGPoint points[3] = {};
+	
+	// Regular bodies should default to being dynamic.
+	XCTAssertEqual([CCPhysicsBody bodyWithCircleOfRadius:0 andCenter:CGPointZero].type, CCPhysicsBodyTypeDynamic, @"");
+	XCTAssertEqual([CCPhysicsBody bodyWithPillFrom:ccp(0, 1) to:ccp(1, 0) cornerRadius:0].type, CCPhysicsBodyTypeDynamic, @"");
+	XCTAssertEqual([CCPhysicsBody bodyWithPolygonFromPoints:points count:3 cornerRadius:0].type, CCPhysicsBodyTypeDynamic, @"");
+	XCTAssertEqual([CCPhysicsBody bodyWithRect:CGRectZero cornerRadius:0].type, CCPhysicsBodyTypeDynamic, @"");
+	
+	// Polyline bodies should default to being static bodies.
+	XCTAssertEqual([CCPhysicsBody bodyWithPolylineFromRect:CGRectZero cornerRadius:0].type, CCPhysicsBodyTypeStatic, @"");
+	
+	XCTAssertEqual([CCPhysicsBody bodyWithPolylineFromPoints:points count:3 cornerRadius:0 looped:YES].type, CCPhysicsBodyTypeStatic, @"");
+}
+
 @end

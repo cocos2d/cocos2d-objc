@@ -95,10 +95,22 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 	return [[self alloc] initWithShapeList:shape];
 }
 
++(CCPhysicsBody *)bodyWithPolylineFromRect:(CGRect)rect cornerRadius:(CGFloat)cornerRadius
+{
+	CGPoint points[] = {
+		{CGRectGetMinX(rect), CGRectGetMinY(rect)},
+		{CGRectGetMaxX(rect), CGRectGetMinY(rect)},
+		{CGRectGetMaxX(rect), CGRectGetMaxY(rect)},
+		{CGRectGetMinX(rect), CGRectGetMaxY(rect)},
+	};
+	
+	return [self bodyWithPolylineFromPoints:points count:4 cornerRadius:cornerRadius looped:YES];
+}
+
 +(CCPhysicsBody *)bodyWithPolylineFromPoints:(CGPoint *)points count:(NSUInteger)count cornerRadius:(CGFloat)cornerRadius looped:(bool)looped;
 {
-	NSAssert(looped || count > 1, @"Non-looped polyline bodies must have at least two points.");
-	NSAssert(!looped || count > 2, @"Looped polyline bodies must have at least three points.");
+	NSAssert(looped || count >= 2, @"Non-looped polyline bodies must have at least two points.");
+	NSAssert(!looped || count >= 3, @"Looped polyline bodies must have at least three points.");
 	
 	CCPhysicsShape *shapes = nil;
 	
@@ -112,7 +124,10 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 		shapes = shape;
 	}
 	
-	return [[self alloc] initWithShapeList:shapes];
+	CCPhysicsBody *body = [[self alloc] initWithShapeList:shapes];
+	body.type = CCPhysicsBodyTypeStatic;
+	
+	return body;
 }
 
 +(CCPhysicsBody *)bodyWithShapes:(NSArray *)shapes

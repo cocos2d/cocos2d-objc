@@ -56,6 +56,11 @@ typedef enum ccPhysicsBodyType {
 /// If the points do not form a convex polygon, then a convex hull will be created for them automatically.
 +(CCPhysicsBody *)bodyWithPolygonFromPoints:(CGPoint *)points count:(NSUInteger)count cornerRadius:(CGFloat)cornerRadius;
 
+/// Create a body with four pill shapes around the rectangle's perimeter.
+/// Will default to being a CCPhysicsBodyTypeStatic type body.
+/// It is not recommended, though it is possible, to make a polyline based body non-static.
++(CCPhysicsBody *)bodyWithPolylineFromRect:(CGRect)rect cornerRadius:(CGFloat)cornerRadius;
+
 /// Create a body with many pill shapes attached. One for each segment in the polyline.
 /// Will default to being a CCPhysicsBodyTypeStatic type body.
 /// It is not recommended, though it is possible, to make a polyline based body non-static.
