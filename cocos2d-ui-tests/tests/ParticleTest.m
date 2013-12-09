@@ -21,7 +21,6 @@
 - (NSArray*) testConstructors
 {
     return [NSArray arrayWithObjects:
-            @"setupComet",
             @"setupFlower",
             @"setupBigFlower",
             @"setupUpsideDown",
@@ -31,7 +30,7 @@
             @"setupRainbowEffect",
             @"setupGalaxy",
             @"setupLavaFlow",
-            @"setupRainbowEffect",
+            @"setupComet",
 
             nil];
 }
@@ -48,7 +47,7 @@
 	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/Flower.plist"];
 	self.emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
 	[self.contentNode addChild:self.emitter z:10];
-  [self createScene: @"Flower"];
+  [self createScene: @"Flower made of pretty stars. Loaded from plist."];
 }
 
 -(void) setupBigFlower
@@ -144,19 +143,18 @@
     [self.contentNode addChild:particleSystem z:10];
   }
 
-  [self createScene: @"Multiple Particle Systems"];
+  [self createScene: @"Multiple Particle Systems - There should be 5"];
 }
 
 
 
 -(void) setupGalaxy
 {
-  self.subTitle = @"Testing radial & tangential accel";
   
 	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/Galaxy.plist"];
   self.emitter.texture = [[CCTextureCache sharedTextureCache] addImage: PARTICLE_FIRE_NAME];
 	[self.contentNode addChild:self.emitter z:10];
-  [self createScene: @"Galaxy"];
+  [self createScene: @"Galaxy - You should see radial & tangential accel"];
 }
 
 -(void) setupLavaFlow
@@ -169,19 +167,17 @@
 -(void) setupTestPremultipliedAlpha
 {
 	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/TestPremultipliedAlpha.plist"];
-  self.subTitle = @"Arrows should be faded";
 	[self.contentNode addChild:self.emitter z:10];
-  [self createScene: @"Test Premultiplied Alpha"];
+  [self createScene: @"Test Premultiplied Alpha - Arrows should be faded"];
 }
 
 -(void) setupUpsideDown
 {
   // Issue 872
 	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/UpsideDown.plist"];
-  self.subTitle = @"Particles should NOT be Upside Down. M should appear, not W.";
   
 	[self.contentNode addChild:self.emitter z:10];
-  [self createScene: @"Test Upside Down"];
+  [self createScene: @"Particles should NOT be Upside Down. M should appear, not W."];
 }
 
 
@@ -201,6 +197,8 @@
 
 -(void) setupRainbowEffect
 {
+  
+  self.emitter = [[CCParticleSystemQuad alloc] initWithTotalParticles:50];
   // additive
   self.emitter.blendAdditive = NO;
   
@@ -250,7 +248,7 @@
   self.emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"particles.png"];
 
 	[self.contentNode addChild:self.emitter z:10];
-  [self createScene: @"Rainbow Effect, Issue 1201"];
+  [self createScene: @"Prevent bursts of particles that exceed the emitCounter. You should see a steady line of particles, without jittering bursts."];
 }
 
 

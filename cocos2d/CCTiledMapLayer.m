@@ -271,7 +271,7 @@ int compareInts (const void * a, const void * b);
 		int z = pos.x + pos.y * _layerSize.width;
 
         NSString* zStr = [NSString stringWithFormat:@"%d",z];
-		tile = (CCSprite*) [self getChildByName:zStr];
+		tile = (CCSprite*) [self getChildByName:zStr recursively:NO];
 
 		// tile not created yet. create it
 		if( ! tile ) {
@@ -530,7 +530,7 @@ int compareInts (const void * a, const void * b)
 
 			int z = pos.x + pos.y * _layerSize.width;
             NSString* zStr = [NSString stringWithFormat:@"%d", z];
-			CCSprite *sprite = (CCSprite*)[self getChildByName:zStr];
+			CCSprite *sprite = (CCSprite*)[self getChildByName:zStr recursively:NO];
 			if( sprite ) {
 				CGRect rect = [_tileset rectForGID:gid];
 				rect = CC_RECT_PIXELS_TO_POINTS(rect);
@@ -587,7 +587,7 @@ int compareInts (const void * a, const void * b)
 
 		// remove it from sprites and/or texture atlas
         NSString* zStr = [NSString stringWithFormat:@"%d", (int)z];
-		id sprite = [self getChildByName:zStr];
+		id sprite = [self getChildByName:zStr recursively:NO];
 		if( sprite )
 			[super removeChild:sprite cleanup:YES];
 		else {
