@@ -119,13 +119,20 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 @synthesize searchPath = _searchPath;
 @synthesize filenameLookup = _filenameLookup;
 
+static CCFileUtils *fileUtils = nil;
+
+// Private method to reset all the saved state that FileUtils holds on to. Useful for unit tests.
++(void) resetSingleton{
+	fileUtils = nil;
+}
+
+
 + (id)sharedFileUtils
 {
 	static dispatch_once_t pred;
-	static CCFileUtils *fileUtils = nil;
-	dispatch_once(&pred, ^{
+	if(!fileUtils) {
 		fileUtils = [[self alloc] init];
-	});
+	}
 	return fileUtils;
 }
 
