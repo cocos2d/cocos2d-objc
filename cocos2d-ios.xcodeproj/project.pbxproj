@@ -907,6 +907,7 @@
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
