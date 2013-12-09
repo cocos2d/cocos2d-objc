@@ -15,44 +15,51 @@
 
 NSString* const CCConfigPixelFormat = @"CCConfigPixelFormat";
 NSString* const CCConfigScreenMode = @"CCConfigScreenMode";
+NSString* const CCConfigScreenOrientation = @"CCConfigScreenOrientation";
 NSString* const CCConfigAnimationInterval = @"CCConfigAnimationInterval";
 
 
 @interface CCNavigationController ()
 {
     CCAppDelegate* __weak _appDelegate;
+    CCScreenOrientation _screenOrientation;
 }
 @property (nonatomic,weak) CCAppDelegate* appDelegate;
+@property (nonatomic, assign) CCScreenOrientation screenOrientation;
 @end
 
 @implementation CCNavigationController
 
 @synthesize appDelegate = _appDelegate;
+@synthesize screenOrientation = _screenOrientation;
 
 // The available orientations should be defined in the Info.plist file.
 // And in iOS 6+ only, you can override it in the Root View controller in the "supportedInterfaceOrientations" method.
 // Only valid for iOS 6+. NOT VALID for iOS 4 / 5.
--(NSUInteger)supportedInterfaceOrientations {
-	
-	// iPhone only
-	if( [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone )
-		return UIInterfaceOrientationMaskLandscape;
-	
-	// iPad only
-	return UIInterfaceOrientationMaskLandscape;
+-(NSUInteger)supportedInterfaceOrientations
+{
+    if (_screenOrientation == CCScreenOrientationLandscape)
+    {
+        return UIInterfaceOrientationMaskLandscape;
+    }
+    else
+    {
+        return UIInterfaceOrientationMaskPortrait;
+    }
 }
 
 // Supported orientations. Customize it for your own needs
 // Only valid on iOS 4 / 5. NOT VALID for iOS 6.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	// iPhone only
-	if( [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone )
-		return UIInterfaceOrientationIsLandscape(interfaceOrientation);
-	
-	// iPad only
-	// iPhone only
-	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+    if (_screenOrientation == CCScreenOrientationLandscape)
+    {
+        return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+    }
+    else
+    {
+        return UIInterfaceOrientationIsPortrait(interfaceOrientation);
+    }
 }
 
 // This is needed for iOS4 and iOS5 in order to ensure
@@ -84,6 +91,7 @@ NSString* const CCConfigAnimationInterval = @"CCConfigAnimationInterval";
     // Default configuration
     NSString* pixelFormat = kEAGLColorFormatRGBA8;
     CCScreenMode screenMode = CCScreenModeFlexible;
+    CCScreenOrientation screenOrientation = CCScreenOrientationLandscape;
     NSTimeInterval animationInterval = 1.0/60;
     
     if (config)
@@ -98,6 +106,12 @@ NSString* const CCConfigAnimationInterval = @"CCConfigAnimationInterval";
         if ([config objectForKey:CCConfigScreenMode])
         {
             screenMode = [[config objectForKey:CCConfigScreenMode] intValue];
+        }
+        
+        // Read screenOrientation
+        if ([config objectForKey:CCConfigScreenOrientation])
+        {
+            screenOrientation = [[config objectForKey:CCConfigScreenOrientation] intValue];
         }
         
         // Read animationInterval
@@ -161,6 +175,7 @@ NSString* const CCConfigAnimationInterval = @"CCConfigAnimationInterval";
 	navController_ = [[CCNavigationController alloc] initWithRootViewController:director];
 	navController_.navigationBarHidden = YES;
     navController_.appDelegate = self;
+    navController_.screenOrientation = screenOrientation;
     
 	// for rotation and other messages
 	[director setDelegate:navController_];
