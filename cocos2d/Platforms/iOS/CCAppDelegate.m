@@ -79,12 +79,6 @@ NSString* const CCConfigAnimationInterval = @"CCConfigAnimationInterval";
     return NULL;
 }
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-    [self setupCocos2dWithOptions:NULL];
-    return YES;
-}
-
 - (void) setupCocos2dWithOptions:(NSDictionary*)config
 {
     // Default configuration
@@ -162,38 +156,6 @@ NSString* const CCConfigAnimationInterval = @"CCConfigAnimationInterval";
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change this setting at any time.
 	[CCTexture setDefaultAlphaPixelFormat:CCTexturePixelFormat_RGBA8888];
-	
-	// If the 1st suffix is not found and if fallback is enabled then fallback suffixes are going to searched. If none is found, it will try with the name without suffix.
-	// On iPad HD  : "-ipadhd", "-ipad",  "-hd"
-	// On iPad     : "-ipad", "-hd"
-	// On iPhone HD: "-hd"
-    CCFileUtils *sharedFileUtils = [CCFileUtils sharedFileUtils];
-    
-    // Setup file utils for use with SpriteBuilder
-    [sharedFileUtils setEnableFallbackSuffixes:NO];
-    
-    sharedFileUtils.directoriesDict =
-    [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-     @"resources-tablet", CCFileUtilsSuffixiPad,
-     @"resources-tablethd", CCFileUtilsSuffixiPadHD,
-     @"resources-phone", CCFileUtilsSuffixiPhone,
-     @"resources-phonehd", CCFileUtilsSuffixiPhoneHD,
-     @"resources-phone", CCFileUtilsSuffixiPhone5,
-     @"resources-phonehd", CCFileUtilsSuffixiPhone5HD,
-     @"", CCFileUtilsSuffixDefault,
-     nil];
-    
-    sharedFileUtils.searchPath =
-    [NSArray arrayWithObjects:
-     [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Resources-shared"],
-     [[NSBundle mainBundle] resourcePath],
-     nil];
-    
-	sharedFileUtils.enableiPhoneResourcesOniPad = YES;
-    sharedFileUtils.searchMode = CCFileUtilsSearchModeDirectory;
-    [sharedFileUtils buildSearchResolutionsOrder];
-    
-    [sharedFileUtils loadFilenameLookupDictionaryFromFile:@"fileLookup.plist"];
 	
 	// Create a Navigation Controller with the Director
 	navController_ = [[CCNavigationController alloc] initWithRootViewController:director];
