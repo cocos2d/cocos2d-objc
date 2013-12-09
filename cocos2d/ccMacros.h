@@ -219,6 +219,8 @@ do {															\
 extern CGFloat __ccContentScaleFactor;
 #define CC_CONTENT_SCALE_FACTOR() __ccContentScaleFactor
 
+// Util functions for rescaling CGRects and CGSize, use ccpMult() for CGPoints.
+
 static inline CGRect CC_RECT_SCALE(CGRect rect, CGFloat scale){
 	return CGRectMake(
 		rect.origin.x * scale,
@@ -231,37 +233,6 @@ static inline CGRect CC_RECT_SCALE(CGRect rect, CGFloat scale){
 static inline CGSize CC_SIZE_SCALE(CGSize size, CGFloat scale){
 	return CGSizeMake(size.width * scale, size.height * scale);
 }
-
-/** @def CC_RECT_PIXELS_TO_POINTS
- Converts a rect in pixels to points
- */
-#define CC_RECT_PIXELS_TO_POINTS(__rect_in_pixels__) CC_RECT_SCALE(__rect_in_pixels__, 1.0/CC_CONTENT_SCALE_FACTOR())
-
-/** @def CC_RECT_POINTS_TO_PIXELS
- Converts a rect in points to pixels
- */
-#define CC_RECT_POINTS_TO_PIXELS(__rect_in_points_points__) CC_RECT_SCALE(__rect_in_points_points__, CC_CONTENT_SCALE_FACTOR())
-
-/** @def CC_POINT_PIXELS_TO_POINTS
- Converts a rect in pixels to points
- */
-#define CC_POINT_PIXELS_TO_POINTS(__pixels__) ccpMult(__pixels__, 1.0/CC_CONTENT_SCALE_FACTOR())
-
-/** @def CC_POINT_POINTS_TO_PIXELS
- Converts a rect in points to pixels
- */
-#define CC_POINT_POINTS_TO_PIXELS(__points__) ccpMult(__pixels__, CC_CONTENT_SCALE_FACTOR())
-
-/** @def CC_POINT_PIXELS_TO_POINTS
- Converts a rect in pixels to points
- */
-#define CC_SIZE_PIXELS_TO_POINTS(__size_in_pixels__) CC_SIZE_SCALE(__size_in_pixels__, 1.0/CC_CONTENT_SCALE_FACTOR())
-
-/** @def CC_POINT_POINTS_TO_PIXELS
- Converts a rect in points to pixels
- */
-#define CC_SIZE_POINTS_TO_PIXELS(__size_in_points__)  CC_SIZE_SCALE(__size_in_points__, CC_CONTENT_SCALE_FACTOR())
-
 
 /**********************/
 /** Profiling Macros **/
