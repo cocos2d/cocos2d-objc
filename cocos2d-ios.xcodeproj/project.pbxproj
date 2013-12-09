@@ -348,20 +348,6 @@
 			remoteGlobalIDString = A04A1FEA13B826B300ABAFB7;
 			remoteInfo = kazmath;
 		};
-		A02E25E416A4EDE8007F064C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
-			remoteInfo = cocos2d;
-		};
-		A02E25F216A4EDE8007F064C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = A04A1FEA13B826B300ABAFB7;
-			remoteInfo = kazmath;
-		};
 		D39A31D917F2284700E94B3B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D39A31D017F2284600E94B3B /* Chipmunk7.xcodeproj */;
@@ -476,7 +462,6 @@
 		506887D80E96C90000F943E5 /* CCAtlasNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCAtlasNode.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		508A4A2310B47A46004B9CC3 /* RELEASE_NOTES */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = RELEASE_NOTES; sourceTree = "<group>"; };
 		508EAC2F1193F8B0007F058D /* utlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utlist.h; sourceTree = "<group>"; };
-		509807081175041800EA7266 /* libbuild all libs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libbuild all libs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		509A79950F6188420032F449 /* CCSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCSprite.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		509A79960F6188420032F449 /* CCSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCSprite.m; sourceTree = "<group>"; };
 		509D0816101E4FCE007E1749 /* CCTiledMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTiledMap.h; sourceTree = "<group>"; };
@@ -812,13 +797,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		509807061175041800EA7266 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		A04A1FE913B826B300ABAFB7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -833,7 +811,6 @@
 			isa = PBXGroup;
 			children = (
 				5018F24D0DFDEAC400C013A5 /* libcocos2d.a */,
-				509807081175041800EA7266 /* libbuild all libs.a */,
 				A04A1FEB13B826B300ABAFB7 /* libkazmath.a */,
 			);
 			name = Products;
@@ -1739,13 +1716,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		509807041175041800EA7266 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		A04A1FE713B826B300ABAFB7 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -1787,25 +1757,6 @@
 			name = cocos2d;
 			productName = cocos2d;
 			productReference = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */;
-			productType = "com.apple.product-type.library.static";
-		};
-		509807071175041800EA7266 /* build all libs */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 509807671175045700EA7266 /* Build configuration list for PBXNativeTarget "build all libs" */;
-			buildPhases = (
-				509807041175041800EA7266 /* Headers */,
-				509807051175041800EA7266 /* Sources */,
-				509807061175041800EA7266 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				A02E25E516A4EDE8007F064C /* PBXTargetDependency */,
-				A02E25F316A4EDE8007F064C /* PBXTargetDependency */,
-			);
-			name = "build all libs";
-			productName = "build all tests";
-			productReference = 509807081175041800EA7266 /* libbuild all libs.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		A04A1FEA13B826B300ABAFB7 /* kazmath */ = {
@@ -1854,7 +1805,6 @@
 			);
 			projectRoot = "";
 			targets = (
-				509807071175041800EA7266 /* build all libs */,
 				5018F24C0DFDEAC400C013A5 /* cocos2d */,
 				A04A1FEA13B826B300ABAFB7 /* kazmath */,
 				B772F6B118120CC9005C069B /* appledoc */,
@@ -2050,13 +2000,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		509807051175041800EA7266 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		A04A1FE813B826B300ABAFB7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2084,16 +2027,6 @@
 			isa = PBXTargetDependency;
 			target = A04A1FEA13B826B300ABAFB7 /* kazmath */;
 			targetProxy = A015BFF713B829D700C73E76 /* PBXContainerItemProxy */;
-		};
-		A02E25E516A4EDE8007F064C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
-			targetProxy = A02E25E416A4EDE8007F064C /* PBXContainerItemProxy */;
-		};
-		A02E25F316A4EDE8007F064C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = A04A1FEA13B826B300ABAFB7 /* kazmath */;
-			targetProxy = A02E25F216A4EDE8007F064C /* PBXContainerItemProxy */;
 		};
 		D39A31E617F2285000E94B3B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2156,43 +2089,6 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = cocos2d;
 				SKIP_INSTALL = YES;
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
-		509807091175041B00EA7266 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_THUMB_SUPPORT = NO;
-				HEADER_SEARCH_PATHS = (
-					external/kazmath/include,
-					external/Box2d,
-					"\"$(SRCROOT)/external/Chipmunk/objectivec/include\"",
-					"\"$(SRCROOT)/external/Chipmunk/include\"",
-				);
-				PRODUCT_NAME = "build all libs";
-			};
-			name = Debug;
-		};
-		5098070A1175041B00EA7266 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_THUMB_SUPPORT = NO;
-				HEADER_SEARCH_PATHS = (
-					external/kazmath/include,
-					external/Box2d,
-					"\"$(SRCROOT)/external/Chipmunk/objectivec/include\"",
-					"\"$(SRCROOT)/external/Chipmunk/include\"",
-				);
-				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_NAME = "build all libs";
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -2343,15 +2239,6 @@
 			buildConfigurations = (
 				5018F24E0DFDEAC500C013A5 /* Debug */,
 				5018F24F0DFDEAC500C013A5 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		509807671175045700EA7266 /* Build configuration list for PBXNativeTarget "build all libs" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				509807091175041B00EA7266 /* Debug */,
-				5098070A1175041B00EA7266 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
