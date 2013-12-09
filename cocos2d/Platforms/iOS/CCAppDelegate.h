@@ -25,8 +25,21 @@ typedef NS_ENUM(unsigned char, CCScreenMode)
     CCScreenModeFixed,
 };
 
+/**
+ *  The screen orientation defines in which orientation the app is displaying.
+ */
+typedef NS_ENUM(unsigned char, CCScreenOrientation)
+{
+    /// Landscape screen orientation
+    CCScreenOrientationLandscape,
+    
+    /// Portrait screen orientation
+    CCScreenOrientationPortrait,
+};
+
 NSString* const CCConfigPixelFormat;
 NSString* const CCConfigScreenMode;
+NSString* const CCConfigScreenOrientation;
 NSString* const CCConfigAnimationInterval;
 
 
