@@ -207,8 +207,23 @@
 
 - (NSArray*) testConstructors
 {
-    NSAssert(NO, @"You must override testConstructors in your test");
-    return NULL;
+	NSMutableArray *arr = [NSMutableArray array];
+	
+	unsigned int count = 0;
+	Method *methods = class_copyMethodList(self.class, &count);
+	
+	for(int i=0; i<count; i++){
+		Method m = methods[i];
+		SEL sel = method_getName(m);
+		NSString *name = NSStringFromSelector(sel);
+		
+		if([name hasPrefix:@"setup"] && [name hasSuffix:@"Test"]){
+			[arr addObject:name];
+		}
+	}
+	
+	free(methods);
+	return arr;
 }
 
 @end

@@ -26,29 +26,28 @@
 #import "TestBase.h"
 #import "CCTransition.h"
 
+#import <objc/runtime.h>
+
 #define kCCTestMenuItemHeight 44
 
 @implementation MainMenu
 
 - (NSArray*) testClassNames
 {
-    return [NSArray arrayWithObjects:
-            @"CCScrollViewTest",
-            @"CCTableViewTest",
-            @"CCTransitionTest",
-            @"CCSprite9SliceTest",
-            @"CCTextFieldTest",
-            @"CCLayoutTest",
-            @"CCSliderTest",
-#ifdef __CC_PLATFORM_IOS
-            @"CCResponderTest",
-#endif
-            @"ObjectALTest",
-            @"CCTextureCacheTest",
-            @"CCLabelTTFTest",
-            @"ParallaxTest",
-            @"ParticleTest",
-            nil];
+	NSMutableArray *arr = [NSMutableArray array];
+	
+	int count = objc_getClassList(NULL, 0);
+	Class classes[count];
+	objc_getClassList(classes, count);
+	
+	for(int i=0; i<count; i++){
+		Class klass = classes[i];
+		if(class_getSuperclass(klass) == [TestBase class]){
+			[arr addObject:NSStringFromClass(klass)];
+		}
+	}
+	
+	return [arr sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
 }
 
 + (CCScene *) scene
