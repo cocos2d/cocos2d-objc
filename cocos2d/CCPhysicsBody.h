@@ -70,6 +70,11 @@ typedef enum ccPhysicsBodyType {
 /// If the body has multiple shapes, you cannot change the mass directly.
 /// Defaults to 1.0.
 @property(nonatomic, assign) CGFloat mass;
+/// Area of the body in points*points.
+/// Note that this is relative to the CCPhysicsNode. Changing a node or a parent can change the area.
+@property(nonatomic, readonly) CGFloat area;
+/// TODO explain units.
+@property(nonatomic, assign) CGFloat density;
 /// Surface friction of the physics body.
 /// When two objects collide, their friction is multiplied together.
 /// The calculated value can be overriden in a CCCollisionPairDelegate pre-solve method.
