@@ -17,18 +17,16 @@
 @implementation CCFileUtilTests
 
 
--(void)testGetChildByName
+-(void)testFullPathForFilename
 {
 	CCFileUtils *sharedFileUtils = [CCFileUtils sharedFileUtils];
 
-	[sharedFileUtils fullPathForFilename:@"non existant file"];
+	NSString *path = [sharedFileUtils fullPathForFilename:@"file that does not exist"];
 	
-	XCTAssertTrue(first == [scene getChildByName:@"first" recursively:NO], @"");
-	XCTAssertTrue(nil == [scene getChildByName:@"nothing" recursively:NO], @"");
-
-	XCTAssertTrue(first == [first getChildByName:@"first" recursively:NO], @"Unable to find itself!");
-
-
+	XCTAssertTrue(path == nil, @"");
+	
+	path = [sharedFileUtils fullPathForFilename:@"powered.png"];
+	NSLog(@"Path: %@", path);
 }
 
 @end
