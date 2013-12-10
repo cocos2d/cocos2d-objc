@@ -90,13 +90,13 @@
 {	\
 	if(!started_)	\
 	{	\
-		[[CCActionManager sharedManager] addAction:self target:targetIn paused:NO];	\
+		[[[CCDirector sharedDirector] actionManager] addAction:self target:targetIn paused:NO];	\
 	}	\
 }	\
 	\
 - (void) stopAction	\
 {	\
-	[[CCActionManager sharedManager] removeAction:self];	\
+	[[[CCDirector sharedDirector] actionManager] removeAction:self];	\
 }	\
 
 #endif /* OBJECTAL_CFG_USE_COCOS2D_ACTIONS */

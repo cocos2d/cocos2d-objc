@@ -94,19 +94,6 @@
 #define CC_ENABLE_GL_STATE_CACHE 1
 #endif
 
-/** @def CC_ENABLE_DEPRECATED
- If enabled, cocos2d will compile all deprecated methods, classes and free functions. Also, renamed constants will be active as well.
- Enable it only when migrating a v1.0 or earlier v2.0 versions to the most recent cocos2d version.
- 
- Default value: Enabled by default
- 
- @since v2.0.0
- */
-#ifndef CC_ENABLE_DEPRECATED
-#define CC_ENABLE_DEPRECATED 1
-#endif
-
-
 /** @def CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
  If enabled, the texture coordinates will be calculated by using this formula:
    - texCoord.left = (rect.origin.x*2+1) / (texture.wide*2);
