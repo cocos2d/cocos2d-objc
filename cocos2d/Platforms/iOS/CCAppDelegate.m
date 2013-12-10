@@ -17,6 +17,8 @@ NSString* const CCConfigPixelFormat = @"CCConfigPixelFormat";
 NSString* const CCConfigScreenMode = @"CCConfigScreenMode";
 NSString* const CCConfigScreenOrientation = @"CCConfigScreenOrientation";
 NSString* const CCConfigAnimationInterval = @"CCConfigAnimationInterval";
+NSString* const CCConfigHideDebugStats = @"CCConfigHideDebugStats";
+NSString* const CCConfigTabletScale2X = @"CCConfigTabletScale2X";
 
 
 @interface CCNavigationController ()
@@ -146,21 +148,37 @@ NSString* const CCConfigAnimationInterval = @"CCConfigAnimationInterval";
 								 multiSampling:NO
 							   numberOfSamples:0];
 	
-	// Enable "retina" mode.
-	glView.contentScaleFactor = [UIScreen mainScreen].scale;
-	
 	CCDirectorIOS* director = (CCDirectorIOS*) [CCDirector sharedDirector];
 	
 	director.wantsFullScreenLayout = YES;
 	
-	// Display FSP and SPF
-	//[director_ setDisplayStats:YES];
+#if DEBUG
+	if(![config[CCConfigHideDebugStats] boolValue]){
+		// Display FSP and SPF
+		[director setDisplayStats:YES];
+	}
+#endif
 	
 	// set FPS at 60
 	[director setAnimationInterval:animationInterval];
 	
 	// attach the openglView to the director
 	[director setView:glView];
+	
+	// Setup tablet scaling if it was requested.
+	if(
+		UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad &&
+		[config[CCConfigTabletScale2X] boolValue]
+	){
+		// Set the director to use 2 points per pixel.
+		director.contentScaleFactor *= 2.0;
+		
+		// Set the UI scale factor to show things at "native" size.
+		director.UIScaleFactor = 0.5;
+		
+		// Let CCFileUtils know that "-ipad" textures should be treated as having a contentScale of 2.0.
+		[[CCFileUtils sharedFileUtils] setiPadContentScaleFactor:2.0];
+	}
 	
 	// 2D projection
 	[director setProjection:CCDirectorProjection2D];
@@ -174,8 +192,8 @@ NSString* const CCConfigAnimationInterval = @"CCConfigAnimationInterval";
 	// Create a Navigation Controller with the Director
 	navController_ = [[CCNavigationController alloc] initWithRootViewController:director];
 	navController_.navigationBarHidden = YES;
-    navController_.appDelegate = self;
-    navController_.screenOrientation = screenOrientation;
+	navController_.appDelegate = self;
+	navController_.screenOrientation = screenOrientation;
     
 	// for rotation and other messages
 	[director setDelegate:navController_];
@@ -217,7 +235,7 @@ NSString* const CCConfigAnimationInterval = @"CCConfigAnimationInterval";
 // application will be killed
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-	CC_DIRECTOR_END();
+	[[CCDirector sharedDirector] end];
 }
 
 // purge memory

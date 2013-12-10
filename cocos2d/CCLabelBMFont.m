@@ -811,7 +811,7 @@ void FNTConfigRemoveCache( void )
 		// See issue 1343. cast( signed short + unsigned integer ) == unsigned integer (sign is lost!)
 		NSInteger yOffset = _configuration->_commonHeight - fontDef.yOffset;
 		CGPoint fontPos = ccp( (CGFloat)nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width*0.5f + kerningAmount,
-							  (CGFloat)nextFontPositionY + yOffset - rect.size.height*0.5f * CC_CONTENT_SCALE_FACTOR() );
+							  (CGFloat)nextFontPositionY + yOffset - rect.size.height*0.5f * __ccContentScaleFactor );
 		fontChar.position = ccpMult(fontPos, 1.0/contentScale);
 		
 		// update kerning
