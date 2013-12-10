@@ -66,4 +66,96 @@
 	
 }
 
+-(void)testCCNodePositionTypePoints
+{
+	CCScene *scene = [CCScene node];
+	
+	CCNode *first = [CCNode node];
+	first.positionType = CCPositionTypePoints;
+	first.position = ccp(10.0, 15.0);
+	first.contentSize = CGSizeMake(1.0, 2.0);
+	[scene addChild:first z:0 name:@"first"];
+
+	first.positionType = CCPositionTypeMake(CCPositionUnitPoints, CCPositionUnitPoints, CCPositionReferenceCornerBottomLeft);
+
+	
+	XCTAssertEqual(first.position.x, (CGFloat) 10.0f, @"");
+	XCTAssertEqual(first.position.y, (CGFloat) 15.0, @"");
+	XCTAssertEqual(first.contentSize.width, (CGFloat) 1.0, @"");
+	XCTAssertEqual(first.contentSize.height, (CGFloat) 2.0, @"");
+	
+	XCTAssertEqual(first.positionInPoints.x, (CGFloat) 10.0, @"");
+	XCTAssertEqual(first.positionInPoints.y, (CGFloat) 15.0, @"");
+	XCTAssertEqual(first.contentSizeInPoints.width, (CGFloat) 1.0, @"");
+	XCTAssertEqual(first.contentSizeInPoints.height, (CGFloat) 2.0, @"");
+
+	
+	
+}
+
+
+-(void)testCCNodePositionTypeChangeCorners
+{
+	CCScene *scene = [CCScene node];
+	
+	CCNode *first = [CCNode node];
+	first.positionType = CCPositionTypePoints;
+	first.position = ccp(10.0, 15.0);
+	first.contentSize = CGSizeMake(1.0, 2.0);
+	[scene addChild:first z:0 name:@"first"];
+	
+	// Change position type, now we're relative to the other corner of the screen.
+	first.positionType = CCPositionTypeMake(CCPositionUnitPoints, CCPositionUnitPoints, CCPositionReferenceCornerTopRight);
+	
+	float screenWidth = 1024.0;
+	float screenHeight = 768.0;
+	
+	XCTAssertEqual(first.position.x, (CGFloat) (screenWidth - 10.0), @""); // TODO: What's up with these crazy numbers?
+	XCTAssertEqual(first.position.y, (CGFloat) (screenHeight - 15.0), @"");
+	XCTAssertEqual(first.contentSize.width, (CGFloat) 1.0, @"");
+	XCTAssertEqual(first.contentSize.height, (CGFloat) 2.0, @"");
+	
+	XCTAssertEqual(first.positionInPoints.x, (CGFloat) (screenWidth - 10.0), @"");
+	XCTAssertEqual(first.positionInPoints.y, (CGFloat) (screenHeight - 15.0), @"");
+	XCTAssertEqual(first.contentSizeInPoints.width, (CGFloat) 1.0, @"");
+	XCTAssertEqual(first.contentSizeInPoints.height, (CGFloat) 2.0, @"");
+	
+	
+	
+}
+
+
+-(void)testCCNodePositionTypeChangeToUIPoints
+{
+	CCScene *scene = [CCScene node];
+
+	CCNode *first = [CCNode node];
+	first.positionType = CCPositionTypePoints;
+	first.position = ccp(10.0, 15.0);
+	first.contentSize = CGSizeMake(1.0, 2.0);
+	[scene addChild:first z:0 name:@"first"];
+
+	first.positionType = CCPositionTypeMake(CCPositionUnitUIPoints, CCPositionUnitUIPoints, CCPositionReferenceCornerBottomLeft);
+	
+	XCTAssertEqual(first.position.x, (CGFloat) 10.0f, @"");
+	XCTAssertEqual(first.position.y, (CGFloat) 15.0, @"");
+	XCTAssertEqual(first.contentSize.width, (CGFloat) 1.0, @"");
+	XCTAssertEqual(first.contentSize.height, (CGFloat) 2.0, @"");
+	
+	XCTAssertEqual(first.positionInPoints.x, (CGFloat) 10.0, @"");
+	XCTAssertEqual(first.positionInPoints.y, (CGFloat) 15.0, @"");
+	XCTAssertEqual(first.contentSizeInPoints.width, (CGFloat) 1.0, @"");
+	XCTAssertEqual(first.contentSizeInPoints.height, (CGFloat) 2.0, @"");
+	
+	[CCDirector sharedDirector].UIScaleFactor = 2.0;
+	
+	XCTAssertEqual(first.positionInPoints.x, (CGFloat) 20.0, @"");
+	XCTAssertEqual(first.positionInPoints.y, (CGFloat) 30.0, @"");
+	XCTAssertEqual(first.contentSizeInPoints.width, (CGFloat) 1.0, @""); // TODO: Should content size be doubled?
+	XCTAssertEqual(first.contentSizeInPoints.height, (CGFloat) 2.0, @"");
+
+}
+
+
+
 @end
