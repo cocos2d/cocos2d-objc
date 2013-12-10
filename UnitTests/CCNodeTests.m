@@ -7,7 +7,7 @@
 
 #import <XCTest/XCTest.h>
 #import "cocos2d.h"
-
+#import "CCDirector_Private.h"
 
 @interface CCNodeTests : XCTestCase
 
@@ -65,6 +65,62 @@
 	
 	
 }
+
+
+-(void)testRemovingNodes
+{
+	CCScene *scene = [CCScene node];
+	
+	CCNode *first = [CCNode node];
+	[scene addChild:first z:0 name:@"first"];
+	
+	CCNode *second = [CCNode node];
+	[first addChild:second z:0 name:@"second"];
+	
+	[scene onEnter];
+	
+	XCTAssertTrue(first.children.count == 1, @"");
+	XCTAssertTrue(second.parent == first, @"");
+	
+	XCTAssertTrue(first.runningInActiveScene, @"");
+	XCTAssertTrue(second.runningInActiveScene, @"");
+	
+	[first removeChild:second];
+	XCTAssertTrue(first.children.count == 0, @"");
+	XCTAssertTrue(second.parent == nil, @"");
+	
+	XCTAssertTrue(first.runningInActiveScene, @"");
+	XCTAssertTrue(!second.runningInActiveScene, @"");
+
+}
+
+-(void)testRemovingScheduledNodes
+{
+	CCScene *scene = [CCScene node];
+	
+	CCNode *first = [CCNode node];
+	[scene addChild:first z:0 name:@"first"];
+
+	CCNode *second = [CCNode node];
+	[first addChild:second z:0 name:@"second"];
+	
+	// This one should occur.
+	[first scheduleBlock:^(CCTimer *timer){
+		XCTAssertTrue(TRUE);
+	} delay:0.0];
+	
+	// this one will be cleaned up and won't happen
+	[second scheduleBlock:^(CCTimer *timer){
+		XCTFail(@"Cleaned up action should not occur");
+	} delay:0.0];
+	
+	[scene removeChild:first cleanup:NO];
+	[scene removeChild:second cleanup:YES];
+	
+	[[[CCDirector sharedDirector] scheduler] update: 1.0];
+}
+
+
 
 -(void)testCCNodePositionTypePoints
 {
