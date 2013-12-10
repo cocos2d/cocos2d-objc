@@ -42,8 +42,10 @@
      [[NSBundle mainBundle] resourcePath],
      nil];
     
-    // Configure Cocos2d with default options
-    [self setupCocos2dWithOptions:NULL];
+    [self setupCocos2dWithOptions:@{
+//			CCConfigTabletScale2X: @YES,
+			CCConfigHideDebugStats: @YES,
+		}];
     
     return YES;
 }

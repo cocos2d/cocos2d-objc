@@ -64,8 +64,9 @@
 	NSString *path = [fntFile stringByDeletingLastPathComponent];
 	NSString *textureFilename = [path stringByAppendingPathComponent:[dict objectForKey:@"textureFilename"]];
 	
-	NSUInteger width = [[dict objectForKey:@"itemWidth"] unsignedIntValue]  / CC_CONTENT_SCALE_FACTOR();
-	NSUInteger height = [[dict objectForKey:@"itemHeight"] unsignedIntValue] / CC_CONTENT_SCALE_FACTOR();
+	CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
+	NSUInteger width = [[dict objectForKey:@"itemWidth"] unsignedIntValue]  / scale;
+	NSUInteger height = [[dict objectForKey:@"itemHeight"] unsignedIntValue] / scale;
 	NSUInteger startChar = [[dict objectForKey:@"firstChar"] unsignedIntValue];
 	
 	return [self initWithString:theString
@@ -106,8 +107,10 @@
 	CCTexture *texture = [_textureAtlas texture];
 	float textureWide = [texture pixelWidth];
 	float textureHigh = [texture pixelHeight];
-    float itemWidthInPixels = _itemWidth * CC_CONTENT_SCALE_FACTOR();
-    float itemHeightInPixels = _itemHeight * CC_CONTENT_SCALE_FACTOR();
+	
+	CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
+	float itemWidthInPixels = _itemWidth * scale;
+	float itemHeightInPixels = _itemHeight * scale;
 
 
 	for( NSUInteger i=0; i<n; i++)
