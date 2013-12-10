@@ -146,9 +146,6 @@ NSString* const CCConfigAnimationInterval = @"CCConfigAnimationInterval";
 								 multiSampling:NO
 							   numberOfSamples:0];
 	
-	// Enable "retina" mode.
-	glView.contentScaleFactor = [UIScreen mainScreen].scale;
-	
 	CCDirectorIOS* director = (CCDirectorIOS*) [CCDirector sharedDirector];
 	
 	director.wantsFullScreenLayout = YES;
