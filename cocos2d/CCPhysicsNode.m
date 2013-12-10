@@ -59,6 +59,12 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 	return _arbiter;
 }
 
+-(CCContactSet)contacts
+{
+	// This function cast should be safe on any ABI that also supports objc_msgSend_stret().
+	return ((CCContactSet (*)(cpArbiter *))cpArbiterGetContactPointSet)(self.arb);
+}
+
 -(CGFloat)friction {return cpArbiterGetFriction(self.arb);}
 -(void)setFriction:(CGFloat)friction {cpArbiterSetFriction(self.arb, friction);}
 
