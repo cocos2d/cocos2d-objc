@@ -65,11 +65,13 @@
 /// Depending on the joint, either the magnitude of the linear or angular impulse that this joint applied on the previous fixed time step.
 @property(nonatomic, readonly) CGFloat impulse;
 
-// Removed due to lack of time before the 3.0 release.
-///// Maximum force that can be applied before the joint disables itself.
-///// To avoid problems with round-off errors, make sure that this value is lower than CCPhysicsJoint.maxForce.
-///// Defaults to INFINITY.
-//@property(nonatomic, assign) CGFloat breakingForce;
+/// Maximum force that can be applied before the joint disables itself.
+/// To avoid problems with solver accuracy, make sure that this value is lower than CCPhysicsJoint.maxForce.
+/// Defaults to INFINITY.
+@property(nonatomic, assign) CGFloat breakingForce;
+
+/// Check if the joint is still valid and active.
+@property(nonatomic, readonly) BOOL valid;
 
 /// Disable the joint and remove it from the simulation.
 -(void)invalidate;

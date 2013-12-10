@@ -393,4 +393,102 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
 	XCTAssertTrue(node2.position.y == 0.0, @"");
 }
 
+-(void)testBreakingJoints
+{
+	CCPhysicsNode *physics = [CCPhysicsNode node];
+	physics.gravity = ccp(0, -100);
+	
+	CGRect rect = CGRectMake(0, 0, 50, 50);
+	CCPhysicsJoint *joint1, *joint2, *joint3, *joint4;
+	
+	// These should break.
+	{
+		CCNode *node1 = [CCNode node];
+		node1.position = ccp(100, 200);
+		
+		CCPhysicsBody *body1 = node1.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
+		body1.type = CCPhysicsBodyTypeStatic;
+		
+		[physics addChild:node1];
+		
+		CCNode *node2 = [CCNode node];
+		node2.position = ccp(100, 100);
+		
+		CCPhysicsBody *body2 = node2.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
+		
+		[physics addChild:node2];
+		
+		joint1 = [CCPhysicsJoint connectedPivotJointWithBodyA:body1 bodyB:body2 anchorA:ccp(rect.size.width/2.0, -rect.size.height/4.0)];
+		joint1.breakingForce = -physics.gravity.y*body2.mass*0.9;
+	}{
+		CCNode *node1 = [CCNode node];
+		node1.position = ccp(200, 200);
+		
+		CCPhysicsBody *body1 = node1.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
+		body1.type = CCPhysicsBodyTypeStatic;
+		
+		[physics addChild:node1];
+		
+		CCNode *node2 = [CCNode node];
+		node2.position = ccp(200, 100);
+		
+		CCPhysicsBody *body2 = node2.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
+		
+		[physics addChild:node2];
+		
+		joint2 = [CCPhysicsJoint connectedDistanceJointWithBodyA:body1 bodyB:body2 anchorA:ccp(rect.size.width/2.0, 0.0) anchorB:ccp(rect.size.width/2.0, rect.size.height)];
+		joint2.breakingForce = -physics.gravity.y*body2.mass*0.9;
+	}
+	
+	// These shouldn't
+	{
+		CCNode *node1 = [CCNode node];
+		node1.position = ccp(300, 200);
+		
+		CCPhysicsBody *body1 = node1.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
+		body1.type = CCPhysicsBodyTypeStatic;
+		
+		[physics addChild:node1];
+		
+		CCNode *node2 = [CCNode node];
+		node2.position = ccp(300, 100);
+		
+		CCPhysicsBody *body2 = node2.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
+		
+		[physics addChild:node2];
+		
+		joint3 = [CCPhysicsJoint connectedPivotJointWithBodyA:body1 bodyB:body2 anchorA:ccp(rect.size.width/2.0, -rect.size.height/4.0)];
+		joint3.breakingForce = -physics.gravity.y*body2.mass*1.1;
+	}{
+		CCNode *node1 = [CCNode node];
+		node1.position = ccp(400, 200);
+		
+		CCPhysicsBody *body1 = node1.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
+		body1.type = CCPhysicsBodyTypeStatic;
+		
+		[physics addChild:node1];
+		
+		CCNode *node2 = [CCNode node];
+		node2.position = ccp(400, 100);
+		
+		CCPhysicsBody *body2 = node2.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
+		
+		[physics addChild:node2];
+		
+		joint4 = [CCPhysicsJoint connectedDistanceJointWithBodyA:body1 bodyB:body2 anchorA:ccp(rect.size.width/2.0, 0.0) anchorB:ccp(rect.size.width/2.0, rect.size.height)];
+		joint4.breakingForce = -physics.gravity.y*body2.mass*1.1;
+	}
+	
+	[physics onEnter];
+	
+	for(int i=0; i<100; i++){
+		[physics fixedUpdate:1.0/60.0];
+	}
+	
+	XCTAssert(!joint1.valid, @"");
+	XCTAssert(!joint2.valid, @"");
+	XCTAssert(joint3.valid, @"");
+	XCTAssert(joint4.valid, @"");
+}
+
 @end
