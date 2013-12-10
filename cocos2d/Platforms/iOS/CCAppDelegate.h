@@ -41,6 +41,8 @@ NSString* const CCConfigPixelFormat;
 NSString* const CCConfigScreenMode;
 NSString* const CCConfigScreenOrientation;
 NSString* const CCConfigAnimationInterval;
+NSString* const CCConfigHideDebugStats;
+NSString* const CCConfigTabletScale2X;
 
 
 @class CCAppDelegate;
