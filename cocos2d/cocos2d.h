@@ -127,11 +127,6 @@
 #import "ccTypes.h"
 #import "ccMacros.h"
 
-//
-// Deprecated methods/classes/functions since v1.0
-//
-#import "ccDeprecated.h"
-
 // Platform common
 #import "Platforms/CCGL.h"
 #import "Platforms/CCNS.h"

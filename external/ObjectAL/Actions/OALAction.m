@@ -156,13 +156,13 @@
 {
 	if(!started_)
 	{
-		[[CCActionManager sharedManager] addAction:self target:target paused:NO];
+		[[[CCDirector sharedDirector] actionManager] addAction:self target:target paused:NO];
 	}
 }
 
 - (void) stopAction
 {
-	[[CCActionManager sharedManager] removeAction:self];
+	[[[CCDirector sharedDirector] actionManager] removeAction:self];
 }
 
 - (void) prepareWithTarget:(id) target
