@@ -717,14 +717,6 @@ static CCFileUtils *fileUtils = nil;
 	return ( path != nil );
 }
 
-#pragma mark CCFileUtils - deprecated
-
-// XXX deprecated
--(void) setEnableFallbackSuffixes:(BOOL)enableFallbackSuffixes
-{
-	[self setEnableiPhoneResourcesOniPad:enableFallbackSuffixes];
-}
-
 #ifdef __CC_PLATFORM_IOS
 
 -(BOOL) iPhoneRetinaDisplayFileExistsAtPath:(NSString*)path
