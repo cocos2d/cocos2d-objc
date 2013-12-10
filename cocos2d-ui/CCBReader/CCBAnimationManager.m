@@ -177,7 +177,7 @@ static NSInteger ccbAnimationManagerID = 0;
             return [CCActionSequence actionOne:[CCActionDelay actionWithDuration:duration] two:[CCActionHide action]];
         }
     }
-    else if ([name isEqualToString:@"displayFrame"])
+    else if ([name isEqualToString:@"spriteFrame"])
     {
         return [CCActionSequence actionOne:[CCActionDelay actionWithDuration:duration] two:[CCBSetSpriteFrame actionWithSpriteFrame:kf1.value]];
     }
