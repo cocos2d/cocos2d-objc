@@ -184,8 +184,8 @@ static NSUInteger globalOrderOfArrival = 1;
 		
 		// set default scheduler and actionManager
 		CCDirector *director = [CCDirector sharedDirector];
-		self.actionManager = [director actionManager];
-		self.scheduler = [director scheduler];
+		_actionManager = [director actionManager];
+		_scheduler = [director scheduler];
         
         // set default touch handling
         self.hitAreaExpansion = 0.0f;
@@ -199,7 +199,7 @@ static NSUInteger globalOrderOfArrival = 1;
 {
 	// actions
 	[self stopAllActions];
-	[self.scheduler unscheduleTarget:self];
+	[_scheduler unscheduleTarget:self];
 
 	// timers
 	[_children makeObjectsPerformSelector:@selector(cleanup)];
@@ -1040,9 +1040,8 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	
 	[self setupPhysicsBody:_physicsBody];
 	
-	CCScheduler *scheduler = self.scheduler;
-	if(![scheduler isTargetScheduled:self]){
-		[scheduler scheduleTarget:self];
+	if(![_scheduler isTargetScheduled:self]){
+		[_scheduler scheduleTarget:self];
 	}
 	
 	BOOL wasRunning = self.runningInActiveScene;
@@ -1131,14 +1130,13 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 -(CCTimer *) scheduleBlock:(CCTimerBlock)block delay:(CCTime)delay
 {
-	return [self.scheduler scheduleBlock:block forTarget:self withDelay:delay];
+	return [_scheduler scheduleBlock:block forTarget:self withDelay:delay];
 }
 
 -(void) setScheduler:(CCScheduler *)scheduler
 {
 	if( scheduler != _scheduler ) {
-		#warning TODO needs to be recursive? (or remove per node schedulers?)
-		[self.scheduler unscheduleTarget:self];
+		[_scheduler unscheduleTarget:self];
 
 		_scheduler = scheduler;
 	}
@@ -1146,7 +1144,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 -(CCScheduler*) scheduler
 {
-	return (_scheduler ?: self.parent.scheduler);
+	return _scheduler;
 }
 
 -(CCTimer *) schedule:(SEL)selector interval:(CCTime)interval
@@ -1162,7 +1160,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	[self unschedule:selector];
 	
 	void (*imp)(id, SEL, CCTime) = (__typeof(imp))[self methodForSelector:selector];
-	CCTimer *timer = [self.scheduler scheduleBlock:^(CCTimer *t){
+	CCTimer *timer = [_scheduler scheduleBlock:^(CCTimer *t){
 		imp(self, selector, t.deltaTime);
 	} forTarget:self withDelay:delay];
 	
@@ -1182,14 +1180,14 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 {
 	NSString *selectorName = NSStringFromSelector(selector);
 	
-	for(CCTimer *timer in [self.scheduler timersForTarget:self]){
+	for(CCTimer *timer in [_scheduler timersForTarget:self]){
 		if([selectorName isEqual:timer.userData]) [timer invalidate];
 	}
 }
 
 -(void)unscheduleAllSelectors
 {
-	for(CCTimer *timer in [self.scheduler timersForTarget:self]){
+	for(CCTimer *timer in [_scheduler timersForTarget:self]){
 		if([timer.userData isKindOfClass:[NSString class]]) [timer invalidate];
 	}
 }
@@ -1200,10 +1198,10 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	BOOL isRunning = self.runningInActiveScene;
 	
 	if(isRunning && !wasRunning){
-		[self.scheduler setPaused:NO target:self];
+		[_scheduler setPaused:NO target:self];
 		[_actionManager resumeTarget:self];
 	} else if(!isRunning && wasRunning){
-		[self.scheduler setPaused:YES target:self];
+		[_scheduler setPaused:YES target:self];
 		[_actionManager pauseTarget:self];
 	}
 }
