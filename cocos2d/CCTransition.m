@@ -287,7 +287,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     _retinaTransition = retinaTransition;
     _incomingDownScale = CCTransitionDownScaleMin;
     _outgoingDownScale = CCTransitionDownScaleMin;
-    if (!_retinaTransition && (CC_CONTENT_SCALE_FACTOR() > 1.0))
+    if (!_retinaTransition && (__ccContentScaleFactor > 1.0))
     {
         _incomingDownScale = CCTransitionDownScaleRetina;
         _outgoingDownScale = CCTransitionDownScaleRetina;
