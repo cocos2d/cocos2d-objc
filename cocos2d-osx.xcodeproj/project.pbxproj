@@ -73,8 +73,6 @@
 		A0D7D68B15E2D2CC000CA0C4 /* cocos2d.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E69D1225EC7400DE0DA2 /* cocos2d.h */; };
 		A0D7D68C15E2D2CC000CA0C4 /* cocos2d.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E69E1225EC7400DE0DA2 /* cocos2d.m */; };
 		A0D7D68D15E2D2CC000CA0C4 /* ccConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6491225EC7400DE0DA2 /* ccConfig.h */; };
-		A0D7D68E15E2D2CC000CA0C4 /* ccDeprecated.h in Headers */ = {isa = PBXBuildFile; fileRef = A0A10B1E14F3003600FA38C1 /* ccDeprecated.h */; };
-		A0D7D68F15E2D2CC000CA0C4 /* ccDeprecated.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A10B1F14F3003600FA38C1 /* ccDeprecated.m */; };
 		A0D7D69015E2D2CC000CA0C4 /* ccMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E65C1225EC7400DE0DA2 /* ccMacros.h */; };
 		A0D7D69115E2D2CC000CA0C4 /* ccTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E69C1225EC7400DE0DA2 /* ccTypes.h */; };
 		A0D7D69415E2D2CC000CA0C4 /* CCConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E64A1225EC7400DE0DA2 /* CCConfiguration.h */; };
@@ -413,8 +411,6 @@
 		A0707F7615F94815001C1263 /* LICENSE_JRSwizzle.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_JRSwizzle.txt; sourceTree = "<group>"; };
 		A0707F7715F94815001C1263 /* LICENSE_jsbindings.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_jsbindings.txt; sourceTree = "<group>"; };
 		A0707F7815F94815001C1263 /* LICENSE_SpiderMonkey.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_SpiderMonkey.txt; sourceTree = "<group>"; };
-		A0A10B1E14F3003600FA38C1 /* ccDeprecated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccDeprecated.h; sourceTree = "<group>"; };
-		A0A10B1F14F3003600FA38C1 /* ccDeprecated.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccDeprecated.m; sourceTree = "<group>"; };
 		A0A7A504151416A000C8BD16 /* CCActionCatmullRom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionCatmullRom.m; sourceTree = "<group>"; };
 		A0A7A505151416A000C8BD16 /* CCActionCatmullRom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionCatmullRom.h; sourceTree = "<group>"; };
 		A0AAB8091451BD3600850F2C /* CCParticleBatchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleBatchNode.h; sourceTree = "<group>"; };
@@ -1164,8 +1160,6 @@
 				E076E69D1225EC7400DE0DA2 /* cocos2d.h */,
 				E076E69E1225EC7400DE0DA2 /* cocos2d.m */,
 				E076E6491225EC7400DE0DA2 /* ccConfig.h */,
-				A0A10B1E14F3003600FA38C1 /* ccDeprecated.h */,
-				A0A10B1F14F3003600FA38C1 /* ccDeprecated.m */,
 				E076E65C1225EC7400DE0DA2 /* ccMacros.h */,
 				E076E69C1225EC7400DE0DA2 /* ccTypes.h */,
 				E076E64A1225EC7400DE0DA2 /* CCConfiguration.h */,
@@ -1612,7 +1606,6 @@
 				B798D1471820384500E7BFCD /* CCSprite_Private.h in Headers */,
 				A0D7D68B15E2D2CC000CA0C4 /* cocos2d.h in Headers */,
 				A0D7D68D15E2D2CC000CA0C4 /* ccConfig.h in Headers */,
-				A0D7D68E15E2D2CC000CA0C4 /* ccDeprecated.h in Headers */,
 				A0D7D69015E2D2CC000CA0C4 /* ccMacros.h in Headers */,
 				B77060981831B0C40043CC67 /* OALNotifications.h in Headers */,
 				B7D2732D1822F5460054849B /* CCBLocalizationManager.h in Headers */,
@@ -1865,7 +1858,6 @@
 				A03714D8154F1D9300081CBA /* CCNode+Debug.m in Sources */,
 				A0DA0BBF15BCD93700E80A92 /* CCDrawNode.m in Sources */,
 				A0D7D68C15E2D2CC000CA0C4 /* cocos2d.m in Sources */,
-				A0D7D68F15E2D2CC000CA0C4 /* ccDeprecated.m in Sources */,
 				B770608A1831B0C40043CC67 /* OALAudioSession.m in Sources */,
 				A0D7D69515E2D2CC000CA0C4 /* CCConfiguration.m in Sources */,
 				B7D2732C1822F5460054849B /* CCBKeyframe.m in Sources */,

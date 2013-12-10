@@ -171,9 +171,6 @@ struct _hashUniformEntry;
 /* will update the builtin uniforms if they are different than the previous call for this same shader program. */
 -(void) setUniformsForBuiltins;
 
-/* Deprecated alias for setUniformsForBuiltins */
--(void)setUniformForModelViewProjectionMatrix __attribute__((__deprecated__));
-
 /* returns the vertexShader error log */
 - (NSString *)vertexShaderLog;
 

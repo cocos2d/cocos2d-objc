@@ -31,12 +31,12 @@
 #import "CCShaderCache.h"
 #import "CCGLProgram.h"
 #import "Support/CCFileUtils.h"
-#import "ccDeprecated.h"
 #import "ccMacros.h"
 #import "ccUtils.h"
 #import "NSAttributedString+CCAdditions.h"
 #import "CCConfiguration.h"
 #import "CCNode_Private.h"
+#import "CCDirector.h"
 
 #ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
