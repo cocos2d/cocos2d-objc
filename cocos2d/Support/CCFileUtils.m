@@ -129,7 +129,6 @@ static CCFileUtils *fileUtils = nil;
 
 + (id)sharedFileUtils
 {
-	static dispatch_once_t pred;
 	if(!fileUtils) {
 		fileUtils = [[self alloc] init];
 	}

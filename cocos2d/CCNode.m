@@ -321,7 +321,6 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 {
 	CCPhysicsBody *body = GetBodyIfRunning(self);
 	if(body){
-		#warning This is *ridiculously* inefficient, but works for now.
 		CGPoint currentPosition = GetPositionFromBody(self, body);
 		CGPoint delta = ccpSub([self convertPositionToPoints:newPosition type:_positionType], currentPosition);
 		body.absolutePosition = ccpAdd(body.absolutePosition, cpTransformVect(NodeToPhysicsTransform(self.parent), delta));
