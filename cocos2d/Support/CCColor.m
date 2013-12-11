@@ -416,20 +416,15 @@
     }
 }
 
-- (BOOL) isEqual:(id)object
-{
-    if (self == object) return YES;
-    if (![object isKindOfClass:[CCColor class]]) return NO;
-    
-    ccColor4F c4f0 = self.ccColor4f;
-    ccColor4F c4f1 = ((CCColor*)object).ccColor4f;
-    
-    return ccc4FEqual(c4f0, c4f1);
-}
-
 - (BOOL) isEqualToColor:(CCColor*) color
 {
-    return [self isEqual:color];
+    if (self == color) return YES;
+    if (![color isKindOfClass:[CCColor class]]) return NO;
+    
+    ccColor4F c4f0 = self.ccColor4f;
+    ccColor4F c4f1 = ((CCColor*)color).ccColor4f;
+    
+    return ccc4FEqual(c4f0, c4f1);
 }
 
 @end
