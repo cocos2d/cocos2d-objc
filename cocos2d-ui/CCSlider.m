@@ -23,7 +23,7 @@
     return [self initWithBackground:NULL andHandleImage:NULL];
 }
 
-- (id) initWithBackground:(CCSpriteFrame*)background andHandleImage:(CCSpriteFrame*) handle
+- (id) initWithBackground:(CCSpriteFrame*)background andHandleImage:(CCSpriteFrame*)handle
 {
     self = [super init];
     if (!self) return NULL;

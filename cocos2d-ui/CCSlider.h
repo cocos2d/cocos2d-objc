@@ -24,7 +24,7 @@
 @property (nonatomic,readonly) CCSprite* handle;
 @property (nonatomic,assign) float sliderValue;
 
-- (id) initWithBackground:(CCSpriteFrame*)background andHandleImage:(CCSpriteFrame*) handle;
+- (id) initWithBackground:(CCSpriteFrame*)background andHandleImage:(CCSpriteFrame*)handle;
 
 - (void) setBackgroundSpriteFrame:(CCSpriteFrame*)spriteFrame forState:(CCControlState)state;
 
