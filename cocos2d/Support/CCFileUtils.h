@@ -426,13 +426,6 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
 
 #endif // __CC_PLATFORM_MAC
 
-/**
- *  Enables using fallbacks for suffixes.
- *
- *  @param enableFallbackSuffixes Enables or disables suffix fallbacks.
- */
--(void) setEnableFallbackSuffixes:(BOOL)enableFallbackSuffixes;
-
 @end
 
 #ifdef __cplusplus

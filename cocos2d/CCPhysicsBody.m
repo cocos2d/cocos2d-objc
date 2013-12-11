@@ -242,11 +242,11 @@ NotAffectedByGravity
 	}
 }
 
-static ccPhysicsBodyType ToCocosBodyType[] = {CCPhysicsBodyTypeDynamic, CCPhysicsBodyTypeKinematic, CCPhysicsBodyTypeStatic};
+static CCPhysicsBodyType ToCocosBodyType[] = {CCPhysicsBodyTypeDynamic, CCPhysicsBodyTypeKinematic, CCPhysicsBodyTypeStatic};
 static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KINEMATIC, CP_BODY_TYPE_STATIC};
 
--(ccPhysicsBodyType)type {return ToCocosBodyType[_body.type];}
--(void)setType:(ccPhysicsBodyType)type {_body.type = ToChipmunkBodyType[type];}
+-(CCPhysicsBodyType)type {return ToCocosBodyType[_body.type];}
+-(void)setType:(CCPhysicsBodyType)type {_body.type = ToChipmunkBodyType[type];}
 
 //MARK: Collision and Contact:
 

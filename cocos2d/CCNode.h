@@ -645,7 +645,4 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 	BOOL		_cascadeColorEnabled, _cascadeOpacityEnabled;
 }
 
-// XXX To make BridgeSupport happy
--(GLubyte) opacity;
-
 @end

@@ -94,14 +94,39 @@ simple macro that swaps 2 variables
 
 
 /** @def CCRANDOM_MINUS1_1
- returns a random float between -1 and 1
+ Returns a random float between -1 and 1.
  */
-#define CCRANDOM_MINUS1_1() ((random() / (float)0x3fffffff )-1.0f)
+static inline float CCRANDOM_MINUS1_1(){ return (random() / (float)0x3fffffff ) - 1.0f; }
 
 /** @def CCRANDOM_0_1
- returns a random float between 0 and 1
+ Returns a random float between 0 and 1.
  */
-#define CCRANDOM_0_1() ((random() / (float)0x7fffffff ))
+static inline float CCRANDOM_0_1(){ return random() / (float)0x7fffffff;}
+
+/** @def CCRANDOM_IN_UNIT_CIRCLE
+ Returns a random CGPoint with a length less than 1.0.
+ */
+static inline CGPoint
+CCRANDOM_IN_UNIT_CIRCLE()
+{
+	while(TRUE){
+		CGPoint p = ccp(CCRANDOM_MINUS1_1(), CCRANDOM_MINUS1_1());
+		if(ccpLengthSQ(p) < 1.0) return p;
+	}
+}
+
+/** @def CCRANDOM_ON_UNIT_CIRCLE
+ Returns a random CGPoint with a length equal to 1.0.
+ */
+static inline CGPoint
+CCRANDOM_ON_UNIT_CIRCLE()
+{
+	while(TRUE){
+		CGPoint p = ccp(CCRANDOM_MINUS1_1(), CCRANDOM_MINUS1_1());
+		CGFloat lsq = ccpLengthSQ(p);
+		if(0.1 < lsq && lsq < 1.0f) return ccpMult(p, 1.0/sqrt(lsq));
+	}
+}
 
 /** @def CC_DEGREES_TO_RADIANS
  converts degrees to radians
@@ -120,71 +145,6 @@ default gl blend src function. Compatible with premultiplied alpha images.
 #define CC_BLEND_SRC GL_ONE
 #define CC_BLEND_DST GL_ONE_MINUS_SRC_ALPHA
 
-/** @def CC_DIRECTOR_INIT
-	- Initializes an CCGLView with 0-bit depth format, and RGB565 render buffer.
-	- The CCGLView view will have multiple touches disabled.
-	- It will create a UIWindow and it will assign it the 'window_' ivar. 'window_' must be declared before calling this macro.
-    - It will create a UINavigationController and it will assign it the 'navigationController_' ivar. 'navController_' must be declared before using this macro.
-    - The director_ will be the root view controller of the navController.
-	- It will connect the CCGLView to the Director
-	- It will connect the UINavController view to the UIWindow.
-	- It will try to run at 60 FPS.
-	- It will connect the director with the CCGLView.
-
- IMPORTANT: If you want to use another type of render buffer (eg: RGBA8)
- or if you want to use a 16-bit or 24-bit depth buffer, you should NOT
- use this macro. Instead, you should create the CCGLView manually.
-
- @since v0.99.4
- */
-
-#ifdef __CC_PLATFORM_IOS
-
-#define CC_DIRECTOR_INIT()																		\
-do	{																							\
-	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];					\
-	director_ = (CCDirectorIOS*)[CCDirector sharedDirector];									\
-	[director_ setDisplayStats:NO];																\
-	[director_ setAnimationInterval:1.0/60];													\
-	CCGLView *__glView = [CCGLView viewWithFrame:[window_ bounds]								\
-									pixelFormat:kEAGLColorFormatRGB565							\
-									depthFormat:0 /* GL_DEPTH_COMPONENT24_OES */				\
-							 preserveBackbuffer:NO												\
-									 sharegroup:nil												\
-								  multiSampling:NO												\
-								numberOfSamples:0												\
-													];											\
-	[director_ setView:__glView];																\
-	[director_ setDelegate:self];																\
-	director_.wantsFullScreenLayout = YES;														\
-	if( ! [director_ enableRetinaDisplay:YES] )													\
-		CCLOG(@"Retina Display Not supported");													\
-	navController_ = [[UINavigationController alloc] initWithRootViewController:director_];		\
-	navController_.navigationBarHidden = YES;													\
-	[window_ addSubview:navController_.view];													\
-	[window_ makeKeyAndVisible];																\
-} while(0)
-
-
-#elif __CC_PLATFORM_MAC
-
-#define CC_DIRECTOR_INIT(__WINSIZE__)															\
-do	{																							\
-	NSRect frameRect = NSMakeRect(0, 0, (__WINSIZE__).width, (__WINSIZE__).height);				\
-	window_ = [[CCWindow alloc] initWithFrame:frameRect fullscreen:NO];						\
-	glView_ = [[CCGLView alloc] initWithFrame:frameRect shareContext:nil];						\
-	[self.window setContentView:self.glView];													\
-	director_ = (CCDirectorMac*) [CCDirector sharedDirector];									\
-	[director_ setDisplayStats:NO];																\
-	[director_ setView:self.glView];															\
-	[director_ setOriginalWinSize:__WINSIZE__];													\
-	[self.window makeMainWindow];																\
-	[self.window makeKeyAndOrderFront:self];													\
-	[self.window center];																		\
-} while(0)
-
-#endif
-
 /** @def CC_NODE_DRAW_SETUP
  Helpful macro that setups the GL server state, the correct GL program and sets the Model View Projection matrix
  @since v2.0
@@ -198,26 +158,17 @@ do {																							\
 } while(0)
 
 
- /** @def CC_DIRECTOR_END
-  Stops and removes the director from memory.
-  Removes the CCGLView from its parent
-
-  @since v0.99.4
-  */
-#define CC_DIRECTOR_END()										\
-do {															\
-	CCDirector *__director = [CCDirector sharedDirector];		\
-	[__director end];											\
-} while(0)
-
-
-
-
 /** @def CC_CONTENT_SCALE_FACTOR
  Factor relating pixel to point coordinates.
  */
 extern CGFloat __ccContentScaleFactor;
-#define CC_CONTENT_SCALE_FACTOR() __ccContentScaleFactor
+
+/// Deprecated in favor of using CCDirector.contentScaleFactor or CCTexture2D.contentScale depending on usage.
+static inline CGFloat DEPRECATED_ATTRIBUTE
+CC_CONTENT_SCALE_FACTOR()
+{
+	return __ccContentScaleFactor;
+}
 
 // Util functions for rescaling CGRects and CGSize, use ccpMult() for CGPoints.
 

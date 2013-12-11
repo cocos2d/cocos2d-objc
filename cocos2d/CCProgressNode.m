@@ -157,24 +157,24 @@ const char kCCProgressTextureCoords = 0x4b;
 	}
 }
 
--(void)setColor:(ccColor3B)c
+-(void)setColor:(CCColor*)c
 {
 	_sprite.color = c;
 	[self updateColor];
 }
 
--(ccColor3B)color
+-(CCColor*)color
 {
 	return _sprite.color;
 }
 
--(void)setOpacity:(GLubyte)o
+-(void)setOpacity:(CGFloat)o
 {
 	_sprite.opacity = o;
 	[self updateColor];
 }
 
--(GLubyte)opacity
+-(CGFloat)opacity
 {
 	return _sprite.opacity;
 }

@@ -473,12 +473,6 @@ typedef void (*GLLogFunction) (GLuint program,
 		[self setUniformLocation:_uniforms[kCCUniformRandom01] withF1:CCRANDOM_0_1() f2:CCRANDOM_0_1() f3:CCRANDOM_0_1() f4:CCRANDOM_0_1()];
 }
 
--(void)setUniformForModelViewProjectionMatrix;
-{
-	[self setUniformsForBuiltins];
-}
-
-
 #pragma mark -
 
 - (void)dealloc

@@ -56,7 +56,7 @@
     CCFileUtils *sharedFileUtils = [CCFileUtils sharedFileUtils];
     
     // Setup file utils for use with SpriteBuilder
-    [sharedFileUtils setEnableFallbackSuffixes:NO];
+    [sharedFileUtils setEnableiPhoneResourcesOniPad:NO];
     
     sharedFileUtils.directoriesDict =
     [[NSMutableDictionary alloc] initWithObjectsAndKeys:

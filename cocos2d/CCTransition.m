@@ -287,7 +287,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     _retinaTransition = retinaTransition;
     _incomingDownScale = CCTransitionDownScaleMin;
     _outgoingDownScale = CCTransitionDownScaleMin;
-    if (!_retinaTransition && (CC_CONTENT_SCALE_FACTOR() > 1.0))
+    if (!_retinaTransition && (__ccContentScaleFactor > 1.0))
     {
         _incomingDownScale = CCTransitionDownScaleRetina;
         _outgoingDownScale = CCTransitionDownScaleRetina;
@@ -323,13 +323,13 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     switch (_fixedFunction)
     {
         case CCTransitionFixedFunctionCrossFade:
-            _incomingTexture.sprite.opacity = 255 * _progress;
-            _outgoingTexture.sprite.opacity = 255 * (1 - _progress);
+            _incomingTexture.sprite.opacity = _progress;
+            _outgoingTexture.sprite.opacity = 1;
             break;
         case CCTransitionFixedFunctionFadeWithColor:
             glClearColor(_color.r, _color.g, _color.b, _color.a);
-            _incomingTexture.sprite.opacity = clampf(512 * (_progress - 0.5), 0, 255);
-            _outgoingTexture.sprite.opacity = clampf(255 * (1 - (2 * _progress)), 0, 255);
+            _incomingTexture.sprite.opacity = clampf(2.0 * (_progress - 0.5), 0, 1);
+            _outgoingTexture.sprite.opacity = clampf(1.0 * (1 - (2 * _progress)), 0, 1);
             break;
         case CCTransitionFixedFunctionReveal:
             _outgoingTexture.sprite.position = ccpMult(_outgoingDestination, _progress);

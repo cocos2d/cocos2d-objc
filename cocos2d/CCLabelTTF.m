@@ -31,12 +31,12 @@
 #import "CCShaderCache.h"
 #import "CCGLProgram.h"
 #import "Support/CCFileUtils.h"
-#import "ccDeprecated.h"
 #import "ccMacros.h"
 #import "ccUtils.h"
 #import "NSAttributedString+CCAdditions.h"
 #import "CCConfiguration.h"
 #import "CCNode_Private.h"
+#import "CCDirector.h"
 
 #ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
@@ -123,7 +123,9 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         self.fontName = fontName;
         self.fontSize = fontSize;
         self.dimensions = dimensions;
-        self.fontColor = ccc4(255, 255, 255, 255);
+        self.fontColor = [CCColor whiteColor];
+        self.shadowColor = [CCColor clearColor];
+        self.outlineColor = [CCColor clearColor];
         self.outlineWidth = 1;
         [self _setAttributedString:attrString];
     }
@@ -195,9 +197,9 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     }
 }
 
-- (void) setFontColor:(ccColor4B)fontColor
+- (void) setFontColor:(CCColor*)fontColor
 {
-    if (!ccc4BEqual(_fontColor, fontColor))
+    if (![fontColor isEqualToColor:_fontColor])
     {
         _fontColor = fontColor;
         [self setTextureDirty];
@@ -248,9 +250,9 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 }
 
 
-- (void) setShadowColor:(ccColor4B)shadowColor
+- (void) setShadowColor:(CCColor*)shadowColor
 {
-    if (!ccc4BEqual(_shadowColor, shadowColor))
+    if (![shadowColor isEqualToColor:_shadowColor])
     {
         _shadowColor = shadowColor;
         [self setTextureDirty];
@@ -275,9 +277,9 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     }
 }
 
-- (void) setOutlineColor:(ccColor4B)outlineColor
+- (void) setOutlineColor:(CCColor*)outlineColor
 {
-    if (!ccc4BEqual(outlineColor, _outlineColor))
+    if (![outlineColor isEqualToColor:_outlineColor])
     {
         _outlineColor = outlineColor;
         [self setTextureDirty];
@@ -341,25 +343,20 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     
     BOOL useFullColor = NO;
     
-    if (_shadowColor.a > 0) useFullColor = YES;
-    if (_outlineColor.a > 0 && _outlineWidth > 0) useFullColor = YES;
+    if (_shadowColor.alpha > 0) useFullColor = YES;
+    if (_outlineColor.alpha > 0 && _outlineWidth > 0) useFullColor = YES;
     
 #ifdef __CC_PLATFORM_IOS
     
     // Font color
     if (![formattedAttributedString hasAttribute:NSForegroundColorAttributeName])
     {
-        if (!ccc4BEqual(_fontColor, ccc4(255, 255, 255, 255)))
+        if (![_fontColor isEqualToColor:[CCColor whiteColor]])
         {
             useFullColor = YES;
         }
         
-        float r = ((float)_fontColor.r)/255;
-        float g = ((float)_fontColor.g)/255;
-        float b = ((float)_fontColor.b)/255;
-        float a = ((float)_fontColor.a)/255;
-        
-        UIColor* color = [UIColor colorWithRed:r green:g blue:b alpha:a];
+        UIColor* color = _fontColor;
         
         [formattedAttributedString addAttribute:NSForegroundColorAttributeName value:color range:fullRange];
     }
@@ -398,15 +395,13 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     // Font color
     if (![formattedAttributedString hasAttribute:NSForegroundColorAttributeName])
     {
-        if (!ccc4BEqual(_fontColor, ccc4(255, 255, 255, 255)))
+        if (![_fontColor isEqualToColor:[CCColor whiteColor]])
         {
             useFullColor = YES;
         }
         
-        float r = ((float)_fontColor.r)/255;
-        float g = ((float)_fontColor.g)/255;
-        float b = ((float)_fontColor.b)/255;
-        float a = ((float)_fontColor.a)/255;
+        CGFloat r,g,b,a;
+        [_fontColor getRed:&r green:&g blue:&b alpha:&a];
         
         NSColor* color = [NSColor colorWithCalibratedRed:r green:g blue:b alpha:a];
         
@@ -477,18 +472,19 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 	NSAssert(attributedString, @"Invalid attributedString");
     
     CGSize originalDimensions = _dimensions;
-    
-    originalDimensions.width *= CC_CONTENT_SCALE_FACTOR();
-    originalDimensions.height *= CC_CONTENT_SCALE_FACTOR();
+  
+		CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
+    originalDimensions.width *= scale;
+    originalDimensions.height *= scale;
     
     CGSize dimensions = originalDimensions;
     
-    float shadowBlurRadius = _shadowBlurRadius * CC_CONTENT_SCALE_FACTOR();
-    CGPoint shadowOffset = ccpMult(_shadowOffset, CC_CONTENT_SCALE_FACTOR());
-    float outlineWidth = _outlineWidth * CC_CONTENT_SCALE_FACTOR();
+    float shadowBlurRadius = _shadowBlurRadius * scale;
+    CGPoint shadowOffset = ccpMult(_shadowOffset, scale);
+    float outlineWidth = _outlineWidth * scale;
     
-    BOOL hasShadow = (_shadowColor.a > 0);
-    BOOL hasOutline = (_outlineColor.a > 0 && _outlineWidth > 0);
+    BOOL hasShadow = (_shadowColor.alpha > 0);
+    BOOL hasOutline = (_outlineColor.alpha > 0 && _outlineWidth > 0);
     
     float xOffset = 0;
     float yOffset = 0;
@@ -562,7 +558,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
                 if (scaleFactor != 1)
                 {
                     float newFontSize = fontSize * scaleFactor;
-                    float minFontSize = _minimumFontSize * CC_CONTENT_SCALE_FACTOR();
+                    float minFontSize = _minimumFontSize * scale;
                     if (minFontSize && newFontSize < minFontSize) newFontSize = minFontSize;
                     attributedString = [attributedString copyWithNewFontSize:newFontSize];
                 }
@@ -586,7 +582,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     }
     
     // Handle baseline adjustments
-    yOffset += _baselineAdjustment * scaleFactor * CC_CONTENT_SCALE_FACTOR() + yPadding;
+    yOffset += _baselineAdjustment * scaleFactor * scale + yPadding;
     xOffset += xPadding;
     
     // Round dimensions to nearest number that is dividable by 2
@@ -630,12 +626,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     // Handle shadow
     if (hasShadow)
     {
-        float r = ((float)_shadowColor.r)/255;
-        float g = ((float)_shadowColor.g)/255;
-        float b = ((float)_shadowColor.b)/255;
-        float a = ((float)_shadowColor.a)/255;
-        
-        UIColor* color = [UIColor colorWithRed:r green:g blue:b alpha:a];
+        UIColor* color = _shadowColor;
         
         CGContextSetShadowWithColor(context, CGSizeMake(shadowOffset.x, shadowOffset.y), shadowBlurRadius, [color CGColor]);
     }
@@ -643,12 +634,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     // Handle outline
     if (hasOutline)
     {
-        float r = ((float)_outlineColor.r)/255;
-        float g = ((float)_outlineColor.g)/255;
-        float b = ((float)_outlineColor.b)/255;
-        float a = ((float)_outlineColor.a)/255;
-        
-        UIColor* color = [UIColor colorWithRed:r green:g blue:b alpha:a];
+        UIColor* color = _outlineColor;
         
         CGContextSetTextDrawingMode(context, kCGTextFillStroke);
         CGContextSetLineWidth(context, outlineWidth * 2);
@@ -702,10 +688,9 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         
         if (hasShadow)
         {
-            float r = ((float)_shadowColor.r)/255;
-            float g = ((float)_shadowColor.g)/255;
-            float b = ((float)_shadowColor.b)/255;
-            float a = ((float)_shadowColor.a)/255;
+            CGFloat r, g, b, a;
+            [_shadowColor getRed:&r green:&g blue:&b alpha:&a];
+            
             NSColor* color = [NSColor colorWithCalibratedRed:r green:g blue:b alpha:a];
             
             CGContextSetShadowWithColor(context, CGSizeMake(shadowOffset.x/retinaFix, shadowOffset.y/retinaFix), shadowBlurRadius/retinaFix, [color CGColor]);
@@ -718,10 +703,9 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
             CGContextSetLineWidth(context, outlineWidth * 2);
             CGContextSetLineJoin(context, kCGLineJoinRound);
             
-            float r = ((float)_outlineColor.r)/255;
-            float g = ((float)_outlineColor.g)/255;
-            float b = ((float)_outlineColor.b)/255;
-            float a = ((float)_outlineColor.a)/255;
+            CGFloat r, g, b, a;
+            [_outlineColor getRed:&r green:&g blue:&b alpha:&a];
+            
             NSColor* color = [NSColor colorWithCalibratedRed:r green:g blue:b alpha:a];
             
             [effectsString addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0, effectsString.length)];
@@ -785,9 +769,9 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     if (!string) return NO;
     
     BOOL useFullColor = NO;
-    if (_shadowColor.a > 0) useFullColor = YES;
-    if (!ccc4BEqual(_fontColor, ccc4(255, 255, 255, 255))) useFullColor = YES;
-    if (_outlineColor.a > 0 && _outlineWidth > 0) useFullColor = YES;
+    if (_shadowColor.alpha > 0) useFullColor = YES;
+    if (![_fontColor isEqualToColor:[CCColor whiteColor]]) useFullColor = YES;
+    if (_outlineColor.alpha > 0 && _outlineWidth > 0) useFullColor = YES;
     
     CCTexture* tex = [self createTextureWithString:string useFullColor:useFullColor];
     if (!tex) return NO;
@@ -810,13 +794,14 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 - (CCTexture*) createTextureWithString:(NSString*) string useFullColor:(BOOL)useFullColor
 {
     // Scale everything up by content scale
-    UIFont* font = [UIFont fontWithName:_fontName size:_fontSize * CC_CONTENT_SCALE_FACTOR()];
-    float shadowBlurRadius = _shadowBlurRadius * CC_CONTENT_SCALE_FACTOR();
-    CGPoint shadowOffset = ccpMult(_shadowOffset, CC_CONTENT_SCALE_FACTOR());
-    float outlineWidth = _outlineWidth * CC_CONTENT_SCALE_FACTOR();
+		CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
+    UIFont* font = [UIFont fontWithName:_fontName size:_fontSize * scale];
+    float shadowBlurRadius = _shadowBlurRadius * scale;
+    CGPoint shadowOffset = ccpMult(_shadowOffset, scale);
+    float outlineWidth = _outlineWidth * scale;
     
-    BOOL hasShadow = (_shadowColor.a > 0);
-    BOOL hasOutline = (_outlineColor.a > 0 && _outlineWidth > 0);
+    BOOL hasShadow = (_shadowColor.alpha > 0);
+    BOOL hasOutline = (_outlineColor.alpha > 0 && _outlineWidth > 0);
     
     float xOffset = 0;
     float yOffset = 0;
@@ -828,8 +813,8 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     float hDrawArea = 0;
     
     CGSize originalDimensions = _dimensions;
-    originalDimensions.width *= CC_CONTENT_SCALE_FACTOR();
-    originalDimensions.height *= CC_CONTENT_SCALE_FACTOR();
+    originalDimensions.width *= scale;
+    originalDimensions.height *= scale;
     
     // Calculate padding
     if (hasShadow)
@@ -894,7 +879,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
             if (scaleFactor != 1)
             {
                 float newFontSize = fontSize * scaleFactor;
-                float minFontSize = _minimumFontSize * CC_CONTENT_SCALE_FACTOR();
+                float minFontSize = _minimumFontSize * scale;
                 if (minFontSize && newFontSize < minFontSize) newFontSize = minFontSize;
                 font = [UIFont fontWithName:font.fontName size:newFontSize];
             }
@@ -914,7 +899,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     }
     
     // Handle baseline adjustments
-    yOffset += _baselineAdjustment * scaleFactor * CC_CONTENT_SCALE_FACTOR() + yPadding;
+    yOffset += _baselineAdjustment * scaleFactor * scale + yPadding;
     xOffset += xPadding;
     
     // Round dimensions to nearest number that is dividable by 2
@@ -955,12 +940,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     // Handle shadow
     if (hasShadow)
     {
-        float r = ((float)_shadowColor.r)/255;
-        float g = ((float)_shadowColor.g)/255;
-        float b = ((float)_shadowColor.b)/255;
-        float a = ((float)_shadowColor.a)/255;
-        
-        UIColor* color = [UIColor colorWithRed:r green:g blue:b alpha:a];
+        UIColor* color = _shadowColor;
         
         CGContextSetShadowWithColor(context, CGSizeMake(shadowOffset.x, shadowOffset.y), shadowBlurRadius, [color CGColor]);
     }
@@ -968,10 +948,8 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     // Handle outline
     if (hasOutline)
     {
-        float r = ((float)_outlineColor.r)/255;
-        float g = ((float)_outlineColor.g)/255;
-        float b = ((float)_outlineColor.b)/255;
-        float a = ((float)_outlineColor.a)/255;
+        float r, g, b, a;
+        [_outlineColor getRed:&r green:&g blue:&b alpha:&a];
         
         CGContextSetTextDrawingMode(context, kCGTextFillStroke);
         CGContextSetRGBStrokeColor(context, r, g, b, a);
@@ -994,10 +972,8 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     }
     
     // Handle font color
-    float r = ((float)_fontColor.r)/255;
-    float g = ((float)_fontColor.g)/255;
-    float b = ((float)_fontColor.b)/255;
-    float a = ((float)_fontColor.a)/255;
+    float r, g, b, a;
+    [_fontColor getRed:&r green:&g blue:&b alpha:&a];
     
     UIColor* color = [UIColor colorWithRed:r green:g blue:b alpha:a];
     [color set];

@@ -184,8 +184,8 @@ static NSUInteger globalOrderOfArrival = 1;
 		
 		// set default scheduler and actionManager
 		CCDirector *director = [CCDirector sharedDirector];
-		self.actionManager = [director actionManager];
-		self.scheduler = [director scheduler];
+		_actionManager = [director actionManager];
+		_scheduler = [director scheduler];
         
         // set default touch handling
         self.hitAreaExpansion = 0.0f;
@@ -199,7 +199,7 @@ static NSUInteger globalOrderOfArrival = 1;
 {
 	// actions
 	[self stopAllActions];
-	[self.scheduler unscheduleTarget:self];
+	[_scheduler unscheduleTarget:self];
 
 	// timers
 	[_children makeObjectsPerformSelector:@selector(cleanup)];
@@ -321,7 +321,6 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 {
 	CCPhysicsBody *body = GetBodyIfRunning(self);
 	if(body){
-		#warning This is *ridiculously* inefficient, but works for now.
 		CGPoint currentPosition = GetPositionFromBody(self, body);
 		CGPoint delta = ccpSub([self convertPositionToPoints:newPosition type:_positionType], currentPosition);
 		body.absolutePosition = ccpAdd(body.absolutePosition, cpTransformVect(NodeToPhysicsTransform(self.parent), delta));
@@ -1040,9 +1039,8 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	
 	[self setupPhysicsBody:_physicsBody];
 	
-	CCScheduler *scheduler = self.scheduler;
-	if(![scheduler isTargetScheduled:self]){
-		[scheduler scheduleTarget:self];
+	if(![_scheduler isTargetScheduled:self]){
+		[_scheduler scheduleTarget:self];
 	}
 	
 	BOOL wasRunning = self.runningInActiveScene;
@@ -1131,14 +1129,13 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 -(CCTimer *) scheduleBlock:(CCTimerBlock)block delay:(CCTime)delay
 {
-	return [self.scheduler scheduleBlock:block forTarget:self withDelay:delay];
+	return [_scheduler scheduleBlock:block forTarget:self withDelay:delay];
 }
 
 -(void) setScheduler:(CCScheduler *)scheduler
 {
 	if( scheduler != _scheduler ) {
-		#warning TODO needs to be recursive? (or remove per node schedulers?)
-		[self.scheduler unscheduleTarget:self];
+		[_scheduler unscheduleTarget:self];
 
 		_scheduler = scheduler;
 	}
@@ -1146,7 +1143,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 -(CCScheduler*) scheduler
 {
-	return (_scheduler ?: self.parent.scheduler);
+	return _scheduler;
 }
 
 -(CCTimer *) schedule:(SEL)selector interval:(CCTime)interval
@@ -1162,7 +1159,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	[self unschedule:selector];
 	
 	void (*imp)(id, SEL, CCTime) = (__typeof(imp))[self methodForSelector:selector];
-	CCTimer *timer = [self.scheduler scheduleBlock:^(CCTimer *t){
+	CCTimer *timer = [_scheduler scheduleBlock:^(CCTimer *t){
 		imp(self, selector, t.deltaTime);
 	} forTarget:self withDelay:delay];
 	
@@ -1182,14 +1179,14 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 {
 	NSString *selectorName = NSStringFromSelector(selector);
 	
-	for(CCTimer *timer in [self.scheduler timersForTarget:self]){
+	for(CCTimer *timer in [_scheduler timersForTarget:self]){
 		if([selectorName isEqual:timer.userData]) [timer invalidate];
 	}
 }
 
 -(void)unscheduleAllSelectors
 {
-	for(CCTimer *timer in [self.scheduler timersForTarget:self]){
+	for(CCTimer *timer in [_scheduler timersForTarget:self]){
 		if([timer.userData isKindOfClass:[NSString class]]) [timer invalidate];
 	}
 }
@@ -1200,10 +1197,10 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	BOOL isRunning = self.runningInActiveScene;
 	
 	if(isRunning && !wasRunning){
-		[self.scheduler setPaused:NO target:self];
+		[_scheduler setPaused:NO target:self];
 		[_actionManager resumeTarget:self];
 	} else if(!isRunning && wasRunning){
-		[self.scheduler setPaused:YES target:self];
+		[_scheduler setPaused:YES target:self];
 		[_actionManager pauseTarget:self];
 	}
 }
@@ -1526,19 +1523,19 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
     return self;
 }
 
--(GLubyte) opacity
+-(CGFloat) opacity
 {
-	return _realOpacity;
+	return _realOpacity/255.0;
 }
 
--(GLubyte) displayedOpacity
+-(CGFloat) displayedOpacity
 {
-	return _displayedOpacity;
+	return _displayedOpacity/255.0;
 }
 
-- (void) setOpacity:(GLubyte)opacity
+- (void) setOpacity:(CGFloat)opacity
 {
-	_displayedOpacity = _realOpacity = opacity;
+	_displayedOpacity = _realOpacity = opacity*255;
 	
 	if( _cascadeOpacityEnabled ) {
 		GLubyte parentOpacity = 255;
@@ -1548,9 +1545,9 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	}
 }
 
-- (void)updateDisplayedOpacity:(GLubyte)parentOpacity
+- (void)updateDisplayedOpacity:(CGFloat)parentOpacity
 {
-	_displayedOpacity = _realOpacity * parentOpacity/255.0;
+	_displayedOpacity = _realOpacity * parentOpacity;
 	
     if (_cascadeOpacityEnabled) {
         for (id<CCRGBAProtocol> item in _children) {
@@ -1561,38 +1558,41 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
     }
 }
 
--(ccColor3B) color
+-(CCColor*) color
 {
-	return _realColor;
+	return [CCColor colorWithCcColor3b:_realColor];
 }
 
--(ccColor3B) displayedColor
+-(CCColor*) displayedColor
 {
-	return _displayedColor;
+	return [CCColor colorWithCcColor3b: _displayedColor];
 }
 
-- (void) setColor:(ccColor3B)color
+- (void) setColor:(CCColor*)color
 {
-	_displayedColor = _realColor = color;
+	_displayedColor = _realColor = color.ccColor3b;
 	
 	if( _cascadeColorEnabled ) {
-		ccColor3B parentColor = ccWHITE;
+		CCColor* parentColor = [CCColor whiteColor];
 		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent isCascadeColorEnabled] )
 			parentColor = [(id<CCRGBAProtocol>)_parent displayedColor];
 		[self updateDisplayedColor:parentColor];
 	}
 }
 
-- (void)updateDisplayedColor:(ccColor3B)parentColor
+- (void)updateDisplayedColor:(CCColor*)parentColor
 {
-	_displayedColor.r = _realColor.r * parentColor.r/255.0;
-	_displayedColor.g = _realColor.g * parentColor.g/255.0;
-	_displayedColor.b = _realColor.b * parentColor.b/255.0;
+    CGFloat r, g, b, a;
+    [parentColor getRed:&r green:&g blue:&b alpha:&a];
+    
+	_displayedColor.r = _realColor.r * r;
+	_displayedColor.g = _realColor.g * g;
+	_displayedColor.b = _realColor.b * b;
 
     if (_cascadeColorEnabled) {
         for (id<CCRGBAProtocol> item in _children) {
             if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
-                [item updateDisplayedColor:_displayedColor];
+                [item updateDisplayedColor:[CCColor colorWithCcColor3b:_displayedColor]];
             }
         }
     }

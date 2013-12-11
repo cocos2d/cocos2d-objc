@@ -47,6 +47,8 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 {
 	if((self = [super init])){
 		_constraint = [ChipmunkPivotJoint pivotJointWithBodyA:bodyA.body bodyB:bodyB.body pivot:anchor];
+		_constraint.userData = self;
+		
 		_anchor = anchor;
 	}
 	
@@ -80,6 +82,8 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 {
 	if((self = [super init])){
 		_constraint = [ChipmunkPinJoint pinJointWithBodyA:bodyA.body bodyB:bodyB.body anchorA:anchorA anchorB:anchorB];
+		_constraint.userData = self;
+		
 		_anchorA = anchorA;
 		_anchorB = anchorB;
 	}
@@ -114,6 +118,8 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 {
 	if((self = [super init])){
 		_constraint = [ChipmunkSlideJoint slideJointWithBodyA:bodyA.body bodyB:bodyB.body anchorA:anchorA anchorB:anchorB min:min max:max];
+		_constraint.userData = self;
+		
 		_anchorA = anchorA;
 		_anchorB = anchorB;
 	}
@@ -147,6 +153,8 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 {
 	if((self = [super init])){
 		_constraint = [ChipmunkDampedSpring dampedSpringWithBodyA:bodyA.body bodyB:bodyB.body anchorA:anchorA anchorB:anchorB restLength:restLength stiffness:stiffness damping:damping];
+		_constraint.userData = self;
+		
 		_anchorA = anchorA;
 		_anchorB = anchorB;
 	}
@@ -171,7 +179,7 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 -(id)init
 {
 	if((self = [super init])){
-		
+		_valid = YES;
 	}
 	
 	return self;
@@ -241,17 +249,39 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 -(void)setBodyB:(CCPhysicsBody *)bodyB {NYI();}
 
 -(CGFloat)maxForce {return self.constraint.maxForce;}
--(void)setMaxForce:(CGFloat)maxForce {self.constraint.maxForce = maxForce;}
+-(void)setMaxForce:(CGFloat)maxForce
+{
+	NSAssert(maxForce > 0.0, @"Max force must be greater than 0.");
+	self.constraint.maxForce = maxForce;
+}
 
 -(CGFloat)impulse {return self.constraint.impulse;}
 
 -(void)invalidate {
+	_valid = NO;
+	
 	[self tryRemoveFromPhysicsNode:self.bodyA.physicsNode];
 	[self.bodyA removeJoint:self];
 	[self.bodyB removeJoint:self];
 }
 
--(void)setBreakingForce:(CGFloat)breakingForce {NYI();}
+static void
+BreakConstraint(cpConstraint *constraint, cpSpace *space)
+{
+	CCPhysicsJoint *joint = [[ChipmunkConstraint constraintFromCPConstraint:constraint] userData];
+	
+	// Divide by the timestep to convent the impulse to a force.
+	if(cpConstraintGetImpulse(constraint)/cpSpaceGetCurrentTimeStep(space) > joint.breakingForce){
+		[joint invalidate];
+	}
+}
+
+-(void)setBreakingForce:(CGFloat)breakingForce
+{
+	NSAssert(breakingForce > 0.0, @"Breaking force must be greater than 0.");
+	_breakingForce = breakingForce;
+	cpConstraintSetPostSolveFunc(self.constraint.constraint, breakingForce < INFINITY ? BreakConstraint : NULL);
+}
 
 @end
 

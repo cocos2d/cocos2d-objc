@@ -59,6 +59,12 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 	return _arbiter;
 }
 
+-(CCContactSet)contacts
+{
+	// This function cast should be safe on any ABI that also supports objc_msgSend_stret().
+	return ((CCContactSet (*)(cpArbiter *))cpArbiterGetContactPointSet)(self.arb);
+}
+
 -(CGFloat)friction {return cpArbiterGetFriction(self.arb);}
 -(void)setFriction:(CGFloat)friction {cpArbiterSetFriction(self.arb, friction);}
 
@@ -424,27 +430,27 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 	}
 }
 
-static inline ccColor4F ToCCColor4f(cpSpaceDebugColor c){return (ccColor4F){c.r, c.g, c.b, c.a};}
+static inline CCColor* ToCCColor(cpSpaceDebugColor c){return [CCColor colorWithRed:c.r green:c.g blue:c.b alpha:c.a];}
 
 static void
 DrawCircle(cpVect p, cpFloat a, cpFloat r, cpSpaceDebugColor outline, cpSpaceDebugColor fill, CCDrawNode *draw)
-{[draw drawDot:p radius:r color:ToCCColor4f(fill)];}
+{[draw drawDot:p radius:r color:ToCCColor(fill)];}
 
 static void
 DrawSegment(cpVect a, cpVect b, cpSpaceDebugColor color, CCDrawNode *draw)
-{[draw drawSegmentFrom:a to:b radius:1.0 color:ToCCColor4f(color)];}
+{[draw drawSegmentFrom:a to:b radius:1.0 color:ToCCColor(color)];}
 
 static void
 DrawFatSegment(cpVect a, cpVect b, cpFloat r, cpSpaceDebugColor outline, cpSpaceDebugColor fill, CCDrawNode *draw)
-{[draw drawSegmentFrom:a to:b radius:r color:ToCCColor4f(fill)];}
+{[draw drawSegmentFrom:a to:b radius:r color:ToCCColor(fill)];}
 
 static void
 DrawPolygon(int count, const cpVect *verts, cpFloat r, cpSpaceDebugColor outline, cpSpaceDebugColor fill, CCDrawNode *draw)
-{[draw drawPolyWithVerts:verts count:count fillColor:ToCCColor4f(fill) borderWidth:1.0 borderColor:ToCCColor4f(outline)];}
+{[draw drawPolyWithVerts:verts count:count fillColor:ToCCColor(fill) borderWidth:1.0 borderColor:ToCCColor(outline)];}
 
 static void
 DrawDot(cpFloat size, cpVect pos, cpSpaceDebugColor color, CCDrawNode *draw)
-{[draw drawDot:pos radius:size/2.0 color:ToCCColor4f(color)];}
+{[draw drawDot:pos radius:size/2.0 color:ToCCColor(color)];}
 
 static cpSpaceDebugColor
 ColorForShape(cpShape *shape, CCDrawNode *draw)
@@ -476,7 +482,7 @@ ColorForShape(cpShape *shape, CCDrawNode *draw)
 	cpSpaceEachBody_b(_space.space, ^(cpBody *body){
 		if(cpBodyGetType(body) == CP_BODY_TYPE_DYNAMIC){
 			cpVect cog = cpBodyLocalToWorld(body, cpBodyGetCenterOfGravity(body));
-			[_debugDraw drawDot:cog radius:1.5 color:ccc4f(1, 1, 0, 1)];
+			[_debugDraw drawDot:cog radius:1.5 color:[CCColor colorWithRed:1 green:1 blue:0 alpha:1]];
 		}
 	});
 }

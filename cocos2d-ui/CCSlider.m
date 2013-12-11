@@ -9,6 +9,13 @@
 #import "CCSlider.h"
 #import "CCControlSubclass.h"
 
+@interface CCSlider (Inputs)
+- (void) inputEnteredWithWorlPos:(CGPoint)worldLocation;
+- (void) inputUpInside;
+- (void) inputUpOutside;
+- (void) inputDraggedWithPos:(CGPoint)dragPos;
+@end
+
 @implementation CCSlider
 
 - (id) init
@@ -16,7 +23,7 @@
     return [self initWithBackground:NULL andHandleImage:NULL];
 }
 
-- (id) initWithBackground:(CCSpriteFrame*)background andHandleImage:(CCSpriteFrame*) handle
+- (id) initWithBackground:(CCSpriteFrame*)background andHandleImage:(CCSpriteFrame*)handle
 {
     self = [super init];
     if (!self) return NULL;
@@ -56,85 +63,83 @@
     return self;
 }
 
+- (void) updateSliderPositionFromValue
+{
+    CGSize size = [self convertContentSizeToPoints: self.preferredSize type:self.preferredSizeType];
+    
+    _handle.position = ccp(size.width * _sliderValue, size.height/2.0f);
+}
+
 #ifdef __CC_PLATFORM_IOS
 
 #pragma mark Handle touches
 
-- (void) touchEntered:(UITouch *)touch withEvent:(UIEvent *)event
+- (void) touchEntered:(UITouch*)touch withEvent:(UIEvent*)event
 {
     CGPoint worldLocation = [touch locationInWorld];
     
-    if ([_handle hitTestWithWorldPos:worldLocation])
-    {
-        // Touch down in slider handle
-        _draggingHandle = YES;
-        self.highlighted = YES;
-        _handleStartPos = _handle.position;
-        _dragStartPos = [self convertToNodeSpace:worldLocation];
-        _dragStartValue = _sliderValue;
-    }
+    [self inputEnteredWithWorlPos:worldLocation];
 }
 
-- (void) touchUpInside:(UITouch *)touch withEvent:(UIEvent *)event
+- (void) touchUpInside:(UITouch*)touch withEvent:(UIEvent*)event
 {
-    _draggingHandle = NO;
-    self.highlighted = NO;
-    
-    if (_dragStartValue != _sliderValue)
-    {
-        [self triggerAction];
-    }
+    [self inputUpInside];
 }
 
-- (void) touchUpOutside:(UITouch *)touch withEvent:(UIEvent *)event
+- (void) touchUpOutside:(UITouch*)touch withEvent:(UIEvent*)event
 {
-    _draggingHandle = NO;
-    self.highlighted = NO;
-    
-    if (_dragStartValue != _sliderValue)
-    {
-        [self triggerAction];
-    }
+    [self inputUpOutside];
 }
 
-- (void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+- (void) touchesMoved:(NSSet*)touches withEvent:(UIEvent*)event
 {
-    CGSize sizeInPoints = [self convertContentSizeToPoints: self.preferredSize type:self.preferredSizeType];
+    UITouch* touch  = [touches anyObject];
+    CGPoint dragPos = [touch locationInNode:self];
     
-    UITouch* touch = [touches anyObject];
-    
-    if (_draggingHandle)
-    {
-        CGPoint dragPos = [touch locationInNode:self];
-        
-        CGPoint delta = ccpSub(dragPos, _dragStartPos);
-        delta.y = 0;
-        
-        CGPoint newPos = ccpAdd(_handleStartPos, delta);
-        if (newPos.x < 0) newPos.x = 0;
-        if (newPos.x >= sizeInPoints.width) newPos.x = sizeInPoints.width;
-        
-        _sliderValue = newPos.x / sizeInPoints.width;
-        if (self.continuous && _sliderValue != _dragStartValue)
-        {
-            _dragStartValue = _sliderValue;
-            [self triggerAction];
-        }
-        
-        _handle.position = newPos;
-    }
+    [self inputDraggedWithPos:dragPos];
     
     [super touchesMoved:touches withEvent:event];
 }
 
+
 #elif defined(__CC_PLATFORM_MAC)
 
-- (void) mouseDownEntered:(NSEvent *)event
+#pragma mark Handle mouse events
+
+- (void) mouseDownEntered:(NSEvent*)event
 {
     if (!self.enabled) return;
     
     CGPoint worldLocation = [event locationInWorld];
     
+    [self inputEnteredWithWorlPos:worldLocation];
+}
+
+- (void) mouseUpInside:(NSEvent*)event
+{
+    [self inputUpInside];
+}
+
+- (void) mouseUpOutside:(NSEvent*)event
+{
+    [self inputUpOutside];
+}
+
+- (void) mouseDragged:(NSEvent*)event
+{
+    CGPoint dragPos = [event locationInNode:self];
+    
+    [self inputDraggedWithPos:dragPos];
+    
+    [super mouseDragged:event];
+}
+
+#endif
+
+#pragma mark Inputs
+
+- (void) inputEnteredWithWorlPos:(CGPoint)worldLocation
+{
     if ([_handle hitTestWithWorldPos:worldLocation])
     {
         // Touch down in slider handle
@@ -146,7 +151,7 @@
     }
 }
 
-- (void) mouseUpInside:(NSEvent *)event
+- (void) inputUpInside
 {
     _draggingHandle = NO;
     self.highlighted = NO;
@@ -157,7 +162,7 @@
     }
 }
 
-- (void) mouseUpOutside:(NSEvent *)event
+- (void) inputUpOutside
 {
     _draggingHandle = NO;
     self.highlighted = NO;
@@ -168,13 +173,11 @@
     }
 }
 
-- (void) mouseDragged:(NSEvent *)event
+- (void) inputDraggedWithPos:(CGPoint)dragPos
 {
-    CGSize sizeInPoints = [self convertContentSizeToPoints: self.preferredSize type:self.preferredSizeType];
-    
     if (_draggingHandle)
     {
-        CGPoint dragPos = [event locationInNode:self];
+        CGSize sizeInPoints = [self convertContentSizeToPoints:self.preferredSize type:self.preferredSizeType];
         
         CGPoint delta = ccpSub(dragPos, _dragStartPos);
         delta.y = 0;
@@ -192,19 +195,6 @@
         
         _handle.position = newPos;
     }
-    
-    [super mouseDragged:event];
-}
-
-#pragma mark Handle mouse events
-
-#endif
-
-- (void) updateSliderPositionFromValue
-{
-    CGSize size = [self convertContentSizeToPoints: self.preferredSize type:self.preferredSizeType];
-    
-    _handle.position = ccp(size.width * _sliderValue, size.height/2.0f);
 }
 
 #pragma mark Laying out Component
