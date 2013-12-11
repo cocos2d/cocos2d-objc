@@ -707,8 +707,9 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	if (child == nil)
 		return;
 
-	if ( [_children containsObject:child] )
-		[self detachChild:child cleanup:cleanup];
+	NSAssert([_children containsObject:child], @"This node does not contain the specified child.");
+	
+	[self detachChild:child cleanup:cleanup];
 }
 
 -(void) removeChildByName:(NSString*)name
@@ -718,12 +719,12 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 -(void) removeChildByName:(NSString*)name cleanup:(BOOL)cleanup
 {
-	NSAssert( !name, @"Invalid tag");
+	NSAssert( !name, @"Invalid name");
 
 	CCNode *child = [self getChildByName:name recursively:NO];
 
 	if (child == nil)
-		CCLOG(@"cocos2d: removeChildByTag: child not found!");
+		CCLOG(@"cocos2d: removeChildByName: child not found!");
 	else
 		[self removeChild:child cleanup:cleanup];
 }
