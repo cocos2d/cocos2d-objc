@@ -937,7 +937,7 @@
 
 #pragma mark Color properties
 
-- (void) setStartColor:(UIColor *)startColor
+- (void) setStartColor:(CCColor *)startColor
 {
     _startColor = startColor.ccColor4f;
 }
@@ -947,7 +947,7 @@
     return [CCColor colorWithCcColor4f:_startColor];
 }
 
-- (void) setStartColorVar:(UIColor *)startColorVar
+- (void) setStartColorVar:(CCColor *)startColorVar
 {
     _startColorVar = startColorVar.ccColor4f;
 }
@@ -957,7 +957,7 @@
     return [CCColor colorWithCcColor4f:_startColorVar];
 }
 
-- (void) setEndColor:(UIColor *)endColor
+- (void) setEndColor:(CCColor *)endColor
 {
     _endColor = endColor.ccColor4f;
 }
@@ -967,7 +967,7 @@
     return [CCColor colorWithCcColor4f:_endColor];
 }
 
-- (void) setEndColorVar:(UIColor *)endColorVar
+- (void) setEndColorVar:(CCColor *)endColorVar
 {
     _endColorVar = endColorVar.ccColor4f;
 }
