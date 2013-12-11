@@ -477,15 +477,16 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 	NSAssert(attributedString, @"Invalid attributedString");
     
     CGSize originalDimensions = _dimensions;
-    
-    originalDimensions.width *= CC_CONTENT_SCALE_FACTOR();
-    originalDimensions.height *= CC_CONTENT_SCALE_FACTOR();
+  
+		CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
+    originalDimensions.width *= scale;
+    originalDimensions.height *= scale;
     
     CGSize dimensions = originalDimensions;
     
-    float shadowBlurRadius = _shadowBlurRadius * CC_CONTENT_SCALE_FACTOR();
-    CGPoint shadowOffset = ccpMult(_shadowOffset, CC_CONTENT_SCALE_FACTOR());
-    float outlineWidth = _outlineWidth * CC_CONTENT_SCALE_FACTOR();
+    float shadowBlurRadius = _shadowBlurRadius * scale;
+    CGPoint shadowOffset = ccpMult(_shadowOffset, scale);
+    float outlineWidth = _outlineWidth * scale;
     
     BOOL hasShadow = (_shadowColor.a > 0);
     BOOL hasOutline = (_outlineColor.a > 0 && _outlineWidth > 0);
@@ -562,7 +563,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
                 if (scaleFactor != 1)
                 {
                     float newFontSize = fontSize * scaleFactor;
-                    float minFontSize = _minimumFontSize * CC_CONTENT_SCALE_FACTOR();
+                    float minFontSize = _minimumFontSize * scale;
                     if (minFontSize && newFontSize < minFontSize) newFontSize = minFontSize;
                     attributedString = [attributedString copyWithNewFontSize:newFontSize];
                 }
@@ -586,7 +587,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     }
     
     // Handle baseline adjustments
-    yOffset += _baselineAdjustment * scaleFactor * CC_CONTENT_SCALE_FACTOR() + yPadding;
+    yOffset += _baselineAdjustment * scaleFactor * scale + yPadding;
     xOffset += xPadding;
     
     // Round dimensions to nearest number that is dividable by 2
@@ -810,10 +811,11 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 - (CCTexture*) createTextureWithString:(NSString*) string useFullColor:(BOOL)useFullColor
 {
     // Scale everything up by content scale
-    UIFont* font = [UIFont fontWithName:_fontName size:_fontSize * CC_CONTENT_SCALE_FACTOR()];
-    float shadowBlurRadius = _shadowBlurRadius * CC_CONTENT_SCALE_FACTOR();
-    CGPoint shadowOffset = ccpMult(_shadowOffset, CC_CONTENT_SCALE_FACTOR());
-    float outlineWidth = _outlineWidth * CC_CONTENT_SCALE_FACTOR();
+		CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
+    UIFont* font = [UIFont fontWithName:_fontName size:_fontSize * scale];
+    float shadowBlurRadius = _shadowBlurRadius * scale;
+    CGPoint shadowOffset = ccpMult(_shadowOffset, scale);
+    float outlineWidth = _outlineWidth * scale;
     
     BOOL hasShadow = (_shadowColor.a > 0);
     BOOL hasOutline = (_outlineColor.a > 0 && _outlineWidth > 0);
@@ -828,8 +830,8 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     float hDrawArea = 0;
     
     CGSize originalDimensions = _dimensions;
-    originalDimensions.width *= CC_CONTENT_SCALE_FACTOR();
-    originalDimensions.height *= CC_CONTENT_SCALE_FACTOR();
+    originalDimensions.width *= scale;
+    originalDimensions.height *= scale;
     
     // Calculate padding
     if (hasShadow)
@@ -894,7 +896,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
             if (scaleFactor != 1)
             {
                 float newFontSize = fontSize * scaleFactor;
-                float minFontSize = _minimumFontSize * CC_CONTENT_SCALE_FACTOR();
+                float minFontSize = _minimumFontSize * scale;
                 if (minFontSize && newFontSize < minFontSize) newFontSize = minFontSize;
                 font = [UIFont fontWithName:font.fontName size:newFontSize];
             }
@@ -914,7 +916,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     }
     
     // Handle baseline adjustments
-    yOffset += _baselineAdjustment * scaleFactor * CC_CONTENT_SCALE_FACTOR() + yPadding;
+    yOffset += _baselineAdjustment * scaleFactor * scale + yPadding;
     xOffset += xPadding;
     
     // Round dimensions to nearest number that is dividable by 2

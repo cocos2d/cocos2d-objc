@@ -240,11 +240,12 @@
 {
     // convert to Tex coords
 
+	CGFloat scale = self.texture.contentScale;
 	CGRect rect = CGRectMake(
-							 pointRect.origin.x * CC_CONTENT_SCALE_FACTOR(),
-							 pointRect.origin.y * CC_CONTENT_SCALE_FACTOR(),
-							 pointRect.size.width * CC_CONTENT_SCALE_FACTOR(),
-							 pointRect.size.height * CC_CONTENT_SCALE_FACTOR() );
+							 pointRect.origin.x * scale,
+							 pointRect.origin.y * scale,
+							 pointRect.size.width * scale,
+							 pointRect.size.height * scale );
 
 	GLfloat wide = [_texture pixelWidth];
 	GLfloat high = [_texture pixelHeight];

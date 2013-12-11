@@ -517,7 +517,7 @@ void ccDrawColor4F( GLfloat r, GLfloat g, GLfloat b, GLfloat a )
 
 void ccPointSize( GLfloat pointSize )
 {
-	pointSize_ = pointSize * CC_CONTENT_SCALE_FACTOR();
+	pointSize_ = pointSize * __ccContentScaleFactor;
 #ifdef __CC_PLATFORM_IOS
 #elif defined(__CC_PLATFORM_MAC)
 	glPointSize( pointSize );

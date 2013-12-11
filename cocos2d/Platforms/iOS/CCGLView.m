@@ -140,6 +140,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		_multiSampling = sampling;
 		_requestedSamples = nSamples;
 		_preserveBackbuffer = retained;
+		
+		// Default to "retina" being enabled.
+		self.contentScaleFactor = [UIScreen mainScreen].scale;
 
 		if( ! [self setupSurfaceWithSharegroup:sharegroup] ) {
 			return nil;

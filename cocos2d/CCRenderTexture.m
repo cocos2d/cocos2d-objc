@@ -91,9 +91,9 @@
 		if( [director runningThread] != [NSThread currentThread] )
 			CCLOGWARN(@"cocos2d: WARNING. CCRenderTexture is running on its own thread. Make sure that an OpenGL context is being used on this thread!");
 
-		
-		w *= CC_CONTENT_SCALE_FACTOR();
-		h *= CC_CONTENT_SCALE_FACTOR();
+		CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
+		w *= scale;
+		h *= scale;
 
 		glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
 
@@ -466,8 +466,8 @@
 	}
 	
 #if __CC_PLATFORM_IOS
-	
-	UIImage* image	= [[UIImage alloc] initWithCGImage:imageRef scale:CC_CONTENT_SCALE_FACTOR() orientation:UIImageOrientationUp];
+	CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
+	UIImage* image	= [[UIImage alloc] initWithCGImage:imageRef scale:scale orientation:UIImageOrientationUp];
 	NSData *imageData = nil;
     
 	if( format == CCRenderTextureImageFormatPNG )
@@ -520,7 +520,8 @@
 {
 	CGImageRef imageRef = [self newCGImage];
 	
-	UIImage* image	= [[UIImage alloc] initWithCGImage:imageRef scale:CC_CONTENT_SCALE_FACTOR() orientation:UIImageOrientationUp];
+	CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
+	UIImage* image	= [[UIImage alloc] initWithCGImage:imageRef scale:scale orientation:UIImageOrientationUp];
     
 	CGImageRelease( imageRef );
     
