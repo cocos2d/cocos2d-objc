@@ -361,16 +361,16 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
 @property (nonatomic,readwrite,assign) float endSizeVar;
 
 /** Start color of each particle. */
-@property (nonatomic,readwrite,assign) ccColor4F startColor;
+@property (nonatomic,readwrite,strong) CCColor* startColor;
 
 /** Start color variance of each particle. */
-@property (nonatomic,readwrite,assign) ccColor4F startColorVar;
+@property (nonatomic,readwrite,strong) CCColor* startColorVar;
 
 /** End color and end color variation of each particle. */
-@property (nonatomic,readwrite,assign) ccColor4F endColor;
+@property (nonatomic,readwrite,strong) CCColor* endColor;
 
 /** End color variance of each particle. */
-@property (nonatomic,readwrite,assign) ccColor4F endColorVar;
+@property (nonatomic,readwrite,strong) CCColor* endColorVar;
 
 /** Start spin of each particle. */
 @property (nonatomic,readwrite,assign) float startSpin;

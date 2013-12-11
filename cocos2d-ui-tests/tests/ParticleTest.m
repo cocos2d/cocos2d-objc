@@ -95,17 +95,10 @@
 	self.emitter.endSpinVar = 0;
   
 	// color of particles
-	ccColor4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
-	self.emitter.startColor = startColor;
-  
-	ccColor4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
-	self.emitter.startColorVar = startColorVar;
-  
-	ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
-	self.emitter.endColor = endColor;
-  
-	ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};
-	self.emitter.endColorVar = endColorVar;
+	self.emitter.startColor = [CCColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1];
+	self.emitter.startColorVar = [CCColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1];
+	self.emitter.endColor = [CCColor colorWithRed:0.1 green:0.1 blue:0.1 alpha:0.2];
+	self.emitter.endColorVar = [CCColor colorWithRed:0.1 green:0.1 blue:0.1 alpha:0.2];
   
 	// size, in pixels
 	self.emitter.startSize = 80.0f;
@@ -242,8 +235,8 @@
   self.emitter.emissionRate = self.emitter.totalParticles/self.emitter.life;
   
   // color of particles
-  self.emitter.startColor = ccc4f(1.0f, 1.0f, 1.0f, 1.0f);
-  self.emitter.endColor = ccc4f(0.0f, 0.0f, 0.0f, 1.0f);
+  self.emitter.startColor = [CCColor colorWithRed:1 green:1 blue:1 alpha:1];
+  self.emitter.endColor = [CCColor colorWithRed:0 green:0 blue:0 alpha:1];
   
   self.emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"particles.png"];
 

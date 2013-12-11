@@ -73,8 +73,6 @@
 @synthesize particleCount = _particleCount;
 @synthesize life = _life, lifeVar = _lifeVar;
 @synthesize angle = _angle, angleVar = _angleVar;
-@synthesize startColor = _startColor, startColorVar = _startColorVar;
-@synthesize endColor = _endColor, endColorVar = _endColorVar;
 @synthesize startSpin = _startSpin, startSpinVar = _startSpinVar;
 @synthesize endSpin = _endSpin, endSpinVar = _endSpinVar;
 @synthesize emissionRate = _emissionRate;
@@ -937,5 +935,46 @@
 	}
 }
 
+#pragma mark Color properties
+
+- (void) setStartColor:(UIColor *)startColor
+{
+    _startColor = startColor.ccColor4f;
+}
+
+- (CCColor*) startColor
+{
+    return [CCColor colorWithCcColor4f:_startColor];
+}
+
+- (void) setStartColorVar:(UIColor *)startColorVar
+{
+    _startColorVar = startColorVar.ccColor4f;
+}
+
+- (CCColor*) startColorVar
+{
+    return [CCColor colorWithCcColor4f:_startColorVar];
+}
+
+- (void) setEndColor:(UIColor *)endColor
+{
+    _endColor = endColor.ccColor4f;
+}
+
+- (CCColor*) endColor
+{
+    return [CCColor colorWithCcColor4f:_endColor];
+}
+
+- (void) setEndColorVar:(UIColor *)endColorVar
+{
+    _endColorVar = endColorVar.ccColor4f;
+}
+
+- (CCColor*) endColorVar
+{
+    return [CCColor colorWithCcColor4f:_endColorVar];
+}
 
 @end
