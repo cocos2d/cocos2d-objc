@@ -70,10 +70,10 @@
 #import "CCLabelBMFont.h"
 //#import "CCLabelAtlas.h"
 
+//#import "CCParticleSystemBase.h"
 #import "CCParticleSystem.h"
-#import "CCParticleSystemQuad.h"
 #import "CCParticleExamples.h"
-#import "CCParticleBatchNode.h"
+//#import "CCParticleBatchNode.h"
 
 #import "CCTexture.h"
 #import "CCTexturePVR.h"
@@ -126,11 +126,6 @@
 //
 #import "ccTypes.h"
 #import "ccMacros.h"
-
-//
-// Deprecated methods/classes/functions since v1.0
-//
-#import "ccDeprecated.h"
 
 // Platform common
 #import "Platforms/CCGL.h"

@@ -69,6 +69,7 @@
 	GLint	_uniformColor;
 }
 
+
 /** conforms to CCTextureProtocol protocol */
 @property (nonatomic,readwrite,strong) CCTextureAtlas *textureAtlas;
 
@@ -76,7 +77,7 @@
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
 /** conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readwrite) ccColor3B color;
+//@property (nonatomic,readwrite) ccColor3B color;
 
 /** how many quads to draw */
 @property (nonatomic,readwrite) NSUInteger quadsToDraw;

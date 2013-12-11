@@ -32,6 +32,7 @@
 #import "Support/CGPointExtension.h"
 #import "Support/OpenGL_Internal.h"
 #import "CCNode_Private.h"
+#import "CCColor.h"
 
 
 // ccVertex2F == CGPoint in 32-bits, but not in 64-bits (OS X)
@@ -195,15 +196,17 @@ static inline ccTex2F __t(ccVertex2F v )
 
 #pragma mark Immediate Mode
 
--(void)drawDot:(CGPoint)pos radius:(CGFloat)radius color:(ccColor4F)color;
+-(void)drawDot:(CGPoint)pos radius:(CGFloat)radius color:(CCColor*)color;
 {
+    ccColor4B c4 = color.ccColor4b;
+    
 	NSUInteger vertex_count = 2*3;
 	[self ensureCapacity:vertex_count];
 	
-	ccV2F_C4B_T2F a = {{pos.x - radius, pos.y - radius}, ccc4BFromccc4F(color), {-1.0, -1.0} };
-	ccV2F_C4B_T2F b = {{pos.x - radius, pos.y + radius}, ccc4BFromccc4F(color), {-1.0,  1.0} };
-	ccV2F_C4B_T2F c = {{pos.x + radius, pos.y + radius}, ccc4BFromccc4F(color), { 1.0,  1.0} };
-	ccV2F_C4B_T2F d = {{pos.x + radius, pos.y - radius}, ccc4BFromccc4F(color), { 1.0, -1.0} };
+	ccV2F_C4B_T2F a = {{pos.x - radius, pos.y - radius}, c4, {-1.0, -1.0} };
+	ccV2F_C4B_T2F b = {{pos.x - radius, pos.y + radius}, c4, {-1.0,  1.0} };
+	ccV2F_C4B_T2F c = {{pos.x + radius, pos.y + radius}, c4, { 1.0,  1.0} };
+	ccV2F_C4B_T2F d = {{pos.x + radius, pos.y - radius}, c4, { 1.0, -1.0} };
 	
 	ccV2F_C4B_T2F_Triangle *triangles = (ccV2F_C4B_T2F_Triangle *)(_buffer + _bufferCount);
 	triangles[0] = (ccV2F_C4B_T2F_Triangle){a, b, c};
@@ -214,8 +217,10 @@ static inline ccTex2F __t(ccVertex2F v )
 	_dirty = YES;
 }
 
--(void)drawSegmentFrom:(CGPoint)_a to:(CGPoint)_b radius:(CGFloat)radius color:(ccColor4F)color;
+-(void)drawSegmentFrom:(CGPoint)_a to:(CGPoint)_b radius:(CGFloat)radius color:(CCColor*)color;
 {
+    ccColor4B c4 = color.ccColor4b;
+    
 	NSUInteger vertex_count = 6*3;
 	[self ensureCapacity:vertex_count];
 	
@@ -241,36 +246,36 @@ static inline ccTex2F __t(ccVertex2F v )
 	ccV2F_C4B_T2F_Triangle *triangles = (ccV2F_C4B_T2F_Triangle *)(_buffer + _bufferCount);
 	
 	triangles[0] = (ccV2F_C4B_T2F_Triangle) {
-		{v0, ccc4BFromccc4F(color), __t(v2fneg(v2fadd(n, t))) },
-		{v1, ccc4BFromccc4F(color), __t(v2fsub(n, t)) },
-		{v2, ccc4BFromccc4F(color), __t(v2fneg(n)) },
+		{v0, c4, __t(v2fneg(v2fadd(n, t))) },
+		{v1, c4, __t(v2fsub(n, t)) },
+		{v2, c4, __t(v2fneg(n)) },
 	};
 	
 	triangles[1] = (ccV2F_C4B_T2F_Triangle){
-		{v3, ccc4BFromccc4F(color), __t(n)},
-		{v1, ccc4BFromccc4F(color), __t(v2fsub(n, t)) },
-		{v2, ccc4BFromccc4F(color), __t(v2fneg(n)) },
+		{v3, c4, __t(n)},
+		{v1, c4, __t(v2fsub(n, t)) },
+		{v2, c4, __t(v2fneg(n)) },
 	};
 	
 	triangles[2] = (ccV2F_C4B_T2F_Triangle){
-		{v3, ccc4BFromccc4F(color), __t(n)},
-		{v4, ccc4BFromccc4F(color), __t(v2fneg(n)) },
-		{v2, ccc4BFromccc4F(color), __t(v2fneg(n)) },
+		{v3, c4, __t(n)},
+		{v4, c4, __t(v2fneg(n)) },
+		{v2, c4, __t(v2fneg(n)) },
 	};
 	triangles[3] = (ccV2F_C4B_T2F_Triangle){
-		{v3, ccc4BFromccc4F(color), __t(n) }, 
-		{v4, ccc4BFromccc4F(color), __t(v2fneg(n)) },
-		{v5, ccc4BFromccc4F(color), __t(n) },
+		{v3, c4, __t(n) },
+		{v4, c4, __t(v2fneg(n)) },
+		{v5, c4, __t(n) },
 	};
 	triangles[4] = (ccV2F_C4B_T2F_Triangle){
-		{v6, ccc4BFromccc4F(color), __t(v2fsub(t, n))},
-		{v4, ccc4BFromccc4F(color), __t(v2fneg(n)) },
-		{v5, ccc4BFromccc4F(color), __t(n)},
+		{v6, c4, __t(v2fsub(t, n))},
+		{v4, c4, __t(v2fneg(n)) },
+		{v5, c4, __t(n)},
 	};
 	triangles[5] = (ccV2F_C4B_T2F_Triangle){
-		{v6, ccc4BFromccc4F(color), __t(v2fsub(t, n)) },
-		{v7, ccc4BFromccc4F(color), __t(v2fadd(n, t)) },
-		{v5, ccc4BFromccc4F(color), __t(n)},
+		{v6, c4, __t(v2fsub(t, n)) },
+		{v7, c4, __t(v2fadd(n, t)) },
+		{v5, c4, __t(n)},
 	};
 	
 	_bufferCount += vertex_count;
@@ -278,8 +283,11 @@ static inline ccTex2F __t(ccVertex2F v )
 	_dirty = YES;
 }
 
--(void)drawPolyWithVerts:(const CGPoint *)verts count:(NSUInteger)count fillColor:(ccColor4F)fill  borderWidth:(CGFloat)width borderColor:(ccColor4F)line;
+-(void)drawPolyWithVerts:(const CGPoint *)verts count:(NSUInteger)count fillColor:(CCColor*)fill  borderWidth:(CGFloat)width borderColor:(CCColor*)line;
 {
+    ccColor4B fill4 = fill.ccColor4b;
+    ccColor4B line4 = line.ccColor4b;
+    
 	struct ExtrudeVerts {ccVertex2F offset, n;};
 	struct ExtrudeVerts extrude[count];
 	bzero(extrude, sizeof(extrude) );
@@ -296,7 +304,7 @@ static inline ccTex2F __t(ccVertex2F v )
 		extrude[i] = (struct ExtrudeVerts){offset, n2};
 	}
 	
-	BOOL outline = (line.a > 0.0 && width > 0.0);
+	BOOL outline = (line4.a > 0 && width > 0.0);
 	
 	NSUInteger triangle_count = 3*count - 2;
 	NSUInteger vertex_count = 3*triangle_count;
@@ -312,9 +320,9 @@ static inline ccTex2F __t(ccVertex2F v )
 		ccVertex2F v2 = v2fsub( __v2f(verts[i+2]), v2fmult(extrude[i+2].offset, inset));
 		
 		*cursor++ = (ccV2F_C4B_T2F_Triangle){
-			{v0, ccc4BFromccc4F(fill), __t(v2fzero) },
-			{v1, ccc4BFromccc4F(fill), __t(v2fzero) },
-			{v2, ccc4BFromccc4F(fill), __t(v2fzero) },
+			{v0, fill4, __t(v2fzero) },
+			{v1, fill4, __t(v2fzero) },
+			{v2, fill4, __t(v2fzero) },
 		};
 	}
 	
@@ -335,14 +343,14 @@ static inline ccTex2F __t(ccVertex2F v )
 			ccVertex2F outer1 = v2fadd(v1, v2fmult(offset1, width));
 			
 			*cursor++ = (ccV2F_C4B_T2F_Triangle){
-				{inner0, ccc4BFromccc4F(line), __t(v2fneg(n0))},
-				{inner1, ccc4BFromccc4F(line), __t(v2fneg(n0))},
-				{outer1, ccc4BFromccc4F(line), __t(n0)}
+				{inner0, line4, __t(v2fneg(n0))},
+				{inner1, line4, __t(v2fneg(n0))},
+				{outer1, line4, __t(n0)}
 			};
 			*cursor++ = (ccV2F_C4B_T2F_Triangle){
-				{inner0, ccc4BFromccc4F(line), __t(v2fneg(n0))},
-				{outer0, ccc4BFromccc4F(line), __t(n0)},
-				{outer1, ccc4BFromccc4F(line), __t(n0)}
+				{inner0, line4, __t(v2fneg(n0))},
+				{outer0, line4, __t(n0)},
+				{outer1, line4, __t(n0)}
 			};
 		} else {
 			ccVertex2F inner0 = v2fsub(v0, v2fmult(offset0, 0.5));
@@ -351,14 +359,14 @@ static inline ccTex2F __t(ccVertex2F v )
 			ccVertex2F outer1 = v2fadd(v1, v2fmult(offset1, 0.5));
 			
 			*cursor++ = (ccV2F_C4B_T2F_Triangle){
-				{inner0, ccc4BFromccc4F(fill), __t(v2fzero)}, 
-				{inner1, ccc4BFromccc4F(fill), __t(v2fzero)},
-				{outer1, ccc4BFromccc4F(fill), __t(n0)}
+				{inner0, fill4, __t(v2fzero)},
+				{inner1, fill4, __t(v2fzero)},
+				{outer1, fill4, __t(n0)}
 			};
 			*cursor++ = (ccV2F_C4B_T2F_Triangle){
-				{inner0, ccc4BFromccc4F(fill), __t(v2fzero)},
-				{outer0, ccc4BFromccc4F(fill), __t(n0)},
-				{outer1, ccc4BFromccc4F(fill), __t(n0)}
+				{inner0, fill4, __t(v2fzero)},
+				{outer0, fill4, __t(n0)},
+				{outer1, fill4, __t(n0)}
 			};
 		}
 	}

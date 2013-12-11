@@ -13,10 +13,12 @@
 #import "CCTexture.h"
 #import "CCFileUtils.h"
 
-NSString* const CCConfigPixelFormat = @"CCConfigPixelFormat";
-NSString* const CCConfigScreenMode = @"CCConfigScreenMode";
-NSString* const CCConfigScreenOrientation = @"CCConfigScreenOrientation";
-NSString* const CCConfigAnimationInterval = @"CCConfigAnimationInterval";
+NSString* const CCSetupPixelFormat = @"CCSetupPixelFormat";
+NSString* const CCSetupScreenMode = @"CCSetupScreenMode";
+NSString* const CCSetupScreenOrientation = @"CCSetupScreenOrientation";
+NSString* const CCSetupAnimationInterval = @"CCSetupAnimationInterval";
+NSString* const CCSetupHideDebugStats = @"CCSetupHideDebugStats";
+NSString* const CCSetupTabletScale2X = @"CCSetupTabletScale2X";
 
 
 @interface CCNavigationController ()
@@ -97,27 +99,27 @@ NSString* const CCConfigAnimationInterval = @"CCConfigAnimationInterval";
     if (config)
     {
         // Read pixelFormat
-        if ([config objectForKey:CCConfigPixelFormat])
+        if ([config objectForKey:CCSetupPixelFormat])
         {
-            pixelFormat = [config objectForKey:CCConfigPixelFormat];
+            pixelFormat = [config objectForKey:CCSetupPixelFormat];
         }
         
         // Read screenMode
-        if ([config objectForKey:CCConfigScreenMode])
+        if ([config objectForKey:CCSetupScreenMode])
         {
-            screenMode = [[config objectForKey:CCConfigScreenMode] intValue];
+            screenMode = [[config objectForKey:CCSetupScreenMode] intValue];
         }
         
         // Read screenOrientation
-        if ([config objectForKey:CCConfigScreenOrientation])
+        if ([config objectForKey:CCSetupScreenOrientation])
         {
-            screenOrientation = [[config objectForKey:CCConfigScreenOrientation] intValue];
+            screenOrientation = [[config objectForKey:CCSetupScreenOrientation] intValue];
         }
         
         // Read animationInterval
-        if ([config objectForKey:CCConfigAnimationInterval])
+        if ([config objectForKey:CCSetupAnimationInterval])
         {
-            animationInterval = [[config objectForKey:CCConfigAnimationInterval] doubleValue];
+            animationInterval = [[config objectForKey:CCSetupAnimationInterval] doubleValue];
         }
     }
     
@@ -146,21 +148,37 @@ NSString* const CCConfigAnimationInterval = @"CCConfigAnimationInterval";
 								 multiSampling:NO
 							   numberOfSamples:0];
 	
-	// Enable "retina" mode.
-	glView.contentScaleFactor = [UIScreen mainScreen].scale;
-	
 	CCDirectorIOS* director = (CCDirectorIOS*) [CCDirector sharedDirector];
 	
 	director.wantsFullScreenLayout = YES;
 	
-	// Display FSP and SPF
-	//[director_ setDisplayStats:YES];
+#if DEBUG
+	if(![config[CCSetupHideDebugStats] boolValue]){
+		// Display FSP and SPF
+		[director setDisplayStats:YES];
+	}
+#endif
 	
 	// set FPS at 60
 	[director setAnimationInterval:animationInterval];
 	
 	// attach the openglView to the director
 	[director setView:glView];
+	
+	// Setup tablet scaling if it was requested.
+	if(
+		UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad &&
+		[config[CCSetupTabletScale2X] boolValue]
+	){
+		// Set the director to use 2 points per pixel.
+		director.contentScaleFactor *= 2.0;
+		
+		// Set the UI scale factor to show things at "native" size.
+		director.UIScaleFactor = 0.5;
+		
+		// Let CCFileUtils know that "-ipad" textures should be treated as having a contentScale of 2.0.
+		[[CCFileUtils sharedFileUtils] setiPadContentScaleFactor:2.0];
+	}
 	
 	// 2D projection
 	[director setProjection:CCDirectorProjection2D];
@@ -174,8 +192,8 @@ NSString* const CCConfigAnimationInterval = @"CCConfigAnimationInterval";
 	// Create a Navigation Controller with the Director
 	navController_ = [[CCNavigationController alloc] initWithRootViewController:director];
 	navController_.navigationBarHidden = YES;
-    navController_.appDelegate = self;
-    navController_.screenOrientation = screenOrientation;
+	navController_.appDelegate = self;
+	navController_.screenOrientation = screenOrientation;
     
 	// for rotation and other messages
 	[director setDelegate:navController_];
@@ -217,7 +235,7 @@ NSString* const CCConfigAnimationInterval = @"CCConfigAnimationInterval";
 // application will be killed
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-	CC_DIRECTOR_END();
+	[[CCDirector sharedDirector] end];
 }
 
 // purge memory

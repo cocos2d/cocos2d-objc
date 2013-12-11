@@ -800,8 +800,8 @@ void FNTConfigRemoveCache( void )
 			[fontChar setOpacityModifyRGB:_opacityModifyRGB];
 
 			// Color MUST be set before opacity, since opacity might change color if OpacityModifyRGB is on
-			[fontChar updateDisplayedColor:_displayedColor];
-			[fontChar updateDisplayedOpacity:_displayedOpacity];
+			[fontChar updateDisplayedColor:[CCColor colorWithCcColor3b:_displayedColor]];
+			[fontChar updateDisplayedOpacity:_displayedOpacity/255.0];
 		}
 
 		// updating previous sprite
@@ -811,7 +811,7 @@ void FNTConfigRemoveCache( void )
 		// See issue 1343. cast( signed short + unsigned integer ) == unsigned integer (sign is lost!)
 		NSInteger yOffset = _configuration->_commonHeight - fontDef.yOffset;
 		CGPoint fontPos = ccp( (CGFloat)nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width*0.5f + kerningAmount,
-							  (CGFloat)nextFontPositionY + yOffset - rect.size.height*0.5f * CC_CONTENT_SCALE_FACTOR() );
+							  (CGFloat)nextFontPositionY + yOffset - rect.size.height*0.5f * __ccContentScaleFactor );
 		fontChar.position = ccpMult(fontPos, 1.0/contentScale);
 		
 		// update kerning
@@ -874,42 +874,42 @@ void FNTConfigRemoveCache( void )
 
 #pragma mark LabelBMFont - CCRGBAProtocol protocol
 
--(ccColor3B) color
+-(CCColor*) color
 {
-	return _realColor;
+	return [CCColor colorWithCcColor3b:_realColor];
 }
 
--(ccColor3B) displayedColor
+-(CCColor*) displayedColor
 {
-	return _displayedColor;
+	return [CCColor colorWithCcColor3b:_displayedColor];
 }
 
--(void) setColor:(ccColor3B)color
+-(void) setColor:(CCColor*)color
 {
-	_displayedColor = _realColor = color;
+	_displayedColor = _realColor = color.ccColor3b;
 	
 	if( _cascadeColorEnabled ) {
-		ccColor3B parentColor = ccWHITE;
+		CCColor* parentColor = [CCColor whiteColor];
 		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent isCascadeColorEnabled] )
 			parentColor = [(id<CCRGBAProtocol>)_parent displayedColor];
 		[self updateDisplayedColor:parentColor];
 	}
 }
 
--(GLubyte) opacity
+-(CGFloat) opacity
 {
-	return _realOpacity;
+	return _realOpacity/255.0;
 }
 
--(GLubyte) displayedOpacity
+-(CGFloat) displayedOpacity
 {
-	return _displayedOpacity;
+	return _displayedOpacity/255.0;
 }
 
 /** Override synthesized setOpacity to recurse items */
-- (void) setOpacity:(GLubyte)opacity
+- (void) setOpacity:(CGFloat)opacity
 {
-	_displayedOpacity = _realOpacity = opacity;
+	_displayedOpacity = _realOpacity = opacity * 255;
 
 	if( _cascadeOpacityEnabled ) {
 		GLubyte parentOpacity = 255;
@@ -932,23 +932,26 @@ void FNTConfigRemoveCache( void )
 	return _opacityModifyRGB;
 }
 
-- (void)updateDisplayedOpacity:(GLubyte)parentOpacity
+- (void)updateDisplayedOpacity:(CGFloat)parentOpacity
 {
-	_displayedOpacity = _realOpacity * parentOpacity/255.0;
+	_displayedOpacity = _realOpacity * parentOpacity;
 
     for (CCSprite* item in _children) {
 		[item updateDisplayedOpacity:_displayedOpacity];
 	}
 }
 
-- (void)updateDisplayedColor:(ccColor3B)parentColor
+- (void)updateDisplayedColor:(CCColor*)parentColor
 {
-	_displayedColor.r = _realColor.r * parentColor.r/255.0;
-	_displayedColor.g = _realColor.g * parentColor.g/255.0;
-	_displayedColor.b = _realColor.b * parentColor.b/255.0;
+    CGFloat r,g,b,a;
+    [parentColor getRed:&r green:&g blue:&b alpha:&a];
+    
+	_displayedColor.r = _realColor.r * r;
+	_displayedColor.g = _realColor.g * g;
+	_displayedColor.b = _realColor.b * b;
 
 	for (CCSprite* item in _children) {
-		[item updateDisplayedColor:_displayedColor];
+		[item updateDisplayedColor:[CCColor colorWithCcColor3b:_displayedColor]];
 	}
 }
 

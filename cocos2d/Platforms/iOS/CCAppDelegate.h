@@ -37,10 +37,12 @@ typedef NS_ENUM(unsigned char, CCScreenOrientation)
     CCScreenOrientationPortrait,
 };
 
-NSString* const CCConfigPixelFormat;
-NSString* const CCConfigScreenMode;
-NSString* const CCConfigScreenOrientation;
-NSString* const CCConfigAnimationInterval;
+NSString* const CCSetupPixelFormat;
+NSString* const CCSetpScreenMode;
+NSString* const CCSetupScreenOrientation;
+NSString* const CCSetupAnimationInterval;
+NSString* const CCSetupHideDebugStats;
+NSString* const CCSetupTabletScale2X;
 
 
 @class CCAppDelegate;
@@ -95,9 +97,11 @@ NSString* const CCConfigAnimationInterval;
  *
  *  Currently supported keys for the configuration dictionary are:
  *
- *  - CCConfigPixelFormat NSString with the pixel format, normally kEAGLColorFormatRGBA8 or kEAGLColorFormatRGB565. The RGB565 option is faster, but will allow less colors.
- *  - CCConfigScreenMode NSNumber with int specifying which CCScreenMode to use, CCScreenModeFlexible is the default option.
- *  - CCConfigAnimationInterval NSNumber with double. Specifies the interval between animation frames. Supported values are 1.0/60 and 1.0/30.
+ *  - CCSetupPixelFormat NSString with the pixel format, normally kEAGLColorFormatRGBA8 or kEAGLColorFormatRGB565. The RGB565 option is faster, but will allow less colors.
+ *  - CCSetupScreenMode NSNumber with int specifying which CCScreenMode to use, CCScreenModeFlexible is the default option.
+ *  - CCSetupAnimationInterval NSNumber with double. Specifies the interval between animation frames. Supported values are 1.0/60 and 1.0/30.
+ *  - CCSetupHideDebugStats NSNumber with bool. Specifies if the stats (FPS, frame time and draw call count) should be hidden when running in debug mode.
+ *  - CCSetupTabletScale2X NSNumber with bool. If true, the iPad will be setup to act like it has a 512x384 "retina" screen. This makes it much easier to make universal iOS games.
  *
  *  @param config Dictionary with options for configuring Cocos2d.
  */

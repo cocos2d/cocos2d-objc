@@ -241,7 +241,7 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
     kmGLPushMatrix();
     kmGLLoadIdentity();
 
-    ccDrawSolidRect(ccp(x, y), ccp(width, height), ccc4f(1, 1, 1, 1));
+    ccDrawSolidRect(ccp(x, y), ccp(width, height), [CCColor whiteColor]);
 
     kmGLMatrixMode(KM_GL_PROJECTION);
     kmGLPopMatrix();

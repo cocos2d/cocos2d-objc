@@ -129,7 +129,6 @@ static CCFileUtils *fileUtils = nil;
 
 + (id)sharedFileUtils
 {
-	static dispatch_once_t pred;
 	if(!fileUtils) {
 		fileUtils = [[self alloc] init];
 	}
@@ -715,14 +714,6 @@ static CCFileUtils *fileUtils = nil;
 	NSString *path = [self getPathForFilename:fullpath withSuffix:suffix];
 
 	return ( path != nil );
-}
-
-#pragma mark CCFileUtils - deprecated
-
-// XXX deprecated
--(void) setEnableFallbackSuffixes:(BOOL)enableFallbackSuffixes
-{
-	[self setEnableiPhoneResourcesOniPad:enableFallbackSuffixes];
 }
 
 #ifdef __CC_PLATFORM_IOS

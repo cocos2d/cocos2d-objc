@@ -79,7 +79,7 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
 /** Valid flags: GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_STENCIL_BUFFER_BIT. They can be OR'ed. Valid when "autoDraw is YES. */
 @property (nonatomic, readwrite) GLbitfield clearFlags;
 /** Clear color value. Valid only when "autoDraw" is YES. */
-@property (nonatomic, readwrite) ccColor4F clearColor;
+@property (nonatomic, strong) CCColor* clearColor;
 /** Value for clearDepth. Valid only when autoDraw is YES. */
 @property (nonatomic, readwrite) GLclampf clearDepth;
 /** Value for clear Stencil. Valid only when autoDraw is YES */
