@@ -193,6 +193,8 @@
 		B7E2603A17E7C786007067F0 /* UITouch+CC.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E2603817E7C786007067F0 /* UITouch+CC.m */; };
 		B7E7758C184FBA47004221AA /* CCNodeColor.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E7758A184FBA47004221AA /* CCNodeColor.h */; };
 		B7E7758D184FBA47004221AA /* CCNodeColor.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E7758B184FBA47004221AA /* CCNodeColor.m */; };
+		B7E7762C1857A4C4004221AA /* CCColor.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E7762A1857A4C4004221AA /* CCColor.h */; };
+		B7E7762D1857A4C4004221AA /* CCColor.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E7762B1857A4C4004221AA /* CCColor.m */; };
 		B7EE698918187F7200B983FE /* CCTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE698818187C0900B983FE /* CCTextField.m */; };
 		B7EE69EA1819EAAC00B983FE /* CCLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = B7EE69E61819EAAC00B983FE /* CCLayout.h */; };
 		B7EE69EB1819EAAC00B983FE /* CCLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69E71819EAAC00B983FE /* CCLayout.m */; };
@@ -562,6 +564,8 @@
 		B7E2603817E7C786007067F0 /* UITouch+CC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITouch+CC.m"; sourceTree = "<group>"; };
 		B7E7758A184FBA47004221AA /* CCNodeColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNodeColor.h; sourceTree = "<group>"; };
 		B7E7758B184FBA47004221AA /* CCNodeColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCNodeColor.m; sourceTree = "<group>"; };
+		B7E7762A1857A4C4004221AA /* CCColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCColor.h; sourceTree = "<group>"; };
+		B7E7762B1857A4C4004221AA /* CCColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCColor.m; sourceTree = "<group>"; };
 		B7EE698718187C0900B983FE /* CCTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTextField.h; path = "cocos2d-ui/CCTextField.h"; sourceTree = "<group>"; };
 		B7EE698818187C0900B983FE /* CCTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTextField.m; path = "cocos2d-ui/CCTextField.m"; sourceTree = "<group>"; };
 		B7EE69E61819EAAC00B983FE /* CCLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLayout.h; sourceTree = "<group>"; };
@@ -1211,6 +1215,8 @@
 				E076E6C31225EC7400DE0DA2 /* ccUtils.h */,
 				E076E6BE1225EC7400DE0DA2 /* CCFileUtils.h */,
 				E076E6BF1225EC7400DE0DA2 /* CCFileUtils.m */,
+				B7E7762A1857A4C4004221AA /* CCColor.h */,
+				B7E7762B1857A4C4004221AA /* CCColor.m */,
 				E076E6C01225EC7400DE0DA2 /* CCProfiling.h */,
 				E076E6C11225EC7400DE0DA2 /* CCProfiling.m */,
 				A0BE62FA140552BD00DAA336 /* CCVertex.h */,
@@ -1594,6 +1600,7 @@
 				B770607D1831B0C40043CC67 /* ALListener.h in Headers */,
 				A009FB8C150EC87500897349 /* ccShader_PositionTextureA8Color_vert.h in Headers */,
 				A009FB8D150EC87500897349 /* ccShader_PositionTextureColor_frag.h in Headers */,
+				B7E7762C1857A4C4004221AA /* CCColor.h in Headers */,
 				A009FB8E150EC87500897349 /* ccShader_PositionTextureColor_vert.h in Headers */,
 				A009FB8F150EC87500897349 /* ccShader_PositionTextureColorAlphaTest_frag.h in Headers */,
 				A009FB90150EC87500897349 /* ccShaders.h in Headers */,
@@ -1843,6 +1850,7 @@
 				E04C31201357138100F65F71 /* ccGLStateCache.m in Sources */,
 				B77060811831B0C40043CC67 /* ALSoundSourcePool.m in Sources */,
 				E04C31221357138100F65F71 /* CCShaderCache.m in Sources */,
+				B7E7762D1857A4C4004221AA /* CCColor.m in Sources */,
 				A0BE62FD140552BD00DAA336 /* CCVertex.m in Sources */,
 				A0AAB80C1451BD3600850F2C /* CCParticleBatchNode.m in Sources */,
 				A046E2B314C1E5000005BBF2 /* CCDirectorIOS.m in Sources */,

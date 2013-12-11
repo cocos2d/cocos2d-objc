@@ -68,12 +68,12 @@
 @synthesize blendFunc = _blendFunc;
 
 
-+ (id) nodeWithColor:(ccColor4B)color width:(GLfloat)w  height:(GLfloat) h
++ (id) nodeWithColor:(CCColor*)color width:(GLfloat)w  height:(GLfloat) h
 {
 	return [[self alloc] initWithColor:color width:w height:h];
 }
 
-+ (id) nodeWithColor:(ccColor4B)color
++ (id) nodeWithColor:(CCColor*)color
 {
 	return [(CCNodeColor*)[self alloc] initWithColor:color];
 }
@@ -81,21 +81,23 @@
 -(id) init
 {
 	CGSize s = [[CCDirector sharedDirector] viewSize];
-	return [self initWithColor:ccc4(0,0,0,0) width:s.width height:s.height];
+	return [self initWithColor:[CCColor clearColor] width:s.width height:s.height];
 }
 
 // Designated initializer
-- (id) initWithColor:(ccColor4B)color width:(GLfloat)w  height:(GLfloat) h
+- (id) initWithColor:(CCColor*)color width:(GLfloat)w  height:(GLfloat) h
 {
 	if( (self=[super init]) ) {
 
+        ccColor4B color4 = color.ccColor4b;
+        
 		// default blend function
 		_blendFunc = (ccBlendFunc) { GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA };
 
-		_displayedColor.r = _realColor.r = color.r;
-		_displayedColor.g = _realColor.g = color.g;
-		_displayedColor.b = _realColor.b = color.b;
-		_displayedOpacity = _realOpacity = color.a;
+		_displayedColor.r = _realColor.r = color4.r;
+		_displayedColor.g = _realColor.g = color4.g;
+		_displayedColor.b = _realColor.b = color4.b;
+		_displayedOpacity = _realOpacity = color4.a;
 
 		for (NSUInteger i = 0; i<sizeof(_squareVertices) / sizeof( _squareVertices[0]); i++ ) {
 			_squareVertices[i].x = 0.0f;
@@ -110,7 +112,7 @@
 	return self;
 }
 
-- (id) initWithColor:(ccColor4B)color
+- (id) initWithColor:(CCColor*)color
 {
 	CGSize s = [[CCDirector sharedDirector] viewSize];
 	return [self initWithColor:color width:s.width height:s.height];
@@ -156,13 +158,13 @@
 #pragma mark Protocols
 // Color Protocol
 
--(void) setColor:(ccColor3B)color
+-(void) setColor:(CCColor*)color
 {
     [super setColor:color];
 	[self updateColor];
 }
 
--(void) setOpacity: (GLubyte) opacity
+-(void) setOpacity: (CGFloat) opacity
 {
     [super setOpacity:opacity];
 	[self updateColor];
@@ -175,41 +177,42 @@
 
 @implementation CCNodeGradient
 
-@synthesize startOpacity = _startOpacity;
-@synthesize endColor = _endColor, endOpacity = _endOpacity;
 @synthesize vector = _vector;
 
-+ (id) nodeWithColor: (ccColor4B) start fadingTo: (ccColor4B) end
++ (id) nodeWithColor: (CCColor*) start fadingTo: (CCColor*) end
 {
     return [[self alloc] initWithColor:start fadingTo:end];
 }
 
-+ (id) nodeWithColor: (ccColor4B) start fadingTo: (ccColor4B) end alongVector: (CGPoint) v
++ (id) nodeWithColor: (CCColor*) start fadingTo: (CCColor*) end alongVector: (CGPoint) v
 {
     return [[self alloc] initWithColor:start fadingTo:end alongVector:v];
 }
 
 - (id) init
 {
-	return [self initWithColor:ccc4(0, 0, 0, 255) fadingTo:ccc4(0, 0, 0, 255)];
+	return [self initWithColor:[CCColor blackColor] fadingTo:[CCColor blackColor]];
 }
 
-- (id) initWithColor: (ccColor4B) start fadingTo: (ccColor4B) end
+- (id) initWithColor: (CCColor*) start fadingTo: (CCColor*) end
 {
     return [self initWithColor:start fadingTo:end alongVector:ccp(0, -1)];
 }
 
-- (id) initWithColor: (ccColor4B) start fadingTo: (ccColor4B) end alongVector: (CGPoint) v
+- (id) initWithColor: (CCColor*) start fadingTo: (CCColor*) end alongVector: (CGPoint) v
 {
-	_endColor.r = end.r;
-	_endColor.g = end.g;
-	_endColor.b = end.b;
+    ccColor4B end4 = end.ccColor4b;
+    ccColor4B start4 = start.ccColor4b;
+    
+	_endColor.r = end4.r;
+	_endColor.g = end4.g;
+	_endColor.b = end4.b;
 
-	_endOpacity		= end.a;
-	_startOpacity	= start.a;
+	_endOpacity		= end4.a;
+	_startOpacity	= start4.a;
 	_vector = v;
 
-	start.a	= 255;
+	start4.a	= 255;
 	_compressedInterpolation = YES;
 
 	return [super initWithColor:start];
@@ -271,31 +274,46 @@
 	_squareColors[3].a = E.a + (S.a - E.a) * ((c - u.x - u.y) / (2.0f * c));
 }
 
--(ccColor3B) startColor
+-(CCColor*) startColor
 {
-	return _realColor;
+	return [CCColor colorWithCcColor3b:_realColor];
 }
 
--(void) setStartColor:(ccColor3B)color
+-(void) setStartColor:(CCColor*)color
 {
 	[self setColor:color];
 }
 
--(void) setEndColor:(ccColor3B)color
+- (CCColor*) endColor
 {
-    _endColor = color;
+    return [CCColor colorWithCcColor3b:_endColor];
+}
+
+-(void) setEndColor:(CCColor*)color
+{
+    _endColor = color.ccColor3b;
     [self updateColor];
 }
 
--(void) setStartOpacity: (GLubyte) o
+- (CGFloat) startOpacity
 {
-	_startOpacity = o;
+    return _startOpacity/255.0;
+}
+
+-(void) setStartOpacity: (CGFloat) o
+{
+	_startOpacity = o*255;
     [self updateColor];
 }
 
--(void) setEndOpacity: (GLubyte) o
+- (CGFloat) endOpacity
 {
-    _endOpacity = o;
+    return _endOpacity/255.0;
+}
+
+-(void) setEndOpacity: (CGFloat) o
+{
+    _endOpacity = o*255;
     [self updateColor];
 }
 

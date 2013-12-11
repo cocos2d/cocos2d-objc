@@ -44,8 +44,8 @@
     
     // Color every other row differently
     CCNodeColor* bg;
-    if (index % 2 != 0) bg = [CCNodeColor nodeWithColor:ccc4(255, 0, 0, 127)];
-    else bg = [CCNodeColor nodeWithColor:ccc4(0, 255, 0, 127)];
+    if (index % 2 != 0) bg = [CCNodeColor nodeWithColor:[CCColor colorWithRed:1 green:0 blue:0 alpha:0.5]];
+    else bg = [CCNodeColor nodeWithColor: [CCColor colorWithRed:0 green:1 blue:0 alpha:0.5]];
     
     bg.userInteractionEnabled = NO;
     bg.contentSizeType = CCSizeTypeNormalized;
@@ -86,8 +86,8 @@
     
     // Color every other row differently
     CCNodeColor* bg;
-    if (index % 2 != 0) bg = [CCNodeColor nodeWithColor:ccc4(255, 0, 0, 127)];
-    else bg = [CCNodeColor nodeWithColor:ccc4(0, 255, 0, 127)];
+    if (index % 2 != 0) bg = [CCNodeColor nodeWithColor:[CCColor colorWithRed:1 green:0 blue:0 alpha:0.5]];
+    else bg = [CCNodeColor nodeWithColor:[CCColor colorWithRed:0 green:1 blue:0 alpha:0.5]];
     
     bg.userInteractionEnabled = NO;
     bg.contentSizeType = CCSizeTypeNormalized;
@@ -130,8 +130,8 @@
     
     // Color every other row differently
     CCNodeColor* bg;
-    if (index % 2 != 0) bg = [CCNodeColor nodeWithColor:ccc4(255, 0, 0, 127)];
-    else bg = [CCNodeColor nodeWithColor:ccc4(0, 255, 0, 127)];
+    if (index % 2 != 0) bg = [CCNodeColor nodeWithColor:[CCColor colorWithRed:1 green:0 blue:0 alpha:0.5]];
+    else bg = [CCNodeColor nodeWithColor:[CCColor colorWithRed:0 green:1 blue:0 alpha:0.5]];
     
     bg.userInteractionEnabled = NO;
     bg.contentSizeType = CCSizeTypeNormalized;
@@ -177,7 +177,7 @@
     self.subTitle = @"Simple table view. Displays a number for each row within box (no clipping).";
     
     // Add a gray background box
-    CCNodeColor* colorBg = [CCNodeColor nodeWithColor:ccc4(127, 127, 127, 255)];
+    CCNodeColor* colorBg = [CCNodeColor nodeWithColor:[CCColor grayColor]];
     colorBg.contentSizeType = CCSizeTypeMake(CCSizeUnitInsetPoints, CCSizeUnitInsetPoints);
     colorBg.contentSize = CGSizeMake(kSimpleTableViewInset * 2, kSimpleTableViewInset * 2);
     colorBg.userInteractionEnabled = NO;
@@ -197,7 +197,7 @@
     self.subTitle = @"Table rows height multiplied by positionScaleFactor.";
     
     // Add a gray background box
-    CCNodeColor* colorBg = [CCNodeColor nodeWithColor:ccc4(127, 127, 127, 255)];
+    CCNodeColor* colorBg = [CCNodeColor nodeWithColor:[CCColor grayColor]];
     colorBg.contentSizeType = CCSizeTypeMake(CCSizeUnitInsetPoints, CCSizeUnitInsetPoints);
     colorBg.contentSize = CGSizeMake(kSimpleTableViewInset * 2, kSimpleTableViewInset * 2);
     colorBg.userInteractionEnabled = NO;
@@ -218,7 +218,7 @@
     self.subTitle = @"Table rows have different (increasing) heights.";
     
     // Add a gray background box
-    CCNodeColor* colorBg = [CCNodeColor nodeWithColor:ccc4(127, 127, 127, 255)];
+    CCNodeColor* colorBg = [CCNodeColor nodeWithColor:[CCColor grayColor]];
     colorBg.contentSizeType = CCSizeTypeMake(CCSizeUnitInsetPoints, CCSizeUnitInsetPoints);
     colorBg.contentSize = CGSizeMake(kSimpleTableViewInset * 2, kSimpleTableViewInset * 2);
     colorBg.userInteractionEnabled = NO;
