@@ -788,10 +788,10 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	// set parent nil at the end (issue #476)
 	[child setParent:nil];
 
-    /** mark responder manager as dirty
-     @since v3.0
-     */
-    [[[CCDirector sharedDirector] responderManager] markAsDirty];
+	/** mark responder manager as dirty
+	 @since v3.0
+	 */
+	[[[CCDirector sharedDirector] responderManager] markAsDirty];
 
 	[_children removeObject:child];
 }
@@ -927,16 +927,16 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 -(void) transform
 {
-	kmMat4 transfrom4x4;
+	kmMat4 transform4x4;
 
 	// Convert 3x3 into 4x4 matrix
 	CGAffineTransform tmpAffine = [self nodeToParentTransform];
-	CGAffineToGL(&tmpAffine, transfrom4x4.mat);
+	CGAffineToGL(&tmpAffine, transform4x4.mat);
 
 	// Update Z vertex manually
-	transfrom4x4.mat[14] = _vertexZ;
+	transform4x4.mat[14] = _vertexZ;
 
-	kmGLMultMatrix( &transfrom4x4 );
+	kmGLMultMatrix( &transform4x4 );
 }
 
 -(void) updateTransform{};
