@@ -136,6 +136,12 @@ static CCDirector *_sharedDirector = nil;
 	return [super alloc];
 }
 
+// Force creation of a new singleton, useful to prevent state leaking during tests.
++ (void) resetSingleton
+{
+	_sharedDirector = nil;
+}
+
 - (id) init
 {
 	if( (self=[super init] ) ) {
