@@ -127,7 +127,7 @@
 	[scene addChild:first z:0];
 
 	CCNode *second = [CCNode node];
-	[first addChild:second z:0];
+	[scene addChild:second z:0];
 	
 	static bool firstActionOccured = FALSE;
 	static bool secondActionOccured = FALSE;
@@ -184,6 +184,8 @@
 	
 }
 
+// TODO Write tests where points != pixels.
+
 
 -(void)testCCNodePositionTypeChangeCorners
 {
@@ -201,17 +203,17 @@
 	float screenWidth = 1024.0;
 	float screenHeight = 768.0;
 	
-	XCTAssertEqual(first.position.x, (CGFloat) (screenWidth - 10.0), @""); // TODO: Shouldn't this be consistent with first.positionInPoints?
+#warning first.positionInPoints is not consistent with first.position.
+	XCTAssertEqual(first.position.x, (CGFloat) (screenWidth - 10.0), @"");
 	XCTAssertEqual(first.position.y, (CGFloat) (screenHeight - 15.0), @"");
 	XCTAssertEqual(first.contentSize.width, (CGFloat) 1.0, @"");
 	XCTAssertEqual(first.contentSize.height, (CGFloat) 2.0, @"");
 	
-	XCTAssertEqual(first.positionInPoints.x, (CGFloat) (screenWidth - 10.0), @""); // TODO: Shouldn't this be consistent with first.position?
+#warning first.positionInPoints is not consistent with first.position.
+	XCTAssertEqual(first.positionInPoints.x, (CGFloat) (screenWidth - 10.0), @"");
 	XCTAssertEqual(first.positionInPoints.y, (CGFloat) (screenHeight - 15.0), @"");
 	XCTAssertEqual(first.contentSizeInPoints.width, (CGFloat) 1.0, @"");
 	XCTAssertEqual(first.contentSizeInPoints.height, (CGFloat) 2.0, @"");
-	
-	
 	
 }
 
@@ -235,14 +237,15 @@
 	
 	XCTAssertEqual(first.positionInPoints.x, (CGFloat) 10.0, @"");
 	XCTAssertEqual(first.positionInPoints.y, (CGFloat) 15.0, @"");
-	XCTAssertEqual(first.contentSizeInPoints.width, (CGFloat) 1.0, @""); // TODO: Should content size be doubled?
+	XCTAssertEqual(first.contentSizeInPoints.width, (CGFloat) 1.0, @"");
 	XCTAssertEqual(first.contentSizeInPoints.height, (CGFloat) 2.0, @"");
 	
 	[CCDirector sharedDirector].UIScaleFactor = 2.0;
 	
 	XCTAssertEqual(first.positionInPoints.x, (CGFloat) 20.0, @"");
 	XCTAssertEqual(first.positionInPoints.y, (CGFloat) 30.0, @"");
-	XCTAssertEqual(first.contentSizeInPoints.width, (CGFloat) 1.0, @""); // TODO: Should content size be doubled?
+#warning Should content size be doubled when the UIScaleFactor changes?
+	XCTAssertEqual(first.contentSizeInPoints.width, (CGFloat) 1.0, @"");
 	XCTAssertEqual(first.contentSizeInPoints.height, (CGFloat) 2.0, @"");
 
 }
@@ -259,24 +262,24 @@
 	first.contentSize = CGSizeMake(1.0, 2.0);
 	[scene addChild:first z:0];
 		
-	CGAffineTransform nodeToParent = [first nodeToWorldTransform];
-	XCTAssertEqualWithAccuracy(nodeToParent.a, 1.0, 0.001, @"");
-	XCTAssertEqualWithAccuracy(nodeToParent.b, 0.0, 0.001, @"");
-	XCTAssertEqualWithAccuracy(nodeToParent.c, 0.0, 0.001, @"");
-	XCTAssertEqualWithAccuracy(nodeToParent.d, 1.0, 0.001, @"");
-	XCTAssertEqualWithAccuracy(nodeToParent.tx, 10.0, 0.001, @"");
-	XCTAssertEqualWithAccuracy(nodeToParent.ty, 15.0, 0.001, @"");
+	CGAffineTransform nodeToWorld = [first nodeToWorldTransform];
+	XCTAssertEqualWithAccuracy(nodeToWorld.a, 1.0, 0.001, @"");
+	XCTAssertEqualWithAccuracy(nodeToWorld.b, 0.0, 0.001, @"");
+	XCTAssertEqualWithAccuracy(nodeToWorld.c, 0.0, 0.001, @"");
+	XCTAssertEqualWithAccuracy(nodeToWorld.d, 1.0, 0.001, @"");
+	XCTAssertEqualWithAccuracy(nodeToWorld.tx, 10.0, 0.001, @"");
+	XCTAssertEqualWithAccuracy(nodeToWorld.ty, 15.0, 0.001, @"");
 	
 	//change position type. This should mark the transform as dirty, so we can recalculate and try again:
 	first.positionType = CCPositionTypeMake(CCPositionUnitUIPoints, CCPositionUnitUIPoints, CCPositionReferenceCornerBottomLeft);
 	
-	nodeToParent = [first nodeToWorldTransform];
-	XCTAssertEqualWithAccuracy(nodeToParent.a, 1.0, 0.001, @"");
-	XCTAssertEqualWithAccuracy(nodeToParent.b, 0.0, 0.001, @"");
-	XCTAssertEqualWithAccuracy(nodeToParent.c, 0.0, 0.001, @"");
-	XCTAssertEqualWithAccuracy(nodeToParent.d, 1.0, 0.001, @"");
-	XCTAssertEqualWithAccuracy(nodeToParent.tx, 10.0, 0.001, @"");
-	XCTAssertEqualWithAccuracy(nodeToParent.ty, 15.0, 0.001, @"");
+	nodeToWorld = [first nodeToWorldTransform];
+	XCTAssertEqualWithAccuracy(nodeToWorld.a, 1.0, 0.001, @"");
+	XCTAssertEqualWithAccuracy(nodeToWorld.b, 0.0, 0.001, @"");
+	XCTAssertEqualWithAccuracy(nodeToWorld.c, 0.0, 0.001, @"");
+	XCTAssertEqualWithAccuracy(nodeToWorld.d, 1.0, 0.001, @"");
+	XCTAssertEqualWithAccuracy(nodeToWorld.tx, 10.0, 0.001, @"");
+	XCTAssertEqualWithAccuracy(nodeToWorld.ty, 15.0, 0.001, @"");
 	
 	//Now try with a UIScaleFactor:
 	[CCDirector sharedDirector].UIScaleFactor = 2.0;
@@ -284,13 +287,13 @@
 	
 	// TODO: It seems odd that "UIScaleFactor" is applied to all nodes. Does the name need changing?
 	// TODO: Also seems odd that a global scale factor works by changing every transform in the app. Why not apply it only when it's being drawn?
-	nodeToParent = [first nodeToWorldTransform];
-	XCTAssertEqualWithAccuracy(nodeToParent.a, 1.0, 0.001, @""); // UIScale Factor *doesn't* change the transform scale.
-	XCTAssertEqualWithAccuracy(nodeToParent.b, 0.0, 0.001, @"");
-	XCTAssertEqualWithAccuracy(nodeToParent.c, 0.0, 0.001, @"");
-	XCTAssertEqualWithAccuracy(nodeToParent.d, 1.0, 0.001, @"");
-	XCTAssertEqualWithAccuracy(nodeToParent.tx, 20.0, 0.001, @""); // Should be doubled.
-	XCTAssertEqualWithAccuracy(nodeToParent.ty, 30.0, 0.001, @"");
+	nodeToWorld = [first nodeToWorldTransform];
+	XCTAssertEqualWithAccuracy(nodeToWorld.a, 1.0, 0.001, @""); // UIScale Factor *doesn't* change the transform scale.
+	XCTAssertEqualWithAccuracy(nodeToWorld.b, 0.0, 0.001, @"");
+	XCTAssertEqualWithAccuracy(nodeToWorld.c, 0.0, 0.001, @"");
+	XCTAssertEqualWithAccuracy(nodeToWorld.d, 1.0, 0.001, @"");
+	XCTAssertEqualWithAccuracy(nodeToWorld.tx, 20.0, 0.001, @""); // Should be doubled.
+	XCTAssertEqualWithAccuracy(nodeToWorld.ty, 30.0, 0.001, @"");
 	
 }
 
@@ -307,16 +310,22 @@
 	
 	[scene addChild:first z:0];
 	
-	CGAffineTransform nodeToParent = [first nodeToWorldTransform];
-	XCTAssertEqualWithAccuracy(nodeToParent.a, 2.0, 0.001, @""); // Node Scale *does* change the transform scale.
-	XCTAssertEqualWithAccuracy(nodeToParent.b, 0.0, 0.001, @"");
-	XCTAssertEqualWithAccuracy(nodeToParent.c, 0.0, 0.001, @"");
-	XCTAssertEqualWithAccuracy(nodeToParent.d, 2.0, 0.001, @"");
-	XCTAssertEqualWithAccuracy(nodeToParent.tx, 10.0, 0.001, @"");
-	XCTAssertEqualWithAccuracy(nodeToParent.ty, 15.0, 0.001, @"");
+	CGAffineTransform nodeToWorld = [first nodeToWorldTransform];
+	XCTAssertEqualWithAccuracy(nodeToWorld.a, 2.0, 0.001, @""); // Node Scale *does* change the transform scale.
+	XCTAssertEqualWithAccuracy(nodeToWorld.b, 0.0, 0.001, @"");
+	XCTAssertEqualWithAccuracy(nodeToWorld.c, 0.0, 0.001, @"");
+	XCTAssertEqualWithAccuracy(nodeToWorld.d, 2.0, 0.001, @"");
+	XCTAssertEqualWithAccuracy(nodeToWorld.tx, 10.0, 0.001, @"");
+	XCTAssertEqualWithAccuracy(nodeToWorld.ty, 15.0, 0.001, @"");
+	
+	// Should changing node scale also change the content size? If contentSize is being used for input on the node....
+	XCTAssertEqualWithAccuracy(first.contentSize.width, 2.0, 0.001, @"");
+	XCTAssertEqualWithAccuracy(first.contentSize.height, 4.0, 0.001, @"");
+	
 	
 }
 
+// TODO: Write tests that scale a parent anchor node, make sure the child's nodeToWorldTransform moves.
 
 
 @end
