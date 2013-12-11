@@ -329,3 +329,107 @@
 }
 
 @end
+
+@implementation CCColor (ExtraProperties)
+
+- (CGFloat) red
+{
+    CGColorSpaceModel csModel = [self colorSpaceModel];
+    if (csModel == kCGColorSpaceModelRGB)
+    {
+        CGFloat r, g, b, a;
+        [self getRed:&r green:&g blue:&b alpha:&a];
+        return r;
+    }
+    else if (csModel == kCGColorSpaceModelMonochrome)
+    {
+        CGFloat w, a;
+        [self getWhite:&w alpha:&a];
+        return w;
+    }
+    else
+    {
+        return 1;
+    }
+}
+
+- (CGFloat) green
+{
+    CGColorSpaceModel csModel = [self colorSpaceModel];
+    if (csModel == kCGColorSpaceModelRGB)
+    {
+        CGFloat r, g, b, a;
+        [self getRed:&r green:&g blue:&b alpha:&a];
+        return g;
+    }
+    else if (csModel == kCGColorSpaceModelMonochrome)
+    {
+        CGFloat w, a;
+        [self getWhite:&w alpha:&a];
+        return w;
+    }
+    else
+    {
+        return 1;
+    }
+}
+
+- (CGFloat) blue
+{
+    CGColorSpaceModel csModel = [self colorSpaceModel];
+    if (csModel == kCGColorSpaceModelRGB)
+    {
+        CGFloat r, g, b, a;
+        [self getRed:&r green:&g blue:&b alpha:&a];
+        return b;
+    }
+    else if (csModel == kCGColorSpaceModelMonochrome)
+    {
+        CGFloat w, a;
+        [self getWhite:&w alpha:&a];
+        return w;
+    }
+    else
+    {
+        return 1;
+    }
+}
+
+- (CGFloat) alpha
+{
+    CGColorSpaceModel csModel = [self colorSpaceModel];
+    if (csModel == kCGColorSpaceModelRGB)
+    {
+        CGFloat r, g, b, a;
+        [self getRed:&r green:&g blue:&b alpha:&a];
+        return a;
+    }
+    else if (csModel == kCGColorSpaceModelMonochrome)
+    {
+        CGFloat w, a;
+        [self getWhite:&w alpha:&a];
+        return a;
+    }
+    else
+    {
+        return 1;
+    }
+}
+
+- (BOOL) isEqual:(id)object
+{
+    if (self == object) return YES;
+    if (![object isKindOfClass:[CCColor class]]) return NO;
+    
+    ccColor4F c4f0 = self.ccColor4f;
+    ccColor4F c4f1 = ((CCColor*)object).ccColor4f;
+    
+    return ccc4FEqual(c4f0, c4f1);
+}
+
+- (BOOL) isEqualToColor:(CCColor*) color
+{
+    return [self isEqual:color];
+}
+
+@end

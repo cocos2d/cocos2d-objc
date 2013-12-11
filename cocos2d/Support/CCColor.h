@@ -82,3 +82,15 @@
 @property (nonatomic, readonly) ccColor4F ccColor4f;
 
 @end
+
+@interface CCColor (ExtraProperties)
+
+@property (nonatomic, readonly) CGFloat red;
+@property (nonatomic, readonly) CGFloat green;
+@property (nonatomic, readonly) CGFloat blue;
+@property (nonatomic, readonly) CGFloat alpha;
+
+- (BOOL) isEqual:(id)object;
+- (BOOL) isEqualToColor:(CCColor*) color;
+
+@end
