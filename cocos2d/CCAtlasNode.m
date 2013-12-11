@@ -152,8 +152,9 @@
 		color3.r = color3.r * _displayedOpacity/255;
 		color3.g = color3.g * _displayedOpacity/255;
 		color3.b = color3.b * _displayedOpacity/255;
+		color = [CCColor colorWithCcColor3b:color3];
 	}
-    [super setColor:color];
+	[super setColor:color];
 }
 
 -(void) setOpacity:(CGFloat) anOpacity
