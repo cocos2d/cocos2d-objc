@@ -64,7 +64,7 @@
  *
  *  @return New CCNodeColor
  */
-+ (id) nodeWithColor: (ccColor4B)color width:(GLfloat)w height:(GLfloat)h;
++ (id) nodeWithColor: (CCColor*)color width:(GLfloat)w height:(GLfloat)h;
 
 /**
  *  Creates a CCNode with color. Width and height are the window size.
@@ -73,7 +73,7 @@
  *
  *  @return New CCNodeColor
  */
-+ (id) nodeWithColor: (ccColor4B)color;
++ (id) nodeWithColor: (CCColor*)color;
 
 /**
  *  Initializes a CCNode with color, width and height in Points.
@@ -84,7 +84,7 @@
  *
  *  @return New CCNodeColor
  */
-- (id) initWithColor:(ccColor4B)color width:(GLfloat)w height:(GLfloat)h;
+- (id) initWithColor:(CCColor*)color width:(GLfloat)w height:(GLfloat)h;
 
 /**
  *  Inirializes a CCNode with color. Width and height are the window size.
@@ -93,7 +93,7 @@
  *
  *  @return New CCNodeColor
  */
-- (id) initWithColor:(ccColor4B)color;
+- (id) initWithColor:(CCColor*)color;
 
 /** BlendFunction. Conforms to CCBlendProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
@@ -128,23 +128,23 @@
 }
 
 /* Creates a full-screen CCNode with a gradient between start and end. */
-+ (id) nodeWithColor: (ccColor4B) start fadingTo: (ccColor4B) end;
++ (id) nodeWithColor: (CCColor*) start fadingTo: (CCColor*) end;
 /* Creates a full-screen CCNode with a gradient between start and end in the direction of v. */
-+ (id) nodeWithColor: (ccColor4B) start fadingTo: (ccColor4B) end alongVector: (CGPoint) v;
++ (id) nodeWithColor: (CCColor*) start fadingTo: (CCColor*) end alongVector: (CGPoint) v;
 
 /* Initializes the CCNode with a gradient between start and end. */
-- (id) initWithColor: (ccColor4B) start fadingTo: (ccColor4B) end;
+- (id) initWithColor: (CCColor*) start fadingTo: (CCColor*) end;
 /* Initializes the CCNode with a gradient between start and end in the direction of v. */
-- (id) initWithColor: (ccColor4B) start fadingTo: (ccColor4B) end alongVector: (CGPoint) v;
+- (id) initWithColor: (CCColor*) start fadingTo: (CCColor*) end alongVector: (CGPoint) v;
 
 /** The starting color. */
-@property (nonatomic, readwrite) ccColor3B startColor;
+@property (nonatomic, strong) CCColor* startColor;
 /** The ending color. */
-@property (nonatomic, readwrite) ccColor3B endColor;
+@property (nonatomic, strong) CCColor* endColor;
 /** The starting opacity. */
-@property (nonatomic, readwrite) GLubyte startOpacity;
+@property (nonatomic, readwrite) CGFloat startOpacity;
 /** The ending color. */
-@property (nonatomic, readwrite) GLubyte endOpacity;
+@property (nonatomic, readwrite) CGFloat endOpacity;
 /** The vector along which to fade color. */
 @property (nonatomic, readwrite) CGPoint vector;
 /** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors.

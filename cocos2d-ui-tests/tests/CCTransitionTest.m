@@ -29,7 +29,7 @@
     self.subTitle = @"Cross fade";
     _nextTransition = [CCTransition transitionCrossFadeWithDuration:1];
     
-    CCNodeColor* bgLayer = [CCNodeColor nodeWithColor:ccc4(255, 0, 0, 255)];
+    CCNodeColor* bgLayer = [CCNodeColor nodeWithColor:[CCColor redColor]];
     bgLayer.contentSize = CGSizeMake(1, 1);
     bgLayer.contentSizeType = CCSizeTypeNormalized;
     [self.contentNode addChild:bgLayer];
@@ -40,7 +40,7 @@
     self.subTitle = @"Fade with Color";
     _nextTransition = [CCTransition transitionFadeWithColor:ccc3(0, 0, 0) duration:1];
     
-    CCNodeColor* bgLayer = [CCNodeColor nodeWithColor:ccc4(0, 255, 0, 255)];
+    CCNodeColor* bgLayer = [CCNodeColor nodeWithColor:[CCColor greenColor]];
     bgLayer.contentSize = CGSizeMake(1, 1);
     bgLayer.contentSizeType = CCSizeTypeNormalized;
     [self.contentNode addChild:bgLayer];

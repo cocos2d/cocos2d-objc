@@ -148,7 +148,7 @@
  *  @param color Color applied to background image.
  *  @param state State to apply the color to.
  */
-- (void) setBackgroundColor:(ccColor3B) color forState:(CCControlState) state;
+- (void) setBackgroundColor:(CCColor*) color forState:(CCControlState) state;
 
 /**
  *  Gets the background color for the specified state.
@@ -157,7 +157,7 @@
  *
  *  @return Background color.
  */
-- (ccColor3B) backgroundColorForState:(CCControlState)state;
+- (CCColor*) backgroundColorForState:(CCControlState)state;
 
 /**
  *  Sets the background's opacity for the specified state.
@@ -165,7 +165,7 @@
  *  @param opacity Opacity to apply to the background image
  *  @param state   State to apply the opacity to.
  */
-- (void) setBackgroundOpacity:(GLubyte) opacity forState:(CCControlState) state;
+- (void) setBackgroundOpacity:(CGFloat) opacity forState:(CCControlState) state;
 
 /**
  *  Gets the background opacity for the specified state.
@@ -174,7 +174,7 @@
  *
  *  @return Opacity.
  */
-- (GLubyte) backgroundOpacityForState:(CCControlState)state;
+- (CGFloat) backgroundOpacityForState:(CCControlState)state;
 
 /**
  *  Sets the label's color for the specified state.
@@ -182,7 +182,7 @@
  *  @param color Color applied to the label.
  *  @param state State to set the color for.
  */
-- (void) setLabelColor:(ccColor3B) color forState:(CCControlState) state;
+- (void) setLabelColor:(CCColor*) color forState:(CCControlState) state;
 
 /**
  *  Gets the label's color for the specified state.
@@ -191,7 +191,7 @@
  *
  *  @return Label color.
  */
-- (ccColor3B) labelColorForState:(CCControlState) state;
+- (CCColor*) labelColorForState:(CCControlState) state;
 
 /**
  *  Sets the label's opacity for the specified state.
@@ -199,7 +199,7 @@
  *  @param opacity Opacity applied to the label.
  *  @param state   State to set the opacity for.
  */
-- (void) setLabelOpacity:(GLubyte) opacity forState:(CCControlState) state;
+- (void) setLabelOpacity:(CGFloat) opacity forState:(CCControlState) state;
 
 /**
  *  Gets the label's opacity for the specified state.
@@ -208,7 +208,7 @@
  *
  *  @return Label opacity.
  */
-- (GLubyte) labelOpacityForState:(CCControlState) state;
+- (CGFloat) labelOpacityForState:(CCControlState) state;
 
 /**
  *  Sets the background's sprite frame for the specified state. The sprite frame will be stretched to the preferred size of the label. If set to `NULL` no background will be drawn.

@@ -137,7 +137,7 @@
             // Create checkered patterns
             if (toggle)
             {
-                CCNodeColor* layer = [CCNodeColor nodeWithColor:ccc4(127, 127, 127, 255)];
+                CCNodeColor* layer = [CCNodeColor nodeWithColor:[CCColor grayColor]];
                 layer.contentSizeType = CCSizeTypeNormalized;
                 layer.contentSize = CGSizeMake(1.0f/w, 1.0f/h);
                 //layer.contentSize = CGSizeMake(100, 100);
