@@ -285,8 +285,8 @@
 	[CCDirector sharedDirector].UIScaleFactor = 2.0;
 	first.positionType = CCPositionTypeMake(CCPositionUnitUIPoints, CCPositionUnitUIPoints, CCPositionReferenceCornerBottomLeft);
 	
-	// TODO: It seems odd that "UIScaleFactor" is applied to all nodes. Does the name need changing?
-	// TODO: Also seems odd that a global scale factor works by changing every transform in the app. Why not apply it only when it's being drawn?
+#warning It seems odd that "UIScaleFactor" is applied to all nodes. Does the name need changing?
+#warning Also seems odd that a global scale factor works by changing every transform in the app. Why not apply it only when it's being drawn?
 	nodeToWorld = [first nodeToWorldTransform];
 	XCTAssertEqualWithAccuracy(nodeToWorld.a, 1.0, 0.001, @""); // UIScale Factor *doesn't* change the transform scale.
 	XCTAssertEqualWithAccuracy(nodeToWorld.b, 0.0, 0.001, @"");
