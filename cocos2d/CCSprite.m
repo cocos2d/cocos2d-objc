@@ -810,19 +810,19 @@
 	// do nothing
 }
 
--(void) setColor:(ccColor3B)color3
+-(void) setColor:(CCColor*)color
 {
-    [super setColor:color3];
+    [super setColor:color];
 	[self updateColor];
 }
 
--(void)updateDisplayedColor:(ccColor3B)parentColor
+-(void)updateDisplayedColor:(CCColor*)parentColor
 {
     [super updateDisplayedColor:parentColor];
     [self updateColor];
 }
 
--(void) setOpacity:(GLubyte)opacity
+-(void) setOpacity:(CGFloat)opacity
 {
     [super setOpacity:opacity];
 	[self updateColor];
@@ -841,7 +841,7 @@
 	return _opacityModifyRGB;
 }
 
--(void)updateDisplayedOpacity:(GLubyte)parentOpacity
+-(void)updateDisplayedOpacity:(CGFloat)parentOpacity
 {
     [super updateDisplayedOpacity:parentOpacity];
     [self updateColor];

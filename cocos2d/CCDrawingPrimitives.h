@@ -53,8 +53,8 @@
 extern "C" {
 #endif
 
+#import "CCColor.h"
 @class CCPointArray;
-
 	
 /**
  @file
@@ -103,7 +103,7 @@ void ccDrawRect( CGPoint origin, CGPoint destination );
 /** draws a solid rectangle given the origin and destination point measured in points.
     @since 1.1
  */
-void ccDrawSolidRect( CGPoint origin, CGPoint destination, ccColor4F color );
+void ccDrawSolidRect( CGPoint origin, CGPoint destination, CCColor* color );
 
 /** draws a polygon given a pointer to CGPoint coordinates and the number of vertices measured in points.
  The polygon can be closed or open
@@ -112,7 +112,7 @@ void ccDrawPoly( const CGPoint *vertices, NSUInteger numOfVertices, BOOL closePo
 
 /** draws a solid polygon given a pointer to CGPoint coordinates, the number of vertices measured in points, and a color.
  */
-void ccDrawSolidPoly( const CGPoint *poli, NSUInteger numberOfPoints, ccColor4F color );
+void ccDrawSolidPoly( const CGPoint *poli, NSUInteger numberOfPoints, CCColor* color );
     
 /** draws a circle given the center, radius and number of segments measured in points */
 void ccDrawCircle( CGPoint center, float radius, float angle, NSUInteger segments, BOOL drawLineToCenter);

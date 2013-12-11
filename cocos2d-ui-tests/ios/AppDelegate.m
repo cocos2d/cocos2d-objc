@@ -43,8 +43,8 @@
      nil];
     
     [self setupCocos2dWithOptions:@{
-//			CCConfigTabletScale2X: @YES,
-			CCConfigHideDebugStats: @YES,
+//			CCSetupTabletScale2X: @YES,
+			CCSetupHideDebugStats: @YES,
 		}];
     
     return YES;

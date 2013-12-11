@@ -13,12 +13,12 @@
 #import "CCTexture.h"
 #import "CCFileUtils.h"
 
-NSString* const CCConfigPixelFormat = @"CCConfigPixelFormat";
-NSString* const CCConfigScreenMode = @"CCConfigScreenMode";
-NSString* const CCConfigScreenOrientation = @"CCConfigScreenOrientation";
-NSString* const CCConfigAnimationInterval = @"CCConfigAnimationInterval";
-NSString* const CCConfigHideDebugStats = @"CCConfigHideDebugStats";
-NSString* const CCConfigTabletScale2X = @"CCConfigTabletScale2X";
+NSString* const CCSetupPixelFormat = @"CCSetupPixelFormat";
+NSString* const CCSetupScreenMode = @"CCSetupScreenMode";
+NSString* const CCSetupScreenOrientation = @"CCSetupScreenOrientation";
+NSString* const CCSetupAnimationInterval = @"CCSetupAnimationInterval";
+NSString* const CCSetupHideDebugStats = @"CCSetupHideDebugStats";
+NSString* const CCSetupTabletScale2X = @"CCSetupTabletScale2X";
 
 
 @interface CCNavigationController ()
@@ -99,27 +99,27 @@ NSString* const CCConfigTabletScale2X = @"CCConfigTabletScale2X";
     if (config)
     {
         // Read pixelFormat
-        if ([config objectForKey:CCConfigPixelFormat])
+        if ([config objectForKey:CCSetupPixelFormat])
         {
-            pixelFormat = [config objectForKey:CCConfigPixelFormat];
+            pixelFormat = [config objectForKey:CCSetupPixelFormat];
         }
         
         // Read screenMode
-        if ([config objectForKey:CCConfigScreenMode])
+        if ([config objectForKey:CCSetupScreenMode])
         {
-            screenMode = [[config objectForKey:CCConfigScreenMode] intValue];
+            screenMode = [[config objectForKey:CCSetupScreenMode] intValue];
         }
         
         // Read screenOrientation
-        if ([config objectForKey:CCConfigScreenOrientation])
+        if ([config objectForKey:CCSetupScreenOrientation])
         {
-            screenOrientation = [[config objectForKey:CCConfigScreenOrientation] intValue];
+            screenOrientation = [[config objectForKey:CCSetupScreenOrientation] intValue];
         }
         
         // Read animationInterval
-        if ([config objectForKey:CCConfigAnimationInterval])
+        if ([config objectForKey:CCSetupAnimationInterval])
         {
-            animationInterval = [[config objectForKey:CCConfigAnimationInterval] doubleValue];
+            animationInterval = [[config objectForKey:CCSetupAnimationInterval] doubleValue];
         }
     }
     
@@ -153,7 +153,7 @@ NSString* const CCConfigTabletScale2X = @"CCConfigTabletScale2X";
 	director.wantsFullScreenLayout = YES;
 	
 #if DEBUG
-	if(![config[CCConfigHideDebugStats] boolValue]){
+	if(![config[CCSetupHideDebugStats] boolValue]){
 		// Display FSP and SPF
 		[director setDisplayStats:YES];
 	}
@@ -168,7 +168,7 @@ NSString* const CCConfigTabletScale2X = @"CCConfigTabletScale2X";
 	// Setup tablet scaling if it was requested.
 	if(
 		UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad &&
-		[config[CCConfigTabletScale2X] boolValue]
+		[config[CCSetupTabletScale2X] boolValue]
 	){
 		// Set the director to use 2 points per pixel.
 		director.contentScaleFactor *= 2.0;

@@ -81,8 +81,8 @@
     self = [self initWithTitle:title spriteFrame:spriteFrame highlightedSpriteFrame:NULL disabledSpriteFrame:NULL];
     
     // Setup default colors for when only one frame is used
-    [self setBackgroundColor:ccc3(190, 190, 190) forState:CCControlStateHighlighted];
-    [self setLabelColor:ccc3(190, 190, 190) forState:CCControlStateHighlighted];
+    [self setBackgroundColor:[CCColor colorWithWhite:0.7 alpha:1] forState:CCControlStateHighlighted];
+    [self setLabelColor:[CCColor colorWithWhite:0.7 alpha:1] forState:CCControlStateHighlighted];
     
     [self setBackgroundOpacity:127 forState:CCControlStateDisabled];
     [self setLabelOpacity:127 forState:CCControlStateDisabled];
@@ -355,60 +355,56 @@
     [super setScaleY:scaleY];
 }
 
-- (void) setLabelColor:(ccColor3B)color forState:(CCControlState)state
+- (void) setLabelColor:(CCColor*)color forState:(CCControlState)state
 {
-    [_labelColors setObject:[NSValue value:&color withObjCType:@encode(ccColor3B)] forKey:[NSNumber numberWithInt:state]];
+    [_labelColors setObject:color forKey:[NSNumber numberWithInt:state]];
     [self stateChanged];
 }
 
-- (ccColor3B) labelColorForState:(CCControlState)state
+- (CCColor*) labelColorForState:(CCControlState)state
 {
-    NSValue* val = [_labelColors objectForKey:[NSNumber numberWithInt:state]];
-    if (!val) return ccc3(255, 255, 255);
-    ccColor3B color;
-    [val getValue:&color];
+    CCColor* color = [_labelColors objectForKey:[NSNumber numberWithInt:state]];
+    if (!color) color = [CCColor whiteColor];
     return color;
 }
 
-- (void) setLabelOpacity:(GLubyte)opacity forState:(CCControlState)state
+- (void) setLabelOpacity:(CGFloat)opacity forState:(CCControlState)state
 {
-    [_labelOpacities setObject:[NSNumber numberWithInt:opacity] forKey:[NSNumber numberWithInt:state]];
+    [_labelOpacities setObject:[NSNumber numberWithFloat:opacity] forKey:[NSNumber numberWithInt:state]];
     [self stateChanged];
 }
 
-- (GLubyte) labelOpacityForState:(CCControlState)state
+- (CGFloat) labelOpacityForState:(CCControlState)state
 {
     NSNumber* val = [_labelOpacities objectForKey:[NSNumber numberWithInt:state]];
-    if (!val) return 255;
-    return [val intValue];
+    if (!val) return 1;
+    return [val floatValue];
 }
 
-- (void) setBackgroundColor:(ccColor3B)color forState:(CCControlState)state
+- (void) setBackgroundColor:(CCColor*)color forState:(CCControlState)state
 {
-    [_backgroundColors setObject:[NSValue value:&color withObjCType:@encode(ccColor3B)] forKey:[NSNumber numberWithInt:state]];
+    [_backgroundColors setObject:color forKey:[NSNumber numberWithInt:state]];
     [self stateChanged];
 }
 
-- (ccColor3B) backgroundColorForState:(CCControlState)state
+- (CCColor*) backgroundColorForState:(CCControlState)state
 {
-    NSValue* val = [_backgroundColors objectForKey:[NSNumber numberWithInt:state]];
-    if (!val) return ccc3(255, 255, 255);
-    ccColor3B color;
-    [val getValue:&color];
+    CCColor* color = [_backgroundColors objectForKey:[NSNumber numberWithInt:state]];
+    if (!color) color = [CCColor whiteColor];
     return color;
 }
 
-- (void) setBackgroundOpacity:(GLubyte)opacity forState:(CCControlState)state
+- (void) setBackgroundOpacity:(CGFloat)opacity forState:(CCControlState)state
 {
-    [_backgroundOpacities setObject:[NSNumber numberWithInt:opacity] forKey:[NSNumber numberWithInt:state]];
+    [_backgroundOpacities setObject:[NSNumber numberWithFloat:opacity] forKey:[NSNumber numberWithInt:state]];
     [self stateChanged];
 }
 
-- (GLubyte) backgroundOpacityForState:(CCControlState)state
+- (CGFloat) backgroundOpacityForState:(CCControlState)state
 {
     NSNumber* val = [_backgroundOpacities objectForKey:[NSNumber numberWithInt:state]];
-    if (!val) return 255;
-    return [val intValue];
+    if (!val) return 1;
+    return [val floatValue];
 }
 
 - (void) setBackgroundSpriteFrame:(CCSpriteFrame*)spriteFrame forState:(CCControlState)state
@@ -497,9 +493,7 @@
     }
     else if ([key isEqualToString:@"labelColor"])
     {
-        ccColor3B c;
-        [value getValue:&c];
-        [self setLabelColor:c forState:state];
+        [self setLabelColor:value forState:state];
     }
     else if ([key isEqualToString:@"backgroundOpacity"])
     {
@@ -507,9 +501,7 @@
     }
     else if ([key isEqualToString:@"backgroundColor"])
     {
-        ccColor3B c;
-        [value getValue:&c];
-        [self setBackgroundColor:c forState:state];
+        [self setBackgroundColor:value forState:state];
     }
     else if ([key isEqualToString:@"backgroundSpriteFrame"])
     {
@@ -525,8 +517,7 @@
     }
     else if ([key isEqualToString:@"labelColor"])
     {
-        ccColor3B c = [self labelColorForState:state];
-        return [NSValue value:&c withObjCType:@encode(ccColor3B)];
+        return [self labelColorForState:state];
     }
     else if ([key isEqualToString:@"backgroundOpacity"])
     {
@@ -534,8 +525,7 @@
     }
     else if ([key isEqualToString:@"backgroundColor"])
     {
-        ccColor3B c = [self backgroundColorForState:state];
-        return [NSValue value:&c withObjCType:@encode(ccColor3B)];
+        return [self backgroundColorForState:state];
     }
     else if ([key isEqualToString:@"backgroundSpriteFrame"])
     {
