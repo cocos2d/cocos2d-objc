@@ -197,13 +197,6 @@
     }
 }
 
-- (void) updateSliderPositionFromValue
-{
-    CGSize size = [self convertContentSizeToPoints:self.preferredSize type:self.preferredSizeType];
-    
-    _handle.position = ccp(size.width * _sliderValue, size.height/2.0f);
-}
-
 #pragma mark Laying out Component
 
 - (void) layout
