@@ -90,7 +90,6 @@
 @property (nonatomic, readonly) CGFloat blue;
 @property (nonatomic, readonly) CGFloat alpha;
 
-- (BOOL) isEqual:(id)object;
 - (BOOL) isEqualToColor:(CCColor*) color;
 
 @end
