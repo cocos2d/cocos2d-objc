@@ -52,16 +52,18 @@
     
     NSRange fullRange = NSMakeRange(0, copy.length);
     
+		CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
+		
     // Update font size
     [copy enumerateAttribute:NSFontAttributeName inRange:fullRange options:0 usingBlock:^(id value, NSRange range, BOOL* stop){
         if (value)
         {
-#ifdef __CC_PLATFORM_IOS   
+#ifdef __CC_PLATFORM_IOS
             UIFont* font = value;
-            font = [UIFont fontWithName:font.fontName size:font.pointSize * CC_CONTENT_SCALE_FACTOR()];
+            font = [UIFont fontWithName:font.fontName size:font.pointSize * scale];
 #elif defined(__CC_PLATFORM_MAC)
             NSFont* font = value;
-            font = [NSFont fontWithName:font.fontName size:font.pointSize * CC_CONTENT_SCALE_FACTOR()];
+            font = [NSFont fontWithName:font.fontName size:font.pointSize * scale];
 #endif						
             [copy removeAttribute:NSFontAttributeName range:range];
             [copy addAttribute:NSFontAttributeName value:font range:range];
@@ -74,9 +76,9 @@
         {
             NSShadow* shadow = value;
             [copy removeAttribute:NSShadowAttributeName range:range];
-            shadow.shadowBlurRadius = shadow.shadowBlurRadius * CC_CONTENT_SCALE_FACTOR();
+            shadow.shadowBlurRadius = shadow.shadowBlurRadius * scale;
             CGSize offset = shadow.shadowOffset;
-            shadow.shadowOffset = CGSizeMake(offset.width * CC_CONTENT_SCALE_FACTOR(), offset.height * CC_CONTENT_SCALE_FACTOR());
+            shadow.shadowOffset = CGSizeMake(offset.width * scale, offset.height * scale);
             [copy addAttribute:NSShadowAttributeName value:shadow range:range];
         }
     }];

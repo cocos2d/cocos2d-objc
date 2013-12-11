@@ -29,7 +29,7 @@
 // TODO Are we going to use NSENUM and such? Decided on naming conventions?
 
 /// Used to control how or if a body's position and velocity are updated.
-typedef enum ccPhysicsBodyType {
+typedef NS_ENUM(unsigned char, CCPhysicsBodyType){
 	/// A regular rigid body that is affected by gravity, forces and collisions.
 	CCPhysicsBodyTypeDynamic,
 	
@@ -38,7 +38,7 @@ typedef enum ccPhysicsBodyType {
 	
 	/// A body that never moves such as a wall or the ground.
 	CCPhysicsBodyTypeStatic,
-} ccPhysicsBodyType;
+};
 
 
 /// Basic rigid body type.
@@ -103,7 +103,7 @@ typedef enum ccPhysicsBodyType {
 @property(nonatomic, assign) BOOL allowsRotation;
 /// Whether the physics body is dynamic, kinematic or static.
 /// Defaults to CCPhysicsBodyTypeDynamic.
-@property(nonatomic, assign) ccPhysicsBodyType type;
+@property(nonatomic, assign) CCPhysicsBodyType type;
 
 //MARK: Collision and Contact:
 
