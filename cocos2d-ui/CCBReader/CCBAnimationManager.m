@@ -163,8 +163,9 @@ static NSInteger ccbAnimationManagerID = 0;
     {
         ccColor3B c;
         [kf1.value getValue:&c];
-        
-        return [CCActionTintTo actionWithDuration:duration red:c.r green:c.g blue:c.b];
+#warning FIX!
+        return NULL;
+        // return [CCActionTintTo actionWithDuration:duration red:c.r green:c.g blue:c.b];
     }
     else if ([name isEqualToString:@"visible"])
     {

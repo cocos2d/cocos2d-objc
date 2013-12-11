@@ -42,17 +42,17 @@
 @synthesize blendFunc = _blendFunc;
 @synthesize fastMode = _fastMode;
 
-+ (id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color textureFilename:(NSString*)path
++ (id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(CCColor*)color textureFilename:(NSString*)path
 {
     return [[self alloc] initWithFade:fade minSeg:minSeg width:stroke color:color textureFilename:path];
 }
 
-+ (id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color texture:(CCTexture*)texture
++ (id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(CCColor*)color texture:(CCTexture*)texture
 {
     return [[self alloc] initWithFade:fade minSeg:minSeg width:stroke color:color texture:texture];
 }
 
-- (id) initWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color textureFilename:(NSString*)path
+- (id) initWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(CCColor*)color textureFilename:(NSString*)path
 {
     NSAssert(path != nil, @"Invalid filename");
 
@@ -60,7 +60,7 @@
     return [self initWithFade:fade minSeg:minSeg width:stroke color:color texture:texture];
 }
 
-- (id) initWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color texture:(CCTexture*)texture
+- (id) initWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(CCColor*)color texture:(CCTexture*)texture
 {
     self = [super init];
     if (self)
@@ -107,21 +107,23 @@
     _positionR = position;
 }
 
-- (void) setColor:(ccColor3B)color
+- (void) setColor:(CCColor*)color
 {
+    ccColor3B color3 = color.ccColor3b;
+    
     [super setColor:color];
 
     // Fast assignation
     for(int i = 0; i<_nuPoints*2; i++)
-        *((ccColor3B*) (_colorPointer+i*4)) = color;
+        *((ccColor3B*) (_colorPointer+i*4)) = color3;
 }
 
-- (void) setOpacity:(GLubyte)opacity
+- (void) setOpacity:(CGFloat)opacity
 {
     NSAssert(NO, @"Set opacity no supported");
 }
 
-- (GLubyte) opacity
+- (CGFloat) opacity
 {
     NSAssert(NO, @"Opacity no supported");
     return 0;

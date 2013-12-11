@@ -98,10 +98,10 @@
 @property (nonatomic,strong) NSString* fntFile;
 
 /** The opacity of the text. */
-@property (nonatomic,readwrite) GLubyte opacity;
+@property (nonatomic,readwrite) CGFloat opacity;
 
 /** The color of the text. */
-@property (nonatomic,readwrite) ccColor3B color;
+@property (nonatomic,strong) CCColor* color;
 
 
 /// -----------------------------------------------------------------------

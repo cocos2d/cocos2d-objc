@@ -66,7 +66,7 @@
 @property (nonatomic,assign) float fontSize;
 
 /** The color of the text (If not using shadow or outline). */
-@property (nonatomic,assign) ccColor4B fontColor;
+@property (nonatomic,strong) CCColor* fontColor;
 
 /** The horizontal alignment technique of the text. */
 @property (nonatomic,assign) CCTextAlignment horizontalAlignment;
@@ -100,7 +100,7 @@
 /// -----------------------------------------------------------------------
 
 /** The color of the text shadow. If the color is transparent, no shadow will be used. */
-@property (nonatomic,assign) ccColor4B shadowColor;
+@property (nonatomic,strong) CCColor* shadowColor;
 
 /** The offset of the shadow. */
 @property (nonatomic,assign) CGPoint shadowOffset;
@@ -117,7 +117,7 @@
 /// -----------------------------------------------------------------------
 
 /** The color of the text's outline. */
-@property (nonatomic,assign) ccColor4B outlineColor;
+@property (nonatomic,strong) CCColor* outlineColor;
 
 /** The width of the text's outline. */
 @property (nonatomic,assign) float outlineWidth;

@@ -135,16 +135,17 @@
 
 #pragma mark CCAtlasNode - RGBA protocol
 
-- (ccColor3B) color
+- (CCColor*) color
 {
 	if (_opacityModifyRGB)
-		return _colorUnmodified;
+		return [CCColor colorWithCcColor3b:_colorUnmodified];
 
 	return super.color;
 }
 
--(void) setColor:(ccColor3B)color3
+-(void) setColor:(CCColor*)color
 {
+    ccColor3B color3 = color.ccColor3b;
 	_colorUnmodified = color3;
 
 	if( _opacityModifyRGB ){
@@ -152,21 +153,21 @@
 		color3.g = color3.g * _displayedOpacity/255;
 		color3.b = color3.b * _displayedOpacity/255;
 	}
-    [super setColor:color3];
+    [super setColor:color];
 }
 
--(void) setOpacity:(GLubyte) anOpacity
+-(void) setOpacity:(CGFloat) anOpacity
 {
     [super setOpacity:anOpacity];
 
 	// special opacity for premultiplied textures
 	if( _opacityModifyRGB )
-		[self setColor: _colorUnmodified];
+		[self setColor: [CCColor colorWithCcColor3b:_colorUnmodified]];
 }
 
 -(void) setOpacityModifyRGB:(BOOL)modify
 {
-	ccColor3B oldColor	= self.color;
+	CCColor* oldColor	= self.color;
 	_opacityModifyRGB	= modify;
 	self.color			= oldColor;
 }

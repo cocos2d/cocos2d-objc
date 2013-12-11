@@ -61,7 +61,7 @@
  *  @param radius Dot radius
  *  @param color  Dot color
  */
--(void)drawDot:(CGPoint)pos radius:(CGFloat)radius color:(ccColor4F)color;
+-(void)drawDot:(CGPoint)pos radius:(CGFloat)radius color:(CCColor*)color;
 
 /**
  *  Draw a segment with a radius and color.
@@ -71,7 +71,7 @@
  *  @param radius Segment radius
  *  @param color  Segment color
  */
--(void)drawSegmentFrom:(CGPoint)a to:(CGPoint)b radius:(CGFloat)radius color:(ccColor4F)color;
+-(void)drawSegmentFrom:(CGPoint)a to:(CGPoint)b radius:(CGFloat)radius color:(CCColor*)color;
 
 /**
  *  Draw a polygon with a fill color and line color.
@@ -82,7 +82,7 @@
  *  @param width Polygon outline width
  *  @param line  Polygon outline color
  */
--(void)drawPolyWithVerts:(const CGPoint*)verts count:(NSUInteger)count fillColor:(ccColor4F)fill borderWidth:(CGFloat)width  borderColor:(ccColor4F)line;
+-(void)drawPolyWithVerts:(const CGPoint*)verts count:(NSUInteger)count fillColor:(CCColor*)fill borderWidth:(CGFloat)width  borderColor:(CCColor*)line;
 
 /** 
  *  Clear the geometry in the node's buffer. 

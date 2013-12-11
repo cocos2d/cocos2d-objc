@@ -1139,7 +1139,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, CCTime t )
 @implementation CCActionFadeIn
 -(void) update: (CCTime) t
 {
-	[(id<CCRGBAProtocol>) _target setOpacity: 255 *t];
+	[(id<CCRGBAProtocol>) _target setOpacity: 1.0 *t];
 }
 
 -(CCActionInterval*) reverse
@@ -1155,7 +1155,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, CCTime t )
 @implementation CCActionFadeOut
 -(void) update: (CCTime) t
 {
-	[(id<CCRGBAProtocol>) _target setOpacity: 255 *(1-t)];
+	[(id<CCRGBAProtocol>) _target setOpacity: 1.0 *(1-t)];
 }
 
 -(CCActionInterval*) reverse
@@ -1169,12 +1169,12 @@ static inline CGFloat bezierat( float a, float b, float c, float d, CCTime t )
 //
 #pragma mark - CCFadeTo
 @implementation CCActionFadeTo
-+(id) actionWithDuration: (CCTime) t opacity: (GLubyte) o
++(id) actionWithDuration: (CCTime) t opacity: (CGFloat) o
 {
 	return [[ self alloc] initWithDuration: t opacity: o];
 }
 
--(id) initWithDuration: (CCTime) t opacity: (GLubyte) o
+-(id) initWithDuration: (CCTime) t opacity: (CGFloat) o
 {
 	if( (self=[super initWithDuration: t] ) )
 		_toOpacity = o;
@@ -1205,22 +1205,22 @@ static inline CGFloat bezierat( float a, float b, float c, float d, CCTime t )
 //
 #pragma mark - CCTintTo
 @implementation CCActionTintTo
-+(id) actionWithDuration:(CCTime)t red:(GLubyte)r green:(GLubyte)g blue:(GLubyte)b
++(id) actionWithDuration:(CCTime)duration color:(CCColor*)color
 {
-	return [(CCActionTintTo*)[ self alloc] initWithDuration:t red:r green:g blue:b];
+	return [(CCActionTintTo*)[ self alloc] initWithDuration:duration color:color];
 }
 
--(id) initWithDuration: (CCTime) t red:(GLubyte)r green:(GLubyte)g blue:(GLubyte)b
+-(id) initWithDuration:(CCTime)t color:(CCColor*)color
 {
 	if( (self=[super initWithDuration:t] ) )
-		_to = ccc3(r,g,b);
+		_to = color;
 
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [(CCActionTintTo*)[[self class] allocWithZone: zone] initWithDuration:[self duration] red:_to.r green:_to.g blue:_to.b];
+	CCAction *copy = [(CCActionTintTo*)[[self class] allocWithZone: zone] initWithDuration:[self duration] color:_to];
 	return copy;
 }
 
@@ -1235,7 +1235,14 @@ static inline CGFloat bezierat( float a, float b, float c, float d, CCTime t )
 -(void) update: (CCTime) t
 {
 	id<CCRGBAProtocol> tn = (id<CCRGBAProtocol>) _target;
-	[tn setColor:ccc3(_from.r + (_to.r - _from.r) * t, _from.g + (_to.g - _from.g) * t, _from.b + (_to.b - _from.b) * t)];
+    
+    CGFloat fr, fg, fb, fa;
+    [_from getRed:&fr green:&fg blue:&fb alpha:&fa];
+    
+    CGFloat tr, tg, tb, ta;
+    [_to getRed:&tr green:&tg blue:&tb alpha:&ta];
+    
+	[tn setColor:[CCColor colorWithRed:fr + (tr - fr) * t green:fg + (tg - fg) * t blue:fb + (tb - fb) * t alpha:1]];
 }
 @end
 
@@ -1244,12 +1251,12 @@ static inline CGFloat bezierat( float a, float b, float c, float d, CCTime t )
 //
 #pragma mark - CCTintBy
 @implementation CCActionTintBy
-+(id) actionWithDuration:(CCTime)t red:(GLshort)r green:(GLshort)g blue:(GLshort)b
++(id) actionWithDuration:(CCTime)t red:(CGFloat)r green:(CGFloat)g blue:(CGFloat)b
 {
 	return [(CCActionTintBy*)[ self alloc] initWithDuration:t red:r green:g blue:b];
 }
 
--(id) initWithDuration:(CCTime)t red:(GLshort)r green:(GLshort)g blue:(GLshort)b
+-(id) initWithDuration:(CCTime)t red:(CGFloat)r green:(CGFloat)g blue:(CGFloat)b
 {
 	if( (self=[super initWithDuration: t] ) ) {
 		_deltaR = r;
@@ -1269,16 +1276,20 @@ static inline CGFloat bezierat( float a, float b, float c, float d, CCTime t )
 	[super startWithTarget:aTarget];
 
 	id<CCRGBAProtocol> tn = (id<CCRGBAProtocol>) _target;
-	ccColor3B color = [tn color];
-	_fromR = color.r;
-	_fromG = color.g;
-	_fromB = color.b;
+	CCColor* color = [tn color];
+    
+    CGFloat r, g, b, a;
+    [color getRed:&r green:&g blue:&b alpha:&a];
+    
+	_fromR = r;
+	_fromG = g;
+	_fromB = b;
 }
 
 -(void) update: (CCTime) t
 {
 	id<CCRGBAProtocol> tn = (id<CCRGBAProtocol>) _target;
-	[tn setColor:ccc3( _fromR + _deltaR * t, _fromG + _deltaG * t, _fromB + _deltaB * t)];
+	[tn setColor:[CCColor colorWithRed:_fromR + _deltaR * t green:_fromG + _deltaG * t blue:_fromB + _deltaB * t alpha:1]];
 }
 
 - (CCActionInterval*) reverse

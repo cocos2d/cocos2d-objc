@@ -1523,19 +1523,19 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
     return self;
 }
 
--(GLubyte) opacity
+-(CGFloat) opacity
 {
-	return _realOpacity;
+	return _realOpacity/255.0;
 }
 
--(GLubyte) displayedOpacity
+-(CGFloat) displayedOpacity
 {
-	return _displayedOpacity;
+	return _displayedOpacity/255.0;
 }
 
-- (void) setOpacity:(GLubyte)opacity
+- (void) setOpacity:(CGFloat)opacity
 {
-	_displayedOpacity = _realOpacity = opacity;
+	_displayedOpacity = _realOpacity = opacity*255;
 	
 	if( _cascadeOpacityEnabled ) {
 		GLubyte parentOpacity = 255;
@@ -1545,9 +1545,9 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	}
 }
 
-- (void)updateDisplayedOpacity:(GLubyte)parentOpacity
+- (void)updateDisplayedOpacity:(CGFloat)parentOpacity
 {
-	_displayedOpacity = _realOpacity * parentOpacity/255.0;
+	_displayedOpacity = _realOpacity * parentOpacity;
 	
     if (_cascadeOpacityEnabled) {
         for (id<CCRGBAProtocol> item in _children) {
@@ -1558,38 +1558,41 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
     }
 }
 
--(ccColor3B) color
+-(CCColor*) color
 {
-	return _realColor;
+	return [CCColor colorWithCcColor3b:_realColor];
 }
 
--(ccColor3B) displayedColor
+-(CCColor*) displayedColor
 {
-	return _displayedColor;
+	return [CCColor colorWithCcColor3b: _displayedColor];
 }
 
-- (void) setColor:(ccColor3B)color
+- (void) setColor:(CCColor*)color
 {
-	_displayedColor = _realColor = color;
+	_displayedColor = _realColor = color.ccColor3b;
 	
 	if( _cascadeColorEnabled ) {
-		ccColor3B parentColor = ccWHITE;
+		CCColor* parentColor = [CCColor whiteColor];
 		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent isCascadeColorEnabled] )
 			parentColor = [(id<CCRGBAProtocol>)_parent displayedColor];
 		[self updateDisplayedColor:parentColor];
 	}
 }
 
-- (void)updateDisplayedColor:(ccColor3B)parentColor
+- (void)updateDisplayedColor:(CCColor*)parentColor
 {
-	_displayedColor.r = _realColor.r * parentColor.r/255.0;
-	_displayedColor.g = _realColor.g * parentColor.g/255.0;
-	_displayedColor.b = _realColor.b * parentColor.b/255.0;
+    CGFloat r, g, b, a;
+    [parentColor getRed:&r green:&g blue:&b alpha:&a];
+    
+	_displayedColor.r = _realColor.r * r;
+	_displayedColor.g = _realColor.g * g;
+	_displayedColor.b = _realColor.b * b;
 
     if (_cascadeColorEnabled) {
         for (id<CCRGBAProtocol> item in _children) {
             if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
-                [item updateDisplayedColor:_displayedColor];
+                [item updateDisplayedColor:[CCColor colorWithCcColor3b:_displayedColor]];
             }
         }
     }

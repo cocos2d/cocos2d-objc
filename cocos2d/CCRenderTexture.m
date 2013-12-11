@@ -48,7 +48,6 @@
 
 @synthesize sprite=_sprite;
 @synthesize autoDraw=_autoDraw;
-@synthesize clearColor=_clearColor;
 @synthesize clearDepth=_clearDepth;
 @synthesize clearStencil=_clearStencil;
 @synthesize clearFlags=_clearFlags;
@@ -528,6 +527,16 @@
 	return image;
 }
 #endif // __CC_PLATFORM_IOS
+
+- (CCColor*) clearColor
+{
+    return [CCColor colorWithCcColor4f:_clearColor];
+}
+
+- (void) setClearColor:(UIColor *)clearColor
+{
+    _clearColor = clearColor.ccColor4f;
+}
 
 #pragma RenderTexture - Override
 

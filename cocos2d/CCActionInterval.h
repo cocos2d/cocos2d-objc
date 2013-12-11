@@ -794,8 +794,8 @@ typedef struct _ccBezierConfig {
  */
 @interface CCActionFadeTo : CCActionInterval <NSCopying>
 {
-	GLubyte _toOpacity;
-	GLubyte _fromOpacity;
+	CGFloat _toOpacity;
+	CGFloat _fromOpacity;
 }
 
 /**
@@ -806,7 +806,7 @@ typedef struct _ccBezierConfig {
  *
  *  @return New fade action
  */
-+(id) actionWithDuration:(CCTime)duration opacity:(GLubyte)opactiy;
++(id) actionWithDuration:(CCTime)duration opacity:(CGFloat)opactiy;
 
 /**
  *  Initalizes a fade action.
@@ -816,7 +816,7 @@ typedef struct _ccBezierConfig {
  *
  *  @return New fade action
  */
--(id) initWithDuration:(CCTime)duration opacity:(GLubyte)opacity;
+-(id) initWithDuration:(CCTime)duration opacity:(CGFloat)opacity;
 
 @end
 
@@ -830,8 +830,8 @@ typedef struct _ccBezierConfig {
  */
 @interface CCActionTintTo : CCActionInterval <NSCopying>
 {
-	ccColor3B _to;
-	ccColor3B _from;
+	CCColor* _to;
+	CCColor* _from;
 }
 
 /**
@@ -844,7 +844,7 @@ typedef struct _ccBezierConfig {
  *
  *  @return New tint to action
  */
-+(id) actionWithDuration:(CCTime)duration red:(GLubyte)red green:(GLubyte)green blue:(GLubyte)blue;
++(id) actionWithDuration:(CCTime)duration color:(CCColor*)color;
 
 /**
  *  Initalizes a tint to action
@@ -856,7 +856,7 @@ typedef struct _ccBezierConfig {
  *
  *  @return New tint to action
  */
--(id) initWithDuration:(CCTime)duration red:(GLubyte)red green:(GLubyte)green blue:(GLubyte)blue;
+-(id) initWithDuration:(CCTime)duration color:(CCColor*)color;
 
 @end
 
@@ -868,8 +868,8 @@ typedef struct _ccBezierConfig {
  */
 @interface CCActionTintBy : CCActionInterval <NSCopying>
 {
-	GLshort _deltaR, _deltaG, _deltaB;
-	GLshort _fromR, _fromG, _fromB;
+	CGFloat _deltaR, _deltaG, _deltaB;
+	CGFloat _fromR, _fromG, _fromB;
 }
 
 /**
@@ -882,7 +882,7 @@ typedef struct _ccBezierConfig {
  *
  *  @return New tint by action
  */
-+(id) actionWithDuration:(CCTime)duration red:(GLshort)deltaRed green:(GLshort)deltaGreen blue:(GLshort)deltaBlue;
++(id) actionWithDuration:(CCTime)duration red:(CGFloat)deltaRed green:(CGFloat)deltaGreen blue:(CGFloat)deltaBlue;
 
 /**
  *  Initalizes a tint to action
@@ -894,7 +894,7 @@ typedef struct _ccBezierConfig {
  *
  *  @return New tint by action
  */
--(id) initWithDuration:(CCTime)duration red:(GLshort)deltaRed green:(GLshort)deltaGreen blue:(GLshort)deltaBlue;
+-(id) initWithDuration:(CCTime)duration red:(CGFloat)deltaRed green:(CGFloat)deltaGreen blue:(CGFloat)deltaBlue;
 
 @end
 

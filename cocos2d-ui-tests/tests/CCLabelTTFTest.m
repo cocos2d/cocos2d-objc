@@ -96,9 +96,9 @@ static int vAlignCount = sizeof(verticalAlignment) / sizeof(*verticalAlignment);
   [center setVerticalAlignment:verticalAlignment[vAlignIdx]];
   [right setVerticalAlignment:verticalAlignment[vAlignIdx]];
   
-  CCNodeColor *leftColor = [CCNodeColor nodeWithColor:ccc4(100, 100, 100, 255) width:blockSize.width height:blockSize.height];
-  CCNodeColor *centerColor = [CCNodeColor nodeWithColor:ccc4(200, 100, 100, 255) width:blockSize.width height:blockSize.height];
-  CCNodeColor *rightColor = [CCNodeColor nodeWithColor:ccc4(100, 100, 200, 255) width:blockSize.width height:blockSize.height];
+  CCNodeColor *leftColor = [CCNodeColor nodeWithColor:[CCColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:1] width:blockSize.width height:blockSize.height];
+  CCNodeColor *centerColor = [CCNodeColor nodeWithColor:[CCColor colorWithRed:0.8 green:0.4 blue:0.4 alpha:1] width:blockSize.width height:blockSize.height];
+  CCNodeColor *rightColor = [CCNodeColor nodeWithColor:[CCColor colorWithRed:0.4 green:0.4 blue:0.8 alpha:1] width:blockSize.width height:blockSize.height];
   
   top.anchorPoint = ccp(0.5, 1);
   left.anchorPoint = leftColor.anchorPoint = ccp(0,0.5);
