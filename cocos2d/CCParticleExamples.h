@@ -25,59 +25,59 @@
  */
 
 #import "ccMacros.h"
-#import "CCParticleSystemQuad.h"
+#import "CCParticleSystem.h"
 
-@interface CCParticleFire: CCParticleSystemQuad
+@interface CCParticleFire: CCParticleSystem
 // Required for BridgeSupport.
 -(id) init;
 @end
 
-@interface CCParticleFireworks : CCParticleSystemQuad
+@interface CCParticleFireworks : CCParticleSystem
 // Required for BridgeSupport.
 -(id) init;
 @end
 
-@interface CCParticleSun : CCParticleSystemQuad
+@interface CCParticleSun : CCParticleSystem
 // Required for BridgeSupport.
 -(id) init;
 @end
 
-@interface CCParticleGalaxy : CCParticleSystemQuad
+@interface CCParticleGalaxy : CCParticleSystem
 //! Required for BridgeSupport.
 -(id) init;
 @end
 
-@interface CCParticleFlower : CCParticleSystemQuad
+@interface CCParticleFlower : CCParticleSystem
 // Required for BridgeSupport.
 -(id) init;
 @end
 
-@interface CCParticleMeteor : CCParticleSystemQuad
+@interface CCParticleMeteor : CCParticleSystem
 // Required for BridgeSupport.
 -(id) init;
 @end
 
-@interface CCParticleSpiral : CCParticleSystemQuad
+@interface CCParticleSpiral : CCParticleSystem
 // Required for BridgeSupport.
 -(id) init;
 @end
 
-@interface CCParticleExplosion : CCParticleSystemQuad
+@interface CCParticleExplosion : CCParticleSystem
 // Required for BridgeSupport.
 -(id) init;
 @end
 
-@interface CCParticleSmoke : CCParticleSystemQuad
+@interface CCParticleSmoke : CCParticleSystem
 // Required for BridgeSupport.
 -(id) init;
 @end
 
-@interface CCParticleSnow : CCParticleSystemQuad
+@interface CCParticleSnow : CCParticleSystem
 // Required for BridgeSupport.
 -(id) init;
 @end
 
-@interface CCParticleRain : CCParticleSystemQuad
+@interface CCParticleRain : CCParticleSystem
 // Required for BridgeSupport.
 -(id) init;
 @end
