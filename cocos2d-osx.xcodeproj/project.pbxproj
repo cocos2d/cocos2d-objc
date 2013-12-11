@@ -170,7 +170,6 @@
 		B798D1471820384500E7BFCD /* CCSprite_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B798D1461820384500E7BFCD /* CCSprite_Private.h */; };
 		B798D149182047AC00E7BFCD /* CCSpriteBatchNode_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B798D148182047AC00E7BFCD /* CCSpriteBatchNode_Private.h */; };
 		B798D14F182056DD00E7BFCD /* CCParticleSystem_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B798D14E182056DD00E7BFCD /* CCParticleSystem_Private.h */; };
-		B798D1511820593B00E7BFCD /* CCParticleSystemQuad_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B798D1501820593B00E7BFCD /* CCParticleSystemQuad_Private.h */; };
 		B7C6239B17F10F3600928F91 /* CCTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = B7C6239817F10F3600928F91 /* CCTableView.h */; };
 		B7C6239C17F10F3600928F91 /* CCTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C6239917F10F3600928F91 /* CCTableView.m */; };
 		B7C6239D17F10F3600928F91 /* cocos2d-ui.h in Headers */ = {isa = PBXBuildFile; fileRef = B7C6239A17F10F3600928F91 /* cocos2d-ui.h */; };
@@ -195,6 +194,9 @@
 		B7E7758D184FBA47004221AA /* CCNodeColor.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E7758B184FBA47004221AA /* CCNodeColor.m */; };
 		B7E7762C1857A4C4004221AA /* CCColor.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E7762A1857A4C4004221AA /* CCColor.h */; };
 		B7E7762D1857A4C4004221AA /* CCColor.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E7762B1857A4C4004221AA /* CCColor.m */; };
+		B7E776521858EC79004221AA /* CCParticleSystemBase_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E7764F1858EC79004221AA /* CCParticleSystemBase_Private.h */; };
+		B7E776531858EC79004221AA /* CCParticleSystemBase.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E776501858EC79004221AA /* CCParticleSystemBase.h */; };
+		B7E776541858EC79004221AA /* CCParticleSystemBase.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E776511858EC79004221AA /* CCParticleSystemBase.m */; };
 		B7EE698918187F7200B983FE /* CCTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE698818187C0900B983FE /* CCTextField.m */; };
 		B7EE69EA1819EAAC00B983FE /* CCLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = B7EE69E61819EAAC00B983FE /* CCLayout.h */; };
 		B7EE69EB1819EAAC00B983FE /* CCLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69E71819EAAC00B983FE /* CCLayout.m */; };
@@ -247,8 +249,6 @@
 		E076E70E1225EC7400DE0DA2 /* CCParticleExamples.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6681225EC7400DE0DA2 /* CCParticleExamples.m */; };
 		E076E70F1225EC7400DE0DA2 /* CCParticleSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6691225EC7400DE0DA2 /* CCParticleSystem.h */; };
 		E076E7101225EC7400DE0DA2 /* CCParticleSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E66A1225EC7400DE0DA2 /* CCParticleSystem.m */; };
-		E076E7131225EC7400DE0DA2 /* CCParticleSystemQuad.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E66D1225EC7400DE0DA2 /* CCParticleSystemQuad.h */; };
-		E076E7141225EC7400DE0DA2 /* CCParticleSystemQuad.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E66E1225EC7400DE0DA2 /* CCParticleSystemQuad.m */; };
 		E076E7151225EC7400DE0DA2 /* CCProgressNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E66F1225EC7400DE0DA2 /* CCProgressNode.h */; };
 		E076E7161225EC7400DE0DA2 /* CCProgressNode.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6701225EC7400DE0DA2 /* CCProgressNode.m */; };
 		E076E7181225EC7400DE0DA2 /* CCRenderTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6721225EC7400DE0DA2 /* CCRenderTexture.h */; };
@@ -541,7 +541,6 @@
 		B798D1461820384500E7BFCD /* CCSprite_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSprite_Private.h; sourceTree = "<group>"; };
 		B798D148182047AC00E7BFCD /* CCSpriteBatchNode_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteBatchNode_Private.h; sourceTree = "<group>"; };
 		B798D14E182056DD00E7BFCD /* CCParticleSystem_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleSystem_Private.h; sourceTree = "<group>"; };
-		B798D1501820593B00E7BFCD /* CCParticleSystemQuad_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleSystemQuad_Private.h; sourceTree = "<group>"; };
 		B7C6239817F10F3600928F91 /* CCTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTableView.h; path = "cocos2d-ui/CCTableView.h"; sourceTree = "<group>"; };
 		B7C6239917F10F3600928F91 /* CCTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTableView.m; path = "cocos2d-ui/CCTableView.m"; sourceTree = "<group>"; };
 		B7C6239A17F10F3600928F91 /* cocos2d-ui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "cocos2d-ui.h"; path = "cocos2d-ui/cocos2d-ui.h"; sourceTree = "<group>"; };
@@ -566,6 +565,9 @@
 		B7E7758B184FBA47004221AA /* CCNodeColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCNodeColor.m; sourceTree = "<group>"; };
 		B7E7762A1857A4C4004221AA /* CCColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCColor.h; sourceTree = "<group>"; };
 		B7E7762B1857A4C4004221AA /* CCColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCColor.m; sourceTree = "<group>"; };
+		B7E7764F1858EC79004221AA /* CCParticleSystemBase_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleSystemBase_Private.h; sourceTree = "<group>"; };
+		B7E776501858EC79004221AA /* CCParticleSystemBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleSystemBase.h; sourceTree = "<group>"; };
+		B7E776511858EC79004221AA /* CCParticleSystemBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParticleSystemBase.m; sourceTree = "<group>"; };
 		B7EE698718187C0900B983FE /* CCTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTextField.h; path = "cocos2d-ui/CCTextField.h"; sourceTree = "<group>"; };
 		B7EE698818187C0900B983FE /* CCTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTextField.m; path = "cocos2d-ui/CCTextField.m"; sourceTree = "<group>"; };
 		B7EE69E61819EAAC00B983FE /* CCLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLayout.h; sourceTree = "<group>"; };
@@ -630,8 +632,6 @@
 		E076E6681225EC7400DE0DA2 /* CCParticleExamples.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParticleExamples.m; sourceTree = "<group>"; };
 		E076E6691225EC7400DE0DA2 /* CCParticleSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleSystem.h; sourceTree = "<group>"; };
 		E076E66A1225EC7400DE0DA2 /* CCParticleSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParticleSystem.m; sourceTree = "<group>"; };
-		E076E66D1225EC7400DE0DA2 /* CCParticleSystemQuad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleSystemQuad.h; sourceTree = "<group>"; };
-		E076E66E1225EC7400DE0DA2 /* CCParticleSystemQuad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParticleSystemQuad.m; sourceTree = "<group>"; };
 		E076E66F1225EC7400DE0DA2 /* CCProgressNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProgressNode.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		E076E6701225EC7400DE0DA2 /* CCProgressNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCProgressNode.m; sourceTree = "<group>"; };
 		E076E6711225EC7400DE0DA2 /* CCProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProtocols.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -1280,16 +1280,16 @@
 		E076E7741225EC9D00DE0DA2 /* Particle Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				B7E7764F1858EC79004221AA /* CCParticleSystemBase_Private.h */,
+				B7E776501858EC79004221AA /* CCParticleSystemBase.h */,
+				B7E776511858EC79004221AA /* CCParticleSystemBase.m */,
 				A0AAB8091451BD3600850F2C /* CCParticleBatchNode.h */,
 				A0AAB80A1451BD3600850F2C /* CCParticleBatchNode.m */,
 				E076E6671225EC7400DE0DA2 /* CCParticleExamples.h */,
 				E076E6681225EC7400DE0DA2 /* CCParticleExamples.m */,
 				E076E6691225EC7400DE0DA2 /* CCParticleSystem.h */,
 				E076E66A1225EC7400DE0DA2 /* CCParticleSystem.m */,
-				E076E66D1225EC7400DE0DA2 /* CCParticleSystemQuad.h */,
-				E076E66E1225EC7400DE0DA2 /* CCParticleSystemQuad.m */,
 				B798D14E182056DD00E7BFCD /* CCParticleSystem_Private.h */,
-				B798D1501820593B00E7BFCD /* CCParticleSystemQuad_Private.h */,
 			);
 			name = "Particle Nodes";
 			sourceTree = "<group>";
@@ -1487,6 +1487,7 @@
 				E076E6DB1225EC7400DE0DA2 /* CCActionInterval.h in Headers */,
 				B7D2732F1822F5460054849B /* CCBReader.h in Headers */,
 				E076E6DD1225EC7400DE0DA2 /* CCActionManager.h in Headers */,
+				B7E776521858EC79004221AA /* CCParticleSystemBase_Private.h in Headers */,
 				B770606B1831B0C40043CC67 /* OALAudioTrackNotifications.h in Headers */,
 				B77060721831B0C40043CC67 /* ObjectALConfig.h in Headers */,
 				E076E6E11225EC7400DE0DA2 /* CCActionProgressTimer.h in Headers */,
@@ -1494,7 +1495,6 @@
 				B791E850182065BD00DAE1D7 /* CCTiledMapLayer.h in Headers */,
 				E076E6E51225EC7400DE0DA2 /* CCActionTween.h in Headers */,
 				E076E6E71225EC7400DE0DA2 /* CCAtlasNode.h in Headers */,
-				B798D1511820593B00E7BFCD /* CCParticleSystemQuad_Private.h in Headers */,
 				E076E6F41225EC7400DE0DA2 /* CCDrawingPrimitives.h in Headers */,
 				B77060851831B0C40043CC67 /* ALWrapper.h in Headers */,
 				B770607F1831B0C40043CC67 /* ALSoundSource.h in Headers */,
@@ -1512,7 +1512,6 @@
 				B77060731831B0C40043CC67 /* ALBuffer.h in Headers */,
 				E076E70F1225EC7400DE0DA2 /* CCParticleSystem.h in Headers */,
 				B798D14F182056DD00E7BFCD /* CCParticleSystem_Private.h in Headers */,
-				E076E7131225EC7400DE0DA2 /* CCParticleSystemQuad.h in Headers */,
 				E076E7151225EC7400DE0DA2 /* CCProgressNode.h in Headers */,
 				B770608D1831B0C40043CC67 /* ARCSafe_MemMgmt.h in Headers */,
 				E076E7181225EC7400DE0DA2 /* CCRenderTexture.h in Headers */,
@@ -1553,6 +1552,7 @@
 				E076E7651225EC7400DE0DA2 /* ccUtils.h in Headers */,
 				B798D13F181F2F6300E7BFCD /* CCNode_Private.h in Headers */,
 				E076E7661225EC7400DE0DA2 /* CGPointExtension.h in Headers */,
+				B7E776531858EC79004221AA /* CCParticleSystemBase.h in Headers */,
 				B77060671831B0C40043CC67 /* OALUtilityActions.h in Headers */,
 				B770606D1831B0C40043CC67 /* OALAudioTracks.h in Headers */,
 				E076E7681225EC7400DE0DA2 /* OpenGL_Internal.h in Headers */,
@@ -1807,7 +1807,6 @@
 				B77060681831B0C40043CC67 /* OALUtilityActions.m in Sources */,
 				B7EE69EB1819EAAC00B983FE /* CCLayout.m in Sources */,
 				E076E7101225EC7400DE0DA2 /* CCParticleSystem.m in Sources */,
-				E076E7141225EC7400DE0DA2 /* CCParticleSystemQuad.m in Sources */,
 				B770606C1831B0C40043CC67 /* OALAudioTrackNotifications.m in Sources */,
 				E076E7161225EC7400DE0DA2 /* CCProgressNode.m in Sources */,
 				B77060831831B0C40043CC67 /* ALSource.m in Sources */,
@@ -1873,6 +1872,7 @@
 				B7EE698918187F7200B983FE /* CCTextField.m in Sources */,
 				A0D7D69715E2D2CC000CA0C4 /* CCDirector.m in Sources */,
 				B77060881831B0C40043CC67 /* OpenALManager.m in Sources */,
+				B7E776541858EC79004221AA /* CCParticleSystemBase.m in Sources */,
 				A0D7D69A15E2D2CC000CA0C4 /* CCScheduler.m in Sources */,
 				B77060971831B0C40043CC67 /* OALAudioFile.m in Sources */,
 				2B192860163379400049A044 /* CCClippingNode.m in Sources */,

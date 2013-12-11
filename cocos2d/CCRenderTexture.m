@@ -533,7 +533,7 @@
     return [CCColor colorWithCcColor4f:_clearColor];
 }
 
-- (void) setClearColor:(UIColor *)clearColor
+- (void) setClearColor:(CCColor *)clearColor
 {
     _clearColor = clearColor.ccColor4f;
 }

@@ -70,10 +70,10 @@
 #import "CCLabelBMFont.h"
 //#import "CCLabelAtlas.h"
 
+//#import "CCParticleSystemBase.h"
 #import "CCParticleSystem.h"
-#import "CCParticleSystemQuad.h"
 #import "CCParticleExamples.h"
-#import "CCParticleBatchNode.h"
+//#import "CCParticleBatchNode.h"
 
 #import "CCTexture.h"
 #import "CCTexturePVR.h"

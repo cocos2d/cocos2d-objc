@@ -9,7 +9,7 @@
 #import "CCTextureCache.h"
 
 @interface ParticleTest : TestBase
-@property (readwrite, retain) CCParticleSystem *emitter;
+@property (readwrite, retain) CCParticleSystemBase *emitter;
 @end
 
 
@@ -37,14 +37,14 @@
 
 -(void) setupComet
 {
-	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/Comet.plist"];
+	self.emitter = [CCParticleSystem particleWithFile:@"Particles/Comet.plist"];
 	[self.contentNode addChild:self.emitter z:10];
   [self createScene: @"Comet Particle System"];
 }
 
 -(void) setupFlower
 {
-	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/Flower.plist"];
+	self.emitter = [CCParticleSystem particleWithFile:@"Particles/Flower.plist"];
 	self.emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
 	[self.contentNode addChild:self.emitter z:10];
   [self createScene: @"Flower made of pretty stars. Loaded from plist."];
@@ -52,7 +52,7 @@
 
 -(void) setupBigFlower
 {
-  self.emitter = [[CCParticleSystemQuad alloc] initWithTotalParticles:50];
+  self.emitter = [[CCParticleSystem alloc] initWithTotalParticles:50];
 	self.emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
   
 	// duration
@@ -95,17 +95,10 @@
 	self.emitter.endSpinVar = 0;
   
 	// color of particles
-	ccColor4F startColor = {0.5f, 0.5f, 0.5f, 1.0f};
-	self.emitter.startColor = startColor;
-  
-	ccColor4F startColorVar = {0.5f, 0.5f, 0.5f, 1.0f};
-	self.emitter.startColorVar = startColorVar;
-  
-	ccColor4F endColor = {0.1f, 0.1f, 0.1f, 0.2f};
-	self.emitter.endColor = endColor;
-  
-	ccColor4F endColorVar = {0.1f, 0.1f, 0.1f, 0.2f};
-	self.emitter.endColorVar = endColorVar;
+	self.emitter.startColor = [CCColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1];
+	self.emitter.startColorVar = [CCColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1];
+	self.emitter.endColor = [CCColor colorWithRed:0.1 green:0.1 blue:0.1 alpha:0.2];
+	self.emitter.endColorVar = [CCColor colorWithRed:0.1 green:0.1 blue:0.1 alpha:0.2];
   
 	// size, in pixels
 	self.emitter.startSize = 80.0f;
@@ -136,7 +129,7 @@
   CGSize s = [[CCDirector sharedDirector] viewSize];
 
   for (int i = 0; i<5; i++) {
-    CCParticleSystemQuad *particleSystem = [CCParticleSystemQuad particleWithFile:@"Particles/Flower.plist"];
+    CCParticleSystem *particleSystem = [CCParticleSystem particleWithFile:@"Particles/Flower.plist"];
     particleSystem.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
     
     particleSystem.position = ccp(s.width/2 + i*150 - 300, s.height/2);
@@ -151,7 +144,7 @@
 -(void) setupGalaxy
 {
   
-	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/Galaxy.plist"];
+	self.emitter = [CCParticleSystem particleWithFile:@"Particles/Galaxy.plist"];
   self.emitter.texture = [[CCTextureCache sharedTextureCache] addImage: PARTICLE_FIRE_NAME];
 	[self.contentNode addChild:self.emitter z:10];
   [self createScene: @"Galaxy - You should see radial & tangential accel"];
@@ -159,14 +152,14 @@
 
 -(void) setupLavaFlow
 {
-	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/LavaFlow.plist"];
+	self.emitter = [CCParticleSystem particleWithFile:@"Particles/LavaFlow.plist"];
 	[self.contentNode addChild:self.emitter z:10];
   [self createScene: @"Lava Flow"];
 }
 
 -(void) setupTestPremultipliedAlpha
 {
-	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/TestPremultipliedAlpha.plist"];
+	self.emitter = [CCParticleSystem particleWithFile:@"Particles/TestPremultipliedAlpha.plist"];
 	[self.contentNode addChild:self.emitter z:10];
   [self createScene: @"Test Premultiplied Alpha - Arrows should be faded"];
 }
@@ -174,7 +167,7 @@
 -(void) setupUpsideDown
 {
   // Issue 872
-	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/UpsideDown.plist"];
+	self.emitter = [CCParticleSystem particleWithFile:@"Particles/UpsideDown.plist"];
   
 	[self.contentNode addChild:self.emitter z:10];
   [self createScene: @"Particles should NOT be Upside Down. M should appear, not W."];
@@ -183,7 +176,7 @@
 
 -(void) setupCustomSpinTest
 {
-	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/SpookyPeas.plist"];
+	self.emitter = [CCParticleSystem particleWithFile:@"Particles/SpookyPeas.plist"];
   
   self.emitter.startSpin = 0;
   self.emitter.startSpinVar = 360;
@@ -198,7 +191,7 @@
 -(void) setupRainbowEffect
 {
   
-  self.emitter = [[CCParticleSystemQuad alloc] initWithTotalParticles:50];
+  self.emitter = [[CCParticleSystem alloc] initWithTotalParticles:50];
   // additive
   self.emitter.blendAdditive = NO;
   
@@ -242,8 +235,8 @@
   self.emitter.emissionRate = self.emitter.totalParticles/self.emitter.life;
   
   // color of particles
-  self.emitter.startColor = ccc4f(1.0f, 1.0f, 1.0f, 1.0f);
-  self.emitter.endColor = ccc4f(0.0f, 0.0f, 0.0f, 1.0f);
+  self.emitter.startColor = [CCColor colorWithRed:1 green:1 blue:1 alpha:1];
+  self.emitter.endColor = [CCColor colorWithRed:0 green:0 blue:0 alpha:1];
   
   self.emitter.texture = [[CCTextureCache sharedTextureCache] addImage: @"particles.png"];
 
