@@ -395,15 +395,13 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     // Font color
     if (![formattedAttributedString hasAttribute:NSForegroundColorAttributeName])
     {
-        if (!ccc4BEqual(_fontColor, ccc4(255, 255, 255, 255)))
+        if (![_fontColor isEqualToColor:[CCColor whiteColor]])
         {
             useFullColor = YES;
         }
         
-        float r = ((float)_fontColor.r)/255;
-        float g = ((float)_fontColor.g)/255;
-        float b = ((float)_fontColor.b)/255;
-        float a = ((float)_fontColor.a)/255;
+        CGFloat r,g,b,a;
+        [_fontColor getRed:&r green:&g blue:&b alpha:&a];
         
         NSColor* color = [NSColor colorWithCalibratedRed:r green:g blue:b alpha:a];
         
@@ -690,10 +688,9 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         
         if (hasShadow)
         {
-            float r = ((float)_shadowColor.r)/255;
-            float g = ((float)_shadowColor.g)/255;
-            float b = ((float)_shadowColor.b)/255;
-            float a = ((float)_shadowColor.a)/255;
+            CGFloat r, g, b, a;
+            [_shadowColor getRed:&r green:&g blue:&b alpha:&a];
+            
             NSColor* color = [NSColor colorWithCalibratedRed:r green:g blue:b alpha:a];
             
             CGContextSetShadowWithColor(context, CGSizeMake(shadowOffset.x/retinaFix, shadowOffset.y/retinaFix), shadowBlurRadius/retinaFix, [color CGColor]);
@@ -706,10 +703,9 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
             CGContextSetLineWidth(context, outlineWidth * 2);
             CGContextSetLineJoin(context, kCGLineJoinRound);
             
-            float r = ((float)_outlineColor.r)/255;
-            float g = ((float)_outlineColor.g)/255;
-            float b = ((float)_outlineColor.b)/255;
-            float a = ((float)_outlineColor.a)/255;
+            CGFloat r, g, b, a;
+            [_outlineColor getRed:&r green:&g blue:&b alpha:&a];
+            
             NSColor* color = [NSColor colorWithCalibratedRed:r green:g blue:b alpha:a];
             
             [effectsString addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0, effectsString.length)];
