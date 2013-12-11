@@ -542,8 +542,6 @@ static inline float readFloat(CCBReader *self)
         CGFloat b = readFloat(self);
         CGFloat a = readFloat(self);
         
-        NSLog(@"Read color: %f %f %f %f (%@)", r, g, b, a, name);
-        
         if (setProp)
         {
             CCColor* cVal = [CCColor colorWithRed:r green:g blue:b alpha:a];
