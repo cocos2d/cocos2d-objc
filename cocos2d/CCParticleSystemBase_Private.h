@@ -24,18 +24,29 @@
  *
  */
 
-#import "CCParticleSystemQuad.h"
+#import "CCParticleSystemBase.h"
 
-// OS X
-@interface CCParticleSystemQuad ()
+@interface CCParticleSystemBase ()
 
-// Initialices the indices for the vertices.
--(void) initIndices;
+// Weak reference to the CCSpriteBatchNode that particle.
+@property (nonatomic,readwrite,unsafe_unretained) CCParticleBatchNode *batchNode;
 
-// Initilizes the texture with a rectangle measured in points.
--(void) initTexCoordsWithRect:(CGRect)rect;
+// Altas Index.
+@property (nonatomic,readwrite) NSUInteger atlasIndex;
 
-// Set sprite frame for system.
--(void)setSpriteFrame:(CCSpriteFrame*)spriteFrame;
+// Should be overriden by subclasses.
+-(void) updateQuadWithParticle:(_CCParticle*)particle newPosition:(CGPoint)pos;
+
+// Should be overriden by subclasses.
+-(void) postStep;
+
+// Update.
+-(void) update: (CCTime) dt;
+
+// Update without time.
+-(void) updateWithNoTime;
+
+// System full status.
+-(BOOL) isFull;
 
 @end

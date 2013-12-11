@@ -31,7 +31,7 @@
 #import "CCNode.h"
 
 @class CCTextureAtlas;
-@class CCParticleSystem;
+@class CCParticleSystemBase;
 
 /**
  *  This extension disables lazy z-ordering.
@@ -155,7 +155,7 @@
  *  @param z     Z Order.
  *  @param aTag  Tag.
  */
--(void) addChild:(CCParticleSystem*)child z:(NSInteger)z tag:(NSInteger) aTag;
+-(void) addChild:(CCParticleSystemBase*)child z:(NSInteger)z tag:(NSInteger) aTag;
 
 /**
  *  Inserts a particle system to the batch node.
@@ -163,7 +163,7 @@
  *  @param pSystem Particle System.
  *  @param index   Index Position.
  */
--(void) insertChild:(CCParticleSystem*) pSystem inAtlasAtIndex:(NSUInteger)index;
+-(void) insertChild:(CCParticleSystemBase*) pSystem inAtlasAtIndex:(NSUInteger)index;
 
 /**
  *  Remove the specified particle system from the batch node.
@@ -171,7 +171,7 @@
  *  @param pSystem   Particle System.
  *  @param doCleanUp Perform cleanup.
  */
--(void) removeChild:(CCParticleSystem*) pSystem cleanup:(BOOL)doCleanUp;
+-(void) removeChild:(CCParticleSystemBase*) pSystem cleanup:(BOOL)doCleanUp;
 
 /** Disables a particle by inserting a 0'd quad into the texture atlas */
 

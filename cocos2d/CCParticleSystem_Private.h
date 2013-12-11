@@ -26,27 +26,16 @@
 
 #import "CCParticleSystem.h"
 
+// OS X
 @interface CCParticleSystem ()
 
-// Weak reference to the CCSpriteBatchNode that particle.
-@property (nonatomic,readwrite,unsafe_unretained) CCParticleBatchNode *batchNode;
+// Initialices the indices for the vertices.
+-(void) initIndices;
 
-// Altas Index.
-@property (nonatomic,readwrite) NSUInteger atlasIndex;
+// Initilizes the texture with a rectangle measured in points.
+-(void) initTexCoordsWithRect:(CGRect)rect;
 
-// Should be overriden by subclasses.
--(void) updateQuadWithParticle:(_CCParticle*)particle newPosition:(CGPoint)pos;
-
-// Should be overriden by subclasses.
--(void) postStep;
-
-// Update.
--(void) update: (CCTime) dt;
-
-// Update without time.
--(void) updateWithNoTime;
-
-// System full status.
--(BOOL) isFull;
+// Set sprite frame for system.
+-(void)setSpriteFrame:(CCSpriteFrame*)spriteFrame;
 
 @end
