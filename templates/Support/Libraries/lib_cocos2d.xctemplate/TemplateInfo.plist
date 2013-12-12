@@ -1001,7 +1001,7 @@
                <integer>0</integer>
             </array>
          </dict>
-         <key>Libraries/cocos2d/CCParticleSystemQuad_Private.h</key>
+         <key>Libraries/cocos2d/CCParticleSystemBase_Private.h</key>
          <dict>
             <key>Group</key>
             <array>
@@ -1010,11 +1010,11 @@
                <string>Particle Nodes</string>
             </array>
             <key>Path</key>
-            <string>Libraries/cocos2d/CCParticleSystemQuad_Private.h</string>
+            <string>Libraries/cocos2d/CCParticleSystemBase_Private.h</string>
             <key>TargetIndices</key>
             <array />
          </dict>
-         <key>Libraries/cocos2d/CCParticleSystemQuad.h</key>
+         <key>Libraries/cocos2d/CCParticleSystemBase.h</key>
          <dict>
             <key>Group</key>
             <array>
@@ -1023,11 +1023,11 @@
                <string>Particle Nodes</string>
             </array>
             <key>Path</key>
-            <string>Libraries/cocos2d/CCParticleSystemQuad.h</string>
+            <string>Libraries/cocos2d/CCParticleSystemBase.h</string>
             <key>TargetIndices</key>
             <array />
          </dict>
-         <key>Libraries/cocos2d/CCParticleSystemQuad.m</key>
+         <key>Libraries/cocos2d/CCParticleSystemBase.m</key>
          <dict>
             <key>Group</key>
             <array>
@@ -1036,7 +1036,7 @@
                <string>Particle Nodes</string>
             </array>
             <key>Path</key>
-            <string>Libraries/cocos2d/CCParticleSystemQuad.m</string>
+            <string>Libraries/cocos2d/CCParticleSystemBase.m</string>
             <key>TargetIndices</key>
             <array>
                <integer>0</integer>
@@ -1048,7 +1048,7 @@
             <array>
                <string>Libraries</string>
                <string>cocos2d</string>
-               <string>Particle Nodes</string>
+               <string>Physics</string>
             </array>
             <key>Path</key>
             <string>Libraries/cocos2d/CCPhysics+ObjectiveChipmunk.h</string>
@@ -2251,6 +2251,36 @@
                <integer>0</integer>
             </array>
          </dict>
+         <key>Libraries/cocos2d/Platforms/iOS/CCAppDelegate.h</key>
+         <dict>
+            <key>Group</key>
+            <array>
+               <string>Libraries</string>
+               <string>cocos2d</string>
+               <string>Platforms</string>
+               <string>iOS</string>
+            </array>
+            <key>Path</key>
+            <string>Libraries/cocos2d/Platforms/iOS/CCAppDelegate.h</string>
+            <key>TargetIndices</key>
+            <array />
+         </dict>
+         <key>Libraries/cocos2d/Platforms/iOS/CCAppDelegate.m</key>
+         <dict>
+            <key>Group</key>
+            <array>
+               <string>Libraries</string>
+               <string>cocos2d</string>
+               <string>Platforms</string>
+               <string>iOS</string>
+            </array>
+            <key>Path</key>
+            <string>Libraries/cocos2d/Platforms/iOS/CCAppDelegate.m</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
+         </dict>
          <key>Libraries/cocos2d/Platforms/Mac/CCDirectorMac.h</key>
          <dict>
             <key>Group</key>
@@ -2396,6 +2426,34 @@
             </array>
             <key>Path</key>
             <string>Libraries/cocos2d/Support/base64.h</string>
+            <key>TargetIndices</key>
+            <array />
+         </dict>
+         <key>Libraries/cocos2d/Support/CCColor.m</key>
+         <dict>
+            <key>Group</key>
+            <array>
+               <string>Libraries</string>
+               <string>cocos2d</string>
+               <string>Support</string>
+            </array>
+            <key>Path</key>
+            <string>Libraries/cocos2d/Support/CCColor.m</string>
+            <key>TargetIndices</key>
+            <array>
+               <integer>0</integer>
+            </array>
+         </dict>
+         <key>Libraries/cocos2d/Support/CCColor.h</key>
+         <dict>
+            <key>Group</key>
+            <array>
+               <string>Libraries</string>
+               <string>cocos2d</string>
+               <string>Support</string>
+            </array>
+            <key>Path</key>
+            <string>Libraries/cocos2d/Support/CCColor.h</string>
             <key>TargetIndices</key>
             <array />
          </dict>
@@ -2815,9 +2873,9 @@
          <string>Libraries/cocos2d/CCParticleSystem_Private.h</string>
          <string>Libraries/cocos2d/CCParticleSystem.h</string>
          <string>Libraries/cocos2d/CCParticleSystem.m</string>
-         <string>Libraries/cocos2d/CCParticleSystemQuad_Private.h</string>
-         <string>Libraries/cocos2d/CCParticleSystemQuad.h</string>
-         <string>Libraries/cocos2d/CCParticleSystemQuad.m</string>
+         <string>Libraries/cocos2d/CCParticleSystemBase_Private.h</string>
+         <string>Libraries/cocos2d/CCParticleSystemBase.h</string>
+         <string>Libraries/cocos2d/CCParticleSystemBase.m</string>
          <string>Libraries/cocos2d/CCPhysics+ObjectiveChipmunk.h</string>
          <string>Libraries/cocos2d/CCPhysicsBody.h</string>
          <string>Libraries/cocos2d/CCPhysicsBody.m</string>
@@ -2906,6 +2964,8 @@
          <string>Libraries/cocos2d/Platforms/iOS/CCGLView.m</string>
          <string>Libraries/cocos2d/Platforms/iOS/UITouch+CC.h</string>
          <string>Libraries/cocos2d/Platforms/iOS/UITouch+CC.m</string>
+         <string>Libraries/cocos2d/Platforms/iOS/CCAppDelegate.h</string>
+         <string>Libraries/cocos2d/Platforms/iOS/CCAppDelegate.m</string>
          <string>Libraries/cocos2d/Platforms/Mac/CCDirectorMac.h</string>
          <string>Libraries/cocos2d/Platforms/Mac/CCDirectorMac.m</string>
          <string>Libraries/cocos2d/Platforms/Mac/CCGLView.h</string>
@@ -2918,6 +2978,8 @@
          <string>Libraries/cocos2d/Support/base64.h</string>
          <string>Libraries/cocos2d/Support/CCFileUtils.h</string>
          <string>Libraries/cocos2d/Support/CCFileUtils.m</string>
+         <string>Libraries/cocos2d/Support/CCColor.h</string>
+         <string>Libraries/cocos2d/Support/CCColor.m</string>
          <string>Libraries/cocos2d/Support/CCProfiling.h</string>
          <string>Libraries/cocos2d/Support/CCProfiling.m</string>
          <string>Libraries/cocos2d/Support/ccUtils.c</string>
