@@ -40,10 +40,12 @@
 
 /// Mass of this individual shape.
 @property(nonatomic, assign) CGFloat mass;
-/// Area of the body in points*points.
+/// Area of the body in points^2.
 /// Note that this is relative to the CCPhysicsNode. Changing a node or a parent can change the area.
 @property(nonatomic, readonly) CGFloat area;
-/// TODO explain units.
+/// Density of the shape in 1/1000 units of mass per area in points^2.
+/// The coefficient is used to keep the mass of the object a reasonable value.
+/// Note that mass and not density will remain constant if an object is rescaled.
 @property(nonatomic, assign) CGFloat density;
 /// Surface friction of the shape.
 /// When two objects collide, their friction is multiplied together.

@@ -232,4 +232,69 @@
 	}
 }
 
+-(void)setupDensityTest
+{
+	CCPhysicsNode *physics = [CCPhysicsNode node];
+	physics.debugDraw = YES;
+	physics.gravity = ccp(0, -100);
+
+	[self.contentNode addChild:physics];
+	
+	{
+		// Fulcrum
+		CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/shape-1.png"];
+		sprite.position = ccp(240, 100);
+		
+		CGSize size = sprite.contentSize;
+		CGPoint points[] = {
+			ccp(0, 0),
+			ccp(size.width, 0),
+			ccp(size.width/2, size.height),
+		};
+		
+		CCPhysicsBody *body = sprite.physicsBody = [CCPhysicsBody bodyWithPolygonFromPoints:points count:3 cornerRadius:0.0];
+		body.type = CCPhysicsBodyTypeStatic;
+		
+		[physics addChild:sprite];
+	}
+	
+	{
+		// Balance
+		CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/shape-3.png"];
+		sprite.position = ccp(240, 130);
+		sprite.scaleX = 4.0;
+		
+		CGRect rect = {CGPointZero, sprite.contentSize};
+		CCPhysicsBody *body = sprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
+		body.mass = 100.0;
+		
+		[physics addChild:sprite];
+	}
+	
+	{
+		// Little box
+		CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/shape-0.png"];
+		sprite.position = ccp(140, 200);
+		CGFloat scale = sprite.scale = 0.5;
+		
+		CGRect rect = {CGPointZero, sprite.contentSize};
+		CCPhysicsBody *body = sprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
+		body.density = 1.0/(scale*scale);
+		
+		[physics addChild:sprite];
+	}
+	
+	{
+		// Big box
+		CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/shape-0.png"];
+		sprite.position = ccp(340, 200);
+		
+		CGRect rect = {CGPointZero, sprite.contentSize};
+		CCPhysicsBody *body = sprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
+		body.density = 1.0;
+		
+		[physics addChild:sprite];
+	}
+}
+
 @end
