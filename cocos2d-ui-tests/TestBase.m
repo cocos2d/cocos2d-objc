@@ -188,7 +188,12 @@
     
     // Find the new test
     NSString* constructorName = [[self testConstructors] objectAtIndex:testNum];
-    
+  
+		if ([self respondsToSelector:@selector(setUp)])
+		{
+			[self setUp];
+		}
+	
     // Setup the new test
     SEL constructor = NSSelectorFromString(constructorName);
     if ([self respondsToSelector:constructor])
