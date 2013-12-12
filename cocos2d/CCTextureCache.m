@@ -301,10 +301,12 @@ static CCTextureCache *sharedTextureCache;
             
 			UIImage *image = [[UIImage alloc] initWithContentsOfFile:fullpath];
 			tex = [[CCTexture alloc] initWithCGImage:image.CGImage contentScale:contentScale];
+            CCLOG(@"Texture loaded: %@", path);
             
 			if( tex ){
 				dispatch_sync(_dictQueue, ^{
 					[_textures setObject: tex forKey:path];
+                    CCLOG(@"Texture cached: %p", tex);
 				});
 			}else{
 				CCLOG(@"cocos2d: Couldn't create texture for file:%@ in CCTextureCache", path);
@@ -335,7 +337,7 @@ static CCTextureCache *sharedTextureCache;
 
 	}
 
-	return tex;
+	return((id)tex.proxy);
 }
 
 
@@ -351,7 +353,7 @@ static CCTextureCache *sharedTextureCache;
 			tex = [_textures objectForKey:key];
 		});
 		if(tex)
-			return tex;
+			return((id)tex.proxy);
 	}
 
 	tex = [[CCTexture alloc] initWithCGImage:imageref contentScale:1.0];
@@ -364,7 +366,7 @@ static CCTextureCache *sharedTextureCache;
 		CCLOG(@"cocos2d: Couldn't add CGImage in CCTextureCache");
 	}
 
-	return tex;
+	return((id)tex.proxy);
 }
 
 #pragma mark TextureCache - Remove
@@ -378,17 +380,21 @@ static CCTextureCache *sharedTextureCache;
 
 -(void) removeUnusedTextures
 {
-//	dispatch_sync(_dictQueue, ^{
-//		NSArray *keys = [_textures allKeys];
-//		for( id key in keys ) {
-//			id value = [_textures objectForKey:key];
-//			if( CFGetRetainCount((CFTypeRef) value) == 1 ) {
-//				CCLOG(@"cocos2d: CCTextureCache: removing unused texture: %@", key);
-//                NSLog(@"Remove!");
-//				[_textures removeObjectForKey:key];
-//			}
-//		}
-//	});
+    dispatch_sync(_dictQueue, ^{
+        NSArray *keys = [_textures allKeys];
+        for(id key in keys)
+        {
+            CCTexture *texture = [_textures objectForKey:key];
+            CCLOG(@"texture: %@", texture);
+            // If the weakly retained proxy object is nil, then the texture is unreferenced.
+            if (!texture.hasProxy)
+            {
+                CCLOG(@"cocos2d: CCTextureCache: removing unused texture: %@", key);
+                [_textures removeObjectForKey:key];
+            }
+        }
+        CCLOG(@"Purge complete.");
+    });
 }
 
 -(void) removeTexture: (CCTexture*) tex
@@ -423,7 +429,7 @@ static CCTextureCache *sharedTextureCache;
 		tex = [_textures objectForKey:key];
 	});
 
-	return tex;
+	return((id)tex.proxy);
 }
 
 @end
@@ -446,7 +452,7 @@ static CCTextureCache *sharedTextureCache;
 	});
 
 	if(tex) {
-		return tex;
+		return((id)tex.proxy);
 	}
 
 	tex = [[CCTexture alloc] initWithPVRFile: path];
@@ -458,7 +464,7 @@ static CCTextureCache *sharedTextureCache;
 		CCLOG(@"cocos2d: Couldn't add PVRImage:%@ in CCTextureCache",path);
 	}
 
-	return tex;
+	return((id)tex.proxy);
 }
 
 @end
