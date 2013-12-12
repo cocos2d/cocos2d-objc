@@ -120,6 +120,11 @@
 	return [[self alloc] initWithCGImage:image key:key];
 }
 
++(id) emptySprite
+{
+    return [[self alloc] init];
+}
+
 -(id) init
 {
 	return [self initWithTexture:nil rect:CGRectZero];
@@ -572,7 +577,11 @@
 
 	if( _batchNode ) {
 		NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSprite only supports CCSprites as children when using CCSpriteBatchNode");
-		NSAssert( child.texture.name == _textureAtlas.texture.name, @"CCSprite is not using the same texture id");
+        
+		f(child.texture) {
+            NSAssert( (child.texture.name == _textureAtlas.texture.name), @"CCSprite is not using the same texture id");
+        }
+
 
 		//put it in descendants array of batch node
 		[_batchNode appendChild:child];
