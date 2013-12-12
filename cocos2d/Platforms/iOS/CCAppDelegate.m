@@ -22,6 +22,10 @@ NSString* const CCSetupScreenOrientation = @"CCSetupScreenOrientation";
 NSString* const CCSetupAnimationInterval = @"CCSetupAnimationInterval";
 NSString* const CCSetupHideDebugStats = @"CCSetupHideDebugStats";
 NSString* const CCSetupTabletScale2X = @"CCSetupTabletScale2X";
+NSString* const CCScreenOrientationLandscape = @"CCScreenOrientationLandscape";
+NSString* const CCScreenOrientationPortrait = @"CCScreenOrientationPortrait";
+NSString* const CCScreenModeFlexible = @"CCScreenModeFlexible";
+NSString* const CCScreenModeFixed = @"CCScreenModeFixed";
 
 // Fixed size. As wide as iPhone 5 at 2x and as high as the iPad at 2x.
 const CGSize FIXED_SIZE = {568, 384};
@@ -29,10 +33,10 @@ const CGSize FIXED_SIZE = {568, 384};
 @interface CCNavigationController ()
 {
     CCAppDelegate* __weak _appDelegate;
-    CCScreenOrientation _screenOrientation;
+    NSString* _screenOrientation;
 }
-@property (nonatomic,weak) CCAppDelegate* appDelegate;
-@property (nonatomic, assign) CCScreenOrientation screenOrientation;
+@property (nonatomic, weak) CCAppDelegate* appDelegate;
+@property (nonatomic, strong) NSString* screenOrientation;
 @end
 
 @implementation CCNavigationController
@@ -45,7 +49,7 @@ const CGSize FIXED_SIZE = {568, 384};
 // Only valid for iOS 6+. NOT VALID for iOS 4 / 5.
 -(NSUInteger)supportedInterfaceOrientations
 {
-    if (_screenOrientation == CCScreenOrientationLandscape)
+    if ([_screenOrientation isEqual:CCScreenOrientationLandscape])
     {
         return UIInterfaceOrientationMaskLandscape;
     }
@@ -59,7 +63,7 @@ const CGSize FIXED_SIZE = {568, 384};
 // Only valid on iOS 4 / 5. NOT VALID for iOS 6.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    if (_screenOrientation == CCScreenOrientationLandscape)
+    if ([_screenOrientation isEqual:CCScreenOrientationLandscape])
     {
         return UIInterfaceOrientationIsLandscape(interfaceOrientation);
     }
@@ -123,39 +127,6 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 - (void) setupCocos2dWithOptions:(NSDictionary*)config
 {
-    // Default configuration
-    NSString* pixelFormat = kEAGLColorFormatRGBA8;
-    CCScreenMode screenMode = CCScreenModeFlexible;
-    CCScreenOrientation screenOrientation = CCScreenOrientationLandscape;
-    NSTimeInterval animationInterval = 1.0/60;
-    
-    if (config)
-    {
-        // Read pixelFormat
-        if ([config objectForKey:CCSetupPixelFormat])
-        {
-            pixelFormat = [config objectForKey:CCSetupPixelFormat];
-        }
-        
-        // Read screenMode
-        if ([config objectForKey:CCSetupScreenMode])
-        {
-            screenMode = [[config objectForKey:CCSetupScreenMode] intValue];
-        }
-        
-        // Read screenOrientation
-        if ([config objectForKey:CCSetupScreenOrientation])
-        {
-            screenOrientation = [[config objectForKey:CCSetupScreenOrientation] intValue];
-        }
-        
-        // Read animationInterval
-        if ([config objectForKey:CCSetupAnimationInterval])
-        {
-            animationInterval = [[config objectForKey:CCSetupAnimationInterval] doubleValue];
-        }
-    }
-    
 	// Create the main window
 	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
@@ -173,13 +144,15 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	//  - Possible values: YES, NO
 	// numberOfSamples: Only valid if multisampling is enabled
 	//  - Possible values: 0 to glGetIntegerv(GL_MAX_SAMPLES_APPLE)
-	CCGLView *glView = [CCGLView viewWithFrame:[window_ bounds]
-								   pixelFormat:pixelFormat
-								   depthFormat:0
-							preserveBackbuffer:NO
-									sharegroup:nil
-								 multiSampling:NO
-							   numberOfSamples:0];
+	CCGLView *glView = [CCGLView
+		viewWithFrame:[window_ bounds]
+		pixelFormat:config[CCSetupPixelFormat] ?: kEAGLColorFormatRGBA8
+		depthFormat:0
+		preserveBackbuffer:NO
+		sharegroup:nil
+		multiSampling:NO
+		numberOfSamples:0
+	];
 	
 	CCDirectorIOS* director = (CCDirectorIOS*) [CCDirector sharedDirector];
 	
@@ -193,12 +166,13 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 #endif
 	
 	// set FPS at 60
+	NSTimeInterval animationInterval = [(config[CCSetupAnimationInterval] ?: @(1.0/60)) doubleValue];
 	[director setAnimationInterval:animationInterval];
 	
 	// attach the openglView to the director
 	[director setView:glView];
 	
-	if(YES || [config[CCSetupScreenMode] isEqual: @"foo"]){
+	if([config[CCSetupScreenMode] isEqual:CCScreenModeFixed]){
 		CGSize size = [CCDirector sharedDirector].viewSizeInPixels;
 		
 		// Find the minimal power-of-two scale that covers both the width and height.
@@ -239,7 +213,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	navController_ = [[CCNavigationController alloc] initWithRootViewController:director];
 	navController_.navigationBarHidden = YES;
 	navController_.appDelegate = self;
-	navController_.screenOrientation = screenOrientation;
+	navController_.screenOrientation = (config[CCSetupScreenOrientation] ?: CCScreenOrientationLandscape);
     
 	// for rotation and other messages
 	[director setDelegate:navController_];

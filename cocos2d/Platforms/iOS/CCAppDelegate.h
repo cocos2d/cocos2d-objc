@@ -13,36 +13,24 @@
 #import <UIKit/UIKit.h>
 #import "CCDirectorIOS.h"
 
-/**
- *  The screen mode defines how different types of screens and resolutions are handled.
- */
-typedef NS_ENUM(unsigned char, CCScreenMode)
-{
-    /// The flexible screen mode is Cocos2d's default. It will give you an area that can vary slightly in size. In landscape mode the height will be 320 points for mobiles and 384 points for tablets. The width of the area can vary from 480 to 568 points.
-    CCScreenModeFlexible,
-    
-    /// The fixed screen mode will setup the working area to be 568 x 384 points. Depending on the device, the outer edges may be cropped. The safe area, that will be displayed on all sorts of devices, is 480 x 320 points and placed in the center of the working area.
-    CCScreenModeFixed,
-};
-
-/**
- *  The screen orientation defines in which orientation the app is displaying.
- */
-typedef NS_ENUM(unsigned char, CCScreenOrientation)
-{
-    /// Landscape screen orientation
-    CCScreenOrientationLandscape,
-    
-    /// Portrait screen orientation
-    CCScreenOrientationPortrait,
-};
-
 NSString* const CCSetupPixelFormat;
-NSString* const CCSetpScreenMode;
+NSString* const CCSetupScreenMode;
 NSString* const CCSetupScreenOrientation;
 NSString* const CCSetupAnimationInterval;
 NSString* const CCSetupHideDebugStats;
 NSString* const CCSetupTabletScale2X;
+
+
+/// Landscape screen orientation. Used with CCSetupScreenOrientation.
+NSString* const CCScreenOrientationLandscape;
+/// Portrait screen orientation.  Used with CCSetupScreenOrientation.
+NSString* const CCScreenOrientationPortrait;
+
+
+/// The flexible screen mode is Cocos2d's default. It will give you an area that can vary slightly in size. In landscape mode the height will be 320 points for mobiles and 384 points for tablets. The width of the area can vary from 480 to 568 points.
+NSString* const CCScreenModeFlexible;
+/// The fixed screen mode will setup the working area to be 568 x 384 points. Depending on the device, the outer edges may be cropped. The safe area, that will be displayed on all sorts of devices, is 480 x 320 points and placed in the center of the working area.
+NSString* const CCScreenModeFixed;
 
 
 @class CCAppDelegate;
@@ -98,10 +86,11 @@ NSString* const CCSetupTabletScale2X;
  *  Currently supported keys for the configuration dictionary are:
  *
  *  - CCSetupPixelFormat NSString with the pixel format, normally kEAGLColorFormatRGBA8 or kEAGLColorFormatRGB565. The RGB565 option is faster, but will allow less colors.
- *  - CCSetupScreenMode NSNumber with int specifying which CCScreenMode to use, CCScreenModeFlexible is the default option.
+ *  - CCSetupScreenMode NSString value that accepts either CCScreenModeFlexible or CCScreenModeFixed.
+ *  - CCSetupScreenOrientation NSString value that accepts either CCScreenOrientationLandscape or CCScreenOrientationPortrait.
  *  - CCSetupAnimationInterval NSNumber with double. Specifies the interval between animation frames. Supported values are 1.0/60 and 1.0/30.
  *  - CCSetupHideDebugStats NSNumber with bool. Specifies if the stats (FPS, frame time and draw call count) should be hidden when running in debug mode.
- *  - CCSetupTabletScale2X NSNumber with bool. If true, the iPad will be setup to act like it has a 512x384 "retina" screen. This makes it much easier to make universal iOS games.
+ *  - CCSetupTabletScale2X NSNumber with bool. If true, the iPad will be setup to act like it has a 512x384 "retina" screen. This makes it much easier to make universal iOS games. This value is overriden when using the fixed screen mode.
  *
  *  @param config Dictionary with options for configuring Cocos2d.
  */
