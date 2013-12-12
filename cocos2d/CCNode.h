@@ -188,7 +188,7 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 /** Position (x,y) of the node in points from the bottom left corner */
 @property(nonatomic,readonly) CGPoint positionInPoints;
 
-/** Defines the position type used for the X component of the position property */
+/** Defines the position type used for the position property. Changing the position type affects the meaning of the position, and allows you to change the referenceCorner, relative to the parent container. It allso allows changing from points to UIPoints. UIPoints are scaled by [CCDirector sharedDirector].UIScaleFactor. See "Coordinate System and Positioning" for more information. */
 @property(nonatomic,readwrite,assign) CCPositionType positionType;
 
 /** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. */
@@ -209,10 +209,15 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 /** The scale factor of the node. 1.0 is the default scale factor. It only modifies the Y scale factor. */
 @property(nonatomic,readwrite,assign) float scaleY;
 
+/** scaleInPoints is the scale factor of the node in both X and Y, measured in points. The scaleType indicates if the scaleInPoints will be scaled byt the UIScaleFactor or not. See "Coordinate System and Positioning" for more information. */
 @property (nonatomic,readonly) float scaleInPoints;
+/** scaleInPoints is the scale factor of the node in X, measured in points. */
 @property (nonatomic,readonly) float scaleXInPoints;
+/** scaleInPoints is the scale factor of the node in Y, measured in points. */
 @property (nonatomic,readonly) float scaleYInPoints;
 
+/** scaleType defines scale behavior for this node. CCScaleTypeScaled indicates that the node will be scaled by [CCDirector sharedDirector].UIScaleFactor. This property is analagous to positionType. ScaleType affects the scaleInPoints of a CCNode. See "Coordinate System and Positioning" for more information.
+ */
 @property (nonatomic,assign) CCScaleType scaleType;
 
 /** The X skew angle of the node in degrees.
@@ -229,11 +234,11 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  */
 @property(nonatomic,readwrite,assign) float skewY;
 
-/** The untransformed size of the node in the unit specified by contentSizeType property. The contentSize remains the same no matter the node is scaled or rotated.
+/** The untransformed size of the node in the unit specified by contentSizeType property. The contentSize remains the same no matter the node is scaled or rotated. contentSize is relative to the node.
  */
 @property (nonatomic,readwrite,assign) CGSize contentSize;
 
-/** The untransformed size of the node in Points. The contentSize remains the same no matter the node is scaled or rotated. */
+/** The untransformed size of the node in Points. The contentSize remains the same no matter the node is scaled or rotated. contentSizeInPoints is affected by the contentSizeType and will be scaled by the [CCDirector sharedDirector].UIScaleFactor if the type is CCSizeUnitUIPoints */
 @property (nonatomic,readonly) CGSize contentSizeInPoints;
 
 /** Defines the contentSize type used for the widht and height component of the contentSize property. */
@@ -305,14 +310,15 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 -(void) removeFromParentAndCleanup:(BOOL)cleanup;
 
 /**
- *  Removes a child from the container forcing a cleanup
+ *  Removes a child from the container forcing a cleanup. This method checks to ensure the parameter node is actually a child of this node.
  *
  *  @param child The child node to remove
  */
 -(void) removeChild:(CCNode*)child;
 
 /**
- *  Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.
+ *  Removes a child from the container. It will also cleanup all running and scheduled actions depending on the cleanup parameter.
+ *  This method checks to ensure the parameter node is actually a child of this node.
  *
  *  @param node    The child node to remove
  *  @param cleanup Stops all scheduled events and actions
@@ -320,14 +326,14 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 -(void) removeChild: (CCNode*)node cleanup:(BOOL)cleanup;
 
 /**
- *  Removes a child from the container by tag value forcing a cleanup.
+ *  Removes a child from the container by name value forcing a cleanup.
  *
  *  @param name Name of node to be removed
  */
 -(void) removeChildByName:(NSString*)name;
 
 /**
- *  Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
+ *  Removes a child from the container by name value. It will also cleanup all running actions depending on the cleanup parameter
  *
  *  @param name    Name of node to be removed
  *  @param cleanup Stops all scheduled events and actions
