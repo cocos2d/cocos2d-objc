@@ -25,6 +25,7 @@
 		758A6C711844011E00D1A8D2 /* CCLabelTTFTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 758A6C701844011E00D1A8D2 /* CCLabelTTFTest.m */; };
 		758A6C7B18440D5C00D1A8D2 /* ParticleTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 758A6C7A18440D5C00D1A8D2 /* ParticleTest.m */; };
 		758A6C80184410EE00D1A8D2 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 758A6C7F184410EE00D1A8D2 /* Particles */; };
+		75F76497185A831B00E2FAFE /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 75F76496185A831B00E2FAFE /* Sounds */; };
 		B70AFC30180F2D7400516435 /* CCTransitionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B70AFC2F180F2D7400516435 /* CCTransitionTest.m */; };
 		B71B087C17EA5B490082EBC0 /* TestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = B71B087B17EA5B490082EBC0 /* TestBase.m */; };
 		B71B088217EA5B6A0082EBC0 /* CCScrollViewTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B71B088117EA5B6A0082EBC0 /* CCScrollViewTest.m */; };
@@ -123,6 +124,7 @@
 		758A6C701844011E00D1A8D2 /* CCLabelTTFTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCLabelTTFTest.m; path = "cocos2d-ui-tests/tests/CCLabelTTFTest.m"; sourceTree = SOURCE_ROOT; };
 		758A6C7A18440D5C00D1A8D2 /* ParticleTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParticleTest.m; path = "cocos2d-ui-tests/tests/ParticleTest.m"; sourceTree = SOURCE_ROOT; };
 		758A6C7F184410EE00D1A8D2 /* Particles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Particles; path = Resources/Particles; sourceTree = SOURCE_ROOT; };
+		75F76496185A831B00E2FAFE /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sounds; path = Resources/Sounds; sourceTree = SOURCE_ROOT; };
 		B70AFC2F180F2D7400516435 /* CCTransitionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTransitionTest.m; path = "cocos2d-ui-tests/tests/CCTransitionTest.m"; sourceTree = SOURCE_ROOT; };
 		B71B087A17EA5B490082EBC0 /* TestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestBase.h; path = "cocos2d-ui-tests/TestBase.h"; sourceTree = SOURCE_ROOT; };
 		B71B087B17EA5B490082EBC0 /* TestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestBase.m; path = "cocos2d-ui-tests/TestBase.m"; sourceTree = SOURCE_ROOT; };
@@ -228,6 +230,7 @@
 		758A6C6E1843E84D00D1A8D2 /* Test Resources */ = {
 			isa = PBXGroup;
 			children = (
+				75F76496185A831B00E2FAFE /* Sounds */,
 				758A6C7F184410EE00D1A8D2 /* Particles */,
 				758A6C6A1843E5BE00D1A8D2 /* TileMaps */,
 				758A6C6B1843E5C500D1A8D2 /* Images */,
@@ -488,6 +491,7 @@
 			files = (
 				758A6C6C1843E5CB00D1A8D2 /* TileMaps in Resources */,
 				758A6C6D1843E5CB00D1A8D2 /* Images in Resources */,
+				75F76497185A831B00E2FAFE /* Sounds in Resources */,
 				B7E2620E17E7D34D007067F0 /* Default-568h@2x.png in Resources */,
 				B7E2620F17E7D34D007067F0 /* Default-Landscape~ipad.png in Resources */,
 				B7E2621017E7D34D007067F0 /* Default.png in Resources */,
