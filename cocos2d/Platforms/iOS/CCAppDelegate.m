@@ -184,6 +184,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 		// TODO not 100% certain this is correct in all the weird edge cases.
 		[[CCFileUtils sharedFileUtils] setiPadContentScaleFactor:scaleFactor*2.0];
 		
+		director.designSize = FIXED_SIZE;
 		[director setProjection:CCDirectorProjectionCustom];
 	} else {
 		// Setup tablet scaling if it was requested.

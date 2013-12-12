@@ -110,7 +110,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     _outgoingOverIncoming = NO;
     
     // find out where the outgoing scene will end (if it is a transition with movement)
-    CGSize size = [CCDirector sharedDirector].viewSize;
+    CGSize size = [CCDirector sharedDirector].designSize;
     switch (direction) {
         case CCTransitionDirectionDown: _outgoingDestination = CGPointMake(0, -size.height); break;
         case CCTransitionDirectionLeft: _outgoingDestination = CGPointMake(-size.width, 0); break;
@@ -182,7 +182,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 
     // create render textures
     // get viewport size
-    CGSize size = [CCDirector sharedDirector].viewSize;
+    CGSize size = [CCDirector sharedDirector].designSize;
 
     // create texture for outgoing scene
     _outgoingTexture = [CCRenderTexture renderTextureWithWidth:size.width / _outgoingDownScale

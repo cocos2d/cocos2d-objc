@@ -200,13 +200,17 @@ and when to execute the Scenes.
  */
 @property (nonatomic,readwrite,assign) float UIScaleFactor;
 
+/// User definable value that is used for default contentSizes of many node types (CCScene, CCNodeColor, etc).
+/// Defaults to the view size.
+@property(nonatomic, assign) CGSize designSize;
+
 /** returns a shared instance of the director */
 +(CCDirector*)sharedDirector;
 
 
 #pragma mark Director - Stats
 
-#pragma mark Director - Win Size
+#pragma mark Director - View Size
 /** returns the size of the OpenGL view in points */
 - (CGSize) viewSize;
 
