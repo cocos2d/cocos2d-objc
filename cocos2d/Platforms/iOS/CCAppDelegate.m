@@ -23,6 +23,8 @@ NSString* const CCSetupAnimationInterval = @"CCSetupAnimationInterval";
 NSString* const CCSetupHideDebugStats = @"CCSetupHideDebugStats";
 NSString* const CCSetupTabletScale2X = @"CCSetupTabletScale2X";
 
+// Fixed size. As wide as iPhone 5 at 2x and as high as the iPad at 2x.
+const CGSize FIXED_SIZE = {568, 384};
 
 @interface CCNavigationController ()
 {
@@ -71,13 +73,15 @@ NSString* const CCSetupTabletScale2X = @"CCSetupTabletScale2X";
 -(void)updateProjection
 {
 	CGSize sizePoint = [CCDirector sharedDirector].viewSize;
-	NSLog(@"viewSize: %@", NSStringFromCGSize(sizePoint));
+	
+	// Half of the extra size that will be cut off
+	CGPoint offset = ccpMult(ccp(FIXED_SIZE.width - sizePoint.width, FIXED_SIZE.height - sizePoint.height), 0.5);
 	
 	kmGLMatrixMode(KM_GL_PROJECTION);
 	kmGLLoadIdentity();
 	
 	kmMat4 orthoMatrix;
-	kmMat4OrthographicProjection(&orthoMatrix, 0, sizePoint.width, 0, sizePoint.height, -1024, 1024 );
+	kmMat4OrthographicProjection(&orthoMatrix, offset.x, sizePoint.width + offset.x, offset.y, sizePoint.height + offset.y, -1024, 1024 );
 	kmGLMultMatrix( &orthoMatrix );
 	
 	kmGLMatrixMode(KM_GL_MODELVIEW);
@@ -108,7 +112,14 @@ NSString* const CCSetupTabletScale2X = @"CCSetupTabletScale2X";
     return NULL;
 }
 
-CGSize FIXED_SIZE = {568, 384};
+static CGFloat
+FindPOTScale(CGFloat size, CGFloat fixedSize)
+{
+	int scale = 1;
+	while(fixedSize*scale < size) scale *= 2;
+	
+	return scale;
+}
 
 - (void) setupCocos2dWithOptions:(NSDictionary*)config
 {
@@ -187,24 +198,37 @@ CGSize FIXED_SIZE = {568, 384};
 	// attach the openglView to the director
 	[director setView:glView];
 	
-	// Setup tablet scaling if it was requested.
-	if(
-		UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad &&
-		[config[CCSetupTabletScale2X] boolValue]
-	){
-		// Set the director to use 2 points per pixel.
-		director.contentScaleFactor *= 2.0;
+	if(YES || [config[CCSetupScreenMode] isEqual: @"foo"]){
+		CGSize size = [CCDirector sharedDirector].viewSizeInPixels;
 		
-		// Set the UI scale factor to show things at "native" size.
-		director.UIScaleFactor = 0.5;
+		// Find the minimal power-of-two scale that covers both the width and height.
+		CGFloat scaleFactor = MIN(FindPOTScale(size.width, FIXED_SIZE.width), FindPOTScale(size.height, FIXED_SIZE.height));
 		
-		// Let CCFileUtils know that "-ipad" textures should be treated as having a contentScale of 2.0.
-		[[CCFileUtils sharedFileUtils] setiPadContentScaleFactor:2.0];
+		director.contentScaleFactor = scaleFactor;
+//		director.UIScaleFactor = 1.0/scaleFactor;
+		
+		// TODO not 100% certain this is correct in all the weird edge cases.
+		[[CCFileUtils sharedFileUtils] setiPadContentScaleFactor:scaleFactor*2.0];
+		
+		[director setProjection:CCDirectorProjectionCustom];
+	} else {
+		// Setup tablet scaling if it was requested.
+		if(
+			UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad &&
+			[config[CCSetupTabletScale2X] boolValue]
+		){
+			// Set the director to use 2 points per pixel.
+			director.contentScaleFactor *= 2.0;
+			
+			// Set the UI scale factor to show things at "native" size.
+			director.UIScaleFactor = 0.5;
+			
+			// Let CCFileUtils know that "-ipad" textures should be treated as having a contentScale of 2.0.
+			[[CCFileUtils sharedFileUtils] setiPadContentScaleFactor:2.0];
+		}
+		
+		[director setProjection:CCDirectorProjection2D];
 	}
-	
-	// Use the default 2D projection unless the fixed resolution mode is enabled.
-	[director setProjection:CCDirectorProjection2D];
-//	[director setProjection:CCDirectorProjectionCustom];
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
