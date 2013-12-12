@@ -56,7 +56,7 @@ NSString* const CCSetupTabletScale2X;
 /**
  *  Most Cocos2d apps should override the CCAppDelegate, it serves as the apps starting point. By the very least, the startScene method should be overridden to return the first scene the app should display. To further customize the behavior of Cocos2d, such as the screen mode of pixel format, override the applicaton:didFinishLaunchingWithOptions: method.
  */
-@interface CCAppDelegate : NSObject <UIApplicationDelegate>
+@interface CCAppDelegate : NSObject <UIApplicationDelegate, CCDirectorDelegate>
 {
     UIWindow *window_;
 	CCNavigationController *navController_;
