@@ -92,6 +92,33 @@
 
 //CLASS IMPLEMENTATIONS:
 
+@implementation CCTextureProxy
+{
+    CCTexture *_texture;
+}
+
+- (id)initWithTexture:(CCTexture *)texture
+{
+    if ((self = [super init]))
+    {
+        _texture = texture;
+    }
+    
+    return(self);
+}
+
+- (id)forwardingTargetForSelector:(SEL)aSelector
+{
+    return(_texture);
+}
+
+- (void)dealloc
+{
+    // CCLOG(@"Proxy for texture %p deallocated.", _texture);
+}
+
+@end
+
 
 // If the image has alpha, you can create RGBA8 (32-bit) or RGBA4 (16-bit) or RGB5A1 (16-bit)
 // Default is: RGBA8888 (32-bit textures)
@@ -101,6 +128,9 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 #pragma mark CCTexture2D - Main
 
 @implementation CCTexture
+{
+    CCTextureProxy __weak *_proxy;
+}
 
 @synthesize contentSizeInPixels = _sizeInPixels, pixelFormat = _format, pixelWidth = _width, pixelHeight = _height, name = _name, maxS = _maxS, maxT = _maxT;
 @synthesize premultipliedAlpha = _premultipliedAlpha;
@@ -182,6 +212,35 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 	return self;
 }
 
+// -------------------------------------------------------------
+
+- (BOOL)hasProxy
+{
+    @synchronized(self)
+    {
+        // NSLog(@"hasProxy: %p", self);
+        return(_proxy != nil);
+    }
+}
+
+- (CCTextureProxy *)proxy
+{
+    @synchronized(self)
+    {
+        __strong CCTextureProxy *proxy = _proxy;
+
+        if (_proxy == nil)
+        {
+            proxy = [[CCTextureProxy alloc] initWithTexture:self];
+            _proxy = proxy;
+        }
+    
+        return(proxy);
+    }
+}
+
+// -------------------------------------------------------------
+
 - (void) releaseData:(void*)data
 {
 	//Free data
@@ -197,7 +256,7 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 - (void) dealloc
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
-
+    CCLOG(@"Deallocating texture %p", self);
 
 	if( _name )
 		ccGLDeleteTexture( _name );

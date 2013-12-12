@@ -8,6 +8,18 @@
 
 #import "CCTexture.h"
 
+// -------------------------------------------------------------
+
+// Proxy object returned in place of a CCTexture by the texture cache.
+// Weakly retained by the texture, so it can be know if a texture is referenced when a memory warning arrives.
+@interface CCTextureProxy : NSObject
+
+- (id)initWithTexture:(CCTexture *)texture;
+
+@end
+
+// -------------------------------------------------------------
+
 @interface CCTexture ()
 
 /* These functions are needed to create mutable textures */
@@ -21,6 +33,12 @@
 @property(nonatomic,readwrite) GLfloat maxS;
 /* texture max T */
 @property(nonatomic,readwrite) GLfloat maxT;
+
+// Check if the texture's weakly retained proxy still exists.
+@property(atomic, readonly) BOOL hasProxy;
+
+// Retrieve a texture proxy for this texture.
+@property(atomic, readonly, weak) CCTextureProxy *proxy;
 
 @end
 
