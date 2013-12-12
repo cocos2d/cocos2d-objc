@@ -17,6 +17,7 @@
 		75556A191856370A00ED1B0F /* CCSchedulerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 755569E61856361100ED1B0F /* CCSchedulerTests.m */; };
 		75556A1B1856374700ED1B0F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 755569EA1856361100ED1B0F /* InfoPlist.strings */; };
 		7575B5FC1856535200CA09C8 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2622D17E7D3D8007067F0 /* libcocos2d.a */; };
+		7587BDB3185A0A6900EEEFDE /* TextureTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7587BDB2185A0A6900EEEFDE /* TextureTest.m */; };
 		758A690F1843E18700D1A8D2 /* ParallaxTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 758A690E1843E18700D1A8D2 /* ParallaxTest.m */; };
 		758A6C6C1843E5CB00D1A8D2 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 758A6C6A1843E5BE00D1A8D2 /* TileMaps */; };
 		758A6C6D1843E5CB00D1A8D2 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 758A6C6B1843E5C500D1A8D2 /* Images */; };
@@ -113,6 +114,7 @@
 		755569EB1856361100ED1B0F /* UnitTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UnitTests-Prefix.pch"; sourceTree = "<group>"; };
 		75556A02185636F100ED1B0F /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		75556A03185636F100ED1B0F /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		7587BDB2185A0A6900EEEFDE /* TextureTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextureTest.m; path = "cocos2d-ui-tests/tests/TextureTest.m"; sourceTree = SOURCE_ROOT; };
 		758A690E1843E18700D1A8D2 /* ParallaxTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParallaxTest.m; path = "cocos2d-ui-tests/tests/ParallaxTest.m"; sourceTree = SOURCE_ROOT; };
 		758A6C6A1843E5BE00D1A8D2 /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TileMaps; path = Resources/TileMaps; sourceTree = SOURCE_ROOT; };
 		758A6C6B1843E5C500D1A8D2 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Images; path = Resources/Images; sourceTree = SOURCE_ROOT; };
@@ -249,6 +251,7 @@
 				758A6C7A18440D5C00D1A8D2 /* ParticleTest.m */,
 				D340E10C185660BE006E605C /* CCPhysicsTest.m */,
 				D340E10D185660BE006E605C /* TilemapTest.m */,
+				7587BDB2185A0A6900EEEFDE /* TextureTest.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -529,6 +532,7 @@
 				B7EE69CF1819D82300B983FE /* CCLayoutTest.m in Sources */,
 				758A6C711844011E00D1A8D2 /* CCLabelTTFTest.m in Sources */,
 				758A690F1843E18700D1A8D2 /* ParallaxTest.m in Sources */,
+				7587BDB3185A0A6900EEEFDE /* TextureTest.m in Sources */,
 				D340E10F185660BE006E605C /* TilemapTest.m in Sources */,
 				B7E2622117E7D3B2007067F0 /* MainMenu.m in Sources */,
 				B70AFC30180F2D7400516435 /* CCTransitionTest.m in Sources */,
