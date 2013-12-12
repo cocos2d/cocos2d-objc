@@ -14,6 +14,9 @@
 @end
 
 @implementation CCTextureCacheTest
+{
+    CCNode *_spriteNode;
+}
 
 - (NSArray*) testConstructors
 {
@@ -26,62 +29,79 @@
 {
     self.subTitle = @"Tests the texture cache's retain count under ARC (check console).";
     
-    CCButton* btnAdd = [CCButton buttonWithTitle:@"Add & Retain To Cache"];
+    CCButton* btnAdd = [CCButton buttonWithTitle:@"Load textures to cache"];
     btnAdd.positionType = CCPositionTypeNormalized;
-    btnAdd.position = ccp(0.5, 0.7);
+    btnAdd.position = ccp(0.5, 0.9);
     [btnAdd setTarget:self selector:@selector(testCacheAdd:)];
     [self.contentNode addChild:btnAdd];
     
-    CCButton* btnClear = [CCButton buttonWithTitle:@"Clear Cache"];
-    btnClear.positionType = CCPositionTypeNormalized;
-    btnClear.position = ccp(0.5, 0.5);
-    [btnClear setTarget:self selector:@selector(testCacheClear:)];
-    [self.contentNode addChild:btnClear];
+    _spriteNode = [CCNode node];
+    [self.contentNode addChild:_spriteNode];
     
-    CCButton* btnRelease = [CCButton buttonWithTitle:@"Release"];
+    CCButton* btnClear = [CCButton buttonWithTitle:@"Cache information"];
+    btnClear.positionType = CCPositionTypeNormalized;
+    btnClear.position = ccp(0.5, 0.8);
+    [btnClear setTarget:self selector:@selector(testCacheInformation:)];
+    [self.contentNode addChild:btnClear];
+
+    CCButton* btnCreate = [CCButton buttonWithTitle:@"Create sprites"];
+    btnCreate.positionType = CCPositionTypeNormalized;
+    btnCreate.position = ccp(0.5, 0.7);
+    [btnCreate setTarget:self selector:@selector(testCacheCreate:)];
+    [self.contentNode addChild:btnCreate];
+
+    CCButton* btnRelease = [CCButton buttonWithTitle:@"Flush unused textures"];
     btnRelease.positionType = CCPositionTypeNormalized;
-    btnRelease.position = ccp(0.5, 0.3);
-    [btnRelease setTarget:self selector:@selector(testRelease:)];
+    btnRelease.position = ccp(0.5, 0.6);
+    [btnRelease setTarget:self selector:@selector(testCacheFlush:)];
     [self.contentNode addChild:btnRelease];
 }
 
-- (void) testCacheClear:(id)sender
+// add a couple of images to the cache
+- (void)testCacheAdd:(id)sender
 {
-    CCTextureCache* cache = [CCTextureCache sharedTextureCache];
-    
-    NSLog(@"BEFORE CLEAR texture: %@", [cache textureForKey:@"Sprites.png"]);
-    if ([cache textureForKey:@"Sprites.png"]) NSLog(@" - retain count: %d", (int)CFGetRetainCount((__bridge CFTypeRef)[cache textureForKey:@"Sprites.png"]));
-    
-    [cache removeUnusedTextures];
-    
-    NSLog(@"AFTER  CLEAR texture: %@", [cache textureForKey:@"Sprites.png"]);
-    if ([cache textureForKey:@"Sprites.png"]) NSLog(@" - retain count: %d", (int)CFGetRetainCount((__bridge CFTypeRef)[cache textureForKey:@"Sprites.png"]));
+    [[CCTextureCache sharedTextureCache] addImage:@"Images/grossini_dance_01.png"];
+    [[CCTextureCache sharedTextureCache] addImage:@"Images/grossini_dance_02.png"];
+    [[CCTextureCache sharedTextureCache] addImage:@"Images/grossini_dance_03.png"];
+    [[CCTextureCache sharedTextureCache] addImage:@"Images/grossini_dance_04.png"];
+    [[CCTextureCache sharedTextureCache] addImage:@"Images/grossini_dance_05.png"];
 }
 
-- (void) testCacheAdd:(id)sender
+// create a couple of sprites, with cache images
+- (void)testCacheCreate:(id)sender
 {
-    CCTextureCache* cache = [CCTextureCache sharedTextureCache];
+    CCSprite *sprite;
     
-    NSLog(@"BEFORE ADD texture: %@", [cache textureForKey:@"Sprites.png"]);
-    if ([cache textureForKey:@"Sprites.png"]) NSLog(@" - retain count: %d", (int)CFGetRetainCount((__bridge CFTypeRef)[cache textureForKey:@"Sprites.png"]));
+    [_spriteNode removeAllChildren];
     
-    self.texture = [cache addImage:@"Sprites.png"];
-    
-    NSLog(@"AFTER  ADD texture: %@", [cache textureForKey:@"Sprites.png"]);
-    if ([cache textureForKey:@"Sprites.png"]) NSLog(@" - retain count: %d", (int)CFGetRetainCount((__bridge CFTypeRef)[cache textureForKey:@"Sprites.png"]));
+    sprite = [CCSprite spriteWithImageNamed:@"Images/grossini_dance_01.png"];
+    sprite.positionType = CCPositionTypeNormalized;
+    sprite.position = ccp(0.3, 0.4);
+    [_spriteNode addChild:sprite];
+
+    sprite = [CCSprite spriteWithImageNamed:@"Images/grossini_dance_02.png"];
+    sprite.positionType = CCPositionTypeNormalized;
+    sprite.position = ccp(0.5, 0.4);
+    [_spriteNode addChild:sprite];
+
+    sprite = [CCSprite spriteWithImageNamed:@"Images/grossini_dance_03.png"];
+    sprite.positionType = CCPositionTypeNormalized;
+    sprite.position = ccp(0.7, 0.4);
+    [_spriteNode addChild:sprite];
+
 }
 
-- (void) testRelease:(id)sender
+
+// show cache information
+- (void)testCacheInformation:(id)sender
 {
-    CCTextureCache* cache = [CCTextureCache sharedTextureCache];
-    
-    NSLog(@"BEFORE RELEASE texture: %@", [cache textureForKey:@"Sprites.png"]);
-    if ([cache textureForKey:@"Sprites.png"]) NSLog(@" - retain count: %d", (int)CFGetRetainCount((__bridge CFTypeRef)[cache textureForKey:@"Sprites.png"]));
-    
-    self.texture = NULL;
-    
-    NSLog(@"AFTER  RELEASE texture: %@", [cache textureForKey:@"Sprites.png"]);
-    if ([cache textureForKey:@"Sprites.png"]) NSLog(@" - retain count: %d", (int)CFGetRetainCount((__bridge CFTypeRef)[cache textureForKey:@"Sprites.png"]));
+    [[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
+}
+
+// remove unused textures
+- (void)testCacheFlush:(id)sender
+{
+    [[CCTextureCache sharedTextureCache] removeUnusedTextures];
 }
 
 @end
