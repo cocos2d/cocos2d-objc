@@ -77,7 +77,7 @@ static int vAlignCount = sizeof(verticalAlignment) / sizeof(*verticalAlignment);
 {
   self.subTitle = @"Test alignment and fonts (click next a bunch of times)";
   
-  CGSize s = [[CCDirector sharedDirector] viewSize];
+  CGSize s = [CCDirector sharedDirector].designSize;
   CGSize blockSize = CGSizeMake(s.width/3, 150);
   CGFloat fontSize = 13;
   
