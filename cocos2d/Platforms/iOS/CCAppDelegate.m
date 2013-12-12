@@ -13,21 +13,30 @@
 #import "CCTexture.h"
 #import "CCFileUtils.h"
 
+#import "kazmath/kazmath.h"
+#import "kazmath/GL/matrix.h"
+
 NSString* const CCSetupPixelFormat = @"CCSetupPixelFormat";
 NSString* const CCSetupScreenMode = @"CCSetupScreenMode";
 NSString* const CCSetupScreenOrientation = @"CCSetupScreenOrientation";
 NSString* const CCSetupAnimationInterval = @"CCSetupAnimationInterval";
 NSString* const CCSetupHideDebugStats = @"CCSetupHideDebugStats";
 NSString* const CCSetupTabletScale2X = @"CCSetupTabletScale2X";
+NSString* const CCScreenOrientationLandscape = @"CCScreenOrientationLandscape";
+NSString* const CCScreenOrientationPortrait = @"CCScreenOrientationPortrait";
+NSString* const CCScreenModeFlexible = @"CCScreenModeFlexible";
+NSString* const CCScreenModeFixed = @"CCScreenModeFixed";
 
+// Fixed size. As wide as iPhone 5 at 2x and as high as the iPad at 2x.
+const CGSize FIXED_SIZE = {568, 384};
 
 @interface CCNavigationController ()
 {
     CCAppDelegate* __weak _appDelegate;
-    CCScreenOrientation _screenOrientation;
+    NSString* _screenOrientation;
 }
-@property (nonatomic,weak) CCAppDelegate* appDelegate;
-@property (nonatomic, assign) CCScreenOrientation screenOrientation;
+@property (nonatomic, weak) CCAppDelegate* appDelegate;
+@property (nonatomic, strong) NSString* screenOrientation;
 @end
 
 @implementation CCNavigationController
@@ -40,7 +49,7 @@ NSString* const CCSetupTabletScale2X = @"CCSetupTabletScale2X";
 // Only valid for iOS 6+. NOT VALID for iOS 4 / 5.
 -(NSUInteger)supportedInterfaceOrientations
 {
-    if (_screenOrientation == CCScreenOrientationLandscape)
+    if ([_screenOrientation isEqual:CCScreenOrientationLandscape])
     {
         return UIInterfaceOrientationMaskLandscape;
     }
@@ -54,7 +63,7 @@ NSString* const CCSetupTabletScale2X = @"CCSetupTabletScale2X";
 // Only valid on iOS 4 / 5. NOT VALID for iOS 6.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    if (_screenOrientation == CCScreenOrientationLandscape)
+    if ([_screenOrientation isEqual:CCScreenOrientationLandscape])
     {
         return UIInterfaceOrientationIsLandscape(interfaceOrientation);
     }
@@ -62,6 +71,25 @@ NSString* const CCSetupTabletScale2X = @"CCSetupTabletScale2X";
     {
         return UIInterfaceOrientationIsPortrait(interfaceOrientation);
     }
+}
+
+// Projection delegate is only used if the fixed resolution mode is enabled
+-(void)updateProjection
+{
+	CGSize sizePoint = [CCDirector sharedDirector].viewSize;
+	
+	// Half of the extra size that will be cut off
+	CGPoint offset = ccpMult(ccp(FIXED_SIZE.width - sizePoint.width, FIXED_SIZE.height - sizePoint.height), 0.5);
+	
+	kmGLMatrixMode(KM_GL_PROJECTION);
+	kmGLLoadIdentity();
+	
+	kmMat4 orthoMatrix;
+	kmMat4OrthographicProjection(&orthoMatrix, offset.x, sizePoint.width + offset.x, offset.y, sizePoint.height + offset.y, -1024, 1024 );
+	kmGLMultMatrix( &orthoMatrix );
+	
+	kmGLMatrixMode(KM_GL_MODELVIEW);
+	kmGLLoadIdentity();
 }
 
 // This is needed for iOS4 and iOS5 in order to ensure
@@ -88,41 +116,17 @@ NSString* const CCSetupTabletScale2X = @"CCSetupTabletScale2X";
     return NULL;
 }
 
+static CGFloat
+FindPOTScale(CGFloat size, CGFloat fixedSize)
+{
+	int scale = 1;
+	while(fixedSize*scale < size) scale *= 2;
+	
+	return scale;
+}
+
 - (void) setupCocos2dWithOptions:(NSDictionary*)config
 {
-    // Default configuration
-    NSString* pixelFormat = kEAGLColorFormatRGBA8;
-    CCScreenMode screenMode = CCScreenModeFlexible;
-    CCScreenOrientation screenOrientation = CCScreenOrientationLandscape;
-    NSTimeInterval animationInterval = 1.0/60;
-    
-    if (config)
-    {
-        // Read pixelFormat
-        if ([config objectForKey:CCSetupPixelFormat])
-        {
-            pixelFormat = [config objectForKey:CCSetupPixelFormat];
-        }
-        
-        // Read screenMode
-        if ([config objectForKey:CCSetupScreenMode])
-        {
-            screenMode = [[config objectForKey:CCSetupScreenMode] intValue];
-        }
-        
-        // Read screenOrientation
-        if ([config objectForKey:CCSetupScreenOrientation])
-        {
-            screenOrientation = [[config objectForKey:CCSetupScreenOrientation] intValue];
-        }
-        
-        // Read animationInterval
-        if ([config objectForKey:CCSetupAnimationInterval])
-        {
-            animationInterval = [[config objectForKey:CCSetupAnimationInterval] doubleValue];
-        }
-    }
-    
 	// Create the main window
 	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
@@ -140,13 +144,15 @@ NSString* const CCSetupTabletScale2X = @"CCSetupTabletScale2X";
 	//  - Possible values: YES, NO
 	// numberOfSamples: Only valid if multisampling is enabled
 	//  - Possible values: 0 to glGetIntegerv(GL_MAX_SAMPLES_APPLE)
-	CCGLView *glView = [CCGLView viewWithFrame:[window_ bounds]
-								   pixelFormat:pixelFormat
-								   depthFormat:0
-							preserveBackbuffer:NO
-									sharegroup:nil
-								 multiSampling:NO
-							   numberOfSamples:0];
+	CCGLView *glView = [CCGLView
+		viewWithFrame:[window_ bounds]
+		pixelFormat:config[CCSetupPixelFormat] ?: kEAGLColorFormatRGBA8
+		depthFormat:0
+		preserveBackbuffer:NO
+		sharegroup:nil
+		multiSampling:NO
+		numberOfSamples:0
+	];
 	
 	CCDirectorIOS* director = (CCDirectorIOS*) [CCDirector sharedDirector];
 	
@@ -160,29 +166,43 @@ NSString* const CCSetupTabletScale2X = @"CCSetupTabletScale2X";
 #endif
 	
 	// set FPS at 60
+	NSTimeInterval animationInterval = [(config[CCSetupAnimationInterval] ?: @(1.0/60)) doubleValue];
 	[director setAnimationInterval:animationInterval];
 	
 	// attach the openglView to the director
 	[director setView:glView];
 	
-	// Setup tablet scaling if it was requested.
-	if(
-		UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad &&
-		[config[CCSetupTabletScale2X] boolValue]
-	){
-		// Set the director to use 2 points per pixel.
-		director.contentScaleFactor *= 2.0;
+	if([config[CCSetupScreenMode] isEqual:CCScreenModeFixed]){
+		CGSize size = [CCDirector sharedDirector].viewSizeInPixels;
 		
-		// Set the UI scale factor to show things at "native" size.
-		director.UIScaleFactor = 0.5;
+		// Find the minimal power-of-two scale that covers both the width and height.
+		CGFloat scaleFactor = MIN(FindPOTScale(size.width, FIXED_SIZE.width), FindPOTScale(size.height, FIXED_SIZE.height));
 		
-		// Let CCFileUtils know that "-ipad" textures should be treated as having a contentScale of 2.0.
-		[[CCFileUtils sharedFileUtils] setiPadContentScaleFactor:2.0];
+		director.contentScaleFactor = scaleFactor;
+//		director.UIScaleFactor = 1.0/scaleFactor;
+		
+		// TODO not 100% certain this is correct in all the weird edge cases.
+		[[CCFileUtils sharedFileUtils] setiPadContentScaleFactor:scaleFactor*2.0];
+		
+		[director setProjection:CCDirectorProjectionCustom];
+	} else {
+		// Setup tablet scaling if it was requested.
+		if(
+			UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad &&
+			[config[CCSetupTabletScale2X] boolValue]
+		){
+			// Set the director to use 2 points per pixel.
+			director.contentScaleFactor *= 2.0;
+			
+			// Set the UI scale factor to show things at "native" size.
+			director.UIScaleFactor = 0.5;
+			
+			// Let CCFileUtils know that "-ipad" textures should be treated as having a contentScale of 2.0.
+			[[CCFileUtils sharedFileUtils] setiPadContentScaleFactor:2.0];
+		}
+		
+		[director setProjection:CCDirectorProjection2D];
 	}
-	
-	// 2D projection
-	[director setProjection:CCDirectorProjection2D];
-	//	[director setProjection:kCCDirectorProjection3D];
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
@@ -193,7 +213,7 @@ NSString* const CCSetupTabletScale2X = @"CCSetupTabletScale2X";
 	navController_ = [[CCNavigationController alloc] initWithRootViewController:director];
 	navController_.navigationBarHidden = YES;
 	navController_.appDelegate = self;
-	navController_.screenOrientation = screenOrientation;
+	navController_.screenOrientation = (config[CCSetupScreenOrientation] ?: CCScreenOrientationLandscape);
     
 	// for rotation and other messages
 	[director setDelegate:navController_];
