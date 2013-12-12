@@ -76,19 +76,81 @@
 
 -(void) setupPVRa88LoadingTest
 {
-	// alpha fails to load?
-	[self loadAndDisplayImageNamed: @"test_image_ai88.pvr" withTitle: @"8+8 bit PVR, alpha + greyscale."];
+	// I expected an alpha channel..?
+	[self loadAndDisplayImageNamed: @"test_image_ai88.pvr" withTitle: @"8+8 bit PVR, greyscale."];
 
 }
 -(void) setupPVRa88v3LoadingTest
 {
-	[self loadAndDisplayImageNamed: @"test_image_ai88_v3.pvr" withTitle: @"8+8 bit PVR v3, alpha  + greyscale."];
+	[self loadAndDisplayImageNamed: @"test_image_ai88_v3.pvr" withTitle: @"8+8 bit PVR v3, alpha + greyscale."];
 }
 
--(void) setup-pvrtc2bpp_v3-LoadingTest
+-(void) setupPvrtc2bppLoadingTest
 {
-	[self loadAndDisplayImageNamed: @"test_image_pvrtc2bpp_v3.pvr" withTitle: @"pvrtc2bpp_v3 "];
+	[self loadAndDisplayImageNamed: @"test_image_pvrtc2bpp.pvr" withTitle: @"pvrtc 2 bits per pixel"];
 }
 
+-(void) setupPvrtc2bpp_v3LoadingTest
+{
+	[self loadAndDisplayImageNamed: @"test_image_pvrtc2bpp_v3.pvr" withTitle: @"pvrtc 2 bits per pixel formatVersion 3 (with alpha)"];
+}
+
+-(void) setupPvrtc4bppLoadingTest
+{
+	[self loadAndDisplayImageNamed: @"test_image_pvrtc4bpp.pvr" withTitle: @"pvrtc 4 bits per pixel"];
+}
+
+-(void) setupPvrtc4bpp_v3LoadingTest
+{
+	[self loadAndDisplayImageNamed: @"test_image_pvrtc4bpp_v3.pvr" withTitle: @"pvrtc 4 bits per pixel formatVersion 3  (with alpha)"];
+}
+
+// TODO: PVRTC2 currently unsupported.
+//-(void) setupTest_image_pvrtcii2bpp_v3LoadingTest
+//{
+//	[self loadAndDisplayImageNamed: @"test_image_pvrtcii2bpp_v3.pvr" withTitle: @"PVRTCII (PVRTC2) 2 bits per pixel"];
+//}
+//
+//-(void) setupTest_image_pvrtcii4bpp_v3LoadingTest
+//{
+//	[self loadAndDisplayImageNamed: @"test_image_pvrtcii4bpp_v3.pvr" withTitle: @"PVRTCII (PVRTC2) 4 bits per pixel"];
+//}
+
+-(void) setupPvr_rgb565_LoadingTest
+{
+	[self loadAndDisplayImageNamed: @"test_image_rgb565.pvr" withTitle: @"PVR uncompressed rgb565"];
+}
+-(void) setupPvr_rgb565_v3_LoadingTest
+{
+	[self loadAndDisplayImageNamed: @"test_image_rgb565_v3.pvr" withTitle: @"PVR uncompressed rgb565 v3"];
+}
+-(void) setupPvr_rgb888_LoadingTest
+{
+	[self loadAndDisplayImageNamed: @"test_image_rgb888.pvr" withTitle: @"PVR uncompressed rgb888"];
+}
+-(void) setupPvr_rgb888_v3_LoadingTest
+{
+	[self loadAndDisplayImageNamed: @"test_image_rgb888_v3.pvr" withTitle: @"PVR uncompressed rgb888 v3"];
+}
+-(void) setupPvr_rgba4444_LoadingTest
+{
+	[self loadAndDisplayImageNamed: @"test_image_rgba4444.pvr" withTitle: @"PVR uncompressed rgba4444"];
+}
+-(void) setupPvr_rgba4444_v3_LoadingTest
+{
+	[self loadAndDisplayImageNamed: @"test_image_rgba4444_v3.pvr" withTitle: @"PVR uncompressed rgba4444 v3"];
+}
+-(void) setupPvr_rgba4444_mipmapped_oadingTest
+{
+	[self loadAndDisplayImageNamed: @"test_image_rgba4444_mipmap.pvr" withTitle: @"PVR uncompressed rgba4444 mipmapped"];
+}
+-(void) setupPvr_rgba4444_gzipped_LoadingTest
+{
+	[self loadAndDisplayImageNamed: @"test_image_rgba4444.pvr.gz" withTitle: @"PVR gzipped rgba4444"];
+}
+-(void) setupPvr_rgba4444_ccz_LoadingTest
+{
+	[self loadAndDisplayImageNamed: @"test_image_rgba4444.pvr.ccz" withTitle: @"PVR gzipped.ccz rgba4444"];
+}
 
 @end
