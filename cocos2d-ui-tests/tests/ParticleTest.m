@@ -126,7 +126,7 @@
 -(void) setupMultipleSystems
 {
 
-  CGSize s = [[CCDirector sharedDirector] viewSize];
+  CGSize s = [CCDirector sharedDirector].designSize;
 
   for (int i = 0; i<5; i++) {
     CCParticleSystem *particleSystem = [CCParticleSystem particleWithFile:@"Particles/Flower.plist"];
@@ -218,7 +218,7 @@
   self.emitter.angleVar = 0;
   
   // emitter position
-  CGSize winSize = [[CCDirector sharedDirector] viewSize];
+  CGSize winSize = [CCDirector sharedDirector].designSize;
   self.emitter.position = ccp(winSize.width/2, winSize.height/2);
   self.emitter.posVar = CGPointZero;
   
@@ -251,7 +251,7 @@
   
   self.userInteractionEnabled = TRUE;
   
-  CGSize s = [[CCDirector sharedDirector] viewSize];
+  CGSize s = [CCDirector sharedDirector].designSize;
   
   background = [CCSprite spriteWithImageNamed:@"Images/background3.png"];
   [self.contentNode addChild:background z:5];

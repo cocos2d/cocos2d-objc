@@ -95,7 +95,7 @@
     loadedSpriteSheets = [[NSMutableSet alloc] init];
     
     // Setup resolution scale and default container size
-    animationManager.rootContainerSize = [[CCDirector sharedDirector] viewSize];
+    animationManager.rootContainerSize = [CCDirector sharedDirector].designSize;
     
     return self;
 }
@@ -1160,7 +1160,7 @@ static inline float readFloat(CCBReader *self)
     
     owner = o;
     
-    self.animationManager.rootContainerSize = [[CCDirector sharedDirector] viewSize];
+    self.animationManager.rootContainerSize = [CCDirector sharedDirector].designSize;
     self.animationManager.owner = owner;
     
     NSMutableDictionary* animationManagers = [NSMutableDictionary dictionary];
@@ -1199,12 +1199,12 @@ static inline float readFloat(CCBReader *self)
 
 - (CCNode*) load:(NSString*) file owner:(id)o
 {
-    return [self nodeGraphFromFile:file owner:o parentSize:[[CCDirector sharedDirector] viewSize]];
+    return [self nodeGraphFromFile:file owner:o parentSize:[CCDirector sharedDirector].designSize];
 }
 
 - (CCNode*) load:(NSString*) file
 {
-    return [self nodeGraphFromFile:file owner:NULL parentSize:[[CCDirector sharedDirector] viewSize]];
+    return [self nodeGraphFromFile:file owner:NULL parentSize:[CCDirector sharedDirector].designSize];
 }
 
 +(void) setResourcePath:(NSString *)searchPath
@@ -1221,7 +1221,7 @@ static inline float readFloat(CCBReader *self)
 
 + (CCNode*) load:(NSString*) file owner:(id)owner
 {
-    return [CCBReader load:file owner:owner parentSize:[[CCDirector sharedDirector] viewSize]];
+    return [CCBReader load:file owner:owner parentSize:[CCDirector sharedDirector].designSize];
 }
 
 + (CCNode*) nodeGraphFromData:(NSData*) data owner:(id)owner parentSize:(CGSize)parentSize
@@ -1241,7 +1241,7 @@ static inline float readFloat(CCBReader *self)
 
 + (CCScene*) loadAsScene:(NSString *)file owner:(id)owner
 {
-    return [CCBReader sceneWithNodeGraphFromFile:file owner:owner parentSize:[[CCDirector sharedDirector] viewSize]];
+    return [CCBReader sceneWithNodeGraphFromFile:file owner:owner parentSize:[CCDirector sharedDirector].designSize];
 }
 
 + (CCScene*) sceneWithNodeGraphFromFile:(NSString *)file owner:(id)owner parentSize:(CGSize)parentSize

@@ -431,6 +431,12 @@ GLToClipTransform(kmMat4 *transformOut)
 	return _winSizeInPixels;
 }
 
+-(CGSize)designSize
+{
+	// Return the viewSize unless designSize has been set.
+	return (CGSizeEqualToSize(_designSize, CGSizeZero) ? self.viewSize : _designSize);
+}
+
 -(void) reshapeProjection:(CGSize)newWindowSize
 {
 	_winSizeInPixels = newWindowSize;
