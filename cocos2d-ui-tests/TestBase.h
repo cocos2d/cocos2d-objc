@@ -54,5 +54,8 @@
 - (void) pressedBack:(id)sender;
 - (void) setupTestWithIndex:(NSInteger)testNum;
 
+// Provide a setUp method called for each test that is run, same as XCode unit tests.
+- (void) setUp;
+
 
 @end
