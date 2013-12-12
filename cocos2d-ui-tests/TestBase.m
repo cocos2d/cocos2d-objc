@@ -154,6 +154,10 @@
     [super onExitTransitionDidStart];
 }
 
+- (void) setUp{
+
+}
+
 - (void) pressedBack:(id)sender
 {
     CCTransition* transition = [CCTransition transitionMoveInWithDirection:CCTransitionDirectionRight duration:0.3];
