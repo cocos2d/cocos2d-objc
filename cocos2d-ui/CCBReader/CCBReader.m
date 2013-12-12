@@ -342,7 +342,7 @@ static inline float readFloat(CCBReader *self)
             [node setValue:[NSValue valueWithPoint:ccp(x,y)] forKey:name];
 #endif
             CCPositionType pType = CCPositionTypeMake(xUnit, yUnit, corner);
-            [node setValue:[NSValue valueWithBytes:&pType objCType:@encode(ccColor4B)] forKey:[name stringByAppendingString:@"Type"]];
+            [node setValue:[NSValue valueWithBytes:&pType objCType:@encode(CCPositionType)] forKey:[name stringByAppendingString:@"Type"]];
             
             
             if ([animatedProps containsObject:name])
@@ -534,35 +534,18 @@ static inline float readFloat(CCBReader *self)
             }
         }
     }
-    else if (type == kCCBPropTypeColor3)
+    else if (type == kCCBPropTypeColor4 ||
+             type == kCCBPropTypeColor3)
     {
-        int r = readByte(self);
-        int g = readByte(self);
-        int b = readByte(self);
+        CGFloat r = readFloat(self);
+        CGFloat g = readFloat(self);
+        CGFloat b = readFloat(self);
+        CGFloat a = readFloat(self);
         
         if (setProp)
         {
-            ccColor3B c = ccc3(r,g,b);
-            NSValue* cVal = [NSValue value:&c withObjCType:@encode(ccColor3B)];
-            [node setValue:cVal forKey:name];
+            CCColor* cVal = [CCColor colorWithRed:r green:g blue:b alpha:a];
             
-            if ([animatedProps containsObject:name])
-            {
-                [animationManager setBaseValue:cVal forNode:node propertyName:name];
-            }
-        }
-    }
-    else if (type == kCCBPropTypeColor4)
-    {
-        int r = readByte(self);
-        int g = readByte(self);
-        int b = readByte(self);
-        int a = readByte(self);
-        
-        if (setProp)
-        {
-            ccColor4B c = ccc4(r,g,b,a);
-            NSValue* cVal = [NSValue value:&c withObjCType:@encode(ccColor4B)];
             [node setValue:cVal forKey:name];
             
             if ([animatedProps containsObject:name])
@@ -584,10 +567,8 @@ static inline float readFloat(CCBReader *self)
         
         if (setProp)
         {
-            ccColor4F c = ccc4f(r, g, b, a);
-            ccColor4F cVar = ccc4f(rVar, gVar, bVar, aVar);
-            NSValue* cVal = [NSValue value:&c withObjCType:@encode(ccColor4F)];
-            NSValue* cVarVal = [NSValue value:&cVar withObjCType:@encode(ccColor4F)];
+            CCColor* cVal = [CCColor colorWithRed:r green:g blue:b alpha:a];;
+            CCColor* cVarVal = [CCColor colorWithRed:rVar green:gVar blue:bVar alpha:aVar];
             NSString* nameVar = [NSString stringWithFormat:@"%@Var",name];
             [node setValue:cVal forKey:name];
             [node setValue:cVarVal forKey:nameVar];
@@ -774,12 +755,12 @@ static inline float readFloat(CCBReader *self)
     }
     else if (type == kCCBPropTypeColor3)
     {
-        int r = readByte(self);
-        int g = readByte(self);
-        int b = readByte(self);
+        CGFloat r = readFloat(self);
+        CGFloat g = readFloat(self);
+        CGFloat b = readFloat(self);
+        CGFloat a = readFloat(self);
         
-        ccColor3B c = ccc3(r,g,b);
-        value = [NSValue value:&c withObjCType:@encode(ccColor3B)];
+        value = [CCColor colorWithRed:r green:g blue:b alpha:a];
     }
     else if (type == kCCBPropTypeDegrees)
     {
@@ -980,10 +961,7 @@ static inline float readFloat(CCBReader *self)
         body.affectedByGravity = affectedByGravity;
         body.allowsRotation = allowsRotation;
         
-        //body.affectedByGravity = affectedByGravity;
-        //body.allowsRotation = allowsRotation;
-        
-        //body.density = density;
+        body.density = density;
         body.friction = friction;
         body.elasticity = elasticity;
         

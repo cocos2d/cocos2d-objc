@@ -285,7 +285,7 @@ int compareInts (const void * a, const void * b);
             [tile setPosition:p];
 			[tile setVertexZ: [self vertexZForPos:pos]];
 			tile.anchorPoint = CGPointZero;
-			[tile setOpacity:_opacity];
+			[tile setOpacity:_opacity/255.0];
 
 			NSUInteger indexForZ = [self atlasIndexForExistantZ:z];
 			[self addSpriteWithoutQuad:tile z:indexForZ name:zStr];
@@ -324,7 +324,7 @@ int compareInts (const void * a, const void * b);
 	[sprite setPosition: [self positionAt:pos]];
 	[sprite setVertexZ: [self vertexZForPos:pos]];
 	//sprite.anchorPoint = CGPointZero; // was the default
-	[sprite setOpacity:_opacity];
+	[sprite setOpacity:_opacity/255.0];
 	
 	//issue 1264, flip can be undone as well
 	sprite.flipX = NO;
