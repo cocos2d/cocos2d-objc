@@ -1584,12 +1584,9 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 - (void)updateDisplayedColor:(CCColor*)parentColor
 {
-    CGFloat r, g, b, a;
-    [parentColor getRed:&r green:&g blue:&b alpha:&a];
-    
-	_displayedColor.r = _realColor.r * r;
-	_displayedColor.g = _realColor.g * g;
-	_displayedColor.b = _realColor.b * b;
+	_displayedColor.r = _realColor.r * parentColor.red;
+	_displayedColor.g = _realColor.g * parentColor.green;
+	_displayedColor.b = _realColor.b * parentColor.blue;
 
     if (_cascadeColorEnabled) {
         for (id<CCRGBAProtocol> item in _children) {
