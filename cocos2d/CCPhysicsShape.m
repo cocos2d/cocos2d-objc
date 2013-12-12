@@ -106,8 +106,8 @@ Determinant(cpTransform t)
 -(CGFloat)mass {return self.shape.mass;}
 -(void)setMass:(CGFloat)mass {self.shape.mass = mass;}
 
--(CGFloat)density {return self.shape.density/Determinant(self.shapeTransform);}
--(void)setDensity:(CGFloat)density {self.shape.density = density*Determinant(self.shapeTransform);}
+-(CGFloat)density {return 1e3*self.shape.density/Determinant(self.shapeTransform);}
+-(void)setDensity:(CGFloat)density {self.shape.density = 1e-3*density*Determinant(self.shapeTransform);}
 
 -(CGFloat)area {return self.shape.area*Determinant(self.shapeTransform);}
 

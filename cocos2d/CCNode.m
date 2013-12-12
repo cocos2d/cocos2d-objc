@@ -86,30 +86,22 @@ static inline CGAffineTransform
 NodeToPhysicsTransform(CCNode *node)
 {
 	CGAffineTransform transform = CGAffineTransformIdentity;
-	for(; node; node = node.parent){
-		if(node.isPhysicsNode){
-			return transform;
-		} else {
-			transform = cpTransformMult(node.nodeToParentTransform, transform);
-		}
+	for(CCNode *n = node; n && !n.isPhysicsNode; n = n.parent){
+		transform = cpTransformMult(n.nodeToParentTransform, transform);
 	}
 	
-	@throw [NSException exceptionWithName:@"CCPhysics Error" reason:@"Node is not added to a CCPhysicsNode" userInfo:nil];
+	return transform;
 }
 
 static inline float
 NodeToPhysicsRotation(CCNode *node)
 {
 	float rotation = 0.0;
-	for(; node; node = node.parent){
-		if(node.isPhysicsNode){
-			return rotation;
-		} else {
-			rotation -= node.rotation;
-		}
+	for(CCNode *n = node; n && !n.isPhysicsNode; n = n.parent){
+		rotation -= n.rotationalSkewX;
 	}
 	
-	@throw [NSException exceptionWithName:@"CCPhysics Error" reason:@"Node is not added to a CCPhysicsNode" userInfo:nil];
+	return rotation;
 }
 
 static inline CGAffineTransform
@@ -948,7 +940,18 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 // This method can only be called in very specific circumstances.
 -(CGAffineTransform)nonRigidTransform
 {
-	return cpTransformMult(cpTransformInverse(self.physicsBody.absoluteTransform), NodeToPhysicsTransform(self));
+	CGAffineTransform toPhysics = NodeToPhysicsTransform(self);
+	
+	CCPhysicsBody *body = GetBodyIfRunning(self);
+	if(body){
+		return cpTransformMult(cpTransformInverse(body.absoluteTransform), toPhysics);
+	} else {
+		// Body is not active yet, so this is more of a mess. :-\
+		// Need to guess the rigid part of the transform.
+		float radians = CC_DEGREES_TO_RADIANS(NodeToPhysicsRotation(self));
+		CGAffineTransform absolute = cpTransformRigid(ccp(toPhysics.tx, toPhysics.ty), radians);
+		return cpTransformMult(cpTransformInverse(absolute), toPhysics);
+	}
 }
 
 // Overriden by CCPhysicsNode to return YES.
