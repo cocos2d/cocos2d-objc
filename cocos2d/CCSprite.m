@@ -578,7 +578,7 @@
 	if( _batchNode ) {
 		NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSprite only supports CCSprites as children when using CCSpriteBatchNode");
         
-		f(child.texture) {
+		if(child.texture) {
             NSAssert( (child.texture.name == _textureAtlas.texture.name), @"CCSprite is not using the same texture id");
         }
 
