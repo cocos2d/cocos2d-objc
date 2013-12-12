@@ -199,7 +199,7 @@ static NSUInteger globalOrderOfArrival = 1;
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %p | Tag = %@>", [self class], self, _name];
+	return [NSString stringWithFormat:@"<%@ = %p | Name = %@>", [self class], self, _name];
 }
 
 - (void) dealloc
@@ -699,8 +699,9 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	if (child == nil)
 		return;
 
-	if ( [_children containsObject:child] )
-		[self detachChild:child cleanup:cleanup];
+	NSAssert([_children containsObject:child], @"This node does not contain the specified child.");
+	
+	[self detachChild:child cleanup:cleanup];
 }
 
 -(void) removeChildByName:(NSString*)name
@@ -710,12 +711,12 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 -(void) removeChildByName:(NSString*)name cleanup:(BOOL)cleanup
 {
-	NSAssert( !name, @"Invalid tag");
+	NSAssert( !name, @"Invalid name");
 
 	CCNode *child = [self getChildByName:name recursively:NO];
 
 	if (child == nil)
-		CCLOG(@"cocos2d: removeChildByTag: child not found!");
+		CCLOG(@"cocos2d: removeChildByName: child not found!");
 	else
 		[self removeChild:child cleanup:cleanup];
 }
@@ -780,10 +781,10 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	// set parent nil at the end (issue #476)
 	[child setParent:nil];
 
-    /** mark responder manager as dirty
-     @since v3.0
-     */
-    [[[CCDirector sharedDirector] responderManager] markAsDirty];
+	/** mark responder manager as dirty
+	 @since v3.0
+	 */
+	[[[CCDirector sharedDirector] responderManager] markAsDirty];
 
 	[_children removeObject:child];
 }
@@ -919,19 +920,17 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 -(void) transform
 {
-	kmMat4 transfrom4x4;
+	kmMat4 transform4x4;
 
 	// Convert 3x3 into 4x4 matrix
 	CGAffineTransform tmpAffine = [self nodeToParentTransform];
-	CGAffineToGL(&tmpAffine, transfrom4x4.mat);
+	CGAffineToGL(&tmpAffine, transform4x4.mat);
 
 	// Update Z vertex manually
-	transfrom4x4.mat[14] = _vertexZ;
+	transform4x4.mat[14] = _vertexZ;
 
-	kmGLMultMatrix( &transfrom4x4 );
+	kmGLMultMatrix( &transform4x4 );
 }
-
--(void) updateTransform{};
 
 #pragma mark CCPhysics support.
 

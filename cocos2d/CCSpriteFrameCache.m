@@ -42,6 +42,7 @@
 #import "CCSpriteFrame.h"
 #import "CCSprite.h"
 #import "Support/CCFileUtils.h"
+#import "CCTexture_Private.h"
 
 @interface CCSpriteFrameCache ()
 - (void) addSpriteFramesWithDictionary:(NSDictionary*)dictionary textureFilename:(NSString*)filename;
@@ -249,7 +250,7 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 		{
 			textureFileName	= textureReference;
 		}
-		else if ( [textureReference isKindOfClass:[CCTexture class]] )
+        else if ( [textureReference isKindOfClass:[CCTexture class]] || [textureReference isKindOfClass:[CCTextureProxy class]] )
 		{
 			texture = textureReference;
 		}

@@ -253,6 +253,13 @@
  */
 -(id) initWithCGImage:(CGImageRef)image key:(NSString*)key;
 
+/**
+ *  Creates a non rendered sprite, the primary use of this type of sprite would be for adding control sprites for more complex animations.
+ *
+ *  @return A newly initialized CCSprite object.
+ */
++(id) emptySprite;
+
 // -----------------------------------------------------------------------
 /**
  *  @name Designated initializer
