@@ -67,6 +67,23 @@ NSString* const CCSetupTabletScale2X = @"CCSetupTabletScale2X";
     }
 }
 
+// Projection delegate is only used if the fixed resolution mode is enabled
+-(void)updateProjection
+{
+	CGSize sizePoint = [CCDirector sharedDirector].viewSize;
+	NSLog(@"viewSize: %@", NSStringFromCGSize(sizePoint));
+	
+	kmGLMatrixMode(KM_GL_PROJECTION);
+	kmGLLoadIdentity();
+	
+	kmMat4 orthoMatrix;
+	kmMat4OrthographicProjection(&orthoMatrix, 0, sizePoint.width, 0, sizePoint.height, -1024, 1024 );
+	kmGLMultMatrix( &orthoMatrix );
+	
+	kmGLMatrixMode(KM_GL_MODELVIEW);
+	kmGLLoadIdentity();
+}
+
 // This is needed for iOS4 and iOS5 in order to ensure
 // that the 1st scene has the correct dimensions
 // This is not needed on iOS6 and could be added to the application:didFinish...
@@ -92,23 +109,6 @@ NSString* const CCSetupTabletScale2X = @"CCSetupTabletScale2X";
 }
 
 CGSize FIXED_SIZE = {568, 384};
-
-// Projection delegate is only used if the fixed resolution mode is enabled
--(void)updateProjection
-{
-	CGSize sizePoint = [CCDirector sharedDirector].viewSize;
-	NSLog(@"viewSize: %@", NSStringFromCGSize(sizePoint));
-	
-	kmGLMatrixMode(KM_GL_PROJECTION);
-	kmGLLoadIdentity();
-	
-	kmMat4 orthoMatrix;
-	kmMat4OrthographicProjection(&orthoMatrix, 0, sizePoint.width, 0, sizePoint.height, -1024, 1024 );
-	kmGLMultMatrix( &orthoMatrix );
-	
-	kmGLMatrixMode(KM_GL_MODELVIEW);
-	kmGLLoadIdentity();
-}
 
 - (void) setupCocos2dWithOptions:(NSDictionary*)config
 {
@@ -203,9 +203,8 @@ CGSize FIXED_SIZE = {568, 384};
 	}
 	
 	// Use the default 2D projection unless the fixed resolution mode is enabled.
-//	[director setProjection:CCDirectorProjection2D];
-	director.delegate = self;
-	[director setProjection:CCDirectorProjectionCustom];
+	[director setProjection:CCDirectorProjection2D];
+//	[director setProjection:CCDirectorProjectionCustom];
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
