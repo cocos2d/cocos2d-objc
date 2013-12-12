@@ -98,7 +98,7 @@ NodeToPhysicsRotation(CCNode *node)
 {
 	float rotation = 0.0;
 	for(CCNode *n = node; n && !n.isPhysicsNode; n = n.parent){
-		rotation -= n.rotation;
+		rotation -= n.rotationalSkewX;
 	}
 	
 	return rotation;
