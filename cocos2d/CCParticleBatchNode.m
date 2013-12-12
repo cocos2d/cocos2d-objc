@@ -35,7 +35,6 @@
 #import "ccMacros.h"
 #import "Support/CGPointExtension.h"
 #import "CCParticleSystemBase.h"
-#import "CCParticleSystemBase.h"
 #import "CCShaderCache.h"
 #import "CCGLProgram.h"
 #import "ccGLStateCache.h"

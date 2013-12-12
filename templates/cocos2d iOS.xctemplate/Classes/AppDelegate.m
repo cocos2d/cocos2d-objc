@@ -127,9 +127,6 @@
 	// On iPhone HD: "-hd"
     CCFileUtils *sharedFileUtils = [CCFileUtils sharedFileUtils];
     
-    // Setup file utils for use with SpriteBuilder
-    [sharedFileUtils setEnableFallbackSuffixes:NO];
-    
     sharedFileUtils.directoriesDict =
     [[NSMutableDictionary alloc] initWithObjectsAndKeys:
      @"resources-tablet", CCFileUtilsSuffixiPad,
@@ -211,7 +208,7 @@
 // application will be killed
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-	CC_DIRECTOR_END();
+	[_director end];
 }
 
 // -----------------------------------------------------------------------
