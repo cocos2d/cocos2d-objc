@@ -54,6 +54,28 @@
 	[img setOpacity:0.5f];
 }
 
+-(void) setupDoNotCascadeColorTest
+{
+	CGSize s = [[CCDirector sharedDirector] viewSize];
+	
+	// add parent with two children sprites.
+	CCSprite *parent = [self loadAndDisplayImageNamed: @"powered.png" withTitle: @""];
+	[parent setPosition:ccp(s.width/2, s.height/3*2)];
+	
+	
+	CCSprite *sprite = [CCSprite spriteWithImageNamed:@"powered.png"];
+	[parent addChild:sprite];
+	[sprite setPosition:ccp(-parent.contentSize.width, -100)];
+	
+	sprite = [CCSprite spriteWithImageNamed:@"powered.png"];
+	[parent addChild:sprite];
+	[sprite setPosition:ccp(2* parent.contentSize.width, -100)];
+	
+	parent.cascadeColorEnabled = NO;
+	[parent setColor:[CCColor redColor]];
+	
+	self.subTitle = @"Parent should be red, children normal. (Color cascade off)";
+}
 
 -(void) setupCascadeColorTest
 {
@@ -63,16 +85,17 @@
 	CCSprite *parent = [self loadAndDisplayImageNamed: @"powered.png" withTitle: @""];
 	[parent setPosition:ccp(s.width/2, s.height/3*2)];
 	
+	
 	CCSprite *sprite = [CCSprite spriteWithImageNamed:@"powered.png"];
 	[parent addChild:sprite];
-	[sprite setPosition:ccp(-s.width/3, -s.height/3)];
+	[sprite setPosition:ccp(-parent.contentSize.width, -100)];
 	
 	sprite = [CCSprite spriteWithImageNamed:@"powered.png"];
 	[parent addChild:sprite];
-	[sprite setPosition:ccp(s.width/3, -s.height/3)];
+	[sprite setPosition:ccp(2* parent.contentSize.width, -100)];
 	
-//	parent.cascadeColorEnabled = YES;
-//	[parent setColor:[CCColor redColor]];
+	parent.cascadeColorEnabled = YES;
+	[parent setColor:[CCColor redColor]];
 	
 	self.subTitle = @"Parent and 2 children sprites should all be red. (Color cascade)";
 }
