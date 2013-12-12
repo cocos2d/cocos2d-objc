@@ -1,9 +1,8 @@
 //
-// Parallax Demo
-// a cocos2d example
+// Texture loading tests
 // http://www.cocos2d-iphone.org
 //
-//  Created by Andy Korth on 11/15/13.
+//  Created by Andy Korth on 12/10/13.
 //
 
 #import "cocos2d.h"
