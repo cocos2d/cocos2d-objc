@@ -931,8 +931,6 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	kmGLMultMatrix( &transfrom4x4 );
 }
 
--(void) updateTransform{};
-
 #pragma mark CCPhysics support.
 
 // Private method used to extract the non-rigid part of the node's transform relative to a CCPhysicsNode.
