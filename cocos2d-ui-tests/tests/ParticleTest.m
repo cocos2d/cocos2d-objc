@@ -253,7 +253,7 @@
   
   CGSize s = [[CCDirector sharedDirector] viewSize];
   
-  background = [CCSprite spriteWithImageNamed:@"Images/background3.png"];
+  background = [CCSprite spriteWithImageNamed:@"Images/gridBackground.png"];
   [self.contentNode addChild:background z:5];
   background.scale = 1.0f;
   [background setPosition:ccp(s.width/2, s.height/2)];
