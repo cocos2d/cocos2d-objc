@@ -35,6 +35,11 @@
             nil];
 }
 
+- (void) setUp
+{
+	[[CCFileUtils sharedFileUtils] setSearchPath: @[ @"Images", kCCFileUtilsDefaultSearchPath] ];
+}
+
 -(void) setupComet
 {
 	self.emitter = [CCParticleSystem particleWithFile:@"Particles/Comet.plist"];
@@ -167,7 +172,7 @@
 -(void) setupUpsideDown
 {
   // Issue 872
-	self.emitter = [CCParticleSystem particleWithFile:@"Particles/UpsideDown.plist"];
+	self.emitter = [CCParticleSystem particleWithFile:@"Particles/Upsidedown.plist"];
   
 	[self.contentNode addChild:self.emitter z:10];
   [self createScene: @"Particles should NOT be Upside Down. M should appear, not W."];
