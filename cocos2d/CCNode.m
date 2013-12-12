@@ -634,7 +634,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 -(void) addChild: (CCNode*)child z:(NSInteger)z name:(NSString*)name
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
-	NSAssert( child.parent == nil, @"child already added. It can't be added again");
+	NSAssert( child.parent == nil, @"child already added to another node. It can't be added again");
 
 	if( ! _children )
 		[self childrenAlloc];
