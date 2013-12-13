@@ -647,26 +647,33 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 
 /**
  * sets and returns the color (tint)
- * The alpha is applied.
+ * The supplied alpha is applied.
  */
 @property (nonatomic,strong) CCColor* colorRGBA;
 
 /** returns the displayed color */
 @property (nonatomic, readonly) CCColor* displayedColor;
-/** whether or not color should be propagated to its children */
-@property (nonatomic, getter = isCascadeColorEnabled) BOOL cascadeColorEnabled;
+/**
+ * CascadeColorEnabled causes changes to this node's color to cascade down to it's children. The new color is multiplied
+ * in with the color of each child, so it doesn't bash the current color of those nodes. Opacity is unaffected by this
+ * property, see cascadeOpacityEnabled to change the alpha of nodes.
+ */@property (nonatomic, getter = isCascadeColorEnabled) BOOL cascadeColorEnabled;
 
 /** recursive method that updates display color */
 - (void)updateDisplayedColor:(ccColor4F)color;
 
 /** sets and returns the opacity.
  @warning If the the texture has premultiplied alpha then, the R, G and B channels will be modified.
- Values goes from 0 to 255, where 255 means fully opaque.
+ Values goes from 0 to 1, where 1 means fully opaque.
  */
 @property (nonatomic) CGFloat opacity;
 /** returns the displayed opacity */
 @property (nonatomic, readonly) CGFloat displayedOpacity;
-/** whether or not opacity should be propagated to its children */
+/** 
+ * CascadeOpacity causes changes to this node's opacity to cascade down to it's children. The new opacity is multiplied 
+ * in with the opacity of each child, so it doesn't bash the current opacity of those nodes. Color is unaffected by this
+ * property, see cascadeColorEnabled for color tint changes.
+ */
 @property (nonatomic, getter = isCascadeOpacityEnabled) BOOL cascadeOpacityEnabled;
 
 /** recursive method that updates the displayed opacity */

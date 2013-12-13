@@ -41,7 +41,7 @@
 #pragma mark CCNodeColor
 
 /**
- *  CCNodeColor is a subclass of CCNode that implements the CCRGBAProtocol protocol.
+ *  CCNodeColor is a subclass of CCNode that is used to generate solid colors.
  *
  *  All features from CCNode are valid, plus the following new features:
  *  - opacity
