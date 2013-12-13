@@ -77,9 +77,10 @@ const CGSize FIXED_SIZE = {568, 384};
 -(void)updateProjection
 {
 	CGSize sizePoint = [CCDirector sharedDirector].viewSize;
+	CGSize fixed = [CCDirector sharedDirector].designSize;
 	
 	// Half of the extra size that will be cut off
-	CGPoint offset = ccpMult(ccp(FIXED_SIZE.width - sizePoint.width, FIXED_SIZE.height - sizePoint.height), 0.5);
+	CGPoint offset = ccpMult(ccp(fixed.width - sizePoint.width, fixed.height - sizePoint.height), 0.5);
 	
 	kmGLMatrixMode(KM_GL_PROJECTION);
 	kmGLLoadIdentity();
@@ -174,9 +175,14 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	
 	if([config[CCSetupScreenMode] isEqual:CCScreenModeFixed]){
 		CGSize size = [CCDirector sharedDirector].viewSizeInPixels;
+		CGSize fixed = FIXED_SIZE;
+		
+		if([config[CCSetupScreenOrientation] isEqualToString:CCScreenOrientationPortrait]){
+			CC_SWAP(fixed.width, fixed.height);
+		}
 		
 		// Find the minimal power-of-two scale that covers both the width and height.
-		CGFloat scaleFactor = MIN(FindPOTScale(size.width, FIXED_SIZE.width), FindPOTScale(size.height, FIXED_SIZE.height));
+		CGFloat scaleFactor = MIN(FindPOTScale(size.width, fixed.width), FindPOTScale(size.height, fixed.height));
 		
 		director.contentScaleFactor = scaleFactor;
 		director.UIScaleFactor = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? 1.0 : 0.5);
@@ -184,7 +190,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 		// TODO not 100% certain this is correct in all the weird edge cases.
 		[[CCFileUtils sharedFileUtils] setiPadContentScaleFactor:scaleFactor*2.0];
 		
-		director.designSize = FIXED_SIZE;
+		director.designSize = fixed;
 		[director setProjection:CCDirectorProjectionCustom];
 	} else {
 		// Setup tablet scaling if it was requested.
