@@ -120,9 +120,7 @@
  */
 @interface CCNodeGradient : CCNodeColor
 {
-	ccColor3B _endColor;
-	GLubyte _startOpacity;
-	GLubyte _endOpacity;
+	ccColor4F _endColor;
 	CGPoint _vector;
 	BOOL	_compressedInterpolation;
 }

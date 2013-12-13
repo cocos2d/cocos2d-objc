@@ -11,17 +11,17 @@
 
 @implementation CCColor
 
-+ (CCColor*) colorWithWhite:(CGFloat)white alpha:(CGFloat)alpha
++ (CCColor*) colorWithWhite:(float)white alpha:(float)alpha
 {
     return [[CCColor alloc] initWithWhite:white alpha:alpha];
 }
 
-+ (CCColor*) colorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha
++ (CCColor*) colorWithRed:(float)red green:(float)green blue:(float)blue alpha:(float)alpha
 {
     return [[CCColor alloc] initWithRed:red green:green blue:blue alpha:alpha];
 }
 
-+ (CCColor*) colorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue
++ (CCColor*) colorWithRed:(float)red green:(float)green blue:(float)blue
 {
     return [[CCColor alloc] initWithRed:red green:green blue:blue];
 }
@@ -38,12 +38,12 @@
 }
 #endif
 
-- (CCColor*) colorWithAlphaComponent:(CGFloat)alpha
+- (CCColor*) colorWithAlphaComponent:(float)alpha
 {
     return [CCColor colorWithRed:_r green:_g blue:_b alpha:alpha];
 }
 
-- (CCColor*) initWithWhite:(CGFloat)white alpha:(CGFloat)alpha
+- (CCColor*) initWithWhite:(float)white alpha:(float)alpha
 {
     self = [super init];
     if (!self) return NULL;
@@ -56,7 +56,7 @@
     return self;
 }
 
-- (CCColor*) initWithHue:(CGFloat)hue saturation:(CGFloat)saturation brightness:(CGFloat)brightness alpha:(CGFloat)alpha
+- (CCColor*) initWithHue:(float)hue saturation:(float)saturation brightness:(float)brightness alpha:(float)alpha
 {
     self = [super init];
     if (!self) return NULL;
@@ -67,7 +67,7 @@
     return self;
 }
 
-- (CCColor*) initWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha
+- (CCColor*) initWithRed:(float)red green:(float)green blue:(float)blue alpha:(float)alpha
 {
     self = [super init];
     if (!self) return NULL;
@@ -80,7 +80,7 @@
     return self;
 }
 
-- (CCColor*) initWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue
+- (CCColor*) initWithRed:(float)red green:(float)green blue:(float)blue
 {
     self = [super init];
     if (!self) return NULL;
@@ -98,7 +98,7 @@
     self = [super init];
     if (!self) return NULL;
     
-    const CGFloat *components = CGColorGetComponents(cgColor);
+    const float *components = CGColorGetComponents(cgColor);
     
     _r = components[0];
     _g = components[1];
@@ -121,7 +121,7 @@
     }
     else if (csModel == kCGColorSpaceModelMonochrome)
     {
-        CGFloat w, a;
+        float w, a;
         [color getWhite:&w alpha:&a];
         _r = w;
         _g = w;
@@ -139,7 +139,7 @@
 
 - (CGColorRef) CGColor
 {
-    CGFloat components[4] = {_r, _g, _b, _a};
+    float components[4] = {_r, _g, _b, _a};
     return CGColorCreate(CGColorSpaceCreateDeviceRGB(), components);
 }
 
@@ -152,7 +152,7 @@
 
 #endif
 
-- (BOOL) getRed:(CGFloat *)red green:(CGFloat *)green blue:(CGFloat *)blue alpha:(CGFloat *)alpha
+- (BOOL) getRed:(float *)red green:(float *)green blue:(float *)blue alpha:(float *)alpha
 {
     *red = _r;
     *green = _g;
@@ -162,7 +162,7 @@
     return YES;
 }
 
-- (BOOL) getWhite:(CGFloat *)white alpha:(CGFloat *)alpha
+- (BOOL) getWhite:(float *)white alpha:(float *)alpha
 {
     *white = (_r + _g + _b) / 3.0; // Just use an average of the components
     *alpha = _a;
@@ -299,22 +299,22 @@
 
 @implementation CCColor (ExtraProperties)
 
-- (CGFloat) red
+- (float) red
 {
     return _r;
 }
 
-- (CGFloat) green
+- (float) green
 {
     return _g;
 }
 
-- (CGFloat) blue
+- (float) blue
 {
     return _b;
 }
 
-- (CGFloat) alpha
+- (float) alpha
 {
     return _a;
 }

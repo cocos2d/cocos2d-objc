@@ -800,7 +800,7 @@ void FNTConfigRemoveCache( void )
 			[fontChar setOpacityModifyRGB:_opacityModifyRGB];
 
 			// Color MUST be set before opacity, since opacity might change color if OpacityModifyRGB is on
-			[fontChar updateDisplayedColor:[CCColor colorWithCcColor3b:_displayedColor]];
+			[fontChar updateDisplayedColor:[CCColor colorWithCcColor3b:_displayedColor].ccColor4f];
 			[fontChar updateDisplayedOpacity:_displayedOpacity/255.0];
 		}
 
@@ -892,7 +892,7 @@ void FNTConfigRemoveCache( void )
 		CCColor* parentColor = [CCColor whiteColor];
 		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent isCascadeColorEnabled] )
 			parentColor = [(id<CCRGBAProtocol>)_parent displayedColor];
-		[self updateDisplayedColor:parentColor];
+		[self updateDisplayedColor:parentColor.ccColor4f];
 	}
 }
 
@@ -941,15 +941,15 @@ void FNTConfigRemoveCache( void )
 	}
 }
 
-- (void)updateDisplayedColor:(CCColor*)parentColor
+- (void)updateDisplayedColor:(ccColor4F) parentColor
 {
 
-	_displayedColor.r = _realColor.r * parentColor.red;
-	_displayedColor.g = _realColor.g * parentColor.green;
-	_displayedColor.b = _realColor.b * parentColor.blue;
+	_displayedColor.r = _realColor.r * parentColor.r;
+	_displayedColor.g = _realColor.g * parentColor.g;
+	_displayedColor.b = _realColor.b * parentColor.b;
 
 	for (CCSprite* item in _children) {
-		[item updateDisplayedColor:[CCColor colorWithCcColor3b:_displayedColor]];
+		[item updateDisplayedColor:[CCColor colorWithCcColor3b:_displayedColor].ccColor4f];
 	}
 }
 

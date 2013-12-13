@@ -35,17 +35,26 @@
 
 /// CC RGBA protocol
 @protocol CCRGBAProtocol <NSObject>
-/** sets and returns the color (tint)
- @since v0.8
+/** 
+ * sets and returns the color (tint)
+ * When setting the color, the supplied alpha is ignored.
+ * @since v0.8
  */
 @property (nonatomic,strong) CCColor* color;
+
+/**
+ * sets and returns the color (tint)
+ * The alpha is applied.
+ */
+@property (nonatomic,strong) CCColor* colorRGBA;
+
 /** returns the displayed color */
 @property (nonatomic, readonly) CCColor* displayedColor;
 /** whether or not color should be propagated to its children */
 @property (nonatomic, getter = isCascadeColorEnabled) BOOL cascadeColorEnabled;
 
 /** recursive method that updates display color */
-- (void)updateDisplayedColor:(CCColor*)color;
+- (void)updateDisplayedColor:(ccColor4F)color;
 
 /** sets and returns the opacity.
  @warning If the the texture has premultiplied alpha then, the R, G and B channels will be modified.
