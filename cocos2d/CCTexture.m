@@ -107,14 +107,26 @@
     return(self);
 }
 
+// Make concrete implementations for methods commonly called at runtime.
+-(GLuint)name {return _texture.name;}
+-(CGFloat)contentScale {return _texture.contentScale;}
+-(CGSize)contentSize {return _texture.contentSize;}
+-(NSUInteger)pixelWidth {return _texture.pixelWidth;}
+-(NSUInteger)pixelHeight {return _texture.pixelWidth;}
+-(BOOL)hasPremultipliedAlpha {return _texture.hasPremultipliedAlpha;}
+-(CCSpriteFrame *)createSpriteFrame {return [_texture createSpriteFrame];}
+-(CCTextureProxy *)proxy {return self;}
+
+// Let the rest fall back to a slow forwarded path.
 - (id)forwardingTargetForSelector:(SEL)aSelector
 {
+	NSLog(@"forwarding selector: %@", NSStringFromSelector(aSelector));
     return(_texture);
 }
 
 - (void)dealloc
 {
-    // CCLOG(@"Proxy for texture %p deallocated.", _texture);
+		CCLOG(@"Proxy for texture %p deallocated.", _texture);
 }
 
 @end
