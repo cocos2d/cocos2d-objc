@@ -160,13 +160,13 @@
 
 -(void) setColor:(CCColor*)color
 {
-    [super setColor:color];
+	[super setColor:color];
 	[self updateColor];
 }
 
 -(void) setOpacity: (CGFloat) opacity
 {
-    [super setOpacity:opacity];
+	[super setOpacity:opacity];
 	[self updateColor];
 }
 @end
