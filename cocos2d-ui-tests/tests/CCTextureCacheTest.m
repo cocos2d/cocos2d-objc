@@ -60,6 +60,7 @@
 // add a couple of images to the cache
 - (void)testCacheAdd:(id)sender
 {
+    NSLog(@"Loading 5 textures:");
     [[CCTextureCache sharedTextureCache] addImage:@"Images/grossini_dance_01.png"];
     [[CCTextureCache sharedTextureCache] addImage:@"Images/grossini_dance_02.png"];
     [[CCTextureCache sharedTextureCache] addImage:@"Images/grossini_dance_03.png"];
@@ -70,6 +71,8 @@
 // create a couple of sprites, with cache images
 - (void)testCacheCreate:(id)sender
 {
+    NSLog(@"Creating 3 sprites:");
+		
     CCSprite *sprite;
     
     [_spriteNode removeAllChildren];
@@ -95,12 +98,14 @@
 // show cache information
 - (void)testCacheInformation:(id)sender
 {
+    NSLog(@"Dumping texture cache info:");
     [[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
 }
 
 // remove unused textures
 - (void)testCacheFlush:(id)sender
 {
+    NSLog(@"Flushing the texture cache:");
     [[CCTextureCache sharedTextureCache] removeUnusedTextures];
 }
 
