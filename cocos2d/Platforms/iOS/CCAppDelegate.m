@@ -111,6 +111,11 @@ const CGSize FIXED_SIZE = {568, 384};
 
 @synthesize window=window_, navController=navController_;
 
+- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+{
+	return UIInterfaceOrientationMaskAll;
+}
+
 - (CCScene*) startScene
 {
     NSAssert(NO, @"Override CCAppDelegate and implement the startScene method");
