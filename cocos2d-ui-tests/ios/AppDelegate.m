@@ -43,6 +43,8 @@
      nil];
     
     [self setupCocos2dWithOptions:@{
+//			CCSetupScreenMode: CCScreenModeFixed,
+//			CCSetupScreenOrientation: CCScreenOrientationPortrait,
 //			CCSetupTabletScale2X: @YES,
 			CCSetupHideDebugStats: @YES,
 		}];
@@ -54,5 +56,50 @@
 {
     return [MainMenu scene];
 }
+
+//// I'm going to leave this in for testing the fixed size screen mode in the future.
+//- (CCScene*) startScene
+//{
+////    return [MainMenu scene];
+//	CCScene *scene = [CCScene node];
+//	
+////	// Landscape
+////	{
+////		// iPad
+////		CCNode *node = [CCNodeColor nodeWithColor:[CCColor greenColor] width:512 height:384];
+////		node.position = ccp(28, 0);
+////		[scene addChild:node];
+////	}{
+////		// iPhone5
+////		CCNode *node = [CCNodeColor nodeWithColor:[CCColor redColor] width:568 height:320];
+////		node.position = ccp(0, 32);
+////		[scene addChild:node];
+////	}{
+////		// iPhone
+////		CCNode *node = [CCNodeColor nodeWithColor:[CCColor blueColor] width:480 height:320];
+////		node.position = ccp(44, 32);
+////		[scene addChild:node];
+////	}
+//	
+//	// Portrait
+//	{
+//		// iPad
+//		CCNode *node = [CCNodeColor nodeWithColor:[CCColor greenColor] width:384 height:512];
+//		node.position = ccp(0, 28);
+//		[scene addChild:node];
+//	}{
+//		// iPhone5
+//		CCNode *node = [CCNodeColor nodeWithColor:[CCColor redColor] width:320 height:568];
+//		node.position = ccp(32, 0);
+//		[scene addChild:node];
+//	}{
+//		// iPhone
+//		CCNode *node = [CCNodeColor nodeWithColor:[CCColor blueColor] width:320 height:480];
+//		node.position = ccp(32, 44);
+//		[scene addChild:node];
+//	}
+//	
+//	return scene;
+//}
 
 @end
