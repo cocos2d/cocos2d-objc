@@ -57,7 +57,7 @@ typedef NS_ENUM(NSUInteger, CCProgressNodeType) {
   
  */
 
-@interface CCProgressNode : CCNodeRGBA {
+@interface CCProgressNode : CCNode {
 	CCProgressNodeType	_type;
 	float				_percentage;
 	CCSprite			*_sprite;

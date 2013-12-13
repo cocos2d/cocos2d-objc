@@ -47,7 +47,7 @@
  *  - opacity
  *  - RGB colors
  */
-@interface CCNodeColor : CCNodeRGBA <CCBlendProtocol>
+@interface CCNodeColor : CCNode <CCBlendProtocol>
 {
 	ccVertex2F	_squareVertices[4];
 	ccColor4F	_squareColors[4];

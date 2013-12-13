@@ -40,7 +40,7 @@
  All features from CCNode are valid, plus the following features:
  - opacity and RGB colors
  */
-@interface CCAtlasNode : CCNodeRGBA <CCTextureProtocol>
+@interface CCAtlasNode : CCNode <CCTextureProtocol>
 {
 	// texture atlas
 	CCTextureAtlas	*_textureAtlas;

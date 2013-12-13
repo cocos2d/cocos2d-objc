@@ -120,12 +120,12 @@
 
 - (void) setOpacity:(CGFloat)opacity
 {
-    NSAssert(NO, @"Set opacity no supported");
+    NSAssert(NO, @"Set opacity not supported");
 }
 
 - (CGFloat) opacity
 {
-    NSAssert(NO, @"Opacity no supported");
+    NSAssert(NO, @"Opacity not supported");
     return 0;
 }
 
