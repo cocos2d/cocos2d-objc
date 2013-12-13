@@ -108,4 +108,36 @@
 	self.subTitle = @"Parent and 2 children sprites should all be red. (Color cascade)";
 }
 
+-(void) setupFadeChildrenTest
+{
+	CGSize s = [[CCDirector sharedDirector] viewSize];
+	
+	// add parent with two children sprites.
+	CCSprite *parent = [self loadAndDisplayImageNamed: @"powered.png" withTitle: @""];
+	parent.name = @"Parent node";
+	[parent setPosition:ccp(s.width/2, s.height/3*2)];
+	
+	
+	CCSprite *sprite = [CCSprite spriteWithImageNamed:@"powered.png"];
+	[parent addChild:sprite];
+	[sprite setPosition:ccp(-parent.contentSize.width, -100)];
+	[sprite setColor:[CCColor redColor]];
+	
+	sprite = [CCSprite spriteWithImageNamed:@"powered.png"];
+	[parent addChild:sprite];
+	[sprite setPosition:ccp(2* parent.contentSize.width, -100)];
+	[sprite setColor:[CCColor greenColor]];
+	
+	parent.cascadeOpacityEnabled = YES;
+	
+	id seq = [CCActionSequence actions:
+						[CCActionFadeOut actionWithDuration:0.5f],
+						[CCActionFadeIn actionWithDuration:0.2f],
+						nil];
+	[parent runAction: [CCActionRepeatForever actionWithAction:seq ] ];
+
+	
+	self.subTitle = @"Parent and red/green child should all fade in and out together.";
+}
+
 @end

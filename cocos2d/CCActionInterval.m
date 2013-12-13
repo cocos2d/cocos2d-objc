@@ -1139,7 +1139,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, CCTime t )
 @implementation CCActionFadeIn
 -(void) update: (CCTime) t
 {
-	[(id<CCRGBAProtocol>) _target setOpacity: 1.0 *t];
+	[(id) _target setOpacity: 1.0 *t];
 }
 
 -(CCActionInterval*) reverse
@@ -1155,7 +1155,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, CCTime t )
 @implementation CCActionFadeOut
 -(void) update: (CCTime) t
 {
-	[(id<CCRGBAProtocol>) _target setOpacity: 1.0 *(1-t)];
+	[(id) _target setOpacity: 1.0 *(1-t)];
 }
 
 -(CCActionInterval*) reverse
@@ -1191,12 +1191,12 @@ static inline CGFloat bezierat( float a, float b, float c, float d, CCTime t )
 -(void) startWithTarget:(CCNode *)aTarget
 {
 	[super startWithTarget:aTarget];
-	_fromOpacity = [(id<CCRGBAProtocol>)_target opacity];
+	_fromOpacity = [(id)_target opacity];
 }
 
 -(void) update: (CCTime) t
 {
-	[(id<CCRGBAProtocol>)_target setOpacity:_fromOpacity + ( _toOpacity - _fromOpacity ) * t];
+	[(id)_target setOpacity:_fromOpacity + ( _toOpacity - _fromOpacity ) * t];
 }
 @end
 
@@ -1224,20 +1224,20 @@ static inline CGFloat bezierat( float a, float b, float c, float d, CCTime t )
 	return copy;
 }
 
--(void) startWithTarget:(id)aTarget
+-(void) startWithTarget:(CCNode*)aTarget
 {
 	[super startWithTarget:aTarget];
 
-	id<CCRGBAProtocol> tn = (id<CCRGBAProtocol>) _target;
+	CCNode* tn = (CCNode*) _target;
 	_from = [tn color];
 }
 
 -(void) update: (CCTime) t
 {
-	id<CCRGBAProtocol> tn = (id<CCRGBAProtocol>) _target;
+	CCNode* tn = (CCNode*) _target;
     
-    ccColor4F fc = _from.ccColor4f;
-    ccColor4F tc = _to.ccColor4f;
+	ccColor4F fc = _from.ccColor4f;
+	ccColor4F tc = _to.ccColor4f;
     
 	[tn setColor:[CCColor colorWithRed:fc.r + (tc.r - fc.r) * t green:fc.g + (tc.g - fc.g) * t blue:fc.b + (tc.b - fc.b) * t alpha:1]];
 }
@@ -1272,7 +1272,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, CCTime t )
 {
 	[super startWithTarget:aTarget];
 
-	id<CCRGBAProtocol> tn = (id<CCRGBAProtocol>) _target;
+	CCNode* tn = (CCNode*) _target;
 	CCColor* color = [tn color];
     
 	_fromR = color.red;
@@ -1282,7 +1282,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, CCTime t )
 
 -(void) update: (CCTime) t
 {
-	id<CCRGBAProtocol> tn = (id<CCRGBAProtocol>) _target;
+	CCNode* tn = (CCNode*) _target;
 	[tn setColor:[CCColor colorWithRed:_fromR + _deltaR * t green:_fromG + _deltaG * t blue:_fromB + _deltaB * t alpha:1]];
 }
 

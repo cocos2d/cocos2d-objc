@@ -179,9 +179,12 @@ static NSUInteger globalOrderOfArrival = 1;
 		_actionManager = [director actionManager];
 		_scheduler = [director scheduler];
         
-        // set default touch handling
-        self.hitAreaExpansion = 0.0f;
-        
+		// set default touch handling
+		self.hitAreaExpansion = 0.0f;
+    
+		_displayColor = _color = [CCColor whiteColor].ccColor4f;
+		_cascadeOpacityEnabled = NO;
+		_cascadeColorEnabled = NO;
 	}
 
 	return self;
@@ -1505,24 +1508,11 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 // -----------------------------------------------------------------
 
-@end
 
-#pragma mark - NodeRGBA
-
-@implementation CCNodeRGBA
+#pragma mark - CCColor methods
 
 @synthesize cascadeColorEnabled=_cascadeColorEnabled;
 @synthesize cascadeOpacityEnabled=_cascadeOpacityEnabled;
-
--(id) init
-{
-	if ((self=[super init]) ) {
-		_displayColor = _color = [CCColor whiteColor].ccColor4f;
-		_cascadeOpacityEnabled = NO;
-		_cascadeColorEnabled = NO;
-	}
-    return self;
-}
 
 -(CGFloat) opacity
 {
@@ -1540,8 +1530,8 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	
 	if( _cascadeOpacityEnabled ) {
 		GLfloat parentOpacity = 1.0f;
-		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent isCascadeOpacityEnabled] )
-			parentOpacity = [(id<CCRGBAProtocol>)_parent displayedOpacity];
+		if( [_parent isCascadeOpacityEnabled] )
+			parentOpacity = [_parent displayedOpacity];
 		[self updateDisplayedOpacity:parentOpacity];
 	}
 }
@@ -1551,10 +1541,8 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	_displayColor.a = _color.a * parentOpacity;
 
 	if (_cascadeOpacityEnabled) {
-			for (id<CCRGBAProtocol> item in _children) {
-					if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
-							[item updateDisplayedOpacity:_displayColor.a];
-					}
+			for (CCNode* item in _children) {
+				[item updateDisplayedOpacity:_displayColor.a];
 			}
 	}
 }
@@ -1578,8 +1566,8 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	
 	if( _cascadeColorEnabled ) {
 		CCColor* parentColor = [CCColor whiteColor];
-		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent isCascadeColorEnabled] )
-			parentColor = [(id<CCRGBAProtocol>)_parent displayedColor];
+		if( _parent.isCascadeColorEnabled )
+			parentColor = [_parent displayedColor];
 		[self updateDisplayedColor:parentColor.ccColor4f];
 	}
 }
@@ -1596,8 +1584,8 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	
 	if( _cascadeColorEnabled ) {
 		CCColor* parentColor = [CCColor whiteColor];
-		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent isCascadeColorEnabled] )
-			parentColor = [(id<CCRGBAProtocol>)_parent displayedColor];
+		if( _parent.isCascadeColorEnabled )
+			parentColor = [_parent displayedColor];
 		[self updateDisplayedColor:parentColor.ccColor4f];
 	}
 }
@@ -1611,72 +1599,19 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	_displayColor.b = _color.b * parentColor.b;
 
     if (_cascadeColorEnabled) {
-        for (id<CCRGBAProtocol> item in _children) {
-            if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
-                [item updateDisplayedColor:_displayColor];
-            }
+        for (CCNode* item in _children) {
+            [item updateDisplayedColor:_displayColor];
         }
     }
 }
 
+-(void) setOpacityModifyRGB:(BOOL)boolean{
+	// Ignored in CCNode. Implemented in subclasses
+}
+
+-(BOOL) doesOpacityModifyRGB{
+	return NO; // Subclasses may use this feature.
+}
+
+
 @end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
