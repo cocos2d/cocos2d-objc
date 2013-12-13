@@ -7,8 +7,7 @@
 //
 
 #import "CCColor.h"
-
-#ifdef __CC_PLATFORM_MAC
+#import <CoreGraphics/CoreGraphics.h>
 
 @implementation CCColor
 
@@ -17,14 +16,14 @@
     return [[CCColor alloc] initWithWhite:white alpha:alpha];
 }
 
-+ (CCColor*) colorWithHue:(CGFloat)hue saturation:(CGFloat)saturation brightness:(CGFloat)brightness alpha:(CGFloat)alpha
-{
-    return [[CCColor alloc] initWithHue:hue saturation:saturation brightness:brightness alpha:alpha];
-}
-
 + (CCColor*) colorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha
 {
     return [[CCColor alloc] initWithRed:red green:green blue:blue alpha:alpha];
+}
+
++ (CCColor*) colorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue
+{
+    return [[CCColor alloc] initWithRed:red green:green blue:blue];
 }
 
 + (CCColor*) colorWithCGColor:(CGColorRef)cgColor
@@ -32,10 +31,12 @@
     return [[CCColor alloc] initWithCGColor:cgColor];
 }
 
-+ (CCColor*) colorWithCIColor:(CIColor *)ciColor
+#ifdef __CC_PLATFORM_IOS
++ (CCColor*) colorWithUIColor:(UIColor *)color
 {
-    return [[CCColor alloc] initWithCIColor:ciColor];
+    return [[CCColor alloc] initWithUIColor:color];
 }
+#endif
 
 - (CCColor*) colorWithAlphaComponent:(CGFloat)alpha
 {
@@ -60,8 +61,8 @@
     self = [super init];
     if (!self) return NULL;
     
-    NSColor* c = [NSColor colorWithCalibratedHue:hue saturation:saturation brightness:brightness alpha:alpha];
-    [c getRed:&_r green:&_g blue:&_b alpha:&_a];
+    //NSColor* c = [NSColor colorWithCalibratedHue:hue saturation:saturation brightness:brightness alpha:alpha];
+    //[c getRed:&_r green:&_g blue:&_b alpha:&_a];
     
     return self;
 }
@@ -75,6 +76,19 @@
     _g = green;
     _b = blue;
     _a = alpha;
+    
+    return self;
+}
+
+- (CCColor*) initWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue
+{
+    self = [super init];
+    if (!self) return NULL;
+    
+    _r = red;
+    _g = green;
+    _b = blue;
+    _a = 1;
     
     return self;
 }
@@ -94,39 +108,49 @@
     return self;
 }
 
-- (CCColor*) initWithCIColor:(CIColor *)ciColor
+#ifdef __CC_PLATFORM_IOS
+- (CCColor*) initWithUIColor:(UIColor *)color
 {
     self = [super init];
     if (!self) return NULL;
     
-    _r = ciColor.red;
-    _g = ciColor.green;
-    _b = ciColor.blue;
-    _a = ciColor.alpha;
+    CGColorSpaceModel csModel = CGColorSpaceGetModel(CGColorGetColorSpace(self.CGColor));
+    if (csModel == kCGColorSpaceModelRGB)
+    {
+        [color getRed:&_r green:&_g blue:&_b alpha:&_a];
+    }
+    else if (csModel == kCGColorSpaceModelMonochrome)
+    {
+        CGFloat w, a;
+        [color getWhite:&w alpha:&a];
+        _r = w;
+        _g = w;
+        _b = w;
+        _a = a;
+    }
+    else
+    {
+        NSAssert(NO, @"UIColor has unsupported color space model");
+    }
     
     return self;
 }
+#endif
 
 - (CGColorRef) CGColor
 {
-    return CGColorCreateGenericRGB(_r, _g, _b, _a);
+    CGFloat components[4] = {_r, _g, _b, _a};
+    return CGColorCreate(CGColorSpaceCreateDeviceRGB(), components);
 }
 
-- (CIColor*) CIColor
+#ifdef __CC_PLATFORM_IOS
+
+- (UIColor*) UIColor
 {
-    return [CIColor colorWithRed:_r green:_g blue:_b alpha:_a];
+    return [UIColor colorWithRed:_r green:_g blue:_b alpha:_a];
 }
 
-- (BOOL) getHue:(CGFloat *)hue saturation:(CGFloat *)saturation brightness:(CGFloat *)brightness alpha:(CGFloat *)alpha
-{
-    NSColor* c = [NSColor colorWithCalibratedRed:_r green:_g blue:_b alpha:_a];
-    *hue = c.hueComponent;
-    *saturation = c.saturationComponent;
-    *brightness = c.saturationComponent;
-    *alpha = _a;
-    
-    return YES;
-}
+#endif
 
 - (BOOL) getRed:(CGFloat *)red green:(CGFloat *)green blue:(CGFloat *)blue alpha:(CGFloat *)alpha
 {
@@ -223,7 +247,6 @@
 
 @end
 
-#endif
 
 @implementation CCColor (OpenGL)
 
@@ -259,73 +282,17 @@
 
 - (ccColor3B) ccColor3b
 {
-    CGColorSpaceModel csModel = [self colorSpaceModel];
-    if (csModel == kCGColorSpaceModelRGB)
-    {
-        CGFloat r, g, b, a;
-        [self getRed:&r green:&g blue:&b alpha:&a];
-        
-        return (ccColor3B){(GLubyte)(r*255), (GLubyte)(g*255), (GLubyte)(b*255)};
-    }
-    else if (csModel == kCGColorSpaceModelMonochrome)
-    {
-        CGFloat w, a;
-        [self getWhite:&w alpha:&a];
-        return ccc3(w*255, w*255, w*255);
-    }
-    else
-    {
-        return ccc3(255, 255, 255);
-    }
+    return (ccColor3B){(GLubyte)(_r*255), (GLubyte)(_g*255), (GLubyte)(_b*255)};
 }
 
 - (ccColor4B) ccColor4b
 {
-    CGColorSpaceModel csModel = [self colorSpaceModel];
-    if (csModel == kCGColorSpaceModelRGB)
-    {
-        CGFloat r, g, b, a;
-        [self getRed:&r green:&g blue:&b alpha:&a];
-        
-        return (ccColor4B){(GLubyte)(r*255), (GLubyte)(g*255), (GLubyte)(b*255), (GLubyte)(a*255)};
-    }
-    else if (csModel == kCGColorSpaceModelMonochrome)
-    {
-        CGFloat w, a;
-        [self getWhite:&w alpha:&a];
-        return ccc4(w*255, w*255, w*255, a*255);
-    }
-    else
-    {
-        return ccc4(255, 255, 255, 255);
-    }
+    return (ccColor4B){(GLubyte)(_r*255), (GLubyte)(_g*255), (GLubyte)(_b*255), (GLubyte)(_a*255)};
 }
 
 - (ccColor4F) ccColor4f
 {
-    CGColorSpaceModel csModel = [self colorSpaceModel];
-    if (csModel == kCGColorSpaceModelRGB)
-    {
-        CGFloat r, g, b, a;
-        [self getRed:&r green:&g blue:&b alpha:&a];
-        
-        return ccc4f(r, g, b, a);
-    }
-    else if (csModel == kCGColorSpaceModelMonochrome)
-    {
-        CGFloat w, a;
-        [self getWhite:&w alpha:&a];
-        return ccc4f(w, w, w, a);
-    }
-    else
-    {
-        return ccc4f(1, 1, 1, 1);
-    }
-}
-
-- (CGColorSpaceModel) colorSpaceModel
-{
-	return CGColorSpaceGetModel(CGColorGetColorSpace(self.CGColor));
+    return ccc4f(_r, _g, _b, _a);
 }
 
 @end
@@ -334,89 +301,25 @@
 
 - (CGFloat) red
 {
-    CGColorSpaceModel csModel = [self colorSpaceModel];
-    if (csModel == kCGColorSpaceModelRGB)
-    {
-        CGFloat r, g, b, a;
-        [self getRed:&r green:&g blue:&b alpha:&a];
-        return r;
-    }
-    else if (csModel == kCGColorSpaceModelMonochrome)
-    {
-        CGFloat w, a;
-        [self getWhite:&w alpha:&a];
-        return w;
-    }
-    else
-    {
-        return 1;
-    }
+    return _r;
 }
 
 - (CGFloat) green
 {
-    CGColorSpaceModel csModel = [self colorSpaceModel];
-    if (csModel == kCGColorSpaceModelRGB)
-    {
-        CGFloat r, g, b, a;
-        [self getRed:&r green:&g blue:&b alpha:&a];
-        return g;
-    }
-    else if (csModel == kCGColorSpaceModelMonochrome)
-    {
-        CGFloat w, a;
-        [self getWhite:&w alpha:&a];
-        return w;
-    }
-    else
-    {
-        return 1;
-    }
+    return _g;
 }
 
 - (CGFloat) blue
 {
-    CGColorSpaceModel csModel = [self colorSpaceModel];
-    if (csModel == kCGColorSpaceModelRGB)
-    {
-        CGFloat r, g, b, a;
-        [self getRed:&r green:&g blue:&b alpha:&a];
-        return b;
-    }
-    else if (csModel == kCGColorSpaceModelMonochrome)
-    {
-        CGFloat w, a;
-        [self getWhite:&w alpha:&a];
-        return w;
-    }
-    else
-    {
-        return 1;
-    }
+    return _b;
 }
 
 - (CGFloat) alpha
 {
-    CGColorSpaceModel csModel = [self colorSpaceModel];
-    if (csModel == kCGColorSpaceModelRGB)
-    {
-        CGFloat r, g, b, a;
-        [self getRed:&r green:&g blue:&b alpha:&a];
-        return a;
-    }
-    else if (csModel == kCGColorSpaceModelMonochrome)
-    {
-        CGFloat w, a;
-        [self getWhite:&w alpha:&a];
-        return a;
-    }
-    else
-    {
-        return 1;
-    }
+    return _a;
 }
 
-- (BOOL) isEqualToColor:(CCColor*) color
+- (BOOL) isEqual:(id)color
 {
     if (self == color) return YES;
     if (![color isKindOfClass:[CCColor class]]) return NO;
@@ -425,6 +328,11 @@
     ccColor4F c4f1 = ((CCColor*)color).ccColor4f;
     
     return ccc4FEqual(c4f0, c4f1);
+}
+
+- (BOOL) isEqualToColor:(CCColor*) color
+{
+    return [self isEqual:color];
 }
 
 @end
