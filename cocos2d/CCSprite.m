@@ -821,19 +821,19 @@
 
 -(void) setColor:(CCColor*)color
 {
-    [super setColor:color];
+	[super setColor:color];
 	[self updateColor];
 }
 
 -(void)updateDisplayedColor:(CCColor*)parentColor
 {
-    [super updateDisplayedColor:parentColor];
-    [self updateColor];
+	[super updateDisplayedColor:parentColor];
+	[self updateColor];
 }
 
 -(void) setOpacity:(CGFloat)opacity
 {
-    [super setOpacity:opacity];
+	[super setOpacity:opacity];
 	[self updateColor];
 }
 
