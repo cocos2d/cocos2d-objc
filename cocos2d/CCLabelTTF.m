@@ -400,10 +400,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
             useFullColor = YES;
         }
         
-        CGFloat r,g,b,a;
-        [_fontColor getRed:&r green:&g blue:&b alpha:&a];
-        
-        NSColor* color = [NSColor colorWithCalibratedRed:r green:g blue:b alpha:a];
+        NSColor* color = [NSColor colorWithCalibratedRed:_fontColor.red green:_fontColor.green blue:_fontColor.blue alpha:_fontColor.alpha];
         
         [formattedAttributedString addAttribute:NSForegroundColorAttributeName value:color range:fullRange];
     }
@@ -688,10 +685,8 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         
         if (hasShadow)
         {
-            CGFloat r, g, b, a;
-            [_shadowColor getRed:&r green:&g blue:&b alpha:&a];
-            
-            NSColor* color = [NSColor colorWithCalibratedRed:r green:g blue:b alpha:a];
+
+            NSColor* color = [NSColor colorWithCalibratedRed:_shadowColor.red green:_shadowColor.green blue:_shadowColor.blue alpha:_shadowColor.alpha];
             
             CGContextSetShadowWithColor(context, CGSizeMake(shadowOffset.x/retinaFix, shadowOffset.y/retinaFix), shadowBlurRadius/retinaFix, [color CGColor]);
         }
@@ -703,10 +698,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
             CGContextSetLineWidth(context, outlineWidth * 2);
             CGContextSetLineJoin(context, kCGLineJoinRound);
             
-            CGFloat r, g, b, a;
-            [_outlineColor getRed:&r green:&g blue:&b alpha:&a];
-            
-            NSColor* color = [NSColor colorWithCalibratedRed:r green:g blue:b alpha:a];
+            NSColor* color = [NSColor colorWithCalibratedRed:_outlineColor.red green:_outlineColor.green blue:_outlineColor.blue alpha:_outlineColor.alpha];
             
             [effectsString addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0, effectsString.length)];
             
@@ -948,12 +940,11 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     // Handle outline
     if (hasOutline)
     {
-        float r, g, b, a;
-        [_outlineColor getRed:&r green:&g blue:&b alpha:&a];
+        ccColor4F outlineColor = _outlineColor.ccColor4f;
         
         CGContextSetTextDrawingMode(context, kCGTextFillStroke);
-        CGContextSetRGBStrokeColor(context, r, g, b, a);
-        CGContextSetRGBFillColor(context, r, g, b, a);
+        CGContextSetRGBStrokeColor(context, outlineColor.r, outlineColor.g, outlineColor.b, outlineColor.a);
+        CGContextSetRGBFillColor(context, outlineColor.r, outlineColor.g, outlineColor.b, outlineColor.a);
         CGContextSetLineWidth(context, outlineWidth * 2);
         CGContextSetLineJoin(context, kCGLineJoinRound);
         
@@ -972,10 +963,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     }
     
     // Handle font color
-    float r, g, b, a;
-    [_fontColor getRed:&r green:&g blue:&b alpha:&a];
-    
-    UIColor* color = [UIColor colorWithRed:r green:g blue:b alpha:a];
+    UIColor* color = [UIColor colorWithRed:_fontColor.red green:_fontColor.green blue:_fontColor.blue alpha:_fontColor.alpha];
     [color set];
     
     [string drawInRect:drawArea withFont:font lineBreakMode:0 alignment:(int)_horizontalAlignment];

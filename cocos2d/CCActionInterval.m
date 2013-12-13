@@ -1236,13 +1236,10 @@ static inline CGFloat bezierat( float a, float b, float c, float d, CCTime t )
 {
 	id<CCRGBAProtocol> tn = (id<CCRGBAProtocol>) _target;
     
-    CGFloat fr, fg, fb, fa;
-    [_from getRed:&fr green:&fg blue:&fb alpha:&fa];
+    ccColor4F fc = _from.ccColor4f;
+    ccColor4F tc = _to.ccColor4f;
     
-    CGFloat tr, tg, tb, ta;
-    [_to getRed:&tr green:&tg blue:&tb alpha:&ta];
-    
-	[tn setColor:[CCColor colorWithRed:fr + (tr - fr) * t green:fg + (tg - fg) * t blue:fb + (tb - fb) * t alpha:1]];
+	[tn setColor:[CCColor colorWithRed:fc.r + (tc.r - fc.r) * t green:fc.g + (tc.g - fc.g) * t blue:fc.b + (tc.b - fc.b) * t alpha:1]];
 }
 @end
 
@@ -1278,12 +1275,9 @@ static inline CGFloat bezierat( float a, float b, float c, float d, CCTime t )
 	id<CCRGBAProtocol> tn = (id<CCRGBAProtocol>) _target;
 	CCColor* color = [tn color];
     
-    CGFloat r, g, b, a;
-    [color getRed:&r green:&g blue:&b alpha:&a];
-    
-	_fromR = r;
-	_fromG = g;
-	_fromB = b;
+	_fromR = color.red;
+	_fromG = color.green;
+	_fromB = color.blue;
 }
 
 -(void) update: (CCTime) t
