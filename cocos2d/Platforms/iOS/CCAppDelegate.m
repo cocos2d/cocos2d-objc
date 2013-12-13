@@ -179,7 +179,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 		CGFloat scaleFactor = MIN(FindPOTScale(size.width, FIXED_SIZE.width), FindPOTScale(size.height, FIXED_SIZE.height));
 		
 		director.contentScaleFactor = scaleFactor;
-//		director.UIScaleFactor = 1.0/scaleFactor;
+		director.UIScaleFactor = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? 1.0 : 0.5);
 		
 		// TODO not 100% certain this is correct in all the weird edge cases.
 		[[CCFileUtils sharedFileUtils] setiPadContentScaleFactor:scaleFactor*2.0];
