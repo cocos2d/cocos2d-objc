@@ -154,7 +154,7 @@
 		quad.tr.vertices.y = (int)(_itemHeight);
 		quad.tr.vertices.z = 0.0f;
 
-		ccColor4B c = { _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity };
+		ccColor4B c = ccc4BFromccc4F(_displayColor);
 		quad.tl.colors = c;
 		quad.tr.colors = c;
 		quad.bl.colors = c;

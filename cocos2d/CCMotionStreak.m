@@ -203,14 +203,10 @@
         _pointVertexes[_nuPoints] = _positionR;
         _pointState[_nuPoints] = 1.0f;
 
-        // Color asignation
+        // Color and opacity assignment
         const NSUInteger offset = _nuPoints*8;
-        *((ccColor3B*)(_colorPointer + offset)) = _displayedColor;
-        *((ccColor3B*)(_colorPointer + offset+4)) = _displayedColor;
-
-        // Opacity
-        _colorPointer[offset+3] = 255;
-        _colorPointer[offset+7] = 255;
+        *((ccColor4B*)(_colorPointer + offset)) = ccc4BFromccc4F(_displayColor);
+        *((ccColor4B*)(_colorPointer + offset+4)) = ccc4BFromccc4F(_displayColor);
 
         // Generate polygon
         if(_nuPoints > 0 && _fastMode )

@@ -89,15 +89,10 @@
 {
 	if( (self=[super init]) ) {
 
-        ccColor4B color4 = color.ccColor4b;
-        
 		// default blend function
 		_blendFunc = (ccBlendFunc) { GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA };
 
-		_displayedColor.r = _realColor.r = color4.r;
-		_displayedColor.g = _realColor.g = color4.g;
-		_displayedColor.b = _realColor.b = color4.b;
-		_displayedOpacity = _realOpacity = color4.a;
+		_displayColor = _color = color.ccColor4f;
 
 		for (NSUInteger i = 0; i<sizeof(_squareVertices) / sizeof( _squareVertices[0]); i++ ) {
 			_squareVertices[i].x = 0.0f;
@@ -122,10 +117,7 @@
 {
 	for( NSUInteger i = 0; i < 4; i++ )
 	{
-		_squareColors[i].r = _displayedColor.r / 255.0f;
-		_squareColors[i].g = _displayedColor.g / 255.0f;
-		_squareColors[i].b = _displayedColor.b / 255.0f;
-		_squareColors[i].a = _displayedOpacity / 255.0f;
+		_squareColors[i] = _displayColor;
 	}
 }
 
@@ -201,18 +193,9 @@
 
 - (id) initWithColor: (CCColor*) start fadingTo: (CCColor*) end alongVector: (CGPoint) v
 {
-    ccColor4B end4 = end.ccColor4b;
-    ccColor4B start4 = start.ccColor4b;
-    
-	_endColor.r = end4.r;
-	_endColor.g = end4.g;
-	_endColor.b = end4.b;
-
-	_endOpacity		= end4.a;
-	_startOpacity	= start4.a;
+	_color = start.ccColor4f;
+	_endColor = end.ccColor4f;
 	_vector = v;
-
-	start4.a	= 255;
 	_compressedInterpolation = YES;
 
 	return [super initWithColor:start];
@@ -220,14 +203,14 @@
 
 - (void) updateColor
 {
-    [super updateColor];
+	[super updateColor];
 
 	float h = ccpLength(_vector);
-    if (h == 0)
+	if (h == 0)
 		return;
 
 	float c = sqrtf(2);
-    CGPoint u = ccp(_vector.x / h, _vector.y / h);
+	CGPoint u = ccp(_vector.x / h, _vector.y / h);
 
 	// Compressed Interpolation mode
 	if( _compressedInterpolation ) {
@@ -235,24 +218,11 @@
 		u = ccpMult(u, h2 * (float)c);
 	}
 
-	float opacityf = (float)_displayedOpacity/255.0f;
+	ccColor4F S = _displayColor;
+	ccColor4F E = _endColor;
 
-    ccColor4F S = {
-		_displayedColor.r / 255.0f,
-		_displayedColor.g / 255.0f,
-		_displayedColor.b / 255.0f,
-		_startOpacity*opacityf / 255.0f,
-	};
-
-    ccColor4F E = {
-		_endColor.r / 255.0f,
-		_endColor.g / 255.0f,
-		_endColor.b / 255.0f,
-		_endOpacity*opacityf / 255.0f,
-	};
-
-
-    // (-1, -1)
+	// TODO my god this is a lot of unnecessary code
+	// (-1, -1)
 	_squareColors[0].r = E.r + (S.r - E.r) * ((c + u.x + u.y) / (2.0f * c));
 	_squareColors[0].g = E.g + (S.g - E.g) * ((c + u.x + u.y) / (2.0f * c));
 	_squareColors[0].b = E.b + (S.b - E.b) * ((c + u.x + u.y) / (2.0f * c));
@@ -276,7 +246,7 @@
 
 -(CCColor*) startColor
 {
-	return [CCColor colorWithCcColor3b:_realColor];
+	return [CCColor colorWithCcColor4f: _color];
 }
 
 -(void) setStartColor:(CCColor*)color
@@ -286,41 +256,41 @@
 
 - (CCColor*) endColor
 {
-    return [CCColor colorWithCcColor3b:_endColor];
+    return [CCColor colorWithCcColor4f:_endColor];
 }
 
 -(void) setEndColor:(CCColor*)color
 {
-    _endColor = color.ccColor3b;
-    [self updateColor];
+	_endColor = color.ccColor4f;
+	[self updateColor];
 }
 
 - (CGFloat) startOpacity
 {
-    return _startOpacity/255.0;
+	return _color.a;
 }
 
 -(void) setStartOpacity: (CGFloat) o
 {
-	_startOpacity = o*255;
-    [self updateColor];
+	_color.a = o;
+	[self updateColor];
 }
 
 - (CGFloat) endOpacity
 {
-    return _endOpacity/255.0;
+	return _endColor.a;
 }
 
 -(void) setEndOpacity: (CGFloat) o
 {
-    _endOpacity = o*255;
-    [self updateColor];
+	_endColor.a = o;
+	[self updateColor];
 }
 
 -(void) setVector: (CGPoint) v
 {
-    _vector = v;
-    [self updateColor];
+	_vector = v;
+	[self updateColor];
 }
 
 -(BOOL) compressedInterpolation

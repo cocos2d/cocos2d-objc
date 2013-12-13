@@ -646,8 +646,7 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  */
 @interface CCNodeRGBA : CCNode <CCRGBAProtocol>
 {
-	GLubyte		_displayedOpacity, _realOpacity;
-	ccColor3B	_displayedColor, _realColor;
+	ccColor4F	_displayColor, _color;
 	BOOL		_cascadeColorEnabled, _cascadeOpacityEnabled;
 }
 

@@ -32,7 +32,7 @@
 -(void) setupTintRedTest
 {
 	CCSprite * img = [self loadAndDisplayImageNamed: @"powered.png" withTitle: @"Tint image red"];
-	[img setColor:[UIColor redColor]];
+	[img setColor:[CCColor redColor]];
 }
 
 
@@ -42,10 +42,17 @@
 	[img setColor:[CCColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:1.0f]];
 }
 
--(void) setupHalfTransparentTest
+-(void) setupSetColorDoesNotChangeAlphaTest
 {
-	CCSprite * img = [self loadAndDisplayImageNamed: @"powered.png" withTitle: @"50% alpha, via Color"];
+	CCSprite * img = [self loadAndDisplayImageNamed: @"powered.png" withTitle: @"Image should not be transparent. setColor ignores alpha"];
 	[img setColor:[CCColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:0.5f]];
+}
+
+
+-(void) setupSetColorRGBASetsAlphaTest
+{
+	CCSprite * img = [self loadAndDisplayImageNamed: @"powered.png" withTitle: @"50% alpha, via setColorRGBA"];
+	[img setColorRGBA:[CCColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:0.5f]];
 }
 
 -(void) setupHalfTransparentViaOpacityTest
@@ -80,9 +87,10 @@
 -(void) setupCascadeColorTest
 {
 	CGSize s = [[CCDirector sharedDirector] viewSize];
-
+	
 	// add parent with two children sprites.
 	CCSprite *parent = [self loadAndDisplayImageNamed: @"powered.png" withTitle: @""];
+	parent.name = @"Parent node";
 	[parent setPosition:ccp(s.width/2, s.height/3*2)];
 	
 	
