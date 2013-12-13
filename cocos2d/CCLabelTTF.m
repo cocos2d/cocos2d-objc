@@ -356,7 +356,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
             useFullColor = YES;
         }
         
-        UIColor* color = _fontColor;
+        UIColor* color = _fontColor.UIColor;
         
         [formattedAttributedString addAttribute:NSForegroundColorAttributeName value:color range:fullRange];
     }
@@ -626,7 +626,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     // Handle shadow
     if (hasShadow)
     {
-        UIColor* color = _shadowColor;
+        UIColor* color = _shadowColor.UIColor;
         
         CGContextSetShadowWithColor(context, CGSizeMake(shadowOffset.x, shadowOffset.y), shadowBlurRadius, [color CGColor]);
     }
@@ -634,7 +634,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     // Handle outline
     if (hasOutline)
     {
-        UIColor* color = _outlineColor;
+        UIColor* color = _outlineColor.UIColor;
         
         CGContextSetTextDrawingMode(context, kCGTextFillStroke);
         CGContextSetLineWidth(context, outlineWidth * 2);
@@ -940,7 +940,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     // Handle shadow
     if (hasShadow)
     {
-        UIColor* color = _shadowColor;
+        UIColor* color = _shadowColor.UIColor;
         
         CGContextSetShadowWithColor(context, CGSizeMake(shadowOffset.x, shadowOffset.y), shadowBlurRadius, [color CGColor]);
     }
