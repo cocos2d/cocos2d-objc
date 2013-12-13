@@ -192,8 +192,8 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 		director.contentScaleFactor = scaleFactor;
 		director.UIScaleFactor = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? 1.0 : 0.5);
 		
-		// TODO not 100% certain this is correct in all the weird edge cases.
-		[[CCFileUtils sharedFileUtils] setiPadContentScaleFactor:scaleFactor*2.0];
+		// Let CCFileUtils know that "-ipad" textures should be treated as having a contentScale of 2.0.
+		[[CCFileUtils sharedFileUtils] setiPadContentScaleFactor: 2.0];
 		
 		director.designSize = fixed;
 		[director setProjection:CCDirectorProjectionCustom];
