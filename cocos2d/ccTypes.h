@@ -163,6 +163,18 @@ static inline ccColor3B ccc3BFromccc4F(ccColor4F c)
 	return (ccColor3B){ (GLubyte) (c.r*255), (GLubyte) (c.g*255), (GLubyte) (c.b*255) };
 }
 
+/**
+ * Returns a ccColor3B from a ccColor4F.
+ */
+static inline ccColor4F ccc4FInterpolated(ccColor4F start, ccColor4F end, float t)
+{
+	start.r = end.r + (start.r - end.r ) * t;
+	start.g = end.g	+ (start.g - end.g ) * t;
+	start.b = end.b + (start.b - end.b ) * t;
+	start.a = end.a	+ (start.a - end.a ) * t;
+	return  start;
+}
+
 /** A vertex composed of 2 GLfloats: x, y
  @since v0.8
  */
