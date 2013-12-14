@@ -35,7 +35,7 @@
  - Segments controls how smooth the shape of the trail appears.
  - Fast mode enables faster point addition and the cost of lower point precision.
  */
-@interface CCMotionStreak : CCNodeRGBA <CCTextureProtocol> {
+@interface CCMotionStreak : CCNode <CCTextureProtocol> {
     
     // Texture.
     CCTexture *_texture;

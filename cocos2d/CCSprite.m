@@ -791,15 +791,14 @@
 #pragma mark CCSprite - RGBA protocol
 -(void) updateColor
 {
-	ccColor4B color4 = {_displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity};
-
+	ccColor4B color4 = ccc4BFromccc4F(_displayColor);
 	
 	// special opacity for premultiplied textures
 	if ( _opacityModifyRGB ) {
-		color4.r *= _displayedOpacity/255.0f;
-		color4.g *= _displayedOpacity/255.0f;
-		color4.b *= _displayedOpacity/255.0f;
-    }
+		color4.r *= _displayColor.a;
+		color4.g *= _displayColor.a;
+		color4.b *= _displayColor.a;
+	}
 
 	_quad.bl.colors = color4;
 	_quad.br.colors = color4;
@@ -825,7 +824,13 @@
 	[self updateColor];
 }
 
--(void)updateDisplayedColor:(CCColor*)parentColor
+- (void) setColorRGBA:(CCColor*)color
+{
+	[super setColorRGBA:color];
+	[self updateColor];
+}
+
+-(void)updateDisplayedColor:(ccColor4F) parentColor
 {
 	[super updateDisplayedColor:parentColor];
 	[self updateColor];

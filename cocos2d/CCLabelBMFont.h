@@ -50,7 +50,7 @@
  
  */
 
-@interface CCLabelBMFont : CCSpriteBatchNode <CCLabelProtocol, CCRGBAProtocol> {
+@interface CCLabelBMFont : CCSpriteBatchNode <CCLabelProtocol> {
     
 	// The text displayed by the label.
 	NSString *_string;
@@ -71,12 +71,6 @@
 	CCBMFontConfiguration	*_configuration;
     
 	// Texture RGBA settings.
-	GLubyte		_displayedOpacity;
-    GLubyte     _realOpacity;
-	ccColor3B	_displayedColor;
-    ccColor3B   _realColor;
-	BOOL		_cascadeOpacityEnabled;
-    BOOL        _cascadeColorEnabled;
 	BOOL		_opacityModifyRGB;
 
     // Offset of the texture atlas.

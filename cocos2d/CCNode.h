@@ -142,7 +142,14 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 
 	BOOL _isReorderChildDirty;
     
-    CCPhysicsBody* _physicsBody;
+  CCPhysicsBody* _physicsBody;
+	
+	// DisplayColor and Color are kept separate to allow for cascading color and alpha changes through node children. Alphas tend to
+	// be multiplied together so you can fade groups of objects that are colored differently, for example.
+	ccColor4F	_displayColor, _color;
+
+	// Opacity/Color propagates into children that conform to if cascadeOpacity/cascadeColor is enabled.
+	BOOL		_cascadeColorEnabled, _cascadeOpacityEnabled;
 }
 
 /// -----------------------------------------------------------------------
@@ -631,24 +638,58 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 /** recursive method that visit its children and draw them */
 -(void) visit;
 
-@end
-
-
-#pragma mark - CCNodeRGBA
-
-/** CCNodeRGBA is a subclass of CCNode that implements the CCRGBAProtocol protocol.
-
- All features from CCNode are valid, plus the following new features:
- - opacity
- - RGB colors
-
- Opacity/Color propagates into children that conform to the CCRGBAProtocol if cascadeOpacity/cascadeColor is enabled.
+/**
+ * sets and returns the color (tint)
+ * When setting the color, the supplied alpha is ignored.
+ * @since v0.8
  */
-@interface CCNodeRGBA : CCNode <CCRGBAProtocol>
-{
-	GLubyte		_displayedOpacity, _realOpacity;
-	ccColor3B	_displayedColor, _realColor;
-	BOOL		_cascadeColorEnabled, _cascadeOpacityEnabled;
-}
+@property (nonatomic,strong) CCColor* color;
+
+/**
+ * sets and returns the color (tint)
+ * The supplied alpha is applied.
+ */
+@property (nonatomic,strong) CCColor* colorRGBA;
+
+/** returns the displayed color */
+@property (nonatomic, readonly) CCColor* displayedColor;
+/**
+ * CascadeColorEnabled causes changes to this node's color to cascade down to it's children. The new color is multiplied
+ * in with the color of each child, so it doesn't bash the current color of those nodes. Opacity is unaffected by this
+ * property, see cascadeOpacityEnabled to change the alpha of nodes.
+ */@property (nonatomic, getter = isCascadeColorEnabled) BOOL cascadeColorEnabled;
+
+/** recursive method that updates display color */
+- (void)updateDisplayedColor:(ccColor4F)color;
+
+/** sets and returns the opacity.
+ @warning If the the texture has premultiplied alpha then, the R, G and B channels will be modified.
+ Values goes from 0 to 1, where 1 means fully opaque.
+ */
+@property (nonatomic) CGFloat opacity;
+/** returns the displayed opacity */
+@property (nonatomic, readonly) CGFloat displayedOpacity;
+/** 
+ * CascadeOpacity causes changes to this node's opacity to cascade down to it's children. The new opacity is multiplied 
+ * in with the opacity of each child, so it doesn't bash the current opacity of those nodes. Color is unaffected by this
+ * property, see cascadeColorEnabled for color tint changes.
+ */
+@property (nonatomic, getter = isCascadeOpacityEnabled) BOOL cascadeOpacityEnabled;
+
+/** recursive method that updates the displayed opacity */
+- (void)updateDisplayedOpacity:(CGFloat)opacity;
+
+/** sets the premultipliedAlphaOpacity property.
+ If set to NO then opacity will be applied as: glColor(R,G,B,opacity);
+ If set to YES then opacity will be applied as: glColor(opacity, opacity, opacity, opacity );
+ Textures with premultiplied alpha will have this property by default on YES. Otherwise the default value is NO
+ @since v0.8
+ */
+-(void) setOpacityModifyRGB:(BOOL)boolean;
+/** returns whether or not the opacity will be applied using glColor(R,G,B,opacity) or glColor(opacity, opacity, opacity, opacity);
+ @since v0.8
+ */
+-(BOOL) doesOpacityModifyRGB;
 
 @end
+

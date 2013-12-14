@@ -11,17 +11,17 @@
 
 @implementation CCColor
 
-+ (CCColor*) colorWithWhite:(CGFloat)white alpha:(CGFloat)alpha
++ (CCColor*) colorWithWhite:(float)white alpha:(float)alpha
 {
     return [[CCColor alloc] initWithWhite:white alpha:alpha];
 }
 
-+ (CCColor*) colorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha
++ (CCColor*) colorWithRed:(float)red green:(float)green blue:(float)blue alpha:(float)alpha
 {
     return [[CCColor alloc] initWithRed:red green:green blue:blue alpha:alpha];
 }
 
-+ (CCColor*) colorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue
++ (CCColor*) colorWithRed:(float)red green:(float)green blue:(float)blue
 {
     return [[CCColor alloc] initWithRed:red green:green blue:blue];
 }
@@ -38,12 +38,12 @@
 }
 #endif
 
-- (CCColor*) colorWithAlphaComponent:(CGFloat)alpha
+- (CCColor*) colorWithAlphaComponent:(float)alpha
 {
     return [CCColor colorWithRed:_r green:_g blue:_b alpha:alpha];
 }
 
-- (CCColor*) initWithWhite:(CGFloat)white alpha:(CGFloat)alpha
+- (CCColor*) initWithWhite:(float)white alpha:(float)alpha
 {
     self = [super init];
     if (!self) return NULL;
@@ -56,18 +56,50 @@
     return self;
 }
 
-- (CCColor*) initWithHue:(CGFloat)hue saturation:(CGFloat)saturation brightness:(CGFloat)brightness alpha:(CGFloat)alpha
+/** Hue in degrees 
+ HSV-RGB Conversion adapted from code by Mr. Evil, beyondunreal wiki
+ */
+- (CCColor*) initWithHue:(float)hue saturation:(float)saturation brightness:(float)brightness alpha:(float)alpha
 {
-    self = [super init];
-    if (!self) return NULL;
-    
-    //NSColor* c = [NSColor colorWithCalibratedHue:hue saturation:saturation brightness:brightness alpha:alpha];
-    //[c getRed:&_r green:&_g blue:&_b alpha:&_a];
-    
-    return self;
+	self = [super init];
+	if (!self) return NULL;
+	
+	float chroma = saturation * brightness;
+	float hueSection = hue / 60.0f;
+	float X = chroma *  (1.0f - ABS(fmod(hueSection, 2.0f) - 1.0f));
+	ccColor4F rgb;
+
+	if(hueSection < 1.0) {
+		rgb.r = chroma;
+		rgb.g = X;
+	} else if(hueSection < 2.0) {
+		rgb.r = X;
+		rgb.g = chroma;
+	} else if(hueSection < 3.0) {
+		rgb.g = chroma;
+		rgb.b = X;
+	} else if(hueSection < 4.0) {
+		rgb.g= X;
+		rgb.b = chroma;
+	} else if(hueSection < 5.0) {
+		rgb.r = X;
+		rgb.b = chroma;
+	} else if(hueSection <= 6.0){
+		rgb.r = chroma;
+		rgb.b = X;
+	}
+
+	float Min = brightness - chroma;
+
+	rgb.r += Min;
+	rgb.g += Min;
+	rgb.b += Min;
+	rgb.a = alpha;
+
+	return [CCColor colorWithCcColor4f:rgb];
 }
 
-- (CCColor*) initWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha
+- (CCColor*) initWithRed:(float)red green:(float)green blue:(float)blue alpha:(float)alpha
 {
     self = [super init];
     if (!self) return NULL;
@@ -80,7 +112,7 @@
     return self;
 }
 
-- (CCColor*) initWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue
+- (CCColor*) initWithRed:(float)red green:(float)green blue:(float)blue
 {
     self = [super init];
     if (!self) return NULL;
@@ -98,7 +130,7 @@
     self = [super init];
     if (!self) return NULL;
     
-    const CGFloat *components = CGColorGetComponents(cgColor);
+    const float *components = CGColorGetComponents(cgColor);
     
     _r = components[0];
     _g = components[1];
@@ -121,7 +153,7 @@
     }
     else if (csModel == kCGColorSpaceModelMonochrome)
     {
-        CGFloat w, a;
+        float w, a;
         [color getWhite:&w alpha:&a];
         _r = w;
         _g = w;
@@ -139,7 +171,7 @@
 
 - (CGColorRef) CGColor
 {
-    CGFloat components[4] = {_r, _g, _b, _a};
+    float components[4] = {_r, _g, _b, _a};
     return CGColorCreate(CGColorSpaceCreateDeviceRGB(), components);
 }
 
@@ -152,7 +184,7 @@
 
 #endif
 
-- (BOOL) getRed:(CGFloat *)red green:(CGFloat *)green blue:(CGFloat *)blue alpha:(CGFloat *)alpha
+- (BOOL) getRed:(float *)red green:(float *)green blue:(float *)blue alpha:(float *)alpha
 {
     *red = _r;
     *green = _g;
@@ -162,12 +194,17 @@
     return YES;
 }
 
-- (BOOL) getWhite:(CGFloat *)white alpha:(CGFloat *)alpha
+- (BOOL) getWhite:(float *)white alpha:(float *)alpha
 {
     *white = (_r + _g + _b) / 3.0; // Just use an average of the components
     *alpha = _a;
     
     return YES;
+}
+
+- (CCColor*) lerpTo:(CCColor *) toColor time:(float) t
+{
+	return [CCColor colorWithCcColor4f:ccc4FInterpolated(self.ccColor4f, toColor.ccColor4f, t)];
 }
 
 + (CCColor*) blackColor
@@ -299,22 +336,22 @@
 
 @implementation CCColor (ExtraProperties)
 
-- (CGFloat) red
+- (float) red
 {
     return _r;
 }
 
-- (CGFloat) green
+- (float) green
 {
     return _g;
 }
 
-- (CGFloat) blue
+- (float) blue
 {
     return _b;
 }
 
-- (CGFloat) alpha
+- (float) alpha
 {
     return _a;
 }

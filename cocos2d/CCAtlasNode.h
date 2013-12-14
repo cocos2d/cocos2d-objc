@@ -31,8 +31,7 @@
 
 @class CCTexture;
 
-/** CCAtlasNode is a subclass of CCNode that implements the CCRGBAProtocol and
- CCTextureProtocol protocol
+/** CCAtlasNode is a subclass of CCNode that implements the CCTextureProtocol protocol
 
  It knows how to render a TextureAtlas object.
  If you are going to render a TextureAtlas consider sub-classing CCAtlasNode (or a subclass of CCAtlasNode)
@@ -40,7 +39,7 @@
  All features from CCNode are valid, plus the following features:
  - opacity and RGB colors
  */
-@interface CCAtlasNode : CCNodeRGBA <CCTextureProtocol>
+@interface CCAtlasNode : CCNode <CCTextureProtocol>
 {
 	// texture atlas
 	CCTextureAtlas	*_textureAtlas;
@@ -75,9 +74,6 @@
 
 /** conforms to CCTextureProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
-
-/** conforms to CCRGBAProtocol protocol */
-//@property (nonatomic,readwrite) ccColor3B color;
 
 /** how many quads to draw */
 @property (nonatomic,readwrite) NSUInteger quadsToDraw;
