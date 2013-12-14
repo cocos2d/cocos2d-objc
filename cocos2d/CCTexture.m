@@ -112,7 +112,7 @@
 -(CGFloat)contentScale {return _texture.contentScale;}
 -(CGSize)contentSize {return _texture.contentSize;}
 -(NSUInteger)pixelWidth {return _texture.pixelWidth;}
--(NSUInteger)pixelHeight {return _texture.pixelWidth;}
+-(NSUInteger)pixelHeight {return _texture.pixelHeight;}
 -(BOOL)hasPremultipliedAlpha {return _texture.hasPremultipliedAlpha;}
 -(CCSpriteFrame *)createSpriteFrame {return [_texture createSpriteFrame];}
 -(CCTextureProxy *)proxy {return self;}
