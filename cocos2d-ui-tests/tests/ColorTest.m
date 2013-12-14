@@ -140,4 +140,42 @@
 	self.subTitle = @"Parent and red/green child should all fade in and out together.";
 }
 
+-(void) setupCCNodeColorTest
+{
+	CCNodeColor *colorNode = [CCNodeColor nodeWithColor:[CCColor colorWithRed:0.2f green:0.3f blue:0.5f alpha:1.0f]];
+	[self.contentNode addChild:colorNode];
+		
+	self.subTitle = @"A pretty blue background.";
+}
+
+-(void) setupCCNodeGradientColorTest
+{
+	CGSize s = [[CCDirector sharedDirector] viewSize];
+
+	CCNodeGradient *colorNode = [CCNodeGradient nodeWithColor:[CCColor blueColor]
+													fadingTo:[CCColor redColor]
+													alongVector:ccp(1, 1)];
+	colorNode.contentSize = CGSizeMake(200, 200);
+	colorNode.position = ccp( s.width/2.0f - 100, s.height/2.0f - 100);
+	[self.contentNode addChild:colorNode];
+	
+	self.subTitle = @"Blue bottom left, red top right";
+}
+
+
+-(void) unfinishedsetupBMFontColorCascadeTest
+{
+	CCNodeColor *colorNode = [CCNodeColor nodeWithColor:[CCColor colorWithRed:1.0f green:0.0f blue:0.0f alpha:1.0f]];
+	[colorNode setCascadeColorEnabled:YES];
+	[self.contentNode addChild:colorNode];
+
+	CCLabelBMFont* bmFont = [CCLabelBMFont labelWithString:@"CCLabelBMFont" fntFile:@"font_menu.fnt"];
+	[colorNode addChild:bmFont]; // This will be white (font bitmap is white)
+
+	[bmFont setColor:[CCColor whiteColor]]; // Oh now it turns red :-)
+	
+	
+	self.subTitle = @"Text color should be red.";
+}
+	
 @end

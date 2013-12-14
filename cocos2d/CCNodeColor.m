@@ -205,43 +205,22 @@
 {
 	[super updateColor];
 
-	float h = ccpLength(_vector);
-	if (h == 0)
+	float len = ccpLength(_vector);
+	if (len == 0)
 		return;
-
-	float c = sqrtf(2);
-	CGPoint u = ccp(_vector.x / h, _vector.y / h);
+	float sqrt2 = sqrtf(2);
+	CGPoint u = ccp(_vector.x / len, _vector.y / len);
 
 	// Compressed Interpolation mode
 	if( _compressedInterpolation ) {
 		float h2 = 1 / ( fabsf(u.x) + fabsf(u.y) );
-		u = ccpMult(u, h2 * (float)c);
+		u = ccpMult(u, h2 * (float) sqrt2);
 	}
 
-	ccColor4F S = _displayColor;
-	ccColor4F E = _endColor;
-
-	// TODO my god this is a lot of unnecessary code
-	// (-1, -1)
-	_squareColors[0].r = E.r + (S.r - E.r) * ((c + u.x + u.y) / (2.0f * c));
-	_squareColors[0].g = E.g + (S.g - E.g) * ((c + u.x + u.y) / (2.0f * c));
-	_squareColors[0].b = E.b + (S.b - E.b) * ((c + u.x + u.y) / (2.0f * c));
-	_squareColors[0].a = E.a + (S.a - E.a) * ((c + u.x + u.y) / (2.0f * c));
-    // (1, -1)
-	_squareColors[1].r = E.r + (S.r - E.r) * ((c - u.x + u.y) / (2.0f * c));
-	_squareColors[1].g = E.g + (S.g - E.g) * ((c - u.x + u.y) / (2.0f * c));
-	_squareColors[1].b = E.b + (S.b - E.b) * ((c - u.x + u.y) / (2.0f * c));
-	_squareColors[1].a = E.a + (S.a - E.a) * ((c - u.x + u.y) / (2.0f * c));
-	// (-1, 1)
-	_squareColors[2].r = E.r + (S.r - E.r) * ((c + u.x - u.y) / (2.0f * c));
-	_squareColors[2].g = E.g + (S.g - E.g) * ((c + u.x - u.y) / (2.0f * c));
-	_squareColors[2].b = E.b + (S.b - E.b) * ((c + u.x - u.y) / (2.0f * c));
-	_squareColors[2].a = E.a + (S.a - E.a) * ((c + u.x - u.y) / (2.0f * c));
-	// (1, 1)
-	_squareColors[3].r = E.r + (S.r - E.r) * ((c - u.x - u.y) / (2.0f * c));
-	_squareColors[3].g = E.g + (S.g - E.g) * ((c - u.x - u.y) / (2.0f * c));
-	_squareColors[3].b = E.b + (S.b - E.b) * ((c - u.x - u.y) / (2.0f * c));
-	_squareColors[3].a = E.a + (S.a - E.a) * ((c - u.x - u.y) / (2.0f * c));
+	_squareColors[0] =  ccc4FInterpolated(_color, _endColor, ((sqrt2 + u.x + u.y) / (2.0f * sqrt2)));
+	_squareColors[1] =  ccc4FInterpolated(_color, _endColor, ((sqrt2 - u.x + u.y) / (2.0f * sqrt2)));
+	_squareColors[2] =  ccc4FInterpolated(_color, _endColor, ((sqrt2 + u.x - u.y) / (2.0f * sqrt2)));
+	_squareColors[3] =  ccc4FInterpolated(_color, _endColor, ((sqrt2 - u.x - u.y) / (2.0f * sqrt2)));
 }
 
 -(CCColor*) startColor
@@ -256,7 +235,7 @@
 
 - (CCColor*) endColor
 {
-    return [CCColor colorWithCcColor4f:_endColor];
+	return [CCColor colorWithCcColor4f:_endColor];
 }
 
 -(void) setEndColor:(CCColor*)color

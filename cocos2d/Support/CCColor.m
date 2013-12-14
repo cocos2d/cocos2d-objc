@@ -56,15 +56,47 @@
     return self;
 }
 
+/** Hue in degrees 
+ HSV-RGB Conversion adapted from code by Mr. Evil, beyondunreal wiki
+ */
 - (CCColor*) initWithHue:(float)hue saturation:(float)saturation brightness:(float)brightness alpha:(float)alpha
 {
-    self = [super init];
-    if (!self) return NULL;
-    
-    //NSColor* c = [NSColor colorWithCalibratedHue:hue saturation:saturation brightness:brightness alpha:alpha];
-    //[c getRed:&_r green:&_g blue:&_b alpha:&_a];
-    
-    return self;
+	self = [super init];
+	if (!self) return NULL;
+	
+	float chroma = saturation * brightness;
+	float hueSection = hue / 60.0f;
+	float X = chroma *  (1.0f - ABS(fmod(hueSection, 2.0f) - 1.0f));
+	ccColor4F rgb;
+
+	if(hueSection < 1.0) {
+		rgb.r = chroma;
+		rgb.g = X;
+	} else if(hueSection < 2.0) {
+		rgb.r = X;
+		rgb.g = chroma;
+	} else if(hueSection < 3.0) {
+		rgb.g = chroma;
+		rgb.b = X;
+	} else if(hueSection < 4.0) {
+		rgb.g= X;
+		rgb.b = chroma;
+	} else if(hueSection < 5.0) {
+		rgb.r = X;
+		rgb.b = chroma;
+	} else if(hueSection <= 6.0){
+		rgb.r = chroma;
+		rgb.b = X;
+	}
+
+	float Min = brightness - chroma;
+
+	rgb.r += Min;
+	rgb.g += Min;
+	rgb.b += Min;
+	rgb.a = alpha;
+
+	return [CCColor colorWithCcColor4f:rgb];
 }
 
 - (CCColor*) initWithRed:(float)red green:(float)green blue:(float)blue alpha:(float)alpha
@@ -168,6 +200,11 @@
     *alpha = _a;
     
     return YES;
+}
+
+- (CCColor*) lerpTo:(CCColor *) toColor time:(float) t
+{
+	return [CCColor colorWithCcColor4f:ccc4FInterpolated(self.ccColor4f, toColor.ccColor4f, t)];
 }
 
 + (CCColor*) blackColor

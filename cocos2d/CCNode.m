@@ -1527,24 +1527,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 - (void) setOpacity:(CGFloat)opacity
 {
 	_displayColor.a = _color.a = opacity;
-	
-	if( _cascadeOpacityEnabled ) {
-		GLfloat parentOpacity = 1.0f;
-		if( [_parent isCascadeOpacityEnabled] )
-			parentOpacity = [_parent displayedOpacity];
-		[self updateDisplayedOpacity:parentOpacity];
-	}
-}
-
-- (void)updateDisplayedOpacity:(CGFloat)parentOpacity
-{
-	_displayColor.a = _color.a * parentOpacity;
-
-	if (_cascadeOpacityEnabled) {
-			for (CCNode* item in _children) {
-				[item updateDisplayedOpacity:_displayColor.a];
-			}
-	}
+	[self cascadeOpacityIfNeeded];
 }
 
 -(CCColor*) color
@@ -1557,6 +1540,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	return [CCColor colorWithCcColor4f:_displayColor];
 }
 
+
 - (void) setColor:(CCColor*)color
 {
 	// Retain old alpha.
@@ -1564,12 +1548,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	_displayColor = _color = color.ccColor4f;
 	_displayColor.a = _color.a = alpha;
 	
-	if( _cascadeColorEnabled ) {
-		CCColor* parentColor = [CCColor whiteColor];
-		if( _parent.isCascadeColorEnabled )
-			parentColor = [_parent displayedColor];
-		[self updateDisplayedColor:parentColor.ccColor4f];
-	}
+	[self cascadeColorIfNeeded];
 }
 
 -(CCColor*) colorRGBA
@@ -1582,6 +1561,13 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	// apply the new alpha too.
 	_displayColor = _color = color.ccColor4f;
 	
+	[self cascadeColorIfNeeded];
+	[self cascadeOpacityIfNeeded];
+}
+
+
+- (void) cascadeColorIfNeeded
+{
 	if( _cascadeColorEnabled ) {
 		CCColor* parentColor = [CCColor whiteColor];
 		if( _parent.isCascadeColorEnabled )
@@ -1590,19 +1576,39 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	}
 }
 
-
-// Used internally only to recurse through children, thus the parameter is not a CCColor*
+// Used internally to recurse through children, thus the parameter is not a CCColor*
 - (void)updateDisplayedColor:(ccColor4F) parentColor
 {
 	_displayColor.r = _color.r * parentColor.r;
 	_displayColor.g = _color.g * parentColor.g;
 	_displayColor.b = _color.b * parentColor.b;
+	
+	if (_cascadeColorEnabled) {
+		for (CCNode* item in _children) {
+			[item updateDisplayedColor:_displayColor];
+		}
+	}
+}
 
-    if (_cascadeColorEnabled) {
-        for (CCNode* item in _children) {
-            [item updateDisplayedColor:_displayColor];
-        }
-    }
+- (void) cascadeOpacityIfNeeded
+{
+	if( _cascadeOpacityEnabled ) {
+		GLfloat parentOpacity = 1.0f;
+		if( [_parent isCascadeOpacityEnabled] )
+			parentOpacity = [_parent displayedOpacity];
+		[self updateDisplayedOpacity:parentOpacity];
+	}
+}
+
+- (void)updateDisplayedOpacity:(CGFloat)parentOpacity
+{
+	_displayColor.a = _color.a * parentOpacity;
+	
+	if (_cascadeOpacityEnabled) {
+		for (CCNode* item in _children) {
+			[item updateDisplayedOpacity:_displayColor.a];
+		}
+	}
 }
 
 -(void) setOpacityModifyRGB:(BOOL)boolean{
