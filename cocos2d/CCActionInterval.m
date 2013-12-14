@@ -1139,7 +1139,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, CCTime t )
 @implementation CCActionFadeIn
 -(void) update: (CCTime) t
 {
-	[(id) _target setOpacity: 1.0 *t];
+	[(CCNode*) _target setOpacity: 1.0 *t];
 }
 
 -(CCActionInterval*) reverse
@@ -1155,7 +1155,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, CCTime t )
 @implementation CCActionFadeOut
 -(void) update: (CCTime) t
 {
-	[(id) _target setOpacity: 1.0 *(1-t)];
+	[(CCNode*) _target setOpacity: 1.0 *(1-t)];
 }
 
 -(CCActionInterval*) reverse
@@ -1191,12 +1191,12 @@ static inline CGFloat bezierat( float a, float b, float c, float d, CCTime t )
 -(void) startWithTarget:(CCNode *)aTarget
 {
 	[super startWithTarget:aTarget];
-	_fromOpacity = [(id)_target opacity];
+	_fromOpacity = [(CCNode*)_target opacity];
 }
 
 -(void) update: (CCTime) t
 {
-	[(id)_target setOpacity:_fromOpacity + ( _toOpacity - _fromOpacity ) * t];
+	[(CCNode*)_target setOpacity:_fromOpacity + ( _toOpacity - _fromOpacity ) * t];
 }
 @end
 
