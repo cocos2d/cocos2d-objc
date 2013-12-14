@@ -41,13 +41,13 @@
 #pragma mark CCNodeColor
 
 /**
- *  CCNodeColor is a subclass of CCNode that implements the CCRGBAProtocol protocol.
+ *  CCNodeColor is a subclass of CCNode that is used to generate solid colors.
  *
  *  All features from CCNode are valid, plus the following new features:
  *  - opacity
  *  - RGB colors
  */
-@interface CCNodeColor : CCNodeRGBA <CCBlendProtocol>
+@interface CCNodeColor : CCNode <CCBlendProtocol>
 {
 	ccVertex2F	_squareVertices[4];
 	ccColor4F	_squareColors[4];
@@ -120,9 +120,7 @@
  */
 @interface CCNodeGradient : CCNodeColor
 {
-	ccColor3B _endColor;
-	GLubyte _startOpacity;
-	GLubyte _endOpacity;
+	ccColor4F _endColor;
 	CGPoint _vector;
 	BOOL	_compressedInterpolation;
 }

@@ -60,7 +60,7 @@
  * The default anchorPoint in CCSprite is (0.5, 0.5).
  */
 
-@interface CCSprite : CCNodeRGBA <CCTextureProtocol>
+@interface CCSprite : CCNode <CCTextureProtocol>
 {
 
 	//

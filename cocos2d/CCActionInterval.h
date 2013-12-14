@@ -756,7 +756,7 @@ typedef struct _ccBezierConfig {
 /** @name CCActionFadeIn */
 
 /**
- *  Fades In an object that implements the CCRGBAProtocol protocol. It modifies the opacity from 0 to 255.
+ *  Fades In a colorable CCNode. It modifies the opacity from 0 to 1. Works with cascadeOpacity, if you want children to fade too.
  *  The "reverse" of this action is FadeOut
  */
 @interface CCActionFadeIn : CCActionInterval <NSCopying>
@@ -772,7 +772,7 @@ typedef struct _ccBezierConfig {
 /** @name CCActionFadeOut */
 
 /**
- *  Fades Out an object that implements the CCRGBAProtocol protocol. It modifies the opacity from 255 to 0.
+ *  Fades Out a colorable CCNode. It modifies the opacity from 1 to 0. Works with cascadeOpacity, if you want children to fade too.
  *  The "reverse" of this action is FadeIn
  */
 @interface CCActionFadeOut : CCActionInterval <NSCopying>
@@ -788,7 +788,8 @@ typedef struct _ccBezierConfig {
 /** @name CCActionFadeTo */
 
 /**
- *  Fades an object that implements the CCRGBAProtocol protocol. It modifies the opacity from the current value to a custom one.
+ *  Fades a colorable CCNode. It modifies the opacity from the current value to a custom one.
+ *  Works with cascadeOpacity, if you want children to fade too.
  *  Note:
  *  This action doesn't support "reverse"
  */
@@ -838,9 +839,7 @@ typedef struct _ccBezierConfig {
  *  Creates a tint to action
  *
  *  @param duration Action duration
- *  @param red      Red color to tint to
- *  @param green    Green color to tint to
- *  @param blue     Blue color to tint to
+ *  @param color		Destination color tint to
  *
  *  @return New tint to action
  */
@@ -850,9 +849,7 @@ typedef struct _ccBezierConfig {
  *  Initalizes a tint to action
  *
  *  @param duration Action duration
- *  @param red      Red color to tint to
- *  @param green    Green color to tint to
- *  @param blue     Blue color to tint to
+ *  @param color		Destination color tint to
  *
  *  @return New tint to action
  */

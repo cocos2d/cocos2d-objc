@@ -31,49 +31,6 @@
 @class CCTexture;
 @class CCDirector;
 
-#pragma mark - CCRGBAProtocol
-
-/// CC RGBA protocol
-@protocol CCRGBAProtocol <NSObject>
-/** sets and returns the color (tint)
- @since v0.8
- */
-@property (nonatomic,strong) CCColor* color;
-/** returns the displayed color */
-@property (nonatomic, readonly) CCColor* displayedColor;
-/** whether or not color should be propagated to its children */
-@property (nonatomic, getter = isCascadeColorEnabled) BOOL cascadeColorEnabled;
-
-/** recursive method that updates display color */
-- (void)updateDisplayedColor:(CCColor*)color;
-
-/** sets and returns the opacity.
- @warning If the the texture has premultiplied alpha then, the R, G and B channels will be modified.
- Values goes from 0 to 255, where 255 means fully opaque.
- */
-@property (nonatomic) CGFloat opacity;
-/** returns the displayed opacity */
-@property (nonatomic, readonly) CGFloat displayedOpacity;
-/** whether or not opacity should be propagated to its children */
-@property (nonatomic, getter = isCascadeOpacityEnabled) BOOL cascadeOpacityEnabled;
-
-/** recursive method that updates the displayed opacity */
-- (void)updateDisplayedOpacity:(CGFloat)opacity;
-
-@optional
-/** sets the premultipliedAlphaOpacity property.
- If set to NO then opacity will be applied as: glColor(R,G,B,opacity);
- If set to YES then opacity will be applied as: glColor(opacity, opacity, opacity, opacity );
- Textures with premultiplied alpha will have this property by default on YES. Otherwise the default value is NO
- @since v0.8
- */
--(void) setOpacityModifyRGB:(BOOL)boolean;
-/** returns whether or not the opacity will be applied using glColor(R,G,B,opacity) or glColor(opacity, opacity, opacity, opacity);
- @since v0.8
- */
- -(BOOL) doesOpacityModifyRGB;
-@end
-
 #pragma mark - CCBlendProtocol
 /**
  You can specify the blending function.

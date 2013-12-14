@@ -45,7 +45,7 @@
 -(void) setupPNGLoadingRedoverlayTest
 {
 	CCSprite * img = [self loadAndDisplayImageNamed: @"test_image.png" withTitle: @"PNG loading example (With red color overlay)"];
-	[img setColor:[UIColor redColor]];
+	[img setColor:[CCColor redColor]];
 }
 
 -(void) setupBMPLoadingTest
@@ -72,14 +72,14 @@
 {
 	// Doesn't seem to work?
 	CCSprite * img = [self loadAndDisplayImageNamed: @"test_image_a8.pvr" withTitle: @"8 bit PVR, alpha only. (With red color overlay)"];
-	[img setColor:[UIColor redColor]];
+	[img setColor:[CCColor redColor]];
 }
 
 -(void) setupPVRa8v3LoadingTest
 {
 	// Doesn't seem to work?
 	CCSprite * img = [self loadAndDisplayImageNamed: @"test_image_a8_v3.pvr" withTitle: @"8 bit PVR v3, alpha only. (With red color overlay)"];
-	[img setColor:[UIColor redColor]];
+	[img setColor:[CCColor redColor]];
 }
 
 -(void) setupPVRa88LoadingTest

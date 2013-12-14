@@ -32,7 +32,7 @@
 -(void) setupTintRedTest
 {
 	CCSprite * img = [self loadAndDisplayImageNamed: @"powered.png" withTitle: @"Tint image red"];
-	[img setColor:[UIColor redColor]];
+	[img setColor:[CCColor redColor]];
 }
 
 
@@ -42,10 +42,17 @@
 	[img setColor:[CCColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:1.0f]];
 }
 
--(void) setupHalfTransparentTest
+-(void) setupSetColorDoesNotChangeAlphaTest
 {
-	CCSprite * img = [self loadAndDisplayImageNamed: @"powered.png" withTitle: @"50% alpha, via Color"];
+	CCSprite * img = [self loadAndDisplayImageNamed: @"powered.png" withTitle: @"Image should not be transparent. setColor ignores alpha"];
 	[img setColor:[CCColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:0.5f]];
+}
+
+
+-(void) setupSetColorRGBASetsAlphaTest
+{
+	CCSprite * img = [self loadAndDisplayImageNamed: @"powered.png" withTitle: @"50% alpha, via setColorRGBA"];
+	[img setColorRGBA:[CCColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:0.5f]];
 }
 
 -(void) setupHalfTransparentViaOpacityTest
@@ -80,9 +87,10 @@
 -(void) setupCascadeColorTest
 {
 	CGSize s = [[CCDirector sharedDirector] viewSize];
-
+	
 	// add parent with two children sprites.
 	CCSprite *parent = [self loadAndDisplayImageNamed: @"powered.png" withTitle: @""];
+	parent.name = @"Parent node";
 	[parent setPosition:ccp(s.width/2, s.height/3*2)];
 	
 	
@@ -100,4 +108,74 @@
 	self.subTitle = @"Parent and 2 children sprites should all be red. (Color cascade)";
 }
 
+-(void) setupFadeChildrenTest
+{
+	CGSize s = [[CCDirector sharedDirector] viewSize];
+	
+	// add parent with two children sprites.
+	CCSprite *parent = [self loadAndDisplayImageNamed: @"powered.png" withTitle: @""];
+	parent.name = @"Parent node";
+	[parent setPosition:ccp(s.width/2, s.height/3*2)];
+	
+	
+	CCSprite *sprite = [CCSprite spriteWithImageNamed:@"powered.png"];
+	[parent addChild:sprite];
+	[sprite setPosition:ccp(-parent.contentSize.width, -100)];
+	[sprite setColor:[CCColor redColor]];
+	
+	sprite = [CCSprite spriteWithImageNamed:@"powered.png"];
+	[parent addChild:sprite];
+	[sprite setPosition:ccp(2* parent.contentSize.width, -100)];
+	[sprite setColor:[CCColor greenColor]];
+	
+	parent.cascadeOpacityEnabled = YES;
+	
+	id seq = [CCActionSequence actions:
+						[CCActionFadeOut actionWithDuration:0.5f],
+						[CCActionFadeIn actionWithDuration:0.2f],
+						nil];
+	[parent runAction: [CCActionRepeatForever actionWithAction:seq ] ];
+
+	
+	self.subTitle = @"Parent and red/green child should all fade in and out together.";
+}
+
+-(void) setupCCNodeColorTest
+{
+	CCNodeColor *colorNode = [CCNodeColor nodeWithColor:[CCColor colorWithRed:0.2f green:0.3f blue:0.5f alpha:1.0f]];
+	[self.contentNode addChild:colorNode];
+		
+	self.subTitle = @"A pretty blue background.";
+}
+
+-(void) setupCCNodeGradientColorTest
+{
+	CGSize s = [[CCDirector sharedDirector] viewSize];
+
+	CCNodeGradient *colorNode = [CCNodeGradient nodeWithColor:[CCColor blueColor]
+													fadingTo:[CCColor redColor]
+													alongVector:ccp(1, 1)];
+	colorNode.contentSize = CGSizeMake(200, 200);
+	colorNode.position = ccp( s.width/2.0f - 100, s.height/2.0f - 100);
+	[self.contentNode addChild:colorNode];
+	
+	self.subTitle = @"Blue bottom left, red top right";
+}
+
+
+-(void) unfinishedsetupBMFontColorCascadeTest
+{
+	CCNodeColor *colorNode = [CCNodeColor nodeWithColor:[CCColor colorWithRed:1.0f green:0.0f blue:0.0f alpha:1.0f]];
+	[colorNode setCascadeColorEnabled:YES];
+	[self.contentNode addChild:colorNode];
+
+	CCLabelBMFont* bmFont = [CCLabelBMFont labelWithString:@"CCLabelBMFont" fntFile:@"font_menu.fnt"];
+	[colorNode addChild:bmFont]; // This will be white (font bitmap is white)
+
+	[bmFont setColor:[CCColor whiteColor]]; // Oh now it turns red :-)
+	
+	
+	self.subTitle = @"Text color should be red.";
+}
+	
 @end

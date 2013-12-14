@@ -11,25 +11,25 @@
 
 @interface CCColor : NSObject
 {
-    CGFloat _r;
-    CGFloat _g;
-    CGFloat _b;
-    CGFloat _a;
+    GLfloat _r;
+    GLfloat _g;
+    GLfloat _b;
+    GLfloat _a;
 }
 
-+ (CCColor *)colorWithWhite:(CGFloat)white alpha:(CGFloat)alpha;
-+ (CCColor *)colorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha;
-+ (CCColor *)colorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue;
++ (CCColor *)colorWithWhite:(float)white alpha:(float)alpha;
++ (CCColor *)colorWithRed:(float)red green:(float)green blue:(float)blue alpha:(float)alpha;
++ (CCColor *)colorWithRed:(float)red green:(float)green blue:(float)blue;
 + (CCColor *)colorWithCGColor:(CGColorRef)cgColor;
-- (CCColor *)colorWithAlphaComponent:(CGFloat)alpha;
+- (CCColor *)colorWithAlphaComponent:(float)alpha;
 
 #ifdef __CC_PLATFORM_IOS
 + (CCColor *)colorWithUIColor:(UIColor*)color;
 #endif
 
-- (CCColor *)initWithWhite:(CGFloat)white alpha:(CGFloat)alpha;
-- (CCColor *)initWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha;
-- (CCColor *)initWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue;
+- (CCColor *)initWithWhite:(float)white alpha:(float)alpha;
+- (CCColor *)initWithRed:(float)red green:(float)green blue:(float)blue alpha:(float)alpha;
+- (CCColor *)initWithRed:(float)red green:(float)green blue:(float)blue;
 - (CCColor *)initWithCGColor:(CGColorRef)cgColor;
 
 #ifdef __CC_PLATFORM_IOS
@@ -58,8 +58,8 @@
 @property (nonatomic, readonly) UIColor* UIColor;
 #endif
 
-- (BOOL)getRed:(CGFloat *)red green:(CGFloat *)green blue:(CGFloat *)blue alpha:(CGFloat *)alpha;
-- (BOOL)getWhite:(CGFloat *)white alpha:(CGFloat *)alpha;
+- (BOOL)getRed:(float *)red green:(float *)green blue:(float *)blue alpha:(float *)alpha;
+- (BOOL)getWhite:(float *)white alpha:(float *)alpha;
 
 @end
 
@@ -82,10 +82,10 @@
 
 @interface CCColor (ExtraProperties)
 
-@property (nonatomic, readonly) CGFloat red;
-@property (nonatomic, readonly) CGFloat green;
-@property (nonatomic, readonly) CGFloat blue;
-@property (nonatomic, readonly) CGFloat alpha;
+@property (nonatomic, readonly) float red;
+@property (nonatomic, readonly) float green;
+@property (nonatomic, readonly) float blue;
+@property (nonatomic, readonly) float alpha;
 
 - (BOOL) isEqualToColor:(CCColor*) color;
 
