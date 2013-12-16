@@ -70,22 +70,22 @@
 
 #if ( TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR )
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {    
     [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
 {
     [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchEnded:(UITouch *)touch withEvent:(UIEvent *)event
 {
     [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
-- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
 {
     [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
