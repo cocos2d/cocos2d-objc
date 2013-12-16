@@ -8,6 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		758A690C1843DBAD00D1A8D2 /* ParallaxTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 758A690B1843DBAD00D1A8D2 /* ParallaxTest.m */; };
+		75FCA703185F88C2006E7468 /* CCLabelTTFTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 75FCA6F2185F88C2006E7468 /* CCLabelTTFTest.m */; };
+		75FCA706185F88C2006E7468 /* ColorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 75FCA6FD185F88C2006E7468 /* ColorTest.m */; };
+		75FCA707185F88C2006E7468 /* ParticleTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 75FCA700185F88C2006E7468 /* ParticleTest.m */; };
+		75FCA708185F88C2006E7468 /* TextureTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 75FCA701185F88C2006E7468 /* TextureTest.m */; };
+		75FCA709185F88C2006E7468 /* TilemapTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 75FCA702185F88C2006E7468 /* TilemapTest.m */; };
+		75FCA710185F89A0006E7468 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 75FCA70B185F89A0006E7468 /* Particles */; };
+		75FCA711185F89A0006E7468 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 75FCA70C185F89A0006E7468 /* TileMaps */; };
+		75FCA712185F89A0006E7468 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 75FCA70D185F89A0006E7468 /* Images */; };
+		75FCA713185F8A52006E7468 /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 75FCA70A185F89A0006E7468 /* Sounds */; };
 		B73C129B17EA48CC0029B6AC /* TestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = B73C129A17EA48CC0029B6AC /* TestBase.m */; };
 		B770601A1831B0080043CC67 /* ObjectALTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B77060191831B0080043CC67 /* ObjectALTest.m */; };
 		B770609E1831B3F60043CC67 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B770609D1831B3F60043CC67 /* AVFoundation.framework */; };
@@ -68,6 +77,16 @@
 
 /* Begin PBXFileReference section */
 		758A690B1843DBAD00D1A8D2 /* ParallaxTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParallaxTest.m; path = "cocos2d-ui-tests/tests/ParallaxTest.m"; sourceTree = SOURCE_ROOT; };
+		75FCA6F2185F88C2006E7468 /* CCLabelTTFTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = CCLabelTTFTest.m; path = "cocos2d-ui-tests/tests/CCLabelTTFTest.m"; sourceTree = SOURCE_ROOT; };
+		75FCA6FD185F88C2006E7468 /* ColorTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ColorTest.m; path = "cocos2d-ui-tests/tests/ColorTest.m"; sourceTree = SOURCE_ROOT; };
+		75FCA6FE185F88C2006E7468 /* ObjectALTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ObjectALTest.m; path = "cocos2d-ui-tests/tests/ObjectALTest.m"; sourceTree = SOURCE_ROOT; };
+		75FCA700185F88C2006E7468 /* ParticleTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ParticleTest.m; path = "cocos2d-ui-tests/tests/ParticleTest.m"; sourceTree = SOURCE_ROOT; };
+		75FCA701185F88C2006E7468 /* TextureTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TextureTest.m; path = "cocos2d-ui-tests/tests/TextureTest.m"; sourceTree = SOURCE_ROOT; };
+		75FCA702185F88C2006E7468 /* TilemapTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TilemapTest.m; path = "cocos2d-ui-tests/tests/TilemapTest.m"; sourceTree = SOURCE_ROOT; };
+		75FCA70A185F89A0006E7468 /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sounds; path = Resources/Sounds; sourceTree = SOURCE_ROOT; };
+		75FCA70B185F89A0006E7468 /* Particles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Particles; path = Resources/Particles; sourceTree = SOURCE_ROOT; };
+		75FCA70C185F89A0006E7468 /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TileMaps; path = Resources/TileMaps; sourceTree = SOURCE_ROOT; };
+		75FCA70D185F89A0006E7468 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Images; path = Resources/Images; sourceTree = SOURCE_ROOT; };
 		B73C129917EA48CC0029B6AC /* TestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestBase.h; path = "cocos2d-ui-tests/TestBase.h"; sourceTree = SOURCE_ROOT; };
 		B73C129A17EA48CC0029B6AC /* TestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestBase.m; path = "cocos2d-ui-tests/TestBase.m"; sourceTree = SOURCE_ROOT; };
 		B77060191831B0080043CC67 /* ObjectALTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObjectALTest.m; path = "cocos2d-ui-tests/tests/ObjectALTest.m"; sourceTree = SOURCE_ROOT; };
@@ -120,6 +139,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		75FCA70E185F89A0006E7468 /* Test Resources */ = {
+			isa = PBXGroup;
+			children = (
+				75FCA70A185F89A0006E7468 /* Sounds */,
+				75FCA70B185F89A0006E7468 /* Particles */,
+				75FCA70C185F89A0006E7468 /* TileMaps */,
+				75FCA70D185F89A0006E7468 /* Images */,
+			);
+			name = "Test Resources";
+			path = "cocos2d-ui-tests-ios";
+			sourceTree = "<group>";
+		};
 		B78AE46F17E7B13C0028BE0B = {
 			isa = PBXGroup;
 			children = (
@@ -161,6 +192,7 @@
 				B78AE61F17E7B2A50028BE0B /* Resources-Mac */,
 				B78AE49317E7B13C0028BE0B /* libs */,
 				B78AE60717E7B13E0028BE0B /* Supporting Files */,
+				75FCA70E185F89A0006E7468 /* Test Resources */,
 			);
 			path = "cocos2d-ui-tests-osx";
 			sourceTree = "<group>";
@@ -235,7 +267,13 @@
 				B7EE6A2F181B285700B983FE /* CCSliderTest.m */,
 				B77060191831B0080043CC67 /* ObjectALTest.m */,
 				B77060B11832EDF90043CC67 /* CCTextureCacheTest.m */,
+				75FCA6F2185F88C2006E7468 /* CCLabelTTFTest.m */,
 				758A690B1843DBAD00D1A8D2 /* ParallaxTest.m */,
+				75FCA6FE185F88C2006E7468 /* ObjectALTest.m */,
+				75FCA6FD185F88C2006E7468 /* ColorTest.m */,
+				75FCA700185F88C2006E7468 /* ParticleTest.m */,
+				75FCA701185F88C2006E7468 /* TextureTest.m */,
+				75FCA702185F88C2006E7468 /* TilemapTest.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -317,7 +355,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75FCA713185F8A52006E7468 /* Sounds in Resources */,
+				75FCA710185F89A0006E7468 /* Particles in Resources */,
+				75FCA711185F89A0006E7468 /* TileMaps in Resources */,
 				B78AE62617E7B2A50028BE0B /* InfoPlist.strings in Resources */,
+				75FCA712185F89A0006E7468 /* Images in Resources */,
 				B78AE62717E7B2A50028BE0B /* MainMenu.xib in Resources */,
 				B78AE62817E7B2A50028BE0B /* icon.icns in Resources */,
 				B7C6238117EBC76900928F91 /* Resources-shared in Resources */,
@@ -331,20 +373,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B78AE61A17E7B2190028BE0B /* AppDelegate.m in Sources */,
-				B7C6238517EBC7C200928F91 /* CCScrollViewTest.m in Sources */,
-				B78AE61E17E7B23B0028BE0B /* main.m in Sources */,
+				75FCA703185F88C2006E7468 /* CCLabelTTFTest.m in Sources */,
 				B7EE69F01819EB0E00B983FE /* CCLayoutTest.m in Sources */,
-				B7EE698518187BC900B983FE /* CCSprite9SliceTest.m in Sources */,
-				B7EE697318186CFA00B983FE /* CCTextFieldTest.m in Sources */,
+				B7C6238517EBC7C200928F91 /* CCScrollViewTest.m in Sources */,
 				B7EE6A30181B285700B983FE /* CCSliderTest.m in Sources */,
+				B7EE698518187BC900B983FE /* CCSprite9SliceTest.m in Sources */,
+				B7C6239617F10F0600928F91 /* CCTableViewTest.m in Sources */,
+				B7EE697318186CFA00B983FE /* CCTextFieldTest.m in Sources */,
 				B77060B21832EDF90043CC67 /* CCTextureCacheTest.m in Sources */,
+				B79DEE1718105B7C00A653C9 /* CCTransitionTest.m in Sources */,
+				75FCA706185F88C2006E7468 /* ColorTest.m in Sources */,
+				B770601A1831B0080043CC67 /* ObjectALTest.m in Sources */,
+				758A690C1843DBAD00D1A8D2 /* ParallaxTest.m in Sources */,
+				75FCA707185F88C2006E7468 /* ParticleTest.m in Sources */,
+				75FCA708185F88C2006E7468 /* TextureTest.m in Sources */,
+				75FCA709185F88C2006E7468 /* TilemapTest.m in Sources */,
+				B78AE61A17E7B2190028BE0B /* AppDelegate.m in Sources */,
+				B78AE61E17E7B23B0028BE0B /* main.m in Sources */,
 				B78AE63D17E7B7690028BE0B /* MainMenu.m in Sources */,
 				B73C129B17EA48CC0029B6AC /* TestBase.m in Sources */,
-				B770601A1831B0080043CC67 /* ObjectALTest.m in Sources */,
-				B79DEE1718105B7C00A653C9 /* CCTransitionTest.m in Sources */,
-				B7C6239617F10F0600928F91 /* CCTableViewTest.m in Sources */,
-				758A690C1843DBAD00D1A8D2 /* ParallaxTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
