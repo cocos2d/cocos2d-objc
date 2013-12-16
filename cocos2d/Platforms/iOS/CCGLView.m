@@ -330,28 +330,28 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #pragma mark CCGLView - Touch Delegate
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
     // dispatch touch to responder manager
-    [ [ CCDirector sharedDirector ].responderManager touchesBegan:touches withEvent:event ];
+    [[CCDirector sharedDirector].responderManager touchesBegan:touches withEvent:event];
 }
 
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-    
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
     // dispatch touch to responder manager
-    [ [ CCDirector sharedDirector ].responderManager touchesMoved:touches withEvent:event ];
+    [[CCDirector sharedDirector].responderManager touchesMoved:touches withEvent:event];
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
     // dispatch touch to responder manager
-    [ [ CCDirector sharedDirector ].responderManager touchesEnded:touches withEvent:event ];
+    [[CCDirector sharedDirector].responderManager touchesEnded:touches withEvent:event];
 }
 
-- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
-    
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+{
     // dispatch touch to responder manager
-    [ [ CCDirector sharedDirector ].responderManager touchesCancelled:touches withEvent:event ];
+    [[CCDirector sharedDirector].responderManager touchesCancelled:touches withEvent:event];
 }
  
 @end

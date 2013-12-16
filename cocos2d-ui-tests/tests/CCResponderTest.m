@@ -48,48 +48,36 @@
     _lblNumTouches.string = [NSString stringWithFormat:@"Num touches: %d", _currentTouches.count];
 }
 
-- (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+- (void) touchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    NSArray* touchesArray = [touches allObjects];
-    for (UITouch* touch in touchesArray)
-    {
-        CGPoint touchLoc = [touch locationInNode:self];
-        
-        CCSprite* sprite = [CCSprite spriteWithImageNamed:@"Sprites/circle.png"];
-        sprite.position = touchLoc;
-        
-        [self addChild:sprite];
-        
-        [_currentTouches setObject:sprite forKey:[NSValue valueWithPointer:(void*)touch]];
-    }
+    CGPoint touchLoc = [touch locationInNode:self];
+    
+    CCSprite* sprite = [CCSprite spriteWithImageNamed:@"Sprites/circle.png"];
+    sprite.position = touchLoc;
+    
+    [self addChild:sprite];
+    
+    [_currentTouches setObject:sprite forKey:[NSValue valueWithPointer:(void*)touch]];
 }
 
-- (void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+- (void) touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    NSArray* touchesArray = [touches allObjects];
-    for (UITouch* touch in touchesArray)
-    {
-        CGPoint touchLoc = [touch locationInNode:self];
-        
-        CCSprite* sprite = [_currentTouches objectForKey:[NSValue valueWithPointer:(void*)touch]];
-        sprite.position = touchLoc;
-    }
+    CGPoint touchLoc = [touch locationInNode:self];
+    
+    CCSprite* sprite = [_currentTouches objectForKey:[NSValue valueWithPointer:(void*)touch]];
+    sprite.position = touchLoc;
 }
 
-- (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void) touchEnded:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    NSArray* touchesArray = [touches allObjects];
-    for (UITouch* touch in touchesArray)
-    {
-        CCSprite* sprite = [_currentTouches objectForKey:[NSValue valueWithPointer:(void*)touch]];
-        [self removeChild:sprite];
-        [_currentTouches removeObjectForKey:[NSValue valueWithPointer:(void*)touch]];
-    }
+    CCSprite* sprite = [_currentTouches objectForKey:[NSValue valueWithPointer:(void*)touch]];
+    [self removeChild:sprite];
+    [_currentTouches removeObjectForKey:[NSValue valueWithPointer:(void*)touch]];
 }
 
-- (void) touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+- (void) touchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    [self touchesEnded:touches withEvent:event];
+    [self touchEnded:touch withEvent:event];
 }
 
 @end

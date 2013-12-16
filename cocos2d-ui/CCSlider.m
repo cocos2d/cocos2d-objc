@@ -91,14 +91,13 @@
     [self inputUpOutside];
 }
 
-- (void) touchesMoved:(NSSet*)touches withEvent:(UIEvent*)event
+- (void) touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    UITouch* touch  = [touches anyObject];
     CGPoint dragPos = [touch locationInNode:self];
     
     [self inputDraggedWithPos:dragPos];
     
-    [super touchesMoved:touches withEvent:event];
+    [super touchMoved:touch withEvent:event];
 }
 
 

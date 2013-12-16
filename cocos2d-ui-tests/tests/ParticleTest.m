@@ -293,20 +293,18 @@
 
 #ifdef __CC_PLATFORM_IOS
 
--(void) touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event
+-(void) touchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
-	[self touchesEnded:touches withEvent:event];
+	[self touchEnded:touch withEvent:event];
 }
 
-- (void)touchesMoved:(NSSet*)touches withEvent:(UIEvent *)event
+- (void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
 {
-	[self touchesEnded:touches withEvent:event];
+	[self touchEnded:touch withEvent:event];
 }
 
-- (void)touchesEnded:(NSSet*)touches withEvent:(UIEvent *)event
+- (void)touchEnded:(UITouch*)touch withEvent:(UIEvent *)event
 {
-  UITouch* touch = [ touches anyObject ];
-  
 	CGPoint location = [touch locationInView: [touch view]];
 	CGPoint convertedLocation = [[CCDirector sharedDirector] convertToGL:location];
   
