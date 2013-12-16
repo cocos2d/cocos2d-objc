@@ -130,12 +130,12 @@
     self = [super init];
     if (!self) return NULL;
     
-    const float *components = CGColorGetComponents(cgColor);
+    const CGFloat *components = CGColorGetComponents(cgColor);
     
-    _r = components[0];
-    _g = components[1];
-    _b = components[2];
-    _a = components[3];
+    _r = (float) components[0];
+    _g = (float) components[1];
+    _b = (float) components[2];
+    _a = (float) components[3];
     
     return self;
 }
@@ -171,7 +171,7 @@
 
 - (CGColorRef) CGColor
 {
-    float components[4] = {_r, _g, _b, _a};
+    CGFloat components[4] = {(CGFloat)_r, (CGFloat)_g, (CGFloat)_b, (CGFloat)_a};
     return CGColorCreate(CGColorSpaceCreateDeviceRGB(), components);
 }
 
@@ -182,6 +182,13 @@
     return [UIColor colorWithRed:_r green:_g blue:_b alpha:_a];
 }
 
+#endif
+
+#ifdef __CC_PLATFORM_MAC
+- (NSColor*) NSColor
+{
+	return [NSColor colorWithCalibratedRed:(CGFloat)_r green:(CGFloat)_g blue:(CGFloat)_b alpha:(CGFloat)_a];
+}
 #endif
 
 - (BOOL) getRed:(float *)red green:(float *)green blue:(float *)blue alpha:(float *)alpha

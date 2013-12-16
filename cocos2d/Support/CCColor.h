@@ -9,6 +9,7 @@
 #import "ccMacros.h"
 #import "ccTypes.h"
 
+
 @interface CCColor : NSObject
 {
     GLfloat _r;
@@ -56,6 +57,10 @@
 
 #ifdef __CC_PLATFORM_IOS
 @property (nonatomic, readonly) UIColor* UIColor;
+#endif
+
+#ifdef __CC_PLATFORM_MAC
+@property (nonatomic, readonly) NSColor* NSColor;
 #endif
 
 - (BOOL)getRed:(float *)red green:(float *)green blue:(float *)blue alpha:(float *)alpha;
