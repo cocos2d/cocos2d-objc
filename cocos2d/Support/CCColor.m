@@ -202,7 +202,7 @@
     return YES;
 }
 
-- (CCColor*) lerpTo:(CCColor *) toColor time:(float) t
+- (CCColor*) interpolateTo:(CCColor *) toColor time:(float) t
 {
 	return [CCColor colorWithCcColor4f:ccc4FInterpolated(self.ccColor4f, toColor.ccColor4f, t)];
 }
