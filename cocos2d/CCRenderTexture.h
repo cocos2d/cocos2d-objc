@@ -35,10 +35,14 @@
 #import <UIKit/UIKit.h>
 #endif // iPHone
 
+/** CCRenderTextureImageFormat type. */
 typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
 {
-	CCRenderTextureImageFormatJPEG = 0,
-	CCRenderTextureImageFormatPNG = 1,
+    /** JPG Format Type */
+    CCRenderTextureImageFormatJPEG = 0,
+    
+    /** PNG Format Type */
+    CCRenderTextureImageFormatPNG = 1,
 };
 
 
