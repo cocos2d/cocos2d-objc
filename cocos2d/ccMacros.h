@@ -29,7 +29,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
-#import "Support/CGPointExtension.h"
+#import "CGPointExtension.h"
 #import <Availability.h>
 
 

@@ -15,6 +15,7 @@
 		5006BA4511BBF4DB00E488BD /* f2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5030947110447D98005F7AFC /* f2.png */; };
 		5006BA4611BBF4DB00E488BD /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5030947510447D98005F7AFC /* r1.png */; };
 		5006BA4711BBF4DB00E488BD /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5030947610447D98005F7AFC /* r2.png */; };
+		5006BA4911BBF4DB00E488BD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5030942510447BC7005F7AFC /* main.m */; };
 		5006BA4F11BBF4DB00E488BD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50671AB611B9596B006C0061 /* CoreGraphics.framework */; };
 		5006BA5011BBF4DB00E488BD /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50671AB811B9596B006C0061 /* OpenGLES.framework */; };
 		5006BA5111BBF4DB00E488BD /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50671ABA11B9596B006C0061 /* QuartzCore.framework */; };
@@ -347,12 +348,26 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		A0EC8D17169CE58E0052B666 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A0EC8C99169CE58A0052B666 /* cocos2d-ios.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 509807081175041800EA7266;
+			remoteInfo = "build all tests";
+		};
 		A0EC8D1D169CE58E0052B666 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A0EC8C99169CE58A0052B666 /* cocos2d-ios.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 5018F24D0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
+		};
+		A0EC8D23169CE58E0052B666 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A0EC8C99169CE58A0052B666 /* cocos2d-ios.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 502C65EE0DFEF3DD00E4107D;
+			remoteInfo = "cocos2d-documentation";
 		};
 		A0EC8D2B169CE58E0052B666 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -659,7 +674,13 @@
 			children = (
 				A0EC8DAB169CE62A0052B666 /* Default-568h@2x.png */,
 				A0EC8C99169CE58A0052B666 /* cocos2d-ios.xcodeproj */,
-				75EA92321860BF7000BF914A /* cocos2d-performance-tests */,
+				A08D161614DD186E0036D9CC /* MemoryAllocationTest */,
+				503095C0104482EA005F7AFC /* PerformanceSpriteTest */,
+				5030944D10447CB5005F7AFC /* PerformanceParticleTest */,
+				5006BA5A11BBF58600E488BD /* PerformanceNodeChildrenTest */,
+				E0B0E65211F8C4A400414246 /* PerformanceTextureTest */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 			);
@@ -875,20 +896,6 @@
 			path = PerformanceSpriteTest;
 			sourceTree = "<group>";
 		};
-		75EA92321860BF7000BF914A /* cocos2d-performance-tests */ = {
-			isa = PBXGroup;
-			children = (
-				A08D161614DD186E0036D9CC /* MemoryAllocationTest */,
-				503095C0104482EA005F7AFC /* PerformanceSpriteTest */,
-				5030944D10447CB5005F7AFC /* PerformanceParticleTest */,
-				5006BA5A11BBF58600E488BD /* PerformanceNodeChildrenTest */,
-				E0B0E65211F8C4A400414246 /* PerformanceTextureTest */,
-				29B97315FDCFA39411CA2CEA /* Other Sources */,
-				29B97317FDCFA39411CA2CEA /* Resources */,
-			);
-			name = "cocos2d-performance-tests";
-			sourceTree = "<group>";
-		};
 		A08D161614DD186E0036D9CC /* MemoryAllocationTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -901,7 +908,9 @@
 		A0EC8C9A169CE58A0052B666 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				A0EC8D18169CE58E0052B666 /* libbuild all libs.a */,
 				A0EC8D1E169CE58E0052B666 /* libcocos2d.a */,
+				A0EC8D24169CE58E0052B666 /* libcocos2d-documentation.a */,
 				A0EC8D2C169CE58E0052B666 /* libkazmath.a */,
 			);
 			name = Products;
@@ -1049,11 +1058,25 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		A0EC8D18169CE58E0052B666 /* libbuild all libs.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libbuild all libs.a";
+			remoteRef = A0EC8D17169CE58E0052B666 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		A0EC8D1E169CE58E0052B666 /* libcocos2d.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libcocos2d.a;
 			remoteRef = A0EC8D1D169CE58E0052B666 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A0EC8D24169CE58E0052B666 /* libcocos2d-documentation.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libcocos2d-documentation.a";
+			remoteRef = A0EC8D23169CE58E0052B666 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		A0EC8D2C169CE58E0052B666 /* libkazmath.a */ = {
@@ -1400,6 +1423,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5006BA4911BBF4DB00E488BD /* main.m in Sources */,
 				5006BA5F11BBF58600E488BD /* AppController.m in Sources */,
 				5006BA6011BBF58600E488BD /* PerformanceNodeChildrenTest.m in Sources */,
 			);
@@ -1484,6 +1508,8 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"CC_ENABLE_PROFILERS=1",
 					"CC_ENABLE_GL_STATE_CACHE=1",
@@ -1509,6 +1535,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"CC_ENABLE_PROFILERS=1",
 					"CC_ENABLE_GL_STATE_CACHE=1",
@@ -1536,6 +1564,8 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = ../../Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -1557,6 +1587,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = ../../Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -1580,6 +1612,8 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = ../../Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -1599,6 +1633,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = ../../Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -1620,6 +1656,8 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = ../../Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -1640,6 +1678,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = ../../Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -1677,6 +1717,7 @@
 				OTHER_LDFLAGS = "-lobjc";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "../../external/kazmath/include ../../cocos2d/ ../../external/Chipmunk/include ../../external/Chipmunk/objectivec/include";
 			};
 			name = Debug;
 		};
@@ -1703,6 +1744,7 @@
 				OTHER_LDFLAGS = "-lobjc";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "../../external/kazmath/include ../../cocos2d/ ../../external/Chipmunk/include ../../external/Chipmunk/objectivec/include";
 			};
 			name = Release;
 		};
@@ -1714,6 +1756,8 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = ../../Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
@@ -1733,6 +1777,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				INFOPLIST_FILE = ../../Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (

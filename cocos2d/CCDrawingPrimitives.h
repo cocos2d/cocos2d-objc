@@ -53,7 +53,7 @@
 extern "C" {
 #endif
 
-#import "Support/CCColor.h"
+#import "CCColor.h"
 @class CCPointArray;
 	
 /**
