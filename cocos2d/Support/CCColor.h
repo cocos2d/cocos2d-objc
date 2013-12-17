@@ -9,6 +9,7 @@
 #import "ccMacros.h"
 #import "ccTypes.h"
 
+
 @interface CCColor : NSObject
 {
     GLfloat _r;
@@ -58,8 +59,17 @@
 @property (nonatomic, readonly) UIColor* UIColor;
 #endif
 
+#ifdef __CC_PLATFORM_MAC
+@property (nonatomic, readonly) NSColor* NSColor;
+#endif
+
 - (BOOL)getRed:(float *)red green:(float *)green blue:(float *)blue alpha:(float *)alpha;
 - (BOOL)getWhite:(float *)white alpha:(float *)alpha;
+
+/**
+ * Linearly interpolate from this color to 'toColor'. Parameter t is
+ */
+- (CCColor*) interpolateTo:(CCColor *) toColor time:(float) t;
 
 @end
 

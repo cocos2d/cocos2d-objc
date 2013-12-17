@@ -276,8 +276,8 @@
                 
                 // begin the touch
                 _currentEventProcessed = YES;
-                if ([node respondsToSelector:@selector(touchesBegan:withEvent:)])
-                    [node touchesBegan:[NSSet setWithObject:touch] withEvent:event];
+                if ([node respondsToSelector:@selector(touchBegan:withEvent:)])
+                    [node touchBegan:touch withEvent:event];
  
                 // if touch was processed, add it and break
                 if (_currentEventProcessed)
@@ -312,8 +312,8 @@
             if (node.claimsUserInteraction)
             {
                 // move the touch
-                if ([node respondsToSelector:@selector(touchesMoved:withEvent:)])
-                    [node touchesMoved:[NSSet setWithObject:touch] withEvent:event];
+                if ([node respondsToSelector:@selector(touchMoved:withEvent:)])
+                    [node touchMoved:touch withEvent:event];
             }
             else
             {
@@ -321,8 +321,8 @@
                 if (![node hitTestWithWorldPos:[[CCDirector sharedDirector] convertToGL:[touch locationInView:[CCDirector sharedDirector].view]]])
                 {
                     // cancel the touch
-                    if ([node respondsToSelector:@selector(touchesCancelled:withEvent:)])
-                        [node touchesCancelled:[NSSet setWithObject:touch] withEvent:event];
+                    if ([node respondsToSelector:@selector(touchCancelled:withEvent:)])
+                        [node touchCancelled:touch withEvent:event];
                     // remove from list
                     [_runningResponderList removeObject:touchEntry];
 
@@ -332,8 +332,8 @@
                 else
                 {
                     // move the touch
-                    if ([node respondsToSelector:@selector(touchesMoved:withEvent:)])
-                        [node touchesMoved:[NSSet setWithObject:touch] withEvent:event];
+                    if ([node respondsToSelector:@selector(touchMoved:withEvent:)])
+                        [node touchMoved:touch withEvent:event];
                 }
             }
         }
@@ -346,7 +346,7 @@
                 {
                     CCNode *node = _responderList[index];
                     
-                    // if the touch responder does not lock touch, it will receive a touchesBegan if a touch is moved inside
+                    // if the touch responder does not lock touch, it will receive a touchBegan if a touch is moved inside
                     if (!node.claimsUserInteraction  && [node hitTestWithWorldPos:[[CCDirector sharedDirector] convertToGL:[touch locationInView:[CCDirector sharedDirector].view ]]])
                     {
                         // check if node has exclusive touch
@@ -358,8 +358,8 @@
 
                         // begin the touch
                         _currentEventProcessed = YES;
-                        if ([node respondsToSelector:@selector(touchesBegan:withEvent:)])
-                            [node touchesBegan:[NSSet setWithObject:touch] withEvent:event];
+                        if ([node respondsToSelector:@selector(touchBegan:withEvent:)])
+                            [node touchBegan:touch withEvent:event];
                         
                         // if touch was accepted, add it and break
                         if (_currentEventProcessed)
@@ -392,8 +392,8 @@
             CCNode *node = (CCNode *)touchEntry.target;
             
             // end the touch
-            if ([node respondsToSelector:@selector(touchesEnded:withEvent:)])
-                [node touchesEnded:[NSSet setWithObject:touch] withEvent:event];
+            if ([node respondsToSelector:@selector(touchEnded:withEvent:)])
+                [node touchEnded:touch withEvent:event];
             // remove from list
             [_runningResponderList removeObject:touchEntry];
             
@@ -463,8 +463,8 @@
     CCNode *node = (CCNode *)responder.target;
     
     // cancel the touch
-    if ([node respondsToSelector:@selector(touchesCancelled:withEvent:)])
-        [node touchesCancelled:[NSSet setWithObject:responder.touch] withEvent:responder.event];
+    if ([node respondsToSelector:@selector(touchCancelled:withEvent:)])
+        [node touchCancelled:responder.touch withEvent:responder.event];
     // remove from list
     [_runningResponderList removeObject:responder];
 }
