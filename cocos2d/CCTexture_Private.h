@@ -10,11 +10,12 @@
 
 // -------------------------------------------------------------
 
-// Proxy object returned in place of a CCTexture by the texture cache.
-// Weakly retained by the texture, so it can be know if a texture is referenced when a memory warning arrives.
-@interface CCTextureProxy : NSObject
+// Proxy object returned in place of a CCTexture or CCSpriteFrame by the texture cache.
+// Weakly retained by the original object, so it can be know if the object is referenced when a memory warning arrives.
+// This is used as a temporary fix for the texture cache until asset loading can be refactored better.
+@interface CCProxy : NSObject
 
-- (id)initWithTexture:(CCTexture *)texture;
+- (id)initWithTarget:(id)target;
 
 @end
 
@@ -37,8 +38,8 @@
 // Check if the texture's weakly retained proxy still exists.
 @property(atomic, readonly) BOOL hasProxy;
 
-// Retrieve a texture proxy for this texture.
-@property(atomic, readonly, weak) CCTextureProxy *proxy;
+// Retrieve the proxy for this texture.
+@property(atomic, readonly, weak) CCProxy *proxy;
 
 @end
 
