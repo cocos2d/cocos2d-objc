@@ -25,8 +25,7 @@
 
 #import "ccMacros.h"
 #import "ccTypes.h"
-#import "CCColor.h"
-
+#import "Support/CCColor.h"
 
 @class CCTexture;
 @class CCDirector;
