@@ -44,6 +44,37 @@
 #import "Support/CCFileUtils.h"
 #import "CCTexture_Private.h"
 
+
+@implementation CCSpriteFrame(Proxy)
+
+- (BOOL)hasProxy
+{
+    @synchronized(self)
+    {
+        // NSLog(@"hasProxy: %p", self);
+        return(_proxy != nil);
+    }
+}
+
+- (CCProxy *)proxy
+{
+    @synchronized(self)
+    {
+        __strong CCProxy *proxy = _proxy;
+
+        if (_proxy == nil)
+        {
+            proxy = [[CCProxy alloc] initWithTarget:self];
+            _proxy = proxy;
+        }
+    
+        return(proxy);
+    }
+}
+
+@end
+
+
 @interface CCSpriteFrameCache ()
 - (void) addSpriteFramesWithDictionary:(NSDictionary*)dictionary textureFilename:(NSString*)filename;
 - (void) addSpriteFramesWithDictionary:(NSDictionary *)dictionary texture:(CCTexture *)texture;
@@ -250,7 +281,7 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 		{
 			textureFileName	= textureReference;
 		}
-        else if ( [textureReference isKindOfClass:[CCTexture class]] || [textureReference isKindOfClass:[CCTextureProxy class]] )
+        else if ( [textureReference isKindOfClass:[CCTexture class]] )
 		{
 			texture = textureReference;
 		}
@@ -362,20 +393,18 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 
 -(void) removeUnusedSpriteFrames
 {
-//	BOOL removed_ = NO;
-//	NSArray *keys = [_spriteFrames allKeys];
-//	for( id key in keys ) {
-//		id value = [_spriteFrames objectForKey:key];
-//		if( CFGetRetainCount((CFTypeRef) value) == 1 ) {
-//			CCLOG(@"cocos2d: CCSpriteFrameCache: removing unused frame: %@", key);
-//			[_spriteFrames removeObjectForKey:key];
-//			removed_ = YES;
-//		}
-//	}
-//	
-//	// XXX. Since we don't know the .plist file that originated the frame, we must remove all .plist from the cache
-//	if( removed_ )
-//		[_loadedFilenames removeAllObjects];
+		for(id key in [_spriteFrames allKeys])
+		{
+				CCSpriteFrame *frame = _spriteFrames[key];
+				CCLOGINFO(@"sprite frame(%@): %@", key, frame);
+				// If the weakly retained proxy object is nil, then the texture is unreferenced.
+				if (!frame.hasProxy)
+				{
+						CCLOGINFO(@"cocos2d: CCSpriteFrameCache: removing unused sprite frame: %@", key);
+						[_spriteFrames removeObjectForKey:key];
+				}
+		}
+		CCLOGINFO(@"Purge complete.");
 }
 
 -(void) removeSpriteFrameByName:(NSString*)name
@@ -459,7 +488,7 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 		frame = [_spriteFrames objectForKey:key];
 	}
 
-	return frame;
+	return (CCSpriteFrame *)frame.proxy;
 }
 
 @end
