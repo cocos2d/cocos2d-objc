@@ -39,6 +39,8 @@
  [sprite setSpriteFrame:frame];
  */
 
+@class CCProxy;
+
 @interface CCSpriteFrame : NSObject <NSCopying> {
 	CGRect			_rectInPixels;
 	BOOL			_rotated;
@@ -46,6 +48,7 @@
 	CGSize			_originalSizeInPixels;
 	CCTexture		*_texture;
 	NSString		*_textureFilename;
+	CCProxy *_proxy;
 }
 
 

@@ -92,41 +92,53 @@
 
 //CLASS IMPLEMENTATIONS:
 
-@implementation CCTextureProxy
+// This class implements what will hopefully be a temporary replacement
+// for the retainCount trick used to figure out which cached objects are safe to purge.
+@implementation CCProxy
 {
-    CCTexture *_texture;
+    id _target;
 }
 
-- (id)initWithTexture:(CCTexture *)texture
+- (id)initWithTarget:(id)target
 {
     if ((self = [super init]))
     {
-        _texture = texture;
+        _target = target;
     }
     
     return(self);
 }
 
-// Make concrete implementations for methods commonly called at runtime.
--(GLuint)name {return _texture.name;}
--(CGFloat)contentScale {return _texture.contentScale;}
--(CGSize)contentSize {return _texture.contentSize;}
--(NSUInteger)pixelWidth {return _texture.pixelWidth;}
--(NSUInteger)pixelHeight {return _texture.pixelHeight;}
--(BOOL)hasPremultipliedAlpha {return _texture.hasPremultipliedAlpha;}
--(CCSpriteFrame *)createSpriteFrame {return [_texture createSpriteFrame];}
--(CCTextureProxy *)proxy {return self;}
+// Forward class checks for assertions.
+-(BOOL)isKindOfClass:(Class)aClass {return [_target isKindOfClass:aClass];}
+
+// Make concrete implementations for CCTexture methods commonly called at runtime.
+-(GLuint)name {return [(CCTexture *)_target name];}
+-(CGFloat)contentScale {return [_target contentScale];}
+-(CGSize)contentSize {return [_target contentSize];}
+-(NSUInteger)pixelWidth {return [_target pixelWidth];}
+-(NSUInteger)pixelHeight {return [_target pixelHeight];}
+-(BOOL)hasPremultipliedAlpha {return [_target hasPremultipliedAlpha];}
+-(CCSpriteFrame *)createSpriteFrame {return [_target createSpriteFrame];}
+
+// Make concrete implementations for CCSpriteFrame methods commonly called at runtime.
+-(CGRect)rect {return [_target rect];}
+-(CGPoint)offset {return [_target offset];}
+-(BOOL)rotated {return [_target rotated];}
+-(CGSize)originalSize {return [_target originalSize];}
+-(CCTexture *)texture {return [_target texture];}
 
 // Let the rest fall back to a slow forwarded path.
 - (id)forwardingTargetForSelector:(SEL)aSelector
 {
-	NSLog(@"forwarding selector: %@", NSStringFromSelector(aSelector));
-    return(_texture);
+//    CCLOGINFO(@"Forwarding selector [%@ %@]", NSStringFromClass([_target class]), NSStringFromSelector(aSelector));
+//		CCLOGINFO(@"If there are many of these calls, we should add concrete forwarding methods. (TODO remove logging before release)");
+    return(_target);
 }
 
 - (void)dealloc
 {
-		CCLOG(@"Proxy for texture %p deallocated.", _texture);
+		CCLOGINFO(@"Proxy for %p deallocated.", _target);
 }
 
 @end
@@ -141,7 +153,7 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 
 @implementation CCTexture
 {
-    CCTextureProxy __weak *_proxy;
+    CCProxy __weak *_proxy;
 }
 
 @synthesize contentSizeInPixels = _sizeInPixels, pixelFormat = _format, pixelWidth = _width, pixelHeight = _height, name = _name, maxS = _maxS, maxT = _maxT;
@@ -235,15 +247,15 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
     }
 }
 
-- (CCTextureProxy *)proxy
+- (CCProxy *)proxy
 {
     @synchronized(self)
     {
-        __strong CCTextureProxy *proxy = _proxy;
+        __strong CCProxy *proxy = _proxy;
 
         if (_proxy == nil)
         {
-            proxy = [[CCTextureProxy alloc] initWithTexture:self];
+            proxy = [[CCProxy alloc] initWithTarget:self];
             _proxy = proxy;
         }
     
@@ -268,7 +280,6 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 - (void) dealloc
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
-    CCLOG(@"Deallocating texture %p", self);
 
 	if( _name )
 		ccGLDeleteTexture( _name );
