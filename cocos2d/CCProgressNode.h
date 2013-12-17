@@ -29,10 +29,10 @@
 /** Progress Node Type. */
 typedef NS_ENUM(NSUInteger, CCProgressNodeType) {
     
-	// Radial Counter-Clockwise
+	/** Radial Counter-Clockwise type. */
 	CCProgressNodeTypeRadial,
     
-	// Bar
+	/** Bar type. */
 	CCProgressNodeTypeBar,
 };
 

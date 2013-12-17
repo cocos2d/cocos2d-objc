@@ -139,7 +139,7 @@ typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
  *  @param pixelFormat Pixelformat of the data
  *  @param width       Width if the texture
  *  @param height      Height of the texture
- *  @param size        The final contentsize of the texture
+ *  @param sizeInPixels  The final contentsize of the texture
  *
  *  @return Returns a new initialized CCTexture
  */
