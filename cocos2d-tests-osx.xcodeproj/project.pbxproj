@@ -446,6 +446,15 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					external/kazmath/include,
+					"cocos2d/**",
+					"cocos2d-ui/**",
+					"cocos2d-ui-tests/**",
+					external/Chipmunk/include,
+					external/Chipmunk/objectivec/include,
+					"external/ObjectAL/**",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -467,6 +476,15 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					external/kazmath/include,
+					"cocos2d/**",
+					"cocos2d-ui/**",
+					"cocos2d-ui-tests/**",
+					external/Chipmunk/include,
+					external/Chipmunk/objectivec/include,
+					"external/ObjectAL/**",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = macosx;
 			};
@@ -481,12 +499,6 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "cocos2d-ui-tests/osx/Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					external/Box2d,
-					external/Chipmunk/include,
-					external/kazmath/include,
-					external/Chipmunk/objectivec/include,
-				);
 				INFOPLIST_FILE = "cocos2d-ui-tests/osx/Resources/Info.plist";
 				OTHER_LDFLAGS = (
 					"-lz",
@@ -507,12 +519,6 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "cocos2d-ui-tests/osx/Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					external/Box2d,
-					external/Chipmunk/include,
-					external/kazmath/include,
-					external/Chipmunk/objectivec/include,
-				);
 				INFOPLIST_FILE = "cocos2d-ui-tests/osx/Resources/Info.plist";
 				OTHER_LDFLAGS = (
 					"-lz",
