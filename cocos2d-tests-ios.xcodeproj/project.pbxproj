@@ -124,6 +124,26 @@
 		758A6C701844011E00D1A8D2 /* CCLabelTTFTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCLabelTTFTest.m; path = "cocos2d-ui-tests/tests/CCLabelTTFTest.m"; sourceTree = SOURCE_ROOT; };
 		758A6C7A18440D5C00D1A8D2 /* ParticleTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParticleTest.m; path = "cocos2d-ui-tests/tests/ParticleTest.m"; sourceTree = SOURCE_ROOT; };
 		758A6C7F184410EE00D1A8D2 /* Particles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Particles; path = Resources/Particles; sourceTree = SOURCE_ROOT; };
+		75EA92351860BFC800BF914A /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; path = AppController.h; sourceTree = "<group>"; };
+		75EA92361860BFC800BF914A /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; path = AppController.m; sourceTree = "<group>"; };
+		75EA92381860BFC800BF914A /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; path = AppController.h; sourceTree = "<group>"; };
+		75EA92391860BFC800BF914A /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; path = AppController.m; sourceTree = "<group>"; };
+		75EA923A1860BFC800BF914A /* CocosNodePerformance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; path = CocosNodePerformance.h; sourceTree = "<group>"; };
+		75EA923B1860BFC800BF914A /* CocosNodePerformance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; path = CocosNodePerformance.m; sourceTree = "<group>"; };
+		75EA923C1860BFC800BF914A /* MainScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; path = MainScene.h; sourceTree = "<group>"; };
+		75EA923D1860BFC800BF914A /* MainScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; path = MainScene.m; sourceTree = "<group>"; };
+		75EA923F1860BFC800BF914A /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; path = AppController.h; sourceTree = "<group>"; };
+		75EA92401860BFC800BF914A /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; path = AppController.m; sourceTree = "<group>"; };
+		75EA92411860BFC800BF914A /* MainScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; path = MainScene.h; sourceTree = "<group>"; };
+		75EA92421860BFC800BF914A /* MainScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; path = MainScene.m; sourceTree = "<group>"; };
+		75EA92441860BFC800BF914A /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; path = AppController.h; sourceTree = "<group>"; };
+		75EA92451860BFC800BF914A /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; path = AppController.m; sourceTree = "<group>"; };
+		75EA92461860BFC800BF914A /* PerformanceNodeChildrenTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; path = PerformanceNodeChildrenTest.h; sourceTree = "<group>"; };
+		75EA92471860BFC800BF914A /* PerformanceNodeChildrenTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; path = PerformanceNodeChildrenTest.m; sourceTree = "<group>"; };
+		75EA92491860BFC800BF914A /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; path = AppController.h; sourceTree = "<group>"; };
+		75EA924A1860BFC800BF914A /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; path = AppController.m; sourceTree = "<group>"; };
+		75EA924B1860BFC800BF914A /* PerformanceTextureTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; path = PerformanceTextureTest.h; sourceTree = "<group>"; };
+		75EA924C1860BFC800BF914A /* PerformanceTextureTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file; path = PerformanceTextureTest.m; sourceTree = "<group>"; };
 		75F76496185A831B00E2FAFE /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sounds; path = Resources/Sounds; sourceTree = SOURCE_ROOT; };
 		B70AFC2F180F2D7400516435 /* CCTransitionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTransitionTest.m; path = "cocos2d-ui-tests/tests/CCTransitionTest.m"; sourceTree = SOURCE_ROOT; };
 		B71B087A17EA5B490082EBC0 /* TestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestBase.h; path = "cocos2d-ui-tests/TestBase.h"; sourceTree = SOURCE_ROOT; };
@@ -238,6 +258,78 @@
 			name = "Test Resources";
 			sourceTree = "<group>";
 		};
+		75EA92331860BFB700BF914A /* PerformanceTests */ = {
+			isa = PBXGroup;
+			children = (
+				75EA92371860BFC800BF914A /* MemoryAllocationTest */,
+				75EA923E1860BFC800BF914A /* PerformanceSpriteTest */,
+				75EA92431860BFC800BF914A /* PerformanceParticleTest */,
+				75EA92481860BFC800BF914A /* PerformanceNodeChildrenTest */,
+				75EA924D1860BFC800BF914A /* PerformanceTextureTest */,
+			);
+			name = PerformanceTests;
+			sourceTree = "<group>";
+		};
+		75EA92371860BFC800BF914A /* MemoryAllocationTest */ = {
+			isa = PBXGroup;
+			children = (
+				75EA92351860BFC800BF914A /* AppController.h */,
+				75EA92361860BFC800BF914A /* AppController.m */,
+			);
+			name = MemoryAllocationTest;
+			path = tests/PerformanceTests/MemoryAllocationTest;
+			sourceTree = "<group>";
+		};
+		75EA923E1860BFC800BF914A /* PerformanceSpriteTest */ = {
+			isa = PBXGroup;
+			children = (
+				75EA92381860BFC800BF914A /* AppController.h */,
+				75EA92391860BFC800BF914A /* AppController.m */,
+				75EA923A1860BFC800BF914A /* CocosNodePerformance.h */,
+				75EA923B1860BFC800BF914A /* CocosNodePerformance.m */,
+				75EA923C1860BFC800BF914A /* MainScene.h */,
+				75EA923D1860BFC800BF914A /* MainScene.m */,
+			);
+			name = PerformanceSpriteTest;
+			path = tests/PerformanceTests/PerformanceSpriteTest;
+			sourceTree = "<group>";
+		};
+		75EA92431860BFC800BF914A /* PerformanceParticleTest */ = {
+			isa = PBXGroup;
+			children = (
+				75EA923F1860BFC800BF914A /* AppController.h */,
+				75EA92401860BFC800BF914A /* AppController.m */,
+				75EA92411860BFC800BF914A /* MainScene.h */,
+				75EA92421860BFC800BF914A /* MainScene.m */,
+			);
+			name = PerformanceParticleTest;
+			path = tests/PerformanceTests/PerformanceParticleTest;
+			sourceTree = "<group>";
+		};
+		75EA92481860BFC800BF914A /* PerformanceNodeChildrenTest */ = {
+			isa = PBXGroup;
+			children = (
+				75EA92441860BFC800BF914A /* AppController.h */,
+				75EA92451860BFC800BF914A /* AppController.m */,
+				75EA92461860BFC800BF914A /* PerformanceNodeChildrenTest.h */,
+				75EA92471860BFC800BF914A /* PerformanceNodeChildrenTest.m */,
+			);
+			name = PerformanceNodeChildrenTest;
+			path = tests/PerformanceTests/PerformanceNodeChildrenTest;
+			sourceTree = "<group>";
+		};
+		75EA924D1860BFC800BF914A /* PerformanceTextureTest */ = {
+			isa = PBXGroup;
+			children = (
+				75EA92491860BFC800BF914A /* AppController.h */,
+				75EA924A1860BFC800BF914A /* AppController.m */,
+				75EA924B1860BFC800BF914A /* PerformanceTextureTest.h */,
+				75EA924C1860BFC800BF914A /* PerformanceTextureTest.m */,
+			);
+			name = PerformanceTextureTest;
+			path = tests/PerformanceTests/PerformanceTextureTest;
+			sourceTree = "<group>";
+		};
 		B71B087F17EA5B500082EBC0 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -302,6 +394,7 @@
 		B7E2605F17E7D278007067F0 /* cocos2d-tests-ios */ = {
 			isa = PBXGroup;
 			children = (
+				75EA92331860BFB700BF914A /* PerformanceTests */,
 				B7E2621D17E7D38D007067F0 /* AppDelegate */,
 				B7E2621E17E7D398007067F0 /* Testbed */,
 				B71B087F17EA5B500082EBC0 /* Tests */,
@@ -492,6 +585,7 @@
 				758A6C6C1843E5CB00D1A8D2 /* TileMaps in Resources */,
 				758A6C6D1843E5CB00D1A8D2 /* Images in Resources */,
 				75F76497185A831B00E2FAFE /* Sounds in Resources */,
+				758A6C80184410EE00D1A8D2 /* Particles in Resources */,
 				B7E2620E17E7D34D007067F0 /* Default-568h@2x.png in Resources */,
 				B7E2620F17E7D34D007067F0 /* Default-Landscape~ipad.png in Resources */,
 				B7E2621017E7D34D007067F0 /* Default.png in Resources */,
@@ -502,7 +596,6 @@
 				B7C6237617EA695100928F91 /* Resources-shared in Resources */,
 				B7E2621517E7D34D007067F0 /* Icon-Small@2x.png in Resources */,
 				B7E2621617E7D34D007067F0 /* Icon.png in Resources */,
-				758A6C80184410EE00D1A8D2 /* Particles in Resources */,
 				B7E2621717E7D34D007067F0 /* Icon@2x.png in Resources */,
 				B7E2621917E7D34D007067F0 /* iTunesArtwork in Resources */,
 			);

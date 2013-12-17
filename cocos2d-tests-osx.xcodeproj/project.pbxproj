@@ -482,13 +482,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "cocos2d-ui-tests/osx/Prefix.pch";
 				HEADER_SEARCH_PATHS = (
-					external/kazmath/include,
-					"cocos2d/**",
-					"cocos2d-ui/**",
-					"cocos2d-ui-tests/**",
+					external/Box2d,
 					external/Chipmunk/include,
+					external/kazmath/include,
 					external/Chipmunk/objectivec/include,
-					"external/ObjectAL/**",
 				);
 				INFOPLIST_FILE = "cocos2d-ui-tests/osx/Resources/Info.plist";
 				OTHER_LDFLAGS = (
@@ -511,13 +508,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "cocos2d-ui-tests/osx/Prefix.pch";
 				HEADER_SEARCH_PATHS = (
-					external/kazmath/include,
-					"cocos2d/**",
-					"cocos2d-ui/**",
-					"cocos2d-ui-tests/**",
+					external/Box2d,
 					external/Chipmunk/include,
+					external/kazmath/include,
 					external/Chipmunk/objectivec/include,
-					"external/ObjectAL/**",
 				);
 				INFOPLIST_FILE = "cocos2d-ui-tests/osx/Resources/Info.plist";
 				OTHER_LDFLAGS = (

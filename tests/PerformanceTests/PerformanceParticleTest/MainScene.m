@@ -67,7 +67,7 @@ Class restartAction()
 		srandom(0);
 
 		subtestNumber = asubtest;
-		CGSize s = [[CCDirector sharedDirector] winSize];
+		CGSize s = [[CCDirector sharedDirector] viewSize];
 
 		lastRenderedCount = 0;
 		quantityParticles = particles;
@@ -340,7 +340,7 @@ Class restartAction()
 
 -(void) doTest
 {
-	CGSize s = [[CCDirector sharedDirector] winSize];
+	CGSize s = [[CCDirector sharedDirector] viewSize];
 	CCParticleSystem *particleSystem = (CCParticleSystem*) [self getChildByTag:kTagParticleSystem];
 
 	// duration
@@ -405,7 +405,7 @@ Class restartAction()
 
 -(void) doTest
 {
-	CGSize s = [[CCDirector sharedDirector] winSize];
+	CGSize s = [[CCDirector sharedDirector] viewSize];
 	CCParticleSystem *particleSystem = (CCParticleSystem*) [self getChildByTag:kTagParticleSystem];
 
 	// duration
@@ -467,7 +467,7 @@ Class restartAction()
 }
 -(void) doTest
 {
-	CGSize s = [[CCDirector sharedDirector] winSize];
+	CGSize s = [[CCDirector sharedDirector] viewSize];
 	CCParticleSystem *particleSystem = (CCParticleSystem*) [self getChildByTag:kTagParticleSystem];
 
 	// duration
@@ -530,7 +530,7 @@ Class restartAction()
 }
 -(void) doTest
 {
-	CGSize s = [[CCDirector sharedDirector] winSize];
+	CGSize s = [[CCDirector sharedDirector] viewSize];
 	CCParticleSystem *particleSystem = (CCParticleSystem*) [self getChildByTag:kTagParticleSystem];
 
 	// duration
