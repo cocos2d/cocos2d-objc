@@ -56,7 +56,7 @@
  *  Locks the touch to the node if touch moved outside
  *  If a node claims user interaction, the touch will continue to be sent to the node, no matter where the touch is moved
  *  If the node does not claim user interaction, a touch will be cancelled, if moved outside the nodes detection area
- *  If the node does not claim user interaction, and a touch is moved from outside the nodes detection area, to inside, a touchesBegan will be generated
+ *  If the node does not claim user interaction, and a touch is moved from outside the nodes detection area, to inside, a touchBegan will be generated
  */
 @property (nonatomic, assign) BOOL claimsUserInteraction;
 
@@ -86,40 +86,47 @@
  */
 
 /**
- *  Called then one or more touches began
- *  If touches are dragged inside nodes which does not claim user interaction, start will be called
- *  If node has exclusive touch, all other ongoing touches will be canceled
- *
- *  @param touches Contains a set of the touches
- *  @param event   Current event information
+ Called when a touch began.
+ 
+ If a touch is dragged inside a node which does not claim user interaction, a touchBegan will be generated.
+ If node has exclusive touch, all other ongoing touches will be canceled
+ 
+ If a node wants to grab the touch, touchBegan must be overridden, even if empty. Overriding touchMoved is not enough.
+ 
+ To pass the touch further down the responder chain, call super touchBegan.
+ 
+    if (!thisNodeGrabsTouch) [super touchBegan:touch withEvent:event];
+ 
+ @param touch    Contains the touch
+ @param event    Current event information
  */
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
+- (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event;
 
 /**
- *  Called then one or more touches are moved
+ *  Called whan a touch moves
  *
- *  @param touches Contains a set of the touches
- *  @param event   Current event information
+ *  @param touch    Contains the touch
+ *  @param event    Current event information
  */
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
+- (void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event;
 
 /**
- *  Called then one or more touches ended
+ *  Called when a touch ends
  *
- *  @param touches Contains a set of the touches
- *  @param event   Current event information
+ *  @param touch    Contains the touch
+ *  @param event    Current event information
  */
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
+- (void)touchEnded:(UITouch *)touch withEvent:(UIEvent *)event;
 
 /**
- *  Called then one or more touches were cancelled
- *  If touches are dragged outside nodes which does not claim user interaction, cancel will be called
- *  If another node with exclusive touch is activated, cancel will be called for all ongoing touches
+ *  Called when a touch was cancelled
+ *  If a touch is dragged outside a node which does not claim user interaction, touchCancelled will be called
+ *  If another node with exclusive touch is activated, touchCancelled will be called for all ongoing touches
  *
- *  @param touches Contains a set of the touches
- *  @param event   Current event information
+ *  @param touch    Contains the touch
+ *  @param event    Current event information
  */
-- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event;
+- (void)touchCancelled:(UITouch *)touch withEvent:(UIEvent *)event;
 
 #else
 
