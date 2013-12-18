@@ -641,7 +641,6 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 /**
  * sets and returns the color (tint)
  * When setting the color, the supplied alpha is ignored.
- * @since v0.8
  */
 @property (nonatomic,strong) CCColor* color;
 
@@ -659,7 +658,11 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  * property, see cascadeOpacityEnabled to change the alpha of nodes.
  */@property (nonatomic, getter = isCascadeColorEnabled) BOOL cascadeColorEnabled;
 
-/** recursive method that updates display color */
+/**
+ *  Recursive method that updates display color.
+ *
+ *  @param color Color used for update.
+ */
 - (void)updateDisplayedColor:(ccColor4F)color;
 
 /** sets and returns the opacity.
@@ -676,18 +679,27 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  */
 @property (nonatomic, getter = isCascadeOpacityEnabled) BOOL cascadeOpacityEnabled;
 
-/** recursive method that updates the displayed opacity */
+/**
+ *  Recursive method that updates the displayed opacity.
+ *
+ *  @param opacity Opacity to use for update.
+ */
 - (void)updateDisplayedOpacity:(CGFloat)opacity;
 
-/** sets the premultipliedAlphaOpacity property.
- If set to NO then opacity will be applied as: glColor(R,G,B,opacity);
- If set to YES then opacity will be applied as: glColor(opacity, opacity, opacity, opacity );
- Textures with premultiplied alpha will have this property by default on YES. Otherwise the default value is NO
- @since v0.8
+/**
+ * Sets the premultipliedAlphaOpacity property.
+ *
+ * If set to NO then opacity will be applied as: glColor(R,G,B,opacity);
+ *
+ * If set to YES then opacity will be applied as: glColor(opacity, opacity, opacity, opacity );
+ *
+ * Textures with premultiplied alpha will have this property by default on YES. Otherwise the default value is NO.
+ *
+ *  @param boolean Enables or disables setting of opacity with color.
  */
 -(void) setOpacityModifyRGB:(BOOL)boolean;
+
 /** returns whether or not the opacity will be applied using glColor(R,G,B,opacity) or glColor(opacity, opacity, opacity, opacity);
- @since v0.8
  */
 -(BOOL) doesOpacityModifyRGB;
 

@@ -35,9 +35,14 @@
 #import <UIKit/UIKit.h>
 #endif // iPHone
 
+/**
+ *  Image format when saving render textures
+ */
 typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
 {
+	/** Image will be saved as JPEG */
 	CCRenderTextureImageFormatJPEG = 0,
+	/** Image will be saved as PNG */
 	CCRenderTextureImageFormatPNG = 1,
 };
 
@@ -50,7 +55,6 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
  the render texture to your scene and treat it like any other CCNode.
  There are also functions for saving the render texture to disk in PNG or JPG format.
 
- @since v0.8.1
  */
 @interface CCRenderTexture : CCNode
 {

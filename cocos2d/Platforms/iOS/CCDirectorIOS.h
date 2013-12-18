@@ -44,7 +44,6 @@
 #pragma mark CCDirectorIOS
 
 /* CCDirectorIOS: Base class of iOS directors
- @since v0.99.5
  */
 @interface CCDirectorIOS : CCDirector
 
@@ -62,7 +61,6 @@
  *
  * It is the recommended Director if the SDK is 3.1 or newer
  *
- * @since v0.8.2
  */
 
 @interface CCDirectorDisplayLink : CCDirectorIOS

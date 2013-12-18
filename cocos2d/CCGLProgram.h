@@ -84,7 +84,6 @@ struct _hashUniformEntry;
  Class that implements a glProgram
  
  
- @since v2.0.0
  */
 @interface CCGLProgram : NSObject
 {

@@ -39,7 +39,6 @@
 #import "Platforms/CCGL.h"
 
 /** RGB color composed of bytes 3 bytes
-@since v0.8
  */
 
 #ifdef __cplusplus
@@ -82,7 +81,6 @@ static const ccColor3B ccORANGE = {255,127,0};
 static const ccColor3B ccGRAY = {166,166,166};
 
 /** RGBA color composed of 4 bytes
-@since v0.8
 */
 typedef struct _ccColor4B
 {
@@ -100,7 +98,6 @@ ccc4(const GLubyte r, const GLubyte g, const GLubyte b, const GLubyte o)
 }
 
 /** returns YES if both ccColor4F are equal. Otherwise it returns NO.
- @since v0.99.1
  */
 static inline BOOL ccc4BEqual(ccColor4B a, ccColor4B b)
 {
@@ -108,7 +105,6 @@ static inline BOOL ccc4BEqual(ccColor4B a, ccColor4B b)
 }
 
 /** RGBA color composed of 4 floats
-@since v0.8
 */
 typedef struct _ccColor4F {
 	GLfloat r;
@@ -124,7 +120,6 @@ static inline ccColor4F ccc4f(const GLfloat r, const GLfloat g, const GLfloat b,
 }
 
 /** Returns a ccColor4F from a ccColor3B. Alpha will be 1.
- @since v0.99.1
  */
 static inline ccColor4F ccc4FFromccc3B(ccColor3B c)
 {
@@ -132,7 +127,6 @@ static inline ccColor4F ccc4FFromccc3B(ccColor3B c)
 }
 
 /** Returns a ccColor4F from a ccColor4B.
- @since v0.99.1
  */
 static inline ccColor4F ccc4FFromccc4B(ccColor4B c)
 {
@@ -140,7 +134,6 @@ static inline ccColor4F ccc4FFromccc4B(ccColor4B c)
 }
 	
 /** returns YES if both ccColor4F are equal. Otherwise it returns NO.
- @since v0.99.1
  */
 static inline BOOL ccc4FEqual(ccColor4F a, ccColor4F b)
 {
@@ -176,7 +169,6 @@ static inline ccColor4F ccc4FInterpolated(ccColor4F start, ccColor4F end, float 
 }
 
 /** A vertex composed of 2 GLfloats: x, y
- @since v0.8
  */
 typedef struct _ccVertex2F
 {
@@ -185,7 +177,6 @@ typedef struct _ccVertex2F
 } ccVertex2F;
 
 /** A vertex composed of 2 floats: x, y
- @since v0.8
  */
 typedef struct _ccVertex3F
 {
@@ -195,7 +186,6 @@ typedef struct _ccVertex3F
 } ccVertex3F;
 
 /** A texcoord composed of 2 floats: u, y
- @since v0.8
  */
 typedef struct _ccTex2F {
 	 GLfloat u;
