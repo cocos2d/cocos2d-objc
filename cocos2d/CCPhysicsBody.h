@@ -26,7 +26,7 @@
 
 @class CCPhysicsCollisionPair;
 
-/** The the type of physics body to use. */
+/** The type of physics body to use. */
 typedef NS_ENUM(unsigned char, CCPhysicsBodyType){
     
 	/** A regular rigid body that is affected by gravity, forces and collisions. */
