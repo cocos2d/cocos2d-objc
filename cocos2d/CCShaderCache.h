@@ -33,7 +33,6 @@
 
 /** CCShaderCache
  Singleton that stores manages GL shaders
- @since v2.0
  */
 @interface CCShaderCache : NSObject {
 

@@ -135,11 +135,12 @@ typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
 /**
  *  Initializes with a texture2d with data
  *
- *  @param data        Pointer to a buffer containing the raw data
- *  @param pixelFormat Pixelformat of the data
- *  @param width       Width if the texture
- *  @param height      Height of the texture
- *  @param size        The final contentsize of the texture
+ *  @param data         Pointer to a buffer containing the raw data
+ *  @param pixelFormat  Pixelformat of the data
+ *  @param width        Width if the texture
+ *  @param height       Height of the texture
+ *  @param sizeInPixels Size of resulting texture.
+ *  @param contentScale Content scale.
  *
  *  @return Returns a new initialized CCTexture
  */
@@ -186,7 +187,6 @@ typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
  Loading behavior is changed by [CCFileUtils set*ContentScaleFactor:].
  The value can be changed manually if you want to force a certain content scale.
 
- @since v3.0
  */
 @property(nonatomic, readwrite) CGFloat contentScale;
 
@@ -197,7 +197,6 @@ typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
  *  Creates a sprite frame from the texture.
  *
  *  @return A new sprite frame.
- *  @since v3.0
  */
 -(CCSpriteFrame*) createSpriteFrame;
 
@@ -212,8 +211,8 @@ typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
 /**
  *  Initializes a texture from a CGImage object.
  *
- *  @param cgImage    CGImage to use for texture
- *  @param resolution Resolution on image
+ *  @param cgImage      CGImage to use for texture
+ *  @param contentScale Content scale.
  *
  *  @return New CCTexture
  */
@@ -261,7 +260,6 @@ typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
 -(NSUInteger) bitsPerPixelForFormat;
 
 /** returns the pixel format in a NSString.
- @since v2.0
  */
 -(NSString*) stringForFormat;
 

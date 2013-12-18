@@ -462,18 +462,21 @@ GLToClipTransform(kmMat4 *transformOut)
 	[self startAnimation];
 }
 
-/*
--(void) replaceScene: (CCScene*) scene
+- (void)presentScene:(CCScene *)scene
 {
-	NSAssert( _runningScene, @"Use runWithScene: instead to start the director");
-	NSAssert( scene != nil, @"Argument must be non-nil");
+    if (_runningScene)
+        [self replaceScene:scene];
+    else
+        [self runWithScene:scene];
+}
 
-	NSUInteger index = [_scenesStack count];
-
-	_sendCleanupToScene = YES;
-	[_scenesStack replaceObjectAtIndex:index-1 withObject:scene];
-	_nextScene = scene;	// _nextScene is a weak ref
-}*/
+- (void)presentScene:(CCScene *)scene WithTransition:(CCTransition *)transition
+{
+    if (_runningScene)
+        [self replaceScene:scene withTransition:transition];
+    else
+        [self runWithScene:scene];
+}
 
 - (void) pushScene: (CCScene*) scene
 {

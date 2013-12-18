@@ -46,7 +46,6 @@ enum  {
 @end
 
 /* Base class of Mac directors
- @since v0.99.5
  */
 @interface CCDirectorMac : CCDirector
 {
@@ -91,7 +90,6 @@ enum  {
  *
  * It is the recommended Director if the SDK is 3.1 or newer
  *
- * @since v0.8.2
  */
 @interface CCDirectorDisplayLink : CCDirectorMac
 {
