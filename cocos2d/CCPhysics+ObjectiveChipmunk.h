@@ -31,48 +31,77 @@
 // In the future, this header will be useful for writing your own Objective-Chipmunk
 // code to interact with CCPhysics. For now, it's not very well documented on how to do it.
 // Do ask questions on the Cocos2D forums if you are interested in learning how.
+//
+// Things to consider:
+//  Projectile bodies?
+//  Interpolation?
+//  Post-step callbacks?
+//  What to do about CCActions?
+//  Check argument types for delegate callbacks?
+//  Angular velocity in degrees?
+//  Warnings for CCPhysicsCollisionPair methods in the wrong event cycle?
+//  Should CCPhysicsCollisionPair.userData retain?
 
-/*
-	Things to consider:
-	* Projectile bodies?
-	* Interpolation?
-	* Post-step callbacks?
-	* What to do about CCActions?
-	* Check argument types for delegate callbacks?
-	* Angular velocity in degrees?
-	* Warnings for CCPhysicsCollisionPair methods in the wrong event cycle?
-	* Should CCPhysicsCollisionPair.userData retain?
-*/
+@interface CCPhysicsBody (ObjectiveChipmunk)<ChipmunkObject>
 
-
-@interface CCPhysicsBody(ObjectiveChipmunk)<ChipmunkObject>
-
-/// The CCNode this physics body is attached to.
+/** The CCNode this physics body is attached to. */
 @property(nonatomic, strong) CCNode *node;
-/// The CCPhysicsNode this body is added to.
+
+/** The CCPhysicsNode this body is added to. */
 @property(nonatomic, readonly) CCPhysicsNode *physicsNode;
-/// Returns YES if the body is currently added to a physicsNode.
+
+/** Returns YES if the body is currently added to a physicsNode. */
 @property(nonatomic, readonly) BOOL isRunning;
 
-// TODO should probably rename these.
-/// The position of the body relative to the space.
+/** The position of the body relative to the space. */
 @property(nonatomic, assign) cpVect absolutePosition;
-/// The rotation of the body relative to the space.
+
+/** The rotation of the body relative to the space. */
 @property(nonatomic, assign) cpFloat absoluteRadians;
-/// The transform of the body relative to the space.
+
+/** The transform of the body relative to the space. */
 @property(nonatomic, readonly) cpTransform absoluteTransform;
 
+/** Chipmunk Body. */
 @property(nonatomic, readonly) ChipmunkBody *body;
 
-/// Implements the ChipmunkObject protocol.
+/** Implements the ChipmunkObject protocol. */
 @property(nonatomic, readonly) NSArray *chipmunkObjects;
 
+/**
+ *  Add joint to body.
+ *
+ *  @param joint Physics joint to use.
+ */
 -(void)addJoint:(CCPhysicsJoint *)joint;
+
+/**
+ *  Remove joint from body.
+ *
+ *  @param joint Physics joint to remove.
+ */
 -(void)removeJoint:(CCPhysicsJoint *)joint;
 
-// Used for deferring collision type setup until there is access to the physics node.
+/**
+ *  Used for deferring collision type setup until there is access to the physics node.
+ *
+ *  @param physics Physics node.
+ *  @param transform Transform to use.
+ */
 -(void)willAddToPhysicsNode:(CCPhysicsNode *)physics nonRigidTransform:(cpTransform)transform;
+
+/**
+ *  Used for deferring collision type setup until there is access to the physics node.
+ *
+ *  @param physics Physics node.
+ */
 -(void)didAddToPhysicsNode:(CCPhysicsNode *)physics;
+
+/**
+ *  Used for deferring collision type setup until there is access to the physics node.
+ *
+ *  @param physics Physics node.
+ */
 -(void)didRemoveFromPhysicsNode:(CCPhysicsNode *)physics;
 
 @end
@@ -80,17 +109,28 @@
 
 @interface CCPhysicsShape(ObjectiveChipmunk)
 
-/// Access to the underlying Objective-Chipmunk object.
+/** Access to the underlying Objective-Chipmunk shape object. */
 @property(nonatomic, readonly) ChipmunkShape *shape;
 
-/// Next shape in the linked list.
+/** Next shape in the linked list. */
 @property(nonatomic, strong) CCPhysicsShape *next;
 
-/// Body this shape is attached to.
+/** Body this shape is attached to. */
 @property(nonatomic, weak) CCPhysicsBody *body;
 
-// Used for deferring collision type setup until there is access to the physics node.
+/**
+ *  Used for deferring collision type setup until there is access to the physics node.
+ *
+ *  @param physics Physics node.
+ *  @param transform Transform to use.
+ */
 -(void)willAddToPhysicsNode:(CCPhysicsNode *)physics nonRigidTransform:(cpTransform)transform;
+
+/**
+ *  Used for deferring collision type setup until there is access to the physics node.
+ *
+ *  @param physics Physics node.
+ */
 -(void)didRemoveFromPhysicsNode:(CCPhysicsNode *)physics;
 
 @end
@@ -98,19 +138,31 @@
 
 @interface CCPhysicsJoint(ObjectiveChipmunk)<ChipmunkObject>
 
-/// Access to the underlying Objective-Chipmunk object.
+/** Access to the underlying Objective-Chipmunk object. */
 @property(nonatomic, readonly) ChipmunkConstraint *constraint;
 
-/// Returns YES if the body is currently added to a physicsNode.
+/** Returns YES if the body is currently added to a physicsNode. */
 @property(nonatomic, readonly) BOOL isRunning;
 
-/// Add the joint to the physics node, but only if both connected bodies are running.
+/**
+ *  Add the join to the physics node, but only if both connected bodies are running.
+ *
+ *  @param physicsNode Physics node.
+ */
 -(void)tryAddToPhysicsNode:(CCPhysicsNode *)physicsNode;
 
-/// Remove the joint from the physics node, but only if the joint is added;
+/**
+ *  Remove the joint from the physics node, but only if the joint is added.
+ *
+ *  @param physicsNode Physics node.
+ */
 -(void)tryRemoveFromPhysicsNode:(CCPhysicsNode *)physicsNode;
 
-/// Used for deferring collision type setup until there is access to the physics node.
+/**
+ *  Used for deferring collision type setup until there is access to the physics node.
+ *
+ *  @param physics Physics node.
+ */
 -(void)willAddToPhysicsNode:(CCPhysicsNode *)physics;
 
 @end
@@ -126,25 +178,49 @@
 
 @interface CCPhysicsNode(ObjectiveChipmunk)
 
-/// Access to the underlying Objective-Chipmunk object.
+/** Access to the underlying Objective-Chipmunk object. */
 @property(nonatomic, readonly) ChipmunkSpace *space;
 
-/// Intern and copy a string to ensure it can be checked by reference
-/// Used for collision type identifiers by CCPhysics.
-/// nil and @"default" both return the value nil.
+/**
+ *  Intern and copy a string to ensure it can be checked by reference
+ *  Used for collision type identifiers by CCPhysics.
+ *  Nil and @"default" both return the value nil.
+ *
+ *  @param string Intern string.
+ *
+ *  @return String.
+ */
 -(NSString *)internString:(NSString *)string;
 
-/// Retain and track a category identifier and return its index.
-/// Up to 32 categories can be tracked for a space.
+/**
+ *  Retain and track a category identifier and return its index.
+ *  Up to 32 categories can be tracked for a space.
+ *
+ *  @param category String category.
+ *
+ *  @return Category index.
+ */
 -(NSUInteger)indexForCategory:(NSString *)category;
 
-/// Convert an array of NSStrings for collision category identifiers into a category bitmask.
-/// The categories are retained and assigned indexes.
-/// Up to 32 categories can be tracked for a space.
+/**
+ *  Convert an array of NSStrings for collision category identifiers into a category bitmask.
+ *  The categories are retained and assigned indexes.
+ *  Up to 32 categories can be tracked for a space.
+ *
+ *  @param categories Array of categories.
+ *
+ *  @return Bitmask.
+ */
 -(cpBitmask)bitmaskForCategories:(NSArray *)categories;
 
-/// Convert a cpBitmask value to an array of collision category strings.
-/// Ignores any bits that don't have a collision category assigned in the physics node.
+/**
+ *  Convert a cpBitmask value to an array of collision category strings.
+ *  Ignores any bits that don't have a collision category assigned in the physics node.
+ *
+ *  @param categories Category bitmask.
+ *
+ *  @return Array of collision categories.
+ */
 -(NSArray *)categoriesForBitmask:(cpBitmask)categories;
 
 @end

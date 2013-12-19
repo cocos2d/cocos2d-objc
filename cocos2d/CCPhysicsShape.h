@@ -24,66 +24,141 @@
 
 #import "cocos2d.h"
 
+/**
+ * @todo This needs fleshed out by @slembcke
+ */
 @interface CCPhysicsShape : NSObject
 
-/// Create a circular shape.
+/// -----------------------------------------------------------------------
+/// @name Creating a CCPhysicsShape Object
+/// -----------------------------------------------------------------------
+
+/**
+*  Creates and retuns a circular physics shape using the circle radius and center values specified.
+*
+*  @param radius Circle radius.
+*  @param center Circle center point.
+*
+*  @return The CCPhysicsShape Object.
+*/
 +(CCPhysicsShape *)circleShapeWithRadius:(CGFloat)radius center:(CGPoint)center;
-/// Create a box shape with rounded corners.
+
+/**
+ *  Creates and returns a physics box shape with rounded corners.
+ *
+ *  @param rect         Box dimensions.
+ *  @param cornerRadius Corner radius.
+ *
+ *  @return The CCPhysicsShape Object.
+ */
 +(CCPhysicsShape *)rectShape:(CGRect)rect cornerRadius:(CGFloat)cornerRadius;
-/// Create a pill shape with rounded corners that stretches from 'start' to 'end'.
+
+/**
+ *  Creates and returns a pill shaped physics shape with rounded corners that stretches from 'start' to 'end'.
+ *
+ *  @param from         Start point.
+ *  @param to           End point.
+ *  @param cornerRadius Corner radius.
+ *
+ *  @return The CCPhysicsShape Object.
+ */
 +(CCPhysicsShape *)pillShapeFrom:(CGPoint)from to:(CGPoint)to cornerRadius:(CGFloat)cornerRadius;
-/// Create a convex polygon shape with rounded corners.
-/// If the points do not form a convex polygon, then a convex hull will be created for them automatically.
+
+/**
+ *  Creates and returns a convex polygon physics shape with rounded corners.  If the points do not form a convex polygon then a convex hull will be created from them automatically.
+ *
+ *  @param points       Points array pointer.
+ *  @param count        Points count.
+ *  @param cornerRadius Corner radius.
+ *
+ *  @return The CCPhysicsShape Object.
+ */
 +(CCPhysicsShape *)polygonShapeWithPoints:(CGPoint *)points count:(NSUInteger)count cornerRadius:(CGFloat)cornerRadius;
 
-//MARK: Basic Properties:
 
-/// Mass of this individual shape.
+/// -----------------------------------------------------------------------
+/// @name Accessing Basic Shape Attributes
+/// -----------------------------------------------------------------------
+
+/**
+ *  Mass of the physics shapes.
+ */
 @property(nonatomic, assign) CGFloat mass;
-/// Area of the body in points^2.
-/// Note that this is relative to the CCPhysicsNode. Changing a node or a parent can change the area.
+
+/**
+ *  Area of the shape in points^2.
+ *  Please note that this is relative to the CCPhysicsNode, change the node or a parent can change the area.
+ */
 @property(nonatomic, readonly) CGFloat area;
-/// Density of the shape in 1/1000 units of mass per area in points^2.
-/// The coefficient is used to keep the mass of the object a reasonable value.
-/// Note that mass and not density will remain constant if an object is rescaled.
+
+/**
+ *  Density of the shape in 1/1000 units of mass per area in points. Co-efficent is used to keep the mass of an object a resonable value.
+ *  Note that mass and not density will remain constant if an object is rescaled.
+ */
 @property(nonatomic, assign) CGFloat density;
-/// Surface friction of the shape.
-/// When two objects collide, their friction is multiplied together.
-/// The calculated value can be overriden in a CCCollisionPairDelegate pre-solve method.
-/// Defaults to 0.7.
+
+/**
+ *  Surface friction of the shape, when two objects collide, their friction is multiplied together.
+ *  The calculated value can be overridden in a CCCollisionPairDelegate pre-solve method.
+ *  Defaults to 0.7
+ */
 @property(nonatomic, assign) CGFloat friction;
-/// Surface friction of the shape.
-/// When two objects collide, their elaticity is multiplied together.
-/// The calculated value can be ovrriden in a CCCollisionPairDelegate pre-solve method.
-/// Defaults to 0.2.
+
+/**
+ *  Elasticity of the physics shape.
+ *  When two objects collide, their elasticity is multiplied together.
+ *  The calculated value can be ovrriden in a CCCollisionPairDelegate pre-solve method.
+ *  Defaults to 0.2.
+ */
 @property(nonatomic, assign) CGFloat elasticity;
-/// Velocity of the surface of the shape relative to its normal velocity.
-/// This is useful for modeling conveyor belts or the feet of a player character.
-/// The calculated surface velocity of two colliding shapes by default only affects their friction.
-/// The calculated value can be overriden in a CCCollisionPairDelegate pre-solve method.
-/// Defaults to CGPointZero.
+
+/**
+ *  Velocity of the surface of a shaperelative to it's normal velocity.  This is useful fr modelling convery belts or the feet of a player avatar.
+ *  The calculated surface velocity of two colliding shapes by default only affects their friction.
+ *  The calculated value can be overriden in a CCCollisionPairDelegate pre-solve method.
+ *  Defaults to CGPointZero.
+ */
 @property(nonatomic, assign) CGPoint surfaceVelocity;
 
-//MARK: Collision and Contact:
 
-/// Sensors call collision delegate methods, but don't cause collisions between bodies.
-/// Defaults to NO.
+/// -----------------------------------------------------------------------
+/// @name Accessing Collision and Contact Attributes
+/// -----------------------------------------------------------------------
+
+/**
+ *  Is this shape a sensor? A sensor will call a collision delegate but does not physically cause collisions between bodies.
+ *  Defaults to NO
+ */
 @property(nonatomic, assign) BOOL sensor;
-/// If two shapes share the same group identifier, then they don't collide.
-/// Defaults to nil.
+
+/**
+ *  The shapes collisionGroup, if two shapes share the same group id, they don't collide.  Default nil
+ */
 @property(nonatomic, assign) id collisionGroup;
-/// A string that identifies which collision pair delegate method should be called when this shape collides.
-/// Defaults to @"default".
+
+/**
+ *  An string that identifies the collision pair delegate method that should be called.  Default @"default"
+ */
 @property(nonatomic, copy) NSString *collisionType;
-/// An array of NSStrings of category names of which this shape is a member of.
-/// Up to 32 categories can be used in a single scene.
-/// The default value is nil, which means the shape exists in all categories.
+
+/**
+ *  An array of NSString category names of which this sahpe is a member.  Up to 32 categories can be used in a single scene.
+ *  Default is nil, which means the shape exists in all categories.
+ */
 @property(nonatomic, copy) NSArray *collisionCategories;
-/// An array of NSStrings of category names this shape will collide with.
-/// The default value is nil, which means the shape collides with all categories.
+
+/**
+ *  An array of NSString category names that this shape will collide with.
+ *  The dedfault is nil, which means the shape collides with all categories.
+ */
 @property(nonatomic, copy) NSArray *collisionMask;
 
-/// The CCNode this shape is attached to.
+
+/// -----------------------------------------------------------------------
+/// @name Accessing Misc Attributes
+/// -----------------------------------------------------------------------
+
+/** The CCNode to which this physics shape is attached. */
 @property(nonatomic, readonly) CCNode *node;
 
 @end
