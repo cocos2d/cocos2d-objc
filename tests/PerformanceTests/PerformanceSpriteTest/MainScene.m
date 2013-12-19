@@ -293,7 +293,7 @@ Class restartAction()
 		subtestNumber = asubtest;
 		subTest = [[SubTest alloc] initWithSubTest:asubtest parent:self];
 
-		CGSize s = [[CCDirector sharedDirector] winSize];
+		CGSize s = [[CCDirector sharedDirector] viewSize];
 
 		lastRenderedCount = 0;
 		quantityNodes = 0;

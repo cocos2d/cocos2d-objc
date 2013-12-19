@@ -131,7 +131,7 @@
 // application will be killed
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-	CC_DIRECTOR_END();
+	[[CCDirector sharedDirector] end];
 }
 
 // purge memory
