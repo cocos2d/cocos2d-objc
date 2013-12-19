@@ -13,24 +13,20 @@
 /* Whether or not the replaced scene will receive the cleanup message.
  If the new scene is pushed, then the old scene won't receive the "cleanup" message.
  If the new scene replaces the old one, the it will receive the "cleanup" message.
- @since v0.99.0
  */
 @property (nonatomic, readonly) BOOL sendCleanupToScene;
 
 /* This object will be visited after the main scene is visited.
  This object MUST implement the "visit" selector.
  Useful to hook a notification object, like CCNotifications (http://github.com/manucorporat/CCNotifications)
- @since v0.99.5
  */
 @property (nonatomic, readwrite, strong) id	notificationNode;
 
 /* CCScheduler associated with this director
- @since v2.0
  */
 @property (nonatomic,readwrite,strong) CCScheduler *scheduler;
 
 /* CCActionManager associated with this director
- @since v2.0
  */
 @property (nonatomic,readwrite,strong) CCActionManager *actionManager;
 

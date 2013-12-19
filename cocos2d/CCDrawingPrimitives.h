@@ -90,7 +90,6 @@ void ccDrawFree(void);
 void ccDrawPoint( CGPoint point );
 
 /** draws an array of points.
- @since v0.7.2
  */
 void ccDrawPoints( const CGPoint *points, NSUInteger numberOfPoints );
 
@@ -101,7 +100,6 @@ void ccDrawLine( CGPoint origin, CGPoint destination );
 void ccDrawRect( CGPoint origin, CGPoint destination );
 
 /** draws a solid rectangle given the origin and destination point measured in points.
-    @since 1.1
  */
 void ccDrawSolidRect( CGPoint origin, CGPoint destination, CCColor* color );
 
@@ -128,40 +126,33 @@ void ccDrawSolidArc(CGPoint center, CGFloat r, CGFloat a, CGFloat arcLength, NSU
 
 /** draws a quad bezier path measured in points.
  @warning This function could be pretty slow. Use it only for debugging purposes.
- @since v0.8
  */
 void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, NSUInteger segments);
 
 /** draws a cubic bezier path measured in points.
  @warning This function could be pretty slow. Use it only for debugging purposes.
- @since v0.8
  */
 void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoint destination, NSUInteger segments);
 
 /** draws a Catmull Rom path.
  @warning This function could be pretty slow. Use it only for debugging purposes.
- @since v2.0
  */
 void ccDrawCatmullRom( CCPointArray *arrayOfControlPoints, NSUInteger segments );
 
 /** draws a Cardinal Spline path.
  @warning This function could be pretty slow. Use it only for debugging purposes.
- @since v2.0
  */
 void ccDrawCardinalSpline( CCPointArray *config, CGFloat tension,  NSUInteger segments );
 
 /** set the drawing color with 4 unsigned bytes
- @since v2.0
  */
 void ccDrawColor4B( GLubyte r, GLubyte g, GLubyte b, GLubyte a );
 
 /** set the drawing color with 4 floats
- @since v2.0
  */
 void ccDrawColor4F( GLfloat r, GLfloat g, GLfloat b, GLfloat a );
 
 /** set the point size in points. Default 1.
- @since v2.0
  */
 void ccPointSize( GLfloat pointSize );
 

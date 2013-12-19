@@ -133,7 +133,6 @@
 @property (nonatomic,readwrite) BOOL flipY;
 
 /** offset position in points of the sprite in points. Calculated automatically by editors like Zwoptex.
- @since v0.99.0
  */
 @property (nonatomic,readonly) CGPoint	offsetPosition;
 

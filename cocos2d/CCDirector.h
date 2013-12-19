@@ -158,7 +158,6 @@ and when to execute the Scenes.
 /** returns the cocos2d thread.
  If you want to run any cocos2d task, run it in this thread.
  Typically this is the main thread.
- @since v0.99.5
  */
 @property (unsafe_unretained, readonly, nonatomic ) NSThread *runningThread;
 /** The current running Scene. Director can only run one Scene at the time */
@@ -181,22 +180,18 @@ and when to execute the Scenes.
 @property (nonatomic, readonly) CCTime secondsPerFrame;
 
 /** Sets the touch manager
- @since v3.0
  */
 @property ( nonatomic, strong ) CCResponderManager* responderManager;
 
 /** CCDirector delegate. It shall implement the CCDirectorDelegate protocol
- @since v0.99.5
  */
 @property (nonatomic, readwrite, unsafe_unretained) id<CCDirectorDelegate> delegate;
 
 /** Content scaling factor. Sets the ratio of Cocos2D "points" to pixels. Default value is initalized from the content scale of the GL view used by the director.
- @since v3.0
  */
 @property(nonatomic, assign) CGFloat contentScaleFactor;
 
 /** UI scaling factor, default value is 1. Positions and content sizes are scale by this factor if the position type is set to scale.
- @since v3.0
  */
 @property (nonatomic,readwrite,assign) float UIScaleFactor;
 
@@ -219,32 +214,81 @@ and when to execute the Scenes.
  */
 - (CGSize) viewSizeInPixels;
 
-/** changes the projection size */
+/**
+ *  Changes the projection size.
+ *
+ *  @param newWindowSize New projection size.
+ */
 -(void) reshapeProjection:(CGSize)newWindowSize;
 
-/** converts a UIKit coordinate to an OpenGL coordinate
- Useful to convert (multi) touch coordinates to the current layout (portrait or landscape)
+/**
+ *  Converts a UIKit coordinate to an OpenGL coordinate.
+ *
+ *  Useful to convert (multi) touch coordinates to the current layout (portrait or landscape).
+ *
+ *  @param p Point to convert.
+ *
+ *  @return Converted point.
  */
 -(CGPoint) convertToGL: (CGPoint) p;
-/** converts an OpenGL coordinate to a UIKit coordinate
- Useful to convert node points to window points for calls such as glScissor
+
+/**
+ *  Converts an OpenGL coordinate to a UIKit coordinate.
+ *
+ *  Useful to convert node points to window points for calls such as glScissor.
+ *
+ *  @param p Point to convert.
+ *
+ *  @return Converted point.
  */
 -(CGPoint) convertToUI:(CGPoint)p;
 
 #pragma mark Director - Scene Management
 
-/** Enters the Director's main loop with the given Scene.
- * Call it to run only your FIRST scene.
- * Don't call it if there is already a running scene.
+/**
+ *  Presents a new scene.
  *
- * It will call pushScene: and then it will call startAnimation
+ *  If no scene is currently running, the scene will be started.
+ *  
+ *  If another scene is currently running, this scene will be stopped, and the new scene started.
+ *
+ *  @param scene Scene to start.
+ */
+- (void)presentScene:(CCScene *)scene;
+
+/**
+ *  Presents a new scene, with a transition.
+ *
+ *  If no scene is currently running, the new scene will be started without a transition.
+ *
+ *  If another scene is currently running, this scene will be stopped, and the new scene started, according to the provided transition.
+ *
+ *  @param scene Scene to start.
+ *  @param transition Transition to use.
+ */
+- (void)presentScene:(CCScene *)scene WithTransition:(CCTransition *)transition;
+
+/**
+ *  Enters the Director's main loop with the given Scene.
+ *
+ *  Call it to run only your FIRST scene.
+ *  Don't call it if there is already a running scene.
+ *
+ *  It will call pushScene: and then it will call startAnimation
+ *
+ *  @param scene Scene to run.
  */
 - (void) runWithScene:(CCScene*) scene;
 
-/** Suspends the execution of the running scene, pushing it on the stack of suspended scenes.
+/**
+ * Suspends the execution of the running scene, pushing it on the stack of suspended scenes.
+ *
  * The new scene will be executed.
  * Try to avoid big stacks of pushed scenes to reduce memory allocation.
+ *
  * ONLY call it if there is a running scene.
+ *
+ *  @param scene New scene to start.
  */
 - (void) pushScene:(CCScene*) scene;
 
@@ -256,13 +300,17 @@ and when to execute the Scenes.
 - (void) popScene;
 
 /**Pops out all scenes from the queue until the root scene in the queue.
+ *
  * This scene will replace the running one.
  * Internally it will call `popToSceneStackLevel:1`
  */
 - (void) popToRootScene;
 
 /** Replaces the running scene with a new one. The running scene is terminated.
+ *
  * ONLY call it if there is a running scene.
+ *
+ *  @param scene New scene to start.
  */
 -(void) replaceScene: (CCScene*) scene;
 
@@ -272,7 +320,6 @@ and when to execute the Scenes.
  *
  *  @param scene      The incoming scene
  *  @param transition The transition to perform
- *  @since v3.0
  */
 - (void)replaceScene:(CCScene *)scene withTransition:(CCTransition *)transition;
 
@@ -281,7 +328,6 @@ and when to execute the Scenes.
  *
  *  @param scene      The scene to present
  *  @param transition The transition to use
- *  @since v3.0
  */
 - (void)pushScene:(CCScene *)scene withTransition:(CCTransition *)transition;
 
@@ -289,7 +335,6 @@ and when to execute the Scenes.
  *  Replaces the running scene, with the last scene pushed to the stack, using a transition
  *
  *  @param transition The transition to use
- *  @since v3.0
  */
 - (void)popSceneWithTransition:(CCTransition *)transition;
 
@@ -324,7 +369,7 @@ and when to execute the Scenes.
 
 #if defined(__CC_PLATFORM_MAC)
 // XXX: Hack. Should be placed on CCDirectorMac.h. Refactoring needed
-/** sets the openGL view */
+// sets the openGL view
 -(void) setView:(CCGLView*)view;
 
 /** returns the OpenGL view */
@@ -336,7 +381,6 @@ and when to execute the Scenes.
 /** Removes all the cocos2d data that was cached automatically.
  It will purge the CCTextureCache, CCLabelBMFont cache.
  IMPORTANT: The CCSpriteFrameCache won't be purged. If you want to purge it, you have to purge it manually.
- @since v0.99.3
  */
 -(void) purgeCachedData;
 
@@ -344,9 +388,19 @@ and when to execute the Scenes.
 
 /** sets the OpenGL default values */
 -(void) setGLDefaultValues;
-/** enables/disables OpenGL alpha blending */
+
+/**
+ *  Enables/disables OpenGL alpha blending.
+ *
+ *  @param on Set to YES to enable alpha blending.
+ */
 - (void) setAlphaBlending: (BOOL) on;
-/** enables/disables OpenGL depth test */
+
+/**
+ *  Enables/disables OpenGL depth test.
+ *
+ *  @param on Set to YES to enable depth tests.
+ */
 - (void) setDepthTest: (BOOL) on;
 @end
 

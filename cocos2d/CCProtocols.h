@@ -34,7 +34,6 @@
 #pragma mark - CCBlendProtocol
 /**
  You can specify the blending function.
- @since v0.99.0
  */
 @protocol CCBlendProtocol <NSObject>
 /** set the source blending function for the texture */
@@ -53,7 +52,6 @@
  else
 	src=GL_SRC_ALPHA dst= GL_ONE_MINUS_SRC_ALPHA
  But you can change the blending function at any time.
- @since v0.8.0
  */
 @protocol CCTextureProtocol <CCBlendProtocol>
 /** returns the used texture */
@@ -73,7 +71,6 @@
 -(NSString*) string;
 @optional
 /** sets a new label using a CString.
- @since v0.99.0
  */
 -(void) setCString:(char*)label;
 @end

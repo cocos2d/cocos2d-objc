@@ -33,7 +33,6 @@
  If you enable it, make sure that Chipmunk is in the search path.
  Disabled by default
 
- @since v2.1
  */
 #ifndef CC_ENABLE_CHIPMUNK_INTEGRATION
 #define CC_ENABLE_CHIPMUNK_INTEGRATION 0
@@ -42,7 +41,6 @@
 /** @def CC_CHIPMUNK_IMPORT
  Which file to import if using Chipmunk.
  Change it to "ObjectiveChipmunk.h" or define it as a preprocessor macro if you are using ObjectiveChipmunk.
- @since v2.1
  */
 #if CC_ENABLE_CHIPMUNK_INTEGRATION && !defined(CC_CHIPMUNK_IMPORT)
 #define CC_CHIPMUNK_IMPORT "chipmunk.h"
@@ -54,7 +52,6 @@
  
  Disabled by default
  
- @since v2.1
  */
 #ifndef CC_ENABLE_BOX2D_INTEGRATION
 #define CC_ENABLE_BOX2D_INTEGRATION 0
@@ -67,7 +64,6 @@
  
  Enabled by default. Disable to be compatible with v2.0 and older versions.
 
- @since v2.1
  */
 #ifndef CC_ENABLE_STACKABLE_ACTIONS
 #define CC_ENABLE_STACKABLE_ACTIONS 1
@@ -88,8 +84,7 @@
 
  Default value: Enabled by default
 
- @since v2.0.0
- */
+  */
 #ifndef CC_ENABLE_GL_STATE_CACHE
 #define CC_ENABLE_GL_STATE_CACHE 1
 #endif
@@ -112,7 +107,6 @@
 
  To enabled set it to 1. Disabled by default.
 
- @since v0.99.5
  */
 #ifndef CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 #define CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL 0

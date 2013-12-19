@@ -50,49 +50,75 @@
 + (CCTextureCache *) sharedTextureCache;
 
 /** purges the cache. It releases the retained instance.
- @since v0.99.0
  */
 +(void)purgeSharedTextureCache;
 
-
-/** Returns a Texture2D object given an file image
+/**
+ * Returns a Texture2D object given an file image.
+ *
  * If the file image was not previously loaded, it will create a new CCTexture2D
- *  object and it will return it. It will use the filename as a key.
+ * object and it will return it. It will use the filename as a key.
  * Otherwise it will return a reference of a previously loaded image.
+ *
  * Supported image extensions: .png, .bmp, .tiff, .jpeg, .pvr, .gif
+ *
+ *  @param fileimage Image file to load.
+ *
+ *  @return Texture.
  */
 -(CCTexture*) addImage: (NSString*) fileimage;
 
-/** Asynchronously, load a texture2d from a file.
+/**
+ * Asynchronously, load a texture2d from a file.
+ *
  * If the file image was previously loaded, it will use it.
  * Otherwise it will load a texture in a new thread, and when the image is loaded, the callback will be called with the Texture2D as a parameter.
  * The callback will be called in the cocos2d thread, so it is safe to create any cocos2d object from the callback.
+ *
  * Supported image extensions: .png, .bmp, .tiff, .jpeg, .pvr, .gif
- * @since v0.8
+ *
+ *  @param filename Image file to load.
+ *  @param target   Target for selector.
+ *  @param selector Selector to execute when image loaded.
  */
 -(void) addImageAsync:(NSString*) filename target:(id)target selector:(SEL)selector;
 
-/** Asynchronously, load a texture2d from a file.
+/**
+ * Asynchronously, load a texture2d from a file.
+ *
  * If the file image was previously loaded, it will use it.
  * Otherwise it will load a texture in a new thread, and when the image is loaded, the block will be called.
  * The callback will be called in the cocos2d thread, so it is safe to create any cocos2d object from the callback.
+ *
  * Supported image extensions: .png, .bmp, .tiff, .jpeg, .pvr, .gif
- * @since v2.0
+ *
+ *  @param filename Image file to load.
+ *  @param block    Block to execute when image loaded.
  */
 -(void) addImageAsync:(NSString*) filename withBlock:(void(^)(CCTexture *tex))block;
 
 
-/** Returns a Texture2D object given an CGImageRef image
+/**
+ * Returns a Texture2D object given an CGImageRef image.
+ *
  * If the image was not previously loaded, it will create a new CCTexture2D object and it will return it.
- * Otherwise it will return a reference of a previously loaded image
+ * Otherwise it will return a reference of a previously loaded image.
  * The "key" parameter will be used as the "key" for the cache.
  * If "key" is nil, then a new texture will be created each time.
- * @since v0.8
+ *
+ *  @param image CG image to create texture from.
+ *  @param key   Key used to define texture in cache.
+ *
+ *  @return Texture.
  */
 -(CCTexture*) addCGImage: (CGImageRef) image forKey: (NSString *)key;
 
-/** Returns an already created texture. Returns nil if the texture doesn't exist.
- @since v0.99.5
+/**
+ *  Returns an already created texture. Returns nil if the texture doesn't exist.
+ *
+ *  @param key Key to look for.
+ *
+ *  @return Texture from cache.
  */
 -(CCTexture *) textureForKey:(NSString *)key;
 
@@ -107,16 +133,20 @@
 /** Removes unused textures
  * Textures that have a retain count of 1 will be deleted
  * It is convenient to call this method after when starting a new Scene
- * @since v0.8
  */
 -(void) removeUnusedTextures;
 
-/** Deletes a texture from the cache given a texture
+/**
+ *  Deletes a texture from the cache given a texture.
+ *
+ *  @param tex Texture to remove from cache.
  */
 -(void) removeTexture: (CCTexture*) tex;
 
-/** Deletes a texture from the cache given a its key name
- @since v0.99.4
+/**
+ *  Deletes a texture from the cache given a its key name.
+ *
+ *  @param textureKeyName Texture key to remove from cache.
  */
 -(void) removeTextureForKey: (NSString*) textureKeyName;
 
@@ -125,21 +155,24 @@
 
 @interface CCTextureCache (PVRSupport)
 
-/** Returns a Texture2D object given an PVR filename.
- * If the file image was not previously loaded, it will create a new CCTexture2D
- *  object and it will return it. Otherwise it will return a reference of a previously loaded image
+/**
+ * Returns a Texture2D object given an PVR filename.
  *
+ * If the file image was not previously loaded, it will create a new CCTexture2D
+ * object and it will return it. Otherwise it will return a reference of a previously loaded image.
+ *
+ *  @param filename Filename on PVR file.
+ *
+ *  @return Texture.
  */
 -(CCTexture*) addPVRImage:(NSString*) filename;
 
 @end
 
-
 @interface CCTextureCache (Debug)
 /** Output to CCLOG the current contents of this CCTextureCache
  * This will attempt to calculate the size of each texture, and the total texture memory in use
  *
- * @since v1.0
  */
 -(void) dumpCachedTextureInfo;
 

@@ -87,7 +87,6 @@
  
  By default it is disabled.
  
- @since v0.99.5
  */
 +(void) PVRImagesHavePremultipliedAlpha:(BOOL)haveAlphaPremultiplied;
 
@@ -109,7 +108,6 @@ typedef struct _ccTexParams {
  
  @warning Calling this method could allocate additional texture memory.
  
- @since v0.8
  */
 -(void) setTexParameters: (ccTexParams*) texParams;
 
@@ -119,7 +117,6 @@ typedef struct _ccTexParams {
  
  @warning Calling this method could allocate additional texture memory.
  
- @since v0.8
  */
 - (void) setAntiAliasTexParameters;
 
@@ -129,14 +126,12 @@ typedef struct _ccTexParams {
  
  @warning Calling this method could allocate additional texture memory.
  
- @since v0.8
  */
 - (void) setAliasTexParameters;
 
 
 /* Generates mipmap images for the texture.
  It only works if the texture size is POT (power of 2).
- @since v0.99.0
  */
 -(void) generateMipmap;
 

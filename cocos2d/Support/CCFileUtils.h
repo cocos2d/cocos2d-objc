@@ -72,12 +72,10 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
 }
 
 /** NSBundle used by CCFileUtils. By default it uses [NSBundle mainBundle].
- @since v2.0
  */
 @property (nonatomic, readwrite, strong) NSBundle	*bundle;
 
 /** NSFileManager used by CCFileUtils. By default it uses its own instance.
- @since v2.0
  */
 @property (nonatomic, readwrite, strong) NSFileManager	*fileManager;
 
@@ -104,7 +102,6 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  - Mac HD: "resources-machd"
  
  If "search in directories" is enabled (disabled by default), it will try to get the resources from the directories according to the order of "searchResolutionsOrder" array.
- @since v2.1
  */
 @property (nonatomic, copy) NSMutableDictionary *directoriesDict;
 
@@ -119,7 +116,6 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
 	- Mac HD: "-machd"
 
   If "search with suffixes" is enabled (enabled by default), it will try to get the resources by appending the suffixes according to the order of "searchResolutionsOrder" array.
- @since v2.1
  */
 @property (nonatomic, copy) NSMutableDictionary *suffixesDict;
 
@@ -136,7 +132,6 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  
  If the property "enableiPhoneResourcesOniPad" is enabled, it will also search for iPhone resources if you are in an iPad.
  
- @since v2.1
  */
 @property (nonatomic, copy) NSArray *searchResolutionsOrder;
 
@@ -146,7 +141,6 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  
  By default it is an array with only the "" (empty string) element.
  
- @since v2.1
  */
 @property (nonatomic, copy) NSArray *searchPath;
 
@@ -157,7 +151,6 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
 	- kCCFileUtilsSearchDirectory: It will search the resoureces in subdirectories like "resources-hd", "resources-ipad", etc...
  
  Default: kCCFileUtilsSearchSuffix
- @since v2.1
  */
 @property (nonatomic, readwrite) CCFileUtilsSearchMode searchMode;
 
@@ -167,7 +160,6 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
   *	-(NSString*) fullPathForFilename:(NSString*)key contentScale:(CGFloat *)contentScale;
   *	-(NSString*) fullPathForFilenameIgnoringResolutions:(NSString*)key;
 
- @since v2.1
  */
 @property (nonatomic, readwrite, copy) NSMutableDictionary *filenameLookup;
 
@@ -205,7 +197,6 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  Defaults to 1.0.
  Only valid on iOS. Not valid for OS X.
  
- @since v3.0
  */
 -(void)setiPhoneContentScaleFactor:(CGFloat)scale;
 
@@ -214,7 +205,6 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  Defaults to 1.0.
  Only valid on iOS. Not valid for OS X.
  
- @since v3.0
  */
 -(void)setiPadContentScaleFactor:(CGFloat)scale;
 
@@ -225,7 +215,6 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  Defaults to 1.0.
  Only valid on Mac. Not valid for iOS.
  
- @since v3.0
  */
 -(void)setMacContentScaleFactor:(CGFloat)scale;
 
@@ -243,7 +232,6 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
 
 /** Calling this method will populate the searchResolutionsOrder property depending on the current device.
  
- @since v2.1
  */
 - (void) buildSearchResolutionsOrder;
 

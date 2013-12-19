@@ -147,7 +147,6 @@ default gl blend src function. Compatible with premultiplied alpha images.
 
 /** @def CC_NODE_DRAW_SETUP
  Helpful macro that setups the GL server state, the correct GL program and sets the Model View Projection matrix
- @since v2.0
  */
 #define CC_NODE_DRAW_SETUP()																	\
 do {																							\
