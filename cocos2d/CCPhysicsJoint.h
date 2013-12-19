@@ -50,9 +50,9 @@
 	restLength:(CGFloat)restLength stiffness:(CGFloat)stiffness damping:(CGFloat)damping;
 
 /// The first body this joint is attached to.
-@property(nonatomic, strong) CCPhysicsBody *bodyA;
+@property(nonatomic, readonly) CCPhysicsBody *bodyA;
 /// The second body this joint is attached to.
-@property(nonatomic, strong) CCPhysicsBody *bodyB;
+@property(nonatomic, readonly) CCPhysicsBody *bodyB;
 
 /// The maximum force this joint is allowed to use.
 /// Defaults to INFINITY.

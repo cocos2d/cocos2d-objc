@@ -25,9 +25,6 @@
 #import "CCPhysicsJoint.h"
 #import "CCPhysics+ObjectiveChipmunk.h"
 
-// TODO temporary
-static inline void NYI(){@throw @"Not Yet Implemented";}
-
 
 @interface CCNode(Private)
 -(CGAffineTransform)nonRigidTransform;
@@ -243,10 +240,10 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 }
 
 -(CCPhysicsBody *)bodyA {return self.constraint.bodyA.userData;}
--(void)setBodyA:(CCPhysicsBody *)bodyA {NYI();}
+//-(void)setBodyA:(CCPhysicsBody *)bodyA {NYI();}
 
 -(CCPhysicsBody *)bodyB {return self.constraint.bodyB.userData;}
--(void)setBodyB:(CCPhysicsBody *)bodyB {NYI();}
+//-(void)setBodyB:(CCPhysicsBody *)bodyB {NYI();}
 
 -(CGFloat)maxForce {return self.constraint.maxForce;}
 -(void)setMaxForce:(CGFloat)maxForce

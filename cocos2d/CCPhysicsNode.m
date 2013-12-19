@@ -34,9 +34,6 @@
 // There are usually few unique categories in a given simulation.
 #define MAX_CACHED_CATEGORIES 64
 
-// TODO temporary
-static inline void NYI(){@throw @"Not Yet Implemented";}
-
 
 @interface CCPhysicsNode(Private)
 
