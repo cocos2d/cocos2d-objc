@@ -66,7 +66,7 @@ float calculateDeltaTime( struct timeval *lastUpdate )
 {
 	if( (self=[super init])) {
 		
-		CGSize s = [[CCDirector sharedDirector] winSize];
+		CGSize s = [[CCDirector sharedDirector] viewSize];
 		
 		CCLabelTTF* label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label z:1];
