@@ -59,7 +59,6 @@
     _textField = [[UITextField alloc] initWithFrame:CGRectZero];
     _textField.delegate = self;
     _textField.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
-		_textField.backgroundColor = [UIColor greenColor];
 		
 		// UIKit might not be running in the same scale as us.
 		_scaleMultiplier = [CCDirector sharedDirector].contentScaleFactor/[UIScreen mainScreen].scale;
