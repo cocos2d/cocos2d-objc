@@ -42,6 +42,7 @@
 		B7EE698518187BC900B983FE /* CCSprite9SliceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE698418187BC900B983FE /* CCSprite9SliceTest.m */; };
 		B7EE69F01819EB0E00B983FE /* CCLayoutTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69EF1819EB0E00B983FE /* CCLayoutTest.m */; };
 		B7EE6A30181B285700B983FE /* CCSliderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE6A2F181B285700B983FE /* CCSliderTest.m */; };
+		D389410E18639CC900725CFC /* CCPhysicsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D389410D18639CC900725CFC /* CCPhysicsTest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,6 +119,9 @@
 		B7EE698418187BC900B983FE /* CCSprite9SliceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSprite9SliceTest.m; path = "cocos2d-ui-tests/tests/CCSprite9SliceTest.m"; sourceTree = SOURCE_ROOT; };
 		B7EE69EF1819EB0E00B983FE /* CCLayoutTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCLayoutTest.m; path = "cocos2d-ui-tests/tests/CCLayoutTest.m"; sourceTree = SOURCE_ROOT; };
 		B7EE6A2F181B285700B983FE /* CCSliderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSliderTest.m; path = "cocos2d-ui-tests/tests/CCSliderTest.m"; sourceTree = SOURCE_ROOT; };
+		D389410D18639CC900725CFC /* CCPhysicsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCPhysicsTest.m; path = "cocos2d-ui-tests/tests/CCPhysicsTest.m"; sourceTree = SOURCE_ROOT; };
+		D389412F18639E4500725CFC /* libObjectiveChipmunk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libObjectiveChipmunk.a; path = DerivedData/cocos2d/Build/Products/Debug/libObjectiveChipmunk.a; sourceTree = "<group>"; };
+		D389413118639E5000725CFC /* libChipmunk.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libChipmunk.a; path = external/Chipmunk/xcode/build/Debug/libChipmunk.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +175,8 @@
 		B78AE47A17E7B13C0028BE0B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D389413118639E5000725CFC /* libChipmunk.a */,
+				D389412F18639E4500725CFC /* libObjectiveChipmunk.a */,
 				B770609D1831B3F60043CC67 /* AVFoundation.framework */,
 				B78AE47B17E7B13C0028BE0B /* QuartzCore.framework */,
 				B78AE47D17E7B13C0028BE0B /* OpenGL.framework */,
@@ -258,6 +264,7 @@
 		B7C6238217EBC7A600928F91 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				D389410D18639CC900725CFC /* CCPhysicsTest.m */,
 				B79DEE1618105B7C00A653C9 /* CCTransitionTest.m */,
 				B7C6238417EBC7C200928F91 /* CCScrollViewTest.m */,
 				B7C6239517F10F0600928F91 /* CCTableViewTest.m */,
@@ -380,6 +387,7 @@
 				B7EE698518187BC900B983FE /* CCSprite9SliceTest.m in Sources */,
 				B7C6239617F10F0600928F91 /* CCTableViewTest.m in Sources */,
 				B7EE697318186CFA00B983FE /* CCTextFieldTest.m in Sources */,
+				D389410E18639CC900725CFC /* CCPhysicsTest.m in Sources */,
 				B77060B21832EDF90043CC67 /* CCTextureCacheTest.m in Sources */,
 				B79DEE1718105B7C00A653C9 /* CCTransitionTest.m in Sources */,
 				75FCA706185F88C2006E7468 /* ColorTest.m in Sources */,
@@ -500,6 +508,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "cocos2d-ui-tests/osx/Prefix.pch";
 				INFOPLIST_FILE = "cocos2d-ui-tests/osx/Resources/Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/slembcke/Development/cocos2d-iphone/DerivedData/cocos2d/Build/Products/Debug",
+				);
 				OTHER_LDFLAGS = (
 					"-lz",
 					"-lsqlite3",
@@ -520,6 +532,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "cocos2d-ui-tests/osx/Prefix.pch";
 				INFOPLIST_FILE = "cocos2d-ui-tests/osx/Resources/Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/slembcke/Development/cocos2d-iphone/DerivedData/cocos2d/Build/Products/Debug",
+				);
 				OTHER_LDFLAGS = (
 					"-lz",
 					"-lsqlite3",

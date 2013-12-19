@@ -110,7 +110,7 @@
 	
 	CCPhysicsShape *shapes = nil;
 	
-	int limit = (looped ? count : count - 1);
+	NSUInteger limit = (looped ? count : count - 1);
 	for(int i=0; i<limit; i++){
 		CCPhysicsShape *shape = [CCPhysicsShape pillShapeFrom:points[i] to:points[(i + 1)%count] cornerRadius:cornerRadius];
 		// TODO Broken. Values may be wrong after applying a transform in onEnter.
@@ -129,7 +129,7 @@
 +(CCPhysicsBody *)bodyWithShapes:(NSArray *)shapes
 {
 	CCPhysicsShape *shapeList = nil;
-	for(int i=0, count=shapes.count; i<count; i++){
+	for(NSUInteger i=0, count=shapes.count; i<count; i++){
 		CCPhysicsShape *shape = shapes[i];
 		shape.next = shapeList;
 		shapeList = shape;

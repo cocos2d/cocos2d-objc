@@ -73,11 +73,6 @@ enum  {
 /* Sets the view in fullscreen or window mode */
 - (void) setFullScreen:(BOOL)fullscreen;
 
-/* Converts window size coordinates to logical coordinates.
- Useful only if resizeMode is kCCDirectorResize_Scale.
- If resizeMode is kCCDirectorResize_NoScale, then no conversion will be done.
-*/
-- (CGPoint) convertToLogicalCoordinates:(CGPoint)coordinates;
 @end
 
 
