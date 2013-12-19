@@ -15,6 +15,8 @@
 
 -(void) setupBasicShapeTest
 {
+	self.subTitle = @"Basic simulation and collision.";
+	
 	CCPhysicsNode *physics = [CCPhysicsNode node];
 	physics.debugDraw = YES;
 	[self.contentNode addChild:physics];
@@ -74,6 +76,8 @@
 
 -(void) setupScaledBasicShapeTest
 {
+	self.subTitle = @"Basic simulation with scaled nodes.";
+	
 	CCPhysicsNode *physics = [CCPhysicsNode node];
 	physics.debugDraw = YES;
 	[self.contentNode addChild:physics];
@@ -137,6 +141,8 @@
 
 -(void) setupJointTest
 {
+	self.subTitle = @"Various joints.";
+	
 	CCPhysicsNode *physics = [CCPhysicsNode node];
 	physics.gravity = ccp(0, -100);
 	physics.debugDraw = YES;
@@ -204,6 +210,8 @@
 
 -(void) setupStackTest
 {
+	self.subTitle = @"Stable stacking.";
+	
 	CCPhysicsNode *physics = [CCPhysicsNode node];
 	physics.gravity = ccp(0, -100);
 	physics.debugDraw = YES;
@@ -234,6 +242,8 @@
 
 -(void)setupDensityTest
 {
+	self.subTitle = @"The two boxes are equal in weight and should balance.";
+	
 	CCPhysicsNode *physics = [CCPhysicsNode node];
 	physics.debugDraw = YES;
 	physics.gravity = ccp(0, -100);
@@ -292,6 +302,74 @@
 		CGRect rect = {CGPointZero, sprite.contentSize};
 		CCPhysicsBody *body = sprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
 		body.density = 1.0;
+		
+		[physics addChild:sprite];
+	}
+}
+
+// This test currently doesn't work since we havent implemented proper physics/action support yet.
+-(void)setupMovingPlatformsTest
+{
+	self.subTitle = @"Moving platforms.";
+	
+	CCPhysicsNode *physics = [CCPhysicsNode node];
+	physics.gravity = ccp(0, -100);
+	physics.debugDraw = YES;
+	[self.contentNode addChild:physics];
+	
+	// TODO temporary.
+	physics.sleepTimeThreshold = INFINITY;
+	
+	{
+		// Vertical moving platform
+		CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/shape-3.png"];
+		sprite.position = ccp(120, 110);
+		
+		CGRect rect = {CGPointZero, sprite.contentSize};
+		CCPhysicsBody *body = sprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
+		body.type = CCPhysicsBodyTypeStatic;
+		
+		[sprite runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+			[CCActionMoveBy actionWithDuration:3 position:ccp(0, 100)],
+			[CCActionMoveBy actionWithDuration:3 position:ccp(0, -100)],
+			nil
+		]]];
+		
+		[physics addChild:sprite];
+	}{
+		// Box
+		CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/shape-0.png"];
+		sprite.position = ccp(120, 160);
+		
+		CGRect rect = {CGPointZero, sprite.contentSize};
+		sprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
+		
+		[physics addChild:sprite];
+	}
+	
+	{
+		// Horizontal moving platform
+		CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/shape-3.png"];
+		sprite.position = ccp(360, 160);
+		
+		CGRect rect = {CGPointZero, sprite.contentSize};
+		CCPhysicsBody *body = sprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
+		body.type = CCPhysicsBodyTypeStatic;
+		
+		[sprite runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+			[CCActionMoveBy actionWithDuration:3 position:ccp(100, 0)],
+			[CCActionMoveBy actionWithDuration:3 position:ccp(-100, 0)],
+			nil
+		]]];
+		
+		[physics addChild:sprite];
+	}{
+		// Box
+		CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/shape-0.png"];
+		sprite.position = ccp(360, 210);
+		
+		CGRect rect = {CGPointZero, sprite.contentSize};
+		sprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
 		
 		[physics addChild:sprite];
 	}

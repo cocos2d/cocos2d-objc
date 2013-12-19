@@ -29,10 +29,6 @@
 #import "CCPhysics+ObjectiveChipmunk.h"
 
 
-// TODO temporary
-static inline void NYI(){@throw @"Not Yet Implemented";}
-
-
 #define FOREACH_SHAPE(__body__, __shapeVar__) for(CCPhysicsShape *__shapeVar__ = __body__->_shapeList; __shapeVar__; __shapeVar__ = __shapeVar__.next)
 
 
@@ -242,8 +238,8 @@ NotAffectedByGravity
 	}
 }
 
-static CCPhysicsBodyType ToCocosBodyType[] = {CCPhysicsBodyTypeDynamic, CCPhysicsBodyTypeKinematic, CCPhysicsBodyTypeStatic};
-static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KINEMATIC, CP_BODY_TYPE_STATIC};
+static CCPhysicsBodyType ToCocosBodyType[] = {CCPhysicsBodyTypeDynamic, CCPhysicsBodyTypeStatic, CCPhysicsBodyTypeStatic};
+static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, /*CP_BODY_TYPE_KINEMATIC,*/ CP_BODY_TYPE_STATIC};
 
 -(CCPhysicsBodyType)type {return ToCocosBodyType[_body.type];}
 -(void)setType:(CCPhysicsBodyType)type {_body.type = ToChipmunkBodyType[type];}
@@ -337,10 +333,25 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 -(void)setNode:(CCNode *)node {_node = node;}
 
 -(cpVect)absolutePosition {return _body.position;}
--(void)setAbsolutePosition:(cpVect)absolutePosition {_body.position = absolutePosition;}
+-(void)setAbsolutePosition:(cpVect)absolutePosition
+{
+	_body.position = absolutePosition;
+	
+	if(_body.type == CP_BODY_TYPE_STATIC){
+		// Need to force Chipmunk to update the spatial indexes for a static body.
+		[_body.space reindexShapesForBody:_body];
+	}
+}
 
 -(cpFloat)absoluteRadians {return _body.angle;}
--(void)setAbsoluteRadians:(cpFloat)absoluteRadians {_body.angle = absoluteRadians;}
+-(void)setAbsoluteRadians:(cpFloat)absoluteRadians {
+	_body.angle = absoluteRadians;
+	
+	if(_body.type == CP_BODY_TYPE_STATIC){
+		// Need to force Chipmunk to update the spatial indexes for a static body.
+		[_body.space reindexShapesForBody:_body];
+	}
+}
 
 -(cpTransform)absoluteTransform {return _body.transform;}
 

@@ -32,10 +32,6 @@
 #define DEFAULT_ELASTICITY 0.2
 
 
-// TODO temporary
-static inline void NYI(){@throw @"Not Yet Implemented";}
-
-
 @interface CCNode()
 -(CGAffineTransform)nonRigidTransform;
 @end

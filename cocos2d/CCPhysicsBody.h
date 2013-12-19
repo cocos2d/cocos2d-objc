@@ -26,17 +26,15 @@
 
 @class CCPhysicsCollisionPair;
 
-// TODO Are we going to use NSENUM and such? Decided on naming conventions?
-
 /// Used to control how or if a body's position and velocity are updated.
 typedef NS_ENUM(unsigned char, CCPhysicsBodyType){
 	/// A regular rigid body that is affected by gravity, forces and collisions.
 	CCPhysicsBodyTypeDynamic,
 	
-	/// A body that is immovable by gravity, forces or collisions, but is moved using code.
-	CCPhysicsBodyTypeKinematic,
+//	/// A body that is immovable by gravity, forces or collisions, but is moved using code.
+//	CCPhysicsBodyTypeKinematic,
 	
-	/// A body that never moves such as a wall or the ground.
+	/// A body that is immovable such as a wall or the ground.
 	CCPhysicsBodyTypeStatic,
 };
 

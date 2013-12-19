@@ -9,6 +9,8 @@
 #import <XCTest/XCTest.h>
 #import "cocos2d.h"
 
+#import "CCPhysics+ObjectiveChipmunk.h"
+
 
 @interface CCPhysicsTests : XCTestCase
 
@@ -393,7 +395,7 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
 	XCTAssertTrue(node2.position.y == 0.0, @"");
 }
 
--(void)testDefaultBodyType
+-(void)testBodyType
 {
 	CGPoint points[3] = {};
 	
@@ -407,6 +409,21 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
 	XCTAssertEqual([CCPhysicsBody bodyWithPolylineFromRect:CGRectZero cornerRadius:0].type, CCPhysicsBodyTypeStatic, @"");
 	
 	XCTAssertEqual([CCPhysicsBody bodyWithPolylineFromPoints:points count:3 cornerRadius:0 looped:YES].type, CCPhysicsBodyTypeStatic, @"");
+	
+	// Test body type setters
+	CCPhysicsBody *body = [CCPhysicsBody bodyWithCircleOfRadius:0 andCenter:CGPointZero];
+	
+	body.type = CCPhysicsBodyTypeStatic;
+	XCTAssertEqual(body.type, CCPhysicsBodyTypeStatic, @"");
+	XCTAssertEqual(body.body.type, CP_BODY_TYPE_STATIC, @"");
+	
+//	body.type = CCPhysicsBodyTypeKinematic;
+//	XCTAssertEqual(body.type, CCPhysicsBodyTypeKinematic, @"");
+//	XCTAssertEqual(body.body.type, CP_BODY_TYPE_KINEMATIC, @"");
+	
+	body.type = CCPhysicsBodyTypeDynamic;
+	XCTAssertEqual(body.type, CCPhysicsBodyTypeDynamic, @"");
+	XCTAssertEqual(body.body.type, CP_BODY_TYPE_DYNAMIC, @"");
 }
 
 -(void)testBreakingJoints
