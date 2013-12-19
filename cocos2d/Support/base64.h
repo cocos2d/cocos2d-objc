@@ -22,7 +22,6 @@ extern "C" {
  *
  * @returns the length of the out buffer
  *
- @since v0.8.1
  */
 int base64Decode(unsigned char *in, unsigned int inLength, unsigned char **out);
 

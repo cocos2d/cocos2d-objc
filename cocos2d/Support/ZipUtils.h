@@ -50,7 +50,6 @@ extern "C" {
  * It will allocate 256k for the destination buffer. If it is not enough it will multiply the previous buffer size per 2, until there is enough memory.
  * @returns the length of the deflated buffer
  *
- @since v0.8.1
  */
 int ccInflateMemory(unsigned char *in, unsigned int inLength, unsigned char **out);
 
@@ -62,7 +61,6 @@ int ccInflateMemory(unsigned char *in, unsigned int inLength, unsigned char **ou
  *
  * @returns the length of the deflated buffer
  *
- @since v1.0.0
  */
 int ccInflateMemoryWithHint(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int outlengthHint );
 
@@ -71,7 +69,6 @@ int ccInflateMemoryWithHint(unsigned char *in, unsigned int inLength, unsigned c
  *
  * @returns the length of the deflated buffer
  *
- * @since v0.99.5
  */
 int ccInflateGZipFile(const char *filename, unsigned char **out);
 
@@ -79,7 +76,6 @@ int ccInflateGZipFile(const char *filename, unsigned char **out);
  *
  * @returns the length of the deflated buffer
  *
- * @since v0.99.5
  */
 int ccInflateCCZFile(const char *filename, unsigned char **out);
 

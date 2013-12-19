@@ -9,7 +9,9 @@
 #import "ccMacros.h"
 #import "ccTypes.h"
 
-
+/**
+ *  Defines a color to use with cocos2d.
+ */
 @interface CCColor : NSObject
 {
     GLfloat _r;
@@ -67,7 +69,12 @@
 - (BOOL)getWhite:(float *)white alpha:(float *)alpha;
 
 /**
- * Linearly interpolate from this color to 'toColor'. Parameter t is
+ *  Linearly interpolate from this color to 'toColor'. Parameter t is normalised
+ *
+ *  @param toColor Color to interpolate to.
+ *  @param t       Normalised progress.
+ *
+ *  @return Interpolated color.
  */
 - (CCColor*) interpolateTo:(CCColor *) toColor time:(float) t;
 

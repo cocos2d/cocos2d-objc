@@ -115,7 +115,6 @@ typedef void (^CCTimerBlock)(CCTimer *timer);
  You can use this property to create a 'slow motion' or 'fast forward' effect.
  Default is 1.0. To create a 'slow motion' effect, use values below 1.0.
  To create a 'fast forward' effect, use values higher than 1.0.
- @since v0.8
  @warning It will affect EVERY scheduled selector / action.
  */
 @property (nonatomic,readwrite) CCTime	timeScale;
@@ -128,7 +127,6 @@ typedef void (^CCTimerBlock)(CCTimer *timer);
  while `pauseAllTargets` will pause all the targets, one by one.
  `setPaused` will pause the whole Scheduler, meaning that calls to `resumeTargets:`, `resumeTarget:` won't affect it.
 
- @since v2.1.0
  */
 @property (nonatomic, assign) BOOL paused;
 
@@ -159,7 +157,6 @@ typedef void (^CCTimerBlock)(CCTimer *timer);
 
 /* Unschedules all selectors and blocks for a given target.
  This also includes the "update" selector.
- @since v0.99.3
  */
 -(void) unscheduleTarget:(NSObject<CCSchedulerTarget> *)target;
 
