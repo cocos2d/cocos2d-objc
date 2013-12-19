@@ -37,6 +37,7 @@
 #endif
 {
     CCSprite9Slice* _background;
+		CGFloat _scaleMultiplier;
 #ifdef __CC_PLATFORM_IOS
     BOOL _keyboardIsShown;
     float _keyboardHeight;
