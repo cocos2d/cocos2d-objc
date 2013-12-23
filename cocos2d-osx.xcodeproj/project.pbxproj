@@ -204,6 +204,15 @@
 		B7EE69ED1819EAAC00B983FE /* CCLayoutBox.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69E91819EAAC00B983FE /* CCLayoutBox.m */; };
 		B7EE6A34181B287300B983FE /* CCSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = B7EE6A32181B287300B983FE /* CCSlider.h */; };
 		B7EE6A35181B287300B983FE /* CCSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE6A33181B287300B983FE /* CCSlider.m */; };
+		D389412618639DD400725CFC /* CCPhysicsBody.h in Headers */ = {isa = PBXBuildFile; fileRef = D389411E18639DD400725CFC /* CCPhysicsBody.h */; };
+		D389412718639DD400725CFC /* CCPhysicsBody.m in Sources */ = {isa = PBXBuildFile; fileRef = D389411F18639DD400725CFC /* CCPhysicsBody.m */; };
+		D389412818639DD400725CFC /* CCPhysicsJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = D389412018639DD400725CFC /* CCPhysicsJoint.h */; };
+		D389412918639DD400725CFC /* CCPhysicsJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = D389412118639DD400725CFC /* CCPhysicsJoint.m */; };
+		D389412A18639DD400725CFC /* CCPhysicsNode.h in Headers */ = {isa = PBXBuildFile; fileRef = D389412218639DD400725CFC /* CCPhysicsNode.h */; };
+		D389412B18639DD400725CFC /* CCPhysicsNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D389412318639DD400725CFC /* CCPhysicsNode.m */; };
+		D389412C18639DD400725CFC /* CCPhysicsShape.h in Headers */ = {isa = PBXBuildFile; fileRef = D389412418639DD400725CFC /* CCPhysicsShape.h */; };
+		D389412D18639DD400725CFC /* CCPhysicsShape.m in Sources */ = {isa = PBXBuildFile; fileRef = D389412518639DD400725CFC /* CCPhysicsShape.m */; };
+		D389412E18639DF800725CFC /* libObjectiveChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D389410A18639C2C00725CFC /* libObjectiveChipmunk.a */; };
 		E01E6A3E121EDCD3001A484F /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */; };
 		E01E6B36121EDCED001A484F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79E121B5C870037C5C6 /* QuartzCore.framework */; };
 		E01E6B49121EDCF4001A484F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
@@ -358,11 +367,18 @@
 			remoteGlobalIDString = D309B22017EFE2EF00AA52C8;
 			remoteInfo = ObjectiveChipmunkTests;
 		};
-		D35209A218340F1200649117 /* PBXContainerItemProxy */ = {
+		D389410918639C2C00725CFC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D352098D18340ECC00649117 /* Chipmunk7.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D333C5F018639A0500BBC4FF;
+			remoteInfo = ObjectiveChipmunk;
+		};
+		D389410B18639C3200725CFC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D352098D18340ECC00649117 /* Chipmunk7.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = D309B21217EFE2EF00AA52C8;
+			remoteGlobalIDString = D333C5E118639A0500BBC4FF;
 			remoteInfo = ObjectiveChipmunk;
 		};
 /* End PBXContainerItemProxy section */
@@ -577,6 +593,14 @@
 		B7EE6A32181B287300B983FE /* CCSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCSlider.h; path = "cocos2d-ui/CCSlider.h"; sourceTree = "<group>"; };
 		B7EE6A33181B287300B983FE /* CCSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSlider.m; path = "cocos2d-ui/CCSlider.m"; sourceTree = "<group>"; };
 		D352098D18340ECC00649117 /* Chipmunk7.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Chipmunk7.xcodeproj; path = external/Chipmunk/xcode/Chipmunk7.xcodeproj; sourceTree = "<group>"; };
+		D389411E18639DD400725CFC /* CCPhysicsBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsBody.h; sourceTree = "<group>"; };
+		D389411F18639DD400725CFC /* CCPhysicsBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsBody.m; sourceTree = "<group>"; };
+		D389412018639DD400725CFC /* CCPhysicsJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsJoint.h; sourceTree = "<group>"; };
+		D389412118639DD400725CFC /* CCPhysicsJoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsJoint.m; sourceTree = "<group>"; };
+		D389412218639DD400725CFC /* CCPhysicsNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsNode.h; sourceTree = "<group>"; };
+		D389412318639DD400725CFC /* CCPhysicsNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsNode.m; sourceTree = "<group>"; };
+		D389412418639DD400725CFC /* CCPhysicsShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsShape.h; sourceTree = "<group>"; };
+		D389412518639DD400725CFC /* CCPhysicsShape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsShape.m; sourceTree = "<group>"; };
 		E01E663D121CA00A001A484F /* libcocos2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		E02BBC79126CD870006E46A2 /* CCAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAnimation.m; sourceTree = "<group>"; };
@@ -741,6 +765,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D389412E18639DF800725CFC /* libObjectiveChipmunk.a in Frameworks */,
 				E01E6A3E121EDCD3001A484F /* ApplicationServices.framework in Frameworks */,
 				E01E6B36121EDCED001A484F /* QuartzCore.framework in Frameworks */,
 				E01E6B49121EDCF4001A484F /* OpenGL.framework in Frameworks */,
@@ -1107,10 +1132,26 @@
 				D352099918340ECC00649117 /* libChipmunk.a */,
 				D352099B18340ECC00649117 /* libChipmunk-iPhone.a */,
 				D352099D18340ECC00649117 /* Benchmark iPhone.app */,
-				D352099F18340ECC00649117 /* libObjectiveChipmunk.a */,
+				D352099F18340ECC00649117 /* libObjectiveChipmunk-iPhone.a */,
 				D35209A118340ECC00649117 /* ObjectiveChipmunkTests.xctest */,
+				D389410A18639C2C00725CFC /* libObjectiveChipmunk.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		D389411D18639DBF00725CFC /* Physics */ = {
+			isa = PBXGroup;
+			children = (
+				D389411E18639DD400725CFC /* CCPhysicsBody.h */,
+				D389411F18639DD400725CFC /* CCPhysicsBody.m */,
+				D389412018639DD400725CFC /* CCPhysicsJoint.h */,
+				D389412118639DD400725CFC /* CCPhysicsJoint.m */,
+				D389412218639DD400725CFC /* CCPhysicsNode.h */,
+				D389412318639DD400725CFC /* CCPhysicsNode.m */,
+				D389412418639DD400725CFC /* CCPhysicsShape.h */,
+				D389412518639DD400725CFC /* CCPhysicsShape.m */,
+			);
+			name = Physics;
 			sourceTree = "<group>";
 		};
 		E0506A8413169AE100EAE33F /* Shaders */ = {
@@ -1155,6 +1196,7 @@
 				A0DA0BC015BCDB2400E80A92 /* Drawing Nodes */,
 				E076E7771225ECBF00DE0DA2 /* TiledMap & Parallax Nodes */,
 				E076E7781225ECC900DE0DA2 /* Layer, Scene & Transition Nodes */,
+				D389411D18639DBF00725CFC /* Physics */,
 				E076E7791225ECF700DE0DA2 /* Misc Nodes */,
 				E076E7711225EC8100DE0DA2 /* Actions */,
 				E076E7761225ECB800DE0DA2 /* Textures */,
@@ -1530,6 +1572,7 @@
 				E076E72C1225EC7400DE0DA2 /* CCTextureAtlas.h in Headers */,
 				E076E72E1225EC7400DE0DA2 /* CCTextureCache.h in Headers */,
 				E076E7301225EC7400DE0DA2 /* CCTexturePVR.h in Headers */,
+				D389412818639DD400725CFC /* CCPhysicsJoint.h in Headers */,
 				B770607B1831B0C40043CC67 /* ALDevice.h in Headers */,
 				B77060651831B0C40043CC67 /* OALAudioActions.h in Headers */,
 				B7D273291822F5460054849B /* CCBAnimationManager.h in Headers */,
@@ -1540,6 +1583,7 @@
 				E076E73A1225EC7400DE0DA2 /* CCTMXXMLParser.h in Headers */,
 				E076E73C1225EC7400DE0DA2 /* CCTransition.h in Headers */,
 				B77060921831B0C40043CC67 /* NSMutableArray+WeakReferences.h in Headers */,
+				D389412A18639DD400725CFC /* CCPhysicsNode.h in Headers */,
 				B77060891831B0C40043CC67 /* OALAudioSession.h in Headers */,
 				E076E7451225EC7400DE0DA2 /* CCGL.h in Headers */,
 				E076E7461225EC7400DE0DA2 /* CCNS.h in Headers */,
@@ -1557,6 +1601,7 @@
 				B770606D1831B0C40043CC67 /* OALAudioTracks.h in Headers */,
 				E076E7681225EC7400DE0DA2 /* OpenGL_Internal.h in Headers */,
 				B77060991831B0C40043CC67 /* OALTools.h in Headers */,
+				D389412C18639DD400725CFC /* CCPhysicsShape.h in Headers */,
 				B77060691831B0C40043CC67 /* OALAudioTrack.h in Headers */,
 				E076E7691225EC7400DE0DA2 /* TGAlib.h in Headers */,
 				B7C6239B17F10F3600928F91 /* CCTableView.h in Headers */,
@@ -1631,6 +1676,7 @@
 				B77060711831B0C40043CC67 /* ObjectAL.h in Headers */,
 				A66680C317D4D73000ECDE6F /* CCResponder.h in Headers */,
 				A66680C517D4D73000ECDE6F /* CCResponderManager.h in Headers */,
+				D389412618639DD400725CFC /* CCPhysicsBody.h in Headers */,
 				B7E2603517E7C774007067F0 /* NSEvent+CC.h in Headers */,
 				B77060961831B0C40043CC67 /* OALAudioFile.h in Headers */,
 				B7E2603917E7C786007067F0 /* UITouch+CC.h in Headers */,
@@ -1668,7 +1714,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				D35209A318340F1200649117 /* PBXTargetDependency */,
+				D389410C18639C3200725CFC /* PBXTargetDependency */,
 				A064312913C1418600CC5554 /* PBXTargetDependency */,
 			);
 			name = cocos2d;
@@ -1739,10 +1785,10 @@
 			remoteRef = D352099C18340ECC00649117 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		D352099F18340ECC00649117 /* libObjectiveChipmunk.a */ = {
+		D352099F18340ECC00649117 /* libObjectiveChipmunk-iPhone.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libObjectiveChipmunk.a;
+			path = "libObjectiveChipmunk-iPhone.a";
 			remoteRef = D352099E18340ECC00649117 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -1751,6 +1797,13 @@
 			fileType = wrapper.cfbundle;
 			path = ObjectiveChipmunkTests.xctest;
 			remoteRef = D35209A018340ECC00649117 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D389410A18639C2C00725CFC /* libObjectiveChipmunk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libObjectiveChipmunk.a;
+			remoteRef = D389410918639C2C00725CFC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1789,6 +1842,7 @@
 				E076E6E21225EC7400DE0DA2 /* CCActionProgressTimer.m in Sources */,
 				E076E6E61225EC7400DE0DA2 /* CCActionTween.m in Sources */,
 				B77060931831B0C40043CC67 /* NSMutableArray+WeakReferences.m in Sources */,
+				D389412D18639DD400725CFC /* CCPhysicsShape.m in Sources */,
 				B770608F1831B0C40043CC67 /* IOSVersion.m in Sources */,
 				E076E6E81225EC7400DE0DA2 /* CCAtlasNode.m in Sources */,
 				E076E6F51225EC7400DE0DA2 /* CCDrawingPrimitives.m in Sources */,
@@ -1804,6 +1858,7 @@
 				E076E70C1225EC7400DE0DA2 /* CCParallaxNode.m in Sources */,
 				B770607E1831B0C40043CC67 /* ALListener.m in Sources */,
 				E076E70E1225EC7400DE0DA2 /* CCParticleExamples.m in Sources */,
+				D389412718639DD400725CFC /* CCPhysicsBody.m in Sources */,
 				B77060681831B0C40043CC67 /* OALUtilityActions.m in Sources */,
 				B7EE69EB1819EAAC00B983FE /* CCLayout.m in Sources */,
 				E076E7101225EC7400DE0DA2 /* CCParticleSystem.m in Sources */,
@@ -1835,6 +1890,7 @@
 				E076E75B1225EC7400DE0DA2 /* base64.c in Sources */,
 				E076E7611225EC7400DE0DA2 /* CCFileUtils.m in Sources */,
 				E076E7631225EC7400DE0DA2 /* CCProfiling.m in Sources */,
+				D389412B18639DD400725CFC /* CCPhysicsNode.m in Sources */,
 				E076E7641225EC7400DE0DA2 /* ccUtils.c in Sources */,
 				B770608C1831B0C40043CC67 /* OALSuspendHandler.m in Sources */,
 				E076E7671225EC7400DE0DA2 /* CGPointExtension.m in Sources */,
@@ -1857,6 +1913,7 @@
 				A046E2B814C1E5000005BBF2 /* CCGLView.m in Sources */,
 				B770606E1831B0C40043CC67 /* OALAudioTracks.m in Sources */,
 				A046E2C114C1E5480005BBF2 /* CCGLProgram.m in Sources */,
+				D389412918639DD400725CFC /* CCPhysicsJoint.m in Sources */,
 				A0C879AD14F98F1C00C0E8B2 /* NSThread+performBlock.m in Sources */,
 				A009FB91150EC87600897349 /* ccShaders.m in Sources */,
 				A0A7A506151416A000C8BD16 /* CCActionCatmullRom.m in Sources */,
@@ -1905,10 +1962,10 @@
 			target = A06430E613C1414300CC5554 /* kazmath */;
 			targetProxy = A064312813C1418600CC5554 /* PBXContainerItemProxy */;
 		};
-		D35209A318340F1200649117 /* PBXTargetDependency */ = {
+		D389410C18639C3200725CFC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = ObjectiveChipmunk;
-			targetProxy = D35209A218340F1200649117 /* PBXContainerItemProxy */;
+			targetProxy = D389410B18639C3200725CFC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1956,10 +2013,13 @@
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					external/Box2d,
-					external/Chipmunk/include,
 					external/kazmath/include,
+					"cocos2d/**",
+					"cocos2d-ui/**",
+					"cocos2d-ui-tests/**",
+					external/Chipmunk/include,
 					external/Chipmunk/objectivec/include,
+					"external/ObjectAL/**",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1986,10 +2046,13 @@
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					external/Box2d,
-					external/Chipmunk/include,
 					external/kazmath/include,
+					"cocos2d/**",
+					"cocos2d-ui/**",
+					"cocos2d-ui-tests/**",
+					external/Chipmunk/include,
 					external/Chipmunk/objectivec/include,
+					"external/ObjectAL/**",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_LDFLAGS = "-ObjC";

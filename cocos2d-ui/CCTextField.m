@@ -59,6 +59,12 @@
     _textField = [[UITextField alloc] initWithFrame:CGRectZero];
     _textField.delegate = self;
     _textField.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
+		
+		// UIKit might not be running in the same scale as us.
+		_scaleMultiplier = [CCDirector sharedDirector].contentScaleFactor/[UIScreen mainScreen].scale;
+		
+		UIFont *font = _textField.font;
+		_textField.font = [font fontWithSize:font.pointSize*_scaleMultiplier];
     
 #elif defined(__CC_PLATFORM_MAC)
     
@@ -71,6 +77,9 @@
     [_textField setBackgroundColor:[NSColor colorWithCalibratedRed:0 green:0 blue:0 alpha:0]];
     [_textField setWantsLayer:YES];
     
+		// TODO need to handle content sizing on Mac
+		_scaleMultiplier = 1.0;
+		
 #endif
     
     _padding = 4;
@@ -87,6 +96,9 @@
     viewPos.y += _padding;
     
     CGSize size = self.contentSizeInPoints;
+		size.width *= _scaleMultiplier;
+		size.height *= _scaleMultiplier;
+		
     viewPos.y -= size.height;
     size.width -= _padding * 2;
     size.height -= _padding * 2;

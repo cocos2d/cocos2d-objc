@@ -71,14 +71,14 @@ Class restartAction()
 
 		srandom(0);
 
-		CGSize s = [[CCDirector sharedDirector] winSize];
+		CGSize s = [[CCDirector sharedDirector] viewSize];
 
 		// Title
 		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:40];
 		[self addChild:label z:1];
 		[label setPosition: ccp(s.width/2, s.height-32)];
-		[label setColor:ccc3(255,255,40)];
-
+		[label setColor: [CCColor colorWithRed:1.0 green:1.0 blue:0.2]];
+		
 		// Subtitle
 		NSString *subtitle = [self subtitle];
 		if( subtitle ) {
@@ -91,21 +91,23 @@ Class restartAction()
 		currentQuantityOfNodes = 0;
 		quantityOfNodes = nodes;
 
-		[CCMenuItemFont setFontSize:65];
-		CCMenuItemFont *decrease = [CCMenuItemFont itemWithString: @" - " target:self selector:@selector(onDecrease:)];
-		[decrease.label setColor:ccc3(0,200,20)];
-		CCMenuItemFont *increase = [CCMenuItemFont itemWithString: @" + " target:self selector:@selector(onIncrease:)];
-		[increase.label setColor:ccc3(0,200,20)];
-
-		CCMenu *menu = [CCMenu menuWithItems: decrease, increase, nil];
-		[menu alignItemsHorizontally];
-		menu.position = ccp(s.width/2, s.height/2+15);
-		[self addChild:menu z:1];
-
-		CCLabelTTF *infoLabel = [CCLabelTTF labelWithString:@"0 nodes" fontName:@"Marker Felt" fontSize:30];
-		[infoLabel setColor:ccc3(0,200,20)];
+		CCButton* btn;
+		
+		btn = [CCButton buttonWithTitle:@" - "];
+    btn.positionType = CCPositionTypeNormalized;
+    btn.position = ccp(0.2, 0.1);
+    [btn setTarget:self selector:@selector(onDecrease:)];
+		[self addChild:btn];
+		
+		btn = [CCButton buttonWithTitle:@" + "];
+    btn.positionType = CCPositionTypeNormalized;
+    btn.position = ccp(0.8, 0.1);
+    [btn setTarget:self selector:@selector(onIncrease:)];
+		[self addChild:btn];
+		
+		CCLabelTTF *infoLabel = [CCLabelTTF labelWithAttributedString:@"0 nodes"];
 		infoLabel.position = ccp(s.width/2, s.height/2-15);
-		[self addChild:infoLabel z:1 tag:kTagInfoLayer];
+		[self addChild:infoLabel z:1 name:@"info"];
 
 
 		// Next Prev Test
@@ -232,7 +234,7 @@ Class restartAction()
 
 -(void) updateQuantityOfNodes
 {
-	CGSize s = [[CCDirector sharedDirector] winSize];
+	CGSize s = [[CCDirector sharedDirector] viewSize];
 	// increase nodes
 	if( currentQuantityOfNodes < quantityOfNodes ) {
 		for(int i=0;i < (quantityOfNodes-currentQuantityOfNodes);i++) {
@@ -355,7 +357,7 @@ Class restartAction()
 
 -(void) updateQuantityOfNodes
 {
-	CGSize s = [[CCDirector sharedDirector] winSize];
+	CGSize s = [[CCDirector sharedDirector] viewSize];
 	// increase nodes
 	if( currentQuantityOfNodes < quantityOfNodes ) {
 		for(int i=0;i < (quantityOfNodes-currentQuantityOfNodes);i++) {

@@ -317,7 +317,7 @@ RadiusForTransform(CGAffineTransform t)
 -(id)initWithPolygonFromPoints:(CGPoint *)points count:(NSUInteger)count cornerRadius:(CGFloat)cornerRadius
 {
 	if((self = [super init])){
-		_shape = [ChipmunkPolyShape polyWithBody:nil count:count verts:points transform:cpTransformIdentity radius:cornerRadius];
+		_shape = [ChipmunkPolyShape polyWithBody:nil count:(int)count verts:points transform:cpTransformIdentity radius:cornerRadius];
 		_radius = cornerRadius;
 		_points = calloc(count, sizeof(CGPoint));
 		memcpy(_points, points, count*sizeof(CGPoint));
@@ -356,7 +356,7 @@ RadiusForTransform(CGAffineTransform t)
 {
 	cpShape *shape = self.shape.shape;
 	cpPolyShapeSetRadius(shape, _radius*RadiusForTransform(transform));
-	cpPolyShapeSetVerts(shape, _count, _points, transform);
+	cpPolyShapeSetVerts(shape, (int)_count, _points, transform);
 }
 
 @end

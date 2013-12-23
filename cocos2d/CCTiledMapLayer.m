@@ -469,7 +469,7 @@ int compareInts (const void * a, const void * b)
 -(NSUInteger) atlasIndexForExistantZ:(NSUInteger)z
 {
     NSUInteger indexResult = [_atlasIndexArray
-                              indexOfObject:[NSNumber numberWithInt:z]
+                              indexOfObject:[NSNumber numberWithInt:(int) z]
                               inSortedRange:NSMakeRange(0, [_atlasIndexArray count])
                               options:0
                               usingComparator:^(id a, id b) {

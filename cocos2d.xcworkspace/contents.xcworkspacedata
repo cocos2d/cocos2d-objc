@@ -8,9 +8,6 @@
       location = "group:cocos2d-tests-ios.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:tests/PerformanceTests/cocos2d-ios-PerformanceTests.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:cocos2d-osx.xcodeproj">
    </FileRef>
    <FileRef
