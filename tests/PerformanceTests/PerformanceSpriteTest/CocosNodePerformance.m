@@ -9,7 +9,7 @@
 
 - (void)performanceMoveByActions
 {
-	CGSize size = [[CCDirector sharedDirector] winSize];
+	CGSize size = [[CCDirector sharedDirector] viewSize];
 	self.position = ccp(random() % (int)size.width, random() % (int)size.height);
 
 	float moveDuration = 0.5f + (random() % 1000) / 500.0f;
@@ -22,7 +22,7 @@
 
 - (void)performanceMoveToActions
 {
-	CGSize size = [[CCDirector sharedDirector] winSize];
+	CGSize size = [[CCDirector sharedDirector] viewSize];
 	self.position = ccp(random() % (int)size.width, random() % (int)size.height);
     CGPoint moveDestination = ccp(random() % (int)size.width, random() % (int)size.height);
 
@@ -39,7 +39,7 @@
 
 - (void)performanceActions
 {
-	CGSize size = [[CCDirector sharedDirector] winSize];
+	CGSize size = [[CCDirector sharedDirector] viewSize];
 	self.position = ccp(random() % (int)size.width, random() % (int)size.height);
 
 	float period = 0.5f + (random() % 1000) / 500.0f;
@@ -56,7 +56,7 @@
 
 - (void)performanceActions20
 {
-	CGSize size = [[CCDirector sharedDirector] winSize];
+	CGSize size = [[CCDirector sharedDirector] viewSize];
 	if( CCRANDOM_0_1() < 0.2f )
 		self.position = ccp(random() % (int)size.width, random() % (int)size.height);
 	else
@@ -76,7 +76,7 @@
 
 - (void)performanceRotationScale
 {
-	CGSize size = [[CCDirector sharedDirector] winSize];
+	CGSize size = [[CCDirector sharedDirector] viewSize];
 	self.position = ccp(random() % (int)size.width, random() % (int)size.height);
 	self.rotation = CCRANDOM_0_1() * 360;
 	self.scale = CCRANDOM_0_1() * 2;
@@ -84,13 +84,13 @@
 
 - (void)performancePosition
 {
-	CGSize size = [[CCDirector sharedDirector] winSize];
+	CGSize size = [[CCDirector sharedDirector] viewSize];
 	self.position = ccp(random() % (int)size.width, random() % (int)size.height);
 }
 
 - (void)performanceout20
 {
-	CGSize size = [[CCDirector sharedDirector] winSize];
+	CGSize size = [[CCDirector sharedDirector] viewSize];
 
 	if( CCRANDOM_0_1() < 0.2f )
 		self.position = ccp(random() % (int)size.width, random() % (int)size.height);
@@ -107,7 +107,7 @@
 
 - (void)performanceScale
 {
-	CGSize size = [[CCDirector sharedDirector] winSize];
+	CGSize size = [[CCDirector sharedDirector] viewSize];
 	self.position = ccp(random() % (int)size.width, random() % (int)size.height);
 	self.scale = CCRANDOM_0_1() * 100 / 50;
 }

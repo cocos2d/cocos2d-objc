@@ -58,14 +58,17 @@
 	[self loadAndDisplayImageNamed: @"test_image.jpeg" withTitle: @"JPEG loading example (no alpha, white spots)"];
 }
 
--(void) setupPVRLoadingTest
-{
-	[self loadAndDisplayImageNamed: @"test_image.pvr" withTitle: @"PVR loading example (no alpha)"];
-}
-
 -(void) setupTIFFLoadingTest
 {
 	[self loadAndDisplayImageNamed: @"test_image.tiff" withTitle: @"TIFF loading example (has alpha)"];
+}
+
+#ifdef __CC_PLATFORM_IOS
+// PVR on iOS only.
+
+-(void) setupPVRLoadingTest
+{
+	[self loadAndDisplayImageNamed: @"test_image.pvr" withTitle: @"PVR loading example (no alpha)"];
 }
 
 -(void) setupPVRa8LoadingTest
@@ -160,6 +163,7 @@
 {
 	[self loadAndDisplayImageNamed: @"test_image_rgba4444.pvr.ccz" withTitle: @"PVR gzipped.ccz rgba4444"];
 }
+#endif
 
 -(void) setupNonPowerOfTwoTextureTest
 {
