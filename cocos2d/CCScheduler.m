@@ -75,15 +75,17 @@
 
 
 @implementation CCScheduledTarget {
-	__weak NSObject<CCSchedulerTarget> *_target;
+	__unsafe_unretained NSObject<CCSchedulerTarget> *_target;
 	CCTimer *_timers;
 }
 
 static void
 InvokeMethods(NSArray *methods, SEL selector, CCTime dt)
 {
-	for(NSUInteger i=0, count=methods.count; i<count; i++){
-		CCScheduledTarget *scheduledTarget = methods[i];
+//	methods = [methods copy];
+//	for(NSUInteger i=0, count=methods.count; i<count; i++){
+//		__unsafe_unretained CCScheduledTarget *scheduledTarget = methods[i];
+	for(CCScheduledTarget *scheduledTarget in [methods copy]){
 		if(!scheduledTarget->_paused) objc_msgSend(scheduledTarget->_target, selector, dt);
 	}
 }
