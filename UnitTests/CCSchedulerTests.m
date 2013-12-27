@@ -10,23 +10,60 @@
 #import "cocos2d.h"
 
 
-@interface SchedulerTarget : NSObject<CCSchedulerTarget>
+@interface SequenceTester : NSObject<CCSchedulerTarget>
 @property(nonatomic, strong) NSMutableArray *sequence;
 @property(nonatomic, assign) NSInteger priority;
 @property(nonatomic, copy) NSString *name;
 @end
 
 
-@implementation SchedulerTarget
+@implementation SequenceTester
 
 -(void)update:(CCTime)delta
 {
-	[_sequence addObject:[NSString stringWithFormat:@"update(%@):%.1f", self.name, delta]];
+	if(_sequence) [_sequence addObject:[NSString stringWithFormat:@"update(%@):%.1f", self.name, delta]];
 }
 
 -(void)fixedUpdate:(CCTime)delta
 {
-	[_sequence addObject:[NSString stringWithFormat:@"fixedUpdate(%@):%.1f", self.name, delta]];
+	if(_sequence) [_sequence addObject:[NSString stringWithFormat:@"fixedUpdate(%@):%.1f", self.name, delta]];
+}
+
+@end
+
+
+@interface ScheduledRemoveTester : NSObject<CCSchedulerTarget>
+-(id)initWithScheduler:(CCScheduler *)scheduler removalTime:(int)removalTime;
+@end
+
+
+@implementation ScheduledRemoveTester {
+	CCScheduler *_scheduler;
+	// int since it's also used as a priority.
+	int _removalTime;
+}
+
+-(NSInteger)priority
+{
+	// Force it to sort by removal time to ensure objects are removed in worst case order.
+	return _removalTime;
+}
+
+-(id)initWithScheduler:(CCScheduler *)scheduler removalTime:(int)removalTime
+{
+	if((self = [super init])){
+		_scheduler = scheduler;
+		_removalTime = removalTime;
+	}
+	
+	return self;
+}
+
+-(void)update:(CCTime)delta
+{
+	if(_scheduler.currentTime > _removalTime){
+		[_scheduler unscheduleTarget:self];
+	}
 }
 
 @end
@@ -185,7 +222,7 @@
 	scheduler.maxTimeStep = INFINITY;
 	scheduler.fixedTimeStep = 1.0;
 	
-	SchedulerTarget *target = [[SchedulerTarget alloc] init];
+	SequenceTester *target = [[SequenceTester alloc] init];
 	target.sequence = seq;
 	target.name = @"foo";
 	
@@ -405,7 +442,7 @@
 	NSArray *priorities = @[@4, @5, @8, @0, @7, @2, @3, @9, @6, @1];
 	
 	for(NSNumber *priority in priorities){
-		SchedulerTarget *target = [[SchedulerTarget alloc] init];
+		SequenceTester *target = [[SequenceTester alloc] init];
 		target.priority = priority.integerValue;
 		
 		[scheduler scheduleBlock:^(CCTimer *timer){[seq addObject:priority];} forTarget:target withDelay:1.0];
@@ -431,12 +468,12 @@
 	} forTarget:nil withDelay:1.0];
 	
 	// This is a high priority target and will be called first to pause the first timer.
-	SchedulerTarget *target = [[SchedulerTarget alloc] init];
+	SequenceTester *target = [[SequenceTester alloc] init];
 	target.priority = -1;
 	
 	[scheduler setPaused:NO target:target];
 	
-	[scheduler scheduleBlock:^(CCTimer *timer){
+	[scheduler scheduleBlock:^(CCTimer *unused){
 		timer.paused = true;
 		timer2Called = true;
 	} forTarget:target withDelay:1.0];
@@ -444,6 +481,73 @@
 	[scheduler update:10.0];
 	XCTAssertTrue(timer1Called, @"");
 	XCTAssertTrue(timer2Called, @"");
+}
+
+-(void)testRemoveScheduledUpdate
+{
+	CCScheduler *scheduler = [[CCScheduler alloc] init];
+	scheduler.maxTimeStep = INFINITY;
+	scheduler.fixedTimeStep = INFINITY;
+	
+	const int count = 10;
+	NSMutableArray *targets = [NSMutableArray array];
+	
+	for(int i=0; i<count; i++){
+		ScheduledRemoveTester *target = [[ScheduledRemoveTester alloc] initWithScheduler:scheduler removalTime:i];
+		[scheduler scheduleTarget:target];
+		[scheduler setPaused:FALSE target:target];
+		[targets addObject:target];
+	}
+	
+	for(id target in targets){
+		XCTAssertTrue([scheduler isTargetScheduled:target], @"");
+	}
+	
+	CCTime dt = 1.0/60.0;
+	for(CCTime t=0.0; t<count; t += dt){
+		// Update methods will remove the targets one by one.
+		[scheduler update:dt];
+	}
+	
+	for(id target in targets){
+		XCTAssertFalse([scheduler isTargetScheduled:target], @"");
+	}
+}
+
+-(void)testLotsOfTargetRemovals
+{
+	CCScheduler *scheduler = [[CCScheduler alloc] init];
+	scheduler.maxTimeStep = INFINITY;
+	scheduler.fixedTimeStep = INFINITY;
+	
+	const int count = 500;
+	NSMutableArray *targets = [NSMutableArray array];
+	
+	for(int i=0; i<count; i++){
+		SequenceTester *target = [[SequenceTester alloc] init];
+		[scheduler scheduleTarget:target];
+		[scheduler setPaused:FALSE target:target];
+		[targets addObject:target];
+	}
+	
+	for(id target in targets){
+		XCTAssertTrue([scheduler isTargetScheduled:target], @"");
+	}
+	
+	CCTime dt = 1.0/60.0;
+	for(CCTime t=0.0; t<count; t += dt){
+		CCTime t = scheduler.currentTime;
+		// Remove the scheduler targets outside of the update loop in this test.
+		if(floor(t) < floor(t + dt)){
+			[scheduler unscheduleTarget:targets[(int)t]];
+		}
+		
+		[scheduler update:dt];
+	}
+	
+	for(id target in targets){
+		XCTAssertFalse([scheduler isTargetScheduled:target], @"");
+	}
 }
 
 @end
