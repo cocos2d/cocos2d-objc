@@ -82,9 +82,6 @@
 static void
 InvokeMethods(NSArray *methods, SEL selector, CCTime dt)
 {
-//	methods = [methods copy];
-//	for(NSUInteger i=0, count=methods.count; i<count; i++){
-//		__unsafe_unretained CCScheduledTarget *scheduledTarget = methods[i];
 	for(CCScheduledTarget *scheduledTarget in [methods copy]){
 		if(!scheduledTarget->_paused) objc_msgSend(scheduledTarget->_target, selector, dt);
 	}
