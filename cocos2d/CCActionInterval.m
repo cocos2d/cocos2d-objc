@@ -553,8 +553,16 @@
 }
 -(void) update: (CCTime) t
 {
-	[_target setRotationalSkewX: _startAngleX + _diffAngleX * t];
-	[_target setRotationalSkewY: _startAngleY + _diffAngleY * t];
+    // added to support overriding setRotation only
+    if (_startAngleX == _startAngleY)
+    {
+        [_target setRotation:(_startAngleX + (_diffAngleX * t))];
+    }
+    else
+    {
+        [_target setRotationalSkewX: _startAngleX + _diffAngleX * t];
+        [_target setRotationalSkewY: _startAngleY + _diffAngleY * t];
+    }
 }
 @end
 
@@ -587,8 +595,8 @@
 {
 	if( (self=[super initWithDuration: t]) ){
 		_angleX = aX;
-    _angleY = aY;
-  }
+        _angleY = aY;
+    }
 	return self;
 }
 
@@ -608,8 +616,16 @@
 -(void) update: (CCTime) t
 {
 	// XXX: shall I add % 360
-	[_target setRotationalSkewX: (_startAngleX + _angleX * t )];
-	[_target setRotationalSkewY: (_startAngleY + _angleY * t )];
+    // added to support overriding setRotation only
+    if (_startAngleX == _startAngleY)
+    {
+        [_target setRotation:(_startAngleX + (_angleX * t))];
+    }
+    else
+    {
+        [_target setRotationalSkewX: (_startAngleX + _angleX * t )];
+        [_target setRotationalSkewY: (_startAngleY + _angleY * t )];
+    }
 }
 
 -(CCActionInterval*) reverse
