@@ -1057,8 +1057,16 @@ static inline CGFloat bezierat( float a, float b, float c, float d, CCTime t )
 
 -(void) update: (CCTime) t
 {
-	[_target setScaleX: (_startScaleX + _deltaX * t ) ];
-	[_target setScaleY: (_startScaleY + _deltaY * t ) ];
+    // added to support overriding setScale only
+    if (_startScaleX == _startScaleY)
+    {
+        [_target setScale:(_startScaleX + (_deltaX * t))];
+    }
+    else
+    {
+        [_target setScaleX: (_startScaleX + _deltaX * t ) ];
+        [_target setScaleY: (_startScaleY + _deltaY * t ) ];
+    }
 }
 @end
 
