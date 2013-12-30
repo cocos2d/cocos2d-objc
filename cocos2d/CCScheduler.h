@@ -127,7 +127,7 @@ typedef void (^CCTimerBlock)(CCTimer *timer);
 @property(nonatomic, assign) CCTime maxTimeStep;
 
 // The time between fixedUpdate: calls.
-//@property(nonatomic, assign) CCTime fixedUpdateInterval;
+@property(nonatomic, assign) CCTime fixedUpdateInterval;
 
 /* 'update' the scheduler.
  You should NEVER call this method, unless you know what you are doing.

@@ -91,7 +91,7 @@
 	NSMutableArray *seq = [NSMutableArray array];
 	CCScheduler *scheduler = [[CCScheduler alloc] init];
 	scheduler.maxTimeStep = INFINITY;
-	scheduler.fixedTimeStep = INFINITY;
+	scheduler.fixedUpdateInterval = INFINITY;
 	
 	[scheduler scheduleBlock:^(CCTimer *timer){
 		XCTAssertEqual(timer.deltaTime, 0.0, @"");
@@ -109,7 +109,7 @@
 	NSMutableArray *seq = [NSMutableArray array];
 	CCScheduler *scheduler = [[CCScheduler alloc] init];
 	scheduler.maxTimeStep = INFINITY;
-	scheduler.fixedTimeStep = INFINITY;
+	scheduler.fixedUpdateInterval = INFINITY;
 	
 	[scheduler scheduleBlock:^(CCTimer *timer){
 		XCTAssertEqual(timer.deltaTime, 1.0, @"");
@@ -127,7 +127,7 @@
 	NSMutableArray *seq = [NSMutableArray array];
 	CCScheduler *scheduler = [[CCScheduler alloc] init];
 	scheduler.maxTimeStep = INFINITY;
-	scheduler.fixedTimeStep = INFINITY;
+	scheduler.fixedUpdateInterval = INFINITY;
 	
 	[scheduler scheduleBlock:^(CCTimer *timer){
 		XCTAssertEqual(timer.deltaTime, 1.0, @"");
@@ -146,7 +146,7 @@
 	NSMutableArray *seq = [NSMutableArray array];
 	CCScheduler *scheduler = [[CCScheduler alloc] init];
 	scheduler.maxTimeStep = INFINITY;
-	scheduler.fixedTimeStep = INFINITY;
+	scheduler.fixedUpdateInterval = INFINITY;
 	
 	__block CCTime expectedInvokeTime = 1.0;
 	__block CCTime expectedDeltaTime = 1.0;
@@ -173,7 +173,7 @@
 	NSMutableArray *seq = [NSMutableArray array];
 	CCScheduler *scheduler = [[CCScheduler alloc] init];
 	scheduler.maxTimeStep = INFINITY;
-	scheduler.fixedTimeStep = INFINITY;
+	scheduler.fixedUpdateInterval = INFINITY;
 	
 	CCTimer *timer = [scheduler scheduleBlock:^(CCTimer *timer){
 			[seq addObject:@(timer.invokeTime)];
@@ -193,7 +193,7 @@
 	__block int counter = 0;
 	CCScheduler *scheduler = [[CCScheduler alloc] init];
 	scheduler.maxTimeStep = INFINITY;
-	scheduler.fixedTimeStep = INFINITY;
+	scheduler.fixedUpdateInterval = INFINITY;
 	
 	CCTimer *timer = [scheduler scheduleBlock:^(CCTimer *timer){
 			counter++;
@@ -220,7 +220,7 @@
 	NSMutableArray *seq = [NSMutableArray array];
 	CCScheduler *scheduler = [[CCScheduler alloc] init];
 	scheduler.maxTimeStep = INFINITY;
-	scheduler.fixedTimeStep = 1.0;
+	scheduler.fixedUpdateInterval = 1.0;
 	
 	SequenceTester *target = [[SequenceTester alloc] init];
 	target.sequence = seq;
@@ -298,7 +298,7 @@
 	
 	CCScheduler *scheduler = [[CCScheduler alloc] init];
 	scheduler.maxTimeStep = INFINITY;
-	scheduler.fixedTimeStep = INFINITY;
+	scheduler.fixedUpdateInterval = INFINITY;
 	
 	// Stuff 100k timers into the scheduler.
 	for(int i=0; i<100000; i++){
@@ -335,7 +335,7 @@
 	
 	CCScheduler *scheduler = [[CCScheduler alloc] init];
 	scheduler.maxTimeStep = INFINITY;
-	scheduler.fixedTimeStep = INFINITY;
+	scheduler.fixedUpdateInterval = INFINITY;
 	
 	int repeatCount = 1000;
 	NSNumber *expectedInvocationCount = @(repeatCount + 1);
@@ -367,7 +367,7 @@
 {
 	CCScheduler *scheduler = [[CCScheduler alloc] init];
 	scheduler.maxTimeStep = INFINITY;
-	scheduler.fixedTimeStep = INFINITY;
+	scheduler.fixedUpdateInterval = INFINITY;
 	
 	[scheduler update:1.0];
 	XCTAssertEqual(scheduler.currentTime, 1.0, @"");
@@ -407,7 +407,7 @@
 {
 	CCScheduler *scheduler = [[CCScheduler alloc] init];
 	scheduler.maxTimeStep = INFINITY;
-	scheduler.fixedTimeStep = INFINITY;
+	scheduler.fixedUpdateInterval = INFINITY;
 	
 	__block int invocations = 0;
 	__block CCTime delay = 1.0;
@@ -437,7 +437,7 @@
 	NSMutableArray *seq = [NSMutableArray array];
 	CCScheduler *scheduler = [[CCScheduler alloc] init];
 	scheduler.maxTimeStep = INFINITY;
-	scheduler.fixedTimeStep = INFINITY;
+	scheduler.fixedUpdateInterval = INFINITY;
 	
 	NSArray *priorities = @[@4, @5, @8, @0, @7, @2, @3, @9, @6, @1];
 	
@@ -457,7 +457,7 @@
 {
 	CCScheduler *scheduler = [[CCScheduler alloc] init];
 	scheduler.maxTimeStep = INFINITY;
-	scheduler.fixedTimeStep = INFINITY;
+	scheduler.fixedUpdateInterval = INFINITY;
 	
 	__block bool timer1Called = false;
 	__block bool timer2Called = false;
@@ -487,7 +487,7 @@
 {
 	CCScheduler *scheduler = [[CCScheduler alloc] init];
 	scheduler.maxTimeStep = INFINITY;
-	scheduler.fixedTimeStep = INFINITY;
+	scheduler.fixedUpdateInterval = INFINITY;
 	
 	const int count = 10;
 	NSMutableArray *targets = [NSMutableArray array];
@@ -518,7 +518,7 @@
 {
 	CCScheduler *scheduler = [[CCScheduler alloc] init];
 	scheduler.maxTimeStep = INFINITY;
-	scheduler.fixedTimeStep = INFINITY;
+	scheduler.fixedUpdateInterval = INFINITY;
 	
 	const int count = 500;
 	NSMutableArray *targets = [NSMutableArray array];
