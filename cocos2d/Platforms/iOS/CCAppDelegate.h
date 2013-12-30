@@ -17,7 +17,7 @@ NSString* const CCSetupPixelFormat;
 NSString* const CCSetupScreenMode;
 NSString* const CCSetupScreenOrientation;
 NSString* const CCSetupAnimationInterval;
-NSString* const CCSetupFixudUpdateInterval;
+NSString* const CCSetupFixedUpdateInterval;
 NSString* const CCSetupHideDebugStats;
 NSString* const CCSetupTabletScale2X;
 
@@ -90,7 +90,7 @@ NSString* const CCScreenModeFixed;
  *  - CCSetupScreenMode NSString value that accepts either CCScreenModeFlexible or CCScreenModeFixed.
  *  - CCSetupScreenOrientation NSString value that accepts either CCScreenOrientationLandscape or CCScreenOrientationPortrait.
  *  - CCSetupAnimationInterval NSNumber with double. Specifies the desired interval between animation frames. Supported values are 1.0/60.0 (default) and 1.0/30.0.
- *  - CCSetupFixudUpdateInterval NSNumber with double. Specifies the desired interval between fixed updates.Should be smaller than CCSetupAnimationInterval. Defaults to 1/60.0.
+ *  - CCSetupFixedUpdateInterval NSNumber with double. Specifies the desired interval between fixed updates.Should be smaller than CCSetupAnimationInterval. Defaults to 1/60.0.
  *  - CCSetupHideDebugStats NSNumber with bool. Specifies if the stats (FPS, frame time and draw call count) should be hidden when running in debug mode.
  *  - CCSetupTabletScale2X NSNumber with bool. If true, the iPad will be setup to act like it has a 512x384 "retina" screen. This makes it much easier to make universal iOS games. This value is overriden when using the fixed screen mode.
  *

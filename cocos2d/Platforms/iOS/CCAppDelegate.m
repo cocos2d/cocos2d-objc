@@ -22,7 +22,7 @@ NSString* const CCSetupPixelFormat = @"CCSetupPixelFormat";
 NSString* const CCSetupScreenMode = @"CCSetupScreenMode";
 NSString* const CCSetupScreenOrientation = @"CCSetupScreenOrientation";
 NSString* const CCSetupAnimationInterval = @"CCSetupAnimationInterval";
-NSString* const CCSetupFixudUpdateInterval = @"CCSetupFixudUpdateInterval";
+NSString* const CCSetupFixedUpdateInterval = @"CCSetupFixedUpdateInterval";
 NSString* const CCSetupHideDebugStats = @"CCSetupHideDebugStats";
 NSString* const CCSetupTabletScale2X = @"CCSetupTabletScale2X";
 
@@ -180,7 +180,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	NSTimeInterval animationInterval = [(config[CCSetupAnimationInterval] ?: @(1.0/60.0)) doubleValue];
 	[director setAnimationInterval:animationInterval];
 	
-	director.fixedUpdateInterval = [(config[CCSetupFixudUpdateInterval] ?: @(1.0/60.0)) doubleValue];
+	director.fixedUpdateInterval = [(config[CCSetupFixedUpdateInterval] ?: @(1.0/60.0)) doubleValue];
 	
 	// attach the openglView to the director
 	[director setView:glView];
