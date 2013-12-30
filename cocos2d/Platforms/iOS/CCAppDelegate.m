@@ -23,7 +23,7 @@ NSString* const CCSetupScreenMode = @"CCSetupScreenMode";
 NSString* const CCSetupScreenOrientation = @"CCSetupScreenOrientation";
 NSString* const CCSetupAnimationInterval = @"CCSetupAnimationInterval";
 NSString* const CCSetupFixedUpdateInterval = @"CCSetupFixedUpdateInterval";
-NSString* const CCSetupHideDebugStats = @"CCSetupHideDebugStats";
+NSString* const CCSetupShowDebugStats = @"CCSetupShowDebugStats";
 NSString* const CCSetupTabletScale2X = @"CCSetupTabletScale2X";
 
 NSString* const CCScreenOrientationLandscape = @"CCScreenOrientationLandscape";
@@ -169,12 +169,10 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	
 	director.wantsFullScreenLayout = YES;
 	
-#if DEBUG
-	if(![config[CCSetupHideDebugStats] boolValue]){
-		// Display FSP and SPF
-		[director setDisplayStats:YES];
-	}
-#endif
+//#if DEBUG
+	// Display FSP and SPF
+	[director setDisplayStats:[config[CCSetupShowDebugStats] boolValue]];
+//#endif
 	
 	// set FPS at 60
 	NSTimeInterval animationInterval = [(config[CCSetupAnimationInterval] ?: @(1.0/60.0)) doubleValue];
