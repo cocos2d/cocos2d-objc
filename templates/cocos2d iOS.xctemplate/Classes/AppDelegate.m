@@ -7,225 +7,48 @@
 //
 // -----------------------------------------------------------------------
 
-#import "cocos2d.h"
 #import "AppDelegate.h"
 #import "IntroScene.h"
 
-// -----------------------------------------------------------------------
+@implementation AppDelegate
 
-@implementation MyNavigationController
-
-// -----------------------------------------------------------------------
-
-// The available orientations should be defined in the Info.plist file.
-// And in iOS 6+ only, you can override it in the Root View controller in the "supportedInterfaceOrientations" method.
-// Only valid for iOS 6+. NOT VALID for iOS 4 / 5.
-- (NSUInteger)supportedInterfaceOrientations {
-	
-	// iPhone only
-	if( [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone )
-    return UIInterfaceOrientationMaskLandscape;
-	
-	// iPad only
-	return UIInterfaceOrientationMaskLandscape;
-}
-
-// -----------------------------------------------------------------------
-
-// Supported orientations. Customize it for your own needs
-// Only valid on iOS 4 / 5. NOT VALID for iOS 6.
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+// 
+-(BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	// iPhone only
-	if( [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone )
-    return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+	// This is the only app delegate method you need to implement when inheriting from CCAppDelegate.
+	// This method is a good place to add one time setup code that only runs when your app is first launched.
 	
-	// iPad only
-	// iPhone only
-	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
-}
-
-// -----------------------------------------------------------------------
-
-// This is needed for iOS4 and iOS5 in order to ensure
-// that the 1st scene has the correct dimensions
-// This is not needed on iOS6 and could be added to the application:didFinish...
-- (void)directorDidReshapeProjection:(CCDirector*)director
-{
-	if(director.runningScene == nil) {
-		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
-		// and add the scene to the stack. The director will run it when it automatically when the view is displayed.
-		[director runWithScene: [IntroScene scene]];
-	}
-}
-
-// -----------------------------------------------------------------------
-
-@end
-
-// -----------------------------------------------------------------------
-
-@implementation AppController
-
-// -----------------------------------------------------------------------
-
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-	// Create the main window
-	_window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	
-	
-	// CCGLView creation
-	// viewWithFrame: size of the OpenGL view. For full screen use [_window bounds]
-	//  - Possible values: any CGRect
-	// pixelFormat: Format of the render buffer. Use RGBA8 for better color precision (eg: gradients). But it takes more memory and it is slower
-	//	- Possible values: kEAGLColorFormatRGBA8, kEAGLColorFormatRGB565
-	// depthFormat: Use stencil if you plan to use CCClippingNode. Use Depth if you plan to use 3D effects, like CCCamera or CCNode#vertexZ
-	//  - Possible values: 0, GL_DEPTH_COMPONENT24_OES, GL_DEPTH24_STENCIL8_OES
-	// sharegroup: OpenGL sharegroup. Useful if you want to share the same OpenGL context between different threads
-	//  - Possible values: nil, or any valid EAGLSharegroup group
-	// multiSampling: Whether or not to enable multisampling
-	//  - Possible values: YES, NO
-	// numberOfSamples: Only valid if multisampling is enabled
-	//  - Possible values: 0 to glGetIntegerv(GL_MAX_SAMPLES_APPLE)
-	CCGLView *glView = [CCGLView viewWithFrame:[_window bounds]
-								   pixelFormat:kEAGLColorFormatRGB565
-								   depthFormat:0
-							preserveBackbuffer:NO
-									sharegroup:nil
-								 multiSampling:NO
-							   numberOfSamples:0];
-	
-	_director = (CCDirectorIOS*) [CCDirector sharedDirector];
-	
-	_director.wantsFullScreenLayout = YES;
-	
-	// Display FSP and SPF
-	[_director setDisplayStats:YES];
-	
-	// Set FPS at 60
-	[_director setAnimationInterval:1.0/60];
-	
-	// Attach the openglView to the director
-	[_director setView:glView];
-	
-	// 2D projection
-	[_director setProjection:CCDirectorProjection2D];
-	// [director setProjection:kCCDirectorProjection3D];
-	
-	// Enable "Retina" mode
-	glView.contentScaleFactor = [UIScreen mainScreen].scale;
-	
-	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
-	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
-	// You can change this setting at any time.
-	[CCTexture setDefaultAlphaPixelFormat:CCTexturePixelFormat_RGBA8888];
-	
-	// If the 1st suffix is not found and if fallback is enabled then fallback suffixes are going to searched. If none is found, it will try with the name without suffix.
-	// On iPad HD  : "-ipadhd", "-ipad",  "-hd"
-	// On iPad     : "-ipad", "-hd"
-	// On iPhone HD: "-hd"
-    CCFileUtils *sharedFileUtils = [CCFileUtils sharedFileUtils];
-    
-    sharedFileUtils.directoriesDict =
-    [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-     @"resources-tablet", CCFileUtilsSuffixiPad,
-     @"resources-tablethd", CCFileUtilsSuffixiPadHD,
-     @"resources-phone", CCFileUtilsSuffixiPhone,
-     @"resources-phonehd", CCFileUtilsSuffixiPhoneHD,
-     @"resources-phone", CCFileUtilsSuffixiPhone5,
-     @"resources-phonehd", CCFileUtilsSuffixiPhone5HD,
-     @"", CCFileUtilsSuffixDefault,
-     nil];
-    
-    sharedFileUtils.searchPath =
-    [NSArray arrayWithObjects:
-     [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Resources-shared"],
-     [[NSBundle mainBundle] resourcePath],
-     nil];
-    
-	sharedFileUtils.enableiPhoneResourcesOniPad = YES;
-    sharedFileUtils.searchMode = CCFileUtilsSearchModeDirectory;
-    [sharedFileUtils buildSearchResolutionsOrder];
-    
-    [sharedFileUtils loadFilenameLookupDictionaryFromFile:@"fileLookup.plist"];
-	
-	// Assume that PVR images have premultiplied alpha;
-	
-	// Create a Navigation Controller with the Director
-	_navController = [[MyNavigationController alloc] initWithRootViewController:_director];
-	_navController.navigationBarHidden = YES;
-    
-	// for rotation and other messages
-	[_director setDelegate:_navController];
-	
-	// set the Navigation Controller as the root view controller
-	[_window setRootViewController:_navController];
-	
-	// make main window visible
-	[_window makeKeyAndVisible];
+	// Setup Cocos2D with reasonable defaults for everything.
+	// There are a number of simple options you can change.
+	// If you want more flexibility, you can configure Cocos2D yourself instead of calling setupCocos2dWithOptions:.
+	[self setupCocos2dWithOptions:@{
+		// Show the FPS and draw call label.
+		CCSetupShowDebugStats: @(YES),
+		
+		// More examples of options you might want to fiddle with:
+		// (See CCAppDelegate.h for more information)
+		
+		// Use a 16 bit color buffer: 
+//		CCSetupPixelFormat: kEAGLColorFormatRGB565,
+		// Use a simplified coordinate system that is shared across devices.
+//		CCSetupScreenMode: CCScreenModeFixed,
+		// Run in portrait mode.
+//		CCSetupScreenOrientation: CCScreenOrientationPortrait,
+		// Run at a reduced framerate.
+//		CCSetupAnimationInterval: @(1.0/30.0),
+		// Run the fixed timestep extra fast.
+//		CCSetupFixedUpdateInterval: @(1.0/180.0),
+		// Make iPad's act like they run at a 2x content scale. (iPad retina 4x)
+//		CCSetupTabletScale2X: @(YES),
+	}];
 	
 	return YES;
 }
 
-// -----------------------------------------------------------------------
-
-// getting a call, pause the game
--(void) applicationWillResignActive:(UIApplication *)application
+-(CCScene *)startScene
 {
-	if( [_navController visibleViewController] == _director )
-    [_director pause];
+	// This method should return the very first scene to be run when your app starts.
+	return [IntroScene scene];
 }
 
-// -----------------------------------------------------------------------
-
-// call got rejected
--(void) applicationDidBecomeActive:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
-	if( [_navController visibleViewController] == _director )
-    [_director resume];
-}
-
-// -----------------------------------------------------------------------
-
--(void) applicationDidEnterBackground:(UIApplication*)application
-{
-	if( [_navController visibleViewController] == _director )
-    [_director stopAnimation];
-}
-
-// -----------------------------------------------------------------------
-
--(void) applicationWillEnterForeground:(UIApplication*)application
-{
-	if( [_navController visibleViewController] == _director )
-    [_director startAnimation];
-}
-
-// -----------------------------------------------------------------------
-
-// application will be killed
-- (void)applicationWillTerminate:(UIApplication *)application
-{
-	[_director end];
-}
-
-// -----------------------------------------------------------------------
-
-// purge memory
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] purgeCachedData];
-}
-
-// -----------------------------------------------------------------------
-
-// next delta time will be zero
--(void) applicationSignificantTimeChange:(UIApplication *)application
-{
-	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
-}
-
-// -----------------------------------------------------------------------
 @end
