@@ -225,7 +225,6 @@ static CCTimerBlock INVALIDATED_BLOCK = ^(CCTimer *timer){};
 
 
 @implementation CCScheduler {
-//	NSMutableArray *_heap;
 	CFBinaryHeapRef _heap;
 	CFMutableDictionaryRef _scheduledTargets;
 	
@@ -320,8 +319,8 @@ CompareTimers(const void *a, const void *b, void *context)
 	return NSIntegerMax;
 }
 
--(CCTime)fixedTimeStep {return _fixedUpdateTimer.repeatInterval;}
--(void)setFixedTimeStep:(CCTime)fixedTimeStep {_fixedUpdateTimer.repeatInterval = fixedTimeStep;}
+-(CCTime)fixedUpdateInterval {return _fixedUpdateTimer.repeatInterval;}
+-(void)setFixedUpdateInterval:(CCTime)fixedTimeStep {_fixedUpdateTimer.repeatInterval = fixedTimeStep;}
 
 -(CCScheduledTarget *)scheduledTargetForTarget:(NSObject<CCSchedulerTarget> *)target insert:(BOOL)insert
 {
