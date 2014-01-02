@@ -278,7 +278,7 @@ static inline float readFloat(CCBReader *self)
     {
         // using a memcpy since the compiler isn't
         // doing the float ptr math correctly on device.
-        float* pF = (float*)(self->bytes+self->currentByte);
+        unsigned char* pF = (unsigned char*)(self->bytes+self->currentByte);
         float f = 0;
         memcpy(&f, pF, sizeof(float));
         self->currentByte+=4;
