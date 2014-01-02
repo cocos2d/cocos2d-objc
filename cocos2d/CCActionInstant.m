@@ -74,6 +74,20 @@
 @end
 
 //
+// Remove
+//
+#pragma mark CCActionRemove
+
+@implementation CCActionRemove
+
+-(void) startWithTarget:(id)aTarget {
+	[super startWithTarget:aTarget];
+	[_target removeFromParent];
+}
+@end
+
+
+//
 // Show
 //
 #pragma mark CCShow
