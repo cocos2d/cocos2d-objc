@@ -27,6 +27,7 @@
 #import "CCButton.h"
 #import "CCScrollView.h"
 #import "CCTableView.h"
+#import "CCTextField.h"
 
 // CCBReader
 #import "CCBuilderReader.h"
