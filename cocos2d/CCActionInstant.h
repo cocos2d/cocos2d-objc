@@ -44,6 +44,18 @@
 @end
 
 // -----------------------------------------------------------------
+/** @name CCActionRemove */
+
+/**
+ *  Removes the target from parent node.
+ */
+@interface CCActionRemove : CCActionInstant
+{
+}
+
+@end
+
+// -----------------------------------------------------------------
 /** @name CCActionShow */
 
 /** 
