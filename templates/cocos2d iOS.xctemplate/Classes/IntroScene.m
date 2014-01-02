@@ -16,7 +16,7 @@
 // -----------------------------------------------------------------------
 
 NSString *preview =
-@"Cosos2D Version 3 (preview)\n\n\
+@"Cocos2D Version 3 (preview)\n\n\
 For evaluation only\n\
 Do not use for new development";
 

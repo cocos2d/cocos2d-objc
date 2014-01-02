@@ -80,6 +80,10 @@ NSUInteger	__ccNumberOfDraws = 0;
 
 extern NSString * cocos2dVersion(void);
 
+@interface CCScheduler (Private)
+@property(nonatomic, assign) CCTime fixedUpdateInterval;
+@end
+
 @interface CCDirector (Private)
 -(void) setNextScene;
 // shows the statistics
@@ -743,6 +747,16 @@ GLToClipTransform(kmMat4 *transformOut)
 - (void)setAnimationInterval:(NSTimeInterval)interval
 {
 	CCLOG(@"cocos2d: Director#setAnimationInterval. Override me");
+}
+
+- (CCTime)fixedUpdateInterval
+{
+	return self.scheduler.fixedUpdateInterval;
+}
+
+-(void)setFixedUpdateInterval:(CCTime)fixedUpdateInterval
+{
+	self.scheduler.fixedUpdateInterval = fixedUpdateInterval;
 }
 
 

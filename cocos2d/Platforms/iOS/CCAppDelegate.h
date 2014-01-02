@@ -17,7 +17,8 @@ NSString* const CCSetupPixelFormat;
 NSString* const CCSetupScreenMode;
 NSString* const CCSetupScreenOrientation;
 NSString* const CCSetupAnimationInterval;
-NSString* const CCSetupHideDebugStats;
+NSString* const CCSetupFixedUpdateInterval;
+NSString* const CCSetupShowDebugStats;
 NSString* const CCSetupTabletScale2X;
 
 
@@ -88,9 +89,10 @@ NSString* const CCScreenModeFixed;
  *  - CCSetupPixelFormat NSString with the pixel format, normally kEAGLColorFormatRGBA8 or kEAGLColorFormatRGB565. The RGB565 option is faster, but will allow less colors.
  *  - CCSetupScreenMode NSString value that accepts either CCScreenModeFlexible or CCScreenModeFixed.
  *  - CCSetupScreenOrientation NSString value that accepts either CCScreenOrientationLandscape or CCScreenOrientationPortrait.
- *  - CCSetupAnimationInterval NSNumber with double. Specifies the interval between animation frames. Supported values are 1.0/60 and 1.0/30.
- *  - CCSetupHideDebugStats NSNumber with bool. Specifies if the stats (FPS, frame time and draw call count) should be hidden when running in debug mode.
- *  - CCSetupTabletScale2X NSNumber with bool. If true, the iPad will be setup to act like it has a 512x384 "retina" screen. This makes it much easier to make universal iOS games. This value is overriden when using the fixed screen mode.
+ *  - CCSetupAnimationInterval NSNumber with double. Specifies the desired interval between animation frames. Supported values are 1.0/60.0 (default) and 1.0/30.0.
+ *  - CCSetupFixedUpdateInterval NSNumber with double. Specifies the desired interval between fixed updates.Should be smaller than CCSetupAnimationInterval. Defaults to 1/60.0.
+ *  - CCSetupShowDebugStats NSNumber with bool. Specifies if the stats (FPS, frame time and draw call count) should be shown. Defaults to NO.
+ *  - CCSetupTabletScale2X NSNumber with bool. If true, the iPad will be setup to act like it has a 512x384 "retina" screen. This makes it much easier to make universal iOS games. This value is ignored when using the fixed screen mode.
  *
  *  @param config Dictionary with options for configuring Cocos2d.
  */

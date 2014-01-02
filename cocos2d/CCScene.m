@@ -39,6 +39,9 @@
 
 // -----------------------------------------------------------------
 
+// Private method used by the CCNode.scene property.
+-(BOOL)isScene {return YES;}
+
 -( id )init {
 	if((self = [ super init ])){
 		CGSize s = [CCDirector sharedDirector].designSize;
