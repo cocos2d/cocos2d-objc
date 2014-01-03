@@ -267,7 +267,7 @@ and when to execute the Scenes.
  *  @param scene Scene to start.
  *  @param transition Transition to use.
  */
-- (void)presentScene:(CCScene *)scene WithTransition:(CCTransition *)transition;
+- (void)presentScene:(CCScene *)scene withTransition:(CCTransition *)transition;
 
 /**
  *  Enters the Director's main loop with the given Scene.
