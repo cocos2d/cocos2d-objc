@@ -231,8 +231,12 @@
 		_lifeVar = [[dictionary valueForKey:@"particleLifespanVariance"] floatValue];
 
 		// emission Rate
-		_emissionRate = _totalParticles/_life;
-
+        _emissionRate = [[dictionary valueForKey:@"emissionRate"] floatValue];
+        if (!_emissionRate)
+        {
+            _emissionRate = _totalParticles/_life;
+        }
+        
 		//don't get the internal texture if a batchNode is used
 		if (!_batchNode)
 		{
