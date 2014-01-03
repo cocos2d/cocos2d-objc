@@ -27,6 +27,7 @@
 
 #import "CCTransition.h"
 #import "CCDirector_Private.h"
+#import "CCNode_Private.h"
 
 // -----------------------------------------------------------------
 
@@ -229,6 +230,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     {
         // exit out scene, and start new scene
         [_outgoingScene onExit];
+        if ([CCDirector sharedDirector].sendCleanupToScene) [_outgoingScene cleanup];
         [[CCDirector sharedDirector] replaceScene:_incomingScene];
         [_incomingScene onEnterTransitionDidFinish];
         
