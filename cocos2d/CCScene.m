@@ -64,6 +64,16 @@
 
 // -----------------------------------------------------------------
 
+- (void)onEnterTransitionDidFinish
+{
+    [super onEnterTransitionDidFinish];
+    
+    // mark starting scene as dirty, to make sure responder manager is updated
+    [[[CCDirector sharedDirector] responderManager] markAsDirty];
+}
+
+// -----------------------------------------------------------------
+
 @end
 
 
