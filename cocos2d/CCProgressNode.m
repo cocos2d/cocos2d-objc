@@ -68,7 +68,7 @@ const char kCCProgressTextureCoords = 0x4b;
 @synthesize vertexData = _vertexData;
 @synthesize vertexDataCount = _vertexDataCount;
 
-+(id)progressWithSprite:(CCSprite*) sprite
++(instancetype)progressWithSprite:(CCSprite*) sprite
 {
 	return [[self alloc]initWithSprite:sprite];
 }

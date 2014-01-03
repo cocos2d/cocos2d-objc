@@ -49,7 +49,7 @@
  *
  *  @return New ease action
  */
-+(id) actionWithAction: (CCActionInterval*) action;
++(instancetype) actionWithAction: (CCActionInterval*) action;
 
 /**
  *  Initializes a new basic ease action
@@ -86,7 +86,7 @@
  *
  *  @return New rate action
  */
-+(id) actionWithAction: (CCActionInterval*) action rate:(float)rate;
++(instancetype) actionWithAction: (CCActionInterval*) action rate:(float)rate;
 
 /**
  *  Initializes the action with the inner action and the rate parameter
@@ -173,7 +173,7 @@
  *
  *  @return New elastic action
  */
-+(id) actionWithAction: (CCActionInterval*) action period:(float)period;
++(instancetype) actionWithAction: (CCActionInterval*) action period:(float)period;
 
 /**
  *  Initializes the action with the inner action and the period in radians (default is 0.3).

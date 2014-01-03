@@ -136,7 +136,7 @@
  *
  *  @return The CCLabelTTF Object.
  */
-+(id) labelWithString:(NSString *)string fontName:(NSString *)name fontSize:(CGFloat)size;
++(instancetype) labelWithString:(NSString *)string fontName:(NSString *)name fontSize:(CGFloat)size;
 
 /**
  *  Creates and returns a label object using the specified text, font name, font size and dimensions.
@@ -148,7 +148,7 @@
  *
  *  @return The CCLabelTTF Object.
  */
-+(id) labelWithString:(NSString *)string fontName:(NSString *)name fontSize:(CGFloat)size dimensions:(CGSize)dimensions;
++(instancetype) labelWithString:(NSString *)string fontName:(NSString *)name fontSize:(CGFloat)size dimensions:(CGSize)dimensions;
 
 /**
  *  Creates and returns a label object using the specified attributed text.
@@ -159,7 +159,7 @@
  *
  *  @return The CCLabelTTF Object.
  */
-+(id) labelWithAttributedString:(NSAttributedString *)attrString;
++(instancetype) labelWithAttributedString:(NSAttributedString *)attrString;
 
 /**
  *  Creates and returns a label object using the specified attributed text and dimensions.
@@ -171,7 +171,7 @@
  *
  *  @return The CCLabelTTF Object.
  */
-+(id) labelWithAttributedString:(NSAttributedString *)attrString dimensions:(CGSize)dimensions;
++(instancetype) labelWithAttributedString:(NSAttributedString *)attrString dimensions:(CGSize)dimensions;
 
 
 /// -----------------------------------------------------------------------

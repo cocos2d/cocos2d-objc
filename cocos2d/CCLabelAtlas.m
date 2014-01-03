@@ -44,12 +44,12 @@
 @implementation CCLabelAtlas
 
 #pragma mark CCLabelAtlas - Creation & Init
-+(id) labelWithString:(NSString*)string charMapFile:(NSString*)charmapfile itemWidth:(NSUInteger)w itemHeight:(NSUInteger)h startCharMap:(NSUInteger)c
++(instancetype) labelWithString:(NSString*)string charMapFile:(NSString*)charmapfile itemWidth:(NSUInteger)w itemHeight:(NSUInteger)h startCharMap:(NSUInteger)c
 {
 	return [[self alloc] initWithString:string charMapFile:charmapfile itemWidth:w itemHeight:h startCharMap:c];
 }
 
-+(id) labelWithString:(NSString*)string fntFile:(NSString*)fntFile
++(instancetype) labelWithString:(NSString*)string fntFile:(NSString*)fntFile
 {
 	return [[self alloc] initWithString:string fntFile:fntFile];
 }

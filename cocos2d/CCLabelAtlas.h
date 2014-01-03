@@ -66,7 +66,7 @@
  *
  *  @return The CCLabelAtlas Object.
  */
-+(id) labelWithString:(NSString*) string charMapFile: (NSString*) charmapfile itemWidth:(NSUInteger)w itemHeight:(NSUInteger)h startCharMap:(NSUInteger)firstElement;
++(instancetype) labelWithString:(NSString*) string charMapFile: (NSString*) charmapfile itemWidth:(NSUInteger)w itemHeight:(NSUInteger)h startCharMap:(NSUInteger)firstElement;
 
 /**
  *  Creates and returns a label object using the specified text and font configuration file values.
@@ -76,7 +76,7 @@
  *
  *  @return The CCLabelAtlas Object.
  */
-+(id) labelWithString:(NSString*) string fntFile:(NSString*)fontFile;
++(instancetype) labelWithString:(NSString*) string fntFile:(NSString*)fontFile;
 
 
 /// -----------------------------------------------------------------------

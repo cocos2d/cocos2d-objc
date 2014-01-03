@@ -179,7 +179,7 @@
  *
  *  @return New CCNodeMultiplexer
  */
-+(id) nodeWithArray:(NSArray*)arrayOfNodes;
++(instancetype) nodeWithArray:(NSArray*)arrayOfNodes;
 
 /** Creates a CCMultiplexLayer with one or more layers using a variable argument list.
 
@@ -191,7 +191,7 @@ Example:
 @param ... nil terminated list of nodes.
 @return New CCNodeMultiplexer
  */
-+(id) nodeWithNodes: (CCNode*) node, ... NS_REQUIRES_NIL_TERMINATION;
++(instancetype) nodeWithNodes: (CCNode*) node, ... NS_REQUIRES_NIL_TERMINATION;
 
 // ----------------------------------------------------------
 /** @name Initializers */

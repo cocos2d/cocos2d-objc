@@ -134,7 +134,7 @@ static CCDirector *_sharedDirector = nil;
 	return _sharedDirector;
 }
 
-+(id)alloc
++(instancetype)alloc
 {
 	NSAssert(_sharedDirector == nil, @"Attempted to allocate a second instance of a singleton.");
 	return [super alloc];

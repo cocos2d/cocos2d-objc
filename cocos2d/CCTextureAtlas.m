@@ -59,12 +59,12 @@
 
 #pragma mark TextureAtlas - alloc & init
 
-+(id) textureAtlasWithFile:(NSString*) file capacity: (NSUInteger) n
++(instancetype) textureAtlasWithFile:(NSString*) file capacity: (NSUInteger) n
 {
 	return [[self alloc] initWithFile:file capacity:n];
 }
 
-+(id) textureAtlasWithTexture:(CCTexture *)tex capacity:(NSUInteger)n
++(instancetype) textureAtlasWithTexture:(CCTexture *)tex capacity:(NSUInteger)n
 {
 	return [[self alloc] initWithTexture:tex capacity:n];
 }

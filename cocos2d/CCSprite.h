@@ -153,7 +153,7 @@
  *
  *  @return a sprite
  */
-+(id)spriteWithImageNamed:(NSString*)imageName;
++(instancetype)spriteWithImageNamed:(NSString*)imageName;
 
 /**
  *  Creates an sprite with a texture.
@@ -164,7 +164,7 @@
  *
  *  @return A newly initialized CCSprite object.
  */
-+(id) spriteWithTexture:(CCTexture*)texture;
++(instancetype) spriteWithTexture:(CCTexture*)texture;
 
 /**
  *  Creates an sprite with a texture.
@@ -175,7 +175,7 @@
  *
  *  @return A newly initialized CCSprite object.
  */
-+(id) spriteWithTexture:(CCTexture*)texture rect:(CGRect)rect;
++(instancetype) spriteWithTexture:(CCTexture*)texture rect:(CGRect)rect;
 
 /**
  *  Creates an sprite from a sprite frame.
@@ -184,7 +184,7 @@
  *
  *  @return A newly initialized CCSprite object.
  */
-+(id) spriteWithSpriteFrame:(CCSpriteFrame*)spriteFrame;
++(instancetype) spriteWithSpriteFrame:(CCSpriteFrame*)spriteFrame;
 
 /**
  *  Creates an sprite with a CGImageRef and a key.
@@ -197,7 +197,7 @@
  *
  *  @return A newly initialized CCSprite object.
  */
-+(id) spriteWithCGImage: (CGImageRef)image key:(NSString*)key;
++(instancetype) spriteWithCGImage: (CGImageRef)image key:(NSString*)key;
 
 /**
  *  Initializes a sprite with the name of an image. The name can be either a name in a sprite sheet or the name of a file.
@@ -257,7 +257,7 @@
  *
  *  @return A newly initialized CCSprite object.
  */
-+(id) emptySprite;
++(instancetype) emptySprite;
 
 // -----------------------------------------------------------------------
 /**

@@ -159,7 +159,7 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 /** Allocates and initializes a node.
  The node will be created as "autorelease".
  */
-+(id) node;
++(instancetype) node;
 
 /** Initializes the node */
 -(id) init;

@@ -73,7 +73,7 @@
  *
  *  @return The CCSpriteBatchNode Object.
  */
-+(id)batchNodeWithTexture:(CCTexture *)tex;
++(instancetype)batchNodeWithTexture:(CCTexture *)tex;
 
 /**
  *  Creates and returns a batch node with the specified image file value.
@@ -82,7 +82,7 @@
  *
  *  @return The CCSpriteBatchNode Object.
  */
-+(id)batchNodeWithFile:(NSString*) fileImage;
++(instancetype)batchNodeWithFile:(NSString*) fileImage;
 
 
 /// -----------------------------------------------------------------------

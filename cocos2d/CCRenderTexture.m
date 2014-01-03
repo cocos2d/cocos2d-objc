@@ -52,18 +52,18 @@
 @synthesize clearStencil=_clearStencil;
 @synthesize clearFlags=_clearFlags;
 
-+(id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat) format depthStencilFormat:(GLuint)depthStencilFormat
++(instancetype)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat) format depthStencilFormat:(GLuint)depthStencilFormat
 {
   return [[self alloc] initWithWidth:w height:h pixelFormat:format depthStencilFormat:depthStencilFormat];
 }
 
 // issue #994
-+(id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat) format
++(instancetype)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat) format
 {
 	return [[self alloc] initWithWidth:w height:h pixelFormat:format];
 }
 
-+(id)renderTextureWithWidth:(int)w height:(int)h
++(instancetype)renderTextureWithWidth:(int)w height:(int)h
 {
 	return [[self alloc] initWithWidth:w height:h pixelFormat:CCTexturePixelFormat_RGBA8888 depthStencilFormat:0];
 }

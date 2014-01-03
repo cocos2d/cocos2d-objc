@@ -107,7 +107,7 @@
  *
  *  @return The CCMotionStreak object.
  */
-+(id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(CCColor*)color textureFilename:(NSString*)path;
++(instancetype) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(CCColor*)color textureFilename:(NSString*)path;
 
 /**
  *  Creates and returns a motion streak object from the specified fade time, segments, stroke, color and texture values.
@@ -120,7 +120,7 @@
  *
  *  @return The CCMotionStreak object.
  */
-+(id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(CCColor*)color texture:(CCTexture*)texture;
++(instancetype) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(CCColor*)color texture:(CCTexture*)texture;
 
 
 /// -----------------------------------------------------------------------

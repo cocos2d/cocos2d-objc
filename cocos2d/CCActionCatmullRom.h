@@ -81,7 +81,7 @@ extern "C" {
  *
  *  @return New point array
  */
-+(id) arrayWithCapacity:(NSUInteger)capacity;
++(instancetype) arrayWithCapacity:(NSUInteger)capacity;
 
 /**
  *  Initializes a Points array with capacity.
@@ -186,7 +186,7 @@ extern "C" {
  *
  *  @return New spline action
  */
-+(id) actionWithDuration:(CCTime)duration points:(CCPointArray*)points tension:(CGFloat)tension;
++(instancetype) actionWithDuration:(CCTime)duration points:(CCPointArray*)points tension:(CGFloat)tension;
 
 /**
  *  Initializes a cardinal spline action, based on control points and tension.
@@ -242,7 +242,7 @@ extern "C" {
  *
  *  @return New catmull-rom action
  */
-+(id) actionWithDuration:(CCTime)dt points:(CCPointArray*)points;
++(instancetype) actionWithDuration:(CCTime)dt points:(CCPointArray*)points;
 
 /**
  *  Initializes an action, performing a catmull-rom spline
@@ -279,7 +279,7 @@ extern "C" {
  *
  *  @return New catmull-rom action
  */
-+(id) actionWithDuration:(CCTime)dt points:(CCPointArray*)points;
++(instancetype) actionWithDuration:(CCTime)dt points:(CCPointArray*)points;
 
 /**
  *  Initializes an action, performing a catmull-rom spline

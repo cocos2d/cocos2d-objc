@@ -49,7 +49,7 @@ static CCAnimationCache *_sharedAnimationCache=nil;
 	return _sharedAnimationCache;
 }
 
-+(id)alloc
++(instancetype)alloc
 {
 	NSAssert(_sharedAnimationCache == nil, @"Attempted to allocate a second instance of a singleton.");
 	return [super alloc];
