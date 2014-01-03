@@ -474,7 +474,7 @@ GLToClipTransform(kmMat4 *transformOut)
         [self runWithScene:scene];
 }
 
-- (void)presentScene:(CCScene *)scene WithTransition:(CCTransition *)transition
+- (void)presentScene:(CCScene *)scene withTransition:(CCTransition *)transition
 {
     if (_runningScene)
         [self replaceScene:scene withTransition:transition];
