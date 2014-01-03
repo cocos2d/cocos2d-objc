@@ -117,7 +117,7 @@
  *
  *  @return A New action sequence.
  */
-+(instancetype) actions: (CCActionFiniteTime*) action1, ... NS_REQUIRES_NIL_TERMINATION;
++(id) actions: (CCActionFiniteTime*) action1, ... NS_REQUIRES_NIL_TERMINATION;
 
 /**
  *  Helper constructor to create an array of sequence-able actions.
@@ -127,7 +127,7 @@
  *
  *  @return New action sequence
  */
-+(instancetype) actions: (CCActionFiniteTime*) action1 vaList:(va_list) args;
++(id) actions: (CCActionFiniteTime*) action1 vaList:(va_list) args;
 
 /**
  *  Helper constructor to create an array of sequence-able actions given an array.
@@ -136,7 +136,7 @@
  *
  *  @return New action sequence
  */
-+(instancetype) actionWithArray: (NSArray*) arrayOfActions;
++(id) actionWithArray: (NSArray*) arrayOfActions;
 
 /**
  *  Creates an action sequence from two actions
@@ -233,7 +233,7 @@
  *
  *  @return New action spawn
  */
-+(instancetype) actions: (CCActionFiniteTime*) action1 vaList:(va_list)args;
++(id) actions: (CCActionFiniteTime*) action1 vaList:(va_list)args;
 
 /**
  *  Helper constructor to create an array of spawned actions given an array.
@@ -242,7 +242,7 @@
  *
  *  @return New action spawn
  */
-+(instancetype) actionWithArray: (NSArray*) arrayOfActions;
++(id) actionWithArray: (NSArray*) arrayOfActions;
 
 /**
  *  Creates the Spawn action from two actions

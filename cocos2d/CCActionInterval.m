@@ -128,7 +128,7 @@
 	return  ret;
 }
 
-+(instancetype) actions: (CCActionFiniteTime*) action1 vaList:(va_list)args
++(id) actions: (CCActionFiniteTime*) action1 vaList:(va_list)args
 {
 	CCActionFiniteTime *now;
 	CCActionFiniteTime *prev = action1;
@@ -145,7 +145,7 @@
 }
 
 
-+(instancetype) actionWithArray: (NSArray*) actions
++(id) actionWithArray: (NSArray*) actions
 {
 	CCActionFiniteTime *prev = [actions objectAtIndex:0];
 	
@@ -391,7 +391,7 @@
 	return ret;
 }
 
-+(instancetype) actions: (CCActionFiniteTime*) action1 vaList:(va_list)args
++(id) actions: (CCActionFiniteTime*) action1 vaList:(va_list)args
 {
 	CCActionFiniteTime *now;
 	CCActionFiniteTime *prev = action1;
@@ -408,7 +408,7 @@
 }
 
 
-+(instancetype) actionWithArray: (NSArray*) actions
++(id) actionWithArray: (NSArray*) actions
 {
 	CCActionFiniteTime *prev = [actions objectAtIndex:0];
 
