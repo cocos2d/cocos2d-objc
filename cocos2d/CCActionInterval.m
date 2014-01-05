@@ -554,7 +554,7 @@
 -(void) update: (CCTime) t
 {
     // added to support overriding setRotation only
-    if (_startAngleX == _startAngleY)
+    if ((_startAngleX == _startAngleY) && (_diffAngleX == _diffAngleY))
     {
         [_target setRotation:(_startAngleX + (_diffAngleX * t))];
     }
@@ -617,7 +617,7 @@
 {
 	// XXX: shall I add % 360
     // added to support overriding setRotation only
-    if (_startAngleX == _startAngleY)
+    if ((_startAngleX == _startAngleY) && (_angleX == _angleY))
     {
         [_target setRotation:(_startAngleX + (_angleX * t))];
     }
@@ -1074,7 +1074,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, CCTime t )
 -(void) update: (CCTime) t
 {
     // added to support overriding setScale only
-    if (_startScaleX == _startScaleY)
+    if ((_startScaleX == _startScaleY) && (_endScaleX == _endScaleY))
     {
         [_target setScale:(_startScaleX + (_deltaX * t))];
     }
