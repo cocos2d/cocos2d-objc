@@ -69,9 +69,9 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionCrossFade direction:CCTransitionDirectionInvalid color:ccBLACK]);
 }
 
-+ (CCTransition *)transitionFadeWithColor:(ccColor3B)color duration:(NSTimeInterval)duration
++ (CCTransition *)transitionFadeWithColor:(CCColor*)color duration:(NSTimeInterval)duration
 {
-    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionFadeWithColor direction:CCTransitionDirectionInvalid color:color]);
+    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionFadeWithColor direction:CCTransitionDirectionInvalid color:color.ccColor3b]);
 }
 
 + (CCTransition *)transitionFadeWithDuration:(NSTimeInterval)duration
