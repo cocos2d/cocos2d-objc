@@ -309,8 +309,8 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 
 -(void)onEnter
 {
-    if(self.shadowOffsetType.xUnit == CCPositionUnitNormalized || self.shadowOffsetType.yUnit == CCPositionUnitNormalized)
-        [self setTextureDirty];
+    
+    [self setTextureDirty];
     
     [super onEnter];
 }
@@ -802,7 +802,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 		CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
     UIFont* font = [UIFont fontWithName:_fontName size:_fontSize * scale];
     float shadowBlurRadius = _shadowBlurRadius * scale;
-    CGPoint shadowOffset = ccpMult(_shadowOffset, scale);
+    CGPoint shadowOffset = ccpMult(self.shadowOffsetInPoints, scale);
     float outlineWidth = _outlineWidth * scale;
     
     BOOL hasShadow = (_shadowColor.alpha > 0);

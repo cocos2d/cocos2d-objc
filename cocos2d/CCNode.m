@@ -1240,7 +1240,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
     else if (yUnit == CCPositionUnitNormalized) y = position.y * _parent.contentSizeInPoints.height;
     
     // Account for reference corner
-    CCPositionReferenceCorner corner = _positionType.corner;
+    CCPositionReferenceCorner corner = type.corner;
     if (corner == CCPositionReferenceCornerBottomLeft)
     {
         // Nothing needs to be done
