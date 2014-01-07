@@ -38,7 +38,7 @@
 - (void) setupFadeWithColorTest
 {
     self.subTitle = @"Fade with Color";
-    _nextTransition = [CCTransition transitionFadeWithColor:ccc3(0, 0, 0) duration:1];
+    _nextTransition = [CCTransition transitionFadeWithColor:[CCColor blackColor] duration:1];
     
     CCNodeColor* bgLayer = [CCNodeColor nodeWithColor:[CCColor greenColor]];
     bgLayer.contentSize = CGSizeMake(1, 1);
