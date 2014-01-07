@@ -268,6 +268,11 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     }
 }
 
+-(CGPoint)shadowOffsetInPoints
+{
+    return [self convertPositionToPoints:self.shadowOffset type:_shadowOffsetType];
+}
+
 - (void) setShadowBlurRadius:(float)shadowBlurRadius
 {
     if (_shadowBlurRadius != shadowBlurRadius)
