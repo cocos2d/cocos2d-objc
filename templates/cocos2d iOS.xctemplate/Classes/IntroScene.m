@@ -15,15 +15,10 @@
 #pragma mark - IntroScene
 // -----------------------------------------------------------------------
 
-NSString *preview =
-@"Cosos2D Version 3 (preview)\n\n\
-For evaluation only\n\
-Do not use for new development";
-
-// -----------------------------------------------------------------------
-
 @implementation IntroScene
 
+// -----------------------------------------------------------------------
+#pragma mark - Create & Destroy
 // -----------------------------------------------------------------------
 
 + (IntroScene *)scene
@@ -40,33 +35,22 @@ Do not use for new development";
     // Crash if basic initialization for some reason failed
     NSAssert(self, @"Unable to create class IntroScene");
     
-    // Here is where custom code for the scene starts
-    
-    // create a colored background
-    CCNodeColor *background = [CCNodeColor nodeWithColor:[CCColor colorWithCcColor4b:(ccColor4B){200, 200, 200, 255}]];
+    // Create a colored background (Dark Grey)
+    CCNodeColor *background = [CCNodeColor nodeWithColor:[CCColor colorWithRed:0.2f green:0.2f blue:0.2f alpha:1.0f]];
     [self addChild:background];
     
-    // create a string with preview text
-    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:preview];
-    
-    // set color and font of the string
-    [string addAttribute:NSForegroundColorAttributeName
-                   value:[UIColor blackColor]
-                   range:NSMakeRange(0, string.length)];
-    [string addAttribute:NSFontAttributeName
-                   value:[UIFont fontWithName:@"Arial" size:22.0f]
-                   range:NSMakeRange(0, string.length)];
-    
-    // create an attributes label, and place it in upper left corner
-    CCLabelTTF *label = [CCLabelTTF labelWithAttributedString:string];
+    // Hello world
+    CCLabelTTF *label = [CCLabelTTF labelWithString:@"Hello World" fontName:@"Chalkduster" fontSize:36.0f];
     label.positionType = CCPositionTypeNormalized;
-    label.position = ccp(0.4f, 0.8f);
+    label.color = [CCColor redColor];
+    label.position = ccp(0.5f, 0.5f); // Middle of screen
     [self addChild:label];
     
-    // add a next button
-    CCButton *nextButton = [CCButton buttonWithTitle:@"[ Next ]"];
+    // Next scene button
+    CCButton *nextButton = [CCButton buttonWithTitle:@"[ Next ]" fontName:@"Verdana-Bold" fontSize:18.0f];
     nextButton.positionType = CCPositionTypeNormalized;
-    nextButton.position = ccp(0.9f, 0.9f);
+    nextButton.position = ccp(0.5f, 0.25f); // Middle Horizonta, 1/4 up vertical
+    
     [nextButton setTarget:self selector:@selector(onNextClicked:)];
     [self addChild:nextButton];
 	

@@ -146,7 +146,7 @@ static CCFileUtils *fileUtils = nil;
 		
 		_bundle = [NSBundle mainBundle];
 
-		_enableiPhoneResourcesOniPad = NO;
+		_enableiPhoneResourcesOniPad = YES;
 		
 		_searchResolutionsOrder = [[NSMutableArray alloc] initWithCapacity:5];
 		

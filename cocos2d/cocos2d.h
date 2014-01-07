@@ -48,6 +48,9 @@
 //
 #import "ccConfig.h"	// should be included first
 
+// Colors
+#import "CCColor.h"
+
 //#import "CCActionManager.h"
 #import "CCAction.h"
 #import "CCActionInstant.h"

@@ -39,6 +39,9 @@
 
 // -----------------------------------------------------------------
 
+// Private method used by the CCNode.scene property.
+-(BOOL)isScene {return YES;}
+
 -( id )init {
 	if((self = [ super init ])){
 		CGSize s = [CCDirector sharedDirector].designSize;
@@ -47,6 +50,26 @@
 	}
 	
 	return( self );
+}
+
+// -----------------------------------------------------------------
+
+- (void)onEnter
+{
+    [super onEnter];
+    
+    // mark starting scene as dirty, to make sure responder manager is updated
+    [[[CCDirector sharedDirector] responderManager] markAsDirty];
+}
+
+// -----------------------------------------------------------------
+
+- (void)onEnterTransitionDidFinish
+{
+    [super onEnterTransitionDidFinish];
+    
+    // mark starting scene as dirty, to make sure responder manager is updated
+    [[[CCDirector sharedDirector] responderManager] markAsDirty];
 }
 
 // -----------------------------------------------------------------
