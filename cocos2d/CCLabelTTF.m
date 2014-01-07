@@ -309,8 +309,8 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 
 -(void)onEnter
 {
-    if(self.shadowOffsetType.xUnit == CCPositionUnitNormalized || self.shadowOffsetType.yUnit == CCPositionUnitNormalized)
-        [self setTextureDirty];
+    
+    [self setTextureDirty];
     
     [super onEnter];
 }
