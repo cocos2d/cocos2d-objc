@@ -553,8 +553,16 @@
 }
 -(void) update: (CCTime) t
 {
-	[_target setRotationalSkewX: _startAngleX + _diffAngleX * t];
-	[_target setRotationalSkewY: _startAngleY + _diffAngleY * t];
+    // added to support overriding setRotation only
+    if ((_startAngleX == _startAngleY) && (_diffAngleX == _diffAngleY))
+    {
+        [_target setRotation:(_startAngleX + (_diffAngleX * t))];
+    }
+    else
+    {
+        [_target setRotationalSkewX: _startAngleX + _diffAngleX * t];
+        [_target setRotationalSkewY: _startAngleY + _diffAngleY * t];
+    }
 }
 @end
 
@@ -587,8 +595,8 @@
 {
 	if( (self=[super initWithDuration: t]) ){
 		_angleX = aX;
-    _angleY = aY;
-  }
+        _angleY = aY;
+    }
 	return self;
 }
 
@@ -608,8 +616,16 @@
 -(void) update: (CCTime) t
 {
 	// XXX: shall I add % 360
-	[_target setRotationalSkewX: (_startAngleX + _angleX * t )];
-	[_target setRotationalSkewY: (_startAngleY + _angleY * t )];
+    // added to support overriding setRotation only
+    if ((_startAngleX == _startAngleY) && (_angleX == _angleY))
+    {
+        [_target setRotation:(_startAngleX + (_angleX * t))];
+    }
+    else
+    {
+        [_target setRotationalSkewX: (_startAngleX + _angleX * t )];
+        [_target setRotationalSkewY: (_startAngleY + _angleY * t )];
+    }
 }
 
 -(CCActionInterval*) reverse
@@ -1057,8 +1073,16 @@ static inline CGFloat bezierat( float a, float b, float c, float d, CCTime t )
 
 -(void) update: (CCTime) t
 {
-	[_target setScaleX: (_startScaleX + _deltaX * t ) ];
-	[_target setScaleY: (_startScaleY + _deltaY * t ) ];
+    // added to support overriding setScale only
+    if ((_startScaleX == _startScaleY) && (_endScaleX == _endScaleY))
+    {
+        [_target setScale:(_startScaleX + (_deltaX * t))];
+    }
+    else
+    {
+        [_target setScaleX: (_startScaleX + _deltaX * t ) ];
+        [_target setScaleY: (_startScaleY + _deltaY * t ) ];
+    }
 }
 @end
 

@@ -276,13 +276,13 @@ static inline float readFloat(CCBReader *self)
     }
     else
     {
-        // using a memcpy since the compiler isn't
-        // doing the float ptr math correctly on device.
-        unsigned char* pF = (unsigned char*)(self->bytes+self->currentByte);
-        float f = 0;
-        memcpy(&f, pF, sizeof(float));
+        volatile union {
+            float f;
+            int i;
+        } t;
+        t.i = *(int *)(self->bytes + self->currentByte);
         self->currentByte+=4;
-        return f;
+        return t.f;
     }
 }
 
@@ -1144,14 +1144,14 @@ static inline float readFloat(CCBReader *self)
 
 + (void) callDidLoadFromCCBForNodeGraph:(CCNode*)nodeGraph
 {
-    if ([nodeGraph respondsToSelector:@selector(didLoadFromCCB)])
-    {
-        [nodeGraph performSelector:@selector(didLoadFromCCB)];
-    }
-    
     for (CCNode* child in nodeGraph.children)
     {
         [CCBReader callDidLoadFromCCBForNodeGraph:child];
+    }
+    
+    if ([nodeGraph respondsToSelector:@selector(didLoadFromCCB)])
+    {
+        [nodeGraph performSelector:@selector(didLoadFromCCB)];
     }
 }
 

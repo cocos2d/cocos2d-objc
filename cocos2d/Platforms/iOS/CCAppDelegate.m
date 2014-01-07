@@ -12,6 +12,8 @@
 #import "CCAppDelegate.h"
 #import "CCTexture.h"
 #import "CCFileUtils.h"
+#import "CCDirector_Private.h"
+#import "CCScheduler.h"
 
 #import "kazmath/kazmath.h"
 #import "kazmath/GL/matrix.h"
@@ -20,10 +22,13 @@ NSString* const CCSetupPixelFormat = @"CCSetupPixelFormat";
 NSString* const CCSetupScreenMode = @"CCSetupScreenMode";
 NSString* const CCSetupScreenOrientation = @"CCSetupScreenOrientation";
 NSString* const CCSetupAnimationInterval = @"CCSetupAnimationInterval";
-NSString* const CCSetupHideDebugStats = @"CCSetupHideDebugStats";
+NSString* const CCSetupFixedUpdateInterval = @"CCSetupFixedUpdateInterval";
+NSString* const CCSetupShowDebugStats = @"CCSetupShowDebugStats";
 NSString* const CCSetupTabletScale2X = @"CCSetupTabletScale2X";
+
 NSString* const CCScreenOrientationLandscape = @"CCScreenOrientationLandscape";
 NSString* const CCScreenOrientationPortrait = @"CCScreenOrientationPortrait";
+
 NSString* const CCScreenModeFlexible = @"CCScreenModeFlexible";
 NSString* const CCScreenModeFixed = @"CCScreenModeFixed";
 
@@ -164,16 +169,16 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	
 	director.wantsFullScreenLayout = YES;
 	
-#if DEBUG
-	if(![config[CCSetupHideDebugStats] boolValue]){
-		// Display FSP and SPF
-		[director setDisplayStats:YES];
-	}
-#endif
+//#if DEBUG
+	// Display FSP and SPF
+	[director setDisplayStats:[config[CCSetupShowDebugStats] boolValue]];
+//#endif
 	
 	// set FPS at 60
-	NSTimeInterval animationInterval = [(config[CCSetupAnimationInterval] ?: @(1.0/60)) doubleValue];
+	NSTimeInterval animationInterval = [(config[CCSetupAnimationInterval] ?: @(1.0/60.0)) doubleValue];
 	[director setAnimationInterval:animationInterval];
+	
+	director.fixedUpdateInterval = [(config[CCSetupFixedUpdateInterval] ?: @(1.0/60.0)) doubleValue];
 	
 	// attach the openglView to the director
 	[director setView:glView];
