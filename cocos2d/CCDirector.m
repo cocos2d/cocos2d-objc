@@ -44,7 +44,6 @@
 #import "ccGLStateCache.h"
 #import "CCShaderCache.h"
 #import "ccFPSImages.h"
-#import "CCDrawingPrimitives.h"
 #import "CCConfiguration.h"
 #import "CCTransition.h"
 
@@ -623,7 +622,6 @@ GLToClipTransform(kmMat4 *transformOut)
 	[CCLabelBMFont purgeCachedData];
 
 	// Purge all managers / caches
-	ccDrawFree();
 	[CCAnimationCache purgeSharedAnimationCache];
 	[CCSpriteFrameCache purgeSharedSpriteFrameCache];
 	[CCTextureCache purgeSharedTextureCache];

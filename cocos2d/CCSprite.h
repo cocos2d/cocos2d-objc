@@ -60,11 +60,10 @@
  * The default anchorPoint in CCSprite is (0.5, 0.5).
  */
 
-@interface CCSprite : CCNode <CCTextureProtocol>
-{
+@interface CCSprite : CCNode <CCTextureProtocol> {
 
 	//
-	// Data used when the sprite is rendered using a CCSpriteBatchNode
+	// Data used when the sprite is rendered using a CCSpriteBatchNode.
 	//
 	CCTextureAtlas			*__unsafe_unretained _textureAtlas;			// Sprite Sheet texture atlas (weak reference)
 	NSUInteger				_atlasIndex;			// Absolute (real) Index on the batch node
@@ -76,46 +75,48 @@
 	BOOL					_shouldBeHidden;		// should not be drawn because one of the ancestors is not visible
 
 	//
-	// Data used when the sprite is self-rendered
+	// Data used when the sprite is self-rendered.
 	//
 	ccBlendFunc				_blendFunc;				// Needed for the texture protocol
 	CCTexture				*_texture;				// Texture used to render the sprite
 
 	//
-	// Shared data
+	// Shared data.
 	//
 
-	// sprite rectangle
+	// Sprite rectangle.
 	CGRect	_rect;
 
-	// texture
+	// True if texture rotated.
 	BOOL	_rectRotated;
 
-	// Offset Position (used by Zwoptex)
+	// Offset Position, used by sprite sheet editors.
 	CGPoint	_offsetPosition;
 	CGPoint _unflippedOffsetPositionFromCenter;
 
-	// vertex coords, texture coords and color info
+	// Vertex coords, texture coords and color info.
 	ccV3F_C4B_T2F_Quad _quad;
 
-	// opacity and RGB protocol
+	// Opacity and RGB protocol.
 	BOOL		_opacityModifyRGB;
 
-	// image is flipped
+	// True if sprite is flipped horizontally.
 	BOOL	_flipX;
+    
+    // True if sprite is flipped vertically.
 	BOOL	_flipY;
 }
 
-/** returns the texture rect of the CCSprite in points */
+/** Returns the texture rect of the CCSprite in points. */
 @property (nonatomic,readonly) CGRect textureRect;
 
-/** returns whether or not the texture rectangle is rotated */
+/** Returns whether or not the texture rectangle is rotated. */
 @property (nonatomic,readonly) BOOL textureRectRotated;
 
 /** The currently displayed spriteFrame. */
 @property (nonatomic,strong) CCSpriteFrame* spriteFrame;
 
-/** whether or not the sprite is flipped horizontally.
+/** Whether or not the sprite is flipped horizontally.
  It only flips the texture of the sprite, and not the texture of the sprite's children.
  Also, flipping the texture doesn't alter the anchorPoint.
  If you want to flip the anchorPoint too, and/or to flip the children too use:
@@ -123,7 +124,8 @@
 	sprite.scaleX *= -1;
  */
 @property (nonatomic,readwrite) BOOL flipX;
-/** whether or not the sprite is flipped vertically.
+
+/** Whether or not the sprite is flipped vertically.
  It only flips the texture of the sprite, and not the texture of the sprite's children.
  Also, flipping the texture doesn't alter the anchorPoint.
  If you want to flip the anchorPoint too, and/or to flip the children too use:
@@ -132,26 +134,24 @@
  */
 @property (nonatomic,readwrite) BOOL flipY;
 
-/** offset position in points of the sprite in points. Calculated automatically by editors like Zwoptex.
+/** The offset position in points of the sprite in points. Calculated automatically by sprite sheet editors.
  */
 @property (nonatomic,readonly) CGPoint	offsetPosition;
 
-/** conforms to CCTextureProtocol protocol */
+/** Conforms to CCTextureProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
-#pragma mark CCSprite - Initializers
 
-// -----------------------------------------------------------------------
-/**
- *  @name Initializers
- */
+/// -----------------------------------------------------------------------
+/// @name Creating a CCSprite Object
+/// -----------------------------------------------------------------------
 
 /**
  *  Creates a sprite with the name of an image. The name can be either a name in a sprite sheet or the name of a file.
  *
- *  @param imageName name of the image to load
+ *  @param imageName name of the image to load.
  *
- *  @return a sprite
+ *  @return The CCSprite Object.
  */
 +(id)spriteWithImageNamed:(NSString*)imageName;
 
@@ -162,7 +162,7 @@
  *
  *  @param texture Texture to use.
  *
- *  @return A newly initialized CCSprite object.
+ *  @return The CCSprite Object.
  */
 +(id) spriteWithTexture:(CCTexture*)texture;
 
@@ -173,7 +173,7 @@
  *  @param texture Texture to use.
  *  @param rect    Rect to use.
  *
- *  @return A newly initialized CCSprite object.
+ *  @return The CCSprite Object.
  */
 +(id) spriteWithTexture:(CCTexture*)texture rect:(CGRect)rect;
 
@@ -182,7 +182,7 @@
  *
  *  @param spriteFrame Sprite frame to use
  *
- *  @return A newly initialized CCSprite object.
+ *  @return The CCSprite Object.
  */
 +(id) spriteWithSpriteFrame:(CCSpriteFrame*)spriteFrame;
 
@@ -195,9 +195,14 @@
  *  @param image Image ref
  *  @param key   Key description
  *
- *  @return A newly initialized CCSprite object.
+ *  @return The CCSprite Object.
  */
 +(id) spriteWithCGImage: (CGImageRef)image key:(NSString*)key;
+
+
+/// -----------------------------------------------------------------------
+/// @name Initializing a CCSprite Object
+/// -----------------------------------------------------------------------
 
 /**
  *  Initializes a sprite with the name of an image. The name can be either a name in a sprite sheet or the name of a file.
@@ -233,7 +238,7 @@
 /**
  *  Initializes an sprite with an sprite frame.
  *
- *  @param spriteFrame Sprite frame to use
+ *  @param spriteFrame Sprite frame to use.
  *
  *  @return A newly initialized CCSprite object.
  */
@@ -245,8 +250,8 @@
  *  For example, a valid key is: @"_spriteframe_01".
  *  If key is nil, then a new texture will be created each time by the CCTextureCache.
  *
- *  @param image Image ref
- *  @param key   Key description
+ *  @param image Image ref.
+ *  @param key   Key description.
  *
  *  @return A newly initialized CCSprite object.
  */
@@ -259,30 +264,24 @@
  */
 +(id) emptySprite;
 
-// -----------------------------------------------------------------------
 /**
- *  @name Designated initializer
- */
-
-/**
+ *  Designated initializer.
  *  Initializes an sprite with a texture and a rect in points, optionally rotated.
  *  The offset will be (0,0).
  *  IMPORTANT: This is the designated initializer.
  *
  *  @param texture The texture to use.
  *  @param rect    The rect to use.
- *  @param rotated YES if texture is rotated
+ *  @param rotated YES if texture is rotated.
  *
  *  @return A newly initialized CCSprite object.
  */
 - (id)initWithTexture:(CCTexture *)texture rect:(CGRect)rect rotated:(BOOL)rotated;
 
-#pragma mark CCSprite - Texture methods
 
-// -----------------------------------------------------------------------
-/**
- *  @name Texture usage
- */
+/// -----------------------------------------------------------------------
+/// @name Textures Methods
+/// -----------------------------------------------------------------------
 
 /**
  *  Set the texture rect of the CCSprite in points.

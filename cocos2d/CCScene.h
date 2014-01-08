@@ -24,23 +24,16 @@
  *
  */
 
-
 #import "CCNode.h"
 
-// -----------------------------------------------------------------
-/**
- *  CCScene is a subclass of CCNode that must be the parent of all your nodes.
- */
+/** CCScene is a subclass of CCNode that must be the parent of all your nodes. */
 @interface CCScene : CCNode
 
-// -----------------------------------------------------------------
+/// -----------------------------------------------------------------------
+/// @name Initializing a CCScene Object
+/// -----------------------------------------------------------------------
 
-/**
- *  Initialize the node
- */
+/** Initialize the node. */
 - (id)init;
-
-// -----------------------------------------------------------------
-
 
 @end

@@ -38,7 +38,6 @@
 #import <math.h>
 #import <stdlib.h>
 #import <string.h>
-
 #import "CCDrawingPrimitives.h"
 #import "ccMacros.h"
 #import "Platforms/CCGL.h"

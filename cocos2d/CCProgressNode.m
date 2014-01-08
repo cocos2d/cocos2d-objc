@@ -33,7 +33,6 @@
 #import "CCDirector.h"
 #import "Support/CGPointExtension.h"
 #import "Support/TransformUtils.h"
-#import "CCDrawingPrimitives.h"
 #import "CCSprite_Private.h"
 
 #import "CCNode_Private.h"

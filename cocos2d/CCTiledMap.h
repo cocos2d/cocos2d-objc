@@ -29,16 +29,16 @@
 @class CCTiledMapLayer;
 @class CCTiledMapObjectGroup;
 
-/** Possible oritentations of the TMX map */
+/** Possible oritentations of the TMX map. */
 typedef NS_ENUM(NSUInteger, CCTiledMapOrientation)
 {
-	/** Orthogonal orientation */
+	/** Orthogonal orientation. */
 	CCTiledMapOrientationOrtho,
 
-	/** Hexagonal orientation */
+	/** Hexagonal orientation. */
 	CCTiledMapOrientationHex,
 
-	/** Isometric orientation */
+	/** Isometric orientation. */
 	CCTiledMapOrientationIso,
 };
 

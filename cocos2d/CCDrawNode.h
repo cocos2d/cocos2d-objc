@@ -34,8 +34,8 @@
  *  The geometry will be saved, so primitives does not need to be redrawn for each frame
  *  Faster than the "drawing primitives" since they it draws everything in one single batch.
  */
-@interface CCDrawNode : CCNode
-{
+@interface CCDrawNode : CCNode {
+    
 	GLuint			_vao;
 	GLuint			_vbo;
 	
@@ -48,45 +48,50 @@
 	BOOL _dirty;
 }
 
-/**
- *  Sets the blending function for the draw node
- *  All primitives will be drawn using the same blend function
- */
+/** Sets the blending function for the draw node.  All primitives will be drawn using the same blend function. */
 @property(nonatomic, assign) ccBlendFunc blendFunc;
+
+
+/// -----------------------------------------------------------------------
+/// @name Primitive Drawing Methods
+/// -----------------------------------------------------------------------
 
 /**
  *  Draw a dot at a position, with a given radius and color.
  *
- *  @param pos    Dot position
- *  @param radius Dot radius
- *  @param color  Dot color
+ *  @param pos    Dot position.
+ *  @param radius Dot radius.
+ *  @param color  Dot color.
  */
 -(void)drawDot:(CGPoint)pos radius:(CGFloat)radius color:(CCColor*)color;
 
 /**
  *  Draw a segment with a radius and color.
  *
- *  @param a      Segment starting point
- *  @param b      Segment end point
- *  @param radius Segment radius
- *  @param color  Segment color
+ *  @param a      Segment starting point.
+ *  @param b      Segment end point.
+ *  @param radius Segment radius.
+ *  @param color  Segment color.
  */
 -(void)drawSegmentFrom:(CGPoint)a to:(CGPoint)b radius:(CGFloat)radius color:(CCColor*)color;
 
 /**
  *  Draw a polygon with a fill color and line color.
  *
- *  @param verts Array of CGPoints, containing the vertices
- *  @param count Number of vertices
- *  @param fill  Polygon fill color
- *  @param width Polygon outline width
- *  @param line  Polygon outline color
+ *  @param verts Array of CGPoints, containing the vertices.
+ *  @param count Number of vertices.
+ *  @param fill  Polygon fill color.
+ *  @param width Polygon outline width.
+ *  @param line  Polygon outline color.
  */
 -(void)drawPolyWithVerts:(const CGPoint*)verts count:(NSUInteger)count fillColor:(CCColor*)fill borderWidth:(CGFloat)width  borderColor:(CCColor*)line;
 
-/** 
- *  Clear the geometry in the node's buffer. 
- */
+
+/// -----------------------------------------------------------------------
+/// @name Draw Node Management
+/// -----------------------------------------------------------------------
+
+/** Clear the geometry in the node's buffer. */
 -(void)clear;
 
 @end
