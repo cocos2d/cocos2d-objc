@@ -124,7 +124,7 @@ typedef NS_ENUM(NSInteger, CCTransitionDirection)
  *
  *  @return A newly initialized CCTransition.
  */
-+ (CCTransition *)transitionFadeWithColor:(ccColor3B)color duration:(NSTimeInterval)duration;
++ (CCTransition *)transitionFadeWithColor:(CCColor*)color duration:(NSTimeInterval)duration;
 
 /**
  *  Creates a fade transition from outgoing to incoming scene, through black

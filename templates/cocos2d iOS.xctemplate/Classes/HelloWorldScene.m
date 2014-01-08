@@ -16,8 +16,7 @@
 
 @implementation HelloWorldScene
 {
-    CCLabelTTF *_helloLabel;
-    float _runtime;
+    CCSprite *_sprite;
 }
 
 // -----------------------------------------------------------------------
@@ -38,19 +37,26 @@
     // Crash if basic initialization for some reason failed
     NSAssert(self, @"Unable to create class HelloWorldScene");
     
-    // Here is where custom code for the scene starts
-    _runtime = 0;
+    // Enable touch handling on scene node
+    self.userInteractionEnabled = YES;
     
-    // create a lebal on the centre of the sceen
-    _helloLabel = [CCLabelTTF labelWithString:@"Hello World (v3)" fontName:@"Arial" fontSize:48];
-    _helloLabel.positionType = CCPositionTypeNormalized;
-    _helloLabel.position = ccp(0.5f, 0.8f);
-    [self addChild:_helloLabel];
+    // Create a colored background (Dark Grey)
+    CCNodeColor *background = [CCNodeColor nodeWithColor:[CCColor colorWithRed:0.2f green:0.2f blue:0.2f alpha:1.0f]];
+    [self addChild:background];
     
-    // create a back button
-    CCButton *backButton = [CCButton buttonWithTitle:@"[ Back ]"];
+    // Add a sprite
+    _sprite = [CCSprite spriteWithImageNamed:@"Icon-72.png"];
+    _sprite.position  = ccp(self.contentSize.width/2,self.contentSize.height/2);
+    [self addChild:_sprite];
+    
+    // Animate sprite with action
+    CCActionRotateBy* actionSpin = [CCActionRotateBy actionWithDuration:1.5f angle:360];
+    [_sprite runAction:[CCActionRepeatForever actionWithAction:actionSpin]];
+    
+    // Create a back button
+    CCButton *backButton = [CCButton buttonWithTitle:@"[ Menu ]" fontName:@"Verdana-Bold" fontSize:18.0f];
     backButton.positionType = CCPositionTypeNormalized;
-    backButton.position = ccp(0.1f, 0.9f);
+    backButton.position = ccp(0.9f, 0.95f); // Top Right of screen
     [backButton setTarget:self selector:@selector(onBackClicked:)];
     [self addChild:backButton];
     
@@ -84,21 +90,23 @@
 
 - (void)onExit
 {
-    
-    
     // always call super onExit last
     [super onExit];
 }
 
 // -----------------------------------------------------------------------
-#pragma mark - update
+#pragma mark - Touch Handler
 // -----------------------------------------------------------------------
 
-- (void)update:(CCTime)delta
-{
-    // manually move hello label up and down
-    _runtime += delta * 5.0f;
-    _helloLabel.position = ccp(0.5f, 0.8f + (sinf(_runtime) * 0.1f));
+-(void) touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
+    CGPoint touchLoc = [touch locationInNode:self];
+    
+    // Log touch location
+    CCLOG(@"Move sprite to @ %@",NSStringFromCGPoint(touchLoc));
+    
+    // Move our sprite to touch location
+    CCActionMoveTo *actionMove = [CCActionMoveTo actionWithDuration:1.0f position:touchLoc];
+    [_sprite runAction:actionMove];
 }
 
 // -----------------------------------------------------------------------
