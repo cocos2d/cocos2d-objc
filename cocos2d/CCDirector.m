@@ -92,8 +92,6 @@ extern NSString * cocos2dVersion(void);
 -(void) calculateDeltaTime;
 // calculates the milliseconds per frame from the start of the frame
 -(void) calculateMPF;
-// returns the FPS image data pointer and len
--(void)getFPSImageData:(unsigned char**)datapointer length:(NSUInteger*)len;
 @end
 
 @implementation CCDirector
@@ -805,20 +803,16 @@ GLToClipTransform(kmMat4 *transformOut)
 
 #pragma mark Director - Helper
 
--(void)getFPSImageData:(unsigned char**)datapointer length:(NSUInteger*)len
+-(void)getFPSImageData:(unsigned char**)datapointer length:(NSUInteger*)len contentScale:(CGFloat *)scale
 {
 	*datapointer = cc_fps_images_png;
 	*len = cc_fps_images_len();
+	*scale = 1.0;
 }
 
 -(void) createStatsLabel
 {
-	CCTexture *texture;
-	CCTextureCache *textureCache = [CCTextureCache sharedTextureCache];
-	
 	if( _FPSLabel && _SPFLabel ) {
-
-		[textureCache removeTextureForKey:@"cc_fps_images"];
 		_FPSLabel = nil;
 		_SPFLabel = nil;
 		_drawsLabel = nil;
@@ -831,12 +825,13 @@ GLToClipTransform(kmMat4 *transformOut)
 
 	unsigned char *data;
 	NSUInteger data_len;
-	[self getFPSImageData:&data length:&data_len];
+	CGFloat contentScale = 0;
+	[self getFPSImageData:&data length:&data_len contentScale:&contentScale];
 	
 	NSData *nsdata = [NSData dataWithBytes:data length:data_len];
 	CGDataProviderRef imgDataProvider = CGDataProviderCreateWithCFData( (__bridge CFDataRef) nsdata);
 	CGImageRef imageRef = CGImageCreateWithPNGDataProvider(imgDataProvider, NULL, true, kCGRenderingIntentDefault);
-	texture = [textureCache addCGImage:imageRef forKey:@"cc_fps_images"];
+	CCTexture *texture = [[CCTexture alloc] initWithCGImage:imageRef contentScale:contentScale];
 	CGDataProviderRelease(imgDataProvider);
 	CGImageRelease(imageRef);
 
