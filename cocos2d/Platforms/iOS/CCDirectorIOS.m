@@ -211,6 +211,7 @@
 	_projection = projection;
 
 	ccSetProjectionMatrixDirty();
+	[self createStatsLabel];
 }
 
 // override default logic
