@@ -840,10 +840,12 @@ GLToClipTransform(kmMat4 *transformOut)
 	_drawsLabel = [[CCLabelAtlas alloc]  initWithString:@"000" texture:texture itemWidth:12 itemHeight:32 startCharMap:'.'];
 
 	[CCTexture setDefaultAlphaPixelFormat:currentFormat];
-
-	[_drawsLabel setPosition: ccpAdd( ccp(0,34), CC_DIRECTOR_STATS_POSITION ) ];
-	[_SPFLabel setPosition: ccpAdd( ccp(0,17), CC_DIRECTOR_STATS_POSITION ) ];
-	[_FPSLabel setPosition: CC_DIRECTOR_STATS_POSITION ];
+	
+	CGPoint offset = [self convertToGL:ccp(0, __view.bounds.size.height)];
+	CGPoint pos = ccpAdd(CC_DIRECTOR_STATS_POSITION, offset);
+	[_drawsLabel setPosition: ccpAdd( ccp(0,34), pos ) ];
+	[_SPFLabel setPosition: ccpAdd( ccp(0,17), pos ) ];
+	[_FPSLabel setPosition: pos ];
 }
 
 @end

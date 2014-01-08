@@ -46,7 +46,7 @@
 //			CCSetupScreenMode: CCScreenModeFixed,
 //			CCSetupScreenOrientation: CCScreenOrientationPortrait,
 //			CCSetupTabletScale2X: @YES,
-			CCSetupShowDebugStats: @NO,
+//			CCSetupShowDebugStats: @YES,
 		}];
     
     return YES;
