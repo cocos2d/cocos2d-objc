@@ -303,7 +303,7 @@
 		B7EE69E31819E75700B983FE /* CCLayoutBox.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69DF1819E75700B983FE /* CCLayoutBox.m */; };
 		B7EE6A1E181AE34600B983FE /* CCSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = B7EE6A1C181AE34600B983FE /* CCSlider.h */; };
 		B7EE6A1F181AE34600B983FE /* CCSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE6A1D181AE34600B983FE /* CCSlider.m */; };
-		D30B5D9817F5E5410058C11C /* libObjectiveChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D39A31E217F2284700E94B3B /* libObjectiveChipmunk.a */; };
+		D30B5D9817F5E5410058C11C /* libObjectiveChipmunk-iPhone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D39A31E217F2284700E94B3B /* libObjectiveChipmunk-iPhone.a */; };
 		D33803E318032ECE0072D8FE /* CCPhysicsBody.m in Sources */ = {isa = PBXBuildFile; fileRef = D33803E218032ECE0072D8FE /* CCPhysicsBody.m */; };
 		D33803E618032F390072D8FE /* CCPhysicsNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D33803E518032F390072D8FE /* CCPhysicsNode.m */; };
 		D33803EA180331A90072D8FE /* CCPhysicsJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = D33803E9180331A90072D8FE /* CCPhysicsJoint.m */; };
@@ -347,6 +347,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = A04A1FEA13B826B300ABAFB7;
 			remoteInfo = kazmath;
+		};
+		D2237081187CF44200FB3105 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D39A31D017F2284600E94B3B /* Chipmunk7.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D333C5F018639A0500BBC4FF;
+			remoteInfo = ObjectiveChipmunk;
 		};
 		D39A31D917F2284700E94B3B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -784,7 +791,7 @@
 				D395DB2C183D73A70024997E /* AudioToolbox.framework in Frameworks */,
 				D395DB2B183D739E0024997E /* OpenAL.framework in Frameworks */,
 				D395DB25183D73930024997E /* AVFoundation.framework in Frameworks */,
-				D30B5D9817F5E5410058C11C /* libObjectiveChipmunk.a in Frameworks */,
+				D30B5D9817F5E5410058C11C /* libObjectiveChipmunk-iPhone.a in Frameworks */,
 				A06D9C141728D5F600704732 /* CoreText.framework in Frameworks */,
 				A0CFE61E15BE3D0E00264229 /* CoreMotion.framework in Frameworks */,
 				A015BFF913B829E100C73E76 /* libkazmath.a in Frameworks */,
@@ -1459,8 +1466,9 @@
 				D39A31DC17F2284700E94B3B /* libChipmunk.a */,
 				D39A31DE17F2284700E94B3B /* libChipmunk-iPhone.a */,
 				D39A31E017F2284700E94B3B /* Benchmark iPhone.app */,
-				D39A31E217F2284700E94B3B /* libObjectiveChipmunk.a */,
+				D39A31E217F2284700E94B3B /* libObjectiveChipmunk-iPhone.a */,
 				D39A31E417F2284700E94B3B /* ObjectiveChipmunkTests.xctest */,
+				D2237082187CF44200FB3105 /* libObjectiveChipmunk.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1813,6 +1821,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		D2237082187CF44200FB3105 /* libObjectiveChipmunk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libObjectiveChipmunk.a;
+			remoteRef = D2237081187CF44200FB3105 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		D39A31DA17F2284700E94B3B /* ChipmunkDemo.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
@@ -1841,10 +1856,10 @@
 			remoteRef = D39A31DF17F2284700E94B3B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		D39A31E217F2284700E94B3B /* libObjectiveChipmunk.a */ = {
+		D39A31E217F2284700E94B3B /* libObjectiveChipmunk-iPhone.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libObjectiveChipmunk.a;
+			path = "libObjectiveChipmunk-iPhone.a";
 			remoteRef = D39A31E117F2284700E94B3B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -2057,6 +2072,15 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
 				GCC_WARN_SHADOW = YES;
+				HEADER_SEARCH_PATHS = (
+					external/kazmath/include,
+					"cocos2d/**",
+					"cocos2d-ui/**",
+					"cocos2d-ui-tests/**",
+					"\"$(SRCROOT)/external/Chipmunk/include\"",
+					"\"$(SRCROOT)/external/Chipmunk/objectivec/include\"",
+					"external/ObjectAL/**",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/build/Debug-iphonesimulator\"",
@@ -2082,6 +2106,15 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
 				GCC_WARN_SHADOW = YES;
+				HEADER_SEARCH_PATHS = (
+					external/kazmath/include,
+					"cocos2d/**",
+					"cocos2d-ui/**",
+					"cocos2d-ui-tests/**",
+					"\"$(SRCROOT)/external/Chipmunk/include\"",
+					"\"$(SRCROOT)/external/Chipmunk/objectivec/include\"",
+					"external/ObjectAL/**",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/build/Debug-iphonesimulator\"",
