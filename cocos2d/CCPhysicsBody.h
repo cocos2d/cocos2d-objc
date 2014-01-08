@@ -27,10 +27,13 @@
 @class CCPhysicsCollisionPair;
 
 /** The type of physics body to use. */
-typedef NS_ENUM(NSUInteger, CCPhysicsBodyType){
+typedef NS_ENUM(unsigned char, CCPhysicsBodyType){
     
 	/** A regular rigid body that is affected by gravity, forces and collisions. */
 	CCPhysicsBodyTypeDynamic,
+	
+//	/** A body that is immovable by gravity, forces or collisions, but is moved using code.  */
+//	CCPhysicsBodyTypeKinematic,
 	
 	/** A body that is immovable such as a wall or the ground. */
 	CCPhysicsBodyTypeStatic,
@@ -333,7 +336,9 @@ typedef NS_ENUM(NSUInteger, CCPhysicsBodyType){
 @property(nonatomic, readonly) NSArray *joints;
 
 /** 
- * Sleeping bodies are not simulated and use minimal CPU resources, normally bodies will fall asleep when they stop moving however you can trigger this manually if required. */
+ * Sleeping bodies are not simulated and use minimal CPU resources, normally bodies will fall asleep when they stop moving however you can trigger this
+ * manually if required. 
+ */
 @property(nonatomic, assign) BOOL sleeping;
 
 /** The CCNode to which this physics body is attached. */
