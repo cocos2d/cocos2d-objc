@@ -25,11 +25,7 @@
 #import "CCLayoutBox.h"
 #import "ccMacros.h"
 #import "CGPointExtension.h"
-
-@interface CCNode () //known private CCNode Methods.
--(void) detachChild:(CCNode *)child cleanup:(BOOL)doCleanup;
-@end
-
+#import "CCNode_Private.h"
 
 @implementation CCLayoutBox
 
