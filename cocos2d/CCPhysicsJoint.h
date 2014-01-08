@@ -25,7 +25,9 @@
 #import "CCPhysicsBody.h"
 
 /**
- * @todo This needs fleshed out by @slembcke
+CCPhysicsJoints hold two CCPhysicsBodies together in some way like a joint between bones or a hinge on a door. Joints work in a fairly automatic fashion.
+They are active from the moment they are created. When you are done with a joint you invalidate it in order to disable it.
+Joints cannot be reactivated once they are invalidated.
  */
 @interface CCPhysicsJoint : NSObject
 
@@ -46,7 +48,9 @@
 +(CCPhysicsJoint *)connectedPivotJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB anchorA:(CGPoint)anchorA;
 
 /**
- *  Creates and returns a pivot joint between the two bodies and keeps the distance of the two anchor points constant.  The anchor points are specified in the coordinates of the node that the bodies are attached to.  Distance will be calculated when the joint becomes active.
+ *  Creates and returns a pivot joint between the two bodies and keeps the distance of the two anchor points constant.
+ *  The anchor points are specified in the coordinates of the node that the bodies are attached to.
+ *  The distance between the anchor points will be calculated when the joint first becomes active.
  *
  *  @param bodyA   Body A.
  *  @param bodyB   Body B.
@@ -59,14 +63,15 @@
 	anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB;
 
 /**
- *  Creates and returns a pivot joint between the two bodies and keeps the distance of the two anchor points within the range.  The anchor points are specified in the coordinates of the node that the bodies are attached to.
+ *  Creates and returns a pivot joint between the two bodies and keeps the distance of the two anchor points within the range.
+ *  The anchor points are specified in the coordinates of the node that the bodies are attached to.
  *
  *  @param bodyA   Body A.
  *  @param bodyB   Body B.
  *  @param anchorA Anchor point A.
  *  @param anchorB Anchor point B.
- *  @param min     Anchor point B.
- *  @param max     Anchor point B.
+ *  @param min     The minimum distance to allow between the anchor points.
+ *  @param max     The maximum distance to allow between the anchor points.
  *
  *  @return The CCPhysicsJoint Object.
  */
@@ -104,7 +109,7 @@
 /** Maxium foce this joint is allowed to use. Defaults to INFINITY. */
 @property(nonatomic, assign) CGFloat maxForce;
 
-/** Whether or not the connected bodies are allow to collide with each other. */
+/** Whether or not the connected bodies are allowed to collide with each other. Defaults to YES. */
 @property(nonatomic, assign) BOOL collideBodies;
 
 /** Depending on the joint, either the magnitude of the linear or angular impulse that this joint applied on the previous fixed time step. */
