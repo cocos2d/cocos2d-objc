@@ -80,6 +80,10 @@
 	<key>Targets</key>
 	<array>
 		<dict>
+			<key>ProductDependencies</key>
+			<array>
+				<integer>1</integer>
+			</array>
 			<key>Frameworks</key>
 			<array>
 				<string>QuartzCore</string>
@@ -95,12 +99,11 @@
 			<key>SharedSettings</key>
 			<dict>
 				<key>OTHER_LDFLAGS</key>
-                <array>
-                    <string>-lz</string>
-                    <string>-lsqlite3</string>
-                    <string>-ObjC</string>
-					<string>-weak_library $BUILT_PRODUCTS_DIR/libObjectiveChipmunk.a</string>					
-                </array>
+				<array>
+					<string>-lz</string>
+					<string>-lsqlite3</string>
+					<string>-ObjC</string>
+				</array>
 			</dict>
 			<key>Configurations</key>
 			<dict>
