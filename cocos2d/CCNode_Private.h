@@ -66,4 +66,10 @@
  */
 -(void) transformAncestors;
 
+/* final method called to actually remove a child node from the children.
+ *  @param node    The child node to remove
+ *  @param cleanup Stops all scheduled events and actions
+ */
+-(void) detachChild:(CCNode *)child cleanup:(BOOL)doCleanup;
+
 @end

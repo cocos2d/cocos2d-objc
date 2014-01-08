@@ -1144,14 +1144,14 @@ static inline float readFloat(CCBReader *self)
 
 + (void) callDidLoadFromCCBForNodeGraph:(CCNode*)nodeGraph
 {
-    if ([nodeGraph respondsToSelector:@selector(didLoadFromCCB)])
-    {
-        [nodeGraph performSelector:@selector(didLoadFromCCB)];
-    }
-    
     for (CCNode* child in nodeGraph.children)
     {
         [CCBReader callDidLoadFromCCBForNodeGraph:child];
+    }
+    
+    if ([nodeGraph respondsToSelector:@selector(didLoadFromCCB)])
+    {
+        [nodeGraph performSelector:@selector(didLoadFromCCB)];
     }
 }
 

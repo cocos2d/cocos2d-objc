@@ -59,12 +59,12 @@
     _textField = [[UITextField alloc] initWithFrame:CGRectZero];
     _textField.delegate = self;
     _textField.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
-		
-		// UIKit might not be running in the same scale as us.
-		_scaleMultiplier = [CCDirector sharedDirector].contentScaleFactor/[UIScreen mainScreen].scale;
-		
-		UIFont *font = _textField.font;
-		_textField.font = [font fontWithSize:font.pointSize*_scaleMultiplier];
+    
+    // UIKit might not be running in the same scale as us.
+    _scaleMultiplier = [CCDirector sharedDirector].contentScaleFactor/[UIScreen mainScreen].scale;
+    
+    // Set default font size
+    [self setFontSize: 17];
     
 #elif defined(__CC_PLATFORM_MAC)
     
@@ -172,6 +172,14 @@
     _background.position = ccp(0,0);
     
     self.contentSize = [self convertContentSizeFromPoints: sizeInPoints type:self.contentSizeType];
+    
+#ifdef __CC_PLATFORM_IOS
+    UIFont *font = _textField.font;
+    _textField.font = [font fontWithSize:self.fontSizeInPoints*_scaleMultiplier];
+#elif defined(__CC_PLATFORM_MAC)
+    NSFont* font = _textField.font;
+    _textField.font = [NSFont fontWithName:font.fontName size:self.fontSizeInPoints];
+#endif
     
     [super layout];
 }
@@ -354,6 +362,24 @@
 - (CCSpriteFrame*) backgroundSpriteFrame
 {
     return _background.spriteFrame;
+}
+
+- (void) setFontSize:(float)fontSize
+{
+    _fontSize = fontSize;
+    [self needsLayout];
+}
+
+- (float) fontSizeInPoints
+{
+    if (self.contentSizeType.heightUnit == CCSizeUnitUIPoints)
+    {
+        return _fontSize * [CCDirector sharedDirector].UIScaleFactor;
+    }
+    else
+    {
+        return _fontSize;
+    }
 }
 
 @end
