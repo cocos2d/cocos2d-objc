@@ -33,8 +33,8 @@
 			<string>Your company&apos;s name</string>
 			<key>Type</key>
 			<string>text</string>
-           <key>Default</key>
-           <string>___FULLUSERNAME___</string>
+			<key>Default</key>
+			<string>___FULLUSERNAME___</string>
 		</dict>
 		<dict>
 			<key>Identifier</key>
@@ -171,12 +171,12 @@
 				<key>EXECUTABLE_EXTENSION</key>
 				<string>a</string>
 				<key>HEADER_SEARCH_PATHS</key>
-                <array>
-                	<string>"$(PROJECT_NAME)/Libraries/Chipmunk/chipmunk/include"</string>
-                	<string>"$(PROJECT_NAME)/Libraries/Chipmunk/objectivec/include"</string>
-                </array>
-                <key>CLANG_ENABLE_OBJC_ARC</key>
-                <string>NO</string>
+				<array>
+					<string>&quot;$(SRCROOT)/$(PROJECT_NAME)/Libraries/Chipmunk/chipmunk/include&quot;</string>
+					<string>&quot;$(SRCROOT)/$(PROJECT_NAME)/Libraries/Chipmunk/objectivec/include&quot;</string>
+				</array>
+				<key>CLANG_ENABLE_OBJC_ARC</key>
+				<string>NO</string>
 			</dict>
 			<key>BuildPhases</key>
 			<array>
