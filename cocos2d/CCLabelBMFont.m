@@ -38,7 +38,6 @@
 #import "ccMacros.h"
 #import "CCLabelBMFont.h"
 #import "CCSprite.h"
-#import "CCDrawingPrimitives.h"
 #import "CCConfiguration.h"
 #import "CCTextureCache.h"
 #import "Support/CCFileUtils.h"

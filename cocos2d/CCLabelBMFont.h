@@ -190,7 +190,7 @@
  *  @param fntFile Label font file.
  *  @param width   Label maximum width.
  *  @param alignment Horizontal text alignment.
- *  @param offset Glyph offset on the font texture
+ *  @param offset Glyph offset on the font texture.
  *
  *  @return An initialized CCLabelBMFont Object.
  */

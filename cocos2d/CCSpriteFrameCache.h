@@ -71,7 +71,7 @@
 /**
  *  Add Sprite frames to the cache from the specified plist.
  *
- *  @param plist plist description
+ *  @param plist plist description.
  */
 -(void) addSpriteFramesWithFile:(NSString*)plist;
 
@@ -109,7 +109,7 @@
 /**
  *  Loads a sprite sheet lookup file and registers all the referenced sprite sheets with the sprite frame cache.
  *
- *  @param filename Sprite sheet lookup file
+ *  @param filename Sprite sheet lookup file.
  */
 -(void) loadSpriteFrameLookupDictionaryFromFile:(NSString*)filename;
 

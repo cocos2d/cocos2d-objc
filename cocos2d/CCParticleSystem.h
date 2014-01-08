@@ -47,16 +47,16 @@
 
 @interface CCParticleSystem : CCParticleSystemBase {
     
-    // Quads to be rendered
+    // Quads to be rendered.
 	ccV3F_C4B_T2F_Quad	*_quads;
     
-    // Indices
+    // Indices.
 	GLushort			*_indices;
     
-    // VAO
+    // VAO.
 	GLuint				_VAOname;
     
-    //0: vertex  1: indices
+    //0: vertex  1: indices.
 	GLuint				_buffersVBO[2];
 }
 

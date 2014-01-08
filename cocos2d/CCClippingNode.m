@@ -32,7 +32,6 @@
 #import "CCShaderCache.h"
 
 #import "CCDirector.h"
-#import "CCDrawingPrimitives.h"
 #import "CGPointExtension.h"
 
 #import "kazmath/GL/matrix.h"

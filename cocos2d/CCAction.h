@@ -34,8 +34,6 @@ enum {
 	kCCActionTagInvalid = -1,
 };
 
-// -----------------------------------------------------------------
-/** @name CCAction */
 
 /**
  *  Base class for CCAction objects.
@@ -62,7 +60,7 @@ enum {
 @property (nonatomic,readonly,unsafe_unretained) id originalTarget;
 
 /** 
- *  The action tag. An identifier of the action 
+ *  The action tag. An identifier of the action.
  */
 @property (nonatomic,readwrite,assign) NSInteger tag;
 
@@ -80,7 +78,7 @@ enum {
  */
 -(id) init;
 
-// Implementation of NSCopying protocol
+/* NSCopying support. */
 -(id) copyWithZone: (NSZone*) zone;
 
 /**
@@ -128,8 +126,7 @@ enum {
 
 @end
 
-// -----------------------------------------------------------------
-/** @name CCActionFiniteTime */
+#pragma mark - CCActionFiniteTime
 
 /**
  *  Base class for actions that have a finite time duration.
@@ -157,8 +154,7 @@ enum {
 
 @end
 
-// -----------------------------------------------------------------
-/** @name CCActionRepeatForever */
+#pragma mark - CCActionRepeatForever
 
 @class CCActionInterval;
 
@@ -198,8 +194,7 @@ enum {
 
 @end
 
-// -----------------------------------------------------------------
-/** @name CCActionSpeed */
+#pragma mark - CCActionSpeed
 
 /**
  *  Changes the speed of an action.
@@ -247,8 +242,7 @@ enum {
 
 @end
 
-// -----------------------------------------------------------------
-/** @name CCActionFollow */
+#pragma mark - CCActionFollow
 
 @class CCNode;
 

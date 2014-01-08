@@ -91,7 +91,6 @@
 #import "CCTMXXMLParser.h"
 
 #import "CCNodeColor.h"
-#import "CCDrawingPrimitives.h"
 #import "CCScene.h"
 //#import "CCScheduler.h"
 #import "CCProtocols.h"
