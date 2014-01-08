@@ -291,6 +291,9 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 -(CGPoint)gravity {return _space.gravity;}
 -(void)setGravity:(CGPoint)gravity {_space.gravity = gravity;}
 
+-(int)iterations {return _space.iterations;}
+-(void)setIterations:(int)iterations {_space.iterations = iterations;}
+
 -(CCTime)sleepTimeThreshold {return _space.sleepTimeThreshold;}
 -(void)setSleepTimeThreshold:(CCTime)sleepTimeThreshold {_space.sleepTimeThreshold = sleepTimeThreshold;}
 
