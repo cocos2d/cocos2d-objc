@@ -732,7 +732,7 @@ void FNTConfigRemoveCache( void )
     CGRect rect;
     ccBMFontDef fontDef;
 	
-	CGFloat contentScale = self.texture.contentScale;
+	CGFloat contentScale = 1.0/self.texture.contentScale;
 	
 	for(NSUInteger i = 0; i<stringLen; i++) {
 		unichar c = [_string characterAtIndex:i];
@@ -810,7 +810,7 @@ void FNTConfigRemoveCache( void )
 		NSInteger yOffset = _configuration->_commonHeight - fontDef.yOffset;
 		CGPoint fontPos = ccp( (CGFloat)nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width*0.5f + kerningAmount,
 							  (CGFloat)nextFontPositionY + yOffset - rect.size.height*0.5f * __ccContentScaleFactor );
-		fontChar.position = ccpMult(fontPos, 1.0/contentScale);
+		fontChar.position = ccpMult(fontPos, contentScale);
 		
 		// update kerning
 		nextFontPositionX += fontDef.xAdvance + kerningAmount;
