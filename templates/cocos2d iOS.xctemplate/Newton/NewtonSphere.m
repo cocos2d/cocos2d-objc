@@ -105,9 +105,11 @@
     
     // create fire
     _fire = [CCParticleSystem particleWithFile:@"fire.plist"];
-    _fire.position = ccp(0, _sphere.contentSize.height * 0.25);
     _fire.particlePositionType = CCParticleSystemPositionTypeFree;
-    
+
+    // place the fire effect in upper half of sphere (looks better)
+    _fire.position = ccp(0, _sphere.contentSize.height * NewtonParticleDisplacement);
+
     // ----------
     // Issue #484
     // There is a bug in particle systems, that prevents free particles from being scaled. In stead the properties must be scaled.
