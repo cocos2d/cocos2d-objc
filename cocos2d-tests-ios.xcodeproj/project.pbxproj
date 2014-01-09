@@ -65,6 +65,7 @@
 		B7EE6A28181B075E00B983FE /* CCSliderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE6A27181B075E00B983FE /* CCSliderTest.m */; };
 		D340E10E185660BE006E605C /* CCPhysicsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D340E10C185660BE006E605C /* CCPhysicsTest.m */; };
 		D340E10F185660BE006E605C /* TilemapTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D340E10D185660BE006E605C /* TilemapTest.m */; };
+		D3B2A7E5187DD60B00406C5A /* CCBMFontTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B2A7E4187DD60B00406C5A /* CCBMFontTest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,12 +97,12 @@
 			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
 		};
-		B7E2623417E7D578007067F0 /* PBXContainerItemProxy */ = {
+		D3B2A7E8187DD60B00406C5A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B7E2622317E7D3D8007067F0 /* cocos2d-ios.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A04A1FEA13B826B300ABAFB7;
-			remoteInfo = kazmath;
+			proxyType = 2;
+			remoteGlobalIDString = D37EE968187D4C9D00CB5EF2;
+			remoteInfo = ObjectiveChipmunk;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -189,6 +190,7 @@
 		B7EE6A27181B075E00B983FE /* CCSliderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSliderTest.m; path = "cocos2d-ui-tests/tests/CCSliderTest.m"; sourceTree = SOURCE_ROOT; };
 		D340E10C185660BE006E605C /* CCPhysicsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCPhysicsTest.m; path = "cocos2d-ui-tests/tests/CCPhysicsTest.m"; sourceTree = SOURCE_ROOT; };
 		D340E10D185660BE006E605C /* TilemapTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TilemapTest.m; path = "cocos2d-ui-tests/tests/TilemapTest.m"; sourceTree = SOURCE_ROOT; };
+		D3B2A7E4187DD60B00406C5A /* CCBMFontTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBMFontTest.m; path = "cocos2d-ui-tests/tests/CCBMFontTest.m"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -350,6 +352,7 @@
 				D340E10D185660BE006E605C /* TilemapTest.m */,
 				7587BDB2185A0A6900EEEFDE /* TextureTest.m */,
 				7587BDB6185A64AD00EEEFDE /* ColorTest.m */,
+				D3B2A7E4187DD60B00406C5A /* CCBMFontTest.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -469,6 +472,7 @@
 			children = (
 				B7E2622D17E7D3D8007067F0 /* libcocos2d.a */,
 				B7E2623117E7D3D8007067F0 /* libkazmath.a */,
+				D3B2A7E9187DD60B00406C5A /* libObjectiveChipmunk.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -505,7 +509,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				B7E2623517E7D578007067F0 /* PBXTargetDependency */,
 				B7E2623317E7D578007067F0 /* PBXTargetDependency */,
 			);
 			name = "cocos2d-tests-ios";
@@ -564,6 +567,13 @@
 			fileType = archive.ar;
 			path = libkazmath.a;
 			remoteRef = B7E2623017E7D3D8007067F0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D3B2A7E9187DD60B00406C5A /* libObjectiveChipmunk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libObjectiveChipmunk.a;
+			remoteRef = D3B2A7E8187DD60B00406C5A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -640,6 +650,7 @@
 				758A6C7B18440D5C00D1A8D2 /* ParticleTest.m in Sources */,
 				B7C6238C17ECDF6A00928F91 /* CCTableViewTest.m in Sources */,
 				D340E10E185660BE006E605C /* CCPhysicsTest.m in Sources */,
+				D3B2A7E5187DD60B00406C5A /* CCBMFontTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -655,11 +666,6 @@
 			isa = PBXTargetDependency;
 			name = cocos2d;
 			targetProxy = B7E2623217E7D578007067F0 /* PBXContainerItemProxy */;
-		};
-		B7E2623517E7D578007067F0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = kazmath;
-			targetProxy = B7E2623417E7D578007067F0 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

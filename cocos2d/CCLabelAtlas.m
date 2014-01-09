@@ -107,7 +107,7 @@
 	float textureWide = [texture pixelWidth];
 	float textureHigh = [texture pixelHeight];
 	
-	CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
+	CGFloat scale = _textureAtlas.texture.contentScale;
 	float itemWidthInPixels = _itemWidth * scale;
 	float itemHeightInPixels = _itemHeight * scale;
 

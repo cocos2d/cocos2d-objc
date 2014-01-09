@@ -105,6 +105,9 @@
 /** The offset of the shadow. */
 @property (nonatomic,assign) CGPoint shadowOffset;
 
+/** The offset of the shadow in points */
+@property(nonatomic,readonly) CGPoint shadowOffsetInPoints;
+
 /** The position type to be used for the shadow offset. */
 @property (nonatomic,assign) CCPositionType shadowOffsetType;
 

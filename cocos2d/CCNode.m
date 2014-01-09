@@ -343,25 +343,22 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 
 -(void) setContentSize:(CGSize)size
 {
-	if( ! CGSizeEqualToSize(size, _contentSize) ) {
+	if( ! CGSizeEqualToSize(size, _contentSize) )
+    {
 		_contentSize = size;
-        
-        CGSize contentSizeInPoints = self.contentSizeInPoints;
-		_anchorPointInPoints = ccp( contentSizeInPoints.width * _anchorPoint.x, contentSizeInPoints.height * _anchorPoint.y );
-		_isTransformDirty = _isInverseDirty = YES;
-        
-        if ([_parent isKindOfClass:[CCLayout class]])
-        {
-            CCLayout* layout = (CCLayout*)_parent;
-            [layout needsLayout];
-        }
+        [self contentSizeChanged];
 	}
 }
 
 - (void) setContentSizeType:(CCSizeType)contentSizeType
 {
     _contentSizeType = contentSizeType;
-    
+    [self contentSizeChanged];
+}
+
+- (void) contentSizeChanged
+{
+    // Update children
     CGSize contentSizeInPoints = self.contentSizeInPoints;
     _anchorPointInPoints = ccp( contentSizeInPoints.width * _anchorPoint.x, contentSizeInPoints.height * _anchorPoint.y );
     _isTransformDirty = _isInverseDirty = YES;
@@ -370,6 +367,16 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
     {
         CCLayout* layout = (CCLayout*)_parent;
         [layout needsLayout];
+    }
+    
+    // Update the children (if needed)
+    for (CCNode* child in _children)
+    {
+        if (!CCPositionTypeIsBasicPoints(child->_positionType))
+        {
+            // This is a position type affected by content size
+            child->_isTransformDirty = _isInverseDirty = YES;
+        }
     }
 }
 
@@ -1233,7 +1240,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
     else if (yUnit == CCPositionUnitNormalized) y = position.y * _parent.contentSizeInPoints.height;
     
     // Account for reference corner
-    CCPositionReferenceCorner corner = _positionType.corner;
+    CCPositionReferenceCorner corner = type.corner;
     if (corner == CCPositionReferenceCornerBottomLeft)
     {
         // Nothing needs to be done

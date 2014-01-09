@@ -268,6 +268,11 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     }
 }
 
+-(CGPoint)shadowOffsetInPoints
+{
+    return [self convertPositionToPoints:self.shadowOffset type:_shadowOffsetType];
+}
+
 - (void) setShadowBlurRadius:(float)shadowBlurRadius
 {
     if (_shadowBlurRadius != shadowBlurRadius)
@@ -300,6 +305,14 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 	// XXX: _string, _fontName can't be displayed here, since they might be already released
 
 	return [NSString stringWithFormat:@"<%@ = %p | FontSize = %.1f>", [self class], self, _fontSize];
+}
+
+-(void)onEnter
+{
+    
+    [self setTextureDirty];
+    
+    [super onEnter];
 }
 
 - (void) visit
@@ -477,7 +490,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     CGSize dimensions = originalDimensions;
     
     float shadowBlurRadius = _shadowBlurRadius * scale;
-    CGPoint shadowOffset = ccpMult(_shadowOffset, scale);
+    CGPoint shadowOffset = ccpMult(self.shadowOffsetInPoints, scale);
     float outlineWidth = _outlineWidth * scale;
     
     BOOL hasShadow = (_shadowColor.alpha > 0);
@@ -789,7 +802,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 		CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
     UIFont* font = [UIFont fontWithName:_fontName size:_fontSize * scale];
     float shadowBlurRadius = _shadowBlurRadius * scale;
-    CGPoint shadowOffset = ccpMult(_shadowOffset, scale);
+    CGPoint shadowOffset = ccpMult(self.shadowOffsetInPoints, scale);
     float outlineWidth = _outlineWidth * scale;
     
     BOOL hasShadow = (_shadowColor.alpha > 0);
