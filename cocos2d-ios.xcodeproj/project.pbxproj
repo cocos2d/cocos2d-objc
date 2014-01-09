@@ -375,13 +375,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		5B77DDE2187C51F00001916A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D39A31D017F2284600E94B3B /* Chipmunk7.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D333C5F018639A0500BBC4FF;
-			remoteInfo = ObjectiveChipmunk;
-		};
 		A015BFF713B829D700C73E76 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -2039,7 +2032,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#appledoc Xcode script\n# Start constants\ncompany=\"Cocos2D\";\ncompanyID=\"Cocos2D 3.0\";\ncompanyURL=\"http://www.cocos2d-iphone.org\";\ntarget=\"iphoneos\";\noutputPath=\"api-docs\";\n# End constants\ntools/appledoc \\\n--project-name \"${companyID}\" \\\n--project-company \"${company}\" \\\n--company-id \"${companyID}\" \\\n--docset-atom-filename \"${company}.atom\" \\\n--docset-feed-url \"${companyURL}/${company}/%DOCSETATOMFILENAME\" \\\n--docset-package-url \"${companyURL}/${company}/%DOCSETPACKAGEFILENAME\" \\\n--docset-fallback-url \"${companyURL}/${company}\" \\\n--output \"${outputPath}\" \\\n--publish-docset \\\n--install-docset \\\n--docset-platform-family \"${target}\" \\\n--logformat xcode \\\n--no-keep-undocumented-members \\\n--no-search-undocumented-doc \\\n--keep-intermediate-files \\\n--no-repeat-first-par \\\n--no-warn-invalid-crossref \\\n--exit-threshold 2 \\\n--ignore base64.h \\\n--ignore CCActionManager.h \\\n--ignore CCAnimationCache.h \\\n--ignore CCAnimation.h \\\n--ignore CCAtlasNode.h \\\n--ignore CCBAnimationManager.h \\\n--ignore CCBKeyFrame.h \\\n--ignore CCBLocalizationManager.h \\\n--ignore CCBReader.h \\\n--ignore CCBReader_Private.h \\\n--ignore CCBSequence.h \\\n--ignore CCBSequenceProperty.h \\\n--ignore CCBuilderReader.h \\\n--ignore ccConfig.h \\\n--ignore CCConfiguration.h \\\n--ignore ccDeprecated.h \\\n--ignore CCDirectorIOS.h \\\n--ignore CCDirectorMac.h \\\n--ignore CCDirector_Private.h \\\n--ignore CCDrawingPrimitives.h \\\n--ignore CCES2Renderer.h \\\n--ignore CCESRenderer.h \\\n--ignore CCFileUtils.h \\\n--ignore ccFPSImages.h \\\n--ignore CCGL.h \\\n--ignore CCGLProgram.h \\\n--ignore ccGLStateCache.h \\\n--ignore CCGLView.h \\\n--ignore CCLabelAtlas.h \\\n--ignore CCLabelBMFont_Private.h \\\n--ignore ccMacros.h \\\n--ignore CCNode_Private.h \\\n--ignore CCNS.h \\\n--ignore CCParticleBatchNode.h \\\n--ignore CCParticleSystem_Private.h \\\n--ignore CCParticleSystemQuad_Private.h \\\n--ignore CCProfiling.h \\\n--ignore CCProgressNode_Private.h \\\n--ignore CCProtocols.h \\\n--ignore CCResponderManager.h \\\n--ignore CCScheduler.h \\\n--ignore CCShaderCache.h \\\n--ignore ccShader_PositionColor_frag.h \\\n--ignore ccShader_PositionColorLengthTexture_frag.h \\\n--ignore ccShader_PositionColorLengthTexture_vert.h \\\n--ignore ccShader_PositionColor_vert.h \\\n--ignore ccShader_PositionTextureA8Color_frag.h \\\n--ignore ccShader_PositionTextureA8Color_vert.h \\\n--ignore ccShader_PositionTextureColorAlphaTest_frag.h \\\n--ignore ccShader_PositionTextureColor_frag.h \\\n--ignore ccShader_PositionTextureColor_vert.h \\\n--ignore ccShader_PositionTexture_frag.h \\\n--ignore ccShader_PositionTexture_uColor_frag.h \\\n--ignore ccShader_PositionTexture_uColor_vert.h \\\n--ignore ccShader_PositionTexture_vert.h \\\n--ignore ccShader_Position_uColor_frag.h \\\n--ignore ccShader_Position_uColor_vert.h \\\n--ignore ccShaders.h \\\n--ignore CCSpriteBatchNode_Private.h \\\n--ignore CCSpriteFrameCache.h \\\n--ignore CCSprite_Private.h \\\n--ignore CCTextureAtlas.h \\\n--ignore CCTextureCache.h \\\n--ignore CCTexture_Private.h \\\n--ignore CCTexturePVR.h \\\n--ignore CCTiledMapLayer_Private.h \\\n--ignore ccTypes.h \\\n--ignore ccUtils.h \\\n--ignore CCVertex.h \\\n--ignore CCWindow.h \\\n--ignore CGPointExtension.h \\\n--ignore cocos2d.h \\\n--ignore cocos2d-ui.h \\\n--ignore .m \\\n--ignore NSAttributedString+CCAdditions.h \\\n--ignore NSThread+performBlock.h \\\n--ignore OpenGL_Internal.h \\\n--ignore TGAlib.h \\\n--ignore TransformUtils.h \\\n--ignore UITouch+CC.h \\\n--ignore uthash.h \\\n--ignore utlist.h \\\n--ignore ZipUtils.h \\\ncocos2d cocos2d-ui\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+			shellScript = "#appledoc Xcode script\n# Start constants\ncompany=\"Cocos2d-iPhone.org\";\ncompanyID=\"org.cocos2d\";\ncompanyURL=\"http://cocos2d-iphone.org\";\ntarget=\"iphoneos\";\n#target=\"macosx\";\noutputPath=\"api-docs\";\n# End constants\ntools/appledoc \\\n--project-name \"Cocos2d\" \\\n--project-company \"${company}\" \\\n--company-id \"${companyID}\" \\\n--docset-atom-filename \"${company}.atom\" \\\n--docset-feed-url \"${companyURL}/${company}/%DOCSETATOMFILENAME\" \\\n--docset-package-url \"${companyURL}/${company}/%DOCSETPACKAGEFILENAME\" \\\n--docset-fallback-url \"${companyURL}/${company}\" \\\n--output \"${outputPath}\" \\\n--publish-docset \\\n--install-docset \\\n--docset-platform-family \"${target}\" \\\n--logformat xcode \\\n--no-keep-undocumented-members \\\n--no-search-undocumented-doc \\\n--keep-intermediate-files \\\n--no-repeat-first-par \\\n--no-warn-invalid-crossref \\\n--exit-threshold 2 \\\n--ignore .m \\\n--ignore cocos2d.h \\\n--ignore CCNode_Private.h \\\n--ignore CCLabelBMFont_Private.h \\\n--ignore CCSprite_Private.h \\\n--ignore CCSpriteBatchNode_Private.h \\\n--ignore CCParticleSystem_Private.h \\\n--ignore CCParticleSystemQuad_Private.h \\\n--ignore CCTiledMapLayer_Private.h \\\n--ignore CCProgressNode_Private.h \\\n--ignore CCTexture_Private.h \\\n--ignore uthash.h \\\n--ignore utlist.h \\\n--ignore TGAlib.h \\\n--ignore CCVertex.h \\\n--ignore CGPointExtension.h \\\n--ignore TransformUtils.h \\\n--ignore OpenGL_Internal.h \\\n--ignore CCProfiling.h \\\n--ignore ccUtils.h \\\n--ignore CCFileUtils.h \\\n--ignore base64.h \\\n--ignore ZipUtils.h \\\n--ignore NSThread+performBlock.h \\\n--ignore NSAttributedString+CCAdditions.h \\\n--ignore ccShader_PositionColorLengthTexture_frag.h \\\n--ignore ccShader_PositionColorLengthTexture_vert.h \\\n--ignore ccShader_Position_uColor_frag.h \\\n--ignore ccShader_Position_uColor_vert.h \\\n--ignore ccShader_PositionColor_frag.h \\\n--ignore ccShader_PositionColor_vert.h \\\n--ignore ccShader_PositionTexture_uColor_frag.h \\\n--ignore ccShader_PositionTexture_uColor_vert.h \\\n--ignore ccShader_PositionTexture_frag.h \\\n--ignore ccShader_PositionTexture_vert.h \\\n--ignore ccShader_PositionTextureA8Color_frag.h \\\n--ignore ccShader_PositionTextureA8Color_vert.h \\\n--ignore ccShader_PositionTextureColor_frag.h \\\n--ignore ccShader_PositionTextureColor_vert.h \\\n--ignore ccShader_PositionTextureColorAlphaTest_frag.h \\\n--ignore ccShaders.h \\\n--ignore ccGLStateCache.h \\\n--ignore CCShaderCache.h \\\n--ignore CCGLProgram.h \\\n--ignore UITouch+CC.h \\\n--ignore CCDirectorIOS.h \\\n--ignore CCGLView.h \\\n--ignore CCES2Renderer.h \\\n--ignore CCESRenderer.h \\\n--ignore CCDirectorMac.h \\\n--ignore CCWindow.h \\\n--ignore CCGL.h \\\n--ignore CCNS.h \\\n--ignore ccFPSImages.h \\\n--ignore ccDeprecated.h \\\n--ignore ccConfig.h \\\n--ignore ccMacros.h \\\n--ignore CCConfiguration.h \\\n--ignore CCProtocols.h \\\n--ignore CCScheduler.h \\\n--ignore CCDirector_Private.h \\\n--ignore CCBAnimationManager.h \\\n--ignore CCBKeyFrame.h \\\n--ignore CCBLocalizationManager.h \\\n--ignore CCBReader.h \\\n--ignore CCBSequence.h \\\n--ignore CCBSequenceProperty.h \\\n--ignore CCBuilderReader.h \\\n--ignore CCBReader_Private.h \\\n--ignore cocos2d-ui.h \\\n--ignore ccTypes.h \\\n--ignore CCTextureAtlas.h \\\n--ignore CCPhysics+ObjectiveChipmunk.h \\\ncocos2d cocos2d-ui\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2187,6 +2180,46 @@
 				A015BFF113B826D800C73E76 /* vec3.c in Sources */,
 				A015BFF313B826D800C73E76 /* vec4.c in Sources */,
 				A08C379114144FDE004538FD /* neon_matrix_impl.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D37EE964187D4C9D00CB5EF2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D37EE9F1187D4CF500CB5EF2 /* cpSpaceQuery.c in Sources */,
+				D37EE9F2187D4CF500CB5EF2 /* cpSpaceStep.c in Sources */,
+				D37EE9D4187D4CF500CB5EF2 /* ChipmunkBody.m in Sources */,
+				D37EE9E5187D4CF500CB5EF2 /* cpPinJoint.c in Sources */,
+				D37EE9DE187D4CF500CB5EF2 /* cpCollision.c in Sources */,
+				D37EE9EA187D4CF500CB5EF2 /* cpShape.c in Sources */,
+				D37EE9D5187D4CF500CB5EF2 /* ChipmunkConstraint.m in Sources */,
+				D37EE9EF187D4CF500CB5EF2 /* cpSpaceDebug.c in Sources */,
+				D37EE9DC187D4CF500CB5EF2 /* cpBBTree.c in Sources */,
+				D37EE9EB187D4CF500CB5EF2 /* cpSimpleMotor.c in Sources */,
+				D37EE9EE187D4CF500CB5EF2 /* cpSpaceComponent.c in Sources */,
+				D37EE9E1187D4CF500CB5EF2 /* cpDampedSpring.c in Sources */,
+				D37EE9E6187D4CF500CB5EF2 /* cpPivotJoint.c in Sources */,
+				D37EE9E4187D4CF500CB5EF2 /* cpHashSet.c in Sources */,
+				D37EE9D9187D4CF500CB5EF2 /* chipmunk.c in Sources */,
+				D37EE9D7187D4CF500CB5EF2 /* ChipmunkShape.m in Sources */,
+				D37EE9E8187D4CF500CB5EF2 /* cpRatchetJoint.c in Sources */,
+				D37EE9E7187D4CF500CB5EF2 /* cpPolyShape.c in Sources */,
+				D37EE9DB187D4CF500CB5EF2 /* cpArray.c in Sources */,
+				D37EE9D6187D4CF500CB5EF2 /* ChipmunkMultiGrab.m in Sources */,
+				D37EE9E3187D4CF500CB5EF2 /* cpGrooveJoint.c in Sources */,
+				D37EE9DA187D4CF500CB5EF2 /* cpArbiter.c in Sources */,
+				D37EE9F4187D4CF500CB5EF2 /* cpSweep1D.c in Sources */,
+				D37EE9E0187D4CF500CB5EF2 /* cpDampedRotarySpring.c in Sources */,
+				D37EE9EC187D4CF500CB5EF2 /* cpSlideJoint.c in Sources */,
+				D37EE9DD187D4CF500CB5EF2 /* cpBody.c in Sources */,
+				D37EE9ED187D4CF500CB5EF2 /* cpSpace.c in Sources */,
+				D37EE9F3187D4CF500CB5EF2 /* cpSpatialIndex.c in Sources */,
+				D37EE9E9187D4CF500CB5EF2 /* cpRotaryLimitJoint.c in Sources */,
+				D37EE9D8187D4CF500CB5EF2 /* ChipmunkSpace.m in Sources */,
+				D37EE9E2187D4CF500CB5EF2 /* cpGearJoint.c in Sources */,
+				D37EE9F0187D4CF500CB5EF2 /* cpSpaceHash.c in Sources */,
+				D37EE9DF187D4CF500CB5EF2 /* cpConstraint.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
