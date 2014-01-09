@@ -86,7 +86,7 @@
  *
  *  @return The CCParticleBatchNode Object.
  */
-+(id)batchNodeWithTexture:(CCTexture *)tex;
++(instancetype)batchNodeWithTexture:(CCTexture *)tex;
 
 /**
  *  Creates and returns a particle batch node object from the specified image file value.
@@ -95,7 +95,7 @@
  *
  *  @return The CCParticleBatchNode Object.
  */
-+(id)batchNodeWithFile:(NSString*) imageFile;
++(instancetype)batchNodeWithFile:(NSString*) imageFile;
 
 /**
  *  Creates and returns a particle batch node object from the specified texture and capacity values.
@@ -105,7 +105,7 @@
  *
  *  @return The CCParticleBatchNode Object.
  */
-+(id)batchNodeWithTexture:(CCTexture *)tex capacity:(NSUInteger) capacity;
++(instancetype)batchNodeWithTexture:(CCTexture *)tex capacity:(NSUInteger) capacity;
 
 /**
  *  Creates and returns a particle batch node object from the specified texture and capacity values.
@@ -116,7 +116,7 @@
  *  @return The CCParticleBatchNode Object.
  */
 
-+(id)batchNodeWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity;
++(instancetype)batchNodeWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity;
 
 
 /// -----------------------------------------------------------------------

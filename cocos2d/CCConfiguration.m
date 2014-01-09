@@ -65,7 +65,7 @@ static char * glExtensions;
 	return _sharedConfiguration;
 }
 
-+(id)alloc
++(instancetype)alloc
 {
 	NSAssert(_sharedConfiguration == nil, @"Attempted to allocate a second instance of a singleton.");
 	return [super alloc];

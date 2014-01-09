@@ -68,7 +68,7 @@
  *
  *  @return Created action
  */
-+(id) actionWithDuration: (CCTime) d;
++(instancetype) actionWithDuration: (CCTime) d;
 
 /**
  *  Initializes the action.
@@ -146,7 +146,7 @@
  *
  *  @return New action sequence
  */
-+(id) actionOne:(CCActionFiniteTime*)actionOne two:(CCActionFiniteTime*)actionTwo;
++(instancetype) actionOne:(CCActionFiniteTime*)actionOne two:(CCActionFiniteTime*)actionTwo;
 
 /**
  *  Initializes an action sequence with two actions
@@ -190,7 +190,7 @@
  *
  *  @return New action repeat
  */
-+(id) actionWithAction:(CCActionFiniteTime*)action times: (NSUInteger)times;
++(instancetype) actionWithAction:(CCActionFiniteTime*)action times: (NSUInteger)times;
 
 /**
  *  Initializes a CCRepeat action.
@@ -223,7 +223,7 @@
  *
  *  @return New action spawn
  */
-+(id) actions: (CCActionFiniteTime*) action1, ... NS_REQUIRES_NIL_TERMINATION;
++(instancetype) actions: (CCActionFiniteTime*) action1, ... NS_REQUIRES_NIL_TERMINATION;
 
 /**
  *  Helper constructor to create an array of spawned actions.
@@ -252,7 +252,7 @@
  *
  *  @return New action spawn
  */
-+(id) actionOne: (CCActionFiniteTime*) one two:(CCActionFiniteTime*) two;
++(instancetype) actionOne: (CCActionFiniteTime*) one two:(CCActionFiniteTime*) two;
 
 /**
  *  Initializes the Spawn action with the 2 actions to spawn.
@@ -292,7 +292,7 @@
  *
  *  @return New rotate action
  */
-+(id) actionWithDuration:(CCTime)duration angle:(float)angle;
++(instancetype) actionWithDuration:(CCTime)duration angle:(float)angle;
 
 /**
  *  Initializes the action.
@@ -313,7 +313,7 @@
  *
  *  @return New rotate action
  */
-+(id) actionWithDuration: (CCTime) t angleX:(float) aX angleY:(float) aY;
++(instancetype) actionWithDuration: (CCTime) t angleX:(float) aX angleY:(float) aY;
 
 /**
  *  Initializes the action with separate rotation angles.
@@ -350,7 +350,7 @@
  *
  *  @return New rotate action
  */
-+(id) actionWithDuration:(CCTime)duration angle:(float)deltaAngle;
++(instancetype) actionWithDuration:(CCTime)duration angle:(float)deltaAngle;
 
 /**
  *  Initializes the action.
@@ -371,7 +371,7 @@
  *
  *  @return New rotate action
  */
-+(id) actionWithDuration: (CCTime) t angleX:(float) aX angleY:(float) aY;
++(instancetype) actionWithDuration: (CCTime) t angleX:(float) aX angleY:(float) aY;
 
 /**
  *  Initializes the action with separate rotation angles.
@@ -409,7 +409,7 @@
  *
  *  @return New moveby action
  */
-+(id) actionWithDuration: (CCTime)duration position:(CGPoint)deltaPosition;
++(instancetype) actionWithDuration: (CCTime)duration position:(CGPoint)deltaPosition;
 
 /**
  *  Initializes the action.
@@ -443,7 +443,7 @@
  *
  *  @return New moveto action
  */
-+(id) actionWithDuration:(CCTime)duration position:(CGPoint)position;
++(instancetype) actionWithDuration:(CCTime)duration position:(CGPoint)position;
 
 /**
  *  Initializes the action.
@@ -484,7 +484,7 @@
  *
  *  @return New skew action
  */
-+(id) actionWithDuration:(CCTime)t skewX:(float)sx skewY:(float)sy;
++(instancetype) actionWithDuration:(CCTime)t skewX:(float)sx skewY:(float)sy;
 
 /**
  *  Initializes the action.
@@ -546,7 +546,7 @@
  *
  *  @return New jump action
  */
-+(id) actionWithDuration: (CCTime)duration position:(CGPoint)position height:(CCTime)height jumps:(NSUInteger)jumps;
++(instancetype) actionWithDuration: (CCTime)duration position:(CGPoint)position height:(CCTime)height jumps:(NSUInteger)jumps;
 
 /**
  *  Initializes the action.
@@ -609,7 +609,7 @@ typedef struct _ccBezierConfig {
  *
  *  @return New bezier action
  */
-+(id) actionWithDuration: (CCTime) t bezier:(ccBezierConfig) c;
++(instancetype) actionWithDuration: (CCTime) t bezier:(ccBezierConfig) c;
 
 /**
  *  Initializes the action with a duration and a bezier configuration.
@@ -667,7 +667,7 @@ typedef struct _ccBezierConfig {
  *
  *  @return New scale action
  */
-+(id) actionWithDuration: (CCTime)duration scale:(float) s;
++(instancetype) actionWithDuration: (CCTime)duration scale:(float) s;
 
 /**
  *  Initializes the action with the same scale factor for X and Y.
@@ -688,7 +688,7 @@ typedef struct _ccBezierConfig {
  *
  *  @return New scale action
  */
-+(id) actionWithDuration: (CCTime)duration scaleX:(float) sx scaleY:(float)sy;
++(instancetype) actionWithDuration: (CCTime)duration scaleX:(float) sx scaleY:(float)sy;
 
 /**
  *  Initializes the action with individual scale factor for X and Y.
@@ -738,7 +738,7 @@ typedef struct _ccBezierConfig {
  *
  *  @return New blink action
  */
-+(id) actionWithDuration: (CCTime)duration blinks:(NSUInteger)blinks;
++(instancetype) actionWithDuration: (CCTime)duration blinks:(NSUInteger)blinks;
 
 /**
  *  Initializes the blink action
@@ -807,7 +807,7 @@ typedef struct _ccBezierConfig {
  *
  *  @return New fade action
  */
-+(id) actionWithDuration:(CCTime)duration opacity:(CGFloat)opactiy;
++(instancetype) actionWithDuration:(CCTime)duration opacity:(CGFloat)opactiy;
 
 /**
  *  Initalizes a fade action.
@@ -843,7 +843,7 @@ typedef struct _ccBezierConfig {
  *
  *  @return New tint to action
  */
-+(id) actionWithDuration:(CCTime)duration color:(CCColor*)color;
++(instancetype) actionWithDuration:(CCTime)duration color:(CCColor*)color;
 
 /**
  *  Initalizes a tint to action
@@ -879,7 +879,7 @@ typedef struct _ccBezierConfig {
  *
  *  @return New tint by action
  */
-+(id) actionWithDuration:(CCTime)duration red:(CGFloat)deltaRed green:(CGFloat)deltaGreen blue:(CGFloat)deltaBlue;
++(instancetype) actionWithDuration:(CCTime)duration red:(CGFloat)deltaRed green:(CGFloat)deltaGreen blue:(CGFloat)deltaBlue;
 
 /**
  *  Initalizes a tint to action
@@ -931,7 +931,7 @@ typedef struct _ccBezierConfig {
  *
  *  @return New reverse action
  */
-+(id) actionWithAction: (CCActionFiniteTime*) action;
++(instancetype) actionWithAction: (CCActionFiniteTime*) action;
 
 /**
  *  Initalizes a reverse action.
@@ -975,7 +975,7 @@ typedef struct _ccBezierConfig {
  *
  *  @return New animation action
  */
-+(id) actionWithAnimation:(CCAnimation*)animation;
++(instancetype) actionWithAnimation:(CCAnimation*)animation;
 
 /**
  *  Initializes the action with an Animation.

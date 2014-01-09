@@ -71,7 +71,7 @@ enum {
  *
  *  @return A new action
  */
-+(id) action;
++(instancetype) action;
 
 /**
  *  Initializes the action
@@ -185,7 +185,7 @@ enum {
  *
  *  @return New repeat forever action
  */
-+(id) actionWithAction: (CCActionInterval*) action;
++(instancetype) actionWithAction: (CCActionInterval*) action;
 
 /**
  *  Initalizes the repeat forever action.
@@ -233,7 +233,7 @@ enum {
  *
  *  @return New speed action
  */
-+(id) actionWithAction: (CCActionInterval*) action speed:(CGFloat)value;
++(instancetype) actionWithAction: (CCActionInterval*) action speed:(CGFloat)value;
 
 /**
  *  Initalizes the speed action.
@@ -294,7 +294,7 @@ enum {
  *
  *  @return New follow action
  */
-+(id) actionWithTarget:(CCNode *)followedNode;
++(instancetype) actionWithTarget:(CCNode *)followedNode;
 
 /**
  *  Initalizes a follow action with no boundaries
@@ -313,7 +313,7 @@ enum {
  *
  *  @return New follow action
  */
-+(id) actionWithTarget:(CCNode *)followedNode worldBoundary:(CGRect)rect;
++(instancetype) actionWithTarget:(CCNode *)followedNode worldBoundary:(CGRect)rect;
 
 /**
  *  Initalizes a follow action with boundaries

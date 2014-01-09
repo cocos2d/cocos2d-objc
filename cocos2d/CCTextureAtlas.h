@@ -68,7 +68,7 @@
 /** creates a TextureAtlas with an filename and with an initial capacity for Quads.
  * The TextureAtlas capacity can be increased in runtime.
  */
-+(id) textureAtlasWithFile:(NSString*)file capacity:(NSUInteger)capacity;
++(instancetype) textureAtlasWithFile:(NSString*)file capacity:(NSUInteger)capacity;
 
 /** initializes a TextureAtlas with a filename and with a certain capacity for Quads.
  * The TextureAtlas capacity can be increased in runtime.
@@ -81,7 +81,7 @@
  * with an initial capacity for n Quads.
  * The TextureAtlas capacity can be increased in runtime.
  */
-+(id) textureAtlasWithTexture:(CCTexture *)tex capacity:(NSUInteger)capacity;
++(instancetype) textureAtlasWithTexture:(CCTexture *)tex capacity:(NSUInteger)capacity;
 
 /** initializes a TextureAtlas with a previously initialized Texture2D object, and
  * with an initial capacity for Quads.

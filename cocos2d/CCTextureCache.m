@@ -69,7 +69,7 @@ static CCTextureCache *sharedTextureCache;
 	return sharedTextureCache;
 }
 
-+(id)alloc
++(instancetype)alloc
 {
 	NSAssert(sharedTextureCache == nil, @"Attempted to allocate a second instance of a singleton.");
 	return [super alloc];

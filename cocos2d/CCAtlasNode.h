@@ -88,7 +88,7 @@
  *
  *  @return A newly initialized CCAtlasNode.
  */
-+(id) atlasWithTileFile:(NSString*)tile tileWidth:(NSUInteger)w tileHeight:(NSUInteger)h itemsToRender: (NSUInteger) c;
++(instancetype) atlasWithTileFile:(NSString*)tile tileWidth:(NSUInteger)w tileHeight:(NSUInteger)h itemsToRender: (NSUInteger) c;
 
 /**
  *  initializes an CCAtlasNode  with an Atlas file the width and height of each item measured in points and the quantity of items to render

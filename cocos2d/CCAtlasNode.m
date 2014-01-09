@@ -57,7 +57,7 @@
     return self;
 }
 
-+(id) atlasWithTileFile:(NSString*)tile tileWidth:(NSUInteger)w tileHeight:(NSUInteger)h itemsToRender: (NSUInteger) c
++(instancetype) atlasWithTileFile:(NSString*)tile tileWidth:(NSUInteger)w tileHeight:(NSUInteger)h itemsToRender: (NSUInteger) c
 {
 	return [[self alloc] initWithTileFile:tile tileWidth:w tileHeight:h itemsToRender:c];
 }

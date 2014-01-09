@@ -134,7 +134,7 @@ static NSUInteger globalOrderOfArrival = 1;
 
 #pragma mark CCNode - Init & cleanup
 
-+(id) node
++(instancetype) node
 {
 	return [[self alloc] init];
 }

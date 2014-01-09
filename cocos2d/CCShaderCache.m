@@ -49,7 +49,7 @@ static CCShaderCache *_sharedShaderCache;
 }
 
 
-+(id)alloc
++(instancetype)alloc
 {
 	NSAssert(_sharedShaderCache == nil, @"Attempted to allocate a second instance of a singleton.");
 	return [super alloc];

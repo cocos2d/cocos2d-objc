@@ -642,7 +642,7 @@ static NSInteger ccbAnimationManagerID = 0;
 #pragma mark Custom Actions
 
 @implementation CCBSetSpriteFrame
-+(id) actionWithSpriteFrame: (CCSpriteFrame*) sf;
++(instancetype) actionWithSpriteFrame: (CCSpriteFrame*) sf;
 {
 	return [[self alloc]initWithSpriteFrame:sf];
 }
@@ -672,7 +672,7 @@ static NSInteger ccbAnimationManagerID = 0;
 
 @implementation CCBRotateTo
 
-+(id) actionWithDuration:(CCTime)duration angle:(float)angle
++(instancetype) actionWithDuration:(CCTime)duration angle:(float)angle
 {
     return [[self alloc] initWithDuration:duration angle:angle];
 }
@@ -752,7 +752,7 @@ static NSInteger ccbAnimationManagerID = 0;
 
 @implementation CCBSoundEffect
 
-+(id) actionWithSoundFile:(NSString*)f pitch:(float)pi pan:(float) pa gain:(float)ga
++(instancetype) actionWithSoundFile:(NSString*)f pitch:(float)pi pan:(float) pa gain:(float)ga
 {
     return [[CCBSoundEffect alloc] initWithSoundFile:f pitch:pi pan:pa gain:ga];
 }

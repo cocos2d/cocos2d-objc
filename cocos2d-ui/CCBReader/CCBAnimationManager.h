@@ -89,7 +89,7 @@
 	CCSpriteFrame* spriteFrame;
 }
 /** creates a Place action with a position */
-+(id) actionWithSpriteFrame: (CCSpriteFrame*) sf;
++(instancetype) actionWithSpriteFrame: (CCSpriteFrame*) sf;
 /** Initializes a Place action with a position */
 -(id) initWithSpriteFrame: (CCSpriteFrame*) sf;
 @end
@@ -100,7 +100,7 @@
     float dstAngle_;
     float diffAngle_;
 }
-+(id) actionWithDuration:(CCTime)duration angle:(float)angle;
++(instancetype) actionWithDuration:(CCTime)duration angle:(float)angle;
 -(id) initWithDuration:(CCTime)duration angle:(float)angle;
 @end
 
@@ -117,7 +117,7 @@
     float pan;
     float gain;
 }
-+(id) actionWithSoundFile:(NSString*)file pitch:(float)pitch pan:(float) pan gain:(float)gain;
++(instancetype) actionWithSoundFile:(NSString*)file pitch:(float)pitch pan:(float) pan gain:(float)gain;
 -(id) initWithSoundFile:(NSString*)file pitch:(float)pitch pan:(float) pan gain:(float)gain;
 @end
 

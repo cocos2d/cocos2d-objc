@@ -70,12 +70,12 @@ const NSUInteger defaultCapacity = 0;
 /*
  * creation with CCTexture2D
  */
-+(id)batchNodeWithTexture:(CCTexture *)tex
++(instancetype)batchNodeWithTexture:(CCTexture *)tex
 {
 	return [[self alloc] initWithTexture:tex capacity:defaultCapacity];
 }
 
-+(id)batchNodeWithTexture:(CCTexture *)tex capacity:(NSUInteger)capacity
++(instancetype)batchNodeWithTexture:(CCTexture *)tex capacity:(NSUInteger)capacity
 {
 	return [[self alloc] initWithTexture:tex capacity:capacity];
 }
@@ -83,12 +83,12 @@ const NSUInteger defaultCapacity = 0;
 /*
  * creation with File Image
  */
-+(id)batchNodeWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity
++(instancetype)batchNodeWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity
 {
 	return [[self alloc] initWithFile:fileImage capacity:capacity];
 }
 
-+(id)batchNodeWithFile:(NSString*) imageFile
++(instancetype)batchNodeWithFile:(NSString*) imageFile
 {
 	return [[self alloc] initWithFile:imageFile capacity:defaultCapacity];
 }

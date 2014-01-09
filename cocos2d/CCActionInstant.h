@@ -118,7 +118,7 @@
  *
  *  @return New flip action
  */
-+(id) actionWithFlipX:(BOOL)x;
++(instancetype) actionWithFlipX:(BOOL)x;
 
 /**
  *  Initializes a flip action with x direction flipped or non flipped
@@ -149,7 +149,7 @@
  *
  *  @return New flip action
  */
-+(id) actionWithFlipY:(BOOL)y;
++(instancetype) actionWithFlipY:(BOOL)y;
 
 /**
  *  Initializes a flip action with y direction flipped or non flipped
@@ -180,7 +180,7 @@
  *
  *  @return New place action
  */
-+(id) actionWithPosition: (CGPoint) pos;
++(instancetype) actionWithPosition: (CGPoint) pos;
 
 /**
  *  Initializes a place action
@@ -218,7 +218,7 @@
  *
  *  @return New call func action
  */
-+(id) actionWithTarget: (id) t selector:(SEL) s;
++(instancetype) actionWithTarget: (id) t selector:(SEL) s;
 
 /**
  *  Initializes the action with the callback.
@@ -258,7 +258,7 @@
  *
  *  @return New call block action
  */
-+(id) actionWithBlock:(void(^)())block;
++(instancetype) actionWithBlock:(void(^)())block;
 
 /**
  *  Initializes the action with the specified block, to be used as a callback.

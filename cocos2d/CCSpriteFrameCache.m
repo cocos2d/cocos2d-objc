@@ -96,7 +96,7 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 	return _sharedSpriteFrameCache;
 }
 
-+(id)alloc
++(instancetype)alloc
 {
 	NSAssert(_sharedSpriteFrameCache == nil, @"Attempted to allocate a second instance of a singleton.");
 	return [super alloc];

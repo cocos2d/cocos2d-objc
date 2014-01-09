@@ -72,7 +72,7 @@
  *
  *  @return The CCClippingNode Object.
  */
-+(id) clippingNode;
++(instancetype) clippingNode;
 
 /**
  *  Creates and returns a clipping node object with the specified stencil node.
@@ -81,7 +81,7 @@
  *
  *  @return The CCClippingNode Object.
  */
-+(id) clippingNodeWithStencil:(CCNode *)stencil;
++(instancetype) clippingNodeWithStencil:(CCNode *)stencil;
 
 
 /// -----------------------------------------------------------------------

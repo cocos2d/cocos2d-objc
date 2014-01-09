@@ -211,7 +211,7 @@ typedef enum ccTMXTileFlags_ {
  *
  *  @return The CCTiledMapInfo Object.
  */
-+(id) formatWithTMXFile:(NSString*)tmxFile;
++(instancetype) formatWithTMXFile:(NSString*)tmxFile;
 
 /**
  *  Creates and returns a CCTiledMapInfo object using the TMX XML and resource file path.
@@ -221,7 +221,7 @@ typedef enum ccTMXTileFlags_ {
  *
  *  @return The CCTiledMapInfo Object.
  */
-+(id) formatWithXML:(NSString*)tmxString resourcePath:(NSString*)resourcePath;
++(instancetype) formatWithXML:(NSString*)tmxString resourcePath:(NSString*)resourcePath;
 
 
 /// -----------------------------------------------------------------------
