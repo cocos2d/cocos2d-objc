@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * Copyright (c) 2013 Lars Birkemose
+ * Copyright (c) 2013-2014 Lars Birkemose
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -85,8 +85,8 @@
         sprite.color = CCNewtonRopeColor;
         [baseSegment addChild:sprite];
         
-        // adjust the length of the sprite, to match the segment length, and make it 5% longer to overlap
-        sprite.scaleY = 1.05 * segmentLength / sprite.contentSize.height;
+        // adjust the length of the sprite, to match the segment length
+        sprite.scaleY = segmentLength / sprite.contentSize.height;
 
         // add the physics
         // the physics is a rounded pill shape, stretching half the segmentVetor in each direction
