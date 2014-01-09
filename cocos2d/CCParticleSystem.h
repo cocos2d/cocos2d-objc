@@ -33,7 +33,8 @@
 
 /**
  
- CCParticleSystemQuad
+ CCParticleSytem improves upon the performance in CCParticleSystemBased and is the default class
+ for adding particles.  Please see CCParticleSystemBase documentation for loading methods.
 
  ### Special features and Limitations
  

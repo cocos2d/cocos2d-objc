@@ -944,17 +944,12 @@ typedef struct _ccBezierConfig {
 
 @end
 
-// -----------------------------------------------------------------
-/** @name CCActionAnimate */
 
 @class CCAnimation;
 @class CCTexture;
 
-/**
- *  Animates a sprite given the name of an Animation.
- */
-@interface CCActionAnimate : CCActionInterval <NSCopying>
-{
+// Animates a sprite given the name of an Animation.
+@interface CCActionAnimate : CCActionInterval <NSCopying> {
 	NSMutableArray		*_splitTimes;
 	NSInteger			_nextFrame;
 	CCAnimation			*_animation;
@@ -962,29 +957,27 @@ typedef struct _ccBezierConfig {
 	NSUInteger			_executedLoops;
 }
 
-/**
- *  Animation used for the sprite
- */
+// Animation used for the sprite.
 @property (readwrite,nonatomic,strong) CCAnimation * animation;
 
-/**
- *  Creates the action with an Animation.
- *  Will restore the original frame when the animation is over
- *
- *  @param animation Animation to run
- *
- *  @return New animation action
- */
+//
+//  Creates the action with an Animation.
+//  Will restore the original frame when the animation is over
+//
+//  @param animation Animation to run
+//
+//  @return New animation action
+//
 +(id) actionWithAnimation:(CCAnimation*)animation;
 
-/**
- *  Initializes the action with an Animation.
- *  Will restore the original frame when the animation is over
- *
- *  @param animation Animation to run
- *
- *  @return New animation action
- */
+//
+//  Initializes the action with an Animation.
+//  Will restore the original frame when the animation is over
+//
+//  @param animation Animation to run
+//
+//  @return New animation action
+//
 -(id) initWithAnimation:(CCAnimation*)animation;
 
 @end
