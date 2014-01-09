@@ -37,29 +37,31 @@
 
 #define CCSpriteIndexNotInitialized 0xffffffff 	/// CCSprite invalid index on the CCSpriteBatchode
 
-/** CCSprite is a 2d image ( http://en.wikipedia.org/wiki/Sprite_(computer_graphics) )
+/** 
+ * CCSprite is a 2D image ( http://en.wikipedia.org/wiki/Sprite_(computer_graphics) )
  *
  * CCSprite can be created with an image, or with a sub-rectangle of an image.
  *
- * If the parent or any of its ancestors is a CCSpriteBatchNode then the following features/limitations are valid
- *	- Features when the parent is a CCBatchNode:
- *		- MUCH faster rendering, specially if the CCSpriteBatchNode has many children. All the children will be drawn in a single batch.
+ * If the parent or any of its ancestors is a CCSpriteBatchNode then the following features &limitations apply.
  *
- *	- Limitations
- *		- Camera is not supported yet (eg: CCOrbitCamera action doesn't work)
- *		- GridBase actions are not supported (eg: CCLens, CCRipple, CCTwirl)
- *		- The Alias/Antialias property belongs to CCSpriteBatchNode, so you can't individually set the aliased property.
- *		- The Blending function property belongs to CCSpriteBatchNode, so you can't individually set the blending function property.
- *		- Parallax scroller is not supported, but can be simulated with a "proxy" sprite.
+ * Features:
  *
- *  If the parent is an standard CCNode, then CCSprite behaves like any other CCNode:
- *    - It supports blending functions
- *    - It supports aliasing / antialiasing
- *    - But the rendering will be slower: 1 draw per children.
+ * - MUCH faster rendering, specially if the CCSpriteBatchNode has many children. All the children will be drawn in a single batch.
+ *
+ * Limitations:
+ *
+ *  - The Alias/Antialias property belongs to CCSpriteBatchNode, so you can't individually set the aliased property.
+ *  - The Blending function property belongs to CCSpriteBatchNode, so you can't individually set the blending function property.
+ *  - Parallax scroller is not supported, but can be simulated with a "proxy" sprite.
+ *
+ * If the parent is an standard CCNode, then CCSprite behaves like any other CCNode:
+ *
+ * - It supports blending functions.
+ * - It supports aliasing / antialiasing.
+ * - But the rendering will be slower: 1 draw per children.
  *
  * The default anchorPoint in CCSprite is (0.5, 0.5).
  */
-
 @interface CCSprite : CCNode <CCTextureProtocol> {
 
 	//
@@ -120,8 +122,7 @@
  It only flips the texture of the sprite, and not the texture of the sprite's children.
  Also, flipping the texture doesn't alter the anchorPoint.
  If you want to flip the anchorPoint too, and/or to flip the children too use:
-
-	sprite.scaleX *= -1;
+ sprite.scaleX *= -1;
  */
 @property (nonatomic,readwrite) BOOL flipX;
 
@@ -129,13 +130,11 @@
  It only flips the texture of the sprite, and not the texture of the sprite's children.
  Also, flipping the texture doesn't alter the anchorPoint.
  If you want to flip the anchorPoint too, and/or to flip the children too use:
-
-	sprite.scaleY *= -1;
+ sprite.scaleY *= -1;
  */
 @property (nonatomic,readwrite) BOOL flipY;
 
-/** The offset position in points of the sprite in points. Calculated automatically by sprite sheet editors.
- */
+/** The offset position in points of the sprite in points. Calculated automatically by sprite sheet editors. */
 @property (nonatomic,readonly) CGPoint	offsetPosition;
 
 /** Conforms to CCTextureProtocol protocol */
@@ -153,7 +152,7 @@
  *
  *  @return The CCSprite Object.
  */
-+(id)spriteWithImageNamed:(NSString*)imageName;
++ (id)spriteWithImageNamed:(NSString*)imageName;
 
 /**
  *  Creates an sprite with a texture.
@@ -164,7 +163,7 @@
  *
  *  @return The CCSprite Object.
  */
-+(id) spriteWithTexture:(CCTexture*)texture;
++ (id)spriteWithTexture:(CCTexture*)texture;
 
 /**
  *  Creates an sprite with a texture.
@@ -175,16 +174,16 @@
  *
  *  @return The CCSprite Object.
  */
-+(id) spriteWithTexture:(CCTexture*)texture rect:(CGRect)rect;
++ (id)spriteWithTexture:(CCTexture*)texture rect:(CGRect)rect;
 
 /**
  *  Creates an sprite from a sprite frame.
  *
- *  @param spriteFrame Sprite frame to use
+ *  @param spriteFrame Sprite frame to use.
  *
  *  @return The CCSprite Object.
  */
-+(id) spriteWithSpriteFrame:(CCSpriteFrame*)spriteFrame;
++ (id)spriteWithSpriteFrame:(CCSpriteFrame*)spriteFrame;
 
 /**
  *  Creates an sprite with a CGImageRef and a key.
@@ -192,12 +191,12 @@
  *  For example, a valid key is: @"_spriteframe_01".
  *  If key is nil, then a new texture will be created each time by the CCTextureCache.
  *
- *  @param image Image ref
- *  @param key   Key description
+ *  @param image Image ref.
+ *  @param key   Key description.
  *
  *  @return The CCSprite Object.
  */
-+(id) spriteWithCGImage: (CGImageRef)image key:(NSString*)key;
++ (id)spriteWithCGImage: (CGImageRef)image key:(NSString*)key;
 
 
 /// -----------------------------------------------------------------------
@@ -207,11 +206,11 @@
 /**
  *  Initializes a sprite with the name of an image. The name can be either a name in a sprite sheet or the name of a file.
  *
- *  @param imageName name of the image to load
+ *  @param imageName name of the image to load.
  *
  *  @return A newly initialized CCSprite object.
  */
-- (id) initWithImageNamed:(NSString*)imageName;
+- (id)initWithImageNamed:(NSString*)imageName;
 
 /**
  *  Initializes an sprite with a texture.
@@ -222,7 +221,7 @@
  *
  *  @return A newly initialized CCSprite object.
  */
--(id) initWithTexture:(CCTexture*)texture;
+- (id)initWithTexture:(CCTexture*)texture;
 
 /**
  *  Initializes an sprite with a texture and a rect in points (unrotated)
@@ -233,7 +232,7 @@
  *
  *  @return A newly initialized CCSprite object.
  */
--(id) initWithTexture:(CCTexture*)texture rect:(CGRect)rect;
+- (id)initWithTexture:(CCTexture*)texture rect:(CGRect)rect;
 
 /**
  *  Initializes an sprite with an sprite frame.
@@ -242,7 +241,7 @@
  *
  *  @return A newly initialized CCSprite object.
  */
--(id) initWithSpriteFrame:(CCSpriteFrame*)spriteFrame;
+- (id)initWithSpriteFrame:(CCSpriteFrame*)spriteFrame;
 
 /**
  *  Initializes an sprite with a CGImageRef and a key.
@@ -255,14 +254,14 @@
  *
  *  @return A newly initialized CCSprite object.
  */
--(id) initWithCGImage:(CGImageRef)image key:(NSString*)key;
+- (id)initWithCGImage:(CGImageRef)image key:(NSString*)key;
 
 /**
  *  Creates a non rendered sprite, the primary use of this type of sprite would be for adding control sprites for more complex animations.
  *
  *  @return A newly initialized CCSprite object.
  */
-+(id) emptySprite;
++ (id)emptySprite;
 
 /**
  *  Designated initializer.
@@ -289,7 +288,7 @@
  *
  *  @param rect Rect to use.
  */
--(void) setTextureRect:(CGRect) rect;
+- (void)setTextureRect:(CGRect) rect;
 
 /**
  *  Set the texture rect, rectRotated and untrimmed size of the CCSprite in points.
@@ -299,6 +298,6 @@
  *  @param rotated YES if texture is rotated.
  *  @param size    Untrimmed size.
  */
--(void) setTextureRect:(CGRect)rect rotated:(BOOL)rotated untrimmedSize:(CGSize)size;
+- (void)setTextureRect:(CGRect)rect rotated:(BOOL)rotated untrimmedSize:(CGSize)size;
 
 @end

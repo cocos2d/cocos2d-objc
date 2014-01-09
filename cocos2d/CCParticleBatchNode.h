@@ -46,7 +46,7 @@
  
  ### Limitations
  
- - Currently only CCParticleSystemQuad is supported.
+ - Only CCParticleSystem is supported.
  - All particle systems need to be drawn with the same parameters, blend function, aliasing and texture.
  
  ### Notes
@@ -56,7 +56,6 @@
  - Default capacity is 500.
 
  */
-
 @interface CCParticleBatchNode : CCNode <CCTextureProtocol> {
 
 	CCTextureAtlas	*_textureAtlas;
