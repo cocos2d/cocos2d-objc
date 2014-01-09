@@ -38,14 +38,9 @@
 #pragma mark - CCNodeColor
 
 /**
- *  CCNodeColor is a subclass of CCNode that is used to generate solid colors.
- *
- *  All features from CCNode are valid, plus the following new features:
- *  - opacity
- *  - RGB colors
+ * CCNodeColor is a subclass of CCNode that is used to generate solid colors.
  */
 @interface CCNodeColor : CCNode <CCBlendProtocol> {
-    
 	ccVertex2F	_squareVertices[4];
 	ccColor4F	_squareColors[4];
 	ccBlendFunc	_blendFunc;
