@@ -105,6 +105,7 @@
     
     // create fire
     _fire = [CCParticleSystem particleWithFile:@"fire.plist"];
+    _fire.position = ccp(0, _sphere.contentSize.height * 0.25);
     _fire.particlePositionType = CCParticleSystemPositionTypeFree;
     
     // ----------
