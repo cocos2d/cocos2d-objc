@@ -1,11 +1,28 @@
-//
-//  NewtonScene.m
-//  ___PROJECTNAME___
-//
-//  Created by ___FULLUSERNAME___ on ___DATE___.
-//  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
-//
-// -----------------------------------------------------------------------
+/*
+ * cocos2d for iPhone: http://www.cocos2d-iphone.org
+ *
+ * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013-2014 Lars Birkemose
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 
 #import "NewtonScene.h"
 #import "IntroScene.h"
@@ -45,7 +62,7 @@
     
     // set the clear color to a dark grey
     // This is a faster alternative to using a CCColorNode (former CCColorLayer) for a colored background
-    glClearColor(0.1, 0.1, 0.1, 1.0);
+    glClearColor(NewtonBackgroundLuminance, NewtonBackgroundLuminance, NewtonBackgroundLuminance, 1.0);
     
     [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"newton.plist"];
     
@@ -55,14 +72,14 @@
     // add a back button
     CCButton *backButton = [CCButton buttonWithTitle:@"" spriteFrame:[CCSpriteFrame frameWithImageNamed:@"left.png"]];
     backButton.positionType = CCPositionTypeNormalized;
-    backButton.position = ccp(0.10f, 0.90f);
+    backButton.position = NewtonButtonBackPosition;
     [backButton setTarget:self selector:@selector(onBackClicked:)];
     [self addChild:backButton];
 
     // add a reset button
     CCButton *resetButton = [CCButton buttonWithTitle:@"" spriteFrame:[CCSpriteFrame frameWithImageNamed:@"reset.png"]];
     resetButton.positionType = CCPositionTypeNormalized;
-    resetButton.position = ccp(0.90f, 0.80f);
+    resetButton.position = NewtonButtonResetPosition;
     [resetButton setTarget:self selector:@selector(onResetClicked:)];
     [self addChild:resetButton];
 
@@ -72,7 +89,7 @@
                               highlightedSpriteFrame:[CCSpriteFrame frameWithImageNamed:@"fire.on.png"]
                                  disabledSpriteFrame:[CCSpriteFrame frameWithImageNamed:@"fire.off.png"]];
     fireButton.positionType = CCPositionTypeNormalized;
-    fireButton.position = ccp(0.90f, 0.90f);
+    fireButton.position = NewtonButtonFirePosition;
     fireButton.zoomWhenHighlighted = YES;
     [fireButton setTarget:self selector:@selector(onFireClicked:)];
     [self addChild:fireButton];
@@ -80,7 +97,7 @@
     // Create light sprite, and enable user intercation. See the LightBulb class on how to handle this.
     // Created with a positive Z, to keep it above the newton spheres
     _light = [LightBulb spriteWithImageNamed:@"light.png"];
-    _light.position = ccp([CCDirector sharedDirector].viewSize.width * 0.75, [CCDirector sharedDirector].viewSize.height * 0.35);
+    _light.position = ccp([CCDirector sharedDirector].viewSize.width * NewtonLightPosition.x, [CCDirector sharedDirector].viewSize.height * NewtonLightPosition.y);
     _light.userInteractionEnabled = YES;
     [self addChild:_light z:1];
     
@@ -99,10 +116,10 @@
 	CGRect worldRect = CGRectMake(0, 0, [CCDirector sharedDirector].viewSize.width, [CCDirector sharedDirector].viewSize.height);
     CCNode *outline = [CCNode node];
     outline.physicsBody = [CCPhysicsBody bodyWithPolylineFromRect:worldRect cornerRadius:0];
-    outline.physicsBody.friction = 1;
-    outline.physicsBody.elasticity = 0.5;
-    outline.physicsBody.collisionCategories = @[@"border"];
-    outline.physicsBody.collisionMask = @[@"sphere", @"rope"];
+    outline.physicsBody.friction = NewtonOutlineFriction;
+    outline.physicsBody.elasticity = NewtonOutlineElasticity;
+    outline.physicsBody.collisionCategories = @[NewtonSphereCollisionOutline];
+    outline.physicsBody.collisionMask = @[NewtonSphereCollisionSphere, NewtonSphereCollisionRope];
     [_physics addChild:outline];
     
     outline.physicsBody.collisionCategories = @[NewtonSphereCollisionOutline];

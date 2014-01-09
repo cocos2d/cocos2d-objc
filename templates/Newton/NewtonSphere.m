@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * Copyright (c) 2013 Lars Birkemose
+ * Copyright (c) 2013-2014 Lars Birkemose
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -75,8 +75,8 @@
     self.physicsBody = body;
     
     // Set the physics properties, trying to simulate a newtons cradle
-    body.friction = 0.50;
-    body.elasticity = 1.00;
+    body.friction = NewtonSphereFriction;
+    body.elasticity = NewtonSphereElasticity;
     
     // Assign the collision category
     // As you can assign several categories, this becomes an extremely flexible and clever way of filtering collisions.
@@ -110,7 +110,7 @@
     // ----------
     // Issue #484
     // There is a bug in particle systems, that prevents free particles from being scaled. In stead the properties must be scaled.
-    float particleScale = [CCDirector sharedDirector].viewSize.width / 1000;
+    float particleScale = NewtonParticleScale * [CCDirector sharedDirector].viewSize.width / 1000;
     _fire.startSize *= particleScale;
     _fire.startSizeVar *= particleScale;
     _fire.endSize *= particleScale;
@@ -236,6 +236,7 @@
             distance /= [CCDirector sharedDirector].viewSize.width;
             
             // calculate opacity for highlight and shadow, to make the lighting look believeable
+            // I know ... this is kind of hardcoded ... Sorry ...
             _highlight.opacity = clampf(1 - (2 * distance),0,1);
             _shadow.opacity = clampf(3 * distance,0,1);
             
