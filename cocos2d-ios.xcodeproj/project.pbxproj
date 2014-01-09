@@ -141,7 +141,6 @@
 		A015BFEF13B826D800C73E76 /* vec2.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFCA13B826D800C73E76 /* vec2.c */; };
 		A015BFF113B826D800C73E76 /* vec3.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFCB13B826D800C73E76 /* vec3.c */; };
 		A015BFF313B826D800C73E76 /* vec4.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFCC13B826D800C73E76 /* vec4.c */; };
-		A015BFF913B829E100C73E76 /* libkazmath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A04A1FEB13B826B300ABAFB7 /* libkazmath.a */; };
 		A039EBFF155C686B0061EE37 /* CCNode+Debug.h in Headers */ = {isa = PBXBuildFile; fileRef = A039EBFD155C686B0061EE37 /* CCNode+Debug.h */; };
 		A039EC00155C686B0061EE37 /* CCNode+Debug.m in Sources */ = {isa = PBXBuildFile; fileRef = A039EBFE155C686B0061EE37 /* CCNode+Debug.m */; };
 		A046E29314C1DB7D0005BBF2 /* CCDirectorMac.h in Headers */ = {isa = PBXBuildFile; fileRef = A046E28B14C1DB7D0005BBF2 /* CCDirectorMac.h */; };
@@ -340,12 +339,13 @@
 		D37EE9F2187D4CF500CB5EF2 /* cpSpaceStep.c in Sources */ = {isa = PBXBuildFile; fileRef = D37EE9D0187D4CF500CB5EF2 /* cpSpaceStep.c */; };
 		D37EE9F3187D4CF500CB5EF2 /* cpSpatialIndex.c in Sources */ = {isa = PBXBuildFile; fileRef = D37EE9D1187D4CF500CB5EF2 /* cpSpatialIndex.c */; };
 		D37EE9F4187D4CF500CB5EF2 /* cpSweep1D.c in Sources */ = {isa = PBXBuildFile; fileRef = D37EE9D2187D4CF500CB5EF2 /* cpSweep1D.c */; };
-		D37EE9F7187D4D1D00CB5EF2 /* libObjectiveChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D37EE968187D4C9D00CB5EF2 /* libObjectiveChipmunk.a */; };
 		D395DB25183D73930024997E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3876C10446C6E00150883 /* AVFoundation.framework */; };
 		D395DB2B183D739E0024997E /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3877010446C6E00150883 /* OpenAL.framework */; };
 		D395DB2C183D73A70024997E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3876E10446C6E00150883 /* AudioToolbox.framework */; };
 		D3A2E7D2181E12750033614C /* CCPhysicsShape.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A2E7D0181E12750033614C /* CCPhysicsShape.h */; };
 		D3A2E7D3181E12750033614C /* CCPhysicsShape.m in Sources */ = {isa = PBXBuildFile; fileRef = D3A2E7D1181E12750033614C /* CCPhysicsShape.m */; };
+		D3B2A7EC187DD96600406C5A /* libkazmath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A04A1FEB13B826B300ABAFB7 /* libkazmath.a */; };
+		D3B2A7ED187DD96600406C5A /* libObjectiveChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D37EE968187D4C9D00CB5EF2 /* libObjectiveChipmunk.a */; };
 		E01E6D8C121F130E001A484F /* CCLabelBMFont.h in Headers */ = {isa = PBXBuildFile; fileRef = E01E6D8A121F130E001A484F /* CCLabelBMFont.h */; };
 		E01E6D8D121F130E001A484F /* CCLabelBMFont.m in Sources */ = {isa = PBXBuildFile; fileRef = E01E6D8B121F130E001A484F /* CCLabelBMFont.m */; };
 		E02BB6D6126CA93A006E46A2 /* CCAnimationCache.h in Headers */ = {isa = PBXBuildFile; fileRef = E02BB6D4126CA93A006E46A2 /* CCAnimationCache.h */; };
@@ -851,13 +851,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D37EE9F7187D4D1D00CB5EF2 /* libObjectiveChipmunk.a in Frameworks */,
+				D3B2A7EC187DD96600406C5A /* libkazmath.a in Frameworks */,
+				D3B2A7ED187DD96600406C5A /* libObjectiveChipmunk.a in Frameworks */,
 				D395DB2C183D73A70024997E /* AudioToolbox.framework in Frameworks */,
 				D395DB2B183D739E0024997E /* OpenAL.framework in Frameworks */,
 				D395DB25183D73930024997E /* AVFoundation.framework in Frameworks */,
 				A06D9C141728D5F600704732 /* CoreText.framework in Frameworks */,
 				A0CFE61E15BE3D0E00264229 /* CoreMotion.framework in Frameworks */,
-				A015BFF913B829E100C73E76 /* libkazmath.a in Frameworks */,
 				5018F2E20DFDEBBA00C013A5 /* Foundation.framework in Frameworks */,
 				5018F2E30DFDEBBA00C013A5 /* UIKit.framework in Frameworks */,
 				5018F2E40DFDEBBA00C013A5 /* CoreGraphics.framework in Frameworks */,
