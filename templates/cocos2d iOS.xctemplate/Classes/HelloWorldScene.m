@@ -9,6 +9,7 @@
 
 #import "HelloWorldScene.h"
 #import "IntroScene.h"
+#import "NewtonScene.h"
 
 // -----------------------------------------------------------------------
 #pragma mark - HelloWorldScene
@@ -56,9 +57,17 @@
     // Create a back button
     CCButton *backButton = [CCButton buttonWithTitle:@"[ Menu ]" fontName:@"Verdana-Bold" fontSize:18.0f];
     backButton.positionType = CCPositionTypeNormalized;
-    backButton.position = ccp(0.9f, 0.95f); // Top Right of screen
+    backButton.position = ccp(0.85f, 0.95f); // Top Right of screen
     [backButton setTarget:self selector:@selector(onBackClicked:)];
     [self addChild:backButton];
+    
+    // Create a newton button
+    CCButton *newtonButton = [CCButton buttonWithTitle:@"[ Newton ]" fontName:@"Verdana-Bold" fontSize:18.0f];
+    newtonButton.positionType = CCPositionTypeNormalized;
+    newtonButton.position = ccp(0.85f, 0.85f); // Top Right of screen
+    [newtonButton setTarget:self selector:@selector(onNewtonClicked:)];
+    [self addChild:newtonButton];
+    
     
     // done
 	return self;
@@ -118,6 +127,11 @@
     // back to intro scene with transition
     [[CCDirector sharedDirector] replaceScene:[IntroScene scene]
                                withTransition:[CCTransition transitionPushWithDirection:CCTransitionDirectionRight duration:1.0f]];
+}
+
+- (void)onNewtonClicked:(id)sender
+{
+    [[CCDirector sharedDirector] pushScene:[NewtonScene scene] withTransition:[CCTransition transitionPushWithDirection:CCTransitionDirectionLeft duration:1.0f]];
 }
 
 // -----------------------------------------------------------------------
