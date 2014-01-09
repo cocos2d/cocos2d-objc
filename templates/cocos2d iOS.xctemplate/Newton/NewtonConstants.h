@@ -51,6 +51,7 @@ static const BOOL NewtonRealRope = NO;
 static const int NewtonRopeSegments = 6;
 
 static const float NewtonParticleScale = 0.8f;
+static const float NewtonParticleDisplacement = 0.35f;
 
 // Added because the image of the sprite doesnt fill the image 100%
 // A transparent blended margin is kept, to make the image looks good then it rotates.
