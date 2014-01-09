@@ -80,9 +80,8 @@
 
 @implementation CCActionRemove
 
--(void) startWithTarget:(id)aTarget {
-	[super startWithTarget:aTarget];
-	[_target removeFromParent];
+-(void) update:(CCTime)time {
+	[(CCNode *)_target removeFromParent];
 }
 @end
 

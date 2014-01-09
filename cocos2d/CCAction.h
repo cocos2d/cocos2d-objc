@@ -34,7 +34,6 @@ enum {
 	kCCActionTagInvalid = -1,
 };
 
-
 /**
  * CCAction forms the foundation for one the great areas of Cocos2D functionality.
  * The manipulatinon of node properties such as position, rotation, scale and opacity over time, to create fun effects.
@@ -48,6 +47,11 @@ enum {
 	id			__unsafe_unretained _target;
 	NSInteger	_tag;
 }
+
+
+/// -----------------------------------------------------------------------
+/// @name Accessing Action Attributes
+/// -----------------------------------------------------------------------
 
 /**
  *  The "target". The action will modify the target properties.
@@ -75,6 +79,11 @@ enum {
  */
 + (id)action;
 
+
+/// -----------------------------------------------------------------------
+/// @name Initializing a CCAction Object
+/// -----------------------------------------------------------------------
+
 /**
  *  Initializes and returns an action object.
  *
@@ -84,6 +93,11 @@ enum {
 
 // NSCopying support.
 - (id)copyWithZone:(NSZone*) zone;
+
+
+/// -----------------------------------------------------------------------
+/// @name Action Management
+/// -----------------------------------------------------------------------
 
 /**
  *  Return YES if the action has finished.
@@ -134,26 +148,26 @@ enum {
 
 #pragma mark - CCActionFiniteTime
 
-/**
- *  Base class for actions that have a finite time duration.
- *
- *  Possible actions:
- *  - An action with a duration of 0 seconds.
- *  - An action with a duration of 35.5 seconds.
- */
+//
+//  Base class for actions that have a finite time duration.
+//
+//  Possible actions:
+//  - An action with a duration of 0 seconds.
+//  - An action with a duration of 35.5 seconds.
+//
 @interface CCActionFiniteTime : CCAction <NSCopying> {
 	// Duration in seconds.
 	CCTime _duration;
 }
 
-/** Duration of the action in seconds. */
+// Duration of the action in seconds.
 @property (nonatomic,readwrite) CCTime duration;
 
-/**
- *  Returns a reversed action.
- *
- *  @return The reversed action object.
- */
+//
+//  Returns a reversed action.
+//
+//  @return The reversed action object.
+//
 - (CCActionFiniteTime *)reverse;
 
 @end
@@ -173,8 +187,18 @@ enum {
 	CCActionInterval *_innerAction;
 }
 
+
+/// -----------------------------------------------------------------------
+/// @name Accessing the Repeat Forever Action Attributes
+/// -----------------------------------------------------------------------
+
 /** Inner action. */
 @property (nonatomic, readwrite, strong) CCActionInterval *innerAction;
+
+
+/// -----------------------------------------------------------------------
+/// @name Creating a CCActionRepeatForever Object
+/// -----------------------------------------------------------------------
 
 /**
  *  Creates the repeat forever action.
@@ -184,6 +208,11 @@ enum {
  *  @return The repeat action object.
  */
 + (id)actionWithAction:(CCActionInterval *) action;
+
+
+/// -----------------------------------------------------------------------
+/// @name Initializing a CCActionRepeatForever Object
+/// -----------------------------------------------------------------------
 
 /**
  *  Initalizes the repeat forever action.
@@ -210,16 +239,26 @@ enum {
 	CGFloat _speed;
 }
 
+
+/// -----------------------------------------------------------------------
+/// @name Accessing the Speed Action Attributes
+/// -----------------------------------------------------------------------
+
 /** 
  * Alter the speed of the inner function in runtime.
  *
- * - Speeds below 1 will make the action run slower
- * - Speeds above 1 will make the action run faster
+ * - Speeds below 1 will make the action run slower.
+ * - Speeds above 1 will make the action run faster.
  */
 @property (nonatomic,readwrite) CGFloat speed;
 
 /** Inner action of CCSpeed. */
 @property (nonatomic, readwrite, strong) CCActionInterval *innerAction;
+
+
+/// -----------------------------------------------------------------------
+/// @name Creating a CCActionSpeed Object
+/// -----------------------------------------------------------------------
 
 /**
  *  Creates the speed action.
@@ -230,6 +269,11 @@ enum {
  *  @return The CCActionSpeed object.
  */
 + (id)actionWithAction:(CCActionInterval *)action speed:(CGFloat)value;
+
+
+/// -----------------------------------------------------------------------
+/// @name Initializing a CCActionSpeed Object
+/// -----------------------------------------------------------------------
 
 /**
  *  Initalizes the speed action.
@@ -278,8 +322,18 @@ enum {
 	float _bottomBoundary;
 }
 
+
+/// -----------------------------------------------------------------------
+/// @name Accessing the Follow Action Attributes
+/// -----------------------------------------------------------------------
+
 /** Turns boundary behaviour on / off.  If set to YES, movement will be clamped to boundaries. */
 @property (nonatomic,readwrite) BOOL boundarySet;
+
+
+/// -----------------------------------------------------------------------
+/// @name Creating a CCActionFollow Object
+/// -----------------------------------------------------------------------
 
 /**
  *  Creates a follow action with no boundaries.
@@ -291,15 +345,6 @@ enum {
 + (id)actionWithTarget:(CCNode *)followedNode;
 
 /**
- *  Initalizes a follow action with no boundaries.
- *
- *  @param followedNode Node to follow.
- *
- *  @return An initialized follow action object.
- */
-- (id)initWithTarget:(CCNode *)followedNode;
-
-/**
  *  Creates a follow action with boundaries.
  *
  *  @param followedNode Node to follow.
@@ -308,6 +353,20 @@ enum {
  *  @return The follow action object.
  */
 + (id)actionWithTarget:(CCNode *)followedNode worldBoundary:(CGRect)rect;
+
+
+/// -----------------------------------------------------------------------
+/// @name Initializing a CCActionFollow Object
+/// -----------------------------------------------------------------------
+
+/**
+ *  Initalizes a follow action with no boundaries.
+ *
+ *  @param followedNode Node to follow.
+ *
+ *  @return An initialized follow action object.
+ */
+- (id)initWithTarget:(CCNode *)followedNode;
 
 /**
  *  Initalizes a follow action with boundaries.
