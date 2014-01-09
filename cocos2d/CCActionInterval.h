@@ -540,41 +540,33 @@
 
 @end
 
-// -----------------------------------------------------------------
-/** @name CCActionJumpTo */
 
 /**
- *  Moves a CCNode object simulating a parabolic jump movement by modifying its position attribute.
+ * This action moves the target to the specified position simulating a parabolic jump movement.
  */
-@interface CCActionJumpTo : CCActionJumpBy <NSCopying>
-{
+@interface CCActionJumpTo : CCActionJumpBy <NSCopying> {
 }
 
-// XXX: Added to prevent bug on BridgeSupport
--(void) startWithTarget:(CCNode *)aTarget;
+// Added to prevent bug on BridgeSupport
+- (void) startWithTarget:(CCNode *)aTarget;
 
 @end
 
-// -----------------------------------------------------------------
-/** @name CCActionBezierBy */
 
-/** 
- *  Bezier configuration structure.
- */
+// Bezier configuration structure.
 typedef struct _ccBezierConfig {
-	//! end position of the bezier
+	// End position of the bezier.
 	CGPoint endPosition;
-	//! Bezier control point 1
+	// Bezier control point 1.
 	CGPoint controlPoint_1;
-	//! Bezier control point 2
+	// Bezier control point 2.
 	CGPoint controlPoint_2;
 } ccBezierConfig;
 
 /**
- *  An action that moves the target with a cubic Bezier curve by a certain distance.
+ *  This action that moves the target with a cubic Bezier curve by a certain distance.
  */
-@interface CCActionBezierBy : CCActionInterval <NSCopying>
-{
+@interface CCActionBezierBy : CCActionInterval <NSCopying> {
 	ccBezierConfig _config;
 	CGPoint _startPosition;
 	CGPoint _previousPosition;
@@ -583,51 +575,46 @@ typedef struct _ccBezierConfig {
 /**
  *  Creates the action with a duration and a bezier configuration.
  *
- *  @param t Action duration
- *  @param c Bezier configuration
+ *  @param t Action duration.
+ *  @param c Bezier configuration.
  *
- *  @return New bezier action
+ *  @return New bezier action.
  */
-+(id) actionWithDuration: (CCTime) t bezier:(ccBezierConfig) c;
++ (id)actionWithDuration:(CCTime)t bezier:(ccBezierConfig)c;
 
 /**
  *  Initializes the action with a duration and a bezier configuration.
  *
- *  @param t Action duration
- *  @param c Bezier configuration
+ *  @param t Action duration.
+ *  @param c Bezier configuration.
  *
- *  @return New bezier action
+ *  @return New bezier action.
  */
--(id) initWithDuration: (CCTime) t bezier:(ccBezierConfig) c;
+- (id)initWithDuration:(CCTime)t bezier:(ccBezierConfig)c;
 
 @end
 
-// -----------------------------------------------------------------
-/** @name CCActionBezierTo */
 
 /**
- *  An action that moves the target with a cubic Bezier curve to a destination point.
+ *  This action moves the target with a cubic Bezier curve to a destination point.
  */
-@interface CCActionBezierTo : CCActionBezierBy
-{
+@interface CCActionBezierTo : CCActionBezierBy {
 	ccBezierConfig _toConfig;
 }
 
-// XXX: Added to prevent bug on BridgeSupport
+// Added to prevent bug on BridgeSupport
 -(void) startWithTarget:(CCNode *)aTarget;
 
 @end
 
-// -----------------------------------------------------------------
-/** @name CCActionScaleTo */
 
 /**
- *  Scales a CCNode object to a zoom factor by modifying its scale attribute.
+ *  This action scales the target to the specified factor value.
+ *
  *  Note:
  *  This action doesn't support "reverse"
  */
-@interface CCActionScaleTo : CCActionInterval <NSCopying>
-{
+@interface CCActionScaleTo : CCActionInterval <NSCopying> {
 	float _scaleX;
 	float _scaleY;
 	float _startScaleX;
@@ -641,83 +628,77 @@ typedef struct _ccBezierConfig {
 /**
  *  Creates the action with the same scale factor for X and Y.
  *
- *  @param duration Action duration
- *  @param s        Scale to scale to
+ *  @param duration Action duration.
+ *  @param s        Scale to scale to.
  *
- *  @return New scale action
+ *  @return New scale action.
  */
-+(id) actionWithDuration: (CCTime)duration scale:(float) s;
++ (id)actionWithDuration:(CCTime)duration scale:(float)s;
 
 /**
  *  Initializes the action with the same scale factor for X and Y.
  *
- *  @param duration Action duration
- *  @param s        Scale to scale to
+ *  @param duration Action duration.
+ *  @param s        Scale to scale to.
  *
- *  @return New scale action
+ *  @return New scale action.
  */
--(id) initWithDuration: (CCTime)duration scale:(float) s;
+- (id)initWithDuration:(CCTime)duration scale:(float)s;
 
 /**
  *  Creates the action with individual scale factor for X and Y.
  *
- *  @param duration Action duration
- *  @param sx       X scale to scale to
- *  @param sy       Y scale to scale to
+ *  @param duration Action duration.
+ *  @param sx       X scale to scale to.
+ *  @param sy       Y scale to scale to.
  *
- *  @return New scale action
+ *  @return New scale action.
  */
-+(id) actionWithDuration: (CCTime)duration scaleX:(float) sx scaleY:(float)sy;
++ (id)actionWithDuration:(CCTime)duration scaleX:(float)sx scaleY:(float)sy;
 
 /**
  *  Initializes the action with individual scale factor for X and Y.
  *
- *  @param duration Action duration
- *  @param sx       X scale to scale to
- *  @param sy       Y scale to scale to
+ *  @param duration Action duration.
+ *  @param sx       X scale to scale to.
+ *  @param sy       Y scale to scale to.
  *
- *  @return New scale action
+ *  @return New scale action.
  */
--(id) initWithDuration: (CCTime)duration scaleX:(float) sx scaleY:(float)sy;
+- (id)initWithDuration:(CCTime)duration scaleX:(float)sx scaleY:(float)sy;
 
 @end
 
-// -----------------------------------------------------------------
-/** @name CCActionScaleBy */
 
 /**
- *  Scales a CCNode object a zoom factor by modifying its scale attribute.
+ *  This action scales the target by the specified factor value.
  */
-@interface CCActionScaleBy : CCActionScaleTo <NSCopying>
-{
+@interface CCActionScaleBy : CCActionScaleTo <NSCopying> {
 }
 
-// XXX: Added to prevent bug on BridgeSupport
--(void) startWithTarget:(CCNode *)aTarget;
+// Added to prevent bug on BridgeSupport
+- (void) startWithTarget:(CCNode *)aTarget;
 
 @end
 
-// -----------------------------------------------------------------
-/** @name CCActionBlink */
 
 /**
- *  Blinks a CCNode object by modifying its visible attribute.
+ *  This action performs a blinks effect on the target.
  */
-@interface CCActionBlink : CCActionInterval <NSCopying>
-{
+@interface CCActionBlink : CCActionInterval <NSCopying> {
 	NSUInteger _times;
 	BOOL _originalState;
 }
 
 /**
- *  Creates the blink action
+ *  Creates the blink action.
  *
- *  @param duration Action duration
- *  @param blinks   Number of times to blink
+ *  @param duration Action duration.
+ *  @param blinks   Number of times to blink.
  *
- *  @return New blink action
+ *  @return New blink action.
  */
-+(id) actionWithDuration: (CCTime)duration blinks:(NSUInteger)blinks;
++ (id)actionWithDuration:(CCTime)duration blinks:(NSUInteger)blinks;
 
 /**
  *  Initializes the blink action
@@ -727,53 +708,45 @@ typedef struct _ccBezierConfig {
  *
  *  @return New blink action
  */
--(id) initWithDuration: (CCTime)duration blinks:(NSUInteger)blinks;
+-(id) initWithDuration:(CCTime)duration blinks:(NSUInteger)blinks;
 
 @end
 
-// -----------------------------------------------------------------
-/** @name CCActionFadeIn */
 
 /**
- *  Fades In a colorable CCNode. It modifies the opacity from 0 to 1. Works with cascadeOpacity, if you want children to fade too.
- *  The "reverse" of this action is FadeOut
- */
-@interface CCActionFadeIn : CCActionInterval <NSCopying>
-{
-}
-
-// XXX: Added to prevent bug on BridgeSupport
--(void) update:(CCTime)dt;
-
-@end
-
-// -----------------------------------------------------------------
-/** @name CCActionFadeOut */
-
-/**
- *  Fades Out a colorable CCNode. It modifies the opacity from 1 to 0. Works with cascadeOpacity, if you want children to fade too.
- *  The "reverse" of this action is FadeIn
- */
-@interface CCActionFadeOut : CCActionInterval <NSCopying>
-{
-}
-
-// XXX: Added to prevent bug on BridgeSupport
--(void) update:(CCTime)dt;
-
-@end
-
-// -----------------------------------------------------------------
-/** @name CCActionFadeTo */
-
-/**
- *  Fades a colorable CCNode. It modifies the opacity from the current value to a custom one.
+ *  This action fades in the target, it modifies the opacity from 0 to 1. 
+ *  Notes:
  *  Works with cascadeOpacity, if you want children to fade too.
- *  Note:
- *  This action doesn't support "reverse"
  */
-@interface CCActionFadeTo : CCActionInterval <NSCopying>
-{
+@interface CCActionFadeIn : CCActionInterval <NSCopying> {
+}
+
+// Added to prevent bug on BridgeSupport
+- (void)update:(CCTime)dt;
+
+@end
+
+
+/**
+ *  This action fades out the target, it modifies the opacity from 1 to 0.
+ *  Notes:
+ *  Works with cascadeOpacity, if you want children to fade too.
+ */
+@interface CCActionFadeOut : CCActionInterval <NSCopying> {
+}
+
+// Added to prevent bug on BridgeSupport
+- (void)update:(CCTime)dt;
+
+@end
+
+
+/**
+ *  This action fades the target, it modifies the opacity from the current value to the specified value.
+ *  Notes:
+ *  Works with cascadeOpacity, if you want children to fade too.
+ */
+@interface CCActionFadeTo : CCActionInterval <NSCopying> {
 	CGFloat _toOpacity;
 	CGFloat _fromOpacity;
 }
@@ -781,139 +754,133 @@ typedef struct _ccBezierConfig {
 /**
  *  Creates a fade action.
  *
- *  @param duration Action duration
- *  @param opactiy  Opacity to fade to
+ *  @param duration Action duration.
+ *  @param opactiy  Opacity to fade to.
  *
- *  @return New fade action
+ *  @return New fade action.
  */
-+(id) actionWithDuration:(CCTime)duration opacity:(CGFloat)opactiy;
++ (id)actionWithDuration:(CCTime)duration opacity:(CGFloat)opactiy;
 
 /**
  *  Initalizes a fade action.
  *
- *  @param duration Action duration
- *  @param opacity  Opacity to fade to
+ *  @param duration Action duration.
+ *  @param opacity  Opacity to fade to.
  *
- *  @return New fade action
+ *  @return New fade action.
  */
--(id) initWithDuration:(CCTime)duration opacity:(CGFloat)opacity;
+- (id)initWithDuration:(CCTime)duration opacity:(CGFloat)opacity;
 
 @end
 
-// -----------------------------------------------------------------
-/** @name CCActionTintTo */
 
 /**
- *  Tints a CCNode that implements the CCNodeRGB protocol from current tint to a custom one.
+ *  This action tints the target from current tint to the specified value.
+ *
  *  Note:
  *  This action doesn't support "reverse"
  */
-@interface CCActionTintTo : CCActionInterval <NSCopying>
-{
+@interface CCActionTintTo : CCActionInterval <NSCopying> {
 	CCColor* _to;
 	CCColor* _from;
 }
 
 /**
- *  Creates a tint to action
+ *  Creates a tint to action.
  *
- *  @param duration Action duration
- *  @param color		Destination color tint to
+ *  @param duration     Action duration.
+ *  @param color		Destination color tint to.
  *
- *  @return New tint to action
+ *  @return New tint to action.
  */
-+(id) actionWithDuration:(CCTime)duration color:(CCColor*)color;
++ (id)actionWithDuration:(CCTime)duration color:(CCColor*)color;
 
 /**
- *  Initalizes a tint to action
+ *  Initalizes a tint to action.
  *
- *  @param duration Action duration
- *  @param color		Destination color tint to
+ *  @param duration     Action duration.
+ *  @param color		Destination color tint to.
  *
- *  @return New tint to action
+ *  @return New tint to action.
  */
--(id) initWithDuration:(CCTime)duration color:(CCColor*)color;
+- (id)initWithDuration:(CCTime)duration color:(CCColor*)color;
 
 @end
 
-// -----------------------------------------------------------------
-/** @name CCActionTintBy */
 
 /**
- *  Tints a CCNode that implements the CCNodeRGB protocol from current tint to a custom one.
+ *  This action tints the target from current tint by the value specified.
  */
-@interface CCActionTintBy : CCActionInterval <NSCopying>
-{
+@interface CCActionTintBy : CCActionInterval <NSCopying> {
 	CGFloat _deltaR, _deltaG, _deltaB;
 	CGFloat _fromR, _fromG, _fromB;
 }
 
 /**
- *  Creates a tint to action
+ *  Creates a tint by action.
  *
- *  @param duration   Action duration
- *  @param deltaRed   Red delta color to tint
- *  @param deltaGreen Green delta color to tint
- *  @param deltaBlue  Blue delta color to tint
+ *  @param duration   Action duration.
+ *  @param deltaRed   Red delta color to tint.
+ *  @param deltaGreen Green delta color to tint.
+ *  @param deltaBlue  Blue delta color to tint.
  *
- *  @return New tint by action
+ *  @return New tint by action.
  */
-+(id) actionWithDuration:(CCTime)duration red:(CGFloat)deltaRed green:(CGFloat)deltaGreen blue:(CGFloat)deltaBlue;
++ (id)actionWithDuration:(CCTime)duration red:(CGFloat)deltaRed green:(CGFloat)deltaGreen blue:(CGFloat)deltaBlue;
 
 /**
- *  Initalizes a tint to action
+ *  Initalizes a tint by action.
  *
- *  @param duration   Action duration
- *  @param deltaRed   Red delta color to tint
- *  @param deltaGreen Green delta color to tint
- *  @param deltaBlue  Blue delta color to tint
+ *  @param duration   Action duration.
+ *  @param deltaRed   Red delta color to tint.
+ *  @param deltaGreen Green delta color to tint.
+ *  @param deltaBlue  Blue delta color to tint.
  *
- *  @return New tint by action
+ *  @return New tint by action.
  */
--(id) initWithDuration:(CCTime)duration red:(CGFloat)deltaRed green:(CGFloat)deltaGreen blue:(CGFloat)deltaBlue;
+- (id)initWithDuration:(CCTime)duration red:(CGFloat)deltaRed green:(CGFloat)deltaGreen blue:(CGFloat)deltaBlue;
 
 @end
 
 /**
- *  Delays the action a certain amount of seconds.
+ *  This action creates a delay by the time specified, useful in sequences.
  */
-@interface CCActionDelay : CCActionInterval <NSCopying>
-{
+@interface CCActionDelay : CCActionInterval <NSCopying> {
 }
 
-// XXX: Added to prevent bug on BridgeSupport
--(void) update:(CCTime)dt;
+// Added to prevent bug on BridgeSupport.
+- (void)update:(CCTime)dt;
 
 @end
 
 /**
- *  Executes an action in reverse order, from time=duration to time=0
+ *  This action executes the specified action in reverse order.
+ *
  *  Note:
  *  Use this action carefully. This action is not sequence-able. 
  *  Use it as the default "reversed" method of your own actions, but using it outside the "reversed" scope is not recommended.
  */
-@interface CCActionReverse : CCActionInterval <NSCopying>
-{
+@interface CCActionReverse : CCActionInterval <NSCopying> {
 	CCActionFiniteTime * _other;
 }
 
 /**
  *  Creates a reverse action.
  *
- *  @param action Action to reverse
+ *  @param action Action to reverse.
  *
- *  @return New reverse action
+ *  @return New reverse action.
  */
-+(id) actionWithAction: (CCActionFiniteTime*) action;
++ (id)actionWithAction: (CCActionFiniteTime*)action;
 
 /**
  *  Initalizes a reverse action.
  *
- *  @param action Action to reverse
+ *  @param action Action to reverse.
  *
- *  @return New reverse action
+ *  @return New reverse action.
  */
--(id) initWithAction: (CCActionFiniteTime*) action;
+- (id)initWithAction:(CCActionFiniteTime*)action;
 
 @end
 
