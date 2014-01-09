@@ -38,7 +38,7 @@ typedef struct CCContactSet {
 	// The array of contact points.
 	struct {
 		// The absolute position of the contact on the surface of each shape.
-		CGPoint point1, point2;
+		CGPoint pointA, pointB;
 		
 		// Penetration distance of the two shapes.
 		// The value will always be negative.
@@ -51,11 +51,11 @@ typedef struct CCContactSet {
 @class CCPhysicsShape;
 
 /**
- *  Contains information about colliding physics bodies.
+ *  Contains information about two colliding physics objects. See CCPhysicsCollisionDelegate for more information.
  *  
  *  ### Notes
- *  - There is only one CCPhysicsCollisionPair object per CCPhysicsNode and it's reused.
- *  - Only use the CCPhysicsCollisionPair object in the method or block it was given to you in. Do not retain it.
+ *  - There is only one CCPhysicsCollisionPair object per CCPhysicsNode and it's reused so don't store a reference to it.
+ *  - You must copy any information you use from this struct if you want to use it later.
  */
 @interface CCPhysicsCollisionPair : NSObject
 
@@ -77,8 +77,8 @@ typedef struct CCContactSet {
 @property(nonatomic, assign) CGFloat restitution;
 
 /**
- *  The relative surface velocities of the two colliding shapes.
- *  The default value is CGPointZero.
+ *  The relative surface velocities of the two colliding shapes. See CCPhysicsBody.surfaceVelocity for more information.
+ *  The default value is the surface velocity of the first body subtracted from the second, then clamped to the collision tangent.
  *  Can be overriden in a CCCollisionPairDelegate pre-solve method to change the collision.
  */
 @property(nonatomic, assign) CGPoint surfaceVelocity;
@@ -120,11 +120,28 @@ typedef struct CCContactSet {
 
 
 /**
- *  Delegate type called when two physics bodies collide.
- *
- *  The final two parameter names should be replaced with strings used with CCPhysicsBody.collisionType or CCPhysicsShape.collisionType.
- *  If both final parameter names are "default" then the method is called when a more specific method isn't found.
- *  "wildcard" can be used as the final parameter name to mean "collides with anything".
+ Delegate type called when two physics bodies collide.
+ 
+ The final two parameter names (typeA/typeB) should be replaced with names used with CCPhysicsBody.collisionType or CCPhysicsShape.collisionType.
+If both final parameter names are "default" then the collision method is called when a more specific method isn't found.
+ 
+ ### Wildcard Collisions:
+ "wildcard" can be used as the final parameter name to mean "collides with anything".
+When using wildcard methods, it's possible for up to three methods to be called (ex: bullet/monster, bullet/wildcard, monster/wildcard).
+The most specific method (bullet/monster) will be called first, and then the wildcard handlers will be called in a somewhat random order.
+Begin and PreSolve methods return a boolean. If multiple methods are called, their return values are combined with a logical AND.
+ 
+ ### Collision Sequence:
+ On the first fixed time step (not necessarily frame) that two physics shapes collide for the first time, a ccPhysicsCollisionBegin method will be called.
+As long as those objects stay in contact, a ccPhysicsCollisionPreSolve and ccPhysicsCollisionPostSolve method will be called before and after the physics solver runs.
+The pre-solve method gives you a chance to modify the outcome of the collision, and the post-solve method lets you find out what the outcome was.
+This means you cannot use the outcome of the collision to modify itself. (ex: discard or undo a collision only if it will cause enough damage)
+Finally, when two physics objects stop touching for the very first fixed time step, the ccPhysicsCollisionSeparate method is called.
+ 
+ ### CCPhysicsShape vs. CCPhysicsBody:
+ Though CCPhysics concentrates mostly on physics bodies, the underlying physics engine (Chipmunk2D) operates collision callbacks on the level of individual shapes.
+CCPhysicsBody objects can have multiple shapes such as polyline bodies or those created with [CCPhysicsBody bodyWithShapes:].
+In those cases, its possible to have have multiple active collisions between two CCPhysicsBody objects. This is something to keep in mind.
  */
 @protocol CCPhysicsCollisionDelegate
 
@@ -144,7 +161,8 @@ typedef struct CCContactSet {
 
 /**
  *  Pre-solve methods are called every fixed time step when two bodies are in contact before the physics solver runs.
- *  You can call use properties such as friction, restitution, surfaceVelocity on CCPhysicsCollisionPair from a post-solve method.
+ *  This gives you a chance to modify the collision's outcome by setting properties such as friction, restitution, or surfaceVelocity on CCPhysicsCollisionPair
+ *  Since the collisions have not been solved yet, you cannot access the outcome by using properties such as totalKineticEnergy or totalImpulse.
  *  If you return NO from a pre-solve method, the collision will be ignored for the current time step.
  *
  *  @param pair  Collision pair.
@@ -178,7 +196,17 @@ typedef struct CCContactSet {
 
 
 /**
- *  A Physics enabled node, @todo expand upon this.
+A CCNode that enables physics simulation in it's children.
+To use CCPhysics, you create a physics node, and then attach CCPhysicsBody objects to any child node that you want to have gravity or collisions applied to.
+Physics nodes are also where you set up a delegate object that can tell you about collision events.
+Lastly, you can query for physics objects near a point, along a ray, or within a certain bounding box.
+
+### Units:
+For simplicity, CCPhysics does not use SI units, and the performance is not tuned to any particular scale.
+Positions and distances are expressed in regular Cocos2D points relative to whatever node is most relevant.
+For example, positions are in the same coordinates as the physics node.
+Shapes and joint anchors use the local coordinates of the node their body is attached to so that they properly respect it's transform.
+Mass has no particular units. I personally find it intuitive to use 1.0 as the main player's mass and set everything else based on that. Time is expressed in seconds.
  */
 @interface CCPhysicsNode : CCNode
 
@@ -187,6 +215,15 @@ typedef struct CCContactSet {
 
 /** Gravity applied to the dynamic bodies in the world. Defaults to CGPointZero. */
 @property(nonatomic, assign) CGPoint gravity;
+
+/**
+ *  The number of solver iterations the underlying physics engine should run.
+ *  This allows you to tune the performance and quality of the physics.
+ *  Low numbers will improve performance, but make the physics spongy or rubbery.
+ *  High numbers will use more CPU time, but make the physics look more solid.
+ *  The default value is 10.
+ */
+@property(nonatomic, assign) int iterations;
 
 /**
  *  Physics bodies fall asleep when a group of them move slowly for longer than the threshold.

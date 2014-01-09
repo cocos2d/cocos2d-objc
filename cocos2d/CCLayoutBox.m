@@ -25,6 +25,7 @@
 #import "CCLayoutBox.h"
 #import "ccMacros.h"
 #import "CGPointExtension.h"
+#import "CCNode_Private.h"
 
 @implementation CCLayoutBox
 
@@ -108,6 +109,12 @@ static float roundUpToEven(float f)
 - (void) setSpacing:(float)spacing
 {
     _spacing = spacing;
+    [self needsLayout];
+}
+
+-(void) detachChild:(CCNode *)child cleanup:(BOOL)doCleanup
+{
+    [super detachChild:child cleanup:doCleanup];
     [self needsLayout];
 }
 
