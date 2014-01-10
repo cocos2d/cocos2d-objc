@@ -118,4 +118,10 @@ static float roundUpToEven(float f)
     [self needsLayout];
 }
 
+-(void)setDirection:(CCLayoutBoxDirection)direction
+{
+    _direction = direction;
+    [self needsLayout];
+}
+
 @end

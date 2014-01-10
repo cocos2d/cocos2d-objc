@@ -207,7 +207,7 @@ typedef enum ccTMXTileFlags_ {
 /**
  *  Creates and returns a CCTiledMapInfo object using the TMX format file specified.
  *
- *  @param tmxFile CCTiledMapInfo
+ *  @param tmxFile CCTiledMapInfo.
  *
  *  @return The CCTiledMapInfo Object.
  */
@@ -216,7 +216,7 @@ typedef enum ccTMXTileFlags_ {
 /**
  *  Creates and returns a CCTiledMapInfo object using the TMX XML and resource file path.
  *
- *  @param tmxString    TMX XML
+ *  @param tmxString    TMX XML.
  *  @param resourcePath Resource file path.
  *
  *  @return The CCTiledMapInfo Object.
@@ -231,7 +231,7 @@ typedef enum ccTMXTileFlags_ {
 /**
  *  Initializes and returns a CCTiledMapInfo object using the TMX format file specified.
  *
- *  @param tmxFile CCTiledMapInfo
+ *  @param tmxFile CCTiledMapInfo.
  *
  *  @return An initialized CCTiledMapInfo Object.
  */
@@ -240,7 +240,7 @@ typedef enum ccTMXTileFlags_ {
 /**
  *   Initializes and returns a  CCTiledMapInfo object using the TMX XML and resource file path.
  *
- *  @param tmxString    TMX XML
+ *  @param tmxString    TMX XML.
  *  @param resourcePath Resource file path.
  *
  *  @return An initialized CCTiledMapInfo Object.
