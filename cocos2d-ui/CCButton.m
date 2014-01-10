@@ -175,8 +175,9 @@
     }
     
     _background.contentSize = size;
-    _background.anchorPoint = ccp(0,0);
-    _background.position = ccp(0,0);
+    _background.anchorPoint = ccp(0.5f,0.5f);
+    _background.positionType = CCPositionTypeNormalized;
+    _background.position = ccp(0.5f,0.5f);
     
     _label.positionType = CCPositionTypeNormalized;
     _label.position = ccp(0.5f, 0.5f);
@@ -296,6 +297,7 @@
             if (_zoomWhenHighlighted)
             {
                 [_label runAction:[CCActionScaleTo actionWithDuration:0.1 scaleX:_originalScaleX*1.2 scaleY:_originalScaleY*1.2]];
+                [_background runAction:[CCActionScaleTo actionWithDuration:0.1 scaleX:_originalScaleX*1.2 scaleY:_originalScaleY*1.2]];
             }
         }
         else
@@ -314,6 +316,9 @@
             {
                 _label.scaleX = _originalScaleX;
                 _label.scaleY = _originalScaleY;
+                
+                _background.scaleX = _originalScaleX;
+                _background.scaleY = _originalScaleY;
             }
         }
     }
@@ -335,24 +340,6 @@
 - (float) hitAreaExpansion
 {
     return _originalHitAreaExpansion;
-}
-
-- (void) setScale:(float)scale
-{
-    _originalScaleX = _originalScaleY = scale;
-    [super setScale:scale];
-}
-
-- (void) setScaleX:(float)scaleX
-{
-    _originalScaleX = scaleX;
-    [super setScaleX:scaleX];
-}
-
-- (void) setScaleY:(float)scaleY
-{
-    _originalScaleY = scaleY;
-    [super setScaleY:scaleY];
 }
 
 - (void) setLabelColor:(CCColor*)color forState:(CCControlState)state
