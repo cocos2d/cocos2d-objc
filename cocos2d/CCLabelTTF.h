@@ -38,7 +38,7 @@
  
  ### Resources
  
- - http://iosfonts.com/ (Safari for accurate font rendering.)
+ - http://iosfonts.com/ (Please use Safari for accurate font rendering)
  
  */
 

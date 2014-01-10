@@ -26,15 +26,13 @@
 
 #ifdef DEBUG
 
-/** Debugging extensions of CCNode.
- They are available when the DEBUG macro is defined at compile time
- */
+/** Debugging extensions of CCNode.  They are available when the DEBUG macro is defined at compile time. */
 @interface CCNode (Debug)
 
 /**
-*  Prints on the debug console the scene graph
-*
-*  @param level Level of debug information.
+ *  Prints on the debug console the scene graph
+ *
+ *  @param level Level of debug information.
 */
 -(void) walkSceneGraph:(NSUInteger)level;
 
