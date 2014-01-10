@@ -39,7 +39,9 @@
 -(void) setupNormalColorTest
 {
 	CCSprite * img = [self loadAndDisplayImageNamed: @"powered.png" withTitle: @"Image should be normal colored"];
-	[img setColor:[CCColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:1.0f]];
+	
+	// Crazy color values should be correctly clamped unless using custom shaders.
+	[img setColor:[CCColor colorWithRed:1.1f green:10.0f blue:100.0f alpha:1.1f]];
 }
 
 -(void) setupSetColorDoesNotChangeAlphaTest
