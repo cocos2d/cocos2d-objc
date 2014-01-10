@@ -188,9 +188,6 @@
     // always call super onEnter first
     [super onEnter];
     
-    // unpause physics
-    _physics.paused = YES;
-    
     // In pre-v3, touch enable and scheduleUpdate was called here
     // In v3, touch is enabled by setting userInterActionEnabled for the individual nodes
     // Pr frame update is automatically enabled, if update is overridden
@@ -198,23 +195,32 @@
     // Basically this will result in fewer having the need to override onEnter and onExit, but for clarity, it is shown
 }
 
-// -----------------------------------------------------------------------
-
 - (void)onExit
 {
-    // exit code goes here
+    
     
     // always call super onExit last
     [super onExit];
 }
 
+// -----------------------------------------------------------------------
+
 - (void)onEnterTransitionDidFinish
 {
-    // unpase physics when transition is complete
-    _physics.paused = NO;
-    
+    // always call super onEnterTransitionDidFinish first
     [super onEnterTransitionDidFinish];
+
+
 }
+
+- (void)onExitTransitionDidStart
+{
+
+
+    // always call super onExitTransitionDidStart last
+    [super onExitTransitionDidStart];
+}
+
 
 // -----------------------------------------------------------------------
 #pragma mark - Button callbacks

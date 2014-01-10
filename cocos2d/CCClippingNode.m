@@ -37,6 +37,7 @@
 #import "kazmath/GL/matrix.h"
 
 #import "CCNode_Private.h"
+#import "CCDrawingPrimitives.h"
 
 static GLint _stencilBits = -1;
 

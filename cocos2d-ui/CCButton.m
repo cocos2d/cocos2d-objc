@@ -119,6 +119,17 @@
         _background = [[CCSprite9Slice alloc] init];
     }
     
+    if (highlighted)
+    {
+        [self setBackgroundSpriteFrame:highlighted forState:CCControlStateHighlighted];
+        [self setBackgroundSpriteFrame:highlighted forState:CCControlStateSelected];
+    }
+    
+    if (disabled)
+    {
+        [self setBackgroundSpriteFrame:disabled forState:CCControlStateDisabled];
+    }
+    
     [self addChild:_background z:0];
     
     // Setup label
@@ -340,6 +351,10 @@
 - (float) hitAreaExpansion
 {
     return _originalHitAreaExpansion;
+}
+
+- (void)setColor:(CCColor *)color {
+    [self setLabelColor:color forState:CCControlStateNormal];
 }
 
 - (void) setLabelColor:(CCColor*)color forState:(CCControlState)state

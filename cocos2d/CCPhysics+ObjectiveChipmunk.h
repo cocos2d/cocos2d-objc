@@ -45,7 +45,7 @@
 @interface CCPhysicsBody (ObjectiveChipmunk)<ChipmunkObject>
 
 /** The CCNode this physics body is attached to. */
-@property(nonatomic, strong) CCNode *node;
+@property(nonatomic, weak) CCNode *node;
 
 /** The CCPhysicsNode this body is added to. */
 @property(nonatomic, readonly) CCPhysicsNode *physicsNode;

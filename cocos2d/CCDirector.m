@@ -495,7 +495,7 @@ GLToClipTransform(kmMat4 *transformOut)
     
     [_scenesStack addObject:scene];
     _sendCleanupToScene = NO;
-    [transition performSelector:@selector(replaceScene:) withObject:scene];
+    [transition performSelector:@selector(startTransition:) withObject:scene];
 }
 
 -(void) popScene
@@ -526,7 +526,7 @@ GLToClipTransform(kmMat4 *transformOut)
         [_scenesStack removeLastObject];
         CCScene * incomingScene = [_scenesStack lastObject];
         _sendCleanupToScene = YES;
-        [transition performSelector:@selector(replaceScene:) withObject:incomingScene];
+        [transition performSelector:@selector(startTransition:) withObject:incomingScene];
     }
 }
 
@@ -590,7 +590,19 @@ GLToClipTransform(kmMat4 *transformOut)
 {
     // the transition gets to become the running scene
     _sendCleanupToScene = YES;
-    [transition performSelector:@selector(replaceScene:) withObject:scene];
+    [transition performSelector:@selector(startTransition:) withObject:scene];
+}
+
+// -----------------------------------------------------------------
+
+- (void)startTransition:(CCTransition *)transition
+{
+	NSAssert(transition, @"Argument must be non-nil");
+    NSAssert(_runningScene, @"There must be a running scene");
+    
+    [_scenesStack removeLastObject];
+    [_scenesStack addObject:transition];
+    _nextScene = transition;
 }
 
 // -----------------------------------------------------------------
@@ -641,9 +653,6 @@ GLToClipTransform(kmMat4 *transformOut)
 
 -(void) setNextScene
 {
-    // -----------------------------------------------------------------
-    // v2.5 functionality
-    
     // If next scene is a transition, the transition has just started
     // Make transition the running scene.
     // Outgoing scene will continue to run
@@ -664,33 +673,31 @@ GLToClipTransform(kmMat4 *transformOut)
     if ([_runningScene isKindOfClass:[CCTransition class]])
     {
         [_runningScene onExit];
+        [_runningScene cleanup];
         _runningScene = nil;
         _runningScene = _nextScene;
         _nextScene = nil;
         return;
     }
-    // -----------------------------------------------------------------
 
-	Class transClass = [CCTransition class];
-	BOOL runningIsTransition = [_runningScene isKindOfClass:transClass];
-	BOOL newIsTransition = [_nextScene isKindOfClass:transClass];
-
-	// If it is not a transition, call onExit/cleanup
-	if( ! newIsTransition ) {
+    
+	// if next scene is not a transition, force exit calls
+	if (![_nextScene isKindOfClass:[CCTransition class]])
+    {
 		[_runningScene onExitTransitionDidStart];
 		[_runningScene onExit];
 
 		// issue #709. the root node (scene) should receive the cleanup message too
 		// otherwise it might be leaked.
-		if( _sendCleanupToScene)
-			[_runningScene cleanup];
+		if (_sendCleanupToScene) [_runningScene cleanup];
 	}
-
 
 	_runningScene = _nextScene;
 	_nextScene = nil;
 
-	if( ! runningIsTransition ) {
+    // if running scene is not a transition, force enter calls
+	if (![_runningScene isKindOfClass:[CCTransition class]])
+    {
 		[_runningScene onEnter];
 		[_runningScene onEnterTransitionDidFinish];
 	}

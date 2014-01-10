@@ -44,7 +44,7 @@
  *  then running it again in Reverse mode.
  *
  *  Example:
- *  CCAction * pingPongAction = [CCSequence actions: action, [action reverse], nil];
+ *  CCAction *pingPongAction = [CCActionSequence actions: action, [action reverse], nil];
  */
 @interface CCActionInterval: CCActionFiniteTime <NSCopying> {
 	CCTime	_elapsed;
@@ -544,11 +544,7 @@
 /**
  * This action moves the target to the specified position simulating a parabolic jump movement.
  */
-@interface CCActionJumpTo : CCActionJumpBy <NSCopying> {
-}
-
-// Added to prevent bug on BridgeSupport
-- (void) startWithTarget:(CCNode *)aTarget;
+@interface CCActionJumpTo : CCActionJumpBy <NSCopying>
 
 @end
 
@@ -601,9 +597,6 @@ typedef struct _ccBezierConfig {
 @interface CCActionBezierTo : CCActionBezierBy {
 	ccBezierConfig _toConfig;
 }
-
-// Added to prevent bug on BridgeSupport
--(void) startWithTarget:(CCNode *)aTarget;
 
 @end
 
@@ -673,11 +666,7 @@ typedef struct _ccBezierConfig {
 /**
  *  This action scales the target by the specified factor value.
  */
-@interface CCActionScaleBy : CCActionScaleTo <NSCopying> {
-}
-
-// Added to prevent bug on BridgeSupport
-- (void) startWithTarget:(CCNode *)aTarget;
+@interface CCActionScaleBy : CCActionScaleTo <NSCopying>
 
 @end
 
@@ -718,11 +707,7 @@ typedef struct _ccBezierConfig {
  *  Notes:
  *  Works with cascadeOpacity, if you want children to fade too.
  */
-@interface CCActionFadeIn : CCActionInterval <NSCopying> {
-}
-
-// Added to prevent bug on BridgeSupport
-- (void)update:(CCTime)dt;
+@interface CCActionFadeIn : CCActionInterval <NSCopying>
 
 @end
 
@@ -732,11 +717,7 @@ typedef struct _ccBezierConfig {
  *  Notes:
  *  Works with cascadeOpacity, if you want children to fade too.
  */
-@interface CCActionFadeOut : CCActionInterval <NSCopying> {
-}
-
-// Added to prevent bug on BridgeSupport
-- (void)update:(CCTime)dt;
+@interface CCActionFadeOut : CCActionInterval <NSCopying>
 
 @end
 
@@ -845,11 +826,7 @@ typedef struct _ccBezierConfig {
 /**
  *  This action creates a delay by the time specified, useful in sequences.
  */
-@interface CCActionDelay : CCActionInterval <NSCopying> {
-}
-
-// Added to prevent bug on BridgeSupport.
-- (void)update:(CCTime)dt;
+@interface CCActionDelay : CCActionInterval <NSCopying>
 
 @end
 

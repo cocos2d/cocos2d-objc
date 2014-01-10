@@ -145,7 +145,12 @@ static inline BOOL ccc4FEqual(ccColor4F a, ccColor4F b)
  */
 static inline ccColor4B ccc4BFromccc4F(ccColor4F c)
 {
-	return (ccColor4B){(GLubyte)(c.r*255), (GLubyte)(c.g*255), (GLubyte)(c.b*255), (GLubyte)(c.a*255)};
+	return (ccColor4B){
+		(GLubyte)(clampf(c.r, 0, 1)*255),
+		(GLubyte)(clampf(c.g, 0, 1)*255),
+		(GLubyte)(clampf(c.b, 0, 1)*255),
+		(GLubyte)(clampf(c.a, 0, 1)*255)
+	};
 }
 	
 /**
@@ -153,7 +158,11 @@ static inline ccColor4B ccc4BFromccc4F(ccColor4F c)
  */
 static inline ccColor3B ccc3BFromccc4F(ccColor4F c)
 {
-	return (ccColor3B){ (GLubyte) (c.r*255), (GLubyte) (c.g*255), (GLubyte) (c.b*255) };
+	return (ccColor3B){
+		(GLubyte)(clampf(c.r, 0, 1)*255),
+		(GLubyte)(clampf(c.g, 0, 1)*255),
+		(GLubyte)(clampf(c.b, 0, 1)*255),
+	};
 }
 
 /**
