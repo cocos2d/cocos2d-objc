@@ -64,11 +64,7 @@
  *  Note:
  *  This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
  */
-@interface CCActionEaseBackIn : CCActionEase <NSCopying> {
-}
-
-// Needed for BridgeSupport.
-- (void)update:(CCTime)t;
+@interface CCActionEaseBackIn : CCActionEase <NSCopying>
 
 @end
 
@@ -79,11 +75,7 @@
  *  Note:
  *  This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
  */
-@interface CCActionEaseBackOut : CCActionEase <NSCopying> {
-}
-
-// Needed for BridgeSupport.
-- (void)update:(CCTime)t;
+@interface CCActionEaseBackOut : CCActionEase <NSCopying>
 
 @end
 
@@ -94,11 +86,7 @@
  *  Note:
  *  This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
  */
-@interface CCActionEaseBackInOut : CCActionEase <NSCopying> {
-}
-
-// Needed for BridgeSupport.
-- (void)update:(CCTime)t;
+@interface CCActionEaseBackInOut : CCActionEase <NSCopying>
 
 @end
 
@@ -140,11 +128,7 @@
 /** 
  *  This action will accelerate the specified action by the rate.
  */
-@interface CCActionEaseIn : CCActionEaseRate <NSCopying> {
-}
-
-// Needed for BridgeSupport.
-- (void)update:(CCTime)t;
+@interface CCActionEaseIn : CCActionEaseRate <NSCopying>
 
 @end
 
@@ -152,11 +136,7 @@
 /**
  *  This action will deccelerate the specified action by the rate.
  */
-@interface CCActionEaseOut : CCActionEaseRate <NSCopying> {
-}
-
-// Needed for BridgeSupport.
-- (void)update:(CCTime)t;
+@interface CCActionEaseOut : CCActionEaseRate <NSCopying>
 
 @end
 
@@ -164,11 +144,7 @@
 /**
  *  This action will both accelerate and deccelerate the specified action with same rate.
  */
-@interface CCActionEaseInOut : CCActionEaseRate <NSCopying> {
-}
-
-// Needed for BridgeSupport.
-- (void)update:(CCTime)t;
+@interface CCActionEaseInOut : CCActionEaseRate <NSCopying>
 
 @end
 
@@ -212,11 +188,7 @@
  *
  *  Note: This action doesn't use a bijective function, actions like CCActionSequence might have an unexpected result when used with this action.
  */
-@interface CCActionEaseElasticIn : CCActionEaseElastic <NSCopying> {
-}
-
-// Needed for BridgeSupport.
-- (void)update:(CCTime)t;
+@interface CCActionEaseElasticIn : CCActionEaseElastic <NSCopying>
 
 @end
 
@@ -226,11 +198,7 @@
  *
  *  Note: This action doesn't use a bijective function, actions like CCActionSequence might have an unexpected result when used with this action.
  */
-@interface CCActionEaseElasticOut : CCActionEaseElastic <NSCopying> {
-}
-
-// Needed for BridgeSupport.
-- (void)update:(CCTime)t;
+@interface CCActionEaseElasticOut : CCActionEaseElastic <NSCopying>
 
 @end
 
@@ -240,11 +208,7 @@
  *
  *  Note: This action doesn't use a bijective function, actions like CCActionSequence might have an unexpected result when used with this action.
  */
-@interface CCActionEaseElasticInOut : CCActionEaseElastic <NSCopying> {
-}
-
-// Needed for BridgeSupport.
-- (void)update:(CCTime)t;
+@interface CCActionEaseElasticInOut : CCActionEaseElastic <NSCopying>
 
 @end
 
@@ -253,10 +217,9 @@
 /**
  *  CCActionEaseBounce adds a bounceTime property and applies a bouncing effect to the specified action.
  */
-@interface CCActionEaseBounce : CCActionEase <NSCopying> {
-}
+@interface CCActionEaseBounce : CCActionEase <NSCopying>
 
-// Needed for BridgeSupport.
+// Bounce time.
 - (CCTime)bounceTime:(CCTime)t;
 
 @end
@@ -267,11 +230,7 @@
  *
  *  Note: This action doesn't use a bijective function, actions like CCActionSequence might have an unexpected result when used with this action.
  */
-@interface CCActionEaseBounceIn : CCActionEaseBounce <NSCopying> {
-}
-
-// Needed for BridgeSupport.
-- (void)update:(CCTime)t;
+@interface CCActionEaseBounceIn : CCActionEaseBounce <NSCopying>
 
 @end
 
@@ -281,11 +240,7 @@
  *
  *  Note: This action doesn't use a bijective function, actions like CCActionSequence might have an unexpected result when used with this action.
  */
-@interface CCActionEaseBounceOut : CCActionEaseBounce <NSCopying> {
-}
-
-// Needed for BridgeSupport.
-- (void)update:(CCTime)t;
+@interface CCActionEaseBounceOut : CCActionEaseBounce <NSCopying>
 
 @end
 
@@ -295,11 +250,7 @@
  *
  *  Note: This action doesn't use a bijective function, actions like CCActionSequence might have an unexpected result when used with this action.
  */
-@interface CCActionEaseBounceInOut : CCActionEaseBounce <NSCopying> {
-}
-
-// Needed for BridgeSupport.
-- (void)update:(CCTime)t;
+@interface CCActionEaseBounceInOut : CCActionEaseBounce <NSCopying>
 
 @end
 
