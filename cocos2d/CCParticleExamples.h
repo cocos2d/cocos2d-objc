@@ -28,56 +28,45 @@
 #import "CCParticleSystem.h"
 
 @interface CCParticleFire: CCParticleSystem
-// Required for BridgeSupport.
--(id) init;
+
 @end
 
 @interface CCParticleFireworks : CCParticleSystem
-// Required for BridgeSupport.
--(id) init;
+
 @end
 
 @interface CCParticleSun : CCParticleSystem
-// Required for BridgeSupport.
--(id) init;
+
 @end
 
 @interface CCParticleGalaxy : CCParticleSystem
-//! Required for BridgeSupport.
--(id) init;
+
 @end
 
 @interface CCParticleFlower : CCParticleSystem
-// Required for BridgeSupport.
--(id) init;
+
 @end
 
 @interface CCParticleMeteor : CCParticleSystem
-// Required for BridgeSupport.
--(id) init;
+
 @end
 
 @interface CCParticleSpiral : CCParticleSystem
-// Required for BridgeSupport.
--(id) init;
+
 @end
 
 @interface CCParticleExplosion : CCParticleSystem
-// Required for BridgeSupport.
--(id) init;
+
 @end
 
 @interface CCParticleSmoke : CCParticleSystem
-// Required for BridgeSupport.
--(id) init;
+
 @end
 
 @interface CCParticleSnow : CCParticleSystem
-// Required for BridgeSupport.
--(id) init;
+
 @end
 
 @interface CCParticleRain : CCParticleSystem
-// Required for BridgeSupport.
--(id) init;
+
 @end
