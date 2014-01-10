@@ -50,10 +50,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "Platforms/CCGL.h"
 #import "CCTexture.h"
 
-
-#pragma mark -
-#pragma mark CCTexturePVR
-
 struct CCPVRMipmap {
 	unsigned char *address;
 	unsigned int len;
@@ -97,48 +93,104 @@ enum {
  */
 @interface CCTexturePVR : NSObject
 {
-	struct CCPVRMipmap	_mipmaps[CC_PVRMIPMAP_MAX];	// pointer to mipmap images
-	NSUInteger	_numberOfMipmaps;					// number of mipmap used
+    // Pointer to mipmap images.
+	struct CCPVRMipmap	_mipmaps[CC_PVRMIPMAP_MAX];
+    
+    // Number of mipmap used.
+	NSUInteger	_numberOfMipmaps;
 
+    // Texture bits.
 	uint32_t _width, _height;
 	GLuint	_name;
 	BOOL	_hasAlpha;
 	BOOL	_hasPremultipliedAlpha;
 	BOOL	_forcePremultipliedAlpha;
 
-	// cocos2d integration
+    // True to retain texture name.
 	BOOL _retainName;
+    
+    // Texture pixel format used.
 	CCTexturePixelFormat _format;
 	
 	const ccPVRTexturePixelFormatInfo *_pixelFormatInfo;
 }
 
-/* initializes a CCTexturePVR with a path */
-- (id)initWithContentsOfFile:(NSString *)path;
-/* initializes a CCTexturePVR with an URL */
-- (id)initWithContentsOfURL:(NSURL *)url;
-/* creates and initializes a CCTexturePVR with a path */
-+ (id)pvrTextureWithContentsOfFile:(NSString *)path;
-/* creates and initializes a CCTexturePVR with an URL */
-+ (id)pvrTextureWithContentsOfURL:(NSURL *)url;
 
-/** texture id name */
+/// -----------------------------------------------------------------------
+/// @name Creating a CCTexturePVR Object
+/// -----------------------------------------------------------------------
+
+/**
+ *  Creates and returns a PVR Texture from the specified file path value.
+ *
+ *  @param path File path.
+ *
+ *  @return The CCTexturePVR object.
+ */
++(id)pvrTextureWithContentsOfFile:(NSString *)path;
+
+/**
+ *  Creates and returns a PVR Texture from the specified URL value.
+ *
+ *  @param url Url object.
+ *
+ *  @return The CCTexturePVR object.
+ */
++(id)pvrTextureWithContentsOfURL:(NSURL *)url;
+
+
+/// -----------------------------------------------------------------------
+/// @name Initializing a CCTexturePVR Object
+/// -----------------------------------------------------------------------
+
+/**
+ *  Initializes a PVR Texture from the specified file path value.
+ *
+ *  @param path File path.
+ *
+ *  @return An initialized CCTexturePVR object.
+ */
+-(id)initWithContentsOfFile:(NSString *)path;
+
+/**
+ *  Initializes a PVR Texture from the specified URL value.
+ *
+ *  @param url Url object.
+ *
+ *  @return An initialized CCTexturePVR object.
+ */
+-(id)initWithContentsOfURL:(NSURL *)url;
+
+
+/// -----------------------------------------------------------------------
+/// @name Accessing PVR Texture Attributes
+/// -----------------------------------------------------------------------
+
+/** Texture id name. */
 @property (nonatomic,readonly) GLuint name;
-/** texture width */
+
+/** Texture width. */
 @property (nonatomic,readonly) uint32_t width;
-/** texture height */
+
+/** Texture height. */
 @property (nonatomic,readonly) uint32_t height;
-/** whether or not the texture has alpha */
+
+/** Whether or not the texture has alpha. */
 @property (nonatomic,readonly) BOOL hasAlpha;
-/** whether or not the texture has premultiplied alpha */
+
+/** Whether or not the texture has premultiplied alpha. */
 @property (nonatomic,readonly) BOOL hasPremultipliedAlpha;
-/** whether or not the texture should use hasPremultipliedAlpha instead of global default */
+
+/** Whether or not the texture should use hasPremultipliedAlpha instead of global default. */
 @property (nonatomic,readonly) BOOL forcePremultipliedAlpha;
-/** how many mipmaps the texture has. 1 means one level (level 0 */
+
+/** How many mipmaps the texture has. 1 means one level (level 0). */
 @property (nonatomic, readonly) NSUInteger numberOfMipmaps;
 
-// cocos2d integration
+/** True to retain texture name. */
 @property (nonatomic,readwrite) BOOL retainName;
+
+/** Texture pixel format used. */
 @property (nonatomic,readonly) CCTexturePixelFormat format;
 
 @end

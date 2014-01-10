@@ -27,7 +27,6 @@
 
 #import "ccConfig.h"
 #import "ccMacros.h"
-#import "CCDrawingPrimitives.h"
 #import "CCLabelAtlas.h"
 #import "CCShaderCache.h"
 #import "CCGLProgram.h"

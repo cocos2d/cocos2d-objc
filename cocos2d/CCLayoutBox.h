@@ -29,10 +29,10 @@
  */
 typedef NS_ENUM(NSUInteger, CCLayoutBoxDirection)
 {
-    /// The children will be layout out in a horizontal line
+    /// The children will be layout out in a horizontal line.
     CCLayoutBoxDirectionHorizontal,
     
-    /// The children will be layout out in a vertical line
+    /// The children will be layout out in a vertical line.
     CCLayoutBoxDirectionVertical,
 };
 
