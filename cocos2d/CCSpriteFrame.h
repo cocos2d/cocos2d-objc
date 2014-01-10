@@ -31,11 +31,9 @@
 /** 
  A CCSpriteFrame contains the texture and rectangle of the texture to be used by a CCSprite.
 
- ### Usage
- 
- You can modify the frame of a CCSprite as follows:
+ You can easily modify the sprite frame of a CCSprite using the following handy method:
 
- CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:texture rect:rect offset:offset];
+ CCSpriteFrame *frame = [CCSpriteFrame frameWithImageNamed:@"jump.png"];
  [sprite setSpriteFrame:frame];
  */
 

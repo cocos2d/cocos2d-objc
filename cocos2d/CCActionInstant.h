@@ -24,201 +24,210 @@
  *
  */
 
-
 #import "CCAction.h"
 
-// -----------------------------------------------------------------
-/** @name CCActionInstant */
-
-/** 
- *  Instant actions are immediate actions. 
- *  They don't have a duration like the CCIntervalAction actions.
- */
-@interface CCActionInstant : CCActionFiniteTime <NSCopying>
-{
+//
+// Base class for instant actions, e.g. they are performed immediately.
+//
+@interface CCActionInstant : CCActionFiniteTime <NSCopying> {
 }
 
-// XXX Needed for BridgeSupport
--(id) init;
+// Needed for BridgeSupport.
+- (id)init;
 
 @end
 
-// -----------------------------------------------------------------
-/** @name CCActionRemove */
 
-/**
- *  Removes the target from parent node.
- */
-@interface CCActionRemove : CCActionInstant
-{
+/** This action will remove the target from its parent node. */
+@interface CCActionRemove : CCActionInstant {
 }
+
+// Needed for BridgeSupport.
+- (void)update:(CCTime)time;
 
 @end
 
-// -----------------------------------------------------------------
-/** @name CCActionShow */
 
 /** 
- *  Shows the target.
+ *  This action will make the target visible.
  */
- @interface CCActionShow : CCActionInstant
-{
+@interface CCActionShow : CCActionInstant {
 }
 
-// Needed for BridgeSupport
--(void) update:(CCTime)time;
+// Needed for BridgeSupport.
+- (void)update:(CCTime)time;
 
 @end
 
-// -----------------------------------------------------------------
-/** @name CCActionHide */
 
 /** 
- *  Hides the target.
+ *  This action will hide the target.
  */
-@interface CCActionHide : CCActionInstant
-{
+@interface CCActionHide : CCActionInstant {
 }
 
 // Needed for BridgeSupport
--(void) update:(CCTime)time;
+- (void)update:(CCTime)time;
 
 @end
 
-// -----------------------------------------------------------------
-/** @name CCActionToggleVisibility */
 
 /** 
- *  Toggles the visibility of a target.
+ *  This action toggles the target's visibility.
  */
-@interface CCActionToggleVisibility : CCActionInstant
-{
+@interface CCActionToggleVisibility : CCActionInstant {
 }
 
 // Needed for BridgeSupport
--(void) update:(CCTime)time;
+- (void)update:(CCTime)time;
 
 @end
 
-// -----------------------------------------------------------------
-/** @name CCActionFlipX */
 
 /** 
- *  Flips the target in x direction.
+ *  This action flips the target in x direction.
  */
-@interface CCActionFlipX : CCActionInstant
-{
+@interface CCActionFlipX : CCActionInstant {
 	BOOL	_flipX;
 }
 
-/**
- *  Creates a flip action with x direction flipped or non flipped
- *
- *  @param x Defines if target is flipped
- *
- *  @return New flip action
- */
-+(id) actionWithFlipX:(BOOL)x;
+
+/// -----------------------------------------------------------------------
+/// @name Creating a CCActionFlipX Object
+/// -----------------------------------------------------------------------
 
 /**
- *  Initializes a flip action with x direction flipped or non flipped
+ *  Creates a flip action with x direction flipped or non flipped.
  *
- *  @param x Defines if target is flipped
+ *  @param x Defines if target is flipped.
  *
- *  @return New flip action
+ *  @return The flip action object.
  */
--(id) initWithFlipX:(BOOL)x;
++ (id)actionWithFlipX:(BOOL)x;
+
+
+/// -----------------------------------------------------------------------
+/// @name Initializing a CCActionFlipX Object
+/// -----------------------------------------------------------------------
+
+/**
+ *  Initializes a flip action with x direction flipped or non flipped.
+ *
+ *  @param x Defines if target is flipped.
+ *
+ *  @return An initialized flip action object.
+ */
+- (id)initWithFlipX:(BOOL)x;
 
 @end
 
-// -----------------------------------------------------------------
-/** @name CCActionFlipY */
 
 /** 
- *  Flips the target in y direction.
+ *  This action will lips the target in y direction.
  */
-@interface CCActionFlipY : CCActionInstant
-{
+@interface CCActionFlipY : CCActionInstant {
 	BOOL	_flipY;
 }
 
+
+/// -----------------------------------------------------------------------
+/// @name Creating a CCActionFlipY Object
+/// -----------------------------------------------------------------------
+
 /**
- *  Creates a flip action with y direction flipped or non flipped
+ *  Creates a flip action with y direction flipped or non flipped.
  *
- *  @param y Defines if target is flipped
+ *  @param y Defines if target is flipped.
  *
- *  @return New flip action
+ *  @return The flip action object.
  */
-+(id) actionWithFlipY:(BOOL)y;
++ (id)actionWithFlipY:(BOOL)y;
+
+
+/// -----------------------------------------------------------------------
+/// @name Initializing a CCActionFlipY Object
+/// -----------------------------------------------------------------------
 
 /**
  *  Initializes a flip action with y direction flipped or non flipped
  *
  *  @param y Defines if target is flipped
  *
- *  @return New flip action
+ *  @return The initialized flip action object.
  */
--(id) initWithFlipY:(BOOL)y;
+- (id)initWithFlipY:(BOOL)y;
 
 @end
 
-// -----------------------------------------------------------------
-/** @name CCActionPlace */
 
 /** 
- *  Places the target in a certain position
+ *  This action will teleport a target to the specififed position.
  */
-@interface CCActionPlace : CCActionInstant <NSCopying>
-{
+@interface CCActionPlace : CCActionInstant <NSCopying> {
 	CGPoint _position;
 }
 
-/**
- *  Creates a place action
- *
- *  @param pos The position the target is placed at
- *
- *  @return New place action
- */
-+(id) actionWithPosition: (CGPoint) pos;
+
+/// -----------------------------------------------------------------------
+/// @name Creating a CCActionPlace Object
+/// -----------------------------------------------------------------------
 
 /**
- *  Initializes a place action
+ *  Creates a place action using the specified position.
+ *
+ *  @param pos The position the target is placed at.
+ *
+ *  @return The place action object.
+ */
++ (id)actionWithPosition:(CGPoint)pos;
+
+
+/// -----------------------------------------------------------------------
+/// @name Initializing a CCActionPlace Object
+/// -----------------------------------------------------------------------
+
+/**
+ *  Initializes a place action using the specified position.
  *
  *  @param pos The position the target is placed at
  *
- *  @return New place action
+ *  @return An initialized place action object.
  */
--(id) initWithPosition: (CGPoint) pos;
+- (id)initWithPosition:(CGPoint)pos;
 
 @end
 
-// -----------------------------------------------------------------
-/** @name CCActionCallFunc */
 
-/** 
- *  Calls a selector on a specific target
+/**
+ *  This action allows a custom function to be called.
  */
-@interface CCActionCallFunc : CCActionInstant <NSCopying>
-{
+@interface CCActionCallFunc : CCActionInstant <NSCopying> {
 	id _targetCallback;
 	SEL _selector;
 }
 
-/** 
- *  Target that will be called 
- */
+/** Target function that will be called. */
 @property (nonatomic, readwrite, strong) id targetCallback;
+
+
+/// -----------------------------------------------------------------------
+/// @name Creating a CCActionCallFunc Object
+/// -----------------------------------------------------------------------
 
 /**
  *  Creates the action with the callback.
  *
- *  @param t Target the selector is sent to
- *  @param s Selector to execute
+ *  @param t Target the selector is sent to.
+ *  @param s Selector to execute.
  *
- *  @return New call func action
+ *  @return The call func action object.
  */
-+(id) actionWithTarget: (id) t selector:(SEL) s;
++ (id)actionWithTarget:(id)t selector:(SEL)s;
+
+
+/// -----------------------------------------------------------------------
+/// @name Initializing a CCActionCallFunc Object
+/// -----------------------------------------------------------------------
 
 /**
  *  Initializes the action with the callback.
@@ -226,53 +235,54 @@
  *  @param t Target the selector is sent to
  *  @param s Selector to execute
  *
- *  @return New call func action
+ *  @return An initialized call func action object.
  */
--(id) initWithTarget: (id) t selector:(SEL) s;
+- (id)initWithTarget:(id)t selector:(SEL)s;
 
-/**
- *  Executes the selector on the specific target
- */
--(void) execute;
+// Executes the selector on the specific target.
+- (void)execute;
 
 @end
 
-#pragma mark Blocks Support
-
-// -----------------------------------------------------------------
-/** @name CCActionCallBlock */
 
 /** 
- *  Executes a callback using a block.
+ *  This actions executes a code block.
  */
-@interface CCActionCallBlock : CCActionInstant<NSCopying>
-{
+@interface CCActionCallBlock : CCActionInstant<NSCopying> {
 	void (^_block)();
 }
+
+
+/// -----------------------------------------------------------------------
+/// @name Creating a CCActionCallBlock Object
+/// -----------------------------------------------------------------------
 
 /**
  *  Creates the action with the specified block, to be used as a callback.
  *  The block will be "copied".
  *
- *  @param block Block to execute
+ *  @param block Block to execute.
  *
- *  @return New call block action
+ *  @return The call block action object.
  */
-+(id) actionWithBlock:(void(^)())block;
++ (id)actionWithBlock:(void(^)())block;
+
+
+/// -----------------------------------------------------------------------
+/// @name Initializing a CCActionCallBlock Object
+/// -----------------------------------------------------------------------
 
 /**
  *  Initializes the action with the specified block, to be used as a callback.
  *  The block will be "copied".
  *
- *  @param block Block to execute
+ *  @param block Block to execute.
  *
- *  @return New call block action
+ *  @return An initialized call block action object.
  */
--(id) initWithBlock:(void(^)())block;
+- (id)initWithBlock:(void(^)())block;
 
-/**
- *  Executes the block
- */
--(void) execute;
+// Executes the selector on the specific target.
+- (void)execute;
 
 @end
