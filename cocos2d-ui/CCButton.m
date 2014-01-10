@@ -355,6 +355,10 @@
     [super setScaleY:scaleY];
 }
 
+- (void)setColor:(CCColor *)color {
+    [self setLabelColor:color forState:CCControlStateNormal];
+}
+
 - (void) setLabelColor:(CCColor*)color forState:(CCControlState)state
 {
     [_labelColors setObject:color forKey:[NSNumber numberWithInt:state]];
