@@ -666,6 +666,7 @@ GLToClipTransform(kmMat4 *transformOut)
     if ([_runningScene isKindOfClass:[CCTransition class]])
     {
         [_runningScene onExit];
+				[_runningScene cleanup];
         _runningScene = nil;
         _runningScene = _nextScene;
         _nextScene = nil;
