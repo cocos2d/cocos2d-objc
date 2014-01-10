@@ -595,6 +595,18 @@ GLToClipTransform(kmMat4 *transformOut)
 
 // -----------------------------------------------------------------
 
+- (void)startTransition:(CCTransition *)transition
+{
+	NSAssert(transition, @"Argument must be non-nil");
+    NSAssert(_runningScene, @"There must be a running scene");
+    
+    [_scenesStack removeLastObject];
+    [_scenesStack addObject:transition];
+    _nextScene = transition;
+}
+
+// -----------------------------------------------------------------
+
 -(void) end
 {
 	[_runningScene onExitTransitionDidStart];
@@ -686,8 +698,8 @@ GLToClipTransform(kmMat4 *transformOut)
     // if running scene is not a transition, force enter calls
 	if (![_runningScene isKindOfClass:[CCTransition class]])
     {
-		[_runningScene onEnterTransitionDidFinish];
 		[_runningScene onEnter];
+		[_runningScene onEnterTransitionDidFinish];
 	}
 }
 

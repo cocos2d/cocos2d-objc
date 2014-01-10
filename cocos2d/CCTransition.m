@@ -206,7 +206,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     [self renderIncoming:0];
     
     // switch to transition scene
-    [[CCDirector sharedDirector] replaceScene:self];
+    [[CCDirector sharedDirector] performSelector:@selector(startTransition:) withObject:self];
 }
 
 // -----------------------------------------------------------------
