@@ -119,6 +119,17 @@
         _background = [[CCSprite9Slice alloc] init];
     }
     
+    if (highlighted)
+    {
+        [self setBackgroundSpriteFrame:highlighted forState:CCControlStateHighlighted];
+        [self setBackgroundSpriteFrame:highlighted forState:CCControlStateSelected];
+    }
+    
+    if (disabled)
+    {
+        [self setBackgroundSpriteFrame:disabled forState:CCControlStateDisabled];
+    }
+    
     [self addChild:_background z:0];
     
     // Setup label
