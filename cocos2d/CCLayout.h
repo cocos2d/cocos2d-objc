@@ -31,8 +31,7 @@
  
  CCLayout is an abstract super class of all layouts. You should subclass this class and implement the layout method if you want to create your own layout.
  */
-@interface CCLayout : CCNode
-{
+@interface CCLayout : CCNode {
     BOOL _needsLayout;
 }
 

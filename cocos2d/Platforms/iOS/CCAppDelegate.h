@@ -22,23 +22,25 @@ NSString* const CCSetupShowDebugStats;
 NSString* const CCSetupTabletScale2X;
 
 
-/// Landscape screen orientation. Used with CCSetupScreenOrientation.
+// Landscape screen orientation. Used with CCSetupScreenOrientation.
 NSString* const CCScreenOrientationLandscape;
-/// Portrait screen orientation.  Used with CCSetupScreenOrientation.
+
+// Portrait screen orientation.  Used with CCSetupScreenOrientation.
 NSString* const CCScreenOrientationPortrait;
 
 
-/// The flexible screen mode is Cocos2d's default. It will give you an area that can vary slightly in size. In landscape mode the height will be 320 points for mobiles and 384 points for tablets. The width of the area can vary from 480 to 568 points.
+// The flexible screen mode is Cocos2d's default. It will give you an area that can vary slightly in size. In landscape mode the height will be 320 points for mobiles and 384 points for tablets. The width of the area can vary from 480 to 568 points.
 NSString* const CCScreenModeFlexible;
-/// The fixed screen mode will setup the working area to be 568 x 384 points. Depending on the device, the outer edges may be cropped. The safe area, that will be displayed on all sorts of devices, is 480 x 320 points and placed in the center of the working area.
+
+// The fixed screen mode will setup the working area to be 568 x 384 points. Depending on the device, the outer edges may be cropped. The safe area, that will be displayed on all sorts of devices, is 480 x 320 points and placed in the center of the working area.
 NSString* const CCScreenModeFixed;
 
 
 @class CCAppDelegate;
 @class CCScene;
 
-@interface CCNavigationController : UINavigationController <CCDirectorDelegate>
-{
+
+@interface CCNavigationController : UINavigationController <CCDirectorDelegate> {
 }
 @end
 

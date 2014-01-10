@@ -31,7 +31,7 @@
 @class CCTiledMapObjectGroup;
 
 /**
- *  CCTMXObjectGroup represents the TMX object group.
+ *  CCTiledMapObjectGroup represents the tile map object group.
  */
 @interface CCTiledMapObjectGroup : NSObject {
 

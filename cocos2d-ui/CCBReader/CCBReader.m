@@ -762,7 +762,7 @@ static inline float readFloat(CCBReader *self)
         
         value = [CCColor colorWithRed:r green:g blue:b alpha:a];
     }
-    else if (type == kCCBPropTypeDegrees)
+    else if (type == kCCBPropTypeDegrees || type == kCCBPropTypeFloat)
     {
         value = [NSNumber numberWithFloat:readFloat(self)];
     }
