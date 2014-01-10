@@ -133,8 +133,8 @@ static CCTextureCache *sharedTextureCache;
 	_auxGLcontext = nil;
 	sharedTextureCache = nil;
     
-	dispatch_release(_loadingQueue);
-	dispatch_release(_dictQueue);
+	// dispatch_release(_loadingQueue);
+	// dispatch_release(_dictQueue);
     
 }
 

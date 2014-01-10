@@ -113,7 +113,7 @@ typedef NS_ENUM(NSInteger, CCTransitionDirection)
  *
  *  @return The CCTransition Object.
  */
-+(CCTransition *) transitionCrossFadeWithDuration:(NSTimeInterval)duration;
++ (CCTransition *)transitionCrossFadeWithDuration:(NSTimeInterval)duration;
 
 /**
  *  Creates a fade transition from outgoing to incoming scene, through color.
@@ -123,7 +123,7 @@ typedef NS_ENUM(NSInteger, CCTransitionDirection)
  *
  *  @return The CCTransition Object.
  */
-+(CCTransition *) transitionFadeWithColor:(CCColor*)color duration:(NSTimeInterval)duration;
++ (CCTransition *)transitionFadeWithColor:(CCColor*)color duration:(NSTimeInterval)duration;
 
 /**
  *  Creates a fade transition from outgoing to incoming scene, through black.
@@ -132,7 +132,7 @@ typedef NS_ENUM(NSInteger, CCTransitionDirection)
  *
  *  @return The CCTransition Object.
  */
-+(CCTransition *) transitionFadeWithDuration:(NSTimeInterval)duration;
++ (CCTransition *)transitionFadeWithDuration:(NSTimeInterval)duration;
 
 /**
  *  Creates a transition where the incoming scene is moved in over the outgoing scene.
@@ -142,7 +142,7 @@ typedef NS_ENUM(NSInteger, CCTransitionDirection)
  *
  *  @return The CCTransition Object.
  */
-+(CCTransition *) transitionMoveInWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration;
++ (CCTransition *)transitionMoveInWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration;
 
 /**
  *  Creates a transition where the incoming scene pushed the outgoing scene out.
@@ -162,6 +162,6 @@ typedef NS_ENUM(NSInteger, CCTransitionDirection)
  *
  *  @return The CCTransition Object.
  */
-+(CCTransition *) transitionRevealWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration;
++ (CCTransition *)transitionRevealWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration;
 
 @end

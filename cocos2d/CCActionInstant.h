@@ -29,21 +29,13 @@
 //
 // Base class for instant actions, e.g. they are performed immediately.
 //
-@interface CCActionInstant : CCActionFiniteTime <NSCopying> {
-}
-
-// Needed for BridgeSupport.
-- (id)init;
+@interface CCActionInstant : CCActionFiniteTime <NSCopying>
 
 @end
 
 
 /** This action will remove the target from its parent node. */
-@interface CCActionRemove : CCActionInstant {
-}
-
-// Needed for BridgeSupport.
-- (void)update:(CCTime)time;
+@interface CCActionRemove : CCActionInstant
 
 @end
 
@@ -51,11 +43,7 @@
 /** 
  *  This action will make the target visible.
  */
-@interface CCActionShow : CCActionInstant {
-}
-
-// Needed for BridgeSupport.
-- (void)update:(CCTime)time;
+@interface CCActionShow : CCActionInstant
 
 @end
 
@@ -63,11 +51,7 @@
 /** 
  *  This action will hide the target.
  */
-@interface CCActionHide : CCActionInstant {
-}
-
-// Needed for BridgeSupport
-- (void)update:(CCTime)time;
+@interface CCActionHide : CCActionInstant
 
 @end
 
@@ -75,11 +59,7 @@
 /** 
  *  This action toggles the target's visibility.
  */
-@interface CCActionToggleVisibility : CCActionInstant {
-}
-
-// Needed for BridgeSupport
-- (void)update:(CCTime)time;
+@interface CCActionToggleVisibility : CCActionInstant
 
 @end
 

@@ -377,6 +377,6 @@ By default physics bodies collide with all other physics bodies. Since 2D games 
 @property(nonatomic, assign) BOOL sleeping;
 
 /** The CCNode to which this physics body is attached. */
-@property(nonatomic, readonly) CCNode *node;
+@property(nonatomic, readonly, weak) CCNode *node;
 
 @end
