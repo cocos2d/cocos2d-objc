@@ -35,8 +35,7 @@
 {
     // Apple recommend assigning self with supers return value
     self = [super init];
-    // Crash if basic initialization for some reason failed
-    NSAssert(self, @"Unable to create class HelloWorldScene");
+    if (!self) return(nil);
     
     // Enable touch handling on scene node
     self.userInteractionEnabled = YES;
