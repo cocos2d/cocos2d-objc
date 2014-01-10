@@ -50,12 +50,12 @@
 	CCTiledMapTilesetInfo	*_tileset;
 	NSString                *_layerName;
 	CGSize                  _layerSize;
-	CGSize                  _mapTileSize; // TODO in pixels or points?
+	CGSize                  _mapTileSize; // TODO: in pixels or points?
 	uint32_t                *_tiles;
 	NSUInteger              _layerOrientation;
 	NSMutableDictionary     *_properties;
     
-    // TMX Layer Opacity
+    // TMX Layer Opacity.
 	unsigned char           _opacity;
 
     // GID Range

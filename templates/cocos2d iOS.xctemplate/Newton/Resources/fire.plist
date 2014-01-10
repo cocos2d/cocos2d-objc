@@ -15,7 +15,7 @@
 	<key>// max particles</key>
 	<string></string>
 	<key>maxParticles</key>
-	<string>50</string>
+	<string>75</string>
 	<key>// life</key>
 	<string></string>
 	<key>particleLifespan</key>
@@ -69,7 +69,7 @@
 	<key>finishColorBlue</key>
 	<string>0</string>
 	<key>finishColorAlpha</key>
-	<string>0.75</string>
+	<string>0.50</string>
 	<key>finishColorVarianceRed</key>
 	<string>0</string>
 	<key>finishColorVarianceGreen</key>
@@ -105,13 +105,13 @@
 	<key>rotationStart</key>
 	<string>0</string>
 	<key>rotationStartVariance</key>
-	<string>360</string>
+	<string>90</string>
 	<key>// end rotation</key>
 	<string></string>
-	<key>- rotationEnd</key>
+	<key>rotationEnd</key>
 	<string>0</string>
-	<key>- rotationEndVariance</key>
-	<string>360</string>
+	<key>rotationEndVariance</key>
+	<string>180</string>
 	<key>// emitter type</key>
 	<string></string>
 	<key>// 0 = gravity</key>
