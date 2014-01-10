@@ -53,6 +53,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     __strong CCScene *_outgoingScene;
     CCRenderTexture *_incomingTexture;
     CCRenderTexture *_outgoingTexture;
+    BOOL _incomingPauseState;
     //
     CCTransitionFixedFunction _fixedFunction;
     CCTransitionDirection _direction;
@@ -178,8 +179,12 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 {
     _incomingScene = scene;
     [_incomingScene onEnter];
+    _incomingPauseState = _incomingScene.paused;
+    _incomingScene.paused = _incomingScene.paused || !_incomingSceneAnimated;
+    
     _outgoingScene = [CCDirector sharedDirector].runningScene;
     [_outgoingScene onExitTransitionDidStart];
+    _outgoingScene.paused = _outgoingScene.paused || !_outgoingSceneAnimated;
 
     // create render textures
     // get viewport size
@@ -233,6 +238,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
         if ([CCDirector sharedDirector].sendCleanupToScene) [_outgoingScene cleanup];
         [[CCDirector sharedDirector] replaceScene:_incomingScene];
         [_incomingScene onEnterTransitionDidFinish];
+        _incomingScene.paused = _incomingPauseState;
         
         // release scenes
         _incomingScene = nil;
@@ -242,8 +248,16 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     }
     
     // render the scenes
-    if (_incomingSceneAnimated) [self renderIncoming:_progress];
-    if (_outgoingSceneAnimated) [self renderOutgoing:_progress];
+    if (_incomingSceneAnimated)
+    {
+        
+        [self renderIncoming:_progress];
+    }
+    if (_outgoingSceneAnimated)
+    {
+     
+        [self renderOutgoing:_progress];
+    }
 }
 
 // -----------------------------------------------------------------

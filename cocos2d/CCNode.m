@@ -1207,6 +1207,11 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	return (_isInActiveScene && !_paused && _pausedAncestors == 0);
 }
 
+- (BOOL)paused
+{
+    return(_paused);
+}
+
 -(void)setPaused:(BOOL)paused
 {
 	if(_paused != paused){
