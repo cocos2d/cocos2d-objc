@@ -419,6 +419,11 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 
 //MARK: Debug Drawing:
 
+const cpSpaceDebugColor CC_PHYSICS_SHAPE_DEBUG_FILL_COLOR = {1.0, 0.0, 0.0, 0.25};
+const cpSpaceDebugColor CC_PHYSICS_SHAPE_DEBUG_OUTLINE_COLOR = {1.0, 1.0, 1.0, 0.5};
+const cpSpaceDebugColor CC_PHYSICS_SHAPE_JOINT_COLOR = {0.0, 1.0, 0.0, 0.5};
+const cpSpaceDebugColor CC_PHYSICS_SHAPE_COLLISION_COLOR = {1.0, 0.0, 0.0, 0.5};
+
 -(BOOL)debugDraw {return (_debugDraw != nil);}
 -(void)setDebugDraw:(BOOL)debugDraw
 {
@@ -454,7 +459,7 @@ DrawDot(cpFloat size, cpVect pos, cpSpaceDebugColor color, CCDrawNode *draw)
 
 static cpSpaceDebugColor
 ColorForShape(cpShape *shape, CCDrawNode *draw)
-{return (cpSpaceDebugColor){0.8, 0.0, 0.0, 0.125};}
+{return CC_PHYSICS_SHAPE_DEBUG_FILL_COLOR;}
 
 -(void)draw
 {
@@ -469,10 +474,10 @@ ColorForShape(cpShape *shape, CCDrawNode *draw)
 		
 		CP_SPACE_DEBUG_DRAW_SHAPES | CP_SPACE_DEBUG_DRAW_CONSTRAINTS | CP_SPACE_DEBUG_DRAW_COLLISION_POINTS,
 		
-		{1.0, 1.0, 1.0, 0.25},
+		CC_PHYSICS_SHAPE_DEBUG_OUTLINE_COLOR,
 		(cpSpaceDebugDrawColorForShapeImpl)ColorForShape,
-		{0.0, 1.0, 0.0, 0.25},
-		{1.0, 0.0, 0.0, 0.25},
+		CC_PHYSICS_SHAPE_JOINT_COLOR,
+		CC_PHYSICS_SHAPE_COLLISION_COLOR,
 		_debugDraw,
 	};
 	
