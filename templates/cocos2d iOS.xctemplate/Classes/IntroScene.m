@@ -10,6 +10,7 @@
 // Import the interfaces
 #import "IntroScene.h"
 #import "HelloWorldScene.h"
+#import "NewtonScene.h"
 
 // -----------------------------------------------------------------------
 #pragma mark - IntroScene
@@ -32,8 +33,7 @@
 {
     // Apple recommend assigning self with supers return value
     self = [super init];
-    // Crash if basic initialization for some reason failed
-    NSAssert(self, @"Unable to create class IntroScene");
+    if (!self) return(nil);
     
     // Create a colored background (Dark Grey)
     CCNodeColor *background = [CCNodeColor nodeWithColor:[CCColor colorWithRed:0.2f green:0.2f blue:0.2f alpha:1.0f]];
@@ -46,13 +46,19 @@
     label.position = ccp(0.5f, 0.5f); // Middle of screen
     [self addChild:label];
     
+    // Spinning scene button
+    CCButton *spinningButton = [CCButton buttonWithTitle:@"[ Spinning ]" fontName:@"Verdana-Bold" fontSize:18.0f];
+    spinningButton.positionType = CCPositionTypeNormalized;
+    spinningButton.position = ccp(0.5f, 0.35f);
+    [spinningButton setTarget:self selector:@selector(onSpinningClicked:)];
+    [self addChild:spinningButton];
+
     // Next scene button
-    CCButton *nextButton = [CCButton buttonWithTitle:@"[ Next ]" fontName:@"Verdana-Bold" fontSize:18.0f];
-    nextButton.positionType = CCPositionTypeNormalized;
-    nextButton.position = ccp(0.5f, 0.25f); // Middle Horizonta, 1/4 up vertical
-    
-    [nextButton setTarget:self selector:@selector(onNextClicked:)];
-    [self addChild:nextButton];
+    CCButton *newtonButton = [CCButton buttonWithTitle:@"[ Newton ]" fontName:@"Verdana-Bold" fontSize:18.0f];
+    newtonButton.positionType = CCPositionTypeNormalized;
+    newtonButton.position = ccp(0.5f, 0.20f);
+    [newtonButton setTarget:self selector:@selector(onNewtonClicked:)];
+    [self addChild:newtonButton];
 	
     // done
 	return self;
@@ -62,11 +68,19 @@
 #pragma mark - Button Callbacks
 // -----------------------------------------------------------------------
 
-- (void)onNextClicked:(id)sender
+- (void)onSpinningClicked:(id)sender
 {
-    // start main scene with transition
+    // start spinning scene with transition
     [[CCDirector sharedDirector] replaceScene:[HelloWorldScene scene]
                                withTransition:[CCTransition transitionPushWithDirection:CCTransitionDirectionLeft duration:1.0f]];
+}
+
+- (void)onNewtonClicked:(id)sender
+{
+    // start newton scene with transition
+    // the current scene is pushed, and thus needs popping to be brought back. This is done in the newton scene, when pressing back (upper left corner)
+    [[CCDirector sharedDirector] pushScene:[NewtonScene scene]
+                            withTransition:[CCTransition transitionPushWithDirection:CCTransitionDirectionLeft duration:1.0f]];
 }
 
 // -----------------------------------------------------------------------
