@@ -293,7 +293,7 @@ if $INSTALL ; then
 	copy_files "external/Chipmunk_download/Chipmunk/objectivec/src" "$LIBS_DIR/Chipmunk/objectivec"
 	copy_files "external/Chipmunk_download/Chipmunk/include" "$LIBS_DIR/Chipmunk/chipmunk"
 	copy_files "external/Chipmunk_download/Chipmunk/src" "$LIBS_DIR/Chipmunk/chipmunk"
-	copy_files "external/Chipmunk_download/Chipmunk/LICENSE.txt" "$LIBS_DIR/Chipmunk"
+	copy_files "LICENSE_Chipmunk.txt" "$LIBS_DIR"
 	rm -rf "${DOWNLOAD_DIR}" 1>/dev/null 2>>"${ERROR_LOG}"
     check_status
 	printf " ${GREEN}✔${COLOREND}\n"

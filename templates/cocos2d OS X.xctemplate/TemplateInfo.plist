@@ -38,6 +38,10 @@
 			<string>Supporting Files</string>
 			<key>Path</key>
 			<string>Supporting Files/main.m</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
 		</dict>
 		<key>Classes/HelloWorldLayer.h</key>
 		<dict>
@@ -54,6 +58,10 @@
 			<string>Classes</string>			
 			<key>Path</key>
 			<string>Classes/HelloWorldLayer.m</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
 		</dict>
 		<key>Classes/AppDelegate.h</key>
 		<dict>
@@ -70,6 +78,10 @@
 			<string>Classes</string>			
 			<key>Path</key>
 			<string>Classes/AppDelegate.m</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
 		</dict>
 	</dict>
 	<key>Nodes</key>
