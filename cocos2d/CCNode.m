@@ -73,7 +73,6 @@
 
 // Suppress automatic ivar creation.
 @dynamic runningInActiveScene;
-@dynamic paused;
 
 static inline
 CCPhysicsBody *
@@ -622,13 +621,10 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 static void
 RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 {
-	NSArray *children = node->_children;
-	for(NSUInteger i=0, count=children.count; i<count; i++){
-		CCNode *child = children[i];
-		
-		BOOL wasRunning = node.runningInActiveScene;
+	for(CCNode *child in node->_children){
+		BOOL wasRunning = child.runningInActiveScene;
 		child->_pausedAncestors += increment;
-		[node wasRunning:wasRunning];
+		[child wasRunning:wasRunning];
 		
 		RecursivelyIncrementPausedAncestors(child, increment);
 	}
@@ -1205,11 +1201,6 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 -(BOOL)isRunningInActiveScene
 {
 	return (_isInActiveScene && !_paused && _pausedAncestors == 0);
-}
-
-- (BOOL)paused
-{
-    return(_paused);
 }
 
 -(void)setPaused:(BOOL)paused
