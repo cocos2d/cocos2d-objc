@@ -174,7 +174,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 
 // -----------------------------------------------------------------
 
-- (void)replaceScene:(CCScene *)scene
+- (void)startTransition:(CCScene *)scene
 {
     _incomingScene = scene;
     [_incomingScene onEnter];
