@@ -90,7 +90,6 @@
                                  disabledSpriteFrame:[CCSpriteFrame frameWithImageNamed:@"fire.off.png"]];
     fireButton.positionType = CCPositionTypeNormalized;
     fireButton.position = NewtonButtonFirePosition;
-    fireButton.zoomWhenHighlighted = YES;
     [fireButton setTarget:self selector:@selector(onFireClicked:)];
     [self addChild:fireButton];
     
