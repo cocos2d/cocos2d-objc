@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A04A1FEA13B826B300ABAFB7"
-               BuildableName = "libkazmath.a"
-               BlueprintName = "kazmath"
+               BlueprintIdentifier = "5018F24C0DFDEAC400C013A5"
+               BuildableName = "libcocos2d.a"
+               BlueprintName = "cocos2d"
                ReferencedContainer = "container:cocos2d-ios.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
