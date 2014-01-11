@@ -130,7 +130,19 @@ static char * glExtensions;
 {
 	NSInteger ret=-1;
 	
-#ifdef __CC_PLATFORM_IOS
+#if defined(APPORTABLE)
+    if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+	{
+		ret = ([UIScreen mainScreen].scale > 1) ? CCDeviceiPadRetinaDisplay : CCDeviceiPad;
+	}
+	else if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone )
+	{
+		if( [UIScreen mainScreen].scale > 1 ) {
+			ret = CCDeviceiPhoneRetinaDisplay;
+		} else
+			ret = CCDeviceiPhone;
+	}
+#elif defined(__CC_PLATFORM_IOS)
 	
 	if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 	{
