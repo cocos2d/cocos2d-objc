@@ -67,7 +67,7 @@
 	float chroma = saturation * brightness;
 	float hueSection = hue / 60.0f;
 	float X = chroma *  (1.0f - ABS(fmod(hueSection, 2.0f) - 1.0f));
-	ccColor4F rgb;
+	ccColor4F rgb = (ccColor4F){};
 
 	if(hueSection < 1.0) {
 		rgb.r = chroma;
@@ -144,9 +144,10 @@
 - (CCColor*) initWithUIColor:(UIColor *)color
 {
     self = [super init];
-    if (!self) return NULL;
+    if (!self) return self;
     
-    CGColorSpaceModel csModel = CGColorSpaceGetModel(CGColorGetColorSpace(self.CGColor));
+    CGColorRef colorRef = self.CGColor;
+    CGColorSpaceModel csModel = CGColorSpaceGetModel(CGColorGetColorSpace(colorRef));
     if (csModel == kCGColorSpaceModelRGB)
     {
         [color getRed:&_r green:&_g blue:&_b alpha:&_a];
@@ -164,6 +165,7 @@
     {
         NSAssert(NO, @"UIColor has unsupported color space model");
     }
+    CGColorRelease(colorRef);
     
     return self;
 }
