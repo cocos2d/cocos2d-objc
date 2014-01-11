@@ -811,7 +811,7 @@ static inline float readFloat(CCBReader *self)
     Class class = NSClassFromString(className);
     if (!class)
     {
-        NSLog(@"CCBReader: Could not create class of type %@",className);
+        NSAssert(false,@"CCBReader: Could not create class of type %@",className);
         return NULL;
     }
     CCNode* node = [[class alloc] init];
