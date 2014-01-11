@@ -254,6 +254,9 @@
 -(id) initWithTarget: (id) t selector:(SEL) s
 {
 	if( (self=[super init]) ) {
+        
+        NSAssert(t == nil || [t respondsToSelector:s], @"target cannot perform selector %@.",        NSStringFromSelector(s));
+        
 		self.targetCallback = t;
 		_selector = s;
 	}
