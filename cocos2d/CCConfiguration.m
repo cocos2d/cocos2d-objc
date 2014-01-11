@@ -76,12 +76,7 @@ static char * glExtensions;
 #elif defined(__CC_PLATFORM_MAC)
 - (NSString*)getMacVersion
 {
-    SInt32 versionMajor, versionMinor, versionBugFix;
-	Gestalt(gestaltSystemVersionMajor, &versionMajor);
-	Gestalt(gestaltSystemVersionMinor, &versionMinor);
-	Gestalt(gestaltSystemVersionBugFix, &versionBugFix);
-
-	return [NSString stringWithFormat:@"%d.%d.%d", versionMajor, versionMinor, versionBugFix];
+    return([[NSProcessInfo processInfo] operatingSystemVersionString]);
 }
 #endif // __CC_PLATFORM_MAC
 

@@ -46,6 +46,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		A6FCD02218816B09009CDEED /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B78AE62A17E7B2DE0028BE0B /* cocos2d-osx.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D37EE9FC187D4E7700CB5EF2;
+			remoteInfo = ObjectiveChipmunk;
+		};
 		B78AE63017E7B2DE0028BE0B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B78AE62A17E7B2DE0028BE0B /* cocos2d-osx.xcodeproj */;
@@ -121,7 +128,7 @@
 		B7EE6A2F181B285700B983FE /* CCSliderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSliderTest.m; path = "cocos2d-ui-tests/tests/CCSliderTest.m"; sourceTree = SOURCE_ROOT; };
 		D389410D18639CC900725CFC /* CCPhysicsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCPhysicsTest.m; path = "cocos2d-ui-tests/tests/CCPhysicsTest.m"; sourceTree = SOURCE_ROOT; };
 		D389412F18639E4500725CFC /* libObjectiveChipmunk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libObjectiveChipmunk.a; path = DerivedData/cocos2d/Build/Products/Debug/libObjectiveChipmunk.a; sourceTree = "<group>"; };
-		D389413118639E5000725CFC /* libChipmunk.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libChipmunk.a; path = external/Chipmunk/xcode/build/Debug/libChipmunk.a; sourceTree = "<group>"; };
+		D389413118639E5000725CFC /* libChipmunk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libChipmunk.a; path = external/Chipmunk/xcode/build/Debug/libChipmunk.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -237,6 +244,7 @@
 			children = (
 				B78AE63117E7B2DE0028BE0B /* libcocos2d.a */,
 				B78AE63317E7B2DE0028BE0B /* libkazmath.a */,
+				A6FCD02318816B09009CDEED /* libObjectiveChipmunk.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -341,6 +349,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		A6FCD02318816B09009CDEED /* libObjectiveChipmunk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libObjectiveChipmunk.a;
+			remoteRef = A6FCD02218816B09009CDEED /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		B78AE63117E7B2DE0028BE0B /* libcocos2d.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -508,10 +523,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "cocos2d-ui-tests/osx/Prefix.pch";
 				INFOPLIST_FILE = "cocos2d-ui-tests/osx/Resources/Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/slembcke/Development/cocos2d-iphone/DerivedData/cocos2d/Build/Products/Debug",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-lz",
 					"-lsqlite3",
@@ -532,10 +544,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "cocos2d-ui-tests/osx/Prefix.pch";
 				INFOPLIST_FILE = "cocos2d-ui-tests/osx/Resources/Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/slembcke/Development/cocos2d-iphone/DerivedData/cocos2d/Build/Products/Debug",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-lz",
 					"-lsqlite3",
