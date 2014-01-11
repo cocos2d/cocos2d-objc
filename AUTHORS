@@ -5,8 +5,53 @@ cocos2d for iPhone wouldn't be possible without the help of the community who is
 constantly adding new features, sending patches, opening issues:
 http://www.cocos2d-iphone.org/forum
 
-cocos2d logos by Michael Heald (http://www.fullyillustrated.com)
+cocos2d logos by Sofia Merkulova (http://merkulova.prosite.com)
+Based on original logo by Michael Heald (http://www.fullyillustrated.com)
 
+cocos2d for iPhone 3.0 authors
+------------------------------
+
+Lead Developer:
+    Lars Birkemose (http://thebackfiregames.wordpress.com)
+    
+People and companies, who have contributed, in alphabetical order.
+
+* Andy Korth
+    Co-author of chipmunk (http://howlingmoonsoftware.com/index.php)
+    CCPhysics
+    Countless other contributions
+
+* Apportable (http://www.apportable.com)
+    Making it all happen
+
+* Dominik Hadl
+    Templates, scripts and other ninja stuff
+
+* John Twigg
+    SpriteBuilder integration
+
+* Martin Walsh
+    Most of the new documentation
+    Various bugfixes.
+    Fixing the forums (not related, but worth mentioning)
+    
+* Oleg Osin
+    Apportable integration
+
+* Scott Lembcke
+    Co-author of chipmunk (http://howlingmoonsoftware.com/index.php)
+    CCPhysics
+    Being the unstopable force
+    An incredible number of contributions and suggestions
+
+* Viktor Lidholt
+    All UI classes
+    Coordination and planning
+    Sprite Builder integration
+    Countless other contributions
+
+Thanks to Wangsheng, Shintaro Kaneko, frranck and Yannick Loriot, for various minor contributions.
+Also thanks to those who contributed on git, and took part in the discussions (Ben-G mentioned, but no-one forgotten) even if their suggestions didnt make it to release.
 
 cocos2d for iPhone 2.1 authors
 ------------------------------
