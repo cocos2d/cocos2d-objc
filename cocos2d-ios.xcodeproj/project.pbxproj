@@ -300,7 +300,7 @@
 		D2CB84A9187F80FD006820BE /* vec4.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFCC13B826D800C73E76 /* vec4.c */; };
 		D2CB84AA187F8102006820BE /* mat4stack.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC113B826D800C73E76 /* mat4stack.c */; };
 		D2CB84AB187F8102006820BE /* matrix.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFC213B826D800C73E76 /* matrix.c */; };
-		D2CB84FC187F8191006820BE /* libObjectiveChipmunk-iPhone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2CB84BF187F8127006820BE /* libObjectiveChipmunk-iPhone.a */; };
+		D2CB85251880C782006820BE /* libObjectiveChipmunk-iPhone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2CB851A1880AE9A006820BE /* libObjectiveChipmunk-iPhone.a */; };
 		D33803E318032ECE0072D8FE /* CCPhysicsBody.m in Sources */ = {isa = PBXBuildFile; fileRef = D33803E218032ECE0072D8FE /* CCPhysicsBody.m */; };
 		D33803E618032F390072D8FE /* CCPhysicsNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D33803E518032F390072D8FE /* CCPhysicsNode.m */; };
 		D33803EA180331A90072D8FE /* CCPhysicsJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = D33803E9180331A90072D8FE /* CCPhysicsJoint.m */; };
@@ -338,16 +338,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		D2CB84BE187F8127006820BE /* PBXContainerItemProxy */ = {
+		D2CB85191880AE9A006820BE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = D2CB84AC187F8127006820BE /* Chipmunk7.xcodeproj */;
+			containerPortal = D2CB85151880AE9A006820BE /* Chipmunk7_apportable.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = D309B21317EFE2EF00AA52C8;
 			remoteInfo = "ObjectiveChipmunk-iPhone";
 		};
-		D2CB84FA187F818B006820BE /* PBXContainerItemProxy */ = {
+		D2CB85221880C77E006820BE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = D2CB84AC187F8127006820BE /* Chipmunk7.xcodeproj */;
+			containerPortal = D2CB85151880AE9A006820BE /* Chipmunk7_apportable.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = D309B21217EFE2EF00AA52C8;
 			remoteInfo = "ObjectiveChipmunk-iPhone";
@@ -685,7 +685,7 @@
 		B7EE69DF1819E75700B983FE /* CCLayoutBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLayoutBox.m; sourceTree = "<group>"; };
 		B7EE6A1C181AE34600B983FE /* CCSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCSlider.h; path = "cocos2d-ui/CCSlider.h"; sourceTree = "<group>"; };
 		B7EE6A1D181AE34600B983FE /* CCSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSlider.m; path = "cocos2d-ui/CCSlider.m"; sourceTree = "<group>"; };
-		D2CB84AC187F8127006820BE /* Chipmunk7.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Chipmunk7.xcodeproj; path = external/Chipmunk/xcode/Chipmunk7.xcodeproj; sourceTree = "<group>"; };
+		D2CB85151880AE9A006820BE /* Chipmunk7_apportable.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Chipmunk7_apportable.xcodeproj; path = external/Chipmunk/xcode/Chipmunk7_apportable.xcodeproj; sourceTree = "<group>"; };
 		D33803DC18032E4F0072D8FE /* CCPhysics+ObjectiveChipmunk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCPhysics+ObjectiveChipmunk.h"; sourceTree = "<group>"; };
 		D33803E218032ECE0072D8FE /* CCPhysicsBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsBody.m; sourceTree = "<group>"; };
 		D33803E418032F250072D8FE /* CCPhysicsBody.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPhysicsBody.h; sourceTree = "<group>"; };
@@ -735,7 +735,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D2CB84FC187F8191006820BE /* libObjectiveChipmunk-iPhone.a in Frameworks */,
+				D2CB85251880C782006820BE /* libObjectiveChipmunk-iPhone.a in Frameworks */,
 				D395DB2C183D73A70024997E /* AudioToolbox.framework in Frameworks */,
 				D395DB2B183D739E0024997E /* OpenAL.framework in Frameworks */,
 				D395DB25183D73930024997E /* AVFoundation.framework in Frameworks */,
@@ -813,7 +813,7 @@
 		501756090F335CE900624901 /* external */ = {
 			isa = PBXGroup;
 			children = (
-				D2CB84AC187F8127006820BE /* Chipmunk7.xcodeproj */,
+				D2CB85151880AE9A006820BE /* Chipmunk7_apportable.xcodeproj */,
 				B7705F8A1831A07B0043CC67 /* ObjectAL */,
 				A015BFAB13B826D800C73E76 /* kazmath */,
 				5031650810277785003ACFE7 /* libpng */,
@@ -1397,10 +1397,10 @@
 			name = Layouts;
 			sourceTree = "<group>";
 		};
-		D2CB84AD187F8127006820BE /* Products */ = {
+		D2CB85161880AE9A006820BE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D2CB84BF187F8127006820BE /* libObjectiveChipmunk-iPhone.a */,
+				D2CB851A1880AE9A006820BE /* libObjectiveChipmunk-iPhone.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1682,7 +1682,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				D2CB84FB187F818B006820BE /* PBXTargetDependency */,
+				D2CB85231880C77E006820BE /* PBXTargetDependency */,
 			);
 			name = cocos2d;
 			productName = cocos2d;
@@ -1712,8 +1712,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = D2CB84AD187F8127006820BE /* Products */;
-					ProjectRef = D2CB84AC187F8127006820BE /* Chipmunk7.xcodeproj */;
+					ProductGroup = D2CB85161880AE9A006820BE /* Products */;
+					ProjectRef = D2CB85151880AE9A006820BE /* Chipmunk7_apportable.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -1725,11 +1725,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		D2CB84BF187F8127006820BE /* libObjectiveChipmunk-iPhone.a */ = {
+		D2CB851A1880AE9A006820BE /* libObjectiveChipmunk-iPhone.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libObjectiveChipmunk-iPhone.a";
-			remoteRef = D2CB84BE187F8127006820BE /* PBXContainerItemProxy */;
+			remoteRef = D2CB85191880AE9A006820BE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1893,10 +1893,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		D2CB84FB187F818B006820BE /* PBXTargetDependency */ = {
+		D2CB85231880C77E006820BE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "ObjectiveChipmunk-iPhone";
-			targetProxy = D2CB84FA187F818B006820BE /* PBXContainerItemProxy */;
+			targetProxy = D2CB85221880C77E006820BE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
