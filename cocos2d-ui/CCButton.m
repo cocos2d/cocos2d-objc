@@ -157,10 +157,8 @@
     paddedLabelSize.width += _horizontalPadding * 2;
     paddedLabelSize.height += _verticalPadding * 2;
     
-    CGSize size = paddedLabelSize;
-    
     BOOL shrunkSize = NO;
-    size = [self convertContentSizeToPoints: self.preferredSize type:self.contentSizeType];
+    CGSize size = [self convertContentSizeToPoints: self.preferredSize type:self.contentSizeType];
     
     CGSize maxSize = [self convertContentSizeToPoints:self.maxSize type:self.contentSizeType];
     

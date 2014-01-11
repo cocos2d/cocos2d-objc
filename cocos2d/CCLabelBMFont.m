@@ -135,7 +135,8 @@ void FNTConfigRemoveCache( void )
 
 -(void) purgeFontDefDictionary
 {	
-	tCCFontDefHashElement *current, *tmp;
+	tCCFontDefHashElement *current;
+    tCCFontDefHashElement *tmp;
 	
 	HASH_ITER(hh, _fontDefDictionary, current, tmp) {
 		HASH_DEL(_fontDefDictionary, current);
@@ -483,24 +484,29 @@ void FNTConfigRemoveCache( void )
 	NSAssert( (theString && fntFile) || (theString==nil && fntFile==nil), @"Invalid params for CCLabelBMFont");
 	
 	CCTexture *texture = nil;
+    CCBMFontConfiguration *newConf = nil;
     
 	if( fntFile ) {
-		CCBMFontConfiguration *newConf = FNTConfigLoadFile(fntFile);
+		newConf = FNTConfigLoadFile(fntFile);
 		if(!newConf) {
 			CCLOGWARN(@"cocos2d: WARNING. CCLabelBMFont: Impossible to create font. Please check file: '%@'", fntFile );
 			return nil;
 		}
         
-		_configuration = newConf;
-		_fntFile = [fntFile copy];
-        
-		texture = [[CCTextureCache sharedTextureCache] addImage:_configuration.atlasName];
+		texture = [[CCTextureCache sharedTextureCache] addImage:newConf.atlasName];
         
 	} else
 		texture = [[CCTexture alloc] init];
     
     
 	if ( (self=[super initWithTexture:texture capacity:[theString length]]) ) {
+        
+        if (fntFile)
+        {
+            _configuration = newConf;
+            _fntFile = [fntFile copy];
+        }
+        
 		_width = width;
 		_alignment = alignment;
 
@@ -729,7 +735,7 @@ void FNTConfigRemoveCache( void )
 	totalHeight = _configuration->_commonHeight * quantityOfLines;
 	nextFontPositionY = -(_configuration->_commonHeight - _configuration->_commonHeight*quantityOfLines);
     CGRect rect;
-    ccBMFontDef fontDef;
+    ccBMFontDef fontDef = (ccBMFontDef){};
 	
 	CGFloat contentScale = 1.0/self.texture.contentScale;
 	

@@ -946,8 +946,10 @@ static inline float readFloat(CCBReader *self)
         }
         else if (bodyShape == 1)
         {
-            body = [CCPhysicsBody bodyWithCircleOfRadius:cornerRadius andCenter:points[0]];
+            if (numPoints > 0)
+                body = [CCPhysicsBody bodyWithCircleOfRadius:cornerRadius andCenter:points[0]];
         }
+        NSAssert(body, @"Unknown body shape");
         
         BOOL dynamic = readBool(self);
         BOOL affectedByGravity = readBool(self);
@@ -972,6 +974,7 @@ static inline float readFloat(CCBReader *self)
         
         node.physicsBody = body;
 #endif
+        free(points);
     }
     
     // Read and add children
@@ -981,6 +984,7 @@ static inline float readFloat(CCBReader *self)
         CCNode* child = [self readNodeGraphParent:node];
         [node addChild:child];
     }
+    
     
     return node;
 }
