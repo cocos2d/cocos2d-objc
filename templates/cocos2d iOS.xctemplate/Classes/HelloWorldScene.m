@@ -59,15 +59,7 @@
     backButton.position = ccp(0.85f, 0.95f); // Top Right of screen
     [backButton setTarget:self selector:@selector(onBackClicked:)];
     [self addChild:backButton];
-    
-    // Create a newton button
-    CCButton *newtonButton = [CCButton buttonWithTitle:@"[ Newton ]" fontName:@"Verdana-Bold" fontSize:18.0f];
-    newtonButton.positionType = CCPositionTypeNormalized;
-    newtonButton.position = ccp(0.85f, 0.85f); // Top Right of screen
-    [newtonButton setTarget:self selector:@selector(onNewtonClicked:)];
-    [self addChild:newtonButton];
-    
-    
+
     // done
 	return self;
 }

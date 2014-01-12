@@ -47,14 +47,14 @@
     [self addChild:label];
     
     // Spinning scene button
-    CCButton *spinningButton = [CCButton buttonWithTitle:@"[ Spinning ]" fontName:@"Verdana-Bold" fontSize:18.0f];
+    CCButton *spinningButton = [CCButton buttonWithTitle:@"[ Simple Sprite ]" fontName:@"Verdana-Bold" fontSize:18.0f];
     spinningButton.positionType = CCPositionTypeNormalized;
     spinningButton.position = ccp(0.5f, 0.35f);
     [spinningButton setTarget:self selector:@selector(onSpinningClicked:)];
     [self addChild:spinningButton];
 
     // Next scene button
-    CCButton *newtonButton = [CCButton buttonWithTitle:@"[ Newton ]" fontName:@"Verdana-Bold" fontSize:18.0f];
+    CCButton *newtonButton = [CCButton buttonWithTitle:@"[ Newton Physics ]" fontName:@"Verdana-Bold" fontSize:18.0f];
     newtonButton.positionType = CCPositionTypeNormalized;
     newtonButton.position = ccp(0.5f, 0.20f);
     [newtonButton setTarget:self selector:@selector(onNewtonClicked:)];
