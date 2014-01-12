@@ -46,3 +46,7 @@ Backup[ ]of[ ]*.key/
 Backup[ ]of[ ]*.numbers/
 
 api-docs
+
+installer/install.tar.gz
+installer/*.app
+

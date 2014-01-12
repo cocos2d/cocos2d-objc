@@ -340,7 +340,7 @@ if $INSTALL ; then
 	printf " ${GREEN}✔${COLOREND}\n\n"
 	echo "${UNDER}                                     ${COLOREND}"
 	echo ""
-	echo "${BOLD}Everything installed successfully.${COLOREND}"
+	echo "${BOLD}Templates installed successfully.${COLOREND}"
 	echo "${BOLD}Have fun!${COLOREND}"
 	echo ""
 	
