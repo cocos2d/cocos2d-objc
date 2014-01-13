@@ -13,7 +13,7 @@
 # Variables setup
 # ----------------------------------------------------
 SCRIPT_VER="v0.9.5"
-COCOS2D_VER="cocos2d-v3.0"
+COCOS2D_VER="Cocos2D-v3.0.0.rc"
 COCOS2D_DST_DIR="cocos2d v3.x"
 SCRIPT_DIR="$(dirname $0)"
 
@@ -39,7 +39,7 @@ BOLD=$(tput bold)
 header()
 {
 	echo ""
-	echo "${UNDER}${BOLD}cocos2d template installer (${SCRIPT_VER}, November 2013) by Dominik Hadl and Lars Birkemose${COLOREND}"
+	echo "${UNDER}${BOLD}Cocos2D Template Installer (${COCOS2D_VER})${COLOREND}"
 	echo ""
 }
 
