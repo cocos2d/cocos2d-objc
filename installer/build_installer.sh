@@ -22,7 +22,7 @@ fi
 
 # Tar / Gzip Cocos2D Repositry
 echo "${BOLD}>>> Creating Cocos2D Archive. ${COLOREND}"
-tar -C ../. --exclude='.git' --exclude='installer' -zcf install.tar.gz .
+tar -C ../. --exclude='.git' --exclude='installer' --exclude='build' --exclude='DerivedData' --exclude='api-docs' -zcf install.tar.gz .
 
 # Create Installer
 echo "${BOLD}>>> Building $INSTALL_TARGET_APP Installer Application. ${COLOREND}"
