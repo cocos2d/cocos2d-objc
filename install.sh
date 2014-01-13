@@ -269,7 +269,7 @@ if $INSTALL ; then
 
 	if [[ -d "$SCRIPT_DIR/.git" ]]; then
 		# If this is a git repo, make sure that the Chipmunk submodule is checked out and current.
-		git submodule update
+		git submodule update 1>>"${ERROR_LOG}" 2>>"${ERROR_LOG}"
 		check_status
 	elif [[ ! -d "$SCRIPT_DIR/external/Chipmunk" ]]; then
 		# Not a git repo, download Chipmunk files.
@@ -279,7 +279,7 @@ if $INSTALL ; then
 		check_status
 	
 		echo -n "."
-		curl -L -# "https://github.com/slembcke/Chipmunk2D/archive/master.zip" -o "$DOWNLOAD_DIR/Chipmunk_tarball.zip" 1>/dev/null 2>>"${ERROR_LOG}"
+		curl -L -# "https://github.com/slembcke/Chipmunk2D/archive/Cocos2D-3.0.zip" -o "$DOWNLOAD_DIR/Chipmunk_tarball.zip" 1>/dev/null 2>>"${ERROR_LOG}"
 		check_status
 		echo -n "."
 		if [[ ! -d "${DOWNLOAD_DIR}/Chipmunk/" ]]; then
