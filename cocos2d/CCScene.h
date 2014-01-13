@@ -27,7 +27,14 @@
 
 #import "CCNode.h"
 
-/** CCScene is a subclass of CCNode and must be the parent of all your nodes. */
+/** CCScene is a subclass of CCNode and must be the parent of all your nodes. 
+ 
+ - In previous versions of Cocos2D, CCLayer was used to group nodes placed in a CCScene.
+ - In V3, this is changed, so that a simple CCNode is used in stead.
+ - Touch handling is now pr. node, so no touch setup is needed. Just set userInteractionEnabled.
+ - To reduce the footprint of a scene, when not active, resources can be loaded in onEnter, and released in onExit.
+ 
+ */
 @interface CCScene : CCNode
 
 /// -----------------------------------------------------------------------
