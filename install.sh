@@ -267,35 +267,41 @@ if $INSTALL ; then
 	check_status
 	printf " ${GREEN}✔${COLOREND}\n"
 
-	# Download Chipmunk files
-	echo -n "...downloading Chipmunk files, please wait"
-	DOWNLOAD_DIR="$SCRIPT_DIR/external/Chipmunk_download"
-	mkdir -p "$DOWNLOAD_DIR" 1>/dev/null 2>>"${ERROR_LOG}"
-	check_status
-
-	echo -n "."
-	curl -L -# "https://github.com/slembcke/Chipmunk2D/archive/master.zip" -o "$DOWNLOAD_DIR/Chipmunk_tarball.zip" 1>/dev/null 2>>"${ERROR_LOG}"
-	check_status
-	echo -n "."
-	if [[ ! -d "${DOWNLOAD_DIR}/Chipmunk/" ]]; then
-		mkdir -p "${DOWNLOAD_DIR}/Chipmunk/" 1>/dev/null 2>>"${ERROR_LOG}"
+	if [[ -d "$SCRIPT_DIR/.git" ]]; then
+		# If this is a git repo, make sure that the Chipmunk submodule is checked out and current.
+		git submodule update
 		check_status
+	elif [[ ! -d "$SCRIPT_DIR/external/Chipmunk" ]]; then
+		# Not a git repo, download Chipmunk files.
+		echo -n "...downloading Chipmunk files, please wait"
+		DOWNLOAD_DIR="$SCRIPT_DIR/external"
+		mkdir -p "$DOWNLOAD_DIR" 1>/dev/null 2>>"${ERROR_LOG}"
+		check_status
+	
+		echo -n "."
+		curl -L -# "https://github.com/slembcke/Chipmunk2D/archive/master.zip" -o "$DOWNLOAD_DIR/Chipmunk_tarball.zip" 1>/dev/null 2>>"${ERROR_LOG}"
+		check_status
+		echo -n "."
+		if [[ ! -d "${DOWNLOAD_DIR}/Chipmunk/" ]]; then
+			mkdir -p "${DOWNLOAD_DIR}/Chipmunk/" 1>/dev/null 2>>"${ERROR_LOG}"
+			check_status
+		fi
+		echo -n "."
+		tar -xf "$DOWNLOAD_DIR/Chipmunk_tarball.zip" -C "${DOWNLOAD_DIR}/Chipmunk/" --strip-components=1 1>>"${ERROR_LOG}" 2>>"${ERROR_LOG}"
+		rm "$DOWNLOAD_DIR/Chipmunk_tarball.zip"
+		check_status	
+		printf " ${GREEN}✔${COLOREND}\n"
 	fi
-	echo -n "."
-	tar -xf "$DOWNLOAD_DIR/Chipmunk_tarball.zip" -C "${DOWNLOAD_DIR}/Chipmunk/" --strip-components=1 1>>"${ERROR_LOG}" 2>>"${ERROR_LOG}"
-	check_status	
-	printf " ${GREEN}✔${COLOREND}\n"
 		
 	# Copy Chipmunk files
 	echo -n "...copying Chipmunk files"
 	LIBS_DIR="$DST_DIR/Support/Libraries/lib_chipmunk.xctemplate/Libraries/"
-	copy_files "external/Chipmunk_download/Chipmunk/objectivec/include" "$LIBS_DIR/Chipmunk/objectivec"
-	copy_files "external/Chipmunk_download/Chipmunk/objectivec/src" "$LIBS_DIR/Chipmunk/objectivec"
-	copy_files "external/Chipmunk_download/Chipmunk/include" "$LIBS_DIR/Chipmunk/chipmunk"
-	copy_files "external/Chipmunk_download/Chipmunk/src" "$LIBS_DIR/Chipmunk/chipmunk"
+	copy_files "external/Chipmunk/objectivec/include" "$LIBS_DIR/Chipmunk/objectivec"
+	copy_files "external/Chipmunk/objectivec/src" "$LIBS_DIR/Chipmunk/objectivec"
+	copy_files "external/Chipmunk/include" "$LIBS_DIR/Chipmunk/chipmunk"
+	copy_files "external/Chipmunk/src" "$LIBS_DIR/Chipmunk/chipmunk"
 	copy_files "LICENSE_Chipmunk.txt" "$LIBS_DIR"
-	rm -rf "${DOWNLOAD_DIR}" 1>/dev/null 2>>"${ERROR_LOG}"
-    check_status
+	check_status
 	printf " ${GREEN}✔${COLOREND}\n"
 
 	# Copy ObjectAL files
