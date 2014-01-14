@@ -690,7 +690,9 @@ static inline float readFloat(CCBReader *self)
         // Load sub file
         NSString* path = [[CCFileUtils sharedFileUtils] fullPathForFilename:ccbFileName];
         NSData* d = [NSData dataWithContentsOfFile:path];
-        
+
+        NSAssert(d,@"Failed to find ccb file: %@",ccbFileName);
+
         CCBReader* reader = [[CCBReader alloc] init];
         reader.animationManager.rootContainerSize = parent.contentSize;
         
