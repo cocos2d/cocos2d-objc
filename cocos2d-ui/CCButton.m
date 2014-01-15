@@ -84,8 +84,8 @@
     [self setBackgroundColor:[CCColor colorWithWhite:0.7 alpha:1] forState:CCControlStateHighlighted];
     [self setLabelColor:[CCColor colorWithWhite:0.7 alpha:1] forState:CCControlStateHighlighted];
     
-    [self setBackgroundOpacity:127 forState:CCControlStateDisabled];
-    [self setLabelOpacity:127 forState:CCControlStateDisabled];
+    [self setBackgroundOpacity:0.5f forState:CCControlStateDisabled];
+    [self setLabelOpacity:0.5f forState:CCControlStateDisabled];
     
     return self;
 }
@@ -489,7 +489,7 @@
 {
     if ([key isEqualToString:@"labelOpacity"])
     {
-        [self setLabelOpacity:[value intValue] forState:state];
+        [self setLabelOpacity:[value floatValue] forState:state];
     }
     else if ([key isEqualToString:@"labelColor"])
     {
@@ -497,7 +497,7 @@
     }
     else if ([key isEqualToString:@"backgroundOpacity"])
     {
-        [self setBackgroundOpacity:[value intValue] forState:state];
+        [self setBackgroundOpacity:[value floatValue] forState:state];
     }
     else if ([key isEqualToString:@"backgroundColor"])
     {
@@ -513,7 +513,7 @@
 {
     if ([key isEqualToString:@"labelOpacity"])
     {
-        return [NSNumber numberWithUnsignedChar:[self labelOpacityForState:state]];
+        return [NSNumber numberWithFloat:[self labelOpacityForState:state]];
     }
     else if ([key isEqualToString:@"labelColor"])
     {
@@ -521,7 +521,7 @@
     }
     else if ([key isEqualToString:@"backgroundOpacity"])
     {
-        return [NSNumber numberWithUnsignedChar:[self backgroundOpacityForState:state]];
+        return [NSNumber numberWithFloat:[self backgroundOpacityForState:state]];
     }
     else if ([key isEqualToString:@"backgroundColor"])
     {
