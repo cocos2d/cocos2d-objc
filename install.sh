@@ -271,7 +271,7 @@ if $INSTALL ; then
 		# If this is a git repo, make sure that the Chipmunk submodule is checked out and current.
 		git submodule update --init 1>>"${ERROR_LOG}" 2>>"${ERROR_LOG}"
 		check_status
-	elif [[ ! -d "$SCRIPT_DIR/external/Chipmunk" ]]; then
+	elif [[ ! -d "$SCRIPT_DIR/external/Chipmunk/src" ]]; then
 		# Not a git repo, download Chipmunk files.
 		echo -n "...downloading Chipmunk files, please wait"
 		DOWNLOAD_DIR="$SCRIPT_DIR/external"
