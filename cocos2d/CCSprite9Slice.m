@@ -205,73 +205,73 @@ typedef NS_ENUM(NSInteger, CCSprite9SliceSizes)
 // sprite is divided into 9 quads, and rendered as 3 triangle strips
 // 
 
--( void )draw:(GLKMatrix4)transform
-{
-    if (!_texture) return;
-    
-    CC_PROFILER_START_CATEGORY(kCCProfilerCategorySprite, @"CCSprite9Slice - draw");
-    
-	CC_NODE_DRAW_SETUP(transform);
-  
-	ccGLBlendFunc(_blendFunc.src, _blendFunc.dst);
-    
-	ccGLBindTexture2D([_texture name]);
-    
-	// enable buffers
-	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex);
-    
-    // calculate quad 9
-    // TODO: Enable dirty functionality
-    // Disabled, as it for some reason does not work on CCButton
-    
-    // if (_quadNineDirty) [self calculateQuadNine];
-    [self calculateQuadNine];
-    
-    // set the buffer positions
-    // position
-    glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, sizeof(ccV3F_C4B_T2F), (void *)&_quadNine[0].vertices);
-    // texCoods
-    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(ccV3F_C4B_T2F), (void *)&_quadNine[0].texCoords);
-    // color
-    glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(ccV3F_C4B_T2F), (void *)&_quadNine[0].colors);
-    
-    // loop through strips
-    for (int strip = 0; strip < CCSprite9SliceStrips; strip ++)
-    {
-        // draw
-        glDrawArrays(GL_TRIANGLE_STRIP, strip * CCSprite9SliceVertices, CCSprite9SliceVertices);
-    }
-    
-    // check for errors
-	CHECK_GL_ERROR_DEBUG();
-    
-    
-#if CC_SPRITE_DEBUG_DRAW == 1
-	// draw bounding box
-	CGPoint vertices[4] =
-    {
-		ccp(_quad.bl.vertices.x,_quad.bl.vertices.y),
-		ccp(_quad.bl.vertices.x + _contentSize.width,_quad.bl.vertices.y),
-		ccp(_quad.bl.vertices.x + _contentSize.width,_quad.bl.vertices.y + _contentSize.height),
-		ccp(_quad.bl.vertices.x,_quad.bl.vertices.y + _contentSize.height),
-	};
-	ccDrawPoly(vertices, 4, YES);
-#elif CC_SPRITE_DEBUG_DRAW == 2
-	// draw texture box
-	CGSize s = self.textureRect.size;
-	CGPoint offsetPix = self.offsetPosition;
-	CGPoint vertices[4] =
-    {
-		ccp(offsetPix.x,offsetPix.y), ccp(offsetPix.x+s.width,offsetPix.y),
-		ccp(offsetPix.x+s.width,offsetPix.y+s.height), ccp(offsetPix.x,offsetPix.y+s.height)
-	};
-	ccDrawPoly(vertices, 4, YES);
-#endif // CC_SPRITE_DEBUG_DRAW
-    
-	CC_INCREMENT_GL_DRAWS(1);
-    
-	CC_PROFILER_STOP_CATEGORY(kCCProfilerCategorySprite, @"CCSprite9Slice - draw");
-}
+//-( void )draw:(CCRenderer *)renderer transform:(GLKMatrix4)transform
+//{
+//    if (!_texture) return;
+//    
+//    CC_PROFILER_START_CATEGORY(kCCProfilerCategorySprite, @"CCSprite9Slice - draw");
+//    
+//	CC_NODE_DRAW_SETUP(transform);
+//  
+//	ccGLBlendFunc(_blendFunc.src, _blendFunc.dst);
+//    
+//	ccGLBindTexture2D([_texture name]);
+//    
+//	// enable buffers
+//	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex);
+//    
+//    // calculate quad 9
+//    // TODO: Enable dirty functionality
+//    // Disabled, as it for some reason does not work on CCButton
+//    
+//    // if (_quadNineDirty) [self calculateQuadNine];
+//    [self calculateQuadNine];
+//    
+//    // set the buffer positions
+//    // position
+//    glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, sizeof(ccV3F_C4B_T2F), (void *)&_quadNine[0].vertices);
+//    // texCoods
+//    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(ccV3F_C4B_T2F), (void *)&_quadNine[0].texCoords);
+//    // color
+//    glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(ccV3F_C4B_T2F), (void *)&_quadNine[0].colors);
+//    
+//    // loop through strips
+//    for (int strip = 0; strip < CCSprite9SliceStrips; strip ++)
+//    {
+//        // draw
+//        glDrawArrays(GL_TRIANGLE_STRIP, strip * CCSprite9SliceVertices, CCSprite9SliceVertices);
+//    }
+//    
+//    // check for errors
+//	CHECK_GL_ERROR_DEBUG();
+//    
+//    
+//#if CC_SPRITE_DEBUG_DRAW == 1
+//	// draw bounding box
+//	CGPoint vertices[4] =
+//    {
+//		ccp(_quad.bl.vertices.x,_quad.bl.vertices.y),
+//		ccp(_quad.bl.vertices.x + _contentSize.width,_quad.bl.vertices.y),
+//		ccp(_quad.bl.vertices.x + _contentSize.width,_quad.bl.vertices.y + _contentSize.height),
+//		ccp(_quad.bl.vertices.x,_quad.bl.vertices.y + _contentSize.height),
+//	};
+//	ccDrawPoly(vertices, 4, YES);
+//#elif CC_SPRITE_DEBUG_DRAW == 2
+//	// draw texture box
+//	CGSize s = self.textureRect.size;
+//	CGPoint offsetPix = self.offsetPosition;
+//	CGPoint vertices[4] =
+//    {
+//		ccp(offsetPix.x,offsetPix.y), ccp(offsetPix.x+s.width,offsetPix.y),
+//		ccp(offsetPix.x+s.width,offsetPix.y+s.height), ccp(offsetPix.x,offsetPix.y+s.height)
+//	};
+//	ccDrawPoly(vertices, 4, YES);
+//#endif // CC_SPRITE_DEBUG_DRAW
+//    
+//	CC_INCREMENT_GL_DRAWS(1);
+//    
+//	CC_PROFILER_STOP_CATEGORY(kCCProfilerCategorySprite, @"CCSprite9Slice - draw");
+//}
 
 // ---------------------------------------------------------------------
 #pragma mark - properties

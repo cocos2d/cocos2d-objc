@@ -32,6 +32,7 @@
 #import "ccGLStateCache.h"
 #import "CCResponder.h"
 #import "CCScheduler.h"
+#import "CCRenderer.h"
 
 #import <GLKit/GLKMatrix4.h>
 
@@ -635,10 +636,10 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  * For further info, please see ccGLstate.h.
  * You shall NOT call [super draw];
  */
--(void) draw:(GLKMatrix4)transform;
+-(void)draw:(CCRenderer *)renderer transform:(GLKMatrix4)transform;
 
 /** Recursive method that visit its children and draw them. */
--(void) visit:(GLKMatrix4)parentTransform;
+-(void) visit:(CCRenderer *)renderer parentTransform:(GLKMatrix4)parentTransform;
 
 /** Sets and returns the color (tint), alpha is ignored when setting. */
 @property (nonatomic,strong) CCColor* color;

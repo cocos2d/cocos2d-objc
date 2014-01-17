@@ -124,7 +124,7 @@
    - using a timer is not guaranteed that it will called after all the positions were updated
    - overriding "draw" will only be precise if the children have a z > 0
 */
--(void) visit:(GLKMatrix4)parentTransform
+-(void) visit:(CCRenderer *)renderer parentTransform:(GLKMatrix4)parentTransform
 {
 //	CGPoint pos = _position;
 //	CGPoint	pos = [self convertToWorldSpace:CGPointZero];
@@ -139,6 +139,6 @@
 		_lastPosition = pos;
 	}
 
-	[super visit:parentTransform];
+	[super visit:renderer parentTransform:parentTransform];
 }
 @end

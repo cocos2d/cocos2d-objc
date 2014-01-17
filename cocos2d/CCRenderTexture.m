@@ -304,7 +304,7 @@
 
 #pragma mark RenderTexture - "auto" update
 
-- (void)visit:(GLKMatrix4)parentTransform
+- (void)visit:(CCRenderer *)renderer parentTransform:(GLKMatrix4)parentTransform
 {
 	// override visit.
 	// Don't call visit on its children
@@ -312,13 +312,13 @@
 		return;
 	
 	GLKMatrix4 transform = [self transform:parentTransform];
-	[_sprite visit:transform];
-	[self draw:transform];
+	[_sprite visit:renderer parentTransform:transform];
+	[self draw:renderer transform:transform];
 	
 	_orderOfArrival = 0;
 }
 
-- (void)draw:(GLKMatrix4)transform
+- (void)draw:(CCRenderer *)renderer transform:(GLKMatrix4)transform
 {
 	if( _autoDraw) {
 		
@@ -363,7 +363,7 @@
 		
         for (CCNode *child in _children) {
 			if( child != _sprite)
-				[child visit:transform];
+				[child visit:renderer parentTransform:transform];
 		}
 		[self end];
 

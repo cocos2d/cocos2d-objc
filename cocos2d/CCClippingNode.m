@@ -115,12 +115,12 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
     [super onExit];
 }
 
-- (void)visit:(GLKMatrix4)parentTransform
+- (void)visit:(CCRenderer *)renderer parentTransform:(GLKMatrix4)parentTransform
 {
     // if stencil buffer disabled
     if (_stencilBits < 1) {
         // draw everything, as if there where no stencil
-        [super visit:parentTransform];
+        [super visit:renderer parentTransform:parentTransform];
         return;
     }
     
@@ -130,7 +130,7 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
     if (!_stencil || !_stencil.visible) {
         if (_inverted) {
             // draw everything
-            [super visit:parentTransform];
+            [super visit:renderer parentTransform:parentTransform];
         }
         return;
     }
@@ -148,7 +148,7 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
             CCLOGWARN(@"Nesting more than %d stencils is not supported. Everything will be drawn without stencil for this node and its childs.", _stencilBits);
         });
         // draw everything, as if there where no stencil
-        [super visit:parentTransform];
+        [super visit:renderer parentTransform:parentTransform];
         return;
     }
     
@@ -298,7 +298,7 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
     // draw the stencil node as if it was one of our child
     // (according to the stencil test func/op and alpha (or alpha shader) test)
     GLKMatrix4 transform = [self transform:parentTransform];
-    [_stencil visit:transform];
+    [_stencil visit:renderer parentTransform:transform];
   
     // restore alpha test state
     if (_alphaThreshold < 1) {
@@ -332,7 +332,7 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
     glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
     
     // draw (according to the stencil test func) this node and its childs
-    [super visit:transform];
+    [super visit:renderer parentTransform:parentTransform];
     
     ///////////////////////////////////
     // CLEANUP

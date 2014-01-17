@@ -501,13 +501,15 @@
 
 #pragma mark CCSprite - draw
 
--(void) draw:(GLKMatrix4)transform
+-(void)draw:(CCRenderer *)renderer transform:(GLKMatrix4)transform;
 {
 	CC_PROFILER_START_CATEGORY(kCCProfilerCategorySprite, @"CCSprite - draw");
 
-	NSAssert(!_batchNode, @"If CCSprite is being rendered by CCSpriteBatchNode, CCSprite#draw SHOULD NOT be called");
+//	NSAssert(!_batchNode, @"If CCSprite is being rendered by CCSpriteBatchNode, CCSprite#draw SHOULD NOT be called");
 
-	CC_NODE_DRAW_SETUP(transform);
+	ccGLEnable( _glServerState );
+	[_shaderProgram use];
+	[_shaderProgram setUniformsForBuiltins:transform];
 
 	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
 

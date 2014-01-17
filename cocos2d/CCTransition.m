@@ -262,7 +262,6 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 
 // -----------------------------------------------------------------
 
-#warning TODO visit transforms
 - (void)renderOutgoing:(float)progress
 {
     float oldScale;
@@ -274,7 +273,8 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     
     glGetFloatv(GL_COLOR_CLEAR_VALUE, clearColor);
     [_outgoingTexture beginWithClear:clearColor[0] g:clearColor[1] b:clearColor[2] a:clearColor[3]];
-    [_outgoingScene visit:GLKMatrix4Identity];
+#warning TODO visit transforms
+//    [_outgoingScene visit:GLKMatrix4Identity];
     [_outgoingTexture end];
     
     _outgoingScene.scale = oldScale;
@@ -291,7 +291,8 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     
     glGetFloatv(GL_COLOR_CLEAR_VALUE, clearColor);
     [_incomingTexture beginWithClear:clearColor[0] g:clearColor[1] b:clearColor[2] a:clearColor[3]];
-    [_incomingScene visit:GLKMatrix4Identity];
+#warning TODO visit transforms
+//    [_incomingScene visit:GLKMatrix4Identity];
     [_incomingTexture end];
     
     _incomingScene.scale = oldScale;

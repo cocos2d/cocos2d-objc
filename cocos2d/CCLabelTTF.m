@@ -316,14 +316,14 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     [super onEnter];
 }
 
-- (void) visit:(GLKMatrix4)parentTransform
+- (void) visit:(CCRenderer *)renderer parentTransform:(GLKMatrix4)parentTransform
 {
     if (_isTextureDirty)
     {
         [self updateTexture];
     }
     
-    [super visit:parentTransform];
+    [super visit:renderer parentTransform:parentTransform];
 }
 
 - (void) setTextureDirty

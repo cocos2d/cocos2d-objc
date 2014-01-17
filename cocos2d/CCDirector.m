@@ -791,10 +791,11 @@ static CCDirector *_sharedDirector = nil;
 			NSString *draws = [[NSString alloc] initWithFormat:@"%4lu", (unsigned long)__ccNumberOfDraws];
 			[_drawsLabel setString:draws];
 		}
-
-		[_drawsLabel visit:GLKMatrix4Identity];
-		[_FPSLabel visit:GLKMatrix4Identity];
-		[_SPFLabel visit:GLKMatrix4Identity];
+		
+		CCRenderer *renderer = [[CCRenderer alloc] init];
+		[_drawsLabel visit:renderer parentTransform:GLKMatrix4Identity];
+		[_FPSLabel visit:renderer parentTransform:GLKMatrix4Identity];
+		[_SPFLabel visit:renderer parentTransform:GLKMatrix4Identity];
 	}
 	
 	__ccNumberOfDraws = 0;

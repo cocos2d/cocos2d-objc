@@ -122,9 +122,10 @@
 	 XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
 	if( _nextScene )
 		[self setNextScene];
-
-	[_runningScene visit:GLKMatrix4Identity];
-	[_notificationNode visit:GLKMatrix4Identity];
+	
+	CCRenderer *renderer = [[CCRenderer alloc] init];
+	[_runningScene visit:renderer parentTransform:GLKMatrix4Identity];
+	[_notificationNode visit:renderer parentTransform:GLKMatrix4Identity];
 
 	if( _displayStats )
 		[self showStats];

@@ -847,11 +847,11 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 #pragma mark CCNode Draw
 
--(void) draw:(GLKMatrix4)transform
+-(void)draw:(CCRenderer *)renderer transform:(GLKMatrix4)transform;
 {
 }
 
--(void) visit:(GLKMatrix4)parentTransform
+-(void) visit:(CCRenderer *)renderer parentTransform:(GLKMatrix4)parentTransform
 {
 	// quick return if not visible. children won't be drawn.
 	if (!_visible)
@@ -869,22 +869,22 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		for( ; i < _children.count; i++ ) {
 			CCNode *child = [_children objectAtIndex:i];
 			if ( [child zOrder] < 0 )
-				[child visit:transform];
+				[child visit:renderer parentTransform:transform];
 			else
 				break;
 		}
 
 		// self draw
-		[self draw:transform];
+		[self draw:renderer transform:transform];
 
 		// draw children zOrder >= 0
 		for( ; i < _children.count; i++ ) {
 			CCNode *child = [_children objectAtIndex:i];
-			[child visit:transform];
+				[child visit:renderer parentTransform:transform];
 		}
 
 	} else
-		[self draw:transform];
+		[self draw:renderer transform:transform];
 
 	// reset for next frame
 	_orderOfArrival = 0;

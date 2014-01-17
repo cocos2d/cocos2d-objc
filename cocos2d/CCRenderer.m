@@ -1,8 +1,7 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * Copyright (c) 2013 Apportable Inc.
- * Copyright (c) 2013-2014 Cocos2D Authors
+ * Copyright (c) 2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,43 +22,8 @@
  * THE SOFTWARE.
  */
 
-#import "CCLayout.h"
+#import "CCRenderer.h"
 
-@implementation CCLayout
-
-- (id) init
-{
-    self = [super init];
-    if (!self) return NULL;
-    
-    [self needsLayout];
-    
-    return self;
-}
-
-- (void) needsLayout
-{
-    _needsLayout = YES;
-}
-
-- (void) layout
-{}
-
-- (void) visit:(CCRenderer *)renderer parentTransform:(GLKMatrix4)parentTransform
-{
-    if (_needsLayout)
-    {
-        [self layout];
-        _needsLayout = NO;
-    }
-    
-    [super visit:renderer parentTransform:parentTransform];
-}
-
-- (void) addChild:(CCNode *)node z:(NSInteger)z name:(NSString*)name
-{
-    [super addChild:node z:z name:name];
-    [self layout];
-}
+@implementation CCRenderer
 
 @end

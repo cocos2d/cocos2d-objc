@@ -131,31 +131,31 @@ const NSUInteger defaultCapacity = 0;
 
 // override visit.
 // Don't call visit on its children
--(void) visit:(GLKMatrix4)parentTransform
-#warning TODO
-{
-	CC_PROFILER_START_CATEGORY(kCCProfilerCategoryBatchSprite, @"CCSpriteBatchNode - visit");
-
-	NSAssert(_parent != nil, @"CCSpriteBatchNode should NOT be root node");
-    
-	// CAREFUL:
-	// This visit is almost identical to CCNode#visit
-	// with the exception that it doesn't call visit on its children
-	//
-	// The alternative is to have a void CCSprite#visit, but
-	// although this is less mantainable, is faster
-	//
-	if (!_visible)
-		return;
-
-	[self sortAllChildren];
-	GLKMatrix4 transform = [self transform:parentTransform];
-	[self draw:transform];
-
-	_orderOfArrival = 0;
-
-	CC_PROFILER_STOP_CATEGORY(kCCProfilerCategoryBatchSprite, @"CCSpriteBatchNode - visit");
-}
+//-(void) visit:(GLKMatrix4)parentTransform
+//#warning TODO
+//{
+//	CC_PROFILER_START_CATEGORY(kCCProfilerCategoryBatchSprite, @"CCSpriteBatchNode - visit");
+//
+//	NSAssert(_parent != nil, @"CCSpriteBatchNode should NOT be root node");
+//    
+//	// CAREFUL:
+//	// This visit is almost identical to CCNode#visit
+//	// with the exception that it doesn't call visit on its children
+//	//
+//	// The alternative is to have a void CCSprite#visit, but
+//	// although this is less mantainable, is faster
+//	//
+//	if (!_visible)
+//		return;
+//
+//	[self sortAllChildren];
+//	GLKMatrix4 transform = [self transform:parentTransform];
+//	[self draw:transform];
+//
+//	_orderOfArrival = 0;
+//
+//	CC_PROFILER_STOP_CATEGORY(kCCProfilerCategoryBatchSprite, @"CCSpriteBatchNode - visit");
+//}
 
 // override addChild:
 -(void) addChild:(CCSprite*)child z:(NSInteger)z name:(NSString*) name
@@ -338,24 +338,24 @@ const NSUInteger defaultCapacity = 0;
 }
 
 #pragma mark CCSpriteBatchNode - draw
--(void) draw:(GLKMatrix4)transform
-{
-	CC_PROFILER_START(@"CCSpriteBatchNode - draw");
-
-	// Optimization: Fast Dispatch
-	if( _textureAtlas.totalQuads == 0 )
-		return;
-
-	CC_NODE_DRAW_SETUP(transform);
-
-	[_children makeObjectsPerformSelector:@selector(updateTransform)];
-
-	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
-
-	[_textureAtlas drawQuads];
-
-	CC_PROFILER_STOP(@"CCSpriteBatchNode - draw");
-}
+//-(void) draw:(CCRenderer *)renderer transform:(GLKMatrix4)transform
+//{
+//	CC_PROFILER_START(@"CCSpriteBatchNode - draw");
+//
+//	// Optimization: Fast Dispatch
+//	if( _textureAtlas.totalQuads == 0 )
+//		return;
+//
+//	CC_NODE_DRAW_SETUP(transform);
+//
+//	[_children makeObjectsPerformSelector:@selector(updateTransform)];
+//
+//	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
+//
+//	[_textureAtlas drawQuads];
+//
+//	CC_PROFILER_STOP(@"CCSpriteBatchNode - draw");
+//}
 
 #pragma mark CCSpriteBatchNode - private
 -(void) increaseAtlasCapacity
