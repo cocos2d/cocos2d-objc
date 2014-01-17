@@ -171,11 +171,11 @@ static inline ccColor3B ccc3BFromccc4F(ccColor4F c)
  */
 static inline ccColor4F ccc4FInterpolated(ccColor4F start, ccColor4F end, float t)
 {
-	start.r = end.r + (start.r - end.r ) * t;
-	start.g = end.g	+ (start.g - end.g ) * t;
-	start.b = end.b + (start.b - end.b ) * t;
-	start.a = end.a	+ (start.a - end.a ) * t;
-	return  start;
+	end.r = start.r + (end.r - start.r ) * t;
+	end.g = start.g	+ (end.g - start.g ) * t;
+	end.b = start.b + (end.b - start.b ) * t;
+	end.a = start.a	+ (end.a - start.a ) * t;
+	return  end;
 }
 
 /** A vertex composed of 2 GLfloats: x, y
