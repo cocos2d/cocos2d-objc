@@ -242,7 +242,12 @@ static NSUInteger globalOrderOfArrival = 1;
 }
 
 -(float)rotationalSkewX {
-	return _rotationalSkewX;
+	CCPhysicsBody *body = GetBodyIfRunning(self);
+	if(body){
+		return -CC_RADIANS_TO_DEGREES(body.absoluteRadians) + NodeToPhysicsRotation(self.parent);
+	} else {
+		return _rotationalSkewX;
+	}
 }
 
 -(void) setRotationalSkewX: (float)newX
@@ -255,7 +260,12 @@ static NSUInteger globalOrderOfArrival = 1;
 
 -(float)rotationalSkewY
 {
-	return _rotationalSkewY;
+	CCPhysicsBody *body = GetBodyIfRunning(self);
+	if(body){
+		return -CC_RADIANS_TO_DEGREES(body.absoluteRadians) + NodeToPhysicsRotation(self.parent);
+	} else {
+		return _rotationalSkewY;
+	}
 }
 
 -(void) setRotationalSkewY: (float)newY
