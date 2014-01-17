@@ -24,8 +24,13 @@
 
 #import "CCTextField.h"
 #import "CCControlSubclass.h"
+#import "CCDirector_Private.h"
 
-@implementation CCTextField
+@implementation CCTextField {
+#if defined(APPORTABLE)
+    BOOL _textFieldIsEditing;
+#endif
+}
 
 + (id) textFieldWithSpriteFrame:(CCSpriteFrame *)frame
 {
@@ -189,6 +194,10 @@
 #ifdef __CC_PLATFORM_IOS
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
+#if defined(APPORTABLE)
+    _textFieldIsEditing = YES;
+#endif
+    
     if (_keyboardIsShown)
     {
         [self focusOnTextField];
@@ -197,6 +206,9 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
+#if defined(APPORTABLE)
+    _textFieldIsEditing = NO;
+#endif
     [self endFocusingOnTextField];
 }
 
@@ -256,7 +268,13 @@
     
     _keyboardHeight = kbSize.height;
     
-    if (_textField.isEditing)
+    BOOL focusOnTextField = _textField.isEditing;
+    
+#if defined(APPORTABLE)
+    focusOnTextField = _textFieldIsEditing;
+#endif
+    
+    if (focusOnTextField)
     {
         [self focusOnTextField];
     }
@@ -275,11 +293,18 @@
 
 - (void) focusOnTextField
 {
+#if defined(APPORTABLE)
+    // Ensure that all textfields have actually been positioned before checkings textField.frame property,
+    // it's possible for the apportable keyboard notification to be fired before the mainloop has had a chance to kick of a scheduler update
+    CCDirector *director = [CCDirector sharedDirector];
+    [director.scheduler update:0.0];
+#endif
+    
     CGSize windowSize = [[CCDirector sharedDirector] viewSize];
     
     // Find the location of the textField
     float fieldCenterY = _textField.frame.origin.y - (_textField.frame.size.height/2);
-    
+
     // Upper third part of the screen
     float upperThirdHeight = windowSize.height / 3;
     
@@ -290,8 +315,16 @@
         // Calculate offset
         float dstYLocation = windowSize.height / 4;
         float offset = -(fieldCenterY - dstYLocation);
+        
         if (offset < -_keyboardHeight) offset = -_keyboardHeight;
         
+#if defined(APPORTABLE)
+        // Apportable does not support changing the openglview position, so we will just change the current scenes position instead
+        CCScene *runningScene = [[CCDirector sharedDirector] runningScene];
+        CGPoint newPosition = runningScene.position;
+        newPosition.y = (offset * -1);
+        runningScene.position = newPosition;
+#else
         // Calcualte target frame
         UIView* view = [[CCDirector sharedDirector] view];
         CGRect frame = view.frame;
@@ -303,16 +336,23 @@
         [UIView setAnimationDuration: 0.2f];
 
         view.frame = frame;
-        
         [UIView commitAnimations];
+#endif
     }
 }
 
 - (void) endFocusingOnTextField
 {
-    UIView* view = [[CCDirector sharedDirector] view];
-    
     // Slide the main view back down
+    
+#if defined(APPORTABLE)
+    // Apportable does not support changing the openglview position, so we will just change the current scenes position instead
+    CCScene *runningScene = [[CCDirector sharedDirector] runningScene];
+    CGPoint newPosition = CGPointZero;
+    newPosition.y = 0.0f;
+    runningScene.position = newPosition;
+#else
+    UIView* view = [[CCDirector sharedDirector] view];
     [UIView beginAnimations: @"textFieldAnim" context: nil];
     [UIView setAnimationBeginsFromCurrentState: YES];
     [UIView setAnimationDuration: 0.2f];
@@ -322,6 +362,8 @@
     view.frame = frame;
     
     [UIView commitAnimations];
+#endif
+    
 }
 
 #endif
