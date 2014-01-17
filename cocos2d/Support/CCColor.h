@@ -307,14 +307,14 @@
 /// -----------------------------------------------------------------------
 
 /**
- *  Linearly interpolate from this color to 'toColor'. Parameter t is normalised
+ *  Linearly interpolate from this color to 'toColor'. Parameter alpha is normalised
  *
  *  @param toColor Color to interpolate to.
- *  @param t       Normalised progress.
+ *  @param alpha   Normalised alpha opacity of toColor.
  *
  *  @return The interpolated color.
  */
-- (CCColor*)interpolateTo:(CCColor *) toColor time:(float) t;
+- (CCColor*)interpolateTo:(CCColor *) toColor alpha:(float) alpha;
 
 @end
 
