@@ -242,12 +242,12 @@
     _nuPoints = 0;
 }
 
-- (void) draw
+- (void) draw:(GLKMatrix4)transform
 {
     if(_nuPoints <= 1)
         return;
 
-	CC_NODE_DRAW_SETUP();
+	CC_NODE_DRAW_SETUP(transform);
 
 	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );
 	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );

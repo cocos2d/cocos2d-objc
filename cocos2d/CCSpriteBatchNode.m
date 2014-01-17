@@ -36,7 +36,6 @@
 #import "ccGLStateCache.h"
 #import "CCDirector.h"
 #import "Support/CGPointExtension.h"
-#import "Support/TransformUtils.h"
 #import "Support/CCProfiling.h"
 #import "CCSprite_Private.h"
 
@@ -44,9 +43,6 @@
 #import "CCSpriteBatchNode_Private.h"
 
 #import "CCTexture_Private.h"
-
-// external
-#import "kazmath/GL/matrix.h"
 
 const NSUInteger defaultCapacity = 0;
 
@@ -135,7 +131,8 @@ const NSUInteger defaultCapacity = 0;
 
 // override visit.
 // Don't call visit on its children
--(void) visit
+-(void) visit:(GLKMatrix4)parentTransform
+#warning TODO
 {
 	CC_PROFILER_START_CATEGORY(kCCProfilerCategoryBatchSprite, @"CCSpriteBatchNode - visit");
 
@@ -151,13 +148,9 @@ const NSUInteger defaultCapacity = 0;
 	if (!_visible)
 		return;
 
-	kmGLPushMatrix();
-
 	[self sortAllChildren];
-	[self transform];
-	[self draw];
-
-	kmGLPopMatrix();
+	GLKMatrix4 transform = [self transform:parentTransform];
+	[self draw:transform];
 
 	_orderOfArrival = 0;
 
@@ -345,7 +338,7 @@ const NSUInteger defaultCapacity = 0;
 }
 
 #pragma mark CCSpriteBatchNode - draw
--(void) draw
+-(void) draw:(GLKMatrix4)transform
 {
 	CC_PROFILER_START(@"CCSpriteBatchNode - draw");
 
@@ -353,7 +346,7 @@ const NSUInteger defaultCapacity = 0;
 	if( _textureAtlas.totalQuads == 0 )
 		return;
 
-	CC_NODE_DRAW_SETUP();
+	CC_NODE_DRAW_SETUP(transform);
 
 	[_children makeObjectsPerformSelector:@selector(updateTransform)];
 

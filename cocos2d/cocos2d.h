@@ -148,17 +148,10 @@
 #import "Support/CCFileUtils.h"
 #import "Support/CGPointExtension.h"
 #import "Support/ccUtils.h"
-#import "Support/TransformUtils.h"
 #import "Support/CCProfiling.h"
 #import "Support/NSThread+performBlock.h"
 #import "Support/uthash.h"
 #import "Support/utlist.h"
-
-//
-// external
-//
-#import "kazmath/kazmath.h"
-#import "kazmath/GL/matrix.h"
 
 
 

@@ -205,14 +205,14 @@ typedef NS_ENUM(NSInteger, CCSprite9SliceSizes)
 // sprite is divided into 9 quads, and rendered as 3 triangle strips
 // 
 
--( void )draw
+-( void )draw:(GLKMatrix4)transform
 {
     if (!_texture) return;
     
     CC_PROFILER_START_CATEGORY(kCCProfilerCategorySprite, @"CCSprite9Slice - draw");
     
-	CC_NODE_DRAW_SETUP();
-    
+	CC_NODE_DRAW_SETUP(transform);
+  
 	ccGLBlendFunc(_blendFunc.src, _blendFunc.dst);
     
 	ccGLBindTexture2D([_texture name]);

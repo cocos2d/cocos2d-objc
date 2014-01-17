@@ -35,11 +35,7 @@
 #import "CCTextureCache.h"
 #import "CCDirector.h"
 #import "Support/CGPointExtension.h"
-#import "Support/TransformUtils.h"
 #import "Support/CCFileUtils.h"
-
-// external
-#import "kazmath/GL/matrix.h"
 
 @implementation CCLabelAtlas
 

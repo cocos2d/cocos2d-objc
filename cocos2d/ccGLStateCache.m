@@ -29,10 +29,6 @@
 #import "CCDirector.h"
 #import "ccConfig.h"
 
-// extern
-#import "kazmath/GL/matrix.h"
-#import "kazmath/kazmath.h"
-
 static GLuint	_ccCurrentProjectionMatrix = -1;
 static BOOL		_vertexAttribPosition = NO;
 static BOOL		_vertexAttribColor = NO;
@@ -52,7 +48,8 @@ static GLuint _ccVAO = 0;
 
 void ccGLInvalidateStateCache( void )
 {
-	kmGLFreeAll();
+#warning What did this do? Set the matrices back to identity? DONE!
+//	kmGLFreeAll();
 	
 	_ccCurrentProjectionMatrix = -1;
 	_vertexAttribPosition = NO;

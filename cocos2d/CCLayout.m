@@ -45,7 +45,7 @@
 - (void) layout
 {}
 
-- (void) visit
+- (void) visit:(GLKMatrix4)parentTransform
 {
     if (_needsLayout)
     {
@@ -53,7 +53,7 @@
         _needsLayout = NO;
     }
     
-    [super visit];
+    [super visit:parentTransform];
 }
 
 - (void) addChild:(CCNode *)node z:(NSInteger)z name:(NSString*)name

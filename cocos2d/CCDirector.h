@@ -31,8 +31,9 @@
 
 #import "CCProtocols.h"
 #import "Platforms/CCGL.h"
-#import "kazmath/mat4.h"
 #import "CCResponderManager.h"
+
+#import <GLKit/GLKMatrix4.h>
 
 /**
  Possible OpenGL projections used by director
@@ -200,6 +201,8 @@ and when to execute the Scenes.
 /// User definable value that is used for default contentSizes of many node types (CCScene, CCNodeColor, etc).
 /// Defaults to the view size.
 @property(nonatomic, assign) CGSize designSize;
+
+@property(nonatomic, assign) GLKMatrix4 projectionMatrix;
 
 /** returns a shared instance of the director */
 +(CCDirector*)sharedDirector;

@@ -38,7 +38,6 @@
 #import "CCGLProgram.h"
 #import "CCDirector.h"
 #import "Support/CGPointExtension.h"
-#import "Support/TransformUtils.h"
 #import "Support/CCProfiling.h"
 #import "Support/OpenGL_Internal.h"
 #import "CCNode_Private.h"
@@ -46,9 +45,6 @@
 #import "CCSprite_Private.h"
 #import "CCSpriteBatchNode_Private.h"
 #import "CCTexture_Private.h"
-
-// external
-#import "kazmath/GL/matrix.h"
 
 #pragma mark -
 #pragma mark CCSprite
@@ -505,13 +501,13 @@
 
 #pragma mark CCSprite - draw
 
--(void) draw
+-(void) draw:(GLKMatrix4)transform
 {
 	CC_PROFILER_START_CATEGORY(kCCProfilerCategorySprite, @"CCSprite - draw");
 
 	NSAssert(!_batchNode, @"If CCSprite is being rendered by CCSpriteBatchNode, CCSprite#draw SHOULD NOT be called");
 
-	CC_NODE_DRAW_SETUP();
+	CC_NODE_DRAW_SETUP(transform);
 
 	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
 

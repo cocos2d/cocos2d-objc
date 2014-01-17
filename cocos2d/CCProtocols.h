@@ -28,6 +28,8 @@
 #import "ccTypes.h"
 #import "CCColor.h"
 
+#import <GLKit/GLKMatrix4.h>
+
 
 @class CCTexture;
 @class CCDirector;
@@ -83,7 +85,7 @@
 
 @optional
 /** Called by CCDirector when the projection is updated, and "custom" projection is used */
--(void) updateProjection;
+-(GLKMatrix4) updateProjection;
 
 #ifdef __CC_PLATFORM_IOS
 /** Returns a Boolean value indicating whether the CCDirector supports the specified orientation. Default value is YES (supports all possible orientations) */

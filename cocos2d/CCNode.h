@@ -30,9 +30,10 @@
 #import "CCProtocols.h"
 #import "ccConfig.h"
 #import "ccGLStateCache.h"
-#import "kazmath/kazmath.h"
 #import "CCResponder.h"
 #import "CCScheduler.h"
+
+#import <GLKit/GLKMatrix4.h>
 
 @class CCScene;
 @class CCGLProgram;
@@ -562,8 +563,8 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 /// @name Accessing Transformations and Matrices
 /// -----------------------------------------------------------------------
 
-/** Performs OpenGL view-matrix transformation based on position, scale, rotation and other attributes. */
--(void) transform;
+#warning TODO
+-(GLKMatrix4)transform:(GLKMatrix4)parentTransform;
 
 /** Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
  The matrix is in Pixels.
@@ -634,10 +635,10 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  * For further info, please see ccGLstate.h.
  * You shall NOT call [super draw];
  */
--(void) draw;
+-(void) draw:(GLKMatrix4)transform;
 
 /** Recursive method that visit its children and draw them. */
--(void) visit;
+-(void) visit:(GLKMatrix4)parentTransform;
 
 /** Sets and returns the color (tint), alpha is ignored when setting. */
 @property (nonatomic,strong) CCColor* color;

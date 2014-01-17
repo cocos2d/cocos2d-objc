@@ -42,10 +42,9 @@
 #import <ApplicationServices/ApplicationServices.h>
 #endif
 
-// extern
-#import "kazmath/GL/matrix.h"
-
-@implementation CCRenderTexture
+@implementation CCRenderTexture {
+	GLKMatrix4 _oldProjection;
+}
 
 @synthesize sprite=_sprite;
 @synthesize autoDraw=_autoDraw;
@@ -175,14 +174,13 @@
 
 -(void)begin
 {
-	kmGLMatrixMode(KM_GL_PROJECTION);
-	kmGLPushMatrix();
-	kmGLMatrixMode(KM_GL_MODELVIEW);
-	kmGLPushMatrix();
-    
 	CCDirector *director = [CCDirector sharedDirector];
-    [director setProjection:director.projection];
-    
+	
+	// #warning Should probably move the projection matrix to the renderer?
+	_oldProjection = director.projectionMatrix;;
+  
+	[director setProjection:director.projection];
+  
 	CGSize texSize = [_texture contentSizeInPixels];
 
 
@@ -195,11 +193,15 @@
 	// Adjust the orthographic projection and viewport
 	glViewport(0, 0, texSize.width, texSize.height );
 
-	kmMat4 orthoMatrix;
-	kmMat4OrthographicProjection(&orthoMatrix, (float)-1.0 / widthRatio,  (float)1.0 / widthRatio,
-								 (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1 );
-	kmGLMultMatrix(&orthoMatrix);
-    
+	#warning This is silly. It should just set a new projection not adjust the old one.
+//	kmMat4 orthoMatrix;
+//	kmMat4OrthographicProjection(&orthoMatrix, (float)-1.0 / widthRatio,  (float)1.0 / widthRatio,
+//								 (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1 );
+//	kmGLMultMatrix(&orthoMatrix);
+	director.projectionMatrix = GLKMatrix4Multiply(_oldProjection, GLKMatrix4MakeOrtho(
+		-1.0 / widthRatio,  1.0 / widthRatio, -1.0 / heightRatio, 1.0 / heightRatio, -1, 1
+	));
+  
 
 	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
 	glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
@@ -262,11 +264,8 @@
 
 	// restore viewport
 	[director setViewport];
-    
-	kmGLMatrixMode(KM_GL_PROJECTION);
-	kmGLPopMatrix();
-	kmGLMatrixMode(KM_GL_MODELVIEW);
-	kmGLPopMatrix();
+	
+	director.projectionMatrix = _oldProjection;
 }
 
 -(void)clear:(float)r g:(float)g b:(float)b a:(float)a
@@ -305,25 +304,21 @@
 
 #pragma mark RenderTexture - "auto" update
 
-- (void)visit
+- (void)visit:(GLKMatrix4)parentTransform
 {
 	// override visit.
 	// Don't call visit on its children
 	if (!_visible)
 		return;
 	
-	kmGLPushMatrix();
-
-	[self transform];
-	[_sprite visit];
-	[self draw];
-	
-	kmGLPopMatrix();
+	GLKMatrix4 transform = [self transform:parentTransform];
+	[_sprite visit:transform];
+	[self draw:transform];
 	
 	_orderOfArrival = 0;
 }
 
-- (void)draw
+- (void)draw:(GLKMatrix4)transform
 {
 	if( _autoDraw) {
 		
@@ -368,7 +363,7 @@
 		
         for (CCNode *child in _children) {
 			if( child != _sprite)
-				[child visit];
+				[child visit:transform];
 		}
 		[self end];
 

@@ -30,7 +30,6 @@
 #import "CCNode.h"
 #import "CCSprite.h"
 #import "Support/OpenGL_Internal.h"
-#import "kazmath/mat4.h"
 
 #ifdef __CC_PLATFORM_IOS
 #import <UIKit/UIKit.h>

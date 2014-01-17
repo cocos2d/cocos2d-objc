@@ -47,11 +47,7 @@
 // support
 #import "Support/OpenGL_Internal.h"
 #import "Support/CGPointExtension.h"
-#import "Support/TransformUtils.h"
 #import "Support/NSThread+performBlock.h"
-
-// extern
-#import "kazmath/GL/matrix.h"
 
 #import "CCNode_Private.h"
 #import "CCParticleSystemBase_Private.h"
@@ -440,11 +436,11 @@
 }
 
 // overriding draw method
--(void) draw
+-(void) draw:(GLKMatrix4)transform
 {
 	NSAssert(!_batchNode,@"draw should not be called when added to a particleBatchNode");
 
-	CC_NODE_DRAW_SETUP();
+	CC_NODE_DRAW_SETUP(transform);
 
 	ccGLBindTexture2D( [_texture name] );
 	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );

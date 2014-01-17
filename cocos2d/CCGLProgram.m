@@ -35,10 +35,6 @@
 
 #import "CCDirector.h"
 
-// extern
-#import "kazmath/GL/matrix.h"
-#import "kazmath/kazmath.h"
-
 
 typedef struct _hashUniformEntry
 {
@@ -438,27 +434,24 @@ typedef void (*GLLogFunction) (GLuint program,
 		glUniformMatrix4fv( (GLint)location, (GLsizei)numberOfMatrices, GL_FALSE, matrixArray);
 }
 
--(void) setUniformsForBuiltins
+-(void) setUniformsForBuiltins:(GLKMatrix4)matrixMV
 {
-	kmMat4 matrixP;
-	kmMat4 matrixMV;
-
-	kmGLGetMatrix(KM_GL_PROJECTION, &matrixP );
-	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV );
+	CCDirector *director = [CCDirector sharedDirector];
+	GLKMatrix4 matrixP = director.projectionMatrix;
 	
 	if( _flags.usesMVP) {
-		kmMat4 matrixMVP;
-		kmMat4Multiply(&matrixMVP, &matrixP, &matrixMV);
-		[self setUniformLocation:_uniforms[kCCUniformMVPMatrix] withMatrix4fv:matrixMVP.mat count:1];
+//		kmMat4 matrixMVP;
+//		kmMat4Multiply(&matrixMVP, &matrixP, &matrixMV);
+		GLKMatrix4 matrixMVP = GLKMatrix4Multiply(matrixP, matrixMV);
+		[self setUniformLocation:_uniforms[kCCUniformMVPMatrix] withMatrix4fv:matrixMVP.m count:1];
 	}
 
 	if( _flags.usesMV) {
-		[self setUniformLocation:_uniforms[  kCCUniformPMatrix] withMatrix4fv:  matrixP.mat count:1];
-		[self setUniformLocation:_uniforms[ kCCUniformMVMatrix] withMatrix4fv: matrixMV.mat count:1];
+		[self setUniformLocation:_uniforms[  kCCUniformPMatrix] withMatrix4fv:  matrixP.m count:1];
+		[self setUniformLocation:_uniforms[ kCCUniformMVMatrix] withMatrix4fv: matrixMV.m count:1];
 	}
 
 	if(_flags.usesTime){
-		CCDirector *director = [CCDirector sharedDirector];
 		// This doesn't give the most accurate global time value.
 		// Cocos2D doesn't store a high precision time value, so this will have to do.
 		// Getting Mach time per frame per shader using time could be extremely expensive.

@@ -149,12 +149,12 @@ default gl blend src function. Compatible with premultiplied alpha images.
 /** @def CC_NODE_DRAW_SETUP
  Helpful macro that setups the GL server state, the correct GL program and sets the Model View Projection matrix
  */
-#define CC_NODE_DRAW_SETUP()																	\
+#define CC_NODE_DRAW_SETUP(__transform__)																	\
 do {																							\
 	ccGLEnable( _glServerState );																\
     NSAssert1(_shaderProgram, @"No shader program set for node: %@", self);						\
 	[_shaderProgram use];																		\
-	[_shaderProgram setUniformsForBuiltins];									\
+	[_shaderProgram setUniformsForBuiltins:__transform__];									\
 } while(0)
 
 

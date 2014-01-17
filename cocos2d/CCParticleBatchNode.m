@@ -42,8 +42,6 @@
 #import "Support/ZipUtils.h"
 #import "Support/CCFileUtils.h"
 
-#import "kazmath/GL/matrix.h"
-
 #import "CCNode_Private.h"
 #import "CCParticleSystemBase_Private.h"
 
@@ -134,7 +132,8 @@
 
 // override visit.
 // Don't call visit on it's children
--(void) visit
+-(void) visit:(GLKMatrix4)parentTransform
+#warning TODO
 {
 	// CAREFUL:
 	// This visit is almost identical to CCNode#visit
@@ -146,13 +145,8 @@
 	if (!_visible)
 		return;
 
-	kmGLPushMatrix();
-
-	[self transform];
-
-	[self draw];
-
-	kmGLPopMatrix();
+	GLKMatrix4 transform = [self transform:parentTransform];
+	[self draw:transform];
 }
 
 // override addChild:
@@ -355,14 +349,14 @@
 }
 
 #pragma mark CCParticleBatchNode - Node overrides
--(void) draw
+-(void) draw:(GLKMatrix4)transform
 {
 	CC_PROFILER_STOP(@"CCParticleBatchNode - draw");
 
 	if( _textureAtlas.totalQuads == 0 )
 		return;
 
-	CC_NODE_DRAW_SETUP();
+	CC_NODE_DRAW_SETUP(transform);
 
 	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
 

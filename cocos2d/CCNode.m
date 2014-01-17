@@ -33,14 +33,10 @@
 #import "ccConfig.h"
 #import "ccMacros.h"
 #import "Support/CGPointExtension.h"
-#import "Support/TransformUtils.h"
 #import "ccMacros.h"
 #import "CCGLProgram.h"
 #import "CCPhysics+ObjectiveChipmunk.h"
 #import "CCDirector_Private.h"
-
-// externals
-#import "kazmath/GL/matrix.h"
 
 #ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
@@ -851,19 +847,17 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 #pragma mark CCNode Draw
 
--(void) draw
+-(void) draw:(GLKMatrix4)transform
 {
 }
 
--(void) visit
+-(void) visit:(GLKMatrix4)parentTransform
 {
 	// quick return if not visible. children won't be drawn.
 	if (!_visible)
 		return;
     
-	kmGLPushMatrix();
-
-	[self transform];
+	GLKMatrix4 transform = NodeTransform(self, parentTransform);
 
 	if(_children) {
 
@@ -875,52 +869,70 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		for( ; i < _children.count; i++ ) {
 			CCNode *child = [_children objectAtIndex:i];
 			if ( [child zOrder] < 0 )
-				[child visit];
+				[child visit:transform];
 			else
 				break;
 		}
 
 		// self draw
-		[self draw];
+		[self draw:transform];
 
 		// draw children zOrder >= 0
 		for( ; i < _children.count; i++ ) {
 			CCNode *child = [_children objectAtIndex:i];
-			[child visit];
+			[child visit:transform];
 		}
 
 	} else
-		[self draw];
+		[self draw:transform];
 
 	// reset for next frame
 	_orderOfArrival = 0;
-
-	kmGLPopMatrix();
 }
 
 #pragma mark CCNode - Transformations
 
--(void) transformAncestors
+static inline GLKMatrix4
+NodeTransform(CCNode *node, GLKMatrix4 parentTransform)
 {
-	if( _parent ) {
-		[_parent transformAncestors];
-		[_parent transform];
-	}
+	CGAffineTransform t = [node nodeToParentTransform];
+	
+	// Convert to 4x4 column major GLK matrix.
+	return GLKMatrix4Multiply(parentTransform, GLKMatrix4Make(
+		t.a, t.b, 0.0, 0.0,
+		t.c, t.d, 0.0, 0.0,
+		0.0, 0.0, 0.0, 0.0,
+		t.tx, t.ty, node->_vertexZ, 1.0
+	));
 }
 
--(void) transform
+-(GLKMatrix4)transform:(GLKMatrix4)parentTransform
 {
-	kmMat4 transform4x4;
-
-	// Convert 3x3 into 4x4 matrix
-	CGAffineTransform tmpAffine = [self nodeToParentTransform];
-	CGAffineToGL(&tmpAffine, transform4x4.mat);
-
-	// Update Z vertex manually
-	transform4x4.mat[14] = _vertexZ;
-
-	kmGLMultMatrix( &transform4x4 );
+	return NodeTransform(self, parentTransform);
 }
+
+#warning TODO
+//-(void) transformAncestors
+//{
+//	if( _parent ) {
+//		[_parent transformAncestors];
+//		[_parent transform];
+//	}
+//}
+//
+//-(void) transform
+//{
+//	kmMat4 transform4x4;
+//
+//	// Convert 3x3 into 4x4 matrix
+//	CGAffineTransform tmpAffine = [self nodeToParentTransform];
+//	CGAffineToGL(&tmpAffine, transform4x4.mat);
+//
+//	// Update Z vertex manually
+//	transform4x4.mat[14] = _vertexZ;
+//
+//	kmGLMultMatrix( &transform4x4 );
+//}
 
 #pragma mark CCPhysics support.
 

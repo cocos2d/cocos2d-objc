@@ -33,16 +33,12 @@
 #import "ccGLStateCache.h"
 #import "CCDirector.h"
 #import "Support/CGPointExtension.h"
-#import "Support/TransformUtils.h"
 #import "CCSprite_Private.h"
 
 #import "CCNode_Private.h"
 #import "CCProgressNode_Private.h"
 
 #import "CCTexture_Private.h"
-
-// extern
-#import "kazmath/GL/matrix.h"
 
 #define kProgressTextureCoordsCount 4
 //  kProgressTextureCoords holds points {0,1} {0,0} {1,0} {1,1} we can represent it as bits
@@ -501,12 +497,12 @@ const char kCCProgressTextureCoords = 0x4b;
 	return CGPointZero;
 }
 
--(void) draw
+-(void) draw:(GLKMatrix4)transform
 {
 	if( ! _vertexData || ! _sprite)
 		return;
   
-	CC_NODE_DRAW_SETUP();
+	CC_NODE_DRAW_SETUP(transform);
   
 	ccGLBlendFunc( _sprite.blendFunc.src, _sprite.blendFunc.dst );
   

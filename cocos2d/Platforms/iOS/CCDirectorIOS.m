@@ -47,11 +47,7 @@
 // support imports
 #import "../../Support/OpenGL_Internal.h"
 #import "../../Support/CGPointExtension.h"
-#import "../../Support/TransformUtils.h"
 #import "../../Support/CCFileUtils.h"
-
-#import "kazmath/kazmath.h"
-#import "kazmath/GL/matrix.h"
 
 #if CC_ENABLE_PROFILERS
 #import "../../Support/CCProfiling.h"
@@ -127,16 +123,11 @@
 	if( _nextScene )
 		[self setNextScene];
 
-	kmGLPushMatrix();
-
-	[_runningScene visit];
-
-	[_notificationNode visit];
+	[_runningScene visit:GLKMatrix4Identity];
+	[_notificationNode visit:GLKMatrix4Identity];
 
 	if( _displayStats )
 		[self showStats];
-
-	kmGLPopMatrix();
 
 	_totalFrames++;
 
@@ -161,41 +152,34 @@
 
 	switch (projection) {
 		case CCDirectorProjection2D:
-
-			kmGLMatrixMode(KM_GL_PROJECTION);
-			kmGLLoadIdentity();
-
-			kmMat4 orthoMatrix;
-			kmMat4OrthographicProjection(&orthoMatrix, 0, sizePoint.width, 0, sizePoint.height, -1024, 1024 );
-			kmGLMultMatrix( &orthoMatrix );
-
-			kmGLMatrixMode(KM_GL_MODELVIEW);
-			kmGLLoadIdentity();
+			
+			self.projectionMatrix = GLKMatrix4MakeOrtho(0, sizePoint.width, 0, sizePoint.height, -1024, 1024 );
 			break;
 
 		case CCDirectorProjection3D:
 		{
-			float zeye = [self getZEye];
-
-			kmMat4 matrixPerspective, matrixLookup;
-
-			kmGLMatrixMode(KM_GL_PROJECTION);
-			kmGLLoadIdentity();
-
-			// issue #1334
-			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)sizePoint.width/sizePoint.height, 0.1f, zeye*2);
-//			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
-
-			kmGLMultMatrix(&matrixPerspective);
-
-			kmGLMatrixMode(KM_GL_MODELVIEW);
-			kmGLLoadIdentity();
-			kmVec3 eye, center, up;
-			kmVec3Fill( &eye, sizePoint.width/2, sizePoint.height/2, zeye );
-			kmVec3Fill( &center, sizePoint.width/2, sizePoint.height/2, 0 );
-			kmVec3Fill( &up, 0, 1, 0);
-			kmMat4LookAt(&matrixLookup, &eye, &center, &up);
-			kmGLMultMatrix(&matrixLookup);
+			#warning TODO
+//			float zeye = [self getZEye];
+//
+//			kmMat4 matrixPerspective, matrixLookup;
+//
+//			kmGLMatrixMode(KM_GL_PROJECTION);
+//			kmGLLoadIdentity();
+//
+//			// issue #1334
+//			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)sizePoint.width/sizePoint.height, 0.1f, zeye*2);
+////			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
+//
+//			kmGLMultMatrix(&matrixPerspective);
+//
+//			kmGLMatrixMode(KM_GL_MODELVIEW);
+//			kmGLLoadIdentity();
+//			kmVec3 eye, center, up;
+//			kmVec3Fill( &eye, sizePoint.width/2, sizePoint.height/2, zeye );
+//			kmVec3Fill( &center, sizePoint.width/2, sizePoint.height/2, 0 );
+//			kmVec3Fill( &up, 0, 1, 0);
+//			kmMat4LookAt(&matrixLookup, &eye, &center, &up);
+//			kmGLMultMatrix(&matrixLookup);
 			break;
 		}
 

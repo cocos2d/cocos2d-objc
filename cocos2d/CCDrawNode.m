@@ -185,12 +185,12 @@ static inline ccTex2F __t(ccVertex2F v )
 	CHECK_GL_ERROR();
 }
 
--(void)draw
+-(void)draw:(GLKMatrix4)transform
 {
 	ccGLBlendFunc(_blendFunc.src, _blendFunc.dst);
 	
 	[_shaderProgram use];
-	[_shaderProgram setUniformsForBuiltins];
+	[_shaderProgram setUniformsForBuiltins:transform];
 	
 	[self render];	
 }

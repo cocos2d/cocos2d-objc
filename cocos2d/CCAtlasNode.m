@@ -32,11 +32,7 @@
 #import "CCShaderCache.h"
 #import "ccGLStateCache.h"
 #import "CCDirector.h"
-#import "Support/TransformUtils.h"
 #import "CCNode_Private.h"
-
-// external
-#import "kazmath/GL/matrix.h"
 
 
 @interface CCAtlasNode ()
@@ -119,9 +115,9 @@
 }
 
 #pragma mark CCAtlasNode - draw
-- (void) draw
+- (void) draw:(GLKMatrix4)transform
 {
-	CC_NODE_DRAW_SETUP();
+	CC_NODE_DRAW_SETUP(transform);
 
 	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
 	

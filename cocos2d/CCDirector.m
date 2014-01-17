@@ -376,17 +376,18 @@ static CCDirector *_sharedDirector = nil;
 	}
 }
 
-static void
-GLToClipTransform(kmMat4 *transformOut)
-{
-	kmMat4 projection;
-	kmGLGetMatrix(KM_GL_PROJECTION, &projection);
-	
-	kmMat4 modelview;
-	kmGLGetMatrix(KM_GL_MODELVIEW, &modelview);
-	
-	kmMat4Multiply(transformOut, &projection, &modelview);
-}
+// Replaced by just the projection matrix.
+//static void
+//GLToClipTransform(kmMat4 *transformOut)
+//{
+//	kmMat4 projection;
+//	kmGLGetMatrix(KM_GL_PROJECTION, &projection);
+//	
+//	kmMat4 modelview;
+//	kmGLGetMatrix(KM_GL_MODELVIEW, &modelview);
+//	
+//	kmMat4Multiply(transformOut, &projection, &modelview);
+//}
 
 -(CGFloat)flipY
 {
@@ -395,38 +396,38 @@ GLToClipTransform(kmMat4 *transformOut)
 
 -(CGPoint)convertToGL:(CGPoint)uiPoint
 {
-	kmMat4 transform;
-	GLToClipTransform(&transform);
-	
-	kmMat4 transformInv;
-	kmMat4Inverse(&transformInv, &transform);
+	GLKMatrix4 transform = _projectionMatrix;
+	GLKMatrix4 invTransform = GLKMatrix4Invert(transform, NULL);
 	
 	// Calculate z=0 using -> transform*[0, 0, 0, 1]/w
-	kmScalar zClip = transform.mat[14]/transform.mat[15];
+	float zClip = transform.m[14]/transform.m[15];
+//	kmScalar zClip = transform.mat[14]/transform.mat[15];
 	
 	CGSize glSize = __view.bounds.size;
-	kmVec3 clipCoord = {2.0*uiPoint.x/glSize.width - 1.0, 2.0*uiPoint.y/glSize.height - 1.0, zClip};
-	clipCoord.y *= self.flipY;
+	GLKVector3 clipCoord = GLKVector3Make(2.0*uiPoint.x/glSize.width - 1.0, 2.0*uiPoint.y/glSize.height - 1.0, zClip);
 	
-	kmVec3 glCoord;
-	kmVec3TransformCoord(&glCoord, &clipCoord, &transformInv);
+	#warning GLKVector3 is supposed to be an anonymous union, why doesn't .y work?
+	clipCoord.v[1] *= self.flipY;
 	
-//	NSLog(@"uiPoint: %@, glPoint: %@", NSStringFromCGPoint(uiPoint), NSStringFromCGPoint(ccp(glCoord.x, glCoord.y)));
-	return ccp(glCoord.x, glCoord.y);
+	GLKVector3 glCoord = GLKMatrix4MultiplyAndProjectVector3(invTransform, clipCoord);
+	return ccp(glCoord.v[0], glCoord.v[1]);
 }
 
 -(CGPoint)convertToUI:(CGPoint)glPoint
 {
-	kmMat4 transform;
-	GLToClipTransform(&transform);
+//	kmMat4 transform;
+//	GLToClipTransform(&transform);
+	GLKMatrix4 transform = _projectionMatrix;
 		
-	kmVec3 clipCoord;
-	// Need to calculate the zero depth from the transform.
-	kmVec3 glCoord = {glPoint.x, glPoint.y, 0.0};
-	kmVec3TransformCoord(&clipCoord, &glCoord, &transform);
+//	kmVec3 clipCoord;
+//	// Need to calculate the zero depth from the transform.
+//	kmVec3 glCoord = {glPoint.x, glPoint.y, 0.0};
+//	kmVec3TransformCoord(&clipCoord, &glCoord, &transform);
+	GLKVector3 clipCoord = GLKMatrix4MultiplyAndProjectVector3(transform, GLKVector3Make(glPoint.x, glPoint.y, 0.0));
 	
 	CGSize glSize = __view.bounds.size;
-	return ccp(glSize.width*(clipCoord.x*0.5 + 0.5), glSize.height*(self.flipY*clipCoord.y*0.5 + 0.5));
+//	return ccp(glSize.width*(clipCoord.x*0.5 + 0.5), glSize.height*(self.flipY*clipCoord.y*0.5 + 0.5));
+	return ccp(glSize.width*(clipCoord.v[0]*0.5 + 0.5), glSize.height*(self.flipY*clipCoord.v[1]*0.5 + 0.5));
 }
 
 -(CGSize)viewSize
@@ -791,9 +792,9 @@ GLToClipTransform(kmMat4 *transformOut)
 			[_drawsLabel setString:draws];
 		}
 
-		[_drawsLabel visit];
-		[_FPSLabel visit];
-		[_SPFLabel visit];
+		[_drawsLabel visit:GLKMatrix4Identity];
+		[_FPSLabel visit:GLKMatrix4Identity];
+		[_SPFLabel visit:GLKMatrix4Identity];
 	}
 	
 	__ccNumberOfDraws = 0;

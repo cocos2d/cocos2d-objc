@@ -77,10 +77,10 @@
  */
 -(void) cleanup;
 
-/* performs OpenGL view-matrix transformation of its ancestors.
- Generally the ancestors are already transformed, but in certain cases (eg: attaching a FBO) it is necessary to transform the ancestors again.
- */
--(void) transformAncestors;
+///* performs OpenGL view-matrix transformation of its ancestors.
+// Generally the ancestors are already transformed, but in certain cases (eg: attaching a FBO) it is necessary to transform the ancestors again.
+// */
+//-(void) transformAncestors;
 
 /* final method called to actually remove a child node from the children.
  *  @param node    The child node to remove

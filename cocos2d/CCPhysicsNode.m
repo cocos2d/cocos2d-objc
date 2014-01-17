@@ -461,7 +461,7 @@ static cpSpaceDebugColor
 ColorForShape(cpShape *shape, CCDrawNode *draw)
 {return CC_PHYSICS_SHAPE_DEBUG_FILL_COLOR;}
 
--(void)draw
+-(void)draw:(GLKMatrix4)transform
 {
 	if(!_debugDraw) return;
 	

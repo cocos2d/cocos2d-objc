@@ -34,7 +34,6 @@
 #import "CCShaderCache.h"
 #import "CCGLProgram.h"
 #import "ccGLStateCache.h"
-#import "Support/TransformUtils.h"
 #import "Support/CGPointExtension.h"
 #import "CCNode_Private.h"
 
@@ -43,9 +42,6 @@
 #elif defined(__CC_PLATFORM_MAC)
 #import "Platforms/Mac/CCDirectorMac.h"
 #endif
-
-// extern
-#import "kazmath/GL/matrix.h"
 
 #pragma mark -
 #pragma mark Layer
@@ -120,7 +116,7 @@
 	}
 }
 
-- (void) draw
+- (void) draw:(GLKMatrix4)transform
 {
     CGSize size = self.contentSizeInPoints;
     
@@ -129,7 +125,7 @@
 	_squareVertices[3].x = size.width;
 	_squareVertices[3].y = size.height;
     
-	CC_NODE_DRAW_SETUP();
+	CC_NODE_DRAW_SETUP(transform);
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_Color );
 
