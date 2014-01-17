@@ -883,7 +883,8 @@ static inline float readFloat(CCBReader *self)
         embeddedNode.positionType = ccbFileNode.positionType;
         //embeddedNode.anchorPoint = ccbFileNode.anchorPoint;
         embeddedNode.rotation = ccbFileNode.rotation;
-        embeddedNode.scale = ccbFileNode.scale;
+        embeddedNode.scaleX = ccbFileNode.scaleX;
+        embeddedNode.scaleY = ccbFileNode.scaleY;
         embeddedNode.name = ccbFileNode.name;
         embeddedNode.visible = YES;
         //embeddedNode.ignoreAnchorPointForPosition = ccbFileNode.ignoreAnchorPointForPosition;
