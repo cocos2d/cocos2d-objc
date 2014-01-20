@@ -461,6 +461,7 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  *
  *  @return An Action pointer
  */
+-(CCAction*) runAction: (CCAction*) action completion:(void(^)(void))completion;
 -(CCAction*) runAction: (CCAction*) action;
 
 /** Removes all actions from the running action list */

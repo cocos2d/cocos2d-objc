@@ -1089,9 +1089,14 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 -(CCAction*) runAction:(CCAction*) action
 {
+	return [self runAction:action completion:^{}];
+}
+
+-(CCAction*) runAction:(CCAction*) action completion:(void (^)(void))completion
+{
 	NSAssert( action != nil, @"Argument must be non-nil");
 
-	[_actionManager addAction:action target:self paused:!self.runningInActiveScene];
+	[_actionManager addAction:action target:self paused:!self.runningInActiveScene completion:completion];
 	return action;
 }
 
