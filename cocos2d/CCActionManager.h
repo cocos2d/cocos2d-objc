@@ -34,6 +34,7 @@
 
 typedef struct _hashElement {
     __unsafe_unretained NSMutableArray	*actions;
+	__unsafe_unretained NSMutableArray *completions;
 	NSUInteger		actionIndex;
 	BOOL			currentActionSalvaged;
 	BOOL			paused;
@@ -69,6 +70,7 @@ typedef struct _hashElement {
  *  @param paused Defines if action will start paused.
  */
 -(void)addAction:(CCAction*)action target:(id)target paused:(BOOL)paused;
+-(void)addAction:(CCAction*)action target:(id)target paused:(BOOL)paused completion:(void(^)(void))completion;
 
 /** Removes all actions from all the targets. */
 -(void)removeAllActions;

@@ -72,7 +72,11 @@
 {
     void* a = (__bridge void*) element->actions;
     CFRelease(a);
+	void* c = (__bridge void*) element->completions;
+	CFRelease(c);
 	HASH_DEL(targets, element);
+
+
 //	CCLOG(@"cocos2d: ---- buckets: %d/%d - %@", targets->entries, targets->size, element->target);
     void* t = (__bridge void*) element->target;
     CFRelease(t);
@@ -84,10 +88,17 @@
     NSMutableArray* aObj = [[NSMutableArray alloc] init];
     void* a = (__bridge void*) aObj;
     CFRetain(a);
+
+	NSMutableArray* cObj = [[NSMutableArray alloc] init];
+	void* c = (__bridge void*) cObj;
+	CFRetain(c);
     
 	// 4 actions per Node by default
 	if( element->actions == nil )
 		element->actions = aObj;
+
+	if ( element->completions == nil)
+		element->completions = cObj;
 }
 
 -(void) removeActionAtIndex:(NSUInteger)index hashElement:(tHashElement*)element
@@ -99,7 +110,9 @@
         CFRetain(a);
 		element->currentActionSalvaged = YES;
 	}
-    
+
+
+	[element->completions removeObjectAtIndex:index];
     [element->actions removeObjectAtIndex:index];
 
 	// update actionIndex in case we are in tick:, looping over the actions
@@ -160,11 +173,15 @@
 
 #pragma mark ActionManager - run
 
--(void) addAction:(CCAction*)action target:(id)t paused:(BOOL)paused
+- (void)addAction:(CCAction *)action target:(id)target paused:(BOOL)paused
+{
+	[self addAction:action target:target paused:paused completion:^{}];
+}
+
+-(void) addAction:(CCAction*)action target:(id)t paused:(BOOL)paused completion:(void (^)(void))completion
 {
 	NSAssert( action != nil, @"Argument action must be non-nil");
 	NSAssert( t != nil, @"Argument target must be non-nil");
-
 	tHashElement *element = NULL;
     void* target = (__bridge void*)t;
 	HASH_FIND_INT(targets, &target, element);
@@ -182,7 +199,9 @@
 
 	NSAssert( ![element->actions containsObject:action], @"runAction: Action already running");
     [element->actions addObject:action];
-
+	if ( !completion )
+		completion = ^{};
+	[element->completions addObject:[completion copy]];
 	[action startWithTarget:t];
 }
 
@@ -212,6 +231,7 @@
 			element->currentActionSalvaged = YES;
 		}
         [element->actions removeAllObjects];
+		[element->completions removeAllObjects];
 		if( currentTarget == element )
 			currentTargetSalvaged = YES;
 		else
@@ -234,8 +254,9 @@
 	HASH_FIND_INT(targets, &t, element );
 	if( element ) {
 		NSUInteger i = [element->actions indexOfObject:action];
-		if( i != NSNotFound )
+		if( i != NSNotFound ) {
 			[self removeActionAtIndex:i hashElement:element];
+		}
 	}
 //	else {
 //		CCLOG(@"cocos2d: removeAction: Target not found");
@@ -336,11 +357,16 @@
 					CCAction *a = currentTarget->currentAction;
 					// Make currentAction nil to prevent removeAction from salvaging it.
 					currentTarget->currentAction = nil;
+					int index = [currentTarget->actions indexOfObject:a];
+					void(^completion)(void) = [currentTarget->completions objectAtIndex:index];
+
 					[self removeAction:a];
+					completion();
 				}
 
 				currentTarget->currentAction = nil;
 			}
+
 		}
 
 		// elt, at this moment, is still valid
@@ -348,8 +374,9 @@
 		elt = elt->hh.next;
 
 		// only delete currentTarget if no actions were scheduled during the cycle (issue #481)
-		if( currentTargetSalvaged && currentTarget->actions.count == 0 )
+		if( currentTargetSalvaged && currentTarget->actions.count == 0 ) {
 			[self deleteHashElement:currentTarget];
+		}
 	}
 
 	// issue #635
