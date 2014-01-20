@@ -335,31 +335,13 @@
 
 - (void) setScrollPosition:(CGPoint)newPos animated:(BOOL)animated
 {
+    // Check bounds
+	newPos.x = MAX(MIN(newPos.x, self.maxScrollX), self.minScrollX);
+	newPos.y = MAX(MIN(newPos.y, self.maxScrollY), self.minScrollY);
+
     BOOL xMoved = (newPos.x != self.scrollPosition.x);
     BOOL yMoved = (newPos.y != self.scrollPosition.y);
-    
-    // Check bounds
-    if (newPos.x > self.maxScrollX)
-    {
-        newPos.x = self.maxScrollX;
-        xMoved = YES;
-    }
-    if (newPos.x < self.minScrollX)
-    {
-        newPos.x = self.minScrollX;
-        xMoved = YES;
-    }
-    if (newPos.y > self.maxScrollY)
-    {
-        newPos.y = self.maxScrollY;
-        yMoved = YES;
-    }
-    if (newPos.y < self.minScrollY)
-    {
-        newPos.y = self.minScrollY;
-        yMoved = YES;
-    }
-    
+
     if (animated)
     {
         CGPoint oldPos = self.scrollPosition;
@@ -749,11 +731,35 @@
 
 - (void)scrollWheel:(NSEvent *)theEvent
 {
-    CCDirector* dir = [CCDirector sharedDirector];
-    
+	CCDirector* dir = [CCDirector sharedDirector];
+
     float deltaX = theEvent.deltaX;
     float deltaY = theEvent.deltaY;
-    
+
+	[self scrollViewDidScroll];
+
+    switch (theEvent.phase) {
+        case NSEventPhaseBegan:
+            [self scrollViewWillBeginDragging];
+            break;
+        case NSEventPhaseEnded:
+			//TODO: add logic to determine if it will decelerate
+            [self scrollViewDidEndDraggingAndWillDecelerate:YES];
+        default:
+            break;
+    }
+
+    switch (theEvent.momentumPhase) {
+        case NSEventPhaseBegan:
+            [self scrollViewWillBeginDecelerating];
+            break;
+        case NSEventPhaseEnded:
+            [self scrollViewDidEndDecelerating];
+        default:
+            break;
+    }
+
+
     // Calculate the delta in node space
     CGPoint ref = [dir convertToGL:CGPointZero];
     ref = [self convertToNodeSpace:ref];
@@ -823,5 +829,47 @@
 }
 
 #endif
+
+
+#pragma mark - CCScrollViewDelegate Helpers
+
+- (void)scrollViewDidScroll
+{
+    if ( [self.delegate respondsToSelector:@selector(scrollViewDidScroll:)] )
+    {
+        [self.delegate scrollViewDidScroll:self];
+    }
+}
+
+- (void)scrollViewWillBeginDragging
+{
+    if ( [self.delegate respondsToSelector:@selector(scrollViewWillBeginDragging:)])
+    {
+        [self.delegate scrollViewWillBeginDragging:self];
+    }
+}
+- (void)scrollViewDidEndDraggingAndWillDecelerate:(BOOL)decelerate
+{
+    if ([self.delegate respondsToSelector:@selector(scrollViewDidEndDragging:willDecelerate:)])
+    {
+        [self.delegate scrollViewDidEndDragging:self
+                                 willDecelerate:decelerate];
+    }
+}
+- (void)scrollViewWillBeginDecelerating
+{
+    if ( [self.delegate respondsToSelector:@selector(scrollViewWillBeginDecelerating:)])
+    {
+        [self.delegate scrollViewWillBeginDecelerating:self];
+    }
+
+}
+- (void)scrollViewDidEndDecelerating
+{
+    if ( [self.delegate respondsToSelector:@selector(scrollViewDidEndDecelerating:)])
+    {
+        [self.delegate scrollViewDidEndDecelerating:self];
+    }
+}
 
 @end
