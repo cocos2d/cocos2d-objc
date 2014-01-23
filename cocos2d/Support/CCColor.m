@@ -189,7 +189,7 @@
 #ifdef __CC_PLATFORM_MAC
 - (NSColor*) NSColor
 {
-	return [NSColor colorWithCalibratedRed:(CGFloat)_r green:(CGFloat)_g blue:(CGFloat)_b alpha:(CGFloat)_a];
+	return [NSColor colorWithDeviceRed:(CGFloat)_r green:(CGFloat)_g blue:(CGFloat)_b alpha:(CGFloat)_a];
 }
 #endif
 
