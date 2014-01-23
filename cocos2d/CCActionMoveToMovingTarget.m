@@ -38,6 +38,10 @@
     BOOL _followInfinite;
 }
 
+- (void)dealloc {
+    CCLOG(@"gone");
+}
+
 #pragma mark - Initializers
 
 + (id)actionWithSpeed:(CGFloat)speed positionUpdateBlock:(PositionUpdateBlock)block followInfinite:(BOOL)infinite
@@ -148,8 +152,8 @@
         if (!_followInfinite) {
             _done = YES;
             
-            if (self.completionBlock) {
-                self.completionBlock();
+            if (self.actionCompletedBlock) {
+                self.actionCompletedBlock();
             }
         }
         

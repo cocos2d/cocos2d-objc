@@ -25,7 +25,7 @@
 #import "CCActionInterval.h"
 
 typedef CGPoint(^PositionUpdateBlock)(void);
-typedef void(^CompletionBlock)(void);
+typedef void(^ActionCompletedBlock)(void);
 
 // -----------------------------------------------------------------
 /** @name CCActionMoveToMovingTarget */
@@ -56,12 +56,12 @@ typedef void(^CompletionBlock)(void);
  *
  *  Example:
  *  @code
- *  [moveTo setCompletionBlock: ^(void) {
+ *  [moveTo setActionCompletedBlock: ^(void) {
  *     CCLOG(@"Done!");
  *  }];
  *  @endcode
  */
-@property (readwrite,nonatomic,copy) CompletionBlock completionBlock;
+@property (readwrite,nonatomic,copy) ActionCompletedBlock actionCompletedBlock;
 
 /**
  *  Creates the action.
