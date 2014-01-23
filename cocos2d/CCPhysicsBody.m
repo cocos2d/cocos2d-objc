@@ -42,6 +42,7 @@
 	NSMutableArray *_chipmunkObjects;
 	
 	BOOL _affectedByGravity;
+	BOOL _allowsRotation;
 }
 
 //MARK: Constructors:
@@ -53,6 +54,7 @@
 		_body.userData = self;
 		
 		_affectedByGravity = YES;
+		_allowsRotation = YES;
 		
 		_chipmunkObjects = [NSMutableArray arrayWithCapacity:2];
 		[_chipmunkObjects addObject:_body];
@@ -217,7 +219,7 @@ NotAffectedByGravity
 
 -(BOOL)allowsRotation {
 	if(self.type == CCPhysicsBodyTypeDynamic){
-		return (_body.moment < INFINITY);
+		return _allowsRotation;
 	} else {
 		// The allowsRotation property is only applicable to dynamic bodies.
 		return NO;
@@ -236,6 +238,8 @@ NotAffectedByGravity
 			_body.angularVelocity = 0.0;
 		}
 	}
+	
+	_allowsRotation = allowsRotation;
 }
 
 static CCPhysicsBodyType ToCocosBodyType[] = {CCPhysicsBodyTypeDynamic, CCPhysicsBodyTypeStatic, CCPhysicsBodyTypeStatic};
