@@ -28,12 +28,14 @@
 #import "CCBSequenceProperty.h"
 #import "CCBReader.h"
 #import "CCBKeyframe.h"
-#import "OALSimpleAudio.h"
+//#import "OALSimpleAudio.h"
 #import <objc/runtime.h>
 
-#import "CCDirector_Private.h"
+//#import "CCDirector_Private.h"
 #import "CCBReader_Private.h"
-#import "CCActionManager.h"
+//#import "CCActionManager.h"
+
+#import "CCBSpriteKitCompatibility.h"
 
 static NSInteger ccbAnimationManagerID = 0;
 
