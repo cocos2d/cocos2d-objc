@@ -23,6 +23,7 @@
  */
 
 #import "CCBLocalizationManager.h"
+#import "CCBSpriteKitCompatibility.h"
 
 @implementation CCBLocalizationManager
 

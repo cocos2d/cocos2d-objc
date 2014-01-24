@@ -24,7 +24,7 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "cocos2d.h"
+#import "CCBSpriteKitCompatibility.h"
 
 @class CCBAnimationManager;
 
@@ -155,6 +155,13 @@
  *  Once a ccb-file has been loaded, the animationManager property will be set to contain the top level CCBAnimationManager
  */
 @property (nonatomic,strong) CCBAnimationManager* animationManager;
+
+
+// Internal use: override methods for Sprite Kit Reader subclass
++(void) setSceneSize:(CGSize)sceneSize;
+-(CCNode*) nodeFromClassName:(NSString*)nodeClassName;
+-(CCScene*) createScene;
+-(void) readerDidSetSpriteFrame:(CCSpriteFrame*)spriteFrame node:(CCNode*)node;
 
 @end
 
