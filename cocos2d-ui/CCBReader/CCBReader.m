@@ -37,10 +37,9 @@
 #import "SSZipArchive.h"
 #endif
 
-#import "CCBSpriteKitCompatibility.h"
-
+// Set to 1 to log assignment of properties in the form: "propertyname = value"
 #ifndef DEBUG_READER_PROPERTIES
-#define DEBUG_READER_PROPERTIES 1
+#define DEBUG_READER_PROPERTIES 0
 #endif
 
 @interface CCBFile : CCNode

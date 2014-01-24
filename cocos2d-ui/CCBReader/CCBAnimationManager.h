@@ -24,7 +24,7 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "CCBSpriteKitCompatibility.h"
+#import "CCBReader.h"
 
 @class CCBSequence;
 

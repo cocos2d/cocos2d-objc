@@ -28,14 +28,17 @@
 #import "CCBSequenceProperty.h"
 #import "CCBReader.h"
 #import "CCBKeyframe.h"
-//#import "OALSimpleAudio.h"
 #import <objc/runtime.h>
 
-//#import "CCDirector_Private.h"
+#import "CCBReader.h"
 #import "CCBReader_Private.h"
-//#import "CCActionManager.h"
 
-#import "CCBSpriteKitCompatibility.h"
+// These imports are (currently) only needed for / supported by cocos2d-iphone
+#if CCB_SPRITEKIT_READER == 0
+#import "OALSimpleAudio.h"
+#import "CCDirector_Private.h"
+#import "CCActionManager.h"
+#endif
 
 static NSInteger ccbAnimationManagerID = 0;
 
