@@ -14,12 +14,16 @@
 @interface CCLayoutTest : TestBase @end
 
 @implementation CCLayoutTest
+{
+    CCLayoutBox *_layout;
+}
 
 - (NSArray*) testConstructors
 {
     return [NSArray arrayWithObjects:
             @"setupLayoutBoxTestHorizontal",
             @"setupLayoutBoxTestVertical",
+            @"setupLayoutBoxTestDynamical",
             nil];
 }
 
@@ -27,45 +31,82 @@
 {
     self.subTitle = @"Horizontal Box Layout.";
     
-    CCLayoutBox* layout = [[CCLayoutBox alloc] init];
-    layout.positionType = CCPositionTypeNormalized;
-    layout.position = ccp(0.5f, 0.5f);
+    _layout = [[CCLayoutBox alloc] init];
+    _layout.positionType = CCPositionTypeNormalized;
+    _layout.position = ccp(0.5f, 0.5f);
     
     CCSprite* sprite0 = [CCSprite spriteWithImageNamed:@"Sprites/bird.png"];
     CCSprite* sprite1 = [CCSprite spriteWithImageNamed:@"Sprites/grossini.png"];
     CCSprite* sprite2 = [CCSprite spriteWithImageNamed:@"Sprites/grossinis_sister.png"];
     
-    [layout addChild:sprite0];
-    [layout addChild:sprite1];
-    [layout addChild:sprite2];
+    [_layout addChild:sprite0];
+    [_layout addChild:sprite1];
+    [_layout addChild:sprite2];
     
-    layout.anchorPoint = ccp(0.5f, 0.5f);
-    layout.spacing = 20;
+    _layout.anchorPoint = ccp(0.5f, 0.5f);
+    _layout.spacing = 20;
     
-    [self.contentNode addChild:layout];
+    [self.contentNode addChild:_layout];
 }
 
 - (void) setupLayoutBoxTestVertical
 {
     self.subTitle = @"Vertical Box Layout.";
     
-    CCLayoutBox* layout = [[CCLayoutBox alloc] init];
-    layout.positionType = CCPositionTypeNormalized;
-    layout.position = ccp(0.5f, 0.5f);
-    layout.direction = CCLayoutBoxDirectionVertical;
+    _layout = [[CCLayoutBox alloc] init];
+    _layout.positionType = CCPositionTypeNormalized;
+    _layout.position = ccp(0.5f, 0.5f);
+    _layout.direction = CCLayoutBoxDirectionVertical;
     
     CCSprite* sprite0 = [CCSprite spriteWithImageNamed:@"Sprites/bird.png"];
     CCSprite* sprite1 = [CCSprite spriteWithImageNamed:@"Sprites/grossini.png"];
     CCSprite* sprite2 = [CCSprite spriteWithImageNamed:@"Sprites/grossinis_sister.png"];
     
-    [layout addChild:sprite0];
-    [layout addChild:sprite1];
-    [layout addChild:sprite2];
+    [_layout addChild:sprite0];
+    [_layout addChild:sprite1];
+    [_layout addChild:sprite2];
     
-    layout.anchorPoint = ccp(0.5f, 0.5f);
-    layout.spacing = 20;
+    _layout.anchorPoint = ccp(0.5f, 0.5f);
+    _layout.spacing = 20;
     
-    [self.contentNode addChild:layout];
+    [self.contentNode addChild:_layout];
+}
+
+- (void) setupLayoutBoxTestDynamical
+{
+    self.subTitle = @"Dynamic Box Layout.";
+    
+    _layout = [[CCLayoutBox alloc] init];
+    _layout.positionType = CCPositionTypeNormalized;
+    _layout.position = ccp(0.5f, 0.5f);
+    _layout.direction = CCLayoutBoxDirectionVertical;
+    
+    CCSprite* sprite0 = [CCSprite spriteWithImageNamed:@"Sprites/bird.png"];
+    CCSprite* sprite1 = [CCSprite spriteWithImageNamed:@"Sprites/grossini.png"];
+    CCSprite* sprite2 = [CCSprite spriteWithImageNamed:@"Sprites/grossinis_sister.png"];
+    
+    [_layout addChild:sprite0];
+    [_layout addChild:sprite1];
+    [_layout addChild:sprite2];
+    
+    _layout.anchorPoint = ccp(0.5f, 0.5f);
+    _layout.spacing = 20;
+    
+    CCButton *button = [CCButton buttonWithTitle:@"[Change]"];
+    button.positionType = CCPositionTypeNormalized;
+    button.position = ccp(0.9, 0.9);
+    [button setTarget:self selector:@selector(layoutChanged:)];
+    [self.contentNode addChild:button];
+    
+    [self.contentNode addChild:_layout];
+}
+
+- (void)layoutChanged:(id)sender
+{
+    _layout.direction = (_layout.direction == CCLayoutBoxDirectionHorizontal) ? CCLayoutBoxDirectionVertical : CCLayoutBoxDirectionHorizontal;
+    _layout.spacing = (_layout.spacing == 20) ? 60 : 20;
+    
+    CCLOG(@"Layout contentSize %.0fx%.0f", _layout.contentSize.width, _layout.contentSize.height);
 }
 
 @end
