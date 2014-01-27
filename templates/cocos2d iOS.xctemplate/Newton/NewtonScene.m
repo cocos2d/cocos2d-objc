@@ -189,7 +189,7 @@
     
     // In pre-v3, touch enable and scheduleUpdate was called here
     // In v3, touch is enabled by setting userInterActionEnabled for the individual nodes
-    // Pr frame update is automatically enabled, if update is overridden
+    // Per frame update is automatically enabled, if update is overridden
     
     // Basically this will result in fewer having the need to override onEnter and onExit, but for clarity, it is shown
 }
