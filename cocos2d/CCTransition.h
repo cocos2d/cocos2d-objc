@@ -68,11 +68,17 @@ typedef NS_ENUM(NSInteger, CCTransitionDirection)
 
 
 /**
- *  Will downscale incoming and outgoing scene.
+ *  Will downscale outgoing scene.
  *  Can be used as an effect, or to decrease render time on complex scenes.
  *  Default 1.0.
  */
 @property (nonatomic, assign) float outgoingDownScale;
+
+/**
+ *  Will downscale incoming scene.
+ *  Can be used as an effect, or to decrease render time on complex scenes.
+ *  Default 1.0.
+ */
 @property (nonatomic, assign) float incomingDownScale;
 
 /**
@@ -89,10 +95,15 @@ typedef NS_ENUM(NSInteger, CCTransitionDirection)
 @property (nonatomic, assign) CCTexturePixelFormat transitionPixelFormat;
 
 /**
- *  Defines whether incoming and outgoing scene will be animated during transition.
+ *  Defines whether outgoing scene will be animated during transition.
  *  Default NO.
  */
 @property (nonatomic, getter = isOutgoingSceneAnimated) BOOL outgoingSceneAnimated;
+
+/**
+ *  Defines whether incoming scene will be animated during transition.
+ *  Default NO.
+ */
 @property (nonatomic, getter = isIncomingSceneAnimated) BOOL incomingSceneAnimated;
 
 /** The actual transition runtime in seconds. */
