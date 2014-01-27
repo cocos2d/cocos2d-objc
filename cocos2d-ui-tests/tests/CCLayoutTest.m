@@ -83,7 +83,7 @@
     
     CCSprite* sprite0 = [CCSprite spriteWithImageNamed:@"Sprites/bird.png"];
     CCSprite* sprite1 = [CCSprite spriteWithImageNamed:@"Sprites/grossini.png"];
-    CCSprite* sprite2 = [CCSprite spriteWithImageNamed:@"Sprites/grossinis_sister.png"];
+    CCButton* sprite2 = [CCButton buttonWithTitle:@"Button" spriteFrame:[CCSpriteFrame frameWithImageNamed:@"Sprites/grossinis_sister.png"]];
     
     [_layout addChild:sprite0];
     [_layout addChild:sprite1];
