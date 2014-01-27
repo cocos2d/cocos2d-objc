@@ -605,11 +605,8 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 -(CCNode*) getChildByName:(NSString *)name recursively:(bool)isRecursive
 {
 	NSAssert(name, @"name is NULL");
-	if([self.name isEqualToString:name]){
-		return self;
-	}
-	
-  for (CCNode* node in _children) {
+
+  	for (CCNode* node in _children) {
 		if(isRecursive){
 			// Recurse:
 			CCNode* n = [node getChildByName:name recursively:isRecursive];
