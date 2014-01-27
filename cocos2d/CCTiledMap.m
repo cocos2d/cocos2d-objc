@@ -112,7 +112,7 @@
 
 -(id) initWithFile:(NSString*)tmxFile
 {
-	NSAssert(tmxFile != nil, @"TMXTiledMap: tmx file should not bi nil");
+	NSAssert(tmxFile != nil, @"TMXTiledMap: tmx file should not be nil");
 
 	if ((self=[super init])) {
 
