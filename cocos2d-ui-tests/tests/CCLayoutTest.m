@@ -92,21 +92,33 @@
     _layout.anchorPoint = ccp(0.5f, 0.5f);
     _layout.spacing = 20;
     
-    CCButton *button = [CCButton buttonWithTitle:@"[Change]"];
-    button.positionType = CCPositionTypeNormalized;
-    button.position = ccp(0.9, 0.9);
-    [button setTarget:self selector:@selector(layoutChanged:)];
-    [self.contentNode addChild:button];
+    CCButton *changeButton = [CCButton buttonWithTitle:@"[Change]"];
+    changeButton.positionType = CCPositionTypeNormalized;
+    changeButton.position = ccp(0.9, 0.9);
+    [changeButton setTarget:self selector:@selector(changedPressed:)];
+    [self.contentNode addChild:changeButton];
+    
+    CCButton *fadeButton = [CCButton buttonWithTitle:@"[Fade]"];
+    fadeButton.positionType = CCPositionTypeNormalized;
+    fadeButton.position = ccp(0.9, 0.7);
+    [fadeButton setTarget:self selector:@selector(fadePressed)];
+    [self.contentNode addChild:fadeButton];
     
     [self.contentNode addChild:_layout];
 }
 
-- (void)layoutChanged:(id)sender
+- (void)changedPressed:(id)sender
 {
     _layout.direction = (_layout.direction == CCLayoutBoxDirectionHorizontal) ? CCLayoutBoxDirectionVertical : CCLayoutBoxDirectionHorizontal;
     _layout.spacing = (_layout.spacing == 20) ? 60 : 20;
     
     CCLOG(@"Layout contentSize %.0fx%.0f", _layout.contentSize.width, _layout.contentSize.height);
+}
+
+- (void)fadePressed
+{
+    _layout.cascadeOpacityEnabled = YES;
+    [_layout runAction:[CCActionSequence actions:[CCActionFadeOut actionWithDuration:1], [CCActionFadeIn actionWithDuration:1], nil]];
 }
 
 @end
