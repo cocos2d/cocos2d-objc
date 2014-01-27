@@ -395,6 +395,87 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
 	XCTAssertTrue(node2.position.y == 0.0, @"");
 }
 
+-(void)testAllowsRotation
+{
+	CCPhysicsNode *physicsNode = [CCPhysicsNode node];
+	[physicsNode onEnter];
+	
+	{
+		// Regular body.
+		CCNode *node = [CCNode node];
+		node.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1.0 andCenter:CGPointZero];
+		XCTAssert(node.physicsBody.allowsRotation == YES, @"");
+		
+		[physicsNode addChild:node];
+		XCTAssert(node.physicsBody.allowsRotation == YES, @"");
+		
+		XCTAssert(node.physicsBody.body.moment < INFINITY, @"");
+	}{
+		// Set before adding.
+		CCNode *node = [CCNode node];
+		node.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1.0 andCenter:CGPointZero];
+		node.physicsBody.allowsRotation = NO;
+		XCTAssert(node.physicsBody.allowsRotation == NO, @"");
+		
+		[physicsNode addChild:node];
+		XCTAssert(node.physicsBody.allowsRotation == NO, @"");
+		
+		XCTAssert(node.physicsBody.body.moment == INFINITY, @"");
+	}{
+		// Set after adding.
+		CCNode *node = [CCNode node];
+		node.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1.0 andCenter:CGPointZero];
+		XCTAssert(node.physicsBody.allowsRotation == YES, @"");
+		
+		[physicsNode addChild:node];
+		XCTAssert(node.physicsBody.allowsRotation == YES, @"");
+		node.physicsBody.allowsRotation = NO;
+		XCTAssert(node.physicsBody.allowsRotation == NO, @"");
+		
+		XCTAssert(node.physicsBody.body.moment == INFINITY, @"");
+	}{
+		// Set and reverted before adding.
+		CCNode *node = [CCNode node];
+		node.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1.0 andCenter:CGPointZero];
+		node.physicsBody.allowsRotation = NO;
+		XCTAssert(node.physicsBody.allowsRotation == NO, @"");
+		node.physicsBody.allowsRotation = YES;
+		XCTAssert(node.physicsBody.allowsRotation == YES, @"");
+		
+		[physicsNode addChild:node];
+		XCTAssert(node.physicsBody.allowsRotation == YES, @"");
+		
+		XCTAssert(node.physicsBody.body.moment < INFINITY, @"");
+	}{
+		// Set before and reverted after adding.
+		CCNode *node = [CCNode node];
+		node.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1.0 andCenter:CGPointZero];
+		node.physicsBody.allowsRotation = NO;
+		XCTAssert(node.physicsBody.allowsRotation == NO, @"");
+		
+		[physicsNode addChild:node];
+		XCTAssert(node.physicsBody.allowsRotation == NO, @"");
+		node.physicsBody.allowsRotation = YES;
+		XCTAssert(node.physicsBody.allowsRotation == YES, @"");
+		
+		XCTAssert(node.physicsBody.body.moment < INFINITY, @"");
+	}{
+		// Set reverted after adding.
+		CCNode *node = [CCNode node];
+		node.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1.0 andCenter:CGPointZero];
+		XCTAssert(node.physicsBody.allowsRotation == YES, @"");
+		
+		[physicsNode addChild:node];
+		XCTAssert(node.physicsBody.allowsRotation == YES, @"");
+		node.physicsBody.allowsRotation = NO;
+		XCTAssert(node.physicsBody.allowsRotation == NO, @"");
+		node.physicsBody.allowsRotation = YES;
+		XCTAssert(node.physicsBody.allowsRotation == YES, @"");
+		
+		XCTAssert(node.physicsBody.body.moment < INFINITY, @"");
+	}
+}
+
 -(void)testBodyType
 {
 	CGPoint points[3] = {};

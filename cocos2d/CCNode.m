@@ -973,6 +973,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		cpTransform nonRigid = self.nonRigidTransform;
 		[_physicsBody willAddToPhysicsNode:physics nonRigidTransform:nonRigid];
 		[physics.space smartAdd:physicsBody];
+		[_physicsBody didAddToPhysicsNode:physics];
 		
 		NSArray *joints = physicsBody.joints;
 		for(NSUInteger i=0, count=joints.count; i<count; i++){
