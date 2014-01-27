@@ -1580,11 +1580,11 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	_displayColor.g = _color.g * parentColor.g;
 	_displayColor.b = _color.b * parentColor.b;
 	
-	if (_cascadeColorEnabled) {
+	// if (_cascadeColorEnabled) {
 		for (CCNode* item in _children) {
 			[item updateDisplayedColor:_displayColor];
 		}
-	}
+	// }
 }
 
 - (void) cascadeOpacityIfNeeded
@@ -1601,11 +1601,11 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 {
 	_displayColor.a = _color.a * parentOpacity;
 	
-	if (_cascadeOpacityEnabled) {
+	// if (_cascadeOpacityEnabled) {
 		for (CCNode* item in _children) {
 			[item updateDisplayedOpacity:_displayColor.a];
 		}
-	}
+	// }
 }
 
 -(void) setOpacityModifyRGB:(BOOL)boolean{
