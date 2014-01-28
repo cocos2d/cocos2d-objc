@@ -81,7 +81,7 @@
 
 -(void) actionAllocWithHashElement:(tHashElement*)element
 {
-	// 4 actions per Node by default
+	// if actions array doesn't exist yet, create one
 	if( element->actions == nil ) {
         NSMutableArray* aObj = [[NSMutableArray alloc] init];
         void* a = (__bridge void*) aObj;
