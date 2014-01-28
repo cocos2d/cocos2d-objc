@@ -22,7 +22,19 @@
 {
 	[self.contentNode removeAllChildren];
 	[CCTextureCache purgeSharedTextureCache];
-	[[CCFileUtils sharedFileUtils] setSearchPath: @[ @"Images", kCCFileUtilsDefaultSearchPath] ];
+	NSMutableArray *newSearchPaths = [[[CCFileUtils sharedFileUtils] searchPath] mutableCopy];
+	[newSearchPaths insertObject:@"Images" atIndex:0];
+	[[CCFileUtils sharedFileUtils] setSearchPath: newSearchPaths ];
+}
+
+- (void) pressedBack:(id)sender
+{
+	[super pressedBack:sender];
+	
+	// Restore the FileUtils search path(s) to what they were before we added "Images"
+	NSMutableArray *oldSearchPaths = [[[CCFileUtils sharedFileUtils] searchPath] mutableCopy];
+	[oldSearchPaths removeObject:@"Images"];
+	[[CCFileUtils sharedFileUtils] setSearchPath:oldSearchPaths];
 }
 
 - (CCSprite *) loadAndDisplayImageNamed:(NSString*) fileName withTitle:(NSString*) title{
