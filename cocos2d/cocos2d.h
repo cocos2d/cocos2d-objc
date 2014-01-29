@@ -57,6 +57,7 @@
 #import "CCActionInterval.h"
 #import "CCActionProgressTimer.h"
 #import "CCActionTween.h"
+#import "CCActionMoveToNode.h"
 #import "CCClippingNode.h"
 #import "CCColor.h"
 #import "CCConfiguration.h"
