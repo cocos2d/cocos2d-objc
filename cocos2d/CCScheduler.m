@@ -60,7 +60,7 @@
 @property(nonatomic, readonly) CCScheduledTarget *scheduledTarget;
 
 // May differ from invoke time due to pausing.
-@property(nonatomic, assign) CCTime invokeTimeInternal;
+@property(nonatomic, readonly) CCTime invokeTimeInternal;
 // Timers form a linked list per target.
 @property(nonatomic, strong) CCTimer *next;
 // Positive value when timer is paused or completing a pause,
@@ -221,6 +221,15 @@ static CCTimerBlock INVALIDATED_BLOCK = ^(CCTimer *timer){};
 
 -(void)setDeltaTime:(CCTime)deltaTime {_deltaTime = deltaTime;}
 
+// Called to update the invoke time and pause delay of a timer.
+-(void)rescheduleForPause
+{
+	_invokeTimeInternal += _pauseDelay;
+	
+	// If the timer is no longer paused, reset the pause delay.
+	if(!_paused) _pauseDelay = 0.0;
+}
+
 @end
 
 
@@ -371,7 +380,7 @@ CompareTimers(const void *a, const void *b, void *context)
 		CCTime pauseDelay = timer.pauseDelay;
 		if(pauseDelay > 0.0){
 			// Rschedule the timer with the minimum remaining delay due to the timer being paused.
-			timer.invokeTimeInternal += pauseDelay;
+			[timer rescheduleForPause];
 			CFBinaryHeapAddValue(_heap, (__bridge CFTypeRef)timer);
 		} else {
 			timer.block(timer);
