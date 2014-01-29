@@ -23,13 +23,16 @@
  *
  */
 
-#import "CCActionMoveToMovingTarget.h"
+#import "CCActionMoveToNode.h"
 
-@implementation CCActionMoveToMovingTarget {
+@implementation CCActionMoveToNode {
     // speed of the movement in points/seconds
     CGFloat _speed;
     // variable to determine if this action is completed
     BOOL _done;
+    /* stores if the ActionCompleted block has already been called for an infinite follow action.
+     For infinite follow actions the block is only allowed to be called once */
+    BOOL _actionCompletedOnce;
     // block that provides target position
     PositionUpdateBlock _positionUpdateBlock;
     // node that shall be followed
@@ -151,6 +154,14 @@
         // if this isn't an infinite action, it is completed, because we reached the target position
         if (!_followInfinite) {
             _done = YES;
+            
+            if (self.actionCompletedBlock) {
+                self.actionCompletedBlock();
+            }
+        }
+        // if this is an infinite action, only call the action completion block once
+        else if (_followInfinite && !_actionCompletedOnce) {
+            _actionCompletedOnce = YES;
             
             if (self.actionCompletedBlock) {
                 self.actionCompletedBlock();

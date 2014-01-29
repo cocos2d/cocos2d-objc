@@ -28,7 +28,7 @@ typedef CGPoint(^PositionUpdateBlock)(void);
 typedef void(^ActionCompletedBlock)(void);
 
 // -----------------------------------------------------------------
-/** @name CCActionMoveToMovingTarget */
+/** @name CCActionMoveToNode */
 
 /**
  *  Moves a CCNode object to a moving target. The moving target can either be a CCNode or a moving position can be provided 
@@ -49,10 +49,12 @@ typedef void(^ActionCompletedBlock)(void);
  *  }];
  *  @endcode
  */
-@interface CCActionMoveToMovingTarget : CCAction <NSCopying>
+@interface CCActionMoveToNode : CCAction <NSCopying>
 
 /**
  *  If you assign a block to this property, it will be called once the action is completed.
+ *  In case you run this action as 'infinite follow', the actionCompletedBlock will be called the first time the target position
+ *  is reached.
  *
  *  Example:
  *  @code
@@ -66,7 +68,7 @@ typedef void(^ActionCompletedBlock)(void);
 /**
  *  Creates the action.
  *
- *  @param speed the speed of the movement in points per second
+ *  @param speed the speed of the movement in points per second within the parent's coordinate system
  *  @param targetNode the node which shall be followed
  *
  *  @return New MoveToMovingTarget action
@@ -76,7 +78,7 @@ typedef void(^ActionCompletedBlock)(void);
 /**
  *  Creates the action.
  *
- *  @param speed the speed of the movement in points per second
+ *  @param speed the speed of the movement in points per second within the parent's coordinate system
  *  @param targetNode the node which shall be followed
  *  @param infinite Defines wether a node should follow the target infinitely; or stop once the target position is reached
  *
@@ -87,7 +89,7 @@ typedef void(^ActionCompletedBlock)(void);
 /**
  *  Creates the action.
  *
- *  @param speed the speed of the movement in points per second
+ *  @param speed the speed of the movement in points per second within the parent's coordinate system
  *  @param positionUpdateBlock a block that returns the target point for this action
  *
  *  @return New MoveToMovingTarget action
@@ -97,7 +99,7 @@ typedef void(^ActionCompletedBlock)(void);
 /**
  *  Creates the action.
  *
- *  @param speed the speed of the movement in points per second
+ *  @param speed the speed of the movement in points per second within the parent's coordinate system
  *  @param positionUpdateBlock a block that returns the target point for this action
  *  @param infinite Defines wether a node should follow the target infinitely; or stop once the target position is reached
  *
@@ -108,7 +110,7 @@ typedef void(^ActionCompletedBlock)(void);
 /**
  *  Initializes the action.
  *
- *  @param speed the speed of the movement in points per second
+ *  @param speed the speed of the movement in points per second within the parent's coordinate system
  *  @param targetNode the node which shall be followed
  *
  *  @return New MoveToMovingTarget action
@@ -118,7 +120,7 @@ typedef void(^ActionCompletedBlock)(void);
 /**
  *  Initializes the action.
  *
- *  @param speed the speed of the movement in points per second
+ *  @param speed the speed of the movement in points per second within the parent's coordinate system
  *  @param targetNode the node which shall be followed
  *  @param infinite Defines wether a node should follow the target infinitely; or stop once the target position is reached
  *
@@ -129,7 +131,7 @@ typedef void(^ActionCompletedBlock)(void);
 /**
  *  Initializes the action.
  *
- *  @param speed the speed of the movement in points per second
+ *  @param speed the speed of the movement in points per second within the parent's coordinate system
  *  @param positionUpdateBlock a block that returns the target point for this action
  *
  *  @return New MoveToMovingTarget action
@@ -139,7 +141,7 @@ typedef void(^ActionCompletedBlock)(void);
 /**
  *  Initializes the action.
  *
- *  @param speed the speed of the movement in points per second
+ *  @param speed the speed of the movement in points per second within the parent's coordinate system
  *  @param positionUpdateBlock a block that returns the target point for this action
  *  @param infinite Defines wether a node should follow the target infinitely; or stop once the target position is reached
  *
