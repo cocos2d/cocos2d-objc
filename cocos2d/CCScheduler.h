@@ -36,6 +36,7 @@
 
 // Used to break ties for scheduled blocks, updated: and fixedUpdate: methods.
 // Targets are sorted by priority so lower priorities are called first.
+// The priority value for a given object should be constant.
 @property(nonatomic, readonly) NSInteger priority;
 
 @optional
@@ -143,6 +144,7 @@ typedef void (^CCTimerBlock)(CCTimer *timer);
  */
 -(void) unscheduleTarget:(NSObject<CCSchedulerTarget> *)target;
 
+// TODO This is no longer needed and should maybe be removed or made a testing only method.
 -(BOOL) isTargetScheduled:(NSObject<CCSchedulerTarget> *)target;
 
 -(void)setPaused:(BOOL)paused target:(NSObject<CCSchedulerTarget> *)target;

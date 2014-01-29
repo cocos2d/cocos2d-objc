@@ -38,6 +38,10 @@ extern NSString* const CCSetupFixedUpdateInterval;
 extern NSString* const CCSetupShowDebugStats;
 extern NSString* const CCSetupTabletScale2X;
 
+extern NSString* const CCSetupDepthFormat;
+extern NSString* const CCSetupPreserveBackbuffer;
+extern NSString* const CCSetupMultiSampling;
+extern NSString* const CCSetupNumberOfSamples;
 
 // Landscape screen orientation. Used with CCSetupScreenOrientation.
 extern NSString* const CCScreenOrientationLandscape;
@@ -112,6 +116,11 @@ extern NSString* const CCScreenModeFixed;
  *  - CCSetupFixedUpdateInterval NSNumber with double. Specifies the desired interval between fixed updates.Should be smaller than CCSetupAnimationInterval. Defaults to 1/60.0.
  *  - CCSetupShowDebugStats NSNumber with bool. Specifies if the stats (FPS, frame time and draw call count) should be shown. Defaults to NO.
  *  - CCSetupTabletScale2X NSNumber with bool. If true, the iPad will be setup to act like it has a 512x384 "retina" screen. This makes it much easier to make universal iOS games. This value is ignored when using the fixed screen mode.
+ *
+ *  - CCSetupDepthFormat NSNumber with integer. Specifies the desired depth format. Values are 0, GL_DEPTH_COMPONENT24_OES and GL_DEPTH24_STENCIL8_OES.
+ *  - CCSetupPreserveBackbuffer NSNumber with bool. Specifies whether backbuffer will be preserved.
+ *  - CCSetupMultiSampling NSNumber with bool. Specifies whether miltisampling is enabled.
+ *  - CCSetupNumberOfSamples NSNumber with integer. Specifies number of samples when multisampling is enabled.
  *
  *  @param config Dictionary with options for configuring Cocos2d.
  */
