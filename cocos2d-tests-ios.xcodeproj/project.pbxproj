@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		624AFA061891A8E2007CC077 /* CCActionMoveToMovingTargetTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 624AFA051891A8E2007CC077 /* CCActionMoveToMovingTargetTest.m */; };
+		624AFA061891A8E2007CC077 /* CCActionMoveToNodeTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 624AFA051891A8E2007CC077 /* CCActionMoveToNodeTest.m */; };
 		75556A04185636F100ED1B0F /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75556A03185636F100ED1B0F /* XCTest.framework */; };
 		75556A05185636F100ED1B0F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605717E7D278007067F0 /* Foundation.framework */; };
 		75556A06185636F100ED1B0F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605517E7D278007067F0 /* UIKit.framework */; };
@@ -96,7 +96,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		624AFA051891A8E2007CC077 /* CCActionMoveToMovingTargetTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCActionMoveToMovingTargetTest.m; path = "cocos2d-ui-tests/tests/CCActionMoveToMovingTargetTest.m"; sourceTree = SOURCE_ROOT; };
+		624AFA051891A8E2007CC077 /* CCActionMoveToNodeTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCActionMoveToNodeTest.m; path = "cocos2d-ui-tests/tests/CCActionMoveToNodeTest.m"; sourceTree = SOURCE_ROOT; };
 		755569E31856361100ED1B0F /* CCFileUtilTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCFileUtilTests.m; sourceTree = "<group>"; };
 		755569E41856361100ED1B0F /* CCNodeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCNodeTests.m; sourceTree = "<group>"; };
 		755569E51856361100ED1B0F /* CCPhysicsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsTests.m; sourceTree = "<group>"; };
@@ -347,7 +347,7 @@
 				7587BDB2185A0A6900EEEFDE /* TextureTest.m */,
 				7587BDB6185A64AD00EEEFDE /* ColorTest.m */,
 				D3B2A7E4187DD60B00406C5A /* CCBMFontTest.m */,
-				624AFA051891A8E2007CC077 /* CCActionMoveToMovingTargetTest.m */,
+				624AFA051891A8E2007CC077 /* CCActionMoveToNodeTest.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -609,7 +609,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				624AFA061891A8E2007CC077 /* CCActionMoveToMovingTargetTest.m in Sources */,
+				624AFA061891A8E2007CC077 /* CCActionMoveToNodeTest.m in Sources */,
 				B71B087C17EA5B490082EBC0 /* TestBase.m in Sources */,
 				B71B088217EA5B6A0082EBC0 /* CCScrollViewTest.m in Sources */,
 				B7EE697918186D5200B983FE /* CCTextFieldTest.m in Sources */,

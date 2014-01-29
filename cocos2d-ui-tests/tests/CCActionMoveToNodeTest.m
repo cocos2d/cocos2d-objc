@@ -9,9 +9,9 @@
 #import "cocos2d.h"
 #import "TestBase.h"
 
-@interface CCActionMoveToMovingTargetTest : TestBase @end
+@interface CCActionMoveToNodeTest : TestBase @end
 
-@implementation CCActionMoveToMovingTargetTest {
+@implementation CCActionMoveToNodeTest {
     CCSprite *_spriteToFollow;
     CCSprite *_followingSprite;
 }
