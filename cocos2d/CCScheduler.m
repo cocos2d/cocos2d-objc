@@ -391,6 +391,7 @@ CompareTimers(const void *a, const void *b, void *context)
 				CCTime delay = timer.deltaTime = timer.repeatInterval;
 				timer.invokeTimeInternal += delay;
 				
+				NSAssert(delay > 0.0, @"Rescheduling a timer with a repeat interval of 0 will cause an infinite loop.");
 				CFBinaryHeapAddValue(_heap, (__bridge CFTypeRef)timer);
 			} else {
 				CCScheduledTarget *scheduledTarget = timer.scheduledTarget;
