@@ -143,6 +143,7 @@ typedef void (^CCTimerBlock)(CCTimer *timer);
  */
 -(void) unscheduleTarget:(NSObject<CCSchedulerTarget> *)target;
 
+// TODO This is no longer needed and should maybe be removed or made a testing only method.
 -(BOOL) isTargetScheduled:(NSObject<CCSchedulerTarget> *)target;
 
 -(void)setPaused:(BOOL)paused target:(NSObject<CCSchedulerTarget> *)target;

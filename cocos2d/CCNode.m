@@ -1038,10 +1038,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	[_children makeObjectsPerformSelector:@selector(onEnter)];
 	
 	[self setupPhysicsBody:_physicsBody];
-	
-	if(![_scheduler isTargetScheduled:self]){
-		[_scheduler scheduleTarget:self];
-	}
+	[_scheduler scheduleTarget:self];
 	
 	BOOL wasRunning = self.runningInActiveScene;
 	_isInActiveScene = YES;

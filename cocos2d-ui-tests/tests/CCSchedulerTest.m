@@ -23,6 +23,19 @@
 	return self;
 }
 
+-(void)foo:(CCTime)delta
+{
+	NSLog(@"Foooo!");
+}
+
+-(void)onEnter
+{
+	// Scheduling a method before calling [super onEnter] used to trigger a bug.
+	[self schedule:@selector(foo:) interval:1.0];
+	
+	[super onEnter];
+}
+
 -(void)update:(CCTime)delta
 {
 	// update: moves left and right
