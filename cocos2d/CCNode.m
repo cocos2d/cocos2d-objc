@@ -1154,6 +1154,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 -(CCTimer *) schedule:(SEL)selector interval:(CCTime)interval repeat: (uint) repeat delay:(CCTime) delay
 {
 	NSAssert( selector != nil, @"Argument must be non-nil");
+	NSAssert( selector != @selector(update:) && selector != @selector(fixedUpdate:), @"The update: and fixedUpdate: methods are scheduled automatically.");
 	NSAssert( interval >=0, @"Arguemnt must be positive");
 	
 	[self unschedule:selector];
