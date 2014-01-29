@@ -41,7 +41,8 @@
 #import "../../ccMacros.h"
 #import "../../CCGLProgram.h"
 #import "../../ccGLStateCache.h"
-
+#import "../../ccFPSImages.h"
+ 
 // external
 #import "kazmath/kazmath.h"
 #import "kazmath/GL/matrix.h"
