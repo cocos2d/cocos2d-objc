@@ -1145,7 +1145,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 -(CCTimer *) schedule:(SEL)selector interval:(CCTime)interval
 {
-	return [self schedule:selector interval:interval repeat:kCCRepeatForever delay:0];
+	return [self schedule:selector interval:interval repeat:CCTimerRepeatForever delay:0];
 }
 
 -(CCTimer *) schedule:(SEL)selector interval:(CCTime)interval repeat: (uint) repeat delay:(CCTime) delay
@@ -1161,7 +1161,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		imp(self, selector, t.deltaTime);
 	} forTarget:self withDelay:delay];
 	
-	timer.repeatCount = CCTimerRepeatForever;
+	timer.repeatCount = repeat;
 	timer.repeatInterval = interval;
 	timer.userData = NSStringFromSelector(selector);
 	
@@ -1170,7 +1170,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 - (CCTimer *) scheduleOnce:(SEL) selector delay:(CCTime) delay
 {
-	return [self schedule:selector interval:0.f repeat:0 delay:delay];
+	return [self schedule:selector interval:INFINITY repeat:0 delay:delay];
 }
 
 -(void)unschedule:(SEL)selector
