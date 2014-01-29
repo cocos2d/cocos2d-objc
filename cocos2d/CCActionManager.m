@@ -81,13 +81,13 @@
 
 -(void) actionAllocWithHashElement:(tHashElement*)element
 {
-    NSMutableArray* aObj = [[NSMutableArray alloc] init];
-    void* a = (__bridge void*) aObj;
-    CFRetain(a);
-    
-	// 4 actions per Node by default
-	if( element->actions == nil )
+	// if actions array doesn't exist yet, create one
+	if( element->actions == nil ) {
+        NSMutableArray* aObj = [[NSMutableArray alloc] init];
+        void* a = (__bridge void*) aObj;
+        CFRetain(a);
 		element->actions = aObj;
+    }
 }
 
 -(void) removeActionAtIndex:(NSUInteger)index hashElement:(tHashElement*)element
