@@ -303,7 +303,7 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, /*CP_BODY_TYPE_K
 -(void)applyAngularImpulse:(CGFloat)impulse {_body.angularVelocity += impulse/_body.moment;}
 
 -(void)applyForce:(CGPoint)force {_body.force = cpvadd(_body.force, force);}
--(void)applyImpulse:(CGPoint)impulse {_body.velocity = cpvadd(_body.velocity, cpvmult(impulse, 1.0f/_body.moment));}
+-(void)applyImpulse:(CGPoint)impulse {_body.velocity = cpvadd(_body.velocity, cpvmult(impulse, 1.0f/_body.mass));}
 
 -(void)applyForce:(CGPoint)force atLocalPoint:(CGPoint)point
 {
