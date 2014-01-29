@@ -696,13 +696,13 @@ static NSInteger ccbAnimationManagerID = 0;
 -(void) startWithTarget:(CCNode *)aTarget
 {
 	[super startWithTarget:aTarget];
-    startAngle_ = [self.target rotation];
+    startAngle_ = [(CCNode *)self.target rotation];
     diffAngle_ = dstAngle_ - startAngle_;
 }
 
 -(void) update: (CCTime) t
 {
-	[self.target setRotation: startAngle_ + diffAngle_ * t];
+	[(CCNode *)self.target setRotation: startAngle_ + diffAngle_ * t];
 }
 
 @end
