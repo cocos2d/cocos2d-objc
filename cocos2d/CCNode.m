@@ -236,7 +236,7 @@ static NSUInteger globalOrderOfArrival = 1;
 	if(body){
 		return -CC_RADIANS_TO_DEGREES(body.absoluteRadians) + NodeToPhysicsRotation(self.parent);
 	} else {
-		NSAssert( _rotationalSkewX == _rotationalSkewY, @"CCNode#rotation. RotationX != RotationY. Don't know which one to return");
+		NSAssert( _rotationalSkewX == _rotationalSkewY, @"CCNode#rotation. rotationalSkewX != rotationalSkewY. Don't know which one to return");
 		return _rotationalSkewX;
 	}
 }
