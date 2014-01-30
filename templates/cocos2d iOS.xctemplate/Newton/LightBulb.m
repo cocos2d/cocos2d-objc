@@ -60,7 +60,7 @@
 - (void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
 {
     // Place the light bulb at the touch position
-    self.position = touch.locationInWorld;
+    self.position = [_parent convertToNodeSpace:touch.locationInWorld];
 }
 
 // -----------------------------------------------------------------------
