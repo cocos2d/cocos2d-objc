@@ -56,7 +56,6 @@
 {
     // Apple recommend assigning self with supers return value, and handling self not created
     self = [super init];
-    self.scale = 0.5;
     if (!self) return(nil);
      
     // Here is where custom code for the newton scene starts
