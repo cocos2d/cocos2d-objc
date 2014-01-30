@@ -3,6 +3,7 @@
  *
  * Copyright (c) 2009-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,16 +30,16 @@
 @class CCTiledMapLayer;
 @class CCTiledMapObjectGroup;
 
-/** Possible oritentations of the TMX map */
+/** Possible oritentations of the TMX map. */
 typedef NS_ENUM(NSUInteger, CCTiledMapOrientation)
 {
-	/** Orthogonal orientation */
+	/** Orthogonal orientation. */
 	CCTiledMapOrientationOrtho,
 
-	/** Hexagonal orientation */
+	/** Hexagonal orientation. */
 	CCTiledMapOrientationHex,
 
-	/** Isometric orientation */
+	/** Isometric orientation. */
 	CCTiledMapOrientationIso,
 };
 

@@ -64,6 +64,11 @@ kmMat4* const kmMat4Identity(kmMat4* pOut)
 	return pOut;
 }
 
+// supress "no prototype" warnings
+float get(const kmMat4 * pIn, int row, int col);
+void set(kmMat4 * pIn, int row, int col, float value);
+void swap(kmMat4 * pIn, int r1, int c1, int r2, int c2);
+int gaussj(kmMat4 *a, kmMat4 *b);
 
 float get(const kmMat4 * pIn, int row, int col)
 {

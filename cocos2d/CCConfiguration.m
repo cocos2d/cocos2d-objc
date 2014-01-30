@@ -3,6 +3,7 @@
  *
  * Copyright (c) 2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -76,12 +77,7 @@ static char * glExtensions;
 #elif defined(__CC_PLATFORM_MAC)
 - (NSString*)getMacVersion
 {
-    SInt32 versionMajor, versionMinor, versionBugFix;
-	Gestalt(gestaltSystemVersionMajor, &versionMajor);
-	Gestalt(gestaltSystemVersionMinor, &versionMinor);
-	Gestalt(gestaltSystemVersionBugFix, &versionBugFix);
-
-	return [NSString stringWithFormat:@"%d.%d.%d", versionMajor, versionMinor, versionBugFix];
+    return([[NSProcessInfo processInfo] operatingSystemVersionString]);
 }
 #endif // __CC_PLATFORM_MAC
 
@@ -130,7 +126,19 @@ static char * glExtensions;
 {
 	NSInteger ret=-1;
 	
-#ifdef __CC_PLATFORM_IOS
+#if defined(APPORTABLE)
+    if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+	{
+		ret = ([UIScreen mainScreen].scale > 1) ? CCDeviceiPadRetinaDisplay : CCDeviceiPad;
+	}
+	else if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone )
+	{
+		if( [UIScreen mainScreen].scale > 1 ) {
+			ret = CCDeviceiPhoneRetinaDisplay;
+		} else
+			ret = CCDeviceiPhone;
+	}
+#elif defined(__CC_PLATFORM_IOS)
 	
 	if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 	{

@@ -22,6 +22,7 @@ dsa_priv.pem
 *.perspective
 *.perspectivev3
 *.pbxuser
+*.xccheckout
 # Xcode 4
 xcuserdata/
 project.xcworkspace/
@@ -45,3 +46,7 @@ Backup[ ]of[ ]*.key/
 Backup[ ]of[ ]*.numbers/
 
 api-docs
+
+installer/install.tar.gz
+installer/*.app
+

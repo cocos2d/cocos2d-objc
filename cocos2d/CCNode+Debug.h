@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2012 Zynga Inc.
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,15 +27,13 @@
 
 #ifdef DEBUG
 
-/** Debugging extensions of CCNode.
- They are available when the DEBUG macro is defined at compile time
- */
+/** Debugging extensions of CCNode.  They are available when the DEBUG macro is defined at compile time. */
 @interface CCNode (Debug)
 
 /**
-*  Prints on the debug console the scene graph
-*
-*  @param level Level of debug information.
+ *  Prints on the debug console the scene graph
+ *
+ *  @param level Level of debug information.
 */
 -(void) walkSceneGraph:(NSUInteger)level;
 

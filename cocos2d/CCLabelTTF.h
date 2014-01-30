@@ -3,6 +3,7 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,7 +39,7 @@
  
  ### Resources
  
- - http://iosfonts.com/ (Safari for accurate font rendering.)
+ - http://iosfonts.com/ (Please use Safari for accurate font rendering)
  
  */
 
@@ -104,6 +105,9 @@
 
 /** The offset of the shadow. */
 @property (nonatomic,assign) CGPoint shadowOffset;
+
+/** The offset of the shadow in points */
+@property(nonatomic,readonly) CGPoint shadowOffsetInPoints;
 
 /** The position type to be used for the shadow offset. */
 @property (nonatomic,assign) CCPositionType shadowOffsetType;

@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2013 Apportable Inc.
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,8 +32,7 @@
  
  CCLayout is an abstract super class of all layouts. You should subclass this class and implement the layout method if you want to create your own layout.
  */
-@interface CCLayout : CCNode
-{
+@interface CCLayout : CCNode {
     BOOL _needsLayout;
 }
 

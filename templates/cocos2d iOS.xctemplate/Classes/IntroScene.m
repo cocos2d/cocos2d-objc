@@ -10,20 +10,16 @@
 // Import the interfaces
 #import "IntroScene.h"
 #import "HelloWorldScene.h"
+#import "NewtonScene.h"
 
 // -----------------------------------------------------------------------
 #pragma mark - IntroScene
 // -----------------------------------------------------------------------
 
-NSString *preview =
-@"Cocos2D Version 3 (preview)\n\n\
-For evaluation only\n\
-Do not use for new development";
-
-// -----------------------------------------------------------------------
-
 @implementation IntroScene
 
+// -----------------------------------------------------------------------
+#pragma mark - Create & Destroy
 // -----------------------------------------------------------------------
 
 + (IntroScene *)scene
@@ -37,38 +33,32 @@ Do not use for new development";
 {
     // Apple recommend assigning self with supers return value
     self = [super init];
-    // Crash if basic initialization for some reason failed
-    NSAssert(self, @"Unable to create class IntroScene");
+    if (!self) return(nil);
     
-    // Here is where custom code for the scene starts
-    
-    // create a colored background
-    CCNodeColor *background = [CCNodeColor nodeWithColor:[CCColor colorWithCcColor4b:(ccColor4B){200, 200, 200, 255}]];
+    // Create a colored background (Dark Grey)
+    CCNodeColor *background = [CCNodeColor nodeWithColor:[CCColor colorWithRed:0.2f green:0.2f blue:0.2f alpha:1.0f]];
     [self addChild:background];
     
-    // create a string with preview text
-    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:preview];
-    
-    // set color and font of the string
-    [string addAttribute:NSForegroundColorAttributeName
-                   value:[UIColor blackColor]
-                   range:NSMakeRange(0, string.length)];
-    [string addAttribute:NSFontAttributeName
-                   value:[UIFont fontWithName:@"Arial" size:22.0f]
-                   range:NSMakeRange(0, string.length)];
-    
-    // create an attributes label, and place it in upper left corner
-    CCLabelTTF *label = [CCLabelTTF labelWithAttributedString:string];
+    // Hello world
+    CCLabelTTF *label = [CCLabelTTF labelWithString:@"Hello World" fontName:@"Chalkduster" fontSize:36.0f];
     label.positionType = CCPositionTypeNormalized;
-    label.position = ccp(0.4f, 0.8f);
+    label.color = [CCColor redColor];
+    label.position = ccp(0.5f, 0.5f); // Middle of screen
     [self addChild:label];
     
-    // add a next button
-    CCButton *nextButton = [CCButton buttonWithTitle:@"[ Next ]"];
-    nextButton.positionType = CCPositionTypeNormalized;
-    nextButton.position = ccp(0.9f, 0.9f);
-    [nextButton setTarget:self selector:@selector(onNextClicked:)];
-    [self addChild:nextButton];
+    // Spinning scene button
+    CCButton *spinningButton = [CCButton buttonWithTitle:@"[ Simple Sprite ]" fontName:@"Verdana-Bold" fontSize:18.0f];
+    spinningButton.positionType = CCPositionTypeNormalized;
+    spinningButton.position = ccp(0.5f, 0.35f);
+    [spinningButton setTarget:self selector:@selector(onSpinningClicked:)];
+    [self addChild:spinningButton];
+
+    // Next scene button
+    CCButton *newtonButton = [CCButton buttonWithTitle:@"[ Newton Physics ]" fontName:@"Verdana-Bold" fontSize:18.0f];
+    newtonButton.positionType = CCPositionTypeNormalized;
+    newtonButton.position = ccp(0.5f, 0.20f);
+    [newtonButton setTarget:self selector:@selector(onNewtonClicked:)];
+    [self addChild:newtonButton];
 	
     // done
 	return self;
@@ -78,11 +68,19 @@ Do not use for new development";
 #pragma mark - Button Callbacks
 // -----------------------------------------------------------------------
 
-- (void)onNextClicked:(id)sender
+- (void)onSpinningClicked:(id)sender
 {
-    // start main scene with transition
+    // start spinning scene with transition
     [[CCDirector sharedDirector] replaceScene:[HelloWorldScene scene]
                                withTransition:[CCTransition transitionPushWithDirection:CCTransitionDirectionLeft duration:1.0f]];
+}
+
+- (void)onNewtonClicked:(id)sender
+{
+    // start newton scene with transition
+    // the current scene is pushed, and thus needs popping to be brought back. This is done in the newton scene, when pressing back (upper left corner)
+    [[CCDirector sharedDirector] pushScene:[NewtonScene scene]
+                            withTransition:[CCTransition transitionPushWithDirection:CCTransitionDirectionLeft duration:1.0f]];
 }
 
 // -----------------------------------------------------------------------

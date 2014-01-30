@@ -106,6 +106,9 @@ kmBool kmRay2IntersectLineSegment(const kmRay2* ray, const kmVec2* p1, const kmV
     return KM_TRUE;*/
 }
 
+// supress "no prototype" warnings
+void calculate_line_normal(kmVec2 p1, kmVec2 p2, kmVec2* normal_out);
+
 void calculate_line_normal(kmVec2 p1, kmVec2 p2, kmVec2* normal_out) {
     kmVec2 tmp;
     kmVec2Subtract(&tmp, &p2, &p1); //Get direction vector
@@ -119,8 +122,8 @@ void calculate_line_normal(kmVec2 p1, kmVec2 p2, kmVec2* normal_out) {
 
 kmBool kmRay2IntersectTriangle(const kmRay2* ray, const kmVec2* p1, const kmVec2* p2, const kmVec2* p3, kmVec2* intersection, kmVec2* normal_out) {
     kmVec2 intersect;
-    kmVec2 final_intersect;
-    kmVec2 normal;
+    kmVec2 final_intersect = (kmVec2){0,0};
+    kmVec2 normal = (kmVec2){0,0};
     kmScalar distance = 10000.0f;
     kmBool intersected = KM_FALSE;
 
@@ -160,7 +163,6 @@ kmBool kmRay2IntersectTriangle(const kmRay2* ray, const kmVec2* p1, const kmVec2
         if(this_distance < distance) {
             final_intersect.x = intersect.x;
             final_intersect.y = intersect.y;
-            distance = this_distance;
 
             calculate_line_normal(*p3, *p1, &normal);
         }

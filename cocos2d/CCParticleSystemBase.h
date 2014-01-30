@@ -3,6 +3,7 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,22 +33,22 @@
 @class CCParticleBatchNode;
 @class CCTexture;
 
-/** The Particle emitter lives forever */
+/** The Particle emitter lives forever. */
 #define CCParticleSystemDurationInfinity -1
 
-/** The starting size of the particle is equal to the ending size */
+/** The starting size of the particle is equal to the ending size. */
 #define CCParticleSystemStartSizeEqualToEndSize -1
 
-/** The starting radius of the particle is equal to the ending radius */
+/** The starting radius of the particle is equal to the ending radius.  */
 #define CCParticleSystemStartRadiusEqualToEndRadius -1
 
 /** Particle system mode. */
 typedef NS_ENUM(NSUInteger, CCParticleSystemMode) {
     
-	/** Gravity mode (A mode) */
+	/** Gravity mode (A mode). */
 	CCParticleSystemModeGravity,
 
-	/** Radius mode (B mode) */
+	/** Radius mode (B mode). */
 	CCParticleSystemModeRadius,
 };
 
@@ -144,175 +145,181 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
  
  cocos2d supports all the variables used by Particle Designer plus a bit more:
  
- - spinning particles (supported when using CCParticleSystemQuad)
- - tangential acceleration (Gravity mode)
- - radial acceleration (Gravity mode)
- - radius direction (Radius mode) (Particle Designer supports outwards to inwards direction only)
+ - Spinning particles (supported when using CCParticleSystemQuad)
+ - Tangential acceleration (Gravity mode)
+ - Radial acceleration (Gravity mode)
+ - Radius direction (Radius mode) (Particle Designer supports outwards to inwards direction only)
 
  */
 @interface CCParticleSystemBase : CCNode <CCTextureProtocol>
 {
-	// is the particle system active ?
+	// True if the the particle system is active.
 	BOOL _active;
     
-	// duration in seconds of the system. -1 is infinity
+	// Duration in seconds of the system. -1 is infinity.
 	float _duration;
     
-	// time elapsed since the start of the system (in seconds)
+	// Time elapsed since the start of the system (in seconds).
 	float _elapsed;
 
-	// position is from "superclass" CocosNode
+	// Position is from "superclass" CCNode.
 	CGPoint _sourcePosition;
     
-	// Position variance
+	// Position variance.
 	CGPoint _posVar;
 
-	// The angle (direction) of the particles measured in degrees
+	// The angle (direction) of the particles measured in degrees.
 	float _angle;
     
-	// Angle variance measured in degrees;
+	// Angle variance measured in degrees.
 	float _angleVar;
 
-	// Different modes
+	// Different modes (Gravity or Radius)
 
 	CCParticleSystemMode _emitterMode;
 	union {
-		// Mode A:Gravity + Tangential Accel + Radial Accel
+		// Mode A:Gravity + Tangential Accel + Radial Accel.
+        
 		struct {
-			// gravity of the particles
+			// Gravity of the particles.
 			CGPoint gravity;
 
 			// The speed the particles will have.
 			float speed;
             
-			// The speed variance
+			// The speed variance.
 			float speedVar;
 
-			// Tangential acceleration
+			// Tangential acceleration.
 			float tangentialAccel;
             
-			// Tangential acceleration variance
+			// Tangential acceleration variance.
 			float tangentialAccelVar;
 
-			// Radial acceleration
+			// Radial acceleration.
 			float radialAccel;
             
-			// Radial acceleration variance
+			// Radial acceleration variance.
 			float radialAccelVar;
+            
 			} A;
 
-		// Mode B: circular movement (gravity, radial accel and tangential accel don't are not used in this mode)
+		// Mode B: circular movement (gravity, radial accel and tangential accel don't are not used in this mode).
 		struct {
 
-			// The starting radius of the particles
+			// The starting radius of the particles.
 			float startRadius;
             
-			// The starting radius variance of the particles
+			// The starting radius variance of the particles.
 			float startRadiusVar;
             
-			// The ending radius of the particles
+			// The ending radius of the particles.
 			float endRadius;
             
-			// The ending radius variance of the particles
+			// The ending radius variance of the particles.
 			float endRadiusVar;
             
-			// Number of degress to rotate a particle around the source pos per second
+			// Number of degress to rotate a particle around the source pos per second.
 			float rotatePerSecond;
             
-			// Variance in degrees for rotatePerSecond
+			// Variance in degrees for rotatePerSecond.
 			float rotatePerSecondVar;
+            
 		} B;
 	} _mode;
 
-	// Start ize of the particles
+	// Start ize of the particles.
 	float _startSize;
     
-	// Start Size variance
+	// Start Size variance.
 	float _startSizeVar;
     
-	// End size of the particle
+	// End size of the particle.
 	float _endSize;
     
-	// End size of variance
+	// End size of variance.
 	float _endSizeVar;
 
-	// How many seconds will the particle live
+	// How many seconds will the particle live.
 	float _life;
     
-	// Life variance
+	// Life variance.
 	float _lifeVar;
 
-	// Start color of the particles
+	// Start color of the particles.
 	ccColor4F _startColor;
     
-	// Start color variance
+	// Start color variance.
 	ccColor4F _startColorVar;
     
-	// End color of the particles
+	// End color of the particles.
 	ccColor4F _endColor;
     
-	// End color variance
+	// End color variance.
 	ccColor4F _endColorVar;
 
-	// Start angle of the particles
+	// Start angle of the particles.
 	float _startSpin;
-	// Start angle variance
+    
+	// Start angle variance.
 	float _startSpinVar;
     
-	// End angle of the particle
+	// End angle of the particle.
 	float _endSpin;
     
-	// End angle ariance
+	// End angle ariance.
 	float _endSpinVar;
 
-	// Array of particles
+	// Array of particles.
 	_CCParticle *_particles;
     
-	// Maximum particles
+	// Maximum particles.
 	NSUInteger _totalParticles;
     
-	// Count of active particles
+	// Count of active particles.
 	NSUInteger _particleCount;
     
-    // Number of allocated particles
+    // Number of allocated particles.
     NSUInteger _allocatedParticles;
 
-	// How many particles can be emitted per second
+	// How many particles can be emitted per second.
 	float _emissionRate;
+    
+    // Particle emission counter.
 	float _emitCounter;
 
-	// Texture of the particles
+	// Texture used.
 	CCTexture *_texture;
     
-	// Blend function
+	// Blend function.
 	ccBlendFunc	_blendFunc;
     
-	// Texture alpha behavior
+	// Texture alpha behavior.
 	BOOL _opacityModifyRGB;
 
-	// Movment type: free or grouped
+	// Movment type: free or grouped.
 	CCParticleSystemPositionType	_particlePositionType;
 
-	// Whether or not the node will be auto-removed when there are not particles
+	// Whether or not the node will be auto-removed when there are not particles.
 	BOOL	_autoRemoveOnFinish;
 
-    // The particly system resetd upon visibility toggling to True
+    // The particly system resetd upon visibility toggling to True.
     BOOL    _resetOnVisibilityToggle;
     
-	// Particle idx
+	// Particle idx.
 	NSUInteger _particleIdx;
 
-	// Optimization
+	// Optimization.
 	_CC_UPDATE_PARTICLE_IMP	_updateParticleImp;
 	SEL						_updateParticleSel;
 
-	// For batching. If nil, then it won't be batched
+	// For batching. If nil, then it won't be batched.
 	CCParticleBatchNode *_batchNode;
 
-	// Index of system in batch node array
+	// Index of system in batch node array.
 	NSUInteger _atlasIndex;
 
-	// YES if scaled or rotated
+	// YES if scaled or rotated.
 	BOOL _transformSystemDirty;
 }
 

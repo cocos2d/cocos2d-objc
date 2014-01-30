@@ -3,6 +3,7 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -75,8 +76,8 @@
 /**
  *  Initializes and returns an Animation Frame object using the specified frame name, delay units and user info values.
  *
- *  @param spriteFrame Sprite Frame
- *  @param delayUnits  Delay time units
+ *  @param spriteFrame Sprite Frame.
+ *  @param delayUnits  Delay time units.
  *  @param userInfo    Custom dictionary.
  *
  *  @return An initialized CCAnimationFrame Object.
@@ -92,7 +93,7 @@
  */
 @interface CCAnimation : NSObject <NSCopying>
 {
-    // Array of CCSpriteFrame
+    // Array of CCSpriteFrame.
 	NSMutableArray	*_frames;
     
     // Total delay units.
@@ -122,7 +123,7 @@
 /** Duration in seconds of the whole animation. */
 @property (nonatomic,readonly) float duration;
 
-/** Array of CCAnimationFrames */
+/** Array of CCAnimationFrames. */
 @property (nonatomic,readwrite,strong) NSMutableArray *frames;
 
 /** True to restore original frame when animation complete. */

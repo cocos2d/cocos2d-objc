@@ -3,7 +3,8 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- *
+ * Copyright (c) 2013-2014 Cocos2D Authors
+*
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -80,9 +81,8 @@
 
 @implementation CCActionRemove
 
--(void) startWithTarget:(id)aTarget {
-	[super startWithTarget:aTarget];
-	[_target removeFromParent];
+-(void) update:(CCTime)time {
+	[(CCNode *)_target removeFromParent];
 }
 @end
 
@@ -255,6 +255,9 @@
 -(id) initWithTarget: (id) t selector:(SEL) s
 {
 	if( (self=[super init]) ) {
+        
+        NSAssert(t == nil || [t respondsToSelector:s], @"target cannot perform selector %@.",        NSStringFromSelector(s));
+        
 		self.targetCallback = t;
 		_selector = s;
 	}

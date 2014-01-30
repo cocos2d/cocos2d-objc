@@ -3,6 +3,7 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -42,71 +43,49 @@
 // 00   03 00 00
 #define COCOS2D_VERSION 0x00030000
 
-
 //
 // all cocos2d include files
 //
 #import "ccConfig.h"	// should be included first
 
-// Colors
-#import "CCColor.h"
-
-//#import "CCActionManager.h"
+// Cocos2D
 #import "CCAction.h"
+#import "CCActionCatmullRom.h"
+#import "CCActionEase.h"
+#import "CCActionEase.h"
 #import "CCActionInstant.h"
 #import "CCActionInterval.h"
-#import "CCActionEase.h"
-#import "CCActionTween.h"
-#import "CCActionEase.h"
 #import "CCActionProgressTimer.h"
-#import "CCActionCatmullRom.h"
-
-//#import "CCAnimation.h"
-//#import "CCAnimationCache.h"
-#import "CCSprite.h"
-#import "CCSpriteFrame.h"
-#import "CCSpriteBatchNode.h"
-#import "CCSpriteFrameCache.h"
-#import "CCSprite9Slice.h"
-
-#import "CCLabelTTF.h"
+#import "CCActionTween.h"
+#import "CCClippingNode.h"
+#import "CCColor.h"
+#import "CCConfiguration.h"
+#import "CCDirector.h"
+#import "CCDrawNode.h"
 #import "CCLabelBMFont.h"
-//#import "CCLabelAtlas.h"
-
-//#import "CCParticleSystemBase.h"
-#import "CCParticleSystem.h"
+#import "CCLabelTTF.h"
+#import "CCMotionStreak.h"
+#import "CCNode+Debug.h"
+#import "CCNode.h"
+#import "CCNodeColor.h"
+#import "CCParallaxNode.h"
 #import "CCParticleExamples.h"
-//#import "CCParticleBatchNode.h"
-
+#import "CCParticleSystem.h"
+#import "CCProtocols.h"
+#import "CCRenderTexture.h"
+#import "CCScene.h"
+#import "CCSprite.h"
+#import "CCSprite9Slice.h"
+#import "CCSpriteBatchNode.h"
+#import "CCSpriteFrame.h"
+#import "CCSpriteFrameCache.h"
+#import "CCTMXXMLParser.h"
 #import "CCTexture.h"
 #import "CCTexturePVR.h"
-//#import "CCTextureCache.h"
-//#import "CCTextureAtlas.h"
-
-#import "CCTransition.h"
-
 #import "CCTiledMap.h"
 #import "CCTiledMapLayer.h"
 #import "CCTiledMapObjectGroup.h"
-#import "CCTMXXMLParser.h"
-
-#import "CCNodeColor.h"
-#import "CCDrawingPrimitives.h"
-#import "CCScene.h"
-//#import "CCScheduler.h"
-#import "CCProtocols.h"
-#import "CCNode.h"
-#import "CCNode+Debug.h"
-#import "CCDirector.h"
-#import "CCAtlasNode.h"
-#import "CCParallaxNode.h"
-#import "CCRenderTexture.h"
-#import "CCMotionStreak.h"
-#import "CCConfiguration.h"
-#import "CCDrawNode.h"
-#import "CCClippingNode.h"
-
-//#import "ccFPSImages.h"
+#import "CCTransition.h"
 
 // Layouts
 #import "CCLayout.h"
@@ -115,14 +94,29 @@
 // Shaders
 #import "CCGLProgram.h"
 #import "ccGLStateCache.h"
-#import "CCShaderCache.h"
 #import "ccShaders.h"
+#import "CCShaderCache.h"
 
 // Physics
 #import "CCPhysicsBody.h"
-#import "CCPhysicsShape.h"
 #import "CCPhysicsJoint.h"
 #import "CCPhysicsNode.h"
+#import "CCPhysicsShape.h"
+
+// Sound
+#import "OALSimpleAudio.h"
+
+// Retiring
+//#import "CCAnimation.h"
+//#import "CCAnimationCache.h"
+//#import "CCActionManager.h"
+//#import "ccFPSImages.h"
+//#import "CCAtlasNode.h"
+//#import "CCLabelAtlas.h"
+//#import "CCScheduler.h"
+//#import "CCTextureCache.h"
+//#import "CCTextureAtlas.h"
+
 
 //
 // cocos2d macros

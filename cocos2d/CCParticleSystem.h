@@ -2,9 +2,9 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2009 Leonardo Kasperavičius
- *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +33,8 @@
 
 /**
  
- CCParticleSystemQuad
+ CCParticleSytem improves upon the performance in CCParticleSystemBase and is the default class
+ for adding particles.  Please see CCParticleSystemBase documentation.
 
  ### Special features and Limitations
  
@@ -47,16 +48,16 @@
 
 @interface CCParticleSystem : CCParticleSystemBase {
     
-    // Quads to be rendered
+    // Quads to be rendered.
 	ccV3F_C4B_T2F_Quad	*_quads;
     
-    // Indices
+    // Indices.
 	GLushort			*_indices;
     
-    // VAO
+    // VAO.
 	GLuint				_VAOname;
     
-    //0: vertex  1: indices
+    //0: vertex  1: indices.
 	GLuint				_buffersVBO[2];
 }
 

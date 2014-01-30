@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>A65B7BE5-B206-48B3-B33B-3563050F370A</string>
+	<key>IDESourceControlProjectName</key>
+	<string>cocos2d</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>625E0235-0E1B-4490-9002-129C7865DDEE</key>
+		<string>github:cocos2d/cocos2d-iphone.git</string>
+		<key>E2E4EF31-484E-410D-BA9A-5DA0CD3BD5CD</key>
+		<string>ssh://github.com/slembcke/Chipmunk2D.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>cocos2d.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>625E0235-0E1B-4490-9002-129C7865DDEE</key>
+		<string>..</string>
+		<key>E2E4EF31-484E-410D-BA9A-5DA0CD3BD5CD</key>
+		<string>../external/Chipmunk</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github:cocos2d/cocos2d-iphone.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>625E0235-0E1B-4490-9002-129C7865DDEE</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>E2E4EF31-484E-410D-BA9A-5DA0CD3BD5CD</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Chipmunk</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>625E0235-0E1B-4490-9002-129C7865DDEE</string>
+			<key>IDESourceControlWCCName</key>
+			<string>cocos2d-iphone</string>
+		</dict>
+	</array>
+</dict>
+</plist>

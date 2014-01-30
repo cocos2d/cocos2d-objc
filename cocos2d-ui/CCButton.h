@@ -177,6 +177,13 @@
 - (CGFloat) backgroundOpacityForState:(CCControlState)state;
 
 /**
+ *  Will set the label's color for the normal state.
+ *
+ *  @param color Color applied to the label.
+ */
+- (void) setColor:(CCColor *)color;
+
+/**
  *  Sets the label's color for the specified state.
  *
  *  @param color Color applied to the label.

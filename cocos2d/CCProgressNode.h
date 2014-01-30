@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2010 Lam Pham
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -102,7 +103,7 @@ typedef NS_ENUM(NSUInteger, CCProgressNodeType) {
  *
  *  @return The CCProgressNode Object.
  */
-+ (id) progressWithSprite:(CCSprite*) sprite;
++(id)progressWithSprite:(CCSprite*) sprite;
 
 
 /// -----------------------------------------------------------------------
@@ -116,6 +117,6 @@ typedef NS_ENUM(NSUInteger, CCProgressNodeType) {
  *
  *  @return An initialized CCProgressNode Object.
  */
-- (id) initWithSprite:(CCSprite*) sprite;
+-(id)initWithSprite:(CCSprite*) sprite;
 
 @end

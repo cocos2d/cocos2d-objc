@@ -3,6 +3,7 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,7 +39,6 @@
 #import "ccMacros.h"
 #import "CCLabelBMFont.h"
 #import "CCSprite.h"
-#import "CCDrawingPrimitives.h"
 #import "CCConfiguration.h"
 #import "CCTextureCache.h"
 #import "Support/CCFileUtils.h"
@@ -136,7 +136,8 @@ void FNTConfigRemoveCache( void )
 
 -(void) purgeFontDefDictionary
 {	
-	tCCFontDefHashElement *current, *tmp;
+	tCCFontDefHashElement *current;
+    tCCFontDefHashElement *tmp;
 	
 	HASH_ITER(hh, _fontDefDictionary, current, tmp) {
 		HASH_DEL(_fontDefDictionary, current);
@@ -484,24 +485,29 @@ void FNTConfigRemoveCache( void )
 	NSAssert( (theString && fntFile) || (theString==nil && fntFile==nil), @"Invalid params for CCLabelBMFont");
 	
 	CCTexture *texture = nil;
+    CCBMFontConfiguration *newConf = nil;
     
 	if( fntFile ) {
-		CCBMFontConfiguration *newConf = FNTConfigLoadFile(fntFile);
+		newConf = FNTConfigLoadFile(fntFile);
 		if(!newConf) {
 			CCLOGWARN(@"cocos2d: WARNING. CCLabelBMFont: Impossible to create font. Please check file: '%@'", fntFile );
 			return nil;
 		}
         
-		_configuration = newConf;
-		_fntFile = [fntFile copy];
-        
-		texture = [[CCTextureCache sharedTextureCache] addImage:_configuration.atlasName];
+		texture = [[CCTextureCache sharedTextureCache] addImage:newConf.atlasName];
         
 	} else
 		texture = [[CCTexture alloc] init];
     
     
 	if ( (self=[super initWithTexture:texture capacity:[theString length]]) ) {
+        
+        if (fntFile)
+        {
+            _configuration = newConf;
+            _fntFile = [fntFile copy];
+        }
+        
 		_width = width;
 		_alignment = alignment;
 
@@ -730,9 +736,9 @@ void FNTConfigRemoveCache( void )
 	totalHeight = _configuration->_commonHeight * quantityOfLines;
 	nextFontPositionY = -(_configuration->_commonHeight - _configuration->_commonHeight*quantityOfLines);
     CGRect rect;
-    ccBMFontDef fontDef;
+    ccBMFontDef fontDef = (ccBMFontDef){};
 	
-	CGFloat contentScale = self.texture.contentScale;
+	CGFloat contentScale = 1.0/self.texture.contentScale;
 	
 	for(NSUInteger i = 0; i<stringLen; i++) {
 		unichar c = [_string characterAtIndex:i];
@@ -810,7 +816,7 @@ void FNTConfigRemoveCache( void )
 		NSInteger yOffset = _configuration->_commonHeight - fontDef.yOffset;
 		CGPoint fontPos = ccp( (CGFloat)nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width*0.5f + kerningAmount,
 							  (CGFloat)nextFontPositionY + yOffset - rect.size.height*0.5f * __ccContentScaleFactor );
-		fontChar.position = ccpMult(fontPos, 1.0/contentScale);
+		fontChar.position = ccpMult(fontPos, contentScale);
 		
 		// update kerning
 		nextFontPositionX += fontDef.xAdvance + kerningAmount;

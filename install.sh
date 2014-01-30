@@ -13,7 +13,7 @@
 # Variables setup
 # ----------------------------------------------------
 SCRIPT_VER="v0.9.5"
-COCOS2D_VER="cocos2d-v3.0"
+COCOS2D_VER="Cocos2D-v3.0.0.rc"
 COCOS2D_DST_DIR="cocos2d v3.x"
 SCRIPT_DIR="$(dirname $0)"
 
@@ -39,7 +39,7 @@ BOLD=$(tput bold)
 header()
 {
 	echo ""
-	echo "${UNDER}${BOLD}cocos2d template installer (${SCRIPT_VER}, November 2013) by Dominik Hadl and Lars Birkemose${COLOREND}"
+	echo "${UNDER}${BOLD}Cocos2D Template Installer (${COCOS2D_VER})${COLOREND}"
 	echo ""
 }
 
@@ -267,35 +267,41 @@ if $INSTALL ; then
 	check_status
 	printf " ${GREEN}✔${COLOREND}\n"
 
-	# Download Chipmunk files
-	echo -n "...downloading Chipmunk files, please wait"
-	DOWNLOAD_DIR="$SCRIPT_DIR/external/Chipmunk_download"
-	mkdir -p "$DOWNLOAD_DIR" 1>/dev/null 2>>"${ERROR_LOG}"
-	check_status
-
-	echo -n "."
-	curl -L -# "https://github.com/slembcke/Chipmunk2D/archive/master.zip" -o "$DOWNLOAD_DIR/Chipmunk_tarball.zip" 1>/dev/null 2>>"${ERROR_LOG}"
-	check_status
-	echo -n "."
-	if [[ ! -d "${DOWNLOAD_DIR}/Chipmunk/" ]]; then
-		mkdir -p "${DOWNLOAD_DIR}/Chipmunk/" 1>/dev/null 2>>"${ERROR_LOG}"
+	if [[ -d "$SCRIPT_DIR/.git" ]]; then
+		# If this is a git repo, make sure that the Chipmunk submodule is checked out and current.
+		git submodule update --init 1>>"${ERROR_LOG}" 2>>"${ERROR_LOG}"
 		check_status
+	elif [[ ! -d "$SCRIPT_DIR/external/Chipmunk/src" ]]; then
+		# Not a git repo, download Chipmunk files.
+		echo -n "...downloading Chipmunk files, please wait"
+		DOWNLOAD_DIR="$SCRIPT_DIR/external"
+		mkdir -p "$DOWNLOAD_DIR" 1>/dev/null 2>>"${ERROR_LOG}"
+		check_status
+	
+		echo -n "."
+		curl -L -# "https://github.com/slembcke/Chipmunk2D/archive/Cocos2D-3.0.zip" -o "$DOWNLOAD_DIR/Chipmunk_tarball.zip" 1>/dev/null 2>>"${ERROR_LOG}"
+		check_status
+		echo -n "."
+		if [[ ! -d "${DOWNLOAD_DIR}/Chipmunk/" ]]; then
+			mkdir -p "${DOWNLOAD_DIR}/Chipmunk/" 1>/dev/null 2>>"${ERROR_LOG}"
+			check_status
+		fi
+		echo -n "."
+		tar -xf "$DOWNLOAD_DIR/Chipmunk_tarball.zip" -C "${DOWNLOAD_DIR}/Chipmunk/" --strip-components=1 1>>"${ERROR_LOG}" 2>>"${ERROR_LOG}"
+		rm "$DOWNLOAD_DIR/Chipmunk_tarball.zip"
+		check_status	
+		printf " ${GREEN}✔${COLOREND}\n"
 	fi
-	echo -n "."
-	tar -xf "$DOWNLOAD_DIR/Chipmunk_tarball.zip" -C "${DOWNLOAD_DIR}/Chipmunk/" --strip-components=1 1>>"${ERROR_LOG}" 2>>"${ERROR_LOG}"
-	check_status	
-	printf " ${GREEN}✔${COLOREND}\n"
 		
 	# Copy Chipmunk files
 	echo -n "...copying Chipmunk files"
 	LIBS_DIR="$DST_DIR/Support/Libraries/lib_chipmunk.xctemplate/Libraries/"
-	copy_files "external/Chipmunk_download/Chipmunk/objectivec/include" "$LIBS_DIR/Chipmunk/objectivec"
-	copy_files "external/Chipmunk_download/Chipmunk/objectivec/src" "$LIBS_DIR/Chipmunk/objectivec"
-	copy_files "external/Chipmunk_download/Chipmunk/include" "$LIBS_DIR/Chipmunk/chipmunk"
-	copy_files "external/Chipmunk_download/Chipmunk/src" "$LIBS_DIR/Chipmunk/chipmunk"
-	copy_files "external/Chipmunk_download/Chipmunk/LICENSE.txt" "$LIBS_DIR/Chipmunk"
-	rm -rf "${DOWNLOAD_DIR}" 1>/dev/null 2>>"${ERROR_LOG}"
-    check_status
+	copy_files "external/Chipmunk/objectivec/include" "$LIBS_DIR/Chipmunk/objectivec"
+	copy_files "external/Chipmunk/objectivec/src" "$LIBS_DIR/Chipmunk/objectivec"
+	copy_files "external/Chipmunk/include" "$LIBS_DIR/Chipmunk/chipmunk"
+	copy_files "external/Chipmunk/src" "$LIBS_DIR/Chipmunk/chipmunk"
+	copy_files "LICENSE_Chipmunk.txt" "$LIBS_DIR"
+	check_status
 	printf " ${GREEN}✔${COLOREND}\n"
 
 	# Copy ObjectAL files
@@ -340,7 +346,7 @@ if $INSTALL ; then
 	printf " ${GREEN}✔${COLOREND}\n\n"
 	echo "${UNDER}                                     ${COLOREND}"
 	echo ""
-	echo "${BOLD}Everything installed successfully.${COLOREND}"
+	echo "${BOLD}Templates installed successfully.${COLOREND}"
 	echo "${BOLD}Have fun!${COLOREND}"
 	echo ""
 	

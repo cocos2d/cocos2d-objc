@@ -3,6 +3,7 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,56 +29,45 @@
 #import "CCParticleSystem.h"
 
 @interface CCParticleFire: CCParticleSystem
-// Required for BridgeSupport.
--(id) init;
+
 @end
 
 @interface CCParticleFireworks : CCParticleSystem
-// Required for BridgeSupport.
--(id) init;
+
 @end
 
 @interface CCParticleSun : CCParticleSystem
-// Required for BridgeSupport.
--(id) init;
+
 @end
 
 @interface CCParticleGalaxy : CCParticleSystem
-//! Required for BridgeSupport.
--(id) init;
+
 @end
 
 @interface CCParticleFlower : CCParticleSystem
-// Required for BridgeSupport.
--(id) init;
+
 @end
 
 @interface CCParticleMeteor : CCParticleSystem
-// Required for BridgeSupport.
--(id) init;
+
 @end
 
 @interface CCParticleSpiral : CCParticleSystem
-// Required for BridgeSupport.
--(id) init;
+
 @end
 
 @interface CCParticleExplosion : CCParticleSystem
-// Required for BridgeSupport.
--(id) init;
+
 @end
 
 @interface CCParticleSmoke : CCParticleSystem
-// Required for BridgeSupport.
--(id) init;
+
 @end
 
 @interface CCParticleSnow : CCParticleSystem
-// Required for BridgeSupport.
--(id) init;
+
 @end
 
 @interface CCParticleRain : CCParticleSystem
-// Required for BridgeSupport.
--(id) init;
+
 @end
