@@ -39,8 +39,7 @@
 #import "CCPhysics+ObjectiveChipmunk.h"
 #import "CCDirector_Private.h"
 
-// externals
-#import "kazmath/GL/matrix.h"
+#import "CCMath.h"
 
 #ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
@@ -868,7 +867,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	if (!_visible)
 		return;
     
-	kmGLPushMatrix();
+	CCGLPushMatrix();
 
 	[self transform];
 
@@ -902,7 +901,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	// reset for next frame
 	_orderOfArrival = 0;
 
-	kmGLPopMatrix();
+	CCGLPopMatrix();
 }
 
 #pragma mark CCNode - Transformations
@@ -917,16 +916,16 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 -(void) transform
 {
-	kmMat4 transform4x4;
+    GLKMatrix4 transform4x4;
 
 	// Convert 3x3 into 4x4 matrix
 	CGAffineTransform tmpAffine = [self nodeToParentTransform];
-	CGAffineToGL(&tmpAffine, transform4x4.mat);
+	CGAffineToGL(&tmpAffine, transform4x4.m);
 
 	// Update Z vertex manually
-	transform4x4.mat[14] = _vertexZ;
+	transform4x4.m[14] = _vertexZ;
 
-	kmGLMultMatrix( &transform4x4 );
+    CCGLMultMatrix(transform4x4);
 }
 
 #pragma mark CCPhysics support.

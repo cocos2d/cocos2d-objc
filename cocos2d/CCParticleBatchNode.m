@@ -42,7 +42,7 @@
 #import "Support/ZipUtils.h"
 #import "Support/CCFileUtils.h"
 
-#import "kazmath/GL/matrix.h"
+#import "CCMath.h"
 
 #import "CCNode_Private.h"
 #import "CCParticleSystemBase_Private.h"
@@ -146,13 +146,13 @@
 	if (!_visible)
 		return;
 
-	kmGLPushMatrix();
+	CCGLPushMatrix();
 
 	[self transform];
 
 	[self draw];
 
-	kmGLPopMatrix();
+	CCGLPopMatrix();
 }
 
 // override addChild:

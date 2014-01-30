@@ -264,7 +264,8 @@ inline CGPoint CCCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p
 
 -(void) updatePosition:(CGPoint)newPos
 {
-	[_target setPosition:newPos];
+    CCNode* node = (CCNode*)_target;
+	[node setPosition:newPos];
 	_previousPosition = newPos;
 }
 
@@ -289,8 +290,10 @@ inline CGPoint CCCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p
 
 -(void) updatePosition:(CGPoint)newPos
 {
+    CCNode* node = (CCNode*)_target;
+
 	CGPoint p = ccpAdd(newPos, _startPosition);
-	[_target setPosition:p];
+	[node setPosition:p];
 	_previousPosition = p;
 }
 

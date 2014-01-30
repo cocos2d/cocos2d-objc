@@ -48,7 +48,7 @@
 #import "CCTexture_Private.h"
 
 // external
-#import "kazmath/GL/matrix.h"
+#import <GLKit/GLKit.h>
 
 #pragma mark -
 #pragma mark CCSprite

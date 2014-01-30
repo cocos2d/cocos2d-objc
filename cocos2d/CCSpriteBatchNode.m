@@ -45,8 +45,7 @@
 
 #import "CCTexture_Private.h"
 
-// external
-#import "kazmath/GL/matrix.h"
+#import "CCMath.h"
 
 const NSUInteger defaultCapacity = 0;
 
@@ -151,13 +150,13 @@ const NSUInteger defaultCapacity = 0;
 	if (!_visible)
 		return;
 
-	kmGLPushMatrix();
+	CCGLPushMatrix();
 
 	[self sortAllChildren];
 	[self transform];
 	[self draw];
 
-	kmGLPopMatrix();
+	CCGLPopMatrix();
 
 	_orderOfArrival = 0;
 

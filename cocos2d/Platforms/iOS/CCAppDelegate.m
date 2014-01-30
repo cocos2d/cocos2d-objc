@@ -32,8 +32,7 @@
 #import "CCDirector_Private.h"
 #import "CCScheduler.h"
 
-#import "kazmath/kazmath.h"
-#import "kazmath/GL/matrix.h"
+#import "CCMath.h"
 
 #import "OALSimpleAudio.h"
 
@@ -111,15 +110,15 @@ const CGSize FIXED_SIZE = {568, 384};
 	// Half of the extra size that will be cut off
 	CGPoint offset = ccpMult(ccp(fixed.width - sizePoint.width, fixed.height - sizePoint.height), 0.5);
 	
-	kmGLMatrixMode(KM_GL_PROJECTION);
-	kmGLLoadIdentity();
-	
-	kmMat4 orthoMatrix;
-	kmMat4OrthographicProjection(&orthoMatrix, offset.x, sizePoint.width + offset.x, offset.y, sizePoint.height + offset.y, -1024, 1024 );
-	kmGLMultMatrix( &orthoMatrix );
-	
-	kmGLMatrixMode(KM_GL_MODELVIEW);
-	kmGLLoadIdentity();
+    
+    CCGLMatrixMode(CCGLProjection);
+    CCGLLoadIdentity();
+    
+    GLKMatrix4 orthoMatrix = GLKMatrix4MakeOrtho(offset.x, sizePoint.width + offset.x, offset.y, sizePoint.height + offset.y, -1024, 1024);
+    CCGLMultMatrix(orthoMatrix);
+    
+    CCGLMatrixMode(CCGLModelView);
+    CCGLLoadIdentity();
 }
 
 // This is needed for iOS4 and iOS5 in order to ensure

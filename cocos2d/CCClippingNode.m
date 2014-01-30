@@ -35,7 +35,7 @@
 #import "CCDirector.h"
 #import "CGPointExtension.h"
 
-#import "kazmath/GL/matrix.h"
+#import "CCMath.h"
 
 #import "CCNode_Private.h"
 #import "CCDrawingPrimitives.h"
@@ -231,7 +231,7 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
     int height = viewport[3];
 
     kmGLMatrixMode(KM_GL_PROJECTION);
-    kmGLPushMatrix();
+    CCGLPushMatrix();
     kmGLLoadIdentity();
 
     kmMat4 orthoMatrix;
@@ -239,15 +239,15 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
     kmGLMultMatrix( &orthoMatrix );
 
     kmGLMatrixMode(KM_GL_MODELVIEW);
-    kmGLPushMatrix();
+    CCGLPushMatrix();
     kmGLLoadIdentity();
 
     ccDrawSolidRect(ccp(x, y), ccp(width, height), [CCColor whiteColor]);
 
     kmGLMatrixMode(KM_GL_PROJECTION);
-    kmGLPopMatrix();
+    CCGLPopMatrix();
     kmGLMatrixMode(KM_GL_MODELVIEW);
-    kmGLPopMatrix();
+    CCGLPopMatrix();
 #else
     glClearStencil(!_inverted ? 0 : ~0);
     glClear(GL_STENCIL_BUFFER_BIT);
@@ -298,10 +298,10 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
 
     // draw the stencil node as if it was one of our child
     // (according to the stencil test func/op and alpha (or alpha shader) test)
-    kmGLPushMatrix();
+    CCGLPushMatrix();
     [self transform];
     [_stencil visit];
-    kmGLPopMatrix();
+    CCGLPopMatrix();
     
     // restore alpha test state
     if (_alphaThreshold < 1) {

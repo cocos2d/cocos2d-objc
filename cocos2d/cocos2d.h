@@ -157,8 +157,7 @@
 //
 // external
 //
-#import "kazmath/kazmath.h"
-#import "kazmath/GL/matrix.h"
+#import <GLKit/GLKit.h>
 
 
 
