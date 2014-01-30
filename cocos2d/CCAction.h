@@ -3,6 +3,7 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,18 +35,24 @@ enum {
 	kCCActionTagInvalid = -1,
 };
 
-// -----------------------------------------------------------------
-/** @name CCAction */
-
 /**
- *  Base class for CCAction objects.
+ * CCAction forms the foundation for one the great areas of Cocos2D functionality.
+ * The manipulatinon of node properties such as position, rotation, scale and opacity over time, to create fun effects.
+ *
+ * - Actions can be modified with easing actions to create more realistic animations. 
+ * - Actions can be put in sequence to create more complex animation sequences.
+ *
  */
-@interface CCAction : NSObject <NSCopying>
-{
+@interface CCAction : NSObject <NSCopying> {
 	id			__unsafe_unretained _originalTarget;
 	id			__unsafe_unretained _target;
 	NSInteger	_tag;
 }
+
+
+/// -----------------------------------------------------------------------
+/// @name Accessing Action Attributes
+/// -----------------------------------------------------------------------
 
 /**
  *  The "target". The action will modify the target properties.
@@ -55,48 +62,58 @@ enum {
  */
 @property (nonatomic,readonly,unsafe_unretained) id target;
 
-/** 
- *  The original target, since target can be nil.
- *  Is the target that were used to run the action. Unless you are doing something complex, like CCActionManager, you should NOT call this method.
- */
+/** The original target, since target can be nil. */
 @property (nonatomic,readonly,unsafe_unretained) id originalTarget;
 
-/** 
- *  The action tag. An identifier of the action 
- */
+/** The action tag. An identifier of the action. */
 @property (nonatomic,readwrite,assign) NSInteger tag;
 
-/**
- *  Allocates and initializes the action
- *
- *  @return A new action
- */
-+(id) action;
+
+/// -----------------------------------------------------------------------
+/// @name Creating a CCAction Object
+/// -----------------------------------------------------------------------
 
 /**
- *  Initializes the action
+ *  Creates and returns an action object.
  *
- *  @return A new action
+ *  @return The CCAction Object.
  */
--(id) init;
++ (id)action;
 
-// Implementation of NSCopying protocol
--(id) copyWithZone: (NSZone*) zone;
+
+/// -----------------------------------------------------------------------
+/// @name Initializing a CCAction Object
+/// -----------------------------------------------------------------------
+
+/**
+ *  Initializes and returns an action object.
+ *
+ *  @return An initialized CCAction Object.
+ */
+- (id)init;
+
+// NSCopying support.
+- (id)copyWithZone:(NSZone*) zone;
+
+
+/// -----------------------------------------------------------------------
+/// @name Action Management
+/// -----------------------------------------------------------------------
 
 /**
  *  Return YES if the action has finished.
  *
  *  @return Action completion status
  */
--(BOOL) isDone;
+- (BOOL)isDone;
 
 /**
  *  Assigns a target to the action
  *  Called before the action is started.
  *
- *  @param target Target to assign to action (weak reference)
+ *  @param target Target to assign to action (weak reference).
  */
--(void) startWithTarget:(id)target;
+- (void)startWithTarget:(id)target;
 
 /**
  *  Stops the action
@@ -105,225 +122,262 @@ enum {
  *  You should never call this method directly. 
  *  In stead use: [target stopAction:action]
  */
--(void) stop;
+- (void)stop;
 
 /**
- *  Steps the action
- *  Called for every frame with step interval
+ *  Steps the action.
+ *  Called for every frame with step interval.
+ *
  *  Note:
  *  Do not override unless you know what you are doing.
  *
- *  @param dt Ellapsed interval since last step
+ *  @param dt Ellapsed interval since last step.
  */
--(void) step: (CCTime) dt;
+- (void)step:(CCTime)dt;
 
 /**
- *  Updates the action with normalized value
+ *  Updates the action with normalized value.
+ *
  *  For example:
  *  A value of 0.5 indicates that the action is 50% complete.
  *
- *  @param time Normalized action progress
+ *  @param time Normalized action progress.
  */
--(void) update: (CCTime) time;
+- (void)update:(CCTime)time;
 
 @end
 
-// -----------------------------------------------------------------
-/** @name CCActionFiniteTime */
+#pragma mark - CCActionFiniteTime
 
-/**
- *  Base class for actions that have a finite time duration.
- *  Possible actions:
- *  - An action with a duration of 0 seconds
- *  - An action with a duration of 35.5 seconds
- */
-@interface CCActionFiniteTime : CCAction <NSCopying>
-{
-	//! duration in seconds
+//
+//  Base class for actions that have a finite time duration.
+//
+//  Possible actions:
+//  - An action with a duration of 0 seconds.
+//  - An action with a duration of 35.5 seconds.
+//
+@interface CCActionFiniteTime : CCAction <NSCopying> {
+	// Duration in seconds.
 	CCTime _duration;
 }
 
-/**
- *  Duration of the action in seconds
- */
+// Duration of the action in seconds.
 @property (nonatomic,readwrite) CCTime duration;
 
-/**
- *  Returns a reversed action.
- *
- *  @return New reverse action
- */
-- (CCActionFiniteTime*) reverse;
+//
+//  Returns a reversed action.
+//
+//  @return The reversed action object.
+//
+- (CCActionFiniteTime *)reverse;
 
 @end
 
-// -----------------------------------------------------------------
-/** @name CCActionRepeatForever */
+#pragma mark - CCActionRepeatForever
 
 @class CCActionInterval;
 
 /**
  *  Repeats an action for ever.
  *  To repeat the action for a limited number of times use the CCActionRepeat action.
+ *
  *  Note:
  *  This action can't be Sequence-able because it is not an IntervalAction
  */
-@interface CCActionRepeatForever : CCAction <NSCopying>
-{
+@interface CCActionRepeatForever : CCAction <NSCopying> {
 	CCActionInterval *_innerAction;
 }
 
-/** 
- *  Inner action 
- */
+
+/// -----------------------------------------------------------------------
+/// @name Accessing the Repeat Forever Action Attributes
+/// -----------------------------------------------------------------------
+
+/** Inner action. */
 @property (nonatomic, readwrite, strong) CCActionInterval *innerAction;
+
+
+/// -----------------------------------------------------------------------
+/// @name Creating a CCActionRepeatForever Object
+/// -----------------------------------------------------------------------
 
 /**
  *  Creates the repeat forever action.
  *
- *  @param action Action to repeat forever
+ *  @param action Action to repeat forever.
  *
- *  @return New repeat forever action
+ *  @return The repeat action object.
  */
-+(id) actionWithAction: (CCActionInterval*) action;
++ (id)actionWithAction:(CCActionInterval *) action;
+
+
+/// -----------------------------------------------------------------------
+/// @name Initializing a CCActionRepeatForever Object
+/// -----------------------------------------------------------------------
 
 /**
  *  Initalizes the repeat forever action.
  *
  *  @param action Action to repeat forever
  *
- *  @return New repeat forever action
+ *  @return An initialised repeat action object.
  */
--(id) initWithAction: (CCActionInterval*) action;
+- (id)initWithAction:(CCActionInterval *) action;
 
 @end
 
-// -----------------------------------------------------------------
-/** @name CCActionSpeed */
+#pragma mark - CCActionSpeed
 
 /**
  *  Changes the speed of an action.
  *  Useful to simulate slow motion or fast forward effects.
+ *
  *  Note:
  *  This action can't be Sequence-able because it is not an CCIntervalAction.
  */
-@interface CCActionSpeed : CCAction <NSCopying>
-{
+@interface CCActionSpeed : CCAction <NSCopying> {
 	CCActionInterval	*_innerAction;
 	CGFloat _speed;
 }
 
+
+/// -----------------------------------------------------------------------
+/// @name Accessing the Speed Action Attributes
+/// -----------------------------------------------------------------------
+
 /** 
- *  Alter the speed of the inner function in runtime 
- *  Speeds below 1 will make the action run slower
- *  Speeds above 1 will make the action run faster
+ * Alter the speed of the inner function in runtime.
+ *
+ * - Speeds below 1 will make the action run slower.
+ * - Speeds above 1 will make the action run faster.
  */
 @property (nonatomic,readwrite) CGFloat speed;
 
-/** 
- *  Inner action of CCSpeed 
- */
+/** Inner action of CCSpeed. */
 @property (nonatomic, readwrite, strong) CCActionInterval *innerAction;
+
+
+/// -----------------------------------------------------------------------
+/// @name Creating a CCActionSpeed Object
+/// -----------------------------------------------------------------------
 
 /**
  *  Creates the speed action.
  *
- *  @param action Action to modify for speed
- *  @param value  Initial action speed
+ *  @param action Action to modify for speed.
+ *  @param value  Initial action speed.
  *
- *  @return New speed action
+ *  @return The CCActionSpeed object.
  */
-+(id) actionWithAction: (CCActionInterval*) action speed:(CGFloat)value;
++ (id)actionWithAction:(CCActionInterval *)action speed:(CGFloat)value;
+
+
+/// -----------------------------------------------------------------------
+/// @name Initializing a CCActionSpeed Object
+/// -----------------------------------------------------------------------
 
 /**
  *  Initalizes the speed action.
  *
- *  @param action Action to modify for speed
- *  @param value  Initial action speed
+ *  @param action Action to modify for speed.
+ *  @param value  Initial action speed.
  *
- *  @return New speed action
+ *  @return An initialized CCActionSpeed object.
  */
--(id) initWithAction: (CCActionInterval*) action speed:(CGFloat)value;
+- (id)initWithAction:(CCActionInterval *)action speed:(CGFloat)value;
 
 @end
 
-// -----------------------------------------------------------------
-/** @name CCActionFollow */
+#pragma mark - CCActionFollow
 
 @class CCNode;
 
 /**
- *  Creates an action which follows a node
+ *  Creates an action which follows a node.
+ *
  *  Note:
- *  In stead of using CCCamera to follow a node, use this action
+ *  In stead of using CCCamera to follow a node, use this action.
+ *
  *  Example:
  *  [layer runAction: [CCFollow actionWithTarget:hero]];
  */
-@interface CCActionFollow : CCAction <NSCopying>
-{
-	/* node to follow */
+@interface CCActionFollow : CCAction <NSCopying> {
+    
+	// Node to follow.
 	CCNode	*_followedNode;
 
-	/* whether camera should be limited to certain area */
+	// Whether camera should be limited to certain area.
 	BOOL _boundarySet;
 
-	/* if screen-size is bigger than the boundary - update not needed */
+	// If screen-size is bigger than the boundary - update not needed.
 	BOOL _boundaryFullyCovered;
 
-	/* fast access to the screen dimensions */
+	// Fast access to the screen dimensions.
 	CGPoint _halfScreenSize;
 	CGPoint _fullScreenSize;
 
-	/* world boundaries */
+	// World boundaries.
 	float _leftBoundary;
 	float _rightBoundary;
 	float _topBoundary;
 	float _bottomBoundary;
 }
 
-/**
- *  Turns boundary behaviour on / off
- *  If set to YES, movement will be clamped to boundaries
- */
+
+/// -----------------------------------------------------------------------
+/// @name Accessing the Follow Action Attributes
+/// -----------------------------------------------------------------------
+
+/** Turns boundary behaviour on / off.  If set to YES, movement will be clamped to boundaries. */
 @property (nonatomic,readwrite) BOOL boundarySet;
 
-/**
- *  Creates a follow action with no boundaries
- *
- *  @param followedNode Node to follow
- *
- *  @return New follow action
- */
-+(id) actionWithTarget:(CCNode *)followedNode;
+
+/// -----------------------------------------------------------------------
+/// @name Creating a CCActionFollow Object
+/// -----------------------------------------------------------------------
 
 /**
- *  Initalizes a follow action with no boundaries
+ *  Creates a follow action with no boundaries.
  *
- *  @param followedNode Node to follow
+ *  @param followedNode Node to follow.
  *
- *  @return New follow action
+ *  @return The follow action object.
  */
--(id) initWithTarget:(CCNode *)followedNode;
++ (id)actionWithTarget:(CCNode *)followedNode;
 
 /**
- *  Creates a follow action with boundaries
+ *  Creates a follow action with boundaries.
  *
- *  @param followedNode Node to follow
- *  @param rect         Boundary rect
+ *  @param followedNode Node to follow.
+ *  @param rect         Boundary rect.
  *
- *  @return New follow action
+ *  @return The follow action object.
  */
-+(id) actionWithTarget:(CCNode *)followedNode worldBoundary:(CGRect)rect;
++ (id)actionWithTarget:(CCNode *)followedNode worldBoundary:(CGRect)rect;
+
+
+/// -----------------------------------------------------------------------
+/// @name Initializing a CCActionFollow Object
+/// -----------------------------------------------------------------------
 
 /**
- *  Initalizes a follow action with boundaries
+ *  Initalizes a follow action with no boundaries.
  *
- *  @param followedNode Node to follow
- *  @param rect         Boundary rect
+ *  @param followedNode Node to follow.
  *
- *  @return New follow action
+ *  @return An initialized follow action object.
  */
--(id) initWithTarget:(CCNode *)followedNode worldBoundary:(CGRect)rect;
+- (id)initWithTarget:(CCNode *)followedNode;
+
+/**
+ *  Initalizes a follow action with boundaries.
+ *
+ *  @param followedNode Node to follow.
+ *  @param rect         Boundary rect.
+ *
+ *  @return The initalized follow action object.
+ */
+- (id)initWithTarget:(CCNode *)followedNode worldBoundary:(CGRect)rect;
 
 @end
 

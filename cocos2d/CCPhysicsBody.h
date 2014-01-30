@@ -27,7 +27,7 @@
 @class CCPhysicsCollisionPair;
 
 /** The type of physics body to use. */
-typedef NS_ENUM(unsigned char, CCPhysicsBodyType){
+typedef NS_ENUM(NSUInteger, CCPhysicsBodyType){
     
 	/** A regular rigid body that is affected by gravity, forces and collisions. */
 	CCPhysicsBodyTypeDynamic,
@@ -40,7 +40,36 @@ typedef NS_ENUM(unsigned char, CCPhysicsBodyType){
 };
 
 /**
- * @todo This needs fleshed out by @slembcke
+Physics bodies are attached to CCNode objects and contain their physical properties such as mass, shape, friction, etc.
+
+There are two main kinds of bodies, static and dynamic. Static bodies cannot be moved by normal forces, collisions or gravity.
+This is the type of body you would use for the ground or wall in a game. Dynamic bodies are just the opposite. They are affected by collisions, friction, gravity, forces, etc.
+You can change the type of a body using the CCPhysicsBody.type property.
+
+There are two basic categories of shapes that physics bodies can have. The simplest category are convex shapes such as circles, pills and polygons (in order of efficiency).
+These are considered to be solid (not hollow) objects by the physics engine.
+Composite bodies, such as those created with the polyline or bodyWithShapes: methods are actually composed of multiple shapes.
+Regardless of the type, all shapes can be given a radius value that adds some thickness to them and rounds out their sharp corners.
+
+Many rigid body properties such as the moment of inertia or center of gravity are calculated for you automatically based on the shapes the body is created from.
+The exception is the mass of the body which defaults to 1.0. It is the developer's responsibility to set the mass (or density) for the objects.
+What units you use for mass is not important as long as they are consistent.
+
+### Collision Filtering:
+
+By default physics bodies collide with all other physics bodies. Since 2D games use a lot of faked perspectives and layering CCPhysics provides you with many options to filter out unwanted collisions.
+
+- collisionGroup: Bodies can be assigned an object pointer that defines a group. Two bodies in the same group will not collide.
+- collisionCategory, collisionMask: Bodies can be assigned a list of categories and masks (rules) that define which kinds of bodies they will collide with.
+- CCPhysicsJoint.collideBodies: Joints have a flag that allows you to reject a collisions between the bodies they connect.
+- CCPhysicsCollisionDelegate methods: You can set up a delegate that responds to collision events between bodies progmatically.
+
+### Tips:
+
+- Use the simplest shape you can. You don't need to be pixel perfect. Collisions with complex shapes are very computationally expensive and will ultimately feel more random and unfair to your players.
+- Add radii to your shapes. It will help smooth out collisions between corners of objects and it will allow the collision detection to run more efficiently.
+- Avoid very small, thin, or fast moving shapes when possible. The underlying physics engine does not perform continuous collision detection and can miss collisions if they move too much in a single step.
+- When possible, try to use groups, categories or joints to filter collisions since they are tried before running the expensive collision detection code. 
  */
 @interface CCPhysicsBody : NSObject
 
@@ -81,7 +110,8 @@ typedef NS_ENUM(unsigned char, CCPhysicsBodyType){
 +(CCPhysicsBody *)bodyWithPillFrom:(CGPoint)from to:(CGPoint)to cornerRadius:(CGFloat)cornerRadius;
 
 /**
- *  Creates and returns a convex polygon shaped physics body with rounded corners.  If the points do not form a convex polygon then a convex hull will be created from them automatically.
+ *  Creates and returns a convex polygon shaped physics body with rounded corners.
+ *  If the points do not form a convex polygon then a convex hull will be created from them automatically.
  *
  *  @param points       Points array pointer.
  *  @param count        Points count.
@@ -92,7 +122,8 @@ typedef NS_ENUM(unsigned char, CCPhysicsBodyType){
 +(CCPhysicsBody *)bodyWithPolygonFromPoints:(CGPoint *)points count:(NSUInteger)count cornerRadius:(CGFloat)cornerRadius;
 
 /**
- *  Creates and returns a physics body with four pill shapes around the rectangle's perimeter, this will also default to being a CCPhysicsBodyTypeStatic type body.
+ *  Creates and returns a physics body with four pill shapes around the rectangle's perimeter.
+ *  Polyline based bodies default to the CCPhysicsBodyTypeStatic body type.
  *
  *  @param rect         Rectangle perimeter.
  *  @param cornerRadius Corner radius.
@@ -102,12 +133,13 @@ typedef NS_ENUM(unsigned char, CCPhysicsBodyType){
 +(CCPhysicsBody *)bodyWithPolylineFromRect:(CGRect)rect cornerRadius:(CGFloat)cornerRadius;
 
 /**
- *  Creates and returns a physics body with multiple pill shapes attached.  One for each segment in the polyline, this will also default to a CCPhysicsBodyTypeStatic type body.
+ *  Creates and returns a physics body with multiple pill shapes attached, one for each segment in the polyline.
+ *  Polyline based bodies default to the CCPhysicsBodyTypeStatic body type.
  *
  *  @param points       Points array pointer.
  *  @param count        Points count.
  *  @param cornerRadius Corner radius.
- *  @param looped       Looped Flag.
+ *  @param looped       Should there be a pill shape that goes from the first to last point or not.
  *
  *  @return The CCPhysicsBody Object.
  */
@@ -128,19 +160,19 @@ typedef NS_ENUM(unsigned char, CCPhysicsBodyType){
 /// -----------------------------------------------------------------------
 
 /**
- *  Mass of the physics body, if the body has multiple shapes you cannont change the mass directly.  
- *  Defaults to 1.0
+ *  Mass of the physics body. The mass of a composite body cannod be changed. 
+ *  Defaults to 1.0.
  */
 @property(nonatomic, assign) CGFloat mass;
 
 /**
  *  Area of the body in points^2.
- *  Please note that this is relative to the CCPhysicsNode, change the node or a parent can change the area.
+ *  Please note that this is relative to the CCPhysicsNode, changing the node or a parent can change the area.
  */
 @property(nonatomic, readonly) CGFloat area;
 
 /**
- *  Density of the body in 1/1000 units of mass per area in points. Co-efficent is used to keep the mass of an object a resonable value.
+ *  Density of the body in 1/1000 units of mass per point^2. The co-efficent is used to keep the mass of an object a reasonably small value.
  *  If the body has multiple shapes, you cannot change the density directly.
  *  Note that mass and not density will remain constant if an object is rescaled.
  */
@@ -162,7 +194,7 @@ typedef NS_ENUM(unsigned char, CCPhysicsBodyType){
 @property(nonatomic, assign) CGFloat elasticity;
 
 /**
- *  Velocity of the surface of a physics body relative to it's normal velocity.  This is useful fr modelling convery belts or the feet of a player avatar.
+ *  Velocity of the surface of a physics body relative to it's normal velocity.  This is useful for modelling conveyor belts or the feet of a player avatar.
  *  The calculated surface velocity of two colliding shapes by default only affects their friction.
  *  The calculated value can be overriden in a CCCollisionPairDelegate pre-solve method.
  *  Defaults to CGPointZero.
@@ -196,35 +228,38 @@ typedef NS_ENUM(unsigned char, CCPhysicsBodyType){
 
 /**
  *  Is this body a sensor? A sensor will call a collision delegate but does not physically cause collisions between bodies.
- *  Defaults to NO
+ *  Defaults to NO.
  */
 @property(nonatomic, assign) BOOL sensor;
 
 /**
- *  The bodies collisionGroup, if two physics bodies share the same group id, they don't collide.  Default nil
+ *  The body's collisionGroup, if two physics bodies share the same group id, they don't collide. Defaults to nil.
  */
 @property(nonatomic, assign) id collisionGroup;
 
 /**
- *  An string that identifies the collision pair delegate method that should be called.  Default @"default"
+ *  A string that identifies the collision pair delegate method that should be called. Default value is @"default".
  */
 @property(nonatomic, copy) NSString *collisionType;
 
 /**
- *  An array of NSString category names of which this physics body is a member.  Up to 32 categories can be used in a single scene.
- *  Default is nil, which means the physics body exists in all categories.
+ *  An array of NSString category names of which this physics body is a member. Up to 32 unique categories can be used in a single physics node.
+ *  A value of nil means that a body exists in all possible collision categories.
+ *  The deefault is nil.
  */
 @property(nonatomic, copy) NSArray *collisionCategories;
 
 /**
- *  An array of NSString category names that this physics body will collide with.
- *  The dedfault is nil, which means the physics body collides with all categories.
+ *  An array of NSString category names that this physics body wants to collide with.
+ *  The categories/masks of both bodies must agree for a collision to occur.
+ *  A value of nil means that this body will collide with a body in any category.
+ *  The default is nil.
  */
 @property(nonatomic, copy) NSArray *collisionMask;
 
 /**
  *  Iterate over all of the CCPhysicsCollisionPairs this body is currently in contact with.
- *  @note The CCPhysicsCollisionPair object is shared so you should not store a strong reference to it.
+ *  @note The CCPhysicsCollisionPair object is shared so you should not store a reference to it.
  *
  *  @param block Collision block.
  */
@@ -247,7 +282,7 @@ typedef NS_ENUM(unsigned char, CCPhysicsBodyType){
 
 
 /// -----------------------------------------------------------------------
-/// @name Accessing Forces, Torques and Impulses Attributes
+/// @name Accessing Forces and Torques Attributes
 /// -----------------------------------------------------------------------
 
 /**
@@ -262,7 +297,7 @@ typedef NS_ENUM(unsigned char, CCPhysicsBodyType){
 
 
 /// -----------------------------------------------------------------------
-/// @name Applying Force Methods
+/// @name Applying Force and Impulses Methods
 /// -----------------------------------------------------------------------
 
 /**
@@ -336,12 +371,12 @@ typedef NS_ENUM(unsigned char, CCPhysicsBodyType){
 @property(nonatomic, readonly) NSArray *joints;
 
 /** 
- * Sleeping bodies are not simulated and use minimal CPU resources, normally bodies will fall asleep when they stop moving however you can trigger this
- * manually if required. 
+ * Sleeping bodies use minimal CPU resources as they are removed from the simulation until something collides with them.
+ * Normally a body will fall alsleep on it's own, but you can manually force a body to fall a sleep at any time if you desire.
  */
 @property(nonatomic, assign) BOOL sleeping;
 
 /** The CCNode to which this physics body is attached. */
-@property(nonatomic, readonly) CCNode *node;
+@property(nonatomic, readonly, weak) CCNode *node;
 
 @end

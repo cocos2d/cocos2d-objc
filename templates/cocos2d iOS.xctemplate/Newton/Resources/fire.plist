@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>// texture</key>
+	<string></string>
+	<key>textureFileName</key>
+	<string>fire.png</string>
+	<key>// duration</key>
+	<string></string>
+	<key>// -1 = forever</key>
+	<string></string>
+	<key>duration</key>
+	<string>-1</string>
+	<key>// max particles</key>
+	<string></string>
+	<key>maxParticles</key>
+	<string>75</string>
+	<key>// life</key>
+	<string></string>
+	<key>particleLifespan</key>
+	<string>1.00</string>
+	<key>particleLifespanVariance</key>
+	<string>0.50</string>
+	<key>// emissionrate = max / life (default)</key>
+	<string></string>
+	<key>- emissionRate</key>
+	<string>100</string>
+	<key>// blend function</key>
+	<string></string>
+	<key>// normal color = 770 + 771 </key>
+	<string></string>
+	<key>// additive = 770 + 1</key>
+	<string></string>
+	<key>blendFuncSource</key>
+	<string>770</string>
+	<key>blendFuncDestination</key>
+	<string>1</string>
+	<key>// angle</key>
+	<string></string>
+	<key>angle</key>
+	<string>0</string>
+	<key>angleVariance</key>
+	<string>360</string>
+	<key>// start color</key>
+	<string></string>
+	<key>startColorRed</key>
+	<string>0.50</string>
+	<key>startColorGreen</key>
+	<string>0.25</string>
+	<key>startColorBlue</key>
+	<string>0</string>
+	<key>startColorAlpha</key>
+	<string>0</string>
+	<key>startColorVarianceRed</key>
+	<string>0</string>
+	<key>startColorVarianceGreen</key>
+	<string>0</string>
+	<key>startColorVarianceBlue</key>
+	<string>0</string>
+	<key>startColorVarianceAlpha</key>
+	<string>0</string>
+	<key>// end color</key>
+	<string></string>
+	<key>finishColorRed</key>
+	<string>0.50</string>
+	<key>finishColorGreen</key>
+	<string>0.25</string>
+	<key>finishColorBlue</key>
+	<string>0</string>
+	<key>finishColorAlpha</key>
+	<string>0.50</string>
+	<key>finishColorVarianceRed</key>
+	<string>0</string>
+	<key>finishColorVarianceGreen</key>
+	<string>0</string>
+	<key>finishColorVarianceBlue</key>
+	<string>0</string>
+	<key>finishCOlorVarianceAlpha</key>
+	<string>0</string>
+	<key>// start particle size</key>
+	<string></string>
+	<key>startParticleSize</key>
+	<string>100</string>
+	<key>startParticleSizeVariance</key>
+	<string>50</string>
+	<key>// end particle size</key>
+	<string></string>
+	<key>finishParticleSize</key>
+	<string>0</string>
+	<key>finishParticleSizeVariance</key>
+	<string>0</string>
+	<key>// start position</key>
+	<string></string>
+	<key>sourcePositionx</key>
+	<string>0</string>
+	<key>sourcePositionVariancex</key>
+	<string>30</string>
+	<key>sourcePositiony</key>
+	<string>0</string>
+	<key>sourcePositionVariancey</key>
+	<string>20</string>
+	<key>// start rotation</key>
+	<string></string>
+	<key>rotationStart</key>
+	<string>0</string>
+	<key>rotationStartVariance</key>
+	<string>90</string>
+	<key>// end rotation</key>
+	<string></string>
+	<key>rotationEnd</key>
+	<string>0</string>
+	<key>rotationEndVariance</key>
+	<string>180</string>
+	<key>// emitter type</key>
+	<string></string>
+	<key>// 0 = gravity</key>
+	<string></string>
+	<key>// 1 = radius</key>
+	<string></string>
+	<key>emitterType</key>
+	<string>0</string>
+	<key>// gravity data</key>
+	<string></string>
+	<key>gravityx</key>
+	<string>0</string>
+	<key>gravityy</key>
+	<string>125</string>
+	<key>speed</key>
+	<string>0</string>
+	<key>speedVariance</key>
+	<string>0</string>
+	<key>radialAcceleration</key>
+	<string>0</string>
+	<key>radialAccelVariance</key>
+	<string>0</string>
+	<key>tangentialAcceleration</key>
+	<string>0</string>
+	<key>tangentialAccelVariation</key>
+	<string>0</string>
+	<key>// radius data</key>
+	<string></string>
+	<key>maxRadius</key>
+	<string>0</string>
+	<key>maxradiusVariance</key>
+	<string>0</string>
+	<key>minRadius</key>
+	<string>0</string>
+	<key>rotatePerSecond</key>
+	<string>0</string>
+	<key>rotatePerSecondVariance</key>
+	<string>0</string>
+</dict>
+</plist>

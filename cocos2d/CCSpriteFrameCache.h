@@ -5,6 +5,7 @@
  * Copyright (c) 2009 Robert J Payne
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -71,7 +72,7 @@
 /**
  *  Add Sprite frames to the cache from the specified plist.
  *
- *  @param plist plist description
+ *  @param plist plist description.
  */
 -(void) addSpriteFramesWithFile:(NSString*)plist;
 
@@ -109,7 +110,7 @@
 /**
  *  Loads a sprite sheet lookup file and registers all the referenced sprite sheets with the sprite frame cache.
  *
- *  @param filename Sprite sheet lookup file
+ *  @param filename Sprite sheet lookup file.
  */
 -(void) loadSpriteFrameLookupDictionaryFromFile:(NSString*)filename;
 

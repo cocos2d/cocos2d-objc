@@ -1,7 +1,7 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * Copyright (c) 2013 Apportable Inc.
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,7 +20,6 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
  */
 
 #import "CCLabelBMFont.h"
@@ -31,57 +30,68 @@ enum {
 
 // ccBMFontDef BMFont definition.
 typedef struct _BMFontDef {
-	//! ID of the character
+    
+	// ID of the character.
 	unichar charID;
     
-	//! origin and size of the font
+	// Origin and size of the font
 	CGRect rect;
     
-	//! The X amount the image should be offset when drawing the image (in pixels)
+	// The X amount the image should be offset when drawing the image (in pixels)
 	short xOffset;
     
-	//! The Y amount the image should be offset when drawing the image (in pixels)
+	// The Y amount the image should be offset when drawing the image (in pixels)
 	short yOffset;
     
-	//! The amount to move the current position after drawing the character (in pixels)
+	// The amount to move the current position after drawing the character (in pixels)
 	short xAdvance;
     
 } ccBMFontDef;
 
 // cBMFontPadding BMFont padding.
 typedef struct _BMFontPadding {
-	// padding left
+    
+	// Padding left.
 	int	left;
-	// padding top
+    
+	// Padding top.
+    
 	int top;
-	// padding right
+	// Padding right.
+    
 	int right;
-	// padding bottom
+    
+	// Padding bottom.
 	int bottom;
+    
 } ccBMFontPadding;
 
 #pragma mark - Hash Element
 // tCCFontDefHashElement.
 typedef struct _FontDefHashElement {
-    // key. Font Unicode value.
+    
+    // Key. Font Unicode value.
 	NSUInteger		key;
     
-    // font definition.
+    // Font definition.
 	ccBMFontDef		fontDef;
     
 	UT_hash_handle	hh;
+    
 } tCCFontDefHashElement;
 
 // tCCKerningHashElement.
 typedef struct _KerningHashElement {
-    // key for the hash. 16-bit for 1st element, 16-bit for 2nd element.
+    
+    // Key for the hash. 16-bit for 1st element, 16-bit for 2nd element.
 	int				key;
     
-    // Kerning value
+    // Kerning value.
 	int				amount;
     
-    // Had Handle
+    // Had Handle.
 	UT_hash_handle	hh;
+    
 } tCCKerningHashElement;
 
 // CCBMFontConfiguration stores the parsed configuration of the specified .fnt file.
@@ -95,16 +105,16 @@ typedef struct _KerningHashElement {
     
 @public
     
-	// BMFont definitions
+	// BMFont definitions.
 	tCCFontDefHashElement	*_fontDefDictionary;
     
-	// FNTConfig: Common Height
+	// FNTConfig: Common Height.
 	NSInteger		_commonHeight;
     
-	// Padding
+	// Padding.
 	ccBMFontPadding	_padding;
     
-	// values for kerning
+	// Values for kerning.
 	tCCKerningHashElement	*_kerningDictionary;
 }
 

@@ -3,6 +3,7 @@
  *
  * Copyright (c) 2009-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -207,7 +208,7 @@ typedef enum ccTMXTileFlags_ {
 /**
  *  Creates and returns a CCTiledMapInfo object using the TMX format file specified.
  *
- *  @param tmxFile CCTiledMapInfo
+ *  @param tmxFile CCTiledMapInfo.
  *
  *  @return The CCTiledMapInfo Object.
  */
@@ -216,7 +217,7 @@ typedef enum ccTMXTileFlags_ {
 /**
  *  Creates and returns a CCTiledMapInfo object using the TMX XML and resource file path.
  *
- *  @param tmxString    TMX XML
+ *  @param tmxString    TMX XML.
  *  @param resourcePath Resource file path.
  *
  *  @return The CCTiledMapInfo Object.
@@ -231,7 +232,7 @@ typedef enum ccTMXTileFlags_ {
 /**
  *  Initializes and returns a CCTiledMapInfo object using the TMX format file specified.
  *
- *  @param tmxFile CCTiledMapInfo
+ *  @param tmxFile CCTiledMapInfo.
  *
  *  @return An initialized CCTiledMapInfo Object.
  */
@@ -240,7 +241,7 @@ typedef enum ccTMXTileFlags_ {
 /**
  *   Initializes and returns a  CCTiledMapInfo object using the TMX XML and resource file path.
  *
- *  @param tmxString    TMX XML
+ *  @param tmxString    TMX XML.
  *  @param resourcePath Resource file path.
  *
  *  @return An initialized CCTiledMapInfo Object.

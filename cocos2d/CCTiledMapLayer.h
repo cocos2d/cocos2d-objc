@@ -3,6 +3,7 @@
  *
  * Copyright (c) 2009-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -50,12 +51,12 @@
 	CCTiledMapTilesetInfo	*_tileset;
 	NSString                *_layerName;
 	CGSize                  _layerSize;
-	CGSize                  _mapTileSize; // TODO in pixels or points?
+	CGSize                  _mapTileSize; // TODO: in pixels or points?
 	uint32_t                *_tiles;
 	NSUInteger              _layerOrientation;
 	NSMutableDictionary     *_properties;
     
-    // TMX Layer Opacity
+    // TMX Layer Opacity.
 	unsigned char           _opacity;
 
     // GID Range

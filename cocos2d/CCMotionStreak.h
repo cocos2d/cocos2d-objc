@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2011 ForzeField Studios S.L. http://forzefield.com
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -107,7 +108,7 @@
  *
  *  @return The CCMotionStreak object.
  */
-+(id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(CCColor*)color textureFilename:(NSString*)path;
++(id)streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(CCColor*)color textureFilename:(NSString*)path;
 
 /**
  *  Creates and returns a motion streak object from the specified fade time, segments, stroke, color and texture values.
@@ -120,7 +121,7 @@
  *
  *  @return The CCMotionStreak object.
  */
-+(id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(CCColor*)color texture:(CCTexture*)texture;
++(id)streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(CCColor*)color texture:(CCTexture*)texture;
 
 
 /// -----------------------------------------------------------------------
@@ -138,7 +139,7 @@
  *
  *  @return An initialized CCMotionStreak object.
  */
--(id) initWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(CCColor*)color textureFilename:(NSString*)path;
+-(id)initWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(CCColor*)color textureFilename:(NSString*)path;
 
 /**
  *  Initializes and returns a motion streak object from the specified fade time, segments, stroke, color and texture values.
@@ -151,9 +152,9 @@
  *
  *  @return An initialized CCMotionStreak object.
  */
--(id) initWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(CCColor*)color texture:(CCTexture*)texture;
+-(id)initWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(CCColor*)color texture:(CCTexture*)texture;
 
 /** Remove all living segments. */
--(void) reset;
+-(void)reset;
 
 @end

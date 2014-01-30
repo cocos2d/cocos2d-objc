@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * Copyright (c) 2013 Lars Birkemose
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,49 +28,35 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
-// ---------------------------------------------------------------------
-
 /**
  *  CCSprite9Slice will render a single image as nine quads, keeping the margins fixed, and stretching the center quads, to fit the content size.
- *  See CcSprite for how to create and use
+ *  See CCSprite for usage.
  */
-@interface CCSprite9Slice : CCSprite
-{
-    
+@interface CCSprite9Slice : CCSprite {
 }
 
-// ---------------------------------------------------------------------
-/**
- *  @name Margin setup
- */
+
+/// -----------------------------------------------------------------------
+/// @name Accessing Margin Attributes
+/// -----------------------------------------------------------------------
 
 /**
- *  Sets the margin as a normalized percentage of the total image size
- *  If set to 0.25, 25% of the left, right, top and bottom of the image, will be unstratched
+ *  Sets the margin as a normalized percentage of the total image size.
+ *  If set to 0.25, 25% of the left, right, top and bottom of the image, will be unstratched.
  */
 @property (nonatomic, assign) float margin;
 
-/**
- *  Sets the left margin exclusively
- */
+/** Sets the left margin exclusively. */
 @property (nonatomic, assign) float marginLeft;
 
-/**
- *  Sets the right margin exclusively
- */
+/** Sets the right margin exclusively. */
 @property (nonatomic, assign) float marginRight;
 
-/**
- *  Sets the top margin exclusively
- */
+/** Sets the top margin exclusively. */
 @property (nonatomic, assign) float marginTop;
 
-/**
- *  Sets the bottom margin exclusively
- */
+/** Sets the bottom margin exclusively. */
 @property (nonatomic, assign) float marginBottom;
-
-// ---------------------------------------------------------------------
 
 @end
 

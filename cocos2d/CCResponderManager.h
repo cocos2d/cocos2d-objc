@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * Copyright (c) 2013 Lars Birkemose
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,36 +34,29 @@
 
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
 
-// -----------------------------------------------------------------
-#pragma mark - CCRunningResponder iOS
-// -----------------------------------------------------------------
-
 #import <UIKit/UIKit.h>
 
 #define RESPONDER UIResponder
 
-// -----------------------------------------------------------------
-/**
- *  @name iOS Running responder definition
- */
+#pragma mark - iOS Running Responder
 
 /**
- *  Defines a running responder
+ *  Defines a running iOS responder.
  */
 @interface CCRunningResponder : NSObject
 
 /**
- *  Holdes the target of the touch. This is the node which accepted the touch
+ *  Holdes the target of the touch. This is the node which accepted the touch.
  */
 @property (nonatomic, strong) id target;
 
 /**
- *  Holds the current touch. Note that touches must not be retained
+ *  Holds the current touch. Note that touches must not be retained.
  */
 @property (nonatomic, weak) UITouch *touch;
 
 /**
- *  Holdes the current event. Note that events must not be retained
+ *  Holdes the current event. Note that events must not be retained.
  */
 @property (nonatomic, weak) UIEvent *event;
 
@@ -71,164 +64,149 @@
 
 #else
 
-// -----------------------------------------------------------------
-#pragma mark - CCRunningResponder Mac
-// -----------------------------------------------------------------
+#pragma mark - OSX Running Responder
 
 #import <AppKit/AppKit.h>
 
 #define RESPONDER NSResponder
 
-// -----------------------------------------------------------------
 /**
- *  @name OSX Running responder definition
- */
-
-/**
- *  Defines the various mouse buttons
+ *  Defines the various mouse buttons.
  */
 typedef NS_ENUM(NSInteger, CCMouseButton)
 {
-    /** Defines left mouse button, in mouse events on OSX */
+    /** Defines left mouse button, in mouse events on OSX. */
     CCMouseButtonLeft,
-    /** Defines right mouse button, in mouse events on OSX */
+    
+    /** Defines right mouse button, in mouse events on OSX. */
     CCMouseButtonRight,
-    /** Defines other (middle) mouse button, in mouse events on OSX */
+    
+    /** Defines other (middle) mouse button, in mouse events on OSX. */
     CCMouseButtonOther,
 };
 
-// -----------------------------------------------------------------
+#pragma mark - CCRunningResponder
 
 /**
- *  Defines a running responder
+ *  Defines a running OS X responder.
  */
 @interface CCRunningResponder : NSObject
 
 /**
- *  Holdes the target of the touch. This is the node which accepted the touch
+ *  Holdes the target of the touch. This is the node which accepted the touch.
  */
-@property (nonatomic, strong) id target;                            // the target associated with the mouse event
+@property (nonatomic, strong) id target;
 
 /**
- *  Button in the currently ongoing event
+ *  Button in the currently ongoing event.
  */
-@property (nonatomic, assign) CCMouseButton button;                 // button of the current event
+@property (nonatomic, assign) CCMouseButton button;
 
 @end
 
 #endif
 
-// -----------------------------------------------------------------
 #pragma mark - CCResponderManager
-// -----------------------------------------------------------------
 
 @class CCNode;
 
 /**
- *  Defines the size of the responder buffer
- *  This is the maximum number of individual responders which can be active at the same time
+ *  Defines the size of the responder buffer.
+ *  This is the maximum number of individual responders which can be active at the same time.
  */
 enum
 {
     CCResponderManagerBufferSize        = 128,
 };
 
-// -----------------------------------------------------------------
-
 /**
- *  The responder manager handles touches and 
+ *  The responder manager handles touches.
  */
 @interface CCResponderManager : RESPONDER
 
-// -----------------------------------------------------------------
-
 /**
- *  Enables the responder manager
- *  When the responder manager is disabled, all current touches will be cancelled, 
- *  and no further touch handling registered
+ *  Enables the responder manager.
+ *  When the responder manager is disabled, all current touches will be cancelled and no further touch handling registered.
  */
 @property (nonatomic, assign, getter = isEnabled) BOOL enabled;     
 
-// -----------------------------------------------------------------
-/**
- *  @name Creation of CCResponderManager
- */
+
+/// -----------------------------------------------------------------------
+/// @name Creating a CCResponderManager Object
+/// -----------------------------------------------------------------------
 
 /**
- *  CCResponderManager factory method
+ *  CCResponderManager factory method.
  *
- *  @return Initialized CCResponderManager object
+ *  @return The CCResponderManager Object.
  */
 + (CCResponderManager*)responderManager;
 
+
+/// -----------------------------------------------------------------------
+/// @name Initializing a CCResponderManager Object
+/// -----------------------------------------------------------------------
+
 /**
- *  Initializes a freshly created CCResponderManager object
+ *  Initializes a freshly created CCResponderManager object.
  *
- *  @return Initialized CCResponderManager object
+ *  @return An initialized CCResponderManager Object.
  */
 - (id)init;
 
-// -----------------------------------------------------------------
-/**
- *  @name Passing events down the responder chain
- */
+
+/// -----------------------------------------------------------------------
+/// @name CCResponderManager Management Methods
+/// -----------------------------------------------------------------------
 
 /**
- *  Discards current event
- *  Do not call directly, call [super touchesXXX] or [super mouseXXX] in stead
+ *  Discards current event.
+ *  Do not call directly, call [super touchesXXX] or [super mouseXXX] in stead.
  */
 - (void)discardCurrentEvent;
 
-// -----------------------------------------------------------------
 /**
- *  @name Adds and removes responders to the responder manager
- */
-
-
-/**
- *  Adds a responder to the responder manager
- *  Normally there is no need to call this method directly
+ *  Adds a responder to the responder manager.
+ *  Normally there is no need to call this method directly.
  *
- *  @param responder A CCNode object
+ *  @param responder A CCNode object.
  */
 - (void)addResponder:(CCNode *)responder;
 
 /**
- *  Removes all responders
- *  Normally there is no need to call this method directly
+ *  Removes all responders.
+ *  Normally there is no need to call this method directly.
  */
 - (void)removeAllResponders;
 
 /**
- *  Mark the responder chain as dirty, if responders state changes
- *  Normally there is no need to call this method directly
+ *  Mark the responder chain as dirty, if responders state changes.
+ *  Normally there is no need to call this method directly.
  */
 - (void)markAsDirty;
 
-// -----------------------------------------------------------------
-/**
- *  @name Finds responders at a certain world position
- */
+
+/// -----------------------------------------------------------------------
+/// @name CCResponderManager Helper Methods
+/// -----------------------------------------------------------------------
 
 /**
- *  Returns the first responder at a certain world position
+ *  Returns the first responder at a certain world position.
  *
- *  @param pos World position ( this in most cases maps to the screen coordinates in points )
+ *  @param pos World position ( this in most cases maps to the screen coordinates in points ).
  *
- *  @return The CCNode at the position, if any
+ *  @return The CCNode at the position (if any).
  */
 - (CCNode *)nodeAtPoint:(CGPoint)pos;
 
 /**
- *  Returns a list of all responders at a certain world position
+ *  Returns a list of all responders at a certain world position.
  *
- *  @param pos World position ( this in most cases maps to the screen coordinates in points )
+ *  @param pos World position ( this in most cases maps to the screen coordinates in points ).
  *
- *  @return Returns an array of CCNodes at the given point. The top most responder will be the first entry
+ *  @return Returns an array of CCNodes at the given point. The top most responder will be the first entry.
  */
 - (NSArray *)nodesAtPoint:(CGPoint)pos;
-
-// -----------------------------------------------------------------
 
 @end
 

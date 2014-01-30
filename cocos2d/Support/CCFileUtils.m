@@ -687,7 +687,8 @@ static CCFileUtils *fileUtils = nil;
 	if( ! ret )
 		ret = path;
 	
-	[_removeSuffixCache setObject:ret forKey:path];
+    if (path)
+        [_removeSuffixCache setObject:ret forKey:path];
 	
 	return ret;
 }

@@ -2,9 +2,9 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (C) 2009 Matt Oswald
- *
  * Copyright (c) 2009-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,6 @@
 #import "ccConfig.h"
 #import "CCSprite.h"
 #import "CCSpriteBatchNode.h"
-#import "CCDrawingPrimitives.h"
 #import "CCTextureCache.h"
 #import "CCShaderCache.h"
 #import "CCGLProgram.h"

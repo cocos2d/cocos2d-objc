@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * Copyright (c) 2013 Lars Birkemose
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -53,6 +53,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     __strong CCScene *_outgoingScene;
     CCRenderTexture *_incomingTexture;
     CCRenderTexture *_outgoingTexture;
+    BOOL _incomingPauseState;
     //
     CCTransitionFixedFunction _fixedFunction;
     CCTransitionDirection _direction;
@@ -69,9 +70,9 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionCrossFade direction:CCTransitionDirectionInvalid color:ccBLACK]);
 }
 
-+ (CCTransition *)transitionFadeWithColor:(ccColor3B)color duration:(NSTimeInterval)duration
++ (CCTransition *)transitionFadeWithColor:(CCColor*)color duration:(NSTimeInterval)duration
 {
-    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionFadeWithColor direction:CCTransitionDirectionInvalid color:color]);
+    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionFadeWithColor direction:CCTransitionDirectionInvalid color:color.ccColor3b]);
 }
 
 + (CCTransition *)transitionFadeWithDuration:(NSTimeInterval)duration
@@ -174,12 +175,16 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 
 // -----------------------------------------------------------------
 
-- (void)replaceScene:(CCScene *)scene
+- (void)startTransition:(CCScene *)scene
 {
     _incomingScene = scene;
     [_incomingScene onEnter];
+    _incomingPauseState = _incomingScene.paused;
+    _incomingScene.paused = _incomingScene.paused || !_incomingSceneAnimated;
+    
     _outgoingScene = [CCDirector sharedDirector].runningScene;
     [_outgoingScene onExitTransitionDidStart];
+    _outgoingScene.paused = _outgoingScene.paused || !_outgoingSceneAnimated;
 
     // create render textures
     // get viewport size
@@ -206,7 +211,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     [self renderIncoming:0];
     
     // switch to transition scene
-    [[CCDirector sharedDirector] replaceScene:self];
+    [[CCDirector sharedDirector] performSelector:@selector(startTransition:) withObject:self];
 }
 
 // -----------------------------------------------------------------
@@ -233,6 +238,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
         if ([CCDirector sharedDirector].sendCleanupToScene) [_outgoingScene cleanup];
         [[CCDirector sharedDirector] replaceScene:_incomingScene];
         [_incomingScene onEnterTransitionDidFinish];
+        _incomingScene.paused = _incomingPauseState;
         
         // release scenes
         _incomingScene = nil;
@@ -242,8 +248,16 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     }
     
     // render the scenes
-    if (_incomingSceneAnimated) [self renderIncoming:_progress];
-    if (_outgoingSceneAnimated) [self renderOutgoing:_progress];
+    if (_incomingSceneAnimated)
+    {
+        
+        [self renderIncoming:_progress];
+    }
+    if (_outgoingSceneAnimated)
+    {
+     
+        [self renderOutgoing:_progress];
+    }
 }
 
 // -----------------------------------------------------------------
@@ -251,12 +265,14 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 - (void)renderOutgoing:(float)progress
 {
     float oldScale;
+    GLfloat clearColor[4];
 
     // scale the out scene to fit render texture
     oldScale = _outgoingScene.scale;
     _outgoingScene.scale = oldScale / _outgoingDownScale;
     
-    [_outgoingTexture beginWithClear:0 g:0 b:0 a:1];
+    glGetFloatv(GL_COLOR_CLEAR_VALUE, clearColor);
+    [_outgoingTexture beginWithClear:clearColor[0] g:clearColor[1] b:clearColor[2] a:clearColor[3]];
     [_outgoingScene visit];
     [_outgoingTexture end];
     
@@ -266,12 +282,14 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 - (void)renderIncoming:(float)progress
 {
     float oldScale;
+    GLfloat clearColor[4];
     
     // scale the in scene to fit render texture
     oldScale = _incomingScene.scale;
     _incomingScene.scale = oldScale / _incomingDownScale;
     
-    [_incomingTexture beginWithClear:0 g:0 b:0 a:1];
+    glGetFloatv(GL_COLOR_CLEAR_VALUE, clearColor);
+    [_incomingTexture beginWithClear:clearColor[0] g:clearColor[1] b:clearColor[2] a:clearColor[3]];
     [_incomingScene visit];
     [_incomingTexture end];
     

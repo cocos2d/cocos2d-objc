@@ -3,6 +3,7 @@
  *
  * Copyright (c) 2008-2011 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -163,8 +164,8 @@
 -(id) initOne: (CCActionFiniteTime*) one two: (CCActionFiniteTime*) two
 {
 	NSAssert( one!=nil && two!=nil, @"Sequence: arguments must be non-nil");
-	NSAssert( one!=_actions[0] && one!=_actions[1], @"Sequence: re-init using the same parameters is not supported");
-	NSAssert( two!=_actions[1] && two!=_actions[0], @"Sequence: re-init using the same parameters is not supported");
+	// NSAssert( one!=_actions[0] && one!=_actions[1], @"Sequence: re-init using the same parameters is not supported");
+	// NSAssert( two!=_actions[1] && two!=_actions[0], @"Sequence: re-init using the same parameters is not supported");
 	
 	CCTime d = [one duration] + [two duration];
 	
@@ -554,7 +555,7 @@
 -(void) update: (CCTime) t
 {
     // added to support overriding setRotation only
-    if (_startAngleX == _startAngleY)
+    if ((_startAngleX == _startAngleY) && (_diffAngleX == _diffAngleY))
     {
         [_target setRotation:(_startAngleX + (_diffAngleX * t))];
     }
@@ -617,7 +618,7 @@
 {
 	// XXX: shall I add % 360
     // added to support overriding setRotation only
-    if (_startAngleX == _startAngleY)
+    if ((_startAngleX == _startAngleY) && (_angleX == _angleY))
     {
         [_target setRotation:(_startAngleX + (_angleX * t))];
     }
@@ -1074,7 +1075,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, CCTime t )
 -(void) update: (CCTime) t
 {
     // added to support overriding setScale only
-    if (_startScaleX == _startScaleY)
+    if ((_startScaleX == _startScaleY) && (_endScaleX == _endScaleY))
     {
         [_target setScale:(_startScaleX + (_deltaX * t))];
     }

@@ -37,7 +37,10 @@ km_mat4_stack* current_stack = NULL;
 
 static unsigned char initialized = 0;
 
-void lazyInitialize()
+// supress "no prototype" warnings
+void lazyInitialize(void);
+
+void lazyInitialize(void)
 {
 
 	if (!initialized) {

@@ -3,6 +3,7 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -145,7 +146,12 @@ static inline BOOL ccc4FEqual(ccColor4F a, ccColor4F b)
  */
 static inline ccColor4B ccc4BFromccc4F(ccColor4F c)
 {
-	return (ccColor4B){(GLubyte)(c.r*255), (GLubyte)(c.g*255), (GLubyte)(c.b*255), (GLubyte)(c.a*255)};
+	return (ccColor4B){
+		(GLubyte)(clampf(c.r, 0, 1)*255),
+		(GLubyte)(clampf(c.g, 0, 1)*255),
+		(GLubyte)(clampf(c.b, 0, 1)*255),
+		(GLubyte)(clampf(c.a, 0, 1)*255)
+	};
 }
 	
 /**
@@ -153,7 +159,11 @@ static inline ccColor4B ccc4BFromccc4F(ccColor4F c)
  */
 static inline ccColor3B ccc3BFromccc4F(ccColor4F c)
 {
-	return (ccColor3B){ (GLubyte) (c.r*255), (GLubyte) (c.g*255), (GLubyte) (c.b*255) };
+	return (ccColor3B){
+		(GLubyte)(clampf(c.r, 0, 1)*255),
+		(GLubyte)(clampf(c.g, 0, 1)*255),
+		(GLubyte)(clampf(c.b, 0, 1)*255),
+	};
 }
 
 /**
@@ -161,11 +171,11 @@ static inline ccColor3B ccc3BFromccc4F(ccColor4F c)
  */
 static inline ccColor4F ccc4FInterpolated(ccColor4F start, ccColor4F end, float t)
 {
-	start.r = end.r + (start.r - end.r ) * t;
-	start.g = end.g	+ (start.g - end.g ) * t;
-	start.b = end.b + (start.b - end.b ) * t;
-	start.a = end.a	+ (start.a - end.a ) * t;
-	return  start;
+	end.r = start.r + (end.r - start.r ) * t;
+	end.g = start.g	+ (end.g - start.g ) * t;
+	end.b = start.b + (end.b - start.b ) * t;
+	end.a = start.a	+ (end.a - start.a ) * t;
+	return  end;
 }
 
 /** A vertex composed of 2 GLfloats: x, y

@@ -3,6 +3,7 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,23 +35,19 @@
 
 @class CCTexture;
 
-/** Singleton that handles the loading of textures
- * Once the texture is loaded, the next time it will return
- * a reference of the previously loaded texture reducing GPU & CPU memory
+/** Singleton that handles the loading of textures.  Once the texture is loaded, the next time it will return
+ * a reference of the previously loaded texture reducing GPU & CPU memory.
  */
-@interface CCTextureCache : NSObject
-{
+@interface CCTextureCache : NSObject {
 	NSMutableDictionary *_textures;
-
 	dispatch_queue_t _loadingQueue;
 	dispatch_queue_t _dictQueue;
 }
 
-/** Retruns ths shared instance of the cache */
+/** Returns ths shared instance of the cache. */
 + (CCTextureCache *) sharedTextureCache;
 
-/** purges the cache. It releases the retained instance.
- */
+/** Purges the cache.  It releases the retained instance. */
 +(void)purgeSharedTextureCache;
 
 /**
@@ -64,7 +61,7 @@
  *
  *  @param fileimage Image file to load.
  *
- *  @return Texture.
+ *  @return A CCTexture object.
  */
 -(CCTexture*) addImage: (NSString*) fileimage;
 
@@ -123,16 +120,16 @@
 -(CCTexture *) textureForKey:(NSString *)key;
 
 /** Purges the dictionary of loaded textures.
- * Call this method if you receive the "Memory Warning"
- * In the short term: it will free some resources preventing your app from being killed
- * In the medium term: it will allocate more resources
- * In the long term: it will be the same
+ * Call this method if you receive the "Memory Warning".
+ * In the short term: it will free some resources preventing your app from being killed.
+ * In the medium term: it will allocate more resources.
+ * In the long term: it will be the same.
  */
 -(void) removeAllTextures;
 
-/** Removes unused textures
- * Textures that have a retain count of 1 will be deleted
- * It is convenient to call this method after when starting a new Scene
+/** Removes unused textures.
+ * Textures that have a retain count of 1 will be deleted.
+ * It is convenient to call this method after when starting a new Scene.
  */
 -(void) removeUnusedTextures;
 
@@ -163,16 +160,15 @@
  *
  *  @param filename Filename on PVR file.
  *
- *  @return Texture.
+ *  @return A Texture.
  */
 -(CCTexture*) addPVRImage:(NSString*) filename;
 
 @end
 
 @interface CCTextureCache (Debug)
-/** Output to CCLOG the current contents of this CCTextureCache
- * This will attempt to calculate the size of each texture, and the total texture memory in use
- *
+/** Output to CCLOG the current contents of this CCTextureCache.
+ * This will attempt to calculate the size of each texture, and the total texture memory in use 
  */
 -(void) dumpCachedTextureInfo;
 

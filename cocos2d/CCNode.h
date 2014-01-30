@@ -2,10 +2,9 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2009 Valentin Milea
- *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * Copyright (c) 2013 Lars Birkemose
+ * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -70,99 +69,103 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  */
 
 @interface CCNode : CCResponder < CCSchedulerTarget > {
-	// rotation angle
+    
+	// Rotation angle.
 	float _rotationalSkewX, _rotationalSkewY;
 
-	// scaling factors
+	// Scaling factors.
 	float _scaleX, _scaleY;
 
-	// openGL real Z vertex
+	// OpenGL real Z vertex.
 	float _vertexZ;
 
-	// position of the node
+	// Position of the node.
 	CGPoint _position;
 
-	// skew angles
+	// Skew angles.
 	float _skewX, _skewY;
 
-	// anchor point in points
+	// Anchor point in points.
 	CGPoint _anchorPointInPoints;
-	// anchor point normalized (NOT in points)
+    
+	// Anchor point normalized (NOT in points).
 	CGPoint _anchorPoint;
 
-	// untransformed size of the node
+	// Untransformed size of the node.
 	CGSize	_contentSize;
 
-	// transform
+	// Transform.
 	CGAffineTransform _transform, _inverse;
 	BOOL _isTransformDirty;
 	BOOL _isInverseDirty;
 
-	// z-order value
+	// Z-order value.
 	NSInteger _zOrder;
 
-	// array of children
+	// Array of children.
 	NSMutableArray *_children;
 
-	// weak ref to parent
+	// Weak ref to parent.
 	CCNode *__unsafe_unretained _parent;
 
-	// a tag. any number you want to assign to the node
-	//NSInteger _tag;
+	// A tag any name you want to assign to the node
     NSString* _name;
 
-	// user data field
+	// User data field.
 	id _userObject;
 
-	// Shader
+	// Shader Program.
 	CCGLProgram	*_shaderProgram;
 
-	// Server side state
+	// Server side state.
 	ccGLServerState _glServerState;
 
-	// used to preserve sequence while sorting children with the same zOrder
+	// Used to preserve sequence while sorting children with the same zOrder.
 	NSUInteger _orderOfArrival;
 
-	// scheduler used to schedule timers and updates
+	// Scheduler used to schedule timers and updates/
 	CCScheduler		*_scheduler;
 
-	// ActionManager used to handle all the actions
+	// ActionManager used to handle all the actions.
 	CCActionManager	*_actionManager;
 	
 	// YES if the node is added to an active scene.
 	BOOL _isInActiveScene;
 	
+    // True if paused.
 	BOOL _paused;
 	
 	// Number of paused parent or ancestor nodes.
 	int _pausedAncestors;
 	
-	// is visible
+	// True when visible.
 	BOOL _visible;
 
+    // True to ensure reorder.
 	BOOL _isReorderChildDirty;
     
-  CCPhysicsBody* _physicsBody;
+    // Physics Body.
+    CCPhysicsBody* _physicsBody;
 	
-	// DisplayColor and Color are kept separate to allow for cascading color and alpha changes through node children. Alphas tend to
-	// be multiplied together so you can fade groups of objects that are colored differently, for example.
+    // DisplayColor and Color are kept separate to allow for cascading color and alpha changes through node children.
+    // Alphas tend to be multiplied together so you can fade groups of objects that are colored differently.
 	ccColor4F	_displayColor, _color;
 
 	// Opacity/Color propagates into children that conform to if cascadeOpacity/cascadeColor is enabled.
 	BOOL		_cascadeColorEnabled, _cascadeOpacityEnabled;
 }
 
+
 /// -----------------------------------------------------------------------
 /// @name Creating Nodes
 /// -----------------------------------------------------------------------
 
-/** Allocates and initializes a node.
- The node will be created as "autorelease".
- */
+/** Allocates and initializes a node. The node will be created as "autorelease". */
 +(id) node;
 
-/** Initializes the node */
+/** Initializes the node. */
 -(id) init;
+
 
 /// -----------------------------------------------------------------------
 /// @name Pausing and Hiding
@@ -171,19 +174,20 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 /** If paused, no callbacks will be called, and no actions will be run. */
 @property(nonatomic, assign) BOOL paused;
 
-/** Whether of not the node is visible. Default is YES */
+/** Whether of not the node is visible. Default is YES. */
 @property( nonatomic,readwrite,assign) BOOL visible;
+
 
 /// -----------------------------------------------------------------------
 /// @name Tagging and Setting User Object
 /// -----------------------------------------------------------------------
 
-/** A tag used to identify the node easily */
-//@property(nonatomic,readwrite,assign) NSInteger tag;
+/** A name tag used to help identify the node easily. */
 @property(nonatomic,strong) NSString* name;
 
-/** Similar to userData, but instead of holding a void* it holds an id */
+/** Similar to userData, but instead of holding a void* it holds an id. */
 @property(nonatomic,readwrite,strong) id userObject;
+
 
 /// -----------------------------------------------------------------------
 /// @name Position and Size
@@ -192,7 +196,7 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 /** Position (x,y) of the node in the unit specified by the positionType property. The distance is measured from one of the corners of the node's parent container, which corner is specified by the positionType property. Default setting is referencing the bottom left corner in points. */
 @property(nonatomic,readwrite,assign) CGPoint position;
 
-/** Position (x,y) of the node in points from the bottom left corner */
+/** Position (x,y) of the node in points from the bottom left corner. */
 @property(nonatomic,readonly) CGPoint positionInPoints;
 
 /** Defines the position type used for the position property. Changing the position type affects the meaning of the position, and allows you to change the referenceCorner, relative to the parent container. It allso allows changing from points to UIPoints. UIPoints are scaled by [CCDirector sharedDirector].UIScaleFactor. See "Coordinate System and Positioning" for more information. */
@@ -201,10 +205,10 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 /** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. */
 @property(nonatomic,readwrite,assign) float rotation;
 
-/** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. It only modifies the X rotation performing a horizontal rotational skew . */
+/** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. It only modifies the X rotation performing a horizontal rotational skew. */
 @property(nonatomic,readwrite,assign) float rotationalSkewX;
 
-/** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. It only modifies the Y rotation performing a vertical rotational skew . */
+/** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. It only modifies the Y rotation performing a vertical rotational skew. */
 @property(nonatomic,readwrite,assign) float rotationalSkewY;
 
 /** The scale factor of the node. 1.0 is the default scale factor. It modifies the X and Y scale at the same time. */
@@ -216,14 +220,16 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 /** The scale factor of the node. 1.0 is the default scale factor. It only modifies the Y scale factor. */
 @property(nonatomic,readwrite,assign) float scaleY;
 
-/** scaleInPoints is the scale factor of the node in both X and Y, measured in points. The scaleType indicates if the scaleInPoints will be scaled byt the UIScaleFactor or not. See "Coordinate System and Positioning" for more information. */
+/** The scaleInPoints is the scale factor of the node in both X and Y, measured in points. The scaleType indicates if the scaleInPoints will be scaled byt the UIScaleFactor or not. See "Coordinate System and Positioning" for more information. */
 @property (nonatomic,readonly) float scaleInPoints;
-/** scaleInPoints is the scale factor of the node in X, measured in points. */
+
+/** The scaleInPoints is the scale factor of the node in X, measured in points. */
 @property (nonatomic,readonly) float scaleXInPoints;
-/** scaleInPoints is the scale factor of the node in Y, measured in points. */
+
+/** The scaleInPoints is the scale factor of the node in Y, measured in points. */
 @property (nonatomic,readonly) float scaleYInPoints;
 
-/** scaleType defines scale behavior for this node. CCScaleTypeScaled indicates that the node will be scaled by [CCDirector sharedDirector].UIScaleFactor. This property is analagous to positionType. ScaleType affects the scaleInPoints of a CCNode. See "Coordinate System and Positioning" for more information.
+/** The scaleType defines scale behavior for this node. CCScaleTypeScaled indicates that the node will be scaled by [CCDirector sharedDirector].UIScaleFactor. This property is analagous to positionType. ScaleType affects the scaleInPoints of a CCNode. See "Coordinate System and Positioning" for more information.
  */
 @property (nonatomic,assign) CCScaleType scaleType;
 
@@ -245,13 +251,13 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  */
 @property (nonatomic,readwrite,assign) CGSize contentSize;
 
-/** The untransformed size of the node in Points. The contentSize remains the same no matter the node is scaled or rotated. contentSizeInPoints is affected by the contentSizeType and will be scaled by the [CCDirector sharedDirector].UIScaleFactor if the type is CCSizeUnitUIPoints */
+/** The untransformed size of the node in Points. The contentSize remains the same no matter the node is scaled or rotated. contentSizeInPoints is affected by the contentSizeType and will be scaled by the [CCDirector sharedDirector].UIScaleFactor if the type is CCSizeUnitUIPoints. */
 @property (nonatomic,readonly) CGSize contentSizeInPoints;
 
 /** Defines the contentSize type used for the widht and height component of the contentSize property. */
 @property (nonatomic,readwrite,assign) CCSizeType contentSizeType;
 
-/** anchorPoint is the point around which all transformations and positioning manipulations take place.
+/** The anchorPoint is the point around which all transformations and positioning manipulations take place.
  It's like a pin in the node where it is "attached" to its parent.
  The anchorPoint is normalized, like a percentage. (0,0) means the bottom-left corner and (1,1) means the top-right corner.
  But you can use values higher than (1,1) and lower than (0,0) too.
@@ -259,17 +265,15 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  */
 @property(nonatomic,readwrite) CGPoint anchorPoint;
 
-/** The anchorPoint in absolute pixels.
- Since v0.8 you can only read it. If you wish to modify it, use anchorPoint instead
- */
+/** The anchorPoint in absolute pixels.  Since v0.8 you can only read it. If you wish to modify it, use anchorPoint instead. */
 @property(nonatomic,readonly) CGPoint anchorPointInPoints;
 
-/** returns a "local" axis aligned bounding box of the node in points.
+/** Returns a "local" axis aligned bounding box of the node in points.
  The returned box is relative only to its parent.
  The returned box is in Points.
- 
  */
 - (CGRect) boundingBox;
+
 
 /// -----------------------------------------------------------------------
 /// @name Adding, Removing and Sorting Children
@@ -279,7 +283,7 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  *  Adds a child to the container with z-order as 0.
  *  If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
  *
- *  @param node CCNode to add as a child
+ *  @param node CCNode to add as a child.
  */
 -(void) addChild: (CCNode*)node;
 
@@ -287,8 +291,8 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  *  Adds a child to the container with a z-order.
  *  If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
  *
- *  @param node CCNode to add as a child
- *  @param z    Z depth of node
+ *  @param node CCNode to add as a child.
+ *  @param z    Z depth of node.
  */
 -(void) addChild: (CCNode*)node z:(NSInteger)z;
 
@@ -296,9 +300,9 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  *  Adds a child to the container with z order and tag.
  *  If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
  *
- *  @param node CCNode to add as a child
- *  @param z    Z depth of node
- *  @param name name tag
+ *  @param node CCNode to add as a child.
+ *  @param z    Z depth of node.
+ *  @param name name tag.
  */
 -(void) addChild: (CCNode*)node z:(NSInteger)z name:(NSString*)name;
 
@@ -312,14 +316,14 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  *  Remove itself from its parent node. If cleanup is YES, then also remove all actions and callbacks.
  *  If the node orphan, then nothing happens.
  *
- *  @param cleanup Stops all scheduled events and actions
+ *  @param cleanup Stops all scheduled events and actions.
  */
 -(void) removeFromParentAndCleanup:(BOOL)cleanup;
 
 /**
  *  Removes a child from the container forcing a cleanup. This method checks to ensure the parameter node is actually a child of this node.
  *
- *  @param child The child node to remove
+ *  @param child The child node to remove.
  */
 -(void) removeChild:(CCNode*)child;
 
@@ -327,23 +331,23 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  *  Removes a child from the container. It will also cleanup all running and scheduled actions depending on the cleanup parameter.
  *  This method checks to ensure the parameter node is actually a child of this node.
  *
- *  @param node    The child node to remove
- *  @param cleanup Stops all scheduled events and actions
+ *  @param node    The child node to remove.
+ *  @param cleanup Stops all scheduled events and actions.
  */
 -(void) removeChild: (CCNode*)node cleanup:(BOOL)cleanup;
 
 /**
  *  Removes a child from the container by name value forcing a cleanup.
  *
- *  @param name Name of node to be removed
+ *  @param name Name of node to be removed.
  */
 -(void) removeChildByName:(NSString*)name;
 
 /**
  *  Removes a child from the container by name value. It will also cleanup all running actions depending on the cleanup parameter
  *
- *  @param name    Name of node to be removed
- *  @param cleanup Stops all scheduled events and actions
+ *  @param name    Name of node to be removed.
+ *  @param cleanup Stops all scheduled events and actions.
  */
 -(void) removeChildByName:(NSString*)name cleanup:(BOOL)cleanup;
 
@@ -355,18 +359,14 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 /**
  *  Removes all children from the container and do a cleanup all running actions depending on the cleanup parameter.
  *
- *  @param cleanup Stops all scheduled events and actions
+ *  @param cleanup Stops all scheduled events and actions.
  */
 -(void) removeAllChildrenWithCleanup:(BOOL)cleanup;
 
-/** 
- *  A weak reference to the parent 
- */
+/** A weak reference to the parent. */
 @property(nonatomic,readwrite,unsafe_unretained) CCNode* parent;
 
-/** 
- *  Array of children 
- */
+/** Array of child nodes. */
 @property(nonatomic,readonly) NSArray *children;
 
 /**
@@ -374,17 +374,16 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  *  If recursive, it returns the first matching node, via a depth first search.
  *  Otherwise, only immediate children are checked.
  *
- *  @param name Name tag
- *  @param isRecursive Search recursively through children of children
+ *  @param name Name tag.
+ *  @param isRecursive Search recursively through children of children.
  *
  *  @return Returns a CCNode, or nil if no marching nodes are found.
  */
 -(CCNode*) getChildByName:(NSString *)name recursively:(bool)isRecursive;
 
-/** 
- *  The z order of the node relative to its "siblings": children of the same parent 
- */
+/** The z order of the node relative to its "siblings": children of the same parent. */
 @property(nonatomic,assign) NSInteger zOrder;
+
 
 /// -----------------------------------------------------------------------
 /// @name Hit tests
@@ -392,11 +391,11 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 
 /**
  *  Check if a touch is inside the node.
- *  To allow for custom detection, override this method
+ *  To allow for custom detection, override this method.
  *
- *  @param pos world position
+ *  @param pos World position.
  *
- *  @return returns true, if the position is inside the node
+ *  @return Returns true, if the position is inside the node.
  */
 - (BOOL)hitTestWithWorldPos:(CGPoint)pos;
 
@@ -405,6 +404,7 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  *  The expansion is in normalized content size. Ie a hit area expansion of 2, will result in the hit area being double width, and double height.
  */
 @property (nonatomic, assign) float hitAreaExpansion;
+
 
 /// -----------------------------------------------------------------------
 /// @name Scene Management
@@ -430,7 +430,7 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  */
 -(void) onExit;
 
-/** callback that is called every time the CCNode leaves the 'stage'.
+/** Callback that is called every time the CCNode leaves the 'stage'.
  If the CCNode leaves the 'stage' with a transition, this callback is called when the transition starts.
  */
 -(void) onExitTransitionDidStart;
@@ -447,6 +447,7 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 
 /** The physics body (if any) that this node is attached to. */
 @property(nonatomic, strong) CCPhysicsBody *physicsBody;
+
 
 /// -----------------------------------------------------------------------
 /// @name Actions
@@ -466,25 +467,25 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 -(void) stopAllActions;
 
 /**
- *  Removes an action from the running action list
+ *  Removes an action from the running action list.
  *
- *  @param action Action to remove
+ *  @param action Action to remove.
  */
 -(void) stopAction: (CCAction*) action;
 
 /**
- *  Removes an action from the running action list given its tag
+ *  Removes an action from the running action list given its tag.
  *
- *  @param tag Tag to remove
+ *  @param tag Tag to remove.
  */
 -(void) stopActionByTag:(NSInteger) tag;
 
 /**
- *  Gets an action from the running action list given its tag
+ *  Gets an action from the running action list given its tag.
  *
- *  @param tag Tag to retrieve
+ *  @param tag Tag to retrieve.
  *
- *  @return the Action the with the given tag
+ *  @return the Action the with the given tag.
  */
 -(CCAction*) getActionByTag:(NSInteger) tag;
 
@@ -494,6 +495,7 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  *    If you are running 7 Sequences of 2 actions, it will return 7.
  */
 -(NSUInteger) numberOfRunningActions;
+
 
 /// -----------------------------------------------------------------------
 /// @name Scheduling Repeating Callbacks
@@ -505,7 +507,7 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  *  @param block Block to execute.
  *  @param delay Delay in seconds.
  *
- *  @return A newly initialized CCTimer object
+ *  @return A newly initialized CCTimer object.
  */
 -(CCTimer *) scheduleBlock:(CCTimerBlock)block delay:(CCTime)delay;
 
@@ -534,7 +536,7 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 -(CCTimer *) schedule:(SEL)selector interval:(CCTime)interval repeat: (uint) repeat delay:(CCTime) delay;
 
 /**
- *  Schedules a selector that runs only once, with a delay of 0 or larger
+ *  Schedules a selector that runs only once, with a delay of 0 or larger.
  *
  *  @param selector Selector to execute.
  *  @param delay    Initial delay in seconds.
@@ -544,7 +546,7 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 - (CCTimer *) scheduleOnce:(SEL) selector delay:(CCTime) delay;
 
 /**
- *  Unschedule a scheduled selector
+ *  Unschedule a scheduled selector.
  *
  *  @param selector Selector to unschedule.
  */
@@ -555,11 +557,12 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  */
 -(void)unscheduleAllSelectors;
 
+
 /// -----------------------------------------------------------------------
 /// @name Accessing Transformations and Matrices
 /// -----------------------------------------------------------------------
 
-/** performs OpenGL view-matrix transformation based on position, scale, rotation and other attributes. */
+/** Performs OpenGL view-matrix transformation based on position, scale, rotation and other attributes. */
 -(void) transform;
 
 /** Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
@@ -573,17 +576,13 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 - (CGSize) convertContentSizeToPoints:(CGSize)contentSize type:(CCSizeType) type;
 - (CGSize) convertContentSizeFromPoints:(CGSize)pointSize type:(CCSizeType) type;
 
-/** Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.
- The matrix is in Pixels.
- */
+/** Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates. The matrix is in Pixels. */
 - (CGAffineTransform)parentToNodeTransform;
 
-/** Returns the world affine transform matrix. The matrix is in Pixels.
- */
+/** Returns the world affine transform matrix. The matrix is in Pixels. */
 - (CGAffineTransform)nodeToWorldTransform;
 
-/** Returns the inverse world affine transform matrix. The matrix is in Pixels.
- */
+/** Returns the inverse world affine transform matrix. The matrix is in Pixels. */
 - (CGAffineTransform)worldToNodeTransform;
 
 /**
@@ -624,39 +623,37 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  */
 - (CGPoint)convertToWorldSpaceAR:(CGPoint)nodePoint;
 
+
 /// -----------------------------------------------------------------------
 /// @name Rendering (Used by Subclasses)
 /// -----------------------------------------------------------------------
 
-/** Override this method to draw your own node.
- You should use cocos2d's GL API to enable/disable the GL state / shaders.
- For further info, please see ccGLstate.h.
- You shall NOT call [super draw];
+/** 
+ * Override this method to draw your own node.
+ * You should use cocos2d's GL API to enable/disable the GL state / shaders.
+ * For further info, please see ccGLstate.h.
+ * You shall NOT call [super draw];
  */
 -(void) draw;
 
-/** recursive method that visit its children and draw them */
+/** Recursive method that visit its children and draw them. */
 -(void) visit;
 
-/**
- * sets and returns the color (tint)
- * When setting the color, the supplied alpha is ignored.
- */
+/** Sets and returns the color (tint), alpha is ignored when setting. */
 @property (nonatomic,strong) CCColor* color;
 
-/**
- * sets and returns the color (tint)
- * The supplied alpha is applied.
- */
+/** Sets and returns the color (tint) with alpha. */
 @property (nonatomic,strong) CCColor* colorRGBA;
 
-/** returns the displayed color */
+/** Returns the displayed color. */
 @property (nonatomic, readonly) CCColor* displayedColor;
+
 /**
  * CascadeColorEnabled causes changes to this node's color to cascade down to it's children. The new color is multiplied
  * in with the color of each child, so it doesn't bash the current color of those nodes. Opacity is unaffected by this
  * property, see cascadeOpacityEnabled to change the alpha of nodes.
- */@property (nonatomic, getter = isCascadeColorEnabled) BOOL cascadeColorEnabled;
+ */
+@property (nonatomic, getter = isCascadeColorEnabled) BOOL cascadeColorEnabled;
 
 /**
  *  Recursive method that updates display color.
@@ -665,17 +662,20 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  */
 - (void)updateDisplayedColor:(ccColor4F)color;
 
-/** sets and returns the opacity.
- @warning If the the texture has premultiplied alpha then, the R, G and B channels will be modified.
- Values goes from 0 to 1, where 1 means fully opaque.
+/** 
+ *  Sets and returns the opacity.
+ *  @warning If the the texture has premultiplied alpha then, the R, G and B channels will be modified.
+ *  Values goes from 0 to 1, where 1 means fully opaque.
  */
 @property (nonatomic) CGFloat opacity;
-/** returns the displayed opacity */
+
+/** Returns the displayed opacity. */
 @property (nonatomic, readonly) CGFloat displayedOpacity;
+
 /** 
- * CascadeOpacity causes changes to this node's opacity to cascade down to it's children. The new opacity is multiplied 
- * in with the opacity of each child, so it doesn't bash the current opacity of those nodes. Color is unaffected by this
- * property, see cascadeColorEnabled for color tint changes.
+ *  CascadeOpacity causes changes to this node's opacity to cascade down to it's children. The new opacity is multiplied
+ *  in with the opacity of each child, so it doesn't bash the current opacity of those nodes. Color is unaffected by this
+ *  property, see cascadeColorEnabled for color tint changes.
  */
 @property (nonatomic, getter = isCascadeOpacityEnabled) BOOL cascadeOpacityEnabled;
 
@@ -687,19 +687,19 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 - (void)updateDisplayedOpacity:(CGFloat)opacity;
 
 /**
- * Sets the premultipliedAlphaOpacity property.
+ *  Sets the premultipliedAlphaOpacity property.
  *
- * If set to NO then opacity will be applied as: glColor(R,G,B,opacity);
+ *  If set to NO then opacity will be applied as: glColor(R,G,B,opacity);
  *
- * If set to YES then opacity will be applied as: glColor(opacity, opacity, opacity, opacity );
+ *  If set to YES then opacity will be applied as: glColor(opacity, opacity, opacity, opacity );
  *
- * Textures with premultiplied alpha will have this property by default on YES. Otherwise the default value is NO.
+ *  Textures with premultiplied alpha will have this property by default on YES. Otherwise the default value is NO.
  *
  *  @param boolean Enables or disables setting of opacity with color.
  */
 -(void) setOpacityModifyRGB:(BOOL)boolean;
 
-/** returns whether or not the opacity will be applied using glColor(R,G,B,opacity) or glColor(opacity, opacity, opacity, opacity);
+/** Returns whether or not the opacity will be applied using glColor(R,G,B,opacity) or glColor(opacity, opacity, opacity, opacity).
  */
 -(BOOL) doesOpacityModifyRGB;
 
