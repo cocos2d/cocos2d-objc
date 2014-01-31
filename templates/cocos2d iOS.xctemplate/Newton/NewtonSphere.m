@@ -154,9 +154,12 @@
     
     // To fix this, the hit test function is overridden.
     // As this is a simple sphere, the hit test will return YES, if the touch distance to sphere, is less than radius
+
+    // get the position in the node
+    CGPoint nodePos = [self convertToNodeSpace:pos];
     
-    // calculate distance from touch to node position
-    float distance = ccpDistance(pos, self.position);
+    // calculate distance from touch to node center
+    float distance = ccpLength(nodePos);
     return(distance < _sphere.contentSize.width * 0.5);
 }
 
@@ -166,26 +169,34 @@
 
 - (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
+    // convert the touch into parents coordinate system
+    // This is often the same as the world location, but if the scene is ex, scaled or offset, it might not be
+    CGPoint parentPos = [_parent convertToNodeSpace:touch.locationInWorld];
+    
     // The spehre was grabbed.
     // To move the sphere around in a "believeable" manner, two things has to be done
     // 1) the mass has to be increased, to simulate "an unstopable force" (please dont add an imovable object to the space, or chipmunk will crash ... no it wont :)
     self.physicsBody.mass = NewtonSphereMovingMass;
-
+    
     // 2) Save state data, like time and position, so that a velocity can be calculated when moving the sphere.
     // Velocity must be set on forced movement, otherwise the collisions will feel "mushy"
     _grabbed = YES;
     _previousVelocity = CGPointZero;
     _previousTime = event.timestamp;
-    _previousPos = touch.locationInWorld;
+    _previousPos = parentPos;
     CCLOG(@"A Newton Sphere was touched");
 }
 
 - (void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
 {
+    // convert the touch into parents coordinate system
+    // This is often the same as the world location, but if the scene is ex, scaled or offset, it might not be
+    CGPoint parentPos = [_parent convertToNodeSpace:touch.locationInWorld];
+    
     // on each move, calculate a velocity used in update, and save new state data
-    _previousVelocity = ccpMult( ccpSub(touch.locationInWorld, _previousPos), 1 / (event.timestamp - _previousTime));
+    _previousVelocity = ccpMult( ccpSub(parentPos, _previousPos), 1 / (event.timestamp - _previousTime));
     _previousTime = event.timestamp;
-    _previousPos = touch.locationInWorld;
+    _previousPos = parentPos;
 }
 
 - (void)touchEnded:(UITouch *)touch withEvent:(UIEvent *)event
