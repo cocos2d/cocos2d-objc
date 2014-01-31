@@ -28,12 +28,28 @@
 	NSLog(@"Foooo!");
 }
 
+-(void)fooSingle:(CCTime)delta
+{
+	NSLog(@"FooSingle!");
+}
+
 -(void)onEnter
 {
 	// Scheduling a method before calling [super onEnter] used to trigger a bug.
-	[self schedule:@selector(foo:) interval:1.0];
+//	[self schedule:@selector(foo:) interval:1.0];
+	
+	[self scheduleBlock:^(CCTimer *timer){
+		NSLog(@"Before");
+		[timer repeatOnceWithInterval:2.0];
+	} delay:0.0];
 	
 	[super onEnter];
+	
+	[self scheduleBlock:^(CCTimer *timer){
+		NSLog(@"After");
+		[timer repeatOnceWithInterval:2.0];
+	} delay:0.0];
+	
 }
 
 -(void)update:(CCTime)delta
