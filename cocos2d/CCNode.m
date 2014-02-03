@@ -236,7 +236,7 @@ static NSUInteger globalOrderOfArrival = 1;
 	if(body){
 		return -CC_RADIANS_TO_DEGREES(body.absoluteRadians) + NodeToPhysicsRotation(self.parent);
 	} else {
-		NSAssert( _rotationalSkewX == _rotationalSkewY, @"CCNode#rotation. RotationX != RotationY. Don't know which one to return");
+		NSAssert( _rotationalSkewX == _rotationalSkewY, @"CCNode#rotation. rotationalSkewX != rotationalSkewY. Don't know which one to return");
 		return _rotationalSkewX;
 	}
 }
@@ -1148,13 +1148,29 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	return [self schedule:selector interval:interval repeat:CCTimerRepeatForever delay:0];
 }
 
+-(BOOL)unschedule_private:(SEL)selector
+{
+	NSString *selectorName = NSStringFromSelector(selector);
+	
+	for(CCTimer *timer in [_scheduler timersForTarget:self]){
+		if([selectorName isEqual:timer.userData]){
+			[timer invalidate];
+			return YES;
+		}
+	}
+	
+	return NO;
+}
+
 -(CCTimer *) schedule:(SEL)selector interval:(CCTime)interval repeat: (uint) repeat delay:(CCTime) delay
 {
-	NSAssert( selector != nil, @"Argument must be non-nil");
-	NSAssert( selector != @selector(update:) && selector != @selector(fixedUpdate:), @"The update: and fixedUpdate: methods are scheduled automatically.");
-	NSAssert( interval >=0, @"Arguemnt must be positive");
+	NSAssert(selector != nil, @"Selector must be non-nil");
+	NSAssert(selector != @selector(update:) && selector != @selector(fixedUpdate:), @"The update: and fixedUpdate: methods are scheduled automatically.");
+	NSAssert(interval > 0.0, @"Scheduled method interval must be positive.");
 	
-	[self unschedule:selector];
+	if([self unschedule_private:selector]){
+		CCLOGWARN(@"Selector '%@' was already scheduled on %@", NSStringFromSelector(selector), self);
+	}
 	
 	void (*imp)(id, SEL, CCTime) = (__typeof(imp))[self methodForSelector:selector];
 	CCTimer *timer = [_scheduler scheduleBlock:^(CCTimer *t){
@@ -1175,10 +1191,8 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 -(void)unschedule:(SEL)selector
 {
-	NSString *selectorName = NSStringFromSelector(selector);
-	
-	for(CCTimer *timer in [_scheduler timersForTarget:self]){
-		if([selectorName isEqual:timer.userData]) [timer invalidate];
+	if(![self unschedule_private:selector]){
+		CCLOGWARN(@"Selector '%@' was never scheduled on %@", NSStringFromSelector(selector), self);
 	}
 }
 

@@ -135,9 +135,17 @@ Determinant(cpTransform t)
 }
 
 // TODO these need a reference to the space to intern the strings
-// Needs to be deferred?
 -(NSString *)collisionType {return _collisionType;}
--(void)setCollisionType:(NSString *)collisionType {_collisionType = [collisionType copy];}
+-(void)setCollisionType:(NSString *)collisionType
+{
+	CCPhysicsNode *physics = self.physicsNode;
+	if(physics){
+		_collisionType = [physics internString:collisionType];
+		self.shape.collisionType = _collisionType;
+	} else {
+		_collisionType = [collisionType copy];
+	}
+}
 
 -(NSArray *)collisionCategories {
 	if(_collisionCategories){
@@ -207,7 +215,7 @@ Determinant(cpTransform t)
 	// nil the array references to save on memory.
 	// They will rarely be read back and we can easily reconstruct the array.
 	_collisionCategories = nil;
-	_collisionType = nil;
+	_collisionMask = nil;
 	
 	[self rescaleShape:transform];
 }
