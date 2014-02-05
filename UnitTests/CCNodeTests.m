@@ -35,11 +35,8 @@
 
 	XCTAssertTrue(first == [scene getChildByName:@"first" recursively:NO], @"");
 	XCTAssertTrue(nil == [scene getChildByName:@"nothing" recursively:NO], @"");
-
-	XCTAssertTrue(first == [first getChildByName:@"first" recursively:NO], @"Unable to find itself!");
-
-
 }
+
 -(void)testGetChildByNameRecursive
 {
 	CCScene *scene = [CCScene node];
