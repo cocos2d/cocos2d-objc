@@ -458,6 +458,20 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 
 #ifdef __CC_PLATFORM_IOS
 
+// get it running on Xcode versions prior to 4.4
+#if (defined(__clang__) && __has_feature(objc_default_synthesize_properties))
+#else
+     #define NSLineBreakByWordWrapping UILineBreakModeWordWrap
+     #define NSLineBreakByCharWrapping UILineBreakModeCharacterWrap
+     #define NSLineBreakByClipping UILineBreakModeClip
+     #define NSLineBreakByTruncatingHead UILineBreakModeHeadTruncation
+     #define NSLineBreakByTruncatingTail UILineBreakModeTailTruncation
+     #define NSLineBreakByTruncatingMiddle UILineBreakModeMiddleTruncation
+     #define NSTextAlignmentLeft UITextAlignmentLeft
+     #define NSTextAlignmentRight UITextAlignmentRight
+     #define NSTextAlignmentCenter UITextAlignmentCenter
+#endif
+
 - (id) initWithString:(NSString*)string fontDef:(CCFontDefinition *)definition
 {
 	// MUST have the same order declared on ccTypes
