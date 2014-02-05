@@ -84,6 +84,12 @@ void ccGLDeleteProgram( GLuint program );
  @since v2.0.0
  */
 void ccGLBlendFunc(GLenum sfactor, GLenum dfactor);
+    
+/** Uses a blending function in case it is not already used.
+ If CC_ENABLE_GL_STATE_CACHE is disabled, it will use glBlendFuncSeparate() directly.
+ It will invalidate the cache for ccBlendFunc().
+ */
+void ccGLBlendFuncSeparate(GLenum srcRGB, GLenum dstRGB, GLenum srcAlpha, GLenum dstAlpha);
 
 /** Resets the blending mode back to the cached state in case you used glBlendFuncSeparate() or glBlendEquation().
  If CC_ENABLE_GL_STATE_CACHE is disabled, it will just set the default blending mode using GL_FUNC_ADD.
