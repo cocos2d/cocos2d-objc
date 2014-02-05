@@ -30,7 +30,7 @@
 #import "CCProtocols.h"
 #import "ccConfig.h"
 #import "ccGLStateCache.h"
-#import "kazmath/kazmath.h"
+#import <GLKit/GLKit.h>
 #import "CCResponder.h"
 #import "CCScheduler.h"
 

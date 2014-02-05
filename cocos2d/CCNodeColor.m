@@ -44,8 +44,8 @@
 #import "Platforms/Mac/CCDirectorMac.h"
 #endif
 
-// extern
-#import "kazmath/GL/matrix.h"
+
+#import <GLKit/GLKit.h>
 
 #pragma mark -
 #pragma mark Layer

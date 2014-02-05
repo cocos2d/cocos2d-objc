@@ -50,8 +50,7 @@
 #import "Support/TransformUtils.h"
 #import "Support/NSThread+performBlock.h"
 
-// extern
-#import "kazmath/GL/matrix.h"
+#import "CCMath.h"
 
 #import "CCNode_Private.h"
 #import "CCParticleSystemBase_Private.h"

@@ -32,7 +32,7 @@
 #ifdef __CC_PLATFORM_IOS
 
 #import "../../CCDirector.h"
-#import "kazmath/mat4.h"
+#import <GLKit/GLKit.h>
 
 /** CCDirector extensions for iPhone
  */

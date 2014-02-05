@@ -31,7 +31,7 @@
 
 #import "CCProtocols.h"
 #import "Platforms/CCGL.h"
-#import "kazmath/mat4.h"
+#import <GLKit/GLKit.h>
 #import "CCResponderManager.h"
 
 /**

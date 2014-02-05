@@ -36,7 +36,7 @@
 #import "CCNode_Private.h"
 
 // external
-#import "kazmath/GL/matrix.h"
+#import <GLKit/GLKit.h>
 
 
 @interface CCAtlasNode ()

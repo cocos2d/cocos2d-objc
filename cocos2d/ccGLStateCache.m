@@ -29,9 +29,7 @@
 #import "CCDirector.h"
 #import "ccConfig.h"
 
-// extern
-#import "kazmath/GL/matrix.h"
-#import "kazmath/kazmath.h"
+#import "CCMath.h"
 
 static GLuint	_ccCurrentProjectionMatrix = -1;
 static BOOL		_vertexAttribPosition = NO;
@@ -52,7 +50,7 @@ static GLuint _ccVAO = 0;
 
 void ccGLInvalidateStateCache( void )
 {
-	kmGLFreeAll();
+	CCGLFreeAll();
 	
 	_ccCurrentProjectionMatrix = -1;
 	_vertexAttribPosition = NO;

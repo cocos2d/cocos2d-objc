@@ -48,6 +48,8 @@
 #import "CCConfiguration.h"
 #import "CCTransition.h"
 
+#import "CCMath.h"
+
 // support imports
 #import "Platforms/CCGL.h"
 #import "Platforms/CCNS.h"
@@ -376,16 +378,13 @@ static CCDirector *_sharedDirector = nil;
 	}
 }
 
-static void
-GLToClipTransform(kmMat4 *transformOut)
+static GLKMatrix4 GLToClipTransform()
 {
-	kmMat4 projection;
-	kmGLGetMatrix(KM_GL_PROJECTION, &projection);
-	
-	kmMat4 modelview;
-	kmGLGetMatrix(KM_GL_MODELVIEW, &modelview);
-	
-	kmMat4Multiply(transformOut, &projection, &modelview);
+    GLKMatrix4 projection = CCGLGetMatrix(CCGLProjection);
+    GLKMatrix4 modelview = CCGLGetMatrix(CCGLModelView);
+    
+    
+	return GLKMatrix4Multiply(projection, modelview);
 }
 
 -(CGFloat)flipY
@@ -395,38 +394,34 @@ GLToClipTransform(kmMat4 *transformOut)
 
 -(CGPoint)convertToGL:(CGPoint)uiPoint
 {
-	kmMat4 transform;
-	GLToClipTransform(&transform);
+    GLKMatrix4 transform = GLToClipTransform();
 	
-	kmMat4 transformInv;
-	kmMat4Inverse(&transformInv, &transform);
-	
+    GLKMatrix4 transformInv = GLKMatrix4Invert(transform, NULL);
+
 	// Calculate z=0 using -> transform*[0, 0, 0, 1]/w
-	kmScalar zClip = transform.mat[14]/transform.mat[15];
+	float zClip = transform.m[14]/transform.m[15];
 	
 	CGSize glSize = __view.bounds.size;
-	kmVec3 clipCoord = {2.0*uiPoint.x/glSize.width - 1.0, 2.0*uiPoint.y/glSize.height - 1.0, zClip};
-	clipCoord.y *= self.flipY;
+    
+    GLKVector4 clipCoord = GLKVector4Make(2.0*uiPoint.x/glSize.width - 1.0, (2.0*uiPoint.y/glSize.height - 1.0) * self.flipY, zClip, 1.0);
+    GLKVector4 result = GLKMatrix4MultiplyVector4(transformInv, clipCoord);
+    result = GLKVector4DivideScalar(result, result.v[3]);
 	
-	kmVec3 glCoord;
-	kmVec3TransformCoord(&glCoord, &clipCoord, &transformInv);
-	
-//	NSLog(@"uiPoint: %@, glPoint: %@", NSStringFromCGPoint(uiPoint), NSStringFromCGPoint(ccp(glCoord.x, glCoord.y)));
-	return ccp(glCoord.x, glCoord.y);
+	return ccp(result.v[0], result.v[1]);
 }
 
 -(CGPoint)convertToUI:(CGPoint)glPoint
 {
-	kmMat4 transform;
-	GLToClipTransform(&transform);
-		
-	kmVec3 clipCoord;
-	// Need to calculate the zero depth from the transform.
-	kmVec3 glCoord = {glPoint.x, glPoint.y, 0.0};
-	kmVec3TransformCoord(&clipCoord, &glCoord, &transform);
+    GLKMatrix4 transform = GLToClipTransform();
+    
+	
+    GLKVector4 glCoord = GLKVector4Make(glPoint.x, glPoint.y, 0.0, 1.0);
+    GLKVector4 clipCoord = GLKMatrix4MultiplyVector4(transform, glCoord);
+    clipCoord = GLKVector4DivideScalar(clipCoord, clipCoord.v[3]);
+	
 	
 	CGSize glSize = __view.bounds.size;
-	return ccp(glSize.width*(clipCoord.x*0.5 + 0.5), glSize.height*(self.flipY*clipCoord.y*0.5 + 0.5));
+	return ccp(glSize.width*(clipCoord.v[0]*0.5 + 0.5), glSize.height*(self.flipY*clipCoord.v[1]*0.5 + 0.5));
 }
 
 -(CGSize)viewSize

@@ -542,7 +542,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	if( _nextScene )
 		[self setNextScene];
 
-	kmGLPushMatrix();
+	CCGLPushMatrix();
 
 
 	/* draw the scene */
@@ -554,7 +554,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	if( _displayStats )
 		[self showStats];
 
-	kmGLPopMatrix();
+	CCGLPopMatrix();
 
 	_totalFrames++;
 	

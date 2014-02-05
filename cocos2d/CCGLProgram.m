@@ -35,9 +35,7 @@
 
 #import "CCDirector.h"
 
-// extern
-#import "kazmath/GL/matrix.h"
-#import "kazmath/kazmath.h"
+#import "CCMath.h"
 
 
 typedef struct _hashUniformEntry
@@ -440,21 +438,19 @@ typedef void (*GLLogFunction) (GLuint program,
 
 -(void) setUniformsForBuiltins
 {
-	kmMat4 matrixP;
-	kmMat4 matrixMV;
-
-	kmGLGetMatrix(KM_GL_PROJECTION, &matrixP );
-	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV );
+    GLKMatrix4 matrixP = CCGLGetMatrix(CCGLProjection);
+    GLKMatrix4 matrixMV = CCGLGetMatrix(CCGLModelView);
+    
 	
 	if( _flags.usesMVP) {
-		kmMat4 matrixMVP;
-		kmMat4Multiply(&matrixMVP, &matrixP, &matrixMV);
-		[self setUniformLocation:_uniforms[kCCUniformMVPMatrix] withMatrix4fv:matrixMVP.mat count:1];
+        GLKMatrix4 matrixMVP = GLKMatrix4Multiply(matrixP, matrixMV);
+        
+		[self setUniformLocation:_uniforms[kCCUniformMVPMatrix] withMatrix4fv:matrixMVP.m count:1];
 	}
 
 	if( _flags.usesMV) {
-		[self setUniformLocation:_uniforms[  kCCUniformPMatrix] withMatrix4fv:  matrixP.mat count:1];
-		[self setUniformLocation:_uniforms[ kCCUniformMVMatrix] withMatrix4fv: matrixMV.mat count:1];
+		[self setUniformLocation:_uniforms[  kCCUniformPMatrix] withMatrix4fv:  matrixP.m count:1];
+		[self setUniformLocation:_uniforms[ kCCUniformMVMatrix] withMatrix4fv: matrixMV.m count:1];
 	}
 
 	if(_flags.usesTime){

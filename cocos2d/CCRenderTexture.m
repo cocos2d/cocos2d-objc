@@ -42,8 +42,7 @@
 #import <ApplicationServices/ApplicationServices.h>
 #endif
 
-// extern
-#import "kazmath/GL/matrix.h"
+#import "CCMath.h"
 
 @implementation CCRenderTexture
 
@@ -175,10 +174,10 @@
 
 -(void)begin
 {
-	kmGLMatrixMode(KM_GL_PROJECTION);
-	kmGLPushMatrix();
-	kmGLMatrixMode(KM_GL_MODELVIEW);
-	kmGLPushMatrix();
+	CCGLMatrixMode(CCGLProjection);
+	CCGLPushMatrix();
+	CCGLMatrixMode(CCGLModelView);
+	CCGLPushMatrix();
     
 	CCDirector *director = [CCDirector sharedDirector];
     [director setProjection:director.projection];
@@ -195,10 +194,8 @@
 	// Adjust the orthographic projection and viewport
 	glViewport(0, 0, texSize.width, texSize.height );
 
-	kmMat4 orthoMatrix;
-	kmMat4OrthographicProjection(&orthoMatrix, (float)-1.0 / widthRatio,  (float)1.0 / widthRatio,
-								 (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1 );
-	kmGLMultMatrix(&orthoMatrix);
+    
+    CCGLMultMatrix(GLKMatrix4MakeOrtho((float)-1.0 / widthRatio, (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1, 1));
     
 
 	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
@@ -263,10 +260,10 @@
 	// restore viewport
 	[director setViewport];
     
-	kmGLMatrixMode(KM_GL_PROJECTION);
-	kmGLPopMatrix();
-	kmGLMatrixMode(KM_GL_MODELVIEW);
-	kmGLPopMatrix();
+	CCGLMatrixMode(CCGLProjection);
+	CCGLPopMatrix();
+	CCGLMatrixMode(CCGLModelView);
+	CCGLPopMatrix();
 }
 
 -(void)clear:(float)r g:(float)g b:(float)b a:(float)a
@@ -312,13 +309,13 @@
 	if (!_visible)
 		return;
 	
-	kmGLPushMatrix();
+	CCGLPushMatrix();
 
 	[self transform];
 	[_sprite visit];
 	[self draw];
 	
-	kmGLPopMatrix();
+	CCGLPopMatrix();
 	
 	_orderOfArrival = 0;
 }
