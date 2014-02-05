@@ -91,6 +91,16 @@
     return _shadow.m_shadowBlur;
 }
 
+-(void) setShadowOpacity:(CGFloat)opacity
+{
+    _shadow.m_shadowOpacity = opacity;
+}
+
+-(CGFloat) shadowOpacity
+{
+    return _shadow.m_shadowOpacity;
+}
+
 -(void) enableStroke:(bool) strokeEnabled
 {
     _stroke.m_strokeEnabled = strokeEnabled;

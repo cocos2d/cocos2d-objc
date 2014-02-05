@@ -590,10 +590,16 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
     // take care of shadow if needed
     if ( [definition shadowEnabled] )
     {
+    	colorspace = CGColorSpaceCreateDeviceRGB();
+        CGFloat shadowColorValues[] = { 0, 0, 0, [definition shadowOpacity]};
+        CGColorRef shadowColor = CGColorCreate( colorSpace, shadowColorValues );
         CGSize offset;
         offset.height = [definition shadowOffset].height;
         offset.width  = [definition shadowOffset].width;
-        CGContextSetShadow(context, offset, [definition shadowBlur]);
+        CGContextSetShadowWithColor(context, offset, [definition shadowBlur], shadowColor);
+        
+        CGColorRelease(shadowColor);
+        CGColorSpaceRelease(colorSpace);
     }
     
     float textOriginX  = 0.0;

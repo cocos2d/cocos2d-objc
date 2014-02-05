@@ -531,6 +531,7 @@
         {
             [retDefinition enableShadow:true];
             [retDefinition setShadowBlur:_shadowBlur];
+            [retDefinition setShadowOpacity:_shadowOpacity];
             
             if (resAdjust)
             {
