@@ -602,23 +602,34 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 	_children = [[NSMutableArray alloc] init];
 }
 
+// Recursively get a child by name, but don't return the root of the search.
+-(CCNode*) getChildByNameRecursive:(NSString *)name root:(CCNode *)root
+{
+	if(self != root && [_name isEqualToString:name]) return self;
+	
+	for (CCNode* node in _children) {
+		CCNode *n = [node getChildByNameRecursive:name root:root];
+		if(n) return n;
+	}
+
+	// not found
+	return nil;
+}
+
 -(CCNode*) getChildByName:(NSString *)name recursively:(bool)isRecursive
 {
-	NSAssert(name, @"name is NULL");
-
-  	for (CCNode* node in _children) {
-		if(isRecursive){
-			// Recurse:
-			CCNode* n = [node getChildByName:name recursively:isRecursive];
-			if(n)
-				return n;
-		}else{
+	NSAssert(name, @"name is nil.");
+	
+	if(isRecursive){
+		return [self getChildByNameRecursive:name root:self];
+	} else {
+		for (CCNode* node in _children) {
 			if([node.name isEqualToString:name]){
 				return node;
 			}
 		}
 	}
-	
+
 	// not found
 	return nil;
 }
