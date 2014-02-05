@@ -115,7 +115,7 @@ enum {
 		CGRect r = [[UIApplication sharedApplication] statusBarFrame];
 		s.height -= r.size.height;
 #endif
-		self.position = ccp(s.width/2, s.height/2);
+		self.position = ccp(0, 0);
 		
 		int z=0;
 		
