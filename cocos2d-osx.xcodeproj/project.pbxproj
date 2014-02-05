@@ -378,7 +378,6 @@
 		A05B641D156F552500ADAB65 /* cpVect.c in Sources */ = {isa = PBXBuildFile; fileRef = A05B63E6156F552500ADAB65 /* cpVect.c */; };
 		A05B641E156F552500ADAB65 /* prime.h in Headers */ = {isa = PBXBuildFile; fileRef = A05B63E7156F552500ADAB65 /* prime.h */; };
 		A063BDDB1714F0DD00BBF71A /* BitArray.h in Headers */ = {isa = PBXBuildFile; fileRef = A063BD9D1714F0DD00BBF71A /* BitArray.h */; };
-		A063BDDC1714F0DD00BBF71A /* Root.h in Headers */ = {isa = PBXBuildFile; fileRef = A063BD9F1714F0DD00BBF71A /* Root.h */; };
 		A063BDDD1714F0DD00BBF71A /* HashTable.h in Headers */ = {isa = PBXBuildFile; fileRef = A063BDA11714F0DD00BBF71A /* HashTable.h */; };
 		A063BDDE1714F0DD00BBF71A /* HeapAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = A063BDA21714F0DD00BBF71A /* HeapAPI.h */; };
 		A063BDDF1714F0DD00BBF71A /* LegacyIntTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = A063BDA31714F0DD00BBF71A /* LegacyIntTypes.h */; };
@@ -405,7 +404,6 @@
 		A063BDF41714F0DD00BBF71A /* jspubtd.h in Headers */ = {isa = PBXBuildFile; fileRef = A063BDB91714F0DD00BBF71A /* jspubtd.h */; };
 		A063BDF51714F0DD00BBF71A /* jstypes.h in Headers */ = {isa = PBXBuildFile; fileRef = A063BDBA1714F0DD00BBF71A /* jstypes.h */; };
 		A063BDF61714F0DD00BBF71A /* jsutil.h in Headers */ = {isa = PBXBuildFile; fileRef = A063BDBB1714F0DD00BBF71A /* jsutil.h */; };
-		A063BDF71714F0DD00BBF71A /* jsval.h in Headers */ = {isa = PBXBuildFile; fileRef = A063BDBC1714F0DD00BBF71A /* jsval.h */; };
 		A063BDF81714F0DD00BBF71A /* jsversion.h in Headers */ = {isa = PBXBuildFile; fileRef = A063BDBD1714F0DD00BBF71A /* jsversion.h */; };
 		A063BDF91714F0DD00BBF71A /* jswrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = A063BDBE1714F0DD00BBF71A /* jswrapper.h */; };
 		A063BDFA1714F0DD00BBF71A /* Assertions.h in Headers */ = {isa = PBXBuildFile; fileRef = A063BDC01714F0DD00BBF71A /* Assertions.h */; };
@@ -1480,7 +1478,6 @@
 		A05B63E6156F552500ADAB65 /* cpVect.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpVect.c; sourceTree = "<group>"; };
 		A05B63E7156F552500ADAB65 /* prime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prime.h; sourceTree = "<group>"; };
 		A063BD9D1714F0DD00BBF71A /* BitArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BitArray.h; sourceTree = "<group>"; };
-		A063BD9F1714F0DD00BBF71A /* Root.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Root.h; sourceTree = "<group>"; };
 		A063BDA11714F0DD00BBF71A /* HashTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HashTable.h; sourceTree = "<group>"; };
 		A063BDA21714F0DD00BBF71A /* HeapAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeapAPI.h; sourceTree = "<group>"; };
 		A063BDA31714F0DD00BBF71A /* LegacyIntTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LegacyIntTypes.h; sourceTree = "<group>"; };
@@ -1508,7 +1505,6 @@
 		A063BDB91714F0DD00BBF71A /* jspubtd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jspubtd.h; sourceTree = "<group>"; };
 		A063BDBA1714F0DD00BBF71A /* jstypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jstypes.h; sourceTree = "<group>"; };
 		A063BDBB1714F0DD00BBF71A /* jsutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsutil.h; sourceTree = "<group>"; };
-		A063BDBC1714F0DD00BBF71A /* jsval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsval.h; sourceTree = "<group>"; };
 		A063BDBD1714F0DD00BBF71A /* jsversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsversion.h; sourceTree = "<group>"; };
 		A063BDBE1714F0DD00BBF71A /* jswrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jswrapper.h; sourceTree = "<group>"; };
 		A063BDC01714F0DD00BBF71A /* Assertions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Assertions.h; sourceTree = "<group>"; };
@@ -2599,7 +2595,6 @@
 				A063BDB91714F0DD00BBF71A /* jspubtd.h */,
 				A063BDBA1714F0DD00BBF71A /* jstypes.h */,
 				A063BDBB1714F0DD00BBF71A /* jsutil.h */,
-				A063BDBC1714F0DD00BBF71A /* jsval.h */,
 				A063BDBD1714F0DD00BBF71A /* jsversion.h */,
 				A063BDBE1714F0DD00BBF71A /* jswrapper.h */,
 				A063BDBF1714F0DD00BBF71A /* mozilla */,
@@ -2618,7 +2613,6 @@
 		A063BD9E1714F0DD00BBF71A /* gc */ = {
 			isa = PBXGroup;
 			children = (
-				A063BD9F1714F0DD00BBF71A /* Root.h */,
 			);
 			path = gc;
 			sourceTree = "<group>";
@@ -3759,7 +3753,6 @@
 				A0D31EAD16C756D5004FFCD2 /* jsb_opengl_manual.h in Headers */,
 				A0D31EBB16C75A52004FFCD2 /* jsb_opengl_registration.h in Headers */,
 				A063BDDB1714F0DD00BBF71A /* BitArray.h in Headers */,
-				A063BDDC1714F0DD00BBF71A /* Root.h in Headers */,
 				A063BDDD1714F0DD00BBF71A /* HashTable.h in Headers */,
 				A063BDDE1714F0DD00BBF71A /* HeapAPI.h in Headers */,
 				A063BDDF1714F0DD00BBF71A /* LegacyIntTypes.h in Headers */,
@@ -3786,7 +3779,6 @@
 				A063BDF41714F0DD00BBF71A /* jspubtd.h in Headers */,
 				A063BDF51714F0DD00BBF71A /* jstypes.h in Headers */,
 				A063BDF61714F0DD00BBF71A /* jsutil.h in Headers */,
-				A063BDF71714F0DD00BBF71A /* jsval.h in Headers */,
 				A063BDF81714F0DD00BBF71A /* jsversion.h in Headers */,
 				A063BDF91714F0DD00BBF71A /* jswrapper.h in Headers */,
 				A063BDFA1714F0DD00BBF71A /* Assertions.h in Headers */,
