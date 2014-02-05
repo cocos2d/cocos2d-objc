@@ -139,6 +139,74 @@
 	}
 }
 
+-(void) setupBatchedBasicShapeTest
+{
+	self.subTitle = @"Basic simulation with scaled, batched sprites.";
+	
+	CCPhysicsNode *physics = [CCPhysicsNode node];
+	physics.debugDraw = YES;
+	[self.contentNode addChild:physics];
+	
+	CCSpriteBatchNode *bn = [CCSpriteBatchNode batchNodeWithFile:@"Sprites.png"];
+	[physics addChild:bn];
+	
+	{
+		CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/shape-0.png"];
+		sprite.position = ccp(100, 100);
+		sprite.rotation = 13;
+		sprite.scale = 0.5;
+		
+		CGRect rect = {CGPointZero, sprite.contentSize};
+		CCPhysicsBody *body = sprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
+		body.velocity = ccp(10, 10);
+		body.angularVelocity = 0.1;
+		
+		[bn addChild:sprite];
+	}{
+		CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/shape-1.png"];
+		sprite.position = ccp(100, 220);
+		sprite.rotation = 13;
+		sprite.scaleY = 1.5;
+		
+		CGSize size = sprite.contentSize;
+		CGPoint points[] = {
+			ccp(0, 0),
+			ccp(size.width, 0),
+			ccp(size.width/2, size.height),
+		};
+		
+		CCPhysicsBody *body = sprite.physicsBody = [CCPhysicsBody bodyWithPolygonFromPoints:points count:3 cornerRadius:0.0];
+		body.velocity = ccp(10, -10);
+		body.angularVelocity = -0.1;
+		
+		[bn addChild:sprite];
+	}{
+		CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/shape-2.png"];
+		sprite.position = ccp(380, 220);
+		sprite.rotation = 13;
+		sprite.scaleX = 0.5;
+		
+		CGRect rect = {CGPointZero, sprite.contentSize};
+		CCPhysicsBody *body = sprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
+		body.velocity = ccp(-10, -10);
+		body.angularVelocity = 0.1;
+		
+		[bn addChild:sprite];
+	}{
+		CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/shape-3.png"];
+		sprite.position = ccp(380, 100);
+		sprite.rotation = 13;
+		sprite.scaleY = 1.5;
+		
+		CGRect rect = {CGPointZero, sprite.contentSize};
+		CCPhysicsBody *body = sprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
+		body.velocity = ccp(-10, 10);
+		body.angularVelocity = -0.1;
+		
+		[bn addChild:sprite];
+	}
+}
+
 -(void) setupJointTest
 {
 	self.subTitle = @"Various joints.";
