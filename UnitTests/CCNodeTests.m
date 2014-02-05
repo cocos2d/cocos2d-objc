@@ -78,6 +78,7 @@
 	CCScene *scene = [CCScene node];
 	
 	CCNode *first = [CCNode node];
+	first.name = @"first";
 	[scene addChild:first z:0];
 	
 	CCNode *second = [CCNode node];
@@ -96,8 +97,10 @@
 	XCTAssertTrue(second.parent == nil, @"");
 	
 	XCTAssertTrue(first.runningInActiveScene, @"");
-	XCTAssertTrue(!second.runningInActiveScene, @"");
-
+	XCTAssertFalse(second.runningInActiveScene, @"");
+	
+	[scene removeChildByName:@"first"];
+	XCTAssertFalse(first.runningInActiveScene, @"");
 }
 
 
