@@ -36,7 +36,7 @@ const NSString *CARD_NAME[] =
 
 // -----------------------------------------------------------------
 
-- (NSArray*) testConstructors
+- (NSArray *)testConstructors
 {
     return [NSArray arrayWithObjects:
             @"setupVertexZTest",
@@ -50,22 +50,32 @@ const NSString *CARD_NAME[] =
     return([NSString stringWithFormat:@"%@.%d.png", CARD_NAME[arc4random() % 4], 1 + (arc4random() % 13)]);
 }
 
-- (void) setupVertexZTest
+- (void)setupVertexZTest
 {
-    // Load card images
-    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"Resources-shared/Cards/cards.classic.plist"];
+    self.subTitle = @"Tests vertexZ (hardware Z) for batch nodes";
 
-    // add a rendomize button
-    CCButton *button = [CCButton buttonWithTitle:@"[shuffle]"];
-    button.positionType = CCPositionTypeNormalized;
-    button.position = ccp(0.5, 0.3);
-    [button setTarget:self selector:@selector(shufflePressed:)];
-    [self addChild:button];
+    // Load card images
+    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"Cards/cards.classic.plist"];
+
+    // add a shuffle button
+    CCButton *shuffleButton = [CCButton buttonWithTitle:@"[shuffle]"];
+    shuffleButton.positionType = CCPositionTypeNormalized;
+    shuffleButton.position = ccp(0.5, 0.3);
+    [shuffleButton setTarget:self selector:@selector(shufflePressed:)];
+    [self.contentNode addChild:shuffleButton];
+
+    // add a reset button
+    CCButton *resetButton = [CCButton buttonWithTitle:@"[reset]"];
+    resetButton.positionType = CCPositionTypeNormalized;
+    resetButton.position = ccp(0.5, 0.25);
+    [resetButton setTarget:self selector:@selector(resetPressed:)];
+    [self.contentNode addChild:resetButton];
+    
     
     // add a card node to hold the cards
-    _cardNode = [CCSpriteBatchNode batchNodeWithFile:@"Resources-shared/Cards/cards.classic.png"];
+    _cardNode = [CCSpriteBatchNode batchNodeWithFile:@"Cards/cards.classic.png"];
     _cardNode.contentSize = [CCDirector sharedDirector].viewSize;
-    [self addChild:_cardNode];
+    [self.contentNode addChild:_cardNode];
     
     // add an array of cards
     for (int count = 0; count < NUMBER_OF_CARDS; count ++)
@@ -84,7 +94,13 @@ const NSString *CARD_NAME[] =
     for (CCNode *node in _cardNode.children) node.vertexZ = arc4random() % 100;
 }
 
+- (void)resetPressed:(id)sender
+{
+    for (CCNode *node in _cardNode.children) node.vertexZ = 0;
+}
+
 // -----------------------------------------------------------------
+
 
 @end
 
