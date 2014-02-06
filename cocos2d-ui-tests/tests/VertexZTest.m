@@ -12,9 +12,7 @@
 
 // -----------------------------------------------------------------
 
-@interface
-
-VertexZTest : TestBase
+@interface VertexZTest : TestBase
 
 @end
 
