@@ -605,4 +605,8 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
 	XCTAssert(joint4.valid, @"");
 }
 
+// TODO
+// * Check that body and shape settings are preserved through multiple add/remove cycles and are actually applied to the cpBody.
+// * Check that changing properties before and after adding to an active physics node updates the properties correctly.
+
 @end

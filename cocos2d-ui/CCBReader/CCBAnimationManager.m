@@ -147,11 +147,11 @@ static NSInteger ccbAnimationManagerID = 0;
     {
         return [CCBRotateTo actionWithDuration:duration angle:[kf1.value floatValue]];
     }
-    else if ([name isEqualToString:@"rotationX"])
+    else if ([name isEqualToString:@"rotationalSkewX"])
     {
         return [CCBRotateXTo actionWithDuration:duration angle:[kf1.value floatValue]];
     }
-    else if ([name isEqualToString:@"rotationY"])
+    else if ([name isEqualToString:@"rotationalSkewY"])
     {
         return [CCBRotateYTo actionWithDuration:duration angle:[kf1.value floatValue]];
     }
