@@ -84,7 +84,7 @@ const CGSize FIXED_SIZE = {568, 384};
     }
     else
     {
-        return UIInterfaceOrientationMaskPortrait;
+        return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
     }
 }
 
