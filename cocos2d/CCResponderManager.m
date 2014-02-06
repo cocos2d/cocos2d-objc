@@ -478,9 +478,7 @@
 // -----------------------------------------------------------------
 
 - (void)mouseDown:(NSEvent *)theEvent button:(CCMouseButton)button
-{
-    NSAssert(![self responderForButton:button], @"Unexpected Mouse State");
-    
+{    
     if (_dirty) [self buildResponderList];
     
     // scan backwards through mouse responders
