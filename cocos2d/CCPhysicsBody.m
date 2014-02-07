@@ -347,8 +347,8 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, /*CP_BODY_TYPE_K
 	}
 }
 
--(cpFloat)absoluteRadians {return _body.angle;}
--(void)setAbsoluteRadians:(cpFloat)absoluteRadians {
+-(CGFloat)absoluteRadians {return _body.angle;}
+-(void)setAbsoluteRadians:(CGFloat)absoluteRadians {
 	_body.angle = absoluteRadians;
 	
 	if(_body.type == CP_BODY_TYPE_STATIC){

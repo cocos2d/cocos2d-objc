@@ -1187,7 +1187,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 	return NO;
 }
 
--(CCTimer *) schedule:(SEL)selector interval:(CCTime)interval repeat: (uint) repeat delay:(CCTime) delay
+-(CCTimer *) schedule:(SEL)selector interval:(CCTime)interval repeat: (NSUInteger) repeat delay:(CCTime) delay
 {
 	NSAssert(selector != nil, @"Selector must be non-nil");
 	NSAssert(selector != @selector(update:) && selector != @selector(fixedUpdate:), @"The update: and fixedUpdate: methods are scheduled automatically.");
