@@ -95,6 +95,7 @@
     return [NSArray arrayWithObjects:
             @"setupSimpleMultiTouchTest",
             @"setupExclusiveTouchTest",
+            @"setupTouchPositioning",
             nil];
 }
 
