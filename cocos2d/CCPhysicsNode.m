@@ -95,7 +95,7 @@
 /// Internal class used to wrap cpCollisionHandlers
 @interface CCPhysicsCollisionHandler : NSObject {
 	cpCollisionHandler *_handler;
-	id _delegate;
+	__weak id _delegate;
 	
 	// Cache the CCPhysicsNode's collision pair singleton.
 	CCPhysicsCollisionPair *_collisionPairSingleton;
