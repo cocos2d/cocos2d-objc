@@ -58,6 +58,7 @@
 
 -(CCContactSet)contacts
 {
+	// TODO this needs to be fixed for 64 bit if CG types are disabled.
 	// This function cast should be safe on any ABI that also supports objc_msgSend_stret().
 	return ((CCContactSet (*)(cpArbiter *))cpArbiterGetContactPointSet)(self.arb);
 }
@@ -104,6 +105,7 @@
 	BOOL _wildcard;
 	
 	// Cache all the methods, imps and selectors.
+	// TODO should move to using objc_msgSend instead?
 	Method _begin, _preSolve, _postSolve, _separate;
 	IMP _beginImp, _preSolveImp, _postSolveImp, _separateImp;
 	SEL _beginSel, _preSolveSel, _postSolveSel, _separateSel;
