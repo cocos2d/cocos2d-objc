@@ -307,7 +307,7 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
 	
 	TestBasicSequenceHelper(self, physicsNode, parent, node, body);
 }
-	
+
 -(void)testBasicSequences10
 {
 	CCPhysicsNode *physicsNode = [CCPhysicsNode node];
@@ -331,6 +331,74 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
 	CCPhysicsBody *body = [CCPhysicsBody bodyWithCircleOfRadius:1.0 andCenter:CGPointZero];
 	
 	TestBasicSequenceHelper(self, physicsNode, parent, node, body);
+}
+
+-(void)testBasicSequences11
+{
+	CCPhysicsNode *physicsNode = [CCPhysicsNode node];
+	
+	CCNode *parent = [CCNode node];
+	parent.contentSize = CGSizeMake(25, 35);
+	parent.anchorPoint = ccp(0.3, 0.7);
+	parent.position = ccp(20, 60);
+	parent.rotation = -15;
+	parent.scaleX = 1.5;
+	parent.scaleY = 8.0;
+	
+	CCNode *node = [CCNode node];
+	node.contentSize = CGSizeMake(30, 30);
+	node.anchorPoint = ccp(0,0);
+	node.position = ccp(100, 100);
+	node.rotation = 30;
+	node.scaleX = 2.0;
+	node.scaleY = 3.0;
+	
+	CCPhysicsBody *body = [CCPhysicsBody bodyWithCircleOfRadius:1.0 andCenter:CGPointZero];
+	body.type = CCPhysicsBodyTypeStatic;
+	
+	TestBasicSequenceHelper(self, physicsNode, parent, node, body);
+}
+
+-(void)testDynamicAnchorPoint
+{
+	CCPhysicsNode *physicsNode = [CCPhysicsNode node];
+	
+	CCNode *node = [CCNode node];
+	node.contentSize = CGSizeMake(2, 2);
+	node.anchorPoint = ccp(0.5, 0.5);
+	XCTAssert(ccpDistance(node.position, CGPointZero) == 0.0, @"");
+	
+	node.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1.0 andCenter:CGPointZero];
+	node.physicsBody.type = CCPhysicsBodyTypeDynamic;
+	XCTAssert(ccpDistance(node.position, CGPointZero) == 0.0, @"");
+	
+	[physicsNode addChild:node];
+	[physicsNode onEnter];
+	XCTAssert(ccpDistance(node.position, CGPointZero) == 0.0, @"");
+	
+	node.rotation = 90;
+	XCTAssert(ccpDistance(node.position, CGPointZero) == 0.0, @"");
+}
+
+-(void)testStaticAnchorPoint
+{
+	CCPhysicsNode *physicsNode = [CCPhysicsNode node];
+	
+	CCNode *node = [CCNode node];
+	node.contentSize = CGSizeMake(2, 2);
+	node.anchorPoint = ccp(0.5, 0.5);
+	XCTAssert(ccpDistance(node.position, CGPointZero) == 0.0, @"");
+	
+	node.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1.0 andCenter:CGPointZero];
+	node.physicsBody.type = CCPhysicsBodyTypeStatic;
+	XCTAssert(ccpDistance(node.position, CGPointZero) == 0.0, @"");
+	
+	[physicsNode addChild:node];
+	[physicsNode onEnter];
+	XCTAssert(ccpDistance(node.position, CGPointZero) == 0.0, @"");
+	
+	node.rotation = 90;
+	XCTAssert(ccpDistance(node.position, CGPointZero) == 0.0, @"");
 }
 
 -(void)testCollisionGroups
