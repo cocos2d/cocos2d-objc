@@ -329,9 +329,13 @@ RadiusForTransform(cpTransform t)
 		_points = calloc(count, sizeof(cpVect));
 		_count = count;
 		
+#if !CP_USE_CGTYPES
 		for(NSUInteger i=0; i<count; i++){
 			_points[i] = CCP_TO_CPV(points[i]);
 		}
+#else
+		memcpy(_points, points, count*sizeof(CGPoint));
+#endif
 		
 		_shape = [ChipmunkPolyShape polyWithBody:nil count:(int)_count verts:_points transform:cpTransformIdentity radius:_radius];
 		
