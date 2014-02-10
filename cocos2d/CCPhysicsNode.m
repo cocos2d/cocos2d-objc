@@ -454,12 +454,13 @@ DrawFatSegment(cpVect a, cpVect b, cpFloat r, cpSpaceDebugColor outline, cpSpace
 static void
 DrawPolygon(int count, const cpVect *verts, cpFloat r, cpSpaceDebugColor outline, cpSpaceDebugColor fill, CCDrawNode *draw)
 {
-	// TODO avoid copy on 32bit?
-	
+#if !CP_USE_CGTYPES
 	CGPoint _verts[count];
 	for(int i=0; i<count; i++) _verts[i] = CPV_TO_CCP(verts[i]);
-	
 	[draw drawPolyWithVerts:_verts count:count fillColor:ToCCColor(fill) borderWidth:1.0 borderColor:ToCCColor(outline)];
+#else
+	[draw drawPolyWithVerts:verts count:count fillColor:ToCCColor(fill) borderWidth:1.0 borderColor:ToCCColor(outline)];
+#endif
 }
 
 static void
