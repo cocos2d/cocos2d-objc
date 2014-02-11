@@ -388,9 +388,9 @@ static NSInteger ccbAnimationManagerID = 0;
 {
     CCActionManager* am = [[CCDirector sharedDirector] actionManager];
     
-    while ([am getActionByTag:tag target:node])
+    while ([am getActionByTag:(int)tag target:node])
     {
-        [am removeActionByTag:tag target:node];
+        [am removeActionByTag:(int)tag target:node];
     }
 }
 
