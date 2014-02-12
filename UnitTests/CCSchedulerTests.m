@@ -10,6 +10,10 @@
 #import "cocos2d.h"
 
 
+// XCTAssertEqual() doesn't like comparing to the preprocessor token for some reason.
+static CCTime inf = INFINITY;
+
+
 @interface SequenceTester : NSObject<CCSchedulerTarget>
 @property(nonatomic, strong) NSMutableArray *sequence;
 @property(nonatomic, assign) NSInteger priority;
@@ -369,38 +373,91 @@
 	scheduler.maxTimeStep = INFINITY;
 	scheduler.fixedUpdateInterval = INFINITY;
 	
-	[scheduler update:1.0];
-	XCTAssertEqual(scheduler.currentTime, 1.0, @"");
+	[scheduler update:2.0];
+	XCTAssertEqual(scheduler.currentTime, 2.0, @"");
 	
 	__block CCTime invokedTime = -1.0;
 	CCTimer *timer = [scheduler scheduleBlock:^(CCTimer *timer){
 		invokedTime = timer.invokeTime;
 		
 		// deltaTime should not include paused time.
-		XCTAssertEqual(timer.deltaTime, 1.0, @"");
-	} forTarget:nil withDelay:1.0];
-	timer.paused = YES;
+		XCTAssertEqual(timer.invokeTime, timer.scheduler.currentTime, @"");
+		XCTAssertEqual(timer.deltaTime, 5.0, @"");
+	} forTarget:nil withDelay:5.0];
+	XCTAssertEqual(timer.invokeTime, 7.0, @"");
 	
-	// XCTAssertEqual() doesn't like comparing to the preprocessor token for some reason.
-	CCTime inf = INFINITY;
+	[scheduler update:2.0];
+	XCTAssertEqual(timer.invokeTime, 7.0, @"");
+	
+	timer.paused = YES;
+	timer.paused = YES;
 	XCTAssertEqual(timer.invokeTime, inf, @"");
+	// After resuming the timer should have 3 seconds remaining.
 	
 	[scheduler update:10.0];
 	XCTAssertEqual(invokedTime, -1.0, @"");
-	XCTAssertEqual(scheduler.currentTime, 11.0, @"");
+	XCTAssertEqual(scheduler.currentTime, 14.0, @"");
 	
 	timer.paused = NO;
-	XCTAssertEqual(timer.invokeTime, 12.0, @"");
+	XCTAssertEqual(timer.invokeTime, 17.0, @"");
 	
 	timer.paused = YES;
 	XCTAssertEqual(timer.invokeTime, inf, @"");
 	
 	timer.paused = NO;
-	XCTAssertEqual(timer.invokeTime, 12.0, @"");
+	timer.paused = NO;
+	XCTAssertEqual(timer.invokeTime, 17.0, @"");
 	
 	[scheduler update:10.0];
-	XCTAssertEqual(timer.invokeTime, 12.0, @"");
-	XCTAssertEqual(invokedTime, 12.0, @"");
+	XCTAssertEqual(invokedTime, 17.0, @"");
+	
+	// The timer should have an infinite invoke time after it has expired.
+	XCTAssertEqual(timer.invokeTime, inf, @"");
+}
+
+- (void)testPauseTimerTarget
+{
+	CCScheduler *scheduler = [[CCScheduler alloc] init];
+	scheduler.maxTimeStep = INFINITY;
+	scheduler.fixedUpdateInterval = INFINITY;
+	
+	[scheduler update:2.0];
+	XCTAssertEqual(scheduler.currentTime, 2.0, @"");
+	
+	__block CCTime invokedTime = -1.0;
+	CCTimer *timer = [scheduler scheduleBlock:^(CCTimer *timer){
+		invokedTime = timer.invokeTime;
+		
+		// deltaTime should not include paused time.
+		XCTAssertEqual(timer.deltaTime, 5.0, @"");
+	} forTarget:nil withDelay:5.0];
+	XCTAssertEqual(timer.invokeTime, 7.0, @"");
+	
+	[scheduler update:2.0];
+	XCTAssertEqual(timer.invokeTime, 7.0, @"");
+	
+	[scheduler setPaused:YES target:nil];
+	XCTAssertEqual(timer.invokeTime, inf, @"");
+	// After resuming the timer should have 3 seconds remaining.
+	
+	[scheduler update:10.0];
+	XCTAssertEqual(invokedTime, -1.0, @"");
+	XCTAssertEqual(scheduler.currentTime, 14.0, @"");
+	
+	[scheduler setPaused:NO target:nil];
+	XCTAssertEqual(timer.invokeTime, 17.0, @"");
+	
+	[scheduler setPaused:YES target:nil];
+	XCTAssertEqual(timer.invokeTime, inf, @"");
+	
+	[scheduler setPaused:NO target:nil];
+	XCTAssertEqual(timer.invokeTime, 17.0, @"");
+	
+	[scheduler update:10.0];
+	XCTAssertEqual(invokedTime, 17.0, @"");
+	
+	// The timer should have an infinite invoke time after it has expired.
+	XCTAssertEqual(timer.invokeTime, inf, @"");
 }
 
 -(void)testTimerIncrement
@@ -459,13 +516,15 @@
 	scheduler.maxTimeStep = INFINITY;
 	scheduler.fixedUpdateInterval = INFINITY;
 	
-	__block bool timer1Called = false;
-	__block bool timer2Called = false;
+	__block int timer1CallCount = 0;
+	__block int timer2CallCount = 0;
 	
 	// This target will be paused at exactly it's invocation time.
-	CCTimer *timer = [scheduler scheduleBlock:^(CCTimer *timer){
-		timer1Called = true;
+	CCTimer *timer1 = [scheduler scheduleBlock:^(CCTimer *timer){
+		timer1CallCount++;
 	} forTarget:nil withDelay:1.0];
+	
+	timer1.repeatCount = CCTimerRepeatForever;
 	
 	// This is a high priority target and will be called first to pause the first timer.
 	SequenceTester *target = [[SequenceTester alloc] init];
@@ -474,13 +533,143 @@
 	[scheduler setPaused:NO target:target];
 	
 	[scheduler scheduleBlock:^(CCTimer *unused){
-		timer.paused = true;
-		timer2Called = true;
+		timer1.paused = true;
+		timer2CallCount++;
 	} forTarget:target withDelay:1.0];
 	
 	[scheduler update:10.0];
-	XCTAssertTrue(timer1Called, @"");
-	XCTAssertTrue(timer2Called, @"");
+	XCTAssertEqual(timer1CallCount, 0, @"");
+	XCTAssertEqual(timer2CallCount, 1, @"");
+}
+
+-(void)testTimerPause1
+{
+	CCScheduler *scheduler = [[CCScheduler alloc] init];
+	scheduler.maxTimeStep = INFINITY;
+	scheduler.fixedUpdateInterval = INFINITY;
+	
+	CCTimer *timer = [scheduler scheduleBlock:^(CCTimer *t){
+		XCTAssertEqual(t.deltaTime, 3.0, @"");
+		XCTAssertEqual(t.invokeTime, 6.0, @"");
+		XCTAssertEqual(t.scheduler.currentTime, 6.0, @"");
+	} forTarget:nil withDelay:3.0];
+	XCTAssertEqual(timer.invokeTime, 3.0, @"");
+	
+	// Pause at 1.0
+	[scheduler scheduleBlock:^(CCTimer *t){
+		timer.paused = YES;
+		XCTAssertEqual(timer.invokeTime, inf, @"");
+	} forTarget:nil withDelay:1.0];
+	
+	// Unpause at 4.0
+	[scheduler scheduleBlock:^(CCTimer *t){
+		timer.paused = NO;
+		XCTAssertEqual(timer.invokeTime, 6.0, @"");
+	} forTarget:nil withDelay:4.0];
+	
+	[scheduler update:20.0];
+}
+
+-(void)testTimerPause2
+{
+	CCScheduler *scheduler = [[CCScheduler alloc] init];
+	scheduler.maxTimeStep = INFINITY;
+	scheduler.fixedUpdateInterval = INFINITY;
+	
+	CCTimer *timer = [scheduler scheduleBlock:^(CCTimer *t){
+		XCTAssertEqual(t.deltaTime, 3.0, @"");
+		XCTAssertEqual(t.invokeTime, 4.0, @"");
+		XCTAssertEqual(t.scheduler.currentTime, 4.0, @"");
+	} forTarget:nil withDelay:3.0];
+	XCTAssertEqual(timer.invokeTime, 3.0, @"");
+	
+	// Pause at 1.0
+	[scheduler scheduleBlock:^(CCTimer *t){
+		timer.paused = YES;
+		XCTAssertEqual(timer.invokeTime, inf, @"");
+	} forTarget:nil withDelay:1.0];
+	
+	// Unpause at 2.0
+	[scheduler scheduleBlock:^(CCTimer *t){
+		timer.paused = NO;
+		XCTAssertEqual(timer.invokeTime, 4.0, @"");
+	} forTarget:nil withDelay:2.0];
+	
+	[scheduler update:20.0];
+}
+
+-(void)testTimerPause3
+{
+	CCScheduler *scheduler = [[CCScheduler alloc] init];
+	scheduler.maxTimeStep = INFINITY;
+	scheduler.fixedUpdateInterval = INFINITY;
+	
+	CCTimer *timer = [scheduler scheduleBlock:^(CCTimer *t){
+		XCTAssertEqual(t.deltaTime, 2.0, @"");
+		XCTAssertEqual(t.invokeTime, 4.0, @"");
+		XCTAssertEqual(t.scheduler.currentTime, 4.0, @"");
+	} forTarget:nil withDelay:2.0];
+	XCTAssertEqual(timer.invokeTime, 2.0, @"");
+	
+	// Pause at 1.0
+	[scheduler scheduleBlock:^(CCTimer *t){
+		timer.paused = YES;
+		XCTAssertEqual(timer.invokeTime, inf, @"");
+	} forTarget:nil withDelay:1.0];
+	
+	// Unpause at 3.0
+	[scheduler scheduleBlock:^(CCTimer *t){
+		timer.paused = NO;
+		XCTAssertEqual(timer.invokeTime, 4.0, @"");
+	} forTarget:nil withDelay:3.0];
+	
+	[scheduler update:20.0];
+}
+
+-(void)testTimerPause4
+{
+	CCScheduler *scheduler = [[CCScheduler alloc] init];
+	scheduler.maxTimeStep = INFINITY;
+	scheduler.fixedUpdateInterval = INFINITY;
+	
+	__block int invokeCount = 0;
+	
+	CCTimer *timer = [scheduler scheduleBlock:^(CCTimer *t){
+		XCTAssertEqual(t.deltaTime, 2.0, @"");
+		XCTAssertEqual(fmod(t.invokeTime, 4.0), 0.0, @"");
+		XCTAssertEqual(t.invokeTime, t.scheduler.currentTime, @"");
+		
+		invokeCount++;
+	} forTarget:nil withDelay:2.0];
+	
+	timer.repeatCount = 2;
+	
+	// Pause at 0.5 + 2i
+	[scheduler scheduleBlock:^(CCTimer *pausingTimer){
+		timer.paused = YES;
+		XCTAssertEqual(timer.invokeTime, inf, @"");
+		
+		[pausingTimer repeatOnceWithInterval:2.0];
+	} forTarget:nil withDelay:0.5];
+	
+	// Unpause at 1.5 + 2i
+	[scheduler scheduleBlock:^(CCTimer *unpausingTimer){
+		timer.paused = NO;
+		
+		if(timer.invokeTime > 12.0){
+			// After 12.0, the timer will stop repeating and become invalid.
+			XCTAssertEqual(timer.invokeTime, inf, @"");
+		} else if(fmod(unpausingTimer.invokeTime, 4.0) == 1.5){
+			XCTAssertEqual(fmod(timer.invokeTime, 4.0), 3.0, @"");
+		} else {
+			XCTAssertEqual(fmod(timer.invokeTime, 4.0), 0.0, @"");
+		}
+		
+		[unpausingTimer repeatOnceWithInterval:2.0];
+	} forTarget:nil withDelay:1.5];
+	
+	[scheduler update:20.0];
+	XCTAssertEqual(invokeCount, 3, @"");
 }
 
 -(void)testRemoveScheduledUpdate

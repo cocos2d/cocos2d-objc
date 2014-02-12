@@ -37,6 +37,7 @@ static float roundUpToEven(float f)
 
 - (void) layout
 {
+    [super layout];
     if (_direction == CCLayoutBoxDirectionHorizontal)
     {
         // Get the maximum height

@@ -328,7 +328,12 @@ static CCDirector *_sharedDirector = nil;
 
 		// set size
 		CGSize size = CCNSSizeToCGSize(__view.bounds.size);
+#ifdef __CC_PLATFORM_IOS
 		CGFloat scale = __view.layer.contentsScale ?: 1.0;
+#else
+		self.view.wantsBestResolutionOpenGLSurface = YES;
+		CGFloat scale = self.view.window.backingScaleFactor;
+#endif
 		
 		_winSizeInPixels = CGSizeMake(size.width*scale, size.height*scale);
 		_winSizeInPoints = size;
@@ -849,7 +854,7 @@ static CCDirector *_sharedDirector = nil;
 
 	[CCTexture setDefaultAlphaPixelFormat:currentFormat];
 	
-	CGPoint offset = [self convertToGL:ccp(0, __view.bounds.size.height)];
+	CGPoint offset = [self convertToGL:ccp(0, (self.flipY == 1.0) ? 0 : __view.bounds.size.height)];
 	CGPoint pos = ccpAdd(CC_DIRECTOR_STATS_POSITION, offset);
 	[_drawsLabel setPosition: ccpAdd( ccp(0,34), pos ) ];
 	[_SPFLabel setPosition: ccpAdd( ccp(0,17), pos ) ];

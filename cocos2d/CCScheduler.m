@@ -63,14 +63,16 @@
 @property(nonatomic, assign) CCTime invokeTimeInternal;
 // Timers form a linked list per target.
 @property(nonatomic, strong) CCTimer *next;
-// Positive value when timer is paused or completing a pause,
-// The minim amount of time remaining on the timer after the next invocation.
-@property(nonatomic, readonly) CCTime pauseDelay;
+// Invocation requires an extra delay due to being paused.
+@property(nonatomic, readonly) BOOL requiresDelay;
+// If the timer is currently added to the heap or not.
+@property(nonatomic, assign) BOOL scheduled;
 
 @end
 
 
 @interface CCScheduler (Private) <CCSchedulerTarget>
+-(void)scheduleTimer:(CCTimer *)timer retain:(BOOL)retain;
 @end
 
 
@@ -149,6 +151,7 @@ RemoveRecursive(CCTimer *timer, CCTimer *skip)
 	
 	CCTime _invokeTimeInternal;
 	CCTime _pauseDelay;
+	BOOL _scheduled;
 	
 	__weak CCScheduler *_scheduler;
 	__weak CCScheduledTarget *_scheduledTarget;
@@ -156,19 +159,30 @@ RemoveRecursive(CCTimer *timer, CCTimer *skip)
 
 -(CCTime)invokeTime
 {
-	return (self.paused ? INFINITY : _invokeTimeInternal + _pauseDelay);
+	return (_paused || self.invalid ? INFINITY : _invokeTimeInternal + _pauseDelay);
+}
+
+-(void)applyPauseDelay:(CCTime)currentTime
+{
+	_invokeTimeInternal = MAX(_invokeTimeInternal, currentTime) + _pauseDelay;
+	_pauseDelay = 0.0;
 }
 
 -(void)setPaused:(BOOL)paused
 {
-	if(paused){
-		_pauseDelay = self.invokeTime - _scheduler.currentTime;
-	} else {
-		// Subtract off the delay to the next invoke time.
-		_pauseDelay -= MAX(_invokeTimeInternal - _scheduler.currentTime, 0.0);
+	if(paused != _paused){
+		CCTime currentTime = _scheduler.currentTime;
+		
+		// This should ensure _pauseDelay is always positive since currentTime can never decrease.
+		_pauseDelay += MAX(_invokeTimeInternal - currentTime, 0.0)*(paused ? 1.0 : -1.0);
+		
+		if(!paused && !_scheduled){
+			[self applyPauseDelay:currentTime];
+			[_scheduler scheduleTimer:self retain:YES];
+		}
+		
+		_paused = paused;
 	}
-	
-	_paused = paused;
 }
 
 // A valid block that does nothing.
@@ -208,7 +222,10 @@ static CCTimerBlock INVALIDATED_BLOCK = ^(CCTimer *timer){};
 	return self;
 }
 
--(CCTime)pauseDelay {return _pauseDelay;}
+-(BOOL)requiresDelay {return (_pauseDelay > 0.0);}
+
+-(BOOL)scheduled {return _scheduled;}
+-(void)setScheduled:(BOOL)scheduled {_scheduled = scheduled;}
 
 -(CCTime)invokeTimeInternal {return _invokeTimeInternal;}
 -(void)setInvokeTimeInternal:(CCTime)invokeTimeInternal {_invokeTimeInternal = invokeTimeInternal;}
@@ -339,12 +356,20 @@ CompareTimers(const void *a, const void *b, void *context)
 	return scheduledTarget;
 }
 
+-(void)scheduleTimer:(CCTimer *)timer retain:(BOOL)retain
+{
+	if(retain) CFRetain((__bridge CFTypeRef)timer);
+	
+	CFBinaryHeapAddValue(_heap, (__bridge CFTypeRef)timer);
+	timer.scheduled = YES;
+}
+
 -(CCTimer *)scheduleBlock:(CCTimerBlock)block forTarget:(NSObject<CCSchedulerTarget> *)target withDelay:(CCTime)delay
 {
 	CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
 	
 	CCTimer *timer = [[CCTimer alloc] initWithDelay:delay scheduler:self scheduledTarget:scheduledTarget block:block];
-	CFBinaryHeapAddValue(_heap, CFRetain((__bridge CFTypeRef)timer));
+	[self scheduleTimer:timer retain:YES];
 	
 	timer.next = scheduledTarget.timers;
 	scheduledTarget.timers = timer;
@@ -364,15 +389,17 @@ CompareTimers(const void *a, const void *b, void *context)
 			break;
 		} else {
 			CFBinaryHeapRemoveMinimumValue(_heap);
+			timer.scheduled = NO;
 		}
 		
 		_currentTime = invokeTime;
 		
-		CCTime pauseDelay = timer.pauseDelay;
-		if(pauseDelay > 0.0){
-			// Rschedule the timer with the minimum remaining delay due to the timer being paused.
-			timer.invokeTimeInternal += pauseDelay;
-			CFBinaryHeapAddValue(_heap, (__bridge CFTypeRef)timer);
+		if(timer.paused){
+			// Release the timer now in case it never becomes rescheduled.
+			CFRelease((__bridge CFTypeRef)timer);
+		} else if(timer.requiresDelay){
+			[timer applyPauseDelay:_currentTime];
+			[self scheduleTimer:timer retain:NO];
 		} else {
 			timer.block(timer);
 			
@@ -382,7 +409,8 @@ CompareTimers(const void *a, const void *b, void *context)
 				CCTime delay = timer.deltaTime = timer.repeatInterval;
 				timer.invokeTimeInternal += delay;
 				
-				CFBinaryHeapAddValue(_heap, (__bridge CFTypeRef)timer);
+				NSAssert(delay > 0.0, @"Rescheduling a timer with a repeat interval of 0 will cause an infinite loop.");
+				[self scheduleTimer:timer retain:NO];
 			} else {
 				CCScheduledTarget *scheduledTarget = timer.scheduledTarget;
 				[scheduledTarget removeTimer:timer];
@@ -390,9 +418,8 @@ CompareTimers(const void *a, const void *b, void *context)
 					CFDictionaryRemoveValue(_scheduledTargets, (__bridge CFTypeRef)scheduledTarget.target);
 				}
 				
+				// We are done with the timer.
 				[timer invalidate];
-				
-				// Timer was removed from the heap permanently.
 				CFRelease((__bridge CFTypeRef)timer);
 			}
 		}

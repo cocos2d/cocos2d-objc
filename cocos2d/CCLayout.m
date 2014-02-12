@@ -43,14 +43,21 @@
 }
 
 - (void) layout
-{}
+{
+    _needsLayout = NO;
+}
+
+- (CGSize)contentSize
+{
+    if (_needsLayout) [self layout];
+    return super.contentSize;
+}
 
 - (void) visit:(CCRenderer *)renderer parentTransform:(GLKMatrix4)parentTransform
 {
     if (_needsLayout)
     {
         [self layout];
-        _needsLayout = NO;
     }
     
     [super visit:renderer parentTransform:parentTransform];

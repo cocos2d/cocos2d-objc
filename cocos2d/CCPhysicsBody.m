@@ -42,6 +42,7 @@
 	NSMutableArray *_chipmunkObjects;
 	
 	BOOL _affectedByGravity;
+	BOOL _allowsRotation;
 }
 
 //MARK: Constructors:
@@ -53,6 +54,7 @@
 		_body.userData = self;
 		
 		_affectedByGravity = YES;
+		_allowsRotation = YES;
 		
 		_chipmunkObjects = [NSMutableArray arrayWithCapacity:2];
 		[_chipmunkObjects addObject:_body];
@@ -217,7 +219,7 @@ NotAffectedByGravity
 
 -(BOOL)allowsRotation {
 	if(self.type == CCPhysicsBodyTypeDynamic){
-		return (_body.moment < INFINITY);
+		return _allowsRotation;
 	} else {
 		// The allowsRotation property is only applicable to dynamic bodies.
 		return NO;
@@ -236,13 +238,24 @@ NotAffectedByGravity
 			_body.angularVelocity = 0.0;
 		}
 	}
+	
+	_allowsRotation = allowsRotation;
 }
 
 static CCPhysicsBodyType ToCocosBodyType[] = {CCPhysicsBodyTypeDynamic, CCPhysicsBodyTypeStatic, CCPhysicsBodyTypeStatic};
 static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, /*CP_BODY_TYPE_KINEMATIC,*/ CP_BODY_TYPE_STATIC};
 
 -(CCPhysicsBodyType)type {return ToCocosBodyType[_body.type];}
--(void)setType:(CCPhysicsBodyType)type {_body.type = ToChipmunkBodyType[type];}
+-(void)setType:(CCPhysicsBodyType)type
+{
+	ChipmunkSpace *space = self.physicsNode.space;
+	if(space && cpSpaceIsLocked(space.space)){
+		// Chipmunk body type cannot be changed from within a callback, need to make this safe.
+		[space addPostStepBlock:^{_body.type = ToChipmunkBodyType[type];} key:self];
+	} else {
+		_body.type = ToChipmunkBodyType[type];
+	}
+}
 
 //MARK: Collision and Contact:
 
@@ -299,7 +312,7 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, /*CP_BODY_TYPE_K
 -(void)applyAngularImpulse:(CGFloat)impulse {_body.angularVelocity += impulse/_body.moment;}
 
 -(void)applyForce:(CGPoint)force {_body.force = cpvadd(_body.force, force);}
--(void)applyImpulse:(CGPoint)impulse {_body.velocity = cpvadd(_body.velocity, cpvmult(impulse, 1.0f/_body.moment));}
+-(void)applyImpulse:(CGPoint)impulse {_body.velocity = cpvadd(_body.velocity, cpvmult(impulse, 1.0f/_body.mass));}
 
 -(void)applyForce:(CGPoint)force atLocalPoint:(CGPoint)point
 {

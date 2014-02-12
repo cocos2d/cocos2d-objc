@@ -42,6 +42,11 @@ NSString* const CCSetupFixedUpdateInterval = @"CCSetupFixedUpdateInterval";
 NSString* const CCSetupShowDebugStats = @"CCSetupShowDebugStats";
 NSString* const CCSetupTabletScale2X = @"CCSetupTabletScale2X";
 
+NSString* const CCSetupDepthFormat = @"CCSetupDepthFormat";
+NSString* const CCSetupPreserveBackbuffer = @"CCSetupPreserveBackbuffer";
+NSString* const CCSetupMultiSampling = @"CCSetupMultiSampling";
+NSString* const CCSetupNumberOfSamples = @"CCSetupNumberOfSamples";
+
 NSString* const CCScreenOrientationLandscape = @"CCScreenOrientationLandscape";
 NSString* const CCScreenOrientationPortrait = @"CCScreenOrientationPortrait";
 
@@ -76,7 +81,7 @@ const CGSize FIXED_SIZE = {568, 384};
     }
     else
     {
-        return UIInterfaceOrientationMaskPortrait;
+        return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
     }
 }
 
@@ -166,11 +171,11 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	CCGLView *glView = [CCGLView
 		viewWithFrame:[window_ bounds]
 		pixelFormat:config[CCSetupPixelFormat] ?: kEAGLColorFormatRGBA8
-		depthFormat:0
-		preserveBackbuffer:NO
+        depthFormat:[config[CCSetupDepthFormat] integerValue]
+		preserveBackbuffer:[config[CCSetupPreserveBackbuffer] boolValue]
 		sharegroup:nil
-		multiSampling:NO
-		numberOfSamples:0
+		multiSampling:[config[CCSetupMultiSampling] boolValue]
+		numberOfSamples:[config[CCSetupNumberOfSamples] integerValue]
 	];
 	
 	CCDirectorIOS* director = (CCDirectorIOS*) [CCDirector sharedDirector];
