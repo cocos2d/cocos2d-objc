@@ -188,6 +188,8 @@ static CCDirector *_sharedDirector = nil;
 		
 		__ccContentScaleFactor = 1;
 		self.UIScaleFactor = 1;
+		
+		_renderer = [[CCRenderer alloc] init];
 	}
 
 	return self;
@@ -209,11 +211,12 @@ static CCDirector *_sharedDirector = nil;
 
 -(void) setGLDefaultValues
 {
+#warning TODO
 	// This method SHOULD be called only after __view was initialized
 	NSAssert( __view, @"__view must be initialized");
 
-	[self setAlphaBlending: YES];
-	[self setDepthTest: __view.depthFormat];
+//	[self setAlphaBlending: YES];
+//	[self setDepthTest: __view.depthFormat];
 	[self setProjection: _projection];
 
 	// set other opengl default values
@@ -288,30 +291,30 @@ static CCDirector *_sharedDirector = nil;
 	CCLOG(@"cocos2d: override me");
 }
 
-- (void) setAlphaBlending: (BOOL) on
-{
-	if (on) {
-		ccGLBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
-
-	} else
-		ccGLBlendFunc(GL_ONE, GL_ZERO);
-
-	CHECK_GL_ERROR_DEBUG();
-}
-
-- (void) setDepthTest: (BOOL) on
-{
-	if (on) {
-		glClearDepth(1.0f);
-
-		glEnable(GL_DEPTH_TEST);
-		glDepthFunc(GL_LEQUAL);
-//		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-	} else
-		glDisable( GL_DEPTH_TEST );
-
-	CHECK_GL_ERROR_DEBUG();
-}
+//- (void) setAlphaBlending: (BOOL) on
+//{
+//	if (on) {
+//		ccGLBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+//
+//	} else
+//		ccGLBlendFunc(GL_ONE, GL_ZERO);
+//
+//	CHECK_GL_ERROR_DEBUG();
+//}
+//
+//- (void) setDepthTest: (BOOL) on
+//{
+//	if (on) {
+//		glClearDepth(1.0f);
+//
+//		glEnable(GL_DEPTH_TEST);
+//		glDepthFunc(GL_LEQUAL);
+////		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+//	} else
+//		glDisable( GL_DEPTH_TEST );
+//
+//	CHECK_GL_ERROR_DEBUG();
+//}
 
 #pragma mark Director Integration with a UIKit view
 

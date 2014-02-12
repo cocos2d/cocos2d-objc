@@ -32,6 +32,7 @@
 #import "CCProtocols.h"
 #import "Platforms/CCGL.h"
 #import "CCResponderManager.h"
+#import "CCRenderer.h"
 
 #import <GLKit/GLKMatrix4.h>
 
@@ -155,6 +156,8 @@ and when to execute the Scenes.
 	
 	/*  OpenGLView. On iOS it is a copy of self.view */
 	CCGLView		*__view;
+	
+	CCRenderer *_renderer;
 }
 
 /** returns the cocos2d thread.
@@ -394,19 +397,19 @@ and when to execute the Scenes.
 /** sets the OpenGL default values */
 -(void) setGLDefaultValues;
 
-/**
- *  Enables/disables OpenGL alpha blending.
- *
- *  @param on Set to YES to enable alpha blending.
- */
-- (void) setAlphaBlending: (BOOL) on;
-
-/**
- *  Enables/disables OpenGL depth test.
- *
- *  @param on Set to YES to enable depth tests.
- */
-- (void) setDepthTest: (BOOL) on;
+///**
+// *  Enables/disables OpenGL alpha blending.
+// *
+// *  @param on Set to YES to enable alpha blending.
+// */
+//- (void) setAlphaBlending: (BOOL) on;
+//
+///**
+// *  Enables/disables OpenGL depth test.
+// *
+// *  @param on Set to YES to enable depth tests.
+// */
+//- (void) setDepthTest: (BOOL) on;
 @end
 
 // optimization. Should only be used to read it. Never to write it.

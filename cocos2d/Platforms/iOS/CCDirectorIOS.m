@@ -123,9 +123,8 @@
 	if( _nextScene )
 		[self setNextScene];
 	
-	CCRenderer *renderer = [[CCRenderer alloc] init];
-	[_runningScene visit:renderer parentTransform:GLKMatrix4Identity];
-	[_notificationNode visit:renderer parentTransform:GLKMatrix4Identity];
+	[_runningScene visit:_renderer parentTransform:GLKMatrix4Identity];
+	[_notificationNode visit:_renderer parentTransform:GLKMatrix4Identity];
 
 	if( _displayStats )
 		[self showStats];

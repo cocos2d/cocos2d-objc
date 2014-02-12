@@ -35,6 +35,7 @@ static BOOL		_vertexAttribColor = NO;
 static BOOL		_vertexAttribTexCoords = NO;
 
 #if CC_ENABLE_GL_STATE_CACHE
+#error
 #define kCCMaxActiveTexture 16
 static GLuint	_ccCurrentShaderProgram = -1;
 static GLuint	_ccCurrentBoundTexture[kCCMaxActiveTexture] =  {-1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, };

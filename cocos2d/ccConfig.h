@@ -86,9 +86,9 @@
  Default value: Enabled by default
 
   */
-#ifndef CC_ENABLE_GL_STATE_CACHE
-#define CC_ENABLE_GL_STATE_CACHE 1
-#endif
+//#ifndef CC_ENABLE_GL_STATE_CACHE
+#define CC_ENABLE_GL_STATE_CACHE 0
+//#endif
 
 /** @def CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
  If enabled, the texture coordinates will be calculated by using this formula:

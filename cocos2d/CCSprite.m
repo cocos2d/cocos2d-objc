@@ -511,8 +511,11 @@
 	[_shaderProgram use];
 	[_shaderProgram setUniformsForBuiltins:transform];
 
-	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
-
+//	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
+	[renderer setBlendMode:[CCBlendMode blendModeWithOptions:@{
+		CCBlendFuncSrcColor: @(_blendFunc.src),
+		CCBlendFuncDstColor: @(_blendFunc.dst),
+	}]];
 	ccGLBindTexture2D( [_texture name] );
 
 	//

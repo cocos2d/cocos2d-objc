@@ -32,11 +32,26 @@ extern const NSString *CCBlendFuncDstAlpha;
 extern const NSString *CCBlendEquationAlpha;
 
 
+@interface CCBlendMode : NSDictionary
+
++(NSDictionary *)blendModeWithOptions:(NSDictionary *)options;
+
++(NSDictionary *)disabledMode;
++(NSDictionary *)alphaMode;
++(NSDictionary *)premultipliedAlphaMode;
++(NSDictionary *)addMode;
++(NSDictionary *)multiplyMode;
+
+@end
+
+
 @interface CCRenderState : NSObject
 
 @end
 
 
 @interface CCRenderer : NSObject
+
+-(void)setBlendMode:(NSDictionary *)blendMode;
 
 @end

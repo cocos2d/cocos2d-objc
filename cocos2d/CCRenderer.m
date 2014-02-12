@@ -149,6 +149,42 @@ static NSDictionary *CCBLEND_MULTIPLY = nil;
 @end
 
 
-@implementation CCRenderer
+@implementation CCRenderer {
+	NSDictionary *_blendMode;
+}
+
+-(instancetype)init
+{
+	if((self = [super init])){
+		
+	}
+	
+	return self;
+}
+
+-(void)setBlendMode:(NSDictionary *)blendMode;
+{
+	if(blendMode == _blendMode) return;
+	
+	if(blendMode == CCBLEND_DISABLED){
+		glDisable(GL_BLEND);
+	} else {
+		glEnable(GL_BLEND);
+		
+		glBlendFuncSeparate(
+			[blendMode[CCBlendFuncSrcColor] unsignedIntValue],
+			[blendMode[CCBlendFuncDstColor] unsignedIntValue],
+			[blendMode[CCBlendFuncSrcAlpha] unsignedIntValue],
+			[blendMode[CCBlendFuncDstAlpha] unsignedIntValue]
+		);
+		
+		glBlendEquationSeparate(
+			[blendMode[CCBlendEquationColor] unsignedIntValue],
+			[blendMode[CCBlendEquationAlpha] unsignedIntValue]
+		);
+	}
+	
+	_blendMode = blendMode;
+}
 
 @end

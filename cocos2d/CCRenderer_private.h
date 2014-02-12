@@ -26,15 +26,3 @@
 #import <Foundation/Foundation.h>
 #import "CCRenderer.h"
 
-
-@interface CCBlendMode : NSObject
-
-+(NSDictionary *)blendModeWithOptions:(NSDictionary *)options;
-
-+(NSDictionary *)disabledMode;
-+(NSDictionary *)alphaMode;
-+(NSDictionary *)premultipliedAlphaMode;
-+(NSDictionary *)addMode;
-+(NSDictionary *)multiplyMode;
-
-@end
