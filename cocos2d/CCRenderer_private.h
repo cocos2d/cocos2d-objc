@@ -1,9 +1,7 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * Copyright (c) 2010 Ricardo Quesada
- * Copyright (c) 2011 Zynga Inc.
- * Copyright (c) 2013 Lars Birkemose
+ * Copyright (c) 2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,57 +20,21 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
  */
 
+
 #import <Foundation/Foundation.h>
-#import "cocos2d.h"
+#import "CCRenderer.h"
 
-//------------------------------------------------------------------------------
 
-@interface CCCache : NSObject
+@interface CCBlendMode : NSObject
 
-//------------------------------------------------------------------------------
++(NSDictionary *)blendModeWithOptions:(NSDictionary *)options;
 
-+ (instancetype)cache;
-- (instancetype)init;
-
-- (void)preload:(id<NSCopying>)key;
-
-- (id)objectForKey:(id<NSCopying>)key;
-
-- (void)flush;
-
-//------------------------------------------------------------------------------
++(NSDictionary *)disabledMode;
++(NSDictionary *)alphaMode;
++(NSDictionary *)premultipliedAlphaMode;
++(NSDictionary *)addMode;
++(NSDictionary *)multiplyMode;
 
 @end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

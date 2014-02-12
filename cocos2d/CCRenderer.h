@@ -22,7 +22,20 @@
  * THE SOFTWARE.
  */
 
-#import <Foundation/Foundation.h>
+
+// Blending mode keys.
+extern const NSString *CCBlendFuncSrcColor;
+extern const NSString *CCBlendFuncDstColor;
+extern const NSString *CCBlendEquationColor;
+extern const NSString *CCBlendFuncSrcAlpha;
+extern const NSString *CCBlendFuncDstAlpha;
+extern const NSString *CCBlendEquationAlpha;
+
+
+@interface CCRenderState : NSObject
+
+@end
+
 
 @interface CCRenderer : NSObject
 

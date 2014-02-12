@@ -107,14 +107,14 @@
 #pragma mark - Basic cache functionality
 //------------------------------------------------------------------------------
 
-- (void)preload:(NSString *)key
+- (void)preload:(id<NSCopying>)key
 {
     [self objectForKey:key];
 }
 
 //------------------------------------------------------------------------------
 
-- (id)objectForKey:(NSString *)key
+- (id)objectForKey:(id<NSCopying>)key
 {
     CCCacheEntry *entry = [_cacheList objectForKey:key];
     
@@ -177,7 +177,7 @@
 // creates the data associated with the key
 // this could ex. be a GLKTextureInfo class for use with creating textures
 
-- (id)createSharedDataForKey:(NSString *)key
+- (id)createSharedDataForKey:(id<NSCopying>)key
 {
     NSAssert(NO, @"Subclasses must override this method");
     return nil;
@@ -187,7 +187,7 @@
 // create the object, based on data
 // it is obviously important, that the cache does not perform costly operations, but rely on the data
 
-- (id)createObjectForData:(id)data
+- (id)createObjectForData:(id<NSCopying>)data
 {
     NSAssert(NO, @"Subclasses must override this method");
     return nil;
@@ -197,7 +197,7 @@
 // dispose the underlying data
 // this could ex be disposal of the GLKTextureInfo class, used when creating textures
 
-- (void)disposeObjectForData:(id)data
+- (void)disposeObjectForData:(id<NSCopying>)data
 {
     NSAssert(NO, @"Subclasses must override this method");
 }
