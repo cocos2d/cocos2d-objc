@@ -517,7 +517,7 @@ ColorForShape(cpShape *shape, CCDrawNode *draw)
 {
 	// Add the category if it doesn't exist yet.
 	if(![_categories containsObject:category]){
-		NSAssert(_categories.count <= MAX_CATEGORIES, @"A space can only track up to %d categories.", MAX_CATEGORIES);
+		NSAssert(_categories.count < MAX_CATEGORIES, @"A space can only track up to %d categories.", MAX_CATEGORIES);
 		[_categories addObject:category];
 	}
 	
