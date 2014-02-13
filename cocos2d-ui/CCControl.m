@@ -59,7 +59,7 @@
 
 - (void) setTarget:(id)target selector:(SEL)selector
 {
-    __unsafe_unretained id weakTarget = target; // avoid retain cycle
+    __weak id weakTarget = target; // avoid retain cycle
     [self setBlock:^(id sender) {
         typedef void (*Func)(id, SEL, id);
         ((Func)objc_msgSend)(weakTarget, selector, sender);

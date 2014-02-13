@@ -12,7 +12,7 @@
 #import "CCPhysics+ObjectiveChipmunk.h"
 
 
-@interface CCPhysicsTests : XCTestCase
+@interface CCPhysicsTests : XCTestCase <CCPhysicsCollisionDelegate>
 
 @end
 
@@ -307,7 +307,7 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
 	
 	TestBasicSequenceHelper(self, physicsNode, parent, node, body);
 }
-	
+
 -(void)testBasicSequences10
 {
 	CCPhysicsNode *physicsNode = [CCPhysicsNode node];
@@ -331,6 +331,78 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
 	CCPhysicsBody *body = [CCPhysicsBody bodyWithCircleOfRadius:1.0 andCenter:CGPointZero];
 	
 	TestBasicSequenceHelper(self, physicsNode, parent, node, body);
+}
+
+-(void)testBasicSequences11
+{
+	CCPhysicsNode *physicsNode = [CCPhysicsNode node];
+	
+	CCNode *parent = [CCNode node];
+	parent.contentSize = CGSizeMake(25, 35);
+	parent.anchorPoint = ccp(0.3, 0.7);
+	parent.position = ccp(20, 60);
+	parent.rotation = -15;
+	parent.scaleX = 1.5;
+	parent.scaleY = 8.0;
+	
+	CCNode *node = [CCNode node];
+	node.contentSize = CGSizeMake(30, 30);
+	node.anchorPoint = ccp(0,0);
+	node.position = ccp(100, 100);
+	node.rotation = 30;
+	node.scaleX = 2.0;
+	node.scaleY = 3.0;
+	
+	CCPhysicsBody *body = [CCPhysicsBody bodyWithCircleOfRadius:1.0 andCenter:CGPointZero];
+	body.type = CCPhysicsBodyTypeStatic;
+	
+	TestBasicSequenceHelper(self, physicsNode, parent, node, body);
+}
+
+-(void)testDynamicAnchorPoint
+{
+	CCPhysicsNode *physicsNode = [CCPhysicsNode node];
+	
+	CCNode *node = [CCNode node];
+	node.contentSize = CGSizeMake(2, 2);
+	node.anchorPoint = ccp(0.5, 0.5);
+	XCTAssert(ccpDistance(node.position, CGPointZero) == 0.0, @"");
+	
+	node.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1.0 andCenter:CGPointZero];
+	node.physicsBody.type = CCPhysicsBodyTypeDynamic;
+	XCTAssert(ccpDistance(node.position, CGPointZero) == 0.0, @"");
+	
+	[physicsNode addChild:node];
+	[physicsNode onEnter];
+	XCTAssert(ccpDistance(node.position, CGPointZero) == 0.0, @"");
+	
+	node.rotation = 90;
+	XCTAssert(ccpDistance(node.position, CGPointZero) == 0.0, @"");
+	
+	[physicsNode onExit];
+}
+
+-(void)testStaticAnchorPoint
+{
+	CCPhysicsNode *physicsNode = [CCPhysicsNode node];
+	
+	CCNode *node = [CCNode node];
+	node.contentSize = CGSizeMake(2, 2);
+	node.anchorPoint = ccp(0.5, 0.5);
+	XCTAssert(ccpDistance(node.position, CGPointZero) == 0.0, @"");
+	
+	node.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1.0 andCenter:CGPointZero];
+	node.physicsBody.type = CCPhysicsBodyTypeStatic;
+	XCTAssert(ccpDistance(node.position, CGPointZero) == 0.0, @"");
+	
+	[physicsNode addChild:node];
+	[physicsNode onEnter];
+	XCTAssert(ccpDistance(node.position, CGPointZero) == 0.0, @"");
+	
+	node.rotation = 90;
+	XCTAssert(ccpDistance(node.position, CGPointZero) == 0.0, @"");
+	
+	[physicsNode onExit];
 }
 
 -(void)testCollisionGroups
@@ -360,6 +432,8 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
 	// Both nodes should be at (0, 0)
 	XCTAssertTrue(CGPointEqualToPoint(node1.position, CGPointZero) , @"");
 	XCTAssertTrue(CGPointEqualToPoint(node2.position, CGPointZero) , @"");
+	
+	[physicsNode onExit];
 }
 
 -(void)testAffectedByGravity
@@ -393,6 +467,8 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
 	
 	// Node2 should stay at (0, 0)
 	XCTAssertTrue(node2.position.y == 0.0, @"");
+	
+	[physicsNode onExit];
 }
 
 -(void)testAllowsRotation
@@ -474,6 +550,8 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
 		
 		XCTAssert(node.physicsBody.body.moment < INFINITY, @"");
 	}
+	
+	[physicsNode onExit];
 }
 
 -(void)testBodyType
@@ -603,6 +681,50 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
 	XCTAssert(!joint2.valid, @"");
 	XCTAssert(joint3.valid, @"");
 	XCTAssert(joint4.valid, @"");
+	
+	[physics onExit];
+}
+
+-(BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair theStaticOne:(CCNode *)nodeA theDynamicOne:(CCNode *)nodeB
+{
+	nodeB.physicsBody.type = CCPhysicsBodyTypeStatic;
+	
+	// TODO not sure if we should hide the deferred nature or not... Hrm.
+	XCTAssertEqual(nodeB.physicsBody.type, CCPhysicsBodyTypeDynamic, @"");
+	
+	return FALSE;
+}
+
+-(void)testBodyTypeCollisions
+{
+	CCPhysicsNode *physicsNode = [CCPhysicsNode node];
+	physicsNode.collisionDelegate = self;
+	physicsNode.gravity = ccp(0, -100);
+	
+	CCNode *node1 = [CCNode node];
+	node1.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1.0 andCenter:CGPointZero];
+	node1.physicsBody.type = CCPhysicsBodyTypeStatic;
+	node1.physicsBody.collisionType = @"theStaticOne";
+	[physicsNode addChild:node1];
+	
+	CCNode *node2 = [CCNode node];
+	node2.position = ccp(0, 10);
+	node2.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1.0 andCenter:CGPointZero];
+	node2.physicsBody.type = CCPhysicsBodyTypeDynamic;
+	node2.physicsBody.collisionType = @"theDynamicOne";
+	[physicsNode addChild:node2];
+	
+	// Force entering the scene to set up the physics objects.
+	[physicsNode onEnter];
+	
+	// Step the physics for a while.
+	for(int i=0; i<100; i++){
+		[physicsNode fixedUpdate:1.0/100.0];
+	}
+	
+	XCTAssertEqual(node2.physicsBody.type, CCPhysicsBodyTypeStatic, @"");
+	
+	[physicsNode onExit];
 }
 
 // TODO
