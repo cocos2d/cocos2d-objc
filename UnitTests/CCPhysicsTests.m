@@ -361,46 +361,50 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
 
 -(void)testDynamicAnchorPoint
 {
+	cpFloat accuracy = 1e-4;
+	
 	CCPhysicsNode *physicsNode = [CCPhysicsNode node];
 	
 	CCNode *node = [CCNode node];
 	node.contentSize = CGSizeMake(2, 2);
 	node.anchorPoint = ccp(0.5, 0.5);
-	XCTAssert(ccpDistance(node.position, CGPointZero) == 0.0, @"");
+	XCTAssert(ccpDistance(node.position, CGPointZero) < accuracy, @"");
 	
 	node.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1.0 andCenter:CGPointZero];
 	node.physicsBody.type = CCPhysicsBodyTypeDynamic;
-	XCTAssert(ccpDistance(node.position, CGPointZero) == 0.0, @"");
+	XCTAssert(ccpDistance(node.position, CGPointZero) < accuracy, @"");
 	
 	[physicsNode addChild:node];
 	[physicsNode onEnter];
-	XCTAssert(ccpDistance(node.position, CGPointZero) == 0.0, @"");
+	XCTAssert(ccpDistance(node.position, CGPointZero) < accuracy, @"");
 	
 	node.rotation = 90;
-	XCTAssert(ccpDistance(node.position, CGPointZero) == 0.0, @"");
+	XCTAssert(ccpDistance(node.position, CGPointZero) < accuracy, @"");
 	
 	[physicsNode onExit];
 }
 
 -(void)testStaticAnchorPoint
 {
+	cpFloat accuracy = 1e-4;
+	
 	CCPhysicsNode *physicsNode = [CCPhysicsNode node];
 	
 	CCNode *node = [CCNode node];
 	node.contentSize = CGSizeMake(2, 2);
 	node.anchorPoint = ccp(0.5, 0.5);
-	XCTAssert(ccpDistance(node.position, CGPointZero) == 0.0, @"");
+	XCTAssert(ccpDistance(node.position, CGPointZero) < accuracy, @"");
 	
 	node.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1.0 andCenter:CGPointZero];
 	node.physicsBody.type = CCPhysicsBodyTypeStatic;
-	XCTAssert(ccpDistance(node.position, CGPointZero) == 0.0, @"");
+	XCTAssert(ccpDistance(node.position, CGPointZero) < accuracy, @"");
 	
 	[physicsNode addChild:node];
 	[physicsNode onEnter];
-	XCTAssert(ccpDistance(node.position, CGPointZero) == 0.0, @"");
+	XCTAssert(ccpDistance(node.position, CGPointZero) < accuracy, @"");
 	
 	node.rotation = 90;
-	XCTAssert(ccpDistance(node.position, CGPointZero) == 0.0, @"");
+	XCTAssert(ccpDistance(node.position, CGPointZero) < accuracy, @"");
 	
 	[physicsNode onExit];
 }
