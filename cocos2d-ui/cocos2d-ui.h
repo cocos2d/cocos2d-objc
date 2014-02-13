@@ -28,6 +28,7 @@
 #import "CCScrollView.h"
 #import "CCTableView.h"
 #import "CCTextField.h"
+#import "CCSlider.h"
 
 // CCBReader
 #import "CCBuilderReader.h"
