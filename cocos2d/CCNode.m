@@ -222,7 +222,11 @@ static NSUInteger globalOrderOfArrival = 1;
 {
 	CCPhysicsBody *body = GetBodyIfRunning(self);
 	if(body){
+		CGPoint position = self.position;
 		body.absoluteRadians = -CC_DEGREES_TO_RADIANS(newRotation + NodeToPhysicsRotation(self.parent));
+		
+		// Rotating the body will cause the node to move unless the CoG is the same as the anchor point.
+		self.position = position;
 	} else {
 		_rotationalSkewX = newRotation;
 		_rotationalSkewY = newRotation;

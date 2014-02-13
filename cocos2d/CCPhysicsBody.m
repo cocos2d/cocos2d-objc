@@ -246,7 +246,16 @@ static CCPhysicsBodyType ToCocosBodyType[] = {CCPhysicsBodyTypeDynamic, CCPhysic
 static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, /*CP_BODY_TYPE_KINEMATIC,*/ CP_BODY_TYPE_STATIC};
 
 -(CCPhysicsBodyType)type {return ToCocosBodyType[_body.type];}
--(void)setType:(CCPhysicsBodyType)type {_body.type = ToChipmunkBodyType[type];}
+-(void)setType:(CCPhysicsBodyType)type
+{
+	ChipmunkSpace *space = self.physicsNode.space;
+	if(space && cpSpaceIsLocked(space.space)){
+		// Chipmunk body type cannot be changed from within a callback, need to make this safe.
+		[space addPostStepBlock:^{_body.type = ToChipmunkBodyType[type];} key:self];
+	} else {
+		_body.type = ToChipmunkBodyType[type];
+	}
+}
 
 //MARK: Collision and Contact:
 
