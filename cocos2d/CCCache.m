@@ -31,48 +31,7 @@
 #pragma mark - Cache entry class
 //------------------------------------------------------------------------------
 
-@interface CCCacheEntry : NSObject
-{
-    __weak id _object;
-    __strong id _sharedData;
-}
-
-+ (instancetype)entryWithObject:(id)object sharedData:(id)data;
-
-- (id)object;
-
-@end
-
 @implementation CCCacheEntry
-
-+ (instancetype)entryWithObject:(id)object sharedData:(id)data
-{
-    return [[self alloc] initWithObject:object sharedData:data];
-}
-
-- (instancetype)initWithObject:(id)object sharedData:(id)data
-{
-    self = [super init];
-    NSAssert(self, @"Unable to create class CCCacheEntry");
-    
-    // initialize
-    _object = object;
-    _sharedData = data;
-    
-    //done
-    return self;
-}
-
-- (id)object
-{
-    return _object;
-}
-
-- (id)sharedData
-{
-    return _sharedData;
-}
-
 @end
 
 //------------------------------------------------------------------------------
@@ -114,42 +73,46 @@
 
 //------------------------------------------------------------------------------
 
-- (id)objectForKey:(id<NSCopying>)key
+-(id)rawObjectForKey:(id<NSCopying>)key
+{
+    CCCacheEntry *entry = [_cacheList objectForKey:key];
+		return entry.publicObject;
+}
+
+- (CCCacheEntry *)entryForKey:(id<NSCopying>)key
 {
     CCCacheEntry *entry = [_cacheList objectForKey:key];
     
     if (entry == nil)
-    {
-        // create a spanking new entry
-        
-        // get data
-        id data = [self createSharedDataForKey:key];
-        
-        // create new cache entry
-        CCCacheEntry *newEntry = [CCCacheEntry entryWithObject:[self createObjectForData:data] sharedData:data];
-        [_cacheList setObject:newEntry forKey:key];
-        
-        // return object
-        return   newEntry.object;
+		{
+				// Create the cached entry with the shared data.
+        entry = [[CCCacheEntry alloc] init];
+				entry.sharedData = [self createSharedDataForKey:key];
+				
+        [_cacheList setObject:entry forKey:key];
     }
-    else if (entry.object == nil)
-    {
-        // entry was found, but no objects are alive
-        
-        // make a copy of data, and remove old entry
-        id data = entry.sharedData;
-        [_cacheList removeObjectForKey:key];
-        
-        // create new cache entry
-        CCCacheEntry *newEntry = [CCCacheEntry entryWithObject:[self createObjectForData:data] sharedData:data];
-        [_cacheList setObject:newEntry forKey:key];
-        
-        // return object
-        return   newEntry.object;
-    }
-    
-    // object found and alive
-    return entry.object;
+		
+		return entry;
+}
+
+- (id)objectForKey:(id<NSCopying>)key
+{
+    CCCacheEntry *entry = [self entryForKey:key];
+		
+		id object = entry.publicObject;
+		if (object == nil)
+		{
+        // Create the public object from the shared data.
+		    object = entry.publicObject = [self createPublicObjectForSharedData:entry.sharedData];
+		}
+		
+    return object;
+}
+
+- (void)makeAlias:(id<NSCopying>)alias forKey:(id<NSCopying>)key
+{
+    CCCacheEntry *entry = [self entryForKey:key];
+		[_cacheList setObject:entry forKey:alias];
 }
 
 //------------------------------------------------------------------------------
@@ -157,14 +120,20 @@
 - (void)flush
 {
     // iterate keys
-    for (NSString *key in _cacheList.allKeys)
+    for (NSString *key in _cacheList)
     {
         CCCacheEntry *entry = [_cacheList objectForKey:key];
         
-        // if entry has no live objects, dispose of data and delete entry
-        if (entry.object == nil)
+        // if entry has no live public objects, delete the entry
+        if (entry.publicObject == nil)
         {
-            [self disposeObjectForData:entry.sharedData];
+				    // If the entry's shared data hasn't been disposed of by another alias, do it now.
+				    if(entry.sharedData != nil)
+						{
+                [self disposeOfSharedData:entry.sharedData];
+		    				entry.sharedData = nil;
+						}
+						
             [_cacheList removeObjectForKey:key];
         }
     }
@@ -187,7 +156,7 @@
 // create the object, based on data
 // it is obviously important, that the cache does not perform costly operations, but rely on the data
 
-- (id)createObjectForData:(id<NSCopying>)data
+- (id)createPublicObjectForSharedData:(id)data
 {
     NSAssert(NO, @"Subclasses must override this method");
     return nil;
@@ -197,7 +166,7 @@
 // dispose the underlying data
 // this could ex be disposal of the GLKTextureInfo class, used when creating textures
 
-- (void)disposeObjectForData:(id<NSCopying>)data
+- (void)disposeOfSharedData:(id)data
 {
     NSAssert(NO, @"Subclasses must override this method");
 }
@@ -205,33 +174,3 @@
 //------------------------------------------------------------------------------
 
 @end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

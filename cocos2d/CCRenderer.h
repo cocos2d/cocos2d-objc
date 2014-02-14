@@ -23,7 +23,19 @@
  */
 
 
-// Blending mode keys.
+@interface NSValue(CCRenderer)
+
++(NSValue *)valueWithGLKVector2:(GLKVector2)vector;
++(NSValue *)valueWithGLKVector3:(GLKVector3)vector;
++(NSValue *)valueWithGLKVector4:(GLKVector4)vector;
+
+@end
+
+
+extern const NSString *CCRenderStateBlendMode;
+extern const NSString *CCRenderStateShader;
+extern const NSString *CCRenderStateUniforms;
+
 extern const NSString *CCBlendFuncSrcColor;
 extern const NSString *CCBlendFuncDstColor;
 extern const NSString *CCBlendEquationColor;
@@ -31,27 +43,36 @@ extern const NSString *CCBlendFuncSrcAlpha;
 extern const NSString *CCBlendFuncDstAlpha;
 extern const NSString *CCBlendEquationAlpha;
 
+extern const NSString *CCMainTexture;
 
-@interface CCBlendMode : NSDictionary
 
-+(NSDictionary *)blendModeWithOptions:(NSDictionary *)options;
+@interface CCBlendMode : NSObject
 
-+(NSDictionary *)disabledMode;
-+(NSDictionary *)alphaMode;
-+(NSDictionary *)premultipliedAlphaMode;
-+(NSDictionary *)addMode;
-+(NSDictionary *)multiplyMode;
+@property(nonatomic, readonly) NSDictionary *options;
+
++(CCBlendMode *)blendModeWithOptions:(NSDictionary *)options;
+
++(CCBlendMode *)disabledMode;
++(CCBlendMode *)alphaMode;
++(CCBlendMode *)premultipliedAlphaMode;
++(CCBlendMode *)addMode;
++(CCBlendMode *)multiplyMode;
 
 @end
 
 
 @interface CCRenderState : NSObject
 
+@property(nonatomic, readonly) NSDictionary *options;
+
++(CCRenderState *)renderStateWithOptions:(NSDictionary *)options;
+
 @end
 
 
 @interface CCRenderer : NSObject
 
--(void)setBlendMode:(NSDictionary *)blendMode;
+-(void)setRenderState:(CCRenderState *)renderState;
+//-(void)setBlendMode:(CCBlendMode *)blendMode;
 
 @end

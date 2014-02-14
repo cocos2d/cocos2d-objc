@@ -507,17 +507,17 @@
 
 //	NSAssert(!_batchNode, @"If CCSprite is being rendered by CCSpriteBatchNode, CCSprite#draw SHOULD NOT be called");
 
-	ccGLEnable( _glServerState );
-	[_shaderProgram use];
-	[_shaderProgram setUniformsForBuiltins:transform];
-
-//	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
-	[renderer setBlendMode:[CCBlendMode blendModeWithOptions:@{
-		CCBlendFuncSrcColor: @(_blendFunc.src),
-		CCBlendFuncDstColor: @(_blendFunc.dst),
+	[renderer setRenderState:[CCRenderState renderStateWithOptions:@{
+		CCRenderStateBlendMode: [CCBlendMode blendModeWithOptions:@{
+			CCBlendFuncSrcColor: @(_blendFunc.src),
+			CCBlendFuncDstColor: @(_blendFunc.dst),
+		}],
+		CCRenderStateShader: _shaderProgram,
+		CCRenderStateUniforms: @{CCMainTexture: (_texture ?: [NSNull null])},
 	}]];
-	ccGLBindTexture2D( [_texture name] );
 
+	[_shaderProgram setUniformsForBuiltins:transform];
+	
 	//
 	// Attributes
 	//

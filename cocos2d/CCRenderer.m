@@ -24,7 +24,35 @@
 
 #import "cocos2d.h"
 #import "CCRenderer_private.h"
+#import "CCCache.h"
+#import "CCTexture_Private.h"
 
+
+//MARK: NSValue Additions.
+@implementation NSValue(CCRenderer)
+
++(NSValue *)valueWithGLKVector2:(GLKVector2)vector
+{
+	return [NSValue valueWithBytes:&vector objCType:@encode(GLKVector2)];
+}
+
++(NSValue *)valueWithGLKVector3:(GLKVector3)vector
+{
+	return [NSValue valueWithBytes:&vector objCType:@encode(GLKVector3)];
+}
+
++(NSValue *)valueWithGLKVector4:(GLKVector4)vector
+{
+	return [NSValue valueWithBytes:&vector objCType:@encode(GLKVector4)];
+}
+
+@end
+
+
+//MARK: Option Keys.
+const NSString *CCRenderStateBlendMode = @"CCRenderStateBlendMode";
+const NSString *CCRenderStateShader = @"CCRenderStateShader";
+const NSString *CCRenderStateUniforms = @"CCRenderStateUniforms";
 
 const NSString *CCBlendFuncSrcColor = @"CCBlendFuncSrcColor";
 const NSString *CCBlendFuncDstColor = @"CCBlendFuncDstColor";
@@ -33,34 +61,100 @@ const NSString *CCBlendFuncSrcAlpha = @"CCBlendFuncSrcAlpha";
 const NSString *CCBlendFuncDstAlpha = @"CCBlendFuncDstAlpha";
 const NSString *CCBlendEquationAlpha = @"CCBlendEquationAlpha";
 
+const NSString *CCMainTexture = @"CCMainTexture";
 
-@implementation CCBlendMode
 
-static NSSet *CCBLEND_SHARED_KEYS = nil;
-static NSMutableDictionary *CCBLEND_CACHE = nil;
+//MARK: Blend Modes.
+@interface CCBlendMode()
+
+-(instancetype)initWithOptions:(NSDictionary *)options;
+
+@end
+
+
+@interface CCBlendModeCache : CCCache
+@end
+
+
+@implementation CCBlendModeCache
+
+-(id)objectForKey:(id<NSCopying>)options
+{
+	CCBlendMode *blendMode = [self rawObjectForKey:options];
+	if(blendMode) return blendMode;
+	
+	// Normalize the blending mode to use for the key.
+	id src = (options[CCBlendFuncSrcColor] ?: @(GL_ONE));
+	id dst = (options[CCBlendFuncDstColor] ?: @(GL_ZERO));
+	id equation = (options[CCBlendEquationColor] ?: @(GL_FUNC_ADD));
+	
+	NSDictionary *normalized = @{
+		CCBlendFuncSrcColor: src,
+		CCBlendFuncDstColor: dst,
+		CCBlendEquationColor: equation,
+		
+		// Assume they meant non-separate blending if they didn't fill in the keys.
+		CCBlendFuncSrcAlpha: (options[CCBlendFuncSrcAlpha] ?: src),
+		CCBlendFuncDstAlpha: (options[CCBlendFuncDstAlpha] ?: dst),
+		CCBlendEquationAlpha: (options[CCBlendEquationAlpha] ?: equation),
+	};
+	
+	// Create the key using the normalized blending mode.
+	blendMode = [super objectForKey:normalized];
+	
+	// Make an alias for the unnormalized version
+	[self makeAlias:options forKey:normalized];
+	
+	return blendMode;
+}
+
+-(id)createSharedDataForKey:(NSDictionary *)options
+{
+	return options;
+}
+
+-(id)createPublicObjectForSharedData:(NSDictionary *)options
+{
+	return [[CCBlendMode alloc] initWithOptions:options];
+}
+
+// Nothing special
+-(void)disposeOfSharedData:(id)data {}
+
+@end
+
+
+@implementation CCBlendMode {
+	NSDictionary *_options;
+}
+
+-(instancetype)initWithOptions:(NSDictionary *)options
+{
+	if((self = [super init])){
+		_options = options;
+	}
+	
+	return self;
+}
+
+static CCBlendModeCache *CCBLEND_CACHE = nil;
 
 // Default modes
-static NSDictionary *CCBLEND_DISABLED = nil;
-static NSDictionary *CCBLEND_ALPHA = nil;
-static NSDictionary *CCBLEND_PREMULTIPLIED_ALPHA = nil;
-static NSDictionary *CCBLEND_ADD = nil;
-static NSDictionary *CCBLEND_MULTIPLY = nil;
+static CCBlendMode *CCBLEND_DISABLED = nil;
+static CCBlendMode *CCBLEND_ALPHA = nil;
+static CCBlendMode *CCBLEND_PREMULTIPLIED_ALPHA = nil;
+static CCBlendMode *CCBLEND_ADD = nil;
+static CCBlendMode *CCBLEND_MULTIPLY = nil;
+
+static NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 
 +(void)initialize
 {
-	CCBLEND_SHARED_KEYS = [NSDictionary sharedKeySetForKeys:@[
-		CCBlendFuncSrcColor,
-		CCBlendFuncDstColor,
-		CCBlendEquationColor,
-		CCBlendFuncSrcAlpha,
-		CCBlendFuncDstAlpha,
-		CCBlendEquationAlpha,
-	]];
-	
-	CCBLEND_CACHE = [[NSMutableDictionary alloc] init];
+	CCBLEND_CACHE = [[CCBlendModeCache alloc] init];
 	
 	// Add the default modes
 	CCBLEND_DISABLED = [self blendModeWithOptions:@{}];
+	CCBLEND_DISABLED_OPTIONS = CCBLEND_DISABLED.options;
 	
 	CCBLEND_ALPHA = [self blendModeWithOptions:@{
 		CCBlendFuncSrcColor: @(GL_SRC_ALPHA),
@@ -83,60 +177,32 @@ static NSDictionary *CCBLEND_MULTIPLY = nil;
 	}];
 }
 
-+(NSDictionary *)blendModeWithOptions:(NSDictionary *)options
++(CCBlendMode *)blendModeWithOptions:(NSDictionary *)options
 {
-	// Try the raw options dictionary before normalizing.
-	NSDictionary *blendMode = CCBLEND_CACHE[options];
-	if(blendMode) return blendMode;
-	
-	NSNumber *src = (options[CCBlendFuncSrcColor] ?: @(GL_ONE));
-	NSNumber *dst = (options[CCBlendFuncDstColor] ?: @(GL_ZERO));
-	NSNumber *equation = (options[CCBlendEquationColor] ?: @(GL_FUNC_ADD));
-	
-	NSDictionary *normalized = @{
-		CCBlendFuncSrcColor: src,
-		CCBlendFuncDstColor: dst,
-		CCBlendEquationColor: equation,
-		
-		// Assume they meant non-separate blending if they didn't fill in the keys.
-		CCBlendFuncSrcAlpha: (options[CCBlendFuncSrcAlpha] ?: src),
-		CCBlendFuncDstAlpha: (options[CCBlendFuncDstAlpha] ?: dst),
-		CCBlendEquationAlpha: (options[CCBlendEquationAlpha] ?: equation),
-	};
-	
-	blendMode = CCBLEND_CACHE[normalized];
-	if(blendMode == nil){
-		// Add to the cache.
-		CCBLEND_CACHE[options] = normalized;
-		CCBLEND_CACHE[normalized] = normalized;
-		
-		blendMode = normalized;
-	}
-	
-	return blendMode;
+	return [CCBLEND_CACHE objectForKey:options];
 }
 
-+(NSDictionary *)disabledMode
++(CCBlendMode *)disabledMode
 {
 	return CCBLEND_DISABLED;
 }
 
-+(NSDictionary *)alphaMode
++(CCBlendMode *)alphaMode
 {
 	return CCBLEND_ALPHA;
 }
 
-+(NSDictionary *)premultipliedAlphaMode
++(CCBlendMode *)premultipliedAlphaMode
 {
 	return CCBLEND_PREMULTIPLIED_ALPHA;
 }
 
-+(NSDictionary *)addMode
++(CCBlendMode *)addMode
 {
 	return CCBLEND_ADD;
 }
 
-+(NSDictionary *)multiplyMode
++(CCBlendMode *)multiplyMode
 {
 	return CCBLEND_MULTIPLY;
 }
@@ -144,47 +210,168 @@ static NSDictionary *CCBLEND_MULTIPLY = nil;
 @end
 
 
-@implementation CCRenderState
+//MARK: Render States.
+@interface CCRenderState()
+
+-(instancetype)initWithOptions:(NSDictionary *)options;
 
 @end
 
 
-@implementation CCRenderer {
-	NSDictionary *_blendMode;
+@interface CCRenderStateCache : CCCache
+@end
+
+
+@implementation CCRenderStateCache
+
+-(id)objectForKey:(id<NSCopying>)options
+{
+	CCRenderState *renderState = [self rawObjectForKey:options];
+	if(renderState) return renderState;
+	
+	// Normalize the render state to use for the key.
+	id blendMode = (options[CCRenderStateBlendMode] ?: CCBLEND_DISABLED);
+	NSAssert([blendMode isKindOfClass:[CCBlendMode class]], @"CCRenderStateBlendMode value is not a CCBlendMode object.");
+	
+	id shader = (options[CCRenderStateShader] ?: [NSNull null]);
+	NSAssert([shader isKindOfClass:[CCGLProgram class]], @"CCRenderStateShader value is not a CCGLProgram object.");
+	
+	id uniforms = ([options[CCRenderStateUniforms] copy] ?: @{});
+	NSAssert([uniforms isKindOfClass:[NSDictionary class]], @"CCRenderStateShaderUniforms value is not a NSDictionary object.");
+	
+	NSDictionary *normalized = @{
+		CCRenderStateBlendMode: blendMode,
+		CCRenderStateShader: shader,
+		CCRenderStateUniforms: uniforms,
+	};
+	
+	// Create the key using the normalized blending mode.
+	renderState = [super objectForKey:normalized];
+	
+	// Make an alias for the unnormalized version
+	[self makeAlias:options forKey:normalized];
+	
+	return renderState;
 }
 
--(instancetype)init
+-(id)createSharedDataForKey:(NSDictionary *)options
+{
+	return options;
+}
+
+-(id)createPublicObjectForSharedData:(NSDictionary *)options
+{
+	return [[CCRenderState alloc] initWithOptions:options];
+}
+
+// Nothing special
+-(void)disposeOfSharedData:(id)data {}
+
+@end
+
+
+@implementation CCRenderState {
+	NSDictionary *_options;
+}
+
+-(instancetype)initWithOptions:(NSDictionary *)options
 {
 	if((self = [super init])){
-		
+		_options = options;
 	}
 	
 	return self;
 }
 
--(void)setBlendMode:(NSDictionary *)blendMode;
+static CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
+
++(void)initialize
 {
-	if(blendMode == _blendMode) return;
+	CCRENDERSTATE_CACHE = [[CCRenderStateCache alloc] init];
+}
+
++(CCRenderState *)renderStateWithOptions:(NSDictionary *)options
+{
+	return [CCRENDERSTATE_CACHE objectForKey:options];
+}
+
+@end
+
+
+//MARK: Render Queue
+@implementation CCRenderer {
+	NSDictionary *_renderOptions;
 	
-	if(blendMode == CCBLEND_DISABLED){
+	NSDictionary *_blendOptions;
+	
+	// TODO buffer the full texture state.
+	CCTexture *_texture;
+	
+	CCGLProgram *_shader;
+	NSDictionary *_uniforms;
+}
+
+-(void)invalidateState
+{
+	_renderOptions = nil;
+	_blendOptions = nil;
+	_texture = nil;
+	_shader = nil;
+	_uniforms = nil;
+}
+
+-(instancetype)init
+{
+	if((self = [super init])){
+	}
+	
+	return self;
+}
+
+-(void)setBlendOptions:(NSDictionary *)blendOptions;
+{
+	// TODO should cache enable status, but need to deal with nil.
+	if(blendOptions == CCBLEND_DISABLED_OPTIONS){
 		glDisable(GL_BLEND);
 	} else {
 		glEnable(GL_BLEND);
 		
 		glBlendFuncSeparate(
-			[blendMode[CCBlendFuncSrcColor] unsignedIntValue],
-			[blendMode[CCBlendFuncDstColor] unsignedIntValue],
-			[blendMode[CCBlendFuncSrcAlpha] unsignedIntValue],
-			[blendMode[CCBlendFuncDstAlpha] unsignedIntValue]
+			[blendOptions[CCBlendFuncSrcColor] unsignedIntValue],
+			[blendOptions[CCBlendFuncDstColor] unsignedIntValue],
+			[blendOptions[CCBlendFuncSrcAlpha] unsignedIntValue],
+			[blendOptions[CCBlendFuncDstAlpha] unsignedIntValue]
 		);
 		
 		glBlendEquationSeparate(
-			[blendMode[CCBlendEquationColor] unsignedIntValue],
-			[blendMode[CCBlendEquationAlpha] unsignedIntValue]
+			[blendOptions[CCBlendEquationColor] unsignedIntValue],
+			[blendOptions[CCBlendEquationAlpha] unsignedIntValue]
 		);
 	}
 	
-	_blendMode = blendMode;
+	_blendOptions = blendOptions;
+}
+
+-(void)setRenderState:(CCRenderState *)renderState
+{
+	NSDictionary *renderOptions = renderState.options;
+	if(renderOptions == _renderOptions) return;
+	
+	NSDictionary *blendOptions = [(CCBlendMode *)renderOptions[CCRenderStateBlendMode] options];
+	if(blendOptions != _blendOptions) [self setBlendOptions:blendOptions];
+	
+	CCGLProgram *shader = renderOptions[CCRenderStateShader];
+	if(shader != _shader) [shader use];
+	
+	NSDictionary *uniforms = renderOptions[CCRenderStateUniforms];
+	if(uniforms != _uniforms){
+		// TODO finish me!
+		CCTexture *texture = uniforms[CCMainTexture];
+		if(texture != _texture && texture != [NSNull null]){
+			glBindTexture(GL_TEXTURE_2D, texture.name);
+			_texture = texture;
+		}
+	}
 }
 
 @end

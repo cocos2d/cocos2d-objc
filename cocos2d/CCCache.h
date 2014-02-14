@@ -28,6 +28,13 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
+@interface CCCacheEntry : NSObject
+
+@property(nonatomic, strong) id sharedData;
+@property(nonatomic, weak) id publicObject;
+
+@end
+
 //------------------------------------------------------------------------------
 
 @interface CCCache : NSObject
@@ -39,40 +46,17 @@
 
 - (void)preload:(id<NSCopying>)key;
 
+- (id)rawObjectForKey:(id<NSCopying>)key;
 - (id)objectForKey:(id<NSCopying>)key;
+- (void)makeAlias:(id<NSCopying>)alias forKey:(id<NSCopying>)key;
 
 - (void)flush;
+
+- (id)createSharedDataForKey:(id<NSCopying>)key;
+- (id)createPublicObjectForSharedData:(id)data;
+- (void)disposeOfSharedData:(id)data;
+
 
 //------------------------------------------------------------------------------
 
 @end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
