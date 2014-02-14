@@ -23,6 +23,17 @@
  */
 
 
+typedef struct CCVertex {
+	GLKVector3 position;
+	GLKVector2 texCoord1, texCoord2;
+	GLKVector4 color;
+} CCVertex;
+
+typedef struct CCTriangle {
+	CCVertex a, b, c;
+} CCTriangle;
+
+
 @interface NSValue(CCRenderer)
 
 +(NSValue *)valueWithGLKVector2:(GLKVector2)vector;
@@ -72,7 +83,8 @@ extern const NSString *CCMainTexture;
 
 @interface CCRenderer : NSObject
 
--(void)setRenderState:(CCRenderState *)renderState;
-//-(void)setBlendMode:(CCBlendMode *)blendMode;
+-(CCTriangle *)bufferTriangles:(NSUInteger)count withState:(CCRenderState *)renderState;
+
+-(void)flush;
 
 @end

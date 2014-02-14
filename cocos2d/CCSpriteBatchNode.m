@@ -599,7 +599,7 @@ const NSUInteger defaultCapacity = 0;
 	// XXX: updateTransform will update the textureAtlas too, using updateQuad.
 	// XXX: so, it should be AFTER the insertQuad
 	[sprite setDirty:YES];
-	[sprite updateTransform];
+//	[sprite updateTransform];
 }
 
 -(void) updateQuadFromSprite:(CCSprite*)sprite quadIndex:(NSUInteger)index
@@ -620,7 +620,7 @@ const NSUInteger defaultCapacity = 0;
 	[sprite setDirty:YES];
 	
 	// UpdateTransform updates the textureAtlas quad
-	[sprite updateTransform];
+//	[sprite updateTransform];
 }
 
 

@@ -298,6 +298,38 @@ static CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
 @end
 
 
+//MARK: Render Command.
+@interface CCRenderCommand : NSObject
+@property(nonatomic, readonly) NSDictionary *renderOptions;
+@end
+
+
+@implementation CCRenderCommand {
+	CCTriangle _triangles[2];
+}
+
+-(instancetype)initWithRenderOptions:(NSDictionary *)renderOptions
+{
+	if((self = [super init])){
+		_renderOptions = renderOptions;
+	}
+	
+	return self;
+}
+
+-(GLint)count
+{
+	#warning TODO
+	return 2;
+}
+
+-(CCTriangle *)triangles
+{
+	return _triangles;
+}
+
+@end
+
 //MARK: Render Queue
 @implementation CCRenderer {
 	NSDictionary *_renderOptions;
@@ -309,6 +341,8 @@ static CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
 	
 	CCGLProgram *_shader;
 	NSDictionary *_uniforms;
+	
+	NSMutableArray *_queue;
 }
 
 -(void)invalidateState
@@ -323,6 +357,7 @@ static CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
 -(instancetype)init
 {
 	if((self = [super init])){
+		_queue = [NSMutableArray array];
 	}
 	
 	return self;
@@ -332,9 +367,9 @@ static CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
 {
 	// TODO should cache enable status, but need to deal with nil.
 	if(blendOptions == CCBLEND_DISABLED_OPTIONS){
-		glDisable(GL_BLEND);
+		if(_blendOptions != CCBLEND_DISABLED_OPTIONS) glDisable(GL_BLEND);
 	} else {
-		glEnable(GL_BLEND);
+		if(_blendOptions == nil || _blendOptions == CCBLEND_DISABLED_OPTIONS) glEnable(GL_BLEND);
 		
 		glBlendFuncSeparate(
 			[blendOptions[CCBlendFuncSrcColor] unsignedIntValue],
@@ -352,10 +387,9 @@ static CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
 	_blendOptions = blendOptions;
 }
 
--(void)setRenderState:(CCRenderState *)renderState
+-(BOOL)setRenderOptions:(NSDictionary *)renderOptions
 {
-	NSDictionary *renderOptions = renderState.options;
-	if(renderOptions == _renderOptions) return;
+	if(renderOptions == _renderOptions) return NO;
 	
 	NSDictionary *blendOptions = [(CCBlendMode *)renderOptions[CCRenderStateBlendMode] options];
 	if(blendOptions != _blendOptions) [self setBlendOptions:blendOptions];
@@ -372,6 +406,43 @@ static CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
 			_texture = texture;
 		}
 	}
+	
+	_renderOptions = renderOptions;
+	return YES;
+}
+
+-(CCTriangle *)bufferTriangles:(NSUInteger)count withState:(CCRenderState *)renderState;
+{
+	NSAssert(count == 2, @"TODO Temporary restriction.");
+	
+	CCRenderCommand *command = [[CCRenderCommand alloc] initWithRenderOptions:renderState.options];
+	[_queue addObject:command];
+	
+	#warning TODO temporary
+	[self setRenderOptions:command.renderOptions];
+	
+	return command.triangles;
+}
+
+-(void)flush
+{
+	NSAssert(_queue.count == 1, @"TODO Temparary restriction.");
+	
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
+	for(CCRenderCommand *command in _queue){
+		[self setRenderOptions:command.renderOptions];
+		
+		CCVertex *verts = (CCVertex *)command.triangles;
+		long foo1 = offsetof(CCVertex, position);
+		long foo2 = offsetof(CCVertex, texCoord1);
+		long foo3 = offsetof(CCVertex, color);
+		glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (GLvoid *)verts + foo1);
+		glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (GLvoid *)verts + foo2);
+		glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (GLvoid *)verts + foo3);
+		glDrawArrays(GL_TRIANGLES, 0, 3*command.count);
+	}
+	
+	[_queue removeAllObjects];
 }
 
 @end

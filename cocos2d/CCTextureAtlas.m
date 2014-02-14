@@ -451,109 +451,109 @@
 
 #pragma mark TextureAtlas - Drawing
 
--(void) drawQuads
-{
-	[self drawNumberOfQuads: _totalQuads fromIndex:0];
-}
-
--(void) drawNumberOfQuads: (NSUInteger) n
-{
-	[self drawNumberOfQuads:n fromIndex:0];
-}
-
--(void) drawNumberOfQuads: (NSUInteger) n fromIndex: (NSUInteger) start
-{
-	ccGLBindTexture2D( [_texture name] );
-
-#if CC_TEXTURE_ATLAS_USE_VAO
-
-	//
-	// Using VBO and VAO
-	//
-	// XXX: update is done in draw... perhaps it should be done in a timer
-	if (_dirty) {
-
-        ccGLBindVAO(0);
-        
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _capacity * 6, _indices, GL_STATIC_DRAW);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-        
-        
-		glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-		// option 1: subdata
-//		glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * n , &_quads[start] );
-		
-		// option 2: data
-//		glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * (n-start), &_quads[start], GL_DYNAMIC_DRAW);
-		
-		// option 3: orphaning + glMapBuffer
-		glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * (n-start), nil, GL_DYNAMIC_DRAW);
-		void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-		memcpy(buf, _quads, sizeof(_quads[0])* (n-start));
-		glUnmapBuffer(GL_ARRAY_BUFFER);		
-		
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-		_dirty = NO;
-	}
-
-	ccGLBindVAO( _VAOname );
-
-#if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
-	glDrawElements(GL_TRIANGLE_STRIP, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])) );
-#else
-	glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])) );
-#endif // CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
-	
-//	glBindVertexArray(0);
-	
-
-#else // ! CC_TEXTURE_ATLAS_USE_VAO
-	
-	//
-	// Using VBO without VAO
-	//
-
-#define kQuadSize sizeof(_quads[0].bl)
-	glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-    
-	// XXX: update is done in draw... perhaps it should be done in a timer
-	if (_dirty) {
-//		glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * n , &_quads[start] );
-
-		// Apparently this is faster... need to do performance tests
-		glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * n, _quads, GL_DYNAMIC_DRAW);
-		_dirty = NO;
-	}
-
-	ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
-
-	// vertices
-	glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, vertices));
-	
-	// colors
-	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, colors));
-	
-	// tex coords
-	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, texCoords));
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-
-#if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
-	glDrawElements(GL_TRIANGLE_STRIP, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])) );
-#else
-	glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])) );
-#endif // CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-#endif // CC_TEXTURE_ATLAS_USE_VAO
-
-	CC_INCREMENT_GL_DRAWS(1);
-
-	CHECK_GL_ERROR_DEBUG();
-}
+//-(void) drawQuads
+//{
+//	[self drawNumberOfQuads: _totalQuads fromIndex:0];
+//}
+//
+//-(void) drawNumberOfQuads: (NSUInteger) n
+//{
+//	[self drawNumberOfQuads:n fromIndex:0];
+//}
+//
+//-(void) drawNumberOfQuads: (NSUInteger) n fromIndex: (NSUInteger) start
+//{
+//	ccGLBindTexture2D( [_texture name] );
+//
+//#if CC_TEXTURE_ATLAS_USE_VAO
+//
+//	//
+//	// Using VBO and VAO
+//	//
+//	// XXX: update is done in draw... perhaps it should be done in a timer
+//	if (_dirty) {
+//
+//        ccGLBindVAO(0);
+//        
+//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
+//        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _capacity * 6, _indices, GL_STATIC_DRAW);
+//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+//        
+//        
+//		glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
+//		// option 1: subdata
+////		glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * n , &_quads[start] );
+//		
+//		// option 2: data
+////		glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * (n-start), &_quads[start], GL_DYNAMIC_DRAW);
+//		
+//		// option 3: orphaning + glMapBuffer
+//		glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * (n-start), nil, GL_DYNAMIC_DRAW);
+//		void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+//		memcpy(buf, _quads, sizeof(_quads[0])* (n-start));
+//		glUnmapBuffer(GL_ARRAY_BUFFER);		
+//		
+//		glBindBuffer(GL_ARRAY_BUFFER, 0);
+//
+//		_dirty = NO;
+//	}
+//
+//	ccGLBindVAO( _VAOname );
+//
+//#if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
+//	glDrawElements(GL_TRIANGLE_STRIP, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])) );
+//#else
+//	glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])) );
+//#endif // CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
+//	
+////	glBindVertexArray(0);
+//	
+//
+//#else // ! CC_TEXTURE_ATLAS_USE_VAO
+//	
+//	//
+//	// Using VBO without VAO
+//	//
+//
+//#define kQuadSize sizeof(_quads[0].bl)
+//	glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
+//    
+//	// XXX: update is done in draw... perhaps it should be done in a timer
+//	if (_dirty) {
+////		glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * n , &_quads[start] );
+//
+//		// Apparently this is faster... need to do performance tests
+//		glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * n, _quads, GL_DYNAMIC_DRAW);
+//		_dirty = NO;
+//	}
+//
+//	ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
+//
+//	// vertices
+//	glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, vertices));
+//	
+//	// colors
+//	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, colors));
+//	
+//	// tex coords
+//	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, texCoords));
+//
+//	glBindBuffer(GL_ARRAY_BUFFER, 0);
+//
+//	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
+//
+//#if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
+//	glDrawElements(GL_TRIANGLE_STRIP, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])) );
+//#else
+//	glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])) );
+//#endif // CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
+//
+//	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+//
+//#endif // CC_TEXTURE_ATLAS_USE_VAO
+//
+//	CC_INCREMENT_GL_DRAWS(1);
+//
+//	CHECK_GL_ERROR_DEBUG();
+//}
 @end

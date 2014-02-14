@@ -497,44 +497,46 @@ const char kCCProgressTextureCoords = 0x4b;
 	return CGPointZero;
 }
 
--(void) draw:(GLKMatrix4)transform
+-(void)draw:(CCRenderer *)renderer transform:(GLKMatrix4)transform
 {
-	if( ! _vertexData || ! _sprite)
-		return;
-  
-	CC_NODE_DRAW_SETUP(transform);
-  
-	ccGLBlendFunc( _sprite.blendFunc.src, _sprite.blendFunc.dst );
-  
-	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );
-  
-	ccGLBindTexture2D( _sprite.texture.name );
-  
-  glVertexAttribPointer( kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]) , &_vertexData[0].vertices);
-  glVertexAttribPointer( kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]), &_vertexData[0].texCoords);
-  glVertexAttribPointer( kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(_vertexData[0]), &_vertexData[0].colors);
-  
-	if(_type == CCProgressNodeTypeRadial)
-	{
-		glDrawArrays(GL_TRIANGLE_FAN, 0, _vertexDataCount);
-	} 
-	else if (_type == CCProgressNodeTypeBar)
-	{
-		if (!_reverseDirection)
-		{
-			glDrawArrays(GL_TRIANGLE_STRIP, 0, _vertexDataCount);
-		}
-		else
-		{
-			glDrawArrays(GL_TRIANGLE_STRIP, 0, _vertexDataCount/2);
-			glDrawArrays(GL_TRIANGLE_STRIP, 4, _vertexDataCount/2);
-			
-			// 2 draw calls
-			CC_INCREMENT_GL_DRAWS(1);
-		}
-	}
-	CC_INCREMENT_GL_DRAWS(1);
-  
+	#warning TODO
+//	
+//	if( ! _vertexData || ! _sprite)
+//		return;
+//  
+//	CC_NODE_DRAW_SETUP(transform);
+//  
+//	ccGLBlendFunc( _sprite.blendFunc.src, _sprite.blendFunc.dst );
+//  
+//	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );
+//  
+//	ccGLBindTexture2D( _sprite.texture.name );
+//  
+//  glVertexAttribPointer( kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]) , &_vertexData[0].vertices);
+//  glVertexAttribPointer( kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]), &_vertexData[0].texCoords);
+//  glVertexAttribPointer( kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(_vertexData[0]), &_vertexData[0].colors);
+//  
+//	if(_type == CCProgressNodeTypeRadial)
+//	{
+//		glDrawArrays(GL_TRIANGLE_FAN, 0, _vertexDataCount);
+//	} 
+//	else if (_type == CCProgressNodeTypeBar)
+//	{
+//		if (!_reverseDirection)
+//		{
+//			glDrawArrays(GL_TRIANGLE_STRIP, 0, _vertexDataCount);
+//		}
+//		else
+//		{
+//			glDrawArrays(GL_TRIANGLE_STRIP, 0, _vertexDataCount/2);
+//			glDrawArrays(GL_TRIANGLE_STRIP, 4, _vertexDataCount/2);
+//			
+//			// 2 draw calls
+//			CC_INCREMENT_GL_DRAWS(1);
+//		}
+//	}
+//	CC_INCREMENT_GL_DRAWS(1);
+//  
 }
 
 @end

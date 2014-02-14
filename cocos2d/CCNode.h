@@ -34,7 +34,7 @@
 #import "CCScheduler.h"
 #import "CCRenderer.h"
 
-#import <GLKit/GLKMatrix4.h>
+#import <GLKit/GLKit.h>
 
 @class CCScene;
 @class CCGLProgram;

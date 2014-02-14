@@ -434,16 +434,17 @@ typedef void (*GLLogFunction) (GLuint program,
 		glUniformMatrix4fv( (GLint)location, (GLsizei)numberOfMatrices, GL_FALSE, matrixArray);
 }
 
--(void) setUniformsForBuiltins:(GLKMatrix4)matrixMV
+-(void) setUniformsForBuiltins:(GLKMatrix4)unused
 {
+#warning TODO need to change how shaders ard bound and how globals/uniforms are set.
 	CCDirector *director = [CCDirector sharedDirector];
 	GLKMatrix4 matrixP = director.projectionMatrix;
+	GLKMatrix4 matrixMV = GLKMatrix4Identity;
 	
 	if( _flags.usesMVP) {
 //		kmMat4 matrixMVP;
 //		kmMat4Multiply(&matrixMVP, &matrixP, &matrixMV);
-		GLKMatrix4 matrixMVP = GLKMatrix4Multiply(matrixP, matrixMV);
-		[self setUniformLocation:_uniforms[kCCUniformMVPMatrix] withMatrix4fv:matrixMVP.m count:1];
+		[self setUniformLocation:_uniforms[kCCUniformMVPMatrix] withMatrix4fv:matrixP.m count:1];
 	}
 
 	if( _flags.usesMV) {
@@ -451,19 +452,19 @@ typedef void (*GLLogFunction) (GLuint program,
 		[self setUniformLocation:_uniforms[ kCCUniformMVMatrix] withMatrix4fv: matrixMV.m count:1];
 	}
 
-	if(_flags.usesTime){
-		// This doesn't give the most accurate global time value.
-		// Cocos2D doesn't store a high precision time value, so this will have to do.
-		// Getting Mach time per frame per shader using time could be extremely expensive.
-		CCTime time = director.totalFrames*director.animationInterval;
-		
-		[self setUniformLocation:_uniforms[kCCUniformTime] withF1:time/10.0 f2:time f3:time*2 f4:time*4];
-		[self setUniformLocation:_uniforms[kCCUniformSinTime] withF1:sinf(time/8.0) f2:sinf(time/4.0) f3:sinf(time/2.0) f4:sinf(time)];
-		[self setUniformLocation:_uniforms[kCCUniformCosTime] withF1:cosf(time/8.0) f2:cosf(time/4.0) f3:cosf(time/2.0) f4:cosf(time)];
-	}
-	
-	if(_flags.usesRandom)
-		[self setUniformLocation:_uniforms[kCCUniformRandom01] withF1:CCRANDOM_0_1() f2:CCRANDOM_0_1() f3:CCRANDOM_0_1() f4:CCRANDOM_0_1()];
+//	if(_flags.usesTime){
+//		// This doesn't give the most accurate global time value.
+//		// Cocos2D doesn't store a high precision time value, so this will have to do.
+//		// Getting Mach time per frame per shader using time could be extremely expensive.
+//		CCTime time = director.totalFrames*director.animationInterval;
+//		
+//		[self setUniformLocation:_uniforms[kCCUniformTime] withF1:time/10.0 f2:time f3:time*2 f4:time*4];
+//		[self setUniformLocation:_uniforms[kCCUniformSinTime] withF1:sinf(time/8.0) f2:sinf(time/4.0) f3:sinf(time/2.0) f4:sinf(time)];
+//		[self setUniformLocation:_uniforms[kCCUniformCosTime] withF1:cosf(time/8.0) f2:cosf(time/4.0) f3:cosf(time/2.0) f4:cosf(time)];
+//	}
+//	
+//	if(_flags.usesRandom)
+//		[self setUniformLocation:_uniforms[kCCUniformRandom01] withF1:CCRANDOM_0_1() f2:CCRANDOM_0_1() f3:CCRANDOM_0_1() f4:CCRANDOM_0_1()];
 }
 
 #pragma mark -

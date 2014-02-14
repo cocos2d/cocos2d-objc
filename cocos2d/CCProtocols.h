@@ -28,7 +28,7 @@
 #import "ccTypes.h"
 #import "CCColor.h"
 
-#import <GLKit/GLKMatrix4.h>
+#import <GLKit/GLKit.h>
 
 
 @class CCTexture;

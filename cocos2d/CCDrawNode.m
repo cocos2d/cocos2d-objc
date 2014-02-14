@@ -185,14 +185,15 @@ static inline ccTex2F __t(ccVertex2F v )
 	CHECK_GL_ERROR();
 }
 
--(void)draw:(GLKMatrix4)transform
+-(void)draw:(CCRenderer *)renderer transform:(GLKMatrix4)transform
 {
-	ccGLBlendFunc(_blendFunc.src, _blendFunc.dst);
-	
-	[_shaderProgram use];
-	[_shaderProgram setUniformsForBuiltins:transform];
-	
-	[self render];	
+	#warning TODO
+//	ccGLBlendFunc(_blendFunc.src, _blendFunc.dst);
+//	
+//	[_shaderProgram use];
+//	[_shaderProgram setUniformsForBuiltins:transform];
+//	
+//	[self render];	
 }
 
 #pragma mark Immediate Mode

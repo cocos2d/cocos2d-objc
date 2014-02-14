@@ -116,30 +116,31 @@
 	}
 }
 
-- (void) draw:(GLKMatrix4)transform
+-(void)draw:(CCRenderer *)renderer transform:(GLKMatrix4)transform
 {
-    CGSize size = self.contentSizeInPoints;
-    
-    _squareVertices[1].x = size.width;
-	_squareVertices[2].y = size.height;
-	_squareVertices[3].x = size.width;
-	_squareVertices[3].y = size.height;
-    
-	CC_NODE_DRAW_SETUP(transform);
-
-	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_Color );
-
-	//
-	// Attributes
-	//
-	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, _squareVertices);
-	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_FLOAT, GL_FALSE, 0, _squareColors);
-
-	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
-
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-	
-	CC_INCREMENT_GL_DRAWS(1);
+	#warning TODO
+//    CGSize size = self.contentSizeInPoints;
+//    
+//    _squareVertices[1].x = size.width;
+//	_squareVertices[2].y = size.height;
+//	_squareVertices[3].x = size.width;
+//	_squareVertices[3].y = size.height;
+//    
+//	CC_NODE_DRAW_SETUP(transform);
+//
+//	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_Color );
+//
+//	//
+//	// Attributes
+//	//
+//	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, _squareVertices);
+//	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_FLOAT, GL_FALSE, 0, _squareColors);
+//
+//	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
+//
+//	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+//	
+//	CC_INCREMENT_GL_DRAWS(1);
 }
 
 #pragma mark Protocols

@@ -115,15 +115,16 @@
 }
 
 #pragma mark CCAtlasNode - draw
-- (void) draw:(GLKMatrix4)transform
+-(void)draw:(CCRenderer *)renderer transform:(GLKMatrix4)transform
 {
-	CC_NODE_DRAW_SETUP(transform);
-
-	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
-	
-	[_shaderProgram setUniformLocation:_uniformColor with4fv:&_displayColor count:1];
-
-	[_textureAtlas drawNumberOfQuads:_quadsToDraw fromIndex:0];
+	#warning TODO
+//	CC_NODE_DRAW_SETUP(transform);
+//
+//	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
+//	
+//	[_shaderProgram setUniformLocation:_uniformColor with4fv:&_displayColor count:1];
+//
+//	[_textureAtlas drawNumberOfQuads:_quadsToDraw fromIndex:0];
 }
 
 #pragma mark CCAtlasNode - RGBA protocol

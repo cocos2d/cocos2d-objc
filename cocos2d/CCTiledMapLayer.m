@@ -425,7 +425,7 @@ int compareInts (const void * a, const void * b);
 
 	[tile setAtlasIndex:indexForZ];
 	[tile setDirty:YES];
-	[tile updateTransform];
+//	[tile updateTransform];
 	_tiles[z] = gid;
 
 	return tile;

@@ -34,7 +34,7 @@
 #import "CCResponderManager.h"
 #import "CCRenderer.h"
 
-#import <GLKit/GLKMatrix4.h>
+#import <GLKit/GLKit.h>
 
 /**
  Possible OpenGL projections used by director

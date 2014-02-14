@@ -680,7 +680,7 @@
 	CGPoint diff = ccpSub(currentPos, _previousPos);
 	_startPos = ccpAdd( _startPos, diff);
 	CGPoint newPos =  ccpAdd( _startPos, ccpMult(_positionDelta, t) );
-	[_target setPosition: newPos];
+	[(CCNode *)_target setPosition: newPos];
 	_previousPos = newPos;
 #else
 	[node setPosition: ccpAdd( _startPos, ccpMult(_positionDelta, t))];

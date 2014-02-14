@@ -436,23 +436,24 @@
 }
 
 // overriding draw method
--(void) draw:(GLKMatrix4)transform
+-(void)draw:(CCRenderer *)renderer transform:(GLKMatrix4)transform
 {
-	NSAssert(!_batchNode,@"draw should not be called when added to a particleBatchNode");
-
-	CC_NODE_DRAW_SETUP(transform);
-
-	ccGLBindTexture2D( [_texture name] );
-	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
-
-	NSAssert( _particleIdx == _particleCount, @"Abnormal error in particle quad");
-
-	ccGLBindVAO( _VAOname );
-	glDrawElements(GL_TRIANGLES, (GLsizei) _particleIdx*6, GL_UNSIGNED_SHORT, 0);
-	
-	CC_INCREMENT_GL_DRAWS(1);
-
-	CHECK_GL_ERROR_DEBUG();
+	#warning TODO
+//	NSAssert(!_batchNode,@"draw should not be called when added to a particleBatchNode");
+//
+//	CC_NODE_DRAW_SETUP(transform);
+//
+//	ccGLBindTexture2D( [_texture name] );
+//	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
+//
+//	NSAssert( _particleIdx == _particleCount, @"Abnormal error in particle quad");
+//
+//	ccGLBindVAO( _VAOname );
+//	glDrawElements(GL_TRIANGLES, (GLsizei) _particleIdx*6, GL_UNSIGNED_SHORT, 0);
+//	
+//	CC_INCREMENT_GL_DRAWS(1);
+//
+//	CHECK_GL_ERROR_DEBUG();
 }
 
 -(void) setBatchNode:(CCParticleBatchNode *)batchNode

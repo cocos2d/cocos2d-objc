@@ -265,29 +265,29 @@
 
 -(void) setBatchNode:(CCSpriteBatchNode *)batchNode
 {
-	_batchNode = batchNode; // weak reference
-
-	// self render
-	if( ! batchNode ) {
-		_atlasIndex = CCSpriteIndexNotInitialized;
-		_textureAtlas = nil;
-		_dirty = _recursiveDirty = NO;
-
-		float x1 = _offsetPosition.x;
-		float y1 = _offsetPosition.y;
-		float x2 = x1 + _rect.size.width;
-		float y2 = y1 + _rect.size.height;
-		_quad.bl.vertices = (ccVertex3F) { x1, y1, 0 };
-		_quad.br.vertices = (ccVertex3F) { x2, y1, 0 };
-		_quad.tl.vertices = (ccVertex3F) { x1, y2, 0 };
-		_quad.tr.vertices = (ccVertex3F) { x2, y2, 0 };
-
-	} else {
-
-		// using batch
-		_transformToBatch = CGAffineTransformIdentity;
-		_textureAtlas = [batchNode textureAtlas]; // weak ref
-	}
+//	_batchNode = batchNode; // weak reference
+//
+//	// self render
+//	if( ! batchNode ) {
+//		_atlasIndex = CCSpriteIndexNotInitialized;
+//		_textureAtlas = nil;
+//		_dirty = _recursiveDirty = NO;
+//
+//		float x1 = _offsetPosition.x;
+//		float y1 = _offsetPosition.y;
+//		float x2 = x1 + _rect.size.width;
+//		float y2 = y1 + _rect.size.height;
+//		_quad.bl.vertices = (ccVertex3F) { x1, y1, 0 };
+//		_quad.br.vertices = (ccVertex3F) { x2, y1, 0 };
+//		_quad.tl.vertices = (ccVertex3F) { x1, y2, 0 };
+//		_quad.tr.vertices = (ccVertex3F) { x2, y2, 0 };
+//
+//	} else {
+//
+//		// using batch
+//		_transformToBatch = CGAffineTransformIdentity;
+//		_textureAtlas = [batchNode textureAtlas]; // weak ref
+//	}
 }
 
 -(void) setTextureRect:(CGRect)rect
@@ -416,90 +416,103 @@
 	}
 }
 
--(void)updateTransform
-{
-	NSAssert( _batchNode, @"updateTransform is only valid when CCSprite is being rendered using an CCSpriteBatchNode");
-
-	// recaculate matrix only if it is dirty
-	if( self.dirty || self->_physicsBody ) {
-
-		// If it is not visible, or one of its ancestors is not visible, then do nothing:
-		if( !_visible || ( _parent && _parent != _batchNode && ((CCSprite*)_parent)->_shouldBeHidden) ) {
-			_quad.br.vertices = _quad.tl.vertices = _quad.tr.vertices = _quad.bl.vertices = (ccVertex3F){0,0,0};
-			_shouldBeHidden = YES;
-		}
-
-		else {
-
-			_shouldBeHidden = NO;
-
-			if( ! _parent || _parent == _batchNode )
-				_transformToBatch = [self nodeToParentTransform];
-
-			else {
-				NSAssert( [_parent isKindOfClass:[CCSprite class]], @"Logic error in CCSprite. Parent must be a CCSprite");
-
-				_transformToBatch = CGAffineTransformConcat( [self nodeToParentTransform] , ((CCSprite*)_parent)->_transformToBatch );
-			}
-
-			//
-			// calculate the Quad based on the Affine Matrix
-			//
-
-			CGSize size = _rect.size;
-
-			float x1 = _offsetPosition.x;
-			float y1 = _offsetPosition.y;
-
-			float x2 = x1 + size.width;
-			float y2 = y1 + size.height;
-			float x = _transformToBatch.tx;
-			float y = _transformToBatch.ty;
-
-			float cr = _transformToBatch.a;
-			float sr = _transformToBatch.b;
-			float cr2 = _transformToBatch.d;
-			float sr2 = -_transformToBatch.c;
-			float ax = x1 * cr - y1 * sr2 + x;
-			float ay = x1 * sr + y1 * cr2 + y;
-
-			float bx = x2 * cr - y1 * sr2 + x;
-			float by = x2 * sr + y1 * cr2 + y;
-
-			float cx = x2 * cr - y2 * sr2 + x;
-			float cy = x2 * sr + y2 * cr2 + y;
-
-			float dx = x1 * cr - y2 * sr2 + x;
-			float dy = x1 * sr + y2 * cr2 + y;
-
-			_quad.bl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), _vertexZ };
-			_quad.br.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _vertexZ };
-			_quad.tl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _vertexZ };
-			_quad.tr.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _vertexZ };
-		}
-
-		[_textureAtlas updateQuad:&_quad atIndex:_atlasIndex];
-		_dirty = _recursiveDirty = NO;
-	}
-
-	// recursively iterate over children
-	if( _hasChildren )
-		[_children makeObjectsPerformSelector:@selector(updateTransform)];
-
-#if CC_SPRITE_DEBUG_DRAW
-	// draw bounding box
-	CGPoint vertices[4] = {
-		ccp( _quad.bl.vertices.x, _quad.bl.vertices.y ),
-		ccp( _quad.br.vertices.x, _quad.br.vertices.y ),
-		ccp( _quad.tr.vertices.x, _quad.tr.vertices.y ),
-		ccp( _quad.tl.vertices.x, _quad.tl.vertices.y ),
-	};
-	ccDrawPoly(vertices, 4, YES);
-#endif // CC_SPRITE_DEBUG_DRAW
-
-}
+//-(void)updateTransform
+//{
+//	NSAssert( _batchNode, @"updateTransform is only valid when CCSprite is being rendered using an CCSpriteBatchNode");
+//
+//	// recaculate matrix only if it is dirty
+//	if( self.dirty || self->_physicsBody ) {
+//
+//		// If it is not visible, or one of its ancestors is not visible, then do nothing:
+//		if( !_visible || ( _parent && _parent != _batchNode && ((CCSprite*)_parent)->_shouldBeHidden) ) {
+//			_quad.br.vertices = _quad.tl.vertices = _quad.tr.vertices = _quad.bl.vertices = (ccVertex3F){0,0,0};
+//			_shouldBeHidden = YES;
+//		}
+//
+//		else {
+//
+//			_shouldBeHidden = NO;
+//
+//			if( ! _parent || _parent == _batchNode )
+//				_transformToBatch = [self nodeToParentTransform];
+//
+//			else {
+//				NSAssert( [_parent isKindOfClass:[CCSprite class]], @"Logic error in CCSprite. Parent must be a CCSprite");
+//
+//				_transformToBatch = CGAffineTransformConcat( [self nodeToParentTransform] , ((CCSprite*)_parent)->_transformToBatch );
+//			}
+//
+//			//
+//			// calculate the Quad based on the Affine Matrix
+//			//
+//
+//			CGSize size = _rect.size;
+//
+//			float x1 = _offsetPosition.x;
+//			float y1 = _offsetPosition.y;
+//
+//			float x2 = x1 + size.width;
+//			float y2 = y1 + size.height;
+//			float x = _transformToBatch.tx;
+//			float y = _transformToBatch.ty;
+//
+//			float cr = _transformToBatch.a;
+//			float sr = _transformToBatch.b;
+//			float cr2 = _transformToBatch.d;
+//			float sr2 = -_transformToBatch.c;
+//			float ax = x1 * cr - y1 * sr2 + x;
+//			float ay = x1 * sr + y1 * cr2 + y;
+//
+//			float bx = x2 * cr - y1 * sr2 + x;
+//			float by = x2 * sr + y1 * cr2 + y;
+//
+//			float cx = x2 * cr - y2 * sr2 + x;
+//			float cy = x2 * sr + y2 * cr2 + y;
+//
+//			float dx = x1 * cr - y2 * sr2 + x;
+//			float dy = x1 * sr + y2 * cr2 + y;
+//
+//			_quad.bl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), _vertexZ };
+//			_quad.br.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _vertexZ };
+//			_quad.tl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _vertexZ };
+//			_quad.tr.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _vertexZ };
+//		}
+//
+//		[_textureAtlas updateQuad:&_quad atIndex:_atlasIndex];
+//		_dirty = _recursiveDirty = NO;
+//	}
+//
+//	// recursively iterate over children
+//	if( _hasChildren )
+//		[_children makeObjectsPerformSelector:@selector(updateTransform)];
+//
+//#if CC_SPRITE_DEBUG_DRAW
+//	// draw bounding box
+//	CGPoint vertices[4] = {
+//		ccp( _quad.bl.vertices.x, _quad.bl.vertices.y ),
+//		ccp( _quad.br.vertices.x, _quad.br.vertices.y ),
+//		ccp( _quad.tr.vertices.x, _quad.tr.vertices.y ),
+//		ccp( _quad.tl.vertices.x, _quad.tl.vertices.y ),
+//	};
+//	ccDrawPoly(vertices, 4, YES);
+//#endif // CC_SPRITE_DEBUG_DRAW
+//
+//}
 
 #pragma mark CCSprite - draw
+
+// TODO temporary crap.
+//static GLKVector3 AB(ccVertex3F v){return GLKVector3Make(v.x, v.y, v.z);}
+//static ccVertex3F BA(GLKVector3 v){return (ccVertex3F){v.x, v.y, v.z};}
+static CCVertex Transform(GLKMatrix4 transform, ccV3F_C4B_T2F v)
+{
+	return (CCVertex){
+		GLKMatrix4MultiplyAndProjectVector3(transform, GLKVector3Make(v.vertices.x, v.vertices.y, v.vertices.y)),
+		GLKVector2Make(v.texCoords.u, v.texCoords.v),
+		GLKVector2Make(5.0f, 6.0f),
+		GLKVector4MultiplyScalar(GLKVector4Make(v.colors.r, v.colors.g, v.colors.b, v.colors.a), 1.0/255.0),
+	};
+}
 
 -(void)draw:(CCRenderer *)renderer transform:(GLKMatrix4)transform;
 {
@@ -507,63 +520,37 @@
 
 //	NSAssert(!_batchNode, @"If CCSprite is being rendered by CCSpriteBatchNode, CCSprite#draw SHOULD NOT be called");
 
-	[renderer setRenderState:[CCRenderState renderStateWithOptions:@{
+	CCRenderState *renderState = [CCRenderState renderStateWithOptions:@{
 		CCRenderStateBlendMode: [CCBlendMode blendModeWithOptions:@{
 			CCBlendFuncSrcColor: @(_blendFunc.src),
 			CCBlendFuncDstColor: @(_blendFunc.dst),
 		}],
 		CCRenderStateShader: _shaderProgram,
 		CCRenderStateUniforms: @{CCMainTexture: (_texture ?: [NSNull null])},
-	}]];
-
+	}];
+	
+	CCTriangle *triangles = [renderer bufferTriangles:2 withState:renderState];
+	
+	#warning TODO temporary
 	[_shaderProgram setUniformsForBuiltins:transform];
+	
+	
 	
 	//
 	// Attributes
 	//
-
-	ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
-
-#define kQuadSize sizeof(_quad.bl)
-	long offset = (long)&_quad;
-
-	// vertex
-	NSInteger diff = offsetof( ccV3F_C4B_T2F, vertices);
-	glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
-
-	// texCoods
-	diff = offsetof( ccV3F_C4B_T2F, texCoords);
-	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
-
-	// color
-	diff = offsetof( ccV3F_C4B_T2F, colors);
-	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
-
-
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	
+	// TODO temporary code
+	CCVertex tl = Transform(transform, _quad.tl);
+	CCVertex bl = Transform(transform, _quad.bl);
+	CCVertex tr = Transform(transform, _quad.tr);
+	CCVertex br = Transform(transform, _quad.br);
+	triangles[0] = (CCTriangle){tl, bl, tr};
+	triangles[1] = (CCTriangle){bl, tr, br};
+	
+	[renderer flush];
 
 	CHECK_GL_ERROR_DEBUG();
-
-
-#if CC_SPRITE_DEBUG_DRAW == 1
-	// draw bounding box
-	CGPoint vertices[4]={
-		ccp(_quad.tl.vertices.x,_quad.tl.vertices.y),
-		ccp(_quad.bl.vertices.x,_quad.bl.vertices.y),
-		ccp(_quad.br.vertices.x,_quad.br.vertices.y),
-		ccp(_quad.tr.vertices.x,_quad.tr.vertices.y),
-	};
-	ccDrawPoly(vertices, 4, YES);
-#elif CC_SPRITE_DEBUG_DRAW == 2
-	// draw texture box
-	CGSize s = self.textureRect.size;
-	CGPoint offsetPix = self.offsetPosition;
-	CGPoint vertices[4] = {
-		ccp(offsetPix.x,offsetPix.y), ccp(offsetPix.x+s.width,offsetPix.y),
-		ccp(offsetPix.x+s.width,offsetPix.y+s.height), ccp(offsetPix.x,offsetPix.y+s.height)
-	};
-	ccDrawPoly(vertices, 4, YES);
-#endif // CC_SPRITE_DEBUG_DRAW
 
 	CC_INCREMENT_GL_DRAWS(1);
 

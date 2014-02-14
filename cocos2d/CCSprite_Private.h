@@ -40,12 +40,12 @@
 @property (nonatomic,readwrite,unsafe_unretained) CCTextureAtlas *textureAtlas;
 
 // Weak reference to the CCSpriteBatchNode that renders the CCSprite.
-@property (nonatomic,readwrite,unsafe_unretained) CCSpriteBatchNode *batchNode;
+@property (nonatomic,readwrite,unsafe_unretained) CCSpriteBatchNode *batchNode __deprecated;
 
 #pragma mark CCSprite - BatchNode
 
 // Updates the quad according the the rotation, position, scale values.
--(void) updateTransform;
+//-(void) updateTransform;
 
 /* 
  Set the vertex rect. It will be called internally by setTextureRect.

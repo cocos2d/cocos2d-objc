@@ -414,11 +414,10 @@ static CCDirector *_sharedDirector = nil;
 	CGSize glSize = __view.bounds.size;
 	GLKVector3 clipCoord = GLKVector3Make(2.0*uiPoint.x/glSize.width - 1.0, 2.0*uiPoint.y/glSize.height - 1.0, zClip);
 	
-	#warning GLKVector3 is supposed to be an anonymous union, why doesn't .y work?
-	clipCoord.v[1] *= self.flipY;
+	clipCoord.y *= self.flipY;
 	
 	GLKVector3 glCoord = GLKMatrix4MultiplyAndProjectVector3(invTransform, clipCoord);
-	return ccp(glCoord.v[0], glCoord.v[1]);
+	return ccp(glCoord.x, glCoord.y);
 }
 
 -(CGPoint)convertToUI:(CGPoint)glPoint
@@ -804,6 +803,7 @@ static CCDirector *_sharedDirector = nil;
 		[_drawsLabel visit:renderer parentTransform:GLKMatrix4Identity];
 		[_FPSLabel visit:renderer parentTransform:GLKMatrix4Identity];
 		[_SPFLabel visit:renderer parentTransform:GLKMatrix4Identity];
+		[renderer flush];
 	}
 	
 	__ccNumberOfDraws = 0;

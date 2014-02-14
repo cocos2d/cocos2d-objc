@@ -31,7 +31,7 @@
 #import "ccMacros.h"
 #import "Platforms/CCGL.h"
 
-#import <GLKit/GLKMatrix4.h>
+#import <GLKit/GLKit.h>
 
 enum {
 	kCCVertexAttrib_Position,
@@ -170,7 +170,7 @@ struct _hashUniformEntry;
 -(void) setUniformLocation:(GLint)location withMatrix4fv:(GLvoid*)matrix_array count:(NSUInteger)numberOfMatrix;
 
 /* will update the builtin uniforms if they are different than the previous call for this same shader program. */
--(void) setUniformsForBuiltins:(GLKMatrix4)modelView;
+-(void) setUniformsForBuiltins:(GLKMatrix4)unused __attribute((deprecated));
 
 /* returns the vertexShader error log */
 - (NSString *)vertexShaderLog;

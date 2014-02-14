@@ -242,25 +242,26 @@
     _nuPoints = 0;
 }
 
-- (void) draw:(GLKMatrix4)transform
+- (void) draw:(CCRenderer *)renderer transform:(GLKMatrix4)transform
 {
-    if(_nuPoints <= 1)
-        return;
-
-	CC_NODE_DRAW_SETUP(transform);
-
-	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );
-	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
-
-	ccGLBindTexture2D( [_texture name] );
-
-	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, _vertices);
-	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, _texCoords);
-	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, _colorPointer);
-
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, (GLsizei)_nuPoints*2);
-	
-	CC_INCREMENT_GL_DRAWS(1);
+	#warning TODO
+//    if(_nuPoints <= 1)
+//        return;
+//	
+//	CC_NODE_DRAW_SETUP(transform);
+//
+//	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );
+//	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
+//
+//	ccGLBindTexture2D( [_texture name] );
+//
+//	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, _vertices);
+//	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, _texCoords);
+//	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, _colorPointer);
+//
+//    glDrawArrays(GL_TRIANGLE_STRIP, 0, (GLsizei)_nuPoints*2);
+//	
+//	CC_INCREMENT_GL_DRAWS(1);
 }
 
 - (void)dealloc

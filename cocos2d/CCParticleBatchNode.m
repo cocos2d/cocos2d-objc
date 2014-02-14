@@ -133,20 +133,20 @@
 // override visit.
 // Don't call visit on it's children
 -(void) visit:(GLKMatrix4)parentTransform
-#warning TODO
 {
-	// CAREFUL:
-	// This visit is almost identical to CCNode#visit
-	// with the exception that it doesn't call visit on it's children
-	//
-	// The alternative is to have a void CCSprite#visit, but
-	// although this is less mantainable, is faster
-	//
-	if (!_visible)
-		return;
-
-	GLKMatrix4 transform = [self transform:parentTransform];
-	[self draw:transform];
+	#warning TODO
+//	// CAREFUL:
+//	// This visit is almost identical to CCNode#visit
+//	// with the exception that it doesn't call visit on it's children
+//	//
+//	// The alternative is to have a void CCSprite#visit, but
+//	// although this is less mantainable, is faster
+//	//
+//	if (!_visible)
+//		return;
+//
+//	GLKMatrix4 transform = [self transform:parentTransform];
+//	[self draw:transform];
 }
 
 // override addChild:
@@ -349,20 +349,21 @@
 }
 
 #pragma mark CCParticleBatchNode - Node overrides
--(void) draw:(GLKMatrix4)transform
+-(void)draw:(CCRenderer *)renderer transform:(GLKMatrix4)transform
 {
-	CC_PROFILER_STOP(@"CCParticleBatchNode - draw");
-
-	if( _textureAtlas.totalQuads == 0 )
-		return;
-
-	CC_NODE_DRAW_SETUP(transform);
-
-	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
-
-	[_textureAtlas drawQuads];
-
-	CC_PROFILER_STOP(@"CCParticleBatchNode - draw");
+	#warning TODO
+//	CC_PROFILER_STOP(@"CCParticleBatchNode - draw");
+//
+//	if( _textureAtlas.totalQuads == 0 )
+//		return;
+//
+//	CC_NODE_DRAW_SETUP(transform);
+//
+//	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
+//
+//	[_textureAtlas drawQuads];
+//
+//	CC_PROFILER_STOP(@"CCParticleBatchNode - draw");
 }
 
 #pragma mark CCParticleBatchNode - private
