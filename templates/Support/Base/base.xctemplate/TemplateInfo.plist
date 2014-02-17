@@ -177,6 +177,8 @@
 				</array>
 				<key>CLANG_ENABLE_OBJC_ARC</key>
 				<string>NO</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
 			</dict>
 			<key>BuildPhases</key>
 			<array>
