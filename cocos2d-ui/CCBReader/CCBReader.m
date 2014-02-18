@@ -98,6 +98,8 @@
     // Setup resolution scale and default container size
     animationManager.rootContainerSize = [CCDirector sharedDirector].designSize;
     
+    nodeMapping = [NSMutableDictionary dictionary];
+    
     return self;
 }
 
@@ -720,9 +722,16 @@ static inline float readFloat(CCBReader *self)
             [node setValue:ccbFile forKey:name];
         }
     }
+    else if(type == kCCBPropTypeNodeReference)
+    {
+        int uuid = readIntWithSign(self, NO);
+        CCNode * node = nodeMapping[@(uuid)];
+        NSAssert(node != nil, @"CCBReader: Failed to find node UUID:%i", uuid);
+        
+    }
     else
     {
-        NSLog(@"CCBReader: Failed to read property type %d",type);
+        NSAssert(false, @"CCBReader: Failed to read property type %d",type);
     }
 }
 
@@ -799,11 +808,55 @@ static inline float readFloat(CCBReader *self)
 {}
 
 
+-(NSArray*)readJoints
+{
+    int numJoints = readIntWithSign(self, NO);
+    
+    NSMutableArray * joints = [NSMutableArray array];
+    
+    for (int i =0; i < numJoints; i++)
+    {
+        id joint = [self readNodeGraphParent:nil];
+        [joints addObject:joint];
+    }
+}
 
-- (CCNode*) readNodeGraphParent:(CCNode*)parent
+
+-(CCPhysicsJoint*)readJoint
+{
+    Class class = [self readClassInformation];
+
+    // Read assignment type and name
+    int memberVarAssignmentType = readIntWithSign(self, NO);
+    NSString* memberVarAssignmentName = NULL;
+    if (memberVarAssignmentType)
+    {
+        memberVarAssignmentName = [self readCachedString];
+    }
+
+}
+
+-(Class)readClassInformation
 {
     // Read class
     NSString* className = [self readCachedString];
+    
+
+    
+    Class class = NSClassFromString(className);
+    if (!class)
+    {
+        NSAssert(false,@"CCBReader: Could not create class of type %@",className);
+        return NULL;
+    }
+
+    return class;
+}
+
+- (CCNode*) readNodeGraphParent:(CCNode*)parent
+{
+    Class class = [self readClassInformation];
+    CCNode* node = [[class alloc] init];
     
     // Read assignment type and name
     int memberVarAssignmentType = readIntWithSign(self, NO);
@@ -812,14 +865,6 @@ static inline float readFloat(CCBReader *self)
     {
         memberVarAssignmentName = [self readCachedString];
     }
-    
-    Class class = NSClassFromString(className);
-    if (!class)
-    {
-        NSAssert(false,@"CCBReader: Could not create class of type %@",className);
-        return NULL;
-    }
-    CCNode* node = [[class alloc] init];
     
     // Set root node
     if (!animationManager.rootNode) animationManager.rootNode = node;
@@ -865,6 +910,11 @@ static inline float readFloat(CCBReader *self)
     }
     
     // Read properties
+    NSUInteger uuid = readIntWithSign(self, NO);
+    if(uuid != 0x0)
+    {
+        nodeMapping[@(uuid)] = node;
+    }
     int numRegularProps = readIntWithSign(self, NO);
     int numExtraProps = readIntWithSign(self, NO);
     int numProps = numRegularProps + numExtraProps;
@@ -1184,6 +1234,7 @@ static inline float readFloat(CCBReader *self)
     actionManagers = am;
     
     CCNode* node = [self readNodeGraphParent:NULL];
+    NSArray * joints = [self readJoints];
     
     [actionManagers setObject:self.animationManager forKey:[NSValue valueWithPointer:(__bridge const void *)(node)]];
     
