@@ -299,41 +299,59 @@ static CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
 
 
 //MARK: Render Command.
-@interface CCRenderCommand : NSObject
+@interface CCRenderCommandDraw : NSObject
+
 @property(nonatomic, readonly) NSDictionary *renderOptions;
+@property(nonatomic, readonly) GLint first;
+@property(nonatomic, readonly) GLsizei count;
+
 @end
 
 
-@implementation CCRenderCommand {
-	CCTriangle _triangles[2];
+@implementation CCRenderCommandDraw {
+	
 }
 
--(instancetype)initWithRenderOptions:(NSDictionary *)renderOptions
+-(instancetype)initWithRenderOptions:(NSDictionary *)renderOptions first:(GLint)first count:(GLsizei)count
 {
 	if((self = [super init])){
 		_renderOptions = renderOptions;
+		_first = first;
+		_count = count;
 	}
 	
 	return self;
 }
 
--(GLint)count
+-(void)batchTriangles:(GLsizei)count
 {
-	#warning TODO
-	return 2;
+	_count += count;
 }
 
--(CCTriangle *)triangles
+-(void)invoke:(CCRenderer *)renderer
 {
-	return _triangles;
+	[renderer setRenderOptions:_renderOptions];
+	glDrawArrays(GL_TRIANGLES, 3*_first, 3*_count);
 }
 
 @end
 
 //MARK: Render Queue
+
+
+/*
+TODO
+
+Things to try if sorting isn't implemented:
+* Regular CPU buffer -> VBO buffer. Can be flushed for each state change.
+* Transform directly into a mapped buffer.
+
+Things to try if sorting is implemented:
+*
+*/
+
 @implementation CCRenderer {
 	NSDictionary *_renderOptions;
-	
 	NSDictionary *_blendOptions;
 	
 	// TODO buffer the full texture state.
@@ -343,6 +361,11 @@ static CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
 	NSDictionary *_uniforms;
 	
 	NSMutableArray *_queue;
+	
+	CCTriangle *_triangles;
+	GLsizei _triangleCount, _triangleCapacity;
+	
+	NSUInteger _statDrawCommands;
 }
 
 -(void)invalidateState
@@ -358,9 +381,17 @@ static CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
 {
 	if((self = [super init])){
 		_queue = [NSMutableArray array];
+		
+		_triangleCapacity = 2*1;
+		_triangles = calloc(_triangleCapacity, sizeof(*_triangles));
 	}
 	
 	return self;
+}
+
+-(void)dealloc
+{
+	free(_triangles);
 }
 
 -(void)setBlendOptions:(NSDictionary *)blendOptions;
@@ -395,7 +426,10 @@ static CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
 	if(blendOptions != _blendOptions) [self setBlendOptions:blendOptions];
 	
 	CCGLProgram *shader = renderOptions[CCRenderStateShader];
-	if(shader != _shader) [shader use];
+	if(shader != _shader){
+		[shader use];
+		[shader setUniformsForBuiltins:GLKMatrix4Identity];
+	}
 	
 	NSDictionary *uniforms = renderOptions[CCRenderStateUniforms];
 	if(uniforms != _uniforms){
@@ -407,42 +441,65 @@ static CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
 		}
 	}
 	
+	CHECK_GL_ERROR_DEBUG();
+	
 	_renderOptions = renderOptions;
 	return YES;
 }
 
+-(CCTriangle *)ensureBufferCapacity:(NSUInteger)requestedCount
+{
+	GLsizei required = _triangleCount + requestedCount;
+	if(required > _triangleCapacity){
+		// Double the size of the buffer until it fits.
+		while(required >= _triangleCapacity) _triangleCapacity *= 2;
+		
+		_triangles = realloc(_triangles, _triangleCapacity*sizeof(*_triangles));
+	}
+	
+	// Return the triangle buffer pointer.
+	return &_triangles[_triangleCount];
+}
+
 -(CCTriangle *)bufferTriangles:(NSUInteger)count withState:(CCRenderState *)renderState;
 {
-	NSAssert(count == 2, @"TODO Temporary restriction.");
+	NSDictionary *renderOptions = renderState.options;
+	CCRenderCommandDraw *previous = [_queue lastObject];
+	CCTriangle *buffer = [self ensureBufferCapacity:count];
 	
-	CCRenderCommand *command = [[CCRenderCommand alloc] initWithRenderOptions:renderState.options];
-	[_queue addObject:command];
+	if(renderOptions == previous.renderOptions){
+		// Batch with the previous command.
+		[previous batchTriangles:count];
+	} else {
+		// Start a new command.
+		CCRenderCommandDraw *command = [[CCRenderCommandDraw alloc] initWithRenderOptions:renderOptions first:_triangleCount count:count];
+		[_queue addObject:command];
+	}
 	
-	#warning TODO temporary
-	[self setRenderOptions:command.renderOptions];
-	
-	return command.triangles;
+	_statDrawCommands++;
+	_triangleCount += count;
+	return buffer;
 }
 
 -(void)flush
 {
-	NSAssert(_queue.count == 1, @"TODO Temparary restriction.");
-	
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
-	for(CCRenderCommand *command in _queue){
-		[self setRenderOptions:command.renderOptions];
-		
-		CCVertex *verts = (CCVertex *)command.triangles;
-		long foo1 = offsetof(CCVertex, position);
-		long foo2 = offsetof(CCVertex, texCoord1);
-		long foo3 = offsetof(CCVertex, color);
-		glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (GLvoid *)verts + foo1);
-		glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (GLvoid *)verts + foo2);
-		glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (GLvoid *)verts + foo3);
-		glDrawArrays(GL_TRIANGLES, 0, 3*command.count);
-	}
+	CCVertex *verts = (CCVertex *)_triangles;
+	long foo1 = offsetof(CCVertex, position);
+	long foo2 = offsetof(CCVertex, texCoord1);
+	long foo3 = offsetof(CCVertex, color);
+	glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (GLvoid *)verts + foo1);
+	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (GLvoid *)verts + foo2);
+	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (GLvoid *)verts + foo3);
 	
+	for(CCRenderCommandDraw *command in _queue) [command invoke];
+	
+	NSLog(@"Draw commands: %d, Draw calls: %d", _statDrawCommands, _queue.count);
+	_statDrawCommands = 0;
 	[_queue removeAllObjects];
+	
+	CHECK_GL_ERROR_DEBUG();
+//	CC_INCREMENT_GL_DRAWS(1);
 }
 
 @end

@@ -26,3 +26,12 @@
 #import <Foundation/Foundation.h>
 #import "CCRenderer.h"
 
+
+@interface CCRenderer()
+
+-(BOOL)setRenderOptions:(NSDictionary *)renderOptions;
+
+-(void)invalidateState;
+-(void)flush;
+
+@end

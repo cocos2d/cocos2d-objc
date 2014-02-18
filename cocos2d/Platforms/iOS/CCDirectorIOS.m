@@ -123,8 +123,10 @@
 	if( _nextScene )
 		[self setNextScene];
 	
+	[_renderer invalidateState];
 	[_runningScene visit:_renderer parentTransform:GLKMatrix4Identity];
 	[_notificationNode visit:_renderer parentTransform:GLKMatrix4Identity];
+	[_renderer flush];
 
 	if( _displayStats )
 		[self showStats];

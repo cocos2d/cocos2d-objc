@@ -62,7 +62,9 @@
 -(void) setReorderChildDirtyRecursively;
 @end
 
-@implementation CCSprite
+@implementation CCSprite {
+	CCRenderState *_renderState;
+}
 
 @synthesize dirty = _dirty;
 @synthesize quad = _quad;
@@ -514,31 +516,25 @@ static CCVertex Transform(GLKMatrix4 transform, ccV3F_C4B_T2F v)
 	};
 }
 
+-(CCRenderState *)renderState
+{
+	if(_renderState == nil){
+		_renderState = [CCRenderState renderStateWithOptions:@{
+			CCRenderStateBlendMode: [CCBlendMode blendModeWithOptions:@{
+				CCBlendFuncSrcColor: @(_blendFunc.src),
+				CCBlendFuncDstColor: @(_blendFunc.dst),
+			}],
+			CCRenderStateShader: _shaderProgram,
+			CCRenderStateUniforms: @{CCMainTexture: (_texture ?: [NSNull null])},
+		}];
+	}
+	
+	return _renderState;
+}
+
 -(void)draw:(CCRenderer *)renderer transform:(GLKMatrix4)transform;
 {
-	CC_PROFILER_START_CATEGORY(kCCProfilerCategorySprite, @"CCSprite - draw");
-
-//	NSAssert(!_batchNode, @"If CCSprite is being rendered by CCSpriteBatchNode, CCSprite#draw SHOULD NOT be called");
-
-	CCRenderState *renderState = [CCRenderState renderStateWithOptions:@{
-		CCRenderStateBlendMode: [CCBlendMode blendModeWithOptions:@{
-			CCBlendFuncSrcColor: @(_blendFunc.src),
-			CCBlendFuncDstColor: @(_blendFunc.dst),
-		}],
-		CCRenderStateShader: _shaderProgram,
-		CCRenderStateUniforms: @{CCMainTexture: (_texture ?: [NSNull null])},
-	}];
-	
-	CCTriangle *triangles = [renderer bufferTriangles:2 withState:renderState];
-	
-	#warning TODO temporary
-	[_shaderProgram setUniformsForBuiltins:transform];
-	
-	
-	
-	//
-	// Attributes
-	//
+	CCTriangle *triangles = [renderer bufferTriangles:2 withState:self.renderState];
 	
 	// TODO temporary code
 	CCVertex tl = Transform(transform, _quad.tl);
@@ -547,14 +543,6 @@ static CCVertex Transform(GLKMatrix4 transform, ccV3F_C4B_T2F v)
 	CCVertex br = Transform(transform, _quad.br);
 	triangles[0] = (CCTriangle){tl, bl, tr};
 	triangles[1] = (CCTriangle){bl, tr, br};
-	
-	[renderer flush];
-
-	CHECK_GL_ERROR_DEBUG();
-
-	CC_INCREMENT_GL_DRAWS(1);
-
-	CC_PROFILER_STOP_CATEGORY(kCCProfilerCategorySprite, @"CCSprite - draw");
 }
 
 #pragma mark CCSprite - CCNode overrides

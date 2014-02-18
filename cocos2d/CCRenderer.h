@@ -85,6 +85,4 @@ extern const NSString *CCMainTexture;
 
 -(CCTriangle *)bufferTriangles:(NSUInteger)count withState:(CCRenderState *)renderState;
 
--(void)flush;
-
 @end
