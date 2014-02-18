@@ -492,7 +492,7 @@ Things to try if sorting is implemented:
 	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (GLvoid *)verts + foo2);
 	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (GLvoid *)verts + foo3);
 	
-	for(CCRenderCommandDraw *command in _queue) [command invoke];
+	for(CCRenderCommandDraw *command in _queue) [command invoke:self];
 	
 	NSLog(@"Draw commands: %d, Draw calls: %d", _statDrawCommands, _queue.count);
 	_statDrawCommands = 0;
