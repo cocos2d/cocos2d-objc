@@ -725,9 +725,9 @@ static inline float readFloat(CCBReader *self)
     else if(type == kCCBPropTypeNodeReference)
     {
         int uuid = readIntWithSign(self, NO);
-        CCNode * node = nodeMapping[@(uuid)];
-        NSAssert(node != nil, @"CCBReader: Failed to find node UUID:%i", uuid);
-        
+        CCNode * mappedNode = nodeMapping[@(uuid)];
+        NSAssert(mappedNode != nil, @"CCBReader: Failed to find node UUID:%i", uuid);
+        [node setValue:mappedNode forKey:name];
     }
     else
     {
@@ -808,7 +808,7 @@ static inline float readFloat(CCBReader *self)
 {}
 
 
--(NSArray*)readJoints
+-(void)readJoints
 {
     int numJoints = readIntWithSign(self, NO);
     
@@ -816,7 +816,7 @@ static inline float readFloat(CCBReader *self)
     
     for (int i =0; i < numJoints; i++)
     {
-        id joint = [self readNodeGraphParent:nil];
+        id joint = [self readJoint];
         [joints addObject:joint];
     }
 }
@@ -824,24 +824,35 @@ static inline float readFloat(CCBReader *self)
 
 -(CCPhysicsJoint*)readJoint
 {
-    Class class = [self readClassInformation];
+    NSString* className = [self readCachedString];
 
-    // Read assignment type and name
-    int memberVarAssignmentType = readIntWithSign(self, NO);
-    NSString* memberVarAssignmentName = NULL;
-    if (memberVarAssignmentType)
+    int propertyCount = readIntWithSign(self,NO);
+    
+    NSMutableDictionary * properties = [NSMutableDictionary dictionary];
+    for (int i =0; i < propertyCount; i++)
     {
-        memberVarAssignmentName = [self readCachedString];
+        //Hack to extract the properties serialized. the dictionary is Not a node.
+        [self readPropertyForNode:(CCNode*)properties parent:nil isExtraProp:NO];
     }
-
+    
+    CCNode * nodeBodyA = properties[@"bodyA"];
+    CCNode * nodeBodyB = properties[@"bodyB"];
+    
+    if([className isEqualToString:@"CCPhysicsPivotJoint"])
+    {
+        CGPoint anchorPos = [properties[@"anchorPos"] CGPointValue];
+        
+        return [CCPhysicsJoint connectedPivotJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody anchorA:anchorPos];
+    }
+    
+    return nil;
+    
 }
 
 -(Class)readClassInformation
 {
     // Read class
     NSString* className = [self readCachedString];
-    
-
     
     Class class = NSClassFromString(className);
     if (!class)
@@ -1234,7 +1245,7 @@ static inline float readFloat(CCBReader *self)
     actionManagers = am;
     
     CCNode* node = [self readNodeGraphParent:NULL];
-    NSArray * joints = [self readJoints];
+    [self readJoints];
     
     [actionManagers setObject:self.animationManager forKey:[NSValue valueWithPointer:(__bridge const void *)(node)]];
     
