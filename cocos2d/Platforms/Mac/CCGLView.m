@@ -124,7 +124,7 @@
 
 	[self lockOpenGLContext];
 
-	NSRect rect = [self bounds];
+	NSRect rect = [self convertRectToBacking:self.bounds];
 
 	CCDirector *director = [CCDirector sharedDirector];
 	[director reshapeProjection: NSSizeToCGSize(rect.size) ];
