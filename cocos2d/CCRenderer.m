@@ -494,9 +494,11 @@ Things to try if sorting is implemented:
 	
 	for(CCRenderCommandDraw *command in _queue) [command invoke:self];
 	
-	NSLog(@"Draw commands: %d, Draw calls: %d", _statDrawCommands, _queue.count);
+//	NSLog(@"Draw commands: %d, Draw calls: %d", _statDrawCommands, _queue.count);
 	_statDrawCommands = 0;
 	[_queue removeAllObjects];
+	
+	_triangleCount = 0;
 	
 	CHECK_GL_ERROR_DEBUG();
 //	CC_INCREMENT_GL_DRAWS(1);

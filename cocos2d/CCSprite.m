@@ -532,15 +532,36 @@ static CCVertex Transform(GLKMatrix4 transform, ccV3F_C4B_T2F v)
 	return _renderState;
 }
 
+static BOOL
+CheckBounds(GLKMatrix4 t, CGSize size)
+{
+	float hw = size.width*0.5f;
+	float hh = size.height*0.5f;
+	
+	// Bounding box center point in clip coordinates.
+	GLKVector4 center = GLKMatrix4MultiplyVector4(t, GLKVector4Make(hw, hh, 0.0f, 1.0f));
+	center = GLKVector4MultiplyScalar(center, 1.0f/center.w);
+	
+	// Half width/height in clip space.
+	float cshw = hw*fmaxf(fabsf(t.m00 + t.m10), fabsf(t.m00 - t.m10));
+	float cshh = hh*fmaxf(fabsf(t.m01 + t.m11), fabsf(t.m01 - t.m11));
+	
+	// Check the bounds against the viewport.
+	return (fabsf(center.x) - cshw < 1.0f && fabsf(center.y) - cshh < 1.0f);
+}
+
 -(void)draw:(CCRenderer *)renderer transform:(GLKMatrix4)transform;
 {
-	CCTriangle *triangles = [renderer bufferTriangles:2 withState:self.renderState];
+	if(!CheckBounds(transform, self.contentSize)) return;
 	
 	// TODO temporary code
 	CCVertex tl = Transform(transform, _quad.tl);
 	CCVertex bl = Transform(transform, _quad.bl);
 	CCVertex tr = Transform(transform, _quad.tr);
 	CCVertex br = Transform(transform, _quad.br);
+	
+	
+	CCTriangle *triangles = [renderer bufferTriangles:2 withState:self.renderState];
 	triangles[0] = (CCTriangle){tl, bl, tr};
 	triangles[1] = (CCTriangle){bl, tr, br};
 }

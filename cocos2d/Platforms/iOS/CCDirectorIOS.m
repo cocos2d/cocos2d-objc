@@ -124,9 +124,11 @@
 	if( _nextScene )
 		[self setNextScene];
 	
+	GLKMatrix4 projection = self.projectionMatrix;
+	
 	[_renderer invalidateState];
-	[_runningScene visit:_renderer parentTransform:GLKMatrix4Identity];
-	[_notificationNode visit:_renderer parentTransform:GLKMatrix4Identity];
+	[_runningScene visit:_renderer parentTransform:projection];
+	[_notificationNode visit:_renderer parentTransform:projection];
 	[_renderer flush];
 
 	if( _displayStats )

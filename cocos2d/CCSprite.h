@@ -141,6 +141,9 @@
 /** Conforms to CCTextureProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
+#warning TODO
+@property (nonatomic,readonly) CCRenderState *renderState;
+
 
 /// -----------------------------------------------------------------------
 /// @name Creating a CCSprite Object

@@ -437,8 +437,8 @@ typedef void (*GLLogFunction) (GLuint program,
 -(void) setUniformsForBuiltins:(GLKMatrix4)unused
 {
 #warning TODO need to change how shaders ard bound and how globals/uniforms are set.
-	CCDirector *director = [CCDirector sharedDirector];
-	GLKMatrix4 matrixP = director.projectionMatrix;
+//	CCDirector *director = [CCDirector sharedDirector];
+	GLKMatrix4 matrixP = GLKMatrix4Identity;
 	GLKMatrix4 matrixMV = GLKMatrix4Identity;
 	
 	if( _flags.usesMVP) {
