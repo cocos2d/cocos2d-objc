@@ -38,6 +38,7 @@
 #endif
 
 
+
 @interface CCBFile : CCNode
 {
     CCNode* ccbFile;
@@ -96,6 +97,8 @@
     
     // Setup resolution scale and default container size
     animationManager.rootContainerSize = [CCDirector sharedDirector].designSize;
+    
+    nodeMapping = [NSMutableDictionary dictionary];
     
     return self;
 }
@@ -721,9 +724,16 @@ static inline float readFloat(CCBReader *self)
             [node setValue:ccbFile forKey:name];
         }
     }
+    else if(type == kCCBPropTypeNodeReference)
+    {
+        int uuid = readIntWithSign(self, NO);
+        CCNode * mappedNode = nodeMapping[@(uuid)];
+        NSAssert(mappedNode != nil, @"CCBReader: Failed to find node UUID:%i", uuid);
+        [node setValue:mappedNode forKey:name];
+    }
     else
     {
-        NSLog(@"CCBReader: Failed to read property type %d",type);
+        NSAssert(false, @"CCBReader: Failed to read property type %d",type);
     }
 }
 
@@ -799,10 +809,67 @@ static inline float readFloat(CCBReader *self)
 - (void) didLoadFromCCB
 {}
 
-- (CCNode*) readNodeGraphParent:(CCNode*)parent
+
+-(void)readJoints
+{
+    int numJoints = readIntWithSign(self, NO);
+    
+    NSMutableArray * joints = [NSMutableArray array];
+    
+    for (int i =0; i < numJoints; i++)
+    {
+        id joint = [self readJoint];
+        [joints addObject:joint];
+    }
+}
+
+
+-(CCPhysicsJoint*)readJoint
+{
+    NSString* className = [self readCachedString];
+
+    int propertyCount = readIntWithSign(self,NO);
+    
+    NSMutableDictionary * properties = [NSMutableDictionary dictionary];
+    for (int i =0; i < propertyCount; i++)
+    {
+        //Hack to extract the properties serialized. the dictionary is Not a node.
+        [self readPropertyForNode:(CCNode*)properties parent:nil isExtraProp:NO];
+    }
+    
+    CCNode * nodeBodyA = properties[@"bodyA"];
+    CCNode * nodeBodyB = properties[@"bodyB"];
+    
+    if([className isEqualToString:@"CCPhysicsPivotJoint"])
+    {
+        CGPoint anchorPos = [properties[@"anchorPos"] CGPointValue];
+        
+        return [CCPhysicsJoint connectedPivotJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody anchorA:anchorPos];
+    }
+    
+    return nil;
+    
+}
+
+-(Class)readClassInformation
 {
     // Read class
     NSString* className = [self readCachedString];
+    
+    Class class = NSClassFromString(className);
+    if (!class)
+    {
+        NSAssert(false,@"CCBReader: Could not create class of type %@",className);
+        return NULL;
+    }
+
+    return class;
+}
+
+- (CCNode*) readNodeGraphParent:(CCNode*)parent
+{
+    Class class = [self readClassInformation];
+    CCNode* node = [[class alloc] init];
     
     // Read assignment type and name
     int memberVarAssignmentType = readIntWithSign(self, NO);
@@ -811,14 +878,6 @@ static inline float readFloat(CCBReader *self)
     {
         memberVarAssignmentName = [self readCachedString];
     }
-    
-    Class class = NSClassFromString(className);
-    if (!class)
-    {
-        NSAssert(false,@"CCBReader: Could not create class of type %@",className);
-        return NULL;
-    }
-    CCNode* node = [[class alloc] init];
     
     // Set root node
     if (!animationManager.rootNode) animationManager.rootNode = node;
@@ -864,6 +923,11 @@ static inline float readFloat(CCBReader *self)
     }
     
     // Read properties
+    NSUInteger uuid = readIntWithSign(self, NO);
+    if(uuid != 0x0)
+    {
+        nodeMapping[@(uuid)] = node;
+    }
     int numRegularProps = readIntWithSign(self, NO);
     int numExtraProps = readIntWithSign(self, NO);
     int numProps = numRegularProps + numExtraProps;
@@ -925,34 +989,77 @@ static inline float readFloat(CCBReader *self)
     BOOL hasPhysicsBody = readBool(self);
     if (hasPhysicsBody)
     {
-#ifdef __CC_PLATFORM_IOS
+//#ifdef __CC_PLATFORM_IOS
 			// Read body shape
         int bodyShape = readIntWithSign(self, NO);
         float cornerRadius = readFloat(self);
-#endif
-        // Read points
-        int numPoints = readIntWithSign(self, NO);
-        CGPoint* points = malloc(sizeof(CGPoint)*numPoints);
-        for (int i = 0; i < numPoints; i++)
-        {
-            float x = readFloat(self);
-            float y = readFloat(self);
-            
-            points[i] = ccp(x, y);
-        }
-        
-#ifdef __CC_PLATFORM_IOS
+
         // Create body
         CCPhysicsBody* body = NULL;
         
         if (bodyShape == 0)
         {
-            body = [CCPhysicsBody bodyWithPolygonFromPoints:points count:numPoints cornerRadius:cornerRadius];
+            
+            
+            int numPolygons = readIntWithSign(self, NO);
+            
+            
+            //Read Shapes from binary
+            typedef struct
+            {
+                CGPoint * polygon;
+                int numPoints;
+            } PolygonPtr;
+            
+            PolygonPtr * polygons =malloc(sizeof(PolygonPtr)*numPolygons);
+            
+            for(int j = 0; j < numPolygons; j++)
+            {
+                // Read points
+                int numPoints = readIntWithSign(self, NO);
+                CGPoint* points = malloc(sizeof(CGPoint)*numPoints);
+                for (int i = 0; i < numPoints; i++)
+                {
+                    float x = readFloat(self);
+                    float y = readFloat(self);
+                    
+                    points[i] = ccp(x, y);
+                }
+                
+                polygons[j].polygon = points;
+                polygons[j].numPoints = numPoints;
+                
+            }
+            
+            // INit CCPhysicsShape.
+            NSMutableArray * shapes = [NSMutableArray array];
+            for (int i=0; i < numPolygons; i++)
+            {
+                CCPhysicsShape * shape = [CCPhysicsShape polygonShapeWithPoints:polygons[i].polygon count:polygons[i].numPoints cornerRadius:cornerRadius];
+                [shapes addObject:shape];
+            }
+            //Construct body.
+            body = [CCPhysicsBody bodyWithShapes:shapes];
+           
+            
+            //Cleanup.
+            for (int i=0; i < numPolygons; i++)
+            {
+                free(polygons[i].polygon);
+            }
+            
+            free(polygons);
+
+        
         }
         else if (bodyShape == 1)
         {
-            if (numPoints > 0)
-                body = [CCPhysicsBody bodyWithCircleOfRadius:cornerRadius andCenter:points[0]];
+            float x = readFloat(self);
+            float y = readFloat(self);
+            
+            CGPoint point = ccp(x, y);
+
+            body = [CCPhysicsBody bodyWithCircleOfRadius:cornerRadius andCenter:point];
         }
         NSAssert(body, @"Unknown body shape");
         
@@ -978,8 +1085,8 @@ static inline float readFloat(CCBReader *self)
         body.elasticity = elasticity;
         
         node.physicsBody = body;
-#endif
-        free(points);
+//#endif
+
     }
     
     // Read and add children
@@ -1140,6 +1247,7 @@ static inline float readFloat(CCBReader *self)
     actionManagers = am;
     
     CCNode* node = [self readNodeGraphParent:NULL];
+    [self readJoints];
     
     [actionManagers setObject:self.animationManager forKey:[NSValue valueWithPointer:(__bridge const void *)(node)]];
     
