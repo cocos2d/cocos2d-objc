@@ -45,7 +45,7 @@
 
 - (void) update:(CCTime)delta
 {
-    _lblNumTouches.string = [NSString stringWithFormat:@"Num touches: %d", _currentTouches.count];
+    _lblNumTouches.string = [NSString stringWithFormat:@"Num touches: %d", (unsigned int)_currentTouches.count];
 }
 
 - (void) touchBegan:(UITouch *)touch withEvent:(UIEvent *)event
