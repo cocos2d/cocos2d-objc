@@ -203,7 +203,8 @@
     SEL constructor = NSSelectorFromString(constructorName);
     if ([self respondsToSelector:constructor])
     {
-        objc_msgSend(self, constructor);
+        typedef void (*Func)(id, SEL);
+        ((Func)objc_msgSend)(self, constructor);
     }
     
     _currentTest = testNum;

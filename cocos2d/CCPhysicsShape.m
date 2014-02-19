@@ -87,9 +87,9 @@
 	// That's not available until the scene is set up though... hrm.
 	CCNode *node = self.node;
 	if(node){
-		return [node nonRigidTransform];
+		return CGAFFINETRANSFORM_TO_CPTRANSFORM([node nonRigidTransform]);
 	} else {
-		return CGAffineTransformIdentity;
+		return cpTransformIdentity;
 	}
 }
 
@@ -113,8 +113,8 @@ Determinant(cpTransform t)
 -(CGFloat)elasticity {return self.shape.elasticity;}
 -(void)setElasticity:(CGFloat)elasticity {self.shape.elasticity = elasticity;}
 
--(CGPoint)surfaceVelocity {return self.shape.surfaceVelocity;}
--(void)setSurfaceVelocity:(CGPoint)surfaceVelocity {self.shape.surfaceVelocity = surfaceVelocity;}
+-(CGPoint)surfaceVelocity {return CPV_TO_CCP(self.shape.surfaceVelocity);}
+-(void)setSurfaceVelocity:(CGPoint)surfaceVelocity {self.shape.surfaceVelocity = CCP_TO_CPV(surfaceVelocity);}
 
 
 //MARK: Simulation Properties:
@@ -238,8 +238,8 @@ Determinant(cpTransform t)
 @end
 
 
-static CGFloat
-RadiusForTransform(CGAffineTransform t)
+static cpFloat
+RadiusForTransform(cpTransform t)
 {
 	// Return the magnitude of the longest basis vector.
 	return cpfsqrt(MAX(t.a*t.a + t.b*t.b, t.c*t.c + t.d*t.d));
@@ -248,16 +248,16 @@ RadiusForTransform(CGAffineTransform t)
 
 @implementation CCPhysicsCircleShape {
 	ChipmunkCircleShape *_shape;
-	CGFloat _radius;
-	CGPoint _center;
+	cpFloat _radius;
+	cpVect _center;
 }
 
 -(id)initWithRadius:(CGFloat)radius center:(CGPoint)center
 {
 	if((self = [super init])){
-		_shape = [ChipmunkCircleShape circleWithBody:nil radius:radius offset:center];
 		_radius = radius;
-		_center = center;
+		_center = CCP_TO_CPV(center);
+		_shape = [ChipmunkCircleShape circleWithBody:nil radius:_radius offset:_center];
 		
 		_shape.mass = 1.0;
 		_shape.friction = DEFAULT_FRICTION;
@@ -282,16 +282,16 @@ RadiusForTransform(CGAffineTransform t)
 
 @implementation CCPhysicsSegmentShape {
 	ChipmunkCircleShape *_shape;
-	CGFloat _radius;
-	CGPoint _from, _to;
+	cpFloat _radius;
+	cpVect _from, _to;
 }
 
 -(id)initFrom:(CGPoint)from to:(CGPoint)to cornerRadius:(CGFloat)cornerRadius
 {
 	if((self = [super init])){
-		_shape = [ChipmunkSegmentShape segmentWithBody:nil from:from to:to radius:cornerRadius];
 		_radius = cornerRadius;
-		_from = from; _to = to;
+		_from = CCP_TO_CPV(from); _to = CCP_TO_CPV(to);
+		_shape = [ChipmunkSegmentShape segmentWithBody:nil from:_from to:_to radius:cornerRadius];
 		
 		_shape.mass = 1.0;
 		_shape.friction = DEFAULT_FRICTION;
@@ -317,19 +317,27 @@ RadiusForTransform(CGAffineTransform t)
 
 @implementation CCPhysicsPolyShape {
 	ChipmunkPolyShape *_shape;
-	CGFloat _radius;
-	CGPoint *_points;
+	cpFloat _radius;
+	cpVect *_points;
 	NSUInteger _count;
 }
 
 -(id)initWithPolygonFromPoints:(CGPoint *)points count:(NSUInteger)count cornerRadius:(CGFloat)cornerRadius
 {
 	if((self = [super init])){
-		_shape = [ChipmunkPolyShape polyWithBody:nil count:(int)count verts:points transform:cpTransformIdentity radius:cornerRadius];
 		_radius = cornerRadius;
-		_points = calloc(count, sizeof(CGPoint));
-		memcpy(_points, points, count*sizeof(CGPoint));
+		_points = calloc(count, sizeof(cpVect));
 		_count = count;
+		
+#if !CP_USE_CGTYPES
+		for(NSUInteger i=0; i<count; i++){
+			_points[i] = CCP_TO_CPV(points[i]);
+		}
+#else
+		memcpy(_points, points, count*sizeof(CGPoint));
+#endif
+		
+		_shape = [ChipmunkPolyShape polyWithBody:nil count:(int)_count verts:_points transform:cpTransformIdentity radius:_radius];
 		
 		_shape.mass = 1.0;
 		_shape.friction = DEFAULT_FRICTION;
@@ -343,11 +351,11 @@ RadiusForTransform(CGAffineTransform t)
 -(id)initWithRect:(CGRect)rect cornerRadius:(CGFloat)cornerRadius
 {
 	cpBB bb = {CGRectGetMinX(rect), CGRectGetMinY(rect), CGRectGetMaxX(rect), CGRectGetMaxY(rect)};
-	cpVect points[] = {
-		cpv(bb.r, bb.b),
-		cpv(bb.r, bb.t),
-		cpv(bb.l, bb.t),
-		cpv(bb.l, bb.b),
+	CGPoint points[] = {
+		ccp(bb.r, bb.b),
+		ccp(bb.r, bb.t),
+		ccp(bb.l, bb.t),
+		ccp(bb.l, bb.b),
 	};
 	
 	return [self initWithPolygonFromPoints:points count:4 cornerRadius:cornerRadius];
