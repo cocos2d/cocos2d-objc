@@ -593,10 +593,10 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 
 - (void) setZOrder:(NSInteger)zOrder
 {
-	[self _setZOrder:zOrder];
-
     if (_parent)
         [_parent reorderChild:self z:zOrder];
+    else
+    	[self _setZOrder:zOrder]; // issue #598
 }
 
 #pragma mark CCNode Composition
