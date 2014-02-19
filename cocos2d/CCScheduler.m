@@ -504,7 +504,7 @@ PrioritySearch(NSArray *array, NSInteger priority)
 	
 	NSMutableArray *arr = [NSMutableArray array];
 	for(CCTimer *timer = scheduledTarget.timers; timer; timer = timer.next){
-		[arr addObject:timer];
+		if(!timer.invalid) [arr addObject:timer];
 	}
 	
 	return arr;

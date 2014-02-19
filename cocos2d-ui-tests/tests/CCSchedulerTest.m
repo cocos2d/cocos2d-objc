@@ -41,6 +41,10 @@
 	[super onEnter];
 	
 	[self schedule:@selector(after:) interval:2.0];
+	
+	// Unschedule it and reschedule it to check for rescheduling issues.
+	[self unschedule:@selector(after:)];
+	[self schedule:@selector(after:) interval:1.0];
 }
 
 -(void)update:(CCTime)delta
