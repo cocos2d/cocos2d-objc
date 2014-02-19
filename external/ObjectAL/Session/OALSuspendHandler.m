@@ -153,7 +153,8 @@
 			{
 				if(nil != suspendStatusChangeTarget)
 				{
-					objc_msgSend(suspendStatusChangeTarget, suspendStatusChangeSelector, manualSuspendLock);
+					typedef void (*Func)(id, SEL, bool);
+					((Func)objc_msgSend)(suspendStatusChangeTarget, suspendStatusChangeSelector, manualSuspendLock);
 				}
 			}
 		}
@@ -218,7 +219,8 @@
 			{
 				if(nil != suspendStatusChangeTarget)
 				{
-					objc_msgSend(suspendStatusChangeTarget, suspendStatusChangeSelector, interruptLock);
+					typedef void (*Func)(id, SEL, bool);
+					((Func)objc_msgSend)(suspendStatusChangeTarget, suspendStatusChangeSelector, interruptLock);
 				}
 			}
 		}

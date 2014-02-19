@@ -42,6 +42,26 @@
 //  Warnings for CCPhysicsCollisionPair methods in the wrong event cycle?
 //  Should CCPhysicsCollisionPair.userData retain?
 
+
+#if CP_USE_CGTYPES
+
+#define CCP_TO_CPV(p) (p)
+#define CPV_TO_CCP(p) (p)
+
+#define CPTRANSFORM_TO_CGAFFINETRANSFORM(t) (t)
+#define CGAFFINETRANSFORM_TO_CPTRANSFORM(t) (t)
+
+#else
+
+// If Chipmunk is not configured to use CG types then they will need to be converted.
+static inline cpVect CCP_TO_CPV(CGPoint p){return cpv(p.x, p.y);}
+static inline CGPoint CPV_TO_CCP(cpVect p){return CGPointMake(p.x, p.y);}
+
+static inline CGAffineTransform CPTRANSFORM_TO_CGAFFINETRANSFORM(cpTransform t){return CGAffineTransformMake(t.a, t.b, t.c, t.d, t.tx, t.ty);}
+static inline cpTransform CGAFFINETRANSFORM_TO_CPTRANSFORM(CGAffineTransform t){return cpTransformNew(t.a, t.b, t.c, t.d, t.tx, t.ty);}
+
+#endif
+
 @interface CCPhysicsBody (ObjectiveChipmunk)<ChipmunkObject>
 
 /** The CCNode this physics body is attached to. */
@@ -54,13 +74,13 @@
 @property(nonatomic, readonly) BOOL isRunning;
 
 /** The position of the body relative to the space. */
-@property(nonatomic, assign) cpVect absolutePosition;
+@property(nonatomic, assign) CGPoint absolutePosition;
 
 /** The rotation of the body relative to the space. */
-@property(nonatomic, assign) cpFloat absoluteRadians;
+@property(nonatomic, assign) CGFloat absoluteRadians;
 
 /** The transform of the body relative to the space. */
-@property(nonatomic, readonly) cpTransform absoluteTransform;
+@property(nonatomic, readonly) CGAffineTransform absoluteTransform;
 
 /** Chipmunk Body. */
 @property(nonatomic, readonly) ChipmunkBody *body;

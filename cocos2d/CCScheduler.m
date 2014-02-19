@@ -85,7 +85,8 @@ static void
 InvokeMethods(NSArray *methods, SEL selector, CCTime dt)
 {
 	for(CCScheduledTarget *scheduledTarget in [methods copy]){
-		if(!scheduledTarget->_paused) objc_msgSend(scheduledTarget->_target, selector, dt);
+		typedef void (*Func)(id, SEL, CCTime);
+		if(!scheduledTarget->_paused) ((Func)objc_msgSend)(scheduledTarget->_target, selector, dt);
 	}
 }
 
