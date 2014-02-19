@@ -288,7 +288,8 @@
 
 -(void) execute
 {
-    objc_msgSend(_targetCallback, _selector);
+    typedef void (*Func)(id, SEL);
+    ((Func)objc_msgSend)(_targetCallback, _selector);
 }
 @end
 
