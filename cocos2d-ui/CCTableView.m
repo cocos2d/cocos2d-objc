@@ -234,11 +234,12 @@
 
 - (void) showRowsForRange:(NSRange)range
 {
-    if (NSEqualRanges(range, _currentlyVisibleRange)) return;
-    
+    if (!_visibleRowsDirty && NSEqualRanges(range, _currentlyVisibleRange)) return;
+
+    // Remove all previously visible nodes that are now hidden or dirty.
     for (NSUInteger oldIdx = _currentlyVisibleRange.location; oldIdx < NSMaxRange(_currentlyVisibleRange); oldIdx++)
     {
-        if (!NSLocationInRange(oldIdx, range))
+        if (!NSLocationInRange(oldIdx, range) || _visibleRowsDirty)
         {
             CCTableViewCellHolder* holder = [_rows objectAtIndex:oldIdx];
             if (holder)
@@ -248,10 +249,11 @@
             }
         }
     }
-    
+
+    // Update now-visible nodes; both previously invisible and dirty already-visible.
     for (NSUInteger newIdx = range.location; newIdx < NSMaxRange(range); newIdx++)
     {
-        if (!NSLocationInRange(newIdx, _currentlyVisibleRange))
+        if (!NSLocationInRange(newIdx, _currentlyVisibleRange) || _visibleRowsDirty)
         {
             CCTableViewCellHolder* holder = [_rows objectAtIndex:newIdx];
             if (!holder.cell)
