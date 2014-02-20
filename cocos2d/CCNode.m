@@ -81,7 +81,7 @@ NodeToPhysicsTransform(CCNode *node)
 {
 	CGAffineTransform transform = CGAffineTransformIdentity;
 	for(CCNode *n = node; n && !n.isPhysicsNode; n = n.parent){
-		transform = cpTransformMult(n.nodeToParentTransform, transform);
+		transform = CGAffineTransformConcat(transform, n.nodeToParentTransform);
 	}
 	
 	return transform;
@@ -101,7 +101,7 @@ NodeToPhysicsRotation(CCNode *node)
 static inline CGAffineTransform
 RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
 {
-	return cpTransformMult(cpTransformInverse(NodeToPhysicsTransform(node.parent)), body.absoluteTransform);
+	return CGAffineTransformConcat(body.absoluteTransform, CGAffineTransformInvert(NodeToPhysicsTransform(node.parent)));
 }
 
 // XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
@@ -307,7 +307,7 @@ static NSUInteger globalOrderOfArrival = 1;
 static inline CGPoint
 GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 {
-	return cpTransformPoint([node nodeToParentTransform], node->_anchorPointInPoints);
+	return CGPointApplyAffineTransform(node->_anchorPointInPoints, [node nodeToParentTransform]);
 }
 
 -(CGPoint)position
@@ -320,13 +320,20 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 	}
 }
 
+// Urg. CGPoint types. -_-
+static inline CGPoint
+TransformPointAsVector(CGPoint p, CGAffineTransform t)
+{
+  return (CGPoint){t.a*p.x + t.c*p.y, t.b*p.x + t.d*p.y};
+}
+
 -(void) setPosition: (CGPoint)newPosition
 {
 	CCPhysicsBody *body = GetBodyIfRunning(self);
 	if(body){
 		CGPoint currentPosition = GetPositionFromBody(self, body);
 		CGPoint delta = ccpSub([self convertPositionToPoints:newPosition type:_positionType], currentPosition);
-		body.absolutePosition = ccpAdd(body.absolutePosition, cpTransformVect(NodeToPhysicsTransform(self.parent), delta));
+		body.absolutePosition = ccpAdd(body.absolutePosition, TransformPointAsVector(delta, NodeToPhysicsTransform(self.parent)));
 	} else {
 		_position = newPosition;
 		_isTransformDirty = _isInverseDirty = YES;
@@ -958,6 +965,13 @@ NodeTransform(CCNode *node, GLKMatrix4 parentTransform)
 
 #pragma mark CCPhysics support.
 
+static inline CGAffineTransform
+CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
+{
+	CGPoint rot = ccpForAngle(radians);
+	return CGAffineTransformMake(rot.x, rot.y, -rot.y, rot.x, translate.x, translate.y);
+}
+
 // Private method used to extract the non-rigid part of the node's transform relative to a CCPhysicsNode.
 // This method can only be called in very specific circumstances.
 -(CGAffineTransform)nonRigidTransform
@@ -966,13 +980,13 @@ NodeTransform(CCNode *node, GLKMatrix4 parentTransform)
 	
 	CCPhysicsBody *body = GetBodyIfRunning(self);
 	if(body){
-		return cpTransformMult(cpTransformInverse(body.absoluteTransform), toPhysics);
+		return CGAffineTransformConcat(toPhysics, CGAffineTransformInvert(body.absoluteTransform));
 	} else {
 		// Body is not active yet, so this is more of a mess. :-\
 		// Need to guess the rigid part of the transform.
 		float radians = CC_DEGREES_TO_RADIANS(NodeToPhysicsRotation(self));
-		CGAffineTransform absolute = cpTransformRigid(ccp(toPhysics.tx, toPhysics.ty), radians);
-		return cpTransformMult(cpTransformInverse(absolute), toPhysics);
+		CGAffineTransform absolute = CGAffineTransformMakeRigid(ccp(toPhysics.tx, toPhysics.ty), radians);
+		return CGAffineTransformConcat(toPhysics, CGAffineTransformInvert(absolute));
 	}
 }
 
@@ -994,8 +1008,8 @@ NodeTransform(CCNode *node, GLKMatrix4 parentTransform)
 		CGAffineTransform transform = NodeToPhysicsTransform(self);
 		physicsBody.absolutePosition = ccp(transform.tx, transform.ty);
 		
-		cpTransform nonRigid = self.nonRigidTransform;
-		[_physicsBody willAddToPhysicsNode:physics nonRigidTransform:nonRigid];
+		CGAffineTransform nonRigid = self.nonRigidTransform;
+		[_physicsBody willAddToPhysicsNode:physics nonRigidTransform:CGAFFINETRANSFORM_TO_CPTRANSFORM(nonRigid)];
 		[physics.space smartAdd:physicsBody];
 		[_physicsBody didAddToPhysicsNode:physics];
 		
@@ -1189,7 +1203,7 @@ NodeTransform(CCNode *node, GLKMatrix4 parentTransform)
 	return NO;
 }
 
--(CCTimer *) schedule:(SEL)selector interval:(CCTime)interval repeat: (uint) repeat delay:(CCTime) delay
+-(CCTimer *) schedule:(SEL)selector interval:(CCTime)interval repeat: (NSUInteger) repeat delay:(CCTime) delay
 {
 	NSAssert(selector != nil, @"Selector must be non-nil");
 	NSAssert(selector != @selector(update:) && selector != @selector(fixedUpdate:), @"The update: and fixedUpdate: methods are scheduled automatically.");
@@ -1380,7 +1394,7 @@ NodeTransform(CCNode *node, GLKMatrix4 parentTransform)
 	CCPhysicsBody *physicsBody = GetBodyIfRunning(self);
 	if(physicsBody){
 		CGAffineTransform rigidTransform = RigidBodyToParentTransform(self, physicsBody);
-		_transform = cpTransformMult(rigidTransform, cpTransformScale(_scaleX, _scaleY));
+		_transform = CGAffineTransformConcat(CGAffineTransformMakeScale(_scaleX, _scaleY), rigidTransform);
 	} else if ( _isTransformDirty ) {
         
         // Get content size

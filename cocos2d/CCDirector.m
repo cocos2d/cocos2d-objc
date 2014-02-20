@@ -335,7 +335,7 @@ static CCDirector *_sharedDirector = nil;
 #ifdef __CC_PLATFORM_IOS
 		CGFloat scale = __view.layer.contentsScale ?: 1.0;
 #else
-		self.view.wantsBestResolutionOpenGLSurface = YES;
+		//self.view.wantsBestResolutionOpenGLSurface = YES;
 		CGFloat scale = self.view.window.backingScaleFactor;
 #endif
 		

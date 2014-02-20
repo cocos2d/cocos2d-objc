@@ -333,7 +333,7 @@
 
 -(void)getFPSImageData:(unsigned char**)datapointer length:(NSUInteger*)len contentScale:(CGFloat *)scale
 {
-	int device = [[CCConfiguration sharedConfiguration] runningDevice];
+	NSInteger device = [[CCConfiguration sharedConfiguration] runningDevice];
 
 	if( device == CCDeviceiPadRetinaDisplay) {
 		*datapointer = cc_fps_images_ipadhd_png;

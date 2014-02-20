@@ -43,7 +43,7 @@
 -(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB anchor:(CGPoint)anchor
 {
 	if((self = [super init])){
-		_constraint = [ChipmunkPivotJoint pivotJointWithBodyA:bodyA.body bodyB:bodyB.body pivot:anchor];
+		_constraint = [ChipmunkPivotJoint pivotJointWithBodyA:bodyA.body bodyB:bodyB.body pivot:CCP_TO_CPV(anchor)];
 		_constraint.userData = self;
 		
 		_anchor = anchor;
@@ -57,10 +57,10 @@
 -(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
 {
 	CCPhysicsBody *bodyA = self.bodyA;
-	CGPoint anchor = cpTransformPoint(bodyA.node.nonRigidTransform, _anchor);
+	CGPoint anchor = CGPointApplyAffineTransform(_anchor, bodyA.node.nonRigidTransform);
 	
-	_constraint.anchorA = anchor;
-	_constraint.anchorB = [_constraint.bodyB worldToLocal:[_constraint.bodyA localToWorld:anchor]];
+	_constraint.anchorA = CCP_TO_CPV(anchor);
+	_constraint.anchorB = [_constraint.bodyB worldToLocal:[_constraint.bodyA localToWorld:CCP_TO_CPV(anchor)]];
 }
 
 @end
@@ -78,7 +78,7 @@
 -(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB
 {
 	if((self = [super init])){
-		_constraint = [ChipmunkPinJoint pinJointWithBodyA:bodyA.body bodyB:bodyB.body anchorA:anchorA anchorB:anchorB];
+		_constraint = [ChipmunkPinJoint pinJointWithBodyA:bodyA.body bodyB:bodyB.body anchorA:CCP_TO_CPV(anchorA) anchorB:CCP_TO_CPV(anchorB)];
 		_constraint.userData = self;
 		
 		_anchorA = anchorA;
@@ -93,10 +93,10 @@
 -(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
 {
 	CCPhysicsBody *bodyA = self.bodyA, *bodyB = self.bodyB;
-	cpVect anchorA = _constraint.anchorA = cpTransformPoint(bodyA.node.nonRigidTransform, _anchorA);
-	cpVect anchorB = _constraint.anchorB = cpTransformPoint(bodyB.node.nonRigidTransform, _anchorB);
+	CGPoint anchorA = CGPointApplyAffineTransform(_anchorA, bodyA.node.nonRigidTransform);
+	CGPoint anchorB = CGPointApplyAffineTransform(_anchorB, bodyB.node.nonRigidTransform);
 	
-	_constraint.dist = cpvdist([bodyA.body localToWorld:anchorA], [bodyB.body localToWorld:anchorB]);
+	_constraint.dist = cpvdist([bodyA.body localToWorld:CCP_TO_CPV(anchorA)], [bodyB.body localToWorld:CCP_TO_CPV(anchorB)]);
 }
 
 @end
@@ -114,7 +114,7 @@
 -(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB minDistance:(CGFloat)min maxDistance:(CGFloat)max;
 {
 	if((self = [super init])){
-		_constraint = [ChipmunkSlideJoint slideJointWithBodyA:bodyA.body bodyB:bodyB.body anchorA:anchorA anchorB:anchorB min:min max:max];
+		_constraint = [ChipmunkSlideJoint slideJointWithBodyA:bodyA.body bodyB:bodyB.body anchorA:CCP_TO_CPV(anchorA) anchorB:CCP_TO_CPV(anchorB) min:min max:max];
 		_constraint.userData = self;
 		
 		_anchorA = anchorA;
@@ -129,8 +129,8 @@
 -(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
 {
 	CCPhysicsBody *bodyA = self.bodyA, *bodyB = self.bodyB;
-	_constraint.anchorA = cpTransformPoint(bodyA.node.nonRigidTransform, _anchorA);
-	_constraint.anchorB = cpTransformPoint(bodyB.node.nonRigidTransform, _anchorB);
+	_constraint.anchorA = CCP_TO_CPV(CGPointApplyAffineTransform(_anchorA, bodyA.node.nonRigidTransform));
+	_constraint.anchorB = CCP_TO_CPV(CGPointApplyAffineTransform(_anchorB, bodyB.node.nonRigidTransform));
 }
 
 @end
@@ -149,7 +149,7 @@
 
 {
 	if((self = [super init])){
-		_constraint = [ChipmunkDampedSpring dampedSpringWithBodyA:bodyA.body bodyB:bodyB.body anchorA:anchorA anchorB:anchorB restLength:restLength stiffness:stiffness damping:damping];
+		_constraint = [ChipmunkDampedSpring dampedSpringWithBodyA:bodyA.body bodyB:bodyB.body anchorA:CCP_TO_CPV(anchorA) anchorB:CCP_TO_CPV(anchorB) restLength:restLength stiffness:stiffness damping:damping];
 		_constraint.userData = self;
 		
 		_anchorA = anchorA;
@@ -164,8 +164,8 @@
 -(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
 {
 	CCPhysicsBody *bodyA = self.bodyA, *bodyB = self.bodyB;
-	_constraint.anchorA = cpTransformPoint(bodyA.node.nonRigidTransform, _anchorA);
-	_constraint.anchorB = cpTransformPoint(bodyB.node.nonRigidTransform, _anchorB);
+	_constraint.anchorA = CCP_TO_CPV(CGPointApplyAffineTransform(_anchorA, bodyA.node.nonRigidTransform));
+	_constraint.anchorB = CCP_TO_CPV(CGPointApplyAffineTransform(_anchorB, bodyB.node.nonRigidTransform));
 }
 
 @end

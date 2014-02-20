@@ -535,7 +535,7 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  *
  *  @return A newly initialized CCTimer object.
  */
--(CCTimer *) schedule:(SEL)selector interval:(CCTime)interval repeat: (uint) repeat delay:(CCTime) delay;
+-(CCTimer *) schedule:(SEL)selector interval:(CCTime)interval repeat: (NSUInteger) repeat delay:(CCTime) delay;
 
 /**
  *  Schedules a selector that runs only once, with a delay of 0 or larger.
