@@ -842,9 +842,9 @@ static inline float readFloat(CCBReader *self)
     
     if([className isEqualToString:@"CCPhysicsPivotJoint"])
     {
-        CGPoint anchorPos = [properties[@"anchorPos"] CGPointValue];
+        CGPoint anchorA = [properties[@"anchorA"] CGPointValue];
         
-        return [CCPhysicsJoint connectedPivotJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody anchorA:anchorPos];
+        return [CCPhysicsJoint connectedPivotJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody anchorA:anchorA];
     }
     
     return nil;
