@@ -233,16 +233,17 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     // check for runtime expired
     if (_progress >= 1.0f)
     {
-        // exit out scene, and start new scene
+        // Exit out scene
         [_outgoingScene onExit];
         if ([CCDirector sharedDirector].sendCleanupToScene) [_outgoingScene cleanup];
+        _outgoingScene = nil;
+				
+				
+				// Start incoming scene
         [[CCDirector sharedDirector] replaceScene:_incomingScene];
         [_incomingScene onEnterTransitionDidFinish];
         _incomingScene.paused = _incomingPauseState;
-        
-        // release scenes
         _incomingScene = nil;
-        _outgoingScene = nil;
         
         return;
     }

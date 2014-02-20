@@ -287,8 +287,8 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, /*CP_BODY_TYPE_K
 
 //MARK: Velocity
 
--(CGPoint)velocity {return _body.velocity;}
--(void)setVelocity:(CGPoint)velocity {_body.velocity = velocity;}
+-(CGPoint)velocity {return CPV_TO_CCP(_body.velocity);}
+-(void)setVelocity:(CGPoint)velocity {_body.velocity = CCP_TO_CPV(velocity);}
 
 -(CGFloat)angularVelocity {return _body.angularVelocity;}
 -(void)setAngularVelocity:(CGFloat)angularVelocity
@@ -302,8 +302,8 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, /*CP_BODY_TYPE_K
 
 //MARK: Forces, Torques and Impulses:
 
--(CGPoint)force {return _body.force;}
--(void)setForce:(CGPoint)force {_body.force = force;}
+-(CGPoint)force {return CPV_TO_CCP(_body.force);}
+-(void)setForce:(CGPoint)force {_body.force = CCP_TO_CPV(force);}
 
 -(CGFloat)torque {return _body.torque;}
 -(void)setTorque:(CGFloat)torque {_body.torque = torque;}
@@ -311,23 +311,23 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, /*CP_BODY_TYPE_K
 -(void)applyTorque:(CGFloat)torque {_body.torque += torque;}
 -(void)applyAngularImpulse:(CGFloat)impulse {_body.angularVelocity += impulse/_body.moment;}
 
--(void)applyForce:(CGPoint)force {_body.force = cpvadd(_body.force, force);}
--(void)applyImpulse:(CGPoint)impulse {_body.velocity = cpvadd(_body.velocity, cpvmult(impulse, 1.0f/_body.mass));}
+-(void)applyForce:(CGPoint)force {_body.force = cpvadd(_body.force, CCP_TO_CPV(force));}
+-(void)applyImpulse:(CGPoint)impulse {_body.velocity = cpvadd(_body.velocity, cpvmult(CCP_TO_CPV(impulse), 1.0f/_body.mass));}
 
 -(void)applyForce:(CGPoint)force atLocalPoint:(CGPoint)point
 {
-	cpVect f = cpTransformVect(_body.transform, force);
-	[_body applyForce:f atLocalPoint:point];
+	cpVect f = cpTransformVect(_body.transform, CCP_TO_CPV(force));
+	[_body applyForce:f atLocalPoint:CCP_TO_CPV(point)];
 }
 
 -(void)applyImpulse:(CGPoint)impulse atLocalPoint:(CGPoint)point
 {
-	cpVect j = cpTransformVect(_body.transform, impulse);
-	[_body applyImpulse:j atLocalPoint:point];
+	cpVect j = cpTransformVect(_body.transform, CCP_TO_CPV(impulse));
+	[_body applyImpulse:j atLocalPoint:CCP_TO_CPV(point)];
 }
 
--(void)applyForce:(CGPoint)force atWorldPoint:(CGPoint)point {[_body applyForce:force atWorldPoint:point];}
--(void)applyImpulse:(CGPoint)impulse atWorldPoint:(CGPoint)point {[_body applyImpulse:impulse atWorldPoint:point];}
+-(void)applyForce:(CGPoint)force atWorldPoint:(CGPoint)point {[_body applyForce:CCP_TO_CPV(force) atWorldPoint:CCP_TO_CPV(point)];}
+-(void)applyImpulse:(CGPoint)impulse atWorldPoint:(CGPoint)point {[_body applyImpulse:CCP_TO_CPV(impulse) atWorldPoint:CCP_TO_CPV(point)];}
 
 //MARK: Misc.
 
@@ -345,10 +345,10 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, /*CP_BODY_TYPE_K
 
 -(void)setNode:(CCNode *)node {_node = node;}
 
--(cpVect)absolutePosition {return _body.position;}
--(void)setAbsolutePosition:(cpVect)absolutePosition
+-(CGPoint)absolutePosition {return CPV_TO_CCP(_body.position);}
+-(void)setAbsolutePosition:(CGPoint)absolutePosition
 {
-	_body.position = absolutePosition;
+	_body.position = CCP_TO_CPV(absolutePosition);
 	
 	if(_body.type == CP_BODY_TYPE_STATIC){
 		// Need to force Chipmunk to update the spatial indexes for a static body.
@@ -356,8 +356,8 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, /*CP_BODY_TYPE_K
 	}
 }
 
--(cpFloat)absoluteRadians {return _body.angle;}
--(void)setAbsoluteRadians:(cpFloat)absoluteRadians {
+-(CGFloat)absoluteRadians {return _body.angle;}
+-(void)setAbsoluteRadians:(CGFloat)absoluteRadians {
 	_body.angle = absoluteRadians;
 	
 	if(_body.type == CP_BODY_TYPE_STATIC){
@@ -366,7 +366,9 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, /*CP_BODY_TYPE_K
 	}
 }
 
--(cpTransform)absoluteTransform {return _body.transform;}
+-(CGAffineTransform)absoluteTransform {
+	return CPTRANSFORM_TO_CGAFFINETRANSFORM(_body.transform);
+}
 
 -(ChipmunkBody *)body {return _body;}
 
