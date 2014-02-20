@@ -28,8 +28,6 @@
 #import "ccTypes.h"
 #import "CCColor.h"
 
-#import <GLKit/GLKit.h>
-
 
 @class CCTexture;
 @class CCDirector;

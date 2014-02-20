@@ -43,40 +43,9 @@
  *
  * CCSprite can be created with an image, or with a sub-rectangle of an image.
  *
- * If the parent or any of its ancestors is a CCSpriteBatchNode then the following features &limitations apply.
- *
- * Features:
- *
- * - MUCH faster rendering, specially if the CCSpriteBatchNode has many children. All the children will be drawn in a single batch.
- *
- * Limitations:
- *
- *  - The Alias/Antialias property belongs to CCSpriteBatchNode, so you can't individually set the aliased property.
- *  - The Blending function property belongs to CCSpriteBatchNode, so you can't individually set the blending function property.
- *  - Parallax scroller is not supported, but can be simulated with a "proxy" sprite.
- *
- * If the parent is an standard CCNode, then CCSprite behaves like any other CCNode:
- *
- * - It supports blending functions.
- * - It supports aliasing / antialiasing.
- * - But the rendering will be slower: 1 draw per children.
- *
  * The default anchorPoint in CCSprite is (0.5, 0.5).
  */
 @interface CCSprite : CCNode <CCTextureProtocol> {
-
-	//
-	// Data used when the sprite is rendered using a CCSpriteBatchNode.
-	//
-	CCTextureAtlas			*__unsafe_unretained _textureAtlas;			// Sprite Sheet texture atlas (weak reference)
-	NSUInteger				_atlasIndex;			// Absolute (real) Index on the batch node
-	CCSpriteBatchNode		*_batchNode;			// Used batch node (weak reference)
-	CGAffineTransform		_transformToBatch;		//
-	BOOL					_dirty;					// Sprite needs to be updated
-	BOOL					_recursiveDirty;		// Subchildren needs to be updated
-	BOOL					_hasChildren;			// optimization to check if it contain children
-	BOOL					_shouldBeHidden;		// should not be drawn because one of the ancestors is not visible
-
 	//
 	// Data used when the sprite is self-rendered.
 	//
@@ -98,7 +67,7 @@
 	CGPoint _unflippedOffsetPositionFromCenter;
 
 	// Vertex coords, texture coords and color info.
-	ccV3F_C4B_T2F_Quad _quad;
+	CCVertex _verts[4];
 
 	// Opacity and RGB protocol.
 	BOOL		_opacityModifyRGB;

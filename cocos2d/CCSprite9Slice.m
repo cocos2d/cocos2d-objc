@@ -133,69 +133,69 @@ typedef NS_ENUM(NSInteger, CCSprite9SliceSizes)
 
 - (void)calculateQuadNine
 {
-    float alphaX[CCSprite9SliceVerticesX];
-    float alphaY[CCSprite9SliceVerticesY];
-    float alphaTexX[CCSprite9SliceVerticesX];
-    float alphaTexY[CCSprite9SliceVerticesY];
-    ccV3F_C4B_T2F min, max;
-    
-    // calculate interpolation min and max
-    min.vertices = _quad.bl.vertices;
-    min.texCoords = _quad.bl.texCoords;
-    
-    CGSize physicalSize = CGSizeMake(
-                                     self.contentSizeInPoints.width + _rect.size.width - _originalContentSize.width,
-                                     self.contentSizeInPoints.height + _rect.size.height - _originalContentSize.height);
-    max.vertices = (ccVertex3F)
-    {
-        _quad.bl.vertices.x + physicalSize.width,
-        _quad.bl.vertices.y + physicalSize.height,
-        _quad.tr.vertices.z
-    };
-    max.texCoords = _quad.tr.texCoords;
-    
-    // calculate alpha
-    alphaX[0] = 0;
-    alphaX[1] = _marginLeft / (physicalSize.width / _rect.size.width);
-    alphaX[2] = 1 - _marginRight / (physicalSize.width / _rect.size.width);
-    alphaX[3] = 1;
-    
-    alphaY[0] = 0;
-    alphaY[1] = _marginBottom / (physicalSize.height / _rect.size.height);
-    alphaY[2] = 1 - _marginTop / (physicalSize.height / _rect.size.height);
-    alphaY[3] = 1;
-    
-    alphaTexX[0] = 0;
-    alphaTexX[1] = _marginLeft;
-    alphaTexX[2] = 1 - _marginRight;
-    alphaTexX[3] = 1;
-    
-    alphaTexY[0] = 0;
-    alphaTexY[1] = _marginBottom;
-    alphaTexY[2] = 1 - _marginTop;
-    alphaTexY[3] = 1;
-    
-    
-    for (int strip = 0; strip < CCSprite9SliceStrips; strip ++)
-    {
-        for (int col = 0; col < CCSprite9SliceVerticesX; col ++)
-        {
-            int index = 2 * ((strip * CCSprite9SliceVerticesX) + col);
-            
-            _quadNine[index].vertices = [self vertex3FLerp:min.vertices max:max.vertices alpha:ccp(alphaX[col],alphaY[strip])];
-            _quadNine[index].texCoords = [self tex2FLerp:min.texCoords max:max.texCoords alpha:ccp(alphaTexX[col],alphaTexY[strip])];
-            _quadNine[index].colors = _quad.bl.colors;
-
-            index ++;
-            
-            _quadNine[index].vertices = [self vertex3FLerp:min.vertices max:max.vertices alpha:ccp(alphaX[col],alphaY[strip+1])];
-            _quadNine[index].texCoords = [self tex2FLerp:min.texCoords max:max.texCoords alpha:ccp(alphaTexX[col],alphaTexY[strip+1])];
-            _quadNine[index].colors = _quad.bl.colors;
-
-        }
-    }
-    
-    _quadNineDirty = NO;
+//    float alphaX[CCSprite9SliceVerticesX];
+//    float alphaY[CCSprite9SliceVerticesY];
+//    float alphaTexX[CCSprite9SliceVerticesX];
+//    float alphaTexY[CCSprite9SliceVerticesY];
+//    ccV3F_C4B_T2F min, max;
+//    
+//    // calculate interpolation min and max
+//    min.vertices = _quad.bl.vertices;
+//    min.texCoords = _quad.bl.texCoords;
+//    
+//    CGSize physicalSize = CGSizeMake(
+//                                     self.contentSizeInPoints.width + _rect.size.width - _originalContentSize.width,
+//                                     self.contentSizeInPoints.height + _rect.size.height - _originalContentSize.height);
+//    max.vertices = (ccVertex3F)
+//    {
+//        _quad.bl.vertices.x + physicalSize.width,
+//        _quad.bl.vertices.y + physicalSize.height,
+//        _quad.tr.vertices.z
+//    };
+//    max.texCoords = _quad.tr.texCoords;
+//    
+//    // calculate alpha
+//    alphaX[0] = 0;
+//    alphaX[1] = _marginLeft / (physicalSize.width / _rect.size.width);
+//    alphaX[2] = 1 - _marginRight / (physicalSize.width / _rect.size.width);
+//    alphaX[3] = 1;
+//    
+//    alphaY[0] = 0;
+//    alphaY[1] = _marginBottom / (physicalSize.height / _rect.size.height);
+//    alphaY[2] = 1 - _marginTop / (physicalSize.height / _rect.size.height);
+//    alphaY[3] = 1;
+//    
+//    alphaTexX[0] = 0;
+//    alphaTexX[1] = _marginLeft;
+//    alphaTexX[2] = 1 - _marginRight;
+//    alphaTexX[3] = 1;
+//    
+//    alphaTexY[0] = 0;
+//    alphaTexY[1] = _marginBottom;
+//    alphaTexY[2] = 1 - _marginTop;
+//    alphaTexY[3] = 1;
+//    
+//    
+//    for (int strip = 0; strip < CCSprite9SliceStrips; strip ++)
+//    {
+//        for (int col = 0; col < CCSprite9SliceVerticesX; col ++)
+//        {
+//            int index = 2 * ((strip * CCSprite9SliceVerticesX) + col);
+//            
+//            _quadNine[index].vertices = [self vertex3FLerp:min.vertices max:max.vertices alpha:ccp(alphaX[col],alphaY[strip])];
+//            _quadNine[index].texCoords = [self tex2FLerp:min.texCoords max:max.texCoords alpha:ccp(alphaTexX[col],alphaTexY[strip])];
+//            _quadNine[index].colors = _quad.bl.colors;
+//
+//            index ++;
+//            
+//            _quadNine[index].vertices = [self vertex3FLerp:min.vertices max:max.vertices alpha:ccp(alphaX[col],alphaY[strip+1])];
+//            _quadNine[index].texCoords = [self tex2FLerp:min.texCoords max:max.texCoords alpha:ccp(alphaTexX[col],alphaTexY[strip+1])];
+//            _quadNine[index].colors = _quad.bl.colors;
+//
+//        }
+//    }
+//    
+//    _quadNineDirty = NO;
 }
 
 // ---------------------------------------------------------------------

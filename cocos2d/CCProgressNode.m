@@ -180,44 +180,44 @@ const char kCCProgressTextureCoords = 0x4b;
 ///
 //	@returns the vertex position from the texture coordinate
 ///
--(ccTex2F)textureCoordFromAlphaPoint:(CGPoint) alpha
-{
-	if (!_sprite) {
-		return (ccTex2F){0,0};
-	}
-	ccV3F_C4B_T2F_Quad quad = _sprite.quad;
-	CGPoint min = (CGPoint){quad.bl.texCoords.u,quad.bl.texCoords.v};
-	CGPoint max = (CGPoint){quad.tr.texCoords.u,quad.tr.texCoords.v};
-  //  Fix bug #1303 so that progress timer handles sprite frame texture rotation
-  if (_sprite.textureRectRotated) {
-    CC_SWAP(alpha.x, alpha.y);
-  }
-	return (ccTex2F){min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y};
-}
-
--(ccVertex2F)vertexFromAlphaPoint:(CGPoint) alpha
-{
-	if (!_sprite) {
-		return (ccVertex2F){0.f, 0.f};
-	}
-	ccV3F_C4B_T2F_Quad quad = _sprite.quad;
-	CGPoint min = (CGPoint){quad.bl.vertices.x,quad.bl.vertices.y};
-	CGPoint max = (CGPoint){quad.tr.vertices.x,quad.tr.vertices.y};
-	return (ccVertex2F){min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y};
-}
-
--(void)updateColor
-{
-	if (!_sprite) {
-		return;
-	}
-	if(_vertexData){
-		ccColor4B sc = _sprite.quad.tl.colors;
-		for (int i=0; i < _vertexDataCount; ++i) {
-			_vertexData[i].colors = sc;
-		}
-	}
-}
+//-(ccTex2F)textureCoordFromAlphaPoint:(CGPoint) alpha
+//{
+//	if (!_sprite) {
+//		return (ccTex2F){0,0};
+//	}
+//	ccV3F_C4B_T2F_Quad quad = _sprite.quad;
+//	CGPoint min = (CGPoint){quad.bl.texCoords.u,quad.bl.texCoords.v};
+//	CGPoint max = (CGPoint){quad.tr.texCoords.u,quad.tr.texCoords.v};
+//  //  Fix bug #1303 so that progress timer handles sprite frame texture rotation
+//  if (_sprite.textureRectRotated) {
+//    CC_SWAP(alpha.x, alpha.y);
+//  }
+//	return (ccTex2F){min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y};
+//}
+//
+//-(ccVertex2F)vertexFromAlphaPoint:(CGPoint) alpha
+//{
+//	if (!_sprite) {
+//		return (ccVertex2F){0.f, 0.f};
+//	}
+//	ccV3F_C4B_T2F_Quad quad = _sprite.quad;
+//	CGPoint min = (CGPoint){quad.bl.vertices.x,quad.bl.vertices.y};
+//	CGPoint max = (CGPoint){quad.tr.vertices.x,quad.tr.vertices.y};
+//	return (ccVertex2F){min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y};
+//}
+//
+//-(void)updateColor
+//{
+//	if (!_sprite) {
+//		return;
+//	}
+//	if(_vertexData){
+//		ccColor4B sc = _sprite.quad.tl.colors;
+//		for (int i=0; i < _vertexDataCount; ++i) {
+//			_vertexData[i].colors = sc;
+//		}
+//	}
+//}
 
 -(void)updateProgress
 {
@@ -361,26 +361,26 @@ const char kCCProgressTextureCoords = 0x4b;
 	}
 	[self updateColor];
   
-	if (!sameIndexCount) {
-    
-		//	First we populate the array with the _midpoint, then all
-		//	vertices/texcoords/colors of the 12 'o clock start and edges and the hitpoint
-		_vertexData[0].texCoords = [self textureCoordFromAlphaPoint:_midpoint];
-		_vertexData[0].vertices = [self vertexFromAlphaPoint:_midpoint];
-    
-		_vertexData[1].texCoords = [self textureCoordFromAlphaPoint:topMid];
-		_vertexData[1].vertices = [self vertexFromAlphaPoint:topMid];
-    
-		for(int i = 0; i < index; ++i){
-			CGPoint alphaPoint = [self boundaryTexCoord:i];
-			_vertexData[i+2].texCoords = [self textureCoordFromAlphaPoint:alphaPoint];
-			_vertexData[i+2].vertices = [self vertexFromAlphaPoint:alphaPoint];
-		}
-	}
-  
-	//	hitpoint will go last
-	_vertexData[_vertexDataCount - 1].texCoords = [self textureCoordFromAlphaPoint:hit];
-	_vertexData[_vertexDataCount - 1].vertices = [self vertexFromAlphaPoint:hit];
+//	if (!sameIndexCount) {
+//    
+//		//	First we populate the array with the _midpoint, then all
+//		//	vertices/texcoords/colors of the 12 'o clock start and edges and the hitpoint
+//		_vertexData[0].texCoords = [self textureCoordFromAlphaPoint:_midpoint];
+//		_vertexData[0].vertices = [self vertexFromAlphaPoint:_midpoint];
+//    
+//		_vertexData[1].texCoords = [self textureCoordFromAlphaPoint:topMid];
+//		_vertexData[1].vertices = [self vertexFromAlphaPoint:topMid];
+//    
+//		for(int i = 0; i < index; ++i){
+//			CGPoint alphaPoint = [self boundaryTexCoord:i];
+//			_vertexData[i+2].texCoords = [self textureCoordFromAlphaPoint:alphaPoint];
+//			_vertexData[i+2].vertices = [self vertexFromAlphaPoint:alphaPoint];
+//		}
+//	}
+//  
+//	//	hitpoint will go last
+//	_vertexData[_vertexDataCount - 1].texCoords = [self textureCoordFromAlphaPoint:hit];
+//	_vertexData[_vertexDataCount - 1].vertices = [self vertexFromAlphaPoint:hit];
 }
 
 ///
@@ -394,95 +394,95 @@ const char kCCProgressTextureCoords = 0x4b;
 ///
 -(void)updateBar
 {
-	if (!_sprite) {
-		return;
-	}
-	float alpha = _percentage / 100.f;
-	CGPoint alphaOffset = ccpMult(ccp(1.f * (1.f - _barChangeRate.x) + alpha * _barChangeRate.x, 1.f * (1.f - _barChangeRate.y) + alpha * _barChangeRate.y), .5f);
-	CGPoint min = ccpSub(_midpoint, alphaOffset);
-	CGPoint max = ccpAdd(_midpoint, alphaOffset);
-  
-	if (min.x < 0.f) {
-		max.x += -min.x;
-		min.x = 0.f;
-	}
-  
-	if (max.x > 1.f) {
-		min.x -= max.x - 1.f;
-		max.x = 1.f;
-	}
-  
-	if (min.y < 0.f) {
-		max.y += -min.y;
-		min.y = 0.f;
-	}
-  
-	if (max.y > 1.f) {
-		min.y -= max.y - 1.f;
-		max.y = 1.f;
-	}
-  
-  
-	if (!_reverseDirection) {
-		if(!_vertexData) {
-			_vertexDataCount = 4;
-			_vertexData = malloc(_vertexDataCount * sizeof(ccV2F_C4B_T2F));
-			NSAssert( _vertexData, @"CCProgressTimer. Not enough memory");
-		}
-		//	TOPLEFT
-		_vertexData[0].texCoords = [self textureCoordFromAlphaPoint:ccp(min.x,max.y)];
-		_vertexData[0].vertices = [self vertexFromAlphaPoint:ccp(min.x,max.y)];
-    
-		//	BOTLEFT
-		_vertexData[1].texCoords = [self textureCoordFromAlphaPoint:ccp(min.x,min.y)];
-		_vertexData[1].vertices = [self vertexFromAlphaPoint:ccp(min.x,min.y)];
-    
-		//	TOPRIGHT
-		_vertexData[2].texCoords = [self textureCoordFromAlphaPoint:ccp(max.x,max.y)];
-		_vertexData[2].vertices = [self vertexFromAlphaPoint:ccp(max.x,max.y)];
-    
-		//	BOTRIGHT
-		_vertexData[3].texCoords = [self textureCoordFromAlphaPoint:ccp(max.x,min.y)];
-		_vertexData[3].vertices = [self vertexFromAlphaPoint:ccp(max.x,min.y)];
-	} else {
-		if(!_vertexData) {
-			_vertexDataCount = 8;
-			_vertexData = malloc(_vertexDataCount * sizeof(ccV2F_C4B_T2F));
-			NSAssert( _vertexData, @"CCProgressTimer. Not enough memory");
-			//	TOPLEFT 1
-			_vertexData[0].texCoords = [self textureCoordFromAlphaPoint:ccp(0,1)];
-			_vertexData[0].vertices = [self vertexFromAlphaPoint:ccp(0,1)];
-      
-			//	BOTLEFT 1
-			_vertexData[1].texCoords = [self textureCoordFromAlphaPoint:ccp(0,0)];
-			_vertexData[1].vertices = [self vertexFromAlphaPoint:ccp(0,0)];
-      
-			//	TOPRIGHT 2
-			_vertexData[6].texCoords = [self textureCoordFromAlphaPoint:ccp(1,1)];
-			_vertexData[6].vertices = [self vertexFromAlphaPoint:ccp(1,1)];
-      
-			//	BOTRIGHT 2
-			_vertexData[7].texCoords = [self textureCoordFromAlphaPoint:ccp(1,0)];
-			_vertexData[7].vertices = [self vertexFromAlphaPoint:ccp(1,0)];
-		}
-    
-		//	TOPRIGHT 1
-		_vertexData[2].texCoords = [self textureCoordFromAlphaPoint:ccp(min.x,max.y)];
-		_vertexData[2].vertices = [self vertexFromAlphaPoint:ccp(min.x,max.y)];
-    
-		//	BOTRIGHT 1
-		_vertexData[3].texCoords = [self textureCoordFromAlphaPoint:ccp(min.x,min.y)];
-		_vertexData[3].vertices = [self vertexFromAlphaPoint:ccp(min.x,min.y)];
-    
-		//	TOPLEFT 2
-		_vertexData[4].texCoords = [self textureCoordFromAlphaPoint:ccp(max.x,max.y)];
-		_vertexData[4].vertices = [self vertexFromAlphaPoint:ccp(max.x,max.y)];
-    
-		//	BOTLEFT 2
-		_vertexData[5].texCoords = [self textureCoordFromAlphaPoint:ccp(max.x,min.y)];
-		_vertexData[5].vertices = [self vertexFromAlphaPoint:ccp(max.x,min.y)];
-	}
-	[self updateColor];
+//	if (!_sprite) {
+//		return;
+//	}
+//	float alpha = _percentage / 100.f;
+//	CGPoint alphaOffset = ccpMult(ccp(1.f * (1.f - _barChangeRate.x) + alpha * _barChangeRate.x, 1.f * (1.f - _barChangeRate.y) + alpha * _barChangeRate.y), .5f);
+//	CGPoint min = ccpSub(_midpoint, alphaOffset);
+//	CGPoint max = ccpAdd(_midpoint, alphaOffset);
+//  
+//	if (min.x < 0.f) {
+//		max.x += -min.x;
+//		min.x = 0.f;
+//	}
+//  
+//	if (max.x > 1.f) {
+//		min.x -= max.x - 1.f;
+//		max.x = 1.f;
+//	}
+//  
+//	if (min.y < 0.f) {
+//		max.y += -min.y;
+//		min.y = 0.f;
+//	}
+//  
+//	if (max.y > 1.f) {
+//		min.y -= max.y - 1.f;
+//		max.y = 1.f;
+//	}
+//  
+//  
+//	if (!_reverseDirection) {
+//		if(!_vertexData) {
+//			_vertexDataCount = 4;
+//			_vertexData = malloc(_vertexDataCount * sizeof(ccV2F_C4B_T2F));
+//			NSAssert( _vertexData, @"CCProgressTimer. Not enough memory");
+//		}
+//		//	TOPLEFT
+//		_vertexData[0].texCoords = [self textureCoordFromAlphaPoint:ccp(min.x,max.y)];
+//		_vertexData[0].vertices = [self vertexFromAlphaPoint:ccp(min.x,max.y)];
+//    
+//		//	BOTLEFT
+//		_vertexData[1].texCoords = [self textureCoordFromAlphaPoint:ccp(min.x,min.y)];
+//		_vertexData[1].vertices = [self vertexFromAlphaPoint:ccp(min.x,min.y)];
+//    
+//		//	TOPRIGHT
+//		_vertexData[2].texCoords = [self textureCoordFromAlphaPoint:ccp(max.x,max.y)];
+//		_vertexData[2].vertices = [self vertexFromAlphaPoint:ccp(max.x,max.y)];
+//    
+//		//	BOTRIGHT
+//		_vertexData[3].texCoords = [self textureCoordFromAlphaPoint:ccp(max.x,min.y)];
+//		_vertexData[3].vertices = [self vertexFromAlphaPoint:ccp(max.x,min.y)];
+//	} else {
+//		if(!_vertexData) {
+//			_vertexDataCount = 8;
+//			_vertexData = malloc(_vertexDataCount * sizeof(ccV2F_C4B_T2F));
+//			NSAssert( _vertexData, @"CCProgressTimer. Not enough memory");
+//			//	TOPLEFT 1
+//			_vertexData[0].texCoords = [self textureCoordFromAlphaPoint:ccp(0,1)];
+//			_vertexData[0].vertices = [self vertexFromAlphaPoint:ccp(0,1)];
+//      
+//			//	BOTLEFT 1
+//			_vertexData[1].texCoords = [self textureCoordFromAlphaPoint:ccp(0,0)];
+//			_vertexData[1].vertices = [self vertexFromAlphaPoint:ccp(0,0)];
+//      
+//			//	TOPRIGHT 2
+//			_vertexData[6].texCoords = [self textureCoordFromAlphaPoint:ccp(1,1)];
+//			_vertexData[6].vertices = [self vertexFromAlphaPoint:ccp(1,1)];
+//      
+//			//	BOTRIGHT 2
+//			_vertexData[7].texCoords = [self textureCoordFromAlphaPoint:ccp(1,0)];
+//			_vertexData[7].vertices = [self vertexFromAlphaPoint:ccp(1,0)];
+//		}
+//    
+//		//	TOPRIGHT 1
+//		_vertexData[2].texCoords = [self textureCoordFromAlphaPoint:ccp(min.x,max.y)];
+//		_vertexData[2].vertices = [self vertexFromAlphaPoint:ccp(min.x,max.y)];
+//    
+//		//	BOTRIGHT 1
+//		_vertexData[3].texCoords = [self textureCoordFromAlphaPoint:ccp(min.x,min.y)];
+//		_vertexData[3].vertices = [self vertexFromAlphaPoint:ccp(min.x,min.y)];
+//    
+//		//	TOPLEFT 2
+//		_vertexData[4].texCoords = [self textureCoordFromAlphaPoint:ccp(max.x,max.y)];
+//		_vertexData[4].vertices = [self vertexFromAlphaPoint:ccp(max.x,max.y)];
+//    
+//		//	BOTLEFT 2
+//		_vertexData[5].texCoords = [self textureCoordFromAlphaPoint:ccp(max.x,min.y)];
+//		_vertexData[5].vertices = [self vertexFromAlphaPoint:ccp(max.x,min.y)];
+//	}
+//	[self updateColor];
 }
 
 -(CGPoint)boundaryTexCoord:(char)index

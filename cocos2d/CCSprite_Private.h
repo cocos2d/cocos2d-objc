@@ -25,27 +25,8 @@
 
 #import "CCSprite.h"
 
+#warning TODO Check if these are still needed
 @interface CCSprite ()
-
-// Whether or not the Sprite needs to be updated in the Atlas.
-@property (nonatomic,readwrite) BOOL dirty;
-
-// The quad (tex coords, vertex coords and color) information.
-@property (nonatomic,readonly) ccV3F_C4B_T2F_Quad quad;
-
-// The index used on the TextureAtlas. Don't modify this value unless you know what you are doing.
-@property (nonatomic,readwrite) NSUInteger atlasIndex;
-
-// Weak reference of the CCTextureAtlas used when the sprite is rendered using a CCSpriteBatchNode.
-@property (nonatomic,readwrite,unsafe_unretained) CCTextureAtlas *textureAtlas;
-
-// Weak reference to the CCSpriteBatchNode that renders the CCSprite.
-@property (nonatomic,readwrite,unsafe_unretained) CCSpriteBatchNode *batchNode __deprecated;
-
-#pragma mark CCSprite - BatchNode
-
-// Updates the quad according the the rotation, position, scale values.
-//-(void) updateTransform;
 
 /* 
  Set the vertex rect. It will be called internally by setTextureRect.

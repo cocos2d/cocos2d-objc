@@ -524,7 +524,8 @@ void FNTConfigRemoveCache( void )
 		_imageOffset = offset;
         
 		_reusedChar = [[CCSprite alloc] initWithTexture:_textureAtlas.texture rect:CGRectMake(0, 0, 0, 0) rotated:NO];
-		[_reusedChar setBatchNode:self];
+		#warning TODO
+//		[_reusedChar setBatchNode:self];
 
 		[self setString:theString updateLabel:YES];
 	}
@@ -650,10 +651,11 @@ void FNTConfigRemoveCache( void )
             //Find position of last character on the line
             CCSprite *lastChar;
             for(CCSprite* child in [self children]) {
-                if([child atlasIndex]==index) {
-                    lastChar = child;
-                    break;
-                }
+							#warning TODO
+//                if([child atlasIndex]==index) {
+//                    lastChar = child;
+//                    break;
+//                }
             }
 			
             lineWidth = lastChar.position.x + lastChar.contentSize.width/2;
@@ -792,7 +794,8 @@ void FNTConfigRemoveCache( void )
 				 Ideal for big labels.
 				 */
 				fontChar = _reusedChar;
-				fontChar.batchNode = nil;
+				#warning TODO
+//				fontChar.batchNode = nil;
 				hasSprite = NO;
 			} else {
 				fontChar = [[CCSprite alloc] initWithTexture:_textureAtlas.texture rect:rect];

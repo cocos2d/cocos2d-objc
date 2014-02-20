@@ -264,73 +264,9 @@ const NSUInteger defaultCapacity = 0;
 	}
 }
 
--(void) updateAtlasIndex:(CCSprite*) sprite currentIndex:(NSInteger*) curIndex
-{
-	NSMutableArray *array = (NSMutableArray*)[sprite children];
-	NSUInteger count = [array count];
-	NSInteger oldIndex;
+-(void) updateAtlasIndex:(CCSprite*) sprite currentIndex:(NSInteger*) curIndex{}
 
-	if( count == 0 )
-	{
-		oldIndex = sprite.atlasIndex;
-		sprite.atlasIndex = *curIndex;
-		sprite.orderOfArrival = 0;
-		if (oldIndex != *curIndex)
-			[self swap:oldIndex withNewIndex:*curIndex];
-		(*curIndex)++;
-	}
-	else
-	{
-		BOOL needNewIndex=YES;
-
-		if (((CCSprite*) [array objectAtIndex:0]).zOrder >= 0)
-		{
-			//all children are in front of the parent
-			oldIndex = sprite.atlasIndex;
-			sprite.atlasIndex = *curIndex;
-			sprite.orderOfArrival = 0;
-			if (oldIndex != *curIndex)
-				[self swap:oldIndex withNewIndex:*curIndex];
-			(*curIndex)++;
-
-			needNewIndex = NO;
-		}
-
-        for (CCSprite* child in array)
-		{
-			if (needNewIndex && child.zOrder >= 0)
-			{
-				oldIndex = sprite.atlasIndex;
-				sprite.atlasIndex = *curIndex;
-				sprite.orderOfArrival = 0;
-				if (oldIndex != *curIndex)
-					[self swap:oldIndex withNewIndex:*curIndex];
-				(*curIndex)++;
-				needNewIndex = NO;
-
-			}
-
-			[self updateAtlasIndex:child currentIndex:curIndex];
-		}
-
-		if (needNewIndex)
-		{//all children have a zOrder < 0)
-			oldIndex=sprite.atlasIndex;
-			sprite.atlasIndex=*curIndex;
-			sprite.orderOfArrival=0;
-			if (oldIndex!=*curIndex)
-				[self swap:oldIndex withNewIndex:*curIndex];
-			(*curIndex)++;
-		}
-	}
-}
-
-- (void) swap:(NSInteger) oldIndex withNewIndex:(NSInteger) newIndex
-{
-    //update the index of other swapped item
-	( ( CCSprite* )[ _descendants objectAtIndex:newIndex ] ).atlasIndex = oldIndex;
-    [_descendants exchangeObjectAtIndex:oldIndex withObjectAtIndex:newIndex];
-}
+- (void) swap:(NSInteger) oldIndex withNewIndex:(NSInteger) newIndex{}
 
 - (void) reorderBatch:(BOOL) reorder
 {
@@ -380,175 +316,25 @@ const NSUInteger defaultCapacity = 0;
 
 #pragma mark CCSpriteBatchNode - Atlas Index Stuff
 
--(NSUInteger) rebuildIndexInOrder:(CCSprite*)node atlasIndex:(NSUInteger)index
-{
-    for (CCSprite* sprite in node.children) {
-		if( sprite.zOrder < 0 )
-			index = [self rebuildIndexInOrder:sprite atlasIndex:index];
-	}
+-(NSUInteger) rebuildIndexInOrder:(CCSprite*)node atlasIndex:(NSUInteger)index{}
 
-	// ignore self (batch node)
-	if( ! [node isEqual:self]) {
-		node.atlasIndex = index;
-		index++;
-	}
+-(NSUInteger) highestAtlasIndexInChild:(CCSprite*)sprite{}
 
-	for (CCSprite* sprite in node.children) {
-		if( sprite.zOrder >= 0 )
-			index = [self rebuildIndexInOrder:sprite atlasIndex:index];
-	}
-
-	return index;
-}
-
--(NSUInteger) highestAtlasIndexInChild:(CCSprite*)sprite
-{
-	if( sprite.children.count == 0 )
-		return sprite.atlasIndex;
-	else
-		return [self highestAtlasIndexInChild:[sprite.children lastObject]];
-}
-
--(NSUInteger) lowestAtlasIndexInChild:(CCSprite*)sprite
-{
-	NSArray *array = [sprite children];
-	NSUInteger count = [array count];
-	if( count == 0 )
-		return sprite.atlasIndex;
-	else
-		return [self lowestAtlasIndexInChild:[array objectAtIndex:0] ];
-}
+-(NSUInteger) lowestAtlasIndexInChild:(CCSprite*)sprite{}
 
 
--(NSUInteger)atlasIndexForChild:(CCSprite*)sprite atZ:(NSInteger)z
-{
-	NSArray *brothers = [[sprite parent] children];
-	NSUInteger childIndex = [brothers indexOfObject:sprite];
-
-	// ignore parent Z if parent is batchnode
-	BOOL ignoreParent = ( sprite.parent == self );
-	CCSprite *previous = nil;
-	if( childIndex > 0 )
-		previous = [brothers objectAtIndex:childIndex-1];
-
-	// first child of the sprite sheet
-	if( ignoreParent ) {
-		if( childIndex == 0 )
-			return 0;
-		// else
-		return [self highestAtlasIndexInChild: previous] + 1;
-	}
-
-	// parent is a CCSprite, so, it must be taken into account
-
-	// first child of an CCSprite ?
-	if( childIndex == 0 )
-	{
-		CCSprite *p = (CCSprite*) sprite.parent;
-
-		// less than parent and brothers
-		if( z < 0 )
-			return p.atlasIndex;
-		else
-			return p.atlasIndex+1;
-
-	} else {
-		// previous & sprite belong to the same branch
-		if( ( previous.zOrder < 0 && z < 0 )|| (previous.zOrder >= 0 && z >= 0) )
-			return [self highestAtlasIndexInChild:previous] + 1;
-
-		// else (previous < 0 and sprite >= 0 )
-		CCSprite *p = (CCSprite*) sprite.parent;
-		return p.atlasIndex + 1;
-	}
-
-	NSAssert( NO, @"Should not happen. Error calculating Z on Batch Node");
-	return 0;
-}
+-(NSUInteger)atlasIndexForChild:(CCSprite*)sprite atZ:(NSInteger)z{}
 
 #pragma mark CCSpriteBatchNode - add / remove / reorder helper methods
 // add child helper
--(void) insertChild:(CCSprite*)sprite inAtlasAtIndex:(NSUInteger)index
-{
-	[sprite setBatchNode:self];
-	[sprite setAtlasIndex:index];
-	[sprite setDirty: YES];
-
-	if(_textureAtlas.totalQuads == _textureAtlas.capacity)
-		[self increaseAtlasCapacity];
-
-	ccV3F_C4B_T2F_Quad quad = [sprite quad];
-	[_textureAtlas insertQuad:&quad atIndex:index];
-
-    [_descendants insertObject:sprite atIndex:index];
-
-	// update indices
-	NSUInteger i = index+1;
-	CCSprite *child;
-	for(; i<_descendants.count; i++){
-		child = [_descendants objectAtIndex:i];
-		child.atlasIndex = child.atlasIndex + 1;
-	}
-
-	// add children recursively
-    for (child in sprite.children){
-		NSUInteger idx = [self atlasIndexForChild:child atZ: child.zOrder];
-		[self insertChild:child inAtlasAtIndex:idx];
-	}
-}
+-(void) insertChild:(CCSprite*)sprite inAtlasAtIndex:(NSUInteger)index{}
 
 // addChild helper, faster than insertChild
--(void) appendChild:(CCSprite*)sprite
-{
-    _isReorderChildDirty=YES;
-    [sprite setBatchNode:self];
-    [sprite setDirty: YES];
-    
-    if(_textureAtlas.totalQuads == _textureAtlas.capacity)
-        [self increaseAtlasCapacity];
-    
-    [_descendants addObject:sprite];
-    
-    NSUInteger index=_descendants.count-1;
-    
-    sprite.atlasIndex=index;
-    
-    ccV3F_C4B_T2F_Quad quad = [sprite quad];
-    [_textureAtlas insertQuad:&quad atIndex:index];
-    
-    for(CCSprite* child in sprite.children)
-        [self appendChild:child];
-
-}
+-(void) appendChild:(CCSprite*)sprite{}
 
 
 // remove child helper
--(void) removeSpriteFromAtlas:(CCSprite*)sprite
-{
-	// remove from TextureAtlas
-	[_textureAtlas removeQuadAtIndex:sprite.atlasIndex];
-
-	// Cleanup sprite. It might be reused (issue #569)
-	[sprite setBatchNode:nil];
-
-	NSUInteger index = [_descendants indexOfObject:sprite];
-	if( index != NSNotFound ) {
-        [_descendants removeObjectAtIndex:index];
-
-		// update all sprites beyond this one
-		NSUInteger count = _descendants.count;
-
-		for(; index < count; index++)
-		{
-			CCSprite *s = [_descendants objectAtIndex:index];
-			s.atlasIndex = s.atlasIndex - 1;
-		}
-	}
-
-	// remove children recursively
-    for (CCSprite* child in sprite.children)
-		[self removeSpriteFromAtlas:child];
-}
+-(void) removeSpriteFromAtlas:(CCSprite*)sprite{}
 
 #pragma mark CCSpriteBatchNode - CocosNodeTexture protocol
 
@@ -577,77 +363,11 @@ const NSUInteger defaultCapacity = 0;
 
 @implementation CCSpriteBatchNode (QuadExtension)
 
--(void) insertQuadFromSprite:(CCSprite*)sprite quadIndex:(NSUInteger)index
-{
-	NSAssert( sprite != nil, @"Argument must be non-nil");
-	NSAssert( [sprite isKindOfClass:[CCSprite class]], @"CCSpriteBatchNode only supports CCSprites as children");
-	
-	// make needed room
-	while(index >= _textureAtlas.capacity || _textureAtlas.capacity == _textureAtlas.totalQuads )
-		[self increaseAtlasCapacity];
-	
-	//
-	// update the quad directly. Don't add the sprite to the scene graph
-	//
-	
-	[sprite setBatchNode:self];
-	[sprite setAtlasIndex:index];
-	
-	ccV3F_C4B_T2F_Quad quad = [sprite quad];
-	[_textureAtlas insertQuad:&quad atIndex:index];
-	
-	// XXX: updateTransform will update the textureAtlas too, using updateQuad.
-	// XXX: so, it should be AFTER the insertQuad
-	[sprite setDirty:YES];
-//	[sprite updateTransform];
-}
+-(void) insertQuadFromSprite:(CCSprite*)sprite quadIndex:(NSUInteger)index{}
 
--(void) updateQuadFromSprite:(CCSprite*)sprite quadIndex:(NSUInteger)index
-{
-	NSAssert( sprite != nil, @"Argument must be non-nil");
-	NSAssert( [sprite isKindOfClass:[CCSprite class]], @"CCSpriteBatchNode only supports CCSprites as children");
-
-	// make needed room
-	while(index >= _textureAtlas.capacity || _textureAtlas.capacity == _textureAtlas.totalQuads )
-		[self increaseAtlasCapacity];
-
-	//
-	// update the quad directly. Don't add the sprite to the scene graph
-	//	
-	[sprite setBatchNode:self];
-	[sprite setAtlasIndex:index];
-
-	[sprite setDirty:YES];
-	
-	// UpdateTransform updates the textureAtlas quad
-//	[sprite updateTransform];
-}
+-(void) updateQuadFromSprite:(CCSprite*)sprite quadIndex:(NSUInteger)index{}
 
 
--(id) addSpriteWithoutQuad:(CCSprite*)child z:(NSUInteger)z name:(NSString*)name
-{
-	NSAssert( child != nil, @"Argument must be non-nil");
-	NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSpriteBatchNode only supports CCSprites as children");
-	
-	// quad index is Z
-	[child setAtlasIndex:z];
-	
-	// XXX: optimize with a binary search
-	int i=0;
-	for( CCSprite *c in _descendants ) {
-		if( c.atlasIndex >= z )
-			break;
-		i++;
-	}
-	[_descendants insertObject:child atIndex:i];
-	
-	
-	// IMPORTANT: Call super, and not self. Avoid adding it to the texture atlas array
-	[super addChild:child z:z name:name];
-	
-	//#issue 1262 don't use lazy sorting, tiles are added as quads not as sprites, so sprites need to be added in order
-	[self reorderBatch:NO];
-	return self;
-}
+-(id) addSpriteWithoutQuad:(CCSprite*)child z:(NSUInteger)z name:(NSString*)name{}
 @end
 

@@ -28,10 +28,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ccTypes.h"
 #import "ccMacros.h"
 #import "Platforms/CCGL.h"
-
-#import <GLKit/GLKit.h>
 
 enum {
 	kCCVertexAttrib_Position,

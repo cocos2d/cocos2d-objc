@@ -166,19 +166,18 @@ int compareInts (const void * a, const void * b);
 {	
 	if( ! _reusedTile ) {
 		_reusedTile = [[CCSprite alloc] initWithTexture:_textureAtlas.texture rect:rect rotated:NO];
-		[_reusedTile setBatchNode:self];
 	}
 	else
 	{
 		// XXX HACK: Needed because if "batch node" is nil,
 		// then the Sprite'squad will be reset
-		[_reusedTile setBatchNode:nil];
+//		[_reusedTile setBatchNode:nil];
 
 		// Re-init the sprite
 		[_reusedTile setTextureRect:rect rotated:NO untrimmedSize:rect.size];
 
 		// restore the batch node
-		[_reusedTile setBatchNode:self];
+//		[_reusedTile setBatchNode:self];
 	}
 
 	return _reusedTile;
@@ -280,7 +279,6 @@ int compareInts (const void * a, const void * b);
 		if( ! tile ) {
 			CGRect rect = CC_RECT_SCALE([_tileset rectForGID:gid], 1.0/self.textureAtlas.texture.contentScale);
 			tile = [[CCSprite alloc] initWithTexture:self.texture rect:rect];
-			[tile setBatchNode:self];
 
             CGPoint p = [self positionAt:pos];
             [tile setPosition:p];
@@ -400,9 +398,9 @@ int compareInts (const void * a, const void * b);
 
 	// update possible children
     for (CCSprite *sprite in _children) {
-		NSUInteger ai = [sprite atlasIndex];
-		if( ai >= indexForZ)
-			[sprite setAtlasIndex: ai+1];
+//		NSUInteger ai = [sprite atlasIndex];
+//		if( ai >= indexForZ)
+//			[sprite setAtlasIndex: ai+1];
 	}
 
 	_tiles[z] = gid;
@@ -421,10 +419,10 @@ int compareInts (const void * a, const void * b);
 	[self setupTileSprite:tile position:pos withGID:gid];
 	
 	// get atlas index
-	NSUInteger indexForZ = [self atlasIndexForExistantZ:z];
-
-	[tile setAtlasIndex:indexForZ];
-	[tile setDirty:YES];
+//	NSUInteger indexForZ = [self atlasIndexForExistantZ:z];
+//
+//	[tile setAtlasIndex:indexForZ];
+//	[tile setDirty:YES];
 //	[tile updateTransform];
 	_tiles[z] = gid;
 
@@ -558,10 +556,10 @@ int compareInts (const void * a, const void * b)
 
 	NSAssert( [_children containsObject:sprite], @"Tile does not belong to TMXLayer");
 
-	NSUInteger atlasIndex = [sprite atlasIndex];
-	NSUInteger zz = (NSUInteger) [[_atlasIndexArray objectAtIndex:atlasIndex] intValue];
-	_tiles[zz] = 0;
-    [_atlasIndexArray removeObjectAtIndex:atlasIndex];
+//	NSUInteger atlasIndex = [sprite atlasIndex];
+//	NSUInteger zz = (NSUInteger) [[_atlasIndexArray objectAtIndex:atlasIndex] intValue];
+//	_tiles[zz] = 0;
+//    [_atlasIndexArray removeObjectAtIndex:atlasIndex];
 	[super removeChild:sprite cleanup:cleanup];
 }
 
@@ -594,10 +592,10 @@ int compareInts (const void * a, const void * b)
 			// update possible children
             for (sprite in _children)
             {
-				NSUInteger ai = [sprite atlasIndex];
-				if( ai >= atlasIndex) {
-					[sprite setAtlasIndex: ai-1];
-				}
+//				NSUInteger ai = [sprite atlasIndex];
+//				if( ai >= atlasIndex) {
+//					[sprite setAtlasIndex: ai-1];
+//				}
 			}
 		}
 	}
