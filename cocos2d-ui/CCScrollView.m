@@ -680,7 +680,7 @@
     
     NSArray* responders = [[CCDirector sharedDirector].responderManager nodesAtPoint:touchWorldPos];
     BOOL foundSelf = NO;
-    for (int i = responders.count - 1; i >= 0; i--)
+    for (int i = (int)responders.count - 1; i >= 0; i--)
     {
         CCNode* responder = [responders objectAtIndex:i];
         if (foundSelf)

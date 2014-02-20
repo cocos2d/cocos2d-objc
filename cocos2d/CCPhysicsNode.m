@@ -58,6 +58,7 @@
 
 -(CCContactSet)contacts
 {
+	// TODO this needs to be fixed for 64 bit if CG types are disabled.
 	// This function cast should be safe on any ABI that also supports objc_msgSend_stret().
 	return ((CCContactSet (*)(cpArbiter *))cpArbiterGetContactPointSet)(self.arb);
 }
@@ -68,11 +69,11 @@
 -(CGFloat)restitution {return cpArbiterGetRestitution(self.arb);}
 -(void)setRestitution:(CGFloat)restitution {cpArbiterSetRestitution(self.arb, restitution);}
 
--(CGPoint)surfaceVelocity {return cpArbiterGetSurfaceVelocity(self.arb);}
--(void)setSurfaceVelocity:(CGPoint)surfaceVelocity {cpArbiterSetSurfaceVelocity(self.arb, surfaceVelocity);}
+-(CGPoint)surfaceVelocity {return CPV_TO_CCP(cpArbiterGetSurfaceVelocity(self.arb));}
+-(void)setSurfaceVelocity:(CGPoint)surfaceVelocity {cpArbiterSetSurfaceVelocity(self.arb, CCP_TO_CPV(surfaceVelocity));}
 
 -(CGFloat)totalKineticEnergy {return cpArbiterTotalKE(self.arb);}
--(CGPoint)totalImpulse {return cpArbiterTotalImpulse(self.arb);}
+-(CGPoint)totalImpulse {return CPV_TO_CCP(cpArbiterTotalImpulse(self.arb));}
 
 -(id)userData {return cpArbiterGetUserData(self.arb);}
 -(void)setUserData:(id)userData {cpArbiterSetUserData(self.arb, userData);}
@@ -104,6 +105,7 @@
 	BOOL _wildcard;
 	
 	// Cache all the methods, imps and selectors.
+	// TODO should move to using objc_msgSend instead?
 	Method _begin, _preSolve, _postSolve, _separate;
 	IMP _beginImp, _preSolveImp, _postSolveImp, _separateImp;
 	SEL _beginSel, _preSolveSel, _postSolveSel, _separateSel;
@@ -288,8 +290,8 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 	return self;
 }
 
--(CGPoint)gravity {return _space.gravity;}
--(void)setGravity:(CGPoint)gravity {_space.gravity = gravity;}
+-(CGPoint)gravity {return CPV_TO_CCP(_space.gravity);}
+-(void)setGravity:(CGPoint)gravity {_space.gravity = CCP_TO_CPV(gravity);}
 
 -(int)iterations {return _space.iterations;}
 -(void)setIterations:(int)iterations {_space.iterations = iterations;}
@@ -346,10 +348,10 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 			method_getReturnType(methods[i], returnType, 2);
 			
 			if([phase isEqualToString:@"ccPhysicsCollisionBegin"]){
-				NSAssert(strcmp(returnType, "c") == 0, @"CCPhysicsCollisionBegin delegate methods must return a BOOL.");
+				NSAssert(strcmp(returnType, @encode(BOOL)) == 0, @"CCPhysicsCollisionBegin delegate methods must return a BOOL.");
 				[self handlerForTypeA:typeA typeB:typeB].begin = methods[i];
 			} else if([phase isEqualToString:@"ccPhysicsCollisionPreSolve"]){
-				NSAssert(strcmp(returnType, "c") == 0, @"CCPhysicsCollisionPreSolve delegate methods must return a BOOL.");
+				NSAssert(strcmp(returnType, @encode(BOOL)) == 0, @"CCPhysicsCollisionPreSolve delegate methods must return a BOOL.");
 				[self handlerForTypeA:typeA typeB:typeB].preSolve = methods[i];
 			} else if([phase isEqualToString:@"ccPhysicsCollisionPostSolve"]){
 				// TODO check for no return value?
@@ -376,15 +378,15 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 
 -(void)pointQueryAt:(CGPoint)point within:(CGFloat)radius block:(BOOL (^)(CCPhysicsShape *, CGPoint, CGFloat))block
 {
-	cpSpacePointQuery_b(_space.space, point, radius, CP_SHAPE_FILTER_ALL, ^(cpShape *shape, CGPoint p, CGFloat d, CGPoint g){
-		block([cpShapeGetUserData(shape) userData], p, d);
+	cpSpacePointQuery_b(_space.space, CCP_TO_CPV(point), radius, CP_SHAPE_FILTER_ALL, ^(cpShape *shape, cpVect p, cpFloat d, cpVect g){
+		block([cpShapeGetUserData(shape) userData], CPV_TO_CCP(p), d);
 	});
 }
 
 -(void)rayQueryFirstFrom:(CGPoint)start to:(CGPoint)end block:(BOOL (^)(CCPhysicsShape *, CGPoint, CGPoint, CGFloat))block
 {
-	cpSpaceSegmentQuery_b(_space.space, start, end, 0.0, CP_SHAPE_FILTER_ALL, ^(cpShape *shape, CGPoint p, CGPoint n, CGFloat t){
-		block([cpShapeGetUserData(shape) userData], p, n, t);
+	cpSpaceSegmentQuery_b(_space.space, CCP_TO_CPV(start), CCP_TO_CPV(end), 0.0, CP_SHAPE_FILTER_ALL, ^(cpShape *shape, cpVect p, cpVect n, cpFloat t){
+		block([cpShapeGetUserData(shape) userData], CPV_TO_CCP(p), CPV_TO_CCP(n), t);
 	});
 }
 
@@ -439,23 +441,31 @@ static inline CCColor* ToCCColor(cpSpaceDebugColor c){return [CCColor colorWithR
 
 static void
 DrawCircle(cpVect p, cpFloat a, cpFloat r, cpSpaceDebugColor outline, cpSpaceDebugColor fill, CCDrawNode *draw)
-{[draw drawDot:p radius:r color:ToCCColor(fill)];}
+{[draw drawDot:CPV_TO_CCP(p) radius:r color:ToCCColor(fill)];}
 
 static void
 DrawSegment(cpVect a, cpVect b, cpSpaceDebugColor color, CCDrawNode *draw)
-{[draw drawSegmentFrom:a to:b radius:1.0 color:ToCCColor(color)];}
+{[draw drawSegmentFrom:CPV_TO_CCP(a) to:CPV_TO_CCP(b) radius:1.0 color:ToCCColor(color)];}
 
 static void
 DrawFatSegment(cpVect a, cpVect b, cpFloat r, cpSpaceDebugColor outline, cpSpaceDebugColor fill, CCDrawNode *draw)
-{[draw drawSegmentFrom:a to:b radius:r color:ToCCColor(fill)];}
+{[draw drawSegmentFrom:CPV_TO_CCP(a) to:CPV_TO_CCP(b) radius:r color:ToCCColor(fill)];}
 
 static void
 DrawPolygon(int count, const cpVect *verts, cpFloat r, cpSpaceDebugColor outline, cpSpaceDebugColor fill, CCDrawNode *draw)
-{[draw drawPolyWithVerts:verts count:count fillColor:ToCCColor(fill) borderWidth:1.0 borderColor:ToCCColor(outline)];}
+{
+#if !CP_USE_CGTYPES
+	CGPoint _verts[count];
+	for(int i=0; i<count; i++) _verts[i] = CPV_TO_CCP(verts[i]);
+	[draw drawPolyWithVerts:_verts count:count fillColor:ToCCColor(fill) borderWidth:1.0 borderColor:ToCCColor(outline)];
+#else
+	[draw drawPolyWithVerts:verts count:count fillColor:ToCCColor(fill) borderWidth:1.0 borderColor:ToCCColor(outline)];
+#endif
+}
 
 static void
 DrawDot(cpFloat size, cpVect pos, cpSpaceDebugColor color, CCDrawNode *draw)
-{[draw drawDot:pos radius:size/2.0 color:ToCCColor(color)];}
+{[draw drawDot:CPV_TO_CCP(pos) radius:size/2.0 color:ToCCColor(color)];}
 
 static cpSpaceDebugColor
 ColorForShape(cpShape *shape, CCDrawNode *draw)
@@ -487,7 +497,7 @@ ColorForShape(cpShape *shape, CCDrawNode *draw)
 	cpSpaceEachBody_b(_space.space, ^(cpBody *body){
 		if(cpBodyGetType(body) == CP_BODY_TYPE_DYNAMIC){
 			cpVect cog = cpBodyLocalToWorld(body, cpBodyGetCenterOfGravity(body));
-			[_debugDraw drawDot:cog radius:1.5 color:[CCColor colorWithRed:1 green:1 blue:0 alpha:1]];
+			[_debugDraw drawDot:CPV_TO_CCP(cog) radius:1.5 color:[CCColor colorWithRed:1 green:1 blue:0 alpha:1]];
 		}
 	});
 }

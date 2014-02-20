@@ -68,6 +68,7 @@
 		D3395F1A187F83E600F22C74 /* CCMemoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D3395F19187F83E600F22C74 /* CCMemoryTests.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D340E10E185660BE006E605C /* CCPhysicsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D340E10C185660BE006E605C /* CCPhysicsTest.m */; };
 		D340E10F185660BE006E605C /* TilemapTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D340E10D185660BE006E605C /* TilemapTest.m */; };
+		D3870C5A18B43FC20033D885 /* SpritePerformanceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3870C5918B43FC20033D885 /* SpritePerformanceTest.m */; };
 		D3B2A7E5187DD60B00406C5A /* CCBMFontTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B2A7E4187DD60B00406C5A /* CCBMFontTest.m */; };
 		D3C9C867188078B900C58900 /* CCSchedulerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3C9C866188078B900C58900 /* CCSchedulerTest.m */; };
 /* End PBXBuildFile section */
@@ -183,6 +184,7 @@
 		D3395F19187F83E600F22C74 /* CCMemoryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMemoryTests.m; sourceTree = "<group>"; };
 		D340E10C185660BE006E605C /* CCPhysicsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCPhysicsTest.m; path = "cocos2d-ui-tests/tests/CCPhysicsTest.m"; sourceTree = SOURCE_ROOT; };
 		D340E10D185660BE006E605C /* TilemapTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TilemapTest.m; path = "cocos2d-ui-tests/tests/TilemapTest.m"; sourceTree = SOURCE_ROOT; };
+		D3870C5918B43FC20033D885 /* SpritePerformanceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpritePerformanceTest.m; path = "cocos2d-ui-tests/tests/SpritePerformanceTest.m"; sourceTree = SOURCE_ROOT; };
 		D3B2A7E4187DD60B00406C5A /* CCBMFontTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBMFontTest.m; path = "cocos2d-ui-tests/tests/CCBMFontTest.m"; sourceTree = SOURCE_ROOT; };
 		D3C9C866188078B900C58900 /* CCSchedulerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSchedulerTest.m; path = "cocos2d-ui-tests/tests/CCSchedulerTest.m"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -330,6 +332,7 @@
 		B71B087F17EA5B500082EBC0 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				D3870C5918B43FC20033D885 /* SpritePerformanceTest.m */,
 				B71B088117EA5B6A0082EBC0 /* CCScrollViewTest.m */,
 				D3C9C866188078B900C58900 /* CCSchedulerTest.m */,
 				B7C6238B17ECDF6A00928F91 /* CCTableViewTest.m */,
@@ -613,6 +616,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B71B087C17EA5B490082EBC0 /* TestBase.m in Sources */,
+				D3870C5A18B43FC20033D885 /* SpritePerformanceTest.m in Sources */,
 				B71B088217EA5B6A0082EBC0 /* CCScrollViewTest.m in Sources */,
 				B7EE697918186D5200B983FE /* CCTextFieldTest.m in Sources */,
 				B7E2620017E7D321007067F0 /* AppDelegate.m in Sources */,
@@ -671,6 +675,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/cocos2d-tests-ios.app/cocos2d-tests-ios";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -724,6 +729,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/cocos2d-tests-ios.app/cocos2d-tests-ios";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -793,7 +799,7 @@
 					"external/ObjectAL/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -821,6 +827,7 @@
 					"external/ObjectAL/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -830,6 +837,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -838,8 +846,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "cocos2d-ui-tests/ios/Prefix.pch";
 				INFOPLIST_FILE = "cocos2d-ui-tests/ios/Resources/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				ONLY_ACTIVE_ARCH = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				OTHER_LDFLAGS = (
 					"-lz",
 					"-lsqlite3",
@@ -855,6 +862,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -862,7 +870,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "cocos2d-ui-tests/ios/Prefix.pch";
 				INFOPLIST_FILE = "cocos2d-ui-tests/ios/Resources/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				OTHER_LDFLAGS = (
 					"-lz",
 					"-lsqlite3",
