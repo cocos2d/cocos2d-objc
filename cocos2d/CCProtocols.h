@@ -33,6 +33,7 @@
 @class CCDirector;
 
 #pragma mark - CCBlendProtocol
+#warning TODO this moved to CCNode effectively
 /**
  You can specify the blending function.
  */

@@ -57,8 +57,10 @@
 -(void) updateColor;
 @end
 
-@implementation CCNodeColor
-
+@implementation CCNodeColor {
+	@protected
+	GLKVector4	_colors[4];
+}
 
 + (id) nodeWithColor:(CCColor*)color width:(GLfloat)w  height:(GLfloat) h
 {
@@ -85,12 +87,6 @@
 		self.blendFunc = (ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
 
 		_displayColor = _color = color.ccColor4f;
-
-		for (NSUInteger i = 0; i<sizeof(_squareVertices) / sizeof( _squareVertices[0]); i++ ) {
-			_squareVertices[i].x = 0.0f;
-			_squareVertices[i].y = 0.0f;
-		}
-
 		[self updateColor];
 		[self setContentSize:CGSizeMake(w, h) ];
 
@@ -107,37 +103,28 @@
 
 - (void) updateColor
 {
-	for( NSUInteger i = 0; i < 4; i++ )
-	{
-		_squareColors[i] = _displayColor;
-	}
+	GLKVector4 color = GLKVector4Make(_displayColor.r, _displayColor.g, _displayColor.b, _displayColor.a);
+	for(int i=0; i<4; i++) _colors[i] = color;
 }
 
 -(void)draw:(CCRenderer *)renderer transform:(GLKMatrix4)transform
 {
-	#warning TODO
-//    CGSize size = self.contentSizeInPoints;
-//    
-//    _squareVertices[1].x = size.width;
-//	_squareVertices[2].y = size.height;
-//	_squareVertices[3].x = size.width;
-//	_squareVertices[3].y = size.height;
-//    
-//	CC_NODE_DRAW_SETUP(transform);
-//
-//	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_Color );
-//
-//	//
-//	// Attributes
-//	//
-//	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, _squareVertices);
-//	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_FLOAT, GL_FALSE, 0, _squareColors);
-//
-//	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
-//
-//	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-//	
-//	CC_INCREMENT_GL_DRAWS(1);
+	CGSize size = self.contentSizeInPoints;
+	if(!CCCheckVisbility(transform, size)) return;
+	
+	GLKVector2 zero = GLKVector2Make(0, 0);
+	
+	float w = size.width, h = size.height;
+	CCVertex verts[] = {
+		{GLKMatrix4MultiplyAndProjectVector3(transform, GLKVector3Make(0, 0, 0)), zero, zero, _colors[0]},
+		{GLKMatrix4MultiplyAndProjectVector3(transform, GLKVector3Make(w, 0, 0)), zero, zero, _colors[1]},
+		{GLKMatrix4MultiplyAndProjectVector3(transform, GLKVector3Make(w, h, 0)), zero, zero, _colors[2]},
+		{GLKMatrix4MultiplyAndProjectVector3(transform, GLKVector3Make(0, h, 0)), zero, zero, _colors[3]},
+	};
+	
+	CCTriangle *triangles = [renderer bufferTriangles:2 withState:self.renderState];
+	triangles[0] = (CCTriangle){verts[0], verts[1], verts[2]};
+	triangles[1] = (CCTriangle){verts[0], verts[2], verts[3]};
 }
 
 #pragma mark Protocols
@@ -201,19 +188,20 @@
 	float len = ccpLength(_vector);
 	if (len == 0)
 		return;
-	float sqrt2 = sqrtf(2);
 	CGPoint u = ccp(_vector.x / len, _vector.y / len);
 
 	// Compressed Interpolation mode
 	if( _compressedInterpolation ) {
 		float h2 = 1 / ( fabsf(u.x) + fabsf(u.y) );
-		u = ccpMult(u, h2 * (float) sqrt2);
+		u = ccpMult(u, h2 * (float) M_SQRT2);
 	}
-
-	_squareColors[0] =  ccc4FInterpolated(_color, _endColor, ((sqrt2 + u.x + u.y) / (2.0f * sqrt2)));
-	_squareColors[1] =  ccc4FInterpolated(_color, _endColor, ((sqrt2 - u.x + u.y) / (2.0f * sqrt2)));
-	_squareColors[2] =  ccc4FInterpolated(_color, _endColor, ((sqrt2 + u.x - u.y) / (2.0f * sqrt2)));
-	_squareColors[3] =  ccc4FInterpolated(_color, _endColor, ((sqrt2 - u.x - u.y) / (2.0f * sqrt2)));
+	
+	GLKVector4 a = GLKVector4Make(_color.r, _color.g, _color.b, _color.a);
+	GLKVector4 b = GLKVector4Make(_endColor.r, _endColor.g, _endColor.b, _endColor.a);
+	_colors[0] =  GLKVector4Lerp(a, b, ((M_SQRT2 + u.x + u.y) / (2.0f * M_SQRT2)));
+	_colors[1] =  GLKVector4Lerp(a, b, ((M_SQRT2 - u.x + u.y) / (2.0f * M_SQRT2)));
+	_colors[2] =  GLKVector4Lerp(a, b, ((M_SQRT2 + u.x - u.y) / (2.0f * M_SQRT2)));
+	_colors[3] =  GLKVector4Lerp(a, b, ((M_SQRT2 - u.x - u.y) / (2.0f * M_SQRT2)));
 }
 
 -(CCColor*) startColor

@@ -39,11 +39,7 @@
 /**
  * CCNodeColor is a subclass of CCNode that is used to generate solid colors.
  */
-@interface CCNodeColor : CCNode <CCBlendProtocol> {
-	ccVertex2F	_squareVertices[4];
-	ccColor4F	_squareColors[4];
-}
-
+@interface CCNodeColor : CCNode <CCBlendProtocol>
 
 /// -----------------------------------------------------------------------
 /// @name Creating a CCNodeColor Object
