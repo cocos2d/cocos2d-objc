@@ -47,9 +47,6 @@
     
     // Texture atlas for batch.
 	CCTextureAtlas	*_textureAtlas;
-    
-    // Blend mode.
-	ccBlendFunc		_blendFunc;
 
 	// Node children.
 	NSMutableArray *_descendants;

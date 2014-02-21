@@ -117,7 +117,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         if (!fontName) fontName = @"Helvetica";
         if (!fontSize) fontSize = 12;
         
-				self.blendFunc = (ccBlendFunc){CC_BLEND_SRC, CC_BLEND_DST};
+				self.blendFunc = (ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
         
         // other properties
         self.fontName = fontName;

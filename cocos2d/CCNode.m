@@ -163,6 +163,7 @@ static NSUInteger globalOrderOfArrival = 1;
 		_parent = nil;
 
 		_shaderProgram = nil;
+		_blendFunc = (ccBlendFunc){GL_ONE, GL_ZERO};
 
 		_orderOfArrival = 0;
 
@@ -1666,5 +1667,22 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 	return NO; // Subclasses may use this feature.
 }
 
+#pragma mark - RenderState Methods
+
+-(CCRenderState *)renderState
+{
+#warning TODO State is never uncached.
+	if(_renderState == nil){
+		_renderState = [CCRenderState renderStateWithOptions:@{
+			CCRenderStateBlendMode: [CCBlendMode blendModeWithOptions:@{
+				CCBlendFuncSrcColor: @(_blendFunc.src),
+				CCBlendFuncDstColor: @(_blendFunc.dst),
+			}],
+			CCRenderStateShader: _shaderProgram,
+		}];
+	}
+	
+	return _renderState;
+}
 
 @end

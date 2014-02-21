@@ -41,6 +41,10 @@
  */
 @property(nonatomic,readwrite,strong) CCGLProgram *shaderProgram;
 
+#warning TODO
+@property (nonatomic,readwrite) ccBlendFunc blendFunc;
+@property (nonatomic,readonly) CCRenderState *renderState;
+
 /* used internally for zOrder sorting, don't change this manually */
 @property(nonatomic,readwrite) NSUInteger orderOfArrival;
 

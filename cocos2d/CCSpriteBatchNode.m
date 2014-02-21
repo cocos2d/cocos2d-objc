@@ -103,9 +103,6 @@ const NSUInteger defaultCapacity = 0;
 -(id)initWithTexture:(CCTexture *)tex capacity:(NSUInteger)capacity
 {
 	if( (self=[super init])) {
-
-		_blendFunc.src = CC_BLEND_SRC;
-		_blendFunc.dst = CC_BLEND_DST;
 		_textureAtlas = [[CCTextureAtlas alloc] initWithTexture:tex capacity:capacity];
 
 		[self updateBlendFunc];

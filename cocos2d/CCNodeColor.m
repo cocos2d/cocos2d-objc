@@ -59,9 +59,6 @@
 
 @implementation CCNodeColor
 
-// Opacity and RGB color protocol
-@synthesize blendFunc = _blendFunc;
-
 
 + (id) nodeWithColor:(CCColor*)color width:(GLfloat)w  height:(GLfloat) h
 {
@@ -85,7 +82,7 @@
 	if( (self=[super init]) ) {
 
 		// default blend function
-		_blendFunc = (ccBlendFunc) { GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA };
+		self.blendFunc = (ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
 
 		_displayColor = _color = color.ccColor4f;
 

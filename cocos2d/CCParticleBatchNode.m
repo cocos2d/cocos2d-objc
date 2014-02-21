@@ -103,9 +103,9 @@
 
 		// no lazy alloc in this node
 		_children = [[NSMutableArray alloc] initWithCapacity:capacity];
-
-		_blendFunc.src = CC_BLEND_SRC;
-		_blendFunc.dst = CC_BLEND_DST;
+		
+//		_blendFunc.src = CC_BLEND_SRC;
+//		_blendFunc.dst = CC_BLEND_DST;
 
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
 	}
@@ -429,22 +429,22 @@
 
 -(void) updateBlendFunc
 {
-	if( ! [_textureAtlas.texture hasPremultipliedAlpha] ) {
-		_blendFunc.src = GL_SRC_ALPHA;
-		_blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
-	}
+//	if( ! [_textureAtlas.texture hasPremultipliedAlpha] ) {
+//		_blendFunc.src = GL_SRC_ALPHA;
+//		_blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+//	}
 }
 
 -(void) setTexture:(CCTexture*)texture
 {
-	_textureAtlas.texture = texture;
-
-	// If the new texture has No premultiplied alpha, AND the blendFunc hasn't been changed, then update it
-	if( texture && ! [texture hasPremultipliedAlpha] && ( _blendFunc.src == CC_BLEND_SRC && _blendFunc.dst == CC_BLEND_DST ) )
-	{
-			_blendFunc.src = GL_SRC_ALPHA;
-			_blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
-	}
+//	_textureAtlas.texture = texture;
+//
+//	// If the new texture has No premultiplied alpha, AND the blendFunc hasn't been changed, then update it
+//	if( texture && ! [texture hasPremultipliedAlpha] && ( _blendFunc.src == CC_BLEND_SRC && _blendFunc.dst == CC_BLEND_DST ) )
+//	{
+//			_blendFunc.src = GL_SRC_ALPHA;
+//			_blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+//	}
 }
 
 -(CCTexture*) texture

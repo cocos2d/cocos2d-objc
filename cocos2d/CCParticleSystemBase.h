@@ -291,9 +291,6 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
 	// Texture used.
 	CCTexture *_texture;
     
-	// Blend function.
-	ccBlendFunc	_blendFunc;
-    
 	// Texture alpha behavior.
 	BOOL _opacityModifyRGB;
 

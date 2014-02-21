@@ -139,16 +139,10 @@ CCRANDOM_ON_UNIT_CIRCLE()
  */
 #define CC_RADIANS_TO_DEGREES(__ANGLE__) ((__ANGLE__) * 57.29577951f) // PI * 180
 
-#define kCCRepeatForever (UINT_MAX -1)
-/** @def CC_BLEND_SRC
-default gl blend src function. Compatible with premultiplied alpha images.
-*/
-#define CC_BLEND_SRC GL_ONE
-#define CC_BLEND_DST GL_ONE_MINUS_SRC_ALPHA
-
 /** @def CC_NODE_DRAW_SETUP
  Helpful macro that setups the GL server state, the correct GL program and sets the Model View Projection matrix
  */
+#warning TODO
 #define CC_NODE_DRAW_SETUP(__transform__)																	\
 do {																							\
 	abort();\

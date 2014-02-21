@@ -58,7 +58,6 @@
 @interface CCParticleBatchNode : CCNode <CCTextureProtocol> {
 
 	CCTextureAtlas	*_textureAtlas;
-	ccBlendFunc		_blendFunc;
 }
 
 

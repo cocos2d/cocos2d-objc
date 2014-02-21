@@ -103,8 +103,6 @@ static inline ccTex2F __t(ccVertex2F v )
 
 @implementation CCDrawNode
 
-@synthesize blendFunc = _blendFunc;
-
 #pragma mark memory
 
 -(void)ensureCapacity:(NSUInteger)count
@@ -120,7 +118,7 @@ static inline ccTex2F __t(ccVertex2F v )
 -(id)init
 {
 	if((self = [super init])){
-		self.blendFunc = (ccBlendFunc){CC_BLEND_SRC, CC_BLEND_DST};
+		self.blendFunc = (ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
 		
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionLengthTexureColor];
 

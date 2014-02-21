@@ -57,11 +57,7 @@
 
 
 @implementation CCSprite {
-	//
-	// Data used when the sprite is self-rendered.
-	//
-	ccBlendFunc				_blendFunc;				// Needed for the texture protocol
-	CCTexture				*_texture;				// Texture used to render the sprite
+	CCTexture *_texture;
 
 	// Offset Position, used by sprite sheet editors.
 	CGPoint _unflippedOffsetPositionFromCenter;
@@ -71,8 +67,6 @@
 	
 	BOOL _opacityModifyRGB;
 	BOOL _flipX, _flipY;
-	
-	CCRenderState *_renderState;
 }
 
 +(id)spriteWithImageNamed:(NSString*)imageName
@@ -135,12 +129,10 @@
 	{
 		// shader program
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
-
+		
+		self.blendFunc = (ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
 		_opacityModifyRGB = YES;
-
-		_blendFunc.src = CC_BLEND_SRC;
-		_blendFunc.dst = CC_BLEND_DST;
-
+		
 		_flipY = _flipX = NO;
 
 		// default transform anchor: center
@@ -354,11 +346,13 @@
 
 -(CCRenderState *)renderState
 {
+	ccBlendFunc blendFunc = self.blendFunc;
+	
 	if(_renderState == nil){
 		_renderState = [CCRenderState renderStateWithOptions:@{
 			CCRenderStateBlendMode: [CCBlendMode blendModeWithOptions:@{
-				CCBlendFuncSrcColor: @(_blendFunc.src),
-				CCBlendFuncDstColor: @(_blendFunc.dst),
+				CCBlendFuncSrcColor: @(blendFunc.src),
+				CCBlendFuncDstColor: @(blendFunc.dst),
 			}],
 			CCRenderStateShader: _shaderProgram,
 			CCRenderStateUniforms: @{CCMainTexture: (_texture ?: [NSNull null])},
@@ -368,27 +362,9 @@
 	return _renderState;
 }
 
-static BOOL
-CheckBounds(GLKMatrix4 t, CGSize size)
-{
-	float hw = size.width*0.5f;
-	float hh = size.height*0.5f;
-	
-	// Bounding box center point in clip coordinates.
-	GLKVector4 center = GLKMatrix4MultiplyVector4(t, GLKVector4Make(hw, hh, 0.0f, 1.0f));
-	center = GLKVector4MultiplyScalar(center, 1.0f/center.w);
-	
-	// Half width/height in clip space.
-	float cshw = hw*fmaxf(fabsf(t.m00 + t.m10), fabsf(t.m00 - t.m10));
-	float cshh = hh*fmaxf(fabsf(t.m01 + t.m11), fabsf(t.m01 - t.m11));
-	
-	// Check the bounds against the viewport.
-	return (fabsf(center.x) - cshw < 1.0f && fabsf(center.y) - cshh < 1.0f);
-}
-
 -(void)draw:(CCRenderer *)renderer transform:(GLKMatrix4)transform;
 {
-	if(!CheckBounds(transform, self.contentSize)) return;
+	if(!CCCheckVisbility(transform, self.contentSizeInPoints)) return;
 	
 	CCVertex verts[] = {
 		CCVertexApplyTransform(_verts[0], transform),
@@ -540,12 +516,10 @@ CheckBounds(GLKMatrix4 t, CGSize size)
 {
 	// it is possible to have an untextured sprite
 	if( !_texture || ! [_texture hasPremultipliedAlpha] ) {
-		_blendFunc.src = GL_SRC_ALPHA;
-		_blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+		self.blendFunc = (ccBlendFunc){GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA};
 		[self setOpacityModifyRGB:NO];
 	} else {
-		_blendFunc.src = CC_BLEND_SRC;
-		_blendFunc.dst = CC_BLEND_DST;
+		self.blendFunc = (ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
 		[self setOpacityModifyRGB:YES];
 	}
 }

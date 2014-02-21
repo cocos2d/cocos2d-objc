@@ -75,12 +75,6 @@
 /** The offset position in points of the sprite in points. Calculated automatically by sprite sheet editors. */
 @property (nonatomic,readonly) CGPoint	offsetPosition;
 
-/** Conforms to CCTextureProtocol protocol */
-@property (nonatomic,readwrite) ccBlendFunc blendFunc;
-
-#warning TODO
-@property (nonatomic,readonly) CCRenderState *renderState;
-
 
 /// -----------------------------------------------------------------------
 /// @name Creating a CCSprite Object

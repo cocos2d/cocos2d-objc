@@ -44,7 +44,6 @@
 @implementation CCAtlasNode
 
 @synthesize textureAtlas = _textureAtlas;
-@synthesize blendFunc = _blendFunc;
 @synthesize quadsToDraw = _quadsToDraw;
 
 #pragma mark CCAtlasNode - Creation & Init
@@ -74,9 +73,6 @@
 
 		_colorUnmodified = ccWHITE;
 		_opacityModifyRGB = YES;
-
-		_blendFunc.src = CC_BLEND_SRC;
-		_blendFunc.dst = CC_BLEND_DST;
 
 		_textureAtlas = [[CCTextureAtlas alloc] initWithTexture:texture capacity:c];
 		
@@ -182,10 +178,10 @@
 
 -(void) updateBlendFunc
 {
-	if( ! [_textureAtlas.texture hasPremultipliedAlpha] ) {
-		_blendFunc.src = GL_SRC_ALPHA;
-		_blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
-	}
+//	if( ! [_textureAtlas.texture hasPremultipliedAlpha] ) {
+//		_blendFunc.src = GL_SRC_ALPHA;
+//		_blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+//	}
 }
 
 -(void) setTexture:(CCTexture*)texture

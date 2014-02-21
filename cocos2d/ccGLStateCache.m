@@ -114,12 +114,12 @@ void ccGLBlendFunc(GLenum sfactor, GLenum dfactor)
 
 void ccGLBlendResetToCache(void)
 {
-	glBlendEquation(GL_FUNC_ADD);
-#if CC_ENABLE_GL_STATE_CACHE
-	SetBlending( _ccBlendingSource, _ccBlendingDest );
-#else
-	SetBlending( CC_BLEND_SRC, CC_BLEND_DST );
-#endif // CC_ENABLE_GL_STATE_CACHE
+//	glBlendEquation(GL_FUNC_ADD);
+//#if CC_ENABLE_GL_STATE_CACHE
+//	SetBlending( _ccBlendingSource, _ccBlendingDest );
+//#else
+//	SetBlending( CC_BLEND_SRC, CC_BLEND_DST );
+//#endif // CC_ENABLE_GL_STATE_CACHE
 }
 
 void ccGLBindTexture( GLenum target, GLuint textureId )

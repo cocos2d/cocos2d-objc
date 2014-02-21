@@ -40,7 +40,6 @@
 
 @implementation CCMotionStreak
 @synthesize texture = _texture;
-@synthesize blendFunc = _blendFunc;
 @synthesize fastMode = _fastMode;
 
 + (id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(CCColor*)color textureFilename:(NSString*)path
@@ -88,8 +87,7 @@
         _colorPointer =  malloc(sizeof(GLubyte) * _maxPoints * 2 * 4);
 
         // Set blend mode
-        _blendFunc.src = GL_SRC_ALPHA;
-		_blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+				self.blendFunc = (ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
 
 		// shader program
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];

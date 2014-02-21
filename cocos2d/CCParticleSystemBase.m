@@ -319,7 +319,7 @@
 		_active = YES;
 
 		// default blend function
-		_blendFunc = (ccBlendFunc) { CC_BLEND_SRC, CC_BLEND_DST };
+		self.blendFunc = (ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
 
 		// default movement type;
 		_particlePositionType = CCParticleSystemPositionTypeGrouped;
@@ -692,11 +692,9 @@
 	} else {
 
 		if( _texture && ! [_texture hasPremultipliedAlpha] ) {
-			_blendFunc.src = GL_SRC_ALPHA;
-			_blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+			self.blendFunc = (ccBlendFunc){GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA};
 		} else {
-			_blendFunc.src = CC_BLEND_SRC;
-			_blendFunc.dst = CC_BLEND_DST;
+			self.blendFunc = (ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
 		}
 	}
 }
@@ -930,7 +928,7 @@
 
 	_opacityModifyRGB = NO;
 
-	if( _texture && ( _blendFunc.src == CC_BLEND_SRC && _blendFunc.dst == CC_BLEND_DST ) ) {
+	if( _texture && ( _blendFunc.src == GL_ONE && _blendFunc.dst == GL_ONE_MINUS_SRC_ALPHA ) ) {
 		if( premultiplied )
 			_opacityModifyRGB = YES;
 		else {

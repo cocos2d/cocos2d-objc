@@ -58,9 +58,6 @@
 	// Quads to draw.
 	NSUInteger		_quadsToDraw;
 
-	// Blend function.
-	ccBlendFunc		_blendFunc;
-
 	// Texture RGBA.
 	ccColor3B	_colorUnmodified;
 	BOOL		_opacityModifyRGB;

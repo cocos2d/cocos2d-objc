@@ -44,9 +44,6 @@
     // Position.
     CGPoint _positionR;
     
-    // Blend mode.
-    ccBlendFunc _blendFunc;
-    
     // Stroke width.
     float _stroke;
     
