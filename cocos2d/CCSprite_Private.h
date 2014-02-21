@@ -28,12 +28,8 @@
 #warning TODO Check if these are still needed
 @interface CCSprite ()
 
-/* 
- Set the vertex rect. It will be called internally by setTextureRect.
- Useful if you want to create 2x images from SD images in Retina Display.  
- Do not call it manually. Use setTextureRect instead.
-*/
--(void) setVertexRect:(CGRect)rect;
+// Access to the untransformed vertex array.
+@property(nonatomic, readonly) CCVertex *verts;
 
 #pragma mark CCSprite - Animation
 

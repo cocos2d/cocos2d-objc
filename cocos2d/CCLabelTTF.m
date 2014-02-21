@@ -117,8 +117,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         if (!fontName) fontName = @"Helvetica";
         if (!fontSize) fontSize = 12;
         
-        _blendFunc.src = CC_BLEND_SRC;
-        _blendFunc.dst = CC_BLEND_DST;
+				self.blendFunc = (ccBlendFunc){CC_BLEND_SRC, CC_BLEND_DST};
         
         // other properties
         self.fontName = fontName;
@@ -472,7 +471,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 	[self setTexture:tex];
 	
 	CGRect rect = CGRectZero;
-	rect.size = [_texture contentSize];
+	rect.size = [self.texture contentSize];
 	[self setTextureRect: rect];
 	
 	return YES;
@@ -795,7 +794,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 	[self setTexture:tex];
 	
 	CGRect rect = CGRectZero;
-	rect.size = [_texture contentSize];
+	rect.size = [self.texture contentSize];
 	[self setTextureRect: rect];
 	
 	return YES;

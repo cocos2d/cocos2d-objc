@@ -49,27 +49,31 @@
 #pragma mark -
 #pragma mark CCSprite
 
-#if CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
-#define RENDER_IN_SUBPIXEL
-#else
-#define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
-#endif
+//#if CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
+//#define RENDER_IN_SUBPIXEL
+//#else
+//#define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
+//#endif
 
-
-@interface CCSprite ()
--(void) setTextureCoords:(CGRect)rect;
--(void) updateBlendFunc;
--(void) setReorderChildDirtyRecursively;
-@end
 
 @implementation CCSprite {
+	//
+	// Data used when the sprite is self-rendered.
+	//
+	ccBlendFunc				_blendFunc;				// Needed for the texture protocol
+	CCTexture				*_texture;				// Texture used to render the sprite
+
+	// Offset Position, used by sprite sheet editors.
+	CGPoint _unflippedOffsetPositionFromCenter;
+
+	// Vertex coords, texture coords and color info.
+	CCVertex _verts[4];
+	
+	BOOL _opacityModifyRGB;
+	BOOL _flipX, _flipY;
+	
 	CCRenderState *_renderState;
 }
-
-@synthesize textureRect = _rect;
-@synthesize textureRectRotated = _rectRotated;
-@synthesize blendFunc = _blendFunc;
-@synthesize offsetPosition = _offsetPosition;
 
 +(id)spriteWithImageNamed:(NSString*)imageName
 {
@@ -144,8 +148,8 @@
 
 		// zwoptex default values
 		_offsetPosition = CGPointZero;
-
-		// Atlas: Color
+		
+		#warning Seems like this isn't needed?
 		GLKVector4 tmpColor = GLKVector4Make(1.0, 1.0, 1.0, 1.0);
 		_verts[0].color = tmpColor;
 		_verts[1].color = tmpColor;
@@ -235,7 +239,7 @@
 - (NSString*) description
 {
 	return [NSString stringWithFormat:@"<%@ = %p | Rect = (%.2f,%.2f,%.2f,%.2f) | tag = %@ >",
-		[self class], self, _rect.origin.x, _rect.origin.y, _rect.size.width, _rect.size.height, _name
+		[self class], self, _textureRect.origin.x, _textureRect.origin.y, _textureRect.size.width, _textureRect.size.height, _name
 	];
 }
 
@@ -246,11 +250,11 @@
 
 -(void) setTextureRect:(CGRect)rect rotated:(BOOL)rotated untrimmedSize:(CGSize)untrimmedSize
 {
-	_rectRotated = rotated;
+	_textureRectRotated = rotated;
 
     self.contentSizeType = CCSizeTypePoints;
 	[self setContentSize:untrimmedSize];
-	[self setVertexRect:rect];
+	_textureRect = rect;
 	[self setTextureCoords:rect];
 
 	CGPoint relativeOffset = _unflippedOffsetPositionFromCenter;
@@ -262,27 +266,21 @@
 		relativeOffset.y = -relativeOffset.y;
 
 
-	_offsetPosition.x = relativeOffset.x + (_contentSize.width - _rect.size.width) / 2;
-	_offsetPosition.y = relativeOffset.y + (_contentSize.height - _rect.size.height) / 2;
+	_offsetPosition.x = relativeOffset.x + (_contentSize.width - _textureRect.size.width) / 2;
+	_offsetPosition.y = relativeOffset.y + (_contentSize.height - _textureRect.size.height) / 2;
 
 
 	// Atlas: Vertex
 	float x1 = _offsetPosition.x;
 	float y1 = _offsetPosition.y;
-	float x2 = x1 + _rect.size.width;
-	float y2 = y1 + _rect.size.height;
+	float x2 = x1 + _textureRect.size.width;
+	float y2 = y1 + _textureRect.size.height;
 
 	// Don't update Z.
-	_verts[0].position = GLKVector3Make(x1, y1, 0);
-	_verts[1].position = GLKVector3Make(x2, y1, 0);
-	_verts[2].position = GLKVector3Make(x2, y2, 0);
-	_verts[3].position = GLKVector3Make(x1, y2, 0);
-}
-
-// override this method to generate "double scale" sprites
--(void) setVertexRect:(CGRect)rect
-{
-	_rect = rect;
+	_verts[0].position = GLKVector3Make(x1, y1, 0.0);
+	_verts[1].position = GLKVector3Make(x2, y1, 0.0);
+	_verts[2].position = GLKVector3Make(x2, y2, 0.0);
+	_verts[3].position = GLKVector3Make(x1, y2, 0.0);
 }
 
 -(void) setTextureCoords:(CGRect)rect
@@ -299,7 +297,7 @@
 	float left, right ,top , bottom;
 	
 	#warning TODO Seems like this could be significantly simplified.
-	if(_rectRotated)
+	if(_textureRectRotated)
     {
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 		left	= (2*rect.origin.x+1)/(2*atlasWidth);
@@ -347,6 +345,11 @@
 	}
 }
 
+-(CCVertex *)verts
+{
+	return _verts;
+}
+
 #pragma mark CCSprite - draw
 
 -(CCRenderState *)renderState
@@ -387,13 +390,12 @@ CheckBounds(GLKMatrix4 t, CGSize size)
 {
 	if(!CheckBounds(transform, self.contentSize)) return;
 	
-	CCVertex verts[4];
-	for(int i=0; i<4; i++){
-		verts[i].position = GLKMatrix4MultiplyAndProjectVector3(transform, _verts[i].position);
-		verts[i].texCoord1 = _verts[i].texCoord1;
-		verts[i].texCoord2 = _verts[i].texCoord2;
-		verts[i].color = _verts[i].color;
-	}
+	CCVertex verts[] = {
+		CCVertexApplyTransform(_verts[0], transform),
+		CCVertexApplyTransform(_verts[1], transform),
+		CCVertexApplyTransform(_verts[2], transform),
+		CCVertexApplyTransform(_verts[3], transform),
+	};
 	
 	CCTriangle *triangles = [renderer bufferTriangles:2 withState:self.renderState];
 	triangles[0] = (CCTriangle){verts[0], verts[1], verts[2]};
@@ -412,7 +414,7 @@ CheckBounds(GLKMatrix4 t, CGSize size)
 {
 	if( _flipX != b ) {
 		_flipX = b;
-		[self setTextureRect:_rect rotated:_rectRotated untrimmedSize:_contentSize];
+		[self setTextureRect:_textureRect rotated:_textureRectRotated untrimmedSize:_contentSize];
 	}
 }
 -(BOOL) flipX
@@ -424,7 +426,7 @@ CheckBounds(GLKMatrix4 t, CGSize size)
 {
 	if( _flipY != b ) {
 		_flipY = b;
-		[self setTextureRect:_rect rotated:_rectRotated untrimmedSize:_contentSize];
+		[self setTextureRect:_textureRect rotated:_textureRectRotated untrimmedSize:_contentSize];
 	}
 }
 -(BOOL) flipY
@@ -512,9 +514,9 @@ CheckBounds(GLKMatrix4 t, CGSize size)
 		[self setTexture: newTexture];
 
 	// update rect
-	_rectRotated = frame.rotated;
+	_textureRectRotated = frame.rotated;
 
-	[self setTextureRect:frame.rect rotated:_rectRotated untrimmedSize:frame.originalSize];
+	[self setTextureRect:frame.rect rotated:_textureRectRotated untrimmedSize:frame.originalSize];
     
     _spriteFrame = frame;
 }
@@ -522,16 +524,14 @@ CheckBounds(GLKMatrix4 t, CGSize size)
 -(void) setSpriteFrameWithAnimationName: (NSString*) animationName index:(int) frameIndex
 {
 	NSAssert( animationName, @"CCSprite#setSpriteFrameWithAnimationName. animationName must not be nil");
-
+	
 	CCAnimation *a = [[CCAnimationCache sharedAnimationCache] animationByName:animationName];
-
 	NSAssert( a, @"CCSprite#setSpriteFrameWithAnimationName: Frame not found");
-
+	
 	CCAnimationFrame *frame = [[a frames] objectAtIndex:frameIndex];
-
 	NSAssert( frame, @"CCSprite#setSpriteFrame. Invalid frame");
-    
-    self.spriteFrame = frame.spriteFrame;
+	
+	self.spriteFrame = frame.spriteFrame;
 }
 
 #pragma mark CCSprite - CocosNodeTexture protocol

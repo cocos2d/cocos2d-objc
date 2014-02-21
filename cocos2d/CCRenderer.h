@@ -29,6 +29,26 @@ typedef struct CCVertex {
 	GLKVector4 color;
 } CCVertex;
 
+static inline CCVertex
+CCVertexApplyTransform(CCVertex v, GLKMatrix4 transform)
+{
+	return (CCVertex){
+		GLKMatrix4MultiplyAndProjectVector3(transform, v.position),
+		v.texCoord1, v.texCoord2, v.color,
+	};
+}
+
+static inline CCVertex
+CCVertexLerp(CCVertex a, CCVertex b, float t)
+{
+	return (CCVertex){
+		GLKVector3Lerp(a.position, b.position, t),
+		GLKVector2Lerp(a.texCoord1, b.texCoord1, t),
+		GLKVector2Lerp(a.texCoord2, b.texCoord2, t),
+		GLKVector4Lerp(a.color, b.color, t),
+	};
+}
+
 typedef struct CCTriangle {
 	CCVertex a, b, c;
 } CCTriangle;

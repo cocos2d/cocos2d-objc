@@ -45,39 +45,7 @@
  *
  * The default anchorPoint in CCSprite is (0.5, 0.5).
  */
-@interface CCSprite : CCNode <CCTextureProtocol> {
-	//
-	// Data used when the sprite is self-rendered.
-	//
-	ccBlendFunc				_blendFunc;				// Needed for the texture protocol
-	CCTexture				*_texture;				// Texture used to render the sprite
-
-	//
-	// Shared data.
-	//
-
-	// Sprite rectangle.
-	CGRect	_rect;
-
-	// True if texture rotated.
-	BOOL	_rectRotated;
-
-	// Offset Position, used by sprite sheet editors.
-	CGPoint	_offsetPosition;
-	CGPoint _unflippedOffsetPositionFromCenter;
-
-	// Vertex coords, texture coords and color info.
-	CCVertex _verts[4];
-
-	// Opacity and RGB protocol.
-	BOOL		_opacityModifyRGB;
-
-	// True if sprite is flipped horizontally.
-	BOOL	_flipX;
-    
-    // True if sprite is flipped vertically.
-	BOOL	_flipY;
-}
+@interface CCSprite : CCNode <CCTextureProtocol>
 
 /** Returns the texture rect of the CCSprite in points. */
 @property (nonatomic,readonly) CGRect textureRect;
