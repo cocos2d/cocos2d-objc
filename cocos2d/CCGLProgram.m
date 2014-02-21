@@ -434,24 +434,24 @@ typedef void (*GLLogFunction) (GLuint program,
 		glUniformMatrix4fv( (GLint)location, (GLsizei)numberOfMatrices, GL_FALSE, matrixArray);
 }
 
--(void) setUniformsForBuiltins:(GLKMatrix4)unused
-{
-#warning TODO need to change how shaders ard bound and how globals/uniforms are set.
-//	CCDirector *director = [CCDirector sharedDirector];
-	GLKMatrix4 matrixP = GLKMatrix4Identity;
-	GLKMatrix4 matrixMV = GLKMatrix4Identity;
-	
-	if( _flags.usesMVP) {
-//		kmMat4 matrixMVP;
-//		kmMat4Multiply(&matrixMVP, &matrixP, &matrixMV);
-		[self setUniformLocation:_uniforms[kCCUniformMVPMatrix] withMatrix4fv:matrixP.m count:1];
-	}
-
-	if( _flags.usesMV) {
-		[self setUniformLocation:_uniforms[  kCCUniformPMatrix] withMatrix4fv:  matrixP.m count:1];
-		[self setUniformLocation:_uniforms[ kCCUniformMVMatrix] withMatrix4fv: matrixMV.m count:1];
-	}
-
+//-(void) setUniformsForBuiltins:(GLKMatrix4)unused
+//{
+//#warning TODO need to change how shaders ard bound and how globals/uniforms are set.
+////	CCDirector *director = [CCDirector sharedDirector];
+//	GLKMatrix4 matrixP = GLKMatrix4Identity;
+//	GLKMatrix4 matrixMV = GLKMatrix4Identity;
+//	
+//	if( _flags.usesMVP) {
+////		kmMat4 matrixMVP;
+////		kmMat4Multiply(&matrixMVP, &matrixP, &matrixMV);
+//		[self setUniformLocation:_uniforms[kCCUniformMVPMatrix] withMatrix4fv:matrixP.m count:1];
+//	}
+//
+//	if( _flags.usesMV) {
+//		[self setUniformLocation:_uniforms[  kCCUniformPMatrix] withMatrix4fv:  matrixP.m count:1];
+//		[self setUniformLocation:_uniforms[ kCCUniformMVMatrix] withMatrix4fv: matrixMV.m count:1];
+//	}
+//
 //	if(_flags.usesTime){
 //		// This doesn't give the most accurate global time value.
 //		// Cocos2D doesn't store a high precision time value, so this will have to do.
@@ -465,7 +465,7 @@ typedef void (*GLLogFunction) (GLuint program,
 //	
 //	if(_flags.usesRandom)
 //		[self setUniformLocation:_uniforms[kCCUniformRandom01] withF1:CCRANDOM_0_1() f2:CCRANDOM_0_1() f3:CCRANDOM_0_1() f4:CCRANDOM_0_1()];
-}
+//}
 
 #pragma mark -
 

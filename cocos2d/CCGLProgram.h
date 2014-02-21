@@ -168,8 +168,8 @@ struct _hashUniformEntry;
 /* calls glUniformMatrix4fv only if the values are different than the previous call for this same shader program. */
 -(void) setUniformLocation:(GLint)location withMatrix4fv:(GLvoid*)matrix_array count:(NSUInteger)numberOfMatrix;
 
-/* will update the builtin uniforms if they are different than the previous call for this same shader program. */
--(void) setUniformsForBuiltins:(GLKMatrix4)unused __attribute((deprecated));
+///* will update the builtin uniforms if they are different than the previous call for this same shader program. */
+//-(void) setUniformsForBuiltins:(GLKMatrix4)unused __attribute((deprecated));
 
 /* returns the vertexShader error log */
 - (NSString *)vertexShaderLog;

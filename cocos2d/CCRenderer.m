@@ -428,7 +428,7 @@ Things to try if sorting is implemented:
 	CCGLProgram *shader = renderOptions[CCRenderStateShader];
 	if(shader != _shader){
 		[shader use];
-		[shader setUniformsForBuiltins:GLKMatrix4Identity];
+//		[shader setUniformsForBuiltins:GLKMatrix4Identity];
 	}
 	
 	NSDictionary *uniforms = renderOptions[CCRenderStateUniforms];
