@@ -289,6 +289,8 @@
 
 - (void) reloadData
 {
+    _currentlyVisibleRange = NSMakeRange(0, 0);
+    
     [self.contentNode removeAllChildrenWithCleanup:YES];
     
     if (!_dataSource) return;
