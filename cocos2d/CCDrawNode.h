@@ -35,17 +35,7 @@
  *  The geometry will be saved, so primitives does not need to be redrawn for each frame
  *  Faster than the "drawing primitives" since they it draws everything in one single batch.
  */
-@interface CCDrawNode : CCNode {
-    
-	GLuint			_vao;
-	GLuint			_vbo;
-	
-	NSUInteger		_bufferCapacity;
-	GLsizei			_bufferCount;
-	ccV2F_C4B_T2F	*_buffer;
-
-	BOOL _dirty;
-}
+@interface CCDrawNode : CCNode
 
 /** Sets the blending function for the draw node.  All primitives will be drawn using the same blend function. */
 @property(nonatomic, assign) ccBlendFunc blendFunc;
@@ -62,7 +52,7 @@
  *  @param radius Dot radius.
  *  @param color  Dot color.
  */
--(void)drawDot:(CGPoint)pos radius:(CGFloat)radius color:(CCColor*)color;
+-(void)drawDot:(CGPoint)pos radius:(CGFloat)radius color:(CCColor *)color;
 
 /**
  *  Draw a segment with a radius and color.
@@ -72,7 +62,7 @@
  *  @param radius Segment radius.
  *  @param color  Segment color.
  */
--(void)drawSegmentFrom:(CGPoint)a to:(CGPoint)b radius:(CGFloat)radius color:(CCColor*)color;
+-(void)drawSegmentFrom:(CGPoint)a to:(CGPoint)b radius:(CGFloat)radius color:(CCColor *)color;
 
 /**
  *  Draw a polygon with a fill color and line color.
@@ -83,7 +73,7 @@
  *  @param width Polygon outline width.
  *  @param line  Polygon outline color.
  */
--(void)drawPolyWithVerts:(const CGPoint*)verts count:(NSUInteger)count fillColor:(CCColor*)fill borderWidth:(CGFloat)width  borderColor:(CCColor*)line;
+-(void)drawPolyWithVerts:(const CGPoint *)verts count:(NSUInteger)count fillColor:(CCColor *)fill borderWidth:(CGFloat)width  borderColor:(CCColor *)line;
 
 
 /// -----------------------------------------------------------------------

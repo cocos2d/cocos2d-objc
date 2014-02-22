@@ -382,6 +382,7 @@ Things to try if sorting is implemented:
 	if((self = [super init])){
 		_queue = [NSMutableArray array];
 		
+		#warning TODO
 		_triangleCapacity = 2*1;
 		_triangles = calloc(_triangleCapacity, sizeof(*_triangles));
 	}
@@ -449,7 +450,7 @@ Things to try if sorting is implemented:
 
 -(CCTriangle *)ensureBufferCapacity:(NSUInteger)requestedCount
 {
-	GLsizei required = _triangleCount + requestedCount;
+	GLsizei required = _triangleCount + (GLsizei)requestedCount;
 	if(required > _triangleCapacity){
 		// Double the size of the buffer until it fits.
 		while(required >= _triangleCapacity) _triangleCapacity *= 2;
@@ -469,10 +470,10 @@ Things to try if sorting is implemented:
 	
 	if(renderOptions == previous.renderOptions){
 		// Batch with the previous command.
-		[previous batchTriangles:count];
+		[previous batchTriangles:(GLsizei)count];
 	} else {
 		// Start a new command.
-		CCRenderCommandDraw *command = [[CCRenderCommandDraw alloc] initWithRenderOptions:renderOptions first:_triangleCount count:count];
+		CCRenderCommandDraw *command = [[CCRenderCommandDraw alloc] initWithRenderOptions:renderOptions first:(GLint)_triangleCount count:(GLsizei)count];
 		[_queue addObject:command];
 	}
 	

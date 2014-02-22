@@ -340,6 +340,11 @@
     return ccc4f(_r, _g, _b, _a);
 }
 
+-(GLKVector4)glkVector4
+{
+	return GLKVector4Make(_r, _g, _b, _a);
+}
+
 @end
 
 @implementation CCColor (ExtraProperties)
