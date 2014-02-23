@@ -24,7 +24,7 @@
 
 #import "CCScrollView.h"
 
-@class CCButton;
+@class CCControl;
 @class CCTableView;
 
 #pragma mark CCTableViewCell
@@ -34,7 +34,7 @@
     NSUInteger _index;
 }
 
-@property (nonatomic,readonly) CCButton* button;
+@property (nonatomic,strong) CCControl* button;
 
 @end
 

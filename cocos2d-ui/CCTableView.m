@@ -24,6 +24,7 @@
 
 #import "CCTableView.h"
 #import "CCButton.h"
+#import "CCControl.h"
 #import "CCDirector.h"
 #import "CGPointExtension.h"
 #import <objc/message.h>
@@ -77,15 +78,19 @@
 {
     self = [super init];
     if (!self) return NULL;
-    
-    _button = [CCButton buttonWithTitle:NULL];
+    self.button = [CCButton buttonWithTitle:NULL];
+    return self;
+}
+
+- (void)setButton:(CCControl *)button
+{
+    [self removeChild:_button];
+    _button = button;
     _button.contentSizeType = CCSizeTypeNormalized;
     _button.preferredSize = CGSizeMake(1, 1);
     _button.anchorPoint = ccp(0, 0);
     [_button setTarget:self selector:@selector(pressedCell:)];
     [self addChild:_button z:-1];
-    
-    return self;
 }
 
 - (void) pressedCell:(id)sender
