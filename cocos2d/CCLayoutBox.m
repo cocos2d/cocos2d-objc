@@ -37,6 +37,7 @@ static float roundUpToEven(float f)
 
 - (void) layout
 {
+    [super layout];
     if (_direction == CCLayoutBoxDirectionHorizontal)
     {
         // Get the maximum height
@@ -83,7 +84,7 @@ static float roundUpToEven(float f)
         
         // Position the nodes
         float height = 0;
-        for (CCNode* child in self.children)
+        for (CCNode* child in [[self.children reverseObjectEnumerator] allObjects])
         {
             CGSize childSize = child.contentSizeInPoints;
             

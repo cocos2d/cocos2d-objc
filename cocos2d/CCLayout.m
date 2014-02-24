@@ -43,16 +43,19 @@
 }
 
 - (void) layout
-{}
+{
+    _needsLayout = NO;
+}
+
+- (CGSize)contentSize
+{
+    if (_needsLayout) [self layout];
+    return super.contentSize;
+}
 
 - (void) visit
 {
-    if (_needsLayout)
-    {
-        [self layout];
-        _needsLayout = NO;
-    }
-    
+    if (_needsLayout) [self layout];
     [super visit];
 }
 

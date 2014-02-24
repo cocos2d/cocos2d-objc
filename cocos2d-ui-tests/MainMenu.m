@@ -73,6 +73,7 @@
     // Load resources
     [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"Interface.plist"];
     [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"Sprites.plist"];
+    [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"TilesAtlassed.plist"];
     
     // Make the node the same size as the parent container (i.e. the screen)
     self.contentSizeType = CCSizeTypeNormalized;
