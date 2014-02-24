@@ -26,3 +26,4 @@
 #import "CCBReader.h"
 #import "CCBAnimationManager.h"
 #import "CCBLocalizationManager.h"
+#import "CCBSpriteKitCompatibility.h"
