@@ -121,73 +121,29 @@ MakeVertex(GLKVector2 v, GLKVector2 texCoord, GLKVector4 color)
 	GLKVector2 a = GLKVector2Make(_a.x, _a.y);
 	GLKVector2 b = GLKVector2Make(_b.x, _b.y);
 	
-	GLKVector2 t = GLKVector2Normalize(GLKVector2Subtract(b, a));
+	GLKVector2 t = GLKVector2Normalize(GLKVector2Subtract(a, b));
 	GLKVector2 n = GLKVector2Make(-t.y, t.x);
-	
 	GLKVector2 nw = GLKVector2MultiplyScalar(n, radius);
 	GLKVector2 tw = GLKVector2MultiplyScalar(t, radius);
-	GLKVector2 v0 = GLKVector2Subtract(b, GLKVector2Add(nw, tw));
-	GLKVector2 v1 = GLKVector2Add(b, GLKVector2Subtract(nw, tw));
-	GLKVector2 v2 = GLKVector2Subtract(b, nw);
-	GLKVector2 v3 = GLKVector2Add(b, nw);
-	GLKVector2 v4 = GLKVector2Subtract(a, nw);
-	GLKVector2 v5 = GLKVector2Add(a, nw);
-//	GLKVector2 v6 = GLKVector2Subtract(a, GLKVector2Subtract(nw, tw));
-//	GLKVector2 v7 = GLKVector2Add(a, GLKVector2Add(nw, tw));
 	
 	GLKVector4 color4 = color.glkVector4;
-	CCTriangle *triangles = [self bufferTriangles:2];
+	CCVertex v0 = MakeVertex(GLKVector2Subtract(b, GLKVector2Add(nw, tw)), GLKVector2Negate(GLKVector2Add(n, t)), color4);
+	CCVertex v1 = MakeVertex(GLKVector2Add(b, GLKVector2Subtract(nw, tw)), GLKVector2Subtract(n, t), color4);
+	CCVertex v2 = MakeVertex(GLKVector2Subtract(b, nw), GLKVector2Negate(n), color4);
+	CCVertex v3 = MakeVertex(GLKVector2Add(b, nw), n, color4);
+	CCVertex v4 = MakeVertex(GLKVector2Subtract(a, nw), GLKVector2Negate(n), color4);
+	CCVertex v5 = MakeVertex(GLKVector2Add(a, nw), n, color4);
+	CCVertex v6 = MakeVertex(GLKVector2Subtract(a, GLKVector2Subtract(nw, tw)), GLKVector2Subtract(t, n), color4);
+	CCVertex v7 = MakeVertex(GLKVector2Add(a, GLKVector2Add(nw, tw)), GLKVector2Add(n, t), color4);
 	
-	triangles[0] = (CCTriangle){
-		MakeVertex(v3, n, color4),
-		MakeVertex(v4, GLKVector2Negate(n), color4),
-		MakeVertex(v2, GLKVector2Negate(n), color4),
-	};
-
-	triangles[1] = (CCTriangle){
-		MakeVertex(v3, n, color4),
-		MakeVertex(v4, GLKVector2Negate(n), color4),
-		MakeVertex(v5, n, color4),
-	};
-
-//	triangles[0] = (CCTriangle){
-//		MakeVertex(v0, GLKVector2Negate(GLKVector2Add(n, t)), color4),
-//		MakeVertex(v1, GLKVector2Subtract(n, t), color4),
-//		MakeVertex(v2, GLKVector2Negate(n), color4),
-//	};
-
-//	triangles[0] = (CCTriangle) {
-//		{v0, c4, __t(GLKVector2Negate(GLKVector2Add(n, t))) },
-//		{v1, c4, __t(GLKVector2Subtract(n, t)) },
-//		{v2, c4, __t(GLKVector2Negate(n)) },
-//	};
-//	
-//	triangles[1] = (ccV2F_C4B_T2F_Triangle){
-//		{v3, c4, __t(n)},
-//		{v1, c4, __t(GLKVector2Subtract(n, t)) },
-//		{v2, c4, __t(GLKVector2Negate(n)) },
-//	};
-//	
-//	triangles[2] = (ccV2F_C4B_T2F_Triangle){
-//		{v3, c4, __t(n)},
-//		{v4, c4, __t(GLKVector2Negate(n)) },
-//		{v2, c4, __t(GLKVector2Negate(n)) },
-//	};
-//	triangles[3] = (ccV2F_C4B_T2F_Triangle){
-//		{v3, c4, __t(n) },
-//		{v4, c4, __t(GLKVector2Negate(n)) },
-//		{v5, c4, __t(n) },
-//	};
-//	triangles[4] = (ccV2F_C4B_T2F_Triangle){
-//		{v6, c4, __t(GLKVector2Subtract(t, n))},
-//		{v4, c4, __t(GLKVector2Negate(n)) },
-//		{v5, c4, __t(n)},
-//	};
-//	triangles[5] = (ccV2F_C4B_T2F_Triangle){
-//		{v6, c4, __t(GLKVector2Subtract(t, n)) },
-//		{v7, c4, __t(GLKVector2Add(n, t)) },
-//		{v5, c4, __t(n)},
-//	};
+	CCTriangle *triangles = [self bufferTriangles:6];
+	
+	triangles[0] = (CCTriangle){v0, v1, v2};
+	triangles[1] = (CCTriangle){v3, v1, v2};
+	triangles[2] = (CCTriangle){v3, v4, v2};
+	triangles[3] = (CCTriangle){v3, v4, v5};
+	triangles[4] = (CCTriangle){v6, v4, v5};
+	triangles[5] = (CCTriangle){v6, v7, v5};
 }
 
 -(void)drawPolyWithVerts:(const CGPoint *)verts count:(NSUInteger)count fillColor:(CCColor*)fill  borderWidth:(CGFloat)width borderColor:(CCColor*)line;
