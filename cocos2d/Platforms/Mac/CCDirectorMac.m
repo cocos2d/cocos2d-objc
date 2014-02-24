@@ -41,7 +41,8 @@
 #import "../../ccMacros.h"
 #import "../../CCGLProgram.h"
 #import "../../ccGLStateCache.h"
-
+#import "../../ccFPSImages.h"
+ 
 // external
 #import "kazmath/kazmath.h"
 #import "kazmath/GL/matrix.h"
@@ -395,6 +396,25 @@
 //{
 //	return [self unConvertFromLogicalCoordinates:glPoint];
 //}
+
+#pragma mark helper
+
+-(void)getFPSImageData:(unsigned char**)datapointer length:(NSUInteger*)len contentScale:(CGFloat *)scale
+{
+	// Mac Retina display?
+	if (self.view.wantsBestResolutionOpenGLSurface &&
+		self.view.window.backingScaleFactor == 2.0) {
+
+		*datapointer = cc_fps_images_hd_png;
+		*len = cc_fps_images_hd_len();
+		*scale = 2;
+	} else {
+
+		*datapointer = cc_fps_images_png;
+		*len = cc_fps_images_len();
+		*scale = 1;
+	}
+}
 
 @end
 

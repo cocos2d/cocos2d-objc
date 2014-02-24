@@ -32,8 +32,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(IOSVersion);
 		version = (float)(ch - '0');
 		
 		float multiplier = 0.1f;
-		unsigned int vLength = [versionStr length];
-		for(unsigned int i = 2; i < vLength; i++)
+		NSUInteger vLength = [versionStr length];
+		for(NSUInteger i = 2; i < vLength; i++)
 		{
 			ch = [versionStr characterAtIndex:i];
 			if(ch >= '0' && ch <= '9')

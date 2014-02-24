@@ -159,7 +159,8 @@ static CCTextureCache *sharedTextureCache;
 	});
 
 	if(tex) {
-        objc_msgSend(target, selector, tex);
+		typedef void (*Func)(id, SEL, id);
+		((Func)objc_msgSend)(target, selector, tex);
 		return;
 	}
 

@@ -30,27 +30,31 @@
 #import <UIKit/UIKit.h>
 #import "CCDirectorIOS.h"
 
-NSString* const CCSetupPixelFormat;
-NSString* const CCSetupScreenMode;
-NSString* const CCSetupScreenOrientation;
-NSString* const CCSetupAnimationInterval;
-NSString* const CCSetupFixedUpdateInterval;
-NSString* const CCSetupShowDebugStats;
-NSString* const CCSetupTabletScale2X;
+extern NSString* const CCSetupPixelFormat;
+extern NSString* const CCSetupScreenMode;
+extern NSString* const CCSetupScreenOrientation;
+extern NSString* const CCSetupAnimationInterval;
+extern NSString* const CCSetupFixedUpdateInterval;
+extern NSString* const CCSetupShowDebugStats;
+extern NSString* const CCSetupTabletScale2X;
 
+extern NSString* const CCSetupDepthFormat;
+extern NSString* const CCSetupPreserveBackbuffer;
+extern NSString* const CCSetupMultiSampling;
+extern NSString* const CCSetupNumberOfSamples;
 
 // Landscape screen orientation. Used with CCSetupScreenOrientation.
-NSString* const CCScreenOrientationLandscape;
+extern NSString* const CCScreenOrientationLandscape;
 
 // Portrait screen orientation.  Used with CCSetupScreenOrientation.
-NSString* const CCScreenOrientationPortrait;
+extern NSString* const CCScreenOrientationPortrait;
 
 
 // The flexible screen mode is Cocos2d's default. It will give you an area that can vary slightly in size. In landscape mode the height will be 320 points for mobiles and 384 points for tablets. The width of the area can vary from 480 to 568 points.
-NSString* const CCScreenModeFlexible;
+extern NSString* const CCScreenModeFlexible;
 
 // The fixed screen mode will setup the working area to be 568 x 384 points. Depending on the device, the outer edges may be cropped. The safe area, that will be displayed on all sorts of devices, is 480 x 320 points and placed in the center of the working area.
-NSString* const CCScreenModeFixed;
+extern NSString* const CCScreenModeFixed;
 
 
 @class CCAppDelegate;
@@ -112,6 +116,11 @@ NSString* const CCScreenModeFixed;
  *  - CCSetupFixedUpdateInterval NSNumber with double. Specifies the desired interval between fixed updates.Should be smaller than CCSetupAnimationInterval. Defaults to 1/60.0.
  *  - CCSetupShowDebugStats NSNumber with bool. Specifies if the stats (FPS, frame time and draw call count) should be shown. Defaults to NO.
  *  - CCSetupTabletScale2X NSNumber with bool. If true, the iPad will be setup to act like it has a 512x384 "retina" screen. This makes it much easier to make universal iOS games. This value is ignored when using the fixed screen mode.
+ *
+ *  - CCSetupDepthFormat NSNumber with integer. Specifies the desired depth format. Values are 0, GL_DEPTH_COMPONENT24_OES and GL_DEPTH24_STENCIL8_OES.
+ *  - CCSetupPreserveBackbuffer NSNumber with bool. Specifies whether backbuffer will be preserved.
+ *  - CCSetupMultiSampling NSNumber with bool. Specifies whether miltisampling is enabled.
+ *  - CCSetupNumberOfSamples NSNumber with integer. Specifies number of samples when multisampling is enabled.
  *
  *  @param config Dictionary with options for configuring Cocos2d.
  */

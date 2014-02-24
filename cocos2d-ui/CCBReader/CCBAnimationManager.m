@@ -152,11 +152,11 @@ static NSInteger ccbAnimationManagerID = 0;
     {
         return [CCBRotateTo actionWithDuration:duration angle:[kf1.value floatValue]];
     }
-    else if ([name isEqualToString:@"rotationX"])
+    else if ([name isEqualToString:@"rotationalSkewX"])
     {
         return [CCBRotateXTo actionWithDuration:duration angle:[kf1.value floatValue]];
     }
-    else if ([name isEqualToString:@"rotationY"])
+    else if ([name isEqualToString:@"rotationalSkewY"])
     {
         return [CCBRotateYTo actionWithDuration:duration angle:[kf1.value floatValue]];
     }
@@ -701,13 +701,13 @@ static NSInteger ccbAnimationManagerID = 0;
 -(void) startWithTarget:(CCNode *)aTarget
 {
 	[super startWithTarget:aTarget];
-    startAngle_ = [self.target rotation];
+    startAngle_ = [(CCNode *)self.target rotation];
     diffAngle_ = dstAngle_ - startAngle_;
 }
 
 -(void) update: (CCTime) t
 {
-	[self.target setRotation: startAngle_ + diffAngle_ * t];
+	[(CCNode *)self.target setRotation: startAngle_ + diffAngle_ * t];
 }
 
 @end

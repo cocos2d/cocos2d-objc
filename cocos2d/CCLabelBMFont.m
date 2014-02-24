@@ -47,6 +47,7 @@
 #import "CCLabelBMFont_Private.h"
 #import "CCSprite_Private.h"
 #import "CCSpriteBatchNode_Private.h"
+#import "CCDrawingPrimitives.h"
 
 #pragma mark -
 #pragma mark FNTConfig Cache - free functions
@@ -815,7 +816,7 @@ void FNTConfigRemoveCache( void )
 		// See issue 1343. cast( signed short + unsigned integer ) == unsigned integer (sign is lost!)
 		NSInteger yOffset = _configuration->_commonHeight - fontDef.yOffset;
 		CGPoint fontPos = ccp( (CGFloat)nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width*0.5f + kerningAmount,
-							  (CGFloat)nextFontPositionY + yOffset - rect.size.height*0.5f * __ccContentScaleFactor );
+							  (CGFloat)nextFontPositionY + yOffset - rect.size.height*0.5f * _textureAtlas.texture.contentScale );
 		fontChar.position = ccpMult(fontPos, contentScale);
 		
 		// update kerning

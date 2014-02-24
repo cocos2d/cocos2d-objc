@@ -647,7 +647,7 @@ typedef struct {
 
 					NSUInteger neededBytes = (4 - mod ) / (bpp/8);
 					printf("\n");
-					NSLog(@"cocos2d: WARNING. Current texture size=(%d,%d). Convert it to size=(%d,%d) in order to save memory", _width, _height, _width + neededBytes, _height );
+					NSLog(@"cocos2d: WARNING. Current texture size=(%d,%d). Convert it to size=(%d,%d) in order to save memory", _width, _height, (unsigned int)(_width + neededBytes), _height );
 					NSLog(@"cocos2d: WARNING: File: %@", [path lastPathComponent] );
 					NSLog(@"cocos2d: WARNING: For further info visit: http://www.cocos2d-iphone.org/forum/topic/31092");
 					printf("\n");
