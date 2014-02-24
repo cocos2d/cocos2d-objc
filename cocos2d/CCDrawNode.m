@@ -109,6 +109,8 @@
 	triangles[1] = (CCTriangle){a, c, d};
 }
 
+static inline GLKVector2 GLKVector2Perp(GLKVector2 v){return GLKVector2Make(-v.y, v.x);}
+
 static inline CCVertex
 MakeVertex(GLKVector2 v, GLKVector2 texCoord, GLKVector4 color)
 {
@@ -121,8 +123,10 @@ MakeVertex(GLKVector2 v, GLKVector2 texCoord, GLKVector4 color)
 	GLKVector2 a = GLKVector2Make(_a.x, _a.y);
 	GLKVector2 b = GLKVector2Make(_b.x, _b.y);
 	
-	GLKVector2 t = GLKVector2Normalize(GLKVector2Subtract(a, b));
-	GLKVector2 n = GLKVector2Make(-t.y, t.x);
+	
+	GLKVector2 n = GLKVector2Normalize(GLKVector2Perp(GLKVector2Subtract(b, a)));
+	GLKVector2 t = GLKVector2Perp(n);
+	
 	GLKVector2 nw = GLKVector2MultiplyScalar(n, radius);
 	GLKVector2 tw = GLKVector2MultiplyScalar(t, radius);
 	
@@ -146,95 +150,95 @@ MakeVertex(GLKVector2 v, GLKVector2 texCoord, GLKVector4 color)
 	triangles[5] = (CCTriangle){v6, v7, v5};
 }
 
--(void)drawPolyWithVerts:(const CGPoint *)verts count:(NSUInteger)count fillColor:(CCColor*)fill  borderWidth:(CGFloat)width borderColor:(CCColor*)line;
+-(void)drawPolyWithVerts:(const CGPoint *)_verts count:(NSUInteger)count fillColor:(CCColor*)fill  borderWidth:(CGFloat)width borderColor:(CCColor*)line;
 {
-//    ccColor4B fill4 = fill.ccColor4b;
-//    ccColor4B line4 = line.ccColor4b;
-//    
-//	struct ExtrudeVerts {GLKVector2 offset, n;};
-//	struct ExtrudeVerts extrude[count];
-//	bzero(extrude, sizeof(extrude) );
-//	
-//	for(int i=0; i<count; i++){
-//		GLKVector2 v0 = __v2f( verts[(i-1+count)%count] );
-//		GLKVector2 v1 = __v2f( verts[i] );
-//		GLKVector2 v2 = __v2f( verts[(i+1)%count] );
-//	
-//		GLKVector2 n1 = v2fnormalize(v2fperp(GLKVector2Subtract(v1, v0)));
-//		GLKVector2 n2 = v2fnormalize(v2fperp(GLKVector2Subtract(v2, v1)));
-//		
-//		GLKVector2 offset = v2fmult(GLKVector2Add(n1, n2), 1.0/(v2fdot(n1, n2) + 1.0));
-//		extrude[i] = (struct ExtrudeVerts){offset, n2};
-//	}
-//	
-//	BOOL outline = (line4.a > 0 && width > 0.0);
-//	
+	GLKVector4 fill4 = fill.glkVector4;
+	GLKVector4 line4 = line.glkVector4;
+	
+	GLKVector2 verts[count];
+	for(int i=0; i<count; i++) verts[i] = GLKVector2Make(_verts[i].x, _verts[i].y);
+	
+	struct ExtrudeVerts {GLKVector2 offset, n;};
+	struct ExtrudeVerts extrude[count];
+	bzero(extrude, sizeof(extrude) );
+	
+	for(int i=0; i<count; i++){
+		GLKVector2 v0 = verts[(i-1+count)%count];
+		GLKVector2 v1 = verts[i];
+		GLKVector2 v2 = verts[(i+1)%count];
+	
+		GLKVector2 n1 = GLKVector2Normalize(GLKVector2Perp(GLKVector2Subtract(v1, v0)));
+		GLKVector2 n2 = GLKVector2Normalize(GLKVector2Perp(GLKVector2Subtract(v2, v1)));
+		
+		GLKVector2 offset = GLKVector2MultiplyScalar(GLKVector2Add(n1, n2), 1.0/(GLKVector2DotProduct(n1, n2) + 1.0));
+		extrude[i] = (struct ExtrudeVerts){offset, n2};
+	}
+	
+	BOOL outline = (line4.a > 0 && width > 0.0);
+	
 //	NSUInteger triangle_count = 3*count - 2;
-//	NSUInteger vertex_count = 3*triangle_count;
-//	[self ensureCapacity:vertex_count];
-//	
-//	ccV2F_C4B_T2F_Triangle *triangles = (ccV2F_C4B_T2F_Triangle *)(_buffer + _bufferCount);
-//	ccV2F_C4B_T2F_Triangle *cursor = triangles;
-//	
-//	CGFloat inset = (outline == 0.0 ? 0.5 : 0.0);
-//	for(int i=0; i<count-2; i++){
-//		GLKVector2 v0 = GLKVector2Subtract( __v2f(verts[0  ]), v2fmult(extrude[0  ].offset, inset));
-//		GLKVector2 v1 = GLKVector2Subtract( __v2f(verts[i+1]), v2fmult(extrude[i+1].offset, inset));
-//		GLKVector2 v2 = GLKVector2Subtract( __v2f(verts[i+2]), v2fmult(extrude[i+2].offset, inset));
-//		
-//		*cursor++ = (ccV2F_C4B_T2F_Triangle){
-//			{v0, fill4, __t(v2fzero) },
-//			{v1, fill4, __t(v2fzero) },
-//			{v2, fill4, __t(v2fzero) },
-//		};
-//	}
-//	
-//	for(int i=0; i<count; i++){
-//		int j = (i+1)%count;
-//		GLKVector2 v0 = __v2f( verts[i] );
-//		GLKVector2 v1 = __v2f( verts[j] );
-//		
-//		GLKVector2 n0 = extrude[i].n;
-//		
-//		GLKVector2 offset0 = extrude[i].offset;
-//		GLKVector2 offset1 = extrude[j].offset;
-//		
-//		if(outline){
-//			GLKVector2 inner0 = GLKVector2Subtract(v0, v2fmult(offset0, width));
-//			GLKVector2 inner1 = GLKVector2Subtract(v1, v2fmult(offset1, width));
-//			GLKVector2 outer0 = GLKVector2Add(v0, v2fmult(offset0, width));
-//			GLKVector2 outer1 = GLKVector2Add(v1, v2fmult(offset1, width));
-//			
-//			*cursor++ = (ccV2F_C4B_T2F_Triangle){
-//				{inner0, line4, __t(GLKVector2Negate(n0))},
-//				{inner1, line4, __t(GLKVector2Negate(n0))},
-//				{outer1, line4, __t(n0)}
-//			};
-//			*cursor++ = (ccV2F_C4B_T2F_Triangle){
-//				{inner0, line4, __t(GLKVector2Negate(n0))},
-//				{outer0, line4, __t(n0)},
-//				{outer1, line4, __t(n0)}
-//			};
-//		} else {
-//			GLKVector2 inner0 = GLKVector2Subtract(v0, v2fmult(offset0, 0.5));
-//			GLKVector2 inner1 = GLKVector2Subtract(v1, v2fmult(offset1, 0.5));
-//			GLKVector2 outer0 = GLKVector2Add(v0, v2fmult(offset0, 0.5));
-//			GLKVector2 outer1 = GLKVector2Add(v1, v2fmult(offset1, 0.5));
-//			
-//			*cursor++ = (ccV2F_C4B_T2F_Triangle){
-//				{inner0, fill4, __t(v2fzero)},
-//				{inner1, fill4, __t(v2fzero)},
-//				{outer1, fill4, __t(n0)}
-//			};
-//			*cursor++ = (ccV2F_C4B_T2F_Triangle){
-//				{inner0, fill4, __t(v2fzero)},
-//				{outer0, fill4, __t(n0)},
-//				{outer1, fill4, __t(n0)}
-//			};
-//		}
-//	}
-//	
-//	_bufferCount += vertex_count;
+	CCTriangle *triangles = [self bufferTriangles:3*count - 2];
+	CCTriangle *cursor = triangles;
+	
+	const GLKVector2 zero = {{0.0f, 0.0f}};
+	
+	CGFloat inset = (outline == 0.0 ? 0.5 : 0.0);
+	for(int i=0; i<count-2; i++){
+		GLKVector2 v0 = GLKVector2Subtract( (verts[0  ]), GLKVector2MultiplyScalar(extrude[0  ].offset, inset));
+		GLKVector2 v1 = GLKVector2Subtract( (verts[i+1]), GLKVector2MultiplyScalar(extrude[i+1].offset, inset));
+		GLKVector2 v2 = GLKVector2Subtract( (verts[i+2]), GLKVector2MultiplyScalar(extrude[i+2].offset, inset));
+		
+		*cursor++ = (CCTriangle){
+			MakeVertex(v0, zero, fill4),
+			MakeVertex(v1, zero, fill4),
+			MakeVertex(v2, zero, fill4),
+		};
+	}
+	
+	for(int i=0; i<count; i++){
+		int j = (i+1)%count;
+		GLKVector2 v0 = ( verts[i] );
+		GLKVector2 v1 = ( verts[j] );
+		
+		GLKVector2 n0 = extrude[i].n;
+		
+		GLKVector2 offset0 = extrude[i].offset;
+		GLKVector2 offset1 = extrude[j].offset;
+		
+		if(outline){
+			GLKVector2 inner0 = GLKVector2Subtract(v0, GLKVector2MultiplyScalar(offset0, width));
+			GLKVector2 inner1 = GLKVector2Subtract(v1, GLKVector2MultiplyScalar(offset1, width));
+			GLKVector2 outer0 = GLKVector2Add(v0, GLKVector2MultiplyScalar(offset0, width));
+			GLKVector2 outer1 = GLKVector2Add(v1, GLKVector2MultiplyScalar(offset1, width));
+			
+			*cursor++ = (CCTriangle){
+				MakeVertex(inner0, GLKVector2Negate(n0), line4),
+				MakeVertex(inner1, GLKVector2Negate(n0), line4),
+				MakeVertex(outer1, n0, line4),
+			};
+			*cursor++ = (CCTriangle){
+				MakeVertex(inner0, GLKVector2Negate(n0), line4),
+				MakeVertex(outer0, n0, line4),
+				MakeVertex(outer1, n0, line4),
+			};
+		} else {
+			GLKVector2 inner0 = GLKVector2Subtract(v0, GLKVector2MultiplyScalar(offset0, 0.5));
+			GLKVector2 inner1 = GLKVector2Subtract(v1, GLKVector2MultiplyScalar(offset1, 0.5));
+			GLKVector2 outer0 = GLKVector2Add(v0, GLKVector2MultiplyScalar(offset0, 0.5));
+			GLKVector2 outer1 = GLKVector2Add(v1, GLKVector2MultiplyScalar(offset1, 0.5));
+			
+			*cursor++ = (CCTriangle){
+				MakeVertex(inner0, zero, fill4),
+				MakeVertex(inner1, zero, fill4),
+				MakeVertex(outer1, n0, fill4),
+			};
+			*cursor++ = (CCTriangle){
+				MakeVertex(inner0, zero, fill4),
+				MakeVertex(outer0, n0, fill4),
+				MakeVertex(outer1, n0, fill4),
+			};
+		}
+	}
 }
 
 -(void)clear
