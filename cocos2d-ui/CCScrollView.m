@@ -91,15 +91,18 @@
 {
 	float _endPosition;
 	float _startPos;
+	void (^block)(void);
 }
 @end
 
 @implementation CCMoveToX
 
--(id) initWithDuration: (CCTime) t positionX: (float) p
+-(id) initWithDuration: (CCTime) t positionX: (float) p callback:(void(^)(void))callback
 {
-	if( (self=[super initWithDuration: t]) )
+	if( (self=[super initWithDuration: t]) ) {
 		_endPosition = p;
+		block = callback;
+	}
 	return self;
 }
 
@@ -119,6 +122,7 @@
     float y = node.position.y;
     
 	node.position = ccp(x,y);
+	block();
 }
 @end
 
@@ -127,15 +131,18 @@
 {
 	float _endPosition;
 	float _startPos;
+	void (^block)(void);
 }
 @end
 
 @implementation CCMoveToY
 
--(id) initWithDuration: (CCTime) t positionY: (float) p
+-(id) initWithDuration: (CCTime) t positionY: (float) p callback:(void(^)(void))callback
 {
-	if( (self=[super initWithDuration: t]) )
+	if( (self=[super initWithDuration: t]) ) {
 		_endPosition = p;
+		block = [callback copy];
+	}
 	return self;
 }
 
@@ -155,6 +162,7 @@
     float x = node.position.x;
     
 	node.position = ccp(x,y);
+	block();
 }
 @end
 
@@ -162,7 +170,13 @@
 #pragma mark -
 #pragma mark CCScrollView
 
-@implementation CCScrollView
+@implementation CCScrollView {
+	BOOL _decelerating;
+
+#ifdef __CC_PLATFORM_MAC
+	CGPoint _lastPosition;
+#endif
+}
 
 #pragma mark Initializers
 
@@ -335,31 +349,13 @@
 
 - (void) setScrollPosition:(CGPoint)newPos animated:(BOOL)animated
 {
+    // Check bounds
+	newPos.x = MAX(MIN(newPos.x, self.maxScrollX), self.minScrollX);
+	newPos.y = MAX(MIN(newPos.y, self.maxScrollY), self.minScrollY);
+
     BOOL xMoved = (newPos.x != self.scrollPosition.x);
     BOOL yMoved = (newPos.y != self.scrollPosition.y);
-    
-    // Check bounds
-    if (newPos.x > self.maxScrollX)
-    {
-        newPos.x = self.maxScrollX;
-        xMoved = YES;
-    }
-    if (newPos.x < self.minScrollX)
-    {
-        newPos.x = self.minScrollX;
-        xMoved = YES;
-    }
-    if (newPos.y > self.maxScrollY)
-    {
-        newPos.y = self.maxScrollY;
-        yMoved = YES;
-    }
-    if (newPos.y < self.minScrollY)
-    {
-        newPos.y = self.minScrollY;
-        yMoved = YES;
-    }
-    
+
     if (animated)
     {
         CGPoint oldPos = self.scrollPosition;
@@ -375,7 +371,9 @@
             _animatingX = YES;
             
             // Create animation action
-            CCActionInterval* action = [CCActionEaseOut actionWithAction:[[CCMoveToX alloc] initWithDuration:duration positionX:-newPos.x] rate:2];
+            CCActionInterval* action = [CCActionEaseOut actionWithAction:[[CCMoveToX alloc] initWithDuration:duration positionX:-newPos.x callback:^{
+				[self scrollViewDidScroll];
+			}] rate:2];
             CCActionCallFunc* callFunc = [CCActionCallFunc actionWithTarget:self selector:@selector(xAnimationDone)];
             action = [CCActionSequence actions:action, callFunc, nil];
             action.tag = kCCScrollViewActionXTag;
@@ -389,7 +387,9 @@
             _animatingY = YES;
             
             // Create animation action
-            CCActionInterval* action = [CCActionEaseOut actionWithAction:[[CCMoveToY alloc] initWithDuration:duration positionY:-newPos.y] rate:2];
+            CCActionInterval* action = [CCActionEaseOut actionWithAction:[[CCMoveToY alloc] initWithDuration:duration positionY:-newPos.y callback:^{
+				[self scrollViewDidScroll];
+			}] rate:2];
             CCActionCallFunc* callFunc = [CCActionCallFunc actionWithTarget:self selector:@selector(yAnimationDone)];
             action = [CCActionSequence actions:action, callFunc, nil];
             action.tag = kCCScrollViewActionYTag;
@@ -399,6 +399,9 @@
     }
     else
     {
+#ifdef __CC_PLATFORM_MAC
+		_lastPosition = self.scrollPosition;
+#endif
         [_contentNode stopActionByTag:kCCScrollViewActionXTag];
         [_contentNode stopActionByTag:kCCScrollViewActionYTag];
         _contentNode.position = ccpMult(newPos, -1);
@@ -453,7 +456,7 @@
         if (newPos.y > self.maxScrollY) newPos.y = self.maxScrollY;
         if (newPos.y < self.minScrollY) newPos.y = self.minScrollY;
     }
-    
+    [self scrollViewDidScroll];
     _contentNode.position = ccpMult(newPos, -1);
 }
 
@@ -461,7 +464,24 @@
 {
     float fps = 1.0/df;
     float p = 60/fps;
-    
+
+	if (! CGPointEqualToPoint(_velocity, CGPointZero) ) {
+		[self scrollViewDidScroll];
+	} else {
+
+#ifdef __CC_PLATFORM_IOS
+		if ( _decelerating && !(_animatingX || _animatingY)) {
+			[self scrollViewDidEndDecelerating];
+			_decelerating = NO;
+		}
+#elif defined(__CC_PLATFORM_MAC)
+		if ( _decelerating && CGPointEqualToPoint(_lastPosition, self.scrollPosition)) {
+			[self scrollViewDidEndDecelerating];
+			_decelerating = NO;
+		}
+#endif
+    }
+
     if (!_isPanning)
     {
         if (_velocity.x != 0 || _velocity.y != 0)
@@ -553,6 +573,7 @@
     
     if (pgr.state == UIGestureRecognizerStateBegan)
     {
+		[self scrollViewWillBeginDragging];
         _animatingX = NO;
         _animatingY = NO;
         _rawTranslationStart = rawTranslation;
@@ -581,6 +602,7 @@
     }
     else if (pgr.state == UIGestureRecognizerStateEnded)
     {
+
         // Calculate the velocity in node space
         CGPoint ref = [dir convertToGL:CGPointZero];
         ref = [self convertToNodeSpace:ref];
@@ -595,6 +617,7 @@
         // Check if scroll directions has been disabled
         if (!_horizontalScrollEnabled) _velocity.x = 0;
         if (!_verticalScrollEnabled) _velocity.y = 0;
+		[self scrollViewDidEndDraggingAndWillDecelerate:!CGPointEqualToPoint(_velocity, CGPointZero)];
         
         // Setup a target if paging is enabled
         if (_pagingEnabled)
@@ -633,7 +656,8 @@
             
             _velocity = CGPointZero;
         }
-        
+        [self scrollViewWillBeginDecelerating];
+		_decelerating = YES;
         _isPanning = NO;
     }
     else if (pgr.state == UIGestureRecognizerStateCancelled)
@@ -749,11 +773,30 @@
 
 - (void)scrollWheel:(NSEvent *)theEvent
 {
-    CCDirector* dir = [CCDirector sharedDirector];
-    
+	CCDirector* dir = [CCDirector sharedDirector];
+
     float deltaX = theEvent.deltaX;
     float deltaY = theEvent.deltaY;
-    
+
+	[self scrollViewDidScroll];
+
+    switch (theEvent.phase) {
+        case NSEventPhaseBegan:
+            [self scrollViewWillBeginDragging];
+            break;
+        case NSEventPhaseEnded:
+			//TODO: add logic to determine if it will decelerate
+            [self scrollViewDidEndDraggingAndWillDecelerate:YES];
+			_decelerating = YES;
+        default:
+            break;
+    }
+
+    if (theEvent.momentumPhase == NSEventPhaseBegan)
+	{
+		[self scrollViewWillBeginDecelerating];
+    }
+
     // Calculate the delta in node space
     CGPoint ref = [dir convertToGL:CGPointZero];
     ref = [self convertToNodeSpace:ref];
@@ -768,6 +811,7 @@
     // Flip coordinates
     if (_flipYCoordinates) delta.y = -delta.y;
     delta.x = -delta.x;
+
     
     // Handle disabled x/y axis
     if (!_horizontalScrollEnabled) delta.x = 0;
@@ -818,10 +862,55 @@
         // Update scroll position
         CGPoint scrollPos = self.scrollPosition;
         scrollPos = ccpAdd(delta, scrollPos);
-        self.scrollPosition = scrollPos;
+		self.scrollPosition = scrollPos;
     }
 }
 
 #endif
+
+
+#pragma mark - CCScrollViewDelegate Helpers
+
+- (void)scrollViewDidScroll
+{
+    if ( [self.delegate respondsToSelector:@selector(scrollViewDidScroll:)] )
+    {
+        [self.delegate scrollViewDidScroll:self];
+    }
+}
+
+- (void)scrollViewWillBeginDragging
+{
+    if ( [self.delegate respondsToSelector:@selector(scrollViewWillBeginDragging:)])
+    {
+        [self.delegate scrollViewWillBeginDragging:self];
+    }
+}
+- (void)scrollViewDidEndDraggingAndWillDecelerate:(BOOL)decelerate
+{
+    if ([self.delegate respondsToSelector:@selector(scrollViewDidEndDragging:willDecelerate:)])
+    {
+        [self.delegate scrollViewDidEndDragging:self
+                                 willDecelerate:decelerate];
+    }
+}
+- (void)scrollViewWillBeginDecelerating
+{
+	if ( !_pagingEnabled )
+    {
+		if ( [self.delegate respondsToSelector:@selector(scrollViewWillBeginDecelerating:)])
+		{
+			[self.delegate scrollViewWillBeginDecelerating:self];
+		}
+	}
+
+}
+- (void)scrollViewDidEndDecelerating
+{
+    if ( [self.delegate respondsToSelector:@selector(scrollViewDidEndDecelerating:)])
+    {
+        [self.delegate scrollViewDidEndDecelerating:self];
+    }
+}
 
 @end
