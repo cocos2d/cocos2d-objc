@@ -33,7 +33,6 @@
 #import "ccMacros.h"
 #import "CCShaderCache.h"
 #import "CCGLProgram.h"
-#import "ccGLStateCache.h"
 #import "Support/CGPointExtension.h"
 #import "CCNode_Private.h"
 

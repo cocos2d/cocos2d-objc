@@ -40,7 +40,6 @@
 #import "../../ccMacros.h"
 #import "../../CCScene.h"
 #import "../../CCGLProgram.h"
-#import "../../ccGLStateCache.h"
 #import "../../ccFPSImages.h"
 #import "../../CCConfiguration.h"
 #import "CCRenderer_private.h"
@@ -200,7 +199,6 @@
 
 	_projection = projection;
 
-	ccSetProjectionMatrixDirty();
 	[self createStatsLabel];
 }
 

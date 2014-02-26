@@ -28,7 +28,6 @@
 #import "CCDirector.h"
 #import "ccMacros.h"
 #import "CCGLProgram.h"
-#import "ccGLStateCache.h"
 #import "CCConfiguration.h"
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"

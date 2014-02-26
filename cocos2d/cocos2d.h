@@ -93,7 +93,6 @@
 
 // Shaders
 #import "CCGLProgram.h"
-#import "ccGLStateCache.h"
 #import "ccShaders.h"
 #import "CCShaderCache.h"
 

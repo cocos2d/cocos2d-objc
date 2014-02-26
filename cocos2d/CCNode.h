@@ -29,7 +29,6 @@
 #import "ccTypes.h"
 #import "CCProtocols.h"
 #import "ccConfig.h"
-#import "ccGLStateCache.h"
 #import "CCResponder.h"
 #import "CCScheduler.h"
 #import "CCRenderer.h"
@@ -117,9 +116,6 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 	// Shader Program.
 	CCGLProgram	*_shaderProgram;
 	CCRenderState *_renderState;
-
-	// Server side state.
-	ccGLServerState _glServerState;
 
 	// Used to preserve sequence while sorting children with the same zOrder.
 	NSUInteger _orderOfArrival;

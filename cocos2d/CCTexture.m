@@ -78,7 +78,6 @@
 #import "CCConfiguration.h"
 #import "CCTexturePVR.h"
 #import "CCGLProgram.h"
-#import "ccGLStateCache.h"
 #import "CCShaderCache.h"
 #import "CCDirector.h"
 
@@ -180,7 +179,7 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 			glPixelStorei(GL_UNPACK_ALIGNMENT,1);
 
 		glGenTextures(1, &_name);
-		ccGLBindTexture2D( _name );
+		glBindTexture(GL_TEXTURE_2D, _name);
 		
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
@@ -282,7 +281,7 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
 
 	if( _name )
-		ccGLDeleteTexture( _name );
+		glDeleteTextures(1, &_name);
 
 }
 
@@ -667,7 +666,7 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 -(void) generateMipmap
 {
 	NSAssert( _width == CCNextPOT(_width) && _height == CCNextPOT(_height), @"Mimpap texture only works in POT textures");
-	ccGLBindTexture2D( _name );
+	glBindTexture(GL_TEXTURE_2D, _name);
 	glGenerateMipmap(GL_TEXTURE_2D);
 	_hasMipmaps = YES;
 }
@@ -678,7 +677,7 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 				(texParams->wrapS == GL_CLAMP_TO_EDGE && texParams->wrapT == GL_CLAMP_TO_EDGE),
 			@"GL_CLAMP_TO_EDGE should be used in NPOT dimensions");
 
-	ccGLBindTexture2D( _name );
+	glBindTexture(GL_TEXTURE_2D, _name );
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texParams->minFilter );
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texParams->magFilter );
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, texParams->wrapS );
@@ -687,7 +686,7 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 
 -(void) setAliasTexParameters
 {
-	ccGLBindTexture2D( _name );
+	glBindTexture(GL_TEXTURE_2D, _name );
 	
 	if( ! _hasMipmaps )
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
@@ -701,7 +700,7 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 
 -(void) setAntiAliasTexParameters
 {
-	ccGLBindTexture2D( _name );
+	glBindTexture(GL_TEXTURE_2D, _name );
 	
 	if( ! _hasMipmaps )
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );

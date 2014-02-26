@@ -42,7 +42,6 @@
 #import "CCSpriteFrameCache.h"
 #import "CCTexture.h"
 #import "CCLabelBMFont.h"
-#import "ccGLStateCache.h"
 #import "CCShaderCache.h"
 #import "ccFPSImages.h"
 #import "CCConfiguration.h"
@@ -653,11 +652,7 @@ static CCDirector *_sharedDirector = nil;
 	// Since the director doesn't attach the openglview to the window
 	// it shouldn't remove it from the window too.
 //	[openGLView_ removeFromSuperview];
-
-
-	// Invalidate GL state cache
-	ccGLInvalidateStateCache();
-
+	
 	CHECK_GL_ERROR();
 }
 

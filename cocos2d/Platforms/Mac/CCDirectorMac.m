@@ -40,7 +40,6 @@
 #import "../../CCScheduler.h"
 #import "../../ccMacros.h"
 #import "../../CCGLProgram.h"
-#import "../../ccGLStateCache.h"
 #import "../../ccFPSImages.h"
  
 // external

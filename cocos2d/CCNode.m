@@ -116,7 +116,6 @@ static NSUInteger globalOrderOfArrival = 1;
 @synthesize userObject = _userObject;
 @synthesize	shaderProgram = _shaderProgram;
 @synthesize orderOfArrival = _orderOfArrival;
-@synthesize glServerState = _glServerState;
 @synthesize physicsBody = _physicsBody;
 
 #pragma mark CCNode - Transform related properties
@@ -166,8 +165,6 @@ static NSUInteger globalOrderOfArrival = 1;
 		_blendFunc = (ccBlendFunc){GL_ONE, GL_ZERO};
 
 		_orderOfArrival = 0;
-
-		_glServerState = 0;
 		
 		// set default scheduler and actionManager
 		CCDirector *director = [CCDirector sharedDirector];

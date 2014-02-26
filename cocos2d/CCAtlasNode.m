@@ -30,7 +30,6 @@
 #import "CCGLProgram.h"
 #import "CCTextureCache.h"
 #import "CCShaderCache.h"
-#import "ccGLStateCache.h"
 #import "CCDirector.h"
 #import "CCNode_Private.h"
 

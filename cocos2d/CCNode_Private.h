@@ -48,10 +48,6 @@
 /* used internally for zOrder sorting, don't change this manually */
 @property(nonatomic,readwrite) NSUInteger orderOfArrival;
 
-/* GL server side state
- */
-@property (nonatomic, readwrite) ccGLServerState glServerState;
-
 /* CCActionManager used by all the actions.
  IMPORTANT: If you set a new CCActionManager, then previously created actions are going to be removed.
  */

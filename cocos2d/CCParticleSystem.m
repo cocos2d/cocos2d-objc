@@ -40,7 +40,6 @@
 #import "CCSpriteFrame.h"
 #import "CCDirector.h"
 #import "CCShaderCache.h"
-#import "ccGLStateCache.h"
 #import "CCGLProgram.h"
 #import "CCConfiguration.h"
 
@@ -179,37 +178,37 @@
 	// https://devforums.apple.com/thread/145566?tstart=0
 	
 	void (^createVAO)(void) = ^ {
-		glGenVertexArrays(1, &_VAOname);
-		ccGLBindVAO(_VAOname);
-
-	#define kQuadSize sizeof(_quads[0].bl)
-
-		glGenBuffers(2, &_buffersVBO[0]);
-
-		glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _totalParticles, _quads, GL_DYNAMIC_DRAW);
-
-		// vertices
-		glEnableVertexAttribArray(kCCVertexAttrib_Position);
-		glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, vertices));
-
-		// colors
-		glEnableVertexAttribArray(kCCVertexAttrib_Color);
-		glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, colors));
-
-		// tex coords
-		glEnableVertexAttribArray(kCCVertexAttrib_TexCoords);
-		glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, texCoords));
-
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _totalParticles * 6, _indices, GL_STATIC_DRAW);
-
-		// Must unbind the VAO before changing the element buffer.
-		ccGLBindVAO(0);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-		CHECK_GL_ERROR_DEBUG();
+//		glGenVertexArrays(1, &_VAOname);
+//		ccGLBindVAO(_VAOname);
+//
+//	#define kQuadSize sizeof(_quads[0].bl)
+//
+//		glGenBuffers(2, &_buffersVBO[0]);
+//
+//		glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
+//		glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _totalParticles, _quads, GL_DYNAMIC_DRAW);
+//
+//		// vertices
+//		glEnableVertexAttribArray(kCCVertexAttrib_Position);
+//		glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, vertices));
+//
+//		// colors
+//		glEnableVertexAttribArray(kCCVertexAttrib_Color);
+//		glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, colors));
+//
+//		// tex coords
+//		glEnableVertexAttribArray(kCCVertexAttrib_TexCoords);
+//		glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, texCoords));
+//
+//		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
+//		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _totalParticles * 6, _indices, GL_STATIC_DRAW);
+//
+//		// Must unbind the VAO before changing the element buffer.
+//		ccGLBindVAO(0);
+//		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+//		glBindBuffer(GL_ARRAY_BUFFER, 0);
+//
+//		CHECK_GL_ERROR_DEBUG();
 	};
 	
 	NSThread *cocos2dThread = [[CCDirector sharedDirector] runningThread];

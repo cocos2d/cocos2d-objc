@@ -27,7 +27,6 @@
 
 
 #import "CCGLProgram.h"
-#import "ccGLStateCache.h"
 #import "ccMacros.h"
 #import "Support/CCFileUtils.h"
 #import "Support/uthash.h"
@@ -246,7 +245,7 @@ typedef void (*GLLogFunction) (GLuint program,
 	
     if (status == GL_FALSE) {
         NSLog(@"cocos2d: ERROR: Failed to link program: %i - %@", _program, log);
-        ccGLDeleteProgram( _program );
+        glDeleteProgram(_program);
         _program = 0;
     }
 #endif
@@ -256,7 +255,7 @@ typedef void (*GLLogFunction) (GLuint program,
 
 -(void) use
 {
-	ccGLUseProgram(_program);
+	glUseProgram(_program);
 }
 
 #pragma mark -
@@ -478,7 +477,7 @@ typedef void (*GLLogFunction) (GLuint program,
 	NSAssert( _fragShader == 0, @"Fragment Shaders should have been already deleted");
 
 	if (_program)
-		ccGLDeleteProgram(_program);
+		glDeleteProgram(_program);
 
 	tHashUniformEntry *current_element, *tmp;
 
