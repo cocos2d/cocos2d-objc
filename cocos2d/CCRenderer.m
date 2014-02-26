@@ -350,12 +350,19 @@ Things to try if sorting is implemented:
 *
 */
 
+#define MAX_TEXTURE_UNITS 8
+
 @implementation CCRenderer {
+	GLuint _vao;
+	GLuint _vbo;
+	
 	NSDictionary *_renderOptions;
 	NSDictionary *_blendOptions;
 	
-	// TODO buffer the full texture state.
-	CCTexture *_texture;
+	// TODO GL_MAX_TEXTURE_UNITS.
+	CCTexture *_textures[MAX_TEXTURE_UNITS];
+	NSUInteger _textureStamps[MAX_TEXTURE_UNITS];
+	NSUInteger _textureStamp;
 	
 	CCGLProgram *_shader;
 	NSDictionary *_uniforms;
@@ -372,14 +379,17 @@ Things to try if sorting is implemented:
 {
 	_renderOptions = nil;
 	_blendOptions = nil;
-	_texture = nil;
 	_shader = nil;
 	_uniforms = nil;
+	
+	for(int i=0; i<MAX_TEXTURE_UNITS;i++) _textures[i] = nil;
 }
 
 -(instancetype)init
 {
 	if((self = [super init])){
+		[self setupVAO];
+		
 		_queue = [NSMutableArray array];
 		
 		#warning TODO
@@ -393,6 +403,26 @@ Things to try if sorting is implemented:
 -(void)dealloc
 {
 	free(_triangles);
+}
+
+-(void)setupVAO
+{
+	glGenBuffers(1, &_vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+	
+	glGenVertexArraysOES(1, &_vao);
+	glBindVertexArrayOES(_vao);
+
+	glEnableVertexAttribArray(kCCVertexAttrib_Position);
+	glEnableVertexAttribArray(kCCVertexAttrib_TexCoords);
+	glEnableVertexAttribArray(kCCVertexAttrib_Color);
+	
+	glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, position));
+	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, texCoord1));
+	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, color));
+
+	glBindVertexArrayOES(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 -(void)setBlendOptions:(NSDictionary *)blendOptions;
@@ -419,6 +449,39 @@ Things to try if sorting is implemented:
 	_blendOptions = blendOptions;
 }
 
+-(GLint)markTexture:(GLint)unit
+{
+	_textureStamps[unit] = _textureStamp;
+	_textureStamp++;
+	
+	return unit;
+}
+
+-(GLint)unitForTexture:(CCTexture *)texture
+{
+	GLint unit = -1;
+//	NSUInteger stamp = NSUIntegerMax;
+//	
+//	// First check if the texture is already bound
+//	for(int i=0; i<MAX_TEXTURE_UNITS; i++){
+//		if(texture == _textures[i]){
+//			return [self markTexture:i];
+//		} else if(_textureStamps[i] < stamp){
+//			stamp = _textureStamps[i];
+//			unit = i;
+//		}
+//	}
+	
+	unit = 0;
+//	NSLog(@"Binding %@ to unit %d", texture, unit);
+	glActiveTexture(GL_TEXTURE0 + unit);
+	glBindTexture(GL_TEXTURE_2D, texture.name);
+	_textures[unit] = texture;
+	CHECK_GL_ERROR_DEBUG();
+	
+	return [self markTexture:unit];
+}
+
 -(BOOL)setRenderOptions:(NSDictionary *)renderOptions
 {
 	if(renderOptions == _renderOptions) return NO;
@@ -429,16 +492,20 @@ Things to try if sorting is implemented:
 	CCGLProgram *shader = renderOptions[CCRenderStateShader];
 	if(shader != _shader){
 		[shader use];
-//		[shader setUniformsForBuiltins:GLKMatrix4Identity];
+		
+		_shader = shader;
+		_uniforms = nil;
 	}
 	
 	NSDictionary *uniforms = renderOptions[CCRenderStateUniforms];
 	if(uniforms != _uniforms){
-		// TODO finish me!
-		CCTexture *texture = uniforms[CCMainTexture];
-		if(texture != _texture && texture != [NSNull null]){
-			glBindTexture(GL_TEXTURE_2D, texture.name);
-			_texture = texture;
+		id texture = uniforms[CCMainTexture];
+		if(texture && texture != [NSNull null]){
+			GLint unit = [self unitForTexture:texture];
+//			GLint program = shader.program;
+//			
+//			GLint loc = glGetUniformLocation(program, "CC_Texture0");
+//			if(loc >= 0) glUniform1i(loc, unit);
 		}
 	}
 	
@@ -484,16 +551,13 @@ Things to try if sorting is implemented:
 
 -(void)flush
 {
-	ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
-	CCVertex *verts = (CCVertex *)_triangles;
-	long foo1 = offsetof(CCVertex, position);
-	long foo2 = offsetof(CCVertex, texCoord1);
-	long foo3 = offsetof(CCVertex, color);
-	glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (GLvoid *)verts + foo1);
-	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (GLvoid *)verts + foo2);
-	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (GLvoid *)verts + foo3);
+	glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+	glBufferData(GL_ARRAY_BUFFER, _triangleCount*sizeof(CCTriangle), _triangles, GL_STREAM_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	
+	glBindVertexArrayOES(_vao);
 	for(CCRenderCommandDraw *command in _queue) [command invoke:self];
+	glBindVertexArrayOES(0);
 	
 //	NSLog(@"Draw commands: %d, Draw calls: %d", _statDrawCommands, _queue.count);
 	_statDrawCommands = 0;
