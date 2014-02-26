@@ -32,13 +32,159 @@
 #import "ccMacros.h"
 #import "CCNode_Private.h"
 
-#import "Support/CCVertex.h"
 #import "Support/CGPointExtension.h"
 
 #import "CCTexture_Private.h"
 
 
-@implementation CCMotionStreak
+static BOOL CCVertexLineIntersect(float Ax, float Ay,
+                               float Bx, float By,
+                               float Cx, float Cy,
+                               float Dx, float Dy, float *T)
+{
+    float  distAB, theCos, theSin, newX;
+
+    // FAIL: Line undefined
+    if ((Ax==Bx && Ay==By) || (Cx==Dx && Cy==Dy)) return NO;
+
+    //  Translate system to make A the origin
+    Bx-=Ax; By-=Ay;
+    Cx-=Ax; Cy-=Ay;
+    Dx-=Ax; Dy-=Ay;
+
+    // Length of segment AB
+    distAB = sqrtf(Bx*Bx+By*By);
+
+    // Rotate the system so that point B is on the positive X axis.
+    theCos = Bx/distAB;
+    theSin = By/distAB;
+    newX = Cx*theCos+Cy*theSin;
+    Cy  = Cy*theCos-Cx*theSin; Cx = newX;
+    newX = Dx*theCos+Dy*theSin;
+    Dy  = Dy*theCos-Dx*theSin; Dx = newX;
+
+    // FAIL: Lines are parallel.
+    if (Cy == Dy) return NO;
+
+    // Discover the relative position of the intersection in the line AB
+    *T = (Dx+(Cx-Dx)*Dy/(Dy-Cy))/distAB;
+
+    // Success.
+    return YES;
+}
+
+static void CCVertexLineToPolygon(CGPoint *points, float stroke, ccVertex2F *vertices, NSUInteger offset, NSUInteger nuPoints)
+{
+    nuPoints += offset;
+    if(nuPoints<=1) return;
+
+    stroke *= 0.5f;
+
+    NSUInteger idx;
+    NSUInteger nuPointsMinus = nuPoints-1;
+
+    for(NSUInteger i = offset; i<nuPoints; i++)
+    {
+        idx = i*2;
+        CGPoint p1 = points[i];
+        CGPoint perpVector;
+
+        if(i == 0)
+            perpVector = ccpPerp(ccpNormalize(ccpSub(p1, points[i+1])));
+        else if(i == nuPointsMinus)
+            perpVector = ccpPerp(ccpNormalize(ccpSub(points[i-1], p1)));
+        else
+        {
+            CGPoint p2 = points[i+1];
+            CGPoint p0 = points[i-1];
+
+            CGPoint p2p1 = ccpNormalize(ccpSub(p2, p1));
+            CGPoint p0p1 = ccpNormalize(ccpSub(p0, p1));
+
+            // Calculate angle between vectors
+            float angle = acosf(ccpDot(p2p1, p0p1));
+
+            if(angle < CC_DEGREES_TO_RADIANS(70))
+                perpVector = ccpPerp(ccpNormalize(ccpMidpoint(p2p1, p0p1)));
+            else if(angle < CC_DEGREES_TO_RADIANS(170))
+                perpVector = ccpNormalize(ccpMidpoint(p2p1, p0p1));
+            else
+                perpVector = ccpPerp(ccpNormalize(ccpSub(p2, p0)));
+        }
+        perpVector = ccpMult(perpVector, stroke);
+
+        vertices[idx] = (ccVertex2F) {p1.x+perpVector.x, p1.y+perpVector.y};
+        vertices[idx+1] = (ccVertex2F) {p1.x-perpVector.x, p1.y-perpVector.y};
+    }
+
+    // Validate vertexes
+    offset = (offset==0) ? 0 : offset-1;
+    for(NSUInteger i = offset; i<nuPointsMinus; i++)
+    {
+        idx = i*2;
+        const NSUInteger idx1 = idx+2;
+
+        ccVertex2F p1 = vertices[idx];
+        ccVertex2F p2 = vertices[idx+1];
+        ccVertex2F p3 = vertices[idx1];
+        ccVertex2F p4 = vertices[idx1+1];
+
+        float s;
+        //BOOL fixVertex = !ccpLineIntersect(ccp(p1.x, p1.y), ccp(p4.x, p4.y), ccp(p2.x, p2.y), ccp(p3.x, p3.y), &s, &t);
+        BOOL fixVertex = !CCVertexLineIntersect(p1.x, p1.y, p4.x, p4.y, p2.x, p2.y, p3.x, p3.y, &s);
+        if(!fixVertex)
+            if (s<0.0f || s>1.0f)
+                fixVertex = YES;
+
+        if(fixVertex)
+        {
+            vertices[idx1] = p4;
+            vertices[idx1+1] = p3;
+        }
+    }
+}
+
+
+@implementation CCMotionStreak {
+    
+    // Texture.
+    CCTexture *_texture;
+    
+    // Position.
+    CGPoint _positionR;
+    
+    // Stroke width.
+    float _stroke;
+    
+    // Fade time.
+    float _fadeDelta;
+    
+    // Minimum segments.
+    float _minSeg;
+    
+    // Point counters.
+    NSUInteger _maxPoints;
+    NSUInteger _nuPoints;
+    NSUInteger _previousNuPoints;
+
+    // Trail vertexes.
+    CGPoint *_pointVertexes;
+    
+    // Trail vertex states.
+    float *_pointState;
+
+    // OpenGL.
+    ccVertex2F *_vertices;
+    ccTex2F *_texCoords;
+    unsigned char *_colorPointer;
+
+    // Toggle fast mode.
+    BOOL	_fastMode;
+	
+    // Starting point.
+	BOOL	_startingPositionInitialized;
+}
+
 @synthesize texture = _texture;
 @synthesize fastMode = _fastMode;
 
@@ -68,7 +214,7 @@
         [super setPosition:CGPointZero];
         [self setAnchorPoint:CGPointZero];
 
-		_startingPositionInitialized = NO;
+        _startingPositionInitialized = NO;
         _positionR = CGPointZero;
         _fastMode = YES;
         _minSeg = (minSeg == -1.0f) ? stroke/5.0f : minSeg;
@@ -87,10 +233,10 @@
         _colorPointer =  malloc(sizeof(GLubyte) * _maxPoints * 2 * 4);
 
         // Set blend mode
-				self.blendFunc = (ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
+				self.blendFunc = (ccBlendFunc){GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA};
 
-		// shader program
-		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
+        // shader program
+        self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
 
         [self setTexture:texture];
         [super setColor:color];
@@ -145,10 +291,9 @@
     {
         _pointState[i]-=delta;
 
-        if(_pointState[i] <= 0)
+        if(_pointState[i] <= 0) {
             mov++;
-        else
-        {
+        } else {
             newIdx = i-mov;
 
             if(mov>0)
@@ -174,8 +319,9 @@
                 _colorPointer[newIdx2+4] = _colorPointer[i2+4];
                 _colorPointer[newIdx2+5] = _colorPointer[i2+5];
                 _colorPointer[newIdx2+6] = _colorPointer[i2+6];
-            }else
+            } else {
                 newIdx2 = newIdx*8;
+						}
 
             const GLubyte op = _pointState[newIdx] * 255.0f;
             _colorPointer[newIdx2+3] = op;
@@ -186,11 +332,9 @@
 
     // Append new point
     BOOL appendNewPoint = YES;
-    if(_nuPoints >= _maxPoints)
+    if(_nuPoints >= _maxPoints) {
         appendNewPoint = NO;
-
-    else if(_nuPoints>0)
-    {
+		} else if(_nuPoints>0) {
         BOOL a1 = ccpDistanceSQ(_pointVertexes[_nuPoints-1], _positionR) < _minSeg;
         BOOL a2 = (_nuPoints == 1) ? NO : (ccpDistanceSQ(_pointVertexes[_nuPoints-2], _positionR) < (_minSeg * 2.0f));
         if(a1 || a2)
@@ -210,17 +354,19 @@
         // Generate polygon
         if(_nuPoints > 0 && _fastMode )
         {
-            if(_nuPoints > 1)
+            if(_nuPoints > 1){
                 CCVertexLineToPolygon(_pointVertexes, _stroke, _vertices, _nuPoints, 1);
-            else
+            } else {
                 CCVertexLineToPolygon(_pointVertexes, _stroke, _vertices, 0, 2);
+						}
         }
 
         _nuPoints ++;
     }
 
-    if( ! _fastMode )
+    if( ! _fastMode ) {
         CCVertexLineToPolygon(_pointVertexes, _stroke, _vertices, 0, _nuPoints);
+		}
 	
 	
 	// Updated Tex Coords only if they are different than previous step
@@ -240,31 +386,70 @@
     _nuPoints = 0;
 }
 
+-(CCRenderState *)renderState
+{
+	ccBlendFunc blendFunc = self.blendFunc;
+	
+	if(_renderState == nil){
+		_renderState = [CCRenderState renderStateWithOptions:@{
+			CCRenderStateBlendMode: [CCBlendMode blendModeWithOptions:@{
+				CCBlendFuncSrcColor: @(blendFunc.src),
+				CCBlendFuncDstColor: @(blendFunc.dst),
+			}],
+			CCRenderStateShader: _shaderProgram,
+			CCRenderStateUniforms: @{CCMainTexture: (_texture ?: [NSNull null])},
+		}];
+	}
+	
+	return _renderState;
+}
+
+// TODO should update the class to store the rendering values in actual output types.
+static inline CCVertex
+MakeVertex(ccVertex2F v, ccTex2F texCoord, unsigned char *color, GLKMatrix4 transform)
+{
+	return (CCVertex){
+		GLKMatrix4MultiplyAndProjectVector3(transform, GLKVector3Make(v.x, v.y, 0.0f)),
+		GLKVector2Make(texCoord.u, texCoord.v), GLKVector2Make(0.0f, 0.0f),
+		GLKVector4Make(color[0]/255.0, color[1]/255.0, color[2]/255.0, color[3]/255.0)
+	};
+}
+
 - (void) draw:(CCRenderer *)renderer transform:(GLKMatrix4)transform
 {
-	#warning TODO
-//    if(_nuPoints <= 1)
-//        return;
-//	
-//	CC_NODE_DRAW_SETUP(transform);
-//
+	if(_nuPoints <= 1) return;
+	
+	// Keep a cache of the previous two vertexes in the strip
+	CCVertex verts[] = {
+		MakeVertex(_vertices[0], _texCoords[0], _colorPointer + 0*4, transform),
+		MakeVertex(_vertices[1], _texCoords[1], _colorPointer + 1*4, transform),
+	};
+	
+	CCTriangle *triangles = [renderer bufferTriangles:2*_nuPoints withState:self.renderState];
+	for(int i=1; i<_nuPoints; i++){
+		CCVertex a = MakeVertex(_vertices[2*i + 0], _texCoords[2*i + 0], _colorPointer + (2*i + 0)*4, transform);
+		triangles[2*i + 0] = (CCTriangle){verts[0], verts[1], a};
+		verts[0] = a;
+		
+		CCVertex b = MakeVertex(_vertices[2*i + 1], _texCoords[2*i + 1], _colorPointer + (2*i + 1)*4, transform);
+		triangles[2*i + 1] = (CCTriangle){verts[0], verts[1], b};
+		verts[1] = b;
+	}
+	
 //	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );
 //	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
-//
+//	
 //	ccGLBindTexture2D( [_texture name] );
-//
-//	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, _vertices);
+//	
+//	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, _verts);
 //	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, _texCoords);
 //	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, _colorPointer);
-//
-//    glDrawArrays(GL_TRIANGLE_STRIP, 0, (GLsizei)_nuPoints*2);
 //	
-//	CC_INCREMENT_GL_DRAWS(1);
+//	glDrawArrays(GL_TRIANGLE_STRIP, 0, (GLsizei)_nuPoints*2);
 }
 
 - (void)dealloc
 {
-
     free(_pointState);
     free(_pointVertexes);
     free(_vertices);

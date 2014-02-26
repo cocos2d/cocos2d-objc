@@ -36,45 +36,7 @@
  - Segments controls how smooth the shape of the trail appears.
  - Fast mode enables faster point addition and the cost of lower point precision.
  */
-@interface CCMotionStreak : CCNode <CCTextureProtocol> {
-    
-    // Texture.
-    CCTexture *_texture;
-    
-    // Position.
-    CGPoint _positionR;
-    
-    // Stroke width.
-    float _stroke;
-    
-    // Fade time.
-    float _fadeDelta;
-    
-    // Minimum segments.
-    float _minSeg;
-    
-    // Point counters.
-    NSUInteger _maxPoints;
-    NSUInteger _nuPoints;
-	NSUInteger _previousNuPoints;
-
-    // Trail vertexes.
-    CGPoint *_pointVertexes;
-    
-    // Trail vertex states.
-    float *_pointState;
-
-    // OpenGL.
-    ccVertex2F *_vertices;
-    unsigned char *_colorPointer;
-    ccTex2F *_texCoords;
-
-    // Toggle fast mode.
-    BOOL	_fastMode;
-	
-    // Starting point.
-	BOOL	_startingPositionInitialized;
-}
+@interface CCMotionStreak : CCNode <CCTextureProtocol>
 
 /// -----------------------------------------------------------------------
 /// @name Accessing Motion Streak Attributes
