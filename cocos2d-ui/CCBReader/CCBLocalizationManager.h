@@ -23,7 +23,6 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "cocos2d.h"
 
 #define CCBLocalize(key) \
 [[CCBLocalizationManager sharedManager] localizedStringForKey:(key)]
