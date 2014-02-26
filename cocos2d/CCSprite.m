@@ -496,18 +496,18 @@
     _spriteFrame = frame;
 }
 
--(void) setSpriteFrameWithAnimationName: (NSString*) animationName index:(int) frameIndex
-{
-	NSAssert( animationName, @"CCSprite#setSpriteFrameWithAnimationName. animationName must not be nil");
-	
-	CCAnimation *a = [[CCAnimationCache sharedAnimationCache] animationByName:animationName];
-	NSAssert( a, @"CCSprite#setSpriteFrameWithAnimationName: Frame not found");
-	
-	CCAnimationFrame *frame = [[a frames] objectAtIndex:frameIndex];
-	NSAssert( frame, @"CCSprite#setSpriteFrame. Invalid frame");
-	
-	self.spriteFrame = frame.spriteFrame;
-}
+//-(void) setSpriteFrameWithAnimationName: (NSString*) animationName index:(int) frameIndex
+//{
+//	NSAssert( animationName, @"CCSprite#setSpriteFrameWithAnimationName. animationName must not be nil");
+//	
+//	CCAnimation *a = [[CCAnimationCache sharedAnimationCache] animationByName:animationName];
+//	NSAssert( a, @"CCSprite#setSpriteFrameWithAnimationName: Frame not found");
+//	
+//	CCAnimationFrame *frame = [[a frames] objectAtIndex:frameIndex];
+//	NSAssert( frame, @"CCSprite#setSpriteFrame. Invalid frame");
+//	
+//	self.spriteFrame = frame.spriteFrame;
+//}
 
 #pragma mark CCSprite - CocosNodeTexture protocol
 

@@ -28,7 +28,6 @@
 
 #import "CCNode.h"
 #import "CCProtocols.h"
-#import "CCTextureAtlas.h"
 
 @class CCSpriteBatchNode;
 @class CCSpriteFrame;

@@ -139,19 +139,6 @@ CCRANDOM_ON_UNIT_CIRCLE()
  */
 #define CC_RADIANS_TO_DEGREES(__ANGLE__) ((__ANGLE__) * 57.29577951f) // PI * 180
 
-/** @def CC_NODE_DRAW_SETUP
- Helpful macro that setups the GL server state, the correct GL program and sets the Model View Projection matrix
- */
-#warning TODO
-#define CC_NODE_DRAW_SETUP(__transform__)																	\
-do {																							\
-	abort();\
-	ccGLEnable( _glServerState );																\
-    NSAssert1(_shaderProgram, @"No shader program set for node: %@", self);						\
-	[_shaderProgram use];																		\
-	[_shaderProgram setUniformsForBuiltins:__transform__];									\
-} while(0)
-
 
 /** @def CC_CONTENT_SCALE_FACTOR
  Factor relating pixel to point coordinates.

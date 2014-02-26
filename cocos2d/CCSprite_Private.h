@@ -25,18 +25,9 @@
 
 #import "CCSprite.h"
 
-#warning TODO Check if these are still needed
 @interface CCSprite ()
 
 // Access to the untransformed vertex array.
 @property(nonatomic, readonly) CCVertex *verts;
-
-#pragma mark CCSprite - Animation
-
-/* 
- Changes the display frame with animation name and index. 
- The animation name will be retried from the CCAnimationCache.
-*/
--(void) setSpriteFrameWithAnimationName:(NSString*)animationName index:(int) frameIndex;
 
 @end

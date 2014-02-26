@@ -29,7 +29,7 @@
 #import "ccMacros.h"
 #import "CCNode.h"
 #import "CCSprite.h"
-#import "Support/OpenGL_Internal.h"
+#import "CCTexture.h"
 
 #ifdef __CC_PLATFORM_IOS
 #import <UIKit/UIKit.h>
