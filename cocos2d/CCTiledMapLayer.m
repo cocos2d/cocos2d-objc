@@ -40,7 +40,6 @@
 #import "Support/CGPointExtension.h"
 #import "CCNode_Private.h"
 #import "CCSprite_Private.h"
-#import "CCSpriteBatchNode_Private.h"
 #import "CCTiledMapLayer_Private.h"
 #import "CCTexture_Private.h"
 
@@ -165,7 +164,7 @@ int compareInts (const void * a, const void * b);
 -(CCSprite*) reusedTileWithRect:(CGRect)rect
 {	
 	if( ! _reusedTile ) {
-		_reusedTile = [[CCSprite alloc] initWithTexture:_textureAtlas.texture rect:rect rotated:NO];
+		_reusedTile = [[CCSprite alloc] initWithTexture:self.texture rect:rect rotated:NO];
 	}
 	else
 	{
@@ -186,14 +185,14 @@ int compareInts (const void * a, const void * b);
 -(void) setupTiles
 {
 	// Optimization: quick hack that sets the image size on the tileset
-	_tileset.imageSize = [_textureAtlas.texture contentSizeInPixels];
+	_tileset.imageSize = [self.texture contentSizeInPixels];
 
 	// By default all the tiles are aliased
 	// pros:
 	//  - easier to render
 	// cons:
 	//  - difficult to scale / rotate / etc.
-	[_textureAtlas.texture setAliasTexParameters];
+	[self.texture setAliasTexParameters];
 
 	// Parse cocos2d properties
 	[self parseInternalProperties];
@@ -275,9 +274,8 @@ int compareInts (const void * a, const void * b);
         NSString* zStr = [NSString stringWithFormat:@"%d",z];
 		tile = (CCSprite*) [self getChildByName:zStr recursively:NO];
 
-		// tile not created yet. create it
 		if( ! tile ) {
-			CGRect rect = CC_RECT_SCALE([_tileset rectForGID:gid], 1.0/self.textureAtlas.texture.contentScale);
+			CGRect rect = CC_RECT_SCALE([_tileset rectForGID:gid], 1.0/self.texture.contentScale);
 			tile = [[CCSprite alloc] initWithTexture:self.texture rect:rect];
 
             CGPoint p = [self positionAt:pos];
@@ -286,8 +284,9 @@ int compareInts (const void * a, const void * b);
 			tile.anchorPoint = CGPointZero;
 			[tile setOpacity:_opacity/255.0];
 
-			NSUInteger indexForZ = [self atlasIndexForExistantZ:z];
-			[self addSpriteWithoutQuad:tile z:indexForZ name:zStr];
+			#warning TODO was this needed? Seems bizzare.
+//			NSUInteger indexForZ = [self atlasIndexForExistantZ:z];
+//			[self addSpriteWithoutQuad:tile z:indexForZ name:zStr];
 		}
 	}
 	return tile;
@@ -379,7 +378,7 @@ int compareInts (const void * a, const void * b);
 
 -(CCSprite*) insertTileForGID:(uint32_t)gid at:(CGPoint)pos
 {
-	CGRect rect = CC_RECT_SCALE([_tileset rectForGID:gid], 1.0/self.textureAtlas.texture.contentScale);
+	CGRect rect = CC_RECT_SCALE([_tileset rectForGID:gid], 1.0/self.texture.contentScale);
 
 	NSInteger z = pos.x + pos.y * _layerSize.width;
 
@@ -389,9 +388,10 @@ int compareInts (const void * a, const void * b);
 
 	// get atlas index
 	NSUInteger indexForZ = [self atlasIndexForNewZ:z];
-
+	
+	#warning TODO Apparently this is why the tilemaps never rendered. Fake sprites.
 	// Optimization: add the quad without adding a child
-	[self insertQuadFromSprite:tile quadIndex:indexForZ];
+//	[self insertQuadFromSprite:tile quadIndex:indexForZ];
 
 	// insert it into the local atlasindex array
     [_atlasIndexArray insertObject:[NSNumber numberWithInt:(int)z] atIndex:indexForZ];
@@ -410,7 +410,7 @@ int compareInts (const void * a, const void * b);
 
 -(CCSprite*) updateTileForGID:(uint32_t)gid at:(CGPoint)pos
 {
-	CGRect rect = CC_RECT_SCALE([_tileset rectForGID:gid], 1.0/self.textureAtlas.texture.contentScale);
+	CGRect rect = CC_RECT_SCALE([_tileset rectForGID:gid], 1.0/self.texture.contentScale);
 
 	int z = pos.x + pos.y * _layerSize.width;
 
@@ -434,7 +434,7 @@ int compareInts (const void * a, const void * b);
 // since lot's of assumptions are no longer true
 -(CCSprite*) appendTileForGID:(uint32_t)gid at:(CGPoint)pos
 {
-	CGRect rect = CC_RECT_SCALE([_tileset rectForGID:gid], 1.0/self.textureAtlas.texture.contentScale);
+	CGRect rect = CC_RECT_SCALE([_tileset rectForGID:gid], 1.0/self.texture.contentScale);
 
 	NSInteger z = pos.x + pos.y * _layerSize.width;
 
@@ -447,9 +447,9 @@ int compareInts (const void * a, const void * b);
 	// it appends the tile at the end of the texture atlas
 	NSUInteger indexForZ = _atlasIndexArray.count;
 
-
+	#warning TODO
 	// don't add it using the "standard" way.
-	[self insertQuadFromSprite:tile quadIndex:indexForZ];
+//	[self insertQuadFromSprite:tile quadIndex:indexForZ];
 
 
 	// append should be after addQuadFromSprite since it modifies the quantity values
@@ -529,7 +529,7 @@ int compareInts (const void * a, const void * b)
             NSString* zStr = [NSString stringWithFormat:@"%d", z];
 			CCSprite *sprite = (CCSprite*)[self getChildByName:zStr recursively:NO];
 			if( sprite ) {
-			CGRect rect = CC_RECT_SCALE([_tileset rectForGID:gid], 1.0/self.textureAtlas.texture.contentScale);
+			CGRect rect = CC_RECT_SCALE([_tileset rectForGID:gid], 1.0/self.texture.contentScale);
 
 				[sprite setTextureRect:rect rotated:NO untrimmedSize:rect.size];
 
@@ -587,7 +587,7 @@ int compareInts (const void * a, const void * b)
 		if( sprite )
 			[super removeChild:sprite cleanup:YES];
 		else {
-			[_textureAtlas removeQuadAtIndex:atlasIndex];
+//			[_textureAtlas removeQuadAtIndex:atlasIndex];
 
 			// update possible children
             for (sprite in _children)
@@ -636,7 +636,7 @@ int compareInts (const void * a, const void * b)
 			break;
 	}
 
-	return ccpMult(ret, 1.0/self.textureAtlas.texture.contentScale);
+	return ccpMult(ret, 1.0/self.texture.contentScale);
 }
 
 -(CGPoint) positionForOrthoAt:(CGPoint)pos

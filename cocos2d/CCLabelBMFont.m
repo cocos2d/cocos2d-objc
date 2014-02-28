@@ -40,13 +40,13 @@
 #import "CCLabelBMFont.h"
 #import "CCSprite.h"
 #import "CCConfiguration.h"
+#import "CCTexture.h"
 #import "CCTextureCache.h"
 #import "Support/CCFileUtils.h"
 #import "Support/CGPointExtension.h"
 #import "Support/uthash.h"
 #import "CCLabelBMFont_Private.h"
 #import "CCSprite_Private.h"
-#import "CCSpriteBatchNode_Private.h"
 
 #pragma mark -
 #pragma mark FNTConfig Cache - free functions
@@ -517,15 +517,13 @@ void FNTConfigRemoveCache( void )
 
 		_contentSize = CGSizeZero;
 		
-		_opacityModifyRGB = [[_textureAtlas texture] hasPremultipliedAlpha];
+		_opacityModifyRGB = [self.texture hasPremultipliedAlpha];
 		
 		_anchorPoint = ccp(0.5f, 0.5f);
         
 		_imageOffset = offset;
         
-		_reusedChar = [[CCSprite alloc] initWithTexture:_textureAtlas.texture rect:CGRectMake(0, 0, 0, 0) rotated:NO];
-		#warning TODO
-//		[_reusedChar setBatchNode:self];
+		_reusedChar = [[CCSprite alloc] initWithTexture:self.texture rect:CGRectMake(0, 0, 0, 0) rotated:NO];
 
 		[self setString:theString updateLabel:YES];
 	}
@@ -651,7 +649,11 @@ void FNTConfigRemoveCache( void )
             //Find position of last character on the line
             CCSprite *lastChar;
             for(CCSprite* child in [self children]) {
+							
 							#warning TODO
+							// This seems pretty important though I don't really know what it was doing.
+							// Was the quad index equivalent to the character position?
+							
 //                if([child atlasIndex]==index) {
 //                    lastChar = child;
 //                    break;
@@ -794,11 +796,9 @@ void FNTConfigRemoveCache( void )
 				 Ideal for big labels.
 				 */
 				fontChar = _reusedChar;
-				#warning TODO
-//				fontChar.batchNode = nil;
 				hasSprite = NO;
 			} else {
-				fontChar = [[CCSprite alloc] initWithTexture:_textureAtlas.texture rect:rect];
+				fontChar = [[CCSprite alloc] initWithTexture:self.texture rect:rect];
                 NSString* iStr1 = [NSString stringWithFormat:@"%d",(int)i];
 				[self addChild:fontChar z:i name:iStr1];
 			}
@@ -818,7 +818,7 @@ void FNTConfigRemoveCache( void )
 		// See issue 1343. cast( signed short + unsigned integer ) == unsigned integer (sign is lost!)
 		NSInteger yOffset = _configuration->_commonHeight - fontDef.yOffset;
 		CGPoint fontPos = ccp( (CGFloat)nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width*0.5f + kerningAmount,
-							  (CGFloat)nextFontPositionY + yOffset - rect.size.height*0.5f * _textureAtlas.texture.contentScale );
+							  (CGFloat)nextFontPositionY + yOffset - rect.size.height*0.5f * self.texture.contentScale );
 		fontChar.position = ccpMult(fontPos, contentScale);
 		
 		// update kerning
@@ -828,9 +828,6 @@ void FNTConfigRemoveCache( void )
 
 		if (longestLine < nextFontPositionX)
 			longestLine = nextFontPositionX;
-		
-		if( ! hasSprite )
-			[self updateQuadFromSprite:fontChar quadIndex:i];
 	}
     
     // If the last character processed has an xAdvance which is less that the width of the characters image, then we need

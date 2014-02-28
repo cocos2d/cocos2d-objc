@@ -27,10 +27,8 @@
  */
 
 #import "CCNode.h"
-#import "CCProtocols.h"
-#import "CCTextureAtlas.h"
-#import "ccMacros.h"
 
+@class CCTexture;
 @class CCSprite;
 
 /**
@@ -43,22 +41,9 @@
  - Default child capacity is 29 children and will be increased by 33% at runtime each time capacity is reached.
  
  */
-@interface CCSpriteBatchNode : CCNode <CCTextureProtocol> {
-    
-    // Texture atlas for batch.
-	CCTextureAtlas	*_textureAtlas;
+@interface CCSpriteBatchNode : CCNode
 
-	// Node children.
-	NSMutableArray *_descendants;
-}
-
-
-/// -----------------------------------------------------------------------
-/// @name Accessing the Batch Node Attributes
-/// -----------------------------------------------------------------------
-
-/** Blend mode. */
-@property (nonatomic,readwrite) ccBlendFunc blendFunc;
+@property(nonatomic, strong) CCTexture *texture;
 
 
 /// -----------------------------------------------------------------------
@@ -107,18 +92,5 @@
  *  @return An initialized CCSpriteBatchNode Object.
  */
 -(id)initWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity;
-
-
-/// -----------------------------------------------------------------------
-/// @name Managing the Batch Node
-/// -----------------------------------------------------------------------
-
-/**
- *  Removes a sprite from the batch node.
- *
- *  @param sprite    Sprite reference.
- *  @param doCleanup Perform additional cleanup.
- */
--(void)removeChild: (CCSprite *)sprite cleanup:(BOOL)doCleanup;
 
 @end
