@@ -23,6 +23,7 @@
  */
 
 #import "CCBLocalizationManager.h"
+#import "CCBReader.h"
 
 @implementation CCBLocalizationManager
 
