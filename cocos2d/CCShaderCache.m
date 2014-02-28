@@ -84,13 +84,6 @@ static CCShaderCache *_sharedShaderCache;
 	CCGLProgram *p = [[CCGLProgram alloc] initWithVertexShaderByteArray:ccPositionTextureColor_vert
 												fragmentShaderByteArray:ccPositionTextureColor_frag];
 
-	[p addAttribute:kCCAttributeNamePosition index:kCCVertexAttrib_Position];
-	[p addAttribute:kCCAttributeNameColor index:kCCVertexAttrib_Color];
-	[p addAttribute:kCCAttributeNameTexCoord index:kCCVertexAttrib_TexCoords];
-
-	[p link];
-	[p updateUniforms];
-
 	[_programs setObject:p forKey:kCCShader_PositionTextureColor];
 
 	CHECK_GL_ERROR_DEBUG();
@@ -98,13 +91,6 @@ static CCShaderCache *_sharedShaderCache;
 	// Position Texture Color alpha test
 	p = [[CCGLProgram alloc] initWithVertexShaderByteArray:ccPositionTextureColor_vert
 								   fragmentShaderByteArray:ccPositionTextureColorAlphaTest_frag];
-
-	[p addAttribute:kCCAttributeNamePosition index:kCCVertexAttrib_Position];
-	[p addAttribute:kCCAttributeNameColor index:kCCVertexAttrib_Color];
-	[p addAttribute:kCCAttributeNameTexCoord index:kCCVertexAttrib_TexCoords];
-
-	[p link];
-	[p updateUniforms];
 
 	[_programs setObject:p forKey:kCCShader_PositionTextureColorAlphaTest];
 
@@ -116,12 +102,6 @@ static CCShaderCache *_sharedShaderCache;
 	p = [[CCGLProgram alloc] initWithVertexShaderByteArray:ccPositionColor_vert
 								   fragmentShaderByteArray:ccPositionColor_frag];
 
-	[p addAttribute:kCCAttributeNamePosition index:kCCVertexAttrib_Position];
-	[p addAttribute:kCCAttributeNameColor index:kCCVertexAttrib_Color];
-
-	[p link];
-	[p updateUniforms];
-
 	[_programs setObject:p forKey:kCCShader_PositionColor];
 
 	CHECK_GL_ERROR_DEBUG();
@@ -131,12 +111,6 @@ static CCShaderCache *_sharedShaderCache;
 	//
 	p = [[CCGLProgram alloc] initWithVertexShaderByteArray:ccPositionTexture_vert
 								   fragmentShaderByteArray:ccPositionTexture_frag];
-
-	[p addAttribute:kCCAttributeNamePosition index:kCCVertexAttrib_Position];
-	[p addAttribute:kCCAttributeNameTexCoord index:kCCVertexAttrib_TexCoords];
-
-	[p link];
-	[p updateUniforms];
 
 	[_programs setObject:p forKey:kCCShader_PositionTexture];
 
@@ -148,12 +122,6 @@ static CCShaderCache *_sharedShaderCache;
 	p = [[CCGLProgram alloc] initWithVertexShaderByteArray:ccPositionTexture_uColor_vert
 								   fragmentShaderByteArray:ccPositionTexture_uColor_frag];
 
-	[p addAttribute:kCCAttributeNamePosition index:kCCVertexAttrib_Position];
-	[p addAttribute:kCCAttributeNameTexCoord index:kCCVertexAttrib_TexCoords];
-
-	[p link];
-	[p updateUniforms];
-
 	[_programs setObject:p forKey:kCCShader_PositionTexture_uColor];
 	
 	CHECK_GL_ERROR_DEBUG();
@@ -163,13 +131,6 @@ static CCShaderCache *_sharedShaderCache;
 	//
 	p = [[CCGLProgram alloc] initWithVertexShaderByteArray:ccPositionTextureA8Color_vert
 								   fragmentShaderByteArray:ccPositionTextureA8Color_frag];
-
-	[p addAttribute:kCCAttributeNamePosition index:kCCVertexAttrib_Position];
-	[p addAttribute:kCCAttributeNameColor index:kCCVertexAttrib_Color];
-	[p addAttribute:kCCAttributeNameTexCoord index:kCCVertexAttrib_TexCoords];
-
-	[p link];
-	[p updateUniforms];
 
 	[_programs setObject:p forKey:kCCShader_PositionTextureA8Color];
 
@@ -181,11 +142,6 @@ static CCShaderCache *_sharedShaderCache;
 	p = [[CCGLProgram alloc] initWithVertexShaderByteArray:ccPosition_uColor_vert
 								   fragmentShaderByteArray:ccPosition_uColor_frag];	
 	
-	[p addAttribute:@"aVertex" index:kCCVertexAttrib_Position];
-	
-	[p link];
-	[p updateUniforms];
-
 	[_programs setObject:p forKey:kCCShader_Position_uColor];
 
 	CHECK_GL_ERROR_DEBUG();
@@ -195,13 +151,6 @@ static CCShaderCache *_sharedShaderCache;
 	//
 	p = [[CCGLProgram alloc] initWithVertexShaderByteArray:ccPositionColorLengthTexture_vert
 								   fragmentShaderByteArray:ccPositionColorLengthTexture_frag];	
-	
-	[p addAttribute:kCCAttributeNamePosition index:kCCVertexAttrib_Position];
-	[p addAttribute:kCCAttributeNameTexCoord index:kCCVertexAttrib_TexCoords];
-	[p addAttribute:kCCAttributeNameColor index:kCCVertexAttrib_Color];
-	
-	[p link];
-	[p updateUniforms];
 	
 	[_programs setObject:p forKey:kCCShader_PositionLengthTexureColor];
 	CHECK_GL_ERROR_DEBUG();

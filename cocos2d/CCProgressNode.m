@@ -204,9 +204,9 @@ const char kCCProgressTextureCoords = 0x4b;
 //	CGPoint max = (CGPoint){quad.tr.vertices.x,quad.tr.vertices.y};
 //	return (ccVertex2F){min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y};
 //}
-//
-//-(void)updateColor
-//{
+
+-(void)updateColor
+{
 //	if (!_sprite) {
 //		return;
 //	}
@@ -216,7 +216,7 @@ const char kCCProgressTextureCoords = 0x4b;
 //			_vertexData[i].colors = sc;
 //		}
 //	}
-//}
+}
 
 -(void)updateProgress
 {

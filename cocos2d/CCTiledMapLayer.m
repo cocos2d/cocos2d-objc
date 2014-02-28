@@ -242,15 +242,15 @@ int compareInts (const void * a, const void * b);
 		if( [vertexz isEqualToString:@"automatic"] ) {
 			_useAutomaticVertexZ = YES;
 
-			NSString *alphaFuncVal = [self propertyNamed:@"cc_alpha_func"];
-			float alphaFuncValue = [alphaFuncVal floatValue];
-
-			self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColorAlphaTest];
-
-			GLint alphaValueLocation = glGetUniformLocation(self.shaderProgram.program, kCCUniformAlphaTestValue_s);
-
-			// NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
-			[self.shaderProgram setUniformLocation:alphaValueLocation withF1:alphaFuncValue];
+//			NSString *alphaFuncVal = [self propertyNamed:@"cc_alpha_func"];
+//			float alphaFuncValue = [alphaFuncVal floatValue];
+//
+//			self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColorAlphaTest];
+//
+//			GLint alphaValueLocation = glGetUniformLocation(self.shaderProgram.program, kCCUniformAlphaTestValue_s);
+//
+//			// NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
+//			[self.shaderProgram setUniformLocation:alphaValueLocation withF1:alphaFuncValue];
 		}
 		else
 			_vertexZvalue = [vertexz intValue];

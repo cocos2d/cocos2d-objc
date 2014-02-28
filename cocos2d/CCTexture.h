@@ -193,9 +193,6 @@ typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
 /** True if antialised. */
 @property(nonatomic,assign,getter=isAntialiased) BOOL antialiased;
 
-/** Shader program used by drawAtPoint and drawInRect. */
-@property(nonatomic,readwrite,strong) CCGLProgram *shaderProgram;
-
 /** Returns the contentScale of the texture.
  In general "HD" textures return a contentScale of 2.0, while non-HD textures return 1.0.
  Loading behavior is changed by [CCFileUtils set*ContentScaleFactor:].

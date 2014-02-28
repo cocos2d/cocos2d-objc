@@ -275,9 +275,9 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
         // since glAlphaTest do not exists in OES, use a shader that writes
         // pixel only if greater than an alpha threshold
         CCGLProgram *program = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColorAlphaTest];
-        GLint alphaValueLocation = glGetUniformLocation(program.program, kCCUniformAlphaTestValue_s);
-        // set our alphaThreshold
-        [program setUniformLocation:alphaValueLocation withF1:_alphaThreshold];
+//        GLint alphaValueLocation = glGetUniformLocation(program.program, kCCUniformAlphaTestValue_s);
+//        // set our alphaThreshold
+//        [program setUniformLocation:alphaValueLocation withF1:_alphaThreshold];
         // we need to recursively apply this shader to all the nodes in the stencil node
         // XXX: we should have a way to apply shader to all nodes without having to do this
         setProgram(_stencil, program);

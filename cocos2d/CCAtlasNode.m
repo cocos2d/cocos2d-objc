@@ -86,8 +86,8 @@
 		self.quadsToDraw = c;
 
 		// shader stuff
-		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTexture_uColor];
-		_uniformColor = glGetUniformLocation( _shaderProgram.program, "u_color");
+//		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTexture_uColor];
+//		_uniformColor = glGetUniformLocation( _shaderProgram.program, "u_color");
 	}
 	return self;
 }

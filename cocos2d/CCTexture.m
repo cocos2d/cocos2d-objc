@@ -157,7 +157,6 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 
 @synthesize contentSizeInPixels = _sizeInPixels, pixelFormat = _format, pixelWidth = _width, pixelHeight = _height, name = _name, maxS = _maxS, maxT = _maxT;
 @synthesize premultipliedAlpha = _premultipliedAlpha;
-@synthesize shaderProgram = _shaderProgram;
 @synthesize contentScale = _contentScale;
 @synthesize antialiased = _antialiased;
 
@@ -230,7 +229,6 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
         _antialiased = YES;
 
 		_contentScale = contentScale;
-		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTexture];
 	}
 	return self;
 }
@@ -590,70 +588,6 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 
 #pragma mark -
 #pragma mark CCTexture2D - Drawing
-
-@implementation CCTexture (Drawing)
-
-//- (void) drawAtPoint:(CGPoint)point
-//{
-//	GLfloat		coordinates[] = { 0.0f,	_maxT,
-//        _maxS,	_maxT,
-//        0.0f,	0.0f,
-//        _maxS,	0.0f };
-//	GLfloat		width = (GLfloat)_width * _maxS,
-//    height = (GLfloat)_height * _maxT;
-//
-//	GLfloat		vertices[] = {	point.x,			point.y,
-//        width + point.x,	point.y,
-//        point.x,			height  + point.y,
-//		width + point.x,	height  + point.y };
-//
-//	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
-//	[_shaderProgram use];
-//	[_shaderProgram setUniformsForBuiltins];
-//
-//	ccGLBindTexture2D( _name );
-//
-//
-//	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-//	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
-//
-//
-//	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-//	
-//	CC_INCREMENT_GL_DRAWS(1);
-//}
-
-
-//- (void) drawInRect:(CGRect)rect
-//{
-//	GLfloat	 coordinates[] = {  0.0f,	_maxT,
-//        _maxS,	_maxT,
-//        0.0f,	0.0f,
-//        _maxS,	0.0f  };
-//	GLfloat	vertices[] = {	rect.origin.x,						rect.origin.y,
-//        rect.origin.x + rect.size.width,	rect.origin.y,
-//        rect.origin.x,						rect.origin.y + rect.size.height,
-//		rect.origin.x + rect.size.width,						rect.origin.y + rect.size.height };
-//
-//
-//	[_shaderProgram use];
-//	[_shaderProgram setUniformsForBuiltins];    
-//
-//	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
-//
-//	ccGLBindTexture2D( _name );
-//
-//	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-//	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
-//
-//
-//	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-//	
-//	CC_INCREMENT_GL_DRAWS(1);
-//}
-
-@end
-
 
 #pragma mark -
 #pragma mark CCTexture2D - GLFilter

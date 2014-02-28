@@ -77,6 +77,10 @@ typedef void (*GLLogFunction) (GLuint program,
 	return [[self alloc] initWithVertexShaderFilename:vShaderFilename fragmentShaderFilename:fShaderFilename];
 }
 
+#define	kCCAttributeNameColor			@"a_color"
+#define	kCCAttributeNamePosition		@"a_position"
+#define	kCCAttributeNameTexCoord		@"a_texCoord"
+
 - (id)initWithVertexShaderByteArray:(const GLchar *)vShaderByteArray fragmentShaderByteArray:(const GLchar *)fShaderByteArray
 {
     if ((self = [super init]) )
@@ -109,6 +113,12 @@ typedef void (*GLLogFunction) (GLuint program,
 			glAttachShader(_program, _fragShader);
 		
 		_hashForUniforms = NULL;
+		
+		[self addAttribute:kCCAttributeNamePosition index:kCCVertexAttrib_Position];
+		[self addAttribute:kCCAttributeNameColor index:kCCVertexAttrib_Color];
+		[self addAttribute:kCCAttributeNameTexCoord index:kCCVertexAttrib_TexCoords];
+
+		[self link];
     }
 	
     return self;
@@ -192,36 +202,6 @@ typedef void (*GLLogFunction) (GLuint program,
 						 [attributeName UTF8String]);
 }
 
--(void) updateUniforms
-{
-	_uniforms[  kCCUniformPMatrix] = glGetUniformLocation(_program, kCCUniformPMatrix_s);
-	_uniforms[ kCCUniformMVMatrix] = glGetUniformLocation(_program, kCCUniformMVMatrix_s);
-	_uniforms[kCCUniformMVPMatrix] = glGetUniformLocation(_program, kCCUniformMVPMatrix_s);
-	
-	_uniforms[kCCUniformTime] = glGetUniformLocation(_program, kCCUniformTime_s);
-	_uniforms[kCCUniformSinTime] = glGetUniformLocation(_program, kCCUniformSinTime_s);
-	_uniforms[kCCUniformCosTime] = glGetUniformLocation(_program, kCCUniformCosTime_s);
-
-	_uniforms[kCCUniformRandom01] = glGetUniformLocation(_program, kCCUniformRandom01_s);
-
-	_uniforms[kCCUniformSampler] = glGetUniformLocation(_program, kCCUniformSampler_s);
-
-	_flags.usesMVP = _uniforms[kCCUniformMVPMatrix] != -1;
-	_flags.usesMV = (_uniforms[kCCUniformMVMatrix] != -1 && _uniforms[kCCUniformPMatrix] != -1 );
-	_flags.usesTime = (
-		_uniforms[kCCUniformTime] != -1 ||
-		_uniforms[kCCUniformSinTime] != -1 ||
-		_uniforms[kCCUniformCosTime] != -1
-	);
-	_flags.usesRandom = _uniforms[kCCUniformRandom01] != -1;
-
-
-	[self use];
-	
-	// Since sample most probably won't change, set it to 0 now.
-	[self setUniformLocation:_uniforms[kCCUniformSampler] withI1:0];
-}
-
 #pragma mark -
 
 -(BOOL) link
@@ -278,193 +258,6 @@ typedef void (*GLLogFunction) (GLuint program,
 	free(logBytes);
 	return log;
 }
-
-- (NSString *)vertexShaderLog
-{
-	return [self logForOpenGLObject:_vertShader
-					   infoCallback:(GLInfoFunction)&glGetShaderiv
-							logFunc:(GLLogFunction)&glGetShaderInfoLog];
-}
-
-- (NSString *)fragmentShaderLog
-{
-	return [self logForOpenGLObject:_fragShader
-					   infoCallback:(GLInfoFunction)&glGetShaderiv
-							logFunc:(GLLogFunction)&glGetShaderInfoLog];
-}
-
-- (NSString *)programLog
-{
-	return [self logForOpenGLObject:_program
-					   infoCallback:(GLInfoFunction)&glGetProgramiv
-							logFunc:(GLLogFunction)&glGetProgramInfoLog];
-}
-
-#pragma mark - Uniform cache
-
--(BOOL) updateUniformLocation:(GLint)location withData:(GLvoid*)data sizeOfData:(NSUInteger)bytes
-{
-	if(location < 0)
-		return FALSE;
-
-	BOOL updated = YES;
-	tHashUniformEntry *element = NULL;
-	HASH_FIND_INT(_hashForUniforms, &location, element);
-
-	if( ! element ) {
-
-		element = malloc( sizeof(*element) );
-
-		// key
-		element->location = location;
-
-		// value
-		element->value = malloc( bytes );
-        element->length = bytes;
-		memcpy(element->value, data, bytes );
-		
-		HASH_ADD_INT(_hashForUniforms, location, element);
-	}
-	else
-	{
-        if (element->length != bytes)
-        {
-            element->value = realloc(element->value, bytes);
-            memcpy(element->value, data, bytes);
-            element->length = bytes;
-        }
-        else
-        {
-            if( memcmp( element->value, data, bytes) == 0 )
-            {
-                updated = NO;
-            }
-            else
-            {
-                memcpy( element->value, data, bytes );
-            }
-        }
-	}
-
-	return updated;
-}
-
-- (GLint)uniformLocationForName:(NSString*)name
-{
-    NSAssert(name != nil, @"Invalid uniform name" );
-    NSAssert(_program != 0, @"Invalid operation. Cannot get uniform location when program is not initialized");
-    
-    return glGetUniformLocation(_program, [name UTF8String]);
-}
-
--(void) setUniformLocation:(GLint)location withI1:(GLint)i1
-{
-	BOOL updated =  [self updateUniformLocation:location withData:&i1 sizeOfData:sizeof(i1)*1];
-	
-	if( updated )
-		glUniform1i( (GLint)location, i1);
-}
-
--(void) setUniformLocation:(GLint)location withF1:(GLfloat)f1
-{
-	BOOL updated =  [self updateUniformLocation:location withData:&f1 sizeOfData:sizeof(f1)*1];
-	
-	if( updated )
-		glUniform1f( (GLint)location, f1);
-}
-
--(void) setUniformLocation:(GLint)location withF1:(GLfloat)f1 f2:(GLfloat)f2
-{
-	GLfloat floats[2] = {f1,f2};
-	BOOL updated =  [self updateUniformLocation:location withData:floats sizeOfData:sizeof(floats)];
-	
-	if( updated )
-		glUniform2f( (GLint)location, f1, f2);
-}
-
--(void) setUniformLocation:(GLint)location withF1:(GLfloat)f1 f2:(GLfloat)f2 f3:(GLfloat)f3
-{
-	GLfloat floats[3] = {f1,f2,f3};
-	BOOL updated =  [self updateUniformLocation:location withData:floats sizeOfData:sizeof(floats)];
-	
-	if( updated )
-		glUniform3f( (GLint)location, f1, f2, f3);
-}
-
--(void) setUniformLocation:(GLint)location withF1:(GLfloat)f1 f2:(GLfloat)f2 f3:(GLfloat)f3 f4:(GLfloat)f4
-{
-	GLfloat floats[4] = {f1,f2,f3,f4};
-	BOOL updated =  [self updateUniformLocation:location withData:floats sizeOfData:sizeof(floats)];
-	
-	if( updated )
-		glUniform4f( (GLint)location, f1, f2, f3,f4);
-}
-
--(void) setUniformLocation:(GLint)location with2fv:(GLfloat*)floats count:(NSUInteger)numberOfArrays
-{
-	BOOL updated =  [self updateUniformLocation:location withData:floats sizeOfData:sizeof(float)*2*numberOfArrays];
-	
-	if( updated )
-		glUniform2fv( (GLint)location, (GLsizei)numberOfArrays, floats );
-}
-
--(void) setUniformLocation:(GLint)location with3fv:(GLfloat*)floats count:(NSUInteger)numberOfArrays
-{
-	BOOL updated =  [self updateUniformLocation:location withData:floats sizeOfData:sizeof(float)*3*numberOfArrays];
-	
-	if( updated )
-		glUniform3fv( (GLint)location, (GLsizei)numberOfArrays, floats );
-}
-
--(void) setUniformLocation:(GLint)location with4fv:(GLvoid*)floats count:(NSUInteger)numberOfArrays
-{
-	BOOL updated =  [self updateUniformLocation:location withData:floats sizeOfData:sizeof(float)*4*numberOfArrays];
-	
-	if( updated )
-		glUniform4fv( (GLint)location, (GLsizei)numberOfArrays, floats );
-}
-
-
--(void) setUniformLocation:(GLint)location withMatrix4fv:(GLvoid*)matrixArray count:(NSUInteger)numberOfMatrices
-{
-	BOOL updated =  [self updateUniformLocation:location withData:matrixArray sizeOfData:sizeof(float)*16*numberOfMatrices];
-	
-	if( updated )
-		glUniformMatrix4fv( (GLint)location, (GLsizei)numberOfMatrices, GL_FALSE, matrixArray);
-}
-
-//-(void) setUniformsForBuiltins:(GLKMatrix4)unused
-//{
-//#warning TODO need to change how shaders ard bound and how globals/uniforms are set.
-////	CCDirector *director = [CCDirector sharedDirector];
-//	GLKMatrix4 matrixP = GLKMatrix4Identity;
-//	GLKMatrix4 matrixMV = GLKMatrix4Identity;
-//	
-//	if( _flags.usesMVP) {
-////		kmMat4 matrixMVP;
-////		kmMat4Multiply(&matrixMVP, &matrixP, &matrixMV);
-//		[self setUniformLocation:_uniforms[kCCUniformMVPMatrix] withMatrix4fv:matrixP.m count:1];
-//	}
-//
-//	if( _flags.usesMV) {
-//		[self setUniformLocation:_uniforms[  kCCUniformPMatrix] withMatrix4fv:  matrixP.m count:1];
-//		[self setUniformLocation:_uniforms[ kCCUniformMVMatrix] withMatrix4fv: matrixMV.m count:1];
-//	}
-//
-//	if(_flags.usesTime){
-//		// This doesn't give the most accurate global time value.
-//		// Cocos2D doesn't store a high precision time value, so this will have to do.
-//		// Getting Mach time per frame per shader using time could be extremely expensive.
-//		CCTime time = director.totalFrames*director.animationInterval;
-//		
-//		[self setUniformLocation:_uniforms[kCCUniformTime] withF1:time/10.0 f2:time f3:time*2 f4:time*4];
-//		[self setUniformLocation:_uniforms[kCCUniformSinTime] withF1:sinf(time/8.0) f2:sinf(time/4.0) f3:sinf(time/2.0) f4:sinf(time)];
-//		[self setUniformLocation:_uniforms[kCCUniformCosTime] withF1:cosf(time/8.0) f2:cosf(time/4.0) f3:cosf(time/2.0) f4:cosf(time)];
-//	}
-//	
-//	if(_flags.usesRandom)
-//		[self setUniformLocation:_uniforms[kCCUniformRandom01] withF1:CCRANDOM_0_1() f2:CCRANDOM_0_1() f3:CCRANDOM_0_1() f4:CCRANDOM_0_1()];
-//}
 
 #pragma mark -
 
