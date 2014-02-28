@@ -84,7 +84,7 @@ static float roundUpToEven(float f)
         
         // Position the nodes
         float height = 0;
-        for (CCNode* child in [[self.children reverseObjectEnumerator] allObjects])
+        for (CCNode* child in self.children)
         {
             CGSize childSize = child.contentSizeInPoints;
             
