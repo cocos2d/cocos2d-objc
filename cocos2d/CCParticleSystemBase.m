@@ -50,8 +50,8 @@
 #import "ccConfig.h"
 #import "CCParticleSystemBase.h"
 #import "CCParticleBatchNode.h"
+#import "CCTexture.h"
 #import "CCTextureCache.h"
-#import "CCTextureAtlas.h"
 #import "ccMacros.h"
 #import "Support/CCProfiling.h"
 
@@ -238,8 +238,6 @@
             _emissionRate = _totalParticles/_life;
         }
         
-		//don't get the internal texture if a batchNode is used
-		if (!_batchNode)
 		{
 			// Set a compatible default for the alpha transfer
 			_opacityModifyRGB = NO;
@@ -306,15 +304,7 @@
 			return nil;
 		}
         _allocatedParticles = numberOfParticles;
-
-		if (_batchNode)
-		{
-			for (int i = 0; i < _totalParticles; i++)
-			{
-				_particles[i].atlasIndex=i;
-			}
-		}
-
+		
 		// default, active
 		_active = YES;
 
@@ -605,14 +595,6 @@
 				} else
 					newPos = p->pos;
 
-				// translate newPos to correct position, since matrix transform isn't performed in batchnode
-				// don't update the particle with the new position information, it will interfere with the radius and tangential calculations
-				if (_batchNode)
-				{
-					newPos.x+=_position.x;
-					newPos.y+=_position.y;
-				}
-
 				_updateParticleImp(self, _updateParticleSel, p, newPos);
 
 				// update particle counter
@@ -620,19 +602,8 @@
 
 			} else {
 				// life < 0
-				NSInteger currentIndex = p->atlasIndex;
-
 				if( _particleIdx != _particleCount-1 )
 					_particles[_particleIdx] = _particles[_particleCount-1];
-
-				if (_batchNode)
-				{
-					//disable the switched particle
-					[_batchNode disableParticle:(_atlasIndex+currentIndex)];
-
-					//switch indexes
-					_particles[_particleCount-1].atlasIndex = currentIndex;
-				}
 
 				_particleCount--;
 
@@ -645,8 +616,7 @@
 		_transformSystemDirty = NO;
 	}
 
-	if (!_batchNode)
-		[self postStep];
+	[self postStep];
 
 	CC_PROFILER_STOP_CATEGORY(kCCProfilerCategoryParticles , @"CCParticleSystem - update");
 }
@@ -871,27 +841,6 @@
 }
 
 #pragma mark ParticleSystem - methods for batchNode rendering
-
--(CCParticleBatchNode*) batchNode
-{
-	return _batchNode;
-}
-
--(void) setBatchNode:(CCParticleBatchNode*) batchNode
-{
-	if( _batchNode != batchNode ) {
-
-		_batchNode = batchNode; // weak reference
-
-		if( batchNode ) {
-			//each particle needs a unique index
-			for (int i = 0; i < _totalParticles; i++)
-			{
-				_particles[i].atlasIndex=i;
-			}
-		}
-	}
-}
 
 //don't use a transform matrix, this is faster
 -(void) setScale:(float) s

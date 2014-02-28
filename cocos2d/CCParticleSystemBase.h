@@ -310,9 +310,6 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
 	_CC_UPDATE_PARTICLE_IMP	_updateParticleImp;
 	SEL						_updateParticleSel;
 
-	// For batching. If nil, then it won't be batched.
-	CCParticleBatchNode *_batchNode;
-
 	// Index of system in batch node array.
 	NSUInteger _atlasIndex;
 

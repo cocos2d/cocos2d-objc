@@ -93,113 +93,97 @@
 
 -(void) updateAtlasValues
 {
-	NSUInteger n = [_string length];
-
-	ccV3F_C4B_T2F_Quad quad;
-
-	const unsigned char *s = (unsigned char*) [_string UTF8String];
-
-	CCTexture *texture = [_textureAtlas texture];
-	float textureWide = [texture pixelWidth];
-	float textureHigh = [texture pixelHeight];
-	
-	CGFloat scale = _textureAtlas.texture.contentScale;
-	float itemWidthInPixels = _itemWidth * scale;
-	float itemHeightInPixels = _itemHeight * scale;
-
-
-	for( NSUInteger i=0; i<n; i++)
-	{
-		unsigned char a = s[i] - _mapStartChar;
-		float row = (a % _itemsPerRow);
-		float col = (a / _itemsPerRow);
-
-#if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-		// Issue #938. Don't use texStepX & texStepY
-		float left		= (2*row*itemWidthInPixels+1)/(2*textureWide);
-		float right		= left+(itemWidthInPixels*2-2)/(2*textureWide);
-		float top		= (2*col*itemHeightInPixels+1)/(2*textureHigh);
-		float bottom	= top+(itemHeightInPixels*2-2)/(2*textureHigh);
-#else
-		float left		= row*itemWidthInPixels/textureWide;
-		float right		= left+itemWidthInPixels/textureWide;
-		float top		= col*itemHeightInPixels/textureHigh;
-		float bottom	= top+itemHeightInPixels/textureHigh;
-#endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-
-		quad.tl.texCoords.u = left;
-		quad.tl.texCoords.v = top;
-		quad.tr.texCoords.u = right;
-		quad.tr.texCoords.v = top;
-		quad.bl.texCoords.u = left;
-		quad.bl.texCoords.v = bottom;
-		quad.br.texCoords.u = right;
-		quad.br.texCoords.v = bottom;
-
-		quad.bl.vertices.x = (int) (i * _itemWidth);
-		quad.bl.vertices.y = 0;
-		quad.bl.vertices.z = 0.0f;
-		quad.br.vertices.x = (int)(i * _itemWidth + _itemWidth);
-		quad.br.vertices.y = 0;
-		quad.br.vertices.z = 0.0f;
-		quad.tl.vertices.x = (int)(i * _itemWidth);
-		quad.tl.vertices.y = (int)(_itemHeight);
-		quad.tl.vertices.z = 0.0f;
-		quad.tr.vertices.x = (int)(i * _itemWidth + _itemWidth);
-		quad.tr.vertices.y = (int)(_itemHeight);
-		quad.tr.vertices.z = 0.0f;
-
-		ccColor4B c = ccc4BFromccc4F(_displayColor);
-		quad.tl.colors = c;
-		quad.tr.colors = c;
-		quad.bl.colors = c;
-		quad.br.colors = c;
-		[_textureAtlas updateQuad:&quad atIndex:i];
-	}
+//	NSUInteger n = [_string length];
+//
+//	ccV3F_C4B_T2F_Quad quad;
+//
+//	const unsigned char *s = (unsigned char*) [_string UTF8String];
+//
+//	CCTexture *texture = [_textureAtlas texture];
+//	float textureWide = [texture pixelWidth];
+//	float textureHigh = [texture pixelHeight];
+//	
+//	CGFloat scale = _textureAtlas.texture.contentScale;
+//	float itemWidthInPixels = _itemWidth * scale;
+//	float itemHeightInPixels = _itemHeight * scale;
+//
+//
+//	for( NSUInteger i=0; i<n; i++)
+//	{
+//		unsigned char a = s[i] - _mapStartChar;
+//		float row = (a % _itemsPerRow);
+//		float col = (a / _itemsPerRow);
+//
+//#if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
+//		// Issue #938. Don't use texStepX & texStepY
+//		float left		= (2*row*itemWidthInPixels+1)/(2*textureWide);
+//		float right		= left+(itemWidthInPixels*2-2)/(2*textureWide);
+//		float top		= (2*col*itemHeightInPixels+1)/(2*textureHigh);
+//		float bottom	= top+(itemHeightInPixels*2-2)/(2*textureHigh);
+//#else
+//		float left		= row*itemWidthInPixels/textureWide;
+//		float right		= left+itemWidthInPixels/textureWide;
+//		float top		= col*itemHeightInPixels/textureHigh;
+//		float bottom	= top+itemHeightInPixels/textureHigh;
+//#endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
+//
+//		quad.tl.texCoords.u = left;
+//		quad.tl.texCoords.v = top;
+//		quad.tr.texCoords.u = right;
+//		quad.tr.texCoords.v = top;
+//		quad.bl.texCoords.u = left;
+//		quad.bl.texCoords.v = bottom;
+//		quad.br.texCoords.u = right;
+//		quad.br.texCoords.v = bottom;
+//
+//		quad.bl.vertices.x = (int) (i * _itemWidth);
+//		quad.bl.vertices.y = 0;
+//		quad.bl.vertices.z = 0.0f;
+//		quad.br.vertices.x = (int)(i * _itemWidth + _itemWidth);
+//		quad.br.vertices.y = 0;
+//		quad.br.vertices.z = 0.0f;
+//		quad.tl.vertices.x = (int)(i * _itemWidth);
+//		quad.tl.vertices.y = (int)(_itemHeight);
+//		quad.tl.vertices.z = 0.0f;
+//		quad.tr.vertices.x = (int)(i * _itemWidth + _itemWidth);
+//		quad.tr.vertices.y = (int)(_itemHeight);
+//		quad.tr.vertices.z = 0.0f;
+//
+//		ccColor4B c = ccc4BFromccc4F(_displayColor);
+//		quad.tl.colors = c;
+//		quad.tr.colors = c;
+//		quad.bl.colors = c;
+//		quad.br.colors = c;
+//		[_textureAtlas updateQuad:&quad atIndex:i];
+//	}
 }
 
 #pragma mark CCLabelAtlas - CCLabelProtocol
 
 - (void) setString:(NSString*) newString
 {
-	if( newString == _string )
-		return;
-
-	if( [newString hash] != [_string hash] ) {
-
-		NSUInteger len = [newString length];
-		if( len > _textureAtlas.capacity )
-			[_textureAtlas resizeCapacity:len];
-
-		_string = [newString copy];
-		[self updateAtlasValues];
-
-		CGSize s = CGSizeMake(len * _itemWidth, _itemHeight);
-		[self setContentSize:s];
-
-		self.quadsToDraw = len;
-	}
+//	if( newString == _string )
+//		return;
+//
+//	if( [newString hash] != [_string hash] ) {
+//
+//		NSUInteger len = [newString length];
+//		if( len > _textureAtlas.capacity )
+//			[_textureAtlas resizeCapacity:len];
+//
+//		_string = [newString copy];
+//		[self updateAtlasValues];
+//
+//		CGSize s = CGSizeMake(len * _itemWidth, _itemHeight);
+//		[self setContentSize:s];
+//
+//		self.quadsToDraw = len;
+//	}
 }
 
 -(NSString*) string
 {
 	return _string;
 }
-
-#pragma mark CCLabelAtlas - DebugDraw
-
-#if CC_LABELATLAS_DEBUG_DRAW
-- (void) draw
-{
-	[super draw];
-
-	CGSize s = [self contentSize];
-	CGPoint vertices[4]={
-		ccp(0,0),ccp(s.width,0),
-		ccp(s.width,s.height),ccp(0,s.height),
-	};
-	ccDrawPoly(vertices, 4, YES);
-}
-#endif // CC_LABELATLAS_DEBUG_DRAW
 
 @end

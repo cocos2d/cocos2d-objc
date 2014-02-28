@@ -41,8 +41,6 @@
 @end
 
 @implementation CCAtlasNode
-
-@synthesize textureAtlas = _textureAtlas;
 @synthesize quadsToDraw = _quadsToDraw;
 
 #pragma mark CCAtlasNode - Creation & Init
@@ -73,12 +71,12 @@
 		_colorUnmodified = ccWHITE;
 		_opacityModifyRGB = YES;
 
-		_textureAtlas = [[CCTextureAtlas alloc] initWithTexture:texture capacity:c];
-		
-		if( ! _textureAtlas ) {
-			CCLOG(@"cocos2d: Could not initialize CCAtlasNode. Invalid Texture");
-			return nil;
-		}
+//		_textureAtlas = [[CCTextureAtlas alloc] initWithTexture:texture capacity:c];
+//		
+//		if( ! _textureAtlas ) {
+//			CCLOG(@"cocos2d: Could not initialize CCAtlasNode. Invalid Texture");
+//			return nil;
+//		}
 
 		[self updateBlendFunc];
 		[self updateOpacityModifyRGB];
@@ -99,9 +97,9 @@
 
 -(void) calculateMaxItems
 {
-	CGSize s = [[_textureAtlas texture] contentSize];
-	_itemsPerColumn = s.height / _itemHeight;
-	_itemsPerRow = s.width / _itemWidth;
+//	CGSize s = [[_textureAtlas texture] contentSize];
+//	_itemsPerColumn = s.height / _itemHeight;
+//	_itemsPerRow = s.width / _itemWidth;
 }
 
 -(void) updateAtlasValues
@@ -112,7 +110,6 @@
 #pragma mark CCAtlasNode - draw
 -(void)draw:(CCRenderer *)renderer transform:(GLKMatrix4)transform
 {
-	#warning TODO
 //	CC_NODE_DRAW_SETUP(transform);
 //
 //	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
@@ -170,7 +167,7 @@
 
 -(void) updateOpacityModifyRGB
 {
-	_opacityModifyRGB = [_textureAtlas.texture hasPremultipliedAlpha];
+//	_opacityModifyRGB = [_textureAtlas.texture hasPremultipliedAlpha];
 }
 
 #pragma mark CCAtlasNode - CCNodeTexture protocol
@@ -185,14 +182,15 @@
 
 -(void) setTexture:(CCTexture*)texture
 {
-	_textureAtlas.texture = texture;
-	[self updateBlendFunc];
-	[self updateOpacityModifyRGB];
+//	_textureAtlas.texture = texture;
+//	[self updateBlendFunc];
+//	[self updateOpacityModifyRGB];
 }
 
 -(CCTexture*) texture
 {
-	return _textureAtlas.texture;
+	return nil;
+//	return _textureAtlas.texture;
 }
 
 @end

@@ -34,7 +34,6 @@
 #import "ccConfig.h"
 #import "CCParticleSystem.h"
 #import "CCParticleBatchNode.h"
-#import "CCTextureAtlas.h"
 #import "CCTextureCache.h"
 #import "ccMacros.h"
 #import "CCSpriteFrame.h"
@@ -147,15 +146,6 @@
         
         _totalParticles = tp;
         
-        // Init particles
-        if (_batchNode)
-		{
-			for (int i = 0; i < _totalParticles; i++)
-			{
-				_particles[i].atlasIndex=i;
-			}
-		}
-        
         [self initIndices];
 		
 		// clean VAO
@@ -220,14 +210,11 @@
 
 -(void) dealloc
 {
-	if( ! _batchNode ) {
-		free(_quads);
-		free(_indices);
+	free(_quads);
+	free(_indices);
 
-		glDeleteBuffers(2, &_buffersVBO[0]);
-		glDeleteVertexArrays(1, &_VAOname);
-	}
-
+	glDeleteBuffers(2, &_buffersVBO[0]);
+	glDeleteVertexArrays(1, &_VAOname);
 }
 
 // pointRect is in Points coordinates.
@@ -260,22 +247,8 @@
 	// Important. Texture in cocos2d are inverted, so the Y component should be inverted
 	CC_SWAP( top, bottom);
 
-	ccV3F_C4B_T2F_Quad *quads;
-	NSUInteger start, end;
-	if (_batchNode)
-	{
-		quads = [[_batchNode textureAtlas] quads];
-		start = _atlasIndex;
-		end = _atlasIndex + _totalParticles;
-	}
-	else
-	{
-		quads = _quads;
-		start = 0;
-		end = _totalParticles;
-	}
-
-	for(NSUInteger i=start; i<end; i++) {
+	ccV3F_C4B_T2F_Quad *quads = _quads;
+	for(NSUInteger i=0; i<_totalParticles; i++) {
 
 		// bottom-left vertex:
 		quads[i].bl.texCoords.u = left;
@@ -336,13 +309,7 @@
 {
 	ccV3F_C4B_T2F_Quad *quad;
 
-	if (_batchNode)
-	{
-		ccV3F_C4B_T2F_Quad *batchQuads = [[_batchNode textureAtlas] quads];
-		quad = &(batchQuads[_atlasIndex+p->atlasIndex]);
-	}
-	else
-		quad = &(_quads[_particleIdx]);
+	quad = &(_quads[_particleIdx]);
 
 	ccColor4B color = (_opacityModifyRGB)
 		? (ccColor4B){ p->color.r*p->color.a*255, p->color.g*p->color.a*255, p->color.b*p->color.a*255, p->color.a*255}
@@ -453,44 +420,6 @@
 //	CC_INCREMENT_GL_DRAWS(1);
 //
 //	CHECK_GL_ERROR_DEBUG();
-}
-
--(void) setBatchNode:(CCParticleBatchNode *)batchNode
-{
-	if( _batchNode != batchNode ) {
-
-		CCParticleBatchNode *oldBatch = _batchNode;
-
-		[super setBatchNode:batchNode];
-
-		// NEW: is self render ?
-		if( ! batchNode ) {
-			[self allocMemory];
-			[self initIndices];
-			[self setTexture:[oldBatch texture]];
-			[self initVAO];
-		}
-
-		// OLD: was it self render ? cleanup
-		else if( ! oldBatch )
-		{
-			// copy current state to batch
-			ccV3F_C4B_T2F_Quad *batchQuads = [[_batchNode textureAtlas] quads];
-			ccV3F_C4B_T2F_Quad *quad = &(batchQuads[_atlasIndex] );
-			memcpy( quad, _quads, _totalParticles * sizeof(_quads[0]) );
-
-			if (_quads)
-				free(_quads);
-			_quads = NULL;
-
-			if (_indices)
-				free(_indices);
-			_indices = NULL;
-
-			glDeleteBuffers(2, &_buffersVBO[0]);
-			glDeleteVertexArrays(1, &_VAOname);
-		}
-	}
 }
 
 @end

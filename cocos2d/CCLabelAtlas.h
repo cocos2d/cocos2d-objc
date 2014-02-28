@@ -26,7 +26,6 @@
  */
 
 #import "CCAtlasNode.h"
-#import "CCTextureAtlas.h"
 
 /** 
 

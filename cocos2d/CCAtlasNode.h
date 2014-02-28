@@ -25,7 +25,6 @@
  * THE SOFTWARE.
  */
 
-#import "CCTextureAtlas.h"
 #import "CCNode.h"
 #import "CCProtocols.h"
 
@@ -40,9 +39,6 @@
  - opacity and RGB colors
  */
 @interface CCAtlasNode : CCNode <CCTextureProtocol> {
-	// Texture Atlas.
-	CCTextureAtlas	*_textureAtlas;
-
 	// Chars per row.
 	NSUInteger		_itemsPerRow;
     
@@ -70,9 +66,6 @@
 /// -----------------------------------------------------------------------
 /// @name Accessing the Atlas Node Attributes
 /// -----------------------------------------------------------------------
-
-/** Conforms to CCTextureProtocol protocol. */
-@property (nonatomic,readwrite,strong) CCTextureAtlas *textureAtlas;
 
 /** Conforms to CCTextureProtocol protocol. */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
