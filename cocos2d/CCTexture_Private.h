@@ -25,6 +25,8 @@
 
 #import "CCTexture.h"
 
+extern CCTexture *CCTextureNone;
+
 // -------------------------------------------------------------
 
 // Proxy object returned in place of a CCTexture or CCSpriteFrame by the texture cache.

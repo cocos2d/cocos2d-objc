@@ -64,7 +64,7 @@ const NSString *CCBlendFuncSrcAlpha = @"CCBlendFuncSrcAlpha";
 const NSString *CCBlendFuncDstAlpha = @"CCBlendFuncDstAlpha";
 const NSString *CCBlendEquationAlpha = @"CCBlendEquationAlpha";
 
-const NSString *CCMainTexture = @"CCMainTexture";
+const NSString *CCMainTexture = @"cc_MainTexture";
 
 
 //MARK: Blend Modes.
@@ -128,6 +128,7 @@ const NSString *CCMainTexture = @"CCMainTexture";
 
 
 @implementation CCBlendMode {
+	@public
 	NSDictionary *_options;
 }
 
@@ -274,6 +275,7 @@ static NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 
 
 @implementation CCRenderState {
+	@public
 	NSDictionary *_options;
 }
 
@@ -304,7 +306,7 @@ static CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
 //MARK: Render Command.
 @interface CCRenderCommandDraw : NSObject
 
-@property(nonatomic, readonly) NSDictionary *renderOptions;
+//@property(nonatomic, readonly) NSDictionary *renderOptions;
 @property(nonatomic, readonly) GLint first;
 @property(nonatomic, readonly) GLsizei count;
 
@@ -312,7 +314,8 @@ static CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
 
 
 @implementation CCRenderCommandDraw {
-	
+	@public
+	NSDictionary *_renderOptions;
 }
 
 -(instancetype)initWithRenderOptions:(NSDictionary *)renderOptions first:(GLint)first count:(GLsizei)count
@@ -353,19 +356,12 @@ Things to try if sorting is implemented:
 *
 */
 
-#define MAX_TEXTURE_UNITS 8
-
 @implementation CCRenderer {
 	GLuint _vao;
 	GLuint _vbo;
 	
 	NSDictionary *_renderOptions;
 	NSDictionary *_blendOptions;
-	
-	// TODO GL_MAX_TEXTURE_UNITS.
-	CCTexture *_textures[MAX_TEXTURE_UNITS];
-	NSUInteger _textureStamps[MAX_TEXTURE_UNITS];
-	NSUInteger _textureStamp;
 	
 	CCGLProgram *_shader;
 	NSDictionary *_uniforms;
@@ -384,8 +380,6 @@ Things to try if sorting is implemented:
 	_blendOptions = nil;
 	_shader = nil;
 	_uniforms = nil;
-	
-	for(int i=0; i<MAX_TEXTURE_UNITS;i++) _textures[i] = nil;
 }
 
 -(instancetype)init
@@ -409,7 +403,7 @@ Things to try if sorting is implemented:
 	free(_triangles);
 }
 
--(void)setBlendOptions:(NSDictionary *)blendOptions;
+-(void)setBlendOptions:(__unsafe_unretained NSDictionary *)blendOptions;
 {
 	// TODO should cache enable status, but need to deal with nil.
 	if(blendOptions == CCBLEND_DISABLED_OPTIONS){
@@ -433,64 +427,26 @@ Things to try if sorting is implemented:
 	_blendOptions = blendOptions;
 }
 
--(GLint)markTexture:(GLint)unit
-{
-	_textureStamps[unit] = _textureStamp;
-	_textureStamp++;
-	
-	return unit;
-}
-
--(GLint)unitForTexture:(CCTexture *)texture
-{
-	GLint unit = -1;
-//	NSUInteger stamp = NSUIntegerMax;
-//	
-//	// First check if the texture is already bound
-//	for(int i=0; i<MAX_TEXTURE_UNITS; i++){
-//		if(texture == _textures[i]){
-//			return [self markTexture:i];
-//		} else if(_textureStamps[i] < stamp){
-//			stamp = _textureStamps[i];
-//			unit = i;
-//		}
-//	}
-	
-	unit = 0;
-//	NSLog(@"Binding %@ to unit %d", texture, unit);
-	glActiveTexture(GL_TEXTURE0 + unit);
-	glBindTexture(GL_TEXTURE_2D, texture.name);
-	_textures[unit] = texture;
-	CHECK_GL_ERROR_DEBUG();
-	
-	return [self markTexture:unit];
-}
-
--(BOOL)setRenderOptions:(NSDictionary *)renderOptions
+-(BOOL)setRenderOptions:(__unsafe_unretained NSDictionary *)renderOptions
 {
 	if(renderOptions == _renderOptions) return NO;
 	
-	NSDictionary *blendOptions = [(CCBlendMode *)renderOptions[CCRenderStateBlendMode] options];
+	__unsafe_unretained NSDictionary *blendOptions = ((CCBlendMode *)renderOptions[CCRenderStateBlendMode])->_options;
 	if(blendOptions != _blendOptions) [self setBlendOptions:blendOptions];
 	
-	CCGLProgram *shader = renderOptions[CCRenderStateShader];
+	__unsafe_unretained CCGLProgram *shader = renderOptions[CCRenderStateShader];
 	if(shader != _shader){
 		[shader use];
 		
 		_shader = shader;
 		_uniforms = nil;
 	}
-	
-	NSDictionary *uniforms = renderOptions[CCRenderStateUniforms];
+		
+	__unsafe_unretained NSDictionary *uniforms = renderOptions[CCRenderStateUniforms];
 	if(uniforms != _uniforms){
-		id texture = uniforms[CCMainTexture];
-		if(texture && texture != [NSNull null]){
-			GLint unit = [self unitForTexture:texture];
-//			GLint program = shader.program;
-//			
-//			GLint loc = glGetUniformLocation(program, "CC_Texture0");
-//			if(loc >= 0) glUniform1i(loc, unit);
-		}
+//		[self unitForTexture:uniforms[CCMainTexture]];
+		[shader setUniforms:uniforms renderer:self];
+		_uniforms = uniforms;
 	}
 	
 	CHECK_GL_ERROR_DEBUG();
@@ -515,11 +471,11 @@ Things to try if sorting is implemented:
 
 -(CCTriangle *)bufferTriangles:(NSUInteger)count withState:(CCRenderState *)renderState;
 {
-	NSDictionary *renderOptions = renderState.options;
-	CCRenderCommandDraw *previous = [_queue lastObject];
+	__unsafe_unretained NSDictionary *renderOptions = renderState->_options;
+	__unsafe_unretained CCRenderCommandDraw *previous = [_queue lastObject];
 	CCTriangle *buffer = [self ensureBufferCapacity:count];
 	
-	if(renderOptions == previous.renderOptions){
+	if(previous && renderOptions == previous->_renderOptions){
 		// Batch with the previous command.
 		[previous batchTriangles:(GLsizei)count];
 	} else {

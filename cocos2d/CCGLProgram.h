@@ -32,41 +32,21 @@
 #import "ccMacros.h"
 #import "Platforms/CCGL.h"
 
-//#define kCCShader_PositionTextureColor			@"ShaderPositionTextureColor"
-//#define kCCShader_PositionTextureColorAlphaTest	@"ShaderPositionTextureColorAlphaTest"
-//#define kCCShader_PositionColor					@"ShaderPositionColor"
-//#define kCCShader_PositionTexture				@"ShaderPositionTexture"
-//#define kCCShader_PositionTexture_uColor		@"ShaderPositionTexture_uColor"
-//#define kCCShader_PositionTextureA8Color		@"ShaderPositionTextureA8Color"
-//#define kCCShader_Position_uColor				@"ShaderPosition_uColor"
-//#define kCCShader_PositionLengthTexureColor		@"ShaderPositionLengthTextureColor"
-
 #define CC_GLSL(x) #x
 
-/* CCGLProgram
- Class that implements a glProgram
- */
+@class CCRenderer;
+
+typedef void (^CCUniformSetter)(CCRenderer *renderer, id value);
+
 @interface CCGLProgram : NSObject
 
 @property(nonatomic, readonly) GLuint program;
 
-/* creates the CCGLProgram with a vertex and fragment from byte arrays */
-+ (id)programWithVertexShaderByteArray:(const GLchar*)vShaderByteArray fragmentShaderByteArray:(const GLchar*)fShaderByteArray;
-
-/* creates the CCGLProgram with a vertex and fragment with contents of filenames */
-+ (id)programWithVertexShaderFilename:(NSString *)vShaderFilename fragmentShaderFilename:(NSString *)fShaderFilename;
-
-/* Initializes the CCGLProgram with a vertex and fragment with bytes array */
-- (id)initWithVertexShaderByteArray:(const GLchar*)vShaderByteArray fragmentShaderByteArray:(const GLchar*)fShaderByteArray;
-
-/* Initializes the CCGLProgram with a vertex and fragment with contents of filenames */
-- (id)initWithVertexShaderFilename:(NSString *)vShaderFilename fragmentShaderFilename:(NSString *)fShaderFilename;
-
-/* it will call glUseProgram() */
-- (void)use;
-
 +(instancetype)positionColorShader;
 +(instancetype)positionTextureColorShader;
 +(instancetype)positionTextureA8ColorShader;
+
+-(void)use;
+-(void)setUniforms:(NSDictionary *)uniforms renderer:(CCRenderer *)renderer;
 
 @end

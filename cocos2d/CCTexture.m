@@ -159,6 +159,21 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 @synthesize contentScale = _contentScale;
 @synthesize antialiased = _antialiased;
 
+CCTexture *CCTextureNone = nil;
+
++(void)initialize
+{
+	CCTextureNone = [self alloc];
+	CCTextureNone->_name = 0;
+	CCTextureNone->_format = CCTexturePixelFormat_RGBA8888;
+	CCTextureNone->_contentScale = 1.0;
+}
+
++(instancetype)none
+{
+	return CCTextureNone;
+}
+
 + (id) textureWithFile:(NSString*)file
 {
     return [[CCTextureCache sharedTextureCache] addImage:file];

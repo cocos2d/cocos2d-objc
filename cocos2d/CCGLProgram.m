@@ -31,6 +31,8 @@
 #import "Support/CCFileUtils.h"
 #import "Support/uthash.h"
 #import "Support/OpenGL_Internal.h"
+#import "CCRenderer_private.h"
+#import "CCTexture_private.h"
 
 #import "CCDirector.h"
 
@@ -43,7 +45,9 @@ enum {
 };
 
 
-@implementation CCGLProgram
+@implementation CCGLProgram {
+	NSMutableDictionary *_uniformSetters;
+}
 
 +(GLuint)createVAOforCCVertexBuffer:(GLuint)vbo
 {
@@ -92,6 +96,10 @@ CCCheckShaderError(GLint obj, GLenum status, GetShaderivFunc getiv, GetShaderInf
 	}
 }
 
+/*
+	viewport size points/pixels
+	main texture size points/pixels
+*/
 static const GLchar *CCShaderHeader =
 	"uniform highp vec4 cc_Time;\n"
 	"uniform highp vec4 cc_SinTime;\n"
@@ -170,6 +178,58 @@ LinkProgram(GLint program, GLint vshader, GLint fshader)
 		
 		glDeleteShader(vshader);
 		glDeleteShader(fshader);
+		
+		_uniformSetters = [NSMutableDictionary dictionary];
+		
+		glUseProgram(_program);
+		
+		GLint count = 0;
+		glGetProgramiv(_program, GL_ACTIVE_UNIFORMS, &count);
+		
+		int textureUnit = 0;
+		
+		for(int i=0; i<count; i++){
+			GLchar name[256];
+			GLsizei length = 0;
+			GLsizei size = 0;
+			GLenum type = 0;
+			
+			glGetActiveUniform(_program, i, sizeof(name), &length, &size, &type, name);
+			NSAssert(size == 1, @"Uniform arrays not supported. (yet?)");
+			
+			if(type == GL_FLOAT){
+				_uniformSetters[@(name)] = ^(CCRenderer *renderer, id value){
+					glUniform1f(i, [value floatValue]);
+				};
+			} else if(type == GL_FLOAT_VEC2){
+				_uniformSetters[@(name)] = ^(CCRenderer *renderer, id value){
+					GLKVector2 v; [(NSValue *)value getValue:&v];
+					glUniform2f(i, v.x, v.y);
+				};
+			} else if(type == GL_FLOAT_VEC3){
+				_uniformSetters[@(name)] = ^(CCRenderer *renderer, id value){
+					GLKVector3 v; [(NSValue *)value getValue:&v];
+					glUniform3f(i, v.x, v.y, v.z);
+				};
+			} else if(type == GL_FLOAT_VEC4){
+				_uniformSetters[@(name)] = ^(CCRenderer *renderer, id value){
+					GLKVector4 v; [(NSValue *)value getValue:&v];
+					glUniform4f(i, v.x, v.y, v.z, v.w);
+				};
+//			} else if(type == GL_FLOAT_MAT4){
+//				_uniformSetters[@(name)] = ^(CCRenderer *renderer, id value){glUniform1f(i, [value floatValue]);};
+			} else if(type == GL_SAMPLER_2D){
+				_uniformSetters[@(name)] = [^(CCRenderer *renderer, id value){
+					glActiveTexture(GL_TEXTURE0 + textureUnit);
+					glBindTexture(GL_TEXTURE_2D, [(CCTexture *)value name]);
+				} copy];
+				
+				glUniform1i(i, textureUnit);
+				textureUnit++;
+			} else {
+				NSAssert(NO, @"Uniform type not supported. (yet?)");
+			}
+		}
 	}
 	
 	return self;
@@ -225,9 +285,17 @@ static const char CCDefaultVShader[] = CC_GLSL(
 	return shader;
 }
 
--(void) use
+-(void)use
 {
 	glUseProgram(_program);
+}
+
+-(void)setUniforms:(NSDictionary *)uniforms renderer:(CCRenderer *)renderer
+{
+	for(NSString *uniform in uniforms){
+		CCUniformSetter setter = _uniformSetters[uniform];
+		setter(renderer, uniforms[uniform]);
+	}
 }
 
 @end

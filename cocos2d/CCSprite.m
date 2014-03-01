@@ -352,7 +352,7 @@
 				CCBlendFuncDstColor: @(blendFunc.dst),
 			}],
 			CCRenderStateShader: _shaderProgram,
-			CCRenderStateUniforms: @{CCMainTexture: (_texture ?: [NSNull null])},
+			CCRenderStateUniforms: @{CCMainTexture: (_texture ?: CCTextureNone)},
 		}];
 	}
 	
@@ -528,8 +528,9 @@
     
 	if( _texture != texture ) {
 		_texture = texture;
-
+		
 		[self updateBlendFunc];
+		_renderState = nil;
 	}
 }
 
