@@ -29,7 +29,6 @@
 #import "ccMacros.h"
 #import "CCGLProgram.h"
 #import "CCTextureCache.h"
-#import "CCShaderCache.h"
 #import "CCDirector.h"
 #import "CCNode_Private.h"
 

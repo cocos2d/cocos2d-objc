@@ -29,7 +29,6 @@
 #import "CCLabelTTF.h"
 #import "Support/CGPointExtension.h"
 #import "ccMacros.h"
-#import "CCShaderCache.h"
 #import "CCGLProgram.h"
 #import "Support/CCFileUtils.h"
 #import "ccMacros.h"
@@ -460,11 +459,11 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     
     if (!useFullColor)
     {
-        self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureA8Color];
+        self.shaderProgram = [CCGLProgram positionTextureA8ColorShader];
     }
     else
     {
-        self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
+        self.shaderProgram = [CCGLProgram positionTextureColorShader];
     }
 
     // Update texture and content size
@@ -753,7 +752,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
             dst[i] = data[i*4+3];
         
         texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_A8 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSizeInPixels:dimensions contentScale:[CCDirector sharedDirector].contentScaleFactor];
-        self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureA8Color];
+        self.shaderProgram = [CCGLProgram positionTextureA8ColorShader];
     }
     
 #ifdef __CC_PLATFORM_IOS
@@ -783,11 +782,11 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     
     if (!useFullColor)
     {
-        self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureA8Color];
+        self.shaderProgram = [CCGLProgram positionTextureA8ColorShader];
     }
     else
     {
-        self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
+        self.shaderProgram = [CCGLProgram positionTextureColorShader];
     }
         
     // Update texture and content size
@@ -1007,7 +1006,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
             dst[i] = data[i*4+3];
         
         texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_A8 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSizeInPixels:dimensions contentScale:[CCDirector sharedDirector].contentScaleFactor];
-        self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureA8Color];
+        self.shaderProgram = [CCGLProgram positionTextureA8ColorShader];
     }
 
     free(data);

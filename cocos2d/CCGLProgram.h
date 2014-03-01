@@ -32,73 +32,21 @@
 #import "ccMacros.h"
 #import "Platforms/CCGL.h"
 
-enum {
-	kCCVertexAttrib_Position,
-	kCCVertexAttrib_Color,
-	kCCVertexAttrib_TexCoords,
+//#define kCCShader_PositionTextureColor			@"ShaderPositionTextureColor"
+//#define kCCShader_PositionTextureColorAlphaTest	@"ShaderPositionTextureColorAlphaTest"
+//#define kCCShader_PositionColor					@"ShaderPositionColor"
+//#define kCCShader_PositionTexture				@"ShaderPositionTexture"
+//#define kCCShader_PositionTexture_uColor		@"ShaderPositionTexture_uColor"
+//#define kCCShader_PositionTextureA8Color		@"ShaderPositionTextureA8Color"
+//#define kCCShader_Position_uColor				@"ShaderPosition_uColor"
+//#define kCCShader_PositionLengthTexureColor		@"ShaderPositionLengthTextureColor"
 
-	kCCVertexAttrib_MAX,
-};
-
-enum {
-	kCCUniformPMatrix,
-	kCCUniformMVMatrix,
-	kCCUniformMVPMatrix,
-	kCCUniformTime,
-	kCCUniformSinTime,
-	kCCUniformCosTime,
-	kCCUniformRandom01,
-	kCCUniformSampler,
-
-	kCCUniform_MAX,
-};
-
-#define kCCShader_PositionTextureColor			@"ShaderPositionTextureColor"
-#define kCCShader_PositionTextureColorAlphaTest	@"ShaderPositionTextureColorAlphaTest"
-#define kCCShader_PositionColor					@"ShaderPositionColor"
-#define kCCShader_PositionTexture				@"ShaderPositionTexture"
-#define kCCShader_PositionTexture_uColor		@"ShaderPositionTexture_uColor"
-#define kCCShader_PositionTextureA8Color		@"ShaderPositionTextureA8Color"
-#define kCCShader_Position_uColor				@"ShaderPosition_uColor"
-#define kCCShader_PositionLengthTexureColor		@"ShaderPositionLengthTextureColor"
-
-//// uniform names
-//#define kCCUniformPMatrix_s				"CC_PMatrix"
-//#define kCCUniformMVMatrix_s			"CC_MVMatrix"
-//#define kCCUniformMVPMatrix_s			"CC_MVPMatrix"
-//#define kCCUniformTime_s				"CC_Time"
-//#define kCCUniformSinTime_s				"CC_SinTime"
-//#define kCCUniformCosTime_s				"CC_CosTime"
-//#define kCCUniformRandom01_s			"CC_Random01"
-//#define kCCUniformSampler_s				"CC_Texture0"
-//#define kCCUniformAlphaTestValue_s		"CC_AlphaValue"
-
-
-struct _hashUniformEntry;
+#define CC_GLSL(x) #x
 
 /* CCGLProgram
  Class that implements a glProgram
- 
- 
  */
 @interface CCGLProgram : NSObject
-{
-	struct _hashUniformEntry	*_hashForUniforms;
-
-@public
-	GLuint          _program,
-					_vertShader,
-					_fragShader;
-
-	GLint			_uniforms[kCCUniform_MAX];
-
-	struct {
-        unsigned int usesTime:1;
-        unsigned int usesMVP:1;
-        unsigned int usesMV:1;
-		unsigned int usesRandom:1;
-    } _flags;
-}
 
 @property(nonatomic, readonly) GLuint program;
 
@@ -114,13 +62,11 @@ struct _hashUniformEntry;
 /* Initializes the CCGLProgram with a vertex and fragment with contents of filenames */
 - (id)initWithVertexShaderFilename:(NSString *)vShaderFilename fragmentShaderFilename:(NSString *)fShaderFilename;
 
-///*  It will add a new attribute to the shader */
-//- (void)addAttribute:(NSString *)attributeName index:(GLuint)index;
-//
-///* links the glProgram */
-//- (BOOL)link;
-
 /* it will call glUseProgram() */
 - (void)use;
+
++(instancetype)positionColorShader;
++(instancetype)positionTextureColorShader;
++(instancetype)positionTextureA8ColorShader;
 
 @end

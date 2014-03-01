@@ -42,7 +42,6 @@
 #import "CCSpriteFrameCache.h"
 #import "CCTexture.h"
 #import "CCLabelBMFont.h"
-#import "CCShaderCache.h"
 #import "ccFPSImages.h"
 #import "CCConfiguration.h"
 #import "CCTransition.h"
@@ -644,7 +643,6 @@ static CCDirector *_sharedDirector = nil;
 	[CCAnimationCache purgeSharedAnimationCache];
 	[CCSpriteFrameCache purgeSharedSpriteFrameCache];
 	[CCTextureCache purgeSharedTextureCache];
-	[CCShaderCache purgeSharedShaderCache];
 	[[CCFileUtils sharedFileUtils] purgeCachedEntries];
 
 	// OpenGL view

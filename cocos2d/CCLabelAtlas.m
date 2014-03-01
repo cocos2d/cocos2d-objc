@@ -29,8 +29,6 @@
 #import "ccConfig.h"
 #import "ccMacros.h"
 #import "CCLabelAtlas.h"
-#import "CCShaderCache.h"
-#import "CCGLProgram.h"
 #import "CCTextureCache.h"
 #import "CCDirector.h"
 #import "Support/CGPointExtension.h"

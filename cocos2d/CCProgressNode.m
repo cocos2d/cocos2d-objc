@@ -29,7 +29,6 @@
 #import "ccMacros.h"
 #import "CCTextureCache.h"
 #import "CCGLProgram.h"
-#import "CCShaderCache.h"
 #import "CCDirector.h"
 #import "Support/CGPointExtension.h"
 #import "CCSprite_Private.h"
@@ -88,7 +87,7 @@ const char kCCProgressTextureCoords = 0x4b;
 		self.sprite = sprite;
     
 		// shader program
-		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
+		self.shaderProgram = [CCGLProgram positionTextureColorShader];
 	}
 	return self;
 }

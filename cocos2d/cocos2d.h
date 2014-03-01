@@ -93,8 +93,6 @@
 
 // Shaders
 #import "CCGLProgram.h"
-#import "ccShaders.h"
-#import "CCShaderCache.h"
 
 // Physics
 #import "CCPhysicsBody.h"

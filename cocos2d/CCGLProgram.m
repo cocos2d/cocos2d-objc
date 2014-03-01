@@ -35,202 +35,194 @@
 #import "CCDirector.h"
 
 
-typedef struct _hashUniformEntry
-{
-	GLvoid			*value;		// value
-    size_t          length;
-	NSUInteger		location;	// Key
-	UT_hash_handle  hh;			// hash entry
-} tHashUniformEntry;
+enum {
+	CCAttributePosition,
+	CCAttributeTexCoord0,
+	CCAttributeTexCoord1,
+	CCAttributeColor,
+};
 
-
-#pragma mark Function Pointer Definitions
-typedef void (*GLInfoFunction)(GLuint program,
-                               GLenum pname,
-                               GLint* params);
-typedef void (*GLLogFunction) (GLuint program,
-                               GLsizei bufsize,
-                               GLsizei* length,
-                               GLchar* infolog);
-#pragma mark -
-#pragma mark Private Extension Method Declaration
-
-@interface CCGLProgram()
-- (BOOL)compileShader:(GLuint *)shader type:(GLenum)type byteArray:(const GLchar*)byteArray;
-
-- (NSString *)logForOpenGLObject:(GLuint)object infoCallback:(GLInfoFunction)infoFunc logFunc:(GLLogFunction)logFunc;
-@end
-
-#pragma mark -
 
 @implementation CCGLProgram
 
-@synthesize program = _program;
-
-+ (id)programWithVertexShaderByteArray:(const GLchar*)vShaderByteArray fragmentShaderByteArray:(const GLchar*)fShaderByteArray
++(GLuint)createVAOforCCVertexBuffer:(GLuint)vbo
 {
-	return [[self alloc] initWithVertexShaderByteArray:vShaderByteArray fragmentShaderByteArray:fShaderByteArray];
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	
+	GLuint vao = 0;
+	glGenVertexArraysOES(1, &vao);
+	glBindVertexArrayOES(vao);
+
+	glEnableVertexAttribArray(CCAttributePosition);
+	glEnableVertexAttribArray(CCAttributeTexCoord0);
+	glEnableVertexAttribArray(CCAttributeTexCoord1);
+	glEnableVertexAttribArray(CCAttributeColor);
+	
+	glVertexAttribPointer(CCAttributePosition, 3, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, position));
+	glVertexAttribPointer(CCAttributeTexCoord0, 2, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, texCoord1));
+	glVertexAttribPointer(CCAttributeTexCoord1, 2, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, texCoord1));
+	glVertexAttribPointer(CCAttributeColor, 4, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, color));
+
+	glBindVertexArrayOES(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	
+	return vao;
 }
 
-+ (id)programWithVertexShaderFilename:(NSString *)vShaderFilename fragmentShaderFilename:(NSString *)fShaderFilename
+typedef void (* GetShaderivFunc) (GLuint shader, GLenum pname, GLint* param);
+typedef void (* GetShaderInfoLogFunc) (GLuint shader, GLsizei bufSize, GLsizei* length, GLchar* infoLog);
+
+static BOOL
+CCCheckShaderError(GLint obj, GLenum status, GetShaderivFunc getiv, GetShaderInfoLogFunc getInfoLog)
 {
-	return [[self alloc] initWithVertexShaderFilename:vShaderFilename fragmentShaderFilename:fShaderFilename];
+	GLint success;
+	getiv(obj, status, &success);
+	
+	if(!success){
+		GLint length;
+		getiv(obj, GL_INFO_LOG_LENGTH, &length);
+		
+		char *log = (char *)alloca(length);
+		getInfoLog(obj, length, NULL, log);
+		
+		fprintf(stderr, "Shader compile error for 0x%04X: %s\n", status, log);
+		return NO;
+	} else {
+		return YES;
+	}
 }
 
-#define	kCCAttributeNameColor			@"a_color"
-#define	kCCAttributeNamePosition		@"a_position"
-#define	kCCAttributeNameTexCoord		@"a_texCoord"
+static const GLchar *CCShaderHeader =
+	"uniform highp vec4 cc_Time;\n"
+	"uniform highp vec4 cc_SinTime;\n"
+	"uniform highp vec4 cc_CosTime;\n"
+	"uniform highp vec4 cc_Random01;\n\n"
+	"uniform sampler2D cc_MainTexture;\n\n"
+	"varying lowp vec4 cc_FragColor;\n"
+	"varying highp vec2 cc_FragTexCoord0;\n"
+	"varying highp vec2 cc_FragTexCoord1;\n\n"
+	"// End Cocos2D shader header.\n\n";
+
+static const GLchar *CCVertexShaderHeader =
+	"precision highp float;\n\n"
+	"attribute vec4 cc_Position;\n"
+	"attribute vec2 cc_TexCoord0;\n"
+	"attribute vec2 cc_TexCoord1;\n"
+	"attribute vec4 cc_Color;\n\n"
+	"// End Cocos2D vertex shader header.\n\n";
+
+static const GLchar *CCFragmentShaderHeader =
+	"precision lowp float;\n\n"
+	"// End Cocos2D fragment shader header.\n\n";
+
+static const GLchar *
+CCShaderTypeHeader(GLenum type)
+{
+	switch(type){
+		case GL_VERTEX_SHADER: return CCVertexShaderHeader;
+		case GL_FRAGMENT_SHADER: return CCFragmentShaderHeader;
+		default: NSCAssert(NO, @"Bad shader type enumeration."); return NULL;
+	}
+}
+
+static GLint
+CompileShader(GLenum type, const char *source)
+{
+	GLint shader = glCreateShader(type);
+	
+	const GLchar *sources[] = {
+		CCShaderHeader,
+		CCShaderTypeHeader(type),
+		source,
+	};
+	
+	glShaderSource(shader, 3, sources, NULL);
+	glCompileShader(shader);
+	
+	NSCAssert(CCCheckShaderError(shader, GL_COMPILE_STATUS, glGetShaderiv, glGetShaderInfoLog), @"Error compiling shader");
+	
+	return shader;
+}
+
+static void
+LinkProgram(GLint program, GLint vshader, GLint fshader)
+{
+	glAttachShader(program, vshader);
+	glAttachShader(program, fshader);
+	glLinkProgram(program);
+	
+	// todo return placeholder program instead?
+	NSCAssert(CCCheckShaderError(program, GL_LINK_STATUS, glGetProgramiv, glGetProgramInfoLog), @"Error linking shader program");
+}
 
 - (id)initWithVertexShaderByteArray:(const GLchar *)vShaderByteArray fragmentShaderByteArray:(const GLchar *)fShaderByteArray
 {
-    if ((self = [super init]) )
-    {
-        _program = glCreateProgram();
+	if((self = [super init])){
+		GLint vshader = CompileShader(GL_VERTEX_SHADER, vShaderByteArray);
+		GLint fshader = CompileShader(GL_FRAGMENT_SHADER, fShaderByteArray);
 		
-		_vertShader = _fragShader = 0;
+		_program = glCreateProgram();
+		glBindAttribLocation(_program, CCAttributePosition, "cc_Position");
+		glBindAttribLocation(_program, CCAttributeTexCoord0, "cc_TexCoord0");
+		glBindAttribLocation(_program, CCAttributeTexCoord1, "cc_TexCoord1");
+		glBindAttribLocation(_program, CCAttributeColor, "cc_Color");
+		LinkProgram(_program, vshader, fshader);
 		
-		if( vShaderByteArray ) {
-			
-			if (![self compileShader:&_vertShader
-								type:GL_VERTEX_SHADER
-						   byteArray:vShaderByteArray] )
-				CCLOG(@"cocos2d: ERROR: Failed to compile vertex shader");
-		}
-		
-        // Create and compile fragment shader
-		if( fShaderByteArray ) {
-			if (![self compileShader:&_fragShader
-								type:GL_FRAGMENT_SHADER
-						   byteArray:fShaderByteArray] )
-
-				CCLOG(@"cocos2d: ERROR: Failed to compile fragment shader");
-		}
-		
-		if( _vertShader )
-			glAttachShader(_program, _vertShader);
-		
-		if( _fragShader )
-			glAttachShader(_program, _fragShader);
-		
-		_hashForUniforms = NULL;
-		
-		[self addAttribute:kCCAttributeNamePosition index:kCCVertexAttrib_Position];
-		[self addAttribute:kCCAttributeNameColor index:kCCVertexAttrib_Color];
-		[self addAttribute:kCCAttributeNameTexCoord index:kCCVertexAttrib_TexCoords];
-
-		[self link];
-    }
-	
-    return self;
-}
-
-- (id)initWithVertexShaderFilename:(NSString *)vShaderFilename fragmentShaderFilename:(NSString *)fShaderFilename
-{
-	NSString *v = [[CCFileUtils sharedFileUtils] fullPathForFilenameIgnoringResolutions:vShaderFilename];
-	NSString *f = [[CCFileUtils sharedFileUtils] fullPathForFilenameIgnoringResolutions:fShaderFilename];
-	if( !(v || f) ) {
-		if(!v)
-			CCLOGWARN(@"Could not open vertex shader: %@", vShaderFilename);
-		if(!f)
-			CCLOGWARN(@"Could not open fragment shader: %@", fShaderFilename);
-		return nil;
+		glDeleteShader(vshader);
+		glDeleteShader(fshader);
 	}
-	const GLchar * vertexSource = (GLchar*) [[NSString stringWithContentsOfFile:v encoding:NSUTF8StringEncoding error:nil] UTF8String];
-	const GLchar * fragmentSource = (GLchar*) [[NSString stringWithContentsOfFile:f encoding:NSUTF8StringEncoding error:nil] UTF8String];
-
-	return [self initWithVertexShaderByteArray:vertexSource fragmentShaderByteArray:fragmentSource];
+	
+	return self;
 }
 
-- (NSString*) description
+- (void)dealloc
 {
-	return [NSString stringWithFormat:@"<%@ = %p | Program = %i, VertexShader = %i, FragmentShader = %i>", [self class], self, _program, _vertShader, _fragShader];
+	CCLOGINFO( @"cocos2d: deallocing %@", self);
+
+	if(_program) glDeleteProgram(_program);
 }
 
-
-- (BOOL)compileShader:(GLuint *)shader type:(GLenum)type byteArray:(const GLchar *)source
-{
-    GLint status;
-
-    if (!source)
-        return NO;
-		
-		const GLchar *sources[] = {
-#ifdef __CC_PLATFORM_IOS
-			(type == GL_VERTEX_SHADER ? "precision highp float;\n" : "precision mediump float;\n"),
-#endif
-			"uniform mat4 CC_PMatrix;\n"
-			"uniform mat4 CC_MVMatrix;\n"
-			"uniform mat4 CC_MVPMatrix;\n"
-			"uniform vec4 CC_Time;\n"
-			"uniform vec4 CC_SinTime;\n"
-			"uniform vec4 CC_CosTime;\n"
-			"uniform vec4 CC_Random01;\n"
-			"//CC INCLUDES END\n\n",
-			source,
-		};
-		
-    *shader = glCreateShader(type);
-    glShaderSource(*shader, sizeof(sources)/sizeof(*sources), sources, NULL);
-    glCompileShader(*shader);
-	
-    glGetShaderiv(*shader, GL_COMPILE_STATUS, &status);
-	
-	if( ! status ) {
-		GLsizei length;
-		glGetShaderiv(*shader, GL_SHADER_SOURCE_LENGTH, &length);
-		GLchar src[length];
-		
-		glGetShaderSource(*shader, length, NULL, src);
-		CCLOG(@"cocos2d: ERROR: Failed to compile shader:\n%s", src);
-		
-		if( type == GL_VERTEX_SHADER )
-			CCLOG(@"cocos2d: %@", [self vertexShaderLog] );
-		else
-			CCLOG(@"cocos2d: %@", [self fragmentShaderLog] );
-		
-		abort();
+static const char CCDefaultVShader[] = CC_GLSL(
+	void main()
+	{
+		gl_Position = cc_Position;
+		cc_FragColor = cc_Color;
+		cc_FragTexCoord0 = cc_TexCoord0;
+		cc_FragTexCoord1 = cc_TexCoord1;
 	}
-    return ( status == GL_TRUE );
+);
+
++(instancetype)positionColorShader
+{
+	static CCGLProgram *shader = nil;
+	if(!shader){
+		GLchar *fragShader = "void main(){gl_FragColor = cc_FragColor;}";
+		shader = [[self alloc] initWithVertexShaderByteArray:CCDefaultVShader fragmentShaderByteArray:fragShader];
+	}
+	
+	return shader;
 }
 
-#pragma mark -
-
-- (void)addAttribute:(NSString *)attributeName index:(GLuint)index
++(instancetype)positionTextureColorShader
 {
-	glBindAttribLocation(_program,
-						 index,
-						 [attributeName UTF8String]);
+	static CCGLProgram *shader = nil;
+	if(!shader){
+		GLchar *fragShader = "void main(){gl_FragColor = cc_FragColor * texture2D(cc_MainTexture, cc_FragTexCoord0);}";
+		shader = [[self alloc] initWithVertexShaderByteArray:CCDefaultVShader fragmentShaderByteArray:fragShader];
+	}
+	
+	return shader;
 }
 
-#pragma mark -
-
--(BOOL) link
++(instancetype)positionTextureA8ColorShader
 {
-    NSAssert(_program != 0, @"Cannot link invalid program");
+	static CCGLProgram *shader = nil;
+	if(!shader){
+		GLchar *fragShader = "void main(){gl_FragColor = vec4(cc_FragColor.rgb, cc_FragColor.a * texture2D(cc_MainTexture, cc_FragTexCoord0).a);}";
+		shader = [[self alloc] initWithVertexShaderByteArray:CCDefaultVShader fragmentShaderByteArray:fragShader];
+	}
 	
-    GLint status = GL_TRUE;
-    glLinkProgram(_program);
-	
-    if (_vertShader)
-        glDeleteShader(_vertShader);
-
-    if (_fragShader)
-        glDeleteShader(_fragShader);
-
-    _vertShader = _fragShader = 0;
-	
-#if DEBUG
-    glGetProgramiv(_program, GL_LINK_STATUS, &status);
-    NSString* log = self.programLog;
-	
-    if (status == GL_FALSE) {
-        NSLog(@"cocos2d: ERROR: Failed to link program: %i - %@", _program, log);
-        glDeleteProgram(_program);
-        _program = 0;
-    }
-#endif
-	
-    return (status == GL_TRUE);
+	return shader;
 }
 
 -(void) use
@@ -238,48 +230,4 @@ typedef void (*GLLogFunction) (GLuint program,
 	glUseProgram(_program);
 }
 
-#pragma mark -
-
--(NSString *) logForOpenGLObject:(GLuint)object
-					infoCallback:(GLInfoFunction)infoFunc
-						 logFunc:(GLLogFunction)logFunc
-{
-	GLint logLength = 0, charsWritten = 0;
-
-	infoFunc(object, GL_INFO_LOG_LENGTH, &logLength);
-	if (logLength < 1)
-		return nil;
-
-	char *logBytes = malloc(logLength);
-	logFunc(object, logLength, &charsWritten, logBytes);
-	NSString *log = [[NSString alloc] initWithBytes:logBytes
-											  length:logLength
-											encoding:NSUTF8StringEncoding];
-	free(logBytes);
-	return log;
-}
-
-#pragma mark -
-
-- (void)dealloc
-{
-	CCLOGINFO( @"cocos2d: deallocing %@", self);
-
-	// there is no need to delete the shaders. They should have been already deleted.
-	NSAssert( _vertShader == 0, @"Vertex Shaders should have been already deleted");
-	NSAssert( _fragShader == 0, @"Fragment Shaders should have been already deleted");
-
-	if (_program)
-		glDeleteProgram(_program);
-
-	tHashUniformEntry *current_element, *tmp;
-
-	// Purge uniform hash
-	HASH_ITER(hh, _hashForUniforms, current_element, tmp) {
-		HASH_DEL(_hashForUniforms, current_element);
-		free(current_element->value);
-		free(current_element);
-	}
-
-}
 @end

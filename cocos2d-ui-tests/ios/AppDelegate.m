@@ -43,7 +43,7 @@
      nil];
     
     [self setupCocos2dWithOptions:@{
-                                    CCSetupDepthFormat: @GL_DEPTH24_STENCIL8,
+			CCSetupDepthFormat: @GL_DEPTH24_STENCIL8,
 //			CCSetupScreenMode: CCScreenModeFixed,
 //			CCSetupScreenOrientation: CCScreenOrientationPortrait,
 //			CCSetupTabletScale2X: @YES,

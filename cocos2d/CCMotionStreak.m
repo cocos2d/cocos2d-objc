@@ -27,7 +27,6 @@
 #import "CCMotionStreak.h"
 #import "CCTextureCache.h"
 #import "CCGLProgram.h"
-#import "CCShaderCache.h"
 #import "ccMacros.h"
 #import "CCNode_Private.h"
 
@@ -235,7 +234,7 @@ static void CCVertexLineToPolygon(CGPoint *points, float stroke, ccVertex2F *ver
 				self.blendFunc = (ccBlendFunc){GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA};
 
         // shader program
-        self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
+        self.shaderProgram = [CCGLProgram positionTextureColorShader];
 
         [self setTexture:texture];
         [super setColor:color];

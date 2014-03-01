@@ -78,7 +78,6 @@
 #import "CCConfiguration.h"
 #import "CCTexturePVR.h"
 #import "CCGLProgram.h"
-#import "CCShaderCache.h"
 #import "CCDirector.h"
 
 #import "Support/ccUtils.h"

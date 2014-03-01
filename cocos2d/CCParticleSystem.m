@@ -38,7 +38,6 @@
 #import "ccMacros.h"
 #import "CCSpriteFrame.h"
 #import "CCDirector.h"
-#import "CCShaderCache.h"
 #import "CCGLProgram.h"
 #import "CCConfiguration.h"
 
@@ -76,7 +75,7 @@
 		[self initIndices];
 		[self initVAO];
 
-		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
+		self.shaderProgram = [CCGLProgram positionTextureColorShader];
 	}
 
 	return self;
@@ -85,7 +84,6 @@
 -(BOOL) allocMemory
 {
 	NSAssert( ( !_quads && !_indices), @"Memory already alloced");
-	NSAssert( !_batchNode, @"Memory should not be alloced when not using batchNode");
 
 	_quads = calloc( sizeof(_quads[0]) * _totalParticles, 1 );
 	_indices = calloc( sizeof(_indices[0]) * _totalParticles * 6, 1 );

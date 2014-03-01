@@ -35,7 +35,6 @@
 #import "CCSprite.h"
 #import "CCSpriteBatchNode.h"
 #import "CCTextureCache.h"
-#import "CCShaderCache.h"
 #import "CCGLProgram.h"
 #import "Support/CGPointExtension.h"
 #import "CCNode_Private.h"

@@ -28,6 +28,10 @@
 #import "CCTexture_Private.h"
 
 
+@interface CCGLProgram()
++(GLuint)createVAOforCCVertexBuffer:(GLuint)vbo;
+@end
+
 //MARK: NSValue Additions.
 @implementation NSValue(CCRenderer)
 
@@ -47,7 +51,6 @@
 }
 
 @end
-
 
 //MARK: Option Keys.
 const NSString *CCRenderStateBlendMode = @"CCRenderStateBlendMode";
@@ -388,7 +391,8 @@ Things to try if sorting is implemented:
 -(instancetype)init
 {
 	if((self = [super init])){
-		[self setupVAO];
+		glGenBuffers(1, &_vbo);
+		_vao = [CCGLProgram createVAOforCCVertexBuffer:_vbo];
 		
 		_queue = [NSMutableArray array];
 		
@@ -403,26 +407,6 @@ Things to try if sorting is implemented:
 -(void)dealloc
 {
 	free(_triangles);
-}
-
--(void)setupVAO
-{
-	glGenBuffers(1, &_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-	
-	glGenVertexArraysOES(1, &_vao);
-	glBindVertexArrayOES(_vao);
-
-	glEnableVertexAttribArray(kCCVertexAttrib_Position);
-	glEnableVertexAttribArray(kCCVertexAttrib_TexCoords);
-	glEnableVertexAttribArray(kCCVertexAttrib_Color);
-	
-	glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, position));
-	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, texCoord1));
-	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, color));
-
-	glBindVertexArrayOES(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 -(void)setBlendOptions:(NSDictionary *)blendOptions;

@@ -74,9 +74,10 @@ const NSString *CARD_NAME[] =
     _cardNode = [CCSpriteBatchNode batchNodeWithFile:@"Cards/cards.classic.png"];
     _cardNode.contentSize = [CCDirector sharedDirector].viewSize;
 		
-		_cardNode.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColorAlphaTest];
-		GLint location = [_cardNode.shaderProgram uniformLocationForName:@(kCCUniformAlphaTestValue_s)];
-		[_cardNode.shaderProgram setUniformLocation:location withF1:0.5];
+		#warning TODO
+//		_cardNode.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColorAlphaTest];
+//		GLint location = [_cardNode.shaderProgram uniformLocationForName:@(kCCUniformAlphaTestValue_s)];
+//		[_cardNode.shaderProgram setUniformLocation:location withF1:0.5];
 		
     [self.contentNode addChild:_cardNode];
     

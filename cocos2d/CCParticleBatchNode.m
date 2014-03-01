@@ -33,7 +33,6 @@
 #import "ccMacros.h"
 #import "Support/CGPointExtension.h"
 #import "CCParticleSystemBase.h"
-#import "CCShaderCache.h"
 #import "CCGLProgram.h"
 
 #import "Support/base64.h"
@@ -98,8 +97,6 @@
 
 		// no lazy alloc in this node
 		_children = [[NSMutableArray alloc] initWithCapacity:capacity];
-		
-		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
 	}
 
 	return self;

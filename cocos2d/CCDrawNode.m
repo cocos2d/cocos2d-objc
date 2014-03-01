@@ -28,7 +28,6 @@
  */
 
 #import "CCDrawNode.h"
-#import "CCShaderCache.h"
 #import "CCGLProgram.h"
 #import "Support/CGPointExtension.h"
 #import "Support/OpenGL_Internal.h"
@@ -64,7 +63,8 @@
 {
 	if((self = [super init])){
 		self.blendFunc = (ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
-		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionLengthTexureColor];
+		#warning TODO
+//		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionLengthTexureColor];
 
 		_triangleCapacity = 128;
 		_triangles = calloc(_triangleCapacity, sizeof(*_triangles));

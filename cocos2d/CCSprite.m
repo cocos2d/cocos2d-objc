@@ -33,7 +33,6 @@
 #import "CCAnimation.h"
 #import "CCAnimationCache.h"
 #import "CCTextureCache.h"
-#import "CCShaderCache.h"
 #import "CCGLProgram.h"
 #import "CCDirector.h"
 #import "Support/CGPointExtension.h"
@@ -126,7 +125,7 @@
 	if( (self = [super init]) )
 	{
 		// shader program
-		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
+		self.shaderProgram = [CCGLProgram positionTextureColorShader];
 		
 		self.blendFunc = (ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
 		_opacityModifyRGB = YES;
