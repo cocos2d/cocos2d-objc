@@ -352,7 +352,7 @@
 				CCBlendFuncDstColor: @(blendFunc.dst),
 			}],
 			CCRenderStateShader: _shaderProgram,
-			CCRenderStateUniforms: @{CCMainTexture: (_texture ?: CCTextureNone)},
+			CCRenderStateUniforms: @{CCShaderUniformMainTexture: (_texture ?: CCTextureNone)},
 		}];
 	}
 	

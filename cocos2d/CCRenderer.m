@@ -26,6 +26,8 @@
 #import "CCRenderer_private.h"
 #import "CCCache.h"
 #import "CCTexture_Private.h"
+#import "CCGLProgram_private.h"
+#import "CCDirector_Private.h"
 
 
 @interface CCGLProgram()
@@ -64,7 +66,7 @@ const NSString *CCBlendFuncSrcAlpha = @"CCBlendFuncSrcAlpha";
 const NSString *CCBlendFuncDstAlpha = @"CCBlendFuncDstAlpha";
 const NSString *CCBlendEquationAlpha = @"CCBlendEquationAlpha";
 
-const NSString *CCMainTexture = @"cc_MainTexture";
+const NSString *CCShaderUniformMainTexture = @"cc_MainTexture";
 
 
 //MARK: Blend Modes.
@@ -357,6 +359,8 @@ Things to try if sorting is implemented:
 */
 
 @implementation CCRenderer {
+	NSDictionary *_uniformGlobals;
+	
 	GLuint _vao;
 	GLuint _vbo;
 	
@@ -376,6 +380,18 @@ Things to try if sorting is implemented:
 
 -(void)invalidateState
 {
+	#warning TODO this is a really hacky place to put this...
+	CCDirector *director = [CCDirector sharedDirector];
+	CCTime t = director.scheduler.currentTime;
+	CGSize size = director.viewSize;
+	CGSize pixelSize = director.viewSizeInPixels;
+	
+	_uniformGlobals = @{
+		@"cc_Time": [NSValue valueWithGLKVector4:GLKVector4Make(t, t/2, t/4, t/8)],
+		@"cc_ViewSize": [NSValue valueWithGLKVector2:GLKVector2Make(size.width, size.height)],
+		@"cc_ViewSizeInPixels": [NSValue valueWithGLKVector2:GLKVector2Make(pixelSize.width, pixelSize.height)],
+	};
+	
 	_renderOptions = nil;
 	_blendOptions = nil;
 	_shader = nil;
@@ -390,8 +406,7 @@ Things to try if sorting is implemented:
 		
 		_queue = [NSMutableArray array];
 		
-		#warning TODO
-		_triangleCapacity = 2*1;
+		_triangleCapacity = 2*1024;
 		_triangles = calloc(_triangleCapacity, sizeof(*_triangles));
 	}
 	
@@ -407,6 +422,7 @@ Things to try if sorting is implemented:
 {
 	if(renderOptions == _renderOptions) return NO;
 	
+	// Set the blending state.
 	__unsafe_unretained NSDictionary *blendOptions = ((CCBlendMode *)renderOptions[CCRenderStateBlendMode])->_options;
 	if(blendOptions != _blendOptions){
 		if(blendOptions == CCBLEND_DISABLED_OPTIONS){
@@ -430,20 +446,22 @@ Things to try if sorting is implemented:
 		_blendOptions = blendOptions;
 	}
 	
+	// Bind the shader.
 	__unsafe_unretained CCGLProgram *shader = renderOptions[CCRenderStateShader];
 	if(shader != _shader){
-		[shader use];
+		glUseProgram(shader->_program);
 		
 		_shader = shader;
 		_uniforms = nil;
 	}
-		
+	
+	// Set the shader's uniform state.
 	__unsafe_unretained NSDictionary *uniforms = renderOptions[CCRenderStateUniforms];
 	if(uniforms != _uniforms){
-		__unsafe_unretained NSDictionary *setters = shader.uniformSetters;
+		__unsafe_unretained NSDictionary *setters = shader->_uniformSetters;
 		for(NSString *uniform in setters){
 			__unsafe_unretained CCUniformSetter setter = setters[uniform];
-			setter(self, uniforms[uniform]);
+			setter(self, uniforms[uniform] ?: _uniformGlobals[uniform]);
 		}
 		_uniforms = uniforms;
 	}

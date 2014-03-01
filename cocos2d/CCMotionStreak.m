@@ -395,7 +395,7 @@ static void CCVertexLineToPolygon(CGPoint *points, float stroke, ccVertex2F *ver
 				CCBlendFuncDstColor: @(blendFunc.dst),
 			}],
 			CCRenderStateShader: _shaderProgram,
-			CCRenderStateUniforms: @{CCMainTexture: (_texture ?: CCTextureNone)},
+			CCRenderStateUniforms: @{CCShaderUniformMainTexture: (_texture ?: CCTextureNone)},
 		}];
 	}
 	

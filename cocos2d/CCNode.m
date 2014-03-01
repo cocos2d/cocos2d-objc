@@ -1662,7 +1662,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 				CCBlendFuncSrcColor: @(_blendFunc.src),
 				CCBlendFuncDstColor: @(_blendFunc.dst),
 			}],
-			CCRenderStateShader: _shaderProgram,
+			CCRenderStateShader: _shaderProgram ?: [CCGLProgram positionColorShader],
 		}];
 	}
 	

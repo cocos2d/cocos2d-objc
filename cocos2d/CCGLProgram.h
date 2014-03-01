@@ -32,21 +32,15 @@
 #import "ccMacros.h"
 #import "Platforms/CCGL.h"
 
-#define CC_GLSL(x) #x
-
-@class CCRenderer;
-
-typedef void (^CCUniformSetter)(__unsafe_unretained CCRenderer *renderer, __unsafe_unretained id value);
+#define CC_GLSL(x) @#x
 
 @interface CCGLProgram : NSObject
 
-@property(nonatomic, readonly) GLuint program;
-@property(nonatomic, readonly) NSDictionary *uniformSetters;
+-(instancetype)initWithVertexShaderSource:(NSString *)vertexSource fragmentShaderSource:(NSString *)fragmentSource;
+-(instancetype)initWithFragmentShaderSource:(NSString *)source;
 
 +(instancetype)positionColorShader;
 +(instancetype)positionTextureColorShader;
 +(instancetype)positionTextureA8ColorShader;
-
--(void)use;
 
 @end

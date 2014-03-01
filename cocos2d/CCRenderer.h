@@ -94,7 +94,7 @@ extern const NSString *CCBlendFuncSrcAlpha;
 extern const NSString *CCBlendFuncDstAlpha;
 extern const NSString *CCBlendEquationAlpha;
 
-extern const NSString *CCMainTexture;
+extern const NSString *CCShaderUniformMainTexture;
 
 
 @interface CCBlendMode : NSObject
