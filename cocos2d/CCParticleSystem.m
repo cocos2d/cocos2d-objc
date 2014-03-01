@@ -400,7 +400,7 @@
 }
 
 // overriding draw method
--(void)draw:(CCRenderer *)renderer transform:(GLKMatrix4)transform
+-(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
 	#warning TODO
 //	NSAssert(!_batchNode,@"draw should not be called when added to a particleBatchNode");

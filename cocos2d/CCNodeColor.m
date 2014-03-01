@@ -105,7 +105,7 @@
 	for(int i=0; i<4; i++) _colors[i] = color;
 }
 
--(void)draw:(CCRenderer *)renderer transform:(GLKMatrix4)transform
+-(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
 	CGSize size = self.contentSizeInPoints;
 	if(!CCCheckVisbility(transform, size)) return;
@@ -114,10 +114,10 @@
 	
 	float w = size.width, h = size.height;
 	CCVertex verts[] = {
-		{GLKMatrix4MultiplyAndProjectVector3(transform, GLKVector3Make(0, 0, 0)), zero, zero, _colors[0]},
-		{GLKMatrix4MultiplyAndProjectVector3(transform, GLKVector3Make(w, 0, 0)), zero, zero, _colors[1]},
-		{GLKMatrix4MultiplyAndProjectVector3(transform, GLKVector3Make(w, h, 0)), zero, zero, _colors[2]},
-		{GLKMatrix4MultiplyAndProjectVector3(transform, GLKVector3Make(0, h, 0)), zero, zero, _colors[3]},
+		{GLKMatrix4MultiplyAndProjectVector3(*transform, GLKVector3Make(0, 0, 0)), zero, zero, _colors[0]},
+		{GLKMatrix4MultiplyAndProjectVector3(*transform, GLKVector3Make(w, 0, 0)), zero, zero, _colors[1]},
+		{GLKMatrix4MultiplyAndProjectVector3(*transform, GLKVector3Make(w, h, 0)), zero, zero, _colors[2]},
+		{GLKMatrix4MultiplyAndProjectVector3(*transform, GLKVector3Make(0, h, 0)), zero, zero, _colors[3]},
 	};
 	
 	CCTriangle *triangles = [renderer bufferTriangles:2 withState:self.renderState];

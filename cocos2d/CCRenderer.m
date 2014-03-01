@@ -403,36 +403,32 @@ Things to try if sorting is implemented:
 	free(_triangles);
 }
 
--(void)setBlendOptions:(__unsafe_unretained NSDictionary *)blendOptions;
-{
-	// TODO should cache enable status, but need to deal with nil.
-	if(blendOptions == CCBLEND_DISABLED_OPTIONS){
-		if(_blendOptions != CCBLEND_DISABLED_OPTIONS) glDisable(GL_BLEND);
-	} else {
-		if(_blendOptions == nil || _blendOptions == CCBLEND_DISABLED_OPTIONS) glEnable(GL_BLEND);
-		
-		glBlendFuncSeparate(
-			[blendOptions[CCBlendFuncSrcColor] unsignedIntValue],
-			[blendOptions[CCBlendFuncDstColor] unsignedIntValue],
-			[blendOptions[CCBlendFuncSrcAlpha] unsignedIntValue],
-			[blendOptions[CCBlendFuncDstAlpha] unsignedIntValue]
-		);
-		
-		glBlendEquationSeparate(
-			[blendOptions[CCBlendEquationColor] unsignedIntValue],
-			[blendOptions[CCBlendEquationAlpha] unsignedIntValue]
-		);
-	}
-	
-	_blendOptions = blendOptions;
-}
-
 -(BOOL)setRenderOptions:(__unsafe_unretained NSDictionary *)renderOptions
 {
 	if(renderOptions == _renderOptions) return NO;
 	
 	__unsafe_unretained NSDictionary *blendOptions = ((CCBlendMode *)renderOptions[CCRenderStateBlendMode])->_options;
-	if(blendOptions != _blendOptions) [self setBlendOptions:blendOptions];
+	if(blendOptions != _blendOptions){
+		if(blendOptions == CCBLEND_DISABLED_OPTIONS){
+			if(_blendOptions != CCBLEND_DISABLED_OPTIONS) glDisable(GL_BLEND);
+		} else {
+			if(_blendOptions == nil || _blendOptions == CCBLEND_DISABLED_OPTIONS) glEnable(GL_BLEND);
+			
+			glBlendFuncSeparate(
+				[blendOptions[CCBlendFuncSrcColor] unsignedIntValue],
+				[blendOptions[CCBlendFuncDstColor] unsignedIntValue],
+				[blendOptions[CCBlendFuncSrcAlpha] unsignedIntValue],
+				[blendOptions[CCBlendFuncDstAlpha] unsignedIntValue]
+			);
+			
+			glBlendEquationSeparate(
+				[blendOptions[CCBlendEquationColor] unsignedIntValue],
+				[blendOptions[CCBlendEquationAlpha] unsignedIntValue]
+			);
+		}
+		
+		_blendOptions = blendOptions;
+	}
 	
 	__unsafe_unretained CCGLProgram *shader = renderOptions[CCRenderStateShader];
 	if(shader != _shader){
@@ -444,8 +440,11 @@ Things to try if sorting is implemented:
 		
 	__unsafe_unretained NSDictionary *uniforms = renderOptions[CCRenderStateUniforms];
 	if(uniforms != _uniforms){
-//		[self unitForTexture:uniforms[CCMainTexture]];
-		[shader setUniforms:uniforms renderer:self];
+		__unsafe_unretained NSDictionary *setters = shader.uniformSetters;
+		for(NSString *uniform in setters){
+			__unsafe_unretained CCUniformSetter setter = setters[uniform];
+			setter(self, uniforms[uniform]);
+		}
 		_uniforms = uniforms;
 	}
 	

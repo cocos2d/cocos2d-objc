@@ -31,10 +31,10 @@ typedef struct CCVertex {
 } CCVertex;
 
 static inline CCVertex
-CCVertexApplyTransform(CCVertex v, GLKMatrix4 transform)
+CCVertexApplyTransform(CCVertex v, const GLKMatrix4 *transform)
 {
 	return (CCVertex){
-		GLKMatrix4MultiplyAndProjectVector3(transform, v.position),
+		GLKMatrix4MultiplyAndProjectVector3(*transform, v.position),
 		v.texCoord1, v.texCoord2, v.color,
 	};
 }
@@ -56,18 +56,18 @@ typedef struct CCTriangle {
 
 
 static inline BOOL
-CCCheckVisbility(GLKMatrix4 transform, CGSize contentSize)
+CCCheckVisbility(const GLKMatrix4 *transform, CGSize contentSize)
 {
 	float hw = contentSize.width*0.5f;
 	float hh = contentSize.height*0.5f;
 	
 	// Bounding box center point in clip coordinates.
-	GLKVector4 center = GLKMatrix4MultiplyVector4(transform, GLKVector4Make(hw, hh, 0.0f, 1.0f));
+	GLKVector4 center = GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(hw, hh, 0.0f, 1.0f));
 	center = GLKVector4MultiplyScalar(center, 1.0f/center.w);
 	
 	// Half width/height in clip space.
-	float cshw = hw*fmaxf(fabsf(transform.m00 + transform.m10), fabsf(transform.m00 - transform.m10));
-	float cshh = hh*fmaxf(fabsf(transform.m01 + transform.m11), fabsf(transform.m01 - transform.m11));
+	float cshw = hw*fmaxf(fabsf(transform->m00 + transform->m10), fabsf(transform->m00 - transform->m10));
+	float cshh = hh*fmaxf(fabsf(transform->m01 + transform->m11), fabsf(transform->m01 - transform->m11));
 	
 	// Check the bounds against the viewport.
 	return (fabsf(center.x) - cshw < 1.0f && fabsf(center.y) - cshh < 1.0f);

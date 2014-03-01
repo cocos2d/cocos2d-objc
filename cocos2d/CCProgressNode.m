@@ -495,7 +495,7 @@ const char kCCProgressTextureCoords = 0x4b;
 	return CGPointZero;
 }
 
--(void)draw:(CCRenderer *)renderer transform:(GLKMatrix4)transform
+-(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
 	#warning TODO
 //	

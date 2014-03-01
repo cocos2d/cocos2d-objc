@@ -290,12 +290,4 @@ static const char CCDefaultVShader[] = CC_GLSL(
 	glUseProgram(_program);
 }
 
--(void)setUniforms:(NSDictionary *)uniforms renderer:(CCRenderer *)renderer
-{
-	for(NSString *uniform in uniforms){
-		CCUniformSetter setter = _uniformSetters[uniform];
-		setter(renderer, uniforms[uniform]);
-	}
-}
-
 @end

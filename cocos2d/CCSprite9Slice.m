@@ -114,7 +114,7 @@ TexCoordInterpolationMatrix(CCVertex *verts)
 
 // TODO This is sort of brute force. Could probably use some optimization after profiling.
 // Could it be done in a vertex shader using the texCoord2 attribute?
--(void)draw:(CCRenderer *)renderer transform:(GLKMatrix4)transform
+-(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
 	// Don't draw rects that were originally sizeless. CCButtons in tableviews are like this.
 	// Not really sure it's intended behavior or not.
@@ -145,7 +145,7 @@ TexCoordInterpolationMatrix(CCVertex *verts)
 	
 	// Interpolation matrices for the vertexes and texture coordinates
 	CCVertex *_verts = self.verts;
-	GLKMatrix4 interpolatePosition = PositionInterpolationMatrix(_verts, transform);
+	GLKMatrix4 interpolatePosition = PositionInterpolationMatrix(_verts, *transform);
 	GLKMatrix3 interpolateTexCoord = TexCoordInterpolationMatrix(_verts);
 	GLKVector4 color = _verts[0].color;
 	

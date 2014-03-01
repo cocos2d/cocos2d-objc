@@ -343,9 +343,9 @@
 
 -(CCRenderState *)renderState
 {
-	ccBlendFunc blendFunc = self.blendFunc;
-	
 	if(_renderState == nil){
+		ccBlendFunc blendFunc = self.blendFunc;
+		
 		_renderState = [CCRenderState renderStateWithOptions:@{
 			CCRenderStateBlendMode: [CCBlendMode blendModeWithOptions:@{
 				CCBlendFuncSrcColor: @(blendFunc.src),
@@ -359,9 +359,9 @@
 	return _renderState;
 }
 
--(void)draw:(CCRenderer *)renderer transform:(GLKMatrix4)transform;
+-(void)draw:(__unsafe_unretained CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
 {
-	if(!CCCheckVisbility(transform, self.contentSizeInPoints)) return;
+	if(!CCCheckVisbility(transform, _contentSize)) return;
 	
 	CCVertex verts[] = {
 		CCVertexApplyTransform(_verts[0], transform),
@@ -370,7 +370,8 @@
 		CCVertexApplyTransform(_verts[3], transform),
 	};
 	
-	CCTriangle *triangles = [renderer bufferTriangles:2 withState:self.renderState];
+	__unsafe_unretained CCRenderState *renderState = self.renderState;
+	CCTriangle *triangles = [renderer bufferTriangles:2 withState:renderState];
 	triangles[0] = (CCTriangle){verts[0], verts[1], verts[2]};
 	triangles[1] = (CCTriangle){verts[0], verts[2], verts[3]};
 }

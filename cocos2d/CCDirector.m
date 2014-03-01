@@ -794,9 +794,9 @@ static CCDirector *_sharedDirector = nil;
 		}
 		
 		CCRenderer *renderer = [[CCRenderer alloc] init];
-		[_drawsLabel visit:renderer parentTransform:GLKMatrix4Identity];
-		[_FPSLabel visit:renderer parentTransform:GLKMatrix4Identity];
-		[_SPFLabel visit:renderer parentTransform:GLKMatrix4Identity];
+		[_drawsLabel visit:renderer parentTransform:&GLKMatrix4Identity];
+		[_FPSLabel visit:renderer parentTransform:&GLKMatrix4Identity];
+		[_SPFLabel visit:renderer parentTransform:&GLKMatrix4Identity];
 		[renderer flush];
 	}
 	

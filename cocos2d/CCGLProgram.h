@@ -36,17 +36,17 @@
 
 @class CCRenderer;
 
-typedef void (^CCUniformSetter)(CCRenderer *renderer, id value);
+typedef void (^CCUniformSetter)(__unsafe_unretained CCRenderer *renderer, __unsafe_unretained id value);
 
 @interface CCGLProgram : NSObject
 
 @property(nonatomic, readonly) GLuint program;
+@property(nonatomic, readonly) NSDictionary *uniformSetters;
 
 +(instancetype)positionColorShader;
 +(instancetype)positionTextureColorShader;
 +(instancetype)positionTextureA8ColorShader;
 
 -(void)use;
--(void)setUniforms:(NSDictionary *)uniforms renderer:(CCRenderer *)renderer;
 
 @end

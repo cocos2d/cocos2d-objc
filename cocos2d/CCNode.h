@@ -560,7 +560,7 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 /// -----------------------------------------------------------------------
 
 #warning TODO
--(GLKMatrix4)transform:(GLKMatrix4)parentTransform;
+-(GLKMatrix4)transform:(const GLKMatrix4 *)parentTransform;
 
 /** Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
  The matrix is in Pixels.
@@ -631,10 +631,10 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  * For further info, please see ccGLstate.h.
  * You shall NOT call [super draw];
  */
--(void)draw:(CCRenderer *)renderer transform:(GLKMatrix4)transform;
+-(void)draw:(__unsafe_unretained CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
 
 /** Recursive method that visit its children and draw them. */
--(void) visit:(CCRenderer *)renderer parentTransform:(GLKMatrix4)parentTransform;
+-(void) visit:(__unsafe_unretained CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform;
 
 /** Sets and returns the color (tint), alpha is ignored when setting. */
 @property (nonatomic,strong) CCColor* color;

@@ -31,7 +31,6 @@
 @interface CCRenderer()
 
 -(BOOL)setRenderOptions:(__unsafe_unretained NSDictionary *)renderOptions;
--(GLint)unitForTexture:(__unsafe_unretained CCTexture *)texture;
 
 -(void)invalidateState;
 -(void)flush;

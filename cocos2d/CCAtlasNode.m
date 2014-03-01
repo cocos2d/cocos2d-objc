@@ -107,7 +107,7 @@
 }
 
 #pragma mark CCAtlasNode - draw
--(void)draw:(CCRenderer *)renderer transform:(GLKMatrix4)transform
+-(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
 //	CC_NODE_DRAW_SETUP(transform);
 //

@@ -292,7 +292,7 @@
     _needsLayout = NO;
 }
 
-- (void) visit:(CCRenderer *)renderer parentTransform:(GLKMatrix4)parentTransform
+- (void) visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
 {
     if (_needsLayout) [self layout];
     [super visit:renderer parentTransform:parentTransform];

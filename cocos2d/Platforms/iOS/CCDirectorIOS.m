@@ -126,8 +126,8 @@
 	GLKMatrix4 projection = self.projectionMatrix;
 	
 	[_renderer invalidateState];
-	[_runningScene visit:_renderer parentTransform:projection];
-	[_notificationNode visit:_renderer parentTransform:projection];
+	[_runningScene visit:_renderer parentTransform:&projection];
+	[_notificationNode visit:_renderer parentTransform:&projection];
 	[_renderer flush];
 
 	if( _displayStats )

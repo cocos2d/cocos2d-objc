@@ -81,7 +81,7 @@
 
 #pragma mark Rendering
 
--(void)draw:(CCRenderer *)renderer transform:(GLKMatrix4)transform
+-(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
 	CCVertex *verts = (CCVertex *)[renderer bufferTriangles:_triangleCount withState:self.renderState];
 	
