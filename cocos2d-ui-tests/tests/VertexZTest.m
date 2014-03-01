@@ -73,14 +73,20 @@ const NSString *CARD_NAME[] =
     // add a card node to hold the cards
     _cardNode = [CCSpriteBatchNode batchNodeWithFile:@"Cards/cards.classic.png"];
     _cardNode.contentSize = [CCDirector sharedDirector].viewSize;
+		
+		_cardNode.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColorAlphaTest];
+		GLint location = [_cardNode.shaderProgram uniformLocationForName:@(kCCUniformAlphaTestValue_s)];
+		[_cardNode.shaderProgram setUniformLocation:location withF1:0.5];
+		
     [self.contentNode addChild:_cardNode];
     
     // add an array of cards
     for (int count = 0; count < NUMBER_OF_CARDS; count ++)
     {
         CCSprite *card = [CCSprite spriteWithImageNamed:[self randomCard]];
+				
         card.positionType = CCPositionTypeNormalized;
-        card.position = ccp(0.5 + (count - NUMBER_OF_CARDS / 2) * 0.02, 0.5);
+        card.position = ccp(0.5 + (count - NUMBER_OF_CARDS / 2) * 0.02, 0.5 + (count - NUMBER_OF_CARDS / 2) * 0.01);
         [_cardNode addChild:card];
     }
 }
