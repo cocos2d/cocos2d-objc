@@ -1,4 +1,15 @@
-===== cocos2d for iPhone 2.1.0 Release Notes =====
+===== cocos2d for iPhone 3.0.0 Release Notes =====
 
-Please, see the online document:
-https://github.com/cocos2d/cocos2d-iphone/wiki/cocos2d-v2.1-release-notes
+FIX Invalid time intervals for scheduled timers
+FIX Updated installer
+NEW Full support for 64 bit
+FIX Retina control
+FIX Adjustments to layouts
+FIX Changes to Z behaviour
+FIX Font sizing fixes
+NEW Sine actions
+FIX Portraid / landscape fixes
+NEW Improved scroll view
+NEW Betetr versioning
+NEW Better and more in depth tests
+NEW A lot of preparations for 3.1
