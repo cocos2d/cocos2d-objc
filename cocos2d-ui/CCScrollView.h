@@ -25,6 +25,18 @@
 #import "CCNode.h"
 
 @class CCTapDownGestureRecognizer;
+@class CCScrollView;
+
+@protocol CCScrollViewDelegate <NSObject>
+
+@optional
+- (void)scrollViewDidScroll:(CCScrollView *)scrollView;
+- (void)scrollViewWillBeginDragging:(CCScrollView *)scrollView;
+- (void)scrollViewDidEndDragging:(CCScrollView * )scrollView willDecelerate:(BOOL)decelerate;
+- (void)scrollViewWillBeginDecelerating:(CCScrollView *)scrollView;
+- (void)scrollViewDidEndDecelerating:(CCScrollView *)scrollView;
+
+@end
 
 #ifdef __CC_PLATFORM_IOS
 
@@ -51,6 +63,8 @@
     BOOL _animatingY;
     CGPoint _velocity;
 }
+
+@property (nonatomic, weak) id<CCScrollViewDelegate> delegate;
 
 @property (nonatomic,strong) CCNode* contentNode;
 
