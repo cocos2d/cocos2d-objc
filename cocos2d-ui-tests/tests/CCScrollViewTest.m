@@ -24,7 +24,7 @@
 
 #import "TestBase.h"
 
-@interface CCScrollViewTest : TestBase @end
+@interface CCScrollViewTest : TestBase <CCScrollViewDelegate> @end
 
 @implementation CCScrollViewTest
 
@@ -46,8 +46,34 @@
     
     CCScrollView* scrollView = [[CCScrollView alloc] initWithContentNode:[self createScrollContent]];
     scrollView.flipYCoordinates = NO;
+	scrollView.delegate = self;
     
     [self.contentNode addChild:scrollView];
+}
+
+- (void)scrollViewDidEndDecelerating:(CCScrollView *)scrollView
+{
+	CCLOG(@"did end decelerating");
+}
+
+- (void)scrollViewDidEndDragging:(CCScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+	CCLOG(@"did end dragging, decelerate: %@", decelerate ? @"YES" : @"NO");
+}
+
+- (void)scrollViewWillBeginDecelerating:(CCScrollView *)scrollView
+{
+	CCLOG(@"will begin decelerating");
+}
+
+- (void)scrollViewWillBeginDragging:(CCScrollView *)scrollView
+{
+	CCLOG(@"will begin dragging");
+}
+
+- (void)scrollViewDidScroll:(CCScrollView *)scrollView
+{
+	//CCLOG(@"Scrolling");
 }
 
 - (void)setupScrollViewPagingTest
