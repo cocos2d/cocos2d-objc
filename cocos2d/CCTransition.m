@@ -339,7 +339,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 
 // -----------------------------------------------------------------
 
--(void)draw:(CCRenderer *__unsafe_unretained)renderer transform:(const GLKMatrix4 *)transform
+-(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
 	typedef id (*Func)(id, SEL);
 	((Func)objc_msgSend)(self, _drawSelector);

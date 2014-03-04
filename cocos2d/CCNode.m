@@ -882,23 +882,21 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	if (!_visible)
 		return;
     
-	GLKMatrix4 transform = NodeTransform(self, *parentTransform);
+	[self sortAllChildren];
 	
-	if(_children){
-		[self sortAllChildren];
-		
-		BOOL drawn = NO;
-		for(CCNode *child in _children){
-			if(!drawn && child.zOrder >= 0){
-				[self draw:renderer transform:&transform];
-				drawn = YES;
-			}
-			
-			[child visit:renderer parentTransform:&transform];
+	GLKMatrix4 transform = NodeTransform(self, *parentTransform);
+	BOOL drawn = NO;
+	
+	for(CCNode *child in _children){
+		if(!drawn && child.zOrder >= 0){
+			[self draw:renderer transform:&transform];
+			drawn = YES;
 		}
-	} else {
-		[self draw:renderer transform:&transform];
+		
+		[child visit:renderer parentTransform:&transform];
 	}
+	
+	if(!drawn) [self draw:renderer transform:&transform];
 	
 	// reset for next frame
 	_orderOfArrival = 0;

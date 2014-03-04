@@ -359,7 +359,7 @@
 	return _renderState;
 }
 
--(void)draw:(__unsafe_unretained CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
+-(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
 {
 	if(!CCCheckVisbility(transform, _contentSize)) return;
 	
