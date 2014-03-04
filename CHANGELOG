@@ -1,3 +1,7 @@
+03-03-14
+Deprecated, as all changes can be found and backtracked on Git.
+/Birkemose
+
 version 2.1 - 17-Jun-2013
 . [NEW] EaseActions: Added CCEasePolynomialIn,Out,InOut
 . [NEW] LabelTTF: Added support for Shadow and stroke
