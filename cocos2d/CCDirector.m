@@ -812,11 +812,9 @@ static CCDirector *_sharedDirector = nil;
 			[_drawsLabel setString:draws];
 		}
 		
-		CCRenderer *renderer = [[CCRenderer alloc] init];
-		[_drawsLabel visit:renderer parentTransform:&GLKMatrix4Identity];
-		[_FPSLabel visit:renderer parentTransform:&GLKMatrix4Identity];
-		[_SPFLabel visit:renderer parentTransform:&GLKMatrix4Identity];
-		[renderer flush];
+		[_drawsLabel visit:_renderer parentTransform:&GLKMatrix4Identity];
+		[_FPSLabel visit:_renderer parentTransform:&GLKMatrix4Identity];
+		[_SPFLabel visit:_renderer parentTransform:&GLKMatrix4Identity];
 	}
 	
 	__ccNumberOfDraws = 0;

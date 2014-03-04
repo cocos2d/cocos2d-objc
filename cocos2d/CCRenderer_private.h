@@ -26,13 +26,21 @@
 #import <Foundation/Foundation.h>
 #import "CCRenderer.h"
 
-@class CCTexture;
-
 @interface CCRenderer()
 
+/// Ensure that the specified rendering options are applied to GL.
 -(BOOL)setRenderOptions:(__unsafe_unretained NSDictionary *)renderOptions;
 
+/// Retrieve the current renderer for the current thread.
++(instancetype)currentRenderer;
+
+/// Set the current renderer for the current thread.
++(void)bindRenderer:(CCRenderer *)renderer;
+
+/// Mark the renderer's cached GL state as invalid.
 -(void)invalidateState;
+
+/// Render any currendly queued commands.
 -(void)flush;
 
 @end

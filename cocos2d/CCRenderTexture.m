@@ -36,6 +36,8 @@
 #import "CCTexture_Private.h"
 #import "CCDirector_Private.h"
 #import "CCNode_Private.h"
+#import "CCRenderer_private.h"
+#import "OpenGL_Internal.h"
 
 #if __CC_PLATFORM_MAC
 #import <ApplicationServices/ApplicationServices.h>
@@ -154,6 +156,8 @@
 		glBindRenderbuffer(GL_RENDERBUFFER, oldRBO);
 		glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
 		
+		CHECK_GL_ERROR_DEBUG();
+		
 		// Diabled by default.
 		_autoDraw = NO;
 		
@@ -166,139 +170,208 @@
 -(void)dealloc
 {
 	glDeleteFramebuffers(1, &_FBO);
-	if (_depthRenderBufffer)
+	if(_depthRenderBufffer){
 		glDeleteRenderbuffers(1, &_depthRenderBufffer);
-
+	}
 }
 
--(void)begin
+//-(void)begin
+//{
+//	CCDirector *director = [CCDirector sharedDirector];
+//	
+//	// #warning Should probably move the projection matrix to the renderer?
+//	_oldProjection = director.projectionMatrix;;
+//  
+//	[director setProjection:director.projection];
+//  
+//	CGSize texSize = [_texture contentSizeInPixels];
+//
+//
+//	// Calculate the adjustment ratios based on the old and new projections
+//	CGSize size = [director viewSizeInPixels];
+//	float widthRatio = size.width / texSize.width;
+//	float heightRatio = size.height / texSize.height;
+//
+//
+//	// Adjust the orthographic projection and viewport
+//	glViewport(0, 0, texSize.width, texSize.height );
+//
+//	#warning This is silly. It should just set a new projection not adjust the old one.
+////	kmMat4 orthoMatrix;
+////	kmMat4OrthographicProjection(&orthoMatrix, (float)-1.0 / widthRatio,  (float)1.0 / widthRatio,
+////								 (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1 );
+////	kmGLMultMatrix(&orthoMatrix);
+//	director.projectionMatrix = GLKMatrix4Multiply(_oldProjection, GLKMatrix4MakeOrtho(
+//		-1.0 / widthRatio,  1.0 / widthRatio, -1.0 / heightRatio, 1.0 / heightRatio, -1, 1
+//	));
+//  
+//
+//	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
+//	glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
+//}
+//
+//-(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a depth:(float)depthValue stencil:(int)stencilValue flags:(GLbitfield)flags
+//{
+//	[self begin];
+//	
+//	// save clear color
+//	GLfloat	clearColor[4];
+//	GLfloat depthClearValue;
+//	int stencilClearValue;
+//	
+//	if(flags & GL_COLOR_BUFFER_BIT) {
+//		glGetFloatv(GL_COLOR_CLEAR_VALUE,clearColor);
+//		glClearColor(r, g, b, a);
+//	}
+//	
+//	if( flags & GL_DEPTH_BUFFER_BIT ) {
+//		glGetFloatv(GL_DEPTH_CLEAR_VALUE, &depthClearValue);
+//		glClearDepth(depthValue);
+//	}
+//	
+//	if( flags & GL_STENCIL_BUFFER_BIT ) {
+//		glGetIntegerv(GL_STENCIL_CLEAR_VALUE, &stencilClearValue);
+//		glClearStencil(stencilValue);
+//	}
+//	
+//	glClear(flags);
+//	
+//	
+//	// restore
+//	if( flags & GL_COLOR_BUFFER_BIT)
+//		glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
+//	if( flags & GL_DEPTH_BUFFER_BIT)
+//		glClearDepth(depthClearValue);
+//	if( flags & GL_STENCIL_BUFFER_BIT)
+//		glClearStencil(stencilClearValue);
+//}
+//
+//-(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a
+//{
+//	[self beginWithClear:r g:g b:b a:a depth:0 stencil:0 flags:GL_COLOR_BUFFER_BIT];
+//}
+//
+//-(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a depth:(float)depthValue
+//{
+//	[self beginWithClear:r g:g b:b a:a depth:depthValue stencil:0 flags:GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT];
+//}
+//-(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a depth:(float)depthValue stencil:(int)stencilValue
+//{
+//	[self beginWithClear:r g:g b:b a:a depth:depthValue stencil:stencilValue flags:GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT|GL_STENCIL_BUFFER_BIT];
+//}
+//
+//-(void)end
+//{
+//	CCDirector *director = [CCDirector sharedDirector];
+//	glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
+//
+//	// restore viewport
+//	[director setViewport];
+//	
+//	director.projectionMatrix = _oldProjection;
+//}
+//
+//-(void)clear:(float)r g:(float)g b:(float)b a:(float)a
+//{
+//	[self beginWithClear:r g:g b:b a:a];
+//	[self end];
+//}
+//
+//- (void)clearDepth:(float)depthValue
+//{
+//	[self begin];
+//	//! save old depth value
+//	GLfloat depthClearValue;
+//	glGetFloatv(GL_DEPTH_CLEAR_VALUE, &depthClearValue);
+//
+//	glClearDepth(depthValue);
+//	glClear(GL_DEPTH_BUFFER_BIT);
+//
+//	// restore clear color
+//	glClearDepth(depthClearValue);
+//	[self end];
+//}
+//
+//- (void)clearStencil:(int)stencilValue
+//{
+//	// save old stencil value
+//	int stencilClearValue;
+//	glGetIntegerv(GL_STENCIL_CLEAR_VALUE, &stencilClearValue);
+//
+//	glClearStencil(stencilValue);
+//	glClear(GL_STENCIL_BUFFER_BIT);
+//
+//	// restore clear color
+//	glClearStencil(stencilClearValue);
+//}
+
+-(void)render:(void (^)(CCRenderer *, GLKMatrix4 *))block
 {
-	CCDirector *director = [CCDirector sharedDirector];
+//	GLfloat	oldClearColor[4];
+//	if(_clearFlags & GL_COLOR_BUFFER_BIT){
+//		glGetFloatv(GL_COLOR_CLEAR_VALUE, oldClearColor);
+//		glClearColor(_clearColor.r, _clearColor.g, _clearColor.b, _clearColor.a);
+//	}
+//	
+//	GLfloat oldDepthClearValue;
+//	if(_clearFlags & GL_DEPTH_BUFFER_BIT){
+//		glGetFloatv(GL_DEPTH_CLEAR_VALUE, &oldDepthClearValue);
+//		glClearDepth(_clearDepth);
+//	}
+//	
+//	int stencilClearValue;
+//	if(_clearFlags & GL_STENCIL_BUFFER_BIT){
+//		glGetIntegerv(GL_STENCIL_CLEAR_VALUE, &oldStencilClearValue);
+//		glClearStencil(_clearStencil);
+//	}
+//	
+//	glClear(_clearFlags);
+//	
+//	
+//	// restore
+//	if( flags & GL_COLOR_BUFFER_BIT)
+//		glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
+//	if( flags & GL_DEPTH_BUFFER_BIT)
+//		glClearDepth(depthClearValue);
+//	if( flags & GL_STENCIL_BUFFER_BIT)
+//		glClearStencil(stencilClearValue);
 	
-	// #warning Should probably move the projection matrix to the renderer?
-	_oldProjection = director.projectionMatrix;;
-  
-	[director setProjection:director.projection];
-  
 	CGSize texSize = [_texture contentSizeInPixels];
-
-
-	// Calculate the adjustment ratios based on the old and new projections
-	CGSize size = [director viewSizeInPixels];
-	float widthRatio = size.width / texSize.width;
-	float heightRatio = size.height / texSize.height;
-
-
-	// Adjust the orthographic projection and viewport
-	glViewport(0, 0, texSize.width, texSize.height );
-
-	#warning This is silly. It should just set a new projection not adjust the old one.
-//	kmMat4 orthoMatrix;
-//	kmMat4OrthographicProjection(&orthoMatrix, (float)-1.0 / widthRatio,  (float)1.0 / widthRatio,
-//								 (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1 );
-//	kmGLMultMatrix(&orthoMatrix);
-	director.projectionMatrix = GLKMatrix4Multiply(_oldProjection, GLKMatrix4MakeOrtho(
-		-1.0 / widthRatio,  1.0 / widthRatio, -1.0 / heightRatio, 1.0 / heightRatio, -1, 1
-	));
-  
-
-	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
-	glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
-}
-
--(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a depth:(float)depthValue stencil:(int)stencilValue flags:(GLbitfield)flags
-{
-	[self begin];
+	__block struct{ GLfloat v[4]; } oldViewport;
 	
-	// save clear color
-	GLfloat	clearColor[4];
-	GLfloat depthClearValue;
-	int stencilClearValue;
+	CCRenderer *renderer = [CCRenderer currentRenderer];
+	BOOL needsFlush = NO;
 	
-	if(flags & GL_COLOR_BUFFER_BIT) {
-		glGetFloatv(GL_COLOR_CLEAR_VALUE,clearColor);
-		glClearColor(r, g, b, a);
+	if(renderer == nil){
+		renderer = [[CCRenderer alloc] init];
+		[CCRenderer bindRenderer:renderer];
+		needsFlush = YES;
 	}
 	
-	if( flags & GL_DEPTH_BUFFER_BIT ) {
-		glGetFloatv(GL_DEPTH_CLEAR_VALUE, &depthClearValue);
-		glClearDepth(depthValue);
+	#warning TODO eventually will need to update the global projection uniforms here.
+	GLKMatrix4 projection = GLKMatrix4MakeOrtho(0.0f, texSize.width/__ccContentScaleFactor, 0.0f, texSize.height/__ccContentScaleFactor, -1024.0f, 1024.0f);
+	
+	[renderer queueCustomGLBlock:^{
+		glGetFloatv(GL_VIEWPORT, oldViewport.v);
+		glViewport(0, 0, texSize.width, texSize.height );
+		
+		glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
+		glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
+		
+		glClear(GL_COLOR_BUFFER_BIT);
+	}];
+
+	block(renderer, &projection);
+	
+	[renderer queueCustomGLBlock:^{
+		glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
+		glViewport(oldViewport.v[0], oldViewport.v[1], oldViewport.v[2], oldViewport.v[3]);
+	}];
+	
+	if(needsFlush){
+		[renderer flush];
+		[CCRenderer bindRenderer:nil];
 	}
-	
-	if( flags & GL_STENCIL_BUFFER_BIT ) {
-		glGetIntegerv(GL_STENCIL_CLEAR_VALUE, &stencilClearValue);
-		glClearStencil(stencilValue);
-	}
-	
-	glClear(flags);
-	
-	
-	// restore
-	if( flags & GL_COLOR_BUFFER_BIT)
-		glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
-	if( flags & GL_DEPTH_BUFFER_BIT)
-		glClearDepth(depthClearValue);
-	if( flags & GL_STENCIL_BUFFER_BIT)
-		glClearStencil(stencilClearValue);
-}
-
--(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a
-{
-	[self beginWithClear:r g:g b:b a:a depth:0 stencil:0 flags:GL_COLOR_BUFFER_BIT];
-}
-
--(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a depth:(float)depthValue
-{
-	[self beginWithClear:r g:g b:b a:a depth:depthValue stencil:0 flags:GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT];
-}
--(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a depth:(float)depthValue stencil:(int)stencilValue
-{
-	[self beginWithClear:r g:g b:b a:a depth:depthValue stencil:stencilValue flags:GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT|GL_STENCIL_BUFFER_BIT];
-}
-
--(void)end
-{
-	CCDirector *director = [CCDirector sharedDirector];
-	glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
-
-	// restore viewport
-	[director setViewport];
-	
-	director.projectionMatrix = _oldProjection;
-}
-
--(void)clear:(float)r g:(float)g b:(float)b a:(float)a
-{
-	[self beginWithClear:r g:g b:b a:a];
-	[self end];
-}
-
-- (void)clearDepth:(float)depthValue
-{
-	[self begin];
-	//! save old depth value
-	GLfloat depthClearValue;
-	glGetFloatv(GL_DEPTH_CLEAR_VALUE, &depthClearValue);
-
-	glClearDepth(depthValue);
-	glClear(GL_DEPTH_BUFFER_BIT);
-
-	// restore clear color
-	glClearDepth(depthClearValue);
-	[self end];
-}
-
-- (void)clearStencil:(int)stencilValue
-{
-	// save old stencil value
-	int stencilClearValue;
-	glGetIntegerv(GL_STENCIL_CLEAR_VALUE, &stencilClearValue);
-
-	glClearStencil(stencilValue);
-	glClear(GL_STENCIL_BUFFER_BIT);
-
-	// restore clear color
-	glClearStencil(stencilClearValue);
 }
 
 #pragma mark RenderTexture - "auto" update
@@ -321,51 +394,52 @@
 {
 	if( _autoDraw) {
 		
-		[self begin];
-		
-		if (_clearFlags) {
-			
-			GLfloat oldClearColor[4];
-			GLfloat oldDepthClearValue;
-			GLint oldStencilClearValue;
-			
-			// backup and set
-			if( _clearFlags & GL_COLOR_BUFFER_BIT ) {
-				glGetFloatv(GL_COLOR_CLEAR_VALUE, oldClearColor);
-				glClearColor(_clearColor.r, _clearColor.g, _clearColor.b, _clearColor.a);
-			}
-			
-			if( _clearFlags & GL_DEPTH_BUFFER_BIT ) {
-				glGetFloatv(GL_DEPTH_CLEAR_VALUE, &oldDepthClearValue);
-				glClearDepth(_clearDepth);
-			}
-			
-			if( _clearFlags & GL_STENCIL_BUFFER_BIT ) {
-				glGetIntegerv(GL_STENCIL_CLEAR_VALUE, &oldStencilClearValue);
-				glClearStencil(_clearStencil);
-			}
-			
-			// clear
-			glClear(_clearFlags);
-			
-			// restore
-			if( _clearFlags & GL_COLOR_BUFFER_BIT )
-				glClearColor(oldClearColor[0], oldClearColor[1], oldClearColor[2], oldClearColor[3]);
-			if( _clearFlags & GL_DEPTH_BUFFER_BIT )
-				glClearDepth(oldDepthClearValue);
-			if( _clearFlags & GL_STENCIL_BUFFER_BIT )
-				glClearStencil(oldStencilClearValue);
-		}
+//		[self begin];
+//		
+//		if (_clearFlags) {
+//			
+//			GLfloat oldClearColor[4];
+//			GLfloat oldDepthClearValue;
+//			GLint oldStencilClearValue;
+//			
+//			// backup and set
+//			if( _clearFlags & GL_COLOR_BUFFER_BIT ) {
+//				glGetFloatv(GL_COLOR_CLEAR_VALUE, oldClearColor);
+//				glClearColor(_clearColor.r, _clearColor.g, _clearColor.b, _clearColor.a);
+//			}
+//			
+//			if( _clearFlags & GL_DEPTH_BUFFER_BIT ) {
+//				glGetFloatv(GL_DEPTH_CLEAR_VALUE, &oldDepthClearValue);
+//				glClearDepth(_clearDepth);
+//			}
+//			
+//			if( _clearFlags & GL_STENCIL_BUFFER_BIT ) {
+//				glGetIntegerv(GL_STENCIL_CLEAR_VALUE, &oldStencilClearValue);
+//				glClearStencil(_clearStencil);
+//			}
+//			
+//			// clear
+//			glClear(_clearFlags);
+//			
+//			// restore
+//			if( _clearFlags & GL_COLOR_BUFFER_BIT )
+//				glClearColor(oldClearColor[0], oldClearColor[1], oldClearColor[2], oldClearColor[3]);
+//			if( _clearFlags & GL_DEPTH_BUFFER_BIT )
+//				glClearDepth(oldDepthClearValue);
+//			if( _clearFlags & GL_STENCIL_BUFFER_BIT )
+//				glClearStencil(oldStencilClearValue);
+//		}
 		
 		//! make sure all children are drawn
 		[self sortAllChildren];
 		
-        for (CCNode *child in _children) {
-			if( child != _sprite)
-				[child visit:renderer parentTransform:transform];
-		}
-		[self end];
-
+		[self render:^(CCRenderer *renderer, GLKMatrix4 *transform) {
+			for (CCNode *child in _children) {
+				if( child != _sprite) [child visit:renderer parentTransform:transform];
+			}
+		}];
+		
+//		[self end];
 	}
 
 //	[_sprite visit];
@@ -399,12 +473,13 @@
 		return nil;
 	}
 	
-	[self begin];
-	
-
-	glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, buffer);
-
-	[self end];
+	#warning TODO
+//	[self begin];
+//	
+//
+//	glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, buffer);
+//
+//	[self end];
 	
 	// make data provider with data.
 	

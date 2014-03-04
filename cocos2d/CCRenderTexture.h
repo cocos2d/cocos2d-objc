@@ -154,75 +154,77 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
  */
 - (id)initWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat)format depthStencilFormat:(GLuint)depthStencilFormat;
 
-/** 
- *  Starts rendering to the texture whitout clearing the texture first. 
- */
--(void)begin;
+-(void)render:(void (^)(CCRenderer *renderer, GLKMatrix4 *transform))block;
 
-/**
- *  starts rendering to the texture while clearing the texture first.
- *  This is more efficient then calling -clear first and then -begin.
- *
- *  @param r Red color.
- *  @param g Green color.
- *  @param b Blue color.
- *  @param a Alpha.
- */
--(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a;
+///** 
+// *  Starts rendering to the texture whitout clearing the texture first. 
+// */
+//-(void)begin;
+//
+///**
+// *  starts rendering to the texture while clearing the texture first.
+// *  This is more efficient then calling -clear first and then -begin.
+// *
+// *  @param r Red color.
+// *  @param g Green color.
+// *  @param b Blue color.
+// *  @param a Alpha.
+// */
+//-(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a;
+//
+///**
+// *  starts rendering to the texture while clearing the texture first.
+// *  This is more efficient then calling -clear first and then -begin.
+// *
+// *  @param r Red color.
+// *  @param g Green color.
+// *  @param b Blue color.
+// *  @param a Alpha.
+// *  @param depthValue Depth value.
+// */
+//- (void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a depth:(float)depthValue;
+//
+///**
+// *  starts rendering to the texture while clearing the texture first.
+// *  This is more efficient then calling -clear first and then -begin.
+// *
+// *  @param r Red color.
+// *  @param g Green color.
+// *  @param b Blue color.
+// *  @param a Alpha.
+// *  @param depthValue Depth value.
+// *  @param stencilValue Stencil value.
+// */
+//- (void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a depth:(float)depthValue stencil:(int)stencilValue;
+//
+///** 
+// *  Ends grabbing 
+// */
+//-(void)end;
 
-/**
- *  starts rendering to the texture while clearing the texture first.
- *  This is more efficient then calling -clear first and then -begin.
- *
- *  @param r Red color.
- *  @param g Green color.
- *  @param b Blue color.
- *  @param a Alpha.
- *  @param depthValue Depth value.
- */
-- (void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a depth:(float)depthValue;
-
-/**
- *  starts rendering to the texture while clearing the texture first.
- *  This is more efficient then calling -clear first and then -begin.
- *
- *  @param r Red color.
- *  @param g Green color.
- *  @param b Blue color.
- *  @param a Alpha.
- *  @param depthValue Depth value.
- *  @param stencilValue Stencil value.
- */
-- (void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a depth:(float)depthValue stencil:(int)stencilValue;
-
-/** 
- *  Ends grabbing 
- */
--(void)end;
-
-/**
- *  Clears the texture with a color
- *
- *  @param r Red color.
- *  @param g Green color.
- *  @param b Blue color.
- *  @param a Alpha.
- */
--(void)clear:(float)r g:(float)g b:(float)b a:(float)a;
-
-/**
- *  Clears the texture with a specified depth value.
- *
- *  @param depthValue Depth value.
- */
-- (void)clearDepth:(float)depthValue;
-
-/**
- *  Clears the texture with a specified stencil value.
- *
- *  @param stencilValue Stencil value.
- */
-- (void)clearStencil:(int)stencilValue;
+///**
+// *  Clears the texture with a color
+// *
+// *  @param r Red color.
+// *  @param g Green color.
+// *  @param b Blue color.
+// *  @param a Alpha.
+// */
+//-(void)clear:(float)r g:(float)g b:(float)b a:(float)a;
+//
+///**
+// *  Clears the texture with a specified depth value.
+// *
+// *  @param depthValue Depth value.
+// */
+//- (void)clearDepth:(float)depthValue;
+//
+///**
+// *  Clears the texture with a specified stencil value.
+// *
+// *  @param stencilValue Stencil value.
+// */
+//- (void)clearStencil:(int)stencilValue;
 
 /* 
  *  Creates a new CGImage from with the texture's data.

@@ -22,6 +22,8 @@
  * THE SOFTWARE.
  */
 
+#import "objc/message.h"
+
 #import "cocos2d.h"
 #import "CCRenderer_private.h"
 #import "CCCache.h"
@@ -305,8 +307,14 @@ static CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
 @end
 
 
-//MARK: Render Command.
-@interface CCRenderCommandDraw : NSObject
+//MARK: Render Command Protocol
+@protocol CCRenderCommand <NSObject>
+-(void)invoke:(CCRenderer *)renderer;
+@end
+
+
+//MARK: Draw Command.
+@interface CCRenderCommandDraw : NSObject<CCRenderCommand>
 
 //@property(nonatomic, readonly) NSDictionary *renderOptions;
 @property(nonatomic, readonly) GLint first;
@@ -344,6 +352,34 @@ static CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
 
 @end
 
+
+//MARK: Custom Block Command.
+@interface CCRenderCommandCustom : NSObject<CCRenderCommand>
+@end
+
+
+@implementation CCRenderCommandCustom
+{
+	void (^_block)();
+}
+
+-(instancetype)initWithBlock:(void (^)())block
+{
+	if((self = [super init])){
+		_block = block;
+	}
+	
+	return self;
+}
+
+-(void)invoke:(CCRenderer *)renderer
+{
+	_block();
+}
+
+@end
+
+
 //MARK: Render Queue
 
 
@@ -371,6 +407,7 @@ Things to try if sorting is implemented:
 	NSDictionary *_uniforms;
 	
 	NSMutableArray *_queue;
+	__unsafe_unretained CCRenderCommandDraw *_lastDrawCommand;
 	
 	CCTriangle *_triangles;
 	GLsizei _triangleCount, _triangleCapacity;
@@ -392,6 +429,7 @@ Things to try if sorting is implemented:
 		@"cc_ViewSizeInPixels": [NSValue valueWithGLKVector2:GLKVector2Make(pixelSize.width, pixelSize.height)],
 	};
 	
+	_lastDrawCommand = nil;
 	_renderOptions = nil;
 	_blendOptions = nil;
 	_shader = nil;
@@ -416,6 +454,23 @@ Things to try if sorting is implemented:
 -(void)dealloc
 {
 	free(_triangles);
+}
+
+static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
+
++(instancetype)currentRenderer
+{
+	return [NSThread currentThread].threadDictionary[CURRENT_RENDERER_KEY];
+}
+
++(void)bindRenderer:(CCRenderer *)renderer
+{
+	if(renderer){
+		NSAssert(self.currentRenderer == nil, @"Internal Error: Already have a renderer bound.");
+		[NSThread currentThread].threadDictionary[CURRENT_RENDERER_KEY] = renderer;
+	} else {
+		[[NSThread currentThread].threadDictionary removeObjectForKey:CURRENT_RENDERER_KEY];
+	}
 }
 
 -(BOOL)setRenderOptions:(__unsafe_unretained NSDictionary *)renderOptions
@@ -489,7 +544,7 @@ Things to try if sorting is implemented:
 -(CCTriangle *)bufferTriangles:(NSUInteger)count withState:(CCRenderState *)renderState;
 {
 	__unsafe_unretained NSDictionary *renderOptions = renderState->_options;
-	__unsafe_unretained CCRenderCommandDraw *previous = [_queue lastObject];
+	__unsafe_unretained CCRenderCommandDraw *previous = _lastDrawCommand;
 	CCTriangle *buffer = [self ensureBufferCapacity:count];
 	
 	if(previous && renderOptions == previous->_renderOptions){
@@ -499,11 +554,26 @@ Things to try if sorting is implemented:
 		// Start a new command.
 		CCRenderCommandDraw *command = [[CCRenderCommandDraw alloc] initWithRenderOptions:renderOptions first:(GLint)_triangleCount count:(GLsizei)count];
 		[_queue addObject:command];
+		_lastDrawCommand = command;
 	}
 	
 	_statDrawCommands++;
 	_triangleCount += count;
 	return buffer;
+}
+
+-(void)queueCustomGLBlock:(void (^)())block
+{
+	[_queue addObject:[[CCRenderCommandCustom alloc] initWithBlock:block]];
+	_lastDrawCommand = nil;
+}
+
+-(void)queueCustomGLMethod:(SEL)selector target:(id)target
+{
+	[self queueCustomGLBlock:^{
+    typedef void (*Func)(id, SEL);
+    ((Func)objc_msgSend)(target, selector);
+	}];
 }
 
 -(void)flush

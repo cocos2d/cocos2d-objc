@@ -125,4 +125,8 @@ extern const NSString *CCShaderUniformMainTexture;
 
 -(CCTriangle *)bufferTriangles:(NSUInteger)count withState:(CCRenderState *)renderState;
 
+-(void)queueCustomGLBlock:(void (^)())block;
+
+-(void)queueCustomGLMethod:(SEL)selector target:(id)target;
+
 @end

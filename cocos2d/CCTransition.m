@@ -25,6 +25,8 @@
  *
  */
 
+#import "objc/message.h"
+
 #import "CCTransition.h"
 #import "CCDirector_Private.h"
 #import "CCNode_Private.h"
@@ -276,11 +278,13 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     oldScale = _outgoingScene.scale;
     _outgoingScene.scale = oldScale / _outgoingDownScale;
     
-    glGetFloatv(GL_COLOR_CLEAR_VALUE, clearColor);
-    [_outgoingTexture beginWithClear:clearColor[0] g:clearColor[1] b:clearColor[2] a:clearColor[3]];
-#warning TODO visit transforms
-//    [_outgoingScene visit:GLKMatrix4Identity];
-    [_outgoingTexture end];
+		[_outgoingTexture render:^(CCRenderer *renderer, GLKMatrix4 *transform) {
+			[_outgoingScene visit:renderer parentTransform:transform];
+		}];
+//    glGetFloatv(GL_COLOR_CLEAR_VALUE, clearColor);
+//    [_outgoingTexture beginWithClear:clearColor[0] g:clearColor[1] b:clearColor[2] a:clearColor[3]];
+//	    [_outgoingScene visit:GLKMatrix4Identity];
+//    [_outgoingTexture end];
     
     _outgoingScene.scale = oldScale;
 }
@@ -294,11 +298,13 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     oldScale = _incomingScene.scale;
     _incomingScene.scale = oldScale / _incomingDownScale;
     
-    glGetFloatv(GL_COLOR_CLEAR_VALUE, clearColor);
-    [_incomingTexture beginWithClear:clearColor[0] g:clearColor[1] b:clearColor[2] a:clearColor[3]];
-#warning TODO visit transforms
-//    [_incomingScene visit:GLKMatrix4Identity];
-    [_incomingTexture end];
+		[_incomingTexture render:^(CCRenderer *renderer, GLKMatrix4 *transform) {
+			[_incomingScene visit:renderer parentTransform:transform];
+		}];
+//    glGetFloatv(GL_COLOR_CLEAR_VALUE, clearColor);
+//    [_incomingTexture beginWithClear:clearColor[0] g:clearColor[1] b:clearColor[2] a:clearColor[3]];
+//	    [_incomingScene visit:GLKMatrix4Identity];
+//    [_incomingTexture end];
     
     _incomingScene.scale = oldScale;
     
@@ -333,13 +339,10 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 
 // -----------------------------------------------------------------
 
-- (void)draw:(GLKMatrix4)transform
+-(void)draw:(CCRenderer *__unsafe_unretained)renderer transform:(const GLKMatrix4 *)transform
 {
-    // remove ARC warning about possible leak from performSelector
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-    [self performSelector:_drawSelector];
-#pragma clang diagnostic pop
+	typedef id (*Func)(id, SEL);
+	((Func)objc_msgSend)(self, _drawSelector);
 }
 
 - (void)drawFixedFunction

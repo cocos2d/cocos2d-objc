@@ -108,38 +108,35 @@
     /* calculate "global" dt */
 	[self calculateDeltaTime];
 
-	CCGLView *openGLview = (CCGLView*)[self view];
-
-	[EAGLContext setCurrentContext: [openGLview context]];
+	CCGLView *openGLview = (CCGLView*)self.view;
+	[EAGLContext setCurrentContext:openGLview.context];
 
 	/* tick before glClear: issue #533 */
-	if( ! _isPaused )
-		[_scheduler update: _dt];
+	if( ! _isPaused ) [_scheduler update: _dt];
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	/* to avoid flickr, nextScene MUST be here: after tick and before draw.
 	 XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
-	if( _nextScene )
-		[self setNextScene];
+	if( _nextScene ) [self setNextScene];
 	
 	GLKMatrix4 projection = self.projectionMatrix;
 	
+	[CCRenderer bindRenderer:_renderer];
 	[_renderer invalidateState];
+	
 	[_runningScene visit:_renderer parentTransform:&projection];
 	[_notificationNode visit:_renderer parentTransform:&projection];
+	if( _displayStats ) [self showStats];
+	
 	[_renderer flush];
-
-	if( _displayStats )
-		[self showStats];
+	[CCRenderer bindRenderer:nil];
+	
+	[openGLview swapBuffers];
 
 	_totalFrames++;
 
-	[openGLview swapBuffers];
-
-	if( _displayStats )
-		[self calculateMPF];
-    
+	if( _displayStats ) [self calculateMPF];
 }
 
 -(void) setViewport
