@@ -24,6 +24,9 @@ People and companies, who have contributed, in alphabetical order.
 * Apportable (http://www.apportable.com)
     Making it all happen
 
+* Christian Enevoldsen
+    Improved scroll view class
+
 * Dominik Hadl
     Templates, scripts and other ninja stuff
 
@@ -50,9 +53,6 @@ People and companies, who have contributed, in alphabetical order.
     Coordination and planning
     Sprite Builder integration
     Countless other contributions
-    
-* Christian Enevoldsen
-    Improved scroll view class
 
 Thanks to Wangsheng, Shintaro Kaneko, frranck and Yannick Loriot, Magician, masanorythm, Jogn Vu for various minor contributions.
 Also thanks to all those who contributed on git, helped us testing, and took part in the discussions even if their suggestions didn't make it to release.
