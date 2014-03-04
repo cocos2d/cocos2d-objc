@@ -80,6 +80,8 @@ CCCheckVisbility(const GLKMatrix4 *transform, CGSize contentSize)
 +(NSValue *)valueWithGLKVector3:(GLKVector3)vector;
 +(NSValue *)valueWithGLKVector4:(GLKVector4)vector;
 
++(NSValue *)valueWithGLKMatrix4:(GLKMatrix4)matrix;
+
 @end
 
 
@@ -93,8 +95,6 @@ extern const NSString *CCBlendEquationColor;
 extern const NSString *CCBlendFuncSrcAlpha;
 extern const NSString *CCBlendFuncDstAlpha;
 extern const NSString *CCBlendEquationAlpha;
-
-extern const NSString *CCShaderUniformMainTexture;
 
 
 @interface CCBlendMode : NSObject
@@ -123,10 +123,14 @@ extern const NSString *CCShaderUniformMainTexture;
 
 @interface CCRenderer : NSObject
 
+/// Enqueue a basic drawing command, and returns a buffer for the geometry.
+/// IMPORTANT! The buffer should be considered write-only. Attempting to read from the buffer could crash your game.
 -(CCTriangle *)bufferTriangles:(NSUInteger)count withState:(CCRenderState *)renderState;
 
--(void)queueCustomGLBlock:(void (^)())block;
+/// Enqueue a block that performs GL commands.
+-(void)customGLBlock:(void (^)())block;
 
--(void)queueCustomGLMethod:(SEL)selector target:(id)target;
+/// Enqueue a method that performs GL commands.
+-(void)customGLMethod:(SEL)selector target:(id)target;
 
 @end

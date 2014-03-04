@@ -26,7 +26,12 @@
 #import <Foundation/Foundation.h>
 #import "CCRenderer.h"
 
+extern const NSString *CCShaderUniformMainTexture;
+extern const NSString *CCShaderUniformProjection;
+
 @interface CCRenderer()
+
+@property(nonatomic, copy) NSDictionary *uniformGlobals;
 
 /// Ensure that the specified rendering options are applied to GL.
 -(BOOL)setRenderOptions:(__unsafe_unretained NSDictionary *)renderOptions;

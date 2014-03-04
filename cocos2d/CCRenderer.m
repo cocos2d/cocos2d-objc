@@ -54,6 +54,11 @@
 	return [NSValue valueWithBytes:&vector objCType:@encode(GLKVector4)];
 }
 
++(NSValue *)valueWithGLKMatrix4:(GLKMatrix4)matrix
+{
+	return [NSValue valueWithBytes:&matrix objCType:@encode(GLKMatrix4)];
+}
+
 @end
 
 //MARK: Option Keys.
@@ -69,6 +74,7 @@ const NSString *CCBlendFuncDstAlpha = @"CCBlendFuncDstAlpha";
 const NSString *CCBlendEquationAlpha = @"CCBlendEquationAlpha";
 
 const NSString *CCShaderUniformMainTexture = @"cc_MainTexture";
+const NSString *CCShaderUniformProjection = @"cc_Projection";
 
 
 //MARK: Blend Modes.
@@ -417,18 +423,6 @@ Things to try if sorting is implemented:
 
 -(void)invalidateState
 {
-	#warning TODO this is a really hacky place to put this...
-	CCDirector *director = [CCDirector sharedDirector];
-	CCTime t = director.scheduler.currentTime;
-	CGSize size = director.viewSize;
-	CGSize pixelSize = director.viewSizeInPixels;
-	
-	_uniformGlobals = @{
-		@"cc_Time": [NSValue valueWithGLKVector4:GLKVector4Make(t, t/2, t/4, t/8)],
-		@"cc_ViewSize": [NSValue valueWithGLKVector2:GLKVector2Make(size.width, size.height)],
-		@"cc_ViewSizeInPixels": [NSValue valueWithGLKVector2:GLKVector2Make(pixelSize.width, pixelSize.height)],
-	};
-	
 	_lastDrawCommand = nil;
 	_renderOptions = nil;
 	_blendOptions = nil;
@@ -471,6 +465,12 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	} else {
 		[[NSThread currentThread].threadDictionary removeObjectForKey:CURRENT_RENDERER_KEY];
 	}
+}
+
+-(void)setUniformGlobals:(NSDictionary *)uniformGlobals
+{
+	_uniformGlobals = [uniformGlobals copy];
+	[self invalidateState];
 }
 
 -(BOOL)setRenderOptions:(__unsafe_unretained NSDictionary *)renderOptions
@@ -562,15 +562,15 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	return buffer;
 }
 
--(void)queueCustomGLBlock:(void (^)())block
+-(void)customGLBlock:(void (^)())block
 {
 	[_queue addObject:[[CCRenderCommandCustom alloc] initWithBlock:block]];
 	_lastDrawCommand = nil;
 }
 
--(void)queueCustomGLMethod:(SEL)selector target:(id)target
+-(void)customGLMethod:(SEL)selector target:(id)target
 {
-	[self queueCustomGLBlock:^{
+	[self customGLBlock:^{
     typedef void (*Func)(id, SEL);
     ((Func)objc_msgSend)(target, selector);
 	}];

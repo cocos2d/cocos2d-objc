@@ -633,6 +633,9 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  */
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
 
+/** Calls visit:parentTransform using the current renderer and projection. */
+-(void) visit;
+
 /** Recursive method that visit its children and draw them. */
 -(void) visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform;
 

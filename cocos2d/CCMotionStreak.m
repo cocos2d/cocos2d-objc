@@ -29,10 +29,10 @@
 #import "CCGLProgram.h"
 #import "ccMacros.h"
 #import "CCNode_Private.h"
+#import "CCTexture_Private.h"
+#import "CCRenderer_private.h"
 
 #import "Support/CGPointExtension.h"
-
-#import "CCTexture_Private.h"
 
 
 static BOOL CCVertexLineIntersect(float Ax, float Ay,

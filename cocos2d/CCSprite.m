@@ -39,7 +39,7 @@
 #import "Support/CCProfiling.h"
 #import "Support/OpenGL_Internal.h"
 #import "CCNode_Private.h"
-
+#import "CCRenderer_private.h"
 #import "CCSprite_Private.h"
 #import "CCTexture_Private.h"
 

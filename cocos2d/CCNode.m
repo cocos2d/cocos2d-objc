@@ -37,6 +37,7 @@
 #import "CCGLProgram.h"
 #import "CCPhysics+ObjectiveChipmunk.h"
 #import "CCDirector_Private.h"
+#import "CCRenderer_private.h"
 
 #ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
@@ -900,6 +901,15 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	
 	// reset for next frame
 	_orderOfArrival = 0;
+}
+
+-(void)visit
+{
+	CCRenderer *renderer = [CCRenderer currentRenderer];
+	NSAssert(renderer, @"Cannot call [CCNode visit] without a currently bound renderer.");
+	
+	GLKMatrix4 projection; [renderer.uniformGlobals[CCShaderUniformProjection] getValue:&projection];
+	[self visit:renderer parentTransform:&projection];
 }
 
 #pragma mark CCNode - Transformations

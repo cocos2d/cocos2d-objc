@@ -279,7 +279,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     _outgoingScene.scale = oldScale / _outgoingDownScale;
     
 		[_outgoingTexture render:^(CCRenderer *renderer, GLKMatrix4 *transform) {
-			[_outgoingScene visit:renderer parentTransform:transform];
+			[_outgoingScene visit];
 		}];
 //    glGetFloatv(GL_COLOR_CLEAR_VALUE, clearColor);
 //    [_outgoingTexture beginWithClear:clearColor[0] g:clearColor[1] b:clearColor[2] a:clearColor[3]];
@@ -299,7 +299,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     _incomingScene.scale = oldScale / _incomingDownScale;
     
 		[_incomingTexture render:^(CCRenderer *renderer, GLKMatrix4 *transform) {
-			[_incomingScene visit:renderer parentTransform:transform];
+			[_incomingScene visit];
 		}];
 //    glGetFloatv(GL_COLOR_CLEAR_VALUE, clearColor);
 //    [_incomingTexture beginWithClear:clearColor[0] g:clearColor[1] b:clearColor[2] a:clearColor[3]];

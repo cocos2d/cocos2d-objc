@@ -337,6 +337,8 @@
 //		glClearStencil(stencilClearValue);
 	
 	CGSize texSize = [_texture contentSizeInPixels];
+	GLKMatrix4 projection = GLKMatrix4MakeOrtho(0.0f, texSize.width/__ccContentScaleFactor, 0.0f, texSize.height/__ccContentScaleFactor, -1024.0f, 1024.0f);
+	
 	__block struct{ GLfloat v[4]; } oldViewport;
 	
 	CCRenderer *renderer = [CCRenderer currentRenderer];
@@ -344,14 +346,17 @@
 	
 	if(renderer == nil){
 		renderer = [[CCRenderer alloc] init];
+		
+#warning TODO Should get and update from CCDirector
+		renderer.uniformGlobals = @{
+			CCShaderUniformProjection: [NSValue valueWithGLKMatrix4:projection],
+		};
+		
 		[CCRenderer bindRenderer:renderer];
 		needsFlush = YES;
 	}
 	
-	#warning TODO eventually will need to update the global projection uniforms here.
-	GLKMatrix4 projection = GLKMatrix4MakeOrtho(0.0f, texSize.width/__ccContentScaleFactor, 0.0f, texSize.height/__ccContentScaleFactor, -1024.0f, 1024.0f);
-	
-	[renderer queueCustomGLBlock:^{
+	[renderer customGLBlock:^{
 		glGetFloatv(GL_VIEWPORT, oldViewport.v);
 		glViewport(0, 0, texSize.width, texSize.height );
 		
@@ -363,7 +368,7 @@
 
 	block(renderer, &projection);
 	
-	[renderer queueCustomGLBlock:^{
+	[renderer customGLBlock:^{
 		glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
 		glViewport(oldViewport.v[0], oldViewport.v[1], oldViewport.v[2], oldViewport.v[3]);
 	}];
@@ -390,7 +395,7 @@
 	_orderOfArrival = 0;
 }
 
-- (void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
+- (void)draw:(CCRenderer *)_renderer transform:(const GLKMatrix4 *)_transform
 {
 	if( _autoDraw) {
 		
