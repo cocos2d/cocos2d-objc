@@ -446,6 +446,25 @@ static CCDirector *_sharedDirector = nil;
 	return _winSizeInPixels;
 }
 
+-(CGRect)viewportRect
+{
+	// TODO It's _possible_ that a user will use a non-axis aligned projection. Weird, but possible.
+	GLKMatrix4 projectionInv = GLKMatrix4Invert(_projectionMatrix, NULL);
+	
+	// Calculate z=0 using -> transform*[0, 0, 0, 1]/w
+	float zClip = _projectionMatrix.m[14]/_projectionMatrix.m[15];
+	
+	// Bottom left and top right coords of viewport in clip coords.
+	GLKVector3 clipBL = GLKVector3Make(-1.0, -1.0, zClip);
+	GLKVector3 clipTR = GLKVector3Make( 1.0,  1.0, zClip);
+	
+	// Bottom left and top right coords in GL coords.
+	GLKVector3 glBL = GLKMatrix4MultiplyAndProjectVector3(projectionInv, clipBL);
+	GLKVector3 glTR = GLKMatrix4MultiplyAndProjectVector3(projectionInv, clipTR);
+	
+	return CGRectMake(glBL.x, glBL.y, glTR.x - glBL.x, glTR.y - glBL.y);
+}
+
 -(CGSize)designSize
 {
 	// Return the viewSize unless designSize has been set.

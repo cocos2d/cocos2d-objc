@@ -5,6 +5,56 @@
 @interface CCRendererTest : TestBase @end
 @implementation CCRendererTest
 
+-(void)renderTextureHelper:(CCNode *)stage size:(CGSize)size
+{
+	CCColor *color = [CCColor colorWithRed:0.0 green:0.0 blue:0.5 alpha:0.5];
+	CCNode *node = [CCNodeColor nodeWithColor:color width:128 height:128];
+	[stage addChild:node];
+	
+	CCNodeColor *colorNode = [CCNodeColor nodeWithColor:[CCColor greenColor] width:32 height:32];
+	colorNode.anchorPoint = ccp(0.5, 0.5);
+	colorNode.position = ccp(size.width, 0);
+	[colorNode runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+		[CCActionMoveTo actionWithDuration:1.0 position:ccp(0, size.height)],
+		[CCActionMoveTo actionWithDuration:1.0 position:ccp(size.width, 0)],
+		nil
+	]]];
+	[node addChild:colorNode];
+	
+	CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/bird.png"];
+	sprite.opacity = 0.5;
+	[sprite runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+		[CCActionMoveTo actionWithDuration:1.0 position:ccp(size.width, size.height)],
+		[CCActionMoveTo actionWithDuration:1.0 position:ccp(0, 0)],
+		nil
+	]]];
+	[node addChild:sprite];
+}
+
+-(void)setupRenderTextureTest
+{
+	self.subTitle = @"Testing CCRenderTexture.";
+	
+	CGSize size = CGSizeMake(128, 128);
+	
+	CCNode *stage = [CCNode node];
+	stage.contentSize = size;
+	stage.anchorPoint = ccp(0.5, 0.5);
+	stage.positionType = CCPositionTypeNormalized;
+	stage.position = ccp(0.25, 0.5);
+	[self.contentNode addChild:stage];
+	
+	[self renderTextureHelper:stage size:size];
+	
+	CCRenderTexture *renderTexture = [CCRenderTexture renderTextureWithWidth:size.width height:size.height pixelFormat:CCTexturePixelFormat_RGBA8888];
+	renderTexture.positionType = CCPositionTypeNormalized;
+	renderTexture.position = ccp(0.75, 0.5);
+	[self.contentNode addChild:renderTexture];
+	
+	[self renderTextureHelper:renderTexture size:size];
+	renderTexture.autoDraw = YES;
+}
+
 -(void)setupShader1Test
 {
 	self.subTitle = @"Shaders!";
