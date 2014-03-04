@@ -46,6 +46,9 @@
  */
 @property (nonatomic,readwrite,strong) CCActionManager *actionManager;
 
+/// Rect of the visible screen area in GL coordinates.
+@property(nonatomic, readonly) CGRect viewportRect;
+
 /* Sets the glViewport*/
 -(void) setViewport;
 
