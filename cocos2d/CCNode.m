@@ -1663,7 +1663,6 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 
 -(CCRenderState *)renderState
 {
-#warning TODO State is never uncached.
 	if(_renderState == nil){
 		_renderState = [CCRenderState renderStateWithOptions:@{
 			CCRenderStateBlendMode: _blendMode,
@@ -1672,6 +1671,12 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 	}
 	
 	return _renderState;
+}
+
+-(void)setBlendMode:(CCBlendMode *)blendMode
+{
+	_blendMode = blendMode;
+	_renderState = nil;
 }
 
 -(ccBlendFunc)blendFunc
@@ -1688,6 +1693,12 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 		CCBlendFuncSrcColor: @(blendFunc.src),
 		CCBlendFuncDstColor: @(blendFunc.dst),
 	}];
+}
+
+-(void)setShader:(CCShader *)shader
+{
+	_shader = shader;
+	_renderState = nil;
 }
 
 @end

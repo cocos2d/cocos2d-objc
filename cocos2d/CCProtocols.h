@@ -31,13 +31,15 @@
 
 @class CCTexture;
 @class CCDirector;
+@class CCBlendMode;
 
 #pragma mark - CCBlendProtocol
-#warning TODO this moved to CCNode effectively
 /**
  You can specify the blending function.
  */
 @protocol CCBlendProtocol <NSObject>
+
+@property(nonatomic, strong) CCBlendMode *blendMode;
 
 /** set the source blending function for the texture */
 -(void) setBlendFunc:(ccBlendFunc)blendFunc __deprecated;

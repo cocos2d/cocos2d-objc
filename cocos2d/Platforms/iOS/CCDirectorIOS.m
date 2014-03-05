@@ -121,17 +121,7 @@
 	if( _nextScene ) [self setNextScene];
 	
 	GLKMatrix4 projection = self.projectionMatrix;
-	CCTime t = self.scheduler.currentTime;
-	CGSize size = self.viewSize;
-	CGSize pixelSize = self.viewSizeInPixels;
-	
-#warning TODO incomplete global list.
-	_renderer.uniformGlobals = @{
-		CCShaderUniformProjection: [NSValue valueWithGLKMatrix4:projection],
-		@"cc_Time": [NSValue valueWithGLKVector4:GLKVector4Make(t, t/2, t/4, t/8)],
-		@"cc_ViewSize": [NSValue valueWithGLKVector2:GLKVector2Make(size.width, size.height)],
-		@"cc_ViewSizeInPixels": [NSValue valueWithGLKVector2:GLKVector2Make(pixelSize.width, pixelSize.height)],
-	};
+	_renderer.uniformGlobals = self.uniformGlobals;
 	
 	[CCRenderer bindRenderer:_renderer];
 	[_renderer invalidateState];

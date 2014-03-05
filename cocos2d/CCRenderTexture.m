@@ -347,13 +347,14 @@
 	if(renderer == nil){
 		renderer = [[CCRenderer alloc] init];
 		
-#warning TODO Should get and update from CCDirector
-		renderer.uniformGlobals = @{
-			CCShaderUniformProjection: [NSValue valueWithGLKMatrix4:projection],
-		};
+		NSMutableDictionary *uniformGlobals = [[CCDirector sharedDirector].uniformGlobals mutableCopy];
+		uniformGlobals[CCShaderUniformProjection] = [NSValue valueWithGLKMatrix4:projection];
+		renderer.uniformGlobals = uniformGlobals;
 		
 		[CCRenderer bindRenderer:renderer];
 		needsFlush = YES;
+	} else {
+		#warning TODO update projection
 	}
 	
 	[renderer customGLBlock:^{

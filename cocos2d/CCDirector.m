@@ -222,6 +222,26 @@ static CCDirector *_sharedDirector = nil;
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
+#warning TODO still need a method to set globals.
+-(NSDictionary *)uniformGlobals
+{
+	GLKMatrix4 projection = self.projectionMatrix;
+	CCTime t = self.scheduler.currentTime;
+	CGSize size = self.viewSize;
+	CGSize pixelSize = self.viewSizeInPixels;
+	
+	return @{
+		CCShaderUniformProjection: [NSValue valueWithGLKMatrix4:projection],
+		CCShaderUniformProjectionInv: [NSValue valueWithGLKMatrix4:GLKMatrix4Invert(projection, NULL)],
+		CCShaderUniformViewSize: [NSValue valueWithGLKVector2:GLKVector2Make(size.width, size.height)],
+		CCShaderUniformViewSizeInPixels: [NSValue valueWithGLKVector2:GLKVector2Make(pixelSize.width, pixelSize.height)],
+		CCShaderUniformTime: [NSValue valueWithGLKVector4:GLKVector4Make(t/8.0f, t/4.0f, t/2.0f, t)],
+		CCShaderUniformSinTime: [NSValue valueWithGLKVector4:GLKVector4Make(sinf(t/4.0f), sinf(t/2.0f), sinf(t), sinf(t*2.0))],
+		CCShaderUniformCosTime: [NSValue valueWithGLKVector4:GLKVector4Make(cosf(t/4.0f), cosf(t/2.0f), cosf(t), cosf(t*2.0))],
+		CCShaderUniformRandom01: [NSValue valueWithGLKVector4:GLKVector4Make(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1())],
+	};
+}
+
 //
 // Draw the Scene
 //

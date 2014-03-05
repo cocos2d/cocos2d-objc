@@ -49,6 +49,9 @@
 /// Rect of the visible screen area in GL coordinates.
 @property(nonatomic, readonly) CGRect viewportRect;
 
+/// The current uniformGlobal values.
+@property(nonatomic, readonly) NSDictionary *uniformGlobals;
+
 /* Sets the glViewport*/
 -(void) setViewport;
 

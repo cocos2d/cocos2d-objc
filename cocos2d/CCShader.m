@@ -202,6 +202,7 @@ CompileShader(GLenum type, const char *source)
 	return vao;
 }
 
+#warning TODO error handling
 -(NSDictionary *)uniformSettersForProgram:(GLuint)program
 {
 	NSMutableDictionary *uniformSetters = [NSMutableDictionary dictionary];
