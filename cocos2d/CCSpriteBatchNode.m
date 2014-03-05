@@ -337,6 +337,10 @@ const NSUInteger defaultCapacity = 0;
     //update the index of other swapped item
 	( ( CCSprite* )[ _descendants objectAtIndex:newIndex ] ).atlasIndex = oldIndex;
     [_descendants exchangeObjectAtIndex:oldIndex withObjectAtIndex:newIndex];
+    
+    // update the quads for the swapped sprites in the textureAtlas (issue #598)
+    _textureAtlas.quads[newIndex] = [(CCSprite *)[_descendants objectAtIndex:newIndex] quad];
+    _textureAtlas.quads[oldIndex] = [(CCSprite *)[_descendants objectAtIndex:oldIndex] quad];
 }
 
 - (void) reorderBatch:(BOOL) reorder
