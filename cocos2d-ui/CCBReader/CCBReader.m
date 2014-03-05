@@ -849,6 +849,17 @@ static inline float readFloat(CCBReader *self)
         NSAssert(mappedNode != nil, @"CCBReader: Failed to find node UUID:%i", uuid);
         [node setValue:mappedNode forKey:name];
     }
+    else if(type == kCCBPropTypeFloatCheck)
+    {
+        float f = readFloat(self);
+        bool enabled = readBool(self);
+        
+        [node setValue:@(enabled) forKey:[NSString stringWithFormat:@"%@Enabled",name]];
+        if(enabled)
+        {
+            [node setValue:@(f) forKey:name];
+        }
+    }
     else
     {
         NSAssert(false, @"CCBReader: Failed to read property type %d",type);
@@ -973,7 +984,20 @@ static inline float readFloat(CCBReader *self)
         CGPoint anchorA = [properties[@"anchorA"] CGPointValue];
         CGPoint anchorB = [properties[@"anchorB"] CGPointValue];
         
-        return [CCPhysicsJoint connectedDistanceJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody anchorA:anchorA anchorB:anchorB];
+        BOOL minEnabled = [properties[@"minDistanceEnabled"] boolValue];
+        BOOL maxEnabled = [properties[@"maxDistanceEnabled"] boolValue];
+        
+        float minDistance = [properties[@"minDistance"] floatValue];
+        float maxDistance = [properties[@"maxDistance"] floatValue];
+        
+        if(maxEnabled || minEnabled)
+        {
+            return [CCPhysicsJoint connectedDistanceJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody anchorA:anchorA anchorB:anchorB minDistance:minDistance maxDistance:maxDistance];
+        }
+        else
+        {
+            return [CCPhysicsJoint connectedDistanceJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody anchorA:anchorA anchorB:anchorB];
+        }
     }
     
     return nil;

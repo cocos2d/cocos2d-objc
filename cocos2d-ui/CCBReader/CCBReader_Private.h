@@ -40,7 +40,8 @@ enum {
     kCCBPropTypeFloatScale,
     kCCBPropTypeFloatXY,
     kCCBPropTypeColor4,
-    kCCBPropTypeNodeReference
+    kCCBPropTypeNodeReference,
+    kCCBPropTypeFloatCheck,
     
 };
 
