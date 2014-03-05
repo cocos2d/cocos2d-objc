@@ -1,9 +1,69 @@
 #import "TestBase.h"
 #import "CCTextureCache.h"
-#import "CCNode_Private.h"
+//#import "CCNode_Private.h"
 
 @interface CCRendererTest : TestBase @end
 @implementation CCRendererTest
+
+-(CCSprite *)simpleShaderTestHelper
+{
+	CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/bird.png"];
+	sprite.positionType = CCPositionTypeNormalized;
+	[self.contentNode addChild:sprite];
+	
+	return sprite;
+}
+
+-(void)setupSimpleShaderTest
+{
+	self.subTitle = @"Global and node shader uniforms.";
+	
+	// Normally you'd load shaders from a file using the [CCShader shaderNamed:] method to use the shader cache.
+	// Embedding shaders in the source code is handy when they are short though.
+	CCShader *shader = [[CCShader alloc] initWithFragmentShaderSource:CC_GLSL(
+		uniform lowp mat4 u_ColorMatrix;
+		
+		void main(void){
+			gl_FragColor = u_ColorMatrix*texture2D(cc_MainTexture, cc_FragTexCoord1);
+		}
+	)];
+	
+	CCSprite *sprite1 = [self simpleShaderTestHelper];
+	sprite1.position = ccp(0.3, 0.4);
+	sprite1.shader = shader;
+	
+	CCSprite *sprite2 = [self simpleShaderTestHelper];
+	sprite2.position = ccp(0.3, 0.6);
+	sprite2.shader = shader;
+	
+	CCLabelTTF *label1 = [CCLabelTTF labelWithString:@"Using CCDirector.globalShaderUniforms" fontName:@"Helvetica" fontSize:10.0];
+	label1.positionType = CCPositionTypeNormalized;
+	label1.position = ccp(0.3, 0.3);
+	[self.contentNode addChild:label1];
+	
+	CCSprite *sprite3 = [self simpleShaderTestHelper];
+	sprite3.position = ccp(0.7, 0.5);
+	sprite3.shader = shader;
+	
+	CCLabelTTF *label2 = [CCLabelTTF labelWithString:@"Using CCNode.shaderUniforms" fontName:@"Helvetica" fontSize:10.0];
+	label2.positionType = CCPositionTypeNormalized;
+	label2.position = ccp(0.7, 0.3);
+	[self.contentNode addChild:label2];
+	
+	[self scheduleBlock:^(CCTimer *timer) {
+		// Set up a global uniform matrix to rotate colors counter-clockwise.
+		GLKMatrix4 colorMatrix1 = GLKMatrix4MakeRotation(2.0f*timer.invokeTime, 1.0f, 1.0f, 1.0f);
+		[CCDirector sharedDirector].globalShaderUniforms[@"u_ColorMatrix"] = [NSValue valueWithGLKMatrix4:colorMatrix1];
+		
+		// Set just sprite3's matrix to rotate colors clockwise.
+		GLKMatrix4 colorMatrix2 = GLKMatrix4MakeRotation(-4.0f*timer.invokeTime, 1.0f, 1.0f, 1.0f);
+		sprite3.shaderUniforms = @{
+			@"u_ColorMatrix": [NSValue valueWithGLKMatrix4:colorMatrix2],
+		};
+		
+		[timer repeatOnceWithInterval:1.0/60.0];
+	} delay:0.0f];
+}
 
 -(void)renderTextureHelper:(CCNode *)stage size:(CGSize)size
 {

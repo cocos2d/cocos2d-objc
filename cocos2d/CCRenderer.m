@@ -148,7 +148,7 @@ const NSString *CCBlendEquationAlpha = @"CCBlendEquationAlpha";
 	return self;
 }
 
-static CCBlendModeCache *CCBLEND_CACHE = nil;
+CCBlendModeCache *CCBLENDMODE_CACHE = nil;
 
 // Default modes
 static CCBlendMode *CCBLEND_DISABLED = nil;
@@ -161,7 +161,7 @@ static NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 
 +(void)initialize
 {
-	CCBLEND_CACHE = [[CCBlendModeCache alloc] init];
+	CCBLENDMODE_CACHE = [[CCBlendModeCache alloc] init];
 	
 	// Add the default modes
 	CCBLEND_DISABLED = [self blendModeWithOptions:@{}];
@@ -190,7 +190,7 @@ static NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 
 +(CCBlendMode *)blendModeWithOptions:(NSDictionary *)options
 {
-	return [CCBLEND_CACHE objectForKey:options];
+	return [CCBLENDMODE_CACHE objectForKey:options];
 }
 
 +(CCBlendMode *)disabledMode
@@ -223,9 +223,7 @@ static NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 
 //MARK: Render States.
 @interface CCRenderState()
-
 -(instancetype)initWithOptions:(NSDictionary *)options;
-
 @end
 
 
@@ -295,7 +293,7 @@ static NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 	return self;
 }
 
-static CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
+CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
 
 +(void)initialize
 {
@@ -557,15 +555,15 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	return buffer;
 }
 
--(void)customGLBlock:(void (^)())block
+-(void)customBlock:(void (^)())block
 {
 	[_queue addObject:[[CCRenderCommandCustom alloc] initWithBlock:block]];
 	_lastDrawCommand = nil;
 }
 
--(void)customGLMethod:(SEL)selector target:(id)target
+-(void)customMethod:(SEL)selector target:(id)target
 {
-	[self customGLBlock:^{
+	[self customBlock:^{
     typedef void (*Func)(id, SEL);
     ((Func)objc_msgSend)(target, selector);
 	}];

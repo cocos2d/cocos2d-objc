@@ -120,7 +120,7 @@
 - (void)flush
 {
     // iterate keys
-    for (NSString *key in _cacheList)
+    for (NSString *key in [_cacheList allKeys])
     {
         CCCacheEntry *entry = [_cacheList objectForKey:key];
         

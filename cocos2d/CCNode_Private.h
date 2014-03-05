@@ -25,10 +25,12 @@
 #import "CCNode.h"
 
 @interface CCNode()<CCShaderProtocol, CCBlendProtocol, CCTextureProtocol> {
-	CCShader *_shader;
-	CCBlendMode *_blendMode;
 	CCRenderState *_renderState;
 	
+	CCShader *_shader;
+	NSDictionary *_shaderUniforms;
+	
+	CCBlendMode *_blendMode;
 	CCTexture *_texture;
 }
 

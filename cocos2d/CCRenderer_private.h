@@ -25,6 +25,12 @@
 
 #import <Foundation/Foundation.h>
 #import "CCRenderer.h"
+#import "CCCache.h"
+
+
+extern id CCBLENDMODE_CACHE;
+extern id CCRENDERSTATE_CACHE;
+
 
 @interface CCRenderer()
 
@@ -39,9 +45,6 @@
 
 /// Set the current renderer for the current thread.
 +(void)bindRenderer:(CCRenderer *)renderer;
-
-/// Mark the renderer's cached GL state as invalid.
--(void)invalidateState;
 
 /// Render any currendly queued commands.
 -(void)flush;

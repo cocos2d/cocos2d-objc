@@ -234,25 +234,25 @@ CompileShader(GLenum type, const char *source)
 			}; break;
 			case GL_FLOAT_VEC2: {
 				uniformSetters[name] = ^(CCRenderer *renderer, NSValue *value){
-					GLKVector2 v; [(NSValue *)value getValue:&v];
+					GLKVector2 v = {}; [(NSValue *)value getValue:&v];
 					glUniform2f(i, v.x, v.y);
 				};
 			}; break;
 			case GL_FLOAT_VEC3: {
 				uniformSetters[name] = ^(CCRenderer *renderer, NSValue *value){
-					GLKVector3 v; [(NSValue *)value getValue:&v];
+					GLKVector3 v = {}; [(NSValue *)value getValue:&v];
 					glUniform3f(i, v.x, v.y, v.z);
 				};
 			}; break;
 			case GL_FLOAT_VEC4: {
 				uniformSetters[name] = ^(CCRenderer *renderer, NSValue *value){
-					GLKVector4 v; [(NSValue *)value getValue:&v];
+					GLKVector4 v = {}; [(NSValue *)value getValue:&v];
 					glUniform4f(i, v.x, v.y, v.z, v.w);
 				};
 			}; break;
 			case GL_FLOAT_MAT4: {
 				uniformSetters[name] = ^(CCRenderer *renderer, NSValue *value){
-					GLKMatrix4 m; [(NSValue *)value getValue:&m];
+					GLKMatrix4 m = GLKMatrix4Identity; [(NSValue *)value getValue:&m];
 					glUniformMatrix4fv(i, 1, GL_FALSE, m.m);
 				};
 			}; break;
