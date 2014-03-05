@@ -357,7 +357,7 @@
 		#warning TODO update projection
 	}
 	
-	[renderer customBlock:^{
+	[renderer enqueueBlock:^{
 		glGetFloatv(GL_VIEWPORT, oldViewport.v);
 		glViewport(0, 0, texSize.width, texSize.height );
 		
@@ -369,7 +369,7 @@
 
 	block(renderer, &projection);
 	
-	[renderer customBlock:^{
+	[renderer enqueueBlock:^{
 		glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
 		glViewport(oldViewport.v[0], oldViewport.v[1], oldViewport.v[2], oldViewport.v[3]);
 	}];

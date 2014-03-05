@@ -83,7 +83,7 @@
 
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
-	CCVertex *verts = (CCVertex *)[renderer bufferTriangles:_triangleCount withState:self.renderState];
+	CCVertex *verts = (CCVertex *)[renderer enqueueTriangles:_triangleCount withState:self.renderState];
 	
 	// TODO Try if memcpy + transforming just the verts is faster?
 	// TODO Maybe it would be even better to skip the CPU transform and use a uniform matrix?

@@ -128,12 +128,12 @@ extern const NSString *CCBlendEquationAlpha;
 
 /// Enqueue a basic drawing command, and returns a buffer for the geometry.
 /// IMPORTANT! The buffer should be considered write-only. Attempting to read from the buffer could crash your game.
--(CCTriangle *)bufferTriangles:(NSUInteger)count withState:(CCRenderState *)renderState;
+-(CCTriangle *)enqueueTriangles:(NSUInteger)count withState:(CCRenderState *)renderState;
 
 /// Enqueue a block that performs GL commands.
--(void)customBlock:(void (^)())block;
+-(void)enqueueBlock:(void (^)())block;
 
 /// Enqueue a method that performs GL commands.
--(void)customMethod:(SEL)selector target:(id)target;
+-(void)enqueueMethod:(SEL)selector target:(id)target;
 
 @end

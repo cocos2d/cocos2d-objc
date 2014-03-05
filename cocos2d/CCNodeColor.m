@@ -120,7 +120,7 @@
 		{GLKMatrix4MultiplyAndProjectVector3(*transform, GLKVector3Make(0, h, 0)), zero, zero, _colors[3]},
 	};
 	
-	CCTriangle *triangles = [renderer bufferTriangles:2 withState:self.renderState];
+	CCTriangle *triangles = [renderer enqueueTriangles:2 withState:self.renderState];
 	triangles[0] = (CCTriangle){verts[0], verts[1], verts[2]};
 	triangles[1] = (CCTriangle){verts[0], verts[2], verts[3]};
 }

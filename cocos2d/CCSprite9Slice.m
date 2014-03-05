@@ -160,7 +160,7 @@ TexCoordInterpolationMatrix(CCVertex *verts)
 	}
 	
 	// Output lots of triangles.
-	CCTriangle *triangles = [renderer bufferTriangles:18 withState:self.renderState];
+	CCTriangle *triangles = [renderer enqueueTriangles:18 withState:self.renderState];
 	for(int y=0; y<3; y++){
 		for(int x=0; x<3; x++){
 			triangles[y*6 + x*2 + 0] = (CCTriangle){verts[y + 0][x + 0], verts[y + 0][x + 1], verts[y + 1][x + 1]};

@@ -349,7 +349,7 @@
 		CCVertexApplyTransform(_verts[3], transform),
 	};
 	
-	CCTriangle *triangles = [renderer bufferTriangles:2 withState:self.renderState];
+	CCTriangle *triangles = [renderer enqueueTriangles:2 withState:self.renderState];
 	triangles[0] = (CCTriangle){verts[0], verts[1], verts[2]};
 	triangles[1] = (CCTriangle){verts[0], verts[2], verts[3]};
 }

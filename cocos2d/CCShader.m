@@ -60,8 +60,8 @@ const NSString *CCShaderUniformMainTexture = @"cc_MainTexture";
 	main texture size points/pixels
 */
 static const GLchar *CCShaderHeader =
-	"uniform highp vec2 cc_Projection;\n"
-	"uniform highp vec2 cc_ProjectionInv;\n"
+	"uniform highp mat4 cc_Projection;\n"
+	"uniform highp mat4 cc_ProjectionInv;\n"
 	"uniform highp vec2 cc_ViewSize;\n"
 	"uniform highp vec2 cc_ViewSizeInPixels;\n"
 	"uniform highp vec4 cc_Time;\n"

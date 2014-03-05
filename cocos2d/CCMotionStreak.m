@@ -401,7 +401,7 @@ MakeVertex(ccVertex2F v, ccTex2F texCoord, unsigned char *color, GLKMatrix4 tran
 		MakeVertex(_vertices[1], _texCoords[1], _colorPointer + 1*4, *transform),
 	};
 	
-	CCTriangle *triangles = [renderer bufferTriangles:2*_nuPoints withState:self.renderState];
+	CCTriangle *triangles = [renderer enqueueTriangles:2*_nuPoints withState:self.renderState];
 	for(int i=1; i<_nuPoints; i++){
 		CCVertex a = MakeVertex(_vertices[2*i + 0], _texCoords[2*i + 0], _colorPointer + (2*i + 0)*4, *transform);
 		triangles[2*i + 0] = (CCTriangle){verts[0], verts[1], a};

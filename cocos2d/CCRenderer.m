@@ -534,7 +534,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	return &_triangles[_triangleCount];
 }
 
--(CCTriangle *)bufferTriangles:(NSUInteger)count withState:(CCRenderState *)renderState;
+-(CCTriangle *)enqueueTriangles:(NSUInteger)count withState:(CCRenderState *)renderState;
 {
 	__unsafe_unretained NSDictionary *renderOptions = renderState->_options;
 	__unsafe_unretained CCRenderCommandDraw *previous = _lastDrawCommand;
@@ -555,15 +555,15 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	return buffer;
 }
 
--(void)customBlock:(void (^)())block
+-(void)enqueueBlock:(void (^)())block
 {
 	[_queue addObject:[[CCRenderCommandCustom alloc] initWithBlock:block]];
 	_lastDrawCommand = nil;
 }
 
--(void)customMethod:(SEL)selector target:(id)target
+-(void)enqueueMethod:(SEL)selector target:(id)target
 {
-	[self customBlock:^{
+	[self enqueueBlock:^{
     typedef void (*Func)(id, SEL);
     ((Func)objc_msgSend)(target, selector);
 	}];
