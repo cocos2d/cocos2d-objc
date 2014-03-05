@@ -28,7 +28,8 @@
 
 @interface CCRenderer()
 
-@property(nonatomic, copy) NSDictionary *uniformGlobals;
+/// Current global shader uniform values.
+@property(nonatomic, copy) NSDictionary *globalShaderUniforms;
 
 /// Ensure that the specified rendering options are applied to GL.
 -(BOOL)setRenderOptions:(__unsafe_unretained NSDictionary *)renderOptions;

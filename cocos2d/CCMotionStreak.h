@@ -36,7 +36,7 @@
  - Segments controls how smooth the shape of the trail appears.
  - Fast mode enables faster point addition and the cost of lower point precision.
  */
-@interface CCMotionStreak : CCNode <CCTextureProtocol>
+@interface CCMotionStreak : CCNode <CCTextureProtocol, CCShaderProtocol, CCBlendProtocol>
 
 /// -----------------------------------------------------------------------
 /// @name Accessing Motion Streak Attributes
@@ -44,9 +44,6 @@
 
 /** Fast mode toggle. */
 @property (nonatomic, readwrite, assign, getter = isFastMode) BOOL fastMode;
-
-/** Trail texture. */
-@property (nonatomic, strong) CCTexture *texture;
 
 
 /// -----------------------------------------------------------------------

@@ -61,7 +61,6 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
 	GLuint				_FBO;
 	GLuint				_depthRenderBufffer;
 	GLint				_oldFBO;
-	CCTexture*		_texture;
 	CCSprite*			_sprite;
 	GLenum				_pixelFormat;
 

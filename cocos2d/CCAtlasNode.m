@@ -178,17 +178,4 @@
 //	}
 }
 
--(void) setTexture:(CCTexture*)texture
-{
-//	_textureAtlas.texture = texture;
-//	[self updateBlendFunc];
-//	[self updateOpacityModifyRGB];
-}
-
--(CCTexture*) texture
-{
-	return nil;
-//	return _textureAtlas.texture;
-}
-
 @end

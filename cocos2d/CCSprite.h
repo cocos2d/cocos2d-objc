@@ -44,7 +44,7 @@
  *
  * The default anchorPoint in CCSprite is (0.5, 0.5).
  */
-@interface CCSprite : CCNode <CCTextureProtocol>
+@interface CCSprite : CCNode <CCTextureProtocol, CCShaderProtocol, CCBlendProtocol>
 
 /** Returns the texture rect of the CCSprite in points. */
 @property (nonatomic,readonly) CGRect textureRect;

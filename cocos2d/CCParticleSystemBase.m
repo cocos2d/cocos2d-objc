@@ -54,6 +54,7 @@
 #import "CCTextureCache.h"
 #import "ccMacros.h"
 #import "Support/CCProfiling.h"
+#import "CCNode_Private.h"
 
 // support
 #import "Support/OpenGL_Internal.h"
@@ -80,7 +81,6 @@
 @synthesize startSize = _startSize, startSizeVar = _startSizeVar;
 @synthesize endSize = _endSize, endSizeVar = _endSizeVar;
 @synthesize opacityModifyRGB = _opacityModifyRGB;
-@synthesize blendFunc = _blendFunc;
 @synthesize particlePositionType = _particlePositionType;
 @synthesize autoRemoveOnFinish = _autoRemoveOnFinish;
 @synthesize resetOnVisibilityToggle = _resetOnVisibilityToggle;
@@ -640,16 +640,8 @@
 
 -(void) setTexture:(CCTexture*) texture
 {
-	if( _texture != texture ) {
-		_texture = texture;
-
-		[self updateBlendFunc];
-	}
-}
-
--(CCTexture*) texture
-{
-	return _texture;
+	super.texture = texture;
+	[self updateBlendFunc];
 }
 
 #pragma mark ParticleSystem - Additive Blending
@@ -661,7 +653,7 @@
 
 	} else {
 
-		if( _texture && ! [_texture hasPremultipliedAlpha] ) {
+		if(self.texture && ! [self.texture hasPremultipliedAlpha]){
 			self.blendFunc = (ccBlendFunc){GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA};
 		} else {
 			self.blendFunc = (ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
@@ -873,14 +865,14 @@
 {
 	NSAssert(! _batchNode, @"Can't change blending functions when the particle is being batched");
 
-	BOOL premultiplied = [_texture hasPremultipliedAlpha];
+	BOOL premultiplied = [self.texture hasPremultipliedAlpha];
 
 	_opacityModifyRGB = NO;
 
-	if( _texture && ( _blendFunc.src == GL_ONE && _blendFunc.dst == GL_ONE_MINUS_SRC_ALPHA ) ) {
-		if( premultiplied )
+	if(self.texture && (_blendFunc.src == GL_ONE && _blendFunc.dst == GL_ONE_MINUS_SRC_ALPHA)){
+		if( premultiplied ){
 			_opacityModifyRGB = YES;
-		else {
+		} else {
 			_blendFunc.src = GL_SRC_ALPHA;
 			_blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
 		}

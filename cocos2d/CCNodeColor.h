@@ -39,7 +39,7 @@
 /**
  * CCNodeColor is a subclass of CCNode that is used to generate solid colors.
  */
-@interface CCNodeColor : CCNode <CCBlendProtocol>
+@interface CCNodeColor : CCNode <CCShaderProtocol, CCBlendProtocol>
 
 /// -----------------------------------------------------------------------
 /// @name Creating a CCNodeColor Object

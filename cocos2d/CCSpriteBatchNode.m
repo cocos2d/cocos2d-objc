@@ -30,9 +30,9 @@
 #import "CCSpriteBatchNode.h"
 #import "CCTexture.h"
 #import "CCTextureCache.h"
+#import "CCNode_Private.h"
 
 @implementation CCSpriteBatchNode {
-	CCTexture	*_texture;
 }
 
 +(id)batchNodeWithTexture:(CCTexture *)tex
@@ -70,7 +70,7 @@
 -(id)initWithTexture:(CCTexture *)tex capacity:(NSUInteger)capacity
 {
 	if( (self=[super init])) {
-		_texture = tex;
+		self.texture = tex;
 	}
 
 	return self;

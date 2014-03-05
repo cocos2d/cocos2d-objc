@@ -87,7 +87,7 @@ CCCheckVisbility(const GLKMatrix4 *transform, CGSize contentSize)
 
 extern const NSString *CCRenderStateBlendMode;
 extern const NSString *CCRenderStateShader;
-extern const NSString *CCRenderStateUniforms;
+extern const NSString *CCRenderStateShaderUniforms;
 
 extern const NSString *CCBlendFuncSrcColor;
 extern const NSString *CCBlendFuncDstColor;

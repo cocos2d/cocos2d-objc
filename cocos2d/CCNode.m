@@ -38,6 +38,7 @@
 #import "CCPhysics+ObjectiveChipmunk.h"
 #import "CCDirector_Private.h"
 #import "CCRenderer_private.h"
+#import "CCTexture_Private.h"
 
 #ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
@@ -115,7 +116,6 @@ static NSUInteger globalOrderOfArrival = 1;
 @synthesize name = _name;
 @synthesize vertexZ = _vertexZ;
 @synthesize userObject = _userObject;
-@synthesize	shader = _shader;
 @synthesize orderOfArrival = _orderOfArrival;
 @synthesize physicsBody = _physicsBody;
 
@@ -908,7 +908,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	CCRenderer *renderer = [CCRenderer currentRenderer];
 	NSAssert(renderer, @"Cannot call [CCNode visit] without a currently bound renderer.");
 	
-	GLKMatrix4 projection; [renderer.uniformGlobals[CCShaderUniformProjection] getValue:&projection];
+	GLKMatrix4 projection; [renderer.globalShaderUniforms[CCShaderUniformProjection] getValue:&projection];
 	[self visit:renderer parentTransform:&projection];
 }
 
@@ -1667,16 +1667,35 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 		_renderState = [CCRenderState renderStateWithOptions:@{
 			CCRenderStateBlendMode: _blendMode,
 			CCRenderStateShader: _shader,
+			CCRenderStateShaderUniforms: @{CCShaderUniformMainTexture: (_texture ?: CCTextureNone)},
 		}];
 	}
 	
 	return _renderState;
 }
 
+-(CCShader *)shader
+{
+	return _shader;
+}
+
+-(void)setShader:(CCShader *)shader
+{
+	_shader = shader;
+	_renderState = nil;
+}
+
+-(CCBlendMode *)blendMode
+{
+	return _blendMode;
+}
+
 -(void)setBlendMode:(CCBlendMode *)blendMode
 {
-	_blendMode = blendMode;
-	_renderState = nil;
+	if(_blendMode != blendMode){
+		_blendMode = blendMode;
+		_renderState = nil;
+	}
 }
 
 -(ccBlendFunc)blendFunc
@@ -1695,10 +1714,17 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 	}];
 }
 
--(void)setShader:(CCShader *)shader
+-(CCTexture*) texture
 {
-	_shader = shader;
-	_renderState = nil;
+	return _texture;
+}
+
+-(void) setTexture:(CCTexture *)texture
+{
+	if(_texture != texture){
+		_texture = texture;
+		self.renderState = nil;
+	}
 }
 
 @end

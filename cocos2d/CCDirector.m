@@ -179,16 +179,17 @@ static CCDirector *_sharedDirector = nil;
 		_actionManager = [[CCActionManager alloc] init];
 		[_scheduler scheduleTarget:_actionManager];
 		[_scheduler setPaused:NO target:_actionManager];
-        
-        // touch manager
-        _responderManager = [ CCResponderManager responderManager ];
-
+		
+		// touch manager
+		_responderManager = [ CCResponderManager responderManager ];
+		
 		_winSizeInPixels = _winSizeInPoints = CGSizeZero;
 		
 		__ccContentScaleFactor = 1;
 		self.UIScaleFactor = 1;
 		
 		_renderer = [[CCRenderer alloc] init];
+		_globalShaderUniforms = [NSMutableDictionary dictionary];
 	}
 
 	return self;
@@ -222,24 +223,27 @@ static CCDirector *_sharedDirector = nil;
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
-#warning TODO still need a method to set globals.
--(NSDictionary *)uniformGlobals
+-(NSDictionary *)updateGlobalShaderUniforms
 {
 	GLKMatrix4 projection = self.projectionMatrix;
-	CCTime t = self.scheduler.currentTime;
-	CGSize size = self.viewSize;
-	CGSize pixelSize = self.viewSizeInPixels;
+	_globalShaderUniforms[CCShaderUniformProjection] = [NSValue valueWithGLKMatrix4:projection];
+	_globalShaderUniforms[CCShaderUniformProjectionInv] = [NSValue valueWithGLKMatrix4:GLKMatrix4Invert(projection, NULL)];
 	
-	return @{
-		CCShaderUniformProjection: [NSValue valueWithGLKMatrix4:projection],
-		CCShaderUniformProjectionInv: [NSValue valueWithGLKMatrix4:GLKMatrix4Invert(projection, NULL)],
-		CCShaderUniformViewSize: [NSValue valueWithGLKVector2:GLKVector2Make(size.width, size.height)],
-		CCShaderUniformViewSizeInPixels: [NSValue valueWithGLKVector2:GLKVector2Make(pixelSize.width, pixelSize.height)],
-		CCShaderUniformTime: [NSValue valueWithGLKVector4:GLKVector4Make(t/8.0f, t/4.0f, t/2.0f, t)],
-		CCShaderUniformSinTime: [NSValue valueWithGLKVector4:GLKVector4Make(sinf(t/4.0f), sinf(t/2.0f), sinf(t), sinf(t*2.0))],
-		CCShaderUniformCosTime: [NSValue valueWithGLKVector4:GLKVector4Make(cosf(t/4.0f), cosf(t/2.0f), cosf(t), cosf(t*2.0))],
-		CCShaderUniformRandom01: [NSValue valueWithGLKVector4:GLKVector4Make(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1())],
-	};
+	CGSize size = self.viewSize;
+	_globalShaderUniforms[CCShaderUniformViewSize] = [NSValue valueWithGLKVector2:GLKVector2Make(size.width, size.height)];
+	
+	CGSize pixelSize = self.viewSizeInPixels;
+	_globalShaderUniforms[CCShaderUniformViewSizeInPixels] = [NSValue valueWithGLKVector2:GLKVector2Make(pixelSize.width, pixelSize.height)];
+	
+	CCTime t = self.scheduler.currentTime;
+	_globalShaderUniforms[CCShaderUniformTime] = [NSValue valueWithGLKVector4:GLKVector4Make(t, t/2.0f, t/8.0f, t/8.0f)];
+	_globalShaderUniforms[CCShaderUniformSinTime] = [NSValue valueWithGLKVector4:GLKVector4Make(sinf(t*2.0f), sinf(t), sinf(t/2.0f), sinf(t/4.0f))];
+	_globalShaderUniforms[CCShaderUniformCosTime] = [NSValue valueWithGLKVector4:GLKVector4Make(cosf(t*2.0f), cosf(t), cosf(t/2.0f), cosf(t/4.0f))];
+	
+	GLKVector4 random = GLKVector4Make(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
+	_globalShaderUniforms[CCShaderUniformRandom01] = [NSValue valueWithGLKVector4:random];
+	
+	return _globalShaderUniforms;
 }
 
 //
@@ -423,7 +427,7 @@ static CCDirector *_sharedDirector = nil;
 
 -(CGPoint)convertToGL:(CGPoint)uiPoint
 {
-	GLKMatrix4 transform = _projectionMatrix;
+	GLKMatrix4 transform = self.projectionMatrix;
 	GLKMatrix4 invTransform = GLKMatrix4Invert(transform, NULL);
 	
 	// Calculate z=0 using -> transform*[0, 0, 0, 1]/w
@@ -443,7 +447,7 @@ static CCDirector *_sharedDirector = nil;
 {
 //	kmMat4 transform;
 //	GLToClipTransform(&transform);
-	GLKMatrix4 transform = _projectionMatrix;
+	GLKMatrix4 transform = self.projectionMatrix;
 		
 //	kmVec3 clipCoord;
 //	// Need to calculate the zero depth from the transform.
@@ -468,11 +472,13 @@ static CCDirector *_sharedDirector = nil;
 
 -(CGRect)viewportRect
 {
+	GLKMatrix4 projection = self.projectionMatrix;
+	
 	// TODO It's _possible_ that a user will use a non-axis aligned projection. Weird, but possible.
-	GLKMatrix4 projectionInv = GLKMatrix4Invert(_projectionMatrix, NULL);
+	GLKMatrix4 projectionInv = GLKMatrix4Invert(projection, NULL);
 	
 	// Calculate z=0 using -> transform*[0, 0, 0, 1]/w
-	float zClip = _projectionMatrix.m[14]/_projectionMatrix.m[15];
+	float zClip = projection.m[14]/projection.m[15];
 	
 	// Bottom left and top right coords of viewport in clip coords.
 	GLKVector3 clipBL = GLKVector3Make(-1.0, -1.0, zClip);

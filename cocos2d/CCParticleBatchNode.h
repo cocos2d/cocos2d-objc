@@ -47,9 +47,7 @@
  - Default capacity is 500.
 
  */
-@interface CCParticleBatchNode : CCNode
-
-@property(nonatomic, strong) CCTexture *texture;
+@interface CCParticleBatchNode : CCNode<CCTextureProtocol, CCShaderProtocol, CCBlendProtocol>
 
 
 /// -----------------------------------------------------------------------

@@ -113,10 +113,6 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 	// User data field.
 	id _userObject;
 
-	// Shader Program.
-	CCShader *_shader;
-	CCRenderState *_renderState;
-
 	// Used to preserve sequence while sorting children with the same zOrder.
 	NSUInteger _orderOfArrival;
 
@@ -264,14 +260,6 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 
 /** The anchorPoint in absolute pixels.  Since v0.8 you can only read it. If you wish to modify it, use anchorPoint instead. */
 @property(nonatomic,readonly) CGPoint anchorPointInPoints;
-
-#warning TODO Doc me
-@property(nonatomic, strong) CCShader *shader;
-@property(nonatomic, strong) CCBlendMode *blendMode;
-@property (nonatomic, readonly) CCRenderState *renderState;
-
--(ccBlendFunc)blendFunc __deprecated;
--(void)setBlendFunc:(ccBlendFunc)blendFunc __deprecated;
 
 
 /** Returns a "local" axis aligned bounding box of the node in points.

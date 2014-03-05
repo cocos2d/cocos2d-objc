@@ -93,7 +93,7 @@
 {
 	if (self = [super init])
 	{
-		_texture = tex;
+		self.texture = tex;
 
 		// no lazy alloc in this node
 		_children = [[NSMutableArray alloc] initWithCapacity:capacity];

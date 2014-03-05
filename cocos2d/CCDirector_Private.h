@@ -24,7 +24,10 @@
 
 #import "CCDirector.h"
 
-@interface CCDirector ()
+@interface CCDirector () {
+	@protected
+	GLKMatrix4 _projectionMatrix;
+}
 
 /* Whether or not the replaced scene will receive the cleanup message.
  If the new scene is pushed, then the old scene won't receive the "cleanup" message.
@@ -49,8 +52,8 @@
 /// Rect of the visible screen area in GL coordinates.
 @property(nonatomic, readonly) CGRect viewportRect;
 
-/// The current uniformGlobal values.
-@property(nonatomic, readonly) NSDictionary *uniformGlobals;
+/// Update the list of default globals and return them.
+-(NSDictionary *)updateGlobalShaderUniforms;
 
 /* Sets the glViewport*/
 -(void) setViewport;

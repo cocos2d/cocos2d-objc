@@ -38,7 +38,7 @@
  All features from CCNode are valid, plus the following features:
  - opacity and RGB colors
  */
-@interface CCAtlasNode : CCNode <CCTextureProtocol> {
+@interface CCAtlasNode : CCNode <CCTextureProtocol, CCShaderProtocol, CCBlendProtocol> {
 	// Chars per row.
 	NSUInteger		_itemsPerRow;
     

@@ -121,7 +121,7 @@
 	if( _nextScene ) [self setNextScene];
 	
 	GLKMatrix4 projection = self.projectionMatrix;
-	_renderer.uniformGlobals = self.uniformGlobals;
+	_renderer.globalShaderUniforms = [self updateGlobalShaderUniforms];
 	
 	[CCRenderer bindRenderer:_renderer];
 	[_renderer invalidateState];
@@ -155,7 +155,7 @@
 	switch (projection) {
 		case CCDirectorProjection2D:
 			
-			self.projectionMatrix = GLKMatrix4MakeOrtho(0, sizePoint.width, 0, sizePoint.height, -1024, 1024 );
+			_projectionMatrix = GLKMatrix4MakeOrtho(0, sizePoint.width, 0, sizePoint.height, -1024, 1024 );
 			break;
 
 		case CCDirectorProjection3D:

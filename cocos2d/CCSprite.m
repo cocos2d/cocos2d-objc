@@ -54,8 +54,6 @@
 
 
 @implementation CCSprite {
-	CCTexture *_texture;
-
 	// Offset Position, used by sprite sheet editors.
 	CGPoint _unflippedOffsetPositionFromCenter;
 
@@ -274,16 +272,15 @@
 
 -(void) setTextureCoords:(CGRect)rect
 {
-	if(!_texture)
-		return;
+	if(!self.texture) return;
 	
-	CGFloat scale = _texture.contentScale;
+	CGFloat scale = self.texture.contentScale;
 	rect = CC_RECT_SCALE(rect, scale);
 	
-	float atlasWidth = (float)_texture.pixelWidth;
-	float atlasHeight = (float)_texture.pixelHeight;
+	float atlasWidth = (float)self.texture.pixelWidth;
+	float atlasHeight = (float)self.texture.pixelHeight;
 
-	float left, right ,top , bottom;
+	float left, right, top, bottom;
 	
 	#warning TODO Seems like this could be significantly simplified.
 	if(_textureRectRotated)
@@ -341,19 +338,6 @@
 
 #pragma mark CCSprite - draw
 
--(CCRenderState *)renderState
-{
-	if(_renderState == nil){
-		_renderState = [CCRenderState renderStateWithOptions:@{
-			CCRenderStateBlendMode: self.blendMode,
-			CCRenderStateShader: self.shader,
-			CCRenderStateUniforms: @{CCShaderUniformMainTexture: (_texture ?: CCTextureNone)},
-		}];
-	}
-	
-	return _renderState;
-}
-
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
 {
 	if(!CCCheckVisbility(transform, _contentSize)) return;
@@ -365,8 +349,7 @@
 		CCVertexApplyTransform(_verts[3], transform),
 	};
 	
-	__unsafe_unretained CCRenderState *renderState = self.renderState;
-	CCTriangle *triangles = [renderer bufferTriangles:2 withState:renderState];
+	CCTriangle *triangles = [renderer bufferTriangles:2 withState:self.renderState];
 	triangles[0] = (CCTriangle){verts[0], verts[1], verts[2]};
 	triangles[1] = (CCTriangle){verts[0], verts[2], verts[3]};
 }
@@ -479,8 +462,9 @@
 
 	CCTexture *newTexture = [frame texture];
 	// update texture before updating texture rect
-	if ( newTexture.name != _texture.name )
+	if(newTexture != self.texture){
 		[self setTexture: newTexture];
+	}
 
 	// update rect
 	_textureRectRotated = frame.rotated;
@@ -508,7 +492,7 @@
 -(void) updateBlendFunc
 {
 	// it is possible to have an untextured sprite
-	if( !_texture || ! [_texture hasPremultipliedAlpha] ) {
+	if(!self.texture || ![self.texture hasPremultipliedAlpha]){
 		self.blendMode = [CCBlendMode alphaMode];
 		[self setOpacityModifyRGB:NO];
 	} else {
@@ -519,20 +503,8 @@
 
 -(void) setTexture:(CCTexture*)texture
 {
-	// accept texture==nil as argument
-    NSAssert( !texture || [texture isKindOfClass:[CCTexture class]], @"setTexture expects a CCTexture2D. Invalid argument");
-    
-	if( _texture != texture ) {
-		_texture = texture;
-		
-		[self updateBlendFunc];
-		_renderState = nil;
-	}
-}
-
--(CCTexture*) texture
-{
-	return _texture;
+	super.texture = texture;
+	[self updateBlendFunc];
 }
 
 @end

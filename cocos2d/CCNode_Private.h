@@ -24,7 +24,17 @@
 
 #import "CCNode.h"
 
-@interface CCNode ()
+@interface CCNode()<CCShaderProtocol, CCBlendProtocol, CCTextureProtocol> {
+	CCShader *_shader;
+	CCBlendMode *_blendMode;
+	CCRenderState *_renderState;
+	
+	CCTexture *_texture;
+}
+
+/// Cache and return the current render state.
+/// Should be set to nil whenever changing a property that affects the renderstate.
+@property(nonatomic, strong) CCRenderState *renderState;
 
 /* The real openGL Z vertex.
  Differences between openGL Z vertex and cocos2d Z order:

@@ -64,7 +64,7 @@
 //MARK: Option Keys.
 const NSString *CCRenderStateBlendMode = @"CCRenderStateBlendMode";
 const NSString *CCRenderStateShader = @"CCRenderStateShader";
-const NSString *CCRenderStateUniforms = @"CCRenderStateUniforms";
+const NSString *CCRenderStateShaderUniforms = @"CCRenderStateShaderUniforms";
 
 const NSString *CCBlendFuncSrcColor = @"CCBlendFuncSrcColor";
 const NSString *CCBlendFuncDstColor = @"CCBlendFuncDstColor";
@@ -247,13 +247,13 @@ static NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 	id shader = (options[CCRenderStateShader] ?: [NSNull null]);
 	NSAssert([shader isKindOfClass:[CCShader class]], @"CCRenderStateShader value is not a CCShader object.");
 	
-	id uniforms = ([options[CCRenderStateUniforms] copy] ?: @{});
+	id uniforms = ([options[CCRenderStateShaderUniforms] copy] ?: @{});
 	NSAssert([uniforms isKindOfClass:[NSDictionary class]], @"CCRenderStateShaderUniforms value is not a NSDictionary object.");
 	
 	NSDictionary *normalized = @{
 		CCRenderStateBlendMode: blendMode,
 		CCRenderStateShader: shader,
-		CCRenderStateUniforms: uniforms,
+		CCRenderStateShaderUniforms: uniforms,
 	};
 	
 	// Create the key using the normalized blending mode.
@@ -398,8 +398,6 @@ Things to try if sorting is implemented:
 */
 
 @implementation CCRenderer {
-	NSDictionary *_uniformGlobals;
-	
 	GLuint _vao;
 	GLuint _vbo;
 	
@@ -464,9 +462,9 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	}
 }
 
--(void)setUniformGlobals:(NSDictionary *)uniformGlobals
+-(void)setGlobalShaderUniforms:(NSDictionary *)globalShaderUniforms
 {
-	_uniformGlobals = [uniformGlobals copy];
+	_globalShaderUniforms = [globalShaderUniforms copy];
 	[self invalidateState];
 }
 
@@ -508,12 +506,12 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	}
 	
 	// Set the shader's uniform state.
-	__unsafe_unretained NSDictionary *uniforms = renderOptions[CCRenderStateUniforms];
+	__unsafe_unretained NSDictionary *uniforms = renderOptions[CCRenderStateShaderUniforms];
 	if(uniforms != _uniforms){
 		__unsafe_unretained NSDictionary *setters = shader->_uniformSetters;
 		for(NSString *uniform in setters){
 			__unsafe_unretained CCUniformSetter setter = setters[uniform];
-			setter(self, uniforms[uniform] ?: _uniformGlobals[uniform]);
+			setter(self, uniforms[uniform] ?: _globalShaderUniforms[uniform]);
 		}
 		_uniforms = uniforms;
 	}

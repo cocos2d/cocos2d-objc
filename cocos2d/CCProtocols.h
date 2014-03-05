@@ -32,6 +32,18 @@
 @class CCTexture;
 @class CCDirector;
 @class CCBlendMode;
+@class CCShader;
+
+
+#pragma mark - CCShaderProtocol
+
+@protocol CCShaderProtocol <NSObject>
+
+@property(nonatomic, strong) CCShader *shader;
+@property(nonatomic, copy) NSDictionary *shaderUniforms;
+
+@end
+
 
 #pragma mark - CCBlendProtocol
 /**
@@ -39,7 +51,7 @@
  */
 @protocol CCBlendProtocol <NSObject>
 
-@property(nonatomic, strong) CCBlendMode *blendMode;
+@property(nonatomic, readwrite, strong) CCBlendMode *blendMode;
 
 /** set the source blending function for the texture */
 -(void) setBlendFunc:(ccBlendFunc)blendFunc __deprecated;
@@ -65,6 +77,7 @@
 /** sets a new texture. it will be retained */
 -(void) setTexture:(CCTexture*)texture;
 @end
+
 
 #pragma mark - CCLabelProtocol
 /** Common interface for Labels */

@@ -227,8 +227,8 @@
 							 pointRect.size.width * scale,
 							 pointRect.size.height * scale );
 
-	GLfloat wide = [_texture pixelWidth];
-	GLfloat high = [_texture pixelHeight];
+	GLfloat wide = [self.texture pixelWidth];
+	GLfloat high = [self.texture pixelHeight];
 
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 	GLfloat left = (rect.origin.x*2+1) / (wide*2);
@@ -265,10 +265,7 @@
 
 -(void) setTexture:(CCTexture *)texture withRect:(CGRect)rect
 {
-	// Only update the texture if is different from the current one
-	if( [texture name] != [_texture name] )
-		[super setTexture:texture];
-
+	[super setTexture:texture];
 	[self initTexCoordsWithRect:rect];
 }
 
@@ -284,8 +281,9 @@
 	NSAssert( CGPointEqualToPoint( spriteFrame.offset , CGPointZero ), @"QuadParticle only supports SpriteFrames with no offsets");
     
 	// update texture before updating texture rect
-	if ( spriteFrame.texture.name != _texture.name )
+	if(spriteFrame.texture != self.texture){
 		[self setTexture: spriteFrame.texture];
+	}
 }
 
 -(void) initIndices

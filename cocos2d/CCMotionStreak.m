@@ -145,9 +145,6 @@ static void CCVertexLineToPolygon(CGPoint *points, float stroke, ccVertex2F *ver
 
 @implementation CCMotionStreak {
     
-    // Texture.
-    CCTexture *_texture;
-    
     // Position.
     CGPoint _positionR;
     
@@ -183,7 +180,6 @@ static void CCVertexLineToPolygon(CGPoint *points, float stroke, ccVertex2F *ver
 	BOOL	_startingPositionInitialized;
 }
 
-@synthesize texture = _texture;
 @synthesize fastMode = _fastMode;
 
 + (id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(CCColor*)color textureFilename:(NSString*)path
@@ -382,19 +378,6 @@ static void CCVertexLineToPolygon(CGPoint *points, float stroke, ccVertex2F *ver
 - (void) reset
 {
     _nuPoints = 0;
-}
-
--(CCRenderState *)renderState
-{
-	if(_renderState == nil){
-		_renderState = [CCRenderState renderStateWithOptions:@{
-			CCRenderStateBlendMode: self.blendMode,
-			CCRenderStateShader: self.shader,
-			CCRenderStateUniforms: @{CCShaderUniformMainTexture: (_texture ?: CCTextureNone)},
-		}];
-	}
-	
-	return _renderState;
 }
 
 // TODO should update the class to store the rendering values in actual output types.

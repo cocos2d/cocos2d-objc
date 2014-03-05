@@ -113,7 +113,7 @@
 		memset(data, 0, (int)(powW * powH * 4));
 		_pixelFormat=format;
 
-		_texture = [[CCTexture alloc] initWithData:data pixelFormat:_pixelFormat pixelsWide:powW pixelsHigh:powH contentSizeInPixels:CGSizeMake(w, h) contentScale:[CCDirector sharedDirector].contentScaleFactor];
+		self.texture = [[CCTexture alloc] initWithData:data pixelFormat:_pixelFormat pixelsWide:powW pixelsHigh:powH contentSizeInPixels:CGSizeMake(w, h) contentScale:[CCDirector sharedDirector].contentScaleFactor];
 		free( data );
 
 		GLint oldRBO;
@@ -124,7 +124,7 @@
 		glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
 
 		// associate texture with FBO
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _texture.name, 0);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, self.texture.name, 0);
 
 		if (depthStencilFormat != 0) {
 			//create and attach depth buffer
@@ -141,10 +141,10 @@
 		// check if it worked (probably worth doing :) )
 		NSAssert( glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, @"Could not attach texture to framebuffer");
 
-		[_texture setAliasTexParameters];
+		[self.texture setAliasTexParameters];
 
 		// retained
-		self.sprite = [CCSprite spriteWithTexture:_texture];
+		self.sprite = [CCSprite spriteWithTexture:self.texture];
 
 		[_sprite setScaleY:-1];
 
@@ -336,7 +336,7 @@
 //	if( flags & GL_STENCIL_BUFFER_BIT)
 //		glClearStencil(stencilClearValue);
 	
-	CGSize texSize = [_texture contentSizeInPixels];
+	CGSize texSize = [self.texture contentSizeInPixels];
 	GLKMatrix4 projection = GLKMatrix4MakeOrtho(0.0f, texSize.width/__ccContentScaleFactor, 0.0f, texSize.height/__ccContentScaleFactor, -1024.0f, 1024.0f);
 	
 	__block struct{ GLfloat v[4]; } oldViewport;
@@ -347,9 +347,9 @@
 	if(renderer == nil){
 		renderer = [[CCRenderer alloc] init];
 		
-		NSMutableDictionary *uniformGlobals = [[CCDirector sharedDirector].uniformGlobals mutableCopy];
-		uniformGlobals[CCShaderUniformProjection] = [NSValue valueWithGLKMatrix4:projection];
-		renderer.uniformGlobals = uniformGlobals;
+		NSMutableDictionary *uniforms = [[CCDirector sharedDirector].globalShaderUniforms mutableCopy];
+		uniforms[CCShaderUniformProjection] = [NSValue valueWithGLKMatrix4:projection];
+		renderer.globalShaderUniforms = uniforms;
 		
 		[CCRenderer bindRenderer:renderer];
 		needsFlush = YES;
@@ -458,7 +458,7 @@
     NSAssert(_pixelFormat == CCTexturePixelFormat_RGBA8888,@"only RGBA8888 can be saved as image");
 	
 	
-	CGSize s = [_texture contentSizeInPixels];
+	CGSize s = [self.texture contentSizeInPixels];
 	int tx = s.width;
 	int ty = s.height;
 	
@@ -618,7 +618,7 @@
 
 -(CGSize) contentSize
 {
-	return _texture.contentSize;
+	return self.texture.contentSize;
 }
 
 -(void) setContentSize:(CGSize)size

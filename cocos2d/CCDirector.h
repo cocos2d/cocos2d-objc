@@ -203,7 +203,11 @@ and when to execute the Scenes.
 /// Defaults to the view size.
 @property(nonatomic, assign) CGSize designSize;
 
-@property(nonatomic, assign) GLKMatrix4 projectionMatrix;
+/// Projection matrix used for rendering.
+@property(nonatomic, readonly) GLKMatrix4 projectionMatrix;
+
+/// The current global shader values values.
+@property(nonatomic, readonly) NSMutableDictionary *globalShaderUniforms;
 
 /** returns a shared instance of the director */
 +(CCDirector*)sharedDirector;
