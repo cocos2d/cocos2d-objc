@@ -57,30 +57,12 @@
 
 -(void)setupShader1Test
 {
-	self.subTitle = @"Shaders!";
-	
-	NSString *path = [[CCFileUtils sharedFileUtils] fullPathForFilename:@"TrippyTriangles.fsh"];
-	NSString *source = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
+	self.subTitle = @"Useless fragment shader.";
 	
 	CCNodeColor *node = [CCNodeColor nodeWithColor:[CCColor blueColor]];
 	node.contentSizeType = CCSizeTypeNormalized;
 	node.contentSize = CGSizeMake(1.0, 1.0);
-	node.shaderProgram = [[CCGLProgram alloc] initWithFragmentShaderSource:source];
-	
-	[self.contentNode addChild:node];
-}
-
--(void)setupShader2Test
-{
-	self.subTitle = @"Shaders!";
-	
-	NSString *path = [[CCFileUtils sharedFileUtils] fullPathForFilename:@"Raytrace.fsh"];
-	NSString *source = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
-	
-	CCNodeColor *node = [CCNodeColor nodeWithColor:[CCColor blueColor]];
-	node.contentSizeType = CCSizeTypeNormalized;
-	node.contentSize = CGSizeMake(1.0, 1.0);
-	node.shaderProgram = [[CCGLProgram alloc] initWithFragmentShaderSource:source];
+	node.shader = [CCShader shaderNamed:@"TrippyTriangles"];
 	
 	[self.contentNode addChild:node];
 }

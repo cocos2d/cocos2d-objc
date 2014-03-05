@@ -92,7 +92,7 @@
 #import "CCLayoutBox.h"
 
 // Shaders
-#import "CCGLProgram.h"
+#import "CCShader.h"
 
 // Physics
 #import "CCPhysicsBody.h"

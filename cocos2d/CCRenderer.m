@@ -28,11 +28,11 @@
 #import "CCRenderer_private.h"
 #import "CCCache.h"
 #import "CCTexture_Private.h"
-#import "CCGLProgram_private.h"
+#import "CCShader_private.h"
 #import "CCDirector_Private.h"
 
 
-@interface CCGLProgram()
+@interface CCShader()
 +(GLuint)createVAOforCCVertexBuffer:(GLuint)vbo;
 @end
 
@@ -72,9 +72,6 @@ const NSString *CCBlendEquationColor = @"CCBlendEquationColor";
 const NSString *CCBlendFuncSrcAlpha = @"CCBlendFuncSrcAlpha";
 const NSString *CCBlendFuncDstAlpha = @"CCBlendFuncDstAlpha";
 const NSString *CCBlendEquationAlpha = @"CCBlendEquationAlpha";
-
-const NSString *CCShaderUniformMainTexture = @"cc_MainTexture";
-const NSString *CCShaderUniformProjection = @"cc_Projection";
 
 
 //MARK: Blend Modes.
@@ -248,7 +245,7 @@ static NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 	NSAssert([blendMode isKindOfClass:[CCBlendMode class]], @"CCRenderStateBlendMode value is not a CCBlendMode object.");
 	
 	id shader = (options[CCRenderStateShader] ?: [NSNull null]);
-	NSAssert([shader isKindOfClass:[CCGLProgram class]], @"CCRenderStateShader value is not a CCGLProgram object.");
+	NSAssert([shader isKindOfClass:[CCShader class]], @"CCRenderStateShader value is not a CCShader object.");
 	
 	id uniforms = ([options[CCRenderStateUniforms] copy] ?: @{});
 	NSAssert([uniforms isKindOfClass:[NSDictionary class]], @"CCRenderStateShaderUniforms value is not a NSDictionary object.");
@@ -409,7 +406,7 @@ Things to try if sorting is implemented:
 	NSDictionary *_renderOptions;
 	NSDictionary *_blendOptions;
 	
-	CCGLProgram *_shader;
+	CCShader *_shader;
 	NSDictionary *_uniforms;
 	
 	NSMutableArray *_queue;
@@ -434,7 +431,7 @@ Things to try if sorting is implemented:
 {
 	if((self = [super init])){
 		glGenBuffers(1, &_vbo);
-		_vao = [CCGLProgram createVAOforCCVertexBuffer:_vbo];
+		_vao = [CCShader createVAOforCCVertexBuffer:_vbo];
 		
 		_queue = [NSMutableArray array];
 		
@@ -502,7 +499,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	}
 	
 	// Bind the shader.
-	__unsafe_unretained CCGLProgram *shader = renderOptions[CCRenderStateShader];
+	__unsafe_unretained CCShader *shader = renderOptions[CCRenderStateShader];
 	if(shader != _shader){
 		glUseProgram(shader->_program);
 		

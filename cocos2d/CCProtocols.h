@@ -38,10 +38,12 @@
  You can specify the blending function.
  */
 @protocol CCBlendProtocol <NSObject>
+
 /** set the source blending function for the texture */
--(void) setBlendFunc:(ccBlendFunc)blendFunc;
+-(void) setBlendFunc:(ccBlendFunc)blendFunc __deprecated;
 /** returns the blending function used for the texture */
--(ccBlendFunc) blendFunc;
+-(ccBlendFunc) blendFunc __deprecated;
+
 @end
 
 

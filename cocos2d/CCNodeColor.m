@@ -31,7 +31,7 @@
 #import "CCNodeColor.h"
 #import "CCDirector.h"
 #import "ccMacros.h"
-#import "CCGLProgram.h"
+#import "CCShader.h"
 #import "Support/CGPointExtension.h"
 #import "CCNode_Private.h"
 
@@ -88,7 +88,7 @@
 		[self updateColor];
 		[self setContentSize:CGSizeMake(w, h) ];
 
-		self.shaderProgram = [CCGLProgram positionColorShader];
+		self.shader = [CCShader positionColorShader];
 	}
 	return self;
 }

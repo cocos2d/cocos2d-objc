@@ -26,9 +26,6 @@
 #import <Foundation/Foundation.h>
 #import "CCRenderer.h"
 
-extern const NSString *CCShaderUniformMainTexture;
-extern const NSString *CCShaderUniformProjection;
-
 @interface CCRenderer()
 
 @property(nonatomic, copy) NSDictionary *uniformGlobals;

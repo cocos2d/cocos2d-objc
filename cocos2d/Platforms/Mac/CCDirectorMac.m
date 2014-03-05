@@ -39,7 +39,7 @@
 #import "../../CCScene.h"
 #import "../../CCScheduler.h"
 #import "../../ccMacros.h"
-#import "../../CCGLProgram.h"
+#import "../../CCShader.h"
 #import "../../ccFPSImages.h"
  
 // external

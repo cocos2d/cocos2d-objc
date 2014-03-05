@@ -37,9 +37,6 @@
  */
 @interface CCDrawNode : CCNode
 
-/** Sets the blending function for the draw node.  All primitives will be drawn using the same blend function. */
-@property(nonatomic, assign) ccBlendFunc blendFunc;
-
 
 /// -----------------------------------------------------------------------
 /// @name Primitive Drawing Methods

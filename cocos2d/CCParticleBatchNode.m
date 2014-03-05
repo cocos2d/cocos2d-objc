@@ -33,7 +33,7 @@
 #import "ccMacros.h"
 #import "Support/CGPointExtension.h"
 #import "CCParticleSystemBase.h"
-#import "CCGLProgram.h"
+#import "CCShader.h"
 
 #import "Support/base64.h"
 #import "Support/ZipUtils.h"

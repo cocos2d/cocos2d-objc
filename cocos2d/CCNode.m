@@ -34,7 +34,7 @@
 #import "ccMacros.h"
 #import "Support/CGPointExtension.h"
 #import "ccMacros.h"
-#import "CCGLProgram.h"
+#import "CCShader.h"
 #import "CCPhysics+ObjectiveChipmunk.h"
 #import "CCDirector_Private.h"
 #import "CCRenderer_private.h"
@@ -115,7 +115,7 @@ static NSUInteger globalOrderOfArrival = 1;
 @synthesize name = _name;
 @synthesize vertexZ = _vertexZ;
 @synthesize userObject = _userObject;
-@synthesize	shaderProgram = _shaderProgram;
+@synthesize	shader = _shader;
 @synthesize orderOfArrival = _orderOfArrival;
 @synthesize physicsBody = _physicsBody;
 
@@ -162,8 +162,8 @@ static NSUInteger globalOrderOfArrival = 1;
 		//initialize parent to nil
 		_parent = nil;
 
-		_shaderProgram = nil;
-		_blendFunc = (ccBlendFunc){GL_ONE, GL_ZERO};
+		_shader = [CCShader positionColorShader];
+		_blendMode = [CCBlendMode premultipliedAlphaMode];
 
 		_orderOfArrival = 0;
 		
@@ -1666,15 +1666,28 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 #warning TODO State is never uncached.
 	if(_renderState == nil){
 		_renderState = [CCRenderState renderStateWithOptions:@{
-			CCRenderStateBlendMode: [CCBlendMode blendModeWithOptions:@{
-				CCBlendFuncSrcColor: @(_blendFunc.src),
-				CCBlendFuncDstColor: @(_blendFunc.dst),
-			}],
-			CCRenderStateShader: _shaderProgram ?: [CCGLProgram positionColorShader],
+			CCRenderStateBlendMode: _blendMode,
+			CCRenderStateShader: _shader,
 		}];
 	}
 	
 	return _renderState;
+}
+
+-(ccBlendFunc)blendFunc
+{
+	return (ccBlendFunc){
+		[_blendMode.options[CCBlendFuncSrcColor] unsignedIntValue],
+		[_blendMode.options[CCBlendFuncDstColor] unsignedIntValue],
+	};
+}
+
+-(void)setBlendFunc:(ccBlendFunc)blendFunc
+{
+	_blendMode = [CCBlendMode blendModeWithOptions:@{
+		CCBlendFuncSrcColor: @(blendFunc.src),
+		CCBlendFuncDstColor: @(blendFunc.dst),
+	}];
 }
 
 @end

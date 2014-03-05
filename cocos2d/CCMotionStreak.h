@@ -42,9 +42,6 @@
 /// @name Accessing Motion Streak Attributes
 /// -----------------------------------------------------------------------
 
-/** Blend method. */
-@property (nonatomic, readwrite, assign) ccBlendFunc blendFunc;
-
 /** Fast mode toggle. */
 @property (nonatomic, readwrite, assign, getter = isFastMode) BOOL fastMode;
 

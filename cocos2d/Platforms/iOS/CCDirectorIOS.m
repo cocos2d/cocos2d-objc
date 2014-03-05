@@ -39,7 +39,7 @@
 #import "../../CCTextureCache.h"
 #import "../../ccMacros.h"
 #import "../../CCScene.h"
-#import "../../CCGLProgram.h"
+#import "../../CCShader.h"
 #import "../../ccFPSImages.h"
 #import "../../CCConfiguration.h"
 #import "CCRenderer_private.h"

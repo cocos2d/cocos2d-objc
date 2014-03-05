@@ -26,8 +26,8 @@
 		CCBlendEquationAlpha: @(GL_FUNC_ADD),
 	};
 	
-	NSDictionary *blendMode1 = [CCBlendMode blendModeWithOptions:[options mutableCopy]];
-	NSDictionary *blendMode2 = [CCBlendMode blendModeWithOptions:[options mutableCopy]];
+	CCBlendMode *blendMode1 = [CCBlendMode blendModeWithOptions:[options mutableCopy]];
+	CCBlendMode *blendMode2 = [CCBlendMode blendModeWithOptions:[options mutableCopy]];
 	
 	// The two returned blend modes should be interned and equal as object references too
 	XCTAssertEqualObjects(blendMode1, blendMode2, @"");
@@ -40,7 +40,7 @@
 -(void)testBlendModeDefaults
 {
 	{
-		NSDictionary *mode = [CCBlendMode blendModeWithOptions:@{
+		CCBlendMode *mode = [CCBlendMode blendModeWithOptions:@{
 			CCBlendFuncSrcColor: @(GL_SRC_ALPHA),
 			CCBlendFuncDstColor: @(GL_ONE_MINUS_SRC_ALPHA),
 			CCBlendEquationColor: @(GL_FUNC_ADD),
@@ -50,7 +50,7 @@
 		}];
 		XCTAssertEqual([CCBlendMode alphaMode], mode, @"");
 	}{
-		NSDictionary *mode = [CCBlendMode blendModeWithOptions:@{
+		CCBlendMode *mode = [CCBlendMode blendModeWithOptions:@{
 			CCBlendFuncSrcColor: @(GL_ONE),
 			CCBlendFuncDstColor: @(GL_ONE_MINUS_SRC_ALPHA),
 			CCBlendEquationColor: @(GL_FUNC_ADD),
@@ -60,7 +60,7 @@
 		}];
 		XCTAssertEqual([CCBlendMode premultipliedAlphaMode], mode, @"");
 	}{
-		NSDictionary *mode = [CCBlendMode blendModeWithOptions:@{
+		CCBlendMode *mode = [CCBlendMode blendModeWithOptions:@{
 			CCBlendFuncSrcColor: @(GL_ONE),
 			CCBlendFuncDstColor: @(GL_ONE),
 			CCBlendEquationColor: @(GL_FUNC_ADD),
@@ -70,7 +70,7 @@
 		}];
 		XCTAssertEqual([CCBlendMode addMode], mode, @"");
 	}{
-		NSDictionary *mode = [CCBlendMode blendModeWithOptions:@{
+		CCBlendMode *mode = [CCBlendMode blendModeWithOptions:@{
 			CCBlendFuncSrcColor: @(GL_DST_COLOR),
 			CCBlendFuncDstColor: @(GL_ZERO),
 			CCBlendEquationColor: @(GL_FUNC_ADD),

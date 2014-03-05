@@ -32,9 +32,24 @@
 #import "ccMacros.h"
 #import "Platforms/CCGL.h"
 
+/// Macro to embed GLSL source
 #define CC_GLSL(x) @#x
 
-@interface CCGLProgram : NSObject
+
+extern const NSString *CCShaderUniformProjection;
+extern const NSString *CCShaderUniformProjectionInv;
+extern const NSString *CCShaderUniformViewSize;
+extern const NSString *CCShaderUniformViewSizeInPixels;
+extern const NSString *CCShaderUniformTime;
+extern const NSString *CCShaderUniformSinTime;
+extern const NSString *CCShaderUniformCosTime;
+extern const NSString *CCShaderUniformRandom01;
+extern const NSString *CCShaderUniformMainTexture;
+
+
+@interface CCShader : NSObject<NSCopying>
+
++(instancetype)shaderNamed:(NSString *)shaderName;
 
 -(instancetype)initWithVertexShaderSource:(NSString *)vertexSource fragmentShaderSource:(NSString *)fragmentSource;
 -(instancetype)initWithFragmentShaderSource:(NSString *)source;

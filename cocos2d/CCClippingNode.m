@@ -29,7 +29,7 @@
 #import "CCGL.h"
 #import "OpenGL_Internal.h"
 
-#import "CCGLProgram.h"
+#import "CCShader.h"
 
 #import "CCDirector.h"
 #import "CGPointExtension.h"
@@ -39,8 +39,8 @@
 
 static GLint _stencilBits = -1;
 
-static void setProgram(CCNode *n, CCGLProgram *p) {
-    n.shaderProgram = p;
+static void setProgram(CCNode *n, CCShader *p) {
+    n.shader = p;
     if (!n.children) return;
     for (CCNode* c in n.children) setProgram(c,p);
 }
@@ -273,7 +273,7 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
 #if defined(__CC_PLATFORM_IOS)
         // since glAlphaTest do not exists in OES, use a shader that writes
         // pixel only if greater than an alpha threshold
-//        CCGLProgram *program = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColorAlphaTest];
+//        CCShader *program = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColorAlphaTest];
 //        GLint alphaValueLocation = glGetUniformLocation(program.program, kCCUniformAlphaTestValue_s);
 //        // set our alphaThreshold
 //        [program setUniformLocation:alphaValueLocation withF1:_alphaThreshold];

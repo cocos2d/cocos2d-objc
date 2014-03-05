@@ -38,7 +38,7 @@
 #import "ccMacros.h"
 #import "CCSpriteFrame.h"
 #import "CCDirector.h"
-#import "CCGLProgram.h"
+#import "CCShader.h"
 #import "CCConfiguration.h"
 
 // support
@@ -75,7 +75,7 @@
 		[self initIndices];
 		[self initVAO];
 
-		self.shaderProgram = [CCGLProgram positionTextureColorShader];
+		self.shader = [CCShader positionTextureColorShader];
 	}
 
 	return self;

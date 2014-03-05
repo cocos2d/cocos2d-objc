@@ -109,7 +109,7 @@ typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
 	CCTexturePixelFormat_Default = CCTexturePixelFormat_RGBA8888,
 };
 
-@class CCGLProgram;
+@class CCShader;
 
 /** CCTexture2D class.
  *  This class allows to easily create OpenGL 2D textures from images, text or raw data.
@@ -133,7 +133,7 @@ typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
     BOOL                        _antialiased;
 
 	// Needed for drawAtRect, drawInPoint.
-	CCGLProgram					*_shaderProgram;
+	CCShader					*_shaderProgram;
 }
 
 

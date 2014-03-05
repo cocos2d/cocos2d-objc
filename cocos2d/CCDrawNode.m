@@ -28,7 +28,7 @@
  */
 
 #import "CCDrawNode.h"
-#import "CCGLProgram.h"
+#import "CCShader.h"
 #import "Support/CGPointExtension.h"
 #import "Support/OpenGL_Internal.h"
 #import "CCNode_Private.h"
@@ -62,7 +62,7 @@
 -(id)init
 {
 	if((self = [super init])){
-		self.blendFunc = (ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
+		self.blendMode = [CCBlendMode premultipliedAlphaMode];
 		#warning TODO
 //		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionLengthTexureColor];
 

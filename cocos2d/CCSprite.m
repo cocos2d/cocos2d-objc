@@ -33,7 +33,7 @@
 #import "CCAnimation.h"
 #import "CCAnimationCache.h"
 #import "CCTextureCache.h"
-#import "CCGLProgram.h"
+#import "CCShader.h"
 #import "CCDirector.h"
 #import "Support/CGPointExtension.h"
 #import "Support/CCProfiling.h"
@@ -125,9 +125,9 @@
 	if( (self = [super init]) )
 	{
 		// shader program
-		self.shaderProgram = [CCGLProgram positionTextureColorShader];
+		self.shader = [CCShader positionTextureColorShader];
 		
-		self.blendFunc = (ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
+		self.blendMode = [CCBlendMode premultipliedAlphaMode];
 		_opacityModifyRGB = YES;
 		
 		_flipY = _flipX = NO;
@@ -344,14 +344,9 @@
 -(CCRenderState *)renderState
 {
 	if(_renderState == nil){
-		ccBlendFunc blendFunc = self.blendFunc;
-		
 		_renderState = [CCRenderState renderStateWithOptions:@{
-			CCRenderStateBlendMode: [CCBlendMode blendModeWithOptions:@{
-				CCBlendFuncSrcColor: @(blendFunc.src),
-				CCBlendFuncDstColor: @(blendFunc.dst),
-			}],
-			CCRenderStateShader: _shaderProgram,
+			CCRenderStateBlendMode: self.blendMode,
+			CCRenderStateShader: self.shader,
 			CCRenderStateUniforms: @{CCShaderUniformMainTexture: (_texture ?: CCTextureNone)},
 		}];
 	}
@@ -514,10 +509,10 @@
 {
 	// it is possible to have an untextured sprite
 	if( !_texture || ! [_texture hasPremultipliedAlpha] ) {
-		self.blendFunc = (ccBlendFunc){GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA};
+		self.blendMode = [CCBlendMode alphaMode];
 		[self setOpacityModifyRGB:NO];
 	} else {
-		self.blendFunc = (ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
+		self.blendMode = [CCBlendMode premultipliedAlphaMode];
 		[self setOpacityModifyRGB:YES];
 	}
 }

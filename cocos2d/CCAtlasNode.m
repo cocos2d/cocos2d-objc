@@ -27,7 +27,7 @@
 
 #import "CCAtlasNode.h"
 #import "ccMacros.h"
-#import "CCGLProgram.h"
+#import "CCShader.h"
 #import "CCTextureCache.h"
 #import "CCDirector.h"
 #import "CCNode_Private.h"
@@ -35,7 +35,6 @@
 
 @interface CCAtlasNode ()
 -(void) calculateMaxItems;
--(void) updateBlendFunc;
 -(void) updateOpacityModifyRGB;
 @end
 

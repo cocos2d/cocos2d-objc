@@ -27,7 +27,7 @@
 #import "CCRenderTexture.h"
 #import "CCDirector.h"
 #import "ccMacros.h"
-#import "CCGLProgram.h"
+#import "CCShader.h"
 #import "CCConfiguration.h"
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
@@ -149,7 +149,7 @@
 		[_sprite setScaleY:-1];
 
 		// issue #937
-		[_sprite setBlendFunc:(ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
+		_sprite.blendMode = [CCBlendMode premultipliedAlphaMode];
 		// issue #1464
 		[_sprite setOpacityModifyRGB:YES];
 

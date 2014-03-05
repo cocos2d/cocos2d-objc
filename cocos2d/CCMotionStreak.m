@@ -26,7 +26,7 @@
 
 #import "CCMotionStreak.h"
 #import "CCTextureCache.h"
-#import "CCGLProgram.h"
+#import "CCShader.h"
 #import "ccMacros.h"
 #import "CCNode_Private.h"
 #import "CCTexture_Private.h"
@@ -231,10 +231,10 @@ static void CCVertexLineToPolygon(CGPoint *points, float stroke, ccVertex2F *ver
         _colorPointer =  malloc(sizeof(GLubyte) * _maxPoints * 2 * 4);
 
         // Set blend mode
-				self.blendFunc = (ccBlendFunc){GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA};
+				self.blendMode = [CCBlendMode alphaMode];
 
         // shader program
-        self.shaderProgram = [CCGLProgram positionTextureColorShader];
+        self.shader = [CCShader positionTextureColorShader];
 
         [self setTexture:texture];
         [super setColor:color];
@@ -386,15 +386,10 @@ static void CCVertexLineToPolygon(CGPoint *points, float stroke, ccVertex2F *ver
 
 -(CCRenderState *)renderState
 {
-	ccBlendFunc blendFunc = self.blendFunc;
-	
 	if(_renderState == nil){
 		_renderState = [CCRenderState renderStateWithOptions:@{
-			CCRenderStateBlendMode: [CCBlendMode blendModeWithOptions:@{
-				CCBlendFuncSrcColor: @(blendFunc.src),
-				CCBlendFuncDstColor: @(blendFunc.dst),
-			}],
-			CCRenderStateShader: _shaderProgram,
+			CCRenderStateBlendMode: self.blendMode,
+			CCRenderStateShader: self.shader,
 			CCRenderStateUniforms: @{CCShaderUniformMainTexture: (_texture ?: CCTextureNone)},
 		}];
 	}

@@ -29,7 +29,7 @@
 #import "CCLabelTTF.h"
 #import "Support/CGPointExtension.h"
 #import "ccMacros.h"
-#import "CCGLProgram.h"
+#import "CCShader.h"
 #import "Support/CCFileUtils.h"
 #import "ccMacros.h"
 #import "ccUtils.h"
@@ -116,7 +116,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         if (!fontName) fontName = @"Helvetica";
         if (!fontSize) fontSize = 12;
         
-				self.blendFunc = (ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
+				self.blendMode = [CCBlendMode premultipliedAlphaMode];
         
         // other properties
         self.fontName = fontName;
@@ -452,19 +452,11 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     // Generate a new texture from the attributed string
 	CCTexture *tex;
     
-    tex = [self createTextureWithAttributedString:[formattedAttributedString copyAdjustedForContentScaleFactor] useFullColor:useFullColor];
+	tex = [self createTextureWithAttributedString:[formattedAttributedString copyAdjustedForContentScaleFactor] useFullColor:useFullColor];
 
-	if( !tex )
-		return NO;
+	if(!tex) return NO;
     
-    if (!useFullColor)
-    {
-        self.shaderProgram = [CCGLProgram positionTextureA8ColorShader];
-    }
-    else
-    {
-        self.shaderProgram = [CCGLProgram positionTextureColorShader];
-    }
+	self.shader = (useFullColor ? [CCShader positionTextureColorShader] : [CCShader positionTextureA8ColorShader]);
 
     // Update texture and content size
 	[self setTexture:tex];
@@ -752,7 +744,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
             dst[i] = data[i*4+3];
         
         texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_A8 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSizeInPixels:dimensions contentScale:[CCDirector sharedDirector].contentScaleFactor];
-        self.shaderProgram = [CCGLProgram positionTextureA8ColorShader];
+        self.shader = [CCShader positionTextureA8ColorShader];
     }
     
 #ifdef __CC_PLATFORM_IOS
@@ -780,14 +772,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     CCTexture* tex = [self createTextureWithString:string useFullColor:useFullColor];
     if (!tex) return NO;
     
-    if (!useFullColor)
-    {
-        self.shaderProgram = [CCGLProgram positionTextureA8ColorShader];
-    }
-    else
-    {
-        self.shaderProgram = [CCGLProgram positionTextureColorShader];
-    }
+		self.shader = (useFullColor ? [CCShader positionTextureColorShader] : [CCShader positionTextureA8ColorShader]);
         
     // Update texture and content size
 	[self setTexture:tex];
@@ -1006,7 +991,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
             dst[i] = data[i*4+3];
         
         texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_A8 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSizeInPixels:dimensions contentScale:[CCDirector sharedDirector].contentScaleFactor];
-        self.shaderProgram = [CCGLProgram positionTextureA8ColorShader];
+        self.shader = [CCShader positionTextureA8ColorShader];
     }
 
     free(data);

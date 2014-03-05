@@ -67,9 +67,6 @@
 /// @name Accessing the Atlas Node Attributes
 /// -----------------------------------------------------------------------
 
-/** Conforms to CCTextureProtocol protocol. */
-@property (nonatomic,readwrite) ccBlendFunc blendFunc;
-
 /** How many quads to draw. */
 @property (nonatomic,readwrite) NSUInteger quadsToDraw;
 
