@@ -150,7 +150,10 @@
 
         // Show the fullscreen window
         [_fullScreenWindow makeKeyAndOrderFront:self];
-		[_fullScreenWindow makeMainWindow];
+        [_fullScreenWindow makeMainWindow];
+        // issue #632
+        self.view.wantsBestResolutionOpenGLSurface = NO;
+
 
     } else {
 
@@ -168,7 +171,10 @@
 
         // Show the window
         [_windowGLView makeKeyAndOrderFront:self];
-		[_windowGLView makeMainWindow];
+        [_windowGLView makeMainWindow];
+        // issue #632
+        self.view.wantsBestResolutionOpenGLSurface = YES;
+
     }
 	
 	// issue #1189
