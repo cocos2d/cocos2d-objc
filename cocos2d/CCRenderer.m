@@ -486,10 +486,14 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	[self invalidateState];
 }
 
+#if defined(__CC_PLATFORM_IOS)
+#define glBindVertexArray glBindVertexArrayOES
+#endif
+
 -(void)unbindVAO
 {
 	if(!_vaoBound){
-		glBindVertexArrayOES(0);
+		glBindVertexArray(0);
 		_vaoBound = NO;
 	}
 }
@@ -497,7 +501,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 -(void)setRenderState:(CCRenderState *)renderState
 {
 	if(!_vaoBound){
-		glBindVertexArrayOES(_vao);
+		glBindVertexArray(_vao);
 		_vaoBound = YES;
 	}
 	

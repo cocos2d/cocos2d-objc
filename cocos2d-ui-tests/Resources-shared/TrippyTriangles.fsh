@@ -1,5 +1,7 @@
-#extension GL_OES_standard_derivatives : enable
+#ifdef GL_ES
 precision highp float;
+#extension GL_OES_standard_derivatives : enable
+#endif
 
 const float sqrt3 = 1.73205080756888;
 

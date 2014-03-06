@@ -60,6 +60,11 @@ const NSString *CCShaderUniformMainTexture = @"cc_MainTexture";
 	main texture size points/pixels
 */
 static const GLchar *CCShaderHeader =
+	"#ifndef GL_ES\n"
+	"#define lowp\n"
+	"#define mediump\n"
+	"#define highp\n"
+	"#endif\n\n"
 	"uniform highp mat4 cc_Projection;\n"
 	"uniform highp mat4 cc_ProjectionInv;\n"
 	"uniform highp vec2 cc_ViewSize;\n"
@@ -69,21 +74,25 @@ static const GLchar *CCShaderHeader =
 	"uniform highp vec4 cc_CosTime;\n"
 	"uniform highp vec4 cc_Random01;\n\n"
 	"uniform sampler2D cc_MainTexture;\n\n"
-	"varying lowp vec4 cc_FragColor;\n"
+	"varying mediump vec4 cc_FragColor;\n"
 	"varying highp vec2 cc_FragTexCoord1;\n"
 	"varying highp vec2 cc_FragTexCoord2;\n\n"
 	"// End Cocos2D shader header.\n\n";
 
 static const GLchar *CCVertexShaderHeader =
+	"#ifdef GL_ES\n"
 	"precision highp float;\n\n"
-	"attribute vec4 cc_Position;\n"
-	"attribute vec2 cc_TexCoord1;\n"
-	"attribute vec2 cc_TexCoord2;\n"
-	"attribute vec4 cc_Color;\n\n"
+	"#endif\n\n"
+	"attribute highp vec4 cc_Position;\n"
+	"attribute highp vec2 cc_TexCoord1;\n"
+	"attribute highp vec2 cc_TexCoord2;\n"
+	"attribute highp vec4 cc_Color;\n\n"
 	"// End Cocos2D vertex shader header.\n\n";
 
 static const GLchar *CCFragmentShaderHeader =
+	"#ifdef GL_ES\n"
 	"precision lowp float;\n\n"
+	"#endif\n\n"
 	"// End Cocos2D fragment shader header.\n\n";
 
 static NSString *CCDefaultVShader =
@@ -178,13 +187,18 @@ CompileShader(GLenum type, const char *source)
 	BOOL _ownsProgram;
 }
 
+#if defined(__CC_PLATFORM_IOS)
+#define glGenVertexArray glGenVertexArrayOES
+#define glBindVertexArray glBindVertexArrayOES
+#endif
+
 +(GLuint)createVAOforCCVertexBuffer:(GLuint)vbo
 {
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	
 	GLuint vao = 0;
-	glGenVertexArraysOES(1, &vao);
-	glBindVertexArrayOES(vao);
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
 
 	glEnableVertexAttribArray(CCAttributePosition);
 	glEnableVertexAttribArray(CCAttributeTexCoord1);
@@ -196,7 +210,7 @@ CompileShader(GLenum type, const char *source)
 	glVertexAttribPointer(CCAttributeTexCoord2, 2, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, texCoord2));
 	glVertexAttribPointer(CCAttributeColor, 4, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, color));
 
-	glBindVertexArrayOES(0);
+	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	
 	return vao;

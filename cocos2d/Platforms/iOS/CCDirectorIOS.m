@@ -126,13 +126,13 @@
 	[CCRenderer bindRenderer:_renderer];
 	[_renderer invalidateState];
 	
+	// Render
 	[_runningScene visit:_renderer parentTransform:&projection];
 	[_notificationNode visit:_renderer parentTransform:&projection];
 	if( _displayStats ) [self showStats];
 	
 	// Flush any unused rendering modes from the cache.
 	[CCRENDERSTATE_CACHE flush];
-	[CCBLENDMODE_CACHE flush];
 	
 	[_renderer flush];
 	[CCRenderer bindRenderer:nil];
@@ -158,12 +158,10 @@
 
 	switch (projection) {
 		case CCDirectorProjection2D:
-			
 			_projectionMatrix = GLKMatrix4MakeOrtho(0, sizePoint.width, 0, sizePoint.height, -1024, 1024 );
 			break;
 
-		case CCDirectorProjection3D:
-		{
+		case CCDirectorProjection3D: {
 			#warning TODO
 //			float zeye = [self getZEye];
 //
@@ -200,7 +198,6 @@
 	}
 
 	_projection = projection;
-
 	[self createStatsLabel];
 }
 
