@@ -556,9 +556,6 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	[_runningScene visit];
 	[_notificationNode visit];
 	if( _displayStats ) [self showStats];
-
-	// Flush any unused rendering modes from the cache.
-	[CCRENDERSTATE_CACHE flush];
 	
 	[_renderer flush];
 	[CCRenderer bindRenderer:nil];

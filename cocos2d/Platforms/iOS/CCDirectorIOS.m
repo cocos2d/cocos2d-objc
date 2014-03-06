@@ -131,9 +131,6 @@
 	[_notificationNode visit:_renderer parentTransform:&projection];
 	if( _displayStats ) [self showStats];
 	
-	// Flush any unused rendering modes from the cache.
-	[CCRENDERSTATE_CACHE flush];
-	
 	[_renderer flush];
 	[CCRenderer bindRenderer:nil];
 	
