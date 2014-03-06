@@ -324,6 +324,12 @@ CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
 @end
 
 
+@interface CCRenderer()
+-(void)unbindVAO;
+-(void)setRenderState:(CCRenderState *)renderState;
+@end
+
+
 //MARK: Draw Command.
 @interface CCRenderCommandDraw : NSObject<CCRenderCommand>
 
@@ -385,6 +391,7 @@ CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
 
 -(void)invoke:(CCRenderer *)renderer
 {
+	[renderer unbindVAO];
 	_block();
 }
 
@@ -413,7 +420,9 @@ Things to try if sorting is implemented:
 	NSDictionary *_blendOptions;
 	
 	CCShader *_shader;
-	NSDictionary *_uniforms;
+	NSDictionary *_shaderUniforms;
+	
+	BOOL _vaoBound;
 	
 	NSMutableArray *_queue;
 	__unsafe_unretained CCRenderCommandDraw *_lastDrawCommand;
@@ -430,7 +439,8 @@ Things to try if sorting is implemented:
 	_renderState = nil;
 	_blendOptions = nil;
 	_shader = nil;
-	_uniforms = nil;
+	_shaderUniforms = nil;
+	_vaoBound = NO;
 }
 
 -(instancetype)init
@@ -476,8 +486,21 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	[self invalidateState];
 }
 
+-(void)unbindVAO
+{
+	if(!_vaoBound){
+		glBindVertexArrayOES(0);
+		_vaoBound = NO;
+	}
+}
+
 -(void)setRenderState:(CCRenderState *)renderState
 {
+	if(!_vaoBound){
+		glBindVertexArrayOES(_vao);
+		_vaoBound = YES;
+	}
+	
 	if(renderState == _renderState) return;
 	
 	// Set the blending state.
@@ -510,18 +533,18 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 		glUseProgram(shader->_program);
 		
 		_shader = shader;
-		_uniforms = nil;
+		_shaderUniforms = nil;
 	}
 	
 	// Set the shader's uniform state.
-	__unsafe_unretained NSDictionary *uniforms = renderState->_shaderUniforms;
-	if(uniforms != _uniforms){
+	__unsafe_unretained NSDictionary *shaderUniforms = renderState->_shaderUniforms;
+	if(shaderUniforms != _shaderUniforms){
 		__unsafe_unretained NSDictionary *setters = shader->_uniformSetters;
-		for(NSString *uniform in setters){
-			__unsafe_unretained CCUniformSetter setter = setters[uniform];
-			setter(self, uniforms[uniform] ?: _globalShaderUniforms[uniform]);
+		for(NSString *uniformName in setters){
+			__unsafe_unretained CCUniformSetter setter = setters[uniformName];
+			setter(self, shaderUniforms[uniformName] ?: _globalShaderUniforms[uniformName]);
 		}
-		_uniforms = uniforms;
+		_shaderUniforms = shaderUniforms;
 	}
 	
 	CHECK_GL_ERROR_DEBUG();
@@ -584,10 +607,8 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	glBufferData(GL_ARRAY_BUFFER, _triangleCount*sizeof(CCTriangle), _triangles, GL_STREAM_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	
-	#warning TODO need to manage VAO state around the custom blocks
-	glBindVertexArrayOES(_vao);
 	for(CCRenderCommandDraw *command in _queue) [command invoke:self];
-	glBindVertexArrayOES(0);
+	[self unbindVAO];
 	
 //	NSLog(@"Draw commands: %d, Draw calls: %d", _statDrawCommands, _queue.count);
 	_statDrawCommands = 0;

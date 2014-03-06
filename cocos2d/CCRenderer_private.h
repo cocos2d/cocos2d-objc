@@ -37,16 +37,13 @@ extern id CCRENDERSTATE_CACHE;
 /// Current global shader uniform values.
 @property(nonatomic, copy) NSDictionary *globalShaderUniforms;
 
-/// Ensure that the specified renderstate is applied to GL.
--(void)setRenderState:(CCRenderState *)renderState;
-
 /// Retrieve the current renderer for the current thread.
 +(instancetype)currentRenderer;
 
 /// Set the current renderer for the current thread.
 +(void)bindRenderer:(CCRenderer *)renderer;
 
-/// Render any currendly queued commands.
+/// Render any currently queued commands.
 -(void)flush;
 
 @end
