@@ -729,6 +729,7 @@ GLToClipTransform(kmMat4 *transformOut)
     {
 		[_runningScene onEnter];
 		[_runningScene onEnterTransitionDidFinish];
+        [_runningScene setPaused:NO];
 	}
 }
 
