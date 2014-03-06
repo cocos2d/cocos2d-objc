@@ -650,10 +650,9 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         CGContextSetTextDrawingMode(context, kCGTextFillStroke);
         CGContextSetLineWidth(context, outlineWidth * 2);
         CGContextSetLineJoin(context, kCGLineJoinRound);
-        CGContextSetStrokeColorWithColor(context, [color CGColor]);
-        
+
         NSMutableAttributedString* outlineString = [attributedString mutableCopy];
-        [outlineString removeAttribute:NSForegroundColorAttributeName range:NSMakeRange(0, outlineString.length)];
+        [outlineString addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0, outlineString.length)];
         
         [outlineString drawInRect:drawArea];
         
