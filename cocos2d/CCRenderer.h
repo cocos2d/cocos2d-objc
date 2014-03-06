@@ -24,6 +24,9 @@
 
 #import <ccTypes.h>
 
+
+@class CCTexture;
+
 typedef struct CCVertex {
 	GLKVector3 position;
 	GLKVector2 texCoord1, texCoord2;
@@ -112,11 +115,11 @@ extern const NSString *CCBlendEquationAlpha;
 @end
 
 
-@interface CCRenderState : NSObject
+@interface CCRenderState : NSObject<NSCopying>
 
-@property(nonatomic, readonly) NSDictionary *options;
++(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader mainTexture:(CCTexture *)mainTexture;
 
-+(CCRenderState *)renderStateWithOptions:(NSDictionary *)options;
+-(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms;
 
 @end
 

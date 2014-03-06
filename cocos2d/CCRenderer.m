@@ -222,8 +222,15 @@ static NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 
 
 //MARK: Render States.
-@interface CCRenderState()
--(instancetype)initWithOptions:(NSDictionary *)options;
+@interface CCRenderState() {
+	@public
+	CCBlendMode *_blendMode;
+	CCShader *_shader;
+	NSDictionary *_shaderUniforms;
+}
+
+-(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms;
+
 @end
 
 
@@ -233,44 +240,14 @@ static NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 
 @implementation CCRenderStateCache
 
--(id)objectForKey:(id<NSCopying>)options
+-(id)createSharedDataForKey:(CCRenderState *)renderState
 {
-	CCRenderState *renderState = [self rawObjectForKey:options];
-	if(renderState) return renderState;
-	
-	// Normalize the render state to use for the key.
-	id blendMode = (options[CCRenderStateBlendMode] ?: CCBLEND_DISABLED);
-	NSAssert([blendMode isKindOfClass:[CCBlendMode class]], @"CCRenderStateBlendMode value is not a CCBlendMode object.");
-	
-	id shader = (options[CCRenderStateShader] ?: [NSNull null]);
-	NSAssert([shader isKindOfClass:[CCShader class]], @"CCRenderStateShader value is not a CCShader object.");
-	
-	id uniforms = ([options[CCRenderStateShaderUniforms] copy] ?: @{});
-	NSAssert([uniforms isKindOfClass:[NSDictionary class]], @"CCRenderStateShaderUniforms value is not a NSDictionary object.");
-	
-	NSDictionary *normalized = @{
-		CCRenderStateBlendMode: blendMode,
-		CCRenderStateShader: shader,
-		CCRenderStateShaderUniforms: uniforms,
-	};
-	
-	// Create the key using the normalized blending mode.
-	renderState = [super objectForKey:normalized];
-	
-	// Make an alias for the unnormalized version
-	[self makeAlias:options forKey:normalized];
-	
 	return renderState;
 }
 
--(id)createSharedDataForKey:(NSDictionary *)options
+-(id)createPublicObjectForSharedData:(CCRenderState *)renderState
 {
-	return options;
-}
-
--(id)createPublicObjectForSharedData:(NSDictionary *)options
-{
-	return [[CCRenderState alloc] initWithOptions:options];
+	return [[CCRenderState alloc] initWithBlendMode:renderState->_blendMode shader:renderState->_shader shaderUniforms:renderState->_shaderUniforms];
 }
 
 // Nothing special
@@ -280,17 +257,7 @@ static NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 
 
 @implementation CCRenderState {
-	@public
-	NSDictionary *_options;
-}
-
--(instancetype)initWithOptions:(NSDictionary *)options
-{
-	if((self = [super init])){
-		_options = options;
-	}
-	
-	return self;
+	CCTexture *_mainTexture;
 }
 
 CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
@@ -300,9 +267,52 @@ CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
 	CCRENDERSTATE_CACHE = [[CCRenderStateCache alloc] init];
 }
 
-+(CCRenderState *)renderStateWithOptions:(NSDictionary *)options
+-(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms
 {
-	return [CCRENDERSTATE_CACHE objectForKey:options];
+	if((self = [super init])){
+		_blendMode = blendMode;
+		_shader = shader;
+		_shaderUniforms = shaderUniforms;
+	}
+	
+	return self;
+}
+
++(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader mainTexture:(CCTexture *)mainTexture;
+{
+	CCRenderState *renderState = [[self alloc] initWithBlendMode:blendMode shader:shader shaderUniforms:@{CCShaderUniformMainTexture: mainTexture}];
+	renderState->_mainTexture = mainTexture;
+	
+	return [CCRENDERSTATE_CACHE objectForKey:renderState];
+}
+
+-(id)copyWithZone:(NSZone *)zone
+{
+	if([_shaderUniforms isKindOfClass:[NSMutableDictionary class]]){
+		return [[CCRenderState allocWithZone:zone] initWithBlendMode:_blendMode shader:_shader shaderUniforms:[_shaderUniforms copy]];
+	} else {
+		return self;
+	}
+}
+
+-(NSUInteger)hash
+{
+	NSAssert(_mainTexture, @"Attempting to cache a renderstate without a mainTexture value.");
+	
+	// Not great, but acceptable. All values are unique by pointer.
+	return ((NSUInteger)_blendMode ^ (NSUInteger)_shader ^ (NSUInteger)_mainTexture);
+}
+
+-(BOOL)isEqual:(id)object
+{
+	CCRenderState *other = object;
+	
+	return (
+		[other isKindOfClass:[CCRenderState class]] &&
+		_blendMode == other->_blendMode &&
+		_shader == other->_shader &&
+		_mainTexture == other->_mainTexture
+	);
 }
 
 @end
@@ -326,13 +336,13 @@ CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
 
 @implementation CCRenderCommandDraw {
 	@public
-	NSDictionary *_renderOptions;
+	CCRenderState *_renderState;
 }
 
--(instancetype)initWithRenderOptions:(NSDictionary *)renderOptions first:(GLint)first count:(GLsizei)count
+-(instancetype)initWithRenderState:(CCRenderState *)renderState first:(GLint)first count:(GLsizei)count
 {
 	if((self = [super init])){
-		_renderOptions = renderOptions;
+		_renderState = [renderState copy];
 		_first = first;
 		_count = count;
 	}
@@ -347,7 +357,7 @@ CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
 
 -(void)invoke:(CCRenderer *)renderer
 {
-	[renderer setRenderOptions:_renderOptions];
+	[renderer setRenderState:_renderState];
 	glDrawArrays(GL_TRIANGLES, 3*_first, 3*_count);
 }
 
@@ -399,7 +409,7 @@ Things to try if sorting is implemented:
 	GLuint _vao;
 	GLuint _vbo;
 	
-	NSDictionary *_renderOptions;
+	CCRenderState *_renderState;
 	NSDictionary *_blendOptions;
 	
 	CCShader *_shader;
@@ -417,7 +427,7 @@ Things to try if sorting is implemented:
 -(void)invalidateState
 {
 	_lastDrawCommand = nil;
-	_renderOptions = nil;
+	_renderState = nil;
 	_blendOptions = nil;
 	_shader = nil;
 	_uniforms = nil;
@@ -466,12 +476,12 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	[self invalidateState];
 }
 
--(BOOL)setRenderOptions:(__unsafe_unretained NSDictionary *)renderOptions
+-(void)setRenderState:(CCRenderState *)renderState
 {
-	if(renderOptions == _renderOptions) return NO;
+	if(renderState == _renderState) return;
 	
 	// Set the blending state.
-	__unsafe_unretained NSDictionary *blendOptions = ((CCBlendMode *)renderOptions[CCRenderStateBlendMode])->_options;
+	__unsafe_unretained NSDictionary *blendOptions = renderState->_blendMode->_options;
 	if(blendOptions != _blendOptions){
 		if(blendOptions == CCBLEND_DISABLED_OPTIONS){
 			if(_blendOptions != CCBLEND_DISABLED_OPTIONS) glDisable(GL_BLEND);
@@ -495,7 +505,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	}
 	
 	// Bind the shader.
-	__unsafe_unretained CCShader *shader = renderOptions[CCRenderStateShader];
+	__unsafe_unretained CCShader *shader = renderState->_shader;
 	if(shader != _shader){
 		glUseProgram(shader->_program);
 		
@@ -504,7 +514,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	}
 	
 	// Set the shader's uniform state.
-	__unsafe_unretained NSDictionary *uniforms = renderOptions[CCRenderStateShaderUniforms];
+	__unsafe_unretained NSDictionary *uniforms = renderState->_shaderUniforms;
 	if(uniforms != _uniforms){
 		__unsafe_unretained NSDictionary *setters = shader->_uniformSetters;
 		for(NSString *uniform in setters){
@@ -516,8 +526,8 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	
 	CHECK_GL_ERROR_DEBUG();
 	
-	_renderOptions = renderOptions;
-	return YES;
+	_renderState = renderState;
+	return;
 }
 
 -(CCTriangle *)ensureBufferCapacity:(NSUInteger)requestedCount
@@ -536,16 +546,15 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 
 -(CCTriangle *)enqueueTriangles:(NSUInteger)count withState:(CCRenderState *)renderState;
 {
-	__unsafe_unretained NSDictionary *renderOptions = renderState->_options;
 	__unsafe_unretained CCRenderCommandDraw *previous = _lastDrawCommand;
 	CCTriangle *buffer = [self ensureBufferCapacity:count];
 	
-	if(previous && renderOptions == previous->_renderOptions){
+	if(previous && previous->_renderState == renderState){
 		// Batch with the previous command.
 		[previous batchTriangles:(GLsizei)count];
 	} else {
 		// Start a new command.
-		CCRenderCommandDraw *command = [[CCRenderCommandDraw alloc] initWithRenderOptions:renderOptions first:(GLint)_triangleCount count:(GLsizei)count];
+		CCRenderCommandDraw *command = [[CCRenderCommandDraw alloc] initWithRenderState:renderState first:(GLint)_triangleCount count:(GLsizei)count];
 		[_queue addObject:command];
 		_lastDrawCommand = command;
 	}
@@ -575,6 +584,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	glBufferData(GL_ARRAY_BUFFER, _triangleCount*sizeof(CCTriangle), _triangles, GL_STREAM_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	
+	#warning TODO need to manage VAO state around the custom blocks
 	glBindVertexArrayOES(_vao);
 	for(CCRenderCommandDraw *command in _queue) [command invoke:self];
 	glBindVertexArrayOES(0);

@@ -28,7 +28,7 @@
 	CCRenderState *_renderState;
 	
 	CCShader *_shader;
-	NSDictionary *_shaderUniforms;
+	NSMutableDictionary *_shaderUniforms;
 	
 	CCBlendMode *_blendMode;
 	CCTexture *_texture;

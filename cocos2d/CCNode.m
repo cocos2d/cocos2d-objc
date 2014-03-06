@@ -1664,17 +1664,11 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 -(CCRenderState *)renderState
 {
 	if(_renderState == nil){
-		CCTexture *texture = (_texture ?: CCTextureNone);
-		
-		// Update the main texture uniform. (_shaderUniforms may be nil)
-		NSMutableDictionary *uniforms = [_shaderUniforms mutableCopy];
-		uniforms[CCShaderUniformMainTexture] = texture;
-		
-		_renderState = [CCRenderState renderStateWithOptions:@{
-			CCRenderStateBlendMode: _blendMode,
-			CCRenderStateShader: _shader,
-			CCRenderStateShaderUniforms: uniforms ?: @{CCShaderUniformMainTexture: texture},
-		}];
+		if(_shaderUniforms.count > 1){
+			_renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms];
+		} else {
+			_renderState = [CCRenderState renderStateWithBlendMode:_blendMode shader:_shader mainTexture:(_texture ?: CCTextureNone)];
+		}
 	}
 	
 	return _renderState;
@@ -1696,14 +1690,18 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 	return _blendMode;
 }
 
--(NSDictionary *)shaderUniforms
+-(NSMutableDictionary *)shaderUniforms
 {
+	if(_shaderUniforms == nil){
+		self.shaderUniforms = [@{CCShaderUniformMainTexture: (_texture ?: CCTextureNone)} mutableCopy];
+	}
+	
 	return _shaderUniforms;
 }
 
--(void)setShaderUniforms:(NSDictionary *)shaderUniforms
+-(void)setShaderUniforms:(NSMutableDictionary *)shaderUniforms
 {
-	_shaderUniforms = [shaderUniforms copy];
+	_shaderUniforms = shaderUniforms;
 	_renderState = nil;
 }
 

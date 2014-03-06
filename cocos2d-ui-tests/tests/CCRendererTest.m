@@ -57,9 +57,7 @@
 		
 		// Set just sprite3's matrix to rotate colors clockwise.
 		GLKMatrix4 colorMatrix2 = GLKMatrix4MakeRotation(-4.0f*timer.invokeTime, 1.0f, 1.0f, 1.0f);
-		sprite3.shaderUniforms = @{
-			@"u_ColorMatrix": [NSValue valueWithGLKMatrix4:colorMatrix2],
-		};
+		sprite3.shaderUniforms[@"u_ColorMatrix"] = [NSValue valueWithGLKMatrix4:colorMatrix2];
 		
 		[timer repeatOnceWithInterval:1.0/60.0];
 	} delay:0.0f];
