@@ -325,7 +325,7 @@ CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
 
 
 @interface CCRenderer()
--(void)unbindVAO;
+-(void)bindVAO:(BOOL)bind;
 -(void)setRenderState:(CCRenderState *)renderState;
 @end
 
@@ -391,7 +391,7 @@ CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
 
 -(void)invoke:(CCRenderer *)renderer
 {
-	[renderer unbindVAO];
+	[renderer bindVAO:NO];
 	_block();
 }
 
@@ -490,21 +490,17 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 #define glBindVertexArray glBindVertexArrayOES
 #endif
 
--(void)unbindVAO
+-(void)bindVAO:(BOOL)bind
 {
-	if(!_vaoBound){
-		glBindVertexArray(0);
-		_vaoBound = NO;
+	if(bind != _vaoBound){
+		glBindVertexArray(bind ? _vao : 0);
+		_vaoBound = bind;
 	}
 }
 
 -(void)setRenderState:(CCRenderState *)renderState
 {
-	if(!_vaoBound){
-		glBindVertexArray(_vao);
-		_vaoBound = YES;
-	}
-	
+	[self bindVAO:YES];
 	if(renderState == _renderState) return;
 	
 	// Set the blending state.
@@ -612,7 +608,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	
 	for(CCRenderCommandDraw *command in _queue) [command invoke:self];
-	[self unbindVAO];
+	[self bindVAO:NO];
 	
 //	NSLog(@"Draw commands: %d, Draw calls: %d", _statDrawCommands, _queue.count);
 	_statDrawCommands = 0;
