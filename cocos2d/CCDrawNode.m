@@ -35,10 +35,28 @@
 #import "CCColor.h"
 
 
+static NSString *FRAGMENT_SHADER_SOURCE = 
+	@"#ifdef GL_ES\n"
+	@"#extension GL_OES_standard_derivatives : enable\n"
+	@"#endif\n"
+	@"\n"
+	@"void main(){\n"
+	@"	gl_FragColor = cc_FragColor*smoothstep(0.0, length(fwidth(cc_FragTexCoord1)), 1.0 - length(cc_FragTexCoord1));\n"
+	@"}\n";
+
+
+
 @implementation CCDrawNode {
 	GLsizei _triangleCapacity;
 	GLsizei _triangleCount;
 	CCTriangle *_triangles;
+}
+
+CCShader *SHADER = nil;
+
++(void)initialize
+{
+	SHADER = [[CCShader alloc] initWithFragmentShaderSource:FRAGMENT_SHADER_SOURCE];
 }
 
 #pragma mark memory
@@ -63,8 +81,7 @@
 {
 	if((self = [super init])){
 		self.blendMode = [CCBlendMode premultipliedAlphaMode];
-		#warning TODO
-//		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionLengthTexureColor];
+		self.shader = SHADER;
 
 		_triangleCapacity = 128;
 		_triangles = calloc(_triangleCapacity, sizeof(*_triangles));
