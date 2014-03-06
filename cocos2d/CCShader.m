@@ -73,8 +73,8 @@ static const GLchar *CCShaderHeader =
 	"uniform highp vec4 cc_SinTime;\n"
 	"uniform highp vec4 cc_CosTime;\n"
 	"uniform highp vec4 cc_Random01;\n\n"
-	"uniform sampler2D cc_MainTexture;\n\n"
-	"varying mediump vec4 cc_FragColor;\n"
+	"uniform lowp sampler2D cc_MainTexture;\n\n"
+	"varying lowp vec4 cc_FragColor;\n"
 	"varying highp vec2 cc_FragTexCoord1;\n"
 	"varying highp vec2 cc_FragTexCoord2;\n\n"
 	"// End Cocos2D shader header.\n\n";
