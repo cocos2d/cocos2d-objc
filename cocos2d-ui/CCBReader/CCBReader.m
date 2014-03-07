@@ -979,6 +979,18 @@ static inline float readFloat(CCBReader *self)
         
         return [CCPhysicsJoint connectedPivotJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody anchorA:anchorA];
     }
+    else if([className isEqualToString:@"CCPhysicsSpringJoint"])
+    {
+        CGPoint anchorA = [properties[@"anchorA"] CGPointValue];
+        CGPoint anchorB = [properties[@"anchorB"] CGPointValue];
+        
+        float   restLength = [properties[@"restLength"] floatValue];
+        float   stiffness = [properties[@"stiffness"] floatValue];
+        float   damping = [properties[@"damping"] floatValue];
+        
+        return [CCPhysicsJoint connectedSpringJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody anchorA:anchorA anchorB:anchorB restLength:restLength stiffness:stiffness damping:damping];
+        
+    }
     else if([className isEqualToString:@"CCPhysicsPinJoint"])
     {
         CGPoint anchorA = [properties[@"anchorA"] CGPointValue];
