@@ -33,7 +33,7 @@
 
 
 @interface CCShader()
-+(GLuint)createVAOforCCVertexBuffer:(GLuint)vbo;
++(GLuint)createVAOforCCVertexBuffer:(GLuint)vbo elementBuffer:(GLuint)ebo;
 @end
 
 //MARK: NSValue Additions.
@@ -364,7 +364,8 @@ CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
 -(void)invoke:(CCRenderer *)renderer
 {
 	[renderer setRenderState:_renderState];
-	glDrawArrays(GL_TRIANGLES, 3*_first, 3*_count);
+	glDrawElements(GL_TRIANGLES, 3*_count, GL_UNSIGNED_SHORT, (GLvoid *)(3*_first*sizeof(GLushort)));
+//	glDrawArrays(GL_TRIANGLES, 3*_first, 3*_count);
 }
 
 @end
@@ -415,6 +416,7 @@ Things to try if sorting is implemented:
 @implementation CCRenderer {
 	GLuint _vao;
 	GLuint _vbo;
+	GLuint _ebo;
 	
 	CCRenderState *_renderState;
 	NSDictionary *_blendOptions;
@@ -426,6 +428,9 @@ Things to try if sorting is implemented:
 	
 	NSMutableArray *_queue;
 	__unsafe_unretained CCRenderCommandDraw *_lastDrawCommand;
+	
+	CCVertex *_vertexes;
+	GLsizei _vertexCount, _vertexCapacity;
 	
 	CCTriangle *_triangles;
 	GLsizei _triangleCount, _triangleCapacity;
@@ -447,9 +452,14 @@ Things to try if sorting is implemented:
 {
 	if((self = [super init])){
 		glGenBuffers(1, &_vbo);
-		_vao = [CCShader createVAOforCCVertexBuffer:_vbo];
+		glGenBuffers(1, &_ebo);
+		
+		_vao = [CCShader createVAOforCCVertexBuffer:_vbo elementBuffer:_ebo];
 		
 		_queue = [NSMutableArray array];
+		
+		_vertexCapacity = 2*1024;
+		_vertexes = calloc(_vertexCapacity, sizeof(*_vertexes));
 		
 		_triangleCapacity = 2*1024;
 		_triangles = calloc(_triangleCapacity, sizeof(*_triangles));
@@ -460,6 +470,11 @@ Things to try if sorting is implemented:
 
 -(void)dealloc
 {
+	glDeleteVertexArraysOES(1, &_vao);
+	glDeleteBuffers(1, &_vbo);
+	glDeleteBuffers(1, &_ebo);
+	
+	free(_vertexes);
 	free(_triangles);
 }
 
@@ -553,7 +568,21 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	return;
 }
 
--(CCTriangle *)ensureBufferCapacity:(NSUInteger)requestedCount
+-(CCVertex *)ensureVertexCapacity:(NSUInteger)requestedCount
+{
+	GLsizei required = _vertexCount + (GLsizei)requestedCount;
+	if(required > _vertexCapacity){
+		// Double the size of the buffer until it fits.
+		while(required >= _vertexCapacity) _vertexCapacity *= 2;
+		
+		_vertexes = realloc(_vertexes, _vertexCapacity*sizeof(*_vertexes));
+	}
+	
+	// Return the triangle buffer pointer.
+	return &_vertexes[_vertexCount];
+}
+
+-(CCTriangle *)ensureTriangleCapacity:(NSUInteger)requestedCount
 {
 	GLsizei required = _triangleCount + (GLsizei)requestedCount;
 	if(required > _triangleCapacity){
@@ -567,23 +596,27 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	return &_triangles[_triangleCount];
 }
 
--(CCTriangle *)enqueueTriangles:(NSUInteger)count withState:(CCRenderState *)renderState;
+-(CCRenderBuffer)enqueueTriangles:(NSUInteger)triangleCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState;
 {
 	__unsafe_unretained CCRenderCommandDraw *previous = _lastDrawCommand;
-	CCTriangle *buffer = [self ensureBufferCapacity:count];
+	CCVertex *vertexes = [self ensureVertexCapacity:vertexCount];
+	CCTriangle *triangles = [self ensureTriangleCapacity:triangleCount];
 	
 	if(previous && previous->_renderState == renderState){
 		// Batch with the previous command.
-		[previous batchTriangles:(GLsizei)count];
+		[previous batchTriangles:(GLsizei)triangleCount];
 	} else {
 		// Start a new command.
-		CCRenderCommandDraw *command = [[CCRenderCommandDraw alloc] initWithRenderState:renderState first:(GLint)_triangleCount count:(GLsizei)count];
+		CCRenderCommandDraw *command = [[CCRenderCommandDraw alloc] initWithRenderState:renderState first:(GLint)_triangleCount count:(GLsizei)triangleCount];
 		[_queue addObject:command];
 		_lastDrawCommand = command;
 	}
 	
+	CCRenderBuffer buffer = {vertexes, triangles, _vertexCount};
+	_vertexCount += vertexCount;
+	_triangleCount += triangleCount;
+	
 	_statDrawCommands++;
-	_triangleCount += count;
 	return buffer;
 }
 
@@ -604,8 +637,12 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 -(void)flush
 {
 	glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-	glBufferData(GL_ARRAY_BUFFER, _triangleCount*sizeof(CCTriangle), _triangles, GL_STREAM_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, _vertexCount*sizeof(*_vertexes), _vertexes, GL_STREAM_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ebo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, _triangleCount*sizeof(*_triangles), _triangles, GL_STREAM_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	
 	for(CCRenderCommandDraw *command in _queue) [command invoke:self];
 	[self bindVAO:NO];
@@ -614,6 +651,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	_statDrawCommands = 0;
 	[_queue removeAllObjects];
 	
+	_vertexCount = 0;
 	_triangleCount = 0;
 	
 	CHECK_GL_ERROR_DEBUG();

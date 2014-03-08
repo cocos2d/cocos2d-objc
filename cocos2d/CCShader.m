@@ -192,10 +192,8 @@ CompileShader(GLenum type, const char *source)
 #define glBindVertexArray glBindVertexArrayOES
 #endif
 
-+(GLuint)createVAOforCCVertexBuffer:(GLuint)vbo
++(GLuint)createVAOforCCVertexBuffer:(GLuint)vbo elementBuffer:(GLuint)ebo
 {
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	
 	GLuint vao = 0;
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
@@ -205,13 +203,17 @@ CompileShader(GLenum type, const char *source)
 	glEnableVertexAttribArray(CCAttributeTexCoord2);
 	glEnableVertexAttribArray(CCAttributeColor);
 	
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glVertexAttribPointer(CCAttributePosition, 3, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, position));
 	glVertexAttribPointer(CCAttributeTexCoord1, 2, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, texCoord1));
 	glVertexAttribPointer(CCAttributeTexCoord2, 2, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, texCoord2));
 	glVertexAttribPointer(CCAttributeColor, 4, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, color));
+	
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	
 	return vao;
 }

@@ -342,16 +342,13 @@
 {
 	if(!CCCheckVisbility(transform, _contentSize)) return;
 	
-	CCVertex verts[] = {
-		CCVertexApplyTransform(_verts[0], transform),
-		CCVertexApplyTransform(_verts[1], transform),
-		CCVertexApplyTransform(_verts[2], transform),
-		CCVertexApplyTransform(_verts[3], transform),
-	};
-	
-	CCTriangle *triangles = [renderer enqueueTriangles:2 withState:self.renderState];
-	triangles[0] = (CCTriangle){verts[0], verts[1], verts[2]};
-	triangles[1] = (CCTriangle){verts[0], verts[2], verts[3]};
+	CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:self.renderState];
+	CCRenderBufferSetVertex(buffer, 0, CCVertexApplyTransform(_verts[0], transform));
+	CCRenderBufferSetVertex(buffer, 1, CCVertexApplyTransform(_verts[1], transform));
+	CCRenderBufferSetVertex(buffer, 2, CCVertexApplyTransform(_verts[2], transform));
+	CCRenderBufferSetVertex(buffer, 3, CCVertexApplyTransform(_verts[3], transform));
+	CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
+	CCRenderBufferSetTriangle(buffer, 1, 0, 2, 3);
 }
 
 #pragma mark CCSprite - CCNode overrides

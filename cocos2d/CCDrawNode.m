@@ -100,13 +100,13 @@ CCShader *SHADER = nil;
 
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
-	CCVertex *verts = (CCVertex *)[renderer enqueueTriangles:_triangleCount withState:self.renderState];
-	
-	// TODO Try if memcpy + transforming just the verts is faster?
-	// TODO Maybe it would be even better to skip the CPU transform and use a uniform matrix?
-	for(int i=0; i<_triangleCount*3; i++){
-		verts[i] = CCVertexApplyTransform(((CCVertex *)_triangles)[i], transform);
-	}
+//	CCVertex *verts = (CCVertex *)[renderer enqueueTriangles:_triangleCount withState:self.renderState];
+//	
+//	// TODO Try if memcpy + transforming just the verts is faster?
+//	// TODO Maybe it would be even better to skip the CPU transform and use a uniform matrix?
+//	for(int i=0; i<_triangleCount*3; i++){
+//		verts[i] = CCVertexApplyTransform(((CCVertex *)_triangles)[i], transform);
+//	}
 }
 
 #pragma mark Immediate Mode
@@ -121,9 +121,9 @@ CCShader *SHADER = nil;
 	CCVertex c = {GLKVector3Make(pos.x + radius, pos.y + radius, 0), GLKVector2Make( 1,  1), zero2, color4};
 	CCVertex d = {GLKVector3Make(pos.x + radius, pos.y - radius, 0), GLKVector2Make( 1, -1), zero2, color4};
 	
-	CCTriangle *triangles = [self bufferTriangles:2];
-	triangles[0] = (CCTriangle){a, b, c};
-	triangles[1] = (CCTriangle){a, c, d};
+//	CCTriangle *triangles = [self bufferTriangles:2];
+//	triangles[0] = (CCTriangle){a, b, c};
+//	triangles[1] = (CCTriangle){a, c, d};
 }
 
 static inline GLKVector2 GLKVector2Perp(GLKVector2 v){return GLKVector2Make(-v.y, v.x);}
@@ -157,14 +157,14 @@ MakeVertex(GLKVector2 v, GLKVector2 texCoord, GLKVector4 color)
 	CCVertex v6 = MakeVertex(GLKVector2Subtract(a, GLKVector2Subtract(nw, tw)), GLKVector2Subtract(t, n), color4);
 	CCVertex v7 = MakeVertex(GLKVector2Add(a, GLKVector2Add(nw, tw)), GLKVector2Add(n, t), color4);
 	
-	CCTriangle *triangles = [self bufferTriangles:6];
-	
-	triangles[0] = (CCTriangle){v0, v1, v2};
-	triangles[1] = (CCTriangle){v3, v1, v2};
-	triangles[2] = (CCTriangle){v3, v4, v2};
-	triangles[3] = (CCTriangle){v3, v4, v5};
-	triangles[4] = (CCTriangle){v6, v4, v5};
-	triangles[5] = (CCTriangle){v6, v7, v5};
+//	CCTriangle *triangles = [self bufferTriangles:6];
+//	
+//	triangles[0] = (CCTriangle){v0, v1, v2};
+//	triangles[1] = (CCTriangle){v3, v1, v2};
+//	triangles[2] = (CCTriangle){v3, v4, v2};
+//	triangles[3] = (CCTriangle){v3, v4, v5};
+//	triangles[4] = (CCTriangle){v6, v4, v5};
+//	triangles[5] = (CCTriangle){v6, v7, v5};
 }
 
 -(void)drawPolyWithVerts:(const CGPoint *)_verts count:(NSUInteger)count fillColor:(CCColor*)fill  borderWidth:(CGFloat)width borderColor:(CCColor*)line;
@@ -205,11 +205,11 @@ MakeVertex(GLKVector2 v, GLKVector2 texCoord, GLKVector4 color)
 		GLKVector2 v1 = GLKVector2Subtract( (verts[i+1]), GLKVector2MultiplyScalar(extrude[i+1].offset, inset));
 		GLKVector2 v2 = GLKVector2Subtract( (verts[i+2]), GLKVector2MultiplyScalar(extrude[i+2].offset, inset));
 		
-		*cursor++ = (CCTriangle){
-			MakeVertex(v0, zero, fill4),
-			MakeVertex(v1, zero, fill4),
-			MakeVertex(v2, zero, fill4),
-		};
+//		*cursor++ = (CCTriangle){
+//			MakeVertex(v0, zero, fill4),
+//			MakeVertex(v1, zero, fill4),
+//			MakeVertex(v2, zero, fill4),
+//		};
 	}
 	
 	for(int i=0; i<count; i++){
@@ -228,32 +228,32 @@ MakeVertex(GLKVector2 v, GLKVector2 texCoord, GLKVector4 color)
 			GLKVector2 outer0 = GLKVector2Add(v0, GLKVector2MultiplyScalar(offset0, width));
 			GLKVector2 outer1 = GLKVector2Add(v1, GLKVector2MultiplyScalar(offset1, width));
 			
-			*cursor++ = (CCTriangle){
-				MakeVertex(inner0, GLKVector2Negate(n0), line4),
-				MakeVertex(inner1, GLKVector2Negate(n0), line4),
-				MakeVertex(outer1, n0, line4),
-			};
-			*cursor++ = (CCTriangle){
-				MakeVertex(inner0, GLKVector2Negate(n0), line4),
-				MakeVertex(outer0, n0, line4),
-				MakeVertex(outer1, n0, line4),
-			};
+//			*cursor++ = (CCTriangle){
+//				MakeVertex(inner0, GLKVector2Negate(n0), line4),
+//				MakeVertex(inner1, GLKVector2Negate(n0), line4),
+//				MakeVertex(outer1, n0, line4),
+//			};
+//			*cursor++ = (CCTriangle){
+//				MakeVertex(inner0, GLKVector2Negate(n0), line4),
+//				MakeVertex(outer0, n0, line4),
+//				MakeVertex(outer1, n0, line4),
+//			};
 		} else {
 			GLKVector2 inner0 = GLKVector2Subtract(v0, GLKVector2MultiplyScalar(offset0, 0.5));
 			GLKVector2 inner1 = GLKVector2Subtract(v1, GLKVector2MultiplyScalar(offset1, 0.5));
 			GLKVector2 outer0 = GLKVector2Add(v0, GLKVector2MultiplyScalar(offset0, 0.5));
 			GLKVector2 outer1 = GLKVector2Add(v1, GLKVector2MultiplyScalar(offset1, 0.5));
 			
-			*cursor++ = (CCTriangle){
-				MakeVertex(inner0, zero, fill4),
-				MakeVertex(inner1, zero, fill4),
-				MakeVertex(outer1, n0, fill4),
-			};
-			*cursor++ = (CCTriangle){
-				MakeVertex(inner0, zero, fill4),
-				MakeVertex(outer0, n0, fill4),
-				MakeVertex(outer1, n0, fill4),
-			};
+//			*cursor++ = (CCTriangle){
+//				MakeVertex(inner0, zero, fill4),
+//				MakeVertex(inner1, zero, fill4),
+//				MakeVertex(outer1, n0, fill4),
+//			};
+//			*cursor++ = (CCTriangle){
+//				MakeVertex(inner0, zero, fill4),
+//				MakeVertex(outer0, n0, fill4),
+//				MakeVertex(outer1, n0, fill4),
+//			};
 		}
 	}
 }

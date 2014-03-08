@@ -54,8 +54,27 @@ CCVertexLerp(CCVertex a, CCVertex b, float t)
 }
 
 typedef struct CCTriangle {
-	CCVertex a, b, c;
+	uint16_t a, b, c;
 } CCTriangle;
+
+typedef struct CCRenderBuffer {
+	CCVertex *vertexes;
+	CCTriangle *triangles;
+	uint16_t startIndex;
+} CCRenderBuffer;
+
+static inline void
+CCRenderBufferSetVertex(CCRenderBuffer buffer, int index, CCVertex vertex)
+{
+	buffer.vertexes[index] = vertex;
+}
+
+static inline void
+CCRenderBufferSetTriangle(CCRenderBuffer buffer, int index, GLushort a, GLushort b, GLushort c)
+{
+	uint16_t offset = buffer.startIndex;
+	buffer.triangles[index] = (CCTriangle){a + offset, b + offset, c + offset};
+}
 
 
 static inline BOOL
@@ -131,7 +150,7 @@ extern const NSString *CCBlendEquationAlpha;
 
 /// Enqueue a basic drawing command, and returns a buffer for the geometry.
 /// IMPORTANT! The buffer should be considered write-only. Attempting to read from the buffer could crash your game.
--(CCTriangle *)enqueueTriangles:(NSUInteger)count withState:(CCRenderState *)renderState;
+-(CCRenderBuffer)enqueueTriangles:(NSUInteger)triangleCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState;
 
 /// Enqueue a block that performs GL commands.
 -(void)enqueueBlock:(void (^)())block;

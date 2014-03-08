@@ -149,22 +149,22 @@ TexCoordInterpolationMatrix(CCVertex *verts)
 	GLKMatrix3 interpolateTexCoord = TexCoordInterpolationMatrix(_verts);
 	GLKVector4 color = _verts[0].color;
 	
+	CCRenderBuffer buffer = [renderer enqueueTriangles:18 andVertexes:16 withState:self.renderState];
+	
 	// Interpolate the vertexes!
-	CCVertex verts[4][4];
 	for(int y=0; y<4; y++){
 		for(int x=0; x<4; x++){
 			GLKVector3 position = GLKMatrix4MultiplyAndProjectVector3(interpolatePosition, GLKVector3Make(alphaX[x], alphaY[y], 0.0));
 			GLKVector3 texCoord = GLKMatrix3MultiplyVector3(interpolateTexCoord, GLKVector3Make(alphaTexX[x], alphaTexY[y], 1.0));
-			verts[y][x] = (CCVertex){position, GLKVector2Make(texCoord.x, texCoord.y), GLKVector2Make(0.0, 0.0), color};
+			CCRenderBufferSetVertex(buffer, y*4 + x, (CCVertex){position, GLKVector2Make(texCoord.x, texCoord.y), GLKVector2Make(0.0, 0.0), color});
 		}
 	}
 	
 	// Output lots of triangles.
-	CCTriangle *triangles = [renderer enqueueTriangles:18 withState:self.renderState];
 	for(int y=0; y<3; y++){
 		for(int x=0; x<3; x++){
-			triangles[y*6 + x*2 + 0] = (CCTriangle){verts[y + 0][x + 0], verts[y + 0][x + 1], verts[y + 1][x + 1]};
-			triangles[y*6 + x*2 + 1] = (CCTriangle){verts[y + 0][x + 0], verts[y + 1][x + 1], verts[y + 1][x + 0]};
+			CCRenderBufferSetTriangle(buffer, y*6 + x*2 + 0, (y + 0)*4 + (x + 0), (y + 0)*4 + (x + 1), (y + 1)*4 + (x + 1));
+			CCRenderBufferSetTriangle(buffer, y*6 + x*2 + 1, (y + 0)*4 + (x + 0), (y + 1)*4 + (x + 1), (y + 1)*4 + (x + 0));
 		}
 	}
 }
