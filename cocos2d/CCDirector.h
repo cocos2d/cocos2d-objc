@@ -48,7 +48,7 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 	CCDirectorProjectionCustom,
 
 	/// Detault projection is 3D projection
-	CCDirectorProjectionDefault = CCDirectorProjection3D,
+	CCDirectorProjectionDefault = CCDirectorProjection2D,
 
 };
 

@@ -447,22 +447,22 @@ GLToClipTransform(kmMat4 *transformOut)
 -(CGRect)viewportRect
 {
 	// TODO It's _possible_ that a user will use a non-axis aligned projection. Weird, but possible.
-	kmMat4 projection;
-	kmGLGetMatrix(KM_GL_PROJECTION, &projection);
-	
-	kmMat4 projectionInv;
-	kmMat4Inverse(&projectionInv, &projection);
+	kmMat4 transform;
+	GLToClipTransform(&transform);
+		
+	kmMat4 transformInv;
+	kmMat4Inverse(&transformInv, &transform);
 	
 	// Calculate z=0 using -> transform*[0, 0, 0, 1]/w
-	kmScalar zClip = projection.mat[14]/projection.mat[15];
+	kmScalar zClip = transform.mat[14]/transform.mat[15];
 	
 	// Bottom left and top right coordinates of viewport in clip coords.
 	kmVec3 clipBL = {-1.0, -1.0, zClip};
 	kmVec3 clipTR = { 1.0,  1.0, zClip};
 	
 	kmVec3 glBL, glTR;
-	kmVec3TransformCoord(&glBL, &clipBL, &projectionInv);
-	kmVec3TransformCoord(&glTR, &clipTR, &projectionInv);
+	kmVec3TransformCoord(&glBL, &clipBL, &transformInv);
+	kmVec3TransformCoord(&glTR, &clipTR, &transformInv);
 	
 	return CGRectMake(glBL.x, glBL.y, glTR.x - glBL.x, glTR.y - glBL.y);
 }
