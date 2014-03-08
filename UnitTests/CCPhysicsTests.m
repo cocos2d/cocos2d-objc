@@ -731,6 +731,45 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
 	[physicsNode onExit];
 }
 
+-(void)testBodyEachCollisionPair
+{
+	CCPhysicsNode *physicsNode = [CCPhysicsNode node];
+	physicsNode.gravity = ccp(0, -100);
+	
+	CCNode *node1 = [CCNode node];
+	node1.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1.0 andCenter:CGPointZero];
+	node1.physicsBody.type = CCPhysicsBodyTypeStatic;
+	[physicsNode addChild:node1];
+	
+	CCNode *node2 = [CCNode node];
+	node2.position = ccp(0, 10);
+	node2.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1.0 andCenter:CGPointZero];
+	node2.physicsBody.type = CCPhysicsBodyTypeDynamic;
+	[physicsNode addChild:node2];
+	
+	// Force entering the scene to set up the physics objects.
+	[physicsNode onEnter];
+	
+	// Step the physics for a while.
+	for(int i=0; i<100; i++){
+		[physicsNode fixedUpdate:1.0/100.0];
+	}
+	
+	__block BOOL check = NO;
+	
+	[node1.physicsBody eachCollisionPair:^(CCPhysicsCollisionPair *pair) {
+		CCPhysicsShape *a, *b; [pair shapeA:&a shapeB:&b];
+		check = (
+			(a.node == node1 && b.node == node2) ||
+			(b.node == node1 && a.node == node2)
+		);
+	}];
+	
+	XCTAssert(check, @"The objects should have had a collision pair listed between them.");
+	
+	[physicsNode onExit];
+}
+
 // TODO
 // * Check that body and shape settings are preserved through multiple add/remove cycles and are actually applied to the cpBody.
 // * Check that changing properties before and after adding to an active physics node updates the properties correctly.

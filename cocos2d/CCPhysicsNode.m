@@ -48,6 +48,7 @@
 }
 
 -(cpArbiter *)arbiter {return _arbiter;}
+-(void)setArbiter:(cpArbiter *)arbiter {_arbiter = arbiter;}
 
 // Check that the arbiter is set and return it.
 -(cpArbiter *)arb

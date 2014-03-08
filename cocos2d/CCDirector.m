@@ -749,6 +749,7 @@ static CCDirector *_sharedDirector = nil;
     {
 		[_runningScene onEnter];
 		[_runningScene onEnterTransitionDidFinish];
+        [_runningScene setPaused:NO];
 	}
 }
 

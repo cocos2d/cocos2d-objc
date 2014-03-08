@@ -274,7 +274,12 @@
 -(void) viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-	[self startAnimation];
+
+    UIApplicationState state = UIApplication.sharedApplication.applicationState;
+    if (state != UIApplicationStateBackground)
+    {
+        [self startAnimation];
+    }
 }
 
 -(void) viewDidAppear:(BOOL)animated
