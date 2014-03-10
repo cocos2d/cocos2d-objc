@@ -152,23 +152,29 @@
 
 - (void) inputUpInside
 {
-    _draggingHandle = NO;
-    self.highlighted = NO;
-    
-    if (_dragStartValue != _sliderValue)
+    if (_draggingHandle)
     {
-        [self triggerAction];
+        _draggingHandle = NO;
+        self.highlighted = NO;
+        
+        if (_dragStartValue != _sliderValue)
+        {
+            [self triggerAction];
+        }
     }
 }
 
 - (void) inputUpOutside
 {
-    _draggingHandle = NO;
-    self.highlighted = NO;
-    
-    if (_dragStartValue != _sliderValue)
+    if (_draggingHandle)
     {
-        if (self.enabled) [self triggerAction];
+        _draggingHandle = NO;
+        self.highlighted = NO;
+        
+        if (_dragStartValue != _sliderValue)
+        {
+            if (self.enabled) [self triggerAction];
+        }
     }
 }
 
