@@ -999,8 +999,13 @@ static inline float readFloat(CCBReader *self)
         BOOL minEnabled = [properties[@"minDistanceEnabled"] boolValue];
         BOOL maxEnabled = [properties[@"maxDistanceEnabled"] boolValue];
         
-        float minDistance = [properties[@"minDistance"] floatValue];
-        float maxDistance = [properties[@"maxDistance"] floatValue];
+        CGPoint anchoAWorldPos = [nodeBodyA convertToWorldSpace:anchorA];
+        CGPoint anchoBWorldPos = [nodeBodyB convertToWorldSpace:anchorB];
+        
+        float distance =  ccpDistance(anchoAWorldPos, anchoBWorldPos);
+        
+        float minDistance = minEnabled ? [properties[@"minDistance"] floatValue] : distance;
+        float maxDistance = maxEnabled ? [properties[@"maxDistance"] floatValue] : distance;
         
         if(maxEnabled || minEnabled)
         {
