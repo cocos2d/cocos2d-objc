@@ -95,6 +95,8 @@
 	CCPhysicsBody *bodyA = self.bodyA, *bodyB = self.bodyB;
 	CGPoint anchorA = CGPointApplyAffineTransform(_anchorA, bodyA.node.nonRigidTransform);
 	CGPoint anchorB = CGPointApplyAffineTransform(_anchorB, bodyB.node.nonRigidTransform);
+    _constraint.anchorA = CCP_TO_CPV(anchorA);
+    _constraint.anchorB = CCP_TO_CPV(anchorB);
 	
 	_constraint.anchorA = CCP_TO_CPV(anchorA);
 	_constraint.anchorB = CCP_TO_CPV(anchorB);
