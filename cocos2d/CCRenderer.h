@@ -90,9 +90,9 @@ CCCheckVisbility(const GLKMatrix4 *transform, CGSize contentSize)
 	float hh = contentSize.height*0.5f;
 	
 	// Bounding box center point in clip coordinates.
-	GLKVector4 center = GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(hw, hh, 0.0f, 1.0f));
-	center = GLKVector4MultiplyScalar(center, 1.0f/center.w);
+	GLKVector3 center = GLKMatrix4MultiplyAndProjectVector3(*transform, GLKVector3Make(hw, hh, 0.0f));
 	
+	#warning TODO: does not handle perspective divide
 	// Half width/height in clip space.
 	float cshw = hw*fmaxf(fabsf(transform->m00 + transform->m10), fabsf(transform->m00 - transform->m10));
 	float cshh = hh*fmaxf(fabsf(transform->m01 + transform->m11), fabsf(transform->m01 - transform->m11));
