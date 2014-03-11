@@ -208,7 +208,7 @@
 		// Easy case: 0 duration.
 		for(OALAction* action in actions_)
 		{
-			[pDurations_ addObject:[NSNumber numberWithFloat:0]];
+			[pDurations_ addObject:[NSNumber numberWithFloat:action.duration * 0.0f]];
 		}
 	}
 	else
