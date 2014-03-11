@@ -115,10 +115,10 @@
 	CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:self.renderState];
 	
 	float w = size.width, h = size.height;
-	CCRenderBufferSetVertex(buffer, 0, (CCVertex){GLKMatrix4MultiplyAndProjectVector3(*transform, GLKVector3Make(0, 0, 0)), zero, zero, _colors[0]});
-	CCRenderBufferSetVertex(buffer, 0, (CCVertex){GLKMatrix4MultiplyAndProjectVector3(*transform, GLKVector3Make(w, 0, 0)), zero, zero, _colors[1]});
-	CCRenderBufferSetVertex(buffer, 0, (CCVertex){GLKMatrix4MultiplyAndProjectVector3(*transform, GLKVector3Make(w, h, 0)), zero, zero, _colors[2]});
-	CCRenderBufferSetVertex(buffer, 0, (CCVertex){GLKMatrix4MultiplyAndProjectVector3(*transform, GLKVector3Make(0, h, 0)), zero, zero, _colors[3]});
+	CCRenderBufferSetVertex(buffer, 0, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(0, 0, 0, 1)), zero, zero, _colors[0]});
+	CCRenderBufferSetVertex(buffer, 1, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(w, 0, 0, 1)), zero, zero, _colors[1]});
+	CCRenderBufferSetVertex(buffer, 2, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(w, h, 0, 1)), zero, zero, _colors[2]});
+	CCRenderBufferSetVertex(buffer, 3, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(0, h, 0, 1)), zero, zero, _colors[3]});
 	
 	CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
 	CCRenderBufferSetTriangle(buffer, 1, 0, 2, 3);

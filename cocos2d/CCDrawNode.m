@@ -45,11 +45,12 @@ static NSString *FRAGMENT_SHADER_SOURCE =
 	@"}\n";
 
 
-
 @implementation CCDrawNode {
-	GLsizei _triangleCapacity;
-	GLsizei _triangleCount;
-	CCTriangle *_triangles;
+	GLsizei _vertexCount, _vertexCapacity;
+	CCVertex *_vertexes;
+	
+	GLsizei _elementCount, _elementCapacity;
+	GLushort *_elements;
 }
 
 CCShader *SHADER = nil;
@@ -61,20 +62,35 @@ CCShader *SHADER = nil;
 
 #pragma mark memory
 
--(CCTriangle *)bufferTriangles:(NSUInteger)requestedCount
+-(CCRenderBuffer)bufferVertexes:(GLsizei)vertexCount andTriangleCount:(GLsizei)triangleCount
 {
-	GLsizei required = _triangleCount + (GLsizei)requestedCount;
-	if(required > _triangleCapacity){
+	GLsizei requiredVertexes = _vertexCount + vertexCount;
+	if(requiredVertexes > _vertexCapacity){
 		// Double the size of the buffer until it fits.
-		while(required >= _triangleCapacity) _triangleCapacity *= 2;
+		while(requiredVertexes >= _vertexCapacity) _vertexCapacity *= 2;
 		
-		_triangles = realloc(_triangles, _triangleCapacity*sizeof(*_triangles));
+		_vertexes = realloc(_vertexes, _vertexCapacity*sizeof(*_vertexes));
 	}
 	
-	CCTriangle *triangles =  &_triangles[_triangleCount];
-	_triangleCount += requestedCount;
+	GLsizei elementCount = 3*triangleCount;
+	GLsizei requiredElements = _elementCount + elementCount;
+	if(requiredElements > _elementCapacity){
+		// Double the size of the buffer until it fits.
+		while(requiredElements >= _elementCapacity) _elementCapacity *= 2;
+		
+		_elements = realloc(_elements, _elementCapacity*sizeof(*_elements));
+	}
 	
-	return triangles;
+	CCRenderBuffer buffer = {
+		_vertexes + _vertexCount,
+		_elements + _elementCount,
+		_vertexCount
+	};
+	
+	_vertexCount += vertexCount;
+	_elementCount += elementCount;
+	
+	return buffer;
 }
 
 -(id)init
@@ -83,8 +99,11 @@ CCShader *SHADER = nil;
 		self.blendMode = [CCBlendMode premultipliedAlphaMode];
 		self.shader = SHADER;
 
-		_triangleCapacity = 128;
-		_triangles = calloc(_triangleCapacity, sizeof(*_triangles));
+		_vertexCapacity = 128;
+		_vertexes = calloc(_vertexCapacity, sizeof(*_vertexes));
+		
+		_elementCapacity = 128;
+		_elements = calloc(_elementCapacity, sizeof(*_elements));
 	}
 	
 	return self;
@@ -92,21 +111,24 @@ CCShader *SHADER = nil;
 
 -(void)dealloc
 {
-	free(_triangles);
-	_triangles = NULL;
+	free(_vertexes); _vertexes = NULL;
+	free(_elements); _elements = NULL;
 }
 
 #pragma mark Rendering
 
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
-//	CCVertex *verts = (CCVertex *)[renderer enqueueTriangles:_triangleCount withState:self.renderState];
-//	
-//	// TODO Try if memcpy + transforming just the verts is faster?
-//	// TODO Maybe it would be even better to skip the CPU transform and use a uniform matrix?
-//	for(int i=0; i<_triangleCount*3; i++){
-//		verts[i] = CCVertexApplyTransform(((CCVertex *)_triangles)[i], transform);
-//	}
+	CCRenderBuffer buffer = [renderer enqueueTriangles:_elementCount/3 andVertexes:_vertexCount withState:self.renderState];
+	
+	// TODO Maybe it would be even better to skip the CPU transform and use a uniform matrix?
+	for(int i=0; i<_vertexCount; i++){
+		CCRenderBufferSetVertex(buffer, i, CCVertexApplyTransform(_vertexes[i], transform));
+	}
+	
+	for(int i=0; i<_elementCount; i++){
+		buffer.elements[i] = _elements[i] + buffer.startIndex;
+	}
 }
 
 #pragma mark Immediate Mode
@@ -116,30 +138,29 @@ CCShader *SHADER = nil;
 	GLKVector4 color4 = color.glkVector4;
 	GLKVector2 zero2 = GLKVector2Make(0, 0);
 	
-	CCVertex a = {GLKVector3Make(pos.x - radius, pos.y - radius, 0), GLKVector2Make(-1, -1), zero2, color4};
-	CCVertex b = {GLKVector3Make(pos.x - radius, pos.y + radius, 0), GLKVector2Make(-1,  1), zero2, color4};
-	CCVertex c = {GLKVector3Make(pos.x + radius, pos.y + radius, 0), GLKVector2Make( 1,  1), zero2, color4};
-	CCVertex d = {GLKVector3Make(pos.x + radius, pos.y - radius, 0), GLKVector2Make( 1, -1), zero2, color4};
+	CCRenderBuffer buffer = [self bufferVertexes:4 andTriangleCount:2];
+	CCRenderBufferSetVertex(buffer, 0, (CCVertex){GLKVector4Make(pos.x - radius, pos.y - radius, 0, 1), GLKVector2Make(-1, -1), zero2, color4});
+	CCRenderBufferSetVertex(buffer, 1, (CCVertex){GLKVector4Make(pos.x - radius, pos.y + radius, 0, 1), GLKVector2Make(-1,  1), zero2, color4});
+	CCRenderBufferSetVertex(buffer, 2, (CCVertex){GLKVector4Make(pos.x + radius, pos.y + radius, 0, 1), GLKVector2Make( 1,  1), zero2, color4});
+	CCRenderBufferSetVertex(buffer, 3, (CCVertex){GLKVector4Make(pos.x + radius, pos.y - radius, 0, 1), GLKVector2Make( 1, -1), zero2, color4});
 	
-//	CCTriangle *triangles = [self bufferTriangles:2];
-//	triangles[0] = (CCTriangle){a, b, c};
-//	triangles[1] = (CCTriangle){a, c, d};
+	CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
+	CCRenderBufferSetTriangle(buffer, 1, 0, 2, 3);
 }
 
 static inline GLKVector2 GLKVector2Perp(GLKVector2 v){return GLKVector2Make(-v.y, v.x);}
 
-static inline CCVertex
-MakeVertex(GLKVector2 v, GLKVector2 texCoord, GLKVector4 color)
+static inline void
+SetVertex(CCRenderBuffer buffer, int index, GLKVector2 v, GLKVector2 texCoord, GLKVector4 color)
 {
-	return (CCVertex){GLKVector3Make(v.x, v.y, 0.0f), texCoord, GLKVector2Make(0.0f, 0.0f), color};
+	CCRenderBufferSetVertex(buffer, index, (CCVertex){GLKVector4Make(v.x, v.y, 0.0f, 1.0f), texCoord, GLKVector2Make(0.0f, 0.0f), color});
 }
 
 -(void)drawSegmentFrom:(CGPoint)_a to:(CGPoint)_b radius:(CGFloat)radius color:(CCColor*)color;
 {
-	
+	GLKVector4 color4 = color.glkVector4;
 	GLKVector2 a = GLKVector2Make(_a.x, _a.y);
 	GLKVector2 b = GLKVector2Make(_b.x, _b.y);
-	
 	
 	GLKVector2 n = GLKVector2Normalize(GLKVector2Perp(GLKVector2Subtract(b, a)));
 	GLKVector2 t = GLKVector2Perp(n);
@@ -147,24 +168,22 @@ MakeVertex(GLKVector2 v, GLKVector2 texCoord, GLKVector4 color)
 	GLKVector2 nw = GLKVector2MultiplyScalar(n, radius);
 	GLKVector2 tw = GLKVector2MultiplyScalar(t, radius);
 	
-	GLKVector4 color4 = color.glkVector4;
-	CCVertex v0 = MakeVertex(GLKVector2Subtract(b, GLKVector2Add(nw, tw)), GLKVector2Negate(GLKVector2Add(n, t)), color4);
-	CCVertex v1 = MakeVertex(GLKVector2Add(b, GLKVector2Subtract(nw, tw)), GLKVector2Subtract(n, t), color4);
-	CCVertex v2 = MakeVertex(GLKVector2Subtract(b, nw), GLKVector2Negate(n), color4);
-	CCVertex v3 = MakeVertex(GLKVector2Add(b, nw), n, color4);
-	CCVertex v4 = MakeVertex(GLKVector2Subtract(a, nw), GLKVector2Negate(n), color4);
-	CCVertex v5 = MakeVertex(GLKVector2Add(a, nw), n, color4);
-	CCVertex v6 = MakeVertex(GLKVector2Subtract(a, GLKVector2Subtract(nw, tw)), GLKVector2Subtract(t, n), color4);
-	CCVertex v7 = MakeVertex(GLKVector2Add(a, GLKVector2Add(nw, tw)), GLKVector2Add(n, t), color4);
+	CCRenderBuffer buffer = [self bufferVertexes:8 andTriangleCount:6];
+	SetVertex(buffer, 0, GLKVector2Subtract(b, GLKVector2Add(nw, tw)), GLKVector2Negate(GLKVector2Add(n, t)), color4);
+	SetVertex(buffer, 1, GLKVector2Add(b, GLKVector2Subtract(nw, tw)), GLKVector2Subtract(n, t), color4);
+	SetVertex(buffer, 2, GLKVector2Subtract(b, nw), GLKVector2Negate(n), color4);
+	SetVertex(buffer, 3, GLKVector2Add(b, nw), n, color4);
+	SetVertex(buffer, 4, GLKVector2Subtract(a, nw), GLKVector2Negate(n), color4);
+	SetVertex(buffer, 5, GLKVector2Add(a, nw), n, color4);
+	SetVertex(buffer, 6, GLKVector2Subtract(a, GLKVector2Subtract(nw, tw)), GLKVector2Subtract(t, n), color4);
+	SetVertex(buffer, 7, GLKVector2Add(a, GLKVector2Add(nw, tw)), GLKVector2Add(n, t), color4);
 	
-//	CCTriangle *triangles = [self bufferTriangles:6];
-//	
-//	triangles[0] = (CCTriangle){v0, v1, v2};
-//	triangles[1] = (CCTriangle){v3, v1, v2};
-//	triangles[2] = (CCTriangle){v3, v4, v2};
-//	triangles[3] = (CCTriangle){v3, v4, v5};
-//	triangles[4] = (CCTriangle){v6, v4, v5};
-//	triangles[5] = (CCTriangle){v6, v7, v5};
+	CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
+	CCRenderBufferSetTriangle(buffer, 1, 3, 1, 2);
+	CCRenderBufferSetTriangle(buffer, 2, 3, 4, 2);
+	CCRenderBufferSetTriangle(buffer, 3, 3, 4, 5);
+	CCRenderBufferSetTriangle(buffer, 4, 6, 4, 5);
+	CCRenderBufferSetTriangle(buffer, 5, 6, 7, 5);
 }
 
 -(void)drawPolyWithVerts:(const CGPoint *)_verts count:(NSUInteger)count fillColor:(CCColor*)fill  borderWidth:(CGFloat)width borderColor:(CCColor*)line;
@@ -191,25 +210,19 @@ MakeVertex(GLKVector2 v, GLKVector2 texCoord, GLKVector4 color)
 		extrude[i] = (struct ExtrudeVerts){offset, n2};
 	}
 	
+	CCRenderBuffer buffer = [self bufferVertexes:(GLsizei)(count + 2*count*2) andTriangleCount:(GLsizei)(3*count - 2)];
+	int vertexCursor = 0, triangleCursor = 0;
+	
 	BOOL outline = (line4.a > 0 && width > 0.0);
-	
-//	NSUInteger triangle_count = 3*count - 2;
-	CCTriangle *triangles = [self bufferTriangles:3*count - 2];
-	CCTriangle *cursor = triangles;
-	
-	const GLKVector2 zero = {{0.0f, 0.0f}};
+	const GLKVector2 GLKVector2Zero = {{0.0f, 0.0f}};
 	
 	CGFloat inset = (outline == 0.0 ? 0.5 : 0.0);
+	for(int i=0; i<count; i++){
+		SetVertex(buffer, vertexCursor++, GLKVector2Subtract(verts[i], GLKVector2MultiplyScalar(extrude[i].offset, inset)), GLKVector2Zero, fill4);
+	}
+	
 	for(int i=0; i<count-2; i++){
-		GLKVector2 v0 = GLKVector2Subtract( (verts[0  ]), GLKVector2MultiplyScalar(extrude[0  ].offset, inset));
-		GLKVector2 v1 = GLKVector2Subtract( (verts[i+1]), GLKVector2MultiplyScalar(extrude[i+1].offset, inset));
-		GLKVector2 v2 = GLKVector2Subtract( (verts[i+2]), GLKVector2MultiplyScalar(extrude[i+2].offset, inset));
-		
-//		*cursor++ = (CCTriangle){
-//			MakeVertex(v0, zero, fill4),
-//			MakeVertex(v1, zero, fill4),
-//			MakeVertex(v2, zero, fill4),
-//		};
+		CCRenderBufferSetTriangle(buffer, triangleCursor++, 0, i + 1, i + 2);
 	}
 	
 	for(int i=0; i<count; i++){
@@ -219,48 +232,34 @@ MakeVertex(GLKVector2 v, GLKVector2 texCoord, GLKVector4 color)
 		
 		GLKVector2 n0 = extrude[i].n;
 		
+		float w = (outline ? width : 0.5);
 		GLKVector2 offset0 = extrude[i].offset;
 		GLKVector2 offset1 = extrude[j].offset;
 		
-		if(outline){
-			GLKVector2 inner0 = GLKVector2Subtract(v0, GLKVector2MultiplyScalar(offset0, width));
-			GLKVector2 inner1 = GLKVector2Subtract(v1, GLKVector2MultiplyScalar(offset1, width));
-			GLKVector2 outer0 = GLKVector2Add(v0, GLKVector2MultiplyScalar(offset0, width));
-			GLKVector2 outer1 = GLKVector2Add(v1, GLKVector2MultiplyScalar(offset1, width));
-			
-//			*cursor++ = (CCTriangle){
-//				MakeVertex(inner0, GLKVector2Negate(n0), line4),
-//				MakeVertex(inner1, GLKVector2Negate(n0), line4),
-//				MakeVertex(outer1, n0, line4),
-//			};
-//			*cursor++ = (CCTriangle){
-//				MakeVertex(inner0, GLKVector2Negate(n0), line4),
-//				MakeVertex(outer0, n0, line4),
-//				MakeVertex(outer1, n0, line4),
-//			};
-		} else {
-			GLKVector2 inner0 = GLKVector2Subtract(v0, GLKVector2MultiplyScalar(offset0, 0.5));
-			GLKVector2 inner1 = GLKVector2Subtract(v1, GLKVector2MultiplyScalar(offset1, 0.5));
-			GLKVector2 outer0 = GLKVector2Add(v0, GLKVector2MultiplyScalar(offset0, 0.5));
-			GLKVector2 outer1 = GLKVector2Add(v1, GLKVector2MultiplyScalar(offset1, 0.5));
-			
-//			*cursor++ = (CCTriangle){
-//				MakeVertex(inner0, zero, fill4),
-//				MakeVertex(inner1, zero, fill4),
-//				MakeVertex(outer1, n0, fill4),
-//			};
-//			*cursor++ = (CCTriangle){
-//				MakeVertex(inner0, zero, fill4),
-//				MakeVertex(outer0, n0, fill4),
-//				MakeVertex(outer1, n0, fill4),
-//			};
-		}
+		GLKVector2 inner0 = GLKVector2Subtract(v0, GLKVector2MultiplyScalar(offset0, w));
+		GLKVector2 inner1 = GLKVector2Subtract(v1, GLKVector2MultiplyScalar(offset1, w));
+		GLKVector2 outer0 = GLKVector2Add(v0, GLKVector2MultiplyScalar(offset0, w));
+		GLKVector2 outer1 = GLKVector2Add(v1, GLKVector2MultiplyScalar(offset1, w));
+		
+		GLKVector2 outerTexCoord = (outline ? GLKVector2Negate(n0) : GLKVector2Zero);
+		
+		CCRenderBufferSetTriangle(buffer, triangleCursor++, vertexCursor + 0, vertexCursor + 1, vertexCursor + 2);
+		CCRenderBufferSetTriangle(buffer, triangleCursor++, vertexCursor + 0, vertexCursor + 2, vertexCursor + 3);
+		
+		GLKVector4 outlineColor = (outline ? line4 : fill4);
+		
+		// TODO could reduce this to 2 vertexes per 
+		SetVertex(buffer, vertexCursor++, inner0, outerTexCoord, outlineColor);
+		SetVertex(buffer, vertexCursor++, inner1, outerTexCoord, outlineColor);
+		SetVertex(buffer, vertexCursor++, outer1, n0, outlineColor);
+		SetVertex(buffer, vertexCursor++, outer0, n0, outlineColor);
 	}
 }
 
 -(void)clear
 {
-	_triangleCount = 0;
+	_vertexCount = 0;
+	_elementCount = 0;
 }
 
 @end

@@ -385,7 +385,7 @@ static inline CCVertex
 MakeVertex(ccVertex2F v, ccTex2F texCoord, unsigned char *color, GLKMatrix4 transform)
 {
 	return (CCVertex){
-		GLKMatrix4MultiplyAndProjectVector3(transform, GLKVector3Make(v.x, v.y, 0.0f)),
+		GLKMatrix4MultiplyVector4(transform, GLKVector4Make(v.x, v.y, 0.0f, 1.0f)),
 		GLKVector2Make(texCoord.u, texCoord.v), GLKVector2Make(0.0f, 0.0f),
 		GLKVector4Make(color[0]/255.0, color[1]/255.0, color[2]/255.0, color[3]/255.0)
 	};

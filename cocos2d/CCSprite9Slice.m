@@ -84,18 +84,18 @@ const float CCSprite9SliceMarginDefault         = 1.0f/3.0f;
 #pragma mark - draw
 
 static GLKMatrix4
-PositionInterpolationMatrix(CCVertex *verts, GLKMatrix4 transform)
+PositionInterpolationMatrix(CCVertex *verts, const GLKMatrix4 *transform)
 {
-	GLKVector3 origin = GLKMatrix4MultiplyAndProjectVector3(transform, verts[0].position);
-	GLKVector3 basisX = GLKMatrix4MultiplyVector3(transform, GLKVector3Subtract(verts[1].position, verts[0].position));
-	GLKVector3 basisY = GLKMatrix4MultiplyVector3(transform, GLKVector3Subtract(verts[3].position, verts[0].position));
+	GLKVector4 origin = verts[0].position;
+	GLKVector4 basisX = GLKVector4Subtract(verts[1].position, origin);
+	GLKVector4 basisY = GLKVector4Subtract(verts[3].position, origin);
 	
-	return GLKMatrix4Make(
-		basisX.x, basisX.y, basisX.z, 0.0,
-		basisY.x, basisY.y, basisY.z, 0.0,
-		     0.0,      0.0,      1.0, 0.0,
-		origin.x, origin.y, origin.z, 1.0
-	);
+	return GLKMatrix4Multiply(*transform, GLKMatrix4Make(
+		basisX.x, basisX.y, basisX.z, 0.0f,
+		basisY.x, basisY.y, basisY.z, 0.0f,
+				0.0f,     0.0f,     1.0f, 0.0f,
+		origin.x, origin.y, origin.z, 1.0f
+	));
 }
 
 static GLKMatrix3
@@ -106,9 +106,9 @@ TexCoordInterpolationMatrix(CCVertex *verts)
 	GLKVector2 basisY = GLKVector2Subtract(verts[3].texCoord1, origin);
 	
 	return GLKMatrix3Make(
-		basisX.x, basisX.y, 0.0,
-		basisY.x, basisY.y, 0.0,
-		origin.x, origin.y, 1.0
+		basisX.x, basisX.y, 0.0f,
+		basisY.x, basisY.y, 0.0f,
+		origin.x, origin.y, 1.0f
 	);
 }
 
@@ -137,15 +137,15 @@ TexCoordInterpolationMatrix(CCVertex *verts)
 	alphaX2[1] = _marginLeft / (physicalSize.width / rectSize.width);
 	alphaX2[2] = 1 - _marginRight / (physicalSize.width / rectSize.width);
 	alphaX2[3] = 1;
-	const float alphaX[4] = {0.0, _marginLeft, scaleX - _marginRight, scaleX};
-	const float alphaY[4] = {0.0, _marginBottom, scaleY - _marginTop, scaleY};
+	const float alphaX[4] = {0.0f, _marginLeft, scaleX - _marginRight, scaleX};
+	const float alphaY[4] = {0.0f, _marginBottom, scaleY - _marginTop, scaleY};
 	
-	const float alphaTexX[4] = {0.0, _marginLeft, 1.0 - _marginRight, 1.0};
-	const float alphaTexY[4] = {0.0, _marginBottom, 1.0 - _marginTop, 1.0};
+	const float alphaTexX[4] = {0.0f, _marginLeft, 1.0f - _marginRight, 1.0f};
+	const float alphaTexY[4] = {0.0f, _marginBottom, 1.0f - _marginTop, 1.0f};
 	
 	// Interpolation matrices for the vertexes and texture coordinates
 	CCVertex *_verts = self.verts;
-	GLKMatrix4 interpolatePosition = PositionInterpolationMatrix(_verts, *transform);
+	GLKMatrix4 interpolatePosition = PositionInterpolationMatrix(_verts, transform);
 	GLKMatrix3 interpolateTexCoord = TexCoordInterpolationMatrix(_verts);
 	GLKVector4 color = _verts[0].color;
 	
@@ -154,9 +154,9 @@ TexCoordInterpolationMatrix(CCVertex *verts)
 	// Interpolate the vertexes!
 	for(int y=0; y<4; y++){
 		for(int x=0; x<4; x++){
-			GLKVector3 position = GLKMatrix4MultiplyAndProjectVector3(interpolatePosition, GLKVector3Make(alphaX[x], alphaY[y], 0.0));
-			GLKVector3 texCoord = GLKMatrix3MultiplyVector3(interpolateTexCoord, GLKVector3Make(alphaTexX[x], alphaTexY[y], 1.0));
-			CCRenderBufferSetVertex(buffer, y*4 + x, (CCVertex){position, GLKVector2Make(texCoord.x, texCoord.y), GLKVector2Make(0.0, 0.0), color});
+			GLKVector4 position = GLKMatrix4MultiplyVector4(interpolatePosition, GLKVector4Make(alphaX[x], alphaY[y], 0.0f, 1.0f));
+			GLKVector3 texCoord = GLKMatrix3MultiplyVector3(interpolateTexCoord, GLKVector3Make(alphaTexX[x], alphaTexY[y], 1.0f));
+			CCRenderBufferSetVertex(buffer, y*4 + x, (CCVertex){position, GLKVector2Make(texCoord.x, texCoord.y), GLKVector2Make(0.0f, 0.0f), color});
 		}
 	}
 	
