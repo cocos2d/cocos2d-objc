@@ -281,8 +281,6 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, /*CP_BODY_TYPE_K
 		pair.arbiter = arbiter;
 		block(pair);
 	});
-	
-	pair.arbiter = NULL;
 }
 
 //MARK: Velocity

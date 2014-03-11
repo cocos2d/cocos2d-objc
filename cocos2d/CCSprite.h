@@ -68,9 +68,9 @@
 	//
 	// Data used when the sprite is rendered using a CCSpriteBatchNode.
 	//
-	CCTextureAtlas			*__unsafe_unretained _textureAtlas;			// Sprite Sheet texture atlas (weak reference)
+	__unsafe_unretained CCTextureAtlas			* _textureAtlas;			// Sprite Sheet texture atlas (weak reference)
 	NSUInteger				_atlasIndex;			// Absolute (real) Index on the batch node
-	CCSpriteBatchNode		*_batchNode;			// Used batch node (weak reference)
+	__unsafe_unretained CCSpriteBatchNode		*_batchNode;			// Used batch node (weak reference)
 	CGAffineTransform		_transformToBatch;		//
 	BOOL					_dirty;					// Sprite needs to be updated
 	BOOL					_recursiveDirty;		// Subchildren needs to be updated
