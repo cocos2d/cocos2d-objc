@@ -186,7 +186,7 @@
 
 		case CCDirectorProjectionCustom:
 			if( [_delegate respondsToSelector:@selector(updateProjection)] )
-				[_delegate updateProjection];
+				_projectionMatrix = [_delegate updateProjection];
 			break;
 
 		default:
