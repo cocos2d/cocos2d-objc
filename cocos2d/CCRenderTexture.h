@@ -78,6 +78,8 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
  */
 @property (nonatomic, readwrite) BOOL autoDraw;
 
+@property (nonatomic, readwrite) GLKMatrix4 projection;
+
 // ---------------------------------------------------------------------
 /**
  *  @name Create CCRenderTexture.
