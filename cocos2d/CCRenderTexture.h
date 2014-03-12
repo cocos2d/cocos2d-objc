@@ -57,20 +57,6 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
 
  */
 @interface CCRenderTexture : CCNode
-{
-	GLuint				_FBO;
-	GLuint				_depthRenderBufffer;
-	GLint				_oldFBO;
-	CCSprite*			_sprite;
-	GLenum				_pixelFormat;
-
-	// code for "auto" update
-	GLbitfield			_clearFlags;
-	ccColor4F			_clearColor;
-	GLclampf			_clearDepth;
-	GLint				_clearStencil;
-	BOOL				_autoDraw;
-}
 
 /** The CCSprite being used.
  The sprite, by default, will use the following blending function: GL_ONE, GL_ONE_MINUS_SRC_ALPHA.
@@ -153,77 +139,75 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
  */
 - (id)initWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat)format depthStencilFormat:(GLuint)depthStencilFormat;
 
--(void)render:(void (^)(CCRenderer *renderer, GLKMatrix4 *transform))block;
+/** 
+ *  Starts rendering to the texture whitout clearing the texture first. 
+ */
+-(void)begin;
 
-///** 
-// *  Starts rendering to the texture whitout clearing the texture first. 
-// */
-//-(void)begin;
-//
-///**
-// *  starts rendering to the texture while clearing the texture first.
-// *  This is more efficient then calling -clear first and then -begin.
-// *
-// *  @param r Red color.
-// *  @param g Green color.
-// *  @param b Blue color.
-// *  @param a Alpha.
-// */
-//-(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a;
-//
-///**
-// *  starts rendering to the texture while clearing the texture first.
-// *  This is more efficient then calling -clear first and then -begin.
-// *
-// *  @param r Red color.
-// *  @param g Green color.
-// *  @param b Blue color.
-// *  @param a Alpha.
-// *  @param depthValue Depth value.
-// */
-//- (void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a depth:(float)depthValue;
-//
-///**
-// *  starts rendering to the texture while clearing the texture first.
-// *  This is more efficient then calling -clear first and then -begin.
-// *
-// *  @param r Red color.
-// *  @param g Green color.
-// *  @param b Blue color.
-// *  @param a Alpha.
-// *  @param depthValue Depth value.
-// *  @param stencilValue Stencil value.
-// */
-//- (void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a depth:(float)depthValue stencil:(int)stencilValue;
-//
-///** 
-// *  Ends grabbing 
-// */
-//-(void)end;
+/**
+ *  starts rendering to the texture while clearing the texture first.
+ *  This is more efficient then calling -clear first and then -begin.
+ *
+ *  @param r Red color.
+ *  @param g Green color.
+ *  @param b Blue color.
+ *  @param a Alpha.
+ */
+-(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a;
 
-///**
-// *  Clears the texture with a color
-// *
-// *  @param r Red color.
-// *  @param g Green color.
-// *  @param b Blue color.
-// *  @param a Alpha.
-// */
-//-(void)clear:(float)r g:(float)g b:(float)b a:(float)a;
-//
-///**
-// *  Clears the texture with a specified depth value.
-// *
-// *  @param depthValue Depth value.
-// */
-//- (void)clearDepth:(float)depthValue;
-//
-///**
-// *  Clears the texture with a specified stencil value.
-// *
-// *  @param stencilValue Stencil value.
-// */
-//- (void)clearStencil:(int)stencilValue;
+/**
+ *  starts rendering to the texture while clearing the texture first.
+ *  This is more efficient then calling -clear first and then -begin.
+ *
+ *  @param r Red color.
+ *  @param g Green color.
+ *  @param b Blue color.
+ *  @param a Alpha.
+ *  @param depthValue Depth value.
+ */
+- (void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a depth:(float)depthValue;
+
+/**
+ *  starts rendering to the texture while clearing the texture first.
+ *  This is more efficient then calling -clear first and then -begin.
+ *
+ *  @param r Red color.
+ *  @param g Green color.
+ *  @param b Blue color.
+ *  @param a Alpha.
+ *  @param depthValue Depth value.
+ *  @param stencilValue Stencil value.
+ */
+- (void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a depth:(float)depthValue stencil:(int)stencilValue;
+
+/** 
+ *  Ends grabbing 
+ */
+-(void)end;
+
+/**
+ *  Clears the texture with a color
+ *
+ *  @param r Red color.
+ *  @param g Green color.
+ *  @param b Blue color.
+ *  @param a Alpha.
+ */
+-(void)clear:(float)r g:(float)g b:(float)b a:(float)a;
+
+/**
+ *  Clears the texture with a specified depth value.
+ *
+ *  @param depthValue Depth value.
+ */
+- (void)clearDepth:(float)depthValue;
+
+/**
+ *  Clears the texture with a specified stencil value.
+ *
+ *  @param stencilValue Stencil value.
+ */
+- (void)clearStencil:(int)stencilValue;
 
 /* 
  *  Creates a new CGImage from with the texture's data.
