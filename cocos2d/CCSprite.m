@@ -264,10 +264,10 @@
 	float y2 = y1 + _textureRect.size.height;
 
 	// Don't update Z.
-	_verts[0].position = GLKVector3Make(x1, y1, 0.0);
-	_verts[1].position = GLKVector3Make(x2, y1, 0.0);
-	_verts[2].position = GLKVector3Make(x2, y2, 0.0);
-	_verts[3].position = GLKVector3Make(x1, y2, 0.0);
+	_verts[0].position = GLKVector4Make(x1, y1, 0.0f, 1.0f);
+	_verts[1].position = GLKVector4Make(x2, y1, 0.0f, 1.0f);
+	_verts[2].position = GLKVector4Make(x2, y2, 0.0f, 1.0f);
+	_verts[3].position = GLKVector4Make(x1, y2, 0.0f, 1.0f);
 }
 
 -(void) setTextureCoords:(CGRect)rect
@@ -342,16 +342,30 @@
 {
 	if(!CCCheckVisbility(transform, _contentSize)) return;
 	
-	CCVertex verts[] = {
-		CCVertexApplyTransform(_verts[0], transform),
-		CCVertexApplyTransform(_verts[1], transform),
-		CCVertexApplyTransform(_verts[2], transform),
-		CCVertexApplyTransform(_verts[3], transform),
-	};
+	CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:self.renderState];
+	CCRenderBufferSetVertex(buffer, 0, CCVertexApplyTransform(_verts[0], transform));
+	CCRenderBufferSetVertex(buffer, 1, CCVertexApplyTransform(_verts[1], transform));
+	CCRenderBufferSetVertex(buffer, 2, CCVertexApplyTransform(_verts[2], transform));
+	CCRenderBufferSetVertex(buffer, 3, CCVertexApplyTransform(_verts[3], transform));
 	
-	CCTriangle *triangles = [renderer enqueueTriangles:2 withState:self.renderState];
-	triangles[0] = (CCTriangle){verts[0], verts[1], verts[2]};
-	triangles[1] = (CCTriangle){verts[0], verts[2], verts[3]};
+	CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
+	CCRenderBufferSetTriangle(buffer, 1, 0, 2, 3);
+	
+#if CC_SPRITE_DEBUG_DRAW
+	const GLKVector2 zero = {{0, 0}};
+	const GLKVector4 red = {{1, 0, 0, 1}};
+	
+	CCRenderBuffer debug = [renderer enqueueLines:4 andVertexes:4 withState:[CCRenderState debugColor]];
+	CCRenderBufferSetVertex(debug, 0, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts[0].position), zero, zero, red});
+	CCRenderBufferSetVertex(debug, 1, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts[1].position), zero, zero, red});
+	CCRenderBufferSetVertex(debug, 2, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts[2].position), zero, zero, red});
+	CCRenderBufferSetVertex(debug, 3, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts[3].position), zero, zero, red});
+	
+	CCRenderBufferSetLine(debug, 0, 0, 1);
+	CCRenderBufferSetLine(debug, 1, 1, 2);
+	CCRenderBufferSetLine(debug, 2, 2, 3);
+	CCRenderBufferSetLine(debug, 3, 3, 0);
+#endif
 }
 
 #pragma mark CCSprite - CCNode overrides

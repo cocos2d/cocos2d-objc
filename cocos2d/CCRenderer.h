@@ -28,7 +28,7 @@
 @class CCTexture;
 
 typedef struct CCVertex {
-	GLKVector3 position;
+	GLKVector4 position;
 	GLKVector2 texCoord1, texCoord2;
 	GLKVector4 color;
 } CCVertex;
@@ -37,7 +37,7 @@ static inline CCVertex
 CCVertexApplyTransform(CCVertex v, const GLKMatrix4 *transform)
 {
 	return (CCVertex){
-		GLKMatrix4MultiplyAndProjectVector3(*transform, v.position),
+		GLKMatrix4MultiplyVector4(*transform, v.position),
 		v.texCoord1, v.texCoord2, v.color,
 	};
 }
@@ -46,16 +46,41 @@ static inline CCVertex
 CCVertexLerp(CCVertex a, CCVertex b, float t)
 {
 	return (CCVertex){
-		GLKVector3Lerp(a.position, b.position, t),
+		GLKVector4Lerp(a.position, b.position, t),
 		GLKVector2Lerp(a.texCoord1, b.texCoord1, t),
 		GLKVector2Lerp(a.texCoord2, b.texCoord2, t),
 		GLKVector4Lerp(a.color, b.color, t),
 	};
 }
 
-typedef struct CCTriangle {
-	CCVertex a, b, c;
-} CCTriangle;
+typedef struct CCRenderBuffer {
+	CCVertex *vertexes;
+	GLushort *elements;
+	GLushort startIndex;
+} CCRenderBuffer;
+
+static inline void
+CCRenderBufferSetVertex(CCRenderBuffer buffer, int index, CCVertex vertex)
+{
+	buffer.vertexes[index] = vertex;
+}
+
+static inline void
+CCRenderBufferSetTriangle(CCRenderBuffer buffer, int index, GLushort a, GLushort b, GLushort c)
+{
+	uint16_t offset = buffer.startIndex;
+	buffer.elements[3*index + 0] = a + offset;
+	buffer.elements[3*index + 1] = b + offset;
+	buffer.elements[3*index + 2] = c + offset;
+}
+
+static inline void
+CCRenderBufferSetLine(CCRenderBuffer buffer, int index, GLushort a, GLushort b)
+{
+	uint16_t offset = buffer.startIndex;
+	buffer.elements[2*index + 0] = a + offset;
+	buffer.elements[2*index + 1] = b + offset;
+}
 
 
 static inline BOOL
@@ -65,9 +90,9 @@ CCCheckVisbility(const GLKMatrix4 *transform, CGSize contentSize)
 	float hh = contentSize.height*0.5f;
 	
 	// Bounding box center point in clip coordinates.
-	GLKVector4 center = GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(hw, hh, 0.0f, 1.0f));
-	center = GLKVector4MultiplyScalar(center, 1.0f/center.w);
+	GLKVector3 center = GLKMatrix4MultiplyAndProjectVector3(*transform, GLKVector3Make(hw, hh, 0.0f));
 	
+	#warning TODO: does not handle perspective divide
 	// Half width/height in clip space.
 	float cshw = hw*fmaxf(fabsf(transform->m00 + transform->m10), fabsf(transform->m00 - transform->m10));
 	float cshh = hh*fmaxf(fabsf(transform->m01 + transform->m11), fabsf(transform->m01 - transform->m11));
@@ -117,6 +142,8 @@ extern const NSString *CCBlendEquationAlpha;
 
 @interface CCRenderState : NSObject<NSCopying>
 
++(instancetype)debugColor;
+
 +(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader mainTexture:(CCTexture *)mainTexture;
 
 -(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms;
@@ -129,9 +156,8 @@ extern const NSString *CCBlendEquationAlpha;
 /// Mark the renderer's cached GL state as invalid.
 -(void)invalidateState;
 
-/// Enqueue a basic drawing command, and returns a buffer for the geometry.
-/// IMPORTANT! The buffer should be considered write-only. Attempting to read from the buffer could crash your game.
--(CCTriangle *)enqueueTriangles:(NSUInteger)count withState:(CCRenderState *)renderState;
+-(CCRenderBuffer)enqueueTriangles:(NSUInteger)triangleCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState;
+-(CCRenderBuffer)enqueueLines:(NSUInteger)lineCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState;
 
 /// Enqueue a block that performs GL commands.
 -(void)enqueueBlock:(void (^)())block;

@@ -385,7 +385,7 @@ static inline CCVertex
 MakeVertex(ccVertex2F v, ccTex2F texCoord, unsigned char *color, GLKMatrix4 transform)
 {
 	return (CCVertex){
-		GLKMatrix4MultiplyAndProjectVector3(transform, GLKVector3Make(v.x, v.y, 0.0f)),
+		GLKMatrix4MultiplyVector4(transform, GLKVector4Make(v.x, v.y, 0.0f, 1.0f)),
 		GLKVector2Make(texCoord.u, texCoord.v), GLKVector2Make(0.0f, 0.0f),
 		GLKVector4Make(color[0]/255.0, color[1]/255.0, color[2]/255.0, color[3]/255.0)
 	};
@@ -393,24 +393,24 @@ MakeVertex(ccVertex2F v, ccTex2F texCoord, unsigned char *color, GLKMatrix4 tran
 
 - (void) draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
-	if(_nuPoints <= 1) return;
-	
-	// Keep a cache of the previous two vertexes in the strip
-	CCVertex verts[] = {
-		MakeVertex(_vertices[0], _texCoords[0], _colorPointer + 0*4, *transform),
-		MakeVertex(_vertices[1], _texCoords[1], _colorPointer + 1*4, *transform),
-	};
-	
-	CCTriangle *triangles = [renderer enqueueTriangles:2*_nuPoints withState:self.renderState];
-	for(int i=1; i<_nuPoints; i++){
-		CCVertex a = MakeVertex(_vertices[2*i + 0], _texCoords[2*i + 0], _colorPointer + (2*i + 0)*4, *transform);
-		triangles[2*i + 0] = (CCTriangle){verts[0], verts[1], a};
-		verts[0] = a;
-		
-		CCVertex b = MakeVertex(_vertices[2*i + 1], _texCoords[2*i + 1], _colorPointer + (2*i + 1)*4, *transform);
-		triangles[2*i + 1] = (CCTriangle){verts[0], verts[1], b};
-		verts[1] = b;
-	}
+//	if(_nuPoints <= 1) return;
+//	
+//	// Keep a cache of the previous two vertexes in the strip
+//	CCVertex verts[] = {
+//		MakeVertex(_vertices[0], _texCoords[0], _colorPointer + 0*4, *transform),
+//		MakeVertex(_vertices[1], _texCoords[1], _colorPointer + 1*4, *transform),
+//	};
+//	
+//	CCTriangle *triangles = [renderer enqueueTriangles:2*_nuPoints withState:self.renderState];
+//	for(int i=1; i<_nuPoints; i++){
+//		CCVertex a = MakeVertex(_vertices[2*i + 0], _texCoords[2*i + 0], _colorPointer + (2*i + 0)*4, *transform);
+//		triangles[2*i + 0] = (CCTriangle){verts[0], verts[1], a};
+//		verts[0] = a;
+//		
+//		CCVertex b = MakeVertex(_vertices[2*i + 1], _texCoords[2*i + 1], _colorPointer + (2*i + 1)*4, *transform);
+//		triangles[2*i + 1] = (CCTriangle){verts[0], verts[1], b};
+//		verts[1] = b;
+//	}
 	
 //	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );
 //	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );

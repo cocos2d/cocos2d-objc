@@ -918,13 +918,14 @@ static inline GLKMatrix4
 NodeTransform(__unsafe_unretained CCNode *node, GLKMatrix4 parentTransform)
 {
 	CGAffineTransform t = [node nodeToParentTransform];
+	float z = node->_vertexZ;
 	
 	// Convert to 4x4 column major GLK matrix.
 	return GLKMatrix4Multiply(parentTransform, GLKMatrix4Make(
-		t.a, t.b, 0.0, 0.0,
-		t.c, t.d, 0.0, 0.0,
-		0.0, 0.0, 0.0, 0.0,
-		t.tx, t.ty, node->_vertexZ, 1.0
+		 t.a,  t.b, 0.0f, 0.0f,
+		 t.c,  t.d, 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		t.tx, t.ty,    z, 1.0f
 	));
 }
 
