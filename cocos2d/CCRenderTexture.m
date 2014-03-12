@@ -337,50 +337,48 @@
 	_orderOfArrival = 0;
 }
 
-- (void)draw:(CCRenderer *)_renderer transform:(const GLKMatrix4 *)_transform
+- (void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
-	if( _autoDraw){
-		
+	if(_autoDraw){
 		[self begin];
+		NSAssert(_renderer == renderer, @"CCRenderTexture error!");
 		
-		if(_clearFlags){
-			GLfloat oldClearColor[4];
-			GLfloat oldDepthClearValue;
-			GLint oldStencilClearValue;
-			
-			// backup and set
-			if( _clearFlags & GL_COLOR_BUFFER_BIT ) {
-				glGetFloatv(GL_COLOR_CLEAR_VALUE, oldClearColor);
-				glClearColor(_clearColor.r, _clearColor.g, _clearColor.b, _clearColor.a);
+		[renderer enqueueBlock:^{
+			if(_clearFlags){
+				// Save old values.
+				GLfloat oldClearColor[4];
+				if(_clearFlags & GL_COLOR_BUFFER_BIT){
+					glGetFloatv(GL_COLOR_CLEAR_VALUE, oldClearColor);
+					glClearColor(_clearColor.r, _clearColor.g, _clearColor.b, _clearColor.a);
+				}
+				
+				GLfloat oldDepthClearValue;
+				if(_clearFlags & GL_DEPTH_BUFFER_BIT){
+					glGetFloatv(GL_DEPTH_CLEAR_VALUE, &oldDepthClearValue);
+					glClearDepth(_clearDepth);
+				}
+				
+				GLint oldStencilClearValue;
+				if(_clearFlags & GL_STENCIL_BUFFER_BIT){
+					glGetIntegerv(GL_STENCIL_CLEAR_VALUE, &oldStencilClearValue);
+					glClearStencil(_clearStencil);
+				}
+				
+				// clear
+				glClear(_clearFlags);
+				
+				// Restore values.
+				if(_clearFlags & GL_COLOR_BUFFER_BIT) glClearColor(oldClearColor[0], oldClearColor[1], oldClearColor[2], oldClearColor[3]);
+				if(_clearFlags & GL_DEPTH_BUFFER_BIT) glClearDepth(oldDepthClearValue);
+				if(_clearFlags & GL_STENCIL_BUFFER_BIT) glClearStencil(oldStencilClearValue);
 			}
-			
-			if( _clearFlags & GL_DEPTH_BUFFER_BIT ) {
-				glGetFloatv(GL_DEPTH_CLEAR_VALUE, &oldDepthClearValue);
-				glClearDepth(_clearDepth);
-			}
-			
-			if( _clearFlags & GL_STENCIL_BUFFER_BIT ) {
-				glGetIntegerv(GL_STENCIL_CLEAR_VALUE, &oldStencilClearValue);
-				glClearStencil(_clearStencil);
-			}
-			
-			// clear
-			glClear(_clearFlags);
-			
-			// restore
-			if( _clearFlags & GL_COLOR_BUFFER_BIT )
-				glClearColor(oldClearColor[0], oldClearColor[1], oldClearColor[2], oldClearColor[3]);
-			if( _clearFlags & GL_DEPTH_BUFFER_BIT )
-				glClearDepth(oldDepthClearValue);
-			if( _clearFlags & GL_STENCIL_BUFFER_BIT )
-				glClearStencil(oldStencilClearValue);
-		}
+		}];
 		
 		//! make sure all children are drawn
 		[self sortAllChildren];
 		
 		for(CCNode *child in _children){
-			if( child != _sprite) [child visit];
+			if( child != _sprite) [child visit:renderer parentTransform:&_projection];
 		}
 		
 		[self end];

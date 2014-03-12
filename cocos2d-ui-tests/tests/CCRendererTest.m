@@ -107,6 +107,8 @@
 	CCRenderTexture *renderTexture = [CCRenderTexture renderTextureWithWidth:size.width height:size.height pixelFormat:CCTexturePixelFormat_RGBA8888];
 	renderTexture.positionType = CCPositionTypeNormalized;
 	renderTexture.position = ccp(0.75, 0.5);
+	renderTexture.clearFlags = GL_COLOR_BUFFER_BIT;
+	renderTexture.clearColor = [CCColor clearColor];
 	[self.contentNode addChild:renderTexture];
 	
 	[self renderTextureHelper:renderTexture size:size];
