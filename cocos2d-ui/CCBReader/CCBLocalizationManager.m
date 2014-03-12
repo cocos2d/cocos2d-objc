@@ -90,7 +90,7 @@
         for (NSDictionary* translation in translations)
         {
             NSString* key = [translation objectForKey:@"key"];
-            NSString* value = [[translation objectForKey:@"translations"] objectForKey:userLanguage];
+            NSString* value = [(NSDictionary*)[translation objectForKey:@"translations"] objectForKey:userLanguage];
             
             if (key != NULL && value != NULL)
             {

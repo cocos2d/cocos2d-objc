@@ -428,7 +428,7 @@ static NSInteger ccbAnimationManagerID = 0;
         }
         
         CCActionSequence* seq = [CCActionSequence actionWithArray:actions];
-        seq.tag = animationManagerId;
+        seq.tag = (int)animationManagerId;
         [node runAction:seq];
     }
 }
@@ -545,7 +545,7 @@ static NSInteger ccbAnimationManagerID = 0;
     // Make callback at end of sequence
     CCBSequence* seq = [self sequenceFromSequenceId:seqId];
     CCAction* completeAction = [CCActionSequence actionOne:[CCActionDelay actionWithDuration:seq.duration+tweenDuration] two:[CCActionCallFunc actionWithTarget:self selector:@selector(sequenceCompleted)]];
-    completeAction.tag = animationManagerId;
+    completeAction.tag = (int)animationManagerId;
     [rootNode runAction:completeAction];
     
     // Playback callbacks and sounds
@@ -555,7 +555,7 @@ static NSInteger ccbAnimationManagerID = 0;
         CCAction* action = [self actionForCallbackChannel:seq.callbackChannel];
         if (action)
         {
-            action.tag = animationManagerId;
+            action.tag = (int)animationManagerId;
             [self.rootNode runAction:action];
         }
     }
@@ -566,7 +566,7 @@ static NSInteger ccbAnimationManagerID = 0;
         CCAction* action = [self actionForSoundChannel:seq.soundChannel];
         if (action)
         {
-            action.tag = animationManagerId;
+            action.tag = (int)animationManagerId;
             [self.rootNode runAction:action];
         }
     }

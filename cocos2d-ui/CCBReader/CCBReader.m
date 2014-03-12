@@ -138,6 +138,7 @@ static inline NSString *readUTF8(CCBReader *self)
     return str;
 }
 
+/* commented because of warning: unused function
 static inline BOOL getBit(CCBReader *self)
 {
     BOOL bit;
@@ -154,6 +155,7 @@ static inline BOOL getBit(CCBReader *self)
     
     return bit;
 }
+*/
 
 static inline void alignBits(CCBReader *self)
 {
