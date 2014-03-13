@@ -610,8 +610,21 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	return;
 }
 
+-(void)enqueueClear:(GLbitfield)mask color:(GLKVector4)color4 depth:(GLclampf)depth stencil:(GLint)stencil
+{
+	[self enqueueBlock:^{
+		if(mask & GL_COLOR_BUFFER_BIT) glClearColor(color4.r, color4.g, color4.b, color4.a);
+		if(mask & GL_DEPTH_BUFFER_BIT) glClearDepthf(depth);
+		if(mask & GL_STENCIL_BUFFER_BIT) glClearStencil(stencil);
+		
+		glClear(mask);
+	} debugLabel:@"CCRenderer: Clear"];
+}
+
 -(CCVertex *)ensureVertexCapacity:(NSUInteger)requestedCount
 {
+	NSAssert(requestedCount > 0, @"Vertex count must be positive.");
+	
 	GLsizei required = _vertexCount + (GLsizei)requestedCount;
 	if(required > _vertexCapacity){
 		// Double the size of the buffer until it fits.
@@ -626,6 +639,8 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 
 -(GLushort *)ensureElementCapacity:(NSUInteger)requestedCount
 {
+	NSAssert(requestedCount > 0, @"Element count must be positive.");
+	
 	GLsizei required = _elementCount + (GLsizei)requestedCount;
 	if(required > _elementCapacity){
 		// Double the size of the buffer until it fits.

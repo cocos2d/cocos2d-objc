@@ -348,6 +348,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
             _outgoingTexture.sprite.opacity = 1;
             break;
         case CCTransitionFixedFunctionFadeWithColor:
+				    #warning TODO
             glClearColor(_color.r, _color.g, _color.b, _color.a);
             _incomingTexture.sprite.opacity = clampf(2.0 * (_progress - 0.5), 0, 1);
             _outgoingTexture.sprite.opacity = clampf(1.0 * (1 - (2 * _progress)), 0, 1);

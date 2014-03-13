@@ -55,7 +55,7 @@
 
 	GLuint _FBO;
 	GLuint _depthRenderBufffer;
-	ccColor4F _clearColor;
+	GLKVector4 _clearColor;
 	
 	GLKVector4 _oldViewport;
 	GLint _oldFBO;
@@ -267,36 +267,7 @@
 -(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a depth:(float)depthValue stencil:(int)stencilValue flags:(GLbitfield)flags
 {
 	[self begin];
-	
-	[_renderer enqueueBlock:^{
-		// save clear color
-		GLfloat	clearColor[4];
-		GLfloat depthClearValue;
-		int stencilClearValue;
-		
-		if(flags & GL_COLOR_BUFFER_BIT){
-			glGetFloatv(GL_COLOR_CLEAR_VALUE,clearColor);
-			glClearColor(r, g, b, a);
-		}
-		
-		if(flags & GL_DEPTH_BUFFER_BIT){
-			glGetFloatv(GL_DEPTH_CLEAR_VALUE, &depthClearValue);
-			glClearDepth(depthValue);
-		}
-		
-		if(flags & GL_STENCIL_BUFFER_BIT){
-			glGetIntegerv(GL_STENCIL_CLEAR_VALUE, &stencilClearValue);
-			glClearStencil(stencilValue);
-		}
-		
-		glClear(flags);
-		
-		
-		// restore
-		if(flags & GL_COLOR_BUFFER_BIT) glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
-		if(flags & GL_DEPTH_BUFFER_BIT) glClearDepth(depthClearValue);
-		if(flags & GL_STENCIL_BUFFER_BIT) glClearStencil(stencilClearValue);
-	} debugLabel:@"CCRenderTexture: Clear"];
+	[_renderer enqueueClear:flags color:GLKVector4Make(r, g, b, a) depth:depthValue stencil:stencilValue];
 }
 
 -(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a
@@ -340,35 +311,15 @@
 - (void)clearDepth:(float)depthValue
 {
 	[self begin];
-	
-	[_renderer enqueueBlock:^{
-		//! save old depth value
-		GLfloat depthClearValue;
-		glGetFloatv(GL_DEPTH_CLEAR_VALUE, &depthClearValue);
-
-		glClearDepth(depthValue);
-		glClear(GL_DEPTH_BUFFER_BIT);
-
-		// restore clear color
-		glClearDepth(depthClearValue);
-	} debugLabel:@"CCRenderTexture: Clear Depth"];
-	
+		[_renderer enqueueClear:GL_DEPTH_BUFFER_BIT color:GLKVector4Make(0, 0, 0, 0) depth:depthValue stencil:0];
 	[self end];
 }
 
 - (void)clearStencil:(int)stencilValue
 {
-	[_renderer enqueueBlock:^{
-		// save old stencil value
-		int stencilClearValue;
-		glGetIntegerv(GL_STENCIL_CLEAR_VALUE, &stencilClearValue);
-
-		glClearStencil(stencilValue);
-		glClear(GL_STENCIL_BUFFER_BIT);
-
-		// restore clear color
-		glClearStencil(stencilClearValue);
-	} debugLabel:@"CCRenderTexture: Clear Stencil"];
+	[self begin];
+		[_renderer enqueueClear:GL_DEPTH_BUFFER_BIT color:GLKVector4Make(0, 0, 0, 0) depth:0.0 stencil:stencilValue];
+	[self end];
 }
 
 #pragma mark RenderTexture - "auto" update
@@ -392,36 +343,7 @@
 		[self begin];
 		NSAssert(_renderer == renderer, @"CCRenderTexture error!");
 		
-		[renderer enqueueBlock:^{
-			if(_clearFlags){
-				// Save old values.
-				GLfloat oldClearColor[4];
-				if(_clearFlags & GL_COLOR_BUFFER_BIT){
-					glGetFloatv(GL_COLOR_CLEAR_VALUE, oldClearColor);
-					glClearColor(_clearColor.r, _clearColor.g, _clearColor.b, _clearColor.a);
-				}
-				
-				GLfloat oldDepthClearValue;
-				if(_clearFlags & GL_DEPTH_BUFFER_BIT){
-					glGetFloatv(GL_DEPTH_CLEAR_VALUE, &oldDepthClearValue);
-					glClearDepth(_clearDepth);
-				}
-				
-				GLint oldStencilClearValue;
-				if(_clearFlags & GL_STENCIL_BUFFER_BIT){
-					glGetIntegerv(GL_STENCIL_CLEAR_VALUE, &oldStencilClearValue);
-					glClearStencil(_clearStencil);
-				}
-				
-				// clear
-				glClear(_clearFlags);
-				
-				// Restore values.
-				if(_clearFlags & GL_COLOR_BUFFER_BIT) glClearColor(oldClearColor[0], oldClearColor[1], oldClearColor[2], oldClearColor[3]);
-				if(_clearFlags & GL_DEPTH_BUFFER_BIT) glClearDepth(oldDepthClearValue);
-				if(_clearFlags & GL_STENCIL_BUFFER_BIT) glClearStencil(oldStencilClearValue);
-			}
-		} debugLabel:@"CCRenderTexture: Clear for autoDraw"];
+		[_renderer enqueueClear:_clearFlags color:_clearColor depth:_clearDepth stencil:_clearStencil];
 		
 		//! make sure all children are drawn
 		[self sortAllChildren];
@@ -585,12 +507,12 @@
 
 - (CCColor*) clearColor
 {
-    return [CCColor colorWithCcColor4f:_clearColor];
+    return [CCColor colorWithGLKVector4:_clearColor];
 }
 
 - (void) setClearColor:(CCColor *)clearColor
 {
-    _clearColor = clearColor.ccColor4f;
+    _clearColor = clearColor.glkVector4;
 }
 
 #pragma RenderTexture - Override

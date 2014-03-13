@@ -114,8 +114,6 @@
 	/* tick before glClear: issue #533 */
 	if( ! _isPaused ) [_scheduler update: _dt];
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 	/* to avoid flickr, nextScene MUST be here: after tick and before draw.
 	 XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
 	if( _nextScene ) [self setNextScene];
@@ -125,6 +123,8 @@
 	
 	[CCRenderer bindRenderer:_renderer];
 	[_renderer invalidateState];
+	
+	[_renderer enqueueClear:(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) color:GLKVector4Make(0.0f, 0.0f, 0.0f, 0.0f) depth:1.0f stencil:0];
 	
 	// Render
 	[_runningScene visit:_renderer parentTransform:&projection];

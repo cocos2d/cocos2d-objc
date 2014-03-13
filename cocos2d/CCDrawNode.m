@@ -119,6 +119,8 @@ CCShader *SHADER = nil;
 
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
+	if(_elementCount == 0) return;
+	
 	CCRenderBuffer buffer = [renderer enqueueTriangles:_elementCount/3 andVertexes:_vertexCount withState:self.renderState];
 	
 	// TODO Maybe it would be even better to skip the CPU transform and use a uniform matrix?

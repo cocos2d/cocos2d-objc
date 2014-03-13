@@ -156,6 +156,8 @@ extern const NSString *CCBlendEquationAlpha;
 /// Mark the renderer's cached GL state as invalid.
 -(void)invalidateState;
 
+-(void)enqueueClear:(GLbitfield)mask color:(GLKVector4)color4 depth:(GLclampf)depth stencil:(GLint)stencil;
+
 -(CCRenderBuffer)enqueueTriangles:(NSUInteger)triangleCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState;
 -(CCRenderBuffer)enqueueLines:(NSUInteger)lineCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState;
 

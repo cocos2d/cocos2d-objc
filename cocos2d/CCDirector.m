@@ -218,9 +218,6 @@ static CCDirector *_sharedDirector = nil;
 //	[self setAlphaBlending: YES];
 //	[self setDepthTest: __view.depthFormat];
 	[self setProjection: _projection];
-
-	// set other opengl default values
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
 -(NSDictionary *)updateGlobalShaderUniforms

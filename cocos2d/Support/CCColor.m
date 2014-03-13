@@ -310,6 +310,11 @@
     return [[CCColor alloc] initWithCcColor4f:c];
 }
 
++ (CCColor*) colorWithGLKVector4:(GLKVector4)c
+{
+    return [[CCColor alloc] initWithGLKVector4:c];
+}
+
 - (CCColor*) initWithCcColor3b: (ccColor3B) c
 {
     return [self initWithRed:c.r/255.0 green:c.g/255.0 blue:c.b/255.0 alpha:1];
@@ -321,6 +326,11 @@
 }
 
 - (CCColor*) initWithCcColor4f: (ccColor4F) c
+{
+    return [self initWithRed:c.r green:c.g blue:c.b alpha:c.a];
+}
+
+- (CCColor*) initWithGLKVector4: (GLKVector4) c
 {
     return [self initWithRed:c.r green:c.g blue:c.b alpha:c.a];
 }
