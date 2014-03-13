@@ -1246,6 +1246,10 @@ static inline float readFloat(CCBReader *self)
         float friction = readFloat(self);
         float elasticity = readFloat(self);
         
+        NSString * collisionType = [self readCachedString];
+        NSString * collisionCategories = [self readCachedString];
+        NSString * collisionMask = [self readCachedString];
+        
         if (dynamic)
         {
             body.affectedByGravity = affectedByGravity;
@@ -1255,6 +1259,23 @@ static inline float readFloat(CCBReader *self)
         body.density = density;
         body.friction = friction;
         body.elasticity = elasticity;
+        
+        body.collisionType = collisionType;
+        
+        NSArray * masks = nil;
+        if(![collisionMask isEqualToString:@""])
+        {
+            masks = [collisionMask componentsSeparatedByString:@";"];
+        }
+        
+        NSArray * categories= nil;
+        if(![collisionCategories isEqualToString:@""])
+        {
+            categories = [collisionCategories componentsSeparatedByString:@";"];
+        }
+
+        body.collisionMask = masks;
+        body.collisionCategories = categories;
         
         node.physicsBody = body;
 //#endif

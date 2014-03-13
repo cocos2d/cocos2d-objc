@@ -163,8 +163,7 @@
 
 -(void)setDensity:(CGFloat)density
 {
-	NSAssert(_shapeList.next == nil, @"Cannot set the density of a multi-shape body directly. Set the individual shape densities instead.");
-	_shapeList.density = density;
+    FOREACH_SHAPE(self, shape) shape.density = density;
 }
 
 -(CGFloat)area
