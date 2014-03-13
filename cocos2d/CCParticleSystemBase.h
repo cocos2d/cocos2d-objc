@@ -288,9 +288,6 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
     // Particle emission counter.
 	float _emitCounter;
 
-	// Texture alpha behavior.
-	BOOL _opacityModifyRGB;
-
 	// Movment type: free or grouped.
 	CCParticleSystemPositionType	_particlePositionType;
 
@@ -387,12 +384,6 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
 
 /** Maxmium particles of the system. */
 @property (nonatomic,readwrite,assign) NSUInteger totalParticles;
-
-/** Blend method. */
-@property (nonatomic,readwrite) ccBlendFunc blendFunc;
-
-/** True to enbale alpha value modifies color. */
-@property (nonatomic, readwrite, getter=doesOpacityModifyRGB, assign) BOOL opacityModifyRGB;
 
 /** True to enable blend additive mode. (GL_SRC_ALPHA, GL_ONE). */
 @property (nonatomic,readwrite) BOOL blendAdditive;

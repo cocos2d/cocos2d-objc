@@ -194,6 +194,8 @@ CompileShader(GLenum type, const char *source)
 
 +(GLuint)createVAOforCCVertexBuffer:(GLuint)vbo elementBuffer:(GLuint)ebo
 {
+	glPushGroupMarkerEXT(0, "CCShader: Creating vertex buffer");
+	
 	GLuint vao = 0;
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
@@ -214,6 +216,8 @@ CompileShader(GLenum type, const char *source)
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	
+	glPopGroupMarkerEXT();
 	
 	return vao;
 }
@@ -306,7 +310,7 @@ CompileShader(GLenum type, const char *source)
 			}; break;
 			case GL_SAMPLER_2D: {
 				uniformSetters[name] = ^(CCRenderer *renderer, CCTexture *texture){
-					texture = texture ?: CCTextureNone;
+					texture = texture ?: [CCTexture none];
 					NSAssert([texture isKindOfClass:[CCTexture class]], @"Shader uniform '%@' value must be a CCTexture object.", name);
 					
 					// Bind the texture to the texture unit for the uniform.
@@ -338,6 +342,8 @@ CompileShader(GLenum type, const char *source)
 
 -(instancetype)initWithVertexShaderSource:(NSString *)vertexSource fragmentShaderSource:(NSString *)fragmentSource
 {
+	glPushGroupMarkerEXT(0, "CCShader: Init");
+	
 	GLuint program = glCreateProgram();
 	glBindAttribLocation(program, CCAttributePosition, "cc_Position");
 	glBindAttribLocation(program, CCAttributeTexCoord1, "cc_TexCoord1");
@@ -355,6 +361,8 @@ CompileShader(GLenum type, const char *source)
 	
 	glDeleteShader(vshader);
 	glDeleteShader(fshader);
+	
+	glPopGroupMarkerEXT();
 	
 	return [self initWithProgram:program uniformSetters:[self uniformSettersForProgram:program] ownsProgram:YES];
 }
@@ -393,7 +401,7 @@ static CCShader *CC_SHADER_POS_TEXA8_COLOR = nil;
 		@"void main(){gl_FragColor = cc_FragColor * texture2D(cc_MainTexture, cc_FragTexCoord1);}"];
 	
 	CC_SHADER_POS_TEXA8_COLOR = [[self alloc] initWithVertexShaderSource:CCDefaultVShader fragmentShaderSource:
-		@"void main(){gl_FragColor = vec4(cc_FragColor.rgb, cc_FragColor.a * texture2D(cc_MainTexture, cc_FragTexCoord1).a);}"];
+		@"void main(){gl_FragColor = cc_FragColor*texture2D(cc_MainTexture, cc_FragTexCoord1).a;}"];
 }
 
 +(instancetype)positionColorShader

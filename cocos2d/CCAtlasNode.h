@@ -56,7 +56,6 @@
 
 	// Texture RGBA.
 	ccColor3B	_colorUnmodified;
-	BOOL		_opacityModifyRGB;
 
 	// Color uniform.
 	GLint	_uniformColor;

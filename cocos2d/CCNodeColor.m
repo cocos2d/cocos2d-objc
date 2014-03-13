@@ -51,10 +51,6 @@
 #pragma mark -
 #pragma mark LayerColor
 
-@interface CCNodeColor (Private)
--(void) updateColor;
-@end
-
 @implementation CCNodeColor {
 	@protected
 	GLKVector4	_colors[4];
@@ -80,9 +76,7 @@
 - (id) initWithColor:(CCColor*)color width:(GLfloat)w  height:(GLfloat) h
 {
 	if( (self=[super init]) ) {
-
-		// default blend function
-		self.blendFunc = (ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
+		self.blendMode = [CCBlendMode premultipliedAlphaMode];
 
 		_displayColor = _color = color.ccColor4f;
 		[self updateColor];
@@ -127,7 +121,7 @@
 #pragma mark Protocols
 // Color Protocol
 
--(void) setColor:(CCColor*)color
+-(void) setColor:(CCColor *)color
 {
 	[super setColor:color];
 	[self updateColor];

@@ -65,10 +65,6 @@
 
 #import "CCParticleSystemBase_Private.h"
 
-@interface CCParticleSystemBase ()
--(void) updateBlendFunc;
-@end
-
 @implementation CCParticleSystemBase
 @synthesize active = _active, duration = _duration;
 @synthesize sourcePosition = _sourcePosition, posVar = _posVar;
@@ -80,7 +76,6 @@
 @synthesize emissionRate = _emissionRate;
 @synthesize startSize = _startSize, startSizeVar = _startSizeVar;
 @synthesize endSize = _endSize, endSizeVar = _endSizeVar;
-@synthesize opacityModifyRGB = _opacityModifyRGB;
 @synthesize particlePositionType = _particlePositionType;
 @synthesize autoRemoveOnFinish = _autoRemoveOnFinish;
 @synthesize resetOnVisibilityToggle = _resetOnVisibilityToggle;
@@ -133,8 +128,10 @@
 		_duration = [[dictionary valueForKey:@"duration"] floatValue];
 
 		// blend function
-		_blendFunc.src = [[dictionary valueForKey:@"blendFuncSource"] intValue];
-		_blendFunc.dst = [[dictionary valueForKey:@"blendFuncDestination"] intValue];
+		self.blendMode = [CCBlendMode blendModeWithOptions:@{
+			CCBlendFuncSrcColor: [dictionary valueForKey:@"blendFuncSource"],
+			CCBlendFuncDstColor: [dictionary valueForKey:@"blendFuncDestination"],
+		}];
 
 		// color
 		float r,g,b,a;
@@ -239,9 +236,6 @@
         }
         
 		{
-			// Set a compatible default for the alpha transfer
-			_opacityModifyRGB = NO;
-
 			// texture
 			// Try to get the texture from the cache
 
@@ -309,7 +303,7 @@
 		_active = YES;
 
 		// default blend function
-		self.blendFunc = (ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
+		self.blendMode = [CCBlendMode premultipliedAlphaMode];
 
 		// default movement type;
 		_particlePositionType = CCParticleSystemPositionTypeGrouped;
@@ -638,41 +632,21 @@
 
 #pragma mark ParticleSystem - CCTexture protocol
 
--(void) setTexture:(CCTexture*) texture
-{
-	super.texture = texture;
-	[self updateBlendFunc];
-}
-
 #pragma mark ParticleSystem - Additive Blending
 -(void) setBlendAdditive:(BOOL)additive
 {
 	if( additive ) {
-		_blendFunc.src = GL_SRC_ALPHA;
-		_blendFunc.dst = GL_ONE;
-
+		self.blendMode = [CCBlendMode addMode];
 	} else {
-
-		if(self.texture && ! [self.texture hasPremultipliedAlpha]){
-			self.blendFunc = (ccBlendFunc){GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA};
-		} else {
-			self.blendFunc = (ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
-		}
+		self.blendMode = [CCBlendMode premultipliedAlphaMode];
 	}
 }
 
 -(BOOL) blendAdditive
 {
-	return( _blendFunc.src == GL_SRC_ALPHA && _blendFunc.dst == GL_ONE);
+	return (self.blendMode == [CCBlendMode addMode]);
 }
 
--(void) setBlendFunc:(ccBlendFunc)blendFunc
-{
-	if( _blendFunc.src != blendFunc.src || _blendFunc.dst != blendFunc.dst ) {
-		_blendFunc = blendFunc;
-		[self updateBlendFunc];
-	}
-}
 #pragma mark ParticleSystem - Total Particles Property
 
 - (void) setTotalParticles:(NSUInteger)tp
@@ -857,26 +831,6 @@
 {
 	_transformSystemDirty = YES;
 	[super setScaleY:newScaleY];
-}
-
-#pragma mark Particle - Helpers
-
--(void) updateBlendFunc
-{
-	NSAssert(! _batchNode, @"Can't change blending functions when the particle is being batched");
-
-	BOOL premultiplied = [self.texture hasPremultipliedAlpha];
-
-	_opacityModifyRGB = NO;
-
-	if(self.texture && (_blendFunc.src == GL_ONE && _blendFunc.dst == GL_ONE_MINUS_SRC_ALPHA)){
-		if( premultiplied ){
-			_opacityModifyRGB = YES;
-		} else {
-			_blendFunc.src = GL_SRC_ALPHA;
-			_blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
-		}
-	}
 }
 
 #pragma mark Color properties

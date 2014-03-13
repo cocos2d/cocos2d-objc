@@ -35,7 +35,6 @@
 
 @interface CCAtlasNode ()
 -(void) calculateMaxItems;
--(void) updateOpacityModifyRGB;
 @end
 
 @implementation CCAtlasNode
@@ -67,7 +66,6 @@
 		_itemHeight = h;
 
 		_colorUnmodified = ccWHITE;
-		_opacityModifyRGB = YES;
 
 //		_textureAtlas = [[CCTextureAtlas alloc] initWithTexture:texture capacity:c];
 //		
@@ -75,9 +73,6 @@
 //			CCLOG(@"cocos2d: Could not initialize CCAtlasNode. Invalid Texture");
 //			return nil;
 //		}
-
-		[self updateBlendFunc];
-		[self updateOpacityModifyRGB];
 
 		[self calculateMaxItems];
 
@@ -121,10 +116,7 @@
 
 - (CCColor*) color
 {
-	if (_opacityModifyRGB)
-		return [CCColor colorWithCcColor3b:_colorUnmodified];
-
-	return super.color;
+	return [CCColor colorWithCcColor3b:_colorUnmodified];
 }
 
 -(void) setColor:(CCColor*)color
@@ -132,50 +124,19 @@
 	ccColor4F color4f = color.ccColor4f;
 	_colorUnmodified = color.ccColor3b;
 
-	if( _opacityModifyRGB ){
-		// premultiply the alpha back in.
-		color4f.r *= color4f.a;
-		color4f.g *= color4f.a;
-		color4f.b *= color4f.a;
-		color = [CCColor colorWithCcColor4f:color4f];
-	}
+	// premultiply the alpha back in.
+	color4f.r *= color4f.a;
+	color4f.g *= color4f.a;
+	color4f.b *= color4f.a;
+	color = [CCColor colorWithCcColor4f:color4f];
+	
 	[super setColor:color];
 }
 
 -(void) setOpacity:(CGFloat) anOpacity
 {
-    [super setOpacity:anOpacity];
-
-	// special opacity for premultiplied textures
-	if( _opacityModifyRGB )
-		[self setColor: [CCColor colorWithCcColor3b:_colorUnmodified]];
-}
-
--(void) setOpacityModifyRGB:(BOOL)modify
-{
-	CCColor* oldColor	= self.color;
-	_opacityModifyRGB	= modify;
-	self.color			= oldColor;
-}
-
--(BOOL) doesOpacityModifyRGB
-{
-	return _opacityModifyRGB;
-}
-
--(void) updateOpacityModifyRGB
-{
-//	_opacityModifyRGB = [_textureAtlas.texture hasPremultipliedAlpha];
-}
-
-#pragma mark CCAtlasNode - CCNodeTexture protocol
-
--(void) updateBlendFunc
-{
-//	if( ! [_textureAtlas.texture hasPremultipliedAlpha] ) {
-//		_blendFunc.src = GL_SRC_ALPHA;
-//		_blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
-//	}
+	[super setOpacity:anOpacity];
+	[self setColor: [CCColor colorWithCcColor3b:_colorUnmodified]];
 }
 
 @end

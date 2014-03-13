@@ -282,6 +282,10 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 
 +(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader mainTexture:(CCTexture *)mainTexture;
 {
+	if(mainTexture == nil){
+		mainTexture = [CCTexture none];
+	}
+	
 	CCRenderState *renderState = [[self alloc] initWithBlendMode:blendMode shader:shader shaderUniforms:@{CCShaderUniformMainTexture: mainTexture}];
 	renderState->_mainTexture = mainTexture;
 	
@@ -373,8 +377,12 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 
 -(void)invoke:(CCRenderer *)renderer
 {
+	glPushGroupMarkerEXT(0, "CCRendererCommandDraw: Invoke");
+	
 	[renderer setRenderState:_renderState];
 	glDrawElements(_mode, _elements, GL_UNSIGNED_SHORT, (GLvoid *)(_first*sizeof(GLushort)));
+	
+	glPopGroupMarkerEXT();
 }
 
 @end
@@ -388,12 +396,14 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 @implementation CCRenderCommandCustom
 {
 	void (^_block)();
+	NSString *_debugLabel;
 }
 
--(instancetype)initWithBlock:(void (^)())block
+-(instancetype)initWithBlock:(void (^)())block debugLabel:(NSString *)debugLabel
 {
 	if((self = [super init])){
 		_block = block;
+		_debugLabel = debugLabel;
 	}
 	
 	return self;
@@ -401,8 +411,12 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 
 -(void)invoke:(CCRenderer *)renderer
 {
+	glPushGroupMarkerEXT(0, [NSString stringWithFormat:@"CCRenderCommandCustom(%@): Invoke", _debugLabel].UTF8String);
+	
 	[renderer bindVAO:NO];
 	_block();
+	
+	glPopGroupMarkerEXT();
 }
 
 @end
@@ -460,10 +474,14 @@ Things to try if sorting is implemented:
 -(instancetype)init
 {
 	if((self = [super init])){
+		glPushGroupMarkerEXT(0, "CCRenderer: Init");
+		
 		glGenBuffers(1, &_vbo);
 		glGenBuffers(1, &_ebo);
 		
 		_vao = [CCShader createVAOforCCVertexBuffer:_vbo elementBuffer:_ebo];
+		
+		glPopGroupMarkerEXT();
 		
 		_queue = [NSMutableArray array];
 		
@@ -479,9 +497,13 @@ Things to try if sorting is implemented:
 
 -(void)dealloc
 {
+	glPushGroupMarkerEXT(0, "CCRenderer: Dealloc");
+	
 	glDeleteVertexArraysOES(1, &_vao);
 	glDeleteBuffers(1, &_vbo);
 	glDeleteBuffers(1, &_ebo);
+	
+	glPopGroupMarkerEXT();
 	
 	free(_vertexes);
 	free(_elements);
@@ -517,7 +539,9 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 -(void)bindVAO:(BOOL)bind
 {
 	if(bind != _vaoBound){
+		glInsertEventMarkerEXT(0, "CCRenderer: Bind VAO");
 		glBindVertexArray(bind ? _vao : 0);
+		
 		_vaoBound = bind;
 	}
 }
@@ -527,9 +551,13 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	[self bindVAO:YES];
 	if(renderState == _renderState) return;
 	
+	glPushGroupMarkerEXT(0, "CCRenderer: Render State");
+	
 	// Set the blending state.
 	__unsafe_unretained NSDictionary *blendOptions = renderState->_blendMode->_options;
 	if(blendOptions != _blendOptions){
+		glInsertEventMarkerEXT(0, "Blending mode");
+		
 		if(blendOptions == CCBLEND_DISABLED_OPTIONS){
 			if(_blendOptions != CCBLEND_DISABLED_OPTIONS) glDisable(GL_BLEND);
 		} else {
@@ -554,6 +582,8 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	// Bind the shader.
 	__unsafe_unretained CCShader *shader = renderState->_shader;
 	if(shader != _shader){
+		glInsertEventMarkerEXT(0, "Shader");
+		
 		glUseProgram(shader->_program);
 		
 		_shader = shader;
@@ -563,6 +593,8 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	// Set the shader's uniform state.
 	__unsafe_unretained NSDictionary *shaderUniforms = renderState->_shaderUniforms;
 	if(shaderUniforms != _shaderUniforms){
+		glInsertEventMarkerEXT(0, "Uniforms");
+		
 		__unsafe_unretained NSDictionary *setters = shader->_uniformSetters;
 		for(NSString *uniformName in setters){
 			__unsafe_unretained CCUniformSetter setter = setters[uniformName];
@@ -572,6 +604,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	}
 	
 	CHECK_GL_ERROR_DEBUG();
+	glPopGroupMarkerEXT();
 	
 	_renderState = renderState;
 	return;
@@ -648,9 +681,9 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	return buffer;
 }
 
--(void)enqueueBlock:(void (^)())block
+-(void)enqueueBlock:(void (^)())block debugLabel:(NSString *)debugLabel
 {
-	[_queue addObject:[[CCRenderCommandCustom alloc] initWithBlock:block]];
+	[_queue addObject:[[CCRenderCommandCustom alloc] initWithBlock:block debugLabel:debugLabel]];
 	_lastDrawCommand = nil;
 }
 
@@ -659,11 +692,15 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	[self enqueueBlock:^{
     typedef void (*Func)(id, SEL);
     ((Func)objc_msgSend)(target, selector);
-	}];
+	} debugLabel:NSStringFromSelector(selector)];
 }
 
 -(void)flush
 {
+	glPushGroupMarkerEXT(0, "CCRenderer: Flush");
+	
+	glInsertEventMarkerEXT(0, "Buffering");
+	
 	glBindBuffer(GL_ARRAY_BUFFER, _vbo);
 	glBufferData(GL_ARRAY_BUFFER, _vertexCount*sizeof(*_vertexes), _vertexes, GL_STREAM_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -683,6 +720,8 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	_elementCount = 0;
 	
 	CHECK_GL_ERROR_DEBUG();
+	glPopGroupMarkerEXT();
+	
 //	CC_INCREMENT_GL_DRAWS(1);
 }
 

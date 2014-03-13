@@ -307,9 +307,7 @@
 
 	quad = &(_quads[_particleIdx]);
 
-	ccColor4B color = (_opacityModifyRGB)
-		? (ccColor4B){ p->color.r*p->color.a*255, p->color.g*p->color.a*255, p->color.b*p->color.a*255, p->color.a*255}
-		: (ccColor4B){ p->color.r*255, p->color.g*255, p->color.b*255, p->color.a*255};
+	ccColor4B color = (ccColor4B){p->color.r*p->color.a*255, p->color.g*p->color.a*255, p->color.b*p->color.a*255, p->color.a*255};
 
 	quad->bl.colors = color;
 	quad->br.colors = color;

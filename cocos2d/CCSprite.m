@@ -60,7 +60,6 @@
 	// Vertex coords, texture coords and color info.
 	CCVertex _verts[4];
 	
-	BOOL _opacityModifyRGB;
 	BOOL _flipX, _flipY;
 }
 
@@ -120,13 +119,9 @@
 // designated initializer
 -(id) initWithTexture:(CCTexture*)texture rect:(CGRect)rect rotated:(BOOL)rotated
 {
-	if( (self = [super init]) )
-	{
-		// shader program
-		self.shader = [CCShader positionTextureColorShader];
-		
+	if((self = [super init])){
 		self.blendMode = [CCBlendMode premultipliedAlphaMode];
-		_opacityModifyRGB = YES;
+		self.shader = [CCShader positionTextureColorShader];
 		
 		_flipY = _flipX = NO;
 
@@ -146,6 +141,7 @@
 		[self setTexture:texture];
 		[self setTextureRect:rect rotated:rotated untrimmedSize:rect.size];
 	}
+	
 	return self;
 }
 
@@ -408,12 +404,10 @@
 {
 	GLKVector4 color4 = GLKVector4Make(_displayColor.r, _displayColor.g, _displayColor.b, _displayColor.a);
 	
-	// special opacity for premultiplied textures
-	if ( _opacityModifyRGB ) {
-		color4.r *= _displayColor.a;
-		color4.g *= _displayColor.a;
-		color4.b *= _displayColor.a;
-	}
+	// Premultiply alpha.
+	color4.r *= _displayColor.a;
+	color4.g *= _displayColor.a;
+	color4.b *= _displayColor.a;
 	
 	_verts[0].color = color4;
 	_verts[1].color = color4;
@@ -443,19 +437,6 @@
 {
 	[super setOpacity:opacity];
 	[self updateColor];
-}
-
--(void) setOpacityModifyRGB:(BOOL)modify
-{
-	if( _opacityModifyRGB != modify ) {
-		_opacityModifyRGB = modify;
-		[self updateColor];
-	}
-}
-
--(BOOL) doesOpacityModifyRGB
-{
-	return _opacityModifyRGB;
 }
 
 -(void)updateDisplayedOpacity:(CGFloat)parentOpacity
@@ -500,25 +481,5 @@
 //	
 //	self.spriteFrame = frame.spriteFrame;
 //}
-
-#pragma mark CCSprite - CocosNodeTexture protocol
-
--(void) updateBlendFunc
-{
-	// it is possible to have an untextured sprite
-	if(!self.texture || ![self.texture hasPremultipliedAlpha]){
-		self.blendMode = [CCBlendMode alphaMode];
-		[self setOpacityModifyRGB:NO];
-	} else {
-		self.blendMode = [CCBlendMode premultipliedAlphaMode];
-		[self setOpacityModifyRGB:YES];
-	}
-}
-
--(void) setTexture:(CCTexture*)texture
-{
-	super.texture = texture;
-	[self updateBlendFunc];
-}
 
 @end

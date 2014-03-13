@@ -517,8 +517,6 @@ void FNTConfigRemoveCache( void )
 
 		_contentSize = CGSizeZero;
 		
-		_opacityModifyRGB = [self.texture hasPremultipliedAlpha];
-		
 		_anchorPoint = ccp(0.5f, 0.5f);
         
 		_imageOffset = offset;
@@ -803,10 +801,7 @@ void FNTConfigRemoveCache( void )
 				[self addChild:fontChar z:i name:iStr1];
 			}
 			
-			// Apply label properties
-			[fontChar setOpacityModifyRGB:_opacityModifyRGB];
-
-			// Color MUST be set before opacity, since opacity might change color if OpacityModifyRGB is on
+			// Color MUST be set before opacity due to premultiplied alpha.
 			[fontChar updateDisplayedColor:_displayColor];
 			[fontChar updateDisplayedOpacity:_displayColor.a];
 		}

@@ -90,9 +90,6 @@
  */
 -(id) initWithColor:(CCColor*)color;
 
-/** Blend method to use. */
-@property (nonatomic,readwrite) ccBlendFunc blendFunc;
-
 @end
 
 #pragma mark - CCNodeGradient

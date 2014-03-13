@@ -694,11 +694,11 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  *
  *  @param boolean Enables or disables setting of opacity with color.
  */
--(void) setOpacityModifyRGB:(BOOL)boolean;
+-(void) setOpacityModifyRGB:(BOOL)boolean __deprecated;
 
 /** Returns whether or not the opacity will be applied using glColor(R,G,B,opacity) or glColor(opacity, opacity, opacity, opacity).
  */
--(BOOL) doesOpacityModifyRGB;
+-(BOOL) doesOpacityModifyRGB __deprecated;
 
 @end
 

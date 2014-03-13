@@ -26,9 +26,6 @@
 
 @interface CCParticleSystemBase ()
 
-// Weak reference to the CCSpriteBatchNode that particle.
-@property (nonatomic,readwrite,unsafe_unretained) CCParticleBatchNode *batchNode;
-
 // Altas Index.
 @property (nonatomic,readwrite) NSUInteger atlasIndex;
 

@@ -1657,7 +1657,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 }
 
 -(BOOL) doesOpacityModifyRGB{
-	return NO; // Subclasses may use this feature.
+	return YES;
 }
 
 #pragma mark - RenderState Methods
@@ -1668,7 +1668,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 		if(_shaderUniforms.count > 1){
 			_renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms];
 		} else {
-			_renderState = [CCRenderState renderStateWithBlendMode:_blendMode shader:_shader mainTexture:(_texture ?: CCTextureNone)];
+			_renderState = [CCRenderState renderStateWithBlendMode:_blendMode shader:_shader mainTexture:_texture];
 		}
 	}
 	
@@ -1694,7 +1694,10 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 -(NSMutableDictionary *)shaderUniforms
 {
 	if(_shaderUniforms == nil){
-		self.shaderUniforms = [@{CCShaderUniformMainTexture: (_texture ?: CCTextureNone)} mutableCopy];
+		self.shaderUniforms = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+			(_texture ?: [CCTexture none]), CCShaderUniformMainTexture,
+			nil
+		];
 	}
 	
 	return _shaderUniforms;
@@ -1730,16 +1733,18 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 	}];
 }
 
--(CCTexture*) texture
+-(CCTexture*)texture
 {
 	return _texture;
 }
 
--(void) setTexture:(CCTexture *)texture
+-(void)setTexture:(CCTexture *)texture
 {
 	if(_texture != texture){
 		_texture = texture;
 		self.renderState = nil;
+		
+		_shaderUniforms[CCShaderUniformMainTexture] = (_texture ?: [CCTexture none]);
 	}
 }
 

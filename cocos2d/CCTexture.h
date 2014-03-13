@@ -170,6 +170,9 @@ typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
  */
 +(instancetype)textureWithFile:(NSString*)file;
 
+/// A placeholder value for a blank sizeless texture.
++(instancetype)none;
+
 
 /// -------------------------------------------------------
 /// @name Accessing The Texture Attributes

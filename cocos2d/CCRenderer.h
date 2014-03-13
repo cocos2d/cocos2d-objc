@@ -160,7 +160,7 @@ extern const NSString *CCBlendEquationAlpha;
 -(CCRenderBuffer)enqueueLines:(NSUInteger)lineCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState;
 
 /// Enqueue a block that performs GL commands.
--(void)enqueueBlock:(void (^)())block;
+-(void)enqueueBlock:(void (^)())block debugLabel:(NSString *)debugLabel;
 
 /// Enqueue a method that performs GL commands.
 -(void)enqueueMethod:(SEL)selector target:(id)target;
