@@ -283,6 +283,7 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 +(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader mainTexture:(CCTexture *)mainTexture;
 {
 	if(mainTexture == nil){
+		CCLOGWARN(@"nil Texture passed to CCRenderState");
 		mainTexture = [CCTexture none];
 	}
 	
