@@ -50,7 +50,7 @@ const NSString *CCShaderUniformProjectionInv = @"cc_ProjectionInv";
 const NSString *CCShaderUniformViewSize = @"cc_ViewSize";
 const NSString *CCShaderUniformViewSizeInPixels = @"cc_ViewSizeInPixels";
 const NSString *CCShaderUniformTime = @"cc_Time";
-const NSString *CCShaderUniformSinTime = @"cc_SineTime";
+const NSString *CCShaderUniformSinTime = @"cc_SinTime";
 const NSString *CCShaderUniformCosTime = @"cc_CosTime";
 const NSString *CCShaderUniformRandom01 = @"cc_Random01";
 const NSString *CCShaderUniformMainTexture = @"cc_MainTexture";
@@ -244,6 +244,7 @@ CompileShader(GLenum type, const char *source)
 		NSAssert(size == 1, @"Uniform arrays not supported. (yet?)");
 		
 		NSString *name = @(cname);
+		GLint location = glGetUniformLocation(program, cname);
 		
 		// Setup a block that is responsible for binding that uniform variable's value.
 		switch(type){
@@ -252,7 +253,7 @@ CompileShader(GLenum type, const char *source)
 					value = value ?: @0;
 					NSAssert([value isKindOfClass:[NSNumber class]], @"Shader uniform '%@' value must be wrapped in a NSNumber.", name);
 					
-					glUniform1f(i, value.floatValue);
+					glUniform1f(location, value.floatValue);
 				};
 			}; break;
 			case GL_FLOAT_VEC2: {
@@ -262,12 +263,15 @@ CompileShader(GLenum type, const char *source)
 					
 					if(strcmp(value.objCType, @encode(GLKVector2)) == 0){
 						GLKVector2 v; [value getValue:&v];
-						glUniform2f(i, v.x, v.y);
+						glUniform2f(location, v.x, v.y);
 					} else if(strcmp(value.objCType, @encode(CGPoint)) == 0){
 						CGPoint v = {}; [value getValue:&v];
-						glUniform2f(i, v.x, v.y);
+						glUniform2f(location, v.x, v.y);
+					} else if(strcmp(value.objCType, @encode(CGSize)) == 0){
+						CGSize v = {}; [value getValue:&v];
+						glUniform2f(location, v.width, v.height);
 					} else {
-						NSAssert(NO, @"Shader uniformm 'vec2 %@' value must be passed using [NSValue valueWithGLKVector2:] or [NSValue valueWithCGPoint:]", name);
+						NSAssert(NO, @"Shader uniformm 'vec2 %@' value must be passed using [NSValue valueWithGLKVector2:], [NSValue valueWithCGPoint:], or [NSValue valueWithCGSize:]", name);
 					}
 				};
 			}; break;
@@ -278,7 +282,7 @@ CompileShader(GLenum type, const char *source)
 					NSAssert(strcmp(value.objCType, @encode(GLKVector3)) == 0, @"Shader uniformm 'vec3 %@' value must be passed using [NSValue valueWithGLKVector3:]", name);
 					
 					GLKVector3 v; [value getValue:&v];
-					glUniform3f(i, v.x, v.y, v.z);
+					glUniform3f(location, v.x, v.y, v.z);
 				};
 			}; break;
 			case GL_FLOAT_VEC4: {
@@ -289,10 +293,10 @@ CompileShader(GLenum type, const char *source)
 						NSAssert(strcmp([(NSValue *)value objCType], @encode(GLKVector4)) == 0, @"Shader uniformm 'vec4 %@' value must be passed using [NSValue valueWithGLKVector4:].", name);
 						
 						GLKVector4 v; [value getValue:&v];
-						glUniform4f(i, v.x, v.y, v.z, v.w);
+						glUniform4f(location, v.x, v.y, v.z, v.w);
 					} else if([value isKindOfClass:[CCColor class]]){
 						GLKVector4 v = [(CCColor *)value glkVector4];
-						glUniform4f(i, v.x, v.y, v.z, v.w);
+						glUniform4f(location, v.x, v.y, v.z, v.w);
 					} else {
 						NSAssert(NO, @"Shader uniformm 'vec4 %@' value must be passed using [NSValue valueWithGLKVector4:] or a CCColor object.", name);
 					}
@@ -305,7 +309,7 @@ CompileShader(GLenum type, const char *source)
 					NSAssert(strcmp(value.objCType, @encode(GLKMatrix4)) == 0, @"Shader uniformm 'mat4 %@' value must be passed using [NSValue valueWithGLKMatrix4:]", name);
 					
 					GLKMatrix4 m; [value getValue:&m];
-					glUniformMatrix4fv(i, 1, GL_FALSE, m.m);
+					glUniformMatrix4fv(location, 1, GL_FALSE, m.m);
 				};
 			}; break;
 			case GL_SAMPLER_2D: {
@@ -319,7 +323,7 @@ CompileShader(GLenum type, const char *source)
 				};
 				
 				// Bind the texture unit at init time.
-				glUniform1i(i, textureUnit);
+				glUniform1i(location, textureUnit);
 				textureUnit++;
 			}; break;
 			default: NSAssert(NO, @"Uniform type not supported. (yet?)");
