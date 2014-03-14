@@ -961,6 +961,8 @@ static inline float readFloat(CCBReader *self)
 
 -(CCPhysicsJoint*)readJoint
 {
+    
+    CCPhysicsJoint * joint = nil;
     NSString* className = [self readCachedString];
 
     int propertyCount = readIntWithSign(self,NO);
@@ -975,11 +977,16 @@ static inline float readFloat(CCBReader *self)
     CCNode * nodeBodyA = properties[@"bodyA"];
     CCNode * nodeBodyB = properties[@"bodyB"];
     
+    float breakingForce = [properties[@"breakingForceEnabled"] boolValue] ? [properties[@"breakingForce"] floatValue] : INFINITY;
+    
+    float maxForce = [properties[@"maxForceEnabled"] boolValue] ? [properties[@"maxForce"] floatValue] : INFINITY;
+    
+    
     if([className isEqualToString:@"CCPhysicsPivotJoint"])
     {
         CGPoint anchorA = [properties[@"anchorA"] CGPointValue];
         
-        return [CCPhysicsJoint connectedPivotJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody anchorA:anchorA];
+        joint = [CCPhysicsJoint connectedPivotJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody anchorA:anchorA];
     }
     else if([className isEqualToString:@"CCPhysicsSpringJoint"])
     {
@@ -1011,15 +1018,21 @@ static inline float readFloat(CCBReader *self)
         
         if(maxEnabled || minEnabled)
         {
-            return [CCPhysicsJoint connectedDistanceJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody anchorA:anchorA anchorB:anchorB minDistance:minDistance maxDistance:maxDistance];
+            joint =  [CCPhysicsJoint connectedDistanceJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody anchorA:anchorA anchorB:anchorB minDistance:minDistance maxDistance:maxDistance];
         }
         else
         {
-            return [CCPhysicsJoint connectedDistanceJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody anchorA:anchorA anchorB:anchorB];
+            joint =  [CCPhysicsJoint connectedDistanceJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody anchorA:anchorA anchorB:anchorB];
         }
     }
+    else
+    {
+        return nil;
+    }
+    joint.maxForce = maxForce;
+    joint.breakingForce = breakingForce;
     
-    return nil;
+    return joint;
     
 }
 
