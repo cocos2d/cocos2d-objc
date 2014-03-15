@@ -304,6 +304,7 @@ static char * glExtensions;
 		  );
 
 	printf("cocos2d: OS version: %s (0x%08x)\n", [OSVer UTF8String], _OSVersion);
+	printf("cocos2d: %ld bit runtime\n", 8*sizeof(long));
 	
 	printf("cocos2d: GL_VENDOR:   %s\n", glGetString(GL_VENDOR) );
 	printf("cocos2d: GL_RENDERER: %s\n", glGetString ( GL_RENDERER   ) );
