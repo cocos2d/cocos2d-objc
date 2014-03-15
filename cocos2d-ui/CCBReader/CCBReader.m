@@ -131,23 +131,6 @@ static inline NSString *readUTF8(CCBReader *self)
     return str;
 }
 
-static inline BOOL getBit(CCBReader *self)
-{
-    BOOL bit;
-    unsigned char byte = *(self->bytes+self->currentByte);
-    if (byte & (1 << self->currentBit)) bit = YES;
-    else bit = NO;
-    
-    self->currentBit++;
-    if (self->currentBit >= 8)
-    {
-        self->currentBit = 0;
-        self->currentByte++;
-    }
-    
-    return bit;
-}
-
 static inline void alignBits(CCBReader *self)
 {
     if (self->currentBit)
