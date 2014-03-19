@@ -1431,7 +1431,7 @@ static inline float readFloat(CCBReader *self)
     int version = readIntWithSign(self, NO);
     if (version != kCCBVersion)
     {
-        NSLog(@"CCBReader: Incompatible ccbi file version (file: %d reader: %d)",version,kCCBVersion);
+		[NSException raise:NSInternalInconsistencyException format:@"CCBReader: Incompatible ccbi file version (file: %d reader: %d)",version,kCCBVersion];
         return NO;
     }
     
