@@ -47,7 +47,7 @@
 	CGSize			_originalSizeInPixels;
 	CCTexture		*_texture;
 	NSString		*_textureFilename;
-	CCProxy *_proxy;
+	CCProxy __weak *_proxy;
 }
 
 
