@@ -248,6 +248,7 @@
 //-(void)setBodyB:(CCPhysicsBody *)bodyB {NYI();}
 
 -(CGFloat)maxForce {return self.constraint.maxForce;}
+
 -(void)setMaxForce:(CGFloat)maxForce
 {
 	NSAssert(maxForce > 0.0, @"Max force must be greater than 0.");
@@ -256,6 +257,15 @@
 
 -(CGFloat)impulse {return self.constraint.impulse;}
 
+-(BOOL)collideBodies
+{
+    return self.constraint.collideBodies;
+}
+
+-(void)setCollideBodies:(BOOL)collideBodies
+{
+    self.constraint.collideBodies = collideBodies;
+}
 -(void)invalidate {
 	_valid = NO;
 	

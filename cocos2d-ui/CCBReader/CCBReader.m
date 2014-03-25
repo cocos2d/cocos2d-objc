@@ -978,9 +978,8 @@ static inline float readFloat(CCBReader *self)
     CCNode * nodeBodyB = properties[@"bodyB"];
     
     float breakingForce = [properties[@"breakingForceEnabled"] boolValue] ? [properties[@"breakingForce"] floatValue] : INFINITY;
-    
     float maxForce = [properties[@"maxForceEnabled"] boolValue] ? [properties[@"maxForce"] floatValue] : INFINITY;
-    
+    bool  collideBodies = [properties[@"collideBodies"] boolValue];
     
     if([className isEqualToString:@"CCPhysicsPivotJoint"])
     {
@@ -1031,6 +1030,7 @@ static inline float readFloat(CCBReader *self)
     }
     joint.maxForce = maxForce;
     joint.breakingForce = breakingForce;
+    joint.collideBodies = collideBodies;
     
     return joint;
     
