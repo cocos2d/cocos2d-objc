@@ -64,6 +64,8 @@
     [headerBg addChild:_lblTitle];
     
     _lblSubTitle = [CCLabelTTF labelWithString:@"" fontName:@"HelveticaNeue-Light" fontSize:14];
+		_lblSubTitle.shadowColor = [CCColor blackColor];
+		_lblSubTitle.shadowBlurRadius = 2.5;
     _lblSubTitle.positionType = CCPositionTypeMake(CCPositionUnitNormalized, CCPositionUnitPoints, CCPositionReferenceCornerTopLeft);
     _lblSubTitle.position = ccp(0.5, 64);
     _lblSubTitle.horizontalAlignment = CCTextAlignmentCenter;
