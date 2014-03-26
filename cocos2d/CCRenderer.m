@@ -30,6 +30,7 @@
 #import "CCTexture_Private.h"
 #import "CCShader_private.h"
 #import "CCDirector_Private.h"
+#import "CCGL.h"
 
 
 @interface CCShader()
@@ -500,7 +501,7 @@ Things to try if sorting is implemented:
 {
 	glPushGroupMarkerEXT(0, "CCRenderer: Dealloc");
 	
-	glDeleteVertexArraysOES(1, &_vao);
+	glDeleteVertexArrays(1, &_vao);
 	glDeleteBuffers(1, &_vbo);
 	glDeleteBuffers(1, &_ebo);
 	
@@ -615,7 +616,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 {
 	[self enqueueBlock:^{
 		if(mask & GL_COLOR_BUFFER_BIT) glClearColor(color4.r, color4.g, color4.b, color4.a);
-		if(mask & GL_DEPTH_BUFFER_BIT) glClearDepthf(depth);
+		if(mask & GL_DEPTH_BUFFER_BIT) glClearDepth(depth);
 		if(mask & GL_STENCIL_BUFFER_BIT) glClearStencil(stencil);
 		
 		glClear(mask);

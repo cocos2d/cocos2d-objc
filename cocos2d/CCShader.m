@@ -35,6 +35,7 @@
 #import "CCTexture_private.h"
 #import "CCDirector.h"
 #import "CCCache.h"
+#import "CCGL.h"
 
 
 enum {
@@ -186,11 +187,6 @@ CompileShader(GLenum type, const char *source)
 @implementation CCShader {
 	BOOL _ownsProgram;
 }
-
-#if defined(__CC_PLATFORM_IOS)
-#define glGenVertexArray glGenVertexArrayOES
-#define glBindVertexArray glBindVertexArrayOES
-#endif
 
 +(GLuint)createVAOforCCVertexBuffer:(GLuint)vbo elementBuffer:(GLuint)ebo
 {
