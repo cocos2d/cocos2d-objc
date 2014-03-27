@@ -42,7 +42,17 @@
 //  kProgressTextureCoords holds points {0,1} {0,0} {1,0} {1,1} we can represent it as bits
 const char kCCProgressTextureCoords = 0x4b;
 
-@interface CCProgressNode ()
+@interface CCProgressNode () {
+	CCProgressNodeType _type;
+	float _percentage;
+	CCSprite *_sprite;
+
+	int _vertexCount;
+	CCVertex *_verts;
+	CGPoint _midpoint;
+	CGPoint _barChangeRate;
+	BOOL _reverseDirection;
+}
 
 -(void)updateProgress;
 -(void)updateBar;
@@ -59,8 +69,6 @@ const char kCCProgressTextureCoords = 0x4b;
 @synthesize reverseDirection = _reverseDirection;
 @synthesize midpoint = _midpoint;
 @synthesize barChangeRate = _barChangeRate;
-@synthesize vertexData = _vertexData;
-@synthesize vertexDataCount = _vertexDataCount;
 
 +(id)progressWithSprite:(CCSprite*) sprite
 {
@@ -77,26 +85,28 @@ const char kCCProgressTextureCoords = 0x4b;
 {
 	if(( self = [super init] )){
 		_percentage = 0.f;
-		_vertexData = NULL;
-		_vertexDataCount = 0;
+		_verts = NULL;
+		_vertexCount = 0;
 		self.anchorPoint = ccp(0.5f,0.5f);
 		self.type = CCProgressNodeTypeRadial;
 		self.reverseDirection = NO;
 		self.midpoint = ccp(.5f, .5f);
 		self.barChangeRate = ccp(1,1);
 		self.sprite = sprite;
-    
-		// shader program
-		self.shader = [CCShader positionTextureColorShader];
 	}
 	return self;
 }
 
+-(void)freeVertexData
+{
+	free(_verts);
+	_verts = NULL;
+	_vertexCount = 0;
+}
+
 -(void)dealloc
 {
-	if(_vertexData){
-		free(_vertexData);
-	}
+	[self freeVertexData];
 }
 
 -(void)setPercentage:(float) percentage
@@ -114,11 +124,7 @@ const char kCCProgressTextureCoords = 0x4b;
 		self.contentSize = _sprite.contentSize;
     
 		//	Everytime we set a new sprite, we free the current vertex data
-		if(_vertexData){
-			free(_vertexData);
-			_vertexData = NULL;
-			_vertexDataCount = 0;
-		}
+		[self freeVertexData];
 	}
 }
 
@@ -127,11 +133,8 @@ const char kCCProgressTextureCoords = 0x4b;
 	if (newType != _type) {
     
 		//	release all previous information
-		if(_vertexData){
-			free(_vertexData);
-			_vertexData = NULL;
-			_vertexDataCount = 0;
-		}
+		[self freeVertexData];
+		
 		_type = newType;
 		[self updateProgress];
 	}
@@ -143,11 +146,7 @@ const char kCCProgressTextureCoords = 0x4b;
 		_reverseDirection = reverse;
     
 		//	release all previous information
-		if(_vertexData){
-			free(_vertexData);
-			_vertexData = NULL;
-			_vertexDataCount = 0;
-		}
+		[self freeVertexData];
 	}
 }
 
@@ -178,43 +177,46 @@ const char kCCProgressTextureCoords = 0x4b;
 ///
 //	@returns the vertex position from the texture coordinate
 ///
-//-(ccTex2F)textureCoordFromAlphaPoint:(CGPoint) alpha
-//{
-//	if (!_sprite) {
-//		return (ccTex2F){0,0};
-//	}
-//	ccV3F_C4B_T2F_Quad quad = _sprite.quad;
-//	CGPoint min = (CGPoint){quad.bl.texCoords.u,quad.bl.texCoords.v};
-//	CGPoint max = (CGPoint){quad.tr.texCoords.u,quad.tr.texCoords.v};
-//  //  Fix bug #1303 so that progress timer handles sprite frame texture rotation
-//  if (_sprite.textureRectRotated) {
-//    CC_SWAP(alpha.x, alpha.y);
-//  }
-//	return (ccTex2F){min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y};
-//}
-//
-//-(ccVertex2F)vertexFromAlphaPoint:(CGPoint) alpha
-//{
-//	if (!_sprite) {
-//		return (ccVertex2F){0.f, 0.f};
-//	}
-//	ccV3F_C4B_T2F_Quad quad = _sprite.quad;
-//	CGPoint min = (CGPoint){quad.bl.vertices.x,quad.bl.vertices.y};
-//	CGPoint max = (CGPoint){quad.tr.vertices.x,quad.tr.vertices.y};
-//	return (ccVertex2F){min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y};
-//}
+-(GLKVector2)textureCoordFromAlphaPoint:(CGPoint) alpha
+{
+	if (!_sprite) {
+		return GLKVector2Make(0.0f, 0.0f);
+	}
+	
+	CCVertex *verts = _sprite.verts;
+	GLKVector2 min = verts[0].texCoord1;
+	GLKVector2 max = verts[2].texCoord1;
+  //  Fix bug #1303 so that progress timer handles sprite frame texture rotation
+  if (_sprite.textureRectRotated) {
+    CC_SWAP(alpha.x, alpha.y);
+  }
+	
+	return GLKVector2Make(min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y);
+}
+
+-(GLKVector4)vertexFromAlphaPoint:(CGPoint) alpha
+{
+	if (!_sprite) {
+		return GLKVector4Make(0.0f, 0.0f, 0.0f, 1.0f);
+	}
+	
+	CCVertex *verts = _sprite.verts;
+	GLKVector4 min = verts[0].position;
+	GLKVector4 max = verts[2].position;
+	return GLKVector4Make(min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y, 0.0f, 1.0f);
+}
 
 -(void)updateColor
 {
-//	if (!_sprite) {
-//		return;
-//	}
-//	if(_vertexData){
-//		ccColor4B sc = _sprite.quad.tl.colors;
-//		for (int i=0; i < _vertexDataCount; ++i) {
-//			_vertexData[i].colors = sc;
-//		}
-//	}
+	if (!_sprite) {
+		return;
+	}
+	if(_verts){
+		GLKVector4 sc = _sprite.verts[0].color;
+		for (int i=0; i < _vertexCount; ++i) {
+			_verts[i].color = sc;
+		}
+	}
 }
 
 -(void)updateProgress
@@ -342,43 +344,39 @@ const char kCCProgressTextureCoords = 0x4b;
 	//	the 3 is for the _midpoint, 12 o'clock point and hitpoint position.
   
 	BOOL sameIndexCount = YES;
-	if(_vertexDataCount != index + 3){
+	if(_vertexCount != index + 3){
 		sameIndexCount = NO;
-		if(_vertexData){
-			free(_vertexData);
-			_vertexData = NULL;
-			_vertexDataCount = 0;
-		}
+		[self freeVertexData];
 	}
   
   
-	if(!_vertexData) {
-		_vertexDataCount = index + 3;
-		_vertexData = malloc(_vertexDataCount * sizeof(ccV2F_C4B_T2F));
-		NSAssert( _vertexData, @"CCProgressTimer. Not enough memory");
+	if(!_verts) {
+		_vertexCount = index + 3;
+		_verts = calloc(_vertexCount, sizeof(*_verts));
+		NSAssert( _verts, @"CCProgressTimer. Not enough memory");
 	}
 	[self updateColor];
   
-//	if (!sameIndexCount) {
-//    
-//		//	First we populate the array with the _midpoint, then all
-//		//	vertices/texcoords/colors of the 12 'o clock start and edges and the hitpoint
-//		_vertexData[0].texCoords = [self textureCoordFromAlphaPoint:_midpoint];
-//		_vertexData[0].vertices = [self vertexFromAlphaPoint:_midpoint];
-//    
-//		_vertexData[1].texCoords = [self textureCoordFromAlphaPoint:topMid];
-//		_vertexData[1].vertices = [self vertexFromAlphaPoint:topMid];
-//    
-//		for(int i = 0; i < index; ++i){
-//			CGPoint alphaPoint = [self boundaryTexCoord:i];
-//			_vertexData[i+2].texCoords = [self textureCoordFromAlphaPoint:alphaPoint];
-//			_vertexData[i+2].vertices = [self vertexFromAlphaPoint:alphaPoint];
-//		}
-//	}
-//  
-//	//	hitpoint will go last
-//	_vertexData[_vertexDataCount - 1].texCoords = [self textureCoordFromAlphaPoint:hit];
-//	_vertexData[_vertexDataCount - 1].vertices = [self vertexFromAlphaPoint:hit];
+	if (!sameIndexCount) {
+    
+		//	First we populate the array with the _midpoint, then all
+		//	vertices/texcoords/colors of the 12 'o clock start and edges and the hitpoint
+		_verts[0].texCoord1 = [self textureCoordFromAlphaPoint:_midpoint];
+		_verts[0].position = [self vertexFromAlphaPoint:_midpoint];
+    
+		_verts[1].texCoord1 = [self textureCoordFromAlphaPoint:topMid];
+		_verts[1].position = [self vertexFromAlphaPoint:topMid];
+    
+		for(int i = 0; i < index; ++i){
+			CGPoint alphaPoint = [self boundaryTexCoord:i];
+			_verts[i+2].texCoord1 = [self textureCoordFromAlphaPoint:alphaPoint];
+			_verts[i+2].position = [self vertexFromAlphaPoint:alphaPoint];
+		}
+	}
+  
+	//	hitpoint will go last
+	_verts[_vertexCount - 1].texCoord1 = [self textureCoordFromAlphaPoint:hit];
+	_verts[_vertexCount - 1].position = [self vertexFromAlphaPoint:hit];
 }
 
 ///
@@ -392,95 +390,95 @@ const char kCCProgressTextureCoords = 0x4b;
 ///
 -(void)updateBar
 {
-//	if (!_sprite) {
-//		return;
-//	}
-//	float alpha = _percentage / 100.f;
-//	CGPoint alphaOffset = ccpMult(ccp(1.f * (1.f - _barChangeRate.x) + alpha * _barChangeRate.x, 1.f * (1.f - _barChangeRate.y) + alpha * _barChangeRate.y), .5f);
-//	CGPoint min = ccpSub(_midpoint, alphaOffset);
-//	CGPoint max = ccpAdd(_midpoint, alphaOffset);
-//  
-//	if (min.x < 0.f) {
-//		max.x += -min.x;
-//		min.x = 0.f;
-//	}
-//  
-//	if (max.x > 1.f) {
-//		min.x -= max.x - 1.f;
-//		max.x = 1.f;
-//	}
-//  
-//	if (min.y < 0.f) {
-//		max.y += -min.y;
-//		min.y = 0.f;
-//	}
-//  
-//	if (max.y > 1.f) {
-//		min.y -= max.y - 1.f;
-//		max.y = 1.f;
-//	}
-//  
-//  
-//	if (!_reverseDirection) {
-//		if(!_vertexData) {
-//			_vertexDataCount = 4;
-//			_vertexData = malloc(_vertexDataCount * sizeof(ccV2F_C4B_T2F));
-//			NSAssert( _vertexData, @"CCProgressTimer. Not enough memory");
-//		}
-//		//	TOPLEFT
-//		_vertexData[0].texCoords = [self textureCoordFromAlphaPoint:ccp(min.x,max.y)];
-//		_vertexData[0].vertices = [self vertexFromAlphaPoint:ccp(min.x,max.y)];
-//    
-//		//	BOTLEFT
-//		_vertexData[1].texCoords = [self textureCoordFromAlphaPoint:ccp(min.x,min.y)];
-//		_vertexData[1].vertices = [self vertexFromAlphaPoint:ccp(min.x,min.y)];
-//    
-//		//	TOPRIGHT
-//		_vertexData[2].texCoords = [self textureCoordFromAlphaPoint:ccp(max.x,max.y)];
-//		_vertexData[2].vertices = [self vertexFromAlphaPoint:ccp(max.x,max.y)];
-//    
-//		//	BOTRIGHT
-//		_vertexData[3].texCoords = [self textureCoordFromAlphaPoint:ccp(max.x,min.y)];
-//		_vertexData[3].vertices = [self vertexFromAlphaPoint:ccp(max.x,min.y)];
-//	} else {
-//		if(!_vertexData) {
-//			_vertexDataCount = 8;
-//			_vertexData = malloc(_vertexDataCount * sizeof(ccV2F_C4B_T2F));
-//			NSAssert( _vertexData, @"CCProgressTimer. Not enough memory");
-//			//	TOPLEFT 1
-//			_vertexData[0].texCoords = [self textureCoordFromAlphaPoint:ccp(0,1)];
-//			_vertexData[0].vertices = [self vertexFromAlphaPoint:ccp(0,1)];
-//      
-//			//	BOTLEFT 1
-//			_vertexData[1].texCoords = [self textureCoordFromAlphaPoint:ccp(0,0)];
-//			_vertexData[1].vertices = [self vertexFromAlphaPoint:ccp(0,0)];
-//      
-//			//	TOPRIGHT 2
-//			_vertexData[6].texCoords = [self textureCoordFromAlphaPoint:ccp(1,1)];
-//			_vertexData[6].vertices = [self vertexFromAlphaPoint:ccp(1,1)];
-//      
-//			//	BOTRIGHT 2
-//			_vertexData[7].texCoords = [self textureCoordFromAlphaPoint:ccp(1,0)];
-//			_vertexData[7].vertices = [self vertexFromAlphaPoint:ccp(1,0)];
-//		}
-//    
-//		//	TOPRIGHT 1
-//		_vertexData[2].texCoords = [self textureCoordFromAlphaPoint:ccp(min.x,max.y)];
-//		_vertexData[2].vertices = [self vertexFromAlphaPoint:ccp(min.x,max.y)];
-//    
-//		//	BOTRIGHT 1
-//		_vertexData[3].texCoords = [self textureCoordFromAlphaPoint:ccp(min.x,min.y)];
-//		_vertexData[3].vertices = [self vertexFromAlphaPoint:ccp(min.x,min.y)];
-//    
-//		//	TOPLEFT 2
-//		_vertexData[4].texCoords = [self textureCoordFromAlphaPoint:ccp(max.x,max.y)];
-//		_vertexData[4].vertices = [self vertexFromAlphaPoint:ccp(max.x,max.y)];
-//    
-//		//	BOTLEFT 2
-//		_vertexData[5].texCoords = [self textureCoordFromAlphaPoint:ccp(max.x,min.y)];
-//		_vertexData[5].vertices = [self vertexFromAlphaPoint:ccp(max.x,min.y)];
-//	}
-//	[self updateColor];
+	if (!_sprite) {
+		return;
+	}
+	float alpha = _percentage / 100.f;
+	CGPoint alphaOffset = ccpMult(ccp(1.f * (1.f - _barChangeRate.x) + alpha * _barChangeRate.x, 1.f * (1.f - _barChangeRate.y) + alpha * _barChangeRate.y), .5f);
+	CGPoint min = ccpSub(_midpoint, alphaOffset);
+	CGPoint max = ccpAdd(_midpoint, alphaOffset);
+  
+	if (min.x < 0.f) {
+		max.x += -min.x;
+		min.x = 0.f;
+	}
+  
+	if (max.x > 1.f) {
+		min.x -= max.x - 1.f;
+		max.x = 1.f;
+	}
+  
+	if (min.y < 0.f) {
+		max.y += -min.y;
+		min.y = 0.f;
+	}
+  
+	if (max.y > 1.f) {
+		min.y -= max.y - 1.f;
+		max.y = 1.f;
+	}
+  
+  
+	if (!_reverseDirection) {
+		if(!_verts) {
+			_vertexCount = 4;
+			_verts = calloc(_vertexCount, sizeof(*_verts));
+			NSAssert( _verts, @"CCProgressTimer. Not enough memory");
+		}
+		//	TOPLEFT
+		_verts[0].texCoord1 = [self textureCoordFromAlphaPoint:ccp(min.x,max.y)];
+		_verts[0].position = [self vertexFromAlphaPoint:ccp(min.x,max.y)];
+    
+		//	BOTLEFT
+		_verts[1].texCoord1 = [self textureCoordFromAlphaPoint:ccp(min.x,min.y)];
+		_verts[1].position = [self vertexFromAlphaPoint:ccp(min.x,min.y)];
+    
+		//	TOPRIGHT
+		_verts[2].texCoord1 = [self textureCoordFromAlphaPoint:ccp(max.x,max.y)];
+		_verts[2].position = [self vertexFromAlphaPoint:ccp(max.x,max.y)];
+    
+		//	BOTRIGHT
+		_verts[3].texCoord1 = [self textureCoordFromAlphaPoint:ccp(max.x,min.y)];
+		_verts[3].position = [self vertexFromAlphaPoint:ccp(max.x,min.y)];
+	} else {
+		if(!_verts) {
+			_vertexCount = 8;
+			_verts = calloc(_vertexCount, sizeof(*_verts));
+			NSAssert( _verts, @"CCProgressTimer. Not enough memory");
+			//	TOPLEFT 1
+			_verts[0].texCoord1 = [self textureCoordFromAlphaPoint:ccp(0,1)];
+			_verts[0].position = [self vertexFromAlphaPoint:ccp(0,1)];
+      
+			//	BOTLEFT 1
+			_verts[1].texCoord1 = [self textureCoordFromAlphaPoint:ccp(0,0)];
+			_verts[1].position = [self vertexFromAlphaPoint:ccp(0,0)];
+      
+			//	TOPRIGHT 2
+			_verts[6].texCoord1 = [self textureCoordFromAlphaPoint:ccp(1,1)];
+			_verts[6].position = [self vertexFromAlphaPoint:ccp(1,1)];
+      
+			//	BOTRIGHT 2
+			_verts[7].texCoord1 = [self textureCoordFromAlphaPoint:ccp(1,0)];
+			_verts[7].position = [self vertexFromAlphaPoint:ccp(1,0)];
+		}
+    
+		//	TOPRIGHT 1
+		_verts[2].texCoord1 = [self textureCoordFromAlphaPoint:ccp(min.x,max.y)];
+		_verts[2].position = [self vertexFromAlphaPoint:ccp(min.x,max.y)];
+    
+		//	BOTRIGHT 1
+		_verts[3].texCoord1 = [self textureCoordFromAlphaPoint:ccp(min.x,min.y)];
+		_verts[3].position = [self vertexFromAlphaPoint:ccp(min.x,min.y)];
+    
+		//	TOPLEFT 2
+		_verts[4].texCoord1 = [self textureCoordFromAlphaPoint:ccp(max.x,max.y)];
+		_verts[4].position = [self vertexFromAlphaPoint:ccp(max.x,max.y)];
+    
+		//	BOTLEFT 2
+		_verts[5].texCoord1 = [self textureCoordFromAlphaPoint:ccp(max.x,min.y)];
+		_verts[5].position = [self vertexFromAlphaPoint:ccp(max.x,min.y)];
+	}
+	[self updateColor];
 }
 
 -(CGPoint)boundaryTexCoord:(char)index
@@ -495,46 +493,44 @@ const char kCCProgressTextureCoords = 0x4b;
 	return CGPointZero;
 }
 
+-(void)visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
+{
+	[super visit:renderer parentTransform:parentTransform];
+}
+
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
-	#warning TODO
-//	
-//	if( ! _vertexData || ! _sprite)
-//		return;
-//  
-//	CC_NODE_DRAW_SETUP(transform);
-//  
-//	ccGLBlendFunc( _sprite.blendFunc.src, _sprite.blendFunc.dst );
-//  
-//	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );
-//  
-//	ccGLBindTexture2D( _sprite.texture.name );
-//  
-//  glVertexAttribPointer( kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]) , &_vertexData[0].vertices);
-//  glVertexAttribPointer( kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]), &_vertexData[0].texCoords);
-//  glVertexAttribPointer( kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(_vertexData[0]), &_vertexData[0].colors);
-//  
-//	if(_type == CCProgressNodeTypeRadial)
-//	{
-//		glDrawArrays(GL_TRIANGLE_FAN, 0, _vertexDataCount);
-//	} 
-//	else if (_type == CCProgressNodeTypeBar)
-//	{
-//		if (!_reverseDirection)
-//		{
-//			glDrawArrays(GL_TRIANGLE_STRIP, 0, _vertexDataCount);
-//		}
-//		else
-//		{
-//			glDrawArrays(GL_TRIANGLE_STRIP, 0, _vertexDataCount/2);
-//			glDrawArrays(GL_TRIANGLE_STRIP, 4, _vertexDataCount/2);
-//			
-//			// 2 draw calls
-//			CC_INCREMENT_GL_DRAWS(1);
-//		}
-//	}
-//	CC_INCREMENT_GL_DRAWS(1);
-//  
+	if(!_verts || !_sprite)return;
+  
+	if(_type == CCProgressNodeTypeRadial){
+		int triangles = _vertexCount - 2;
+		CCRenderBuffer buffer = [renderer enqueueTriangles:triangles andVertexes:_vertexCount withState:_sprite.renderState];
+		
+		for(int i=0; i<_vertexCount; i++){
+			CCRenderBufferSetVertex(buffer, i, CCVertexApplyTransform(_verts[i], transform));
+		}
+		
+		for(int i=0; i<triangles; i++){
+			CCRenderBufferSetTriangle(buffer, i, 0, i + 1, i + 2);
+		}
+	} else if (_type == CCProgressNodeTypeBar){
+		int triangles = _vertexCount/2;
+		CCRenderBuffer buffer = [renderer enqueueTriangles:triangles andVertexes:_vertexCount withState:_sprite.renderState];
+		
+		for(int i=0; i<_vertexCount; i++){
+			CCRenderBufferSetVertex(buffer, i, CCVertexApplyTransform(_verts[i], transform));
+		}
+		
+		if (!_reverseDirection){
+			CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
+			CCRenderBufferSetTriangle(buffer, 1, 1, 2, 3);
+		} else {
+			CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
+			CCRenderBufferSetTriangle(buffer, 1, 1, 2, 3);
+			CCRenderBufferSetTriangle(buffer, 2, 4, 5, 6);
+			CCRenderBufferSetTriangle(buffer, 3, 5, 6, 7);
+		}
+	}
 }
 
 @end
