@@ -393,35 +393,21 @@ MakeVertex(ccVertex2F v, ccTex2F texCoord, unsigned char *color, GLKMatrix4 tran
 
 - (void) draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
-//	if(_nuPoints <= 1) return;
-//	
-//	// Keep a cache of the previous two vertexes in the strip
-//	CCVertex verts[] = {
-//		MakeVertex(_vertices[0], _texCoords[0], _colorPointer + 0*4, *transform),
-//		MakeVertex(_vertices[1], _texCoords[1], _colorPointer + 1*4, *transform),
-//	};
-//	
-//	CCTriangle *triangles = [renderer enqueueTriangles:2*_nuPoints withState:self.renderState];
-//	for(int i=1; i<_nuPoints; i++){
-//		CCVertex a = MakeVertex(_vertices[2*i + 0], _texCoords[2*i + 0], _colorPointer + (2*i + 0)*4, *transform);
-//		triangles[2*i + 0] = (CCTriangle){verts[0], verts[1], a};
-//		verts[0] = a;
-//		
-//		CCVertex b = MakeVertex(_vertices[2*i + 1], _texCoords[2*i + 1], _colorPointer + (2*i + 1)*4, *transform);
-//		triangles[2*i + 1] = (CCTriangle){verts[0], verts[1], b};
-//		verts[1] = b;
-//	}
+	if(_nuPoints <= 1) return;
 	
-//	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );
-//	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
-//	
-//	ccGLBindTexture2D( [_texture name] );
-//	
-//	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, _verts);
-//	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, _texCoords);
-//	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, _colorPointer);
-//	
-//	glDrawArrays(GL_TRIANGLE_STRIP, 0, (GLsizei)_nuPoints*2);
+	CCRenderBuffer buffer = [renderer enqueueTriangles:2*(_nuPoints - 1) andVertexes:2*_nuPoints withState:self.renderState];
+	
+	// Output vertexes.
+	for(int i=0; i<_nuPoints; i++){
+		CCRenderBufferSetVertex(buffer, 2*i + 0, MakeVertex(_vertices[2*i + 0], _texCoords[2*i + 0], _colorPointer + (2*i + 0)*4, *transform));
+		CCRenderBufferSetVertex(buffer, 2*i + 1, MakeVertex(_vertices[2*i + 1], _texCoords[2*i + 1], _colorPointer + (2*i + 1)*4, *transform));
+	}
+	
+	// Output triangles.
+	for(int i=0; i<_nuPoints - 1; i++){
+		CCRenderBufferSetTriangle(buffer, 2*i + 0,  2*i + 0,  2*i + 1,  2*i + 2);
+		CCRenderBufferSetTriangle(buffer, 2*i + 1,  2*i + 1,  2*i + 2,  2*i + 3);
+	}
 }
 
 - (void)dealloc
