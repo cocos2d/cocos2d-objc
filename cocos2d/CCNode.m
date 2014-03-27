@@ -1668,7 +1668,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 		if(_shaderUniforms.count > 1){
 			_renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms];
 		} else {
-			_renderState = [CCRenderState renderStateWithBlendMode:_blendMode shader:_shader mainTexture:_texture];
+			_renderState = [CCRenderState renderStateWithBlendMode:_blendMode shader:_shader mainTexture:(_texture ?: [CCTexture none])];
 		}
 	}
 	
