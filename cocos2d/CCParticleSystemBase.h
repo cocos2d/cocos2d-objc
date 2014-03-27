@@ -70,11 +70,11 @@ typedef NS_ENUM(NSUInteger, CCParticleSystemPositionType) {
 /** Contains the values of each individual particle. */
 typedef struct _sCCParticle {
     
-	CGPoint		pos;
-	CGPoint		startPos;
+	GLKVector2		pos;
+	GLKVector2		startPos;
     
-	ccColor4F	color;
-	ccColor4F	deltaColor;
+	GLKVector4	color;
+	GLKVector4	deltaColor;
     
 	float		size;
 	float		deltaSize;
@@ -82,14 +82,14 @@ typedef struct _sCCParticle {
 	float		rotation;
 	float		deltaRotation;
     
-	CCTime		timeToLive;
+	float		timeToLive;
     
 	NSUInteger	atlasIndex;
     
 	union {
 		// Mode A
 		struct {
-			CGPoint		dir;
+			GLKVector2		dir;
 			float		radialAccel;
 			float		tangentialAccel;
 		} A;
@@ -182,7 +182,7 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
         
 		struct {
 			// Gravity of the particles.
-			CGPoint gravity;
+			GLKVector2 gravity;
 
 			// The speed the particles will have.
 			float speed;
@@ -297,16 +297,6 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
     // The particly system resetd upon visibility toggling to True.
     BOOL    _resetOnVisibilityToggle;
     
-	// Particle idx.
-	NSUInteger _particleIdx;
-
-	// Optimization.
-	_CC_UPDATE_PARTICLE_IMP	_updateParticleImp;
-	SEL						_updateParticleSel;
-
-	// Index of system in batch node array.
-	NSUInteger _atlasIndex;
-
 	// YES if scaled or rotated.
 	BOOL _transformSystemDirty;
 }

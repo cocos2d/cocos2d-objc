@@ -80,7 +80,6 @@
 @synthesize autoRemoveOnFinish = _autoRemoveOnFinish;
 @synthesize resetOnVisibilityToggle = _resetOnVisibilityToggle;
 @synthesize emitterMode = _emitterMode;
-@synthesize atlasIndex = _atlasIndex;
 @synthesize totalParticles = _totalParticles;
 
 +(id) particleWithFile:(NSString*) plistFile
@@ -315,10 +314,6 @@
         
         _resetOnVisibilityToggle = YES;
 
-		// Optimization: compile updateParticle method
-		_updateParticleSel = @selector(updateQuadWithParticle:newPosition:);
-		_updateParticleImp = (_CC_UPDATE_PARTICLE_IMP) [self methodForSelector:_updateParticleSel];
-
 		//for batchNode
 		_transformSystemDirty = NO;
 	}
@@ -355,13 +350,13 @@
 	particle->pos.y = _sourcePosition.y + _posVar.y * CCRANDOM_MINUS1_1();
 
 	// Color
-	ccColor4F start;
+	GLKVector4 start;
 	start.r = clampf( _startColor.r + _startColorVar.r * CCRANDOM_MINUS1_1(), 0, 1);
 	start.g = clampf( _startColor.g + _startColorVar.g * CCRANDOM_MINUS1_1(), 0, 1);
 	start.b = clampf( _startColor.b + _startColorVar.b * CCRANDOM_MINUS1_1(), 0, 1);
 	start.a = clampf( _startColor.a + _startColorVar.a * CCRANDOM_MINUS1_1(), 0, 1);
 
-	ccColor4F end;
+	GLKVector4 end;
 	end.r = clampf( _endColor.r + _endColorVar.r * CCRANDOM_MINUS1_1(), 0, 1);
 	end.g = clampf( _endColor.g + _endColorVar.g * CCRANDOM_MINUS1_1(), 0, 1);
 	end.b = clampf( _endColor.b + _endColorVar.b * CCRANDOM_MINUS1_1(), 0, 1);
@@ -393,12 +388,13 @@
 	particle->deltaRotation = (endA - startA) / particle->timeToLive;
 
 	// position
-	if( _particlePositionType == CCParticleSystemPositionTypeFree )
-		particle->startPos = [self convertToWorldSpace:CGPointZero];
-
-	else if( _particlePositionType == CCParticleSystemPositionTypeRelative )
-		particle->startPos = _position;
-
+	if( _particlePositionType == CCParticleSystemPositionTypeFree ){
+		CGPoint p = [self convertToWorldSpace:CGPointZero];
+		particle->startPos = GLKVector2Make(p.x, p.y);
+	} else if( _particlePositionType == CCParticleSystemPositionTypeRelative ){
+		CGPoint p = self.position;
+		particle->startPos = GLKVector2Make(p.x, p.y);
+	}
 
 	// direction
 	float a = CC_DEGREES_TO_RADIANS( _angle + _angleVar * CCRANDOM_MINUS1_1() );
@@ -406,11 +402,11 @@
 	// Mode Gravity: A
 	if( _emitterMode == CCParticleSystemModeGravity ) {
 
-		CGPoint v = {cosf( a ), sinf( a )};
+		GLKVector2 v = GLKVector2Make(cosf(a), sinf(a));
 		float s = _mode.A.speed + _mode.A.speedVar * CCRANDOM_MINUS1_1();
 
 		// direction
-		particle->mode.A.dir = ccpMult( v, s );
+		particle->mode.A.dir = GLKVector2MultiplyScalar( v, s );
 
 		// radial accel
 		particle->mode.A.radialAccel = _mode.A.radialAccel + _mode.A.radialAccelVar * CCRANDOM_MINUS1_1();
@@ -461,8 +457,8 @@
 {
 	_active = YES;
 	_elapsed = 0;
-	for(_particleIdx = 0; _particleIdx < _particleCount; ++_particleIdx) {
-		_CCParticle *p = &_particles[_particleIdx];
+	for(int i = 0; i < _particleCount; ++i) {
+		_CCParticle *p = &_particles[i];
 		p->timeToLive = 0;
 	}
 
@@ -507,8 +503,6 @@
 			[self stopSystem];
 	}
 
-	_particleIdx = 0;
-
 	CGPoint currentPosition = CGPointZero;
 	if( _particlePositionType == CCParticleSystemPositionTypeFree )
 		currentPosition = [self convertToWorldSpace:CGPointZero];
@@ -518,9 +512,9 @@
 
 	if (_visible)
 	{
-		while( _particleIdx < _particleCount )
+		for(int i=0; i < _particleCount;)
 		{
-			_CCParticle *p = &_particles[_particleIdx];
+			_CCParticle *p = &_particles[i];
 
 			// life
 			p->timeToLive -= dt;
@@ -529,28 +523,27 @@
 
 				// Mode A: gravity, direction, tangential accel & radial accel
 				if( _emitterMode == CCParticleSystemModeGravity ) {
-					CGPoint tmp, radial, tangential;
-
-					radial = CGPointZero;
+					GLKVector2 radial = GLKVector2Make(0.0f, 0.0f);
 					// radial acceleration
-					if(p->pos.x || p->pos.y)
-						radial = ccpNormalize(p->pos);
+					if(p->pos.x || p->pos.y){
+						radial = GLKVector2Normalize(p->pos);
+					}
 
-					tangential = radial;
-					radial = ccpMult(radial, p->mode.A.radialAccel);
+					GLKVector2 tangential = radial;
+					radial = GLKVector2MultiplyScalar(radial, p->mode.A.radialAccel);
 
 					// tangential acceleration
 					float newy = tangential.x;
 					tangential.x = -tangential.y;
 					tangential.y = newy;
-					tangential = ccpMult(tangential, p->mode.A.tangentialAccel);
+					tangential = GLKVector2MultiplyScalar(tangential, p->mode.A.tangentialAccel);
 
 					// (gravity + radial + tangential) * dt
-					tmp = ccpAdd( ccpAdd( radial, tangential), _mode.A.gravity);
-					tmp = ccpMult( tmp, dt);
-					p->mode.A.dir = ccpAdd( p->mode.A.dir, tmp);
-					tmp = ccpMult(p->mode.A.dir, dt);
-					p->pos = ccpAdd( p->pos, tmp );
+					GLKVector2 tmp = GLKVector2Add( GLKVector2Add( radial, tangential), _mode.A.gravity);
+					tmp = GLKVector2MultiplyScalar( tmp, dt);
+					p->mode.A.dir = GLKVector2Add(p->mode.A.dir, tmp);
+					tmp = GLKVector2MultiplyScalar(p->mode.A.dir, dt);
+					p->pos = GLKVector2Add( p->pos, tmp );
 				}
 
 				// Mode B: radius movement
@@ -576,28 +569,11 @@
 				// angle
 				p->rotation += (p->deltaRotation * dt);
 
-				//
-				// update values in quad
-				//
-
-				CGPoint	newPos;
-
-				if( _particlePositionType == CCParticleSystemPositionTypeFree || _particlePositionType == CCParticleSystemPositionTypeRelative )
-				{
-					CGPoint diff = ccpSub( currentPosition, p->startPos );
-					newPos = ccpSub(p->pos, diff);
-				} else
-					newPos = p->pos;
-
-				_updateParticleImp(self, _updateParticleSel, p, newPos);
-
-				// update particle counter
-				_particleIdx++;
-
+				i++;
 			} else {
 				// life < 0
-				if( _particleIdx != _particleCount-1 )
-					_particles[_particleIdx] = _particles[_particleCount-1];
+				if( i != _particleCount-1 )
+					_particles[i] = _particles[_particleCount-1];
 
 				_particleCount--;
 
@@ -606,11 +582,10 @@
 					return;
 				}
 			}
-		}//while
+		}
+		
 		_transformSystemDirty = NO;
 	}
-
-	[self postStep];
 
 	CC_PROFILER_STOP_CATEGORY(kCCProfilerCategoryParticles , @"CCParticleSystem - update");
 }
@@ -621,11 +596,6 @@
 }
 
 -(void) updateQuadWithParticle:(_CCParticle*)particle newPosition:(CGPoint)pos;
-{
-	// should be overriden
-}
-
--(void) postStep
 {
 	// should be overriden
 }
@@ -708,12 +678,13 @@
 -(void) setGravity:(CGPoint)g
 {
 	NSAssert( _emitterMode == CCParticleSystemModeGravity, @"Particle Mode should be Gravity");
-	_mode.A.gravity = g;
+	_mode.A.gravity = GLKVector2Make(g.x, g.y);
 }
 -(CGPoint) gravity
 {
 	NSAssert( _emitterMode == CCParticleSystemModeGravity, @"Particle Mode should be Gravity");
-	return _mode.A.gravity;
+	GLKVector2 g = _mode.A.gravity;
+	return CGPointMake(g.x, g.y);
 }
 
 -(void) setSpeed:(float)speed

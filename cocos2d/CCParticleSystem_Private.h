@@ -26,10 +26,6 @@
 
 // OS X
 @interface CCParticleSystem ()
-
-// Initialices the indices for the vertices.
--(void) initIndices;
-
 // Initilizes the texture with a rectangle measured in points.
 -(void) initTexCoordsWithRect:(CGRect)rect;
 

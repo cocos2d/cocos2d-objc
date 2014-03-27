@@ -26,12 +26,6 @@
 
 @interface CCParticleSystemBase ()
 
-// Altas Index.
-@property (nonatomic,readwrite) NSUInteger atlasIndex;
-
-// Should be overriden by subclasses.
--(void) updateQuadWithParticle:(_CCParticle*)particle newPosition:(CGPoint)pos;
-
 // Should be overriden by subclasses.
 -(void) postStep;
 
