@@ -20,23 +20,35 @@ Pod::Spec.new do |spec|
   cocos2d design: It uses the same concepts, but instead of using Python,
   it uses Objective-C.'
   spec.source       =  {
-    git: 'https://github.com/dylan/cocos2d-iphone.git',
+    git: 'https://github.com/cocos2d/cocos2d-iphone.git',
     tag: 'release-3.0-rc4'
   }
+  # Declare so we can exlcude them
+  objective_chipmunk = 'external/Chipmunk/include/**/*.h',
+                       'external/Chipmunk/src/*.c',
+                       'external/Chipmunk/objectivec/include/ObjectiveChipmunk/*.h',
+                       'external/Chipmunk/objectivec/src/*.m'
+
   spec.header_mappings_dir = 'kazmath'
-  spec.source_files = 'cocos2d/**/*.{h,m}',
+  spec.source_files = 'cocos2d/**/*.{h,m,c}',
                       'cocos2d-ui/**/*.{h,m}',
-                      'external/libpng/*.{h,c}',
-                      'external/kazmath/**/*.{h,c}',
-                      'external/ObjectAL/**/*.{h,m}',
-                      'external/Chipmunk/include/chipmunk/*.h',
-                      'external/Chipmunk/src/*.c',
-                      'external/Chipmunk/objectivec/include/ObjectiveChipmunk/*.h',
-                      'external/Chipmunk/objectivec/src/*.m'
+                      'external/kazmath/**/*.{h,m,c}',
+                      'external/libpng/**/*.{h,m,c}',
+                      'external/ObjectAL/**/*.{h,m,c}'
+
+  #Exclude them so we can make a subspec that doesn't use ARC
+  spec.exclude_files = objective_chipmunk
+
   spec.xcconfig = {
     'HEADER_SEARCH_PATHS' => '"${PODS_ROOT}/Headers/external/kazmath/include" "${PODS_ROOT}/Headers/external/Chipmunk/objectivec/include" "${PODS_ROOT}/Headers/external/Chipmunk/include"'
   }
+
   spec.frameworks   = 'CoreText', 'CoreMotion', 'CoreGraphics', 'Foundation', 'OpenGLES', 'QuartzCore', 'UIKit', 'AVFoundation', 'AudioToolbox', 'OpenAL', 'GameKit', 'XCTest'
   spec.library = 'z', 'sqlite3'
-  # spec.requires_arc = true
+  spec.requires_arc = true
+
+  spec.subspec 'ObjectiveChipmunk' do |objChipmunk|
+    objChipmunk.requires_arc = false
+    objChipmunk.source_files = objective_chipmunk
+  end
 end
