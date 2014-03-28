@@ -138,6 +138,7 @@ static inline NSString *readUTF8(CCBReader *self)
     return str;
 }
 
+/* commented because of warning: unused function
 static inline BOOL getBit(CCBReader *self)
 {
     BOOL bit;
@@ -154,6 +155,7 @@ static inline BOOL getBit(CCBReader *self)
     
     return bit;
 }
+*/
 
 static inline void alignBits(CCBReader *self)
 {
@@ -959,6 +961,8 @@ static inline float readFloat(CCBReader *self)
 
 -(CCPhysicsJoint*)readJoint
 {
+    
+    CCPhysicsJoint * joint = nil;
     NSString* className = [self readCachedString];
 
     int propertyCount = readIntWithSign(self,NO);
@@ -973,11 +977,15 @@ static inline float readFloat(CCBReader *self)
     CCNode * nodeBodyA = properties[@"bodyA"];
     CCNode * nodeBodyB = properties[@"bodyB"];
     
+    float breakingForce = [properties[@"breakingForceEnabled"] boolValue] ? [properties[@"breakingForce"] floatValue] : INFINITY;
+    float maxForce = [properties[@"maxForceEnabled"] boolValue] ? [properties[@"maxForce"] floatValue] : INFINITY;
+    bool  collideBodies = [properties[@"collideBodies"] boolValue];
+    
     if([className isEqualToString:@"CCPhysicsPivotJoint"])
     {
         CGPoint anchorA = [properties[@"anchorA"] CGPointValue];
         
-        return [CCPhysicsJoint connectedPivotJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody anchorA:anchorA];
+        joint = [CCPhysicsJoint connectedPivotJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody anchorA:anchorA];
     }
     else if([className isEqualToString:@"CCPhysicsSpringJoint"])
     {
@@ -999,20 +1007,32 @@ static inline float readFloat(CCBReader *self)
         BOOL minEnabled = [properties[@"minDistanceEnabled"] boolValue];
         BOOL maxEnabled = [properties[@"maxDistanceEnabled"] boolValue];
         
-        float minDistance = [properties[@"minDistance"] floatValue];
-        float maxDistance = [properties[@"maxDistance"] floatValue];
+        CGPoint anchoAWorldPos = [nodeBodyA convertToWorldSpace:anchorA];
+        CGPoint anchoBWorldPos = [nodeBodyB convertToWorldSpace:anchorB];
+        
+        float distance =  ccpDistance(anchoAWorldPos, anchoBWorldPos);
+        
+        float minDistance = minEnabled ? [properties[@"minDistance"] floatValue] : distance;
+        float maxDistance = maxEnabled ? [properties[@"maxDistance"] floatValue] : distance;
         
         if(maxEnabled || minEnabled)
         {
-            return [CCPhysicsJoint connectedDistanceJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody anchorA:anchorA anchorB:anchorB minDistance:minDistance maxDistance:maxDistance];
+            joint =  [CCPhysicsJoint connectedDistanceJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody anchorA:anchorA anchorB:anchorB minDistance:minDistance maxDistance:maxDistance];
         }
         else
         {
-            return [CCPhysicsJoint connectedDistanceJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody anchorA:anchorA anchorB:anchorB];
+            joint =  [CCPhysicsJoint connectedDistanceJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody anchorA:anchorA anchorB:anchorB];
         }
     }
+    else
+    {
+        return nil;
+    }
+    joint.maxForce = maxForce;
+    joint.breakingForce = breakingForce;
+    joint.collideBodies = collideBodies;
     
-    return nil;
+    return joint;
     
 }
 
@@ -1241,6 +1261,10 @@ static inline float readFloat(CCBReader *self)
         float friction = readFloat(self);
         float elasticity = readFloat(self);
         
+        NSString * collisionType = [self readCachedString];
+        NSString * collisionCategories = [self readCachedString];
+        NSString * collisionMask = [self readCachedString];
+        
         if (dynamic)
         {
             body.affectedByGravity = affectedByGravity;
@@ -1250,6 +1274,23 @@ static inline float readFloat(CCBReader *self)
         body.density = density;
         body.friction = friction;
         body.elasticity = elasticity;
+        
+        body.collisionType = collisionType;
+        
+        NSArray * masks = nil;
+        if(![collisionMask isEqualToString:@""])
+        {
+            masks = [collisionMask componentsSeparatedByString:@";"];
+        }
+        
+        NSArray * categories= nil;
+        if(![collisionCategories isEqualToString:@""])
+        {
+            categories = [collisionCategories componentsSeparatedByString:@";"];
+        }
+
+        body.collisionMask = masks;
+        body.collisionCategories = categories;
         
         node.physicsBody = body;
 //#endif
@@ -1390,7 +1431,7 @@ static inline float readFloat(CCBReader *self)
     int version = readIntWithSign(self, NO);
     if (version != kCCBVersion)
     {
-        NSLog(@"CCBReader: Incompatible ccbi file version (file: %d reader: %d)",version,kCCBVersion);
+		[NSException raise:NSInternalInconsistencyException format:@"CCBReader: Incompatible ccbi file version (file: %d reader: %d)",version,kCCBVersion];
         return NO;
     }
     
