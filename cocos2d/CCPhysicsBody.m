@@ -440,7 +440,7 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, /*CP_BODY_TYPE_K
         CGFloat lastAngle = cpfatan2(_lastTransform.a, _lastTransform.b);
         
         _lastTransform = self.absoluteTransform;
-        _body.angularVelocity = (self.absoluteRadians - lastAngle) / deltaTime;
+        //_body.angularVelocity = (self.absoluteRadians - lastAngle) / deltaTime;
         self.velocity = ccpMult(ccpSub(self.absolutePosition, lastPos), 1.0/deltaTime);
        
     }
