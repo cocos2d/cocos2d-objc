@@ -264,6 +264,10 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 	// CCDrawNode used for drawing the debug overlay.
 	// Only allocated if CCPhysicsNode.debugDraw is YES.
 	CCDrawNode *_debugDraw;
+    
+    //List of moving static handlers that need updating due to thier parent nodes moving.
+    NSMutableSet * _kineticNodes;
+    
 }
 
 // Used by CCNode.physicsNode
@@ -286,6 +290,7 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 		
 		_collisionPairSingleton = [[CCPhysicsCollisionPair alloc] init];
 		_handlers = [NSMutableSet set];
+        _kineticNodes = [NSMutableSet set];
 	}
 	
 	return self;
@@ -299,6 +304,11 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 
 -(CCTime)sleepTimeThreshold {return _space.sleepTimeThreshold;}
 -(void)setSleepTimeThreshold:(CCTime)sleepTimeThreshold {_space.sleepTimeThreshold = sleepTimeThreshold;}
+
+-(NSMutableSet*)kineticNodes
+{
+    return _kineticNodes;
+}
 
 // Collision Delegates
 
@@ -414,6 +424,19 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 
 -(void)fixedUpdate:(CCTime)delta
 {
+    NSSet * tempKinetics = [_kineticNodes copy];
+    for(CCNode * node in tempKinetics)
+    {
+        NSAssert(node.physicsBody, @"Should have a physics body");
+        NSAssert(node.physicsBody.isKinetic, @"Should be kinetic");
+        
+        [node.physicsBody updateKinetics:delta];
+        if(!node.physicsBody.isKinetic)
+        {
+            [_kineticNodes removeObject:node];
+        }
+    }
+    
 	[_space step:delta];
 	
 	// Null out the arbiter just in case somebody retained a pair.

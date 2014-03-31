@@ -27,7 +27,11 @@
 
 #import "CCPhysicsBody.h"
 #import "CCPhysics+ObjectiveChipmunk.h"
+#import "CCNode_Private.h"
 
+@interface CCNode(Private)
+-(CGAffineTransform)nonRigidTransform;
+@end
 
 #define FOREACH_SHAPE(__body__, __shapeVar__) for(CCPhysicsShape *__shapeVar__ = __body__->_shapeList; __shapeVar__; __shapeVar__ = __shapeVar__.next)
 
@@ -43,7 +47,15 @@
 	
 	BOOL _affectedByGravity;
 	BOOL _allowsRotation;
+    
+    BOOL _isKinetic;
+    BOOL _isKineticTransformDirty;
+    
+    CGAffineTransform _lastTransform;
+    CGPoint           _relativePosition;
+    float             _relativeRotation;
 }
+
 
 //MARK: Constructors:
 
@@ -55,6 +67,8 @@
 		
 		_affectedByGravity = YES;
 		_allowsRotation = YES;
+        _isKinetic = NO;
+        _isKineticTransformDirty = YES;
 		
 		_chipmunkObjects = [NSMutableArray arrayWithCapacity:2];
 		[_chipmunkObjects addObject:_body];
@@ -340,6 +354,7 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, /*CP_BODY_TYPE_K
 
 @implementation CCPhysicsBody(ObjectiveChipmunk)
 
+
 -(void)setNode:(CCNode *)node {_node = node;}
 
 -(CGPoint)absolutePosition {return CPV_TO_CCP(_body.position);}
@@ -363,8 +378,60 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, /*CP_BODY_TYPE_K
 	}
 }
 
+
+-(CGFloat)relativeRotation {return _relativeRotation;}
+-(void)setRelativeRotation:(CGFloat)relativeRotation
+{
+    _relativeRotation = relativeRotation;
+}
+
+-(CGPoint)relativePosition {return _relativePosition;}
+-(void)setRelativePosition:(CGPoint)relativePosition
+{
+    _relativePosition = relativePosition;
+}
+
+
 -(CGAffineTransform)absoluteTransform {
 	return CPTRANSFORM_TO_CGAFFINETRANSFORM(_body.transform);
+}
+
+-(BOOL)isKinetic
+{
+    return _isKinetic;
+}
+
+-(BOOL)isKineticTransformDirty
+{
+    return _isKineticTransformDirty;
+}
+
+
+
+-(void)updateKinetics:(CCTime)delta
+{
+    
+    if(!_isKineticTransformDirty)
+    {
+        _isKinetic = NO;
+    }
+    else
+    {
+        _isKineticTransformDirty = NO;
+        
+        CGAffineTransform parentTransform = NodeToPhysicsTransform(self.node.parent);
+        self.absolutePosition = CGPointApplyAffineTransform(self.relativePosition, parentTransform);
+
+        
+        CGPoint lastPos = ccp(_lastTransform.tx,_lastTransform.ty);
+        
+//        self.angularVelocity = (self.absoluteRadians - previousRadians) / delta;
+        self.velocity = ccpMult(ccpSub(self.absolutePosition, lastPos),1.0/delta);
+        
+        _lastTransform = self.absoluteTransform;
+       
+    }
+    
 }
 
 -(ChipmunkBody *)body {return _body;}
@@ -384,7 +451,9 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, /*CP_BODY_TYPE_K
 
 -(void)willAddToPhysicsNode:(CCPhysicsNode *)physics nonRigidTransform:(cpTransform)transform
 {
+    _lastTransform = NodeToPhysicsTransform(self.node);
 	FOREACH_SHAPE(self, shape) [shape willAddToPhysicsNode:physics nonRigidTransform:transform];
+    [self trackParentTransformations:physics];
 }
 
 -(void)didAddToPhysicsNode:(CCPhysicsNode *)physics
@@ -395,6 +464,52 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, /*CP_BODY_TYPE_K
 -(void)didRemoveFromPhysicsNode:(CCPhysicsNode *)physics
 {
 	FOREACH_SHAPE(self, shape) [shape didRemoveFromPhysicsNode:physics];
+    [self removeParentTransformTracking:physics];
+}
+
+
+#pragma - Tracking movement
+
+NSString *  kDependantProperties[2] = { @"position", @"rotation"};
+
+-(void)trackParentTransformations:(CCPhysicsNode *)physics
+{
+    CCNode * node = self.node;
+    
+    while (node && node != physics)
+    {
+        for (int i = 0; i < sizeof(kDependantProperties)/sizeof(kDependantProperties[0]); i++)
+        {
+            [node addObserver:self forKeyPath:kDependantProperties[i] options:NSKeyValueObservingOptionNew context:nil];
+        }
+        node = node.parent;
+    }
+}
+
+-(void)removeParentTransformTracking:(CCPhysicsNode *)physics
+{
+    CCNode * node = self.node;
+    
+    while (node && node != physics)
+    {
+        for (int i = 0; i < sizeof(kDependantProperties)/sizeof(kDependantProperties[0]); i++)
+        {
+            [node removeObserver:self forKeyPath:kDependantProperties[i]];
+        }
+        node = node.parent;
+    }
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    _isKineticTransformDirty = YES;
+    
+    if(_isKinetic)
+        return;
+    
+    _isKinetic = YES;
+    _isKineticTransformDirty = YES;
+    [self.physicsNode.kineticNodes addObject:self.node];
 }
 
 @end

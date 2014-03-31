@@ -78,7 +78,7 @@ GetBodyIfRunning(CCNode *node)
 	return (node->_isInActiveScene ? node->_physicsBody : nil);
 }
 
-static inline CGAffineTransform
+inline CGAffineTransform
 NodeToPhysicsTransform(CCNode *node)
 {
 	CGAffineTransform transform = CGAffineTransformIdentity;
@@ -89,7 +89,7 @@ NodeToPhysicsTransform(CCNode *node)
 	return transform;
 }
 
-static inline float
+inline float
 NodeToPhysicsRotation(CCNode *node)
 {
 	float rotation = 0.0;
@@ -100,7 +100,7 @@ NodeToPhysicsRotation(CCNode *node)
 	return rotation;
 }
 
-static inline CGAffineTransform
+inline CGAffineTransform
 RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
 {
 	return CGAffineTransformConcat(body.absoluteTransform, CGAffineTransformInvert(NodeToPhysicsTransform(node.parent)));
@@ -303,7 +303,7 @@ static NSUInteger globalOrderOfArrival = 1;
 	_isTransformDirty = _isInverseDirty = YES;
 }
 
-static inline CGPoint
+inline CGPoint
 GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 {
 	return CGPointApplyAffineTransform(node->_anchorPointInPoints, [node nodeToParentTransform]);
@@ -320,7 +320,7 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 }
 
 // Urg. CGPoint types. -_-
-static inline CGPoint
+inline CGPoint
 TransformPointAsVector(CGPoint p, CGAffineTransform t)
 {
   return (CGPoint){t.a*p.x + t.c*p.y, t.b*p.x + t.d*p.y};
@@ -331,8 +331,11 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
 	CCPhysicsBody *body = GetBodyIfRunning(self);
 	if(body){
 		CGPoint currentPosition = GetPositionFromBody(self, body);
-		CGPoint delta = ccpSub([self convertPositionToPoints:newPosition type:_positionType], currentPosition);
+        CGPoint newPositionInPoints = [self convertPositionToPoints:newPosition type:_positionType];
+        
+		CGPoint delta = ccpSub(newPositionInPoints, currentPosition);
 		body.absolutePosition = ccpAdd(body.absolutePosition, TransformPointAsVector(delta, NodeToPhysicsTransform(self.parent)));
+        body.relativePosition = newPositionInPoints;
 	} else {
 		_position = newPosition;
 		_isTransformDirty = _isInverseDirty = YES;
@@ -936,7 +939,7 @@ NodeTransform(__unsafe_unretained CCNode *node, GLKMatrix4 parentTransform)
 
 #pragma mark CCPhysics support.
 
-static inline CGAffineTransform
+inline CGAffineTransform
 CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 {
 	CGPoint rot = ccpForAngle(radians);
@@ -988,12 +991,6 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 		for(NSUInteger i=0, count=joints.count; i<count; i++){
 			[joints[i] tryAddToPhysicsNode:physics];
 		}
-		
-#ifndef NDEBUG
-		// Reset these to zero since they shouldn't be read anyway.
-		_position = CGPointZero;
-		_rotationalSkewX = _rotationalSkewY = 0.0f;
-#endif
 	}
 }
 

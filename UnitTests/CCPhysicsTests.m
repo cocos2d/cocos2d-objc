@@ -770,6 +770,63 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
 	[physicsNode onExit];
 }
 
+
+-(void)testKineticBodyBasic1
+{
+    CCPhysicsNode *physicsNode = [CCPhysicsNode node];
+	physicsNode.collisionDelegate = self;
+	physicsNode.gravity = ccp(0, 0);
+    
+    CGPoint node0Pos = ccp(100.0f,0.0f);
+    
+    CCNode *node0 = [CCNode node];
+    node0.position = node0Pos;
+    node0.name = @"node0";
+    [physicsNode addChild:node0];
+	
+    CCPhysicsBody * body1 = [CCPhysicsBody bodyWithCircleOfRadius:1.0 andCenter:CGPointZero];
+
+    CGPoint node1Pos = ccp(-25, 0);
+	CCNode *node1 = [CCNode node];
+	node1.physicsBody = body1;
+	node1.physicsBody.type = CCPhysicsBodyTypeStatic;
+	node1.physicsBody.collisionType = @"theStaticOne";
+    node1.name = @"node1";
+    node1.position = node1Pos;
+	[node0 addChild:node1];
+    
+	// Force entering the scene to set up the physics objects.
+	[physicsNode onEnter];
+    
+    // Step the physics for a while.
+    const int KineticCount = 50;
+    
+	for(int i=0; i<100; i++)
+    {
+        if(i < KineticCount)
+        {
+            node0.position = ccp(node0Pos.x + (i + 1), node0Pos.y);
+            node1.position = ccp(node1Pos.x - 2 * (i + 1), node1Pos.y);
+        }
+        
+		[physicsNode fixedUpdate:1.0/100.0];
+        
+        if(i >= KineticCount)
+        {
+            XCTAssertTrue(!body1.isKinetic,@"Should not be kinetic now.");
+        }
+        else
+        {
+            XCTAssertTrue(body1.isKinetic, @"Should be kinetic now");
+        }
+	}
+    
+    
+    //Test on exit
+    //Text if node0->node1->node2->node3 and you detatch node1,that node0 can get unobservered.
+    
+}
+
 // TODO
 // * Check that body and shape settings are preserved through multiple add/remove cycles and are actually applied to the cpBody.
 // * Check that changing properties before and after adding to an active physics node updates the properties correctly.

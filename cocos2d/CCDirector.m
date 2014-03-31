@@ -747,7 +747,7 @@ static CCDirector *_sharedDirector = nil;
 
 - (void)setAnimationInterval:(NSTimeInterval)interval
 {
-	CCLOG(@"cocos2d: Director#setAnimationInterval. Override me");
+	//CCLOG(@"cocos2d: Director#setAnimationInterval. Override me");
 }
 
 - (CCTime)fixedUpdateInterval

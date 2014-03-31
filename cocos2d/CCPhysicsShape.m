@@ -218,6 +218,7 @@ Determinant(cpTransform t)
 	_collisionMask = nil;
 	
 	[self rescaleShape:transform];
+    
 }
 
 -(void)didRemoveFromPhysicsNode:(CCPhysicsNode *)physics
@@ -234,6 +235,7 @@ Determinant(cpTransform t)
 
 -(CCPhysicsBody *)body {return self.shape.body.userData;}
 -(void)setBody:(CCPhysicsBody *)body {self.shape.body = body.body;}
+
 
 @end
 
