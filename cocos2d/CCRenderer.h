@@ -83,22 +83,23 @@ CCRenderBufferSetLine(CCRenderBuffer buffer, int index, GLushort a, GLushort b)
 }
 
 
+	
 static inline BOOL
-CCCheckVisbility(const GLKMatrix4 *transform, CGSize contentSize)
+CCRenderCheckVisbility(const GLKMatrix4 *transform, GLKVector2 center, GLKVector2 extents)
 {
-	float hw = contentSize.width*0.5f;
-	float hh = contentSize.height*0.5f;
+//	float hw = contentSize.width*0.5f;
+//	float hh = contentSize.height*0.5f;
 	
-	// Bounding box center point in clip coordinates.
-	GLKVector3 center = GLKMatrix4MultiplyAndProjectVector3(*transform, GLKVector3Make(hw, hh, 0.0f));
+	// Center point in clip coordinates.
+	GLKVector4 csc = GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(center.x, center.y, 0.0f, 1.0f));
 	
-	#warning TODO: does not handle perspective divide
-	// Half width/height in clip space.
-	float cshw = hw*fmaxf(fabsf(transform->m00 + transform->m10), fabsf(transform->m00 - transform->m10));
-	float cshh = hh*fmaxf(fabsf(transform->m01 + transform->m11), fabsf(transform->m01 - transform->m11));
+	// x, y in clip space.
+	float cshx = fmaxf(fabsf(extents.x*transform->m00 + extents.y*transform->m10), fabsf(extents.x*transform->m00 - extents.y*transform->m10));
+	float cshy = fmaxf(fabsf(extents.x*transform->m01 + extents.y*transform->m11), fabsf(extents.x*transform->m01 - extents.y*transform->m11));
 	
-	// Check the bounds against the viewport.
-	return (fabsf(center.x) - cshw < 1.0f && fabsf(center.y) - cshh < 1.0f);
+	// Check the bounds against the clip space viewport using a conservative w-value.
+	float w = fabs(csc.w) + fmaxf(fabsf(extents.x*transform->m03 + extents.y*transform->m13), fabsf(extents.x*transform->m03 - extents.y*transform->m13));
+	return ((fabs(csc.x) - cshx < w) && (fabs(csc.y) - cshy < w));
 }
 
 

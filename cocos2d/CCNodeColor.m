@@ -102,7 +102,8 @@
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
 	CGSize size = self.contentSizeInPoints;
-	if(!CCCheckVisbility(transform, size)) return;
+	GLKVector2 hs = GLKVector2Make(size.width*0.5f, size.height*0.5f);
+	if(!CCRenderCheckVisbility(transform, hs, hs)) return;
 	
 	GLKVector2 zero = GLKVector2Make(0, 0);
 	

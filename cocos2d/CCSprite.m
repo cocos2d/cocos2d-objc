@@ -56,6 +56,9 @@
 @implementation CCSprite {
 	// Offset Position, used by sprite sheet editors.
 	CGPoint _unflippedOffsetPositionFromCenter;
+	
+	// Center of extents (half width/height) of the sprite for culling purposes.
+	GLKVector2 _vertexCenter, _vertexExtents;
 
 	// Vertex coords, texture coords and color info.
 	CCVertex _verts[4];
@@ -131,12 +134,7 @@
 		// zwoptex default values
 		_offsetPosition = CGPointZero;
 		
-		#warning Seems like this isn't needed?
-		GLKVector4 tmpColor = GLKVector4Make(1.0, 1.0, 1.0, 1.0);
-		_verts[0].color = tmpColor;
-		_verts[1].color = tmpColor;
-		_verts[2].color = tmpColor;
-		_verts[3].color = tmpColor;
+		[self updateColor];
 		
 		[self setTexture:texture];
 		[self setTextureRect:rect rotated:rotated untrimmedSize:rect.size];
@@ -235,7 +233,7 @@
 {
 	_textureRectRotated = rotated;
 
-    self.contentSizeType = CCSizeTypePoints;
+	self.contentSizeType = CCSizeTypePoints;
 	[self setContentSize:untrimmedSize];
 	_textureRect = rect;
 	[self setTextureCoords:rect];
@@ -243,27 +241,26 @@
 	CGPoint relativeOffset = _unflippedOffsetPositionFromCenter;
 
 	// issue #732
-	if( _flipX )
-		relativeOffset.x = -relativeOffset.x;
-	if( _flipY )
-		relativeOffset.y = -relativeOffset.y;
-
+	if(_flipX) relativeOffset.x = -relativeOffset.x;
+	if(_flipY) relativeOffset.y = -relativeOffset.y;
 
 	_offsetPosition.x = relativeOffset.x + (_contentSize.width - _textureRect.size.width) / 2;
 	_offsetPosition.y = relativeOffset.y + (_contentSize.height - _textureRect.size.height) / 2;
-
 
 	// Atlas: Vertex
 	float x1 = _offsetPosition.x;
 	float y1 = _offsetPosition.y;
 	float x2 = x1 + _textureRect.size.width;
 	float y2 = y1 + _textureRect.size.height;
-
-	// Don't update Z.
+	
 	_verts[0].position = GLKVector4Make(x1, y1, 0.0f, 1.0f);
 	_verts[1].position = GLKVector4Make(x2, y1, 0.0f, 1.0f);
 	_verts[2].position = GLKVector4Make(x2, y2, 0.0f, 1.0f);
 	_verts[3].position = GLKVector4Make(x1, y2, 0.0f, 1.0f);
+	
+	// Set the center/extents for culling purposes.
+	_vertexCenter = GLKVector2Make((x1 + x2)*0.5f, (y1 + y2)*0.5f);
+	_vertexExtents = GLKVector2Make((x2 - x1)*0.5f, (y2 - y1)*0.5f);
 }
 
 -(void) setTextureCoords:(CGRect)rect
@@ -336,7 +333,7 @@
 
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
 {
-	if(!CCCheckVisbility(transform, _contentSize)) return;
+	if(!CCRenderCheckVisbility(transform, _vertexCenter, _vertexExtents)) return;
 	
 	CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:self.renderState];
 	CCRenderBufferSetVertex(buffer, 0, CCVertexApplyTransform(_verts[0], transform));
@@ -349,13 +346,13 @@
 	
 #if CC_SPRITE_DEBUG_DRAW
 	const GLKVector2 zero = {{0, 0}};
-	const GLKVector4 red = {{1, 0, 0, 1}};
+	const GLKVector4 white = {{1, 1, 1, 1}};
 	
 	CCRenderBuffer debug = [renderer enqueueLines:4 andVertexes:4 withState:[CCRenderState debugColor]];
-	CCRenderBufferSetVertex(debug, 0, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts[0].position), zero, zero, red});
-	CCRenderBufferSetVertex(debug, 1, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts[1].position), zero, zero, red});
-	CCRenderBufferSetVertex(debug, 2, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts[2].position), zero, zero, red});
-	CCRenderBufferSetVertex(debug, 3, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts[3].position), zero, zero, red});
+	CCRenderBufferSetVertex(debug, 0, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts[0].position), zero, zero, white});
+	CCRenderBufferSetVertex(debug, 1, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts[1].position), zero, zero, white});
+	CCRenderBufferSetVertex(debug, 2, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts[2].position), zero, zero, white});
+	CCRenderBufferSetVertex(debug, 3, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts[3].position), zero, zero, white});
 	
 	CCRenderBufferSetLine(debug, 0, 0, 1);
 	CCRenderBufferSetLine(debug, 1, 1, 2);
