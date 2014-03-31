@@ -421,7 +421,7 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, /*CP_BODY_TYPE_K
     {
         _isKineticTransformDirty = NO;
         
-        ///////
+        /////// Update absolute position
         
         CGPoint currentPosition = GetPositionFromBody(self.node, self);
         CGPoint newPositionInPoints = [self.node convertPositionToPoints:self.relativePosition type:self.node.positionType];
@@ -429,15 +429,14 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, /*CP_BODY_TYPE_K
 		CGPoint delta = ccpSub(newPositionInPoints, currentPosition);
         CGPoint newPos = ccpAdd(self.absolutePosition, TransformPointAsVector(delta, NodeToPhysicsTransform(self.node.parent)));
 		self.absolutePosition = newPos;
-        ///////////////////////
+        /////// Update absolute angle
 
-     //   CGPoint position = self.node.position;
         CGFloat newRotation = -CC_DEGREES_TO_RADIANS(self.relativeRotation - NodeToPhysicsRotation(self.node.parent));
 		self.absoluteRadians = newRotation;
-		// Rotating the body will cause the node to move unless the CoG is the same as the anchor point.
-		//self.node.position = position;
 
 
+        /// update velocity and angular velocity.
+        
         CGPoint lastPos = cpTransformPoint(_lastTransform, cpvzero);
         CGFloat lastAngle = cpfatan2(_lastTransform.b, _lastTransform.a);
         
