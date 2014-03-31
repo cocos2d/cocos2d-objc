@@ -430,17 +430,19 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, /*CP_BODY_TYPE_K
         CGPoint newPos = ccpAdd(self.absolutePosition, TransformPointAsVector(delta, NodeToPhysicsTransform(self.node.parent)));
 		self.absolutePosition = newPos;
         ///////////////////////
-        /*
-        CGAffineTransform parentTransform = NodeToPhysicsTransform(self.node.parent);
-        CGPoint newAbsPos = CGPointApplyAffineTransform(ccpSub(self.relativePosition,self.node.anchorPointInPoints), parentTransform);
-        
-        self.absolutePosition = newAbsPos;*/
+
+     //   CGPoint position = self.node.position;
+        CGFloat newRotation = -CC_DEGREES_TO_RADIANS(self.relativeRotation - NodeToPhysicsRotation(self.node.parent));
+		self.absoluteRadians = newRotation;
+		// Rotating the body will cause the node to move unless the CoG is the same as the anchor point.
+		//self.node.position = position;
+
 
         CGPoint lastPos = cpTransformPoint(_lastTransform, cpvzero);
-        CGFloat lastAngle = cpfatan2(_lastTransform.a, _lastTransform.b);
+        CGFloat lastAngle = cpfatan2(_lastTransform.b, _lastTransform.a);
         
         _lastTransform = self.absoluteTransform;
-        //_body.angularVelocity = (self.absoluteRadians - lastAngle) / deltaTime;
+        _body.angularVelocity = (self.absoluteRadians - lastAngle) / deltaTime;
         self.velocity = ccpMult(ccpSub(self.absolutePosition, lastPos), 1.0/deltaTime);
        
     }
