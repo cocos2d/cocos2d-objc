@@ -219,7 +219,7 @@ static NSUInteger globalOrderOfArrival = 1;
 	if(body){
 		CGPoint position = self.position;
 		body.absoluteRadians = -CC_DEGREES_TO_RADIANS(newRotation + NodeToPhysicsRotation(self.parent));
-		
+		body.relativeRotation = newRotation;
 		// Rotating the body will cause the node to move unless the CoG is the same as the anchor point.
 		self.position = position;
 	} else {
@@ -981,7 +981,10 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 		// Grab the origin position of the node from it's transform.
 		CGAffineTransform transform = NodeToPhysicsTransform(self);
 		physicsBody.absolutePosition = ccp(transform.tx, transform.ty);
-		
+        
+        physicsBody.relativePosition = self.positionInPoints;
+		physicsBody.relativeRotation = self.rotation;
+        
 		CGAffineTransform nonRigid = self.nonRigidTransform;
 		[_physicsBody willAddToPhysicsNode:physics nonRigidTransform:CGAFFINETRANSFORM_TO_CPTRANSFORM(nonRigid)];
 		[physics.space smartAdd:physicsBody];

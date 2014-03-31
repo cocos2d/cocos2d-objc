@@ -784,8 +784,9 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
     node0.name = @"node0";
     [physicsNode addChild:node0];
 	
-    CCPhysicsBody * body1 = [CCPhysicsBody bodyWithCircleOfRadius:1.0 andCenter:CGPointZero];
+    CCPhysicsBody * body1 = [CCPhysicsBody bodyWithRect:CGRectMake(0, 0, 60, 20) cornerRadius:0];
 
+    
     CGPoint node1Pos = ccp(-25, 0);
 	CCNode *node1 = [CCNode node];
 	node1.physicsBody = body1;
@@ -793,6 +794,8 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
 	node1.physicsBody.collisionType = @"theStaticOne";
     node1.name = @"node1";
     node1.position = node1Pos;
+    node1.contentSize = CGSizeMake(60, 20);
+    node1.anchorPoint = ccp(0.5f,0.5f);
 	[node0 addChild:node1];
     
 	// Force entering the scene to set up the physics objects.
@@ -801,12 +804,16 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
     // Step the physics for a while.
     const int KineticCount = 50;
     
+    //Test translation.
 	for(int i=0; i<100; i++)
     {
         if(i < KineticCount)
         {
             node0.position = ccp(node0Pos.x + (i + 1), node0Pos.y);
-            node1.position = ccp(node1Pos.x - 2 * (i + 1), node1Pos.y);
+        }
+        else
+        {
+            int break_here = 1;
         }
         
 		[physicsNode fixedUpdate:1.0/100.0];
@@ -814,13 +821,42 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
         if(i >= KineticCount)
         {
             XCTAssertTrue(!body1.isKinetic,@"Should not be kinetic now.");
+            XCTAssertTrue(ccpLength(body1.velocity) == 0.0f ,@"Should not have velocity.");
         }
         else
         {
             XCTAssertTrue(body1.isKinetic, @"Should be kinetic now");
+            XCTAssertTrue(ccpLength(body1.velocity) > 0.0f ,@"Should have velocity.");
         }
 	}
     
+    return;
+    
+    //Test rotation.
+    node0.position = node0Pos;
+    node0.rotation = 0.0f;
+    
+    //Test translation.
+	for(int i=0; i<100; i++)
+    {
+        if(i < KineticCount)
+        {
+            node0.rotation = node0.rotation + 1.0f;
+        }
+        
+		[physicsNode fixedUpdate:1.0/100.0];
+        
+        if(i >= KineticCount)
+        {
+            XCTAssertTrue(!body1.isKinetic,@"Should not be kinetic now.");
+            XCTAssertTrue(ccpLength(body1.velocity) == 0.0f ,@"Should not have velocity.");
+        }
+        else
+        {
+            XCTAssertTrue(body1.isKinetic, @"Should be kinetic now");
+            XCTAssertTrue(ccpLength(body1.velocity) == 0.0f ,@"Should not have velocity.");
+        }
+	}
     
     //Test on exit
     //Text if node0->node1->node2->node3 and you detatch node1,that node0 can get unobservered.

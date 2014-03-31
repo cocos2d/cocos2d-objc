@@ -29,6 +29,7 @@
 #import "CCPhysics+ObjectiveChipmunk.h"
 #import "CCNode_Private.h"
 
+
 @interface CCNode(Private)
 -(CGAffineTransform)nonRigidTransform;
 @end
@@ -408,27 +409,39 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, /*CP_BODY_TYPE_K
 
 
 
--(void)updateKinetics:(CCTime)delta
+-(void)updateKinetics:(CCTime)deltaTime
 {
     
     if(!_isKineticTransformDirty)
     {
         _isKinetic = NO;
+        self.velocity = CGPointZero;
     }
     else
     {
         _isKineticTransformDirty = NO;
         
+        ///////
+        
+        CGPoint currentPosition = GetPositionFromBody(self.node, self);
+        CGPoint newPositionInPoints = [self.node convertPositionToPoints:self.relativePosition type:self.node.positionType];
+        
+		CGPoint delta = ccpSub(newPositionInPoints, currentPosition);
+        CGPoint newPos = ccpAdd(self.absolutePosition, TransformPointAsVector(delta, NodeToPhysicsTransform(self.node.parent)));
+		self.absolutePosition = newPos;
+        ///////////////////////
+        /*
         CGAffineTransform parentTransform = NodeToPhysicsTransform(self.node.parent);
-        self.absolutePosition = CGPointApplyAffineTransform(self.relativePosition, parentTransform);
+        CGPoint newAbsPos = CGPointApplyAffineTransform(ccpSub(self.relativePosition,self.node.anchorPointInPoints), parentTransform);
+        
+        self.absolutePosition = newAbsPos;*/
 
-        
-        CGPoint lastPos = ccp(_lastTransform.tx,_lastTransform.ty);
-        
-//        self.angularVelocity = (self.absoluteRadians - previousRadians) / delta;
-        self.velocity = ccpMult(ccpSub(self.absolutePosition, lastPos),1.0/delta);
+        CGPoint lastPos = cpTransformPoint(_lastTransform, cpvzero);
+        CGFloat lastAngle = cpfatan2(_lastTransform.a, _lastTransform.b);
         
         _lastTransform = self.absoluteTransform;
+        _body.angularVelocity = (self.absoluteRadians - lastAngle) / deltaTime;
+        self.velocity = ccpMult(ccpSub(self.absolutePosition, lastPos), 1.0/deltaTime);
        
     }
     

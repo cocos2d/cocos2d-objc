@@ -24,8 +24,8 @@
 
 #import "CCPhysicsNode.h"
 #import "CCPhysics+ObjectiveChipmunk.h"
-
 #import <objc/runtime.h>
+
 
 // Do not change this value unless you redefine the cpBitmask type to have more than 32 bits.
 #define MAX_CATEGORIES 32
