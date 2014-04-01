@@ -191,25 +191,22 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     // create render textures
     // get viewport size
     CGRect rect = [CCDirector sharedDirector].viewportRect;
+		CGSize size = rect.size;
 		
 		// Make sure we aren't rounding down.
-		rect.size.width = ceil(rect.size.width);
-		rect.size.height = ceil(rect.size.height);
+		size.width = ceil(rect.size.width);
+		size.height = ceil(rect.size.height);
 
     // create texture for outgoing scene
-    _outgoingTexture = [CCRenderTexture renderTextureWithWidth:rect.size.width / _outgoingDownScale
-                                                        height:rect.size.height / _outgoingDownScale
-                                                   pixelFormat:_transitionPixelFormat];
-    _outgoingTexture.position = CGPointMake(rect.size.width * 0.5f + rect.origin.x, rect.size.height * 0.5f + rect.origin.y);
-    _outgoingTexture.scale = _outgoingDownScale;
+    _outgoingTexture = [CCRenderTexture renderTextureWithWidth:size.width height:size.height pixelFormat:_transitionPixelFormat];
+    _outgoingTexture.position = CGPointMake(size.width * 0.5f + rect.origin.x, size.height * 0.5f + rect.origin.y);
+    _outgoingTexture.contentScale /= _outgoingDownScale;
     [self addChild:_outgoingTexture z:_outgoingOverIncoming];
     
     // create texture for incoming scene
-    _incomingTexture = [CCRenderTexture renderTextureWithWidth:rect.size.width / _incomingDownScale
-                                                        height:rect.size.height / _incomingDownScale
-                                                   pixelFormat:_transitionPixelFormat];
-    _incomingTexture.position = CGPointMake(rect.size.width * 0.5f + rect.origin.x, rect.size.height * 0.5f + rect.origin.y);
-    _incomingTexture.scale = _incomingDownScale;
+    _incomingTexture = [CCRenderTexture renderTextureWithWidth:size.width height:size.height pixelFormat:_transitionPixelFormat];
+    _incomingTexture.position = CGPointMake(size.width * 0.5f + rect.origin.x, size.height * 0.5f + rect.origin.y);
+    _incomingTexture.contentScale /= _incomingDownScale;
     [self addChild:_incomingTexture];
     
     // make sure scene is rendered at least once at progress 0.0
@@ -271,37 +268,17 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 
 - (void)renderOutgoing:(float)progress
 {
-    float oldScale;
-    GLfloat clearColor[4];
-
-    // scale the out scene to fit render texture
-    oldScale = _outgoingScene.scale;
-    _outgoingScene.scale = oldScale / _outgoingDownScale;
-    
-    glGetFloatv(GL_COLOR_CLEAR_VALUE, clearColor);
-    [_outgoingTexture beginWithClear:clearColor[0] g:clearColor[1] b:clearColor[2] a:clearColor[3]];
+    #warning TODO Should make a CCScene.clearColor property.
+    [_outgoingTexture beginWithClear:0 g:0 b:0 a:1];
 	    [_outgoingScene visit];
     [_outgoingTexture end];
-    
-    _outgoingScene.scale = oldScale;
 }
 
 - (void)renderIncoming:(float)progress
 {
-    float oldScale;
-    GLfloat clearColor[4];
-    
-    // scale the in scene to fit render texture
-    oldScale = _incomingScene.scale;
-    _incomingScene.scale = oldScale / _incomingDownScale;
-    
-    glGetFloatv(GL_COLOR_CLEAR_VALUE, clearColor);
-    [_incomingTexture beginWithClear:clearColor[0] g:clearColor[1] b:clearColor[2] a:clearColor[3]];
+    [_incomingTexture beginWithClear:0 g:0 b:0 a:1];
 	    [_incomingScene visit];
     [_incomingTexture end];
-    
-    _incomingScene.scale = oldScale;
-    
 }
 
 // -----------------------------------------------------------------
@@ -315,7 +292,6 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     {
         _incomingDownScale = CCTransitionDownScaleRetina;
         _outgoingDownScale = CCTransitionDownScaleRetina;
-        
     }
 }
 
