@@ -51,7 +51,6 @@
 #import "Platforms/CCGL.h"
 #import "Platforms/CCNS.h"
 
-#import "Support/OpenGL_Internal.h"
 #import "Support/CGPointExtension.h"
 #import "Support/CCProfiling.h"
 #import "Support/CCFileUtils.h"
@@ -320,7 +319,7 @@ static CCDirector *_sharedDirector = nil;
 //	} else
 //		ccGLBlendFunc(GL_ONE, GL_ZERO);
 //
-//	CHECK_GL_ERROR_DEBUG();
+//	CC_CHECK_GL_ERROR_DEBUG();
 //}
 //
 //- (void) setDepthTest: (BOOL) on
@@ -334,7 +333,7 @@ static CCDirector *_sharedDirector = nil;
 //	} else
 //		glDisable( GL_DEPTH_TEST );
 //
-//	CHECK_GL_ERROR_DEBUG();
+//	CC_CHECK_GL_ERROR_DEBUG();
 //}
 
 #pragma mark Director Integration with a UIKit view
@@ -372,7 +371,7 @@ static CCDirector *_sharedDirector = nil;
 		// Dump info once OpenGL was initilized
 		[[CCConfiguration sharedConfiguration] dumpInfo];
 
-		CHECK_GL_ERROR_DEBUG();
+		CC_CHECK_GL_ERROR_DEBUG();
 	}
 }
 
@@ -694,7 +693,7 @@ static CCDirector *_sharedDirector = nil;
 	// it shouldn't remove it from the window too.
 //	[openGLView_ removeFromSuperview];
 	
-	CHECK_GL_ERROR();
+	CC_CHECK_GL_ERROR_DEBUG();
 }
 
 -(void) setNextScene

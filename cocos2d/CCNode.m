@@ -934,29 +934,6 @@ NodeTransform(__unsafe_unretained CCNode *node, GLKMatrix4 parentTransform)
 	return NodeTransform(self, *parentTransform);
 }
 
-#warning TODO
-//-(void) transformAncestors
-//{
-//	if( _parent ) {
-//		[_parent transformAncestors];
-//		[_parent transform];
-//	}
-//}
-//
-//-(void) transform
-//{
-//	kmMat4 transform4x4;
-//
-//	// Convert 3x3 into 4x4 matrix
-//	CGAffineTransform tmpAffine = [self nodeToParentTransform];
-//	CGAffineToGL(&tmpAffine, transform4x4.mat);
-//
-//	// Update Z vertex manually
-//	transform4x4.mat[14] = _vertexZ;
-//
-//	kmGLMultMatrix( &transform4x4 );
-//}
-
 #pragma mark CCPhysics support.
 
 static inline CGAffineTransform

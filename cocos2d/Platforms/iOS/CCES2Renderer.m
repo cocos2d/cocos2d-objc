@@ -34,7 +34,7 @@
 
 #import "CCES2Renderer.h"
 
-#import "../../Support/OpenGL_Internal.h"
+#import "../CCGL.h"
 #import "../../ccMacros.h"
 
 @implementation CCES2Renderer
@@ -89,7 +89,7 @@
 			
 		}
 
-		CHECK_GL_ERROR_DEBUG();
+		CC_CHECK_GL_ERROR_DEBUG();
     }
 
     return self;
@@ -137,7 +137,7 @@
 		}
 	}
 
-	CHECK_GL_ERROR();
+	CC_CHECK_GL_ERROR_DEBUG();
 
 	if (_depthFormat)
 	{
@@ -163,7 +163,7 @@
 		glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderbuffer);		
 	}
 
-	CHECK_GL_ERROR();
+	CC_CHECK_GL_ERROR_DEBUG();
 
 	GLenum error;
 	if( (error=glCheckFramebufferStatus(GL_FRAMEBUFFER)) != GL_FRAMEBUFFER_COMPLETE)

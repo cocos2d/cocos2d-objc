@@ -34,7 +34,6 @@
 #import "CCConfiguration.h"
 #import "ccMacros.h"
 #import "ccConfig.h"
-#import "Support/OpenGL_Internal.h"
 #import "cocos2d.h"
 
 @interface CCConfiguration ()
@@ -101,7 +100,7 @@ static char * glExtensions;
 		}
 	}
 
-	CHECK_GL_ERROR_DEBUG();
+	CC_CHECK_GL_ERROR_DEBUG();
 
 	return self;
 }

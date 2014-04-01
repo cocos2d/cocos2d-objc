@@ -27,8 +27,6 @@
 #import "CCClippingNode.h"
 
 #import "CCGL.h"
-#import "OpenGL_Internal.h"
-
 #import "CCShader.h"
 
 #import "CCDirector.h"
@@ -185,7 +183,7 @@ static void setProgram(CCNode *n, CCShader *p) {
     // enable stencil use
     glEnable(GL_STENCIL_TEST);
     // check for OpenGL error while enabling stencil test
-    CHECK_GL_ERROR_DEBUG();
+    CC_CHECK_GL_ERROR_DEBUG();
     
     // all bits on the stencil buffer are readonly, except the current layer bit,
     // this means that operation like glClear or glStencilOp will be masked with this value
@@ -288,7 +286,7 @@ static void setProgram(CCNode *n, CCShader *p) {
         // enable alpha testing
         glEnable(GL_ALPHA_TEST);
         // check for OpenGL error while enabling alpha test
-        CHECK_GL_ERROR_DEBUG();
+        CC_CHECK_GL_ERROR_DEBUG();
         // pixel will be drawn only if greater than an alpha threshold
         glAlphaFunc(GL_GREATER, _alphaThreshold);
 #endif

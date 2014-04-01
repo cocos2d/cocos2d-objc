@@ -605,7 +605,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 		_shaderUniforms = shaderUniforms;
 	}
 	
-	CHECK_GL_ERROR_DEBUG();
+	CC_CHECK_GL_ERROR_DEBUG();
 	glPopGroupMarkerEXT();
 	
 	_renderState = renderState;
@@ -725,6 +725,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ebo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, _elementCount*sizeof(*_elements), _elements, GL_STREAM_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	CC_CHECK_GL_ERROR_DEBUG();
 	
 	for(CCRenderCommandDraw *command in _queue) [command invoke:self];
 	[self bindVAO:NO];
@@ -736,8 +737,8 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	_vertexCount = 0;
 	_elementCount = 0;
 	
-	CHECK_GL_ERROR_DEBUG();
 	glPopGroupMarkerEXT();
+	CC_CHECK_GL_ERROR_DEBUG();
 	
 //	CC_INCREMENT_GL_DRAWS(1);
 }

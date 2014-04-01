@@ -57,7 +57,6 @@
 #import "CCNode_Private.h"
 
 // support
-#import "Support/OpenGL_Internal.h"
 #import "Support/CGPointExtension.h"
 #import "Support/base64.h"
 #import "Support/ZipUtils.h"

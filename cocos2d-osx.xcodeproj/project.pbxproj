@@ -294,7 +294,6 @@
 		E076E7651225EC7400DE0DA2 /* ccUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6C31225EC7400DE0DA2 /* ccUtils.h */; };
 		E076E7661225EC7400DE0DA2 /* CGPointExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6C41225EC7400DE0DA2 /* CGPointExtension.h */; };
 		E076E7671225EC7400DE0DA2 /* CGPointExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6C51225EC7400DE0DA2 /* CGPointExtension.m */; };
-		E076E7681225EC7400DE0DA2 /* OpenGL_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6C61225EC7400DE0DA2 /* OpenGL_Internal.h */; };
 		E076E7691225EC7400DE0DA2 /* TGAlib.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6C71225EC7400DE0DA2 /* TGAlib.h */; };
 		E076E76A1225EC7400DE0DA2 /* TGAlib.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6C81225EC7400DE0DA2 /* TGAlib.m */; };
 		E076E76D1225EC7400DE0DA2 /* uthash.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6CB1225EC7400DE0DA2 /* uthash.h */; };
@@ -703,7 +702,6 @@
 		E076E6C31225EC7400DE0DA2 /* ccUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccUtils.h; sourceTree = "<group>"; };
 		E076E6C41225EC7400DE0DA2 /* CGPointExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGPointExtension.h; sourceTree = "<group>"; };
 		E076E6C51225EC7400DE0DA2 /* CGPointExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CGPointExtension.m; sourceTree = "<group>"; };
-		E076E6C61225EC7400DE0DA2 /* OpenGL_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGL_Internal.h; sourceTree = "<group>"; };
 		E076E6C71225EC7400DE0DA2 /* TGAlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGAlib.h; sourceTree = "<group>"; };
 		E076E6C81225EC7400DE0DA2 /* TGAlib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGAlib.m; sourceTree = "<group>"; };
 		E076E6CB1225EC7400DE0DA2 /* uthash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uthash.h; sourceTree = "<group>"; };
@@ -1364,7 +1362,6 @@
 				A0BE62FB140552BD00DAA336 /* CCVertex.m */,
 				E076E6C41225EC7400DE0DA2 /* CGPointExtension.h */,
 				E076E6C51225EC7400DE0DA2 /* CGPointExtension.m */,
-				E076E6C61225EC7400DE0DA2 /* OpenGL_Internal.h */,
 				E076E6C71225EC7400DE0DA2 /* TGAlib.h */,
 				E076E6C81225EC7400DE0DA2 /* TGAlib.m */,
 				E076E6CB1225EC7400DE0DA2 /* uthash.h */,
@@ -1673,7 +1670,6 @@
 				B7E776531858EC79004221AA /* CCParticleSystemBase.h in Headers */,
 				B77060671831B0C40043CC67 /* OALUtilityActions.h in Headers */,
 				B770606D1831B0C40043CC67 /* OALAudioTracks.h in Headers */,
-				E076E7681225EC7400DE0DA2 /* OpenGL_Internal.h in Headers */,
 				B77060991831B0C40043CC67 /* OALTools.h in Headers */,
 				D389412C18639DD400725CFC /* CCPhysicsShape.h in Headers */,
 				B77060691831B0C40043CC67 /* OALAudioTrack.h in Headers */,

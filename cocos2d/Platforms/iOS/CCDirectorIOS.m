@@ -45,7 +45,6 @@
 #import "CCRenderer_private.h"
 
 // support imports
-#import "../../Support/OpenGL_Internal.h"
 #import "../../Support/CGPointExtension.h"
 #import "../../Support/CCFileUtils.h"
 

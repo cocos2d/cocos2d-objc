@@ -42,7 +42,6 @@
 #import "CCConfiguration.h"
 
 // support
-#import "Support/OpenGL_Internal.h"
 #import "Support/CGPointExtension.h"
 #import "Support/NSThread+performBlock.h"
 

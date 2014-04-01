@@ -39,7 +39,6 @@
 #import "CCDirector_Private.h"
 #import "CCNode_Private.h"
 #import "CCRenderer_private.h"
-#import "OpenGL_Internal.h"
 
 #if __CC_PLATFORM_MAC
 #import <ApplicationServices/ApplicationServices.h>
@@ -179,7 +178,7 @@
 	glBindRenderbuffer(GL_RENDERBUFFER, oldRBO);
 	glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
 	
-	CHECK_GL_ERROR_DEBUG();
+	CC_CHECK_GL_ERROR_DEBUG();
 	glPopGroupMarkerEXT();
 	
 	CGRect rect = CGRectMake(0, 0, _size.width, _size.height);

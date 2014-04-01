@@ -68,7 +68,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
 #import "Support/ZipUtils.h"
-#import "Support/OpenGL_Internal.h"
+#import "CCGL.h"
 
 #pragma mark -
 #pragma mark CCTexturePVR
@@ -522,7 +522,7 @@ typedef struct {
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
 	}
 	
-	CHECK_GL_ERROR(); // clean possible GL error
+	CC_CHECK_GL_ERROR_DEBUG(); // clean possible GL error
 
 	GLenum internalFormat = _pixelFormatInfo->internalFormat;
 	GLenum format = _pixelFormatInfo->format;

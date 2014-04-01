@@ -30,7 +30,6 @@
 #import "CCDrawNode.h"
 #import "CCShader.h"
 #import "Support/CGPointExtension.h"
-#import "Support/OpenGL_Internal.h"
 #import "CCNode_Private.h"
 #import "CCColor.h"
 

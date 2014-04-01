@@ -30,7 +30,6 @@
 #import "ccMacros.h"
 #import "Support/CCFileUtils.h"
 #import "Support/uthash.h"
-#import "Support/OpenGL_Internal.h"
 #import "CCRenderer_private.h"
 #import "CCTexture_private.h"
 #import "CCDirector.h"
