@@ -217,7 +217,87 @@ CompileShader(GLenum type, const char *source)
 	return vao;
 }
 
-#warning TODO error handling
+//MARK: Uniform Setters:
+
+static CCUniformSetter
+SetFloat(NSString *name, GLint location)
+{
+	return ^(CCRenderer *renderer, NSNumber *value){
+		value = value ?: @0;
+		NSCAssert([value isKindOfClass:[NSNumber class]], @"Shader uniform '%@' value must be wrapped in a NSNumber.", name);
+		
+		glUniform1f(location, value.floatValue);
+	};
+}
+
+static CCUniformSetter
+SetVec2(NSString *name, GLint location)
+{
+	return ^(CCRenderer *renderer, NSValue *value){
+		value = value ?: [NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)];
+		NSCAssert([value isKindOfClass:[NSValue class]], @"Shader uniform '%@' value must be wrapped in a NSValue.", name);
+		
+		if(strcmp(value.objCType, @encode(GLKVector2)) == 0){
+			GLKVector2 v; [value getValue:&v];
+			glUniform2f(location, v.x, v.y);
+		} else if(strcmp(value.objCType, @encode(CGPoint)) == 0){
+			CGPoint v = {}; [value getValue:&v];
+			glUniform2f(location, v.x, v.y);
+		} else if(strcmp(value.objCType, @encode(CGSize)) == 0){
+			CGSize v = {}; [value getValue:&v];
+			glUniform2f(location, v.width, v.height);
+		} else {
+			NSCAssert(NO, @"Shader uniformm 'vec2 %@' value must be passed using [NSValue valueWithGLKVector2:], [NSValue valueWithCGPoint:], or [NSValue valueWithCGSize:]", name);
+		}
+	};
+}
+
+static CCUniformSetter
+SetVec3(NSString *name, GLint location)
+{
+	return ^(CCRenderer *renderer, NSValue *value){
+		value = value ?: [NSValue valueWithGLKVector3:GLKVector3Make(0.0f, 0.0f, 0.0f)];
+		NSCAssert([value isKindOfClass:[NSValue class]], @"Shader uniform '%@' value must be wrapped in a NSValue.", name);
+		NSCAssert(strcmp(value.objCType, @encode(GLKVector3)) == 0, @"Shader uniformm 'vec3 %@' value must be passed using [NSValue valueWithGLKVector3:]", name);
+		
+		GLKVector3 v; [value getValue:&v];
+		glUniform3f(location, v.x, v.y, v.z);
+	};
+}
+
+static CCUniformSetter
+SetVec4(NSString *name, GLint location)
+{
+	return ^(CCRenderer *renderer, id value){
+		value = value ?: [NSValue valueWithGLKVector4:GLKVector4Make(0.0f, 0.0f, 0.0f, 1.0f)];
+		
+		if([value isKindOfClass:[NSValue class]]){
+			NSCAssert(strcmp([(NSValue *)value objCType], @encode(GLKVector4)) == 0, @"Shader uniformm 'vec4 %@' value must be passed using [NSValue valueWithGLKVector4:].", name);
+			
+			GLKVector4 v; [value getValue:&v];
+			glUniform4f(location, v.x, v.y, v.z, v.w);
+		} else if([value isKindOfClass:[CCColor class]]){
+			GLKVector4 v = [(CCColor *)value glkVector4];
+			glUniform4f(location, v.x, v.y, v.z, v.w);
+		} else {
+			NSCAssert(NO, @"Shader uniformm 'vec4 %@' value must be passed using [NSValue valueWithGLKVector4:] or a CCColor object.", name);
+		}
+	};
+}
+
+static CCUniformSetter
+SetMat4(NSString *name, GLint location)
+{
+	return ^(CCRenderer *renderer, NSValue *value){
+		value = value ?: [NSValue valueWithGLKMatrix4:GLKMatrix4Identity];
+		NSCAssert([value isKindOfClass:[NSValue class]], @"Shader uniform '%@' value must be wrapped in a NSValue.", name);
+		NSCAssert(strcmp(value.objCType, @encode(GLKMatrix4)) == 0, @"Shader uniformm 'mat4 %@' value must be passed using [NSValue valueWithGLKMatrix4:]", name);
+		
+		GLKMatrix4 m; [value getValue:&m];
+		glUniformMatrix4fv(location, 1, GL_FALSE, m.m);
+	};
+}
+
 -(NSDictionary *)uniformSettersForProgram:(GLuint)program
 {
 	NSMutableDictionary *uniformSetters = [NSMutableDictionary dictionary];
@@ -243,71 +323,14 @@ CompileShader(GLenum type, const char *source)
 		
 		// Setup a block that is responsible for binding that uniform variable's value.
 		switch(type){
-			case GL_FLOAT: {
-				uniformSetters[name] = ^(CCRenderer *renderer, NSNumber *value){
-					value = value ?: @0;
-					NSAssert([value isKindOfClass:[NSNumber class]], @"Shader uniform '%@' value must be wrapped in a NSNumber.", name);
-					
-					glUniform1f(location, value.floatValue);
-				};
-			}; break;
-			case GL_FLOAT_VEC2: {
-				uniformSetters[name] = ^(CCRenderer *renderer, NSValue *value){
-					value = value ?: [NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)];
-					NSAssert([value isKindOfClass:[NSValue class]], @"Shader uniform '%@' value must be wrapped in a NSValue.", name);
-					
-					if(strcmp(value.objCType, @encode(GLKVector2)) == 0){
-						GLKVector2 v; [value getValue:&v];
-						glUniform2f(location, v.x, v.y);
-					} else if(strcmp(value.objCType, @encode(CGPoint)) == 0){
-						CGPoint v = {}; [value getValue:&v];
-						glUniform2f(location, v.x, v.y);
-					} else if(strcmp(value.objCType, @encode(CGSize)) == 0){
-						CGSize v = {}; [value getValue:&v];
-						glUniform2f(location, v.width, v.height);
-					} else {
-						NSAssert(NO, @"Shader uniformm 'vec2 %@' value must be passed using [NSValue valueWithGLKVector2:], [NSValue valueWithCGPoint:], or [NSValue valueWithCGSize:]", name);
-					}
-				};
-			}; break;
-			case GL_FLOAT_VEC3: {
-				uniformSetters[name] = ^(CCRenderer *renderer, NSValue *value){
-					value = value ?: [NSValue valueWithGLKVector3:GLKVector3Make(0.0f, 0.0f, 0.0f)];
-					NSAssert([value isKindOfClass:[NSValue class]], @"Shader uniform '%@' value must be wrapped in a NSValue.", name);
-					NSAssert(strcmp(value.objCType, @encode(GLKVector3)) == 0, @"Shader uniformm 'vec3 %@' value must be passed using [NSValue valueWithGLKVector3:]", name);
-					
-					GLKVector3 v; [value getValue:&v];
-					glUniform3f(location, v.x, v.y, v.z);
-				};
-			}; break;
-			case GL_FLOAT_VEC4: {
-				uniformSetters[name] = ^(CCRenderer *renderer, id value){
-					value = value ?: [NSValue valueWithGLKVector4:GLKVector4Make(0.0f, 0.0f, 0.0f, 1.0f)];
-					
-					if([value isKindOfClass:[NSValue class]]){
-						NSAssert(strcmp([(NSValue *)value objCType], @encode(GLKVector4)) == 0, @"Shader uniformm 'vec4 %@' value must be passed using [NSValue valueWithGLKVector4:].", name);
-						
-						GLKVector4 v; [value getValue:&v];
-						glUniform4f(location, v.x, v.y, v.z, v.w);
-					} else if([value isKindOfClass:[CCColor class]]){
-						GLKVector4 v = [(CCColor *)value glkVector4];
-						glUniform4f(location, v.x, v.y, v.z, v.w);
-					} else {
-						NSAssert(NO, @"Shader uniformm 'vec4 %@' value must be passed using [NSValue valueWithGLKVector4:] or a CCColor object.", name);
-					}
-				};
-			}; break;
-			case GL_FLOAT_MAT4: {
-				uniformSetters[name] = ^(CCRenderer *renderer, NSValue *value){
-					value = value ?: [NSValue valueWithGLKMatrix4:GLKMatrix4Identity];
-					NSAssert([value isKindOfClass:[NSValue class]], @"Shader uniform '%@' value must be wrapped in a NSValue.", name);
-					NSAssert(strcmp(value.objCType, @encode(GLKMatrix4)) == 0, @"Shader uniformm 'mat4 %@' value must be passed using [NSValue valueWithGLKMatrix4:]", name);
-					
-					GLKMatrix4 m; [value getValue:&m];
-					glUniformMatrix4fv(location, 1, GL_FALSE, m.m);
-				};
-			}; break;
+			default: NSAssert(NO, @"Uniform type not supported. (yet?)");
+			case GL_FLOAT: uniformSetters[name] = SetFloat(name, location); break;
+			case GL_FLOAT_VEC2: uniformSetters[name] = SetVec2(name, location); break;
+			case GL_FLOAT_VEC3: uniformSetters[name] = SetVec3(name, location); break;
+			case GL_FLOAT_VEC4: uniformSetters[name] = SetVec4(name, location); break;
+			case GL_FLOAT_MAT4: uniformSetters[name] = SetMat4(name, location); break;
 			case GL_SAMPLER_2D: {
+				// Sampler setters are handled a differently since the real work is binding the texture and not setting the uniform value.
 				uniformSetters[name] = ^(CCRenderer *renderer, CCTexture *texture){
 					texture = texture ?: [CCTexture none];
 					NSAssert([texture isKindOfClass:[CCTexture class]], @"Shader uniform '%@' value must be a CCTexture object.", name);
@@ -321,12 +344,13 @@ CompileShader(GLenum type, const char *source)
 				glUniform1i(location, textureUnit);
 				textureUnit++;
 			}; break;
-			default: NSAssert(NO, @"Uniform type not supported. (yet?)");
 		}
 	}
 	
 	return uniformSetters;
 }
+
+//MARK: Init Methods:
 
 -(instancetype)initWithProgram:(GLuint)program uniformSetters:(NSDictionary *)uniformSetters ownsProgram:(BOOL)ownsProgram
 {
