@@ -9,26 +9,38 @@
 #import "TestBase.h"
 #import "CCTextureCache.h"
 
+static NSString *TEST_STRING =
+	@"ABCDEFGHIJKLMNOPQRSTUVWXYZ\n"
+	@"abcdefghijklmnopqrstuvwxyz\n"
+	@",.?!;:'\"()[]{}<>\\|/\n"
+	@"@#$%^&*+-=_";
+
 @interface CCBMFontTest : TestBase @end
 
 @implementation CCBMFontTest
 
-- (void) setupSimpleAudioTest
+-(void)testFont:(NSString *)font
 {
-    self.subTitle = @"Test bitmap fonts.";
-    
-		NSString *string =
-			@"@Q&wyHDB4#qphdi\n"
-			@"WYK>kgbE?97652f\n"
-			@"MlXS<'U8Z{/usonec:\n"
-			@"$}V0C%T3Lj1a)=~_\n"
-			@"A!RGmPOJ\t]*-`\n"
-			@"^;xv+NzF\"r[:(|l";
-			
-		CCLabelBMFont *label = [CCLabelBMFont labelWithString:string fntFile:@"din.fnt"];
+    self.subTitle = [NSString stringWithFormat:@"Test bitmap fonts. (%@)", font];
+		
+		CCLabelBMFont *label = [CCLabelBMFont labelWithString:TEST_STRING fntFile:font];
 		label.positionType = CCPositionTypeNormalized;
 		label.position = ccp(0.5, 0.5);
 		[self.contentNode addChild:label];
 }
+
+-(void)setupBMFont01Test {[self testFont:@"din.fnt"];}
+-(void)setupBMFont02Test {[self testFont:@"Fonts/arial-unicode-26.fnt"];}
+-(void)setupBMFont03Test {[self testFont:@"Fonts/arial16.fnt"];}
+-(void)setupBMFont04Test {[self testFont:@"Fonts/bitmapFontTest.fnt"];}
+-(void)setupBMFont06Test {[self testFont:@"Fonts/bitmapFontTest3.fnt"];}
+-(void)setupBMFont07Test {[self testFont:@"Fonts/bitmapFontTest4.fnt"];}
+-(void)setupBMFont08Test {[self testFont:@"Fonts/bitmapFontTest5.fnt"];}
+-(void)setupBMFont09Test {[self testFont:@"Fonts/boundsTestFont.fnt"];}
+-(void)setupBMFont10Test {[self testFont:@"Fonts/font-issue1343.fnt"];}
+-(void)setupBMFont11Test {[self testFont:@"Fonts/futura-48.fnt"];}
+-(void)setupBMFont12Test {[self testFont:@"Fonts/konqa32.fnt"];}
+-(void)setupBMFont14Test {[self testFont:@"Fonts/markerFelt.fnt"];}
+-(void)setupBMFont15Test {[self testFont:@"Fonts/west_england-64.fnt"];}
 
 @end
