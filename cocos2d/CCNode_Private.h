@@ -25,6 +25,7 @@
 #import "CCNode.h"
 
 @interface CCNode()<CCShaderProtocol, CCBlendProtocol, CCTextureProtocol> {
+	@protected
 	CCRenderState *_renderState;
 	
 	CCShader *_shader;

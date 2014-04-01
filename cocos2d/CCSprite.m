@@ -272,27 +272,21 @@
 	float atlasWidth = (float)self.texture.pixelWidth;
 	float atlasHeight = (float)self.texture.pixelHeight;
 
-	float left, right, top, bottom;
-	
-	#warning TODO Seems like this could be significantly simplified.
-	if(_textureRectRotated)
-    {
+	if(_textureRectRotated){
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-		left	= (2*rect.origin.x+1)/(2*atlasWidth);
-		right	= left+(rect.size.height*2-2)/(2*atlasWidth);
-		top		= (2*rect.origin.y+1)/(2*atlasHeight);
-		bottom	= top+(rect.size.width*2-2)/(2*atlasHeight);
+		float left	= (2*rect.origin.x + 1)/(2*atlasWidth);
+		float right	= left+(rect.size.height*2 - 2)/(2*atlasWidth);
+		float top		= (2*rect.origin.y + 1)/(2*atlasHeight);
+		float bottom	= top+(rect.size.width*2 - 2)/(2*atlasHeight);
 #else
-		left	= rect.origin.x/atlasWidth;
-		right	= (rect.origin.x+rect.size.height) / atlasWidth;
-		top		= rect.origin.y/atlasHeight;
-		bottom	= (rect.origin.y+rect.size.width) / atlasHeight;
-#endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
+		float left	= rect.origin.x/atlasWidth;
+		float right	= (rect.origin.x + rect.size.height)/atlasWidth;
+		float top		= rect.origin.y/atlasHeight;
+		float bottom	= (rect.origin.y + rect.size.width)/atlasHeight;
+#endif
 
-		if( _flipX)
-			CC_SWAP(top,bottom);
-		if( _flipY)
-			CC_SWAP(left,right);
+		if( _flipX) CC_SWAP(top,bottom);
+		if( _flipY) CC_SWAP(left,right);
 		
 		_verts[0].texCoord1 = GLKVector2Make( left,    top);
 		_verts[1].texCoord1 = GLKVector2Make( left, bottom);
@@ -300,21 +294,19 @@
 		_verts[3].texCoord1 = GLKVector2Make(right,    top);
 	} else {
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-		left	= (2*rect.origin.x+1)/(2*atlasWidth);
-		right	= left + (rect.size.width*2-2)/(2*atlasWidth);
-		top		= (2*rect.origin.y+1)/(2*atlasHeight);
-		bottom	= top + (rect.size.height*2-2)/(2*atlasHeight);
+		float left	= (2*rect.origin.x + 1)/(2*atlasWidth);
+		float right	= left + (rect.size.width*2 - 2)/(2*atlasWidth);
+		float top		= (2*rect.origin.y + 1)/(2*atlasHeight);
+		float bottom	= top + (rect.size.height*2 - 2)/(2*atlasHeight);
 #else
-		left	= rect.origin.x/atlasWidth;
-		right	= (rect.origin.x + rect.size.width) / atlasWidth;
-		top		= rect.origin.y/atlasHeight;
-		bottom	= (rect.origin.y + rect.size.height) / atlasHeight;
-#endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
+		float left	= rect.origin.x/atlasWidth;
+		float right	= (rect.origin.x + rect.size.width)/atlasWidth;
+		float top		= rect.origin.y/atlasHeight;
+		float bottom	= (rect.origin.y + rect.size.height)/atlasHeight;
+#endif
 
-		if( _flipX)
-			CC_SWAP(left,right);
-		if( _flipY)
-			CC_SWAP(top,bottom);
+		if( _flipX) CC_SWAP(left,right);
+		if( _flipY) CC_SWAP(top,bottom);
 
 		_verts[0].texCoord1 = GLKVector2Make( left, bottom);
 		_verts[1].texCoord1 = GLKVector2Make(right, bottom);

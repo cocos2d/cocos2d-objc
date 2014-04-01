@@ -589,11 +589,6 @@
 	CC_PROFILER_STOP_CATEGORY(kCCProfilerCategoryParticles , @"CCParticleSystem - update");
 }
 
--(void) updateWithNoTime
-{
-	[self update:0.0f];
-}
-
 -(void) updateQuadWithParticle:(_CCParticle*)particle newPosition:(CGPoint)pos;
 {
 	// should be overriden

@@ -556,7 +556,7 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 /// @name Accessing Transformations and Matrices
 /// -----------------------------------------------------------------------
 
-#warning TODO
+/** Returns the 4x4 drawing transformation for this node. Really only useful when overriding visit:parentTransform: */
 -(GLKMatrix4)transform:(const GLKMatrix4 *)parentTransform;
 
 /** Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.

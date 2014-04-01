@@ -343,7 +343,7 @@ SetMat4(NSString *name, GLint location)
 				// Bind the texture unit at init time.
 				glUniform1i(location, textureUnit);
 				textureUnit++;
-			}; break;
+			}
 		}
 	}
 	

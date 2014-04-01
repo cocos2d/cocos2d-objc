@@ -26,14 +26,8 @@
 
 @interface CCParticleSystemBase ()
 
-// Should be overriden by subclasses.
--(void) postStep;
-
 // Update.
 -(void) update: (CCTime) dt;
-
-// Update without time.
--(void) updateWithNoTime;
 
 // System full status.
 -(BOOL) isFull;

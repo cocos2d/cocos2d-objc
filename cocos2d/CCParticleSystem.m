@@ -150,34 +150,36 @@
 
 static inline void OutputParticle(CCRenderBuffer buffer, int i, _CCParticle *p, GLKVector2 pos, const GLKMatrix4 *transform, GLKVector2 *texCoord1)
 {
+	const GLKVector2 zero = {{0, 0}};
 	GLKVector4 color = GLKVector4Make(p->color.r*p->color.a, p->color.g*p->color.a, p->color.b*p->color.a, p->color.a);
 
 #warning TODO Can do some extra optimization to the vertex transform math.
-#warning TODO Can pass the particle life and maybe another param using TexCoord2.
+#warning TODO Can pass the particle life and maybe another param using TexCoord2?
 
-	GLfloat hs = 0.5f*p->size;
+	float hs = 0.5f*p->size;
+	
 	if( p->rotation ) {
-		GLfloat r = (GLfloat)-CC_DEGREES_TO_RADIANS(p->rotation);
-		GLfloat cr = cosf(r);
-		GLfloat sr = sinf(r);
-		GLfloat ax = -hs * cr - -hs * sr + pos.x;
-		GLfloat ay = -hs * sr + -hs * cr + pos.y;
-		GLfloat bx =  hs * cr - -hs * sr + pos.x;
-		GLfloat by =  hs * sr + -hs * cr + pos.y;
-		GLfloat cx =  hs * cr -  hs * sr + pos.x;
-		GLfloat cy =  hs * sr +  hs * cr + pos.y;
-		GLfloat dx = -hs * cr -  hs * sr + pos.x;
-		GLfloat dy = -hs * sr +  hs * cr + pos.y;
+		float r = -CC_DEGREES_TO_RADIANS(p->rotation);
+		float cr = cosf(r);
+		float sr = sinf(r);
+		float ax = -hs * cr - -hs * sr + pos.x;
+		float ay = -hs * sr + -hs * cr + pos.y;
+		float bx =  hs * cr - -hs * sr + pos.x;
+		float by =  hs * sr + -hs * cr + pos.y;
+		float cx =  hs * cr -  hs * sr + pos.x;
+		float cy =  hs * sr +  hs * cr + pos.y;
+		float dx = -hs * cr -  hs * sr + pos.x;
+		float dy = -hs * sr +  hs * cr + pos.y;
 		
-		CCRenderBufferSetVertex(buffer, 4*i + 0, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(ax, ay, 0.0f, 1.0f)), texCoord1[0], GLKVector2Make(0.0f, 0.0f), color});
-		CCRenderBufferSetVertex(buffer, 4*i + 1, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(bx, by, 0.0f, 1.0f)), texCoord1[1], GLKVector2Make(0.0f, 0.0f), color});
-		CCRenderBufferSetVertex(buffer, 4*i + 2, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(cx, cy, 0.0f, 1.0f)), texCoord1[2], GLKVector2Make(0.0f, 0.0f), color});
-		CCRenderBufferSetVertex(buffer, 4*i + 3, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(dx, dy, 0.0f, 1.0f)), texCoord1[3], GLKVector2Make(0.0f, 0.0f), color});
+		CCRenderBufferSetVertex(buffer, 4*i + 0, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(ax, ay, 0.0f, 1.0f)), texCoord1[0], zero, color});
+		CCRenderBufferSetVertex(buffer, 4*i + 1, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(bx, by, 0.0f, 1.0f)), texCoord1[1], zero, color});
+		CCRenderBufferSetVertex(buffer, 4*i + 2, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(cx, cy, 0.0f, 1.0f)), texCoord1[2], zero, color});
+		CCRenderBufferSetVertex(buffer, 4*i + 3, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(dx, dy, 0.0f, 1.0f)), texCoord1[3], zero, color});
 	} else {
-		CCRenderBufferSetVertex(buffer, 4*i + 0, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(pos.x - hs, pos.y - hs, 0.0f, 1.0f)), texCoord1[0], GLKVector2Make(0.0f, 0.0f), color});
-		CCRenderBufferSetVertex(buffer, 4*i + 1, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(pos.x + hs, pos.y - hs, 0.0f, 1.0f)), texCoord1[1], GLKVector2Make(0.0f, 0.0f), color});
-		CCRenderBufferSetVertex(buffer, 4*i + 2, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(pos.x + hs, pos.y + hs, 0.0f, 1.0f)), texCoord1[2], GLKVector2Make(0.0f, 0.0f), color});
-		CCRenderBufferSetVertex(buffer, 4*i + 3, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(pos.x - hs, pos.y + hs, 0.0f, 1.0f)), texCoord1[3], GLKVector2Make(0.0f, 0.0f), color});
+		CCRenderBufferSetVertex(buffer, 4*i + 0, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(pos.x - hs, pos.y - hs, 0.0f, 1.0f)), texCoord1[0], zero, color});
+		CCRenderBufferSetVertex(buffer, 4*i + 1, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(pos.x + hs, pos.y - hs, 0.0f, 1.0f)), texCoord1[1], zero, color});
+		CCRenderBufferSetVertex(buffer, 4*i + 2, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(pos.x + hs, pos.y + hs, 0.0f, 1.0f)), texCoord1[2], zero, color});
+		CCRenderBufferSetVertex(buffer, 4*i + 3, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(pos.x - hs, pos.y + hs, 0.0f, 1.0f)), texCoord1[3], zero, color});
 	}
 	
 	CCRenderBufferSetTriangle(buffer, 2*i + 0, 4*i + 0, 4*i + 1, 4*i + 2);

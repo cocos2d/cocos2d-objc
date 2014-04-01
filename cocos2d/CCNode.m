@@ -1671,20 +1671,22 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 -(NSMutableDictionary *)shaderUniforms
 {
 	if(_shaderUniforms == nil){
-		self.shaderUniforms = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+		_shaderUniforms = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 			(_texture ?: [CCTexture none]), CCShaderUniformMainTexture,
 			nil
 		];
+		
+		_renderState = nil;
 	}
 	
 	return _shaderUniforms;
 }
 
--(void)setShaderUniforms:(NSMutableDictionary *)shaderUniforms
-{
-	_shaderUniforms = shaderUniforms;
-	_renderState = nil;
-}
+//-(void)setShaderUniforms:(NSMutableDictionary *)shaderUniforms
+//{
+//	_shaderUniforms = shaderUniforms;
+//	_renderState = nil;
+//}
 
 -(void)setBlendMode:(CCBlendMode *)blendMode
 {
@@ -1721,6 +1723,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 		_texture = texture;
 		self.renderState = nil;
 		
+		// Set the main texture in the uniforms dictionary (if the dictionary exists).
 		_shaderUniforms[CCShaderUniformMainTexture] = (_texture ?: [CCTexture none]);
 	}
 }

@@ -394,24 +394,6 @@ and when to execute the Scenes.
  */
 -(void) purgeCachedData;
 
-// OpenGL Helper
-
-/** sets the OpenGL default values */
--(void) setGLDefaultValues;
-
-///**
-// *  Enables/disables OpenGL alpha blending.
-// *
-// *  @param on Set to YES to enable alpha blending.
-// */
-//- (void) setAlphaBlending: (BOOL) on;
-//
-///**
-// *  Enables/disables OpenGL depth test.
-// *
-// *  @param on Set to YES to enable depth tests.
-// */
-//- (void) setDepthTest: (BOOL) on;
 @end
 
 // optimization. Should only be used to read it. Never to write it.

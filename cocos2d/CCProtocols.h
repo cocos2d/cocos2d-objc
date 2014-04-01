@@ -40,7 +40,7 @@
 @protocol CCShaderProtocol <NSObject>
 
 @property(nonatomic, strong) CCShader *shader;
-@property(nonatomic, strong) NSMutableDictionary *shaderUniforms;
+@property(nonatomic, readonly) NSMutableDictionary *shaderUniforms;
 
 @end
 

@@ -208,17 +208,6 @@ static CCDirector *_sharedDirector = nil;
 
 }
 
--(void) setGLDefaultValues
-{
-#warning TODO
-	// This method SHOULD be called only after __view was initialized
-	NSAssert( __view, @"__view must be initialized");
-
-//	[self setAlphaBlending: YES];
-//	[self setDepthTest: __view.depthFormat];
-	[self setProjection: _projection];
-}
-
 -(NSDictionary *)updateGlobalShaderUniforms
 {
 	GLKMatrix4 projection = self.projectionMatrix;
@@ -365,7 +354,7 @@ static CCDirector *_sharedDirector = nil;
 		// it could be nil
 		if( view ) {
 			[self createStatsLabel];
-			[self setGLDefaultValues];
+			[self setProjection: _projection];
 		}
 
 		// Dump info once OpenGL was initilized
