@@ -316,6 +316,13 @@ and when to execute the Scenes.
  */
 - (void) popToRootScene;
 
+/**Pops out all scenes from the queue until the root scene in the queue, using a transition
+ *
+ * This scene will replace the running one.
+ * Internally it will call `popToRootScene`
+ */
+-(void) popToRootSceneWithTransition:(CCTransition *)transition;
+
 /** Replaces the running scene with a new one. The running scene is terminated.
  *
  * ONLY call it if there is a running scene.
