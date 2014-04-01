@@ -586,6 +586,12 @@ static CCDirector *_sharedDirector = nil;
 	[self popToSceneStackLevel:1];
 }
 
+-(void) popToRootSceneWithTransition:(CCTransition *)transition {
+	[self popToRootScene];
+	_sendCleanupToScene = YES;
+	[transition performSelector:@selector(startTransition:) withObject:_nextScene];
+}
+
 -(void) popToSceneStackLevel:(NSUInteger)level
 {
 	NSAssert(_runningScene != nil, @"A running Scene is needed");
