@@ -901,15 +901,21 @@ void FNTConfigRemoveCache( void )
 - (void) setFntFile:(NSString*) fntFile
 {
 	if( fntFile != _fntFile ) {
-		
+
 		CCBMFontConfiguration *newConf = FNTConfigLoadFile(fntFile);
-		
-		NSAssert( newConf, @"CCLabelBMFont: Impossible to create font. Please check file: '%@'", fntFile );
-		
+
+        // Always throw this exception instead of NSAssert to let a consumer handle
+        // errors gracefully in environments with disabled assertions(e.g. release builds).
+        // Otherwise createFontChars can crash with a nasty segmentation fault.
+        if (!newConf)
+        {
+            [NSException raise:@"Invalid font file" format:@"CCLabelBMFont: Impossible to create font. Please check file: '%@'", fntFile];
+        }
+
 		_fntFile = fntFile;
-		
+
 		_configuration = newConf;
-        
+
 		[self setTexture:[[CCTextureCache sharedTextureCache] addImage:_configuration.atlasName]];
 		[self createFontChars];
 	}
