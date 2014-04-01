@@ -32,6 +32,8 @@
 #import "CCBKeyframe.h"
 #import "CCBLocalizationManager.h"
 #import "CCBReader_Private.h"
+#import "CCNode_Private.h"
+#import "CCDirector_Private.h"
 
 #ifdef CCB_ENABLE_UNZIP
 #import "SSZipArchive.h"
@@ -1049,6 +1051,11 @@ static inline float readFloat(CCBReader *self)
     
     // Set root node
     if (!animationManager.rootNode) animationManager.rootNode = node;
+    
+    if(animationManager.fixedTimestep)
+    {
+        node.actionManager = [CCDirector sharedDirector].actionManagerFixed;
+    }
     
     // Read animated properties
     NSMutableDictionary* seqs = [NSMutableDictionary dictionary];

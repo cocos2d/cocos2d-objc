@@ -356,3 +356,18 @@
 	currentTarget = nil;
 }
 @end
+
+
+@implementation CCFixedActionManager
+
+-(void)update:(CCTime)delta
+{
+    //return. Do nothing.
+}
+
+-(void)fixedUpdate:(CCTime)delta
+{
+    [super update:delta];
+}
+
+@end
