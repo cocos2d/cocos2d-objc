@@ -1364,6 +1364,7 @@ static inline float readFloat(CCBReader *self)
     NSMutableArray* sequences = animationManager.sequences;
     
     int numSeqs = readIntWithSign(self, NO);
+    bool hasPhysicsNodes = readBool(self);
     
     for (int i = 0; i < numSeqs; i++)
     {
@@ -1380,6 +1381,7 @@ static inline float readFloat(CCBReader *self)
     }
     
     animationManager.autoPlaySequenceId = readIntWithSign(self, YES);
+    animationManager.fixedTimestep = hasPhysicsNodes;
     return YES;
 }
 

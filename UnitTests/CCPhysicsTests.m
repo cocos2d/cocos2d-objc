@@ -812,11 +812,7 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
         {
             node0.position = ccp(node0Pos.x + (i + 1), node0Pos.y);
         }
-        else
-        {
-            int break_here = 1;
-        }
-        
+      
 		[physicsNode fixedUpdate:1.0/100.0];
         
         if(i >= KineticCount)
@@ -877,10 +873,6 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
             node0.rotation = (i + 1) * 1.0f;
             node1.rotation = (i + 1) * 1.0f;
         }
-        else
-        {
-            int break_here = 1;
-        }
         
         [physicsNode fixedUpdate:1.0/100.0];
         
@@ -895,10 +887,51 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
         }
 	}
     
-    //Test on exit
-    //Text if node0->node1->node2->node3 and you detatch node1,that node0 can get unobservered.
+    //TODO on exit
+    //TODO if node0->node1->node2->node3 and you detatch node1,that node0 can get unobservered.
     
 }
+
+
+//When a node graph that is the child of a physics node is added (onEnter) ensure all the actions
+//it subsuquently posesses are changed to fixed scheduled.
+-(void)testKineticNodeActionsBasic1
+{
+    CCPhysicsNode *physicsNode = [CCPhysicsNode node];
+	physicsNode.collisionDelegate = self;
+	physicsNode.gravity = ccp(0, 0);
+    
+    CGPoint node0Pos = ccp(100.0f,0.0f);
+    
+    CCNode *node0 = [CCNode node];
+    node0.position = node0Pos;
+    node0.name = @"node0";
+    [node0 runAction:[CCActionMoveBy actionWithDuration:1.0f position:ccpAdd(node0Pos, ccp(50.0f,0.0f))]];
+    [physicsNode addChild:node0];
+	
+    CCPhysicsBody * body1 = [CCPhysicsBody bodyWithRect:CGRectMake(0, 0, 60, 20) cornerRadius:0];
+    
+    CGPoint node1Pos = ccp(-25, 0);
+	CCNode *node1 = [CCNode node];
+	node1.physicsBody = body1;
+	node1.physicsBody.type = CCPhysicsBodyTypeStatic;
+	node1.physicsBody.collisionType = @"theStaticOne";
+    node1.name = @"node1";
+    node1.position = node1Pos;
+    node1.contentSize = CGSizeMake(60, 20);
+    node1.anchorPoint = ccp(0.5f,0.5f);
+	[node0 addChild:node1];
+    
+	// Force entering the scene to set up the physics objects.
+	[physicsNode onEnter];
+    
+    //test actions are fixed.
+    
+}
+
+//TODO
+//Test : When a node is added to a scene graph, its actions are Fixed if its part of a PhysicsNode.
+
 
 
 // TODO
