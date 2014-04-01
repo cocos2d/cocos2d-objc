@@ -24,8 +24,6 @@
  *
  */
 
-#warning Render texture sprites shouldn't use cached render states.
-
 #import "CCRenderTexture.h"
 #import "CCDirector.h"
 #import "ccMacros.h"
@@ -43,6 +41,29 @@
 #if __CC_PLATFORM_MAC
 #import <ApplicationServices/ApplicationServices.h>
 #endif
+
+
+@interface CCRenderTextureSprite : CCSprite @end
+@implementation CCRenderTextureSprite
+
+-(CCRenderState *)renderState
+{
+	if(_renderState == nil){
+		if(_shaderUniforms.count > 1){
+			_renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms];
+		} else {
+			// Creating a regular, cached render state here would be mildly bad.
+			// The state would prevent the render texture from being released until the cache is flushed.
+			NSDictionary *uniforms = @{CCShaderUniformMainTexture:(_texture ?: [CCTexture none])};
+			_renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:uniforms];
+		}
+	}
+	
+	return _renderState;
+}
+
+@end
+
 
 @implementation CCRenderTexture {
 	CGSize _size;
@@ -108,7 +129,7 @@
 		// Flip the projection matrix on the y-axis since Cocos2D uses upside down textures.
 		_projection = GLKMatrix4MakeOrtho(0.0f, width, height, 0.0f, -1024.0f, 1024.0f);
 		
-		_sprite = [CCSprite spriteWithTexture:[CCTexture none]];
+		_sprite = [CCRenderTextureSprite spriteWithTexture:[CCTexture none]];
 
 		// Diabled by default.
 		_autoDraw = NO;
