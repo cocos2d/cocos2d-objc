@@ -59,31 +59,6 @@
 @end
 
 
-#pragma mark - Ease Sine Actions
-/**
- *  This action will start the specified action with an sine effect.
- *
- *  Note: This action doesn't use a bijective function, actions like CCActionSequence might have an unexpected result when used with this action.
- */
-@interface CCActionEaseSineIn : CCActionEase <NSCopying>
-@end
-
-/**
- *  This action will start the specified action with an sine effect.
- *
- *  Note: This action doesn't use a bijective function, actions like CCActionSequence might have an unexpected result when used with this action.
- */
-@interface CCActionEaseSineOut : CCActionEase <NSCopying>
-@end
-
-/**
- *  This action will start the specified action with an sine effect.
- *
- *  Note: This action doesn't use a bijective function, actions like CCActionSequence might have an unexpected result when used with this action.
- */
-@interface CCActionEaseSineInOut : CCActionEase <NSCopying>
-@end
-
 /**
  *  This action will start the specified action with a reversed acceleration.
  *
@@ -277,6 +252,11 @@
  *  Note: This action doesn't use a bijective function, actions like CCActionSequence might have an unexpected result when used with this action.
  */
 @interface CCActionEaseBounceInOut : CCActionEaseBounce <NSCopying>
+
+@end
+
+// SpriteBuilder Support Ease
+@interface CCActionEaseInstant : CCActionEase <NSCopying>
 
 @end
 
