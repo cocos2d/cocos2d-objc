@@ -2,7 +2,7 @@
 # ----------------------------------------------------
 # Variables setup
 # ----------------------------------------------------
-COCOS2D_VER="Cocos2D-v3.0.0.RC.2"
+COCOS2D_VER="Cocos2D-v3.0.0"
 TARGET_DIR="$HOME/Downloads/${COCOS2D_VER}"
 INSTALL_FILE=install.tar.gz
 
@@ -33,4 +33,4 @@ echo "${BOLD}>>> ${COCOS2D_VER} installation complete! ${COLOREND}"
 rm -fr $TARGET_DIR
 
 # Landing Page, @todo Needs a nice welcome page
-open http://www.cocos2d-iphone.org/forums/
+open http://www.cocos2d-iphone.org/getting-started/
