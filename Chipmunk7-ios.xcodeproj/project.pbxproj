@@ -309,7 +309,7 @@
 		D3E5F0190AA32EAC004E361B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 			};
 			buildConfigurationList = D3E5F01A0AA32EAC004E361B /* Build configuration list for PBXProject "Chipmunk7-ios" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -428,7 +428,6 @@
 		D3E5F01B0AA32EAC004E361B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -447,7 +446,7 @@
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/external/Chipmunk/include\"";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-DDEBUG",
 					"-ffast-math",
@@ -466,7 +465,6 @@
 		D3E5F01C0AA32EAC004E361B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
