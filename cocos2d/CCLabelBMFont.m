@@ -423,39 +423,6 @@ void FNTConfigRemoveCache( void )
 #pragma mark -
 #pragma mark CCLabelBMFont
 
-static NSString* stringFromUInt32(UInt32 i)
-{
-    static NSString* strings[] = { @"0", @"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9",
-        @"10", @"11", @"12", @"13", @"14", @"15", @"16", @"17", @"18", @"19",
-        @"20", @"21", @"22", @"23", @"24", @"25", @"26", @"27", @"28", @"29",
-        @"30", @"31", @"32", @"33", @"34", @"35", @"36", @"37", @"38", @"39",
-        @"40", @"41", @"42", @"43", @"44", @"45", @"46", @"47", @"48", @"49",
-        @"50", @"51", @"52", @"53", @"54", @"55", @"56", @"57", @"58", @"59",
-        @"60", @"61", @"62", @"63", @"64", @"65", @"66", @"67", @"68", @"69",
-        @"70", @"71", @"72", @"73", @"74", @"75", @"76", @"77", @"78", @"79",
-        @"80", @"81", @"82", @"83", @"84", @"85", @"86", @"87", @"88", @"89",
-        @"90", @"91", @"92", @"93", @"94", @"95", @"96", @"97", @"98", @"99",
-        @"100", @"101", @"102", @"103", @"104", @"105", @"106", @"107", @"108", @"109",
-        @"110", @"111", @"112", @"113", @"114", @"115", @"116", @"117", @"118", @"119",
-        @"120", @"121", @"122", @"123", @"124", @"125", @"126", @"127", @"128", @"129",
-        @"130", @"131", @"132", @"133", @"134", @"135", @"136", @"137", @"138", @"139",
-        @"140", @"141", @"142", @"143", @"144", @"145", @"146", @"147", @"148", @"149",
-        @"150", @"151", @"152", @"153", @"154", @"155", @"156", @"157", @"158", @"159",
-        @"160", @"161", @"162", @"163", @"164", @"165", @"166", @"167", @"168", @"169",
-        @"170", @"171", @"172", @"173", @"174", @"175", @"176", @"177", @"178", @"179",
-        @"180", @"181", @"182", @"183", @"184", @"185", @"186", @"187", @"188", @"189",
-        @"190", @"191", @"192", @"193", @"194", @"195", @"196", @"197", @"198", @"199",
-        @"200", @"201", @"202", @"203", @"204", @"205", @"206", @"207", @"208", @"209",
-        @"210", @"211", @"212", @"213", @"214", @"215", @"216", @"217", @"218", @"219",
-        @"220", @"221", @"222", @"223", @"224", @"225", @"226", @"227", @"228", @"229",
-        @"230", @"231", @"232", @"233", @"234", @"235", @"236", @"237", @"238", @"239",
-        @"240", @"241", @"242", @"243", @"244", @"245", @"246", @"247", @"248", @"249",
-        @"250", @"251", @"252", @"253", @"254", @"255" };
-
-
-    return ((i & 0xFFFFFF00) ? @(i).stringValue : strings[i]);
-}
-
 @interface CCLabelBMFont ()
 
 -(int) kerningAmountForFirst:(unichar)first second:(unichar)second;
@@ -467,7 +434,11 @@ static NSString* stringFromUInt32(UInt32 i)
 #pragma mark -
 #pragma mark CCLabelBMFont
 
-@implementation CCLabelBMFont
+@implementation CCLabelBMFont {
+	// Replacement for the old CCNode.tag property which was
+	// used heavily in the original code.
+	NSMutableArray *_childForTag;
+}
 
 @synthesize alignment = _alignment;
 
@@ -555,11 +526,29 @@ static NSString* stringFromUInt32(UInt32 i)
 		_imageOffset = offset;
         
 		_reusedChar = [[CCSprite alloc] initWithTexture:self.texture rect:CGRectMake(0, 0, 0, 0) rotated:NO];
+		_childForTag = [NSMutableArray array];
 
 		[self setString:theString updateLabel:YES];
 	}
     
 	return self;
+}
+
+-(CCSprite *)childForTag:(NSUInteger)tag
+{
+	if(tag < _childForTag.count){
+		id child = _childForTag[tag];
+		return (child == [NSNull null] ? nil : child);
+	} else {
+		return nil;
+	}
+}
+
+-(void)setTag:(NSUInteger)tag forChild:(CCSprite *)child
+{
+	// Insert NSNull to fill holes if necessary.
+	while(_childForTag.count < tag) [_childForTag addObject:[NSNull null]];
+	[_childForTag addObject:child];
 }
 
 
@@ -581,9 +570,7 @@ static NSString* stringFromUInt32(UInt32 i)
         for (int j = 0; j < [_children count]; j++) {
             CCSprite *characterSprite;
             int justSkipped = 0;
-            int idx = j+skip+justSkipped;
-            NSString* idxStr = stringFromUInt32(idx);
-            while(!(characterSprite = (CCSprite *)[self getChildByName:idxStr recursively:NO]))
+            while(!(characterSprite = [self childForTag:j+skip+justSkipped]))
                 justSkipped++;
             skip += justSkipped;
 			
@@ -678,18 +665,7 @@ static NSString* stringFromUInt32(UInt32 i)
                 continue;
 			
             //Find position of last character on the line
-            CCSprite *lastChar;
-            for(CCSprite* child in [self children]) {
-							
-							#warning TODO
-							// This seems pretty important though I don't really know what it was doing.
-							// Was the quad index equivalent to the character position?
-							
-//                if([child atlasIndex]==index) {
-//                    lastChar = child;
-//                    break;
-//                }
-            }
+            CCSprite *lastChar = [self childForTag:index];
 			
             lineWidth = lastChar.position.x + lastChar.contentSize.width/2;
 			
@@ -712,8 +688,7 @@ static NSString* stringFromUInt32(UInt32 i)
                     index = i + j + lineNumber;
                     if (index < 0)
                         continue;
-                    NSString* indexStr1 = stringFromUInt32((UInt32)index);
-                    CCSprite *characterSprite = (CCSprite *)[self getChildByName:indexStr1 recursively:NO];
+                    CCSprite *characterSprite = [self childForTag:index];
                     characterSprite.position = ccpAdd(characterSprite.position, ccp(shift, 0));
                 }
             }
@@ -808,11 +783,8 @@ static NSString* stringFromUInt32(UInt32 i)
 		rect.origin.x += _imageOffset.x;
 		rect.origin.y += _imageOffset.y;
         
-		CCSprite *fontChar;
-
 		BOOL hasSprite = YES;
-        NSString* iStr = stringFromUInt32((UInt32)i);
-		fontChar = (CCSprite*) [self getChildByName:iStr recursively:NO];
+		CCSprite *fontChar = [self childForTag:i];
 		if( fontChar )
 		{
 			// Reusing previous Sprite
@@ -830,8 +802,8 @@ static NSString* stringFromUInt32(UInt32 i)
 				hasSprite = NO;
 			} else {
 				fontChar = [[CCSprite alloc] initWithTexture:self.texture rect:rect];
-                NSString* iStr1 = stringFromUInt32((UInt32)i);
-				[self addChild:fontChar z:i name:iStr1];
+				[self addChild:fontChar z:i];
+				[self setTag:i forChild:fontChar];
 			}
 			
 			// Color MUST be set before opacity due to premultiplied alpha.
