@@ -287,16 +287,29 @@
 //		[_delegate willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 //}
 
-
--(void) viewWillAppear:(BOOL)animated
+-(void) startAnimationIfPossible
 {
-	[super viewWillAppear:animated];
-
     UIApplicationState state = UIApplication.sharedApplication.applicationState;
     if (state != UIApplicationStateBackground)
     {
         [self startAnimation];
     }
+    else
+    {
+        // we are backgrounded, try again in 1 second, we want to make sure that this call eventually goes through in the event
+        // that there was a full screen view controller that caused additional stop animation calls
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^
+        {
+            [self startAnimationIfPossible];
+        });
+    }
+}
+
+-(void) viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+
+    [self startAnimationIfPossible];
 }
 
 -(void) viewDidAppear:(BOOL)animated

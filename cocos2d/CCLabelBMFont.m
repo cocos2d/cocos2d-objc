@@ -206,7 +206,7 @@ void FNTConfigRemoveCache( void )
 			element->key = element->fontDef.charID;
 			HASH_ADD_INT(_fontDefDictionary, key, element);
       
-			[validCharsString appendString:[NSString stringWithFormat:@"%C", element->fontDef.charID]];
+            [validCharsString appendFormat:@"%C", element->fontDef.charID];
 		}
 //		else if([line hasPrefix:@"kernings count"]) {
 //			[self parseKerningCapacity:line];
@@ -435,7 +435,11 @@ void FNTConfigRemoveCache( void )
 #pragma mark -
 #pragma mark CCLabelBMFont
 
-@implementation CCLabelBMFont
+@implementation CCLabelBMFont {
+	// Replacement for the old CCNode.tag property which was
+	// used heavily in the original code.
+	NSMutableArray *_childForTag;
+}
 
 @synthesize alignment = _alignment;
 
@@ -526,11 +530,29 @@ void FNTConfigRemoveCache( void )
         
 		_reusedChar = [[CCSprite alloc] initWithTexture:_textureAtlas.texture rect:CGRectMake(0, 0, 0, 0) rotated:NO];
 		[_reusedChar setBatchNode:self];
+		_childForTag = [NSMutableArray array];
 
 		[self setString:theString updateLabel:YES];
 	}
     
 	return self;
+}
+
+-(CCSprite *)childForTag:(NSUInteger)tag
+{
+	if(tag < _childForTag.count){
+		id child = _childForTag[tag];
+		return (child == [NSNull null] ? nil : child);
+	} else {
+		return nil;
+	}
+}
+
+-(void)setTag:(NSUInteger)tag forChild:(CCSprite *)child
+{
+	// Insert NSNull to fill holes if necessary.
+	while(_childForTag.count < tag) [_childForTag addObject:[NSNull null]];
+	[_childForTag addObject:child];
 }
 
 
@@ -552,9 +574,7 @@ void FNTConfigRemoveCache( void )
         for (int j = 0; j < [_children count]; j++) {
             CCSprite *characterSprite;
             int justSkipped = 0;
-            int idx = j+skip+justSkipped;
-            NSString* idxStr = [NSString stringWithFormat:@"%d", idx];
-            while(!(characterSprite = (CCSprite *)[self getChildByName:idxStr recursively:NO]))
+            while(!(characterSprite = [self childForTag:j+skip+justSkipped]))
                 justSkipped++;
             skip += justSkipped;
 			
@@ -649,13 +669,7 @@ void FNTConfigRemoveCache( void )
                 continue;
 			
             //Find position of last character on the line
-            CCSprite *lastChar;
-            for(CCSprite* child in [self children]) {
-                if([child atlasIndex]==index) {
-                    lastChar = child;
-                    break;
-                }
-            }
+            CCSprite *lastChar = [self childForTag:index];
 			
             lineWidth = lastChar.position.x + lastChar.contentSize.width/2;
 			
@@ -678,8 +692,7 @@ void FNTConfigRemoveCache( void )
                     index = i + j + lineNumber;
                     if (index < 0)
                         continue;
-                    NSString* indexStr1 = [NSString stringWithFormat:@"%d",(int)index];
-                    CCSprite *characterSprite = (CCSprite *)[self getChildByName:indexStr1 recursively:NO];
+                    CCSprite *characterSprite = [self childForTag:index];
                     characterSprite.position = ccpAdd(characterSprite.position, ccp(shift, 0));
                 }
             }
@@ -774,11 +787,8 @@ void FNTConfigRemoveCache( void )
 		rect.origin.x += _imageOffset.x;
 		rect.origin.y += _imageOffset.y;
         
-		CCSprite *fontChar;
-
 		BOOL hasSprite = YES;
-        NSString* iStr = [NSString stringWithFormat:@"%d",(int)i];
-		fontChar = (CCSprite*) [self getChildByName:iStr recursively:NO];
+		CCSprite *fontChar = [self childForTag:i];
 		if( fontChar )
 		{
 			// Reusing previous Sprite
@@ -797,8 +807,8 @@ void FNTConfigRemoveCache( void )
 				hasSprite = NO;
 			} else {
 				fontChar = [[CCSprite alloc] initWithTexture:_textureAtlas.texture rect:rect];
-                NSString* iStr1 = [NSString stringWithFormat:@"%d",(int)i];
-				[self addChild:fontChar z:i name:iStr1];
+				[self addChild:fontChar z:i];
+				[self setTag:i forChild:fontChar];
 			}
 			
 			// Apply label properties

@@ -415,25 +415,25 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  During onEnter you can't access a sibling node.
  If you override onEnter, you shall call [super onEnter].
  */
--(void) onEnter;
+-(void) onEnter __attribute__((objc_requires_super));
 
 /** Event that is called when the CCNode enters in the 'stage'.
  If the CCNode enters the 'stage' with a transition, this event is called when the transition finishes.
  If you override onEnterTransitionDidFinish, you shall call [super onEnterTransitionDidFinish].
  */
--(void) onEnterTransitionDidFinish;
+-(void) onEnterTransitionDidFinish __attribute__((objc_requires_super));
 
 /** Event that is called every time the CCNode leaves the 'stage'.
  If the CCNode leaves the 'stage' with a transition, this event is called when the transition finishes.
  During onExit you can't access a sibling node.
  If you override onExit, you shall call [super onExit].
  */
--(void) onExit;
+-(void) onExit __attribute__((objc_requires_super));
 
 /** Callback that is called every time the CCNode leaves the 'stage'.
  If the CCNode leaves the 'stage' with a transition, this callback is called when the transition starts.
  */
--(void) onExitTransitionDidStart;
+-(void) onExitTransitionDidStart __attribute__((objc_requires_super));
 
 /** The scene this node is added to, or nil if it's not part of a scene. */
 @property(nonatomic, readonly) CCScene *scene;

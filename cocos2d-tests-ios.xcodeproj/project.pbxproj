@@ -70,6 +70,7 @@
 		D340E10F185660BE006E605C /* TilemapTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D340E10D185660BE006E605C /* TilemapTest.m */; };
 		D356F65918BC02BC00FE4ACF /* CCRendererTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D356F65818BC02BC00FE4ACF /* CCRendererTest.m */; };
 		D3870C5A18B43FC20033D885 /* SpritePerformanceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3870C5918B43FC20033D885 /* SpritePerformanceTest.m */; };
+		D38C223418EC8D2C00DD7599 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = D38C223318EC8D2C00DD7599 /* Fonts */; };
 		D3B2A7E5187DD60B00406C5A /* CCBMFontTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B2A7E4187DD60B00406C5A /* CCBMFontTest.m */; };
 		D3C9C867188078B900C58900 /* CCSchedulerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3C9C866188078B900C58900 /* CCSchedulerTest.m */; };
 /* End PBXBuildFile section */
@@ -187,6 +188,7 @@
 		D340E10D185660BE006E605C /* TilemapTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TilemapTest.m; path = "cocos2d-ui-tests/tests/TilemapTest.m"; sourceTree = SOURCE_ROOT; };
 		D356F65818BC02BC00FE4ACF /* CCRendererTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCRendererTest.m; path = "cocos2d-ui-tests/tests/CCRendererTest.m"; sourceTree = SOURCE_ROOT; };
 		D3870C5918B43FC20033D885 /* SpritePerformanceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpritePerformanceTest.m; path = "cocos2d-ui-tests/tests/SpritePerformanceTest.m"; sourceTree = SOURCE_ROOT; };
+		D38C223318EC8D2C00DD7599 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = Resources/Fonts; sourceTree = SOURCE_ROOT; };
 		D3B2A7E4187DD60B00406C5A /* CCBMFontTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBMFontTest.m; path = "cocos2d-ui-tests/tests/CCBMFontTest.m"; sourceTree = SOURCE_ROOT; };
 		D3C9C866188078B900C58900 /* CCSchedulerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSchedulerTest.m; path = "cocos2d-ui-tests/tests/CCSchedulerTest.m"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -251,6 +253,7 @@
 		758A6C6E1843E84D00D1A8D2 /* Test Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D38C223318EC8D2C00DD7599 /* Fonts */,
 				75F76496185A831B00E2FAFE /* Sounds */,
 				758A6C7F184410EE00D1A8D2 /* Particles */,
 				758A6C6A1843E5BE00D1A8D2 /* TileMaps */,
@@ -594,6 +597,7 @@
 				B7E2621417E7D34D007067F0 /* Icon-Small.png in Resources */,
 				B7C6237617EA695100928F91 /* Resources-shared in Resources */,
 				B7E2621517E7D34D007067F0 /* Icon-Small@2x.png in Resources */,
+				D38C223418EC8D2C00DD7599 /* Fonts in Resources */,
 				B7E2621617E7D34D007067F0 /* Icon.png in Resources */,
 				B7E2621717E7D34D007067F0 /* Icon@2x.png in Resources */,
 				B7E2621917E7D34D007067F0 /* iTunesArtwork in Resources */,
