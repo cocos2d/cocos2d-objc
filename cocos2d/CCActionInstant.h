@@ -26,6 +26,7 @@
  */
 
 #import "CCAction.h"
+#import "CCSpriteFrame.h"
 
 //
 // Base class for instant actions, e.g. they are performed immediately.
@@ -265,5 +266,67 @@
 
 // Executes the selector on the specific target.
 - (void)execute;
+
+@end
+
+
+/**
+ *  This actions changes the target sprite frame.
+ */
+@interface CCActionSpriteFrame : CCActionInstant <NSCopying>
+{
+	CCSpriteFrame* _spriteFrame;
+}
+
+/// -----------------------------------------------------------------------
+/// @name Creating a CCActionSpriteFrame Object
+/// -----------------------------------------------------------------------
+
+/**
+ *  Creates the action action with the specified sprite frame.
+ *
+ *  @param spriteFrame SpriteFrame to use.
+ *
+ *  @return The sprite frame action object.
+ */
++(id) actionWithSpriteFrame:(CCSpriteFrame*)spriteFrame;
+
+/// -----------------------------------------------------------------------
+/// @name Initializing a CCActionSpriteFrame Object
+/// -----------------------------------------------------------------------
+
+/**
+ *  Initializes the action action with the specified sprite frame.
+ *
+ *  @param spriteFrame SpriteFrame to use.
+ *
+ *  @return An initialized sprite frame action object.
+ */
+-(id) initWithSpriteFrame:(CCSpriteFrame*)spriteFrame;
+
+@end
+
+/**
+ *  This actions plays a sound effect.
+ */
+@interface CCActionSoundEffect : CCActionInstant
+{
+    NSString* _soundFile;
+    float _pitch;
+    float _pan;
+    float _gain;
+}
+
+/// -----------------------------------------------------------------------
+/// @name Creating a CCActionSoundEffect Object
+/// -----------------------------------------------------------------------
++(id) actionWithSoundFile:(NSString*)file pitch:(float)pitch pan:(float) pan gain:(float)gain;
+
+
+/// -----------------------------------------------------------------------
+/// @name Initializing a CCActionSoundEffect Object
+/// -----------------------------------------------------------------------
+
+-(id) initWithSoundFile:(NSString*)file pitch:(float)pitch pan:(float) pan gain:(float)gain;
 
 @end
