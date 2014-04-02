@@ -1253,13 +1253,11 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 
 -(void)setPaused:(BOOL)paused
 {
-	if(_paused != paused){
-		BOOL wasRunning = self.runningInActiveScene;
-		_paused = paused;
-		[self wasRunning:wasRunning];
-		
-		RecursivelyIncrementPausedAncestors(self, (paused ? 1 : -1));
-	}
+	BOOL wasRunning = self.runningInActiveScene;
+	_paused = paused;
+	[self wasRunning:wasRunning];
+	
+	RecursivelyIncrementPausedAncestors(self, (paused ? 1 : -1));
 }
 
 #pragma mark CCNode Transform
