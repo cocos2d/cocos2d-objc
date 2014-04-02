@@ -9,11 +9,14 @@
 #import "TestBase.h"
 #import "CCTextureCache.h"
 
-static NSString *TEST_STRING =
-	@"ABCDEFGHIJKLMNOPQRSTUVWXYZ\n"
-	@"abcdefghijklmnopqrstuvwxyz\n"
-	@",.?!;:'\"()[]{}<>\\|/\n"
-	@"@#$%^&*+-=_";
+static NSString *TEST_STRINGS[] = {
+	@"ABCDEFGHIJKLM\nNOPQRSTUVWXYZ",
+	@"abcdefghijklm\nnopqrstuvwxyz",
+	@",.?!;:'\"",
+	@"()[]{}<>\\|/\n",
+	@"@#$%^&*+-=_",
+};
+static const int TEST_STRING_COUNT = sizeof(TEST_STRINGS)/sizeof(*TEST_STRINGS);
 
 @interface CCBMFontTest : TestBase @end
 
@@ -23,10 +26,19 @@ static NSString *TEST_STRING =
 {
     self.subTitle = [NSString stringWithFormat:@"Test bitmap fonts. (%@)", font];
 		
-		CCLabelBMFont *label = [CCLabelBMFont labelWithString:TEST_STRING fntFile:font];
+		CCLabelBMFont *label = [CCLabelBMFont labelWithString:TEST_STRINGS[0] fntFile:font];
 		label.positionType = CCPositionTypeNormalized;
 		label.position = ccp(0.5, 0.5);
 		[self.contentNode addChild:label];
+		
+		__block int i = 0;
+		const CCTime delay = 1.0;
+		[self scheduleBlock:^(CCTimer *timer) {
+			i = (i + 1)%TEST_STRING_COUNT;
+			label.string = TEST_STRINGS[i];
+			
+			[timer repeatOnceWithInterval:delay];
+		} delay:delay];
 }
 
 -(void)setupBMFont01Test {[self testFont:@"din.fnt"];}
