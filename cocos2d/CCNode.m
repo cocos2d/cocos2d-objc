@@ -898,7 +898,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 		[self sortAllChildren];
 
-		NSUInteger i = 0;
+		int i = 0;
 
 		// draw children zOrder < 0
 		for( ; i < _children.count; i++ ) {
