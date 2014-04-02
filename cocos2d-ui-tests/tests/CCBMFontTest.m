@@ -15,6 +15,7 @@ static NSString *TEST_STRINGS[] = {
 	@",.?!;:'\"",
 	@"()[]{}<>\\|/\n",
 	@"@#$%^&*+-=_",
+	@" ab c de\n fg  hi j k",
 };
 static const int TEST_STRING_COUNT = sizeof(TEST_STRINGS)/sizeof(*TEST_STRINGS);
 
