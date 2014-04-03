@@ -423,9 +423,6 @@
 		A06430E713C1414300CC5554 /* libkazmath.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libkazmath.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A06BF7FA1680398C0018A802 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		A0707F7515F94815001C1263 /* LICENSE_CCBReader.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_CCBReader.txt; sourceTree = "<group>"; };
-		A0707F7615F94815001C1263 /* LICENSE_JRSwizzle.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_JRSwizzle.txt; sourceTree = "<group>"; };
-		A0707F7715F94815001C1263 /* LICENSE_jsbindings.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_jsbindings.txt; sourceTree = "<group>"; };
-		A0707F7815F94815001C1263 /* LICENSE_SpiderMonkey.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_SpiderMonkey.txt; sourceTree = "<group>"; };
 		A0A7A504151416A000C8BD16 /* CCActionCatmullRom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionCatmullRom.m; sourceTree = "<group>"; };
 		A0A7A505151416A000C8BD16 /* CCActionCatmullRom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionCatmullRom.h; sourceTree = "<group>"; };
 		A0AAB8091451BD3600850F2C /* CCParticleBatchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleBatchNode.h; sourceTree = "<group>"; };
@@ -785,38 +782,12 @@
 		E076E6CD1225EC7400DE0DA2 /* ZipUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipUtils.h; sourceTree = "<group>"; };
 		E076E6CE1225EC7400DE0DA2 /* ZipUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipUtils.m; sourceTree = "<group>"; };
 		E076EB3E1225F05200DE0DA2 /* RELEASE_NOTES */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = RELEASE_NOTES; sourceTree = "<group>"; };
-		E076EF8B1225FF5800DE0DA2 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = external/libpng/LICENSE; sourceTree = "<group>"; };
-		E076EF8D1225FF5800DE0DA2 /* png.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = png.c; path = external/libpng/png.c; sourceTree = "<group>"; };
-		E076EF8E1225FF5800DE0DA2 /* png.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = png.h; path = external/libpng/png.h; sourceTree = "<group>"; };
-		E076EF8F1225FF5800DE0DA2 /* pngbar.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = pngbar.jpg; path = external/libpng/pngbar.jpg; sourceTree = "<group>"; };
-		E076EF901225FF5800DE0DA2 /* pngbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pngbar.png; path = external/libpng/pngbar.png; sourceTree = "<group>"; };
-		E076EF911225FF5800DE0DA2 /* pngconf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pngconf.h; path = external/libpng/pngconf.h; sourceTree = "<group>"; };
-		E076EF921225FF5800DE0DA2 /* pngerror.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pngerror.c; path = external/libpng/pngerror.c; sourceTree = "<group>"; };
-		E076EF931225FF5800DE0DA2 /* pnggccrd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pnggccrd.c; path = external/libpng/pnggccrd.c; sourceTree = "<group>"; };
-		E076EF941225FF5800DE0DA2 /* pngget.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pngget.c; path = external/libpng/pngget.c; sourceTree = "<group>"; };
-		E076EF951225FF5800DE0DA2 /* pngmem.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pngmem.c; path = external/libpng/pngmem.c; sourceTree = "<group>"; };
-		E076EF961225FF5800DE0DA2 /* pngnow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pngnow.png; path = external/libpng/pngnow.png; sourceTree = "<group>"; };
-		E076EF971225FF5800DE0DA2 /* pngpread.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pngpread.c; path = external/libpng/pngpread.c; sourceTree = "<group>"; };
-		E076EF981225FF5800DE0DA2 /* pngread.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pngread.c; path = external/libpng/pngread.c; sourceTree = "<group>"; };
-		E076EF991225FF5800DE0DA2 /* pngrio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pngrio.c; path = external/libpng/pngrio.c; sourceTree = "<group>"; };
-		E076EF9A1225FF5800DE0DA2 /* pngrtran.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pngrtran.c; path = external/libpng/pngrtran.c; sourceTree = "<group>"; };
-		E076EF9B1225FF5800DE0DA2 /* pngrutil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pngrutil.c; path = external/libpng/pngrutil.c; sourceTree = "<group>"; };
-		E076EF9C1225FF5800DE0DA2 /* pngset.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pngset.c; path = external/libpng/pngset.c; sourceTree = "<group>"; };
-		E076EF9F1225FF5800DE0DA2 /* pngtrans.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pngtrans.c; path = external/libpng/pngtrans.c; sourceTree = "<group>"; };
-		E076EFA01225FF5800DE0DA2 /* pngvcrd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pngvcrd.c; path = external/libpng/pngvcrd.c; sourceTree = "<group>"; };
-		E076EFA11225FF5800DE0DA2 /* pngwio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pngwio.c; path = external/libpng/pngwio.c; sourceTree = "<group>"; };
-		E076EFA21225FF5800DE0DA2 /* pngwrite.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pngwrite.c; path = external/libpng/pngwrite.c; sourceTree = "<group>"; };
-		E076EFA31225FF5800DE0DA2 /* pngwtran.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pngwtran.c; path = external/libpng/pngwtran.c; sourceTree = "<group>"; };
-		E076EFA41225FF5800DE0DA2 /* pngwutil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pngwutil.c; path = external/libpng/pngwutil.c; sourceTree = "<group>"; };
-		E076EFA51225FF5800DE0DA2 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README; path = external/libpng/README; sourceTree = "<group>"; };
 		E08AA19912C262B3000341BD /* CCWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCWindow.h; sourceTree = "<group>"; };
 		E08AA19A12C262B3000341BD /* CCWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCWindow.m; sourceTree = "<group>"; };
 		E0D5D6DB1343FAEF00A7B1B9 /* LICENSE_artwork.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_artwork.txt; sourceTree = "<group>"; };
-		E0D5D6DC1343FAEF00A7B1B9 /* LICENSE_Box2D.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_Box2D.txt; sourceTree = "<group>"; };
 		E0D5D6DD1343FAEF00A7B1B9 /* LICENSE_Chipmunk.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_Chipmunk.txt; sourceTree = "<group>"; };
 		E0D5D6DE1343FAEF00A7B1B9 /* LICENSE_cocos2d.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_cocos2d.txt; sourceTree = "<group>"; };
 		E0D5D6DF1343FAEF00A7B1B9 /* LICENSE_CocosDenshion.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_CocosDenshion.txt; sourceTree = "<group>"; };
-		E0D5D6E11343FAEF00A7B1B9 /* LICENSE_libpng.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_libpng.txt; sourceTree = "<group>"; };
 		E0F9256D1224207200EF2362 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -895,15 +866,10 @@
 				E076E61E1225EC1E00DE0DA2 /* DONORS */,
 				E0D5D6DE1343FAEF00A7B1B9 /* LICENSE_cocos2d.txt */,
 				E0D5D6DB1343FAEF00A7B1B9 /* LICENSE_artwork.txt */,
-				E0D5D6DC1343FAEF00A7B1B9 /* LICENSE_Box2D.txt */,
 				E0D5D6DD1343FAEF00A7B1B9 /* LICENSE_Chipmunk.txt */,
 				E0D5D6DF1343FAEF00A7B1B9 /* LICENSE_CocosDenshion.txt */,
-				E0D5D6E11343FAEF00A7B1B9 /* LICENSE_libpng.txt */,
 				A0443F7E14A5131900E62742 /* LICENSE_Kazmath.txt */,
 				A0707F7515F94815001C1263 /* LICENSE_CCBReader.txt */,
-				A0707F7615F94815001C1263 /* LICENSE_JRSwizzle.txt */,
-				A0707F7715F94815001C1263 /* LICENSE_jsbindings.txt */,
-				A0707F7815F94815001C1263 /* LICENSE_SpiderMonkey.txt */,
 				E076E6281225EC7400DE0DA2 /* cocos2d */,
 				B78AE63E17E7BA690028BE0B /* cocos2d-ui */,
 				E076EF801225FF3E00DE0DA2 /* external */,
@@ -1632,43 +1598,11 @@
 			name = "Base Nodes";
 			sourceTree = "<group>";
 		};
-		E076EF2D1225FEF600DE0DA2 /* libpng */ = {
-			isa = PBXGroup;
-			children = (
-				E076EFA51225FF5800DE0DA2 /* README */,
-				E076EF8B1225FF5800DE0DA2 /* LICENSE */,
-				E076EF8D1225FF5800DE0DA2 /* png.c */,
-				E076EF8E1225FF5800DE0DA2 /* png.h */,
-				E076EF8F1225FF5800DE0DA2 /* pngbar.jpg */,
-				E076EF901225FF5800DE0DA2 /* pngbar.png */,
-				E076EF911225FF5800DE0DA2 /* pngconf.h */,
-				E076EF921225FF5800DE0DA2 /* pngerror.c */,
-				E076EF931225FF5800DE0DA2 /* pnggccrd.c */,
-				E076EF941225FF5800DE0DA2 /* pngget.c */,
-				E076EF951225FF5800DE0DA2 /* pngmem.c */,
-				E076EF961225FF5800DE0DA2 /* pngnow.png */,
-				E076EF971225FF5800DE0DA2 /* pngpread.c */,
-				E076EF981225FF5800DE0DA2 /* pngread.c */,
-				E076EF991225FF5800DE0DA2 /* pngrio.c */,
-				E076EF9A1225FF5800DE0DA2 /* pngrtran.c */,
-				E076EF9B1225FF5800DE0DA2 /* pngrutil.c */,
-				E076EF9C1225FF5800DE0DA2 /* pngset.c */,
-				E076EF9F1225FF5800DE0DA2 /* pngtrans.c */,
-				E076EFA01225FF5800DE0DA2 /* pngvcrd.c */,
-				E076EFA11225FF5800DE0DA2 /* pngwio.c */,
-				E076EFA21225FF5800DE0DA2 /* pngwrite.c */,
-				E076EFA31225FF5800DE0DA2 /* pngwtran.c */,
-				E076EFA41225FF5800DE0DA2 /* pngwutil.c */,
-			);
-			name = libpng;
-			sourceTree = "<group>";
-		};
 		E076EF801225FF3E00DE0DA2 /* external */ = {
 			isa = PBXGroup;
 			children = (
 				D37EEAB8187D4F7A00CB5EF2 /* ObjectiveChipmunk */,
 				A0B5329713C141FF0072EDA4 /* kazmath */,
-				E076EF2D1225FEF600DE0DA2 /* libpng */,
 				B770601C1831B0810043CC67 /* ObjectAL */,
 			);
 			name = external;
@@ -2382,6 +2316,7 @@
 				D37EEA1D187D4E7800CB5EF2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E01E6791121CA045001A484F /* Build configuration list for PBXNativeTarget "cocos2d" */ = {
 			isa = XCConfigurationList;
