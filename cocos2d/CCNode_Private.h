@@ -24,6 +24,7 @@
 
 #import "CCNode.h"
 
+extern inline CGPoint NodeToPhysicsScale(CCNode * node);
 extern inline float NodeToPhysicsRotation(CCNode *node);
 extern inline CGAffineTransform NodeToPhysicsTransform(CCNode *node);
 extern inline CGAffineTransform RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body);

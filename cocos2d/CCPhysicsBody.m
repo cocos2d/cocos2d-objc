@@ -49,8 +49,7 @@
 	BOOL _affectedByGravity;
 	BOOL _allowsRotation;
     
-    BOOL _isKinetic;
-    BOOL _isKineticTransformDirty;
+    BOOL _isKinematicTransformDirty;
     
     CGAffineTransform _lastTransform;
     CGPoint           _relativePosition;
@@ -68,8 +67,7 @@
 		
 		_affectedByGravity = YES;
 		_allowsRotation = YES;
-        _isKinetic = NO;
-        _isKineticTransformDirty = YES;
+        _isKinematicTransformDirty = YES;
 		
 		_chipmunkObjects = [NSMutableArray arrayWithCapacity:2];
 		[_chipmunkObjects addObject:_body];
@@ -256,8 +254,8 @@ NotAffectedByGravity
 	_allowsRotation = allowsRotation;
 }
 
-static CCPhysicsBodyType ToCocosBodyType[] = {CCPhysicsBodyTypeDynamic, CCPhysicsBodyTypeStatic, CCPhysicsBodyTypeStatic};
-static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, /*CP_BODY_TYPE_KINEMATIC,*/ CP_BODY_TYPE_STATIC};
+static CCPhysicsBodyType ToCocosBodyType[] = {CCPhysicsBodyTypeDynamic, CCPhysicsBodyTypeKinematic, CCPhysicsBodyTypeStatic};
+static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KINEMATIC, CP_BODY_TYPE_STATIC};
 
 -(CCPhysicsBodyType)type {return ToCocosBodyType[_body.type];}
 -(void)setType:(CCPhysicsBodyType)type
@@ -397,14 +395,10 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, /*CP_BODY_TYPE_K
 	return CPTRANSFORM_TO_CGAFFINETRANSFORM(_body.transform);
 }
 
--(BOOL)isKinetic
-{
-    return _isKinetic;
-}
 
--(BOOL)isKineticTransformDirty
+-(BOOL)isKinematicTransformDirty
 {
-    return _isKineticTransformDirty;
+    return _isKinematicTransformDirty;
 }
 
 
@@ -412,14 +406,14 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, /*CP_BODY_TYPE_K
 -(void)updateKinetics:(CCTime)deltaTime
 {
     
-    if(!_isKineticTransformDirty)
+    if(!_isKinematicTransformDirty)
     {
-        _isKinetic = NO;
+        self.type = CCPhysicsBodyTypeStatic;
         self.velocity = CGPointZero;
     }
     else
     {
-        _isKineticTransformDirty = NO;
+        _isKinematicTransformDirty = NO;
         
         /////// Update absolute position
         
@@ -516,13 +510,14 @@ NSString *  kDependantProperties[2] = { @"position", @"rotation"};
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    _isKineticTransformDirty = YES;
+    _isKinematicTransformDirty = YES;
     
-    if(_isKinetic)
+    if(self.type == CCPhysicsBodyTypeDynamic || self.type == CCPhysicsBodyTypeKinematic)
         return;
     
-    _isKinetic = YES;
-    _isKineticTransformDirty = YES;
+    [self setType:CCPhysicsBodyTypeKinematic];
+    
+    _isKinematicTransformDirty = YES;
     [self.physicsNode.kineticNodes addObject:self.node];
 }
 

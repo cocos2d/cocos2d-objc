@@ -100,6 +100,19 @@ NodeToPhysicsRotation(CCNode *node)
 	return rotation;
 }
 
+inline CGPoint
+NodeToPhysicsScale(CCNode * node)
+{
+    CGPoint scale = ccp(1.0f,1.0f);
+    for(CCNode *n = node; n && !n.isPhysicsNode; n = n.parent){
+        scale.x = scale.x * n.scaleX;
+        scale.y = scale.y * n.scaleY;
+	}
+    
+    return scale;
+	
+}
+
 inline CGAffineTransform
 RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
 {
@@ -201,7 +214,6 @@ static NSUInteger globalOrderOfArrival = 1;
 - (void) dealloc
 {
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
-
 
 	// children
     for (CCNode* child in _children)
@@ -1364,8 +1376,12 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 {
 	CCPhysicsBody *physicsBody = GetBodyIfRunning(self);
 	if(physicsBody){
-		CGAffineTransform rigidTransform = RigidBodyToParentTransform(self, physicsBody);
-		_transform = CGAffineTransformConcat(CGAffineTransformMakeScale(_scaleX, _scaleY), rigidTransform);
+        
+        CGAffineTransform nodeToPhysics = NodeToPhysicsTransform(self.parent);
+        CGPoint scaleToParent = NodeToPhysicsScale(self.parent);
+        CGAffineTransform rigidTransform = CGAffineTransformConcat(physicsBody.absoluteTransform, CGAffineTransformInvert(nodeToPhysics));
+
+		_transform = CGAffineTransformConcat(CGAffineTransformMakeScale(_scaleX * scaleToParent.x, _scaleY * scaleToParent.y), rigidTransform);
 	} else if ( _isTransformDirty ) {
         
         // Get content size

@@ -94,11 +94,8 @@ static inline cpTransform CGAFFINETRANSFORM_TO_CPTRANSFORM(CGAffineTransform t){
 /** Implements the ChipmunkObject protocol. */
 @property(nonatomic, readonly) NSArray *chipmunkObjects;
 
-/** Is static body in motion due to animations */
-@property(nonatomic, readonly) BOOL isKinetic;
-
 /** Is static bodies transform dirty to animations */
-@property(nonatomic, readonly) BOOL isKineticTransformDirty;
+@property(nonatomic, readonly) BOOL isKinematicTransformDirty;
 
 
 /**

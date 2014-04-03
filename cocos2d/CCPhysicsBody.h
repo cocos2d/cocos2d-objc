@@ -33,7 +33,7 @@ typedef NS_ENUM(NSUInteger, CCPhysicsBodyType){
 	CCPhysicsBodyTypeDynamic,
 	
 //	/** A body that is immovable by gravity, forces or collisions, but is moved using code.  */
-//	CCPhysicsBodyTypeKinematic,
+	CCPhysicsBodyTypeKinematic,
 	
 	/** A body that is immovable such as a wall or the ground. */
 	CCPhysicsBodyTypeStatic,
