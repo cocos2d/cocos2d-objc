@@ -24,106 +24,91 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "CCBReader.h"
+#import "cocos2d.h"
+#import "CCBSequenceProperty.h"
 
 @class CCBSequence;
 
-#pragma mark Delegate
+#pragma mark Animation Manager Delegate
 
 @protocol CCBAnimationManagerDelegate <NSObject>
 
-- (void) completedAnimationSequenceNamed:(NSString*)name;
+- (void)completedAnimationSequenceNamed:(NSString*)name;
 
 @end
 
-#pragma mark Action Manager
+#pragma mark Animation Manager
 
-@interface CCBAnimationManager : NSObject
+@interface CCBAnimationManager : NSObject <CCSchedulerTarget>
 {
-    NSMutableArray* sequences;
-    NSMutableDictionary* nodeSequences;
-    NSMutableDictionary* baseValues;
-    int autoPlaySequenceId;
+    NSMutableDictionary* _nodeSequences;
+    NSMutableDictionary* _baseValues;
     
-    NSInteger animationManagerId;
-    
-    CCNode* __unsafe_unretained rootNode;
-    id __unsafe_unretained owner;
-    CGSize rootContainerSize;
-    
-    NSObject<CCBAnimationManagerDelegate>* delegate;
-    CCBSequence* runningSequence;
+    NSInteger _animationManagerId;
+    CCBSequence* _runningSequence;
+    CCBSequence* _lastSequence;
     
     void (^block)(id sender);
+    
+    CCScheduler* _scheduler;
+    NSMutableArray* _currentActions;
+    
 }
+
+// Sequence Array.
 @property (nonatomic,readonly) NSMutableArray* sequences;
+
+// Auto play sequence id.
 @property (nonatomic,assign) int autoPlaySequenceId;
+
+// Base node.
 @property (nonatomic,unsafe_unretained) CCNode* rootNode;
+
+// (CCB) Optional owner
 @property (nonatomic,unsafe_unretained) id owner;
+
+// (CCB) Resolution and default container size.
 @property (nonatomic,assign) CGSize rootContainerSize;
+
+// Delegate.
 @property (nonatomic,strong) NSObject<CCBAnimationManagerDelegate>* delegate;
+
+// Currently running sequence name.
 @property (unsafe_unretained, nonatomic,readonly) NSString* runningSequenceName;
+
+// Last sequence name completed.
 @property (nonatomic,readonly) NSString* lastCompletedSequenceName;
 
-- (CGSize) containerSize:(CCNode*)node;
+// Speed.
+@property (nonatomic,assign) float playbackSpeed;
 
+// Pause.
+@property (nonatomic,assign) bool paused;
+
+// (CCB) Node Management
+- (CGSize) containerSize:(CCNode*)node;
 - (void) addNode:(CCNode*)node andSequences:(NSDictionary*)seq;
 - (void) moveAnimationsFromNode:(CCNode*)fromNode toNode:(CCNode*)toNode;
 
+// Reset node state.
 - (void) setBaseValue:(id)value forNode:(CCNode*)node propertyName:(NSString*)propName;
 
-- (void) runAnimationsForSequenceNamed:(NSString*)name tweenDuration:(float)tweenDuration;
+// Run an animation.
 - (void) runAnimationsForSequenceNamed:(NSString*)name;
+- (void) runAnimationsForSequenceNamed:(NSString*)name tweenDuration:(float)tweenDuration;
 - (void) runAnimationsForSequenceId:(int)seqId tweenDuration:(float) tweenDuration;
 
--(void) setCompletedAnimationCallbackBlock:(void(^)(id sender))b;
+// Animation call back.
+- (void) setCompletedAnimationCallbackBlock:(void(^)(id sender))b;
 
-- (void) debug;
+#pragma mark Time Controls
+- (void)timeSeekForSequenceNamed:(NSString*)name time:(float)time;
+- (void)timeSeekForSequenceId:(int)seqId time:(float)time;
 
-@end
+#pragma mark Simple Sequence Builder
+- (void)addKeyFramesForSequenceNamed:(NSString*)name propertyType:(CCBSequencePropertyType)propertyType frameArray:(NSArray*)frameArray node:(CCNode *)node loop:(BOOL)loop;
 
-#pragma mark Custom Animation Actions
+#pragma mark Cocos2D Animation Support
+- (void)animationWithSpriteFrames:animFrames delay:(float)delay name:(NSString*)name node:(CCNode*)node loop:(BOOL)loop;
 
-@interface CCBSetSpriteFrame : CCActionInstant <NSCopying>
-{
-	CCSpriteFrame* spriteFrame;
-}
-/** creates a Place action with a position */
-+(id) actionWithSpriteFrame: (CCSpriteFrame*) sf;
-/** Initializes a Place action with a position */
--(id) initWithSpriteFrame: (CCSpriteFrame*) sf;
-@end
-
-@interface CCBRotateTo : CCActionInterval <NSCopying>
-{
-    float startAngle_;
-    float dstAngle_;
-    float diffAngle_;
-}
-+(id) actionWithDuration:(CCTime)duration angle:(float)angle;
--(id) initWithDuration:(CCTime)duration angle:(float)angle;
-@end
-
-@interface CCBRotateXTo : CCBRotateTo
-@end
-
-@interface CCBRotateYTo : CCBRotateTo
-@end
-
-@interface CCBSoundEffect : CCActionInstant
-{
-    NSString* soundFile;
-    float pitch;
-    float pan;
-    float gain;
-}
-+(id) actionWithSoundFile:(NSString*)file pitch:(float)pitch pan:(float) pan gain:(float)gain;
--(id) initWithSoundFile:(NSString*)file pitch:(float)pitch pan:(float) pan gain:(float)gain;
-@end
-
-//
-// EeseInstant
-//
-@interface CCActionEaseInstant : CCActionEase <NSCopying>
-{}
 @end
