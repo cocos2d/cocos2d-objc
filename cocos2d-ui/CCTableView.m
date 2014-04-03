@@ -82,6 +82,7 @@
     _button.contentSizeType = CCSizeTypeNormalized;
     _button.preferredSize = CGSizeMake(1, 1);
     _button.anchorPoint = ccp(0, 0);
+    _button.zoomWhenHighlighted = NO;
     [_button setTarget:self selector:@selector(pressedCell:)];
     [self addChild:_button z:-1];
     
