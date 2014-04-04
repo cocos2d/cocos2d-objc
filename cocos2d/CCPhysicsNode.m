@@ -22,6 +22,8 @@
  * THE SOFTWARE.
  */
 
+#define CP_ALLOW_PRIVATE_ACCESS 1
+
 #import "CCPhysicsNode.h"
 #import "CCPhysics+ObjectiveChipmunk.h"
 #import <objc/runtime.h>
@@ -444,7 +446,8 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 }
 
 //MARK: Debug Drawing:
-
+const cpSpaceDebugColor CC_PHYSICS_SHAPE_DEBUG_FILL_COLOR_STATIC = {0.0, 0.0, 1.0, 0.8};
+const cpSpaceDebugColor CC_PHYSICS_SHAPE_DEBUG_FILL_COLOR_KINEMATIC = {1.0, 1.0, 0.0, 0.8};
 const cpSpaceDebugColor CC_PHYSICS_SHAPE_DEBUG_FILL_COLOR = {1.0, 0.0, 0.0, 0.25};
 const cpSpaceDebugColor CC_PHYSICS_SHAPE_DEBUG_OUTLINE_COLOR = {1.0, 1.0, 1.0, 0.5};
 const cpSpaceDebugColor CC_PHYSICS_SHAPE_JOINT_COLOR = {0.0, 1.0, 0.0, 0.5};
@@ -491,9 +494,24 @@ static void
 DrawDot(cpFloat size, cpVect pos, cpSpaceDebugColor color, CCDrawNode *draw)
 {[draw drawDot:CPV_TO_CCP(pos) radius:size/2.0 color:ToCCColor(color)];}
 
+
 static cpSpaceDebugColor
 ColorForShape(cpShape *shape, CCDrawNode *draw)
-{return CC_PHYSICS_SHAPE_DEBUG_FILL_COLOR;}
+{
+
+    cpBodyType bodyType = cpBodyGetType(shape->body);
+    
+    if(bodyType == CP_BODY_TYPE_KINEMATIC)
+    {
+        return CC_PHYSICS_SHAPE_DEBUG_FILL_COLOR_KINEMATIC;
+    }
+    if(bodyType == CP_BODY_TYPE_STATIC)
+    {
+        return CC_PHYSICS_SHAPE_DEBUG_FILL_COLOR_STATIC;
+    }
+    
+    return CC_PHYSICS_SHAPE_DEBUG_FILL_COLOR;
+}
 
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
