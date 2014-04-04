@@ -56,6 +56,7 @@ extern const NSString *CCShaderUniformMainTexture;
 
 +(instancetype)positionColorShader;
 +(instancetype)positionTextureColorShader;
++(instancetype)positionTextureColorAlphaTestShader;
 +(instancetype)positionTextureA8ColorShader;
 
 @end

@@ -91,14 +91,14 @@ static const GLchar *CCVertexShaderHeader =
 
 static const GLchar *CCFragmentShaderHeader =
 	"#ifdef GL_ES\n"
-	"precision lowp float;\n\n"
+	"precision mediump float;\n\n"
 	"#endif\n\n"
 	"// End Cocos2D fragment shader header.\n\n";
 
 static NSString *CCDefaultVShader =
 	@"void main(){\n"
 	@"	gl_Position = cc_Position;\n"
-	@"	cc_FragColor = cc_Color;\n"
+	@"	cc_FragColor = clamp(cc_Color, 0.0, 1.0);\n"
 	@"	cc_FragTexCoord1 = cc_TexCoord1;\n"
 	@"	cc_FragTexCoord2 = cc_TexCoord2;\n"
 	@"}\n";
@@ -411,6 +411,7 @@ static CCShaderCache *CC_SHADER_CACHE = nil;
 static CCShader *CC_SHADER_POS_COLOR = nil;
 static CCShader *CC_SHADER_POS_TEX_COLOR = nil;
 static CCShader *CC_SHADER_POS_TEXA8_COLOR = nil;
+static CCShader *CC_SHADER_POS_TEX_COLOR_ALPHA_TEST = nil;
 
 +(void)initialize
 {
@@ -421,10 +422,19 @@ static CCShader *CC_SHADER_POS_TEXA8_COLOR = nil;
 		@"void main(){gl_FragColor = cc_FragColor;}"];
 	
 	CC_SHADER_POS_TEX_COLOR = [[self alloc] initWithVertexShaderSource:CCDefaultVShader fragmentShaderSource:
-		@"void main(){gl_FragColor = cc_FragColor * texture2D(cc_MainTexture, cc_FragTexCoord1);}"];
+		@"void main(){gl_FragColor = cc_FragColor*texture2D(cc_MainTexture, cc_FragTexCoord1);}"];
 	
 	CC_SHADER_POS_TEXA8_COLOR = [[self alloc] initWithVertexShaderSource:CCDefaultVShader fragmentShaderSource:
 		@"void main(){gl_FragColor = cc_FragColor*texture2D(cc_MainTexture, cc_FragTexCoord1).a;}"];
+	
+	CC_SHADER_POS_TEX_COLOR_ALPHA_TEST = [[self alloc] initWithVertexShaderSource:CCDefaultVShader fragmentShaderSource:CC_GLSL(
+		uniform float cc_AlphaTestValue;
+		void main(){
+			vec4 tex = texture2D(cc_MainTexture, cc_FragTexCoord1);
+			if(tex.a <= 0.5) discard;
+			gl_FragColor = cc_FragColor*tex;
+		}
+	)];
 }
 
 +(instancetype)positionColorShader
@@ -435,6 +445,11 @@ static CCShader *CC_SHADER_POS_TEXA8_COLOR = nil;
 +(instancetype)positionTextureColorShader
 {
 	return CC_SHADER_POS_TEX_COLOR;
+}
+
++(instancetype)positionTextureColorAlphaTestShader
+{
+	return CC_SHADER_POS_TEX_COLOR_ALPHA_TEST;
 }
 
 +(instancetype)positionTextureA8ColorShader

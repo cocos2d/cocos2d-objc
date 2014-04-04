@@ -74,11 +74,6 @@ const NSString *CARD_NAME[] =
     _cardNode = [CCSpriteBatchNode batchNodeWithFile:@"Cards/cards.classic.png"];
     _cardNode.contentSize = [CCDirector sharedDirector].viewSize;
 		
-		#warning TODO
-//		_cardNode.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColorAlphaTest];
-//		GLint location = [_cardNode.shaderProgram uniformLocationForName:@(kCCUniformAlphaTestValue_s)];
-//		[_cardNode.shaderProgram setUniformLocation:location withF1:0.5];
-		
     [self.contentNode addChild:_cardNode];
     
     // add an array of cards
@@ -89,6 +84,9 @@ const NSString *CARD_NAME[] =
         card.positionType = CCPositionTypeNormalized;
         card.position = ccp(0.5 + (count - NUMBER_OF_CARDS / 2) * 0.02, 0.5 + (count - NUMBER_OF_CARDS / 2) * 0.01);
         [_cardNode addChild:card];
+				
+		    card.shader = [CCShader positionTextureColorAlphaTestShader];
+		    card.blendMode = [CCBlendMode disabledMode];
     }
 }
 
