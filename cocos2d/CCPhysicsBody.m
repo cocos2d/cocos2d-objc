@@ -52,6 +52,8 @@
     BOOL _isKinematicTransformDirty;
     
     CGAffineTransform _lastTransform;
+    CGFloat           _lastRotation;
+    
     CGPoint           _relativePosition;
     float             _relativeRotation;
 }
@@ -432,11 +434,14 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
         /// update velocity and angular velocity.
         
         CGPoint lastPos = cpTransformPoint(_lastTransform, cpvzero);
-        CGFloat lastAngle = cpfatan2(_lastTransform.b, _lastTransform.a);
+        
+
+        _body.angularVelocity = (self.absoluteRadians - _lastRotation) / deltaTime;
+        self.velocity = ccpMult(ccpSub(self.absolutePosition, lastPos), 1.0/deltaTime);
+       
         
         _lastTransform = self.absoluteTransform;
-        _body.angularVelocity = (self.absoluteRadians - lastAngle) / deltaTime;
-        self.velocity = ccpMult(ccpSub(self.absolutePosition, lastPos), 1.0/deltaTime);
+        _lastRotation = self.absoluteRadians;
        
     }
     
@@ -460,7 +465,10 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 -(void)willAddToPhysicsNode:(CCPhysicsNode *)physics nonRigidTransform:(cpTransform)transform
 {
     _lastTransform = NodeToPhysicsTransform(self.node);
+    _lastRotation  = self.absoluteRadians;
 	FOREACH_SHAPE(self, shape) [shape willAddToPhysicsNode:physics nonRigidTransform:transform];
+
+    if(self.type == CCPhysicsBodyTypeStatic)
     [self trackParentTransformations:physics];
 }
 
@@ -478,7 +486,13 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 
 #pragma - Tracking movement
 
+//The following are properties which we track on the parent nodes in order to update the child nodes.
 NSString *  kDependantProperties[2] = { @"position", @"rotation"};
+
+#ifdef DEBUG
+//The following are properties which cannot be animated. Changing their values after onEnter in unhandled.
+NSString *  kRestrictedProperties[3] = { @"scale", @"scaleX", @"scaleY"};
+#endif
 
 -(void)trackParentTransformations:(CCPhysicsNode *)physics
 {
@@ -490,6 +504,13 @@ NSString *  kDependantProperties[2] = { @"position", @"rotation"};
         {
             [node addObserver:self forKeyPath:kDependantProperties[i] options:NSKeyValueObservingOptionNew context:nil];
         }
+        
+#if DEBUG
+        for (int i = 0; i < sizeof(kRestrictedProperties)/sizeof(kRestrictedProperties[0]); i++)
+        {
+            [node addObserver:self forKeyPath:kRestrictedProperties[i] options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+        }
+#endif
         node = node.parent;
     }
 }
@@ -504,12 +525,36 @@ NSString *  kDependantProperties[2] = { @"position", @"rotation"};
         {
             [node removeObserver:self forKeyPath:kDependantProperties[i]];
         }
+#ifdef DEBUG
+        for (int i = 0; i < sizeof(kRestrictedProperties)/sizeof(kRestrictedProperties[0]); i++)
+        {
+            [node removeObserver:self forKeyPath:kRestrictedProperties[i]];
+        }
+#endif
+        
         node = node.parent;
     }
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
+#ifdef DEBUG
+    for (int i = 0; i < sizeof(kRestrictedProperties)/sizeof(kRestrictedProperties[0]); i++)
+    {
+        if([kRestrictedProperties[i] isEqualToString:keyPath])
+        {
+            if([change[NSKeyValueChangeNewKey] isEqualToValue:change[NSKeyValueChangeOldKey]])
+            {
+                continue;
+            }
+
+            //There are several properties on a physics body that cannot be changed after on enter (eg scale). Scaleing the parent of a physics body will fail as well, at least until the CCPhysicsNode parent.
+            NSAssert(![kRestrictedProperties[i] isEqualToString:keyPath], @"Property '%@' cannot be changed on a physics body or one of its parents after onEnter.",keyPath);
+
+        }
+    }
+#endif
+    
     _isKinematicTransformDirty = YES;
     
     if(self.type == CCPhysicsBodyTypeDynamic || self.type == CCPhysicsBodyTypeKinematic)
