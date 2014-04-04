@@ -431,17 +431,26 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 		self.absoluteRadians = newRotation;
 
 
+        ////////////        ////////////        ////////////        ////////////        ////////////
         /// update velocity and angular velocity.
         
         CGPoint lastPos = cpTransformPoint(_lastTransform, cpvzero);
         
+        // Change in transform since last frame.
+        cpTransform deltaTransform = cpTransformMult(cpTransformInverse(_lastTransform), self.absoluteTransform);
 
-        _body.angularVelocity = (self.absoluteRadians - _lastRotation) / deltaTime;
+        // Change in rotation since the last frame.
+        cpFloat deltaRadians = cpfatan2(deltaTransform.b, deltaTransform.a);
+        cpFloat angularVelocity = deltaRadians/deltaTime;
+        
+
+        _body.angularVelocity = angularVelocity;
         self.velocity = ccpMult(ccpSub(self.absolutePosition, lastPos), 1.0/deltaTime);
        
         
         _lastTransform = self.absoluteTransform;
         _lastRotation = self.absoluteRadians;
+       
        
     }
     
