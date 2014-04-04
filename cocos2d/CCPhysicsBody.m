@@ -49,10 +49,10 @@
 	BOOL _affectedByGravity;
 	BOOL _allowsRotation;
     
+	BOOL _trackingPerformed;
     BOOL _isKinematicTransformDirty;
     
     CGAffineTransform _lastTransform;
-    CGFloat           _lastRotation;
     
     CGPoint           _relativePosition;
     float             _relativeRotation;
@@ -407,7 +407,7 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 
 -(void)updateKinetics:(CCTime)deltaTime
 {
-    
+
     if(!_isKinematicTransformDirty)
     {
         self.type = CCPhysicsBodyTypeStatic;
@@ -435,7 +435,8 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
         /// update velocity and angular velocity.
         
         CGPoint lastPos = cpTransformPoint(_lastTransform, cpvzero);
-        
+        CGPoint velocity = ccpMult(ccpSub(self.absolutePosition, lastPos), 1.0/deltaTime);
+		
         // Change in transform since last frame.
         cpTransform deltaTransform = cpTransformMult(cpTransformInverse(_lastTransform), self.absoluteTransform);
 
@@ -443,14 +444,11 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
         cpFloat deltaRadians = cpfatan2(deltaTransform.b, deltaTransform.a);
         cpFloat angularVelocity = deltaRadians/deltaTime;
         
-
-        _body.angularVelocity = angularVelocity;
-        self.velocity = ccpMult(ccpSub(self.absolutePosition, lastPos), 1.0/deltaTime);
-       
         
-        _lastTransform = self.absoluteTransform;
-        _lastRotation = self.absoluteRadians;
+		_body.angularVelocity = angularVelocity;
+        self.velocity = velocity;
        
+        _lastTransform = self.absoluteTransform;
        
     }
     
@@ -474,11 +472,10 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 -(void)willAddToPhysicsNode:(CCPhysicsNode *)physics nonRigidTransform:(cpTransform)transform
 {
     _lastTransform = NodeToPhysicsTransform(self.node);
-    _lastRotation  = self.absoluteRadians;
 	FOREACH_SHAPE(self, shape) [shape willAddToPhysicsNode:physics nonRigidTransform:transform];
 
     if(self.type == CCPhysicsBodyTypeStatic)
-    [self trackParentTransformations:physics];
+		[self trackParentTransformations:physics];
 }
 
 -(void)didAddToPhysicsNode:(CCPhysicsNode *)physics
@@ -489,7 +486,9 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 -(void)didRemoveFromPhysicsNode:(CCPhysicsNode *)physics
 {
 	FOREACH_SHAPE(self, shape) [shape didRemoveFromPhysicsNode:physics];
-    [self removeParentTransformTracking:physics];
+
+	if(_trackingPerformed)
+		[self removeParentTransformTracking:physics];
 }
 
 
@@ -505,6 +504,7 @@ NSString *  kRestrictedProperties[3] = { @"scale", @"scaleX", @"scaleY"};
 
 -(void)trackParentTransformations:(CCPhysicsNode *)physics
 {
+	_trackingPerformed = YES;
     CCNode * node = self.node;
     
     while (node && node != physics)
@@ -527,6 +527,7 @@ NSString *  kRestrictedProperties[3] = { @"scale", @"scaleX", @"scaleY"};
 -(void)removeParentTransformTracking:(CCPhysicsNode *)physics
 {
     CCNode * node = self.node;
+
     
     while (node && node != physics)
     {
@@ -543,6 +544,8 @@ NSString *  kRestrictedProperties[3] = { @"scale", @"scaleX", @"scaleY"};
         
         node = node.parent;
     }
+	
+	_trackingPerformed = NO;
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context

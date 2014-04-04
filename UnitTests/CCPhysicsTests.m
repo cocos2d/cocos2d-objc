@@ -817,12 +817,12 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
         
         if(i >= KineticCount)
         {
-            XCTAssertTrue(!body1.isKinetic,@"Should not be kinetic now.");
+            XCTAssertTrue(body1.type != CCPhysicsBodyTypeKinematic,@"Should not be kinetic now.");
             XCTAssertTrue(ccpLength(body1.velocity) == 0.0f ,@"Should not have velocity.");
         }
         else
         {
-            XCTAssertTrue(body1.isKinetic, @"Should be kinetic now");
+            XCTAssertTrue(body1.type == CCPhysicsBodyTypeKinematic, @"Should be kinetic now");
             XCTAssertTrue(ccpLength(body1.velocity) > 0.0f ,@"Should have velocity.");
             XCTAssertTrue(body1.absolutePosition.x == (45.0f + (i + 1)), @"should be this value");
         }
@@ -878,11 +878,11 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
         
         if(i >= KineticCount)
         {
-            XCTAssertTrue(!body1.isKinetic, @"Should not be kinetic now.");
+            XCTAssertTrue(body1.type != CCPhysicsBodyTypeKinematic, @"Should not be kinetic now.");
         }
         else
         {
-            XCTAssertTrue(body1.isKinetic, @"Should be kinetic now");
+            XCTAssertTrue(body1.type == CCPhysicsBodyTypeKinematic, @"Should be kinetic now");
             XCTAssertEqualWithAccuracy(-CC_RADIANS_TO_DEGREES(body1.absoluteRadians),(i + 1) * 2.0f,0.01f, @"Should be 2x rotation because of parent.");
         }
 	}
