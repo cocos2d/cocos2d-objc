@@ -655,17 +655,16 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         [outlineString addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0, outlineString.length)];
         
         [outlineString drawInRect:drawArea];
-        
-        CGContextSetTextDrawingMode(context, kCGTextFill);
-        
+
         // Don't draw shadow for main font
         CGContextSetShadowWithColor(context, CGSizeZero, 0, NULL);
-        
+
         if (hasShadow)
         {
             // Draw outline again because shadow overlap
             [outlineString drawInRect:drawArea];
         }
+        CGContextSetTextDrawingMode(context, kCGTextFill);
     }
     
     [attributedString drawInRect:drawArea];
