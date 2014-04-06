@@ -146,6 +146,16 @@
     [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
+-(void)keyDown:(NSEvent *)theEvent
+{
+  [[CCDirector sharedDirector].responderManager discardCurrentEvent];
+}
+
+-(void)keyUp:(NSEvent *)theEvent
+{
+  [[CCDirector sharedDirector].responderManager discardCurrentEvent];
+}
+
 #endif
 
 // -----------------------------------------------------------------

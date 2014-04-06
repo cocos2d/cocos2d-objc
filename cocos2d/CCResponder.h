@@ -203,6 +203,20 @@
  */
 - (void)scrollWheel:(NSEvent *)theEvent;
 
+/**
+ *  Called whan a key down.
+ *
+ *  @param theEvent    Current event information.
+ */
+- (void)keyDown:(NSEvent *)theEvent;
+
+/**
+ *  Called whan a key up.
+ *
+ *  @param theEvent    Current event information.
+ */
+- (void)keyUp:(NSEvent *)theEvent;
+
 #endif
 
 @end
