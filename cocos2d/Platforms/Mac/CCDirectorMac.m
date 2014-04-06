@@ -174,6 +174,8 @@
         self.view.wantsBestResolutionOpenGLSurface = YES;
 
     }
+  // issue #681
+  [openGLview keyDown:nil];
 	
 	// issue #1189
 	[_windowGLView makeFirstResponder:view];
