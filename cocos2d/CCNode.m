@@ -39,6 +39,7 @@
 #import "CCDirector_Private.h"
 #import "CCRenderer_private.h"
 #import "CCTexture_Private.h"
+#import "CCActionManager_Private.h"
 
 #ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
@@ -179,7 +180,7 @@ static NSUInteger globalOrderOfArrival = 1;
 		_blendMode = [CCBlendMode premultipliedAlphaMode];
 
 		_orderOfArrival = 0;
-		
+
 		// set default scheduler and actionManager
 		CCDirector *director = [CCDirector sharedDirector];
 		_actionManager = [director actionManager];
@@ -898,22 +899,22 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	if (!_visible)
 		return;
     
-	[self sortAllChildren];
-	
+		[self sortAllChildren];
+
 	GLKMatrix4 transform = NodeTransform(self, *parentTransform);
 	BOOL drawn = NO;
-	
+
 	for(CCNode *child in _children){
 		if(!drawn && child.zOrder >= 0){
 			[self draw:renderer transform:&transform];
 			drawn = YES;
 		}
-		
+
 		[child visit:renderer parentTransform:&transform];
-	}
-	
+		}
+
 	if(!drawn) [self draw:renderer transform:&transform];
-	
+
 	// reset for next frame
 	_orderOfArrival = 0;
 }
@@ -922,7 +923,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 {
 	CCRenderer *renderer = [CCRenderer currentRenderer];
 	NSAssert(renderer, @"Cannot call [CCNode visit] without a currently bound renderer.");
-	
+
 	GLKMatrix4 projection; [renderer.globalShaderUniforms[CCShaderUniformProjection] getValue:&projection];
 	[self visit:renderer parentTransform:&projection];
 }
@@ -1072,6 +1073,20 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 	
 	BOOL wasRunning = self.runningInActiveScene;
 	_isInActiveScene = YES;
+	
+	//If there's a physics node in the hierarchy, all actions should run on a fixed timestep.
+	BOOL hasPhysicsNode = self.physicsNode != nil;
+	if(hasPhysicsNode && _actionManager != [CCDirector sharedDirector].actionManagerFixed)
+	{
+		[[CCDirector sharedDirector].actionManagerFixed migrateActions:self from:[CCDirector sharedDirector].actionManager];
+		[self setActionManager:[CCDirector sharedDirector].actionManagerFixed];
+	}
+	else if(!hasPhysicsNode && _actionManager != [CCDirector sharedDirector].actionManager)
+	{
+		[[CCDirector sharedDirector].actionManager migrateActions:self from:[CCDirector sharedDirector].actionManagerFixed];
+		[self setActionManager:[CCDirector sharedDirector].actionManager];
+	}
+	
 	[self wasRunning:wasRunning];
 }
 
@@ -1246,6 +1261,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 		[_actionManager pauseTarget:self];
 	}
 }
+
 
 -(BOOL)isRunningInActiveScene
 {

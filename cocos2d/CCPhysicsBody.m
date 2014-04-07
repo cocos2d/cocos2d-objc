@@ -34,6 +34,10 @@
 -(CGAffineTransform)nonRigidTransform;
 @end
 
+//Function Prototype
+static inline void
+CCPhysicsBodyUpdatePosition(cpBody *body, cpFloat dt);
+
 #define FOREACH_SHAPE(__body__, __shapeVar__) for(CCPhysicsShape *__shapeVar__ = __body__->_shapeList; __shapeVar__; __shapeVar__ = __shapeVar__.next)
 
 
@@ -66,6 +70,7 @@
 	if((self = [super init])){
 		_body = [ChipmunkBody bodyWithMass:0.0 andMoment:0.0];
 		_body.userData = self;
+		cpBodySetPositionUpdateFunc(_body.body,CCPhysicsBodyUpdatePosition);
 		
 		_affectedByGravity = YES;
 		_allowsRotation = YES;
@@ -271,6 +276,15 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 	}
 }
 
+static inline void
+CCPhysicsBodyUpdatePosition(cpBody *body, cpFloat dt)
+{
+	// Skip kinematic bodies.
+	if(cpBodyGetType(body) == CP_BODY_TYPE_KINEMATIC) return;
+	
+	cpBodyUpdatePosition(body, dt);
+}
+
 //MARK: Collision and Contact:
 
 -(BOOL)sensor {return _shapeList.sensor;}
@@ -424,7 +438,13 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
         
 		CGPoint delta = ccpSub(newPositionInPoints, currentPosition);
         CGPoint newPos = ccpAdd(self.absolutePosition, TransformPointAsVector(delta, NodeToPhysicsTransform(self.node.parent)));
-		self.absolutePosition = newPos;
+		
+		///
+		CGPoint newPos2 = ccpSub(self.relativePosition , self.node.anchorPointInPoints );
+		CGPoint newPos3 = TransformPointAsVector(newPos2, NodeToPhysicsTransform(self.node.parent));
+
+		
+		self.absolutePosition = newPos3;
         /////// Update absolute angle
 
         CGFloat newRotation = -CC_DEGREES_TO_RADIANS(self.relativeRotation - NodeToPhysicsRotation(self.node.parent));

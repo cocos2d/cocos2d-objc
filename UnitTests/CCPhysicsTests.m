@@ -10,7 +10,13 @@
 #import "cocos2d.h"
 
 #import "CCPhysics+ObjectiveChipmunk.h"
+#import "CCDirector_Private.h"
 
+@interface CCScheduler(Test)
+
+-(CCTimer*)fixedUpdateTimer;
+
+@end
 
 @interface CCPhysicsTests : XCTestCase <CCPhysicsCollisionDelegate>
 
@@ -901,17 +907,18 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
 	physicsNode.collisionDelegate = self;
 	physicsNode.gravity = ccp(0, 0);
     
-    CGPoint node0Pos = ccp(100.0f,0.0f);
+    CGPoint node0Pos = ccp(0.0f,0.0f);
     
     CCNode *node0 = [CCNode node];
     node0.position = node0Pos;
     node0.name = @"node0";
-    [node0 runAction:[CCActionMoveBy actionWithDuration:1.0f position:ccpAdd(node0Pos, ccp(50.0f,0.0f))]];
+	node0.scale = 2.0f;
+	[node0 runAction:[CCActionMoveBy actionWithDuration:10 position:ccp(1000, 0)]];
     [physicsNode addChild:node0];
 	
     CCPhysicsBody * body1 = [CCPhysicsBody bodyWithRect:CGRectMake(0, 0, 60, 20) cornerRadius:0];
     
-    CGPoint node1Pos = ccp(-25, 0);
+    CGPoint node1Pos = ccp(0, 0);
 	CCNode *node1 = [CCNode node];
 	node1.physicsBody = body1;
 	node1.physicsBody.type = CCPhysicsBodyTypeStatic;
@@ -922,12 +929,25 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
     node1.anchorPoint = ccp(0.5f,0.5f);
 	[node0 addChild:node1];
     
+	[node1 runAction:[CCActionMoveBy actionWithDuration:10 position:ccp(1000, 0)]];
+	
 	// Force entering the scene to set up the physics objects.
 	[physicsNode onEnter];
-    
+	
+	CCScheduler * scheduler =  [CCDirector sharedDirector].scheduler;
+    scheduler.fixedUpdateInterval = 0.1f;
+	[scheduler update:0.10f];// first tick
+	const float accuracy = 1e-4;
     //test actions are fixed.
-    
+    for(int i = 0; i < 100; i++)
+	{
+		float desired  = (float)i * 0.1f * 100.0f + (float)i * 0.1f * 200.0f;
+		NSLog(@"node1.position.x=  %0.2f   desired = %0.2f",node1.position.x, desired);
+		//XCTAssertEqualWithAccuracy(node1.position.x, desired , accuracy, @"Not in the write position");
+		[scheduler update:0.10f];
+	}
 }
+
 
 //TODO
 //Test : When a node is added to a scene graph, its actions are Fixed if its part of a PhysicsNode.
