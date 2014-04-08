@@ -9,17 +9,17 @@
 {
 	CGSize size = [CCDirector sharedDirector].designSize;
 	
-	CCNode *parent = self.contentNode;
+//	CCNode *parent = self.contentNode;
 	
-//	CCRenderTexture *parent = [CCRenderTexture renderTextureWithWidth:size.width height:size.height pixelFormat:CCTexturePixelFormat_RGBA8888 depthStencilFormat:GL_DEPTH24_STENCIL8_OES];
-//	parent.positionType = CCPositionTypeNormalized;
-//	parent.position = ccp(0.5, 0.5);
-//	parent.autoDraw = YES;
-//	parent.clearColor = [CCColor blackColor];
-//	parent.clearDepth = 1.0;
-//	parent.clearStencil = 0;
-//	parent.clearFlags = GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT;
-//	[self.contentNode addChild:parent];
+	CCRenderTexture *parent = [CCRenderTexture renderTextureWithWidth:size.width height:size.height pixelFormat:CCTexturePixelFormat_RGBA8888 depthStencilFormat:GL_DEPTH24_STENCIL8_OES];
+	parent.positionType = CCPositionTypeNormalized;
+	parent.position = ccp(0.5, 0.5);
+	parent.autoDraw = YES;
+	parent.clearColor = [CCColor blackColor];
+	parent.clearDepth = 1.0;
+	parent.clearStencil = 0;
+	parent.clearFlags = GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT;
+	[self.contentNode addChild:parent];
 	
 	CCNodeGradient *grad = [CCNodeGradient nodeWithColor:[CCColor redColor] fadingTo:[CCColor blueColor] alongVector:ccp(1, 1)];
 //	[parent addChild:grad];

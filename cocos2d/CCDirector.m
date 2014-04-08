@@ -189,7 +189,6 @@ static CCDirector *_sharedDirector = nil;
 		
 		_renderer = [[CCRenderer alloc] init];
 		_globalShaderUniforms = [NSMutableDictionary dictionary];
-		_globalShaderUniforms[@"cc_AlphaTestValue"] = @(0.5f);
 	}
 
 	return self;
