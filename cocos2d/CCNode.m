@@ -1403,12 +1403,12 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 		
 		if(physicsBody.body.type == CCPhysicsBodyTypeKinematic)
 		{
-			
-			rigidTransform = CGAffineTransformMakeRigid(ccpSub(physicsBody.relativePosition , _anchorPointInPoints ), -CC_DEGREES_TO_RADIANS(physicsBody.relativeRotation));
+			CGPoint rot = ccpRotateByAngle(_anchorPointInPoints, CGPointZero, -CC_DEGREES_TO_RADIANS(physicsBody.relativeRotation));
+			rigidTransform = CGAffineTransformMakeRigid(ccpSub(physicsBody.relativePosition , rot ), -CC_DEGREES_TO_RADIANS(physicsBody.relativeRotation));
 		}
 		else
 		{
-        CGPoint scaleToParent = NodeToPhysicsScale(self.parent);
+			CGPoint scaleToParent = NodeToPhysicsScale(self.parent);
 			CGAffineTransform nodeToPhysics = NodeToPhysicsTransform(self.parent);
 			rigidTransform = CGAffineTransformConcat(physicsBody.absoluteTransform, CGAffineTransformInvert(nodeToPhysics));
 			rigidTransform = CGAffineTransformConcat(CGAffineTransformMakeScale(scaleToParent.x, scaleToParent.y), rigidTransform);

@@ -913,7 +913,7 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
     node0.position = node0Pos;
     node0.name = @"node0";
 	node0.scale = 2.0f;
-	[node0 runAction:[CCActionMoveBy actionWithDuration:10 position:ccp(1000, 0)]];
+	[node0 runAction:[CCActionMoveBy actionWithDuration:10 position:ccp(100, 0)]];
     [physicsNode addChild:node0];
 	
     CCPhysicsBody * body1 = [CCPhysicsBody bodyWithRect:CGRectMake(0, 0, 60, 20) cornerRadius:0];
@@ -926,10 +926,10 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
     node1.name = @"node1";
     node1.position = node1Pos;
     node1.contentSize = CGSizeMake(60, 20);
-    node1.anchorPoint = ccp(0.5f,0.5f);
+    node1.anchorPoint = ccp(0.0f,0.0f);
 	[node0 addChild:node1];
     
-	[node1 runAction:[CCActionMoveBy actionWithDuration:10 position:ccp(1000, 0)]];
+	[node1 runAction:[CCActionMoveBy actionWithDuration:10 position:ccp(100, 0)]];
 	
 	// Force entering the scene to set up the physics objects.
 	[physicsNode onEnter];
@@ -941,9 +941,9 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
     //test actions are fixed.
     for(int i = 0; i < 100; i++)
 	{
-		float desired  = (float)i * 0.1f * 100.0f + (float)i * 0.1f * 200.0f;
-		NSLog(@"node1.position.x=  %0.2f   desired = %0.2f",node1.position.x, desired);
-		//XCTAssertEqualWithAccuracy(node1.position.x, desired , accuracy, @"Not in the write position");
+		float desired  = (float)i * 0.1f * 100.0f/10.0f + (float)i * 0.1f * 200.0f/10.0f;
+		NSLog(@"node1.position.x=  %0.2f   desired = %0.2f",body1.absolutePosition.x, desired);
+		XCTAssertEqualWithAccuracy(body1.absolutePosition.x, desired , accuracy, @"Not in the write position");
 		[scheduler update:0.10f];
 	}
 }
