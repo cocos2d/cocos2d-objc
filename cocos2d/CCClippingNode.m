@@ -229,24 +229,23 @@ SetProgram(CCNode *n, CCShader *p, NSNumber *alpha) {
 			glStencilFunc(GL_NEVER, mask_layer, mask_layer);
 			glStencilOp(_inverted ? GL_ZERO : GL_REPLACE, GL_KEEP, GL_KEEP);
 			
-			// enable alpha test only if the alpha threshold < 1,
-			// indeed if alpha threshold == 1, every pixel will be drawn anyways
-			if (_alphaThreshold.floatValue < 1) {
-					// since glAlphaTest do not exists in OES, use a shader that writes
-					// pixel only if greater than an alpha threshold
-					CCShader *program = [CCShader positionTextureColorAlphaTestShader];
-					// we need to recursively apply this shader to all the nodes in the stencil node
-					// XXX: we should have a way to apply shader to all nodes without having to do this
-					SetProgram(_stencil, program, _alphaThreshold);
-			}
+//			NSLog(@"Stencil setup.");
 		} debugLabel:@"CCClippingNode: Setup Stencil"];
-
+		
+		// since glAlphaTest do not exists in OES, use a shader that writes
+		// pixel only if greater than an alpha threshold
+		CCShader *program = [CCShader positionTextureColorAlphaTestShader];
+		// we need to recursively apply this shader to all the nodes in the stencil node
+		// XXX: we should have a way to apply shader to all nodes without having to do this
+		SetProgram(_stencil, program, _alphaThreshold);
+		
     // draw the stencil node as if it was one of our child
     // (according to the stencil test func/op and alpha (or alpha shader) test)
     GLKMatrix4 transform = [self transform:parentTransform];
     [_stencil visit:renderer parentTransform:&transform];
   
 		[renderer enqueueBlock:^{
+//			NSLog(@"Stencil rendered.");
 			// restore the depth test state
 			glDepthMask(currentDepthWriteMask);
 			
