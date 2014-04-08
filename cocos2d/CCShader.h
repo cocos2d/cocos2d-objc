@@ -50,6 +50,8 @@ extern const NSString *CCShaderUniformAlphaTestValue;
 
 @interface CCShader : NSObject<NSCopying>
 
+@property(nonatomic, copy) NSString *debugName;
+
 +(instancetype)shaderNamed:(NSString *)shaderName;
 
 -(instancetype)initWithVertexShaderSource:(NSString *)vertexSource fragmentShaderSource:(NSString *)fragmentSource;
