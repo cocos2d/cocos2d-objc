@@ -37,10 +37,13 @@
 
 static GLint _stencilBits = -1;
 
-static void setProgram(CCNode *n, CCShader *p) {
-    n.shader = p;
-    if (!n.children) return;
-    for (CCNode* c in n.children) setProgram(c,p);
+static void
+SetProgram(CCNode *n, CCShader *p, NSNumber *alpha) {
+	n.shader = p;
+	n.shaderUniforms[CCShaderUniformAlphaTestValue] = alpha;
+	
+	if(!n.children) return;
+	for(CCNode* c in n.children) SetProgram(c,p, alpha);
 }
 
 @implementation CCClippingNode
@@ -232,10 +235,9 @@ static void setProgram(CCNode *n, CCShader *p) {
 					// since glAlphaTest do not exists in OES, use a shader that writes
 					// pixel only if greater than an alpha threshold
 					CCShader *program = [CCShader positionTextureColorAlphaTestShader];
-					[CCDirector sharedDirector].globalShaderUniforms[CCShaderUniformAlphaTestValue] = _alphaThreshold;
 					// we need to recursively apply this shader to all the nodes in the stencil node
 					// XXX: we should have a way to apply shader to all nodes without having to do this
-					setProgram(_stencil, program);
+					SetProgram(_stencil, program, _alphaThreshold);
 			}
 		} debugLabel:@"CCClippingNode: Setup Stencil"];
 

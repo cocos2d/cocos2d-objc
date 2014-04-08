@@ -432,7 +432,7 @@ static CCShader *CC_SHADER_POS_TEX_COLOR_ALPHA_TEST = nil;
 		uniform float cc_AlphaTestValue;
 		void main(){
 			vec4 tex = texture2D(cc_MainTexture, cc_FragTexCoord1);
-			if(tex.a <= 0.5) discard;
+			if(tex.a <= cc_AlphaTestValue) discard;
 			gl_FragColor = cc_FragColor*tex;
 		}
 	)];
