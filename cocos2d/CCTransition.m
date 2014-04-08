@@ -167,7 +167,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     _progress = 0.0f;
     
     _transitionPixelFormat = CCTexturePixelFormat_RGBA8888;
-		_transitionDepthStencilFormat = GL_DEPTH24_STENCIL8_OES;
+		_transitionDepthStencilFormat = GL_DEPTH24_STENCIL8;
     
     // disable touch during transition
     self.userInteractionEnabled = NO;

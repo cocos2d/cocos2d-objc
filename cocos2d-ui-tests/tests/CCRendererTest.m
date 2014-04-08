@@ -27,7 +27,7 @@
 	CCNode *stencil = [CCSprite spriteWithImageNamed:@"Sprites/grossini.png"];
 //	[parent addChild:stencil];
 	stencil.position = ccp(size.width/2, size.height/2);
-	stencil.scale = 3.0;
+	stencil.scale = 5.0;
 	[stencil runAction:[CCActionRepeatForever actionWithAction:[CCActionRotateBy actionWithDuration:1.0 angle:90.0]]];
 	
 	CCClippingNode *clip = [CCClippingNode clippingNodeWithStencil:stencil];
