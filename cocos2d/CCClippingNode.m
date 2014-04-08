@@ -278,6 +278,7 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
         CCGLProgram *program = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColorAlphaTest];
         GLint alphaValueLocation = glGetUniformLocation(program.program, kCCUniformAlphaTestValue_s);
         // set our alphaThreshold
+        [program use];
         [program setUniformLocation:alphaValueLocation withF1:_alphaThreshold];
         // we need to recursively apply this shader to all the nodes in the stencil node
         // XXX: we should have a way to apply shader to all nodes without having to do this
