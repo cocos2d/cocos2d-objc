@@ -1399,11 +1399,22 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 	CCPhysicsBody *physicsBody = GetBodyIfRunning(self);
 	if(physicsBody){
         
-        CGAffineTransform nodeToPhysics = NodeToPhysicsTransform(self.parent);
+		CGAffineTransform rigidTransform;
+		
+		if(physicsBody.body.type == CCPhysicsBodyTypeKinematic)
+		{
+			
+			rigidTransform = CGAffineTransformMakeRigid(ccpSub(physicsBody.relativePosition , _anchorPointInPoints ), -CC_DEGREES_TO_RADIANS(physicsBody.relativeRotation));
+		}
+		else
+		{
         CGPoint scaleToParent = NodeToPhysicsScale(self.parent);
-        CGAffineTransform rigidTransform = CGAffineTransformConcat(physicsBody.absoluteTransform, CGAffineTransformInvert(nodeToPhysics));
+			CGAffineTransform nodeToPhysics = NodeToPhysicsTransform(self.parent);
+			rigidTransform = CGAffineTransformConcat(physicsBody.absoluteTransform, CGAffineTransformInvert(nodeToPhysics));
+			rigidTransform = CGAffineTransformConcat(CGAffineTransformMakeScale(scaleToParent.x, scaleToParent.y), rigidTransform);
+		}
 
-		_transform = CGAffineTransformConcat(CGAffineTransformMakeScale(_scaleX * scaleToParent.x, _scaleY * scaleToParent.y), rigidTransform);
+		_transform = CGAffineTransformConcat(CGAffineTransformMakeScale(_scaleX , _scaleY), rigidTransform);
 	} else if ( _isTransformDirty ) {
         
         // Get content size
