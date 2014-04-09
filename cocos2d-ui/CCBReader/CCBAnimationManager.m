@@ -641,6 +641,7 @@ static NSInteger ccbAnimationManagerID = 0;
     
     _playbackSpeed = playbackSpeed;
 }
+
     
 - (void) timeSeekStaticForSequenceId:(int)seqId time:(float)time {
     NSAssert(seqId != -1, @"Sequence id %d couldn't be found",seqId);
@@ -869,7 +870,22 @@ static NSInteger ccbAnimationManagerID = 0;
     return seq;
 }
 
+-(void)fixedUpdate:(CCTime)delta
+{
+	if(self.fixedTimestep)
+	{
+		[self updateInternal:delta];
+	}
+}
+
 - (void) update:(CCTime)delta {
+	if(!self.fixedTimestep)
+	{
+		[self updateInternal:delta];
+	}
+}
+
+- (void)updateInternal:(CCTime)delta {
     
     if(_paused)
         return;
