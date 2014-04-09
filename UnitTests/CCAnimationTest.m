@@ -109,8 +109,7 @@ _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_NotEqualWithAccuracy, 0
 		
 		//Uncomment to debug
 		NSLog(@"Pos (%0.2f,%0.2f) i=%i",node.position.x,node.position.y, i);
-
-			
+	
 		if(i == 49)
 		{
 			//When we zoom back to to the root pos, there should be no abrupt jump.
