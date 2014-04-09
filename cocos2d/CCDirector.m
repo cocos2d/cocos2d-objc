@@ -177,8 +177,14 @@ static CCDirector *_sharedDirector = nil;
 
 		// action manager
 		_actionManager = [[CCActionManager alloc] init];
+		_actionManagerFixed = [[CCFixedActionManager alloc] init];
+		
 		[_scheduler scheduleTarget:_actionManager];
+		[_scheduler scheduleTarget:_actionManagerFixed];
+
 		[_scheduler setPaused:NO target:_actionManager];
+		[_scheduler setPaused:NO target:_actionManagerFixed];
+		
 		
 		// touch manager
 		_responderManager = [ CCResponderManager responderManager ];
