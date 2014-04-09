@@ -132,6 +132,12 @@
 -(id) parseLayer:(CCTiledMapLayerInfo*)layerInfo map:(CCTiledMapInfo*)mapInfo
 {
 	CCTiledMapTilesetInfo *tileset = [self tilesetForLayer:layerInfo map:mapInfo];
+	
+	// if the tileset is empty, return a nil layer
+	if(tileset == nil){
+		return nil;
+	}
+	
 	CCTiledMapLayer *layer = [CCTiledMapLayer layerWithTilesetInfo:tileset layerInfo:layerInfo mapInfo:mapInfo];
 
 	// tell the layerinfo to release the ownership of the tiles map.
