@@ -149,3 +149,13 @@ typedef struct _hashElement {
 
 @end
 
+
+/**
+ *  CCFixedActionManager: An action manager that updates actions on a fixed timestep.
+ *  Fixed timesteps are useful when running actions that applied to nodes with physics bodies attached.
+ *  All animations that possess physics nodes will utilize the fixed action manager.
+ */
+@interface CCFixedActionManager : CCActionManager
+
+@end
+

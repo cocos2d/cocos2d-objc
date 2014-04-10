@@ -39,6 +39,7 @@
 #import "CCDirector_Private.h"
 #import "CCRenderer_private.h"
 #import "CCTexture_Private.h"
+#import "CCActionManager_Private.h"
 
 #ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
@@ -78,7 +79,7 @@ GetBodyIfRunning(CCNode *node)
 	return (node->_isInActiveScene ? node->_physicsBody : nil);
 }
 
-static inline CGAffineTransform
+inline CGAffineTransform
 NodeToPhysicsTransform(CCNode *node)
 {
 	CGAffineTransform transform = CGAffineTransformIdentity;
@@ -89,7 +90,7 @@ NodeToPhysicsTransform(CCNode *node)
 	return transform;
 }
 
-static inline float
+inline float
 NodeToPhysicsRotation(CCNode *node)
 {
 	float rotation = 0.0;
@@ -100,7 +101,20 @@ NodeToPhysicsRotation(CCNode *node)
 	return rotation;
 }
 
-static inline CGAffineTransform
+inline CGPoint
+NodeToPhysicsScale(CCNode * node)
+{
+    CGPoint scale = ccp(1.0f,1.0f);
+    for(CCNode *n = node; n && !n.isPhysicsNode; n = n.parent){
+        scale.x = scale.x * n.scaleX;
+        scale.y = scale.y * n.scaleY;
+	}
+    
+    return scale;
+	
+}
+
+inline CGAffineTransform
 RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
 {
 	return CGAffineTransformConcat(body.absoluteTransform, CGAffineTransformInvert(NodeToPhysicsTransform(node.parent)));
@@ -166,7 +180,7 @@ static NSUInteger globalOrderOfArrival = 1;
 		_blendMode = [CCBlendMode premultipliedAlphaMode];
 
 		_orderOfArrival = 0;
-		
+
 		// set default scheduler and actionManager
 		CCDirector *director = [CCDirector sharedDirector];
 		_actionManager = [director actionManager];
@@ -202,7 +216,6 @@ static NSUInteger globalOrderOfArrival = 1;
 {
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
 
-
 	// children
     for (CCNode* child in _children)
 		child.parent = nil;
@@ -218,8 +231,8 @@ static NSUInteger globalOrderOfArrival = 1;
 	CCPhysicsBody *body = GetBodyIfRunning(self);
 	if(body){
 		CGPoint position = self.position;
-		body.absoluteRadians = -CC_DEGREES_TO_RADIANS(newRotation + NodeToPhysicsRotation(self.parent));
-		
+		body.absoluteRadians = -CC_DEGREES_TO_RADIANS(newRotation - NodeToPhysicsRotation(self.parent));
+		body.relativeRotation = newRotation;
 		// Rotating the body will cause the node to move unless the CoG is the same as the anchor point.
 		self.position = position;
 	} else {
@@ -303,7 +316,7 @@ static NSUInteger globalOrderOfArrival = 1;
 	_isTransformDirty = _isInverseDirty = YES;
 }
 
-static inline CGPoint
+inline CGPoint
 GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 {
 	return CGPointApplyAffineTransform(node->_anchorPointInPoints, [node nodeToParentTransform]);
@@ -320,7 +333,7 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 }
 
 // Urg. CGPoint types. -_-
-static inline CGPoint
+inline CGPoint
 TransformPointAsVector(CGPoint p, CGAffineTransform t)
 {
   return (CGPoint){t.a*p.x + t.c*p.y, t.b*p.x + t.d*p.y};
@@ -331,8 +344,11 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
 	CCPhysicsBody *body = GetBodyIfRunning(self);
 	if(body){
 		CGPoint currentPosition = GetPositionFromBody(self, body);
-		CGPoint delta = ccpSub([self convertPositionToPoints:newPosition type:_positionType], currentPosition);
+        CGPoint newPositionInPoints = [self convertPositionToPoints:newPosition type:_positionType];
+        
+		CGPoint delta = ccpSub(newPositionInPoints, currentPosition);
 		body.absolutePosition = ccpAdd(body.absolutePosition, TransformPointAsVector(delta, NodeToPhysicsTransform(self.parent)));
+        body.relativePosition = newPositionInPoints;
 	} else {
 		_position = newPosition;
 		_isTransformDirty = _isInverseDirty = YES;
@@ -883,22 +899,22 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	if (!_visible)
 		return;
     
-	[self sortAllChildren];
-	
+		[self sortAllChildren];
+
 	GLKMatrix4 transform = NodeTransform(self, *parentTransform);
 	BOOL drawn = NO;
-	
+
 	for(CCNode *child in _children){
 		if(!drawn && child.zOrder >= 0){
 			[self draw:renderer transform:&transform];
 			drawn = YES;
 		}
-		
+
 		[child visit:renderer parentTransform:&transform];
-	}
-	
+		}
+
 	if(!drawn) [self draw:renderer transform:&transform];
-	
+
 	// reset for next frame
 	_orderOfArrival = 0;
 }
@@ -907,7 +923,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 {
 	CCRenderer *renderer = [CCRenderer currentRenderer];
 	NSAssert(renderer, @"Cannot call [CCNode visit] without a currently bound renderer.");
-	
+
 	GLKMatrix4 projection; [renderer.globalShaderUniforms[CCShaderUniformProjection] getValue:&projection];
 	[self visit:renderer parentTransform:&projection];
 }
@@ -936,7 +952,7 @@ NodeTransform(__unsafe_unretained CCNode *node, GLKMatrix4 parentTransform)
 
 #pragma mark CCPhysics support.
 
-static inline CGAffineTransform
+inline CGAffineTransform
 CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 {
 	CGPoint rot = ccpForAngle(radians);
@@ -969,7 +985,13 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 {
 	if(physicsBody){
 		CCPhysicsNode *physics = self.physicsNode;
-		NSAssert(physics != nil, @"A CCNode with an attached CCPhysicsBody must be added as a descendant of a CCPhysicsNode.");
+        
+		if(physics == nil)
+        {
+            CCLOGWARN(@"Failed to find a parent CCPhysicsNode for this CCPhysicsBody. The CCPhysicsBody requires it be the child of a CCPhysicsNode when onEnter is called.");
+            _physicsBody = nil;
+            return;
+        }
 		
 		// Copy the node's rotation first.
 		// Otherwise it may cause the position to rotate around a non-zero center of gravity.
@@ -978,7 +1000,10 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 		// Grab the origin position of the node from it's transform.
 		CGAffineTransform transform = NodeToPhysicsTransform(self);
 		physicsBody.absolutePosition = ccp(transform.tx, transform.ty);
-		
+        
+        physicsBody.relativePosition = self.positionInPoints;
+		physicsBody.relativeRotation = self.rotation;
+        
 		CGAffineTransform nonRigid = self.nonRigidTransform;
 		[_physicsBody willAddToPhysicsNode:physics nonRigidTransform:CGAFFINETRANSFORM_TO_CPTRANSFORM(nonRigid)];
 		[physics.space smartAdd:physicsBody];
@@ -1054,6 +1079,20 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 	
 	BOOL wasRunning = self.runningInActiveScene;
 	_isInActiveScene = YES;
+	
+	//If there's a physics node in the hierarchy, all actions should run on a fixed timestep.
+	BOOL hasPhysicsNode = self.physicsNode != nil;
+	if(hasPhysicsNode && _actionManager != [CCDirector sharedDirector].actionManagerFixed)
+	{
+		[[CCDirector sharedDirector].actionManagerFixed migrateActions:self from:[CCDirector sharedDirector].actionManager];
+		[self setActionManager:[CCDirector sharedDirector].actionManagerFixed];
+	}
+	else if(!hasPhysicsNode && _actionManager != [CCDirector sharedDirector].actionManager)
+	{
+		[[CCDirector sharedDirector].actionManager migrateActions:self from:[CCDirector sharedDirector].actionManagerFixed];
+		[self setActionManager:[CCDirector sharedDirector].actionManager];
+	}
+	
 	[self wasRunning:wasRunning];
 }
 
@@ -1229,6 +1268,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 	}
 }
 
+
 -(BOOL)isRunningInActiveScene
 {
 	return (_isInActiveScene && !_paused && _pausedAncestors == 0);
@@ -1364,8 +1404,23 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 {
 	CCPhysicsBody *physicsBody = GetBodyIfRunning(self);
 	if(physicsBody){
-		CGAffineTransform rigidTransform = RigidBodyToParentTransform(self, physicsBody);
-		_transform = CGAffineTransformConcat(CGAffineTransformMakeScale(_scaleX, _scaleY), rigidTransform);
+        
+		CGAffineTransform rigidTransform;
+		
+		if(physicsBody.body.type == CCPhysicsBodyTypeKinematic)
+		{
+			CGPoint rot = ccpRotateByAngle(_anchorPointInPoints, CGPointZero, -CC_DEGREES_TO_RADIANS(physicsBody.relativeRotation));
+			rigidTransform = CGAffineTransformMakeRigid(ccpSub(physicsBody.relativePosition , rot ), -CC_DEGREES_TO_RADIANS(physicsBody.relativeRotation));
+		}
+		else
+		{
+			CGPoint scaleToParent = NodeToPhysicsScale(self.parent);
+			CGAffineTransform nodeToPhysics = NodeToPhysicsTransform(self.parent);
+			rigidTransform = CGAffineTransformConcat(physicsBody.absoluteTransform, CGAffineTransformInvert(nodeToPhysics));
+			rigidTransform = CGAffineTransformConcat(CGAffineTransformMakeScale(scaleToParent.x, scaleToParent.y), rigidTransform);
+		}
+
+		_transform = CGAffineTransformConcat(CGAffineTransformMakeScale(_scaleX , _scaleY), rigidTransform);
 	} else if ( _isTransformDirty ) {
         
         // Get content size

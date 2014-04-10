@@ -153,7 +153,7 @@ static NSInteger ccbAnimationManagerID = 0;
 - (CCActionInterval*) actionFromKeyframe0:(CCBKeyframe*)kf0 andKeyframe1:(CCBKeyframe*)kf1 propertyName:(NSString*)name node:(CCNode*)node
 {
     float duration = kf1.time - kf0.time;
-
+    
     if ([name isEqualToString:@"rotation"])
     {
         return [CCActionRotateTo actionWithDuration:duration angle:[kf1.value floatValue] simple:YES];
@@ -244,7 +244,7 @@ static NSInteger ccbAnimationManagerID = 0;
     }
     else
     {
-
+    
         if ([name isEqualToString:@"position"])
         {
             
@@ -279,7 +279,7 @@ static NSInteger ccbAnimationManagerID = 0;
         {
             [node setValue:value forKey:name];
         }
-    }
+    }  
 }
 
 - (void) setKeyFrameForNode:(CCNode*)node sequenceProperty:(CCBSequenceProperty*)seqProp tweenDuration:(float)tweenDuration keyFrame:(int)kf
@@ -370,19 +370,19 @@ static NSInteger ccbAnimationManagerID = 0;
     
     // Grab Key Frames / Count
     NSArray* keyframes = [seqProp keyframes];
-    int numKeyframes   = (int)keyframes.count;
+    int numKeyframes = (int)keyframes.count;
     
     // Nothing to do - No Keyframes
     if(numKeyframes<1)
         return;
     
     // Action Sequence Builder
-    NSMutableArray* actions = [NSMutableArray array];
+        NSMutableArray* actions = [NSMutableArray array];
     int endFrame            = startFrame+1;
-
+            
     if(endFrame==numKeyframes || endFrame<0)
         return;
-    
+        
     // Initial Tween
     if(startFrame==0) {
         CCBKeyframe* kf0 = [keyframes objectAtIndex:startFrame];
@@ -393,21 +393,21 @@ static NSInteger ccbAnimationManagerID = 0;
             [actions addObject:[CCActionDelay actionWithDuration:timeFirst]];
         }
     }
-    
+        
     // Build Actions
     CCActionSequence* run = [self createActionForNode:node sequenceProperty:seqProp beginKeyFrame:startFrame endKeyFrame:endFrame];
     if(run) {
         [actions addObject:run];
     }
-    
+            
     // Next Sequence
     CCActionCallBlock* nextKeyFrameBlock = [CCActionCallBlock actionWithBlock:^{
         [self runActionsForNode:node sequenceProperty:seqProp tweenDuration:0 startKeyFrame:endFrame];
     }];
-    
+                
     [actions addObject:nextKeyFrameBlock];
-    
-    CCActionSequence* seq = [CCActionSequence actionWithArray:actions];
+        
+        CCActionSequence* seq = [CCActionSequence actionWithArray:actions];
     seq.tag = _animationManagerId;
     [seq startWithTarget:node];
     [_currentActions addObject:seq];
@@ -509,22 +509,22 @@ static NSInteger ccbAnimationManagerID = 0;
         
         if(_lastSequence.sequenceId!=seqId) {
             
-            // Reset the nodes that may have been changed by other timelines
+        // Reset the nodes that may have been changed by other timelines
             NSDictionary* nodeBaseValues = [_baseValues objectForKey:nodePtr];
-            for (NSString* propName in nodeBaseValues)
+        for (NSString* propName in nodeBaseValues)
+        {
+            if (![seqNodePropNames containsObject:propName])
             {
-                if (![seqNodePropNames containsObject:propName])
+                id value = [nodeBaseValues objectForKey:propName];
+                
+                if (value)
                 {
-                    id value = [nodeBaseValues objectForKey:propName];
-                    
-                    if (value)
-                    {
-                        [self setAnimatedProperty:propName forNode:node toValue:value tweenDuration:tweenDuration];
-                    }
+                    [self setAnimatedProperty:propName forNode:node toValue:value tweenDuration:tweenDuration];
                 }
             }
         }
-
+    }
+    
     }
     
     [self addSequenceCallBacks:seqId tweenDuration:tweenDuration startTime:0];
@@ -598,7 +598,7 @@ static NSInteger ccbAnimationManagerID = 0;
     // Callbacks
     [_delegate completedAnimationSequenceNamed:_lastCompletedSequenceName];
     if (block) block(self);
-
+    
     // Run next sequence if callbacks did not start a new sequence
     if (_runningSequence == NULL && nextSeqId != -1)
     {
@@ -642,27 +642,28 @@ static NSInteger ccbAnimationManagerID = 0;
     _playbackSpeed = playbackSpeed;
 }
 
+    
 - (void) timeSeekStaticForSequenceId:(int)seqId time:(float)time {
     NSAssert(seqId != -1, @"Sequence id %d couldn't be found",seqId);
     
     // Reverse Loop Hack
     if(_playbackSpeed<0 && time<0 && _runningSequence.chainedSequenceId==_runningSequence.sequenceId) {
         time = _runningSequence.duration;
-    }
-    
+}
+
     [self clearAllActions];
     
     // Contains all Sequence Propertys / Keyframe
     for (NSValue* nodePtr in _nodeSequences)
-    {
+{
         CCNode* node = [nodePtr pointerValue];
-        
+
         NSDictionary* seqs = [_nodeSequences objectForKey:nodePtr];
         NSDictionary* seqNodeProps = [seqs objectForKey:[NSNumber numberWithInt:seqId]];
-        
+
         // Reset Nodes, Create Actions
         NSMutableSet* seqNodePropNames = [NSMutableSet set];
-        
+
         // Reset the nodes that may have been changed by other timelines
         NSDictionary* nodeBaseValues = [_baseValues objectForKey:nodePtr];
         for (NSString* propName in nodeBaseValues) {
@@ -672,13 +673,13 @@ static NSInteger ccbAnimationManagerID = 0;
                     [self setAnimatedProperty:propName forNode:node toValue:value tweenDuration:0];
                 }
             }
-        }
-        
+}
+
         for (NSString* propName in seqNodeProps)
-        {
+{
             CCBSequenceProperty* seqProp = [seqNodeProps objectForKey:propName];
             NSMutableArray* keyFrames    = [self findFrames:time sequenceProperty:seqProp];
-            
+    
             // No KeyFrames Found
             if([keyFrames count]==0) {
                 continue;
@@ -688,8 +689,8 @@ static NSInteger ccbAnimationManagerID = 0;
             if([keyFrames count]==1) {
                 [self setKeyFrameForNode:node sequenceProperty:seqProp tweenDuration:0 keyFrame:[[keyFrames objectAtIndex:0] intValue]];
                 continue;
-            }
-            
+}
+
             // Set Initial State First Key Frame
             [self setKeyFrameForNode:node sequenceProperty:seqProp tweenDuration:0 keyFrame:[[keyFrames objectAtIndex:0] intValue]];
             
@@ -709,8 +710,8 @@ static NSInteger ccbAnimationManagerID = 0;
             [action step:timeFoward];
             
         }
-        
-    }
+
+}
 
     _runningSequence      = [self sequenceFromSequenceId:seqId];
     _runningSequence.time = time;
@@ -724,11 +725,11 @@ static NSInteger ccbAnimationManagerID = 0;
 
 - (void) timeSeekForSequenceId:(int)seqId time:(float)time {
     NSAssert(seqId != -1, @"Sequence id %d couldn't be found",seqId);
-    
+
     [self clearAllActions];
     // Contains all Sequence Propertys / Keyframe
     for (NSValue* nodePtr in _nodeSequences)
-    {
+{
         CCNode* node = [nodePtr pointerValue];
         
         NSDictionary* seqs = [_nodeSequences objectForKey:nodePtr];
@@ -746,10 +747,10 @@ static NSInteger ccbAnimationManagerID = 0;
                     [self setAnimatedProperty:propName forNode:node toValue:value tweenDuration:0];
                 }
             }
-        }
-        
+}
+
         for (NSString* propName in seqNodeProps)
-        {
+{
             CCBSequenceProperty* seqProp = [seqNodeProps objectForKey:propName];
             NSMutableArray* keyFrames    = [self findFrames:time sequenceProperty:seqProp];
             
@@ -785,18 +786,18 @@ static NSInteger ccbAnimationManagerID = 0;
             
             
             CCActionSequence* animSequence = [CCActionSequence actions:action, nextKeyFrameBlock,nil];
-            
+    
             // Fast forward to time point
             [animSequence setTag:_animationManagerId];
             [animSequence startWithTarget:node];
             [animSequence step:0]; // First Tick
             [animSequence step:timeFoward];
             [_currentActions addObject:animSequence];
-            
-        }
-        
-    }
     
+}
+
+}
+
     [self addSequenceCallBacks:seqId tweenDuration:0 startTime:time];
     
     _runningSequence      = [self sequenceFromSequenceId:seqId];
@@ -822,11 +823,11 @@ static NSInteger ccbAnimationManagerID = 0;
             [result addObject:[NSNumber numberWithUnsignedInteger:[seqProp.keyframes indexOfObject:startKeyFrame]]];
             [result addObject:[NSNumber numberWithUnsignedInteger:[seqProp.keyframes indexOfObject:endKeyFrame]]];
             break;
-        }
-        
+}
+
         startKeyFrame = [seqProp.keyframes objectAtIndex:i];
     }
-    
+
     // No Frames
     if([result count]==0) {
         [result addObject:[NSNumber numberWithInteger:(i-1)]];
@@ -858,29 +859,44 @@ static NSInteger ccbAnimationManagerID = 0;
             // Apply Easing
             action = [self easeAction:action easingType:startKF.easingType easingOpt:startKF.easingOpt];
             [actions addObject:action];
-        
+    
             // Cache
             seq = [CCActionSequence actionWithArray:actions];
             seq.tag = _animationManagerId;
             endKF.frameActions = [seq copy]; 
         }
-    }
-    
+}
+
     return seq;
 }
 
+-(void)fixedUpdate:(CCTime)delta
+{
+	if(self.fixedTimestep)
+	{
+		[self updateInternal:delta];
+	}
+}
+
 - (void) update:(CCTime)delta {
+	if(!self.fixedTimestep)
+	{
+		[self updateInternal:delta];
+	}
+}
+
+- (void)updateInternal:(CCTime)delta {
     
     if(_paused)
         return;
     
     float step = delta*_playbackSpeed;
-    
+
     if(_playbackSpeed<0) {
         [self timeSeekStaticForSequenceId:_runningSequence.sequenceId time:_runningSequence.time+step];
         return;
     }
-    
+
     if(_currentActions.count==0)
         return;
 
@@ -889,24 +905,24 @@ static NSInteger ccbAnimationManagerID = 0;
     
     for(action in actionsCopy) {
         [action step:step];
-        
+    
         if([action isDone]) {
             [_currentActions removeObject:action];
         }
-    }
-    
+}
+
     _runningSequence.time+=step;
 }
 
 - (void)clearAllActions {
-    
+
     if(!_currentActions.count)
         return;
-    
+
     for(CCAction *action in _currentActions) {
         [action stop];
     }
-    
+
     [_currentActions removeAllObjects];
 }
 
@@ -925,8 +941,8 @@ static NSInteger ccbAnimationManagerID = 0;
     // Repeat Sequence (Loop)
     if(loop) {
         [sequence setChainedSequenceId:seqId];
-    }
-    
+}
+
     NSString *propertyName = [CCBSequenceProperty getPropertyNameFromTypeId:propertyType];
     NSAssert(propertyName != nil, @"Property type %d couldn't be found",(int)propertyType);
     
@@ -939,7 +955,7 @@ static NSInteger ccbAnimationManagerID = 0;
     float duration = 0.0f;
     
     for(NSDictionary* frameDict in frameArray) {
-        
+
         // Create KeyFrame
         CCBKeyframe* newFrame = [[CCBKeyframe alloc] init];
         [newFrame setTime:[[frameDict valueForKey:@"time"] floatValue]];
@@ -947,8 +963,8 @@ static NSInteger ccbAnimationManagerID = 0;
         
         [sequenceProperty.keyframes addObject:newFrame];
         duration=newFrame.time;
-    }
-    
+}
+
     // Set Sequence Duration
     sequence.duration = duration;
     
@@ -959,8 +975,8 @@ static NSInteger ccbAnimationManagerID = 0;
     [seqs setObject:seqNodeProps forKey:[NSNumber numberWithInt:seqId]];
     
     [self addNode:node andSequences:seqs];
-    
-}
+
+    }
 
 #pragma mark Cocos2D Animation Support
 

@@ -8,7 +8,7 @@
 
 #import "CCBReader.h"
 
-#define kCCBVersion 7
+#define kCCBVersion 8
 
 enum {
     kCCBPropTypePosition = 0,

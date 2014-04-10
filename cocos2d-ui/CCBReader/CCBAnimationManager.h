@@ -33,7 +33,7 @@
 
 @protocol CCBAnimationManagerDelegate <NSObject>
 
-- (void)completedAnimationSequenceNamed:(NSString*)name;
+- (void) completedAnimationSequenceNamed:(NSString*)name;
 
 @end
 
@@ -60,6 +60,9 @@
 
 // Auto play sequence id.
 @property (nonatomic,assign) int autoPlaySequenceId;
+
+// Animation manager updates on a fixed timestep.
+@property (nonatomic,assign) bool fixedTimestep;
 
 // Base node.
 @property (nonatomic,unsafe_unretained) CCNode* rootNode;
@@ -99,7 +102,7 @@
 - (void) runAnimationsForSequenceId:(int)seqId tweenDuration:(float) tweenDuration;
 
 // Animation call back.
-- (void) setCompletedAnimationCallbackBlock:(void(^)(id sender))b;
+-(void) setCompletedAnimationCallbackBlock:(void(^)(id sender))b;
 
 #pragma mark Time Controls
 - (void)timeSeekForSequenceNamed:(NSString*)name time:(float)time;
