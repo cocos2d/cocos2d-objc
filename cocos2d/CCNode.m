@@ -1414,7 +1414,10 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 		}
 		else
 		{
-			rigidTransform = RigidBodyToParentTransform(self, physicsBody);
+			CGPoint scaleToParent = NodeToPhysicsScale(self.parent);
+			CGAffineTransform nodeToPhysics = NodeToPhysicsTransform(self.parent);
+			rigidTransform = CGAffineTransformConcat(physicsBody.absoluteTransform, CGAffineTransformInvert(nodeToPhysics));
+			rigidTransform = CGAffineTransformConcat(CGAffineTransformMakeScale(scaleToParent.x, scaleToParent.y), rigidTransform);
 		}
 
 		_transform = CGAffineTransformConcat(CGAffineTransformMakeScale(_scaleX , _scaleY), rigidTransform);
