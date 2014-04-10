@@ -48,6 +48,7 @@ _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_NotEqualWithAccuracy, 0
     [super tearDown];
 }
 
+
 - (void)testSmallKeyframesTest
 {
 	CCBAnimationManager * animationManager = [[CCBAnimationManager alloc] init];
@@ -108,7 +109,7 @@ _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_NotEqualWithAccuracy, 0
 		[animationManager update:0.1f];
 		
 		//Uncomment to debug
-		NSLog(@"Pos (%0.2f,%0.2f) i=%i",node.position.x,node.position.y, i);
+		//NSLog(@"Pos (%0.2f,%0.2f) i=%i",node.position.x,node.position.y, i);
 	
 		if(i == 49)
 		{
