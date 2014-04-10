@@ -10,6 +10,35 @@
 #import "cocos2d.h"
 #import "CCNode_private.h"
 
+@interface CCMemoryNode : CCNode
+
+@end
+
+@implementation CCMemoryNode
+
+-(id)retain
+{
+	//Help with debug.
+	//NSLog(@"CCMemoryNode : Retain %@",[NSThread callStackSymbols]);
+	return [super retain];
+}
+
+-(oneway void)release
+{
+	//Help with debug.
+	//NSLog(@"CCMemoryNode : release %@",[NSThread callStackSymbols]);
+	[super release];
+}
+
+-(id)autorelease
+{
+	//Help with debug.
+	//NSLog(@"CCMemoryNode : retain | autorelease %@",[NSThread callStackSymbols]);
+	return [super autorelease];
+}
+
+@end
+
 @interface CCMemoryTests : XCTestCase
 @end
 
@@ -32,20 +61,25 @@
 
 - (void)testPhysicsBodyRetainCycle2
 {
-	CCNode *node = [[CCNode alloc] init];
+	CCNode *node;
+	CCPhysicsNode *physics;
+	@autoreleasepool {
+		node = [[CCMemoryNode alloc] init];
+		XCTAssert(node.retainCount == 1, @"");
+		
+		node.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1 andCenter:CGPointZero];
+		XCTAssert(node.retainCount == 1, @"");
+		
+		physics = [CCPhysicsNode node];
+		[physics onEnter];
+		
+		[physics addChild:node];
+		XCTAssert(node.retainCount > 1, @"");
+		
+		[physics removeChild:node];
+	}
 	XCTAssert(node.retainCount == 1, @"");
-	
-	node.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1 andCenter:CGPointZero];
-	XCTAssert(node.retainCount == 1, @"");
-	
-	CCPhysicsNode *physics = [CCPhysicsNode node];
-	[physics onEnter];
-	
-	[physics addChild:node];
-	XCTAssert(node.retainCount > 1, @"");
-	
-	[physics removeChild:node];
-	XCTAssert(node.retainCount == 1, @"");
+	XCTAssert(physics.retainCount == 1, @"");
 	
 	[physics release];
 	[node release];
