@@ -1013,6 +1013,12 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 		for(NSUInteger i=0, count=joints.count; i<count; i++){
 			[joints[i] tryAddToPhysicsNode:physics];
 		}
+		
+#ifndef NDEBUG
+		// Reset these to zero since they shouldn't be read anyway.
+		_position = CGPointZero;
+		_rotationalSkewX = _rotationalSkewY = 0.0f;
+#endif
 	}
 }
 
