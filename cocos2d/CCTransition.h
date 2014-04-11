@@ -95,6 +95,12 @@ typedef NS_ENUM(NSInteger, CCTransitionDirection)
 @property (nonatomic, assign) CCTexturePixelFormat transitionPixelFormat;
 
 /**
+ *  Depth/stencil format used for transition.
+ *  Default GL_DEPTH24_STENCIL8_OES.
+ */
+@property (nonatomic, assign) GLuint transitionDepthStencilFormat;
+
+/**
  *  Defines whether outgoing scene will be animated during transition.
  *  Default NO.
  */

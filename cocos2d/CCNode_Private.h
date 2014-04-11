@@ -24,6 +24,14 @@
 
 #import "CCNode.h"
 
+extern inline CGPoint NodeToPhysicsScale(CCNode * node);
+extern inline float NodeToPhysicsRotation(CCNode *node);
+extern inline CGAffineTransform NodeToPhysicsTransform(CCNode *node);
+extern inline CGAffineTransform RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body);
+extern inline CGPoint GetPositionFromBody(CCNode *node, CCPhysicsBody *body);
+extern inline CGPoint TransformPointAsVector(CGPoint p, CGAffineTransform t);
+extern inline CGAffineTransform CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians);
+
 @interface CCNode()<CCShaderProtocol, CCBlendProtocol, CCTextureProtocol> {
 	@protected
 	CCRenderState *_renderState;

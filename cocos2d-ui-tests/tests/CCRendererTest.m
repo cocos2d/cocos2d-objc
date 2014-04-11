@@ -5,6 +5,37 @@
 @interface CCRendererTest : TestBase @end
 @implementation CCRendererTest
 
+-(void)setupClippingNodeTest
+{
+	CGSize size = [CCDirector sharedDirector].designSize;
+	
+//	CCNode *parent = self.contentNode;
+	
+	CCRenderTexture *parent = [CCRenderTexture renderTextureWithWidth:size.width height:size.height pixelFormat:CCTexturePixelFormat_RGBA8888 depthStencilFormat:GL_DEPTH24_STENCIL8];
+	parent.positionType = CCPositionTypeNormalized;
+	parent.position = ccp(0.5, 0.5);
+	parent.autoDraw = YES;
+	parent.clearColor = [CCColor blackColor];
+	parent.clearDepth = 1.0;
+	parent.clearStencil = 0;
+	parent.clearFlags = GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT;
+	[self.contentNode addChild:parent];
+	
+	CCNodeGradient *grad = [CCNodeGradient nodeWithColor:[CCColor redColor] fadingTo:[CCColor blueColor] alongVector:ccp(1, 1)];
+//	[parent addChild:grad];
+	
+	CCNode *stencil = [CCSprite spriteWithImageNamed:@"Sprites/grossini.png"];
+//	[parent addChild:stencil];
+	stencil.position = ccp(size.width/2, size.height/2);
+	stencil.scale = 5.0;
+	[stencil runAction:[CCActionRepeatForever actionWithAction:[CCActionRotateBy actionWithDuration:1.0 angle:90.0]]];
+	
+	CCClippingNode *clip = [CCClippingNode clippingNodeWithStencil:stencil];
+	[parent addChild:clip];
+	clip.alphaThreshold = 0.5;
+	[clip addChild:grad];
+}
+
 -(CCSprite *)simpleShaderTestHelper
 {
 	CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/bird.png"];
@@ -62,7 +93,6 @@
 		[timer repeatOnceWithInterval:1.0/60.0];
 	} delay:0.0f];
 }
-
 -(void)renderTextureHelper:(CCNode *)stage size:(CGSize)size
 {
 	CCColor *color = [CCColor colorWithRed:0.0 green:0.0 blue:0.5 alpha:0.5];

@@ -45,9 +45,12 @@ extern const NSString *CCShaderUniformSinTime;
 extern const NSString *CCShaderUniformCosTime;
 extern const NSString *CCShaderUniformRandom01;
 extern const NSString *CCShaderUniformMainTexture;
+extern const NSString *CCShaderUniformAlphaTestValue;
 
 
 @interface CCShader : NSObject<NSCopying>
+
+@property(nonatomic, copy) NSString *debugName;
 
 +(instancetype)shaderNamed:(NSString *)shaderName;
 
@@ -56,6 +59,7 @@ extern const NSString *CCShaderUniformMainTexture;
 
 +(instancetype)positionColorShader;
 +(instancetype)positionTextureColorShader;
++(instancetype)positionTextureColorAlphaTestShader;
 +(instancetype)positionTextureA8ColorShader;
 
 @end
