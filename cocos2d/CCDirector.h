@@ -151,6 +151,9 @@ and when to execute the Scenes.
 
 	/* action manager associated with this director */
 	CCActionManager *_actionManager;
+
+    /* fixed timestep action manager associated with this director */
+    CCActionManager *_actionManagerFixed;
 	
 	/*  OpenGLView. On iOS it is a copy of self.view */
 	CCGLView		*__view;

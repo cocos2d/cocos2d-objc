@@ -192,8 +192,8 @@
 	GLKVector4 b = GLKVector4Make(_endColor.r, _endColor.g, _endColor.b, _endColor.a);
 	_colors[0] =  GLKVector4Lerp(a, b, ((M_SQRT2 + u.x + u.y) / (2.0f * M_SQRT2)));
 	_colors[1] =  GLKVector4Lerp(a, b, ((M_SQRT2 - u.x + u.y) / (2.0f * M_SQRT2)));
-	_colors[2] =  GLKVector4Lerp(a, b, ((M_SQRT2 + u.x - u.y) / (2.0f * M_SQRT2)));
-	_colors[3] =  GLKVector4Lerp(a, b, ((M_SQRT2 - u.x - u.y) / (2.0f * M_SQRT2)));
+	_colors[2] =  GLKVector4Lerp(a, b, ((M_SQRT2 - u.x - u.y) / (2.0f * M_SQRT2)));
+	_colors[3] =  GLKVector4Lerp(a, b, ((M_SQRT2 + u.x - u.y) / (2.0f * M_SQRT2)));
 }
 
 -(CCColor*) startColor

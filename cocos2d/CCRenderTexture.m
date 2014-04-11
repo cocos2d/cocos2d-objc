@@ -350,15 +350,6 @@
 	// Don't call visit on its children
 	if(!_visible) return;
 	
-	GLKMatrix4 transform = [self transform:parentTransform];
-	[_sprite visit:renderer parentTransform:&transform];
-	[self draw:renderer transform:&transform];
-	
-	_orderOfArrival = 0;
-}
-
-- (void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
-{
 	if(_autoDraw){
 		[self begin];
 		NSAssert(_renderer == renderer, @"CCRenderTexture error!");
@@ -374,6 +365,11 @@
 		
 		[self end];
 	}
+	
+	GLKMatrix4 transform = [self transform:parentTransform];
+	[_sprite visit:renderer parentTransform:&transform];
+	
+	_orderOfArrival = 0;
 }
 
 #pragma mark RenderTexture - Save Image

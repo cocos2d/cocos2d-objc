@@ -108,6 +108,7 @@ extern NSString * cocos2dVersion(void);
 @synthesize secondsPerFrame = _secondsPerFrame;
 @synthesize scheduler = _scheduler;
 @synthesize actionManager = _actionManager;
+@synthesize actionManagerFixed = _actionManagerFixed;
 
 //
 // singleton stuff
@@ -176,8 +177,14 @@ static CCDirector *_sharedDirector = nil;
 
 		// action manager
 		_actionManager = [[CCActionManager alloc] init];
+		_actionManagerFixed = [[CCFixedActionManager alloc] init];
+		
 		[_scheduler scheduleTarget:_actionManager];
+		[_scheduler scheduleTarget:_actionManagerFixed];
+
 		[_scheduler setPaused:NO target:_actionManager];
+		[_scheduler setPaused:NO target:_actionManagerFixed];
+		
 		
 		// touch manager
 		_responderManager = [ CCResponderManager responderManager ];
@@ -300,31 +307,6 @@ static CCDirector *_sharedDirector = nil;
 	CCLOG(@"cocos2d: override me");
 }
 
-//- (void) setAlphaBlending: (BOOL) on
-//{
-//	if (on) {
-//		ccGLBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
-//
-//	} else
-//		ccGLBlendFunc(GL_ONE, GL_ZERO);
-//
-//	CC_CHECK_GL_ERROR_DEBUG();
-//}
-//
-//- (void) setDepthTest: (BOOL) on
-//{
-//	if (on) {
-//		glClearDepth(1.0f);
-//
-//		glEnable(GL_DEPTH_TEST);
-//		glDepthFunc(GL_LEQUAL);
-////		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-//	} else
-//		glDisable( GL_DEPTH_TEST );
-//
-//	CC_CHECK_GL_ERROR_DEBUG();
-//}
-
 #pragma mark Director Integration with a UIKit view
 
 -(void) setView:(CCGLView*)view
@@ -355,6 +337,10 @@ static CCDirector *_sharedDirector = nil;
 		if( view ) {
 			[self createStatsLabel];
 			[self setProjection: _projection];
+			
+			// TODO this should probably migrate somewhere else.
+			glEnable(GL_DEPTH_TEST);
+			glDepthFunc(GL_LEQUAL);
 		}
 
 		// Dump info once OpenGL was initilized
@@ -393,19 +379,6 @@ static CCDirector *_sharedDirector = nil;
 	}
 }
 
-// Replaced by just the projection matrix.
-//static void
-//GLToClipTransform(kmMat4 *transformOut)
-//{
-//	kmMat4 projection;
-//	kmGLGetMatrix(KM_GL_PROJECTION, &projection);
-//	
-//	kmMat4 modelview;
-//	kmGLGetMatrix(KM_GL_MODELVIEW, &modelview);
-//	
-//	kmMat4Multiply(transformOut, &projection, &modelview);
-//}
-
 -(CGFloat)flipY
 {
 	return -1.0;
@@ -418,7 +391,6 @@ static CCDirector *_sharedDirector = nil;
 	
 	// Calculate z=0 using -> transform*[0, 0, 0, 1]/w
 	float zClip = transform.m[14]/transform.m[15];
-//	kmScalar zClip = transform.mat[14]/transform.mat[15];
 	
 	CGSize glSize = __view.bounds.size;
 	GLKVector3 clipCoord = GLKVector3Make(2.0*uiPoint.x/glSize.width - 1.0, 2.0*uiPoint.y/glSize.height - 1.0, zClip);
@@ -431,18 +403,11 @@ static CCDirector *_sharedDirector = nil;
 
 -(CGPoint)convertToUI:(CGPoint)glPoint
 {
-//	kmMat4 transform;
-//	GLToClipTransform(&transform);
 	GLKMatrix4 transform = self.projectionMatrix;
 		
-//	kmVec3 clipCoord;
-//	// Need to calculate the zero depth from the transform.
-//	kmVec3 glCoord = {glPoint.x, glPoint.y, 0.0};
-//	kmVec3TransformCoord(&clipCoord, &glCoord, &transform);
 	GLKVector3 clipCoord = GLKMatrix4MultiplyAndProjectVector3(transform, GLKVector3Make(glPoint.x, glPoint.y, 0.0));
 	
 	CGSize glSize = __view.bounds.size;
-//	return ccp(glSize.width*(clipCoord.x*0.5 + 0.5), glSize.height*(self.flipY*clipCoord.y*0.5 + 0.5));
 	return ccp(glSize.width*(clipCoord.v[0]*0.5 + 0.5), glSize.height*(self.flipY*clipCoord.v[1]*0.5 + 0.5));
 }
 
@@ -789,7 +754,7 @@ static CCDirector *_sharedDirector = nil;
 
 - (void)setAnimationInterval:(NSTimeInterval)interval
 {
-	CCLOG(@"cocos2d: Director#setAnimationInterval. Override me");
+	//CCLOG(@"cocos2d: Director#setAnimationInterval. Override me");
 }
 
 - (CCTime)fixedUpdateInterval
