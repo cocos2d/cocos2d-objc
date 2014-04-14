@@ -33,6 +33,12 @@
 @class CCSpriteFrame;
 @class CCAnimation;
 
+/// The four CCVertexes of a sprite.
+/// Bottom left, bottom right, top right, top left.
+typedef struct CCSpriteVertexes {
+	CCVertex bl, br, tr, tl;
+} CCSpriteVertexes;
+
 #pragma mark CCSprite
 
 #define CCSpriteIndexNotInitialized 0xffffffff 	/// CCSprite invalid index on the CCSpriteBatchode
@@ -48,6 +54,8 @@
 
 /** Returns the texture rect of the CCSprite in points. */
 @property (nonatomic,readonly) CGRect textureRect;
+
+@property (nonatomic, readonly) const CCSpriteVertexes *vertexes;
 
 /** Returns whether or not the texture rectangle is rotated. */
 @property (nonatomic,readonly) BOOL textureRectRotated;

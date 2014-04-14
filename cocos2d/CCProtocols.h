@@ -33,6 +33,7 @@
 @class CCDirector;
 @class CCBlendMode;
 @class CCShader;
+@class CCRenderState;
 
 
 #pragma mark - CCShaderProtocol
@@ -41,6 +42,7 @@
 
 @property(nonatomic, strong) CCShader *shader;
 @property(nonatomic, readonly) NSMutableDictionary *shaderUniforms;
+@property(nonatomic, readonly) CCRenderState *renderState;
 
 @end
 
@@ -52,6 +54,7 @@
 @protocol CCBlendProtocol <NSObject>
 
 @property(nonatomic, readwrite, strong) CCBlendMode *blendMode;
+@property(nonatomic, readonly) CCRenderState *renderState;
 
 /** set the source blending function for the texture */
 -(void) setBlendFunc:(ccBlendFunc)blendFunc __deprecated;
@@ -72,10 +75,10 @@
  But you can change the blending function at any time.
  */
 @protocol CCTextureProtocol <CCBlendProtocol>
-/** returns the used texture */
--(CCTexture*) texture;
-/** sets a new texture. it will be retained */
--(void) setTexture:(CCTexture*)texture;
+
+@property(nonatomic, strong) CCTexture *texture;
+@property(nonatomic, readonly) CCRenderState *renderState;
+
 @end
 
 

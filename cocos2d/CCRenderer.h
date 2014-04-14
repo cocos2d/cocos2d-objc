@@ -87,9 +87,6 @@ CCRenderBufferSetLine(CCRenderBuffer buffer, int index, GLushort a, GLushort b)
 static inline BOOL
 CCRenderCheckVisbility(const GLKMatrix4 *transform, GLKVector2 center, GLKVector2 extents)
 {
-//	float hw = contentSize.width*0.5f;
-//	float hh = contentSize.height*0.5f;
-	
 	// Center point in clip coordinates.
 	GLKVector4 csc = GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(center.x, center.y, 0.0f, 1.0f));
 	

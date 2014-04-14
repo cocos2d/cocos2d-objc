@@ -1776,7 +1776,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 {
 	if(_texture != texture){
 		_texture = texture;
-		self.renderState = nil;
+		_renderState = nil;
 		
 		// Set the main texture in the uniforms dictionary (if the dictionary exists).
 		_shaderUniforms[CCShaderUniformMainTexture] = (_texture ?: [CCTexture none]);

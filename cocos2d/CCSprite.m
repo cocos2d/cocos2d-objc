@@ -60,7 +60,7 @@
 	GLKVector2 _vertexCenter, _vertexExtents;
 
 	// Vertex coords, texture coords and color info.
-	CCVertex _verts[4];
+	CCSpriteVertexes _verts;
 	
 	BOOL _flipX, _flipY;
 }
@@ -252,10 +252,10 @@
 	float x2 = x1 + _textureRect.size.width;
 	float y2 = y1 + _textureRect.size.height;
 	
-	_verts[0].position = GLKVector4Make(x1, y1, 0.0f, 1.0f);
-	_verts[1].position = GLKVector4Make(x2, y1, 0.0f, 1.0f);
-	_verts[2].position = GLKVector4Make(x2, y2, 0.0f, 1.0f);
-	_verts[3].position = GLKVector4Make(x1, y2, 0.0f, 1.0f);
+	_verts.bl.position = GLKVector4Make(x1, y1, 0.0f, 1.0f);
+	_verts.br.position = GLKVector4Make(x2, y1, 0.0f, 1.0f);
+	_verts.tr.position = GLKVector4Make(x2, y2, 0.0f, 1.0f);
+	_verts.tl.position = GLKVector4Make(x1, y2, 0.0f, 1.0f);
 	
 	// Set the center/extents for culling purposes.
 	_vertexCenter = GLKVector2Make((x1 + x2)*0.5f, (y1 + y2)*0.5f);
@@ -288,10 +288,10 @@
 		if( _flipX) CC_SWAP(top,bottom);
 		if( _flipY) CC_SWAP(left,right);
 		
-		_verts[0].texCoord1 = GLKVector2Make( left,    top);
-		_verts[1].texCoord1 = GLKVector2Make( left, bottom);
-		_verts[2].texCoord1 = GLKVector2Make(right, bottom);
-		_verts[3].texCoord1 = GLKVector2Make(right,    top);
+		_verts.bl.texCoord1 = GLKVector2Make( left,    top);
+		_verts.br.texCoord1 = GLKVector2Make( left, bottom);
+		_verts.tr.texCoord1 = GLKVector2Make(right, bottom);
+		_verts.tl.texCoord1 = GLKVector2Make(right,    top);
 	} else {
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 		float left	= (2*rect.origin.x + 1)/(2*atlasWidth);
@@ -308,16 +308,16 @@
 		if( _flipX) CC_SWAP(left,right);
 		if( _flipY) CC_SWAP(top,bottom);
 
-		_verts[0].texCoord1 = GLKVector2Make( left, bottom);
-		_verts[1].texCoord1 = GLKVector2Make(right, bottom);
-		_verts[2].texCoord1 = GLKVector2Make(right,    top);
-		_verts[3].texCoord1 = GLKVector2Make( left,    top);
+		_verts.bl.texCoord1 = GLKVector2Make( left, bottom);
+		_verts.br.texCoord1 = GLKVector2Make(right, bottom);
+		_verts.tr.texCoord1 = GLKVector2Make(right,    top);
+		_verts.tl.texCoord1 = GLKVector2Make( left,    top);
 	}
 }
 
--(CCVertex *)verts
+-(const CCSpriteVertexes *)vertexes
 {
-	return _verts;
+	return &_verts;
 }
 
 #pragma mark CCSprite - draw
@@ -327,10 +327,10 @@
 	if(!CCRenderCheckVisbility(transform, _vertexCenter, _vertexExtents)) return;
 	
 	CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:self.renderState];
-	CCRenderBufferSetVertex(buffer, 0, CCVertexApplyTransform(_verts[0], transform));
-	CCRenderBufferSetVertex(buffer, 1, CCVertexApplyTransform(_verts[1], transform));
-	CCRenderBufferSetVertex(buffer, 2, CCVertexApplyTransform(_verts[2], transform));
-	CCRenderBufferSetVertex(buffer, 3, CCVertexApplyTransform(_verts[3], transform));
+	CCRenderBufferSetVertex(buffer, 0, CCVertexApplyTransform(_verts.bl, transform));
+	CCRenderBufferSetVertex(buffer, 1, CCVertexApplyTransform(_verts.br, transform));
+	CCRenderBufferSetVertex(buffer, 2, CCVertexApplyTransform(_verts.tr, transform));
+	CCRenderBufferSetVertex(buffer, 3, CCVertexApplyTransform(_verts.tl, transform));
 	
 	CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
 	CCRenderBufferSetTriangle(buffer, 1, 0, 2, 3);
@@ -340,10 +340,10 @@
 	const GLKVector4 white = {{1, 1, 1, 1}};
 	
 	CCRenderBuffer debug = [renderer enqueueLines:4 andVertexes:4 withState:[CCRenderState debugColor]];
-	CCRenderBufferSetVertex(debug, 0, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts[0].position), zero, zero, white});
-	CCRenderBufferSetVertex(debug, 1, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts[1].position), zero, zero, white});
-	CCRenderBufferSetVertex(debug, 2, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts[2].position), zero, zero, white});
-	CCRenderBufferSetVertex(debug, 3, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts[3].position), zero, zero, white});
+	CCRenderBufferSetVertex(debug, 0, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts.bl.position), zero, zero, white});
+	CCRenderBufferSetVertex(debug, 1, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts.br.position), zero, zero, white});
+	CCRenderBufferSetVertex(debug, 2, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts.tr.position), zero, zero, white});
+	CCRenderBufferSetVertex(debug, 3, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts.tl.position), zero, zero, white});
 	
 	CCRenderBufferSetLine(debug, 0, 0, 1);
 	CCRenderBufferSetLine(debug, 1, 1, 2);
@@ -397,10 +397,10 @@
 	color4.g *= _displayColor.a;
 	color4.b *= _displayColor.a;
 	
-	_verts[0].color = color4;
-	_verts[1].color = color4;
-	_verts[2].color = color4;
-	_verts[3].color = color4;
+	_verts.bl.color = color4;
+	_verts.br.color = color4;
+	_verts.tr.color = color4;
+	_verts.tl.color = color4;
 }
 
 -(void) setColor:(CCColor*)color
