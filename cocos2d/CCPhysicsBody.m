@@ -434,7 +434,11 @@ CCPhysicsBodyUpdatePosition(cpBody *body, cpFloat dt)
         /////// Update absolute position
         
 		CGAffineTransform phyicsTransform = NodeToPhysicsTransform(self.node.parent);
-        CGPoint rotPos = ccpRotateByAngle(self.node.anchorPointInPoints, CGPointZero, -CC_DEGREES_TO_RADIANS(self.relativeRotation));
+		
+		CGPoint anchorPointInPointsScaled = ccpCompMult(self.node.anchorPointInPoints,
+												   ccp(self.node.scaleX, self.node.scaleY));
+		
+        CGPoint rotPos = ccpRotateByAngle(anchorPointInPointsScaled, CGPointZero, -CC_DEGREES_TO_RADIANS(self.relativeRotation));
 		CGPoint newPos2 = ccpSub(self.relativePosition , rotPos );
 		CGPoint newPos3 = cpTransformPoint(phyicsTransform, newPos2);
 
