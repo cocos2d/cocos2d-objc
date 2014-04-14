@@ -123,7 +123,7 @@
 	[CCRenderer bindRenderer:_renderer];
 	[_renderer invalidateState];
 	
-	[_renderer enqueueClear:(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) color:GLKVector4Make(0.0f, 0.0f, 0.0f, 0.0f) depth:1.0f stencil:0];
+	[_renderer enqueueClear:(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) color:_runningScene.colorRGBA.glkVector4 depth:1.0f stencil:0];
 	
 	// Render
 	[_runningScene visit:_renderer parentTransform:&projection];
