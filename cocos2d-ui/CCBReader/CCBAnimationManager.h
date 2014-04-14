@@ -57,7 +57,7 @@
     
 }
 
-// Sequence Array.
+// Sequence Array
 @property (nonatomic,readonly) NSMutableArray* sequences;
 
 // Auto play sequence id.

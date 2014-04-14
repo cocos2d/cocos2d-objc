@@ -86,6 +86,11 @@ static NSInteger ccbAnimationManagerID = 0;
     [_nodeSequences setObject:seq forKey:nodePtr];
 }
 
+- (id)seqForNode:(CCNode*)node {
+    NSValue* nodePtr = [NSValue valueWithPointer:(__bridge const void *)(node)];
+    return [_nodeSequences objectForKey:nodePtr];
+}
+
 - (void)moveAnimationsFromNode:(CCNode*)fromNode toNode:(CCNode*)toNode {
     NSValue* fromNodePtr = [NSValue valueWithPointer:(__bridge const void *)(fromNode)];
     NSValue* toNodePtr = [NSValue valueWithPointer:(__bridge const void *)(toNode)];
@@ -912,11 +917,16 @@ static NSInteger ccbAnimationManagerID = 0;
     
     NSMutableDictionary* seqs         = [NSMutableDictionary dictionary];
     NSMutableDictionary* seqNodeProps = [NSMutableDictionary dictionary];
-    
+
     [seqNodeProps setObject:sequenceProperty forKey:sequenceProperty.name];
     [seqs setObject:seqNodeProps forKey:[NSNumber numberWithInt:seqId]];
     
-    [self addNode:node andSequences:seqs];
+    NSMutableDictionary* seqNode      = [self seqForNode:node];
+    if(seqNode) {
+        [seqNode setObject:seqNodeProps forKey:[NSNumber numberWithInt:seqId]];
+    } else {
+        [self addNode:node andSequences:seqs];
+    }
     
 }
 
