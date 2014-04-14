@@ -64,7 +64,7 @@
 @property (nonatomic,strong) NSString* fontName;
 
 /** The font size of the text. */
-@property (nonatomic,assign) float fontSize;
+@property (nonatomic,assign) CGFloat fontSize;
 
 /** The color of the text (If not using shadow or outline). */
 @property (nonatomic,strong) CCColor* fontColor;
@@ -90,10 +90,10 @@
 @property (nonatomic,assign) BOOL adjustsFontSizeToFit;
 
 /** Used together with adjustsFontSizeToFit. Fonts will not be scaled down below this size (the label will instead be clipped). */
-@property (nonatomic,assign) float minimumFontSize;
+@property (nonatomic,assign) CGFloat minimumFontSize;
 
 /** Adjusts the fonts baseline, the value is set in points. */
-@property (nonatomic,assign) float baselineAdjustment;
+@property (nonatomic,assign) CGFloat baselineAdjustment;
 
 
 /// -----------------------------------------------------------------------
@@ -113,7 +113,7 @@
 @property (nonatomic,assign) CCPositionType shadowOffsetType;
 
 /** The blur radius of the shadow. */
-@property (nonatomic,assign) float shadowBlurRadius;
+@property (nonatomic,assign) CGFloat shadowBlurRadius;
 
 
 /// -----------------------------------------------------------------------
@@ -124,7 +124,7 @@
 @property (nonatomic,strong) CCColor* outlineColor;
 
 /** The width of the text's outline. */
-@property (nonatomic,assign) float outlineWidth;
+@property (nonatomic,assign) CGFloat outlineWidth;
 
 
 /// -----------------------------------------------------------------------

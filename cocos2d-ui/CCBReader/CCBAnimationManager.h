@@ -74,7 +74,7 @@
 @property (nonatomic,assign) CGSize rootContainerSize;
 
 // Delegate.
-@property (nonatomic,strong) NSObject<CCBAnimationManagerDelegate>* delegate;
+@property (nonatomic,weak) NSObject<CCBAnimationManagerDelegate>* delegate;
 
 // Currently running sequence name.
 @property (unsafe_unretained, nonatomic,readonly) NSString* runningSequenceName;
