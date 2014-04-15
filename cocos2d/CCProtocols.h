@@ -38,10 +38,18 @@
 
 #pragma mark - CCShaderProtocol
 
+/// Properties for controlling the shader of a CCNode when it renders.
+/// These properties are already implemented by CCNode, but not normally exposed.
 @protocol CCShaderProtocol <NSObject>
 
+@optional
+
+/// The shader this node will be drawn using.
 @property(nonatomic, strong) CCShader *shader;
+/// The dictionary of shader uniform values that will be passed to the shader.
 @property(nonatomic, readonly) NSMutableDictionary *shaderUniforms;
+
+/// The rendering state this node will use when rendering.
 @property(nonatomic, readonly) CCRenderState *renderState;
 
 @end
@@ -53,7 +61,12 @@
  */
 @protocol CCBlendProtocol <NSObject>
 
+@optional
+
+/// The blending mode that will be used to render this node.
 @property(nonatomic, readwrite, strong) CCBlendMode *blendMode;
+
+/// The rendering state this node will use when rendering.
 @property(nonatomic, readonly) CCRenderState *renderState;
 
 /** set the source blending function for the texture */
@@ -76,7 +89,12 @@
  */
 @protocol CCTextureProtocol <CCBlendProtocol>
 
+@optional
+
+/// The main texture that will be passed to this node's shader.
 @property(nonatomic, strong) CCTexture *texture;
+
+/// The rendering state this node will use when rendering.
 @property(nonatomic, readonly) CCRenderState *renderState;
 
 @end
