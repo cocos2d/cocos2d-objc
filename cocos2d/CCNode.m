@@ -1763,7 +1763,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 
 -(void)setBlendFunc:(ccBlendFunc)blendFunc
 {
-	_blendMode = [CCBlendMode blendModeWithOptions:@{
+	self.blendMode = [CCBlendMode blendModeWithOptions:@{
 		CCBlendFuncSrcColor: @(blendFunc.src),
 		CCBlendFuncDstColor: @(blendFunc.dst),
 	}];
