@@ -109,7 +109,7 @@ typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
 	CCTexturePixelFormat_Default = CCTexturePixelFormat_RGBA8888,
 };
 
-@class CCGLProgram;
+@class CCShader;
 
 /** CCTexture2D class.
  *  This class allows to easily create OpenGL 2D textures from images, text or raw data.
@@ -133,7 +133,7 @@ typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
     BOOL                        _antialiased;
 
 	// Needed for drawAtRect, drawInPoint.
-	CCGLProgram					*_shaderProgram;
+	CCShader					*_shaderProgram;
 }
 
 
@@ -170,6 +170,9 @@ typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
  */
 +(instancetype)textureWithFile:(NSString*)file;
 
+/// A placeholder value for a blank sizeless texture.
++(instancetype)none;
+
 
 /// -------------------------------------------------------
 /// @name Accessing The Texture Attributes
@@ -192,9 +195,6 @@ typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
 
 /** True if antialised. */
 @property(nonatomic,assign,getter=isAntialiased) BOOL antialiased;
-
-/** Shader program used by drawAtPoint and drawInRect. */
-@property(nonatomic,readwrite,strong) CCGLProgram *shaderProgram;
 
 /** Returns the contentScale of the texture.
  In general "HD" textures return a contentScale of 2.0, while non-HD textures return 1.0.

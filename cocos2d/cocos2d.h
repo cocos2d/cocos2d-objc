@@ -92,10 +92,7 @@
 #import "CCLayoutBox.h"
 
 // Shaders
-#import "CCGLProgram.h"
-#import "ccGLStateCache.h"
-#import "ccShaders.h"
-#import "CCShaderCache.h"
+#import "CCShader.h"
 
 // Physics
 #import "CCPhysicsBody.h"
@@ -144,21 +141,13 @@
 //
 // cocos2d helper files
 //
-#import "Support/OpenGL_Internal.h"
 #import "Support/CCFileUtils.h"
 #import "Support/CGPointExtension.h"
 #import "Support/ccUtils.h"
-#import "Support/TransformUtils.h"
 #import "Support/CCProfiling.h"
 #import "Support/NSThread+performBlock.h"
 #import "Support/uthash.h"
 #import "Support/utlist.h"
-
-//
-// external
-//
-#import "kazmath/kazmath.h"
-#import "kazmath/GL/matrix.h"
 
 
 

@@ -25,7 +25,6 @@
  * THE SOFTWARE.
  */
 
-#import "CCTextureAtlas.h"
 #import "CCNode.h"
 #import "CCProtocols.h"
 
@@ -39,10 +38,7 @@
  All features from CCNode are valid, plus the following features:
  - opacity and RGB colors
  */
-@interface CCAtlasNode : CCNode <CCTextureProtocol> {
-	// Texture Atlas.
-	CCTextureAtlas	*_textureAtlas;
-
+@interface CCAtlasNode : CCNode <CCTextureProtocol, CCShaderProtocol, CCBlendProtocol> {
 	// Chars per row.
 	NSUInteger		_itemsPerRow;
     
@@ -58,12 +54,8 @@
 	// Quads to draw.
 	NSUInteger		_quadsToDraw;
 
-	// Blend function.
-	ccBlendFunc		_blendFunc;
-
 	// Texture RGBA.
 	ccColor3B	_colorUnmodified;
-	BOOL		_opacityModifyRGB;
 
 	// Color uniform.
 	GLint	_uniformColor;
@@ -73,12 +65,6 @@
 /// -----------------------------------------------------------------------
 /// @name Accessing the Atlas Node Attributes
 /// -----------------------------------------------------------------------
-
-/** Conforms to CCTextureProtocol protocol. */
-@property (nonatomic,readwrite,strong) CCTextureAtlas *textureAtlas;
-
-/** Conforms to CCTextureProtocol protocol. */
-@property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
 /** How many quads to draw. */
 @property (nonatomic,readwrite) NSUInteger quadsToDraw;

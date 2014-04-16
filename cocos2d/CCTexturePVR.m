@@ -65,11 +65,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "CCTexturePVR.h"
 #import "ccMacros.h"
 #import "CCConfiguration.h"
-#import "ccGLStateCache.h"
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
 #import "Support/ZipUtils.h"
-#import "Support/OpenGL_Internal.h"
+#import "CCGL.h"
 
 #pragma mark -
 #pragma mark CCTexturePVR
@@ -504,13 +503,13 @@ typedef struct {
 	if (_numberOfMipmaps > 0)
 	{
 		if (_name != 0)
-			ccGLDeleteTexture( _name );
+			glDeleteTextures(1, &_name);
 
 		// From PVR sources: "PVR files are never row aligned."
 		glPixelStorei(GL_UNPACK_ALIGNMENT,1);
 
 		glGenTextures(1, &_name);
-		ccGLBindTexture2D( _name );
+		glBindTexture(GL_TEXTURE_2D, _name);
 
 		// Default: Anti alias.
 		if( _numberOfMipmaps == 1 )
@@ -523,7 +522,7 @@ typedef struct {
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
 	}
 	
-	CHECK_GL_ERROR(); // clean possible GL error
+	CC_CHECK_GL_ERROR_DEBUG(); // clean possible GL error
 
 	GLenum internalFormat = _pixelFormatInfo->internalFormat;
 	GLenum format = _pixelFormatInfo->format;
@@ -696,7 +695,7 @@ typedef struct {
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
 
 	if (_name != 0 && ! _retainName )
-		ccGLDeleteTexture( _name );
+		glDeleteTextures(1, &_name);
 
 }
 

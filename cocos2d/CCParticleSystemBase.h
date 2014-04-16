@@ -70,11 +70,11 @@ typedef NS_ENUM(NSUInteger, CCParticleSystemPositionType) {
 /** Contains the values of each individual particle. */
 typedef struct _sCCParticle {
     
-	CGPoint		pos;
-	CGPoint		startPos;
+	GLKVector2		pos;
+	GLKVector2		startPos;
     
-	ccColor4F	color;
-	ccColor4F	deltaColor;
+	GLKVector4	color;
+	GLKVector4	deltaColor;
     
 	float		size;
 	float		deltaSize;
@@ -82,14 +82,14 @@ typedef struct _sCCParticle {
 	float		rotation;
 	float		deltaRotation;
     
-	CCTime		timeToLive;
+	float		timeToLive;
     
 	NSUInteger	atlasIndex;
     
 	union {
 		// Mode A
 		struct {
-			CGPoint		dir;
+			GLKVector2		dir;
 			float		radialAccel;
 			float		tangentialAccel;
 		} A;
@@ -151,7 +151,7 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
  - Radius direction (Radius mode) (Particle Designer supports outwards to inwards direction only)
 
  */
-@interface CCParticleSystemBase : CCNode <CCTextureProtocol>
+@interface CCParticleSystemBase : CCNode <CCTextureProtocol, CCShaderProtocol, CCBlendProtocol>
 {
 	// True if the the particle system is active.
 	BOOL _active;
@@ -182,7 +182,7 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
         
 		struct {
 			// Gravity of the particles.
-			CGPoint gravity;
+			GLKVector2 gravity;
 
 			// The speed the particles will have.
 			float speed;
@@ -288,15 +288,6 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
     // Particle emission counter.
 	float _emitCounter;
 
-	// Texture used.
-	CCTexture *_texture;
-    
-	// Blend function.
-	ccBlendFunc	_blendFunc;
-    
-	// Texture alpha behavior.
-	BOOL _opacityModifyRGB;
-
 	// Movment type: free or grouped.
 	CCParticleSystemPositionType	_particlePositionType;
 
@@ -306,19 +297,6 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
     // The particly system resetd upon visibility toggling to True.
     BOOL    _resetOnVisibilityToggle;
     
-	// Particle idx.
-	NSUInteger _particleIdx;
-
-	// Optimization.
-	_CC_UPDATE_PARTICLE_IMP	_updateParticleImp;
-	SEL						_updateParticleSel;
-
-	// For batching. If nil, then it won't be batched.
-	CCParticleBatchNode *_batchNode;
-
-	// Index of system in batch node array.
-	NSUInteger _atlasIndex;
-
 	// YES if scaled or rotated.
 	BOOL _transformSystemDirty;
 }
@@ -396,15 +374,6 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
 
 /** Maxmium particles of the system. */
 @property (nonatomic,readwrite,assign) NSUInteger totalParticles;
-
-/** Particle system texture. */
-@property (nonatomic,readwrite, strong) CCTexture * texture;
-
-/** Blend method. */
-@property (nonatomic,readwrite) ccBlendFunc blendFunc;
-
-/** True to enbale alpha value modifies color. */
-@property (nonatomic, readwrite, getter=doesOpacityModifyRGB, assign) BOOL opacityModifyRGB;
 
 /** True to enable blend additive mode. (GL_SRC_ALPHA, GL_ONE). */
 @property (nonatomic,readwrite) BOOL blendAdditive;

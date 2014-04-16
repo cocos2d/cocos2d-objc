@@ -53,10 +53,14 @@
     return super.contentSize;
 }
 
-- (void) visit
+- (void) visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
 {
-    if (_needsLayout) [self layout];
-    [super visit];
+    if (_needsLayout)
+    {
+        [self layout];
+    }
+    
+    [super visit:renderer parentTransform:parentTransform];
 }
 
 - (void) addChild:(CCNode *)node z:(NSInteger)z name:(NSString*)name

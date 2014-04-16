@@ -24,7 +24,28 @@
 
 #import "CCNode.h"
 
-@interface CCNode ()
+extern inline CGPoint NodeToPhysicsScale(CCNode * node);
+extern inline float NodeToPhysicsRotation(CCNode *node);
+extern inline CGAffineTransform NodeToPhysicsTransform(CCNode *node);
+extern inline CGAffineTransform RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body);
+extern inline CGPoint GetPositionFromBody(CCNode *node, CCPhysicsBody *body);
+extern inline CGPoint TransformPointAsVector(CGPoint p, CGAffineTransform t);
+extern inline CGAffineTransform CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians);
+
+@interface CCNode()<CCShaderProtocol, CCBlendProtocol, CCTextureProtocol> {
+	@protected
+	CCRenderState *_renderState;
+	
+	CCShader *_shader;
+	NSMutableDictionary *_shaderUniforms;
+	
+	CCBlendMode *_blendMode;
+	CCTexture *_texture;
+}
+
+/// Cache and return the current render state.
+/// Should be set to nil whenever changing a property that affects the renderstate.
+@property(nonatomic, strong) CCRenderState *renderState;
 
 /* The real openGL Z vertex.
  Differences between openGL Z vertex and cocos2d Z order:
@@ -37,16 +58,8 @@
 
 @property (nonatomic,readonly) BOOL isPhysicsNode;
 
-/* Shader Program
- */
-@property(nonatomic,readwrite,strong) CCGLProgram *shaderProgram;
-
 /* used internally for zOrder sorting, don't change this manually */
 @property(nonatomic,readwrite) NSUInteger orderOfArrival;
-
-/* GL server side state
- */
-@property (nonatomic, readwrite) ccGLServerState glServerState;
 
 /* CCActionManager used by all the actions.
  IMPORTANT: If you set a new CCActionManager, then previously created actions are going to be removed.
@@ -77,10 +90,10 @@
  */
 -(void) cleanup;
 
-/* performs OpenGL view-matrix transformation of its ancestors.
- Generally the ancestors are already transformed, but in certain cases (eg: attaching a FBO) it is necessary to transform the ancestors again.
- */
--(void) transformAncestors;
+///* performs OpenGL view-matrix transformation of its ancestors.
+// Generally the ancestors are already transformed, but in certain cases (eg: attaching a FBO) it is necessary to transform the ancestors again.
+// */
+//-(void) transformAncestors;
 
 /* final method called to actually remove a child node from the children.
  *  @param node    The child node to remove

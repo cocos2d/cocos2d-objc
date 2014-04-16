@@ -318,10 +318,10 @@
 			return;
 
 		CGPoint tempPos = ccpSub( _halfScreenSize, _followedNode.position);
-		[_target setPosition:ccp(clampf(tempPos.x, _leftBoundary, _rightBoundary), clampf(tempPos.y, _bottomBoundary, _topBoundary))];
+		[(CCNode *)_target setPosition:ccp(clampf(tempPos.x, _leftBoundary, _rightBoundary), clampf(tempPos.y, _bottomBoundary, _topBoundary))];
 	}
 	else
-		[_target setPosition:ccpSub( _halfScreenSize, _followedNode.position )];
+		[(CCNode *)_target setPosition:ccpSub( _halfScreenSize, _followedNode.position )];
 }
 
 

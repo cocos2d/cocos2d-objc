@@ -22,10 +22,12 @@
  * THE SOFTWARE.
  */
 
+#define CP_ALLOW_PRIVATE_ACCESS 1
+
 #import "CCPhysicsNode.h"
 #import "CCPhysics+ObjectiveChipmunk.h"
-
 #import <objc/runtime.h>
+
 
 // Do not change this value unless you redefine the cpBitmask type to have more than 32 bits.
 #define MAX_CATEGORIES 32
@@ -264,6 +266,10 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 	// CCDrawNode used for drawing the debug overlay.
 	// Only allocated if CCPhysicsNode.debugDraw is YES.
 	CCDrawNode *_debugDraw;
+    
+    //List of moving static handlers that need updating due to thier parent nodes moving.
+    NSMutableSet * _kineticNodes;
+    
 }
 
 // Used by CCNode.physicsNode
@@ -286,6 +292,7 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 		
 		_collisionPairSingleton = [[CCPhysicsCollisionPair alloc] init];
 		_handlers = [NSMutableSet set];
+        _kineticNodes = [NSMutableSet set];
 	}
 	
 	return self;
@@ -299,6 +306,11 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 
 -(CCTime)sleepTimeThreshold {return _space.sleepTimeThreshold;}
 -(void)setSleepTimeThreshold:(CCTime)sleepTimeThreshold {_space.sleepTimeThreshold = sleepTimeThreshold;}
+
+-(NSMutableSet*)kineticNodes
+{
+    return _kineticNodes;
+}
 
 // Collision Delegates
 
@@ -414,6 +426,19 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 
 -(void)fixedUpdate:(CCTime)delta
 {
+    NSSet * tempKinetics = [_kineticNodes copy];
+    for(CCNode * node in tempKinetics)
+    {
+        NSAssert(node.physicsBody, @"Should have a physics body");
+        NSAssert(node.physicsBody.type == CCPhysicsBodyTypeKinematic, @"Should be kinematic");
+        
+        [node.physicsBody updateKinetics:delta];
+        if(node.physicsBody.type != CCPhysicsBodyTypeKinematic)
+        {
+            [_kineticNodes removeObject:node];
+        }
+    }
+    
 	[_space step:delta];
 	
 	// Null out the arbiter just in case somebody retained a pair.
@@ -421,7 +446,8 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 }
 
 //MARK: Debug Drawing:
-
+const cpSpaceDebugColor CC_PHYSICS_SHAPE_DEBUG_FILL_COLOR_STATIC = {0.0, 0.0, 1.0, 0.8};
+const cpSpaceDebugColor CC_PHYSICS_SHAPE_DEBUG_FILL_COLOR_KINEMATIC = {1.0, 1.0, 0.0, 0.8};
 const cpSpaceDebugColor CC_PHYSICS_SHAPE_DEBUG_FILL_COLOR = {1.0, 0.0, 0.0, 0.25};
 const cpSpaceDebugColor CC_PHYSICS_SHAPE_DEBUG_OUTLINE_COLOR = {1.0, 1.0, 1.0, 0.5};
 const cpSpaceDebugColor CC_PHYSICS_SHAPE_JOINT_COLOR = {0.0, 1.0, 0.0, 0.5};
@@ -468,11 +494,26 @@ static void
 DrawDot(cpFloat size, cpVect pos, cpSpaceDebugColor color, CCDrawNode *draw)
 {[draw drawDot:CPV_TO_CCP(pos) radius:size/2.0 color:ToCCColor(color)];}
 
+
 static cpSpaceDebugColor
 ColorForShape(cpShape *shape, CCDrawNode *draw)
-{return CC_PHYSICS_SHAPE_DEBUG_FILL_COLOR;}
+{
 
--(void)draw
+    cpBodyType bodyType = cpBodyGetType(shape->body);
+    
+    if(bodyType == CP_BODY_TYPE_KINEMATIC)
+    {
+        return CC_PHYSICS_SHAPE_DEBUG_FILL_COLOR_KINEMATIC;
+    }
+    if(bodyType == CP_BODY_TYPE_STATIC)
+    {
+        return CC_PHYSICS_SHAPE_DEBUG_FILL_COLOR_STATIC;
+    }
+    
+    return CC_PHYSICS_SHAPE_DEBUG_FILL_COLOR;
+}
+
+-(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
 	if(!_debugDraw) return;
 	

@@ -31,8 +31,8 @@
 
 #import "CCProtocols.h"
 #import "Platforms/CCGL.h"
-#import "kazmath/mat4.h"
 #import "CCResponderManager.h"
+#import "CCRenderer.h"
 
 /**
  Possible OpenGL projections used by director
@@ -151,9 +151,14 @@ and when to execute the Scenes.
 
 	/* action manager associated with this director */
 	CCActionManager *_actionManager;
+
+    /* fixed timestep action manager associated with this director */
+    CCActionManager *_actionManagerFixed;
 	
 	/*  OpenGLView. On iOS it is a copy of self.view */
 	CCGLView		*__view;
+	
+	CCRenderer *_renderer;
 }
 
 /** returns the cocos2d thread.
@@ -200,6 +205,12 @@ and when to execute the Scenes.
 /// User definable value that is used for default contentSizes of many node types (CCScene, CCNodeColor, etc).
 /// Defaults to the view size.
 @property(nonatomic, assign) CGSize designSize;
+
+/// Projection matrix used for rendering.
+@property(nonatomic, readonly) GLKMatrix4 projectionMatrix;
+
+/// The current global shader values values.
+@property(nonatomic, readonly) NSMutableDictionary *globalShaderUniforms;
 
 /** returns a shared instance of the director */
 +(CCDirector*)sharedDirector;
@@ -308,6 +319,13 @@ and when to execute the Scenes.
  */
 - (void) popToRootScene;
 
+/**Pops out all scenes from the queue until the root scene in the queue, using a transition
+ *
+ * This scene will replace the running one.
+ * Internally it will call `popToRootScene`
+ */
+-(void) popToRootSceneWithTransition:(CCTransition *)transition;
+
 /** Replaces the running scene with a new one. The running scene is terminated.
  *
  * ONLY call it if there is a running scene.
@@ -386,24 +404,6 @@ and when to execute the Scenes.
  */
 -(void) purgeCachedData;
 
-// OpenGL Helper
-
-/** sets the OpenGL default values */
--(void) setGLDefaultValues;
-
-/**
- *  Enables/disables OpenGL alpha blending.
- *
- *  @param on Set to YES to enable alpha blending.
- */
-- (void) setAlphaBlending: (BOOL) on;
-
-/**
- *  Enables/disables OpenGL depth test.
- *
- *  @param on Set to YES to enable depth tests.
- */
-- (void) setDepthTest: (BOOL) on;
 @end
 
 // optimization. Should only be used to read it. Never to write it.

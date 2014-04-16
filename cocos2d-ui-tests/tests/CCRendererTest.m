@@ -1,24 +1,133 @@
 #import "TestBase.h"
 #import "CCTextureCache.h"
+//#import "CCNode_Private.h"
+
+@interface CustomSprite : CCNode<CCShaderProtocol, CCTextureProtocol> @end
+@implementation CustomSprite
+
+-(id)init
+{
+	if((self = [super init])){
+		// Set up a texture for rendering.
+		// If you want to mix several textures, you need to make a shader and use CCNode.shaderUniforms.
+		self.texture = [CCTexture textureWithFile:@"Tiles/05.png"];
+		
+		// Set a builtin shader that draws the node with a texture.
+		// The default shader only draws the color of a node, ignoring it's texture.
+		self.shader = [CCShader positionTextureColorShader];
+	}
+	
+	return self;
+}
+
+-(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
+{
+	// What we want to do here is draw the texture from (0, 0) to (width, height) in the node's coordinates like a regular sprite.
+	
+	// 1) First we should check if our sprite will be onscreen or not, though this step is not required.
+	// Given a bounding box in node coordinates and the node's transform, CCRenderCheckVisbility() can figure that out for us.
+	
+	// CCRenderCheckVisbility() takes an axis aligned bounding box expressed as a center and extents.
+	// "extents" just means half the width and height of the bounding box.
+	
+	// Normally you'd want to do this outside of the draw method, but I'm trying to keep everything together.
+	CGSize size = self.texture.contentSize;
+	
+	// The center and extents are easy to calculate in this case.
+	// They are actually the same value in this case, but that won't normally be true.
+	GLKVector2 center = GLKVector2Make(size.width/2.0, size.height/2.0);
+	GLKVector2 extents = GLKVector2Make(size.width/2.0, size.height/2.0);
+	
+	// Now we just need to check if the sprite is visible.
+	if(CCRenderCheckVisbility(transform, center, extents)){
+		// 2) Now we can request a buffer from the renderer with enough space for 2 triangles and 4 vertexes.
+		// Why two triangles instead of a rectangle? Modern GPUs really only draw triangles (and really bad lines/circles).
+		// To draw a "fancy" shape like a rectangle to put our sprite on, we need to split it into two triangles.
+		// self.renderState encapsulates the shader, shader uniforms, textures and blending modes set for this node.
+		// You aren't required to pass self.renderState if you want to do something else.
+		CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:self.renderState];
+		
+		// 3) Next we make some vertexes to fill the buffer with. We need to make one for each corner of the sprite.
+		// There are easier/shorter ways to fill in a CCVertex (See CCSprite.m for example), but this way is easy to read.
+		
+		CCVertex bottomLeft;
+		// This is the position of the vertex in the node's coordinates.
+		// Why are there 4 coordinates if this is a Cocos ->2D<- ?
+		// You can probably guess, that the first two numbers are the x and y coordinates.
+		// The 3rd is the z-coordinate in case you want to do 3D effects.
+		// Always set the 4th coordinate to 1.0. (Google for "homogenous coordinates" if you want to learn what it is)
+		bottomLeft.position = GLKVector4Make(0.0, 0.0, 0.0, 1.0);
+		// This is the position of the vertex relative to the texture in normalized coordinates.
+		// (0, 0) is the top left corner and (1, 1) is the bottom right.
+		// This is actually upside down compared to the OpenGL convention.
+		bottomLeft.texCoord1 = GLKVector2Make(0.0, 1.0);
+		// Lastly we need to set a "pre-multiplied" RGBA color.
+		// Premultiplied means that the RGB components have been multiplied by the alpha.
+		bottomLeft.color = GLKVector4Make(1.0, 1.0, 1.0, 1.0);
+		
+		// Now we are almost ready to put the vertex into the buffer, but there is one last step.
+		// The positions of the vertexes need to be screen relative (OpenGL clip coordinates), but we made them node relative!
+		// Fortunately, that's what the 'transform' variable is for. It lets you convert from node to screen coordinates.
+		// CCVertexApplyTransform() will apply a transformation to an existing vertex's position.
+		// Then we just need to use CCRenderBufferSetVertex() to store the vertex at index 0.
+		CCRenderBufferSetVertex(buffer, 0, CCVertexApplyTransform(bottomLeft, transform));
+		
+		// Now to fill in the other 3 vertexes the same way.
+		CCVertex bottomRight;
+		bottomRight.position = GLKVector4Make(0.0, size.width, 0.0, 1.0);
+		bottomRight.texCoord1 = GLKVector2Make(1.0, 1.0);
+		bottomRight.color = GLKVector4Make(1.0, 1.0, 1.0, 1.0);
+		CCRenderBufferSetVertex(buffer, 1, CCVertexApplyTransform(bottomRight, transform));
+		
+		CCVertex topRight;
+		topRight.position = GLKVector4Make(size.height, size.width, 0.0, 1.0);
+		topRight.texCoord1 = GLKVector2Make(1.0, 0.0);
+		topRight.color = GLKVector4Make(1.0, 1.0, 1.0, 1.0);
+		CCRenderBufferSetVertex(buffer, 2, CCVertexApplyTransform(topRight, transform));
+		
+		CCVertex topLeft;
+		topLeft.position = GLKVector4Make(size.height, 0.0, 0.0, 1.0);
+		topLeft.texCoord1 = GLKVector2Make(0.0, 0.0);
+		topLeft.color = GLKVector4Make(1.0, 1.0, 1.0, 1.0);
+		CCRenderBufferSetVertex(buffer, 3, CCVertexApplyTransform(topLeft, transform));
+		
+		// 4) Now that we are all done filling in the vertexes, we just need to make triangles with them.
+		// This is pretty easy. The first number is the index of the triangle we are setting.
+		// The last three numbers are the indexes of the vertexes set using CCRenderBufferSetVertex() to use for the corners.
+		CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
+		CCRenderBufferSetTriangle(buffer, 1, 0, 2, 3);
+	}
+}
+
+@end
 
 @interface CCRendererTest : TestBase @end
 @implementation CCRendererTest
+
+//-(void)setupCustomSpriteTest
+//{
+//	CustomSprite *sprite = [CustomSprite node];
+//	sprite.positionType = CCPositionTypeNormalized;
+//	sprite.position = ccp(0.5, 0.5);
+//	
+//	[self.contentNode addChild:sprite];
+//}
 
 -(void)setupClippingNodeTest
 {
 	CGSize size = [CCDirector sharedDirector].designSize;
 	
-	CCNode *parent = self.contentNode;
+//	CCNode *parent = self.contentNode;
 	
-//	CCRenderTexture *parent = [CCRenderTexture renderTextureWithWidth:size.width height:size.height pixelFormat:CCTexturePixelFormat_RGBA8888 depthStencilFormat:GL_DEPTH24_STENCIL8_OES];
-//	parent.positionType = CCPositionTypeNormalized;
-//	parent.position = ccp(0.5, 0.5);
-//	parent.autoDraw = YES;
-//	parent.clearColor = [CCColor blackColor];
-//	parent.clearDepth = 1.0;
-//	parent.clearStencil = 0;
-//	parent.clearFlags = GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT;
-//	[self.contentNode addChild:parent];
+	CCRenderTexture *parent = [CCRenderTexture renderTextureWithWidth:size.width height:size.height pixelFormat:CCTexturePixelFormat_RGBA8888 depthStencilFormat:GL_DEPTH24_STENCIL8];
+	parent.positionType = CCPositionTypeNormalized;
+	parent.position = ccp(0.5, 0.5);
+	parent.autoDraw = YES;
+	parent.clearColor = [CCColor blackColor];
+	parent.clearDepth = 1.0;
+	parent.clearStencil = 0;
+	parent.clearFlags = GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT;
+	[self.contentNode addChild:parent];
 	
 	CCNodeGradient *grad = [CCNodeGradient nodeWithColor:[CCColor redColor] fadingTo:[CCColor blueColor] alongVector:ccp(1, 1)];
 //	[parent addChild:grad];
@@ -35,6 +144,63 @@
 	[clip addChild:grad];
 }
 
+-(CCSprite *)simpleShaderTestHelper
+{
+	CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/bird.png"];
+	sprite.positionType = CCPositionTypeNormalized;
+	[self.contentNode addChild:sprite];
+	
+	return sprite;
+}
+
+-(void)setupSimpleShaderTest
+{
+	self.subTitle = @"Global and node shader uniforms.";
+	
+	// Normally you'd load shaders from a file using the [CCShader shaderNamed:] method to use the shader cache.
+	// Embedding shaders in the source code is handy when they are short though.
+	CCShader *shader = [[CCShader alloc] initWithFragmentShaderSource:CC_GLSL(
+		uniform lowp mat4 u_ColorMatrix;
+		
+		void main(void){
+			gl_FragColor = u_ColorMatrix*texture2D(cc_MainTexture, cc_FragTexCoord1);
+		}
+	)];
+	
+	CCSprite *sprite1 = [self simpleShaderTestHelper];
+	sprite1.position = ccp(0.3, 0.4);
+	sprite1.shader = shader;
+	
+	CCSprite *sprite2 = [self simpleShaderTestHelper];
+	sprite2.position = ccp(0.3, 0.6);
+	sprite2.shader = shader;
+	
+	CCLabelTTF *label1 = [CCLabelTTF labelWithString:@"Using CCDirector.globalShaderUniforms" fontName:@"Helvetica" fontSize:10.0];
+	label1.positionType = CCPositionTypeNormalized;
+	label1.position = ccp(0.3, 0.3);
+	[self.contentNode addChild:label1];
+	
+	CCSprite *sprite3 = [self simpleShaderTestHelper];
+	sprite3.position = ccp(0.7, 0.5);
+	sprite3.shader = shader;
+	
+	CCLabelTTF *label2 = [CCLabelTTF labelWithString:@"Using CCNode.shaderUniforms" fontName:@"Helvetica" fontSize:10.0];
+	label2.positionType = CCPositionTypeNormalized;
+	label2.position = ccp(0.7, 0.3);
+	[self.contentNode addChild:label2];
+	
+	[self scheduleBlock:^(CCTimer *timer) {
+		// Set up a global uniform matrix to rotate colors counter-clockwise.
+		GLKMatrix4 colorMatrix1 = GLKMatrix4MakeRotation(2.0f*timer.invokeTime, 1.0f, 1.0f, 1.0f);
+		[CCDirector sharedDirector].globalShaderUniforms[@"u_ColorMatrix"] = [NSValue valueWithGLKMatrix4:colorMatrix1];
+		
+		// Set just sprite3's matrix to rotate colors clockwise.
+		GLKMatrix4 colorMatrix2 = GLKMatrix4MakeRotation(-4.0f*timer.invokeTime, 1.0f, 1.0f, 1.0f);
+		sprite3.shaderUniforms[@"u_ColorMatrix"] = [NSValue valueWithGLKMatrix4:colorMatrix2];
+		
+		[timer repeatOnceWithInterval:1.0/60.0];
+	} delay:0.0f];
+}
 -(void)renderTextureHelper:(CCNode *)stage size:(CGSize)size
 {
 	CCColor *color = [CCColor colorWithRed:0.0 green:0.0 blue:0.5 alpha:0.5];
@@ -79,10 +245,24 @@
 	CCRenderTexture *renderTexture = [CCRenderTexture renderTextureWithWidth:size.width height:size.height pixelFormat:CCTexturePixelFormat_RGBA8888];
 	renderTexture.positionType = CCPositionTypeNormalized;
 	renderTexture.position = ccp(0.75, 0.5);
+	renderTexture.clearFlags = GL_COLOR_BUFFER_BIT;
+	renderTexture.clearColor = [CCColor clearColor];
 	[self.contentNode addChild:renderTexture];
 	
 	[self renderTextureHelper:renderTexture size:size];
 	renderTexture.autoDraw = YES;
+}
+
+-(void)setupShader1Test
+{
+	self.subTitle = @"Useless fragment shader.";
+	
+	CCNodeColor *node = [CCNodeColor nodeWithColor:[CCColor blueColor]];
+	node.contentSizeType = CCSizeTypeNormalized;
+	node.contentSize = CGSizeMake(1.0, 1.0);
+	node.shader = [CCShader shaderNamed:@"TrippyTriangles"];
+	
+	[self.contentNode addChild:node];
 }
 
 - (void)setupMotionStreakNodeTest

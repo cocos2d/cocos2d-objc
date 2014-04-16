@@ -42,17 +42,15 @@
 #import "CCSpriteFrameCache.h"
 #import "CCTexture.h"
 #import "CCLabelBMFont.h"
-#import "ccGLStateCache.h"
-#import "CCShaderCache.h"
 #import "ccFPSImages.h"
 #import "CCConfiguration.h"
 #import "CCTransition.h"
+#import "CCRenderer_private.h"
 
 // support imports
 #import "Platforms/CCGL.h"
 #import "Platforms/CCNS.h"
 
-#import "Support/OpenGL_Internal.h"
 #import "Support/CGPointExtension.h"
 #import "Support/CCProfiling.h"
 #import "Support/CCFileUtils.h"
@@ -110,6 +108,7 @@ extern NSString * cocos2dVersion(void);
 @synthesize secondsPerFrame = _secondsPerFrame;
 @synthesize scheduler = _scheduler;
 @synthesize actionManager = _actionManager;
+@synthesize actionManagerFixed = _actionManagerFixed;
 
 //
 // singleton stuff
@@ -178,16 +177,25 @@ static CCDirector *_sharedDirector = nil;
 
 		// action manager
 		_actionManager = [[CCActionManager alloc] init];
+		_actionManagerFixed = [[CCFixedActionManager alloc] init];
+		
 		[_scheduler scheduleTarget:_actionManager];
-		[_scheduler setPaused:NO target:_actionManager];
-        
-        // touch manager
-        _responderManager = [ CCResponderManager responderManager ];
+		[_scheduler scheduleTarget:_actionManagerFixed];
 
+		[_scheduler setPaused:NO target:_actionManager];
+		[_scheduler setPaused:NO target:_actionManagerFixed];
+		
+		
+		// touch manager
+		_responderManager = [ CCResponderManager responderManager ];
+		
 		_winSizeInPixels = _winSizeInPoints = CGSizeZero;
 		
 		__ccContentScaleFactor = 1;
 		self.UIScaleFactor = 1;
+		
+		_renderer = [[CCRenderer alloc] init];
+		_globalShaderUniforms = [NSMutableDictionary dictionary];
 	}
 
 	return self;
@@ -207,17 +215,27 @@ static CCDirector *_sharedDirector = nil;
 
 }
 
--(void) setGLDefaultValues
+-(NSDictionary *)updateGlobalShaderUniforms
 {
-	// This method SHOULD be called only after __view was initialized
-	NSAssert( __view, @"__view must be initialized");
-
-	[self setAlphaBlending: YES];
-	[self setDepthTest: __view.depthFormat];
-	[self setProjection: _projection];
-
-	// set other opengl default values
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	GLKMatrix4 projection = self.projectionMatrix;
+	_globalShaderUniforms[CCShaderUniformProjection] = [NSValue valueWithGLKMatrix4:projection];
+	_globalShaderUniforms[CCShaderUniformProjectionInv] = [NSValue valueWithGLKMatrix4:GLKMatrix4Invert(projection, NULL)];
+	
+	CGSize size = self.viewSize;
+	_globalShaderUniforms[CCShaderUniformViewSize] = [NSValue valueWithGLKVector2:GLKVector2Make(size.width, size.height)];
+	
+	CGSize pixelSize = self.viewSizeInPixels;
+	_globalShaderUniforms[CCShaderUniformViewSizeInPixels] = [NSValue valueWithGLKVector2:GLKVector2Make(pixelSize.width, pixelSize.height)];
+	
+	CCTime t = self.scheduler.currentTime;
+	_globalShaderUniforms[CCShaderUniformTime] = [NSValue valueWithGLKVector4:GLKVector4Make(t, t/2.0f, t/8.0f, t/8.0f)];
+	_globalShaderUniforms[CCShaderUniformSinTime] = [NSValue valueWithGLKVector4:GLKVector4Make(sinf(t*2.0f), sinf(t), sinf(t/2.0f), sinf(t/4.0f))];
+	_globalShaderUniforms[CCShaderUniformCosTime] = [NSValue valueWithGLKVector4:GLKVector4Make(cosf(t*2.0f), cosf(t), cosf(t/2.0f), cosf(t/4.0f))];
+	
+	GLKVector4 random = GLKVector4Make(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
+	_globalShaderUniforms[CCShaderUniformRandom01] = [NSValue valueWithGLKVector4:random];
+	
+	return _globalShaderUniforms;
 }
 
 //
@@ -260,6 +278,7 @@ static CCDirector *_sharedDirector = nil;
 
 -(void) purgeCachedData
 {
+	[CCRENDERSTATE_CACHE flush];
 	[CCLabelBMFont purgeCachedData];
 	if ([_sharedDirector view])
 		[[CCTextureCache sharedTextureCache] removeUnusedTextures];
@@ -286,31 +305,6 @@ static CCDirector *_sharedDirector = nil;
 -(void) setProjection:(CCDirectorProjection)projection
 {
 	CCLOG(@"cocos2d: override me");
-}
-
-- (void) setAlphaBlending: (BOOL) on
-{
-	if (on) {
-		ccGLBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
-
-	} else
-		ccGLBlendFunc(GL_ONE, GL_ZERO);
-
-	CHECK_GL_ERROR_DEBUG();
-}
-
-- (void) setDepthTest: (BOOL) on
-{
-	if (on) {
-		glClearDepth(1.0f);
-
-		glEnable(GL_DEPTH_TEST);
-		glDepthFunc(GL_LEQUAL);
-//		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-	} else
-		glDisable( GL_DEPTH_TEST );
-
-	CHECK_GL_ERROR_DEBUG();
 }
 
 #pragma mark Director Integration with a UIKit view
@@ -342,13 +336,17 @@ static CCDirector *_sharedDirector = nil;
 		// it could be nil
 		if( view ) {
 			[self createStatsLabel];
-			[self setGLDefaultValues];
+			[self setProjection: _projection];
+			
+			// TODO this should probably migrate somewhere else.
+			glEnable(GL_DEPTH_TEST);
+			glDepthFunc(GL_LEQUAL);
 		}
 
 		// Dump info once OpenGL was initilized
 		[[CCConfiguration sharedConfiguration] dumpInfo];
 
-		CHECK_GL_ERROR_DEBUG();
+		CC_CHECK_GL_ERROR_DEBUG();
 	}
 }
 
@@ -381,18 +379,6 @@ static CCDirector *_sharedDirector = nil;
 	}
 }
 
-static void
-GLToClipTransform(kmMat4 *transformOut)
-{
-	kmMat4 projection;
-	kmGLGetMatrix(KM_GL_PROJECTION, &projection);
-	
-	kmMat4 modelview;
-	kmGLGetMatrix(KM_GL_MODELVIEW, &modelview);
-	
-	kmMat4Multiply(transformOut, &projection, &modelview);
-}
-
 -(CGFloat)flipY
 {
 	return -1.0;
@@ -400,38 +386,29 @@ GLToClipTransform(kmMat4 *transformOut)
 
 -(CGPoint)convertToGL:(CGPoint)uiPoint
 {
-	kmMat4 transform;
-	GLToClipTransform(&transform);
-	
-	kmMat4 transformInv;
-	kmMat4Inverse(&transformInv, &transform);
+	GLKMatrix4 transform = self.projectionMatrix;
+	GLKMatrix4 invTransform = GLKMatrix4Invert(transform, NULL);
 	
 	// Calculate z=0 using -> transform*[0, 0, 0, 1]/w
-	kmScalar zClip = transform.mat[14]/transform.mat[15];
+	float zClip = transform.m[14]/transform.m[15];
 	
 	CGSize glSize = __view.bounds.size;
-	kmVec3 clipCoord = {2.0*uiPoint.x/glSize.width - 1.0, 2.0*uiPoint.y/glSize.height - 1.0, zClip};
+	GLKVector3 clipCoord = GLKVector3Make(2.0*uiPoint.x/glSize.width - 1.0, 2.0*uiPoint.y/glSize.height - 1.0, zClip);
+	
 	clipCoord.y *= self.flipY;
 	
-	kmVec3 glCoord;
-	kmVec3TransformCoord(&glCoord, &clipCoord, &transformInv);
-	
-//	NSLog(@"uiPoint: %@, glPoint: %@", NSStringFromCGPoint(uiPoint), NSStringFromCGPoint(ccp(glCoord.x, glCoord.y)));
+	GLKVector3 glCoord = GLKMatrix4MultiplyAndProjectVector3(invTransform, clipCoord);
 	return ccp(glCoord.x, glCoord.y);
 }
 
 -(CGPoint)convertToUI:(CGPoint)glPoint
 {
-	kmMat4 transform;
-	GLToClipTransform(&transform);
+	GLKMatrix4 transform = self.projectionMatrix;
 		
-	kmVec3 clipCoord;
-	// Need to calculate the zero depth from the transform.
-	kmVec3 glCoord = {glPoint.x, glPoint.y, 0.0};
-	kmVec3TransformCoord(&clipCoord, &glCoord, &transform);
+	GLKVector3 clipCoord = GLKMatrix4MultiplyAndProjectVector3(transform, GLKVector3Make(glPoint.x, glPoint.y, 0.0));
 	
 	CGSize glSize = __view.bounds.size;
-	return ccp(glSize.width*(clipCoord.x*0.5 + 0.5), glSize.height*(self.flipY*clipCoord.y*0.5 + 0.5));
+	return ccp(glSize.width*(clipCoord.v[0]*0.5 + 0.5), glSize.height*(self.flipY*clipCoord.v[1]*0.5 + 0.5));
 }
 
 -(CGSize)viewSize
@@ -446,23 +423,21 @@ GLToClipTransform(kmMat4 *transformOut)
 
 -(CGRect)viewportRect
 {
+	GLKMatrix4 projection = self.projectionMatrix;
+	
 	// TODO It's _possible_ that a user will use a non-axis aligned projection. Weird, but possible.
-	kmMat4 transform;
-	GLToClipTransform(&transform);
-		
-	kmMat4 transformInv;
-	kmMat4Inverse(&transformInv, &transform);
+	GLKMatrix4 projectionInv = GLKMatrix4Invert(projection, NULL);
 	
 	// Calculate z=0 using -> transform*[0, 0, 0, 1]/w
-	kmScalar zClip = transform.mat[14]/transform.mat[15];
+	float zClip = projection.m[14]/projection.m[15];
 	
-	// Bottom left and top right coordinates of viewport in clip coords.
-	kmVec3 clipBL = {-1.0, -1.0, zClip};
-	kmVec3 clipTR = { 1.0,  1.0, zClip};
+	// Bottom left and top right coords of viewport in clip coords.
+	GLKVector3 clipBL = GLKVector3Make(-1.0, -1.0, zClip);
+	GLKVector3 clipTR = GLKVector3Make( 1.0,  1.0, zClip);
 	
-	kmVec3 glBL, glTR;
-	kmVec3TransformCoord(&glBL, &clipBL, &transformInv);
-	kmVec3TransformCoord(&glTR, &clipTR, &transformInv);
+	// Bottom left and top right coords in GL coords.
+	GLKVector3 glBL = GLKMatrix4MultiplyAndProjectVector3(projectionInv, clipBL);
+	GLKVector3 glTR = GLKMatrix4MultiplyAndProjectVector3(projectionInv, clipTR);
 	
 	return CGRectMake(glBL.x, glBL.y, glTR.x - glBL.x, glTR.y - glBL.y);
 }
@@ -562,6 +537,12 @@ GLToClipTransform(kmMat4 *transformOut)
 -(void) popToRootScene
 {
 	[self popToSceneStackLevel:1];
+}
+
+-(void) popToRootSceneWithTransition:(CCTransition *)transition {
+	[self popToRootScene];
+	_sendCleanupToScene = YES;
+	[transition performSelector:@selector(startTransition:) withObject:_nextScene];
 }
 
 -(void) popToSceneStackLevel:(NSUInteger)level
@@ -664,7 +645,6 @@ GLToClipTransform(kmMat4 *transformOut)
 	[CCAnimationCache purgeSharedAnimationCache];
 	[CCSpriteFrameCache purgeSharedSpriteFrameCache];
 	[CCTextureCache purgeSharedTextureCache];
-	[CCShaderCache purgeSharedShaderCache];
 	[[CCFileUtils sharedFileUtils] purgeCachedEntries];
 
 	// OpenGL view
@@ -672,12 +652,8 @@ GLToClipTransform(kmMat4 *transformOut)
 	// Since the director doesn't attach the openglview to the window
 	// it shouldn't remove it from the window too.
 //	[openGLView_ removeFromSuperview];
-
-
-	// Invalidate GL state cache
-	ccGLInvalidateStateCache();
-
-	CHECK_GL_ERROR();
+	
+	CC_CHECK_GL_ERROR_DEBUG();
 }
 
 -(void) setNextScene
@@ -778,7 +754,7 @@ GLToClipTransform(kmMat4 *transformOut)
 
 - (void)setAnimationInterval:(NSTimeInterval)interval
 {
-	CCLOG(@"cocos2d: Director#setAnimationInterval. Override me");
+	//CCLOG(@"cocos2d: Director#setAnimationInterval. Override me");
 }
 
 - (CCTime)fixedUpdateInterval
@@ -819,10 +795,10 @@ GLToClipTransform(kmMat4 *transformOut)
 			NSString *draws = [[NSString alloc] initWithFormat:@"%4lu", (unsigned long)__ccNumberOfDraws];
 			[_drawsLabel setString:draws];
 		}
-
-		[_drawsLabel visit];
-		[_FPSLabel visit];
-		[_SPFLabel visit];
+		
+		[_drawsLabel visit:_renderer parentTransform:&GLKMatrix4Identity];
+		[_FPSLabel visit:_renderer parentTransform:&GLKMatrix4Identity];
+		[_SPFLabel visit:_renderer parentTransform:&GLKMatrix4Identity];
 	}
 	
 	__ccNumberOfDraws = 0;

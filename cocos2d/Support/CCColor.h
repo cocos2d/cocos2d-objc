@@ -326,14 +326,16 @@
 + (CCColor*)colorWithCcColor3b: (ccColor3B) c;
 + (CCColor*)colorWithCcColor4b: (ccColor4B) c;
 + (CCColor*)colorWithCcColor4f: (ccColor4F) c;
++ (CCColor*)colorWithGLKVector4: (GLKVector4) c;
 
 - (CCColor*)initWithCcColor3b: (ccColor3B) c;
 - (CCColor*)initWithCcColor4b: (ccColor4B) c;
-- (CCColor*)initWithCcColor4f: (ccColor4F) c;
+- (CCColor*)initWithGLKVector4: (GLKVector4) c;
 
 @property (nonatomic, readonly) ccColor3B ccColor3b;
 @property (nonatomic, readonly) ccColor4B ccColor4b;
 @property (nonatomic, readonly) ccColor4F ccColor4f;
+@property (nonatomic, readonly) GLKVector4 glkVector4;
 
 @end
 

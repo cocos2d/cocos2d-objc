@@ -43,7 +43,7 @@
     CCNode *_stencil;
     
     // Alpha threshold.
-    GLfloat _alphaThreshold;
+    NSNumber *_alphaThreshold;
     
     // Inverted.
     BOOL _inverted;

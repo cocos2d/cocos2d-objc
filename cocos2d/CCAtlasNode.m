@@ -27,28 +27,17 @@
 
 #import "CCAtlasNode.h"
 #import "ccMacros.h"
-#import "CCGLProgram.h"
+#import "CCShader.h"
 #import "CCTextureCache.h"
-#import "CCShaderCache.h"
-#import "ccGLStateCache.h"
 #import "CCDirector.h"
-#import "Support/TransformUtils.h"
 #import "CCNode_Private.h"
-
-// external
-#import "kazmath/GL/matrix.h"
 
 
 @interface CCAtlasNode ()
 -(void) calculateMaxItems;
--(void) updateBlendFunc;
--(void) updateOpacityModifyRGB;
 @end
 
 @implementation CCAtlasNode
-
-@synthesize textureAtlas = _textureAtlas;
-@synthesize blendFunc = _blendFunc;
 @synthesize quadsToDraw = _quadsToDraw;
 
 #pragma mark CCAtlasNode - Creation & Init
@@ -77,28 +66,21 @@
 		_itemHeight = h;
 
 		_colorUnmodified = ccWHITE;
-		_opacityModifyRGB = YES;
 
-		_blendFunc.src = CC_BLEND_SRC;
-		_blendFunc.dst = CC_BLEND_DST;
-
-		_textureAtlas = [[CCTextureAtlas alloc] initWithTexture:texture capacity:c];
-		
-		if( ! _textureAtlas ) {
-			CCLOG(@"cocos2d: Could not initialize CCAtlasNode. Invalid Texture");
-			return nil;
-		}
-
-		[self updateBlendFunc];
-		[self updateOpacityModifyRGB];
+//		_textureAtlas = [[CCTextureAtlas alloc] initWithTexture:texture capacity:c];
+//		
+//		if( ! _textureAtlas ) {
+//			CCLOG(@"cocos2d: Could not initialize CCAtlasNode. Invalid Texture");
+//			return nil;
+//		}
 
 		[self calculateMaxItems];
 
 		self.quadsToDraw = c;
 
 		// shader stuff
-		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTexture_uColor];
-		_uniformColor = glGetUniformLocation( _shaderProgram.program, "u_color");
+//		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTexture_uColor];
+//		_uniformColor = glGetUniformLocation( _shaderProgram.program, "u_color");
 	}
 	return self;
 }
@@ -108,9 +90,9 @@
 
 -(void) calculateMaxItems
 {
-	CGSize s = [[_textureAtlas texture] contentSize];
-	_itemsPerColumn = s.height / _itemHeight;
-	_itemsPerRow = s.width / _itemWidth;
+//	CGSize s = [[_textureAtlas texture] contentSize];
+//	_itemsPerColumn = s.height / _itemHeight;
+//	_itemsPerRow = s.width / _itemWidth;
 }
 
 -(void) updateAtlasValues
@@ -119,25 +101,22 @@
 }
 
 #pragma mark CCAtlasNode - draw
-- (void) draw
+-(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
-	CC_NODE_DRAW_SETUP();
-
-	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
-	
-	[_shaderProgram setUniformLocation:_uniformColor with4fv:&_displayColor count:1];
-
-	[_textureAtlas drawNumberOfQuads:_quadsToDraw fromIndex:0];
+//	CC_NODE_DRAW_SETUP(transform);
+//
+//	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
+//	
+//	[_shaderProgram setUniformLocation:_uniformColor with4fv:&_displayColor count:1];
+//
+//	[_textureAtlas drawNumberOfQuads:_quadsToDraw fromIndex:0];
 }
 
 #pragma mark CCAtlasNode - RGBA protocol
 
 - (CCColor*) color
 {
-	if (_opacityModifyRGB)
-		return [CCColor colorWithCcColor3b:_colorUnmodified];
-
-	return super.color;
+	return [CCColor colorWithCcColor3b:_colorUnmodified];
 }
 
 -(void) setColor:(CCColor*)color
@@ -145,62 +124,19 @@
 	ccColor4F color4f = color.ccColor4f;
 	_colorUnmodified = color.ccColor3b;
 
-	if( _opacityModifyRGB ){
-		// premultiply the alpha back in.
-		color4f.r *= color4f.a;
-		color4f.g *= color4f.a;
-		color4f.b *= color4f.a;
-		color = [CCColor colorWithCcColor4f:color4f];
-	}
+	// premultiply the alpha back in.
+	color4f.r *= color4f.a;
+	color4f.g *= color4f.a;
+	color4f.b *= color4f.a;
+	color = [CCColor colorWithCcColor4f:color4f];
+	
 	[super setColor:color];
 }
 
 -(void) setOpacity:(CGFloat) anOpacity
 {
-    [super setOpacity:anOpacity];
-
-	// special opacity for premultiplied textures
-	if( _opacityModifyRGB )
-		[self setColor: [CCColor colorWithCcColor3b:_colorUnmodified]];
-}
-
--(void) setOpacityModifyRGB:(BOOL)modify
-{
-	CCColor* oldColor	= self.color;
-	_opacityModifyRGB	= modify;
-	self.color			= oldColor;
-}
-
--(BOOL) doesOpacityModifyRGB
-{
-	return _opacityModifyRGB;
-}
-
--(void) updateOpacityModifyRGB
-{
-	_opacityModifyRGB = [_textureAtlas.texture hasPremultipliedAlpha];
-}
-
-#pragma mark CCAtlasNode - CCNodeTexture protocol
-
--(void) updateBlendFunc
-{
-	if( ! [_textureAtlas.texture hasPremultipliedAlpha] ) {
-		_blendFunc.src = GL_SRC_ALPHA;
-		_blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
-	}
-}
-
--(void) setTexture:(CCTexture*)texture
-{
-	_textureAtlas.texture = texture;
-	[self updateBlendFunc];
-	[self updateOpacityModifyRGB];
-}
-
--(CCTexture*) texture
-{
-	return _textureAtlas.texture;
+	[super setOpacity:anOpacity];
+	[self setColor: [CCColor colorWithCcColor3b:_colorUnmodified]];
 }
 
 @end

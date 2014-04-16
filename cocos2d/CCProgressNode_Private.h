@@ -27,7 +27,4 @@
 // OS X
 @interface CCProgressNode ()
 
-@property (nonatomic, readonly) ccV2F_C4B_T2F *vertexData;
-@property (nonatomic, readonly) int vertexDataCount;
-
 @end

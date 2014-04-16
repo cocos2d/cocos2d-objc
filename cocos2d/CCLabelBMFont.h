@@ -71,9 +71,6 @@
     // Parsed configuration of the font file.
 	CCBMFontConfiguration	*_configuration;
     
-	// Texture RGBA settings.
-	BOOL		_opacityModifyRGB;
-
     // Offset of the texture atlas.
 	CGPoint			_imageOffset;
 	

@@ -31,6 +31,7 @@
 */
 
 #import <Foundation/Foundation.h>
+#import <GLKit/GLKMath.h>
 #import "ccMacros.h"
 
 #ifdef __CC_PLATFORM_IOS

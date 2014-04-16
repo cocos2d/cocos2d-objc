@@ -29,13 +29,12 @@
 #import "ccTypes.h"
 #import "CCProtocols.h"
 #import "ccConfig.h"
-#import "ccGLStateCache.h"
-#import "kazmath/kazmath.h"
 #import "CCResponder.h"
 #import "CCScheduler.h"
+#import "CCRenderer.h"
 
 @class CCScene;
-@class CCGLProgram;
+@class CCShader;
 @class CCScheduler;
 @class CCActionManager;
 @class CCAction;
@@ -113,12 +112,6 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 
 	// User data field.
 	id _userObject;
-
-	// Shader Program.
-	CCGLProgram	*_shaderProgram;
-
-	// Server side state.
-	ccGLServerState _glServerState;
 
 	// Used to preserve sequence while sorting children with the same zOrder.
 	NSUInteger _orderOfArrival;
@@ -267,6 +260,7 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 
 /** The anchorPoint in absolute pixels.  Since v0.8 you can only read it. If you wish to modify it, use anchorPoint instead. */
 @property(nonatomic,readonly) CGPoint anchorPointInPoints;
+
 
 /** Returns a "local" axis aligned bounding box of the node in points.
  The returned box is relative only to its parent.
@@ -562,8 +556,8 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 /// @name Accessing Transformations and Matrices
 /// -----------------------------------------------------------------------
 
-/** Performs OpenGL view-matrix transformation based on position, scale, rotation and other attributes. */
--(void) transform;
+/** Returns the 4x4 drawing transformation for this node. Really only useful when overriding visit:parentTransform: */
+-(GLKMatrix4)transform:(const GLKMatrix4 *)parentTransform;
 
 /** Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
  The matrix is in Pixels.
@@ -634,10 +628,13 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  * For further info, please see ccGLstate.h.
  * You shall NOT call [super draw];
  */
--(void) draw;
+-(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
+
+/** Calls visit:parentTransform using the current renderer and projection. */
+-(void) visit;
 
 /** Recursive method that visit its children and draw them. */
--(void) visit;
+-(void) visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform;
 
 /** Sets and returns the color (tint), alpha is ignored when setting. */
 @property (nonatomic,strong) CCColor* color;
@@ -697,11 +694,11 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  *
  *  @param boolean Enables or disables setting of opacity with color.
  */
--(void) setOpacityModifyRGB:(BOOL)boolean;
+-(void) setOpacityModifyRGB:(BOOL)boolean __deprecated;
 
 /** Returns whether or not the opacity will be applied using glColor(R,G,B,opacity) or glColor(opacity, opacity, opacity, opacity).
  */
--(BOOL) doesOpacityModifyRGB;
+-(BOOL) doesOpacityModifyRGB __deprecated;
 
 @end
 

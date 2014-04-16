@@ -77,9 +77,7 @@
 #import "ccMacros.h"
 #import "CCConfiguration.h"
 #import "CCTexturePVR.h"
-#import "CCGLProgram.h"
-#import "ccGLStateCache.h"
-#import "CCShaderCache.h"
+#import "CCShader.h"
 #import "CCDirector.h"
 
 #import "Support/ccUtils.h"
@@ -158,9 +156,23 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 
 @synthesize contentSizeInPixels = _sizeInPixels, pixelFormat = _format, pixelWidth = _width, pixelHeight = _height, name = _name, maxS = _maxS, maxT = _maxT;
 @synthesize premultipliedAlpha = _premultipliedAlpha;
-@synthesize shaderProgram = _shaderProgram;
 @synthesize contentScale = _contentScale;
 @synthesize antialiased = _antialiased;
+
+static CCTexture *CCTextureNone = nil;
+
++(void)initialize
+{
+	CCTextureNone = [self alloc];
+	CCTextureNone->_name = 0;
+	CCTextureNone->_format = CCTexturePixelFormat_RGBA8888;
+	CCTextureNone->_contentScale = 1.0;
+}
+
++(instancetype)none
+{
+	return CCTextureNone;
+}
 
 + (id) textureWithFile:(NSString*)file
 {
@@ -171,7 +183,7 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 - (id) initWithData:(const void*)data pixelFormat:(CCTexturePixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSizeInPixels:(CGSize)sizeInPixels contentScale:(CGFloat)contentScale
 {
 	if((self = [super init])) {
-		
+		glPushGroupMarkerEXT(0, "CCTexture: Init");
 		
 		// XXX: 32 bits or POT textures uses UNPACK of 4 (is this correct ??? )
 		if( pixelFormat == CCTexturePixelFormat_RGBA8888 || ( CCNextPOT(width)==width && CCNextPOT(height)==height) )
@@ -180,7 +192,7 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 			glPixelStorei(GL_UNPACK_ALIGNMENT,1);
 
 		glGenTextures(1, &_name);
-		ccGLBindTexture2D( _name );
+		glBindTexture(GL_TEXTURE_2D, _name);
 		
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
@@ -231,7 +243,8 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
         _antialiased = YES;
 
 		_contentScale = contentScale;
-		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTexture];
+		
+		glPopGroupMarkerEXT();
 	}
 	return self;
 }
@@ -281,9 +294,11 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
 
-	if( _name )
-		ccGLDeleteTexture( _name );
-
+	if( _name ){
+		glPushGroupMarkerEXT(0, "CCTexture: Dealloc");
+		glDeleteTextures(1, &_name);
+		glPopGroupMarkerEXT();
+	}
 }
 
 - (NSString*) description
@@ -592,70 +607,6 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 #pragma mark -
 #pragma mark CCTexture2D - Drawing
 
-@implementation CCTexture (Drawing)
-
-- (void) drawAtPoint:(CGPoint)point
-{
-	GLfloat		coordinates[] = { 0.0f,	_maxT,
-        _maxS,	_maxT,
-        0.0f,	0.0f,
-        _maxS,	0.0f };
-	GLfloat		width = (GLfloat)_width * _maxS,
-    height = (GLfloat)_height * _maxT;
-
-	GLfloat		vertices[] = {	point.x,			point.y,
-        width + point.x,	point.y,
-        point.x,			height  + point.y,
-		width + point.x,	height  + point.y };
-
-	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
-	[_shaderProgram use];
-	[_shaderProgram setUniformsForBuiltins];
-
-	ccGLBindTexture2D( _name );
-
-
-	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
-
-
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-	
-	CC_INCREMENT_GL_DRAWS(1);
-}
-
-
-- (void) drawInRect:(CGRect)rect
-{
-	GLfloat	 coordinates[] = {  0.0f,	_maxT,
-        _maxS,	_maxT,
-        0.0f,	0.0f,
-        _maxS,	0.0f  };
-	GLfloat	vertices[] = {	rect.origin.x,						rect.origin.y,
-        rect.origin.x + rect.size.width,	rect.origin.y,
-        rect.origin.x,						rect.origin.y + rect.size.height,
-		rect.origin.x + rect.size.width,						rect.origin.y + rect.size.height };
-
-
-	[_shaderProgram use];
-	[_shaderProgram setUniformsForBuiltins];    
-
-	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
-
-	ccGLBindTexture2D( _name );
-
-	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
-
-
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-	
-	CC_INCREMENT_GL_DRAWS(1);
-}
-
-@end
-
-
 #pragma mark -
 #pragma mark CCTexture2D - GLFilter
 
@@ -666,28 +617,38 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 
 -(void) generateMipmap
 {
+	glPushGroupMarkerEXT(0, "CCTexture: Generate Mipmap");
+	
 	NSAssert( _width == CCNextPOT(_width) && _height == CCNextPOT(_height), @"Mimpap texture only works in POT textures");
-	ccGLBindTexture2D( _name );
+	glBindTexture(GL_TEXTURE_2D, _name);
 	glGenerateMipmap(GL_TEXTURE_2D);
 	_hasMipmaps = YES;
+	
+	glPopGroupMarkerEXT();
 }
 
 -(void) setTexParameters: (ccTexParams*) texParams
 {
+	glPushGroupMarkerEXT(0, "CCTexture: Set Texture Parameters");
+	
 	NSAssert( (_width == CCNextPOT(_width) && _height == CCNextPOT(_height)) ||
 				(texParams->wrapS == GL_CLAMP_TO_EDGE && texParams->wrapT == GL_CLAMP_TO_EDGE),
 			@"GL_CLAMP_TO_EDGE should be used in NPOT dimensions");
 
-	ccGLBindTexture2D( _name );
+	glBindTexture(GL_TEXTURE_2D, _name );
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texParams->minFilter );
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texParams->magFilter );
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, texParams->wrapS );
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, texParams->wrapT );
+	
+	glPopGroupMarkerEXT();
 }
 
 -(void) setAliasTexParameters
 {
-	ccGLBindTexture2D( _name );
+	glPushGroupMarkerEXT(0, "CCTexture: Set Alias Texture Parameters");
+	
+	glBindTexture(GL_TEXTURE_2D, _name );
 	
 	if( ! _hasMipmaps )
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
@@ -697,11 +658,15 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
 	
     _antialiased = NO;
+	
+	glPopGroupMarkerEXT();
 }
 
 -(void) setAntiAliasTexParameters
 {
-	ccGLBindTexture2D( _name );
+	glPushGroupMarkerEXT(0, "CCTexture: Set Anti-alias Texture Parameters");
+	
+	glBindTexture(GL_TEXTURE_2D, _name );
 	
 	if( ! _hasMipmaps )
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
@@ -711,6 +676,8 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
     
     _antialiased = YES;
+	
+	glPopGroupMarkerEXT();
 }
 @end
 
