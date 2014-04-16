@@ -183,9 +183,9 @@ const char kCCProgressTextureCoords = 0x4b;
 		return GLKVector2Make(0.0f, 0.0f);
 	}
 	
-	CCVertex *verts = _sprite.verts;
-	GLKVector2 min = verts[0].texCoord1;
-	GLKVector2 max = verts[2].texCoord1;
+	const CCSpriteVertexes *verts = _sprite.vertexes;
+	GLKVector2 min = verts->bl.texCoord1;
+	GLKVector2 max = verts->tr.texCoord1;
   //  Fix bug #1303 so that progress timer handles sprite frame texture rotation
   if (_sprite.textureRectRotated) {
     CC_SWAP(alpha.x, alpha.y);
@@ -200,9 +200,9 @@ const char kCCProgressTextureCoords = 0x4b;
 		return GLKVector4Make(0.0f, 0.0f, 0.0f, 1.0f);
 	}
 	
-	CCVertex *verts = _sprite.verts;
-	GLKVector4 min = verts[0].position;
-	GLKVector4 max = verts[2].position;
+	const CCSpriteVertexes *verts = _sprite.vertexes;
+	GLKVector4 min = verts->br.position;
+	GLKVector4 max = verts->tl.position;
 	return GLKVector4Make(min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y, 0.0f, 1.0f);
 }
 
@@ -212,7 +212,7 @@ const char kCCProgressTextureCoords = 0x4b;
 		return;
 	}
 	if(_verts){
-		GLKVector4 sc = _sprite.verts[0].color;
+		GLKVector4 sc = _sprite.vertexes->br.color;
 		for (int i=0; i < _vertexCount; ++i) {
 			_verts[i].color = sc;
 		}

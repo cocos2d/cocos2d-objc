@@ -84,11 +84,11 @@ const float CCSprite9SliceMarginDefault         = 1.0f/3.0f;
 #pragma mark - draw
 
 static GLKMatrix4
-PositionInterpolationMatrix(CCVertex *verts, const GLKMatrix4 *transform)
+PositionInterpolationMatrix(const CCSpriteVertexes *verts, const GLKMatrix4 *transform)
 {
-	GLKVector4 origin = verts[0].position;
-	GLKVector4 basisX = GLKVector4Subtract(verts[1].position, origin);
-	GLKVector4 basisY = GLKVector4Subtract(verts[3].position, origin);
+	GLKVector4 origin = verts->bl.position;
+	GLKVector4 basisX = GLKVector4Subtract(verts->br.position, origin);
+	GLKVector4 basisY = GLKVector4Subtract(verts->tl.position, origin);
 	
 	return GLKMatrix4Multiply(*transform, GLKMatrix4Make(
 		basisX.x, basisX.y, basisX.z, 0.0f,
@@ -99,11 +99,11 @@ PositionInterpolationMatrix(CCVertex *verts, const GLKMatrix4 *transform)
 }
 
 static GLKMatrix3
-TexCoordInterpolationMatrix(CCVertex *verts)
+TexCoordInterpolationMatrix(const CCSpriteVertexes *verts)
 {
-	GLKVector2 origin = verts[0].texCoord1;
-	GLKVector2 basisX = GLKVector2Subtract(verts[1].texCoord1, origin);
-	GLKVector2 basisY = GLKVector2Subtract(verts[3].texCoord1, origin);
+	GLKVector2 origin = verts->bl.texCoord1;
+	GLKVector2 basisX = GLKVector2Subtract(verts->br.texCoord1, origin);
+	GLKVector2 basisY = GLKVector2Subtract(verts->tl.texCoord1, origin);
 	
 	return GLKMatrix3Make(
 		basisX.x, basisX.y, 0.0f,
@@ -144,10 +144,10 @@ TexCoordInterpolationMatrix(CCVertex *verts)
 	const float alphaTexY[4] = {0.0f, _marginBottom, 1.0f - _marginTop, 1.0f};
 	
 	// Interpolation matrices for the vertexes and texture coordinates
-	CCVertex *_verts = self.verts;
+	const CCSpriteVertexes *_verts = self.vertexes;
 	GLKMatrix4 interpolatePosition = PositionInterpolationMatrix(_verts, transform);
 	GLKMatrix3 interpolateTexCoord = TexCoordInterpolationMatrix(_verts);
-	GLKVector4 color = _verts[0].color;
+	GLKVector4 color = _verts->bl.color;
 	
 	CCRenderBuffer buffer = [renderer enqueueTriangles:18 andVertexes:16 withState:self.renderState];
 	

@@ -48,6 +48,8 @@
 		CGSize s = [CCDirector sharedDirector].designSize;
 		_anchorPoint = ccp(0.0f, 0.0f);
 		[self setContentSize:s];
+		
+		self.colorRGBA = [CCColor blackColor];
 	}
 	
 	return( self );

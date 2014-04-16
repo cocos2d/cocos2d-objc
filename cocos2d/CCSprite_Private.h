@@ -27,7 +27,4 @@
 
 @interface CCSprite ()
 
-// Access to the untransformed vertex array.
-@property(nonatomic, readonly) CCVertex *verts;
-
 @end
