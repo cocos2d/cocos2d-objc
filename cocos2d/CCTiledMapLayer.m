@@ -115,7 +115,7 @@ int compareInts (const void * a, const void * b);
 		_mapTileSize = mapInfo.tileSize;
 		_layerOrientation = mapInfo.orientation;
 		
-		CGFloat pixelsToPoints = 1.0/tex.contentScale;
+		CGFloat pixelsToPoints = tex ? 1.0/tex.contentScale : 1.0;
 		
 		// offset (after layer orientation is set);
 		CGPoint offset = [self calculateLayerOffset:layerInfo.offset];
