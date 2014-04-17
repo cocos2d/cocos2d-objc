@@ -115,7 +115,7 @@ int compareInts (const void * a, const void * b);
 		_mapTileSize = mapInfo.tileSize;
 		_layerOrientation = mapInfo.orientation;
 		
-		CGFloat pixelsToPoints = 1.0/tex.contentScale;
+		CGFloat pixelsToPoints = tex ? 1.0/tex.contentScale : 1.0;
 		
 		// offset (after layer orientation is set);
 		CGPoint offset = [self calculateLayerOffset:layerInfo.offset];
@@ -283,7 +283,7 @@ int compareInts (const void * a, const void * b);
 			tile.anchorPoint = CGPointZero;
 			[tile setOpacity:_opacity/255.0];
 
-			#warning TODO was this needed? Seems bizzare.
+			//#warning TODO was this needed? Seems bizzare.
 //			NSUInteger indexForZ = [self atlasIndexForExistantZ:z];
 //			[self addSpriteWithoutQuad:tile z:indexForZ name:zStr];
 		}
@@ -388,7 +388,7 @@ int compareInts (const void * a, const void * b);
 	// get atlas index
 	NSUInteger indexForZ = [self atlasIndexForNewZ:z];
 	
-	#warning TODO Apparently this is why the tilemaps never rendered. Fake sprites.
+	//#warning TODO Apparently this is why the tilemaps never rendered. Fake sprites.
 	// Optimization: add the quad without adding a child
 //	[self insertQuadFromSprite:tile quadIndex:indexForZ];
 
@@ -446,7 +446,7 @@ int compareInts (const void * a, const void * b);
 	// it appends the tile at the end of the texture atlas
 	NSUInteger indexForZ = _atlasIndexArray.count;
 
-	#warning TODO
+	//#warning TODO
 	// don't add it using the "standard" way.
 //	[self insertQuadFromSprite:tile quadIndex:indexForZ];
 

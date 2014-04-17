@@ -132,6 +132,14 @@ const NSString *CCBlendEquationAlpha = @"CCBlendEquationAlpha";
 // Nothing special
 -(void)disposeOfSharedData:(id)data {}
 
+-(void)flush
+{
+	// Since blending modes are used for keys, need to wrap the flush call in a pool.
+	@autoreleasepool {
+		[super flush];
+	}
+}
+
 @end
 
 
@@ -253,6 +261,14 @@ static NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 
 // Nothing special
 -(void)disposeOfSharedData:(id)data {}
+
+-(void)flush
+{
+	// Since render states are used for keys, need to wrap the flush call in a pool.
+	@autoreleasepool {
+		[super flush];
+	}
+}
 
 @end
 
