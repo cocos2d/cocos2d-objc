@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-#import <ccTypes.h>
+#import "ccTypes.h"
 
 
 @class CCTexture;
