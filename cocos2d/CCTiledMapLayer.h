@@ -45,7 +45,7 @@
  
  */
 
-@interface CCTiledMapLayer : CCSpriteBatchNode {
+@interface CCTiledMapLayer : CCNode<CCShaderProtocol, CCTextureProtocol, CCBlendProtocol> {
     
     // Various Map data storage.
 	CCTiledMapTilesetInfo	*_tileset;
@@ -59,17 +59,9 @@
     // TMX Layer Opacity.
 	unsigned char           _opacity;
 
-    // GID Range
-	NSUInteger              _minGID;
-	NSUInteger              _maxGID;
-
 	// Only used when vertexZ is used.
 	NSInteger               _vertexZvalue;
 	BOOL                    _useAutomaticVertexZ;
-
-	// Used for optimization.
-	CCSprite                *_reusedTile;
-	NSMutableArray          *_atlasIndexArray;
 }
 
 
@@ -135,6 +127,7 @@
 /// @name Tile Map Layer Helpers
 /// -----------------------------------------------------------------------
 
+#warning TODO deprecate or remove
 /**
  *  Returns the tile at the specified tile coordinates.
  *
@@ -142,7 +135,7 @@
  *
  *  @return CCSprite tile object.
  */
--(CCSprite*) tileAt:(CGPoint)tileCoordinate;
+//-(CCSprite*) tileAt:(CGPoint)tileCoordinate;
 
 /**
  *  Returns the tile GID at the specified tile coordinates.

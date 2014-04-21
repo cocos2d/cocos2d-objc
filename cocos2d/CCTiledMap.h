@@ -35,10 +35,7 @@ typedef NS_ENUM(NSUInteger, CCTiledMapOrientation)
 {
 	/** Orthogonal orientation. */
 	CCTiledMapOrientationOrtho,
-
-	/** Hexagonal orientation. */
-	CCTiledMapOrientationHex,
-
+	
 	/** Isometric orientation. */
 	CCTiledMapOrientationIso,
 };

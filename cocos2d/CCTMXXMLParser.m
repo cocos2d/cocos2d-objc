@@ -229,8 +229,6 @@
 			_orientation = CCTiledMapOrientationOrtho;
 		else if ( [orientationStr isEqualToString:@"isometric"])
 			_orientation = CCTiledMapOrientationIso;
-		else if( [orientationStr isEqualToString:@"hexagonal"])
-			_orientation = CCTiledMapOrientationHex;
 		else
 			CCLOG(@"cocos2d: TMXFomat: Unsupported orientation: %d", _orientation);
 
