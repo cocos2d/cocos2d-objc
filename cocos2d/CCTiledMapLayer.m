@@ -506,18 +506,33 @@ static inline CGRect CC_RECT_SCALE2(CGRect rect, CGFloat scaleX, CGFloat scaleY)
 	int ymin = 0;
 	int ymax = _layerSize.height;
 	
-//	int tileCount = (xmax - xmin + 1)*(ymax - ymin + 1);
-	
 	float scale = 1.0/self.texture.contentScale;
 	GLKVector2 zero2 = GLKVector2Make(0, 0);
 	GLKVector4 white = GLKVector4Make(1, 1, 1, 1);
 	
-	CCRenderState *renderState = self.renderState;
+	// Count the number of tiles to be drawn.
+	int tileCount = 0;
 	
 	for(int tileY = 0; tileY < ymax; tileY++){
 		for(int tileX = xmin; tileX < xmax; tileX++){
 			int index = tileX + tileY*_layerSize.width;
 			uint32_t gid = _tiles[index];
+			
+			// Blank tiles have a GID of 0.
+			if(gid != 0) tileCount++;
+		}
+	}
+	
+	CCRenderBuffer buffer = [renderer enqueueTriangles:tileCount*2 andVertexes:tileCount*4 withState:self.renderState];
+	int vertex_cursor = 0;
+	int triangle_cursor = 0;
+	
+	for(int tileY = 0; tileY < ymax; tileY++){
+		for(int tileX = xmin; tileX < xmax; tileX++){
+			int index = tileX + tileY*_layerSize.width;
+			uint32_t gid = _tiles[index];
+			
+			// Skip blank tiles.
 			if(gid == 0) continue;
 			
 			CGRect rect = [_tileset rectForGID:gid];
@@ -527,15 +542,14 @@ static inline CGRect CC_RECT_SCALE2(CGRect rect, CGFloat scaleX, CGFloat scaleY)
 			float x = tileX*_mapTileSize.width;
 			float y = (_layerSize.height - tileY - 1)*_mapTileSize.height;
 			
-			CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:renderState];
+			int v0 = vertex_cursor;
+			CCRenderBufferSetVertex(buffer, vertex_cursor++, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(x             ,               y, 0, 1)), GLKVector2Make(CGRectGetMinX(trect), CGRectGetMaxY(trect)), zero2, white});
+			CCRenderBufferSetVertex(buffer, vertex_cursor++, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(x + size.width,               y, 0, 1)), GLKVector2Make(CGRectGetMaxX(trect), CGRectGetMaxY(trect)), zero2, white});
+			CCRenderBufferSetVertex(buffer, vertex_cursor++, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(x + size.width, y + size.height, 0, 1)), GLKVector2Make(CGRectGetMaxX(trect), CGRectGetMinY(trect)), zero2, white});
+			CCRenderBufferSetVertex(buffer, vertex_cursor++, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(x             , y + size.height, 0, 1)), GLKVector2Make(CGRectGetMinX(trect), CGRectGetMinY(trect)), zero2, white});
 			
-			CCRenderBufferSetVertex(buffer, 0, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(x             ,               y, 0, 1)), GLKVector2Make(CGRectGetMinX(trect), CGRectGetMaxY(trect)), zero2, white});
-			CCRenderBufferSetVertex(buffer, 1, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(x + size.width,               y, 0, 1)), GLKVector2Make(CGRectGetMaxX(trect), CGRectGetMaxY(trect)), zero2, white});
-			CCRenderBufferSetVertex(buffer, 2, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(x + size.width, y + size.height, 0, 1)), GLKVector2Make(CGRectGetMaxX(trect), CGRectGetMinY(trect)), zero2, white});
-			CCRenderBufferSetVertex(buffer, 3, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(x             , y + size.height, 0, 1)), GLKVector2Make(CGRectGetMinX(trect), CGRectGetMinY(trect)), zero2, white});
-			
-			CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
-			CCRenderBufferSetTriangle(buffer, 1, 0, 2, 3);
+			CCRenderBufferSetTriangle(buffer, triangle_cursor++, v0 + 0, v0 + 1, v0 + 2);
+			CCRenderBufferSetTriangle(buffer, triangle_cursor++, v0 + 0, v0 + 2, v0 + 3);
 		}
 	}
 }
