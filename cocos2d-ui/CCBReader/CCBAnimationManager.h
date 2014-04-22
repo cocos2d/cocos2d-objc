@@ -51,7 +51,7 @@
     id __unsafe_unretained owner;
     CGSize rootContainerSize;
     
-    NSObject<CCBAnimationManagerDelegate>* delegate;
+    __weak NSObject<CCBAnimationManagerDelegate>* delegate;
     CCBSequence* runningSequence;
     
     void (^block)(id sender);
@@ -61,7 +61,7 @@
 @property (nonatomic,unsafe_unretained) CCNode* rootNode;
 @property (nonatomic,unsafe_unretained) id owner;
 @property (nonatomic,assign) CGSize rootContainerSize;
-@property (nonatomic,strong) NSObject<CCBAnimationManagerDelegate>* delegate;
+@property (nonatomic,weak) NSObject<CCBAnimationManagerDelegate>* delegate;
 @property (unsafe_unretained, nonatomic,readonly) NSString* runningSequenceName;
 @property (nonatomic,readonly) NSString* lastCompletedSequenceName;
 

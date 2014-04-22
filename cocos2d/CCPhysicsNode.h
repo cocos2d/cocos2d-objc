@@ -242,7 +242,7 @@ Mass has no particular units. I personally find it intuitive to use 1.0 as the m
  *  @param radius Radius to sweep.
  *  @param block  Block to execute per result.
  */
--(void)pointQueryAt:(CGPoint)point within:(CGFloat)radius block:(BOOL (^)(CCPhysicsShape *shape, CGPoint nearest, CGFloat distance))block;
+-(void)pointQueryAt:(CGPoint)point within:(CGFloat)radius block:(void (^)(CCPhysicsShape *shape, CGPoint nearest, CGFloat distance))block;
 
 /**
  *  Shoot a ray from 'start' to 'end' and find all of the CCPhysicsShapes that it would hit.
@@ -252,7 +252,7 @@ Mass has no particular units. I personally find it intuitive to use 1.0 as the m
  *  @param end   End point.
  *  @param block Block to execute per result.
  */
--(void)rayQueryFirstFrom:(CGPoint)start to:(CGPoint)end block:(BOOL (^)(CCPhysicsShape *shape, CGPoint point, CGPoint normal, CGFloat distance))block;
+-(void)rayQueryFirstFrom:(CGPoint)start to:(CGPoint)end block:(void (^)(CCPhysicsShape *shape, CGPoint point, CGPoint normal, CGFloat distance))block;
 
 /**
  *  Find all CCPhysicsShapes whose bounding boxes overlap the given CGRect.
@@ -261,7 +261,7 @@ Mass has no particular units. I personally find it intuitive to use 1.0 as the m
  *  @param rect  Rectangle area to check.
  *  @param block The block is called once for each shape found.
  */
--(void)rectQuery:(CGRect)rect block:(BOOL (^)(CCPhysicsShape *shape))block;
+-(void)rectQuery:(CGRect)rect block:(void (^)(CCPhysicsShape *shape))block;
 
 @end
 
