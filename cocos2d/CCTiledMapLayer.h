@@ -45,25 +45,7 @@
  
  */
 
-@interface CCTiledMapLayer : CCNode<CCShaderProtocol, CCTextureProtocol, CCBlendProtocol> {
-    
-    // Various Map data storage.
-	CCTiledMapTilesetInfo	*_tileset;
-	NSString                *_layerName;
-	CGSize                  _layerSize;
-	CGSize                  _mapTileSize; // TODO: in pixels or points?
-	uint32_t                *_tiles;
-	NSUInteger              _layerOrientation;
-	NSMutableDictionary     *_properties;
-    
-    // TMX Layer Opacity.
-	unsigned char           _opacity;
-
-	// Only used when vertexZ is used.
-	NSInteger               _vertexZvalue;
-	BOOL                    _useAutomaticVertexZ;
-}
-
+@interface CCTiledMapLayer : CCNode<CCShaderProtocol, CCTextureProtocol, CCBlendProtocol> 
 
 /// -----------------------------------------------------------------------
 /// @name Accessing the Tile Map Layer Attributes

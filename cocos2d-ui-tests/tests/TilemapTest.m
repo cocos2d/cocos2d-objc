@@ -10,73 +10,69 @@
 #import "TestBase.h"
 
 @interface TilemapTest : TestBase @end
-@implementation TilemapTest {
-	CCNode *map;
-}
+@implementation TilemapTest
 
 -(void) setupTilemap1Test
 {
-	self.userInteractionEnabled = YES;
-	map = [CCTiledMap tiledMapWithFile:@"TileMaps/orthogonal-test1.tmx"];
-	[self.contentNode addChild:map];
+	self.subTitle = @"TileMaps/orthogonal-test1.tmx";
+	
+	CCNode *map = [CCTiledMap tiledMapWithFile:self.subTitle];
+	CCScrollView *scroll = [[CCScrollView alloc] initWithContentNode:map];
+	scroll.flipYCoordinates = NO;
+	
+	[self.contentNode addChild:scroll];
 }
 
 -(void) setupTilemap2Test
 {
-	self.userInteractionEnabled = YES;
-	map = [CCTiledMap tiledMapWithFile:@"TileMaps/orthogonal-desert-test-with-flips.tmx"];
-	[self.contentNode addChild:map];
+	self.subTitle = @"TileMaps/orthogonal-desert-test-with-flips.tmx";
+	
+	CCNode *map = [CCTiledMap tiledMapWithFile:self.subTitle];
+	CCScrollView *scroll = [[CCScrollView alloc] initWithContentNode:map];
+	scroll.flipYCoordinates = NO;
+	
+	[self.contentNode addChild:scroll];
 }
 
 -(void) setupTilemap3Test
 {
-	self.userInteractionEnabled = YES;
-	map = [CCTiledMap tiledMapWithFile:@"TileMaps/orthogonal-testLarge.tmx"];
-	[self.contentNode addChild:map];
+	self.subTitle = @"TileMaps/orthogonal-testLarge.tmx";
+	
+	CCNode *map = [CCTiledMap tiledMapWithFile:self.subTitle];
+	CCScrollView *scroll = [[CCScrollView alloc] initWithContentNode:map];
+	scroll.flipYCoordinates = NO;
+	
+	[self.contentNode addChild:scroll];
 }
 
 -(void) setupTilemap4Test
 {
-	self.userInteractionEnabled = YES;
-	map = [CCTiledMap tiledMapWithFile:@"TileMaps/orthogonal-desert-obscenely-large.tmx"];
-	[self.contentNode addChild:map];
-}
-
-#if ( TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR )
-
--(void) touchBegan:(UITouch *)touch withEvent:(UIEvent *)event
-{
-	[self touchEnded:touch withEvent:event];
-}
-
-- (void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
-{
-	[self touchEnded:touch withEvent:event];
-}
-
-- (void)touchEnded:(UITouch *)touch withEvent:(UIEvent *)event
-{
-	CGPoint touchLocation = [touch locationInView: [touch view]];
-	CGPoint prevLocation = [touch previousLocationInView: [touch view]];
-  
-	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
-	prevLocation = [[CCDirector sharedDirector] convertToGL: prevLocation];
-  
-	CGPoint diff = ccpSub(touchLocation,prevLocation);
+	self.subTitle = @"TileMaps/orthogonal-desert-obscenely-large.tmx";
 	
-
-	CGPoint currentPos = [map position];
-	[map setPosition: ccpAdd(currentPos, diff)];
+	CCNode *map = [CCTiledMap tiledMapWithFile:self.subTitle];
+	CCScrollView *scroll = [[CCScrollView alloc] initWithContentNode:map];
+	scroll.flipYCoordinates = NO;
+	
+	[self.contentNode addChild:scroll];
 }
 
-#else
-
-- (void)mouseDragged:(NSEvent *)theEvent
+-(void) setupTilemap5Test
 {
-	CGPoint currentPos = [parallaxNode position];
-	[parallaxNode setPosition: ccpAdd(currentPos, CGPointMake( theEvent.deltaX, -theEvent.deltaY) )];
+	self.subTitle = @"TileMaps/orthogonal-desert-test-with-flips.tmx";
+	
+	CCNode *map = [CCTiledMap tiledMapWithFile:self.subTitle];
+	map.anchorPoint = ccp(0.5, 0.5);
+	map.position = map.anchorPointInPoints;
+	[map runAction:[CCActionRepeatForever actionWithAction:[CCActionRotateBy actionWithDuration:10.0 angle:90]]];
+	
+	CCNode *content = [CCNode node];
+	content.contentSize = map.contentSize;
+	[content addChild:map];
+	
+	CCScrollView *scroll = [[CCScrollView alloc] initWithContentNode:content];
+	scroll.flipYCoordinates = NO;
+	
+	[self.contentNode addChild:scroll];
 }
-#endif
-
 
 @end

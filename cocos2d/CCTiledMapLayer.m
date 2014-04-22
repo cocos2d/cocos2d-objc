@@ -46,9 +46,6 @@
 #pragma mark -
 #pragma mark CCTMXLayer
 
-int compareInts (const void * a, const void * b);
-
-
 @interface CCTiledMapLayer ()
 -(CGPoint) positionForIsoAt:(CGPoint)pos;
 -(CGPoint) positionForOrthoAt:(CGPoint)pos;
@@ -65,7 +62,20 @@ int compareInts (const void * a, const void * b);
 -(NSInteger) vertexZForPos:(CGPoint)pos;
 @end
 
-@implementation CCTiledMapLayer
+@implementation CCTiledMapLayer {
+	// Various Map data storage.
+	CCTiledMapTilesetInfo	*_tileset;
+	NSString                *_layerName;
+	CGSize                  _layerSize;
+	CGSize                  _mapTileSize; // TODO: in pixels or points?
+	uint32_t                *_tiles;
+	NSUInteger              _layerOrientation;
+	NSMutableDictionary     *_properties;
+	
+	// Only used when vertexZ is used.
+	NSInteger               _vertexZvalue;
+	BOOL                    _useAutomaticVertexZ;
+}
 
 #pragma mark CCTMXLayer - init & alloc & dealloc
 
@@ -76,10 +86,7 @@ int compareInts (const void * a, const void * b);
 
 -(id) initWithTilesetInfo:(CCTiledMapTilesetInfo*)tilesetInfo layerInfo:(CCTiledMapLayerInfo*)layerInfo mapInfo:(CCTiledMapInfo*)mapInfo
 {
-	// XXX: is 35% a good estimate ?
 	CGSize size = layerInfo.layerSize;
-	float totalNumberOfTiles = size.width * size.height;
-	float capacity = totalNumberOfTiles * 0.35f + 1; // 35 percent is occupied ?
 
 	CCTexture *tex = nil;
 	if( tilesetInfo )
@@ -93,7 +100,7 @@ int compareInts (const void * a, const void * b);
 		self.layerName = layerInfo.name;
 		_layerSize = size;
 		_tiles = layerInfo.tiles;
-		_opacity = layerInfo.opacity;
+		self.opacity = layerInfo.opacity;
 		self.properties = [NSMutableDictionary dictionaryWithDictionary:layerInfo.properties];
 
 		// tilesetInfo
@@ -120,12 +127,8 @@ int compareInts (const void * a, const void * b);
 
 - (void) dealloc
 {
-
-	if( _tiles ) {
-		free(_tiles);
-		_tiles = NULL;
-	}
-
+	free(_tiles);
+	_tiles = NULL;
 }
 
 #pragma mark CCTMXLayer - setup Tiles
@@ -215,7 +218,7 @@ int compareInts (const void * a, const void * b);
             [tile setPosition:p];
 			[tile setVertexZ: [self vertexZForPos:pos]];
 			tile.anchorPoint = CGPointZero;
-			[tile setOpacity:_opacity/255.0];
+			tile.opacity = self.opacity;
 
 			//#warning TODO was this needed? Seems bizzare.
 //			NSUInteger indexForZ = [self atlasIndexForExistantZ:z];
@@ -256,7 +259,7 @@ int compareInts (const void * a, const void * b);
 	[sprite setPosition: [self positionAt:pos]];
 	[sprite setVertexZ: [self vertexZForPos:pos]];
 	//sprite.anchorPoint = CGPointZero; // was the default
-	[sprite setOpacity:_opacity/255.0];
+//	[sprite setOpacity:_opacity/255.0];
 	
 	//issue 1264, flip can be undone as well
 	sprite.flipX = NO;
@@ -324,11 +327,6 @@ int compareInts (const void * a, const void * b);
 }
 
 #pragma mark CCTMXLayer - atlasIndex and Z
-
-int compareInts (const void * a, const void * b)
-{
-	return ( *(int*)a - *(int*)b );
-}
 
 #pragma mark CCTMXLayer - adding / remove tiles
 -(void) setTileGID:(uint32_t)gid at:(CGPoint)pos
@@ -402,17 +400,16 @@ int compareInts (const void * a, const void * b)
 
 -(CGPoint) calculateLayerOffset:(CGPoint)pos
 {
-	CGPoint ret = CGPointZero;
 	switch( _layerOrientation ) {
 		case CCTiledMapOrientationOrtho:
-			ret = ccp( pos.x * _mapTileSize.width, -pos.y *_mapTileSize.height);
-			break;
+			return ccp( pos.x * _mapTileSize.width, -pos.y *_mapTileSize.height);
 		case CCTiledMapOrientationIso:
-			ret = ccp( (_mapTileSize.width /2) * (pos.x - pos.y),
-					  (_mapTileSize.height /2 ) * (-pos.x - pos.y) );
-			break;
+			return ccp(
+				(_mapTileSize.width /2) * (pos.x - pos.y),
+				(_mapTileSize.height /2 ) * (-pos.x - pos.y)
+			);
+		default: return CGPointZero;
 	}
-	return ret;
 }
 
 -(CGPoint) positionAt:(CGPoint)pos
@@ -432,56 +429,45 @@ int compareInts (const void * a, const void * b)
 
 -(CGPoint) positionForOrthoAt:(CGPoint)pos
 {
-	CGPoint xy = {
+	return ccp(
 		pos.x * _mapTileSize.width,
-		(_layerSize.height - pos.y - 1) * _mapTileSize.height,
-	};
-	return xy;
+		(_layerSize.height - pos.y - 1) * _mapTileSize.height
+	);
 }
 
 -(CGPoint) positionForIsoAt:(CGPoint)pos
 {
-	CGPoint xy = {
+	return ccp(
 		_mapTileSize.width /2 * ( _layerSize.width + pos.x - pos.y - 1),
-		_mapTileSize.height /2 * (( _layerSize.height * 2 - pos.x - pos.y) - 2),
-	};
-	return xy;
+		_mapTileSize.height /2 * (( _layerSize.height * 2 - pos.x - pos.y) - 2)
+	);
 }
 
 -(CGPoint) positionForHexAt:(CGPoint)pos
 {
-	float diffY = 0;
-	if( (int)pos.x % 2 == 1 )
-		diffY = -_mapTileSize.height/2 ;
+	float diffY = ((int)pos.x % 2 == 1 ? -_mapTileSize.height/2 : 0);
 
-	CGPoint xy = {
+	return ccp(
 		pos.x * _mapTileSize.width*3/4,
 		(_layerSize.height - pos.y - 1) * _mapTileSize.height + diffY
-	};
-	return xy;
+	);
 }
 
 -(NSInteger) vertexZForPos:(CGPoint)pos
 {
-	NSInteger ret = 0;
-	NSUInteger maxVal = 0;
 	if( _useAutomaticVertexZ ) {
 		switch( _layerOrientation ) {
-			case CCTiledMapOrientationIso:
-				maxVal = _layerSize.width + _layerSize.height;
-				ret = -(maxVal - (pos.x + pos.y));
-				break;
-			case CCTiledMapOrientationOrtho:
-				ret = -(_layerSize.height-pos.y);
-				break;
-			default:
-				NSAssert(NO,@"TMX invalid value");
-				break;
+			case CCTiledMapOrientationIso: {
+				NSUInteger maxVal = _layerSize.width + _layerSize.height;
+				return -(maxVal - (pos.x + pos.y));
+			}
+			
+			case CCTiledMapOrientationOrtho: return -(_layerSize.height-pos.y);
+			default: NSAssert(NO, @"TMX invalid value");
 		}
-	} else
-		ret = _vertexZvalue;
-
-	return ret;
+	}
+	
+	return _vertexZvalue;
 }
 
 static inline CGRect CC_RECT_SCALE2(CGRect rect, CGFloat scaleX, CGFloat scaleY){
@@ -495,26 +481,26 @@ static inline CGRect CC_RECT_SCALE2(CGRect rect, CGFloat scaleX, CGFloat scaleY)
 
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
+	// Convert from tile coordinates to clip coordinates
 	GLKMatrix4 fromTileSpace = GLKMatrix4Multiply(*transform, GLKMatrix4MakeScale(_mapTileSize.width, _mapTileSize.height, 1));
 	
+	// Inverting the matrix lets you convert from clip coordinates to tile coordinates.
 	bool isInvertible = YES;
 	GLKMatrix4 toTileSpace = GLKMatrix4Invert(fromTileSpace, &isInvertible);
 	NSAssert(isInvertible, @"Attempted to draw a tilemap using a bad transform. (Scale is zero maybe?)");
 	
-	GLKVector4 tileSpaceCenter = GLKMatrix4MultiplyVector4(toTileSpace, GLKVector4Make(0, 0, 0, 1));
+	// Clip coordinates just go from [-1, 1] so it's fairly easy to convert the bounds to tile coordinates.
+	GLKVector4 tileSpaceCenter = GLKVector4Make(toTileSpace.m30, toTileSpace.m31, toTileSpace.m32, toTileSpace.m33);
 	float tileSpaceHalfWidth = fmaxf(fabsf(toTileSpace.m00 + toTileSpace.m10), fabsf(toTileSpace.m00 - toTileSpace.m10));
 	float tileSpaceHalfHeight = fmaxf(fabsf(toTileSpace.m01 + toTileSpace.m11), fabsf(toTileSpace.m01 - toTileSpace.m11));
 	
-	// TODO handle perspective?
+	// TODO Needs to handle perspective? Will make it easy to generate *huge* ranges.
 	
+	// Calculating visible tile bounds.
 	int xmin = MAX(0, floorf(tileSpaceCenter.x - tileSpaceHalfWidth));
 	int xmax = MIN(_layerSize.width, ceilf(tileSpaceCenter.x + tileSpaceHalfWidth));
-	int ymin = _layerSize.width - MIN(_layerSize.height, ceilf(tileSpaceCenter.y + tileSpaceHalfHeight));
-	int ymax = _layerSize.width - MAX(0, floorf(tileSpaceCenter.y - tileSpaceHalfHeight));
-	
-	float scale = 1.0/self.texture.contentScale;
-	GLKVector2 zero2 = GLKVector2Make(0, 0);
-	GLKVector4 white = GLKVector4Make(1, 1, 1, 1);
+	int ymin = _layerSize.height - MIN(_layerSize.height, ceilf(tileSpaceCenter.y + tileSpaceHalfHeight));
+	int ymax = _layerSize.height - MAX(0, floorf(tileSpaceCenter.y - tileSpaceHalfHeight));
 	
 	// Count the number of tiles to be drawn.
 	int tileCount = 0;
@@ -529,10 +515,23 @@ static inline CGRect CC_RECT_SCALE2(CGRect rect, CGFloat scaleX, CGFloat scaleY)
 		}
 	}
 	
-	if(tileCount == 0){
-		// No tiles on screen. Skip rendering.
-		return;
-	}
+	// No tiles on screen. Skip rendering.
+	if(tileCount == 0) return;
+	
+	GLKVector2 zero2 = GLKVector2Make(0, 0);
+	GLKVector4 color = GLKVector4Make(_displayColor.r, _displayColor.g, _displayColor.b, _displayColor.a);
+	
+	CCTexture *tex = self.texture;
+	float scale = 1.0/tex.contentScale;
+	float scaleW = scale/self.texture.pixelWidth;
+	float scaleH = scale/self.texture.pixelHeight;
+	
+	CGSize tileSize = _tileset.tileSize;
+	int tileW = tileSize.width;
+	int tileH = tileSize.height;
+	
+	GLKVector4 tileXOffset = GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(tileW, 0, 0, 0));
+	GLKVector4 tileYOffset = GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(0, tileH, 0, 0));
 	
 	CCRenderBuffer buffer = [renderer enqueueTriangles:tileCount*2 andVertexes:tileCount*4 withState:self.renderState];
 	int vertex_cursor = 0;
@@ -546,21 +545,56 @@ static inline CGRect CC_RECT_SCALE2(CGRect rect, CGFloat scaleX, CGFloat scaleY)
 			// Skip blank tiles.
 			if(gid == 0) continue;
 			
-			CGRect rect = [_tileset rectForGID:gid];
-			CGSize size = rect.size;
-			CGRect trect = CC_RECT_SCALE2(rect, scale/self.texture.pixelWidth, scale/self.texture.pixelHeight);
+			// Texture coords
+			CGRect trect = CC_RECT_SCALE2([_tileset rectForGID:gid], scaleW, scaleH);
 			
-			float x = tileX*_mapTileSize.width;
-			float y = (_layerSize.height - tileY - 1)*_mapTileSize.height;
+			// Texture coords left, right, bottom, top
+			float tl = CGRectGetMinX(trect);
+			float tr = CGRectGetMaxX(trect);
+			float tb = CGRectGetMinY(trect);
+			float tt = CGRectGetMaxY(trect);
 			
-			int v0 = vertex_cursor;
-			CCRenderBufferSetVertex(buffer, vertex_cursor++, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(x             ,               y, 0, 1)), GLKVector2Make(CGRectGetMinX(trect), CGRectGetMaxY(trect)), zero2, white});
-			CCRenderBufferSetVertex(buffer, vertex_cursor++, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(x + size.width,               y, 0, 1)), GLKVector2Make(CGRectGetMaxX(trect), CGRectGetMaxY(trect)), zero2, white});
-			CCRenderBufferSetVertex(buffer, vertex_cursor++, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(x + size.width, y + size.height, 0, 1)), GLKVector2Make(CGRectGetMaxX(trect), CGRectGetMinY(trect)), zero2, white});
-			CCRenderBufferSetVertex(buffer, vertex_cursor++, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(x             , y + size.height, 0, 1)), GLKVector2Make(CGRectGetMinX(trect), CGRectGetMinY(trect)), zero2, white});
+			if(gid & kCCTMXTileHorizontalFlag) CC_SWAP(tl, tr);
+			if(gid & kCCTMXTileVerticalFlag) CC_SWAP(tb, tt);
+			#warning TODO diagonal flips?
 			
-			CCRenderBufferSetTriangle(buffer, triangle_cursor++, v0 + 0, v0 + 1, v0 + 2);
-			CCRenderBufferSetTriangle(buffer, triangle_cursor++, v0 + 0, v0 + 2, v0 + 3);
+//			{
+//				CGRect rect;
+//				rect.size = _tileSize;
+//
+//				gid &= kCCFlippedMask;
+//				gid = gid - _firstGid;
+//
+//				int max_x = (_imageSize.width - _margin*2 + _spacing) / (_tileSize.width + _spacing);
+//				//	int max_y = (imageSize.height - margin*2 + spacing) / (tileSize.height + spacing);
+//
+//				rect.origin.x = (gid % max_x) * (_tileSize.width + _spacing) + _margin;
+//				rect.origin.y = (gid / max_x) * (_tileSize.height + _spacing) + _margin;
+//
+//				return rect;
+//			}
+			
+			// Set up the triangles first so we don't have to save the vertex_cursor value.
+			CCRenderBufferSetTriangle(buffer, triangle_cursor++, vertex_cursor + 0, vertex_cursor + 1, vertex_cursor + 2);
+			CCRenderBufferSetTriangle(buffer, triangle_cursor++, vertex_cursor + 0, vertex_cursor + 2, vertex_cursor + 3);
+			
+			// Calculate the vertex positions.
+			int x = tileX*_mapTileSize.width;
+			int y = (_layerSize.height - tileY - 1)*_mapTileSize.height;
+			GLKVector4 v0 = GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(x        , y        , 0, 1));
+			GLKVector4 v1 = GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(x + tileW, y        , 0, 1));
+			GLKVector4 v2 = GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(x + tileW, y + tileH, 0, 1));
+			GLKVector4 v3 = GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(x        , y + tileH, 0, 1));
+			
+//			GLKVector4 _v0 = GLKVector4Add(GLKVector4MultiplyScalar(tileXOffset, tileX), GLKVector4MultiplyScalar(tileYOffset, (_layerSize.height - tileY - 1)));
+//			GLKVector4 _v1 = GLKVector4Add(v0, tileXOffset);
+//			GLKVector4 _v2 = GLKVector4Add(v1, tileYOffset);
+//			GLKVector4 _v3 = GLKVector4Add(v0, tileYOffset);
+			
+			CCRenderBufferSetVertex(buffer, vertex_cursor++, (CCVertex){v0, GLKVector2Make(tl, tt), zero2, color});
+			CCRenderBufferSetVertex(buffer, vertex_cursor++, (CCVertex){v1, GLKVector2Make(tr, tt), zero2, color});
+			CCRenderBufferSetVertex(buffer, vertex_cursor++, (CCVertex){v2, GLKVector2Make(tr, tb), zero2, color});
+			CCRenderBufferSetVertex(buffer, vertex_cursor++, (CCVertex){v3, GLKVector2Make(tl, tb), zero2, color});
 		}
 	}
 }
