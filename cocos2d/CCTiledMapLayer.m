@@ -52,7 +52,6 @@ int compareInts (const void * a, const void * b);
 @interface CCTiledMapLayer ()
 -(CGPoint) positionForIsoAt:(CGPoint)pos;
 -(CGPoint) positionForOrthoAt:(CGPoint)pos;
--(CGPoint) positionForHexAt:(CGPoint)pos;
 
 -(CGPoint) calculateLayerOffset:(CGPoint)offset;
 
@@ -67,11 +66,6 @@ int compareInts (const void * a, const void * b);
 @end
 
 @implementation CCTiledMapLayer
-@synthesize layerSize = _layerSize, layerName = _layerName, tiles = _tiles;
-@synthesize tileset = _tileset;
-@synthesize layerOrientation = _layerOrientation;
-@synthesize mapTileSize = _mapTileSize;
-@synthesize properties = _properties;
 
 #pragma mark CCTMXLayer - init & alloc & dealloc
 
@@ -501,10 +495,22 @@ static inline CGRect CC_RECT_SCALE2(CGRect rect, CGFloat scaleX, CGFloat scaleY)
 
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
-	int xmin = 0;
-	int xmax = _layerSize.width;
-	int ymin = 0;
-	int ymax = _layerSize.height;
+	GLKMatrix4 fromTileSpace = GLKMatrix4Multiply(*transform, GLKMatrix4MakeScale(_mapTileSize.width, _mapTileSize.height, 1));
+	
+	bool isInvertible = YES;
+	GLKMatrix4 toTileSpace = GLKMatrix4Invert(fromTileSpace, &isInvertible);
+	NSAssert(isInvertible, @"Attempted to draw a tilemap using a bad transform. (Scale is zero maybe?)");
+	
+	GLKVector4 tileSpaceCenter = GLKMatrix4MultiplyVector4(toTileSpace, GLKVector4Make(0, 0, 0, 1));
+	float tileSpaceHalfWidth = fmaxf(fabsf(toTileSpace.m00 + toTileSpace.m10), fabsf(toTileSpace.m00 - toTileSpace.m10));
+	float tileSpaceHalfHeight = fmaxf(fabsf(toTileSpace.m01 + toTileSpace.m11), fabsf(toTileSpace.m01 - toTileSpace.m11));
+	
+	// TODO handle perspective?
+	
+	int xmin = MAX(0, floorf(tileSpaceCenter.x - tileSpaceHalfWidth));
+	int xmax = MIN(_layerSize.width, ceilf(tileSpaceCenter.x + tileSpaceHalfWidth));
+	int ymin = _layerSize.width - MIN(_layerSize.height, ceilf(tileSpaceCenter.y + tileSpaceHalfHeight));
+	int ymax = _layerSize.width - MAX(0, floorf(tileSpaceCenter.y - tileSpaceHalfHeight));
 	
 	float scale = 1.0/self.texture.contentScale;
 	GLKVector2 zero2 = GLKVector2Make(0, 0);
@@ -513,7 +519,7 @@ static inline CGRect CC_RECT_SCALE2(CGRect rect, CGFloat scaleX, CGFloat scaleY)
 	// Count the number of tiles to be drawn.
 	int tileCount = 0;
 	
-	for(int tileY = 0; tileY < ymax; tileY++){
+	for(int tileY = ymin; tileY < ymax; tileY++){
 		for(int tileX = xmin; tileX < xmax; tileX++){
 			int index = tileX + tileY*_layerSize.width;
 			uint32_t gid = _tiles[index];
@@ -523,11 +529,16 @@ static inline CGRect CC_RECT_SCALE2(CGRect rect, CGFloat scaleX, CGFloat scaleY)
 		}
 	}
 	
+	if(tileCount == 0){
+		// No tiles on screen. Skip rendering.
+		return;
+	}
+	
 	CCRenderBuffer buffer = [renderer enqueueTriangles:tileCount*2 andVertexes:tileCount*4 withState:self.renderState];
 	int vertex_cursor = 0;
 	int triangle_cursor = 0;
 	
-	for(int tileY = 0; tileY < ymax; tileY++){
+	for(int tileY = ymin; tileY < ymax; tileY++){
 		for(int tileX = xmin; tileX < xmax; tileX++){
 			int index = tileX + tileY*_layerSize.width;
 			uint32_t gid = _tiles[index];
