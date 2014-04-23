@@ -530,9 +530,6 @@ static inline CGRect CC_RECT_SCALE2(CGRect rect, CGFloat scaleX, CGFloat scaleY)
 	int tileW = tileSize.width;
 	int tileH = tileSize.height;
 	
-	GLKVector4 tileXOffset = GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(tileW, 0, 0, 0));
-	GLKVector4 tileYOffset = GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(0, tileH, 0, 0));
-	
 	CCRenderBuffer buffer = [renderer enqueueTriangles:tileCount*2 andVertexes:tileCount*4 withState:self.renderState];
 	int vertex_cursor = 0;
 	int triangle_cursor = 0;
@@ -545,56 +542,54 @@ static inline CGRect CC_RECT_SCALE2(CGRect rect, CGFloat scaleX, CGFloat scaleY)
 			// Skip blank tiles.
 			if(gid == 0) continue;
 			
-			// Texture coords
-			CGRect trect = CC_RECT_SCALE2([_tileset rectForGID:gid], scaleW, scaleH);
-			
-			// Texture coords left, right, bottom, top
-			float tl = CGRectGetMinX(trect);
-			float tr = CGRectGetMaxX(trect);
-			float tb = CGRectGetMinY(trect);
-			float tt = CGRectGetMaxY(trect);
-			
-			if(gid & kCCTMXTileHorizontalFlag) CC_SWAP(tl, tr);
-			if(gid & kCCTMXTileVerticalFlag) CC_SWAP(tb, tt);
-			#warning TODO diagonal flips?
-			
-//			{
-//				CGRect rect;
-//				rect.size = _tileSize;
-//
-//				gid &= kCCFlippedMask;
-//				gid = gid - _firstGid;
-//
-//				int max_x = (_imageSize.width - _margin*2 + _spacing) / (_tileSize.width + _spacing);
-//				//	int max_y = (imageSize.height - margin*2 + spacing) / (tileSize.height + spacing);
-//
-//				rect.origin.x = (gid % max_x) * (_tileSize.width + _spacing) + _margin;
-//				rect.origin.y = (gid / max_x) * (_tileSize.height + _spacing) + _margin;
-//
-//				return rect;
-//			}
-			
-			// Set up the triangles first so we don't have to save the vertex_cursor value.
-			CCRenderBufferSetTriangle(buffer, triangle_cursor++, vertex_cursor + 0, vertex_cursor + 1, vertex_cursor + 2);
-			CCRenderBufferSetTriangle(buffer, triangle_cursor++, vertex_cursor + 0, vertex_cursor + 2, vertex_cursor + 3);
+			// Need to normalize these before storing them to BOOLs to avoid truncation.
+			BOOL diagonalFlip   = !!(gid & kCCTMXTileDiagonalFlag);
+			BOOL horizontalFlip = !!(gid & kCCTMXTileHorizontalFlag);
+			BOOL verticalFlip   = !!(gid & kCCTMXTileVerticalFlag);
 			
 			// Calculate the vertex positions.
 			int x = tileX*_mapTileSize.width;
 			int y = (_layerSize.height - tileY - 1)*_mapTileSize.height;
-			GLKVector4 v0 = GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(x        , y        , 0, 1));
-			GLKVector4 v1 = GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(x + tileW, y        , 0, 1));
-			GLKVector4 v2 = GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(x + tileW, y + tileH, 0, 1));
-			GLKVector4 v3 = GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(x        , y + tileH, 0, 1));
 			
-//			GLKVector4 _v0 = GLKVector4Add(GLKVector4MultiplyScalar(tileXOffset, tileX), GLKVector4MultiplyScalar(tileYOffset, (_layerSize.height - tileY - 1)));
-//			GLKVector4 _v1 = GLKVector4Add(v0, tileXOffset);
-//			GLKVector4 _v2 = GLKVector4Add(v1, tileYOffset);
-//			GLKVector4 _v3 = GLKVector4Add(v0, tileYOffset);
+			int x1 = tileW, y1 =     0;
+			int x2 = tileW, y2 = tileH;
+			int x3 =     0, y3 = tileH;
 			
-			CCRenderBufferSetVertex(buffer, vertex_cursor++, (CCVertex){v0, GLKVector2Make(tl, tt), zero2, color});
-			CCRenderBufferSetVertex(buffer, vertex_cursor++, (CCVertex){v1, GLKVector2Make(tr, tt), zero2, color});
-			CCRenderBufferSetVertex(buffer, vertex_cursor++, (CCVertex){v2, GLKVector2Make(tr, tb), zero2, color});
-			CCRenderBufferSetVertex(buffer, vertex_cursor++, (CCVertex){v3, GLKVector2Make(tl, tb), zero2, color});
+			if(diagonalFlip){
+				CC_SWAP(x1, y1);
+				CC_SWAP(x2, y2);
+				CC_SWAP(x3, y3);
+				
+				horizontalFlip = !horizontalFlip;
+				verticalFlip = !verticalFlip;
+				CC_SWAP(horizontalFlip, verticalFlip);
+			}
+			
+			// Calculate the texture coordinates.
+			uint32_t tileIndex = (gid & kCCFlippedMask) - _tileset.firstGid;
+			int max_x = (_tileset.imageSize.width - _tileset.margin*2 + _tileset.spacing) / (_tileset.tileSize.width + _tileset.spacing);
+
+			float txmin = (tileIndex % max_x) * (_tileset.tileSize.width + _tileset.spacing) + _tileset.margin;
+			float tymin = (tileIndex / max_x) * (_tileset.tileSize.height + _tileset.spacing) + _tileset.margin;
+			txmin *= scaleW;
+			tymin *= scaleH;
+			
+			float txmax = txmin + _tileset.tileSize.width*scaleW;
+			float tymax = tymin + _tileset.tileSize.height*scaleH;
+			
+			if(horizontalFlip) CC_SWAP(txmin, txmax);
+			if(verticalFlip  ) CC_SWAP(tymin, tymax);
+			
+			CCRenderBufferSetVertex(buffer, vertex_cursor + 0, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(x     , y     , 0, 1)), GLKVector2Make(txmin, tymax), zero2, color});
+			CCRenderBufferSetVertex(buffer, vertex_cursor + 1, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(x + x1, y + y1, 0, 1)), GLKVector2Make(txmax, tymax), zero2, color});
+			CCRenderBufferSetVertex(buffer, vertex_cursor + 2, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(x + x2, y + y2, 0, 1)), GLKVector2Make(txmax, tymin), zero2, color});
+			CCRenderBufferSetVertex(buffer, vertex_cursor + 3, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(x + x3, y + y3, 0, 1)), GLKVector2Make(txmin, tymin), zero2, color});
+			
+			CCRenderBufferSetTriangle(buffer, triangle_cursor + 0, vertex_cursor + 0, vertex_cursor + 1, vertex_cursor + 2);
+			CCRenderBufferSetTriangle(buffer, triangle_cursor + 1, vertex_cursor + 0, vertex_cursor + 2, vertex_cursor + 3);
+			
+			vertex_cursor += 4;
+			triangle_cursor += 2;
 		}
 	}
 }
