@@ -3,7 +3,7 @@
  <tileset firstgid="1" source="orthogonal-test1.tsx"/>
  <layer name="Layer 0" width="12" height="12">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA9XMzQpAQBhG4cnfwsK/sJVBuf/7c9Sn3o0aWXnrSTNz4ty/N4iQTSJkBUpUdp4futa+m4gRIUGKTNq7X7Fbr2usud48Frv3osaBER166/OX/Zf/n+tha6FAAgAA
+   H4sIAAAAAAAAA6XQyQmAMBAF0OB28OAu6i2IG9iEpViKpViKpViKf2ACoyAY/PAOyfyEEKXskiu1wwEaFl6b2Qnbo09W2uc5nV15Rue15RNuqYQvaYQviSCGhNftS8/8wSi44IAHPgSia/oDTNyXybhDsx463u+FFGaooYCS+6Fl/8/9F8oHltpAAgAA
   </data>
  </layer>
 </map>
