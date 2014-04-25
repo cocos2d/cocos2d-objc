@@ -1020,7 +1020,7 @@ static inline float readFloat(CCBReader *self)
     joint.maxForce = maxForce;
     joint.breakingForce = breakingForce;
     joint.collideBodies = collideBodies;
-    
+    [joint resetScale:NodeToPhysicsScale(nodeBodyA).x];
     return joint;
     
 }
