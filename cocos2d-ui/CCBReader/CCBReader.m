@@ -972,14 +972,20 @@ static inline float readFloat(CCBReader *self)
     }
     else if([className isEqualToString:@"CCPhysicsSpringJoint"])
     {
-        CGPoint anchorA = [properties[@"anchorA"] CGPointValue];
+		CGPoint anchorA = [properties[@"anchorA"] CGPointValue];
         CGPoint anchorB = [properties[@"anchorB"] CGPointValue];
+		
+		CGPoint anchoAWorldPos = [nodeBodyA convertToWorldSpace:anchorA];
+        CGPoint anchoBWorldPos = [nodeBodyB convertToWorldSpace:anchorB];
+        float distance =  ccpDistance(anchoAWorldPos, anchoBWorldPos);
         
-        float   restLength = [properties[@"restLength"] floatValue];
+		BOOL    restLengthEnabled = [properties[@"restLengthEnabled"] boolValue];
+        float   restLength = restLengthEnabled?  [properties[@"restLength"] floatValue] : distance;
         float   stiffness = [properties[@"stiffness"] floatValue];
         float   damping = [properties[@"damping"] floatValue];
         
-        return [CCPhysicsJoint connectedSpringJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody anchorA:anchorA anchorB:anchorB restLength:restLength stiffness:stiffness damping:damping];
+        joint = [CCPhysicsJoint connectedSpringJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody anchorA:anchorA anchorB:anchorB restLength:restLength stiffness:stiffness damping:damping];
+
         
     }
     else if([className isEqualToString:@"CCPhysicsPinJoint"])
