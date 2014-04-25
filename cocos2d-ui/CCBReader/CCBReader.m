@@ -34,6 +34,7 @@
 #import "CCBReader_Private.h"
 #import "CCNode_Private.h"
 #import "CCDirector_Private.h"
+#import "CCPhysics+ObjectiveChipmunk.h"
 
 #ifdef CCB_ENABLE_UNZIP
 #import "SSZipArchive.h"
