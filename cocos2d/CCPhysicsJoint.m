@@ -60,7 +60,7 @@
 {
 	if((self = [super init])){
 		_valid = YES;
-		scale = -1.0f;//Uninitialized.
+		scale = 0.0f;//Uninitialized.
 	}
 	
 	return self;
@@ -279,7 +279,7 @@ BreakConstraint(cpConstraint *constraint, cpSpace *space)
 
 -(void)setScale:(float)_scale
 {
-	if(_scale != scale)
+	if(scale != 0.0f &&  _scale != scale)
 	{
 		float ratioChange = _scale/scale;
 		_constraint.min = _constraint.min * ratioChange;
@@ -324,7 +324,7 @@ BreakConstraint(cpConstraint *constraint, cpSpace *space)
 
 -(void)setScale:(float)_scale
 {
-	if(_scale != scale)
+	if(scale != 0.0f && _scale != scale)
 	{
 		float ratioChange = _scale/scale;
 		_constraint.restLength = _constraint.restLength * ratioChange;
@@ -356,7 +356,7 @@ BreakConstraint(cpConstraint *constraint, cpSpace *space)
 {
 	if(self.isRunning && self.constraint.space == nil)
 	{
-		self.scale = NodeToPhysicsScale(self.bodyA.node).x;
+		self.scale = NodeToPhysicsScale(self.bodyA.node).x;//We only care about uniform scaling.
 		[self addToPhysicsNode:physicsNode];
 	}
 }
