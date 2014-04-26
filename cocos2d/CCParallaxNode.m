@@ -95,8 +95,21 @@
 
 -(void) removeChild:(CCNode*)node cleanup:(BOOL)cleanup
 {
-	[_parallaxArray removeObject:node];
-	[super removeChild:node cleanup:cleanup];
+
+    NSUInteger index = 0, removeIndex = NSNotFound;
+    
+    for(CGPointObject *point in _parallaxArray){
+        if (point.child == node) {
+            removeIndex = index;
+            break;
+        }
+        index++;
+    }
+    
+    if (removeIndex != NSNotFound) [_parallaxArray removeObjectAtIndex:removeIndex];
+    
+    [super removeChild:node cleanup:cleanup];
+    
 }
 
 -(void) removeAllChildrenWithCleanup:(BOOL)cleanup
