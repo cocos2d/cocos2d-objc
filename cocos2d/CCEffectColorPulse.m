@@ -27,7 +27,7 @@
 
 -(void)buildFragmentFunctions
 {
-    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"defaultEffect" body:@"return mix(u_effectColorFrom, u_effectColorTo, cc_SinTime.y);" returnType:@"vec4"];
+    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"colorPulseEffect" body:@"return mix(u_effectColorFrom, u_effectColorTo, cc_SinTime.y);" returnType:@"vec4"];
     [self.fragmentFunctions addObject:fragmentFunction];
 }
 

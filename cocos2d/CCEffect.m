@@ -72,6 +72,13 @@
 
 @end
 
+@implementation CCEffectRenderPass
+
+//
+
+@end
+
+
 @implementation CCEffect {
     NSMutableArray* _effects;
 }
@@ -201,7 +208,7 @@
     [fragFunctions appendFormat:@"%@\n", effectFunction.function];
     
     NSString* fragBody = [NSString stringWithFormat:fragBase, fragUniforms, fragFunctions, effectFunction.method];
-    
+    //NSLog(@"\n------------fragBody:\n %@", fragBody);
     
     // Build vertex body
     NSString* vertBase =
@@ -240,6 +247,7 @@
     [vertexFunctions appendFormat:@"%@\n", effectFunction.function];
     
     NSString* vertBody = [NSString stringWithFormat:vertBase, vertexUniforms, vertexFunctions, effectFunction.method];
+    //NSLog(@"\n------------vert:\n %@", vertBody);
     
     _shader = [[CCShader alloc] initWithVertexShaderSource:vertBody fragmentShaderSource:fragBody];
 
@@ -255,6 +263,24 @@
 {
     CCEffectFunction* vertexFunction = [[CCEffectFunction alloc] initWithName:@"defaultEffect" body:@"return cc_Position;" returnType:@"vec4"];
     [_vertexFunctions addObject:vertexFunction];
+}
+
+-(void)renderPassBegin:(CCEffectRenderPass*) renderPass defaultBlock:(void (^)())defaultBlock
+{
+    if(defaultBlock)
+        defaultBlock();
+}
+
+-(void)renderPassUpdate:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
+{
+    if(defaultBlock)
+        defaultBlock();
+}
+
+-(void)renderPassEnd:(CCEffectRenderPass*) renderPass defaultBlock:(void (^)())defaultBlock
+{
+    if(defaultBlock)
+        defaultBlock();
 }
 
 @end

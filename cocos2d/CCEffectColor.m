@@ -27,7 +27,7 @@
 
 -(void)buildFragmentFunctions
 {
-    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"defaultEffect" body:@"return u_effectColor;" returnType:@"vec4"];
+    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"colorEffect" body:@"return u_effectColor;" returnType:@"vec4"];
     [self.fragmentFunctions addObject:fragmentFunction];
 }
 

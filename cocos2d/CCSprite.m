@@ -41,6 +41,7 @@
 #import "CCRenderer_private.h"
 #import "CCSprite_Private.h"
 #import "CCTexture_Private.h"
+#import "CCEffect.h"
 
 #pragma mark -
 #pragma mark CCSprite
@@ -433,6 +434,12 @@
     [self updateColor];
 }
 
+-(void)setEffect:(CCEffect *)effect
+{
+    self.shader = effect.shader;
+    if(effect.shaderUniforms != nil) // TODO: check for duplicate uniform names
+        [self.shaderUniforms addEntriesFromDictionary:effect.shaderUniforms];
+}
 
 //
 // Frames

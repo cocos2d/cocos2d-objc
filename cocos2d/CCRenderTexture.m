@@ -37,7 +37,7 @@
 #import "CCDirector_Private.h"
 #import "CCNode_Private.h"
 #import "CCRenderer_private.h"
-
+#import "CCRenderTexture_Private.h"
 #if __CC_PLATFORM_MAC
 #import <ApplicationServices/ApplicationServices.h>
 #endif
@@ -65,24 +65,7 @@
 @end
 
 
-@implementation CCRenderTexture {
-	CGSize _size;
-	GLenum _pixelFormat;
-	GLuint _depthStencilFormat;
-	
-	CCRenderer *_renderer;
-	BOOL _privateRenderer;
-
-	GLuint _FBO;
-	GLuint _depthRenderBufffer;
-	GLKVector4 _clearColor;
-	
-	GLKVector4 _oldViewport;
-	GLint _oldFBO;
-	NSDictionary *_oldGlobalUniforms;
-}
-
-@dynamic texture;
+@implementation CCRenderTexture
 
 +(id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat) format depthStencilFormat:(GLuint)depthStencilFormat
 {
@@ -113,8 +96,11 @@
 -(id)initWithWidth:(int)width height:(int)height pixelFormat:(CCTexturePixelFormat) format depthStencilFormat:(GLuint)depthStencilFormat
 {
 	if((self = [super init])){
+        
 		NSAssert(format != CCTexturePixelFormat_A8, @"only RGB and RGBA formats are valid for a render texture");
 
+        _textures = [[NSMutableArray alloc] init];
+        
 		CCDirector *director = [CCDirector sharedDirector];
 
 		// XXX multithread
@@ -164,7 +150,8 @@
 	void *data = calloc(powW*powH, 4);
 
 	CCTexture *texture = [[CCTexture alloc] initWithData:data pixelFormat:_pixelFormat pixelsWide:powW pixelsHigh:powH contentSizeInPixels:CGSizeMake(pixelW, pixelH) contentScale:_contentScale];
-	self.texture = texture;
+
+    [_textures insertObject:texture atIndex:_currentRenderPass];
 	
 	free(data);
 
@@ -176,7 +163,7 @@
 	glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
 
 	// associate texture with FBO
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, self.texture.name, 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.name, 0);
 
 	if(_depthStencilFormat){
 		//create and attach depth buffer
@@ -194,7 +181,7 @@
 	// check if it worked (probably worth doing :) )
 	NSAssert( glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, @"Could not attach texture to framebuffer");
 
-	[self.texture setAliasTexParameters];
+	[texture setAliasTexParameters];
 	
 	glBindRenderbuffer(GL_RENDERBUFFER, oldRBO);
 	glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
@@ -203,8 +190,14 @@
 	glPopGroupMarkerEXT();
 	
 	CGRect rect = CGRectMake(0, 0, _size.width, _size.height);
-	_sprite.texture = self.texture;
+    
+    [self assignSpriteTexture];
 	[_sprite setTextureRect:rect];
+}
+
+-(void)assignSpriteTexture
+{
+    _sprite.texture = self.texture;
 }
 
 -(void)setContentScale:(float)contentScale
@@ -213,12 +206,14 @@
 		_contentScale = contentScale;
 		
 		[self destroy];
-		self.texture = nil;
+        _currentRenderPass = 0;
+        [_textures removeAllObjects];
 	}
 }
 
 -(void)destroy
 {
+    [_textures removeAllObjects];
 	glDeleteFramebuffers(1, &_FBO);
 	_FBO = 0;
 	
@@ -235,20 +230,18 @@
 
 -(CCTexture *)texture
 {
-	if(super.texture == nil){
-		[self create];
-	}
-	
-	return super.texture;
+    if(([_textures count] <= _currentRenderPass) || [_textures objectAtIndex:_currentRenderPass]  == nil)
+        [self create];
+    
+    return [_textures objectAtIndex:_currentRenderPass];
 }
 
 -(GLuint)fbo
 {
-	if(super.texture == nil){
-		[self create];
-	}
-	
-	return _FBO;
+    if([_textures objectAtIndex:_currentRenderPass] == nil)
+        [self create];
+    
+    return _FBO;
 }
 
 -(void)begin

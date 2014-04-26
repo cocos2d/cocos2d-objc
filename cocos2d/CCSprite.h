@@ -50,7 +50,7 @@ typedef struct CCSpriteVertexes {
  *
  * The default anchorPoint in CCSprite is (0.5, 0.5).
  */
-@interface CCSprite : CCNode <CCTextureProtocol, CCShaderProtocol, CCBlendProtocol>
+@interface CCSprite : CCNode <CCTextureProtocol, CCShaderProtocol, CCBlendProtocol, CCEffectProtocol>
 
 /** Returns the texture rect of the CCSprite in points. */
 @property (nonatomic,readonly) CGRect textureRect;

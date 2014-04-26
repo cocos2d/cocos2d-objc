@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CCSprite.h"
 #import "CCShader.h"
 #import <ccTypes.h>
 
@@ -35,15 +36,30 @@
 
 @end
 
+
+// Note to self: I don't like this pattern, refactor it. I think there should be a CCRenderPass that is used by CCEffect instead.
+@interface CCEffectRenderPass : NSObject
+
+@property (nonatomic) NSInteger renderPassId;
+@property (nonatomic) CCSprite* sprite;
+@property (nonatomic) NSMutableArray* textures; // indexed by renderPassId
+@property (nonatomic) CCRenderer* renderer;
+@property (nonatomic) GLKMatrix4 transform;
+
+@end
+
 @interface CCEffect : NSObject
 
 @property (nonatomic, readonly) CCShader* shader;
 @property (nonatomic, readonly) NSMutableDictionary* shaderUniforms;
+@property (nonatomic, readonly) NSInteger renderPassesRequired;
 
 -(id)initWithUniforms:(NSArray*)fragmentUniforms vertextUniforms:(NSArray*)vertexUniforms;
 -(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertextUniforms:(NSArray*)vertexUniforms;
 -(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions vertexFunctions:(NSMutableArray*)vertextFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertextUniforms:(NSArray*)vertexUniforms;
 
-// TODO: add a way for effect implementations to update uniforms dynamically
+-(void)renderPassBegin:(CCEffectRenderPass*) renderPass defaultBlock:(void (^)())defaultBlock;
+-(void)renderPassUpdate:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock;
+-(void)renderPassEnd:(CCEffectRenderPass*) renderPass defaultBlock:(void (^)())defaultBlock;
 
 @end

@@ -34,7 +34,7 @@
 @class CCBlendMode;
 @class CCShader;
 @class CCRenderState;
-
+@class CCEffect;
 
 #pragma mark - CCShaderProtocol
 
@@ -46,6 +46,14 @@
 
 @end
 
+#pragma mark - CCEffectProtocol
+
+@protocol CCEffectProtocol <NSObject>
+
+/** Effect which will be applied to this sprite, NOTE: effect will overwrite any custom CCShader settings. */
+@property (nonatomic) CCEffect* effect;
+
+@end
 
 #pragma mark - CCBlendProtocol
 /**

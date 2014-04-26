@@ -24,7 +24,8 @@
     
     while(1)
     {
-        if(!object) break; // we're using 'nil' as a list terminator
+        if(!object)
+             break; // nil is a list terminator
         
         [effects addObject:object];
         object = va_arg(argumentList, id);
