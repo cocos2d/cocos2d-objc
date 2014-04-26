@@ -95,7 +95,27 @@
 
 -(void) removeChild:(CCNode*)node cleanup:(BOOL)cleanup
 {
-	[_parallaxArray removeObject:node];
+
+	CGPointObject *objectToRemove = nil;
+    
+	for (CGPointObject *point in _parallaxArray) {
+	    
+		if(point.child == node){
+
+			objectToRemove = point;
+            
+			break;
+            
+		}
+    
+	}
+    
+	if(objectToRemove != nil){
+        
+		[_parallaxArray removeObject:objectToRemove];
+
+	}
+    
 	[super removeChild:node cleanup:cleanup];
 }
 
