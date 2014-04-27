@@ -1582,7 +1582,7 @@ static inline float readFloat(CCBReader *self)
 + (CCScene*) sceneWithNodeGraphFromFile:(NSString *)file owner:(id)owner parentSize:(CGSize)parentSize
 {
     CCNode* node = [CCBReader load:file owner:owner parentSize:parentSize];
-    CCScene* scene = [[CCBReader reader] createScene];
+    CCScene* scene = [CCScene node];
     [scene addChild:node];
     return scene;
 }
