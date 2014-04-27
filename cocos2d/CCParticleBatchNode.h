@@ -151,9 +151,9 @@
  *
  *  @param child Particle System.
  *  @param z     Z Order.
- *  @param aTag  Tag.
+ *  @param name  name tag.
  */
--(void) addChild:(CCParticleSystemBase*)child z:(NSInteger)z tag:(NSInteger) aTag;
+-(void) addChild:(CCParticleSystemBase*)child z:(NSInteger)z name:(NSString*)name;
 
 /**
  *  Inserts a particle system to the batch node.
