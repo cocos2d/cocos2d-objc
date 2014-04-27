@@ -49,9 +49,6 @@
 @interface CCTiledMapLayer ()
 -(CGPoint) calculateLayerOffset:(CGPoint)offset;
 
-/* optimization methos */
--(CCSprite*) updateTileForGID:(uint32_t)gid at:(CGPoint)pos;
-
 /* The layer recognizes some special properties, like cc_vertez */
 -(void) parseInternalProperties;
 @end
@@ -148,27 +145,6 @@
 
 #pragma mark CCTMXLayer - setup Tiles
 
-//-(CCSprite*) reusedTileWithRect:(CGRect)rect
-//{	
-//	if( ! _reusedTile ) {
-//		_reusedTile = [[CCSprite alloc] initWithTexture:self.texture rect:rect rotated:NO];
-//	}
-//	else
-//	{
-//		// XXX HACK: Needed because if "batch node" is nil,
-//		// then the Sprite'squad will be reset
-////		[_reusedTile setBatchNode:nil];
-//
-//		// Re-init the sprite
-//		[_reusedTile setTextureRect:rect rotated:NO untrimmedSize:rect.size];
-//
-//		// restore the batch node
-////		[_reusedTile setBatchNode:self];
-//	}
-//
-//	return _reusedTile;
-//}
-
 -(void) setupTiles
 {
 	// Optimization: quick hack that sets the image size on the tileset
@@ -198,7 +174,6 @@
 
 	NSString *vertexz = [self propertyNamed:@"cc_vertexz"];
 	if( vertexz ) {
-
 		// If "automatic" is on, then parse the "cc_alpha_func" too
 		if( [vertexz isEqualToString:@"automatic"] ) {
 			_useAutomaticVertexZ = YES;
@@ -210,39 +185,6 @@
 
 #pragma mark CCTMXLayer - obtaining tiles/gids
 
-//-(CCSprite*) tileAt:(CGPoint)pos
-//{
-//	NSAssert( pos.x < _mapColumns && pos.y < _mapRows && pos.x >=0 && pos.y >=0, @"TMXLayer: invalid position");
-//	NSAssert( _tiles, @"TMXLayer: the tiles map has been released");
-//
-//	CCSprite *tile = nil;
-//	uint32_t gid = [self tileGIDAt:pos];
-//
-//	// if GID == 0, then no tile is present
-//	if( gid ) {
-//		int z = pos.x + pos.y * _mapColumns;
-//
-//        NSString* zStr = [NSString stringWithFormat:@"%d",z];
-//		tile = (CCSprite*) [self getChildByName:zStr recursively:NO];
-//
-//		if( ! tile ) {
-//			CGRect rect = CC_RECT_SCALE([_tileset rectForGID:gid], 1.0/self.texture.contentScale);
-//			tile = [[CCSprite alloc] initWithTexture:self.texture rect:rect];
-//
-//            CGPoint p = [self positionAt:pos];
-//            [tile setPosition:p];
-//			[tile setVertexZ: [self vertexZForPos:pos]];
-//			tile.anchorPoint = CGPointZero;
-//			tile.opacity = self.opacity;
-//
-//			//#warning TODO was this needed? Seems bizzare.
-////			NSUInteger indexForZ = [self atlasIndexForExistantZ:z];
-////			[self addSpriteWithoutQuad:tile z:indexForZ name:zStr];
-//		}
-//	}
-//	return tile;
-//}
-
 -(uint32_t) tileGIDAt:(CGPoint)pos
 {
 	return [self tileGIDAt:pos withFlags:NULL];
@@ -253,35 +195,19 @@
 	NSAssert( pos.x < _mapColumns && pos.y < _mapRows && pos.x >=0 && pos.y >=0, @"TMXLayer: invalid position");
 	NSAssert( _tiles, @"TMXLayer: the tiles map has been released");
 
-	NSInteger idx = pos.x + pos.y * _mapColumns;
+	NSInteger idx = (int)pos.x + (int)pos.y*_mapColumns;
 
 	// Bits on the far end of the 32-bit global tile ID are used for tile flags
 
 	uint32_t tile = _tiles[idx];
 	
 	// issue1264, flipped tiles can be changed dynamically
-	if (flags)
+	if(flags){
 		*flags = tile & kCCFlipedAll;
+	}
 
 	return ( tile & kCCFlippedMask);
 }
-
-#pragma mark CCTMXLayer - adding helper methods
-
--(CCSprite *) updateTileForGID:(uint32_t)gid at:(CGPoint)pos
-{
-	return nil;
-//	CGRect rect = CC_RECT_SCALE([_tileset rectForGID:gid], 1.0/self.texture.contentScale);
-//	int z = pos.x + pos.y * _mapColumns;
-//
-//	CCSprite *tile = [self reusedTileWithRect:rect];
-//	[self setupTileSprite:tile position:pos withGID:gid];
-//	_tiles[z] = gid;
-//
-//	return tile;
-}
-
-#pragma mark CCTMXLayer - atlasIndex and Z
 
 #pragma mark CCTMXLayer - adding / remove tiles
 -(void) setTileGID:(uint32_t)gid at:(CGPoint)pos
@@ -289,46 +215,20 @@
 	[self setTileGID:gid at:pos withFlags:NO];	
 }
 
-#warning TODO
 -(void) setTileGID:(uint32_t)gid at:(CGPoint)pos withFlags:(ccTMXTileFlags)flags
 {
 	NSAssert( pos.x < _mapColumns && pos.y < _mapRows && pos.x >=0 && pos.y >=0, @"TMXLayer: invalid position");
 	NSAssert( _tiles, @"TMXLayer: the tiles map has been released");
 	NSAssert( gid == 0 || gid >= _tileset.firstGid, @"TMXLayer: invalid gid" );
 
-	ccTMXTileFlags currentFlags;
+	ccTMXTileFlags currentFlags = 0;
 	uint32_t currentGID = [self tileGIDAt:pos withFlags:&currentFlags];
 	
-	if (currentGID != gid || currentFlags != flags )
-	{
+	if(currentGID != gid || currentFlags != flags){
 		uint32_t gidAndFlags = gid | flags;
-
-		// setting gid=0 is equal to remove the tile
-		if( gid == 0 )
-			[self removeTileAt:pos];
-
-		// empty tile. create a new one
-		else if( currentGID == 0 )
-			[self updateTileForGID:gidAndFlags at:pos];
-
-		// modifying an existing tile with a non-empty tile
-		else {
-
-			int z = pos.x + pos.y * _mapColumns;
-            NSString* zStr = [NSString stringWithFormat:@"%d", z];
-			CCSprite *sprite = (CCSprite*)[self getChildByName:zStr recursively:NO];
-			if( sprite ) {
-			CGRect rect = CC_RECT_SCALE([_tileset rectForGID:gid], 1.0/self.texture.contentScale);
-
-				[sprite setTextureRect:rect rotated:NO untrimmedSize:rect.size];
-
-//				if (flags) 
-//					[self setupTileSprite:sprite position:[sprite position] withGID:gidAndFlags];
-
-				_tiles[z] = gidAndFlags;
-			} else
-				[self updateTileForGID:gidAndFlags at:pos];
-		}
+		
+		int idx = (int)pos.x + (int)pos.y*_mapColumns;
+		_tiles[idx] = gidAndFlags;
 	}
 }
 
@@ -345,10 +245,8 @@
 	uint32_t gid = [self tileGIDAt:pos];
 
 	if( gid ) {
-		NSUInteger z = pos.x + pos.y * _mapColumns;
-
-		// remove tile from GID map
-		_tiles[z] = 0;
+		NSUInteger idx = (int)pos.x + (int)pos.y * _mapColumns;
+		_tiles[idx] = 0;
 	}
 }
 
