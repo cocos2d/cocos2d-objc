@@ -347,12 +347,6 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 @end
 
 
-//MARK: Render Command Protocol
-@protocol CCRenderCommand <NSObject>
--(void)invoke:(CCRenderer *)renderer;
-@end
-
-
 @interface CCRenderer()
 -(void)bindVAO:(BOOL)bind;
 -(void)setRenderState:(CCRenderState *)renderState;
@@ -393,7 +387,7 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 	_elements += elements;
 }
 
--(void)invoke:(CCRenderer *)renderer
+-(void)invokeOnRenderer:(CCRenderer *)renderer
 {
 	glPushGroupMarkerEXT(0, "CCRendererCommandDraw: Invoke");
 	
@@ -427,7 +421,7 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 	return self;
 }
 
--(void)invoke:(CCRenderer *)renderer
+-(void)invokeOnRenderer:(CCRenderer *)renderer
 {
 	glPushGroupMarkerEXT(0, [NSString stringWithFormat:@"CCRenderCommandCustom(%@): Invoke", _debugLabel].UTF8String);
 	
@@ -728,6 +722,11 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	} debugLabel:NSStringFromSelector(selector)];
 }
 
+-(void)enqueueRenderCommand: (id<CCRenderCommand>) renderCommand {
+	[_queue addObject: renderCommand];
+	_lastDrawCommand = nil;
+}
+
 -(void)flush
 {
 	glPushGroupMarkerEXT(0, "CCRenderer: Flush");
@@ -743,7 +742,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	CC_CHECK_GL_ERROR_DEBUG();
 	
-	for(CCRenderCommandDraw *command in _queue) [command invoke:self];
+	for(CCRenderCommandDraw *command in _queue) [command invokeOnRenderer:self];
 	[self bindVAO:NO];
 	
 //	NSLog(@"Draw commands: %d, Draw calls: %d", _statDrawCommands, _queue.count);
