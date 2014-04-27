@@ -61,7 +61,7 @@
 	int _tileWidth, _tileHeight;
 	
 	// Only used when vertexZ is used.
-	NSInteger _vertexZvalue;
+	float _vertexZvalue;
 	BOOL _useAutomaticVertexZ;
 }
 
@@ -305,22 +305,19 @@
 	return ccp(floorf(p.x), floorf(p.y));
 }
 
-//-(NSInteger) vertexZForPos:(CGPoint)pos
-//{
-//	if( _useAutomaticVertexZ ) {
-//		switch( _layerOrientation ) {
-//			case CCTiledMapOrientationIso: {
-//				NSUInteger maxVal = _mapColumns + _mapRows;
-//				return -(maxVal - (pos.x + pos.y));
-//			}
-//			
-//			case CCTiledMapOrientationOrtho: return -(_mapRows-pos.y);
-//			default: NSAssert(NO, @"TMX invalid value");
-//		}
-//	}
-//	
-//	return _vertexZvalue;
-//}
+static float
+AutomaticVertexZ(int tileX, int tileY, int mapColumns, int mapRows, CCTiledMapOrientation orientation)
+{
+	switch(orientation) {
+		case CCTiledMapOrientationIso: {
+			NSUInteger maxVal = mapColumns + mapRows;
+			return -(maxVal - (tileX + tileY));
+		}
+		
+		case CCTiledMapOrientationOrtho: return -(mapRows - tileY);
+		default: NSCAssert(NO, @"TMX invalid value");
+	}
+}
 
 struct IntRect { int xmin, xmax, ymin, ymax; };
 
@@ -462,11 +459,14 @@ struct IntRect { int xmin, xmax, ymin, ymax; };
 			if(horizontalFlip) CC_SWAP(txmin, txmax);
 			if(verticalFlip  ) CC_SWAP(tymin, tymax);
 			
+			// AutomaticZ
+			float z = (_useAutomaticVertexZ ? AutomaticVertexZ(tileX, tileY, _mapColumns, _mapRows, _layerOrientation) : _vertexZvalue);
+			
 			// Fill in the buffers and increment the cursors.
-			CCRenderBufferSetVertex(buffer, vertex_cursor + 0, (CCVertex){GLKVector4Make(pos.x + v0.x, pos.y + v0.y, 0, 1), GLKVector2Make(txmin*scaleW, tymax*scaleH), zero2, tileColor});
-			CCRenderBufferSetVertex(buffer, vertex_cursor + 1, (CCVertex){GLKVector4Make(pos.x + v1.x, pos.y + v1.y, 0, 1), GLKVector2Make(txmax*scaleW, tymax*scaleH), zero2, tileColor});
-			CCRenderBufferSetVertex(buffer, vertex_cursor + 2, (CCVertex){GLKVector4Make(pos.x + v2.x, pos.y + v2.y, 0, 1), GLKVector2Make(txmax*scaleW, tymin*scaleH), zero2, tileColor});
-			CCRenderBufferSetVertex(buffer, vertex_cursor + 3, (CCVertex){GLKVector4Make(pos.x + v3.x, pos.y + v3.y, 0, 1), GLKVector2Make(txmin*scaleW, tymin*scaleH), zero2, tileColor});
+			CCRenderBufferSetVertex(buffer, vertex_cursor + 0, (CCVertex){GLKVector4Make(pos.x + v0.x, pos.y + v0.y, z, 1), GLKVector2Make(txmin*scaleW, tymax*scaleH), zero2, tileColor});
+			CCRenderBufferSetVertex(buffer, vertex_cursor + 1, (CCVertex){GLKVector4Make(pos.x + v1.x, pos.y + v1.y, z, 1), GLKVector2Make(txmax*scaleW, tymax*scaleH), zero2, tileColor});
+			CCRenderBufferSetVertex(buffer, vertex_cursor + 2, (CCVertex){GLKVector4Make(pos.x + v2.x, pos.y + v2.y, z, 1), GLKVector2Make(txmax*scaleW, tymin*scaleH), zero2, tileColor});
+			CCRenderBufferSetVertex(buffer, vertex_cursor + 3, (CCVertex){GLKVector4Make(pos.x + v3.x, pos.y + v3.y, z, 1), GLKVector2Make(txmin*scaleW, tymin*scaleH), zero2, tileColor});
 			
 			CCRenderBufferSetTriangle(buffer, triangle_cursor + 0, vertex_cursor + 0, vertex_cursor + 1, vertex_cursor + 2);
 			CCRenderBufferSetTriangle(buffer, triangle_cursor + 1, vertex_cursor + 0, vertex_cursor + 2, vertex_cursor + 3);
