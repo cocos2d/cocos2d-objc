@@ -173,6 +173,15 @@
 -(CGPoint) positionAt:(CGPoint)tileCoordinate;
 
 /**
+ *  Return the position in tile coordinates of the tile specified by position in points.
+ *
+ *  @param position Position in points.
+ *
+ *  @return Coordinate of the tile at that position.
+ */
+-(CGPoint) tileCoordinateAt:(CGPoint)position;
+
+/**
  *  Return the value for the specified property name value.
  *
  *  @param propertyName Propery name to lookup.

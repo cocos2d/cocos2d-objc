@@ -294,11 +294,15 @@
 
 -(CGPoint) positionAt:(CGPoint)pos
 {
-	GLKMatrix4 tileToNode = [self tileToNodeTransform];
 	GLKVector4 p = GLKMatrix4MultiplyVector4([self tileToNodeTransform], GLKVector4Make(floorf(pos.x), floorf(pos.y), 0.0f, 1.0f));
-	
-	float scale = 1.0/self.texture.contentScale;
-	return ccp(p.x*scale, p.y*scale);
+	return ccp(p.x, p.y);
+}
+
+-(CGPoint)tileCoordinateAt:(CGPoint)pos
+{
+	GLKMatrix4 nodeToTile = GLKMatrix4Invert([self tileToNodeTransform], NULL);
+	GLKVector4 p = GLKMatrix4MultiplyVector4(nodeToTile, GLKVector4Make(pos.x, pos.y, 0.0f, 1.0f));
+	return ccp(floorf(p.x), floorf(p.y));
 }
 
 //-(NSInteger) vertexZForPos:(CGPoint)pos
@@ -320,6 +324,7 @@
 
 struct IntRect { int xmin, xmax, ymin, ymax; };
 
+// Calculate the range of tiles visible on the screen.
 -(struct IntRect)tileBoundsForClipTransform:(GLKMatrix4)tileToClip
 {
 	// Inverting the matrix lets you convert from clip coordinates to tile coordinates.
@@ -352,6 +357,7 @@ struct IntRect { int xmin, xmax, ymin, ymax; };
 	};
 }
 
+// Calculate the bounds of a tile on the screen. (Could be precalculated)
 -(struct IntRect)tileBounds
 {
 	int w = _tileset.tileSize.width;
@@ -409,15 +415,22 @@ struct IntRect { int xmin, xmax, ymin, ymax; };
 	for(int tileY = tiles.ymin; tileY < tiles.ymax; tileY++){
 		for(int tileX = tiles.xmin; tileX < tiles.xmax; tileX++){
 			int index = tileX + tileY*_mapColumns;
-			uint32_t gid = _tiles[index];
+			uint32_t gidWithFlags = _tiles[index];
+			
+			uint32_t flags = gidWithFlags & kCCFlipedAll;
+			uint32_t gid = gidWithFlags & kCCFlippedMask;
+			GLKVector4 tileColor = color;
+			
+			// Call the animation block to substitute tile values.
+			if(_animationBlock) _animationBlock(tileX, tileY, &gid, &flags, &tileColor);
 			
 			// Skip blank tiles.
 			if(gid == 0) continue;
 			
-			// Need to normalize these before storing them to BOOLs to avoid truncation.
-			BOOL diagonalFlip   = !!(gid & kCCTMXTileDiagonalFlag);
-			BOOL horizontalFlip = !!(gid & kCCTMXTileHorizontalFlag);
-			BOOL verticalFlip   = !!(gid & kCCTMXTileVerticalFlag);
+			// Need to normalize these before storing them to BOOLs to avoid truncation on the 32 bit ABI.
+			BOOL diagonalFlip   = !!(flags & kCCTMXTileDiagonalFlag);
+			BOOL horizontalFlip = !!(flags & kCCTMXTileHorizontalFlag);
+			BOOL verticalFlip   = !!(flags & kCCTMXTileVerticalFlag);
 			
 			// Calculate the vertex positions (in points).
 			GLKVector4 pos = GLKMatrix4MultiplyVector4(tileToNode, GLKVector4Make(tileX, tileY, 0.0f, 1.0f));
@@ -440,7 +453,7 @@ struct IntRect { int xmin, xmax, ymin, ymax; };
 			}
 			
 			// Calculate the texture coordinates (in points).
-			uint32_t tileIndex = (gid & kCCFlippedMask) - tilesetFirstGid;
+			uint32_t tileIndex = gid - tilesetFirstGid;
 			int txmin = (tileIndex%tilesPerSheetRow)*(tilesetTileW + tilesetSpacing) + tilesetMargin;
 			int tymin = (tileIndex/tilesPerSheetRow)*(tilesetTileH + tilesetSpacing) + tilesetMargin;
 			int txmax = txmin + tilesetTileW;
@@ -449,10 +462,11 @@ struct IntRect { int xmin, xmax, ymin, ymax; };
 			if(horizontalFlip) CC_SWAP(txmin, txmax);
 			if(verticalFlip  ) CC_SWAP(tymin, tymax);
 			
-			CCRenderBufferSetVertex(buffer, vertex_cursor + 0, (CCVertex){GLKVector4Make(pos.x + v0.x, pos.y + v0.y, 0, 1), GLKVector2Make(txmin*scaleW, tymax*scaleH), zero2, color});
-			CCRenderBufferSetVertex(buffer, vertex_cursor + 1, (CCVertex){GLKVector4Make(pos.x + v1.x, pos.y + v1.y, 0, 1), GLKVector2Make(txmax*scaleW, tymax*scaleH), zero2, color});
-			CCRenderBufferSetVertex(buffer, vertex_cursor + 2, (CCVertex){GLKVector4Make(pos.x + v2.x, pos.y + v2.y, 0, 1), GLKVector2Make(txmax*scaleW, tymin*scaleH), zero2, color});
-			CCRenderBufferSetVertex(buffer, vertex_cursor + 3, (CCVertex){GLKVector4Make(pos.x + v3.x, pos.y + v3.y, 0, 1), GLKVector2Make(txmin*scaleW, tymin*scaleH), zero2, color});
+			// Fill in the buffers and increment the cursors.
+			CCRenderBufferSetVertex(buffer, vertex_cursor + 0, (CCVertex){GLKVector4Make(pos.x + v0.x, pos.y + v0.y, 0, 1), GLKVector2Make(txmin*scaleW, tymax*scaleH), zero2, tileColor});
+			CCRenderBufferSetVertex(buffer, vertex_cursor + 1, (CCVertex){GLKVector4Make(pos.x + v1.x, pos.y + v1.y, 0, 1), GLKVector2Make(txmax*scaleW, tymax*scaleH), zero2, tileColor});
+			CCRenderBufferSetVertex(buffer, vertex_cursor + 2, (CCVertex){GLKVector4Make(pos.x + v2.x, pos.y + v2.y, 0, 1), GLKVector2Make(txmax*scaleW, tymin*scaleH), zero2, tileColor});
+			CCRenderBufferSetVertex(buffer, vertex_cursor + 3, (CCVertex){GLKVector4Make(pos.x + v3.x, pos.y + v3.y, 0, 1), GLKVector2Make(txmin*scaleW, tymin*scaleH), zero2, tileColor});
 			
 			CCRenderBufferSetTriangle(buffer, triangle_cursor + 0, vertex_cursor + 0, vertex_cursor + 1, vertex_cursor + 2);
 			CCRenderBufferSetTriangle(buffer, triangle_cursor + 1, vertex_cursor + 0, vertex_cursor + 2, vertex_cursor + 3);
@@ -462,7 +476,7 @@ struct IntRect { int xmin, xmax, ymin, ymax; };
 		}
 	}
 	
-	// Transform the vertexes
+	// Transform the vertexes in a loop to avoid invariance.
 	for(int i=0; i<4*tileCount; i++) buffer.vertexes[i].position = GLKMatrix4MultiplyVector4(*transform, buffer.vertexes[i].position);
 }
 
