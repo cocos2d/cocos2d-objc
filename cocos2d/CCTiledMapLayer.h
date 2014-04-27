@@ -28,6 +28,7 @@
 #import "CCAtlasNode.h"
 #import "CCSpriteBatchNode.h"
 #import "CCTMXXMLParser.h"
+#import "CCTiledMap.h"
 
 @class CCTiledMapInfo;
 @class CCTiledMapLayerInfo;
@@ -67,7 +68,7 @@
 @property (nonatomic,readwrite,strong) CCTiledMapTilesetInfo *tileset;
 
 /** Layer orientation method, which is the same as the map orientation method. */
-@property (nonatomic,readwrite) NSUInteger layerOrientation;
+@property (nonatomic,readwrite) CCTiledMapOrientation layerOrientation;
 
 /** Properties from the layer. They can be added using tiled. */
 @property (nonatomic,readwrite,strong) NSMutableDictionary *properties;

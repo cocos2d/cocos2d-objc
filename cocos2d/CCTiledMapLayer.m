@@ -47,9 +47,6 @@
 #pragma mark CCTMXLayer
 
 @interface CCTiledMapLayer ()
--(CGPoint) positionForIsoAt:(CGPoint)pos;
--(CGPoint) positionForOrthoAt:(CGPoint)pos;
-
 -(CGPoint) calculateLayerOffset:(CGPoint)offset;
 
 /* optimization methos */
@@ -57,25 +54,14 @@
 
 /* The layer recognizes some special properties, like cc_vertez */
 -(void) parseInternalProperties;
-- (void) setupTileSprite:(CCSprite*) sprite position:(CGPoint)pos withGID:(uint32_t)gid;
-
--(NSInteger) vertexZForPos:(CGPoint)pos;
 @end
 
 @implementation CCTiledMapLayer {
-	NSString *_layerName;
-	NSUInteger _layerOrientation;
-	NSMutableDictionary *_properties;
-	CCTiledMapTilesetInfo	*_tileset;
-	
 	// Number of rows and columns of tiles in the layer.
 	int _mapRows, _mapColumns;
 	
 	// Size of a tile in points.
 	int _tileWidth, _tileHeight;
-	
-	// Tightly packed array of TMX tile GIDs.
-	uint32_t *_tiles;
 	
 	// Only used when vertexZ is used.
 	NSInteger _vertexZvalue;
@@ -224,38 +210,38 @@
 
 #pragma mark CCTMXLayer - obtaining tiles/gids
 
--(CCSprite*) tileAt:(CGPoint)pos
-{
-	NSAssert( pos.x < _mapColumns && pos.y < _mapRows && pos.x >=0 && pos.y >=0, @"TMXLayer: invalid position");
-	NSAssert( _tiles, @"TMXLayer: the tiles map has been released");
-
-	CCSprite *tile = nil;
-	uint32_t gid = [self tileGIDAt:pos];
-
-	// if GID == 0, then no tile is present
-	if( gid ) {
-		int z = pos.x + pos.y * _mapColumns;
-
-        NSString* zStr = [NSString stringWithFormat:@"%d",z];
-		tile = (CCSprite*) [self getChildByName:zStr recursively:NO];
-
-		if( ! tile ) {
-			CGRect rect = CC_RECT_SCALE([_tileset rectForGID:gid], 1.0/self.texture.contentScale);
-			tile = [[CCSprite alloc] initWithTexture:self.texture rect:rect];
-
-            CGPoint p = [self positionAt:pos];
-            [tile setPosition:p];
-			[tile setVertexZ: [self vertexZForPos:pos]];
-			tile.anchorPoint = CGPointZero;
-			tile.opacity = self.opacity;
-
-			//#warning TODO was this needed? Seems bizzare.
-//			NSUInteger indexForZ = [self atlasIndexForExistantZ:z];
-//			[self addSpriteWithoutQuad:tile z:indexForZ name:zStr];
-		}
-	}
-	return tile;
-}
+//-(CCSprite*) tileAt:(CGPoint)pos
+//{
+//	NSAssert( pos.x < _mapColumns && pos.y < _mapRows && pos.x >=0 && pos.y >=0, @"TMXLayer: invalid position");
+//	NSAssert( _tiles, @"TMXLayer: the tiles map has been released");
+//
+//	CCSprite *tile = nil;
+//	uint32_t gid = [self tileGIDAt:pos];
+//
+//	// if GID == 0, then no tile is present
+//	if( gid ) {
+//		int z = pos.x + pos.y * _mapColumns;
+//
+//        NSString* zStr = [NSString stringWithFormat:@"%d",z];
+//		tile = (CCSprite*) [self getChildByName:zStr recursively:NO];
+//
+//		if( ! tile ) {
+//			CGRect rect = CC_RECT_SCALE([_tileset rectForGID:gid], 1.0/self.texture.contentScale);
+//			tile = [[CCSprite alloc] initWithTexture:self.texture rect:rect];
+//
+//            CGPoint p = [self positionAt:pos];
+//            [tile setPosition:p];
+//			[tile setVertexZ: [self vertexZForPos:pos]];
+//			tile.anchorPoint = CGPointZero;
+//			tile.opacity = self.opacity;
+//
+//			//#warning TODO was this needed? Seems bizzare.
+////			NSUInteger indexForZ = [self atlasIndexForExistantZ:z];
+////			[self addSpriteWithoutQuad:tile z:indexForZ name:zStr];
+//		}
+//	}
+//	return tile;
+//}
 
 -(uint32_t) tileGIDAt:(CGPoint)pos
 {
@@ -282,66 +268,6 @@
 
 #pragma mark CCTMXLayer - adding helper methods
 
-#warning TODO
-- (void) setupTileSprite:(CCSprite*) sprite position:(CGPoint)pos withGID:(uint32_t)gid
-{
-	[sprite setPosition: [self positionAt:pos]];
-	[sprite setVertexZ: [self vertexZForPos:pos]];
-	//sprite.anchorPoint = CGPointZero; // was the default
-//	[sprite setOpacity:_opacity/255.0];
-	
-	//issue 1264, flip can be undone as well
-	sprite.flipX = NO;
-	sprite.flipY = NO;
-	sprite.rotation = 0;
-	//sprite.anchorPoint = ccp(0,0); // was the default
-	
-	// All tile sprites in the layer should have the same anchorpoint.
-	// The default anchor point is defined in the TMX file (within the tileset node) and stored in the
-	// CCTMXTilesetInfo* property of the CCTMXLayer.
-	sprite.anchorPoint = _tileset.tileAnchorPoint;
-	
-	// Rotation in tiled is achieved using 3 flipped states, flipping across the horizontal, vertical, and diagonal axes of the tiles.
-	if (gid & kCCTMXTileDiagonalFlag)
-	{
-		// put the anchor in the middle for ease of rotation.
-		sprite.anchorPoint = ccp(0.5f,0.5f);
-		[sprite setPosition: ccp([self positionAt:pos].x + sprite.contentSize.height/2,
-								 [self positionAt:pos].y + sprite.contentSize.width/2 )
-		 ];
-
-		uint32_t flag = gid & (kCCTMXTileHorizontalFlag | kCCTMXTileVerticalFlag );
-
-		// handle the 4 diagonally flipped states.
-		if (flag == kCCTMXTileHorizontalFlag)
-		{
-			sprite.rotation = 90;
-		}
-		else if (flag == kCCTMXTileVerticalFlag)
-		{
-			sprite.rotation = 270;
-		}
-		else if (flag == (kCCTMXTileVerticalFlag | kCCTMXTileHorizontalFlag) )
-		{
-			sprite.rotation = 90;
-			sprite.flipX = YES;
-		}
-		else
-		{
-			sprite.rotation = 270;
-			sprite.flipX = YES;
-		}
-	}
-	else
-	{
-		if (gid & kCCTMXTileHorizontalFlag)
-			sprite.flipX = YES;
-		
-		if (gid & kCCTMXTileVerticalFlag)
-			sprite.flipY = YES;
-	}
-}
-
 -(CCSprite *) updateTileForGID:(uint32_t)gid at:(CGPoint)pos
 {
 	return nil;
@@ -363,6 +289,7 @@
 	[self setTileGID:gid at:pos withFlags:NO];	
 }
 
+#warning TODO
 -(void) setTileGID:(uint32_t)gid at:(CGPoint)pos withFlags:(ccTMXTileFlags)flags
 {
 	NSAssert( pos.x < _mapColumns && pos.y < _mapRows && pos.x >=0 && pos.y >=0, @"TMXLayer: invalid position");
@@ -395,8 +322,8 @@
 
 				[sprite setTextureRect:rect rotated:NO untrimmedSize:rect.size];
 
-				if (flags) 
-					[self setupTileSprite:sprite position:[sprite position] withGID:gidAndFlags];
+//				if (flags) 
+//					[self setupTileSprite:sprite position:[sprite position] withGID:gidAndFlags];
 
 				_tiles[z] = gidAndFlags;
 			} else
@@ -441,92 +368,113 @@
 	}
 }
 
--(CGPoint) positionAt:(CGPoint)pos
+-(GLKMatrix4)tileToNodeTransform
 {
-	CGPoint ret = CGPointZero;
-	switch( _layerOrientation ) {
+	float w = _tileWidth;
+	float h = _tileHeight;
+	float offY = _mapRows*h;
+	
+	switch(_layerOrientation){
 		case CCTiledMapOrientationOrtho:
-			ret = [self positionForOrthoAt:pos];
-			break;
-		case CCTiledMapOrientationIso:
-			ret = [self positionForIsoAt:pos];
-			break;
-	}
-
-	return ccpMult(ret, 1.0/self.texture.contentScale);
-}
-
--(CGPoint) positionForOrthoAt:(CGPoint)pos
-{
-	return ccp(
-		pos.x * _tileWidth,
-		(_mapRows - pos.y - 1) * _tileHeight
-	);
-}
-
--(CGPoint) positionForIsoAt:(CGPoint)pos
-{
-	return ccp(
-		_tileWidth /2 * ( _mapColumns + pos.x - pos.y - 1),
-		_tileHeight /2 * (( _mapRows * 2 - pos.x - pos.y) - 2)
-	);
-}
-
--(CGPoint) positionForHexAt:(CGPoint)pos
-{
-	float diffY = ((int)pos.x % 2 == 1 ? -_tileHeight/2 : 0);
-
-	return ccp(
-		pos.x * _tileWidth*3/4,
-		(_mapRows - pos.y - 1) * _tileHeight + diffY
-	);
-}
-
--(NSInteger) vertexZForPos:(CGPoint)pos
-{
-	if( _useAutomaticVertexZ ) {
-		switch( _layerOrientation ) {
-			case CCTiledMapOrientationIso: {
-				NSUInteger maxVal = _mapColumns + _mapRows;
-				return -(maxVal - (pos.x + pos.y));
-			}
-			
-			case CCTiledMapOrientationOrtho: return -(_mapRows-pos.y);
-			default: NSAssert(NO, @"TMX invalid value");
+			return GLKMatrix4Make(
+				   w, 0.0f, 0.0f, 0.0f,
+				0.0f,   -h, 0.0f, 0.0f,
+				0.0f, 0.0f, 1.0f, 0.0f,
+				0.0f, offY, 0.0f, 1.0f
+			);
+		case CCTiledMapOrientationIso: {
+			float offX = _mapColumns*w/2;
+			return GLKMatrix4Make(
+				 w/2, -h/2, 00.f, 0.0f,
+				-w/2, -h/2, 0.0f, 0.0f,
+				0.0f, 0.0f, 1.0f, 0.0f,
+				offX, offY, 0.0f, 1.0f
+			);
 		}
 	}
+}
+
+-(CGPoint) positionAt:(CGPoint)pos
+{
+	GLKMatrix4 tileToNode = [self tileToNodeTransform];
+	GLKVector4 p = GLKMatrix4MultiplyVector4([self tileToNodeTransform], GLKVector4Make(floorf(pos.x), floorf(pos.y), 0.0f, 1.0f));
 	
-	return _vertexZvalue;
+	float scale = 1.0/self.texture.contentScale;
+	return ccp(p.x*scale, p.y*scale);
+}
+
+//-(NSInteger) vertexZForPos:(CGPoint)pos
+//{
+//	if( _useAutomaticVertexZ ) {
+//		switch( _layerOrientation ) {
+//			case CCTiledMapOrientationIso: {
+//				NSUInteger maxVal = _mapColumns + _mapRows;
+//				return -(maxVal - (pos.x + pos.y));
+//			}
+//			
+//			case CCTiledMapOrientationOrtho: return -(_mapRows-pos.y);
+//			default: NSAssert(NO, @"TMX invalid value");
+//		}
+//	}
+//	
+//	return _vertexZvalue;
+//}
+
+struct IntRect { int xmin, xmax, ymin, ymax; };
+
+-(struct IntRect)tileBoundsForClipTransform:(GLKMatrix4)tileToClip
+{
+	// Inverting the matrix lets you convert from clip coordinates to tile coordinates.
+	bool isInvertible = YES;
+	GLKMatrix4 clipToTile = GLKMatrix4Invert(tileToClip, &isInvertible);
+	NSAssert(isInvertible, @"Attempted to draw a tilemap using a bad transform. (Scale is zero maybe?)");
+	
+	// TODO Needs to handle perspective? Will make it easy to generate *huge* ranges.
+	
+	// TODO Doesn't handle offsets.
+	// Find the maximum amount a tile sprite can spill out of it's bounds.
+	float oversize = MAX(_tileset.tileSize.width, _tileset.tileSize.height)/MIN(_tileWidth, _tileHeight) - 1.0f;
+	
+	// TODO This might be overly conservative for Isometric tilemaps.
+	if(_layerOrientation == CCTiledMapOrientationIso){
+		oversize = oversize*2 + 1;
+	}
+	
+	// Clip coordinates just go from [-1, 1] so it's fairly easy to convert the bounds to tile coordinates.
+	GLKVector4 tileSpaceCenter = GLKMatrix4GetColumn(clipToTile, 3);
+	float tileSpaceHalfWidth = fmaxf(fabsf(clipToTile.m00 + clipToTile.m10), fabsf(clipToTile.m00 - clipToTile.m10)) + oversize;
+	float tileSpaceHalfHeight = fmaxf(fabsf(clipToTile.m01 + clipToTile.m11), fabsf(clipToTile.m01 - clipToTile.m11)) + oversize;
+	
+	// Calculating visible tile bounds.
+	return (struct IntRect){
+		MAX(0, MIN(_mapColumns, floorf(tileSpaceCenter.x - tileSpaceHalfWidth))),
+		MAX(0, MIN(_mapColumns, ceilf(tileSpaceCenter.x + tileSpaceHalfWidth))),
+		MAX(0, MIN(_mapRows, floorf(tileSpaceCenter.y - tileSpaceHalfHeight))),
+		MAX(0, MIN(_mapRows, ceilf(tileSpaceCenter.y + tileSpaceHalfHeight))),
+	};
+}
+
+-(struct IntRect)tileBounds
+{
+	int w = _tileset.tileSize.width;
+	int h = _tileset.tileSize.height;
+	
+	switch(_layerOrientation){
+		case CCTiledMapOrientationOrtho: return (struct IntRect){0, w, 0, h};
+		case CCTiledMapOrientationIso: return (struct IntRect){-w/2, w/2, 0, h};
+	}
 }
 
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
-	// Convert from tile coordinates to clip coordinates
-	GLKMatrix4 fromTileSpace = GLKMatrix4Multiply(*transform, GLKMatrix4MakeScale(_tileWidth, _tileHeight, 1));
-	
-	// Inverting the matrix lets you convert from clip coordinates to tile coordinates.
-	bool isInvertible = YES;
-	GLKMatrix4 toTileSpace = GLKMatrix4Invert(fromTileSpace, &isInvertible);
-	NSAssert(isInvertible, @"Attempted to draw a tilemap using a bad transform. (Scale is zero maybe?)");
-	
-	// Clip coordinates just go from [-1, 1] so it's fairly easy to convert the bounds to tile coordinates.
-	GLKVector4 tileSpaceCenter = GLKVector4Make(toTileSpace.m30, toTileSpace.m31, toTileSpace.m32, toTileSpace.m33);
-	float tileSpaceHalfWidth = fmaxf(fabsf(toTileSpace.m00 + toTileSpace.m10), fabsf(toTileSpace.m00 - toTileSpace.m10));
-	float tileSpaceHalfHeight = fmaxf(fabsf(toTileSpace.m01 + toTileSpace.m11), fabsf(toTileSpace.m01 - toTileSpace.m11));
-	
-	// TODO Needs to handle perspective? Will make it easy to generate *huge* ranges.
-	
-	// Calculating visible tile bounds.
-	int xmin = MAX(0, floorf(tileSpaceCenter.x - tileSpaceHalfWidth));
-	int xmax = MIN(_mapColumns, ceilf(tileSpaceCenter.x + tileSpaceHalfWidth));
-	int ymin = _mapRows - MIN(_mapRows, ceilf(tileSpaceCenter.y + tileSpaceHalfHeight));
-	int ymax = _mapRows - MAX(0, floorf(tileSpaceCenter.y - tileSpaceHalfHeight));
+	GLKMatrix4 tileToNode = [self tileToNodeTransform];
+	struct IntRect tiles = [self tileBoundsForClipTransform:GLKMatrix4Multiply(*transform, tileToNode)];
 	
 	// Count the number of tiles to be drawn.
 	int tileCount = 0;
 	
-	for(int tileY = ymin; tileY < ymax; tileY++){
-		for(int tileX = xmin; tileX < xmax; tileX++){
+	for(int tileY = tiles.ymin; tileY < tiles.ymax; tileY++){
+		for(int tileX = tiles.xmin; tileX < tiles.xmax; tileX++){
 			int index = tileX + tileY*_mapColumns;
 			uint32_t gid = _tiles[index];
 			
@@ -554,12 +502,14 @@
 	int tilesetTileH = _tileset.tileSize.height;
 	int tilesPerSheetRow = (_tileset.imageSize.width - tilesetMargin*2 + tilesetSpacing) / (_tileset.tileSize.width + _tileset.spacing);
 	
+	struct IntRect tileBounds = [self tileBounds];
+	
 	CCRenderBuffer buffer = [renderer enqueueTriangles:tileCount*2 andVertexes:tileCount*4 withState:self.renderState];
 	int vertex_cursor = 0;
 	int triangle_cursor = 0;
 	
-	for(int tileY = ymin; tileY < ymax; tileY++){
-		for(int tileX = xmin; tileX < xmax; tileX++){
+	for(int tileY = tiles.ymin; tileY < tiles.ymax; tileY++){
+		for(int tileX = tiles.xmin; tileX < tiles.xmax; tileX++){
 			int index = tileX + tileY*_mapColumns;
 			uint32_t gid = _tiles[index];
 			
@@ -572,17 +522,19 @@
 			BOOL verticalFlip   = !!(gid & kCCTMXTileVerticalFlag);
 			
 			// Calculate the vertex positions (in points).
-			int x = tileX*_tileWidth;
-			int y = (_mapRows - tileY - 1)*_tileHeight;
+			GLKVector4 pos = GLKMatrix4MultiplyVector4(tileToNode, GLKVector4Make(tileX, tileY, 0.0f, 1.0f));
+			pos.y -= _tileHeight;
 			
-			int x1 = tilesetTileW, y1 =            0;
-			int x2 = tilesetTileW, y2 = tilesetTileH;
-			int x3 =            0, y3 = tilesetTileH;
+			GLKVector2 v0 = GLKVector2Make(tileBounds.xmin, tileBounds.ymin);
+			GLKVector2 v1 = GLKVector2Make(tileBounds.xmax, tileBounds.ymin);
+			GLKVector2 v2 = GLKVector2Make(tileBounds.xmax, tileBounds.ymax);
+			GLKVector2 v3 = GLKVector2Make(tileBounds.xmin, tileBounds.ymax);
 			
 			if(diagonalFlip){
-				CC_SWAP(x1, y1);
-				CC_SWAP(x2, y2);
-				CC_SWAP(x3, y3);
+				CC_SWAP(v0.x, v0.y);
+				CC_SWAP(v1.x, v1.y);
+				CC_SWAP(v2.x, v2.y);
+				CC_SWAP(v3.x, v3.y);
 				
 				horizontalFlip = !horizontalFlip;
 				verticalFlip = !verticalFlip;
@@ -591,18 +543,18 @@
 			
 			// Calculate the texture coordinates (in points).
 			uint32_t tileIndex = (gid & kCCFlippedMask) - tilesetFirstGid;
-			int txmin = (tileIndex % tilesPerSheetRow) * (tilesetTileW + tilesetSpacing) + tilesetMargin;
-			int tymin = (tileIndex / tilesPerSheetRow) * (tilesetTileH + tilesetSpacing) + tilesetMargin;
+			int txmin = (tileIndex%tilesPerSheetRow)*(tilesetTileW + tilesetSpacing) + tilesetMargin;
+			int tymin = (tileIndex/tilesPerSheetRow)*(tilesetTileH + tilesetSpacing) + tilesetMargin;
 			int txmax = txmin + tilesetTileW;
 			int tymax = tymin + tilesetTileH;
 			
 			if(horizontalFlip) CC_SWAP(txmin, txmax);
 			if(verticalFlip  ) CC_SWAP(tymin, tymax);
 			
-			CCRenderBufferSetVertex(buffer, vertex_cursor + 0, (CCVertex){GLKVector4Make(x     , y     , 0, 1), GLKVector2Make(txmin*scaleW, tymax*scaleH), zero2, color});
-			CCRenderBufferSetVertex(buffer, vertex_cursor + 1, (CCVertex){GLKVector4Make(x + x1, y + y1, 0, 1), GLKVector2Make(txmax*scaleW, tymax*scaleH), zero2, color});
-			CCRenderBufferSetVertex(buffer, vertex_cursor + 2, (CCVertex){GLKVector4Make(x + x2, y + y2, 0, 1), GLKVector2Make(txmax*scaleW, tymin*scaleH), zero2, color});
-			CCRenderBufferSetVertex(buffer, vertex_cursor + 3, (CCVertex){GLKVector4Make(x + x3, y + y3, 0, 1), GLKVector2Make(txmin*scaleW, tymin*scaleH), zero2, color});
+			CCRenderBufferSetVertex(buffer, vertex_cursor + 0, (CCVertex){GLKVector4Make(pos.x + v0.x, pos.y + v0.y, 0, 1), GLKVector2Make(txmin*scaleW, tymax*scaleH), zero2, color});
+			CCRenderBufferSetVertex(buffer, vertex_cursor + 1, (CCVertex){GLKVector4Make(pos.x + v1.x, pos.y + v1.y, 0, 1), GLKVector2Make(txmax*scaleW, tymax*scaleH), zero2, color});
+			CCRenderBufferSetVertex(buffer, vertex_cursor + 2, (CCVertex){GLKVector4Make(pos.x + v2.x, pos.y + v2.y, 0, 1), GLKVector2Make(txmax*scaleW, tymin*scaleH), zero2, color});
+			CCRenderBufferSetVertex(buffer, vertex_cursor + 3, (CCVertex){GLKVector4Make(pos.x + v3.x, pos.y + v3.y, 0, 1), GLKVector2Make(txmin*scaleW, tymin*scaleH), zero2, color});
 			
 			CCRenderBufferSetTriangle(buffer, triangle_cursor + 0, vertex_cursor + 0, vertex_cursor + 1, vertex_cursor + 2);
 			CCRenderBufferSetTriangle(buffer, triangle_cursor + 1, vertex_cursor + 0, vertex_cursor + 2, vertex_cursor + 3);
