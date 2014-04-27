@@ -25,7 +25,7 @@
 #import "ccTypes.h"
 
 
-@class CCTexture;
+@class CCTexture, CCRenderer;
 
 /// Standard interleaved vertex format for Cocos2D.
 typedef struct CCVertex {
@@ -177,6 +177,26 @@ extern const NSString *CCBlendEquationAlpha;
 
 @end
 
+/**
+ * Describes the behaviour for an command object that can be submitted to the queue of a 
+ * CCRenderer in order to perform some drawing operations.
+ *
+ * When submitted to a renderer, render commands can be queued and executed at a later time.
+ * Each implementation of CCRenderCommand encapsulates the content to be rendered.
+ */
+@protocol CCRenderCommand <NSObject>
+
+/**
+ * Invokes this command on the specified renderer.
+ *
+ * When submitted to a renderer, render commands may be queued and executed at a later time.
+ * Implementations should expect that this method will not be executed at the time that this
+ * command is submitted to the renderer.
+ */
+-(void)invokeOnRenderer:(CCRenderer *)renderer;
+
+@end
+
 
 /// A rendering queue.
 /// All drawing commands in Cocos2D must be sequenced using a CCRenderer.
@@ -203,5 +223,8 @@ extern const NSString *CCBlendEquationAlpha;
 
 /// Enqueue a method that performs GL commands.
 -(void)enqueueMethod:(SEL)selector target:(id)target;
+
+// Enqueue a general or custom render command.
+-(void)enqueueRenderCommand: (id<CCRenderCommand>) renderCommand;
 
 @end
