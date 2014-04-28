@@ -1174,7 +1174,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 
 -(CCTimer *) schedule:(SEL)selector interval:(CCTime)interval
 {
-	return [self schedule:selector interval:interval repeat:CCTimerRepeatForever delay:0];
+	return [self schedule:selector interval:interval repeat:CCTimerRepeatForever delay:interval];
 }
 
 -(BOOL)unschedule_private:(SEL)selector
