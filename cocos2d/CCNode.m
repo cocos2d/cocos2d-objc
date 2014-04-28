@@ -29,6 +29,7 @@
 #import "CCNode_Private.h"
 #import "CCDirector.h"
 #import "CCActionManager.h"
+#import "CCBAnimationManager.h"
 #import "CCScheduler.h"
 #import "ccConfig.h"
 #import "ccMacros.h"
@@ -41,6 +42,7 @@
 #import "CCTexture_Private.h"
 #import "CCActionManager_Private.h"
 
+
 #ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
 #endif
@@ -51,7 +53,6 @@
 #else
 #define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
 #endif
-
 
 #pragma mark - Node
 
@@ -207,7 +208,7 @@ static NSUInteger globalOrderOfArrival = 1;
 	[_children makeObjectsPerformSelector:@selector(cleanup)];
     
     // Custom cleanup for userOjbect (Typically CCBAnimationManager when using SpriteBuilder)
-    if([_userObject respondsToSelector:@selector(cleanup)]) {
+    if([_userObject isKindOfClass:[CCBAnimationManager class]]) {
         [_userObject performSelector:@selector(cleanup)];
     }
     _userObject = nil;
