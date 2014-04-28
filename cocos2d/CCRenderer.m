@@ -399,10 +399,6 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 {
 	void (^_block)();
 	NSString *_debugLabel;
-
-@public
-	CCRenderState *_renderState;
-
 }
 
 -(instancetype)initWithBlock:(void (^)())block debugLabel:(NSString *)debugLabel
@@ -415,24 +411,10 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 	return self;
 }
 
--(instancetype)initWithBlock:(void (^)())block renderState:(CCRenderState *)renderState debugLabel:(NSString *)debugLabel
-{
-	if((self = [super init])){
-		_block = block;
-		_debugLabel = debugLabel;
-        _renderState = renderState;
-	}
-	
-	return self;
-}
-
-
 -(void)invoke:(CCRenderer *)renderer
 {
 	glPushGroupMarkerEXT(0, [NSString stringWithFormat:@"CCRenderCommandCustom(%@): Invoke", _debugLabel].UTF8String);
 	
-    if(_renderState != nil)
-        [renderer setRenderState:_renderState];
 	[renderer bindVAO:NO];
 	_block();
 	
@@ -719,12 +701,6 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 -(void)enqueueBlock:(void (^)())block debugLabel:(NSString *)debugLabel
 {
 	[_queue addObject:[[CCRenderCommandCustom alloc] initWithBlock:block debugLabel:debugLabel]];
-	_lastDrawCommand = nil;
-}
-
--(void)enqueueBlock:(void (^)())block debugLabel:(NSString *)debugLabel withState:(CCRenderState *)renderState
-{
-	[_queue addObject:[[CCRenderCommandCustom alloc] initWithBlock:block renderState:renderState debugLabel:debugLabel]];
 	_lastDrawCommand = nil;
 }
 

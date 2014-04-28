@@ -20,7 +20,7 @@
 @property (nonatomic, readonly) NSString* method;
 
 -(id)initWithName:(NSString*)name body:(NSString*)body returnType:(NSString*)returnType;
-+(id)functionName:(NSString*)name body:(NSString*)body returnType:(NSString*)returnType;
++(id)functionWithName:(NSString*)name body:(NSString*)body returnType:(NSString*)returnType;
 
 @end
 
@@ -31,7 +31,7 @@
 @property (nonatomic, readonly) NSString* declaration;
 @property (nonatomic, readonly) NSValue* value;
 
--(id)initWithUniform:(NSString*)type name:(NSString*)name value:(NSValue*)value;
+-(id)initWithType:(NSString*)type name:(NSString*)name value:(NSValue*)value;
 +(id)uniform:(NSString*)type name:(NSString*)name value:(NSValue*)value;
 
 @end

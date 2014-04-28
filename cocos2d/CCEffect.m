@@ -9,22 +9,39 @@
 #import "CCEffect.h"
 #import "CCEffect_Private.h"
 
+static NSString* fragBase =
+@"%@\n\n"   // uniforms
+@"%@\n"     // function defs
+@"void main() {\n"
+@"gl_FragColor = %@;\n"
+@"}\n";
+
+static NSString* vertBase =
+@"%@\n\n"   // uniforms
+@"%@\n"     // function defs
+@"void main(){\n"
+@"	cc_FragColor = cc_Color;\n"
+@"	cc_FragTexCoord1 = cc_TexCoord1;\n"
+@"	cc_FragTexCoord2 = cc_TexCoord2;\n"
+@"	gl_Position = %@;\n"
+@"}\n";
+
 @implementation CCEffectFunction
 
 -(id)initWithName:(NSString *)name body:(NSString*)body returnType:(NSString *)returnType
 {
-    if(self = [super init])
+    if((self = [super init]))
     {
-        _body = body;
-        _name = name;
-        _returnType = returnType;
+        _body = [body copy];
+        _name = [name copy];
+        _returnType = [returnType copy];
         return self;
     }
     
     return self;
 }
 
-+(id)functionName:(NSString*)name body:(NSString*)body returnType:(NSString*)returnType
++(id)functionWithName:(NSString*)name body:(NSString*)body returnType:(NSString*)returnType
 {
     return [[self alloc] initWithName:name body:body returnType:returnType];
 }
@@ -45,12 +62,12 @@
 
 @implementation CCEffectUniform
 
--(id)initWithUniform:(NSString*)type name:(NSString*)name value:(NSValue*)value
+-(id)initWithType:(NSString*)type name:(NSString*)name value:(NSValue*)value
 {
-    if(self = [super init])
+    if((self = [super init]))
     {
-        _name = name;
-        _type = type;
+        _name = [name copy];
+        _type = [type copy];
         _value = value;
         
         return self;
@@ -61,7 +78,7 @@
 
 +(id)uniform:(NSString*)type name:(NSString*)name value:(NSValue*)value
 {
-    return [[self alloc] initWithUniform:type name:name value:value];
+    return [[self alloc] initWithType:type name:name value:value];
 }
 
 -(NSString*)declaration
@@ -85,7 +102,7 @@
 
 -(id)init
 {
-    if(self = [super init])
+    if((self = [super init]))
     {
         _fragmentFunctions = [[NSMutableArray alloc] init];
         _vertexFunctions = [[NSMutableArray alloc] init];
@@ -102,10 +119,10 @@
 
 -(id)initWithUniforms:(NSArray*)fragmentUniforms vertextUniforms:(NSArray*)vertexUniforms
 {
-    if(self = [super init])
+    if((self = [super init]))
     {
-        _fragmentUniforms = fragmentUniforms;
-        _vertexUniforms = vertexUniforms;
+        _fragmentUniforms = [fragmentUniforms copy];
+        _vertexUniforms = [vertexUniforms copy];
         _fragmentFunctions = [[NSMutableArray alloc] init];
         _vertexFunctions = [[NSMutableArray alloc] init];
         
@@ -122,10 +139,10 @@
 
 -(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertextUniforms:(NSArray*)vertexUniforms
 {
-    if(self = [super init])
+    if((self = [super init]))
     {
-        _fragmentUniforms = fragmentUniforms;
-        _vertexUniforms = vertexUniforms;
+        _fragmentUniforms = [fragmentUniforms copy];
+        _vertexUniforms = [vertexUniforms copy];
         _fragmentFunctions = fragmentFunctions;
         [self buildShaderUniforms:fragmentUniforms vertexUniforms:vertexUniforms];
         [self buildVertexFunctions];
@@ -139,7 +156,7 @@
 
 -(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions vertexFunctions:(NSMutableArray*)vertextFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertextUniforms:(NSArray*)vertexUniforms
 {
-    if(self = [super init])
+    if((self = [super init]))
     {
         _fragmentUniforms = fragmentUniforms;
         _vertexUniforms = vertexUniforms;
@@ -156,6 +173,8 @@
 
 -(void)buildShaderUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms
 {
+    [_shaderUniforms removeAllObjects];
+    
     for(CCEffectUniform* uniform in fragmentUniforms)
     {
         if(_shaderUniforms == nil)
@@ -175,14 +194,10 @@
 
 -(void)buildEffectShader
 {
-    // Build fragment body
-    NSString* fragBase =
-    @"%@\n\n"   // uniforms
-    @"%@\n"     // function defs
-    @"void main() {\n"
-    @"gl_FragColor = %@;\n"
-    @"}\n";
+    if(_shader != nil)
+        return;
     
+    // Build fragment body
     NSMutableString* fragUniforms = [[NSMutableString alloc] init];
     for(CCEffectUniform* uniform in _fragmentUniforms)
     {
@@ -210,17 +225,8 @@
     NSString* fragBody = [NSString stringWithFormat:fragBase, fragUniforms, fragFunctions, effectFunction.method];
     //NSLog(@"\n------------fragBody:\n %@", fragBody);
     
-    // Build vertex body
-    NSString* vertBase =
-    @"%@\n\n"   // uniforms
-    @"%@\n"     // function defs
-    @"void main(){\n"
-    @"	cc_FragColor = cc_Color;\n"
-    @"	cc_FragTexCoord1 = cc_TexCoord1;\n"
-    @"	cc_FragTexCoord2 = cc_TexCoord2;\n"
-    @"	gl_Position = %@;\n"
-    @"}\n";
     
+    // Build vertex body
     NSMutableString* vertexUniforms = [[NSMutableString alloc] init];
     for(CCEffectUniform* uniform in _vertexUniforms)
     {
@@ -281,6 +287,11 @@
 {
     if(defaultBlock)
         defaultBlock();
+}
+
+-(NSInteger)renderPassesRequired
+{
+    return 1;
 }
 
 @end

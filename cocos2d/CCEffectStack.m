@@ -22,11 +22,8 @@
     va_start(argumentList, firstObject);
     object = firstObject;
     
-    while(1)
+    while(object != nil)
     {
-        if(!object)
-             break; // nil is a list terminator
-        
         [effects addObject:object];
         object = va_arg(argumentList, id);
     }
@@ -60,7 +57,7 @@
                 continue;
             
             [functions addObject:function];
-            [functionNames setObject:[NSNumber numberWithBool:YES] forKey:function.name];
+            [functionNames setObject:@YES forKey:function.name];
         }
         
         // TODO: check/handle uniforms with the same name
@@ -82,7 +79,7 @@
                 continue;
             
             [functions addObject:function];
-            [functionNames setObject:[NSNumber numberWithBool:YES] forKey:function.name];
+            [functionNames setObject:@YES forKey:function.name];
         }
         
         // TODO: check/handle uniforms with the same name

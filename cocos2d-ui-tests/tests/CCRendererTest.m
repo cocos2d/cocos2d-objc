@@ -34,7 +34,6 @@
     defaultSprite.positionType = CCPositionTypeNormalized;
     defaultSprite.position = ccp(0.1, 0.5);
     [self.contentNode addChild:defaultSprite];
-
 }
 
 -(void)setupEffectNodeTest
@@ -43,50 +42,15 @@
     
     CGSize size = CGSizeMake(128, 128);
 	
-    CCEffectNode* effectNode1 = [[CCEffectNode alloc] initWithWidth:80 height:80];
+    CCEffectNode* effectNode1 = [[CCEffectNode alloc] initWithWidth:size.width height:size.height];
 	effectNode1.positionType = CCPositionTypeNormalized;
-	effectNode1.position = ccp(0.1, 0.8);
+	effectNode1.position = ccp(0.25, 0.5);
     [self renderTextureHelper:effectNode1 size:size];
     CCEffectColorPulse* effectColorPulse = [[CCEffectColorPulse alloc] initWithColor:[CCColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:1.0] toColor:[CCColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:1.0]];
-    effectNode1.effect = effectColorPulse;
+    CCEffectTexture* effectTexture = [[CCEffectTexture alloc] init];
+    CCEffect* compositeEffect = [CCEffectStack effects:effectColorPulse, effectTexture];
+    effectNode1.effect = compositeEffect;
 	[self.contentNode addChild:effectNode1];
-
-    CCEffectNode* effectNode2 = [[CCEffectNode alloc] initWithWidth:size.width height:size.height];
-	effectNode2.positionType = CCPositionTypeNormalized;
-	effectNode2.position = ccp(0.75, 0.5);
-    [self renderTextureHelper:effectNode2 size:size];
-    
-    CCEffectColor* effectColor = [[CCEffectColor alloc] initWithColor:[CCColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:1.0]];
-    CCEffect* compositeEffect = [CCEffectStack effects:[[CCEffectTexture alloc] init], effectColor, nil];
-    effectNode2.effect = compositeEffect;
-	[self.contentNode addChild:effectNode2];
-    
-    // Create a glowing square
-    CCSprite *effectSprite = [CCSprite spriteWithImageNamed:@"sample_square.png"];
-    effectSprite.anchorPoint = ccp(0.5, 0.5);
-    effectSprite.position = ccp(40, 40);
-    CCEffectGlow* glowEffect = [[CCEffectGlow alloc] init];
-    //effectSprite.effect = glowEffect;
-    //[self.contentNode addChild:effectSprite];
-    
-    CCEffectNode* effectNode3 = [[CCEffectNode alloc] initWithWidth:80 height:80];
-    effectNode3.positionType = CCPositionTypeNormalized;
-    effectNode3.position = ccp(0.1, 0.5);
-    [effectNode3 addChild:effectSprite];
-    effectNode3.effect = glowEffect;
-    [self.contentNode addChild:effectNode3];
-    
-    // Create a glowing hollow circle
-    CCSprite* effectSprite2 = [CCSprite spriteWithImageNamed:@"sample_hollow_circle.png"];
-    effectSprite2.anchorPoint = ccp(0.5, 0.5);
-    effectSprite2.position = ccp(40, 40);
-    
-    CCEffectNode* effectNode4 = [[CCEffectNode alloc] initWithWidth:80 height:80];
-    effectNode4.positionType = CCPositionTypeNormalized;
-    effectNode4.position = ccp(0.1, 0.2);
-    [effectNode4 addChild:effectSprite2];
-    effectNode4.effect = glowEffect;
-    [self.contentNode addChild:effectNode4];
 }
 
 -(void)setupClippingNodeTest

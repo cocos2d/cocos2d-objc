@@ -33,8 +33,6 @@
 {
 	if((self = [super initWithWidth:width height:height pixelFormat:CCTexturePixelFormat_Default])) {
         
-        _sprite.anchorPoint = ccp(0.0, 0.0);
-        
 	}
 	return self;
 }
@@ -126,7 +124,7 @@
     renderPass.renderer = _renderer;
     renderPass.transform = (*transform);
     
-    if(self.sprite.shader != self.effect.shader)
+    if(self.effect.shader && self.sprite.shader != self.effect.shader)
         self.sprite.shader = self.effect.shader;
     
     for(int i = 0; i < self.effect.renderPassesRequired; i++)
@@ -148,7 +146,10 @@
         }];
         [self end];
         [_renderer flush];
-        [self.effect renderPassEnd:renderPass defaultBlock:nil];
+        [self.effect renderPassEnd:renderPass defaultBlock:^{
+            renderPass.sprite.texture = renderPass.textures[0];
+            [renderPass.sprite visit:renderPass.renderer parentTransform:transform];
+        }];
     }
     
     if(_privateRenderer == NO)

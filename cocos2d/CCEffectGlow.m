@@ -72,6 +72,8 @@
 
 -(void)renderPassBegin:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
 {
+    renderPass.sprite.anchorPoint = ccp(0.0, 0.0);
+    
     if(renderPass.renderPassId == 1)
     {
         renderPass.sprite.texture = renderPass.textures[0];

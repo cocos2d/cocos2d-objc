@@ -161,7 +161,6 @@ extern const NSString *CCBlendEquationAlpha;
 
 /// Enqueue a block that performs GL commands.
 -(void)enqueueBlock:(void (^)())block debugLabel:(NSString *)debugLabel;
--(void)enqueueBlockWithState:(void (^)())block debugLabel:(NSString *)debugLabel withState:(CCRenderState *)renderState;
 
 /// Enqueue a method that performs GL commands.
 -(void)enqueueMethod:(SEL)selector target:(id)target;
