@@ -207,7 +207,7 @@ static NSUInteger globalOrderOfArrival = 1;
 	// timers
 	[_children makeObjectsPerformSelector:@selector(cleanup)];
     
-    // Custom cleanup for userOjbect (Typically CCBAnimationManager when using SpriteBuilder)
+    // CCBAnimationManager Cleanup (Set by SpriteBuilder)
     if([_userObject isKindOfClass:[CCBAnimationManager class]]) {
         [_userObject performSelector:@selector(cleanup)];
     }
