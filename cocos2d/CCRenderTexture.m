@@ -315,8 +315,8 @@
 	kmGLPushMatrix();
 
 	[self transform];
-	[_sprite visit];
 	[self draw];
+	[_sprite visit];
 	
 	kmGLPopMatrix();
 	
