@@ -786,9 +786,12 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 -(void)popGroup:(NSInteger)globalSortOrder
 {
 	NSAssert(_queueStack.count > 0, @"Render queue stack underflow. (Unmatched pushQueue/popQueue calls.)");
-	[_queue addObject:[[CCRenderCommandGroup alloc] initWithQueue:[_queueStack lastObject] globalSortOrder:globalSortOrder]];
+	
+	NSMutableArray *groupQueue = _queue;
+	_queue = [_queueStack lastObject];
 	[_queueStack removeLastObject];
 	
+	[_queue addObject:[[CCRenderCommandGroup alloc] initWithQueue:groupQueue globalSortOrder:globalSortOrder]];
 	_lastDrawCommand = nil;
 }
 

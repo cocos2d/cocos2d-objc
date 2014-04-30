@@ -115,6 +115,8 @@
 
 -(void)setupClippingNodeTest
 {
+	self.subTitle = @"ClippingNode test.";
+	
 	CGSize size = [CCDirector sharedDirector].designSize;
 	
 //	CCNode *parent = self.contentNode;
