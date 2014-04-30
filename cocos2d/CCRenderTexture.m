@@ -281,13 +281,15 @@
 		
 		glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-	} debugLabel:@"CCRenderTexture: Bind FBO"];
+	} globalSortOrder:0 debugLabel:@"CCRenderTexture: Bind FBO" threadSafe:NO];
+	
+	[_renderer pushGroup];
 }
 
 -(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a depth:(float)depthValue stencil:(int)stencilValue flags:(GLbitfield)flags
 {
 	[self begin];
-	[_renderer enqueueClear:flags color:GLKVector4Make(r, g, b, a) depth:depthValue stencil:stencilValue];
+	[_renderer enqueueClear:flags color:GLKVector4Make(r, g, b, a) depth:depthValue stencil:stencilValue globalSortOrder:NSIntegerMin];
 }
 
 -(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a
@@ -306,10 +308,12 @@
 
 -(void)end
 {
+	[_renderer popGroup:0];
+	
 	[_renderer enqueueBlock:^{
 		glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
 		glViewport(_oldViewport.v[0], _oldViewport.v[1], _oldViewport.v[2], _oldViewport.v[3]);
-	} debugLabel:@"CCRenderTexture: Restore FBO"];
+	} globalSortOrder:0 debugLabel:@"CCRenderTexture: Restore FBO" threadSafe:NO];
 	
 	if(_privateRenderer){
 		[_renderer flush];
@@ -331,14 +335,14 @@
 - (void)clearDepth:(float)depthValue
 {
 	[self begin];
-		[_renderer enqueueClear:GL_DEPTH_BUFFER_BIT color:GLKVector4Make(0, 0, 0, 0) depth:depthValue stencil:0];
+		[_renderer enqueueClear:GL_DEPTH_BUFFER_BIT color:GLKVector4Make(0, 0, 0, 0) depth:depthValue stencil:0 globalSortOrder:NSIntegerMin];
 	[self end];
 }
 
 - (void)clearStencil:(int)stencilValue
 {
 	[self begin];
-		[_renderer enqueueClear:GL_DEPTH_BUFFER_BIT color:GLKVector4Make(0, 0, 0, 0) depth:0.0 stencil:stencilValue];
+		[_renderer enqueueClear:GL_DEPTH_BUFFER_BIT color:GLKVector4Make(0, 0, 0, 0) depth:0.0 stencil:stencilValue globalSortOrder:NSIntegerMin];
 	[self end];
 }
 
@@ -354,7 +358,7 @@
 		[self begin];
 		NSAssert(_renderer == renderer, @"CCRenderTexture error!");
 		
-		[_renderer enqueueClear:_clearFlags color:_clearColor depth:_clearDepth stencil:_clearStencil];
+		[_renderer enqueueClear:_clearFlags color:_clearColor depth:_clearDepth stencil:_clearStencil globalSortOrder:NSIntegerMin];
 		
 		//! make sure all children are drawn
 		[self sortAllChildren];

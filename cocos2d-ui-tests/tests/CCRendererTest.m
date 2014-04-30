@@ -45,7 +45,7 @@
 		// To draw a "fancy" shape like a rectangle to put our sprite on, we need to split it into two triangles.
 		// self.renderState encapsulates the shader, shader uniforms, textures and blending modes set for this node.
 		// You aren't required to pass self.renderState if you want to do something else.
-		CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:self.renderState];
+		CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:self.renderState globalSortOrder:0];
 		
 		// 3) Next we make some vertexes to fill the buffer with. We need to make one for each corner of the sprite.
 		// There are easier/shorter ways to fill in a CCVertex (See CCSprite.m for example), but this way is easy to read.

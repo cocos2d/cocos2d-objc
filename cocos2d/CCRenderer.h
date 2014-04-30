@@ -187,21 +187,24 @@ extern const NSString *CCBlendEquationAlpha;
 -(void)invalidateState;
 
 /// Enqueue a OpenGL clear operation for the given buffers and the given values.
--(void)enqueueClear:(GLbitfield)mask color:(GLKVector4)color4 depth:(GLclampf)depth stencil:(GLint)stencil;
+-(void)enqueueClear:(GLbitfield)mask color:(GLKVector4)color4 depth:(GLclampf)depth stencil:(GLint)stencil globalSortOrder:(NSInteger)globalSortOrder;
 
 /// Enqueue a drawing command for some triangles.
 /// Returns a CCRendereBuffer that you should fill using CCRenderBufferSetVertex() and CCRenderBufferSetTriangle().
--(CCRenderBuffer)enqueueTriangles:(NSUInteger)triangleCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState;
+-(CCRenderBuffer)enqueueTriangles:(NSUInteger)triangleCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
 
 /// Enqueue a drawing command for some lines.
 /// Returns a CCRendereBuffer that you should fill using CCRenderBufferSetVertex() and CCRenderBufferSetLine().
 /// Note: These are primitive OpenGL lines that you'll only want to use for debug rendering. They are not batched.
--(CCRenderBuffer)enqueueLines:(NSUInteger)lineCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState;
+-(CCRenderBuffer)enqueueLines:(NSUInteger)lineCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
 
 /// Enqueue a block that performs GL commands. The debugLabel is optional and will show up in in the GLES frame debugger.
--(void)enqueueBlock:(void (^)())block debugLabel:(NSString *)debugLabel;
+-(void)enqueueBlock:(void (^)())block globalSortOrder:(NSInteger)globalSortOrder debugLabel:(NSString *)debugLabel threadSafe:(BOOL)threadSafe;
 
 /// Enqueue a method that performs GL commands.
 -(void)enqueueMethod:(SEL)selector target:(id)target;
+
+-(void)pushGroup;
+-(void)popGroup:(NSInteger)globalSortOrder;
 
 @end

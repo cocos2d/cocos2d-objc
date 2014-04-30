@@ -504,7 +504,7 @@ const char kCCProgressTextureCoords = 0x4b;
   
 	if(_type == CCProgressNodeTypeRadial){
 		int triangles = _vertexCount - 2;
-		CCRenderBuffer buffer = [renderer enqueueTriangles:triangles andVertexes:_vertexCount withState:_sprite.renderState];
+		CCRenderBuffer buffer = [renderer enqueueTriangles:triangles andVertexes:_vertexCount withState:_sprite.renderState globalSortOrder:0];
 		
 		for(int i=0; i<_vertexCount; i++){
 			CCRenderBufferSetVertex(buffer, i, CCVertexApplyTransform(_verts[i], transform));
@@ -515,7 +515,7 @@ const char kCCProgressTextureCoords = 0x4b;
 		}
 	} else if (_type == CCProgressNodeTypeBar){
 		int triangles = _vertexCount/2;
-		CCRenderBuffer buffer = [renderer enqueueTriangles:triangles andVertexes:_vertexCount withState:_sprite.renderState];
+		CCRenderBuffer buffer = [renderer enqueueTriangles:triangles andVertexes:_vertexCount withState:_sprite.renderState globalSortOrder:0];
 		
 		for(int i=0; i<_vertexCount; i++){
 			CCRenderBufferSetVertex(buffer, i, CCVertexApplyTransform(_verts[i], transform));
