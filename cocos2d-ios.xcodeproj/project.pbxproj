@@ -103,6 +103,8 @@
 		50F9E8170E1AA34E000E7616 /* ccTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F9E8160E1AA34E000E7616 /* ccTypes.h */; };
 		50FBB2DA117613F500150761 /* CCActionTween.h in Headers */ = {isa = PBXBuildFile; fileRef = 50FBB2D8117613F500150761 /* CCActionTween.h */; };
 		50FBB2DB117613F500150761 /* CCActionTween.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FBB2D9117613F500150761 /* CCActionTween.m */; };
+		9D25E1351912E5370099AF7E /* CCEffectBrightnessAndContrast.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D25E1331912E5370099AF7E /* CCEffectBrightnessAndContrast.h */; };
+		9D25E1361912E5370099AF7E /* CCEffectBrightnessAndContrast.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D25E1341912E5370099AF7E /* CCEffectBrightnessAndContrast.m */; };
 		A003AC8C1657071100C7B792 /* ccFPSImages.h in Headers */ = {isa = PBXBuildFile; fileRef = A003AC8B1657071100C7B792 /* ccFPSImages.h */; };
 		A003AC8F16572D6000C7B792 /* ccFPSImages.m in Sources */ = {isa = PBXBuildFile; fileRef = A003AC8E16572D6000C7B792 /* ccFPSImages.m */; };
 		A039EBFF155C686B0061EE37 /* CCNode+Debug.h in Headers */ = {isa = PBXBuildFile; fileRef = A039EBFD155C686B0061EE37 /* CCNode+Debug.h */; };
@@ -418,6 +420,8 @@
 		50FBB2D8117613F500150761 /* CCActionTween.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionTween.h; sourceTree = "<group>"; };
 		50FBB2D9117613F500150761 /* CCActionTween.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionTween.m; sourceTree = "<group>"; };
 		92FF6C7318F33A2A005B7139 /* CCActionManager_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCActionManager_Private.h; sourceTree = "<group>"; };
+		9D25E1331912E5370099AF7E /* CCEffectBrightnessAndContrast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectBrightnessAndContrast.h; sourceTree = "<group>"; };
+		9D25E1341912E5370099AF7E /* CCEffectBrightnessAndContrast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectBrightnessAndContrast.m; sourceTree = "<group>"; };
 		A003AC8B1657071100C7B792 /* ccFPSImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccFPSImages.h; sourceTree = "<group>"; };
 		A003AC8E16572D6000C7B792 /* ccFPSImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccFPSImages.m; sourceTree = "<group>"; };
 		A034FF85149DC993009F11AA /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
@@ -1195,6 +1199,8 @@
 				D272032318FC89A000B100FF /* CCEffectTexture.m */,
 				D272033118FC9A4700B100FF /* CCEffectGlow.h */,
 				D272033218FC9A4700B100FF /* CCEffectGlow.m */,
+				9D25E1331912E5370099AF7E /* CCEffectBrightnessAndContrast.h */,
+				9D25E1341912E5370099AF7E /* CCEffectBrightnessAndContrast.m */,
 			);
 			name = Effects;
 			sourceTree = "<group>";
@@ -1329,6 +1335,7 @@
 				D38058201889CE7700822437 /* CCCache.h in Headers */,
 				D309055018AC23110081BF11 /* CCRenderer_private.h in Headers */,
 				505462FC1062768000AB7C52 /* ccConfig.h in Headers */,
+				9D25E1351912E5370099AF7E /* CCEffectBrightnessAndContrast.h in Headers */,
 				50E2A15010A45E7F00D894CE /* CCSpriteFrame.h in Headers */,
 				B7E776211857A159004221AA /* CCColor.h in Headers */,
 				50E2A25210A46CC600D894CE /* CCProtocols.h in Headers */,
@@ -1513,6 +1520,7 @@
 				5018F2720DFDEAFF00C013A5 /* CCActionInterval.m in Sources */,
 				B77060071831A07B0043CC67 /* OALTools.m in Sources */,
 				D272033018FC89A000B100FF /* CCEffectTexture.m in Sources */,
+				9D25E1361912E5370099AF7E /* CCEffectBrightnessAndContrast.m in Sources */,
 				D33803EA180331A90072D8FE /* CCPhysicsJoint.m in Sources */,
 				B7705FE91831A07B0043CC67 /* ALDevice.m in Sources */,
 				5018F2740DFDEAFF00C013A5 /* CCLabelTTF.m in Sources */,
