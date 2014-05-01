@@ -574,6 +574,7 @@ static NSInteger ccbAnimationManagerID = 0;
 }
 
 - (void)cleanup {
+    [_scheduler setPaused:YES target:self];
 	[_scheduler unscheduleTarget:self];
     [self clearAllActions];
 }
