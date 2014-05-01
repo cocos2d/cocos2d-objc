@@ -17,7 +17,7 @@
     CCEffectUniform* fromColorUniform = [CCEffectUniform uniform:@"vec4" name:@"u_effectColorFrom" value:[NSValue valueWithGLKVector4:fromColor.glkVector4]];
     CCEffectUniform* toColorUniform = [CCEffectUniform uniform:@"vec4" name:@"u_effectColorTo" value:[NSValue valueWithGLKVector4:toColor.glkVector4]];
     
-    if(self = [super initWithUniforms:[NSArray arrayWithObjects:fromColorUniform, toColorUniform, nil] vertextUniforms:nil])
+    if(self = [super initWithUniforms:[NSArray arrayWithObjects:fromColorUniform, toColorUniform, nil] vertextUniforms:nil varying:nil])
     {
         return self;
     }

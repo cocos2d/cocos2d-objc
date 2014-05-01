@@ -10,17 +10,17 @@
 {
     self.subTitle = @"Glow Effect Node Test";
     
-    // Create a glowing square
+    // Create a hollow circle
     CCSprite *effectSprite = [CCSprite spriteWithImageNamed:@"sample_hollow_circle.png"];
     effectSprite.anchorPoint = ccp(0.5, 0.5);
     effectSprite.position = ccp(40, 40);
-    CCEffectGlow* glowEffect = [[CCEffectGlow alloc] init];
     
     // Blend glow maps test
     CCEffectNode* effectNode3 = [[CCEffectNode alloc] initWithWidth:80 height:80];
     effectNode3.positionType = CCPositionTypeNormalized;
     effectNode3.position = ccp(0.1, 0.5);
     [effectNode3 addChild:effectSprite];
+    CCEffectGlow* glowEffect = [[CCEffectGlow alloc] init];
     effectNode3.effect = glowEffect;
     [effectNode3 visit];
     

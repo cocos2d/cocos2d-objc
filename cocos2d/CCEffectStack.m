@@ -38,7 +38,7 @@
     NSMutableArray* vertexUniforms = [[NSMutableArray alloc] init];
     [CCEffectStack extractVertexData:effects functions:vertexFunctions uniforms:vertexUniforms];
     
-    CCEffect* compositeEffect = [[CCEffect alloc] initWithFragmentFunction:fragFunctions vertexFunctions:vertexFunctions fragmentUniforms:fragUniforms vertextUniforms:vertexUniforms];
+    CCEffect* compositeEffect = [[CCEffect alloc] initWithFragmentFunction:fragFunctions vertexFunctions:vertexFunctions fragmentUniforms:fragUniforms vertextUniforms:vertexUniforms varying:nil];
     
     return compositeEffect;
 }

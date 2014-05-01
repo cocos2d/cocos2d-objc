@@ -15,6 +15,7 @@
 @property (nonatomic) NSMutableArray* fragmentFunctions;
 @property (nonatomic) NSArray* fragmentUniforms;
 @property (nonatomic) NSArray* vertexUniforms;
+@property (nonatomic) NSArray* varyingVars;
 
 -(void)buildEffectShader;
 -(void)buildFragmentFunctions;
