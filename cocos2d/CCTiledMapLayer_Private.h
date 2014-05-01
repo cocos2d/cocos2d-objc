@@ -26,14 +26,11 @@
 
 #import "CCTiledMapLayer.h"
 
+typedef void (^CCTiledMapLayerAnimationBlock)(NSUInteger tileX, NSUInteger tileY, uint32_t *gid, uint32_t *flags, GLKVector4 *color);
+
 @interface CCTiledMapLayer ()
 
-/* 
- Dealloc the map that contains the tile position from memory.
- Unless you want to know at runtime the tiles positions, you can safely call this method.
- If you are going to call [layer tileGIDAt:] then, don't release the map.
- */
--(void) releaseMap;
+@property(nonatomic, copy) CCTiledMapLayerAnimationBlock animationBlock;
 
 // Setup the tiles.
 -(void) setupTiles;

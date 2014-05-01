@@ -95,6 +95,7 @@
 				<string>Foundation</string>
 				<string>CoreGraphics</string>
 				<string>CoreText</string>
+				<string>GLKit</string>
 			</array>
 			<key>SharedSettings</key>
 			<dict>

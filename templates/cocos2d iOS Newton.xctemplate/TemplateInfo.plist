@@ -13,7 +13,6 @@
 		<string>com.cocos2d-v3.cocos2dlib</string>
 		<string>com.cocos2d-v3.objectallib</string>
 		<string>com.cocos2d-v3.cocos2d-uilib</string>
-		<string>com.cocos2d-v3.kazmathlib</string>
 		<string>com.cocos2d-v3.ccbreaderlib</string>
 		<string>com.cocos2d-v3.chipmunklib</string>
 	</array>

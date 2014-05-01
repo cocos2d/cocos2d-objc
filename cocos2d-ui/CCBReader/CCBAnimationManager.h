@@ -53,9 +53,11 @@
     CCScheduler* _scheduler;
     NSMutableArray* _currentActions;
     
+    BOOL _loop;
+    
 }
 
-// Sequence Array.
+// Sequence Array
 @property (nonatomic,readonly) NSMutableArray* sequences;
 
 // Auto play sequence id.
@@ -110,8 +112,5 @@
 
 #pragma mark Simple Sequence Builder
 - (void)addKeyFramesForSequenceNamed:(NSString*)name propertyType:(CCBSequencePropertyType)propertyType frameArray:(NSArray*)frameArray node:(CCNode *)node loop:(BOOL)loop;
-
-#pragma mark Cocos2D Animation Support
-- (void)animationWithSpriteFrames:animFrames delay:(float)delay name:(NSString*)name node:(CCNode*)node loop:(BOOL)loop;
 
 @end

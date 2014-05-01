@@ -229,8 +229,6 @@
 			_orientation = CCTiledMapOrientationOrtho;
 		else if ( [orientationStr isEqualToString:@"isometric"])
 			_orientation = CCTiledMapOrientationIso;
-		else if( [orientationStr isEqualToString:@"hexagonal"])
-			_orientation = CCTiledMapOrientationHex;
 		else
 			CCLOG(@"cocos2d: TMXFomat: Unsupported orientation: %d", _orientation);
 
@@ -302,10 +300,11 @@
 
 		layer.visible = ![[attributeDict objectForKey:@"visible"] isEqualToString:@"0"];
 
-		if( [attributeDict objectForKey:@"opacity"] )
-			layer.opacity = 255 * [[attributeDict objectForKey:@"opacity"] floatValue];
-		else
-			layer.opacity = 255;
+		if( [attributeDict objectForKey:@"opacity"] ){
+			layer.opacity = [[attributeDict objectForKey:@"opacity"] floatValue];
+		} else {
+			layer.opacity = 1.0;
+		}
 
 		int x = [[attributeDict objectForKey:@"x"] intValue];
 		int y = [[attributeDict objectForKey:@"y"] intValue];

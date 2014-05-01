@@ -478,7 +478,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     originalDimensions.width *= scale;
     originalDimensions.height *= scale;
     
-    CGSize dimensions = originalDimensions;
+    CGSize dimensions = [self convertContentSizeToPoints:originalDimensions type:_dimensionsType];
     
     CGFloat shadowBlurRadius = _shadowBlurRadius * scale;
     CGPoint shadowOffset = ccpMult(self.shadowOffsetInPoints, scale);

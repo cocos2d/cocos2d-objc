@@ -1409,7 +1409,9 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 		
 		if(physicsBody.type == CCPhysicsBodyTypeKinematic)
 		{
-			CGPoint rot = ccpRotateByAngle(_anchorPointInPoints, CGPointZero, -CC_DEGREES_TO_RADIANS(physicsBody.relativeRotation));
+			CGPoint anchorPointInPointsScaled = ccpCompMult(_anchorPointInPoints,
+															ccp(_scaleX, _scaleY));
+			CGPoint rot = ccpRotateByAngle(anchorPointInPointsScaled, CGPointZero, -CC_DEGREES_TO_RADIANS(physicsBody.relativeRotation));
 			rigidTransform = CGAffineTransformMakeRigid(ccpSub(physicsBody.relativePosition , rot ), -CC_DEGREES_TO_RADIANS(physicsBody.relativeRotation));
 		}
 		else
@@ -1761,7 +1763,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 
 -(void)setBlendFunc:(ccBlendFunc)blendFunc
 {
-	_blendMode = [CCBlendMode blendModeWithOptions:@{
+	self.blendMode = [CCBlendMode blendModeWithOptions:@{
 		CCBlendFuncSrcColor: @(blendFunc.src),
 		CCBlendFuncDstColor: @(blendFunc.dst),
 	}];

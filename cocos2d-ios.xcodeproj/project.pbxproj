@@ -103,6 +103,8 @@
 		50F9E8170E1AA34E000E7616 /* ccTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F9E8160E1AA34E000E7616 /* ccTypes.h */; };
 		50FBB2DA117613F500150761 /* CCActionTween.h in Headers */ = {isa = PBXBuildFile; fileRef = 50FBB2D8117613F500150761 /* CCActionTween.h */; };
 		50FBB2DB117613F500150761 /* CCActionTween.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FBB2D9117613F500150761 /* CCActionTween.m */; };
+		5B051B1D18FC032F0091CB8C /* CCBAnimationManager+FrameAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B051B1B18FC032F0091CB8C /* CCBAnimationManager+FrameAnimation.h */; };
+		5B051B1E18FC032F0091CB8C /* CCBAnimationManager+FrameAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B051B1C18FC032F0091CB8C /* CCBAnimationManager+FrameAnimation.m */; };
 		A003AC8C1657071100C7B792 /* ccFPSImages.h in Headers */ = {isa = PBXBuildFile; fileRef = A003AC8B1657071100C7B792 /* ccFPSImages.h */; };
 		A003AC8F16572D6000C7B792 /* ccFPSImages.m in Sources */ = {isa = PBXBuildFile; fileRef = A003AC8E16572D6000C7B792 /* ccFPSImages.m */; };
 		A039EBFF155C686B0061EE37 /* CCNode+Debug.h in Headers */ = {isa = PBXBuildFile; fileRef = A039EBFD155C686B0061EE37 /* CCNode+Debug.h */; };
@@ -417,6 +419,8 @@
 		50F9E8160E1AA34E000E7616 /* ccTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ccTypes.h; sourceTree = "<group>"; };
 		50FBB2D8117613F500150761 /* CCActionTween.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionTween.h; sourceTree = "<group>"; };
 		50FBB2D9117613F500150761 /* CCActionTween.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionTween.m; sourceTree = "<group>"; };
+		5B051B1B18FC032F0091CB8C /* CCBAnimationManager+FrameAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CCBAnimationManager+FrameAnimation.h"; path = "cocos2d-ui/CCBReader/CCBAnimationManager+FrameAnimation.h"; sourceTree = "<group>"; };
+		5B051B1C18FC032F0091CB8C /* CCBAnimationManager+FrameAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "CCBAnimationManager+FrameAnimation.m"; path = "cocos2d-ui/CCBReader/CCBAnimationManager+FrameAnimation.m"; sourceTree = "<group>"; };
 		92FF6C7318F33A2A005B7139 /* CCActionManager_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCActionManager_Private.h; sourceTree = "<group>"; };
 		A003AC8B1657071100C7B792 /* ccFPSImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccFPSImages.h; sourceTree = "<group>"; };
 		A003AC8E16572D6000C7B792 /* ccFPSImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccFPSImages.m; sourceTree = "<group>"; };
@@ -1150,6 +1154,8 @@
 		B7D272FA1822F4920054849B /* CCBReader */ = {
 			isa = PBXGroup;
 			children = (
+				5B051B1B18FC032F0091CB8C /* CCBAnimationManager+FrameAnimation.h */,
+				5B051B1C18FC032F0091CB8C /* CCBAnimationManager+FrameAnimation.m */,
 				B7D273001822F4AA0054849B /* CCBAnimationManager.h */,
 				B7D273011822F4AA0054849B /* CCBAnimationManager.m */,
 				B7D273021822F4AA0054849B /* CCBKeyframe.h */,
@@ -1322,6 +1328,7 @@
 				509D0818101E4FCE007E1749 /* CCTiledMap.h in Headers */,
 				50F29F6F102053370046CA73 /* base64.h in Headers */,
 				50F2A105102094550046CA73 /* ZipUtils.h in Headers */,
+				5B051B1D18FC032F0091CB8C /* CCBAnimationManager+FrameAnimation.h in Headers */,
 				50CFAC391023660000175934 /* CCTMXXMLParser.h in Headers */,
 				50316AA610291280003ACFE7 /* CCRenderTexture.h in Headers */,
 				B7D273171822F4AA0054849B /* CCBSequenceProperty.h in Headers */,
@@ -1586,6 +1593,7 @@
 				A046E29414C1DB7D0005BBF2 /* CCDirectorMac.m in Sources */,
 				A046E29814C1DB7D0005BBF2 /* CCGLView.m in Sources */,
 				A046E29A14C1DB7E0005BBF2 /* CCWindow.m in Sources */,
+				5B051B1E18FC032F0091CB8C /* CCBAnimationManager+FrameAnimation.m in Sources */,
 				B7D273121822F4AA0054849B /* CCBLocalizationManager.m in Sources */,
 				B7705FFC1831A07B0043CC67 /* IOSVersion.m in Sources */,
 				A0C87D1B14F9A3A100C0E8B2 /* NSThread+performBlock.m in Sources */,
