@@ -6,6 +6,37 @@
 @interface CCRendererTest : TestBase @end
 @implementation CCRendererTest
 
+
+-(void)setupBrightnessAndContrastEffectNodeTest
+{
+    self.subTitle = @"Brightness and Contrast Effect Test";
+    
+    // Create a sprite
+    CCSprite *effectSprite = [CCSprite spriteWithImageNamed:@"f1.png"];
+    effectSprite.anchorPoint = ccp(0.5, 0.5);
+    effectSprite.position = ccp(40, 40);
+    CCEffectBrightnessAndContrast* effect = [[CCEffectBrightnessAndContrast alloc] init];
+    
+    // Brightness and contrast test
+    CCEffectNode* effectNode = [[CCEffectNode alloc] initWithWidth:80 height:80];
+    effectNode.positionType = CCPositionTypeNormalized;
+    effectNode.position = ccp(0.1, 0.5);
+    [effectNode addChild:effectSprite];
+    effectNode.effect = effect;
+    [effectNode visit];
+    
+    CCSprite* testSprite = [CCSprite spriteWithTexture:effectNode.texture];
+    testSprite.positionType = CCPositionTypeNormalized;
+    testSprite.position = ccp(0.5, 0.5);
+    [self.contentNode addChild:testSprite];
+    
+    CCSprite *defaultSprite = [CCSprite spriteWithImageNamed:@"f1.png"];
+    defaultSprite.anchorPoint = ccp(0.5, 0.5);
+    defaultSprite.positionType = CCPositionTypeNormalized;
+    defaultSprite.position = ccp(0.1, 0.5);
+    [self.contentNode addChild:defaultSprite];
+}
+
 -(void)setupGlowEffectNodeTest
 {
     self.subTitle = @"Glow Effect Node Test";
