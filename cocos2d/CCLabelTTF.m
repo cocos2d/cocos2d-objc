@@ -518,6 +518,9 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         dimensions = [attributedString boundingRectWithSize:NSSizeFromCGSize(dimensions) options:NSStringDrawingUsesLineFragmentOrigin].size;
 #endif
         
+        dimensions.width = ceil(dimensions.width);
+        dimensions.height = ceil(dimensions.height);
+        
         wDrawArea = dimensions.width;
         hDrawArea = dimensions.height;
         

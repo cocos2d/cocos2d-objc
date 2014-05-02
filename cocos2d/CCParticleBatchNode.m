@@ -55,7 +55,7 @@
 -(void) increaseAtlasCapacityTo:(NSUInteger) quantity;
 -(NSUInteger) searchNewPositionInChildrenForZ:(NSInteger)z;
 -(void) getCurrentIndex:(NSUInteger*)oldIndex newIndex:(NSUInteger*)newIndex forChild:(CCNode*)child z:(NSInteger)z;
--(NSUInteger) addChildHelper: (CCNode*) child z:(NSInteger)z tag:(NSInteger) aTag;
+-(NSUInteger) addChildHelper:(CCNode*)child z:(NSInteger)z name:(NSString*)name;
 @end
 
 @implementation CCParticleBatchNode
