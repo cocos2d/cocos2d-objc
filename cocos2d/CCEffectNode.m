@@ -131,7 +131,7 @@
         [self.effect renderPassBegin:renderPass defaultBlock:nil];
         [self begin];
         [self.effect renderPassUpdate:renderPass defaultBlock:^{
-            [_renderer enqueueClear:0 color:_clearColor depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
+            [_renderer enqueueClear:self.clearFlags color:_clearColor depth:self.clearDepth stencil:self.clearStencil globalSortOrder:NSIntegerMin];
             
             //! make sure all children are drawn
             [self sortAllChildren];

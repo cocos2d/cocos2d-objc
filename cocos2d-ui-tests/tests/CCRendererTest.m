@@ -140,6 +140,8 @@
     
     // Blend glow maps test
     CCEffectNode* glowEffectNode = [[CCEffectNode alloc] initWithWidth:80 height:80];
+    glowEffectNode.clearFlags = GL_COLOR_BUFFER_BIT;
+	glowEffectNode.clearColor = [CCColor clearColor];
     glowEffectNode.positionType = CCPositionTypeNormalized;
     glowEffectNode.position = ccp(0.1, 0.5);
     [glowEffectNode addChild:sampleSprite];
