@@ -273,7 +273,7 @@ static NSString* vertBase =
     [fragFunctions appendFormat:@"%@\n", effectFunction.function];
     
     NSString* fragBody = [NSString stringWithFormat:fragBase, fragUniforms, varyingVarsToInsert, fragFunctions, effectFunction.method];
-    NSLog(@"\n------------fragBody:\n%@", fragBody);
+    //NSLog(@"\n------------fragBody:\n%@", fragBody);
     
     
     // Build vertex body
@@ -303,7 +303,7 @@ static NSString* vertBase =
     [vertexFunctions appendFormat:@"%@\n", effectFunction.function];
     
     NSString* vertBody = [NSString stringWithFormat:vertBase, vertexUniforms, varyingVarsToInsert, vertexFunctions, effectFunction.method];
-    NSLog(@"\n------------vertBody:\n%@", vertBody);
+    //NSLog(@"\n------------vertBody:\n%@", vertBody);
     
     _shader = [[CCShader alloc] initWithVertexShaderSource:vertBody fragmentShaderSource:fragBody];
 

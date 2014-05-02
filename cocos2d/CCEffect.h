@@ -61,7 +61,7 @@
 
 @interface CCEffect : NSObject
 
-@property (nonatomic, readonly) CCShader* shader;
+@property (nonatomic, readonly) CCShader* shader; // Note: consider adding multiple shaders (one for reach renderpass, this will help break up logic and avoid branching in a potential uber shader).
 @property (nonatomic, readonly) NSMutableDictionary* shaderUniforms;
 @property (nonatomic, readonly) NSInteger renderPassesRequired;
 

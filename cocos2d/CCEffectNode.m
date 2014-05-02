@@ -58,12 +58,6 @@
 		glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
 		glViewport(_oldViewport.v[0], _oldViewport.v[1], _oldViewport.v[2], _oldViewport.v[3]);
 	} debugLabel:@"CCEffectNode: Restore FBO"];
-	
-	if(_privateRenderer){
-		[CCRenderer bindRenderer:nil];
-	} else {
-		_renderer.globalShaderUniforms = _oldGlobalUniforms;
-	}
 }
 
 -(void)visit
@@ -94,7 +88,8 @@
     // bind renderer
     _renderer = [CCRenderer currentRenderer];
 	
-	if(_renderer == nil){
+	if(_renderer == nil)
+    {
 		_renderer = [[CCRenderer alloc] init];
 		
 		NSMutableDictionary *uniforms = [[CCDirector sharedDirector].globalShaderUniforms mutableCopy];
@@ -103,7 +98,9 @@
 		
 		[CCRenderer bindRenderer:_renderer];
 		_privateRenderer = YES;
-    } else if(_privateRenderer == NO) {
+    }
+    else if(_privateRenderer == NO)
+    {
 		_oldGlobalUniforms = _renderer.globalShaderUniforms;
 		
 		NSMutableDictionary *uniforms = [_oldGlobalUniforms mutableCopy];
@@ -154,6 +151,9 @@
     
     if(_privateRenderer == NO)
         _renderer.globalShaderUniforms = _oldGlobalUniforms;
+    else
+        [CCRenderer bindRenderer:nil];
+
     _renderer = nil;
 }
 
@@ -165,7 +165,6 @@
     self.sprite.shader = effect.shader;
     if(effect.shaderUniforms != nil) // TODO: check for duplicate uniform names
     {
-        //[self.shaderUniforms addEntriesFromDictionary:effect.shaderUniforms];
         [self.sprite.shaderUniforms addEntriesFromDictionary:effect.shaderUniforms];
     }
 }
