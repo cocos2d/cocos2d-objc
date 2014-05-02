@@ -365,5 +365,77 @@
 	[self.contentNode addChild:draw];
 }
 
+- (void)setupColorNodeTest
+{
+	self.subTitle = @"Testing CCNodeColor/CCNodeGradient";
+	
+		CCNodeColor *bg = [CCNodeColor nodeWithColor:[CCColor lightGrayColor]];
+		[self.contentNode addChild:bg];
+		
+	// Solid Colors
+	{ // Red
+		CCNodeColor *node = [CCNodeColor nodeWithColor:[CCColor colorWithRed:0.5 green:0.0 blue:0.0 alpha:0.25] width:100 height:100];
+		node.positionType = CCPositionTypeNormalized;
+		node.position = ccp(0.25, 0.3);
+		node.anchorPoint = ccp(0.5, 0.5);
+		
+		[self.contentNode addChild:node];
+	}
+	
+	{ // Green
+		CCNodeColor *node = [CCNodeColor nodeWithColor:[CCColor colorWithRed:0.0 green:0.5 blue:0.0 alpha:0.25] width:100 height:100];
+		node.positionType = CCPositionTypeNormalized;
+		node.position = ccp(0.50, 0.3);
+		node.anchorPoint = ccp(0.5, 0.5);
+		
+		[self.contentNode addChild:node];
+	}
+	
+	{ // Blue
+		CCNodeColor *node = [CCNodeColor nodeWithColor:[CCColor colorWithRed:0.0 green:0.0 blue:0.5 alpha:0.25] width:100 height:100];
+		node.positionType = CCPositionTypeNormalized;
+		node.position = ccp(0.75, 0.3);
+		node.anchorPoint = ccp(0.5, 0.5);
+		
+		[self.contentNode addChild:node];
+	}
+	
+	CCColor *clearWhite = [CCColor colorWithRed:1 green:1 blue:1 alpha:0];
+	
+	// Gradients
+	{ // Red
+		CCNodeGradient *node = [CCNodeGradient nodeWithColor:[CCColor colorWithRed:0.5 green:0.0 blue:0.0 alpha:1.0] width:100 height:100];
+		node.endColor = clearWhite;
+		node.vector = ccp(1, 1);
+		node.positionType = CCPositionTypeNormalized;
+		node.position = ccp(0.25, 0.7);
+		node.anchorPoint = ccp(0.5, 0.5);
+		
+		[self.contentNode addChild:node];
+	}
+	
+	{ // Green
+		CCNodeGradient *node = [CCNodeGradient nodeWithColor:[CCColor colorWithRed:0.0 green:0.5 blue:0.0 alpha:1.0] width:100 height:100];
+		node.endColor = clearWhite;
+		node.vector = ccp(0, 1);
+		node.positionType = CCPositionTypeNormalized;
+		node.position = ccp(0.50, 0.7);
+		node.anchorPoint = ccp(0.5, 0.5);
+		
+		[self.contentNode addChild:node];
+	}
+	
+	{ // Blue
+		CCNodeGradient *node = [CCNodeGradient nodeWithColor:[CCColor colorWithRed:0.0 green:0.0 blue:0.5 alpha:1.0] width:100 height:100];
+		node.endColor = clearWhite;
+		node.vector = ccp(-1, 1);
+		node.positionType = CCPositionTypeNormalized;
+		node.position = ccp(0.75, 0.7);
+		node.anchorPoint = ccp(0.5, 0.5);
+		
+		[self.contentNode addChild:node];
+	}
+}
+
 @end
 
