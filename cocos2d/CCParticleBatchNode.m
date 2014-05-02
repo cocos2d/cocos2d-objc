@@ -60,7 +60,7 @@
 -(void) increaseAtlasCapacityTo:(NSUInteger) quantity;
 -(NSUInteger) searchNewPositionInChildrenForZ:(NSInteger)z;
 -(void) getCurrentIndex:(NSUInteger*)oldIndex newIndex:(NSUInteger*)newIndex forChild:(CCNode*)child z:(NSInteger)z;
--(NSUInteger) addChildHelper: (CCNode*) child z:(NSInteger)z tag:(NSInteger) aTag;
+-(NSUInteger) addChildHelper:(CCNode*)child z:(NSInteger)z name:(NSString*)name;
 @end
 
 @implementation CCParticleBatchNode
@@ -156,7 +156,7 @@
 }
 
 // override addChild:
--(void) addChild:(CCParticleSystemBase*)child z:(NSInteger)z tag:(NSInteger) aTag
+-(void) addChild:(CCParticleSystemBase*)child z:(NSInteger)z name:(NSString*)name
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( [child isKindOfClass:[CCParticleSystemBase class]], @"CCParticleBatchNode only supports CCQuadParticleSystems as children");
@@ -169,7 +169,7 @@
 	NSAssert( _blendFunc.src  == child.blendFunc.src && _blendFunc.dst  == child.blendFunc.dst, @"Can't add a PaticleSystem that uses a differnt blending function");
 
 	//no lazy sorting, so don't call super addChild, call helper instead
-	NSUInteger pos = [self addChildHelper:child z:z tag:aTag];
+	NSUInteger pos = [self addChildHelper:child z:z name:name];
 
 	//get new atlasIndex
 	NSUInteger atlasIndex;
