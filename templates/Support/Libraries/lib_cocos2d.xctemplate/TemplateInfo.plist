@@ -413,34 +413,6 @@
 				<integer>0</integer>
 			</array>
 		</dict>
-		<key>Libraries/cocos2d/CCAtlasNode.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>Libraries</string>
-				<string>cocos2d</string>
-				<string>Base Nodes</string>
-			</array>
-			<key>Path</key>
-			<string>Libraries/cocos2d/CCAtlasNode.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-		<key>Libraries/cocos2d/CCAtlasNode.m</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>Libraries</string>
-				<string>cocos2d</string>
-				<string>Base Nodes</string>
-			</array>
-			<key>Path</key>
-			<string>Libraries/cocos2d/CCAtlasNode.m</string>
-			<key>TargetIndices</key>
-			<array>
-				<integer>0</integer>
-			</array>
-		</dict>
 		<key>Libraries/cocos2d/CCClippingNode.h</key>
 		<dict>
 			<key>Group</key>
@@ -594,34 +566,6 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/cocos2d/ccFPSImages.m</string>
-			<key>TargetIndices</key>
-			<array>
-				<integer>0</integer>
-			</array>
-		</dict>
-		<key>Libraries/cocos2d/CCLabelAtlas.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>Libraries</string>
-				<string>cocos2d</string>
-				<string>Label Nodes</string>
-			</array>
-			<key>Path</key>
-			<string>Libraries/cocos2d/CCLabelAtlas.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-		<key>Libraries/cocos2d/CCLabelAtlas.m</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>Libraries</string>
-				<string>cocos2d</string>
-				<string>Label Nodes</string>
-			</array>
-			<key>Path</key>
-			<string>Libraries/cocos2d/CCLabelAtlas.m</string>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
@@ -2507,8 +2451,6 @@
 		<string>Libraries/cocos2d/CCAnimation.m</string>
 		<string>Libraries/cocos2d/CCAnimationCache.h</string>
 		<string>Libraries/cocos2d/CCAnimationCache.m</string>
-		<string>Libraries/cocos2d/CCAtlasNode.h</string>
-		<string>Libraries/cocos2d/CCAtlasNode.m</string>
 		<string>Libraries/cocos2d/CCClippingNode.h</string>
 		<string>Libraries/cocos2d/CCClippingNode.m</string>
 		<string>Libraries/cocos2d/ccConfig.h</string>
@@ -2521,8 +2463,6 @@
 		<string>Libraries/cocos2d/CCDrawNode.m</string>
 		<string>Libraries/cocos2d/ccFPSImages.h</string>
 		<string>Libraries/cocos2d/ccFPSImages.m</string>
-		<string>Libraries/cocos2d/CCLabelAtlas.h</string>
-		<string>Libraries/cocos2d/CCLabelAtlas.m</string>
 		<string>Libraries/cocos2d/CCLabelBMFont_Private.h</string>
 		<string>Libraries/cocos2d/CCLabelBMFont.h</string>
 		<string>Libraries/cocos2d/CCLabelBMFont.m</string>

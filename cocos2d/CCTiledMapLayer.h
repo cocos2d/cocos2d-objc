@@ -25,7 +25,6 @@
  *
  */
 
-#import "CCAtlasNode.h"
 #import "CCSpriteBatchNode.h"
 #import "CCTMXXMLParser.h"
 #import "CCTiledMap.h"

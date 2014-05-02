@@ -232,10 +232,6 @@
 		E076E6E21225EC7400DE0DA2 /* CCActionProgressTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E63C1225EC7400DE0DA2 /* CCActionProgressTimer.m */; };
 		E076E6E51225EC7400DE0DA2 /* CCActionTween.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E63F1225EC7400DE0DA2 /* CCActionTween.h */; };
 		E076E6E61225EC7400DE0DA2 /* CCActionTween.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6401225EC7400DE0DA2 /* CCActionTween.m */; };
-		E076E6E71225EC7400DE0DA2 /* CCAtlasNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6411225EC7400DE0DA2 /* CCAtlasNode.h */; };
-		E076E6E81225EC7400DE0DA2 /* CCAtlasNode.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6421225EC7400DE0DA2 /* CCAtlasNode.m */; };
-		E076E6FA1225EC7400DE0DA2 /* CCLabelAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6541225EC7400DE0DA2 /* CCLabelAtlas.h */; };
-		E076E6FB1225EC7400DE0DA2 /* CCLabelAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6551225EC7400DE0DA2 /* CCLabelAtlas.m */; };
 		E076E6FC1225EC7400DE0DA2 /* CCLabelBMFont.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6561225EC7400DE0DA2 /* CCLabelBMFont.h */; };
 		E076E6FD1225EC7400DE0DA2 /* CCLabelBMFont.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6571225EC7400DE0DA2 /* CCLabelBMFont.m */; };
 		E076E6FE1225EC7400DE0DA2 /* CCLabelTTF.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6581225EC7400DE0DA2 /* CCLabelTTF.h */; };
@@ -599,15 +595,11 @@
 		E076E63C1225EC7400DE0DA2 /* CCActionProgressTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionProgressTimer.m; sourceTree = "<group>"; };
 		E076E63F1225EC7400DE0DA2 /* CCActionTween.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionTween.h; sourceTree = "<group>"; };
 		E076E6401225EC7400DE0DA2 /* CCActionTween.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionTween.m; sourceTree = "<group>"; };
-		E076E6411225EC7400DE0DA2 /* CCAtlasNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAtlasNode.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		E076E6421225EC7400DE0DA2 /* CCAtlasNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAtlasNode.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		E076E6491225EC7400DE0DA2 /* ccConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccConfig.h; sourceTree = "<group>"; };
 		E076E64A1225EC7400DE0DA2 /* CCConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCConfiguration.h; sourceTree = "<group>"; };
 		E076E64B1225EC7400DE0DA2 /* CCConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCConfiguration.m; sourceTree = "<group>"; };
 		E076E64C1225EC7400DE0DA2 /* CCDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDirector.h; sourceTree = "<group>"; };
 		E076E64D1225EC7400DE0DA2 /* CCDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDirector.m; sourceTree = "<group>"; };
-		E076E6541225EC7400DE0DA2 /* CCLabelAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelAtlas.h; sourceTree = "<group>"; };
-		E076E6551225EC7400DE0DA2 /* CCLabelAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLabelAtlas.m; sourceTree = "<group>"; };
 		E076E6561225EC7400DE0DA2 /* CCLabelBMFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelBMFont.h; sourceTree = "<group>"; };
 		E076E6571225EC7400DE0DA2 /* CCLabelBMFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLabelBMFont.m; sourceTree = "<group>"; };
 		E076E6581225EC7400DE0DA2 /* CCLabelTTF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelTTF.h; sourceTree = "<group>"; };
@@ -1260,8 +1252,6 @@
 		E076E7721225EC8C00DE0DA2 /* Label Nodes */ = {
 			isa = PBXGroup;
 			children = (
-				E076E6541225EC7400DE0DA2 /* CCLabelAtlas.h */,
-				E076E6551225EC7400DE0DA2 /* CCLabelAtlas.m */,
 				E076E6561225EC7400DE0DA2 /* CCLabelBMFont.h */,
 				E076E6571225EC7400DE0DA2 /* CCLabelBMFont.m */,
 				E076E6581225EC7400DE0DA2 /* CCLabelTTF.h */,
@@ -1374,8 +1364,6 @@
 		E076E77B1225ED1100DE0DA2 /* Base Nodes */ = {
 			isa = PBXGroup;
 			children = (
-				E076E6411225EC7400DE0DA2 /* CCAtlasNode.h */,
-				E076E6421225EC7400DE0DA2 /* CCAtlasNode.m */,
 				E076E6631225EC7400DE0DA2 /* CCNode.h */,
 				E076E6641225EC7400DE0DA2 /* CCNode.m */,
 				B798D13E181F2F6300E7BFCD /* CCNode_Private.h */,
@@ -1432,11 +1420,9 @@
 				B706B19B1820A42300B27A2C /* CCDirector_Private.h in Headers */,
 				B791E850182065BD00DAE1D7 /* CCTiledMapLayer.h in Headers */,
 				E076E6E51225EC7400DE0DA2 /* CCActionTween.h in Headers */,
-				E076E6E71225EC7400DE0DA2 /* CCAtlasNode.h in Headers */,
 				B77060851831B0C40043CC67 /* ALWrapper.h in Headers */,
 				B770607F1831B0C40043CC67 /* ALSoundSource.h in Headers */,
 				B770608E1831B0C40043CC67 /* IOSVersion.h in Headers */,
-				E076E6FA1225EC7400DE0DA2 /* CCLabelAtlas.h in Headers */,
 				E076E6FC1225EC7400DE0DA2 /* CCLabelBMFont.h in Headers */,
 				E076E6FE1225EC7400DE0DA2 /* CCLabelTTF.h in Headers */,
 				B77060821831B0C40043CC67 /* ALSource.h in Headers */,
@@ -1686,9 +1672,7 @@
 				D389412D18639DD400725CFC /* CCPhysicsShape.m in Sources */,
 				D3AD531818C84F79005B6CF3 /* CCShader.m in Sources */,
 				B770608F1831B0C40043CC67 /* IOSVersion.m in Sources */,
-				E076E6E81225EC7400DE0DA2 /* CCAtlasNode.m in Sources */,
 				B77060621831B0C40043CC67 /* OALAction.m in Sources */,
-				E076E6FB1225EC7400DE0DA2 /* CCLabelAtlas.m in Sources */,
 				B770607C1831B0C40043CC67 /* ALDevice.m in Sources */,
 				E076E6FD1225EC7400DE0DA2 /* CCLabelBMFont.m in Sources */,
 				E076E6FF1225EC7400DE0DA2 /* CCLabelTTF.m in Sources */,

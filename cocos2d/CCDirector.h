@@ -53,7 +53,7 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 };
 
 
-@class CCLabelAtlas;
+@class CCFPSLabel;
 @class CCScene;
 @class CCScheduler;
 @class CCActionManager;
@@ -98,9 +98,9 @@ and when to execute the Scenes.
 
 	CCTime		_accumDt;
 	CCTime		_frameRate;
-	CCLabelAtlas *_FPSLabel;
-	CCLabelAtlas *_SPFLabel;
-	CCLabelAtlas *_drawsLabel;
+	CCFPSLabel *_FPSLabel;
+	CCFPSLabel *_SPFLabel;
+	CCFPSLabel *_drawsLabel;
 
 	/* is the running scene paused */
 	BOOL _isPaused;

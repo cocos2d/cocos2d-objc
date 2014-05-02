@@ -78,8 +78,11 @@
  */
 -(void) drawScene;
 
-// helper
-/* creates the Stats labels */
+@end
+
+
+@interface CCDirector(Stats)
+
 -(void) createStatsLabel;
 
 @end

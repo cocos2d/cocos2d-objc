@@ -393,6 +393,7 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 	
 	[renderer setRenderState:_renderState];
 	glDrawElements(_mode, _elements, GL_UNSIGNED_SHORT, (GLvoid *)(_first*sizeof(GLushort)));
+	CC_INCREMENT_GL_DRAWS(1);
 	
 	glPopGroupMarkerEXT();
 }
