@@ -436,9 +436,8 @@
 
 -(void)setEffect:(CCEffect *)effect
 {
-    self.shader = effect.shader;
-    if(effect.shaderUniforms != nil) // TODO: check for duplicate uniform names
-        [self.shaderUniforms addEntriesFromDictionary:effect.shaderUniforms];
+    // work in progress, since I added mutli pass rendering for efffects, sprite are no longer working with all effects.
+    // taking this out for now.
 }
 
 //
