@@ -113,6 +113,7 @@
 {
     [_textures removeAllObjects];
     [self configureRender];
+
     NSAssert(_renderer == renderer, @"CCEffectNode error!");
     
     CCEffectRenderPass* renderPass = [[CCEffectRenderPass alloc] init];

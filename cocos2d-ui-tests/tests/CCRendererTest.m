@@ -112,37 +112,41 @@
     self.subTitle = @"Glow Effect Node Test";
     
     // Create a hollow circle
-    CCSprite *effectSprite = [CCSprite spriteWithImageNamed:@"sample_hollow_circle.png"];
-    effectSprite.anchorPoint = ccp(0.5, 0.5);
-    effectSprite.position = ccp(40, 40);
+    CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"sample_hollow_circle.png"];
+    sampleSprite.anchorPoint = ccp(0.5, 0.5);
+    sampleSprite.position = ccp(0.5, 0.5);
+    sampleSprite.positionType = CCPositionTypeNormalized;
     
     // Blend glow maps test
-    CCEffectNode* effectNode3 = [[CCEffectNode alloc] initWithWidth:80 height:80];
-    effectNode3.positionType = CCPositionTypeNormalized;
-    effectNode3.position = ccp(0.1, 0.5);
-    [effectNode3 addChild:effectSprite];
+    CCEffectNode* glowEffectNode = [[CCEffectNode alloc] initWithWidth:80 height:80];
+    glowEffectNode.positionType = CCPositionTypeNormalized;
+    glowEffectNode.position = ccp(0.1, 0.5);
+    [glowEffectNode addChild:sampleSprite];
     CCEffectGlow* glowEffect = [[CCEffectGlow alloc] init];
-    effectNode3.effect = glowEffect;
+    glowEffectNode.effect = glowEffect;
     
 #ifdef WORKING_GLOW
-    [effectNode3 visit];
-    CCSprite* testSrpite = [CCSprite spriteWithTexture:effectNode3.texture];
-    testSrpite.positionType = CCPositionTypeNormalized;
-    testSrpite.position = ccp(0.6, 0.5);
-    [self.contentNode addChild:testSrpite];
-    
-    CCSprite *defaultSprite = [CCSprite spriteWithImageNamed:@"sample_hollow_circle.png"];
-    defaultSprite.anchorPoint = ccp(0.5, 0.5);
-    defaultSprite.positionType = CCPositionTypeNormalized;
-    defaultSprite.position = ccp(0.1, 0.5);
-    [self.contentNode addChild:defaultSprite];
-    
+        [glowEffectNode visit];
+        CCSprite* testSrpite = [CCSprite spriteWithTexture:glowEffectNode.texture];
+        testSrpite.positionType = CCPositionTypeNormalized;
+        testSrpite.position = ccp(0.6, 0.5);
+        [self.contentNode addChild:testSrpite];
+        
+        CCSprite *defaultSprite = [CCSprite spriteWithImageNamed:@"sample_hollow_circle.png"];
+        defaultSprite.anchorPoint = ccp(0.5, 0.5);
+        defaultSprite.positionType = CCPositionTypeNormalized;
+        defaultSprite.position = ccp(0.1, 0.5);
+        [self.contentNode addChild:defaultSprite];
+        
 #else
-    [self.contentNode addChild:effectNode3];
+        [self.contentNode addChild:glowEffectNode];
 #endif
     
-    
-    
+//    CCSprite *testSprite = [CCSprite spriteWithImageNamed:@"sample_hollow_circle.png"];
+//    testSprite.anchorPoint = ccp(0.5, 0.5);
+//    testSprite.positionType = CCPositionTypeNormalized;
+//    testSprite.position = ccp(0.55, 0.5);
+//    [self.contentNode addChild:testSprite];
 }
 
 -(void)setupEffectNodeTest
