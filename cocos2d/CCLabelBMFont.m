@@ -435,6 +435,31 @@ void FNTConfigRemoveCache( void )
 #pragma mark CCLabelBMFont
 
 @implementation CCLabelBMFont {
+    
+	// The text displayed by the label.
+	NSString *_string;
+    
+	// The font file of the text.
+	NSString *_fntFile;
+	
+	// The original text excluding line breaks.
+	NSString *_initialString;
+	
+	// The maximum width allowed before a line break will be inserted.
+	float _width;
+	
+	// The technique used for horizontal aligning of the text.
+	CCTextAlignment _alignment;
+	
+	// Parsed configuration of the font file.
+	CCBMFontConfiguration	*_configuration;
+    
+	// Offset of the texture atlas.
+	CGPoint _imageOffset;
+	
+	// Reused char.
+	CCSprite *_reusedChar;
+	
 	// Replacement for the old CCNode.tag property which was
 	// used heavily in the original code.
 	NSMutableArray *_childForTag;
@@ -499,26 +524,24 @@ void FNTConfigRemoveCache( void )
 		}
         
 		texture = [[CCTextureCache sharedTextureCache] addImage:newConf.atlasName];
-        
-	} else
+	} else {
 		texture = [[CCTexture alloc] init];
+	}
     
-    
-	if ( (self=[super initWithTexture:texture capacity:[theString length]]) ) {
-        
-        if (fntFile)
-        {
-            _configuration = newConf;
-            _fntFile = [fntFile copy];
-        }
-        
+	if((self = [super init])){
+		if (fntFile){
+			_configuration = newConf;
+			_fntFile = [fntFile copy];
+		}
+		
+		self.texture = texture;
 		_width = width;
 		_alignment = alignment;
-
+		
 		_displayColor = _color = [CCColor whiteColor].ccColor4f;
 		_cascadeOpacityEnabled = YES;
 		_cascadeColorEnabled = YES;
-
+		
 		_contentSize = CGSizeZero;
 		
 		_anchorPoint = ccp(0.5f, 0.5f);
@@ -527,7 +550,7 @@ void FNTConfigRemoveCache( void )
         
 		_reusedChar = [[CCSprite alloc] initWithTexture:self.texture rect:CGRectMake(0, 0, 0, 0) rotated:NO];
 		_childForTag = [NSMutableArray array];
-
+		
 		[self setString:theString updateLabel:YES];
 	}
     
@@ -915,7 +938,7 @@ void FNTConfigRemoveCache( void )
 
 		_configuration = newConf;
 
-		[self setTexture:[[CCTextureCache sharedTextureCache] addImage:_configuration.atlasName]];
+		self.texture = [CCTexture textureWithFile:_configuration.atlasName];
 		[self createFontChars];
 	}
 }

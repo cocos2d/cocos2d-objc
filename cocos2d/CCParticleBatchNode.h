@@ -47,6 +47,7 @@
  - Default capacity is 500.
 
  */
+__attribute__((deprecated))
 @interface CCParticleBatchNode : CCNode<CCTextureProtocol, CCShaderProtocol, CCBlendProtocol>
 
 

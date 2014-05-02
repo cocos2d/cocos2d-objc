@@ -79,7 +79,7 @@ GetBodyIfRunning(CCNode *node)
 	return (node->_isInActiveScene ? node->_physicsBody : nil);
 }
 
-inline CGAffineTransform
+CGAffineTransform
 NodeToPhysicsTransform(CCNode *node)
 {
 	CGAffineTransform transform = CGAffineTransformIdentity;
@@ -90,7 +90,7 @@ NodeToPhysicsTransform(CCNode *node)
 	return transform;
 }
 
-inline float
+float
 NodeToPhysicsRotation(CCNode *node)
 {
 	float rotation = 0.0;
@@ -101,7 +101,7 @@ NodeToPhysicsRotation(CCNode *node)
 	return rotation;
 }
 
-inline CGPoint
+CGPoint
 NodeToPhysicsScale(CCNode * node)
 {
     CGPoint scale = ccp(1.0f,1.0f);

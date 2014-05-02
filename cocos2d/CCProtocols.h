@@ -70,9 +70,9 @@
 @property(nonatomic, readonly) CCRenderState *renderState;
 
 /** set the source blending function for the texture */
--(void) setBlendFunc:(ccBlendFunc)blendFunc __deprecated;
+-(void) setBlendFunc:(ccBlendFunc)blendFunc __attribute__((deprecated));
 /** returns the blending function used for the texture */
--(ccBlendFunc) blendFunc __deprecated;
+-(ccBlendFunc) blendFunc __attribute__((deprecated));
 
 @end
 
