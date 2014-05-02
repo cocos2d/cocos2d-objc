@@ -573,8 +573,14 @@ static NSInteger ccbAnimationManagerID = 0;
     block = [b copy];
 }
 
+- (void)cleanup {
+    [_scheduler setPaused:YES target:self];
+	[_scheduler unscheduleTarget:self];
+    [self clearAllActions];
+}
+
 - (void)dealloc {
-    self.rootNode = NULL;
+    _rootNode = NULL;
 }
 
 - (void)debug {
