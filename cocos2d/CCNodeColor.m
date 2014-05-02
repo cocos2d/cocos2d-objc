@@ -95,7 +95,7 @@
 
 - (void) updateColor
 {
-	GLKVector4 color = GLKVector4Make(_displayColor.r, _displayColor.g, _displayColor.b, _displayColor.a);
+	GLKVector4 color = GLKVector4Make(_displayColor.r*_displayColor.a, _displayColor.g*_displayColor.a, _displayColor.b*_displayColor.a, _displayColor.a);
 	for(int i=0; i<4; i++) _colors[i] = color;
 }
 
@@ -188,8 +188,8 @@
 		u = ccpMult(u, h2 * (float) M_SQRT2);
 	}
 	
-	GLKVector4 a = GLKVector4Make(_color.r, _color.g, _color.b, _color.a);
-	GLKVector4 b = GLKVector4Make(_endColor.r, _endColor.g, _endColor.b, _endColor.a);
+	GLKVector4 a = GLKVector4Make(_color.r*_color.a, _color.g*_color.a, _color.b*_color.a, _color.a);
+	GLKVector4 b = GLKVector4Make(_endColor.r*_endColor.a, _endColor.g*_endColor.a, _endColor.b*_endColor.a, _endColor.a);
 	_colors[0] =  GLKVector4Lerp(a, b, ((M_SQRT2 + u.x + u.y) / (2.0f * M_SQRT2)));
 	_colors[1] =  GLKVector4Lerp(a, b, ((M_SQRT2 - u.x + u.y) / (2.0f * M_SQRT2)));
 	_colors[2] =  GLKVector4Lerp(a, b, ((M_SQRT2 - u.x - u.y) / (2.0f * M_SQRT2)));
