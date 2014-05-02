@@ -120,7 +120,7 @@ CCShader *SHADER = nil;
 {
 	if(_elementCount == 0) return;
 	
-	CCRenderBuffer buffer = [renderer enqueueTriangles:_elementCount/3 andVertexes:_vertexCount withState:self.renderState];
+	CCRenderBuffer buffer = [renderer enqueueTriangles:_elementCount/3 andVertexes:_vertexCount withState:self.renderState globalSortOrder:0];
 	
 	// TODO Maybe it would be even better to skip the CPU transform and use a uniform matrix?
 	for(int i=0; i<_vertexCount; i++){

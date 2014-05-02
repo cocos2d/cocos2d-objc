@@ -368,18 +368,25 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 	
 	@public
 	CCRenderState *_renderState;
+	NSInteger _globalSortOrder;
 }
 
--(instancetype)initWithMode:(GLenum)mode renderState:(CCRenderState *)renderState first:(GLint)first elements:(GLsizei)elements
+-(instancetype)initWithMode:(GLenum)mode renderState:(CCRenderState *)renderState first:(GLint)first elements:(GLsizei)elements globalSortOrder:(NSInteger)globalSortOrder
 {
 	if((self = [super init])){
 		_mode = mode;
 		_renderState = [renderState copy];
 		_first = first;
 		_elements = elements;
+		_globalSortOrder = globalSortOrder;
 	}
 	
 	return self;
+}
+
+-(NSInteger)globalSortOrder
+{
+	return _globalSortOrder;
 }
 
 -(void)batchElements:(GLsizei)elements
@@ -410,21 +417,30 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 {
 	void (^_block)();
 	NSString *_debugLabel;
+	
+	NSInteger _globalSortOrder;
 }
 
--(instancetype)initWithBlock:(void (^)())block debugLabel:(NSString *)debugLabel
+-(instancetype)initWithBlock:(void (^)())block debugLabel:(NSString *)debugLabel globalSortOrder:(NSInteger)globalSortOrder
 {
 	if((self = [super init])){
 		_block = block;
 		_debugLabel = debugLabel;
+		
+		_globalSortOrder = globalSortOrder;
 	}
 	
 	return self;
 }
 
+-(NSInteger)globalSortOrder
+{
+	return _globalSortOrder;
+}
+
 -(void)invokeOnRenderer:(CCRenderer *)renderer
 {
-	glPushGroupMarkerEXT(0, [NSString stringWithFormat:@"CCRenderCommandCustom(%@): Invoke", _debugLabel].UTF8String);
+	glPushGroupMarkerEXT(0, _debugLabel.UTF8String);
 	
 	[renderer bindVAO:NO];
 	_block();
@@ -435,19 +451,63 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 @end
 
 
+//MARK: Rendering group command.
+
+static void
+SortQueue(NSMutableArray *queue)
+{
+	[queue sortWithOptions:NSSortStable usingComparator:^NSComparisonResult(id<CCRenderCommand> obj1, id<CCRenderCommand> obj2) {
+		NSInteger sort1 = obj1.globalSortOrder;
+		NSInteger sort2 = obj2.globalSortOrder;
+		
+		if(sort1 < sort2) return NSOrderedAscending;
+		if(sort1 > sort2) return NSOrderedDescending;
+		return NSOrderedSame;
+	}];
+}
+
+@interface CCRenderCommandGroup : NSObject<CCRenderCommand>
+@end
+
+
+@implementation CCRenderCommandGroup {
+	NSMutableArray *_queue;
+	NSString *_debugLabel;
+	
+	NSInteger _globalSortOrder;
+}
+
+-(instancetype)initWithQueue:(NSMutableArray *)queue debugLabel:(NSString *)debugLabel globalSortOrder:(NSInteger)globalSortOrder
+{
+	if((self = [super init])){
+		_queue = queue;
+		_debugLabel = debugLabel;
+		
+		_globalSortOrder = globalSortOrder;
+	}
+	
+	return self;
+}
+
+-(void)invokeOnRenderer:(CCRenderer *)renderer
+{
+	SortQueue(_queue);
+	
+	glPushGroupMarkerEXT(0, _debugLabel.UTF8String);
+	for(id<CCRenderCommand> command in _queue) [command invokeOnRenderer:renderer];
+	glPopGroupMarkerEXT();
+}
+
+-(NSInteger)globalSortOrder
+{
+	return _globalSortOrder;
+}
+
+@end
+
+
 //MARK: Render Queue
 
-
-/*
-TODO
-
-Things to try if sorting isn't implemented:
-* Regular CPU buffer -> VBO buffer. Can be flushed for each state change.
-* Transform directly into a mapped buffer.
-
-Things to try if sorting is implemented:
-*
-*/
 
 @implementation CCRenderer {
 	GLuint _vao;
@@ -463,6 +523,7 @@ Things to try if sorting is implemented:
 	BOOL _vaoBound;
 	
 	NSMutableArray *_queue;
+	NSMutableArray *_queueStack;
 	__unsafe_unretained CCRenderCommandDraw *_lastDrawCommand;
 	
 	CCVertex *_vertexes;
@@ -623,7 +684,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	return;
 }
 
--(void)enqueueClear:(GLbitfield)mask color:(GLKVector4)color4 depth:(GLclampf)depth stencil:(GLint)stencil
+-(void)enqueueClear:(GLbitfield)mask color:(GLKVector4)color4 depth:(GLclampf)depth stencil:(GLint)stencil globalSortOrder:(NSInteger)globalSortOrder
 {
 	[self enqueueBlock:^{
 		if(mask & GL_COLOR_BUFFER_BIT) glClearColor(color4.r, color4.g, color4.b, color4.a);
@@ -631,7 +692,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 		if(mask & GL_STENCIL_BUFFER_BIT) glClearStencil(stencil);
 		
 		glClear(mask);
-	} debugLabel:@"CCRenderer: Clear"];
+	} globalSortOrder:globalSortOrder debugLabel:@"CCRenderer: Clear" threadSafe:YES];
 }
 
 -(CCVertex *)ensureVertexCapacity:(NSUInteger)requestedCount
@@ -666,18 +727,18 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	return &_elements[_elementCount];
 }
 
--(CCRenderBuffer)enqueueTriangles:(NSUInteger)triangleCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState;
+-(CCRenderBuffer)enqueueTriangles:(NSUInteger)triangleCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
 {
 	__unsafe_unretained CCRenderCommandDraw *previous = _lastDrawCommand;
 	CCVertex *vertexes = [self ensureVertexCapacity:vertexCount];
 	GLushort *elements = [self ensureElementCapacity:3*triangleCount];
 	
-	if(previous && previous->_renderState == renderState){
+	if(previous && previous->_renderState == renderState && previous->_globalSortOrder == globalSortOrder){
 		// Batch with the previous command.
 		[previous batchElements:(GLsizei)(3*triangleCount)];
 	} else {
 		// Start a new command.
-		CCRenderCommandDraw *command = [[CCRenderCommandDraw alloc] initWithMode:GL_TRIANGLES renderState:renderState first:(GLint)_elementCount elements:(GLsizei)(3*triangleCount)];
+		CCRenderCommandDraw *command = [[CCRenderCommandDraw alloc] initWithMode:GL_TRIANGLES renderState:renderState first:(GLint)_elementCount elements:(GLsizei)(3*triangleCount) globalSortOrder:globalSortOrder];
 		[_queue addObject:command];
 		_lastDrawCommand = command;
 	}
@@ -690,12 +751,12 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	return buffer;
 }
 
--(CCRenderBuffer)enqueueLines:(NSUInteger)lineCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState;
+-(CCRenderBuffer)enqueueLines:(NSUInteger)lineCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
 {
 	CCVertex *vertexes = [self ensureVertexCapacity:vertexCount];
 	GLushort *elements = [self ensureElementCapacity:2*lineCount];
 	
-	CCRenderCommandDraw *command = [[CCRenderCommandDraw alloc] initWithMode:GL_LINES renderState:renderState first:(GLint)_elementCount elements:(GLsizei)(2*lineCount)];
+	CCRenderCommandDraw *command = [[CCRenderCommandDraw alloc] initWithMode:GL_LINES renderState:renderState first:(GLint)_elementCount elements:(GLsizei)(2*lineCount) globalSortOrder:globalSortOrder];
 	[_queue addObject:command];
 	
 	// Line drawing commands are currently intended for debugging and cannot be batched.
@@ -709,9 +770,9 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	return buffer;
 }
 
--(void)enqueueBlock:(void (^)())block debugLabel:(NSString *)debugLabel
+-(void)enqueueBlock:(void (^)())block globalSortOrder:(NSInteger)globalSortOrder debugLabel:(NSString *)debugLabel threadSafe:(BOOL)threadsafe
 {
-	[_queue addObject:[[CCRenderCommandCustom alloc] initWithBlock:block debugLabel:debugLabel]];
+	[_queue addObject:[[CCRenderCommandCustom alloc] initWithBlock:block debugLabel:debugLabel globalSortOrder:globalSortOrder]];
 	_lastDrawCommand = nil;
 }
 
@@ -720,11 +781,35 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	[self enqueueBlock:^{
     typedef void (*Func)(id, SEL);
     ((Func)objc_msgSend)(target, selector);
-	} debugLabel:NSStringFromSelector(selector)];
+	} globalSortOrder:0 debugLabel:NSStringFromSelector(selector) threadSafe:NO];
 }
 
 -(void)enqueueRenderCommand: (id<CCRenderCommand>) renderCommand {
 	[_queue addObject: renderCommand];
+	_lastDrawCommand = nil;
+}
+
+-(void)pushGroup;
+{
+	if(_queueStack == nil){
+		// Allocate the stack lazily.
+		_queueStack = [[NSMutableArray alloc] init];
+	}
+	
+	[_queueStack addObject:_queue];
+	_queue = [[NSMutableArray alloc] init];
+	_lastDrawCommand = nil;
+}
+
+-(void)popGroupWithDebugLabel:(NSString *)debugLabel globalSortOrder:(NSInteger)globalSortOrder
+{
+	NSAssert(_queueStack.count > 0, @"Render queue stack underflow. (Unmatched pushQueue/popQueue calls.)");
+	
+	NSMutableArray *groupQueue = _queue;
+	_queue = [_queueStack lastObject];
+	[_queueStack removeLastObject];
+	
+	[_queue addObject:[[CCRenderCommandGroup alloc] initWithQueue:groupQueue debugLabel:debugLabel globalSortOrder:globalSortOrder]];
 	_lastDrawCommand = nil;
 }
 
@@ -743,12 +828,13 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	CC_CHECK_GL_ERROR_DEBUG();
 	
-	for(CCRenderCommandDraw *command in _queue) [command invokeOnRenderer:self];
+	SortQueue(_queue);
+	for(id<CCRenderCommand> command in _queue) [command invokeOnRenderer:self];
 	[self bindVAO:NO];
 	
 //	NSLog(@"Draw commands: %d, Draw calls: %d", _statDrawCommands, _queue.count);
 	_statDrawCommands = 0;
-	[_queue removeAllObjects];
+	_queue = [[NSMutableArray alloc] init];
 	
 	_vertexCount = 0;
 	_elementCount = 0;
