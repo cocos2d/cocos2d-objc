@@ -24,163 +24,43 @@
 
 #import "CCPhysicsJoint.h"
 #import "CCPhysics+ObjectiveChipmunk.h"
-
+#import "CCNode_Private.h"
 
 @interface CCNode(Private)
 -(CGAffineTransform)nonRigidTransform;
 @end
 
 
+
 @interface CCPhysicsPivotJoint : CCPhysicsJoint
+-(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB anchor:(CGPoint)anchor;
 @end
-
-
-@implementation CCPhysicsPivotJoint {
-	ChipmunkPivotJoint *_constraint;
-	CGPoint _anchor;
-}
-
--(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB anchor:(CGPoint)anchor
-{
-	if((self = [super init])){
-		_constraint = [ChipmunkPivotJoint pivotJointWithBodyA:bodyA.body bodyB:bodyB.body pivot:CCP_TO_CPV(anchor)];
-		_constraint.userData = self;
-		
-		_anchor = anchor;
-	}
-	
-	return self;
-}
-
--(ChipmunkConstraint *)constraint {return _constraint;}
-
--(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
-{
-	CCPhysicsBody *bodyA = self.bodyA;
-	CGPoint anchor = CGPointApplyAffineTransform(_anchor, bodyA.node.nonRigidTransform);
-	
-	_constraint.anchorA = CCP_TO_CPV(anchor);
-	_constraint.anchorB = [_constraint.bodyB worldToLocal:[_constraint.bodyA localToWorld:CCP_TO_CPV(anchor)]];
-}
-
-@end
-
 
 @interface CCPhysicsPinJoint : CCPhysicsJoint
+-(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB;
 @end
-
-
-@implementation CCPhysicsPinJoint {
-	ChipmunkPinJoint *_constraint;
-	CGPoint _anchorA, _anchorB;
-}
-
--(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB
-{
-	if((self = [super init])){
-		_constraint = [ChipmunkPinJoint pinJointWithBodyA:bodyA.body bodyB:bodyB.body anchorA:CCP_TO_CPV(anchorA) anchorB:CCP_TO_CPV(anchorB)];
-		_constraint.userData = self;
-		
-		_anchorA = anchorA;
-		_anchorB = anchorB;
-	}
-	
-	return self;
-}
-
--(ChipmunkConstraint *)constraint {return _constraint;}
-
--(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
-{
-	CCPhysicsBody *bodyA = self.bodyA, *bodyB = self.bodyB;
-	CGPoint anchorA = CGPointApplyAffineTransform(_anchorA, bodyA.node.nonRigidTransform);
-	CGPoint anchorB = CGPointApplyAffineTransform(_anchorB, bodyB.node.nonRigidTransform);
-    _constraint.anchorA = CCP_TO_CPV(anchorA);
-    _constraint.anchorB = CCP_TO_CPV(anchorB);
-	
-	_constraint.anchorA = CCP_TO_CPV(anchorA);
-	_constraint.anchorB = CCP_TO_CPV(anchorB);
-	_constraint.dist = cpvdist([bodyA.body localToWorld:CCP_TO_CPV(anchorA)], [bodyB.body localToWorld:CCP_TO_CPV(anchorB)]);
-}
-
-@end
-
 
 @interface CCPhysicsSlideJoint : CCPhysicsJoint
-@end
-
-
-@implementation CCPhysicsSlideJoint {
-	ChipmunkSlideJoint *_constraint;
-	CGPoint _anchorA, _anchorB;
-}
-
 -(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB minDistance:(CGFloat)min maxDistance:(CGFloat)max;
-{
-	if((self = [super init])){
-		_constraint = [ChipmunkSlideJoint slideJointWithBodyA:bodyA.body bodyB:bodyB.body anchorA:CCP_TO_CPV(anchorA) anchorB:CCP_TO_CPV(anchorB) min:min max:max];
-		_constraint.userData = self;
-		
-		_anchorA = anchorA;
-		_anchorB = anchorB;
-	}
-	
-	return self;
-}
-
--(ChipmunkConstraint *)constraint {return _constraint;}
-
--(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
-{
-	CCPhysicsBody *bodyA = self.bodyA, *bodyB = self.bodyB;
-	_constraint.anchorA = CCP_TO_CPV(CGPointApplyAffineTransform(_anchorA, bodyA.node.nonRigidTransform));
-	_constraint.anchorB = CCP_TO_CPV(CGPointApplyAffineTransform(_anchorB, bodyB.node.nonRigidTransform));
-}
-
 @end
-
 
 @interface CCPhysicsSpringJoint : CCPhysicsJoint
-@end
-
-
-@implementation CCPhysicsSpringJoint {
-	ChipmunkDampedSpring *_constraint;
-	CGPoint _anchorA, _anchorB;
-}
-
--(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB restLength:(CGFloat)restLength stiffness:(CGFloat)stiffness damping:(CGFloat)damping
-
-{
-	if((self = [super init])){
-		_constraint = [ChipmunkDampedSpring dampedSpringWithBodyA:bodyA.body bodyB:bodyB.body anchorA:CCP_TO_CPV(anchorA) anchorB:CCP_TO_CPV(anchorB) restLength:restLength stiffness:stiffness damping:damping];
-		_constraint.userData = self;
-		
-		_anchorA = anchorA;
-		_anchorB = anchorB;
-	}
-	
-	return self;
-}
-
--(ChipmunkConstraint *)constraint {return _constraint;}
-
--(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
-{
-	CCPhysicsBody *bodyA = self.bodyA, *bodyB = self.bodyB;
-	_constraint.anchorA = CCP_TO_CPV(CGPointApplyAffineTransform(_anchorA, bodyA.node.nonRigidTransform));
-	_constraint.anchorB = CCP_TO_CPV(CGPointApplyAffineTransform(_anchorB, bodyB.node.nonRigidTransform));
-}
-
+-(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB restLength:(CGFloat)restLength stiffness:(CGFloat)stiffness damping:(CGFloat)damping;
 @end
 
 
 @implementation CCPhysicsJoint
+{
+@protected
+	float scale;
+}
+
 
 -(id)init
 {
 	if((self = [super init])){
 		_valid = YES;
+		scale = 0.0f;//Uninitialized.
 	}
 	
 	return self;
@@ -206,7 +86,7 @@
 }
 
 +(CCPhysicsJoint *)connectedDistanceJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
-	anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB
+										   anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB
 {
 	CCPhysicsJoint *joint = [[CCPhysicsPinJoint alloc] initWithBodyA:bodyA bodyB:bodyB anchorA:anchorA anchorB:anchorB];
 	[bodyA addJoint:joint];
@@ -218,8 +98,8 @@
 }
 
 +(CCPhysicsJoint *)connectedDistanceJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
-	anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB
-	minDistance:(CGFloat)min maxDistance:(CGFloat)max
+										   anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB
+									   minDistance:(CGFloat)min maxDistance:(CGFloat)max
 {
 	CCPhysicsJoint *joint = [[CCPhysicsSlideJoint alloc] initWithBodyA:bodyA bodyB:bodyB anchorA:anchorA anchorB:anchorB minDistance:min maxDistance:max];
 	[bodyA addJoint:joint];
@@ -231,14 +111,15 @@
 }
 
 +(CCPhysicsJoint *)connectedSpringJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
-	anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB
-	restLength:(CGFloat)restLength stiffness:(CGFloat)stiffness damping:(CGFloat)damping
+										 anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB
+									  restLength:(CGFloat)restLength stiffness:(CGFloat)stiffness damping:(CGFloat)damping
 {
 	CCPhysicsSpringJoint *joint = [[CCPhysicsSpringJoint alloc] initWithBodyA:bodyA bodyB:bodyB anchorA:anchorA anchorB:anchorB restLength:restLength stiffness:stiffness damping:damping];
 	[bodyA addJoint:joint];
 	[bodyB addJoint:joint];
 	
 	[joint addToPhysicsNode:bodyA.physicsNode];
+	
 	
 	return joint;
 }
@@ -297,6 +178,166 @@ BreakConstraint(cpConstraint *constraint, cpSpace *space)
 @end
 
 
+@implementation CCPhysicsPivotJoint {
+	ChipmunkPivotJoint *_constraint;
+	CGPoint _anchor;
+}
+
+-(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB anchor:(CGPoint)anchor
+{
+	if((self = [super init])){
+		_constraint = [ChipmunkPivotJoint pivotJointWithBodyA:bodyA.body bodyB:bodyB.body pivot:CCP_TO_CPV(anchor)];
+		_constraint.userData = self;
+		
+		_anchor = anchor;
+	}
+	
+	return self;
+}
+
+-(ChipmunkConstraint *)constraint {return _constraint;}
+
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
+{
+	
+	CCPhysicsBody *bodyA = self.bodyA;
+	CGPoint anchor = CGPointApplyAffineTransform(_anchor, bodyA.node.nonRigidTransform);
+	
+	_constraint.anchorA = CCP_TO_CPV(anchor);
+	_constraint.anchorB = [_constraint.bodyB worldToLocal:[_constraint.bodyA localToWorld:CCP_TO_CPV(anchor)]];
+}
+
+@end
+
+
+
+
+@implementation CCPhysicsPinJoint {
+	ChipmunkPinJoint *_constraint;
+	CGPoint _anchorA, _anchorB;
+}
+
+-(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB
+{
+	if((self = [super init])){
+		_constraint = [ChipmunkPinJoint pinJointWithBodyA:bodyA.body bodyB:bodyB.body anchorA:CCP_TO_CPV(anchorA) anchorB:CCP_TO_CPV(anchorB)];
+		_constraint.userData = self;
+		
+		_anchorA = anchorA;
+		_anchorB = anchorB;
+	}
+	
+	return self;
+}
+
+-(ChipmunkConstraint *)constraint {return _constraint;}
+
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
+{
+	CCPhysicsBody *bodyA = self.bodyA, *bodyB = self.bodyB;
+	CGPoint anchorA = CGPointApplyAffineTransform(_anchorA, bodyA.node.nonRigidTransform);
+	CGPoint anchorB = CGPointApplyAffineTransform(_anchorB, bodyB.node.nonRigidTransform);
+    _constraint.anchorA = CCP_TO_CPV(anchorA);
+    _constraint.anchorB = CCP_TO_CPV(anchorB);
+	
+	_constraint.anchorA = CCP_TO_CPV(anchorA);
+	_constraint.anchorB = CCP_TO_CPV(anchorB);
+	_constraint.dist = cpvdist([bodyA.body localToWorld:CCP_TO_CPV(anchorA)], [bodyB.body localToWorld:CCP_TO_CPV(anchorB)]);
+}
+
+@end
+
+
+
+
+@implementation CCPhysicsSlideJoint {
+	ChipmunkSlideJoint *_constraint;
+	CGPoint _anchorA, _anchorB;
+}
+
+-(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB minDistance:(CGFloat)min maxDistance:(CGFloat)max
+{
+	if((self = [super init])){
+		_constraint = [ChipmunkSlideJoint slideJointWithBodyA:bodyA.body bodyB:bodyB.body anchorA:CCP_TO_CPV(anchorA) anchorB:CCP_TO_CPV(anchorB) min:min max:max];
+		_constraint.userData = self;
+		
+		_anchorA = anchorA;
+		_anchorB = anchorB;
+	}
+	
+	return self;
+}
+
+-(ChipmunkConstraint *)constraint {return _constraint;}
+
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
+{
+	CCPhysicsBody *bodyA = self.bodyA, *bodyB = self.bodyB;
+	_constraint.anchorA = CCP_TO_CPV(CGPointApplyAffineTransform(_anchorA, bodyA.node.nonRigidTransform));
+	_constraint.anchorB = CCP_TO_CPV(CGPointApplyAffineTransform(_anchorB, bodyB.node.nonRigidTransform));
+}
+
+-(void)setScale:(float)_scale
+{
+	if(scale != 0.0f &&  _scale != scale)
+	{
+		float ratioChange = _scale/scale;
+		_constraint.min = _constraint.min * ratioChange;
+		_constraint.max = _constraint.max * ratioChange;
+	}
+	[super setScale:_scale];
+}
+
+
+@end
+
+
+
+@implementation CCPhysicsSpringJoint {
+	ChipmunkDampedSpring *_constraint;
+	CGPoint _anchorA, _anchorB;
+}
+
+-(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB restLength:(CGFloat)restLength stiffness:(CGFloat)stiffness damping:(CGFloat)damping
+
+{
+	if((self = [super init])){
+		_constraint = [ChipmunkDampedSpring dampedSpringWithBodyA:bodyA.body bodyB:bodyB.body anchorA:CCP_TO_CPV(anchorA) anchorB:CCP_TO_CPV(anchorB) restLength:restLength stiffness:stiffness damping:damping];
+		_constraint.userData = self;
+		
+		_anchorA = anchorA;
+		_anchorB = anchorB;
+	}
+	
+	return self;
+}
+
+-(ChipmunkConstraint *)constraint {return _constraint;}
+
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
+{
+	CCPhysicsBody *bodyA = self.bodyA, *bodyB = self.bodyB;
+	_constraint.anchorA = CCP_TO_CPV(CGPointApplyAffineTransform(_anchorA, bodyA.node.nonRigidTransform));
+	_constraint.anchorB = CCP_TO_CPV(CGPointApplyAffineTransform(_anchorB, bodyB.node.nonRigidTransform));
+	
+}
+
+-(void)setScale:(float)_scale
+{
+	if(scale != 0.0f && _scale != scale)
+	{
+		float ratioChange = _scale/scale;
+		_constraint.restLength = _constraint.restLength * ratioChange;
+	}
+	[super setScale:_scale];
+}
+
+@end
+
+
+
+
+
 @implementation CCPhysicsJoint(ObjectiveChipmunk)
 
 -(id<NSFastEnumeration>)chipmunkObjects {return [NSArray arrayWithObject:self.constraint];}
@@ -313,7 +354,11 @@ BreakConstraint(cpConstraint *constraint, cpSpace *space)
 
 -(void)tryAddToPhysicsNode:(CCPhysicsNode *)physicsNode
 {
-	if(self.isRunning && self.constraint.space == nil) [self addToPhysicsNode:physicsNode];
+	if(self.isRunning && self.constraint.space == nil)
+	{
+		self.scale = NodeToPhysicsScale(self.bodyA.node).x;//We only care about uniform scaling.
+		[self addToPhysicsNode:physicsNode];
+	}
 }
 
 -(void)tryRemoveFromPhysicsNode:(CCPhysicsNode *)physicsNode
@@ -324,6 +369,21 @@ BreakConstraint(cpConstraint *constraint, cpSpace *space)
 -(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
 {
 	@throw [NSException exceptionWithName:@"AbstractInvocation" reason:@"This method is abstract." userInfo:nil];
+}
+
+-(float)scale
+{
+	return scale;
+}
+
+-(void)setScale:(float)_scale
+{
+	scale = _scale;
+}
+
+-(void)resetScale:(float)_scale
+{
+	scale = _scale;
 }
 
 @end

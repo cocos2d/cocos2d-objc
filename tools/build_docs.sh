@@ -108,4 +108,5 @@ tools/appledoc \
 --ignore uthash.h \
 --ignore utlist.h \
 --ignore ZipUtils.h \
+--ignore CCPhysics+ObjectiveChipmunk.h \
 cocos2d cocos2d-ui

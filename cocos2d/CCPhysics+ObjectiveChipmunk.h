@@ -181,11 +181,15 @@ static inline cpTransform CGAFFINETRANSFORM_TO_CPTRANSFORM(CGAffineTransform t){
 
 @interface CCPhysicsJoint(ObjectiveChipmunk)<ChipmunkObject>
 
+
 /** Access to the underlying Objective-Chipmunk object. */
 @property(nonatomic, readonly) ChipmunkConstraint *constraint;
 
 /** Returns YES if the body is currently added to a physicsNode. */
 @property(nonatomic, readonly) BOOL isRunning;
+
+/** Joints can be scaled, which updates their max/min lenghts, restLengths and stiffness. */
+@property(nonatomic, assign) float scale;
 
 /**
  *  Add the join to the physics node, but only if both connected bodies are running.
@@ -208,6 +212,12 @@ static inline cpTransform CGAFFINETRANSFORM_TO_CPTRANSFORM(CGAffineTransform t){
  */
 -(void)willAddToPhysicsNode:(CCPhysicsNode *)physics;
 
+/**
+ *	Used to initialize the scale to a setting without adjusting the min/max/rest lengths.
+ *
+ * @param scale to be reset to.
+ */
+-(void)resetScale:(float)_scale;
 @end
 
 

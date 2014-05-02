@@ -153,8 +153,8 @@ static inline void OutputParticle(CCRenderBuffer buffer, int i, _CCParticle *p, 
 	const GLKVector2 zero = {{0, 0}};
 	GLKVector4 color = GLKVector4Make(p->color.r*p->color.a, p->color.g*p->color.a, p->color.b*p->color.a, p->color.a);
 
-#warning TODO Can do some extra optimization to the vertex transform math.
-#warning TODO Can pass the particle life and maybe another param using TexCoord2?
+//#warning TODO Can do some extra optimization to the vertex transform math.
+//#warning TODO Can pass the particle life and maybe another param using TexCoord2?
 
 	float hs = 0.5f*p->size;
 	

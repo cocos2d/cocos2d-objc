@@ -9,7 +9,6 @@
 		<string>com.cocos2d-v3.cocos2dlib</string>
 		<string>com.cocos2d-v3.objectallib</string>
 		<string>com.cocos2d-v3.cocos2d-uilib</string>
-		<string>com.cocos2d-v3.kazmathlib</string>
 		<string>com.cocos2d-v3.ccbreaderlib</string>
 		<string>com.cocos2d-v3.chipmunklib</string>
 	</array>
@@ -55,7 +54,7 @@
 		<key>Classes/HelloWorldLayer.m</key>
 		<dict>
 			<key>Group</key>
-			<string>Classes</string>			
+			<string>Classes</string>
 			<key>Path</key>
 			<string>Classes/HelloWorldLayer.m</string>
 			<key>TargetIndices</key>
@@ -66,7 +65,7 @@
 		<key>Classes/AppDelegate.h</key>
 		<dict>
 			<key>Group</key>
-			<string>Classes</string>			
+			<string>Classes</string>
 			<key>Path</key>
 			<string>Classes/AppDelegate.h</string>
 			<key>TargetIndices</key>
@@ -75,7 +74,7 @@
 		<key>Classes/AppDelegate.m</key>
 		<dict>
 			<key>Group</key>
-			<string>Classes</string>			
+			<string>Classes</string>
 			<key>Path</key>
 			<string>Classes/AppDelegate.m</string>
 			<key>TargetIndices</key>

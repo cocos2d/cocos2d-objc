@@ -170,10 +170,14 @@
 }
 #endif
 
+/// After using you must call CGColorRelease(color)
 - (CGColorRef) CGColor
 {
     CGFloat components[4] = {(CGFloat)_r, (CGFloat)_g, (CGFloat)_b, (CGFloat)_a};
-    return CGColorCreate(CGColorSpaceCreateDeviceRGB(), components);
+    CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
+    CGColorRef color = CGColorCreate(colorspace, components);
+    CGColorSpaceRelease(colorspace);
+    return color;
 }
 
 #ifdef __CC_PLATFORM_IOS

@@ -422,19 +422,16 @@ static CCShader *CC_SHADER_POS_TEX_COLOR_ALPHA_TEST = nil;
 	CC_SHADER_CACHE = [[CCShaderCache alloc] init];
 	
 	// Setup the builtin shaders.
-	CC_SHADER_POS_COLOR = [[self alloc] initWithVertexShaderSource:CCDefaultVShader fragmentShaderSource:
-		@"void main(){gl_FragColor = cc_FragColor;}"];
+	CC_SHADER_POS_COLOR = [[self alloc] initWithFragmentShaderSource:@"void main(){gl_FragColor = cc_FragColor;}"];
 	CC_SHADER_POS_COLOR.debugName = @"CCPositionColorShader";
 	
-	CC_SHADER_POS_TEX_COLOR = [[self alloc] initWithVertexShaderSource:CCDefaultVShader fragmentShaderSource:
-		@"void main(){gl_FragColor = cc_FragColor*texture2D(cc_MainTexture, cc_FragTexCoord1);}"];
+	CC_SHADER_POS_TEX_COLOR = [[self alloc] initWithFragmentShaderSource:@"void main(){gl_FragColor = cc_FragColor*texture2D(cc_MainTexture, cc_FragTexCoord1);}"];
 	CC_SHADER_POS_TEX_COLOR.debugName = @"CCPositionTextureColorShader";
 	
-	CC_SHADER_POS_TEXA8_COLOR = [[self alloc] initWithVertexShaderSource:CCDefaultVShader fragmentShaderSource:
-		@"void main(){gl_FragColor = cc_FragColor*texture2D(cc_MainTexture, cc_FragTexCoord1).a;}"];
+	CC_SHADER_POS_TEXA8_COLOR = [[self alloc] initWithFragmentShaderSource:@"void main(){gl_FragColor = cc_FragColor*texture2D(cc_MainTexture, cc_FragTexCoord1).a;}"];
 	CC_SHADER_POS_TEXA8_COLOR.debugName = @"CCPositionTextureA8ColorShader";
 	
-	CC_SHADER_POS_TEX_COLOR_ALPHA_TEST = [[self alloc] initWithVertexShaderSource:CCDefaultVShader fragmentShaderSource:CC_GLSL(
+	CC_SHADER_POS_TEX_COLOR_ALPHA_TEST = [[self alloc] initWithFragmentShaderSource:CC_GLSL(
 		uniform float cc_AlphaTestValue;
 		void main(){
 			vec4 tex = texture2D(cc_MainTexture, cc_FragTexCoord1);
