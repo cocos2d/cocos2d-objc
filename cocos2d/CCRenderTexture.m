@@ -197,7 +197,7 @@
 
 	kmMat4 orthoMatrix;
 	kmMat4OrthographicProjection(&orthoMatrix, (float)-1.0 / widthRatio,  (float)1.0 / widthRatio,
-								 (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1,1 );
+								 (float)-1.0 / heightRatio, (float)1.0 / heightRatio, 1,-1 );
 	kmGLMultMatrix(&orthoMatrix);
     
 
