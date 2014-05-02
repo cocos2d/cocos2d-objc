@@ -1,7 +1,8 @@
 #import "TestBase.h"
 #import "CCTextureCache.h"
 #import "CCNodeColor.h"
-//#import "CCNode_Private.h"
+#import "CCEffectNode.h"
+
 
 @interface CustomSprite : CCNode<CCShaderProtocol, CCTextureProtocol> @end
 @implementation CustomSprite
@@ -105,6 +106,7 @@
 @interface CCRendererTest : TestBase @end
 @implementation CCRendererTest
 
+#define WORKING_GLOW
 -(void)setupGlowEffectNodeTest
 {
     self.subTitle = @"Glow Effect Node Test";
@@ -121,8 +123,9 @@
     [effectNode3 addChild:effectSprite];
     CCEffectGlow* glowEffect = [[CCEffectGlow alloc] init];
     effectNode3.effect = glowEffect;
-    [effectNode3 visit];
     
+#ifdef WORKING_GLOW
+    [effectNode3 visit];
     CCSprite* testSrpite = [CCSprite spriteWithTexture:effectNode3.texture];
     testSrpite.positionType = CCPositionTypeNormalized;
     testSrpite.position = ccp(0.6, 0.5);
@@ -133,6 +136,13 @@
     defaultSprite.positionType = CCPositionTypeNormalized;
     defaultSprite.position = ccp(0.1, 0.5);
     [self.contentNode addChild:defaultSprite];
+    
+#else
+    [self.contentNode addChild:effectNode3];
+#endif
+    
+    
+    
 }
 
 -(void)setupEffectNodeTest
