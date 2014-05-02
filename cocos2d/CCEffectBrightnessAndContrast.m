@@ -13,13 +13,16 @@
 
 @implementation CCEffectBrightnessAndContrast
 
--(id)init
+-(id)initWithBrightness:(float)brightness contrast:(float)contrast
 {
-    CCEffectUniform* uniformBrightness = [CCEffectUniform uniform:@"float" name:@"u_brightness" value:[NSNumber numberWithFloat:0.0f]];
-    CCEffectUniform* uniformContrast = [CCEffectUniform uniform:@"float" name:@"u_contrast" value:[NSNumber numberWithFloat:1.0f]];
+    CCEffectUniform* uniformBrightness = [CCEffectUniform uniform:@"float" name:@"u_brightness" value:[NSNumber numberWithFloat:brightness]];
+    CCEffectUniform* uniformContrast = [CCEffectUniform uniform:@"float" name:@"u_contrast" value:[NSNumber numberWithFloat:contrast]];
     
-    if(self = [super initWithUniforms:[NSArray arrayWithObjects:uniformBrightness, uniformContrast, nil] vertextUniforms:nil])
+    if(self = [super initWithUniforms:[NSArray arrayWithObjects:uniformBrightness, uniformContrast, nil] vertextUniforms:nil varying:nil])
     {
+        _brightness = brightness;
+        _contrast = contrast;
+        
         return self;
     }
     
@@ -57,6 +60,9 @@
     if(renderPass.renderPassId == 1)
     {
         renderPass.sprite.texture = renderPass.textures[0];
+        
+        renderPass.sprite.shaderUniforms[@"u_brightness"] = [NSNumber numberWithFloat:self.brightness];
+        renderPass.sprite.shaderUniforms[@"u_contrast"] = [NSNumber numberWithFloat:self.contrast];
     }
 }
 

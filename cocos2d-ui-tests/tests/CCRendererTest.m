@@ -114,13 +114,14 @@
     CCSprite *effectSprite = [CCSprite spriteWithImageNamed:@"f1.png"];
     effectSprite.anchorPoint = ccp(0.5, 0.5);
     effectSprite.position = ccp(40, 40);
-    CCEffectBrightnessAndContrast* effect = [[CCEffectBrightnessAndContrast alloc] init];
     
     // Brightness and contrast test
     CCEffectNode* effectNode = [[CCEffectNode alloc] initWithWidth:80 height:80];
     effectNode.positionType = CCPositionTypeNormalized;
     effectNode.position = ccp(0.1, 0.5);
     [effectNode addChild:effectSprite];
+    CCEffectBrightnessAndContrast* effect = [[CCEffectBrightnessAndContrast alloc] initWithBrightness:0.5f contrast:4.0f];
+    
     effectNode.effect = effect;
     [effectNode visit];
     

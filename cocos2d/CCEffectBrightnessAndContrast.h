@@ -10,4 +10,9 @@
 
 @interface CCEffectBrightnessAndContrast : CCEffect
 
+-(id)initWithBrightness:(float)brightness contrast:(float)contrast;
+
+@property (nonatomic) float brightness;
+@property (nonatomic) float contrast;
+
 @end
