@@ -275,15 +275,15 @@
 	CGSize pixelSize = self.texture.contentSizeInPixels;
 	GLuint fbo = [self fbo];
 	
+	[_renderer pushGroup];
+	
 	[_renderer enqueueBlock:^{
 		glGetFloatv(GL_VIEWPORT, _oldViewport.v);
 		glViewport(0, 0, pixelSize.width, pixelSize.height );
 		
 		glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-	} globalSortOrder:0 debugLabel:@"CCRenderTexture: Bind FBO" threadSafe:NO];
-	
-	[_renderer pushGroup];
+	} globalSortOrder:NSIntegerMin debugLabel:@"CCRenderTexture: Bind FBO" threadSafe:NO];
 }
 
 -(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a depth:(float)depthValue stencil:(int)stencilValue flags:(GLbitfield)flags
@@ -308,12 +308,12 @@
 
 -(void)end
 {
-	[_renderer popGroup:0];
-	
 	[_renderer enqueueBlock:^{
 		glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
 		glViewport(_oldViewport.v[0], _oldViewport.v[1], _oldViewport.v[2], _oldViewport.v[3]);
-	} globalSortOrder:0 debugLabel:@"CCRenderTexture: Restore FBO" threadSafe:NO];
+	} globalSortOrder:NSIntegerMax debugLabel:@"CCRenderTexture: Restore FBO" threadSafe:NO];
+	
+	[_renderer popGroupWithDebugLabel:@"CCRenderTexture begin/end" globalSortOrder:0];
 	
 	if(_privateRenderer){
 		[_renderer flush];

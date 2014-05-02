@@ -175,6 +175,8 @@ SetProgram(CCNode *n, CCShader *p, NSNumber *alpha) {
     __block GLenum currentStencilPassDepthPass = GL_KEEP;
 		__block GLboolean currentDepthWriteMask = GL_TRUE;
 		
+		[renderer pushGroup];
+		
 		[renderer enqueueBlock:^{
 			currentStencilEnabled = glIsEnabled(GL_STENCIL_TEST);
 			glGetIntegerv(GL_STENCIL_WRITEMASK, (GLint *)&currentStencilWriteMask);
@@ -230,9 +232,7 @@ SetProgram(CCNode *n, CCShader *p, NSNumber *alpha) {
 			glStencilOp(_inverted ? GL_ZERO : GL_REPLACE, GL_KEEP, GL_KEEP);
 			
 //			NSLog(@"Stencil setup.");
-		} globalSortOrder:0 debugLabel:@"CCClippingNode: Setup Stencil" threadSafe:NO];
-		
-		[renderer pushGroup];
+		} globalSortOrder:NSIntegerMin debugLabel:@"CCClippingNode: Setup Stencil" threadSafe:NO];
 		
 		// since glAlphaTest do not exists in OES, use a shader that writes
 		// pixel only if greater than an alpha threshold
@@ -244,10 +244,11 @@ SetProgram(CCNode *n, CCShader *p, NSNumber *alpha) {
     // draw the stencil node as if it was one of our child
     // (according to the stencil test func/op and alpha (or alpha shader) test)
     GLKMatrix4 transform = [self transform:parentTransform];
-    [_stencil visit:renderer parentTransform:&transform];
 		
-		[renderer popGroup:0];
-  
+		[renderer pushGroup];
+    [_stencil visit:renderer parentTransform:&transform];
+		[renderer popGroupWithDebugLabel:@"CCClippingNode: Stencil" globalSortOrder:NSIntegerMin];
+		
 		[renderer enqueueBlock:^{
 //			NSLog(@"Stencil rendered.");
 			// restore the depth test state
@@ -264,15 +265,11 @@ SetProgram(CCNode *n, CCShader *p, NSNumber *alpha) {
 			//         do not draw the pixel but keep the current layer in the stencil buffer
 			glStencilFunc(GL_EQUAL, mask_layer_le, mask_layer_le);
 			glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-		} globalSortOrder:0 debugLabel:@"CCClippingNode: Setup Children" threadSafe:NO];
+		} globalSortOrder:NSIntegerMin debugLabel:@"CCClippingNode: Setup Children" threadSafe:NO];
   
-		[renderer pushGroup];
-		
     // draw (according to the stencil test func) this node and its childs
     [super visit:renderer parentTransform:parentTransform];
   
-		[renderer popGroup:0];
-		
 		[renderer enqueueBlock:^{
 			///////////////////////////////////
 			// CLEANUP
@@ -284,7 +281,9 @@ SetProgram(CCNode *n, CCShader *p, NSNumber *alpha) {
 			if (!currentStencilEnabled) {
 					glDisable(GL_STENCIL_TEST);
 			}
-		} globalSortOrder:0 debugLabel:@"CCClippingNode: Restore" threadSafe:NO];
+		} globalSortOrder:NSIntegerMax debugLabel:@"CCClippingNode: Restore" threadSafe:NO];
+		
+		[renderer popGroupWithDebugLabel:@"CCClippingNode: Visit" globalSortOrder:0];
   
     // we are done using this layer, decrement
     layer--;

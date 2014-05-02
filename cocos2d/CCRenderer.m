@@ -420,12 +420,13 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 	NSInteger _globalSortOrder;
 }
 
--(instancetype)initWithBlock:(void (^)())block globalSortOrder:(NSInteger)globalSortOrder debugLabel:(NSString *)debugLabel
+-(instancetype)initWithBlock:(void (^)())block debugLabel:(NSString *)debugLabel globalSortOrder:(NSInteger)globalSortOrder
 {
 	if((self = [super init])){
 		_block = block;
-		_globalSortOrder = globalSortOrder;
 		_debugLabel = debugLabel;
+		
+		_globalSortOrder = globalSortOrder;
 	}
 	
 	return self;
@@ -451,6 +452,18 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 
 //MARK: Rendering group command.
 
+static void
+SortQueue(NSMutableArray *queue)
+{
+	[queue sortWithOptions:NSSortStable usingComparator:^NSComparisonResult(id<CCRenderCommand> obj1, id<CCRenderCommand> obj2) {
+		NSInteger sort1 = obj1.globalSortOrder;
+		NSInteger sort2 = obj2.globalSortOrder;
+		
+		if(sort1 < sort2) return NSOrderedAscending;
+		if(sort1 > sort2) return NSOrderedDescending;
+		return NSOrderedSame;
+	}];
+}
 
 @interface CCRenderCommandGroup : NSObject<CCRenderCommand>
 @end
@@ -458,13 +471,17 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 
 @implementation CCRenderCommandGroup {
 	NSMutableArray *_queue;
+	NSString *_debugLabel;
+	
 	NSInteger _globalSortOrder;
 }
 
--(instancetype)initWithQueue:(NSMutableArray *)queue globalSortOrder:(NSInteger)globalSortOrder
+-(instancetype)initWithQueue:(NSMutableArray *)queue debugLabel:(NSString *)debugLabel globalSortOrder:(NSInteger)globalSortOrder
 {
 	if((self = [super init])){
 		_queue = queue;
+		_debugLabel = debugLabel;
+		
 		_globalSortOrder = globalSortOrder;
 	}
 	
@@ -473,11 +490,11 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 
 -(void)invokeOnRenderer:(CCRenderer *)renderer
 {
-	[_queue sortWithOptions:NSSortStable usingComparator:^NSComparisonResult(id<CCRenderCommand> obj1, id<CCRenderCommand> obj2) {
-		return (obj2.globalSortOrder - obj1.globalSortOrder);
-	}];
+	SortQueue(_queue);
 	
+	glPushGroupMarkerEXT(0, _debugLabel.UTF8String);
 	for(id<CCRenderCommand> command in _queue) [command invokeOnRenderer:renderer];
+	glPopGroupMarkerEXT();
 }
 
 -(NSInteger)globalSortOrder
@@ -754,7 +771,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 
 -(void)enqueueBlock:(void (^)())block globalSortOrder:(NSInteger)globalSortOrder debugLabel:(NSString *)debugLabel threadSafe:(BOOL)threadsafe
 {
-	[_queue addObject:[[CCRenderCommandCustom alloc] initWithBlock:block globalSortOrder:globalSortOrder debugLabel:debugLabel]];
+	[_queue addObject:[[CCRenderCommandCustom alloc] initWithBlock:block debugLabel:debugLabel globalSortOrder:globalSortOrder]];
 	_lastDrawCommand = nil;
 }
 
@@ -771,7 +788,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	_lastDrawCommand = nil;
 }
 
--(void)pushGroup
+-(void)pushGroup;
 {
 	if(_queueStack == nil){
 		// Allocate the stack lazily.
@@ -783,7 +800,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	_lastDrawCommand = nil;
 }
 
--(void)popGroup:(NSInteger)globalSortOrder
+-(void)popGroupWithDebugLabel:(NSString *)debugLabel globalSortOrder:(NSInteger)globalSortOrder
 {
 	NSAssert(_queueStack.count > 0, @"Render queue stack underflow. (Unmatched pushQueue/popQueue calls.)");
 	
@@ -791,7 +808,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	_queue = [_queueStack lastObject];
 	[_queueStack removeLastObject];
 	
-	[_queue addObject:[[CCRenderCommandGroup alloc] initWithQueue:groupQueue globalSortOrder:globalSortOrder]];
+	[_queue addObject:[[CCRenderCommandGroup alloc] initWithQueue:groupQueue debugLabel:debugLabel globalSortOrder:globalSortOrder]];
 	_lastDrawCommand = nil;
 }
 
@@ -810,10 +827,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	CC_CHECK_GL_ERROR_DEBUG();
 	
-	[_queue sortWithOptions:NSSortStable usingComparator:^NSComparisonResult(id<CCRenderCommand> obj1, id<CCRenderCommand> obj2) {
-		return (obj2.globalSortOrder - obj1.globalSortOrder);
-	}];
-	
+	SortQueue(_queue);
 	for(id<CCRenderCommand> command in _queue) [command invokeOnRenderer:self];
 	[self bindVAO:NO];
 	
