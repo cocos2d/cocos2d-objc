@@ -47,7 +47,7 @@
 		// To draw a "fancy" shape like a rectangle to put our sprite on, we need to split it into two triangles.
 		// self.renderState encapsulates the shader, shader uniforms, textures and blending modes set for this node.
 		// You aren't required to pass self.renderState if you want to do something else.
-		CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:self.renderState];
+		CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:self.renderState globalSortOrder:0];
 		
 		// 3) Next we make some vertexes to fill the buffer with. We need to make one for each corner of the sprite.
 		// There are easier/shorter ways to fill in a CCVertex (See CCSprite.m for example), but this way is easy to read.
@@ -105,6 +105,27 @@
 
 @interface CCRendererTest : TestBase @end
 @implementation CCRendererTest
+
+-(id)init
+{
+	if((self = [super init])){
+		// Delay setting the color until the first frame.
+		// Otherwise the scene will not exist yet.
+		[self scheduleBlock:^(CCTimer *timer){self.scene.color = [CCColor lightGrayColor];} delay:0];
+		
+		// Alternatively, set up some rotating colors.
+//		float delay = 1.0f;
+//		[self scheduleBlock:^(CCTimer *timer) {
+//			GLKMatrix4 colorMatrix = GLKMatrix4MakeRotation(timer.invokeTime*1e0, 1, 1, 1);
+//			GLKVector4 color = GLKMatrix4MultiplyVector4(colorMatrix, GLKVector4Make(1, 0, 0, 1));
+//			self.scene.color = [CCColor colorWithGLKVector4:color];
+//			
+//			[timer repeatOnceWithInterval:delay];
+//		} delay:delay];
+	}
+	
+	return self;
+}
 
 #define WORKING_GLOW
 -(void)setupGlowEffectNodeTest
@@ -208,6 +229,8 @@
 
 -(void)setupClippingNodeTest
 {
+	self.subTitle = @"ClippingNode test.";
+	
 	CGSize size = [CCDirector sharedDirector].designSize;
 	
 //	CCNode *parent = self.contentNode;
@@ -294,6 +317,7 @@
 		[timer repeatOnceWithInterval:1.0/60.0];
 	} delay:0.0f];
 }
+
 -(void)renderTextureHelper:(CCNode *)stage size:(CGSize)size
 {
 	CCColor *color = [CCColor colorWithRed:0.0 green:0.0 blue:0.5 alpha:0.5];
@@ -615,8 +639,8 @@
 	
 	CCDrawNode *draw = [CCDrawNode node];
 	
-	[draw drawDot:ccp(100, 100) radius:50 color:[CCColor redColor]];
-	[draw drawSegmentFrom:ccp(100, 200) to:ccp(200, 200) radius:25 color:[CCColor blueColor]];
+	[draw drawDot:ccp(100, 100) radius:50 color:[CCColor colorWithRed:0.5 green:0.0 blue:0.0 alpha:0.75]];
+	[draw drawSegmentFrom:ccp(100, 200) to:ccp(200, 200) radius:25 color:[CCColor colorWithRed:0.0 green:0.0 blue:0.5 alpha:0.75]];
 	
 	CGPoint points1[] = {
 		{300, 100},
@@ -626,16 +650,85 @@
 		{350, 250},
 		{300, 200},
 	};
-	[draw drawPolyWithVerts:points1 count:sizeof(points1)/sizeof(*points1) fillColor:[CCColor greenColor] borderWidth:5.0 borderColor:[CCColor whiteColor]];
+	[draw drawPolyWithVerts:points1 count:sizeof(points1)/sizeof(*points1) fillColor:[CCColor colorWithRed:0.0 green:0.5 blue:0.0 alpha:0.75] borderWidth:5.0 borderColor:[CCColor whiteColor]];
 	
 	CGPoint points2[] = {
 		{325, 125},
 		{375, 125},
 		{350, 200},
 	};
-	[draw drawPolyWithVerts:points2 count:sizeof(points2)/sizeof(*points2) fillColor:[CCColor blackColor] borderWidth:0.0 borderColor:[CCColor whiteColor]];
+	[draw drawPolyWithVerts:points2 count:sizeof(points2)/sizeof(*points2) fillColor:[CCColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.75] borderWidth:0.0 borderColor:[CCColor whiteColor]];
 	
 	[self.contentNode addChild:draw];
+}
+
+- (void)setupColorNodeTest
+{
+	self.subTitle = @"Testing CCNodeColor/CCNodeGradient";
+	
+	// Solid Colors
+	{ // Red
+		CCNodeColor *node = [CCNodeColor nodeWithColor:[CCColor colorWithRed:0.5 green:0.0 blue:0.0 alpha:0.25] width:100 height:100];
+		node.positionType = CCPositionTypeNormalized;
+		node.position = ccp(0.25, 0.3);
+		node.anchorPoint = ccp(0.5, 0.5);
+		
+		[self.contentNode addChild:node];
+	}
+	
+	{ // Green
+		CCNodeColor *node = [CCNodeColor nodeWithColor:[CCColor colorWithRed:0.0 green:0.5 blue:0.0 alpha:0.25] width:100 height:100];
+		node.positionType = CCPositionTypeNormalized;
+		node.position = ccp(0.50, 0.3);
+		node.anchorPoint = ccp(0.5, 0.5);
+		
+		[self.contentNode addChild:node];
+	}
+	
+	{ // Blue
+		CCNodeColor *node = [CCNodeColor nodeWithColor:[CCColor colorWithRed:0.0 green:0.0 blue:0.5 alpha:0.25] width:100 height:100];
+		node.positionType = CCPositionTypeNormalized;
+		node.position = ccp(0.75, 0.3);
+		node.anchorPoint = ccp(0.5, 0.5);
+		
+		[self.contentNode addChild:node];
+	}
+	
+	CCColor *clearWhite = [CCColor colorWithRed:1 green:1 blue:1 alpha:0];
+	
+	// Gradients
+	{ // Red
+		CCNodeGradient *node = [CCNodeGradient nodeWithColor:[CCColor colorWithRed:0.5 green:0.0 blue:0.0 alpha:1.0] width:100 height:100];
+		node.endColor = clearWhite;
+		node.vector = ccp(1, 1);
+		node.positionType = CCPositionTypeNormalized;
+		node.position = ccp(0.25, 0.7);
+		node.anchorPoint = ccp(0.5, 0.5);
+		
+		[self.contentNode addChild:node];
+	}
+	
+	{ // Green
+		CCNodeGradient *node = [CCNodeGradient nodeWithColor:[CCColor colorWithRed:0.0 green:0.5 blue:0.0 alpha:1.0] width:100 height:100];
+		node.endColor = clearWhite;
+		node.vector = ccp(0, 1);
+		node.positionType = CCPositionTypeNormalized;
+		node.position = ccp(0.50, 0.7);
+		node.anchorPoint = ccp(0.5, 0.5);
+		
+		[self.contentNode addChild:node];
+	}
+	
+	{ // Blue
+		CCNodeGradient *node = [CCNodeGradient nodeWithColor:[CCColor colorWithRed:0.0 green:0.0 blue:0.5 alpha:1.0] width:100 height:100];
+		node.endColor = clearWhite;
+		node.vector = ccp(-1, 1);
+		node.positionType = CCPositionTypeNormalized;
+		node.position = ccp(0.75, 0.7);
+		node.anchorPoint = ccp(0.5, 0.5);
+		
+		[self.contentNode addChild:node];
+	}
 }
 
 @end

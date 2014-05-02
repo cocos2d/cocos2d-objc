@@ -405,7 +405,7 @@ struct IntRect { int xmin, xmax, ymin, ymax; };
 	
 	struct IntRect tileBounds = [self tileBounds];
 	
-	CCRenderBuffer buffer = [renderer enqueueTriangles:tileCount*2 andVertexes:tileCount*4 withState:self.renderState];
+	CCRenderBuffer buffer = [renderer enqueueTriangles:tileCount*2 andVertexes:tileCount*4 withState:self.renderState globalSortOrder:0];
 	int vertex_cursor = 0;
 	int triangle_cursor = 0;
 	

@@ -78,7 +78,7 @@
     }
     else if(renderPass.renderPassId == 1)
     {
-        [renderPass.renderer enqueueClear:0 color:clearColor depth:0.0f stencil:0];
+        [renderPass.renderer enqueueClear:0 color:clearColor depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
         [renderPass.sprite visit:renderPass.renderer parentTransform:&transform];
     }
 

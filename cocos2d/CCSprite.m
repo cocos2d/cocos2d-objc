@@ -327,7 +327,7 @@
 {
 	if(!CCRenderCheckVisbility(transform, _vertexCenter, _vertexExtents)) return;
 	
-	CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:self.renderState];
+	CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:self.renderState globalSortOrder:0];
 	CCRenderBufferSetVertex(buffer, 0, CCVertexApplyTransform(_verts.bl, transform));
 	CCRenderBufferSetVertex(buffer, 1, CCVertexApplyTransform(_verts.br, transform));
 	CCRenderBufferSetVertex(buffer, 2, CCVertexApplyTransform(_verts.tr, transform));
@@ -340,7 +340,7 @@
 	const GLKVector2 zero = {{0, 0}};
 	const GLKVector4 white = {{1, 1, 1, 1}};
 	
-	CCRenderBuffer debug = [renderer enqueueLines:4 andVertexes:4 withState:[CCRenderState debugColor]];
+	CCRenderBuffer debug = [renderer enqueueLines:4 andVertexes:4 withState:[CCRenderState debugColor] globalSortOrder:0];
 	CCRenderBufferSetVertex(debug, 0, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts.bl.position), zero, zero, white});
 	CCRenderBufferSetVertex(debug, 1, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts.br.position), zero, zero, white});
 	CCRenderBufferSetVertex(debug, 2, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts.tr.position), zero, zero, white});

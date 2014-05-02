@@ -41,6 +41,8 @@ extern id CCRENDERSTATE_CACHE;
  */
 @protocol CCRenderCommand <NSObject>
 
+@property(nonatomic, readonly) NSInteger globalSortOrder;
+
 /**
  * Invokes this command on the specified renderer.
  *

@@ -25,7 +25,6 @@
  *
  */
 
-#import "CCAtlasNode.h"
 #import "CCSpriteBatchNode.h"
 #import "CCTMXXMLParser.h"
 #import "CCTiledMap.h"
@@ -109,16 +108,6 @@
 /// -----------------------------------------------------------------------
 /// @name Tile Map Layer Helpers
 /// -----------------------------------------------------------------------
-
-#warning TODO deprecate or remove
-/**
- *  Returns the tile at the specified tile coordinates.
- *
- *  @param tileCoordinate Tile Coordinate to use.
- *
- *  @return CCSprite tile object.
- */
-//-(CCSprite*) tileAt:(CGPoint)tileCoordinate;
 
 /**
  *  Returns the tile GID at the specified tile coordinates.

@@ -41,6 +41,7 @@
  - Default child capacity is 29 children and will be increased by 33% at runtime each time capacity is reached.
  
  */
+__attribute__((deprecated))
 @interface CCSpriteBatchNode : CCNode<CCTextureProtocol, CCBlendProtocol>
 
 

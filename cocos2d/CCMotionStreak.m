@@ -395,7 +395,7 @@ MakeVertex(ccVertex2F v, ccTex2F texCoord, unsigned char *color, GLKMatrix4 tran
 {
 	if(_nuPoints <= 1) return;
 	
-	CCRenderBuffer buffer = [renderer enqueueTriangles:2*(_nuPoints - 1) andVertexes:2*_nuPoints withState:self.renderState];
+	CCRenderBuffer buffer = [renderer enqueueTriangles:2*(_nuPoints - 1) andVertexes:2*_nuPoints withState:self.renderState globalSortOrder:0];
 	
 	// Output vertexes.
 	for(int i=0; i<_nuPoints; i++){

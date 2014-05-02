@@ -149,7 +149,7 @@ TexCoordInterpolationMatrix(const CCSpriteVertexes *verts)
 	GLKMatrix3 interpolateTexCoord = TexCoordInterpolationMatrix(_verts);
 	GLKVector4 color = _verts->bl.color;
 	
-	CCRenderBuffer buffer = [renderer enqueueTriangles:18 andVertexes:16 withState:self.renderState];
+	CCRenderBuffer buffer = [renderer enqueueTriangles:18 andVertexes:16 withState:self.renderState globalSortOrder:0];
 	
 	// Interpolate the vertexes!
 	for(int y=0; y<4; y++){

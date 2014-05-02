@@ -25,8 +25,6 @@
 #import <ApplicationServices/ApplicationServices.h>
 #endif
 
-
-
 @implementation CCEffectNode 
 
 -(id)initWithWidth:(int)width height:(int)height
@@ -49,7 +47,7 @@
 		glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
         
-	} debugLabel:@"CCEffectNode: Bind FBO"];
+	} globalSortOrder:NSIntegerMin debugLabel:@"CCEffectNode: Bind FBO" threadSafe:NO];
 }
 
 -(void)end
@@ -57,7 +55,7 @@
     [_renderer enqueueBlock:^{
 		glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
 		glViewport(_oldViewport.v[0], _oldViewport.v[1], _oldViewport.v[2], _oldViewport.v[3]);
-	} debugLabel:@"CCEffectNode: Restore FBO"];
+	} globalSortOrder:NSIntegerMax debugLabel:@"CCEffectNode: Restore FBO" threadSafe:NO];
 }
 
 -(void)visit
@@ -133,7 +131,7 @@
         [self.effect renderPassBegin:renderPass defaultBlock:nil];
         [self begin];
         [self.effect renderPassUpdate:renderPass defaultBlock:^{
-            [_renderer enqueueClear:0 color:_clearColor depth:0.0f stencil:0];
+            [_renderer enqueueClear:0 color:_clearColor depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
             
             //! make sure all children are drawn
             [self sortAllChildren];
