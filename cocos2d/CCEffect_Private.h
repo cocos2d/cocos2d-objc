@@ -9,6 +9,7 @@
 #import "CCEffect.h"
 
 
+#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffect()
 
 @property (nonatomic) NSMutableArray* vertexFunctions;
@@ -22,3 +23,4 @@
 -(void)buildVertexFunctions;
 
 @end
+#endif

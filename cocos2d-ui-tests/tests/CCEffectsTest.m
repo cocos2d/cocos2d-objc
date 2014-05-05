@@ -1,9 +1,9 @@
-
 #import "TestBase.h"
 #import "CCTextureCache.h"
 #import "CCNodeColor.h"
 #import "CCEffectNode.h"
 
+#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 
 @interface CCEffectsTest : TestBase @end
 @implementation CCEffectsTest
@@ -150,3 +150,4 @@
 }
 
 @end
+#endif

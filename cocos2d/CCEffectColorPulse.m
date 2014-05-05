@@ -10,6 +10,7 @@
 #import "CCEffect_Private.h"
 #import "CCRenderer.h"
 
+#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @implementation CCEffectColorPulse
 
 -(id)initWithColor:(CCColor*)fromColor toColor:(CCColor*)toColor
@@ -32,3 +33,4 @@
 }
 
 @end
+#endif

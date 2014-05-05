@@ -11,6 +11,7 @@
 #import "CCRenderer.h"
 #import "CCTexture.h"
 
+#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @implementation CCEffectBrightnessAndContrast
 
 -(id)initWithBrightness:(float)brightness contrast:(float)contrast
@@ -96,3 +97,4 @@
 }
 
 @end
+#endif

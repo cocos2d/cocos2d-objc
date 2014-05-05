@@ -8,8 +8,10 @@
 
 #import "CCEffect.h"
 
+#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffectStack : NSObject
 
 +(CCEffect*)effects:(id)firstObject, ...;
 
 @end
+#endif

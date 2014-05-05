@@ -25,6 +25,7 @@
 #import <ApplicationServices/ApplicationServices.h>
 #endif
 
+#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @implementation CCEffectNode 
 
 -(id)initWithWidth:(int)width height:(int)height
@@ -174,3 +175,4 @@
 }
 
 @end
+#endif

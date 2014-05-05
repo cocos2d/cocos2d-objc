@@ -9,8 +9,10 @@
 #import "CCEffect.h"
 #import "CCColor.h"
 
+#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffectColorPulse : CCEffect
 
 -(id)initWithColor:(CCColor*)fromColor toColor:(CCColor*)toColor;
 
 @end
+#endif

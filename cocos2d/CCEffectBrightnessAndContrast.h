@@ -8,6 +8,7 @@
 
 #import "CCEffect.h"
 
+#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffectBrightnessAndContrast : CCEffect
 
 -(id)initWithBrightness:(float)brightness contrast:(float)contrast;
@@ -16,3 +17,4 @@
 @property (nonatomic) float contrast;
 
 @end
+#endif

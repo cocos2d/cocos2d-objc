@@ -9,7 +9,7 @@
 #import "CCEffectStack.h"
 #import "CCEffect_Private.h"
 
-
+#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @implementation CCEffectStack
 
 +(CCEffect*)effects:(id)firstObject, ...
@@ -88,3 +88,4 @@
 }
 
 @end
+#endif

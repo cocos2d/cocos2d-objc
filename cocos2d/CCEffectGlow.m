@@ -11,6 +11,7 @@
 #import "CCRenderer.h"
 #import "CCTexture.h"
 
+#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @implementation CCEffectGlow
 
 -(id)init
@@ -154,6 +155,5 @@
 }
 
 @end
-
-
+#endif
 

@@ -10,6 +10,7 @@
 #import "CCEffect_Private.h"
 #import "CCRenderer.h"
 
+#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @implementation CCEffectColor
 
 -(id)initWithColor:(CCColor*)color
@@ -32,3 +33,4 @@
 }
 
 @end
+#endif

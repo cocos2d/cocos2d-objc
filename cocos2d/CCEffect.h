@@ -9,8 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "CCSprite.h"
 #import "CCShader.h"
+#import "ccConfig.h"
 #import <ccTypes.h>
 
+#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffectFunction : NSObject
 
 @property (nonatomic, readonly) NSString* body;
@@ -74,3 +76,4 @@
 -(void)renderPassEnd:(CCEffectRenderPass*) renderPass defaultBlock:(void (^)())defaultBlock;
 
 @end
+#endif

@@ -9,6 +9,7 @@
 #import "CCEffect.h"
 #import "CCEffect_Private.h"
 
+#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 static NSString* fragBase =
 @"%@\n\n"   // uniforms
 @"%@\n"     // varying vars
@@ -345,3 +346,4 @@ static NSString* vertBase =
 }
 
 @end
+#endif

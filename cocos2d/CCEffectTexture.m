@@ -9,6 +9,7 @@
 #import "CCEffectTexture.h"
 #import "CCEffect_Private.h"
 
+#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @implementation CCEffectTexture
 
 -(void)buildFragmentFunctions
@@ -18,3 +19,4 @@
 }
 
 @end
+#endif
