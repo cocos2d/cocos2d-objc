@@ -1,6 +1,8 @@
 #import "TestBase.h"
 #import "CCTextureCache.h"
-//#import "CCNode_Private.h"
+#import "CCNodeColor.h"
+#import "CCEffectNode.h"
+
 
 @interface CustomSprite : CCNode<CCShaderProtocol, CCTextureProtocol> @end
 @implementation CustomSprite
@@ -224,6 +226,7 @@
 		[timer repeatOnceWithInterval:1.0/60.0];
 	} delay:0.0f];
 }
+
 -(void)renderTextureHelper:(CCNode *)stage size:(CGSize)size
 {
 	CCColor *color = [CCColor colorWithRed:0.0 green:0.0 blue:0.5 alpha:0.5];

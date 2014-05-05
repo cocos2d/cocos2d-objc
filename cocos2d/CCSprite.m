@@ -41,6 +41,7 @@
 #import "CCRenderer_private.h"
 #import "CCSprite_Private.h"
 #import "CCTexture_Private.h"
+#import "CCEffect.h"
 
 #pragma mark -
 #pragma mark CCSprite
@@ -433,6 +434,11 @@
     [self updateColor];
 }
 
+-(void)setEffect:(CCEffect *)effect
+{
+    // work in progress, since I added mutli pass rendering for efffects, sprite are no longer working with all effects.
+    // taking this out for now.
+}
 
 //
 // Frames
