@@ -25,7 +25,7 @@
 #import <UIKit/UIKit.h>
 #endif // iPHone
 
-
+#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffectNode : CCRenderTexture
 
 @property (nonatomic) CCEffect* effect;
@@ -33,3 +33,4 @@
 -(id)initWithWidth:(int)w height:(int)h;
 
 @end
+#endif
