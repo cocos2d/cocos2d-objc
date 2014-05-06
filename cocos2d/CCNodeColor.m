@@ -168,7 +168,6 @@
 	_color = start.ccColor4f;
 	_endColor = end.ccColor4f;
 	_vector = v;
-	_compressedInterpolation = YES;
 
 	return [super initWithColor:start];
 }
@@ -176,24 +175,22 @@
 - (void) updateColor
 {
 	[super updateColor];
-
-	float len = ccpLength(_vector);
-	if (len == 0)
-		return;
-	CGPoint u = ccp(_vector.x / len, _vector.y / len);
-
-	// Compressed Interpolation mode
-	if( _compressedInterpolation ) {
-		float h2 = 1 / ( fabsf(u.x) + fabsf(u.y) );
-		u = ccpMult(u, h2 * (float) M_SQRT2);
-	}
+	
+	// _vector apparently points towards the first color.
+	float g0 = 0.0f; // (0, 0) dot _vector
+	float g1 = -_vector.x; // (0, 1) dot _vector
+	float g2 = -_vector.x - _vector.y; // (1, 1) dot _vector
+	float g3 = -_vector.y; // (1, 0) dot _vector
+	
+	float gmin = MIN(MIN(g0, g1), MIN(g2, g3));
+	float gmax = MAX(MAX(g0, g1), MAX(g2, g3));
 	
 	GLKVector4 a = GLKVector4Make(_color.r*_color.a, _color.g*_color.a, _color.b*_color.a, _color.a);
 	GLKVector4 b = GLKVector4Make(_endColor.r*_endColor.a, _endColor.g*_endColor.a, _endColor.b*_endColor.a, _endColor.a);
-	_colors[0] =  GLKVector4Lerp(a, b, ((M_SQRT2 + u.x + u.y) / (2.0f * M_SQRT2)));
-	_colors[1] =  GLKVector4Lerp(a, b, ((M_SQRT2 - u.x + u.y) / (2.0f * M_SQRT2)));
-	_colors[2] =  GLKVector4Lerp(a, b, ((M_SQRT2 - u.x - u.y) / (2.0f * M_SQRT2)));
-	_colors[3] =  GLKVector4Lerp(a, b, ((M_SQRT2 + u.x - u.y) / (2.0f * M_SQRT2)));
+	_colors[0] =  GLKVector4Lerp(a, b, (g0 - gmin)/(gmax - gmin));
+	_colors[1] =  GLKVector4Lerp(a, b, (g1 - gmin)/(gmax - gmin));
+	_colors[2] =  GLKVector4Lerp(a, b, (g2 - gmin)/(gmax - gmin));
+	_colors[3] =  GLKVector4Lerp(a, b, (g3 - gmin)/(gmax - gmin));
 }
 
 -(CCColor*) startColor
@@ -245,16 +242,10 @@
 	[self updateColor];
 }
 
--(BOOL) compressedInterpolation
-{
-	return _compressedInterpolation;
-}
+// Deprecated
+-(BOOL) compressedInterpolation {return YES; }
+-(void) setCompressedInterpolation:(BOOL)compress {}
 
--(void) setCompressedInterpolation:(BOOL)compress
-{
-	_compressedInterpolation = compress;
-	[self updateColor];
-}
 @end
 
 #pragma mark -

@@ -40,8 +40,9 @@
 {
 	CGSize pixelSize = self.texture.contentSizeInPixels;
 	GLuint fbo = [self fbo];
-    
-    [_renderer enqueueBlock:^{
+  
+	[_renderer pushGroup];
+	[_renderer enqueueBlock:^{
 		glGetFloatv(GL_VIEWPORT, _oldViewport.v);
 		glViewport(0, 0, pixelSize.width, pixelSize.height );
 		
@@ -57,6 +58,8 @@
 		glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
 		glViewport(_oldViewport.v[0], _oldViewport.v[1], _oldViewport.v[2], _oldViewport.v[3]);
 	} globalSortOrder:NSIntegerMax debugLabel:@"CCEffectNode: Restore FBO" threadSafe:NO];
+	
+	[_renderer popGroupWithDebugLabel:@"CCEffectNode" globalSortOrder:0];
 }
 
 -(void)visit
