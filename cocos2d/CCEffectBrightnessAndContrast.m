@@ -33,16 +33,12 @@
 -(void)buildFragmentFunctions
 {
     NSString* effectBody = CC_GLSL(
-                                   vec4 pixelValue = texture2D(cc_MainTexture, cc_FragTexCoord1);
-                                   if (u_brightness < 0.0)
-                                   {
-                                       pixelValue = pixelValue * (1.0 + u_brightness);
-                                   }
-                                   else
-                                   {
-                                       pixelValue = pixelValue + ((1.0 - pixelValue) * u_brightness);
-                                   }
-                                   return (pixelValue - 0.5) * u_contrast + 0.5;
+                                   vec4 inputValue = texture2D(cc_MainTexture, cc_FragTexCoord1);
+
+                                   vec3 brightnessAdjusted = inputValue.rgb + vec3(u_brightness);
+                                   vec3 contrastAdjusted = (brightnessAdjusted - vec3(0.5)) * vec3(u_contrast) + vec3(0.5);
+
+                                   return vec4(contrastAdjusted, inputValue.a);
                                    );
 
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"brightnessAndContrastEffect" body:effectBody returnType:@"vec4"];
@@ -90,8 +86,11 @@
     if (renderPass.renderPassId == 1)
     {
         GLKMatrix4 transform = renderPass.transform;
+
+        renderPass.sprite.anchorPoint = ccp(0.5, 0.5);
         renderPass.sprite.texture = renderPass.textures[1];
         renderPass.sprite.shader = [CCShader positionTextureColorShader];
+        renderPass.sprite.blendMode = [CCBlendMode alphaMode];
         [renderPass.sprite visit:renderPass.renderer parentTransform:&transform];
     }
 }
