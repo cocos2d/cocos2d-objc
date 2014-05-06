@@ -86,8 +86,11 @@
     if (renderPass.renderPassId == 1)
     {
         GLKMatrix4 transform = renderPass.transform;
+
+        renderPass.sprite.anchorPoint = ccp(0.5, 0.5);
         renderPass.sprite.texture = renderPass.textures[1];
         renderPass.sprite.shader = [CCShader positionTextureColorShader];
+        renderPass.sprite.blendMode = [CCBlendMode alphaMode];
         [renderPass.sprite visit:renderPass.renderer parentTransform:&transform];
     }
 }
