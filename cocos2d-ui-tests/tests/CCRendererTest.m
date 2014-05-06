@@ -1,7 +1,6 @@
 #import "TestBase.h"
 #import "CCTextureCache.h"
 #import "CCNodeColor.h"
-#import "CCEffectNode.h"
 
 
 @interface CustomSprite : CCNode<CCShaderProtocol, CCTextureProtocol> @end

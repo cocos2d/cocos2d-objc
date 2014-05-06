@@ -86,7 +86,7 @@
 #import "CCTiledMapLayer.h"
 #import "CCTiledMapObjectGroup.h"
 #import "CCTransition.h"
-//#import "CCEffectNode.h" work in progress
+#import "CCEffectNode.h"
 
 // Layouts
 #import "CCLayout.h"
