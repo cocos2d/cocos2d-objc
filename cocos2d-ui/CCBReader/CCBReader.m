@@ -933,17 +933,14 @@ static inline float readFloat(CCBReader *self)
 {
     int numJoints = readIntWithSign(self, NO);
     
-    NSMutableArray * joints = [NSMutableArray array];
-    
     for (int i =0; i < numJoints; i++)
     {
-        id joint = [self readJoint];
-        [joints addObject:joint];
+        [self readJoint];
     }
 }
 
 
--(CCPhysicsJoint*)readJoint
+-(void)readJoint
 {
     
     CCPhysicsJoint * joint = nil;
@@ -967,9 +964,24 @@ static inline float readFloat(CCBReader *self)
     
     if([className isEqualToString:@"CCPhysicsPivotJoint"])
     {
-        CGPoint anchorA = [properties[@"anchorA"] CGPointValue];
         
+        if([properties[@"dampedSpringEnabled"] boolValue])
+        {
+            float   restAngle = properties[@"dampedSpringRestAngle"] ?  [properties[@"dampedSpringRestAngle"]  floatValue] : 0.0f;
+            restAngle = CC_DEGREES_TO_RADIANS(restAngle);
+            float   stiffness = properties[@"dampedSpringStiffness"] ? [properties[@"dampedSpringStiffness"] floatValue] : 1.0f;
+            float   damping = properties[@"dampedSpringDamping"] ? [properties[@"dampedSpringDamping"] floatValue] : 4.0f;
+
+            CCPhysicsJoint * rotarySpringJoint = [CCPhysicsJoint connectedRotarySpringJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody restAngle:restAngle stifness:stiffness damping:damping];
+            
+            rotarySpringJoint.maxForce = maxForce;
+            rotarySpringJoint.breakingForce = breakingForce;
+            rotarySpringJoint.collideBodies = collideBodies;
+        }
+        
+        CGPoint anchorA = [properties[@"anchorA"] CGPointValue];
         joint = [CCPhysicsJoint connectedPivotJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody anchorA:anchorA];
+        
     }
     else if([className isEqualToString:@"CCPhysicsSpringJoint"])
     {
@@ -1016,13 +1028,12 @@ static inline float readFloat(CCBReader *self)
     }
     else
     {
-        return nil;
+        return;
     }
     joint.maxForce = maxForce;
     joint.breakingForce = breakingForce;
     joint.collideBodies = collideBodies;
     [joint resetScale:NodeToPhysicsScale(nodeBodyA).x];
-    return joint;
     
 }
 

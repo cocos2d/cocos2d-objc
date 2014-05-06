@@ -96,6 +96,20 @@ Joints cannot be reactivated once they are invalidated.
 	anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB
 	restLength:(CGFloat)restLength stiffness:(CGFloat)stiffness damping:(CGFloat)damping;
 
+
+/**
+ *  Creates and returns a rotary spring joint between the two bodies. No anchor points are specified as this joint can be used in conjunction with a pivot joint to make a springing pivot joint.
+ *
+ *  @param bodyA   Body A.
+ *  @param bodyB   Body B.
+ *  @param restAngle Rest angle.
+ *  @param stiffness  Spring stiffness.
+ *  @param damping    Sprin damping.
+ *
+ *  @return The CCPhysicsJoint Object.
+ */
++(CCPhysicsJoint *)connectedRotarySpringJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB restAngle:(CGFloat)restAngle stifness:(CGFloat)stiffness damping:(CGFloat)damping;
+
 /// -----------------------------------------------------------------------
 /// @name Accessing Physics Joint Attributes
 /// -----------------------------------------------------------------------

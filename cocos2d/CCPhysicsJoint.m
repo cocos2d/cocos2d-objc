@@ -48,6 +48,10 @@
 -(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB restLength:(CGFloat)restLength stiffness:(CGFloat)stiffness damping:(CGFloat)damping;
 @end
 
+@interface CCPhysicsRotarySpring : CCPhysicsJoint
+-(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB restAngle:(cpFloat)restAngle stifness:(cpFloat)stiffness damping:(cpFloat)damping;
+@end
+
 
 @implementation CCPhysicsJoint
 {
@@ -123,6 +127,24 @@
 	
 	return joint;
 }
+
+
+
++(CCPhysicsJoint *)connectedRotarySpringJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
+                                       restAngle:(CGFloat)restAngle
+                                        stifness:(CGFloat)stiffness
+                                         damping:(CGFloat)damping
+{
+    CCPhysicsRotarySpring * joint  = [[CCPhysicsRotarySpring alloc] initWithBodyA:bodyA bodyB:bodyB restAngle:restAngle stifness:stiffness damping:damping];
+    
+    [bodyA addJoint:joint];
+	[bodyB addJoint:joint];
+    [joint addToPhysicsNode:bodyA.physicsNode];
+    return joint;
+}
+
+
+
 
 -(CCPhysicsBody *)bodyA {return self.constraint.bodyA.userData;}
 //-(void)setBodyA:(CCPhysicsBody *)bodyA {NYI();}
@@ -210,6 +232,32 @@ BreakConstraint(cpConstraint *constraint, cpSpace *space)
 @end
 
 
+
+
+@implementation CCPhysicsRotarySpring{
+	ChipmunkDampedRotarySpring *_constraint;
+
+}
+
+-(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB restAngle:(cpFloat)restAngle stifness:(cpFloat)stiffness damping:(cpFloat)damping
+{
+	if((self = [super init])){
+		_constraint = [ChipmunkDampedRotarySpring dampedRotarySpringWithBodyA:bodyA.body bodyB:bodyB.body restAngle:restAngle stiffness:stiffness damping:damping];
+		_constraint.userData = self;
+		
+	}
+	
+	return self;
+}
+
+-(ChipmunkConstraint *)constraint {return _constraint;}
+
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
+{
+	
+}
+
+@end
 
 
 @implementation CCPhysicsPinJoint {
