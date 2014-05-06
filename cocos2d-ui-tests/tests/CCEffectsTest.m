@@ -71,6 +71,15 @@
     [self.contentNode addChild:defaultSprite];
     
 #else
+    
+    CGSize size = CGSizeMake(1.0, 1.0);
+    [glowEffectNode runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+                                                                  [CCActionMoveTo actionWithDuration:4.0 position:ccp(0, 0.5)],
+                                                                  [CCActionMoveTo actionWithDuration:4.0 position:ccp(size.width, 0.5)],
+                                                                  nil
+                                                                  ]]];
+
+    
     [self.contentNode addChild:glowEffectNode];
 #endif
     
