@@ -87,7 +87,7 @@
     [self renderTextureHelper:effectNode1 size:size];
     CCEffectColorPulse* effectColorPulse = [[CCEffectColorPulse alloc] initWithColor:[CCColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:1.0] toColor:[CCColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:1.0]];
     CCEffectTexture* effectTexture = [[CCEffectTexture alloc] init];
-    CCEffect* compositeEffect = [CCEffectStack effects:effectColorPulse, effectTexture];
+    CCEffect* compositeEffect = [CCEffectStack effects:effectColorPulse, effectTexture, nil];
     effectNode1.effect = compositeEffect;
 	[self.contentNode addChild:effectNode1];
 }

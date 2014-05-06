@@ -40,8 +40,9 @@
 {
 	CGSize pixelSize = self.texture.contentSizeInPixels;
 	GLuint fbo = [self fbo];
-    
-    [_renderer enqueueBlock:^{
+  
+	[_renderer pushGroup];
+	[_renderer enqueueBlock:^{
 		glGetFloatv(GL_VIEWPORT, _oldViewport.v);
 		glViewport(0, 0, pixelSize.width, pixelSize.height );
 		
@@ -57,6 +58,8 @@
 		glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
 		glViewport(_oldViewport.v[0], _oldViewport.v[1], _oldViewport.v[2], _oldViewport.v[3]);
 	} globalSortOrder:NSIntegerMax debugLabel:@"CCEffectNode: Restore FBO" threadSafe:NO];
+	
+	[_renderer popGroupWithDebugLabel:@"CCEffectNode" globalSortOrder:0];
 }
 
 -(void)visit
@@ -119,13 +122,13 @@
     renderPass.renderPassId = _currentRenderPass;
     renderPass.sprite = _sprite;
     renderPass.renderer = _renderer;
-    renderPass.transform = (*transform);
     
     if(self.effect.shader && self.sprite.shader != self.effect.shader)
         self.sprite.shader = self.effect.shader;
     
     for(int i = 0; i < self.effect.renderPassesRequired; i++)
     {
+        renderPass.transform = _projection;
         _currentRenderPass = i;
         renderPass.renderPassId = i;
         renderPass.textures = _textures;
@@ -143,6 +146,7 @@
         }];
         [self end];
         [_renderer flush];
+        renderPass.transform = (*transform);
         [self.effect renderPassEnd:renderPass defaultBlock:^{
             renderPass.sprite.texture = renderPass.textures[0];
             [renderPass.sprite visit:renderPass.renderer parentTransform:transform];

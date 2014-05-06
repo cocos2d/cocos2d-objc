@@ -113,7 +113,6 @@
 @interface CCNodeGradient : CCNodeColor {
 	ccColor4F _endColor;
 	CGPoint _vector;
-	BOOL	_compressedInterpolation;
 }
 
 
@@ -188,11 +187,11 @@
 /** The vector along which to fade color. */
 @property (nonatomic, readwrite) CGPoint vector;
 
-/** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors.
- *
+/**
+ *	Deprecated in 3.1. All colors are correctly displayed across the node's rectangle.
  *  Default: YES.
  */
-@property (nonatomic, readwrite) BOOL compressedInterpolation;
+@property (nonatomic, readwrite) BOOL compressedInterpolation __attribute__((deprecated));
 
 @end
 
