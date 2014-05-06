@@ -34,10 +34,10 @@
 {
     NSString* effectBody = CC_GLSL(
                                    vec4 inputValue = texture2D(cc_MainTexture, cc_FragTexCoord1);
-                                   
+
                                    vec3 brightnessAdjusted = inputValue.rgb + vec3(u_brightness);
                                    vec3 contrastAdjusted = (brightnessAdjusted - vec3(0.5)) * vec3(u_contrast) + vec3(0.5);
-                                   
+
                                    return vec4(contrastAdjusted, inputValue.a);
                                    );
 
