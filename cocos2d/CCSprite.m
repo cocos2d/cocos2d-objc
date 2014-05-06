@@ -434,6 +434,13 @@
     [self updateColor];
 }
 
+-(CCEffect *)effect
+{
+    // work in progress, since I added mutli pass rendering for efffects, sprite are no longer working with all effects.
+    // taking this out for now.
+	return nil;
+}
+
 -(void)setEffect:(CCEffect *)effect
 {
     // work in progress, since I added mutli pass rendering for efffects, sprite are no longer working with all effects.

@@ -766,7 +766,7 @@ static NSInteger ccbAnimationManagerID = 0;
     
     CCBKeyframe* startKeyFrame = [seqProp.keyframes objectAtIndex:0];
     CCBKeyframe* endKeyFrame   = [seqProp.keyframes objectAtIndex:0];
-    
+  
     NSUInteger frameCount = [seqProp.keyframes count];
     
     // Find KeyFrames

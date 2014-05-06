@@ -107,7 +107,7 @@ const NSString *CARD_NAME[] =
     [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"Cards/cards.classic.plist"];
 
     // add a card node to hold the cards
-    _cardNode = [CCSpriteBatchNode batchNodeWithFile:@"Cards/cards.classic.png"];
+    _cardNode = [CCNode node];
     _cardNode.contentSize = [CCDirector sharedDirector].viewSize;
 		
     [self.contentNode addChild:_cardNode];
