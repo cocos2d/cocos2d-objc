@@ -102,13 +102,13 @@
     sprite = [CCSprite spriteWithImageNamed:@"f1.png"];
     sprite.anchorPoint = ccp(0.5, 0.5);
     sprite.positionType = CCPositionTypeNormalized;
-    sprite.position = ccp(0.5, 0.5);
+    sprite.position = ccp(0.4, 0.5);
     [self.contentNode addChild:sprite];
 
     sprite = [CCSprite spriteWithImageNamed:@"f1.png"];
     sprite.anchorPoint = ccp(0.5, 0.5);
     sprite.positionType = CCPositionTypeNormalized;
-    sprite.position = ccp(0.6, 0.6);
+    sprite.position = ccp(0.5, 0.6);
     [self.contentNode addChild:sprite];
 
     // Create third sprite for use with the effect. It does
@@ -123,17 +123,11 @@
     CCEffectNode* effectNode = [[CCEffectNode alloc] initWithWidth:effectDim height:effectDim];
     effectNode.anchorPoint = ccp(0.5, 0.5);
     effectNode.positionType = CCPositionTypeNormalized;
-    effectNode.position = ccp(0.5, 0.5);
-    //    effectNode.blendMode = [CCBlendMode alphaMode];
-    
-    effectNode.effect = [[CCEffectBrightnessAndContrast alloc] initWithBrightness:0.0f contrast:4.0f];
+    effectNode.position = ccp(0.5, 0.4);
+    effectNode.effect = [[CCEffectBrightnessAndContrast alloc] initWithBrightness:0.25f contrast:2.0f];
     [effectNode addChild:sprite];
-    [effectNode visit];
-    
-    sprite = [CCSprite spriteWithTexture:effectNode.texture];
-    sprite.positionType = CCPositionTypeNormalized;
-    sprite.position = ccp(0.6, 0.4);
-    [self.contentNode addChild:sprite];
+
+    [self.contentNode addChild:effectNode];
 }
 
 -(void)renderTextureHelper:(CCNode *)stage size:(CGSize)size
