@@ -96,31 +96,44 @@
 {
     self.subTitle = @"Brightness and Contrast Effect Test";
     
-    // Create a sprite
-    CCSprite *effectSprite = [CCSprite spriteWithImageNamed:@"f1.png"];
-    effectSprite.anchorPoint = ccp(0.5, 0.5);
-    effectSprite.position = ccp(40, 40);
+    CCSprite *sprite = nil;
     
+    // Add a couple sprites directly to the scene
+    sprite = [CCSprite spriteWithImageNamed:@"f1.png"];
+    sprite.anchorPoint = ccp(0.5, 0.5);
+    sprite.positionType = CCPositionTypeNormalized;
+    sprite.position = ccp(0.5, 0.5);
+    [self.contentNode addChild:sprite];
+
+    sprite = [CCSprite spriteWithImageNamed:@"f1.png"];
+    sprite.anchorPoint = ccp(0.5, 0.5);
+    sprite.positionType = CCPositionTypeNormalized;
+    sprite.position = ccp(0.6, 0.6);
+    [self.contentNode addChild:sprite];
+
+    // Create third sprite for use with the effect. It does
+    // not get added to the scene directly.
+    sprite = [CCSprite spriteWithImageNamed:@"f1.png"];
+    sprite.anchorPoint = ccp(0.5, 0.5);
+    sprite.positionType = CCPositionTypeNormalized;
+    sprite.position = ccp(0.5, 0.5);
+
     // Brightness and contrast test
-    CCEffectNode* effectNode = [[CCEffectNode alloc] initWithWidth:80 height:80];
+    float effectDim = MAX(sprite.contentSize.width, sprite.contentSize.width);
+    CCEffectNode* effectNode = [[CCEffectNode alloc] initWithWidth:effectDim height:effectDim];
+    effectNode.anchorPoint = ccp(0.5, 0.5);
     effectNode.positionType = CCPositionTypeNormalized;
-    effectNode.position = ccp(0.1, 0.5);
-    [effectNode addChild:effectSprite];
-    CCEffectBrightnessAndContrast* effect = [[CCEffectBrightnessAndContrast alloc] initWithBrightness:0.5f contrast:4.0f];
+    effectNode.position = ccp(0.5, 0.5);
+    //    effectNode.blendMode = [CCBlendMode alphaMode];
     
-    effectNode.effect = effect;
+    effectNode.effect = [[CCEffectBrightnessAndContrast alloc] initWithBrightness:0.0f contrast:4.0f];
+    [effectNode addChild:sprite];
     [effectNode visit];
     
-    CCSprite* testSprite = [CCSprite spriteWithTexture:effectNode.texture];
-    testSprite.positionType = CCPositionTypeNormalized;
-    testSprite.position = ccp(0.5, 0.5);
-    [self.contentNode addChild:testSprite];
-    
-    CCSprite *defaultSprite = [CCSprite spriteWithImageNamed:@"f1.png"];
-    defaultSprite.anchorPoint = ccp(0.5, 0.5);
-    defaultSprite.positionType = CCPositionTypeNormalized;
-    defaultSprite.position = ccp(0.1, 0.5);
-    [self.contentNode addChild:defaultSprite];
+    sprite = [CCSprite spriteWithTexture:effectNode.texture];
+    sprite.positionType = CCPositionTypeNormalized;
+    sprite.position = ccp(0.6, 0.4);
+    [self.contentNode addChild:sprite];
 }
 
 -(void)renderTextureHelper:(CCNode *)stage size:(CGSize)size
