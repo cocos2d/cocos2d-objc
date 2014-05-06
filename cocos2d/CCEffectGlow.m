@@ -108,12 +108,14 @@
     
     if(renderPass.renderPassId == 1)
     {
-        renderPass.sprite.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(0.023f, 0.0f)];
+        renderPass.sprite.shaderUniforms[@"u_enableGlowMap"] = [NSNumber numberWithFloat:0.0f];
+        renderPass.sprite.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(0.01f, 0.0f)];
         renderPass.sprite.texture = renderPass.textures[0];
     }
     else if(renderPass.renderPassId == 2)
     {
-        renderPass.sprite.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.023f)];
+        renderPass.sprite.shaderUniforms[@"u_enableGlowMap"] = [NSNumber numberWithFloat:0.0f];
+        renderPass.sprite.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.01f)];
         renderPass.sprite.texture = renderPass.textures[1];
     }
     else if(renderPass.renderPassId == 3)
