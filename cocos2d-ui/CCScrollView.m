@@ -328,6 +328,31 @@
 
 #pragma mark Panning and setting position
 
+- (void)setContentNodePosition:(CGPoint)newPos {
+    CGPoint originalPos = _contentNode.position;
+    _contentNode.position = newPos;
+    CGPoint motion = ccpSub(_contentNode.position, originalPos);
+    motion.y *= -1;
+    
+    //It's a bit of a weird scenario, but we have to assume that if Pencil Case users have put a node
+    //in a scroll view, it's because they want it to scroll when they scroll the scroll view.
+    //If physics is applied, and we don't manually update their positions, however, than they will not
+    //scroll as the physics simulation will be in charge of their position. This matches that expectation.
+    //(Example of where this is the case: Flappy Bot demo)
+    for (CCNode *childNode in _contentNode.children) {
+        [self recursiveAddOffset:motion toPhysicsBodiesInNode:childNode];
+    }
+}
+
+- (void)recursiveAddOffset:(CGPoint)offset toPhysicsBodiesInNode:(CCNode *)node {
+    if (node.physicsBody) {
+        node.position = ccpAdd(node.position, offset);
+    }
+    for (CCNode *childNode in node.children) {
+        [self recursiveAddOffset:offset toPhysicsBodiesInNode:childNode];
+    }
+}
+
 - (void) setScrollPosition:(CGPoint)newPos
 {
     [self setScrollPosition:newPos animated:NO];
@@ -401,7 +426,7 @@
     {
         [_contentNode stopActionByTag:kCCScrollViewActionXTag];
         [_contentNode stopActionByTag:kCCScrollViewActionYTag];
-        _contentNode.position = ccpMult(newPos, -1);
+        [self setContentNodePosition:ccpMult(newPos, -1)];
     }
 }
 
@@ -454,7 +479,7 @@
         if (newPos.y < self.minScrollY) newPos.y = self.minScrollY;
     }
     
-    _contentNode.position = ccpMult(newPos, -1);
+    [self setContentNodePosition:ccpMult(newPos, -1)];
 }
 
 - (void) update:(CCTime)df
@@ -468,7 +493,7 @@
         {
             CGPoint delta = ccpMult(_velocity, df);
             
-            _contentNode.position = ccpAdd(_contentNode.position, delta);
+            [self setContentNodePosition:ccpAdd(_contentNode.position, delta)];
             
             // Deaccelerate layer
             float deaccelerationX = kCCScrollViewDeacceleration;
@@ -656,7 +681,7 @@
     CGPoint pos = _contentNode.position;
     pos.x = roundf(pos.x);
     pos.y = roundf(pos.y);
-    _contentNode.position = pos;
+    [self setContentNodePosition:pos];
 }
 
 - (BOOL) isAncestor:(CCNode*) ancestor toNode:(CCNode*)node
@@ -680,7 +705,7 @@
     
     NSArray* responders = [[CCDirector sharedDirector].responderManager nodesAtPoint:touchWorldPos];
     BOOL foundSelf = NO;
-    for (int i = responders.count - 1; i >= 0; i--)
+    for (NSInteger i = responders.count - 1; i >= 0; i--)
     {
         CCNode* responder = [responders objectAtIndex:i];
         if (foundSelf)

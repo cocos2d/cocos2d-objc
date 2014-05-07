@@ -186,7 +186,7 @@
 		B7D273331822F5460054849B /* CCBSequenceProperty.h in Headers */ = {isa = PBXBuildFile; fileRef = B7D273261822F5460054849B /* CCBSequenceProperty.h */; };
 		B7D273341822F5460054849B /* CCBSequenceProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D273271822F5460054849B /* CCBSequenceProperty.m */; };
 		B7D273351822F5460054849B /* CCBuilderReader.h in Headers */ = {isa = PBXBuildFile; fileRef = B7D273281822F5460054849B /* CCBuilderReader.h */; };
-		B7E2603517E7C774007067F0 /* NSEvent+CC.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E2603317E7C774007067F0 /* NSEvent+CC.h */; };
+		B7E2603517E7C774007067F0 /* NSEvent+CC.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E2603317E7C774007067F0 /* NSEvent+CC.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B7E2603617E7C774007067F0 /* NSEvent+CC.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E2603417E7C774007067F0 /* NSEvent+CC.m */; };
 		B7E2603917E7C786007067F0 /* UITouch+CC.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E2603717E7C786007067F0 /* UITouch+CC.h */; };
 		B7E2603A17E7C786007067F0 /* UITouch+CC.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E2603817E7C786007067F0 /* UITouch+CC.m */; };
@@ -1718,7 +1718,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E076E6CF1225EC7400DE0DA2 /* CCAction.h in Headers */,
-				B7E2603517E7C774007067F0 /* NSEvent+CC.h in Headers */,
 				B7D273351822F5460054849B /* CCBuilderReader.h in Headers */,
 				B77060771831B0C40043CC67 /* ALChannelSource.h in Headers */,
 				E076E6D31225EC7400DE0DA2 /* CCActionEase.h in Headers */,
@@ -1874,6 +1873,7 @@
 				A66680C317D4D73000ECDE6F /* CCResponder.h in Headers */,
 				A66680C517D4D73000ECDE6F /* CCResponderManager.h in Headers */,
 				D389412618639DD400725CFC /* CCPhysicsBody.h in Headers */,
+				B7E2603517E7C774007067F0 /* NSEvent+CC.h in Headers */,
 				B77060961831B0C40043CC67 /* OALAudioFile.h in Headers */,
 				B7E2603917E7C786007067F0 /* UITouch+CC.h in Headers */,
 			);
@@ -2176,7 +2176,6 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				PRODUCT_NAME = kazmath;
-				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -2188,7 +2187,6 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				PRODUCT_NAME = kazmath;
-				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -2339,7 +2337,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = cocos2d;
-				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -2353,7 +2350,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = cocos2d;
-				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -2386,7 +2382,6 @@
 				D37EEA1D187D4E7800CB5EF2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
 		};
 		E01E6791121CA045001A484F /* Build configuration list for PBXNativeTarget "cocos2d" */ = {
 			isa = XCConfigurationList;

@@ -41,6 +41,8 @@ enum {
     kCCBPropTypeFloatXY,
     kCCBPropTypeColor4,
     kCCBPropTypeDictionary,
+    kCCBPropTypeArray,
+    kCCBPropTypeMutableArray,
 };
 
 enum {

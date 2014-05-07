@@ -33,6 +33,7 @@
 #import "CCBLocalizationManager.h"
 #import "CCBReader_Private.h"
 
+
 #ifdef CCB_ENABLE_UNZIP
 #import "SSZipArchive.h"
 #endif
@@ -623,13 +624,42 @@ static inline float readFloat(CCBReader *self)
         }
     }
     else if (type == kCCBPropTypeDictionary) {
-        NSString* text = [self readCachedString];
-
-        NSData *textData = [text dataUsingEncoding:NSUTF8StringEncoding];
-        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:textData options:0 error:NULL];
+        NSUInteger length = readIntWithSign(self, NO);
+        unsigned char buffer[length];
+        for (NSUInteger index = 0; index < length; index += 1) {
+            buffer[index] = readByte(self);
+        }
+        NSData *propData = [NSData dataWithBytes:&buffer length:length];
+        NSDictionary *dictionary = [NSKeyedUnarchiver unarchiveObjectWithData:propData];
 
         if (setProp) {
             [node setValue:dictionary forKey:name];
+        }
+    }
+    else if (type == kCCBPropTypeArray) {
+        NSUInteger length = readIntWithSign(self, NO);
+        unsigned char buffer[length];
+        for (NSUInteger index = 0; index < length; index += 1) {
+            buffer[index] = readByte(self);
+        }
+        NSData *propData = [NSData dataWithBytes:&buffer length:length];
+        NSArray *array = [NSKeyedUnarchiver unarchiveObjectWithData:propData];
+
+        if (setProp) {
+            [node setValue:array forKey:name];
+        }
+    }
+    else if (type == kCCBPropTypeMutableArray) {
+        NSUInteger length = readIntWithSign(self, NO);
+        unsigned char buffer[length];
+        for (NSUInteger index = 0; index < length; index += 1) {
+            buffer[index] = readByte(self);
+        }
+        NSData *propData = [NSData dataWithBytes:&buffer length:length];
+        NSMutableArray *array = [NSKeyedUnarchiver unarchiveObjectWithData:propData];
+
+        if (setProp) {
+            [node setValue:array forKey:name];
         }
     }
     else if (type == kCCBPropTypeFontTTF)
@@ -691,6 +721,7 @@ static inline float readFloat(CCBReader *self)
     else if (type == kCCBPropTypeCCBFile)
     {
         NSString* ccbFileName = [self readCachedString];
+        if (![ccbFileName length]) return;
         
         // Change path extension to .ccbi
         if ([ccbFileName hasSuffix:@".ccb"]) ccbFileName = [ccbFileName stringByDeletingPathExtension];
@@ -1188,12 +1219,6 @@ static inline float readFloat(CCBReader *self)
     NSMutableDictionary* animationManagers = [NSMutableDictionary dictionary];
     CCNode* nodeGraph = [self readFileWithCleanUp:YES actionManagers:animationManagers];
     
-    if (nodeGraph && self.animationManager.autoPlaySequenceId != -1)
-    {
-        // Auto play animations
-        [self.animationManager runAnimationsForSequenceId:self.animationManager.autoPlaySequenceId tweenDuration:0];
-    }
-    
     for (NSValue* pointerValue in animationManagers)
     {
         CCNode* node = [pointerValue pointerValue];
@@ -1204,7 +1229,7 @@ static inline float readFloat(CCBReader *self)
     
     // Call didLoadFromCCB
     [CCBReader callDidLoadFromCCBForNodeGraph:nodeGraph];
-
+    
     return nodeGraph;
 }
 
@@ -1270,6 +1295,7 @@ static inline float readFloat(CCBReader *self)
 {
     CCNode* node = [CCBReader load:file owner:owner parentSize:parentSize];
     CCScene* scene = [CCScene node];
+    [scene setUserInteractionEnabled:YES];
     [scene addChild:node];
     return scene;
 }

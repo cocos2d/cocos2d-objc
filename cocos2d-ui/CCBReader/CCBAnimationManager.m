@@ -300,9 +300,12 @@ static NSInteger ccbAnimationManagerID = 0;
     if (keyframes.count == 0)
     {
         // Use base value (no animation)
-        id baseValue = [self baseValueForNode:node propertyName:seqProp.name];
-        NSAssert1(baseValue, @"No baseValue found for property (%@)", seqProp.name);
-        [self setAnimatedProperty:seqProp.name forNode:node toValue:baseValue tweenDuration:tweenDuration];
+        /**
+         RNP: We are disabling this. It resets all values to a base value at the start of a timeline. Even if that property isn't being animated in the timeline. We don't want this.
+         **/
+       // id baseValue = [self baseValueForNode:node propertyName:seqProp.name];
+       // NSAssert1(baseValue, @"No baseValue found for property (%@)", seqProp.name);
+       // [self setAnimatedProperty:seqProp.name forNode:node toValue:baseValue tweenDuration:tweenDuration];
     }
     else
     {
@@ -495,21 +498,20 @@ static NSInteger ccbAnimationManagerID = 0;
 - (void) runAnimationsForSequenceId:(int)seqId tweenDuration:(float) tweenDuration
 {
     NSAssert(seqId != -1, @"Sequence id %d couldn't be found",seqId);
-    
-    // Stop actions associated with this animation manager
-    [self removeActionsByTag:animationManagerId fromNode:rootNode];
-    
+
     for (NSValue* nodePtr in nodeSequences)
     {
         CCNode* node = [nodePtr pointerValue];
         
         // Stop actions associated with this animation manager
-        [self removeActionsByTag:animationManagerId fromNode:node];
+        /** RNP: Don't stop running animations when starting a new one **/
+       // [self removeActionsByTag:animationManagerId fromNode:node];
         
         NSDictionary* seqs = [nodeSequences objectForKey:nodePtr];
         NSDictionary* seqNodeProps = [seqs objectForKey:[NSNumber numberWithInt:seqId]];
         
         NSMutableSet* seqNodePropNames = [NSMutableSet set];
+        
         
         // Reset nodes that have sequence node properties, and run actions on them
         for (NSString* propName in seqNodeProps)
@@ -520,8 +522,9 @@ static NSInteger ccbAnimationManagerID = 0;
             [self setFirstFrameForNode:node sequenceProperty:seqProp tweenDuration:tweenDuration];
             [self runActionsForNode:node sequenceProperty:seqProp tweenDuration:tweenDuration];
         }
-        
-        
+       
+        /** RNP: Don't reset base values! **/
+        /*
         // Reset the nodes that may have been changed by other timelines
         NSDictionary* nodeBaseValues = [baseValues objectForKey:nodePtr];
         for (NSString* propName in nodeBaseValues)
@@ -535,12 +538,17 @@ static NSInteger ccbAnimationManagerID = 0;
                     [self setAnimatedProperty:propName forNode:node toValue:value tweenDuration:tweenDuration];
                 }
             }
-        }
+        }*/
     }
     
     // Make callback at end of sequence
     CCBSequence* seq = [self sequenceFromSequenceId:seqId];
-    CCAction* completeAction = [CCActionSequence actionOne:[CCActionDelay actionWithDuration:seq.duration+tweenDuration] two:[CCActionCallFunc actionWithTarget:self selector:@selector(sequenceCompleted)]];
+    __weak CCBAnimationManager *weakSelf = self;
+    CCActionCallBlock *sequenceCompleteAction = [CCActionCallBlock actionWithBlock:^{
+        [weakSelf sequenceCompleted:seq.sequenceId];
+    }];
+    
+    CCAction* completeAction = [CCActionSequence actionOne:[CCActionDelay actionWithDuration:seq.duration+tweenDuration] two:sequenceCompleteAction];
     completeAction.tag = animationManagerId;
     [rootNode runAction:completeAction];
     
@@ -580,6 +588,23 @@ static NSInteger ccbAnimationManagerID = 0;
 - (void) runAnimationsForSequenceNamed:(NSString*)name
 {
     [self runAnimationsForSequenceNamed:name tweenDuration:0];
+}
+
+- (void)sequenceCompleted:(NSInteger)seqId {
+    // Play next sequence
+    CCBSequence *completedSequence = [self.sequences objectAtIndex:seqId];
+    int nextSeqId = completedSequence.chainedSequenceId;
+    runningSequence = nil;
+    
+    // Callbacks
+    [delegate completedAnimationSequenceNamed:lastCompletedSequenceName];
+    if (block) block(self);
+    
+    // Run next sequence if callbacks did not start a new sequence
+    if (nextSeqId != -1)
+    {
+        [self runAnimationsForSequenceId:nextSeqId tweenDuration:0];
+    }
 }
 
 - (void) sequenceCompleted
