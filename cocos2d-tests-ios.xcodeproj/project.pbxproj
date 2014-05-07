@@ -1,0 +1,933 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		75556A04185636F100ED1B0F /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75556A03185636F100ED1B0F /* XCTest.framework */; };
+		75556A05185636F100ED1B0F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605717E7D278007067F0 /* Foundation.framework */; };
+		75556A06185636F100ED1B0F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605517E7D278007067F0 /* UIKit.framework */; };
+		75556A15185636FB00ED1B0F /* powered.png in Resources */ = {isa = PBXBuildFile; fileRef = 755569E71856361100ED1B0F /* powered.png */; };
+		75556A161856370A00ED1B0F /* CCFileUtilTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 755569E31856361100ED1B0F /* CCFileUtilTests.m */; };
+		75556A171856370A00ED1B0F /* CCNodeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 755569E41856361100ED1B0F /* CCNodeTests.m */; };
+		75556A181856370A00ED1B0F /* CCPhysicsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 755569E51856361100ED1B0F /* CCPhysicsTests.m */; };
+		75556A191856370A00ED1B0F /* CCSchedulerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 755569E61856361100ED1B0F /* CCSchedulerTests.m */; };
+		75556A1B1856374700ED1B0F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 755569EA1856361100ED1B0F /* InfoPlist.strings */; };
+		7575B5FC1856535200CA09C8 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2622D17E7D3D8007067F0 /* libcocos2d.a */; };
+		7587BDB3185A0A6900EEEFDE /* TextureTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7587BDB2185A0A6900EEEFDE /* TextureTest.m */; };
+		7587BDB7185A64AD00EEEFDE /* ColorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7587BDB6185A64AD00EEEFDE /* ColorTest.m */; };
+		758A690F1843E18700D1A8D2 /* ParallaxTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 758A690E1843E18700D1A8D2 /* ParallaxTest.m */; };
+		758A6C6C1843E5CB00D1A8D2 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 758A6C6A1843E5BE00D1A8D2 /* TileMaps */; };
+		758A6C6D1843E5CB00D1A8D2 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 758A6C6B1843E5C500D1A8D2 /* Images */; };
+		758A6C711844011E00D1A8D2 /* CCLabelTTFTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 758A6C701844011E00D1A8D2 /* CCLabelTTFTest.m */; };
+		758A6C7B18440D5C00D1A8D2 /* ParticleTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 758A6C7A18440D5C00D1A8D2 /* ParticleTest.m */; };
+		758A6C80184410EE00D1A8D2 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 758A6C7F184410EE00D1A8D2 /* Particles */; };
+		75F76497185A831B00E2FAFE /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 75F76496185A831B00E2FAFE /* Sounds */; };
+		B70AFC30180F2D7400516435 /* CCTransitionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B70AFC2F180F2D7400516435 /* CCTransitionTest.m */; };
+		B71B087C17EA5B490082EBC0 /* TestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = B71B087B17EA5B490082EBC0 /* TestBase.m */; };
+		B71B088217EA5B6A0082EBC0 /* CCScrollViewTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B71B088117EA5B6A0082EBC0 /* CCScrollViewTest.m */; };
+		B77060141831A17C0043CC67 /* ObjectALTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B77060131831A17C0043CC67 /* ObjectALTest.m */; };
+		B77060AB1832E3310043CC67 /* CCTextureCacheTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B77060AA1832E3310043CC67 /* CCTextureCacheTest.m */; };
+		B772F69F1811C8D9005C069B /* CCResponderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B772F69E1811C8D9005C069B /* CCResponderTest.m */; };
+		B7C6237617EA695100928F91 /* Resources-shared in Resources */ = {isa = PBXBuildFile; fileRef = B7C6237517EA695100928F91 /* Resources-shared */; };
+		B7C6238C17ECDF6A00928F91 /* CCTableViewTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C6238B17ECDF6A00928F91 /* CCTableViewTest.m */; };
+		B7E2604C17E7D278007067F0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2604B17E7D278007067F0 /* QuartzCore.framework */; };
+		B7E2604E17E7D278007067F0 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2604D17E7D278007067F0 /* OpenGLES.framework */; };
+		B7E2605017E7D278007067F0 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2604F17E7D278007067F0 /* OpenAL.framework */; };
+		B7E2605217E7D278007067F0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605117E7D278007067F0 /* AudioToolbox.framework */; };
+		B7E2605417E7D278007067F0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605317E7D278007067F0 /* AVFoundation.framework */; };
+		B7E2605617E7D278007067F0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605517E7D278007067F0 /* UIKit.framework */; };
+		B7E2605817E7D278007067F0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605717E7D278007067F0 /* Foundation.framework */; };
+		B7E2605A17E7D278007067F0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605917E7D278007067F0 /* CoreGraphics.framework */; };
+		B7E2605C17E7D278007067F0 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605B17E7D278007067F0 /* CoreText.framework */; };
+		B7E2605E17E7D278007067F0 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605D17E7D278007067F0 /* GameKit.framework */; };
+		B7E2620017E7D321007067F0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E261FF17E7D321007067F0 /* AppDelegate.m */; };
+		B7E2620E17E7D34D007067F0 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E2620217E7D34D007067F0 /* Default-568h@2x.png */; };
+		B7E2620F17E7D34D007067F0 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E2620317E7D34D007067F0 /* Default-Landscape~ipad.png */; };
+		B7E2621017E7D34D007067F0 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E2620417E7D34D007067F0 /* Default.png */; };
+		B7E2621117E7D34D007067F0 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E2620517E7D34D007067F0 /* Default@2x.png */; };
+		B7E2621217E7D34D007067F0 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E2620617E7D34D007067F0 /* Icon-72.png */; };
+		B7E2621317E7D34D007067F0 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E2620717E7D34D007067F0 /* Icon-Small-50.png */; };
+		B7E2621417E7D34D007067F0 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E2620817E7D34D007067F0 /* Icon-Small.png */; };
+		B7E2621517E7D34D007067F0 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E2620917E7D34D007067F0 /* Icon-Small@2x.png */; };
+		B7E2621617E7D34D007067F0 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E2620A17E7D34D007067F0 /* Icon.png */; };
+		B7E2621717E7D34D007067F0 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E2620B17E7D34D007067F0 /* Icon@2x.png */; };
+		B7E2621917E7D34D007067F0 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = B7E2620D17E7D34D007067F0 /* iTunesArtwork */; };
+		B7E2621C17E7D370007067F0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E2621A17E7D370007067F0 /* main.m */; };
+		B7E2622117E7D3B2007067F0 /* MainMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E2622017E7D3B2007067F0 /* MainMenu.m */; };
+		B7E2623617E7D589007067F0 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2622D17E7D3D8007067F0 /* libcocos2d.a */; };
+		B7EE697918186D5200B983FE /* CCTextFieldTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE697818186D5200B983FE /* CCTextFieldTest.m */; };
+		B7EE69811818760700B983FE /* CCSprite9SliceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69801818760700B983FE /* CCSprite9SliceTest.m */; };
+		B7EE69CF1819D82300B983FE /* CCLayoutTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69CE1819D82300B983FE /* CCLayoutTest.m */; };
+		B7EE6A28181B075E00B983FE /* CCSliderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE6A27181B075E00B983FE /* CCSliderTest.m */; };
+		D3395F1A187F83E600F22C74 /* CCMemoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D3395F19187F83E600F22C74 /* CCMemoryTests.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D340E10E185660BE006E605C /* CCPhysicsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D340E10C185660BE006E605C /* CCPhysicsTest.m */; };
+		D340E10F185660BE006E605C /* TilemapTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D340E10D185660BE006E605C /* TilemapTest.m */; };
+		D3B2A7E5187DD60B00406C5A /* CCBMFontTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B2A7E4187DD60B00406C5A /* CCBMFontTest.m */; };
+		D3C9C867188078B900C58900 /* CCSchedulerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3C9C866188078B900C58900 /* CCSchedulerTest.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		75556A10185636F100ED1B0F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B7E2604017E7D278007067F0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B7E2604717E7D278007067F0;
+			remoteInfo = "cocos2d-ui-tests-ios";
+		};
+		B7E2622C17E7D3D8007067F0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B7E2622317E7D3D8007067F0 /* cocos2d-ios.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5018F24D0DFDEAC400C013A5;
+			remoteInfo = cocos2d;
+		};
+		B7E2623017E7D3D8007067F0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B7E2622317E7D3D8007067F0 /* cocos2d-ios.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A04A1FEB13B826B300ABAFB7;
+			remoteInfo = kazmath;
+		};
+		B7E2623217E7D578007067F0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B7E2622317E7D3D8007067F0 /* cocos2d-ios.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
+			remoteInfo = cocos2d;
+		};
+		D3B2A7E8187DD60B00406C5A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B7E2622317E7D3D8007067F0 /* cocos2d-ios.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D37EE968187D4C9D00CB5EF2;
+			remoteInfo = ObjectiveChipmunk;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		755569E31856361100ED1B0F /* CCFileUtilTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCFileUtilTests.m; sourceTree = "<group>"; };
+		755569E41856361100ED1B0F /* CCNodeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCNodeTests.m; sourceTree = "<group>"; };
+		755569E51856361100ED1B0F /* CCPhysicsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsTests.m; sourceTree = "<group>"; };
+		755569E61856361100ED1B0F /* CCSchedulerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSchedulerTests.m; sourceTree = "<group>"; };
+		755569E71856361100ED1B0F /* powered.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = powered.png; sourceTree = "<group>"; };
+		755569E81856361100ED1B0F /* UnitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UnitTests-Info.plist"; sourceTree = "<group>"; };
+		755569E91856361100ED1B0F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		755569EB1856361100ED1B0F /* UnitTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UnitTests-Prefix.pch"; sourceTree = "<group>"; };
+		75556A02185636F100ED1B0F /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		75556A03185636F100ED1B0F /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		7587BDB2185A0A6900EEEFDE /* TextureTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextureTest.m; path = "cocos2d-ui-tests/tests/TextureTest.m"; sourceTree = SOURCE_ROOT; };
+		7587BDB6185A64AD00EEEFDE /* ColorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ColorTest.m; path = "cocos2d-ui-tests/tests/ColorTest.m"; sourceTree = SOURCE_ROOT; };
+		758A690E1843E18700D1A8D2 /* ParallaxTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParallaxTest.m; path = "cocos2d-ui-tests/tests/ParallaxTest.m"; sourceTree = SOURCE_ROOT; };
+		758A6C6A1843E5BE00D1A8D2 /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TileMaps; path = Resources/TileMaps; sourceTree = SOURCE_ROOT; };
+		758A6C6B1843E5C500D1A8D2 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Images; path = Resources/Images; sourceTree = SOURCE_ROOT; };
+		758A6C701844011E00D1A8D2 /* CCLabelTTFTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCLabelTTFTest.m; path = "cocos2d-ui-tests/tests/CCLabelTTFTest.m"; sourceTree = SOURCE_ROOT; };
+		758A6C7A18440D5C00D1A8D2 /* ParticleTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParticleTest.m; path = "cocos2d-ui-tests/tests/ParticleTest.m"; sourceTree = SOURCE_ROOT; };
+		758A6C7F184410EE00D1A8D2 /* Particles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Particles; path = Resources/Particles; sourceTree = SOURCE_ROOT; };
+		75EA92351860BFC800BF914A /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
+		75EA92361860BFC800BF914A /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
+		75EA92381860BFC800BF914A /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
+		75EA92391860BFC800BF914A /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
+		75EA923A1860BFC800BF914A /* CocosNodePerformance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosNodePerformance.h; sourceTree = "<group>"; };
+		75EA923B1860BFC800BF914A /* CocosNodePerformance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocosNodePerformance.m; sourceTree = "<group>"; };
+		75EA923C1860BFC800BF914A /* MainScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainScene.h; sourceTree = "<group>"; };
+		75EA923D1860BFC800BF914A /* MainScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainScene.m; sourceTree = "<group>"; };
+		75EA923F1860BFC800BF914A /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
+		75EA92401860BFC800BF914A /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
+		75EA92411860BFC800BF914A /* MainScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainScene.h; sourceTree = "<group>"; };
+		75EA92421860BFC800BF914A /* MainScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainScene.m; sourceTree = "<group>"; };
+		75EA92441860BFC800BF914A /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
+		75EA92451860BFC800BF914A /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
+		75EA92461860BFC800BF914A /* PerformanceNodeChildrenTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceNodeChildrenTest.h; sourceTree = "<group>"; };
+		75EA92471860BFC800BF914A /* PerformanceNodeChildrenTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerformanceNodeChildrenTest.m; sourceTree = "<group>"; };
+		75EA92491860BFC800BF914A /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
+		75EA924A1860BFC800BF914A /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
+		75EA924B1860BFC800BF914A /* PerformanceTextureTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceTextureTest.h; sourceTree = "<group>"; };
+		75EA924C1860BFC800BF914A /* PerformanceTextureTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerformanceTextureTest.m; sourceTree = "<group>"; };
+		75F76496185A831B00E2FAFE /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sounds; path = Resources/Sounds; sourceTree = SOURCE_ROOT; };
+		B70AFC2F180F2D7400516435 /* CCTransitionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTransitionTest.m; path = "cocos2d-ui-tests/tests/CCTransitionTest.m"; sourceTree = SOURCE_ROOT; };
+		B71B087A17EA5B490082EBC0 /* TestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestBase.h; path = "cocos2d-ui-tests/TestBase.h"; sourceTree = SOURCE_ROOT; };
+		B71B087B17EA5B490082EBC0 /* TestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestBase.m; path = "cocos2d-ui-tests/TestBase.m"; sourceTree = SOURCE_ROOT; };
+		B71B088117EA5B6A0082EBC0 /* CCScrollViewTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCScrollViewTest.m; path = "cocos2d-ui-tests/tests/CCScrollViewTest.m"; sourceTree = SOURCE_ROOT; };
+		B77060131831A17C0043CC67 /* ObjectALTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObjectALTest.m; path = "cocos2d-ui-tests/tests/ObjectALTest.m"; sourceTree = SOURCE_ROOT; };
+		B77060AA1832E3310043CC67 /* CCTextureCacheTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTextureCacheTest.m; path = "cocos2d-ui-tests/tests/CCTextureCacheTest.m"; sourceTree = SOURCE_ROOT; };
+		B772F69E1811C8D9005C069B /* CCResponderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCResponderTest.m; path = "cocos2d-ui-tests/tests/CCResponderTest.m"; sourceTree = SOURCE_ROOT; };
+		B7C6237517EA695100928F91 /* Resources-shared */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Resources-shared"; path = "cocos2d-ui-tests/Resources-shared"; sourceTree = SOURCE_ROOT; };
+		B7C6238B17ECDF6A00928F91 /* CCTableViewTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTableViewTest.m; path = "cocos2d-ui-tests/tests/CCTableViewTest.m"; sourceTree = SOURCE_ROOT; };
+		B7E2604817E7D278007067F0 /* cocos2d-tests-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cocos2d-tests-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7E2604B17E7D278007067F0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		B7E2604D17E7D278007067F0 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		B7E2604F17E7D278007067F0 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
+		B7E2605117E7D278007067F0 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		B7E2605317E7D278007067F0 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		B7E2605517E7D278007067F0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		B7E2605717E7D278007067F0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		B7E2605917E7D278007067F0 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		B7E2605B17E7D278007067F0 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		B7E2605D17E7D278007067F0 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		B7E261FE17E7D321007067F0 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = "cocos2d-ui-tests/ios/AppDelegate.h"; sourceTree = SOURCE_ROOT; };
+		B7E261FF17E7D321007067F0 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = "cocos2d-ui-tests/ios/AppDelegate.m"; sourceTree = SOURCE_ROOT; };
+		B7E2620217E7D34D007067F0 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		B7E2620317E7D34D007067F0 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
+		B7E2620417E7D34D007067F0 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		B7E2620517E7D34D007067F0 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		B7E2620617E7D34D007067F0 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
+		B7E2620717E7D34D007067F0 /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
+		B7E2620817E7D34D007067F0 /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
+		B7E2620917E7D34D007067F0 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
+		B7E2620A17E7D34D007067F0 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		B7E2620B17E7D34D007067F0 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		B7E2620D17E7D34D007067F0 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = text; path = iTunesArtwork; sourceTree = "<group>"; };
+		B7E2621A17E7D370007067F0 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "cocos2d-ui-tests/ios/main.m"; sourceTree = SOURCE_ROOT; };
+		B7E2621B17E7D370007067F0 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Prefix.pch; path = "cocos2d-ui-tests/ios/Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		B7E2621F17E7D3B2007067F0 /* MainMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainMenu.h; path = "cocos2d-ui-tests/MainMenu.h"; sourceTree = SOURCE_ROOT; };
+		B7E2622017E7D3B2007067F0 /* MainMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainMenu.m; path = "cocos2d-ui-tests/MainMenu.m"; sourceTree = SOURCE_ROOT; };
+		B7E2622317E7D3D8007067F0 /* cocos2d-ios.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "cocos2d-ios.xcodeproj"; sourceTree = SOURCE_ROOT; };
+		B7EE697818186D5200B983FE /* CCTextFieldTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTextFieldTest.m; path = "cocos2d-ui-tests/tests/CCTextFieldTest.m"; sourceTree = SOURCE_ROOT; };
+		B7EE69801818760700B983FE /* CCSprite9SliceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSprite9SliceTest.m; path = "cocos2d-ui-tests/tests/CCSprite9SliceTest.m"; sourceTree = SOURCE_ROOT; };
+		B7EE69CE1819D82300B983FE /* CCLayoutTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCLayoutTest.m; path = "cocos2d-ui-tests/tests/CCLayoutTest.m"; sourceTree = SOURCE_ROOT; };
+		B7EE6A27181B075E00B983FE /* CCSliderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSliderTest.m; path = "cocos2d-ui-tests/tests/CCSliderTest.m"; sourceTree = SOURCE_ROOT; };
+		D3395F19187F83E600F22C74 /* CCMemoryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMemoryTests.m; sourceTree = "<group>"; };
+		D340E10C185660BE006E605C /* CCPhysicsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCPhysicsTest.m; path = "cocos2d-ui-tests/tests/CCPhysicsTest.m"; sourceTree = SOURCE_ROOT; };
+		D340E10D185660BE006E605C /* TilemapTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TilemapTest.m; path = "cocos2d-ui-tests/tests/TilemapTest.m"; sourceTree = SOURCE_ROOT; };
+		D3B2A7E4187DD60B00406C5A /* CCBMFontTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBMFontTest.m; path = "cocos2d-ui-tests/tests/CCBMFontTest.m"; sourceTree = SOURCE_ROOT; };
+		D3C9C866188078B900C58900 /* CCSchedulerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSchedulerTest.m; path = "cocos2d-ui-tests/tests/CCSchedulerTest.m"; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		755569FF185636F100ED1B0F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7575B5FC1856535200CA09C8 /* libcocos2d.a in Frameworks */,
+				75556A04185636F100ED1B0F /* XCTest.framework in Frameworks */,
+				75556A06185636F100ED1B0F /* UIKit.framework in Frameworks */,
+				75556A05185636F100ED1B0F /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B7E2604517E7D278007067F0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7E2623617E7D589007067F0 /* libcocos2d.a in Frameworks */,
+				B7E2604C17E7D278007067F0 /* QuartzCore.framework in Frameworks */,
+				B7E2604E17E7D278007067F0 /* OpenGLES.framework in Frameworks */,
+				B7E2605017E7D278007067F0 /* OpenAL.framework in Frameworks */,
+				B7E2605217E7D278007067F0 /* AudioToolbox.framework in Frameworks */,
+				B7E2605417E7D278007067F0 /* AVFoundation.framework in Frameworks */,
+				B7E2605617E7D278007067F0 /* UIKit.framework in Frameworks */,
+				B7E2605817E7D278007067F0 /* Foundation.framework in Frameworks */,
+				B7E2605A17E7D278007067F0 /* CoreGraphics.framework in Frameworks */,
+				B7E2605C17E7D278007067F0 /* CoreText.framework in Frameworks */,
+				B7E2605E17E7D278007067F0 /* GameKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		755569EC1856361100ED1B0F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				755569E71856361100ED1B0F /* powered.png */,
+				755569E81856361100ED1B0F /* UnitTests-Info.plist */,
+				755569EA1856361100ED1B0F /* InfoPlist.strings */,
+				755569EB1856361100ED1B0F /* UnitTests-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		755569ED1856361100ED1B0F /* UnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				755569E31856361100ED1B0F /* CCFileUtilTests.m */,
+				755569E41856361100ED1B0F /* CCNodeTests.m */,
+				755569E51856361100ED1B0F /* CCPhysicsTests.m */,
+				755569E61856361100ED1B0F /* CCSchedulerTests.m */,
+				D3395F19187F83E600F22C74 /* CCMemoryTests.m */,
+				755569EC1856361100ED1B0F /* Supporting Files */,
+			);
+			path = UnitTests;
+			sourceTree = "<group>";
+		};
+		758A6C6E1843E84D00D1A8D2 /* Test Resources */ = {
+			isa = PBXGroup;
+			children = (
+				75F76496185A831B00E2FAFE /* Sounds */,
+				758A6C7F184410EE00D1A8D2 /* Particles */,
+				758A6C6A1843E5BE00D1A8D2 /* TileMaps */,
+				758A6C6B1843E5C500D1A8D2 /* Images */,
+			);
+			name = "Test Resources";
+			sourceTree = "<group>";
+		};
+		75EA92331860BFB700BF914A /* PerformanceTests */ = {
+			isa = PBXGroup;
+			children = (
+				75EA92371860BFC800BF914A /* MemoryAllocationTest */,
+				75EA923E1860BFC800BF914A /* PerformanceSpriteTest */,
+				75EA92431860BFC800BF914A /* PerformanceParticleTest */,
+				75EA92481860BFC800BF914A /* PerformanceNodeChildrenTest */,
+				75EA924D1860BFC800BF914A /* PerformanceTextureTest */,
+			);
+			name = PerformanceTests;
+			sourceTree = "<group>";
+		};
+		75EA92371860BFC800BF914A /* MemoryAllocationTest */ = {
+			isa = PBXGroup;
+			children = (
+				75EA92351860BFC800BF914A /* AppController.h */,
+				75EA92361860BFC800BF914A /* AppController.m */,
+			);
+			name = MemoryAllocationTest;
+			path = tests/PerformanceTests/MemoryAllocationTest;
+			sourceTree = "<group>";
+		};
+		75EA923E1860BFC800BF914A /* PerformanceSpriteTest */ = {
+			isa = PBXGroup;
+			children = (
+				75EA92381860BFC800BF914A /* AppController.h */,
+				75EA92391860BFC800BF914A /* AppController.m */,
+				75EA923A1860BFC800BF914A /* CocosNodePerformance.h */,
+				75EA923B1860BFC800BF914A /* CocosNodePerformance.m */,
+				75EA923C1860BFC800BF914A /* MainScene.h */,
+				75EA923D1860BFC800BF914A /* MainScene.m */,
+			);
+			name = PerformanceSpriteTest;
+			path = tests/PerformanceTests/PerformanceSpriteTest;
+			sourceTree = "<group>";
+		};
+		75EA92431860BFC800BF914A /* PerformanceParticleTest */ = {
+			isa = PBXGroup;
+			children = (
+				75EA923F1860BFC800BF914A /* AppController.h */,
+				75EA92401860BFC800BF914A /* AppController.m */,
+				75EA92411860BFC800BF914A /* MainScene.h */,
+				75EA92421860BFC800BF914A /* MainScene.m */,
+			);
+			name = PerformanceParticleTest;
+			path = tests/PerformanceTests/PerformanceParticleTest;
+			sourceTree = "<group>";
+		};
+		75EA92481860BFC800BF914A /* PerformanceNodeChildrenTest */ = {
+			isa = PBXGroup;
+			children = (
+				75EA92441860BFC800BF914A /* AppController.h */,
+				75EA92451860BFC800BF914A /* AppController.m */,
+				75EA92461860BFC800BF914A /* PerformanceNodeChildrenTest.h */,
+				75EA92471860BFC800BF914A /* PerformanceNodeChildrenTest.m */,
+			);
+			name = PerformanceNodeChildrenTest;
+			path = tests/PerformanceTests/PerformanceNodeChildrenTest;
+			sourceTree = "<group>";
+		};
+		75EA924D1860BFC800BF914A /* PerformanceTextureTest */ = {
+			isa = PBXGroup;
+			children = (
+				75EA92491860BFC800BF914A /* AppController.h */,
+				75EA924A1860BFC800BF914A /* AppController.m */,
+				75EA924B1860BFC800BF914A /* PerformanceTextureTest.h */,
+				75EA924C1860BFC800BF914A /* PerformanceTextureTest.m */,
+			);
+			name = PerformanceTextureTest;
+			path = tests/PerformanceTests/PerformanceTextureTest;
+			sourceTree = "<group>";
+		};
+		B71B087F17EA5B500082EBC0 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				B71B088117EA5B6A0082EBC0 /* CCScrollViewTest.m */,
+				D3C9C866188078B900C58900 /* CCSchedulerTest.m */,
+				B7C6238B17ECDF6A00928F91 /* CCTableViewTest.m */,
+				B70AFC2F180F2D7400516435 /* CCTransitionTest.m */,
+				B772F69E1811C8D9005C069B /* CCResponderTest.m */,
+				B7EE69801818760700B983FE /* CCSprite9SliceTest.m */,
+				B7EE697818186D5200B983FE /* CCTextFieldTest.m */,
+				B7EE69CE1819D82300B983FE /* CCLayoutTest.m */,
+				B7EE6A27181B075E00B983FE /* CCSliderTest.m */,
+				B77060131831A17C0043CC67 /* ObjectALTest.m */,
+				B77060AA1832E3310043CC67 /* CCTextureCacheTest.m */,
+				758A6C701844011E00D1A8D2 /* CCLabelTTFTest.m */,
+				758A690E1843E18700D1A8D2 /* ParallaxTest.m */,
+				758A6C7A18440D5C00D1A8D2 /* ParticleTest.m */,
+				D340E10C185660BE006E605C /* CCPhysicsTest.m */,
+				D340E10D185660BE006E605C /* TilemapTest.m */,
+				7587BDB2185A0A6900EEEFDE /* TextureTest.m */,
+				7587BDB6185A64AD00EEEFDE /* ColorTest.m */,
+				D3B2A7E4187DD60B00406C5A /* CCBMFontTest.m */,
+			);
+			name = Tests;
+			sourceTree = "<group>";
+		};
+		B7E2603F17E7D278007067F0 = {
+			isa = PBXGroup;
+			children = (
+				755569ED1856361100ED1B0F /* UnitTests */,
+				B7E2605F17E7D278007067F0 /* cocos2d-tests-ios */,
+				B7E2604A17E7D278007067F0 /* Frameworks */,
+				B7E2604917E7D278007067F0 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B7E2604917E7D278007067F0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B7E2604817E7D278007067F0 /* cocos2d-tests-ios.app */,
+				75556A02185636F100ED1B0F /* UnitTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B7E2604A17E7D278007067F0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B7E2604B17E7D278007067F0 /* QuartzCore.framework */,
+				B7E2604D17E7D278007067F0 /* OpenGLES.framework */,
+				B7E2604F17E7D278007067F0 /* OpenAL.framework */,
+				B7E2605117E7D278007067F0 /* AudioToolbox.framework */,
+				B7E2605317E7D278007067F0 /* AVFoundation.framework */,
+				B7E2605517E7D278007067F0 /* UIKit.framework */,
+				B7E2605717E7D278007067F0 /* Foundation.framework */,
+				B7E2605917E7D278007067F0 /* CoreGraphics.framework */,
+				B7E2605B17E7D278007067F0 /* CoreText.framework */,
+				B7E2605D17E7D278007067F0 /* GameKit.framework */,
+				75556A03185636F100ED1B0F /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B7E2605F17E7D278007067F0 /* cocos2d-tests-ios */ = {
+			isa = PBXGroup;
+			children = (
+				75EA92331860BFB700BF914A /* PerformanceTests */,
+				B7E2621D17E7D38D007067F0 /* AppDelegate */,
+				B7E2621E17E7D398007067F0 /* Testbed */,
+				B71B087F17EA5B500082EBC0 /* Tests */,
+				B7C6237517EA695100928F91 /* Resources-shared */,
+				B7E2620117E7D34D007067F0 /* Resources-iOS */,
+				B7E2622217E7D3CA007067F0 /* libs */,
+				B7E261EC17E7D27A007067F0 /* Supporting Files */,
+				758A6C6E1843E84D00D1A8D2 /* Test Resources */,
+			);
+			name = "cocos2d-tests-ios";
+			path = "cocos2d-ui-tests-ios";
+			sourceTree = "<group>";
+		};
+		B7E261EC17E7D27A007067F0 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B7E2621A17E7D370007067F0 /* main.m */,
+				B7E2621B17E7D370007067F0 /* Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B7E2620117E7D34D007067F0 /* Resources-iOS */ = {
+			isa = PBXGroup;
+			children = (
+				B7E2620217E7D34D007067F0 /* Default-568h@2x.png */,
+				B7E2620317E7D34D007067F0 /* Default-Landscape~ipad.png */,
+				B7E2620417E7D34D007067F0 /* Default.png */,
+				B7E2620517E7D34D007067F0 /* Default@2x.png */,
+				B7E2620617E7D34D007067F0 /* Icon-72.png */,
+				B7E2620717E7D34D007067F0 /* Icon-Small-50.png */,
+				B7E2620817E7D34D007067F0 /* Icon-Small.png */,
+				B7E2620917E7D34D007067F0 /* Icon-Small@2x.png */,
+				B7E2620A17E7D34D007067F0 /* Icon.png */,
+				B7E2620B17E7D34D007067F0 /* Icon@2x.png */,
+				B7E2620D17E7D34D007067F0 /* iTunesArtwork */,
+			);
+			name = "Resources-iOS";
+			path = "cocos2d-ui-tests/ios/Resources";
+			sourceTree = SOURCE_ROOT;
+		};
+		B7E2621D17E7D38D007067F0 /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				B7E261FE17E7D321007067F0 /* AppDelegate.h */,
+				B7E261FF17E7D321007067F0 /* AppDelegate.m */,
+			);
+			name = AppDelegate;
+			sourceTree = "<group>";
+		};
+		B7E2621E17E7D398007067F0 /* Testbed */ = {
+			isa = PBXGroup;
+			children = (
+				B7E2621F17E7D3B2007067F0 /* MainMenu.h */,
+				B7E2622017E7D3B2007067F0 /* MainMenu.m */,
+				B71B087A17EA5B490082EBC0 /* TestBase.h */,
+				B71B087B17EA5B490082EBC0 /* TestBase.m */,
+			);
+			name = Testbed;
+			sourceTree = "<group>";
+		};
+		B7E2622217E7D3CA007067F0 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				B7E2622317E7D3D8007067F0 /* cocos2d-ios.xcodeproj */,
+			);
+			name = libs;
+			sourceTree = "<group>";
+		};
+		B7E2622417E7D3D8007067F0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B7E2622D17E7D3D8007067F0 /* libcocos2d.a */,
+				B7E2623117E7D3D8007067F0 /* libkazmath.a */,
+				D3B2A7E9187DD60B00406C5A /* libObjectiveChipmunk.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		75556A01185636F100ED1B0F /* UnitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 75556A12185636F100ED1B0F /* Build configuration list for PBXNativeTarget "UnitTests" */;
+			buildPhases = (
+				755569FE185636F100ED1B0F /* Sources */,
+				755569FF185636F100ED1B0F /* Frameworks */,
+				75556A00185636F100ED1B0F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				75556A11185636F100ED1B0F /* PBXTargetDependency */,
+			);
+			name = UnitTests;
+			productName = "Unit Tests";
+			productReference = 75556A02185636F100ED1B0F /* UnitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B7E2604717E7D278007067F0 /* cocos2d-tests-ios */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B7E261FB17E7D27A007067F0 /* Build configuration list for PBXNativeTarget "cocos2d-tests-ios" */;
+			buildPhases = (
+				B7E2604417E7D278007067F0 /* Sources */,
+				B7E2604517E7D278007067F0 /* Frameworks */,
+				B7E2604617E7D278007067F0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B7E2623317E7D578007067F0 /* PBXTargetDependency */,
+			);
+			name = "cocos2d-tests-ios";
+			productName = "cocos2d-ui-tests-ios";
+			productReference = B7E2604817E7D278007067F0 /* cocos2d-tests-ios.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B7E2604017E7D278007067F0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = Cocos2d;
+				TargetAttributes = {
+					75556A01185636F100ED1B0F = {
+						TestTargetID = B7E2604717E7D278007067F0;
+					};
+				};
+			};
+			buildConfigurationList = B7E2604317E7D278007067F0 /* Build configuration list for PBXProject "cocos2d-tests-ios" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = B7E2603F17E7D278007067F0;
+			productRefGroup = B7E2604917E7D278007067F0 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = B7E2622417E7D3D8007067F0 /* Products */;
+					ProjectRef = B7E2622317E7D3D8007067F0 /* cocos2d-ios.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				B7E2604717E7D278007067F0 /* cocos2d-tests-ios */,
+				75556A01185636F100ED1B0F /* UnitTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		B7E2622D17E7D3D8007067F0 /* libcocos2d.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcocos2d.a;
+			remoteRef = B7E2622C17E7D3D8007067F0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B7E2623117E7D3D8007067F0 /* libkazmath.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libkazmath.a;
+			remoteRef = B7E2623017E7D3D8007067F0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D3B2A7E9187DD60B00406C5A /* libObjectiveChipmunk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libObjectiveChipmunk.a;
+			remoteRef = D3B2A7E8187DD60B00406C5A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		75556A00185636F100ED1B0F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				75556A1B1856374700ED1B0F /* InfoPlist.strings in Resources */,
+				75556A15185636FB00ED1B0F /* powered.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B7E2604617E7D278007067F0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				758A6C6C1843E5CB00D1A8D2 /* TileMaps in Resources */,
+				758A6C6D1843E5CB00D1A8D2 /* Images in Resources */,
+				75F76497185A831B00E2FAFE /* Sounds in Resources */,
+				758A6C80184410EE00D1A8D2 /* Particles in Resources */,
+				B7E2620E17E7D34D007067F0 /* Default-568h@2x.png in Resources */,
+				B7E2620F17E7D34D007067F0 /* Default-Landscape~ipad.png in Resources */,
+				B7E2621017E7D34D007067F0 /* Default.png in Resources */,
+				B7E2621117E7D34D007067F0 /* Default@2x.png in Resources */,
+				B7E2621217E7D34D007067F0 /* Icon-72.png in Resources */,
+				B7E2621317E7D34D007067F0 /* Icon-Small-50.png in Resources */,
+				B7E2621417E7D34D007067F0 /* Icon-Small.png in Resources */,
+				B7C6237617EA695100928F91 /* Resources-shared in Resources */,
+				B7E2621517E7D34D007067F0 /* Icon-Small@2x.png in Resources */,
+				B7E2621617E7D34D007067F0 /* Icon.png in Resources */,
+				B7E2621717E7D34D007067F0 /* Icon@2x.png in Resources */,
+				B7E2621917E7D34D007067F0 /* iTunesArtwork in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		755569FE185636F100ED1B0F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				75556A161856370A00ED1B0F /* CCFileUtilTests.m in Sources */,
+				75556A171856370A00ED1B0F /* CCNodeTests.m in Sources */,
+				D3395F1A187F83E600F22C74 /* CCMemoryTests.m in Sources */,
+				75556A181856370A00ED1B0F /* CCPhysicsTests.m in Sources */,
+				75556A191856370A00ED1B0F /* CCSchedulerTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B7E2604417E7D278007067F0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B71B087C17EA5B490082EBC0 /* TestBase.m in Sources */,
+				B71B088217EA5B6A0082EBC0 /* CCScrollViewTest.m in Sources */,
+				B7EE697918186D5200B983FE /* CCTextFieldTest.m in Sources */,
+				B7E2620017E7D321007067F0 /* AppDelegate.m in Sources */,
+				B77060AB1832E3310043CC67 /* CCTextureCacheTest.m in Sources */,
+				B7E2621C17E7D370007067F0 /* main.m in Sources */,
+				B7EE69811818760700B983FE /* CCSprite9SliceTest.m in Sources */,
+				B7EE6A28181B075E00B983FE /* CCSliderTest.m in Sources */,
+				B772F69F1811C8D9005C069B /* CCResponderTest.m in Sources */,
+				B77060141831A17C0043CC67 /* ObjectALTest.m in Sources */,
+				B7EE69CF1819D82300B983FE /* CCLayoutTest.m in Sources */,
+				758A6C711844011E00D1A8D2 /* CCLabelTTFTest.m in Sources */,
+				758A690F1843E18700D1A8D2 /* ParallaxTest.m in Sources */,
+				7587BDB3185A0A6900EEEFDE /* TextureTest.m in Sources */,
+				D3C9C867188078B900C58900 /* CCSchedulerTest.m in Sources */,
+				7587BDB7185A64AD00EEEFDE /* ColorTest.m in Sources */,
+				D340E10F185660BE006E605C /* TilemapTest.m in Sources */,
+				B7E2622117E7D3B2007067F0 /* MainMenu.m in Sources */,
+				B70AFC30180F2D7400516435 /* CCTransitionTest.m in Sources */,
+				758A6C7B18440D5C00D1A8D2 /* ParticleTest.m in Sources */,
+				B7C6238C17ECDF6A00928F91 /* CCTableViewTest.m in Sources */,
+				D340E10E185660BE006E605C /* CCPhysicsTest.m in Sources */,
+				D3B2A7E5187DD60B00406C5A /* CCBMFontTest.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		75556A11185636F100ED1B0F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B7E2604717E7D278007067F0 /* cocos2d-tests-ios */;
+			targetProxy = 75556A10185636F100ED1B0F /* PBXContainerItemProxy */;
+		};
+		B7E2623317E7D578007067F0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = cocos2d;
+			targetProxy = B7E2623217E7D578007067F0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		755569EA1856361100ED1B0F /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				755569E91856361100ED1B0F /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		75556A13185636F100ED1B0F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/cocos2d-tests-ios.app/cocos2d-tests-ios";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UnitTests/UnitTests-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					external/kazmath/include,
+					"cocos2d/**",
+					"cocos2d-ui/**",
+					"cocos2d-ui-tests/**",
+					external/Chipmunk/include,
+					external/Chipmunk/objectivec/include,
+					"external/ObjectAL/**",
+				);
+				INFOPLIST_FILE = "UnitTests/UnitTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		75556A14185636F100ED1B0F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/cocos2d-tests-ios.app/cocos2d-tests-ios";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UnitTests/UnitTests-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					external/kazmath/include,
+					"cocos2d/**",
+					"cocos2d-ui/**",
+					"cocos2d-ui-tests/**",
+					external/Chipmunk/include,
+					external/Chipmunk/objectivec/include,
+					"external/ObjectAL/**",
+				);
+				INFOPLIST_FILE = "UnitTests/UnitTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+		B7E261F917E7D27A007067F0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					DEBUG,
+					"COCOS2D_DEBUG=1",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					external/kazmath/include,
+					"cocos2d/**",
+					"cocos2d-ui/**",
+					"cocos2d-ui-tests/**",
+					external/Chipmunk/include,
+					external/Chipmunk/objectivec/include,
+					"external/ObjectAL/**",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B7E261FA17E7D27A007067F0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					"NS_BLOCK_ASSERTIONS=1",
+				);
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					external/kazmath/include,
+					"cocos2d/**",
+					"cocos2d-ui/**",
+					"cocos2d-ui-tests/**",
+					external/Chipmunk/include,
+					external/Chipmunk/objectivec/include,
+					"external/ObjectAL/**",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		B7E261FC17E7D27A007067F0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "cocos2d-ui-tests/ios/Prefix.pch";
+				INFOPLIST_FILE = "cocos2d-ui-tests/ios/Resources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-lz",
+					"-lsqlite3",
+					"-ObjC",
+				);
+				PRODUCT_NAME = "cocos2d-tests-ios";
+				PROVISIONING_PROFILE = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		B7E261FD17E7D27A007067F0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "cocos2d-ui-tests/ios/Prefix.pch";
+				INFOPLIST_FILE = "cocos2d-ui-tests/ios/Resources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_LDFLAGS = (
+					"-lz",
+					"-lsqlite3",
+					"-ObjC",
+				);
+				PRODUCT_NAME = "cocos2d-tests-ios";
+				PROVISIONING_PROFILE = "";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		75556A12185636F100ED1B0F /* Build configuration list for PBXNativeTarget "UnitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				75556A13185636F100ED1B0F /* Debug */,
+				75556A14185636F100ED1B0F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B7E2604317E7D278007067F0 /* Build configuration list for PBXProject "cocos2d-tests-ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B7E261F917E7D27A007067F0 /* Debug */,
+				B7E261FA17E7D27A007067F0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B7E261FB17E7D27A007067F0 /* Build configuration list for PBXNativeTarget "cocos2d-tests-ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B7E261FC17E7D27A007067F0 /* Debug */,
+				B7E261FD17E7D27A007067F0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B7E2604017E7D278007067F0 /* Project object */;
+}
