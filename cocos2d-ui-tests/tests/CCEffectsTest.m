@@ -15,21 +15,21 @@
 		// Otherwise the scene will not exist yet.
 		[self scheduleBlock:^(CCTimer *timer){self.scene.color = [CCColor lightGrayColor];} delay:0];
 		
-		// Alternatively, set up some rotating colors.
-        //		float delay = 1.0f;
-        //		[self scheduleBlock:^(CCTimer *timer) {
-        //			GLKMatrix4 colorMatrix = GLKMatrix4MakeRotation(timer.invokeTime*1e0, 1, 1, 1);
-        //			GLKVector4 color = GLKMatrix4MultiplyVector4(colorMatrix, GLKVector4Make(1, 0, 0, 1));
-        //			self.scene.color = [CCColor colorWithGLKVector4:color];
-        //
-        //			[timer repeatOnceWithInterval:delay];
-        //		} delay:delay];
+        // Alternatively, set up some rotating colors.
+//		float delay = 1.0f;
+//		[self scheduleBlock:^(CCTimer *timer) {
+//			GLKMatrix4 colorMatrix = GLKMatrix4MakeRotation(timer.invokeTime*1e0, 1, 1, 1);
+//			GLKVector4 color = GLKMatrix4MultiplyVector4(colorMatrix, GLKVector4Make(1, 0, 0, 1));
+//			self.scene.color = [CCColor colorWithGLKVector4:color];
+//
+//			[timer repeatOnceWithInterval:delay];
+//		} delay:delay];
 	}
 	
 	return self;
 }
 
-#define WORKING_GLOW
+//#define GLOW_WITHOUT_AUTO_DRAW
 -(void)setupGlowEffectNodeTest
 {
 //    CCSprite *testSprite = [CCSprite spriteWithImageNamed:@"sample_hollow_circle.png"];
@@ -56,8 +56,9 @@
     CCEffectGlow* glowEffect = [[CCEffectGlow alloc] init];
     glowEffectNode.effect = glowEffect;
     
-#ifdef WORKING_GLOW
+#ifdef GLOW_WITHOUT_AUTO_DRAW
     [glowEffectNode visit];
+
     CCSprite* testSrpite = [CCSprite spriteWithTexture:glowEffectNode.texture];
     testSrpite.positionType = CCPositionTypeNormalized;
     testSrpite.position = ccp(0.6, 0.5);
