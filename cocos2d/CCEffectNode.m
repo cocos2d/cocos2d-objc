@@ -113,7 +113,7 @@
 
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
-    [_textures removeAllObjects];
+    [self destroy];
     [self configureRender];
 
     NSAssert(_renderer == renderer, @"CCEffectNode error!");

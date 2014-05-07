@@ -18,8 +18,6 @@
     CCRenderer *_renderer;
     BOOL _privateRenderer;
 
-    GLuint _FBO;
-    GLuint _depthRenderBufffer;
     GLKVector4 _clearColor;
 
     GLKVector4 _oldViewport;
@@ -35,6 +33,7 @@
     
     int _currentRenderPass;
     NSMutableArray *_textures;
+    NSMutableArray *_FBOs;
 }
 
 -(void)destroy;
