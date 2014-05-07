@@ -101,10 +101,10 @@
 		50F9E8170E1AA34E000E7616 /* ccTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F9E8160E1AA34E000E7616 /* ccTypes.h */; };
 		50FBB2DA117613F500150761 /* CCActionTween.h in Headers */ = {isa = PBXBuildFile; fileRef = 50FBB2D8117613F500150761 /* CCActionTween.h */; };
 		50FBB2DB117613F500150761 /* CCActionTween.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FBB2D9117613F500150761 /* CCActionTween.m */; };
-		9D25E1351912E5370099AF7E /* CCEffectBrightnessAndContrast.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D25E1331912E5370099AF7E /* CCEffectBrightnessAndContrast.h */; };
-		9D25E1361912E5370099AF7E /* CCEffectBrightnessAndContrast.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D25E1341912E5370099AF7E /* CCEffectBrightnessAndContrast.m */; };
 		5B051B1D18FC032F0091CB8C /* CCBAnimationManager+FrameAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B051B1B18FC032F0091CB8C /* CCBAnimationManager+FrameAnimation.h */; };
 		5B051B1E18FC032F0091CB8C /* CCBAnimationManager+FrameAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B051B1C18FC032F0091CB8C /* CCBAnimationManager+FrameAnimation.m */; };
+		9D25E1351912E5370099AF7E /* CCEffectBrightnessAndContrast.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D25E1331912E5370099AF7E /* CCEffectBrightnessAndContrast.h */; };
+		9D25E1361912E5370099AF7E /* CCEffectBrightnessAndContrast.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D25E1341912E5370099AF7E /* CCEffectBrightnessAndContrast.m */; };
 		A003AC8C1657071100C7B792 /* ccFPSImages.h in Headers */ = {isa = PBXBuildFile; fileRef = A003AC8B1657071100C7B792 /* ccFPSImages.h */; };
 		A003AC8F16572D6000C7B792 /* ccFPSImages.m in Sources */ = {isa = PBXBuildFile; fileRef = A003AC8E16572D6000C7B792 /* ccFPSImages.m */; };
 		A039EBFF155C686B0061EE37 /* CCNode+Debug.h in Headers */ = {isa = PBXBuildFile; fileRef = A039EBFD155C686B0061EE37 /* CCNode+Debug.h */; };
@@ -420,6 +420,7 @@
 		92FF6C7318F33A2A005B7139 /* CCActionManager_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCActionManager_Private.h; sourceTree = "<group>"; };
 		9D25E1331912E5370099AF7E /* CCEffectBrightnessAndContrast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectBrightnessAndContrast.h; sourceTree = "<group>"; };
 		9D25E1341912E5370099AF7E /* CCEffectBrightnessAndContrast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectBrightnessAndContrast.m; sourceTree = "<group>"; };
+		9D85671A191AE2CC00573093 /* CCEffectStack_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCEffectStack_Private.h; sourceTree = "<group>"; };
 		A003AC8B1657071100C7B792 /* ccFPSImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccFPSImages.h; sourceTree = "<group>"; };
 		A003AC8E16572D6000C7B792 /* ccFPSImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccFPSImages.m; sourceTree = "<group>"; };
 		A034FF85149DC993009F11AA /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
@@ -1190,6 +1191,7 @@
 				D272031C18FC89A000B100FF /* CCEffectColorPulse.h */,
 				D272031D18FC89A000B100FF /* CCEffectColorPulse.m */,
 				D272032018FC89A000B100FF /* CCEffectStack.h */,
+				9D85671A191AE2CC00573093 /* CCEffectStack_Private.h */,
 				D272032118FC89A000B100FF /* CCEffectStack.m */,
 				D272032218FC89A000B100FF /* CCEffectTexture.h */,
 				D272032318FC89A000B100FF /* CCEffectTexture.m */,

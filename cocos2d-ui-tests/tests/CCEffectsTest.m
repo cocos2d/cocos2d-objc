@@ -54,7 +54,7 @@
     glowEffectNode.position = ccp(0.1, 0.5);
     [glowEffectNode addChild:sampleSprite];
     CCEffectGlow* glowEffect = [CCEffectGlow effectWithRadius:0.01f];
-    glowEffectNode.effect = glowEffect;
+    [glowEffectNode addEffect:glowEffect];
     
 #ifdef GLOW_WITHOUT_AUTO_DRAW
     [glowEffectNode visit];
@@ -98,7 +98,7 @@
     CCEffectColorPulse* effectColorPulse = [[CCEffectColorPulse alloc] initWithColor:[CCColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:1.0] toColor:[CCColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:1.0]];
     CCEffectTexture* effectTexture = [[CCEffectTexture alloc] init];
     CCEffect* compositeEffect = [CCEffectStack effects:effectColorPulse, effectTexture, nil];
-    effectNode1.effect = compositeEffect;
+    [effectNode1 addEffect:compositeEffect];
 	[self.contentNode addChild:effectNode1];
 }
 
@@ -134,7 +134,7 @@
     effectNode.anchorPoint = ccp(0.5, 0.5);
     effectNode.positionType = CCPositionTypeNormalized;
     effectNode.position = ccp(0.5, 0.4);
-    effectNode.effect = [[CCEffectBrightnessAndContrast alloc] initWithBrightness:0.25f contrast:2.0f];
+    [effectNode addEffect:[[CCEffectBrightnessAndContrast alloc] initWithBrightness:0.25f contrast:2.0f]];
     [effectNode addChild:sprite];
 
     [self.contentNode addChild:effectNode];
