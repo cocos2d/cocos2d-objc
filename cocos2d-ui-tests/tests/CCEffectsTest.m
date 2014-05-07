@@ -53,7 +53,7 @@
     glowEffectNode.positionType = CCPositionTypeNormalized;
     glowEffectNode.position = ccp(0.1, 0.5);
     [glowEffectNode addChild:sampleSprite];
-    CCEffectGlow* glowEffect = [[CCEffectGlow alloc] init];
+    CCEffectGlow* glowEffect = [CCEffectGlow effectWithRadius:0.01f];
     glowEffectNode.effect = glowEffect;
     
 #ifdef GLOW_WITHOUT_AUTO_DRAW
