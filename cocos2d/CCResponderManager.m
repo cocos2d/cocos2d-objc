@@ -495,9 +495,20 @@
             _currentEventProcessed = YES;
             switch (button)
             {
-                case CCMouseButtonLeft: if ([node respondsToSelector:@selector(mouseDown:)]) [node mouseDown:theEvent]; break;
-                case CCMouseButtonRight: if ([node respondsToSelector:@selector(rightMouseDown:)]) [node rightMouseDown:theEvent]; break;
-                case CCMouseButtonOther: if ([node respondsToSelector:@selector(otherMouseDown:)]) [node otherMouseDown:theEvent]; break;
+                case CCMouseButtonLeft:
+                    if ([node respondsToSelector:@selector(mouseDown:)])
+                    [node mouseDown:theEvent];
+                    break;
+                case CCMouseButtonRight:
+                    if ([node respondsToSelector:@selector(rightMouseDown:)]) {
+                        [node rightMouseDown:theEvent];
+                        _currentEventProcessed = NO;
+                    }
+                    break;
+                case CCMouseButtonOther:
+                    if ([node respondsToSelector:@selector(otherMouseDown:)])
+                    [node otherMouseDown:theEvent];
+                    break;
             }
             
             // if mouse was processed, remember it and break

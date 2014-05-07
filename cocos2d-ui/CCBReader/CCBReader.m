@@ -622,6 +622,16 @@ static inline float readFloat(CCBReader *self)
             [node setValue:txt forKey:name];
         }
     }
+    else if (type == kCCBPropTypeDictionary) {
+        NSString* text = [self readCachedString];
+
+        NSData *textData = [text dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:textData options:0 error:NULL];
+
+        if (setProp) {
+            [node setValue:dictionary forKey:name];
+        }
+    }
     else if (type == kCCBPropTypeFontTTF)
     {
         NSString* fnt = [self readCachedString];

@@ -521,6 +521,7 @@ static NSInteger ccbAnimationManagerID = 0;
             [self runActionsForNode:node sequenceProperty:seqProp tweenDuration:tweenDuration];
         }
         
+        
         // Reset the nodes that may have been changed by other timelines
         NSDictionary* nodeBaseValues = [baseValues objectForKey:nodePtr];
         for (NSString* propName in nodeBaseValues)

@@ -40,6 +40,7 @@ enum {
     kCCBPropTypeFloatScale,
     kCCBPropTypeFloatXY,
     kCCBPropTypeColor4,
+    kCCBPropTypeDictionary,
 };
 
 enum {
