@@ -15,21 +15,21 @@
 		// Otherwise the scene will not exist yet.
 		[self scheduleBlock:^(CCTimer *timer){self.scene.color = [CCColor lightGrayColor];} delay:0];
 		
-		// Alternatively, set up some rotating colors.
-        //		float delay = 1.0f;
-        //		[self scheduleBlock:^(CCTimer *timer) {
-        //			GLKMatrix4 colorMatrix = GLKMatrix4MakeRotation(timer.invokeTime*1e0, 1, 1, 1);
-        //			GLKVector4 color = GLKMatrix4MultiplyVector4(colorMatrix, GLKVector4Make(1, 0, 0, 1));
-        //			self.scene.color = [CCColor colorWithGLKVector4:color];
-        //
-        //			[timer repeatOnceWithInterval:delay];
-        //		} delay:delay];
+        // Alternatively, set up some rotating colors.
+//		float delay = 1.0f;
+//		[self scheduleBlock:^(CCTimer *timer) {
+//			GLKMatrix4 colorMatrix = GLKMatrix4MakeRotation(timer.invokeTime*1e0, 1, 1, 1);
+//			GLKVector4 color = GLKMatrix4MultiplyVector4(colorMatrix, GLKVector4Make(1, 0, 0, 1));
+//			self.scene.color = [CCColor colorWithGLKVector4:color];
+//
+//			[timer repeatOnceWithInterval:delay];
+//		} delay:delay];
 	}
 	
 	return self;
 }
 
-#define WORKING_GLOW
+//#define GLOW_WITHOUT_AUTO_DRAW
 -(void)setupGlowEffectNodeTest
 {
 //    CCSprite *testSprite = [CCSprite spriteWithImageNamed:@"sample_hollow_circle.png"];
@@ -53,11 +53,12 @@
     glowEffectNode.positionType = CCPositionTypeNormalized;
     glowEffectNode.position = ccp(0.1, 0.5);
     [glowEffectNode addChild:sampleSprite];
-    CCEffectGlow* glowEffect = [[CCEffectGlow alloc] init];
+    CCEffectGlow* glowEffect = [CCEffectGlow effectWithRadius:0.01f];
     glowEffectNode.effect = glowEffect;
     
-#ifdef WORKING_GLOW
+#ifdef GLOW_WITHOUT_AUTO_DRAW
     [glowEffectNode visit];
+
     CCSprite* testSrpite = [CCSprite spriteWithTexture:glowEffectNode.texture];
     testSrpite.positionType = CCPositionTypeNormalized;
     testSrpite.position = ccp(0.6, 0.5);
@@ -70,6 +71,15 @@
     [self.contentNode addChild:defaultSprite];
     
 #else
+    
+    CGSize size = CGSizeMake(1.0, 1.0);
+    [glowEffectNode runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+                                                                  [CCActionMoveTo actionWithDuration:4.0 position:ccp(0, 0.5)],
+                                                                  [CCActionMoveTo actionWithDuration:4.0 position:ccp(size.width, 0.5)],
+                                                                  nil
+                                                                  ]]];
+
+    
     [self.contentNode addChild:glowEffectNode];
 #endif
     
@@ -96,31 +106,38 @@
 {
     self.subTitle = @"Brightness and Contrast Effect Test";
     
-    // Create a sprite
-    CCSprite *effectSprite = [CCSprite spriteWithImageNamed:@"f1.png"];
-    effectSprite.anchorPoint = ccp(0.5, 0.5);
-    effectSprite.position = ccp(40, 40);
+    CCSprite *sprite = nil;
     
+    // Add a couple sprites directly to the scene
+    sprite = [CCSprite spriteWithImageNamed:@"f1.png"];
+    sprite.anchorPoint = ccp(0.5, 0.5);
+    sprite.positionType = CCPositionTypeNormalized;
+    sprite.position = ccp(0.4, 0.5);
+    [self.contentNode addChild:sprite];
+
+    sprite = [CCSprite spriteWithImageNamed:@"f1.png"];
+    sprite.anchorPoint = ccp(0.5, 0.5);
+    sprite.positionType = CCPositionTypeNormalized;
+    sprite.position = ccp(0.5, 0.6);
+    [self.contentNode addChild:sprite];
+
+    // Create third sprite for use with the effect. It does
+    // not get added to the scene directly.
+    sprite = [CCSprite spriteWithImageNamed:@"f1.png"];
+    sprite.anchorPoint = ccp(0.5, 0.5);
+    sprite.positionType = CCPositionTypeNormalized;
+    sprite.position = ccp(0.5, 0.5);
+
     // Brightness and contrast test
-    CCEffectNode* effectNode = [[CCEffectNode alloc] initWithWidth:80 height:80];
+    float effectDim = MAX(sprite.contentSize.width, sprite.contentSize.width);
+    CCEffectNode* effectNode = [[CCEffectNode alloc] initWithWidth:effectDim height:effectDim];
+    effectNode.anchorPoint = ccp(0.5, 0.5);
     effectNode.positionType = CCPositionTypeNormalized;
-    effectNode.position = ccp(0.1, 0.5);
-    [effectNode addChild:effectSprite];
-    CCEffectBrightnessAndContrast* effect = [[CCEffectBrightnessAndContrast alloc] initWithBrightness:0.5f contrast:4.0f];
-    
-    effectNode.effect = effect;
-    [effectNode visit];
-    
-    CCSprite* testSprite = [CCSprite spriteWithTexture:effectNode.texture];
-    testSprite.positionType = CCPositionTypeNormalized;
-    testSprite.position = ccp(0.5, 0.5);
-    [self.contentNode addChild:testSprite];
-    
-    CCSprite *defaultSprite = [CCSprite spriteWithImageNamed:@"f1.png"];
-    defaultSprite.anchorPoint = ccp(0.5, 0.5);
-    defaultSprite.positionType = CCPositionTypeNormalized;
-    defaultSprite.position = ccp(0.1, 0.5);
-    [self.contentNode addChild:defaultSprite];
+    effectNode.position = ccp(0.5, 0.4);
+    effectNode.effect = [[CCEffectBrightnessAndContrast alloc] initWithBrightness:0.25f contrast:2.0f];
+    [effectNode addChild:sprite];
+
+    [self.contentNode addChild:effectNode];
 }
 
 -(void)renderTextureHelper:(CCNode *)stage size:(CGSize)size

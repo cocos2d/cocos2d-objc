@@ -26,7 +26,7 @@
     
     CCTexture* texture = [CCTexture none];
     CCEffectUniform* u_sampler2 = [CCEffectUniform uniform:@"sampler2D" name:@"u_sampler2" value:(NSValue*)texture];
-
+    
     if(self = [super initWithUniforms:[NSArray arrayWithObjects:u_enableGlowMap, u_sampler2, nil]
                       vertextUniforms:[NSArray arrayWithObjects:u_blurDirection, nil]
                               varying:[NSArray arrayWithObjects:v_centerTextureCoordinate, v_twoStepsLeftTextureCoordinate,
@@ -39,6 +39,23 @@
     return self;
 }
 
+
+-(id)initWithBlurRadius:(float)blurRadius
+{
+    if((self = [self init]))
+    {
+        _blurRadius = blurRadius;
+        return self;
+    }
+
+    return self;
+}
+
++(id)effectWithRadius:(float)blurRadius;
+{
+    return [[self alloc] initWithBlurRadius:blurRadius];
+}
+
 -(void)buildFragmentFunctions
 {
 
@@ -49,13 +66,13 @@
                                    
                                    if(u_enableGlowMap == 0.0)
                                    {
-                                       lowp vec3 fragmentColor = texture2D(cc_MainTexture, v_centerTextureCoordinate).rgb * 0.2270270270;
-                                       fragmentColor += texture2D(cc_MainTexture, v_oneStepLeftTextureCoordinate).rgb * 0.3162162162;
-                                       fragmentColor += texture2D(cc_MainTexture, v_oneStepRightTextureCoordinate).rgb * 0.3162162162;
-                                       fragmentColor += texture2D(cc_MainTexture, v_twoStepsLeftTextureCoordinate).rgb * 0.0702702703;
-                                       fragmentColor += texture2D(cc_MainTexture, v_twoStepsRightTextureCoordinate).rgb * 0.0702702703;
+                                       lowp vec4 fragmentColor = texture2D(cc_MainTexture, v_centerTextureCoordinate).rgba * 0.2270270270;
+                                       fragmentColor += texture2D(cc_MainTexture, v_oneStepLeftTextureCoordinate).rgba * 0.3162162162;
+                                       fragmentColor += texture2D(cc_MainTexture, v_oneStepRightTextureCoordinate).rgba * 0.3162162162;
+                                       fragmentColor += texture2D(cc_MainTexture, v_twoStepsLeftTextureCoordinate).rgba * 0.0702702703;
+                                       fragmentColor += texture2D(cc_MainTexture, v_twoStepsRightTextureCoordinate).rgba * 0.0702702703;
                                        
-                                       src = vec4(fragmentColor, 1.0);
+                                       src = fragmentColor;
                                    }
                                    else
                                    {
@@ -108,19 +125,21 @@
     
     if(renderPass.renderPassId == 1)
     {
-        renderPass.sprite.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(0.023f, 0.0f)];
+        renderPass.sprite.shaderUniforms[@"u_enableGlowMap"] = [NSNumber numberWithFloat:0.0f];
+        renderPass.sprite.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(_blurRadius, 0.0f)];
         renderPass.sprite.texture = renderPass.textures[0];
     }
     else if(renderPass.renderPassId == 2)
     {
-        renderPass.sprite.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.023f)];
+        renderPass.sprite.shaderUniforms[@"u_enableGlowMap"] = [NSNumber numberWithFloat:0.0f];
+        renderPass.sprite.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(0.0f, _blurRadius)];
         renderPass.sprite.texture = renderPass.textures[1];
     }
     else if(renderPass.renderPassId == 3)
     {
         renderPass.sprite.texture = renderPass.textures[0];
         
-        // tell shader to use 2nd texture
+        // Set the glowmap as u_sampler2
         renderPass.sprite.shaderUniforms[@"u_enableGlowMap"] = [NSNumber numberWithFloat:1.0f];
         renderPass.sprite.shaderUniforms[@"u_sampler2"] = renderPass.textures[2];
     }
@@ -138,7 +157,6 @@
     }
     else if(renderPass.renderPassId == 1 || renderPass.renderPassId == 2 || renderPass.renderPassId == 3)
     {
-        [renderPass.renderer enqueueClear:0 color:clearColor depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
         [renderPass.sprite visit:renderPass.renderer parentTransform:&transform];
     }
 }

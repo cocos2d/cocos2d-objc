@@ -113,7 +113,7 @@
 
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
-    [_textures removeAllObjects];
+    [self destroy];
     [self configureRender];
 
     NSAssert(_renderer == renderer, @"CCEffectNode error!");
@@ -122,13 +122,13 @@
     renderPass.renderPassId = _currentRenderPass;
     renderPass.sprite = _sprite;
     renderPass.renderer = _renderer;
-    renderPass.transform = (*transform);
     
     if(self.effect.shader && self.sprite.shader != self.effect.shader)
         self.sprite.shader = self.effect.shader;
     
     for(int i = 0; i < self.effect.renderPassesRequired; i++)
     {
+        renderPass.transform = _projection;
         _currentRenderPass = i;
         renderPass.renderPassId = i;
         renderPass.textures = _textures;
@@ -146,6 +146,7 @@
         }];
         [self end];
         [_renderer flush];
+        renderPass.transform = (*transform);
         [self.effect renderPassEnd:renderPass defaultBlock:^{
             renderPass.sprite.texture = renderPass.textures[0];
             [renderPass.sprite visit:renderPass.renderer parentTransform:transform];
