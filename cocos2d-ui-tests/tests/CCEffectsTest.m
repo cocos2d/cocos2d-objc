@@ -106,50 +106,46 @@
 {
     self.subTitle = @"Brightness and Contrast Effect Test";
     
-    CCSprite *sprite = nil;
-    
-    // Add a couple sprites directly to the scene
-    sprite = [CCSprite spriteWithImageNamed:@"f1.png"];
+    // An unmodified sprite that is added directly to the scene.
+    CCSprite *sprite = [CCSprite spriteWithImageNamed:@"f1.png"];
     sprite.anchorPoint = ccp(0.5, 0.5);
     sprite.positionType = CCPositionTypeNormalized;
-    sprite.position = ccp(0.4, 0.5);
+    sprite.position = ccp(0.3, 0.5);
     [self.contentNode addChild:sprite];
 
+    // The brightness and contrast effects.
+    CCEffect *brightness = [[CCEffectBrightness alloc] initWithBrightness:0.25f];
+    CCEffect *contrast = [[CCEffectContrast alloc] initWithContrast:4.0f];
     
-    // Create third sprite for use with the effect. It does
-    // not get added to the scene directly.
-    sprite = [CCSprite spriteWithImageNamed:@"f1.png"];
+    // Effect nodes that use the effects in different combinations.
+//    [self.contentNode addChild:[self effectNodeWithEffects:@[brightness] appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.4, 0.5)]];
+//    [self.contentNode addChild:[self effectNodeWithEffects:@[contrast] appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.5, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[brightness, contrast] appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.6, 0.5)]];
+}
+
+- (CCEffectNode *)effectNodeWithEffects:(NSArray *)effects appliedToSpriteWithImage:(NSString *)spriteImage atPosition:(CGPoint)position
+{
+    // Another sprite that will be added directly
+    CCSprite *sprite = [CCSprite spriteWithImageNamed:spriteImage];
     sprite.anchorPoint = ccp(0.5, 0.5);
     sprite.positionType = CCPositionTypeNormalized;
     sprite.position = ccp(0.5, 0.5);
-
+    
     float effectDim = MAX(sprite.contentSize.width, sprite.contentSize.width);
-
+    
     // Brightness and contrast test
-    CCEffectNode* brightnessEffectNode = [[CCEffectNode alloc] initWithWidth:effectDim height:effectDim];
-    brightnessEffectNode.anchorPoint = ccp(0.5, 0.5);
-    brightnessEffectNode.positionType = CCPositionTypeNormalized;
-    brightnessEffectNode.position = ccp(0.5, 0.4);
-    [brightnessEffectNode addEffect:[[CCEffectBrightness alloc] initWithBrightness:0.25f]];
-    [brightnessEffectNode addChild:sprite];
-    [self.contentNode addChild:brightnessEffectNode];
+    CCEffectNode* effectNode = [[CCEffectNode alloc] initWithWidth:effectDim height:effectDim];
+    effectNode.anchorPoint = ccp(0.5, 0.5);
+    effectNode.positionType = CCPositionTypeNormalized;
+    effectNode.position = position;
+    [effectNode addChild:sprite];
 
-
-    // Create third sprite for use with the effect. It does
-    // not get added to the scene directly.
-    sprite = [CCSprite spriteWithImageNamed:@"f1.png"];
-    sprite.anchorPoint = ccp(0.5, 0.5);
-    sprite.positionType = CCPositionTypeNormalized;
-    sprite.position = ccp(0.5, 0.5);
-        
-    // Brightness and contrast test
-    CCEffectNode* contrastEffectNode = [[CCEffectNode alloc] initWithWidth:effectDim height:effectDim];
-    contrastEffectNode.anchorPoint = ccp(0.5, 0.5);
-    contrastEffectNode.positionType = CCPositionTypeNormalized;
-    contrastEffectNode.position = ccp(0.5, 0.6);
-    [contrastEffectNode addEffect:[[CCEffectContrast alloc] initWithContrast:4.0f]];
-    [contrastEffectNode addChild:sprite];
-    [self.contentNode addChild:contrastEffectNode];
+    for (CCEffect *effect in effects)
+    {
+        [effectNode addEffect:effect];
+    }
+    
+    return effectNode;
 }
 
 -(void)renderTextureHelper:(CCNode *)stage size:(CGSize)size
