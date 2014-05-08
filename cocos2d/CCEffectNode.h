@@ -19,7 +19,8 @@
 #import "CCEffectColor.h"
 #import "CCEffectColorPulse.h"
 #import "CCEffectGlow.h"
-#import "CCEffectBrightnessAndContrast.h"
+#import "CCEffectBrightness.h"
+#import "CCEffectContrast.h"
 
 #ifdef __CC_PLATFORM_IOS
 #import <UIKit/UIKit.h>

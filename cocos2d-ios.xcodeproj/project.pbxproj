@@ -105,6 +105,10 @@
 		5B051B1E18FC032F0091CB8C /* CCBAnimationManager+FrameAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B051B1C18FC032F0091CB8C /* CCBAnimationManager+FrameAnimation.m */; };
 		9D25E1351912E5370099AF7E /* CCEffectBrightnessAndContrast.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D25E1331912E5370099AF7E /* CCEffectBrightnessAndContrast.h */; };
 		9D25E1361912E5370099AF7E /* CCEffectBrightnessAndContrast.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D25E1341912E5370099AF7E /* CCEffectBrightnessAndContrast.m */; };
+		9D85671D191B018200573093 /* CCEffectBrightness.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D85671B191B018200573093 /* CCEffectBrightness.h */; };
+		9D85671E191B018200573093 /* CCEffectBrightness.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D85671C191B018200573093 /* CCEffectBrightness.m */; };
+		9D856721191B019900573093 /* CCEffectContrast.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D85671F191B019900573093 /* CCEffectContrast.h */; };
+		9D856722191B019900573093 /* CCEffectContrast.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D856720191B019900573093 /* CCEffectContrast.m */; };
 		A003AC8C1657071100C7B792 /* ccFPSImages.h in Headers */ = {isa = PBXBuildFile; fileRef = A003AC8B1657071100C7B792 /* ccFPSImages.h */; };
 		A003AC8F16572D6000C7B792 /* ccFPSImages.m in Sources */ = {isa = PBXBuildFile; fileRef = A003AC8E16572D6000C7B792 /* ccFPSImages.m */; };
 		A039EBFF155C686B0061EE37 /* CCNode+Debug.h in Headers */ = {isa = PBXBuildFile; fileRef = A039EBFD155C686B0061EE37 /* CCNode+Debug.h */; };
@@ -421,6 +425,10 @@
 		9D25E1331912E5370099AF7E /* CCEffectBrightnessAndContrast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectBrightnessAndContrast.h; sourceTree = "<group>"; };
 		9D25E1341912E5370099AF7E /* CCEffectBrightnessAndContrast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectBrightnessAndContrast.m; sourceTree = "<group>"; };
 		9D85671A191AE2CC00573093 /* CCEffectStack_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCEffectStack_Private.h; sourceTree = "<group>"; };
+		9D85671B191B018200573093 /* CCEffectBrightness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectBrightness.h; sourceTree = "<group>"; };
+		9D85671C191B018200573093 /* CCEffectBrightness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectBrightness.m; sourceTree = "<group>"; };
+		9D85671F191B019900573093 /* CCEffectContrast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectContrast.h; sourceTree = "<group>"; };
+		9D856720191B019900573093 /* CCEffectContrast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectContrast.m; sourceTree = "<group>"; };
 		A003AC8B1657071100C7B792 /* ccFPSImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccFPSImages.h; sourceTree = "<group>"; };
 		A003AC8E16572D6000C7B792 /* ccFPSImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccFPSImages.m; sourceTree = "<group>"; };
 		A034FF85149DC993009F11AA /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
@@ -1199,6 +1207,10 @@
 				D272033218FC9A4700B100FF /* CCEffectGlow.m */,
 				9D25E1331912E5370099AF7E /* CCEffectBrightnessAndContrast.h */,
 				9D25E1341912E5370099AF7E /* CCEffectBrightnessAndContrast.m */,
+				9D85671B191B018200573093 /* CCEffectBrightness.h */,
+				9D85671C191B018200573093 /* CCEffectBrightness.m */,
+				9D85671F191B019900573093 /* CCEffectContrast.h */,
+				9D856720191B019900573093 /* CCEffectContrast.m */,
 			);
 			name = Effects;
 			sourceTree = "<group>";
@@ -1290,6 +1302,7 @@
 				5038B6B20E196CD8009A621E /* CCParticleSystemBase.h in Headers */,
 				B7705FE01831A07B0043CC67 /* ALBuffer.h in Headers */,
 				B7705FE41831A07B0043CC67 /* ALChannelSource.h in Headers */,
+				9D856721191B019900573093 /* CCEffectContrast.h in Headers */,
 				B77060011831A07B0043CC67 /* NSMutableDictionary+WeakReferences.h in Headers */,
 				50F9E8170E1AA34E000E7616 /* ccTypes.h in Headers */,
 				D3A2E7D2181E12750033614C /* CCPhysicsShape.h in Headers */,
@@ -1369,6 +1382,7 @@
 				E0EAD10C121F4B4600B0C81C /* CCESRenderer.h in Headers */,
 				E0EAD19D121F4D7300B0C81C /* CCGL.h in Headers */,
 				E0EAD1F1121F522A00B0C81C /* CCConfiguration.h in Headers */,
+				9D85671D191B018200573093 /* CCEffectBrightness.h in Headers */,
 				D272032B18FC89A000B100FF /* CCEffectNode.h in Headers */,
 				B77060061831A07B0043CC67 /* OALTools.h in Headers */,
 				E0F924711224140400EF2362 /* CCTexturePVR.h in Headers */,
@@ -1521,6 +1535,7 @@
 				D33803EA180331A90072D8FE /* CCPhysicsJoint.m in Sources */,
 				B7705FE91831A07B0043CC67 /* ALDevice.m in Sources */,
 				5018F2740DFDEAFF00C013A5 /* CCLabelTTF.m in Sources */,
+				9D856722191B019900573093 /* CCEffectContrast.m in Sources */,
 				5018F2760DFDEAFF00C013A5 /* CCNodeColor.m in Sources */,
 				B77060001831A07B0043CC67 /* NSMutableArray+WeakReferences.m in Sources */,
 				5018F2780DFDEAFF00C013A5 /* CCScene.m in Sources */,
@@ -1577,6 +1592,7 @@
 				E01E6D8D121F130E001A484F /* CCLabelBMFont.m in Sources */,
 				E0EAD100121F4B4600B0C81C /* CCDirectorIOS.m in Sources */,
 				E0EAD109121F4B4600B0C81C /* CCGLView.m in Sources */,
+				9D85671E191B018200573093 /* CCEffectBrightness.m in Sources */,
 				D272033418FC9A4700B100FF /* CCEffectGlow.m in Sources */,
 				B7D273101822F4AA0054849B /* CCBKeyframe.m in Sources */,
 				E0F924721224140400EF2362 /* CCTexturePVR.m in Sources */,

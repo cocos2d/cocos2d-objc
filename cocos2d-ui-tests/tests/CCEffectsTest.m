@@ -115,12 +115,7 @@
     sprite.position = ccp(0.4, 0.5);
     [self.contentNode addChild:sprite];
 
-    sprite = [CCSprite spriteWithImageNamed:@"f1.png"];
-    sprite.anchorPoint = ccp(0.5, 0.5);
-    sprite.positionType = CCPositionTypeNormalized;
-    sprite.position = ccp(0.5, 0.6);
-    [self.contentNode addChild:sprite];
-
+    
     // Create third sprite for use with the effect. It does
     // not get added to the scene directly.
     sprite = [CCSprite spriteWithImageNamed:@"f1.png"];
@@ -128,16 +123,33 @@
     sprite.positionType = CCPositionTypeNormalized;
     sprite.position = ccp(0.5, 0.5);
 
-    // Brightness and contrast test
     float effectDim = MAX(sprite.contentSize.width, sprite.contentSize.width);
-    CCEffectNode* effectNode = [[CCEffectNode alloc] initWithWidth:effectDim height:effectDim];
-    effectNode.anchorPoint = ccp(0.5, 0.5);
-    effectNode.positionType = CCPositionTypeNormalized;
-    effectNode.position = ccp(0.5, 0.4);
-    [effectNode addEffect:[[CCEffectBrightnessAndContrast alloc] initWithBrightness:0.25f contrast:2.0f]];
-    [effectNode addChild:sprite];
 
-    [self.contentNode addChild:effectNode];
+    // Brightness and contrast test
+    CCEffectNode* brightnessEffectNode = [[CCEffectNode alloc] initWithWidth:effectDim height:effectDim];
+    brightnessEffectNode.anchorPoint = ccp(0.5, 0.5);
+    brightnessEffectNode.positionType = CCPositionTypeNormalized;
+    brightnessEffectNode.position = ccp(0.5, 0.4);
+    [brightnessEffectNode addEffect:[[CCEffectBrightness alloc] initWithBrightness:0.25f]];
+    [brightnessEffectNode addChild:sprite];
+    [self.contentNode addChild:brightnessEffectNode];
+
+
+    // Create third sprite for use with the effect. It does
+    // not get added to the scene directly.
+    sprite = [CCSprite spriteWithImageNamed:@"f1.png"];
+    sprite.anchorPoint = ccp(0.5, 0.5);
+    sprite.positionType = CCPositionTypeNormalized;
+    sprite.position = ccp(0.5, 0.5);
+        
+    // Brightness and contrast test
+    CCEffectNode* contrastEffectNode = [[CCEffectNode alloc] initWithWidth:effectDim height:effectDim];
+    contrastEffectNode.anchorPoint = ccp(0.5, 0.5);
+    contrastEffectNode.positionType = CCPositionTypeNormalized;
+    contrastEffectNode.position = ccp(0.5, 0.6);
+    [contrastEffectNode addEffect:[[CCEffectContrast alloc] initWithContrast:4.0f]];
+    [contrastEffectNode addChild:sprite];
+    [self.contentNode addChild:contrastEffectNode];
 }
 
 -(void)renderTextureHelper:(CCNode *)stage size:(CGSize)size
