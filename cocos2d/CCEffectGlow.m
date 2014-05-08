@@ -66,11 +66,11 @@
                                    
                                    if(u_enableGlowMap == 0.0)
                                    {
-                                       lowp vec4 fragmentColor = texture2D(cc_MainTexture, v_centerTextureCoordinate).rgba * 0.2270270270;
-                                       fragmentColor += texture2D(cc_MainTexture, v_oneStepLeftTextureCoordinate).rgba * 0.3162162162;
-                                       fragmentColor += texture2D(cc_MainTexture, v_oneStepRightTextureCoordinate).rgba * 0.3162162162;
-                                       fragmentColor += texture2D(cc_MainTexture, v_twoStepsLeftTextureCoordinate).rgba * 0.0702702703;
-                                       fragmentColor += texture2D(cc_MainTexture, v_twoStepsRightTextureCoordinate).rgba * 0.0702702703;
+                                       lowp vec4 fragmentColor = texture2D(cc_MainTexture, v_centerTextureCoordinate) * 0.2270270270;
+                                       fragmentColor += texture2D(cc_MainTexture, v_oneStepLeftTextureCoordinate) * 0.3162162162;
+                                       fragmentColor += texture2D(cc_MainTexture, v_oneStepRightTextureCoordinate) * 0.3162162162;
+                                       fragmentColor += texture2D(cc_MainTexture, v_twoStepsLeftTextureCoordinate) * 0.0702702703;
+                                       fragmentColor += texture2D(cc_MainTexture, v_twoStepsRightTextureCoordinate) * 0.0702702703;
                                        
                                        src = fragmentColor;
                                    }
@@ -166,7 +166,7 @@
     if(renderPass.renderPassId == 3)
     {
         GLKMatrix4 transform = renderPass.transform;
-        renderPass.sprite.texture = renderPass.textures[2];
+        renderPass.sprite.texture = renderPass.textures[3];
         renderPass.sprite.shader = [CCShader positionTextureColorShader];
         [renderPass.sprite visit:renderPass.renderer parentTransform:&transform];
     }

@@ -79,7 +79,6 @@
 	
     _currentRenderPass = 0;
     GLKMatrix4 transform = [self transform:parentTransform];
-    //[_sprite visit:renderer parentTransform:&transform];
     [self draw:renderer transform:&transform];
 	
 	_orderOfArrival = 0;
@@ -145,7 +144,6 @@
             }
         }];
         [self end];
-        [_renderer flush];
         renderPass.transform = (*transform);
         [self.effect renderPassEnd:renderPass defaultBlock:^{
             renderPass.sprite.texture = renderPass.textures[0];
