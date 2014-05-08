@@ -28,7 +28,7 @@
 -(void)buildFragmentFunctions
 {
     NSString* effectBody = CC_GLSL(
-                                   vec4 inputValue = texture2D(cc_MainTexture, cc_FragTexCoord1);
+                                   vec4 inputValue = texture2D(cc_PreviousPassTexture, cc_FragTexCoord1);
                                    return vec4((inputValue.rgb + vec3(u_brightness)), inputValue.a);
                                    );
     
@@ -38,18 +38,13 @@
 
 -(NSInteger)renderPassesRequired
 {
-    return 2;
+    return 1;
 }
 
 -(void)renderPassBegin:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
 {
     renderPass.sprite.anchorPoint = ccp(0.0, 0.0);
-    
-    if(renderPass.renderPassId == 1)
-    {
-        renderPass.sprite.texture = renderPass.textures[0];        
-        renderPass.sprite.shaderUniforms[@"u_brightness"] = [NSNumber numberWithFloat:self.brightness];
-    }
+    renderPass.sprite.shaderUniforms[@"u_brightness"] = [NSNumber numberWithFloat:self.brightness];
 }
 
 -(void)renderPassUpdate:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
@@ -57,31 +52,12 @@
     GLKMatrix4 transform = renderPass.transform;
     GLKVector4 clearColor;
     
-    if(renderPass.renderPassId == 0)
-    {
-        if(defaultBlock)
-            defaultBlock();
-    }
-    else if(renderPass.renderPassId == 1)
-    {
-        [renderPass.renderer enqueueClear:0 color:clearColor depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
-        [renderPass.sprite visit:renderPass.renderer parentTransform:&transform];
-    }
-    
+    [renderPass.renderer enqueueClear:0 color:clearColor depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
+    [renderPass.sprite visit:renderPass.renderer parentTransform:&transform];
 }
 
 -(void)renderPassEnd:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
 {
-    if (renderPass.renderPassId == 1)
-    {
-        GLKMatrix4 transform = renderPass.transform;
-        
-        renderPass.sprite.anchorPoint = ccp(0.5, 0.5);
-        renderPass.sprite.texture = renderPass.textures[1];
-        renderPass.sprite.shader = [CCShader positionTextureColorShader];
-        renderPass.sprite.blendMode = [CCBlendMode alphaMode];
-        [renderPass.sprite visit:renderPass.renderer parentTransform:&transform];
-    }
 }
 
 @end

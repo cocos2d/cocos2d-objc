@@ -90,7 +90,6 @@
 	// Don't call visit on its children
 	if(!_visible) return;
 	
-    _currentRenderPass = 0;
     GLKMatrix4 transform = [self transform:parentTransform];
     //[_sprite visit:renderer parentTransform:&transform];
     [self draw:renderer transform:&transform];
@@ -131,49 +130,90 @@
 
     NSAssert(_renderer == renderer, @"CCEffectNode error!");
     
+    _currentRenderPass = 0;
+    
+    // XXX Let the first effect in the stack override this pre-rendering step
+    
+    /////////////////////////////////////////////////////////////////
+    // Render children of this effect node into an FBO
+    /////////////////////////////////////////////////////////////////
+    
+    // Render children
+    [self begin];
+    [_renderer enqueueClear:self.clearFlags color:_clearColor depth:self.clearDepth stencil:self.clearStencil globalSortOrder:NSIntegerMin];
+    
+    //! make sure all children are drawn
+    [self sortAllChildren];
+    
+    for(CCNode *child in _children){
+        if( child != _sprite) [child visit:renderer parentTransform:&_projection];
+    }
+    [self end];
+
+    /////////////////////////////////////////////////////////////////
+    // Done pre-render
+    /////////////////////////////////////////////////////////////////
+    
+    
     CCEffectRenderPass* renderPass = [[CCEffectRenderPass alloc] init];
-    renderPass.renderPassId = _currentRenderPass;
     renderPass.sprite = _sprite;
     renderPass.renderer = _renderer;
     
+    NSInteger globalPassIndex = 0;
     for (NSUInteger e = 0; e < _effectStack.effectCount; e++)
     {
         CCEffect *effect = [_effectStack effectAtIndex:e];
-
         if(effect.shader && self.sprite.shader != effect.shader)
         {
             self.sprite.shader = effect.shader;
             [self.sprite.shaderUniforms removeAllObjects];
             [self.sprite.shaderUniforms addEntriesFromDictionary:effect.shaderUniforms];
+            self.sprite.shaderUniforms[@"cc_MainTexture"] = _textures[0];
         }
         
         for(int i = 0; i < effect.renderPassesRequired; i++)
         {
+            _currentRenderPass = globalPassIndex + 1;
+
             renderPass.transform = _projection;
-            _currentRenderPass = i;
             renderPass.renderPassId = i;
             renderPass.textures = _textures;
+            
+            renderPass.sprite.shaderUniforms[@"cc_PreviousPassTexture"] = _textures[globalPassIndex];
+            
             [effect renderPassBegin:renderPass defaultBlock:nil];
             [self begin];
-            [effect renderPassUpdate:renderPass defaultBlock:^{
-                [_renderer enqueueClear:self.clearFlags color:_clearColor depth:self.clearDepth stencil:self.clearStencil globalSortOrder:NSIntegerMin];
-                
-                //! make sure all children are drawn
-                [self sortAllChildren];
-                
-                for(CCNode *child in _children){
-                    if( child != _sprite) [child visit:renderer parentTransform:&_projection];
-                }
-            }];
+            [effect renderPassUpdate:renderPass defaultBlock:nil];
+
             [self end];
             [_renderer flush];
-            renderPass.transform = (*transform);
-            [effect renderPassEnd:renderPass defaultBlock:^{
-                renderPass.sprite.texture = renderPass.textures[0];
-                [renderPass.sprite visit:renderPass.renderer parentTransform:transform];
-            }];
+            [effect renderPassEnd:renderPass defaultBlock:nil];
+            
+            ++globalPassIndex;
         }
     }
+    
+    
+    
+    // XXX Let the last effect in the stack override this post-rendering step
+    
+    /////////////////////////////////////////////////////////////////
+    // Draw accumulated results into the real framebuffer
+    /////////////////////////////////////////////////////////////////
+
+    // The texture property always points to the most recently allocated
+    // texture so it will contain any accumulated results for a stack of
+    // effects.
+    _sprite.texture = self.texture;
+    _sprite.blendMode = [CCBlendMode alphaMode];
+    _sprite.anchorPoint = ccp(0.5, 0.5);
+    [_sprite visit:_renderer parentTransform:transform];
+    
+    /////////////////////////////////////////////////////////////////
+    // Done framebuffer composite
+    /////////////////////////////////////////////////////////////////
+
+    
     
     if(_privateRenderer == NO)
         _renderer.globalShaderUniforms = _oldGlobalUniforms;
