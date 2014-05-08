@@ -29,7 +29,7 @@
 {
     NSString* effectBody = CC_GLSL(
                                    vec4 inputValue = texture2D(cc_PreviousPassTexture, cc_FragTexCoord1);
-                                   return vec4((inputValue.rgb + vec3(u_brightness)), inputValue.a);
+                                   return vec4((inputValue.rgb + vec3(u_brightness * inputValue.a)), inputValue.a);
                                    );
     
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"brightnessEffect" body:effectBody returnType:@"vec4"];
