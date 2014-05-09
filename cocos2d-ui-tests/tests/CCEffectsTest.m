@@ -132,7 +132,7 @@
     sprite.positionType = CCPositionTypeNormalized;
     sprite.position = ccp(0.5, 0.5);
     
-    float effectDim = MAX(sprite.contentSize.width, sprite.contentSize.width);
+    float effectDim = MAX(sprite.contentSize.width, sprite.contentSize.height);
     
     // Brightness and contrast test
     CCEffectNode* effectNode = [[CCEffectNode alloc] initWithWidth:effectDim height:effectDim];
