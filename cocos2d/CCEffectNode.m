@@ -132,14 +132,19 @@
     
     _currentRenderPass = 0;
     
-    // XXX Let the first effect in the stack override this pre-rendering step
-    
-    /////////////////////////////////////////////////////////////////
-    // Render children of this effect node into an FBO
-    /////////////////////////////////////////////////////////////////
-    
-    // Render children
+    // XXX We may want to make this pre-render step overridable by the
+    // first effect in the stack. That would look something like this:
+    //
+    // CCEffect *firstEffect = [_effectStack effectAtIndex:0];
+    // if (firstEffect.overridesPrerender)
+    //   [firstEffect prerender]
+    // else
+    //   Do all the stuff below.
+
+    // Render children of this effect node into an FBO for use by the
+    // remainder of the effects.
     [self begin];
+    
     [_renderer enqueueClear:self.clearFlags color:_clearColor depth:self.clearDepth stencil:self.clearStencil globalSortOrder:NSIntegerMin];
     
     //! make sure all children are drawn
@@ -150,9 +155,7 @@
     }
     [self end];
 
-    /////////////////////////////////////////////////////////////////
     // Done pre-render
-    /////////////////////////////////////////////////////////////////
     
     
     CCEffectRenderPass* renderPass = [[CCEffectRenderPass alloc] init];
@@ -196,22 +199,19 @@
     
     
     
-    // XXX Let the last effect in the stack override this post-rendering step
+    // XXX We may want to make this post-render step overridable by the
+    // last effect in the stack. That would look like the code in the
+    // pre-render override comment above.
+    //
     
-    /////////////////////////////////////////////////////////////////
-    // Draw accumulated results into the real framebuffer
-    /////////////////////////////////////////////////////////////////
-
+    // Draw accumulated results from the last textureinto the real framebuffer
     // The texture property always points to the most recently allocated
-    // texture so it will contain any accumulated results for a stack of
-    // effects.
+    // texture so it will contain any accumulated results for the effect stack.
     _sprite.texture = self.texture;
     _sprite.anchorPoint = ccp(0.5, 0.5);
     [_sprite visit:_renderer parentTransform:transform];
     
-    /////////////////////////////////////////////////////////////////
     // Done framebuffer composite
-    /////////////////////////////////////////////////////////////////
 
     
     
