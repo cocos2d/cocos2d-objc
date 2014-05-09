@@ -91,7 +91,6 @@
 	if(!_visible) return;
 	
     GLKMatrix4 transform = [self transform:parentTransform];
-    //[_sprite visit:renderer parentTransform:&transform];
     [self draw:renderer transform:&transform];
 	
 	_orderOfArrival = 0;
