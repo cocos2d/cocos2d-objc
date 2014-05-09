@@ -12,5 +12,10 @@
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffectGlow : CCEffect
 
+@property (nonatomic) float blurRadius;
+
+-(id)initWithBlurRadius:(float)blurRadius;
++(id)effectWithRadius:(float)blurRadius;
+
 @end
 #endif

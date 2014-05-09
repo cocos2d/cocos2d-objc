@@ -434,6 +434,7 @@
     [self updateColor];
 }
 
+#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 -(CCEffect *)effect
 {
     // work in progress, since I added mutli pass rendering for efffects, sprite are no longer working with all effects.
@@ -446,6 +447,7 @@
     // work in progress, since I added mutli pass rendering for efffects, sprite are no longer working with all effects.
     // taking this out for now.
 }
+#endif
 
 //
 // Frames

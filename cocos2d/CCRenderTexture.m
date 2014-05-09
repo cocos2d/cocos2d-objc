@@ -65,6 +65,27 @@
 @end
 
 
+@interface CCRenderTextureFBO : NSObject
+
+@property (nonatomic, readonly) GLuint FBO;
+@property (nonatomic, readonly) GLuint depthRenderBuffer;
+
+@end
+
+@implementation CCRenderTextureFBO
+
+- (id)initWithFBO:(GLuint)fbo depthRenderBuffer:(GLuint)depthBuffer
+{
+    if((self = [super init]))
+    {
+        _FBO = fbo;
+        _depthRenderBuffer = depthBuffer;
+    }
+    return self;
+}
+
+@end
+
 @implementation CCRenderTexture
 
 +(id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat) format depthStencilFormat:(GLuint)depthStencilFormat
@@ -100,6 +121,7 @@
 		NSAssert(format != CCTexturePixelFormat_A8, @"only RGB and RGBA formats are valid for a render texture");
 
         _textures = [[NSMutableArray alloc] init];
+        _FBOs = [[NSMutableArray alloc] init];
         
 		CCDirector *director = [CCDirector sharedDirector];
 
@@ -159,28 +181,33 @@
 	glGetIntegerv(GL_RENDERBUFFER_BINDING, &oldRBO);
 
 	// generate FBO
-	glGenFramebuffers(1, &_FBO);
-	glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
+    GLuint fbo;
+	glGenFramebuffers(1, &fbo);
+	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
 	// associate texture with FBO
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.name, 0);
 
+    GLuint depthRenderBuffer = 0;
 	if(_depthStencilFormat){
 		//create and attach depth buffer
-		glGenRenderbuffers(1, &_depthRenderBufffer);
-		glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBufffer);
+		glGenRenderbuffers(1, &depthRenderBuffer);
+		glBindRenderbuffer(GL_RENDERBUFFER, depthRenderBuffer);
 		glRenderbufferStorage(GL_RENDERBUFFER, _depthStencilFormat, (GLsizei)powW, (GLsizei)powH);
-		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBufffer);
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthRenderBuffer);
 
 		// if depth format is the one with stencil part, bind same render buffer as stencil attachment
 		if(_depthStencilFormat == GL_DEPTH24_STENCIL8){
-			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBufffer);
+			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depthRenderBuffer);
 		}
 	}
-
+    
 	// check if it worked (probably worth doing :) )
 	NSAssert( glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, @"Could not attach texture to framebuffer");
 
+    CCRenderTextureFBO *renderTextureFBO = [[CCRenderTextureFBO alloc] initWithFBO:fbo depthRenderBuffer:depthRenderBuffer];
+    [_FBOs insertObject:renderTextureFBO atIndex:_currentRenderPass];
+    
 	[texture setAliasTexParameters];
 	
 	glBindRenderbuffer(GL_RENDERBUFFER, oldRBO);
@@ -207,20 +234,25 @@
 		
 		[self destroy];
         _currentRenderPass = 0;
-        [_textures removeAllObjects];
 	}
 }
 
 -(void)destroy
 {
-    [_textures removeAllObjects];
-	glDeleteFramebuffers(1, &_FBO);
-	_FBO = 0;
+    for (CCRenderTextureFBO *renderTextureFBO in _FBOs)
+    {
+        GLuint fbo = renderTextureFBO.FBO;
+        glDeleteFramebuffers(1, &fbo);
 	
-	if(_depthRenderBufffer){
-		glDeleteRenderbuffers(1, &_depthRenderBufffer);
-		_depthRenderBufffer = 0;
-	}
+        GLuint depthRenderBuffer = renderTextureFBO.depthRenderBuffer;
+        if (depthRenderBuffer)
+        {
+            glDeleteRenderbuffers(1, &depthRenderBuffer);
+        }
+    }
+
+    [_textures removeAllObjects];
+    [_FBOs removeAllObjects];
 }
 
 -(void)dealloc
@@ -230,6 +262,7 @@
 
 -(CCTexture *)texture
 {
+    NSAssert([_textures count] == [_FBOs count], @"The number of textures is out of sync with the number of FBOs.");
     if(([_textures count] <= _currentRenderPass) || [_textures objectAtIndex:_currentRenderPass]  == nil)
         [self create];
     
@@ -238,10 +271,12 @@
 
 -(GLuint)fbo
 {
+    NSAssert([_textures count] == [_FBOs count], @"The number of textures is out of sync with the number of FBOs.");
     if([_textures objectAtIndex:_currentRenderPass] == nil)
         [self create];
     
-    return _FBO;
+    CCRenderTextureFBO *renderTextureFBO = [_FBOs objectAtIndex:_currentRenderPass];
+    return renderTextureFBO.FBO;
 }
 
 -(void)begin
@@ -294,6 +329,7 @@
 {
 	[self beginWithClear:r g:g b:b a:a depth:depthValue stencil:0 flags:GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT];
 }
+
 -(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a depth:(float)depthValue stencil:(int)stencilValue
 {
 	[self beginWithClear:r g:g b:b a:a depth:depthValue stencil:stencilValue flags:GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT|GL_STENCIL_BUFFER_BIT];

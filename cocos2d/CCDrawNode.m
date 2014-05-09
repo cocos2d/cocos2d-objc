@@ -134,9 +134,16 @@ CCShader *SHADER = nil;
 
 #pragma mark Immediate Mode
 
+static inline GLKVector4
+Premultiply(GLKVector4 c)
+{
+	return GLKVector4Make(c.r*c.a, c.g*c.a, c.b*c.a, c.a);
+}
+
 -(void)drawDot:(CGPoint)pos radius:(CGFloat)radius color:(CCColor *)color;
 {
-	GLKVector4 color4 = color.glkVector4;
+	GLKVector4 color4 = Premultiply(color.glkVector4);
+	
 	GLKVector2 zero2 = GLKVector2Make(0, 0);
 	
 	CCRenderBuffer buffer = [self bufferVertexes:4 andTriangleCount:2];
@@ -159,7 +166,7 @@ SetVertex(CCRenderBuffer buffer, int index, GLKVector2 v, GLKVector2 texCoord, G
 
 -(void)drawSegmentFrom:(CGPoint)_a to:(CGPoint)_b radius:(CGFloat)radius color:(CCColor*)color;
 {
-	GLKVector4 color4 = color.glkVector4;
+	GLKVector4 color4 = Premultiply(color.glkVector4);
 	GLKVector2 a = GLKVector2Make(_a.x, _a.y);
 	GLKVector2 b = GLKVector2Make(_b.x, _b.y);
 	
@@ -189,8 +196,8 @@ SetVertex(CCRenderBuffer buffer, int index, GLKVector2 v, GLKVector2 texCoord, G
 
 -(void)drawPolyWithVerts:(const CGPoint *)_verts count:(NSUInteger)count fillColor:(CCColor*)fill  borderWidth:(CGFloat)width borderColor:(CCColor*)line;
 {
-	GLKVector4 fill4 = fill.glkVector4;
-	GLKVector4 line4 = line.glkVector4;
+	GLKVector4 fill4 = Premultiply(fill.glkVector4);
+	GLKVector4 line4 = Premultiply(line.glkVector4);
 	
 	GLKVector2 verts[count];
 	for(int i=0; i<count; i++) verts[i] = GLKVector2Make(_verts[i].x, _verts[i].y);

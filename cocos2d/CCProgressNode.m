@@ -191,6 +191,8 @@ const char kCCProgressTextureCoords = 0x4b;
     CC_SWAP(alpha.x, alpha.y);
   }
 	
+	// As of 3.1, the x alpha needs to be flipped. Not really sure why.
+	alpha.x = 1.0 - alpha.x;
 	return GLKVector2Make(min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y);
 }
 
@@ -203,6 +205,9 @@ const char kCCProgressTextureCoords = 0x4b;
 	const CCSpriteVertexes *verts = _sprite.vertexes;
 	GLKVector4 min = verts->br.position;
 	GLKVector4 max = verts->tl.position;
+	
+	// As of 3.1, the x alpha needs to be flipped. Not really sure why.
+	alpha.x = 1.0 - alpha.x;
 	return GLKVector4Make(min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y, 0.0f, 1.0f);
 }
 
