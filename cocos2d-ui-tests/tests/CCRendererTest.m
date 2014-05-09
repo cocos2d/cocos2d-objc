@@ -125,6 +125,12 @@
 	}
 }
 
+static float
+ProgressPercent(CCTime t)
+{
+	return 100.0*fmod(t, 1.0);
+}
+
 - (void)setupProgressNodeTest
 {
 	self.subTitle = @"Testing various CCProgressNode setups.";
@@ -148,7 +154,7 @@
 		[self.contentNode addChild:progress];
 		
 		[self scheduleBlock:^(CCTimer *timer) {
-			progress.percentage = 100.0*(0.5 + 0.5*sin(timer.invokeTime*M_PI));
+			progress.percentage = ProgressPercent(timer.invokeTime);
 			[timer repeatOnceWithInterval:interval];
 		} delay:interval];
 	}
@@ -173,7 +179,7 @@
 		
 		[self scheduleBlock:^(CCTimer *timer) {
 			progress.midpoint = ccpAdd(ccp(0.5, 0.5), ccpMult(ccpForAngle(timer.invokeTime), 0.25));
-			progress.percentage = 100.0*(0.5 + 0.5*sin(timer.invokeTime*M_PI));
+			progress.percentage = ProgressPercent(timer.invokeTime);
 			
 			[timer repeatOnceWithInterval:interval];
 		} delay:interval];
@@ -199,7 +205,7 @@
 		[self.contentNode addChild:progress];
 		
 		[self scheduleBlock:^(CCTimer *timer) {
-			progress.percentage = 100.0*(0.5 + 0.5*sin(timer.invokeTime*M_PI));
+			progress.percentage = ProgressPercent(timer.invokeTime);
 			
 			[timer repeatOnceWithInterval:interval];
 		} delay:interval];
@@ -225,7 +231,7 @@
 		[self.contentNode addChild:progress];
 		
 		[self scheduleBlock:^(CCTimer *timer) {
-			progress.percentage = 100.0*(0.5 + 0.5*sin(timer.invokeTime*M_PI));
+			progress.percentage = ProgressPercent(timer.invokeTime);
 			
 			[timer repeatOnceWithInterval:interval];
 		} delay:interval];
@@ -251,7 +257,7 @@
 		[self.contentNode addChild:progress];
 		
 		[self scheduleBlock:^(CCTimer *timer) {
-			progress.percentage = 100.0*(0.5 + 0.5*sin(timer.invokeTime*M_PI));
+			progress.percentage = ProgressPercent(timer.invokeTime);
 			
 			[timer repeatOnceWithInterval:interval];
 		} delay:interval];
@@ -277,7 +283,7 @@
 		[self.contentNode addChild:progress];
 		
 		[self scheduleBlock:^(CCTimer *timer) {
-			progress.percentage = 100.0*(0.5 + 0.5*sin(timer.invokeTime*M_PI));
+			progress.percentage = ProgressPercent(timer.invokeTime);
 			
 			[timer repeatOnceWithInterval:interval];
 		} delay:interval];
@@ -303,7 +309,7 @@
 		[self.contentNode addChild:progress];
 		
 		[self scheduleBlock:^(CCTimer *timer) {
-			progress.percentage = 100.0*(0.5 + 0.5*sin(timer.invokeTime*M_PI));
+			progress.percentage = ProgressPercent(timer.invokeTime);
 			
 			[timer repeatOnceWithInterval:interval];
 		} delay:interval];
@@ -329,7 +335,7 @@
 		[self.contentNode addChild:progress];
 		
 		[self scheduleBlock:^(CCTimer *timer) {
-			progress.percentage = 100.0*(0.5 + 0.5*sin(timer.invokeTime*M_PI));
+			progress.percentage = ProgressPercent(timer.invokeTime);
 			
 			[timer repeatOnceWithInterval:interval];
 		} delay:interval];
