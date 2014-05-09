@@ -168,8 +168,9 @@
             self.sprite.shader = effect.shader;
             [self.sprite.shaderUniforms removeAllObjects];
             [self.sprite.shaderUniforms addEntriesFromDictionary:effect.shaderUniforms];
-            self.sprite.shaderUniforms[@"cc_MainTexture"] = _textures[0];
         }
+
+        renderPass.sprite.shaderUniforms[@"cc_MainTexture"] = _textures[globalPassIndex];
         
         for(int i = 0; i < effect.renderPassesRequired; i++)
         {
@@ -205,7 +206,6 @@
     // texture so it will contain any accumulated results for a stack of
     // effects.
     _sprite.texture = self.texture;
-    _sprite.blendMode = [CCBlendMode alphaMode];
     _sprite.anchorPoint = ccp(0.5, 0.5);
     [_sprite visit:_renderer parentTransform:transform];
     
