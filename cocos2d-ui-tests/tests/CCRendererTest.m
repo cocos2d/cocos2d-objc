@@ -548,6 +548,10 @@
 	CCDrawNode *draw = [CCDrawNode node];
 	
 	[draw drawDot:ccp(100, 100) radius:50 color:[CCColor colorWithRed:0.5 green:0.0 blue:0.0 alpha:0.75]];
+	
+	// This yellow dot should not be visible.
+	[draw drawDot:ccp(150, 150) radius:50 color:[CCColor colorWithRed:0.5 green:0.5 blue:0.0 alpha:0.0]];
+	
 	[draw drawSegmentFrom:ccp(100, 200) to:ccp(200, 200) radius:25 color:[CCColor colorWithRed:0.0 green:0.0 blue:0.5 alpha:0.75]];
 	
 	CGPoint points1[] = {
