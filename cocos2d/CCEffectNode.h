@@ -21,6 +21,7 @@
 #import "CCEffectGlow.h"
 #import "CCEffectBrightness.h"
 #import "CCEffectContrast.h"
+#import "CCEffectPixellate.h"
 
 #ifdef __CC_PLATFORM_IOS
 #import <UIKit/UIKit.h>
