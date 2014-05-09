@@ -124,6 +124,24 @@
     [self.contentNode addChild:[self effectNodeWithEffects:@[contrast, brightness] appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.7, 0.5)]];
 }
 
+-(void)setupPixellateEffectNodeTest
+{
+    self.subTitle = @"Pixellate Effect Test";
+    
+    // An unmodified sprite that is added directly to the scene.
+    CCSprite *sprite = [CCSprite spriteWithImageNamed:@"grossini-hd.png"];
+    sprite.anchorPoint = ccp(0.5, 0.5);
+    sprite.positionType = CCPositionTypeNormalized;
+    sprite.position = ccp(0.3, 0.5);
+    [self.contentNode addChild:sprite];
+    
+    // The brightness and contrast effects.
+    CCEffect *pixellate = [[CCEffectPixellate alloc] initWithPixelScale:0.02f];
+    
+    // Effect nodes that use the effects in different combinations.
+    [self.contentNode addChild:[self effectNodeWithEffects:@[pixellate] appliedToSpriteWithImage:@"grossini-hd.png" atPosition:ccp(0.6, 0.5)]];
+}
+
 - (CCEffectNode *)effectNodeWithEffects:(NSArray *)effects appliedToSpriteWithImage:(NSString *)spriteImage atPosition:(CGPoint)position
 {
     // Another sprite that will be added directly
