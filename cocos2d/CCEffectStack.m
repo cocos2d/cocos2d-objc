@@ -41,7 +41,7 @@
 
 - (NSUInteger)effectCount
 {
-    return _effects.count;;
+    return _effects.count;
 }
 
 - (CCEffect *)effectAtIndex:(NSUInteger)effectIndex
