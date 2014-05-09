@@ -24,10 +24,7 @@
     CCEffectVarying* v_oneStepRightTextureCoordinate = [CCEffectVarying varying:@"vec2" name:@"v_oneStepRightTextureCoordinate"];
     CCEffectVarying* v_twoStepsRightTextureCoordinate = [CCEffectVarying varying:@"vec2" name:@"v_twoStepsRightTextureCoordinate"];
     
-    CCTexture* texture = [CCTexture none];
-    CCEffectUniform* u_sampler2 = [CCEffectUniform uniform:@"sampler2D" name:@"u_sampler2" value:(NSValue*)texture];
-    
-    if(self = [super initWithUniforms:[NSArray arrayWithObjects:u_enableGlowMap, u_sampler2, nil]
+    if(self = [super initWithUniforms:[NSArray arrayWithObjects:u_enableGlowMap, nil]
                       vertextUniforms:[NSArray arrayWithObjects:u_blurDirection, nil]
                               varying:[NSArray arrayWithObjects:v_centerTextureCoordinate, v_twoStepsLeftTextureCoordinate,
                                        v_oneStepLeftTextureCoordinate, v_oneStepRightTextureCoordinate,
@@ -66,18 +63,18 @@
                                    
                                    if(u_enableGlowMap == 0.0)
                                    {
-                                       lowp vec4 fragmentColor = texture2D(cc_MainTexture, v_centerTextureCoordinate).rgba * 0.2270270270;
-                                       fragmentColor += texture2D(cc_MainTexture, v_oneStepLeftTextureCoordinate).rgba * 0.3162162162;
-                                       fragmentColor += texture2D(cc_MainTexture, v_oneStepRightTextureCoordinate).rgba * 0.3162162162;
-                                       fragmentColor += texture2D(cc_MainTexture, v_twoStepsLeftTextureCoordinate).rgba * 0.0702702703;
-                                       fragmentColor += texture2D(cc_MainTexture, v_twoStepsRightTextureCoordinate).rgba * 0.0702702703;
+                                       lowp vec4 fragmentColor = texture2D(cc_PreviousPassTexture, v_centerTextureCoordinate).rgba * 0.2270270270;
+                                       fragmentColor += texture2D(cc_PreviousPassTexture, v_oneStepLeftTextureCoordinate).rgba * 0.3162162162;
+                                       fragmentColor += texture2D(cc_PreviousPassTexture, v_oneStepRightTextureCoordinate).rgba * 0.3162162162;
+                                       fragmentColor += texture2D(cc_PreviousPassTexture, v_twoStepsLeftTextureCoordinate).rgba * 0.0702702703;
+                                       fragmentColor += texture2D(cc_PreviousPassTexture, v_twoStepsRightTextureCoordinate).rgba * 0.0702702703;
                                        
                                        src = fragmentColor;
                                    }
                                    else
                                    {
                                        dst = texture2D(cc_MainTexture, cc_FragTexCoord1);
-                                       src = texture2D(u_sampler2, cc_FragTexCoord1);
+                                       src = texture2D(cc_PreviousPassTexture, cc_FragTexCoord1);
                                    }
                                    
                                    return (src + dst) - (src * dst);
@@ -110,66 +107,41 @@
 -(NSInteger)renderPassesRequired
 {
     // optmized approach based on linear sampling - http://rastergrid.com/blog/2010/09/efficient-gaussian-blur-with-linear-sampling/ and GPUImage - https://github.com/BradLarson/GPUImage
-    // pass 0: draws all children to texture[0]
-    // pass 1: blurs (horizontal) texture[0] and outputs blurmap to texture[1]
-    // pass 2: blurs (vertical) texture[1] and outputs to texture[2]
-    // pass 3: blends texture[0] and texture[2] and outputs texture[3], once the blend is complete,
-    //         we set the sprites shader back to a regular position/texture shader and assign texture[3] (bloom/glow) as the main texture of the sprite
-
-    return 4;
+    // pass 0: blurs (horizontal) texture[0] and outputs blurmap to texture[1]
+    // pass 1: blurs (vertical) texture[1] and outputs to texture[2]
+    // pass 2: blends texture[0] and texture[2] and outputs to texture[3]
+    
+    return 3;
 }
 
 -(void)renderPassBegin:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
 {
     renderPass.sprite.anchorPoint = ccp(0.0, 0.0);
     
-    if(renderPass.renderPassId == 1)
+    if(renderPass.renderPassId == 0)
     {
         renderPass.sprite.shaderUniforms[@"u_enableGlowMap"] = [NSNumber numberWithFloat:0.0f];
         renderPass.sprite.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(_blurRadius, 0.0f)];
-        renderPass.sprite.texture = renderPass.textures[0];
     }
-    else if(renderPass.renderPassId == 2)
+    else if(renderPass.renderPassId == 1)
     {
         renderPass.sprite.shaderUniforms[@"u_enableGlowMap"] = [NSNumber numberWithFloat:0.0f];
         renderPass.sprite.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(0.0f, _blurRadius)];
-        renderPass.sprite.texture = renderPass.textures[1];
     }
-    else if(renderPass.renderPassId == 3)
+    else if(renderPass.renderPassId == 2)
     {
-        renderPass.sprite.texture = renderPass.textures[0];
-        
-        // Set the glowmap as u_sampler2
         renderPass.sprite.shaderUniforms[@"u_enableGlowMap"] = [NSNumber numberWithFloat:1.0f];
-        renderPass.sprite.shaderUniforms[@"u_sampler2"] = renderPass.textures[2];
     }
 }
 
 -(void)renderPassUpdate:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
 {
     GLKMatrix4 transform = renderPass.transform;
-    GLKVector4 clearColor;
-
-    if(renderPass.renderPassId == 0)
-    {
-        if(defaultBlock)
-            defaultBlock();
-    }
-    else if(renderPass.renderPassId == 1 || renderPass.renderPassId == 2 || renderPass.renderPassId == 3)
-    {
-        [renderPass.sprite visit:renderPass.renderer parentTransform:&transform];
-    }
+    [renderPass.sprite visit:renderPass.renderer parentTransform:&transform];
 }
 
 -(void)renderPassEnd:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
 {
-    if(renderPass.renderPassId == 3)
-    {
-        GLKMatrix4 transform = renderPass.transform;
-        renderPass.sprite.texture = renderPass.textures[2];
-        renderPass.sprite.shader = [CCShader positionTextureColorShader];
-        [renderPass.sprite visit:renderPass.renderer parentTransform:&transform];
-    }
 }
 
 @end
