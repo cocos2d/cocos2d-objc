@@ -36,21 +36,20 @@
     return self;
 }
 
-
--(id)initWithBlurRadius:(float)blurRadius
+-(id)initWithbBurStrength:(float)blurStrength
 {
     if((self = [self init]))
     {
-        _blurRadius = blurRadius;
+        _blurStrength = blurStrength;
         return self;
     }
 
     return self;
 }
 
-+(id)effectWithRadius:(float)blurRadius;
++(id)effectWithBlurStrength:(float)blurStrength
 {
-    return [[self alloc] initWithBlurRadius:blurRadius];
+    return [[self alloc] initWithbBurStrength:blurStrength];
 }
 
 -(void)buildFragmentFunctions
@@ -121,12 +120,12 @@
     if(renderPass.renderPassId == 0)
     {
         renderPass.sprite.shaderUniforms[@"u_enableGlowMap"] = [NSNumber numberWithFloat:0.0f];
-        renderPass.sprite.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(_blurRadius, 0.0f)];
+        renderPass.sprite.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(_blurStrength, 0.0f)];
     }
     else if(renderPass.renderPassId == 1)
     {
         renderPass.sprite.shaderUniforms[@"u_enableGlowMap"] = [NSNumber numberWithFloat:0.0f];
-        renderPass.sprite.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(0.0f, _blurRadius)];
+        renderPass.sprite.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(0.0f, _blurStrength)];
     }
     else if(renderPass.renderPassId == 2)
     {

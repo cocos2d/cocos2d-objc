@@ -105,7 +105,7 @@
     glowEffectNode.positionType = CCPositionTypeNormalized;
     glowEffectNode.position = ccp(0.1, 0.5);
     [glowEffectNode addChild:sampleSprite];
-    CCEffectGlow* glowEffect = [CCEffectGlow effectWithRadius:0.01f];
+    CCEffectGlow* glowEffect = [CCEffectGlow effectWithBlurStrength:0.02f];
     [glowEffectNode addEffect:glowEffect];
     
     CGSize size = CGSizeMake(1.0, 1.0);
