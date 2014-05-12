@@ -57,8 +57,12 @@ const NSString *CCShaderUniformMainTexture = @"cc_MainTexture";
 const NSString *CCShaderUniformAlphaTestValue = @"cc_AlphaTestValue";
 
 
+// Stringify macros
+#define STR(s) #s
+#define XSTR(s) STR(s)
+
 /*
-	main texture size points/pixels
+	main texture size points/pixels?
 */
 static const GLchar *CCShaderHeader =
 	"#ifndef GL_ES\n"
@@ -84,6 +88,7 @@ static const GLchar *CCVertexShaderHeader =
 	"#ifdef GL_ES\n"
 	"precision highp float;\n\n"
 	"#endif\n\n"
+	"#define CC_NODE_RENDER_SUBPIXEL " XSTR(CC_NODE_RENDER_SUBPIXEL) "\n"
 	"attribute highp vec4 cc_Position;\n"
 	"attribute highp vec2 cc_TexCoord1;\n"
 	"attribute highp vec2 cc_TexCoord2;\n"
@@ -99,6 +104,10 @@ static const GLchar *CCFragmentShaderHeader =
 static NSString *CCDefaultVShader =
 	@"void main(){\n"
 	@"	gl_Position = cc_Position;\n"
+	@"#if !CC_NODE_RENDER_SUBPIXEL\n"
+	@"	vec2 pixelPos = (0.5*gl_Position.xy/gl_Position.w + 0.5)*cc_ViewSizeInPixels;\n"
+	@"	gl_Position.xy = (2.0*floor(pixelPos)/cc_ViewSizeInPixels - 1.0)*gl_Position.w;\n"
+	@"#endif\n\n"
 	@"	cc_FragColor = clamp(cc_Color, 0.0, 1.0);\n"
 	@"	cc_FragTexCoord1 = cc_TexCoord1;\n"
 	@"	cc_FragTexCoord2 = cc_TexCoord2;\n"

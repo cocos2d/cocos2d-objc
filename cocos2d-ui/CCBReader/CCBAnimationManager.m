@@ -573,8 +573,14 @@ static NSInteger ccbAnimationManagerID = 0;
     block = [b copy];
 }
 
+- (void)cleanup {
+    [_scheduler setPaused:YES target:self];
+	[_scheduler unscheduleTarget:self];
+    [self clearAllActions];
+}
+
 - (void)dealloc {
-    self.rootNode = NULL;
+    _rootNode = NULL;
 }
 
 - (void)debug {
@@ -760,7 +766,7 @@ static NSInteger ccbAnimationManagerID = 0;
     
     CCBKeyframe* startKeyFrame = [seqProp.keyframes objectAtIndex:0];
     CCBKeyframe* endKeyFrame   = [seqProp.keyframes objectAtIndex:0];
-    
+  
     NSUInteger frameCount = [seqProp.keyframes count];
     
     // Find KeyFrames

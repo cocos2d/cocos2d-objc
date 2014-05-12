@@ -165,7 +165,17 @@
 
 - (void) update:(CCTime)delta
 {
-    [self positionTextField];
+    BOOL isVisible = self.visible;
+    if (isVisible) {
+    	// run through ancestors and see if we are visible
+        for (CCNode *parent = self.parent; parent && isVisible; parent = parent.parent)
+            isVisible &= parent.visible;
+    }
+    
+    // hide the UITextField if node is invisible
+    _textField.hidden = !isVisible;
+    
+    if (isVisible) [self positionTextField];
 }
 
 - (void) layout
@@ -187,6 +197,11 @@
 #endif
     
     [super layout];
+}
+
+- (void) setEnabled:(BOOL)enabled {
+    _textField.enabled = enabled;
+    [super setEnabled:enabled];
 }
 
 #pragma mark Text Field Delegate Methods

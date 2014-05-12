@@ -147,7 +147,7 @@
 	physics.debugDraw = YES;
 	[self.contentNode addChild:physics];
 	
-	CCSpriteBatchNode *bn = [CCSpriteBatchNode batchNodeWithFile:@"Sprites.png"];
+	CCNode *bn = [CCNode node];
 	[physics addChild:bn];
 	
 	{

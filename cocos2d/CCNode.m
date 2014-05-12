@@ -29,6 +29,7 @@
 #import "CCNode_Private.h"
 #import "CCDirector.h"
 #import "CCActionManager.h"
+#import "CCBAnimationManager.h"
 #import "CCScheduler.h"
 #import "ccConfig.h"
 #import "ccMacros.h"
@@ -41,6 +42,7 @@
 #import "CCTexture_Private.h"
 #import "CCActionManager_Private.h"
 
+
 #ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
 #endif
@@ -51,7 +53,6 @@
 #else
 #define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
 #endif
-
 
 #pragma mark - Node
 
@@ -79,7 +80,7 @@ GetBodyIfRunning(CCNode *node)
 	return (node->_isInActiveScene ? node->_physicsBody : nil);
 }
 
-inline CGAffineTransform
+CGAffineTransform
 NodeToPhysicsTransform(CCNode *node)
 {
 	CGAffineTransform transform = CGAffineTransformIdentity;
@@ -90,7 +91,7 @@ NodeToPhysicsTransform(CCNode *node)
 	return transform;
 }
 
-inline float
+float
 NodeToPhysicsRotation(CCNode *node)
 {
 	float rotation = 0.0;
@@ -101,7 +102,7 @@ NodeToPhysicsRotation(CCNode *node)
 	return rotation;
 }
 
-inline CGPoint
+CGPoint
 NodeToPhysicsScale(CCNode * node)
 {
     CGPoint scale = ccp(1.0f,1.0f);
@@ -205,6 +206,12 @@ static NSUInteger globalOrderOfArrival = 1;
 
 	// timers
 	[_children makeObjectsPerformSelector:@selector(cleanup)];
+    
+    // CCBAnimationManager Cleanup (Set by SpriteBuilder)
+    if([_userObject isKindOfClass:[CCBAnimationManager class]]) {
+        [_userObject performSelector:@selector(cleanup)];
+    }
+    _userObject = nil;
 }
 
 - (NSString*) description
@@ -1196,7 +1203,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 
 -(CCTimer *) schedule:(SEL)selector interval:(CCTime)interval
 {
-	return [self schedule:selector interval:interval repeat:CCTimerRepeatForever delay:0];
+	return [self schedule:selector interval:interval repeat:CCTimerRepeatForever delay:interval];
 }
 
 -(BOOL)unschedule_private:(SEL)selector

@@ -502,13 +502,6 @@
 			[self stopSystem];
 	}
 
-	CGPoint currentPosition = CGPointZero;
-	if( _particlePositionType == CCParticleSystemPositionTypeFree )
-		currentPosition = [self convertToWorldSpace:CGPointZero];
-
-	else if( _particlePositionType == CCParticleSystemPositionTypeRelative )
-		currentPosition = _position;
-
 	if (_visible)
 	{
 		for(int i=0; i < _particleCount;)
