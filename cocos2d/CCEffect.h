@@ -50,7 +50,7 @@
 @end
 
 
-// Note to self: I don't like this pattern, refactor it. I think there should be a CCRenderPass that is used by CCEffect instead.
+// Note to self: I don't like this pattern, refactor it. I think there should be a CCRenderPass that is used by CCEffect instead. NOTE: convert this to a CCRnderPassProtocol
 @interface CCEffectRenderPass : NSObject
 
 @property (nonatomic) NSInteger renderPassId;

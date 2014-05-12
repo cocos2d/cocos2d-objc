@@ -7,10 +7,58 @@
 //
 
 #import "CCEffectStack.h"
+#import "CCEffectStack_Private.h"
 #import "CCEffect_Private.h"
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @implementation CCEffectStack
+
+- (id)init
+{
+    return [self initWithEffects:nil];
+}
+
+- (id)initWithEffects:(NSArray *)effects
+{
+    if ((self = [super init]))
+    {
+        if (effects)
+        {
+            _effects = [effects mutableCopy];
+        }
+        else
+        {
+            _effects = [[NSMutableArray alloc] init];
+        }
+    }
+    return self;
+}
+
+- (void)addEffect:(CCEffect *)effect
+{
+    [_effects addObject:effect];
+}
+
+- (NSUInteger)effectCount
+{
+    return _effects.count;
+}
+
+- (CCEffect *)effectAtIndex:(NSUInteger)effectIndex
+{
+    NSAssert(effectIndex < _effects.count,@"Pass index out of range.");
+    return _effects[effectIndex];
+}
+
+
+#pragma mark - Private
+
+- (BOOL)prepareForRendering
+{
+    return YES;
+}
+
+
 
 +(CCEffect*)effects:(id)firstObject, ...
 {

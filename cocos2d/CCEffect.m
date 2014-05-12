@@ -8,6 +8,7 @@
 
 #import "CCEffect.h"
 #import "CCEffect_Private.h"
+#import "CCtexture.h"
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 static NSString* fragBase =
@@ -136,14 +137,26 @@ static NSString* vertBase =
 
 #pragma mark CCEffect
 
-@implementation CCEffect {
-    NSMutableArray* _effects;
+@implementation CCEffect
+
++ (NSArray *)defaultEffectFragmentUniforms
+{
+    return @[
+             [CCEffectUniform uniform:@"sampler2D" name:@"cc_PreviousPassTexture" value:(NSValue *)[CCTexture none]]
+            ];
+}
+
++ (NSArray *)defaultEffectVertexUniforms
+{
+    return @[];
 }
 
 -(id)init
 {
     if((self = [super init]))
     {
+        _fragmentUniforms = [[CCEffect defaultEffectFragmentUniforms] copy];
+        _vertexUniforms = [[CCEffect defaultEffectVertexUniforms] copy];
         _fragmentFunctions = [[NSMutableArray alloc] init];
         _vertexFunctions = [[NSMutableArray alloc] init];
         
@@ -161,13 +174,13 @@ static NSString* vertBase =
 {
     if((self = [super init]))
     {
-        _fragmentUniforms = [fragmentUniforms copy];
-        _vertexUniforms = [vertexUniforms copy];
+        _fragmentUniforms = [[CCEffect defaultEffectFragmentUniforms] arrayByAddingObjectsFromArray:fragmentUniforms];
+        _vertexUniforms = [[CCEffect defaultEffectVertexUniforms] arrayByAddingObjectsFromArray:vertexUniforms];
         _varyingVars = [varying copy];
         _fragmentFunctions = [[NSMutableArray alloc] init];
         _vertexFunctions = [[NSMutableArray alloc] init];
         
-        [self buildShaderUniforms:fragmentUniforms vertexUniforms:vertexUniforms];
+        [self buildShaderUniforms:_fragmentUniforms vertexUniforms:_vertexUniforms];
         [self buildFragmentFunctions];
         [self buildVertexFunctions];
         [self buildEffectShader];
@@ -182,11 +195,11 @@ static NSString* vertBase =
 {
     if((self = [super init]))
     {
-        _fragmentUniforms = [fragmentUniforms copy];
-        _vertexUniforms = [vertexUniforms copy];
+        _fragmentUniforms = [[CCEffect defaultEffectFragmentUniforms] arrayByAddingObjectsFromArray:fragmentUniforms];
+        _vertexUniforms = [[CCEffect defaultEffectVertexUniforms] arrayByAddingObjectsFromArray:vertexUniforms];
         _fragmentFunctions = fragmentFunctions;
         _varyingVars = [varying copy];
-        [self buildShaderUniforms:fragmentUniforms vertexUniforms:vertexUniforms];
+        [self buildShaderUniforms:_fragmentUniforms vertexUniforms:_vertexUniforms];
         [self buildVertexFunctions];
         [self buildEffectShader];
         
@@ -200,12 +213,12 @@ static NSString* vertBase =
 {
     if((self = [super init]))
     {
-        _fragmentUniforms = fragmentUniforms;
-        _vertexUniforms = vertexUniforms;
+        _fragmentUniforms = [[CCEffect defaultEffectFragmentUniforms] arrayByAddingObjectsFromArray:fragmentUniforms];
+        _vertexUniforms = [[CCEffect defaultEffectVertexUniforms] arrayByAddingObjectsFromArray:vertexUniforms];
         _fragmentFunctions = fragmentFunctions;
         _vertexFunctions = vertextFunctions;
         _varyingVars = [varying copy];
-        [self buildShaderUniforms:fragmentUniforms vertexUniforms:vertexUniforms];
+        [self buildShaderUniforms:_fragmentUniforms vertexUniforms:_vertexUniforms];
         [self buildEffectShader];
         
         return self;
@@ -347,3 +360,6 @@ static NSString* vertBase =
 
 @end
 #endif
+
+
+

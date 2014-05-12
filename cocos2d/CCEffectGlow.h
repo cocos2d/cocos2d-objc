@@ -7,15 +7,14 @@
 //
 
 #import "CCEffect.h"
-#import "CCColor.h"
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffectGlow : CCEffect
 
-@property (nonatomic) float blurRadius;
+@property (nonatomic) float blurStrength;
 
--(id)initWithBlurRadius:(float)blurRadius;
-+(id)effectWithRadius:(float)blurRadius;
+-(id)initWithbBurStrength:(float)blurStrength;
++(id)effectWithBlurStrength:(float)blurStrength;
 
 @end
 #endif
