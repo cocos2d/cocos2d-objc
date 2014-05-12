@@ -186,10 +186,10 @@
             
             [effect renderPassBegin:renderPass defaultBlock:nil];
             [self begin];
+            
             [effect renderPassUpdate:renderPass defaultBlock:nil];
 
             [self end];
-            [_renderer flush];
             [effect renderPassEnd:renderPass defaultBlock:nil];
             
             ++globalPassIndex;
