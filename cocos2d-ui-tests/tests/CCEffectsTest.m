@@ -2,6 +2,7 @@
 #import "CCTextureCache.h"
 #import "CCNodeColor.h"
 #import "CCEffectNode.h"
+#import "CCEffectGaussianBlur.h"
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 
@@ -12,21 +13,79 @@
 {
 	if((self = [super init])){
 		// Delay setting the color until the first frame.
-		// Otherwise the scene will not exist yet.
 		[self scheduleBlock:^(CCTimer *timer){self.scene.color = [CCColor lightGrayColor];} delay:0];
-		
-        // Alternatively, set up some rotating colors.
-//		float delay = 1.0f;
-//		[self scheduleBlock:^(CCTimer *timer) {
-//			GLKMatrix4 colorMatrix = GLKMatrix4MakeRotation(timer.invokeTime*1e0, 1, 1, 1);
-//			GLKVector4 color = GLKMatrix4MultiplyVector4(colorMatrix, GLKVector4Make(1, 0, 0, 1));
-//			self.scene.color = [CCColor colorWithGLKVector4:color];
-//
-//			[timer repeatOnceWithInterval:delay];
-//		} delay:delay];
 	}
 	
 	return self;
+}
+
+-(void)setupBlurEffectNodeTest
+{
+    self.subTitle = @"Blur Effect Node Test";
+
+    // Horizontal
+    CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"sample_hollow_circle.png"];
+    sampleSprite.anchorPoint = ccp(0.5, 0.5);
+    sampleSprite.position = ccp(0.5, 0.5);
+    sampleSprite.positionType = CCPositionTypeNormalized;
+
+
+    CCEffectNode* effectNode = [[CCEffectNode alloc] initWithWidth:80 height:80];
+    effectNode.positionType = CCPositionTypeNormalized;
+    effectNode.position = ccp(0.08, 0.5);
+    [effectNode addChild:sampleSprite];
+    CCEffectGaussianBlur* effect = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:GLKVector2Make(1.0, 0.0)];
+    [effectNode addEffect:effect];
+    
+    [self.contentNode addChild:effectNode];
+
+    // Vertical
+    CCSprite *sampleSprite2 = [CCSprite spriteWithImageNamed:@"sample_hollow_circle.png"];
+    sampleSprite2.anchorPoint = ccp(0.5, 0.5);
+    sampleSprite2.position = ccp(0.5, 0.5);
+    sampleSprite2.positionType = CCPositionTypeNormalized;
+    
+    
+    CCEffectNode* effectNode2 = [[CCEffectNode alloc] initWithWidth:80 height:80];
+    effectNode2.positionType = CCPositionTypeNormalized;
+    effectNode2.position = ccp(0.21, 0.5);
+    [effectNode2 addChild:sampleSprite2];
+    CCEffectGaussianBlur* effect2 = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:GLKVector2Make(0.0, 1.0)];
+    [effectNode2 addEffect:effect2];
+    
+    [self.contentNode addChild:effectNode2];
+    
+    // Tilt shift
+    CCSprite *sampleSprite3 = [CCSprite spriteWithImageNamed:@"sample_hollow_circle.png"];
+    sampleSprite3.anchorPoint = ccp(0.5, 0.5);
+    sampleSprite3.position = ccp(0.5, 0.5);
+    sampleSprite3.positionType = CCPositionTypeNormalized;
+    
+    
+    CCEffectNode* effectNode3 = [[CCEffectNode alloc] initWithWidth:80 height:80];
+    effectNode3.positionType = CCPositionTypeNormalized;
+    effectNode3.position = ccp(0.35, 0.5);
+    [effectNode3 addChild:sampleSprite3];
+    CCEffectGaussianBlur* effect3 = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:GLKVector2Make(1.0, 1.0)];
+    [effectNode3 addEffect:effect3];
+    
+    [self.contentNode addChild:effectNode3];
+    
+    // Tilt shift reversed
+    CCSprite *sampleSprite4 = [CCSprite spriteWithImageNamed:@"sample_hollow_circle.png"];
+    sampleSprite4.anchorPoint = ccp(0.5, 0.5);
+    sampleSprite4.position = ccp(0.5, 0.5);
+    sampleSprite4.positionType = CCPositionTypeNormalized;
+    
+    
+    CCEffectNode* effectNode4 = [[CCEffectNode alloc] initWithWidth:80 height:80];
+    effectNode4.positionType = CCPositionTypeNormalized;
+    effectNode4.position = ccp(0.49, 0.5);
+    [effectNode4 addChild:sampleSprite4];
+    CCEffectGaussianBlur* effect4 = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:GLKVector2Make(-1.0, 1.0)];
+    [effectNode4 addEffect:effect4];
+    
+    [self.contentNode addChild:effectNode4];
 }
 
 -(void)setupGlowEffectNodeTest
@@ -46,7 +105,7 @@
     glowEffectNode.positionType = CCPositionTypeNormalized;
     glowEffectNode.position = ccp(0.1, 0.5);
     [glowEffectNode addChild:sampleSprite];
-    CCEffectGlow* glowEffect = [CCEffectGlow effectWithRadius:0.02f];
+    CCEffectGlow* glowEffect = [CCEffectGlow effectWithRadius:0.01f];
     [glowEffectNode addEffect:glowEffect];
     
     CGSize size = CGSizeMake(1.0, 1.0);

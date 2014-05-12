@@ -7,7 +7,6 @@
 //
 
 #import "CCEffect.h"
-#import "CCColor.h"
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffectGlow : CCEffect
