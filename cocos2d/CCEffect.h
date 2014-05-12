@@ -10,7 +10,7 @@
 #import "CCSprite.h"
 #import "CCShader.h"
 #import "ccConfig.h"
-#import <ccTypes.h>
+#import "ccTypes.h"
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffectFunction : NSObject

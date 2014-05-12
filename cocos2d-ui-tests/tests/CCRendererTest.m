@@ -330,6 +330,12 @@
 	}
 }
 
+static float
+ProgressPercent(CCTime t)
+{
+	return 100.0*fmod(t, 1.0);
+}
+
 - (void)setupProgressNodeTest
 {
 	self.subTitle = @"Testing various CCProgressNode setups.";
@@ -353,7 +359,7 @@
 		[self.contentNode addChild:progress];
 		
 		[self scheduleBlock:^(CCTimer *timer) {
-			progress.percentage = 100.0*(0.5 + 0.5*sin(timer.invokeTime*M_PI));
+			progress.percentage = ProgressPercent(timer.invokeTime);
 			[timer repeatOnceWithInterval:interval];
 		} delay:interval];
 	}
@@ -378,7 +384,7 @@
 		
 		[self scheduleBlock:^(CCTimer *timer) {
 			progress.midpoint = ccpAdd(ccp(0.5, 0.5), ccpMult(ccpForAngle(timer.invokeTime), 0.25));
-			progress.percentage = 100.0*(0.5 + 0.5*sin(timer.invokeTime*M_PI));
+			progress.percentage = ProgressPercent(timer.invokeTime);
 			
 			[timer repeatOnceWithInterval:interval];
 		} delay:interval];
@@ -404,7 +410,7 @@
 		[self.contentNode addChild:progress];
 		
 		[self scheduleBlock:^(CCTimer *timer) {
-			progress.percentage = 100.0*(0.5 + 0.5*sin(timer.invokeTime*M_PI));
+			progress.percentage = ProgressPercent(timer.invokeTime);
 			
 			[timer repeatOnceWithInterval:interval];
 		} delay:interval];
@@ -430,7 +436,7 @@
 		[self.contentNode addChild:progress];
 		
 		[self scheduleBlock:^(CCTimer *timer) {
-			progress.percentage = 100.0*(0.5 + 0.5*sin(timer.invokeTime*M_PI));
+			progress.percentage = ProgressPercent(timer.invokeTime);
 			
 			[timer repeatOnceWithInterval:interval];
 		} delay:interval];
@@ -456,7 +462,7 @@
 		[self.contentNode addChild:progress];
 		
 		[self scheduleBlock:^(CCTimer *timer) {
-			progress.percentage = 100.0*(0.5 + 0.5*sin(timer.invokeTime*M_PI));
+			progress.percentage = ProgressPercent(timer.invokeTime);
 			
 			[timer repeatOnceWithInterval:interval];
 		} delay:interval];
@@ -482,7 +488,7 @@
 		[self.contentNode addChild:progress];
 		
 		[self scheduleBlock:^(CCTimer *timer) {
-			progress.percentage = 100.0*(0.5 + 0.5*sin(timer.invokeTime*M_PI));
+			progress.percentage = ProgressPercent(timer.invokeTime);
 			
 			[timer repeatOnceWithInterval:interval];
 		} delay:interval];
@@ -508,7 +514,7 @@
 		[self.contentNode addChild:progress];
 		
 		[self scheduleBlock:^(CCTimer *timer) {
-			progress.percentage = 100.0*(0.5 + 0.5*sin(timer.invokeTime*M_PI));
+			progress.percentage = ProgressPercent(timer.invokeTime);
 			
 			[timer repeatOnceWithInterval:interval];
 		} delay:interval];
@@ -534,7 +540,7 @@
 		[self.contentNode addChild:progress];
 		
 		[self scheduleBlock:^(CCTimer *timer) {
-			progress.percentage = 100.0*(0.5 + 0.5*sin(timer.invokeTime*M_PI));
+			progress.percentage = ProgressPercent(timer.invokeTime);
 			
 			[timer repeatOnceWithInterval:interval];
 		} delay:interval];
@@ -548,6 +554,10 @@
 	CCDrawNode *draw = [CCDrawNode node];
 	
 	[draw drawDot:ccp(100, 100) radius:50 color:[CCColor colorWithRed:0.5 green:0.0 blue:0.0 alpha:0.75]];
+	
+	// This yellow dot should not be visible.
+	[draw drawDot:ccp(150, 150) radius:50 color:[CCColor colorWithRed:0.5 green:0.5 blue:0.0 alpha:0.0]];
+	
 	[draw drawSegmentFrom:ccp(100, 200) to:ccp(200, 200) radius:25 color:[CCColor colorWithRed:0.0 green:0.0 blue:0.5 alpha:0.75]];
 	
 	CGPoint points1[] = {
