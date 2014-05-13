@@ -966,36 +966,6 @@ static inline float readFloat(CCBReader *self)
     
     if([className isEqualToString:@"CCPhysicsPivotJoint"])
     {
-        
-        if([properties[@"dampedSpringEnabled"] boolValue])
-        {
-            float   restAngle = properties[@"dampedSpringRestAngle"] ?  [properties[@"dampedSpringRestAngle"]  floatValue] : 0.0f;
-            restAngle = CC_DEGREES_TO_RADIANS(restAngle);
-            float   stiffness = properties[@"dampedSpringStiffness"] ? [properties[@"dampedSpringStiffness"] floatValue] : 1.0f;
-            float   damping = properties[@"dampedSpringDamping"] ? [properties[@"dampedSpringDamping"] floatValue] : 4.0f;
-
-            CCPhysicsJoint * rotarySpringJoint = [CCPhysicsJoint connectedRotarySpringJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody restAngle:restAngle stifness:stiffness damping:damping];
-            
-            rotarySpringJoint.maxForce = maxForce;
-            rotarySpringJoint.breakingForce = breakingForce;
-            rotarySpringJoint.collideBodies = collideBodies;
-        }
-        
-        if([properties[@"limitEnabled"] boolValue])
-        {
-            float   limitMax = properties[@"limitMax"] ? [properties[@"limitMax"]  floatValue] : 90.0f;
-            limitMax = CC_DEGREES_TO_RADIANS(limitMax);
-
-            float   limitMin = properties[@"limitMin"] ? [properties[@"limitMin"] floatValue] : 0;
-            limitMin = CC_DEGREES_TO_RADIANS(limitMin);
-            
-            CCPhysicsJoint * limitJoint = [CCPhysicsJoint connectedRotaryLimitJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody min:limitMin max:limitMax];
-            
-            limitJoint.maxForce = maxForce;
-            limitJoint.breakingForce = breakingForce;
-            limitJoint.collideBodies = collideBodies;
-        }
-        
         if([properties[@"motorEnabled"] boolValue])
         {
             float motorRate = properties[@"motorRate"] ? [properties[@"motorRate"]  floatValue] : 1.0f;
@@ -1006,6 +976,38 @@ static inline float readFloat(CCBReader *self)
             motorJoint.collideBodies = collideBodies;
         }
         
+        if([properties[@"dampedSpringEnabled"] boolValue])
+        {
+            float   restAngle = properties[@"dampedSpringRestAngle"] ?  [properties[@"dampedSpringRestAngle"]  floatValue] : 0.0f;
+            restAngle = CC_DEGREES_TO_RADIANS(restAngle);
+            float   stiffness = properties[@"dampedSpringStiffness"] ? [properties[@"dampedSpringStiffness"] floatValue] : 1.0f;
+            stiffness *= 1000.0f;
+            float   damping = properties[@"dampedSpringDamping"] ? [properties[@"dampedSpringDamping"] floatValue] : 4.0f;
+            damping *= 100.0f;
+
+            CCPhysicsJoint * rotarySpringJoint = [CCPhysicsJoint connectedRotarySpringJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody restAngle:restAngle stifness:stiffness damping:damping];
+            
+            rotarySpringJoint.maxForce = maxForce;
+            rotarySpringJoint.breakingForce = breakingForce;
+            rotarySpringJoint.collideBodies = collideBodies;
+        }
+        
+        
+        if([properties[@"limitEnabled"] boolValue])
+        {
+            float   limitMax = properties[@"limitMax"] ? [properties[@"limitMax"]  floatValue] : 90.0f;
+            limitMax = CC_DEGREES_TO_RADIANS(limitMax);
+            
+            float   limitMin = properties[@"limitMin"] ? [properties[@"limitMin"] floatValue] : 0;
+            limitMin = CC_DEGREES_TO_RADIANS(limitMin);
+            
+            CCPhysicsJoint * limitJoint = [CCPhysicsJoint connectedRotaryLimitJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody min:limitMin max:limitMax];
+            
+            limitJoint.maxForce = maxForce;
+            limitJoint.breakingForce = breakingForce;
+            limitJoint.collideBodies = collideBodies;
+        }
+            
         if([properties[@"ratchetEnabled"] boolValue])
         {
             float ratchetValue = properties[@"ratchetValue"] ? [properties[@"ratchetValue"]  floatValue] : 30.0f;
@@ -1036,6 +1038,7 @@ static inline float readFloat(CCBReader *self)
         
 		BOOL    restLengthEnabled = [properties[@"restLengthEnabled"] boolValue];
         float   restLength = restLengthEnabled?  [properties[@"restLength"] floatValue] : distance;
+
         float   stiffness = [properties[@"stiffness"] floatValue];
         float   damping = [properties[@"damping"] floatValue];
         
