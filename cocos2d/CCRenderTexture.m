@@ -432,9 +432,12 @@
 		return nil;
 	}
 	
-	[self begin];
-	glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, buffer);
-	[self end];
+    [self begin];
+    [_renderer enqueueBlock:^
+    {
+        glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, buffer);
+    } globalSortOrder:NSIntegerMax debugLabel:@"CCRenderTexture reading pixels for new image" threadSafe:NO];
+    [self end];
 	
 	// make data provider with data.
 	
@@ -451,13 +454,7 @@
 												 ty, CGImageGetBitsPerComponent(iref),
 												 CGImageGetBytesPerRow(iref), CGImageGetColorSpace(iref),
 												 bitmapInfo);
-	
-	// vertically flipped
-	if( YES ) {
-		CGContextTranslateCTM(context, 0.0f, ty);
-		CGContextScaleCTM(context, 1.0f, -1.0f);
-	}
-	
+
 	CGContextDrawImage(context, CGRectMake(0.0f, 0.0f, tx, ty), iref);
 	CGImageRef image = CGBitmapContextCreateImage(context);
 	
