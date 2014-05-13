@@ -48,6 +48,21 @@
 -(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB restLength:(CGFloat)restLength stiffness:(CGFloat)stiffness damping:(CGFloat)damping;
 @end
 
+@interface CCPhysicsRotarySpring : CCPhysicsJoint
+-(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB restAngle:(cpFloat)restAngle stifness:(cpFloat)stiffness damping:(cpFloat)damping;
+@end
+
+@interface CCPhysicsMotorJoint : CCPhysicsJoint
+-(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB rate:(cpFloat)rate;
+@end
+
+@interface CCPhysicsRatchet : CCPhysicsJoint
+-(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB phase:(cpFloat)phase ratchet:(cpFloat)ratchet;
+@end
+
+@interface CCPhysicsRotaryLimitJoint : CCPhysicsJoint
+-(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB min:(cpFloat)min max:(cpFloat)max;
+@end
 
 @implementation CCPhysicsJoint
 {
@@ -123,6 +138,62 @@
 	
 	return joint;
 }
+
+
+
++(CCPhysicsJoint *)connectedRotarySpringJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
+                                       restAngle:(CGFloat)restAngle
+                                        stifness:(CGFloat)stiffness
+                                         damping:(CGFloat)damping
+{
+    CCPhysicsRotarySpring * joint  = [[CCPhysicsRotarySpring alloc] initWithBodyA:bodyA bodyB:bodyB restAngle:restAngle stifness:stiffness damping:damping];
+    
+    [bodyA addJoint:joint];
+	[bodyB addJoint:joint];
+    [joint addToPhysicsNode:bodyA.physicsNode];
+    return joint;
+}
+
+
++(CCPhysicsJoint *)connectedMotorJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
+                                             rate:(CGFloat)rate
+{
+    CCPhysicsMotorJoint * joint  = [[CCPhysicsMotorJoint alloc] initWithBodyA:bodyA bodyB:bodyB rate:rate];
+    
+    [bodyA addJoint:joint];
+	[bodyB addJoint:joint];
+    [joint addToPhysicsNode:bodyA.physicsNode];
+    return joint;
+}
+
+
+
++(CCPhysicsJoint *)connectedRotaryLimitJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
+                                            min:(cpFloat)min
+                                            max:(cpFloat)max
+{
+    CCPhysicsRotaryLimitJoint * joint  = [[CCPhysicsRotaryLimitJoint alloc] initWithBodyA:bodyA bodyB:bodyB min:min max:max];
+    
+    [bodyA addJoint:joint];
+	[bodyB addJoint:joint];
+    [joint addToPhysicsNode:bodyA.physicsNode];
+    return joint;
+}
+
+
++(CCPhysicsJoint *)connectedRatchetJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
+                                                  phase:(cpFloat)phase
+                                                  ratchet:(cpFloat)ratchet
+{
+    CCPhysicsRatchet * joint  = [[CCPhysicsRatchet alloc] initWithBodyA:bodyA bodyB:bodyB phase:phase ratchet:ratchet];
+    
+    [bodyA addJoint:joint];
+	[bodyB addJoint:joint];
+    [joint addToPhysicsNode:bodyA.physicsNode];
+    return joint;
+}
+
+
 
 -(CCPhysicsBody *)bodyA {return self.constraint.bodyA.userData;}
 //-(void)setBodyA:(CCPhysicsBody *)bodyA {NYI();}
@@ -210,6 +281,32 @@ BreakConstraint(cpConstraint *constraint, cpSpace *space)
 @end
 
 
+
+
+@implementation CCPhysicsRotarySpring{
+	ChipmunkDampedRotarySpring *_constraint;
+
+}
+
+-(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB restAngle:(cpFloat)restAngle stifness:(cpFloat)stiffness damping:(cpFloat)damping
+{
+	if((self = [super init])){
+		_constraint = [ChipmunkDampedRotarySpring dampedRotarySpringWithBodyA:bodyA.body bodyB:bodyB.body restAngle:restAngle stiffness:stiffness damping:damping];
+		_constraint.userData = self;
+		
+	}
+	
+	return self;
+}
+
+-(ChipmunkConstraint *)constraint {return _constraint;}
+
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
+{
+	
+}
+
+@end
 
 
 @implementation CCPhysicsPinJoint {
@@ -334,7 +431,87 @@ BreakConstraint(cpConstraint *constraint, cpSpace *space)
 
 @end
 
+@implementation CCPhysicsMotorJoint
+{
+	ChipmunkSimpleMotor *_constraint;
+}
 
+-(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB rate:(cpFloat)rate
+{
+    if((self = [super init])){
+        _constraint = [ChipmunkSimpleMotor simpleMotorWithBodyA:bodyA.body bodyB:bodyB.body rate:rate];
+		_constraint.userData = self;
+    }
+    
+	return self;
+}
+
+-(ChipmunkConstraint *)constraint {return _constraint;}
+
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
+{
+	
+}
+
+@end
+
+@implementation CCPhysicsRatchet
+{
+    ChipmunkRatchetJoint * _constraint;
+}
+
+-(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB phase:(cpFloat)phase ratchet:(cpFloat)ratchet
+{
+    if((self = [super init])){
+        _constraint = [ChipmunkRatchetJoint ratchetJointWithBodyA:bodyA.body bodyB:bodyB.body phase:phase ratchet:ratchet];
+        _constraint.userData = self;
+    }
+    
+    return self;
+}
+
+-(ChipmunkConstraint *)constraint {return _constraint;}
+
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
+{
+	
+}
+
+
+@end
+
+@implementation CCPhysicsRotaryLimitJoint
+{
+    ChipmunkRotaryLimitJoint * _constraint;
+    float min;
+    float max;
+    
+}
+
+-(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB min:(cpFloat)_min max:(cpFloat)_max
+{
+    if((self = [super init])){
+        _constraint = [ChipmunkRotaryLimitJoint rotaryLimitJointWithBodyA:bodyA.body bodyB:bodyB.body min:_min max:_max];
+        min = _min;
+        max = _max;
+    }
+    
+    return self;
+}
+
+-(ChipmunkConstraint *)constraint {return _constraint;}
+
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
+{
+    float currentAngle = (_constraint.bodyB.angle - _constraint.bodyA.angle);
+    
+    _constraint.max = currentAngle - min;
+    _constraint.min = currentAngle - max;
+}
+
+
+
+@end
 
 
 

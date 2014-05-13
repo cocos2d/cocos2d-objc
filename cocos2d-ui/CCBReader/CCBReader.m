@@ -933,17 +933,14 @@ static inline float readFloat(CCBReader *self)
 {
     int numJoints = readIntWithSign(self, NO);
     
-    NSMutableArray * joints = [NSMutableArray array];
-    
     for (int i =0; i < numJoints; i++)
     {
-        id joint = [self readJoint];
-        [joints addObject:joint];
+        [self readJoint];
     }
 }
 
 
--(CCPhysicsJoint*)readJoint
+-(void)readJoint
 {
     
     CCPhysicsJoint * joint = nil;
@@ -964,12 +961,71 @@ static inline float readFloat(CCBReader *self)
     float breakingForce = [properties[@"breakingForceEnabled"] boolValue] ? [properties[@"breakingForce"] floatValue] : INFINITY;
     float maxForce = [properties[@"maxForceEnabled"] boolValue] ? [properties[@"maxForce"] floatValue] : INFINITY;
     bool  collideBodies = [properties[@"collideBodies"] boolValue];
+    float referenceAngle = [properties[@"referenceAngle"] floatValue];
+    referenceAngle = CC_DEGREES_TO_RADIANS(referenceAngle);
     
     if([className isEqualToString:@"CCPhysicsPivotJoint"])
     {
-        CGPoint anchorA = [properties[@"anchorA"] CGPointValue];
+        if([properties[@"motorEnabled"] boolValue])
+        {
+            float motorRate = properties[@"motorRate"] ? [properties[@"motorRate"]  floatValue] : 1.0f;
+            CCPhysicsJoint * motorJoint = [CCPhysicsJoint connectedMotorJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody rate:motorRate];
+            
+            motorJoint.maxForce = maxForce;
+            motorJoint.breakingForce = breakingForce;
+            motorJoint.collideBodies = collideBodies;
+        }
         
+        if([properties[@"dampedSpringEnabled"] boolValue])
+        {
+            float   restAngle = properties[@"dampedSpringRestAngle"] ?  [properties[@"dampedSpringRestAngle"]  floatValue] : 0.0f;
+            restAngle = CC_DEGREES_TO_RADIANS(restAngle);
+            float   stiffness = properties[@"dampedSpringStiffness"] ? [properties[@"dampedSpringStiffness"] floatValue] : 1.0f;
+            stiffness *= 1000.0f;
+            float   damping = properties[@"dampedSpringDamping"] ? [properties[@"dampedSpringDamping"] floatValue] : 4.0f;
+            damping *= 100.0f;
+
+            CCPhysicsJoint * rotarySpringJoint = [CCPhysicsJoint connectedRotarySpringJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody restAngle:restAngle stifness:stiffness damping:damping];
+            
+            rotarySpringJoint.maxForce = maxForce;
+            rotarySpringJoint.breakingForce = breakingForce;
+            rotarySpringJoint.collideBodies = collideBodies;
+        }
+        
+        
+        if([properties[@"limitEnabled"] boolValue])
+        {
+            float   limitMax = properties[@"limitMax"] ? [properties[@"limitMax"]  floatValue] : 90.0f;
+            limitMax = CC_DEGREES_TO_RADIANS(limitMax);
+            
+            float   limitMin = properties[@"limitMin"] ? [properties[@"limitMin"] floatValue] : 0;
+            limitMin = CC_DEGREES_TO_RADIANS(limitMin);
+            
+            CCPhysicsJoint * limitJoint = [CCPhysicsJoint connectedRotaryLimitJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody min:limitMin max:limitMax];
+            
+            limitJoint.maxForce = maxForce;
+            limitJoint.breakingForce = breakingForce;
+            limitJoint.collideBodies = collideBodies;
+        }
+            
+        if([properties[@"ratchetEnabled"] boolValue])
+        {
+            float ratchetValue = properties[@"ratchetValue"] ? [properties[@"ratchetValue"]  floatValue] : 30.0f;
+            ratchetValue = CC_DEGREES_TO_RADIANS(ratchetValue);
+            float ratchetPhase = properties[@"ratchetPhase"] ? [properties[@"ratchetPhase"]  floatValue] : 0.0f;
+            ratchetPhase = CC_DEGREES_TO_RADIANS(ratchetPhase);
+            
+            CCPhysicsJoint * ratchetJoint = [CCPhysicsJoint connectedRatchetJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody phase:ratchetPhase ratchet:ratchetValue];
+            
+            ratchetJoint.maxForce = maxForce;
+            ratchetJoint.breakingForce = breakingForce;
+            ratchetJoint.collideBodies = collideBodies;
+    
+        }
+        
+        CGPoint anchorA = [properties[@"anchorA"] CGPointValue];
         joint = [CCPhysicsJoint connectedPivotJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody anchorA:anchorA];
+        
     }
     else if([className isEqualToString:@"CCPhysicsSpringJoint"])
     {
@@ -982,6 +1038,7 @@ static inline float readFloat(CCBReader *self)
         
 		BOOL    restLengthEnabled = [properties[@"restLengthEnabled"] boolValue];
         float   restLength = restLengthEnabled?  [properties[@"restLength"] floatValue] : distance;
+
         float   stiffness = [properties[@"stiffness"] floatValue];
         float   damping = [properties[@"damping"] floatValue];
         
@@ -1016,13 +1073,12 @@ static inline float readFloat(CCBReader *self)
     }
     else
     {
-        return nil;
+        return;
     }
     joint.maxForce = maxForce;
     joint.breakingForce = breakingForce;
     joint.collideBodies = collideBodies;
     [joint resetScale:NodeToPhysicsScale(nodeBodyA).x];
-    return joint;
     
 }
 
