@@ -214,6 +214,7 @@
     // The texture property always points to the most recently allocated
     // texture so it will contain any accumulated results for the effect stack.
     _sprite.texture = self.texture;
+    _sprite.shader = [CCShader positionTextureColorShader];
     _sprite.anchorPoint = ccp(0.5, 0.5);
     [_sprite visit:_renderer parentTransform:transform];
     
