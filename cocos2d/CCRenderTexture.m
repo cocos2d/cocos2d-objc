@@ -432,9 +432,12 @@
 		return nil;
 	}
 	
-	[self begin];
-	glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, buffer);
-	[self end];
+    [self begin];
+       [_renderer enqueueBlock:^
+       {
+       	glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, buffer);
+       } globalSortOrder:NSIntegerMax debugLabel:@"CCRenderTexture reading pixels for new image" threadSafe:NO];
+   	[self end];
 	
 	// make data provider with data.
 	
@@ -451,13 +454,7 @@
 												 ty, CGImageGetBitsPerComponent(iref),
 												 CGImageGetBytesPerRow(iref), CGImageGetColorSpace(iref),
 												 bitmapInfo);
-	
-	// vertically flipped
-	if( YES ) {
-		CGContextTranslateCTM(context, 0.0f, ty);
-		CGContextScaleCTM(context, 1.0f, -1.0f);
-	}
-	
+
 	CGContextDrawImage(context, CGRectMake(0.0f, 0.0f, tx, ty), iref);
 	CGImageRef image = CGBitmapContextCreateImage(context);
 	
@@ -479,63 +476,76 @@
 
 -(BOOL)saveToFile:(NSString*)fileName format:(CCRenderTextureImageFormat)format
 {
-	BOOL success;
-	
-	NSString *fullPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:fileName];
-	
-	CGImageRef imageRef = [self newCGImage];
+    NSString *fullPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:fileName];
+    [self saveToFilePath:fullPath format:format];
+}
 
-	if( ! imageRef ) {
-		CCLOG(@"cocos2d: Error: Cannot create CGImage ref from texture");
-		return NO;
-	}
-	
+- (BOOL)saveToFilePath:(NSString *)filePath
+{
+    [self saveToFilePath:filePath format:CCRenderTextureImageFormatJPEG];
+}
+
+- (BOOL)saveToFilePath:(NSString *)filePath format:(CCRenderTextureImageFormat)format
+{
+    BOOL success;
+
+   	CGImageRef imageRef = [self newCGImage];
+
+   	if( ! imageRef ) {
+   		CCLOG(@"cocos2d: Error: Cannot create CGImage ref from texture");
+   		return NO;
+   	}
+
 #if __CC_PLATFORM_IOS
-	CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
-	UIImage* image	= [[UIImage alloc] initWithCGImage:imageRef scale:scale orientation:UIImageOrientationUp];
-	NSData *imageData = nil;
-    
-	if( format == CCRenderTextureImageFormatPNG )
-		imageData = UIImagePNGRepresentation( image );
-    
-	else if( format == CCRenderTextureImageFormatJPEG )
-		imageData = UIImageJPEGRepresentation(image, 0.9f);
-    
-	else
-		NSAssert(NO, @"Unsupported format");
-	
-    
-	success = [imageData writeToFile:fullPath atomically:YES];
+   	CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
+   	UIImage* image	= [[UIImage alloc] initWithCGImage:imageRef scale:scale orientation:UIImageOrientationUp];
+   	NSData *imageData = nil;
 
-	
+   	if( format == CCRenderTextureImageFormatPNG )
+   		imageData = UIImagePNGRepresentation( image );
+
+   	else if( format == CCRenderTextureImageFormatJPEG )
+   		imageData = UIImageJPEGRepresentation(image, 0.9f);
+
+   	else
+   		NSAssert(NO, @"Unsupported format");
+
+   	success = [imageData writeToFile:filePath atomically:YES];
+
 #elif __CC_PLATFORM_MAC
-	
-	CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:fullPath];
-	
-	CGImageDestinationRef dest;
+    CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:filePath];
 
-	if( format == CCRenderTextureImageFormatPNG )
-		dest = 	CGImageDestinationCreateWithURL(url, kUTTypePNG, 1, NULL);
+    CGImageDestinationRef dest;
 
-	else if( format == CCRenderTextureImageFormatJPEG )
-		dest = 	CGImageDestinationCreateWithURL(url, kUTTypeJPEG, 1, NULL);
+    if( format == CCRenderTextureImageFormatPNG )
+        dest = 	CGImageDestinationCreateWithURL(url, kUTTypePNG, 1, NULL);
 
-	else
-		NSAssert(NO, @"Unsupported format");
+    else if( format == CCRenderTextureImageFormatJPEG )
+        dest = 	CGImageDestinationCreateWithURL(url, kUTTypeJPEG, 1, NULL);
 
-	CGImageDestinationAddImage(dest, imageRef, nil);
-		
-	success = CGImageDestinationFinalize(dest);
+    else
+        NSAssert(NO, @"Unsupported format");
 
-	CFRelease(dest);
+    if (!dest)
+    {
+        CCLOG(@"cocos2d: ERROR: Failed to create image destination with file path:%@", filePath);
+        CGImageRelease(imageRef);
+        return NO;
+    }
+
+    CGImageDestinationAddImage(dest, imageRef, nil);
+
+    success = CGImageDestinationFinalize(dest);
+
+    CFRelease(dest);
 #endif
 
-	CGImageRelease(imageRef);
-	
-	if( ! success )
-		CCLOG(@"cocos2d: ERROR: Failed to save file:%@ to disk",fullPath);
+    CGImageRelease(imageRef);
 
-	return success;
+    if( ! success )
+        CCLOG(@"cocos2d: ERROR: Failed to save file:%@ to disk", filePath);
+
+    return success;
 }
 
 
