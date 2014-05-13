@@ -238,6 +238,26 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
  */
 -(BOOL)saveToFile:(NSString*)name format:(CCRenderTextureImageFormat)format;
 
+/**
+ *  Saves the texture into a file using JPEG format.
+ *
+ *  @param filePath File path to save image to.
+ *
+ *  @return YES if the operation was successful.
+ */
+-(BOOL)saveToFilePath:(NSString*)filePath;
+
+/**
+ *  Saves the texture into a file. The format could be JPG or PNG.
+ *
+ *  @param filePath   File path to save image to.
+ *  @param format File format.
+ *
+ *  @return YES if the operation was successful.
+ */
+-(BOOL)saveToFilePath:(NSString*)filePath format:(CCRenderTextureImageFormat)format;
+
+
 #ifdef __CC_PLATFORM_IOS
 
 /**
