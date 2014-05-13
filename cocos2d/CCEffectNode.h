@@ -19,7 +19,9 @@
 #import "CCEffectColor.h"
 #import "CCEffectColorPulse.h"
 #import "CCEffectGlow.h"
-#import "CCEffectBrightnessAndContrast.h"
+#import "CCEffectBrightness.h"
+#import "CCEffectContrast.h"
+#import "CCEffectPixellate.h"
 
 #ifdef __CC_PLATFORM_IOS
 #import <UIKit/UIKit.h>
@@ -28,9 +30,9 @@
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffectNode : CCRenderTexture
 
-@property (nonatomic) CCEffect* effect;
-
 -(id)initWithWidth:(int)w height:(int)h;
+
+-(void)addEffect:(CCEffect *)effect;
 
 @end
 #endif
