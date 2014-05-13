@@ -187,7 +187,14 @@
             [effect renderPassBegin:renderPass defaultBlock:nil];
             [self begin];
             
-            [effect renderPassUpdate:renderPass defaultBlock:nil];
+            [effect renderPassUpdate:renderPass defaultBlock:^{
+                GLKMatrix4 xform = renderPass.transform;
+                GLKVector4 clearColor;
+                
+                renderPass.sprite.anchorPoint = ccp(0.0, 0.0);
+                [renderPass.renderer enqueueClear:0 color:clearColor depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
+                [renderPass.sprite visit:renderPass.renderer parentTransform:&xform];
+            }];
 
             [self end];
             [effect renderPassEnd:renderPass defaultBlock:nil];

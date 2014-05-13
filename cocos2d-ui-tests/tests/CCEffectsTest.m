@@ -119,22 +119,22 @@
     [self.contentNode addChild:glowEffectNode];
 }
 
-//-(void)setupEffectNodeTest
-//{
-//    self.subTitle = @"Effect Node Test";
-//    
-//    CGSize size = CGSizeMake(128, 128);
-//	
-//    CCEffectNode* effectNode1 = [[CCEffectNode alloc] initWithWidth:size.width height:size.height];
-//	effectNode1.positionType = CCPositionTypeNormalized;
-//	effectNode1.position = ccp(0.25, 0.5);
-//    [self renderTextureHelper:effectNode1 size:size];
-//    CCEffectColorPulse* effectColorPulse = [[CCEffectColorPulse alloc] initWithColor:[CCColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:1.0] toColor:[CCColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:1.0]];
-//    CCEffectTexture* effectTexture = [[CCEffectTexture alloc] init];
-//    CCEffect* compositeEffect = [CCEffectStack effects:effectColorPulse, effectTexture, nil];
-//    [effectNode1 addEffect:compositeEffect];
-//	[self.contentNode addChild:effectNode1];
-//}
+-(void)setupEffectNodeTest
+{
+    self.subTitle = @"Effect Node Test";
+    
+    CGSize size = CGSizeMake(128, 128);
+	
+    CCEffectNode* effectNode1 = [[CCEffectNode alloc] initWithWidth:size.width height:size.height];
+	effectNode1.positionType = CCPositionTypeNormalized;
+	effectNode1.position = ccp(0.25, 0.5);
+    [self renderTextureHelper:effectNode1 size:size];
+    CCEffectColorPulse* effectColorPulse = [[CCEffectColorPulse alloc] initWithColor:[CCColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:1.0] toColor:[CCColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:1.0]];
+    CCEffectTexture* effectTexture = [[CCEffectTexture alloc] init];
+    CCEffect* compositeEffect = [CCEffectStack effects:effectColorPulse, effectTexture, nil];
+    [effectNode1 addEffect:compositeEffect];
+	[self.contentNode addChild:effectNode1];
+}
 
 -(void)setupBrightnessAndContrastEffectNodeTest
 {
