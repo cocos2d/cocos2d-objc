@@ -961,6 +961,8 @@ static inline float readFloat(CCBReader *self)
     float breakingForce = [properties[@"breakingForceEnabled"] boolValue] ? [properties[@"breakingForce"] floatValue] : INFINITY;
     float maxForce = [properties[@"maxForceEnabled"] boolValue] ? [properties[@"maxForce"] floatValue] : INFINITY;
     bool  collideBodies = [properties[@"collideBodies"] boolValue];
+    float referenceAngle = [properties[@"referenceAngle"] floatValue];
+    referenceAngle = CC_DEGREES_TO_RADIANS(referenceAngle);
     
     if([className isEqualToString:@"CCPhysicsPivotJoint"])
     {
@@ -977,6 +979,21 @@ static inline float readFloat(CCBReader *self)
             rotarySpringJoint.maxForce = maxForce;
             rotarySpringJoint.breakingForce = breakingForce;
             rotarySpringJoint.collideBodies = collideBodies;
+        }
+        
+        if([properties[@"limitEnabled"] boolValue])
+        {
+            float   limitMax = properties[@"limitMax"] ? [properties[@"limitMax"]  floatValue] : 90.0f;
+            limitMax = CC_DEGREES_TO_RADIANS(limitMax);
+
+            float   limitMin = properties[@"limitMin"] ? [properties[@"limitMin"] floatValue] : 0;
+            limitMin = CC_DEGREES_TO_RADIANS(limitMin);
+            
+            CCPhysicsJoint * limitJoint = [CCPhysicsJoint connectedRotaryLimitJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody min:limitMin max:limitMax];
+            
+            limitJoint.maxForce = maxForce;
+            limitJoint.breakingForce = breakingForce;
+            limitJoint.collideBodies = collideBodies;
         }
         
         CGPoint anchorA = [properties[@"anchorA"] CGPointValue];
