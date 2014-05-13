@@ -996,6 +996,12 @@ static inline float readFloat(CCBReader *self)
             limitJoint.collideBodies = collideBodies;
         }
         
+        if([properties[@"motorEnabled"] boolValue])
+        {
+            float motorRate = properties[@"motorRate"] ? [properties[@"motorRate"]  floatValue] : 1.0f;
+            CCPhysicsJoint * motorJoint = [CCPhysicsJoint connectedMotorJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody rate:motorRate];
+        }
+        
         CGPoint anchorA = [properties[@"anchorA"] CGPointValue];
         joint = [CCPhysicsJoint connectedPivotJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody anchorA:anchorA];
         
