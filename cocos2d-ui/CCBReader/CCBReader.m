@@ -1000,6 +1000,25 @@ static inline float readFloat(CCBReader *self)
         {
             float motorRate = properties[@"motorRate"] ? [properties[@"motorRate"]  floatValue] : 1.0f;
             CCPhysicsJoint * motorJoint = [CCPhysicsJoint connectedMotorJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody rate:motorRate];
+            
+            motorJoint.maxForce = maxForce;
+            motorJoint.breakingForce = breakingForce;
+            motorJoint.collideBodies = collideBodies;
+        }
+        
+        if([properties[@"ratchetEnabled"] boolValue])
+        {
+            float ratchetValue = properties[@"ratchetValue"] ? [properties[@"ratchetValue"]  floatValue] : 30.0f;
+            ratchetValue = CC_DEGREES_TO_RADIANS(ratchetValue);
+            float ratchetPhase = properties[@"ratchetPhase"] ? [properties[@"ratchetPhase"]  floatValue] : 0.0f;
+            ratchetPhase = CC_DEGREES_TO_RADIANS(ratchetPhase);
+            
+            CCPhysicsJoint * ratchetJoint = [CCPhysicsJoint connectedRatchetJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody phase:ratchetPhase ratchet:ratchetValue];
+            
+            ratchetJoint.maxForce = maxForce;
+            ratchetJoint.breakingForce = breakingForce;
+            ratchetJoint.collideBodies = collideBodies;
+    
         }
         
         CGPoint anchorA = [properties[@"anchorA"] CGPointValue];
