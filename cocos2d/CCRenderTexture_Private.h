@@ -33,6 +33,8 @@
     int _currentRenderPass;
     NSMutableArray *_textures;
     NSMutableArray *_FBOs;
+    
+    BOOL _contentSizeChanged;
 }
 
 -(void)destroy;
