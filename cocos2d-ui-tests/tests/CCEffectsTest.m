@@ -179,7 +179,7 @@
 -(void)setupSaturationEffectNodeTest
 {
     self.subTitle = @"Saturation Effect Test";
-    
+
     // Different configurations of the saturation effect
     NSArray *effects = @[
                          [[CCEffectSaturation alloc] initWithSaturation:1.0f],
@@ -189,7 +189,7 @@
                          [[CCEffectSaturation alloc] initWithSaturation:0.2f],
                          [[CCEffectSaturation alloc] initWithSaturation:0.0f]
                          ];
-    
+
     // Effect nodes that use the effects in different combinations.
     [self.contentNode addChild:[self effectNodeWithEffects:@[effects[0]] appliedToSpriteWithImage:@"grossini.png" atPosition:ccp( 0.2, 0.5)]];
     [self.contentNode addChild:[self effectNodeWithEffects:@[effects[1]] appliedToSpriteWithImage:@"grossini.png" atPosition:ccp(0.32, 0.5)]];
