@@ -93,45 +93,71 @@
 
 +(void)extractFragmentData:(NSMutableArray*)effects functions:(NSMutableArray*)functions uniforms:(NSMutableArray*)uniforms
 {
-    // Check for duplicate names
-    NSMutableDictionary* functionNames = [[NSMutableDictionary alloc] init];
-
+    // Check for duplicate function and uniform names.
+    //
+    // Initialize the uniform name set with the default CCEffect uniform names
+    // so these don't get returned. The logic is that these are automatically
+    // added to each effect, not created by the user, so we don't want to return
+    // them here. This way the user gets back what they originally specified and
+    // no more.
+    NSMutableSet* functionNames = [[NSMutableSet alloc] init];
+    NSMutableSet* uniformNames = [[NSMutableSet alloc] initWithArray:@[ @"cc_PreviousPassTexture" ]];
+    
     // Extract all fragment functions and uniforms
     for(CCEffect* effect in effects)
     {
         for(CCEffectFunction* function in effect.fragmentFunctions)
         {
-            if([functionNames objectForKey:function.name])
-                continue;
-            
-            [functions addObject:function];
-            [functionNames setObject:@YES forKey:function.name];
+            if(![functionNames containsObject:function.name])
+            {
+                [functions addObject:function];
+                [functionNames addObject:function.name];
+            }
         }
-        
-        // TODO: check/handle uniforms with the same name
-        [uniforms addObjectsFromArray:effect.fragmentUniforms];
+
+        for(CCEffectUniform* uniform in effect.fragmentUniforms)
+        {
+            if(![uniformNames containsObject:uniform.name])
+            {
+                [uniforms addObject:uniform];
+                [uniformNames addObject:uniform.name];
+            }
+        }
     }
 }
 
 +(void)extractVertexData:(NSMutableArray*)effects functions:(NSMutableArray*)functions uniforms:(NSMutableArray*)uniforms
 {
-    // Check for duplicate names
-    NSMutableDictionary* functionNames = [[NSMutableDictionary alloc] init];
-
-    // Extract all fragment functions and uniforms
+    // Check for duplicate function and uniform names.
+    //
+    // Initialize the uniform name set with the default CCEffect uniform names
+    // so these don't get returned. The logic is that these are automatically
+    // added to each effect, not created by the user, so we don't want to return
+    // them here. This way the user gets back what they originally specified and
+    // no more.
+    NSMutableSet* functionNames = [[NSMutableSet alloc] init];
+    NSMutableSet* uniformNames = [[NSMutableSet alloc] initWithArray:@[ @"cc_PreviousPassTexture" ]];
+    
+    // Extract all vertex functions and uniforms
     for(CCEffect* effect in effects)
     {
         for(CCEffectFunction* function in effect.vertexFunctions)
         {
-            if([functionNames objectForKey:function.name])
-                continue;
-            
-            [functions addObject:function];
-            [functionNames setObject:@YES forKey:function.name];
+            if(![functionNames containsObject:function.name])
+            {
+                [functions addObject:function];
+                [functionNames addObject:function.name];
+            }
         }
         
-        // TODO: check/handle uniforms with the same name
-        [uniforms addObjectsFromArray:effect.vertexUniforms];
+        for(CCEffectUniform* uniform in effect.vertexUniforms)
+        {
+            if(![uniformNames containsObject:uniform.name])
+            {
+                [uniforms addObject:uniform];
+                [uniformNames addObject:uniform.name];
+            }
+        }
     }
 }
 
