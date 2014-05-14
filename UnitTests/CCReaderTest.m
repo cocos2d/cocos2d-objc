@@ -55,17 +55,17 @@ double machGetClockDiffS()
 
 -(void)testReaderPerformance
 {
-    NSData * fileData = [[NSData alloc] initWithContentsOfFile:@"PerfTest1.ccbi"];
+    NSString *filePath =[[NSBundle mainBundle] pathsForResourcesOfType:@"ccbi" inDirectory:@"Resources-shared/Tests"][0];
+    XCTAssertNotNil(filePath);
+    
+    NSData * fileData = [[NSData alloc] initWithContentsOfFile:filePath];
     
     CCBReader  * ccbReader = [[CCBReader alloc] init];
     
     machGetClockDiffS();
-    for (int i = 0; i < 1000000; i++)
+    for (int i = 0; i < 100; i++)
     {
-        @autoreleasepool {
             [ccbReader loadWithData:fileData owner:self];
-        }
-
     }
 
     NSLog(@"TimeToRun: %0.8f", machGetClockDiffS());
