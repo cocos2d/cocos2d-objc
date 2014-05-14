@@ -23,28 +23,27 @@
 {
     self.subTitle = @"Blur Effect Node Test";
 
-    // Horizontal
     CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"sample_hollow_circle.png"];
-    sampleSprite.anchorPoint = ccp(0.5, 0.5);
     sampleSprite.position = ccp(0.5, 0.5);
     sampleSprite.positionType = CCPositionTypeNormalized;
 
 
-    CCEffectNode* effectNode = [[CCEffectNode alloc] initWithWidth:80 height:80];
+    CCEffectNode* effectNode = [[CCEffectNode alloc] init];
+    effectNode.contentSize = CGSizeMake(80, 80);
+    effectNode.anchorPoint = ccp(0.5, 0.5);
     effectNode.positionType = CCPositionTypeNormalized;
-    effectNode.position = ccp(0.08, 0.5);
+    effectNode.position = ccp(0.1, 0.5);
     [effectNode addChild:sampleSprite];
     CCEffectGaussianBlur* effect = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:GLKVector2Make(1.0, 0.0)];
     [effectNode addEffect:effect];
     
     [self.contentNode addChild:effectNode];
 
+    
     // Vertical
     CCSprite *sampleSprite2 = [CCSprite spriteWithImageNamed:@"sample_hollow_circle.png"];
-    sampleSprite2.anchorPoint = ccp(0.5, 0.5);
     sampleSprite2.position = ccp(0.5, 0.5);
     sampleSprite2.positionType = CCPositionTypeNormalized;
-    
     
     CCEffectNode* effectNode2 = [[CCEffectNode alloc] initWithWidth:80 height:80];
     effectNode2.positionType = CCPositionTypeNormalized;
@@ -57,14 +56,14 @@
     
     // Tilt shift
     CCSprite *sampleSprite3 = [CCSprite spriteWithImageNamed:@"sample_hollow_circle.png"];
-    sampleSprite3.anchorPoint = ccp(0.5, 0.5);
     sampleSprite3.position = ccp(0.5, 0.5);
     sampleSprite3.positionType = CCPositionTypeNormalized;
     
     
     CCEffectNode* effectNode3 = [[CCEffectNode alloc] initWithWidth:80 height:80];
     effectNode3.positionType = CCPositionTypeNormalized;
-    effectNode3.position = ccp(0.35, 0.5);
+    effectNode3.position = ccp(0.5, 0.5);
+    effectNode3.anchorPoint = ccp(0.5, 0.5);
     [effectNode3 addChild:sampleSprite3];
     CCEffectGaussianBlur* effect3 = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:GLKVector2Make(1.0, 1.0)];
     [effectNode3 addEffect:effect3];
@@ -73,14 +72,13 @@
     
     // Tilt shift reversed
     CCSprite *sampleSprite4 = [CCSprite spriteWithImageNamed:@"sample_hollow_circle.png"];
-    sampleSprite4.anchorPoint = ccp(0.5, 0.5);
     sampleSprite4.position = ccp(0.5, 0.5);
     sampleSprite4.positionType = CCPositionTypeNormalized;
     
     
     CCEffectNode* effectNode4 = [[CCEffectNode alloc] initWithWidth:80 height:80];
     effectNode4.positionType = CCPositionTypeNormalized;
-    effectNode4.position = ccp(0.49, 0.5);
+    effectNode4.position = ccp(0.6, 0.5);
     [effectNode4 addChild:sampleSprite4];
     CCEffectGaussianBlur* effect4 = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:GLKVector2Make(-1.0, 1.0)];
     [effectNode4 addEffect:effect4];
@@ -226,6 +224,6 @@
                                                                ]]];
 	[node addChild:sprite];
 }
-
-@end
 #endif
+@end
+

@@ -13,7 +13,7 @@
 
 @property (nonatomic) float blurStrength;
 
--(id)initWithbBurStrength:(float)blurStrength;
+-(id)initWithbBlurStrength:(float)blurStrength;
 +(id)effectWithBlurStrength:(float)blurStrength;
 
 @end

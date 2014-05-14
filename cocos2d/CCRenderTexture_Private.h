@@ -11,7 +11,6 @@
 @interface CCRenderTexture() {
 
 @protected
-    CGSize _size;
     GLenum _pixelFormat;
     GLuint _depthStencilFormat;
 
