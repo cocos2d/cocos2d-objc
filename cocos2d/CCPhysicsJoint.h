@@ -96,6 +96,65 @@ Joints cannot be reactivated once they are invalidated.
 	anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB
 	restLength:(CGFloat)restLength stiffness:(CGFloat)stiffness damping:(CGFloat)damping;
 
+
+/**
+ *  Creates and returns a rotary spring joint between the two bodies. No anchor points are specified as this joint can be used in conjunction with a pivot joint to make a springing pivot joint.
+ *
+ *  @param bodyA   Body A.
+ *  @param bodyB   Body B.
+ *  @param restAngle Rest angle.
+ *  @param stiffness  Spring stiffness.
+ *  @param damping    Sprin damping.
+ *
+ *  @return The CCPhysicsJoint Object.
+ */
++(CCPhysicsJoint *)connectedRotarySpringJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB restAngle:(CGFloat)restAngle stifness:(CGFloat)stiffness damping:(CGFloat)damping;
+
+
+
+/**
+ *  Creates and returns a Motor joint between the two bodies. No anchor points are specified as this joint can be used in conjunction with a pivot joint to make a motor around a pivot point.
+ *
+ *  @param bodyA   Body A.
+ *  @param bodyB   Body B.
+ *  @param rate    Rate at which the rotate relative to each other. Negative values to reverse direction.
+ *
+ *  @return The CCPhysicsJoint Object.
+ */
++(CCPhysicsJoint *)connectedMotorJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
+                                           rate:(CGFloat)rate;
+
+
+/**
+ *  Creates and returns joint whereby the angle of rotation between too bodies is limited. No anchor points are specified as this joint can be used in conjunction with a pivot joint to make the pivots range of motion limited.
+ *
+ *  @param bodyA   Body A.
+ *  @param bodyB   Body B.
+ *  @param min     Minimum angle in radians.
+ *  @param max     Maximum angle in radians.
+ *
+ *  @return The CCPhysicsJoint Object.
+ */
++(CCPhysicsJoint *)connectedRotaryLimitJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
+                                                  min:(CGFloat)min
+                                                  max:(CGFloat)max;
+
+
+
+/**
+ *  Creates and returns ratchet jointwhereby the angle of rotation between too bodies can go forwards smoothely, but the backwards motion is clipped at 'ratchet' intervals. No anchor points are specified as this joint can be used in conjunction with a pivot joint to ratchet its range of motion.
+ *  @param bodyA   Body A.
+ *  @param bodyB   Body B.
+ *  @param phase   Phase angle in Radians [0, 2 PI] describing where within the rathet interval the joint is located.
+ *  @param ratchet Ratchet interval angle in radians.
+ *
+ *  @return The CCPhysicsJoint Object.
+ */
++(CCPhysicsJoint *)connectedRatchetJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
+                                            phase:(CGFloat)phase
+                                          ratchet:(CGFloat)ratchet;
+
+
 /// -----------------------------------------------------------------------
 /// @name Accessing Physics Joint Attributes
 /// -----------------------------------------------------------------------
