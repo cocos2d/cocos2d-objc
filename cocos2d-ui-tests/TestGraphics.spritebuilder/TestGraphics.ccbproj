@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>cocos2dUpdateIgnoredVersions</key>
+	<array/>
 	<key>defaultOrientation</key>
 	<integer>0</integer>
 	<key>designTarget</key>
@@ -16,6 +18,8 @@
 	<false/>
 	<key>deviceScaling</key>
 	<integer>0</integer>
+	<key>engine</key>
+	<integer>0</integer>
 	<key>exporter</key>
 	<string>ccbi</string>
 	<key>fileType</key>
@@ -24,10 +28,6 @@
 	<integer>1</integer>
 	<key>flattenPaths</key>
 	<false/>
-	<key>javascriptBased</key>
-	<true/>
-	<key>javascriptMainCCB</key>
-	<string>MainScene</string>
 	<key>needRepublish</key>
 	<false/>
 	<key>onlyPublishCCBs</key>
@@ -40,20 +40,12 @@
 	<string>../Resources-shared</string>
 	<key>publishDirectoryAndroid</key>
 	<string>Published-Android</string>
-	<key>publishDirectoryHTML5</key>
-	<string>Published-HTML5</string>
 	<key>publishEnabledAndroid</key>
-	<false/>
-	<key>publishEnabledHTML5</key>
 	<false/>
 	<key>publishEnablediPhone</key>
 	<true/>
-	<key>publishResolutionHTML5_height</key>
-	<integer>320</integer>
-	<key>publishResolutionHTML5_scale</key>
-	<integer>1</integer>
-	<key>publishResolutionHTML5_width</key>
-	<integer>480</integer>
+	<key>publishEnvironment</key>
+	<integer>0</integer>
 	<key>publishResolution_android_phone</key>
 	<true/>
 	<key>publishResolution_android_phonehd</key>
@@ -220,11 +212,9 @@
 			<integer>1</integer>
 		</dict>
 	</dict>
-	<key>tabletPositionScaleFactorType</key>
-	<integer>0</integer>
 	<key>versionStr</key>
-	<string>Version: 0.9.alpha
-GitHub: a60fad70ec
+	<string>Version: 0.9
+GitHub: 551c4795b8
 </string>
 </dict>
 </plist>
