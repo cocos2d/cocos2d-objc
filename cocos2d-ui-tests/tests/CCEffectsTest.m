@@ -176,6 +176,29 @@
     [self.contentNode addChild:[self effectNodeWithEffects:@[pixellate] appliedToSpriteWithImage:@"grossini-hd.png" atPosition:ccp(0.6, 0.5)]];
 }
 
+-(void)setupSaturationEffectNodeTest
+{
+    self.subTitle = @"Saturation Effect Test";
+    
+    // Different configurations of the saturation effect
+    NSArray *effects = @[
+                         [[CCEffectSaturation alloc] initWithSaturation:1.0f],
+                         [[CCEffectSaturation alloc] initWithSaturation:0.8f],
+                         [[CCEffectSaturation alloc] initWithSaturation:0.6f],
+                         [[CCEffectSaturation alloc] initWithSaturation:0.4f],
+                         [[CCEffectSaturation alloc] initWithSaturation:0.2f],
+                         [[CCEffectSaturation alloc] initWithSaturation:0.0f]
+                         ];
+    
+    // Effect nodes that use the effects in different combinations.
+    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[0]] appliedToSpriteWithImage:@"grossini.png" atPosition:ccp( 0.2, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[1]] appliedToSpriteWithImage:@"grossini.png" atPosition:ccp(0.32, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[2]] appliedToSpriteWithImage:@"grossini.png" atPosition:ccp(0.44, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[3]] appliedToSpriteWithImage:@"grossini.png" atPosition:ccp(0.56, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[4]] appliedToSpriteWithImage:@"grossini.png" atPosition:ccp(0.68, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[5]] appliedToSpriteWithImage:@"grossini.png" atPosition:ccp( 0.8, 0.5)]];
+}
+
 - (CCEffectNode *)effectNodeWithEffects:(NSArray *)effects appliedToSpriteWithImage:(NSString *)spriteImage atPosition:(CGPoint)position
 {
     // Another sprite that will be added directly

@@ -22,6 +22,8 @@
 #import "CCEffectBrightness.h"
 #import "CCEffectContrast.h"
 #import "CCEffectPixellate.h"
+#import "CCEffectSaturation.h"
+
 
 #ifdef __CC_PLATFORM_IOS
 #import <UIKit/UIKit.h>
