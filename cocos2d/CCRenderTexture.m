@@ -412,7 +412,7 @@
 		[self end];
 	}
 	
-    _sprite.anchorPoint = ccp(0.0, 0.0);
+//	_sprite.anchorPoint = ccp(0.0, 0.0);
 	GLKMatrix4 transform = [self transform:parentTransform];
 	[_sprite visit:renderer parentTransform:&transform];
 	
