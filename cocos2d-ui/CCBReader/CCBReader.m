@@ -1018,7 +1018,9 @@ static inline float readFloat(CCBReader *self)
             float motorRate = properties[@"motorRate"] ? [properties[@"motorRate"]  floatValue] : 1.0f;
             CCPhysicsJoint * motorJoint = [CCPhysicsJoint connectedMotorJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody rate:motorRate];
             
-            motorJoint.maxForce = maxForce;
+            float maxMotorForce = [properties[@"motorMaxForceEnabled"] boolValue] ? [properties[@"motorMaxForce"] floatValue] : INFINITY;
+
+            motorJoint.maxForce = maxMotorForce;
             motorJoint.breakingForce = breakingForce;
             motorJoint.collideBodies = collideBodies;
         }
