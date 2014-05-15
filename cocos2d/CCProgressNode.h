@@ -66,6 +66,9 @@ typedef NS_ENUM(NSUInteger, CCProgressNodeType) {
 	CGPoint				_midpoint;
 	CGPoint				_barChangeRate;
 	BOOL				_reverseDirection;
+	
+	BOOL				_dirtyVertexData;
+	BOOL				_needsUpdateProgress;
 }
 
 
