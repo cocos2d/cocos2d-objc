@@ -11,9 +11,9 @@
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffectPixellate : CCEffect
 
--(id)initWithPixelScale:(float)pixelScale;
+-(id)initWithPixelSize:(float)pixelSize;
 
-@property (nonatomic) float pixelScale;
+@property (nonatomic) float pixelSize;
 
 @end
 #endif

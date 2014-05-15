@@ -14,13 +14,17 @@
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @implementation CCEffectPixellate
 
--(id)initWithPixelScale:(float)pixelScale
+-(id)initWithPixelSize:(float)pixelSize
 {
-    CCEffectUniform* uniformPixelScale = [CCEffectUniform uniform:@"float" name:@"u_pixelScale" value:[NSNumber numberWithFloat:pixelScale]];
+    float uStep = pixelSize;
+    float vStep = pixelSize;
     
-    if((self = [super initWithUniforms:@[uniformPixelScale] vertextUniforms:nil varying:nil]))
+    CCEffectUniform* uniformUStep = [CCEffectUniform uniform:@"float" name:@"u_uStep" value:[NSNumber numberWithFloat:uStep]];
+    CCEffectUniform* uniformVStep = [CCEffectUniform uniform:@"float" name:@"u_vStep" value:[NSNumber numberWithFloat:vStep]];
+
+    if((self = [super initWithUniforms:@[uniformUStep, uniformVStep] vertextUniforms:nil varying:nil]))
     {
-        _pixelScale = pixelScale;
+        _pixelSize = pixelSize;
     }
     return self;
 }
@@ -29,7 +33,7 @@
 {
     // Image pixellation shader based on pixellation filter in GPUImage - https://github.com/BradLarson/GPUImage
     NSString* effectBody = CC_GLSL(
-                                   vec2 samplePos = cc_FragTexCoord1 - mod(cc_FragTexCoord1, vec2(u_pixelScale) + 0.5 * vec2(u_pixelScale));
+                                   vec2 samplePos = cc_FragTexCoord1 - mod(cc_FragTexCoord1, vec2(u_uStep, u_vStep)) + 0.5 * vec2(u_uStep, u_vStep);
                                    return texture2D(cc_PreviousPassTexture, samplePos);
                                    );
     
@@ -45,7 +49,15 @@
 -(void)renderPassBegin:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
 {
     renderPass.sprite.anchorPoint = ccp(0.0, 0.0);
-    renderPass.sprite.shaderUniforms[@"u_pixelScale"] = [NSNumber numberWithFloat:self.pixelScale];
+    
+    CCTexture *texture = renderPass.sprite.shaderUniforms[@"cc_PreviousPassTexture"];
+
+    float aspect = texture.contentSize.width / texture.contentSize.height;
+    float uStep = self.pixelSize / texture.contentSize.width;
+    float vStep = uStep * aspect;
+    
+    renderPass.sprite.shaderUniforms[@"u_uStep"] = [NSNumber numberWithFloat:uStep];
+    renderPass.sprite.shaderUniforms[@"u_vStep"] = [NSNumber numberWithFloat:vStep];
 }
 
 -(void)renderPassUpdate:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
