@@ -162,18 +162,21 @@
 {
     self.subTitle = @"Pixellate Effect Test";
     
-    // An unmodified sprite that is added directly to the scene.
-    CCSprite *sprite = [CCSprite spriteWithImageNamed:@"grossini-hd.png"];
-    sprite.anchorPoint = ccp(0.5, 0.5);
-    sprite.positionType = CCPositionTypeNormalized;
-    sprite.position = ccp(0.3, 0.5);
-    [self.contentNode addChild:sprite];
-    
-    // The brightness and contrast effects.
-    CCEffect *pixellate = [[CCEffectPixellate alloc] initWithPixelScale:0.02f];
+    // Different configurations of the pixellate effect
+    NSArray *effects = @[
+                         [[CCEffectPixellate alloc] initWithPixelSize:1.0f],
+                         [[CCEffectPixellate alloc] initWithPixelSize:2.0f],
+                         [[CCEffectPixellate alloc] initWithPixelSize:4.0f],
+                         [[CCEffectPixellate alloc] initWithPixelSize:8.0f],
+                         [[CCEffectPixellate alloc] initWithPixelSize:16.0f]
+                         ];
     
     // Effect nodes that use the effects in different combinations.
-    [self.contentNode addChild:[self effectNodeWithEffects:@[pixellate] appliedToSpriteWithImage:@"grossini-hd.png" atPosition:ccp(0.6, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[0]] appliedToSpriteWithImage:@"grossini-hd.png" atPosition:ccp(0.1, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[1]] appliedToSpriteWithImage:@"grossini-hd.png" atPosition:ccp(0.3, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[2]] appliedToSpriteWithImage:@"grossini-hd.png" atPosition:ccp(0.5, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[3]] appliedToSpriteWithImage:@"grossini-hd.png" atPosition:ccp(0.7, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[4]] appliedToSpriteWithImage:@"grossini-hd.png" atPosition:ccp(0.9, 0.5)]];
 }
 
 -(void)setupSaturationEffectNodeTest
@@ -210,7 +213,7 @@
     float effectDim = MAX(sprite.contentSize.width, sprite.contentSize.height);
     
     // Brightness and contrast test
-    CCEffectNode* effectNode = [[CCEffectNode alloc] initWithWidth:effectDim height:effectDim];
+    CCEffectNode* effectNode = [[CCEffectNode alloc] initWithWidth:sprite.contentSize.width height:sprite.contentSize.height];
     effectNode.anchorPoint = ccp(0.5, 0.5);
     effectNode.positionType = CCPositionTypeNormalized;
     effectNode.position = position;
