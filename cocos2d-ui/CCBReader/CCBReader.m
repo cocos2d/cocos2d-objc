@@ -191,6 +191,116 @@ static inline int readIntWithSign(CCBReader *self, BOOL pSigned)
 }
 
 
+#define REVERSE_BYTE(b) (unsigned char)(((b * 0x0802LU & 0x22110LU) | (b * 0x8020LU & 0x88440LU)) * 0x10101LU >> 16)
+
+//DEPRICATED
+//DEPRICATED
+//DEPRICATED
+static inline int readIntWithSignOLD(CCBReader *self, BOOL sign)
+{
+    // Good luck groking this!
+    // The basic idea is to do as little bit reading as possible and use everything in a byte contexts and avoid loops; espc ones that iterate 8 * bytes-read
+    // Note: this implementation is NOT the same encoding concept as the standard Elias Gamma, instead the real encoding is a byte flipped version of it.
+    // In order to optimize to little-endian devices, we have chosen to unflip the bytes before transacting upon them (excluding of course the "leading" zeros.
+    
+    unsigned int v = *(unsigned int *)(self->bytes + self->currentByte);
+    int numBits = 32;
+    int extraByte = 0;
+    v &= -((int)v);
+    if (v) numBits--;
+    if (v & 0x0000FFFF) numBits -= 16;
+    if (v & 0x00FF00FF) numBits -= 8;
+    if (v & 0x0F0F0F0F) numBits -= 4;
+    if (v & 0x33333333) numBits -= 2;
+    if (v & 0x55555555) numBits -= 1;
+    
+    if ((numBits & 0x00000007) == 0)
+    {
+        extraByte = 1;
+        self->currentBit = 0;
+        self->currentByte += (numBits >> 3);
+    }
+    else
+    {
+        self->currentBit = numBits - (numBits >> 3) * 8;
+        self->currentByte += (numBits >> 3);
+    }
+    
+    static char prefixMask[] = {
+        0xFF,
+        0x7F,
+        0x3F,
+        0x1F,
+        0x0F,
+        0x07,
+        0x03,
+        0x01,
+    };
+    static unsigned int suffixMask[] = {
+        0x00,
+        0x80,
+        0xC0,
+        0xE0,
+        0xF0,
+        0xF8,
+        0xFC,
+        0xFE,
+        0xFF,
+    };
+    unsigned char prefix = REVERSE_BYTE(*(self->bytes + self->currentByte)) & prefixMask[self->currentBit];
+    long long current = prefix;
+    int numBytes = 0;
+    int suffixBits = (numBits - (8 - self->currentBit) + 1);
+    if (numBits >= 8)
+    {
+        suffixBits %= 8;
+        numBytes = (numBits - (8 - (int)(self->currentBit)) - suffixBits + 1) / 8;
+    }
+    if (suffixBits >= 0)
+    {
+        self->currentByte++;
+        for (int i = 0; i < numBytes; i++)
+        {
+            current <<= 8;
+            unsigned char byte = REVERSE_BYTE(*(self->bytes + self->currentByte));
+            current += byte;
+            self->currentByte++;
+        }
+        current <<= suffixBits;
+        unsigned char suffix = (REVERSE_BYTE(*(self->bytes + self->currentByte)) & suffixMask[suffixBits]) >> (8 - suffixBits);
+        current += suffix;
+    }
+    else
+    {
+        current >>= -suffixBits;
+    }
+    self->currentByte += extraByte;
+    int num;
+    
+    if (sign)
+    {
+        int s = current % 2;
+        if (s)
+        {
+            num = (int)(current / 2);
+        }
+        else
+        {
+            num = (int)(-current / 2);
+        }
+    }
+    else
+    {
+        num = (int)current - 1;
+    }
+    
+    alignBits(self);
+    
+    return num;
+}
+
+
+
 
 static inline float readFloat(CCBReader *self)
 {
@@ -1419,7 +1529,7 @@ static inline float readFloat(CCBReader *self)
     if (magic != CHAR4('c', 'c', 'b', 'i')) return NO;
     
     // Read version
-    int version = readIntWithSign(self, NO);
+    int version = readIntWithSignOLD(self, NO);
     if (version != kCCBVersion)
     {
 		[NSException raise:NSInternalInconsistencyException format:@"CCBReader: Incompatible ccbi file version (file: %d reader: %d)",version,kCCBVersion];
