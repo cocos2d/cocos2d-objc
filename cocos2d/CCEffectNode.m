@@ -36,6 +36,12 @@
 
 @implementation CCEffectNode
 
+
+-(id)init
+{
+    return [self initWithWidth:1 height:1];
+}
+
 -(id)initWithWidth:(int)width height:(int)height
 {
 	if((self = [super initWithWidth:width height:height pixelFormat:CCTexturePixelFormat_Default])) {
@@ -91,6 +97,7 @@
 	if(!_visible) return;
 	
     GLKMatrix4 transform = [self transform:parentTransform];
+    
     [self draw:renderer transform:&transform];
 	
 	_orderOfArrival = 0;
@@ -215,7 +222,6 @@
     // texture so it will contain any accumulated results for the effect stack.
     _sprite.texture = self.texture;
     _sprite.shader = [CCShader positionTextureColorShader];
-    _sprite.anchorPoint = ccp(0.5, 0.5);
     [_sprite visit:_renderer parentTransform:transform];
     
     // Done framebuffer composite

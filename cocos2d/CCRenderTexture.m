@@ -130,7 +130,7 @@
 			CCLOGWARN(@"cocos2d: WARNING. CCRenderTexture is running on its own thread. Make sure that an OpenGL context is being used on this thread!");
 
 		_contentScale = [CCDirector sharedDirector].contentScaleFactor;
-		_size = CGSizeMake(width, height);
+        [self setContentSize:CGSizeMake(width, height)];
 		_pixelFormat = format;
 		_depthStencilFormat = depthStencilFormat;
 
@@ -148,12 +148,19 @@
 	return self;
 }
 
+
+-(id)init
+{
+    return [self initWithWidth:0 height:0 pixelFormat:CCTexturePixelFormat_RGBA8888];
+}
+
 -(void)create
 {
 	glPushGroupMarkerEXT(0, "CCRenderTexture: Create");
 	
-	int pixelW = _size.width*_contentScale;
-	int pixelH = _size.height*_contentScale;
+    int pixelW = _contentSize.width*_contentScale;
+	int pixelH = _contentSize.height*_contentScale;
+
 
 	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
 
@@ -216,7 +223,7 @@
 	CC_CHECK_GL_ERROR_DEBUG();
 	glPopGroupMarkerEXT();
 	
-	CGRect rect = CGRectMake(0, 0, _size.width, _size.height);
+    CGRect rect = CGRectMake(0, 0, _contentSize.width, _contentSize.height);
     
     [self assignSpriteTexture];
 	[_sprite setTextureRect:rect];
@@ -384,6 +391,13 @@
 	if(!_visible) return;
 	
 	if(_autoDraw){
+        
+        if(_contentSizeChanged)
+        {
+            [self destroy];
+            _contentSizeChanged = NO;
+        }
+        
 		[self begin];
 		NSAssert(_renderer == renderer, @"CCRenderTexture error!");
 		
@@ -399,6 +413,7 @@
 		[self end];
 	}
 	
+    _sprite.anchorPoint = ccp(0.0, 0.0);
 	GLKMatrix4 transform = [self transform:parentTransform];
 	[_sprite visit:renderer parentTransform:&transform];
 	
@@ -566,14 +581,11 @@
 
 #pragma RenderTexture - Override
 
--(CGSize) contentSize
-{
-	return self.texture.contentSize;
-}
-
 -(void) setContentSize:(CGSize)size
 {
-	NSAssert(NO, @"You cannot change the content size of an already created CCRenderTexture. Recreate it");
+    [super setContentSize:size];
+    _projection = GLKMatrix4MakeOrtho(0.0f, size.width, size.height, 0.0f, -1024.0f, 1024.0f);
+    _contentSizeChanged = YES;
 }
 
 @end
