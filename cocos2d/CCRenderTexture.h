@@ -143,6 +143,9 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
  */
 - (id)initWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat)format depthStencilFormat:(GLuint)depthStencilFormat;
 
+
+- (id)init;
+
 /** 
  *  Starts rendering to the texture whitout clearing the texture first. 
  */
