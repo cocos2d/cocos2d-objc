@@ -309,8 +309,6 @@ BreakConstraint(cpConstraint *constraint, cpSpace *space)
 	float currentAngle = (_constraint.bodyA.angle - _constraint.bodyB.angle);
     
     _constraint.restAngle = currentAngle + restAngle;
-
-
 }
 
 @end
