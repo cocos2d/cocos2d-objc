@@ -285,14 +285,17 @@ BreakConstraint(cpConstraint *constraint, cpSpace *space)
 
 @implementation CCPhysicsRotarySpring{
 	ChipmunkDampedRotarySpring *_constraint;
+    float restAngle;
 
 }
 
--(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB restAngle:(cpFloat)restAngle stifness:(cpFloat)stiffness damping:(cpFloat)damping
+-(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB restAngle:(cpFloat)_restAngle stifness:(cpFloat)stiffness damping:(cpFloat)damping
 {
 	if((self = [super init])){
-		_constraint = [ChipmunkDampedRotarySpring dampedRotarySpringWithBodyA:bodyA.body bodyB:bodyB.body restAngle:restAngle stiffness:stiffness damping:damping];
+		_constraint = [ChipmunkDampedRotarySpring dampedRotarySpringWithBodyA:bodyA.body bodyB:bodyB.body restAngle:_restAngle stiffness:stiffness damping:damping];
 		_constraint.userData = self;
+        _constraint.restAngle = _restAngle;
+        restAngle = _restAngle;
 		
 	}
 	
@@ -303,7 +306,11 @@ BreakConstraint(cpConstraint *constraint, cpSpace *space)
 
 -(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
 {
-	
+	float currentAngle = (_constraint.bodyA.angle - _constraint.bodyB.angle);
+    
+    _constraint.restAngle = currentAngle + restAngle;
+
+
 }
 
 @end
