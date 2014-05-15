@@ -54,6 +54,12 @@
 @end
 
 
+@interface CCBReader()
+
+@property (nonatomic, copy) NSString *currentCCBFile;
+
+@end
+
 
 @implementation CCBReader
 
@@ -260,6 +266,15 @@ static inline float readFloat(CCBReader *self)
         
         [extraPropNames addObject:name];
     }
+
+#if DEBUG
+    if (isExtraProp
+        && ![self isPropertyKeySettable:name onInstance:node])
+    {
+        NSLog(@"*** [PROPERTY] ERROR HINT: Did you set a custom property \"%@\"? In file \"%@\" ", name, _currentCCBFile);
+        NSLog(@"*** [PROPERTY] ERROR HINT: Make sure the class \"%@\" is KVC compliant and \"%@\" can be set", [node class], name);
+    }
+#endif
     
 #if DEBUG_READER_PROPERTIES
 	NSString* valueString = nil;
@@ -737,7 +752,16 @@ static inline float readFloat(CCBReader *self)
         NSString* path = [[CCFileUtils sharedFileUtils] fullPathForFilename:ccbFileName];
         NSData* d = [NSData dataWithContentsOfFile:path];
 
-        NSAssert(d,@"Failed to find ccb file: %@",ccbFileName);
+#if DEBUG
+        // Special case: scroll view missing content node
+        if (!d && [ccbFileName isEqualToString:@".ccbi"] && [NSStringFromClass([node class]) isEqualToString:@"CCScrollView"])
+        {
+            NSLog(@"*** [PROPERTY] ERROR HINT: Did you forget to set the content node for your CCScrollView?");
+        }
+#endif
+
+        NSAssert(d,@"[PROPERTY] %@ - kCCBPropTypeCCBFile - Failed to find ccb file: \"%@\", node class name: \"%@\", name: \"%@\", in ccb file: \"%@\"",
+                 name, ccbFileName, [node class], [node name], _currentCCBFile);
 
         CCBReader* reader = [[CCBReader alloc] init];
         reader.animationManager.rootContainerSize = parent.contentSize;
@@ -785,12 +809,73 @@ static inline float readFloat(CCBReader *self)
     }
     else
     {
-        NSAssert(false, @"CCBReader: Failed to read property type %d",type);
+        NSAssert(false, @"[PROPERTY] %@ - Failed to read property type %d, node class name: \"%@\", name: \"%@\", in ccb file: \"%@\"", name, type, [node class], [node name], _currentCCBFile);
+    }
+}
+
+- (BOOL)isPropertyKeySettable:(NSString *)key onInstance:(id)instance
+{
+    if (!key || !instance || ([key length] == 0))
+    {
+        return NO;
     }
 
-#if DEBUG_READER_PROPERTIES
-	NSLog(@"%@ = %@", name, valueString);
-#endif
+    NSString *firstCharacterOfKey = [[key substringWithRange:NSMakeRange(0, 1)] uppercaseString];
+    NSString *uppercaseKey = [key stringByReplacingCharactersInRange:NSMakeRange(0, 1) withString:firstCharacterOfKey];
+    NSString *setterName = [NSString stringWithFormat:@"set%@", uppercaseKey];
+
+    if ([instance respondsToSelector:NSSelectorFromString(setterName)])
+    {
+        return YES;
+    }
+
+    NSArray *setOfDirectlySettableIvarNames = @[[NSString stringWithFormat:@"_%@", key],
+                                                [NSString stringWithFormat:@"_is%@", uppercaseKey],
+                                                key,
+                                                [NSString stringWithFormat:@"is%@", uppercaseKey]];
+
+    return [self doesIvarNameExistInClassHierarchy:[instance class] searchForIvarNames:setOfDirectlySettableIvarNames];
+}
+
+- (BOOL)doesIvarNameExistInClassHierarchy:(Class)class searchForIvarNames:(NSArray *)searchedIvarNames
+{
+    if ([class accessInstanceVariablesDirectly])
+    {
+        NSArray *ivarNames = [self getIvarNamesOfClass:class];
+
+        for (NSString *ivarName in ivarNames)
+        {
+            if ([searchedIvarNames containsObject:ivarName])
+            {
+                return YES;
+            }
+        }
+    }
+
+    Class superClass = class_getSuperclass(class);
+    if (superClass)
+    {
+        return [self doesIvarNameExistInClassHierarchy:superClass searchForIvarNames:searchedIvarNames];
+    }
+
+    return NO;
+}
+
+- (NSArray *)getIvarNamesOfClass:(Class)class
+{
+    NSMutableArray *result = [NSMutableArray array];
+    unsigned int iVarCount;
+
+    Ivar *vars = class_copyIvarList(class, &iVarCount);
+    for (int i = 0; i < iVarCount; i++)
+    {
+        Ivar var = vars[i];
+        NSString *ivarName = [NSString stringWithCString:ivar_getName(var) encoding:NSUTF8StringEncoding];
+        [result addObject:ivarName];
+    }
+    free(vars);
+
+    return result;
 }
 
 - (CCBKeyframe*) readKeyframeOfType:(int)type
@@ -1035,12 +1120,7 @@ static inline float readFloat(CCBReader *self)
 - (CCNode*) readNodeGraphParent:(CCNode*)parent
 {
     NSString* className = [self readCachedString];
-    CCNode* node = [self nodeFromClassName:className];
-	if (node == nil)
-	{
-		return nil;
-	}
-    
+  
     // Read assignment type and name
     int memberVarAssignmentType = readIntWithSign(self, NO);
     NSString* memberVarAssignmentName = NULL;
@@ -1048,6 +1128,17 @@ static inline float readFloat(CCBReader *self)
     {
         memberVarAssignmentName = [self readCachedString];
     }
+    
+    Class class = NSClassFromString(className);
+    if (!class)
+    {
+#if DEBUG
+        NSLog(@"*** [CLASS] ERROR HINT: Did you set a custom class for a CCNode? Please check if the specified class name is spelled correctly and available in your project.");
+#endif
+        NSAssert(nil, @"[CLASS] Could not create class named: \"%@\". in CCB file: \"%@\"", className, _currentCCBFile);
+        return NULL;
+    }
+    CCNode* node = [[class alloc] init];
     
     // Set root node
     if (!animationManager.rootNode) animationManager.rootNode = node;
@@ -1236,8 +1327,8 @@ static inline float readFloat(CCBReader *self)
 
             body = [CCPhysicsBody bodyWithCircleOfRadius:cornerRadius andCenter:point];
         }
-        NSAssert(body, @"Unknown body shape");
-        
+        NSAssert(body, @"[PHYSICS] Unknown body shape %i, class name \"%@\", in CCB file: \"%@\"", bodyShape, className, _currentCCBFile);
+
         BOOL dynamic = readBool(self);
         BOOL affectedByGravity = readBool(self);
         BOOL allowsRotation = readBool(self);
@@ -1516,7 +1607,9 @@ static inline float readFloat(CCBReader *self)
     
     NSString* path = [[CCFileUtils sharedFileUtils] fullPathForFilename:file];
     NSData* d = [NSData dataWithContentsOfFile:path];
-    
+
+    self.currentCCBFile = file;
+
     return [self loadWithData:d owner:(id)o];
 }
 
