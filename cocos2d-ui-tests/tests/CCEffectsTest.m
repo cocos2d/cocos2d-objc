@@ -224,6 +224,6 @@
                                                                ]]];
 	[node addChild:sprite];
 }
-#endif
 @end
+#endif
 

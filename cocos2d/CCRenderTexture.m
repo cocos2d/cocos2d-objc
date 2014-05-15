@@ -158,7 +158,7 @@
 {
 	glPushGroupMarkerEXT(0, "CCRenderTexture: Create");
 	
-    int pixelW = _contentSize.width*_contentScale;
+	int pixelW = _contentSize.width*_contentScale;
 	int pixelH = _contentSize.height*_contentScale;
 
 
@@ -179,8 +179,7 @@
 	void *data = calloc(powW*powH, 4);
 
 	CCTexture *texture = [[CCTexture alloc] initWithData:data pixelFormat:_pixelFormat pixelsWide:powW pixelsHigh:powH contentSizeInPixels:CGSizeMake(pixelW, pixelH) contentScale:_contentScale];
-
-    [_textures insertObject:texture atIndex:_currentRenderPass];
+	[_textures insertObject:texture atIndex:_currentRenderPass];
 	
 	free(data);
 
@@ -188,14 +187,14 @@
 	glGetIntegerv(GL_RENDERBUFFER_BINDING, &oldRBO);
 
 	// generate FBO
-    GLuint fbo;
+	GLuint fbo;
 	glGenFramebuffers(1, &fbo);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
 	// associate texture with FBO
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.name, 0);
 
-    GLuint depthRenderBuffer = 0;
+	GLuint depthRenderBuffer = 0;
 	if(_depthStencilFormat){
 		//create and attach depth buffer
 		glGenRenderbuffers(1, &depthRenderBuffer);
@@ -211,10 +210,10 @@
     
 	// check if it worked (probably worth doing :) )
 	NSAssert( glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, @"Could not attach texture to framebuffer");
-
-    CCRenderTextureFBO *renderTextureFBO = [[CCRenderTextureFBO alloc] initWithFBO:fbo depthRenderBuffer:depthRenderBuffer];
-    [_FBOs insertObject:renderTextureFBO atIndex:_currentRenderPass];
-    
+	
+	CCRenderTextureFBO *renderTextureFBO = [[CCRenderTextureFBO alloc] initWithFBO:fbo depthRenderBuffer:depthRenderBuffer];
+	[_FBOs insertObject:renderTextureFBO atIndex:_currentRenderPass];
+  
 	[texture setAliasTexParameters];
 	
 	glBindRenderbuffer(GL_RENDERBUFFER, oldRBO);
@@ -223,9 +222,9 @@
 	CC_CHECK_GL_ERROR_DEBUG();
 	glPopGroupMarkerEXT();
 	
-    CGRect rect = CGRectMake(0, 0, _contentSize.width, _contentSize.height);
-    
-    [self assignSpriteTexture];
+	CGRect rect = CGRectMake(0, 0, _contentSize.width, _contentSize.height);
+	
+	[self assignSpriteTexture];
 	[_sprite setTextureRect:rect];
 }
 

@@ -8,6 +8,7 @@
 
 #import "CCEffectStack.h"
 
+#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffectStack ()
 {
     NSMutableArray *_effects;
@@ -16,4 +17,4 @@
 - (BOOL)prepareForRendering;
 
 @end
-
+#endif

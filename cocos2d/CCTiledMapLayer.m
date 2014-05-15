@@ -402,7 +402,6 @@ struct IntRect { int xmin, xmax, ymin, ymax; };
 	int tilesetTileW = _tileset.tileSize.width;
 	int tilesetTileH = _tileset.tileSize.height;
 	int tilesPerSheetRow = (_tileset.imageSize.width - tilesetMargin*2 + tilesetSpacing) / (_tileset.tileSize.width + _tileset.spacing);
-	NSLog(@"scale: %.2f, margin: %d, spacing: %d, w: %d, h: %d, perRow: %d", scale, tilesetMargin, tilesetSpacing, tilesetTileW, tilesetTileH, tilesPerSheetRow);
 	
 	struct IntRect tileBounds = [self tileBounds];
 	
