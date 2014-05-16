@@ -55,19 +55,13 @@
 {
     
     NSString* effectBody = CC_GLSL(
-                                   
-                                   vec4 src = vec4(0.0);
-                               
                                    lowp vec4 fragmentColor = texture2D(cc_PreviousPassTexture, v_centerTextureCoordinate) * 0.2270270270;
                                    fragmentColor += texture2D(cc_PreviousPassTexture, v_oneStepLeftTextureCoordinate) * 0.3162162162;
                                    fragmentColor += texture2D(cc_PreviousPassTexture, v_oneStepRightTextureCoordinate) * 0.3162162162;
                                    fragmentColor += texture2D(cc_PreviousPassTexture, v_twoStepsLeftTextureCoordinate) * 0.0702702703;
                                    fragmentColor += texture2D(cc_PreviousPassTexture, v_twoStepsRightTextureCoordinate) * 0.0702702703;
                                    
-                                   src = fragmentColor;
-                                   
-                                   return src;
-                                   
+                                   return fragmentColor;
                                    );
     
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"blurEffect" body:effectBody returnType:@"vec4"];

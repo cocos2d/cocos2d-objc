@@ -36,7 +36,7 @@
     return self;
 }
 
--(id)initWithbBurStrength:(float)blurStrength
+-(id)initWithbBlurStrength:(float)blurStrength
 {
     if((self = [self init]))
     {
@@ -49,7 +49,7 @@
 
 +(id)effectWithBlurStrength:(float)blurStrength
 {
-    return [[self alloc] initWithbBurStrength:blurStrength];
+    return [[self alloc] initWithbBlurStrength:blurStrength];
 }
 
 -(void)buildFragmentFunctions

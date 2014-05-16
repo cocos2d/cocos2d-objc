@@ -130,7 +130,7 @@
 			CCLOGWARN(@"cocos2d: WARNING. CCRenderTexture is running on its own thread. Make sure that an OpenGL context is being used on this thread!");
 
 		_contentScale = [CCDirector sharedDirector].contentScaleFactor;
-		_size = CGSizeMake(width, height);
+        [self setContentSize:CGSizeMake(width, height)];
 		_pixelFormat = format;
 		_depthStencilFormat = depthStencilFormat;
 
@@ -148,12 +148,19 @@
 	return self;
 }
 
+
+-(id)init
+{
+    return [self initWithWidth:0 height:0 pixelFormat:CCTexturePixelFormat_RGBA8888];
+}
+
 -(void)create
 {
 	glPushGroupMarkerEXT(0, "CCRenderTexture: Create");
 	
-	int pixelW = _size.width*_contentScale;
-	int pixelH = _size.height*_contentScale;
+    int pixelW = _contentSize.width*_contentScale;
+	int pixelH = _contentSize.height*_contentScale;
+
 
 	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
 
@@ -216,7 +223,7 @@
 	CC_CHECK_GL_ERROR_DEBUG();
 	glPopGroupMarkerEXT();
 	
-	CGRect rect = CGRectMake(0, 0, _size.width, _size.height);
+    CGRect rect = CGRectMake(0, 0, _contentSize.width, _contentSize.height);
     
     [self assignSpriteTexture];
 	[_sprite setTextureRect:rect];
@@ -384,6 +391,13 @@
 	if(!_visible) return;
 	
 	if(_autoDraw){
+        
+        if(_contentSizeChanged)
+        {
+            [self destroy];
+            _contentSizeChanged = NO;
+        }
+        
 		[self begin];
 		NSAssert(_renderer == renderer, @"CCRenderTexture error!");
 		
@@ -399,6 +413,7 @@
 		[self end];
 	}
 	
+    _sprite.anchorPoint = ccp(0.0, 0.0);
 	GLKMatrix4 transform = [self transform:parentTransform];
 	[_sprite visit:renderer parentTransform:&transform];
 	
@@ -432,9 +447,12 @@
 		return nil;
 	}
 	
-	[self begin];
-	glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, buffer);
-	[self end];
+    [self begin];
+    [_renderer enqueueBlock:^
+    {
+        glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, buffer);
+    } globalSortOrder:NSIntegerMax debugLabel:@"CCRenderTexture reading pixels for new image" threadSafe:NO];
+    [self end];
 	
 	// make data provider with data.
 	
@@ -452,11 +470,11 @@
 												 CGImageGetBytesPerRow(iref), CGImageGetColorSpace(iref),
 												 bitmapInfo);
 	
-	// vertically flipped
-	if( YES ) {
-		CGContextTranslateCTM(context, 0.0f, ty);
-		CGContextScaleCTM(context, 1.0f, -1.0f);
-	}
+//	// vertically flipped
+//	if( YES ) {
+//		CGContextTranslateCTM(context, 0.0f, ty);
+//		CGContextScaleCTM(context, 1.0f, -1.0f);
+//	}
 	
 	CGContextDrawImage(context, CGRectMake(0.0f, 0.0f, tx, ty), iref);
 	CGImageRef image = CGBitmapContextCreateImage(context);
@@ -479,63 +497,76 @@
 
 -(BOOL)saveToFile:(NSString*)fileName format:(CCRenderTextureImageFormat)format
 {
-	BOOL success;
-	
-	NSString *fullPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:fileName];
-	
-	CGImageRef imageRef = [self newCGImage];
+    NSString *fullPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:fileName];
+    [self saveToFilePath:fullPath format:format];
+}
 
-	if( ! imageRef ) {
-		CCLOG(@"cocos2d: Error: Cannot create CGImage ref from texture");
-		return NO;
-	}
-	
+- (BOOL)saveToFilePath:(NSString *)filePath
+{
+    [self saveToFilePath:filePath format:CCRenderTextureImageFormatJPEG];
+}
+
+- (BOOL)saveToFilePath:(NSString *)filePath format:(CCRenderTextureImageFormat)format
+{
+    BOOL success;
+
+   	CGImageRef imageRef = [self newCGImage];
+
+   	if( ! imageRef ) {
+   		CCLOG(@"cocos2d: Error: Cannot create CGImage ref from texture");
+   		return NO;
+   	}
+
 #if __CC_PLATFORM_IOS
-	CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
-	UIImage* image	= [[UIImage alloc] initWithCGImage:imageRef scale:scale orientation:UIImageOrientationUp];
-	NSData *imageData = nil;
-    
-	if( format == CCRenderTextureImageFormatPNG )
-		imageData = UIImagePNGRepresentation( image );
-    
-	else if( format == CCRenderTextureImageFormatJPEG )
-		imageData = UIImageJPEGRepresentation(image, 0.9f);
-    
-	else
-		NSAssert(NO, @"Unsupported format");
-	
-    
-	success = [imageData writeToFile:fullPath atomically:YES];
+   	CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
+   	UIImage* image	= [[UIImage alloc] initWithCGImage:imageRef scale:scale orientation:UIImageOrientationUp];
+   	NSData *imageData = nil;
 
-	
+   	if( format == CCRenderTextureImageFormatPNG )
+   		imageData = UIImagePNGRepresentation( image );
+
+   	else if( format == CCRenderTextureImageFormatJPEG )
+   		imageData = UIImageJPEGRepresentation(image, 0.9f);
+
+   	else
+   		NSAssert(NO, @"Unsupported format");
+
+   	success = [imageData writeToFile:filePath atomically:YES];
+
 #elif __CC_PLATFORM_MAC
-	
-	CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:fullPath];
-	
-	CGImageDestinationRef dest;
+    CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:filePath];
 
-	if( format == CCRenderTextureImageFormatPNG )
-		dest = 	CGImageDestinationCreateWithURL(url, kUTTypePNG, 1, NULL);
+    CGImageDestinationRef dest;
 
-	else if( format == CCRenderTextureImageFormatJPEG )
-		dest = 	CGImageDestinationCreateWithURL(url, kUTTypeJPEG, 1, NULL);
+    if( format == CCRenderTextureImageFormatPNG )
+        dest = 	CGImageDestinationCreateWithURL(url, kUTTypePNG, 1, NULL);
 
-	else
-		NSAssert(NO, @"Unsupported format");
+    else if( format == CCRenderTextureImageFormatJPEG )
+        dest = 	CGImageDestinationCreateWithURL(url, kUTTypeJPEG, 1, NULL);
 
-	CGImageDestinationAddImage(dest, imageRef, nil);
-		
-	success = CGImageDestinationFinalize(dest);
+    else
+        NSAssert(NO, @"Unsupported format");
 
-	CFRelease(dest);
+    if (!dest)
+    {
+        CCLOG(@"cocos2d: ERROR: Failed to create image destination with file path:%@", filePath);
+        CGImageRelease(imageRef);
+        return NO;
+    }
+
+    CGImageDestinationAddImage(dest, imageRef, nil);
+
+    success = CGImageDestinationFinalize(dest);
+
+    CFRelease(dest);
 #endif
 
-	CGImageRelease(imageRef);
-	
-	if( ! success )
-		CCLOG(@"cocos2d: ERROR: Failed to save file:%@ to disk",fullPath);
+    CGImageRelease(imageRef);
 
-	return success;
+    if( ! success )
+        CCLOG(@"cocos2d: ERROR: Failed to save file:%@ to disk", filePath);
+
+    return success;
 }
 
 
@@ -566,14 +597,11 @@
 
 #pragma RenderTexture - Override
 
--(CGSize) contentSize
-{
-	return self.texture.contentSize;
-}
-
 -(void) setContentSize:(CGSize)size
 {
-	NSAssert(NO, @"You cannot change the content size of an already created CCRenderTexture. Recreate it");
+    [super setContentSize:size];
+    _projection = GLKMatrix4MakeOrtho(0.0f, size.width, size.height, 0.0f, -1024.0f, 1024.0f);
+    _contentSizeChanged = YES;
 }
 
 @end
