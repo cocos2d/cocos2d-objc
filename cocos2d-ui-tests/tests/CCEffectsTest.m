@@ -2,6 +2,7 @@
 #import "CCTextureCache.h"
 #import "CCNodeColor.h"
 #import "CCEffectNode.h"
+#import "CCEffectGaussianBlur.h"
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 
@@ -12,32 +13,81 @@
 {
 	if((self = [super init])){
 		// Delay setting the color until the first frame.
-		// Otherwise the scene will not exist yet.
 		[self scheduleBlock:^(CCTimer *timer){self.scene.color = [CCColor lightGrayColor];} delay:0];
-		
-        // Alternatively, set up some rotating colors.
-//		float delay = 1.0f;
-//		[self scheduleBlock:^(CCTimer *timer) {
-//			GLKMatrix4 colorMatrix = GLKMatrix4MakeRotation(timer.invokeTime*1e0, 1, 1, 1);
-//			GLKVector4 color = GLKMatrix4MultiplyVector4(colorMatrix, GLKVector4Make(1, 0, 0, 1));
-//			self.scene.color = [CCColor colorWithGLKVector4:color];
-//
-//			[timer repeatOnceWithInterval:delay];
-//		} delay:delay];
 	}
 	
 	return self;
 }
 
-//#define GLOW_WITHOUT_AUTO_DRAW
+-(void)setupBlurEffectNodeTest
+{
+    self.subTitle = @"Blur Effect Node Test";
+
+    CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"sample_hollow_circle.png"];
+    sampleSprite.position = ccp(0.5, 0.5);
+    sampleSprite.positionType = CCPositionTypeNormalized;
+
+
+    CCEffectNode* effectNode = [[CCEffectNode alloc] init];
+    effectNode.contentSize = CGSizeMake(80, 80);
+    effectNode.anchorPoint = ccp(0.5, 0.5);
+    effectNode.positionType = CCPositionTypeNormalized;
+    effectNode.position = ccp(0.1, 0.5);
+    [effectNode addChild:sampleSprite];
+    CCEffectGaussianBlur* effect = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:GLKVector2Make(1.0, 0.0)];
+    [effectNode addEffect:effect];
+    
+    [self.contentNode addChild:effectNode];
+
+    
+    // Vertical
+    CCSprite *sampleSprite2 = [CCSprite spriteWithImageNamed:@"sample_hollow_circle.png"];
+    sampleSprite2.position = ccp(0.5, 0.5);
+    sampleSprite2.positionType = CCPositionTypeNormalized;
+    
+    CCEffectNode* effectNode2 = [[CCEffectNode alloc] initWithWidth:80 height:80];
+    effectNode2.positionType = CCPositionTypeNormalized;
+    effectNode2.position = ccp(0.21, 0.5);
+    [effectNode2 addChild:sampleSprite2];
+    CCEffectGaussianBlur* effect2 = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:GLKVector2Make(0.0, 1.0)];
+    [effectNode2 addEffect:effect2];
+    
+    [self.contentNode addChild:effectNode2];
+    
+    // Tilt shift
+    CCSprite *sampleSprite3 = [CCSprite spriteWithImageNamed:@"sample_hollow_circle.png"];
+    sampleSprite3.position = ccp(0.5, 0.5);
+    sampleSprite3.positionType = CCPositionTypeNormalized;
+    
+    
+    CCEffectNode* effectNode3 = [[CCEffectNode alloc] initWithWidth:80 height:80];
+    effectNode3.positionType = CCPositionTypeNormalized;
+    effectNode3.position = ccp(0.5, 0.5);
+    effectNode3.anchorPoint = ccp(0.5, 0.5);
+    [effectNode3 addChild:sampleSprite3];
+    CCEffectGaussianBlur* effect3 = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:GLKVector2Make(1.0, 1.0)];
+    [effectNode3 addEffect:effect3];
+    
+    [self.contentNode addChild:effectNode3];
+    
+    // Tilt shift reversed
+    CCSprite *sampleSprite4 = [CCSprite spriteWithImageNamed:@"sample_hollow_circle.png"];
+    sampleSprite4.position = ccp(0.5, 0.5);
+    sampleSprite4.positionType = CCPositionTypeNormalized;
+    
+    
+    CCEffectNode* effectNode4 = [[CCEffectNode alloc] initWithWidth:80 height:80];
+    effectNode4.positionType = CCPositionTypeNormalized;
+    effectNode4.position = ccp(0.6, 0.5);
+    [effectNode4 addChild:sampleSprite4];
+    CCEffectGaussianBlur* effect4 = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:GLKVector2Make(-1.0, 1.0)];
+    [effectNode4 addEffect:effect4];
+    
+    [self.contentNode addChild:effectNode4];
+}
+
 -(void)setupGlowEffectNodeTest
 {
-//    CCSprite *testSprite = [CCSprite spriteWithImageNamed:@"sample_hollow_circle.png"];
-//    testSprite.anchorPoint = ccp(0.5, 0.5);
-//    testSprite.positionType = CCPositionTypeNormalized;
-//    testSprite.position = ccp(0.55, 0.5);
-//    [self.contentNode addChild:testSprite];
-    
     self.subTitle = @"Glow Effect Node Test";
     
     // Create a hollow circle
@@ -53,24 +103,8 @@
     glowEffectNode.positionType = CCPositionTypeNormalized;
     glowEffectNode.position = ccp(0.1, 0.5);
     [glowEffectNode addChild:sampleSprite];
-    CCEffectGlow* glowEffect = [CCEffectGlow effectWithRadius:0.01f];
-    glowEffectNode.effect = glowEffect;
-    
-#ifdef GLOW_WITHOUT_AUTO_DRAW
-    [glowEffectNode visit];
-
-    CCSprite* testSrpite = [CCSprite spriteWithTexture:glowEffectNode.texture];
-    testSrpite.positionType = CCPositionTypeNormalized;
-    testSrpite.position = ccp(0.6, 0.5);
-    [self.contentNode addChild:testSrpite];
-    
-    CCSprite *defaultSprite = [CCSprite spriteWithImageNamed:@"sample_hollow_circle.png"];
-    defaultSprite.anchorPoint = ccp(0.5, 0.5);
-    defaultSprite.positionType = CCPositionTypeNormalized;
-    defaultSprite.position = ccp(0.1, 0.5);
-    [self.contentNode addChild:defaultSprite];
-    
-#else
+    CCEffectGlow* glowEffect = [CCEffectGlow effectWithBlurStrength:0.02f];
+    [glowEffectNode addEffect:glowEffect];
     
     CGSize size = CGSizeMake(1.0, 1.0);
     [glowEffectNode runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
@@ -81,8 +115,6 @@
 
     
     [self.contentNode addChild:glowEffectNode];
-#endif
-    
 }
 
 -(void)setupEffectNodeTest
@@ -98,7 +130,7 @@
     CCEffectColorPulse* effectColorPulse = [[CCEffectColorPulse alloc] initWithColor:[CCColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:1.0] toColor:[CCColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:1.0]];
     CCEffectTexture* effectTexture = [[CCEffectTexture alloc] init];
     CCEffect* compositeEffect = [CCEffectStack effects:effectColorPulse, effectTexture, nil];
-    effectNode1.effect = compositeEffect;
+    [effectNode1 addEffect:compositeEffect];
 	[self.contentNode addChild:effectNode1];
 }
 
@@ -106,38 +138,65 @@
 {
     self.subTitle = @"Brightness and Contrast Effect Test";
     
-    CCSprite *sprite = nil;
+    // An unmodified sprite that is added directly to the scene.
+    CCSprite *sprite = [CCSprite spriteWithImageNamed:@"f1.png"];
+    sprite.anchorPoint = ccp(0.5, 0.5);
+    sprite.positionType = CCPositionTypeNormalized;
+    sprite.position = ccp(0.3, 0.5);
+    [self.contentNode addChild:sprite];
+
+    // The brightness and contrast effects.
+    CCEffect *brightness = [[CCEffectBrightness alloc] initWithBrightness:0.25f];
+    CCEffect *contrast = [[CCEffectContrast alloc] initWithContrast:4.0f];
     
-    // Add a couple sprites directly to the scene
-    sprite = [CCSprite spriteWithImageNamed:@"f1.png"];
+    // Effect nodes that use the effects in different combinations.
+    [self.contentNode addChild:[self effectNodeWithEffects:@[brightness] appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.4, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[contrast] appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.5, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[brightness, contrast] appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.6, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[contrast, brightness] appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.7, 0.5)]];
+}
+
+-(void)setupPixellateEffectNodeTest
+{
+    self.subTitle = @"Pixellate Effect Test";
+    
+    // An unmodified sprite that is added directly to the scene.
+    CCSprite *sprite = [CCSprite spriteWithImageNamed:@"grossini-hd.png"];
     sprite.anchorPoint = ccp(0.5, 0.5);
     sprite.positionType = CCPositionTypeNormalized;
-    sprite.position = ccp(0.4, 0.5);
+    sprite.position = ccp(0.3, 0.5);
     [self.contentNode addChild:sprite];
+    
+    // The brightness and contrast effects.
+    CCEffect *pixellate = [[CCEffectPixellate alloc] initWithPixelScale:0.02f];
+    
+    // Effect nodes that use the effects in different combinations.
+    [self.contentNode addChild:[self effectNodeWithEffects:@[pixellate] appliedToSpriteWithImage:@"grossini-hd.png" atPosition:ccp(0.6, 0.5)]];
+}
 
-    sprite = [CCSprite spriteWithImageNamed:@"f1.png"];
-    sprite.anchorPoint = ccp(0.5, 0.5);
-    sprite.positionType = CCPositionTypeNormalized;
-    sprite.position = ccp(0.5, 0.6);
-    [self.contentNode addChild:sprite];
-
-    // Create third sprite for use with the effect. It does
-    // not get added to the scene directly.
-    sprite = [CCSprite spriteWithImageNamed:@"f1.png"];
+- (CCEffectNode *)effectNodeWithEffects:(NSArray *)effects appliedToSpriteWithImage:(NSString *)spriteImage atPosition:(CGPoint)position
+{
+    // Another sprite that will be added directly
+    CCSprite *sprite = [CCSprite spriteWithImageNamed:spriteImage];
     sprite.anchorPoint = ccp(0.5, 0.5);
     sprite.positionType = CCPositionTypeNormalized;
     sprite.position = ccp(0.5, 0.5);
-
+    
+    float effectDim = MAX(sprite.contentSize.width, sprite.contentSize.height);
+    
     // Brightness and contrast test
-    float effectDim = MAX(sprite.contentSize.width, sprite.contentSize.width);
     CCEffectNode* effectNode = [[CCEffectNode alloc] initWithWidth:effectDim height:effectDim];
     effectNode.anchorPoint = ccp(0.5, 0.5);
     effectNode.positionType = CCPositionTypeNormalized;
-    effectNode.position = ccp(0.5, 0.4);
-    effectNode.effect = [[CCEffectBrightnessAndContrast alloc] initWithBrightness:0.25f contrast:2.0f];
+    effectNode.position = position;
     [effectNode addChild:sprite];
 
-    [self.contentNode addChild:effectNode];
+    for (CCEffect *effect in effects)
+    {
+        [effectNode addEffect:effect];
+    }
+    
+    return effectNode;
 }
 
 -(void)renderTextureHelper:(CCNode *)stage size:(CGSize)size
@@ -165,6 +224,6 @@
                                                                ]]];
 	[node addChild:sprite];
 }
-
-@end
 #endif
+@end
+

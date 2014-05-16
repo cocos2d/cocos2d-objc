@@ -95,6 +95,7 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 
 	// Transform.
 	CGAffineTransform _transform, _inverse;
+
 	BOOL _isTransformDirty;
 	BOOL _isInverseDirty;
 

@@ -11,7 +11,6 @@
 @interface CCRenderTexture() {
 
 @protected
-    CGSize _size;
     GLenum _pixelFormat;
     GLuint _depthStencilFormat;
 
@@ -34,6 +33,8 @@
     int _currentRenderPass;
     NSMutableArray *_textures;
     NSMutableArray *_FBOs;
+    
+    BOOL _contentSizeChanged;
 }
 
 -(void)destroy;

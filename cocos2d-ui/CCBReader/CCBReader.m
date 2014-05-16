@@ -150,9 +150,53 @@ static inline void alignBits(CCBReader *self)
     }
 }
 
+
+static inline unsigned int readVariableLengthIntFromArray(const uint8_t* buffer, uint32_t * value) {
+    const uint8_t* ptr = buffer;
+    uint32_t b;
+    uint32_t result;
+    
+    b = *(ptr++); result  = (b & 0x7F)      ; if (!(b & 0x80)) goto done;
+    b = *(ptr++); result |= (b & 0x7F) <<  7; if (!(b & 0x80)) goto done;
+    b = *(ptr++); result |= (b & 0x7F) << 14; if (!(b & 0x80)) goto done;
+    b = *(ptr++); result |= (b & 0x7F) << 21; if (!(b & 0x80)) goto done;
+    b = *(ptr++); result |=  b         << 28; if (!(b & 0x80)) goto done;
+    
+done:
+    *value = result;
+    return ptr - buffer;
+}
+
+
+static inline int readIntWithSign(CCBReader *self, BOOL pSigned)
+{
+    unsigned int value = 0;
+    self->currentByte += readVariableLengthIntFromArray(self->bytes + self->currentByte, &value);
+    
+    int num = 0;
+    
+    if (pSigned)
+    {
+        if (value & 0x1)
+            num = -(int)((value+1) >> 1);
+        else
+            num = (int)(value >> 1);
+    }
+    else
+    {
+        num = (int)value;
+    }
+    
+    return num;
+}
+
+
 #define REVERSE_BYTE(b) (unsigned char)(((b * 0x0802LU & 0x22110LU) | (b * 0x8020LU & 0x88440LU)) * 0x10101LU >> 16)
 
-static inline int readIntWithSign(CCBReader *self, BOOL sign)
+//DEPRICATED
+//DEPRICATED
+//DEPRICATED
+static inline int readIntWithSignOLD(CCBReader *self, BOOL sign)
 {
     // Good luck groking this!
     // The basic idea is to do as little bit reading as possible and use everything in a byte contexts and avoid loops; espc ones that iterate 8 * bytes-read
@@ -254,6 +298,9 @@ static inline int readIntWithSign(CCBReader *self, BOOL sign)
     
     return num;
 }
+
+
+
 
 static inline float readFloat(CCBReader *self)
 {
@@ -933,17 +980,14 @@ static inline float readFloat(CCBReader *self)
 {
     int numJoints = readIntWithSign(self, NO);
     
-    NSMutableArray * joints = [NSMutableArray array];
-    
     for (int i =0; i < numJoints; i++)
     {
-        id joint = [self readJoint];
-        [joints addObject:joint];
+        [self readJoint];
     }
 }
 
 
--(CCPhysicsJoint*)readJoint
+-(void)readJoint
 {
     
     CCPhysicsJoint * joint = nil;
@@ -964,12 +1008,73 @@ static inline float readFloat(CCBReader *self)
     float breakingForce = [properties[@"breakingForceEnabled"] boolValue] ? [properties[@"breakingForce"] floatValue] : INFINITY;
     float maxForce = [properties[@"maxForceEnabled"] boolValue] ? [properties[@"maxForce"] floatValue] : INFINITY;
     bool  collideBodies = [properties[@"collideBodies"] boolValue];
+    float referenceAngle = [properties[@"referenceAngle"] floatValue];
+    referenceAngle = CC_DEGREES_TO_RADIANS(referenceAngle);
     
     if([className isEqualToString:@"CCPhysicsPivotJoint"])
     {
-        CGPoint anchorA = [properties[@"anchorA"] CGPointValue];
+        if([properties[@"motorEnabled"] boolValue])
+        {
+            float motorRate = properties[@"motorRate"] ? [properties[@"motorRate"]  floatValue] : 1.0f;
+            CCPhysicsJoint * motorJoint = [CCPhysicsJoint connectedMotorJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody rate:motorRate];
+            
+            float maxMotorForce = [properties[@"motorMaxForceEnabled"] boolValue] ? [properties[@"motorMaxForce"] floatValue] : INFINITY;
+
+            motorJoint.maxForce = maxMotorForce;
+            motorJoint.breakingForce = breakingForce;
+            motorJoint.collideBodies = collideBodies;
+        }
         
+        if([properties[@"dampedSpringEnabled"] boolValue])
+        {
+            float   restAngle = properties[@"dampedSpringRestAngle"] ?  [properties[@"dampedSpringRestAngle"]  floatValue] : 0.0f;
+            restAngle = CC_DEGREES_TO_RADIANS(restAngle);
+            float   stiffness = properties[@"dampedSpringStiffness"] ? [properties[@"dampedSpringStiffness"] floatValue] : 1.0f;
+            stiffness *= 1000.0f;
+            float   damping = properties[@"dampedSpringDamping"] ? [properties[@"dampedSpringDamping"] floatValue] : 4.0f;
+            damping *= 100.0f;
+
+            CCPhysicsJoint * rotarySpringJoint = [CCPhysicsJoint connectedRotarySpringJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody restAngle:restAngle stifness:stiffness damping:damping];
+            
+            rotarySpringJoint.maxForce = maxForce;
+            rotarySpringJoint.breakingForce = breakingForce;
+            rotarySpringJoint.collideBodies = collideBodies;
+        }
+        
+        
+        if([properties[@"limitEnabled"] boolValue])
+        {
+            float   limitMax = properties[@"limitMax"] ? [properties[@"limitMax"]  floatValue] : 90.0f;
+            limitMax = CC_DEGREES_TO_RADIANS(limitMax);
+            
+            float   limitMin = properties[@"limitMin"] ? [properties[@"limitMin"] floatValue] : 0;
+            limitMin = CC_DEGREES_TO_RADIANS(limitMin);
+            
+            CCPhysicsJoint * limitJoint = [CCPhysicsJoint connectedRotaryLimitJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody min:limitMin max:limitMax];
+            
+            limitJoint.maxForce = maxForce;
+            limitJoint.breakingForce = breakingForce;
+            limitJoint.collideBodies = collideBodies;
+        }
+            
+        if([properties[@"ratchetEnabled"] boolValue])
+        {
+            float ratchetValue = properties[@"ratchetValue"] ? [properties[@"ratchetValue"]  floatValue] : 30.0f;
+            ratchetValue = CC_DEGREES_TO_RADIANS(ratchetValue);
+            float ratchetPhase = properties[@"ratchetPhase"] ? [properties[@"ratchetPhase"]  floatValue] : 0.0f;
+            ratchetPhase = CC_DEGREES_TO_RADIANS(ratchetPhase);
+            
+            CCPhysicsJoint * ratchetJoint = [CCPhysicsJoint connectedRatchetJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody phase:ratchetPhase ratchet:ratchetValue];
+            
+            ratchetJoint.maxForce = maxForce;
+            ratchetJoint.breakingForce = breakingForce;
+            ratchetJoint.collideBodies = collideBodies;
+    
+        }
+        
+        CGPoint anchorA = [properties[@"anchorA"] CGPointValue];
         joint = [CCPhysicsJoint connectedPivotJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody anchorA:anchorA];
+        
     }
     else if([className isEqualToString:@"CCPhysicsSpringJoint"])
     {
@@ -982,6 +1087,7 @@ static inline float readFloat(CCBReader *self)
         
 		BOOL    restLengthEnabled = [properties[@"restLengthEnabled"] boolValue];
         float   restLength = restLengthEnabled?  [properties[@"restLength"] floatValue] : distance;
+
         float   stiffness = [properties[@"stiffness"] floatValue];
         float   damping = [properties[@"damping"] floatValue];
         
@@ -1016,13 +1122,12 @@ static inline float readFloat(CCBReader *self)
     }
     else
     {
-        return nil;
+        return;
     }
     joint.maxForce = maxForce;
     joint.breakingForce = breakingForce;
     joint.collideBodies = collideBodies;
     [joint resetScale:NodeToPhysicsScale(nodeBodyA).x];
-    return joint;
     
 }
 
@@ -1426,7 +1531,7 @@ static inline float readFloat(CCBReader *self)
     if (magic != CHAR4('c', 'c', 'b', 'i')) return NO;
     
     // Read version
-    int version = readIntWithSign(self, NO);
+    int version = readIntWithSignOLD(self, NO);
     if (version != kCCBVersion)
     {
 		[NSException raise:NSInternalInconsistencyException format:@"CCBReader: Incompatible ccbi file version (file: %d reader: %d)",version,kCCBVersion];
