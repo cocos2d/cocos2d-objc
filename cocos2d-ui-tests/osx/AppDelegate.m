@@ -47,7 +47,12 @@
     [fileUtils buildSearchResolutionsOrder];
     
     [fileUtils loadFilenameLookupDictionaryFromFile:@"fileLookup.plist"];
-    
+		
+    // Register spritesheets.
+    [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"Interface.plist"];
+    [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"Sprites.plist"];
+    [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"TilesAtlassed.plist"];
+   
 	
 	[director runWithScene:[MainMenu scene]];
 }
