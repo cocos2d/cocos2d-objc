@@ -367,8 +367,8 @@ static void CCVertexLineToPolygon(CGPoint *points, float stroke, ccVertex2F *ver
 	if( _nuPoints  && _previousNuPoints != _nuPoints ) {
 		float texDelta = 1.0f / _nuPoints;
 		for( i=0; i < _nuPoints; i++ ) {
-			_texCoords[i*2] = (ccTex2F) {0, texDelta*i};
-			_texCoords[i*2+1] = (ccTex2F) {1, texDelta*i};
+			_texCoords[i*2] = (ccTex2F) {0.0f, 1.0f - texDelta*i};
+			_texCoords[i*2+1] = (ccTex2F) {1.0f, 1.0f - texDelta*i};
 		}
 		
 		_previousNuPoints = _nuPoints;

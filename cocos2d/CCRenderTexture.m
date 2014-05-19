@@ -134,8 +134,7 @@
 		_pixelFormat = format;
 		_depthStencilFormat = depthStencilFormat;
 
-		// Flip the projection matrix on the y-axis since Cocos2D uses upside down textures.
-		_projection = GLKMatrix4MakeOrtho(0.0f, width, height, 0.0f, -1024.0f, 1024.0f);
+		_projection = GLKMatrix4MakeOrtho(0.0f, width, 0.0f, height, -1024.0f, 1024.0f);
 		
 		_sprite = [CCRenderTextureSprite spriteWithTexture:[CCTexture none]];
 

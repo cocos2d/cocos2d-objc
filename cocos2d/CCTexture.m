@@ -470,6 +470,8 @@ static CCTexture *CCTextureNone = nil;
 
 	CGContextClearRect(context, CGRectMake(0, 0, textureWidth, textureHeight));
 	CGContextTranslateCTM(context, 0, textureHeight - imageSizeInPixels.height);
+	CGContextScaleCTM(context, 1.0, -1.0);
+	CGContextTranslateCTM(context, 0, -imageSizeInPixels.height);
 	CGContextDrawImage(context, CGRectMake(0, 0, CGImageGetWidth(cgImage), CGImageGetHeight(cgImage)), cgImage);
 
 	// Repack the pixel data into the right format
