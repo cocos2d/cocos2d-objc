@@ -82,7 +82,7 @@ typedef enum { TEST_PONG_PLAYING, TESTS_PONG_GAMEOVER } TEST_PONG_STATE;
     // effect handles behave different when an effect is added.
     _pixellateEffectNode.position = ccp(_designSize.width * 0.5f, _designSize.height * 0.5f);
     
-    _pixellateEffect = [[CCEffectPixellate alloc] initWithPixelScale:0.0001f];
+    _pixellateEffect = [[CCEffectPixellate alloc] initWithBlockSize:4.0f];
 
     [self setupBackgroundScene];
     
@@ -374,12 +374,12 @@ typedef enum { TEST_PONG_PLAYING, TESTS_PONG_GAMEOVER } TEST_PONG_STATE;
 
 - (void)increasePixellate:(CCTime)interval
 {
-    _pixellateEffect.pixelScale += 0.001f;
+    _pixellateEffect.blockSize += 1.0f;
 }
 
 - (void)decreasePixellate:(CCTime)interval
 {
-    _pixellateEffect.pixelScale -= 0.001f;
+    _pixellateEffect.blockSize -= 1.0f;
 }
 
 @end
