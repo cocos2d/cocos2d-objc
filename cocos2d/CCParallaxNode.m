@@ -95,7 +95,15 @@
 
 -(void) removeChild:(CCNode*)node cleanup:(BOOL)cleanup
 {
-	[_parallaxArray removeObject:node];
+	for(NSUInteger i = 0; i < _parallaxArray.count; i++){
+		CGPointObject *point = _parallaxArray[i];
+		
+		if(point.child == node) {
+			[_parallaxArray removeObjectAtIndex:i];
+			break;
+		}
+	}
+
 	[super removeChild:node cleanup:cleanup];
 }
 
