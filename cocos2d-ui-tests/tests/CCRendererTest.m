@@ -551,6 +551,36 @@ ProgressPercent(CCTime t)
 			[timer repeatOnceWithInterval:interval];
 		} delay:interval];
 	}
+	
+	{
+		NSString *image = @"Tiles/05.png";
+		CGPoint position = ccp(0.5, 3.0/8.0);
+		
+		CCSprite *sprite = [CCSprite spriteWithImageNamed:image];
+		sprite.positionType = CCPositionTypeNormalized;
+		sprite.position = position;
+		sprite.color = [CCColor grayColor];
+		[self.contentNode addChild:sprite];
+		
+		CCProgressNode *progress = [CCProgressNode progressWithSprite:[CCSprite spriteWithImageNamed:image]];
+		progress.type = CCProgressNodeTypeBar;
+		progress.midpoint = ccp(0.5, 0.5);
+		progress.barChangeRate = ccp(1, 1);
+		progress.positionType = CCPositionTypeNormalized;
+		progress.position = position;
+		progress.percentage = 50;
+		[self.contentNode addChild:progress];
+		
+		[self scheduleBlock:^(CCTimer *timer) {
+			progress.sprite = [CCSprite spriteWithImageNamed:@"Tiles/06.png"];
+			[timer repeatOnceWithInterval:1.0];
+		} delay:0.5];
+		
+		[self scheduleBlock:^(CCTimer *timer) {
+			progress.sprite = [CCSprite spriteWithImageNamed:@"Tiles/05.png"];
+			[timer repeatOnceWithInterval:1.0];
+		} delay:1.0];
+	}
 }
 
 - (void)setupDrawNodeTest

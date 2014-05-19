@@ -52,6 +52,9 @@ const char kCCProgressTextureCoords = 0x4b;
 	CGPoint _midpoint;
 	CGPoint _barChangeRate;
 	BOOL _reverseDirection;
+	
+	BOOL _dirtyVertexData;
+	BOOL _needsUpdateProgress;
 }
 
 -(void)updateProgress;
@@ -84,16 +87,21 @@ const char kCCProgressTextureCoords = 0x4b;
 -(id)initWithSprite:(CCSprite*) sprite
 {
 	if(( self = [super init] )){
+		_type = CCProgressNodeTypeRadial;
+		_reverseDirection = NO;
 		_percentage = 0.f;
 		_verts = NULL;
 		_vertexCount = 0;
+		
 		self.anchorPoint = ccp(0.5f,0.5f);
-		self.type = CCProgressNodeTypeRadial;
-		self.reverseDirection = NO;
-		self.midpoint = ccp(.5f, .5f);
-		self.barChangeRate = ccp(1,1);
+		self.midpoint = ccp(0.5f, 0.5f);
+		self.barChangeRate = ccp(1, 1);
 		self.sprite = sprite;
+		
+		_dirtyVertexData = NO;
+		_needsUpdateProgress = YES;
 	}
+	
 	return self;
 }
 
@@ -109,11 +117,14 @@ const char kCCProgressTextureCoords = 0x4b;
 	[self freeVertexData];
 }
 
--(void)setPercentage:(float) percentage
+-(void)setPercentage:(float)percentage
 {
 	if(_percentage != percentage) {
-    _percentage = clampf( percentage, 0, 100);
-		[self updateProgress];
+		_percentage = clampf(percentage, 0, 100);
+		
+		// only flag update progress here, let the progress type handle
+		// whether it needs to rebuild the vertex data
+		_needsUpdateProgress = YES;
 	}
 }
 
@@ -123,20 +134,18 @@ const char kCCProgressTextureCoords = 0x4b;
 		_sprite = newSprite;
 		self.contentSize = _sprite.contentSize;
     
-		//	Everytime we set a new sprite, we free the current vertex data
-		[self freeVertexData];
+		_dirtyVertexData = YES;
+		_needsUpdateProgress = YES;
 	}
 }
 
 -(void)setType:(CCProgressNodeType)newType
 {
 	if (newType != _type) {
-    
-		//	release all previous information
-		[self freeVertexData];
-		
 		_type = newType;
-		[self updateProgress];
+		
+		_dirtyVertexData = YES;
+		_needsUpdateProgress = YES;
 	}
 }
 
@@ -145,8 +154,8 @@ const char kCCProgressTextureCoords = 0x4b;
 	if( _reverseDirection != reverse ) {
 		_reverseDirection = reverse;
     
-		//	release all previous information
-		[self freeVertexData];
+		_dirtyVertexData = YES;
+		_needsUpdateProgress = YES;
 	}
 }
 
@@ -226,15 +235,24 @@ const char kCCProgressTextureCoords = 0x4b;
 
 -(void)updateProgress
 {
+	if (_dirtyVertexData){
+		// remove the vertex data if the type, direction, or sprite have changed 
+		if (_verts) {
+			[self freeVertexData];
+		}
+		
+		_dirtyVertexData = NO;
+	}
+        
 	switch (_type) {
 		case CCProgressNodeTypeRadial:
 			[self updateRadial];
-			break;
+			return;
 		case CCProgressNodeTypeBar:
 			[self updateBar];
-			break;
+			return;
 		default:
-			break;
+			return;
 	}
 }
 
@@ -505,6 +523,11 @@ const char kCCProgressTextureCoords = 0x4b;
 
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
+	if (_needsUpdateProgress) {
+		[self updateProgress];
+		_needsUpdateProgress = NO;
+	}
+	
 	if(!_verts || !_sprite)return;
   
 	if(_type == CCProgressNodeTypeRadial){
