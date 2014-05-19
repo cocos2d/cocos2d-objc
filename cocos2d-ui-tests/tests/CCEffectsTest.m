@@ -200,29 +200,40 @@
     [self.contentNode addChild:[self effectNodeWithEffects:@[effects[5]] appliedToSpriteWithImage:@"grossini.png" atPosition:ccp( 0.8, 0.5)]];
 }
 
-- (CCEffectNode *)effectNodeWithEffects:(NSArray *)effects appliedToSpriteWithImage:(NSString *)spriteImage atPosition:(CGPoint)position
+- (CCNode *)effectNodeWithEffects:(NSArray *)effects appliedToSpriteWithImage:(NSString *)spriteImage atPosition:(CGPoint)position
 {
-    // Another sprite that will be added directly
-    CCSprite *sprite = [CCSprite spriteWithImageNamed:spriteImage];
-    sprite.anchorPoint = ccp(0.5, 0.5);
-    sprite.positionType = CCPositionTypeNormalized;
-    sprite.position = ccp(0.5, 0.5);
-    
-    float effectDim = MAX(sprite.contentSize.width, sprite.contentSize.height);
-    
-    // Brightness and contrast test
-    CCEffectNode* effectNode = [[CCEffectNode alloc] initWithWidth:sprite.contentSize.width height:sprite.contentSize.height];
-    effectNode.anchorPoint = ccp(0.5, 0.5);
-    effectNode.positionType = CCPositionTypeNormalized;
-    effectNode.position = position;
-    [effectNode addChild:sprite];
-
-    for (CCEffect *effect in effects)
+    if (effects.count == 0)
     {
-        [effectNode addEffect:effect];
+        // Another sprite that will be added directly
+        CCSprite *sprite = [CCSprite spriteWithImageNamed:spriteImage];
+        sprite.anchorPoint = ccp(0.5, 0.5);
+        sprite.positionType = CCPositionTypeNormalized;
+        sprite.position = position;
+        
+        return sprite;
     }
-    
-    return effectNode;
+    else
+    {
+        // Another sprite that will be added directly
+        CCSprite *sprite = [CCSprite spriteWithImageNamed:spriteImage];
+        sprite.anchorPoint = ccp(0.5, 0.5);
+        sprite.positionType = CCPositionTypeNormalized;
+        sprite.position = ccp(0.5, 0.5);
+        
+        // Brightness and contrast test
+        CCEffectNode* effectNode = [[CCEffectNode alloc] initWithWidth:sprite.contentSize.width height:sprite.contentSize.height];
+        effectNode.anchorPoint = ccp(0.5, 0.5);
+        effectNode.positionType = CCPositionTypeNormalized;
+        effectNode.position = position;
+        [effectNode addChild:sprite];
+        
+        for (CCEffect *effect in effects)
+        {
+            [effectNode addEffect:effect];
+        }
+        
+        return effectNode;
+    }
 }
 
 -(void)renderTextureHelper:(CCNode *)stage size:(CGSize)size
