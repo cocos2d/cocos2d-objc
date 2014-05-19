@@ -55,6 +55,12 @@
     [_effectStack addEffect:effect];
 }
 
+-(void)removeEffect:(CCEffect*)effect
+{
+    // FIXME - make sure effect node reverts back to acting as empty node after all effects have been removed
+    [_effectStack removeEffect:effect];
+}
+
 -(void)begin
 {
 	CGSize pixelSize = self.texture.contentSizeInPixels;
@@ -252,6 +258,7 @@
 {
     // don't do anything on effect nodes
 }
+
 
 @end
 #endif

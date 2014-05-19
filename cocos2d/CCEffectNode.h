@@ -35,6 +35,7 @@
 -(id)initWithWidth:(int)w height:(int)h;
 
 -(void)addEffect:(CCEffect *)effect;
+-(void)removeEffect:(CCEffect*)effect;
 
 @end
 #endif
