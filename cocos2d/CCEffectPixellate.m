@@ -46,20 +46,35 @@
 #import "CCTexture.h"
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
-static float conditionPixelSize(float pixelSize);
+static float conditionBlockSize(float blockSize);
 
 @implementation CCEffectPixellate
 
--(id)initWithPixelSize:(float)pixelSize
+
+-(id)init
 {
     CCEffectUniform* uniformUStep = [CCEffectUniform uniform:@"float" name:@"u_uStep" value:[NSNumber numberWithFloat:1.0f]];
     CCEffectUniform* uniformVStep = [CCEffectUniform uniform:@"float" name:@"u_vStep" value:[NSNumber numberWithFloat:1.0f]];
-
+    
     if((self = [super initWithUniforms:@[uniformUStep, uniformVStep] vertextUniforms:nil varying:nil]))
     {
-        _pixelSize = conditionPixelSize(pixelSize);
+        return self;
     }
     return self;
+}
+
+-(id)initWithBlockSize:(float)blockSize
+{
+    if((self = [self init]))
+    {
+        _blockSize = conditionBlockSize(blockSize);
+    }
+    return self;
+}
+
++(id)effectWithBlockSize:(float)blockSize;
+{
+    return [[self alloc] initWithBlockSize:blockSize];
 }
 
 -(void)buildFragmentFunctions
@@ -79,9 +94,9 @@ static float conditionPixelSize(float pixelSize);
     return 1;
 }
 
--(void)setPixelSize:(float)pixelSize
+-(void)setBlockSize:(float)blockSize
 {
-    _pixelSize = conditionPixelSize(pixelSize);
+    _blockSize = conditionBlockSize(blockSize);
 }
 
 -(void)renderPassBegin:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
@@ -91,7 +106,7 @@ static float conditionPixelSize(float pixelSize);
     CCTexture *texture = renderPass.sprite.shaderUniforms[@"cc_PreviousPassTexture"];
 
     float aspect = texture.contentSize.width / texture.contentSize.height;
-    float uStep = self.pixelSize / texture.contentSize.width;
+    float uStep = self.blockSize / texture.contentSize.width;
     float vStep = uStep * aspect;
 
     renderPass.sprite.shaderUniforms[@"u_uStep"] = [NSNumber numberWithFloat:uStep];
@@ -113,11 +128,11 @@ static float conditionPixelSize(float pixelSize);
 
 @end
 
-float conditionPixelSize(float pixelSize)
+float conditionBlockSize(float blockSize)
 {
     // If the user requests an illegal pixel size value, just force
     // the value to 1.0 which results in the effect being a NOOP.
-    return (pixelSize <= 1.0f) ? 1.0f : pixelSize;
+    return (blockSize <= 1.0f) ? 1.0f : blockSize;
 }
 
 #endif

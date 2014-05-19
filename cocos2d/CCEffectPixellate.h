@@ -11,9 +11,10 @@
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffectPixellate : CCEffect
 
--(id)initWithPixelSize:(float)pixelSize;
+-(id)initWithBlockSize:(float)blockSize;
++(id)effectWithBlockSize:(float)blockSize;
 
-@property (nonatomic) float pixelSize;
+@property (nonatomic) float blockSize;
 
 @end
 #endif

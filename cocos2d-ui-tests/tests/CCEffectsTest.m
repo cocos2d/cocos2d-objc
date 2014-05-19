@@ -162,11 +162,11 @@
     
     // Different configurations of the pixellate effect
     NSArray *effects = @[
-                         [[CCEffectPixellate alloc] initWithPixelSize:1.0f],
-                         [[CCEffectPixellate alloc] initWithPixelSize:2.0f],
-                         [[CCEffectPixellate alloc] initWithPixelSize:4.0f],
-                         [[CCEffectPixellate alloc] initWithPixelSize:8.0f],
-                         [[CCEffectPixellate alloc] initWithPixelSize:16.0f]
+                         [[CCEffectPixellate alloc] initWithBlockSize:1.0f],
+                         [[CCEffectPixellate alloc] initWithBlockSize:2.0f],
+                         [[CCEffectPixellate alloc] initWithBlockSize:4.0f],
+                         [[CCEffectPixellate alloc] initWithBlockSize:8.0f],
+                         [[CCEffectPixellate alloc] initWithBlockSize:16.0f]
                          ];
     
     // Effect nodes that use the effects in different combinations.
