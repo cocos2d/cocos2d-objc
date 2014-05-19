@@ -14,15 +14,29 @@
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @implementation CCEffectContrast
 
--(id)initWithContrast:(float)contrast
+-(id)init
 {
-    CCEffectUniform* uniformContrast = [CCEffectUniform uniform:@"float" name:@"u_contrast" value:[NSNumber numberWithFloat:contrast]];
+    CCEffectUniform* uniformContrast = [CCEffectUniform uniform:@"float" name:@"u_contrast" value:[NSNumber numberWithFloat:1.0f]];
     
     if((self = [super initWithUniforms:@[uniformContrast] vertextUniforms:nil varying:nil]))
+    {
+        return self;
+    }
+    return self;
+}
+
+-(id)initWithContrast:(float)contrast
+{
+    if((self = [self init]))
     {
         _contrast = contrast;
     }
     return self;
+}
+
++(id)effectWithContrast:(float)contrast
+{
+    return [[self alloc] initWithContrast:contrast];
 }
 
 -(void)buildFragmentFunctions
