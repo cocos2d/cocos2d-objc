@@ -144,6 +144,8 @@
 //	CCNode *parent = self.contentNode;
 	
 	CCRenderTexture *parent = [CCRenderTexture renderTextureWithWidth:size.width height:size.height pixelFormat:CCTexturePixelFormat_RGBA8888 depthStencilFormat:GL_DEPTH24_STENCIL8];
+    parent.positionType = CCPositionTypeNormalized;
+	parent.position = ccp(0.5, 0.5);
 	parent.autoDraw = YES;
 	parent.clearColor = [CCColor blackColor];
 	parent.clearDepth = 1.0;
@@ -228,9 +230,6 @@
 {
 	CCColor *color = [CCColor colorWithRed:0.0 green:0.0 blue:0.5 alpha:0.5];
 	CCNode *node = [CCNodeColor nodeWithColor:color width:128 height:128];
-    node.positionType = CCPositionTypeNormalized;
-    node.anchorPoint = ccp(0.5, 0.5);
-    node.position = ccp(0.5, 0.5);
 	[stage addChild:node];
 	
 	CCNodeColor *colorNode = [CCNodeColor nodeWithColor:[CCColor greenColor] width:32 height:32];
@@ -269,14 +268,14 @@
 	[self renderTextureHelper:stage size:size];
 	
 	CCRenderTexture *renderTexture = [CCRenderTexture renderTextureWithWidth:size.width height:size.height pixelFormat:CCTexturePixelFormat_RGBA8888];
-    renderTexture.anchorPoint = ccp(0.5, 0.5);
 	renderTexture.positionType = CCPositionTypeNormalized;
 	renderTexture.position = ccp(0.75, 0.5);
 	renderTexture.clearFlags = GL_COLOR_BUFFER_BIT;
 	renderTexture.clearColor = [CCColor clearColor];
 	[self.contentNode addChild:renderTexture];
     
-    [self scheduleBlock:^(CCTimer *timer){renderTexture.contentSize = CGSizeMake(256, 256);} delay:3];
+    // TODO: allow render texture to allow content size changes
+    //[self scheduleBlock:^(CCTimer *timer){renderTexture.contentSize = CGSizeMake(256, 256);} delay:3];
 	
 	[self renderTextureHelper:renderTexture size:size];
 	renderTexture.autoDraw = YES;

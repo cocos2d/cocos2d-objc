@@ -17,10 +17,8 @@
 - (id)initWithEffects:(NSArray *)effects;
 
 - (void)addEffect:(CCEffect *)effect;
+- (void)removeEffect:(CCEffect *)effect;
 - (CCEffect *)effectAtIndex:(NSUInteger)passIndex;
-
-
-
 
 +(CCEffect*)effects:(id)firstObject, ...;
 

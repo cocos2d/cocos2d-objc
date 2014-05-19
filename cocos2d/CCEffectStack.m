@@ -39,6 +39,11 @@
     [_effects addObject:effect];
 }
 
+- (void)removeEffect:(CCEffect *)effect
+{
+    [_effects removeObject:effect];
+}
+
 - (NSUInteger)effectCount
 {
     return _effects.count;
