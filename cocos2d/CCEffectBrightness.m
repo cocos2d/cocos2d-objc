@@ -14,15 +14,29 @@
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @implementation CCEffectBrightness
 
--(id)initWithBrightness:(float)brightness
+-(id)init
 {
-    CCEffectUniform* uniformBrightness = [CCEffectUniform uniform:@"float" name:@"u_brightness" value:[NSNumber numberWithFloat:brightness]];
+    CCEffectUniform* uniformBrightness = [CCEffectUniform uniform:@"float" name:@"u_brightness" value:[NSNumber numberWithFloat:0.0f]];
     
     if((self = [super initWithUniforms:@[uniformBrightness] vertextUniforms:nil varying:nil]))
+    {
+        return self;
+    }
+    return self;
+}
+
+-(id)initWithBrightness:(float)brightness
+{
+    if((self = [self init]))
     {
         _brightness = brightness;
     }    
     return self;
+}
+
++(id)effectWithBrightness:(float)brightness
+{
+    return [[self alloc] initWithBrightness:brightness];
 }
 
 -(void)buildFragmentFunctions
