@@ -46,19 +46,18 @@
 #import "CCTexture.h"
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
+static float conditionPixelSize(float pixelSize);
+
 @implementation CCEffectPixellate
 
 -(id)initWithPixelSize:(float)pixelSize
 {
-    float uStep = pixelSize;
-    float vStep = pixelSize;
-
-    CCEffectUniform* uniformUStep = [CCEffectUniform uniform:@"float" name:@"u_uStep" value:[NSNumber numberWithFloat:uStep]];
-    CCEffectUniform* uniformVStep = [CCEffectUniform uniform:@"float" name:@"u_vStep" value:[NSNumber numberWithFloat:vStep]];
+    CCEffectUniform* uniformUStep = [CCEffectUniform uniform:@"float" name:@"u_uStep" value:[NSNumber numberWithFloat:1.0f]];
+    CCEffectUniform* uniformVStep = [CCEffectUniform uniform:@"float" name:@"u_vStep" value:[NSNumber numberWithFloat:1.0f]];
 
     if((self = [super initWithUniforms:@[uniformUStep, uniformVStep] vertextUniforms:nil varying:nil]))
     {
-        _pixelSize = pixelSize;
+        _pixelSize = conditionPixelSize(pixelSize);
     }
     return self;
 }
@@ -78,6 +77,11 @@
 -(NSInteger)renderPassesRequired
 {
     return 1;
+}
+
+-(void)setPixelSize:(float)pixelSize
+{
+    _pixelSize = conditionPixelSize(pixelSize);
 }
 
 -(void)renderPassBegin:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
@@ -108,4 +112,12 @@
 }
 
 @end
+
+float conditionPixelSize(float pixelSize)
+{
+    // If the user requests an illegal pixel size value, just force
+    // the value to 1.0 which results in the effect being a NOOP.
+    return (pixelSize <= 1.0f) ? 1.0f : pixelSize;
+}
+
 #endif
