@@ -93,9 +93,9 @@ const char kCCProgressTextureCoords = 0x4b;
 		self.barChangeRate = ccp(1, 1);
 		self.sprite = sprite;
 		
-    		_dirtyVertexData = NO;
-    		_needsUpdateProgress = YES;
-    
+		_dirtyVertexData = NO;
+		_needsUpdateProgress = YES;
+		
 		// shader program
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
 	}
@@ -222,12 +222,12 @@ const char kCCProgressTextureCoords = 0x4b;
 	if (_dirtyVertexData){
 		// remove the vertex data if the type, direction, or sprite have changed 
 		if (_vertexData) {
-	            free(_vertexData);
-	            _vertexData = NULL;
-	            _vertexDataCount = 0;
+			free(_vertexData);
+			_vertexData = NULL;
+			_vertexDataCount = 0;
 		}
-        	_dirtyVertexData = NO;
-        }
+		_dirtyVertexData = NO;
+	}
         
 	switch (_type) {
 		case CCProgressNodeTypeRadial:
