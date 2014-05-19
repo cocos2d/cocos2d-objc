@@ -12,6 +12,7 @@
 @interface CCEffectSaturation : CCEffect
 
 -(id)initWithSaturation:(float)saturation;
++(id)effectWithSaturation:(float)saturation;
 
 @property (nonatomic) float saturation;
 

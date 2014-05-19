@@ -48,15 +48,30 @@
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @implementation CCEffectSaturation
 
+
+-(id)init
+{
+    CCEffectUniform* uniformSaturation = [CCEffectUniform uniform:@"float" name:@"u_saturation" value:[NSNumber numberWithFloat:1.0f]];
+    
+    if((self = [super initWithUniforms:@[uniformSaturation] vertextUniforms:nil varying:nil]))
+    {
+        return self;
+    }
+    return self;
+}
+
 -(id)initWithSaturation:(float)saturation
 {
-    CCEffectUniform* uniformSaturation = [CCEffectUniform uniform:@"float" name:@"u_saturation" value:[NSNumber numberWithFloat:saturation]];
-
-    if((self = [super initWithUniforms:@[uniformSaturation] vertextUniforms:nil varying:nil]))
+    if((self = [self init]))
     {
         _saturation = saturation;
     }
     return self;
+}
+
++(id)effectWithSaturation:(float)saturation
+{
+    return [[self alloc] initWithSaturation:saturation];
 }
 
 -(void)buildFragmentFunctions
