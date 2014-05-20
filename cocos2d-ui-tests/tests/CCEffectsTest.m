@@ -125,18 +125,18 @@
     CCSprite *sprite = [CCSprite spriteWithImageNamed:@"f1.png"];
     sprite.anchorPoint = ccp(0.5, 0.5);
     sprite.positionType = CCPositionTypeNormalized;
-    sprite.position = ccp(0.3, 0.5);
+    sprite.position = ccp(0.2, 0.5);
     [self.contentNode addChild:sprite];
 
     // The brightness and contrast effects.
     CCEffect *brightness = [[CCEffectBrightness alloc] initWithBrightness:0.25f];
-    CCEffect *contrast = [[CCEffectContrast alloc] initWithContrast:4.0f];
+    CCEffect *contrast = [[CCEffectContrast alloc] initWithContrast:1.0f];
     
     // Effect nodes that use the effects in different combinations.
-    [self.contentNode addChild:[self effectNodeWithEffects:@[brightness] appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.4, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[brightness] appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.35, 0.5)]];
     [self.contentNode addChild:[self effectNodeWithEffects:@[contrast] appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.5, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[brightness, contrast] appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.6, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[contrast, brightness] appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.7, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[brightness, contrast] appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.65, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[contrast, brightness] appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.8, 0.5)]];
 }
 
 -(void)setupPixellateEffectNodeTest
