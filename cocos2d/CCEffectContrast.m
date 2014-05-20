@@ -12,6 +12,8 @@
 #import "CCTexture.h"
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
+static float conditionContrast(float contrast);
+
 @implementation CCEffectContrast
 
 -(id)init
@@ -29,7 +31,7 @@
 {
     if((self = [self init]))
     {
-        _contrast = contrast;
+        _contrast = conditionContrast(contrast);
     }
     return self;
 }
@@ -55,6 +57,11 @@
     return 1;
 }
 
+-(void)setContrast:(float)contrast
+{
+    _contrast = conditionContrast(contrast);
+}
+
 -(void)renderPassBegin:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
 {
     renderPass.sprite.anchorPoint = ccp(0.0, 0.0);
@@ -75,4 +82,16 @@
 }
 
 @end
+
+float conditionContrast(float contrast)
+{
+    // Yes, this value is somewhat magical. It was arrived at experimentally by comparing
+    // our results at min and max contrast (-1 and 1 respectively) with the results from
+    // various image editing applications at their own min and max contrast values.
+    static const float kContrastBase = 4.0f;
+    
+    float clampedExp = clampf(contrast, -1.0f, 1.0f);
+    return powf(kContrastBase, clampedExp);
+}
+
 #endif

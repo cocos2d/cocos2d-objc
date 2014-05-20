@@ -12,6 +12,8 @@
 #import "CCTexture.h"
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
+static float conditionBrightness(float brightness);
+
 @implementation CCEffectBrightness
 
 -(id)init
@@ -29,7 +31,7 @@
 {
     if((self = [self init]))
     {
-        _brightness = brightness;
+        _brightness = conditionBrightness(brightness);
     }    
     return self;
 }
@@ -55,6 +57,11 @@
     return 1;
 }
 
+-(void)setBrightness:(float)brightness
+{
+    _brightness = conditionBrightness(brightness);
+}
+
 -(void)renderPassBegin:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
 {
     renderPass.sprite.anchorPoint = ccp(0.0, 0.0);
@@ -75,4 +82,10 @@
 }
 
 @end
+
+float conditionBrightness(float brightness)
+{
+    return clampf(brightness, -1.0f, 1.0f);
+}
+
 #endif
