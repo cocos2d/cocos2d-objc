@@ -22,6 +22,7 @@ static float conditionContrast(float contrast);
     
     if((self = [super initWithUniforms:@[uniformContrast] vertextUniforms:nil varying:nil]))
     {
+        self.debugName = @"CCEffectContrast";
         return self;
     }
     return self;

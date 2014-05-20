@@ -60,6 +60,7 @@
                                        v_oneStepLeftTextureCoordinate, v_oneStepRightTextureCoordinate,
                                        v_twoStepsRightTextureCoordinate, nil]])
     {
+        self.debugName = @"CCEffectGaussianBlur";
         return self;
     }
     

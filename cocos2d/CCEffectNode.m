@@ -77,14 +77,14 @@
 	} globalSortOrder:NSIntegerMin debugLabel:@"CCEffectNode: Bind FBO" threadSafe:NO];
 }
 
--(void)end
+-(void)endWithDebugLabel:(NSString *)debugLabel
 {
     [_renderer enqueueBlock:^{
 		glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
 		glViewport(_oldViewport.v[0], _oldViewport.v[1], _oldViewport.v[2], _oldViewport.v[3]);
 	} globalSortOrder:NSIntegerMax debugLabel:@"CCEffectNode: Restore FBO" threadSafe:NO];
 	
-	[_renderer popGroupWithDebugLabel:@"CCEffectNode" globalSortOrder:0];
+	[_renderer popGroupWithDebugLabel:debugLabel globalSortOrder:0];
 }
 
 -(void)visit
@@ -165,7 +165,7 @@
     for(CCNode *child in _children){
         if( child != _sprite) [child visit:renderer parentTransform:&_projection];
     }
-    [self end];
+    [self endWithDebugLabel:@"CCEffectNode: Pre-render pass"];
 
     // Done pre-render
     
@@ -209,7 +209,7 @@
                 [renderPass.sprite visit:renderPass.renderer parentTransform:&xform];
             }];
 
-            [self end];
+            [self endWithDebugLabel:[NSString stringWithFormat:@"CCEffectNode: %@: Pass %d", effect.debugName, i]];
             [effect renderPassEnd:renderPass defaultBlock:nil];
             
             ++globalPassIndex;
@@ -226,12 +226,16 @@
     // Draw accumulated results from the last textureinto the real framebuffer
     // The texture property always points to the most recently allocated
     // texture so it will contain any accumulated results for the effect stack.
+	[_renderer pushGroup];
+
     _sprite.texture = self.texture;
     _sprite.anchorPoint = ccp(0.0f, 0.0f);
     _sprite.position = ccp(0.0f, 0.0f);
     _sprite.shader = [CCShader positionTextureColorShader];
     [_sprite visit:_renderer parentTransform:transform];
     
+    [_renderer popGroupWithDebugLabel:@"CCEffectNode: Post-render composite pass" globalSortOrder:0];
+
     // Done framebuffer composite
 
     

@@ -58,6 +58,7 @@ static float conditionBlockSize(float blockSize);
     
     if((self = [super initWithUniforms:@[uniformUStep, uniformVStep] vertextUniforms:nil varying:nil]))
     {
+        self.debugName = @"CCEffectPixellate";
         return self;
     }
     return self;

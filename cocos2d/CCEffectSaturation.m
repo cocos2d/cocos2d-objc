@@ -55,6 +55,7 @@
     
     if((self = [super initWithUniforms:@[uniformSaturation] vertextUniforms:nil varying:nil]))
     {
+        self.debugName = @"CCEffectSaturation";
         return self;
     }
     return self;

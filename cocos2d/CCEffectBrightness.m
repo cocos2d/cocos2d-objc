@@ -22,6 +22,7 @@ static float conditionBrightness(float brightness);
     
     if((self = [super initWithUniforms:@[uniformBrightness] vertextUniforms:nil varying:nil]))
     {
+        self.debugName = @"CCEffectBrightness";
         return self;
     }
     return self;
