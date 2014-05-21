@@ -233,7 +233,7 @@
 	
 	if ( _msaaFramebuffer)
 	{
-		glDeleteRenderbuffers(1, &_msaaFramebuffer);
+		glDeleteFramebuffers(1, &_msaaFramebuffer);
 		_msaaFramebuffer = 0;
 	}
 
