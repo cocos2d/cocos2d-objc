@@ -137,7 +137,6 @@
 
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
-    [self destroy];
     [self configureRender];
 
     NSAssert(_renderer == renderer, @"CCEffectNode error!");
@@ -157,7 +156,7 @@
     // remainder of the effects.
     [self begin];
     
-    [_renderer enqueueClear:self.clearFlags color:_clearColor depth:self.clearDepth stencil:self.clearStencil globalSortOrder:NSIntegerMin];
+    [_renderer enqueueClear:GL_COLOR_BUFFER_BIT color:_clearColor depth:self.clearDepth stencil:self.clearStencil globalSortOrder:NSIntegerMin];
     
     //! make sure all children are drawn
     [self sortAllChildren];
@@ -185,7 +184,7 @@
             [self.sprite.shaderUniforms addEntriesFromDictionary:effect.shaderUniforms];
         }
 
-        renderPass.sprite.shaderUniforms[@"cc_MainTexture"] = _textures[globalPassIndex];
+        renderPass.sprite.texture = _textures[globalPassIndex];
         
         for(int i = 0; i < effect.renderPassesRequired; i++)
         {
@@ -205,7 +204,7 @@
                 GLKVector4 clearColor;
                 
                 renderPass.sprite.anchorPoint = ccp(0.0, 0.0);
-                [renderPass.renderer enqueueClear:0 color:clearColor depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
+                [renderPass.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:clearColor depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
                 [renderPass.sprite visit:renderPass.renderer parentTransform:&xform];
             }];
 

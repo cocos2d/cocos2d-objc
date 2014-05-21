@@ -119,7 +119,7 @@ static float conditionBlockSize(float blockSize);
     GLKMatrix4 transform = renderPass.transform;
     GLKVector4 clearColor;
 
-    [renderPass.renderer enqueueClear:0 color:clearColor depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
+    [renderPass.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:clearColor depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
     [renderPass.sprite visit:renderPass.renderer parentTransform:&transform];
 }
 
