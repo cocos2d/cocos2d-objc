@@ -140,9 +140,7 @@
     [self configureRender];
 
     NSAssert(_renderer == renderer, @"CCEffectNode error!");
-    
-    _currentRenderPass = 0;
-    
+        
     // XXX We may want to make this pre-render step overridable by the
     // first effect in the stack. That would look something like this:
     //
@@ -168,7 +166,7 @@
 
     // Done pre-render
     
-    
+#if 0
     CCEffectRenderPass* renderPass = [[CCEffectRenderPass alloc] init];
     renderPass.sprite = _sprite;
     renderPass.renderer = _renderer;
@@ -214,7 +212,7 @@
             ++globalPassIndex;
         }
     }
-    
+#endif
     
     
     // XXX We may want to make this post-render step overridable by the
@@ -259,10 +257,10 @@
 //    }
 //}
 
--(void)assignSpriteTexture
-{
-    // don't do anything on effect nodes
-}
+//-(void)assignSpriteTexture
+//{
+//    // don't do anything on effect nodes
+//}
 
 
 @end
