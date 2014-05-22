@@ -108,7 +108,15 @@
             
             renderPass.transform = *transform;
             renderPass.renderPassId = i;
-            renderPass.sprite.shaderUniforms[@"cc_PreviousPassTexture"] = previousPassRT.texture;
+            
+            if (previousPassRT)
+            {
+                renderPass.sprite.shaderUniforms[@"cc_PreviousPassTexture"] = previousPassRT.texture;
+            }
+            else
+            {
+                renderPass.sprite.shaderUniforms[@"cc_PreviousPassTexture"] = sprite.texture;
+            }
             
             [effect renderPassBegin:renderPass defaultBlock:nil];
 
