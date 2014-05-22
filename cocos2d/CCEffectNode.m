@@ -8,6 +8,7 @@
 
 #import "CCEffectNode.h"
 #import "CCEffectStack.h"
+#import "CCEffectRenderer.h"
 #import "CCDirector.h"
 #import "ccMacros.h"
 #import "CCShader.h"
@@ -30,6 +31,7 @@
 @interface CCEffectNode()
 {
     CCEffectStack *_effectStack;
+    CCEffectRenderer *_effectRenderer;
 }
 
 @end
@@ -46,6 +48,7 @@
 {
 	if((self = [super initWithWidth:width height:height pixelFormat:CCTexturePixelFormat_Default])) {
         _effectStack = [[CCEffectStack alloc] init];
+        _effectRenderer = [[CCEffectRenderer alloc] initWithWidth:width height:height];
 	}
 	return self;
 }
@@ -166,54 +169,8 @@
 
     // Done pre-render
     
-#if 0
-    CCEffectRenderPass* renderPass = [[CCEffectRenderPass alloc] init];
-    renderPass.sprite = _sprite;
-    renderPass.renderer = _renderer;
-    
-    NSInteger globalPassIndex = 0;
-    for (NSUInteger e = 0; e < _effectStack.effectCount; e++)
-    {
-        CCEffect *effect = [_effectStack effectAtIndex:e];
-        if(effect.shader && self.sprite.shader != effect.shader)
-        {
-            self.sprite.shader = effect.shader;
-            [self.sprite.shaderUniforms removeAllObjects];
-            [self.sprite.shaderUniforms addEntriesFromDictionary:effect.shaderUniforms];
-        }
-
-        renderPass.sprite.texture = _textures[globalPassIndex];
-        
-        for(int i = 0; i < effect.renderPassesRequired; i++)
-        {
-            _currentRenderPass = globalPassIndex + 1;
-
-            renderPass.transform = _projection;
-            renderPass.renderPassId = i;
-            renderPass.textures = _textures;
-            
-            renderPass.sprite.shaderUniforms[@"cc_PreviousPassTexture"] = _textures[globalPassIndex];
-            
-            [effect renderPassBegin:renderPass defaultBlock:nil];
-            [self begin];
-            
-            [effect renderPassUpdate:renderPass defaultBlock:^{
-                GLKMatrix4 xform = renderPass.transform;
-                GLKVector4 clearColor;
-                
-                renderPass.sprite.anchorPoint = ccp(0.0, 0.0);
-                [renderPass.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:clearColor depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
-                [renderPass.sprite visit:renderPass.renderer parentTransform:&xform];
-            }];
-
-            [self endWithDebugLabel:[NSString stringWithFormat:@"CCEffectNode: %@: Pass %d", effect.debugName, i]];
-            [effect renderPassEnd:renderPass defaultBlock:nil];
-            
-            ++globalPassIndex;
-        }
-    }
-#endif
-    
+    _sprite.texture = self.texture;
+    [_effectRenderer drawSprite:_sprite withEffects:_effectStack renderer:_renderer transform:&_projection];
     
     // XXX We may want to make this post-render step overridable by the
     // last effect in the stack. That would look like the code in the
@@ -225,7 +182,7 @@
     // texture so it will contain any accumulated results for the effect stack.
 	[_renderer pushGroup];
 
-    _sprite.texture = self.texture;
+    _sprite.texture = _effectRenderer.outputTexture;
     _sprite.anchorPoint = ccp(0.0f, 0.0f);
     _sprite.position = ccp(0.0f, 0.0f);
     _sprite.shader = [CCShader positionTextureColorShader];

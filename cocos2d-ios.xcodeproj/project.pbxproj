@@ -107,6 +107,8 @@
 		9D85671E191B018200573093 /* CCEffectBrightness.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D85671C191B018200573093 /* CCEffectBrightness.m */; };
 		9D856721191B019900573093 /* CCEffectContrast.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D85671F191B019900573093 /* CCEffectContrast.h */; };
 		9D856722191B019900573093 /* CCEffectContrast.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D856720191B019900573093 /* CCEffectContrast.m */; };
+		9DE90429192D630000AEB37A /* CCEffectRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9DE90427192D630000AEB37A /* CCEffectRenderer.h */; };
+		9DE9042A192D630000AEB37A /* CCEffectRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DE90428192D630000AEB37A /* CCEffectRenderer.m */; };
 		9DF37621191C594A00C6D27A /* CCEffectPixellate.h in Headers */ = {isa = PBXBuildFile; fileRef = 9DF3761F191C594A00C6D27A /* CCEffectPixellate.h */; };
 		9DF37622191C594A00C6D27A /* CCEffectPixellate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DF37620191C594A00C6D27A /* CCEffectPixellate.m */; };
 		9DFB1E5019241AEF008371EF /* CCEffectSaturation.h in Headers */ = {isa = PBXBuildFile; fileRef = 9DFB1E4E19241AEF008371EF /* CCEffectSaturation.h */; };
@@ -425,6 +427,8 @@
 		9D85671C191B018200573093 /* CCEffectBrightness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectBrightness.m; sourceTree = "<group>"; };
 		9D85671F191B019900573093 /* CCEffectContrast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectContrast.h; sourceTree = "<group>"; };
 		9D856720191B019900573093 /* CCEffectContrast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectContrast.m; sourceTree = "<group>"; };
+		9DE90427192D630000AEB37A /* CCEffectRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectRenderer.h; sourceTree = "<group>"; };
+		9DE90428192D630000AEB37A /* CCEffectRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectRenderer.m; sourceTree = "<group>"; };
 		9DF3761F191C594A00C6D27A /* CCEffectPixellate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectPixellate.h; sourceTree = "<group>"; };
 		9DF37620191C594A00C6D27A /* CCEffectPixellate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectPixellate.m; sourceTree = "<group>"; };
 		9DFB1E4E19241AEF008371EF /* CCEffectSaturation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectSaturation.h; sourceTree = "<group>"; };
@@ -1205,6 +1209,8 @@
 				D2B49103192146FB00C3443A /* CCEffectGaussianBlur.m */,
 				9DFB1E4E19241AEF008371EF /* CCEffectSaturation.h */,
 				9DFB1E4F19241AEF008371EF /* CCEffectSaturation.m */,
+				9DE90427192D630000AEB37A /* CCEffectRenderer.h */,
+				9DE90428192D630000AEB37A /* CCEffectRenderer.m */,
 			);
 			name = Effects;
 			sourceTree = "<group>";
@@ -1420,6 +1426,7 @@
 				A6A0734517C788EB004343C8 /* CCResponderManager.h in Headers */,
 				A6A0734A17C78EF3004343C8 /* CCResponder.h in Headers */,
 				B78AE46217E7AF1C0028BE0B /* CCButton.h in Headers */,
+				9DE90429192D630000AEB37A /* CCEffectRenderer.h in Headers */,
 				B798D15318205EFB00E7BFCD /* CCParticleSystem_Private.h in Headers */,
 				B7705FD61831A07B0043CC67 /* OALAudioTrack.h in Headers */,
 				B78AE46417E7AF1C0028BE0B /* CCControl.h in Headers */,
@@ -1627,6 +1634,7 @@
 				B7705FF71831A07B0043CC67 /* OALAudioSession.m in Sources */,
 				B7E776221857A159004221AA /* CCColor.m in Sources */,
 				A6DC4E0A18055DCC00C280A6 /* CCTransition.m in Sources */,
+				9DE9042A192D630000AEB37A /* CCEffectRenderer.m in Sources */,
 				B77060021831A07B0043CC67 /* NSMutableDictionary+WeakReferences.m in Sources */,
 				A6A0734617C788EB004343C8 /* CCResponderManager.m in Sources */,
 				A6A0734B17C78EF3004343C8 /* CCResponder.m in Sources */,
