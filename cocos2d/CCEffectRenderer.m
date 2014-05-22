@@ -86,6 +86,8 @@
     renderPass.sprite = sprite;
     renderPass.renderer = renderer;
     
+    CCTexture *inputTexture = sprite.texture;
+    
     CCEffectRenderTarget *previousPassRT = nil;
     for (NSUInteger e = 0; e < effectStack.effectCount; e++)
     {
@@ -99,7 +101,11 @@
         
         if (previousPassRT)
         {
-            renderPass.sprite.texture = previousPassRT.texture;
+            renderPass.sprite.shaderUniforms[@"cc_MainTexture"] = previousPassRT.texture;
+        }
+        else
+        {
+            renderPass.sprite.shaderUniforms[@"cc_MainTexture"] = inputTexture;
         }
         
         for(int i = 0; i < effect.renderPassesRequired; i++)
@@ -115,7 +121,7 @@
             }
             else
             {
-                renderPass.sprite.shaderUniforms[@"cc_PreviousPassTexture"] = sprite.texture;
+                renderPass.sprite.shaderUniforms[@"cc_PreviousPassTexture"] = inputTexture;
             }
             
             [effect renderPassBegin:renderPass defaultBlock:nil];
