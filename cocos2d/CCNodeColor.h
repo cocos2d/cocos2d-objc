@@ -247,7 +247,7 @@
 
 
 /// -----------------------------------------------------------------------
-/// @name Creating a CCNodeColor Object
+/// @name Creating a CCNodeGradientRadial Object
 /// -----------------------------------------------------------------------
 
 /**
@@ -257,7 +257,7 @@
  *  @param w     Width of the node.
  *  @param h     Height of the node.
  *
- *  @return The CCNodeColor Object.
+ *  @return The CCNodeGradientRadial Object.
  */
 +(id) nodeWithColor: (CCColor*)color width:(GLfloat)w height:(GLfloat)h;
 
@@ -266,12 +266,22 @@
  *
  *  @param color Color of the node.
  *
- *  @return The CCNodeColor Object.
+ *  @return The CCNodeGradientRadial Object.
  */
 +(id) nodeWithColor: (CCColor*)color;
 
+/**
+ *  Creates a full-screen CCNode with a gradient between start and end color values.
+ *
+ *  @param start Start color.
+ *  @param end   End color.
+ *
+ *  @return The CCNodeGradientRadial Object.
+ */
++(id)nodeWithColor:(CCColor*)start fadingTo:(CCColor*)end;
+
 /// -----------------------------------------------------------------------
-/// @name Initializing a CCNodeColor Object
+/// @name Initializing a CCNodeGradientRadial Object
 /// -----------------------------------------------------------------------
 
 
@@ -282,7 +292,7 @@
  *  @param w     Width of the node.
  *  @param h     Height of the node.
  *
- *  @return An initialized CCNodeColor Object.
+ *  @return An initialized CCNodeGradientRadial Object.
  */
 -(id) initWithColor:(CCColor*)color width:(GLfloat)w height:(GLfloat)h;
 
@@ -291,39 +301,9 @@
  *
  *  @param color Color of the node.
  *
- *  @return An initialized CCNodeColor Object.
+ *  @return An initialized CCNodeGradientRadial Object.
  */
 -(id) initWithColor:(CCColor*)color;
-
-/// -----------------------------------------------------------------------
-/// @name Creating a CCNodeGradient Object
-/// -----------------------------------------------------------------------
-
-/**
- *  Creates a full-screen CCNode with a gradient between start and end color values.
- *
- *  @param start Start color.
- *  @param end   End color.
- *
- *  @return The CCNodeGradient Object.
- */
-+(id)nodeWithColor:(CCColor*)start fadingTo:(CCColor*)end;
-
-/**
- *  Creates a full-screen CCNode with a gradient between start and end color values with gradient direction vector.
- *
- *  @param start Start color.
- *  @param end   End color.
- *  @param v Direction vector for gradient.
- *
- *  @return The CCNodeGradient Object.
- */
-+(id)nodeWithColor:(CCColor*)start fadingTo:(CCColor*)end alongVector:(CGPoint)v;
-
-
-/// -----------------------------------------------------------------------
-/// @name Initializing a CCNodeGradient Object
-/// -----------------------------------------------------------------------
 
 /**
  *  Initializes a full-screen CCNode with a gradient between start and end color values.
@@ -331,24 +311,13 @@
  *  @param start Start color.
  *  @param end   End color.
  *
- *  @return An initialized CCNodeGradient Object.
+ *  @return An initialized CCNodeGradientRadial Object.
  */
 - (id)initWithColor:(CCColor*)start fadingTo:(CCColor*)end;
 
-/**
- *  Creates a full-screen CCNode with a gradient between start and end color values with gradient direction vector.
- *
- *  @param start Start color.
- *  @param end   End color.
- *  @param v Direction vector for gradient.
- *
- *  @return An initialized CCNodeGradient Object.
- */
-- (id)initWithColor:(CCColor*)start fadingTo:(CCColor*)end alongVector:(CGPoint)v;
-
 
 /// -----------------------------------------------------------------------
-/// @name Accessing CCNodeGradient Attributes
+/// @name Accessing CCNodeGradientRadial Attributes
 /// -----------------------------------------------------------------------
 
 /** The starting color. */
@@ -363,9 +332,6 @@
 /** The ending color. */
 @property (nonatomic, readwrite) CGFloat endOpacity;
 
-/** The vector along which to fade color. */
-@property (nonatomic, readwrite) CGPoint vector;
-
 /** The gradientFactor controls the interpolation from startColor to endColor. 
  * If resolution = 6 (or vertexCount = 26) then along each edge we get 6 vertices
  * For gradientFactor = 1 the color fades along each edge as
@@ -374,7 +340,9 @@
  * for gradientFactor = 2; the color fade along each edge as:
  * [0.00, 0.17, 0.33, 0.50, 0.33, 0.17]
  *
- * The default value is 3
+ * The default value is 3.0
+ *
+ * @warning gradientFactor should be > 0
  */
 @property (nonatomic, readwrite) CGFloat gradientFactor;
 

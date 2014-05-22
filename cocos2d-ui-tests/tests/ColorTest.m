@@ -167,15 +167,14 @@
 -(void) setupCCNodeGradientRadialColorTest
 {
 	CGSize s = [[CCDirector sharedDirector] viewSize];
-    
+
 	CCNodeGradientRadial *colorNode = [CCNodeGradientRadial nodeWithColor:[CCColor blueColor]
-                                                     fadingTo:[CCColor redColor]
-                                                  alongVector:ccp(1, 1)];
+                                                     fadingTo:[CCColor greenColor]];
 	colorNode.contentSize = CGSizeMake(200, 200);
 	colorNode.position = ccp( s.width/2.0f - 100, s.height/2.0f - 100);
 	[self.contentNode addChild:colorNode];
 	
-	self.subTitle = @"Blue inner, red outer";
+	self.subTitle = @"Blue inner, green outer";
 }
 
 -(void) unfinishedsetupBMFontColorCascadeTest

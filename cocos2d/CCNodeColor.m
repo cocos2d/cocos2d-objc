@@ -311,6 +311,7 @@ static inline float RadialMix(const int i, const int num, const float gradientFa
     return (mid - fabs(mid - i)) / (mid * gradientFactor);
 }
 
+/** Linerly interpolate two vectors */
 static inline ccVertex2F ccVertex2FLerp(const ccVertex2F start, const ccVertex2F end, float t)
 {
     ccVertex2F ret;
@@ -322,7 +323,7 @@ static inline ccVertex2F ccVertex2FLerp(const ccVertex2F start, const ccVertex2F
 
 @interface CCNodeGradientRadial () {
     ccColor4F _endColor;
-	CGPoint _vector;    
+    CGFloat _gradient;
 }
 
 - (void)updatePosition;
@@ -350,11 +351,6 @@ static inline ccVertex2F ccVertex2FLerp(const ccVertex2F start, const ccVertex2F
     return [[self alloc] initWithColor:start fadingTo:end];
 }
 
-+ (id) nodeWithColor: (CCColor*) start fadingTo: (CCColor*) end alongVector: (CGPoint) v
-{
-    return [[self alloc] initWithColor:start fadingTo:end alongVector:v];
-}
-
 - (id) init
 {
 	return [self initWithColor:[CCColor blackColor] fadingTo:[CCColor blackColor]];
@@ -362,14 +358,8 @@ static inline ccVertex2F ccVertex2FLerp(const ccVertex2F start, const ccVertex2F
 
 - (id) initWithColor: (CCColor*) start fadingTo: (CCColor*) end
 {
-    return [self initWithColor:start fadingTo:end alongVector:ccp(0, -1)];
-}
-
-- (id) initWithColor: (CCColor*) start fadingTo: (CCColor*) end alongVector: (CGPoint) v
-{
 	_color = start.ccColor4f;
 	_endColor = end.ccColor4f;
-	_vector = v;
     
 	return [self initWithColor:start];
 }
@@ -390,7 +380,7 @@ static inline ccVertex2F ccVertex2FLerp(const ccVertex2F start, const ccVertex2F
         
 		_displayColor = _color = color.ccColor4f;
         
-        _gradientFactor = 3.0f;
+        _gradient = 3.0f;
         
 		for (NSUInteger i = 0; i<sizeof(_fanVertices) / sizeof( _fanVertices[0]); i++ ) {
 			_fanVertices[i].x = 0.0f;
@@ -495,7 +485,7 @@ static inline ccVertex2F ccVertex2FLerp(const ccVertex2F start, const ccVertex2F
         
         for (int r = 0; r < kCCNodeGradientRadialResolution; ++r) {
 
-            ccColor4F clr = ccc4FInterpolated(_endColor, _color, RadialMix(r, kCCNodeGradientRadialResolution, _gradientFactor));
+            ccColor4F clr = ccc4FInterpolated(_endColor, _color, RadialMix(r, kCCNodeGradientRadialResolution, _gradient));
             memcpy(&_fanColors[v++], &clr, sizeof(clr));
         }
     }
@@ -547,10 +537,20 @@ static inline ccVertex2F ccVertex2FLerp(const ccVertex2F start, const ccVertex2F
 	[self updateColor];
 }
 
--(void) setVector: (CGPoint) v
+- (CGFloat) gradientFactor
 {
-	_vector = v;
-	[self updateColor];
+    return _gradient;
+}
+
+- (void)setGradientFactor:(CGFloat)gradientFactor
+{
+    NSAssert(gradientFactor > 0.0,
+             @"gradientFactor should always have a value greater than 0.0.\n"
+             "gradientFactor controls the smoothness of the interpolation between the two colors\n"
+             "Ideally it should be >= 3.0.");
+
+    _gradient = gradientFactor;
+    [self updateColor];
 }
 
 #pragma mark Protocols
