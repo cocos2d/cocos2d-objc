@@ -16,6 +16,8 @@
 
 @interface CCEffectRenderer : NSObject
 
+@property (nonatomic, assign) int width;
+@property (nonatomic, assign) int height;
 @property (nonatomic, readonly) CCTexture *outputTexture;
 
 -(id)init;

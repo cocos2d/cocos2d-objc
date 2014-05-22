@@ -170,6 +170,8 @@
     // Done pre-render
     
     _sprite.texture = self.texture;
+    _effectRenderer.width = self.contentSize.width;
+    _effectRenderer.height = self.contentSize.height;
     [_effectRenderer drawSprite:_sprite withEffects:_effectStack renderer:_renderer transform:&_projection];
     
     // XXX We may want to make this post-render step overridable by the

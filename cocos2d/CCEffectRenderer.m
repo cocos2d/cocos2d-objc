@@ -45,8 +45,6 @@
 @property (nonatomic, strong) NSMutableArray *renderTargets;
 @property (nonatomic, assign) GLKVector4 oldViewport;
 @property (nonatomic, assign) GLint oldFBO;
-@property (nonatomic, readonly) int width;
-@property (nonatomic, readonly) int height;
 
 @end
 
