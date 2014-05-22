@@ -82,6 +82,8 @@
 
 -(void)drawSprite:(CCSprite *)sprite withEffects:(CCEffectStack *)effectStack renderer:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
+    [self destroyAllRenderTargets];
+    
     CCEffectRenderPass* renderPass = [[CCEffectRenderPass alloc] init];
     renderPass.sprite = sprite;
     renderPass.renderer = renderer;
