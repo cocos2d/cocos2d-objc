@@ -139,7 +139,7 @@
                     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
                     glBindFramebuffer(GL_FRAMEBUFFER, fbo);
                     
-                } globalSortOrder:NSIntegerMin debugLabel:@"CCEffectNode: Bind FBO" threadSafe:NO];
+                } globalSortOrder:NSIntegerMin debugLabel:@"CCEffectRenderer: Bind FBO" threadSafe:NO];
             }
             // /Begin
             
@@ -159,9 +159,9 @@
                 [renderer enqueueBlock:^{
                     glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
                     glViewport(_oldViewport.v[0], _oldViewport.v[1], _oldViewport.v[2], _oldViewport.v[3]);
-                } globalSortOrder:NSIntegerMax debugLabel:@"CCEffectNode: Restore FBO" threadSafe:NO];
+                } globalSortOrder:NSIntegerMax debugLabel:@"CCEffectRenderer: Restore FBO" threadSafe:NO];
                 
-                [renderer popGroupWithDebugLabel:[NSString stringWithFormat:@"CCEffectNode: %@: Pass %d", effect.debugName, i] globalSortOrder:0];
+                [renderer popGroupWithDebugLabel:[NSString stringWithFormat:@"CCEffectRenderer: %@: Pass %d", effect.debugName, i] globalSortOrder:0];
             }
             // /End
             
