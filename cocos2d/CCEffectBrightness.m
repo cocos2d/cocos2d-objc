@@ -72,9 +72,7 @@ static float conditionBrightness(float brightness);
 -(void)renderPassUpdate:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
 {
     GLKMatrix4 transform = renderPass.transform;
-    GLKVector4 clearColor;
-    
-    [renderPass.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:clearColor depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
+    [renderPass.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:[CCColor clearColor].glkVector4 depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
     [renderPass.sprite visit:renderPass.renderer parentTransform:&transform];
 }
 
