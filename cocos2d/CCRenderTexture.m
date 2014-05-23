@@ -496,12 +496,12 @@
 -(BOOL)saveToFile:(NSString*)fileName format:(CCRenderTextureImageFormat)format
 {
     NSString *fullPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:fileName];
-    [self saveToFilePath:fullPath format:format];
+    return [self saveToFilePath:fullPath format:format];
 }
 
 - (BOOL)saveToFilePath:(NSString *)filePath
 {
-    [self saveToFilePath:filePath format:CCRenderTextureImageFormatJPEG];
+    return [self saveToFilePath:filePath format:CCRenderTextureImageFormatJPEG];
 }
 
 - (BOOL)saveToFilePath:(NSString *)filePath format:(CCRenderTextureImageFormat)format
