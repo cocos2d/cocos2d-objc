@@ -76,12 +76,6 @@ typedef enum { TEST_PONG_PLAYING, TESTS_PONG_GAMEOVER } TEST_PONG_STATE;
     _designSize.height -= _headerBg.contentSize.height;
     
     _pixellateEffectNode = [[CCEffectNode alloc] initWithWidth:_designSize.width height:_designSize.height];
-    
-    // HACK
-    // This should work with position 0,0. FIXME - Oleg. An effectnodes position without an actual
-    // effect handles behave different when an effect is added.
-    _pixellateEffectNode.position = ccp(_designSize.width * 0.5f, _designSize.height * 0.5f);
-    
     _pixellateEffect = [[CCEffectPixellate alloc] initWithBlockSize:4.0f];
 
     [self setupBackgroundScene];
@@ -259,8 +253,6 @@ typedef enum { TEST_PONG_PLAYING, TESTS_PONG_GAMEOVER } TEST_PONG_STATE;
         
         [self updateScore];
         
-        // FIXME - Oleg. An effectnodes position without an actual effect handles behave different when an effect is added.
-        _pixellateEffectNode.position = ccp(0.0f, 0.0f);
         [_pixellateEffectNode addEffect:_pixellateEffect];
                 
         [_pixellateEffectNode addChild:_scoredLabel];
