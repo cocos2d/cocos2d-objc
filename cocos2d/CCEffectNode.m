@@ -184,7 +184,15 @@
     // texture so it will contain any accumulated results for the effect stack.
 	[_renderer pushGroup];
 
-    _sprite.texture = _effectRenderer.outputTexture;
+    if (_effectStack.effectCount)
+    {
+        _sprite.texture = _effectRenderer.outputTexture;
+    }
+    else
+    {
+        _sprite.texture = self.texture;
+    }
+
     _sprite.anchorPoint = ccp(0.0f, 0.0f);
     _sprite.position = ccp(0.0f, 0.0f);
     _sprite.shader = [CCShader positionTextureColorShader];
