@@ -21,20 +21,94 @@
 @property (nonatomic, readonly) CCTexture *texture;
 @property (nonatomic, readonly) GLuint FBO;
 @property (nonatomic, readonly) GLuint depthRenderBuffer;
+@property (nonatomic, readonly) BOOL glResourcesAllocated;
 
 @end
 
 @implementation CCEffectRenderTarget
 
-- (id)initWithTexture:(CCTexture*)texture FBO:(GLuint)fbo depthRenderBuffer:(GLuint)depthBuffer
+- (id)init
 {
     if((self = [super init]))
     {
-        _texture = texture;
-        _FBO = fbo;
-        _depthRenderBuffer = depthBuffer;
     }
     return self;
+}
+
+- (void)dealloc
+{
+    if (self.glResourcesAllocated)
+    {
+        [self destroyGLResources];
+    }
+}
+
+- (BOOL)allocGLResourcesWithWidth:(int)width height:(int)height
+{
+    NSAssert(!_glResourcesAllocated, @"");
+    
+    glPushGroupMarkerEXT(0, "CCEffectRenderTarget: allocateRenderTarget");
+    
+	// Textures may need to be a power of two
+	NSUInteger powW;
+	NSUInteger powH;
+    
+	if( [[CCConfiguration sharedConfiguration] supportsNPOT] )
+    {
+		powW = width;
+		powH = height;
+	}
+    else
+    {
+		powW = CCNextPOT(width);
+		powH = CCNextPOT(height);
+	}
+    
+    static const CCTexturePixelFormat kRenderTargetDefaultPixelFormat = CCTexturePixelFormat_RGBA8888;
+    static const float kRenderTargetDefaultContentScale = 1.0f;
+    
+    // Create a new texture object for use as the color attachment of the new
+    // FBO.
+	_texture = [[CCTexture alloc] initWithData:nil pixelFormat:kRenderTargetDefaultPixelFormat pixelsWide:powW pixelsHigh:powH contentSizeInPixels:CGSizeMake(width, height) contentScale:kRenderTargetDefaultContentScale];
+	[_texture setAliasTexParameters];
+	
+    // Save the old FBO binding so it can be restored after we create the new
+    // one.
+	GLint oldFBO;
+	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFBO);
+    
+	// Generate a new FBO and bind it so it can be modified.
+	glGenFramebuffers(1, &_FBO);
+	glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
+    
+	// Associate texture with FBO
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _texture.name, 0);
+    
+	// Check if it worked (probably worth doing :) )
+	NSAssert( glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, @"Could not attach texture to framebuffer");
+    
+    // Restore the old FBO binding.
+	glBindFramebuffer(GL_FRAMEBUFFER, oldFBO);
+	
+	CC_CHECK_GL_ERROR_DEBUG();
+	glPopGroupMarkerEXT();
+    
+    _glResourcesAllocated = YES;
+    return YES;
+}
+
+- (void)destroyGLResources
+{
+    NSAssert(_glResourcesAllocated, @"");
+    glDeleteFramebuffers(1, &_FBO);
+    if (_depthRenderBuffer)
+    {
+        glDeleteRenderbuffers(1, &_depthRenderBuffer);
+    }
+    
+    _texture = nil;
+    
+    _glResourcesAllocated = NO;
 }
 
 @end
@@ -174,77 +248,18 @@
 
 - (CCEffectRenderTarget *)allocRenderTargetWithWidth:(int)width height:(int)height
 {
-    glPushGroupMarkerEXT(0, "CCEffectRenderTarget: allocateRenderTarget");
-
-	// Textures may need to be a power of two
-	NSUInteger powW;
-	NSUInteger powH;
-    
-	if( [[CCConfiguration sharedConfiguration] supportsNPOT] )
-    {
-		powW = width;
-		powH = height;
-	}
-    else
-    {
-		powW = CCNextPOT(width);
-		powH = CCNextPOT(height);
-	}
-
-    static const CCTexturePixelFormat kRenderTargetDefaultPixelFormat = CCTexturePixelFormat_RGBA8888;
-    static const float kRenderTargetDefaultContentScale = 1.0f;
-    
-    // Create a new texture object for use as the color attachment of the new
-    // FBO.
-	CCTexture *texture = [[CCTexture alloc] initWithData:nil pixelFormat:kRenderTargetDefaultPixelFormat pixelsWide:powW pixelsHigh:powH contentSizeInPixels:CGSizeMake(width, height) contentScale:kRenderTargetDefaultContentScale];
-	[texture setAliasTexParameters];
-	
-    // Save the old FBO binding so it can be restored after we create the new
-    // one.
-	GLint oldFBO;
-	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFBO);
-    
-	// Generate a new FBO and bind it so it can be modified.
-    GLuint fbo;
-	glGenFramebuffers(1, &fbo);
-	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-    
-	// Associate texture with FBO
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.name, 0);
-    
-	// Check if it worked (probably worth doing :) )
-	NSAssert( glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, @"Could not attach texture to framebuffer");
-    
-    CCEffectRenderTarget *rt = [[CCEffectRenderTarget alloc] initWithTexture:texture FBO:fbo depthRenderBuffer:0];
-    
-    // Restore the old FBO binding.
-	glBindFramebuffer(GL_FRAMEBUFFER, oldFBO);
-	
-	CC_CHECK_GL_ERROR_DEBUG();
-	glPopGroupMarkerEXT();
-	
+    CCEffectRenderTarget *rt = [[CCEffectRenderTarget alloc] init];
+    [rt allocGLResourcesWithWidth:width height:height];
     [_renderTargets addObject:rt];
     
     return rt;
-}
-
-- (void)destroyRenderTarget:(CCEffectRenderTarget *)rt
-{
-    GLuint fbo = rt.FBO;
-    glDeleteFramebuffers(1, &fbo);
-	
-    GLuint depthRenderBuffer = rt.depthRenderBuffer;
-    if (depthRenderBuffer)
-    {
-        glDeleteRenderbuffers(1, &depthRenderBuffer);
-    }
 }
 
 - (void)destroyAllRenderTargets
 {
     for (CCEffectRenderTarget *rt in _renderTargets)
     {
-        [self destroyRenderTarget:rt];
+        [rt destroyGLResources];
     }
     [_renderTargets removeAllObjects];
 }
