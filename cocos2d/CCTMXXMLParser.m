@@ -444,6 +444,13 @@
 			[dict setObject:propertyValue forKey:propertyName];
 		}
 
+    } else if ([elementName isEqualToString:@"ellipse"]) {
+		
+		// find parent object's dict and add ellipse-boolean (true) to it
+		CCTiledMapObjectGroup *objectGroup = [_objectGroups lastObject];
+		NSMutableDictionary *dict = [[objectGroup objects] lastObject];
+		[dict setObject:[NSNumber numberWithBool:YES] forKey:@"ellipse"];
+    
 	} else if ([elementName isEqualToString:@"polygon"]) {
 		
 		// find parent object's dict and add polygon-points to it
