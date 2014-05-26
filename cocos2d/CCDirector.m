@@ -448,12 +448,14 @@ static CCDirector *_sharedDirector = nil;
 	return (CGSizeEqualToSize(_designSize, CGSizeZero) ? self.viewSize : _designSize);
 }
 
--(void) reshapeProjection:(CGSize)newWindowSize
+-(void) reshapeProjection:(CGSize)newViewSize
 {
-	_winSizeInPixels = newWindowSize;
+	_winSizeInPixels = newViewSize;
 	_winSizeInPoints = CGSizeMake( _winSizeInPixels.width / __ccContentScaleFactor, _winSizeInPixels.height / __ccContentScaleFactor );
 	
 	[self setProjection:_projection];
+	
+	[_runningScene viewDidResizeTo: newViewSize];
 }
 
 #pragma mark Director Scene Management
