@@ -208,9 +208,8 @@ static NSUInteger globalOrderOfArrival = 1;
 	[_children makeObjectsPerformSelector:@selector(cleanup)];
     
     // CCBAnimationManager Cleanup (Set by SpriteBuilder)
-    if([_userObject isKindOfClass:[CCBAnimationManager class]]) {
-        [_userObject performSelector:@selector(cleanup)];
-    }
+    [_animationManager performSelector:@selector(cleanup)];
+    
     _userObject = nil;
 }
 
@@ -1173,6 +1172,23 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 -(NSUInteger) numberOfRunningActions
 {
 	return [_actionManager numberOfRunningActionsInTarget:self];
+}
+
+-(CCBAnimationManager*)animationManager
+{
+    if(_animationManager)
+    {
+        return _animationManager;
+    }
+    else
+    {
+        return self.parent.animationManager;
+    }
+}
+
+-(void)setAnimationManager:(CCBAnimationManager *)animationManager
+{
+    _animationManager = animationManager;
 }
 
 #pragma mark CCNode - Scheduler
