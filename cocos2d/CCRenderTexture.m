@@ -468,11 +468,11 @@
 												 CGImageGetBytesPerRow(iref), CGImageGetColorSpace(iref),
 												 bitmapInfo);
 	
-//	// vertically flipped
-//	if( YES ) {
-//		CGContextTranslateCTM(context, 0.0f, ty);
-//		CGContextScaleCTM(context, 1.0f, -1.0f);
-//	}
+	// vertically flipped
+	if( YES ) {
+		CGContextTranslateCTM(context, 0.0f, ty);
+		CGContextScaleCTM(context, 1.0f, -1.0f);
+	}
 	
 	CGContextDrawImage(context, CGRectMake(0.0f, 0.0f, tx, ty), iref);
 	CGImageRef image = CGBitmapContextCreateImage(context);

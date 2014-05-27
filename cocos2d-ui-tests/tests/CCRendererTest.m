@@ -278,7 +278,10 @@
 	renderTexture.clearColor = [CCColor clearColor];
 	[self.contentNode addChild:renderTexture];
     
-    [self scheduleBlock:^(CCTimer *timer){renderTexture.contentSize = CGSizeMake(256, 256);} delay:3];
+	[self scheduleBlock:^(CCTimer *timer){
+		[renderTexture saveToFile:@"RenderTexture.png"];
+		renderTexture.contentSize = CGSizeMake(256, 256);
+	} delay:3];
 	
 	[self renderTextureHelper:renderTexture size:size];
 	renderTexture.autoDraw = YES;
