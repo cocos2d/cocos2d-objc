@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "ccTypes.h"
 
+#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @class CCEffectStack;
 @class CCRenderer;
 @class CCSprite;
@@ -25,3 +26,4 @@
 -(void)drawSprite:(CCSprite *)sprite withEffects:(CCEffectStack *)effectStack renderer:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
 
 @end
+#endif
