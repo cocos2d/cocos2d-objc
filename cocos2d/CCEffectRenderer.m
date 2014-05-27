@@ -180,6 +180,7 @@
         for(int i = 0; i < effect.renderPassesRequired; i++)
         {
             BOOL lastPass = (lastEffect && (i == (effect.renderPassesRequired - 1)));
+            BOOL directRendering = lastPass && effectStack.supportsDirectRendering;
             renderPass.renderPassId = i;
             
             if (previousPassRT)
@@ -194,7 +195,7 @@
             CCEffectRenderTarget *rt = nil;
 
             [renderer pushGroup];
-            if (lastPass)
+            if (directRendering)
             {
                 renderPass.transform = *transform;
                 
