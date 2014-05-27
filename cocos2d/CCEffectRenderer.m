@@ -193,40 +193,16 @@
             
             [effect renderPassBegin:renderPass defaultBlock:nil];
 
-            // Begin
-            {
-                CGSize pixelSize = rt.texture.contentSizeInPixels;
-                GLuint fbo = rt.FBO;
-                
-                [renderer pushGroup];
-                [renderer enqueueBlock:^{
-                    glGetFloatv(GL_VIEWPORT, _oldViewport.v);
-                    glViewport(0, 0, pixelSize.width, pixelSize.height );
-                    
-                    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
-                    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-                    
-                } globalSortOrder:NSIntegerMin debugLabel:@"CCEffectRenderer: Bind FBO" threadSafe:NO];
-            }
-            // /Begin
-            
+            [renderer pushGroup];
+            [self bindRenderTarget:rt withRenderer:renderer];
             
             [effect renderPassUpdate:renderPass defaultBlock:^{
                 [renderPass.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:[CCColor clearColor].glkVector4 depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
                 [renderPass draw];
             }];
 
-            
-            // End
-            {
-                [renderer enqueueBlock:^{
-                    glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
-                    glViewport(_oldViewport.v[0], _oldViewport.v[1], _oldViewport.v[2], _oldViewport.v[3]);
-                } globalSortOrder:NSIntegerMax debugLabel:@"CCEffectRenderer: Restore FBO" threadSafe:NO];
-                
-                [renderer popGroupWithDebugLabel:[NSString stringWithFormat:@"CCEffectRenderer: %@: Pass %d", effect.debugName, i] globalSortOrder:0];
-            }
-            // /End
+            [self restoreRenderTargetWithRenderer:renderer];
+            [renderer popGroupWithDebugLabel:[NSString stringWithFormat:@"CCEffectRenderer: %@: Pass %d", effect.debugName, i] globalSortOrder:0];
             
             [effect renderPassEnd:renderPass defaultBlock:nil];
             
@@ -235,6 +211,30 @@
     }
     
     _outputTexture = previousPassRT.texture;
+}
+
+- (void)bindRenderTarget:(CCEffectRenderTarget *)rt withRenderer:(CCRenderer *)renderer
+{
+    CGSize pixelSize = rt.texture.contentSizeInPixels;
+    GLuint fbo = rt.FBO;
+    
+    [renderer enqueueBlock:^{
+        glGetFloatv(GL_VIEWPORT, _oldViewport.v);
+        glViewport(0, 0, pixelSize.width, pixelSize.height );
+        
+        glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
+        glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+        
+    } globalSortOrder:NSIntegerMin debugLabel:@"CCEffectRenderer: Bind FBO" threadSafe:NO];
+}
+
+- (void)restoreRenderTargetWithRenderer:(CCRenderer *)renderer
+{
+    [renderer enqueueBlock:^{
+        glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
+        glViewport(_oldViewport.v[0], _oldViewport.v[1], _oldViewport.v[2], _oldViewport.v[3]);
+    } globalSortOrder:NSIntegerMax debugLabel:@"CCEffectRenderer: Restore FBO" threadSafe:NO];
+    
 }
 
 - (CCEffectRenderTarget *)allocRenderTargetWithWidth:(int)width height:(int)height
