@@ -190,40 +190,39 @@
             {
                 renderPass.shaderUniforms[@"cc_PreviousPassTexture"] = inputTexture;
             }
-            
-            if (!lastPass)
+
+            CCEffectRenderTarget *rt = nil;
+
+            [renderer pushGroup];
+            if (lastPass)
             {
-                renderPass.transform = projection;
+                renderPass.transform = *transform;
+                
+                [effect renderPassBegin:renderPass defaultBlock:nil];
+                [effect renderPassUpdate:renderPass defaultBlock:^{
+                    [renderPass.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:[CCColor clearColor].glkVector4 depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
+                    [renderPass draw];
+                }];
+                [effect renderPassEnd:renderPass defaultBlock:nil];
             }
             else
             {
-                renderPass.transform = *transform;
-            }
+                renderPass.transform = projection;
 
-            [effect renderPassBegin:renderPass defaultBlock:nil];
-
-            [renderer pushGroup];
-            
-            CCEffectRenderTarget *rt = nil;
-            if (!lastPass)
-            {
                 rt = [self allocRenderTargetWithWidth:_contentSize.width * _contentScale height:_contentSize.height * _contentScale];
+                
+                [effect renderPassBegin:renderPass defaultBlock:nil];
                 [self bindRenderTarget:rt withRenderer:renderer];
-            }
-            
-            [effect renderPassUpdate:renderPass defaultBlock:^{
-                [renderPass.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:[CCColor clearColor].glkVector4 depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
-                [renderPass draw];
-            }];
-            
-            if (!lastPass)
-            {
+                
+                [effect renderPassUpdate:renderPass defaultBlock:^{
+                    [renderPass.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:[CCColor clearColor].glkVector4 depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
+                    [renderPass draw];
+                }];
+                
                 [self restoreRenderTargetWithRenderer:renderer];
+                [effect renderPassEnd:renderPass defaultBlock:nil];
             }
-
             [renderer popGroupWithDebugLabel:[NSString stringWithFormat:@"CCEffectRenderer: %@: Pass %d", effect.debugName, i] globalSortOrder:0];
-            
-            [effect renderPassEnd:renderPass defaultBlock:nil];
             
             previousPassRT = rt;
         }
