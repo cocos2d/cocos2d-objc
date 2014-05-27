@@ -1285,9 +1285,11 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 	if(isRunning && !wasRunning){
 		[_scheduler setPaused:NO target:self];
 		[_actionManager resumeTarget:self];
+        [_animationManager setPaused:NO];
 	} else if(!isRunning && wasRunning){
 		[_scheduler setPaused:YES target:self];
 		[_actionManager pauseTarget:self];
+        [_animationManager setPaused:YES];
 	}
 }
 
