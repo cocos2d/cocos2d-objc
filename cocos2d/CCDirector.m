@@ -62,7 +62,7 @@
 #define CC_DIRECTOR_DEFAULT CCDirectorDisplayLink
 #elif defined(__CC_PLATFORM_MAC)
 #import "Platforms/Mac/CCDirectorMac.h"
-#define CC_DIRECTOR_DEFAULT CCDirectorDisplayLink
+#define CC_DIRECTOR_DEFAULT CCDirectorTimer
 #endif
 
 #import "CCDirector_Private.h"
