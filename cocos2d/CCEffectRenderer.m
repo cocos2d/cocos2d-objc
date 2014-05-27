@@ -116,20 +116,16 @@
 
 @interface CCEffectRenderer ()
 
-@property (nonatomic, strong) NSMutableArray *renderTargets;
+@property (nonatomic, strong) NSMutableArray *allRenderTargets;
+@property (nonatomic, strong) NSMutableArray *freeRenderTargets;
 @property (nonatomic, assign) GLKVector4 oldViewport;
 @property (nonatomic, assign) GLint oldFBO;
+@property (nonatomic, strong) CCTexture *outputTexture;
 
 @end
 
 
 @implementation CCEffectRenderer
-
--(CCTexture *)outputTexture
-{
-    CCEffectRenderTarget *rt = [_renderTargets lastObject];
-    return rt.texture;
-}
 
 -(id)init
 {
@@ -140,7 +136,8 @@
 {
     if((self = [super init]))
     {
-        _renderTargets = [[NSMutableArray alloc] init];
+        _allRenderTargets = [[NSMutableArray alloc] init];
+        _freeRenderTargets = [[NSMutableArray alloc] init];
         _width = width;
         _height = height;
     }
@@ -154,7 +151,7 @@
 
 -(void)drawSprite:(CCSprite *)sprite withEffects:(CCEffectStack *)effectStack renderer:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
-    [self destroyAllRenderTargets];
+    [self freeAllRenderTargets];
     
     CCEffectRenderPass* renderPass = [[CCEffectRenderPass alloc] init];
     renderPass.sprite = sprite;
@@ -244,24 +241,53 @@
             previousPassRT = rt;
         }
     }
+    
+    _outputTexture = previousPassRT.texture;
 }
 
 - (CCEffectRenderTarget *)allocRenderTargetWithWidth:(int)width height:(int)height
 {
-    CCEffectRenderTarget *rt = [[CCEffectRenderTarget alloc] init];
-    [rt allocGLResourcesWithWidth:width height:height];
-    [_renderTargets addObject:rt];
-    
+    // If there is a free render target available for use, return that one. If
+    // not, create a new one and return that.
+    CCEffectRenderTarget *rt = nil;
+    if (_freeRenderTargets.count)
+    {
+        rt = [_freeRenderTargets lastObject];
+        [_freeRenderTargets removeLastObject];
+    }
+    else
+    {
+        rt = [[CCEffectRenderTarget alloc] init];
+        [rt allocGLResourcesWithWidth:width height:height];
+        [_allRenderTargets addObject:rt];
+    }
     return rt;
 }
 
 - (void)destroyAllRenderTargets
 {
-    for (CCEffectRenderTarget *rt in _renderTargets)
+    // Destroy all allocated render target objects and the associated GL resources.
+    for (CCEffectRenderTarget *rt in _allRenderTargets)
     {
         [rt destroyGLResources];
     }
-    [_renderTargets removeAllObjects];
+    [_allRenderTargets removeAllObjects];
+    [_freeRenderTargets removeAllObjects];
+}
+
+- (void)freeRenderTarget:(CCEffectRenderTarget *)rt
+{
+    // Put the supplied render target back into the free list. If it's already there
+    // them somebody is doing something wrong.
+    NSAssert(![_freeRenderTargets containsObject:rt], @"Double freeing a render target!");
+    [_freeRenderTargets addObject:rt];
+}
+
+- (void)freeAllRenderTargets
+{
+    // Reset the free render target list to contain all allocated render targets.
+    [_freeRenderTargets removeAllObjects];
+    [_freeRenderTargets addObjectsFromArray:_allRenderTargets];
 }
 
 @end
