@@ -339,8 +339,10 @@ static CCDirector *_sharedDirector = nil;
 			[self setProjection: _projection];
 			
 			// TODO this should probably migrate somewhere else.
-			glEnable(GL_DEPTH_TEST);
-			glDepthFunc(GL_LEQUAL);
+			if(view.depthFormat){
+				glEnable(GL_DEPTH_TEST);
+				glDepthFunc(GL_LEQUAL);
+			}
 		}
 
 		// Dump info once OpenGL was initilized
