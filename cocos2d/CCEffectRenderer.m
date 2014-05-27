@@ -8,6 +8,7 @@
 
 #import "CCEffectRenderer.h"
 #import "CCConfiguration.h"
+#import "CCDirector.h"
 #import "CCEffect.h"
 #import "CCEffectStack.h"
 #import "CCTexture.h"
@@ -130,17 +131,12 @@
 
 -(id)init
 {
-    return [self initWithWidth:0 height:0];
-}
-
--(id)initWithWidth:(int)width height:(int)height
-{
     if((self = [super init]))
     {
         _allRenderTargets = [[NSMutableArray alloc] init];
         _freeRenderTargets = [[NSMutableArray alloc] init];
-        _width = width;
-        _height = height;
+        _contentSize = CGSizeMake(1.0f, 1.0f);
+        _contentScale = [CCDirector sharedDirector].contentScaleFactor;
     }
     return self;
 }
@@ -154,10 +150,12 @@
 {
     [self freeAllRenderTargets];
     
+    GLKMatrix4 projection = GLKMatrix4MakeOrtho(0.0f, _contentSize.width, _contentSize.height, 0.0f, -1024.0f, 1024.0f);
+    
     CCEffectRenderPass* renderPass = [[CCEffectRenderPass alloc] init];
     renderPass.renderer = renderer;
     renderPass.verts = *(sprite.vertexes);
-    renderPass.transform = *transform;
+    renderPass.transform = projection;
     renderPass.blendMode = [CCBlendMode premultipliedAlphaMode];
     
     CCTexture *inputTexture = sprite.texture;
@@ -180,7 +178,7 @@
         
         for(int i = 0; i < effect.renderPassesRequired; i++)
         {
-            CCEffectRenderTarget *rt = [self allocRenderTargetWithWidth:_width height:_height];
+            CCEffectRenderTarget *rt = [self allocRenderTargetWithWidth:_contentSize.width * _contentScale height:_contentSize.height * _contentScale];
             
             renderPass.renderPassId = i;
             

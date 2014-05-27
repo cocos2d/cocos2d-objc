@@ -17,12 +17,11 @@
 
 @interface CCEffectRenderer : NSObject
 
-@property (nonatomic, assign) int width;
-@property (nonatomic, assign) int height;
+@property (nonatomic, assign) CGSize contentSize;
+@property (nonatomic, assign) float contentScale;
 @property (nonatomic, readonly) CCTexture *outputTexture;
 
 -(id)init;
--(id)initWithWidth:(int)width height:(int)height;
 -(void)drawSprite:(CCSprite *)sprite withEffects:(CCEffectStack *)effectStack renderer:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
 
 @end

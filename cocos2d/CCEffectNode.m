@@ -48,7 +48,7 @@
 {
 	if((self = [super initWithWidth:width height:height pixelFormat:CCTexturePixelFormat_Default])) {
         _effectStack = [[CCEffectStack alloc] init];
-        _effectRenderer = [[CCEffectRenderer alloc] initWithWidth:width height:height];
+        _effectRenderer = [[CCEffectRenderer alloc] init];
 	}
 	return self;
 }
@@ -170,8 +170,7 @@
     // Done pre-render
     
     _sprite.texture = self.texture;
-    _effectRenderer.width = self.texture.pixelWidth;
-    _effectRenderer.height = self.texture.pixelHeight;
+    _effectRenderer.contentSize = self.texture.contentSize;
     [_effectRenderer drawSprite:_sprite withEffects:_effectStack renderer:_renderer transform:&_projection];
     
     // XXX We may want to make this post-render step overridable by the
