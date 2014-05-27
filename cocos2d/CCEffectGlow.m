@@ -150,29 +150,26 @@
 
 -(void)renderPassBegin:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
 {
-    renderPass.sprite.anchorPoint = ccp(0.0, 0.0);
-    
     if(renderPass.renderPassId == 0)
     {
-        renderPass.sprite.shaderUniforms[@"u_enableGlowMap"] = [NSNumber numberWithFloat:0.0f];
-        renderPass.sprite.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(_blurStrength, 0.0f)];
+        renderPass.shaderUniforms[@"u_enableGlowMap"] = [NSNumber numberWithFloat:0.0f];
+        renderPass.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(_blurStrength, 0.0f)];
     }
     else if(renderPass.renderPassId == 1)
     {
-        renderPass.sprite.shaderUniforms[@"u_enableGlowMap"] = [NSNumber numberWithFloat:0.0f];
-        renderPass.sprite.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(0.0f, _blurStrength)];
+        renderPass.shaderUniforms[@"u_enableGlowMap"] = [NSNumber numberWithFloat:0.0f];
+        renderPass.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(0.0f, _blurStrength)];
     }
     else if(renderPass.renderPassId == 2)
     {
-        renderPass.sprite.shaderUniforms[@"u_enableGlowMap"] = [NSNumber numberWithFloat:1.0f];
+        renderPass.shaderUniforms[@"u_enableGlowMap"] = [NSNumber numberWithFloat:1.0f];
     }
 }
 
 -(void)renderPassUpdate:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
 {
-    GLKMatrix4 transform = renderPass.transform;
     [renderPass.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:[CCColor clearColor].glkVector4 depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
-    [renderPass.sprite visit:renderPass.renderer parentTransform:&transform];
+    [renderPass draw];
 }
 
 -(void)renderPassEnd:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock

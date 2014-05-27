@@ -155,8 +155,10 @@
     [self freeAllRenderTargets];
     
     CCEffectRenderPass* renderPass = [[CCEffectRenderPass alloc] init];
-    renderPass.sprite = sprite;
     renderPass.renderer = renderer;
+    renderPass.verts = *(sprite.vertexes);
+    renderPass.transform = *transform;
+    renderPass.blendMode = [CCBlendMode premultipliedAlphaMode];
     
     CCTexture *inputTexture = sprite.texture;
     
@@ -164,36 +166,31 @@
     for (NSUInteger e = 0; e < effectStack.effectCount; e++)
     {
         CCEffect *effect = [effectStack effectAtIndex:e];
-        if(effect.shader && sprite.shader != effect.shader)
-        {
-            sprite.shader = effect.shader;
-            [sprite.shaderUniforms removeAllObjects];
-            [sprite.shaderUniforms addEntriesFromDictionary:effect.shaderUniforms];
-        }
-        
+        renderPass.shader = effect.shader;
+        renderPass.shaderUniforms = effect.shaderUniforms;
+
         if (previousPassRT)
         {
-            renderPass.sprite.shaderUniforms[@"cc_MainTexture"] = previousPassRT.texture;
+            renderPass.shaderUniforms[@"cc_MainTexture"] = previousPassRT.texture;
         }
         else
         {
-            renderPass.sprite.shaderUniforms[@"cc_MainTexture"] = inputTexture;
+            renderPass.shaderUniforms[@"cc_MainTexture"] = inputTexture;
         }
         
         for(int i = 0; i < effect.renderPassesRequired; i++)
         {
             CCEffectRenderTarget *rt = [self allocRenderTargetWithWidth:_width height:_height];
             
-            renderPass.transform = *transform;
             renderPass.renderPassId = i;
             
             if (previousPassRT)
             {
-                renderPass.sprite.shaderUniforms[@"cc_PreviousPassTexture"] = previousPassRT.texture;
+                renderPass.shaderUniforms[@"cc_PreviousPassTexture"] = previousPassRT.texture;
             }
             else
             {
-                renderPass.sprite.shaderUniforms[@"cc_PreviousPassTexture"] = inputTexture;
+                renderPass.shaderUniforms[@"cc_PreviousPassTexture"] = inputTexture;
             }
             
             [effect renderPassBegin:renderPass defaultBlock:nil];
@@ -217,12 +214,8 @@
             
             
             [effect renderPassUpdate:renderPass defaultBlock:^{
-                GLKMatrix4 xform = renderPass.transform;
-                GLKVector4 clearColor;
-                
-                renderPass.sprite.anchorPoint = ccp(0.0, 0.0);
-                [renderPass.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:clearColor depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
-                [renderPass.sprite visit:renderPass.renderer parentTransform:&xform];
+                [renderPass.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:[CCColor clearColor].glkVector4 depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
+                [renderPass draw];
             }];
 
             

@@ -54,10 +54,14 @@
 @interface CCEffectRenderPass : NSObject
 
 @property (nonatomic) NSInteger renderPassId;
-@property (nonatomic) CCSprite* sprite;
-@property (nonatomic) NSMutableArray* textures; // indexed by renderPassId
+@property (nonatomic) CCBlendMode* blendMode;
+@property (nonatomic) CCShader* shader;
+@property (nonatomic) NSMutableDictionary* shaderUniforms;
 @property (nonatomic) CCRenderer* renderer;
+@property (nonatomic) CCSpriteVertexes verts;
 @property (nonatomic) GLKMatrix4 transform;
+
+-(void)draw;
 
 @end
 

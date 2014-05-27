@@ -65,15 +65,13 @@ static float conditionContrast(float contrast);
 
 -(void)renderPassBegin:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
 {
-    renderPass.sprite.anchorPoint = ccp(0.0, 0.0);
-    renderPass.sprite.shaderUniforms[@"u_contrast"] = [NSNumber numberWithFloat:self.contrast];
+    renderPass.shaderUniforms[@"u_contrast"] = [NSNumber numberWithFloat:self.contrast];
 }
 
 -(void)renderPassUpdate:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
 {
-    GLKMatrix4 transform = renderPass.transform;
     [renderPass.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:[CCColor clearColor].glkVector4 depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
-    [renderPass.sprite visit:renderPass.renderer parentTransform:&transform];
+    [renderPass draw];
 }
 
 -(void)renderPassEnd:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock

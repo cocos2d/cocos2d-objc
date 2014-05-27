@@ -132,6 +132,19 @@ static NSString* vertBase =
 @implementation CCEffectRenderPass
 
 //
+-(void)draw
+{
+    CCRenderState *renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms];
+    
+    CCRenderBuffer buffer = [_renderer enqueueTriangles:2 andVertexes:4 withState:renderState globalSortOrder:0];
+	CCRenderBufferSetVertex(buffer, 0, CCVertexApplyTransform(_verts.bl, &_transform));
+	CCRenderBufferSetVertex(buffer, 1, CCVertexApplyTransform(_verts.br, &_transform));
+	CCRenderBufferSetVertex(buffer, 2, CCVertexApplyTransform(_verts.tr, &_transform));
+	CCRenderBufferSetVertex(buffer, 3, CCVertexApplyTransform(_verts.tl, &_transform));
+	
+	CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
+	CCRenderBufferSetTriangle(buffer, 1, 0, 2, 3);
+}
 
 @end
 

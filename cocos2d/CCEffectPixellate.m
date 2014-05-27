@@ -102,23 +102,20 @@ static float conditionBlockSize(float blockSize);
 
 -(void)renderPassBegin:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
 {
-    renderPass.sprite.anchorPoint = ccp(0.0, 0.0);
-
-    CCTexture *texture = renderPass.sprite.shaderUniforms[@"cc_PreviousPassTexture"];
+    CCTexture *texture = renderPass.shaderUniforms[@"cc_PreviousPassTexture"];
 
     float aspect = texture.contentSize.width / texture.contentSize.height;
     float uStep = self.blockSize / texture.contentSize.width;
     float vStep = uStep * aspect;
 
-    renderPass.sprite.shaderUniforms[@"u_uStep"] = [NSNumber numberWithFloat:uStep];
-    renderPass.sprite.shaderUniforms[@"u_vStep"] = [NSNumber numberWithFloat:vStep];
+    renderPass.shaderUniforms[@"u_uStep"] = [NSNumber numberWithFloat:uStep];
+    renderPass.shaderUniforms[@"u_vStep"] = [NSNumber numberWithFloat:vStep];
 }
 
 -(void)renderPassUpdate:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
 {
-    GLKMatrix4 transform = renderPass.transform;
     [renderPass.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:[CCColor clearColor].glkVector4 depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
-    [renderPass.sprite visit:renderPass.renderer parentTransform:&transform];
+    [renderPass draw];
 }
 
 -(void)renderPassEnd:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
