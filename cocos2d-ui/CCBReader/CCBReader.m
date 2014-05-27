@@ -1703,7 +1703,8 @@ static inline float readFloat(CCBReader *self)
         CCNode* node = [pointerValue pointerValue];
         
         CCBAnimationManager* manager = [animationManagers objectForKey:pointerValue];
-        node.userObject = manager;
+        node.animationManager = manager;
+        node.userObject = manager;//Backwards Compatible.
     }
     
     // Call didLoadFromCCB

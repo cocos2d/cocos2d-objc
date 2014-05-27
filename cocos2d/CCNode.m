@@ -208,9 +208,8 @@ static NSUInteger globalOrderOfArrival = 1;
 	[_children makeObjectsPerformSelector:@selector(cleanup)];
     
     // CCBAnimationManager Cleanup (Set by SpriteBuilder)
-    if([_userObject isKindOfClass:[CCBAnimationManager class]]) {
-        [_userObject performSelector:@selector(cleanup)];
-    }
+    [_animationManager performSelector:@selector(cleanup)];
+    
     _userObject = nil;
 }
 
@@ -1175,6 +1174,23 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 	return [_actionManager numberOfRunningActionsInTarget:self];
 }
 
+-(CCBAnimationManager*)animationManager
+{
+    if(_animationManager)
+    {
+        return _animationManager;
+    }
+    else
+    {
+        return self.parent.animationManager;
+    }
+}
+
+-(void)setAnimationManager:(CCBAnimationManager *)animationManager
+{
+    _animationManager = animationManager;
+}
+
 #pragma mark CCNode - Scheduler
 
 -(NSInteger)priority
@@ -1269,9 +1285,11 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 	if(isRunning && !wasRunning){
 		[_scheduler setPaused:NO target:self];
 		[_actionManager resumeTarget:self];
+        [_animationManager setPaused:NO];
 	} else if(!isRunning && wasRunning){
 		[_scheduler setPaused:YES target:self];
 		[_actionManager pauseTarget:self];
+        [_animationManager setPaused:YES];
 	}
 }
 

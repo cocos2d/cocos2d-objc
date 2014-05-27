@@ -42,7 +42,7 @@
  
  When all loading is complete, the didLoadFromCCB method will be called on all loaded nodes (if it has been implemented).
  
- If you are using animations a CCBAnimationManager will be assigned to all ccb-file root node's userObject properties. The top CCBAnimationManager is also assigned to the CCBReader's animationManager property.
+ If you are using animations a CCBAnimationManager will be assigned to all ccb-file root node's animationManager property. The top CCBAnimationManager is also assigned to the CCBReader's animationManager property.
  */
 @interface CCBReader : NSObject
 {
