@@ -171,8 +171,9 @@
     
     _sprite.texture = self.texture;
     _effectRenderer.contentSize = self.texture.contentSize;
-    [_effectRenderer drawSprite:_sprite withEffects:_effectStack renderer:_renderer transform:&_projection];
+    [_effectRenderer drawSprite:_sprite withEffects:_effectStack renderer:_renderer transform:transform];
     
+#if 0
     // XXX We may want to make this post-render step overridable by the
     // last effect in the stack. That would look like the code in the
     // pre-render override comment above.
@@ -200,7 +201,7 @@
     [_renderer popGroupWithDebugLabel:@"CCEffectNode: Post-render composite pass" globalSortOrder:0];
 
     // Done framebuffer composite
-
+#endif
     
     
     if(_privateRenderer == NO)

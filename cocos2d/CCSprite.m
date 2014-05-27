@@ -344,6 +344,7 @@
         _effectRenderer.contentSize = self.texture.contentSize;
         [_effectRenderer drawSprite:self withEffects:effectStack renderer:renderer transform:transform];
         
+#if 0
         CCTexture *backup = self.texture;
         self.texture = _effectRenderer.outputTexture;
 
@@ -357,6 +358,7 @@
         CCRenderBufferSetTriangle(buffer, 1, 0, 2, 3);
         
         self.texture = backup;
+#endif
     }
     else
     {
