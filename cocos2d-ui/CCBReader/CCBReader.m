@@ -813,7 +813,7 @@ static inline float readFloat(CCBReader *self)
                 if (target)
                 {
                     SEL selector = NSSelectorFromString(selectorName);
-                    __unsafe_unretained id t = target;
+                    __weak id t = target;
 
                     void (^block)(id sender);
                     block = ^(id sender) {

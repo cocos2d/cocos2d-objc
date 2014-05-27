@@ -135,7 +135,7 @@ and when to execute the Scenes.
 	CCDirectorProjection _projection;
 
 	/* CCDirector delegate */
-	id<CCDirectorDelegate>	__unsafe_unretained _delegate;
+	__weak id<CCDirectorDelegate> _delegate;
 
 	/* window size in points */
 	CGSize	_winSizeInPoints;
@@ -144,7 +144,7 @@ and when to execute the Scenes.
 	CGSize	_winSizeInPixels;
 
 	/* the cocos2d running thread */
-	NSThread	*__unsafe_unretained _runningThread;
+	__weak NSThread *_runningThread;
 
 	/* scheduler associated with this director */
 	CCScheduler *_scheduler;
@@ -165,7 +165,7 @@ and when to execute the Scenes.
  If you want to run any cocos2d task, run it in this thread.
  Typically this is the main thread.
  */
-@property (unsafe_unretained, readonly, nonatomic ) NSThread *runningThread;
+@property (weak, readonly, nonatomic ) NSThread *runningThread;
 /** The current running Scene. Director can only run one Scene at the time */
 @property (nonatomic, readonly) CCScene* runningScene;
 /** The FPS value */
@@ -192,7 +192,7 @@ and when to execute the Scenes.
 
 /** CCDirector delegate. It shall implement the CCDirectorDelegate protocol
  */
-@property (nonatomic, readwrite, unsafe_unretained) id<CCDirectorDelegate> delegate;
+@property (nonatomic, readwrite, weak) id<CCDirectorDelegate> delegate;
 
 /** Content scaling factor. Sets the ratio of Cocos2D "points" to pixels. Default value is initalized from the content scale of the GL view used by the director.
  */
