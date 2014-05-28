@@ -211,7 +211,7 @@
  *  Features:
  *
  *  - It supports one or more children
- *  - Only one children will be active a time
+ *  - Only one child will be active a time
  */
 @interface CCNodeMultiplexer : CCNode {
 	unsigned int _enabledNode;
@@ -224,21 +224,21 @@
 /// -----------------------------------------------------------------------
 
 /**
- *  Creates a CCNodeMultiplexer with an array of layers.
+ *  Creates a CCNodeMultiplexer with an array of nodes.
  *
  *  @param arrayOfNodes Array of nodes.
  *
- *  @return The CCNodeMultiplexer Object.
+ *  @return The CCNodeMultiplexer object.
  */
 +(id)nodeWithArray:(NSArray*)arrayOfNodes;
 
-/** Creates a CCMultiplexLayer with one or more layers using a variable argument list.
+/** Creates a CCMultiplexLayer with one or more nodes using a variable argument list.
  *  Example: 
  *  @code mux = [CCNodeMultiplexer nodeWithNodes:nodeA, nodeB, nodeC, nil];
  *  
  *  @param node List of nodes.
  *  @param ... Nil terminator.
- *  @return The CCNodeMultiplexer Object.
+ *  @return The CCNodeMultiplexer object.
  */
 +(id)nodeWithNodes:(CCNode*)node, ... NS_REQUIRES_NIL_TERMINATION;
 
@@ -248,7 +248,7 @@
 /// -----------------------------------------------------------------------
 
 /**
- *  Initializes a CCNodeMultiplexer with an array of layers.
+ *  Initializes a CCNodeMultiplexer with an array of nodes.
  *
  *  @param arrayOfNodes Array of nodes.
  *
