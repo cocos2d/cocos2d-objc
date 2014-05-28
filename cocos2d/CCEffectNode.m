@@ -173,7 +173,7 @@
     _effectRenderer.contentSize = self.texture.contentSize;
     [_effectRenderer drawSprite:_sprite withEffects:_effectStack renderer:_renderer transform:transform];
     
-    if (!_effectStack.supportsDirectRendering)
+    if (!_effectStack.supportsDirectRendering || !_effectStack.effectCount)
     {
         // XXX We may want to make this post-render step overridable by the
         // last effect in the stack. That would look like the code in the
