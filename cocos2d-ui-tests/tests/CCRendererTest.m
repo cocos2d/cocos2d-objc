@@ -168,6 +168,38 @@
 	[clip addChild:grad];
 }
 
+-(void)setupInfiniteWindowTest
+{
+	self.subTitle = @"Should draw an infinite window";
+	
+	CCNode *contentNode = self.contentNode;
+	CGSize size = [CCDirector sharedDirector].designSize;
+	
+	[self scheduleBlock:^(CCTimer *timer) {
+		CCRenderTexture *rt = [CCRenderTexture renderTextureWithWidth:size.width height:size.height];
+		
+		[rt begin];
+			[[CCDirector sharedDirector].runningScene visit];
+		[rt end];
+		
+		// Remove the old sprite
+		[contentNode removeChildByName:@"zoom"];
+		
+		CGImageRef image = [rt newCGImage];
+		CCTexture *texture = [[CCTexture alloc] initWithCGImage:image contentScale:rt.contentScale];
+		CGImageRelease(image);
+		
+		CCSprite *sprite = [CCSprite spriteWithTexture:texture];
+		sprite.scale = 0.9;
+		sprite.position = ccp(size.width/2.0, size.height/2.0);
+		sprite.name = @"zoom";
+		
+		[contentNode addChild:sprite];
+				
+		[timer repeatOnceWithInterval:0.125];
+	} delay:0.0];
+}
+
 -(CCSprite *)simpleShaderTestHelper
 {
 	CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/bird.png"];
