@@ -39,6 +39,7 @@
 @class CCActionManager;
 @class CCAction;
 @class CCPhysicsBody;
+@class CCBAnimationManager;
 
 /** CCNode is the base class for all objects displayed by Cocos2d. The nodes are hierachically organized in a tree, normally with a CCScene as its root node. Example of CCNode:s are CCSprite, CCScene and CCButton. The CCNode handles transformations, can have a content size and provides a coordinate system to its children. Any CCNode or subclass can handle user interaction, such as touches and mouse events, see the CCResponder for more information on this.
  
@@ -139,6 +140,9 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 	
 	// ActionManager used to handle all the actions.
 	CCActionManager	*_actionManager;
+	
+    //Animation Manager used to handle CCB animations
+    CCBAnimationManager * _animationManager;
 	
 	// YES if the node is added to an active scene.
 	BOOL _isInActiveScene;
@@ -553,6 +557,10 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  */
 -(void)unscheduleAllSelectors;
 
+/**
+ *  Returns the CCB Animation Manager of this node, or that of its parent.
+ */
+@property (nonatomic, readonly) CCBAnimationManager * animationManager;
 
 /// -----------------------------------------------------------------------
 /// @name Accessing Transformations and Matrices
