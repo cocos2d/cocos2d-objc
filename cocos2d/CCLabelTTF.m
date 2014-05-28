@@ -627,7 +627,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     {
         UIColor* color = _shadowColor.UIColor;
         
-        CGContextSetShadowWithColor(context, CGSizeMake(shadowOffset.x, shadowOffset.y), shadowBlurRadius, [color CGColor]);
+        CGContextSetShadowWithColor(context, CGSizeMake(shadowOffset.x, -shadowOffset.y), shadowBlurRadius, [color CGColor]);
     }
     
     // Handle outline
@@ -689,7 +689,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 
             NSColor* color = [NSColor colorWithCalibratedRed:_shadowColor.red green:_shadowColor.green blue:_shadowColor.blue alpha:_shadowColor.alpha];
             
-            CGContextSetShadowWithColor(context, CGSizeMake(shadowOffset.x/retinaFix, shadowOffset.y/retinaFix), shadowBlurRadius/retinaFix, [color CGColor]);
+            CGContextSetShadowWithColor(context, CGSizeMake(shadowOffset.x/retinaFix, -shadowOffset.y/retinaFix), shadowBlurRadius/retinaFix, [color CGColor]);
         }
         
         if (hasOutline)
@@ -928,7 +928,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     {
         UIColor* color = _shadowColor.UIColor;
         
-        CGContextSetShadowWithColor(context, CGSizeMake(shadowOffset.x, shadowOffset.y), shadowBlurRadius, [color CGColor]);
+        CGContextSetShadowWithColor(context, CGSizeMake(shadowOffset.x, -shadowOffset.y), shadowBlurRadius, [color CGColor]);
     }
     
     // Handle outline
