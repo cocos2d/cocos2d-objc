@@ -581,4 +581,46 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 
 @end
 
+@implementation CCDirectorTimer
+
+- (void) startAnimation
+{
+    if(_animating) return;
+    
+	CCLOG(@"cocos2d: startAnimation");
+
+#if (CC_DIRECTOR_MAC_THREAD == CC_MAC_USE_OWN_THREAD)
+	_runningThread = [[NSThread alloc] initWithTarget:self selector:@selector(mainLoop) object:nil];
+	[_runningThread start];
+#elif (CC_DIRECTOR_MAC_THREAD == CC_MAC_USE_MAIN_THREAD)
+    _runningThread = [NSThread mainThread];
+#endif
+    
+    self.drawTimer = [NSTimer scheduledTimerWithTimeInterval:1.0/30.0 target:self selector:@selector(drawScene) userInfo:nil repeats:YES];
+    
+    _animating = YES;
+}
+
+- (void) stopAnimation
+{
+    if(!_animating) return;
+    
+	CCLOG(@"cocos2d: stopAnimation");
+    
+#if CC_DIRECTOR_MAC_THREAD == CC_MAC_USE_OWN_THREAD
+    [_runningThread cancel];
+    [_runningThread release];
+    _runningThread = nil;
+#elif (CC_DIRECTOR_MAC_THREAD == CC_MAC_USE_MAIN_THREAD)
+    _runningThread = nil;
+#endif
+    
+    [self.drawTimer invalidate];
+    self.drawTimer = nil;
+    
+    _animating = NO;
+}
+
+@end
+
 #endif // __CC_PLATFORM_MAC

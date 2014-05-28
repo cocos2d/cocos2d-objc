@@ -91,6 +91,22 @@ enum  {
 {
 	CVDisplayLinkRef displayLink;
 }
+
+@property (nonatomic, strong) NSTimer *drawTimer;
+
+@end
+
+/* TiemrDirector is a Director that uses a simple timer to draw
+ *
+ * Features and Limitations:
+ * - Doesn't deadlock
+ * - Drawing isn't synced with the display
+ *
+ */
+@interface CCDirectorTimer : CCDirectorDisplayLink
+
+@property (nonatomic, strong) NSTimer *drawTimer;
+
 @end
 
 #endif // __CC_PLATFORM_MAC
