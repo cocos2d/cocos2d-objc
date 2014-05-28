@@ -176,10 +176,9 @@ TexCoordInterpolationMatrix(const CCSpriteVertexes *verts)
 - (float)margin
 {
     // if margins are not the same, a unified margin can nort be read
-    NSAssert(*(unsigned int *)&_marginLeft |
-             *(unsigned int *)&_marginRight |
-             *(unsigned int *)&_marginTop ==
-             *(unsigned int *)&_marginBottom, @"Margin can not be read. Do not know which margin to return");
+    NSAssert(_marginLeft == _marginRight &&
+             _marginLeft == _marginTop &&
+             _marginLeft == _marginBottom, @"Margin can not be read. Do not know which margin to return");
 
     // just return any of them
     return(_marginLeft);
