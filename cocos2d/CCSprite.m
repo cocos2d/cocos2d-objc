@@ -344,19 +344,22 @@
         _effectRenderer.contentSize = self.texture.contentSize;
         [_effectRenderer drawSprite:self withEffects:effectStack renderer:renderer transform:transform];
         
-        CCTexture *backup = self.texture;
-        self.texture = _effectRenderer.outputTexture;
-
-        CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:self.renderState globalSortOrder:0];
-        CCRenderBufferSetVertex(buffer, 0, CCVertexApplyTransform(_verts.bl, transform));
-        CCRenderBufferSetVertex(buffer, 1, CCVertexApplyTransform(_verts.br, transform));
-        CCRenderBufferSetVertex(buffer, 2, CCVertexApplyTransform(_verts.tr, transform));
-        CCRenderBufferSetVertex(buffer, 3, CCVertexApplyTransform(_verts.tl, transform));
-        
-        CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
-        CCRenderBufferSetTriangle(buffer, 1, 0, 2, 3);
-        
-        self.texture = backup;
+        if (!effectStack.supportsDirectRendering)
+        {
+            CCTexture *backup = self.texture;
+            self.texture = _effectRenderer.outputTexture;
+            
+            CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:self.renderState globalSortOrder:0];
+            CCRenderBufferSetVertex(buffer, 0, CCVertexApplyTransform(_verts.bl, transform));
+            CCRenderBufferSetVertex(buffer, 1, CCVertexApplyTransform(_verts.br, transform));
+            CCRenderBufferSetVertex(buffer, 2, CCVertexApplyTransform(_verts.tr, transform));
+            CCRenderBufferSetVertex(buffer, 3, CCVertexApplyTransform(_verts.tl, transform));
+            
+            CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
+            CCRenderBufferSetTriangle(buffer, 1, 0, 2, 3);
+            
+            self.texture = backup;
+        }
     }
     else
     {

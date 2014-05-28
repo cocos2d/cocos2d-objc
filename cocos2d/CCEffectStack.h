@@ -12,6 +12,7 @@
 @interface CCEffectStack : NSObject
 
 @property (nonatomic, readonly) NSUInteger effectCount;
+@property (nonatomic, readonly) BOOL supportsDirectRendering;
 
 - (id)init;
 - (id)initWithEffects:(NSArray *)effects;

@@ -54,12 +54,13 @@
 @interface CCEffectRenderPass : NSObject
 
 @property (nonatomic) NSInteger renderPassId;
-@property (nonatomic) CCBlendMode* blendMode;
-@property (nonatomic) CCShader* shader;
-@property (nonatomic) NSMutableDictionary* shaderUniforms;
 @property (nonatomic) CCRenderer* renderer;
 @property (nonatomic) CCSpriteVertexes verts;
 @property (nonatomic) GLKMatrix4 transform;
+@property (nonatomic) CCBlendMode* blendMode;
+@property (nonatomic) CCShader* shader;
+@property (nonatomic) NSMutableDictionary* shaderUniforms;
+@property (nonatomic) BOOL needsClear;
 
 -(void)draw;
 
