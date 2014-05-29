@@ -824,14 +824,14 @@ static inline float readFloat(CCBReader *self)
                     NSString* setSelectorName = [NSString stringWithFormat:@"set%@:",[name capitalizedString]];
                     SEL setSelector = NSSelectorFromString(setSelectorName);
                     
-                    if ([node respondsToSelector:setSelector])
+                    if ([target respondsToSelector:selector] && [node respondsToSelector:setSelector])
                     {
                         typedef void (*Func)(id, SEL, id);
                         ((Func)objc_msgSend)(node, setSelector, block);
                     }
                     else
                     {
-                        NSLog(@"CCBReader: Failed to set selector/target block for %@",selectorName);
+                        NSLog(@"CCBReader: Failed to set selector/target block for \"%@\" for target %@",selectorName,target);
                     }
 
 #if DEBUG_READER_PROPERTIES
