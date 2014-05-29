@@ -157,7 +157,7 @@ typedef enum { TEST_PONG_PLAYING, TESTS_PONG_GAMEOVER } TEST_PONG_STATE;
         [_ballEffectNode addChild:_ball];
         
         _ballEffect = [CCEffectGaussianBlur effectWithBlurStrength:0.01f direction:GLKVector2Make(0.0, 0.0)];
-        [_ballEffectNode addEffect:_ballEffect];
+        _ballEffectNode.effect = _ballEffect;
     }
     
     _ballEffectNode.physicsBody.velocity = ccp(-BALL_VELOCITY, 0);
@@ -253,7 +253,7 @@ typedef enum { TEST_PONG_PLAYING, TESTS_PONG_GAMEOVER } TEST_PONG_STATE;
         
         [self updateScore];
         
-        [_pixellateEffectNode addEffect:_pixellateEffect];
+        _pixellateEffectNode.effect = _pixellateEffect;
                 
         [_pixellateEffectNode addChild:_scoredLabel];
         
@@ -278,8 +278,7 @@ typedef enum { TEST_PONG_PLAYING, TESTS_PONG_GAMEOVER } TEST_PONG_STATE;
     [self setupPlayerPaddle];
     [self setupAIPaddle];
 
-    // FIXME - make sure effect node reverts back to acting as empty node after all effects have been removed
-    [_pixellateEffectNode removeEffect:_pixellateEffect];
+    _pixellateEffectNode.effect = nil;
   
     [self setupBall];
     

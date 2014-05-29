@@ -35,7 +35,7 @@
     effectNode.position = ccp(0.1, 0.5);
     [effectNode addChild:sampleSprite];
     CCEffectGaussianBlur* effect = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:GLKVector2Make(1.0, 0.0)];
-    [effectNode addEffect:effect];
+    effectNode.effect = effect;
     
     [self.contentNode addChild:effectNode];
 
@@ -50,7 +50,7 @@
     effectNode2.position = ccp(0.21, 0.5);
     [effectNode2 addChild:sampleSprite2];
     CCEffectGaussianBlur* effect2 = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:GLKVector2Make(0.0, 1.0)];
-    [effectNode2 addEffect:effect2];
+    effectNode2.effect = effect2;
     
     [self.contentNode addChild:effectNode2];
     
@@ -66,7 +66,7 @@
     effectNode3.anchorPoint = ccp(0.5, 0.5);
     [effectNode3 addChild:sampleSprite3];
     CCEffectGaussianBlur* effect3 = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:GLKVector2Make(1.0, 1.0)];
-    [effectNode3 addEffect:effect3];
+    effectNode3.effect = effect3;
     
     [self.contentNode addChild:effectNode3];
     
@@ -81,7 +81,7 @@
     effectNode4.position = ccp(0.6, 0.5);
     [effectNode4 addChild:sampleSprite4];
     CCEffectGaussianBlur* effect4 = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:GLKVector2Make(-1.0, 1.0)];
-    [effectNode4 addEffect:effect4];
+    effectNode4.effect = effect4;
     
     [self.contentNode addChild:effectNode4];
 }
@@ -104,7 +104,7 @@
     glowEffectNode.position = ccp(0.1, 0.5);
     [glowEffectNode addChild:sampleSprite];
     CCEffectGlow* glowEffect = [CCEffectGlow effectWithBlurStrength:0.02f];
-    [glowEffectNode addEffect:glowEffect];
+    glowEffectNode.effect = glowEffect;
     
     CGSize size = CGSizeMake(1.0, 1.0);
     [glowEffectNode runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
@@ -189,39 +189,53 @@
 
 - (CCNode *)effectNodeWithEffects:(NSArray *)effects appliedToSpriteWithImage:(NSString *)spriteImage atPosition:(CGPoint)position
 {
-    if (effects.count == 0)
+    // Another sprite that will be added directly
+    CCSprite *sprite = [CCSprite spriteWithImageNamed:spriteImage];
+    sprite.anchorPoint = ccp(0.5, 0.5);
+    sprite.positionType = CCPositionTypeNormalized;
+    sprite.position = ccp(0.5, 0.5);
+    
+    // Brightness and contrast test
+    CCEffectNode* effectNode = [[CCEffectNode alloc] initWithWidth:sprite.contentSize.width height:sprite.contentSize.height];
+    effectNode.anchorPoint = ccp(0.5, 0.5);
+    effectNode.positionType = CCPositionTypeNormalized;
+    effectNode.position = position;
+    [effectNode addChild:sprite];
+    
+    if (effects.count == 1)
     {
-        // Another sprite that will be added directly
-        CCSprite *sprite = [CCSprite spriteWithImageNamed:spriteImage];
-        sprite.anchorPoint = ccp(0.5, 0.5);
-        sprite.positionType = CCPositionTypeNormalized;
-        sprite.position = position;
-        
-        return sprite;
+        effectNode.effect = effects[0];
     }
     else
     {
-        // Another sprite that will be added directly
-        CCSprite *sprite = [CCSprite spriteWithImageNamed:spriteImage];
-        sprite.anchorPoint = ccp(0.5, 0.5);
-        sprite.positionType = CCPositionTypeNormalized;
-        sprite.position = ccp(0.5, 0.5);
-        
-        // Brightness and contrast test
-        CCEffectNode* effectNode = [[CCEffectNode alloc] initWithWidth:sprite.contentSize.width height:sprite.contentSize.height];
-        effectNode.anchorPoint = ccp(0.5, 0.5);
-        effectNode.positionType = CCPositionTypeNormalized;
-        effectNode.position = position;
-        [effectNode addChild:sprite];
-        
-        for (CCEffect *effect in effects)
-        {
-            [effectNode addEffect:effect];
-        }
-        
-        return effectNode;
+        CCEffectStack *stack = [[CCEffectStack alloc] initWithEffects:effects];
+        effectNode.effect = stack;
     }
+    
+    return effectNode;
 }
+
+- (CCSprite *)spriteWithEffects:(NSArray *)effects image:(NSString *)spriteImage atPosition:(CGPoint)position
+{
+    // Another sprite that will be added directly
+    CCSprite *sprite = [CCSprite spriteWithImageNamed:spriteImage];
+    sprite.anchorPoint = ccp(0.5, 0.5);
+    sprite.positionType = CCPositionTypeNormalized;
+    sprite.position = position;
+    
+    if (effects.count == 1)
+    {
+        sprite.effect = effects[0];
+    }
+    else
+    {
+        CCEffectStack *stack = [[CCEffectStack alloc] initWithEffects:effects];
+        sprite.effect = stack;
+    }
+    
+    return sprite;
+}
+
 
 -(void)renderTextureHelper:(CCNode *)stage size:(CGSize)size
 {

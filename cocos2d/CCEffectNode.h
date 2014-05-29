@@ -27,12 +27,9 @@
 #endif // iPHone
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
-@interface CCEffectNode : CCRenderTexture
+@interface CCEffectNode : CCRenderTexture <CCEffectProtocol>
 
 -(id)initWithWidth:(int)w height:(int)h;
-
--(void)addEffect:(CCEffect *)effect;
--(void)removeEffect:(CCEffect*)effect;
 
 @end
 #endif

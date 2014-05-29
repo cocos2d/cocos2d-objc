@@ -30,7 +30,7 @@
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffectNode()
 {
-    CCEffectStack *_effectStack;
+    CCEffect *_effect;
     CCEffectRenderer *_effectRenderer;
 }
 
@@ -47,21 +47,19 @@
 -(id)initWithWidth:(int)width height:(int)height
 {
 	if((self = [super initWithWidth:width height:height pixelFormat:CCTexturePixelFormat_Default])) {
-        _effectStack = [[CCEffectStack alloc] init];
         _effectRenderer = [[CCEffectRenderer alloc] init];
 	}
 	return self;
 }
 
--(void)addEffect:(CCEffect *)effect
+-(CCEffect *)effect
 {
-    [_effectStack addEffect:effect];
+	return _effect;
 }
 
--(void)removeEffect:(CCEffect*)effect
+-(void)setEffect:(CCEffect *)effect
 {
-    // FIXME - make sure effect node reverts back to acting as empty node after all effects have been removed
-    [_effectStack removeEffect:effect];
+    _effect = effect;
 }
 
 -(void)begin
@@ -171,9 +169,9 @@
     
     _sprite.texture = self.texture;
     _effectRenderer.contentSize = self.texture.contentSize;
-    [_effectRenderer drawSprite:_sprite withEffect:_effectStack renderer:_renderer transform:transform];
+    [_effectRenderer drawSprite:_sprite withEffect:_effect renderer:_renderer transform:transform];
     
-    if (!_effectStack.supportsDirectRendering || !_effectStack.effectCount)
+    if (!_effect.supportsDirectRendering || !_effect)
     {
         // XXX We may want to make this post-render step overridable by the
         // last effect in the stack. That would look like the code in the
@@ -185,7 +183,7 @@
         // texture so it will contain any accumulated results for the effect stack.
         [_renderer pushGroup];
         
-        if (_effectStack.effectCount)
+        if (_effect)
         {
             _sprite.texture = _effectRenderer.outputTexture;
         }
