@@ -13,7 +13,6 @@
     NSMutableArray *_effects;
 }
 
-- (BOOL)prepareForRendering;
 
 @end
 

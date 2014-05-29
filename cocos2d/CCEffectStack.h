@@ -9,10 +9,9 @@
 #import "CCEffect.h"
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
-@interface CCEffectStack : NSObject
+@interface CCEffectStack : CCEffect
 
 @property (nonatomic, readonly) NSUInteger effectCount;
-@property (nonatomic, readonly) BOOL supportsDirectRendering;
 
 - (id)init;
 - (id)initWithEffects:(NSArray *)effects;

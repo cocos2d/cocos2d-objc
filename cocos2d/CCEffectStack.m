@@ -55,13 +55,6 @@
     return _effects[effectIndex];
 }
 
-- (BOOL)supportsDirectRendering
-{
-    return YES;
-}
-
-#pragma mark - Private
-
 - (BOOL)prepareForRendering
 {
     return YES;
