@@ -179,37 +179,6 @@
     self.renderPasses = @[pass0, pass1, pass2];
 }
 
--(void)renderPassBegin:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
-{
-    if(renderPass.renderPassId == 0)
-    {
-        renderPass.shaderUniforms[@"u_enableGlowMap"] = [NSNumber numberWithFloat:0.0f];
-        renderPass.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(_blurStrength, 0.0f)];
-    }
-    else if(renderPass.renderPassId == 1)
-    {
-        renderPass.shaderUniforms[@"u_enableGlowMap"] = [NSNumber numberWithFloat:0.0f];
-        renderPass.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(0.0f, _blurStrength)];
-    }
-    else if(renderPass.renderPassId == 2)
-    {
-        renderPass.shaderUniforms[@"u_enableGlowMap"] = [NSNumber numberWithFloat:1.0f];
-    }
-}
-
--(void)renderPassUpdate:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
-{
-    if (renderPass.needsClear)
-    {
-        [renderPass.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:[CCColor clearColor].glkVector4 depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
-    }
-    [renderPass draw];
-}
-
--(void)renderPassEnd:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
-{
-}
-
 @end
 #endif
 

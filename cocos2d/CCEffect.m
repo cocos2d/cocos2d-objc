@@ -405,24 +405,6 @@ static NSString* vertBase =
     return _renderPasses[passIndex];;
 }
 
--(void)renderPassBegin:(CCEffectRenderPass*) renderPass defaultBlock:(void (^)())defaultBlock
-{
-    if(defaultBlock)
-        defaultBlock();
-}
-
--(void)renderPassUpdate:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
-{
-    if(defaultBlock)
-        defaultBlock();
-}
-
--(void)renderPassEnd:(CCEffectRenderPass*) renderPass defaultBlock:(void (^)())defaultBlock
-{
-    if(defaultBlock)
-        defaultBlock();
-}
-
 @end
 #endif
 

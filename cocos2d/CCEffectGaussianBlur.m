@@ -165,39 +165,6 @@
     return [self radialBlur] ? 2 : 1;
 }
 
--(void)renderPassBegin:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
-{
-    if(renderPass.renderPassId == 0)
-    {
-        if([self radialBlur])
-        {
-            renderPass.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(_blurStrength, 0.0f)];
-        }
-        else
-        {
-            GLKVector2 dir = [self calculateBlurDirection];
-            renderPass.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:dir];
-        }
-    }
-    else if(renderPass.renderPassId == 1)
-    {
-        renderPass.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(0.0f, _blurStrength)];
-    }
-}
-
--(void)renderPassUpdate:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
-{
-    if (renderPass.needsClear)
-    {
-        [renderPass.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:[CCColor clearColor].glkVector4 depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
-    }
-    [renderPass draw];
-}
-
--(void)renderPassEnd:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
-{
-}
-
 -(GLKVector2)calculateBlurDirection
 {
     return GLKVector2Make(_blurDirection.x * _blurStrength, _blurDirection.y * _blurStrength);

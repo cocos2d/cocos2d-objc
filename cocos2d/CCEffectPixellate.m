@@ -119,31 +119,6 @@ static float conditionBlockSize(float blockSize);
     _blockSize = conditionBlockSize(blockSize);
 }
 
--(void)renderPassBegin:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
-{
-    CCTexture *texture = renderPass.shaderUniforms[CCShaderUniformPreviousPassTexture];
-
-    float aspect = texture.contentSize.width / texture.contentSize.height;
-    float uStep = self.blockSize / texture.contentSize.width;
-    float vStep = uStep * aspect;
-
-    renderPass.shaderUniforms[@"u_uStep"] = [NSNumber numberWithFloat:uStep];
-    renderPass.shaderUniforms[@"u_vStep"] = [NSNumber numberWithFloat:vStep];
-}
-
--(void)renderPassUpdate:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
-{
-    if (renderPass.needsClear)
-    {
-        [renderPass.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:[CCColor clearColor].glkVector4 depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
-    }
-    [renderPass draw];
-}
-
--(void)renderPassEnd:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
-{
-}
-
 @end
 
 float conditionBlockSize(float blockSize)

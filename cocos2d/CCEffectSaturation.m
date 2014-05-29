@@ -109,23 +109,5 @@
     self.renderPasses = @[pass0];
 }
 
--(void)renderPassBegin:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
-{
-    renderPass.shaderUniforms[@"u_saturation"] = [NSNumber numberWithFloat:self.saturation];
-}
-
--(void)renderPassUpdate:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
-{
-    if (renderPass.needsClear)
-    {
-        [renderPass.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:[CCColor clearColor].glkVector4 depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
-    }
-    [renderPass draw];
-}
-
--(void)renderPassEnd:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
-{
-}
-
 @end
 #endif
