@@ -19,7 +19,7 @@
 
 - (void)addEffect:(CCEffect *)effect;
 - (void)removeEffect:(CCEffect *)effect;
-- (CCEffect *)effectAtIndex:(NSUInteger)passIndex;
+- (CCEffect *)effectAtIndex:(NSUInteger)effectIndex;
 
 +(CCEffect*)effects:(id)firstObject, ...;
 
