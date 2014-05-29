@@ -152,12 +152,9 @@
     
     GLKMatrix4 projection = GLKMatrix4MakeOrtho(0.0f, _contentSize.width, _contentSize.height, 0.0f, -1024.0f, 1024.0f);
     
-    CCEffectRenderPass* renderPass = [[CCEffectRenderPass alloc] init];
-    renderPass.renderer = renderer;
-    renderPass.verts = *(sprite.vertexes);
-    renderPass.blendMode = [CCBlendMode premultipliedAlphaMode];
-    
     CCTexture *inputTexture = sprite.texture;
+    CCTexture *previousPassTexture = nil;
+    CCTexture *mainTexture = nil;
     
     CCEffectRenderTarget *previousPassRT = nil;
     for (NSUInteger e = 0; e < effectStack.effectCount; e++)
@@ -165,34 +162,39 @@
         BOOL lastEffect = (e == (effectStack.effectCount - 1));
         
         CCEffect *effect = [effectStack effectAtIndex:e];
-        renderPass.shader = effect.shader;
-        renderPass.shaderUniforms = effect.shaderUniforms;
 
         if (previousPassRT)
         {
-            renderPass.shaderUniforms[@"cc_MainTexture"] = previousPassRT.texture;
+            mainTexture = previousPassRT.texture;
         }
         else
         {
-            renderPass.shaderUniforms[@"cc_MainTexture"] = inputTexture;
+            mainTexture = inputTexture;
         }
         
         for(int i = 0; i < effect.renderPassesRequired; i++)
         {
             BOOL lastPass = (lastEffect && (i == (effect.renderPassesRequired - 1)));
             BOOL directRendering = lastPass && effectStack.supportsDirectRendering;
-            renderPass.renderPassId = i;
-            renderPass.needsClear = !directRendering;
             
             if (previousPassRT)
             {
-                renderPass.shaderUniforms[@"cc_PreviousPassTexture"] = previousPassRT.texture;
+                previousPassTexture = previousPassRT.texture;
             }
             else
             {
-                renderPass.shaderUniforms[@"cc_PreviousPassTexture"] = inputTexture;
+                previousPassTexture = inputTexture;
             }
 
+            CCEffectRenderPass* renderPass = [effect renderPassAtIndex:i];
+            renderPass.renderer = renderer;
+            renderPass.renderPassId = i;
+            renderPass.verts = *(sprite.vertexes);
+            renderPass.blendMode = [CCBlendMode premultipliedAlphaMode];
+            renderPass.needsClear = !directRendering;
+            renderPass.shaderUniforms[CCShaderUniformMainTexture] = mainTexture;
+            renderPass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
+            
             CCEffectRenderTarget *rt = nil;
 
             [renderer pushGroup];
@@ -200,15 +202,9 @@
             {
                 renderPass.transform = *transform;
                 
-                [effect renderPassBegin:renderPass defaultBlock:nil];
-                [effect renderPassUpdate:renderPass defaultBlock:^{
-                    if (renderPass.needsClear)
-                    {
-                        [renderPass.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:[CCColor clearColor].glkVector4 depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
-                    }
-                    [renderPass draw];
-                }];
-                [effect renderPassEnd:renderPass defaultBlock:nil];
+                renderPass.beginBlock();
+                renderPass.updateBlock();
+                renderPass.endBlock();
             }
             else
             {
@@ -216,19 +212,11 @@
 
                 rt = [self allocRenderTargetWithWidth:_contentSize.width * _contentScale height:_contentSize.height * _contentScale];
                 
-                [effect renderPassBegin:renderPass defaultBlock:nil];
+                renderPass.beginBlock();
                 [self bindRenderTarget:rt withRenderer:renderer];
-                
-                [effect renderPassUpdate:renderPass defaultBlock:^{
-                    if (renderPass.needsClear)
-                    {
-                        [renderPass.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:[CCColor clearColor].glkVector4 depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
-                    }
-                    [renderPass draw];
-                }];
-                
+                renderPass.updateBlock();
                 [self restoreRenderTargetWithRenderer:renderer];
-                [effect renderPassEnd:renderPass defaultBlock:nil];
+                renderPass.endBlock();
             }
             [renderer popGroupWithDebugLabel:[NSString stringWithFormat:@"CCEffectRenderer: %@: Pass %d", effect.debugName, i] globalSortOrder:0];
             
