@@ -138,14 +138,45 @@
     [self.vertexFunctions addObject:vertexFunction];
 }
 
--(NSInteger)renderPassesRequired
+-(void)buildRenderPasses
 {
     // optmized approach based on linear sampling - http://rastergrid.com/blog/2010/09/efficient-gaussian-blur-with-linear-sampling/ and GPUImage - https://github.com/BradLarson/GPUImage
     // pass 0: blurs (horizontal) texture[0] and outputs blurmap to texture[1]
     // pass 1: blurs (vertical) texture[1] and outputs to texture[2]
     // pass 2: blends texture[0] and texture[2] and outputs to texture[3]
+
+    __weak CCEffectGlow *weakSelf = self;
+    __weak CCEffectRenderPass *weakPass = nil;
     
-    return 3;
+    CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
+    weakPass = pass0;
+    pass0.shader = self.shader;
+    pass0.shaderUniforms = self.shaderUniforms;
+    pass0.beginBlock = ^{
+        weakPass.shaderUniforms[@"u_enableGlowMap"] = [NSNumber numberWithFloat:0.0f];
+        weakPass.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(weakSelf.blurStrength, 0.0f)];
+    };
+    
+    
+    CCEffectRenderPass *pass1 = [[CCEffectRenderPass alloc] init];
+    weakPass = pass1;
+    pass1.shader = self.shader;
+    pass1.shaderUniforms = self.shaderUniforms;
+    pass1.beginBlock = ^{
+        weakPass.shaderUniforms[@"u_enableGlowMap"] = [NSNumber numberWithFloat:0.0f];
+        weakPass.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(0.0f, weakSelf.blurStrength)];
+    };
+
+    
+    CCEffectRenderPass *pass2 = [[CCEffectRenderPass alloc] init];
+    weakPass = pass2;
+    pass2.shader = self.shader;
+    pass2.shaderUniforms = self.shaderUniforms;
+    pass2.beginBlock = ^{
+        weakPass.shaderUniforms[@"u_enableGlowMap"] = [NSNumber numberWithFloat:1.0f];
+    };
+
+    self.renderPasses = @[pass0, pass1, pass2];
 }
 
 -(void)renderPassBegin:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock

@@ -49,6 +49,7 @@
 
 @end
 
+typedef void (^CCEffectRenderPassBlock)();
 
 // Note to self: I don't like this pattern, refactor it. I think there should be a CCRenderPass that is used by CCEffect instead. NOTE: convert this to a CCRnderPassProtocol
 @interface CCEffectRenderPass : NSObject
@@ -61,6 +62,9 @@
 @property (nonatomic) CCShader* shader;
 @property (nonatomic) NSMutableDictionary* shaderUniforms;
 @property (nonatomic) BOOL needsClear;
+@property (nonatomic,copy) CCEffectRenderPassBlock beginBlock;
+@property (nonatomic,copy) CCEffectRenderPassBlock updateBlock;
+@property (nonatomic,copy) CCEffectRenderPassBlock endBlock;
 
 -(void)draw;
 

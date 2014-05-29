@@ -53,9 +53,20 @@ static float conditionContrast(float contrast);
     [self.fragmentFunctions addObject:fragmentFunction];
 }
 
--(NSInteger)renderPassesRequired
+-(void)buildRenderPasses
 {
-    return 1;
+    __weak CCEffectContrast *weakSelf = self;
+    __weak CCEffectRenderPass *weakPass = nil;
+    
+    CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
+    weakPass = pass0;
+    pass0.shader = self.shader;
+    pass0.shaderUniforms = self.shaderUniforms;
+    pass0.beginBlock = ^{
+        weakPass.shaderUniforms[@"u_contrast"] = [NSNumber numberWithFloat:weakSelf.contrast];
+    };
+    
+    self.renderPasses = @[pass0];
 }
 
 -(void)setContrast:(float)contrast

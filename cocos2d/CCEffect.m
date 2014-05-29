@@ -131,6 +131,31 @@ static NSString* vertBase =
 
 @implementation CCEffectRenderPass
 
+-(id)init
+{
+    if((self = [super init]))
+    {
+        __weak CCEffectRenderPass *weakSelf = self;
+        
+        CCEffectRenderPassBlock emptyBlock = ^{};
+        _beginBlock = [emptyBlock copy];
+        _endBlock = [emptyBlock copy];
+
+        _updateBlock = ^{
+            if (weakSelf.needsClear)
+            {
+                [weakSelf.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:[CCColor clearColor].glkVector4 depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
+            }
+            [weakSelf draw];
+        };
+        _blendMode = [CCBlendMode premultipliedAlphaMode];
+        
+        return self;
+    }
+    
+    return self;
+}
+
 //
 -(void)draw
 {
@@ -176,6 +201,7 @@ static NSString* vertBase =
         [self buildFragmentFunctions];
         [self buildVertexFunctions];
         [self buildEffectShader];
+        [self buildRenderPasses];
         
         return self;
     }
@@ -197,6 +223,7 @@ static NSString* vertBase =
         [self buildFragmentFunctions];
         [self buildVertexFunctions];
         [self buildEffectShader];
+        [self buildRenderPasses];
         
         return self;
     }
@@ -215,6 +242,7 @@ static NSString* vertBase =
         [self buildShaderUniforms:_fragmentUniforms vertexUniforms:_vertexUniforms];
         [self buildVertexFunctions];
         [self buildEffectShader];
+        [self buildRenderPasses];
         
         return self;
     }
@@ -233,6 +261,7 @@ static NSString* vertBase =
         _varyingVars = [varying copy];
         [self buildShaderUniforms:_fragmentUniforms vertexUniforms:_vertexUniforms];
         [self buildEffectShader];
+        [self buildRenderPasses];
         
         return self;
     }
@@ -348,6 +377,16 @@ static NSString* vertBase =
     [_vertexFunctions addObject:vertexFunction];
 }
 
+-(void)buildRenderPasses
+{
+    self.renderPasses = @[];
+}
+
+-(NSInteger)renderPassesRequired
+{
+    return _renderPasses.count;
+}
+
 -(void)renderPassBegin:(CCEffectRenderPass*) renderPass defaultBlock:(void (^)())defaultBlock
 {
     if(defaultBlock)
@@ -364,11 +403,6 @@ static NSString* vertBase =
 {
     if(defaultBlock)
         defaultBlock();
-}
-
--(NSInteger)renderPassesRequired
-{
-    return 1;
 }
 
 @end

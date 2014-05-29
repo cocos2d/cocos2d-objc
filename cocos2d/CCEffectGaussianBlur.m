@@ -121,6 +121,41 @@
     [self.vertexFunctions addObject:vertexFunction];
 }
 
+-(void)buildRenderPasses
+{
+    __weak CCEffectGaussianBlur *weakSelf = self;
+    __weak CCEffectRenderPass *weakPass = nil;
+    
+    CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
+    weakPass = pass0;
+    pass0.shader = self.shader;
+    pass0.shaderUniforms = self.shaderUniforms;
+    pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
+    pass0.beginBlock = ^{
+        if([self radialBlur])
+        {
+            weakPass.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(weakSelf.blurStrength, 0.0f)];
+        }
+        else
+        {
+            GLKVector2 dir = [self calculateBlurDirection];
+            weakPass.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:dir];
+        }
+    };
+
+    
+    CCEffectRenderPass *pass1 = [[CCEffectRenderPass alloc] init];
+    weakPass = pass1;
+    pass1.shader = self.shader;
+    pass1.shaderUniforms = self.shaderUniforms;
+    pass1.blendMode = [CCBlendMode premultipliedAlphaMode];
+    pass1.beginBlock = ^{
+        weakPass.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(0.0f, weakSelf.blurStrength)];
+    };
+    
+    self.renderPasses = @[pass0, pass1];
+}
+
 -(NSInteger)renderPassesRequired
 {
     // optmized approach based on linear sampling - http://rastergrid.com/blog/2010/09/efficient-gaussian-blur-with-linear-sampling/ and GPUImage - https://github.com/BradLarson/GPUImage

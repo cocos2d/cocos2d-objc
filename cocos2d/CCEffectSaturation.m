@@ -92,9 +92,21 @@
     [self.fragmentFunctions addObject:fragmentFunction];
 }
 
--(NSInteger)renderPassesRequired
+-(void)buildRenderPasses
 {
-    return 1;
+    __weak CCEffectSaturation *weakSelf = self;
+    __weak CCEffectRenderPass *weakPass = nil;
+    
+    CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
+    weakPass = pass0;
+    pass0.shader = self.shader;
+    pass0.shaderUniforms = self.shaderUniforms;
+    pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
+    pass0.beginBlock = ^{
+        weakSelf.shaderUniforms[@"u_saturation"] = [NSNumber numberWithFloat:weakSelf.saturation];
+    };
+    
+    self.renderPasses = @[pass0];
 }
 
 -(void)renderPassBegin:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
