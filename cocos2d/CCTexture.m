@@ -477,7 +477,7 @@ static CCTexture *CCTextureNone = nil;
 	// Repack the pixel data into the right format
 
 	if(pixelFormat == CCTexturePixelFormat_RGB565) {
-		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGGBBBBB"
+		//Convert "RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGGBBBBB"
 		tempData = malloc(textureHeight * textureWidth * 2);
 		inPixel32 = (unsigned int*)data;
 		outPixel16 = (unsigned short*)tempData;
@@ -489,7 +489,7 @@ static CCTexture *CCTextureNone = nil;
 	}
 
 	else if(pixelFormat == CCTexturePixelFormat_RGB888) {
-		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRRRRGGGGGGGGBBBBBBB"
+		//Convert "RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRRRRGGGGGGGGBBBBBBB"
 		tempData = malloc(textureHeight * textureWidth * 3);
 		char *inData = (char*)data;
 		char *outData = (char*)tempData;
@@ -505,7 +505,7 @@ static CCTexture *CCTextureNone = nil;
 	}
 
 	else if (pixelFormat == CCTexturePixelFormat_RGBA4444) {
-		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRGGGGBBBBAAAA"
+		//Convert "RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRGGGGBBBBAAAA"
 		tempData = malloc(textureHeight * textureWidth * 2);
 		inPixel32 = (unsigned int*)data;
 		outPixel16 = (unsigned short*)tempData;
@@ -522,7 +522,7 @@ static CCTexture *CCTextureNone = nil;
 
 	}
 	else if (pixelFormat == CCTexturePixelFormat_RGB5A1) {
-		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGBBBBBA"
+		//Convert "RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGBBBBBA"
 		/*
 		 Here was a bug.
 		 When you convert RGBA8888 texture to RGB5A1 texture and then render it on black background, you'll see a "ghost" image as if the texture is still RGBA8888. 
