@@ -196,7 +196,7 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 @property(nonatomic,readwrite,assign) CGPoint position;
 
 /** Position (x,y) of the node in points from the bottom left corner. */
-@property(nonatomic,readonly) CGPoint positionInPoints;
+@property(nonatomic,readwrite,assign) CGPoint positionInPoints;
 
 /** Defines the position type used for the position property. Changing the position type affects the meaning of the position, and allows you to change the referenceCorner, relative to the parent container. It allso allows changing from points to UIPoints. UIPoints are scaled by [CCDirector sharedDirector].UIScaleFactor. See "Coordinate System and Positioning" for more information. */
 @property(nonatomic,readwrite,assign) CCPositionType positionType;
@@ -251,7 +251,7 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 @property (nonatomic,readwrite,assign) CGSize contentSize;
 
 /** The untransformed size of the node in Points. The contentSize remains the same no matter the node is scaled or rotated. contentSizeInPoints is affected by the contentSizeType and will be scaled by the [CCDirector sharedDirector].UIScaleFactor if the type is CCSizeUnitUIPoints. */
-@property (nonatomic,readonly) CGSize contentSizeInPoints;
+@property (nonatomic,readwrite,assign) CGSize contentSizeInPoints;
 
 /** Defines the contentSize type used for the widht and height component of the contentSize property. */
 @property (nonatomic,readwrite,assign) CCSizeType contentSizeType;
