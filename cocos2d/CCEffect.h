@@ -75,6 +75,7 @@ typedef void (^CCEffectRenderPassBlock)();
 @property (nonatomic, readonly) CCShader* shader; // Note: consider adding multiple shaders (one for reach renderpass, this will help break up logic and avoid branching in a potential uber shader).
 @property (nonatomic, readonly) NSMutableDictionary* shaderUniforms;
 @property (nonatomic, readonly) NSInteger renderPassesRequired;
+@property (nonatomic, readonly) BOOL supportsDirectRendering;
 @property (nonatomic, copy) NSString *debugName;
 
 
@@ -82,6 +83,7 @@ typedef void (^CCEffectRenderPassBlock)();
 -(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertextUniforms:(NSArray*)vertexUniforms varying:(NSArray*)varying;
 -(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions vertexFunctions:(NSMutableArray*)vertextFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertextUniforms:(NSArray*)vertexUniforms varying:(NSArray*)varying;
 
+-(BOOL)prepareForRendering;
 -(void)renderPassBegin:(CCEffectRenderPass*) renderPass defaultBlock:(void (^)())defaultBlock;
 -(void)renderPassUpdate:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock;
 -(void)renderPassEnd:(CCEffectRenderPass*) renderPass defaultBlock:(void (^)())defaultBlock;

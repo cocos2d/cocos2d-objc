@@ -387,6 +387,15 @@ static NSString* vertBase =
     return _renderPasses.count;
 }
 
+- (BOOL)supportsDirectRendering
+{
+    return YES;
+}
+
+- (BOOL)prepareForRendering
+{
+    return YES;
+}
 -(void)renderPassBegin:(CCEffectRenderPass*) renderPass defaultBlock:(void (^)())defaultBlock
 {
     if(defaultBlock)
