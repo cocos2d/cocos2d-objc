@@ -148,7 +148,7 @@ static NSString* vertBase =
             {
                 [weakSelf.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:[CCColor clearColor].glkVector4 depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
             }
-            [weakSelf draw];
+            [weakSelf enqueueTriangles];
         };
         _blendMode = [CCBlendMode premultipliedAlphaMode];
         
@@ -159,7 +159,7 @@ static NSString* vertBase =
 }
 
 //
--(void)draw
+-(void)enqueueTriangles
 {
     CCRenderState *renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms];
     

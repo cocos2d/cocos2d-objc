@@ -68,7 +68,7 @@ typedef void (^CCEffectRenderPassBlock)();
 @property (nonatomic,copy) CCEffectRenderPassBlock updateBlock;
 @property (nonatomic,copy) CCEffectRenderPassBlock endBlock;
 
--(void)draw;
+-(void)enqueueTriangles;
 
 @end
 
