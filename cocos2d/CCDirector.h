@@ -230,9 +230,9 @@ and when to execute the Scenes.
 /**
  *  Changes the projection size.
  *
- *  @param newWindowSize New projection size.
+ *  @param newViewSize New projection size.
  */
--(void) reshapeProjection:(CGSize)newWindowSize;
+-(void) reshapeProjection:(CGSize)newViewSize;
 
 /**
  *  Converts a UIKit coordinate to an OpenGL coordinate.

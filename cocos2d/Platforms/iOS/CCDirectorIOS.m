@@ -193,13 +193,9 @@
 	[self performSelector:@selector(drawScene) onThread:thread withObject:nil waitUntilDone:YES];
 }
 
-// overriden, don't call super
--(void) reshapeProjection:(CGSize)size
+-(void) reshapeProjection:(CGSize)newViewSize
 {
-	_winSizeInPixels = size;
-	_winSizeInPoints = CGSizeMake(size.width/__ccContentScaleFactor, size.height/__ccContentScaleFactor);
-	
-	[self setProjection:_projection];
+	[super reshapeProjection:newViewSize];
   
 	if( [_delegate respondsToSelector:@selector(directorDidReshapeProjection:)] )
 		[_delegate directorDidReshapeProjection:self];

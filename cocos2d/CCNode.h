@@ -267,6 +267,14 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 /** The anchorPoint in absolute pixels.  Since v0.8 you can only read it. If you wish to modify it, use anchorPoint instead. */
 @property(nonatomic,readonly) CGPoint anchorPointInPoints;
 
+/**
+ * Invoked automatically when the OS view has been resized.
+ *
+ * This implementation simply propagates the same method to the children.
+ * Subclasses may override to actually do something when the view resizes.
+ */
+-(void) viewDidResizeTo: (CGSize) newViewSize;
+
 
 /** Returns a "local" axis aligned bounding box of the node in points.
  The returned box is relative only to its parent.

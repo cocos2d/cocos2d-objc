@@ -550,6 +550,11 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
     return [self convertContentSizeToPoints:self.contentSize type:_contentSizeType];
 }
 
+-(void) viewDidResizeTo: (CGSize) newViewSize
+{
+	for (CCNode* child in _children) [child viewDidResizeTo: newViewSize];
+}
+
 - (float) scaleInPoints
 {
     if (_scaleType == CCScaleTypeScaled)
