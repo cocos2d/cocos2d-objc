@@ -550,6 +550,11 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
     return [self convertContentSizeToPoints:self.contentSize type:_contentSizeType];
 }
 
+-(void)setContentSizeInPoints:(CGSize)contentSizeInPoints
+{
+	self.contentSize = [self convertContentSizeFromPoints:contentSizeInPoints type:self.contentSizeType];
+}
+
 -(void) viewDidResizeTo: (CGSize) newViewSize
 {
 	for (CCNode* child in _children) [child viewDidResizeTo: newViewSize];
@@ -1428,6 +1433,11 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 - (CGPoint) positionInPoints
 {
     return [self convertPositionToPoints:self.position type:_positionType];
+}
+
+-(void)setPositionInPoints:(CGPoint)positionInPoints
+{
+	self.position = [self convertPositionFromPoints:positionInPoints type:self.positionType];
 }
 
 - (CGAffineTransform)nodeToParentTransform
