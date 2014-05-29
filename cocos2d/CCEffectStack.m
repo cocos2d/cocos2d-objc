@@ -119,7 +119,7 @@
     // them here. This way the user gets back what they originally specified and
     // no more.
     NSMutableSet* functionNames = [[NSMutableSet alloc] init];
-    NSMutableSet* uniformNames = [[NSMutableSet alloc] initWithArray:@[ @"cc_PreviousPassTexture" ]];
+    NSMutableSet* uniformNames = [[NSMutableSet alloc] initWithArray:@[CCShaderUniformPreviousPassTexture]];
     
     // Extract all fragment functions and uniforms
     for(CCEffect* effect in effects)
@@ -154,7 +154,7 @@
     // them here. This way the user gets back what they originally specified and
     // no more.
     NSMutableSet* functionNames = [[NSMutableSet alloc] init];
-    NSMutableSet* uniformNames = [[NSMutableSet alloc] initWithArray:@[ @"cc_PreviousPassTexture" ]];
+    NSMutableSet* uniformNames = [[NSMutableSet alloc] initWithArray:@[CCShaderUniformPreviousPassTexture]];
     
     // Extract all vertex functions and uniforms
     for(CCEffect* effect in effects)

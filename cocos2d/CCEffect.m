@@ -11,6 +11,8 @@
 #import "CCtexture.h"
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
+const NSString *CCShaderUniformPreviousPassTexture = @"cc_PreviousPassTexture";
+
 static NSString* fragBase =
 @"%@\n\n"   // uniforms
 @"%@\n"     // varying vars
@@ -180,7 +182,7 @@ static NSString* vertBase =
 + (NSArray *)defaultEffectFragmentUniforms
 {
     return @[
-             [CCEffectUniform uniform:@"sampler2D" name:@"cc_PreviousPassTexture" value:(NSValue *)[CCTexture none]]
+             [CCEffectUniform uniform:@"sampler2D" name:CCShaderUniformPreviousPassTexture value:(NSValue *)[CCTexture none]]
             ];
 }
 

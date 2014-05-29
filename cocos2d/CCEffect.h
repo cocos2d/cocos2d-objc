@@ -13,6 +13,8 @@
 #import "ccTypes.h"
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
+extern const NSString *CCShaderUniformPreviousPassTexture;
+
 @interface CCEffectFunction : NSObject
 
 @property (nonatomic, readonly) NSString* body;
