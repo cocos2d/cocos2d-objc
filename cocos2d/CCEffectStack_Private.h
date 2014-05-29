@@ -13,6 +13,7 @@
     NSMutableArray *_effects;
 }
 
+@property (nonatomic) BOOL passesDirty;
 
 @end
 

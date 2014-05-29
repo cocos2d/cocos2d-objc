@@ -30,17 +30,20 @@
         {
             _effects = [[NSMutableArray alloc] init];
         }
+        _passesDirty = YES;
     }
     return self;
 }
 
 - (void)addEffect:(CCEffect *)effect
 {
+    _passesDirty = YES;
     [_effects addObject:effect];
 }
 
 - (void)removeEffect:(CCEffect *)effect
 {
+    _passesDirty = YES;
     [_effects removeObject:effect];
 }
 
@@ -57,6 +60,19 @@
 
 - (BOOL)prepareForRendering
 {
+    if (_passesDirty)
+    {
+        NSMutableArray *passes = [[NSMutableArray alloc] init];
+        for (CCEffect *effect in _effects)
+        {
+            for (CCEffectRenderPass *pass in effect.renderPasses)
+            {
+                [passes addObject:pass];
+            }
+        }
+        self.renderPasses = [passes copy];
+        _passesDirty = NO;
+    }
     return YES;
 }
 
