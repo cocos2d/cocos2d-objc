@@ -164,58 +164,58 @@
     
     CCEffectRenderTarget *previousPassRT = nil;
 
-        for(int i = 0; i < effect.renderPassesRequired; i++)
+    for(int i = 0; i < effect.renderPassesRequired; i++)
+    {
+        BOOL lastPass = (i == (effect.renderPassesRequired - 1));
+        BOOL directRendering = lastPass && effect.supportsDirectRendering;
+        
+        if (previousPassRT)
         {
-            BOOL lastPass = (i == (effect.renderPassesRequired - 1));
-            BOOL directRendering = lastPass && effect.supportsDirectRendering;
-            
-            if (previousPassRT)
-            {
-                mainTexture = previousPassRT.texture;
-                previousPassTexture = previousPassRT.texture;
-            }
-            else
-            {
-                mainTexture = inputTexture;
-                previousPassTexture = inputTexture;
-            }
-
-            CCEffectRenderPass* renderPass = [effect renderPassAtIndex:i];
-            renderPass.renderer = renderer;
-            renderPass.renderPassId = i;
-            renderPass.verts = *(sprite.vertexes);
-            renderPass.blendMode = [CCBlendMode premultipliedAlphaMode];
-            renderPass.needsClear = !directRendering;
-            renderPass.shaderUniforms[CCShaderUniformMainTexture] = mainTexture;
-            renderPass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-            
-            CCEffectRenderTarget *rt = nil;
-
-            [renderer pushGroup];
-            if (directRendering)
-            {
-                renderPass.transform = *transform;
-                
-                renderPass.beginBlock();
-                renderPass.updateBlock();
-                renderPass.endBlock();
-            }
-            else
-            {
-                renderPass.transform = projection;
-
-                rt = [self allocRenderTargetWithWidth:_contentSize.width * _contentScale height:_contentSize.height * _contentScale];
-                
-                renderPass.beginBlock();
-                [self bindRenderTarget:rt withRenderer:renderer];
-                renderPass.updateBlock();
-                [self restoreRenderTargetWithRenderer:renderer];
-                renderPass.endBlock();
-            }
-            [renderer popGroupWithDebugLabel:[NSString stringWithFormat:@"CCEffectRenderer: %@: Pass %d", effect.debugName, i] globalSortOrder:0];
-            
-            previousPassRT = rt;
+            mainTexture = previousPassRT.texture;
+            previousPassTexture = previousPassRT.texture;
         }
+        else
+        {
+            mainTexture = inputTexture;
+            previousPassTexture = inputTexture;
+        }
+        
+        CCEffectRenderPass* renderPass = [effect renderPassAtIndex:i];
+        renderPass.renderer = renderer;
+        renderPass.renderPassId = i;
+        renderPass.verts = *(sprite.vertexes);
+        renderPass.blendMode = [CCBlendMode premultipliedAlphaMode];
+        renderPass.needsClear = !directRendering;
+        renderPass.shaderUniforms[CCShaderUniformMainTexture] = mainTexture;
+        renderPass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
+        
+        CCEffectRenderTarget *rt = nil;
+        
+        [renderer pushGroup];
+        if (directRendering)
+        {
+            renderPass.transform = *transform;
+            
+            renderPass.beginBlock();
+            renderPass.updateBlock();
+            renderPass.endBlock();
+        }
+        else
+        {
+            renderPass.transform = projection;
+            
+            rt = [self allocRenderTargetWithWidth:_contentSize.width * _contentScale height:_contentSize.height * _contentScale];
+            
+            renderPass.beginBlock();
+            [self bindRenderTarget:rt withRenderer:renderer];
+            renderPass.updateBlock();
+            [self restoreRenderTargetWithRenderer:renderer];
+            renderPass.endBlock();
+        }
+        [renderer popGroupWithDebugLabel:[NSString stringWithFormat:@"CCEffectRenderer: %@: Pass %d", effect.debugName, i] globalSortOrder:0];
+        
+        previousPassRT = rt;
+    }
     
     _outputTexture = previousPassRT.texture;
 }
