@@ -146,8 +146,14 @@
     [self destroyAllRenderTargets];
 }
 
--(void)drawSprite:(CCSprite *)sprite withEffects:(CCEffectStack *)effectStack renderer:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
+-(void)drawSprite:(CCSprite *)sprite withEffect:(CCEffect *)effect renderer:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
+    if (effect && ![effect prepareForRendering])
+    {
+        NSAssert(0, @"Effect preparation failed.");
+        return;
+    }
+
     [self freeAllRenderTargets];
     
     GLKMatrix4 projection = GLKMatrix4MakeOrtho(0.0f, _contentSize.width, _contentSize.height, 0.0f, -1024.0f, 1024.0f);
@@ -157,32 +163,20 @@
     CCTexture *mainTexture = nil;
     
     CCEffectRenderTarget *previousPassRT = nil;
-    for (NSUInteger e = 0; e < effectStack.effectCount; e++)
-    {
-        BOOL lastEffect = (e == (effectStack.effectCount - 1));
-        
-        CCEffect *effect = [effectStack effectAtIndex:e];
 
-        if (previousPassRT)
-        {
-            mainTexture = previousPassRT.texture;
-        }
-        else
-        {
-            mainTexture = inputTexture;
-        }
-        
         for(int i = 0; i < effect.renderPassesRequired; i++)
         {
-            BOOL lastPass = (lastEffect && (i == (effect.renderPassesRequired - 1)));
-            BOOL directRendering = lastPass && effectStack.supportsDirectRendering;
+            BOOL lastPass = (i == (effect.renderPassesRequired - 1));
+            BOOL directRendering = lastPass && effect.supportsDirectRendering;
             
             if (previousPassRT)
             {
+                mainTexture = previousPassRT.texture;
                 previousPassTexture = previousPassRT.texture;
             }
             else
             {
+                mainTexture = inputTexture;
                 previousPassTexture = inputTexture;
             }
 
@@ -222,7 +216,6 @@
             
             previousPassRT = rt;
         }
-    }
     
     _outputTexture = previousPassRT.texture;
 }

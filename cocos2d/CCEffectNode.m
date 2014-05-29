@@ -171,7 +171,7 @@
     
     _sprite.texture = self.texture;
     _effectRenderer.contentSize = self.texture.contentSize;
-    [_effectRenderer drawSprite:_sprite withEffects:_effectStack renderer:_renderer transform:transform];
+    [_effectRenderer drawSprite:_sprite withEffect:_effectStack renderer:_renderer transform:transform];
     
     if (!_effectStack.supportsDirectRendering || !_effectStack.effectCount)
     {

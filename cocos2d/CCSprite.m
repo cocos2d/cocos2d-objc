@@ -336,15 +336,10 @@
     
     if (self.effect)
     {
-        // This is a temporary hack until CCEffectStack becomes a subclass of CCEffect
-        // as described in the original discussions of CCEffects.
-        CCEffectStack *effectStack = [[CCEffectStack alloc] init];
-        [effectStack addEffect:self.effect];
-        
         _effectRenderer.contentSize = self.texture.contentSize;
-        [_effectRenderer drawSprite:self withEffects:effectStack renderer:renderer transform:transform];
+        [_effectRenderer drawSprite:self withEffect:self.effect renderer:renderer transform:transform];
         
-        if (!effectStack.supportsDirectRendering)
+        if (!self.effect.supportsDirectRendering)
         {
             CCTexture *backup = self.texture;
             self.texture = _effectRenderer.outputTexture;

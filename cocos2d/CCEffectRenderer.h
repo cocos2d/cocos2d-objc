@@ -10,7 +10,7 @@
 #import "ccTypes.h"
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
-@class CCEffectStack;
+@class CCEffect;
 @class CCRenderer;
 @class CCSprite;
 @class CCTexture;
@@ -22,7 +22,7 @@
 @property (nonatomic, readonly) CCTexture *outputTexture;
 
 -(id)init;
--(void)drawSprite:(CCSprite *)sprite withEffects:(CCEffectStack *)effectStack renderer:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
+-(void)drawSprite:(CCSprite *)sprite withEffect:(CCEffect *)effect renderer:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
 
 @end
 #endif
