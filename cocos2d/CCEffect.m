@@ -396,6 +396,13 @@ static NSString* vertBase =
 {
     return YES;
 }
+
+-(CCEffectRenderPass *)renderPassAtIndex:(NSInteger)passIndex
+{
+    NSAssert((passIndex >= 0) && (passIndex < _renderPasses.count), @"Pass index out of range.");
+    return _renderPasses[passIndex];;
+}
+
 -(void)renderPassBegin:(CCEffectRenderPass*) renderPass defaultBlock:(void (^)())defaultBlock
 {
     if(defaultBlock)
