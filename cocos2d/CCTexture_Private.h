@@ -61,17 +61,6 @@
 @end
 
 /*
- Drawing extensions to make it easy to draw basic quads using a CCTexture2D object.
- These functions require GL_TEXTURE_2D and both GL_VERTEX_ARRAY and GL_TEXTURE_COORD_ARRAY client states to be enabled.
- */
-@interface CCTexture (Drawing)
-/* draws a texture at a given point */
-- (void) drawAtPoint:(CGPoint)point;
-/* draws a texture inside a rect */
-- (void) drawInRect:(CGRect)rect;
-@end
-
-/*
  Extensions to make it easy to create a CCTexture2D object from a PVRTC file
  Note that the generated textures don't have their alpha premultiplied - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
  */

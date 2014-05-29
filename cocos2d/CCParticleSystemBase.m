@@ -50,23 +50,19 @@
 #import "ccConfig.h"
 #import "CCParticleSystemBase.h"
 #import "CCParticleBatchNode.h"
+#import "CCTexture.h"
 #import "CCTextureCache.h"
-#import "CCTextureAtlas.h"
 #import "ccMacros.h"
 #import "Support/CCProfiling.h"
+#import "CCNode_Private.h"
 
 // support
-#import "Support/OpenGL_Internal.h"
 #import "Support/CGPointExtension.h"
 #import "Support/base64.h"
 #import "Support/ZipUtils.h"
 #import "Support/CCFileUtils.h"
 
 #import "CCParticleSystemBase_Private.h"
-
-@interface CCParticleSystemBase ()
--(void) updateBlendFunc;
-@end
 
 @implementation CCParticleSystemBase
 @synthesize active = _active, duration = _duration;
@@ -79,13 +75,10 @@
 @synthesize emissionRate = _emissionRate;
 @synthesize startSize = _startSize, startSizeVar = _startSizeVar;
 @synthesize endSize = _endSize, endSizeVar = _endSizeVar;
-@synthesize opacityModifyRGB = _opacityModifyRGB;
-@synthesize blendFunc = _blendFunc;
 @synthesize particlePositionType = _particlePositionType;
 @synthesize autoRemoveOnFinish = _autoRemoveOnFinish;
 @synthesize resetOnVisibilityToggle = _resetOnVisibilityToggle;
 @synthesize emitterMode = _emitterMode;
-@synthesize atlasIndex = _atlasIndex;
 @synthesize totalParticles = _totalParticles;
 
 +(id) particleWithFile:(NSString*) plistFile
@@ -133,8 +126,10 @@
 		_duration = [[dictionary valueForKey:@"duration"] floatValue];
 
 		// blend function
-		_blendFunc.src = [[dictionary valueForKey:@"blendFuncSource"] intValue];
-		_blendFunc.dst = [[dictionary valueForKey:@"blendFuncDestination"] intValue];
+		self.blendMode = [CCBlendMode blendModeWithOptions:@{
+			CCBlendFuncSrcColor: [dictionary valueForKey:@"blendFuncSource"],
+			CCBlendFuncDstColor: [dictionary valueForKey:@"blendFuncDestination"],
+		}];
 
 		// color
 		float r,g,b,a;
@@ -238,12 +233,7 @@
             _emissionRate = _totalParticles/_life;
         }
         
-		//don't get the internal texture if a batchNode is used
-		if (!_batchNode)
 		{
-			// Set a compatible default for the alpha transfer
-			_opacityModifyRGB = NO;
-
 			// texture
 			// Try to get the texture from the cache
 
@@ -306,20 +296,12 @@
 			return nil;
 		}
         _allocatedParticles = numberOfParticles;
-
-		if (_batchNode)
-		{
-			for (int i = 0; i < _totalParticles; i++)
-			{
-				_particles[i].atlasIndex=i;
-			}
-		}
-
+		
 		// default, active
 		_active = YES;
 
 		// default blend function
-		_blendFunc = (ccBlendFunc) { CC_BLEND_SRC, CC_BLEND_DST };
+		self.blendMode = [CCBlendMode premultipliedAlphaMode];
 
 		// default movement type;
 		_particlePositionType = CCParticleSystemPositionTypeGrouped;
@@ -330,10 +312,6 @@
 		_autoRemoveOnFinish = NO;
         
         _resetOnVisibilityToggle = YES;
-
-		// Optimization: compile updateParticle method
-		_updateParticleSel = @selector(updateQuadWithParticle:newPosition:);
-		_updateParticleImp = (_CC_UPDATE_PARTICLE_IMP) [self methodForSelector:_updateParticleSel];
 
 		//for batchNode
 		_transformSystemDirty = NO;
@@ -371,13 +349,13 @@
 	particle->pos.y = _sourcePosition.y + _posVar.y * CCRANDOM_MINUS1_1();
 
 	// Color
-	ccColor4F start;
+	GLKVector4 start;
 	start.r = clampf( _startColor.r + _startColorVar.r * CCRANDOM_MINUS1_1(), 0, 1);
 	start.g = clampf( _startColor.g + _startColorVar.g * CCRANDOM_MINUS1_1(), 0, 1);
 	start.b = clampf( _startColor.b + _startColorVar.b * CCRANDOM_MINUS1_1(), 0, 1);
 	start.a = clampf( _startColor.a + _startColorVar.a * CCRANDOM_MINUS1_1(), 0, 1);
 
-	ccColor4F end;
+	GLKVector4 end;
 	end.r = clampf( _endColor.r + _endColorVar.r * CCRANDOM_MINUS1_1(), 0, 1);
 	end.g = clampf( _endColor.g + _endColorVar.g * CCRANDOM_MINUS1_1(), 0, 1);
 	end.b = clampf( _endColor.b + _endColorVar.b * CCRANDOM_MINUS1_1(), 0, 1);
@@ -409,12 +387,13 @@
 	particle->deltaRotation = (endA - startA) / particle->timeToLive;
 
 	// position
-	if( _particlePositionType == CCParticleSystemPositionTypeFree )
-		particle->startPos = [self convertToWorldSpace:CGPointZero];
-
-	else if( _particlePositionType == CCParticleSystemPositionTypeRelative )
-		particle->startPos = _position;
-
+	if( _particlePositionType == CCParticleSystemPositionTypeFree ){
+		CGPoint p = [self convertToWorldSpace:CGPointZero];
+		particle->startPos = GLKVector2Make(p.x, p.y);
+	} else if( _particlePositionType == CCParticleSystemPositionTypeRelative ){
+		CGPoint p = self.position;
+		particle->startPos = GLKVector2Make(p.x, p.y);
+	}
 
 	// direction
 	float a = CC_DEGREES_TO_RADIANS( _angle + _angleVar * CCRANDOM_MINUS1_1() );
@@ -422,11 +401,11 @@
 	// Mode Gravity: A
 	if( _emitterMode == CCParticleSystemModeGravity ) {
 
-		CGPoint v = {cosf( a ), sinf( a )};
+		GLKVector2 v = GLKVector2Make(cosf(a), sinf(a));
 		float s = _mode.A.speed + _mode.A.speedVar * CCRANDOM_MINUS1_1();
 
 		// direction
-		particle->mode.A.dir = ccpMult( v, s );
+		particle->mode.A.dir = GLKVector2MultiplyScalar( v, s );
 
 		// radial accel
 		particle->mode.A.radialAccel = _mode.A.radialAccel + _mode.A.radialAccelVar * CCRANDOM_MINUS1_1();
@@ -477,8 +456,8 @@
 {
 	_active = YES;
 	_elapsed = 0;
-	for(_particleIdx = 0; _particleIdx < _particleCount; ++_particleIdx) {
-		_CCParticle *p = &_particles[_particleIdx];
+	for(int i = 0; i < _particleCount; ++i) {
+		_CCParticle *p = &_particles[i];
 		p->timeToLive = 0;
 	}
 
@@ -523,20 +502,11 @@
 			[self stopSystem];
 	}
 
-	_particleIdx = 0;
-
-	CGPoint currentPosition = CGPointZero;
-	if( _particlePositionType == CCParticleSystemPositionTypeFree )
-		currentPosition = [self convertToWorldSpace:CGPointZero];
-
-	else if( _particlePositionType == CCParticleSystemPositionTypeRelative )
-		currentPosition = _position;
-
 	if (_visible)
 	{
-		while( _particleIdx < _particleCount )
+		for(int i=0; i < _particleCount;)
 		{
-			_CCParticle *p = &_particles[_particleIdx];
+			_CCParticle *p = &_particles[i];
 
 			// life
 			p->timeToLive -= dt;
@@ -545,28 +515,27 @@
 
 				// Mode A: gravity, direction, tangential accel & radial accel
 				if( _emitterMode == CCParticleSystemModeGravity ) {
-					CGPoint tmp, radial, tangential;
-
-					radial = CGPointZero;
+					GLKVector2 radial = GLKVector2Make(0.0f, 0.0f);
 					// radial acceleration
-					if(p->pos.x || p->pos.y)
-						radial = ccpNormalize(p->pos);
+					if(p->pos.x || p->pos.y){
+						radial = GLKVector2Normalize(p->pos);
+					}
 
-					tangential = radial;
-					radial = ccpMult(radial, p->mode.A.radialAccel);
+					GLKVector2 tangential = radial;
+					radial = GLKVector2MultiplyScalar(radial, p->mode.A.radialAccel);
 
 					// tangential acceleration
 					float newy = tangential.x;
 					tangential.x = -tangential.y;
 					tangential.y = newy;
-					tangential = ccpMult(tangential, p->mode.A.tangentialAccel);
+					tangential = GLKVector2MultiplyScalar(tangential, p->mode.A.tangentialAccel);
 
 					// (gravity + radial + tangential) * dt
-					tmp = ccpAdd( ccpAdd( radial, tangential), _mode.A.gravity);
-					tmp = ccpMult( tmp, dt);
-					p->mode.A.dir = ccpAdd( p->mode.A.dir, tmp);
-					tmp = ccpMult(p->mode.A.dir, dt);
-					p->pos = ccpAdd( p->pos, tmp );
+					GLKVector2 tmp = GLKVector2Add( GLKVector2Add( radial, tangential), _mode.A.gravity);
+					tmp = GLKVector2MultiplyScalar( tmp, dt);
+					p->mode.A.dir = GLKVector2Add(p->mode.A.dir, tmp);
+					tmp = GLKVector2MultiplyScalar(p->mode.A.dir, dt);
+					p->pos = GLKVector2Add( p->pos, tmp );
 				}
 
 				// Mode B: radius movement
@@ -592,47 +561,11 @@
 				// angle
 				p->rotation += (p->deltaRotation * dt);
 
-				//
-				// update values in quad
-				//
-
-				CGPoint	newPos;
-
-				if( _particlePositionType == CCParticleSystemPositionTypeFree || _particlePositionType == CCParticleSystemPositionTypeRelative )
-				{
-					CGPoint diff = ccpSub( currentPosition, p->startPos );
-					newPos = ccpSub(p->pos, diff);
-				} else
-					newPos = p->pos;
-
-				// translate newPos to correct position, since matrix transform isn't performed in batchnode
-				// don't update the particle with the new position information, it will interfere with the radius and tangential calculations
-				if (_batchNode)
-				{
-					newPos.x+=_position.x;
-					newPos.y+=_position.y;
-				}
-
-				_updateParticleImp(self, _updateParticleSel, p, newPos);
-
-				// update particle counter
-				_particleIdx++;
-
+				i++;
 			} else {
 				// life < 0
-				NSInteger currentIndex = p->atlasIndex;
-
-				if( _particleIdx != _particleCount-1 )
-					_particles[_particleIdx] = _particles[_particleCount-1];
-
-				if (_batchNode)
-				{
-					//disable the switched particle
-					[_batchNode disableParticle:(_atlasIndex+currentIndex)];
-
-					//switch indexes
-					_particles[_particleCount-1].atlasIndex = currentIndex;
-				}
+				if( i != _particleCount-1 )
+					_particles[i] = _particles[_particleCount-1];
 
 				_particleCount--;
 
@@ -641,19 +574,12 @@
 					return;
 				}
 			}
-		}//while
+		}
+		
 		_transformSystemDirty = NO;
 	}
 
-	if (!_batchNode)
-		[self postStep];
-
 	CC_PROFILER_STOP_CATEGORY(kCCProfilerCategoryParticles , @"CCParticleSystem - update");
-}
-
--(void) updateWithNoTime
-{
-	[self update:0.0f];
 }
 
 -(void) updateQuadWithParticle:(_CCParticle*)particle newPosition:(CGPoint)pos;
@@ -661,58 +587,23 @@
 	// should be overriden
 }
 
--(void) postStep
-{
-	// should be overriden
-}
-
 #pragma mark ParticleSystem - CCTexture protocol
-
--(void) setTexture:(CCTexture*) texture
-{
-	if( _texture != texture ) {
-		_texture = texture;
-
-		[self updateBlendFunc];
-	}
-}
-
--(CCTexture*) texture
-{
-	return _texture;
-}
 
 #pragma mark ParticleSystem - Additive Blending
 -(void) setBlendAdditive:(BOOL)additive
 {
 	if( additive ) {
-		_blendFunc.src = GL_SRC_ALPHA;
-		_blendFunc.dst = GL_ONE;
-
+		self.blendMode = [CCBlendMode addMode];
 	} else {
-
-		if( _texture && ! [_texture hasPremultipliedAlpha] ) {
-			_blendFunc.src = GL_SRC_ALPHA;
-			_blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
-		} else {
-			_blendFunc.src = CC_BLEND_SRC;
-			_blendFunc.dst = CC_BLEND_DST;
-		}
+		self.blendMode = [CCBlendMode premultipliedAlphaMode];
 	}
 }
 
 -(BOOL) blendAdditive
 {
-	return( _blendFunc.src == GL_SRC_ALPHA && _blendFunc.dst == GL_ONE);
+	return (self.blendMode == [CCBlendMode addMode]);
 }
 
--(void) setBlendFunc:(ccBlendFunc)blendFunc
-{
-	if( _blendFunc.src != blendFunc.src || _blendFunc.dst != blendFunc.dst ) {
-		_blendFunc = blendFunc;
-		[self updateBlendFunc];
-	}
-}
 #pragma mark ParticleSystem - Total Particles Property
 
 - (void) setTotalParticles:(NSUInteger)tp
@@ -774,12 +665,13 @@
 -(void) setGravity:(CGPoint)g
 {
 	NSAssert( _emitterMode == CCParticleSystemModeGravity, @"Particle Mode should be Gravity");
-	_mode.A.gravity = g;
+	_mode.A.gravity = GLKVector2Make(g.x, g.y);
 }
 -(CGPoint) gravity
 {
 	NSAssert( _emitterMode == CCParticleSystemModeGravity, @"Particle Mode should be Gravity");
-	return _mode.A.gravity;
+	GLKVector2 g = _mode.A.gravity;
+	return CGPointMake(g.x, g.y);
 }
 
 -(void) setSpeed:(float)speed
@@ -874,27 +766,6 @@
 
 #pragma mark ParticleSystem - methods for batchNode rendering
 
--(CCParticleBatchNode*) batchNode
-{
-	return _batchNode;
-}
-
--(void) setBatchNode:(CCParticleBatchNode*) batchNode
-{
-	if( _batchNode != batchNode ) {
-
-		_batchNode = batchNode; // weak reference
-
-		if( batchNode ) {
-			//each particle needs a unique index
-			for (int i = 0; i < _totalParticles; i++)
-			{
-				_particles[i].atlasIndex=i;
-			}
-		}
-	}
-}
-
 //don't use a transform matrix, this is faster
 -(void) setScale:(float) s
 {
@@ -918,26 +789,6 @@
 {
 	_transformSystemDirty = YES;
 	[super setScaleY:newScaleY];
-}
-
-#pragma mark Particle - Helpers
-
--(void) updateBlendFunc
-{
-	NSAssert(! _batchNode, @"Can't change blending functions when the particle is being batched");
-
-	BOOL premultiplied = [_texture hasPremultipliedAlpha];
-
-	_opacityModifyRGB = NO;
-
-	if( _texture && ( _blendFunc.src == CC_BLEND_SRC && _blendFunc.dst == CC_BLEND_DST ) ) {
-		if( premultiplied )
-			_opacityModifyRGB = YES;
-		else {
-			_blendFunc.src = GL_SRC_ALPHA;
-			_blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
-		}
-	}
 }
 
 #pragma mark Color properties

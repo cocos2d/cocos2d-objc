@@ -56,20 +56,7 @@ typedef NS_ENUM(NSUInteger, CCProgressNodeType) {
   
  */
 
-@interface CCProgressNode : CCNode {
-	CCProgressNodeType	_type;
-	float				_percentage;
-	CCSprite			*_sprite;
-
-	int					_vertexDataCount;
-	ccV2F_C4B_T2F		*_vertexData;
-	CGPoint				_midpoint;
-	CGPoint				_barChangeRate;
-	BOOL				_reverseDirection;
-	
-	BOOL				_dirtyVertexData;
-	BOOL				_needsUpdateProgress;
-}
+@interface CCProgressNode : CCNode
 
 
 /// -----------------------------------------------------------------------

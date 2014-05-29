@@ -280,4 +280,9 @@
 
 @end
 
+// SpriteBuilder Support Ease
+@interface CCActionEaseInstant : CCActionEase <NSCopying>
+
+@end
+
 

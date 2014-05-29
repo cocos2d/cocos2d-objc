@@ -219,80 +219,56 @@
 	return [CCColor colorWithCcColor4f:ccc4FInterpolated(self.ccColor4f, toColor.ccColor4f, t)];
 }
 
-+ (CCColor*) blackColor
+static CCColor *BLACK_COLOR = nil;
+static CCColor *DARK_GRAY_COLOR = nil;
+static CCColor *LIGHT_GRAY_COLOR = nil;
+static CCColor *WHITE_COLOR = nil;
+static CCColor *GRAY_COLOR = nil;
+static CCColor *RED_COLOR = nil;
+static CCColor *GREEN_COLOR = nil;
+static CCColor *BLUE_COLOR = nil;
+static CCColor *CYAN_COLOR = nil;
+static CCColor *YELLOW_COLOR = nil;
+static CCColor *MAGENTA_COLOR = nil;
+static CCColor *ORANGE_COLOR = nil;
+static CCColor *PURPLE_COLOR = nil;
+static CCColor *BROWN_COLOR = nil;
+static CCColor *CLEAR_COLOR = nil;
+
++(void)initialize
 {
-    return [CCColor colorWithRed:0 green:0 blue:0 alpha:1];
+	BLACK_COLOR = [CCColor colorWithRed:0 green:0 blue:0 alpha:1];
+	DARK_GRAY_COLOR = [CCColor colorWithWhite:1.0/3.0 alpha:1];
+	LIGHT_GRAY_COLOR = [CCColor colorWithWhite:2.0/3.0 alpha:1];
+	WHITE_COLOR = [CCColor colorWithWhite:1 alpha:1];
+	GRAY_COLOR = [CCColor colorWithWhite:0.5 alpha:1];
+	RED_COLOR = [CCColor colorWithRed:1 green:0 blue:0 alpha:1];
+	GREEN_COLOR = [CCColor colorWithRed:0 green:1 blue:0 alpha:1];
+	BLUE_COLOR = [CCColor colorWithRed:0 green:0 blue:1 alpha:1];
+	CYAN_COLOR = [CCColor colorWithRed:0 green:1 blue:1 alpha:1];
+	YELLOW_COLOR = [CCColor colorWithRed:1 green:1 blue:0 alpha:1];
+	MAGENTA_COLOR = [CCColor colorWithRed:1 green:0 blue:1 alpha:1];
+	ORANGE_COLOR = [CCColor colorWithRed:1 green:0.5 blue:0 alpha:1];
+	PURPLE_COLOR = [CCColor colorWithRed:0.5 green:0 blue:0.5 alpha:1];
+	BROWN_COLOR = [CCColor colorWithRed:0.6 green:0.4 blue:0.2 alpha:1];
+	CLEAR_COLOR = [CCColor colorWithRed:0 green:0 blue:0 alpha:0];
 }
 
-+ (CCColor*) darkGrayColor
-{
-    return [CCColor colorWithWhite:1.0/3.0 alpha:1];
-}
-
-+ (CCColor*) lightGrayColor
-{
-    return [CCColor colorWithWhite:2.0/3.0 alpha:1];
-}
-
-+ (CCColor*) whiteColor
-{
-    return [CCColor colorWithWhite:1 alpha:1];
-}
-
-+ (CCColor*) grayColor
-{
-    return [CCColor colorWithWhite:0.5 alpha:1];
-}
-
-+ (CCColor*) redColor
-{
-    return [CCColor colorWithRed:1 green:0 blue:0 alpha:1];
-}
-
-+ (CCColor*) greenColor
-{
-    return [CCColor colorWithRed:0 green:1 blue:0 alpha:1];
-}
-
-+ (CCColor*) blueColor
-{
-    return [CCColor colorWithRed:0 green:0 blue:1 alpha:1];
-}
-
-+ (CCColor*) cyanColor
-{
-    return [CCColor colorWithRed:0 green:1 blue:1 alpha:1];
-}
-
-+ (CCColor*) yellowColor
-{
-    return [CCColor colorWithRed:1 green:1 blue:0 alpha:1];
-}
-
-+ (CCColor*) magentaColor
-{
-    return [CCColor colorWithRed:1 green:0 blue:1 alpha:1];
-}
-
-+ (CCColor*) orangeColor
-{
-    return [CCColor colorWithRed:1 green:0.5 blue:0 alpha:1];
-}
-
-+ (CCColor*) purpleColor
-{
-    return [CCColor colorWithRed:0.5 green:0 blue:0.5 alpha:1];
-}
-
-+ (CCColor*) brownColor
-{
-    return [CCColor colorWithRed:0.6 green:0.4 blue:0.2 alpha:1];
-}
-
-+ (CCColor*) clearColor
-{
-    return [CCColor colorWithRed:0 green:0 blue:0 alpha:0];
-}
++ (CCColor*) blackColor {return BLACK_COLOR;}
++ (CCColor*) darkGrayColor {return DARK_GRAY_COLOR;}
++ (CCColor*) lightGrayColor {return LIGHT_GRAY_COLOR;}
++ (CCColor*) whiteColor {return WHITE_COLOR;}
++ (CCColor*) grayColor {return GRAY_COLOR;}
++ (CCColor*) redColor {return RED_COLOR;}
++ (CCColor*) greenColor {return GREEN_COLOR;}
++ (CCColor*) blueColor {return BLUE_COLOR;}
++ (CCColor*) cyanColor {return CYAN_COLOR;}
++ (CCColor*) yellowColor {return YELLOW_COLOR;}
++ (CCColor*) magentaColor {return MAGENTA_COLOR;}
++ (CCColor*) orangeColor {return ORANGE_COLOR;}
++ (CCColor*) purpleColor {return PURPLE_COLOR;}
++ (CCColor*) brownColor {return BROWN_COLOR;}
++ (CCColor*) clearColor {return CLEAR_COLOR;}
 
 @end
 
@@ -314,6 +290,11 @@
     return [[CCColor alloc] initWithCcColor4f:c];
 }
 
++ (CCColor*) colorWithGLKVector4:(GLKVector4)c
+{
+    return [[CCColor alloc] initWithGLKVector4:c];
+}
+
 - (CCColor*) initWithCcColor3b: (ccColor3B) c
 {
     return [self initWithRed:c.r/255.0 green:c.g/255.0 blue:c.b/255.0 alpha:1];
@@ -325,6 +306,11 @@
 }
 
 - (CCColor*) initWithCcColor4f: (ccColor4F) c
+{
+    return [self initWithRed:c.r green:c.g blue:c.b alpha:c.a];
+}
+
+- (CCColor*) initWithGLKVector4: (GLKVector4) c
 {
     return [self initWithRed:c.r green:c.g blue:c.b alpha:c.a];
 }
@@ -342,6 +328,11 @@
 - (ccColor4F) ccColor4f
 {
     return ccc4f(_r, _g, _b, _a);
+}
+
+-(GLKVector4)glkVector4
+{
+	return GLKVector4Make(_r, _g, _b, _a);
 }
 
 @end

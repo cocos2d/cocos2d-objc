@@ -24,7 +24,12 @@
  */
 
 #import <Foundation/Foundation.h>
+
+#if CCB_SPRITEKIT_READER
+#import "CCBSpriteKitCompatibility.h"
+#else
 #import "cocos2d.h"
+#endif
 
 @class CCBAnimationManager;
 
@@ -37,7 +42,7 @@
  
  When all loading is complete, the didLoadFromCCB method will be called on all loaded nodes (if it has been implemented).
  
- If you are using animations a CCBAnimationManager will be assigned to all ccb-file root node's userObject properties. The top CCBAnimationManager is also assigned to the CCBReader's animationManager property.
+ If you are using animations a CCBAnimationManager will be assigned to all ccb-file root node's animationManager property. The top CCBAnimationManager is also assigned to the CCBReader's animationManager property.
  */
 @interface CCBReader : NSObject
 {
@@ -54,6 +59,7 @@
     CCBAnimationManager* animationManager;
     NSMutableDictionary* actionManagers;
     NSMutableSet* animatedProps;
+    NSMutableDictionary* nodeMapping;//Maps UUID -> Node
 }
 
 /// -----------------------------------------------------------------------
@@ -155,6 +161,13 @@
  *  Once a ccb-file has been loaded, the animationManager property will be set to contain the top level CCBAnimationManager
  */
 @property (nonatomic,strong) CCBAnimationManager* animationManager;
+
+
+// Internal use: override methods for Sprite Kit Reader subclass
++(void) setSceneSize:(CGSize)sceneSize;
+-(CCNode*) nodeFromClassName:(NSString*)nodeClassName;
+-(CCScene*) createScene;
+-(void) readerDidSetSpriteFrame:(CCSpriteFrame*)spriteFrame node:(CCNode*)node;
 
 @end
 

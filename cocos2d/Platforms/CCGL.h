@@ -43,6 +43,24 @@
 #import "Mac/CCGLView.h"
 #endif
 
+#if DEBUG
+#define CC_CHECK_GL_ERROR_DEBUG() __CC_CHECK_GL_ERROR_DEBUG(__FUNCTION__, __LINE__)
+static inline void __CC_CHECK_GL_ERROR_DEBUG(const char *function, int line)
+{
+	GLenum error;
+	while((error = glGetError())){
+		switch(error){
+			case GL_INVALID_ENUM: printf("OpenGL error GL_INVALID_ENUM detected at %s %d\n", function, line); break;
+			case GL_INVALID_VALUE: printf("OpenGL error GL_INVALID_VALUE detected at %s %d\n", function, line); break;
+			case GL_INVALID_OPERATION: printf("OpenGL error GL_INVALID_OPERATION detected at %s %d\n", function, line); break;
+			case GL_INVALID_FRAMEBUFFER_OPERATION: printf("OpenGL error GL_INVALID_FRAMEBUFFER_OPERATION detected at %s %d\n", function, line); break;
+			default: printf("OpenGL error 0x%04X detected at %s %d\n", error, function, line);
+		}
+	}
+}
+#else
+#define CC_CHECK_GL_ERROR_DEBUG()
+#endif
 
 // iOS
 #if __CC_PLATFORM_IOS

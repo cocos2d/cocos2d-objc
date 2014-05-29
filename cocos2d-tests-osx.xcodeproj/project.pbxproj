@@ -43,6 +43,12 @@
 		B7EE69F01819EB0E00B983FE /* CCLayoutTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69EF1819EB0E00B983FE /* CCLayoutTest.m */; };
 		B7EE6A30181B285700B983FE /* CCSliderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE6A2F181B285700B983FE /* CCSliderTest.m */; };
 		D389410E18639CC900725CFC /* CCPhysicsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D389410D18639CC900725CFC /* CCPhysicsTest.m */; };
+		D3AD532618C85006005B6CF3 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3AD532518C85006005B6CF3 /* GLKit.framework */; };
+		D3AD532E18C856AC005B6CF3 /* CCBMFontTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AD532818C856AC005B6CF3 /* CCBMFontTest.m */; };
+		D3AD532F18C856AC005B6CF3 /* CCRendererTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AD532918C856AC005B6CF3 /* CCRendererTest.m */; };
+		D3AD533018C856AC005B6CF3 /* CCSchedulerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AD532A18C856AC005B6CF3 /* CCSchedulerTest.m */; };
+		D3AD533218C856AC005B6CF3 /* SpritePerformanceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AD532C18C856AC005B6CF3 /* SpritePerformanceTest.m */; };
+		D3AD533318C856AC005B6CF3 /* VertexZTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AD532D18C856AC005B6CF3 /* VertexZTest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,26 +66,12 @@
 			remoteGlobalIDString = E01E663D121CA00A001A484F;
 			remoteInfo = cocos2d;
 		};
-		B78AE63217E7B2DE0028BE0B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B78AE62A17E7B2DE0028BE0B /* cocos2d-osx.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A06430E713C1414300CC5554;
-			remoteInfo = kazmath;
-		};
 		B78AE63417E7B2EF0028BE0B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B78AE62A17E7B2DE0028BE0B /* cocos2d-osx.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = E01E663C121CA00A001A484F;
 			remoteInfo = cocos2d;
-		};
-		B78AE63617E7B2EF0028BE0B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B78AE62A17E7B2DE0028BE0B /* cocos2d-osx.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A06430E613C1414300CC5554;
-			remoteInfo = kazmath;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -129,6 +121,12 @@
 		D389410D18639CC900725CFC /* CCPhysicsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCPhysicsTest.m; path = "cocos2d-ui-tests/tests/CCPhysicsTest.m"; sourceTree = SOURCE_ROOT; };
 		D389412F18639E4500725CFC /* libObjectiveChipmunk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libObjectiveChipmunk.a; path = DerivedData/cocos2d/Build/Products/Debug/libObjectiveChipmunk.a; sourceTree = "<group>"; };
 		D389413118639E5000725CFC /* libChipmunk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libChipmunk.a; path = external/Chipmunk/xcode/build/Debug/libChipmunk.a; sourceTree = "<group>"; };
+		D3AD532518C85006005B6CF3 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		D3AD532818C856AC005B6CF3 /* CCBMFontTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBMFontTest.m; path = "cocos2d-ui-tests/tests/CCBMFontTest.m"; sourceTree = SOURCE_ROOT; };
+		D3AD532918C856AC005B6CF3 /* CCRendererTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCRendererTest.m; path = "cocos2d-ui-tests/tests/CCRendererTest.m"; sourceTree = SOURCE_ROOT; };
+		D3AD532A18C856AC005B6CF3 /* CCSchedulerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSchedulerTest.m; path = "cocos2d-ui-tests/tests/CCSchedulerTest.m"; sourceTree = SOURCE_ROOT; };
+		D3AD532C18C856AC005B6CF3 /* SpritePerformanceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpritePerformanceTest.m; path = "cocos2d-ui-tests/tests/SpritePerformanceTest.m"; sourceTree = SOURCE_ROOT; };
+		D3AD532D18C856AC005B6CF3 /* VertexZTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VertexZTest.m; path = "cocos2d-ui-tests/tests/VertexZTest.m"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +134,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3AD532618C85006005B6CF3 /* GLKit.framework in Frameworks */,
 				B770609E1831B3F60043CC67 /* AVFoundation.framework in Frameworks */,
 				B78AE63817E7B2FC0028BE0B /* libcocos2d.a in Frameworks */,
 				B78AE47C17E7B13C0028BE0B /* QuartzCore.framework in Frameworks */,
@@ -182,6 +181,7 @@
 		B78AE47A17E7B13C0028BE0B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D3AD532518C85006005B6CF3 /* GLKit.framework */,
 				D389413118639E5000725CFC /* libChipmunk.a */,
 				D389412F18639E4500725CFC /* libObjectiveChipmunk.a */,
 				B770609D1831B3F60043CC67 /* AVFoundation.framework */,
@@ -243,7 +243,6 @@
 			isa = PBXGroup;
 			children = (
 				B78AE63117E7B2DE0028BE0B /* libcocos2d.a */,
-				B78AE63317E7B2DE0028BE0B /* libkazmath.a */,
 				A6FCD02318816B09009CDEED /* libObjectiveChipmunk.a */,
 			);
 			name = Products;
@@ -272,6 +271,11 @@
 		B7C6238217EBC7A600928F91 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				D3AD532818C856AC005B6CF3 /* CCBMFontTest.m */,
+				D3AD532918C856AC005B6CF3 /* CCRendererTest.m */,
+				D3AD532A18C856AC005B6CF3 /* CCSchedulerTest.m */,
+				D3AD532C18C856AC005B6CF3 /* SpritePerformanceTest.m */,
+				D3AD532D18C856AC005B6CF3 /* VertexZTest.m */,
 				D389410D18639CC900725CFC /* CCPhysicsTest.m */,
 				B79DEE1618105B7C00A653C9 /* CCTransitionTest.m */,
 				B7C6238417EBC7C200928F91 /* CCScrollViewTest.m */,
@@ -291,6 +295,7 @@
 				75FCA702185F88C2006E7468 /* TilemapTest.m */,
 			);
 			name = Tests;
+			path = "cocos2d-ui-tests/tests";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -308,7 +313,6 @@
 			);
 			dependencies = (
 				B78AE63517E7B2EF0028BE0B /* PBXTargetDependency */,
-				B78AE63717E7B2EF0028BE0B /* PBXTargetDependency */,
 			);
 			name = "cocos2d-ui-tests-osx";
 			productName = "cocos2d-ui-tests-osx";
@@ -363,13 +367,6 @@
 			remoteRef = B78AE63017E7B2DE0028BE0B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B78AE63317E7B2DE0028BE0B /* libkazmath.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libkazmath.a;
-			remoteRef = B78AE63217E7B2DE0028BE0B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -395,19 +392,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3AD532F18C856AC005B6CF3 /* CCRendererTest.m in Sources */,
 				75FCA703185F88C2006E7468 /* CCLabelTTFTest.m in Sources */,
 				B7EE69F01819EB0E00B983FE /* CCLayoutTest.m in Sources */,
+				D3AD533018C856AC005B6CF3 /* CCSchedulerTest.m in Sources */,
 				B7C6238517EBC7C200928F91 /* CCScrollViewTest.m in Sources */,
 				B7EE6A30181B285700B983FE /* CCSliderTest.m in Sources */,
 				B7EE698518187BC900B983FE /* CCSprite9SliceTest.m in Sources */,
 				B7C6239617F10F0600928F91 /* CCTableViewTest.m in Sources */,
 				B7EE697318186CFA00B983FE /* CCTextFieldTest.m in Sources */,
 				D389410E18639CC900725CFC /* CCPhysicsTest.m in Sources */,
+				D3AD532E18C856AC005B6CF3 /* CCBMFontTest.m in Sources */,
+				D3AD533218C856AC005B6CF3 /* SpritePerformanceTest.m in Sources */,
 				B77060B21832EDF90043CC67 /* CCTextureCacheTest.m in Sources */,
 				B79DEE1718105B7C00A653C9 /* CCTransitionTest.m in Sources */,
 				75FCA706185F88C2006E7468 /* ColorTest.m in Sources */,
 				B770601A1831B0080043CC67 /* ObjectALTest.m in Sources */,
 				758A690C1843DBAD00D1A8D2 /* ParallaxTest.m in Sources */,
+				D3AD533318C856AC005B6CF3 /* VertexZTest.m in Sources */,
 				75FCA707185F88C2006E7468 /* ParticleTest.m in Sources */,
 				75FCA708185F88C2006E7468 /* TextureTest.m in Sources */,
 				75FCA709185F88C2006E7468 /* TilemapTest.m in Sources */,
@@ -425,11 +427,6 @@
 			isa = PBXTargetDependency;
 			name = cocos2d;
 			targetProxy = B78AE63417E7B2EF0028BE0B /* PBXContainerItemProxy */;
-		};
-		B78AE63717E7B2EF0028BE0B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = kazmath;
-			targetProxy = B78AE63617E7B2EF0028BE0B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

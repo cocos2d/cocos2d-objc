@@ -54,6 +54,7 @@
 			<key>Frameworks</key>
 			<array>
 				<string>QuartzCore</string>
+				<string>GLKit</string>
 				<string>OpenGL</string>
 				<string>OpenAL</string>
 				<string>AVFoundation</string>

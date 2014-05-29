@@ -311,11 +311,11 @@ if $INSTALL ; then
 	printf " ${GREEN}✔${COLOREND}\n"
 
 	# Copy kazmath files
-	echo -n "...copying kazmath files"
-	LIBS_DIR="$DST_DIR/Support/Libraries/lib_kazmath.xctemplate/Libraries/"
-	copy_files "external/kazmath" "$LIBS_DIR"
-	copy_files "LICENSE_Kazmath.txt" "$LIBS_DIR"
-	printf " ${GREEN}✔${COLOREND}\n"	
+	#echo -n "...copying kazmath files"
+	#LIBS_DIR="$DST_DIR/Support/Libraries/lib_kazmath.xctemplate/Libraries/"
+	#copy_files "external/kazmath" "$LIBS_DIR"
+	#copy_files "LICENSE_Kazmath.txt" "$LIBS_DIR"
+	#printf " ${GREEN}✔${COLOREND}\n"	
 
 	# Copy CCBReader files
 	echo -n "...copying CCBReader files"

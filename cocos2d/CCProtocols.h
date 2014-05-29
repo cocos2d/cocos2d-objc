@@ -31,16 +31,59 @@
 
 @class CCTexture;
 @class CCDirector;
+@class CCBlendMode;
+@class CCShader;
+@class CCRenderState;
+@class CCEffect;
+
+#pragma mark - CCShaderProtocol
+
+/// Properties for controlling the shader of a CCNode when it renders.
+/// These properties are already implemented by CCNode, but not normally exposed.
+@protocol CCShaderProtocol <NSObject>
+
+@optional
+
+/// The shader this node will be drawn using.
+@property(nonatomic, strong) CCShader *shader;
+/// The dictionary of shader uniform values that will be passed to the shader.
+@property(nonatomic, readonly) NSMutableDictionary *shaderUniforms;
+
+/// The rendering state this node will use when rendering.
+@property(nonatomic, readonly) CCRenderState *renderState;
+
+@end
+
+#pragma mark - CCEffectProtocol
+
+@protocol CCEffectProtocol <NSObject>
+
+#if CC_ENABLE_EXPERIMENTAL_EFFECTS
+/** Effect which will be applied to this sprite, NOTE: effect will overwrite any custom CCShader settings. */
+@property (nonatomic) CCEffect* effect;
+#endif
+
+@end
 
 #pragma mark - CCBlendProtocol
 /**
  You can specify the blending function.
  */
 @protocol CCBlendProtocol <NSObject>
+
+@optional
+
+/// The blending mode that will be used to render this node.
+@property(nonatomic, readwrite, strong) CCBlendMode *blendMode;
+
+/// The rendering state this node will use when rendering.
+@property(nonatomic, readonly) CCRenderState *renderState;
+
 /** set the source blending function for the texture */
--(void) setBlendFunc:(ccBlendFunc)blendFunc;
+-(void) setBlendFunc:(ccBlendFunc)blendFunc __attribute__((deprecated));
 /** returns the blending function used for the texture */
--(ccBlendFunc) blendFunc;
+-(ccBlendFunc) blendFunc __attribute__((deprecated));
+
 @end
 
 
@@ -55,11 +98,17 @@
  But you can change the blending function at any time.
  */
 @protocol CCTextureProtocol <CCBlendProtocol>
-/** returns the used texture */
--(CCTexture*) texture;
-/** sets a new texture. it will be retained */
--(void) setTexture:(CCTexture*)texture;
+
+@optional
+
+/// The main texture that will be passed to this node's shader.
+@property(nonatomic, strong) CCTexture *texture;
+
+/// The rendering state this node will use when rendering.
+@property(nonatomic, readonly) CCRenderState *renderState;
+
 @end
+
 
 #pragma mark - CCLabelProtocol
 /** Common interface for Labels */
@@ -83,7 +132,7 @@
 
 @optional
 /** Called by CCDirector when the projection is updated, and "custom" projection is used */
--(void) updateProjection;
+-(GLKMatrix4) updateProjection;
 
 #ifdef __CC_PLATFORM_IOS
 /** Returns a Boolean value indicating whether the CCDirector supports the specified orientation. Default value is YES (supports all possible orientations) */

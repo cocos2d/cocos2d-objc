@@ -39,12 +39,7 @@
 /**
  * CCNodeColor is a subclass of CCNode that is used to generate solid colors.
  */
-@interface CCNodeColor : CCNode <CCBlendProtocol> {
-	ccVertex2F	_squareVertices[4];
-	ccColor4F	_squareColors[4];
-	ccBlendFunc	_blendFunc;
-}
-
+@interface CCNodeColor : CCNode <CCShaderProtocol, CCBlendProtocol>
 
 /// -----------------------------------------------------------------------
 /// @name Creating a CCNodeColor Object
@@ -95,9 +90,6 @@
  */
 -(id) initWithColor:(CCColor*)color;
 
-/** Blend method to use. */
-@property (nonatomic,readwrite) ccBlendFunc blendFunc;
-
 @end
 
 #pragma mark - CCNodeGradient
@@ -121,7 +113,6 @@
 @interface CCNodeGradient : CCNodeColor {
 	ccColor4F _endColor;
 	CGPoint _vector;
-	BOOL	_compressedInterpolation;
 }
 
 
@@ -196,11 +187,11 @@
 /** The vector along which to fade color. */
 @property (nonatomic, readwrite) CGPoint vector;
 
-/** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors.
- *
+/**
+ *	Deprecated in 3.1. All colors are correctly displayed across the node's rectangle.
  *  Default: YES.
  */
-@property (nonatomic, readwrite) BOOL compressedInterpolation;
+@property (nonatomic, readwrite) BOOL compressedInterpolation __attribute__((deprecated));
 
 @end
 

@@ -28,12 +28,9 @@
 
 #import "ccMacros.h"
 #import "CCTextureCache.h"
-#import "CCGLProgram.h"
-#import "CCShaderCache.h"
-#import "ccGLStateCache.h"
+#import "CCShader.h"
 #import "CCDirector.h"
 #import "Support/CGPointExtension.h"
-#import "Support/TransformUtils.h"
 #import "CCSprite_Private.h"
 
 #import "CCNode_Private.h"
@@ -41,14 +38,24 @@
 
 #import "CCTexture_Private.h"
 
-// extern
-#import "kazmath/GL/matrix.h"
-
 #define kProgressTextureCoordsCount 4
 //  kProgressTextureCoords holds points {0,1} {0,0} {1,0} {1,1} we can represent it as bits
 const char kCCProgressTextureCoords = 0x4b;
 
-@interface CCProgressNode ()
+@interface CCProgressNode () {
+	CCProgressNodeType _type;
+	float _percentage;
+	CCSprite *_sprite;
+
+	int _vertexCount;
+	CCVertex *_verts;
+	CGPoint _midpoint;
+	CGPoint _barChangeRate;
+	BOOL _reverseDirection;
+	
+	BOOL _dirtyVertexData;
+	BOOL _needsUpdateProgress;
+}
 
 -(void)updateProgress;
 -(void)updateBar;
@@ -65,8 +72,6 @@ const char kCCProgressTextureCoords = 0x4b;
 @synthesize reverseDirection = _reverseDirection;
 @synthesize midpoint = _midpoint;
 @synthesize barChangeRate = _barChangeRate;
-@synthesize vertexData = _vertexData;
-@synthesize vertexDataCount = _vertexDataCount;
 
 +(id)progressWithSprite:(CCSprite*) sprite
 {
@@ -85,8 +90,8 @@ const char kCCProgressTextureCoords = 0x4b;
 		_type = CCProgressNodeTypeRadial;
 		_reverseDirection = NO;
 		_percentage = 0.f;
-		_vertexData = NULL;
-		_vertexDataCount = 0;
+		_verts = NULL;
+		_vertexCount = 0;
 		
 		self.anchorPoint = ccp(0.5f,0.5f);
 		self.midpoint = ccp(0.5f, 0.5f);
@@ -95,18 +100,21 @@ const char kCCProgressTextureCoords = 0x4b;
 		
 		_dirtyVertexData = NO;
 		_needsUpdateProgress = YES;
-		
-		// shader program
-		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
 	}
+	
 	return self;
+}
+
+-(void)freeVertexData
+{
+	free(_verts);
+	_verts = NULL;
+	_vertexCount = 0;
 }
 
 -(void)dealloc
 {
-	if(_vertexData){
-		free(_vertexData);
-	}
+	[self freeVertexData];
 }
 
 -(void)setPercentage:(float)percentage
@@ -178,30 +186,38 @@ const char kCCProgressTextureCoords = 0x4b;
 ///
 //	@returns the vertex position from the texture coordinate
 ///
--(ccTex2F)textureCoordFromAlphaPoint:(CGPoint) alpha
+-(GLKVector2)textureCoordFromAlphaPoint:(CGPoint) alpha
 {
 	if (!_sprite) {
-		return (ccTex2F){0,0};
+		return GLKVector2Make(0.0f, 0.0f);
 	}
-	ccV3F_C4B_T2F_Quad quad = _sprite.quad;
-	CGPoint min = (CGPoint){quad.bl.texCoords.u,quad.bl.texCoords.v};
-	CGPoint max = (CGPoint){quad.tr.texCoords.u,quad.tr.texCoords.v};
+	
+	const CCSpriteVertexes *verts = _sprite.vertexes;
+	GLKVector2 min = verts->bl.texCoord1;
+	GLKVector2 max = verts->tr.texCoord1;
   //  Fix bug #1303 so that progress timer handles sprite frame texture rotation
   if (_sprite.textureRectRotated) {
     CC_SWAP(alpha.x, alpha.y);
   }
-	return (ccTex2F){min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y};
+	
+	// As of 3.1, the x alpha needs to be flipped. Not really sure why.
+	alpha.x = 1.0 - alpha.x;
+	return GLKVector2Make(min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y);
 }
 
--(ccVertex2F)vertexFromAlphaPoint:(CGPoint) alpha
+-(GLKVector4)vertexFromAlphaPoint:(CGPoint) alpha
 {
 	if (!_sprite) {
-		return (ccVertex2F){0.f, 0.f};
+		return GLKVector4Make(0.0f, 0.0f, 0.0f, 1.0f);
 	}
-	ccV3F_C4B_T2F_Quad quad = _sprite.quad;
-	CGPoint min = (CGPoint){quad.bl.vertices.x,quad.bl.vertices.y};
-	CGPoint max = (CGPoint){quad.tr.vertices.x,quad.tr.vertices.y};
-	return (ccVertex2F){min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y};
+	
+	const CCSpriteVertexes *verts = _sprite.vertexes;
+	GLKVector4 min = verts->br.position;
+	GLKVector4 max = verts->tl.position;
+	
+	// As of 3.1, the x alpha needs to be flipped. Not really sure why.
+	alpha.x = 1.0 - alpha.x;
+	return GLKVector4Make(min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y, 0.0f, 1.0f);
 }
 
 -(void)updateColor
@@ -209,10 +225,10 @@ const char kCCProgressTextureCoords = 0x4b;
 	if (!_sprite) {
 		return;
 	}
-	if(_vertexData){
-		ccColor4B sc = _sprite.quad.tl.colors;
-		for (int i=0; i < _vertexDataCount; ++i) {
-			_vertexData[i].colors = sc;
+	if(_verts){
+		GLKVector4 sc = _sprite.vertexes->br.color;
+		for (int i=0; i < _vertexCount; ++i) {
+			_verts[i].color = sc;
 		}
 	}
 }
@@ -221,11 +237,10 @@ const char kCCProgressTextureCoords = 0x4b;
 {
 	if (_dirtyVertexData){
 		// remove the vertex data if the type, direction, or sprite have changed 
-		if (_vertexData) {
-			free(_vertexData);
-			_vertexData = NULL;
-			_vertexDataCount = 0;
+		if (_verts) {
+			[self freeVertexData];
 		}
+		
 		_dirtyVertexData = NO;
 	}
         
@@ -352,20 +367,16 @@ const char kCCProgressTextureCoords = 0x4b;
 	//	the 3 is for the _midpoint, 12 o'clock point and hitpoint position.
   
 	BOOL sameIndexCount = YES;
-	if(_vertexDataCount != index + 3){
+	if(_vertexCount != index + 3){
 		sameIndexCount = NO;
-		if(_vertexData){
-			free(_vertexData);
-			_vertexData = NULL;
-			_vertexDataCount = 0;
-		}
+		[self freeVertexData];
 	}
   
   
-	if(!_vertexData) {
-		_vertexDataCount = index + 3;
-		_vertexData = malloc(_vertexDataCount * sizeof(ccV2F_C4B_T2F));
-		NSAssert( _vertexData, @"CCProgressTimer. Not enough memory");
+	if(!_verts) {
+		_vertexCount = index + 3;
+		_verts = calloc(_vertexCount, sizeof(*_verts));
+		NSAssert( _verts, @"CCProgressTimer. Not enough memory");
 	}
 	[self updateColor];
   
@@ -373,22 +384,22 @@ const char kCCProgressTextureCoords = 0x4b;
     
 		//	First we populate the array with the _midpoint, then all
 		//	vertices/texcoords/colors of the 12 'o clock start and edges and the hitpoint
-		_vertexData[0].texCoords = [self textureCoordFromAlphaPoint:_midpoint];
-		_vertexData[0].vertices = [self vertexFromAlphaPoint:_midpoint];
+		_verts[0].texCoord1 = [self textureCoordFromAlphaPoint:_midpoint];
+		_verts[0].position = [self vertexFromAlphaPoint:_midpoint];
     
-		_vertexData[1].texCoords = [self textureCoordFromAlphaPoint:topMid];
-		_vertexData[1].vertices = [self vertexFromAlphaPoint:topMid];
+		_verts[1].texCoord1 = [self textureCoordFromAlphaPoint:topMid];
+		_verts[1].position = [self vertexFromAlphaPoint:topMid];
     
 		for(int i = 0; i < index; ++i){
 			CGPoint alphaPoint = [self boundaryTexCoord:i];
-			_vertexData[i+2].texCoords = [self textureCoordFromAlphaPoint:alphaPoint];
-			_vertexData[i+2].vertices = [self vertexFromAlphaPoint:alphaPoint];
+			_verts[i+2].texCoord1 = [self textureCoordFromAlphaPoint:alphaPoint];
+			_verts[i+2].position = [self vertexFromAlphaPoint:alphaPoint];
 		}
 	}
   
 	//	hitpoint will go last
-	_vertexData[_vertexDataCount - 1].texCoords = [self textureCoordFromAlphaPoint:hit];
-	_vertexData[_vertexDataCount - 1].vertices = [self vertexFromAlphaPoint:hit];
+	_verts[_vertexCount - 1].texCoord1 = [self textureCoordFromAlphaPoint:hit];
+	_verts[_vertexCount - 1].position = [self vertexFromAlphaPoint:hit];
 }
 
 ///
@@ -432,63 +443,63 @@ const char kCCProgressTextureCoords = 0x4b;
   
   
 	if (!_reverseDirection) {
-		if(!_vertexData) {
-			_vertexDataCount = 4;
-			_vertexData = malloc(_vertexDataCount * sizeof(ccV2F_C4B_T2F));
-			NSAssert( _vertexData, @"CCProgressTimer. Not enough memory");
+		if(!_verts) {
+			_vertexCount = 4;
+			_verts = calloc(_vertexCount, sizeof(*_verts));
+			NSAssert( _verts, @"CCProgressTimer. Not enough memory");
 		}
 		//	TOPLEFT
-		_vertexData[0].texCoords = [self textureCoordFromAlphaPoint:ccp(min.x,max.y)];
-		_vertexData[0].vertices = [self vertexFromAlphaPoint:ccp(min.x,max.y)];
+		_verts[0].texCoord1 = [self textureCoordFromAlphaPoint:ccp(min.x,max.y)];
+		_verts[0].position = [self vertexFromAlphaPoint:ccp(min.x,max.y)];
     
 		//	BOTLEFT
-		_vertexData[1].texCoords = [self textureCoordFromAlphaPoint:ccp(min.x,min.y)];
-		_vertexData[1].vertices = [self vertexFromAlphaPoint:ccp(min.x,min.y)];
+		_verts[1].texCoord1 = [self textureCoordFromAlphaPoint:ccp(min.x,min.y)];
+		_verts[1].position = [self vertexFromAlphaPoint:ccp(min.x,min.y)];
     
 		//	TOPRIGHT
-		_vertexData[2].texCoords = [self textureCoordFromAlphaPoint:ccp(max.x,max.y)];
-		_vertexData[2].vertices = [self vertexFromAlphaPoint:ccp(max.x,max.y)];
+		_verts[2].texCoord1 = [self textureCoordFromAlphaPoint:ccp(max.x,max.y)];
+		_verts[2].position = [self vertexFromAlphaPoint:ccp(max.x,max.y)];
     
 		//	BOTRIGHT
-		_vertexData[3].texCoords = [self textureCoordFromAlphaPoint:ccp(max.x,min.y)];
-		_vertexData[3].vertices = [self vertexFromAlphaPoint:ccp(max.x,min.y)];
+		_verts[3].texCoord1 = [self textureCoordFromAlphaPoint:ccp(max.x,min.y)];
+		_verts[3].position = [self vertexFromAlphaPoint:ccp(max.x,min.y)];
 	} else {
-		if(!_vertexData) {
-			_vertexDataCount = 8;
-			_vertexData = malloc(_vertexDataCount * sizeof(ccV2F_C4B_T2F));
-			NSAssert( _vertexData, @"CCProgressTimer. Not enough memory");
+		if(!_verts) {
+			_vertexCount = 8;
+			_verts = calloc(_vertexCount, sizeof(*_verts));
+			NSAssert( _verts, @"CCProgressTimer. Not enough memory");
 			//	TOPLEFT 1
-			_vertexData[0].texCoords = [self textureCoordFromAlphaPoint:ccp(0,1)];
-			_vertexData[0].vertices = [self vertexFromAlphaPoint:ccp(0,1)];
+			_verts[0].texCoord1 = [self textureCoordFromAlphaPoint:ccp(0,1)];
+			_verts[0].position = [self vertexFromAlphaPoint:ccp(0,1)];
       
 			//	BOTLEFT 1
-			_vertexData[1].texCoords = [self textureCoordFromAlphaPoint:ccp(0,0)];
-			_vertexData[1].vertices = [self vertexFromAlphaPoint:ccp(0,0)];
+			_verts[1].texCoord1 = [self textureCoordFromAlphaPoint:ccp(0,0)];
+			_verts[1].position = [self vertexFromAlphaPoint:ccp(0,0)];
       
 			//	TOPRIGHT 2
-			_vertexData[6].texCoords = [self textureCoordFromAlphaPoint:ccp(1,1)];
-			_vertexData[6].vertices = [self vertexFromAlphaPoint:ccp(1,1)];
+			_verts[6].texCoord1 = [self textureCoordFromAlphaPoint:ccp(1,1)];
+			_verts[6].position = [self vertexFromAlphaPoint:ccp(1,1)];
       
 			//	BOTRIGHT 2
-			_vertexData[7].texCoords = [self textureCoordFromAlphaPoint:ccp(1,0)];
-			_vertexData[7].vertices = [self vertexFromAlphaPoint:ccp(1,0)];
+			_verts[7].texCoord1 = [self textureCoordFromAlphaPoint:ccp(1,0)];
+			_verts[7].position = [self vertexFromAlphaPoint:ccp(1,0)];
 		}
     
 		//	TOPRIGHT 1
-		_vertexData[2].texCoords = [self textureCoordFromAlphaPoint:ccp(min.x,max.y)];
-		_vertexData[2].vertices = [self vertexFromAlphaPoint:ccp(min.x,max.y)];
+		_verts[2].texCoord1 = [self textureCoordFromAlphaPoint:ccp(min.x,max.y)];
+		_verts[2].position = [self vertexFromAlphaPoint:ccp(min.x,max.y)];
     
 		//	BOTRIGHT 1
-		_vertexData[3].texCoords = [self textureCoordFromAlphaPoint:ccp(min.x,min.y)];
-		_vertexData[3].vertices = [self vertexFromAlphaPoint:ccp(min.x,min.y)];
+		_verts[3].texCoord1 = [self textureCoordFromAlphaPoint:ccp(min.x,min.y)];
+		_verts[3].position = [self vertexFromAlphaPoint:ccp(min.x,min.y)];
     
 		//	TOPLEFT 2
-		_vertexData[4].texCoords = [self textureCoordFromAlphaPoint:ccp(max.x,max.y)];
-		_vertexData[4].vertices = [self vertexFromAlphaPoint:ccp(max.x,max.y)];
+		_verts[4].texCoord1 = [self textureCoordFromAlphaPoint:ccp(max.x,max.y)];
+		_verts[4].position = [self vertexFromAlphaPoint:ccp(max.x,max.y)];
     
 		//	BOTLEFT 2
-		_vertexData[5].texCoords = [self textureCoordFromAlphaPoint:ccp(max.x,min.y)];
-		_vertexData[5].vertices = [self vertexFromAlphaPoint:ccp(max.x,min.y)];
+		_verts[5].texCoord1 = [self textureCoordFromAlphaPoint:ccp(max.x,min.y)];
+		_verts[5].position = [self vertexFromAlphaPoint:ccp(max.x,min.y)];
 	}
 	[self updateColor];
 }
@@ -505,49 +516,49 @@ const char kCCProgressTextureCoords = 0x4b;
 	return CGPointZero;
 }
 
--(void) draw
+-(void)visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
+{
+	[super visit:renderer parentTransform:parentTransform];
+}
+
+-(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
 	if (_needsUpdateProgress) {
 		[self updateProgress];
 		_needsUpdateProgress = NO;
 	}
 	
-	if (!_vertexData || !_sprite)
-		return;
+	if(!_verts || !_sprite)return;
   
-	CC_NODE_DRAW_SETUP();
-  
-	ccGLBlendFunc( _sprite.blendFunc.src, _sprite.blendFunc.dst );
-  
-	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );
-  
-	ccGLBindTexture2D( _sprite.texture.name );
-  
-  glVertexAttribPointer( kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]) , &_vertexData[0].vertices);
-  glVertexAttribPointer( kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]), &_vertexData[0].texCoords);
-  glVertexAttribPointer( kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(_vertexData[0]), &_vertexData[0].colors);
-  
-	if(_type == CCProgressNodeTypeRadial)
-	{
-		glDrawArrays(GL_TRIANGLE_FAN, 0, _vertexDataCount);
-	} 
-	else if (_type == CCProgressNodeTypeBar)
-	{
-		if (!_reverseDirection)
-		{
-			glDrawArrays(GL_TRIANGLE_STRIP, 0, _vertexDataCount);
+	if(_type == CCProgressNodeTypeRadial){
+		int triangles = _vertexCount - 2;
+		CCRenderBuffer buffer = [renderer enqueueTriangles:triangles andVertexes:_vertexCount withState:_sprite.renderState globalSortOrder:0];
+		
+		for(int i=0; i<_vertexCount; i++){
+			CCRenderBufferSetVertex(buffer, i, CCVertexApplyTransform(_verts[i], transform));
 		}
-		else
-		{
-			glDrawArrays(GL_TRIANGLE_STRIP, 0, _vertexDataCount/2);
-			glDrawArrays(GL_TRIANGLE_STRIP, 4, _vertexDataCount/2);
-			
-			// 2 draw calls
-			CC_INCREMENT_GL_DRAWS(1);
+		
+		for(int i=0; i<triangles; i++){
+			CCRenderBufferSetTriangle(buffer, i, 0, i + 1, i + 2);
+		}
+	} else if (_type == CCProgressNodeTypeBar){
+		int triangles = _vertexCount/2;
+		CCRenderBuffer buffer = [renderer enqueueTriangles:triangles andVertexes:_vertexCount withState:_sprite.renderState globalSortOrder:0];
+		
+		for(int i=0; i<_vertexCount; i++){
+			CCRenderBufferSetVertex(buffer, i, CCVertexApplyTransform(_verts[i], transform));
+		}
+		
+		if (!_reverseDirection){
+			CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
+			CCRenderBufferSetTriangle(buffer, 1, 1, 2, 3);
+		} else {
+			CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
+			CCRenderBufferSetTriangle(buffer, 1, 1, 2, 3);
+			CCRenderBufferSetTriangle(buffer, 2, 4, 5, 6);
+			CCRenderBufferSetTriangle(buffer, 3, 5, 6, 7);
 		}
 	}
-	CC_INCREMENT_GL_DRAWS(1);
-  
 }
 
 @end

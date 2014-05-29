@@ -27,39 +27,4 @@
 
 @interface CCSprite ()
 
-// Whether or not the Sprite needs to be updated in the Atlas.
-@property (nonatomic,readwrite) BOOL dirty;
-
-// The quad (tex coords, vertex coords and color) information.
-@property (nonatomic,readonly) ccV3F_C4B_T2F_Quad quad;
-
-// The index used on the TextureAtlas. Don't modify this value unless you know what you are doing.
-@property (nonatomic,readwrite) NSUInteger atlasIndex;
-
-// Weak reference of the CCTextureAtlas used when the sprite is rendered using a CCSpriteBatchNode.
-@property (nonatomic,readwrite,unsafe_unretained) CCTextureAtlas *textureAtlas;
-
-// Weak reference to the CCSpriteBatchNode that renders the CCSprite.
-@property (nonatomic,readwrite,unsafe_unretained) CCSpriteBatchNode *batchNode;
-
-#pragma mark CCSprite - BatchNode
-
-// Updates the quad according the the rotation, position, scale values.
--(void) updateTransform;
-
-/* 
- Set the vertex rect. It will be called internally by setTextureRect.
- Useful if you want to create 2x images from SD images in Retina Display.  
- Do not call it manually. Use setTextureRect instead.
-*/
--(void) setVertexRect:(CGRect)rect;
-
-#pragma mark CCSprite - Animation
-
-/* 
- Changes the display frame with animation name and index. 
- The animation name will be retried from the CCAnimationCache.
-*/
--(void) setSpriteFrameWithAnimationName:(NSString*)animationName index:(int) frameIndex;
-
 @end

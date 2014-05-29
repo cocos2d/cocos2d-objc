@@ -28,22 +28,15 @@
 @class CCBSequenceProperty;
 
 @interface CCBSequence : NSObject
-{
-    float duration;
-    NSString* name;
-    int sequenceId;
-    int chainedSequenceId;
-    
-    // Channels
-    CCBSequenceProperty* callbackChannel;
-    CCBSequenceProperty* soundChannel;
-}
 
 @property (nonatomic,assign) float duration;
-@property (nonatomic,copy) NSString* name;
+@property (nonatomic,assign) float time;
+@property (nonatomic,copy)   NSString* name;
 @property (nonatomic,assign) int sequenceId;
 @property (nonatomic,assign) int chainedSequenceId;
+@property (nonatomic,assign) int loops; // @todo
 
+// Channels
 @property (nonatomic,strong) CCBSequenceProperty* callbackChannel;
 @property (nonatomic,strong) CCBSequenceProperty* soundChannel;
 

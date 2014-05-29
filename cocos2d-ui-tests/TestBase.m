@@ -40,7 +40,7 @@
     self.contentNode = [CCNode node];
     self.contentNode.contentSizeType = CCSizeTypeMake(CCSizeUnitNormalized, CCSizeUnitInsetUIPoints);
     self.contentNode.contentSize = CGSizeMake(1, 44);
-		self.contentNode.name = @"TestBase Content Node";
+    self.contentNode.name = @"TestBase Content Node";
 	
     [self addChild:self.contentNode];
     

@@ -31,8 +31,8 @@
 
 #import "CCProtocols.h"
 #import "Platforms/CCGL.h"
-#import "kazmath/mat4.h"
 #import "CCResponderManager.h"
+#import "CCRenderer.h"
 
 /**
  Possible OpenGL projections used by director
@@ -53,7 +53,7 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 };
 
 
-@class CCLabelAtlas;
+@class CCFPSLabel;
 @class CCScene;
 @class CCScheduler;
 @class CCActionManager;
@@ -98,9 +98,9 @@ and when to execute the Scenes.
 
 	CCTime		_accumDt;
 	CCTime		_frameRate;
-	CCLabelAtlas *_FPSLabel;
-	CCLabelAtlas *_SPFLabel;
-	CCLabelAtlas *_drawsLabel;
+	CCFPSLabel *_FPSLabel;
+	CCFPSLabel *_SPFLabel;
+	CCFPSLabel *_drawsLabel;
 
 	/* is the running scene paused */
 	BOOL _isPaused;
@@ -135,7 +135,7 @@ and when to execute the Scenes.
 	CCDirectorProjection _projection;
 
 	/* CCDirector delegate */
-	id<CCDirectorDelegate>	__unsafe_unretained _delegate;
+	__weak id<CCDirectorDelegate> _delegate;
 
 	/* window size in points */
 	CGSize	_winSizeInPoints;
@@ -144,23 +144,28 @@ and when to execute the Scenes.
 	CGSize	_winSizeInPixels;
 
 	/* the cocos2d running thread */
-	NSThread	*__unsafe_unretained _runningThread;
+	__weak NSThread *_runningThread;
 
 	/* scheduler associated with this director */
 	CCScheduler *_scheduler;
 
 	/* action manager associated with this director */
 	CCActionManager *_actionManager;
+
+    /* fixed timestep action manager associated with this director */
+    CCActionManager *_actionManagerFixed;
 	
 	/*  OpenGLView. On iOS it is a copy of self.view */
 	CCGLView		*__view;
+	
+	CCRenderer *_renderer;
 }
 
 /** returns the cocos2d thread.
  If you want to run any cocos2d task, run it in this thread.
  Typically this is the main thread.
  */
-@property (unsafe_unretained, readonly, nonatomic ) NSThread *runningThread;
+@property (weak, readonly, nonatomic ) NSThread *runningThread;
 /** The current running Scene. Director can only run one Scene at the time */
 @property (nonatomic, readonly) CCScene* runningScene;
 /** The FPS value */
@@ -187,7 +192,7 @@ and when to execute the Scenes.
 
 /** CCDirector delegate. It shall implement the CCDirectorDelegate protocol
  */
-@property (nonatomic, readwrite, unsafe_unretained) id<CCDirectorDelegate> delegate;
+@property (nonatomic, readwrite, weak) id<CCDirectorDelegate> delegate;
 
 /** Content scaling factor. Sets the ratio of Cocos2D "points" to pixels. Default value is initalized from the content scale of the GL view used by the director.
  */
@@ -200,6 +205,12 @@ and when to execute the Scenes.
 /// User definable value that is used for default contentSizes of many node types (CCScene, CCNodeColor, etc).
 /// Defaults to the view size.
 @property(nonatomic, assign) CGSize designSize;
+
+/// Projection matrix used for rendering.
+@property(nonatomic, readonly) GLKMatrix4 projectionMatrix;
+
+/// The current global shader values values.
+@property(nonatomic, readonly) NSMutableDictionary *globalShaderUniforms;
 
 /** returns a shared instance of the director */
 +(CCDirector*)sharedDirector;
@@ -308,6 +319,13 @@ and when to execute the Scenes.
  */
 - (void) popToRootScene;
 
+/**Pops out all scenes from the queue until the root scene in the queue, using a transition
+ *
+ * This scene will replace the running one.
+ * Internally it will call `popToRootScene`
+ */
+-(void) popToRootSceneWithTransition:(CCTransition *)transition;
+
 /** Replaces the running scene with a new one. The running scene is terminated.
  *
  * ONLY call it if there is a running scene.
@@ -386,24 +404,6 @@ and when to execute the Scenes.
  */
 -(void) purgeCachedData;
 
-// OpenGL Helper
-
-/** sets the OpenGL default values */
--(void) setGLDefaultValues;
-
-/**
- *  Enables/disables OpenGL alpha blending.
- *
- *  @param on Set to YES to enable alpha blending.
- */
-- (void) setAlphaBlending: (BOOL) on;
-
-/**
- *  Enables/disables OpenGL depth test.
- *
- *  @param on Set to YES to enable depth tests.
- */
-- (void) setDepthTest: (BOOL) on;
 @end
 
 // optimization. Should only be used to read it. Never to write it.

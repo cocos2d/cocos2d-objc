@@ -39,19 +39,14 @@
 #import "../../CCTextureCache.h"
 #import "../../ccMacros.h"
 #import "../../CCScene.h"
-#import "../../CCGLProgram.h"
-#import "../../ccGLStateCache.h"
+#import "../../CCShader.h"
 #import "../../ccFPSImages.h"
 #import "../../CCConfiguration.h"
+#import "CCRenderer_private.h"
 
 // support imports
-#import "../../Support/OpenGL_Internal.h"
 #import "../../Support/CGPointExtension.h"
-#import "../../Support/TransformUtils.h"
 #import "../../Support/CCFileUtils.h"
-
-#import "kazmath/kazmath.h"
-#import "kazmath/GL/matrix.h"
 
 #if CC_ENABLE_PROFILERS
 #import "../../Support/CCProfiling.h"
@@ -112,39 +107,37 @@
     /* calculate "global" dt */
 	[self calculateDeltaTime];
 
-	CCGLView *openGLview = (CCGLView*)[self view];
-
-	[EAGLContext setCurrentContext: [openGLview context]];
+	CCGLView *openGLview = (CCGLView*)self.view;
+	[EAGLContext setCurrentContext:openGLview.context];
 
 	/* tick before glClear: issue #533 */
-	if( ! _isPaused )
-		[_scheduler update: _dt];
-
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	if( ! _isPaused ) [_scheduler update: _dt];
 
 	/* to avoid flickr, nextScene MUST be here: after tick and before draw.
 	 XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
-	if( _nextScene )
-		[self setNextScene];
-
-	kmGLPushMatrix();
-
-	[_runningScene visit];
-
-	[_notificationNode visit];
-
-	if( _displayStats )
-		[self showStats];
-
-	kmGLPopMatrix();
+	if( _nextScene ) [self setNextScene];
+	
+	GLKMatrix4 projection = self.projectionMatrix;
+	_renderer.globalShaderUniforms = [self updateGlobalShaderUniforms];
+	
+	[CCRenderer bindRenderer:_renderer];
+	[_renderer invalidateState];
+	
+	[_renderer enqueueClear:(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) color:_runningScene.colorRGBA.glkVector4 depth:1.0f stencil:0 globalSortOrder:NSIntegerMin];
+	
+	// Render
+	[_runningScene visit:_renderer parentTransform:&projection];
+	[_notificationNode visit:_renderer parentTransform:&projection];
+	if( _displayStats ) [self showStats];
+	
+	[_renderer flush];
+	[CCRenderer bindRenderer:nil];
+	
+	[openGLview swapBuffers];
 
 	_totalFrames++;
 
-	[openGLview swapBuffers];
-
-	if( _displayStats )
-		[self calculateMPF];
-    
+	if( _displayStats ) [self calculateMPF];
 }
 
 -(void) setViewport
@@ -161,47 +154,22 @@
 
 	switch (projection) {
 		case CCDirectorProjection2D:
-
-			kmGLMatrixMode(KM_GL_PROJECTION);
-			kmGLLoadIdentity();
-
-			kmMat4 orthoMatrix;
-			kmMat4OrthographicProjection(&orthoMatrix, 0, sizePoint.width, 0, sizePoint.height, -1024, 1024 );
-			kmGLMultMatrix( &orthoMatrix );
-
-			kmGLMatrixMode(KM_GL_MODELVIEW);
-			kmGLLoadIdentity();
+			_projectionMatrix = GLKMatrix4MakeOrtho(0, sizePoint.width, 0, sizePoint.height, -1024, 1024 );
 			break;
 
-		case CCDirectorProjection3D:
-		{
-			float zeye = [self getZEye];
+		case CCDirectorProjection3D: {
+			float zeye = sizePoint.height*sqrtf(3.0f)/2.0f;
+			_projectionMatrix = GLKMatrix4Multiply(
+				GLKMatrix4MakePerspective(CC_DEGREES_TO_RADIANS(60), (float)sizePoint.width/sizePoint.height, 0.1f, zeye*2),
+				GLKMatrix4MakeTranslation(-sizePoint.width/2.0, -sizePoint.height/2, -zeye)
+			);
 
-			kmMat4 matrixPerspective, matrixLookup;
-
-			kmGLMatrixMode(KM_GL_PROJECTION);
-			kmGLLoadIdentity();
-
-			// issue #1334
-			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)sizePoint.width/sizePoint.height, 0.1f, zeye*2);
-//			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
-
-			kmGLMultMatrix(&matrixPerspective);
-
-			kmGLMatrixMode(KM_GL_MODELVIEW);
-			kmGLLoadIdentity();
-			kmVec3 eye, center, up;
-			kmVec3Fill( &eye, sizePoint.width/2, sizePoint.height/2, zeye );
-			kmVec3Fill( &center, sizePoint.width/2, sizePoint.height/2, 0 );
-			kmVec3Fill( &up, 0, 1, 0);
-			kmMat4LookAt(&matrixLookup, &eye, &center, &up);
-			kmGLMultMatrix(&matrixLookup);
 			break;
 		}
 
 		case CCDirectorProjectionCustom:
 			if( [_delegate respondsToSelector:@selector(updateProjection)] )
-				[_delegate updateProjection];
+				_projectionMatrix = [_delegate updateProjection];
 			break;
 
 		default:
@@ -210,8 +178,6 @@
 	}
 
 	_projection = projection;
-
-	ccSetProjectionMatrixDirty();
 	[self createStatsLabel];
 }
 

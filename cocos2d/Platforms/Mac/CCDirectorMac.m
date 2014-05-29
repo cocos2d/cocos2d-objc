@@ -39,15 +39,14 @@
 #import "../../CCScene.h"
 #import "../../CCScheduler.h"
 #import "../../ccMacros.h"
-#import "../../CCGLProgram.h"
-#import "../../ccGLStateCache.h"
+#import "../../CCShader.h"
 #import "../../ccFPSImages.h"
  
 // external
-#import "kazmath/kazmath.h"
-#import "kazmath/GL/matrix.h"
+#import <GLKit/GLKMath.h>
 
 #import "CCDirector_Private.h"
+#import "CCRenderer_private.h"
 
 #pragma mark -
 #pragma mark Director Mac extensions
@@ -257,58 +256,47 @@
 
 -(void) setProjection:(CCDirectorProjection)projection
 {
-	CGSize size = _winSizeInPoints;
+	CGSize sizePoint = _winSizeInPoints;
 	if( _resizeMode == kCCDirectorResize_AutoScale && ! CGSizeEqualToSize(_originalWinSizeInPoints, CGSizeZero ) ) {
-		size = _originalWinSizeInPoints;
+		sizePoint = _originalWinSizeInPoints;
 	}
 
 	[self setViewport];
 
 	switch (projection) {
 		case CCDirectorProjection2D:
-
-			kmGLMatrixMode(KM_GL_PROJECTION);
-			kmGLLoadIdentity();
-
-			kmMat4 orthoMatrix;
-			kmMat4OrthographicProjection(&orthoMatrix, 0, size.width, 0, size.height, -1024, 1024);
-			kmGLMultMatrix( &orthoMatrix );
-
-			kmGLMatrixMode(KM_GL_MODELVIEW);
-			kmGLLoadIdentity();
+			_projectionMatrix = GLKMatrix4MakeOrtho(0, sizePoint.width, 0, sizePoint.height, -1024, 1024 );
 			break;
 
 
-		case CCDirectorProjection3D:
-		{
-
-			float zeye = [self getZEye];
-
-			kmGLMatrixMode(KM_GL_PROJECTION);
-			kmGLLoadIdentity();
-
-			kmMat4 matrixPerspective, matrixLookup;
-
-			// issue #1334
-			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, MAX(zeye*2,1500) );
-//			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
-
-
-			kmGLMultMatrix(&matrixPerspective);
-
-
-			kmGLMatrixMode(KM_GL_MODELVIEW);
-			kmGLLoadIdentity();
-			kmVec3 eye, center, up;
-
-			float eyeZ = size.height * zeye / size.height;
-
-			kmVec3Fill( &eye, size.width/2, size.height/2, eyeZ );
-			kmVec3Fill( &center, size.width/2, size.height/2, 0 );
-			kmVec3Fill( &up, 0, 1, 0);
-			kmMat4LookAt(&matrixLookup, &eye, &center, &up);
-			kmGLMultMatrix(&matrixLookup);
-			break;
+		case CCDirectorProjection3D: {
+//			float zeye = [self getZEye];
+//
+//			kmGLMatrixMode(KM_GL_PROJECTION);
+//			kmGLLoadIdentity();
+//
+//			kmMat4 matrixPerspective, matrixLookup;
+//
+//			// issue #1334
+//			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, MAX(zeye*2,1500) );
+////			kmMat4PerspectiveProjection( &matrixPerspective, 60, (GLfloat)size.width/size.height, 0.1f, 1500);
+//
+//
+//			kmGLMultMatrix(&matrixPerspective);
+//
+//
+//			kmGLMatrixMode(KM_GL_MODELVIEW);
+//			kmGLLoadIdentity();
+//			kmVec3 eye, center, up;
+//
+//			float eyeZ = size.height * zeye / size.height;
+//
+//			kmVec3Fill( &eye, size.width/2, size.height/2, eyeZ );
+//			kmVec3Fill( &center, size.width/2, size.height/2, 0 );
+//			kmVec3Fill( &up, 0, 1, 0);
+//			kmMat4LookAt(&matrixLookup, &eye, &center, &up);
+//			kmGLMultMatrix(&matrixLookup);
+//			break;
 		}
 
 		case CCDirectorProjectionCustom:
@@ -322,8 +310,6 @@
 	}
 
 	_projection = projection;
-
-	ccSetProjectionMatrixDirty();
 	[self createStatsLabel];
 }
 
@@ -558,29 +544,27 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	[self.view lockOpenGLContext];
 
 	/* tick before glClear: issue #533 */
-	if( ! _isPaused )
-		[_scheduler update: _dt];
-
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	if( ! _isPaused ) [_scheduler update: _dt];
 
 	/* to avoid flickr, nextScene MUST be here: after tick and before draw.
 	 XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
-	if( _nextScene )
-		[self setNextScene];
+	if( _nextScene ) [self setNextScene];
 
-	kmGLPushMatrix();
-
-
-	/* draw the scene */
+	GLKMatrix4 projection = self.projectionMatrix;
+	_renderer.globalShaderUniforms = [self updateGlobalShaderUniforms];
+	
+	[CCRenderer bindRenderer:_renderer];
+	[_renderer invalidateState];
+	
+	[_renderer enqueueClear:(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) color:_runningScene.colorRGBA.glkVector4 depth:1.0f stencil:0 globalSortOrder:NSIntegerMin];
+	
+	// Render
 	[_runningScene visit];
-
-	/* draw the notification node */
 	[_notificationNode visit];
-
-	if( _displayStats )
-		[self showStats];
-
-	kmGLPopMatrix();
+	if( _displayStats ) [self showStats];
+	
+	[_renderer flush];
+	[CCRenderer bindRenderer:nil];
 
 	_totalFrames++;
 	
@@ -590,8 +574,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 
 	[self.view unlockOpenGLContext];
 
-	if( _displayStats )
-		[self calculateMPF];
+	if( _displayStats ) [self calculateMPF];
 }
 
 // set the event dispatcher

@@ -29,6 +29,7 @@
 #import <objc/runtime.h>
 
 #define kCCTestMenuItemHeight 44
+static CGPoint scrollPosition;
 
 @implementation MainMenu
 
@@ -98,6 +99,7 @@
     tableView.rowHeight = kCCTestMenuItemHeight;
     tableView.rowHeightUnit = CCSizeUnitUIPoints;
     tableView.dataSource = self;
+	tableView.scrollPosition = scrollPosition;
     
     [self addChild:tableView z:-1];
     
@@ -109,6 +111,7 @@
 - (void) selectedRow:(id)sender
 {
     CCTableView* tableView = sender;
+	scrollPosition = tableView.scrollPosition;
     
     NSString* className = [[self testClassNames] objectAtIndex:tableView.selectedRow];
     

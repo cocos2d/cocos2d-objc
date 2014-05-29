@@ -26,23 +26,8 @@
 
 @interface CCParticleSystemBase ()
 
-// Weak reference to the CCSpriteBatchNode that particle.
-@property (nonatomic,readwrite,unsafe_unretained) CCParticleBatchNode *batchNode;
-
-// Altas Index.
-@property (nonatomic,readwrite) NSUInteger atlasIndex;
-
-// Should be overriden by subclasses.
--(void) updateQuadWithParticle:(_CCParticle*)particle newPosition:(CGPoint)pos;
-
-// Should be overriden by subclasses.
--(void) postStep;
-
 // Update.
 -(void) update: (CCTime) dt;
-
-// Update without time.
--(void) updateWithNoTime;
 
 // System full status.
 -(BOOL) isFull;

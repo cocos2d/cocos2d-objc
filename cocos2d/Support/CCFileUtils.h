@@ -87,7 +87,7 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  * On Mac HD   : Mac HD, Mac, Resources without resolution
  * On Mac      : Mac, Resources without resolution
  
- By default this functionality is off;
+ By default this functionality is on;
  */
 @property (nonatomic, readwrite, getter = isEnablediPhoneResourcesOniPad) BOOL enableiPhoneResourcesOniPad;
 

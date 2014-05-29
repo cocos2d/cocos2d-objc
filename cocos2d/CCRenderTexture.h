@@ -29,8 +29,7 @@
 #import "ccMacros.h"
 #import "CCNode.h"
 #import "CCSprite.h"
-#import "Support/OpenGL_Internal.h"
-#import "kazmath/mat4.h"
+#import "CCTexture.h"
 
 #ifdef __CC_PLATFORM_IOS
 #import <UIKit/UIKit.h>
@@ -58,21 +57,6 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
 
  */
 @interface CCRenderTexture : CCNode
-{
-	GLuint				_FBO;
-	GLuint				_depthRenderBufffer;
-	GLint				_oldFBO;
-	CCTexture*		_texture;
-	CCSprite*			_sprite;
-	GLenum				_pixelFormat;
-
-	// code for "auto" update
-	GLbitfield			_clearFlags;
-	ccColor4F			_clearColor;
-	GLclampf			_clearDepth;
-	GLint				_clearStencil;
-	BOOL				_autoDraw;
-}
 
 /** The CCSprite being used.
  The sprite, by default, will use the following blending function: GL_ONE, GL_ONE_MINUS_SRC_ALPHA.
@@ -93,6 +77,10 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
  Will be enabled in the future.
  */
 @property (nonatomic, readwrite) BOOL autoDraw;
+
+@property (nonatomic, readwrite) GLKMatrix4 projection;
+@property (nonatomic, readwrite) float contentScale;
+@property (nonatomic, readonly) CCTexture *texture;
 
 // ---------------------------------------------------------------------
 /**
@@ -154,6 +142,9 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
  *  @return An initialized CCRenderTarget object.
  */
 - (id)initWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat)format depthStencilFormat:(GLuint)depthStencilFormat;
+
+
+- (id)init;
 
 /** 
  *  Starts rendering to the texture whitout clearing the texture first. 
@@ -249,6 +240,26 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
  *  @return YES if the operation is successful.
  */
 -(BOOL)saveToFile:(NSString*)name format:(CCRenderTextureImageFormat)format;
+
+/**
+ *  Saves the texture into a file using JPEG format.
+ *
+ *  @param filePath File path to save image to.
+ *
+ *  @return YES if the operation was successful.
+ */
+-(BOOL)saveToFilePath:(NSString*)filePath;
+
+/**
+ *  Saves the texture into a file. The format could be JPG or PNG.
+ *
+ *  @param filePath   File path to save image to.
+ *  @param format File format.
+ *
+ *  @return YES if the operation was successful.
+ */
+-(BOOL)saveToFilePath:(NSString*)filePath format:(CCRenderTextureImageFormat)format;
+
 
 #ifdef __CC_PLATFORM_IOS
 

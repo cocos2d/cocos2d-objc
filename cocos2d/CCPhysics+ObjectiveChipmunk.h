@@ -79,6 +79,12 @@ static inline cpTransform CGAFFINETRANSFORM_TO_CPTRANSFORM(CGAffineTransform t){
 /** The rotation of the body relative to the space. */
 @property(nonatomic, assign) CGFloat absoluteRadians;
 
+/** The position of the body relative to its parent node. */
+@property(nonatomic, assign) CGPoint relativePosition;
+
+/** The rotation of the body relative to its parent node. */
+@property(nonatomic, assign) CGFloat relativeRotation;
+
 /** The transform of the body relative to the space. */
 @property(nonatomic, readonly) CGAffineTransform absoluteTransform;
 
@@ -87,6 +93,10 @@ static inline cpTransform CGAFFINETRANSFORM_TO_CPTRANSFORM(CGAffineTransform t){
 
 /** Implements the ChipmunkObject protocol. */
 @property(nonatomic, readonly) NSArray *chipmunkObjects;
+
+/** Is static bodies transform dirty to animations */
+@property(nonatomic, readonly) BOOL isKinematicTransformDirty;
+
 
 /**
  *  Add joint to body.
@@ -124,6 +134,12 @@ static inline cpTransform CGAFFINETRANSFORM_TO_CPTRANSFORM(CGAffineTransform t){
  */
 -(void)didRemoveFromPhysicsNode:(CCPhysicsNode *)physics;
 
+
+/**
+ *  For static bodies that are now in motion, update their kinetic properties.
+ */
+-(void)updateKinetics:(CCTime)delta;
+
 @end
 
 
@@ -153,16 +169,27 @@ static inline cpTransform CGAFFINETRANSFORM_TO_CPTRANSFORM(CGAffineTransform t){
  */
 -(void)didRemoveFromPhysicsNode:(CCPhysicsNode *)physics;
 
+
+/**
+ *  TODO: 
+ *
+ *  @param transform Non riged transform.
+ */
+-(void)rescaleShape:(cpTransform)transform;
 @end
 
 
 @interface CCPhysicsJoint(ObjectiveChipmunk)<ChipmunkObject>
+
 
 /** Access to the underlying Objective-Chipmunk object. */
 @property(nonatomic, readonly) ChipmunkConstraint *constraint;
 
 /** Returns YES if the body is currently added to a physicsNode. */
 @property(nonatomic, readonly) BOOL isRunning;
+
+/** Joints can be scaled, which updates their max/min lenghts, restLengths and stiffness. */
+@property(nonatomic, assign) float scale;
 
 /**
  *  Add the join to the physics node, but only if both connected bodies are running.
@@ -185,6 +212,12 @@ static inline cpTransform CGAFFINETRANSFORM_TO_CPTRANSFORM(CGAffineTransform t){
  */
 -(void)willAddToPhysicsNode:(CCPhysicsNode *)physics;
 
+/**
+ *	Used to initialize the scale to a setting without adjusting the min/max/rest lengths.
+ *
+ * @param scale to be reset to.
+ */
+-(void)resetScale:(float)_scale;
 @end
 
 
@@ -200,6 +233,9 @@ static inline cpTransform CGAFFINETRANSFORM_TO_CPTRANSFORM(CGAffineTransform t){
 
 /** Access to the underlying Objective-Chipmunk object. */
 @property(nonatomic, readonly) ChipmunkSpace *space;
+
+/** List of nodes that are currently kinetic due to parent animations*/
+@property(nonatomic, readonly) NSMutableSet * kineticNodes;
 
 /**
  *  Intern and copy a string to ensure it can be checked by reference
@@ -242,5 +278,7 @@ static inline cpTransform CGAFFINETRANSFORM_TO_CPTRANSFORM(CGAffineTransform t){
  *  @return Array of collision categories.
  */
 -(NSArray *)categoriesForBitmask:(cpBitmask)categories;
+
+
 
 @end

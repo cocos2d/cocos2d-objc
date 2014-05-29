@@ -26,28 +26,19 @@
  */
 
 #import "CCSprite9Slice.h"
+#import "CCSprite_Private.h"
 #import "CCTexture_Private.h"
-#import "CCDrawingPrimitives.h"
+#import "CCNode_Private.h"
 
 // ---------------------------------------------------------------------
 
 const float CCSprite9SliceMarginDefault         = 1.0f/3.0f;
-
-typedef NS_ENUM(NSInteger, CCSprite9SliceSizes)
-{
-    CCSprite9SliceStrips                        = 3,
-    CCSprite9SliceVerticesX                     = 4,
-    CCSprite9SliceVerticesY                     = 4,
-    CCSprite9SliceVertices                      = 8,
-};
 
 // ---------------------------------------------------------------------
 
 @implementation CCSprite9Slice
 {
     CGSize _originalContentSize;
-    ccV3F_C4B_T2F _quadNine[(CCSprite9SliceVerticesX * CCSprite9SliceVerticesY) + CCSprite9SliceVertices];
-    BOOL _quadNineDirty;
 }
 
 // ---------------------------------------------------------------------
@@ -58,14 +49,11 @@ typedef NS_ENUM(NSInteger, CCSprite9SliceSizes)
 {
     self = [super initWithTexture:texture rect:rect rotated:rotated];
     NSAssert(self != nil, @"Unable to create class");
+		
+    _originalContentSize = self.contentSizeInPoints;
     
     // initialize new parts in 9slice
-    _marginLeft = CCSprite9SliceMarginDefault;
-    _marginRight = CCSprite9SliceMarginDefault;
-    _marginTop = CCSprite9SliceMarginDefault;
-    _marginBottom = CCSprite9SliceMarginDefault;
-    
-    _quadNineDirty = YES;
+		self.margin = CCSprite9SliceMarginDefault;
     
     // done
     return(self);
@@ -84,7 +72,6 @@ typedef NS_ENUM(NSInteger, CCSprite9SliceSizes)
     
     // save the original sizes for texture calculations
     _originalContentSize = self.contentSizeInPoints;
-    _quadNineDirty = YES;
     
     if (!CGSizeEqualToSize(oldContentSize, CGSizeZero))
     {
@@ -94,184 +81,92 @@ typedef NS_ENUM(NSInteger, CCSprite9SliceSizes)
 }
 
 // ---------------------------------------------------------------------
-#pragma mark - lerping functions
-// ---------------------------------------------------------------------
-
-- (ccVertex3F)vertex3FLerp:(ccVertex3F)min max:(ccVertex3F)max alpha:(CGPoint)alpha
-{
-    return((ccVertex3F)
-           {
-               (min.x * (1 - alpha.x)) + (max.x * alpha.x),
-               (min.y * (1 - alpha.y)) + (max.y * alpha.y),
-               min.z
-           });
-}
-
-- (ccTex2F)tex2FLerp:(ccTex2F)min max:(ccTex2F)max alpha:(CGPoint)alpha
-{
-    if (_rectRotated)
-        return((ccTex2F)
-               {
-                   (min.u * (1 - alpha.y)) + (max.u * alpha.y),
-                   (min.v * (1 - alpha.x)) + (max.v * alpha.x)
-               });
-    return((ccTex2F)
-           {
-               (min.u * (1 - alpha.x)) + (max.u * alpha.x),
-               (min.v * (1 - alpha.y)) + (max.v * alpha.y)
-           });
-}
-
-- (ccColor4B)color4BLerp:(ccColor4B)min max:(ccColor4B)max alpha:(CGPoint)alpha
-{
-    return(min);
-}
-
-// ---------------------------------------------------------------------
-#pragma mark - vertice calculation
-// ---------------------------------------------------------------------
-// TODO: Implement a dirty flag
-
-- (void)calculateQuadNine
-{
-    float alphaX[CCSprite9SliceVerticesX];
-    float alphaY[CCSprite9SliceVerticesY];
-    float alphaTexX[CCSprite9SliceVerticesX];
-    float alphaTexY[CCSprite9SliceVerticesY];
-    ccV3F_C4B_T2F min, max;
-    
-    // calculate interpolation min and max
-    min.vertices = _quad.bl.vertices;
-    min.texCoords = _quad.bl.texCoords;
-    
-    CGSize physicalSize = CGSizeMake(
-                                     self.contentSizeInPoints.width + _rect.size.width - _originalContentSize.width,
-                                     self.contentSizeInPoints.height + _rect.size.height - _originalContentSize.height);
-    max.vertices = (ccVertex3F)
-    {
-        _quad.bl.vertices.x + physicalSize.width,
-        _quad.bl.vertices.y + physicalSize.height,
-        _quad.tr.vertices.z
-    };
-    max.texCoords = _quad.tr.texCoords;
-    
-    // calculate alpha
-    alphaX[0] = 0;
-    alphaX[1] = _marginLeft / (physicalSize.width / _rect.size.width);
-    alphaX[2] = 1 - _marginRight / (physicalSize.width / _rect.size.width);
-    alphaX[3] = 1;
-    
-    alphaY[0] = 0;
-    alphaY[1] = _marginBottom / (physicalSize.height / _rect.size.height);
-    alphaY[2] = 1 - _marginTop / (physicalSize.height / _rect.size.height);
-    alphaY[3] = 1;
-    
-    alphaTexX[0] = 0;
-    alphaTexX[1] = _marginLeft;
-    alphaTexX[2] = 1 - _marginRight;
-    alphaTexX[3] = 1;
-    
-    alphaTexY[0] = 0;
-    alphaTexY[1] = _marginBottom;
-    alphaTexY[2] = 1 - _marginTop;
-    alphaTexY[3] = 1;
-    
-    
-    for (int strip = 0; strip < CCSprite9SliceStrips; strip ++)
-    {
-        for (int col = 0; col < CCSprite9SliceVerticesX; col ++)
-        {
-            int index = 2 * ((strip * CCSprite9SliceVerticesX) + col);
-            
-            _quadNine[index].vertices = [self vertex3FLerp:min.vertices max:max.vertices alpha:ccp(alphaX[col],alphaY[strip])];
-            _quadNine[index].texCoords = [self tex2FLerp:min.texCoords max:max.texCoords alpha:ccp(alphaTexX[col],alphaTexY[strip])];
-            _quadNine[index].colors = _quad.bl.colors;
-
-            index ++;
-            
-            _quadNine[index].vertices = [self vertex3FLerp:min.vertices max:max.vertices alpha:ccp(alphaX[col],alphaY[strip+1])];
-            _quadNine[index].texCoords = [self tex2FLerp:min.texCoords max:max.texCoords alpha:ccp(alphaTexX[col],alphaTexY[strip+1])];
-            _quadNine[index].colors = _quad.bl.colors;
-
-        }
-    }
-    
-    _quadNineDirty = NO;
-}
-
-// ---------------------------------------------------------------------
 #pragma mark - draw
-// ---------------------------------------------------------------------
-// this completely overrides draw of CCSprite
-// sprite is divided into 9 quads, and rendered as 3 triangle strips
-// 
 
--( void )draw
+static GLKMatrix4
+PositionInterpolationMatrix(const CCSpriteVertexes *verts, const GLKMatrix4 *transform)
 {
-    if (!_texture) return;
-    
-    CC_PROFILER_START_CATEGORY(kCCProfilerCategorySprite, @"CCSprite9Slice - draw");
-    
-	CC_NODE_DRAW_SETUP();
-    
-	ccGLBlendFunc(_blendFunc.src, _blendFunc.dst);
-    
-	ccGLBindTexture2D([_texture name]);
-    
-	// enable buffers
-	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex);
-    
-    // calculate quad 9
-    // TODO: Enable dirty functionality
-    // Disabled, as it for some reason does not work on CCButton
-    
-    // if (_quadNineDirty) [self calculateQuadNine];
-    [self calculateQuadNine];
-    
-    // set the buffer positions
-    // position
-    glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, sizeof(ccV3F_C4B_T2F), (void *)&_quadNine[0].vertices);
-    // texCoods
-    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(ccV3F_C4B_T2F), (void *)&_quadNine[0].texCoords);
-    // color
-    glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(ccV3F_C4B_T2F), (void *)&_quadNine[0].colors);
-    
-    // loop through strips
-    for (int strip = 0; strip < CCSprite9SliceStrips; strip ++)
-    {
-        // draw
-        glDrawArrays(GL_TRIANGLE_STRIP, strip * CCSprite9SliceVertices, CCSprite9SliceVertices);
-    }
-    
-    // check for errors
-	CHECK_GL_ERROR_DEBUG();
-    
-    
-#if CC_SPRITE_DEBUG_DRAW == 1
-	// draw bounding box
-	CGPoint vertices[4] =
-    {
-		ccp(_quad.bl.vertices.x,_quad.bl.vertices.y),
-		ccp(_quad.bl.vertices.x + _contentSize.width,_quad.bl.vertices.y),
-		ccp(_quad.bl.vertices.x + _contentSize.width,_quad.bl.vertices.y + _contentSize.height),
-		ccp(_quad.bl.vertices.x,_quad.bl.vertices.y + _contentSize.height),
-	};
-	ccDrawPoly(vertices, 4, YES);
-#elif CC_SPRITE_DEBUG_DRAW == 2
-	// draw texture box
-	CGSize s = self.textureRect.size;
-	CGPoint offsetPix = self.offsetPosition;
-	CGPoint vertices[4] =
-    {
-		ccp(offsetPix.x,offsetPix.y), ccp(offsetPix.x+s.width,offsetPix.y),
-		ccp(offsetPix.x+s.width,offsetPix.y+s.height), ccp(offsetPix.x,offsetPix.y+s.height)
-	};
-	ccDrawPoly(vertices, 4, YES);
-#endif // CC_SPRITE_DEBUG_DRAW
-    
-	CC_INCREMENT_GL_DRAWS(1);
-    
-	CC_PROFILER_STOP_CATEGORY(kCCProfilerCategorySprite, @"CCSprite9Slice - draw");
+	GLKVector4 origin = verts->bl.position;
+	GLKVector4 basisX = GLKVector4Subtract(verts->br.position, origin);
+	GLKVector4 basisY = GLKVector4Subtract(verts->tl.position, origin);
+	
+	return GLKMatrix4Multiply(*transform, GLKMatrix4Make(
+		basisX.x, basisX.y, basisX.z, 0.0f,
+		basisY.x, basisY.y, basisY.z, 0.0f,
+				0.0f,     0.0f,     1.0f, 0.0f,
+		origin.x, origin.y, origin.z, 1.0f
+	));
+}
+
+static GLKMatrix3
+TexCoordInterpolationMatrix(const CCSpriteVertexes *verts)
+{
+	GLKVector2 origin = verts->bl.texCoord1;
+	GLKVector2 basisX = GLKVector2Subtract(verts->br.texCoord1, origin);
+	GLKVector2 basisY = GLKVector2Subtract(verts->tl.texCoord1, origin);
+	
+	return GLKMatrix3Make(
+		basisX.x, basisX.y, 0.0f,
+		basisY.x, basisY.y, 0.0f,
+		origin.x, origin.y, 1.0f
+	);
+}
+
+// TODO This is sort of brute force. Could probably use some optimization after profiling.
+// Could it be done in a vertex shader using the texCoord2 attribute?
+-(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
+{
+	// Don't draw rects that were originally sizeless. CCButtons in tableviews are like this.
+	// Not really sure it's intended behavior or not.
+	if(_originalContentSize.width == 0 && _originalContentSize.height == 0) return;
+	
+	CGSize size = self.contentSizeInPoints;
+	CGSize rectSize = self.textureRect.size;
+	
+	CGSize physicalSize = CGSizeMake(
+		size.width + rectSize.width - _originalContentSize.width,
+		size.height + rectSize.height - _originalContentSize.height
+	);
+	
+	// Lookup tables for alpha coefficients.
+	float scaleX = physicalSize.width/rectSize.width;
+	float scaleY = physicalSize.height/rectSize.height;
+	
+	float alphaX2[4];
+	alphaX2[0] = 0;
+	alphaX2[1] = _marginLeft / (physicalSize.width / rectSize.width);
+	alphaX2[2] = 1 - _marginRight / (physicalSize.width / rectSize.width);
+	alphaX2[3] = 1;
+	const float alphaX[4] = {0.0f, _marginLeft, scaleX - _marginRight, scaleX};
+	const float alphaY[4] = {0.0f, _marginBottom, scaleY - _marginTop, scaleY};
+	
+	const float alphaTexX[4] = {0.0f, _marginLeft, 1.0f - _marginRight, 1.0f};
+	const float alphaTexY[4] = {0.0f, _marginBottom, 1.0f - _marginTop, 1.0f};
+	
+	// Interpolation matrices for the vertexes and texture coordinates
+	const CCSpriteVertexes *_verts = self.vertexes;
+	GLKMatrix4 interpolatePosition = PositionInterpolationMatrix(_verts, transform);
+	GLKMatrix3 interpolateTexCoord = TexCoordInterpolationMatrix(_verts);
+	GLKVector4 color = _verts->bl.color;
+	
+	CCRenderBuffer buffer = [renderer enqueueTriangles:18 andVertexes:16 withState:self.renderState globalSortOrder:0];
+	
+	// Interpolate the vertexes!
+	for(int y=0; y<4; y++){
+		for(int x=0; x<4; x++){
+			GLKVector4 position = GLKMatrix4MultiplyVector4(interpolatePosition, GLKVector4Make(alphaX[x], alphaY[y], 0.0f, 1.0f));
+			GLKVector3 texCoord = GLKMatrix3MultiplyVector3(interpolateTexCoord, GLKVector3Make(alphaTexX[x], alphaTexY[y], 1.0f));
+			CCRenderBufferSetVertex(buffer, y*4 + x, (CCVertex){position, GLKVector2Make(texCoord.x, texCoord.y), GLKVector2Make(0.0f, 0.0f), color});
+		}
+	}
+	
+	// Output lots of triangles.
+	for(int y=0; y<3; y++){
+		for(int x=0; x<3; x++){
+			CCRenderBufferSetTriangle(buffer, y*6 + x*2 + 0, (y + 0)*4 + (x + 0), (y + 0)*4 + (x + 1), (y + 1)*4 + (x + 1));
+			CCRenderBufferSetTriangle(buffer, y*6 + x*2 + 1, (y + 0)*4 + (x + 0), (y + 1)*4 + (x + 1), (y + 1)*4 + (x + 0));
+		}
+	}
 }
 
 // ---------------------------------------------------------------------
@@ -281,19 +176,21 @@ typedef NS_ENUM(NSInteger, CCSprite9SliceSizes)
 - (float)margin
 {
     // if margins are not the same, a unified margin can nort be read
-    NSAssert(_marginLeft == _marginRight == _marginTop == _marginBottom, @"Margin can not be read. Do not know which margin to return");
+    NSAssert(_marginLeft == _marginRight &&
+             _marginLeft == _marginTop &&
+             _marginLeft == _marginBottom, @"Margin can not be read. Do not know which margin to return");
+
     // just return any of them
     return(_marginLeft);
 }
 
 - (void)setMargin:(float)margin
 {
-    margin = clampf(margin, 0, 1);
+    margin = clampf(margin, 0, 0.5);
     _marginLeft = margin;
     _marginRight = margin;
     _marginTop = margin;
     _marginBottom = margin;
-    _quadNineDirty = YES;
 }
 
 // ---------------------------------------------------------------------
@@ -301,7 +198,6 @@ typedef NS_ENUM(NSInteger, CCSprite9SliceSizes)
 - (void)setMarginLeft:(float)marginLeft
 {
     _marginLeft = clampf(marginLeft, 0, 1);
-    _quadNineDirty = YES;
     // sum of left and right margin, can not exceed 1
     NSAssert((_marginLeft + _marginRight) <= 1, @"Sum of left and right margine, can not exceed 1");
 }
@@ -309,7 +205,6 @@ typedef NS_ENUM(NSInteger, CCSprite9SliceSizes)
 - (void)setMarginRight:(float)marginRight
 {
     _marginRight = clampf(marginRight, 0, 1);
-    _quadNineDirty = YES;
     // sum of left and right margin, can not exceed 1
     NSAssert((_marginLeft + _marginRight) <= 1, @"Sum of left and right margine, can not exceed 1");
 }
@@ -317,7 +212,6 @@ typedef NS_ENUM(NSInteger, CCSprite9SliceSizes)
 - (void)setMarginTop:(float)marginTop
 {
     _marginTop = clampf(marginTop, 0, 1);
-    _quadNineDirty = YES;
     // sum of top and bottom margin, can not exceed 1
     NSAssert((_marginTop + _marginBottom) <= 1, @"Sum of top and bottom margine, can not exceed 1");
 }
@@ -325,62 +219,10 @@ typedef NS_ENUM(NSInteger, CCSprite9SliceSizes)
 - (void)setMarginBottom:(float)marginBottom
 {
     _marginBottom = clampf(marginBottom, 0, 1);
-    _quadNineDirty = YES;
     // sum of top and bottom margin, can not exceed 1
     NSAssert((_marginTop + _marginBottom) <= 1, @"Sum of top and bottom margine, can not exceed 1");
 }
 
 // ---------------------------------------------------------------------
 
-- (void)setBatchNode:(CCSpriteBatchNode *)batchNode
-{
-    NSAssert(batchNode == nil, @"CCSprite9Slice can not be rendered as a batch node!");
-}
-
-// ---------------------------------------------------------------------
-
 @end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
