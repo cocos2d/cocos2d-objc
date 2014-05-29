@@ -667,6 +667,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 	
 	NSImage *image = [[NSImage alloc] initWithSize:POTSize];
 	[image lockFocus];
+    [[NSAffineTransform transform] set];
     
     // XXX: The shadows are for some reason scaled on OS X if a retina display is connected
     CGFloat retinaFix = 1;
