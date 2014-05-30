@@ -45,7 +45,7 @@
     }
 }
 
-- (BOOL)allocGLResourcesWithWidth:(int)width height:(int)height
+- (BOOL)setupGLResourcesWithSize:(CGSize)size
 {
     NSAssert(!_glResourcesAllocated, @"");
     
@@ -57,13 +57,13 @@
     
 	if( [[CCConfiguration sharedConfiguration] supportsNPOT] )
     {
-		powW = width;
-		powH = height;
+		powW = size.width;
+		powH = size.height;
 	}
     else
     {
-		powW = CCNextPOT(width);
-		powH = CCNextPOT(height);
+		powW = CCNextPOT(size.width);
+		powH = CCNextPOT(size.height);
 	}
     
     static const CCTexturePixelFormat kRenderTargetDefaultPixelFormat = CCTexturePixelFormat_RGBA8888;
@@ -71,7 +71,7 @@
     
     // Create a new texture object for use as the color attachment of the new
     // FBO.
-	_texture = [[CCTexture alloc] initWithData:nil pixelFormat:kRenderTargetDefaultPixelFormat pixelsWide:powW pixelsHigh:powH contentSizeInPixels:CGSizeMake(width, height) contentScale:kRenderTargetDefaultContentScale];
+	_texture = [[CCTexture alloc] initWithData:nil pixelFormat:kRenderTargetDefaultPixelFormat pixelsWide:powW pixelsHigh:powH contentSizeInPixels:size contentScale:kRenderTargetDefaultContentScale];
 	[_texture setAliasTexParameters];
 	
     // Save the old FBO binding so it can be restored after we create the new
@@ -204,7 +204,8 @@
         {
             renderPass.transform = projection;
             
-            rt = [self allocRenderTargetWithWidth:_contentSize.width * _contentScale height:_contentSize.height * _contentScale];
+            CGSize rtSize = CGSizeMake(_contentSize.width * _contentScale, _contentSize.height * _contentScale);
+            rt = [self renderTargetWithSize:rtSize];
             
             renderPass.beginBlock();
             [self bindRenderTarget:rt withRenderer:renderer];
@@ -244,7 +245,7 @@
     
 }
 
-- (CCEffectRenderTarget *)allocRenderTargetWithWidth:(int)width height:(int)height
+- (CCEffectRenderTarget *)renderTargetWithSize:(CGSize)size
 {
     // If there is a free render target available for use, return that one. If
     // not, create a new one and return that.
@@ -257,7 +258,7 @@
     else
     {
         rt = [[CCEffectRenderTarget alloc] init];
-        [rt allocGLResourcesWithWidth:width height:height];
+        [rt setupGLResourcesWithSize:size];
         [_allRenderTargets addObject:rt];
     }
     return rt;
