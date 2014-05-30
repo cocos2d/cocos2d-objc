@@ -334,6 +334,7 @@
 {
     if(!CCRenderCheckVisbility(transform, _vertexCenter, _vertexExtents)) return;
     
+#if CC_ENABLE_EXPERIMENTAL_EFFECTS
     if (self.effect)
     {
         _effectRenderer.contentSize = self.texture.contentSize;
@@ -348,6 +349,7 @@
         }
     }
     else
+#endif
     {
         [self enqueueTriangles:renderer transform:transform];
 	}
