@@ -211,23 +211,5 @@
     _renderer = nil;
 }
 
-//-(void)setEffect:(CCEffect *)effect
-//{
-//    _effect = effect;
-//    self.shader = effect.shader;
-//
-//    self.sprite.shader = effect.shader;
-//    if(effect.shaderUniforms != nil) // TODO: check for duplicate uniform names
-//    {
-//        [self.sprite.shaderUniforms addEntriesFromDictionary:effect.shaderUniforms];
-//    }
-//}
-
-//-(void)assignSpriteTexture
-//{
-//    // don't do anything on effect nodes
-//}
-
-
 @end
 #endif
