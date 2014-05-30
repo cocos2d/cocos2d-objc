@@ -103,7 +103,7 @@
     pass0.shaderUniforms = self.shaderUniforms;
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass0.beginBlock = ^{
-        weakSelf.shaderUniforms[@"u_saturation"] = [NSNumber numberWithFloat:weakSelf.saturation];
+        weakPass.shaderUniforms[@"u_saturation"] = [NSNumber numberWithFloat:weakSelf.saturation];
     };
     
     self.renderPasses = @[pass0];
