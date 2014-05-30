@@ -6,9 +6,10 @@
 //
 //
 
-#import "CCBAnimationManager+FrameAnimation.h"
+#import "CCAnimationManager+FrameAnimation.h"
+#import "CCAnimationManager_Private.h"
 
-@implementation CCBAnimationManager (FrameAnimation)
+@implementation CCAnimationManager (FrameAnimation)
 
 - (void)animationWithSpriteFrames:animFrames delay:(float)delay name:(NSString*)name node:(CCNode*)node loop:(BOOL)loop{
     

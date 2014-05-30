@@ -72,7 +72,7 @@ CGAffineTransform CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 @property (nonatomic, readwrite, strong) CCScheduler *scheduler;
 
 /* Reads and writes the animation manager for this node.*/
-@property (nonatomic, readwrite) CCBAnimationManager * animationManager;
+@property (nonatomic, readwrite) CCAnimationManager * animationManager;
 
 /* Compares two nodes in respect to zOrder and orderOfArrival (used for sorting sprites in display list) */
 - (NSComparisonResult) compareZOrderToNode:(CCNode*)node;
