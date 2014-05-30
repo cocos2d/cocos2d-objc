@@ -143,13 +143,14 @@ static NSString* vertBase =
         _beginBlock = [emptyBlock copy];
         _endBlock = [emptyBlock copy];
 
-        _updateBlock = ^{
+        CCEffectRenderPassBlock updateBlock = ^{
             if (weakSelf.needsClear)
             {
                 [weakSelf.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:[CCColor clearColor].glkVector4 depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
             }
             [weakSelf enqueueTriangles];
         };
+        _updateBlock = [updateBlock copy];
         _blendMode = [CCBlendMode premultipliedAlphaMode];
         
         return self;
