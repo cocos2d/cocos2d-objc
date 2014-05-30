@@ -6,9 +6,9 @@
 //
 //
 
-#import "CCBAnimationManager.h"
+#import "CCAnimationManager.h"
 
-@interface CCBAnimationManager (FrameAnimation)
+@interface CCAnimationManager (FrameAnimation)
 
 - (void)animationWithSpriteFrames:animFrames delay:(float)delay name:(NSString*)name node:(CCNode*)node loop:(BOOL)loop;
 

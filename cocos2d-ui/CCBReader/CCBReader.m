@@ -27,6 +27,7 @@
 #import <objc/runtime.h>
 #import <objc/message.h>
 #import "CCBAnimationManager.h"
+#import "CCAnimationManager.h"
 #import "CCBSequence.h"
 #import "CCBSequenceProperty.h"
 #import "CCBKeyframe.h"
@@ -35,6 +36,7 @@
 #import "CCNode_Private.h"
 #import "CCDirector_Private.h"
 #import "CCPhysics+ObjectiveChipmunk.h"
+#import "CCAnimationManager_Private.h"
 
 #ifdef CCB_ENABLE_UNZIP
 #import "SSZipArchive.h"
@@ -103,7 +105,7 @@
     if (!self) return NULL;
     
     // Setup action manager
-    self.animationManager = [[CCBAnimationManager alloc] init];
+    self.animationManager = [[CCAnimationManager alloc] init];
     
     // Setup set of loaded sprite sheets
     loadedSpriteSheets = [[NSMutableSet alloc] init];
@@ -1702,7 +1704,7 @@ static inline float readFloat(CCBReader *self)
     {
         CCNode* node = [pointerValue pointerValue];
         
-        CCBAnimationManager* manager = [animationManagers objectForKey:pointerValue];
+        CCAnimationManager* manager = [animationManagers objectForKey:pointerValue];
         node.animationManager = manager;
         node.userObject = manager;//Backwards Compatible.
     }

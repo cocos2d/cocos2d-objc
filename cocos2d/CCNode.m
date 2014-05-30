@@ -29,7 +29,7 @@
 #import "CCNode_Private.h"
 #import "CCDirector.h"
 #import "CCActionManager.h"
-#import "CCBAnimationManager.h"
+#import "CCAnimationManager.h"
 #import "CCScheduler.h"
 #import "ccConfig.h"
 #import "ccMacros.h"
@@ -207,7 +207,7 @@ static NSUInteger globalOrderOfArrival = 1;
 	// timers
 	[_children makeObjectsPerformSelector:@selector(cleanup)];
     
-    // CCBAnimationManager Cleanup (Set by SpriteBuilder)
+    // CCAnimationManager Cleanup (Set by SpriteBuilder)
     [_animationManager performSelector:@selector(cleanup)];
     
     _userObject = nil;
@@ -1184,7 +1184,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 	return [_actionManager numberOfRunningActionsInTarget:self];
 }
 
--(CCBAnimationManager*)animationManager
+-(CCAnimationManager*)animationManager
 {
     if(_animationManager)
     {
@@ -1196,7 +1196,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
     }
 }
 
--(void)setAnimationManager:(CCBAnimationManager *)animationManager
+-(void)setAnimationManager:(CCAnimationManager *)animationManager
 {
     _animationManager = animationManager;
 }
