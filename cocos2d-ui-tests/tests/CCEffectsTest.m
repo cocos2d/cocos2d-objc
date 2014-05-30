@@ -191,11 +191,11 @@
 {
     self.subTitle = @"Effect Performance Test";
     
-    CCEffect *glow = [CCEffectGlow effectWithBlurStrength:0.02f];
-    CCEffect *brightness = [[CCEffectBrightness alloc] initWithBrightness:0.25f];
-    CCEffect *contrast = [[CCEffectContrast alloc] initWithContrast:1.0f];
-    CCEffect *pixellate = [[CCEffectPixellate alloc] initWithBlockSize:4.0f];
-    CCEffect *blur = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:GLKVector2Make(1.0, 1.0)];
+//    CCEffect *glow = [CCEffectGlow effectWithBlurStrength:0.02f];
+//    CCEffect *brightness = [[CCEffectBrightness alloc] initWithBrightness:0.25f];
+//    CCEffect *contrast = [[CCEffectContrast alloc] initWithContrast:1.0f];
+//    CCEffect *pixellate = [[CCEffectPixellate alloc] initWithBlockSize:4.0f];
+//    CCEffect *blur = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:GLKVector2Make(1.0, 1.0)];
     CCEffect *saturation = [[CCEffectSaturation alloc] initWithSaturation:0.0f];
     
     
