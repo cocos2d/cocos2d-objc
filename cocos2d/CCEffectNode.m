@@ -141,20 +141,11 @@
     [self configureRender];
 
     NSAssert(_renderer == renderer, @"CCEffectNode error!");
-        
-    // XXX We may want to make this pre-render step overridable by the
-    // first effect in the stack. That would look something like this:
-    //
-    // CCEffect *firstEffect = [_effectStack effectAtIndex:0];
-    // if (firstEffect.overridesPrerender)
-    //   [firstEffect prerender]
-    // else
-    //   Do all the stuff below.
 
     // Render children of this effect node into an FBO for use by the
     // remainder of the effects.
     [self begin];
-    
+
     [_renderer enqueueClear:GL_COLOR_BUFFER_BIT color:_clearColor depth:self.clearDepth stencil:self.clearStencil globalSortOrder:NSIntegerMin];
     
     //! make sure all children are drawn
