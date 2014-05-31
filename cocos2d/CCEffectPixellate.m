@@ -100,11 +100,13 @@ static float conditionBlockSize(float blockSize);
     pass0.shader = self.shader;
     pass0.shaderUniforms = self.shaderUniforms;
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
-    pass0.beginBlock = ^{
-        CCTexture *texture = weakPass.shaderUniforms[CCShaderUniformPreviousPassTexture];
+    pass0.beginBlock = ^(CCTexture *previousPassTexture){
         
-        float aspect = texture.contentSize.width / texture.contentSize.height;
-        float uStep = self.blockSize / texture.contentSize.width;
+        weakPass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
+        weakPass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
+
+        float aspect = previousPassTexture.contentSize.width / previousPassTexture.contentSize.height;
+        float uStep = self.blockSize / previousPassTexture.contentSize.width;
         float vStep = uStep * aspect;
         
         weakPass.shaderUniforms[@"u_uStep"] = [NSNumber numberWithFloat:uStep];

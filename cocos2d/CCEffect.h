@@ -51,7 +51,9 @@ extern const NSString *CCShaderUniformPreviousPassTexture;
 
 @end
 
-typedef void (^CCEffectRenderPassBlock)();
+typedef void (^CCEffectRenderPassBeginBlock)(CCTexture *previousPassTexture);
+typedef void (^CCEffectRenderPassUpdateBlock)();
+typedef void (^CCEffectRenderPassEndBlock)();
 
 // Note to self: I don't like this pattern, refactor it. I think there should be a CCRenderPass that is used by CCEffect instead. NOTE: convert this to a CCRnderPassProtocol
 @interface CCEffectRenderPass : NSObject
@@ -64,9 +66,9 @@ typedef void (^CCEffectRenderPassBlock)();
 @property (nonatomic) CCShader* shader;
 @property (nonatomic) NSMutableDictionary* shaderUniforms;
 @property (nonatomic) BOOL needsClear;
-@property (nonatomic,copy) CCEffectRenderPassBlock beginBlock;
-@property (nonatomic,copy) CCEffectRenderPassBlock updateBlock;
-@property (nonatomic,copy) CCEffectRenderPassBlock endBlock;
+@property (nonatomic,copy) CCEffectRenderPassBeginBlock beginBlock;
+@property (nonatomic,copy) CCEffectRenderPassUpdateBlock updateBlock;
+@property (nonatomic,copy) CCEffectRenderPassEndBlock endBlock;
 
 -(void)enqueueTriangles;
 

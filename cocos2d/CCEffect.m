@@ -139,11 +139,10 @@ static NSString* vertBase =
     {
         __weak CCEffectRenderPass *weakSelf = self;
         
-        CCEffectRenderPassBlock emptyBlock = ^{};
-        _beginBlock = [emptyBlock copy];
-        _endBlock = [emptyBlock copy];
+        _beginBlock = [^(CCTexture *previousPassTexture){} copy];
+        _endBlock = [^{} copy];
 
-        CCEffectRenderPassBlock updateBlock = ^{
+        CCEffectRenderPassUpdateBlock updateBlock = ^{
             if (weakSelf.needsClear)
             {
                 [weakSelf.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:[CCColor clearColor].glkVector4 depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];

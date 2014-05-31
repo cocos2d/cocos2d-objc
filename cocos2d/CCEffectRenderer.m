@@ -158,10 +158,6 @@
     
     GLKMatrix4 projection = GLKMatrix4MakeOrtho(0.0f, _contentSize.width, _contentSize.height, 0.0f, -1024.0f, 1024.0f);
     
-    CCTexture *inputTexture = sprite.texture;
-    CCTexture *previousPassTexture = nil;
-    CCTexture *mainTexture = nil;
-    
     CCEffectRenderTarget *previousPassRT = nil;
 
     for(int i = 0; i < effect.renderPassesRequired; i++)
@@ -169,15 +165,14 @@
         BOOL lastPass = (i == (effect.renderPassesRequired - 1));
         BOOL directRendering = lastPass && effect.supportsDirectRendering;
         
+        CCTexture *previousPassTexture = nil;
         if (previousPassRT)
         {
-            mainTexture = previousPassRT.texture;
             previousPassTexture = previousPassRT.texture;
         }
         else
         {
-            mainTexture = inputTexture;
-            previousPassTexture = inputTexture;
+            previousPassTexture = sprite.texture;
         }
         
         CCEffectRenderPass* renderPass = [effect renderPassAtIndex:i];
@@ -186,8 +181,6 @@
         renderPass.verts = *(sprite.vertexes);
         renderPass.blendMode = [CCBlendMode premultipliedAlphaMode];
         renderPass.needsClear = !directRendering;
-        renderPass.shaderUniforms[CCShaderUniformMainTexture] = mainTexture;
-        renderPass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
         
         CCEffectRenderTarget *rt = nil;
         
@@ -196,7 +189,7 @@
         {
             renderPass.transform = *transform;
             
-            renderPass.beginBlock();
+            renderPass.beginBlock(previousPassTexture);
             renderPass.updateBlock();
             renderPass.endBlock();
         }
@@ -207,7 +200,7 @@
             CGSize rtSize = CGSizeMake(_contentSize.width * _contentScale, _contentSize.height * _contentScale);
             rt = [self renderTargetWithSize:rtSize];
             
-            renderPass.beginBlock();
+            renderPass.beginBlock(previousPassTexture);
             [self bindRenderTarget:rt withRenderer:renderer];
             renderPass.updateBlock();
             [self restoreRenderTargetWithRenderer:renderer];

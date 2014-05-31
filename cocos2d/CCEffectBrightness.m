@@ -62,7 +62,9 @@ static float conditionBrightness(float brightness);
     weakPass = pass0;
     pass0.shader = self.shader;
     pass0.shaderUniforms = self.shaderUniforms;
-    pass0.beginBlock = ^{
+    pass0.beginBlock = ^(CCTexture *previousPassTexture){
+        weakPass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
+        weakPass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
         weakPass.shaderUniforms[@"u_brightness"] = [NSNumber numberWithFloat:weakSelf.brightness];
     };
     

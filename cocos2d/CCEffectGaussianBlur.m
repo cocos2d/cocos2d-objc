@@ -131,7 +131,9 @@
     pass0.shader = self.shader;
     pass0.shaderUniforms = self.shaderUniforms;
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
-    pass0.beginBlock = ^{
+    pass0.beginBlock = ^(CCTexture *previousPassTexture){
+        weakPass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
+        weakPass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
         if([self radialBlur])
         {
             weakPass.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(weakSelf.blurStrength, 0.0f)];
@@ -149,7 +151,8 @@
     pass1.shader = self.shader;
     pass1.shaderUniforms = self.shaderUniforms;
     pass1.blendMode = [CCBlendMode premultipliedAlphaMode];
-    pass1.beginBlock = ^{
+    pass1.beginBlock = ^(CCTexture *previousPassTexture){
+        weakPass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
         weakPass.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(0.0f, weakSelf.blurStrength)];
     };
     
