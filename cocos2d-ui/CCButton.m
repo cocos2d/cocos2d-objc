@@ -343,7 +343,7 @@
 - (void) setHitAreaExpansion:(float)hitAreaExpansion
 {
     _originalHitAreaExpansion = hitAreaExpansion;
-    [super hitAreaExpansion];
+    [super setHitAreaExpansion:hitAreaExpansion];
 }
 
 - (float) hitAreaExpansion
