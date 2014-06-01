@@ -410,7 +410,7 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 
 /** 
  *  Expands ( or contracts ) the hit area of the node.
- *  The expansion is in normalized content size. Ie a hit area expansion of 2, will result in the hit area being double width, and double height.
+ *  The expansion is calculated as a margin around the sprite, in points.
  */
 @property (nonatomic, assign) float hitAreaExpansion;
 
