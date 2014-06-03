@@ -676,8 +676,10 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     
 #elif defined(__CC_PLATFORM_MAC)
     yOffset = (POTSize.height - hDrawArea) - yOffset;
-	
-	CGRect drawArea = CGRectMake(xOffset, yOffset, wDrawArea, hDrawArea);
+
+    //word wrap fix: increase the width in order to avoid the last word wrapping to the next line
+    int widthFix = 1;
+	CGRect drawArea = CGRectMake(xOffset, yOffset, wDrawArea+widthFix, hDrawArea);
 	
 	NSImage *image = [[NSImage alloc] initWithSize:POTSize];
 	[image lockFocus];
