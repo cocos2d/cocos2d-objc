@@ -175,7 +175,10 @@
 	CCNode *contentNode = self.contentNode;
 	CGSize size = [CCDirector sharedDirector].designSize;
 	
-	[self scheduleBlock:^(CCTimer *timer) {
+	CCNode *node = [CCNode node];
+	[self.contentNode addChild:node];
+	
+	[node scheduleBlock:^(CCTimer *timer) {
 		CCRenderTexture *rt = [CCRenderTexture renderTextureWithWidth:size.width height:size.height];
 		
 		[rt begin];
