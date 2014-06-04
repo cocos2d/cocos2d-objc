@@ -39,7 +39,7 @@
 	<key>InterpreterArgs</key>
 	<array/>
 	<key>Name</key>
-	<string>Cocos2D Installer 3.0.0</string>
+	<string>Cocos2D Installer 3.1.0</string>
 	<key>NibPath</key>
 	<string>/usr/local/share/platypus/MainMenu.nib</string>
 	<key>OptimizeApplication</key>
@@ -84,6 +84,6 @@
 	<key>UseXMLPlistFormat</key>
 	<true/>
 	<key>Version</key>
-	<string>3.0.0</string>
+	<string>3.1.0</string>
 </dict>
 </plist>

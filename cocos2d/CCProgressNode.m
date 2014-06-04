@@ -38,11 +38,7 @@
 
 #import "CCTexture_Private.h"
 
-#define kProgressTextureCoordsCount 4
-//  kProgressTextureCoords holds points {0,1} {0,0} {1,0} {1,1} we can represent it as bits
-const char kCCProgressTextureCoords = 0x4b;
-
-@interface CCProgressNode () {
+@implementation CCProgressNode {
 	CCProgressNodeType _type;
 	float _percentage;
 	CCSprite *_sprite;
@@ -57,15 +53,6 @@ const char kCCProgressTextureCoords = 0x4b;
 	BOOL _needsUpdateProgress;
 }
 
--(void)updateProgress;
--(void)updateBar;
--(void)updateRadial;
--(void)updateColor;
--(CGPoint)boundaryTexCoord:(char)index;
-@end
-
-
-@implementation CCProgressNode
 @synthesize percentage = _percentage;
 @synthesize sprite = _sprite;
 @synthesize type = _type;
@@ -200,8 +187,6 @@ const char kCCProgressTextureCoords = 0x4b;
     CC_SWAP(alpha.x, alpha.y);
   }
 	
-	// As of 3.1, the x alpha needs to be flipped. Not really sure why.
-	alpha.x = 1.0 - alpha.x;
 	return GLKVector2Make(min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y);
 }
 
@@ -271,6 +256,13 @@ const char kCCProgressTextureCoords = 0x4b;
 	_midpoint = ccpClamp(midPoint, CGPointZero, ccp(1,1));
 }
 
+static inline CGPoint
+BoundryTexCoord(int index)
+{
+	static const CGPoint points[] = {{1,1}, {1,0}, {0,0}, {0,1}};
+	return points[index];
+}
+
 ///
 //	Update does the work of mapping the texture onto the triangles
 //	It now doesn't occur the cost of free/alloc data every update cycle.
@@ -317,11 +309,11 @@ const char kCCProgressTextureCoords = 0x4b;
     
 		float min_t = FLT_MAX;
     
-		for (int i = 0; i <= kProgressTextureCoordsCount; ++i) {
-			int pIndex = (i + (kProgressTextureCoordsCount - 1))%kProgressTextureCoordsCount;
+		for (int i = 0; i <= 4; ++i) {
+			int pIndex = (i + 3)%4;
       
-			CGPoint edgePtA = [self boundaryTexCoord:i % kProgressTextureCoordsCount];
-			CGPoint edgePtB = [self boundaryTexCoord:pIndex];
+			CGPoint edgePtA = BoundryTexCoord(i % 4);
+			CGPoint edgePtB = BoundryTexCoord(pIndex);
       
 			//	Remember that the top edge is split in half for the 12 o'clock position
 			//	Let's deal with that here by finding the correct endpoints
@@ -391,7 +383,7 @@ const char kCCProgressTextureCoords = 0x4b;
 		_verts[1].position = [self vertexFromAlphaPoint:topMid];
     
 		for(int i = 0; i < index; ++i){
-			CGPoint alphaPoint = [self boundaryTexCoord:i];
+			CGPoint alphaPoint = BoundryTexCoord(i);
 			_verts[i+2].texCoord1 = [self textureCoordFromAlphaPoint:alphaPoint];
 			_verts[i+2].position = [self vertexFromAlphaPoint:alphaPoint];
 		}
@@ -502,18 +494,6 @@ const char kCCProgressTextureCoords = 0x4b;
 		_verts[5].position = [self vertexFromAlphaPoint:ccp(max.x,min.y)];
 	}
 	[self updateColor];
-}
-
--(CGPoint)boundaryTexCoord:(char)index
-{
-	if (index < kProgressTextureCoordsCount) {
-		if (_reverseDirection) {
-			return ccp((kCCProgressTextureCoords>>(7-(index<<1)))&1,(kCCProgressTextureCoords>>(7-((index<<1)+1)))&1);
-		} else {
-			return ccp((kCCProgressTextureCoords>>((index<<1)+1))&1,(kCCProgressTextureCoords>>(index<<1))&1);
-		}
-	}
-	return CGPointZero;
 }
 
 -(void)visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform

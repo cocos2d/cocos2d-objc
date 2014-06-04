@@ -30,14 +30,24 @@
 
 #pragma mark Animation Manager Delegate
 
+/**
+ * The animation manager delegate receives callbacks when animation sequences finishes playing.
+ */
 @protocol CCBAnimationManagerDelegate <NSObject>
 
+/**
+ * Called when an animation sequence has finished playing.
+ * @param name The name of the sequence that just finished playing.
+ */
 - (void) completedAnimationSequenceNamed:(NSString*)name;
 
 @end
 
 #pragma mark Animation Manager
 
+/**
+ * The animation manager plays back animations, usually created by a tool such as SpriteBuilder. Any animation can have an arbitrary number of sequences (timelines) which each have keyframes for different properties.
+ */
 @interface CCAnimationManager : NSObject <CCSchedulerTarget>
 {
     NSMutableDictionary* _nodeSequences;
@@ -56,39 +66,56 @@
     
 }
 
-// Animation manager updates on a fixed timestep.
+/// If set to true the animation manager will run on a fixed time step, this is required to run animations toghether with physics.
 @property (nonatomic,assign) bool fixedTimestep;
 
 
-// Delegate.
+/// The animation manager delegate receives updates about the animations currently being played.
 @property (nonatomic,weak) NSObject<CCBAnimationManagerDelegate>* delegate;
 
-// Currently running sequence name.
+/// The name of the currently running sequence (timeline).
 @property (unsafe_unretained, nonatomic,readonly) NSString* runningSequenceName;
 
-// Last sequence name completed.
+/// The name of the last completed sequence (timeline).
 @property (nonatomic,readonly) NSString* lastCompletedSequenceName;
 
-// Speed.
+/// Playback speed, default is 1 and corresponds to the normal playback speed. Use this property for fast forward or slow motion playback.
 @property (nonatomic,assign) float playbackSpeed;
 
-// Pause.
+/// Set to true to pause the animation currently being run.
 @property (nonatomic,assign) bool paused;
 
 
 
-// Run an animation.
+/**
+ * Plays an animation sequence (timeline) by its name.
+ * @param name The name of the sequence to play.
+ */
 - (void) runAnimationsForSequenceNamed:(NSString*)name;
+
+/**
+ * Plays an animation sequence (timeline) by its name, tweens smoothly to the new sequence.
+ * @param name The name of the sequence to play.
+ * @param tweenDuration Time to tween to the new sequence.
+ */
 - (void) runAnimationsForSequenceNamed:(NSString*)name tweenDuration:(float)tweenDuration;
 
-// Animation call back.
+/**
+ * Sets a block to be called when an animation sequence has finished playing.
+ * @param b The block to call.
+ */
 -(void) setCompletedAnimationCallbackBlock:(void(^)(id sender))b;
 
 #pragma mark Time Controls
 
 //Renamed to jumpToSequenceNamed:time
-- (void)timeSeekForSequenceNamed:(NSString*)name time:(float)time __attribute__((deprecated));
+//- (void)timeSeekForSequenceNamed:(NSString*)name time:(float)time __attribute__((deprecated));
 
+/**
+ * Jumps to a specific time in a specific sequence (timeline).
+ * @param name The name of the sequence to jump to.
+ * @param time The time in the sequence.
+ */
 - (void)jumpToSequenceNamed:(NSString*)name time:(float)time;
 
 @end

@@ -175,7 +175,10 @@
 	CCNode *contentNode = self.contentNode;
 	CGSize size = [CCDirector sharedDirector].designSize;
 	
-	[self scheduleBlock:^(CCTimer *timer) {
+	CCNode *node = [CCNode node];
+	[self.contentNode addChild:node];
+	
+	[node scheduleBlock:^(CCTimer *timer) {
 		CCRenderTexture *rt = [CCRenderTexture renderTextureWithWidth:size.width height:size.height];
 		
 		[rt begin];
@@ -383,7 +386,7 @@ ProgressPercent(CCTime t)
 	
 	// Radial timer
 	{
-		NSString *image = @"Tiles/05.png";
+		NSString *image = @"Tiles/06.png";
 		CGPoint position = ccp(0.1, 0.25);
 		CCTime interval = 1.0/60.0;
 		
@@ -407,7 +410,7 @@ ProgressPercent(CCTime t)
 	
 	// Radial timer with animating midpoint.
 	{
-		NSString *image = @"Tiles/05.png";
+		NSString *image = @"Tiles/06.png";
 		CGPoint position = ccp(0.1, 0.5);
 		CCTime interval = 1.0/60.0;
 		
@@ -432,7 +435,7 @@ ProgressPercent(CCTime t)
 	}
 	
 	{
-		NSString *image = @"Tiles/05.png";
+		NSString *image = @"Tiles/06.png";
 		CGPoint position = ccp(0.2, 0.25);
 		CCTime interval = 1.0/60.0;
 		
@@ -458,7 +461,7 @@ ProgressPercent(CCTime t)
 	}
 	
 	{
-		NSString *image = @"Tiles/05.png";
+		NSString *image = @"Tiles/06.png";
 		CGPoint position = ccp(0.2, 0.5);
 		CCTime interval = 1.0/60.0;
 		
@@ -484,7 +487,7 @@ ProgressPercent(CCTime t)
 	}
 	
 	{
-		NSString *image = @"Tiles/05.png";
+		NSString *image = @"Tiles/06.png";
 		CGPoint position = ccp(0.3, 0.25);
 		CCTime interval = 1.0/60.0;
 		
@@ -510,7 +513,7 @@ ProgressPercent(CCTime t)
 	}
 	
 	{
-		NSString *image = @"Tiles/05.png";
+		NSString *image = @"Tiles/06.png";
 		CGPoint position = ccp(0.3, 0.5);
 		CCTime interval = 1.0/60.0;
 		
@@ -536,7 +539,7 @@ ProgressPercent(CCTime t)
 	}
 	
 	{
-		NSString *image = @"Tiles/05.png";
+		NSString *image = @"Tiles/06.png";
 		CGPoint position = ccp(0.4, 0.25);
 		CCTime interval = 1.0/60.0;
 		
@@ -562,7 +565,7 @@ ProgressPercent(CCTime t)
 	}
 	
 	{
-		NSString *image = @"Tiles/05.png";
+		NSString *image = @"Tiles/06.png";
 		CGPoint position = ccp(0.4, 0.5);
 		CCTime interval = 1.0/60.0;
 		
@@ -588,7 +591,7 @@ ProgressPercent(CCTime t)
 	}
 	
 	{
-		NSString *image = @"Tiles/05.png";
+		NSString *image = @"Tiles/06.png";
 		CGPoint position = ccp(0.5, 3.0/8.0);
 		
 		CCSprite *sprite = [CCSprite spriteWithImageNamed:image];
