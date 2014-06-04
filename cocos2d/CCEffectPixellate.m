@@ -86,7 +86,7 @@ static float conditionBlockSize(float blockSize);
                                    return texture2D(cc_PreviousPassTexture, samplePos);
                                    );
 
-    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"pixellateEffect" body:effectBody returnType:@"vec4"];
+    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"pixellateEffect" body:effectBody inputs:nil returnType:@"vec4"];
     [self.fragmentFunctions addObject:fragmentFunction];
 }
 

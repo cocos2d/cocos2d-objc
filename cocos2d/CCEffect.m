@@ -36,34 +36,84 @@ static NSString* vertBase =
 
 @implementation CCEffectFunction
 
--(id)initWithName:(NSString *)name body:(NSString*)body returnType:(NSString *)returnType
+-(id)initWithName:(NSString *)name body:(NSString*)body inputs:(NSArray*)inputs returnType:(NSString *)returnType
 {
     if((self = [super init]))
     {
         _body = [body copy];
         _name = [name copy];
+        _inputs = [inputs copy];
         _returnType = [returnType copy];
+
+        _inputString = @"void";
+        if (_inputs.count)
+        {
+            NSMutableString *tmpString = [[NSMutableString alloc] init];
+            for (CCEffectFunctionInput *input in _inputs)
+            {
+                [tmpString appendFormat:@"%@ %@", input.type, input.name];
+            }
+            _inputString = tmpString;
+        }
+        
         return self;
     }
     
     return self;
 }
 
-+(id)functionWithName:(NSString*)name body:(NSString*)body returnType:(NSString*)returnType
++(id)functionWithName:(NSString*)name body:(NSString*)body inputs:(NSArray*)inputs returnType:(NSString*)returnType
 {
-    return [[self alloc] initWithName:name body:body returnType:returnType];
+    return [[self alloc] initWithName:name body:body inputs:inputs returnType:returnType];
 }
 
 -(NSString*)function
 {
-    NSString* function = [NSString stringWithFormat:@"%@ %@(void)\n{\n%@\n}", _returnType, _name, _body];
+    NSString* function = [NSString stringWithFormat:@"%@ %@(%@)\n{\n%@\n}", _returnType, _name, _inputString, _body];
     return function;
 }
 
--(NSString*)method
+-(NSString*)callStringWithInputs:(NSArray*)inputs
 {
-    NSString* method = [NSString stringWithFormat:@"%@()", _name];
-    return method;
+    NSMutableString *callString = [[NSMutableString alloc] initWithFormat:@"%@(", _name];
+    for (NSString *input in inputs)
+    {
+        if ([inputs lastObject] != input)
+        {
+            [callString appendFormat:@"%@, ", input];
+        }
+        else
+        {
+            [callString appendFormat:@"%@", input];
+        }
+    }
+    [callString appendString:@")"];
+    
+    return callString;
+}
+
+@end
+
+#pragma mark CCEffectFunctionInput
+
+@implementation CCEffectFunctionInput
+
+-(id)initWithType:(NSString*)type name:(NSString*)name snippet:(NSString*)snippet
+{
+    if((self = [super init]))
+    {
+        _type = [type copy];
+        _name = [name copy];
+        _snippet = [snippet copy];
+        return self;
+    }
+    
+    return self;
+}
+
++(id)inputWithType:(NSString*)type name:(NSString*)name snippet:(NSString*)snippet
+{
+    return [[self alloc] initWithType:type name:name snippet:snippet];
 }
 
 @end
@@ -314,24 +364,41 @@ static NSString* vertBase =
     
     NSMutableString* fragFunctions = [[NSMutableString alloc] init];
     NSMutableString* effectFunctionBody = [[NSMutableString alloc] init];
-    [effectFunctionBody appendString:@"return "];
+    [effectFunctionBody appendString:@"vec4 tmp;\n"];
     
     for(CCEffectFunction* curFunction in _fragmentFunctions)
     {
         [fragFunctions appendFormat:@"%@\n", curFunction.function];
         
-        [effectFunctionBody appendString:curFunction.method];
-        if([_fragmentFunctions lastObject] != curFunction)
-            [effectFunctionBody appendString:@" + "];
-        else
-            [effectFunctionBody appendString:@";"];
+        if([_fragmentFunctions firstObject] == curFunction)
+        {
+            for (CCEffectFunctionInput *input in curFunction.inputs)
+            {
+                [effectFunctionBody appendFormat:@"tmp = %@;\n", input.snippet];
+            }
+        }
+        
+        NSMutableArray *inputs = [[NSMutableArray alloc] init];
+        for (CCEffectFunctionInput *input in curFunction.inputs)
+        {
+            [inputs addObject:@"tmp"];
+        }
+        
+        [effectFunctionBody appendFormat:@"tmp = %@;\n", [curFunction callStringWithInputs:inputs]];
+//
+//        if([_fragmentFunctions lastObject] != curFunction)
+//            [effectFunctionBody appendString:@" + "];
+//        else
+//            [effectFunctionBody appendString:@";"];
     }
+    [effectFunctionBody appendString:@"return tmp;\n"];
     
-    CCEffectFunction* effectFunction = [[CCEffectFunction alloc] initWithName:@"effectFunction" body:effectFunctionBody returnType:@"vec4"];
+    CCEffectFunction* effectFunction = [[CCEffectFunction alloc] initWithName:@"effectFunction" body:effectFunctionBody inputs:nil returnType:@"vec4"];
     [fragFunctions appendFormat:@"%@\n", effectFunction.function];
     
-    NSString* fragBody = [NSString stringWithFormat:fragBase, fragUniforms, varyingVarsToInsert, fragFunctions, effectFunction.method];
-    //NSLog(@"\n------------fragBody:\n%@", fragBody);
+    NSString* fragBody = [NSString stringWithFormat:fragBase, fragUniforms, varyingVarsToInsert, fragFunctions, [effectFunction callStringWithInputs:nil]];
+    
+    
     
     
     // Build vertex body
@@ -350,17 +417,17 @@ static NSString* vertBase =
     {
         [vertexFunctions appendFormat:@"%@\n", curFunction.function];
         
-        [effectFunctionBody appendString:curFunction.method];
+        [effectFunctionBody appendString:[curFunction callStringWithInputs:nil]];
         if([_vertexFunctions lastObject] != curFunction)
             [effectFunctionBody appendString:@" + "];
         else
             [effectFunctionBody appendString:@";"];
     }
     
-    effectFunction = [[CCEffectFunction alloc] initWithName:@"effectFunction" body:effectFunctionBody returnType:@"vec4"];
+    effectFunction = [[CCEffectFunction alloc] initWithName:@"effectFunction" body:effectFunctionBody inputs:nil returnType:@"vec4"];
     [vertexFunctions appendFormat:@"%@\n", effectFunction.function];
     
-    NSString* vertBody = [NSString stringWithFormat:vertBase, vertexUniforms, varyingVarsToInsert, vertexFunctions, effectFunction.method];
+    NSString* vertBody = [NSString stringWithFormat:vertBase, vertexUniforms, varyingVarsToInsert, vertexFunctions, [effectFunction callStringWithInputs:nil]];
     //NSLog(@"\n------------vertBody:\n%@", vertBody);
     
     _shader = [[CCShader alloc] initWithVertexShaderSource:vertBody fragmentShaderSource:fragBody];
@@ -369,13 +436,13 @@ static NSString* vertBase =
 
 -(void)buildFragmentFunctions
 {
-    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"defaultEffect" body:@"return cc_FragColor;" returnType:@"vec4"];
+    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"defaultEffect" body:@"return cc_FragColor;" inputs:nil returnType:@"vec4"];
     [_fragmentFunctions addObject:fragmentFunction];
 }
 
 -(void)buildVertexFunctions
 {
-    CCEffectFunction* vertexFunction = [[CCEffectFunction alloc] initWithName:@"defaultEffect" body:@"return cc_Position;" returnType:@"vec4"];
+    CCEffectFunction* vertexFunction = [[CCEffectFunction alloc] initWithName:@"defaultEffect" body:@"return cc_Position;" inputs:nil returnType:@"vec4"];
     [_vertexFunctions addObject:vertexFunction];
 }
 

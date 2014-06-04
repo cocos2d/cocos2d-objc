@@ -49,7 +49,7 @@ static float conditionBrightness(float brightness);
                                    return vec4((inputValue.rgb + vec3(u_brightness * inputValue.a)), inputValue.a);
                                    );
     
-    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"brightnessEffect" body:effectBody returnType:@"vec4"];
+    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"brightnessEffect" body:effectBody inputs:nil returnType:@"vec4"];
     [self.fragmentFunctions addObject:fragmentFunction];
 }
 

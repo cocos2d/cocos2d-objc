@@ -19,12 +19,26 @@ extern const NSString *CCShaderUniformPreviousPassTexture;
 
 @property (nonatomic, readonly) NSString* body;
 @property (nonatomic, readonly) NSString* name;
+@property (nonatomic, readonly) NSArray* inputs;
+@property (nonatomic, readonly) NSString* inputString;
 @property (nonatomic, readonly) NSString* returnType;
 @property (nonatomic, readonly) NSString* function;
-@property (nonatomic, readonly) NSString* method;
 
--(id)initWithName:(NSString*)name body:(NSString*)body returnType:(NSString*)returnType;
-+(id)functionWithName:(NSString*)name body:(NSString*)body returnType:(NSString*)returnType;
+-(id)initWithName:(NSString*)name body:(NSString*)body inputs:(NSArray*)inputs returnType:(NSString*)returnType;
++(id)functionWithName:(NSString*)name body:(NSString*)body inputs:(NSArray*)inputs returnType:(NSString*)returnType;
+
+-(NSString*)callStringWithInputs:(NSArray*)inputs;
+
+@end
+
+@interface CCEffectFunctionInput : NSObject
+
+@property (nonatomic, readonly) NSString* type;
+@property (nonatomic, readonly) NSString* name;
+@property (nonatomic, readonly) NSString* snippet;
+
+-(id)initWithType:(NSString*)type name:(NSString*)name snippet:(NSString*)snippet;
++(id)inputWithType:(NSString*)type name:(NSString*)name snippet:(NSString*)snippet;
 
 @end
 

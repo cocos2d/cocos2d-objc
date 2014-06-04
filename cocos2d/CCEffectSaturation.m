@@ -77,18 +77,20 @@
 
 -(void)buildFragmentFunctions
 {
+    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" snippet:@"texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)"];
+    
     // Image saturation shader based on saturation filter in GPUImage - https://github.com/BradLarson/GPUImage
     NSString* effectBody = CC_GLSL(
                                    const vec3 luminanceWeighting = vec3(0.2125, 0.7154, 0.0721);
 
-                                   vec4 inputValue = texture2D(cc_PreviousPassTexture, cc_FragTexCoord1);
+//                                   vec4 inputValue = texture2D(cc_PreviousPassTexture, cc_FragTexCoord1);
                                    float luminance = dot(inputValue.rgb, luminanceWeighting);
                                    vec3 greyScaleColor = vec3(luminance);
 
                                    return vec4(mix(greyScaleColor, inputValue.rgb, u_saturation), inputValue.a);
                                    );
 
-    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"saturationEffect" body:effectBody returnType:@"vec4"];
+    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"saturationEffect" body:effectBody inputs:@[input] returnType:@"vec4"];
     [self.fragmentFunctions addObject:fragmentFunction];
 }
 

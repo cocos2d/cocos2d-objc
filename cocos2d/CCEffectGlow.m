@@ -115,7 +115,7 @@
 
     );
     
-    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"glowEffect" body:effectBody returnType:@"vec4"];
+    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"glowEffect" body:effectBody inputs:nil returnType:@"vec4"];
     [self.fragmentFunctions addObject:fragmentFunction];
 }
 
@@ -134,7 +134,7 @@
     
                                    return cc_Position;
     );
-    CCEffectFunction* vertexFunction = [[CCEffectFunction alloc] initWithName:@"glowEffect" body:effectBody returnType:@"vec4"];
+    CCEffectFunction* vertexFunction = [[CCEffectFunction alloc] initWithName:@"glowEffect" body:effectBody inputs:nil returnType:@"vec4"];
     [self.vertexFunctions addObject:vertexFunction];
 }
 

@@ -49,7 +49,7 @@ static float conditionContrast(float contrast);
                                    return vec4(((inputValue.rgb - vec3(0.5)) * vec3(u_contrast) + vec3(0.5)), inputValue.a);
                                    );
     
-    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"contrastEffect" body:effectBody returnType:@"vec4"];
+    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"contrastEffect" body:effectBody inputs:nil returnType:@"vec4"];
     [self.fragmentFunctions addObject:fragmentFunction];
 }
 
