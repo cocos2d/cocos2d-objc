@@ -397,7 +397,7 @@ static NSString* vertBase =
     [fragFunctions appendFormat:@"%@\n", effectFunction.function];
     
     NSString* fragBody = [NSString stringWithFormat:fragBase, fragUniforms, varyingVarsToInsert, fragFunctions, [effectFunction callStringWithInputs:nil]];
-    
+    //NSLog(@"\n------------fragBody:\n%@", fragBody);
     
     
     
