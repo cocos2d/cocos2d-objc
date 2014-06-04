@@ -27,6 +27,7 @@
 #import "cocos2d.h"
 #import "CCAnimationManager.h"
 
+//This has been replaced by CCAnimationManager
 __attribute__ ((deprecated))
 @interface CCBAnimationManager : CCAnimationManager
 {
