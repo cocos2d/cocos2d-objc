@@ -54,11 +54,11 @@
     CCEffectVarying* v_oneStepRightTextureCoordinate = [CCEffectVarying varying:@"vec2" name:@"v_oneStepRightTextureCoordinate"];
     CCEffectVarying* v_twoStepsRightTextureCoordinate = [CCEffectVarying varying:@"vec2" name:@"v_twoStepsRightTextureCoordinate"];
     
-    if(self = [super initWithUniforms:nil
-                      vertextUniforms:[NSArray arrayWithObjects:u_blurDirection, nil]
-                              varying:[NSArray arrayWithObjects:v_centerTextureCoordinate, v_twoStepsLeftTextureCoordinate,
-                                       v_oneStepLeftTextureCoordinate, v_oneStepRightTextureCoordinate,
-                                       v_twoStepsRightTextureCoordinate, nil]])
+    if(self = [super initWithFragmentUniforms:nil
+                              vertextUniforms:[NSArray arrayWithObjects:u_blurDirection, nil]
+                                      varying:[NSArray arrayWithObjects:v_centerTextureCoordinate, v_twoStepsLeftTextureCoordinate,
+                                               v_oneStepLeftTextureCoordinate, v_oneStepRightTextureCoordinate,
+                                               v_twoStepsRightTextureCoordinate, nil]])
     {
         self.debugName = @"CCEffectGaussianBlur";
         return self;

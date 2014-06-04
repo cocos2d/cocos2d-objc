@@ -53,7 +53,7 @@
 {
     CCEffectUniform* uniformSaturation = [CCEffectUniform uniform:@"float" name:@"u_saturation" value:[NSNumber numberWithFloat:1.0f]];
     
-    if((self = [super initWithUniforms:@[uniformSaturation] vertextUniforms:nil varying:nil]))
+    if((self = [super initWithFragmentUniforms:@[uniformSaturation] vertextUniforms:nil varying:nil]))
     {
         self.debugName = @"CCEffectSaturation";
         return self;

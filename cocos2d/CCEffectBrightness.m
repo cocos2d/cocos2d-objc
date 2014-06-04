@@ -20,7 +20,7 @@ static float conditionBrightness(float brightness);
 {
     CCEffectUniform* uniformBrightness = [CCEffectUniform uniform:@"float" name:@"u_brightness" value:[NSNumber numberWithFloat:0.0f]];
     
-    if((self = [super initWithUniforms:@[uniformBrightness] vertextUniforms:nil varying:nil]))
+    if((self = [super initWithFragmentUniforms:@[uniformBrightness] vertextUniforms:nil varying:nil]))
     {
         self.debugName = @"CCEffectBrightness";
         return self;

@@ -56,7 +56,7 @@ static float conditionBlockSize(float blockSize);
     CCEffectUniform* uniformUStep = [CCEffectUniform uniform:@"float" name:@"u_uStep" value:[NSNumber numberWithFloat:1.0f]];
     CCEffectUniform* uniformVStep = [CCEffectUniform uniform:@"float" name:@"u_vStep" value:[NSNumber numberWithFloat:1.0f]];
     
-    if((self = [super initWithUniforms:@[uniformUStep, uniformVStep] vertextUniforms:nil varying:nil]))
+    if((self = [super initWithFragmentUniforms:@[uniformUStep, uniformVStep] vertextUniforms:nil varying:nil]))
     {
         self.debugName = @"CCEffectPixellate";
         return self;

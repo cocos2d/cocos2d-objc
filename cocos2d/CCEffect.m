@@ -211,7 +211,7 @@ static NSString* vertBase =
     return self;
 }
 
--(id)initWithUniforms:(NSArray*)fragmentUniforms vertextUniforms:(NSArray*)vertexUniforms varying:(NSArray*)varying
+-(id)initWithFragmentUniforms:(NSArray*)fragmentUniforms vertextUniforms:(NSArray*)vertexUniforms varying:(NSArray*)varying
 {
     if((self = [super init]))
     {
