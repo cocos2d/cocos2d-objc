@@ -57,16 +57,14 @@ static float conditionBrightness(float brightness);
 -(void)buildRenderPasses
 {
     __weak CCEffectBrightness *weakSelf = self;
-    __weak CCEffectRenderPass *weakPass = nil;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
-    weakPass = pass0;
     pass0.shader = self.shader;
     pass0.shaderUniforms = self.shaderUniforms;
-    pass0.beginBlocks = @[[^(CCTexture *previousPassTexture){
-        weakPass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
-        weakPass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-        weakPass.shaderUniforms[@"u_brightness"] = [NSNumber numberWithFloat:weakSelf.brightness];
+    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
+        pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
+        pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
+        pass.shaderUniforms[@"u_brightness"] = [NSNumber numberWithFloat:weakSelf.brightness];
     } copy]];
     
     self.renderPasses = @[pass0];

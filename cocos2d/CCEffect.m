@@ -187,17 +187,15 @@ static NSString* vertBase =
 {
     if((self = [super init]))
     {
-        __weak CCEffectRenderPass *weakSelf = self;
-        
-        _beginBlocks = @[[^(CCTexture *previousPassTexture){} copy]];
-        _endBlocks = @[[^{} copy]];
+        _beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){} copy]];
+        _endBlocks = @[[^(CCEffectRenderPass *pass){} copy]];
 
-        CCEffectRenderPassUpdateBlock updateBlock = ^{
-            if (weakSelf.needsClear)
+        CCEffectRenderPassUpdateBlock updateBlock = ^(CCEffectRenderPass *pass){
+            if (pass.needsClear)
             {
-                [weakSelf.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:[CCColor clearColor].glkVector4 depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
+                [pass.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:[CCColor clearColor].glkVector4 depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
             }
-            [weakSelf enqueueTriangles];
+            [pass enqueueTriangles];
         };
         _updateBlocks = @[[updateBlock copy]];
         _blendMode = [CCBlendMode premultipliedAlphaMode];
@@ -212,7 +210,7 @@ static NSString* vertBase =
 {
     for (CCEffectRenderPassBeginBlock block in _beginBlocks)
     {
-        block(previousPassTexture);
+        block(self, previousPassTexture);
     }
 }
 
@@ -220,7 +218,7 @@ static NSString* vertBase =
 {
     for (CCEffectRenderPassUpdateBlock block in _updateBlocks)
     {
-        block();
+        block(self);
     }
 }
 
@@ -228,7 +226,7 @@ static NSString* vertBase =
 {
     for (CCEffectRenderPassUpdateBlock block in _endBlocks)
     {
-        block();
+        block(self);
     }
 }
 

@@ -96,16 +96,14 @@
 -(void)buildRenderPasses
 {
     __weak CCEffectSaturation *weakSelf = self;
-    __weak CCEffectRenderPass *weakPass = nil;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
-    weakPass = pass0;
     pass0.shader = self.shader;
     pass0.shaderUniforms = self.shaderUniforms;
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
-    pass0.beginBlocks = @[[^(CCTexture *previousPassTexture){
-        weakPass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-        weakPass.shaderUniforms[@"u_saturation"] = [NSNumber numberWithFloat:weakSelf.saturation];
+    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
+        pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
+        pass.shaderUniforms[@"u_saturation"] = [NSNumber numberWithFloat:weakSelf.saturation];
     } copy]];
     
     self.renderPasses = @[pass0];

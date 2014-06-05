@@ -147,38 +147,34 @@
     // pass 2: blends texture[0] and texture[2] and outputs to texture[3]
 
     __weak CCEffectGlow *weakSelf = self;
-    __weak CCEffectRenderPass *weakPass = nil;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
-    weakPass = pass0;
     pass0.shader = self.shader;
     pass0.shaderUniforms = self.shaderUniforms;
-    pass0.beginBlocks = @[[^(CCTexture *previousPassTexture){
-        weakPass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
-        weakPass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-        weakPass.shaderUniforms[@"u_enableGlowMap"] = [NSNumber numberWithFloat:0.0f];
-        weakPass.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(weakSelf.blurStrength, 0.0f)];
+    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
+        pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
+        pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
+        pass.shaderUniforms[@"u_enableGlowMap"] = [NSNumber numberWithFloat:0.0f];
+        pass.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(weakSelf.blurStrength, 0.0f)];
     } copy]];
     
     
     CCEffectRenderPass *pass1 = [[CCEffectRenderPass alloc] init];
-    weakPass = pass1;
     pass1.shader = self.shader;
     pass1.shaderUniforms = self.shaderUniforms;
-    pass1.beginBlocks = @[[^(CCTexture *previousPassTexture){
-        weakPass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-        weakPass.shaderUniforms[@"u_enableGlowMap"] = [NSNumber numberWithFloat:0.0f];
-        weakPass.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(0.0f, weakSelf.blurStrength)];
+    pass1.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
+        pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
+        pass.shaderUniforms[@"u_enableGlowMap"] = [NSNumber numberWithFloat:0.0f];
+        pass.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(0.0f, weakSelf.blurStrength)];
     } copy]];
 
     
     CCEffectRenderPass *pass2 = [[CCEffectRenderPass alloc] init];
-    weakPass = pass2;
     pass2.shader = self.shader;
     pass2.shaderUniforms = self.shaderUniforms;
-    pass2.beginBlocks = @[[^(CCTexture *previousPassTexture){
-        weakPass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-        weakPass.shaderUniforms[@"u_enableGlowMap"] = [NSNumber numberWithFloat:1.0f];
+    pass2.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
+        pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
+        pass.shaderUniforms[@"u_enableGlowMap"] = [NSNumber numberWithFloat:1.0f];
     } copy]];
 
     self.renderPasses = @[pass0, pass1, pass2];

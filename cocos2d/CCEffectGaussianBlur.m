@@ -125,36 +125,33 @@
 -(void)buildRenderPasses
 {
     __weak CCEffectGaussianBlur *weakSelf = self;
-    __weak CCEffectRenderPass *weakPass = nil;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
-    weakPass = pass0;
     pass0.shader = self.shader;
     pass0.shaderUniforms = self.shaderUniforms;
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
-    pass0.beginBlocks = @[[^(CCTexture *previousPassTexture){
-        weakPass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
-        weakPass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
+    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
+        pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
+        pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
         if([self radialBlur])
         {
-            weakPass.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(weakSelf.blurStrength, 0.0f)];
+            pass.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(weakSelf.blurStrength, 0.0f)];
         }
         else
         {
             GLKVector2 dir = [self calculateBlurDirection];
-            weakPass.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:dir];
+            pass.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:dir];
         }
     } copy]];
 
     
     CCEffectRenderPass *pass1 = [[CCEffectRenderPass alloc] init];
-    weakPass = pass1;
     pass1.shader = self.shader;
     pass1.shaderUniforms = self.shaderUniforms;
     pass1.blendMode = [CCBlendMode premultipliedAlphaMode];
-    pass1.beginBlocks = @[[^(CCTexture *previousPassTexture){
-        weakPass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-        weakPass.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(0.0f, weakSelf.blurStrength)];
+    pass1.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
+        pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
+        pass.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(0.0f, weakSelf.blurStrength)];
     } copy]];
     
     self.renderPasses = @[pass0, pass1];

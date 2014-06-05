@@ -73,9 +73,11 @@ typedef NS_ENUM(NSUInteger, CCEffectFunctionStitchFlags)
 
 @end
 
-typedef void (^CCEffectRenderPassBeginBlock)(CCTexture *previousPassTexture);
-typedef void (^CCEffectRenderPassUpdateBlock)();
-typedef void (^CCEffectRenderPassEndBlock)();
+@class CCEffectRenderPass;
+
+typedef void (^CCEffectRenderPassBeginBlock)(CCEffectRenderPass *pass, CCTexture *previousPassTexture);
+typedef void (^CCEffectRenderPassUpdateBlock)(CCEffectRenderPass *pass);
+typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass);
 
 // Note to self: I don't like this pattern, refactor it. I think there should be a CCRenderPass that is used by CCEffect instead. NOTE: convert this to a CCRnderPassProtocol
 @interface CCEffectRenderPass : NSObject
