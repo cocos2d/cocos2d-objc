@@ -83,7 +83,6 @@
     NSString* effectBody = CC_GLSL(
                                    const vec3 luminanceWeighting = vec3(0.2125, 0.7154, 0.0721);
 
-//                                   vec4 inputValue = texture2D(cc_PreviousPassTexture, cc_FragTexCoord1);
                                    float luminance = dot(inputValue.rgb, luminanceWeighting);
                                    vec3 greyScaleColor = vec3(luminance);
 
