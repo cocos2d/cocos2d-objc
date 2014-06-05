@@ -144,7 +144,7 @@
 //	CCNode *parent = self.contentNode;
 	
 	CCRenderTexture *parent = [CCRenderTexture renderTextureWithWidth:size.width height:size.height pixelFormat:CCTexturePixelFormat_RGBA8888 depthStencilFormat:GL_DEPTH24_STENCIL8];
-    parent.positionType = CCPositionTypeNormalized;
+	parent.positionType = CCPositionTypeNormalized;
 	parent.position = ccp(0.5, 0.5);
 	parent.autoDraw = YES;
 	parent.clearColor = [CCColor blackColor];
@@ -166,6 +166,41 @@
 	[parent addChild:clip];
 	clip.alphaThreshold = 0.5;
 	[clip addChild:grad];
+}
+
+-(void)setupInfiniteWindowTest
+{
+	self.subTitle = @"Should draw an infinite window";
+	
+	CCNode *contentNode = self.contentNode;
+	CGSize size = [CCDirector sharedDirector].designSize;
+	
+	CCNode *node = [CCNode node];
+	[self.contentNode addChild:node];
+	
+	[node scheduleBlock:^(CCTimer *timer) {
+		CCRenderTexture *rt = [CCRenderTexture renderTextureWithWidth:size.width height:size.height];
+		
+		[rt begin];
+			[[CCDirector sharedDirector].runningScene visit];
+		[rt end];
+		
+		// Remove the old sprite
+		[contentNode removeChildByName:@"zoom"];
+		
+		CGImageRef image = [rt newCGImage];
+		CCTexture *texture = [[CCTexture alloc] initWithCGImage:image contentScale:rt.contentScale];
+		CGImageRelease(image);
+		
+		CCSprite *sprite = [CCSprite spriteWithTexture:texture];
+		sprite.scale = 0.9;
+		sprite.position = ccp(size.width/2.0, size.height/2.0);
+		sprite.name = @"zoom";
+		
+		[contentNode addChild:sprite];
+				
+		[timer repeatOnceWithInterval:0.125];
+	} delay:0.0];
 }
 
 -(CCSprite *)simpleShaderTestHelper
@@ -345,7 +380,7 @@ ProgressPercent(CCTime t)
 	
 	// Radial timer
 	{
-		NSString *image = @"Tiles/05.png";
+		NSString *image = @"Tiles/06.png";
 		CGPoint position = ccp(0.1, 0.25);
 		CCTime interval = 1.0/60.0;
 		
@@ -369,7 +404,7 @@ ProgressPercent(CCTime t)
 	
 	// Radial timer with animating midpoint.
 	{
-		NSString *image = @"Tiles/05.png";
+		NSString *image = @"Tiles/06.png";
 		CGPoint position = ccp(0.1, 0.5);
 		CCTime interval = 1.0/60.0;
 		
@@ -394,7 +429,7 @@ ProgressPercent(CCTime t)
 	}
 	
 	{
-		NSString *image = @"Tiles/05.png";
+		NSString *image = @"Tiles/06.png";
 		CGPoint position = ccp(0.2, 0.25);
 		CCTime interval = 1.0/60.0;
 		
@@ -420,7 +455,7 @@ ProgressPercent(CCTime t)
 	}
 	
 	{
-		NSString *image = @"Tiles/05.png";
+		NSString *image = @"Tiles/06.png";
 		CGPoint position = ccp(0.2, 0.5);
 		CCTime interval = 1.0/60.0;
 		
@@ -446,7 +481,7 @@ ProgressPercent(CCTime t)
 	}
 	
 	{
-		NSString *image = @"Tiles/05.png";
+		NSString *image = @"Tiles/06.png";
 		CGPoint position = ccp(0.3, 0.25);
 		CCTime interval = 1.0/60.0;
 		
@@ -472,7 +507,7 @@ ProgressPercent(CCTime t)
 	}
 	
 	{
-		NSString *image = @"Tiles/05.png";
+		NSString *image = @"Tiles/06.png";
 		CGPoint position = ccp(0.3, 0.5);
 		CCTime interval = 1.0/60.0;
 		
@@ -498,7 +533,7 @@ ProgressPercent(CCTime t)
 	}
 	
 	{
-		NSString *image = @"Tiles/05.png";
+		NSString *image = @"Tiles/06.png";
 		CGPoint position = ccp(0.4, 0.25);
 		CCTime interval = 1.0/60.0;
 		
@@ -524,7 +559,7 @@ ProgressPercent(CCTime t)
 	}
 	
 	{
-		NSString *image = @"Tiles/05.png";
+		NSString *image = @"Tiles/06.png";
 		CGPoint position = ccp(0.4, 0.5);
 		CCTime interval = 1.0/60.0;
 		
@@ -547,6 +582,36 @@ ProgressPercent(CCTime t)
 			
 			[timer repeatOnceWithInterval:interval];
 		} delay:interval];
+	}
+	
+	{
+		NSString *image = @"Tiles/06.png";
+		CGPoint position = ccp(0.5, 3.0/8.0);
+		
+		CCSprite *sprite = [CCSprite spriteWithImageNamed:image];
+		sprite.positionType = CCPositionTypeNormalized;
+		sprite.position = position;
+		sprite.color = [CCColor grayColor];
+		[self.contentNode addChild:sprite];
+		
+		CCProgressNode *progress = [CCProgressNode progressWithSprite:[CCSprite spriteWithImageNamed:image]];
+		progress.type = CCProgressNodeTypeBar;
+		progress.midpoint = ccp(0.5, 0.5);
+		progress.barChangeRate = ccp(1, 1);
+		progress.positionType = CCPositionTypeNormalized;
+		progress.position = position;
+		progress.percentage = 50;
+		[self.contentNode addChild:progress];
+		
+		[self scheduleBlock:^(CCTimer *timer) {
+			progress.sprite = [CCSprite spriteWithImageNamed:@"Tiles/06.png"];
+			[timer repeatOnceWithInterval:1.0];
+		} delay:0.5];
+		
+		[self scheduleBlock:^(CCTimer *timer) {
+			progress.sprite = [CCSprite spriteWithImageNamed:@"Tiles/05.png"];
+			[timer repeatOnceWithInterval:1.0];
+		} delay:1.0];
 	}
 }
 

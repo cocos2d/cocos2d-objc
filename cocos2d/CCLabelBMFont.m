@@ -937,6 +937,8 @@ void FNTConfigRemoveCache( void )
 		_fntFile = fntFile;
 
 		_configuration = newConf;
+        
+        _childForTag = [NSMutableArray array];
 
 		self.texture = [CCTexture textureWithFile:_configuration.atlasName];
 		[self createFontChars];

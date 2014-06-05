@@ -23,7 +23,7 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>Libraries/cocos2d/CCEffectBrightnessAndContrast.h</key>
+		<key>Libraries/cocos2d/CCEffectBrightness.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -32,7 +32,20 @@
 				<string>Effects</string>
 			</array>
 			<key>Path</key>
-			<string>Libraries/cocos2d/CCEffectBrightnessAndContrast.h</string>
+			<string>Libraries/cocos2d/CCEffectBrightness.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>Libraries/cocos2d/CCEffectContrast.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Effects</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCEffectContrast.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -75,13 +88,26 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>Libraries/cocos2d/CCEffectNode.h</key>
+		<key>Libraries/cocos2d/CCEffectPixellate.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
 				<string>Libraries</string>
 				<string>cocos2d</string>
 				<string>Effects</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCEffectPixellate.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>Libraries/cocos2d/CCEffectNode.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Misc Nodes</string>
 			</array>
 			<key>Path</key>
 			<string>Libraries/cocos2d/CCEffectNode.h</string>
@@ -127,12 +153,21 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>Libraries/cocos2d/CCEffectStack_Private.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Effects</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCEffectStack_Private.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>Libraries/cocos2d/CCEffect.m</key>
 		<dict>
-			<key>TargetIndices</key>
-			<array>
-				<integer>0</integer>
-			</array>
 			<key>Group</key>
 			<array>
 				<string>Libraries</string>
@@ -141,13 +176,13 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/cocos2d/CCEffect.m</string>
-		</dict>
-		<key>Libraries/cocos2d/CCEffectBrightnessAndContrast.m</key>
-		<dict>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
 			</array>
+		</dict>
+		<key>Libraries/cocos2d/CCEffectBrightness.m</key>
+		<dict>
 			<key>Group</key>
 			<array>
 				<string>Libraries</string>
@@ -155,14 +190,29 @@
 				<string>Effects</string>
 			</array>
 			<key>Path</key>
-			<string>Libraries/cocos2d/CCEffectBrightnessAndContrast.m</string>
-		</dict>
-		<key>Libraries/cocos2d/CCEffectColor.m</key>
-		<dict>
+			<string>Libraries/cocos2d/CCEffectBrightness.m</string>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
 			</array>
+		</dict>
+		<key>Libraries/cocos2d/CCEffectContrast.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Effects</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCEffectContrast.m</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
+		</dict>
+		<key>Libraries/cocos2d/CCEffectColor.m</key>
+		<dict>
 			<key>Group</key>
 			<array>
 				<string>Libraries</string>
@@ -171,13 +221,13 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/cocos2d/CCEffectColor.m</string>
-		</dict>
-		<key>Libraries/cocos2d/CCEffectColorPulse.m</key>
-		<dict>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
 			</array>
+		</dict>
+		<key>Libraries/cocos2d/CCEffectColorPulse.m</key>
+		<dict>
 			<key>Group</key>
 			<array>
 				<string>Libraries</string>
@@ -186,13 +236,13 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/cocos2d/CCEffectColorPulse.m</string>
-		</dict>
-		<key>Libraries/cocos2d/CCEffectGlow.m</key>
-		<dict>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
 			</array>
+		</dict>
+		<key>Libraries/cocos2d/CCEffectGlow.m</key>
+		<dict>
 			<key>Group</key>
 			<array>
 				<string>Libraries</string>
@@ -201,13 +251,13 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/cocos2d/CCEffectGlow.m</string>
-		</dict>
-		<key>Libraries/cocos2d/CCEffectNode.m</key>
-		<dict>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
 			</array>
+		</dict>
+		<key>Libraries/cocos2d/CCEffectPixellate.m</key>
+		<dict>
 			<key>Group</key>
 			<array>
 				<string>Libraries</string>
@@ -215,14 +265,29 @@
 				<string>Effects</string>
 			</array>
 			<key>Path</key>
-			<string>Libraries/cocos2d/CCEffectNode.m</string>
-		</dict>
-		<key>Libraries/cocos2d/CCEffectStack.m</key>
-		<dict>
+			<string>Libraries/cocos2d/CCEffectPixellate.m</string>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
 			</array>
+		</dict>
+		<key>Libraries/cocos2d/CCEffectNode.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Misc Nodes</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCEffectNode.m</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
+		</dict>
+		<key>Libraries/cocos2d/CCEffectStack.m</key>
+		<dict>
 			<key>Group</key>
 			<array>
 				<string>Libraries</string>
@@ -231,13 +296,13 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/cocos2d/CCEffectStack.m</string>
-		</dict>
-		<key>Libraries/cocos2d/CCEffectTexture.m</key>
-		<dict>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
 			</array>
+		</dict>
+		<key>Libraries/cocos2d/CCEffectTexture.m</key>
+		<dict>
 			<key>Group</key>
 			<array>
 				<string>Libraries</string>
@@ -246,6 +311,10 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/cocos2d/CCEffectTexture.m</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
 		</dict>
 		<key>Libraries/cocos2d/CCRenderer.h</key>
 		<dict>
@@ -645,243 +714,6 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/cocos2d/CCAnimationCache.m</string>
-			<key>TargetIndices</key>
-			<array>
-				<integer>0</integer>
-			</array>
-		</dict>
-        <key>Libraries/cocos2d/CCEffect.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>Libraries</string>
-				<string>cocos2d</string>
-				<string>Effects</string>
-			</array>
-			<key>Path</key>
-			<string>Libraries/cocos2d/CCEffect.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-        <key>Libraries/cocos2d/CCEffect.m</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>Libraries</string>
-				<string>cocos2d</string>
-				<string>Effects</string>
-			</array>
-			<key>Path</key>
-			<string>Libraries/cocos2d/CCEffect.m</string>
-			<key>TargetIndices</key>
-			<array>
-				<integer>0</integer>
-			</array>
-		</dict>
-        <key>Libraries/cocos2d/CCEffectColor.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>Libraries</string>
-				<string>cocos2d</string>
-				<string>Effects</string>
-			</array>
-			<key>Path</key>
-			<string>Libraries/cocos2d/CCEffectColor.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-        <key>Libraries/cocos2d/CCEffectColor.m</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>Libraries</string>
-				<string>cocos2d</string>
-				<string>Effects</string>
-			</array>
-			<key>Path</key>
-			<string>Libraries/cocos2d/CCEffectColor.m</string>
-			<key>TargetIndices</key>
-			<array>
-				<integer>0</integer>
-			</array>
-		</dict>
-        <key>Libraries/cocos2d/CCEffectColorPulse.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>Libraries</string>
-				<string>cocos2d</string>
-				<string>Effects</string>
-			</array>
-			<key>Path</key>
-			<string>Libraries/cocos2d/CCEffectColorPulse.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-        <key>Libraries/cocos2d/CCEffectColorPulse.m</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>Libraries</string>
-				<string>cocos2d</string>
-				<string>Effects</string>
-			</array>
-			<key>Path</key>
-			<string>Libraries/cocos2d/CCEffectColorPulse.m</string>
-			<key>TargetIndices</key>
-			<array>
-				<integer>0</integer>
-			</array>
-		</dict>
-        <key>Libraries/cocos2d/CCEffectStack.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>Libraries</string>
-				<string>cocos2d</string>
-				<string>Effects</string>
-			</array>
-			<key>Path</key>
-			<string>Libraries/cocos2d/CCEffectStack.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-        <key>Libraries/cocos2d/CCEffectStack.m</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>Libraries</string>
-				<string>cocos2d</string>
-				<string>Effects</string>
-			</array>
-			<key>Path</key>
-			<string>Libraries/cocos2d/CCEffectStack.m</string>
-			<key>TargetIndices</key>
-			<array>
-				<integer>0</integer>
-			</array>
-		</dict>
-        <key>Libraries/cocos2d/CCEffectTexture.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>Libraries</string>
-				<string>cocos2d</string>
-				<string>Effects</string>
-			</array>
-			<key>Path</key>
-			<string>Libraries/cocos2d/CCEffectTexture.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-        <key>Libraries/cocos2d/CCEffectTexture.m</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>Libraries</string>
-				<string>cocos2d</string>
-				<string>Effects</string>
-			</array>
-			<key>Path</key>
-			<string>Libraries/cocos2d/CCEffectTexture.m</string>
-			<key>TargetIndices</key>
-			<array>
-				<integer>0</integer>
-			</array>
-		</dict>
-        <key>Libraries/cocos2d/CCEffectGlow.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>Libraries</string>
-				<string>cocos2d</string>
-				<string>Effects</string>
-			</array>
-			<key>Path</key>
-			<string>Libraries/cocos2d/CCEffectGlow.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-        <key>Libraries/cocos2d/CCEffectGlow.m</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>Libraries</string>
-				<string>cocos2d</string>
-				<string>Effects</string>
-			</array>
-			<key>Path</key>
-			<string>Libraries/cocos2d/CCEffectGlow.m</string>
-			<key>TargetIndices</key>
-			<array>
-				<integer>0</integer>
-			</array>
-		</dict>
-        <key>Libraries/cocos2d/CCEffectBrightnessAndContrast.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>Libraries</string>
-				<string>cocos2d</string>
-				<string>Effects</string>
-			</array>
-			<key>Path</key>
-			<string>Libraries/cocos2d/CCEffectBrightnessAndContrast.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-        <key>Libraries/cocos2d/CCEffectBrightnessAndContrast.m</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>Libraries</string>
-				<string>cocos2d</string>
-				<string>Effects</string>
-			</array>
-			<key>Path</key>
-			<string>Libraries/cocos2d/CCEffectBrightnessAndContrast.m</string>
-			<key>TargetIndices</key>
-			<array>
-				<integer>0</integer>
-			</array>
-		</dict>
-        <key>Libraries/cocos2d/CCEffect_Private.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>Libraries</string>
-				<string>cocos2d</string>
-				<string>Effects</string>
-			</array>
-			<key>Path</key>
-			<string>Libraries/cocos2d/CCEffect_Private.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-        <key>Libraries/cocos2d/CCEffectNode.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>Libraries</string>
-				<string>cocos2d</string>
-				<string>Misc Nodes</string>
-			</array>
-			<key>Path</key>
-			<string>Libraries/cocos2d/CCEffectNode.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-        <key>Libraries/cocos2d/CCEffectNode.m</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>Libraries</string>
-				<string>cocos2d</string>
-				<string>Misc Nodes</string>
-			</array>
-			<key>Path</key>
-			<string>Libraries/cocos2d/CCEffectNode.m</string>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
@@ -2910,19 +2742,24 @@
 	<key>Nodes</key>
 	<array>
 		<string>Libraries/cocos2d/CCEffect.h</string>
-		<string>Libraries/cocos2d/CCEffectBrightnessAndContrast.h</string>
+		<string>Libraries/cocos2d/CCEffectBrightness.h</string>
+		<string>Libraries/cocos2d/CCEffectContrast.h</string>
 		<string>Libraries/cocos2d/CCEffectColor.h</string>
 		<string>Libraries/cocos2d/CCEffectColorPulse.h</string>
 		<string>Libraries/cocos2d/CCEffectGlow.h</string>
+		<string>Libraries/cocos2d/CCEffectPixellate.h</string>
 		<string>Libraries/cocos2d/CCEffectNode.h</string>
 		<string>Libraries/cocos2d/CCEffectStack.h</string>
 		<string>Libraries/cocos2d/CCEffectTexture.h</string>
 		<string>Libraries/cocos2d/CCEffect_Private.h</string>
+		<string>Libraries/cocos2d/CCEffectStack_Private.h</string>
 		<string>Libraries/cocos2d/CCEffect.m</string>
-		<string>Libraries/cocos2d/CCEffectBrightnessAndContrast.m</string>
+		<string>Libraries/cocos2d/CCEffectBrightness.m</string>
+		<string>Libraries/cocos2d/CCEffectContrast.m</string>
 		<string>Libraries/cocos2d/CCEffectColor.m</string>
 		<string>Libraries/cocos2d/CCEffectColorPulse.m</string>
 		<string>Libraries/cocos2d/CCEffectGlow.m</string>
+		<string>Libraries/cocos2d/CCEffectPixellate.m</string>
 		<string>Libraries/cocos2d/CCEffectNode.m</string>
 		<string>Libraries/cocos2d/CCEffectStack.m</string>
 		<string>Libraries/cocos2d/CCEffectTexture.m</string>
