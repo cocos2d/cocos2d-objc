@@ -179,6 +179,11 @@
     return ret;
 }
 
+- (CCEffectFunctionStitch)stitchSupport
+{
+    return CCEffectFunctionStitchNone;
+}
+
 @end
 #endif
 

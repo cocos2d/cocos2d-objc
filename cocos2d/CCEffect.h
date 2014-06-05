@@ -15,6 +15,15 @@
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 extern const NSString *CCShaderUniformPreviousPassTexture;
 
+typedef NS_ENUM(NSUInteger, CCEffectFunctionStitch)
+{
+    CCEffectFunctionStitchNone       = 0,
+    CCEffectFunctionStitchBefore     = 1 << 0,
+    CCEffectFunctionStitchAfter      = 1 << 1,
+    CCEffectFunctionStitchBoth       = (CCEffectFunctionStitchBefore | CCEffectFunctionStitchAfter),
+};
+
+
 @interface CCEffectFunction : NSObject
 
 @property (nonatomic, readonly) NSString* body;
@@ -94,6 +103,7 @@ typedef void (^CCEffectRenderPassEndBlock)();
 @property (nonatomic, readonly) NSMutableDictionary* shaderUniforms;
 @property (nonatomic, readonly) NSInteger renderPassesRequired;
 @property (nonatomic, readonly) BOOL supportsDirectRendering;
+@property (nonatomic, readonly) CCEffectFunctionStitch stitchSupport;
 @property (nonatomic, copy) NSString *debugName;
 
 

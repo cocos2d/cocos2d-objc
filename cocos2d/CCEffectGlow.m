@@ -183,6 +183,11 @@
     self.renderPasses = @[pass0, pass1, pass2];
 }
 
+- (CCEffectFunctionStitch)stitchSupport
+{
+    return CCEffectFunctionStitchNone;
+}
+
 @end
 #endif
 

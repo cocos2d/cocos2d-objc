@@ -121,6 +121,11 @@ static float conditionBlockSize(float blockSize);
     _blockSize = conditionBlockSize(blockSize);
 }
 
+- (CCEffectFunctionStitch)stitchSupport
+{
+    return CCEffectFunctionStitchAfter;
+}
+
 @end
 
 float conditionBlockSize(float blockSize)

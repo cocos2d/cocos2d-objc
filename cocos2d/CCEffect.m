@@ -461,6 +461,11 @@ static NSString* vertBase =
     return YES;
 }
 
+- (CCEffectFunctionStitch)stitchSupport
+{
+    return CCEffectFunctionStitchBoth;
+}
+
 - (BOOL)prepareForRendering
 {
     return YES;
