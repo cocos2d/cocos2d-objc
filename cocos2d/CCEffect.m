@@ -272,6 +272,7 @@ static NSString* vertBase =
         _vertexUniforms = [[CCEffect defaultEffectVertexUniforms] copy];
         _fragmentFunctions = [[NSMutableArray alloc] init];
         _vertexFunctions = [[NSMutableArray alloc] init];
+        _stitchFlags = CCEffectFunctionStitchBoth;
         
         [self buildFragmentFunctions];
         [self buildVertexFunctions];
@@ -293,7 +294,8 @@ static NSString* vertBase =
         _varyingVars = [varying copy];
         _fragmentFunctions = [[NSMutableArray alloc] init];
         _vertexFunctions = [[NSMutableArray alloc] init];
-        
+        _stitchFlags = CCEffectFunctionStitchBoth;
+
         [self buildShaderUniforms:_fragmentUniforms vertexUniforms:_vertexUniforms];
         [self buildFragmentFunctions];
         [self buildVertexFunctions];
@@ -314,6 +316,8 @@ static NSString* vertBase =
         _vertexUniforms = [[CCEffect defaultEffectVertexUniforms] arrayByAddingObjectsFromArray:vertexUniforms];
         _fragmentFunctions = fragmentFunctions;
         _varyingVars = [varying copy];
+        _stitchFlags = CCEffectFunctionStitchBoth;
+
         [self buildShaderUniforms:_fragmentUniforms vertexUniforms:_vertexUniforms];
         [self buildVertexFunctions];
         [self buildEffectShader];
@@ -334,6 +338,8 @@ static NSString* vertBase =
         _fragmentFunctions = fragmentFunctions;
         _vertexFunctions = vertextFunctions;
         _varyingVars = [varying copy];
+        _stitchFlags = CCEffectFunctionStitchBoth;
+
         [self buildShaderUniforms:_fragmentUniforms vertexUniforms:_vertexUniforms];
         [self buildEffectShader];
         [self buildRenderPasses];
@@ -484,11 +490,6 @@ static NSString* vertBase =
     return YES;
 }
 
-- (CCEffectFunctionStitch)stitchSupport
-{
-    return CCEffectFunctionStitchBoth;
-}
-
 - (BOOL)prepareForRendering
 {
     return YES;
@@ -499,6 +500,13 @@ static NSString* vertBase =
     NSAssert((passIndex >= 0) && (passIndex < _renderPasses.count), @"Pass index out of range.");
     return _renderPasses[passIndex];;
 }
+
+-(BOOL)stitchSupported:(CCEffectFunctionStitchFlags)stitch
+{
+    NSAssert(stitch && ((stitch & CCEffectFunctionStitchBoth) == stitch), @"Invalid stitch flag specified");
+    return ((stitch & _stitchFlags) == stitch);
+}
+
 
 @end
 #endif

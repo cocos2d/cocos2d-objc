@@ -61,6 +61,7 @@
                                                v_twoStepsRightTextureCoordinate, nil]])
     {
         self.debugName = @"CCEffectGaussianBlur";
+        self.stitchFlags = 0;
         return self;
     }
     
@@ -177,11 +178,6 @@
 {
     BOOL ret = (_blurDirection.x == 0.0f && _blurDirection.y == 0.0f) ? YES : NO;
     return ret;
-}
-
-- (CCEffectFunctionStitch)stitchSupport
-{
-    return CCEffectFunctionStitchNone;
 }
 
 @end

@@ -18,6 +18,7 @@
 @property (nonatomic) NSArray* vertexUniforms;
 @property (nonatomic) NSArray* varyingVars;
 @property (nonatomic) NSArray* renderPasses;
+@property (nonatomic) CCEffectFunctionStitchFlags stitchFlags;
 
 -(void)buildEffectShader;
 -(void)buildFragmentFunctions;

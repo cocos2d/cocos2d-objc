@@ -65,6 +65,7 @@
                                                v_twoStepsRightTextureCoordinate, nil]])
     {
         self.debugName = @"CCEffectGlow";
+        self.stitchFlags = 0;
         return self;
     }
     
@@ -181,11 +182,6 @@
     } copy]];
 
     self.renderPasses = @[pass0, pass1, pass2];
-}
-
-- (CCEffectFunctionStitch)stitchSupport
-{
-    return CCEffectFunctionStitchNone;
 }
 
 @end

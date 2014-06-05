@@ -59,6 +59,7 @@ static float conditionBlockSize(float blockSize);
     if((self = [super initWithFragmentUniforms:@[uniformUStep, uniformVStep] vertextUniforms:nil varying:nil]))
     {
         self.debugName = @"CCEffectPixellate";
+        self.stitchFlags = CCEffectFunctionStitchAfter;
         return self;
     }
     return self;
@@ -119,11 +120,6 @@ static float conditionBlockSize(float blockSize);
 -(void)setBlockSize:(float)blockSize
 {
     _blockSize = conditionBlockSize(blockSize);
-}
-
-- (CCEffectFunctionStitch)stitchSupport
-{
-    return CCEffectFunctionStitchAfter;
 }
 
 @end
