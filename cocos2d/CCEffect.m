@@ -189,8 +189,8 @@ static NSString* vertBase =
     {
         __weak CCEffectRenderPass *weakSelf = self;
         
-        _beginBlock = [^(CCTexture *previousPassTexture){} copy];
-        _endBlock = [^{} copy];
+        _beginBlocks = @[[^(CCTexture *previousPassTexture){} copy]];
+        _endBlocks = @[[^{} copy]];
 
         CCEffectRenderPassUpdateBlock updateBlock = ^{
             if (weakSelf.needsClear)
@@ -199,7 +199,7 @@ static NSString* vertBase =
             }
             [weakSelf enqueueTriangles];
         };
-        _updateBlock = [updateBlock copy];
+        _updateBlocks = @[[updateBlock copy]];
         _blendMode = [CCBlendMode premultipliedAlphaMode];
         
         return self;
@@ -208,7 +208,30 @@ static NSString* vertBase =
     return self;
 }
 
-//
+-(void)begin:(CCTexture *)previousPassTexture
+{
+    for (CCEffectRenderPassBeginBlock block in _beginBlocks)
+    {
+        block(previousPassTexture);
+    }
+}
+
+-(void)update
+{
+    for (CCEffectRenderPassUpdateBlock block in _updateBlocks)
+    {
+        block();
+    }
+}
+
+-(void)end
+{
+    for (CCEffectRenderPassUpdateBlock block in _endBlocks)
+    {
+        block();
+    }
+}
+
 -(void)enqueueTriangles
 {
     CCRenderState *renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms];

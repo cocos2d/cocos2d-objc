@@ -189,9 +189,9 @@
         {
             renderPass.transform = *transform;
             
-            renderPass.beginBlock(previousPassTexture);
-            renderPass.updateBlock();
-            renderPass.endBlock();
+            [renderPass begin:previousPassTexture];
+            [renderPass update];
+            [renderPass end];
         }
         else
         {
@@ -200,11 +200,11 @@
             CGSize rtSize = CGSizeMake(_contentSize.width * _contentScale, _contentSize.height * _contentScale);
             rt = [self renderTargetWithSize:rtSize];
             
-            renderPass.beginBlock(previousPassTexture);
+            [renderPass begin:previousPassTexture];
             [self bindRenderTarget:rt withRenderer:renderer];
-            renderPass.updateBlock();
+            [renderPass update];
             [self restoreRenderTargetWithRenderer:renderer];
-            renderPass.endBlock();
+            [renderPass end];
         }
         [renderer popGroupWithDebugLabel:[NSString stringWithFormat:@"CCEffectRenderer: %@: Pass %d", effect.debugName, i] globalSortOrder:0];
         

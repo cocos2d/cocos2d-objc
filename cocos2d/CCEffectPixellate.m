@@ -100,7 +100,7 @@ static float conditionBlockSize(float blockSize);
     pass0.shader = self.shader;
     pass0.shaderUniforms = self.shaderUniforms;
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
-    pass0.beginBlock = ^(CCTexture *previousPassTexture){
+    pass0.beginBlocks = @[[^(CCTexture *previousPassTexture){
         
         weakPass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
         weakPass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
@@ -111,7 +111,7 @@ static float conditionBlockSize(float blockSize);
         
         weakPass.shaderUniforms[@"u_uStep"] = [NSNumber numberWithFloat:uStep];
         weakPass.shaderUniforms[@"u_vStep"] = [NSNumber numberWithFloat:vStep];
-    };
+    } copy]];
     
     self.renderPasses = @[pass0];
 }

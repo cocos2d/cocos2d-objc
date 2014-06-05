@@ -89,10 +89,13 @@ typedef void (^CCEffectRenderPassEndBlock)();
 @property (nonatomic) CCShader* shader;
 @property (nonatomic) NSMutableDictionary* shaderUniforms;
 @property (nonatomic) BOOL needsClear;
-@property (nonatomic,copy) CCEffectRenderPassBeginBlock beginBlock;
-@property (nonatomic,copy) CCEffectRenderPassUpdateBlock updateBlock;
-@property (nonatomic,copy) CCEffectRenderPassEndBlock endBlock;
+@property (nonatomic,copy) NSArray* beginBlocks;
+@property (nonatomic,copy) NSArray* updateBlocks;
+@property (nonatomic,copy) NSArray* endBlocks;
 
+-(void)begin:(CCTexture *)previousPassTexture;
+-(void)update;
+-(void)end;
 -(void)enqueueTriangles;
 
 @end
