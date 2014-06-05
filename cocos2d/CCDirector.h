@@ -134,17 +134,11 @@ and when to execute the Scenes.
 	/* projection used */
 	CCDirectorProjection _projection;
 
-	/* CCDirector delegate */
-	__weak id<CCDirectorDelegate> _delegate;
-
 	/* window size in points */
 	CGSize	_winSizeInPoints;
 
 	/* window size in pixels */
 	CGSize	_winSizeInPixels;
-
-	/* the cocos2d running thread */
-	__weak NSThread *_runningThread;
 
 	/* scheduler associated with this director */
 	CCScheduler *_scheduler;
