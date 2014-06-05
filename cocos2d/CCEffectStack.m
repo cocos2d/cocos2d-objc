@@ -109,7 +109,7 @@
     return compositeEffect;
 }
 
-+(void)extractFragmentData:(NSMutableArray*)effects functions:(NSMutableArray*)functions uniforms:(NSMutableArray*)uniforms
++(void)extractFragmentData:(NSArray*)effects functions:(NSMutableArray*)functions uniforms:(NSMutableArray*)uniforms
 {
     // Check for duplicate function and uniform names.
     //
@@ -144,7 +144,7 @@
     }
 }
 
-+(void)extractVertexData:(NSMutableArray*)effects functions:(NSMutableArray*)functions uniforms:(NSMutableArray*)uniforms
++(void)extractVertexData:(NSArray*)effects functions:(NSMutableArray*)functions uniforms:(NSMutableArray*)uniforms
 {
     // Check for duplicate function and uniform names.
     //
