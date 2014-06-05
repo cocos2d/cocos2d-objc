@@ -120,9 +120,6 @@
         
 		NSAssert(format != CCTexturePixelFormat_A8, @"only RGB and RGBA formats are valid for a render texture");
 
-        _textures = [[NSMutableArray alloc] init];
-        _FBOs = [[NSMutableArray alloc] init];
-        
 		CCDirector *director = [CCDirector sharedDirector];
 
 		// XXX multithread
@@ -178,8 +175,8 @@
 	void *data = calloc(powW*powH, 4);
 
 	CCTexture *texture = [[CCTexture alloc] initWithData:data pixelFormat:_pixelFormat pixelsWide:powW pixelsHigh:powH contentSizeInPixels:CGSizeMake(pixelW, pixelH) contentScale:_contentScale];
-	[_textures insertObject:texture atIndex:_currentRenderPass];
-	
+    self.texture = texture;
+    
 	free(data);
 
 	GLint oldRBO;
@@ -209,10 +206,9 @@
     
 	// check if it worked (probably worth doing :) )
 	NSAssert( glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, @"Could not attach texture to framebuffer");
-	
-	CCRenderTextureFBO *renderTextureFBO = [[CCRenderTextureFBO alloc] initWithFBO:fbo depthRenderBuffer:depthRenderBuffer];
-	[_FBOs insertObject:renderTextureFBO atIndex:_currentRenderPass];
-  
+
+    _FBO = [[CCRenderTextureFBO alloc] initWithFBO:fbo depthRenderBuffer:depthRenderBuffer];
+    
 	[texture setAliasTexParameters];
 	
 	glBindRenderbuffer(GL_RENDERBUFFER, oldRBO);
@@ -238,26 +234,22 @@
 		_contentScale = contentScale;
 		
 		[self destroy];
-        _currentRenderPass = 0;
 	}
 }
 
 -(void)destroy
 {
-    for (CCRenderTextureFBO *renderTextureFBO in _FBOs)
-    {
-        GLuint fbo = renderTextureFBO.FBO;
-        glDeleteFramebuffers(1, &fbo);
+    GLuint fbo = _FBO.FBO;
+    glDeleteFramebuffers(1, &fbo);
 	
-        GLuint depthRenderBuffer = renderTextureFBO.depthRenderBuffer;
-        if (depthRenderBuffer)
-        {
-            glDeleteRenderbuffers(1, &depthRenderBuffer);
-        }
+    GLuint depthRenderBuffer = _FBO.depthRenderBuffer;
+    if (depthRenderBuffer)
+    {
+        glDeleteRenderbuffers(1, &depthRenderBuffer);
     }
 
-    [_textures removeAllObjects];
-    [_FBOs removeAllObjects];
+    _FBO = nil;
+    self.texture = nil;
 }
 
 -(void)dealloc
@@ -267,21 +259,22 @@
 
 -(CCTexture *)texture
 {
-    NSAssert([_textures count] == [_FBOs count], @"The number of textures is out of sync with the number of FBOs.");
-    if(([_textures count] <= _currentRenderPass) || [_textures objectAtIndex:_currentRenderPass]  == nil)
+    if (super.texture == nil)
+    {
         [self create];
+    }
     
-    return [_textures objectAtIndex:_currentRenderPass];
+    return super.texture;
 }
 
 -(GLuint)fbo
 {
-    NSAssert([_textures count] == [_FBOs count], @"The number of textures is out of sync with the number of FBOs.");
-    if([_textures objectAtIndex:_currentRenderPass] == nil)
+    if (super.texture == nil)
+    {
         [self create];
+    }
     
-    CCRenderTextureFBO *renderTextureFBO = [_FBOs objectAtIndex:_currentRenderPass];
-    return renderTextureFBO.FBO;
+    return _FBO.FBO;
 }
 
 -(void)begin
@@ -411,7 +404,6 @@
 		[self end];
 	}
 	
-//	_sprite.anchorPoint = ccp(0.0, 0.0);
 	GLKMatrix4 transform = [self transform:parentTransform];
 	[_sprite visit:renderer parentTransform:&transform];
 	
@@ -597,9 +589,14 @@
 
 -(void) setContentSize:(CGSize)size
 {
+    // TODO: Fix CCRenderTexture so that it correctly handles this
+	// NSAssert(NO, @"You cannot change the content size of an already created CCRenderTexture. Recreate it");
     [super setContentSize:size];
     _projection = GLKMatrix4MakeOrtho(0.0f, size.width, size.height, 0.0f, -1024.0f, 1024.0f);
     _contentSizeChanged = YES;
+
 }
+
+
 
 @end

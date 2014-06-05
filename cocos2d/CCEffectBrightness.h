@@ -12,6 +12,7 @@
 @interface CCEffectBrightness : CCEffect
 
 -(id)initWithBrightness:(float)brightness;
++(id)effectWithBrightness:(float)brightness;
 
 @property (nonatomic) float brightness;
 

@@ -17,10 +17,12 @@
 @property (nonatomic) NSArray* fragmentUniforms;
 @property (nonatomic) NSArray* vertexUniforms;
 @property (nonatomic) NSArray* varyingVars;
+@property (nonatomic) NSArray* renderPasses;
 
 -(void)buildEffectShader;
 -(void)buildFragmentFunctions;
 -(void)buildVertexFunctions;
+-(void)buildRenderPasses;
 
 @end
 #endif

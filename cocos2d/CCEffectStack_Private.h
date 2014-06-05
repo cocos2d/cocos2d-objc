@@ -14,7 +14,7 @@
     NSMutableArray *_effects;
 }
 
-- (BOOL)prepareForRendering;
+@property (nonatomic) BOOL passesDirty;
 
 @end
 #endif

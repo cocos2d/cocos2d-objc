@@ -11,6 +11,8 @@
 #import "CCtexture.h"
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
+const NSString *CCShaderUniformPreviousPassTexture = @"cc_PreviousPassTexture";
+
 static NSString* fragBase =
 @"%@\n\n"   // uniforms
 @"%@\n"     // varying vars
@@ -131,7 +133,45 @@ static NSString* vertBase =
 
 @implementation CCEffectRenderPass
 
+-(id)init
+{
+    if((self = [super init]))
+    {
+        __weak CCEffectRenderPass *weakSelf = self;
+        
+        _beginBlock = [^(CCTexture *previousPassTexture){} copy];
+        _endBlock = [^{} copy];
+
+        CCEffectRenderPassUpdateBlock updateBlock = ^{
+            if (weakSelf.needsClear)
+            {
+                [weakSelf.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:[CCColor clearColor].glkVector4 depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
+            }
+            [weakSelf enqueueTriangles];
+        };
+        _updateBlock = [updateBlock copy];
+        _blendMode = [CCBlendMode premultipliedAlphaMode];
+        
+        return self;
+    }
+    
+    return self;
+}
+
 //
+-(void)enqueueTriangles
+{
+    CCRenderState *renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms];
+    
+    CCRenderBuffer buffer = [_renderer enqueueTriangles:2 andVertexes:4 withState:renderState globalSortOrder:0];
+	CCRenderBufferSetVertex(buffer, 0, CCVertexApplyTransform(_verts.bl, &_transform));
+	CCRenderBufferSetVertex(buffer, 1, CCVertexApplyTransform(_verts.br, &_transform));
+	CCRenderBufferSetVertex(buffer, 2, CCVertexApplyTransform(_verts.tr, &_transform));
+	CCRenderBufferSetVertex(buffer, 3, CCVertexApplyTransform(_verts.tl, &_transform));
+	
+	CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
+	CCRenderBufferSetTriangle(buffer, 1, 0, 2, 3);
+}
 
 @end
 
@@ -142,7 +182,7 @@ static NSString* vertBase =
 + (NSArray *)defaultEffectFragmentUniforms
 {
     return @[
-             [CCEffectUniform uniform:@"sampler2D" name:@"cc_PreviousPassTexture" value:(NSValue *)[CCTexture none]]
+             [CCEffectUniform uniform:@"sampler2D" name:CCShaderUniformPreviousPassTexture value:(NSValue *)[CCTexture none]]
             ];
 }
 
@@ -163,6 +203,7 @@ static NSString* vertBase =
         [self buildFragmentFunctions];
         [self buildVertexFunctions];
         [self buildEffectShader];
+        [self buildRenderPasses];
         
         return self;
     }
@@ -184,6 +225,7 @@ static NSString* vertBase =
         [self buildFragmentFunctions];
         [self buildVertexFunctions];
         [self buildEffectShader];
+        [self buildRenderPasses];
         
         return self;
     }
@@ -202,6 +244,7 @@ static NSString* vertBase =
         [self buildShaderUniforms:_fragmentUniforms vertexUniforms:_vertexUniforms];
         [self buildVertexFunctions];
         [self buildEffectShader];
+        [self buildRenderPasses];
         
         return self;
     }
@@ -220,6 +263,7 @@ static NSString* vertBase =
         _varyingVars = [varying copy];
         [self buildShaderUniforms:_fragmentUniforms vertexUniforms:_vertexUniforms];
         [self buildEffectShader];
+        [self buildRenderPasses];
         
         return self;
     }
@@ -335,27 +379,30 @@ static NSString* vertBase =
     [_vertexFunctions addObject:vertexFunction];
 }
 
--(void)renderPassBegin:(CCEffectRenderPass*) renderPass defaultBlock:(void (^)())defaultBlock
+-(void)buildRenderPasses
 {
-    if(defaultBlock)
-        defaultBlock();
-}
-
--(void)renderPassUpdate:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
-{
-    if(defaultBlock)
-        defaultBlock();
-}
-
--(void)renderPassEnd:(CCEffectRenderPass*) renderPass defaultBlock:(void (^)())defaultBlock
-{
-    if(defaultBlock)
-        defaultBlock();
+    self.renderPasses = @[];
 }
 
 -(NSInteger)renderPassesRequired
 {
-    return 1;
+    return _renderPasses.count;
+}
+
+- (BOOL)supportsDirectRendering
+{
+    return YES;
+}
+
+- (BOOL)prepareForRendering
+{
+    return YES;
+}
+
+-(CCEffectRenderPass *)renderPassAtIndex:(NSInteger)passIndex
+{
+    NSAssert((passIndex >= 0) && (passIndex < _renderPasses.count), @"Pass index out of range.");
+    return _renderPasses[passIndex];;
 }
 
 @end

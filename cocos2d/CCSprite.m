@@ -42,6 +42,8 @@
 #import "CCSprite_Private.h"
 #import "CCTexture_Private.h"
 #import "CCEffect.h"
+#import "CCEffectRenderer.h"
+#import "CCEffectStack.h"
 
 #pragma mark -
 #pragma mark CCSprite
@@ -64,6 +66,11 @@
 	CCSpriteVertexes _verts;
 	
 	BOOL _flipX, _flipY;
+    
+    CCEffect *_effect;
+#if CC_ENABLE_EXPERIMENTAL_EFFECTS
+    CCEffectRenderer *_effectRenderer;
+#endif
 }
 
 +(id)spriteWithImageNamed:(NSString*)imageName
@@ -138,6 +145,10 @@
 		
 		[self setTexture:texture];
 		[self setTextureRect:rect rotated:rotated untrimmedSize:rect.size];
+        
+#if CC_ENABLE_EXPERIMENTAL_EFFECTS
+        _effectRenderer = [[CCEffectRenderer alloc] init];
+#endif
 	}
 	
 	return self;
@@ -325,17 +336,28 @@
 
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
 {
-	if(!CCRenderCheckVisbility(transform, _vertexCenter, _vertexExtents)) return;
-	
-	CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:self.renderState globalSortOrder:0];
-	CCRenderBufferSetVertex(buffer, 0, CCVertexApplyTransform(_verts.bl, transform));
-	CCRenderBufferSetVertex(buffer, 1, CCVertexApplyTransform(_verts.br, transform));
-	CCRenderBufferSetVertex(buffer, 2, CCVertexApplyTransform(_verts.tr, transform));
-	CCRenderBufferSetVertex(buffer, 3, CCVertexApplyTransform(_verts.tl, transform));
-	
-	CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
-	CCRenderBufferSetTriangle(buffer, 1, 0, 2, 3);
-	
+    if(!CCRenderCheckVisbility(transform, _vertexCenter, _vertexExtents)) return;
+    
+#if CC_ENABLE_EXPERIMENTAL_EFFECTS
+    if (self.effect)
+    {
+        _effectRenderer.contentSize = self.texture.contentSize;
+        [_effectRenderer drawSprite:self withEffect:self.effect renderer:renderer transform:transform];
+        
+        if (!self.effect.supportsDirectRendering)
+        {
+            CCTexture *backup = self.texture;
+            self.texture = _effectRenderer.outputTexture;
+            [self enqueueTriangles:renderer transform:transform];
+            self.texture = backup;
+        }
+    }
+    else
+#endif
+    {
+        [self enqueueTriangles:renderer transform:transform];
+	}
+    
 #if CC_SPRITE_DEBUG_DRAW
 	const GLKVector2 zero = {{0, 0}};
 	const GLKVector4 white = {{1, 1, 1, 1}};
@@ -351,6 +373,18 @@
 	CCRenderBufferSetLine(debug, 2, 2, 3);
 	CCRenderBufferSetLine(debug, 3, 3, 0);
 #endif
+}
+
+-(void)enqueueTriangles:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
+{
+    CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:self.renderState globalSortOrder:0];
+    CCRenderBufferSetVertex(buffer, 0, CCVertexApplyTransform(_verts.bl, transform));
+    CCRenderBufferSetVertex(buffer, 1, CCVertexApplyTransform(_verts.br, transform));
+    CCRenderBufferSetVertex(buffer, 2, CCVertexApplyTransform(_verts.tr, transform));
+    CCRenderBufferSetVertex(buffer, 3, CCVertexApplyTransform(_verts.tl, transform));
+    
+    CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
+    CCRenderBufferSetTriangle(buffer, 1, 0, 2, 3);
 }
 
 #pragma mark CCSprite - CCNode overrides
@@ -437,15 +471,12 @@
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 -(CCEffect *)effect
 {
-    // work in progress, since I added mutli pass rendering for efffects, sprite are no longer working with all effects.
-    // taking this out for now.
-	return nil;
+	return _effect;
 }
 
 -(void)setEffect:(CCEffect *)effect
 {
-    // work in progress, since I added mutli pass rendering for efffects, sprite are no longer working with all effects.
-    // taking this out for now.
+    _effect = effect;
 }
 #endif
 

@@ -1,8 +1,8 @@
 //
-//  CCEffectPixellate.m
+//  CCEffectSaturation.m
 //  cocos2d-ios
 //
-//  Created by Thayer J Andrews on 5/8/14.
+//  Created by Thayer J Andrews on 5/14/14.
 //
 //
 //  This effect makes use of algorithms and GLSL shaders from GPUImage whose
@@ -40,59 +40,61 @@
 //  <End GPUImage license>
 
 
-#import "CCEffectPixellate.h"
+#import "CCEffectSaturation.h"
 #import "CCEffect_Private.h"
 #import "CCRenderer.h"
 #import "CCTexture.h"
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
-static float conditionBlockSize(float blockSize);
-
-@implementation CCEffectPixellate
+@implementation CCEffectSaturation
 
 
 -(id)init
 {
-    CCEffectUniform* uniformUStep = [CCEffectUniform uniform:@"float" name:@"u_uStep" value:[NSNumber numberWithFloat:1.0f]];
-    CCEffectUniform* uniformVStep = [CCEffectUniform uniform:@"float" name:@"u_vStep" value:[NSNumber numberWithFloat:1.0f]];
+    CCEffectUniform* uniformSaturation = [CCEffectUniform uniform:@"float" name:@"u_saturation" value:[NSNumber numberWithFloat:1.0f]];
     
-    if((self = [super initWithUniforms:@[uniformUStep, uniformVStep] vertextUniforms:nil varying:nil]))
+    if((self = [super initWithUniforms:@[uniformSaturation] vertextUniforms:nil varying:nil]))
     {
-        self.debugName = @"CCEffectPixellate";
+        self.debugName = @"CCEffectSaturation";
         return self;
     }
     return self;
 }
 
--(id)initWithBlockSize:(float)blockSize
+-(id)initWithSaturation:(float)saturation
 {
     if((self = [self init]))
     {
-        _blockSize = conditionBlockSize(blockSize);
+        _saturation = saturation;
     }
     return self;
 }
 
-+(id)effectWithBlockSize:(float)blockSize;
++(id)effectWithSaturation:(float)saturation
 {
-    return [[self alloc] initWithBlockSize:blockSize];
+    return [[self alloc] initWithSaturation:saturation];
 }
 
 -(void)buildFragmentFunctions
 {
-    // Image pixellation shader based on pixellation filter in GPUImage - https://github.com/BradLarson/GPUImage
+    // Image saturation shader based on saturation filter in GPUImage - https://github.com/BradLarson/GPUImage
     NSString* effectBody = CC_GLSL(
-                                   vec2 samplePos = cc_FragTexCoord1 - mod(cc_FragTexCoord1, vec2(u_uStep, u_vStep)) + 0.5 * vec2(u_uStep, u_vStep);
-                                   return texture2D(cc_PreviousPassTexture, samplePos);
+                                   const vec3 luminanceWeighting = vec3(0.2125, 0.7154, 0.0721);
+
+                                   vec4 inputValue = texture2D(cc_PreviousPassTexture, cc_FragTexCoord1);
+                                   float luminance = dot(inputValue.rgb, luminanceWeighting);
+                                   vec3 greyScaleColor = vec3(luminance);
+
+                                   return vec4(mix(greyScaleColor, inputValue.rgb, u_saturation), inputValue.a);
                                    );
 
-    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"pixellateEffect" body:effectBody returnType:@"vec4"];
+    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"saturationEffect" body:effectBody returnType:@"vec4"];
     [self.fragmentFunctions addObject:fragmentFunction];
 }
 
 -(void)buildRenderPasses
 {
-    __weak CCEffectPixellate *weakSelf = self;
+    __weak CCEffectSaturation *weakSelf = self;
     __weak CCEffectRenderPass *weakPass = nil;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
@@ -101,33 +103,12 @@ static float conditionBlockSize(float blockSize);
     pass0.shaderUniforms = self.shaderUniforms;
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass0.beginBlock = ^(CCTexture *previousPassTexture){
-        
-        weakPass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
         weakPass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-
-        float aspect = previousPassTexture.contentSize.width / previousPassTexture.contentSize.height;
-        float uStep = self.blockSize / previousPassTexture.contentSize.width;
-        float vStep = uStep * aspect;
-        
-        weakPass.shaderUniforms[@"u_uStep"] = [NSNumber numberWithFloat:uStep];
-        weakPass.shaderUniforms[@"u_vStep"] = [NSNumber numberWithFloat:vStep];
+        weakPass.shaderUniforms[@"u_saturation"] = [NSNumber numberWithFloat:weakSelf.saturation];
     };
     
     self.renderPasses = @[pass0];
 }
 
--(void)setBlockSize:(float)blockSize
-{
-    _blockSize = conditionBlockSize(blockSize);
-}
-
 @end
-
-float conditionBlockSize(float blockSize)
-{
-    // If the user requests an illegal pixel size value, just force
-    // the value to 1.0 which results in the effect being a NOOP.
-    return (blockSize <= 1.0f) ? 1.0f : blockSize;
-}
-
 #endif

@@ -12,6 +12,7 @@
 @interface CCEffectContrast : CCEffect
 
 -(id)initWithContrast:(float)contrast;
++(id)effectWithContrast:(float)contrast;
 
 @property (nonatomic) float contrast;
 

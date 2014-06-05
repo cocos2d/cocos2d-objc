@@ -30,13 +30,21 @@
         {
             _effects = [[NSMutableArray alloc] init];
         }
+        _passesDirty = YES;
     }
     return self;
 }
 
 - (void)addEffect:(CCEffect *)effect
 {
+    _passesDirty = YES;
     [_effects addObject:effect];
+}
+
+- (void)removeEffect:(CCEffect *)effect
+{
+    _passesDirty = YES;
+    [_effects removeObject:effect];
 }
 
 - (NSUInteger)effectCount
@@ -50,11 +58,21 @@
     return _effects[effectIndex];
 }
 
-
-#pragma mark - Private
-
 - (BOOL)prepareForRendering
 {
+    if (_passesDirty)
+    {
+        NSMutableArray *passes = [[NSMutableArray alloc] init];
+        for (CCEffect *effect in _effects)
+        {
+            for (CCEffectRenderPass *pass in effect.renderPasses)
+            {
+                [passes addObject:pass];
+            }
+        }
+        self.renderPasses = [passes copy];
+        _passesDirty = NO;
+    }
     return YES;
 }
 
@@ -101,7 +119,7 @@
     // them here. This way the user gets back what they originally specified and
     // no more.
     NSMutableSet* functionNames = [[NSMutableSet alloc] init];
-    NSMutableSet* uniformNames = [[NSMutableSet alloc] initWithArray:@[ @"cc_PreviousPassTexture" ]];
+    NSMutableSet* uniformNames = [[NSMutableSet alloc] initWithArray:@[CCShaderUniformPreviousPassTexture]];
     
     // Extract all fragment functions and uniforms
     for(CCEffect* effect in effects)
@@ -136,7 +154,7 @@
     // them here. This way the user gets back what they originally specified and
     // no more.
     NSMutableSet* functionNames = [[NSMutableSet alloc] init];
-    NSMutableSet* uniformNames = [[NSMutableSet alloc] initWithArray:@[ @"cc_PreviousPassTexture" ]];
+    NSMutableSet* uniformNames = [[NSMutableSet alloc] initWithArray:@[CCShaderUniformPreviousPassTexture]];
     
     // Extract all vertex functions and uniforms
     for(CCEffect* effect in effects)
