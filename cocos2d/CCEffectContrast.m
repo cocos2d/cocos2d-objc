@@ -12,17 +12,34 @@
 #import "CCTexture.h"
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
+static float conditionContrast(float contrast);
+
 @implementation CCEffectContrast
 
--(id)initWithContrast:(float)contrast
+-(id)init
 {
-    CCEffectUniform* uniformContrast = [CCEffectUniform uniform:@"float" name:@"u_contrast" value:[NSNumber numberWithFloat:contrast]];
+    CCEffectUniform* uniformContrast = [CCEffectUniform uniform:@"float" name:@"u_contrast" value:[NSNumber numberWithFloat:1.0f]];
     
     if((self = [super initWithUniforms:@[uniformContrast] vertextUniforms:nil varying:nil]))
     {
-        _contrast = contrast;
+        self.debugName = @"CCEffectContrast";
+        return self;
     }
     return self;
+}
+
+-(id)initWithContrast:(float)contrast
+{
+    if((self = [self init]))
+    {
+        _contrast = conditionContrast(contrast);
+    }
+    return self;
+}
+
++(id)effectWithContrast:(float)contrast
+{
+    return [[self alloc] initWithContrast:contrast];
 }
 
 -(void)buildFragmentFunctions
@@ -36,29 +53,40 @@
     [self.fragmentFunctions addObject:fragmentFunction];
 }
 
--(NSInteger)renderPassesRequired
+-(void)buildRenderPasses
 {
-    return 1;
+    __weak CCEffectContrast *weakSelf = self;
+    __weak CCEffectRenderPass *weakPass = nil;
+    
+    CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
+    weakPass = pass0;
+    pass0.shader = self.shader;
+    pass0.shaderUniforms = self.shaderUniforms;
+    pass0.beginBlock = ^(CCTexture *previousPassTexture){
+        weakPass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
+        weakPass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
+        weakPass.shaderUniforms[@"u_contrast"] = [NSNumber numberWithFloat:weakSelf.contrast];
+    };
+    
+    self.renderPasses = @[pass0];
 }
 
--(void)renderPassBegin:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
+-(void)setContrast:(float)contrast
 {
-    renderPass.sprite.anchorPoint = ccp(0.0, 0.0);
-    renderPass.sprite.shaderUniforms[@"u_contrast"] = [NSNumber numberWithFloat:self.contrast];
-}
-
--(void)renderPassUpdate:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
-{
-    GLKMatrix4 transform = renderPass.transform;
-    GLKVector4 clearColor;
-
-    [renderPass.renderer enqueueClear:0 color:clearColor depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
-    [renderPass.sprite visit:renderPass.renderer parentTransform:&transform];
-}
-
--(void)renderPassEnd:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
-{
+    _contrast = conditionContrast(contrast);
 }
 
 @end
+
+float conditionContrast(float contrast)
+{
+    // Yes, this value is somewhat magical. It was arrived at experimentally by comparing
+    // our results at min and max contrast (-1 and 1 respectively) with the results from
+    // various image editing applications at their own min and max contrast values.
+    static const float kContrastBase = 4.0f;
+    
+    float clampedExp = clampf(contrast, -1.0f, 1.0f);
+    return powf(kContrastBase, clampedExp);
+}
+
 #endif
