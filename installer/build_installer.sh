@@ -3,7 +3,7 @@
 # Variables setup
 # ----------------------------------------------------
 BUILD_TOOL=/usr/local/bin/platypus
-INSTALL_TARGET_APP="Cocos2D Installer 3.0.0.app"
+INSTALL_TARGET_APP="Cocos2D Installer 3.1.0.app"
 INSTALL_FILE_TARGET=install.tar.gz
 
 # Fun

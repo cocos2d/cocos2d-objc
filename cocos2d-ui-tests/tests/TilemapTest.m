@@ -107,4 +107,17 @@
 	[self testForMapNamed:@"TileMaps/iso-test-bug787.tmx"];
 }
 
+-(void) setupTilemap7Test
+{
+	// These files are in the SB directories.
+	self.subTitle = @"TileMaps/orthogonal_resolution.tmx";
+	
+	CCNode *map = [CCTiledMap tiledMapWithFile:self.subTitle];
+	CCScrollView *scroll = [[CCScrollView alloc] initWithContentNode:map];
+	scroll.flipYCoordinates = NO;
+	
+	[self.contentNode addChild:scroll];
+	scroll.scrollPosition = ccp(map.contentSizeInPoints.width/2 - scroll.contentSizeInPoints.width/2, 0);
+}
+
 @end

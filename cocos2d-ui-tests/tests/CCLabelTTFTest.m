@@ -84,6 +84,12 @@ static int vAlignCount = sizeof(verticalAlignment) / sizeof(*verticalAlignment);
   [self.contentNode removeAllChildren ];
   
   CCLabelTTF *top = [CCLabelTTF labelWithString:aFont fontName:aFont fontSize:24];
+	top.outlineColor = [CCColor blackColor];
+	top.outlineWidth = 1.0;
+	top.shadowColor = [CCColor whiteColor];
+	top.shadowBlurRadius = 2.0;
+	top.shadowOffset = ccp(1.0, -1.0);
+	
 	CCLabelTTF *left = [CCLabelTTF labelWithString:@"alignment left" fontName:aFont fontSize:fontSize dimensions:blockSize];
 	CCLabelTTF *center = [CCLabelTTF labelWithString:@"alignment center" fontName:aFont fontSize:fontSize dimensions:blockSize];
 	CCLabelTTF *right = [CCLabelTTF labelWithString:@"alignment right" fontName:aFont fontSize:fontSize dimensions:blockSize];
@@ -105,7 +111,7 @@ static int vAlignCount = sizeof(verticalAlignment) / sizeof(*verticalAlignment);
   center.anchorPoint = centerColor.anchorPoint = ccp(0,0.5);
   right.anchorPoint = rightColor.anchorPoint = ccp(0,0.5);
   
-	top.position = ccp(s.width/2,s.height-60);
+	top.position = ccp(s.width/2,s.height-80);
 	left.position = leftColor.position = ccp(0,s.height/3);
 	center.position = centerColor.position = ccp(blockSize.width, s.height/3);
 	right.position = rightColor.position = ccp(blockSize.width*2, s.height/3);
@@ -117,7 +123,6 @@ static int vAlignCount = sizeof(verticalAlignment) / sizeof(*verticalAlignment);
 	[self.contentNode addChild:centerColor z:-1];
 	[self.contentNode addChild:center z:0];
 	[self.contentNode addChild:top z:0 ];
-
 }
 
 
