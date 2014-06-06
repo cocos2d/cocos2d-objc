@@ -31,6 +31,7 @@
             _effects = [[NSMutableArray alloc] init];
         }
         _passesDirty = YES;
+        _stitchingEnabled = YES;
     }
     return self;
 }
@@ -62,8 +63,54 @@
 {
     if (_passesDirty)
     {
-        NSMutableArray *passes = [[NSMutableArray alloc] init];
+        // Make sure stacked effects are also ready for rendering before
+        // we do anything else.
         for (CCEffect *effect in _effects)
+        {
+            [effect prepareForRendering];
+        }
+
+        NSMutableArray *stitchedEffects = [[NSMutableArray alloc] init];
+        if ((_effects.count == 1) || !_stitchingEnabled)
+        {
+            // If there's only one effect or if stitching is disabled, just
+            // use the original effects array.
+            [stitchedEffects addObjectsFromArray:_effects];
+        }
+        else if (_effects.count > 1)
+        {
+            NSMutableArray *stitchList = [[NSMutableArray alloc] init];
+            CCEffect *prevEffect = [_effects firstObject];
+            [stitchList addObject:prevEffect];
+
+            // Iterate over the original effects array building sets of effects
+            // that can be stitched together based on their stitch flags.
+            for (CCEffect *effect in [_effects subarrayWithRange:NSMakeRange(1, _effects.count - 1)])
+            {
+                if ([prevEffect stitchSupported:CCEffectFunctionStitchAfter] && [effect stitchSupported:CCEffectFunctionStitchBefore])
+                {
+                    [stitchList addObject:effect];
+                }
+                else
+                {
+                    [stitchedEffects addObject:[self stitchEffects:stitchList]];
+                    
+                    [stitchList removeAllObjects];
+                    [stitchList addObject:prevEffect];
+                }
+                prevEffect = effect;
+            }
+            
+            if (stitchList.count)
+            {
+                [stitchedEffects addObject:[self stitchEffects:stitchList]];
+            }
+        }
+        
+        // Extract passes from the stacked effects and build a flat list
+        // passes.
+        NSMutableArray *passes = [[NSMutableArray alloc] init];
+        for (CCEffect *effect in stitchedEffects)
         {
             for (CCEffectRenderPass *pass in effect.renderPasses)
             {
@@ -76,26 +123,8 @@
     return YES;
 }
 
-
-
-+(CCEffect*)effects:(id)firstObject, ...
+-(CCEffect *)stitchEffects:(NSArray*)effects
 {
-    NSMutableArray* effects = [[NSMutableArray alloc] init];
-   
-    id object;
-    va_list argumentList;
-    
-    va_start(argumentList, firstObject);
-    object = firstObject;
-    
-    while(object != nil)
-    {
-        [effects addObject:object];
-        object = va_arg(argumentList, id);
-    }
-    
-    va_end(argumentList);
-    
     NSMutableArray* fragFunctions = [[NSMutableArray alloc] init];
     NSMutableArray* fragUniforms = [[NSMutableArray alloc] init];
     [CCEffectStack extractFragmentData:effects functions:fragFunctions uniforms:fragUniforms];
@@ -104,9 +133,39 @@
     NSMutableArray* vertexUniforms = [[NSMutableArray alloc] init];
     [CCEffectStack extractVertexData:effects functions:vertexFunctions uniforms:vertexUniforms];
     
-    CCEffect* compositeEffect = [[CCEffect alloc] initWithFragmentFunction:fragFunctions vertexFunctions:vertexFunctions fragmentUniforms:fragUniforms vertextUniforms:vertexUniforms varying:nil];
+    CCEffect* stitchedEffect = [[CCEffect alloc] initWithFragmentFunction:fragFunctions vertexFunctions:vertexFunctions fragmentUniforms:fragUniforms vertextUniforms:vertexUniforms varying:nil];
     
-    return compositeEffect;
+    // Copy the shader for this new pass from the stitched effect.
+    CCEffectRenderPass *newPass = [[CCEffectRenderPass alloc] init];
+    newPass.shader = stitchedEffect.shader;
+    newPass.shaderUniforms = [[NSMutableDictionary alloc] init];
+    
+    NSMutableArray *beginBlocks = [[NSMutableArray alloc] init];
+    NSMutableArray *endBlocks = [[NSMutableArray alloc] init];
+    
+    for (CCEffect *effect in effects)
+    {
+        // Copy the shader uniforms from each input effect to a shared
+        // dictionary for the new pass. For example, if we stitch two effects
+        // together, one with uniforms A and B and one with uniforms C and D,
+        // we will get one dictionary with A, B, C, and D.
+        //
+        // Similarly, copy the begin and end blocks from the input passes into
+        // the new pass.
+        [newPass.shaderUniforms addEntriesFromDictionary:effect.shaderUniforms];
+        for (CCEffectRenderPass *pass in effect.renderPasses)
+        {
+            [beginBlocks addObjectsFromArray:pass.beginBlocks];
+            [endBlocks addObjectsFromArray:pass.endBlocks];
+        }
+    }
+    
+    newPass.beginBlocks = beginBlocks;
+    newPass.endBlocks = endBlocks;
+    
+    stitchedEffect.renderPasses = @[newPass];
+    
+    return stitchedEffect;
 }
 
 +(void)extractFragmentData:(NSArray*)effects functions:(NSMutableArray*)functions uniforms:(NSMutableArray*)uniforms

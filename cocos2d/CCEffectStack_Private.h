@@ -14,6 +14,7 @@
 }
 
 @property (nonatomic) BOOL passesDirty;
+@property (nonatomic) BOOL stitchingEnabled;
 
 @end
 
