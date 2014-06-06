@@ -8,10 +8,11 @@
 
 #import "CCRenderTexture.h"
 
+@class CCRenderTextureFBO;
+
 @interface CCRenderTexture() {
 
 @protected
-    CGSize _size;
     GLenum _pixelFormat;
     GLuint _depthStencilFormat;
 
@@ -27,13 +28,12 @@
 
     float _contentScale;
     GLKMatrix4 _projection;
-    CCTexture* _texture;
 
     CCSprite* _sprite;
     
-    int _currentRenderPass;
-    NSMutableArray *_textures;
-    NSMutableArray *_FBOs;
+    CCRenderTextureFBO *_FBO;
+    
+    BOOL _contentSizeChanged;
 }
 
 -(void)destroy;

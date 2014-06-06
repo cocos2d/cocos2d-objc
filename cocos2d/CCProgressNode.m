@@ -38,11 +38,7 @@
 
 #import "CCTexture_Private.h"
 
-#define kProgressTextureCoordsCount 4
-//  kProgressTextureCoords holds points {0,1} {0,0} {1,0} {1,1} we can represent it as bits
-const char kCCProgressTextureCoords = 0x4b;
-
-@interface CCProgressNode () {
+@implementation CCProgressNode {
 	CCProgressNodeType _type;
 	float _percentage;
 	CCSprite *_sprite;
@@ -52,17 +48,11 @@ const char kCCProgressTextureCoords = 0x4b;
 	CGPoint _midpoint;
 	CGPoint _barChangeRate;
 	BOOL _reverseDirection;
+	
+	BOOL _dirtyVertexData;
+	BOOL _needsUpdateProgress;
 }
 
--(void)updateProgress;
--(void)updateBar;
--(void)updateRadial;
--(void)updateColor;
--(CGPoint)boundaryTexCoord:(char)index;
-@end
-
-
-@implementation CCProgressNode
 @synthesize percentage = _percentage;
 @synthesize sprite = _sprite;
 @synthesize type = _type;
@@ -84,16 +74,21 @@ const char kCCProgressTextureCoords = 0x4b;
 -(id)initWithSprite:(CCSprite*) sprite
 {
 	if(( self = [super init] )){
+		_type = CCProgressNodeTypeRadial;
+		_reverseDirection = NO;
 		_percentage = 0.f;
 		_verts = NULL;
 		_vertexCount = 0;
+		
 		self.anchorPoint = ccp(0.5f,0.5f);
-		self.type = CCProgressNodeTypeRadial;
-		self.reverseDirection = NO;
-		self.midpoint = ccp(.5f, .5f);
-		self.barChangeRate = ccp(1,1);
+		self.midpoint = ccp(0.5f, 0.5f);
+		self.barChangeRate = ccp(1, 1);
 		self.sprite = sprite;
+		
+		_dirtyVertexData = NO;
+		_needsUpdateProgress = YES;
 	}
+	
 	return self;
 }
 
@@ -109,11 +104,14 @@ const char kCCProgressTextureCoords = 0x4b;
 	[self freeVertexData];
 }
 
--(void)setPercentage:(float) percentage
+-(void)setPercentage:(float)percentage
 {
 	if(_percentage != percentage) {
-    _percentage = clampf( percentage, 0, 100);
-		[self updateProgress];
+		_percentage = clampf(percentage, 0, 100);
+		
+		// only flag update progress here, let the progress type handle
+		// whether it needs to rebuild the vertex data
+		_needsUpdateProgress = YES;
 	}
 }
 
@@ -123,20 +121,18 @@ const char kCCProgressTextureCoords = 0x4b;
 		_sprite = newSprite;
 		self.contentSize = _sprite.contentSize;
     
-		//	Everytime we set a new sprite, we free the current vertex data
-		[self freeVertexData];
+		_dirtyVertexData = YES;
+		_needsUpdateProgress = YES;
 	}
 }
 
 -(void)setType:(CCProgressNodeType)newType
 {
 	if (newType != _type) {
-    
-		//	release all previous information
-		[self freeVertexData];
-		
 		_type = newType;
-		[self updateProgress];
+		
+		_dirtyVertexData = YES;
+		_needsUpdateProgress = YES;
 	}
 }
 
@@ -145,8 +141,8 @@ const char kCCProgressTextureCoords = 0x4b;
 	if( _reverseDirection != reverse ) {
 		_reverseDirection = reverse;
     
-		//	release all previous information
-		[self freeVertexData];
+		_dirtyVertexData = YES;
+		_needsUpdateProgress = YES;
 	}
 }
 
@@ -191,8 +187,6 @@ const char kCCProgressTextureCoords = 0x4b;
     CC_SWAP(alpha.x, alpha.y);
   }
 	
-	// As of 3.1, the x alpha needs to be flipped. Not really sure why.
-	alpha.x = 1.0 - alpha.x;
 	return GLKVector2Make(min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y);
 }
 
@@ -226,15 +220,24 @@ const char kCCProgressTextureCoords = 0x4b;
 
 -(void)updateProgress
 {
+	if (_dirtyVertexData){
+		// remove the vertex data if the type, direction, or sprite have changed 
+		if (_verts) {
+			[self freeVertexData];
+		}
+		
+		_dirtyVertexData = NO;
+	}
+        
 	switch (_type) {
 		case CCProgressNodeTypeRadial:
 			[self updateRadial];
-			break;
+			return;
 		case CCProgressNodeTypeBar:
 			[self updateBar];
-			break;
+			return;
 		default:
-			break;
+			return;
 	}
 }
 
@@ -251,6 +254,13 @@ const char kCCProgressTextureCoords = 0x4b;
 -(void)setMidpoint:(CGPoint)midPoint
 {
 	_midpoint = ccpClamp(midPoint, CGPointZero, ccp(1,1));
+}
+
+static inline CGPoint
+BoundryTexCoord(int index)
+{
+	static const CGPoint points[] = {{1,1}, {1,0}, {0,0}, {0,1}};
+	return points[index];
 }
 
 ///
@@ -299,11 +309,11 @@ const char kCCProgressTextureCoords = 0x4b;
     
 		float min_t = FLT_MAX;
     
-		for (int i = 0; i <= kProgressTextureCoordsCount; ++i) {
-			int pIndex = (i + (kProgressTextureCoordsCount - 1))%kProgressTextureCoordsCount;
+		for (int i = 0; i <= 4; ++i) {
+			int pIndex = (i + 3)%4;
       
-			CGPoint edgePtA = [self boundaryTexCoord:i % kProgressTextureCoordsCount];
-			CGPoint edgePtB = [self boundaryTexCoord:pIndex];
+			CGPoint edgePtA = BoundryTexCoord(i % 4);
+			CGPoint edgePtB = BoundryTexCoord(pIndex);
       
 			//	Remember that the top edge is split in half for the 12 o'clock position
 			//	Let's deal with that here by finding the correct endpoints
@@ -373,7 +383,7 @@ const char kCCProgressTextureCoords = 0x4b;
 		_verts[1].position = [self vertexFromAlphaPoint:topMid];
     
 		for(int i = 0; i < index; ++i){
-			CGPoint alphaPoint = [self boundaryTexCoord:i];
+			CGPoint alphaPoint = BoundryTexCoord(i);
 			_verts[i+2].texCoord1 = [self textureCoordFromAlphaPoint:alphaPoint];
 			_verts[i+2].position = [self vertexFromAlphaPoint:alphaPoint];
 		}
@@ -486,18 +496,6 @@ const char kCCProgressTextureCoords = 0x4b;
 	[self updateColor];
 }
 
--(CGPoint)boundaryTexCoord:(char)index
-{
-	if (index < kProgressTextureCoordsCount) {
-		if (_reverseDirection) {
-			return ccp((kCCProgressTextureCoords>>(7-(index<<1)))&1,(kCCProgressTextureCoords>>(7-((index<<1)+1)))&1);
-		} else {
-			return ccp((kCCProgressTextureCoords>>((index<<1)+1))&1,(kCCProgressTextureCoords>>(index<<1))&1);
-		}
-	}
-	return CGPointZero;
-}
-
 -(void)visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
 {
 	[super visit:renderer parentTransform:parentTransform];
@@ -505,6 +503,11 @@ const char kCCProgressTextureCoords = 0x4b;
 
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
+	if (_needsUpdateProgress) {
+		[self updateProgress];
+		_needsUpdateProgress = NO;
+	}
+	
 	if(!_verts || !_sprite)return;
   
 	if(_type == CCProgressNodeTypeRadial){

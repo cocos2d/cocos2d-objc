@@ -114,9 +114,6 @@
 	GLfloat top = bottom + rect.size.height / high;
 #endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 
-	// Important. Texture in cocos2d are inverted, so the Y component should be inverted
-	CC_SWAP( top, bottom);
-
 	for(NSUInteger i=0; i<_totalParticles; i++) {
 		_texCoord1[0] = GLKVector2Make(left, bottom);
 		_texCoord1[1] = GLKVector2Make(right, bottom);

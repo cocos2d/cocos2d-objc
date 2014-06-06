@@ -9,7 +9,7 @@
 #import "CCEffect.h"
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
-@interface CCEffectStack : NSObject
+@interface CCEffectStack : CCEffect
 
 @property (nonatomic, readonly) NSUInteger effectCount;
 
@@ -17,10 +17,8 @@
 - (id)initWithEffects:(NSArray *)effects;
 
 - (void)addEffect:(CCEffect *)effect;
-- (CCEffect *)effectAtIndex:(NSUInteger)passIndex;
-
-
-
+- (void)removeEffect:(CCEffect *)effect;
+- (CCEffect *)effectAtIndex:(NSUInteger)effectIndex;
 
 +(CCEffect*)effects:(id)firstObject, ...;
 

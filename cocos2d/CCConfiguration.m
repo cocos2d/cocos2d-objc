@@ -268,7 +268,7 @@ static char * glExtensions;
 -(void) dumpInfo
 {
 #if DEBUG
-	printf("cocos2d: %s\n", cocos2d_version );
+	printf("cocos2d: %s\n", [cocos2dVersion() UTF8String] );
 
 #ifdef __CC_PLATFORM_IOS
 	NSString *OSVer = [[UIDevice currentDevice] systemVersion];

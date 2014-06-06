@@ -49,6 +49,7 @@ NSString* const CCSetupNumberOfSamples = @"CCSetupNumberOfSamples";
 
 NSString* const CCScreenOrientationLandscape = @"CCScreenOrientationLandscape";
 NSString* const CCScreenOrientationPortrait = @"CCScreenOrientationPortrait";
+NSString* const CCScreenOrientationAll = @"CCScreenOrientationAll";
 
 NSString* const CCScreenModeFlexible = @"CCScreenModeFlexible";
 NSString* const CCScreenModeFixed = @"CCScreenModeFixed";
@@ -75,13 +76,17 @@ const CGSize FIXED_SIZE = {568, 384};
 // Only valid for iOS 6+. NOT VALID for iOS 4 / 5.
 -(NSUInteger)supportedInterfaceOrientations
 {
-    if ([_screenOrientation isEqual:CCScreenOrientationLandscape])
+    if ([_screenOrientation isEqual:CCScreenOrientationAll])
     {
-        return UIInterfaceOrientationMaskLandscape;
+        return UIInterfaceOrientationMaskAll;
+    }
+    else if ([_screenOrientation isEqual:CCScreenOrientationPortrait])
+    {
+        return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
     }
     else
     {
-        return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
+        return UIInterfaceOrientationMaskLandscape;
     }
 }
 
@@ -89,13 +94,17 @@ const CGSize FIXED_SIZE = {568, 384};
 // Only valid on iOS 4 / 5. NOT VALID for iOS 6.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    if ([_screenOrientation isEqual:CCScreenOrientationLandscape])
+    if ([_screenOrientation isEqual:CCScreenOrientationAll])
     {
-        return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+        return YES;
+    }
+    else if ([_screenOrientation isEqual:CCScreenOrientationPortrait])
+    {
+        return UIInterfaceOrientationIsPortrait(interfaceOrientation);
     }
     else
     {
-        return UIInterfaceOrientationIsPortrait(interfaceOrientation);
+        return UIInterfaceOrientationIsLandscape(interfaceOrientation);
     }
 }
 

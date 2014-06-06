@@ -776,7 +776,6 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
 	[physicsNode onExit];
 }
 
-
 //Focusing on Position.
 -(void)testKineticBodyBasic1
 {
@@ -942,7 +941,7 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
     for(int i = 0; i < 100; i++)
 	{
 		float desired  = (float)i * 0.1f * 100.0f/10.0f + (float)i * 0.1f * 200.0f/10.0f;
-		NSLog(@"node1.position.x=  %0.2f   desired = %0.2f",body1.absolutePosition.x, desired);
+		//NSLog(@"node1.position.x=  %0.2f   desired = %0.2f",body1.absolutePosition.x, desired);
 		XCTAssertEqualWithAccuracy(body1.absolutePosition.x, desired , accuracy, @"Not in the write position");
 		[scheduler update:0.10f];
 	}
@@ -953,6 +952,156 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
 //Test : When a node is added to a scene graph, its actions are Fixed if its part of a PhysicsNode.
 
 
+
+-(void)testApplyImpulse
+{
+	CCPhysicsNode *physics = [CCPhysicsNode node];
+	[physics onEnter];
+	
+	{
+		CCNode *node = [CCNode node];
+		[physics addChild:node];
+		
+		node.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1 andCenter:CGPointZero];
+		node.physicsBody.mass = 5;
+		
+		node.physicsBody.velocity = ccp(10, 10);
+		[node.physicsBody applyImpulse:ccp(5, 5)];
+		XCTAssert(ccpDistance(ccp(11, 11), node.physicsBody.velocity) < 1e-5, @"");
+	}{
+		CCNode *node = [CCNode node];
+		node.rotation = 90;
+		[physics addChild:node];
+		
+		node.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1 andCenter:CGPointZero];
+		node.physicsBody.mass = 5;
+		
+		node.physicsBody.velocity = ccp(10, 10);
+		[node.physicsBody applyImpulse:ccp(5, 5)];
+		XCTAssert(ccpDistance(ccp(11, 11), node.physicsBody.velocity) < 1e-5, @"");
+	}{
+		CCNode *node = [CCNode node];
+		node.position = ccp(20, 20);
+		[physics addChild:node];
+		
+		node.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1 andCenter:CGPointZero];
+		node.physicsBody.mass = 5;
+		
+		node.physicsBody.velocity = ccp(10, 10);
+		[node.physicsBody applyImpulse:ccp(5, 5) atWorldPoint:node.position];
+		XCTAssert(ccpDistance(ccp(11, 11), node.physicsBody.velocity) < 1e-5, @"");
+	}{
+		CCNode *node = [CCNode node];
+		node.position = ccp(20, 20);
+		[physics addChild:node];
+		
+		node.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1 andCenter:CGPointZero];
+		node.physicsBody.mass = 5;
+		
+		node.physicsBody.velocity = ccp(10, 10);
+		[node.physicsBody applyImpulse:ccp(5, 5) atLocalPoint:ccp(0, 0)];
+		XCTAssert(ccpDistance(ccp(11, 11), node.physicsBody.velocity) < 1e-5, @"");
+	}{
+		CCNode *node = [CCNode node];
+		node.position = ccp(20, 20);
+		node.rotation = 90;
+		[physics addChild:node];
+		
+		node.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1 andCenter:CGPointZero];
+		node.physicsBody.mass = 5;
+		
+		node.physicsBody.velocity = ccp(10, 10);
+		[node.physicsBody applyImpulse:ccp(5, 0) atLocalPoint:ccp(0, 0)];
+		XCTAssert(ccpDistance(ccp(10, 9), node.physicsBody.velocity) < 1e-5, @"");
+	}{
+		CCNode *node = [CCNode node];
+		node.position = ccp(20, 20);
+		node.rotation = 180;
+		[physics addChild:node];
+		
+		node.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1 andCenter:CGPointZero];
+		node.physicsBody.mass = 5;
+		
+		node.physicsBody.velocity = ccp(10, 10);
+		[node.physicsBody applyImpulse:ccp(5, 0) atLocalPoint:ccp(0, 1)];
+		XCTAssert(ccpDistance(ccp(9, 10), node.physicsBody.velocity) < 1e-5, @"");
+		XCTAssertEqualWithAccuracy(node.physicsBody.angularVelocity, -2, 1e-5, @"");
+	}
+	
+	[physics onExit];
+}
+
+-(void)testApplyForce
+{
+	CCPhysicsNode *physics = [CCPhysicsNode node];
+	[physics onEnter];
+	
+	{
+		CCNode *node = [CCNode node];
+		[physics addChild:node];
+		
+		node.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1 andCenter:CGPointZero];
+		node.physicsBody.mass = 5;
+		
+		[node.physicsBody applyForce:ccp(5, 5)];
+		XCTAssert(ccpDistance(ccp(5, 5), node.physicsBody.force) < 1e-5, @"");
+	}{
+		CCNode *node = [CCNode node];
+		node.rotation = 90;
+		[physics addChild:node];
+		
+		node.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1 andCenter:CGPointZero];
+		node.physicsBody.mass = 5;
+		
+		[node.physicsBody applyForce:ccp(5, 5)];
+		XCTAssert(ccpDistance(ccp(5, 5), node.physicsBody.force) < 1e-5, @"");
+	}{
+		CCNode *node = [CCNode node];
+		node.position = ccp(20, 20);
+		[physics addChild:node];
+		
+		node.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1 andCenter:CGPointZero];
+		node.physicsBody.mass = 5;
+		
+		[node.physicsBody applyForce:ccp(5, 5) atWorldPoint:node.position];
+		XCTAssert(ccpDistance(ccp(5, 5), node.physicsBody.force) < 1e-5, @"");
+	}{
+		CCNode *node = [CCNode node];
+		node.position = ccp(20, 20);
+		[physics addChild:node];
+		
+		node.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1 andCenter:CGPointZero];
+		node.physicsBody.mass = 5;
+		
+		[node.physicsBody applyForce:ccp(5, 5) atLocalPoint:ccp(0, 0)];
+		XCTAssert(ccpDistance(ccp(5, 5), node.physicsBody.force) < 1e-5, @"");
+	}{
+		CCNode *node = [CCNode node];
+		node.position = ccp(20, 20);
+		node.rotation = 90;
+		[physics addChild:node];
+		
+		node.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1 andCenter:CGPointZero];
+		node.physicsBody.mass = 5;
+		
+		[node.physicsBody applyForce:ccp(5, 0) atLocalPoint:ccp(0, 0)];
+		XCTAssert(ccpDistance(ccp(0, -5), node.physicsBody.force) < 1e-5, @"");
+	}{
+		CCNode *node = [CCNode node];
+		node.position = ccp(20, 20);
+		node.rotation = 180;
+		[physics addChild:node];
+		
+		node.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1 andCenter:CGPointZero];
+		node.physicsBody.mass = 5;
+		
+		[node.physicsBody applyForce:ccp(5, 0) atLocalPoint:ccp(0, 1)];
+		XCTAssert(ccpDistance(ccp(-5, 0), node.physicsBody.force) < 1e-5, @"");
+		XCTAssertEqualWithAccuracy(node.physicsBody.torque, -5, 1e-5, @"");
+	}
+	
+	[physics onExit];
+}
 
 // TODO
 // * Check that body and shape settings are preserved through multiple add/remove cycles and are actually applied to the cpBody.
