@@ -78,8 +78,8 @@ static const GLchar *CCShaderHeader =
 	"uniform highp vec4 cc_SinTime;\n"
 	"uniform highp vec4 cc_CosTime;\n"
 	"uniform highp vec4 cc_Random01;\n\n"
-	"uniform lowp sampler2D cc_MainTexture;\n\n"
-	"varying lowp vec4 cc_FragColor;\n"
+	"uniform " XSTR(CC_SHADER_COLOR_PRECISION) " sampler2D cc_MainTexture;\n\n"
+	"varying " XSTR(CC_SHADER_COLOR_PRECISION) " vec4 cc_FragColor;\n"
 	"varying highp vec2 cc_FragTexCoord1;\n"
 	"varying highp vec2 cc_FragTexCoord2;\n\n"
 	"// End Cocos2D shader header.\n\n";
@@ -97,7 +97,7 @@ static const GLchar *CCVertexShaderHeader =
 
 static const GLchar *CCFragmentShaderHeader =
 	"#ifdef GL_ES\n"
-	"precision mediump float;\n\n"
+	"precision " XSTR(CC_SHADER_DEFAULT_FRAGMENT_PRECISION) " float;\n"
 	"#endif\n\n"
 	"// End Cocos2D fragment shader header.\n\n";
 
