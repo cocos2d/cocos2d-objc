@@ -120,9 +120,6 @@
         
 		NSAssert(format != CCTexturePixelFormat_A8, @"only RGB and RGBA formats are valid for a render texture");
 
-        _textures = [[NSMutableArray alloc] init];
-        _FBOs = [[NSMutableArray alloc] init];
-        
 		CCDirector *director = [CCDirector sharedDirector];
 
 		// XXX multithread
@@ -130,12 +127,11 @@
 			CCLOGWARN(@"cocos2d: WARNING. CCRenderTexture is running on its own thread. Make sure that an OpenGL context is being used on this thread!");
 
 		_contentScale = [CCDirector sharedDirector].contentScaleFactor;
-		_size = CGSizeMake(width, height);
+        [self setContentSize:CGSizeMake(width, height)];
 		_pixelFormat = format;
 		_depthStencilFormat = depthStencilFormat;
 
-		// Flip the projection matrix on the y-axis since Cocos2D uses upside down textures.
-		_projection = GLKMatrix4MakeOrtho(0.0f, width, height, 0.0f, -1024.0f, 1024.0f);
+		_projection = GLKMatrix4MakeOrtho(0.0f, width, 0.0f, height, -1024.0f, 1024.0f);
 		
 		_sprite = [CCRenderTextureSprite spriteWithTexture:[CCTexture none]];
 
@@ -148,12 +144,19 @@
 	return self;
 }
 
+
+-(id)init
+{
+    return [self initWithWidth:0 height:0 pixelFormat:CCTexturePixelFormat_RGBA8888];
+}
+
 -(void)create
 {
 	glPushGroupMarkerEXT(0, "CCRenderTexture: Create");
 	
-	int pixelW = _size.width*_contentScale;
-	int pixelH = _size.height*_contentScale;
+	int pixelW = _contentSize.width*_contentScale;
+	int pixelH = _contentSize.height*_contentScale;
+
 
 	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
 
@@ -172,23 +175,22 @@
 	void *data = calloc(powW*powH, 4);
 
 	CCTexture *texture = [[CCTexture alloc] initWithData:data pixelFormat:_pixelFormat pixelsWide:powW pixelsHigh:powH contentSizeInPixels:CGSizeMake(pixelW, pixelH) contentScale:_contentScale];
-
-    [_textures insertObject:texture atIndex:_currentRenderPass];
-	
+    self.texture = texture;
+    
 	free(data);
 
 	GLint oldRBO;
 	glGetIntegerv(GL_RENDERBUFFER_BINDING, &oldRBO);
 
 	// generate FBO
-    GLuint fbo;
+	GLuint fbo;
 	glGenFramebuffers(1, &fbo);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
 	// associate texture with FBO
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.name, 0);
 
-    GLuint depthRenderBuffer = 0;
+	GLuint depthRenderBuffer = 0;
 	if(_depthStencilFormat){
 		//create and attach depth buffer
 		glGenRenderbuffers(1, &depthRenderBuffer);
@@ -205,8 +207,7 @@
 	// check if it worked (probably worth doing :) )
 	NSAssert( glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, @"Could not attach texture to framebuffer");
 
-    CCRenderTextureFBO *renderTextureFBO = [[CCRenderTextureFBO alloc] initWithFBO:fbo depthRenderBuffer:depthRenderBuffer];
-    [_FBOs insertObject:renderTextureFBO atIndex:_currentRenderPass];
+    _FBO = [[CCRenderTextureFBO alloc] initWithFBO:fbo depthRenderBuffer:depthRenderBuffer];
     
 	[texture setAliasTexParameters];
 	
@@ -216,9 +217,9 @@
 	CC_CHECK_GL_ERROR_DEBUG();
 	glPopGroupMarkerEXT();
 	
-	CGRect rect = CGRectMake(0, 0, _size.width, _size.height);
-    
-    [self assignSpriteTexture];
+	CGRect rect = CGRectMake(0, 0, _contentSize.width, _contentSize.height);
+	
+	[self assignSpriteTexture];
 	[_sprite setTextureRect:rect];
 }
 
@@ -233,26 +234,22 @@
 		_contentScale = contentScale;
 		
 		[self destroy];
-        _currentRenderPass = 0;
 	}
 }
 
 -(void)destroy
 {
-    for (CCRenderTextureFBO *renderTextureFBO in _FBOs)
-    {
-        GLuint fbo = renderTextureFBO.FBO;
-        glDeleteFramebuffers(1, &fbo);
+    GLuint fbo = _FBO.FBO;
+    glDeleteFramebuffers(1, &fbo);
 	
-        GLuint depthRenderBuffer = renderTextureFBO.depthRenderBuffer;
-        if (depthRenderBuffer)
-        {
-            glDeleteRenderbuffers(1, &depthRenderBuffer);
-        }
+    GLuint depthRenderBuffer = _FBO.depthRenderBuffer;
+    if (depthRenderBuffer)
+    {
+        glDeleteRenderbuffers(1, &depthRenderBuffer);
     }
 
-    [_textures removeAllObjects];
-    [_FBOs removeAllObjects];
+    _FBO = nil;
+    self.texture = nil;
 }
 
 -(void)dealloc
@@ -262,21 +259,22 @@
 
 -(CCTexture *)texture
 {
-    NSAssert([_textures count] == [_FBOs count], @"The number of textures is out of sync with the number of FBOs.");
-    if(([_textures count] <= _currentRenderPass) || [_textures objectAtIndex:_currentRenderPass]  == nil)
+    if (super.texture == nil)
+    {
         [self create];
+    }
     
-    return [_textures objectAtIndex:_currentRenderPass];
+    return super.texture;
 }
 
 -(GLuint)fbo
 {
-    NSAssert([_textures count] == [_FBOs count], @"The number of textures is out of sync with the number of FBOs.");
-    if([_textures objectAtIndex:_currentRenderPass] == nil)
+    if (super.texture == nil)
+    {
         [self create];
+    }
     
-    CCRenderTextureFBO *renderTextureFBO = [_FBOs objectAtIndex:_currentRenderPass];
-    return renderTextureFBO.FBO;
+    return _FBO.FBO;
 }
 
 -(void)begin
@@ -384,6 +382,13 @@
 	if(!_visible) return;
 	
 	if(_autoDraw){
+        
+        if(_contentSizeChanged)
+        {
+            [self destroy];
+            _contentSizeChanged = NO;
+        }
+        
 		[self begin];
 		NSAssert(_renderer == renderer, @"CCRenderTexture error!");
 		
@@ -432,9 +437,12 @@
 		return nil;
 	}
 	
-	[self begin];
-	glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, buffer);
-	[self end];
+    [self begin];
+    [_renderer enqueueBlock:^
+    {
+        glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, buffer);
+    } globalSortOrder:NSIntegerMax debugLabel:@"CCRenderTexture reading pixels for new image" threadSafe:NO];
+    [self end];
 	
 	// make data provider with data.
 	
@@ -479,63 +487,76 @@
 
 -(BOOL)saveToFile:(NSString*)fileName format:(CCRenderTextureImageFormat)format
 {
-	BOOL success;
-	
-	NSString *fullPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:fileName];
-	
-	CGImageRef imageRef = [self newCGImage];
+    NSString *fullPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:fileName];
+    return [self saveToFilePath:fullPath format:format];
+}
 
-	if( ! imageRef ) {
-		CCLOG(@"cocos2d: Error: Cannot create CGImage ref from texture");
-		return NO;
-	}
-	
+- (BOOL)saveToFilePath:(NSString *)filePath
+{
+    return [self saveToFilePath:filePath format:CCRenderTextureImageFormatJPEG];
+}
+
+- (BOOL)saveToFilePath:(NSString *)filePath format:(CCRenderTextureImageFormat)format
+{
+    BOOL success;
+
+   	CGImageRef imageRef = [self newCGImage];
+
+   	if( ! imageRef ) {
+   		CCLOG(@"cocos2d: Error: Cannot create CGImage ref from texture");
+   		return NO;
+   	}
+
 #if __CC_PLATFORM_IOS
-	CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
-	UIImage* image	= [[UIImage alloc] initWithCGImage:imageRef scale:scale orientation:UIImageOrientationUp];
-	NSData *imageData = nil;
-    
-	if( format == CCRenderTextureImageFormatPNG )
-		imageData = UIImagePNGRepresentation( image );
-    
-	else if( format == CCRenderTextureImageFormatJPEG )
-		imageData = UIImageJPEGRepresentation(image, 0.9f);
-    
-	else
-		NSAssert(NO, @"Unsupported format");
-	
-    
-	success = [imageData writeToFile:fullPath atomically:YES];
+   	CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
+   	UIImage* image	= [[UIImage alloc] initWithCGImage:imageRef scale:scale orientation:UIImageOrientationUp];
+   	NSData *imageData = nil;
 
-	
+   	if( format == CCRenderTextureImageFormatPNG )
+   		imageData = UIImagePNGRepresentation( image );
+
+   	else if( format == CCRenderTextureImageFormatJPEG )
+   		imageData = UIImageJPEGRepresentation(image, 0.9f);
+
+   	else
+   		NSAssert(NO, @"Unsupported format");
+
+   	success = [imageData writeToFile:filePath atomically:YES];
+
 #elif __CC_PLATFORM_MAC
-	
-	CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:fullPath];
-	
-	CGImageDestinationRef dest;
+    CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:filePath];
 
-	if( format == CCRenderTextureImageFormatPNG )
-		dest = 	CGImageDestinationCreateWithURL(url, kUTTypePNG, 1, NULL);
+    CGImageDestinationRef dest;
 
-	else if( format == CCRenderTextureImageFormatJPEG )
-		dest = 	CGImageDestinationCreateWithURL(url, kUTTypeJPEG, 1, NULL);
+    if( format == CCRenderTextureImageFormatPNG )
+        dest = 	CGImageDestinationCreateWithURL(url, kUTTypePNG, 1, NULL);
 
-	else
-		NSAssert(NO, @"Unsupported format");
+    else if( format == CCRenderTextureImageFormatJPEG )
+        dest = 	CGImageDestinationCreateWithURL(url, kUTTypeJPEG, 1, NULL);
 
-	CGImageDestinationAddImage(dest, imageRef, nil);
-		
-	success = CGImageDestinationFinalize(dest);
+    else
+        NSAssert(NO, @"Unsupported format");
 
-	CFRelease(dest);
+    if (!dest)
+    {
+        CCLOG(@"cocos2d: ERROR: Failed to create image destination with file path:%@", filePath);
+        CGImageRelease(imageRef);
+        return NO;
+    }
+
+    CGImageDestinationAddImage(dest, imageRef, nil);
+
+    success = CGImageDestinationFinalize(dest);
+
+    CFRelease(dest);
 #endif
 
-	CGImageRelease(imageRef);
-	
-	if( ! success )
-		CCLOG(@"cocos2d: ERROR: Failed to save file:%@ to disk",fullPath);
+    CGImageRelease(imageRef);
 
-	return success;
+    if( ! success )
+        CCLOG(@"cocos2d: ERROR: Failed to save file:%@ to disk", filePath);
+
+    return success;
 }
 
 
@@ -566,14 +587,16 @@
 
 #pragma RenderTexture - Override
 
--(CGSize) contentSize
-{
-	return self.texture.contentSize;
-}
-
 -(void) setContentSize:(CGSize)size
 {
-	NSAssert(NO, @"You cannot change the content size of an already created CCRenderTexture. Recreate it");
+    // TODO: Fix CCRenderTexture so that it correctly handles this
+	// NSAssert(NO, @"You cannot change the content size of an already created CCRenderTexture. Recreate it");
+    [super setContentSize:size];
+    _projection = GLKMatrix4MakeOrtho(0.0f, size.width, size.height, 0.0f, -1024.0f, 1024.0f);
+    _contentSizeChanged = YES;
+
 }
+
+
 
 @end

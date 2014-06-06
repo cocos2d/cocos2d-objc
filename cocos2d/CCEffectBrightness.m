@@ -12,17 +12,34 @@
 #import "CCTexture.h"
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
+static float conditionBrightness(float brightness);
+
 @implementation CCEffectBrightness
 
--(id)initWithBrightness:(float)brightness
+-(id)init
 {
-    CCEffectUniform* uniformBrightness = [CCEffectUniform uniform:@"float" name:@"u_brightness" value:[NSNumber numberWithFloat:brightness]];
+    CCEffectUniform* uniformBrightness = [CCEffectUniform uniform:@"float" name:@"u_brightness" value:[NSNumber numberWithFloat:0.0f]];
     
     if((self = [super initWithUniforms:@[uniformBrightness] vertextUniforms:nil varying:nil]))
     {
-        _brightness = brightness;
+        self.debugName = @"CCEffectBrightness";
+        return self;
+    }
+    return self;
+}
+
+-(id)initWithBrightness:(float)brightness
+{
+    if((self = [self init]))
+    {
+        _brightness = conditionBrightness(brightness);
     }    
     return self;
+}
+
++(id)effectWithBrightness:(float)brightness
+{
+    return [[self alloc] initWithBrightness:brightness];
 }
 
 -(void)buildFragmentFunctions
@@ -36,29 +53,34 @@
     [self.fragmentFunctions addObject:fragmentFunction];
 }
 
--(NSInteger)renderPassesRequired
+-(void)buildRenderPasses
 {
-    return 1;
-}
-
--(void)renderPassBegin:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
-{
-    renderPass.sprite.anchorPoint = ccp(0.0, 0.0);
-    renderPass.sprite.shaderUniforms[@"u_brightness"] = [NSNumber numberWithFloat:self.brightness];
-}
-
--(void)renderPassUpdate:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
-{
-    GLKMatrix4 transform = renderPass.transform;
-    GLKVector4 clearColor;
+    __weak CCEffectBrightness *weakSelf = self;
+    __weak CCEffectRenderPass *weakPass = nil;
     
-    [renderPass.renderer enqueueClear:0 color:clearColor depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
-    [renderPass.sprite visit:renderPass.renderer parentTransform:&transform];
+    CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
+    weakPass = pass0;
+    pass0.shader = self.shader;
+    pass0.shaderUniforms = self.shaderUniforms;
+    pass0.beginBlock = ^(CCTexture *previousPassTexture){
+        weakPass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
+        weakPass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
+        weakPass.shaderUniforms[@"u_brightness"] = [NSNumber numberWithFloat:weakSelf.brightness];
+    };
+    
+    self.renderPasses = @[pass0];
 }
 
--(void)renderPassEnd:(CCEffectRenderPass*)renderPass defaultBlock:(void (^)())defaultBlock
+-(void)setBrightness:(float)brightness
 {
+    _brightness = conditionBrightness(brightness);
 }
 
 @end
+
+float conditionBrightness(float brightness)
+{
+    return clampf(brightness, -1.0f, 1.0f);
+}
+
 #endif

@@ -132,12 +132,21 @@ CCRANDOM_ON_UNIT_CIRCLE()
 /** @def CC_DEGREES_TO_RADIANS
  converts degrees to radians
  */
-#define CC_DEGREES_TO_RADIANS(__ANGLE__) ((__ANGLE__) * 0.01745329252f) // PI / 180
+static inline float
+CC_DEGREES_TO_RADIANS(const float angle)
+{
+	return angle*0.01745329252f;
+} 
 
 /** @def CC_RADIANS_TO_DEGREES
  converts radians to degrees
  */
-#define CC_RADIANS_TO_DEGREES(__ANGLE__) ((__ANGLE__) * 57.29577951f) // PI * 180
+static inline float
+CC_RADIANS_TO_DEGREES(const float angle)
+{
+	return angle*57.29577951f;
+} 
+
 
 
 /** @def CC_CONTENT_SCALE_FACTOR

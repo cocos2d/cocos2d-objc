@@ -8,7 +8,7 @@ outputPath="api-docs";
 # End constants
 tools/appledoc \
 --project-name "Cocos2D Developer Library" \
---project-company "3.0.0" \
+--project-company "3.1.0" \
 --company-id "org.cocos2d" \
 --docset-atom-filename "testpath4.atom" \
 --docset-feed-url "${companyURL}/${company}/%DOCSETATOMFILENAME" \
