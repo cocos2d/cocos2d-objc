@@ -158,10 +158,18 @@
 
     // Done pre-render
     
-    _sprite.texture = self.texture;
-    _effectRenderer.contentSize = self.texture.contentSize;
-    [_effectRenderer drawSprite:_sprite withEffect:_effect renderer:_renderer transform:transform];
-        
+    if (_effect)
+    {
+        _effectRenderer.contentSize = self.texture.contentSize;
+        [_effectRenderer drawSprite:_sprite withEffect:_effect renderer:_renderer transform:transform];
+    }
+    else
+    {
+        _sprite.anchorPoint = ccp(0.0f, 0.0f);
+        _sprite.position = ccp(0.0f, 0.0f);
+        [_sprite visit:_renderer parentTransform:transform];
+    }
+    
     if(_privateRenderer == NO)
         _renderer.globalShaderUniforms = _oldGlobalUniforms;
     else
