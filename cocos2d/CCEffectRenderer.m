@@ -123,7 +123,6 @@
 @property (nonatomic, strong) NSMutableArray *freeRenderTargets;
 @property (nonatomic, assign) GLKVector4 oldViewport;
 @property (nonatomic, assign) GLint oldFBO;
-@property (nonatomic, strong) CCTexture *outputTexture;
 
 @end
 
@@ -212,7 +211,6 @@
         previousPassRT = rt;
     }
     
-    _outputTexture = previousPassRT.texture;
     if (!effect.supportsDirectRendering)
     {
         // If the effect doesn't support direct renderering then we need one last
@@ -225,6 +223,10 @@
         sprite.texture = backup;
         
         [renderer popGroupWithDebugLabel:@"CCEffectRenderer: Post-render composite pass" globalSortOrder:0];
+    }
+    else if (!effect.renderPassesRequired)
+    {
+        [sprite enqueueTriangles:renderer transform:transform];
     }
 }
 
