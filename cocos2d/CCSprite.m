@@ -339,14 +339,6 @@
     {
         _effectRenderer.contentSize = self.texture.contentSize;
         [_effectRenderer drawSprite:self withEffect:self.effect renderer:renderer transform:transform];
-        
-        if (!self.effect.supportsDirectRendering)
-        {
-            CCTexture *backup = self.texture;
-            self.texture = _effectRenderer.outputTexture;
-            [self enqueueTriangles:renderer transform:transform];
-            self.texture = backup;
-        }
     }
     else
 #endif

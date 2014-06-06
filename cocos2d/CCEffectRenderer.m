@@ -14,6 +14,7 @@
 #import "CCTexture.h"
 #import "ccUtils.h"
 
+#import "CCSprite_Private.h"
 #import "CCTexture_Private.h"
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
@@ -212,6 +213,19 @@
     }
     
     _outputTexture = previousPassRT.texture;
+    if (!effect.supportsDirectRendering)
+    {
+        // If the effect doesn't support direct renderering then we need one last
+        // draw to composite the effect results into the displayable framebuffer.
+        [renderer pushGroup];
+
+        CCTexture *backup = sprite.texture;
+        sprite.texture = previousPassRT.texture;
+        [sprite enqueueTriangles:renderer transform:transform];
+        sprite.texture = backup;
+        
+        [renderer popGroupWithDebugLabel:@"CCEffectRenderer: Post-render composite pass" globalSortOrder:0];
+    }
 }
 
 - (void)bindRenderTarget:(CCEffectRenderTarget *)rt withRenderer:(CCRenderer *)renderer

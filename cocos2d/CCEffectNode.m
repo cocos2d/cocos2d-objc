@@ -161,39 +161,7 @@
     _sprite.texture = self.texture;
     _effectRenderer.contentSize = self.texture.contentSize;
     [_effectRenderer drawSprite:_sprite withEffect:_effect renderer:_renderer transform:transform];
-    
-    if (!_effect.supportsDirectRendering || !_effect)
-    {
-        // XXX We may want to make this post-render step overridable by the
-        // last effect in the stack. That would look like the code in the
-        // pre-render override comment above.
-        //
         
-        // Draw accumulated results from the last textureinto the real framebuffer
-        // The texture property always points to the most recently allocated
-        // texture so it will contain any accumulated results for the effect stack.
-        [_renderer pushGroup];
-        
-        if (_effect)
-        {
-            _sprite.texture = _effectRenderer.outputTexture;
-        }
-        else
-        {
-            _sprite.texture = self.texture;
-        }
-        
-        _sprite.anchorPoint = ccp(0.0f, 0.0f);
-        _sprite.position = ccp(0.0f, 0.0f);
-        _sprite.shader = [CCShader positionTextureColorShader];
-        [_sprite visit:_renderer parentTransform:transform];
-        
-        [_renderer popGroupWithDebugLabel:@"CCEffectNode: Post-render composite pass" globalSortOrder:0];
-        
-        // Done framebuffer composite
-    }
-    
-    
     if(_privateRenderer == NO)
         _renderer.globalShaderUniforms = _oldGlobalUniforms;
     else
