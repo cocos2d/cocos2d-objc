@@ -29,7 +29,7 @@
 #import "CCNode_Private.h"
 #import "CCDirector.h"
 #import "CCActionManager.h"
-#import "CCBAnimationManager.h"
+#import "CCAnimationManager.h"
 #import "CCScheduler.h"
 #import "ccConfig.h"
 #import "ccMacros.h"
@@ -207,10 +207,9 @@ static NSUInteger globalOrderOfArrival = 1;
 	// timers
 	[_children makeObjectsPerformSelector:@selector(cleanup)];
     
-    // CCBAnimationManager Cleanup (Set by SpriteBuilder)
-    if([_userObject isKindOfClass:[CCBAnimationManager class]]) {
-        [_userObject performSelector:@selector(cleanup)];
-    }
+    // CCAnimationManager Cleanup (Set by SpriteBuilder)
+    [_animationManager performSelector:@selector(cleanup)];
+    
     _userObject = nil;
 }
 
@@ -549,6 +548,16 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
 - (CGSize) contentSizeInPoints
 {
     return [self convertContentSizeToPoints:self.contentSize type:_contentSizeType];
+}
+
+-(void)setContentSizeInPoints:(CGSize)contentSizeInPoints
+{
+	self.contentSize = [self convertContentSizeFromPoints:contentSizeInPoints type:self.contentSizeType];
+}
+
+-(void) viewDidResizeTo: (CGSize) newViewSize
+{
+	for (CCNode* child in _children) [child viewDidResizeTo: newViewSize];
 }
 
 - (float) scaleInPoints
@@ -1175,6 +1184,23 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 	return [_actionManager numberOfRunningActionsInTarget:self];
 }
 
+-(CCAnimationManager*)animationManager
+{
+    if(_animationManager)
+    {
+        return _animationManager;
+    }
+    else
+    {
+        return self.parent.animationManager;
+    }
+}
+
+-(void)setAnimationManager:(CCAnimationManager *)animationManager
+{
+    _animationManager = animationManager;
+}
+
 #pragma mark CCNode - Scheduler
 
 -(NSInteger)priority
@@ -1269,9 +1295,11 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 	if(isRunning && !wasRunning){
 		[_scheduler setPaused:NO target:self];
 		[_actionManager resumeTarget:self];
+        [_animationManager setPaused:NO];
 	} else if(!isRunning && wasRunning){
 		[_scheduler setPaused:YES target:self];
 		[_actionManager pauseTarget:self];
+        [_animationManager setPaused:YES];
 	}
 }
 
@@ -1405,6 +1433,11 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 - (CGPoint) positionInPoints
 {
     return [self convertPositionToPoints:self.position type:_positionType];
+}
+
+-(void)setPositionInPoints:(CGPoint)positionInPoints
+{
+	self.position = [self convertPositionFromPoints:positionInPoints type:self.positionType];
 }
 
 - (CGAffineTransform)nodeToParentTransform

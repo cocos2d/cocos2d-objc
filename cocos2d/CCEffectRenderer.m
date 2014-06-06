@@ -14,6 +14,7 @@
 #import "CCTexture.h"
 #import "ccUtils.h"
 
+#import "CCSprite_Private.h"
 #import "CCTexture_Private.h"
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
@@ -122,7 +123,6 @@
 @property (nonatomic, strong) NSMutableArray *freeRenderTargets;
 @property (nonatomic, assign) GLKVector4 oldViewport;
 @property (nonatomic, assign) GLint oldFBO;
-@property (nonatomic, strong) CCTexture *outputTexture;
 
 @end
 
@@ -203,7 +203,23 @@
         previousPassRT = rt;
     }
     
-    _outputTexture = previousPassRT.texture;
+    if (!effect.supportsDirectRendering)
+    {
+        // If the effect doesn't support direct renderering then we need one last
+        // draw to composite the effect results into the displayable framebuffer.
+        [renderer pushGroup];
+
+        CCTexture *backup = sprite.texture;
+        sprite.texture = previousPassRT.texture;
+        [sprite enqueueTriangles:renderer transform:transform];
+        sprite.texture = backup;
+        
+        [renderer popGroupWithDebugLabel:@"CCEffectRenderer: Post-render composite pass" globalSortOrder:0];
+    }
+    else if (!effect.renderPassesRequired)
+    {
+        [sprite enqueueTriangles:renderer transform:transform];
+    }
 }
 
 - (void)bindRenderTarget:(CCEffectRenderTarget *)rt withRenderer:(CCRenderer *)renderer

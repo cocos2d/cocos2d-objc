@@ -33,6 +33,10 @@
 #import "CCSpriteFrameCache.h"
 
 @implementation CCSpriteFrame
+{
+	__weak CCTexture *_lazyTexture;
+}
+
 @synthesize textureFilename = _textureFilename;
 @synthesize rotated = _rotated;
 
@@ -137,15 +141,18 @@
 	}
 }
 
+-(CCTexture *)lazyTexture
+{
+	CCTexture *texture = _lazyTexture;
+	if(!texture && _textureFilename){
+		_lazyTexture = texture = [[CCTextureCache sharedTextureCache] addImage:_textureFilename];
+	}
+	
+	return texture;
+}
+
 -(CCTexture*) texture
 {
-	if( _texture )
-		return _texture;
-
-	if( _textureFilename )
-		return [[CCTextureCache sharedTextureCache] addImage:_textureFilename];
-
-	// no texture or texture filename
-	return nil;
+	return (_texture ?: self.lazyTexture);
 }
 @end

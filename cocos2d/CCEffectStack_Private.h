@@ -8,6 +8,7 @@
 
 #import "CCEffectStack.h"
 
+#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffectStack ()
 {
     NSMutableArray *_effects;
@@ -17,4 +18,4 @@
 @property (nonatomic) BOOL stitchingEnabled;
 
 @end
-
+#endif

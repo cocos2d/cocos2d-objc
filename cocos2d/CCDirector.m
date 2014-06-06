@@ -339,8 +339,10 @@ static CCDirector *_sharedDirector = nil;
 			[self setProjection: _projection];
 			
 			// TODO this should probably migrate somewhere else.
-			glEnable(GL_DEPTH_TEST);
-			glDepthFunc(GL_LEQUAL);
+			if(view.depthFormat){
+				glEnable(GL_DEPTH_TEST);
+				glDepthFunc(GL_LEQUAL);
+			}
 		}
 
 		// Dump info once OpenGL was initilized
@@ -448,12 +450,14 @@ static CCDirector *_sharedDirector = nil;
 	return (CGSizeEqualToSize(_designSize, CGSizeZero) ? self.viewSize : _designSize);
 }
 
--(void) reshapeProjection:(CGSize)newWindowSize
+-(void) reshapeProjection:(CGSize)newViewSize
 {
-	_winSizeInPixels = newWindowSize;
+	_winSizeInPixels = newViewSize;
 	_winSizeInPoints = CGSizeMake( _winSizeInPixels.width / __ccContentScaleFactor, _winSizeInPixels.height / __ccContentScaleFactor );
 	
 	[self setProjection:_projection];
+	
+	[_runningScene viewDidResizeTo: newViewSize];
 }
 
 #pragma mark Director Scene Management
@@ -794,15 +798,15 @@ static const float CCFPSLabelItemHeight = 32;
 		float h = CCFPSLabelItemHeight;
 		
 		float tx = CCFPSLabelItemWidth/texture.contentSize.width;
-		float ty = 1.0f - CCFPSLabelItemHeight/texture.contentSize.height;
+		float ty = CCFPSLabelItemHeight/texture.contentSize.height;
 		
 		for(int i=0; i<CCFPSLabelChars; i++){
 			float tx0 = i*tx;
 			float tx1 = (i + 1)*tx;
-			_charVertexes[i].bl = (CCVertex){GLKVector4Make(0.0f, 0.0f, 0.0f, 1.0f), GLKVector2Make(tx0, 1.0f), GLKVector2Make(0.0f, 0.0f), GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)};
-			_charVertexes[i].br = (CCVertex){GLKVector4Make(   w, 0.0f, 0.0f, 1.0f), GLKVector2Make(tx1, 1.0f), GLKVector2Make(0.0f, 0.0f), GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)};
-			_charVertexes[i].tr = (CCVertex){GLKVector4Make(   w,    h, 0.0f, 1.0f), GLKVector2Make(tx1,   ty), GLKVector2Make(0.0f, 0.0f), GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)};
-			_charVertexes[i].tl = (CCVertex){GLKVector4Make(0.0f,    h, 0.0f, 1.0f), GLKVector2Make(tx0,   ty), GLKVector2Make(0.0f, 0.0f), GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)};
+			_charVertexes[i].bl = (CCVertex){GLKVector4Make(0, 0, 0, 1), GLKVector2Make(tx0,  0), GLKVector2Make(0, 0), GLKVector4Make(1, 1, 1, 1)};
+			_charVertexes[i].br = (CCVertex){GLKVector4Make(w, 0, 0, 1), GLKVector2Make(tx1,  0), GLKVector2Make(0, 0), GLKVector4Make(1, 1, 1, 1)};
+			_charVertexes[i].tr = (CCVertex){GLKVector4Make(w, h, 0, 1), GLKVector2Make(tx1, ty), GLKVector2Make(0, 0), GLKVector4Make(1, 1, 1, 1)};
+			_charVertexes[i].tl = (CCVertex){GLKVector4Make(0, h, 0, 1), GLKVector2Make(tx0, ty), GLKVector2Make(0, 0), GLKVector4Make(1, 1, 1, 1)};
 		}
 	}
 	

@@ -2,7 +2,6 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2013 Apportable Inc.
- * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,52 +22,38 @@
  * THE SOFTWARE.
  */
 
-#import "CCLayout.h"
-#import "CCNode_Private.h"
+@interface CCAnimationManager ()
 
-@implementation CCLayout
+// Sequence Array
+@property (nonatomic,readonly) NSMutableArray* sequences;
 
-- (id) init
-{
-    self = [super init];
-    if (!self) return NULL;
-    
-    [self needsLayout];
-    
-    return self;
-}
 
-- (void) needsLayout
-{
-    _needsLayout = YES;
-}
+// Auto play sequence id.
+@property (nonatomic,assign) int autoPlaySequenceId;
 
-- (void) layout
-{
-    _needsLayout = NO;
-}
+// Base node.
+@property (nonatomic,unsafe_unretained) CCNode* rootNode;
 
-- (CGSize)contentSize
-{
-    if (_needsLayout) [self layout];
-    return super.contentSize;
-}
+// (CCB) Optional owner
+@property (nonatomic,unsafe_unretained) id owner;
 
-- (void) visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
-{
-    if (_needsLayout)
-    {
-        [self layout];
-    }
-    
-    [super visit:renderer parentTransform:parentTransform];
-}
+// (CCB) Resolution and default container size.
+@property (nonatomic,assign) CGSize rootContainerSize;
 
-- (void) addChild:(CCNode *)node z:(NSInteger)z name:(NSString*)name
-{
-    [super addChild:node z:z name:name];
-    [self sortAllChildren];
-    [self layout];
-}
+// (CCB) Node Management
+- (CGSize) containerSize:(CCNode*)node;
+- (void) addNode:(CCNode*)node andSequences:(NSDictionary*)seq;
+- (void) moveAnimationsFromNode:(CCNode*)fromNode toNode:(CCNode*)toNode;
+
+// Reset node state.
+- (void) setBaseValue:(id)value forNode:(CCNode*)node propertyName:(NSString*)propName;
+
+- (void) runAnimationsForSequenceId:(int)seqId tweenDuration:(float) tweenDuration;
+
+- (void)timeSeekForSequenceId:(int)seqId time:(float)time;
+
+#pragma mark Simple Sequence Builder
+- (void)addKeyFramesForSequenceNamed:(NSString*)name propertyType:(CCBSequencePropertyType)propertyType frameArray:(NSArray*)frameArray node:(CCNode *)node loop:(BOOL)loop;
 
 @end
+
