@@ -148,18 +148,10 @@
 
 -(void)drawSprite:(CCSprite *)sprite withEffect:(CCEffect *)effect renderer:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
-    if (effect && ![effect prepareForRendering])
-    {
-        NSAssert(0, @"Effect preparation failed.");
-        return;
-    }
-
+    [effect prepareForRendering];
     [self freeAllRenderTargets];
     
-    GLKMatrix4 projection = GLKMatrix4MakeOrtho(0.0f, _contentSize.width, _contentSize.height, 0.0f, -1024.0f, 1024.0f);
-    
     CCEffectRenderTarget *previousPassRT = nil;
-
     for(int i = 0; i < effect.renderPassesRequired; i++)
     {
         BOOL lastPass = (i == (effect.renderPassesRequired - 1));
@@ -195,8 +187,8 @@
         }
         else
         {
-            renderPass.transform = projection;
-            
+            renderPass.transform = GLKMatrix4MakeOrtho(0.0f, _contentSize.width, _contentSize.height, 0.0f, -1024.0f, 1024.0f);
+
             CGSize rtSize = CGSizeMake(_contentSize.width * _contentScale, _contentSize.height * _contentScale);
             rt = [self renderTargetWithSize:rtSize];
             
