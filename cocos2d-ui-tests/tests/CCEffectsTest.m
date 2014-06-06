@@ -246,7 +246,7 @@
     {
         effectNode.effect = effects[0];
     }
-    else
+    else if (effects.count > 1)
     {
         CCEffectStack *stack = [[CCEffectStack alloc] initWithEffects:effects];
         effectNode.effect = stack;
@@ -267,7 +267,7 @@
     {
         sprite.effect = effects[0];
     }
-    else
+    else if (effects.count > 1)
     {
         CCEffectStack *stack = [[CCEffectStack alloc] initWithEffects:effects];
         sprite.effect = stack;
