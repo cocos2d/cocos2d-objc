@@ -8,9 +8,12 @@
 
 #import <XCTest/XCTest.h>
 #import "cocos2d.h"
-#import "CCBAnimationManager.h"
+#import "CCAnimationManager.h"
 #import "CCBSequence.h"
 #import "CCBKeyframe.h"
+#import "CCAnimationManager_Private.h"
+
+#define NUM_ELEMENTS(array) (sizeof(array)/sizeof(array[0]))
 
 #define AssertNotEqualWithAccuracy(a1,a2,accuracy,format...)\
 {\
@@ -51,7 +54,7 @@ _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_NotEqualWithAccuracy, 0
 
 - (void)testSmallKeyframesTest
 {
-	CCBAnimationManager * animationManager = [[CCBAnimationManager alloc] init];
+	CCAnimationManager * animationManager = [[CCAnimationManager alloc] init];
 	CCNode * node = [[CCNode alloc] init];
 	node.name = @"testNode";
 	node.position = ccp(0.0f,0.0f);
@@ -98,7 +101,6 @@ _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_NotEqualWithAccuracy, 0
 	[seqs setObject:seqNodeProps forKey:[NSNumber numberWithInt:seq.sequenceId]];
 	
 	[animationManager addNode:node andSequences:seqs];
-	
 	[animationManager runAnimationsForSequenceId:seq.sequenceId tweenDuration:0];
 	
 	CGFloat accuracy = 0.01f;
@@ -131,5 +133,140 @@ _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_NotEqualWithAccuracy, 0
 		lastPos = node.position;
 	}
 }
+
+struct PositionKeyframes
+{
+	float   time;
+	CGPoint position;
+};
+
+NSDictionary * createPositionSequencePropery(struct PositionKeyframes * keyframes, int count)
+{
+	
+	const int kSequencerID = 0; //for now;
+	
+	CCBSequenceProperty* seqProp = [[CCBSequenceProperty alloc] init];
+	
+	seqProp.name = @"position";
+	seqProp.type = 0;
+	
+	
+	for (int k = 0; k < count; k++)
+	{
+		CCBKeyframe* keyframe = [[CCBKeyframe alloc] init];
+		keyframe.time = keyframes[k].time;
+		
+		keyframe.easingType = kCCBKeyframeEasingLinear;
+		keyframe.easingOpt = 0;
+		keyframe.value = @[@(keyframes[k].position.x),@(keyframes[k].position.y)];
+		
+		[seqProp.keyframes addObject:keyframe];
+	}
+
+	NSMutableDictionary* seqNodeProps = [NSMutableDictionary dictionary];
+	[seqNodeProps setObject:seqProp forKey:seqProp.name];
+	
+	NSMutableDictionary* seqs = [NSMutableDictionary dictionary];
+	[seqs setObject:seqNodeProps forKey:[NSNumber numberWithInt:kSequencerID]];
+	
+	return seqs;
+}
+
+- (void)testAnimationSync
+{
+	CCAnimationManager * animationManager = [[CCAnimationManager alloc] init];
+	CCBSequence* seq = [[CCBSequence alloc] init];
+	seq.duration = 4.0f;
+	seq.name = @"TestSequence";
+	seq.sequenceId = 0;
+	seq.chainedSequenceId = 0;
+	[animationManager.sequences addObject:seq];
+	
+	/////////////////////////////////////////////
+	
+	CCNode * nodeA = [[CCNode alloc] init];
+	nodeA.name = @"testA";
+	nodeA.position = ccp(0.0f,0.0f);
+	
+	struct PositionKeyframes  positionsA[] =
+		{{0.0f,0.0f,0.0f},
+		{1.0f,100.0f,0.0f},
+		{3.0f,100.0f,0.0f},
+		{4.0f,0.0f,0.0f}};
+		
+				
+	[animationManager addNode:nodeA andSequences:createPositionSequencePropery(positionsA, NUM_ELEMENTS(positionsA))];
+	
+	/////////////////////////////////////////////
+	
+	CCNode * nodeB = [[CCNode alloc] init];
+	nodeB.name = @"testB";
+	nodeB.position = ccp(0.0f,0.0f);
+	
+	struct PositionKeyframes  positionsB[] =
+		{{0.0f,0.0f,0.0f},
+		 {1.0f,0.0f,0.0f},
+		{2.0f,100.0f,0.0f},
+		{3.0f,100.0f,0.0f},
+		{4.0f,0.0f,0.0f}};
+	
+	[animationManager addNode:nodeB andSequences:createPositionSequencePropery(positionsB, NUM_ELEMENTS(positionsB))];
+
+
+	/////////////////////////////////////////////
+	
+	
+	CCNode * nodeC = [[CCNode alloc] init];
+	nodeC.name = @"testC";
+	nodeC.position = ccp(0.0f,0.0f);
+	
+	struct PositionKeyframes  positionsC[] =
+		{	{0.0f,0.0f,0.0f},
+			{2.0f,0.0f,0.0f},
+			{3.0f,100.0f,0.0f},
+			{4.0f,0.0f,0.0f}};
+		
+	[animationManager addNode:nodeC andSequences:createPositionSequencePropery(positionsC, NUM_ELEMENTS(positionsC))];
+	
+	/////////////////////////////////////////////
+	
+	[animationManager runAnimationsForSequenceId:seq.sequenceId tweenDuration:0];
+	
+	
+	const float kDelta = 0.1f;//100ms;
+	const CGFloat kAccuracy = 0.01f;
+	
+	float timeIntoSeq = 0.0f;
+	float elapsed = 0.0f;
+	
+	while(elapsed <= seq.duration * 10)
+	{
+		timeIntoSeq = fmod(elapsed, seq.duration);
+		[animationManager update:kDelta];
+		
+		elapsed += kDelta;
+		
+		timeIntoSeq = fmod(elapsed, seq.duration);
+		
+		if(timeIntoSeq >= 3.0f)
+		{
+			//All final translations go from x=100 -> x=0 over 1 second.
+			float perentageIntroSyncedTranlation = 1.0f - (seq.duration - timeIntoSeq);
+			float desiredXCoord = (1.0f - perentageIntroSyncedTranlation) * 100.0f;
+			
+			
+			XCTAssertTrue(fabsf(nodeA.position.x - nodeB.position.x) < kAccuracy, @"They should all equal each other");
+			
+			XCTAssertTrue(fabsf(nodeA.position.x - nodeC.position.x) < kAccuracy, @"They should all equal each other");
+			
+			XCTAssertTrue(fabsf(nodeA.position.x - desiredXCoord) < kAccuracy, @"They should all equal each desiredXCoord: XPos:%0.2f DesiredPos:%0.2f elapsed:%0.2f", nodeA.position.x,desiredXCoord, elapsed);
+			
+		}
+
+	}
+	
+}
+
+
 
 @end

@@ -27,7 +27,7 @@
 
 @class CCActionSequence;
 
-@interface CCBKeyframe : NSObject
+@interface CCBKeyframe : NSObject <NSCopying>
 
 @property (nonatomic,strong) id value;
 @property (nonatomic,assign) float time;

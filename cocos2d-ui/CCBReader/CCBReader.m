@@ -1288,6 +1288,13 @@ static inline float readFloat(CCBReader *self)
             {
                 CCBKeyframe* keyframe = [self readKeyframeOfType:seqProp.type];
                 
+				if(k==0 && keyframe.time > 0.0f)
+				{
+					CCBKeyframe * copyKeyframe = [keyframe copy];
+					copyKeyframe.time = 0.0f;
+					[seqProp.keyframes addObject:copyKeyframe];
+				}
+                
                 [seqProp.keyframes addObject:keyframe];
             }
             

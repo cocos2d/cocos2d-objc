@@ -531,7 +531,7 @@ NSString *  kRestrictedProperties[3] = { @"scale", @"scaleX", @"scaleY"};
             [node addObserver:self forKeyPath:kDependantProperties[i] options:NSKeyValueObservingOptionNew context:nil];
         }
         
-#if DEBUG
+#ifdef DEBUG
         for (int i = 0; i < sizeof(kRestrictedProperties)/sizeof(kRestrictedProperties[0]); i++)
         {
             [node addObserver:self forKeyPath:kRestrictedProperties[i] options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];

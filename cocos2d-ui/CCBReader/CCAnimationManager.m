@@ -81,7 +81,26 @@ static NSInteger ccbAnimationManagerID = 0;
     }
 }
 
-- (void)addNode:(CCNode*)node andSequences:(NSDictionary*)seq {
+- (void)addNode:(CCNode*)node andSequences:(NSDictionary*)seq
+{
+#ifdef DEBUG
+	//Sanity check sequences;
+	
+	for (NSMutableDictionary* seqNodeProps in seq.allValues) {
+		
+		for (CCBSequenceProperty* seqProp in seqNodeProps.allValues)
+		{
+			if(seqProp.keyframes.count > 0)
+			{
+				CCBKeyframe * keyFrameZero = seqProp.keyframes[0];
+				NSAssert(keyFrameZero.time == 0.0f, @"The first keyframe should always be at time Zero.");
+			}
+			
+		}
+	}
+	
+#endif
+	
     NSValue* nodePtr = [NSValue valueWithPointer:(__bridge const void *)(node)];
     [_nodeSequences setObject:seq forKey:nodePtr];
 }
@@ -441,6 +460,12 @@ static NSInteger ccbAnimationManagerID = 0;
     
     _paused = YES;
     [self clearAllActions];
+	
+	// Set the running scene
+    _runningSequence      = [self sequenceFromSequenceId:seqId];
+    _runningSequence.time = 0.0f;
+	
+	[self addSequenceCallBacks:seqId tweenDuration:tweenDuration startTime:0];
     
     // Contains all Sequence Propertys / Keyframe
     for (NSValue* nodePtr in _nodeSequences) {
@@ -483,12 +508,6 @@ static NSInteger ccbAnimationManagerID = 0;
         }
         
     }
-    
-    [self addSequenceCallBacks:seqId tweenDuration:tweenDuration startTime:0];
-    
-    // Set the running scene
-    _runningSequence      = [self sequenceFromSequenceId:seqId];
-    _runningSequence.time = 0.0f;
     
     _paused = NO;
 }
@@ -545,6 +564,8 @@ static NSInteger ccbAnimationManagerID = 0;
         _lastSequence              = _runningSequence;
     }
     
+	float overhang = _runningSequence.time - _runningSequence.duration;
+	
     // Play next sequence
     int nextSeqId = _runningSequence.chainedSequenceId;
     
@@ -562,6 +583,8 @@ static NSInteger ccbAnimationManagerID = 0;
     // Run next sequence if callbacks did not start a new sequence
     if (_runningSequence == NULL && nextSeqId != -1) {
         [self runAnimationsForSequenceId:nextSeqId tweenDuration:0];
+		[self updateInternal:0];		//Update initially one frame.
+		[self updateInternal:overhang]; //More frame forward.
     }
 }
 
@@ -856,6 +879,8 @@ static NSInteger ccbAnimationManagerID = 0;
         return;
     }
     
+    _runningSequence.time+=step;
+	
     if(_currentActions.count==0) return;
     
     CCAction *action;
@@ -869,7 +894,7 @@ static NSInteger ccbAnimationManagerID = 0;
         }
     }
     
-    _runningSequence.time+=step;
+
 }
 
 - (void)clearAllActions {
