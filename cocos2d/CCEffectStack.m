@@ -127,13 +127,37 @@
 {
     NSMutableArray* fragFunctions = [[NSMutableArray alloc] init];
     NSMutableArray* fragUniforms = [[NSMutableArray alloc] init];
-    [CCEffectStack extractFragmentData:effects functions:fragFunctions uniforms:fragUniforms];
-   
     NSMutableArray* vertexFunctions = [[NSMutableArray alloc] init];
     NSMutableArray* vertexUniforms = [[NSMutableArray alloc] init];
-    [CCEffectStack extractVertexData:effects functions:vertexFunctions uniforms:vertexUniforms];
+    
+    int effectIndex = 0;
+    for(CCEffect* effect in effects)
+    {
+        NSString *effectPrefix = [NSString stringWithFormat:@"%@_%d_", effect.debugName, effectIndex];
+        
+        NSDictionary *fragUniformReplacements = [CCEffectStack uniformsByApplyingPrefix:effectPrefix toUniforms:effect.fragmentUniforms];
+        [fragUniforms addObjectsFromArray:fragUniformReplacements.allValues];
+        
+        for(CCEffectFunction *function in effect.fragmentFunctions)
+        {
+            CCEffectFunction *prefixedFunction = [CCEffectStack effectFunctionByApplyingPrefix:effectPrefix andUniformReplacements:fragUniformReplacements toEffectFunction:function];
+            [fragFunctions addObject:prefixedFunction];
+        }
+
+        NSDictionary *vtxUniformReplacements = [CCEffectStack uniformsByApplyingPrefix:effectPrefix toUniforms:effect.vertexUniforms];
+        [vertexUniforms addObjectsFromArray:vtxUniformReplacements.allValues];
+        
+        for(CCEffectFunction* function in effect.vertexFunctions)
+        {
+            CCEffectFunction *prefixedFunction = [CCEffectStack effectFunctionByApplyingPrefix:effectPrefix andUniformReplacements:vtxUniformReplacements toEffectFunction:function];
+            [vertexFunctions addObject:prefixedFunction];
+        }
+        
+        effectIndex++;
+    }
     
     CCEffect* stitchedEffect = [[CCEffect alloc] initWithFragmentFunction:fragFunctions vertexFunctions:vertexFunctions fragmentUniforms:fragUniforms vertextUniforms:vertexUniforms varying:nil];
+    stitchedEffect.debugName = @"CCEffectStack_Stitched";
     
     // Copy the shader for this new pass from the stitched effect.
     CCEffectRenderPass *newPass = [[CCEffectRenderPass alloc] init];
@@ -168,6 +192,37 @@
     return stitchedEffect;
 }
 
++ (CCEffectFunction *)effectFunctionByApplyingPrefix:(NSString *)prefix andUniformReplacements:(NSDictionary *)uniformReplacements toEffectFunction:(CCEffectFunction *)function
+{
+    NSString *prefixedBody = [CCEffectStack functionBodyByApplyingUniformReplacements:uniformReplacements toFunctionBody:function.body];
+    NSString *prefixedName = [NSString stringWithFormat:@"%@%@", prefix, function.name];
+    CCEffectFunction *prefixedFunction = [[CCEffectFunction alloc] initWithName:prefixedName body:prefixedBody inputs:function.inputs returnType:function.returnType];
+    return prefixedFunction;
+}
+
++ (NSDictionary *)uniformsByApplyingPrefix:(NSString *)prefix toUniforms:(NSArray *)uniforms
+{
+    NSMutableDictionary *uniformReplacements = [[NSMutableDictionary alloc] init];
+    for(CCEffectUniform* uniform in uniforms)
+    {
+        NSString *prefixedName = [NSString stringWithFormat:@"%@%@", prefix, uniform.name];
+        CCEffectUniform *prefixedUniform = [[CCEffectUniform alloc] initWithType:uniform.type name:prefixedName value:uniform.value];
+        [uniformReplacements setObject:prefixedUniform forKey:uniform.name];
+    }
+    return [uniformReplacements copy];
+}
+
++ (NSString *)functionBodyByApplyingUniformReplacements:(NSDictionary *)uniformReplacements toFunctionBody:(NSString *)body
+{
+    for (NSString *oldUniformName in uniformReplacements)
+    {
+        CCEffectUniform *newUniform = uniformReplacements[oldUniformName];
+        body = [body stringByReplacingOccurrencesOfString:oldUniformName withString:newUniform.name];
+    }
+    return body;
+}
+
+#if 0
 +(void)extractFragmentData:(NSArray*)effects functions:(NSMutableArray*)functions uniforms:(NSMutableArray*)uniforms
 {
     // Check for duplicate function and uniform names.
@@ -237,6 +292,7 @@
         }
     }
 }
+#endif
 
 @end
 #endif
