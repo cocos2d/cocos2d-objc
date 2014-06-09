@@ -262,6 +262,17 @@ static NSString* vertBase =
     return @[];
 }
 
++ (NSSet *)defaultEffectFragmentUniformNames
+{
+    return [[NSSet alloc] initWithArray:@[CCShaderUniformPreviousPassTexture]];
+}
+
++ (NSSet *)defaultEffectVertexUniformNames
+{
+    return [[NSSet alloc] initWithArray:@[]];
+}
+
+
 -(id)init
 {
     if((self = [super init]))

@@ -25,5 +25,8 @@
 -(void)buildVertexFunctions;
 -(void)buildRenderPasses;
 
++ (NSSet *)defaultEffectFragmentUniformNames;
++ (NSSet *)defaultEffectVertexUniformNames;
+
 @end
 #endif

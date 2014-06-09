@@ -125,38 +125,40 @@
 
 -(CCEffect *)stitchEffects:(NSArray*)effects
 {
-    NSMutableArray* fragFunctions = [[NSMutableArray alloc] init];
-    NSMutableArray* fragUniforms = [[NSMutableArray alloc] init];
-    NSMutableArray* vertexFunctions = [[NSMutableArray alloc] init];
-    NSMutableArray* vertexUniforms = [[NSMutableArray alloc] init];
+    NSMutableArray* allFragFunctions = [[NSMutableArray alloc] init];
+    NSMutableArray* allFragUniforms = [[NSMutableArray alloc] init];
+    NSMutableArray* allVertexFunctions = [[NSMutableArray alloc] init];
+    NSMutableArray* allVertexUniforms = [[NSMutableArray alloc] init];
     
     int effectIndex = 0;
     for(CCEffect* effect in effects)
     {
         NSString *effectPrefix = [NSString stringWithFormat:@"%@_%d_", effect.debugName, effectIndex];
-        
-        NSDictionary *fragUniformReplacements = [CCEffectStack uniformsByApplyingPrefix:effectPrefix toUniforms:effect.fragmentUniforms];
-        [fragUniforms addObjectsFromArray:fragUniformReplacements.allValues];
+
+        NSArray *fragmentUniforms = [CCEffectStack uniformsByRemovingUniformsFrom:effect.fragmentUniforms withNamesListedInSet:[CCEffect defaultEffectFragmentUniformNames]];
+        NSDictionary *fragUniformReplacements = [CCEffectStack uniformsByApplyingPrefix:effectPrefix toUniforms:fragmentUniforms];
+        [allFragUniforms addObjectsFromArray:fragUniformReplacements.allValues];
         
         for(CCEffectFunction *function in effect.fragmentFunctions)
         {
             CCEffectFunction *prefixedFunction = [CCEffectStack effectFunctionByApplyingPrefix:effectPrefix andUniformReplacements:fragUniformReplacements toEffectFunction:function];
-            [fragFunctions addObject:prefixedFunction];
+            [allFragFunctions addObject:prefixedFunction];
         }
 
-        NSDictionary *vtxUniformReplacements = [CCEffectStack uniformsByApplyingPrefix:effectPrefix toUniforms:effect.vertexUniforms];
-        [vertexUniforms addObjectsFromArray:vtxUniformReplacements.allValues];
+        NSArray *vertexUniforms = [CCEffectStack uniformsByRemovingUniformsFrom:effect.vertexUniforms withNamesListedInSet:[CCEffect defaultEffectVertexUniformNames]];
+        NSDictionary *vtxUniformReplacements = [CCEffectStack uniformsByApplyingPrefix:effectPrefix toUniforms:vertexUniforms];
+        [allVertexUniforms addObjectsFromArray:vtxUniformReplacements.allValues];
         
         for(CCEffectFunction* function in effect.vertexFunctions)
         {
             CCEffectFunction *prefixedFunction = [CCEffectStack effectFunctionByApplyingPrefix:effectPrefix andUniformReplacements:vtxUniformReplacements toEffectFunction:function];
-            [vertexFunctions addObject:prefixedFunction];
+            [allVertexFunctions addObject:prefixedFunction];
         }
         
         effectIndex++;
     }
     
-    CCEffect* stitchedEffect = [[CCEffect alloc] initWithFragmentFunction:fragFunctions vertexFunctions:vertexFunctions fragmentUniforms:fragUniforms vertextUniforms:vertexUniforms varying:nil];
+    CCEffect* stitchedEffect = [[CCEffect alloc] initWithFragmentFunction:allFragFunctions vertexFunctions:allVertexFunctions fragmentUniforms:allFragUniforms vertextUniforms:allVertexUniforms varying:nil];
     stitchedEffect.debugName = @"CCEffectStack_Stitched";
     
     // Copy the shader for this new pass from the stitched effect.
@@ -190,6 +192,15 @@
     stitchedEffect.renderPasses = @[newPass];
     
     return stitchedEffect;
+}
+
++ (NSArray *)uniformsByRemovingUniformsFrom:(NSArray *)uniforms withNamesListedInSet:(NSSet *)toRemove
+{
+    NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+        CCEffectUniform *uniform = evaluatedObject;
+        return ![toRemove containsObject:uniform.name];
+    }];
+    return [uniforms filteredArrayUsingPredicate:predicate];
 }
 
 + (CCEffectFunction *)effectFunctionByApplyingPrefix:(NSString *)prefix andUniformReplacements:(NSDictionary *)uniformReplacements toEffectFunction:(CCEffectFunction *)function
