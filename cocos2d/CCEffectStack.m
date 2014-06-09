@@ -203,14 +203,6 @@
     return [uniforms filteredArrayUsingPredicate:predicate];
 }
 
-+ (CCEffectFunction *)effectFunctionByApplyingPrefix:(NSString *)prefix andUniformReplacements:(NSDictionary *)uniformReplacements toEffectFunction:(CCEffectFunction *)function
-{
-    NSString *prefixedBody = [CCEffectStack functionBodyByApplyingUniformReplacements:uniformReplacements toFunctionBody:function.body];
-    NSString *prefixedName = [NSString stringWithFormat:@"%@%@", prefix, function.name];
-    CCEffectFunction *prefixedFunction = [[CCEffectFunction alloc] initWithName:prefixedName body:prefixedBody inputs:function.inputs returnType:function.returnType];
-    return prefixedFunction;
-}
-
 + (NSDictionary *)uniformsByApplyingPrefix:(NSString *)prefix toUniforms:(NSArray *)uniforms
 {
     NSMutableDictionary *uniformReplacements = [[NSMutableDictionary alloc] init];
@@ -221,6 +213,14 @@
         [uniformReplacements setObject:prefixedUniform forKey:uniform.name];
     }
     return [uniformReplacements copy];
+}
+
++ (CCEffectFunction *)effectFunctionByApplyingPrefix:(NSString *)prefix andUniformReplacements:(NSDictionary *)uniformReplacements toEffectFunction:(CCEffectFunction *)function
+{
+    NSString *prefixedBody = [CCEffectStack functionBodyByApplyingUniformReplacements:uniformReplacements toFunctionBody:function.body];
+    NSString *prefixedName = [NSString stringWithFormat:@"%@%@", prefix, function.name];
+    CCEffectFunction *prefixedFunction = [[CCEffectFunction alloc] initWithName:prefixedName body:prefixedBody inputs:function.inputs returnType:function.returnType];
+    return prefixedFunction;
 }
 
 + (NSString *)functionBodyByApplyingUniformReplacements:(NSDictionary *)uniformReplacements toFunctionBody:(NSString *)body
