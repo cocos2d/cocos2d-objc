@@ -129,19 +129,23 @@
     NSMutableArray* allFragUniforms = [[NSMutableArray alloc] init];
     NSMutableArray* allVertexFunctions = [[NSMutableArray alloc] init];
     NSMutableArray* allVertexUniforms = [[NSMutableArray alloc] init];
+    NSMutableArray* allVaryings = [[NSMutableArray alloc] init];
     
     int effectIndex = 0;
     for(CCEffect* effect in effects)
     {
         NSString *effectPrefix = [NSString stringWithFormat:@"%@_%d_", effect.debugName, effectIndex];
 
+        NSDictionary *varyingReplacements = [CCEffectStack varyingsByApplyingPrefix:effectPrefix toVaryings:effect.varyingVars];
+        [allVaryings addObjectsFromArray:varyingReplacements.allValues];
+        
         NSArray *fragmentUniforms = [CCEffectStack uniformsByRemovingUniformsFrom:effect.fragmentUniforms withNamesListedInSet:[CCEffect defaultEffectFragmentUniformNames]];
         NSDictionary *fragUniformReplacements = [CCEffectStack uniformsByApplyingPrefix:effectPrefix toUniforms:fragmentUniforms];
         [allFragUniforms addObjectsFromArray:fragUniformReplacements.allValues];
         
         for(CCEffectFunction *function in effect.fragmentFunctions)
         {
-            CCEffectFunction *prefixedFunction = [CCEffectStack effectFunctionByApplyingPrefix:effectPrefix andUniformReplacements:fragUniformReplacements toEffectFunction:function];
+            CCEffectFunction *prefixedFunction = [CCEffectStack effectFunctionByApplyingPrefix:effectPrefix uniformReplacements:fragUniformReplacements varyingReplacements:varyingReplacements toEffectFunction:function];
             [allFragFunctions addObject:prefixedFunction];
         }
 
@@ -151,14 +155,14 @@
         
         for(CCEffectFunction* function in effect.vertexFunctions)
         {
-            CCEffectFunction *prefixedFunction = [CCEffectStack effectFunctionByApplyingPrefix:effectPrefix andUniformReplacements:vtxUniformReplacements toEffectFunction:function];
+            CCEffectFunction *prefixedFunction = [CCEffectStack effectFunctionByApplyingPrefix:effectPrefix uniformReplacements:vtxUniformReplacements varyingReplacements:varyingReplacements toEffectFunction:function];
             [allVertexFunctions addObject:prefixedFunction];
         }
         
         effectIndex++;
     }
     
-    CCEffect* stitchedEffect = [[CCEffect alloc] initWithFragmentFunction:allFragFunctions vertexFunctions:allVertexFunctions fragmentUniforms:allFragUniforms vertextUniforms:allVertexUniforms varying:nil];
+    CCEffect* stitchedEffect = [[CCEffect alloc] initWithFragmentFunction:allFragFunctions vertexFunctions:allVertexFunctions fragmentUniforms:allFragUniforms vertextUniforms:allVertexUniforms varying:allVaryings];
     stitchedEffect.debugName = @"CCEffectStack_Stitched";
     
     // Copy the shader for this new pass from the stitched effect.
@@ -194,6 +198,18 @@
     return stitchedEffect;
 }
 
++ (NSDictionary *)varyingsByApplyingPrefix:(NSString *)prefix toVaryings:(NSArray *)varyings
+{
+    NSMutableDictionary *varyingReplacements = [[NSMutableDictionary alloc] init];
+    for(CCEffectVarying *varying in varyings)
+    {
+        NSString *prefixedName = [NSString stringWithFormat:@"%@%@", prefix, varying.name];
+        CCEffectVarying *prefixedVarying = [[CCEffectVarying alloc] initWithType:varying.type name:prefixedName];
+        [varyingReplacements setObject:prefixedVarying forKey:varying.name];
+    }
+    return [varyingReplacements copy];
+}
+
 + (NSArray *)uniformsByRemovingUniformsFrom:(NSArray *)uniforms withNamesListedInSet:(NSSet *)toRemove
 {
     NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
@@ -215,21 +231,28 @@
     return [uniformReplacements copy];
 }
 
-+ (CCEffectFunction *)effectFunctionByApplyingPrefix:(NSString *)prefix andUniformReplacements:(NSDictionary *)uniformReplacements toEffectFunction:(CCEffectFunction *)function
++ (CCEffectFunction *)effectFunctionByApplyingPrefix:(NSString *)prefix uniformReplacements:(NSDictionary *)uniformReplacements varyingReplacements:(NSDictionary *)varyingReplacements toEffectFunction:(CCEffectFunction *)function
 {
-    NSString *prefixedBody = [CCEffectStack functionBodyByApplyingUniformReplacements:uniformReplacements toFunctionBody:function.body];
+    NSString *prefixedBody = [CCEffectStack functionBodyByApplyingUniformReplacements:uniformReplacements varyingReplacements:varyingReplacements toFunctionBody:function.body];
     NSString *prefixedName = [NSString stringWithFormat:@"%@%@", prefix, function.name];
     CCEffectFunction *prefixedFunction = [[CCEffectFunction alloc] initWithName:prefixedName body:prefixedBody inputs:function.inputs returnType:function.returnType];
     return prefixedFunction;
 }
 
-+ (NSString *)functionBodyByApplyingUniformReplacements:(NSDictionary *)uniformReplacements toFunctionBody:(NSString *)body
++ (NSString *)functionBodyByApplyingUniformReplacements:(NSDictionary *)uniformReplacements varyingReplacements:(NSDictionary *)varyingReplacements toFunctionBody:(NSString *)body
 {
     for (NSString *oldUniformName in uniformReplacements)
     {
         CCEffectUniform *newUniform = uniformReplacements[oldUniformName];
         body = [body stringByReplacingOccurrencesOfString:oldUniformName withString:newUniform.name];
     }
+    
+    for (NSString *oldVaryingName in varyingReplacements)
+    {
+        CCEffectVarying *newVarying = varyingReplacements[oldVaryingName];
+        body = [body stringByReplacingOccurrencesOfString:oldVaryingName withString:newVarying.name];
+    }
+    
     return body;
 }
 
