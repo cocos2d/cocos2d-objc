@@ -35,6 +35,7 @@
 @property (nonatomic,assign) int sequenceId;
 @property (nonatomic,assign) int chainedSequenceId;
 @property (nonatomic,assign) int loops; // @todo
+@property (nonatomic,assign) float tween;
 
 // Channels
 @property (nonatomic,strong) CCBSequenceProperty* callbackChannel;

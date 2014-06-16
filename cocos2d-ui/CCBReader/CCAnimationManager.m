@@ -387,9 +387,9 @@ static NSInteger ccbAnimationManagerID = 0;
     CCActionSequence* seq = [CCActionSequence actionWithArray:actions];
     seq.tag = _animationManagerId;
     [seq startWithTarget:node];
-    if(kf0.time>0 || _loop) { // Ensure Sync
+    if(kf0.time > 0 || _loop) { // Ensure Sync
         [seq step:0];
-        [seq step:_runningSequence.time-kf0.time];
+        [seq step:_runningSequence.time-kf0.time - _runningSequence.tween];
     }
     [_currentActions addObject:seq];
 }
@@ -464,6 +464,7 @@ static NSInteger ccbAnimationManagerID = 0;
 	// Set the running scene
     _runningSequence      = [self sequenceFromSequenceId:seqId];
     _runningSequence.time = 0.0f;
+	_runningSequence.tween = tweenDuration;
 	
 	[self addSequenceCallBacks:seqId tweenDuration:tweenDuration startTime:0];
     
@@ -476,6 +477,19 @@ static NSInteger ccbAnimationManagerID = 0;
         NSDictionary* seqNodeProps = [seqs objectForKey:[NSNumber numberWithInt:seqId]];
         
         NSMutableSet* seqNodePropNames = [NSMutableSet set];
+		
+		// Reset nodes that have sequence node properties, build first keyframe action sequence.
+        for (NSString* propName in seqNodeProps) {
+            CCBSequenceProperty* seqProp = [seqNodeProps objectForKey:propName];
+            [seqNodePropNames addObject:propName];
+            
+            // Reset Node State to First KeyFrame
+            [self setKeyFrameForNode:node sequenceProperty:seqProp tweenDuration:tweenDuration keyFrame:0];
+            
+            // Build First Key Frame Sequence
+            [self runActionsForNode:node sequenceProperty:seqProp tweenDuration:tweenDuration startKeyFrame:0];
+        }
+		
         
         if(_lastSequence.sequenceId!=seqId) {
             _loop = NO;
@@ -495,17 +509,7 @@ static NSInteger ccbAnimationManagerID = 0;
             }
         }
         
-        // Reset nodes that have sequence node properties, build first keyframe action sequence.
-        for (NSString* propName in seqNodeProps) {
-            CCBSequenceProperty* seqProp = [seqNodeProps objectForKey:propName];
-            [seqNodePropNames addObject:propName];
-            
-            // Reset Node State to First KeyFrame
-            [self setKeyFrameForNode:node sequenceProperty:seqProp tweenDuration:tweenDuration keyFrame:0];
-            
-            // Build First Key Frame Sequence
-            [self runActionsForNode:node sequenceProperty:seqProp tweenDuration:tweenDuration startKeyFrame:0];
-        }
+
         
     }
     
