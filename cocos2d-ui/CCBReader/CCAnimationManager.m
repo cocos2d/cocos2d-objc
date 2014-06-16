@@ -387,9 +387,9 @@ static NSInteger ccbAnimationManagerID = 0;
     CCActionSequence* seq = [CCActionSequence actionWithArray:actions];
     seq.tag = _animationManagerId;
     [seq startWithTarget:node];
-    if(startFrame == 0 && _loop) { // Ensure Sync
+    if(kf0.time > 0 || _loop) { // Ensure Sync
         [seq step:0];
-        [seq step:_runningSequence.time-kf0.time];
+        [seq step:_runningSequence.time-kf0.time - _runningSequence.tween];
     }
     [_currentActions addObject:seq];
 }
@@ -464,6 +464,7 @@ static NSInteger ccbAnimationManagerID = 0;
 	// Set the running scene
     _runningSequence      = [self sequenceFromSequenceId:seqId];
     _runningSequence.time = 0.0f;
+	_runningSequence.tween = tweenDuration;
 	
 	[self addSequenceCallBacks:seqId tweenDuration:tweenDuration startTime:0];
     
