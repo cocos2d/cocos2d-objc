@@ -107,7 +107,7 @@
             }
         }
         
-        // Extract passes from the stacked effects and build a flat list
+        // Extract passes from the stacked effects and build a flat list of
         // passes.
         NSMutableArray *passes = [[NSMutableArray alloc] init];
         for (CCEffect *effect in stitchedEffects)
