@@ -418,9 +418,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
             useFullColor = YES;
         }
         
-        UIColor* color = _fontColor.UIColor;
-        
-        [formattedAttributedString addAttribute:NSForegroundColorAttributeName value:color range:fullRange];
+        [formattedAttributedString addAttribute:NSForegroundColorAttributeName value:(__bridge id)_fontColor.CGColor range:fullRange];
     }
     else
     {
@@ -665,22 +663,18 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     // Handle shadow
     if (hasShadow)
     {
-        UIColor* color = _shadowColor.UIColor;
-        
-        CGContextSetShadowWithColor(context, CGSizeMake(shadowOffset.x, -shadowOffset.y), shadowBlurRadius, [color CGColor]);
+        CGContextSetShadowWithColor(context, CGSizeMake(shadowOffset.x, -shadowOffset.y), shadowBlurRadius, _shadowColor.CGColor);
     }
     
     // Handle outline
     if (hasOutline)
     {
-        UIColor* color = _outlineColor.UIColor;
-        
         CGContextSetTextDrawingMode(context, kCGTextFillStroke);
         CGContextSetLineWidth(context, outlineWidth * 2);
         CGContextSetLineJoin(context, kCGLineJoinRound);
 
         NSMutableAttributedString* outlineString = [attributedString mutableCopy];
-        [outlineString addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0, outlineString.length)];
+        [outlineString addAttribute:NSForegroundColorAttributeName value:(__bridge id)_outlineColor.CGColor range:NSMakeRange(0, outlineString.length)];
         
         [self drawAttributedString:outlineString inContext:context inRect:drawArea];
 
@@ -969,9 +963,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     // Handle shadow
     if (hasShadow)
     {
-        UIColor* color = _shadowColor.UIColor;
-        
-        CGContextSetShadowWithColor(context, CGSizeMake(shadowOffset.x, -shadowOffset.y), shadowBlurRadius, [color CGColor]);
+        CGContextSetShadowWithColor(context, CGSizeMake(shadowOffset.x, -shadowOffset.y), shadowBlurRadius, _shadowColor.CGColor);
     }
     
     // Handle outline
@@ -1000,9 +992,16 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     }
     
     // Handle font color
-    UIColor* color = [UIColor colorWithRed:_fontColor.red green:_fontColor.green blue:_fontColor.blue alpha:_fontColor.alpha];
-    [color set];
-    
+
+    CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
+    const CGFloat components[] = {_fontColor.red, _fontColor.green, _fontColor.blue, _fontColor.alpha};
+    CGColorRef color = CGColorCreate(colorspace, components);
+    CGColorSpaceRelease(colorspace);
+
+    CGContextSetFillColorWithColor(context, color);
+    CGContextSetStrokeColorWithColor(context, color);
+    CGColorRelease(color);
+
     [self drawString:string withFont:font inContext:context inRect:drawArea];
 
     UIGraphicsPopContext();
