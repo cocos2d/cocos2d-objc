@@ -64,7 +64,7 @@ static float conditionContrast(float contrast);
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
         pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-        pass.shaderUniforms[@"u_contrast"] = [NSNumber numberWithFloat:weakSelf.contrast];
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_contrast"]] = [NSNumber numberWithFloat:weakSelf.contrast];
     } copy]];
     
     self.renderPasses = @[pass0];

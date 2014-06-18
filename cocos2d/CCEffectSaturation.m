@@ -103,7 +103,7 @@
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-        pass.shaderUniforms[@"u_saturation"] = [NSNumber numberWithFloat:weakSelf.saturation];
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_saturation"]] = [NSNumber numberWithFloat:weakSelf.saturation];
     } copy]];
     
     self.renderPasses = @[pass0];

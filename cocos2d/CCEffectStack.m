@@ -159,6 +159,19 @@
             [allVertexFunctions addObject:prefixedFunction];
         }
         
+        effect.uniformTranslationTable = [[NSMutableDictionary alloc] init];
+        for (NSString *key in vtxUniformReplacements)
+        {
+            CCEffectUniform *uniform = vtxUniformReplacements[key];
+            effect.uniformTranslationTable[key] = uniform.name;
+        }
+
+        for (NSString *key in fragUniformReplacements)
+        {
+            CCEffectUniform *uniform = fragUniformReplacements[key];
+            effect.uniformTranslationTable[key] = uniform.name;
+        }
+
         effectIndex++;
     }
     

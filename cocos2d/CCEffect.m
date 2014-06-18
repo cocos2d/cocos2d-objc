@@ -283,6 +283,7 @@ static NSString* vertBase =
         _vertexFunctions = [[NSMutableArray alloc] init];
         _stitchFlags = CCEffectFunctionStitchBoth;
         
+        [self buildUniformTranslationTable];
         [self buildFragmentFunctions];
         [self buildVertexFunctions];
         [self buildEffectShader];
@@ -306,6 +307,7 @@ static NSString* vertBase =
         _stitchFlags = CCEffectFunctionStitchBoth;
 
         [self buildShaderUniforms:_fragmentUniforms vertexUniforms:_vertexUniforms];
+        [self buildUniformTranslationTable];
         [self buildFragmentFunctions];
         [self buildVertexFunctions];
         [self buildEffectShader];
@@ -328,6 +330,7 @@ static NSString* vertBase =
         _stitchFlags = CCEffectFunctionStitchBoth;
 
         [self buildShaderUniforms:_fragmentUniforms vertexUniforms:_vertexUniforms];
+        [self buildUniformTranslationTable];
         [self buildVertexFunctions];
         [self buildEffectShader];
         [self buildRenderPasses];
@@ -350,6 +353,7 @@ static NSString* vertBase =
         _stitchFlags = CCEffectFunctionStitchBoth;
 
         [self buildShaderUniforms:_fragmentUniforms vertexUniforms:_vertexUniforms];
+        [self buildUniformTranslationTable];
         [self buildEffectShader];
         [self buildRenderPasses];
         
@@ -380,6 +384,21 @@ static NSString* vertBase =
     }
 }
 
+-(void)buildUniformTranslationTable
+{
+    self.uniformTranslationTable = [[NSMutableDictionary alloc] init];
+    for(CCEffectUniform* uniform in _vertexUniforms)
+    {
+        self.uniformTranslationTable[uniform.name] = uniform.name;
+    }
+
+    for(CCEffectUniform* uniform in _fragmentUniforms)
+    {
+        self.uniformTranslationTable[uniform.name] = uniform.name;
+    }
+}
+
+
 -(void)buildEffectShader
 {
     if(_shader != nil)
@@ -387,7 +406,7 @@ static NSString* vertBase =
     
     //Build varying vars
     NSMutableString* varyingVarsToInsert = [[NSMutableString alloc] init];
-    for(CCEffectUniform* varying in _varyingVars)
+    for(CCEffectVarying* varying in _varyingVars)
     {
         [varyingVarsToInsert appendFormat:@"%@\n", varying.declaration];
     }

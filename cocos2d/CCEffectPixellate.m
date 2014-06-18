@@ -108,8 +108,8 @@ static float conditionBlockSize(float blockSize);
         float uStep = self.blockSize / previousPassTexture.contentSize.width;
         float vStep = uStep * aspect;
         
-        pass.shaderUniforms[@"u_uStep"] = [NSNumber numberWithFloat:uStep];
-        pass.shaderUniforms[@"u_vStep"] = [NSNumber numberWithFloat:vStep];
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_uStep"]] = [NSNumber numberWithFloat:uStep];
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_vStep"]] = [NSNumber numberWithFloat:vStep];
     } copy]];
     
     self.renderPasses = @[pass0];

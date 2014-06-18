@@ -19,11 +19,13 @@
 @property (nonatomic) NSArray* varyingVars;
 @property (nonatomic) NSArray* renderPasses;
 @property (nonatomic) CCEffectFunctionStitchFlags stitchFlags;
+@property (nonatomic) NSMutableDictionary* uniformTranslationTable;
 
 -(void)buildEffectShader;
 -(void)buildFragmentFunctions;
 -(void)buildVertexFunctions;
 -(void)buildRenderPasses;
+-(void)buildUniformTranslationTable;
 
 + (NSSet *)defaultEffectFragmentUniformNames;
 + (NSSet *)defaultEffectVertexUniformNames;
