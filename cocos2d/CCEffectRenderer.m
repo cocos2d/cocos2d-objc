@@ -187,7 +187,7 @@
         }
         else
         {
-            renderPass.transform = GLKMatrix4MakeOrtho(0.0f, _contentSize.width, _contentSize.height, 0.0f, -1024.0f, 1024.0f);
+            renderPass.transform = GLKMatrix4MakeOrtho(0.0f, _contentSize.width, 0.0f, _contentSize.height, -1024.0f, 1024.0f);
 
             CGSize rtSize = CGSizeMake(_contentSize.width * _contentScale, _contentSize.height * _contentScale);
             rt = [self renderTargetWithSize:rtSize];
