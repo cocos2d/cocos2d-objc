@@ -66,45 +66,30 @@
 {
     if (_passesDirty)
     {
+        // Start by populating the flattened list with this stack's effects.
         NSMutableArray *flattenedEffects = [[NSMutableArray alloc] initWithArray:_effects];
-        NSMutableArray *flattenedEffectsOut = [[NSMutableArray alloc] init];
-        
-        BOOL done = YES;
-        do
+        NSUInteger index = 0;
+        while (index < flattenedEffects.count)
         {
-            done = YES;
-
             // Visit each effect in the current flattened list.
-            // TODO: Fix this logic so we don't revisit effects we've already visited.
-            // If we find a stack and insert its effects into our flattened list, we don't
-            // need to go back and look at effects before that point. They're already
-            // flattened and that doesn't change when we insert effects after them.
-            for (CCEffect *effect in flattenedEffects)
+            CCEffect *effect = flattenedEffects[index];
+            if ([effect isKindOfClass:[CCEffectStack class]])
             {
-                if ([effect isKindOfClass:[CCEffectStack class]])
-                {
-                    // If the effect is a stack, get the effects it contains and
-                    // put them in our flattened list. Since we now have more effects
-                    // to visit, we're not done.
-                    CCEffectStack *stack = (CCEffectStack *)effect;
-                    [flattenedEffectsOut addObjectsFromArray:stack.effects];
-                    done = NO;
-                }
-                else
-                {
-                    // The effect isn't a stack so just insert it into the flattened
-                    // list.
-                    [flattenedEffectsOut addObject:effect];
-                }
+                // If the current effect is a stack, get the effects it contains
+                // and put them in our flattened list. Don't increment index though
+                // because the first effect that we just inserted might also be
+                // a stack so we need to stay at this position and inspect it in
+                // the next loop iteration.
+                CCEffectStack *stack = (CCEffectStack *)effect;
+                [flattenedEffects replaceObjectsInRange:NSMakeRange(index, 1) withObjectsFromArray:stack.effects];
             }
-            
-            // Swap the input and output flattened lists.
-            NSMutableArray *tmp = flattenedEffects;
-            flattenedEffects = flattenedEffectsOut;
-            flattenedEffectsOut = tmp;
-            [flattenedEffectsOut removeAllObjects];
+            else
+            {
+                // The current effect is not a stack so just advance to the
+                // next effect.
+                index++;
+            }
         }
-        while (!done);
         
         // Make sure all the contained effects are ready for rendering
         // before we do anything else.
