@@ -408,17 +408,30 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     if (_shadowColor.alpha > 0) useFullColor = YES;
     if (_outlineColor.alpha > 0 && _outlineWidth > 0) useFullColor = YES;
     
-#ifdef __CC_PLATFORM_IOS
     
+#if defined(__CC_PLATFORM_IOS)
+    if ([formattedAttributedString hasAttribute:NSForegroundColorAttributeName]) {
+        UIColor * color = [formattedAttributedString attribute:NSForegroundColorAttributeName atIndex:0 effectiveRange:NULL];
+        [formattedAttributedString addAttribute:(id)kCTForegroundColorFromContextAttributeName value:(__bridge id)color.CGColor range:fullRange];
+    }
+    if ([formattedAttributedString hasAttribute:NSFontAttributeName]) {
+        UIFont * font = [formattedAttributedString attribute:NSFontAttributeName atIndex:0 effectiveRange:NULL];
+        CTFontRef ctFont = CTFontCreateWithName((__bridge CFStringRef)font.fontName, font.pointSize, NULL);
+        [formattedAttributedString addAttribute:(id)kCTFontAttributeName value:(__bridge id)ctFont range:fullRange];
+        CFRelease(ctFont);
+    }
+#endif
+    
+#if defined(__CC_PLATFORM_IOS) || defined(__CC_PLATFORM_ANDROID)
     // Font color
-    if (![formattedAttributedString hasAttribute:NSForegroundColorAttributeName])
+    if (![formattedAttributedString hasAttribute:(id)kCTForegroundColorFromContextAttributeName])
     {
         if (![_fontColor isEqualToColor:[CCColor whiteColor]])
         {
             useFullColor = YES;
         }
         
-        [formattedAttributedString addAttribute:NSForegroundColorAttributeName value:(__bridge id)_fontColor.CGColor range:fullRange];
+        [formattedAttributedString addAttribute:(__bridge id)kCTForegroundColorAttributeName value:(__bridge id)_fontColor.CGColor range:fullRange];
     }
     else
     {
@@ -430,7 +443,6 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     {
         CTFontRef font = CTFontCreateWithName((__bridge CFStringRef)_fontName, _fontSize, NULL);
         if (font == NULL) font = CTFontCreateWithName(CFSTR("Helvetica"), _fontSize, NULL);
-        NSLog(@"FONT: %@ %@", _fontName, font);
         [formattedAttributedString addAttribute:(NSString *)kCTFontAttributeName value:(__bridge id)font range:fullRange];
         CFRelease(font);
     }
@@ -992,7 +1004,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     }
     
     // Handle font color
-
+    
     CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
     const CGFloat components[] = {_fontColor.red, _fontColor.green, _fontColor.blue, _fontColor.alpha};
     CGColorRef color = CGColorCreate(colorspace, components);
