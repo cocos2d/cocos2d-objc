@@ -66,29 +66,69 @@
 {
     if (_passesDirty)
     {
-        // Make sure stacked effects are also ready for rendering before
-        // we do anything else.
-        for (CCEffect *effect in _effects)
+        NSMutableArray *flattenedEffects = [[NSMutableArray alloc] initWithArray:_effects];
+        NSMutableArray *flattenedEffectsOut = [[NSMutableArray alloc] init];
+        
+        BOOL done = YES;
+        do
+        {
+            done = YES;
+
+            // Visit each effect in the current flattened list.
+            // TODO: Fix this logic so we don't revisit effects we've already visited.
+            // If we find a stack and insert its effects into our flattened list, we don't
+            // need to go back and look at effects before that point. They're already
+            // flattened and that doesn't change when we insert effects after them.
+            for (CCEffect *effect in flattenedEffects)
+            {
+                if ([effect isKindOfClass:[CCEffectStack class]])
+                {
+                    // If the effect is a stack, get the effects it contains and
+                    // put them in our flattened list. Since we now have more effects
+                    // to visit, we're not done.
+                    CCEffectStack *stack = (CCEffectStack *)effect;
+                    [flattenedEffectsOut addObjectsFromArray:stack.effects];
+                    done = NO;
+                }
+                else
+                {
+                    // The effect isn't a stack so just insert it into the flattened
+                    // list.
+                    [flattenedEffectsOut addObject:effect];
+                }
+            }
+            
+            // Swap the input and output flattened lists.
+            NSMutableArray *tmp = flattenedEffects;
+            flattenedEffects = flattenedEffectsOut;
+            flattenedEffectsOut = tmp;
+            [flattenedEffectsOut removeAllObjects];
+        }
+        while (!done);
+        
+        // Make sure all the contained effects are ready for rendering
+        // before we do anything else.
+        for (CCEffect *effect in flattenedEffects)
         {
             [effect prepareForRendering];
         }
 
         NSMutableArray *stitchedEffects = [[NSMutableArray alloc] init];
-        if ((_effects.count == 1) || !_stitchingEnabled)
+        if ((flattenedEffects.count == 1) || !_stitchingEnabled)
         {
             // If there's only one effect or if stitching is disabled, just
             // use the original effects array.
-            [stitchedEffects addObjectsFromArray:_effects];
+            [stitchedEffects addObjectsFromArray:flattenedEffects];
         }
-        else if (_effects.count > 1)
+        else if (flattenedEffects.count > 1)
         {
             NSMutableArray *stitchLists = [[NSMutableArray alloc] init];
-            NSMutableArray *currentStitchList = [[NSMutableArray alloc] initWithArray:@[[_effects firstObject]]];
+            NSMutableArray *currentStitchList = [[NSMutableArray alloc] initWithArray:@[[flattenedEffects firstObject]]];
             [stitchLists addObject:currentStitchList];
 
             // Iterate over the original effects array building sets of effects
             // that can be stitched together based on their stitch flags.
-            for (CCEffect *effect in [_effects subarrayWithRange:NSMakeRange(1, _effects.count - 1)])
+            for (CCEffect *effect in [flattenedEffects subarrayWithRange:NSMakeRange(1, flattenedEffects.count - 1)])
             {
                 CCEffect *prevEffect = [currentStitchList lastObject];
                 if ([prevEffect stitchSupported:CCEffectFunctionStitchAfter] && [effect stitchSupported:CCEffectFunctionStitchBefore])

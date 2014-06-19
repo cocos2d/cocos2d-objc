@@ -10,12 +10,10 @@
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffectStack ()
-{
-    NSMutableArray *_effects;
-}
 
 @property (nonatomic) BOOL passesDirty;
 @property (nonatomic) BOOL stitchingEnabled;
+@property (nonatomic) NSMutableArray *effects;
 
 @end
 #endif
