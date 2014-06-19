@@ -187,6 +187,14 @@
     CCEffect* stitchedEffect = [[CCEffect alloc] initWithFragmentFunction:allFragFunctions vertexFunctions:allVertexFunctions fragmentUniforms:allFragUniforms vertextUniforms:allVertexUniforms varying:allVaryings];
     stitchedEffect.debugName = @"CCEffectStack_Stitched";
     
+    // Set the stitch flags of the resulting effect based on the flags of the first
+    // and last effects in the stitch list. If the "stitch before" flag is set on the
+    // first effect then set it in the resulting effect. If the "stitch after" flag is
+    // set in the last effect then set it in the resulting effect.
+    CCEffect *firstEffect = [effects firstObject];
+    CCEffect *lastEffect = [effects lastObject];
+    stitchedEffect.stitchFlags = (firstEffect.stitchFlags & CCEffectFunctionStitchBefore) | (firstEffect.stitchFlags & CCEffectFunctionStitchAfter);
+    
     // Copy the shader for this new pass from the stitched effect.
     CCEffectRenderPass *newPass = [[CCEffectRenderPass alloc] init];
     newPass.shader = stitchedEffect.shader;
