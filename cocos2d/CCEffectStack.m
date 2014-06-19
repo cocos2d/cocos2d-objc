@@ -32,6 +32,9 @@
         }
         _passesDirty = YES;
         _stitchingEnabled = YES;
+
+        self.debugName = @"CCEffectStack";
+        self.stitchFlags = 0;
     }
     return self;
 }
