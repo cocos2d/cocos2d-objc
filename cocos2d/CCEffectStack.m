@@ -82,31 +82,37 @@
         }
         else if (_effects.count > 1)
         {
-            NSMutableArray *stitchList = [[NSMutableArray alloc] init];
-            CCEffect *prevEffect = [_effects firstObject];
-            [stitchList addObject:prevEffect];
+            NSMutableArray *stitchLists = [[NSMutableArray alloc] init];
+            NSMutableArray *currentStitchList = [[NSMutableArray alloc] initWithArray:@[[_effects firstObject]]];
+            [stitchLists addObject:currentStitchList];
 
             // Iterate over the original effects array building sets of effects
             // that can be stitched together based on their stitch flags.
             for (CCEffect *effect in [_effects subarrayWithRange:NSMakeRange(1, _effects.count - 1)])
             {
+                CCEffect *prevEffect = [currentStitchList lastObject];
                 if ([prevEffect stitchSupported:CCEffectFunctionStitchAfter] && [effect stitchSupported:CCEffectFunctionStitchBefore])
                 {
-                    [stitchList addObject:effect];
+                    [currentStitchList addObject:effect];
+                }
+                else
+                {
+                    currentStitchList = [[NSMutableArray alloc] initWithArray:@[effect]];
+                    [stitchLists addObject:currentStitchList];
+                }
+            }
+
+            for (NSArray *stitchList in stitchLists)
+            {
+                NSAssert(stitchList.count > 0, @"Encountered an empty stitch list which shouldn't happen.");
+                if (stitchList.count == 1)
+                {
+                    [stitchedEffects addObject:[stitchList firstObject]];
                 }
                 else
                 {
                     [stitchedEffects addObject:[self stitchEffects:stitchList]];
-                    
-                    [stitchList removeAllObjects];
-                    [stitchList addObject:prevEffect];
                 }
-                prevEffect = effect;
-            }
-            
-            if (stitchList.count)
-            {
-                [stitchedEffects addObject:[self stitchEffects:stitchList]];
             }
         }
         
