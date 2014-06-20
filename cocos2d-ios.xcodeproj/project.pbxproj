@@ -106,6 +106,8 @@
 		926B97F51938606D00E345FB /* CCAnimationManager_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 926B97F01938606D00E345FB /* CCAnimationManager_Private.h */; };
 		926B97F61938606D00E345FB /* CCAnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 926B97F11938606D00E345FB /* CCAnimationManager.m */; };
 		926B97F71938606D00E345FB /* CCAnimationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 926B97F21938606D00E345FB /* CCAnimationManager.h */; };
+		9D1C03B81954F636007B6735 /* CCEffectRefraction.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D1C03B61954F636007B6735 /* CCEffectRefraction.h */; };
+		9D1C03B91954F636007B6735 /* CCEffectRefraction.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D1C03B71954F636007B6735 /* CCEffectRefraction.m */; };
 		9D85671D191B018200573093 /* CCEffectBrightness.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D85671B191B018200573093 /* CCEffectBrightness.h */; };
 		9D85671E191B018200573093 /* CCEffectBrightness.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D85671C191B018200573093 /* CCEffectBrightness.m */; };
 		9D856721191B019900573093 /* CCEffectContrast.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D85671F191B019900573093 /* CCEffectContrast.h */; };
@@ -428,6 +430,8 @@
 		926B97F11938606D00E345FB /* CCAnimationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCAnimationManager.m; path = "cocos2d-ui/CCBReader/CCAnimationManager.m"; sourceTree = "<group>"; };
 		926B97F21938606D00E345FB /* CCAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCAnimationManager.h; path = "cocos2d-ui/CCBReader/CCAnimationManager.h"; sourceTree = "<group>"; };
 		92FF6C7318F33A2A005B7139 /* CCActionManager_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCActionManager_Private.h; sourceTree = "<group>"; };
+		9D1C03B61954F636007B6735 /* CCEffectRefraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectRefraction.h; sourceTree = "<group>"; };
+		9D1C03B71954F636007B6735 /* CCEffectRefraction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectRefraction.m; sourceTree = "<group>"; };
 		9D85671A191AE2CC00573093 /* CCEffectStack_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCEffectStack_Private.h; sourceTree = "<group>"; };
 		9D85671B191B018200573093 /* CCEffectBrightness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectBrightness.h; sourceTree = "<group>"; };
 		9D85671C191B018200573093 /* CCEffectBrightness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectBrightness.m; sourceTree = "<group>"; };
@@ -1220,6 +1224,8 @@
 				D2B49103192146FB00C3443A /* CCEffectGaussianBlur.m */,
 				9DFB1E4E19241AEF008371EF /* CCEffectSaturation.h */,
 				9DFB1E4F19241AEF008371EF /* CCEffectSaturation.m */,
+				9D1C03B61954F636007B6735 /* CCEffectRefraction.h */,
+				9D1C03B71954F636007B6735 /* CCEffectRefraction.m */,
 				9DE90427192D630000AEB37A /* CCEffectRenderer.h */,
 				9DE90428192D630000AEB37A /* CCEffectRenderer.m */,
 			);
@@ -1396,6 +1402,7 @@
 				9D85671D191B018200573093 /* CCEffectBrightness.h in Headers */,
 				D272032B18FC89A000B100FF /* CCEffectNode.h in Headers */,
 				B77060061831A07B0043CC67 /* OALTools.h in Headers */,
+				9D1C03B81954F636007B6735 /* CCEffectRefraction.h in Headers */,
 				E0F924711224140400EF2362 /* CCTexturePVR.h in Headers */,
 				E0F92AC41224559800EF2362 /* CCNS.h in Headers */,
 				E02BB6D6126CA93A006E46A2 /* CCAnimationCache.h in Headers */,
@@ -1585,6 +1592,7 @@
 				50F2A104102094550046CA73 /* ZipUtils.m in Sources */,
 				B7705FCF1831A07B0043CC67 /* OALAction.m in Sources */,
 				B77060041831A07B0043CC67 /* OALAudioFile.m in Sources */,
+				9D1C03B91954F636007B6735 /* CCEffectRefraction.m in Sources */,
 				D272032E18FC89A000B100FF /* CCEffectStack.m in Sources */,
 				B7705FF01831A07B0043CC67 /* ALSource.m in Sources */,
 				50316AA710291280003ACFE7 /* CCRenderTexture.m in Sources */,
