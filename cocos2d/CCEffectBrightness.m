@@ -20,7 +20,7 @@ static float conditionBrightness(float brightness);
 {
     CCEffectUniform* uniformBrightness = [CCEffectUniform uniform:@"float" name:@"u_brightness" value:[NSNumber numberWithFloat:0.0f]];
     
-    if((self = [super initWithUniforms:@[uniformBrightness] vertextUniforms:nil varying:nil]))
+    if((self = [super initWithFragmentUniforms:@[uniformBrightness] vertextUniforms:nil varying:nil]))
     {
         self.debugName = @"CCEffectBrightness";
         return self;
@@ -44,29 +44,28 @@ static float conditionBrightness(float brightness);
 
 -(void)buildFragmentFunctions
 {
+    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" snippet:@"texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)"];
+
     NSString* effectBody = CC_GLSL(
-                                   vec4 inputValue = texture2D(cc_PreviousPassTexture, cc_FragTexCoord1);
                                    return vec4((inputValue.rgb + vec3(u_brightness * inputValue.a)), inputValue.a);
                                    );
     
-    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"brightnessEffect" body:effectBody returnType:@"vec4"];
+    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"brightnessEffect" body:effectBody inputs:@[input] returnType:@"vec4"];
     [self.fragmentFunctions addObject:fragmentFunction];
 }
 
 -(void)buildRenderPasses
 {
     __weak CCEffectBrightness *weakSelf = self;
-    __weak CCEffectRenderPass *weakPass = nil;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
-    weakPass = pass0;
     pass0.shader = self.shader;
     pass0.shaderUniforms = self.shaderUniforms;
-    pass0.beginBlock = ^(CCTexture *previousPassTexture){
-        weakPass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
-        weakPass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-        weakPass.shaderUniforms[@"u_brightness"] = [NSNumber numberWithFloat:weakSelf.brightness];
-    };
+    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
+        pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
+        pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_brightness"]] = [NSNumber numberWithFloat:weakSelf.brightness];
+    } copy]];
     
     self.renderPasses = @[pass0];
 }

@@ -433,6 +433,7 @@
 		9D85671C191B018200573093 /* CCEffectBrightness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectBrightness.m; sourceTree = "<group>"; };
 		9D85671F191B019900573093 /* CCEffectContrast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectContrast.h; sourceTree = "<group>"; };
 		9D856720191B019900573093 /* CCEffectContrast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectContrast.m; sourceTree = "<group>"; };
+		9D85B7DC195396E90039A9DB /* CCEffectStackProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCEffectStackProtocol.h; sourceTree = "<group>"; };
 		9DE90427192D630000AEB37A /* CCEffectRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectRenderer.h; sourceTree = "<group>"; };
 		9DE90428192D630000AEB37A /* CCEffectRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectRenderer.m; sourceTree = "<group>"; };
 		9DF3761F191C594A00C6D27A /* CCEffectPixellate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectPixellate.h; sourceTree = "<group>"; };
@@ -1206,6 +1207,7 @@
 				D272032018FC89A000B100FF /* CCEffectStack.h */,
 				9D85671A191AE2CC00573093 /* CCEffectStack_Private.h */,
 				D272032118FC89A000B100FF /* CCEffectStack.m */,
+				9D85B7DC195396E90039A9DB /* CCEffectStackProtocol.h */,
 				D272033118FC9A4700B100FF /* CCEffectGlow.h */,
 				D272033218FC9A4700B100FF /* CCEffectGlow.m */,
 				9D85671B191B018200573093 /* CCEffectBrightness.h */,

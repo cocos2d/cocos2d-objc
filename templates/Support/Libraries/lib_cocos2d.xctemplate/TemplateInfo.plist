@@ -23,6 +23,19 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>Libraries/cocos2d/CCEffectRenderer.h</key>
+                <dict>
+                        <key>Group</key>
+                        <array>
+                                <string>Libraries</string>
+                                <string>cocos2d</string>
+                                <string>Effects</string>
+                        </array>
+                        <key>Path</key>
+                        <string>Libraries/cocos2d/CCEffectRenderer.h</string>
+                        <key>TargetIndices</key>
+                        <array/>
+                </dict>
 		<key>Libraries/cocos2d/CCEffectBrightness.h</key>
 		<dict>
 			<key>Group</key>
@@ -36,6 +49,19 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>Libraries/cocos2d/CCEffectSaturation.h</key>
+                <dict>
+                        <key>Group</key>
+                        <array>
+                                <string>Libraries</string>
+                                <string>cocos2d</string>
+                                <string>Effects</string>
+                        </array>
+                        <key>Path</key>
+                        <string>Libraries/cocos2d/CCEffectSaturation.h</string>
+                        <key>TargetIndices</key>
+                        <array/>
+                </dict>
 		<key>Libraries/cocos2d/CCEffectContrast.h</key>
 		<dict>
 			<key>Group</key>
@@ -181,6 +207,21 @@
 				<integer>0</integer>
 			</array>
 		</dict>
+		<key>Libraries/cocos2d/CCEffectRenderer.m</key>
+                <dict>
+                        <key>Group</key>
+                        <array>
+                                <string>Libraries</string>
+                                <string>cocos2d</string>
+                                <string>Effects</string>
+                        </array>
+                        <key>Path</key>
+                        <string>Libraries/cocos2d/CCEffectRenderer.m</string>
+                        <key>TargetIndices</key>
+                        <array>
+                                <integer>0</integer>
+                        </array>
+                </dict>
 		<key>Libraries/cocos2d/CCEffectBrightness.m</key>
 		<dict>
 			<key>Group</key>
@@ -196,6 +237,21 @@
 				<integer>0</integer>
 			</array>
 		</dict>
+		<key>Libraries/cocos2d/CCEffectSaturation.m</key>
+                <dict>
+                        <key>Group</key>
+                        <array>
+                                <string>Libraries</string>
+                                <string>cocos2d</string>
+                                <string>Effects</string>
+                        </array>
+                        <key>Path</key>
+                        <string>Libraries/cocos2d/CCEffectSaturation.m</string>
+                        <key>TargetIndices</key>
+                        <array>
+                                <integer>0</integer>
+                        </array>
+                </dict>
 		<key>Libraries/cocos2d/CCEffectContrast.m</key>
 		<dict>
 			<key>Group</key>
@@ -2742,7 +2798,9 @@
 	<key>Nodes</key>
 	<array>
 		<string>Libraries/cocos2d/CCEffect.h</string>
+		<string>Libraries/cocos2d/CCEffectRenderer.h</string>
 		<string>Libraries/cocos2d/CCEffectBrightness.h</string>
+		<string>Libraries/cocos2d/CCEffectSaturation.h</string>
 		<string>Libraries/cocos2d/CCEffectContrast.h</string>
 		<string>Libraries/cocos2d/CCEffectColor.h</string>
 		<string>Libraries/cocos2d/CCEffectColorPulse.h</string>
@@ -2754,7 +2812,9 @@
 		<string>Libraries/cocos2d/CCEffect_Private.h</string>
 		<string>Libraries/cocos2d/CCEffectStack_Private.h</string>
 		<string>Libraries/cocos2d/CCEffect.m</string>
+		<string>Libraries/cocos2d/CCEffectRenderer.m</string>
 		<string>Libraries/cocos2d/CCEffectBrightness.m</string>
+		<string>Libraries/cocos2d/CCEffectSaturation.m</string>
 		<string>Libraries/cocos2d/CCEffectContrast.m</string>
 		<string>Libraries/cocos2d/CCEffectColor.m</string>
 		<string>Libraries/cocos2d/CCEffectColorPulse.m</string>

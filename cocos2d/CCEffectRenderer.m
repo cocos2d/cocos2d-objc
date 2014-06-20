@@ -14,6 +14,7 @@
 #import "CCTexture.h"
 #import "ccUtils.h"
 
+#import "CCSprite_Private.h"
 #import "CCTexture_Private.h"
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
@@ -122,7 +123,6 @@
 @property (nonatomic, strong) NSMutableArray *freeRenderTargets;
 @property (nonatomic, assign) GLKVector4 oldViewport;
 @property (nonatomic, assign) GLint oldFBO;
-@property (nonatomic, strong) CCTexture *outputTexture;
 
 @end
 
@@ -148,18 +148,10 @@
 
 -(void)drawSprite:(CCSprite *)sprite withEffect:(CCEffect *)effect renderer:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
-    if (effect && ![effect prepareForRendering])
-    {
-        NSAssert(0, @"Effect preparation failed.");
-        return;
-    }
-
+    [effect prepareForRendering];
     [self freeAllRenderTargets];
     
-    GLKMatrix4 projection = GLKMatrix4MakeOrtho(0.0f, _contentSize.width, _contentSize.height, 0.0f, -1024.0f, 1024.0f);
-    
     CCEffectRenderTarget *previousPassRT = nil;
-
     for(int i = 0; i < effect.renderPassesRequired; i++)
     {
         BOOL lastPass = (i == (effect.renderPassesRequired - 1));
@@ -189,29 +181,45 @@
         {
             renderPass.transform = *transform;
             
-            renderPass.beginBlock(previousPassTexture);
-            renderPass.updateBlock();
-            renderPass.endBlock();
+            [renderPass begin:previousPassTexture];
+            [renderPass update];
+            [renderPass end];
         }
         else
         {
-            renderPass.transform = projection;
-            
+            renderPass.transform = GLKMatrix4MakeOrtho(0.0f, _contentSize.width, 0.0f, _contentSize.height, -1024.0f, 1024.0f);
+
             CGSize rtSize = CGSizeMake(_contentSize.width * _contentScale, _contentSize.height * _contentScale);
             rt = [self renderTargetWithSize:rtSize];
             
-            renderPass.beginBlock(previousPassTexture);
+            [renderPass begin:previousPassTexture];
             [self bindRenderTarget:rt withRenderer:renderer];
-            renderPass.updateBlock();
+            [renderPass update];
             [self restoreRenderTargetWithRenderer:renderer];
-            renderPass.endBlock();
+            [renderPass end];
         }
         [renderer popGroupWithDebugLabel:[NSString stringWithFormat:@"CCEffectRenderer: %@: Pass %d", effect.debugName, i] globalSortOrder:0];
         
         previousPassRT = rt;
     }
     
-    _outputTexture = previousPassRT.texture;
+    if (!effect.supportsDirectRendering)
+    {
+        // If the effect doesn't support direct renderering then we need one last
+        // draw to composite the effect results into the displayable framebuffer.
+        [renderer pushGroup];
+
+        CCTexture *backup = sprite.texture;
+        sprite.texture = previousPassRT.texture;
+        [sprite enqueueTriangles:renderer transform:transform];
+        sprite.texture = backup;
+        
+        [renderer popGroupWithDebugLabel:@"CCEffectRenderer: Post-render composite pass" globalSortOrder:0];
+    }
+    else if (!effect.renderPassesRequired)
+    {
+        [sprite enqueueTriangles:renderer transform:transform];
+    }
 }
 
 - (void)bindRenderTarget:(CCEffectRenderTarget *)rt withRenderer:(CCRenderer *)renderer
