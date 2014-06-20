@@ -129,14 +129,16 @@
     [self.contentNode addChild:sprite];
 
     // The brightness and contrast effects.
-    CCEffect *brightness = [[CCEffectBrightness alloc] initWithBrightness:0.25f];
-    CCEffect *contrast = [[CCEffectContrast alloc] initWithContrast:1.0f];
+    NSArray *effects1 = @[[[CCEffectBrightness alloc] initWithBrightness:0.25f]];
+    NSArray *effects2 = @[[[CCEffectContrast alloc] initWithContrast:1.0f]];
+    NSArray *effects3 = @[[[CCEffectBrightness alloc] initWithBrightness:0.25f], [[CCEffectContrast alloc] initWithContrast:1.0f]];
+    NSArray *effects4 = @[[[CCEffectContrast alloc] initWithContrast:1.0f],[[CCEffectBrightness alloc] initWithBrightness:0.25f]];
     
     // Effect nodes that use the effects in different combinations.
-    [self.contentNode addChild:[self effectNodeWithEffects:@[brightness] appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.35, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[contrast] appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.5, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[brightness, contrast] appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.65, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[contrast, brightness] appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.8, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:effects1 appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.35, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:effects2 appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.5, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:effects3 appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.65, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:effects4 appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.8, 0.5)]];
 }
 
 -(void)setupPixellateEffectNodeTest
@@ -197,19 +199,34 @@
 //    CCEffect *pixellate = [[CCEffectPixellate alloc] initWithBlockSize:4.0f];
 //    CCEffect *blur = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:GLKVector2Make(1.0, 1.0)];
     CCEffect *saturation = [[CCEffectSaturation alloc] initWithSaturation:0.0f];
+    NSArray *effects = @[saturation];
     
+    CGSize containerSize = self.contentNode.contentSizeInPoints;
+
+    NSString *spriteImage = @"snow.png";
+    const float footprintScale = 1.1f;
+    CCSprite *sprite = [self spriteWithEffects:effects image:spriteImage atPosition:ccp(0, 0)];
+    CGSize spriteSize = sprite.contentSizeInPoints;
+    CGSize spriteFootprint = CGSizeMake(spriteSize.width * footprintScale, spriteSize.height * footprintScale);
+    CGSize allSpritesBounds = CGSizeMake(((int)(containerSize.width / spriteFootprint.width) * spriteFootprint.width),
+                                         ((int)(containerSize.height / spriteFootprint.height) * spriteFootprint.height));
+    CGPoint origin = CGPointMake((containerSize.width - allSpritesBounds.width) * 0.5f,
+                                 (containerSize.height - allSpritesBounds.height) * 0.5f);
     
-    const float yStart = 0.2f;
-    const float yStep = 0.3f;
-    for (float yPos = yStart; yPos < 1.0f; yPos += yStep)
+    int count = 0;
+    for (float yPos = origin.y; (yPos + spriteFootprint.height) < containerSize.height; yPos += spriteFootprint.height)
     {
-        const float xStart = 0.12f;
-        const float xStep = 0.15f;
-        for (float xPos = xStart; xPos < 1.0f; xPos += xStep)
+        for (float xPos = origin.x; (xPos + spriteFootprint.width) < containerSize.width; xPos += spriteFootprint.width)
         {
-            [self.contentNode addChild:[self spriteWithEffects:@[saturation] image:@"blocks.png" atPosition:ccp(xPos, yPos)]];
+            sprite = [self spriteWithEffects:effects image:spriteImage atPosition:ccp(xPos, yPos)];
+            sprite.anchorPoint = ccp(0.0f, 0.0f);
+            sprite.positionType = CCPositionTypePoints;
+            [self.contentNode addChild:sprite];
+            count++;
         }
     }
+    
+    NSLog(@"setupPerformanceTest: Laid out %d sprites.", count);
 }
 
 - (CCNode *)effectNodeWithEffects:(NSArray *)effects appliedToSpriteWithImage:(NSString *)spriteImage atPosition:(CGPoint)position
@@ -231,7 +248,7 @@
     {
         effectNode.effect = effects[0];
     }
-    else
+    else if (effects.count > 1)
     {
         CCEffectStack *stack = [[CCEffectStack alloc] initWithEffects:effects];
         effectNode.effect = stack;
@@ -252,7 +269,7 @@
     {
         sprite.effect = effects[0];
     }
-    else
+    else if (effects.count > 1)
     {
         CCEffectStack *stack = [[CCEffectStack alloc] initWithEffects:effects];
         sprite.effect = stack;

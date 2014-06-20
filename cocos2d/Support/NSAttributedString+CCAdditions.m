@@ -28,6 +28,7 @@
 #import "NSAttributedString+CCAdditions.h"
 #import "ccMacros.h"
 #import "cocos2d.h"
+#import <CoreText/CoreText.h>
 
 @implementation NSAttributedString (CCAdditions)
 
@@ -64,9 +65,14 @@
 #elif defined(__CC_PLATFORM_MAC)
             NSFont* font = value;
             font = [NSFont fontWithName:font.fontName size:font.pointSize * scale];
-#endif						
+#elif defined(__CC_PLATFORM_ANDROID)
+            CTFontRef font = CTFontCreateCopyWithAttributes(value, font.pointSize * scale, NULL, NULL);
+#endif
             [copy removeAttribute:NSFontAttributeName range:range];
-            [copy addAttribute:NSFontAttributeName value:font range:range];
+            [copy addAttribute:NSFontAttributeName value:(id)font range:range];
+#if defined(__CC_PLATFORM_ANDROID)
+            CFRelease(font);
+#endif
         }
     }];
     
@@ -99,6 +105,8 @@
             UIFont* font = value;
 #elif defined(__CC_PLATFORM_MAC)
             NSFont* font = value;
+#elif defined(__CC_PLATFORM_ANDROID)
+            CTFontRef font = value;
 #endif
             
             if (foundValue)
@@ -107,7 +115,11 @@
                 *stop = YES;
             }
             foundValue = YES;
+#if defined(__CC_PLATFORM_ANDROID)
+            fontSize = CTFontGetSize(font);
+#else
             fontSize = font.pointSize;
+#endif
             if (!NSEqualRanges(fullRange, range)) singleValue = NO;
         }
     }];
@@ -122,6 +134,8 @@
     UIFont* font = [self attribute:NSFontAttributeName atIndex:0 effectiveRange:NULL];
 #elif defined(__CC_PLATFORM_MAC)
     NSFont* font = [self attribute:NSFontAttributeName atIndex:0 effectiveRange:NULL];
+#elif defined(__CC_PLATFORM_ANDROID)
+    CTFontRef font = [self attribute:(__bridge NSString*)kCTFontAttributeName atIndex:0 effectiveRange:NULL];
 #endif
     if (!font) return NULL;
 
@@ -129,10 +143,14 @@
     UIFont* newFont = [UIFont fontWithName:font.fontName size:size];
 #elif defined(__CC_PLATFORM_MAC)
     NSFont* newFont = [NSFont fontWithName:font.fontName size:size];
+#elif defined(__CC_PLATFORM_ANDROID)
+    CTFontRef newFont = CTFontCreateCopyWithAttributes(font, size, NULL, NULL);
 #endif
     NSMutableAttributedString* copy = [self mutableCopy];
     [copy addAttribute:NSFontAttributeName value:newFont range:NSMakeRange(0, copy.length)];
-    
+#if defined(__CC_PLATFORM_ANDROID)
+    CFRelease(newFont);
+#endif
     return copy;
 }
 
