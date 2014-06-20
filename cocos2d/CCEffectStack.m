@@ -13,6 +13,8 @@
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @implementation CCEffectStack
 
+#pragma mark - API
+
 - (id)init
 {
     return [self initWithEffects:nil];
@@ -25,6 +27,11 @@
         if (effects)
         {
             _effects = [effects mutableCopy];
+            for (CCEffect *effect in _effects)
+            {
+                NSAssert(!effect.owningStack, @"Adding an effect to this stack that is already contained by another stack. That's not allowed.");
+                effect.owningStack = self;
+            }
         }
         else
         {
@@ -41,14 +48,30 @@
 
 - (void)addEffect:(CCEffect *)effect
 {
-    _passesDirty = YES;
+    NSAssert(!effect.owningStack, @"Adding an effect to this stack that is already contained by another stack. That's not allowed.");
+    effect.owningStack = self;
+
     [_effects addObject:effect];
+
+    _passesDirty = YES;
+    if (self.owningStack)
+    {
+        [self.owningStack passesDidChange:self];
+    }
 }
 
 - (void)removeEffect:(CCEffect *)effect
 {
-    _passesDirty = YES;
+    NSAssert(effect.owningStack == self, @"Trying to remove an effect that is not contained by this stack.");
+    effect.owningStack = nil;
+
     [_effects removeObject:effect];
+
+    _passesDirty = YES;
+    if (self.owningStack)
+    {
+        [self.owningStack passesDidChange:self];
+    }
 }
 
 - (NSUInteger)effectCount
@@ -61,6 +84,8 @@
     NSAssert(effectIndex < _effects.count,@"Pass index out of range.");
     return _effects[effectIndex];
 }
+
+#pragma mark - CCEffect overrides
 
 - (BOOL)prepareForRendering
 {
@@ -156,6 +181,8 @@
     }
     return YES;
 }
+
+#pragma mark - Internal
 
 -(CCEffect *)stitchEffects:(NSArray*)effects
 {
@@ -310,6 +337,21 @@
     
     return body;
 }
+
+#pragma mark - CCEffectStackProtocol
+
+- (void)passesDidChange:(id)sender
+{
+    // Mark this stack's passes as dirty and propagate the
+    // change notification up the tree (if we're not at the
+    // top).
+    _passesDirty = YES;
+    if (self.owningStack)
+    {
+        [self.owningStack passesDidChange:self];
+    }
+}
+
 
 @end
 #endif

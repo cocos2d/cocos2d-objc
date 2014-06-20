@@ -7,11 +7,12 @@
 //
 
 #import "CCEffect.h"
-
+#import "CCEffectStackProtocol.h"
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffect()
 
+@property (nonatomic, weak) id<CCEffectStackProtocol> owningStack;
 @property (nonatomic) NSMutableArray* vertexFunctions;
 @property (nonatomic) NSMutableArray* fragmentFunctions;
 @property (nonatomic) NSArray* fragmentUniforms;
