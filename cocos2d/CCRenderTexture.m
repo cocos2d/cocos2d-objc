@@ -49,14 +49,8 @@
 -(CCRenderState *)renderState
 {
 	if(_renderState == nil){
-		if(_shaderUniforms.count > 1){
-			_renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms];
-		} else {
-			// Creating a regular, cached render state here would be mildly bad.
-			// The state would prevent the render texture from being released until the cache is flushed.
-			NSDictionary *uniforms = @{CCShaderUniformMainTexture:(_texture ?: [CCTexture none])};
-			_renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:uniforms];
-		}
+		// Create an uncached renderstate so the texture can be released before the renderstate cache is flushed.
+		_renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:self.shaderUniforms];
 	}
 	
 	return _renderState;
