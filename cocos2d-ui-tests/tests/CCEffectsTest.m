@@ -129,14 +129,16 @@
     [self.contentNode addChild:sprite];
 
     // The brightness and contrast effects.
-    CCEffect *brightness = [[CCEffectBrightness alloc] initWithBrightness:0.25f];
-    CCEffect *contrast = [[CCEffectContrast alloc] initWithContrast:1.0f];
+    NSArray *effects1 = @[[[CCEffectBrightness alloc] initWithBrightness:0.25f]];
+    NSArray *effects2 = @[[[CCEffectContrast alloc] initWithContrast:1.0f]];
+    NSArray *effects3 = @[[[CCEffectBrightness alloc] initWithBrightness:0.25f], [[CCEffectContrast alloc] initWithContrast:1.0f]];
+    NSArray *effects4 = @[[[CCEffectContrast alloc] initWithContrast:1.0f],[[CCEffectBrightness alloc] initWithBrightness:0.25f]];
     
     // Effect nodes that use the effects in different combinations.
-    [self.contentNode addChild:[self effectNodeWithEffects:@[brightness] appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.35, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[contrast] appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.5, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[brightness, contrast] appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.65, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[contrast, brightness] appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.8, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:effects1 appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.35, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:effects2 appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.5, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:effects3 appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.65, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:effects4 appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.8, 0.5)]];
 }
 
 -(void)setupPixellateEffectNodeTest
