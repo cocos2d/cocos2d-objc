@@ -666,13 +666,14 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	
 	// Set the shader's uniform state.
 	__unsafe_unretained NSDictionary *shaderUniforms = renderState->_shaderUniforms;
+	__unsafe_unretained NSDictionary *globalShaderUniforms = _globalShaderUniforms;
 	if(shaderUniforms != _shaderUniforms){
 		glInsertEventMarkerEXT(0, "Uniforms");
 		
 		__unsafe_unretained NSDictionary *setters = shader->_uniformSetters;
 		for(NSString *uniformName in setters){
 			__unsafe_unretained CCUniformSetter setter = setters[uniformName];
-			setter(self, shaderUniforms[uniformName] ?: _globalShaderUniforms[uniformName]);
+			setter(self, shaderUniforms, globalShaderUniforms);
 		}
 		_shaderUniforms = shaderUniforms;
 	}

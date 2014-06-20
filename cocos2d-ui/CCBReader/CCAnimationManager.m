@@ -81,7 +81,26 @@ static NSInteger ccbAnimationManagerID = 0;
     }
 }
 
-- (void)addNode:(CCNode*)node andSequences:(NSDictionary*)seq {
+- (void)addNode:(CCNode*)node andSequences:(NSDictionary*)seq
+{
+#ifdef DEBUG
+	//Sanity check sequences;
+	
+	for (NSMutableDictionary* seqNodeProps in seq.allValues) {
+		
+		for (CCBSequenceProperty* seqProp in seqNodeProps.allValues)
+		{
+			if(seqProp.keyframes.count > 0)
+			{
+				CCBKeyframe * keyFrameZero = seqProp.keyframes[0];
+				NSAssert(keyFrameZero.time == 0.0f, @"The first keyframe should always be at time Zero.");
+			}
+			
+		}
+	}
+	
+#endif
+	
     NSValue* nodePtr = [NSValue valueWithPointer:(__bridge const void *)(node)];
     [_nodeSequences setObject:seq forKey:nodePtr];
 }
@@ -368,9 +387,9 @@ static NSInteger ccbAnimationManagerID = 0;
     CCActionSequence* seq = [CCActionSequence actionWithArray:actions];
     seq.tag = _animationManagerId;
     [seq startWithTarget:node];
-    if(kf0.time>0 || _loop) { // Ensure Sync
+    if(kf0.time > 0 || _loop) { // Ensure Sync
         [seq step:0];
-        [seq step:_runningSequence.time-kf0.time];
+        [seq step:_runningSequence.time-kf0.time - _runningSequence.tween];
     }
     [_currentActions addObject:seq];
 }
@@ -441,6 +460,13 @@ static NSInteger ccbAnimationManagerID = 0;
     
     _paused = YES;
     [self clearAllActions];
+	
+	// Set the running scene
+    _runningSequence      = [self sequenceFromSequenceId:seqId];
+    _runningSequence.time = 0.0f;
+	_runningSequence.tween = tweenDuration;
+	
+	[self addSequenceCallBacks:seqId tweenDuration:tweenDuration startTime:0];
     
     // Contains all Sequence Propertys / Keyframe
     for (NSValue* nodePtr in _nodeSequences) {
@@ -451,6 +477,19 @@ static NSInteger ccbAnimationManagerID = 0;
         NSDictionary* seqNodeProps = [seqs objectForKey:[NSNumber numberWithInt:seqId]];
         
         NSMutableSet* seqNodePropNames = [NSMutableSet set];
+		
+		// Reset nodes that have sequence node properties, build first keyframe action sequence.
+        for (NSString* propName in seqNodeProps) {
+            CCBSequenceProperty* seqProp = [seqNodeProps objectForKey:propName];
+            [seqNodePropNames addObject:propName];
+            
+            // Reset Node State to First KeyFrame
+            [self setKeyFrameForNode:node sequenceProperty:seqProp tweenDuration:tweenDuration keyFrame:0];
+            
+            // Build First Key Frame Sequence
+            [self runActionsForNode:node sequenceProperty:seqProp tweenDuration:tweenDuration startKeyFrame:0];
+        }
+		
         
         if(_lastSequence.sequenceId!=seqId) {
             _loop = NO;
@@ -470,25 +509,9 @@ static NSInteger ccbAnimationManagerID = 0;
             }
         }
         
-        // Reset nodes that have sequence node properties, build first keyframe action sequence.
-        for (NSString* propName in seqNodeProps) {
-            CCBSequenceProperty* seqProp = [seqNodeProps objectForKey:propName];
-            [seqNodePropNames addObject:propName];
-            
-            // Reset Node State to First KeyFrame
-            [self setKeyFrameForNode:node sequenceProperty:seqProp tweenDuration:tweenDuration keyFrame:0];
-            
-            // Build First Key Frame Sequence
-            [self runActionsForNode:node sequenceProperty:seqProp tweenDuration:tweenDuration startKeyFrame:0];
-        }
+
         
     }
-    
-    [self addSequenceCallBacks:seqId tweenDuration:tweenDuration startTime:0];
-    
-    // Set the running scene
-    _runningSequence      = [self sequenceFromSequenceId:seqId];
-    _runningSequence.time = 0.0f;
     
     _paused = NO;
 }
@@ -545,6 +568,8 @@ static NSInteger ccbAnimationManagerID = 0;
         _lastSequence              = _runningSequence;
     }
     
+	float overhang = _runningSequence.time - _runningSequence.duration;
+	
     // Play next sequence
     int nextSeqId = _runningSequence.chainedSequenceId;
     
@@ -562,6 +587,8 @@ static NSInteger ccbAnimationManagerID = 0;
     // Run next sequence if callbacks did not start a new sequence
     if (_runningSequence == NULL && nextSeqId != -1) {
         [self runAnimationsForSequenceId:nextSeqId tweenDuration:0];
+		[self updateInternal:0];		//Update initially one frame.
+		[self updateInternal:overhang]; //More frame forward.
     }
 }
 
@@ -856,6 +883,8 @@ static NSInteger ccbAnimationManagerID = 0;
         return;
     }
     
+    _runningSequence.time+=step;
+	
     if(_currentActions.count==0) return;
     
     CCAction *action;
@@ -869,7 +898,7 @@ static NSInteger ccbAnimationManagerID = 0;
         }
     }
     
-    _runningSequence.time+=step;
+
 }
 
 - (void)clearAllActions {

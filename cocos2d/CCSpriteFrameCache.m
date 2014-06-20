@@ -44,33 +44,9 @@
 #import "CCTexture_Private.h"
 
 
-@implementation CCSpriteFrame(Proxy)
-
-- (BOOL)hasProxy
-{
-    @synchronized(self)
-    {
-        // NSLog(@"hasProxy: %p", self);
-        return(_proxy != nil);
-    }
-}
-
-- (CCProxy *)proxy
-{
-    @synchronized(self)
-    {
-        __strong CCProxy *proxy = _proxy;
-
-        if (_proxy == nil)
-        {
-            proxy = [[CCProxy alloc] initWithTarget:self];
-            _proxy = proxy;
-        }
-    
-        return(proxy);
-    }
-}
-
+@interface CCSpriteFrame(Proxy)
+- (BOOL)hasProxy;
+- (CCProxy *)proxy;
 @end
 
 

@@ -27,6 +27,9 @@
 @interface CCDirector () {
 	@protected
 	GLKMatrix4 _projectionMatrix;
+	__weak id<CCDirectorDelegate> _delegate;
+	__weak NSThread *_runningThread;
+
 }
 
 /* Whether or not the replaced scene will receive the cleanup message.
