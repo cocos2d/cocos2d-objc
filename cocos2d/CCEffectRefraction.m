@@ -8,7 +8,6 @@
 
 #import "CCEffectRefraction.h"
 
-#import "CCEffectBrightness.h"
 #import "CCEffect_Private.h"
 #import "CCRenderer.h"
 #import "CCTexture.h"
