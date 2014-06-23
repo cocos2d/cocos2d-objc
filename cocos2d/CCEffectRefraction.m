@@ -8,6 +8,7 @@
 
 #import "CCEffectRefraction.h"
 
+#import "CCDirector.h"
 #import "CCEffect_Private.h"
 #import "CCRenderer.h"
 #import "CCTexture.h"
@@ -17,13 +18,17 @@
 
 -(id)init
 {
-    CCEffectUniform* uniformRefraction = [CCEffectUniform uniform:@"float" name:@"u_refraction" value:[NSNumber numberWithFloat:1.0f]];
-    CCEffectUniform* uniformEnvMap = [CCEffectUniform uniform:@"sampler2D" name:@"u_envMap" value:(NSValue*)[CCTexture none]];
-    CCEffectUniform* uniformNormalMap = [CCEffectUniform uniform:@"sampler2D" name:@"u_normalMap" value:(NSValue*)[CCTexture none]];
-    CCEffectUniform* uniformTangent = [CCEffectUniform uniform:@"vec2" name:@"u_tangent" value:[NSValue valueWithGLKVector2:GLKVector2Make(1.0f, 0.0f)]];
-    CCEffectUniform* uniformBinormal = [CCEffectUniform uniform:@"vec2" name:@"u_binormal" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 1.0f)]];
+    NSArray *uniforms = @[
+                          [CCEffectUniform uniform:@"float" name:@"u_refraction" value:[NSNumber numberWithFloat:1.0f]],
+                          [CCEffectUniform uniform:@"sampler2D" name:@"u_envMap" value:(NSValue*)[CCTexture none]],
+                          [CCEffectUniform uniform:@"sampler2D" name:@"u_normalMap" value:(NSValue*)[CCTexture none]],
+                          [CCEffectUniform uniform:@"vec2" name:@"u_tangent" value:[NSValue valueWithGLKVector2:GLKVector2Make(1.0f, 0.0f)]],
+                          [CCEffectUniform uniform:@"vec2" name:@"u_binormal" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 1.0f)]],
+                          [CCEffectUniform uniform:@"vec2" name:@"u_texCoordOffset" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]],
+                          [CCEffectUniform uniform:@"vec2" name:@"u_texCoordScale" value:[NSValue valueWithGLKVector2:GLKVector2Make(1.0f, 1.0f)]],
+                          ];
     
-    if((self = [super initWithFragmentUniforms:@[uniformRefraction, uniformEnvMap, uniformNormalMap, uniformTangent, uniformBinormal] vertextUniforms:nil varying:nil]))
+    if((self = [super initWithFragmentUniforms:uniforms vertextUniforms:nil varying:nil]))
     {
         self.debugName = @"CCEffectRefraction";
         return self;
@@ -31,20 +36,20 @@
     return self;
 }
 
--(id)initWithRefraction:(float)refraction environmentMap:(CCTexture *)envMap normalMap:(CCTexture *)normalMap;
+-(id)initWithRefraction:(float)refraction environment:(CCSprite *)environment normalMap:(CCTexture *)normalMap;
 {
     if((self = [self init]))
     {
         _refraction = refraction;
-        _envMap = envMap;
+        _environment = environment;
         _normalMap = normalMap;
     }
     return self;
 }
 
-+(id)effectWithRefraction:(float)refraction environmentMap:(CCTexture *)envMap normalMap:(CCTexture *)normalMap;
++(id)effectWithRefraction:(float)refraction environment:(CCSprite *)environment normalMap:(CCTexture *)normalMap;
 {
-    return [[self alloc] initWithRefraction:refraction environmentMap:envMap normalMap:normalMap];
+    return [[self alloc] initWithRefraction:refraction environment:environment normalMap:normalMap];
 }
 
 -(void)buildFragmentFunctions
@@ -54,9 +59,7 @@
     NSString* effectBody = CC_GLSL(
                                    // Compute screen space texture coordinates from the screen space
                                    // fragment position.
-                                   highp vec2 texCoordOffset = vec2(-88.0, 44.0);
-                                   highp vec2 texCoordScale = vec2(1.0 / 960.0, 1.0 / 640.0);
-                                   vec2 screenTexCoords = (gl_FragCoord.xy + texCoordOffset) * texCoordScale;
+                                   vec2 screenTexCoords = (gl_FragCoord.xy + u_texCoordOffset) * u_texCoordScale;
 
                                    // Index the normal map and expand the color value from [0..1] to [-1..1]
                                    vec4 tangentSpaceNormal = texture2D(u_normalMap, cc_FragTexCoord1) * 2.0 - 1.0;
@@ -69,7 +72,6 @@
                                    vec2 refractTexCoords = screenTexCoords + normal.xy * u_refraction;
                                    
                                    return texture2D(u_envMap, refractTexCoords);
-//                                   return vec4(refractTexCoords, 0.0, 1.0);
                                    );
     
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"refractionEffect" body:effectBody inputs:@[input] returnType:@"vec4"];
@@ -87,7 +89,7 @@
         pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
         pass.shaderUniforms[self.uniformTranslationTable[@"u_refraction"]] = [NSNumber numberWithFloat:weakSelf.refraction];
-        pass.shaderUniforms[self.uniformTranslationTable[@"u_envMap"]] = weakSelf.envMap;
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_envMap"]] = weakSelf.environment.texture;
         pass.shaderUniforms[self.uniformTranslationTable[@"u_normalMap"]] = weakSelf.normalMap;
         
         GLKVector4 tangent = GLKVector4Make(1.0f, 0.0f, 0.0f, 0.0f);
@@ -99,6 +101,13 @@
         
         pass.shaderUniforms[self.uniformTranslationTable[@"u_tangent"]] = [NSValue valueWithGLKVector2:GLKVector2Make(tangent.x, tangent.y)];
         pass.shaderUniforms[self.uniformTranslationTable[@"u_binormal"]] = [NSValue valueWithGLKVector2:GLKVector2Make(binormal.x, binormal.y)];
+        
+        CGAffineTransform envTransform = weakSelf.environment.worldToNodeTransform;
+        CGRect textureRect = weakSelf.environment.textureRect;
+        CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
+
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_texCoordOffset"]] = [NSValue valueWithGLKVector2:GLKVector2Make(scale * envTransform.tx / envTransform.a, scale * envTransform.ty / envTransform.d)];
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_texCoordScale"]] = [NSValue valueWithGLKVector2:GLKVector2Make(envTransform.a / (scale * textureRect.size.width), envTransform.d / (scale * textureRect.size.height))];
         
     } copy]];
     
