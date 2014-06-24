@@ -13,6 +13,8 @@
 #import "CCRenderer.h"
 #import "CCTexture.h"
 
+static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
+
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @implementation CCEffectRefraction
 
@@ -96,19 +98,17 @@
         CGAffineTransform screenToWorld = CGAffineTransformMake(1.0f / scale, 0.0f, 0.0f, 1.0f / scale, 0.0f, 0.0f);
         CGAffineTransform worldToEnvNode = weakSelf.environment.worldToNodeTransform;
         CGAffineTransform envNodeToEnvTexture = weakSelf.environment.nodeToTextureTransform;
-        CGAffineTransform screenToEnvNode = CGAffineTransformConcat(screenToWorld, worldToEnvNode);
-        CGAffineTransform screenToEnvTexture = CGAffineTransformConcat(screenToEnvNode, envNodeToEnvTexture);
+        CGAffineTransform worldToEnvTexture = CGAffineTransformConcat(worldToEnvNode, envNodeToEnvTexture);
+        CGAffineTransform screenToEnvTexture = CGAffineTransformConcat(screenToWorld, worldToEnvTexture);
         
-        GLKMatrix4 screenToEnvTextureMat = GLKMatrix4Make( screenToEnvTexture.a,  screenToEnvTexture.b, 0.0f, 0.0f,
-                                                           screenToEnvTexture.c,  screenToEnvTexture.d, 0.0f, 0.0f,
-                                                                           0.0f,                  0.0f, 1.0f, 0.0f,
-                                                          screenToEnvTexture.tx, screenToEnvTexture.ty, 0.0f, 1.0f);
-        
-        pass.shaderUniforms[self.uniformTranslationTable[@"u_screenToEnv"]] = [NSValue valueWithGLKMatrix4:screenToEnvTextureMat];
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_screenToEnv"]] = [NSValue valueWithGLKMatrix4:GLKMatrix4FromAffineTransform(screenToEnvTexture)];
         
         // Setup the tangent and binormal vectors for the normal map.
+        GLKMatrix4 worldToEnvTextureMat = GLKMatrix4FromAffineTransform(worldToEnvTexture);
+        GLKMatrix4 effectToEnvTextureMat = GLKMatrix4Multiply(pass.transform, worldToEnvTextureMat);
+        
         GLKVector4 tangent = GLKVector4Make(1.0f, 0.0f, 0.0f, 0.0f);
-        tangent = GLKMatrix4MultiplyVector4(pass.transform, tangent);
+        tangent = GLKMatrix4MultiplyVector4(effectToEnvTextureMat, tangent);
         tangent = GLKVector4Normalize(tangent);
         
         GLKVector4 normal = GLKVector4Make(0.0f, 0.0f, 1.0f, 1.0f);
@@ -123,5 +123,13 @@
 }
 
 @end
+
+GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at)
+{
+    return GLKMatrix4Make(at.a,  at.b,  0.0f,  0.0f,
+                          at.c,  at.d,  0.0f,  0.0f,
+                          0.0f,  0.0f,  1.0f,  0.0f,
+                          at.tx, at.ty, 0.0f,  1.0f);
+}
 
 #endif
