@@ -91,6 +91,21 @@
         pass.shaderUniforms[self.uniformTranslationTable[@"u_envMap"]] = weakSelf.environment.texture;
         pass.shaderUniforms[self.uniformTranslationTable[@"u_normalMap"]] = weakSelf.normalMap;
         
+        // Setup the screen space to environment space matrix.
+        CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
+        CGAffineTransform screenToWorld = CGAffineTransformMake(1.0f / scale, 0.0f, 0.0f, 1.0f / scale, 0.0f, 0.0f);
+        CGAffineTransform worldToEnvNode = weakSelf.environment.worldToNodeTransform;
+        CGAffineTransform envNodeToEnvTexture = weakSelf.environment.nodeToTextureTransform;
+        CGAffineTransform screenToEnvNode = CGAffineTransformConcat(screenToWorld, worldToEnvNode);
+        CGAffineTransform screenToEnvTexture = CGAffineTransformConcat(screenToEnvNode, envNodeToEnvTexture);
+        
+        GLKMatrix4 screenToEnvTextureMat = GLKMatrix4Make( screenToEnvTexture.a,  screenToEnvTexture.b, 0.0f, 0.0f,
+                                                           screenToEnvTexture.c,  screenToEnvTexture.d, 0.0f, 0.0f,
+                                                                           0.0f,                  0.0f, 1.0f, 0.0f,
+                                                          screenToEnvTexture.tx, screenToEnvTexture.ty, 0.0f, 1.0f);
+        
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_screenToEnv"]] = [NSValue valueWithGLKMatrix4:screenToEnvTextureMat];
+        
         // Setup the tangent and binormal vectors for the normal map.
         GLKVector4 tangent = GLKVector4Make(1.0f, 0.0f, 0.0f, 0.0f);
         tangent = GLKMatrix4MultiplyVector4(pass.transform, tangent);
@@ -101,21 +116,6 @@
         
         pass.shaderUniforms[self.uniformTranslationTable[@"u_tangent"]] = [NSValue valueWithGLKVector2:GLKVector2Make(tangent.x, tangent.y)];
         pass.shaderUniforms[self.uniformTranslationTable[@"u_binormal"]] = [NSValue valueWithGLKVector2:GLKVector2Make(binormal.x, binormal.y)];
-        
-        // Setup the screen space to environment space matrix.
-        CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
-        CGAffineTransform screenToWorld = CGAffineTransformMake(1.0f / scale, 0.0f, 0.0f, 1.0f / scale, 0.0f, 0.0f);
-        CGAffineTransform envWorldToNode = weakSelf.environment.worldToNodeTransform;
-        CGAffineTransform envNodeToTexture = weakSelf.environment.nodeToTextureTransform;
-        CGAffineTransform screenToEnvNode = CGAffineTransformConcat(screenToWorld, envWorldToNode);
-        CGAffineTransform screenToEnvTexture = CGAffineTransformConcat(screenToEnvNode, envNodeToTexture);
-        
-        GLKMatrix4 xformMat = GLKMatrix4Make( screenToEnvTexture.a,  screenToEnvTexture.b, 0.0f, 0.0f,
-                                              screenToEnvTexture.c,  screenToEnvTexture.d, 0.0f, 0.0f,
-                                                              0.0f,                  0.0f, 1.0f, 0.0f,
-                                             screenToEnvTexture.tx, screenToEnvTexture.ty, 0.0f, 1.0f);
-        
-        pass.shaderUniforms[self.uniformTranslationTable[@"u_screenToEnv"]] = [NSValue valueWithGLKMatrix4:xformMat];
 
     } copy]];
     
