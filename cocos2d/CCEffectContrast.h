@@ -11,10 +11,10 @@
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffectContrast : CCEffect
 
+@property (nonatomic) float contrast;
+
 -(id)initWithContrast:(float)contrast;
 +(id)effectWithContrast:(float)contrast;
-
-@property (nonatomic) float contrast;
 
 @end
 #endif

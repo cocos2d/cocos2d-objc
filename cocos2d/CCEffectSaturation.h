@@ -11,10 +11,10 @@
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffectSaturation : CCEffect
 
+@property (nonatomic) float saturation;
+
 -(id)initWithSaturation:(float)saturation;
 +(id)effectWithSaturation:(float)saturation;
-
-@property (nonatomic) float saturation;
 
 @end
 #endif
