@@ -60,7 +60,7 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
     NSString* effectBody = CC_GLSL(
                                    // Compute environment space texture coordinates from the screen space
                                    // fragment position.
-                                   vec4 envSpaceTexCoords = u_screenToEnv * vec4(gl_FragCoord.xy, 0, 1);
+                                   vec4 envSpaceTexCoords = u_screenToEnv * gl_FragCoord;
 
                                    // Index the normal map and expand the color value from [0..1] to [-1..1]
                                    vec4 tangentSpaceNormal = texture2D(u_normalMap, cc_FragTexCoord1) * 2.0 - 1.0;
