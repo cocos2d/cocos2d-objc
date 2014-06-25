@@ -66,6 +66,7 @@
 
 @end
 
+
 @implementation CCRenderTextureFBO
 
 - (id)initWithFBO:(GLuint)fbo depthRenderBuffer:(GLuint)depthBuffer
@@ -79,6 +80,7 @@
 }
 
 @end
+
 
 @implementation CCRenderTexture
 
@@ -373,13 +375,11 @@
 	if(!_visible) return;
 	
 	if(_autoDraw){
-        
-        if(_contentSizeChanged)
-        {
-            [self destroy];
-            _contentSizeChanged = NO;
-        }
-        
+		if(_contentSizeChanged){
+			[self destroy];
+			_contentSizeChanged = NO;
+		}
+		
 		[self begin];
 		NSAssert(_renderer == renderer, @"CCRenderTexture error!");
 		
