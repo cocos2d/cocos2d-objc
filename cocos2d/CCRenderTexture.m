@@ -131,9 +131,6 @@
 
 		// Diabled by default.
 		_autoDraw = NO;
-		
-		// add sprite for backward compatibility
-		[self addChild:_sprite];
 	}
 	return self;
 }
@@ -392,16 +389,27 @@
 		[self sortAllChildren];
 		
 		for(CCNode *child in _children){
-			if( child != _sprite) [child visit:renderer parentTransform:&_projection];
+			[child visit:renderer parentTransform:&_projection];
 		}
 		
 		[self end];
+		
+		GLKMatrix4 transform = [self transform:parentTransform];
+		[self draw:renderer transform:&transform];
+	} else {
+		// Render normally, v3.0 and earlier skipped this.
+		[super visit:renderer parentTransform:parentTransform];
 	}
 	
-	GLKMatrix4 transform = [self transform:parentTransform];
-	[_sprite visit:renderer parentTransform:&transform];
-	
 	_orderOfArrival = 0;
+}
+
+-(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
+{
+	NSAssert(_sprite.zOrder == 0, @"Changing the sprite's zOrder is not supported.");
+	
+	// Force the sprite to render itself.
+	[_sprite visit:renderer parentTransform:transform];
 }
 
 #pragma mark RenderTexture - Save Image
