@@ -184,12 +184,12 @@
  *  This action allows a custom function to be called.
  */
 @interface CCActionCallFunc : CCActionInstant <NSCopying> {
-	id _targetCallback;
+	__weak id _targetCallback;
 	SEL _selector;
 }
 
 /** Target function that will be called. */
-@property (nonatomic, readwrite, strong) id targetCallback;
+@property (nonatomic, readwrite, weak) id targetCallback;
 
 
 /// -----------------------------------------------------------------------
