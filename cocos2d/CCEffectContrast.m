@@ -14,6 +14,14 @@
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 static float conditionContrast(float contrast);
 
+
+@interface CCEffectContrast ()
+
+@property (nonatomic) float conditionedContrast;
+
+@end
+
+
 @implementation CCEffectContrast
 
 -(id)init
@@ -32,7 +40,7 @@ static float conditionContrast(float contrast);
 {
     if((self = [self init]))
     {
-        _contrast = conditionContrast(contrast);
+        _conditionedContrast = conditionContrast(contrast);
     }
     return self;
 }
@@ -64,7 +72,7 @@ static float conditionContrast(float contrast);
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
         pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-        pass.shaderUniforms[self.uniformTranslationTable[@"u_contrast"]] = [NSNumber numberWithFloat:weakSelf.contrast];
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_contrast"]] = [NSNumber numberWithFloat:weakSelf.conditionedContrast];
     } copy]];
     
     self.renderPasses = @[pass0];
@@ -72,13 +80,15 @@ static float conditionContrast(float contrast);
 
 -(void)setContrast:(float)contrast
 {
-    _contrast = conditionContrast(contrast);
+    _conditionedContrast = conditionContrast(contrast);
 }
 
 @end
 
 float conditionContrast(float contrast)
 {
+    NSCAssert((contrast >= -1.0) && (contrast <= 1.0), @"Supplied contrast out of range [-1..1].");
+
     // Yes, this value is somewhat magical. It was arrived at experimentally by comparing
     // our results at min and max contrast (-1 and 1 respectively) with the results from
     // various image editing applications at their own min and max contrast values.

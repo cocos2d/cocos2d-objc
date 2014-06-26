@@ -14,6 +14,13 @@
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 static float conditionBrightness(float brightness);
 
+@interface CCEffectBrightness ()
+
+@property (nonatomic) float conditionedBrightness;
+
+@end
+
+
 @implementation CCEffectBrightness
 
 -(id)init
@@ -32,7 +39,7 @@ static float conditionBrightness(float brightness);
 {
     if((self = [self init]))
     {
-        _brightness = conditionBrightness(brightness);
+        _conditionedBrightness = conditionBrightness(brightness);
     }    
     return self;
 }
@@ -64,7 +71,7 @@ static float conditionBrightness(float brightness);
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
         pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-        pass.shaderUniforms[self.uniformTranslationTable[@"u_brightness"]] = [NSNumber numberWithFloat:weakSelf.brightness];
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_brightness"]] = [NSNumber numberWithFloat:weakSelf.conditionedBrightness];
     } copy]];
     
     self.renderPasses = @[pass0];
@@ -72,13 +79,14 @@ static float conditionBrightness(float brightness);
 
 -(void)setBrightness:(float)brightness
 {
-    _brightness = conditionBrightness(brightness);
+    _conditionedBrightness = conditionBrightness(brightness);
 }
 
 @end
 
 float conditionBrightness(float brightness)
 {
+    NSCAssert((brightness >= -1.0) && (brightness <= 1.0), @"Supplied brightness out of range [-1..1].");
     return clampf(brightness, -1.0f, 1.0f);
 }
 
