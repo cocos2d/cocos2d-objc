@@ -46,8 +46,17 @@
 #import "CCTexture.h"
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
-@implementation CCEffectSaturation
+static float conditionSaturation(float saturation);
 
+
+@interface CCEffectSaturation ()
+
+@property (nonatomic) float conditionedSaturation;
+
+@end
+
+
+@implementation CCEffectSaturation
 
 -(id)init
 {
@@ -65,7 +74,7 @@
 {
     if((self = [self init]))
     {
-        _saturation = saturation;
+        _conditionedSaturation = conditionSaturation(saturation);
     }
     return self;
 }
@@ -103,11 +112,29 @@
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-        pass.shaderUniforms[self.uniformTranslationTable[@"u_saturation"]] = [NSNumber numberWithFloat:weakSelf.saturation];
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_saturation"]] = [NSNumber numberWithFloat:weakSelf.conditionedSaturation];
     } copy]];
     
     self.renderPasses = @[pass0];
 }
 
+-(void)setSaturation:(float)saturation
+{
+    _conditionedSaturation = conditionSaturation(saturation);
+}
 @end
+
+
+float conditionSaturation(float saturation)
+{
+    NSCAssert((saturation >= -1.0) && (saturation <= 1.0), @"Supplied saturation out of range [-1..1].");
+    
+    // Map from [-1..1] to [0..2]. The input values are photoshop equivalents
+    // (-1 is complete desaturation, 0 is no change, and 1 is saturation boost)
+    // while the output values are fed into the GLSL mix mix(a, b, t) function
+    // where t=0 yields a and t=1 yields b. In our case a is the grayscale value
+    // and b is the unmodified color value.
+    float clampedSaturation = clampf(saturation, -1.0f, 1.0f);
+    return clampedSaturation += 1.0f;
+}
 #endif
