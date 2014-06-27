@@ -201,7 +201,7 @@ static NSInteger ccbAnimationManagerID = 0;
     } else if ([name isEqualToString:@"rotationalSkewY"]) {
         return [CCActionRotateTo actionWithDuration:duration angleY:[kf1.value floatValue]];
     } else if ([name isEqualToString:@"opacity"]) {
-        return [CCActionFadeTo actionWithDuration:duration opacity:[kf1.value intValue]];
+        return [CCActionFadeTo actionWithDuration:duration opacity:[kf1.value floatValue]];
     } else if ([name isEqualToString:@"color"]) {
         CCColor* color = kf1.value;
         return [CCActionTintTo actionWithDuration:duration color:color];
