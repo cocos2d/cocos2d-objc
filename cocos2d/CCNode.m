@@ -1108,6 +1108,10 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 		[[CCDirector sharedDirector].actionManager migrateActions:self from:[CCDirector sharedDirector].actionManagerFixed];
 		[self setActionManager:[CCDirector sharedDirector].actionManager];
 	}
+
+    if(_animationManager) {
+        [_animationManager performSelector:@selector(onEnter)];
+    }
 	
 	[self wasRunning:wasRunning];
 }
