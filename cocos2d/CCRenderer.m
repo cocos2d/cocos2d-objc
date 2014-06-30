@@ -231,18 +231,6 @@ static NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 
 
 //MARK: Render States.
-@interface CCRenderState() {
-	@public
-	CCBlendMode *_blendMode;
-	CCShader *_shader;
-	NSDictionary *_shaderUniforms;
-}
-
--(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms;
-
-@end
-
-
 @interface CCRenderStateCache : CCCache
 @end
 
@@ -256,7 +244,7 @@ static NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 
 -(id)createPublicObjectForSharedData:(CCRenderState *)renderState
 {
-	return [[CCRenderState alloc] initWithBlendMode:renderState->_blendMode shader:renderState->_shader shaderUniforms:renderState->_shaderUniforms];
+	return [renderState copy];
 }
 
 // Nothing special
@@ -275,6 +263,11 @@ static NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 
 @implementation CCRenderState {
 	CCTexture *_mainTexture;
+	
+	@public
+	CCBlendMode *_blendMode;
+	CCShader *_shader;
+	NSDictionary *_shaderUniforms;
 }
 
 CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
@@ -312,10 +305,11 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 
 -(id)copyWithZone:(NSZone *)zone
 {
-	if([_shaderUniforms isKindOfClass:[NSMutableDictionary class]]){
-		return [[CCRenderState allocWithZone:zone] initWithBlendMode:_blendMode shader:_shader shaderUniforms:[_shaderUniforms copy]];
-	} else {
+	NSDictionary *shaderUniforms = [_shaderUniforms copy];
+	if(shaderUniforms == _shaderUniforms){
 		return self;
+	} else {
+		return [[CCRenderState allocWithZone:zone] initWithBlendMode:_blendMode shader:_shader shaderUniforms:shaderUniforms];
 	}
 }
 

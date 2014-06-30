@@ -329,6 +329,16 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     _isTextureDirty = YES;
 }
 
+-(CCRenderState *)renderState
+{
+	if(_renderState == nil){
+		// Create an uncached renderstate so the texture can be released before the renderstate cache is flushed.
+		_renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:self.shaderUniforms];
+	}
+	
+	return _renderState;
+}
+
 
 #pragma mark -
 #pragma mark Render Font Mac & iOS 6

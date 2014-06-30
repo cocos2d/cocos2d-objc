@@ -1736,13 +1736,32 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 
 #pragma mark - RenderState Methods
 
+// The default dictionary is either nil or only contains the main texture.
+static inline BOOL
+CheckDefaultUniforms(NSDictionary *uniforms, CCTexture *texture)
+{
+	if(uniforms == nil){
+		return YES;
+	} else {
+		// Check that the uniforms has only one key for the main texture.
+		return (uniforms.count == 1 && uniforms[CCShaderUniformMainTexture] == texture);
+	}
+}
+
 -(CCRenderState *)renderState
 {
 	if(_renderState == nil){
-		if(_shaderUniforms.count > 1){
-			_renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms];
+		CCTexture *texture = (_texture ?: [CCTexture none]);
+		
+		if(CheckDefaultUniforms(_shaderUniforms, texture)){
+			// Create a cached render state so we can use the fast path.
+			_renderState = [CCRenderState renderStateWithBlendMode:_blendMode shader:_shader mainTexture:texture];
+			
+			// If the uniform dictionary was set, it was the default. Throw it away.
+			_shaderUniforms = nil;
 		} else {
-			_renderState = [CCRenderState renderStateWithBlendMode:_blendMode shader:_shader mainTexture:(_texture ?: [CCTexture none])];
+			// Since the node has unique uniforms, it cannot be batched or use the fast path.
+			_renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms];
 		}
 	}
 	
@@ -1768,10 +1787,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 -(NSMutableDictionary *)shaderUniforms
 {
 	if(_shaderUniforms == nil){
-		_shaderUniforms = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-			(_texture ?: [CCTexture none]), CCShaderUniformMainTexture,
-			nil
-		];
+		_shaderUniforms = [NSMutableDictionary dictionaryWithObject:(_texture ?: [CCTexture none]) forKey:CCShaderUniformMainTexture];
 		
 		_renderState = nil;
 	}
