@@ -23,7 +23,7 @@
 {
     self.subTitle = @"Blur Effect Node Test";
 
-    CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"sample_hollow_circle.png"];
+    CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"f1.png"];
     sampleSprite.position = ccp(0.5, 0.5);
     sampleSprite.positionType = CCPositionTypeNormalized;
 
@@ -34,14 +34,13 @@
     effectNode.positionType = CCPositionTypeNormalized;
     effectNode.position = ccp(0.1, 0.5);
     [effectNode addChild:sampleSprite];
-    CCEffectGaussianBlur* effect = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:GLKVector2Make(1.0, 0.0)];
+    CCEffectGaussianBlur* effect = [CCEffectGaussianBlur effectWithPixelBlurRadius:1.0];
     effectNode.effect = effect;
     
     [self.contentNode addChild:effectNode];
-
     
     // Vertical
-    CCSprite *sampleSprite2 = [CCSprite spriteWithImageNamed:@"sample_hollow_circle.png"];
+    CCSprite *sampleSprite2 = [CCSprite spriteWithImageNamed:@"f1.png"];
     sampleSprite2.position = ccp(0.5, 0.5);
     sampleSprite2.positionType = CCPositionTypeNormalized;
     
@@ -49,7 +48,7 @@
     effectNode2.positionType = CCPositionTypeNormalized;
     effectNode2.position = ccp(0.21, 0.5);
     [effectNode2 addChild:sampleSprite2];
-    CCEffectGaussianBlur* effect2 = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:GLKVector2Make(0.0, 1.0)];
+    CCEffectGaussianBlur* effect2 = [CCEffectGaussianBlur effectWithPixelBlurRadius:7.0];
     effectNode2.effect = effect2;
     
     [self.contentNode addChild:effectNode2];
@@ -65,7 +64,7 @@
     effectNode3.position = ccp(0.5, 0.5);
     effectNode3.anchorPoint = ccp(0.5, 0.5);
     [effectNode3 addChild:sampleSprite3];
-    CCEffectGaussianBlur* effect3 = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:GLKVector2Make(1.0, 1.0)];
+    CCEffectGaussianBlur* effect3 = [CCEffectGaussianBlur effectWithPixelBlurRadius:1.0];
     effectNode3.effect = effect3;
     
     [self.contentNode addChild:effectNode3];
@@ -80,7 +79,7 @@
     effectNode4.positionType = CCPositionTypeNormalized;
     effectNode4.position = ccp(0.6, 0.5);
     [effectNode4 addChild:sampleSprite4];
-    CCEffectGaussianBlur* effect4 = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:GLKVector2Make(-1.0, 1.0)];
+    CCEffectGaussianBlur* effect4 = [CCEffectGaussianBlur effectWithPixelBlurRadius:7.0];
     effectNode4.effect = effect4;
     
     [self.contentNode addChild:effectNode4];

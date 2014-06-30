@@ -14,8 +14,8 @@
 @property (nonatomic) float blurStrength;
 @property (nonatomic) GLKVector2 blurDirection;
 
--(id)initWithbBurStrength:(float)blurStrength direction:(GLKVector2)direction;
-+(id)effectWithBlurStrength:(float)blurStrength direction:(GLKVector2)direction;
+-(id)initWithPixelBlurRadius:(NSUInteger)blurStrength;
++(id)effectWithPixelBlurRadius:(NSUInteger)blurStrength;
 
 @end
 #endif

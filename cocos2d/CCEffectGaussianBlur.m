@@ -41,25 +41,44 @@
 
 #import "CCEffect_Private.h"
 #import "CCEffectGaussianBlur.h"
+#import "CCTexture.h"
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
-@implementation CCEffectGaussianBlur
+@implementation CCEffectGaussianBlur {
+    NSUInteger _numberOfOptimizedOffsets;
+    NSUInteger _blurRadius;
+    GLfloat _sigma;
+}
 
 -(id)init
 {
-    CCEffectUniform* u_blurDirection = [CCEffectUniform uniform:@"vec2" name:@"u_blurDirection" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]];
-    CCEffectVarying* v_centerTextureCoordinate = [CCEffectVarying varying:@"vec2" name:@"v_centerTextureCoordinate"];
-    CCEffectVarying* v_twoStepsLeftTextureCoordinate = [CCEffectVarying varying:@"vec2" name:@"v_twoStepsLeftTextureCoordinate"];
-    CCEffectVarying* v_oneStepLeftTextureCoordinate = [CCEffectVarying varying:@"vec2" name:@"v_oneStepLeftTextureCoordinate"];
-    CCEffectVarying* v_oneStepRightTextureCoordinate = [CCEffectVarying varying:@"vec2" name:@"v_oneStepRightTextureCoordinate"];
-    CCEffectVarying* v_twoStepsRightTextureCoordinate = [CCEffectVarying varying:@"vec2" name:@"v_twoStepsRightTextureCoordinate"];
+    if((self = [self initWithPixelBlurRadius:2]))
+    {
+        return self;
+    }
+    
+    return self;
+}
+
+
+-(id)initWithPixelBlurRadius:(NSUInteger)blurRadius
+{
+    // First, generate the normal Gaussian weights for a given sigma
+    _blurRadius = blurRadius;
+    _sigma = 2.0f;
+    _numberOfOptimizedOffsets = MIN(blurRadius / 2 + (blurRadius % 2), 7);
+    
+    CCEffectUniform* u_blurDirection = [CCEffectUniform uniform:@"vec2" name:@"u_blurDirection"
+                                                          value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]];
+    
+    unsigned long count = (unsigned long)(1 + (_numberOfOptimizedOffsets * 2));
+    CCEffectVarying* v_blurCoords = [CCEffectVarying varying:@"vec2" name:@"v_blurCoordinates" count:count];
     
     if(self = [super initWithFragmentUniforms:nil
                               vertextUniforms:[NSArray arrayWithObjects:u_blurDirection, nil]
-                                      varying:[NSArray arrayWithObjects:v_centerTextureCoordinate, v_twoStepsLeftTextureCoordinate,
-                                               v_oneStepLeftTextureCoordinate, v_oneStepRightTextureCoordinate,
-                                               v_twoStepsRightTextureCoordinate, nil]])
+                                      varying:[NSArray arrayWithObjects:v_blurCoords, nil]])
     {
+        
         self.debugName = @"CCEffectGaussianBlur";
         self.stitchFlags = 0;
         return self;
@@ -68,58 +87,150 @@
     return self;
 }
 
-
--(id)initWithbBurStrength:(float)blurStrength direction:(GLKVector2)direction
++(id)effectWithPixelBlurRadius:(NSUInteger)blurStrength
 {
-    if((self = [self init]))
-    {
-        _blurStrength = blurStrength;
-        _blurDirection = direction;
-        return self;
-    }
-    
-    return self;
-}
-
-+(id)effectWithBlurStrength:(float)blurStrength direction:(GLKVector2)direction
-{
-    return [[self alloc] initWithbBurStrength:blurStrength direction:direction];
+    return [[self alloc] initWithPixelBlurRadius:blurStrength];
 }
 
 -(void)buildFragmentFunctions
 {
+    GLfloat *standardGaussianWeights = calloc(_blurRadius + 1, sizeof(GLfloat));
+    GLfloat sumOfWeights = 0.0;
+    for (NSUInteger currentGaussianWeightIndex = 0; currentGaussianWeightIndex < _blurRadius + 1; currentGaussianWeightIndex++)
+    {
+        standardGaussianWeights[currentGaussianWeightIndex] = (1.0 / sqrt(2.0 * M_PI * pow(_sigma, 2.0))) * exp(-pow(currentGaussianWeightIndex, 2.0) / (2.0 * pow(_sigma, 2.0)));
+        
+        if (currentGaussianWeightIndex == 0)
+        {
+            sumOfWeights += standardGaussianWeights[currentGaussianWeightIndex];
+        }
+        else
+        {
+            sumOfWeights += 2.0 * standardGaussianWeights[currentGaussianWeightIndex];
+        }
+    }
     
-    NSString* effectBody = CC_GLSL(
-                                   lowp vec4 fragmentColor = texture2D(cc_PreviousPassTexture, v_centerTextureCoordinate) * 0.2270270270;
-                                   fragmentColor += texture2D(cc_PreviousPassTexture, v_oneStepLeftTextureCoordinate) * 0.3162162162;
-                                   fragmentColor += texture2D(cc_PreviousPassTexture, v_oneStepRightTextureCoordinate) * 0.3162162162;
-                                   fragmentColor += texture2D(cc_PreviousPassTexture, v_twoStepsLeftTextureCoordinate) * 0.0702702703;
-                                   fragmentColor += texture2D(cc_PreviousPassTexture, v_twoStepsRightTextureCoordinate) * 0.0702702703;
-                                   
-                                   return fragmentColor;
-                                   );
+    // Next, normalize these weights to prevent the clipping of the Gaussian curve at the end of the discrete samples from reducing luminance
+    for (NSUInteger currentGaussianWeightIndex = 0; currentGaussianWeightIndex < _blurRadius + 1; currentGaussianWeightIndex++)
+    {
+        standardGaussianWeights[currentGaussianWeightIndex] = standardGaussianWeights[currentGaussianWeightIndex] / sumOfWeights;
+    }
+    
+    // From these weights we calculate the offsets to read interpolated values from
+    NSUInteger numberOfOptimizedOffsets = MIN(_blurRadius / 2 + (_blurRadius % 2), 7);
+    NSUInteger trueNumberOfOptimizedOffsets = _blurRadius / 2 + (_blurRadius % 2);
+    
+    NSMutableString *shaderString = [[NSMutableString alloc] init];
+    
+    // Header
+    [shaderString appendFormat:@"\
+     lowp vec4 sum = vec4(0.0);\n"];
+    
+    // Inner texture loop
+    [shaderString appendFormat:@"sum += texture2D(cc_PreviousPassTexture, v_blurCoordinates[0]) * %f;\n", standardGaussianWeights[0]];
+    
+    for (NSUInteger currentBlurCoordinateIndex = 0; currentBlurCoordinateIndex < numberOfOptimizedOffsets; currentBlurCoordinateIndex++)
+    {
+        GLfloat firstWeight = standardGaussianWeights[currentBlurCoordinateIndex * 2 + 1];
+        GLfloat secondWeight = standardGaussianWeights[currentBlurCoordinateIndex * 2 + 2];
+        GLfloat optimizedWeight = firstWeight + secondWeight;
+        
+        [shaderString appendFormat:@"sum += texture2D(cc_PreviousPassTexture, v_blurCoordinates[%lu]) * %f;\n", (unsigned long)((currentBlurCoordinateIndex * 2) + 1), optimizedWeight];
+        [shaderString appendFormat:@"sum += texture2D(cc_PreviousPassTexture, v_blurCoordinates[%lu]) * %f;\n", (unsigned long)((currentBlurCoordinateIndex * 2) + 2), optimizedWeight];
+    }
+    
+    // If the number of required samples exceeds the amount we can pass in via varyings, we have to do dependent texture reads in the fragment shader
+    if (trueNumberOfOptimizedOffsets > numberOfOptimizedOffsets)
+    {
+        [shaderString appendString:@"highp vec2 singleStepOffset = u_blurDirection;\n"];
+        
+        for (NSUInteger currentOverlowTextureRead = numberOfOptimizedOffsets; currentOverlowTextureRead < trueNumberOfOptimizedOffsets; currentOverlowTextureRead++)
+        {
+            GLfloat firstWeight = standardGaussianWeights[currentOverlowTextureRead * 2 + 1];
+            GLfloat secondWeight = standardGaussianWeights[currentOverlowTextureRead * 2 + 2];
+            
+            GLfloat optimizedWeight = firstWeight + secondWeight;
+            GLfloat optimizedOffset = (firstWeight * (currentOverlowTextureRead * 2 + 1) + secondWeight * (currentOverlowTextureRead * 2 + 2)) / optimizedWeight;
+            
+            [shaderString appendFormat:@"sum += texture2D(cc_PreviousPassTexture, v_blurCoordinates[0] + singleStepOffset * %f) * %f;\n", optimizedOffset, optimizedWeight];
+            [shaderString appendFormat:@"sum += texture2D(cc_PreviousPassTexture, v_blurCoordinates[0] - singleStepOffset * %f) * %f;\n", optimizedOffset, optimizedWeight];
+        }
+    }
+    
+    // Footer
+    [shaderString appendString:@"\
+     return sum;\n"];
+    
+    NSString* effectBody = [NSString stringWithString:shaderString];
     
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"blurEffect" body:effectBody inputs:nil returnType:@"vec4"];
     [self.fragmentFunctions addObject:fragmentFunction];
+    
+    free(standardGaussianWeights);
 }
 
 -(void)buildVertexFunctions
 {
-    NSString* effectBody = CC_GLSL(
-                                   
-                                   vec2 firstOffset = vec2(1.3846153846, 1.3846153846) * u_blurDirection;
-                                   vec2 secondOffset = vec2(3.2307692308, 3.2307692308) * u_blurDirection;
-                                   
-                                   v_centerTextureCoordinate = cc_TexCoord1;
-                                   v_oneStepLeftTextureCoordinate = cc_TexCoord1 - firstOffset;
-                                   v_twoStepsLeftTextureCoordinate = cc_TexCoord1 - secondOffset;
-                                   v_oneStepRightTextureCoordinate = cc_TexCoord1 + firstOffset;
-                                   v_twoStepsRightTextureCoordinate = cc_TexCoord1 + secondOffset;
-                                   
-                                   return cc_Position;
-                                   );
+    GLfloat* standardGaussianWeights = calloc(_blurRadius + 1, sizeof(GLfloat));
+    GLfloat sumOfWeights = 0.0;
+    for (NSUInteger currentGaussianWeightIndex = 0; currentGaussianWeightIndex < _blurRadius + 1; currentGaussianWeightIndex++)
+    {
+        standardGaussianWeights[currentGaussianWeightIndex] = (1.0 / sqrt(2.0 * M_PI * pow(_sigma, 2.0))) * exp(-pow(currentGaussianWeightIndex, 2.0) / (2.0 * pow(_sigma, 2.0)));
+        
+        if (currentGaussianWeightIndex == 0)
+        {
+            sumOfWeights += standardGaussianWeights[currentGaussianWeightIndex];
+        }
+        else
+        {
+            sumOfWeights += 2.0 * standardGaussianWeights[currentGaussianWeightIndex];
+        }
+    }
+    
+    // Next, normalize these weights to prevent the clipping of the Gaussian curve at the end of the discrete samples from reducing luminance
+    for (NSUInteger currentGaussianWeightIndex = 0; currentGaussianWeightIndex < _blurRadius + 1; currentGaussianWeightIndex++)
+    {
+        standardGaussianWeights[currentGaussianWeightIndex] = standardGaussianWeights[currentGaussianWeightIndex] / sumOfWeights;
+    }
+    
+    // From these weights we calculate the offsets to read interpolated values from
+    GLfloat* optimizedGaussianOffsets = calloc(_numberOfOptimizedOffsets, sizeof(GLfloat));
+    
+    for (NSUInteger currentOptimizedOffset = 0; currentOptimizedOffset < _numberOfOptimizedOffsets; currentOptimizedOffset++)
+    {
+        GLfloat firstWeight = standardGaussianWeights[currentOptimizedOffset*2 + 1];
+        GLfloat secondWeight = standardGaussianWeights[currentOptimizedOffset*2 + 2];
+        
+        GLfloat optimizedWeight = firstWeight + secondWeight;
+        
+        optimizedGaussianOffsets[currentOptimizedOffset] = (firstWeight * (currentOptimizedOffset*2 + 1) + secondWeight * (currentOptimizedOffset*2 + 2)) / optimizedWeight;
+    }
+    
+    NSMutableString *shaderString = [[NSMutableString alloc] init];
+    // Header
+    [shaderString appendString:@"\
+     \n\
+     vec2 singleStepOffset = u_blurDirection;\n"];
+    
+    // Inner offset loop
+    [shaderString appendString:@"v_blurCoordinates[0] = cc_TexCoord1.xy;\n"];
+    for (NSUInteger currentOptimizedOffset = 0; currentOptimizedOffset < _numberOfOptimizedOffsets; currentOptimizedOffset++)
+    {
+        [shaderString appendFormat:@"\
+         v_blurCoordinates[%lu] = cc_TexCoord1.xy + singleStepOffset * %f;\n\
+         v_blurCoordinates[%lu] = cc_TexCoord1.xy - singleStepOffset * %f;\n", (unsigned long)((currentOptimizedOffset * 2) + 1), optimizedGaussianOffsets[currentOptimizedOffset], (unsigned long)((currentOptimizedOffset * 2) + 2), optimizedGaussianOffsets[currentOptimizedOffset]];
+    }
+    
+    // Footer
+    [shaderString appendString:@"return cc_Position;\n"];
+
+    NSString* effectBody =  [NSString stringWithString:shaderString];
+
     CCEffectFunction* vertexFunction = [[CCEffectFunction alloc] initWithName:@"glowEffect" body:effectBody inputs:nil returnType:@"vec4"];
     [self.vertexFunctions addObject:vertexFunction];
+    
+    free(optimizedGaussianOffsets);
+    free(standardGaussianWeights);
 }
 
 -(void)buildRenderPasses
@@ -131,17 +242,12 @@
     pass0.shaderUniforms = self.shaderUniforms;
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
+        
         pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-        if([self radialBlur])
-        {
-            pass.shaderUniforms[self.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithGLKVector2:GLKVector2Make(weakSelf.blurStrength, 0.0f)];
-        }
-        else
-        {
-            GLKVector2 dir = [self calculateBlurDirection];
-            pass.shaderUniforms[self.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithGLKVector2:dir];
-        }
+        GLKVector2 dur = GLKVector2Make(1.0 / (previousPassTexture.pixelWidth / previousPassTexture.contentScale), 0.0);
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithGLKVector2:dur];
+        
     } copy]];
 
     
@@ -150,8 +256,11 @@
     pass1.shaderUniforms = self.shaderUniforms;
     pass1.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass1.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
+
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-        pass.shaderUniforms[self.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithGLKVector2:GLKVector2Make(0.0f, weakSelf.blurStrength)];
+        GLKVector2 dur = GLKVector2Make(0.0, 1.0 / (previousPassTexture.pixelHeight / previousPassTexture.contentScale));
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithGLKVector2:dur];
+        
     } copy]];
     
     self.renderPasses = @[pass0, pass1];
@@ -163,18 +272,7 @@
     // pass 0: blurs (horizontal) texture[0] and outputs blurmap to texture[1]
     // pass 1: blurs (vertical) texture[1] and outputs to texture[2]
     
-    return [self radialBlur] ? 2 : 1;
-}
-
--(GLKVector2)calculateBlurDirection
-{
-    return GLKVector2Make(_blurDirection.x * _blurStrength, _blurDirection.y * _blurStrength);
-}
-
--(BOOL)radialBlur
-{
-    BOOL ret = (_blurDirection.x == 0.0f && _blurDirection.y == 0.0f) ? YES : NO;
-    return ret;
+    return 2;
 }
 
 @end

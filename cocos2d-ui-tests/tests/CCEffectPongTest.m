@@ -156,7 +156,7 @@ typedef enum { TEST_PONG_PLAYING, TESTS_PONG_GAMEOVER } TEST_PONG_STATE;
         _ballEffectNode.scale = 0.1f;
         [_ballEffectNode addChild:_ball];
         
-        _ballEffect = [CCEffectGaussianBlur effectWithBlurStrength:0.01f direction:GLKVector2Make(0.0, 0.0)];
+        _ballEffect = [CCEffectGaussianBlur effectWithPixelBlurRadius:2.0];
         _ballEffectNode.effect = _ballEffect;
     }
     
