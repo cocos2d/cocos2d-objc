@@ -19,6 +19,50 @@
 	return self;
 }
 
+-(void)setupRefractionEffectTest
+{
+    self.subTitle = @"Refraction Effect Test";
+    
+    CCSprite *background = [CCSprite spriteWithImageNamed:@"background.png"];
+    background.positionType = CCPositionTypeNormalized;
+    background.position = ccp(0.5, 0.5);
+    [self.contentNode addChild:background];
+    
+    CCTexture *torusNormalMap = [CCTexture textureWithFile:@"torus-normal-256.png"];;
+    CCEffect *torusRefraction = [[CCEffectRefraction alloc] initWithRefraction:0.1f environment:background normalMap:torusNormalMap];
+
+    CCTexture *sphereNormalMap = [CCTexture textureWithFile:@"sphere-normal-256.png"];;
+    CCEffect *sphereRefraction = [[CCEffectRefraction alloc] initWithRefraction:0.1f environment:background normalMap:sphereNormalMap];
+    
+    // Effect nodes that use the effects in different combinations.
+    CGPoint ll = CGPointMake(0.3f, 0.8f);
+    CGPoint ur = CGPointMake(0.4f, 0.2f);
+    
+    CCSprite *sprite1 = [self spriteWithEffects:@[sphereRefraction] image:@"blocks-hd.png" atPosition:ll];
+    [self.contentNode addChild:sprite1];
+    
+    [sprite1 runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+                                                                [CCActionMoveTo actionWithDuration:2.0 position:ccp(ll.x, ur.y)],
+                                                                [CCActionMoveTo actionWithDuration:1.0 position:ccp(ur.x, ur.y)],
+                                                                [CCActionMoveTo actionWithDuration:2.0 position:ccp(ur.x, ll.y)],
+                                                                [CCActionMoveTo actionWithDuration:1.0 position:ccp(ll.x, ll.y)],
+                                                                nil
+                                                                ]]];
+
+    ll = CGPointMake(0.6f, 0.2f);
+    ur = CGPointMake(0.8f, 0.8f);
+    CCSprite *sprite2 = [self spriteWithEffects:@[torusRefraction] image:@"blocks-hd.png" atPosition:ll];
+    [self.contentNode addChild:sprite2];
+    
+    [sprite2 runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+                                                                [CCActionMoveTo actionWithDuration:2.0 position:ccp(ll.x, ur.y)],
+                                                                [CCActionMoveTo actionWithDuration:2.0 position:ccp(ur.x, ur.y)],
+                                                                [CCActionMoveTo actionWithDuration:2.0 position:ccp(ur.x, ll.y)],
+                                                                [CCActionMoveTo actionWithDuration:2.0 position:ccp(ll.x, ll.y)],
+                                                                nil
+                                                                ]]];
+}
+
 -(void)setupBlurEffectNodeTest
 {
     self.subTitle = @"Blur Effect Node Test";
