@@ -23,7 +23,7 @@
 {
     self.subTitle = @"Blur Effect Node Test";
 
-    CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"sample_hollow_circle.png"];
+    CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"Images/sample_hollow_circle.png"];
     sampleSprite.position = ccp(0.5, 0.5);
     sampleSprite.positionType = CCPositionTypeNormalized;
 
@@ -41,7 +41,7 @@
 
     
     // Vertical
-    CCSprite *sampleSprite2 = [CCSprite spriteWithImageNamed:@"sample_hollow_circle.png"];
+    CCSprite *sampleSprite2 = [CCSprite spriteWithImageNamed:@"Images/sample_hollow_circle.png"];
     sampleSprite2.position = ccp(0.5, 0.5);
     sampleSprite2.positionType = CCPositionTypeNormalized;
     
@@ -55,7 +55,7 @@
     [self.contentNode addChild:effectNode2];
     
     // Tilt shift
-    CCSprite *sampleSprite3 = [CCSprite spriteWithImageNamed:@"sample_hollow_circle.png"];
+    CCSprite *sampleSprite3 = [CCSprite spriteWithImageNamed:@"Images/sample_hollow_circle.png"];
     sampleSprite3.position = ccp(0.5, 0.5);
     sampleSprite3.positionType = CCPositionTypeNormalized;
     
@@ -71,7 +71,7 @@
     [self.contentNode addChild:effectNode3];
     
     // Tilt shift reversed
-    CCSprite *sampleSprite4 = [CCSprite spriteWithImageNamed:@"sample_hollow_circle.png"];
+    CCSprite *sampleSprite4 = [CCSprite spriteWithImageNamed:@"Images/sample_hollow_circle.png"];
     sampleSprite4.position = ccp(0.5, 0.5);
     sampleSprite4.positionType = CCPositionTypeNormalized;
     
@@ -91,7 +91,7 @@
     self.subTitle = @"Glow Effect Node Test";
     
     // Create a hollow circle
-    CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"sample_hollow_circle.png"];
+    CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"Images/sample_hollow_circle.png"];
     sampleSprite.anchorPoint = ccp(0.5, 0.5);
     sampleSprite.position = ccp(0.5, 0.5);
     sampleSprite.positionType = CCPositionTypeNormalized;
@@ -122,7 +122,7 @@
     self.subTitle = @"Brightness and Contrast Effect Test";
     
     // An unmodified sprite that is added directly to the scene.
-    CCSprite *sprite = [CCSprite spriteWithImageNamed:@"f1.png"];
+    CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/f1.png"];
     sprite.anchorPoint = ccp(0.5, 0.5);
     sprite.positionType = CCPositionTypeNormalized;
     sprite.position = ccp(0.2, 0.5);
@@ -135,10 +135,10 @@
     NSArray *effects4 = @[[[CCEffectContrast alloc] initWithContrast:1.0f],[[CCEffectBrightness alloc] initWithBrightness:0.25f]];
     
     // Effect nodes that use the effects in different combinations.
-    [self.contentNode addChild:[self effectNodeWithEffects:effects1 appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.35, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:effects2 appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.5, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:effects3 appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.65, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:effects4 appliedToSpriteWithImage:@"f1.png" atPosition:ccp(0.8, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:effects1 appliedToSpriteWithImage:@"Images/f1.png" atPosition:ccp(0.35, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:effects2 appliedToSpriteWithImage:@"Images/f1.png" atPosition:ccp(0.5, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:effects3 appliedToSpriteWithImage:@"Images/f1.png" atPosition:ccp(0.65, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:effects4 appliedToSpriteWithImage:@"Images/f1.png" atPosition:ccp(0.8, 0.5)]];
 }
 
 -(void)setupPixellateEffectNodeTest
@@ -155,11 +155,11 @@
                          ];
     
     // Effect nodes that use the effects in different combinations.
-    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[0]] appliedToSpriteWithImage:@"grossini-hd.png" atPosition:ccp(0.1, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[1]] appliedToSpriteWithImage:@"grossini-hd.png" atPosition:ccp(0.3, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[2]] appliedToSpriteWithImage:@"grossini-hd.png" atPosition:ccp(0.5, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[3]] appliedToSpriteWithImage:@"grossini-hd.png" atPosition:ccp(0.7, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[4]] appliedToSpriteWithImage:@"grossini-hd.png" atPosition:ccp(0.9, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[0]] appliedToSpriteWithImage:@"Images/grossini-hd.png" atPosition:ccp(0.1, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[1]] appliedToSpriteWithImage:@"Images/grossini-hd.png" atPosition:ccp(0.3, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[2]] appliedToSpriteWithImage:@"Images/grossini-hd.png" atPosition:ccp(0.5, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[3]] appliedToSpriteWithImage:@"Images/grossini-hd.png" atPosition:ccp(0.7, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[4]] appliedToSpriteWithImage:@"Images/grossini-hd.png" atPosition:ccp(0.9, 0.5)]];
 }
 
 -(void)setupSaturationEffectNodeTest
@@ -179,14 +179,14 @@
                          ];
 
     // Effect nodes that use the effects in different combinations.
-    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[0]] appliedToSpriteWithImage:@"grossini.png" atPosition:ccp(0.15, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[1]] appliedToSpriteWithImage:@"grossini.png" atPosition:ccp(0.25, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[2]] appliedToSpriteWithImage:@"grossini.png" atPosition:ccp(0.35, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[3]] appliedToSpriteWithImage:@"grossini.png" atPosition:ccp(0.45, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[4]] appliedToSpriteWithImage:@"grossini.png" atPosition:ccp(0.55, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[5]] appliedToSpriteWithImage:@"grossini.png" atPosition:ccp(0.65, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[6]] appliedToSpriteWithImage:@"grossini.png" atPosition:ccp(0.75, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[7]] appliedToSpriteWithImage:@"grossini.png" atPosition:ccp(0.85, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[0]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.15, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[1]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.25, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[2]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.35, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[3]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.45, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[4]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.55, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[5]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.65, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[6]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.75, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[7]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.85, 0.5)]];
 }
 
 -(void)setupPerformanceTest
@@ -202,8 +202,8 @@
     NSArray *effects = @[saturation];
     
     CGSize containerSize = self.contentNode.contentSizeInPoints;
-
-    NSString *spriteImage = @"snow.png";
+    
+    NSString *spriteImage = @"Images/snow.png";
     const float footprintScale = 1.1f;
     CCSprite *sprite = [self spriteWithEffects:effects image:spriteImage atPosition:ccp(0, 0)];
     CGSize spriteSize = sprite.contentSizeInPoints;
