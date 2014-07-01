@@ -25,7 +25,7 @@
     
     CGPoint p1, p2;
     
-    CCSprite *background = [CCSprite spriteWithImageNamed:@"starynight.png"];
+    CCSprite *background = [CCSprite spriteWithImageNamed:@"Images/starynight.png"];
     background.positionType = CCPositionTypeNormalized;
     background.position = ccp(0.5, 0.5);
     CGSize bgSize = background.contentSize;
@@ -34,7 +34,7 @@
     p1 = CGPointMake(0.1f, 0.5f);
     p2 = CGPointMake(0.9f, 0.5f);
 
-    CCSprite *planet = [CCSprite spriteWithImageNamed:@"planet1.png"];
+    CCSprite *planet = [CCSprite spriteWithImageNamed:@"Images/planet1.png"];
     planet.positionType = CCPositionTypeNormalized;
     planet.position = p2;
 
@@ -58,12 +58,12 @@
     [self.contentNode addChild:renderTexture];
     
     
-    CCTexture *sphereNormalMap = [CCTexture textureWithFile:@"sphere-normal-256.png"];;
+    CCTexture *sphereNormalMap = [CCTexture textureWithFile:@"Images/sphere-normal-256.png"];
     CCEffect *sphereRefraction = [[CCEffectRefraction alloc] initWithRefraction:0.1f environment:renderTexture.sprite normalMap:sphereNormalMap];
     
     p1 = CGPointMake(0.1f, 0.8f);
     p2 = CGPointMake(0.35f, 0.2f);
-    CCSprite *sprite1 = [self spriteWithEffects:@[sphereRefraction] image:@"blocks-hd.png" atPosition:p1];
+    CCSprite *sprite1 = [self spriteWithEffects:@[sphereRefraction] image:@"Images/blocks-hd.png" atPosition:p1];
     [sprite1 runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
                                                                 [CCActionMoveTo actionWithDuration:2.0 position:ccp(p1.x, p2.y)],
                                                                 [CCActionMoveTo actionWithDuration:1.0 position:ccp(p2.x, p2.y)],
@@ -74,12 +74,12 @@
     [self.contentNode addChild:sprite1];
     
     
-    CCTexture *torusNormalMap = [CCTexture textureWithFile:@"torus-normal-256.png"];;
+    CCTexture *torusNormalMap = [CCTexture textureWithFile:@"Images/torus-normal-256.png"];
     CCEffect *torusRefraction = [[CCEffectRefraction alloc] initWithRefraction:0.1f environment:renderTexture.sprite normalMap:torusNormalMap];
     
     p1 = CGPointMake(0.65f, 0.2f);
     p2 = CGPointMake(0.9f, 0.8f);
-    CCSprite *sprite2 = [self spriteWithEffects:@[torusRefraction] image:@"blocks-hd.png" atPosition:p1];
+    CCSprite *sprite2 = [self spriteWithEffects:@[torusRefraction] image:@"Images/blocks-hd.png" atPosition:p1];
     [sprite2 runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
                                                                 [CCActionMoveTo actionWithDuration:2.0 position:ccp(p1.x, p2.y)],
                                                                 [CCActionMoveTo actionWithDuration:2.0 position:ccp(p2.x, p2.y)],
