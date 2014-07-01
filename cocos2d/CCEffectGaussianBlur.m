@@ -65,7 +65,10 @@
 {
     // First, generate the normal Gaussian weights for a given sigma
     _blurRadius = blurRadius;
-    _sigma = 2.0f;
+    _sigma = blurRadius / 2;
+    if(_sigma == 0.0)
+        _sigma = 1.0f;
+    
     _numberOfOptimizedOffsets = MIN(blurRadius / 2 + (blurRadius % 2), 7);
     
     CCEffectUniform* u_blurDirection = [CCEffectUniform uniform:@"vec2" name:@"u_blurDirection"
