@@ -13,10 +13,10 @@
 
 @property (nonatomic) float refraction;
 @property (nonatomic) CCSprite *environment;
-@property (nonatomic) CCTexture *normalMap;
+@property (nonatomic) CCSpriteFrame *normalMap;
 
--(id)initWithRefraction:(float)refraction environment:(CCSprite *)environment normalMap:(CCTexture *)normalMap;
-+(id)effectWithRefraction:(float)refraction environment:(CCSprite *)environment normalMap:(CCTexture *)normalMap;
+-(id)initWithRefraction:(float)refraction environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap;
++(id)effectWithRefraction:(float)refraction environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap;
 
 @end
 #endif

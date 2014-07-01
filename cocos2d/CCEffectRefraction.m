@@ -11,6 +11,7 @@
 #import "CCDirector.h"
 #import "CCEffect_Private.h"
 #import "CCRenderer.h"
+#import "CCSpriteFrame.h"
 #import "CCTexture.h"
 
 static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
@@ -37,7 +38,7 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
     return self;
 }
 
--(id)initWithRefraction:(float)refraction environment:(CCSprite *)environment normalMap:(CCTexture *)normalMap;
+-(id)initWithRefraction:(float)refraction environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap;
 {
     if((self = [self init]))
     {
@@ -48,7 +49,7 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
     return self;
 }
 
-+(id)effectWithRefraction:(float)refraction environment:(CCSprite *)environment normalMap:(CCTexture *)normalMap;
++(id)effectWithRefraction:(float)refraction environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap;
 {
     return [[self alloc] initWithRefraction:refraction environment:environment normalMap:normalMap];
 }
@@ -91,7 +92,7 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
         pass.shaderUniforms[self.uniformTranslationTable[@"u_refraction"]] = [NSNumber numberWithFloat:weakSelf.refraction];
         pass.shaderUniforms[self.uniformTranslationTable[@"u_envMap"]] = weakSelf.environment.texture;
-        pass.shaderUniforms[self.uniformTranslationTable[@"u_normalMap"]] = weakSelf.normalMap;
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_normalMap"]] = weakSelf.normalMap.texture;
         
         // Setup the screen space to environment space matrix.
         CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
