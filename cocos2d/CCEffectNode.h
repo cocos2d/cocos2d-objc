@@ -15,7 +15,7 @@
 #import "CCTexture.h"
 #import "CCEffect.h"
 #import "CCEffectStack.h"
-#import "CCEffectGlow.h"
+#import "CCEffectBloom.h"
 #import "CCEffectBrightness.h"
 #import "CCEffectContrast.h"
 #import "CCEffectPixellate.h"
