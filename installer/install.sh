@@ -2,7 +2,7 @@
 # ----------------------------------------------------
 # Variables setup
 # ----------------------------------------------------
-COCOS2D_VER="Cocos2D-v3.0.0"
+COCOS2D_VER="Cocos2D-v3.1.0"
 TARGET_DIR="$HOME/Downloads/${COCOS2D_VER}"
 INSTALL_FILE=install.tar.gz
 

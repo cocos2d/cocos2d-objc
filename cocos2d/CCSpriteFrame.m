@@ -31,8 +31,20 @@
 #import "CCTexture.h"
 #import "ccMacros.h"
 #import "CCSpriteFrameCache.h"
+#import "CCTexture_Private.h"
 
 @implementation CCSpriteFrame
+{
+	CGRect			_rectInPixels;
+	BOOL			_rotated;
+	CGPoint			_offsetInPixels;
+	CGSize			_originalSizeInPixels;
+	CCTexture		*_texture;
+	NSString		*_textureFilename;
+	CCProxy __weak *_proxy;
+	__weak CCTexture *_lazyTexture;
+}
+
 @synthesize textureFilename = _textureFilename;
 @synthesize rotated = _rotated;
 
@@ -137,15 +149,41 @@
 	}
 }
 
+-(CCTexture *)lazyTexture
+{
+	CCTexture *texture = _lazyTexture;
+	if(!texture && _textureFilename){
+		_lazyTexture = texture = [[CCTextureCache sharedTextureCache] addImage:_textureFilename];
+	}
+	
+	return texture;
+}
+
 -(CCTexture*) texture
 {
-	if( _texture )
-		return _texture;
-
-	if( _textureFilename )
-		return [[CCTextureCache sharedTextureCache] addImage:_textureFilename];
-
-	// no texture or texture filename
-	return nil;
+	return (_texture ?: self.lazyTexture);
 }
+
+- (BOOL)hasProxy
+{
+	@synchronized(self){
+		// NSLog(@"hasProxy: %p", self);
+		return(_proxy != nil);
+	}
+}
+
+- (CCProxy *)proxy
+{
+	@synchronized(self){
+		__strong CCProxy *proxy = _proxy;
+
+		if (_proxy == nil){
+			proxy = [[CCProxy alloc] initWithTarget:self];
+			_proxy = proxy;
+		}
+
+		return(proxy);
+	}
+}
+
 @end

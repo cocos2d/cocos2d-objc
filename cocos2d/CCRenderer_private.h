@@ -32,6 +32,29 @@ extern id CCBLENDMODE_CACHE;
 extern id CCRENDERSTATE_CACHE;
 
 
+/**
+ * Describes the behaviour for an command object that can be submitted to the queue of a 
+ * CCRenderer in order to perform some drawing operations.
+ *
+ * When submitted to a renderer, render commands can be queued and executed at a later time.
+ * Each implementation of CCRenderCommand encapsulates the content to be rendered.
+ */
+@protocol CCRenderCommand <NSObject>
+
+@property(nonatomic, readonly) NSInteger globalSortOrder;
+
+/**
+ * Invokes this command on the specified renderer.
+ *
+ * When submitted to a renderer, render commands may be queued and executed at a later time.
+ * Implementations should expect that this method will not be executed at the time that this
+ * command is submitted to the renderer.
+ */
+-(void)invokeOnRenderer:(CCRenderer *)renderer;
+
+@end
+
+
 @interface CCRenderer()
 
 /// Current global shader uniform values.
@@ -42,6 +65,9 @@ extern id CCRENDERSTATE_CACHE;
 
 /// Set the current renderer for the current thread.
 +(void)bindRenderer:(CCRenderer *)renderer;
+
+/// Enqueue a general or custom render command.
+-(void)enqueueRenderCommand: (id<CCRenderCommand>) renderCommand;
 
 /// Render any currently queued commands.
 -(void)flush;

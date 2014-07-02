@@ -25,9 +25,9 @@
  *
  */
 
-#import "CCAtlasNode.h"
 #import "CCSpriteBatchNode.h"
 #import "CCTMXXMLParser.h"
+#import "CCTiledMap.h"
 
 @class CCTiledMapInfo;
 @class CCTiledMapLayerInfo;
@@ -45,33 +45,7 @@
  
  */
 
-@interface CCTiledMapLayer : CCSpriteBatchNode {
-    
-    // Various Map data storage.
-	CCTiledMapTilesetInfo	*_tileset;
-	NSString                *_layerName;
-	CGSize                  _layerSize;
-	CGSize                  _mapTileSize; // TODO: in pixels or points?
-	uint32_t                *_tiles;
-	NSUInteger              _layerOrientation;
-	NSMutableDictionary     *_properties;
-    
-    // TMX Layer Opacity.
-	unsigned char           _opacity;
-
-    // GID Range
-	NSUInteger              _minGID;
-	NSUInteger              _maxGID;
-
-	// Only used when vertexZ is used.
-	NSInteger               _vertexZvalue;
-	BOOL                    _useAutomaticVertexZ;
-
-	// Used for optimization.
-	CCSprite                *_reusedTile;
-	NSMutableArray          *_atlasIndexArray;
-}
-
+@interface CCTiledMapLayer : CCNode<CCShaderProtocol, CCTextureProtocol, CCBlendProtocol> 
 
 /// -----------------------------------------------------------------------
 /// @name Accessing the Tile Map Layer Attributes
@@ -93,7 +67,7 @@
 @property (nonatomic,readwrite,strong) CCTiledMapTilesetInfo *tileset;
 
 /** Layer orientation method, which is the same as the map orientation method. */
-@property (nonatomic,readwrite) NSUInteger layerOrientation;
+@property (nonatomic,readwrite) CCTiledMapOrientation layerOrientation;
 
 /** Properties from the layer. They can be added using tiled. */
 @property (nonatomic,readwrite,strong) NSMutableDictionary *properties;
@@ -134,15 +108,6 @@
 /// -----------------------------------------------------------------------
 /// @name Tile Map Layer Helpers
 /// -----------------------------------------------------------------------
-
-/**
- *  Returns the tile at the specified tile coordinates.
- *
- *  @param tileCoordinate Tile Coordinate to use.
- *
- *  @return CCSprite tile object.
- */
--(CCSprite*) tileAt:(CGPoint)tileCoordinate;
 
 /**
  *  Returns the tile GID at the specified tile coordinates.
@@ -195,6 +160,15 @@
  *  @return Return position of tile.
  */
 -(CGPoint) positionAt:(CGPoint)tileCoordinate;
+
+/**
+ *  Return the position in tile coordinates of the tile specified by position in points.
+ *
+ *  @param position Position in points.
+ *
+ *  @return Coordinate of the tile at that position.
+ */
+-(CGPoint) tileCoordinateAt:(CGPoint)position;
 
 /**
  *  Return the value for the specified property name value.

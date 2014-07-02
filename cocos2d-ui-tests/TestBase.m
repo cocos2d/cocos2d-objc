@@ -40,28 +40,28 @@
     self.contentNode = [CCNode node];
     self.contentNode.contentSizeType = CCSizeTypeMake(CCSizeUnitNormalized, CCSizeUnitInsetUIPoints);
     self.contentNode.contentSize = CGSizeMake(1, 44);
-		self.contentNode.name = @"TestBase Content Node";
+    self.contentNode.name = @"TestBase Content Node";
 	
     [self addChild:self.contentNode];
     
     // Create interface
     
     // Header background
-    CCSprite9Slice* headerBg = [CCSprite9Slice spriteWithImageNamed:@"Interface/header.png"];
-    headerBg.positionType = CCPositionTypeMake(CCPositionUnitUIPoints, CCPositionUnitUIPoints, CCPositionReferenceCornerTopLeft);
-    headerBg.position = ccp(0,0);
-    headerBg.anchorPoint = ccp(0,1);
-    headerBg.contentSizeType = CCSizeTypeMake(CCSizeUnitNormalized, CCSizeUnitUIPoints);
-    headerBg.contentSize = CGSizeMake(1, 44);
+    _headerBg = [CCSprite9Slice spriteWithImageNamed:@"Interface/header.png"];
+    _headerBg.positionType = CCPositionTypeMake(CCPositionUnitUIPoints, CCPositionUnitUIPoints, CCPositionReferenceCornerTopLeft);
+    _headerBg.position = ccp(0,0);
+    _headerBg.anchorPoint = ccp(0,1);
+    _headerBg.contentSizeType = CCSizeTypeMake(CCSizeUnitNormalized, CCSizeUnitUIPoints);
+    _headerBg.contentSize = CGSizeMake(1, 44);
     
-    [self addChild:headerBg];
+    [self addChild:_headerBg];
     
     // Header label
     _lblTitle = [CCLabelTTF labelWithString:NSStringFromClass([self class]) fontName:@"HelveticaNeue-Medium" fontSize:17 * [CCDirector sharedDirector].UIScaleFactor];
     _lblTitle.positionType = CCPositionTypeNormalized;
     _lblTitle.position = ccp(0.5f,0.5f);
     
-    [headerBg addChild:_lblTitle];
+    [_headerBg addChild:_lblTitle];
     
     _lblSubTitle = [CCLabelTTF labelWithString:@"" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector sharedDirector].UIScaleFactor];
 		_lblSubTitle.shadowColor = [CCColor blackColor];

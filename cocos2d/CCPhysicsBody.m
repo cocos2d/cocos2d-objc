@@ -342,14 +342,12 @@ CCPhysicsBodyUpdatePosition(cpBody *body, cpFloat dt)
 
 -(void)applyForce:(CGPoint)force atLocalPoint:(CGPoint)point
 {
-	cpVect f = cpTransformVect(_body.transform, CCP_TO_CPV(force));
-	[_body applyForce:f atLocalPoint:CCP_TO_CPV(point)];
+	[_body applyForce:CCP_TO_CPV(force) atLocalPoint:CCP_TO_CPV(point)];
 }
 
 -(void)applyImpulse:(CGPoint)impulse atLocalPoint:(CGPoint)point
 {
-	cpVect j = cpTransformVect(_body.transform, CCP_TO_CPV(impulse));
-	[_body applyImpulse:j atLocalPoint:CCP_TO_CPV(point)];
+	[_body applyImpulse:CCP_TO_CPV(impulse) atLocalPoint:CCP_TO_CPV(point)];
 }
 
 -(void)applyForce:(CGPoint)force atWorldPoint:(CGPoint)point {[_body applyForce:CCP_TO_CPV(force) atWorldPoint:CCP_TO_CPV(point)];}
@@ -533,7 +531,7 @@ NSString *  kRestrictedProperties[3] = { @"scale", @"scaleX", @"scaleY"};
             [node addObserver:self forKeyPath:kDependantProperties[i] options:NSKeyValueObservingOptionNew context:nil];
         }
         
-#if DEBUG
+#ifdef DEBUG
         for (int i = 0; i < sizeof(kRestrictedProperties)/sizeof(kRestrictedProperties[0]); i++)
         {
             [node addObserver:self forKeyPath:kRestrictedProperties[i] options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];

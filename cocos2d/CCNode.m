@@ -29,6 +29,7 @@
 #import "CCNode_Private.h"
 #import "CCDirector.h"
 #import "CCActionManager.h"
+#import "CCAnimationManager.h"
 #import "CCScheduler.h"
 #import "ccConfig.h"
 #import "ccMacros.h"
@@ -41,6 +42,7 @@
 #import "CCTexture_Private.h"
 #import "CCActionManager_Private.h"
 
+
 #ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
 #endif
@@ -51,7 +53,6 @@
 #else
 #define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
 #endif
-
 
 #pragma mark - Node
 
@@ -79,7 +80,7 @@ GetBodyIfRunning(CCNode *node)
 	return (node->_isInActiveScene ? node->_physicsBody : nil);
 }
 
-inline CGAffineTransform
+CGAffineTransform
 NodeToPhysicsTransform(CCNode *node)
 {
 	CGAffineTransform transform = CGAffineTransformIdentity;
@@ -90,7 +91,7 @@ NodeToPhysicsTransform(CCNode *node)
 	return transform;
 }
 
-inline float
+float
 NodeToPhysicsRotation(CCNode *node)
 {
 	float rotation = 0.0;
@@ -101,7 +102,7 @@ NodeToPhysicsRotation(CCNode *node)
 	return rotation;
 }
 
-inline CGPoint
+CGPoint
 NodeToPhysicsScale(CCNode * node)
 {
     CGPoint scale = ccp(1.0f,1.0f);
@@ -205,6 +206,11 @@ static NSUInteger globalOrderOfArrival = 1;
 
 	// timers
 	[_children makeObjectsPerformSelector:@selector(cleanup)];
+    
+    // CCAnimationManager Cleanup (Set by SpriteBuilder)
+    [_animationManager performSelector:@selector(cleanup)];
+    
+    _userObject = nil;
 }
 
 - (NSString*) description
@@ -542,6 +548,16 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
 - (CGSize) contentSizeInPoints
 {
     return [self convertContentSizeToPoints:self.contentSize type:_contentSizeType];
+}
+
+-(void)setContentSizeInPoints:(CGSize)contentSizeInPoints
+{
+	self.contentSize = [self convertContentSizeFromPoints:contentSizeInPoints type:self.contentSizeType];
+}
+
+-(void) viewDidResizeTo: (CGSize) newViewSize
+{
+	for (CCNode* child in _children) [child viewDidResizeTo: newViewSize];
 }
 
 - (float) scaleInPoints
@@ -1168,6 +1184,23 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 	return [_actionManager numberOfRunningActionsInTarget:self];
 }
 
+-(CCAnimationManager*)animationManager
+{
+    if(_animationManager)
+    {
+        return _animationManager;
+    }
+    else
+    {
+        return self.parent.animationManager;
+    }
+}
+
+-(void)setAnimationManager:(CCAnimationManager *)animationManager
+{
+    _animationManager = animationManager;
+}
+
 #pragma mark CCNode - Scheduler
 
 -(NSInteger)priority
@@ -1196,7 +1229,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 
 -(CCTimer *) schedule:(SEL)selector interval:(CCTime)interval
 {
-	return [self schedule:selector interval:interval repeat:CCTimerRepeatForever delay:0];
+	return [self schedule:selector interval:interval repeat:CCTimerRepeatForever delay:interval];
 }
 
 -(BOOL)unschedule_private:(SEL)selector
@@ -1262,9 +1295,11 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 	if(isRunning && !wasRunning){
 		[_scheduler setPaused:NO target:self];
 		[_actionManager resumeTarget:self];
+        [_animationManager setPaused:NO];
 	} else if(!isRunning && wasRunning){
 		[_scheduler setPaused:YES target:self];
 		[_actionManager pauseTarget:self];
+        [_animationManager setPaused:YES];
 	}
 }
 
@@ -1398,6 +1433,11 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 - (CGPoint) positionInPoints
 {
     return [self convertPositionToPoints:self.position type:_positionType];
+}
+
+-(void)setPositionInPoints:(CGPoint)positionInPoints
+{
+	self.position = [self convertPositionFromPoints:positionInPoints type:self.positionType];
 }
 
 - (CGAffineTransform)nodeToParentTransform
@@ -1696,13 +1736,32 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 
 #pragma mark - RenderState Methods
 
+// The default dictionary is either nil or only contains the main texture.
+static inline BOOL
+CheckDefaultUniforms(NSDictionary *uniforms, CCTexture *texture)
+{
+	if(uniforms == nil){
+		return YES;
+	} else {
+		// Check that the uniforms has only one key for the main texture.
+		return (uniforms.count == 1 && uniforms[CCShaderUniformMainTexture] == texture);
+	}
+}
+
 -(CCRenderState *)renderState
 {
 	if(_renderState == nil){
-		if(_shaderUniforms.count > 1){
-			_renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms];
+		CCTexture *texture = (_texture ?: [CCTexture none]);
+		
+		if(CheckDefaultUniforms(_shaderUniforms, texture)){
+			// Create a cached render state so we can use the fast path.
+			_renderState = [CCRenderState renderStateWithBlendMode:_blendMode shader:_shader mainTexture:texture];
+			
+			// If the uniform dictionary was set, it was the default. Throw it away.
+			_shaderUniforms = nil;
 		} else {
-			_renderState = [CCRenderState renderStateWithBlendMode:_blendMode shader:_shader mainTexture:(_texture ?: [CCTexture none])];
+			// Since the node has unique uniforms, it cannot be batched or use the fast path.
+			_renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms];
 		}
 	}
 	
@@ -1728,10 +1787,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 -(NSMutableDictionary *)shaderUniforms
 {
 	if(_shaderUniforms == nil){
-		_shaderUniforms = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-			(_texture ?: [CCTexture none]), CCShaderUniformMainTexture,
-			nil
-		];
+		_shaderUniforms = [NSMutableDictionary dictionaryWithObject:(_texture ?: [CCTexture none]) forKey:CCShaderUniformMainTexture];
 		
 		_renderState = nil;
 	}

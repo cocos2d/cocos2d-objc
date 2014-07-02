@@ -468,16 +468,14 @@ static inline CCSizeType CCSizeTypeMake(CCSizeUnit widthUnit, CCSizeUnit heightU
     return cst;
 }
 
-#define CCPositionTypePoints CCPositionTypeMake(CCPositionUnitPoints, CCPositionUnitPoints, CCPositionReferenceCornerBottomLeft)
-
-#define CCPositionTypeUIPoints CCPositionTypeMake(CCPositionUnitUIPoints, CCPositionUnitUIPoints, CCPositionReferenceCornerBottomLeft)
-
-#define CCPositionTypeNormalized CCPositionTypeMake(CCPositionUnitNormalized, CCPositionUnitNormalized, CCPositionReferenceCornerBottomLeft)
+static const CCPositionType CCPositionTypePoints = {CCPositionUnitPoints, CCPositionUnitPoints, CCPositionReferenceCornerBottomLeft};
+static const CCPositionType CCPositionTypeUIPoints = {CCPositionUnitUIPoints, CCPositionUnitUIPoints, CCPositionReferenceCornerBottomLeft};
+static const CCPositionType CCPositionTypeNormalized = {CCPositionUnitNormalized, CCPositionUnitNormalized, CCPositionReferenceCornerBottomLeft};
 
 
-#define CCSizeTypePoints CCSizeTypeMake(CCSizeUnitPoints, CCSizeUnitPoints)
-#define CCSizeTypeUIPoints CCSizeTypeMake(CCSizeUnitUIPoints, CCSizeUnitUIPoints)
-#define CCSizeTypeNormalized CCSizeTypeMake(CCSizeUnitNormalized, CCSizeUnitNormalized)
+static const CCSizeType CCSizeTypePoints = {CCSizeUnitPoints, CCSizeUnitPoints};
+static const CCSizeType CCSizeTypeUIPoints = {CCSizeUnitUIPoints, CCSizeUnitUIPoints};
+static const CCSizeType CCSizeTypeNormalized = {CCSizeUnitNormalized, CCSizeUnitNormalized};
 
 typedef NS_ENUM(char, CCScaleType) {
     CCScaleTypePoints,

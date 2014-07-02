@@ -134,6 +134,8 @@ typedef enum ccTMXTileFlags_ {
 /** Auto set when tileOffset is modified. */
 @property (nonatomic,readonly,assign) CGPoint tileAnchorPoint;
 
+/** Content scale of the TMX file. Mostly for backwords compatibility. */
+@property (nonatomic,readwrite) CGFloat contentScale;
 
 /// -----------------------------------------------------------------------
 /// @name Accessing the Tile Map Tileset Info Helpers
@@ -200,6 +202,8 @@ typedef enum ccTMXTileFlags_ {
 // Tile properties dictionary. */
 @property (nonatomic,readwrite,strong) NSMutableDictionary *tileProperties;
 
+/** Content scale of the TMX file. Mostly for backwords compatibility. */
+@property (nonatomic,readwrite) CGFloat contentScale;
 
 /// -----------------------------------------------------------------------
 /// @name Creating a CCTiledMapInfo Object

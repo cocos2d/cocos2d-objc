@@ -40,9 +40,9 @@
  */
 
 // 0x00 HI ME LO
-// 00   03 00 00
-#define COCOS2D_VERSION 0x00030000
-
+// 00   03 01 01
+#define COCOS2D_VERSION 0x00030101
+#define COCOS2D_BUILD @"release"
 //
 // all cocos2d include files
 //
@@ -157,7 +157,6 @@ extern "C" {
 
 // free functions
 NSString * cocos2dVersion(void);
-extern const char * cocos2d_version;
 
 #ifdef __cplusplus
 }

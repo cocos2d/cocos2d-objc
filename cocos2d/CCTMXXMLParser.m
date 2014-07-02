@@ -212,7 +212,7 @@
 
 - (void) parseXMLFile:(NSString *)xmlFilename
 {
-	NSURL *url = [NSURL fileURLWithPath:[[CCFileUtils sharedFileUtils] fullPathForFilename:xmlFilename] ];
+	NSURL *url = [NSURL fileURLWithPath:[[CCFileUtils sharedFileUtils] fullPathForFilename:xmlFilename contentScale:&_contentScale]];
 	NSData *data = [NSData dataWithContentsOfURL:url];
 	[self parseXMLData:data];
 }
@@ -229,15 +229,13 @@
 			_orientation = CCTiledMapOrientationOrtho;
 		else if ( [orientationStr isEqualToString:@"isometric"])
 			_orientation = CCTiledMapOrientationIso;
-		else if( [orientationStr isEqualToString:@"hexagonal"])
-			_orientation = CCTiledMapOrientationHex;
 		else
 			CCLOG(@"cocos2d: TMXFomat: Unsupported orientation: %d", _orientation);
 
 		_mapSize.width = [[attributeDict objectForKey:@"width"] intValue];
 		_mapSize.height = [[attributeDict objectForKey:@"height"] intValue];
-		_tileSize.width = [[attributeDict objectForKey:@"tilewidth"] intValue];
-		_tileSize.height = [[attributeDict objectForKey:@"tileheight"] intValue];
+		_tileSize.width = [[attributeDict objectForKey:@"tilewidth"] intValue]/_contentScale;
+		_tileSize.height = [[attributeDict objectForKey:@"tileheight"] intValue]/_contentScale;
 
 		// The parent element is now "map"
 		_parentElement = TMXPropertyMap;
@@ -264,13 +262,14 @@
 				tileset.firstGid = _currentFirstGID;
 				_currentFirstGID = 0;
 			}
-			tileset.spacing = [[attributeDict objectForKey:@"spacing"] intValue];
-			tileset.margin = [[attributeDict objectForKey:@"margin"] intValue];
+			tileset.spacing = [[attributeDict objectForKey:@"spacing"] intValue]/_contentScale;
+			tileset.margin = [[attributeDict objectForKey:@"margin"] intValue]/_contentScale;
 			CGSize s;
-			s.width = [[attributeDict objectForKey:@"tilewidth"] intValue];
-			s.height = [[attributeDict objectForKey:@"tileheight"] intValue];
+			s.width = [[attributeDict objectForKey:@"tilewidth"] intValue]/_contentScale;
+			s.height = [[attributeDict objectForKey:@"tileheight"] intValue]/_contentScale;
 			tileset.tileSize = s;
 			tileset.tileOffset = CGPointZero; //default offset (0,0)
+			tileset.contentScale = _contentScale;
 
 			[_tilesets addObject:tileset];
 		}
@@ -281,7 +280,7 @@
 		CCTiledMapTilesetInfo *tileset = [_tilesets lastObject];
 		CGPoint offset = CGPointMake([[attributeDict objectForKey:@"x"] floatValue],
 									 [[attributeDict objectForKey:@"y"] floatValue]);
-		tileset.tileOffset = offset;
+		tileset.tileOffset = ccpMult(offset, 1.0/_contentScale);
 	}
 	else if([elementName isEqualToString:@"tile"]) {
 		CCTiledMapTilesetInfo* info = [_tilesets lastObject];
@@ -302,10 +301,11 @@
 
 		layer.visible = ![[attributeDict objectForKey:@"visible"] isEqualToString:@"0"];
 
-		if( [attributeDict objectForKey:@"opacity"] )
-			layer.opacity = 255 * [[attributeDict objectForKey:@"opacity"] floatValue];
-		else
-			layer.opacity = 255;
+		if( [attributeDict objectForKey:@"opacity"] ){
+			layer.opacity = [[attributeDict objectForKey:@"opacity"] floatValue];
+		} else {
+			layer.opacity = 1.0;
+		}
 
 		int x = [[attributeDict objectForKey:@"x"] intValue];
 		int y = [[attributeDict objectForKey:@"y"] intValue];
@@ -444,6 +444,13 @@
 			[dict setObject:propertyValue forKey:propertyName];
 		}
 
+    } else if ([elementName isEqualToString:@"ellipse"]) {
+		
+		// find parent object's dict and add ellipse-boolean (true) to it
+		CCTiledMapObjectGroup *objectGroup = [_objectGroups lastObject];
+		NSMutableDictionary *dict = [[objectGroup objects] lastObject];
+		[dict setObject:[NSNumber numberWithBool:YES] forKey:@"ellipse"];
+    
 	} else if ([elementName isEqualToString:@"polygon"]) {
 		
 		// find parent object's dict and add polygon-points to it

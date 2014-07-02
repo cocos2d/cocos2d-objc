@@ -80,7 +80,7 @@
     [super onEnter];
     
     // In pre-v3, touch enable and scheduleUpdate was called here
-    // In v3, touch is enabled by setting userInterActionEnabled for the individual nodes
+    // In v3, touch is enabled by setting userInteractionEnabled for the individual nodes
     // Per frame update is automatically enabled, if update is overridden
     
 }

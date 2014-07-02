@@ -41,6 +41,9 @@
 #import "CCRenderer_private.h"
 #import "CCSprite_Private.h"
 #import "CCTexture_Private.h"
+#import "CCEffect.h"
+#import "CCEffectRenderer.h"
+#import "CCEffectStack.h"
 
 #pragma mark -
 #pragma mark CCSprite
@@ -63,6 +66,11 @@
 	CCSpriteVertexes _verts;
 	
 	BOOL _flipX, _flipY;
+    
+    CCEffect *_effect;
+#if CC_ENABLE_EXPERIMENTAL_EFFECTS
+    CCEffectRenderer *_effectRenderer;
+#endif
 }
 
 +(id)spriteWithImageNamed:(NSString*)imageName
@@ -137,6 +145,10 @@
 		
 		[self setTexture:texture];
 		[self setTextureRect:rect rotated:rotated untrimmedSize:rect.size];
+        
+#if CC_ENABLE_EXPERIMENTAL_EFFECTS
+        _effectRenderer = [[CCEffectRenderer alloc] init];
+#endif
 	}
 	
 	return self;
@@ -274,15 +286,15 @@
 
 	if(_textureRectRotated){
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-		float left	= (2*rect.origin.x + 1)/(2*atlasWidth);
-		float right	= left+(rect.size.height*2 - 2)/(2*atlasWidth);
-		float top		= (2*rect.origin.y + 1)/(2*atlasHeight);
-		float bottom	= top+(rect.size.width*2 - 2)/(2*atlasHeight);
+		float left   = (2.0f*rect.origin.x + 1.0f)/(2.0f*atlasWidth);
+		float right  = left+(rect.size.height*2.0f - 2.0f)/(2.0f*atlasWidth);
+		float top    = 1.0f - (2.0f*rect.origin.y + 1.0f)/(2.0f*atlasHeight);
+		float bottom = 1.0f - top+(rect.size.width*2.0f - 2.0f)/(2.0f*atlasHeight);
 #else
-		float left	= rect.origin.x/atlasWidth;
-		float right	= (rect.origin.x + rect.size.height)/atlasWidth;
-		float top		= rect.origin.y/atlasHeight;
-		float bottom	= (rect.origin.y + rect.size.width)/atlasHeight;
+		float left   = rect.origin.x/atlasWidth;
+		float right  = (rect.origin.x + rect.size.height)/atlasWidth;
+		float top    = 1.0f - rect.origin.y/atlasHeight;
+		float bottom = 1.0f - (rect.origin.y + rect.size.width)/atlasHeight;
 #endif
 
 		if( _flipX) CC_SWAP(top,bottom);
@@ -294,15 +306,15 @@
 		_verts.tl.texCoord1 = GLKVector2Make(right,    top);
 	} else {
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-		float left	= (2*rect.origin.x + 1)/(2*atlasWidth);
-		float right	= left + (rect.size.width*2 - 2)/(2*atlasWidth);
-		float top		= (2*rect.origin.y + 1)/(2*atlasHeight);
-		float bottom	= top + (rect.size.height*2 - 2)/(2*atlasHeight);
+		float left   = (2.0f*rect.origin.x + 1.0f)/(2.0f*atlasWidth);
+		float right  = left + (rect.size.width*2.0f - 2.0f)/(2.0f*atlasWidth);
+		float top    = 1.0f - (2.0f*rect.origin.y + 1.0f)/(2.0f*atlasHeight);
+		float bottom = 1.0f - top + (rect.size.height*2.0f - 2.0f)/(2.0f*atlasHeight);
 #else
-		float left	= rect.origin.x/atlasWidth;
-		float right	= (rect.origin.x + rect.size.width)/atlasWidth;
-		float top		= rect.origin.y/atlasHeight;
-		float bottom	= (rect.origin.y + rect.size.height)/atlasHeight;
+		float left   = rect.origin.x/atlasWidth;
+		float right  = (rect.origin.x + rect.size.width)/atlasWidth;
+		float top    = 1.0f - rect.origin.y/atlasHeight;
+		float bottom = 1.0f - (rect.origin.y + rect.size.height)/atlasHeight;
 #endif
 
 		if( _flipX) CC_SWAP(left,right);
@@ -324,22 +336,33 @@
 
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
 {
-	if(!CCRenderCheckVisbility(transform, _vertexCenter, _vertexExtents)) return;
-	
-	CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:self.renderState];
-	CCRenderBufferSetVertex(buffer, 0, CCVertexApplyTransform(_verts.bl, transform));
-	CCRenderBufferSetVertex(buffer, 1, CCVertexApplyTransform(_verts.br, transform));
-	CCRenderBufferSetVertex(buffer, 2, CCVertexApplyTransform(_verts.tr, transform));
-	CCRenderBufferSetVertex(buffer, 3, CCVertexApplyTransform(_verts.tl, transform));
-	
-	CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
-	CCRenderBufferSetTriangle(buffer, 1, 0, 2, 3);
-	
+    if(!CCRenderCheckVisbility(transform, _vertexCenter, _vertexExtents)) return;
+    
+#if CC_ENABLE_EXPERIMENTAL_EFFECTS
+    if (self.effect)
+    {
+        _effectRenderer.contentSize = self.texture.contentSize;
+        [_effectRenderer drawSprite:self withEffect:self.effect renderer:renderer transform:transform];
+        
+        if (!self.effect.supportsDirectRendering)
+        {
+            CCTexture *backup = self.texture;
+            self.texture = _effectRenderer.outputTexture;
+            [self enqueueTriangles:renderer transform:transform];
+            self.texture = backup;
+        }
+    }
+    else
+#endif
+    {
+        [self enqueueTriangles:renderer transform:transform];
+	}
+    
 #if CC_SPRITE_DEBUG_DRAW
 	const GLKVector2 zero = {{0, 0}};
 	const GLKVector4 white = {{1, 1, 1, 1}};
 	
-	CCRenderBuffer debug = [renderer enqueueLines:4 andVertexes:4 withState:[CCRenderState debugColor]];
+	CCRenderBuffer debug = [renderer enqueueLines:4 andVertexes:4 withState:[CCRenderState debugColor] globalSortOrder:0];
 	CCRenderBufferSetVertex(debug, 0, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts.bl.position), zero, zero, white});
 	CCRenderBufferSetVertex(debug, 1, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts.br.position), zero, zero, white});
 	CCRenderBufferSetVertex(debug, 2, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts.tr.position), zero, zero, white});
@@ -350,6 +373,18 @@
 	CCRenderBufferSetLine(debug, 2, 2, 3);
 	CCRenderBufferSetLine(debug, 3, 3, 0);
 #endif
+}
+
+-(void)enqueueTriangles:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
+{
+    CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:self.renderState globalSortOrder:0];
+    CCRenderBufferSetVertex(buffer, 0, CCVertexApplyTransform(_verts.bl, transform));
+    CCRenderBufferSetVertex(buffer, 1, CCVertexApplyTransform(_verts.br, transform));
+    CCRenderBufferSetVertex(buffer, 2, CCVertexApplyTransform(_verts.tr, transform));
+    CCRenderBufferSetVertex(buffer, 3, CCVertexApplyTransform(_verts.tl, transform));
+    
+    CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
+    CCRenderBufferSetTriangle(buffer, 1, 0, 2, 3);
 }
 
 #pragma mark CCSprite - CCNode overrides
@@ -433,6 +468,17 @@
     [self updateColor];
 }
 
+#if CC_ENABLE_EXPERIMENTAL_EFFECTS
+-(CCEffect *)effect
+{
+	return _effect;
+}
+
+-(void)setEffect:(CCEffect *)effect
+{
+    _effect = effect;
+}
+#endif
 
 //
 // Frames

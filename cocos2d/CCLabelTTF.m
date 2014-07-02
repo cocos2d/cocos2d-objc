@@ -329,6 +329,16 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     _isTextureDirty = YES;
 }
 
+-(CCRenderState *)renderState
+{
+	if(_renderState == nil){
+		// Create an uncached renderstate so the texture can be released before the renderstate cache is flushed.
+		_renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:self.shaderUniforms];
+	}
+	
+	return _renderState;
+}
+
 
 #pragma mark -
 #pragma mark Render Font Mac & iOS 6
@@ -518,6 +528,9 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         dimensions = [attributedString boundingRectWithSize:NSSizeFromCGSize(dimensions) options:NSStringDrawingUsesLineFragmentOrigin].size;
 #endif
         
+        dimensions.width = ceil(dimensions.width);
+        dimensions.height = ceil(dimensions.height);
+        
         wDrawArea = dimensions.width;
         hDrawArea = dimensions.height;
         
@@ -603,8 +616,6 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     // Render the label - different code for Mac / iOS
     
 #ifdef __CC_PLATFORM_IOS
-    yOffset = (POTSize.height - dimensions.height) + yOffset;
-	
 	CGRect drawArea = CGRectMake(xOffset, yOffset, wDrawArea, hDrawArea);
     
     unsigned char* data = calloc(POTSize.width, POTSize.height * 4);
@@ -619,9 +630,6 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         return NULL;
     }
     
-    CGAffineTransform flipVertical = CGAffineTransformMake(1, 0, 0, -1, 0, POTSize.height * 2 - dimensions.height);
-    CGContextConcatCTM(context, flipVertical);
-    
 	UIGraphicsPushContext(context);
     
     // Handle shadow
@@ -629,7 +637,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     {
         UIColor* color = _shadowColor.UIColor;
         
-        CGContextSetShadowWithColor(context, CGSizeMake(shadowOffset.x, shadowOffset.y), shadowBlurRadius, [color CGColor]);
+        CGContextSetShadowWithColor(context, CGSizeMake(shadowOffset.x, -shadowOffset.y), shadowBlurRadius, [color CGColor]);
     }
     
     // Handle outline
@@ -669,7 +677,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 	
 	NSImage *image = [[NSImage alloc] initWithSize:POTSize];
 	[image lockFocus];
-	[[NSAffineTransform transform] set];
+    [[NSAffineTransform transform] set];
     
     // XXX: The shadows are for some reason scaled on OS X if a retina display is connected
     CGFloat retinaFix = 1;
@@ -679,6 +687,8 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     }
     
     CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
+		CGContextSaveGState(context);
+		CGContextConcatCTM(context, CGAffineTransformMake(1.0, 0.0, 0.0, -1.0, 0.0, POTSize.height));
     
     // Handle shadow
     if (hasShadow || hasOutline)
@@ -690,7 +700,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 
             NSColor* color = [NSColor colorWithCalibratedRed:_shadowColor.red green:_shadowColor.green blue:_shadowColor.blue alpha:_shadowColor.alpha];
             
-            CGContextSetShadowWithColor(context, CGSizeMake(shadowOffset.x/retinaFix, shadowOffset.y/retinaFix), shadowBlurRadius/retinaFix, [color CGColor]);
+            CGContextSetShadowWithColor(context, CGSizeMake(shadowOffset.x/retinaFix, -shadowOffset.y/retinaFix), shadowBlurRadius/retinaFix, [color CGColor]);
         }
         
         if (hasOutline)
@@ -716,6 +726,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     }
 	
     [attributedString drawWithRect:NSRectFromCGRect(drawArea) options:NSStringDrawingUsesLineFragmentOrigin];
+		CGContextRestoreGState(context);
 	
 	NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect (0.0f, 0.0f, POTSize.width, POTSize.height)];
 	[image unlockFocus];
@@ -907,8 +918,6 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     if( POTSize.height == 0)
     POTSize.height = 2;
 
-    yOffset = (POTSize.height - dimensions.height) + yOffset;
-
     CGRect drawArea = CGRectMake(xOffset, yOffset, wDrawArea, hDrawArea);
 
     unsigned char* data = calloc(POTSize.width, POTSize.height * 4);
@@ -923,9 +932,6 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         return NULL;
     }
 
-    CGAffineTransform flipVertical = CGAffineTransformMake(1, 0, 0, -1, 0, POTSize.height * 2 - dimensions.height);
-    CGContextConcatCTM(context, flipVertical);
-
     UIGraphicsPushContext(context);
     
     // Handle shadow
@@ -933,7 +939,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     {
         UIColor* color = _shadowColor.UIColor;
         
-        CGContextSetShadowWithColor(context, CGSizeMake(shadowOffset.x, shadowOffset.y), shadowBlurRadius, [color CGColor]);
+        CGContextSetShadowWithColor(context, CGSizeMake(shadowOffset.x, -shadowOffset.y), shadowBlurRadius, [color CGColor]);
     }
     
     // Handle outline

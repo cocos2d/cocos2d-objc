@@ -29,6 +29,7 @@
 #import <objc/runtime.h>
 
 #define kCCTestMenuItemHeight 44
+static CGPoint scrollPosition;
 
 @implementation MainMenu
 
@@ -70,11 +71,6 @@
     self = [super init];
     if (!self) return NULL;
     
-    // Load resources
-    [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"Interface.plist"];
-    [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"Sprites.plist"];
-    [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"TilesAtlassed.plist"];
-    
     // Make the node the same size as the parent container (i.e. the screen)
     self.contentSizeType = CCSizeTypeNormalized;
     self.contentSize = CGSizeMake(1, 1);
@@ -103,6 +99,7 @@
     tableView.rowHeight = kCCTestMenuItemHeight;
     tableView.rowHeightUnit = CCSizeUnitUIPoints;
     tableView.dataSource = self;
+	tableView.scrollPosition = scrollPosition;
     
     [self addChild:tableView z:-1];
     
@@ -114,6 +111,7 @@
 - (void) selectedRow:(id)sender
 {
     CCTableView* tableView = sender;
+	scrollPosition = tableView.scrollPosition;
     
     NSString* className = [[self testClassNames] objectAtIndex:tableView.selectedRow];
     

@@ -24,13 +24,13 @@
 
 #import "CCNode.h"
 
-extern inline CGPoint NodeToPhysicsScale(CCNode * node);
-extern inline float NodeToPhysicsRotation(CCNode *node);
-extern inline CGAffineTransform NodeToPhysicsTransform(CCNode *node);
-extern inline CGAffineTransform RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body);
-extern inline CGPoint GetPositionFromBody(CCNode *node, CCPhysicsBody *body);
-extern inline CGPoint TransformPointAsVector(CGPoint p, CGAffineTransform t);
-extern inline CGAffineTransform CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians);
+CGPoint NodeToPhysicsScale(CCNode * node);
+float NodeToPhysicsRotation(CCNode *node);
+CGAffineTransform NodeToPhysicsTransform(CCNode *node);
+CGAffineTransform RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body);
+CGPoint GetPositionFromBody(CCNode *node, CCPhysicsBody *body);
+CGPoint TransformPointAsVector(CGPoint p, CGAffineTransform t);
+CGAffineTransform CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians);
 
 @interface CCNode()<CCShaderProtocol, CCBlendProtocol, CCTextureProtocol> {
 	@protected
@@ -70,6 +70,9 @@ extern inline CGAffineTransform CGAffineTransformMakeRigid(CGPoint translate, CG
  IMPORTANT: If you set a new CCScheduler, then previously created timers/update are going to be removed.
  */
 @property (nonatomic, readwrite, strong) CCScheduler *scheduler;
+
+/* Reads and writes the animation manager for this node.*/
+@property (nonatomic, readwrite) CCAnimationManager * animationManager;
 
 /* Compares two nodes in respect to zOrder and orderOfArrival (used for sorting sprites in display list) */
 - (NSComparisonResult) compareZOrderToNode:(CCNode*)node;

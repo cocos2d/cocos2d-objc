@@ -67,7 +67,7 @@ static NSBundle* g_defaultBundle;
 		return nil;
 	}
 	
-    NSString* fullPath = [[CCFileUtils sharedFileUtils] fullPathForFilename:path];
+    NSString* fullPath = [[CCFileUtils sharedFileUtils] fullPathForFilenameIgnoringResolutions:path];
     if(nil == fullPath)
     {
         OAL_LOG_ERROR(@"Could not find full path of file %@", path);

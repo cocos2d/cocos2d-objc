@@ -27,6 +27,9 @@
 @interface CCDirector () {
 	@protected
 	GLKMatrix4 _projectionMatrix;
+	__weak id<CCDirectorDelegate> _delegate;
+	__weak NSThread *_runningThread;
+
 }
 
 /* Whether or not the replaced scene will receive the cleanup message.
@@ -78,8 +81,11 @@
  */
 -(void) drawScene;
 
-// helper
-/* creates the Stats labels */
+@end
+
+
+@interface CCDirector(Stats)
+
 -(void) createStatsLabel;
 
 @end

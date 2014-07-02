@@ -34,7 +34,7 @@
 @class CCBlendMode;
 @class CCShader;
 @class CCRenderState;
-
+@class CCEffect;
 
 #pragma mark - CCShaderProtocol
 
@@ -54,6 +54,16 @@
 
 @end
 
+#pragma mark - CCEffectProtocol
+
+@protocol CCEffectProtocol <NSObject>
+
+#if CC_ENABLE_EXPERIMENTAL_EFFECTS
+/** Effect which will be applied to this sprite, NOTE: effect will overwrite any custom CCShader settings. */
+@property (nonatomic) CCEffect* effect;
+#endif
+
+@end
 
 #pragma mark - CCBlendProtocol
 /**
@@ -70,9 +80,9 @@
 @property(nonatomic, readonly) CCRenderState *renderState;
 
 /** set the source blending function for the texture */
--(void) setBlendFunc:(ccBlendFunc)blendFunc __deprecated;
+-(void) setBlendFunc:(ccBlendFunc)blendFunc __attribute__((deprecated));
 /** returns the blending function used for the texture */
--(ccBlendFunc) blendFunc __deprecated;
+-(ccBlendFunc) blendFunc __attribute__((deprecated));
 
 @end
 

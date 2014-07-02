@@ -149,7 +149,7 @@ TexCoordInterpolationMatrix(const CCSpriteVertexes *verts)
 	GLKMatrix3 interpolateTexCoord = TexCoordInterpolationMatrix(_verts);
 	GLKVector4 color = _verts->bl.color;
 	
-	CCRenderBuffer buffer = [renderer enqueueTriangles:18 andVertexes:16 withState:self.renderState];
+	CCRenderBuffer buffer = [renderer enqueueTriangles:18 andVertexes:16 withState:self.renderState globalSortOrder:0];
 	
 	// Interpolate the vertexes!
 	for(int y=0; y<4; y++){
@@ -176,7 +176,10 @@ TexCoordInterpolationMatrix(const CCSpriteVertexes *verts)
 - (float)margin
 {
     // if margins are not the same, a unified margin can nort be read
-    NSAssert(_marginLeft == _marginRight == _marginTop == _marginBottom, @"Margin can not be read. Do not know which margin to return");
+    NSAssert(_marginLeft == _marginRight &&
+             _marginLeft == _marginTop &&
+             _marginLeft == _marginBottom, @"Margin can not be read. Do not know which margin to return");
+
     // just return any of them
     return(_marginLeft);
 }

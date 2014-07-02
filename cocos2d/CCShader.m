@@ -57,8 +57,12 @@ const NSString *CCShaderUniformMainTexture = @"cc_MainTexture";
 const NSString *CCShaderUniformAlphaTestValue = @"cc_AlphaTestValue";
 
 
+// Stringify macros
+#define STR(s) #s
+#define XSTR(s) STR(s)
+
 /*
-	main texture size points/pixels
+	main texture size points/pixels?
 */
 static const GLchar *CCShaderHeader =
 	"#ifndef GL_ES\n"
@@ -74,8 +78,8 @@ static const GLchar *CCShaderHeader =
 	"uniform highp vec4 cc_SinTime;\n"
 	"uniform highp vec4 cc_CosTime;\n"
 	"uniform highp vec4 cc_Random01;\n\n"
-	"uniform lowp sampler2D cc_MainTexture;\n\n"
-	"varying lowp vec4 cc_FragColor;\n"
+	"uniform " XSTR(CC_SHADER_COLOR_PRECISION) " sampler2D cc_MainTexture;\n\n"
+	"varying " XSTR(CC_SHADER_COLOR_PRECISION) " vec4 cc_FragColor;\n"
 	"varying highp vec2 cc_FragTexCoord1;\n"
 	"varying highp vec2 cc_FragTexCoord2;\n\n"
 	"// End Cocos2D shader header.\n\n";
@@ -84,6 +88,7 @@ static const GLchar *CCVertexShaderHeader =
 	"#ifdef GL_ES\n"
 	"precision highp float;\n\n"
 	"#endif\n\n"
+	"#define CC_NODE_RENDER_SUBPIXEL " XSTR(CC_NODE_RENDER_SUBPIXEL) "\n"
 	"attribute highp vec4 cc_Position;\n"
 	"attribute highp vec2 cc_TexCoord1;\n"
 	"attribute highp vec2 cc_TexCoord2;\n"
@@ -92,13 +97,17 @@ static const GLchar *CCVertexShaderHeader =
 
 static const GLchar *CCFragmentShaderHeader =
 	"#ifdef GL_ES\n"
-	"precision mediump float;\n\n"
+	"precision " XSTR(CC_SHADER_DEFAULT_FRAGMENT_PRECISION) " float;\n"
 	"#endif\n\n"
 	"// End Cocos2D fragment shader header.\n\n";
 
 static NSString *CCDefaultVShader =
 	@"void main(){\n"
 	@"	gl_Position = cc_Position;\n"
+	@"#if !CC_NODE_RENDER_SUBPIXEL\n"
+	@"	vec2 pixelPos = (0.5*gl_Position.xy/gl_Position.w + 0.5)*cc_ViewSizeInPixels;\n"
+	@"	gl_Position.xy = (2.0*floor(pixelPos)/cc_ViewSizeInPixels - 1.0)*gl_Position.w;\n"
+	@"#endif\n\n"
 	@"	cc_FragColor = clamp(cc_Color, 0.0, 1.0);\n"
 	@"	cc_FragTexCoord1 = cc_TexCoord1;\n"
 	@"	cc_FragTexCoord2 = cc_TexCoord2;\n"
@@ -226,8 +235,8 @@ CompileShader(GLenum type, const char *source)
 static CCUniformSetter
 SetFloat(NSString *name, GLint location)
 {
-	return ^(CCRenderer *renderer, NSNumber *value){
-		value = value ?: @0;
+	return ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
+		NSNumber *value = shaderUniforms[name] ?: globalShaderUniforms[name] ?: @(0.0);
 		NSCAssert([value isKindOfClass:[NSNumber class]], @"Shader uniform '%@' value must be wrapped in a NSNumber.", name);
 		
 		glUniform1f(location, value.floatValue);
@@ -237,8 +246,29 @@ SetFloat(NSString *name, GLint location)
 static CCUniformSetter
 SetVec2(NSString *name, GLint location)
 {
-	return ^(CCRenderer *renderer, NSValue *value){
-		value = value ?: [NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)];
+	NSString *textureName = nil;
+	bool pixelSize = [name hasSuffix:@"PixelSize"];
+	if(pixelSize){
+		textureName = [name substringToIndex:name.length - @"PixelSize".length];
+	} else if([name hasSuffix:@"Size"]){
+		textureName = [name substringToIndex:name.length - @"Size".length];
+	}
+	
+	return ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
+		NSValue *value = shaderUniforms[name] ?: globalShaderUniforms[name];
+		
+		// Fall back on looking up the actual texture size if the name matches a texture.
+		if(value == nil && textureName){
+			CCTexture *texture = shaderUniforms[textureName] ?: globalShaderUniforms[textureName];
+			GLKVector2 sizeInPixels = GLKVector2Make(texture.pixelWidth, texture.pixelHeight);
+			
+			GLKVector2 size = GLKVector2MultiplyScalar(sizeInPixels, pixelSize ? 1.0 : 1.0/texture.contentScale);
+			value = [NSValue valueWithGLKVector2:size];
+		}
+		
+		// Finally fall back on 0.
+		if(value == nil) value = [NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)];
+		
 		NSCAssert([value isKindOfClass:[NSValue class]], @"Shader uniform '%@' value must be wrapped in a NSValue.", name);
 		
 		if(strcmp(value.objCType, @encode(GLKVector2)) == 0){
@@ -259,8 +289,8 @@ SetVec2(NSString *name, GLint location)
 static CCUniformSetter
 SetVec3(NSString *name, GLint location)
 {
-	return ^(CCRenderer *renderer, NSValue *value){
-		value = value ?: [NSValue valueWithGLKVector3:GLKVector3Make(0.0f, 0.0f, 0.0f)];
+	return ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
+		NSValue *value = shaderUniforms[name] ?: globalShaderUniforms[name] ?: [NSValue valueWithGLKVector3:GLKVector3Make(0.0f, 0.0f, 0.0f)];
 		NSCAssert([value isKindOfClass:[NSValue class]], @"Shader uniform '%@' value must be wrapped in a NSValue.", name);
 		NSCAssert(strcmp(value.objCType, @encode(GLKVector3)) == 0, @"Shader uniformm 'vec3 %@' value must be passed using [NSValue valueWithGLKVector3:]", name);
 		
@@ -272,8 +302,8 @@ SetVec3(NSString *name, GLint location)
 static CCUniformSetter
 SetVec4(NSString *name, GLint location)
 {
-	return ^(CCRenderer *renderer, id value){
-		value = value ?: [NSValue valueWithGLKVector4:GLKVector4Make(0.0f, 0.0f, 0.0f, 1.0f)];
+	return ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
+		NSValue *value = shaderUniforms[name] ?: globalShaderUniforms[name] ?: [NSValue valueWithGLKVector4:GLKVector4Make(0.0f, 0.0f, 0.0f, 1.0f)];
 		
 		if([value isKindOfClass:[NSValue class]]){
 			NSCAssert(strcmp([(NSValue *)value objCType], @encode(GLKVector4)) == 0, @"Shader uniformm 'vec4 %@' value must be passed using [NSValue valueWithGLKVector4:].", name);
@@ -292,8 +322,8 @@ SetVec4(NSString *name, GLint location)
 static CCUniformSetter
 SetMat4(NSString *name, GLint location)
 {
-	return ^(CCRenderer *renderer, NSValue *value){
-		value = value ?: [NSValue valueWithGLKMatrix4:GLKMatrix4Identity];
+	return ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
+		NSValue *value = shaderUniforms[name] ?: globalShaderUniforms[name] ?: [NSValue valueWithGLKMatrix4:GLKMatrix4Identity];
 		NSCAssert([value isKindOfClass:[NSValue class]], @"Shader uniform '%@' value must be wrapped in a NSValue.", name);
 		NSCAssert(strcmp(value.objCType, @encode(GLKMatrix4)) == 0, @"Shader uniformm 'mat4 %@' value must be passed using [NSValue valueWithGLKMatrix4:]", name);
 		
@@ -335,8 +365,8 @@ SetMat4(NSString *name, GLint location)
 			case GL_FLOAT_MAT4: uniformSetters[name] = SetMat4(name, location); break;
 			case GL_SAMPLER_2D: {
 				// Sampler setters are handled a differently since the real work is binding the texture and not setting the uniform value.
-				uniformSetters[name] = ^(CCRenderer *renderer, CCTexture *texture){
-					texture = texture ?: [CCTexture none];
+				uniformSetters[name] = ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
+					CCTexture *texture = shaderUniforms[name] ?: globalShaderUniforms[name] ?: [CCTexture none];
 					NSAssert([texture isKindOfClass:[CCTexture class]], @"Shader uniform '%@' value must be a CCTexture object.", name);
 					
 					// Bind the texture to the texture unit for the uniform.

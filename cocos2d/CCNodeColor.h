@@ -113,7 +113,6 @@
 @interface CCNodeGradient : CCNodeColor {
 	ccColor4F _endColor;
 	CGPoint _vector;
-	BOOL	_compressedInterpolation;
 }
 
 
@@ -188,11 +187,11 @@
 /** The vector along which to fade color. */
 @property (nonatomic, readwrite) CGPoint vector;
 
-/** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors.
- *
+/**
+ *	Deprecated in 3.1. All colors are correctly displayed across the node's rectangle.
  *  Default: YES.
  */
-@property (nonatomic, readwrite) BOOL compressedInterpolation;
+@property (nonatomic, readwrite) BOOL compressedInterpolation __attribute__((deprecated));
 
 @end
 
@@ -203,7 +202,7 @@
  *  Features:
  *
  *  - It supports one or more children
- *  - Only one children will be active a time
+ *  - Only one child will be active a time
  */
 @interface CCNodeMultiplexer : CCNode {
 	unsigned int _enabledNode;
@@ -216,21 +215,21 @@
 /// -----------------------------------------------------------------------
 
 /**
- *  Creates a CCNodeMultiplexer with an array of layers.
+ *  Creates a CCNodeMultiplexer with an array of nodes.
  *
  *  @param arrayOfNodes Array of nodes.
  *
- *  @return The CCNodeMultiplexer Object.
+ *  @return The CCNodeMultiplexer object.
  */
 +(id)nodeWithArray:(NSArray*)arrayOfNodes;
 
-/** Creates a CCMultiplexLayer with one or more layers using a variable argument list.
+/** Creates a CCMultiplexLayer with one or more nodes using a variable argument list.
  *  Example: 
  *  @code mux = [CCNodeMultiplexer nodeWithNodes:nodeA, nodeB, nodeC, nil];
  *  
  *  @param node List of nodes.
  *  @param ... Nil terminator.
- *  @return The CCNodeMultiplexer Object.
+ *  @return The CCNodeMultiplexer object.
  */
 +(id)nodeWithNodes:(CCNode*)node, ... NS_REQUIRES_NIL_TERMINATION;
 
@@ -240,7 +239,7 @@
 /// -----------------------------------------------------------------------
 
 /**
- *  Initializes a CCNodeMultiplexer with an array of layers.
+ *  Initializes a CCNodeMultiplexer with an array of nodes.
  *
  *  @param arrayOfNodes Array of nodes.
  *

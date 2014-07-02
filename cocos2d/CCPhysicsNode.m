@@ -389,21 +389,21 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 
 //MARK: Queries:
 
--(void)pointQueryAt:(CGPoint)point within:(CGFloat)radius block:(BOOL (^)(CCPhysicsShape *, CGPoint, CGFloat))block
+-(void)pointQueryAt:(CGPoint)point within:(CGFloat)radius block:(void (^)(CCPhysicsShape *, CGPoint, CGFloat))block
 {
 	cpSpacePointQuery_b(_space.space, CCP_TO_CPV(point), radius, CP_SHAPE_FILTER_ALL, ^(cpShape *shape, cpVect p, cpFloat d, cpVect g){
 		block([cpShapeGetUserData(shape) userData], CPV_TO_CCP(p), d);
 	});
 }
 
--(void)rayQueryFirstFrom:(CGPoint)start to:(CGPoint)end block:(BOOL (^)(CCPhysicsShape *, CGPoint, CGPoint, CGFloat))block
+-(void)rayQueryFirstFrom:(CGPoint)start to:(CGPoint)end block:(void (^)(CCPhysicsShape *, CGPoint, CGPoint, CGFloat))block
 {
 	cpSpaceSegmentQuery_b(_space.space, CCP_TO_CPV(start), CCP_TO_CPV(end), 0.0, CP_SHAPE_FILTER_ALL, ^(cpShape *shape, cpVect p, cpVect n, cpFloat t){
 		block([cpShapeGetUserData(shape) userData], CPV_TO_CCP(p), CPV_TO_CCP(n), t);
 	});
 }
 
--(void)rectQuery:(CGRect)rect block:(BOOL (^)(CCPhysicsShape *shape))block
+-(void)rectQuery:(CGRect)rect block:(void (^)(CCPhysicsShape *shape))block
 {
 	cpBB bb = cpBBNew(
 		CGRectGetMinX(rect),

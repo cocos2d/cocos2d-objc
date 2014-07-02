@@ -27,9 +27,19 @@
 
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
-const char *cocos2d_version = "Cocos2D-iPhone version 3.0.0";
 
 NSString *cocos2dVersion()
 {
-	return [NSString stringWithCString:cocos2d_version encoding:NSUTF8StringEncoding];
+    int major   = (COCOS2D_VERSION >> 16) & 0x0000FF;
+    int minor   = (COCOS2D_VERSION >>  8) & 0x0000FF;
+    int rev     = (COCOS2D_VERSION >>  0) & 0x0000FF;
+    
+    if ([COCOS2D_BUILD isEqualToString:@"release"])
+    {
+        return [NSString stringWithFormat:@"Cocos2D-Swift version %d.%d.%d", major, minor, rev];
+    }
+    else
+    {
+        return([[NSString stringWithFormat:@"Cocos2D-Swift version %d.%d.%d-", major, minor, rev] stringByAppendingString:COCOS2D_BUILD]);
+    }
 }
