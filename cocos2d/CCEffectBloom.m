@@ -178,8 +178,7 @@
     
     [shaderString appendString:@"const vec3 luminanceWeighting = vec3(0.2125, 0.7154, 0.0721);\n\
      float luminance = dot(src.rgb, luminanceWeighting);\n\
-     luminance *= u_luminanceThreshold;\n\
-     if(!(src.r >= luminance && src.g >= luminance && src.b >= luminance))\n discard;\n"];
+     if(luminance < u_luminanceThreshold)\n discard;\n"];
     
     [shaderString appendString:@"} else {\n"];
     [shaderString appendString:@"\
