@@ -498,9 +498,7 @@
 	}
 
 	// update rect
-	_textureRectRotated = frame.rotated;
-
-	[self setTextureRect:frame.rect rotated:_textureRectRotated untrimmedSize:frame.originalSize];
+	[self setTextureRect:frame.rect rotated:frame.rotated untrimmedSize:frame.originalSize];
     
     _spriteFrame = frame;
 }
