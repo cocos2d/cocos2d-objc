@@ -17,6 +17,7 @@
 		75FCA711185F89A0006E7468 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 75FCA70C185F89A0006E7468 /* TileMaps */; };
 		75FCA712185F89A0006E7468 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 75FCA70D185F89A0006E7468 /* Images */; };
 		75FCA713185F8A52006E7468 /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 75FCA70A185F89A0006E7468 /* Sounds */; };
+		929D1B7E1954C2DA00B27340 /* CCEffectsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 929D1B7D1954C2DA00B27340 /* CCEffectsTest.m */; };
 		B73C129B17EA48CC0029B6AC /* TestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = B73C129A17EA48CC0029B6AC /* TestBase.m */; };
 		B770601A1831B0080043CC67 /* ObjectALTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B77060191831B0080043CC67 /* ObjectALTest.m */; };
 		B770609E1831B3F60043CC67 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B770609D1831B3F60043CC67 /* AVFoundation.framework */; };
@@ -87,6 +88,7 @@
 		75FCA70B185F89A0006E7468 /* Particles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Particles; path = Resources/Particles; sourceTree = SOURCE_ROOT; };
 		75FCA70C185F89A0006E7468 /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TileMaps; path = Resources/TileMaps; sourceTree = SOURCE_ROOT; };
 		75FCA70D185F89A0006E7468 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Images; path = Resources/Images; sourceTree = SOURCE_ROOT; };
+		929D1B7D1954C2DA00B27340 /* CCEffectsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCEffectsTest.m; path = "cocos2d-ui-tests/tests/CCEffectsTest.m"; sourceTree = SOURCE_ROOT; };
 		B73C129917EA48CC0029B6AC /* TestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestBase.h; path = "cocos2d-ui-tests/TestBase.h"; sourceTree = SOURCE_ROOT; };
 		B73C129A17EA48CC0029B6AC /* TestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestBase.m; path = "cocos2d-ui-tests/TestBase.m"; sourceTree = SOURCE_ROOT; };
 		B77060191831B0080043CC67 /* ObjectALTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObjectALTest.m; path = "cocos2d-ui-tests/tests/ObjectALTest.m"; sourceTree = SOURCE_ROOT; };
@@ -271,6 +273,7 @@
 		B7C6238217EBC7A600928F91 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				929D1B7D1954C2DA00B27340 /* CCEffectsTest.m */,
 				D3AD532818C856AC005B6CF3 /* CCBMFontTest.m */,
 				D3AD532918C856AC005B6CF3 /* CCRendererTest.m */,
 				D3AD532A18C856AC005B6CF3 /* CCSchedulerTest.m */,
@@ -414,6 +417,7 @@
 				75FCA708185F88C2006E7468 /* TextureTest.m in Sources */,
 				75FCA709185F88C2006E7468 /* TilemapTest.m in Sources */,
 				B78AE61A17E7B2190028BE0B /* AppDelegate.m in Sources */,
+				929D1B7E1954C2DA00B27340 /* CCEffectsTest.m in Sources */,
 				B78AE61E17E7B23B0028BE0B /* main.m in Sources */,
 				B78AE63D17E7B7690028BE0B /* MainMenu.m in Sources */,
 				B73C129B17EA48CC0029B6AC /* TestBase.m in Sources */,

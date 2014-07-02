@@ -765,7 +765,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
             if (hasShadow)
             {
                 CGContextSetShadowWithColor(context, CGSizeZero, 0, NULL);
-                [self drawAttributedString:effectsString inContext:context inRect:drawArea withFont:NULL];
+                [self drawAttributedString:effectsString inContext:context inRect:drawArea];
             }
             CGContextSetTextDrawingMode(context, kCGTextFill);
         }
