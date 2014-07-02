@@ -53,7 +53,7 @@
 {
     CCEffectUniform* uniformSaturation = [CCEffectUniform uniform:@"float" name:@"u_saturation" value:[NSNumber numberWithFloat:1.0f]];
     
-    if((self = [super initWithUniforms:@[uniformSaturation] vertextUniforms:nil varying:nil]))
+    if((self = [super initWithFragmentUniforms:@[uniformSaturation] vertextUniforms:nil varying:nil]))
     {
         self.debugName = @"CCEffectSaturation";
         return self;
@@ -77,35 +77,34 @@
 
 -(void)buildFragmentFunctions
 {
+    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" snippet:@"texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)"];
+    
     // Image saturation shader based on saturation filter in GPUImage - https://github.com/BradLarson/GPUImage
     NSString* effectBody = CC_GLSL(
                                    const vec3 luminanceWeighting = vec3(0.2125, 0.7154, 0.0721);
 
-                                   vec4 inputValue = texture2D(cc_PreviousPassTexture, cc_FragTexCoord1);
                                    float luminance = dot(inputValue.rgb, luminanceWeighting);
                                    vec3 greyScaleColor = vec3(luminance);
 
                                    return vec4(mix(greyScaleColor, inputValue.rgb, u_saturation), inputValue.a);
                                    );
 
-    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"saturationEffect" body:effectBody returnType:@"vec4"];
+    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"saturationEffect" body:effectBody inputs:@[input] returnType:@"vec4"];
     [self.fragmentFunctions addObject:fragmentFunction];
 }
 
 -(void)buildRenderPasses
 {
     __weak CCEffectSaturation *weakSelf = self;
-    __weak CCEffectRenderPass *weakPass = nil;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
-    weakPass = pass0;
     pass0.shader = self.shader;
     pass0.shaderUniforms = self.shaderUniforms;
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
-    pass0.beginBlock = ^(CCTexture *previousPassTexture){
-        weakPass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-        weakPass.shaderUniforms[@"u_saturation"] = [NSNumber numberWithFloat:weakSelf.saturation];
-    };
+    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
+        pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_saturation"]] = [NSNumber numberWithFloat:weakSelf.saturation];
+    } copy]];
     
     self.renderPasses = @[pass0];
 }

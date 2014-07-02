@@ -20,7 +20,5 @@
 - (void)removeEffect:(CCEffect *)effect;
 - (CCEffect *)effectAtIndex:(NSUInteger)effectIndex;
 
-+(CCEffect*)effects:(id)firstObject, ...;
-
 @end
 #endif
