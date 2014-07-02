@@ -51,11 +51,12 @@
     NSUInteger _blurRadius;
     GLfloat _sigma;
     float _intensity;
+    float _luminanceThreshold;
 }
 
 -(id)init
 {
-    if((self = [self initWithPixelBlurRadius:2 intensity:1.0f]))
+    if((self = [self initWithPixelBlurRadius:2 intensity:1.0f luminanceThreshold:0.0f]))
     {
         return self;
     }
@@ -64,10 +65,13 @@
 }
 
 
--(id)initWithPixelBlurRadius:(NSUInteger)blurRadius intensity:(float)intensity
+-(id)initWithPixelBlurRadius:(NSUInteger)blurRadius intensity:(float)intensity luminanceThreshold:(float)luminanceThreshold
 {
     _intensity = clampf(intensity, 0.0f, 1.0f);
     _intensity = 1.0f - _intensity;
+    
+    _luminanceThreshold = clampf(luminanceThreshold, 0.0f, 1.0f);
+    
     
     // First, generate the normal Gaussian weights for a given sigma
     blurRadius = MIN(blurRadius, GAUSSIANBLUR_OPTMIZIED_RADIUS_MAX);
@@ -77,7 +81,8 @@
         _sigma = 1.0f;
     
     _numberOfOptimizedOffsets = MIN(blurRadius / 2 + (blurRadius % 2), GAUSSIANBLUR_OPTMIZIED_RADIUS_MAX);
-    
+
+    CCEffectUniform* u_luminanceThreshold = [CCEffectUniform uniform:@"float" name:@"u_luminanceThreshold" value:[NSNumber numberWithFloat:_luminanceThreshold]];
     CCEffectUniform* u_enableGlowMap = [CCEffectUniform uniform:@"float" name:@"u_enableGlowMap" value:[NSNumber numberWithFloat:0.0f]];
     CCEffectUniform* u_blurDirection = [CCEffectUniform uniform:@"vec2" name:@"u_blurDirection"
                                                           value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]];
@@ -85,7 +90,7 @@
     unsigned long count = (unsigned long)(1 + (_numberOfOptimizedOffsets * 2));
     CCEffectVarying* v_blurCoords = [CCEffectVarying varying:@"vec2" name:@"v_blurCoordinates" count:count];
     
-    if(self = [super initWithFragmentUniforms:@[u_enableGlowMap]
+    if(self = [super initWithFragmentUniforms:@[u_enableGlowMap, u_luminanceThreshold]
                               vertextUniforms:@[u_blurDirection]
                                       varying:@[v_blurCoords]])
     {
@@ -98,9 +103,9 @@
     return self;
 }
 
-+(id)effectWithPixelBlurRadius:(NSUInteger)blurRadius intensity:(float)intensity
++(id)effectWithPixelBlurRadius:(NSUInteger)blurRadius intensity:(float)intensity luminanceThreshold:(float)luminanceThreshold
 {
-    return [[self alloc] initWithPixelBlurRadius:blurRadius intensity:intensity];
+    return [[self alloc] initWithPixelBlurRadius:blurRadius intensity:intensity luminanceThreshold:luminanceThreshold];
 }
 
 -(void)buildFragmentFunctions
@@ -128,7 +133,7 @@
     }
     
     // From these weights we calculate the offsets to read interpolated values from
-    NSUInteger numberOfOptimizedOffsets = MIN(_blurRadius / 2 + (_blurRadius % 2), 7);
+    NSUInteger numberOfOptimizedOffsets = MIN(_blurRadius / 2 + (_blurRadius % 2), GAUSSIANBLUR_OPTMIZIED_RADIUS_MAX);
     NSUInteger trueNumberOfOptimizedOffsets = _blurRadius / 2 + (_blurRadius % 2);
     
     NSMutableString *shaderString = [[NSMutableString alloc] init];
@@ -170,6 +175,11 @@
             [shaderString appendFormat:@"src += texture2D(cc_PreviousPassTexture, v_blurCoordinates[0] - singleStepOffset * %f) * %f;\n", optimizedOffset, optimizedWeight];
         }
     }
+    
+    [shaderString appendString:@"const vec3 luminanceWeighting = vec3(0.2125, 0.7154, 0.0721);\n\
+     float luminance = dot(src.rgb, luminanceWeighting);\n\
+     luminance *= u_luminanceThreshold;\n\
+     if(!(src.r >= luminance && src.g >= luminance && src.b >= luminance))\n discard;\n"];
     
     [shaderString appendString:@"} else {\n"];
     [shaderString appendString:@"\

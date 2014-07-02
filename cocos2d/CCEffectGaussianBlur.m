@@ -122,7 +122,7 @@
     }
     
     // From these weights we calculate the offsets to read interpolated values from
-    NSUInteger numberOfOptimizedOffsets = MIN(_blurRadius / 2 + (_blurRadius % 2), 7);
+    NSUInteger numberOfOptimizedOffsets = MIN(_blurRadius / 2 + (_blurRadius % 2), GAUSSIANBLUR_OPTMIZIED_RADIUS_MAX);
     NSUInteger trueNumberOfOptimizedOffsets = _blurRadius / 2 + (_blurRadius % 2);
     
     NSMutableString *shaderString = [[NSMutableString alloc] init];

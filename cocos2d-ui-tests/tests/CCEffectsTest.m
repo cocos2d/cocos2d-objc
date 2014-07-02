@@ -110,7 +110,7 @@
     glowEffectNode.positionType = CCPositionTypeNormalized;
     glowEffectNode.position = ccp(0.1, 0.5);
     [glowEffectNode addChild:sampleSprite];
-    CCEffectBloom* glowEffect = [CCEffectBloom effectWithPixelBlurRadius:8 intensity:1.0f];
+    CCEffectBloom* glowEffect = [CCEffectBloom effectWithPixelBlurRadius:8 intensity:1.0f luminanceThreshold:0.0f];
     glowEffectNode.effect = glowEffect;
     
     [self.contentNode addChild:glowEffectNode];
@@ -137,7 +137,7 @@
     glowEffectNode2.positionType = CCPositionTypeNormalized;
     glowEffectNode2.position = ccp(0.4, 0.5);
     [glowEffectNode2 addChild:sampleSprite2];
-    CCEffectBloom* glowEffect2 = [CCEffectBloom effectWithPixelBlurRadius:2 intensity:0.0f];
+    CCEffectBloom* glowEffect2 = [CCEffectBloom effectWithPixelBlurRadius:2 intensity:0.0f luminanceThreshold:0.0f];
     glowEffectNode2.effect = glowEffect2;
     
     [self.contentNode addChild:glowEffectNode2];
