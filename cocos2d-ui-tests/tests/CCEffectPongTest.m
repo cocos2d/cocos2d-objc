@@ -355,12 +355,14 @@ typedef enum { TEST_PONG_PLAYING, TESTS_PONG_GAMEOVER } TEST_PONG_STATE;
 
 - (void)increaseBallBlur:(CCTime)interval
 {
-    _ballEffect.blurStrength += 0.01;
+    // TODO
+//    _ballEffect.blurStrength += 0.01;
 }
 
 - (void)decreaseBallBlur:(CCTime)interval
 {
-    _ballEffect.blurStrength -= 0.01f;
+    //TODO
+//    _ballEffect.blurStrength -= 0.01f;
 }
 
 - (void)increasePixellate:(CCTime)interval

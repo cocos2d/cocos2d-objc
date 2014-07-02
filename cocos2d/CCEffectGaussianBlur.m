@@ -92,9 +92,9 @@
     return self;
 }
 
-+(id)effectWithPixelBlurRadius:(NSUInteger)blurStrength
++(id)effectWithPixelBlurRadius:(NSUInteger)blurRadius
 {
-    return [[self alloc] initWithPixelBlurRadius:blurStrength];
+    return [[self alloc] initWithPixelBlurRadius:blurRadius];
 }
 
 -(void)buildFragmentFunctions
