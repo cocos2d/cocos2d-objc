@@ -595,7 +595,7 @@ static NSInteger ccbAnimationManagerID = 0;
     NSPredicate *sequenceIdPredicate = [NSPredicate predicateWithFormat:@"sequenceId == %d",seqId];
     NSArray *sequenceListWithId = [self.sequences filteredArrayUsingPredicate:sequenceIdPredicate];
     
-    if (!sequenceListWithId.count) return;
+    if ([sequenceListWithId count] == 0) return;
     CCBSequence *completedSequence = [sequenceListWithId firstObject];
     int nextSeqId = completedSequence.chainedSequenceId;
     runningSequence = nil;
