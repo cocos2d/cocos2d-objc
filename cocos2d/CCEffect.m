@@ -155,11 +155,8 @@ static NSString* vertBase =
 
 -(id)initWithType:(NSString*)type name:(NSString*)name
 {
-    if((self = [super init]))
+    if((self = [self initWithType:type name:name count:0]))
     {
-        _name = [name copy];
-        _type = [type copy];
-        
         return self;
     }
     
@@ -171,9 +168,35 @@ static NSString* vertBase =
     return [[self alloc] initWithType:type name:name];
 }
 
+-(id)initWithType:(NSString*)type name:(NSString*)name count:(NSInteger)count
+{
+    if((self = [super init]))
+    {
+        _name = name;
+        _type = type;
+        _count = count;
+        
+        return self;
+    }
+    
+    return self;
+}
+
++(id)varying:(NSString*)type name:(NSString*)name count:(NSInteger)count
+{
+    return [[self alloc] initWithType:type name:name count:count];
+}
+
+
 -(NSString*)declaration
 {
-    NSString* declaration = [NSString stringWithFormat:@"varying %@ %@;", _type, _name];
+    NSString* declaration;
+
+    if(_count == 0)
+        declaration = [NSString stringWithFormat:@"varying %@ %@;", _type, _name];
+    else
+        declaration = [NSString stringWithFormat:@"varying %@ %@[%lu];", _type, _name, (long)_count];
+    
     return declaration;
 }
 
@@ -454,7 +477,7 @@ static NSString* vertBase =
     [fragFunctions appendFormat:@"%@\n", effectFunction.function];
     
     NSString* fragBody = [NSString stringWithFormat:fragBase, fragUniforms, varyingVarsToInsert, fragFunctions, [effectFunction callStringWithInputs:nil]];
-    //NSLog(@"\n------------fragBody:\n%@", fragBody);
+//    NSLog(@"\n------------fragBody:\n%@", fragBody);
     
     
     
@@ -485,7 +508,7 @@ static NSString* vertBase =
     [vertexFunctions appendFormat:@"%@\n", effectFunction.function];
     
     NSString* vertBody = [NSString stringWithFormat:vertBase, vertexUniforms, varyingVarsToInsert, vertexFunctions, [effectFunction callStringWithInputs:nil]];
-    //NSLog(@"\n------------vertBody:\n%@", vertBody);
+//    NSLog(@"\n------------vertBody:\n%@", vertBody);
     
     _shader = [[CCShader alloc] initWithVertexShaderSource:vertBody fragmentShaderSource:fragBody];
 

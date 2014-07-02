@@ -264,8 +264,8 @@
 		D272032C18FC89A000B100FF /* CCEffectNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D272031F18FC89A000B100FF /* CCEffectNode.m */; };
 		D272032D18FC89A000B100FF /* CCEffectStack.h in Headers */ = {isa = PBXBuildFile; fileRef = D272032018FC89A000B100FF /* CCEffectStack.h */; };
 		D272032E18FC89A000B100FF /* CCEffectStack.m in Sources */ = {isa = PBXBuildFile; fileRef = D272032118FC89A000B100FF /* CCEffectStack.m */; };
-		D272033318FC9A4700B100FF /* CCEffectGlow.h in Headers */ = {isa = PBXBuildFile; fileRef = D272033118FC9A4700B100FF /* CCEffectGlow.h */; };
-		D272033418FC9A4700B100FF /* CCEffectGlow.m in Sources */ = {isa = PBXBuildFile; fileRef = D272033218FC9A4700B100FF /* CCEffectGlow.m */; };
+		D272033318FC9A4700B100FF /* CCEffectBloom.h in Headers */ = {isa = PBXBuildFile; fileRef = D272033118FC9A4700B100FF /* CCEffectBloom.h */; };
+		D272033418FC9A4700B100FF /* CCEffectBloom.m in Sources */ = {isa = PBXBuildFile; fileRef = D272033218FC9A4700B100FF /* CCEffectBloom.m */; };
 		D2B49104192146FB00C3443A /* CCEffectGaussianBlur.h in Headers */ = {isa = PBXBuildFile; fileRef = D2B49102192146FB00C3443A /* CCEffectGaussianBlur.h */; };
 		D2B49105192146FB00C3443A /* CCEffectGaussianBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = D2B49103192146FB00C3443A /* CCEffectGaussianBlur.m */; };
 		D309055018AC23110081BF11 /* CCRenderer_private.h in Headers */ = {isa = PBXBuildFile; fileRef = D309054F18AC23110081BF11 /* CCRenderer_private.h */; };
@@ -598,8 +598,8 @@
 		D272031F18FC89A000B100FF /* CCEffectNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectNode.m; sourceTree = "<group>"; };
 		D272032018FC89A000B100FF /* CCEffectStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectStack.h; sourceTree = "<group>"; };
 		D272032118FC89A000B100FF /* CCEffectStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectStack.m; sourceTree = "<group>"; };
-		D272033118FC9A4700B100FF /* CCEffectGlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectGlow.h; sourceTree = "<group>"; };
-		D272033218FC9A4700B100FF /* CCEffectGlow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectGlow.m; sourceTree = "<group>"; };
+		D272033118FC9A4700B100FF /* CCEffectBloom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectBloom.h; sourceTree = "<group>"; };
+		D272033218FC9A4700B100FF /* CCEffectBloom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectBloom.m; sourceTree = "<group>"; };
 		D2B49102192146FB00C3443A /* CCEffectGaussianBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectGaussianBlur.h; sourceTree = "<group>"; };
 		D2B49103192146FB00C3443A /* CCEffectGaussianBlur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectGaussianBlur.m; sourceTree = "<group>"; };
 		D2B840C31909F447008063EA /* CCRenderTexture_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCRenderTexture_Private.h; sourceTree = "<group>"; };
@@ -1212,8 +1212,8 @@
 				9D85671A191AE2CC00573093 /* CCEffectStack_Private.h */,
 				D272032118FC89A000B100FF /* CCEffectStack.m */,
 				9D85B7DC195396E90039A9DB /* CCEffectStackProtocol.h */,
-				D272033118FC9A4700B100FF /* CCEffectGlow.h */,
-				D272033218FC9A4700B100FF /* CCEffectGlow.m */,
+				D272033118FC9A4700B100FF /* CCEffectBloom.h */,
+				D272033218FC9A4700B100FF /* CCEffectBloom.m */,
 				9D85671B191B018200573093 /* CCEffectBrightness.h */,
 				9D85671C191B018200573093 /* CCEffectBrightness.m */,
 				9D85671F191B019900573093 /* CCEffectContrast.h */,
@@ -1380,7 +1380,7 @@
 				0529445D11098D6F00E500F3 /* CCProfiling.h in Headers */,
 				5015043B113300F900A9CA65 /* CCActionProgressTimer.h in Headers */,
 				B7705FD21831A07B0043CC67 /* OALAudioActions.h in Headers */,
-				D272033318FC9A4700B100FF /* CCEffectGlow.h in Headers */,
+				D272033318FC9A4700B100FF /* CCEffectBloom.h in Headers */,
 				50FBB2DA117613F500150761 /* CCActionTween.h in Headers */,
 				B7705FD41831A07B0043CC67 /* OALUtilityActions.h in Headers */,
 				50D898F31192CB7500458C29 /* uthash.h in Headers */,
@@ -1616,7 +1616,7 @@
 				E0EAD100121F4B4600B0C81C /* CCDirectorIOS.m in Sources */,
 				E0EAD109121F4B4600B0C81C /* CCGLView.m in Sources */,
 				9D85671E191B018200573093 /* CCEffectBrightness.m in Sources */,
-				D272033418FC9A4700B100FF /* CCEffectGlow.m in Sources */,
+				D272033418FC9A4700B100FF /* CCEffectBloom.m in Sources */,
 				B7D273101822F4AA0054849B /* CCBKeyframe.m in Sources */,
 				E0F924721224140400EF2362 /* CCTexturePVR.m in Sources */,
 				B7705FEB1831A07B0043CC67 /* ALListener.m in Sources */,
