@@ -39,8 +39,8 @@
     planet.position = p2;
 
     [planet runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
-                                                               [CCActionEaseIn actionWithAction:[CCActionMoveTo actionWithDuration:4.0 position:ccp(p1.x, p1.y)]],
-                                                               [CCActionEaseIn actionWithAction:[CCActionMoveTo actionWithDuration:4.0 position:ccp(p2.x, p2.y)]],
+                                                               [CCActionMoveTo actionWithDuration:4.0 position:ccp(p1.x, p1.y)],
+                                                               [CCActionMoveTo actionWithDuration:4.0 position:ccp(p2.x, p2.y)],
                                                                 nil
                                                                 ]]];
 
