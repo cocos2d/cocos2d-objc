@@ -43,7 +43,14 @@
 #endif
 
 
-@interface CCRenderTextureSprite : CCSprite @end
+@interface CCRenderTextureSprite : CCSprite
+
+@property (nonatomic, weak) CCRenderTexture *renderTexture;
+
+- (CGAffineTransform)nodeToWorldTransform;
+
+@end
+
 @implementation CCRenderTextureSprite
 
 -(CCRenderState *)renderState
@@ -54,6 +61,17 @@
 	}
 	
 	return _renderState;
+}
+
+- (CGAffineTransform)nodeToWorldTransform
+{
+	CGAffineTransform t = [self nodeToParentTransform];
+    
+	for (CCNode *p = _renderTexture; p != nil; p = p.parent)
+    {
+		t = CGAffineTransformConcat(t, [p nodeToParentTransform]);
+    }
+	return t;
 }
 
 @end
@@ -129,7 +147,9 @@
 
 		_projection = GLKMatrix4MakeOrtho(0.0f, width, 0.0f, height, -1024.0f, 1024.0f);
 		
-		_sprite = [CCRenderTextureSprite spriteWithTexture:[CCTexture none]];
+        CCRenderTextureSprite *rtSprite = [CCRenderTextureSprite spriteWithTexture:[CCTexture none]];
+        rtSprite.renderTexture = self;
+        _sprite = rtSprite;
 
 		// Diabled by default.
 		_autoDraw = NO;

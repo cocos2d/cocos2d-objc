@@ -16,8 +16,6 @@
 - (id)init;
 - (id)initWithEffects:(NSArray *)effects;
 
-- (void)addEffect:(CCEffect *)effect;
-- (void)removeEffect:(CCEffect *)effect;
 - (CCEffect *)effectAtIndex:(NSUInteger)effectIndex;
 
 @end

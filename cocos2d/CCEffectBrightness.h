@@ -11,10 +11,10 @@
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffectBrightness : CCEffect
 
+@property (nonatomic) float brightness;
+
 -(id)initWithBrightness:(float)brightness;
 +(id)effectWithBrightness:(float)brightness;
-
-@property (nonatomic) float brightness;
 
 @end
 #endif

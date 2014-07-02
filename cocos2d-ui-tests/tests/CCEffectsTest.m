@@ -19,6 +19,77 @@
 	return self;
 }
 
+-(void)setupRefractionEffectTest
+{
+    self.subTitle = @"Refraction Effect Test";
+    
+    CGPoint p1, p2;
+    
+    CCSprite *background = [CCSprite spriteWithImageNamed:@"Images/starynight.png"];
+    background.positionType = CCPositionTypeNormalized;
+    background.position = ccp(0.5, 0.5);
+    CGSize bgSize = background.contentSize;
+
+    
+    p1 = CGPointMake(0.1f, 0.5f);
+    p2 = CGPointMake(0.9f, 0.5f);
+
+    CCSprite *planet = [CCSprite spriteWithImageNamed:@"Images/planet1.png"];
+    planet.positionType = CCPositionTypeNormalized;
+    planet.position = p2;
+
+    [planet runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+                                                                [CCActionMoveTo actionWithDuration:4.0 position:ccp(p1.x, p1.y)],
+                                                                [CCActionMoveTo actionWithDuration:4.0 position:ccp(p2.x, p2.y)],
+                                                                nil
+                                                                ]]];
+
+    
+    CCRenderTexture *renderTexture = [CCRenderTexture renderTextureWithWidth:bgSize.width height:bgSize.height];
+    renderTexture.positionType = CCPositionTypeNormalized;
+    renderTexture.position = ccp(0.5, 0.5);
+    renderTexture.anchorPoint = ccp(0.5, 0.5);
+    renderTexture.autoDraw = YES;
+    renderTexture.sprite.anchorPoint = ccp(0.0f, 0.0f);
+
+    [renderTexture addChild:background];
+    [renderTexture addChild:planet];
+    
+    [self.contentNode addChild:renderTexture];
+    
+    
+    CCTexture *sphereNormalMap = [CCTexture textureWithFile:@"Images/sphere-normal-256.png"];
+    CCEffect *sphereRefraction = [[CCEffectRefraction alloc] initWithRefraction:0.1f environment:renderTexture.sprite normalMap:sphereNormalMap];
+    
+    p1 = CGPointMake(0.1f, 0.8f);
+    p2 = CGPointMake(0.35f, 0.2f);
+    CCSprite *sprite1 = [self spriteWithEffects:@[sphereRefraction] image:@"Images/blocks-hd.png" atPosition:p1];
+    [sprite1 runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+                                                                [CCActionMoveTo actionWithDuration:2.0 position:ccp(p1.x, p2.y)],
+                                                                [CCActionMoveTo actionWithDuration:1.0 position:ccp(p2.x, p2.y)],
+                                                                [CCActionMoveTo actionWithDuration:2.0 position:ccp(p2.x, p1.y)],
+                                                                [CCActionMoveTo actionWithDuration:1.0 position:ccp(p1.x, p1.y)],
+                                                                nil
+                                                                ]]];
+    [self.contentNode addChild:sprite1];
+    
+    
+    CCTexture *torusNormalMap = [CCTexture textureWithFile:@"Images/torus-normal-256.png"];
+    CCEffect *torusRefraction = [[CCEffectRefraction alloc] initWithRefraction:0.1f environment:renderTexture.sprite normalMap:torusNormalMap];
+    
+    p1 = CGPointMake(0.65f, 0.2f);
+    p2 = CGPointMake(0.9f, 0.8f);
+    CCSprite *sprite2 = [self spriteWithEffects:@[torusRefraction] image:@"Images/blocks-hd.png" atPosition:p1];
+    [sprite2 runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+                                                                [CCActionMoveTo actionWithDuration:2.0 position:ccp(p1.x, p2.y)],
+                                                                [CCActionMoveTo actionWithDuration:2.0 position:ccp(p2.x, p2.y)],
+                                                                [CCActionMoveTo actionWithDuration:2.0 position:ccp(p2.x, p1.y)],
+                                                                [CCActionMoveTo actionWithDuration:2.0 position:ccp(p1.x, p1.y)],
+                                                                nil
+                                                                ]]];
+    [self.contentNode addChild:sprite2];
+}
+
 -(void)setupBlurEffectNodeTest
 {
     self.subTitle = @"Blur Effect Node Test";
@@ -168,25 +239,27 @@
 
     // Different configurations of the saturation effect
     NSArray *effects = @[
-                         [[CCEffectSaturation alloc] initWithSaturation:2.0f],
                          [[CCEffectSaturation alloc] initWithSaturation:1.0f],
                          [[CCEffectSaturation alloc] initWithSaturation:0.8f],
-                         [[CCEffectSaturation alloc] initWithSaturation:0.6f],
                          [[CCEffectSaturation alloc] initWithSaturation:0.4f],
                          [[CCEffectSaturation alloc] initWithSaturation:0.2f],
                          [[CCEffectSaturation alloc] initWithSaturation:0.0f],
-                         [[CCEffectSaturation alloc] initWithSaturation:-1.0f]
+                         [[CCEffectSaturation alloc] initWithSaturation:-0.2f],
+                         [[CCEffectSaturation alloc] initWithSaturation:-0.4f],
+                         [[CCEffectSaturation alloc] initWithSaturation:-0.8f],
+                         [[CCEffectSaturation alloc] initWithSaturation:-1.0f],
                          ];
 
     // Effect nodes that use the effects in different combinations.
-    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[0]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.15, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[1]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.25, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[2]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.35, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[3]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.45, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[4]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.55, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[5]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.65, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[6]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.75, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[7]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.85, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[0]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.1, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[1]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.2, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[2]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.3, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[3]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.4, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[4]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.5, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[5]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.6, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[6]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.7, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[7]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.8, 0.5)]];
+    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[8]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.9, 0.5)]];
 }
 
 -(void)setupPerformanceTest

@@ -39,6 +39,8 @@
 		92D1343D1954FC7A003833C4 /* CCEffectGlow.h in Headers */ = {isa = PBXBuildFile; fileRef = 92D134381954FC7A003833C4 /* CCEffectGlow.h */; };
 		92D1343E1954FC7A003833C4 /* CCActionManager_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 92D134391954FC7A003833C4 /* CCActionManager_Private.h */; };
 		92D1343F1954FC7A003833C4 /* CCEffectGaussianBlur.h in Headers */ = {isa = PBXBuildFile; fileRef = 92D1343A1954FC7A003833C4 /* CCEffectGaussianBlur.h */; };
+		9DDFEF6A19635F0600CCE3DF /* CCEffectRefraction.h in Headers */ = {isa = PBXBuildFile; fileRef = 9DDFEF6819635F0600CCE3DF /* CCEffectRefraction.h */; };
+		9DDFEF6B19635F0600CCE3DF /* CCEffectRefraction.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DDFEF6919635F0600CCE3DF /* CCEffectRefraction.m */; };
 		A003ACA7165731D500C7B792 /* ccFPSImages.h in Headers */ = {isa = PBXBuildFile; fileRef = A003ACA5165731D500C7B792 /* ccFPSImages.h */; };
 		A003ACA8165731D500C7B792 /* ccFPSImages.m in Sources */ = {isa = PBXBuildFile; fileRef = A003ACA6165731D500C7B792 /* ccFPSImages.m */; };
 		A03714D7154F1D9300081CBA /* CCNode+Debug.h in Headers */ = {isa = PBXBuildFile; fileRef = A03714D5154F1D9300081CBA /* CCNode+Debug.h */; };
@@ -389,6 +391,8 @@
 		92D134381954FC7A003833C4 /* CCEffectGlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectGlow.h; sourceTree = "<group>"; };
 		92D134391954FC7A003833C4 /* CCActionManager_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionManager_Private.h; sourceTree = "<group>"; };
 		92D1343A1954FC7A003833C4 /* CCEffectGaussianBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectGaussianBlur.h; sourceTree = "<group>"; };
+		9DDFEF6819635F0600CCE3DF /* CCEffectRefraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectRefraction.h; sourceTree = "<group>"; };
+		9DDFEF6919635F0600CCE3DF /* CCEffectRefraction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectRefraction.m; sourceTree = "<group>"; };
 		A003ACA5165731D500C7B792 /* ccFPSImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccFPSImages.h; sourceTree = "<group>"; };
 		A003ACA6165731D500C7B792 /* ccFPSImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccFPSImages.m; sourceTree = "<group>"; };
 		A0191EAA167FDBA40099349A /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
@@ -856,6 +860,8 @@
 				929D1B611954C2A600B27340 /* CCEffectPixellate.m */,
 				929D1B621954C2A600B27340 /* CCEffectRenderer.h */,
 				929D1B631954C2A600B27340 /* CCEffectRenderer.m */,
+				9DDFEF6819635F0600CCE3DF /* CCEffectRefraction.h */,
+				9DDFEF6919635F0600CCE3DF /* CCEffectRefraction.m */,
 				929D1B641954C2A600B27340 /* CCEffectSaturation.h */,
 				929D1B651954C2A600B27340 /* CCEffectSaturation.m */,
 				929D1B661954C2A600B27340 /* CCEffectStack_Private.h */,
@@ -1645,6 +1651,7 @@
 				929D1B741954C2A600B27340 /* CCEffectPixellate.h in Headers */,
 				92D1343E1954FC7A003833C4 /* CCActionManager_Private.h in Headers */,
 				A0D7D69915E2D2CC000CA0C4 /* CCScheduler.h in Headers */,
+				9DDFEF6A19635F0600CCE3DF /* CCEffectRefraction.h in Headers */,
 				B7D2732B1822F5460054849B /* CCBKeyframe.h in Headers */,
 				2B19285F163379400049A044 /* CCClippingNode.h in Headers */,
 				A003ACA7165731D500C7B792 /* ccFPSImages.h in Headers */,
@@ -1804,6 +1811,7 @@
 				E076E70E1225EC7400DE0DA2 /* CCParticleExamples.m in Sources */,
 				D389412718639DD400725CFC /* CCPhysicsBody.m in Sources */,
 				B77060681831B0C40043CC67 /* OALUtilityActions.m in Sources */,
+				9DDFEF6B19635F0600CCE3DF /* CCEffectRefraction.m in Sources */,
 				B7EE69EB1819EAAC00B983FE /* CCLayout.m in Sources */,
 				E076E7101225EC7400DE0DA2 /* CCParticleSystem.m in Sources */,
 				B770606C1831B0C40043CC67 /* OALAudioTrackNotifications.m in Sources */,

@@ -46,34 +46,6 @@
     return self;
 }
 
-- (void)addEffect:(CCEffect *)effect
-{
-    NSAssert(!effect.owningStack, @"Adding an effect to this stack that is already contained by another stack. That's not allowed.");
-    effect.owningStack = self;
-
-    [_effects addObject:effect];
-
-    _passesDirty = YES;
-    if (self.owningStack)
-    {
-        [self.owningStack passesDidChange:self];
-    }
-}
-
-- (void)removeEffect:(CCEffect *)effect
-{
-    NSAssert(effect.owningStack == self, @"Trying to remove an effect that is not contained by this stack.");
-    effect.owningStack = nil;
-
-    [_effects removeObject:effect];
-
-    _passesDirty = YES;
-    if (self.owningStack)
-    {
-        [self.owningStack passesDidChange:self];
-    }
-}
-
 - (NSUInteger)effectCount
 {
     return _effects.count;

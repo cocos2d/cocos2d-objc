@@ -20,6 +20,7 @@
 #import "CCEffectContrast.h"
 #import "CCEffectPixellate.h"
 #import "CCEffectSaturation.h"
+#import "CCEffectRefraction.h"
 
 
 #ifdef __CC_PLATFORM_IOS
