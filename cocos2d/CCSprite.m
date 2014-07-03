@@ -247,8 +247,14 @@
 	self.contentSizeType = CCSizeTypePoints;
 	[self setContentSize:untrimmedSize];
 	_textureRect = rect;
-	[self setTextureCoords:rect];
-
+    
+	CCSpriteTexCoordSet texCoords = [CCSprite textureCoordsForTexture:self.texture withRect:rect rotated:rotated xFlipped:_flipX yFlipped:_flipY];
+    _verts.bl.texCoord1 = texCoords.bl;
+    _verts.br.texCoord1 = texCoords.br;
+    _verts.tr.texCoord1 = texCoords.tr;
+    _verts.tl.texCoord1 = texCoords.tl;
+    
+    
 	CGPoint relativeOffset = _unflippedOffsetPositionFromCenter;
 
 	// issue #732
@@ -274,17 +280,18 @@
 	_vertexExtents = GLKVector2Make((x2 - x1)*0.5f, (y2 - y1)*0.5f);
 }
 
--(void) setTextureCoords:(CGRect)rect
++ (CCSpriteTexCoordSet)textureCoordsForTexture:(CCTexture *)texture withRect:(CGRect)rect rotated:(BOOL)rotated xFlipped:(BOOL)flipX yFlipped:(BOOL)flipY
 {
-	if(!self.texture) return;
+    CCSpriteTexCoordSet result;
+	if(!texture) return result;
 	
-	CGFloat scale = self.texture.contentScale;
+	CGFloat scale = texture.contentScale;
 	rect = CC_RECT_SCALE(rect, scale);
 	
-	float atlasWidth = (float)self.texture.pixelWidth;
-	float atlasHeight = (float)self.texture.pixelHeight;
+	float atlasWidth = (float)texture.pixelWidth;
+	float atlasHeight = (float)texture.pixelHeight;
 
-	if(_textureRectRotated){
+	if(rotated){
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 		float left   = (2.0f*rect.origin.x + 1.0f)/(2.0f*atlasWidth);
 		float right  = left+(rect.size.height*2.0f - 2.0f)/(2.0f*atlasWidth);
@@ -297,13 +304,13 @@
 		float bottom = 1.0f - (rect.origin.y + rect.size.width)/atlasHeight;
 #endif
 
-		if( _flipX) CC_SWAP(top,bottom);
-		if( _flipY) CC_SWAP(left,right);
+		if(flipX) CC_SWAP(top,bottom);
+		if(flipY) CC_SWAP(left,right);
 		
-		_verts.bl.texCoord1 = GLKVector2Make( left,    top);
-		_verts.br.texCoord1 = GLKVector2Make( left, bottom);
-		_verts.tr.texCoord1 = GLKVector2Make(right, bottom);
-		_verts.tl.texCoord1 = GLKVector2Make(right,    top);
+		result.bl = GLKVector2Make( left,    top);
+		result.br = GLKVector2Make( left, bottom);
+		result.tr = GLKVector2Make(right, bottom);
+		result.tl = GLKVector2Make(right,    top);
 	} else {
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 		float left   = (2.0f*rect.origin.x + 1.0f)/(2.0f*atlasWidth);
@@ -317,14 +324,16 @@
 		float bottom = 1.0f - (rect.origin.y + rect.size.height)/atlasHeight;
 #endif
 
-		if( _flipX) CC_SWAP(left,right);
-		if( _flipY) CC_SWAP(top,bottom);
+		if(flipX) CC_SWAP(left,right);
+		if(flipY) CC_SWAP(top,bottom);
 
-		_verts.bl.texCoord1 = GLKVector2Make( left, bottom);
-		_verts.br.texCoord1 = GLKVector2Make(right, bottom);
-		_verts.tr.texCoord1 = GLKVector2Make(right,    top);
-		_verts.tl.texCoord1 = GLKVector2Make( left,    top);
+		result.bl = GLKVector2Make( left, bottom);
+		result.br = GLKVector2Make(right, bottom);
+		result.tr = GLKVector2Make(right,    top);
+		result.tl = GLKVector2Make( left,    top);
 	}
+    
+    return result;
 }
 
 -(const CCSpriteVertexes *)vertexes
@@ -352,7 +361,14 @@
     if (self.effect)
     {
         _effectRenderer.contentSize = self.texture.contentSize;
-        [_effectRenderer drawSprite:self withEffect:self.effect renderer:renderer transform:transform];
+        if ([self.effect prepareForRendering] == CCEffectPrepareSuccess)
+        {
+            // Preparing an effect for rendering can modify its uniforms
+            // dictionary which means we need to reinitialize our copy of the
+            // uniforms.
+            [self updateShaderUniformsFromEffect];
+        }
+        [_effectRenderer drawSprite:self withEffect:self.effect uniforms:_shaderUniforms renderer:renderer transform:transform];
     }
     else
 #endif
@@ -479,6 +495,14 @@
 -(void)setEffect:(CCEffect *)effect
 {
     _effect = effect;
+    if (effect)
+    {
+        [self updateShaderUniformsFromEffect];
+    }
+    else
+    {
+        _shaderUniforms = nil;
+    }
 }
 #endif
 
@@ -498,12 +522,26 @@
 	}
 
 	// update rect
-	_textureRectRotated = frame.rotated;
-
-	[self setTextureRect:frame.rect rotated:_textureRectRotated untrimmedSize:frame.originalSize];
+	[self setTextureRect:frame.rect rotated:frame.rotated untrimmedSize:frame.originalSize];
     
     _spriteFrame = frame;
 }
+
+-(void) setNormalMapSpriteFrame:(CCSpriteFrame*)frame
+{
+    CCSpriteTexCoordSet texCoords = [CCSprite textureCoordsForTexture:frame.texture withRect:frame.rect rotated:frame.rotated xFlipped:_flipX yFlipped:_flipY];
+    _verts.bl.texCoord2 = texCoords.bl;
+    _verts.br.texCoord2 = texCoords.br;
+    _verts.tr.texCoord2 = texCoords.tr;
+    _verts.tl.texCoord2 = texCoords.tl;
+    
+    // Set the main texture in the uniforms dictionary (if the dictionary exists).
+    self.shaderUniforms[CCShaderUniformNormalMapTexture] = (frame.texture ?: [CCTexture none]);
+    _renderState = nil;
+    
+    _normalMapSpriteFrame = frame;
+}
+
 
 //-(void) setSpriteFrameWithAnimationName: (NSString*) animationName index:(int) frameIndex
 //{
@@ -517,5 +555,20 @@
 //	
 //	self.spriteFrame = frame.spriteFrame;
 //}
+
+#pragma mark CCSprite - Effects
+
+- (void)updateShaderUniformsFromEffect
+{
+    // Initialize the shader uniforms dictionary with the sprite's main texture and
+    // normal map if it has them.
+    _shaderUniforms = [@{ CCShaderUniformMainTexture : (_texture ?: [CCTexture none]),
+                          CCShaderUniformNormalMapTexture : (_normalMapSpriteFrame.texture ?: [CCTexture none]),
+                          } mutableCopy];
+    
+    // And then copy the new effect's uniforms into the node's uniforms dictionary.
+    [_shaderUniforms addEntriesFromDictionary:_effect.shaderUniforms];
+}
+
 
 @end

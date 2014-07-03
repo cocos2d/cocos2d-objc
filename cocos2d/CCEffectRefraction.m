@@ -9,9 +9,12 @@
 #import "CCEffectRefraction.h"
 
 #import "CCDirector.h"
-#import "CCEffect_Private.h"
 #import "CCRenderer.h"
+#import "CCSpriteFrame.h"
 #import "CCTexture.h"
+
+#import "CCEffect_Private.h"
+#import "CCSprite_Private.h"
 
 static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
 
@@ -23,7 +26,6 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
     NSArray *uniforms = @[
                           [CCEffectUniform uniform:@"float" name:@"u_refraction" value:[NSNumber numberWithFloat:1.0f]],
                           [CCEffectUniform uniform:@"sampler2D" name:@"u_envMap" value:(NSValue*)[CCTexture none]],
-                          [CCEffectUniform uniform:@"sampler2D" name:@"u_normalMap" value:(NSValue*)[CCTexture none]],
                           [CCEffectUniform uniform:@"vec2" name:@"u_tangent" value:[NSValue valueWithGLKVector2:GLKVector2Make(1.0f, 0.0f)]],
                           [CCEffectUniform uniform:@"vec2" name:@"u_binormal" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 1.0f)]],
                           [CCEffectUniform uniform:@"mat4" name:@"u_screenToEnv" value:[NSValue valueWithGLKMatrix4:GLKMatrix4Identity]],
@@ -37,7 +39,7 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
     return self;
 }
 
--(id)initWithRefraction:(float)refraction environment:(CCSprite *)environment normalMap:(CCTexture *)normalMap;
+-(id)initWithRefraction:(float)refraction environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap;
 {
     if((self = [self init]))
     {
@@ -48,7 +50,7 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
     return self;
 }
 
-+(id)effectWithRefraction:(float)refraction environment:(CCSprite *)environment normalMap:(CCTexture *)normalMap;
++(id)effectWithRefraction:(float)refraction environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap;
 {
     return [[self alloc] initWithRefraction:refraction environment:environment normalMap:normalMap];
 }
@@ -63,7 +65,7 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
                                    vec4 envSpaceTexCoords = u_screenToEnv * gl_FragCoord;
 
                                    // Index the normal map and expand the color value from [0..1] to [-1..1]
-                                   vec4 tangentSpaceNormal = texture2D(u_normalMap, cc_FragTexCoord1) * 2.0 - 1.0;
+                                   vec4 tangentSpaceNormal = texture2D(cc_NormalMapTexture, cc_FragTexCoord2) * 2.0 - 1.0;
                                    
                                    // Convert the normal vector from tangent space to environment space
                                    vec2 normal = u_tangent * tangentSpaceNormal.x + u_binormal * tangentSpaceNormal.y;
@@ -85,13 +87,24 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.shader = self.shader;
-    pass0.shaderUniforms = self.shaderUniforms;
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
         pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
+        if (weakSelf.normalMap)
+        {
+            pass.shaderUniforms[CCShaderUniformNormalMapTexture] = weakSelf.normalMap.texture;
+
+            CCSpriteTexCoordSet texCoords = [CCSprite textureCoordsForTexture:weakSelf.normalMap.texture withRect:weakSelf.normalMap.rect rotated:weakSelf.normalMap.rotated xFlipped:NO yFlipped:NO];
+            CCSpriteVertexes verts = pass.verts;
+            verts.bl.texCoord2 = texCoords.bl;
+            verts.br.texCoord2 = texCoords.br;
+            verts.tr.texCoord2 = texCoords.tr;
+            verts.tl.texCoord2 = texCoords.tl;
+            pass.verts = verts;
+        }
+        
         pass.shaderUniforms[self.uniformTranslationTable[@"u_refraction"]] = [NSNumber numberWithFloat:weakSelf.refraction];
         pass.shaderUniforms[self.uniformTranslationTable[@"u_envMap"]] = weakSelf.environment.texture;
-        pass.shaderUniforms[self.uniformTranslationTable[@"u_normalMap"]] = weakSelf.normalMap;
         
         // Setup the screen space to environment space matrix.
         CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;

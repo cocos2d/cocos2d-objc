@@ -39,6 +39,12 @@ typedef struct CCSpriteVertexes {
 	CCVertex bl, br, tr, tl;
 } CCSpriteVertexes;
 
+/// A set of four texture coordinates corresponding to the four
+/// vertices of a sprite. 
+typedef struct CCSpriteTexCoordSet {
+    GLKVector2 bl, br, tr, tl;
+} CCSpriteTexCoordSet;
+
 #pragma mark CCSprite
 
 #define CCSpriteIndexNotInitialized 0xffffffff 	/// CCSprite invalid index on the CCSpriteBatchode
@@ -81,6 +87,9 @@ typedef struct CCSpriteVertexes {
 
 /** The offset position in points of the sprite in points. Calculated automatically by sprite sheet editors. */
 @property (nonatomic,readonly) CGPoint	offsetPosition;
+
+/** The current normal map spriteFrame. */
+@property (nonatomic,strong) CCSpriteFrame* normalMapSpriteFrame;
 
 
 /// -----------------------------------------------------------------------

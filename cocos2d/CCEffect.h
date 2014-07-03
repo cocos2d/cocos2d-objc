@@ -22,6 +22,12 @@ typedef NS_ENUM(NSUInteger, CCEffectFunctionStitchFlags)
     CCEffectFunctionStitchBoth       = (CCEffectFunctionStitchBefore | CCEffectFunctionStitchAfter),
 };
 
+typedef NS_ENUM(NSUInteger, CCEffectPrepareStatus)
+{
+    CCEffectPrepareNothingToDo   = 0,
+    CCEffectPrepareFailure       = 1,
+    CCEffectPrepareSuccess       = 2,
+};
 
 @interface CCEffectFunction : NSObject
 
@@ -107,6 +113,7 @@ typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass);
 @property (nonatomic, readonly) NSMutableDictionary* shaderUniforms;
 @property (nonatomic, readonly) NSInteger renderPassesRequired;
 @property (nonatomic, readonly) BOOL supportsDirectRendering;
+@property (nonatomic, readonly) BOOL readyForRendering;
 @property (nonatomic, copy) NSString *debugName;
 
 
@@ -114,7 +121,7 @@ typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass);
 -(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertextUniforms:(NSArray*)vertexUniforms varying:(NSArray*)varying;
 -(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions vertexFunctions:(NSMutableArray*)vertextFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertextUniforms:(NSArray*)vertexUniforms varying:(NSArray*)varying;
 
--(BOOL)prepareForRendering;
+-(CCEffectPrepareStatus)prepareForRendering;
 -(CCEffectRenderPass *)renderPassAtIndex:(NSInteger)passIndex;
 
 -(BOOL)stitchSupported:(CCEffectFunctionStitchFlags)stitch;

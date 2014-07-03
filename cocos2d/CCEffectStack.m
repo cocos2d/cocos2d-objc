@@ -59,8 +59,9 @@
 
 #pragma mark - CCEffect overrides
 
-- (BOOL)prepareForRendering
+- (CCEffectPrepareStatus)prepareForRendering
 {
+    CCEffectPrepareStatus result = CCEffectPrepareNothingToDo;
     if (_passesDirty)
     {
         // Start by populating the flattened list with this stack's effects.
@@ -150,8 +151,15 @@
         }
         self.renderPasses = [passes copy];
         _passesDirty = NO;
+        
+        result = CCEffectPrepareSuccess;
     }
-    return YES;
+    return result;
+}
+
+- (BOOL)readyForRendering
+{
+    return !_passesDirty;
 }
 
 #pragma mark - Internal

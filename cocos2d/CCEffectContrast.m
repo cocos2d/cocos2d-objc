@@ -68,7 +68,6 @@ static float conditionContrast(float contrast);
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.shader = self.shader;
-    pass0.shaderUniforms = self.shaderUniforms;
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
         pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
