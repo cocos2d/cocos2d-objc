@@ -527,6 +527,22 @@
     _spriteFrame = frame;
 }
 
+-(void) setNormalMapSpriteFrame:(CCSpriteFrame*)frame
+{
+    CCSpriteTexCoordSet texCoords = [CCSprite textureCoordsForTexture:frame.texture withRect:frame.rect rotated:frame.rotated xFlipped:_flipX yFlipped:_flipY];
+    _verts.bl.texCoord2 = texCoords.bl;
+    _verts.br.texCoord2 = texCoords.br;
+    _verts.tr.texCoord2 = texCoords.tr;
+    _verts.tl.texCoord2 = texCoords.tl;
+    
+    // Set the main texture in the uniforms dictionary (if the dictionary exists).
+    self.shaderUniforms[CCShaderUniformNormalMapTexture] = (frame.texture ?: [CCTexture none]);
+    _renderState = nil;
+    
+    _normalMapSpriteFrame = frame;
+}
+
+
 //-(void) setSpriteFrameWithAnimationName: (NSString*) animationName index:(int) frameIndex
 //{
 //	NSAssert( animationName, @"CCSprite#setSpriteFrameWithAnimationName. animationName must not be nil");
@@ -547,6 +563,7 @@
     // Initialize the shader uniforms dictionary with the sprite's main texture and
     // normal map if it has them.
     _shaderUniforms = [@{ CCShaderUniformMainTexture : (_texture ?: [CCTexture none]),
+                          CCShaderUniformNormalMapTexture : (_normalMapSpriteFrame.texture ?: [CCTexture none]),
                           } mutableCopy];
     
     // And then copy the new effect's uniforms into the node's uniforms dictionary.

@@ -199,6 +199,7 @@
     // empty entry for the normal map (because effect node's don't have normal maps
     // like sprites do).
     _shaderUniforms = [@{ CCShaderUniformMainTexture : (_texture ?: [CCTexture none]),
+                          CCShaderUniformNormalMapTexture : [CCTexture none]
                           } mutableCopy];
     
     // And then copy the new effect's uniforms into the node's uniforms dictionary.

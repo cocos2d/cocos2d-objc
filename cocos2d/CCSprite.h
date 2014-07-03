@@ -88,6 +88,9 @@ typedef struct CCSpriteTexCoordSet {
 /** The offset position in points of the sprite in points. Calculated automatically by sprite sheet editors. */
 @property (nonatomic,readonly) CGPoint	offsetPosition;
 
+/** The current normal map spriteFrame. */
+@property (nonatomic,strong) CCSpriteFrame* normalMapSpriteFrame;
+
 
 /// -----------------------------------------------------------------------
 /// @name Creating a CCSprite Object

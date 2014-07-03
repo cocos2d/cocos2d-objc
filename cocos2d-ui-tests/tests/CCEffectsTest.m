@@ -59,11 +59,12 @@
     
     
     CCSpriteFrame *sphereNormalMap = [CCSpriteFrame frameWithImageNamed:@"Images/sphere-normal-256.png"];
-    CCEffect *sphereRefraction = [[CCEffectRefraction alloc] initWithRefraction:0.1f environment:renderTexture.sprite normalMap:sphereNormalMap];
+    CCEffect *sphereRefraction = [[CCEffectRefraction alloc] initWithRefraction:0.1f environment:renderTexture.sprite normalMap:nil];
     
     p1 = CGPointMake(0.1f, 0.8f);
     p2 = CGPointMake(0.35f, 0.2f);
     CCSprite *sprite1 = [self spriteWithEffects:@[sphereRefraction] image:@"Images/blocks-hd.png" atPosition:p1];
+    sprite1.normalMapSpriteFrame = sphereNormalMap;
     [sprite1 runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
                                                                 [CCActionMoveTo actionWithDuration:2.0 position:ccp(p1.x, p2.y)],
                                                                 [CCActionMoveTo actionWithDuration:1.0 position:ccp(p2.x, p2.y)],
