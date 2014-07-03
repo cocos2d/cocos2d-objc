@@ -279,7 +279,6 @@
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.shader = self.shader;
-    pass0.shaderUniforms = self.shaderUniforms;
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
         
         pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
@@ -294,7 +293,6 @@
     
     CCEffectRenderPass *pass1 = [[CCEffectRenderPass alloc] init];
     pass1.shader = self.shader;
-    pass1.shaderUniforms = self.shaderUniforms;
     pass1.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
         
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
@@ -308,7 +306,6 @@
     
     CCEffectRenderPass *pass2 = [[CCEffectRenderPass alloc] init];
     pass2.shader = self.shader;
-    pass2.shaderUniforms = self.shaderUniforms;
     pass2.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
         pass.shaderUniforms[self.uniformTranslationTable[@"u_enableGlowMap"]] = [NSNumber numberWithFloat:1.0f];
