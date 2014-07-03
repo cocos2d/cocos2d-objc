@@ -242,6 +242,11 @@ typedef struct CCSpriteVertexes {
  */
 - (void)setTextureRect:(CGRect)rect rotated:(BOOL)rotated untrimmedSize:(CGSize)size;
 
+
+/// -----------------------------------------------------------------------
+/// @name Accessing Transformations and Matrices
+/// -----------------------------------------------------------------------
+
 /** Returns the matrix that transforms the sprite's (local) space coordinates into the sprite's texture space coordinates.
  */
 - (CGAffineTransform)nodeToTextureTransform;
