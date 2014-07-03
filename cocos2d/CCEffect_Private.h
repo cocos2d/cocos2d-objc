@@ -10,6 +10,11 @@
 #import "CCEffectStackProtocol.h"
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
+
+#ifndef GAUSSIANBLUR_OPTMIZIED_RADIUS_MAX
+#define GAUSSIANBLUR_OPTMIZIED_RADIUS_MAX 6
+#endif
+
 @interface CCEffect()
 
 @property (nonatomic, weak) id<CCEffectStackProtocol> owningStack;

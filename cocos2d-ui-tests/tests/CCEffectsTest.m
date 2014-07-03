@@ -13,7 +13,7 @@
 {
 	if((self = [super init])){
 		// Delay setting the color until the first frame.
-		[self scheduleBlock:^(CCTimer *timer){self.scene.color = [CCColor lightGrayColor];} delay:0];
+		[self scheduleBlock:^(CCTimer *timer){self.scene.color = [CCColor blackColor];} delay:0];
 	}
 	
 	return self;
@@ -94,7 +94,7 @@
 {
     self.subTitle = @"Blur Effect Node Test";
 
-    CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"Images/sample_hollow_circle.png"];
+    CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"Images/f1.png"];
     sampleSprite.position = ccp(0.5, 0.5);
     sampleSprite.positionType = CCPositionTypeNormalized;
 
@@ -105,14 +105,13 @@
     effectNode.positionType = CCPositionTypeNormalized;
     effectNode.position = ccp(0.1, 0.5);
     [effectNode addChild:sampleSprite];
-    CCEffectGaussianBlur* effect = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:GLKVector2Make(1.0, 0.0)];
+    CCEffectGaussianBlur* effect = [CCEffectGaussianBlur effectWithPixelBlurRadius:1.0];
     effectNode.effect = effect;
     
     [self.contentNode addChild:effectNode];
-
     
     // Vertical
-    CCSprite *sampleSprite2 = [CCSprite spriteWithImageNamed:@"Images/sample_hollow_circle.png"];
+    CCSprite *sampleSprite2 = [CCSprite spriteWithImageNamed:@"Images/f1.png"];
     sampleSprite2.position = ccp(0.5, 0.5);
     sampleSprite2.positionType = CCPositionTypeNormalized;
     
@@ -120,7 +119,7 @@
     effectNode2.positionType = CCPositionTypeNormalized;
     effectNode2.position = ccp(0.21, 0.5);
     [effectNode2 addChild:sampleSprite2];
-    CCEffectGaussianBlur* effect2 = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:GLKVector2Make(0.0, 1.0)];
+    CCEffectGaussianBlur* effect2 = [CCEffectGaussianBlur effectWithPixelBlurRadius:7.0];
     effectNode2.effect = effect2;
     
     [self.contentNode addChild:effectNode2];
@@ -136,7 +135,7 @@
     effectNode3.position = ccp(0.5, 0.5);
     effectNode3.anchorPoint = ccp(0.5, 0.5);
     [effectNode3 addChild:sampleSprite3];
-    CCEffectGaussianBlur* effect3 = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:GLKVector2Make(1.0, 1.0)];
+    CCEffectGaussianBlur* effect3 = [CCEffectGaussianBlur effectWithPixelBlurRadius:1.0];
     effectNode3.effect = effect3;
     
     [self.contentNode addChild:effectNode3];
@@ -151,7 +150,7 @@
     effectNode4.positionType = CCPositionTypeNormalized;
     effectNode4.position = ccp(0.6, 0.5);
     [effectNode4 addChild:sampleSprite4];
-    CCEffectGaussianBlur* effect4 = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:GLKVector2Make(-1.0, 1.0)];
+    CCEffectGaussianBlur* effect4 = [CCEffectGaussianBlur effectWithPixelBlurRadius:7.0];
     effectNode4.effect = effect4;
     
     [self.contentNode addChild:effectNode4];
@@ -161,6 +160,13 @@
 {
     self.subTitle = @"Glow Effect Node Test";
     
+    CCSprite *sampleSprite_base = [CCSprite spriteWithImageNamed:@"sample_hollow_circle.png"];
+    sampleSprite_base.anchorPoint = ccp(0.0, 0.0);
+    sampleSprite_base.position = ccp(0.27, 0.52);
+    sampleSprite_base.positionType = CCPositionTypeNormalized;
+    
+    [self.contentNode addChild:sampleSprite_base];
+    
     // Create a hollow circle
     CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"Images/sample_hollow_circle.png"];
     sampleSprite.anchorPoint = ccp(0.5, 0.5);
@@ -168,24 +174,44 @@
     sampleSprite.positionType = CCPositionTypeNormalized;
     
     // Blend glow maps test
-    CCEffectNode* glowEffectNode = [[CCEffectNode alloc] initWithWidth:80 height:80];
+    CCEffectNode* glowEffectNode = [[CCEffectNode alloc] initWithWidth:sampleSprite.contentSize.width + 7
+                                                                height:sampleSprite.contentSize.height + 7];
     glowEffectNode.clearFlags = GL_COLOR_BUFFER_BIT;
 	glowEffectNode.clearColor = [CCColor clearColor];
     glowEffectNode.positionType = CCPositionTypeNormalized;
     glowEffectNode.position = ccp(0.1, 0.5);
     [glowEffectNode addChild:sampleSprite];
-    CCEffectGlow* glowEffect = [CCEffectGlow effectWithBlurStrength:0.02f];
+    CCEffectBloom* glowEffect = [CCEffectBloom effectWithPixelBlurRadius:8 intensity:1.0f luminanceThreshold:0.0f];
     glowEffectNode.effect = glowEffect;
     
-    CGSize size = CGSizeMake(1.0, 1.0);
-    [glowEffectNode runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
-                                                                  [CCActionMoveTo actionWithDuration:4.0 position:ccp(0, 0.5)],
-                                                                  [CCActionMoveTo actionWithDuration:4.0 position:ccp(size.width, 0.5)],
-                                                                  nil
-                                                                  ]]];
-
-    
     [self.contentNode addChild:glowEffectNode];
+    
+    
+    CCSprite *sampleSprite_base2 = [CCSprite spriteWithImageNamed:@"grossini_dance_08.png"];
+    sampleSprite_base2.anchorPoint = ccp(0.0, 0.0);
+    sampleSprite_base2.position = ccp(0.53, 0.515);
+    sampleSprite_base2.positionType = CCPositionTypeNormalized;
+    
+    [self.contentNode addChild:sampleSprite_base2];
+    
+    // Create a hollow circle
+    CCSprite *sampleSprite2 = [CCSprite spriteWithImageNamed:@"grossini_dance_08.png"];
+    sampleSprite2.anchorPoint = ccp(0.5, 0.5);
+    sampleSprite2.position = ccp(0.5, 0.5);
+    sampleSprite2.positionType = CCPositionTypeNormalized;
+    
+    // Blend glow maps test
+    CCEffectNode* glowEffectNode2 = [[CCEffectNode alloc] initWithWidth:sampleSprite2.contentSize.width + 7
+                                                                height:sampleSprite2.contentSize.height + 7];
+    glowEffectNode2.clearFlags = GL_COLOR_BUFFER_BIT;
+	glowEffectNode2.clearColor = [CCColor clearColor];
+    glowEffectNode2.positionType = CCPositionTypeNormalized;
+    glowEffectNode2.position = ccp(0.4, 0.5);
+    [glowEffectNode2 addChild:sampleSprite2];
+    CCEffectBloom* glowEffect2 = [CCEffectBloom effectWithPixelBlurRadius:2 intensity:0.0f luminanceThreshold:0.0f];
+    glowEffectNode2.effect = glowEffect2;
+    
+    [self.contentNode addChild:glowEffectNode2];
 }
 
 -(void)setupBrightnessAndContrastEffectNodeTest

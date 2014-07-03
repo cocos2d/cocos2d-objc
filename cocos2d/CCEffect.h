@@ -73,9 +73,12 @@ typedef NS_ENUM(NSUInteger, CCEffectPrepareStatus)
 @property (nonatomic, readonly) NSString* name;
 @property (nonatomic, readonly) NSString* type;
 @property (nonatomic, readonly) NSString* declaration;
+@property (nonatomic, readonly) NSInteger count;
 
 -(id)initWithType:(NSString*)type name:(NSString*)name;
+-(id)initWithType:(NSString*)type name:(NSString*)name count:(NSInteger)count;
 +(id)varying:(NSString*)type name:(NSString*)name;
++(id)varying:(NSString*)type name:(NSString*)name count:(NSInteger)count;
 
 @end
 
