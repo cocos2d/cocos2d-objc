@@ -59,7 +59,7 @@
     
     
     CCSpriteFrame *sphereNormalMap = [CCSpriteFrame frameWithImageNamed:@"Images/sphere-normal-256.png"];
-    CCEffect *sphereRefraction = [[CCEffectRefraction alloc] initWithRefraction:0.1f environment:renderTexture.sprite normalMap:nil];
+    CCEffectRefraction *sphereRefraction = [[CCEffectRefraction alloc] initWithRefraction:0.1f environment:renderTexture.sprite normalMap:nil];
     
     p1 = CGPointMake(0.1f, 0.8f);
     p2 = CGPointMake(0.35f, 0.2f);
@@ -75,7 +75,7 @@
     [self.contentNode addChild:sprite1];
     
     CCSpriteFrame *torusNormalMap = [CCSpriteFrame frameWithImageNamed:@"Images/torus-normal-256.png"];
-    CCEffect *torusRefraction = [[CCEffectRefraction alloc] initWithRefraction:0.1f environment:renderTexture.sprite normalMap:torusNormalMap];
+    CCEffectRefraction *torusRefraction = [[CCEffectRefraction alloc] initWithRefraction:0.1f environment:renderTexture.sprite normalMap:torusNormalMap];
     
     p1 = CGPointMake(0.65f, 0.2f);
     p2 = CGPointMake(0.9f, 0.8f);
@@ -88,6 +88,71 @@
                                                                 nil
                                                                 ]]];
     [self.contentNode addChild:sprite2];
+    
+    __block NSUInteger spriteConfig = 0;
+    
+    CCActionCallBlock *blockAction = [CCActionCallBlock actionWithBlock:^{
+        spriteConfig++;
+        if (spriteConfig > 8)
+        {
+            spriteConfig = 0;
+        }
+        
+        switch (spriteConfig)
+        {
+            case 0:
+                sprite1.normalMapSpriteFrame = nil;
+                sphereRefraction.normalMap = nil;
+                NSLog(@"Sprite: nil      Effect: nil    - You should see a rectangle.");
+                break;
+            case 1:
+                sprite1.normalMapSpriteFrame = sphereNormalMap;
+                sphereRefraction.normalMap = nil;
+                NSLog(@"Sprite: Sphere   Effect: nil    - You should see a sphere.");
+                break;
+            case 2:
+                sprite1.normalMapSpriteFrame = torusNormalMap;
+                sphereRefraction.normalMap = nil;
+                NSLog(@"Sprite: Torus    Effect: nil    - You should see a torus.");
+                break;
+            case 3:
+                sprite1.normalMapSpriteFrame = nil;
+                sphereRefraction.normalMap = sphereNormalMap;
+                NSLog(@"Sprite: nil      Effect: Sphere - You should see a sphere.");
+                break;
+            case 4:
+                sprite1.normalMapSpriteFrame = sphereNormalMap;
+                sphereRefraction.normalMap = sphereNormalMap;
+                NSLog(@"Sprite: Sphere   Effect: Sphere - You should see a sphere.");
+                break;
+            case 5:
+                sprite1.normalMapSpriteFrame = torusNormalMap;
+                sphereRefraction.normalMap = sphereNormalMap;
+                NSLog(@"Sprite: Torus    Effect: Sphere - You should see a sphere.");
+                break;
+            case 6:
+                sprite1.normalMapSpriteFrame = nil;
+                sphereRefraction.normalMap = torusNormalMap;
+                NSLog(@"Sprite: nil      Effect: Torus  - You should see a torus.");
+                break;
+            case 7:
+                sprite1.normalMapSpriteFrame = sphereNormalMap;
+                sphereRefraction.normalMap = torusNormalMap;
+                NSLog(@"Sprite: Sphere   Effect: Torus  - You should see a torus.");
+                break;
+            case 8:
+                sprite1.normalMapSpriteFrame = torusNormalMap;
+                sphereRefraction.normalMap = torusNormalMap;
+                NSLog(@"Sprite: Torus    Effect: Torus  - You should see a torus.");
+                break;
+        }
+    }];
+    [sprite2 runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+                                                                [CCActionDelay actionWithDuration:4.0f],
+                                                                blockAction,
+                                                                nil
+                                                                ]]];
+    
 }
 
 -(void)setupBlurEffectNodeTest
