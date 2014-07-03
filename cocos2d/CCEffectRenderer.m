@@ -146,9 +146,9 @@
     [self destroyAllRenderTargets];
 }
 
--(void)drawSprite:(CCSprite *)sprite withEffect:(CCEffect *)effect renderer:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
+-(void)drawSprite:(CCSprite *)sprite withEffect:(CCEffect *)effect uniforms:(NSMutableDictionary *)uniforms renderer:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
-    [effect prepareForRendering];
+    NSAssert(effect.readyForRendering, @"Effect not ready for rendering. Call prepareForRendering first.");
     [self freeAllRenderTargets];
     
     CCEffectRenderTarget *previousPassRT = nil;
@@ -173,6 +173,7 @@
         renderPass.verts = *(sprite.vertexes);
         renderPass.blendMode = [CCBlendMode premultipliedAlphaMode];
         renderPass.needsClear = !directRendering;
+        renderPass.shaderUniforms = uniforms;
         
         CCEffectRenderTarget *rt = nil;
         

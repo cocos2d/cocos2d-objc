@@ -60,6 +60,14 @@
 -(void)setEffect:(CCEffect *)effect
 {
     _effect = effect;
+    if (effect)
+    {
+        [self updateShaderUniformsFromEffect];
+    }
+    else
+    {
+        _shaderUniforms = nil;
+    }
 }
 
 -(void)begin
@@ -161,7 +169,14 @@
     if (_effect)
     {
         _effectRenderer.contentSize = self.texture.contentSize;
-        [_effectRenderer drawSprite:_sprite withEffect:_effect renderer:_renderer transform:transform];
+        if ([_effect prepareForRendering] == CCEffectPrepareSuccess)
+        {
+            // Preparing an effect for rendering can modify its uniforms
+            // dictionary which means we need to reinitialize our copy of the
+            // uniforms.
+            [self updateShaderUniformsFromEffect];
+        }
+        [_effectRenderer drawSprite:_sprite withEffect:_effect uniforms:_shaderUniforms renderer:_renderer transform:transform];
     }
     else
     {
@@ -176,6 +191,18 @@
         [CCRenderer bindRenderer:nil];
 
     _renderer = nil;
+}
+
+- (void)updateShaderUniformsFromEffect
+{
+    // Initialize the shader uniforms dictionary with the node's main texture and an
+    // empty entry for the normal map (because effect node's don't have normal maps
+    // like sprites do).
+    _shaderUniforms = [@{ CCShaderUniformMainTexture : (_texture ?: [CCTexture none]),
+                          } mutableCopy];
+    
+    // And then copy the new effect's uniforms into the node's uniforms dictionary.
+    [_shaderUniforms addEntriesFromDictionary:_effect.shaderUniforms];
 }
 
 @end
