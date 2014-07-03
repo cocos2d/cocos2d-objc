@@ -512,9 +512,14 @@ static NSString* vertBase =
     return YES;
 }
 
-- (BOOL)prepareForRendering
+- (BOOL)readyForRendering
 {
     return YES;
+}
+
+- (CCEffectPrepareStatus)prepareForRendering
+{
+    return CCEffectPrepareNothingToDo;
 }
 
 -(CCEffectRenderPass *)renderPassAtIndex:(NSInteger)passIndex
