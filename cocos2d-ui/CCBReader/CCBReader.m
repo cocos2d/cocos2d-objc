@@ -37,6 +37,7 @@
 #import "CCDirector_Private.h"
 #import "CCPhysics+ObjectiveChipmunk.h"
 #import "CCAnimationManager_Private.h"
+#import "CCEffectStack.h"
 
 #ifdef CCB_ENABLE_UNZIP
 #import "SSZipArchive.h"
@@ -919,10 +920,63 @@ static inline float readFloat(CCBReader *self)
             [node setValue:@(f) forKey:name];
         }
     }
+	else if(type == kCCBPropTypeEffects)
+	{
+		CCEffect * effect  = [self readEffects];
+		
+		//Hmmm..... Force it to write to @"effect" property.
+		[node setValue:effect forKey:@"effect"];
+				
+	}
     else
     {
         NSAssert(false, @"[PROPERTY] %@ - Failed to read property type %d, node class name: \"%@\", name: \"%@\", in ccb file: \"%@\"", name, type, [node class], [node name], _currentCCBFile);
     }
+}
+
+
+
+//Either returns a CCStackEffect or the one single effect.
+-(CCEffect*)readEffects
+{
+#if CC_ENABLE_EXPERIMENTAL_EFFECTS
+	int numberOfEffects = readIntWithSign(self, NO);
+	
+	NSMutableArray * effectsStack = [NSMutableArray array];
+	
+	for (int i = 0; i < numberOfEffects; i++) {
+		NSString * className = [self readCachedString];
+		
+		Class nodeClass = NSClassFromString(className);
+		if (nodeClass == nil)
+		{
+			NSAssert(nil, @"CCBReader: Could not create class named: %@", className);
+			return nil;
+		}
+		
+		CCEffect* effect = [[nodeClass alloc] init];
+		
+		int propCount = readIntWithSign(self,NO);
+		
+		for(int propIndex = 0; propIndex < propCount; propIndex++)
+		{
+			//Just lie and let the property reader do its work.
+			[self readPropertyForNode:(CCNode*)effect parent:nil isExtraProp:NO];
+			
+		}
+		
+		if(numberOfEffects == 1)
+		{
+			return effect;
+		}
+		[effectsStack addObject:effect];
+		
+	}
+	
+	return [[CCEffectStack alloc] initWithEffects:effectsStack];
+#else
+	return nil;
+#endif
 }
 
 - (BOOL)isPropertyKeySettable:(NSString *)key onInstance:(id)instance
