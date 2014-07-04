@@ -74,7 +74,8 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
                                    // vector.
                                    vec2 refractTexCoords = envSpaceTexCoords.xy + normal.xy * u_refraction;
 
-                                   return texture2D(u_envMap, refractTexCoords);
+                                   vec4 primaryColor = cc_FragColor * texture2D(cc_MainTexture, cc_FragTexCoord1);
+                                   return primaryColor * texture2D(u_envMap, refractTexCoords);
                                    );
     
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"refractionEffect" body:effectBody inputs:@[input] returnType:@"vec4"];

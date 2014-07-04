@@ -57,14 +57,16 @@
     
     [self.contentNode addChild:renderTexture];
     
-    
+    NSString *sphereTextureFile = @"Images/sphere-256.png";
+    CCTexture *sphereTexture = [CCTexture textureWithFile:sphereTextureFile];
     CCSpriteFrame *sphereNormalMap = [CCSpriteFrame frameWithImageNamed:@"Images/sphere-normal-256.png"];
     CCEffectRefraction *sphereRefraction = [[CCEffectRefraction alloc] initWithRefraction:0.1f environment:renderTexture.sprite normalMap:nil];
     
     p1 = CGPointMake(0.1f, 0.8f);
     p2 = CGPointMake(0.35f, 0.2f);
-    CCSprite *sprite1 = [self spriteWithEffects:@[sphereRefraction] image:@"Images/blocks-hd.png" atPosition:p1];
+    CCSprite *sprite1 = [self spriteWithEffects:@[sphereRefraction] image:sphereTextureFile atPosition:p1];
     sprite1.normalMapSpriteFrame = sphereNormalMap;
+    sprite1.scale = 0.5f;
     [sprite1 runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
                                                                 [CCActionMoveTo actionWithDuration:2.0 position:ccp(p1.x, p2.y)],
                                                                 [CCActionMoveTo actionWithDuration:1.0 position:ccp(p2.x, p2.y)],
@@ -73,13 +75,16 @@
                                                                 nil
                                                                 ]]];
     [self.contentNode addChild:sprite1];
-    
+
+    NSString *torusTextureFile = @"Images/torus-256.png";
+    CCTexture *torusTexture = [CCTexture textureWithFile:torusTextureFile];
     CCSpriteFrame *torusNormalMap = [CCSpriteFrame frameWithImageNamed:@"Images/torus-normal-256.png"];
     CCEffectRefraction *torusRefraction = [[CCEffectRefraction alloc] initWithRefraction:0.1f environment:renderTexture.sprite normalMap:torusNormalMap];
     
     p1 = CGPointMake(0.65f, 0.2f);
     p2 = CGPointMake(0.9f, 0.8f);
-    CCSprite *sprite2 = [self spriteWithEffects:@[torusRefraction] image:@"Images/blocks-hd.png" atPosition:p1];
+    CCSprite *sprite2 = [self spriteWithEffects:@[torusRefraction] image:torusTextureFile atPosition:p1];
+    sprite2.scale = 0.5f;
     [sprite2 runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
                                                                 [CCActionMoveTo actionWithDuration:2.0 position:ccp(p1.x, p2.y)],
                                                                 [CCActionMoveTo actionWithDuration:2.0 position:ccp(p2.x, p2.y)],
@@ -103,46 +108,64 @@
             case 0:
                 sprite1.normalMapSpriteFrame = nil;
                 sphereRefraction.normalMap = nil;
+                sprite1.texture = [CCTexture none];
+                
                 NSLog(@"Sprite: nil      Effect: nil    - You should see a rectangle.");
                 break;
             case 1:
                 sprite1.normalMapSpriteFrame = sphereNormalMap;
                 sphereRefraction.normalMap = nil;
+                sprite1.texture = sphereTexture;
+                
                 NSLog(@"Sprite: Sphere   Effect: nil    - You should see a sphere.");
                 break;
             case 2:
                 sprite1.normalMapSpriteFrame = torusNormalMap;
                 sphereRefraction.normalMap = nil;
+                sprite1.texture = torusTexture;
+                
                 NSLog(@"Sprite: Torus    Effect: nil    - You should see a torus.");
                 break;
             case 3:
                 sprite1.normalMapSpriteFrame = nil;
                 sphereRefraction.normalMap = sphereNormalMap;
+                sprite1.texture = sphereTexture;
+                
                 NSLog(@"Sprite: nil      Effect: Sphere - You should see a sphere.");
                 break;
             case 4:
                 sprite1.normalMapSpriteFrame = sphereNormalMap;
                 sphereRefraction.normalMap = sphereNormalMap;
+                sprite1.texture = sphereTexture;
+
                 NSLog(@"Sprite: Sphere   Effect: Sphere - You should see a sphere.");
                 break;
             case 5:
                 sprite1.normalMapSpriteFrame = torusNormalMap;
                 sphereRefraction.normalMap = sphereNormalMap;
+                sprite1.texture = sphereTexture;
+
                 NSLog(@"Sprite: Torus    Effect: Sphere - You should see a sphere.");
                 break;
             case 6:
                 sprite1.normalMapSpriteFrame = nil;
                 sphereRefraction.normalMap = torusNormalMap;
+                sprite1.texture = torusTexture;
+                
                 NSLog(@"Sprite: nil      Effect: Torus  - You should see a torus.");
                 break;
             case 7:
                 sprite1.normalMapSpriteFrame = sphereNormalMap;
                 sphereRefraction.normalMap = torusNormalMap;
+                sprite1.texture = torusTexture;
+                
                 NSLog(@"Sprite: Sphere   Effect: Torus  - You should see a torus.");
                 break;
             case 8:
                 sprite1.normalMapSpriteFrame = torusNormalMap;
                 sphereRefraction.normalMap = torusNormalMap;
+                sprite1.texture = torusTexture;
+                
                 NSLog(@"Sprite: Torus    Effect: Torus  - You should see a torus.");
                 break;
         }
