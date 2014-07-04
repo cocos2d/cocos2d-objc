@@ -74,6 +74,7 @@ static float conditionSaturation(float saturation);
 {
     if((self = [self init]))
     {
+        _saturation = saturation;
         _conditionedSaturation = conditionSaturation(saturation);
     }
     return self;
@@ -119,6 +120,7 @@ static float conditionSaturation(float saturation);
 
 -(void)setSaturation:(float)saturation
 {
+    _saturation = saturation;
     _conditionedSaturation = conditionSaturation(saturation);
 }
 @end

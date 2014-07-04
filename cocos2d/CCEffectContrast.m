@@ -40,6 +40,7 @@ static float conditionContrast(float contrast);
 {
     if((self = [self init]))
     {
+        _contrast = contrast;
         _conditionedContrast = conditionContrast(contrast);
     }
     return self;
@@ -79,6 +80,7 @@ static float conditionContrast(float contrast);
 
 -(void)setContrast:(float)contrast
 {
+    _contrast = contrast;
     _conditionedContrast = conditionContrast(contrast);
 }
 

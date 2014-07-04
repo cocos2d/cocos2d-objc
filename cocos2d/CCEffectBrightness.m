@@ -39,6 +39,7 @@ static float conditionBrightness(float brightness);
 {
     if((self = [self init]))
     {
+        _brightness = brightness;
         _conditionedBrightness = conditionBrightness(brightness);
     }    
     return self;
@@ -78,6 +79,7 @@ static float conditionBrightness(float brightness);
 
 -(void)setBrightness:(float)brightness
 {
+    _brightness = brightness;
     _conditionedBrightness = conditionBrightness(brightness);
 }
 
