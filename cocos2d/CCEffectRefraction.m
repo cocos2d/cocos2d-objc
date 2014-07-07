@@ -31,7 +31,7 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
                           [CCEffectUniform uniform:@"mat4" name:@"u_screenToEnv" value:[NSValue valueWithGLKMatrix4:GLKMatrix4Identity]],
                           ];
     
-    if((self = [super initWithFragmentUniforms:uniforms vertextUniforms:nil varying:nil]))
+    if((self = [super initWithFragmentUniforms:uniforms vertexUniforms:nil varying:nil]))
     {
         self.debugName = @"CCEffectRefraction";
         return self;

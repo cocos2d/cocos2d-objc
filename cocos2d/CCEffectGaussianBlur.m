@@ -80,7 +80,7 @@
     CCEffectVarying* v_blurCoords = [CCEffectVarying varying:@"vec2" name:@"v_blurCoordinates" count:count];
     
     if(self = [super initWithFragmentUniforms:nil
-                              vertextUniforms:[NSArray arrayWithObjects:u_blurDirection, nil]
+                               vertexUniforms:[NSArray arrayWithObjects:u_blurDirection, nil]
                                       varying:[NSArray arrayWithObjects:v_blurCoords, nil]])
     {
         

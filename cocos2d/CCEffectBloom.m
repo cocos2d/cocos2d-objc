@@ -91,7 +91,7 @@
     CCEffectVarying* v_blurCoords = [CCEffectVarying varying:@"vec2" name:@"v_blurCoordinates" count:count];
     
     if(self = [super initWithFragmentUniforms:@[u_enableGlowMap, u_luminanceThreshold]
-                              vertextUniforms:@[u_blurDirection]
+                               vertexUniforms:@[u_blurDirection]
                                       varying:@[v_blurCoords]])
     {
         

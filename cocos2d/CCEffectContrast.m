@@ -28,7 +28,7 @@ static float conditionContrast(float contrast);
 {
     CCEffectUniform* uniformContrast = [CCEffectUniform uniform:@"float" name:@"u_contrast" value:[NSNumber numberWithFloat:1.0f]];
     
-    if((self = [super initWithFragmentUniforms:@[uniformContrast] vertextUniforms:nil varying:nil]))
+    if((self = [super initWithFragmentUniforms:@[uniformContrast] vertexUniforms:nil varying:nil]))
     {
         self.debugName = @"CCEffectContrast";
         return self;
