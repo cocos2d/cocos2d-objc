@@ -450,11 +450,6 @@ static NSString* vertBase =
         }
         
         [effectFunctionBody appendFormat:@"tmp = %@;\n", [curFunction callStringWithInputs:inputs]];
-//
-//        if([_fragmentFunctions lastObject] != curFunction)
-//            [effectFunctionBody appendString:@" + "];
-//        else
-//            [effectFunctionBody appendString:@";"];
     }
     [effectFunctionBody appendString:@"return tmp;\n"];
     
