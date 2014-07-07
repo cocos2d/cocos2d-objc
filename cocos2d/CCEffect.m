@@ -315,66 +315,68 @@ static NSString* vertBase =
 {
     if((self = [super init]))
     {
-        if (fragmentFunctions)
-        {
-            _fragmentFunctions = fragmentFunctions;
-        }
-        else
-        {
-            _fragmentFunctions = [[NSMutableArray alloc] init];
-            [self buildFragmentFunctions];
-        }
-        
-        if (vertexFunctions)
-        {
-            _vertexFunctions = vertexFunctions;
-        }
-        else
-        {
-            _vertexFunctions = [[NSMutableArray alloc] init];
-            [self buildVertexFunctions];
-        }
-        
-        if (fragmentUniforms)
-        {
-            _fragmentUniforms = [[CCEffect defaultEffectFragmentUniforms] arrayByAddingObjectsFromArray:fragmentUniforms];
-        }
-        else
-        {
-            _fragmentUniforms = [[CCEffect defaultEffectFragmentUniforms] copy];
-        }
-        
-        if (vertexUniforms)
-        {
-            _vertexUniforms = [[CCEffect defaultEffectVertexUniforms] arrayByAddingObjectsFromArray:vertexUniforms];
+        [self buildEffectWithFragmentFunction:fragmentFunctions vertexFunctions:vertexFunctions fragmentUniforms:fragmentUniforms vertexUniforms:vertexUniforms varying:varying];
+    }
+    return self;
+}
 
-        }
-        else
-        {
-            _vertexUniforms = [[CCEffect defaultEffectVertexUniforms] copy];
-        }
-        
-        if (varying)
-        {
-            _varyingVars = [varying copy];
-        }
-        else
-        {
-            _varyingVars = nil;
-        }
-        
-        _stitchFlags = CCEffectFunctionStitchBoth;
-        
-        [self buildShaderUniforms:_fragmentUniforms vertexUniforms:_vertexUniforms];
-        [self buildUniformTranslationTable];
-        
-        [self buildEffectShader];
-        [self buildRenderPasses];
-        
-        return self;
+- (void)buildEffectWithFragmentFunction:(NSMutableArray*) fragmentFunctions vertexFunctions:(NSMutableArray*)vertexFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varying:(NSArray*)varying
+{
+    if (fragmentFunctions)
+    {
+        _fragmentFunctions = fragmentFunctions;
+    }
+    else
+    {
+        _fragmentFunctions = [[NSMutableArray alloc] init];
+        [self buildFragmentFunctions];
     }
     
-    return self;
+    if (vertexFunctions)
+    {
+        _vertexFunctions = vertexFunctions;
+    }
+    else
+    {
+        _vertexFunctions = [[NSMutableArray alloc] init];
+        [self buildVertexFunctions];
+    }
+    
+    if (fragmentUniforms)
+    {
+        _fragmentUniforms = [[CCEffect defaultEffectFragmentUniforms] arrayByAddingObjectsFromArray:fragmentUniforms];
+    }
+    else
+    {
+        _fragmentUniforms = [[CCEffect defaultEffectFragmentUniforms] copy];
+    }
+    
+    if (vertexUniforms)
+    {
+        _vertexUniforms = [[CCEffect defaultEffectVertexUniforms] arrayByAddingObjectsFromArray:vertexUniforms];
+        
+    }
+    else
+    {
+        _vertexUniforms = [[CCEffect defaultEffectVertexUniforms] copy];
+    }
+    
+    if (varying)
+    {
+        _varyingVars = [varying copy];
+    }
+    else
+    {
+        _varyingVars = nil;
+    }
+    
+    _stitchFlags = CCEffectFunctionStitchBoth;
+    
+    [self buildShaderUniforms:_fragmentUniforms vertexUniforms:_vertexUniforms];
+    [self buildUniformTranslationTable];
+    
+    [self buildEffectShader];
+    [self buildRenderPasses];
 }
 
 -(void)buildShaderUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms
@@ -409,9 +411,6 @@ static NSString* vertBase =
 
 -(void)buildEffectShader
 {
-    if(_shader != nil)
-        return;
-    
     //Build varying vars
     NSMutableString* varyingVarsToInsert = [[NSMutableString alloc] init];
     for(CCEffectVarying* varying in _varyingVars)
