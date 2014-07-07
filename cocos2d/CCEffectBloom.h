@@ -19,6 +19,7 @@
  *  @param luminanceThreshold ranges between 0.0-1.0 - defines which part of the image should be glown via a luminance factor (brightness). 
  *  A value of 0.0 will apply bloom to the whole image, a value of 1.0 will only apply bloom to the brightest part of the image.
  */
+-(id)init;
 -(id)initWithPixelBlurRadius:(NSUInteger)blurRadius intensity:(float)intensity luminanceThreshold:(float)luminanceThreshold;
 +(id)effectWithPixelBlurRadius:(NSUInteger)blurRadius intensity:(float)intensity luminanceThreshold:(float)luminanceThreshold;
 
