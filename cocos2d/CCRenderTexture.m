@@ -167,9 +167,13 @@
 {
 	glPushGroupMarkerEXT(0, "CCRenderTexture: Create");
 	
-	int pixelW = _contentSize.width*_contentScale;
-	int pixelH = _contentSize.height*_contentScale;
+	CGSize contentSizeInPoints = self.contentSizeInPoints;
+	
+	int pixelW = contentSizeInPoints.width*_contentScale;
+	int pixelH = contentSizeInPoints.height*_contentScale;
 
+
+	_projection = GLKMatrix4MakeOrtho(0.0f, pixelW, 0.0f, pixelH, -1024.0f, 1024.0f);
 
 	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
 
@@ -230,7 +234,7 @@
 	CC_CHECK_GL_ERROR_DEBUG();
 	glPopGroupMarkerEXT();
 	
-	CGRect rect = CGRectMake(0, 0, _contentSize.width, _contentSize.height);
+	CGRect rect = CGRectMake(0, 0, contentSizeInPoints.width, contentSizeInPoints.height);
 	
 	[self assignSpriteTexture];
 	[_sprite setTextureRect:rect];
@@ -614,9 +618,14 @@
     // TODO: Fix CCRenderTexture so that it correctly handles this
 	// NSAssert(NO, @"You cannot change the content size of an already created CCRenderTexture. Recreate it");
     [super setContentSize:size];
-	_projection = GLKMatrix4MakeOrtho(0.0f, size.width, 0.0f, size.height, -1024.0f, 1024.0f);
     _contentSizeChanged = YES;
 
+}
+
+-(void)setContentSizeType:(CCSizeType)contentSizeType
+{
+	[super setContentSizeType:contentSizeType];
+	_contentSizeChanged = YES;
 }
 
 

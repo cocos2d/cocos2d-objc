@@ -142,6 +142,12 @@
 
     NSAssert(_renderer == renderer, @"CCEffectNode error!");
 
+	if(_contentSizeChanged){
+		[self destroy];
+		_contentSizeChanged = NO;
+	}
+	
+	
     // Render children of this effect node into an FBO for use by the
     // remainder of the effects.
     [self begin];
