@@ -48,10 +48,30 @@
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @implementation CCEffectBloom {
     NSUInteger _numberOfOptimizedOffsets;
-    NSUInteger _blurRadius;
     GLfloat _sigma;
-    float _intensity;
-    float _luminanceThreshold;
+    BOOL _shaderDirty;
+}
+
+- (void)setBlurRadiusAndDependents:(NSUInteger)blurRadius
+{
+    blurRadius = MIN(blurRadius, GAUSSIANBLUR_OPTMIZIED_RADIUS_MAX);
+    _blurRadius = blurRadius;
+    _sigma = blurRadius / 2;
+    if(_sigma == 0.0)
+        _sigma = 1.0f;
+    
+    _numberOfOptimizedOffsets = MIN(blurRadius / 2 + (blurRadius % 2), GAUSSIANBLUR_OPTMIZIED_RADIUS_MAX);
+}
+
+-(void)setBlurRadius:(NSUInteger)blurRadius
+{
+    [self setBlurRadiusAndDependents:blurRadius];
+    
+    // The shader is constructed dynamically based on the blur radius
+    // so mark it dirty and make sure this propagates up to any containing
+    // effect stacks.
+    _shaderDirty = YES;
+    [self.owningStack passesDidChange:self];
 }
 
 -(id)init
@@ -72,15 +92,7 @@
     
     _luminanceThreshold = clampf(luminanceThreshold, 0.0f, 1.0f);
     
-    
-    // First, generate the normal Gaussian weights for a given sigma
-    blurRadius = MIN(blurRadius, GAUSSIANBLUR_OPTMIZIED_RADIUS_MAX);
-    _blurRadius = blurRadius;
-    _sigma = blurRadius / 2;
-    if(_sigma == 0.0)
-        _sigma = 1.0f;
-    
-    _numberOfOptimizedOffsets = MIN(blurRadius / 2 + (blurRadius % 2), GAUSSIANBLUR_OPTMIZIED_RADIUS_MAX);
+    [self setBlurRadiusAndDependents:blurRadius];
 
     CCEffectUniform* u_luminanceThreshold = [CCEffectUniform uniform:@"float" name:@"u_luminanceThreshold" value:[NSNumber numberWithFloat:_luminanceThreshold]];
     CCEffectUniform* u_enableGlowMap = [CCEffectUniform uniform:@"float" name:@"u_enableGlowMap" value:[NSNumber numberWithFloat:0.0f]];
@@ -312,6 +324,27 @@
     } copy]];
 
     self.renderPasses = @[pass0, pass1, pass2];
+}
+
+- (BOOL)readyForRendering
+{
+    return !_shaderDirty;
+}
+
+- (CCEffectPrepareStatus)prepareForRendering
+{
+    CCEffectPrepareStatus result = CCEffectPrepareNothingToDo;
+    if (_shaderDirty)
+    {
+        [self buildFragmentFunctions];
+        [self buildVertexFunctions];
+        [self buildEffectShader];
+        [self buildRenderPasses];
+        
+        _shaderDirty = NO;
+        result = CCEffectPrepareSuccess;
+    }
+    return result;
 }
 
 @end

@@ -11,6 +11,9 @@
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffectBloom : CCEffect
 
+@property (nonatomic) NSUInteger blurRadius;
+@property (nonatomic) float intensity;
+@property (nonatomic) float luminanceThreshold;
 
 /**
  *  @param blurRadius number of pixels blur will extend to (6 is the maximum, because we are limited by the number 
