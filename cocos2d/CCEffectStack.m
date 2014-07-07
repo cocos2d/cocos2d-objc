@@ -326,10 +326,7 @@
     // change notification up the tree (if we're not at the
     // top).
     _passesDirty = YES;
-    if (self.owningStack)
-    {
-        [self.owningStack passesDidChange:self];
-    }
+    [self.owningStack passesDidChange:self];
 }
 
 
