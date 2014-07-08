@@ -248,7 +248,7 @@
 {
     self.subTitle = @"Glow Effect Node Test";
     
-    CCSprite *sampleSprite_base = [CCSprite spriteWithImageNamed:@"sample_hollow_circle.png"];
+    CCSprite *sampleSprite_base = [CCSprite spriteWithImageNamed:@"Images/sample_hollow_circle.png"];
     sampleSprite_base.anchorPoint = ccp(0.0, 0.0);
     sampleSprite_base.position = ccp(0.27, 0.52);
     sampleSprite_base.positionType = CCPositionTypeNormalized;
@@ -275,7 +275,7 @@
     [self.contentNode addChild:glowEffectNode];
     
     
-    CCSprite *sampleSprite_base2 = [CCSprite spriteWithImageNamed:@"grossini_dance_08.png"];
+    CCSprite *sampleSprite_base2 = [CCSprite spriteWithImageNamed:@"Images/grossini_dance_08.png"];
     sampleSprite_base2.anchorPoint = ccp(0.0, 0.0);
     sampleSprite_base2.position = ccp(0.53, 0.515);
     sampleSprite_base2.positionType = CCPositionTypeNormalized;
@@ -283,7 +283,7 @@
     [self.contentNode addChild:sampleSprite_base2];
     
     // Create a hollow circle
-    CCSprite *sampleSprite2 = [CCSprite spriteWithImageNamed:@"grossini_dance_08.png"];
+    CCSprite *sampleSprite2 = [CCSprite spriteWithImageNamed:@"Images/grossini_dance_08.png"];
     sampleSprite2.anchorPoint = ccp(0.5, 0.5);
     sampleSprite2.position = ccp(0.5, 0.5);
     sampleSprite2.positionType = CCPositionTypeNormalized;
