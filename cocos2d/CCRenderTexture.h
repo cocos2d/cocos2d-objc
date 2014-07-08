@@ -59,7 +59,7 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
 @interface CCRenderTexture : CCNode
 
 /** The CCSprite that is used for rendering.
-	A sublte change introduced in v3.1.1 is that this sprite is rendered explicitly and is not a child of the render texture.
+	A subtle change introduced in v3.1.1 is that this sprite is rendered explicitly and is not a child of the render texture.
 */
 @property (nonatomic,readwrite, strong) CCSprite* sprite;
 
