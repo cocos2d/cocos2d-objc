@@ -27,7 +27,7 @@ static float conditionBrightness(float brightness);
 {
     CCEffectUniform* uniformBrightness = [CCEffectUniform uniform:@"float" name:@"u_brightness" value:[NSNumber numberWithFloat:0.0f]];
     
-    if((self = [super initWithFragmentUniforms:@[uniformBrightness] vertextUniforms:nil varying:nil]))
+    if((self = [super initWithFragmentUniforms:@[uniformBrightness] vertexUniforms:nil varying:nil]))
     {
         self.debugName = @"CCEffectBrightness";
         return self;
@@ -52,6 +52,8 @@ static float conditionBrightness(float brightness);
 
 -(void)buildFragmentFunctions
 {
+    self.fragmentFunctions = [[NSMutableArray alloc] init];
+
     CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" snippet:@"texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)"];
 
     NSString* effectBody = CC_GLSL(

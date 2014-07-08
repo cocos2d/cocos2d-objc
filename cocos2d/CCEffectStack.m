@@ -216,7 +216,7 @@
         effectIndex++;
     }
     
-    CCEffect* stitchedEffect = [[CCEffect alloc] initWithFragmentFunction:allFragFunctions vertexFunctions:allVertexFunctions fragmentUniforms:allFragUniforms vertextUniforms:allVertexUniforms varying:allVaryings];
+    CCEffect* stitchedEffect = [[CCEffect alloc] initWithFragmentFunction:allFragFunctions vertexFunctions:allVertexFunctions fragmentUniforms:allFragUniforms vertexUniforms:allVertexUniforms varying:allVaryings];
     stitchedEffect.debugName = @"CCEffectStack_Stitched";
     
     // Set the stitch flags of the resulting effect based on the flags of the first
@@ -326,10 +326,7 @@
     // change notification up the tree (if we're not at the
     // top).
     _passesDirty = YES;
-    if (self.owningStack)
-    {
-        [self.owningStack passesDidChange:self];
-    }
+    [self.owningStack passesDidChange:self];
 }
 
 

@@ -62,7 +62,7 @@ static float conditionSaturation(float saturation);
 {
     CCEffectUniform* uniformSaturation = [CCEffectUniform uniform:@"float" name:@"u_saturation" value:[NSNumber numberWithFloat:1.0f]];
     
-    if((self = [super initWithFragmentUniforms:@[uniformSaturation] vertextUniforms:nil varying:nil]))
+    if((self = [super initWithFragmentUniforms:@[uniformSaturation] vertexUniforms:nil varying:nil]))
     {
         self.debugName = @"CCEffectSaturation";
         return self;
@@ -87,6 +87,8 @@ static float conditionSaturation(float saturation);
 
 -(void)buildFragmentFunctions
 {
+    self.fragmentFunctions = [[NSMutableArray alloc] init];
+
     CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" snippet:@"texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)"];
     
     // Image saturation shader based on saturation filter in GPUImage - https://github.com/BradLarson/GPUImage

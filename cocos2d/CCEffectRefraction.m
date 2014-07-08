@@ -31,7 +31,7 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
                           [CCEffectUniform uniform:@"mat4" name:@"u_screenToEnv" value:[NSValue valueWithGLKMatrix4:GLKMatrix4Identity]],
                           ];
     
-    if((self = [super initWithFragmentUniforms:uniforms vertextUniforms:nil varying:nil]))
+    if((self = [super initWithFragmentUniforms:uniforms vertexUniforms:nil varying:nil]))
     {
         self.debugName = @"CCEffectRefraction";
         return self;
@@ -57,6 +57,8 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
 
 -(void)buildFragmentFunctions
 {
+    self.fragmentFunctions = [[NSMutableArray alloc] init];
+
     CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" snippet:@"texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)"];
     
     NSString* effectBody = CC_GLSL(

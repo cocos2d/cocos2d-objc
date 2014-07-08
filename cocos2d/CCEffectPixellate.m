@@ -62,7 +62,7 @@ static float conditionBlockSize(float blockSize);
     CCEffectUniform* uniformUStep = [CCEffectUniform uniform:@"float" name:@"u_uStep" value:[NSNumber numberWithFloat:1.0f]];
     CCEffectUniform* uniformVStep = [CCEffectUniform uniform:@"float" name:@"u_vStep" value:[NSNumber numberWithFloat:1.0f]];
     
-    if((self = [super initWithFragmentUniforms:@[uniformUStep, uniformVStep] vertextUniforms:nil varying:nil]))
+    if((self = [super initWithFragmentUniforms:@[uniformUStep, uniformVStep] vertexUniforms:nil varying:nil]))
     {
         self.debugName = @"CCEffectPixellate";
         self.stitchFlags = CCEffectFunctionStitchAfter;
@@ -88,6 +88,8 @@ static float conditionBlockSize(float blockSize);
 
 -(void)buildFragmentFunctions
 {
+    self.fragmentFunctions = [[NSMutableArray alloc] init];
+
     // Image pixellation shader based on pixellation filter in GPUImage - https://github.com/BradLarson/GPUImage
     NSString* effectBody = CC_GLSL(
                                    vec2 samplePos = cc_FragTexCoord1 - mod(cc_FragTexCoord1, vec2(u_uStep, u_vStep)) + 0.5 * vec2(u_uStep, u_vStep);
