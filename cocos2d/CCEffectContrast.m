@@ -53,6 +53,8 @@ static float conditionContrast(float contrast);
 
 -(void)buildFragmentFunctions
 {
+    self.fragmentFunctions = [[NSMutableArray alloc] init];
+
     CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" snippet:@"texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)"];
 
     NSString* effectBody = CC_GLSL(

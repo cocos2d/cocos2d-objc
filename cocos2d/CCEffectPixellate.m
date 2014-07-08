@@ -88,6 +88,8 @@ static float conditionBlockSize(float blockSize);
 
 -(void)buildFragmentFunctions
 {
+    self.fragmentFunctions = [[NSMutableArray alloc] init];
+
     // Image pixellation shader based on pixellation filter in GPUImage - https://github.com/BradLarson/GPUImage
     NSString* effectBody = CC_GLSL(
                                    vec2 samplePos = cc_FragTexCoord1 - mod(cc_FragTexCoord1, vec2(u_uStep, u_vStep)) + 0.5 * vec2(u_uStep, u_vStep);

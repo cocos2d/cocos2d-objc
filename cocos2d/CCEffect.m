@@ -328,7 +328,6 @@ static NSString* vertBase =
     }
     else
     {
-        _fragmentFunctions = [[NSMutableArray alloc] init];
         [self buildFragmentFunctions];
     }
     
@@ -338,7 +337,6 @@ static NSString* vertBase =
     }
     else
     {
-        _vertexFunctions = [[NSMutableArray alloc] init];
         [self buildVertexFunctions];
     }
     
@@ -495,14 +493,14 @@ static NSString* vertBase =
 
 -(void)buildFragmentFunctions
 {
-    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"defaultEffect" body:@"return cc_FragColor;" inputs:nil returnType:@"vec4"];
-    [_fragmentFunctions addObject:fragmentFunction];
+    _fragmentFunctions = [[NSMutableArray alloc] init];
+    [_fragmentFunctions addObject:[[CCEffectFunction alloc] initWithName:@"defaultEffect" body:@"return cc_FragColor;" inputs:nil returnType:@"vec4"]];
 }
 
 -(void)buildVertexFunctions
 {
-    CCEffectFunction* vertexFunction = [[CCEffectFunction alloc] initWithName:@"defaultEffect" body:@"return cc_Position;" inputs:nil returnType:@"vec4"];
-    [_vertexFunctions addObject:vertexFunction];
+    _vertexFunctions = [[NSMutableArray alloc] init];
+    [_vertexFunctions addObject:[[CCEffectFunction alloc] initWithName:@"defaultEffect" body:@"return cc_Position;" inputs:nil returnType:@"vec4"]];
 }
 
 -(void)buildRenderPasses

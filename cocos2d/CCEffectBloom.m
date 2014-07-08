@@ -122,6 +122,8 @@
 
 -(void)buildFragmentFunctions
 {
+    self.fragmentFunctions = [[NSMutableArray alloc] init];
+
     GLfloat *standardGaussianWeights = calloc(_blurRadius + 1, sizeof(GLfloat));
     GLfloat sumOfWeights = 0.0;
     for (NSUInteger currentGaussianWeightIndex = 0; currentGaussianWeightIndex < _blurRadius + 1; currentGaussianWeightIndex++)
@@ -218,6 +220,8 @@
 
 -(void)buildVertexFunctions
 {
+    self.vertexFunctions = [[NSMutableArray alloc] init];
+    
     GLfloat* standardGaussianWeights = calloc(_blurRadius + 1, sizeof(GLfloat));
     GLfloat sumOfWeights = 0.0;
     for (NSUInteger currentGaussianWeightIndex = 0; currentGaussianWeightIndex < _blurRadius + 1; currentGaussianWeightIndex++)
