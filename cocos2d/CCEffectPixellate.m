@@ -59,25 +59,23 @@ static float conditionBlockSize(float blockSize);
 
 -(id)init
 {
+    return [self initWithBlockSize:1.0f];
+}
+
+-(id)initWithBlockSize:(float)blockSize
+{
     CCEffectUniform* uniformUStep = [CCEffectUniform uniform:@"float" name:@"u_uStep" value:[NSNumber numberWithFloat:1.0f]];
     CCEffectUniform* uniformVStep = [CCEffectUniform uniform:@"float" name:@"u_vStep" value:[NSNumber numberWithFloat:1.0f]];
     
     if((self = [super initWithFragmentUniforms:@[uniformUStep, uniformVStep] vertexUniforms:nil varying:nil]))
     {
-        self.debugName = @"CCEffectPixellate";
-        self.stitchFlags = CCEffectFunctionStitchAfter;
-        return self;
-    }
-    return self;
-}
-
--(id)initWithBlockSize:(float)blockSize
-{
-    if((self = [self init]))
-    {
         _blockSize = blockSize;
         _conditionedBlockSize = conditionBlockSize(blockSize);
+
+        self.debugName = @"CCEffectPixellate";
+        self.stitchFlags = CCEffectFunctionStitchAfter;
     }
+    
     return self;
 }
 

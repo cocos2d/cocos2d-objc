@@ -23,6 +23,11 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
 
 -(id)init
 {
+    return [self initWithRefraction:1.0f environment:nil normalMap:nil];
+}
+
+-(id)initWithRefraction:(float)refraction environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap
+{
     NSArray *uniforms = @[
                           [CCEffectUniform uniform:@"float" name:@"u_refraction" value:[NSNumber numberWithFloat:1.0f]],
                           [CCEffectUniform uniform:@"sampler2D" name:@"u_envMap" value:(NSValue*)[CCTexture none]],
@@ -33,24 +38,16 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
     
     if((self = [super initWithFragmentUniforms:uniforms vertexUniforms:nil varying:nil]))
     {
-        self.debugName = @"CCEffectRefraction";
-        return self;
-    }
-    return self;
-}
-
--(id)initWithRefraction:(float)refraction environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap;
-{
-    if((self = [self init]))
-    {
         _refraction = refraction;
         _environment = environment;
         _normalMap = normalMap;
+
+        self.debugName = @"CCEffectRefraction";
     }
     return self;
 }
 
-+(id)effectWithRefraction:(float)refraction environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap;
++(id)effectWithRefraction:(float)refraction environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap
 {
     return [[self alloc] initWithRefraction:refraction environment:environment normalMap:normalMap];
 }

@@ -60,22 +60,19 @@ static float conditionSaturation(float saturation);
 
 -(id)init
 {
-    CCEffectUniform* uniformSaturation = [CCEffectUniform uniform:@"float" name:@"u_saturation" value:[NSNumber numberWithFloat:1.0f]];
-    
-    if((self = [super initWithFragmentUniforms:@[uniformSaturation] vertexUniforms:nil varying:nil]))
-    {
-        self.debugName = @"CCEffectSaturation";
-        return self;
-    }
-    return self;
+    return [self initWithSaturation:0.0f];
 }
 
 -(id)initWithSaturation:(float)saturation
 {
-    if((self = [self init]))
+    CCEffectUniform* uniformSaturation = [CCEffectUniform uniform:@"float" name:@"u_saturation" value:[NSNumber numberWithFloat:1.0f]];
+    
+    if((self = [super initWithFragmentUniforms:@[uniformSaturation] vertexUniforms:nil varying:nil]))
     {
         _saturation = saturation;
         _conditionedSaturation = conditionSaturation(saturation);
+
+        self.debugName = @"CCEffectSaturation";
     }
     return self;
 }
