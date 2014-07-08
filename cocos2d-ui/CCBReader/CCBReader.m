@@ -1339,7 +1339,7 @@ static inline float readFloat(CCBReader *self)
         embeddedNode.scaleX = ccbFileNode.scaleX;
         embeddedNode.scaleY = ccbFileNode.scaleY;
         embeddedNode.name = ccbFileNode.name;
-        embeddedNode.visible = YES;
+        embeddedNode.visible = ccbFileNode.visible;
         //embeddedNode.ignoreAnchorPointForPosition = ccbFileNode.ignoreAnchorPointForPosition;
         
         [animationManager moveAnimationsFromNode:ccbFileNode toNode:embeddedNode];
