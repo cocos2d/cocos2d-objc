@@ -104,7 +104,7 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
         }
         
         pass.shaderUniforms[self.uniformTranslationTable[@"u_refraction"]] = [NSNumber numberWithFloat:weakSelf.refraction];
-        pass.shaderUniforms[self.uniformTranslationTable[@"u_envMap"]] = weakSelf.environment.texture;
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_envMap"]] = weakSelf.environment.texture ?: [CCTexture none];
         
         // Setup the screen space to environment space matrix.
         CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
