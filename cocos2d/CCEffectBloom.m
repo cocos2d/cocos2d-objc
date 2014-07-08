@@ -67,11 +67,8 @@
 
 -(id)initWithPixelBlurRadius:(NSUInteger)blurRadius intensity:(float)intensity luminanceThreshold:(float)luminanceThreshold
 {
-    _intensity = clampf(intensity, 0.0f, 1.0f);
-    _intensity = 1.0f - _intensity;
-    
-    _luminanceThreshold = clampf(luminanceThreshold, 0.0f, 1.0f);
-    
+    self.intensity = intensity;
+    self.luminanceThreshold = luminanceThreshold;
     
     // First, generate the normal Gaussian weights for a given sigma
     blurRadius = MIN(blurRadius, GAUSSIANBLUR_OPTMIZIED_RADIUS_MAX);
@@ -82,6 +79,7 @@
     
     _numberOfOptimizedOffsets = MIN(blurRadius / 2 + (blurRadius % 2), GAUSSIANBLUR_OPTMIZIED_RADIUS_MAX);
 
+    CCEffectUniform* u_intensity = [CCEffectUniform uniform:@"float" name:@"u_intensity" value:[NSNumber numberWithFloat:_intensity]];
     CCEffectUniform* u_luminanceThreshold = [CCEffectUniform uniform:@"float" name:@"u_luminanceThreshold" value:[NSNumber numberWithFloat:_luminanceThreshold]];
     CCEffectUniform* u_enableGlowMap = [CCEffectUniform uniform:@"float" name:@"u_enableGlowMap" value:[NSNumber numberWithFloat:0.0f]];
     CCEffectUniform* u_blurDirection = [CCEffectUniform uniform:@"vec2" name:@"u_blurDirection"
@@ -90,7 +88,7 @@
     unsigned long count = (unsigned long)(1 + (_numberOfOptimizedOffsets * 2));
     CCEffectVarying* v_blurCoords = [CCEffectVarying varying:@"vec2" name:@"v_blurCoordinates" count:count];
     
-    if(self = [super initWithFragmentUniforms:@[u_enableGlowMap, u_luminanceThreshold]
+    if(self = [super initWithFragmentUniforms:@[u_enableGlowMap, u_luminanceThreshold, u_intensity]
                               vertextUniforms:@[u_blurDirection]
                                       varying:@[v_blurCoords]])
     {
@@ -106,6 +104,22 @@
 +(id)effectWithPixelBlurRadius:(NSUInteger)blurRadius intensity:(float)intensity luminanceThreshold:(float)luminanceThreshold
 {
     return [[self alloc] initWithPixelBlurRadius:blurRadius intensity:intensity luminanceThreshold:luminanceThreshold];
+}
+
+-(void)setLuminanceThreshold:(float)luminanceThreshold
+{
+    _luminanceThreshold = clampf(luminanceThreshold, 0.0f, 1.0f);
+}
+
+-(void)setIntensity:(float)intensity
+{
+    _intensity = clampf(intensity, 0.0f, 1.0f);
+    _intensity = 1.0f - _intensity;
+}
+
+-(void)setBlurRadius:(NSUInteger)blurRadius
+{
+#warning does not work, waiting on change to CCEffect that will allow us to re-compile a shader easier
 }
 
 -(void)buildFragmentFunctions
@@ -189,7 +203,7 @@
     
     // Choose one?
     NSString* addativeBlending =  @"src + dst";
-    NSString* screenBlending = [NSString stringWithFormat:@"(src + dst) - ((src * dst) * %f)", _intensity];
+    NSString* screenBlending = @"(src + dst) - ((src * dst) * u_intensity)";
     
     [shaderString appendFormat:@"\
      return %@;\n", screenBlending];
@@ -285,6 +299,8 @@
         pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
         pass.shaderUniforms[self.uniformTranslationTable[@"u_enableGlowMap"]] = [NSNumber numberWithFloat:0.0f];
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_luminanceThreshold"]] = [NSNumber numberWithFloat:_luminanceThreshold];
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_intensity"]] = [NSNumber numberWithFloat:_intensity];
         
         GLKVector2 dur = GLKVector2Make(1.0 / (previousPassTexture.pixelWidth / previousPassTexture.contentScale), 0.0);
         pass.shaderUniforms[self.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithGLKVector2:dur];
@@ -299,6 +315,8 @@
         
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
         pass.shaderUniforms[self.uniformTranslationTable[@"u_enableGlowMap"]] = [NSNumber numberWithFloat:0.0f];
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_luminanceThreshold"]] = [NSNumber numberWithFloat:_luminanceThreshold];
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_intensity"]] = [NSNumber numberWithFloat:_intensity];
         
         GLKVector2 dur = GLKVector2Make(0.0, 1.0 / (previousPassTexture.pixelHeight / previousPassTexture.contentScale));
         pass.shaderUniforms[self.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithGLKVector2:dur];
@@ -312,6 +330,9 @@
     pass2.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
         pass.shaderUniforms[self.uniformTranslationTable[@"u_enableGlowMap"]] = [NSNumber numberWithFloat:1.0f];
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_luminanceThreshold"]] = [NSNumber numberWithFloat:_luminanceThreshold];
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_intensity"]] = [NSNumber numberWithFloat:_intensity];
+        
     } copy]];
 
     self.renderPasses = @[pass0, pass1, pass2];

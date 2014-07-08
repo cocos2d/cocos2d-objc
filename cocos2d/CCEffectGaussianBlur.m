@@ -97,6 +97,11 @@
     return [[self alloc] initWithPixelBlurRadius:blurRadius];
 }
 
+-(void)setBlurRadius:(NSUInteger)blurRadius
+{
+#warning does not work, waiting on change to CCEffect that will allow us to re-compile a shader easier
+}
+
 -(void)buildFragmentFunctions
 {
     GLfloat *standardGaussianWeights = calloc(_blurRadius + 1, sizeof(GLfloat));

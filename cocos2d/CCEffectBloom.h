@@ -11,6 +11,14 @@
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffectBloom : CCEffect
 
+// ranges between 0.0-1.0 - defines which part of the image should be glown via a luminance factor (brightness).
+@property (nonatomic) float luminanceThreshold;
+
+// intensity ranges between 0.0-1.0 - defines the contrast of the glowing image. A higher value will make the glow more prevelant.
+@property (nonatomic) float intensity;
+
+// blurRadius number of pixels blur will extend to (6 is the maximum, because we are limited by the number
+@property (nonatomic) NSUInteger blurRadius;
 
 /**
  *  @param blurRadius number of pixels blur will extend to (6 is the maximum, because we are limited by the number 

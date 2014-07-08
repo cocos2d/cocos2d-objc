@@ -11,8 +11,13 @@
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffectGaussianBlur : CCEffect
 
-@property (nonatomic) GLKVector2 blurDirection;
+// blurRadius number of pixels blur will extend to (6 is the maximum, because we are limited by the number
+@property (nonatomic) NSUInteger blurRadius;
 
+/**
+ *  @param blurRadius number of pixels blur will extend to (6 is the maximum, because we are limited by the number
+ *  of varying variables that can be passed to a glsl program). TODO: create a slower bloom shader, that does not have this restriction.
+ */
 -(id)initWithPixelBlurRadius:(NSUInteger)blurRadius;
 +(id)effectWithPixelBlurRadius:(NSUInteger)blurRadius;
 
