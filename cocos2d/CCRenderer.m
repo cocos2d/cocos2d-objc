@@ -263,6 +263,7 @@ static NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 
 @implementation CCRenderState {
 	CCTexture *_mainTexture;
+	BOOL _immutable;
 	
 	@public
 	CCBlendMode *_blendMode;
@@ -281,10 +282,18 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 
 -(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms
 {
+	return [self initWithBlendMode:blendMode shader:shader shaderUniforms:shaderUniforms copyUniforms:NO];
+}
+
+-(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms copyUniforms:(BOOL)copyUniforms
+{
 	if((self = [super init])){
 		_blendMode = blendMode;
 		_shader = shader;
-		_shaderUniforms = shaderUniforms;
+		_shaderUniforms = (copyUniforms ? [shaderUniforms copy] : shaderUniforms);
+		
+		// The renderstate as a whole is immutable if the uniforms are copied.
+		_immutable = copyUniforms;
 	}
 	
 	return self;
@@ -297,7 +306,7 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 		mainTexture = [CCTexture none];
 	}
 	
-	CCRenderState *renderState = [[self alloc] initWithBlendMode:blendMode shader:shader shaderUniforms:@{CCShaderUniformMainTexture: mainTexture}];
+	CCRenderState *renderState = [[self alloc] initWithBlendMode:blendMode shader:shader shaderUniforms:@{CCShaderUniformMainTexture: mainTexture} copyUniforms:YES];
 	renderState->_mainTexture = mainTexture;
 	
 	return [CCRENDERSTATE_CACHE objectForKey:renderState];
@@ -305,17 +314,16 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 
 -(id)copyWithZone:(NSZone *)zone
 {
-	NSDictionary *shaderUniforms = [_shaderUniforms copy];
-	if(shaderUniforms == _shaderUniforms){
+	if(_immutable){
 		return self;
 	} else {
-		return [[CCRenderState allocWithZone:zone] initWithBlendMode:_blendMode shader:_shader shaderUniforms:shaderUniforms];
+		return [[CCRenderState allocWithZone:zone] initWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms copyUniforms:YES];
 	}
 }
 
 -(NSUInteger)hash
 {
-	NSAssert(_mainTexture, @"Attempting to cache a renderstate without a mainTexture value.");
+	NSAssert(_mainTexture, @"Attempting to cache a renderstate that was nort created with renderStateWithBlendMode.");
 	
 	// Not great, but acceptable. All values are unique by pointer.
 	return ((NSUInteger)_blendMode ^ (NSUInteger)_shader ^ (NSUInteger)_mainTexture);

@@ -49,8 +49,12 @@
 -(CCRenderState *)renderState
 {
 	if(_renderState == nil){
+		// Allowing the uniforms to be copied speeds up the rendering by making the render state immutable.
+		// Copy the uniforms if custom uniforms are not being used.
+		BOOL copyUniforms = self.hasDefaultShaderUniforms;
+		
 		// Create an uncached renderstate so the texture can be released before the renderstate cache is flushed.
-		_renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:self.shaderUniforms];
+		_renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:self.shaderUniforms copyUniforms:copyUniforms];
 	}
 	
 	return _renderState;
