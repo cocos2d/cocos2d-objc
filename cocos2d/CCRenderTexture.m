@@ -171,13 +171,9 @@
 {
 	glPushGroupMarkerEXT(0, "CCRenderTexture: Create");
 	
-	CGSize contentSizeInPoints = self.contentSizeInPoints;
-	
-	int pixelW = contentSizeInPoints.width*_contentScale;
-	int pixelH = contentSizeInPoints.height*_contentScale;
+	int pixelW = _contentSize.width*_contentScale;
+	int pixelH = _contentSize.height*_contentScale;
 
-
-	_projection = GLKMatrix4MakeOrtho(0.0f, pixelW, 0.0f, pixelH, -1024.0f, 1024.0f);
 
 	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
 
@@ -238,7 +234,7 @@
 	CC_CHECK_GL_ERROR_DEBUG();
 	glPopGroupMarkerEXT();
 	
-	CGRect rect = CGRectMake(0, 0, contentSizeInPoints.width, contentSizeInPoints.height);
+	CGRect rect = CGRectMake(0, 0, _contentSize.width, _contentSize.height);
 	
 	[self assignSpriteTexture];
 	[_sprite setTextureRect:rect];
