@@ -48,8 +48,14 @@
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 static float conditionBlockSize(float blockSize);
 
-@implementation CCEffectPixellate
+@interface CCEffectPixellate ()
 
+@property (nonatomic) float conditionedBlockSize;
+
+@end
+
+
+@implementation CCEffectPixellate
 
 -(id)init
 {
@@ -69,7 +75,8 @@ static float conditionBlockSize(float blockSize);
 {
     if((self = [self init]))
     {
-        _blockSize = conditionBlockSize(blockSize);
+        _blockSize = blockSize;
+        _conditionedBlockSize = conditionBlockSize(blockSize);
     }
     return self;
 }
@@ -97,7 +104,6 @@ static float conditionBlockSize(float blockSize);
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.shader = self.shader;
-    pass0.shaderUniforms = self.shaderUniforms;
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
         
@@ -105,7 +111,7 @@ static float conditionBlockSize(float blockSize);
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
 
         float aspect = previousPassTexture.contentSize.width / previousPassTexture.contentSize.height;
-        float uStep = self.blockSize / previousPassTexture.contentSize.width;
+        float uStep = self.conditionedBlockSize / previousPassTexture.contentSize.width;
         float vStep = uStep * aspect;
         
         pass.shaderUniforms[self.uniformTranslationTable[@"u_uStep"]] = [NSNumber numberWithFloat:uStep];
@@ -117,7 +123,8 @@ static float conditionBlockSize(float blockSize);
 
 -(void)setBlockSize:(float)blockSize
 {
-    _blockSize = conditionBlockSize(blockSize);
+    _blockSize = blockSize;
+    _conditionedBlockSize = conditionBlockSize(blockSize);
 }
 
 @end

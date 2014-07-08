@@ -13,6 +13,7 @@
 
 @property (nonatomic) float contrast;
 
+-(id)init;
 -(id)initWithContrast:(float)contrast;
 +(id)effectWithContrast:(float)contrast;
 

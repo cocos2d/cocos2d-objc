@@ -13,6 +13,7 @@
 
 @property (nonatomic) float brightness;
 
+-(id)init;
 -(id)initWithBrightness:(float)brightness;
 +(id)effectWithBrightness:(float)brightness;
 
