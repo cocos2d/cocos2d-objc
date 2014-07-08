@@ -13,6 +13,7 @@
 
 @property (nonatomic) float blockSize;
 
+-(id)init;
 -(id)initWithBlockSize:(float)blockSize;
 +(id)effectWithBlockSize:(float)blockSize;
 

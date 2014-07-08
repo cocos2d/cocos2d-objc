@@ -388,21 +388,15 @@ static NSString* vertBase =
 
 -(void)buildShaderUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms
 {
-    [_shaderUniforms removeAllObjects];
+    _shaderUniforms = [[NSMutableDictionary alloc] init];
     
     for(CCEffectUniform* uniform in fragmentUniforms)
     {
-        if(_shaderUniforms == nil)
-            _shaderUniforms = [[NSMutableDictionary alloc] init];
-        
         [_shaderUniforms setObject:uniform.value forKey:uniform.name];
     }
     
     for(CCEffectUniform* uniform in vertexUniforms)
     {
-        if(_shaderUniforms == nil)
-            _shaderUniforms = [[NSMutableDictionary alloc] init];
-        
         [_shaderUniforms setObject:uniform.value forKey:uniform.name];
     }
 }
@@ -541,9 +535,14 @@ static NSString* vertBase =
     return YES;
 }
 
-- (BOOL)prepareForRendering
+- (BOOL)readyForRendering
 {
     return YES;
+}
+
+- (CCEffectPrepareStatus)prepareForRendering
+{
+    return CCEffectPrepareNothingToDo;
 }
 
 -(CCEffectRenderPass *)renderPassAtIndex:(NSInteger)passIndex

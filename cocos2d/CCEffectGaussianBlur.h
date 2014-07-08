@@ -13,6 +13,7 @@
 
 @property (nonatomic) GLKVector2 blurDirection;
 
+-(id)init;
 -(id)initWithPixelBlurRadius:(NSUInteger)blurRadius;
 +(id)effectWithPixelBlurRadius:(NSUInteger)blurRadius;
 

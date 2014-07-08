@@ -1108,6 +1108,10 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 		[[CCDirector sharedDirector].actionManager migrateActions:self from:[CCDirector sharedDirector].actionManagerFixed];
 		[self setActionManager:[CCDirector sharedDirector].actionManager];
 	}
+
+    if(_animationManager) {
+        [_animationManager performSelector:@selector(onEnter)];
+    }
 	
 	[self wasRunning:wasRunning];
 }
@@ -1761,7 +1765,7 @@ CheckDefaultUniforms(NSDictionary *uniforms, CCTexture *texture)
 			_shaderUniforms = nil;
 		} else {
 			// Since the node has unique uniforms, it cannot be batched or use the fast path.
-			_renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms];
+			_renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms copyUniforms:NO];
 		}
 	}
 	
@@ -1782,6 +1786,19 @@ CheckDefaultUniforms(NSDictionary *uniforms, CCTexture *texture)
 -(CCBlendMode *)blendMode
 {
 	return _blendMode;
+}
+
+-(BOOL)hasDefaultShaderUniforms
+{
+	CCTexture *texture = (_texture ?: [CCTexture none]);
+	if(CheckDefaultUniforms(_shaderUniforms, texture)){
+		// If the uniform dictionary was set, it was the default. Throw it away.
+		_shaderUniforms = nil;
+		
+		return YES;
+	} else {
+		return NO;
+	}
 }
 
 -(NSMutableDictionary *)shaderUniforms

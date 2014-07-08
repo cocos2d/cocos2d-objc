@@ -74,6 +74,7 @@ static float conditionSaturation(float saturation);
 {
     if((self = [self init]))
     {
+        _saturation = saturation;
         _conditionedSaturation = conditionSaturation(saturation);
     }
     return self;
@@ -108,7 +109,6 @@ static float conditionSaturation(float saturation);
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.shader = self.shader;
-    pass0.shaderUniforms = self.shaderUniforms;
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
@@ -120,6 +120,7 @@ static float conditionSaturation(float saturation);
 
 -(void)setSaturation:(float)saturation
 {
+    _saturation = saturation;
     _conditionedSaturation = conditionSaturation(saturation);
 }
 @end

@@ -13,6 +13,7 @@
 
 @property (nonatomic) float saturation;
 
+-(id)init;
 -(id)initWithSaturation:(float)saturation;
 +(id)effectWithSaturation:(float)saturation;
 
