@@ -233,14 +233,13 @@
     sampleSprite4.position = ccp(0.5, 0.5);
     sampleSprite4.positionType = CCPositionTypeNormalized;
     
-    
     CCEffectNode* effectNode4 = [[CCEffectNode alloc] initWithWidth:80 height:80];
     effectNode4.positionType = CCPositionTypeNormalized;
     effectNode4.position = ccp(0.6, 0.5);
     [effectNode4 addChild:sampleSprite4];
     CCEffectGaussianBlur* effect4 = [CCEffectGaussianBlur effectWithPixelBlurRadius:7.0];
     effectNode4.effect = effect4;
-    
+        
     [self.contentNode addChild:effectNode4];
 }
 

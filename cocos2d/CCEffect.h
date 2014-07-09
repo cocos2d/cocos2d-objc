@@ -129,5 +129,7 @@ typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass);
 
 -(BOOL)stitchSupported:(CCEffectFunctionStitchFlags)stitch;
 
+-(void)setVarying:(NSArray*)varying;
+
 @end
 #endif
