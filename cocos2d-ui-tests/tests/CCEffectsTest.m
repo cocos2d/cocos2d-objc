@@ -375,6 +375,35 @@
     [self.contentNode addChild:[self effectNodeWithEffects:@[effects[8]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.9, 0.5)]];
 }
 
+-(void)setupHueEffectTest
+{
+    self.subTitle = @"Hue Effect Test";
+    
+    // Different configurations of the saturation effect
+    NSArray *effects = @[
+                         [[CCEffectHue alloc] initWithHue:1.0f],
+                         [[CCEffectHue alloc] initWithHue:0.8f],
+                         [[CCEffectHue alloc] initWithHue:0.4f],
+                         [[CCEffectHue alloc] initWithHue:0.2f],
+                         [[CCEffectHue alloc] initWithHue:0.0f],
+                         [[CCEffectHue alloc] initWithHue:-0.2f],
+                         [[CCEffectHue alloc] initWithHue:-0.4f],
+                         [[CCEffectHue alloc] initWithHue:-0.8f],
+                         [[CCEffectHue alloc] initWithHue:-1.0f],
+                         ];
+    
+    // Effect nodes that use the effects in different combinations.
+    [self.contentNode addChild:[self spriteWithEffects:@[effects[0]] image:@"Images/grossini.png" atPosition:ccp(0.1, 0.5)]];
+    [self.contentNode addChild:[self spriteWithEffects:@[effects[1]] image:@"Images/grossini.png" atPosition:ccp(0.2, 0.5)]];
+    [self.contentNode addChild:[self spriteWithEffects:@[effects[2]] image:@"Images/grossini.png" atPosition:ccp(0.3, 0.5)]];
+    [self.contentNode addChild:[self spriteWithEffects:@[effects[3]] image:@"Images/grossini.png" atPosition:ccp(0.4, 0.5)]];
+    [self.contentNode addChild:[self spriteWithEffects:@[effects[4]] image:@"Images/grossini.png" atPosition:ccp(0.5, 0.5)]];
+    [self.contentNode addChild:[self spriteWithEffects:@[effects[5]] image:@"Images/grossini.png" atPosition:ccp(0.6, 0.5)]];
+    [self.contentNode addChild:[self spriteWithEffects:@[effects[6]] image:@"Images/grossini.png" atPosition:ccp(0.7, 0.5)]];
+    [self.contentNode addChild:[self spriteWithEffects:@[effects[7]] image:@"Images/grossini.png" atPosition:ccp(0.8, 0.5)]];
+    [self.contentNode addChild:[self spriteWithEffects:@[effects[8]] image:@"Images/grossini.png" atPosition:ccp(0.9, 0.5)]];
+}
+
 -(void)setupPerformanceTest
 {
     self.subTitle = @"Effect Performance Test";

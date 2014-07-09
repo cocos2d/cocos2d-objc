@@ -18,6 +18,7 @@
 #import "CCEffectBloom.h"
 #import "CCEffectBrightness.h"
 #import "CCEffectContrast.h"
+#import "CCEffectHue.h"
 #import "CCEffectPixellate.h"
 #import "CCEffectSaturation.h"
 #import "CCEffectRefraction.h"
