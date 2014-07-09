@@ -72,13 +72,16 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
                                    // Perturb the screen space texture coordinate by the scaled normal
                                    // vector.
                                    vec2 refractTexCoords = envSpaceTexCoords.xy + normal.xy * u_refraction;
+                                   
+                                   // This is positive if refractTexCoords is in [0..1] and negative otherwise.
+                                   vec2 compare = 0.5 - abs(refractTexCoords - 0.5);
+                                   
+                                   // This is 1.0 if both refracted texture coords are in bounds and 0.0 otherwise.
+                                   float inBounds = step(0.0, min(compare.x, compare.y));
 
                                    vec4 primaryColor = cc_FragColor * texture2D(cc_MainTexture, cc_FragTexCoord1);
-                                   if ((refractTexCoords.x >= 0.0) && (refractTexCoords.x <= 1.0) &&
-                                       (refractTexCoords.y >= 0.0) && (refractTexCoords.y <= 1.0))
-                                   {
-                                       primaryColor = primaryColor + texture2D(u_envMap, refractTexCoords) * (1.0 - primaryColor.a);
-                                   }
+                                   primaryColor += inBounds * texture2D(u_envMap, refractTexCoords) * (1.0 - primaryColor.a);
+                                   
                                    return primaryColor;
                                    );
     
