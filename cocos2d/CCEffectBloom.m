@@ -50,6 +50,7 @@
     NSUInteger _numberOfOptimizedOffsets;
     GLfloat _sigma;
     BOOL _shaderDirty;
+    float _transformedIntensity;
 }
 
 -(id)init
@@ -70,7 +71,7 @@
 
     [self setBlurRadiusAndDependents:blurRadius];
     
-    CCEffectUniform* u_intensity = [CCEffectUniform uniform:@"float" name:@"u_intensity" value:[NSNumber numberWithFloat:_intensity]];
+    CCEffectUniform* u_intensity = [CCEffectUniform uniform:@"float" name:@"u_intensity" value:[NSNumber numberWithFloat:_transformedIntensity]];
     CCEffectUniform* u_luminanceThreshold = [CCEffectUniform uniform:@"float" name:@"u_luminanceThreshold" value:[NSNumber numberWithFloat:_luminanceThreshold]];
     CCEffectUniform* u_enableGlowMap = [CCEffectUniform uniform:@"float" name:@"u_enableGlowMap" value:[NSNumber numberWithFloat:0.0f]];
     CCEffectUniform* u_blurDirection = [CCEffectUniform uniform:@"vec2" name:@"u_blurDirection"
@@ -105,7 +106,7 @@
 -(void)setIntensity:(float)intensity
 {
     _intensity = clampf(intensity, 0.0f, 1.0f);
-    _intensity = 1.0f - _intensity;
+    _transformedIntensity = 1.0f - _intensity;
 }
 
 -(void)setBlurRadius:(NSUInteger)blurRadius
@@ -212,6 +213,7 @@
     
     
     // Choose one?
+    // TODO: try using min(src, dst) to create a gloomEffect
     NSString* addativeBlending =  @"src + dst";
     NSString* screenBlending = @"(src + dst) - ((src * dst) * u_intensity)";
     
@@ -311,7 +313,7 @@
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
         pass.shaderUniforms[self.uniformTranslationTable[@"u_enableGlowMap"]] = [NSNumber numberWithFloat:0.0f];
         pass.shaderUniforms[self.uniformTranslationTable[@"u_luminanceThreshold"]] = [NSNumber numberWithFloat:_luminanceThreshold];
-        pass.shaderUniforms[self.uniformTranslationTable[@"u_intensity"]] = [NSNumber numberWithFloat:_intensity];
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_intensity"]] = [NSNumber numberWithFloat:_transformedIntensity];
         
         GLKVector2 dur = GLKVector2Make(1.0 / (previousPassTexture.pixelWidth / previousPassTexture.contentScale), 0.0);
         pass.shaderUniforms[self.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithGLKVector2:dur];
@@ -326,7 +328,7 @@
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
         pass.shaderUniforms[self.uniformTranslationTable[@"u_enableGlowMap"]] = [NSNumber numberWithFloat:0.0f];
         pass.shaderUniforms[self.uniformTranslationTable[@"u_luminanceThreshold"]] = [NSNumber numberWithFloat:_luminanceThreshold];
-        pass.shaderUniforms[self.uniformTranslationTable[@"u_intensity"]] = [NSNumber numberWithFloat:_intensity];
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_intensity"]] = [NSNumber numberWithFloat:_transformedIntensity];
         
         GLKVector2 dur = GLKVector2Make(0.0, 1.0 / (previousPassTexture.pixelHeight / previousPassTexture.contentScale));
         pass.shaderUniforms[self.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithGLKVector2:dur];
@@ -340,7 +342,7 @@
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
         pass.shaderUniforms[self.uniformTranslationTable[@"u_enableGlowMap"]] = [NSNumber numberWithFloat:1.0f];
         pass.shaderUniforms[self.uniformTranslationTable[@"u_luminanceThreshold"]] = [NSNumber numberWithFloat:_luminanceThreshold];
-        pass.shaderUniforms[self.uniformTranslationTable[@"u_intensity"]] = [NSNumber numberWithFloat:_intensity];
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_intensity"]] = [NSNumber numberWithFloat:_transformedIntensity];
         
     } copy]];
 
@@ -357,6 +359,10 @@
     CCEffectPrepareStatus result = CCEffectPrepareNothingToDo;
     if (_shaderDirty)
     {
+        unsigned long count = (unsigned long)(1 + (_numberOfOptimizedOffsets * 2));
+        CCEffectVarying* v_blurCoords = [CCEffectVarying varying:@"vec2" name:@"v_blurCoordinates" count:count];
+        [self setVarying:@[v_blurCoords]];
+
         [self buildFragmentFunctions];
         [self buildVertexFunctions];
         [self buildEffectShader];

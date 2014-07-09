@@ -12,13 +12,14 @@
 @interface CCEffectGaussianBlur : CCEffect
 
 // blurRadius number of pixels blur will extend to (6 is the maximum, because we are limited by the number
+// of varying variables that can be passed to a glsl program). TODO: create a slower bloom shader, that does not have this restriction.
 @property (nonatomic) NSUInteger blurRadius;
 
--(id)init;
 /**
  *  @param blurRadius number of pixels blur will extend to (6 is the maximum, because we are limited by the number
  *  of varying variables that can be passed to a glsl program). TODO: create a slower bloom shader, that does not have this restriction.
  */
+-(id)init;
 -(id)initWithPixelBlurRadius:(NSUInteger)blurRadius;
 +(id)effectWithPixelBlurRadius:(NSUInteger)blurRadius;
 
