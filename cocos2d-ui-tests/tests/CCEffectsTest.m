@@ -247,7 +247,7 @@
 {
     self.subTitle = @"Glow Effect Node Test";
     
-    CCSprite *sampleSprite_base = [CCSprite spriteWithImageNamed:@"sample_hollow_circle.png"];
+    CCSprite *sampleSprite_base = [CCSprite spriteWithImageNamed:@"Images/sample_hollow_circle.png"];
     sampleSprite_base.anchorPoint = ccp(0.0, 0.0);
     sampleSprite_base.position = ccp(0.27, 0.52);
     sampleSprite_base.positionType = CCPositionTypeNormalized;
@@ -274,7 +274,7 @@
     [self.contentNode addChild:glowEffectNode];
     
     
-    CCSprite *sampleSprite_base2 = [CCSprite spriteWithImageNamed:@"grossini_dance_08.png"];
+    CCSprite *sampleSprite_base2 = [CCSprite spriteWithImageNamed:@"Images/grossini_dance_08.png"];
     sampleSprite_base2.anchorPoint = ccp(0.0, 0.0);
     sampleSprite_base2.position = ccp(0.53, 0.515);
     sampleSprite_base2.positionType = CCPositionTypeNormalized;
@@ -282,7 +282,7 @@
     [self.contentNode addChild:sampleSprite_base2];
     
     // Create a hollow circle
-    CCSprite *sampleSprite2 = [CCSprite spriteWithImageNamed:@"grossini_dance_08.png"];
+    CCSprite *sampleSprite2 = [CCSprite spriteWithImageNamed:@"Images/grossini_dance_08.png"];
     sampleSprite2.anchorPoint = ccp(0.5, 0.5);
     sampleSprite2.position = ccp(0.5, 0.5);
     sampleSprite2.positionType = CCPositionTypeNormalized;
@@ -373,6 +373,32 @@
     [self.contentNode addChild:[self effectNodeWithEffects:@[effects[6]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.7, 0.5)]];
     [self.contentNode addChild:[self effectNodeWithEffects:@[effects[7]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.8, 0.5)]];
     [self.contentNode addChild:[self effectNodeWithEffects:@[effects[8]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.9, 0.5)]];
+}
+
+-(void)setupHueEffectTest
+{
+    self.subTitle = @"Hue Effect Test";
+    
+    // Effect nodes that use the effects in different combinations.
+    int stepCount = 12;
+    
+    float startX = 0.05f;
+    float endX = 0.95f;
+    float stepX = (endX - startX) / stepCount;
+    float x = startX;
+    float y = 0.5f;
+
+    float startHue = 180.0f;
+    float endHue = -180.0f;
+    float stepHue = (endHue - startHue) / stepCount;
+    float hue = startHue;
+    
+    for (int i = 0; i <= stepCount; i++)
+    {
+        [self.contentNode addChild:[self spriteWithEffects:@[[[CCEffectHue alloc] initWithHue:hue]] image:@"Images/grossini.png" atPosition:ccp(x, y)]];
+        x += stepX;
+        hue += stepHue;
+    }
 }
 
 -(void)setupPerformanceTest
