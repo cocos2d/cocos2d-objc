@@ -159,11 +159,12 @@
         CCTexture *previousPassTexture = nil;
         if (previousPassRT)
         {
+            NSAssert(previousPassRT.texture, @"Texture for render target unexpectedly nil.");
             previousPassTexture = previousPassRT.texture;
         }
         else
         {
-            previousPassTexture = sprite.texture;
+            previousPassTexture = sprite.texture ?: [CCTexture none];
         }
         
         CCEffectRenderPass* renderPass = [effect renderPassAtIndex:i];
