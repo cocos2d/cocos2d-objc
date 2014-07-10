@@ -214,7 +214,7 @@
     
     // Choose one?
     // TODO: try using min(src, dst) to create a gloomEffect
-    NSString* addativeBlending =  @"src + dst";
+    // NSString* additiveBlending =  @"src + dst";
     NSString* screenBlending = @"(src + dst) - ((src * dst) * u_intensity)";
     
     [shaderString appendFormat:@"\

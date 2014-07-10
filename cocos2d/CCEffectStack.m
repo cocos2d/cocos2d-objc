@@ -225,7 +225,7 @@
     // set in the last effect then set it in the resulting effect.
     CCEffect *firstEffect = [effects firstObject];
     CCEffect *lastEffect = [effects lastObject];
-    stitchedEffect.stitchFlags = (firstEffect.stitchFlags & CCEffectFunctionStitchBefore) | (firstEffect.stitchFlags & CCEffectFunctionStitchAfter);
+    stitchedEffect.stitchFlags = (firstEffect.stitchFlags & CCEffectFunctionStitchBefore) | (lastEffect.stitchFlags & CCEffectFunctionStitchAfter);
     
     // Copy the shader for this new pass from the stitched effect.
     CCEffectRenderPass *newPass = [[CCEffectRenderPass alloc] init];
