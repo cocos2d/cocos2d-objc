@@ -40,6 +40,8 @@ static NSString* vertBase =
 {
     if((self = [super init]))
     {
+        NSAssert(inputs.count <= 1, @"Effect functions currently only support 0 or 1 inputs.");
+        
         _body = [body copy];
         _name = [name copy];
         _inputs = [inputs copy];
@@ -445,7 +447,7 @@ static NSString* vertBase =
         }
         
         NSMutableArray *inputs = [[NSMutableArray alloc] init];
-        for (CCEffectFunctionInput *input in curFunction.inputs)
+        if (curFunction.inputs.count)
         {
             [inputs addObject:@"tmp"];
         }
