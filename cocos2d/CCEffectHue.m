@@ -50,10 +50,17 @@
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 static float conditionHue(float hue);
 
+#if CCEFFECTHUE_USES_COLOR_MATRIX
+static GLKMatrix4 matrixWithHue(float hue);
+#endif
+
+
 @interface CCEffectHue ()
-
+#if CCEFFECTHUE_USES_COLOR_MATRIX
+@property (nonatomic) GLKMatrix4 hueRotationMtx;
+#else
 @property (nonatomic) float conditionedHue;
-
+#endif
 @end
 
 
@@ -77,8 +84,11 @@ static float conditionHue(float hue);
     if((self = [super initWithFragmentUniforms:uniforms vertexUniforms:nil varying:nil]))
     {
         _hue = hue;
+#if CCEFFECTHUE_USES_COLOR_MATRIX
+        _hueRotationMtx = matrixWithHue(conditionHue(hue));
+#else
         _conditionedHue = conditionHue(hue);
-        
+#endif
         self.debugName = @"CCEffectHue";
     }
     return self;
@@ -155,29 +165,7 @@ static float conditionHue(float hue);
         pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
 #if CCEFFECTHUE_USES_COLOR_MATRIX
-        // RGB to YIQ and YIQ to RGB matrix values source from here:
-        //   https://github.com/BradLarson/GPUImage/blob/master/framework/Source/GPUImageHueFilter.m
-        // And here:
-        //   http://en.wikipedia.org/wiki/YIQ
-        //
-        // Note that GL matrices are column major so our matrices are transposed relative to the
-        // reference implementations when loaded as they are below. I'm leaving them like this to
-        // improve readability for comparison purposes and I handle the transpose by doing color * mtx
-        // in the shader instead of mtx * color.  The order that the matrices are composed below is
-        // also reversed to account for the left multiply of the color value.
-        
-        GLKMatrix4 rgbToYiq = GLKMatrix4Make(0.299,     0.587,     0.114,    0.0,
-                                             0.595716, -0.274453, -0.321263, 0.0,
-                                             0.211456, -0.522591,  0.31135,  0.0,
-                                             0.0,       0.0,       0.0,      1.0);
-        GLKMatrix4 yiqToRgb = GLKMatrix4Make(1.0,  0.9563,  0.6210, 0.0,
-                                             1.0, -0.2721, -0.6474, 0.0,
-                                             1.0, -1.1070,  1.7046, 0.0,
-                                             0.0,  0.0,     0.0,    1.0);
-        GLKMatrix4 rotation = GLKMatrix4MakeRotation(_conditionedHue, 1.0f, 0.0f, 0.0f);
-        GLKMatrix4 composed = GLKMatrix4Multiply(rgbToYiq, GLKMatrix4Multiply(rotation, yiqToRgb));
-        
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_hueRotationMtx"]] = [NSValue valueWithGLKMatrix4:composed];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_hueRotationMtx"]] = [NSValue valueWithGLKMatrix4:weakSelf.hueRotationMtx];
 #else
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_hue"]] = [NSNumber numberWithFloat:weakSelf.conditionedHue];
 #endif
@@ -189,7 +177,11 @@ static float conditionHue(float hue);
 -(void)setHue:(float)hue
 {
     _hue = hue;
+#if CCEFFECTHUE_USES_COLOR_MATRIX
+    _hueRotationMtx = matrixWithHue(conditionHue(hue));
+#else
     _conditionedHue = conditionHue(hue);
+#endif
 }
 
 @end
@@ -199,5 +191,33 @@ float conditionHue(float hue)
     NSCAssert((hue >= -180.0f) && (hue <= 180.0), @"Supplied hue out of range [-180.0..180.0].");
     return clampf(hue, -180.0f, 180.0f) * M_PI / 180.0f;
 }
+
+#if CCEFFECTHUE_USES_COLOR_MATRIX
+GLKMatrix4 matrixWithHue(float hue)
+{
+    // RGB to YIQ and YIQ to RGB matrix values source from here:
+    //   https://github.com/BradLarson/GPUImage/blob/master/framework/Source/GPUImageHueFilter.m
+    // And here:
+    //   http://en.wikipedia.org/wiki/YIQ
+    //
+    // Note that GL matrices are column major so our matrices are transposed relative to the
+    // reference implementations when loaded as they are below. I'm leaving them like this to
+    // improve readability for comparison purposes and I handle the transpose by doing color * mtx
+    // in the shader instead of mtx * color.  The order that the matrices are composed below is
+    // also reversed to account for the left multiply of the color value.
+    
+    GLKMatrix4 rgbToYiq = GLKMatrix4Make(0.299,     0.587,     0.114,    0.0,
+                                         0.595716, -0.274453, -0.321263, 0.0,
+                                         0.211456, -0.522591,  0.31135,  0.0,
+                                         0.0,       0.0,       0.0,      1.0);
+    GLKMatrix4 yiqToRgb = GLKMatrix4Make(1.0,  0.9563,  0.6210, 0.0,
+                                         1.0, -0.2721, -0.6474, 0.0,
+                                         1.0, -1.1070,  1.7046, 0.0,
+                                         0.0,  0.0,     0.0,    1.0);
+    GLKMatrix4 rotation = GLKMatrix4MakeRotation(hue, 1.0f, 0.0f, 0.0f);
+    GLKMatrix4 composed = GLKMatrix4Multiply(rgbToYiq, GLKMatrix4Multiply(rotation, yiqToRgb));
+    return composed;
+}
+#endif
 
 #endif
