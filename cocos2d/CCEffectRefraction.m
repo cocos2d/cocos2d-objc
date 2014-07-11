@@ -64,7 +64,8 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
                                    vec4 envSpaceTexCoords = u_screenToEnv * gl_FragCoord;
 
                                    // Index the normal map and expand the color value from [0..1] to [-1..1]
-                                   vec4 tangentSpaceNormal = texture2D(cc_NormalMapTexture, cc_FragTexCoord2) * 2.0 - 1.0;
+                                   vec4 normalMap = texture2D(cc_NormalMapTexture, cc_FragTexCoord2);
+                                   vec4 tangentSpaceNormal = normalMap * 2.0 - 1.0;
                                    
                                    // Convert the normal vector from tangent space to environment space
                                    vec2 normal = u_tangent * tangentSpaceNormal.x + u_binormal * tangentSpaceNormal.y;
@@ -79,8 +80,13 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
                                    // This is 1.0 if both refracted texture coords are in bounds and 0.0 otherwise.
                                    float inBounds = step(0.0, min(compare.x, compare.y));
 
+                                   // Compute the combination of the sprite's color and texture.
                                    vec4 primaryColor = cc_FragColor * texture2D(cc_MainTexture, cc_FragTexCoord1);
-                                   primaryColor += inBounds * texture2D(u_envMap, refractTexCoords) * (1.0 - primaryColor.a);
+
+                                   // If the refracted texture coordinates are within the bounds of the environment map
+                                   // blend the primary color with the refracted environment. Multiplying by the normal
+                                   // map alpha also allows the effect to be disabled for specific pixels.
+                                   primaryColor += inBounds * normalMap.a * texture2D(u_envMap, refractTexCoords) * (1.0 - primaryColor.a);
                                    
                                    return primaryColor;
                                    );
