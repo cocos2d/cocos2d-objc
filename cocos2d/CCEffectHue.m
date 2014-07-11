@@ -108,10 +108,7 @@ static GLKMatrix4 matrixWithHue(float hue);
     // The non-color matrix shader is based on the hue filter in GPUImage - https://github.com/BradLarson/GPUImage
 #if CCEFFECTHUE_USES_COLOR_MATRIX
     NSString* effectBody = CC_GLSL(
-                                   // Since GL matrices are in column major order, u_hueRotationMtx is transposed relative to
-                                   // the implementations referenced below. Do color * mtx (as opposed to mtx * color) to
-                                   // account for this.
-                                   return inputValue * u_hueRotationMtx;
+                                   return u_hueRotationMtx * inputValue;
                                    );
 #else
     NSString* effectBody = CC_GLSL(
@@ -200,22 +197,29 @@ GLKMatrix4 matrixWithHue(float hue)
     // And here:
     //   http://en.wikipedia.org/wiki/YIQ
     //
-    // Note that GL matrices are column major so our matrices are transposed relative to the
-    // reference implementations when loaded as they are below. I'm leaving them like this to
-    // improve readability for comparison purposes and I handle the transpose by doing color * mtx
-    // in the shader instead of mtx * color.  The order that the matrices are composed below is
-    // also reversed to account for the left multiply of the color value.
+    // Note that GL matrices are column major so we have to transpose them when loading them in
+    // the order specified here.
     
-    GLKMatrix4 rgbToYiq = GLKMatrix4Make(0.299,     0.587,     0.114,    0.0,
-                                         0.595716, -0.274453, -0.321263, 0.0,
-                                         0.211456, -0.522591,  0.31135,  0.0,
-                                         0.0,       0.0,       0.0,      1.0);
-    GLKMatrix4 yiqToRgb = GLKMatrix4Make(1.0,  0.9563,  0.6210, 0.0,
-                                         1.0, -0.2721, -0.6474, 0.0,
-                                         1.0, -1.1070,  1.7046, 0.0,
-                                         0.0,  0.0,     0.0,    1.0);
-    GLKMatrix4 rotation = GLKMatrix4MakeRotation(hue, 1.0f, 0.0f, 0.0f);
-    GLKMatrix4 composed = GLKMatrix4Multiply(rgbToYiq, GLKMatrix4Multiply(rotation, yiqToRgb));
+    GLKMatrix4 rgbToYiq = GLKMatrix4MakeAndTranspose(0.299,     0.587,     0.114,    0.0,
+                                                     0.595716, -0.274453, -0.321263, 0.0,
+                                                     0.211456, -0.522591,  0.31135,  0.0,
+                                                     0.0,       0.0,       0.0,      1.0);
+    GLKMatrix4 yiqToRgb = GLKMatrix4MakeAndTranspose(1.0,  0.9563,  0.6210, 0.0,
+                                                     1.0, -0.2721, -0.6474, 0.0,
+                                                     1.0, -1.1070,  1.7046, 0.0,
+                                                     0.0,  0.0,     0.0,    1.0);
+    
+    // Positive rotation in YIQ is the opposite of positive rotation in HSV so negate the
+    // rotation value. See this:
+    //   http://upload.wikimedia.org/wikipedia/commons/8/82/YIQ_IQ_plane.svg
+    // And this:
+    //   http://upload.wikimedia.org/wikipedia/commons/5/52/HSL-HSV_hue_and_chroma.svg
+    // To visualize the difference between the two color spaces.
+    //
+    GLKMatrix4 rotation = GLKMatrix4MakeRotation(-hue, 1.0f, 0.0f, 0.0f);
+
+    // Put everything together into one color matrix.
+    GLKMatrix4 composed = GLKMatrix4Multiply(yiqToRgb, GLKMatrix4Multiply(rotation, rgbToYiq));
     return composed;
 }
 #endif
