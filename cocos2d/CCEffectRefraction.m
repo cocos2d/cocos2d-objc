@@ -68,11 +68,12 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
                                    vec4 tangentSpaceNormal = normalMap * 2.0 - 1.0;
                                    
                                    // Convert the normal vector from tangent space to environment space
-                                   vec2 normal = u_tangent * tangentSpaceNormal.x + u_binormal * tangentSpaceNormal.y;
+                                   vec3 normal = normalize(vec3(u_tangent * tangentSpaceNormal.x + u_binormal * tangentSpaceNormal.y, tangentSpaceNormal.z));
+                                   vec3 refractOffset = refract(vec3(0,0,1), normal, 1.0) * u_refraction;
                                    
                                    // Perturb the screen space texture coordinate by the scaled normal
                                    // vector.
-                                   vec2 refractTexCoords = envSpaceTexCoords.xy + normal.xy * u_refraction;
+                                   vec2 refractTexCoords = envSpaceTexCoords.xy + refractOffset.xy;
                                    
                                    // This is positive if refractTexCoords is in [0..1] and negative otherwise.
                                    vec2 compare = 0.5 - abs(refractTexCoords - 0.5);
