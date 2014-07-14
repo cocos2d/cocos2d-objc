@@ -49,6 +49,7 @@
     NSUInteger _numberOfOptimizedOffsets;
     NSUInteger _blurRadius;
     GLfloat _sigma;
+    BOOL _shaderDirty;
 }
 
 -(id)init
@@ -64,14 +65,7 @@
 
 -(id)initWithPixelBlurRadius:(NSUInteger)blurRadius
 {
-    // First, generate the normal Gaussian weights for a given sigma
-    blurRadius = MIN(blurRadius, GAUSSIANBLUR_OPTMIZIED_RADIUS_MAX);
-    _blurRadius = blurRadius;
-    _sigma = blurRadius / 2;
-    if(_sigma == 0.0)
-        _sigma = 1.0f;
-    
-    _numberOfOptimizedOffsets = MIN(blurRadius / 2 + (blurRadius % 2), GAUSSIANBLUR_OPTMIZIED_RADIUS_MAX);
+    [self setBlurRadiusAndDependents:blurRadius];
     
     CCEffectUniform* u_blurDirection = [CCEffectUniform uniform:@"vec2" name:@"u_blurDirection"
                                                           value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]];
@@ -95,6 +89,28 @@
 +(id)effectWithPixelBlurRadius:(NSUInteger)blurRadius
 {
     return [[self alloc] initWithPixelBlurRadius:blurRadius];
+}
+
+-(void)setBlurRadius:(NSUInteger)blurRadius
+{
+    [self setBlurRadiusAndDependents:blurRadius];
+    
+    // The shader is constructed dynamically based on the blur radius
+    // so mark it dirty and make sure this propagates up to any containing
+    // effect stacks.
+    _shaderDirty = YES;
+    [self.owningStack passesDidChange:self];
+}
+
+- (void)setBlurRadiusAndDependents:(NSUInteger)blurRadius
+{
+    blurRadius = MIN(blurRadius, GAUSSIANBLUR_OPTMIZIED_RADIUS_MAX);
+    _blurRadius = blurRadius;
+    _sigma = blurRadius / 2;
+    if(_sigma == 0.0)
+        _sigma = 1.0f;
+    
+    _numberOfOptimizedOffsets = MIN(blurRadius / 2 + (blurRadius % 2), GAUSSIANBLUR_OPTMIZIED_RADIUS_MAX);
 }
 
 -(void)buildFragmentFunctions
@@ -274,6 +290,26 @@
     } copy]];
     
     self.renderPasses = @[pass0, pass1];
+}
+
+- (CCEffectPrepareStatus)prepareForRendering
+{
+    CCEffectPrepareStatus result = CCEffectPrepareNothingToDo;
+    if (_shaderDirty)
+    {
+        unsigned long count = (unsigned long)(1 + (_numberOfOptimizedOffsets * 2));
+        CCEffectVarying* v_blurCoords = [CCEffectVarying varying:@"vec2" name:@"v_blurCoordinates" count:count];
+        [self setVarying:@[v_blurCoords]];
+
+        [self buildFragmentFunctions];
+        [self buildVertexFunctions];
+        [self buildEffectShader];
+        [self buildRenderPasses];
+        
+        _shaderDirty = NO;
+        result = CCEffectPrepareSuccess;
+    }
+    return result;
 }
 
 @end

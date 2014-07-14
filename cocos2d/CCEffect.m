@@ -359,14 +359,7 @@ static NSString* vertBase =
         _vertexUniforms = [[CCEffect defaultEffectVertexUniforms] copy];
     }
     
-    if (varying)
-    {
-        _varyingVars = [varying copy];
-    }
-    else
-    {
-        _varyingVars = nil;
-    }
+    [self setVarying:varying];
     
     _stitchFlags = CCEffectFunctionStitchBoth;
     
@@ -406,6 +399,17 @@ static NSString* vertBase =
     }
 }
 
+-(void)setVarying:(NSArray*)varying
+{
+    if (varying)
+    {
+        _varyingVars = [varying copy];
+    }
+    else
+    {
+        _varyingVars = nil;
+    }
+}
 
 -(void)buildEffectShader
 {

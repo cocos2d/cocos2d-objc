@@ -233,14 +233,13 @@
     sampleSprite4.position = ccp(0.5, 0.5);
     sampleSprite4.positionType = CCPositionTypeNormalized;
     
-    
     CCEffectNode* effectNode4 = [[CCEffectNode alloc] initWithWidth:80 height:80];
     effectNode4.positionType = CCPositionTypeNormalized;
     effectNode4.position = ccp(0.6, 0.5);
     [effectNode4 addChild:sampleSprite4];
     CCEffectGaussianBlur* effect4 = [CCEffectGaussianBlur effectWithPixelBlurRadius:7.0];
     effectNode4.effect = effect4;
-    
+        
     [self.contentNode addChild:effectNode4];
 }
 
@@ -374,6 +373,32 @@
     [self.contentNode addChild:[self effectNodeWithEffects:@[effects[6]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.7, 0.5)]];
     [self.contentNode addChild:[self effectNodeWithEffects:@[effects[7]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.8, 0.5)]];
     [self.contentNode addChild:[self effectNodeWithEffects:@[effects[8]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.9, 0.5)]];
+}
+
+-(void)setupHueEffectTest
+{
+    self.subTitle = @"Hue Effect Test";
+    
+    // Effect nodes that use the effects in different combinations.
+    int stepCount = 12;
+    
+    float startX = 0.05f;
+    float endX = 0.95f;
+    float stepX = (endX - startX) / stepCount;
+    float x = startX;
+    float y = 0.5f;
+
+    float startHue = 180.0f;
+    float endHue = -180.0f;
+    float stepHue = (endHue - startHue) / stepCount;
+    float hue = startHue;
+    
+    for (int i = 0; i <= stepCount; i++)
+    {
+        [self.contentNode addChild:[self spriteWithEffects:@[[[CCEffectHue alloc] initWithHue:hue]] image:@"Images/grossini.png" atPosition:ccp(x, y)]];
+        x += stepX;
+        hue += stepHue;
+    }
 }
 
 -(void)setupPerformanceTest

@@ -25,23 +25,20 @@ static float conditionBrightness(float brightness);
 
 -(id)init
 {
-    CCEffectUniform* uniformBrightness = [CCEffectUniform uniform:@"float" name:@"u_brightness" value:[NSNumber numberWithFloat:0.0f]];
-    
-    if((self = [super initWithFragmentUniforms:@[uniformBrightness] vertexUniforms:nil varying:nil]))
-    {
-        self.debugName = @"CCEffectBrightness";
-        return self;
-    }
-    return self;
+    return [self initWithBrightness:0.0f];
 }
 
 -(id)initWithBrightness:(float)brightness
 {
-    if((self = [self init]))
+    CCEffectUniform* uniformBrightness = [CCEffectUniform uniform:@"float" name:@"u_brightness" value:[NSNumber numberWithFloat:0.0f]];
+    
+    if((self = [super initWithFragmentUniforms:@[uniformBrightness] vertexUniforms:nil varying:nil]))
     {
         _brightness = brightness;
         _conditionedBrightness = conditionBrightness(brightness);
-    }    
+        
+        self.debugName = @"CCEffectBrightness";
+    }
     return self;
 }
 

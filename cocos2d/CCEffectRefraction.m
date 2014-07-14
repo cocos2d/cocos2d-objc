@@ -23,6 +23,11 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
 
 -(id)init
 {
+    return [self initWithRefraction:1.0f environment:nil normalMap:nil];
+}
+
+-(id)initWithRefraction:(float)refraction environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap
+{
     NSArray *uniforms = @[
                           [CCEffectUniform uniform:@"float" name:@"u_refraction" value:[NSNumber numberWithFloat:1.0f]],
                           [CCEffectUniform uniform:@"sampler2D" name:@"u_envMap" value:(NSValue*)[CCTexture none]],
@@ -33,24 +38,16 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
     
     if((self = [super initWithFragmentUniforms:uniforms vertexUniforms:nil varying:nil]))
     {
-        self.debugName = @"CCEffectRefraction";
-        return self;
-    }
-    return self;
-}
-
--(id)initWithRefraction:(float)refraction environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap;
-{
-    if((self = [self init]))
-    {
         _refraction = refraction;
         _environment = environment;
         _normalMap = normalMap;
+
+        self.debugName = @"CCEffectRefraction";
     }
     return self;
 }
 
-+(id)effectWithRefraction:(float)refraction environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap;
++(id)effectWithRefraction:(float)refraction environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap
 {
     return [[self alloc] initWithRefraction:refraction environment:environment normalMap:normalMap];
 }
@@ -75,9 +72,17 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
                                    // Perturb the screen space texture coordinate by the scaled normal
                                    // vector.
                                    vec2 refractTexCoords = envSpaceTexCoords.xy + normal.xy * u_refraction;
+                                   
+                                   // This is positive if refractTexCoords is in [0..1] and negative otherwise.
+                                   vec2 compare = 0.5 - abs(refractTexCoords - 0.5);
+                                   
+                                   // This is 1.0 if both refracted texture coords are in bounds and 0.0 otherwise.
+                                   float inBounds = step(0.0, min(compare.x, compare.y));
 
                                    vec4 primaryColor = cc_FragColor * texture2D(cc_MainTexture, cc_FragTexCoord1);
-                                   return primaryColor * texture2D(u_envMap, refractTexCoords);
+                                   primaryColor += inBounds * texture2D(u_envMap, refractTexCoords) * (1.0 - primaryColor.a);
+                                   
+                                   return primaryColor;
                                    );
     
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"refractionEffect" body:effectBody inputs:@[input] returnType:@"vec4"];
@@ -107,7 +112,7 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
         }
         
         pass.shaderUniforms[self.uniformTranslationTable[@"u_refraction"]] = [NSNumber numberWithFloat:weakSelf.refraction];
-        pass.shaderUniforms[self.uniformTranslationTable[@"u_envMap"]] = weakSelf.environment.texture;
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_envMap"]] = weakSelf.environment.texture ?: [CCTexture none];
         
         // Setup the screen space to environment space matrix.
         CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
