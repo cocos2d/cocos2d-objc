@@ -37,8 +37,8 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
 {
     NSArray *uniforms = @[
                           [CCEffectUniform uniform:@"float" name:@"u_enableFresnel" value:[NSNumber numberWithFloat:0.0f]],
-                          [CCEffectUniform uniform:@"float" name:@"u_fresnelBias" value:[NSNumber numberWithFloat:0.0f]],
-                          [CCEffectUniform uniform:@"float" name:@"u_fresnelPower" value:[NSNumber numberWithFloat:1.0f]],
+                          [CCEffectUniform uniform:@"float" name:@"u_fresnelBias" value:[NSNumber numberWithFloat:0.1f]],
+                          [CCEffectUniform uniform:@"float" name:@"u_fresnelPower" value:[NSNumber numberWithFloat:2.0f]],
                           [CCEffectUniform uniform:@"sampler2D" name:@"u_envMap" value:(NSValue*)[CCTexture none]],
                           [CCEffectUniform uniform:@"vec2" name:@"u_tangent" value:[NSValue valueWithGLKVector2:GLKVector2Make(1.0f, 0.0f)]],
                           [CCEffectUniform uniform:@"vec2" name:@"u_binormal" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 1.0f)]],
@@ -77,14 +77,14 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
                                    
                                    // Convert the normal vector from tangent space to environment space
                                    vec3 normal = normalize(vec3(u_tangent * tangentSpaceNormal.x + u_binormal * tangentSpaceNormal.y, tangentSpaceNormal.z));
-                                   vec3 reflectOffset = reflect(vec3(0,0,1), normal, 1.0) * 0.5;
+                                   vec3 reflectOffset = reflect(vec3(0,0,1), normal) * 0.5;
                                    
                                    // Perturb the screen space texture coordinate by the scaled normal
                                    // vector.
                                    vec2 reflectTexCoords = envSpaceTexCoords.xy + reflectOffset.xy;
                                    
                                    // This is positive if reflectTexCoords is in [0..1] and negative otherwise.
-                                   vec2 compare = 0.5 - abs(refractTexCoords - 0.5);
+                                   vec2 compare = 0.5 - abs(reflectTexCoords - 0.5);
                                    
                                    // This is 1.0 if both reflected texture coords are in bounds and 0.0 otherwise.
                                    float inBounds = step(0.0, min(compare.x, compare.y));
@@ -92,7 +92,8 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
                                    // Compute the combination of the sprite's color and texture.
                                    vec4 primaryColor = cc_FragColor * texture2D(cc_MainTexture, cc_FragTexCoord1);
                                    
-                                   float fresnel = 1.0;
+                                   float nDotL = dot(vec3(0,0,1),normal);
+                                   float fresnel = max(u_fresnelBias + (1.0 - u_fresnelBias) * pow((1.0 - nDotL), u_fresnelPower), 0.0);;
                                    
                                    // If the refracted texture coordinates are within the bounds of the environment map
                                    // blend the primary color with the refracted environment. Multiplying by the normal
@@ -153,6 +154,10 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
         
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_tangent"]] = [NSValue valueWithGLKVector2:GLKVector2Make(tangent.x, tangent.y)];
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_binormal"]] = [NSValue valueWithGLKVector2:GLKVector2Make(binormal.x, binormal.y)];
+        
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_enableFresnel"]] = [NSNumber numberWithFloat:weakSelf.enableFresnel];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fresnelBias"]] = [NSNumber numberWithFloat:weakSelf.fresnelBias];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fresnelPower"]] = [NSNumber numberWithFloat:weakSelf.fresnelPower];
         
     } copy]];
     
