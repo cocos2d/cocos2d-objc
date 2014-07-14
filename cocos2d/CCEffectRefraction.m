@@ -16,9 +16,21 @@
 #import "CCEffect_Private.h"
 #import "CCSprite_Private.h"
 
-static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
-
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
+static const float CCEffectRefractionMinRefract = -0.25;
+static const float CCEffectRefractionMaxRefract = 0.043;
+
+static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
+static float conditionRefraction(float refraction);
+
+
+@interface CCEffectRefraction ()
+
+@property (nonatomic) float conditionedRefraction;
+
+@end
+
+
 @implementation CCEffectRefraction
 
 -(id)init
@@ -39,6 +51,7 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
     if((self = [super initWithFragmentUniforms:uniforms vertexUniforms:nil varying:nil]))
     {
         _refraction = refraction;
+        _conditionedRefraction = conditionRefraction(refraction);
         _environment = environment;
         _normalMap = normalMap;
 
@@ -118,7 +131,7 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
             pass.verts = verts;
         }
         
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_refraction"]] = [NSNumber numberWithFloat:weakSelf.refraction];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_refraction"]] = [NSNumber numberWithFloat:weakSelf.conditionedRefraction];
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_envMap"]] = weakSelf.environment.texture ?: [CCTexture none];
         
         // Setup the screen space to environment space matrix.
@@ -150,6 +163,11 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
     self.renderPasses = @[pass0];
 }
 
+-(void)setRefraction:(float)refraction
+{
+    _refraction = refraction;
+    _conditionedRefraction = conditionRefraction(refraction);
+}
 @end
 
 GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at)
@@ -158,6 +176,17 @@ GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at)
                           at.c,  at.d,  0.0f,  0.0f,
                           0.0f,  0.0f,  1.0f,  0.0f,
                           at.tx, at.ty, 0.0f,  1.0f);
+}
+
+float conditionRefraction(float refraction)
+{
+    NSCAssert((refraction >= -1.0) && (refraction <= 1.0), @"Supplied refraction out of range [-1..1].");
+
+    // Map [-1..1] to [0..1]
+    refraction = (clampf(refraction, -1.0f, 1.0f) + 1.0f) * 0.5f;
+
+    // Lerp between min and max
+    return CCEffectRefractionMinRefract + (CCEffectRefractionMaxRefract - CCEffectRefractionMinRefract) * refraction;
 }
 
 #endif
