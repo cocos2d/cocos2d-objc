@@ -13,7 +13,6 @@
 
 @property (nonatomic) CCSprite *environment;
 @property (nonatomic) CCSpriteFrame *normalMap;
-@property (nonatomic) BOOL enableFresnel;
 @property (nonatomic) float fresnelBias;
 @property (nonatomic) float fresnelPower;
 

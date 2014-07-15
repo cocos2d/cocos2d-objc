@@ -36,9 +36,8 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
 -(id)initWithEnvironment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap
 {
     NSArray *uniforms = @[
-                          [CCEffectUniform uniform:@"float" name:@"u_enableFresnel" value:[NSNumber numberWithFloat:0.0f]],
-                          [CCEffectUniform uniform:@"float" name:@"u_fresnelBias" value:[NSNumber numberWithFloat:0.1f]],
-                          [CCEffectUniform uniform:@"float" name:@"u_fresnelPower" value:[NSNumber numberWithFloat:2.0f]],
+                          [CCEffectUniform uniform:@"float" name:@"u_fresnelBias" value:[NSNumber numberWithFloat:0.0f]],
+                          [CCEffectUniform uniform:@"float" name:@"u_fresnelPower" value:[NSNumber numberWithFloat:0.0f]],
                           [CCEffectUniform uniform:@"sampler2D" name:@"u_envMap" value:(NSValue*)[CCTexture none]],
                           [CCEffectUniform uniform:@"vec2" name:@"u_tangent" value:[NSValue valueWithGLKVector2:GLKVector2Make(1.0f, 0.0f)]],
                           [CCEffectUniform uniform:@"vec2" name:@"u_binormal" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 1.0f)]],
@@ -155,7 +154,6 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_tangent"]] = [NSValue valueWithGLKVector2:GLKVector2Make(tangent.x, tangent.y)];
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_binormal"]] = [NSValue valueWithGLKVector2:GLKVector2Make(binormal.x, binormal.y)];
         
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_enableFresnel"]] = [NSNumber numberWithFloat:weakSelf.enableFresnel];
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fresnelBias"]] = [NSNumber numberWithFloat:weakSelf.fresnelBias];
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fresnelPower"]] = [NSNumber numberWithFloat:weakSelf.fresnelPower];
         
