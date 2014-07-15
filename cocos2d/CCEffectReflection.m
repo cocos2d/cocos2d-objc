@@ -85,10 +85,11 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
                                    // vector.
                                    vec2 reflectTexCoords = envSpaceTexCoords.xy + reflectOffset.xy;
 
+                                   // Feed the resulting coordinates through cos() so they reflect when
+                                   // they would otherwise be outside of [0..1].
                                    const float M_PI = 3.14159265358979323846264338327950288;
                                    reflectTexCoords.x = (1.0 - cos(reflectTexCoords.x * M_PI)) * 0.5;
                                    reflectTexCoords.y = (1.0 - cos(reflectTexCoords.y * M_PI)) * 0.5;
-                                   
                                    
                                    // Compute the combination of the sprite's color and texture.
                                    vec4 primaryColor = cc_FragColor * texture2D(cc_MainTexture, cc_FragTexCoord1);
