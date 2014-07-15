@@ -19,6 +19,45 @@
 	return self;
 }
 
+-(void)setupReflectEffectTest
+{
+    self.subTitle = @"Reflection Effect Test";
+    
+    CGPoint p1, p2;
+    
+    CCSprite *environment = [CCSprite spriteWithImageNamed:@"Images/GraceCathedral.png"];
+    environment.positionType = CCPositionTypeNormalized;
+    environment.position = ccp(0.5f, 0.5f);
+    environment.visible = NO;
+    
+    [self.contentNode addChild:environment];
+    
+    CCSpriteFrame *normalMap = [CCSpriteFrame frameWithImageNamed:@"Images/ShinyBallNormals.png"];
+    CCEffectReflection *reflection = [[CCEffectReflection alloc] initWithEnvironment:environment normalMap:nil];
+    reflection.fresnelBias = 0.1f;
+    reflection.fresnelPower = 1.5f;
+    
+    p1 = CGPointMake(0.1f, 0.1f);
+    p2 = CGPointMake(0.9f, 0.9f);
+    
+    CCSprite *sprite1 = [[CCSprite alloc] initWithImageNamed:@"Images/ShinyBallColor.png"];
+    sprite1.positionType = CCPositionTypeNormalized;
+    sprite1.position = ccp(0.5f, 0.5f);
+    sprite1.normalMapSpriteFrame = normalMap;
+    sprite1.effect = reflection;
+    sprite1.scale = 0.5f;
+    
+    [sprite1 runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+                                                                [CCActionMoveTo actionWithDuration:2.0 position:ccp(p1.x, p2.y)],
+                                                                [CCActionMoveTo actionWithDuration:4.0 position:ccp(p2.x, p2.y)],
+                                                                [CCActionMoveTo actionWithDuration:2.0 position:ccp(p2.x, p1.y)],
+                                                                [CCActionMoveTo actionWithDuration:4.0 position:ccp(p1.x, p1.y)],
+                                                                nil
+                                                                ]]];
+    [self.contentNode addChild:sprite1];
+}
+
+
 -(void)setupRefractionEffectTest
 {
     self.subTitle = @"Refraction Effect Test";
