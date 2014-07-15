@@ -272,6 +272,12 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 		// Chipmunk body type cannot be changed from within a callback, need to make this safe.
 		[space addPostStepBlock:^{_body.type = ToChipmunkBodyType[type];} key:self];
 	} else {
+		
+		if(self.type != type && self.type == CCPhysicsBodyTypeKinematic)
+		{
+			[self.node.physicsNode.kineticNodes removeObject:self.node];
+		}
+		
 		_body.type = ToChipmunkBodyType[type];
 	}
 }
