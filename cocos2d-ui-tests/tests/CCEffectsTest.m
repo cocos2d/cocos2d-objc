@@ -25,7 +25,7 @@
     
     CGPoint p1, p2;
     
-    CCSprite *environment = [CCSprite spriteWithImageNamed:@"Images/GraceCathedral.png"];
+    CCSprite *environment = [CCSprite spriteWithImageNamed:@"Images/starynight.png"];
     environment.positionType = CCPositionTypeNormalized;
     environment.position = ccp(0.5f, 0.5f);
     environment.visible = NO;
@@ -34,8 +34,8 @@
     
     CCSpriteFrame *normalMap = [CCSpriteFrame frameWithImageNamed:@"Images/ShinyBallNormals.png"];
     CCEffectReflection *reflection = [[CCEffectReflection alloc] initWithEnvironment:environment normalMap:nil];
-    reflection.fresnelBias = 0.1f;
-    reflection.fresnelPower = 1.5f;
+    reflection.fresnelBias = 0.0f;
+    reflection.fresnelPower = 0.0f;
     
     p1 = CGPointMake(0.1f, 0.1f);
     p2 = CGPointMake(0.9f, 0.9f);
