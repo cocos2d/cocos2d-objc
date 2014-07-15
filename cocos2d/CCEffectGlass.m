@@ -8,6 +8,192 @@
 
 #import "CCEffectGlass.h"
 
-@implementation CCEffectGlass
+#import "CCDirector.h"
+#import "CCRenderer.h"
+#import "CCSpriteFrame.h"
+#import "CCTexture.h"
+
+#import "CCEffect_Private.h"
+#import "CCSprite_Private.h"
+
+#if CC_ENABLE_EXPERIMENTAL_EFFECTS
+static const float CCEffectRefractionMinRefract = -0.25;
+static const float CCEffectRefractionMaxRefract = 0.043;
+
+static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
+static float conditionRefraction(float refraction);
+
+
+@interface CCEffectGlass ()
+
+@property (nonatomic) float conditionedRefraction;
 
 @end
+
+
+@implementation CCEffectGlass
+
+-(id)init
+{
+    return [self initWithRefraction:1.0f refractionEnvironment:nil reflectionEnvironment:nil normalMap:nil];
+}
+
+-(id)initWithRefraction:(float)refraction refractionEnvironment:(CCSprite *)refractionEnvironment reflectionEnvironment:(CCSprite *)reflectionEnvironment normalMap:(CCSpriteFrame *)normalMap;
+{
+    NSArray *uniforms = @[
+                          [CCEffectUniform uniform:@"float" name:@"u_refraction" value:[NSNumber numberWithFloat:1.0f]],
+                          [CCEffectUniform uniform:@"sampler2D" name:@"u_refractEnvMap" value:(NSValue*)[CCTexture none]],
+                          [CCEffectUniform uniform:@"sampler2D" name:@"u_reflectEnvMap" value:(NSValue*)[CCTexture none]],
+                          [CCEffectUniform uniform:@"vec2" name:@"u_tangent" value:[NSValue valueWithGLKVector2:GLKVector2Make(1.0f, 0.0f)]],
+                          [CCEffectUniform uniform:@"vec2" name:@"u_binormal" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 1.0f)]],
+                          [CCEffectUniform uniform:@"mat4" name:@"u_screenToRefractEnv" value:[NSValue valueWithGLKMatrix4:GLKMatrix4Identity]],
+                          [CCEffectUniform uniform:@"mat4" name:@"u_screenToReflectEnv" value:[NSValue valueWithGLKMatrix4:GLKMatrix4Identity]],
+                          ];
+    
+    if((self = [super initWithFragmentUniforms:uniforms vertexUniforms:nil varying:nil]))
+    {
+        _refraction = refraction;
+        _fresnelBias = 0.1f;
+        _fresnelPower = 2.0f;
+        _conditionedRefraction = conditionRefraction(refraction);
+        _refractionEnvironment = refractionEnvironment;
+        _reflectionEnvironment = reflectionEnvironment;
+        _normalMap = normalMap;
+        
+        self.debugName = @"CCEffectGlass";
+    }
+    return self;
+}
+
++(id)effectWithRefraction:(float)refraction refractionEnvironment:(CCSprite *)refractionEnvironment reflectionEnvironment:(CCSprite *)reflectionEnvironment normalMap:(CCSpriteFrame *)normalMap
+{
+    return [[self alloc] initWithRefraction:refraction refractionEnvironment:refractionEnvironment reflectionEnvironment:reflectionEnvironment normalMap:normalMap];
+}
+
+-(void)buildFragmentFunctions
+{
+    self.fragmentFunctions = [[NSMutableArray alloc] init];
+    
+    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" snippet:@"texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)"];
+    
+    NSString* effectBody = CC_GLSL(
+                                   // Compute environment space texture coordinates from the screen space
+                                   // fragment position.
+                                   vec4 envSpaceTexCoords = u_screenToEnv * gl_FragCoord;
+                                   
+                                   // Index the normal map and expand the color value from [0..1] to [-1..1]
+                                   vec4 normalMap = texture2D(cc_NormalMapTexture, cc_FragTexCoord2);
+                                   vec4 tangentSpaceNormal = normalMap * 2.0 - 1.0;
+                                   
+                                   // Convert the normal vector from tangent space to environment space
+                                   vec3 normal = normalize(vec3(u_tangent * tangentSpaceNormal.x + u_binormal * tangentSpaceNormal.y, tangentSpaceNormal.z));
+                                   vec3 refractOffset = refract(vec3(0,0,1), normal, 1.0) * u_refraction;
+                                   
+                                   // Perturb the screen space texture coordinate by the scaled normal
+                                   // vector.
+                                   vec2 refractTexCoords = envSpaceTexCoords.xy + refractOffset.xy;
+                                   
+                                   // This is positive if refractTexCoords is in [0..1] and negative otherwise.
+                                   vec2 compare = 0.5 - abs(refractTexCoords - 0.5);
+                                   
+                                   // This is 1.0 if both refracted texture coords are in bounds and 0.0 otherwise.
+                                   float inBounds = step(0.0, min(compare.x, compare.y));
+                                   
+                                   // Compute the combination of the sprite's color and texture.
+                                   vec4 primaryColor = cc_FragColor * texture2D(cc_MainTexture, cc_FragTexCoord1);
+                                   
+                                   // If the refracted texture coordinates are within the bounds of the environment map
+                                   // blend the primary color with the refracted environment. Multiplying by the normal
+                                   // map alpha also allows the effect to be disabled for specific pixels.
+                                   primaryColor += inBounds * normalMap.a * texture2D(u_envMap, refractTexCoords) * (1.0 - primaryColor.a);
+                                   
+                                   return primaryColor;
+                                   );
+    
+    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"refractionEffect" body:effectBody inputs:@[input] returnType:@"vec4"];
+    [self.fragmentFunctions addObject:fragmentFunction];
+}
+
+-(void)buildRenderPasses
+{
+    __weak CCEffectGlass *weakSelf = self;
+    
+    CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
+    pass0.shader = self.shader;
+    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
+        pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
+        pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
+        if (weakSelf.normalMap)
+        {
+            pass.shaderUniforms[CCShaderUniformNormalMapTexture] = weakSelf.normalMap.texture;
+            
+            CCSpriteTexCoordSet texCoords = [CCSprite textureCoordsForTexture:weakSelf.normalMap.texture withRect:weakSelf.normalMap.rect rotated:weakSelf.normalMap.rotated xFlipped:NO yFlipped:NO];
+            CCSpriteVertexes verts = pass.verts;
+            verts.bl.texCoord2 = texCoords.bl;
+            verts.br.texCoord2 = texCoords.br;
+            verts.tr.texCoord2 = texCoords.tr;
+            verts.tl.texCoord2 = texCoords.tl;
+            pass.verts = verts;
+        }
+        
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_refraction"]] = [NSNumber numberWithFloat:weakSelf.conditionedRefraction];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_refractEnvMap"]] = weakSelf.refractionEnvironment.texture ?: [CCTexture none];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_reflectEnvMap"]] = weakSelf.reflectionEnvironment.texture ?: [CCTexture none];
+        
+        // Setup the screen space to environment space matrix.
+        CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
+        CGAffineTransform screenToWorld = CGAffineTransformMake(1.0f / scale, 0.0f, 0.0f, 1.0f / scale, 0.0f, 0.0f);
+        CGAffineTransform worldToEnvNode = weakSelf.refractionEnvironment.worldToNodeTransform;
+        CGAffineTransform envNodeToEnvTexture = weakSelf.refractionEnvironment.nodeToTextureTransform;
+        CGAffineTransform worldToEnvTexture = CGAffineTransformConcat(worldToEnvNode, envNodeToEnvTexture);
+        CGAffineTransform screenToEnvTexture = CGAffineTransformConcat(screenToWorld, worldToEnvTexture);
+        
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_screenToRefractEnv"]] = [NSValue valueWithGLKMatrix4:GLKMatrix4FromAffineTransform(screenToEnvTexture)];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_screenToReflectEnv"]] = [NSValue valueWithGLKMatrix4:GLKMatrix4FromAffineTransform(screenToEnvTexture)];
+        
+        // Setup the tangent and binormal vectors for the normal map.
+        GLKMatrix4 worldToEnvTextureMat = GLKMatrix4FromAffineTransform(worldToEnvTexture);
+        GLKMatrix4 effectToEnvTextureMat = GLKMatrix4Multiply(pass.transform, worldToEnvTextureMat);
+        
+        GLKVector4 tangent = GLKVector4Make(1.0f, 0.0f, 0.0f, 0.0f);
+        tangent = GLKMatrix4MultiplyVector4(effectToEnvTextureMat, tangent);
+        tangent = GLKVector4Normalize(tangent);
+        
+        GLKVector4 normal = GLKVector4Make(0.0f, 0.0f, 1.0f, 1.0f);
+        GLKVector4 binormal = GLKVector4CrossProduct(normal, tangent);
+        
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_tangent"]] = [NSValue valueWithGLKVector2:GLKVector2Make(tangent.x, tangent.y)];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_binormal"]] = [NSValue valueWithGLKVector2:GLKVector2Make(binormal.x, binormal.y)];
+        
+    } copy]];
+    
+    self.renderPasses = @[pass0];
+}
+
+-(void)setRefraction:(float)refraction
+{
+    _refraction = refraction;
+    _conditionedRefraction = conditionRefraction(refraction);
+}
+@end
+
+GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at)
+{
+    return GLKMatrix4Make(at.a,  at.b,  0.0f,  0.0f,
+                          at.c,  at.d,  0.0f,  0.0f,
+                          0.0f,  0.0f,  1.0f,  0.0f,
+                          at.tx, at.ty, 0.0f,  1.0f);
+}
+
+float conditionRefraction(float refraction)
+{
+    NSCAssert((refraction >= -1.0) && (refraction <= 1.0), @"Supplied refraction out of range [-1..1].");
+    
+    // Map [-1..1] to [0..1]
+    refraction = (clampf(refraction, -1.0f, 1.0f) + 1.0f) * 0.5f;
+    
+    // Lerp between min and max
+    return CCEffectRefractionMinRefract + (CCEffectRefractionMaxRefract - CCEffectRefractionMinRefract) * refraction;
+}
+
+#endif
