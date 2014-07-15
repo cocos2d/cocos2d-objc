@@ -77,29 +77,28 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
                                    
                                    // Convert the normal vector from tangent space to environment space
                                    vec3 normal = normalize(vec3(u_tangent * tangentSpaceNormal.x + u_binormal * tangentSpaceNormal.y, tangentSpaceNormal.z));
-                                   vec3 reflectOffset = reflect(vec3(0,0,1), normal) * 0.5;
+                                   
+                                   float nDotV = dot(normal, vec3(0,0,1));
+                                   vec3 reflectOffset = normal * pow(1.0 - nDotV, 1.0);
                                    
                                    // Perturb the screen space texture coordinate by the scaled normal
                                    // vector.
                                    vec2 reflectTexCoords = envSpaceTexCoords.xy + reflectOffset.xy;
+
+                                   const float M_PI = 3.14159265358979323846264338327950288;
+                                   reflectTexCoords.x = (1.0 - cos(reflectTexCoords.x * M_PI)) * 0.5;
+                                   reflectTexCoords.y = (1.0 - cos(reflectTexCoords.y * M_PI)) * 0.5;
                                    
-                                   // This is positive if reflectTexCoords is in [0..1] and negative otherwise.
-                                   vec2 compare = 0.5 - abs(reflectTexCoords - 0.5);
-                                   
-                                   // This is 1.0 if both reflected texture coords are in bounds and 0.0 otherwise.
-                                   float inBounds = step(0.0, min(compare.x, compare.y));
                                    
                                    // Compute the combination of the sprite's color and texture.
                                    vec4 primaryColor = cc_FragColor * texture2D(cc_MainTexture, cc_FragTexCoord1);
                                    
-                                   float nDotL = dot(vec3(0,0,1),normal);
-                                   float fresnel = max(u_fresnelBias + (1.0 - u_fresnelBias) * pow((1.0 - nDotL), u_fresnelPower), 0.0);;
+                                   float fresnel = max(u_fresnelBias + (1.0 - u_fresnelBias) * pow((1.0 - nDotV), u_fresnelPower), 0.0);;
                                    
                                    // If the refracted texture coordinates are within the bounds of the environment map
                                    // blend the primary color with the refracted environment. Multiplying by the normal
                                    // map alpha also allows the effect to be disabled for specific pixels.
-                                   primaryColor += inBounds * normalMap.a * fresnel * texture2D(u_envMap, reflectTexCoords);
-                                   
+                                   primaryColor += normalMap.a * fresnel * texture2D(u_envMap, reflectTexCoords);                                   
                                    return primaryColor;
                                    );
     
