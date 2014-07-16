@@ -19,6 +19,54 @@
 	return self;
 }
 
+-(void)setupGlassEffectTest
+{
+    self.subTitle = @"Glass Effect Test";
+    
+    CGPoint p1, p2;
+    
+    CCSprite *reflectEnvironment = [CCSprite spriteWithImageNamed:@"Images/MountainPanorama.jpg"];
+    reflectEnvironment.positionType = CCPositionTypeNormalized;
+    reflectEnvironment.position = ccp(0.5f, 0.5f);
+    reflectEnvironment.visible = NO;
+    
+    [self.contentNode addChild:reflectEnvironment];
+
+    
+    CCSprite *refractEnvironment = [CCSprite spriteWithImageNamed:@"Images/ClownFish.png"];
+    refractEnvironment.positionType = CCPositionTypeNormalized;
+    refractEnvironment.position = ccp(0.5f, 0.5f);
+    
+    [self.contentNode addChild:refractEnvironment];
+    
+    
+    CCSpriteFrame *normalMap = [CCSpriteFrame frameWithImageNamed:@"Images/ShinyBallNormals.png"];
+    CCEffectGlass *glass = [[CCEffectGlass alloc] initWithRefraction:1.0f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment normalMap:nil];
+    glass.fresnelBias = 0.1f;
+    glass.fresnelPower = 2.0f;
+    glass.refraction = 0.95f;
+    
+    p1 = CGPointMake(0.1f, 0.1f);
+    p2 = CGPointMake(0.9f, 0.9f);
+    
+    CCSprite *sprite1 = [[CCSprite alloc] init];
+    sprite1.positionType = CCPositionTypeNormalized;
+    sprite1.position = ccp(0.5f, 0.5f);
+    sprite1.normalMapSpriteFrame = normalMap;
+    sprite1.effect = glass;
+    sprite1.scale = 0.5f;
+    sprite1.colorRGBA = [CCColor colorWithRed:1.0f green:0.0f blue:0.0f alpha:0.0f];
+    
+    [sprite1 runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+                                                                [CCActionMoveTo actionWithDuration:2.0 position:ccp(p1.x, p2.y)],
+                                                                [CCActionMoveTo actionWithDuration:4.0 position:ccp(p2.x, p2.y)],
+                                                                [CCActionMoveTo actionWithDuration:2.0 position:ccp(p2.x, p1.y)],
+                                                                [CCActionMoveTo actionWithDuration:4.0 position:ccp(p1.x, p1.y)],
+                                                                nil
+                                                                ]]];
+    [self.contentNode addChild:sprite1];
+}
+
 -(void)setupReflectEffectTest
 {
     self.subTitle = @"Reflection Effect Test";
