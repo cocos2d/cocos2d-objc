@@ -864,7 +864,8 @@ static const float CCFPSLabelItemHeight = 32;
 			NSString *fpsstr = [[NSString alloc] initWithFormat:@"%.1f", _frameRate];
 			[_FPSLabel setString:fpsstr];
 			
-			NSString *draws = [[NSString alloc] initWithFormat:@"%4lu", (unsigned long)__ccNumberOfDraws];
+			// Subtract one to exclude the batch for actually rendering the stats label itself.
+			NSString *draws = [[NSString alloc] initWithFormat:@"%4lu", (unsigned long)__ccNumberOfDraws - 1];
 			[_drawsLabel setString:draws];
 		}
 		
