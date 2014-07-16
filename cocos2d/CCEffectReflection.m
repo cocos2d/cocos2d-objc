@@ -102,7 +102,7 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
                                    return primaryColor;
                                    );
     
-    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"refractionEffect" body:effectBody inputs:@[input] returnType:@"vec4"];
+    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"reflectionEffect" body:effectBody inputs:@[input] returnType:@"vec4"];
     [self.fragmentFunctions addObject:fragmentFunction];
 }
 
