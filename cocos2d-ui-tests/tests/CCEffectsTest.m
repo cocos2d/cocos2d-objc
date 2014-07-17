@@ -33,9 +33,10 @@
     [self.contentNode addChild:reflectEnvironment];
 
     
-    CCSprite *refractEnvironment = [CCSprite spriteWithImageNamed:@"Images/ClownFish.png"];
+    CCSprite *refractEnvironment = [CCSprite spriteWithImageNamed:@"Images/StoneWall.jpg"];
     refractEnvironment.positionType = CCPositionTypeNormalized;
     refractEnvironment.position = ccp(0.5f, 0.5f);
+    refractEnvironment.scale = 0.5;
     
     [self.contentNode addChild:refractEnvironment];
     
@@ -55,7 +56,7 @@
     sprite1.normalMapSpriteFrame = normalMap;
     sprite1.effect = glass;
     sprite1.scale = 0.5f;
-    sprite1.colorRGBA = [CCColor colorWithRed:1.0f green:0.0f blue:0.0f alpha:0.0f];
+    sprite1.colorRGBA = [CCColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.0f];
     
     [sprite1 runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
                                                                 [CCActionMoveTo actionWithDuration:2.0 position:ccp(p1.x, p2.y)],
@@ -73,7 +74,7 @@
     
     CGPoint p1, p2;
     
-    CCSprite *environment = [CCSprite spriteWithImageNamed:@"Images/starynight.png"];
+    CCSprite *environment = [CCSprite spriteWithImageNamed:@"Images/MountainPanorama.jpg"];
     environment.positionType = CCPositionTypeNormalized;
     environment.position = ccp(0.5f, 0.5f);
     environment.visible = NO;
@@ -88,13 +89,14 @@
     p1 = CGPointMake(0.1f, 0.1f);
     p2 = CGPointMake(0.9f, 0.9f);
     
-    CCSprite *sprite1 = [[CCSprite alloc] initWithImageNamed:@"Images/ShinyBallColor.png"];
+    CCSprite *sprite1 = [[CCSprite alloc] init];
     sprite1.positionType = CCPositionTypeNormalized;
     sprite1.position = ccp(0.5f, 0.5f);
     sprite1.normalMapSpriteFrame = normalMap;
     sprite1.effect = reflection;
     sprite1.scale = 0.5f;
-    
+    sprite1.colorRGBA = [CCColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.0f];
+
     [sprite1 runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
                                                                 [CCActionMoveTo actionWithDuration:2.0 position:ccp(p1.x, p2.y)],
                                                                 [CCActionMoveTo actionWithDuration:4.0 position:ccp(p2.x, p2.y)],
