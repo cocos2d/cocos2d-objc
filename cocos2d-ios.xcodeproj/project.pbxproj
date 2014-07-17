@@ -108,6 +108,8 @@
 		926B97F71938606D00E345FB /* CCAnimationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 926B97F21938606D00E345FB /* CCAnimationManager.h */; };
 		9D1C03B81954F636007B6735 /* CCEffectRefraction.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D1C03B61954F636007B6735 /* CCEffectRefraction.h */; };
 		9D1C03B91954F636007B6735 /* CCEffectRefraction.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D1C03B71954F636007B6735 /* CCEffectRefraction.m */; };
+		9D473920197841A500314F7D /* CCEffectUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D47391E197841A500314F7D /* CCEffectUtils.h */; };
+		9D473921197841A500314F7D /* CCEffectUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D47391F197841A500314F7D /* CCEffectUtils.m */; };
 		9D6BE2FE1975E18B0082A327 /* CCEffectGlass.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D6BE2FC1975E18B0082A327 /* CCEffectGlass.h */; };
 		9D6BE2FF1975E18B0082A327 /* CCEffectGlass.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D6BE2FD1975E18B0082A327 /* CCEffectGlass.m */; };
 		9D85671D191B018200573093 /* CCEffectBrightness.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D85671B191B018200573093 /* CCEffectBrightness.h */; };
@@ -438,6 +440,8 @@
 		92FF6C7318F33A2A005B7139 /* CCActionManager_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCActionManager_Private.h; sourceTree = "<group>"; };
 		9D1C03B61954F636007B6735 /* CCEffectRefraction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectRefraction.h; sourceTree = "<group>"; };
 		9D1C03B71954F636007B6735 /* CCEffectRefraction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectRefraction.m; sourceTree = "<group>"; };
+		9D47391E197841A500314F7D /* CCEffectUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectUtils.h; sourceTree = "<group>"; };
+		9D47391F197841A500314F7D /* CCEffectUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectUtils.m; sourceTree = "<group>"; };
 		9D6BE2FC1975E18B0082A327 /* CCEffectGlass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectGlass.h; sourceTree = "<group>"; };
 		9D6BE2FD1975E18B0082A327 /* CCEffectGlass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectGlass.m; sourceTree = "<group>"; };
 		9D85671A191AE2CC00573093 /* CCEffectStack_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCEffectStack_Private.h; sourceTree = "<group>"; };
@@ -1222,6 +1226,8 @@
 				D272031718FC89A000B100FF /* CCEffect_Private.h */,
 				D272031818FC89A000B100FF /* CCEffect.h */,
 				D272031918FC89A000B100FF /* CCEffect.m */,
+				9D47391E197841A500314F7D /* CCEffectUtils.h */,
+				9D47391F197841A500314F7D /* CCEffectUtils.m */,
 				D272032018FC89A000B100FF /* CCEffectStack.h */,
 				9D85671A191AE2CC00573093 /* CCEffectStack_Private.h */,
 				D272032118FC89A000B100FF /* CCEffectStack.m */,
@@ -1329,6 +1335,7 @@
 				5018F2730DFDEAFF00C013A5 /* CCLabelTTF.h in Headers */,
 				5018F2750DFDEAFF00C013A5 /* CCNodeColor.h in Headers */,
 				5018F2770DFDEAFF00C013A5 /* CCScene.h in Headers */,
+				9D473920197841A500314F7D /* CCEffectUtils.h in Headers */,
 				5018F27D0DFDEAFF00C013A5 /* CCTextureCache.h in Headers */,
 				B77060051831A07B0043CC67 /* OALNotifications.h in Headers */,
 				D380581A1889AD6000822437 /* CCRenderer.h in Headers */,
@@ -1674,6 +1681,7 @@
 				A003AC8F16572D6000C7B792 /* ccFPSImages.m in Sources */,
 				B79F905B17FE2A2E00908504 /* CCTableView.m in Sources */,
 				B74C2B9C17BDA63A00A829C0 /* CCSprite9Slice.m in Sources */,
+				9D473921197841A500314F7D /* CCEffectUtils.m in Sources */,
 				B75C2E7D17C5908B002B0E0D /* NSAttributedString+CCAdditions.m in Sources */,
 				B7EE69E31819E75700B983FE /* CCLayoutBox.m in Sources */,
 				B7705FF71831A07B0043CC67 /* OALAudioSession.m in Sources */,
