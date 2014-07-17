@@ -78,7 +78,7 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
                                    vec3 normal = normalize(vec3(u_tangent * tangentSpaceNormal.x + u_binormal * tangentSpaceNormal.y, tangentSpaceNormal.z));
                                    
                                    float nDotV = dot(normal, vec3(0,0,1));
-                                   vec3 reflectOffset = normal * pow(1.0 - nDotV, 1.0);
+                                   vec3 reflectOffset = normal * pow(1.0 - nDotV, 3.0) / 8.0;
                                    
                                    // Perturb the screen space texture coordinate by the scaled normal
                                    // vector.

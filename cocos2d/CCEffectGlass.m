@@ -119,7 +119,7 @@ static float conditionRefraction(float refraction);
                                    vec3 reflectNormal = normalize(vec3(u_reflectTangent * tangentSpaceNormal.x + u_reflectBinormal * tangentSpaceNormal.y, tangentSpaceNormal.z));
                                    
                                    float nDotV = dot(reflectNormal, vec3(0,0,1));
-                                   vec3 reflectOffset = reflectNormal * pow(1.0 - nDotV, 1.0);
+                                   vec3 reflectOffset = reflectNormal * pow(1.0 - nDotV, 3.0) / 8.0;
                                    
                                    // Perturb the screen space texture coordinate by the scaled normal
                                    // vector.
