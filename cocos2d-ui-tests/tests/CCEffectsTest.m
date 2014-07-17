@@ -45,7 +45,7 @@
     CCEffectGlass *glass = [[CCEffectGlass alloc] initWithRefraction:1.0f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment normalMap:nil];
     glass.fresnelBias = 0.1f;
     glass.fresnelPower = 2.0f;
-    glass.refraction = 0.95f;
+    glass.refraction = 0.75f;
     
     p1 = CGPointMake(0.1f, 0.1f);
     p2 = CGPointMake(0.9f, 0.9f);
@@ -150,6 +150,7 @@
     CCTexture *sphereTexture = [CCTexture textureWithFile:sphereTextureFile];
     CCSpriteFrame *sphereNormalMap = [CCSpriteFrame frameWithImageNamed:@"Images/ShinyBallNormals.png"];
     CCEffectRefraction *sphereRefraction = [[CCEffectRefraction alloc] initWithRefraction:0.1f environment:renderTexture.sprite normalMap:nil];
+    sphereRefraction.refraction = 0.75f;
     
     p1 = CGPointMake(0.1f, 0.8f);
     p2 = CGPointMake(0.35f, 0.2f);
@@ -169,6 +170,7 @@
     CCTexture *torusTexture = [CCTexture textureWithFile:torusTextureFile];
     CCSpriteFrame *torusNormalMap = [CCSpriteFrame frameWithImageNamed:@"Images/ShinyTorusNormals.png"];
     CCEffectRefraction *torusRefraction = [[CCEffectRefraction alloc] initWithRefraction:0.1f environment:renderTexture.sprite normalMap:torusNormalMap];
+    torusRefraction.refraction = 0.75f;
     
     p1 = CGPointMake(0.65f, 0.2f);
     p2 = CGPointMake(0.9f, 0.8f);
