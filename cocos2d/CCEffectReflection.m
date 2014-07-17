@@ -9,6 +9,7 @@
 #import "CCEffectReflection.h"
 
 #import "CCDirector.h"
+#import "CCEffectUtils.h"
 #import "CCRenderer.h"
 #import "CCSpriteFrame.h"
 #import "CCTexture.h"
@@ -128,34 +129,25 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
             pass.verts = verts;
         }
         
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_envMap"]] = weakSelf.environment.texture ?: [CCTexture none];
-        
-        // Setup the screen space to environment space matrix.
-        CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
-        CGAffineTransform screenToWorld = CGAffineTransformMake(1.0f / scale, 0.0f, 0.0f, 1.0f / scale, 0.0f, 0.0f);
-        CGAffineTransform worldToEnvNode = weakSelf.environment.worldToNodeTransform;
-        CGAffineTransform envNodeToEnvTexture = weakSelf.environment.nodeToTextureTransform;
-        CGAffineTransform worldToEnvTexture = CGAffineTransformConcat(worldToEnvNode, envNodeToEnvTexture);
-        CGAffineTransform screenToEnvTexture = CGAffineTransformConcat(screenToWorld, worldToEnvTexture);
-        
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_screenToEnv"]] = [NSValue valueWithGLKMatrix4:GLKMatrix4FromAffineTransform(screenToEnvTexture)];
-        
-        // Setup the tangent and binormal vectors for the normal map.
-        GLKMatrix4 worldToEnvTextureMat = GLKMatrix4FromAffineTransform(worldToEnvTexture);
-        GLKMatrix4 effectToEnvTextureMat = GLKMatrix4Multiply(pass.transform, worldToEnvTextureMat);
-        
-        GLKVector4 tangent = GLKVector4Make(1.0f, 0.0f, 0.0f, 0.0f);
-        tangent = GLKMatrix4MultiplyVector4(effectToEnvTextureMat, tangent);
-        tangent = GLKVector4Normalize(tangent);
-        
-        GLKVector4 normal = GLKVector4Make(0.0f, 0.0f, 1.0f, 1.0f);
-        GLKVector4 binormal = GLKVector4CrossProduct(normal, tangent);
-        
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_tangent"]] = [NSValue valueWithGLKVector2:GLKVector2Make(tangent.x, tangent.y)];
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_binormal"]] = [NSValue valueWithGLKVector2:GLKVector2Make(binormal.x, binormal.y)];
-        
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fresnelBias"]] = [NSNumber numberWithFloat:weakSelf.fresnelBias];
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fresnelPower"]] = [NSNumber numberWithFloat:weakSelf.fresnelPower];
+        
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_envMap"]] = weakSelf.environment.texture ?: [CCTexture none];
+        
+        CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
+        CGAffineTransform screenToWorld = CGAffineTransformMake(1.0f / scale, 0.0f, 0.0f, 1.0f / scale, 0.0f, 0.0f);
+        
+        // Setup the screen space to environment space matrix.
+        CGAffineTransform worldToReflectEnvTexture =  CCEffectUtilsWorldToEnvironmentTransform(weakSelf.environment);
+        CGAffineTransform screenToReflectEnvTexture = CGAffineTransformConcat(screenToWorld, worldToReflectEnvTexture);
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_screenToEnv"]] = [NSValue valueWithGLKMatrix4:CCEffectUtilsMat4FromAffineTransform(screenToReflectEnvTexture)];
+        
+        // Setup the tangent and binormal vectors for the refraction environment
+        GLKVector4 reflectTangent = CCEffectUtilsTangentInEnvironmentSpace(pass.transform, CCEffectUtilsMat4FromAffineTransform(worldToReflectEnvTexture));
+        GLKVector4 reflectNormal = GLKVector4Make(0.0f, 0.0f, 1.0f, 1.0f);
+        GLKVector4 reflectBinormal = GLKVector4CrossProduct(reflectNormal, reflectTangent);
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_tangent"]] = [NSValue valueWithGLKVector2:GLKVector2Make(reflectTangent.x, reflectTangent.y)];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_binormal"]] = [NSValue valueWithGLKVector2:GLKVector2Make(reflectBinormal.x, reflectBinormal.y)];
         
     } copy]];
     

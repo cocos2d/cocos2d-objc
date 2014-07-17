@@ -9,6 +9,7 @@
 #import "CCEffectGlass.h"
 
 #import "CCDirector.h"
+#import "CCEffectUtils.h"
 #import "CCRenderer.h"
 #import "CCSpriteFrame.h"
 #import "CCTexture.h"
@@ -17,13 +18,6 @@
 #import "CCSprite_Private.h"
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
-static const float CCEffectRefractionMinRefract = -0.25;
-static const float CCEffectRefractionMaxRefract = 0.043;
-
-static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
-static float conditionRefraction(float refraction);
-
-
 @interface CCEffectGlass ()
 
 @property (nonatomic) float conditionedRefraction;
@@ -63,7 +57,7 @@ static float conditionRefraction(float refraction);
         _refraction = refraction;
         _fresnelBias = 0.1f;
         _fresnelPower = 2.0f;
-        _conditionedRefraction = conditionRefraction(refraction);
+        _conditionedRefraction = CCEffectUtilsConditionRefraction(refraction);
         _refractionEnvironment = refractionEnvironment;
         _reflectionEnvironment = reflectionEnvironment;
         _normalMap = normalMap;
@@ -190,33 +184,17 @@ static float conditionRefraction(float refraction);
         
         
         // Setup the screen space to refract environment space matrix.
-        CGAffineTransform worldToRefractEnvNode = weakSelf.refractionEnvironment.worldToNodeTransform;
-        CGAffineTransform refractEnvNodeToRefractEnvTexture = weakSelf.refractionEnvironment.nodeToTextureTransform;
-        CGAffineTransform worldToRefractEnvTexture = CGAffineTransformConcat(worldToRefractEnvNode, refractEnvNodeToRefractEnvTexture);
+        CGAffineTransform worldToRefractEnvTexture =  CCEffectUtilsWorldToEnvironmentTransform(weakSelf.refractionEnvironment);
         CGAffineTransform screenToRefractEnvTexture = CGAffineTransformConcat(screenToWorld, worldToRefractEnvTexture);
-        
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_screenToRefractEnv"]] = [NSValue valueWithGLKMatrix4:GLKMatrix4FromAffineTransform(screenToRefractEnvTexture)];
-
-        
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_screenToRefractEnv"]] = [NSValue valueWithGLKMatrix4:CCEffectUtilsMat4FromAffineTransform(screenToRefractEnvTexture)];
         
         // Setup the screen space to reflect environment space matrix.
-        CGAffineTransform worldToReflectEnvNode = weakSelf.reflectionEnvironment.worldToNodeTransform;
-        CGAffineTransform reflectEnvNodeToReflectEnvTexture = weakSelf.reflectionEnvironment.nodeToTextureTransform;
-        CGAffineTransform worldToReflectEnvTexture = CGAffineTransformConcat(worldToReflectEnvNode, reflectEnvNodeToReflectEnvTexture);
+        CGAffineTransform worldToReflectEnvTexture = CCEffectUtilsWorldToEnvironmentTransform(weakSelf.reflectionEnvironment);
         CGAffineTransform screenToReflectEnvTexture = CGAffineTransformConcat(screenToWorld, worldToReflectEnvTexture);
-        
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_screenToReflectEnv"]] = [NSValue valueWithGLKMatrix4:GLKMatrix4FromAffineTransform(screenToReflectEnvTexture)];
-        
-        
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_screenToReflectEnv"]] = [NSValue valueWithGLKMatrix4:CCEffectUtilsMat4FromAffineTransform(screenToReflectEnvTexture)];
         
         // Setup the tangent and binormal vectors for the refraction environment
-        GLKMatrix4 worldToRefractEnvTextureMat = GLKMatrix4FromAffineTransform(worldToRefractEnvTexture);
-        GLKMatrix4 effectToRefractEnvTextureMat = GLKMatrix4Multiply(pass.transform, worldToRefractEnvTextureMat);
-        
-        GLKVector4 refractTangent = GLKVector4Make(1.0f, 0.0f, 0.0f, 0.0f);
-        refractTangent = GLKMatrix4MultiplyVector4(effectToRefractEnvTextureMat, refractTangent);
-        refractTangent = GLKVector4Normalize(refractTangent);
-        
+        GLKVector4 refractTangent = CCEffectUtilsTangentInEnvironmentSpace(pass.transform, CCEffectUtilsMat4FromAffineTransform(worldToRefractEnvTexture));
         GLKVector4 refractNormal = GLKVector4Make(0.0f, 0.0f, 1.0f, 1.0f);
         GLKVector4 refractBinormal = GLKVector4CrossProduct(refractNormal, refractTangent);
         
@@ -226,16 +204,9 @@ static float conditionRefraction(float refraction);
         
         
         // Setup the tangent and binormal vectors for the reflection environment.
-        GLKMatrix4 worldToReflectEnvTextureMat = GLKMatrix4FromAffineTransform(worldToReflectEnvTexture);
-        GLKMatrix4 effectToReflectEnvTextureMat = GLKMatrix4Multiply(pass.transform, worldToReflectEnvTextureMat);
-        
-        GLKVector4 reflectTangent = GLKVector4Make(1.0f, 0.0f, 0.0f, 0.0f);
-        reflectTangent = GLKMatrix4MultiplyVector4(effectToReflectEnvTextureMat, reflectTangent);
-        reflectTangent = GLKVector4Normalize(reflectTangent);
-        
+        GLKVector4 reflectTangent = CCEffectUtilsTangentInEnvironmentSpace(pass.transform, CCEffectUtilsMat4FromAffineTransform(worldToReflectEnvTexture));
         GLKVector4 reflectNormal = GLKVector4Make(0.0f, 0.0f, 1.0f, 1.0f);
         GLKVector4 reflectBinormal = GLKVector4CrossProduct(reflectNormal, reflectTangent);
-        
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_reflectTangent"]] = [NSValue valueWithGLKVector2:GLKVector2Make(reflectTangent.x, reflectTangent.y)];
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_reflectBinormal"]] = [NSValue valueWithGLKVector2:GLKVector2Make(reflectBinormal.x, reflectBinormal.y)];
 
@@ -247,27 +218,7 @@ static float conditionRefraction(float refraction);
 -(void)setRefraction:(float)refraction
 {
     _refraction = refraction;
-    _conditionedRefraction = conditionRefraction(refraction);
+    _conditionedRefraction = CCEffectUtilsConditionRefraction(refraction);
 }
 @end
-
-GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at)
-{
-    return GLKMatrix4Make(at.a,  at.b,  0.0f,  0.0f,
-                          at.c,  at.d,  0.0f,  0.0f,
-                          0.0f,  0.0f,  1.0f,  0.0f,
-                          at.tx, at.ty, 0.0f,  1.0f);
-}
-
-float conditionRefraction(float refraction)
-{
-    NSCAssert((refraction >= -1.0) && (refraction <= 1.0), @"Supplied refraction out of range [-1..1].");
-    
-    // Map [-1..1] to [0..1]
-    refraction = (clampf(refraction, -1.0f, 1.0f) + 1.0f) * 0.5f;
-    
-    // Lerp between min and max
-    return CCEffectRefractionMinRefract + (CCEffectRefractionMaxRefract - CCEffectRefractionMinRefract) * refraction;
-}
-
 #endif
