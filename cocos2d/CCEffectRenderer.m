@@ -19,6 +19,16 @@
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 
+#define CCEFFECT_DEBUG_PASSES 0
+#if CCEFFECT_DEBUG_PASSES
+#define CCEFFECT_DEBUG_PUSH_GROUP(R) [(R) pushGroup]
+#define CCEFFECT_DEBUG_POP_GROUP(R, L) [(R) popGroupWithDebugLabel:(L) globalSortOrder:0]
+#else
+#define CCEFFECT_DEBUG_PUSH_GROUP(R)
+#define CCEFFECT_DEBUG_POP_GROUP(R, L)
+#endif
+
+
 @interface CCEffectRenderTarget : NSObject
 
 @property (nonatomic, readonly) CCTexture *texture;
@@ -177,7 +187,7 @@
         
         CCEffectRenderTarget *rt = nil;
         
-        [renderer pushGroup];
+        CCEFFECT_DEBUG_PUSH_GROUP(renderer);
         if (directRendering)
         {
             renderPass.transform = *transform;
@@ -199,7 +209,7 @@
             [self restoreRenderTargetWithRenderer:renderer];
             [renderPass end];
         }
-        [renderer popGroupWithDebugLabel:renderPass.debugLabel globalSortOrder:0];
+        CCEFFECT_DEBUG_POP_GROUP(renderer, renderPass.debugLabel);
         
         previousPassRT = rt;
     }
