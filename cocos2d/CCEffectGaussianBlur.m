@@ -268,7 +268,9 @@
     pass0.shader = self.shader;
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
-        
+
+        pass.debugLabel = @"CCEffectGaussianBlur pass 0";
+
         pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
         
@@ -282,6 +284,8 @@
     pass1.shader = self.shader;
     pass1.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass1.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
+
+        pass.debugLabel = @"CCEffectGaussianBlur pass 1";
 
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
         GLKVector2 dur = GLKVector2Make(0.0, 1.0 / (previousPassTexture.pixelHeight / previousPassTexture.contentScale));

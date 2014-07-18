@@ -102,6 +102,7 @@ typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass);
 @property (nonatomic,copy) NSArray* beginBlocks;
 @property (nonatomic,copy) NSArray* updateBlocks;
 @property (nonatomic,copy) NSArray* endBlocks;
+@property (nonatomic,copy) NSString *debugLabel;
 
 -(void)begin:(CCTexture *)previousPassTexture;
 -(void)update;

@@ -199,7 +199,7 @@
             [self restoreRenderTargetWithRenderer:renderer];
             [renderPass end];
         }
-        [renderer popGroupWithDebugLabel:[NSString stringWithFormat:@"CCEffectRenderer: %@: Pass %d", effect.debugName, i] globalSortOrder:0];
+        [renderer popGroupWithDebugLabel:renderPass.debugLabel globalSortOrder:0];
         
         previousPassRT = rt;
     }

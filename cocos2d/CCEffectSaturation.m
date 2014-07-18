@@ -110,6 +110,9 @@ static float conditionSaturation(float saturation);
     pass0.shader = self.shader;
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
+        
+        pass.debugLabel = @"CCEffectSaturation pass 0";
+
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_saturation"]] = [NSNumber numberWithFloat:weakSelf.conditionedSaturation];
     } copy]];
