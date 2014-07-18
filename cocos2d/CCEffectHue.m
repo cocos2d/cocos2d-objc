@@ -157,11 +157,10 @@ static GLKMatrix4 matrixWithHue(float hue);
     __weak CCEffectHue *weakSelf = self;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
+    pass0.debugLabel = @"CCEffectHue pass 0";
     pass0.shader = self.shader;
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
 
-        pass.debugLabel = @"CCEffectHue pass 0";
-        
         pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
 #if CCEFFECTHUE_USES_COLOR_MATRIX
