@@ -157,21 +157,8 @@
 
 	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
 
-	// textures must be power of two
-	NSUInteger powW;
-	NSUInteger powH;
-
-	if( [[CCConfiguration sharedConfiguration] supportsNPOT] ) {
-		powW = pixelW;
-		powH = pixelH;
-	} else {
-		powW = CCNextPOT(pixelW);
-		powH = CCNextPOT(pixelH);
-	}
-
-	void *data = calloc(powW*powH, 4);
-
-	CCTexture *texture = [[CCTexture alloc] initWithData:data pixelFormat:_pixelFormat pixelsWide:powW pixelsHigh:powH contentSizeInPixels:CGSizeMake(pixelW, pixelH) contentScale:_contentScale];
+	void *data = calloc(pixelW*pixelH, 4);
+	CCTexture *texture = [[CCTexture alloc] initWithData:data pixelFormat:_pixelFormat pixelsWide:pixelW pixelsHigh:pixelH contentSizeInPixels:CGSizeMake(pixelW, pixelH) contentScale:_contentScale];
     self.texture = texture;
     
 	free(data);
@@ -192,7 +179,7 @@
 		//create and attach depth buffer
 		glGenRenderbuffers(1, &depthRenderBuffer);
 		glBindRenderbuffer(GL_RENDERBUFFER, depthRenderBuffer);
-		glRenderbufferStorage(GL_RENDERBUFFER, _depthStencilFormat, (GLsizei)powW, (GLsizei)powH);
+		glRenderbufferStorage(GL_RENDERBUFFER, _depthStencilFormat, (GLsizei)pixelW, (GLsizei)pixelH);
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthRenderBuffer);
 
 		// if depth format is the one with stencil part, bind same render buffer as stencil attachment
