@@ -64,7 +64,8 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
                                    vec4 envSpaceTexCoords = u_screenToEnv * gl_FragCoord;
 
                                    // Index the normal map and expand the color value from [0..1] to [-1..1]
-                                   vec4 tangentSpaceNormal = texture2D(cc_NormalMapTexture, cc_FragTexCoord2) * 2.0 - 1.0;
+                                   vec4 normalMap = texture2D(cc_NormalMapTexture, cc_FragTexCoord2);
+                                   vec4 tangentSpaceNormal = normalMap * 2.0 - 1.0;
                                    
                                    // Convert the normal vector from tangent space to environment space
                                    vec2 normal = u_tangent * tangentSpaceNormal.x + u_binormal * tangentSpaceNormal.y;
@@ -79,8 +80,13 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
                                    // This is 1.0 if both refracted texture coords are in bounds and 0.0 otherwise.
                                    float inBounds = step(0.0, min(compare.x, compare.y));
 
+                                   // Compute the combination of the sprite's color and texture.
                                    vec4 primaryColor = cc_FragColor * texture2D(cc_MainTexture, cc_FragTexCoord1);
-                                   primaryColor += inBounds * texture2D(u_envMap, refractTexCoords) * (1.0 - primaryColor.a);
+
+                                   // If the refracted texture coordinates are within the bounds of the environment map
+                                   // blend the primary color with the refracted environment. Multiplying by the normal
+                                   // map alpha also allows the effect to be disabled for specific pixels.
+                                   primaryColor += inBounds * normalMap.a * texture2D(u_envMap, refractTexCoords) * (1.0 - primaryColor.a);
                                    
                                    return primaryColor;
                                    );
@@ -111,8 +117,8 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
             pass.verts = verts;
         }
         
-        pass.shaderUniforms[self.uniformTranslationTable[@"u_refraction"]] = [NSNumber numberWithFloat:weakSelf.refraction];
-        pass.shaderUniforms[self.uniformTranslationTable[@"u_envMap"]] = weakSelf.environment.texture ?: [CCTexture none];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_refraction"]] = [NSNumber numberWithFloat:weakSelf.refraction];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_envMap"]] = weakSelf.environment.texture ?: [CCTexture none];
         
         // Setup the screen space to environment space matrix.
         CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
@@ -122,7 +128,7 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
         CGAffineTransform worldToEnvTexture = CGAffineTransformConcat(worldToEnvNode, envNodeToEnvTexture);
         CGAffineTransform screenToEnvTexture = CGAffineTransformConcat(screenToWorld, worldToEnvTexture);
         
-        pass.shaderUniforms[self.uniformTranslationTable[@"u_screenToEnv"]] = [NSValue valueWithGLKMatrix4:GLKMatrix4FromAffineTransform(screenToEnvTexture)];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_screenToEnv"]] = [NSValue valueWithGLKMatrix4:GLKMatrix4FromAffineTransform(screenToEnvTexture)];
         
         // Setup the tangent and binormal vectors for the normal map.
         GLKMatrix4 worldToEnvTextureMat = GLKMatrix4FromAffineTransform(worldToEnvTexture);
@@ -135,8 +141,8 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
         GLKVector4 normal = GLKVector4Make(0.0f, 0.0f, 1.0f, 1.0f);
         GLKVector4 binormal = GLKVector4CrossProduct(normal, tangent);
         
-        pass.shaderUniforms[self.uniformTranslationTable[@"u_tangent"]] = [NSValue valueWithGLKVector2:GLKVector2Make(tangent.x, tangent.y)];
-        pass.shaderUniforms[self.uniformTranslationTable[@"u_binormal"]] = [NSValue valueWithGLKVector2:GLKVector2Make(binormal.x, binormal.y)];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_tangent"]] = [NSValue valueWithGLKVector2:GLKVector2Make(tangent.x, tangent.y)];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_binormal"]] = [NSValue valueWithGLKVector2:GLKVector2Make(binormal.x, binormal.y)];
 
     } copy]];
     

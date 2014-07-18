@@ -45,13 +45,22 @@
 #import "CCRenderer.h"
 #import "CCTexture.h"
 
+#define CCEFFECTHUE_USES_COLOR_MATRIX 1
+
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 static float conditionHue(float hue);
 
+#if CCEFFECTHUE_USES_COLOR_MATRIX
+static GLKMatrix4 matrixWithHue(float hue);
+#endif
+
+
 @interface CCEffectHue ()
-
+#if CCEFFECTHUE_USES_COLOR_MATRIX
+@property (nonatomic) GLKMatrix4 hueRotationMtx;
+#else
 @property (nonatomic) float conditionedHue;
-
+#endif
 @end
 
 
@@ -64,13 +73,22 @@ static float conditionHue(float hue);
 
 -(id)initWithHue:(float)hue
 {
-    CCEffectUniform* uniformHue = [CCEffectUniform uniform:@"float" name:@"u_hue" value:[NSNumber numberWithFloat:hue]];
+    NSArray *uniforms = @[
+#if CCEFFECTHUE_USES_COLOR_MATRIX
+                          [CCEffectUniform uniform:@"mat4" name:@"u_hueRotationMtx" value:[NSValue valueWithGLKMatrix4:GLKMatrix4Identity]]
+#else
+                          [CCEffectUniform uniform:@"float" name:@"u_hue" value:[NSNumber numberWithFloat:hue]]
+#endif
+                          ];
     
-    if((self = [super initWithFragmentUniforms:@[uniformHue] vertexUniforms:nil varying:nil]))
+    if((self = [super initWithFragmentUniforms:uniforms vertexUniforms:nil varying:nil]))
     {
         _hue = hue;
+#if CCEFFECTHUE_USES_COLOR_MATRIX
+        _hueRotationMtx = matrixWithHue(conditionHue(hue));
+#else
         _conditionedHue = conditionHue(hue);
-        
+#endif
         self.debugName = @"CCEffectHue";
     }
     return self;
@@ -87,7 +105,12 @@ static float conditionHue(float hue);
 
     CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" snippet:@"texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)"];
 
-    // Image hue shader based on hue filter in GPUImage - https://github.com/BradLarson/GPUImage
+    // The non-color matrix shader is based on the hue filter in GPUImage - https://github.com/BradLarson/GPUImage
+#if CCEFFECTHUE_USES_COLOR_MATRIX
+    NSString* effectBody = CC_GLSL(
+                                   return u_hueRotationMtx * inputValue;
+                                   );
+#else
     NSString* effectBody = CC_GLSL(
                                    const highp vec4  kRGBToYPrime = vec4 (0.299, 0.587, 0.114, 0.0);
                                    const highp vec4  kRGBToI      = vec4 (0.595716, -0.274453, -0.321263, 0.0);
@@ -123,6 +146,7 @@ static float conditionHue(float hue);
                                    
                                    return outputColor;
                                    );
+#endif
     
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"hueEffect" body:effectBody inputs:@[input] returnType:@"vec4"];
     [self.fragmentFunctions addObject:fragmentFunction];
@@ -137,7 +161,11 @@ static float conditionHue(float hue);
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
         pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-        pass.shaderUniforms[self.uniformTranslationTable[@"u_hue"]] = [NSNumber numberWithFloat:weakSelf.conditionedHue];
+#if CCEFFECTHUE_USES_COLOR_MATRIX
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_hueRotationMtx"]] = [NSValue valueWithGLKMatrix4:weakSelf.hueRotationMtx];
+#else
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_hue"]] = [NSNumber numberWithFloat:weakSelf.conditionedHue];
+#endif
     } copy]];
     
     self.renderPasses = @[pass0];
@@ -146,7 +174,11 @@ static float conditionHue(float hue);
 -(void)setHue:(float)hue
 {
     _hue = hue;
+#if CCEFFECTHUE_USES_COLOR_MATRIX
+    _hueRotationMtx = matrixWithHue(conditionHue(hue));
+#else
     _conditionedHue = conditionHue(hue);
+#endif
 }
 
 @end
@@ -156,5 +188,40 @@ float conditionHue(float hue)
     NSCAssert((hue >= -180.0f) && (hue <= 180.0), @"Supplied hue out of range [-180.0..180.0].");
     return clampf(hue, -180.0f, 180.0f) * M_PI / 180.0f;
 }
+
+#if CCEFFECTHUE_USES_COLOR_MATRIX
+GLKMatrix4 matrixWithHue(float hue)
+{
+    // RGB to YIQ and YIQ to RGB matrix values source from here:
+    //   https://github.com/BradLarson/GPUImage/blob/master/framework/Source/GPUImageHueFilter.m
+    // And here:
+    //   http://en.wikipedia.org/wiki/YIQ
+    //
+    // Note that GL matrices are column major so we have to transpose them when loading them in
+    // the order specified here.
+    
+    GLKMatrix4 rgbToYiq = GLKMatrix4MakeAndTranspose(0.299,     0.587,     0.114,    0.0,
+                                                     0.595716, -0.274453, -0.321263, 0.0,
+                                                     0.211456, -0.522591,  0.31135,  0.0,
+                                                     0.0,       0.0,       0.0,      1.0);
+    GLKMatrix4 yiqToRgb = GLKMatrix4MakeAndTranspose(1.0,  0.9563,  0.6210, 0.0,
+                                                     1.0, -0.2721, -0.6474, 0.0,
+                                                     1.0, -1.1070,  1.7046, 0.0,
+                                                     0.0,  0.0,     0.0,    1.0);
+    
+    // Positive rotation in YIQ is the opposite of positive rotation in HSV so negate the
+    // rotation value. See this:
+    //   http://upload.wikimedia.org/wikipedia/commons/8/82/YIQ_IQ_plane.svg
+    // And this:
+    //   http://upload.wikimedia.org/wikipedia/commons/5/52/HSL-HSV_hue_and_chroma.svg
+    // To visualize the difference between the two color spaces.
+    //
+    GLKMatrix4 rotation = GLKMatrix4MakeRotation(-hue, 1.0f, 0.0f, 0.0f);
+
+    // Put everything together into one color matrix.
+    GLKMatrix4 composed = GLKMatrix4Multiply(yiqToRgb, GLKMatrix4Multiply(rotation, rgbToYiq));
+    return composed;
+}
+#endif
 
 #endif

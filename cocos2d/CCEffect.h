@@ -13,7 +13,7 @@
 #import "ccTypes.h"
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
-extern const NSString *CCShaderUniformPreviousPassTexture;
+extern NSString * const CCShaderUniformPreviousPassTexture;
 
 typedef NS_ENUM(NSUInteger, CCEffectFunctionStitchFlags)
 {

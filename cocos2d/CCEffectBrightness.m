@@ -70,7 +70,7 @@ static float conditionBrightness(float brightness);
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
         pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-        pass.shaderUniforms[self.uniformTranslationTable[@"u_brightness"]] = [NSNumber numberWithFloat:weakSelf.conditionedBrightness];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_brightness"]] = [NSNumber numberWithFloat:weakSelf.conditionedBrightness];
     } copy]];
     
     self.renderPasses = @[pass0];
