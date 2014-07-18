@@ -355,25 +355,25 @@
 
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
 {
-    if(!CCRenderCheckVisbility(transform, _vertexCenter, _vertexExtents)) return;
-    
+	if(!CCRenderCheckVisbility(transform, _vertexCenter, _vertexExtents)) return;
+	
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
-    if (self.effect)
-    {
-        _effectRenderer.contentSize = self.texture.contentSize;
-        if ([self.effect prepareForRendering] == CCEffectPrepareSuccess)
-        {
-            // Preparing an effect for rendering can modify its uniforms
-            // dictionary which means we need to reinitialize our copy of the
-            // uniforms.
-            [self updateShaderUniformsFromEffect];
-        }
-        [_effectRenderer drawSprite:self withEffect:self.effect uniforms:_shaderUniforms renderer:renderer transform:transform];
-    }
-    else
+	if (self.effect)
+	{
+		_effectRenderer.contentSize = self.texture.contentSize;
+		if ([self.effect prepareForRendering] == CCEffectPrepareSuccess)
+		{
+			// Preparing an effect for rendering can modify its uniforms
+			// dictionary which means we need to reinitialize our copy of the
+			// uniforms.
+			[self updateShaderUniformsFromEffect];
+		}
+		[_effectRenderer drawSprite:self withEffect:self.effect uniforms:_shaderUniforms renderer:renderer transform:transform];
+	}
+	else
 #endif
-    {
-        [self enqueueTriangles:renderer transform:transform];
+	{
+		[self enqueueTriangles:renderer transform:transform];
 	}
     
 #if CC_SPRITE_DEBUG_DRAW
