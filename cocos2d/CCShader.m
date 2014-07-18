@@ -449,6 +449,9 @@ static CCShader *CC_SHADER_POS_TEX_COLOR_ALPHA_TEST = nil;
 
 +(void)initialize
 {
+	// +initialize may be called due to loading a subclass.
+	if(self != [CCShader class]) return;
+	
 	CC_SHADER_CACHE = [[CCShaderCache alloc] init];
 	
 	// Setup the builtin shaders.
