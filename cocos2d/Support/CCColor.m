@@ -237,6 +237,9 @@ static CCColor *CLEAR_COLOR = nil;
 
 +(void)initialize
 {
+	// +initialize may be called due to loading a subclass.
+	if(self != [CCColor class]) return;
+	
 	BLACK_COLOR = [CCColor colorWithRed:0 green:0 blue:0 alpha:1];
 	DARK_GRAY_COLOR = [CCColor colorWithWhite:1.0/3.0 alpha:1];
 	LIGHT_GRAY_COLOR = [CCColor colorWithWhite:2.0/3.0 alpha:1];

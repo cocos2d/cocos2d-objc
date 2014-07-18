@@ -299,12 +299,6 @@ typedef struct {
 	if( flipped )
 		CCLOGWARN(@"cocos2d: WARNING: Image is flipped. Regenerate it using PVRTexTool");
 
-	if( ! [configuration supportsNPOT] &&
-	   ( header->width != CCNextPOT(header->width) || header->height != CCNextPOT(header->height ) ) ) {
-		CCLOGWARN(@"cocos2d: ERROR: Loding an NPOT texture (%dx%d) but is not supported on this device", header->width, header->height);
-		return NO;
-	}
-
 	for( NSUInteger i=0; i < (unsigned int)PVR2_MAX_TABLE_ELEMENTS ; i++) {
 		if( v2_pixel_formathash[i].pixelFormat == formatFlags ) {
 
@@ -604,8 +598,7 @@ typedef struct {
 			return nil;
 		}
 		
-#if defined(__CC_PLATFORM_IOS) && defined(DEBUG)
-
+#if defined(__CC_PLATFORM_IOS) && DEBUG
 		GLenum pixelFormat = _pixelFormatInfo->ccPixelFormat;
 		CCConfiguration *conf = [CCConfiguration sharedConfiguration];
 		

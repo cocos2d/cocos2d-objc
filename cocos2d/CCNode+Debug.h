@@ -25,7 +25,7 @@
 
 #import "CCNode.h"
 
-#ifdef DEBUG
+#if DEBUG
 
 /** Debugging extensions of CCNode.  They are available when the DEBUG macro is defined at compile time. */
 @interface CCNode (Debug)

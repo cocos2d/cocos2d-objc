@@ -514,7 +514,7 @@ CCPhysicsBodyUpdatePosition(cpBody *body, cpFloat dt)
 //The following are properties which we track on the parent nodes in order to update the child nodes.
 NSString *  kDependantProperties[2] = { @"position", @"rotation"};
 
-#ifdef DEBUG
+#if DEBUG
 //The following are properties which cannot be animated. Changing their values after onEnter in unhandled.
 NSString *  kRestrictedProperties[3] = { @"scale", @"scaleX", @"scaleY"};
 #endif
@@ -531,7 +531,7 @@ NSString *  kRestrictedProperties[3] = { @"scale", @"scaleX", @"scaleY"};
             [node addObserver:self forKeyPath:kDependantProperties[i] options:NSKeyValueObservingOptionNew context:nil];
         }
         
-#ifdef DEBUG
+#if DEBUG
         for (int i = 0; i < sizeof(kRestrictedProperties)/sizeof(kRestrictedProperties[0]); i++)
         {
             [node addObserver:self forKeyPath:kRestrictedProperties[i] options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
@@ -552,7 +552,7 @@ NSString *  kRestrictedProperties[3] = { @"scale", @"scaleX", @"scaleY"};
         {
             [node removeObserver:self forKeyPath:kDependantProperties[i]];
         }
-#ifdef DEBUG
+#if DEBUG
         for (int i = 0; i < sizeof(kRestrictedProperties)/sizeof(kRestrictedProperties[0]); i++)
         {
             [node removeObserver:self forKeyPath:kRestrictedProperties[i]];
@@ -567,7 +567,7 @@ NSString *  kRestrictedProperties[3] = { @"scale", @"scaleX", @"scaleY"};
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-#ifdef DEBUG
+#if DEBUG
     for (int i = 0; i < sizeof(kRestrictedProperties)/sizeof(kRestrictedProperties[0]); i++)
     {
         if([kRestrictedProperties[i] isEqualToString:keyPath])

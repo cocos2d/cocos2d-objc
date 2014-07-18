@@ -265,7 +265,7 @@ static CCDirector *_sharedDirector = nil;
 		_dt = MAX(0,_dt);
 	}
 
-#ifdef DEBUG
+#if DEBUG
 	// If we are debugging our code, prevent big delta time
 	if( _dt > 0.2f )
 		_dt = 1/60.0f;
@@ -864,7 +864,8 @@ static const float CCFPSLabelItemHeight = 32;
 			NSString *fpsstr = [[NSString alloc] initWithFormat:@"%.1f", _frameRate];
 			[_FPSLabel setString:fpsstr];
 			
-			NSString *draws = [[NSString alloc] initWithFormat:@"%4lu", (unsigned long)__ccNumberOfDraws];
+			// Subtract one for the stat label's own batch. This caused a lot of confusion on the forums...
+			NSString *draws = [[NSString alloc] initWithFormat:@"%4lu", (unsigned long)__ccNumberOfDraws - 1];
 			[_drawsLabel setString:draws];
 		}
 		

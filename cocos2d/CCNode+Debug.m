@@ -26,7 +26,7 @@
 #import "CCNode+Debug.h"
 #import "CCNode_Private.h"
 
-#ifdef DEBUG
+#if DEBUG
 
 @implementation CCNode (Debug)
 

@@ -433,7 +433,7 @@
 	if( _displayStats )
 		gettimeofday( &_lastUpdate, NULL);
 
-#ifdef DEBUG
+#if DEBUG
 	// If we are debugging our code, prevent big delta time
 	if( _dt > 0.2f )
 		_dt = 1/60.0f;
