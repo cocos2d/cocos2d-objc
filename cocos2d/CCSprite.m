@@ -353,12 +353,25 @@
 
 #pragma mark CCSprite - draw
 
+static inline void
+EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transform)
+{
+	CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:self.renderState globalSortOrder:0];
+	CCRenderBufferSetVertex(buffer, 0, CCVertexApplyTransform(self->_verts.bl, transform));
+	CCRenderBufferSetVertex(buffer, 1, CCVertexApplyTransform(self->_verts.br, transform));
+	CCRenderBufferSetVertex(buffer, 2, CCVertexApplyTransform(self->_verts.tr, transform));
+	CCRenderBufferSetVertex(buffer, 3, CCVertexApplyTransform(self->_verts.tl, transform));
+
+	CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
+	CCRenderBufferSetTriangle(buffer, 1, 0, 2, 3);
+}
+
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
 {
 	if(!CCRenderCheckVisbility(transform, _vertexCenter, _vertexExtents)) return;
 	
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
-	if (self.effect)
+	if (_effect)
 	{
 		_effectRenderer.contentSize = self.texture.contentSize;
 		if ([self.effect prepareForRendering] == CCEffectPrepareSuccess)
@@ -373,7 +386,7 @@
 	else
 #endif
 	{
-		[self enqueueTriangles:renderer transform:transform];
+		EnqueueTriangles(self, renderer, transform);
 	}
     
 #if CC_SPRITE_DEBUG_DRAW
@@ -395,14 +408,7 @@
 
 -(void)enqueueTriangles:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
-    CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:self.renderState globalSortOrder:0];
-    CCRenderBufferSetVertex(buffer, 0, CCVertexApplyTransform(_verts.bl, transform));
-    CCRenderBufferSetVertex(buffer, 1, CCVertexApplyTransform(_verts.br, transform));
-    CCRenderBufferSetVertex(buffer, 2, CCVertexApplyTransform(_verts.tr, transform));
-    CCRenderBufferSetVertex(buffer, 3, CCVertexApplyTransform(_verts.tl, transform));
-    
-    CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
-    CCRenderBufferSetTriangle(buffer, 1, 0, 2, 3);
+	EnqueueTriangles(self, renderer, transform);
 }
 
 #pragma mark CCSprite - CCNode overrides
