@@ -57,9 +57,9 @@ static GLKMatrix4 matrixWithHue(float hue);
 
 @interface CCEffectHue ()
 #if CCEFFECTHUE_USES_COLOR_MATRIX
-@property (nonatomic) GLKMatrix4 hueRotationMtx;
+@property (nonatomic) NSValue *hueRotationMtx;
 #else
-@property (nonatomic) float conditionedHue;
+@property (nonatomic) NSNumber *conditionedHue;
 #endif
 @end
 
@@ -85,9 +85,9 @@ static GLKMatrix4 matrixWithHue(float hue);
     {
         _hue = hue;
 #if CCEFFECTHUE_USES_COLOR_MATRIX
-        _hueRotationMtx = matrixWithHue(conditionHue(hue));
+        _hueRotationMtx = [NSValue valueWithGLKMatrix4:matrixWithHue(conditionHue(hue))];
 #else
-        _conditionedHue = conditionHue(hue);
+        _conditionedHue = [NSNumber numberWithFloat:conditionHue(hue)];
 #endif
         self.debugName = @"CCEffectHue";
     }
@@ -164,9 +164,9 @@ static GLKMatrix4 matrixWithHue(float hue);
         pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
 #if CCEFFECTHUE_USES_COLOR_MATRIX
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_hueRotationMtx"]] = [NSValue valueWithGLKMatrix4:weakSelf.hueRotationMtx];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_hueRotationMtx"]] = weakSelf.hueRotationMtx;
 #else
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_hue"]] = [NSNumber numberWithFloat:weakSelf.conditionedHue];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_hue"]] = weakSelf.conditionedHue;
 #endif
     } copy]];
     
@@ -177,9 +177,9 @@ static GLKMatrix4 matrixWithHue(float hue);
 {
     _hue = hue;
 #if CCEFFECTHUE_USES_COLOR_MATRIX
-    _hueRotationMtx = matrixWithHue(conditionHue(hue));
+    _hueRotationMtx = [NSValue valueWithGLKMatrix4:matrixWithHue(conditionHue(hue))];
 #else
-    _conditionedHue = conditionHue(hue);
+    _conditionedHue = [NSNumber numberWithFloat:conditionHue(hue)];
 #endif
 }
 
