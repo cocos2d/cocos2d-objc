@@ -28,6 +28,14 @@
 //
 
 #import "OALSimpleAudio.h"
+
+#if __CC_PLATFORM_ANDROID
+#import <BridgeKitV3/AndroidMediaPlayer.h>
+#import <BridgeKitV3/JavaFileInputStream.h>
+#import <BridgeKitV3/JavaFileDescriptor.h>
+#import "CCActivity.h"
+#endif
+
 #import "ObjectALMacros.h"
 #import "ARCSafe_MemMgmt.h"
 #import "OALAudioSession.h"
@@ -95,8 +103,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
     [OpenALManager sharedInstance].currentContext = context;
     channel = [[ALChannelSource alloc] initWithSources:reservedSources];
 
+#if ANDROID
+#warning TODO: FIXME
+#else
     backgroundTrack = [[OALAudioTrack alloc] init];
-
+#endif
+    
 #if NS_BLOCKS_AVAILABLE && OBJECTAL_CFG_USE_BLOCKS
     oal_dispatch_queue	= dispatch_queue_create("objectal.simpleaudio.queue", NULL);
 #endif
@@ -197,6 +209,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 	}
 }
 
+#if __CC_PLATFORM_IOS
 - (bool) allowIpod
 {
 	return [OALAudioSession sharedInstance].allowIpod;
@@ -216,7 +229,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 {
 	[OALAudioSession sharedInstance].useHardwareIfAvailable = value;
 }
-
+#endif
 
 - (int) reservedSources
 {
@@ -230,34 +243,59 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 
 @synthesize channel;
 
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
 @synthesize backgroundTrack;
+#endif
 
 - (bool) bgPaused
 {
+#if ANDROID
+#warning TODO: FIXME
+    return false;
+#else
 	return backgroundTrack.paused;
+#endif
 }
 
 - (void) setBgPaused:(bool) value
 {
+#if ANDROID
+#warning TODO: FIXME
+#else
 	backgroundTrack.paused = value;
+#endif
 }
 
 - (bool) bgPlaying
 {
+#if ANDROID
+#warning TODO: FIXME
+    return false;
+#else
 	return backgroundTrack.playing;
+#endif
 }
 
 - (float) bgVolume
 {
+#if ANDROID
+#warning TODO: FIXME
+    return 0.0f;
+#else
 	return backgroundTrack.gain;
+#endif
 }
 
 - (void) setBgVolume:(float) value
 {
+#if ANDROID
+#warning TODO: FIXME
+#else
 	OPTIONALLY_SYNCHRONIZED(self)
 	{
 		backgroundTrack.gain = value;
 	}
+#endif
 }
 
 - (bool) effectsPaused
@@ -301,12 +339,21 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 
 - (bool) honorSilentSwitch
 {
+#if ANDROID
+#warning TODO: FIXME
+    return false;
+#else
 	return [OALAudioSession sharedInstance].honorSilentSwitch;
+#endif
 }
 
 - (void) setHonorSilentSwitch:(bool) value
 {
+#if ANDROID
+#warning TODO: FIXME
+#else
 	[OALAudioSession sharedInstance].honorSilentSwitch = value;
+#endif
 }
 
 - (bool) bgMuted
@@ -316,11 +363,15 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 
 - (void) setBgMuted:(bool) value
 {
+#if ANDROID
+#warning TODO: FIXME
+#else
 	OPTIONALLY_SYNCHRONIZED(self)
 	{
 		bgMuted = value;
 		backgroundTrack.muted = bgMuted | muted;
 	}
+#endif
 }
 
 - (bool) effectsMuted
@@ -347,7 +398,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 	OPTIONALLY_SYNCHRONIZED(self)
 	{
 		muted = value;
+#if ANDROID
+#warning TODO: FIXME
+#else
 		backgroundTrack.muted = bgMuted | muted;
+#endif
 		[OpenALManager sharedInstance].currentContext.listener.muted = effectsMuted | muted;
 	}
 }
@@ -356,7 +411,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 
 - (NSURL *) backgroundTrackURL
 {
+#if ANDROID
+#warning TODO: FIXME
+    return nil;
+#else
 	return [backgroundTrack currentlyLoadedUrl];
+#endif
 }
 
 - (bool) preloadBg:(NSString*) filePath
@@ -371,11 +431,16 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 		OAL_LOG_ERROR(@"filePath was NULL");
 		return NO;
 	}
+#if ANDROID
+#warning TODO: FIXME
+    return false;
+#else
 	BOOL result = [backgroundTrack preloadFile:filePath seekTime:seekTime];
 	if(result){
 		backgroundTrack.numberOfLoops = 0;
 	}
 	return result;
+#endif
 }
 
 - (bool) playBg:(NSString*) filePath
@@ -390,7 +455,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 		OAL_LOG_ERROR(@"filePath was NULL");
 		return NO;
 	}
+#if ANDROID
+#warning TODO: FIXME
+    return NO;
+#else
 	return [backgroundTrack playFile:filePath loops:loop ? -1 : 0];
+#endif
 }
 
 - (bool) playBg:(NSString*) filePath
@@ -401,9 +471,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 	OAL_LOG_DEBUG(@"Play bg with vol %f, pan %f, loop %d, file %@", volume, pan, loop, filePath);
 	OPTIONALLY_SYNCHRONIZED(self)
 	{
+#if ANDROID
+#warning TODO: FIXME
+        return false;
+#else
 		backgroundTrack.gain = volume;
 		backgroundTrack.pan = pan;
 		return [backgroundTrack playFile:filePath loops:loop ? -1 : 0];
+#endif
 	}
 }
 
@@ -416,16 +491,25 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 {
 	OPTIONALLY_SYNCHRONIZED(self)
 	{
+#if ANDROID
+#warning TODO: FIXME
+        return false;
+#else
 		OAL_LOG_DEBUG(@"Play bg, loop %d", loop);
 		backgroundTrack.numberOfLoops = loop ? -1 : 0;
 		return [backgroundTrack play];
+#endif
 	}
 }
 
 - (void) stopBg
 {
 	OAL_LOG_DEBUG(@"Stop bg");
+#if ANDROID
+#warning TODO: FIXME
+#else
 	[backgroundTrack stop];
+#endif
 }
 
 
@@ -638,11 +722,32 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 		OAL_LOG_ERROR(@"filePath was NULL");
 		return nil;
 	}
+
+#if __CC_PLATFORM_ANDROID
+    // TODO: we are creating a player and throwing it away each time, and not taking into account if it was preloaded.
+    // think about checking for preload and implement the player's asyncPrepare finish listener
+    AndroidAssetFileDescriptor *assetFd = [[[CCActivity currentActivity] assets] openFdWithFileName:filePath];
+
+    if (assetFd.fileDescriptor && [assetFd.fileDescriptor valid]) {
+        AndroidMediaPlayer *player = [[AndroidMediaPlayer alloc] init];
+        [player reset];
+        [player setDataSource:assetFd.fileDescriptor offset:assetFd.startOffset length:assetFd.length];
+#warning TODO: note sure how to set on finished listener for player and call the player's release() (not objc release) in the callback to close fd
+        [player prepare];
+        [player start];
+    }
+
+    if (assetFd) {
+        [assetFd close];
+    }
+    // TODO: convert to ALSoundSource and return
+#else
 	ALBuffer* buffer = [self internalPreloadEffect:filePath reduceToMono:NO];
 	if(nil != buffer)
 	{
 		return [channel play:buffer gain:volume pitch:pitch pan:pan loop:loop];
 	}
+#endif
 	return nil;
 }
 
@@ -688,22 +793,41 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 
 - (bool) manuallySuspended
 {
+#if ANDROID
+#warning TODO: FIXME
+    return false;
+#else
 	return [OALAudioSession sharedInstance].manuallySuspended;
+#endif
 }
 
 - (void) setManuallySuspended:(bool) value
 {
+#if ANDROID
+#warning TODO: FIXME
+#else
 	[OALAudioSession sharedInstance].manuallySuspended = value;
+#endif
 }
 
 - (bool) interrupted
 {
+#if ANDROID
+#warning TODO: FIXME
+    return false;
+#else
 	return [OALAudioSession sharedInstance].interrupted;
+#endif
 }
 
 - (bool) suspended
 {
+#if ANDROID
+#warning TODO: FIXME
+    return false;
+#else
 	return [OALAudioSession sharedInstance].suspended;
+#endif
 }
 
 

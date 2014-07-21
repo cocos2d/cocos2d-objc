@@ -28,6 +28,9 @@
 //
 
 #import "OALAudioTrack.h"
+
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
+
 #import "OALAudioActions.h"
 #import "OALAudioTracks.h"
 #import "OALTools.h"
@@ -1003,3 +1006,6 @@
 }
 
 @end
+
+
+#endif // __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
