@@ -23,13 +23,13 @@
  */
 
 #import "CCDirector.h"
+#import "CCTransition.h"
 
 @interface CCDirector () {
 	@protected
-	GLKMatrix4 _projectionMatrix;
+	CCMatrix4 _projectionMatrix;
 	__weak id<CCDirectorDelegate> _delegate;
 	__weak NSThread *_runningThread;
-
 }
 
 /* Whether or not the replaced scene will receive the cleanup message.
@@ -81,12 +81,20 @@
  */
 -(void) drawScene;
 
+- (void)startTransition:(CCTransition *)transition;
+
 @end
 
 
 @interface CCDirector(Stats)
 
 -(void) createStatsLabel;
+
+@end
+
+@interface CCTransition (Private)
+
+- (void)startTransition:(CCScene *)scene;
 
 @end
 

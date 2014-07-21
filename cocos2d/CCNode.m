@@ -43,8 +43,10 @@
 #import "CCActionManager_Private.h"
 
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
+#elif __CC_PLATFORM_ANDROID
+#import "Platforms/Android/CCDirectorAndroid.h"
 #endif
 
 
@@ -907,9 +909,9 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 #pragma mark CCNode Draw
 
--(void)draw:(__unsafe_unretained CCRenderer *)renderer transform:(const GLKMatrix4 *)transform {}
+-(void)draw:(__unsafe_unretained CCRenderer *)renderer transform:(const CCMatrix4 *)transform {}
 
--(void) visit:(__unsafe_unretained CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
+-(void) visit:(__unsafe_unretained CCRenderer *)renderer parentTransform:(const CCMatrix4 *)parentTransform
 {
 	// quick return if not visible. children won't be drawn.
 	if (!_visible)
@@ -917,7 +919,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
     
 		[self sortAllChildren];
 
-	GLKMatrix4 transform = NodeTransform(self, *parentTransform);
+	CCMatrix4 transform = NodeTransform(self, *parentTransform);
 	BOOL drawn = NO;
 
 	for(CCNode *child in _children){
@@ -929,8 +931,9 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		[child visit:renderer parentTransform:&transform];
 		}
 
-	if(!drawn) [self draw:renderer transform:&transform];
-
+	if(!drawn) {
+        [self draw:renderer transform:&transform];
+    }
 	// reset for next frame
 	_orderOfArrival = 0;
 }
@@ -940,20 +943,20 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	CCRenderer *renderer = [CCRenderer currentRenderer];
 	NSAssert(renderer, @"Cannot call [CCNode visit] without a currently bound renderer.");
 
-	GLKMatrix4 projection; [renderer.globalShaderUniforms[CCShaderUniformProjection] getValue:&projection];
+	CCMatrix4 projection; [renderer.globalShaderUniforms[CCShaderUniformProjection] getValue:&projection];
 	[self visit:renderer parentTransform:&projection];
 }
 
 #pragma mark CCNode - Transformations
 
-static inline GLKMatrix4
-NodeTransform(__unsafe_unretained CCNode *node, GLKMatrix4 parentTransform)
+static inline CCMatrix4
+NodeTransform(__unsafe_unretained CCNode *node, CCMatrix4 parentTransform)
 {
 	CGAffineTransform t = [node nodeToParentTransform];
 	float z = node->_vertexZ;
 	
-	// Convert to 4x4 column major GLK matrix.
-	return GLKMatrix4Multiply(parentTransform, GLKMatrix4Make(
+	// Convert to 4x4 column major CC matrix.
+	return CCMatrix4Multiply(parentTransform, CCMatrix4Make(
 		 t.a,  t.b, 0.0f, 0.0f,
 		 t.c,  t.d, 0.0f, 0.0f,
 		0.0f, 0.0f, 1.0f, 0.0f,
@@ -961,7 +964,7 @@ NodeTransform(__unsafe_unretained CCNode *node, GLKMatrix4 parentTransform)
 	));
 }
 
--(GLKMatrix4)transform:(const GLKMatrix4 *)parentTransform
+-(CCMatrix4)transform:(const CCMatrix4 *)parentTransform
 {
 	return NodeTransform(self, *parentTransform);
 }

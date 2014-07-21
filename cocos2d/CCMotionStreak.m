@@ -382,16 +382,16 @@ static void CCVertexLineToPolygon(CGPoint *points, float stroke, ccVertex2F *ver
 
 // TODO should update the class to store the rendering values in actual output types.
 static inline CCVertex
-MakeVertex(ccVertex2F v, ccTex2F texCoord, unsigned char *color, GLKMatrix4 transform)
+MakeVertex(ccVertex2F v, ccTex2F texCoord, unsigned char *color, CCMatrix4 transform)
 {
 	return (CCVertex){
-		GLKMatrix4MultiplyVector4(transform, GLKVector4Make(v.x, v.y, 0.0f, 1.0f)),
-		GLKVector2Make(texCoord.u, texCoord.v), GLKVector2Make(0.0f, 0.0f),
-		GLKVector4Make(color[0]/255.0, color[1]/255.0, color[2]/255.0, color[3]/255.0)
+		CCMatrix4MultiplyVector4(transform, CCVector4Make(v.x, v.y, 0.0f, 1.0f)),
+		CCVector2Make(texCoord.u, texCoord.v), CCVector2Make(0.0f, 0.0f),
+		CCVector4Make(color[0]/255.0, color[1]/255.0, color[2]/255.0, color[3]/255.0)
 	};
 }
 
-- (void) draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
+- (void) draw:(CCRenderer *)renderer transform:(const CCMatrix4 *)transform
 {
 	if(_nuPoints <= 1) return;
 	

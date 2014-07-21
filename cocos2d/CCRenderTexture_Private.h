@@ -19,15 +19,15 @@
     CCRenderer *_renderer;
     BOOL _privateRenderer;
 
-    GLKVector4 _clearColor;
+    CCVector4 _clearColor;
 
-    GLKVector4 _oldViewport;
+    CCVector4 _oldViewport;
     GLint _oldFBO;
     NSDictionary *_oldGlobalUniforms;
 
 
     float _contentScale;
-    GLKMatrix4 _projection;
+    CCMatrix4 _projection;
 
     CCSprite* _sprite;
     

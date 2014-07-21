@@ -51,20 +51,21 @@
 -(id)init
 {
     CCEffectUniform* u_enableGlowMap = [CCEffectUniform uniform:@"float" name:@"u_enableGlowMap" value:[NSNumber numberWithFloat:0.0f]];
-    CCEffectUniform* u_blurDirection = [CCEffectUniform uniform:@"vec2" name:@"u_blurDirection" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]];
+    CCEffectUniform* u_blurDirection = [CCEffectUniform uniform:@"vec2" name:@"u_blurDirection" value:[NSValue valueWithCCVector2:CCVector2Make(0.0f, 0.0f)]];
     CCEffectVarying* v_centerTextureCoordinate = [CCEffectVarying varying:@"vec2" name:@"v_centerTextureCoordinate"];
     CCEffectVarying* v_twoStepsLeftTextureCoordinate = [CCEffectVarying varying:@"vec2" name:@"v_twoStepsLeftTextureCoordinate"];
     CCEffectVarying* v_oneStepLeftTextureCoordinate = [CCEffectVarying varying:@"vec2" name:@"v_oneStepLeftTextureCoordinate"];
     CCEffectVarying* v_oneStepRightTextureCoordinate = [CCEffectVarying varying:@"vec2" name:@"v_oneStepRightTextureCoordinate"];
     CCEffectVarying* v_twoStepsRightTextureCoordinate = [CCEffectVarying varying:@"vec2" name:@"v_twoStepsRightTextureCoordinate"];
     
-    if(self = [super initWithUniforms:[NSArray arrayWithObjects:u_enableGlowMap, nil]
-                      vertextUniforms:[NSArray arrayWithObjects:u_blurDirection, nil]
-                              varying:[NSArray arrayWithObjects:v_centerTextureCoordinate, v_twoStepsLeftTextureCoordinate,
-                                       v_oneStepLeftTextureCoordinate, v_oneStepRightTextureCoordinate,
-                                       v_twoStepsRightTextureCoordinate, nil]])
+    if(self = [super initWithFragmentUniforms:[NSArray arrayWithObjects:u_enableGlowMap, nil]
+                              vertextUniforms:[NSArray arrayWithObjects:u_blurDirection, nil]
+                                      varying:[NSArray arrayWithObjects:v_centerTextureCoordinate, v_twoStepsLeftTextureCoordinate,
+                                               v_oneStepLeftTextureCoordinate, v_oneStepRightTextureCoordinate,
+                                               v_twoStepsRightTextureCoordinate, nil]])
     {
         self.debugName = @"CCEffectGlow";
+        self.stitchFlags = 0;
         return self;
     }
     
@@ -115,7 +116,7 @@
 
     );
     
-    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"glowEffect" body:effectBody returnType:@"vec4"];
+    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"glowEffect" body:effectBody inputs:nil returnType:@"vec4"];
     [self.fragmentFunctions addObject:fragmentFunction];
 }
 
@@ -134,7 +135,7 @@
     
                                    return cc_Position;
     );
-    CCEffectFunction* vertexFunction = [[CCEffectFunction alloc] initWithName:@"glowEffect" body:effectBody returnType:@"vec4"];
+    CCEffectFunction* vertexFunction = [[CCEffectFunction alloc] initWithName:@"glowEffect" body:effectBody inputs:nil returnType:@"vec4"];
     [self.vertexFunctions addObject:vertexFunction];
 }
 
@@ -146,39 +147,35 @@
     // pass 2: blends texture[0] and texture[2] and outputs to texture[3]
 
     __weak CCEffectGlow *weakSelf = self;
-    __weak CCEffectRenderPass *weakPass = nil;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
-    weakPass = pass0;
     pass0.shader = self.shader;
     pass0.shaderUniforms = self.shaderUniforms;
-    pass0.beginBlock = ^(CCTexture *previousPassTexture){
-        weakPass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
-        weakPass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-        weakPass.shaderUniforms[@"u_enableGlowMap"] = [NSNumber numberWithFloat:0.0f];
-        weakPass.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(weakSelf.blurStrength, 0.0f)];
-    };
+    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
+        pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
+        pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_enableGlowMap"]] = [NSNumber numberWithFloat:0.0f];
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithCCVector2:CCVector2Make(weakSelf.blurStrength, 0.0f)];
+    } copy]];
     
     
     CCEffectRenderPass *pass1 = [[CCEffectRenderPass alloc] init];
-    weakPass = pass1;
     pass1.shader = self.shader;
     pass1.shaderUniforms = self.shaderUniforms;
-    pass1.beginBlock = ^(CCTexture *previousPassTexture){
-        weakPass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-        weakPass.shaderUniforms[@"u_enableGlowMap"] = [NSNumber numberWithFloat:0.0f];
-        weakPass.shaderUniforms[@"u_blurDirection"] = [NSValue valueWithGLKVector2:GLKVector2Make(0.0f, weakSelf.blurStrength)];
-    };
+    pass1.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
+        pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_enableGlowMap"]] = [NSNumber numberWithFloat:0.0f];
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithCCVector2:CCVector2Make(0.0f, weakSelf.blurStrength)];
+    } copy]];
 
     
     CCEffectRenderPass *pass2 = [[CCEffectRenderPass alloc] init];
-    weakPass = pass2;
     pass2.shader = self.shader;
     pass2.shaderUniforms = self.shaderUniforms;
-    pass2.beginBlock = ^(CCTexture *previousPassTexture){
-        weakPass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-        weakPass.shaderUniforms[@"u_enableGlowMap"] = [NSNumber numberWithFloat:1.0f];
-    };
+    pass2.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
+        pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_enableGlowMap"]] = [NSNumber numberWithFloat:1.0f];
+    } copy]];
 
     self.renderPasses = @[pass0, pass1, pass2];
 }

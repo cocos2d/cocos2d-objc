@@ -30,7 +30,7 @@
 // Only compile this code on iOS. These files should NOT be included on your Mac project.
 // But in case they are included, it won't be compiled.
 #import "../../ccMacros.h"
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 
 #import "CCES2Renderer.h"
 
@@ -90,6 +90,83 @@
     }
 
     return self;
+}
+
+- (void)resizeFromLayer:(CAEAGLLayer *)layer ctx:(EAGLContext *)ctx
+{
+    // Allocate color buffer backing based on the current layer size
+    glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderbuffer);
+    
+    if( ! [ctx renderbufferStorage:GL_RENDERBUFFER fromDrawable:layer] )
+        CCLOG(@"failed to call context");
+    
+    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &_backingWidth);
+    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &_backingHeight);
+    
+    CCLOG(@"cocos2d: surface size: %dx%d", (int)_backingWidth, (int)_backingHeight);
+    
+    if (_multiSampling)
+    {
+        if ( _msaaColorbuffer) {
+            glDeleteRenderbuffers(1, &_msaaColorbuffer);
+            _msaaColorbuffer = 0;
+        }
+        
+        /* Create the offscreen MSAA color buffer.
+         After rendering, the contents of this will be blitted into ColorRenderbuffer */
+        
+        //msaaFrameBuffer needs to be binded
+        glBindFramebuffer(GL_FRAMEBUFFER, _msaaFramebuffer);
+        glGenRenderbuffers(1, &_msaaColorbuffer);
+        NSAssert(_msaaFramebuffer, @"Can't create MSAA color buffer");
+        
+        glBindRenderbuffer(GL_RENDERBUFFER, _msaaColorbuffer);
+        
+        glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, _samplesToUse, _pixelFormat , _backingWidth, _backingHeight);
+        
+        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, _msaaColorbuffer);
+        
+        GLenum error;
+        if ( (error=glCheckFramebufferStatus(GL_FRAMEBUFFER)) != GL_FRAMEBUFFER_COMPLETE)
+        {
+            CCLOG(@"Failed to make complete framebuffer object 0x%X", error);
+        }
+    }
+    
+    CC_CHECK_GL_ERROR_DEBUG();
+    
+    if (_depthFormat)
+    {
+        if( ! _depthBuffer ) {
+            glGenRenderbuffers(1, &_depthBuffer);
+            NSAssert(_depthBuffer, @"Can't create depth buffer");
+        }
+        
+        glBindRenderbuffer(GL_RENDERBUFFER, _depthBuffer);
+        
+        if( _multiSampling )
+            glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, _samplesToUse, _depthFormat,_backingWidth, _backingHeight);
+        else
+            glRenderbufferStorage(GL_RENDERBUFFER, _depthFormat, _backingWidth, _backingHeight);
+        
+        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthBuffer);
+        
+        if (_depthFormat == GL_DEPTH24_STENCIL8_OES) {
+            glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _depthBuffer);
+        }
+        
+        // bind color buffer
+        glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderbuffer);
+    }
+    
+    CC_CHECK_GL_ERROR_DEBUG();
+    
+    GLenum error;
+    if( (error=glCheckFramebufferStatus(GL_FRAMEBUFFER)) != GL_FRAMEBUFFER_COMPLETE)
+    {
+        CCLOG(@"Failed to make complete framebuffer object 0x%X", error);
+    }
+
 }
 
 - (BOOL)resizeFromLayer:(CAEAGLLayer *)layer

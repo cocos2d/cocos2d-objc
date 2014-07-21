@@ -41,6 +41,13 @@
 #import <OpenGL/glu.h>
 #import <Cocoa/Cocoa.h>	// needed for NSOpenGLView
 #import "Mac/CCGLView.h"
+
+#elif __CC_PLATFORM_ANDROID
+#define GL_GLEXT_PROTOTYPES 1
+#include <EGL/egl.h> // requires ndk r5 or newer
+#include <GLES2/gl2.h>
+#include <GLES2/gl2ext.h>
+#import "Android/CCGLView.h"
 #endif
 
 #if DEBUG
@@ -53,7 +60,9 @@ static inline void __CC_CHECK_GL_ERROR_DEBUG(const char *function, int line)
 			case GL_INVALID_ENUM: printf("OpenGL error GL_INVALID_ENUM detected at %s %d\n", function, line); break;
 			case GL_INVALID_VALUE: printf("OpenGL error GL_INVALID_VALUE detected at %s %d\n", function, line); break;
 			case GL_INVALID_OPERATION: printf("OpenGL error GL_INVALID_OPERATION detected at %s %d\n", function, line); break;
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
 			case GL_INVALID_FRAMEBUFFER_OPERATION: printf("OpenGL error GL_INVALID_FRAMEBUFFER_OPERATION detected at %s %d\n", function, line); break;
+#endif
 			default: printf("OpenGL error 0x%04X detected at %s %d\n", error, function, line);
 		}
 	}
@@ -65,6 +74,7 @@ static inline void __CC_CHECK_GL_ERROR_DEBUG(const char *function, int line)
 __attribute__((deprecated)) static const GLenum CC_BLEND_SRC = GL_ONE;
 __attribute__((deprecated)) static const GLenum CC_BLEND_DST = GL_ONE_MINUS_SRC_ALPHA;
 
+
 // iOS
 #if __CC_PLATFORM_IOS
 #define	glClearDepth				glClearDepthf
@@ -75,6 +85,18 @@ __attribute__((deprecated)) static const GLenum CC_BLEND_DST = GL_ONE_MINUS_SRC_
 #define glUnmapBuffer				glUnmapBufferOES
 
 #define GL_DEPTH24_STENCIL8			GL_DEPTH24_STENCIL8_OES
+#define GL_WRITE_ONLY				GL_WRITE_ONLY_OES
+
+// Android
+#elif __CC_PLATFORM_ANDROID
+#define	glClearDepth				glClearDepthf
+#define glDeleteVertexArrays		glDeleteVertexArraysOES
+#define glGenVertexArrays			glGenVertexArraysOES
+#define glBindVertexArray			glBindVertexArrayOES
+#define glMapBuffer					glMapBufferOES
+#define glUnmapBuffer				glUnmapBufferOES
+
+#define GL_DEPTH24_STENCIL8			GL_DEPTH24_STENCIL8_OES //0x88F0
 #define GL_WRITE_ONLY				GL_WRITE_ONLY_OES
 
 // Mac

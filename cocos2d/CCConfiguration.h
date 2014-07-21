@@ -81,6 +81,7 @@ typedef NS_ENUM(NSUInteger, CCDevice) {
 	BOOL			_supportsShareableVAO;
 	GLint			_maxSamplesAllowed;
 	GLint			_maxTextureUnits;
+    BOOL            _supportsPackedDepthStencil;
 
 	unsigned int	_OSVersion;
 }
@@ -97,6 +98,11 @@ typedef NS_ENUM(NSUInteger, CCDevice) {
 
  */
 @property (nonatomic, readonly) BOOL supportsNPOT;
+
+/** Whether or not the GPU supports a combined depthc/stencil buffer.
+ All iOS/OSX devices support GL_DEPTH24_STENCIL8_OES
+ */
+@property (nonatomic, readonly) BOOL supportsPackedDepthStencil;
 
 /** Whether or not PVR Texture Compressed is supported */
 @property (nonatomic, readonly) BOOL supportsPVRTC;

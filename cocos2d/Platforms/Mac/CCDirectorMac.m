@@ -27,7 +27,7 @@
 // Only compile this code on Mac. These files should not be included on your iOS project.
 // But in case they are included, it won't be compiled.
 #import "../../ccMacros.h"
-#ifdef __CC_PLATFORM_MAC
+#if __CC_PLATFORM_MAC
 
 #import <sys/time.h>
 
@@ -42,8 +42,6 @@
 #import "../../CCShader.h"
 #import "../../ccFPSImages.h"
  
-// external
-#import <GLKit/GLKMath.h>
 
 #import "CCDirector_Private.h"
 #import "CCRenderer_private.h"
@@ -265,7 +263,7 @@
 
 	switch (projection) {
 		case CCDirectorProjection2D:
-			_projectionMatrix = GLKMatrix4MakeOrtho(0, sizePoint.width, 0, sizePoint.height, -1024, 1024 );
+			_projectionMatrix = CCMatrix4MakeOrtho(0, sizePoint.width, 0, sizePoint.height, -1024, 1024 );
 			break;
 
 
@@ -550,13 +548,13 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	 XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
 	if( _nextScene ) [self setNextScene];
 
-	GLKMatrix4 projection = self.projectionMatrix;
+	CCMatrix4 projection = self.projectionMatrix;
 	_renderer.globalShaderUniforms = [self updateGlobalShaderUniforms];
 	
 	[CCRenderer bindRenderer:_renderer];
 	[_renderer invalidateState];
 	
-	[_renderer enqueueClear:(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) color:_runningScene.colorRGBA.glkVector4 depth:1.0f stencil:0 globalSortOrder:NSIntegerMin];
+	[_renderer enqueueClear:(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) color:_runningScene.colorRGBA.CCVector4 depth:1.0f stencil:0 globalSortOrder:NSIntegerMin];
 	
 	// Render
 	[_runningScene visit];

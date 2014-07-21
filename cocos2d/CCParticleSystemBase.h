@@ -70,11 +70,11 @@ typedef NS_ENUM(NSUInteger, CCParticleSystemPositionType) {
 /** Contains the values of each individual particle. */
 typedef struct _sCCParticle {
     
-	GLKVector2		pos;
-	GLKVector2		startPos;
+	CCVector2		pos;
+	CCVector2		startPos;
     
-	GLKVector4	color;
-	GLKVector4	deltaColor;
+	CCVector4	color;
+	CCVector4	deltaColor;
     
 	float		size;
 	float		deltaSize;
@@ -89,7 +89,7 @@ typedef struct _sCCParticle {
 	union {
 		// Mode A
 		struct {
-			GLKVector2		dir;
+			CCVector2		dir;
 			float		radialAccel;
 			float		tangentialAccel;
 		} A;
@@ -182,7 +182,7 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
         
 		struct {
 			// Gravity of the particles.
-			GLKVector2 gravity;
+			CCVector2 gravity;
 
 			// The speed the particles will have.
 			float speed;

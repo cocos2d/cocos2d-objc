@@ -12,10 +12,10 @@
 @interface CCEffectGaussianBlur : CCEffect
 
 @property (nonatomic) float blurStrength;
-@property (nonatomic) GLKVector2 blurDirection;
+@property (nonatomic) CCVector2 blurDirection;
 
--(id)initWithbBurStrength:(float)blurStrength direction:(GLKVector2)direction;
-+(id)effectWithBlurStrength:(float)blurStrength direction:(GLKVector2)direction;
+-(id)initWithbBurStrength:(float)blurStrength direction:(CCVector2)direction;
++(id)effectWithBlurStrength:(float)blurStrength direction:(CCVector2)direction;
 
 @end
 #endif

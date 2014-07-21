@@ -55,11 +55,14 @@
 #import "Support/CCProfiling.h"
 #import "Support/CCFileUtils.h"
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
 #define CC_DIRECTOR_DEFAULT CCDirectorDisplayLink
-#elif defined(__CC_PLATFORM_MAC)
+#elif __CC_PLATFORM_MAC
 #import "Platforms/Mac/CCDirectorMac.h"
+#define CC_DIRECTOR_DEFAULT CCDirectorDisplayLink
+#elif __CC_PLATFORM_ANDROID
+#import "Platforms/Android/CCDirectorAndroid.h"
 #define CC_DIRECTOR_DEFAULT CCDirectorDisplayLink
 #endif
 
@@ -217,23 +220,23 @@ static CCDirector *_sharedDirector = nil;
 
 -(NSDictionary *)updateGlobalShaderUniforms
 {
-	GLKMatrix4 projection = self.projectionMatrix;
-	_globalShaderUniforms[CCShaderUniformProjection] = [NSValue valueWithGLKMatrix4:projection];
-	_globalShaderUniforms[CCShaderUniformProjectionInv] = [NSValue valueWithGLKMatrix4:GLKMatrix4Invert(projection, NULL)];
+	CCMatrix4 projection = self.projectionMatrix;
+	_globalShaderUniforms[CCShaderUniformProjection] = [NSValue valueWithCCMatrix4:projection];
+	_globalShaderUniforms[CCShaderUniformProjectionInv] = [NSValue valueWithCCMatrix4:CCMatrix4Invert(projection, NULL)];
 	
 	CGSize size = self.viewSize;
-	_globalShaderUniforms[CCShaderUniformViewSize] = [NSValue valueWithGLKVector2:GLKVector2Make(size.width, size.height)];
+	_globalShaderUniforms[CCShaderUniformViewSize] = [NSValue valueWithCCVector2:CCVector2Make(size.width, size.height)];
 	
 	CGSize pixelSize = self.viewSizeInPixels;
-	_globalShaderUniforms[CCShaderUniformViewSizeInPixels] = [NSValue valueWithGLKVector2:GLKVector2Make(pixelSize.width, pixelSize.height)];
+	_globalShaderUniforms[CCShaderUniformViewSizeInPixels] = [NSValue valueWithCCVector2:CCVector2Make(pixelSize.width, pixelSize.height)];
 	
 	CCTime t = self.scheduler.currentTime;
-	_globalShaderUniforms[CCShaderUniformTime] = [NSValue valueWithGLKVector4:GLKVector4Make(t, t/2.0f, t/8.0f, t/8.0f)];
-	_globalShaderUniforms[CCShaderUniformSinTime] = [NSValue valueWithGLKVector4:GLKVector4Make(sinf(t*2.0f), sinf(t), sinf(t/2.0f), sinf(t/4.0f))];
-	_globalShaderUniforms[CCShaderUniformCosTime] = [NSValue valueWithGLKVector4:GLKVector4Make(cosf(t*2.0f), cosf(t), cosf(t/2.0f), cosf(t/4.0f))];
+	_globalShaderUniforms[CCShaderUniformTime] = [NSValue valueWithCCVector4:CCVector4Make(t, t/2.0f, t/8.0f, t/8.0f)];
+	_globalShaderUniforms[CCShaderUniformSinTime] = [NSValue valueWithCCVector4:CCVector4Make(sinf(t*2.0f), sinf(t), sinf(t/2.0f), sinf(t/4.0f))];
+	_globalShaderUniforms[CCShaderUniformCosTime] = [NSValue valueWithCCVector4:CCVector4Make(cosf(t*2.0f), cosf(t), cosf(t/2.0f), cosf(t/4.0f))];
 	
-	GLKVector4 random = GLKVector4Make(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
-	_globalShaderUniforms[CCShaderUniformRandom01] = [NSValue valueWithGLKVector4:random];
+	CCVector4 random = CCVector4Make(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
+	_globalShaderUniforms[CCShaderUniformRandom01] = [NSValue valueWithCCVector4:random];
 	
 	return _globalShaderUniforms;
 }
@@ -278,7 +281,7 @@ static CCDirector *_sharedDirector = nil;
 
 -(void) purgeCachedData
 {
-	[CCRENDERSTATE_CACHE flush];
+	[[CCRenderStateCache sharedInstance] flush];
 	[CCLabelBMFont purgeCachedData];
 	if ([_sharedDirector view])
 		[[CCTextureCache sharedTextureCache] removeUnusedTextures];
@@ -315,15 +318,17 @@ static CCDirector *_sharedDirector = nil;
 
 	if( view != __view ) {
 	
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 		[super setView:view];
 #endif
 		__view = view;
 
 		// set size
 		CGSize size = CCNSSizeToCGSize(__view.bounds.size);
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 		CGFloat scale = __view.layer.contentsScale ?: 1.0;
+#elif __CC_PLATFORM_ANDROID
+        CGFloat scale = __view.contentScaleFactor;
 #else
 		//self.view.wantsBestResolutionOpenGLSurface = YES;
 		CGFloat scale = self.view.window.backingScaleFactor;
@@ -335,14 +340,17 @@ static CCDirector *_sharedDirector = nil;
 
 		// it could be nil
 		if( view ) {
-			[self createStatsLabel];
+            
+//			[self createStatsLabel]; // donotcheckin
 			[self setProjection: _projection];
-			
+
+#if !__CC_PLATFORM_ANDROID
 			// TODO this should probably migrate somewhere else.
 			if(view.depthFormat){
 				glEnable(GL_DEPTH_TEST);
 				glDepthFunc(GL_LEQUAL);
 			}
+#endif
 		}
 
 		// Dump info once OpenGL was initilized
@@ -350,7 +358,7 @@ static CCDirector *_sharedDirector = nil;
 
 		CC_CHECK_GL_ERROR_DEBUG();
 	}
-}
+} 
 
 -(CCGLView*) view
 {
@@ -388,26 +396,26 @@ static CCDirector *_sharedDirector = nil;
 
 -(CGPoint)convertToGL:(CGPoint)uiPoint
 {
-	GLKMatrix4 transform = self.projectionMatrix;
-	GLKMatrix4 invTransform = GLKMatrix4Invert(transform, NULL);
+	CCMatrix4 transform = self.projectionMatrix;
+	CCMatrix4 invTransform = CCMatrix4Invert(transform, NULL);
 	
 	// Calculate z=0 using -> transform*[0, 0, 0, 1]/w
 	float zClip = transform.m[14]/transform.m[15];
 	
 	CGSize glSize = __view.bounds.size;
-	GLKVector3 clipCoord = GLKVector3Make(2.0*uiPoint.x/glSize.width - 1.0, 2.0*uiPoint.y/glSize.height - 1.0, zClip);
+	CCVector3 clipCoord = CCVector3Make(2.0*uiPoint.x/glSize.width - 1.0, 2.0*uiPoint.y/glSize.height - 1.0, zClip);
 	
 	clipCoord.y *= self.flipY;
 	
-	GLKVector3 glCoord = GLKMatrix4MultiplyAndProjectVector3(invTransform, clipCoord);
+	CCVector3 glCoord = CCMatrix4MultiplyAndProjectVector3(invTransform, clipCoord);
 	return ccp(glCoord.x, glCoord.y);
 }
 
 -(CGPoint)convertToUI:(CGPoint)glPoint
 {
-	GLKMatrix4 transform = self.projectionMatrix;
+	CCMatrix4 transform = self.projectionMatrix;
 		
-	GLKVector3 clipCoord = GLKMatrix4MultiplyAndProjectVector3(transform, GLKVector3Make(glPoint.x, glPoint.y, 0.0));
+	CCVector3 clipCoord = CCMatrix4MultiplyAndProjectVector3(transform, CCVector3Make(glPoint.x, glPoint.y, 0.0));
 	
 	CGSize glSize = __view.bounds.size;
 	return ccp(glSize.width*(clipCoord.v[0]*0.5 + 0.5), glSize.height*(self.flipY*clipCoord.v[1]*0.5 + 0.5));
@@ -425,21 +433,21 @@ static CCDirector *_sharedDirector = nil;
 
 -(CGRect)viewportRect
 {
-	GLKMatrix4 projection = self.projectionMatrix;
+	CCMatrix4 projection = self.projectionMatrix;
 	
 	// TODO It's _possible_ that a user will use a non-axis aligned projection. Weird, but possible.
-	GLKMatrix4 projectionInv = GLKMatrix4Invert(projection, NULL);
+	CCMatrix4 projectionInv = CCMatrix4Invert(projection, NULL);
 	
 	// Calculate z=0 using -> transform*[0, 0, 0, 1]/w
 	float zClip = projection.m[14]/projection.m[15];
 	
 	// Bottom left and top right coords of viewport in clip coords.
-	GLKVector3 clipBL = GLKVector3Make(-1.0, -1.0, zClip);
-	GLKVector3 clipTR = GLKVector3Make( 1.0,  1.0, zClip);
+	CCVector3 clipBL = CCVector3Make(-1.0, -1.0, zClip);
+	CCVector3 clipTR = CCVector3Make( 1.0,  1.0, zClip);
 	
 	// Bottom left and top right coords in GL coords.
-	GLKVector3 glBL = GLKMatrix4MultiplyAndProjectVector3(projectionInv, clipBL);
-	GLKVector3 glTR = GLKMatrix4MultiplyAndProjectVector3(projectionInv, clipTR);
+	CCVector3 glBL = CCMatrix4MultiplyAndProjectVector3(projectionInv, clipBL);
+	CCVector3 glTR = CCMatrix4MultiplyAndProjectVector3(projectionInv, clipTR);
 	
 	return CGRectMake(glBL.x, glBL.y, glTR.x - glBL.x, glTR.y - glBL.y);
 }
@@ -503,7 +511,7 @@ static CCDirector *_sharedDirector = nil;
     
     [_scenesStack addObject:scene];
     _sendCleanupToScene = NO;
-    [transition performSelector:@selector(startTransition:) withObject:scene];
+    [transition startTransition:scene];
 }
 
 -(void) popScene
@@ -534,7 +542,7 @@ static CCDirector *_sharedDirector = nil;
         [_scenesStack removeLastObject];
         CCScene * incomingScene = [_scenesStack lastObject];
         _sendCleanupToScene = YES;
-        [transition performSelector:@selector(startTransition:) withObject:incomingScene];
+        [transition startTransition:incomingScene];
     }
 }
 
@@ -546,7 +554,7 @@ static CCDirector *_sharedDirector = nil;
 -(void) popToRootSceneWithTransition:(CCTransition *)transition {
 	[self popToRootScene];
 	_sendCleanupToScene = YES;
-	[transition performSelector:@selector(startTransition:) withObject:_nextScene];
+    [transition startTransition:_nextScene];
 }
 
 -(void) popToSceneStackLevel:(NSUInteger)level
@@ -604,7 +612,7 @@ static CCDirector *_sharedDirector = nil;
 {
     // the transition gets to become the running scene
     _sendCleanupToScene = YES;
-    [transition performSelector:@selector(startTransition:) withObject:scene];
+    [transition startTransition:scene];
 }
 
 // -----------------------------------------------------------------
@@ -803,17 +811,17 @@ static const float CCFPSLabelItemHeight = 32;
 		for(int i=0; i<CCFPSLabelChars; i++){
 			float tx0 = i*tx;
 			float tx1 = (i + 1)*tx;
-			_charVertexes[i].bl = (CCVertex){GLKVector4Make(0, 0, 0, 1), GLKVector2Make(tx0,  0), GLKVector2Make(0, 0), GLKVector4Make(1, 1, 1, 1)};
-			_charVertexes[i].br = (CCVertex){GLKVector4Make(w, 0, 0, 1), GLKVector2Make(tx1,  0), GLKVector2Make(0, 0), GLKVector4Make(1, 1, 1, 1)};
-			_charVertexes[i].tr = (CCVertex){GLKVector4Make(w, h, 0, 1), GLKVector2Make(tx1, ty), GLKVector2Make(0, 0), GLKVector4Make(1, 1, 1, 1)};
-			_charVertexes[i].tl = (CCVertex){GLKVector4Make(0, h, 0, 1), GLKVector2Make(tx0, ty), GLKVector2Make(0, 0), GLKVector4Make(1, 1, 1, 1)};
+			_charVertexes[i].bl = (CCVertex){CCVector4Make(0.0f, 0.0f, 0.0f, 1.0f), CCVector2Make(tx0, 0.0f), CCVector2Make(0.0f, 0.0f), CCVector4Make(1.0f, 1.0f, 1.0f, 1.0f)};
+			_charVertexes[i].br = (CCVertex){CCVector4Make(   w, 0.0f, 0.0f, 1.0f), CCVector2Make(tx1, 0.0f), CCVector2Make(0.0f, 0.0f), CCVector4Make(1.0f, 1.0f, 1.0f, 1.0f)};
+			_charVertexes[i].tr = (CCVertex){CCVector4Make(   w,    h, 0.0f, 1.0f), CCVector2Make(tx1,   ty), CCVector2Make(0.0f, 0.0f), CCVector4Make(1.0f, 1.0f, 1.0f, 1.0f)};
+			_charVertexes[i].tl = (CCVertex){CCVector4Make(0.0f,    h, 0.0f, 1.0f), CCVector2Make(tx0,   ty), CCVector2Make(0.0f, 0.0f), CCVector4Make(1.0f, 1.0f, 1.0f, 1.0f)};
 		}
 	}
 	
 	return self;
 }
 
--(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
+-(void)draw:(CCRenderer *)renderer transform:(const CCMatrix4 *)transform
 {
 	for(int i=0; i<_string.length; i++){
 		int c = [_string characterAtIndex:i];
@@ -823,7 +831,7 @@ static const float CCFPSLabelItemHeight = 32;
 		
 		// Index relative to '.'.
 		c = MAX(0, MIN(CCFPSLabelChars - 1, c - '.'));
-		GLKMatrix4 t = GLKMatrix4Multiply(*transform, GLKMatrix4MakeTranslation(i*CCFPSLabelItemWidth, 0.0f, 0.0f));
+		CCMatrix4 t = CCMatrix4Multiply(*transform, CCMatrix4MakeTranslation(i*CCFPSLabelItemWidth, 0.0f, 0.0f));
 		
 		CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:self.renderState globalSortOrder:NSIntegerMax];
 		CCRenderBufferSetVertex(buffer, 0, CCVertexApplyTransform(_charVertexes[c].bl, &t));

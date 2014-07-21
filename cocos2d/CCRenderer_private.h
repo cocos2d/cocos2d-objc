@@ -29,8 +29,11 @@
 
 
 extern id CCBLENDMODE_CACHE;
-extern id CCRENDERSTATE_CACHE;
 
+
+@interface CCRenderStateCache : CCCache
++ (instancetype)sharedInstance;
+@end
 
 /**
  * Describes the behaviour for an command object that can be submitted to the queue of a 
