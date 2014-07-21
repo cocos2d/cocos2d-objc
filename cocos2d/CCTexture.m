@@ -163,6 +163,9 @@ static CCTexture *CCTextureNone = nil;
 
 +(void)initialize
 {
+	// +initialize may be called due to loading a subclass.
+	if(self != [CCTexture class]) return;
+	
 	CCTextureNone = [self alloc];
 	CCTextureNone->_name = 0;
 	CCTextureNone->_format = CCTexturePixelFormat_RGBA8888;
@@ -396,16 +399,8 @@ static CCTexture *CCTextureNone = nil;
 		pixelFormat = CCTexturePixelFormat_A8;
 	}
 
-	if( ! [conf supportsNPOT]  )
-	{
-		textureWidth = CCNextPOT(CGImageGetWidth(cgImage));
-		textureHeight = CCNextPOT(CGImageGetHeight(cgImage));
-	}
-	else
-	{
-		textureWidth = CGImageGetWidth(cgImage);
-		textureHeight = CGImageGetHeight(cgImage);
-	}
+	textureWidth = CGImageGetWidth(cgImage);
+	textureHeight = CGImageGetHeight(cgImage);
 
 #ifdef __CC_PLATFORM_IOS
 

@@ -62,26 +62,11 @@
     
     glPushGroupMarkerEXT(0, "CCEffectRenderTarget: allocateRenderTarget");
     
-	// Textures may need to be a power of two
-	NSUInteger powW;
-	NSUInteger powH;
-    
-	if( [[CCConfiguration sharedConfiguration] supportsNPOT] )
-    {
-		powW = size.width;
-		powH = size.height;
-	}
-    else
-    {
-		powW = CCNextPOT(size.width);
-		powH = CCNextPOT(size.height);
-	}
-    
     static const CCTexturePixelFormat kRenderTargetDefaultPixelFormat = CCTexturePixelFormat_RGBA8888;
     
     // Create a new texture object for use as the color attachment of the new
     // FBO.
-	_texture = [[CCTexture alloc] initWithData:nil pixelFormat:kRenderTargetDefaultPixelFormat pixelsWide:powW pixelsHigh:powH contentSizeInPixels:size contentScale:[CCDirector sharedDirector].contentScaleFactor];
+	_texture = [[CCTexture alloc] initWithData:nil pixelFormat:kRenderTargetDefaultPixelFormat pixelsWide:size.width pixelsHigh:size.height contentSizeInPixels:size contentScale:[CCDirector sharedDirector].contentScaleFactor];
 	[_texture setAliasTexParameters];
 	
     // Save the old FBO binding so it can be restored after we create the new
