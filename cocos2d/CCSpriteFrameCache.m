@@ -449,6 +449,10 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
     
     if (!frame)
     {
+        // Check fileLookup.plist
+        NSString *newName = [[CCFileUtils sharedFileUtils].filenameLookup objectForKey:name];
+        name = newName ?: name;
+        
         // Try finding the frame in one of the registered sprite sheets
         NSString* spriteFrameFile = [_spriteFrameFileLookup objectForKey:name];
         if (spriteFrameFile) [self addSpriteFramesWithFile:spriteFrameFile];

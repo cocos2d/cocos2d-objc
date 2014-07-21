@@ -57,9 +57,9 @@
     
     [self.contentNode addChild:renderTexture];
     
-    NSString *sphereTextureFile = @"Images/sphere-256.png";
+    NSString *sphereTextureFile = @"Images/ShinyBallColor.png";
     CCTexture *sphereTexture = [CCTexture textureWithFile:sphereTextureFile];
-    CCSpriteFrame *sphereNormalMap = [CCSpriteFrame frameWithImageNamed:@"Images/sphere-normal-256.png"];
+    CCSpriteFrame *sphereNormalMap = [CCSpriteFrame frameWithImageNamed:@"Images/ShinyBallNormals.png"];
     CCEffectRefraction *sphereRefraction = [[CCEffectRefraction alloc] initWithRefraction:0.1f environment:renderTexture.sprite normalMap:nil];
     
     p1 = CGPointMake(0.1f, 0.8f);
@@ -76,9 +76,9 @@
                                                                 ]]];
     [self.contentNode addChild:sprite1];
 
-    NSString *torusTextureFile = @"Images/torus-256.png";
+    NSString *torusTextureFile = @"Images/ShinyTorusColor.png";
     CCTexture *torusTexture = [CCTexture textureWithFile:torusTextureFile];
-    CCSpriteFrame *torusNormalMap = [CCSpriteFrame frameWithImageNamed:@"Images/torus-normal-256.png"];
+    CCSpriteFrame *torusNormalMap = [CCSpriteFrame frameWithImageNamed:@"Images/ShinyTorusNormals.png"];
     CCEffectRefraction *torusRefraction = [[CCEffectRefraction alloc] initWithRefraction:0.1f environment:renderTexture.sprite normalMap:torusNormalMap];
     
     p1 = CGPointMake(0.65f, 0.2f);

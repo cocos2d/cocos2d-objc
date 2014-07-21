@@ -6,6 +6,7 @@
 
 #define SPRITE_COUNT 3000
 #define TILE_COUNT 37
+#define SCALE 1.0
 
 - (void)setupSpritesUnbatchedUnatlassedTest
 {
@@ -18,6 +19,7 @@
 		CCSprite *sprite = [CCSprite spriteWithImageNamed:[NSString stringWithFormat:@"Tiles/%02d.png", num]];
 		sprite.position = ccp(CCRANDOM_0_1()*size.width, CCRANDOM_0_1()*size.height);
 		sprite.rotation = CCRANDOM_0_1()*360;
+		sprite.scale = SCALE;
 		[self.contentNode addChild:sprite];
 	}
 }
@@ -33,6 +35,7 @@
 		CCSprite *sprite = [CCSprite spriteWithImageNamed:[NSString stringWithFormat:@"TilesAtlassed/%02d.png", num]];
 		sprite.position = ccp(CCRANDOM_0_1()*size.width, CCRANDOM_0_1()*size.height);
 		sprite.rotation = CCRANDOM_0_1()*360;
+		sprite.scale = SCALE;
 		[self.contentNode addChild:sprite];
 	}
 }
@@ -48,6 +51,7 @@
 		CCSprite *sprite = [CCSprite spriteWithImageNamed:[NSString stringWithFormat:@"Tiles/%02d.png", num]];
 		sprite.position = ccp(CCRANDOM_0_1()*size.width, CCRANDOM_0_1()*size.height);
 		sprite.rotation = CCRANDOM_0_1()*360;
+		sprite.scale = SCALE;
 		
 		if(i < 0.8*SPRITE_COUNT) sprite.position = ccp(-1000, -1000);
 		
@@ -68,6 +72,7 @@
 		CCSprite *sprite = [CCSprite spriteWithImageNamed:[NSString stringWithFormat:@"Tiles/%02d.png", num]];
 		sprite.position = ccp(CCRANDOM_0_1()*size.width, CCRANDOM_0_1()*size.height);
 		sprite.rotation = CCRANDOM_0_1()*360;
+		sprite.scale = SCALE;
 		
 		if(i < 0.8*SPRITE_COUNT) sprite.position = ccp(-1000, -1000);
 		
@@ -92,6 +97,7 @@
 		CCSprite *sprite = [CCSprite spriteWithImageNamed:[NSString stringWithFormat:@"TilesAtlassed/%02d.png", num]];
 		sprite.position = ccp(CCRANDOM_0_1()*size.width, CCRANDOM_0_1()*size.height);
 		sprite.rotation = CCRANDOM_0_1()*360;
+		sprite.scale = SCALE;
 		
 		if(i < 0.8*SPRITE_COUNT) sprite.position = ccp(-1000, -1000);
 		

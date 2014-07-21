@@ -11,7 +11,7 @@
 #import "CCtexture.h"
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
-const NSString *CCShaderUniformPreviousPassTexture = @"cc_PreviousPassTexture";
+NSString * const CCShaderUniformPreviousPassTexture = @"cc_PreviousPassTexture";
 
 static NSString* fragBase =
 @"%@\n\n"   // uniforms
@@ -40,6 +40,8 @@ static NSString* vertBase =
 {
     if((self = [super init]))
     {
+        NSAssert(inputs.count <= 1, @"Effect functions currently only support 0 or 1 inputs.");
+        
         _body = [body copy];
         _name = [name copy];
         _inputs = [inputs copy];
@@ -255,7 +257,7 @@ static NSString* vertBase =
 
 -(void)enqueueTriangles
 {
-    CCRenderState *renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms];
+    CCRenderState *renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms copyUniforms:NO];
     
     CCRenderBuffer buffer = [_renderer enqueueTriangles:2 andVertexes:4 withState:renderState globalSortOrder:0];
 	CCRenderBufferSetVertex(buffer, 0, CCVertexApplyTransform(_verts.bl, &_transform));
@@ -445,7 +447,7 @@ static NSString* vertBase =
         }
         
         NSMutableArray *inputs = [[NSMutableArray alloc] init];
-        for (CCEffectFunctionInput *input in curFunction.inputs)
+        if (curFunction.inputs.count)
         {
             [inputs addObject:@"tmp"];
         }
