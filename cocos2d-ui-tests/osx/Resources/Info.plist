@@ -28,5 +28,12 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Schwarzwald Regular.ttf</string>
+		<string>Abberancy.ttf</string>
+		<string>Abduction.ttf</string>
+		<string>Paint Boy.ttf</string>
+	</array>
 </dict>
 </plist>

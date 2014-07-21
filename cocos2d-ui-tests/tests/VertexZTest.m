@@ -23,7 +23,7 @@
 	_globalSortOrder = vertexZ;
 }
 
--(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
+-(void)draw:(CCRenderer *)renderer transform:(const CCMatrix4 *)transform
 {
 	const CCSpriteVertexes *verts = self.vertexes;
 	

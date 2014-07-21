@@ -22,16 +22,42 @@
 static int fontIdx=0;
 static NSString *fontList[] =
 {
+    @"Roboto Slab",
+    @"Roboto Slab Regular",
+    @"Roboto Slab Thin",
+    @"RobotoSlab-Thin.ttf",
+    @"Roboto Slab Bold",
+    @"Roboto Slab Light",
+    @"RobotoSlab-Light",
 	@"American Typewriter",
 	@"Marker Felt",
+	@"A-Damn-Mess",
 	@"A Damn Mess",
 	@"Abberancy",
-	@"Abduction",
+	@"ThisFontIsAbdFont.ttf",
 	@"Paint Boy",
 	@"Schwarzwald",
-	@"Scissor Cuts",
+	@"Scissor Cuts.ttf",
 };
+
+static NSString *fontFileNameList[] =
+{
+    // Those 4 files are registered in info.plist
+    //	@"Abberancy.ttf",
+    //	@"ThisFontIsAbdFont.ttf",
+    //	@"Paint Boy.ttf",
+	//  @"Schwarzwald Regular.ttf",
+    @"A Damn Mess.ttf",
+    // This font is never registered but gets called by name
+    //	@"Scissor Cuts.ttf",
+    @"RobotoSlab-Bold.ttf",
+    @"RobotoSlab-Regular.ttf",
+    @"RobotoSlab-Light.ttf",
+    @"RobotoSlab-Thin.ttf",
+};
+
 static int fontCount = sizeof(fontList) / sizeof(*fontList);
+static int fontFileNameCount = sizeof(fontFileNameList) / sizeof(*fontFileNameList);
 
 static int vAlignIdx = 0;
 static CCVerticalTextAlignment verticalAlignment[] =
@@ -125,5 +151,13 @@ static int vAlignCount = sizeof(verticalAlignment) / sizeof(*verticalAlignment);
 	[self.contentNode addChild:top z:0 ];
 }
 
+
+- (void) setUp {
+    [super setUp];
+    for (int i=0; i<fontFileNameCount; i++) {
+        
+        [CCLabelTTF registerCustomTTF:fontFileNameList[i]];
+    }
+}
 
 @end

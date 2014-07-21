@@ -52,6 +52,8 @@ typedef enum { TEST_PONG_PLAYING, TESTS_PONG_GAMEOVER } TEST_PONG_STATE;
     
     int _playerScore;
     int _aiScore;
+    
+
 }
 
 - (BOOL)canPaddleMoveTo:(float)y
@@ -156,7 +158,7 @@ typedef enum { TEST_PONG_PLAYING, TESTS_PONG_GAMEOVER } TEST_PONG_STATE;
         _ballEffectNode.scale = 0.1f;
         [_ballEffectNode addChild:_ball];
         
-        _ballEffect = [CCEffectGaussianBlur effectWithBlurStrength:0.01f direction:GLKVector2Make(0.0, 0.0)];
+        _ballEffect = [CCEffectGaussianBlur effectWithBlurStrength:0.01f direction:CCVector2Make(0.0, 0.0)];
         _ballEffectNode.effect = _ballEffect;
     }
     
@@ -296,27 +298,31 @@ typedef enum { TEST_PONG_PLAYING, TESTS_PONG_GAMEOVER } TEST_PONG_STATE;
 
 #pragma mark touch
 
-- (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event
+- (void)touchBegan:(CCTouch *)touch withEvent:(CCTouchEvent *)event
 {
+#if !__CC_PLATFORM_ANDROID_COMPILE_ON_IOS_LAWLZ
     CGPoint location = [touch locationInNode:self];
     if(location.x < _designSize.width * 0.5f)
     {
         if([self canPaddleMoveTo:location.y])
             _playerPaddle.position = ccp(_playerPaddle.position.x, location.y);
     }
+#endif
 }
 
-- (void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
+- (void)touchMoved:(CCTouch *)touch withEvent:(CCTouchEvent *)event
 {
+#if !__CC_PLATFORM_ANDROID_COMPILE_ON_IOS_LAWLZ
     CGPoint location = [touch locationInNode:self];
     if(location.x < _designSize.width * 0.5f)
     {
         if([self canPaddleMoveTo:location.y])
             _playerPaddle.position = ccp(_playerPaddle.position.x, location.y);
     }
+#endif
 }
 
-- (void)touchEnded:(UITouch *)touch withEvent:(UIEvent *)event
+- (void)touchEnded:(CCTouch *)touch withEvent:(CCTouchEvent *)event
 {
     
 }

@@ -56,7 +56,7 @@
 	[self loadAndDisplayImageNamed: @"test_image.tiff" withTitle: @"TIFF loading example (has alpha)"];
 }
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 // PVR on iOS only.
 
 -(void) setupPVRLoadingTest

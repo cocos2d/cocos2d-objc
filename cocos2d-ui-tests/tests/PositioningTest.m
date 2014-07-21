@@ -32,18 +32,20 @@ extern const NSString *CARD_NAME[];
 
 @implementation PositioningSprite
 
-- (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event
+- (void)touchBegan:(CCTouch *)touch withEvent:(CCTouchEvent *)event
 {
 
 }
 
-- (void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
+- (void)touchMoved:(CCTouch *)touch withEvent:(CCTouchEvent *)event
 {
+#if !__CC_PLATFORM_ANDROID_COMPILE_ON_IOS_LAWLZ
     CGPoint pos = [self.parent convertToNodeSpace:touch.locationInWorld];
     self.position = pos;
+#endif
 }
 
-- (void)touchEnded:(UITouch *)touch withEvent:(UIEvent *)event
+- (void)touchEnded:(CCTouch *)touch withEvent:(CCTouchEvent *)event
 {
 
 }

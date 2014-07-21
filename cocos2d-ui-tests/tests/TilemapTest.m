@@ -66,9 +66,9 @@
 	[_tileOrigin clear];
 	[_tileOrigin drawDot:[layer0 positionAt:tile] radius:5.0 color:[CCColor blueColor]];
 	
-	layer0.animationBlock = ^(NSUInteger tileX, NSUInteger tileY, uint32_t *gid, uint32_t *flags, GLKVector4 *color){
+	layer0.animationBlock = ^(NSUInteger tileX, NSUInteger tileY, uint32_t *gid, uint32_t *flags, CCVector4 *color){
 		if(tile.x == tileX && tile.y == tileY){
-			*color = GLKVector4Make(1, 0.5, 0.5, 1);
+			*color = CCVector4Make(1, 0.5, 0.5, 1);
 		}
 	};
 }
