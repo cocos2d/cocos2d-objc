@@ -97,7 +97,7 @@
 #pragma mark - Touch Handler
 // -----------------------------------------------------------------------
 
--(void) touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
+-(void) touchBegan:(CCTouch *)touch withEvent:(CCTouchEvent *)event {
     CGPoint touchLoc = [touch locationInNode:self];
     
     // Log touch location

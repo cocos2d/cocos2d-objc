@@ -10,6 +10,66 @@
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
 	<key>Definitions</key>
 	<dict>
+		<key>Libraries/cocos2d-ui/Platform/CCPlatformTextField.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d-ui</string>
+				<string>Platform</string>
+				<string>Android</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d-ui/Platform/CCPlatformTextField.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>Libraries/cocos2d-ui/Platform/CCPlatformTextField.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d-ui</string>
+				<string>Platform</string>
+				<string>Android</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d-ui/Platform/CCPlatformTextField.m</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
+		</dict>
+		<key>Libraries/cocos2d-ui/Platform/iOS/CCPlatformTextFieldiOS.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d-ui</string>
+				<string>Platform</string>
+				<string>iOS</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d-ui/Platform/iOS/CCPlatformTextFieldiOS.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>Libraries/cocos2d-ui/Platform/iOS/CCPlatformTextFieldiOS.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d-ui</string>
+				<string>Platform</string>
+				<string>iOS</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d-ui/Platform/iOS/CCPlatformTextFieldiOS.m</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
+		</dict>
 		<key>Libraries/cocos2d-ui/CCButton.h</key>
 		<dict>
 			<key>Group</key>
@@ -235,6 +295,10 @@
 		<string>Libraries/cocos2d-ui/CCTextField.h</string>
 		<string>Libraries/cocos2d-ui/CCTextField.m</string>
 		<string>Libraries/cocos2d-ui/cocos2d-ui.h</string>
+		<key>Libraries/cocos2d-ui/Platform/CCPlatformTextField.h</key>
+		<key>Libraries/cocos2d-ui/Platform/CCPlatformTextField.m</key>
+		<key>Libraries/cocos2d-ui/Platform/iOS/CCPlatformTextFieldiOS.h</key>
+		<key>Libraries/cocos2d-ui/Platform/iOS/CCPlatformTextFieldiOS.m</key>
 	</array>
 </dict>
 </plist>
