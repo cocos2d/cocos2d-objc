@@ -42,6 +42,7 @@
     
     _callbackChannel   = nil;
     _soundChannel      = nil;
+	_tween			   = 0.0f;
 
     return self;
 }
