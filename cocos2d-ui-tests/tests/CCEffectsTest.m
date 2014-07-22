@@ -492,6 +492,56 @@
     }
 }
 
+-(void)setupStackTest
+{
+    self.subTitle = @"Effect Performance Test";
+    
+    CCSprite *reflectEnvironment = [CCSprite spriteWithImageNamed:@"Images/MountainPanorama.jpg"];
+    reflectEnvironment.positionType = CCPositionTypeNormalized;
+    reflectEnvironment.position = ccp(0.5f, 0.5f);
+    reflectEnvironment.visible = NO;
+    [self.contentNode addChild:reflectEnvironment];
+    
+    CCSprite *refractEnvironment = [CCSprite spriteWithImageNamed:@"Images/StoneWall.jpg"];
+    refractEnvironment.positionType = CCPositionTypeNormalized;
+    refractEnvironment.position = ccp(0.5f, 0.5f);
+    refractEnvironment.scale = 0.5;
+    [self.contentNode addChild:refractEnvironment];
+    
+    NSArray *effects = @[
+                         [CCEffectGaussianBlur effectWithPixelBlurRadius:7.0],
+                         [CCEffectBloom effectWithPixelBlurRadius:8 intensity:1.0f luminanceThreshold:0.0f],
+                         [CCEffectBrightness effectWithBrightness:0.25f],
+                         [CCEffectContrast effectWithContrast:1.0f],
+                         [CCEffectPixellate effectWithBlockSize:8.0f],
+                         [CCEffectSaturation effectWithSaturation:-1.0f],
+                         [CCEffectHue effectWithHue:90.0f],
+                         [CCEffectGlass effectWithRefraction:0.5f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment normalMap:nil],
+                         [CCEffectRefraction effectWithRefraction:0.5f environment:refractEnvironment normalMap:nil],
+                         [CCEffectReflection effectWithEnvironment:reflectEnvironment normalMap:nil],
+                         ];
+    
+    
+    CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/ShinyBallColor.png"];
+    sprite.positionType = CCPositionTypeNormalized;
+    sprite.position = ccp(0.1f, 0.9f);
+    sprite.scale = 0.5f;
+
+    sprite.effect = [[CCEffectStack alloc] initWithEffects:@[effects[4]]];
+    sprite.normalMapSpriteFrame = [CCSpriteFrame frameWithImageNamed:@"Images/ShinyBallNormals.png"];
+    sprite.colorRGBA = [CCColor colorWithRed:0.75f green:0.75f blue:0.75f alpha:0.75f];
+    
+    [self.contentNode addChild:sprite];
+    
+    [sprite runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+                                                               [CCActionMoveTo actionWithDuration:8.0 position:ccp(0.9f, 0.9f)],
+                                                               [CCActionMoveTo actionWithDuration:8.0 position:ccp(0.9f, 0.1f)],
+                                                               [CCActionMoveTo actionWithDuration:8.0 position:ccp(0.1f, 0.1f)],
+                                                               [CCActionMoveTo actionWithDuration:8.0 position:ccp(0.1f, 0.9f)],
+                                                               nil
+                                                               ]]];
+}
+
 -(void)setupPerformanceTest
 {
     self.subTitle = @"Effect Performance Test";
