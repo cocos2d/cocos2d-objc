@@ -93,7 +93,7 @@
  */
 - (CCColor *)colorWithAlphaComponent:(float)alpha;
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 /**
  *  Converts a UIColor object to its CCColor equivalent.
  *
@@ -152,7 +152,7 @@
  */
 - (CCColor *)initWithCGColor:(CGColorRef)cgColor;
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 /**
  *  Initializes and returns a UIColor object to its CCColor equivalent.
  *
@@ -281,12 +281,12 @@
 /** The Quartz color reference that corresponds to the CCColor color. */
 @property(nonatomic, readonly) CGColorRef CGColor;
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 /** The UIColor color reference that corresponds to the CCColor color. */
 @property (nonatomic, readonly) UIColor* UIColor;
 #endif
 
-#ifdef __CC_PLATFORM_MAC
+#if __CC_PLATFORM_MAC
 /** The NSColor color reference that corresponds to the CCColor color. */
 @property (nonatomic, readonly) NSColor* NSColor;
 #endif
@@ -326,16 +326,16 @@
 + (CCColor*)colorWithCcColor3b: (ccColor3B) c;
 + (CCColor*)colorWithCcColor4b: (ccColor4B) c;
 + (CCColor*)colorWithCcColor4f: (ccColor4F) c;
-+ (CCColor*)colorWithGLKVector4: (GLKVector4) c;
++ (CCColor*)colorWithCCVector4: (CCVector4) c;
 
 - (CCColor*)initWithCcColor3b: (ccColor3B) c;
 - (CCColor*)initWithCcColor4b: (ccColor4B) c;
-- (CCColor*)initWithGLKVector4: (GLKVector4) c;
+- (CCColor*)initWithCCVector4: (CCVector4) c;
 
 @property (nonatomic, readonly) ccColor3B ccColor3b;
 @property (nonatomic, readonly) ccColor4B ccColor4b;
 @property (nonatomic, readonly) ccColor4F ccColor4f;
-@property (nonatomic, readonly) GLKVector4 glkVector4;
+@property (nonatomic, readonly) CCVector4 CCVector4;
 
 @end
 

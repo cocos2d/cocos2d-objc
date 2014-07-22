@@ -33,6 +33,7 @@
 #import "CCScheduler.h"
 #import "CCRenderer.h"
 
+
 @class CCScene;
 @class CCShader;
 @class CCScheduler;
@@ -576,7 +577,7 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 /// -----------------------------------------------------------------------
 
 /** Returns the 4x4 drawing transformation for this node. Really only useful when overriding visit:parentTransform: */
--(GLKMatrix4)transform:(const GLKMatrix4 *)parentTransform;
+-(CCMatrix4)transform:(const CCMatrix4 *)parentTransform;
 
 /** Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
  The matrix is in Pixels.
@@ -647,13 +648,13 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  * For further info, please see ccGLstate.h.
  * You shall NOT call [super draw];
  */
--(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
+-(void)draw:(CCRenderer *)renderer transform:(const CCMatrix4 *)transform;
 
 /** Calls visit:parentTransform using the current renderer and projection. */
 -(void) visit;
 
 /** Recursive method that visit its children and draw them. */
--(void) visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform;
+-(void) visit:(CCRenderer *)renderer parentTransform:(const CCMatrix4 *)parentTransform;
 
 /** Sets and returns the color (tint), alpha is ignored when setting. */
 @property (nonatomic,strong) CCColor* color;

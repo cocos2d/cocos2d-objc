@@ -26,7 +26,7 @@
 
 #import "CCTiledMapLayer.h"
 
-typedef void (^CCTiledMapLayerAnimationBlock)(NSUInteger tileX, NSUInteger tileY, uint32_t *gid, uint32_t *flags, GLKVector4 *color);
+typedef void (^CCTiledMapLayerAnimationBlock)(NSUInteger tileX, NSUInteger tileY, uint32_t *gid, uint32_t *flags, CCVector4 *color);
 
 @interface CCTiledMapLayer ()
 

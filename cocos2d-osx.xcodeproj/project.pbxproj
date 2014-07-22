@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		2B19285F163379400049A044 /* CCClippingNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B19285D163379400049A044 /* CCClippingNode.h */; };
 		2B192860163379400049A044 /* CCClippingNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B19285E163379400049A044 /* CCClippingNode.m */; };
+		571CD03C19649E22003D460C /* CCPlatformTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 571CD03219649E22003D460C /* CCPlatformTextField.h */; };
+		571CD03D19649E22003D460C /* CCPlatformTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 571CD03319649E22003D460C /* CCPlatformTextField.m */; };
+		571CD04019649E22003D460C /* CCPlatformTextFieldMac.h in Headers */ = {isa = PBXBuildFile; fileRef = 571CD03819649E22003D460C /* CCPlatformTextFieldMac.h */; };
+		571CD04119649E22003D460C /* CCPlatformTextFieldMac.m in Sources */ = {isa = PBXBuildFile; fileRef = 571CD03919649E22003D460C /* CCPlatformTextFieldMac.m */; };
 		926B97E319385F8A00E345FB /* CCAnimationManager_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 926B97DE19385F8A00E345FB /* CCAnimationManager_Private.h */; };
 		926B97E419385F8A00E345FB /* CCAnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 926B97DF19385F8A00E345FB /* CCAnimationManager.m */; };
 		926B97E519385F8A00E345FB /* CCAnimationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 926B97E019385F8A00E345FB /* CCAnimationManager.h */; };
@@ -106,10 +110,6 @@
 		B770608F1831B0C40043CC67 /* IOSVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = B77060521831B0C40043CC67 /* IOSVersion.m */; };
 		B77060901831B0C40043CC67 /* mach_timing.c in Sources */ = {isa = PBXBuildFile; fileRef = B77060531831B0C40043CC67 /* mach_timing.c */; };
 		B77060911831B0C40043CC67 /* mach_timing.h in Headers */ = {isa = PBXBuildFile; fileRef = B77060541831B0C40043CC67 /* mach_timing.h */; };
-		B77060921831B0C40043CC67 /* NSMutableArray+WeakReferences.h in Headers */ = {isa = PBXBuildFile; fileRef = B77060551831B0C40043CC67 /* NSMutableArray+WeakReferences.h */; };
-		B77060931831B0C40043CC67 /* NSMutableArray+WeakReferences.m in Sources */ = {isa = PBXBuildFile; fileRef = B77060561831B0C40043CC67 /* NSMutableArray+WeakReferences.m */; };
-		B77060941831B0C40043CC67 /* NSMutableDictionary+WeakReferences.h in Headers */ = {isa = PBXBuildFile; fileRef = B77060571831B0C40043CC67 /* NSMutableDictionary+WeakReferences.h */; };
-		B77060951831B0C40043CC67 /* NSMutableDictionary+WeakReferences.m in Sources */ = {isa = PBXBuildFile; fileRef = B77060581831B0C40043CC67 /* NSMutableDictionary+WeakReferences.m */; };
 		B77060961831B0C40043CC67 /* OALAudioFile.h in Headers */ = {isa = PBXBuildFile; fileRef = B77060591831B0C40043CC67 /* OALAudioFile.h */; };
 		B77060971831B0C40043CC67 /* OALAudioFile.m in Sources */ = {isa = PBXBuildFile; fileRef = B770605A1831B0C40043CC67 /* OALAudioFile.m */; };
 		B77060981831B0C40043CC67 /* OALNotifications.h in Headers */ = {isa = PBXBuildFile; fileRef = B770605B1831B0C40043CC67 /* OALNotifications.h */; };
@@ -163,6 +163,23 @@
 		B7EE69ED1819EAAC00B983FE /* CCLayoutBox.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69E91819EAAC00B983FE /* CCLayoutBox.m */; };
 		B7EE6A34181B287300B983FE /* CCSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = B7EE6A32181B287300B983FE /* CCSlider.h */; };
 		B7EE6A35181B287300B983FE /* CCSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE6A33181B287300B983FE /* CCSlider.m */; };
+		D216F9181970A123000DEF7C /* CCMathTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = D216F90C1970A123000DEF7C /* CCMathTypes.h */; };
+		D216F9191970A123000DEF7C /* CCMathUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = D216F90D1970A123000DEF7C /* CCMathUtils.h */; };
+		D216F91A1970A123000DEF7C /* CCMatrix3.h in Headers */ = {isa = PBXBuildFile; fileRef = D216F90E1970A123000DEF7C /* CCMatrix3.h */; };
+		D216F91B1970A123000DEF7C /* CCMatrix4.h in Headers */ = {isa = PBXBuildFile; fileRef = D216F90F1970A123000DEF7C /* CCMatrix4.h */; };
+		D216F91C1970A123000DEF7C /* CCMatrix4.m in Sources */ = {isa = PBXBuildFile; fileRef = D216F9101970A123000DEF7C /* CCMatrix4.m */; };
+		D216F91D1970A123000DEF7C /* CCMatrixStack.h in Headers */ = {isa = PBXBuildFile; fileRef = D216F9111970A123000DEF7C /* CCMatrixStack.h */; };
+		D216F91F1970A123000DEF7C /* CCQuaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = D216F9131970A123000DEF7C /* CCQuaternion.h */; };
+		D216F9201970A123000DEF7C /* CCQuaternion.m in Sources */ = {isa = PBXBuildFile; fileRef = D216F9141970A123000DEF7C /* CCQuaternion.m */; };
+		D216F9211970A123000DEF7C /* CCVector2.h in Headers */ = {isa = PBXBuildFile; fileRef = D216F9151970A123000DEF7C /* CCVector2.h */; };
+		D216F9221970A123000DEF7C /* CCVector3.h in Headers */ = {isa = PBXBuildFile; fileRef = D216F9161970A123000DEF7C /* CCVector3.h */; };
+		D216F9231970A123000DEF7C /* CCVector4.h in Headers */ = {isa = PBXBuildFile; fileRef = D216F9171970A123000DEF7C /* CCVector4.h */; };
+		D216F92A1970A35A000DEF7C /* ALWeakArray.h in Headers */ = {isa = PBXBuildFile; fileRef = D216F9241970A35A000DEF7C /* ALWeakArray.h */; };
+		D216F92B1970A35A000DEF7C /* ALWeakArray.m in Sources */ = {isa = PBXBuildFile; fileRef = D216F9251970A35A000DEF7C /* ALWeakArray.m */; };
+		D216F92C1970A35A000DEF7C /* ALWeakDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = D216F9261970A35A000DEF7C /* ALWeakDictionary.h */; };
+		D216F92D1970A35A000DEF7C /* ALWeakDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = D216F9271970A35A000DEF7C /* ALWeakDictionary.m */; };
+		D216F92E1970A35A000DEF7C /* ALWeakElement.h in Headers */ = {isa = PBXBuildFile; fileRef = D216F9281970A35A000DEF7C /* ALWeakElement.h */; };
+		D216F92F1970A35A000DEF7C /* ALWeakElement.m in Sources */ = {isa = PBXBuildFile; fileRef = D216F9291970A35A000DEF7C /* ALWeakElement.m */; };
 		D37EE9FE187D4E7800CB5EF2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D37EE9FD187D4E7800CB5EF2 /* Foundation.framework */; };
 		D37EEA6E187D4F5200CB5EF2 /* libObjectiveChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D37EE9FC187D4E7700CB5EF2 /* libObjectiveChipmunk.a */; };
 		D37EEB03187D4F9600CB5EF2 /* ChipmunkBody.m in Sources */ = {isa = PBXBuildFile; fileRef = D37EEADF187D4F9600CB5EF2 /* ChipmunkBody.m */; };
@@ -334,6 +351,14 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		2B19285D163379400049A044 /* CCClippingNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCClippingNode.h; sourceTree = "<group>"; };
 		2B19285E163379400049A044 /* CCClippingNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCClippingNode.m; sourceTree = "<group>"; };
+		571CD03019649E22003D460C /* CCPlatformTextFieldAndroid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlatformTextFieldAndroid.h; sourceTree = "<group>"; };
+		571CD03119649E22003D460C /* CCPlatformTextFieldAndroid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPlatformTextFieldAndroid.m; sourceTree = "<group>"; };
+		571CD03219649E22003D460C /* CCPlatformTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlatformTextField.h; sourceTree = "<group>"; };
+		571CD03319649E22003D460C /* CCPlatformTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPlatformTextField.m; sourceTree = "<group>"; };
+		571CD03519649E22003D460C /* CCPlatformTextFieldIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlatformTextFieldIOS.h; sourceTree = "<group>"; };
+		571CD03619649E22003D460C /* CCPlatformTextFieldIOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPlatformTextFieldIOS.m; sourceTree = "<group>"; };
+		571CD03819649E22003D460C /* CCPlatformTextFieldMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlatformTextFieldMac.h; sourceTree = "<group>"; };
+		571CD03919649E22003D460C /* CCPlatformTextFieldMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPlatformTextFieldMac.m; sourceTree = "<group>"; };
 		926B97DE19385F8A00E345FB /* CCAnimationManager_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCAnimationManager_Private.h; path = "cocos2d-ui/CCBReader/CCAnimationManager_Private.h"; sourceTree = "<group>"; };
 		926B97DF19385F8A00E345FB /* CCAnimationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCAnimationManager.m; path = "cocos2d-ui/CCBReader/CCAnimationManager.m"; sourceTree = "<group>"; };
 		926B97E019385F8A00E345FB /* CCAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCAnimationManager.h; path = "cocos2d-ui/CCBReader/CCAnimationManager.h"; sourceTree = "<group>"; };
@@ -428,10 +453,6 @@
 		B77060521831B0C40043CC67 /* IOSVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IOSVersion.m; sourceTree = "<group>"; };
 		B77060531831B0C40043CC67 /* mach_timing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mach_timing.c; sourceTree = "<group>"; };
 		B77060541831B0C40043CC67 /* mach_timing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mach_timing.h; sourceTree = "<group>"; };
-		B77060551831B0C40043CC67 /* NSMutableArray+WeakReferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+WeakReferences.h"; sourceTree = "<group>"; };
-		B77060561831B0C40043CC67 /* NSMutableArray+WeakReferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+WeakReferences.m"; sourceTree = "<group>"; };
-		B77060571831B0C40043CC67 /* NSMutableDictionary+WeakReferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+WeakReferences.h"; sourceTree = "<group>"; };
-		B77060581831B0C40043CC67 /* NSMutableDictionary+WeakReferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+WeakReferences.m"; sourceTree = "<group>"; };
 		B77060591831B0C40043CC67 /* OALAudioFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OALAudioFile.h; sourceTree = "<group>"; };
 		B770605A1831B0C40043CC67 /* OALAudioFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OALAudioFile.m; sourceTree = "<group>"; };
 		B770605B1831B0C40043CC67 /* OALNotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OALNotifications.h; sourceTree = "<group>"; };
@@ -491,6 +512,24 @@
 		B7EE69E91819EAAC00B983FE /* CCLayoutBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLayoutBox.m; sourceTree = "<group>"; };
 		B7EE6A32181B287300B983FE /* CCSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCSlider.h; path = "cocos2d-ui/CCSlider.h"; sourceTree = "<group>"; };
 		B7EE6A33181B287300B983FE /* CCSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSlider.m; path = "cocos2d-ui/CCSlider.m"; sourceTree = "<group>"; };
+		D216F90C1970A123000DEF7C /* CCMathTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMathTypes.h; sourceTree = "<group>"; };
+		D216F90D1970A123000DEF7C /* CCMathUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMathUtils.h; sourceTree = "<group>"; };
+		D216F90E1970A123000DEF7C /* CCMatrix3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMatrix3.h; sourceTree = "<group>"; };
+		D216F90F1970A123000DEF7C /* CCMatrix4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMatrix4.h; sourceTree = "<group>"; };
+		D216F9101970A123000DEF7C /* CCMatrix4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMatrix4.m; sourceTree = "<group>"; };
+		D216F9111970A123000DEF7C /* CCMatrixStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMatrixStack.h; sourceTree = "<group>"; };
+		D216F9121970A123000DEF7C /* CCMatrixStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMatrixStack.m; sourceTree = "<group>"; };
+		D216F9131970A123000DEF7C /* CCQuaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCQuaternion.h; sourceTree = "<group>"; };
+		D216F9141970A123000DEF7C /* CCQuaternion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCQuaternion.m; sourceTree = "<group>"; };
+		D216F9151970A123000DEF7C /* CCVector2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVector2.h; sourceTree = "<group>"; };
+		D216F9161970A123000DEF7C /* CCVector3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVector3.h; sourceTree = "<group>"; };
+		D216F9171970A123000DEF7C /* CCVector4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVector4.h; sourceTree = "<group>"; };
+		D216F9241970A35A000DEF7C /* ALWeakArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWeakArray.h; sourceTree = "<group>"; };
+		D216F9251970A35A000DEF7C /* ALWeakArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALWeakArray.m; sourceTree = "<group>"; };
+		D216F9261970A35A000DEF7C /* ALWeakDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWeakDictionary.h; sourceTree = "<group>"; };
+		D216F9271970A35A000DEF7C /* ALWeakDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALWeakDictionary.m; sourceTree = "<group>"; };
+		D216F9281970A35A000DEF7C /* ALWeakElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWeakElement.h; sourceTree = "<group>"; };
+		D216F9291970A35A000DEF7C /* ALWeakElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALWeakElement.m; sourceTree = "<group>"; };
 		D37EE9FC187D4E7700CB5EF2 /* libObjectiveChipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libObjectiveChipmunk.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D37EE9FD187D4E7800CB5EF2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D37EEA0B187D4E7800CB5EF2 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -786,6 +825,46 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		571CD02E19649E22003D460C /* Platform */ = {
+			isa = PBXGroup;
+			children = (
+				571CD02F19649E22003D460C /* Android */,
+				571CD03219649E22003D460C /* CCPlatformTextField.h */,
+				571CD03319649E22003D460C /* CCPlatformTextField.m */,
+				571CD03419649E22003D460C /* iOS */,
+				571CD03719649E22003D460C /* Mac */,
+			);
+			name = Platform;
+			path = "cocos2d-ui/Platform";
+			sourceTree = "<group>";
+		};
+		571CD02F19649E22003D460C /* Android */ = {
+			isa = PBXGroup;
+			children = (
+				571CD03019649E22003D460C /* CCPlatformTextFieldAndroid.h */,
+				571CD03119649E22003D460C /* CCPlatformTextFieldAndroid.m */,
+			);
+			path = Android;
+			sourceTree = "<group>";
+		};
+		571CD03419649E22003D460C /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				571CD03519649E22003D460C /* CCPlatformTextFieldIOS.h */,
+				571CD03619649E22003D460C /* CCPlatformTextFieldIOS.m */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		571CD03719649E22003D460C /* Mac */ = {
+			isa = PBXGroup;
+			children = (
+				571CD03819649E22003D460C /* CCPlatformTextFieldMac.h */,
+				571CD03919649E22003D460C /* CCPlatformTextFieldMac.m */,
+			);
+			path = Mac;
+			sourceTree = "<group>";
+		};
 		A0DA0BC015BCDB2400E80A92 /* Drawing Nodes */ = {
 			isa = PBXGroup;
 			children = (
@@ -903,15 +982,17 @@
 		B770604F1831B0C40043CC67 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				D216F9241970A35A000DEF7C /* ALWeakArray.h */,
+				D216F9251970A35A000DEF7C /* ALWeakArray.m */,
+				D216F9261970A35A000DEF7C /* ALWeakDictionary.h */,
+				D216F9271970A35A000DEF7C /* ALWeakDictionary.m */,
+				D216F9281970A35A000DEF7C /* ALWeakElement.h */,
+				D216F9291970A35A000DEF7C /* ALWeakElement.m */,
 				B77060501831B0C40043CC67 /* ARCSafe_MemMgmt.h */,
 				B77060511831B0C40043CC67 /* IOSVersion.h */,
 				B77060521831B0C40043CC67 /* IOSVersion.m */,
 				B77060531831B0C40043CC67 /* mach_timing.c */,
 				B77060541831B0C40043CC67 /* mach_timing.h */,
-				B77060551831B0C40043CC67 /* NSMutableArray+WeakReferences.h */,
-				B77060561831B0C40043CC67 /* NSMutableArray+WeakReferences.m */,
-				B77060571831B0C40043CC67 /* NSMutableDictionary+WeakReferences.h */,
-				B77060581831B0C40043CC67 /* NSMutableDictionary+WeakReferences.m */,
 				B77060591831B0C40043CC67 /* OALAudioFile.h */,
 				B770605A1831B0C40043CC67 /* OALAudioFile.m */,
 				B770605B1831B0C40043CC67 /* OALNotifications.h */,
@@ -926,6 +1007,7 @@
 		B78AE63E17E7BA690028BE0B /* cocos2d-ui */ = {
 			isa = PBXGroup;
 			children = (
+				571CD02E19649E22003D460C /* Platform */,
 				B7D2731B1822F52E0054849B /* CCBReader */,
 				B7C6239A17F10F3600928F91 /* cocos2d-ui.h */,
 				B78AE63F17E7BA800028BE0B /* CCButton.h */,
@@ -982,6 +1064,25 @@
 				B7EE69E91819EAAC00B983FE /* CCLayoutBox.m */,
 			);
 			name = Layouts;
+			sourceTree = "<group>";
+		};
+		D216F90B1970A0F6000DEF7C /* Math */ = {
+			isa = PBXGroup;
+			children = (
+				D216F90C1970A123000DEF7C /* CCMathTypes.h */,
+				D216F90D1970A123000DEF7C /* CCMathUtils.h */,
+				D216F90E1970A123000DEF7C /* CCMatrix3.h */,
+				D216F90F1970A123000DEF7C /* CCMatrix4.h */,
+				D216F9101970A123000DEF7C /* CCMatrix4.m */,
+				D216F9111970A123000DEF7C /* CCMatrixStack.h */,
+				D216F9121970A123000DEF7C /* CCMatrixStack.m */,
+				D216F9131970A123000DEF7C /* CCQuaternion.h */,
+				D216F9141970A123000DEF7C /* CCQuaternion.m */,
+				D216F9151970A123000DEF7C /* CCVector2.h */,
+				D216F9161970A123000DEF7C /* CCVector3.h */,
+				D216F9171970A123000DEF7C /* CCVector4.h */,
+			);
+			name = Math;
 			sourceTree = "<group>";
 		};
 		D37EEAB8187D4F7A00CB5EF2 /* ObjectiveChipmunk */ = {
@@ -1144,6 +1245,7 @@
 		E076E6281225EC7400DE0DA2 /* cocos2d */ = {
 			isa = PBXGroup;
 			children = (
+				D216F90B1970A0F6000DEF7C /* Math */,
 				E076E77B1225ED1100DE0DA2 /* Base Nodes */,
 				B7EE69E51819EA9600B983FE /* Layouts */,
 				E076E7721225EC8C00DE0DA2 /* Label Nodes */,
@@ -1424,6 +1526,7 @@
 				B7D273351822F5460054849B /* CCBuilderReader.h in Headers */,
 				B77060771831B0C40043CC67 /* ALChannelSource.h in Headers */,
 				E076E6D31225EC7400DE0DA2 /* CCActionEase.h in Headers */,
+				D216F91B1970A123000DEF7C /* CCMatrix4.h in Headers */,
 				E076E6D91225EC7400DE0DA2 /* CCActionInstant.h in Headers */,
 				E076E6DB1225EC7400DE0DA2 /* CCActionInterval.h in Headers */,
 				B7D2732F1822F5460054849B /* CCBReader.h in Headers */,
@@ -1437,6 +1540,7 @@
 				E076E6E51225EC7400DE0DA2 /* CCActionTween.h in Headers */,
 				B77060851831B0C40043CC67 /* ALWrapper.h in Headers */,
 				B770607F1831B0C40043CC67 /* ALSoundSource.h in Headers */,
+				D216F91F1970A123000DEF7C /* CCQuaternion.h in Headers */,
 				B770608E1831B0C40043CC67 /* IOSVersion.h in Headers */,
 				E076E6FC1225EC7400DE0DA2 /* CCLabelBMFont.h in Headers */,
 				E076E6FE1225EC7400DE0DA2 /* CCLabelTTF.h in Headers */,
@@ -1445,7 +1549,6 @@
 				E076E7071225EC7400DE0DA2 /* CCMotionStreak.h in Headers */,
 				E076E7091225EC7400DE0DA2 /* CCNode.h in Headers */,
 				E076E70B1225EC7400DE0DA2 /* CCParallaxNode.h in Headers */,
-				B77060941831B0C40043CC67 /* NSMutableDictionary+WeakReferences.h in Headers */,
 				E076E70D1225EC7400DE0DA2 /* CCParticleExamples.h in Headers */,
 				B77060731831B0C40043CC67 /* ALBuffer.h in Headers */,
 				E076E70F1225EC7400DE0DA2 /* CCParticleSystem.h in Headers */,
@@ -1462,11 +1565,14 @@
 				E076E7241225EC7400DE0DA2 /* CCSpriteFrame.h in Headers */,
 				E076E7261225EC7400DE0DA2 /* CCSpriteFrameCache.h in Headers */,
 				B750162C18125C4A00708A2F /* CCControlSubclass.h in Headers */,
+				D216F9191970A123000DEF7C /* CCMathUtils.h in Headers */,
 				B77060801831B0C40043CC67 /* ALSoundSourcePool.h in Headers */,
 				E076E72A1225EC7400DE0DA2 /* CCTexture.h in Headers */,
 				B77060611831B0C40043CC67 /* OALAction.h in Headers */,
+				D216F92A1970A35A000DEF7C /* ALWeakArray.h in Headers */,
 				E076E72E1225EC7400DE0DA2 /* CCTextureCache.h in Headers */,
 				E076E7301225EC7400DE0DA2 /* CCTexturePVR.h in Headers */,
+				D216F91D1970A123000DEF7C /* CCMatrixStack.h in Headers */,
 				D389412818639DD400725CFC /* CCPhysicsJoint.h in Headers */,
 				B770607B1831B0C40043CC67 /* ALDevice.h in Headers */,
 				B77060651831B0C40043CC67 /* OALAudioActions.h in Headers */,
@@ -1479,16 +1585,18 @@
 				E076E7381225EC7400DE0DA2 /* CCTiledMap.h in Headers */,
 				E076E73A1225EC7400DE0DA2 /* CCTMXXMLParser.h in Headers */,
 				E076E73C1225EC7400DE0DA2 /* CCTransition.h in Headers */,
-				B77060921831B0C40043CC67 /* NSMutableArray+WeakReferences.h in Headers */,
 				D389412A18639DD400725CFC /* CCPhysicsNode.h in Headers */,
 				B77060891831B0C40043CC67 /* OALAudioSession.h in Headers */,
 				E076E7451225EC7400DE0DA2 /* CCGL.h in Headers */,
 				E076E7461225EC7400DE0DA2 /* CCNS.h in Headers */,
 				E076E7551225EC7400DE0DA2 /* CCDirectorMac.h in Headers */,
+				D216F9221970A123000DEF7C /* CCVector3.h in Headers */,
 				E076E7591225EC7400DE0DA2 /* CCGLView.h in Headers */,
 				E076E75C1225EC7400DE0DA2 /* base64.h in Headers */,
 				B7D273311822F5460054849B /* CCBSequence.h in Headers */,
 				E076E7601225EC7400DE0DA2 /* CCFileUtils.h in Headers */,
+				D216F92C1970A35A000DEF7C /* ALWeakDictionary.h in Headers */,
+				D216F92E1970A35A000DEF7C /* ALWeakElement.h in Headers */,
 				E076E7621225EC7400DE0DA2 /* CCProfiling.h in Headers */,
 				E076E7651225EC7400DE0DA2 /* ccUtils.h in Headers */,
 				926B97E519385F8A00E345FB /* CCAnimationManager.h in Headers */,
@@ -1503,6 +1611,7 @@
 				B77060691831B0C40043CC67 /* OALAudioTrack.h in Headers */,
 				E076E7691225EC7400DE0DA2 /* TGAlib.h in Headers */,
 				B7C6239B17F10F3600928F91 /* CCTableView.h in Headers */,
+				D216F9211970A123000DEF7C /* CCVector2.h in Headers */,
 				D3AD531718C84F79005B6CF3 /* CCShader.h in Headers */,
 				E076E76D1225EC7400DE0DA2 /* uthash.h in Headers */,
 				E076E76E1225EC7400DE0DA2 /* utlist.h in Headers */,
@@ -1523,6 +1632,8 @@
 				A046E2B714C1E5000005BBF2 /* CCGLView.h in Headers */,
 				B7E7758C184FBA47004221AA /* CCNodeColor.h in Headers */,
 				B77060DB18342E540043CC67 /* CCBReader_Private.h in Headers */,
+				D216F9181970A123000DEF7C /* CCMathTypes.h in Headers */,
+				D216F9231970A123000DEF7C /* CCVector4.h in Headers */,
 				B7C6239D17F10F3600928F91 /* cocos2d-ui.h in Headers */,
 				B77060791831B0C40043CC67 /* ALContext.h in Headers */,
 				B7EE69EA1819EAAC00B983FE /* CCLayout.h in Headers */,
@@ -1530,6 +1641,7 @@
 				B770606F1831B0C40043CC67 /* OALSimpleAudio.h in Headers */,
 				B770607D1831B0C40043CC67 /* ALListener.h in Headers */,
 				B7E7762C1857A4C4004221AA /* CCColor.h in Headers */,
+				571CD03C19649E22003D460C /* CCPlatformTextField.h in Headers */,
 				A0A7A507151416A000C8BD16 /* CCActionCatmullRom.h in Headers */,
 				A03714D7154F1D9300081CBA /* CCNode+Debug.h in Headers */,
 				A0DA0BBE15BCD93700E80A92 /* CCDrawNode.h in Headers */,
@@ -1542,6 +1654,7 @@
 				926B97E319385F8A00E345FB /* CCAnimationManager_Private.h in Headers */,
 				D3AD531618C84F79005B6CF3 /* CCShader_Private.h in Headers */,
 				B7D2732D1822F5460054849B /* CCBLocalizationManager.h in Headers */,
+				D216F91A1970A123000DEF7C /* CCMatrix3.h in Headers */,
 				A0D7D69115E2D2CC000CA0C4 /* ccTypes.h in Headers */,
 				A0D7D69415E2D2CC000CA0C4 /* CCConfiguration.h in Headers */,
 				A0D7D69615E2D2CC000CA0C4 /* CCDirector.h in Headers */,
@@ -1556,6 +1669,7 @@
 				B77060631831B0C40043CC67 /* OALActionManager.h in Headers */,
 				B77060711831B0C40043CC67 /* ObjectAL.h in Headers */,
 				A66680C317D4D73000ECDE6F /* CCResponder.h in Headers */,
+				571CD04019649E22003D460C /* CCPlatformTextFieldMac.h in Headers */,
 				A66680C517D4D73000ECDE6F /* CCResponderManager.h in Headers */,
 				D3AD532318C84FC9005B6CF3 /* CCRenderer.h in Headers */,
 				D389412618639DD400725CFC /* CCPhysicsBody.h in Headers */,
@@ -1687,7 +1801,6 @@
 				E076E6E21225EC7400DE0DA2 /* CCActionProgressTimer.m in Sources */,
 				E076E6E61225EC7400DE0DA2 /* CCActionTween.m in Sources */,
 				926B97EA1938602200E345FB /* CCAnimationManager+FrameAnimation.m in Sources */,
-				B77060931831B0C40043CC67 /* NSMutableArray+WeakReferences.m in Sources */,
 				D389412D18639DD400725CFC /* CCPhysicsShape.m in Sources */,
 				D3AD531818C84F79005B6CF3 /* CCShader.m in Sources */,
 				B770608F1831B0C40043CC67 /* IOSVersion.m in Sources */,
@@ -1695,7 +1808,7 @@
 				B770607C1831B0C40043CC67 /* ALDevice.m in Sources */,
 				E076E6FD1225EC7400DE0DA2 /* CCLabelBMFont.m in Sources */,
 				E076E6FF1225EC7400DE0DA2 /* CCLabelTTF.m in Sources */,
-				B77060951831B0C40043CC67 /* NSMutableDictionary+WeakReferences.m in Sources */,
+				D216F9201970A123000DEF7C /* CCQuaternion.m in Sources */,
 				B770606A1831B0C40043CC67 /* OALAudioTrack.m in Sources */,
 				E076E7081225EC7400DE0DA2 /* CCMotionStreak.m in Sources */,
 				E076E70A1225EC7400DE0DA2 /* CCNode.m in Sources */,
@@ -1733,6 +1846,7 @@
 				E076E75B1225EC7400DE0DA2 /* base64.c in Sources */,
 				E076E7611225EC7400DE0DA2 /* CCFileUtils.m in Sources */,
 				E076E7631225EC7400DE0DA2 /* CCProfiling.m in Sources */,
+				571CD03D19649E22003D460C /* CCPlatformTextField.m in Sources */,
 				D389412B18639DD400725CFC /* CCPhysicsNode.m in Sources */,
 				E076E7641225EC7400DE0DA2 /* ccUtils.c in Sources */,
 				B770608C1831B0C40043CC67 /* OALSuspendHandler.m in Sources */,
@@ -1747,13 +1861,16 @@
 				B77060811831B0C40043CC67 /* ALSoundSourcePool.m in Sources */,
 				B7E7762D1857A4C4004221AA /* CCColor.m in Sources */,
 				A0BE62FD140552BD00DAA336 /* CCVertex.m in Sources */,
+				D216F91C1970A123000DEF7C /* CCMatrix4.m in Sources */,
 				A0AAB80C1451BD3600850F2C /* CCParticleBatchNode.m in Sources */,
 				A046E2B314C1E5000005BBF2 /* CCDirectorIOS.m in Sources */,
+				D216F92F1970A35A000DEF7C /* ALWeakElement.m in Sources */,
 				A046E2B514C1E5000005BBF2 /* CCES2Renderer.m in Sources */,
 				A046E2B814C1E5000005BBF2 /* CCGLView.m in Sources */,
 				B770606E1831B0C40043CC67 /* OALAudioTracks.m in Sources */,
 				D389412918639DD400725CFC /* CCPhysicsJoint.m in Sources */,
 				A0C879AD14F98F1C00C0E8B2 /* NSThread+performBlock.m in Sources */,
+				571CD04119649E22003D460C /* CCPlatformTextFieldMac.m in Sources */,
 				A0A7A506151416A000C8BD16 /* CCActionCatmullRom.m in Sources */,
 				B7EE6A35181B287300B983FE /* CCSlider.m in Sources */,
 				B7D2732E1822F5460054849B /* CCBLocalizationManager.m in Sources */,
@@ -1768,6 +1885,7 @@
 				A0D7D69715E2D2CC000CA0C4 /* CCDirector.m in Sources */,
 				D3AD531C18C84FA1005B6CF3 /* CCCache.m in Sources */,
 				B77060881831B0C40043CC67 /* OpenALManager.m in Sources */,
+				D216F92B1970A35A000DEF7C /* ALWeakArray.m in Sources */,
 				B7E776541858EC79004221AA /* CCParticleSystemBase.m in Sources */,
 				A0D7D69A15E2D2CC000CA0C4 /* CCScheduler.m in Sources */,
 				B77060971831B0C40043CC67 /* OALAudioFile.m in Sources */,
@@ -1777,6 +1895,7 @@
 				B74C2B9617BDA54600A829C0 /* CCSprite9Slice.m in Sources */,
 				B770609A1831B0C40043CC67 /* OALTools.m in Sources */,
 				D3AD532418C84FC9005B6CF3 /* CCRenderer.m in Sources */,
+				D216F92D1970A35A000DEF7C /* ALWeakDictionary.m in Sources */,
 				B75C2E7817C5857F002B0E0D /* NSAttributedString+CCAdditions.m in Sources */,
 				A66680C417D4D73000ECDE6F /* CCResponder.m in Sources */,
 				A66680C617D4D73000ECDE6F /* CCResponderManager.m in Sources */,

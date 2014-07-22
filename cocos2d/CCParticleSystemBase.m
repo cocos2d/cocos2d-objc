@@ -265,15 +265,21 @@
 				NSAssert( deflated != NULL, @"CCParticleSystem: error ungzipping textureImageData");
 				NSData *data = [[NSData alloc] initWithBytes:deflated length:deflatedLen];
 
-#ifdef __CC_PLATFORM_IOS
-				UIImage *image = [[UIImage alloc] initWithData:data];
-#elif defined(__CC_PLATFORM_MAC)
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
+                BOOL png = [[[dictionary valueForKey:@"textureFileName"] lowercaseString] hasSuffix:@".png"];
+                CGDataProviderRef imgDataProvider = CGDataProviderCreateWithCFData((__bridge CFDataRef)data);
+                CGImageRef image = (png) ? CGImageCreateWithPNGDataProvider(imgDataProvider, NULL, true, kCGRenderingIntentDefault) : CGImageCreateWithJPEGDataProvider(imgDataProvider, NULL, true, kCGRenderingIntentDefault) ;
+				
+				[self setTexture:  [ [CCTextureCache sharedTextureCache] addCGImage:image forKey:textureName]];
+
+                CGDataProviderRelease(imgDataProvider);
+                CGImageRelease(image); 
+#elif __CC_PLATFORM_MAC
 				NSBitmapImageRep *image = [[NSBitmapImageRep alloc] initWithData:data];
+				[self setTexture:  [ [CCTextureCache sharedTextureCache] addCGImage:[image CGImage] forKey:textureName]];
 #endif
 
 				free(deflated); deflated = NULL;
-
-				[self setTexture:  [ [CCTextureCache sharedTextureCache] addCGImage:[image CGImage] forKey:textureName]];
 			}
 
 			NSAssert( [self texture] != NULL, @"CCParticleSystem: error loading the texture");
@@ -349,13 +355,13 @@
 	particle->pos.y = _sourcePosition.y + _posVar.y * CCRANDOM_MINUS1_1();
 
 	// Color
-	GLKVector4 start;
+	CCVector4 start;
 	start.r = clampf( _startColor.r + _startColorVar.r * CCRANDOM_MINUS1_1(), 0, 1);
 	start.g = clampf( _startColor.g + _startColorVar.g * CCRANDOM_MINUS1_1(), 0, 1);
 	start.b = clampf( _startColor.b + _startColorVar.b * CCRANDOM_MINUS1_1(), 0, 1);
 	start.a = clampf( _startColor.a + _startColorVar.a * CCRANDOM_MINUS1_1(), 0, 1);
 
-	GLKVector4 end;
+	CCVector4 end;
 	end.r = clampf( _endColor.r + _endColorVar.r * CCRANDOM_MINUS1_1(), 0, 1);
 	end.g = clampf( _endColor.g + _endColorVar.g * CCRANDOM_MINUS1_1(), 0, 1);
 	end.b = clampf( _endColor.b + _endColorVar.b * CCRANDOM_MINUS1_1(), 0, 1);
@@ -389,10 +395,10 @@
 	// position
 	if( _particlePositionType == CCParticleSystemPositionTypeFree ){
 		CGPoint p = [self convertToWorldSpace:CGPointZero];
-		particle->startPos = GLKVector2Make(p.x, p.y);
+		particle->startPos = CCVector2Make(p.x, p.y);
 	} else if( _particlePositionType == CCParticleSystemPositionTypeRelative ){
 		CGPoint p = self.position;
-		particle->startPos = GLKVector2Make(p.x, p.y);
+		particle->startPos = CCVector2Make(p.x, p.y);
 	}
 
 	// direction
@@ -401,11 +407,11 @@
 	// Mode Gravity: A
 	if( _emitterMode == CCParticleSystemModeGravity ) {
 
-		GLKVector2 v = GLKVector2Make(cosf(a), sinf(a));
+		CCVector2 v = CCVector2Make(cosf(a), sinf(a));
 		float s = _mode.A.speed + _mode.A.speedVar * CCRANDOM_MINUS1_1();
 
 		// direction
-		particle->mode.A.dir = GLKVector2MultiplyScalar( v, s );
+		particle->mode.A.dir = CCVector2MultiplyScalar( v, s );
 
 		// radial accel
 		particle->mode.A.radialAccel = _mode.A.radialAccel + _mode.A.radialAccelVar * CCRANDOM_MINUS1_1();
@@ -515,27 +521,27 @@
 
 				// Mode A: gravity, direction, tangential accel & radial accel
 				if( _emitterMode == CCParticleSystemModeGravity ) {
-					GLKVector2 radial = GLKVector2Make(0.0f, 0.0f);
+					CCVector2 radial = CCVector2Make(0.0f, 0.0f);
 					// radial acceleration
 					if(p->pos.x || p->pos.y){
-						radial = GLKVector2Normalize(p->pos);
+						radial = CCVector2Normalize(p->pos);
 					}
 
-					GLKVector2 tangential = radial;
-					radial = GLKVector2MultiplyScalar(radial, p->mode.A.radialAccel);
+					CCVector2 tangential = radial;
+					radial = CCVector2MultiplyScalar(radial, p->mode.A.radialAccel);
 
 					// tangential acceleration
 					float newy = tangential.x;
 					tangential.x = -tangential.y;
 					tangential.y = newy;
-					tangential = GLKVector2MultiplyScalar(tangential, p->mode.A.tangentialAccel);
+					tangential = CCVector2MultiplyScalar(tangential, p->mode.A.tangentialAccel);
 
 					// (gravity + radial + tangential) * dt
-					GLKVector2 tmp = GLKVector2Add( GLKVector2Add( radial, tangential), _mode.A.gravity);
-					tmp = GLKVector2MultiplyScalar( tmp, dt);
-					p->mode.A.dir = GLKVector2Add(p->mode.A.dir, tmp);
-					tmp = GLKVector2MultiplyScalar(p->mode.A.dir, dt);
-					p->pos = GLKVector2Add( p->pos, tmp );
+					CCVector2 tmp = CCVector2Add( CCVector2Add( radial, tangential), _mode.A.gravity);
+					tmp = CCVector2MultiplyScalar( tmp, dt);
+					p->mode.A.dir = CCVector2Add(p->mode.A.dir, tmp);
+					tmp = CCVector2MultiplyScalar(p->mode.A.dir, dt);
+					p->pos = CCVector2Add( p->pos, tmp );
 				}
 
 				// Mode B: radius movement
@@ -665,12 +671,12 @@
 -(void) setGravity:(CGPoint)g
 {
 	NSAssert( _emitterMode == CCParticleSystemModeGravity, @"Particle Mode should be Gravity");
-	_mode.A.gravity = GLKVector2Make(g.x, g.y);
+	_mode.A.gravity = CCVector2Make(g.x, g.y);
 }
 -(CGPoint) gravity
 {
 	NSAssert( _emitterMode == CCParticleSystemModeGravity, @"Particle Mode should be Gravity");
-	GLKVector2 g = _mode.A.gravity;
+	CCVector2 g = _mode.A.gravity;
 	return CGPointMake(g.x, g.y);
 }
 

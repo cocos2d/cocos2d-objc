@@ -233,7 +233,7 @@
 /// @name OS X
 /// -----------------------------------------------------------------------
 
-#ifdef __CC_PLATFORM_MAC
+#if __CC_PLATFORM_MAC
 /**
  *  (OS X) HTML Label
  *
@@ -251,8 +251,10 @@
  *  Register a TTF font resource.
  *
  *  @param fontFile Font file path.
+ *
+ *  @return Registered font name
  */
-+(void) registerCustomTTF:(NSString*)fontFile;
++(NSString *) registerCustomTTF:(NSString*)fontFile;
 
 
 @end

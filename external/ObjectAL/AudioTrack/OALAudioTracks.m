@@ -26,7 +26,10 @@
 //
 
 #import "OALAudioTracks.h"
-#import "NSMutableArray+WeakReferences.h"
+
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
+
+#import "ALWeakArray.h"
 #import "ObjectALMacros.h"
 #import "ARCSafe_MemMgmt.h"
 #import "OALAudioSession.h"
@@ -67,7 +70,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALAudioTracks);
 
 		suspendHandler = [[OALSuspendHandler alloc] initWithTarget:nil selector:nil];
 
-		tracks = [NSMutableArray newMutableArrayUsingWeakReferencesWithCapacity:10];
+		tracks = [[ALWeakArray alloc] initWithCapacity:10];
 		
 		[[OALAudioSession sharedInstance] addSuspendListener:self];
 
@@ -223,3 +226,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALAudioTracks);
 }
 
 @end
+
+#endif // __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
+

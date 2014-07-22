@@ -513,7 +513,7 @@ ColorForShape(cpShape *shape, CCDrawNode *draw)
     return CC_PHYSICS_SHAPE_DEBUG_FILL_COLOR;
 }
 
--(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
+-(void)draw:(CCRenderer *)renderer transform:(const CCMatrix4 *)transform
 {
 	if(!_debugDraw) return;
 	

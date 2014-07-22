@@ -161,7 +161,7 @@
 	colorNode.position = ccp( s.width/2.0f - 100, s.height/2.0f - 100);
 	[self.contentNode addChild:colorNode];
 	
-	self.subTitle = @"Blue bottom left, red top right";
+	self.subTitle = @"Red bottom left, blue top right";
 }
 
 

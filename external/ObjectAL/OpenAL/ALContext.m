@@ -28,7 +28,8 @@
 //
 
 #import "ALContext.h"
-#import "NSMutableArray+WeakReferences.h"
+
+#import "ALWeakArray.h"
 #import "ObjectALMacros.h"
 #import "ARCSafe_MemMgmt.h"
 #import "ALWrapper.h"
@@ -179,7 +180,7 @@
 		
 		listener = [[ALListener alloc] initWithContext:self];
 		
-		sources = [NSMutableArray newMutableArrayUsingWeakReferencesWithCapacity:32];
+		sources = [[ALWeakArray alloc] initWithCapacity:32];
 		
 		// Cache all attributes for this context.
 		attributes = [[NSMutableArray alloc] initWithCapacity:5];

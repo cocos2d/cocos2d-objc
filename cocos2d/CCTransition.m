@@ -167,7 +167,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     _progress = 0.0f;
     
     _transitionPixelFormat = CCTexturePixelFormat_RGBA8888;
-		_transitionDepthStencilFormat = GL_DEPTH24_STENCIL8;
+    _transitionDepthStencilFormat = GL_DEPTH24_STENCIL8;
     
     // disable touch during transition
     self.userInteractionEnabled = NO;
@@ -215,7 +215,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     [self renderIncoming:0];
     
     // switch to transition scene
-    [[CCDirector sharedDirector] performSelector:@selector(startTransition:) withObject:self];
+    [[CCDirector sharedDirector] startTransition:self];
 }
 
 // -----------------------------------------------------------------
@@ -269,15 +269,15 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 
 - (void)renderOutgoing:(float)progress
 {
-    GLKVector4 c = _outgoingScene.colorRGBA.glkVector4;
+    CCVector4 c = _outgoingScene.colorRGBA.CCVector4;
     [_outgoingTexture beginWithClear:c.r g:c.g b:c.b a:c.a depth:1.0 stencil:0];
-	    [_outgoingScene visit];
+    [_outgoingScene visit];
     [_outgoingTexture end];
 }
 
 - (void)renderIncoming:(float)progress
 {
-    GLKVector4 c = _outgoingScene.colorRGBA.glkVector4;
+    CCVector4 c = _outgoingScene.colorRGBA.CCVector4;
     [_incomingTexture beginWithClear:c.r g:c.g b:c.b a:c.a depth:1.0 stencil:0];
 	    [_incomingScene visit];
     [_incomingTexture end];
@@ -311,7 +311,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 
 // -----------------------------------------------------------------
 
--(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
+-(void)draw:(CCRenderer *)renderer transform:(const CCMatrix4 *)transform
 {
 	typedef id (*Func)(id, SEL);
 	((Func)objc_msgSend)(self, _drawSelector);

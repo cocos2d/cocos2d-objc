@@ -30,19 +30,19 @@
 /// Standard interleaved vertex format for Cocos2D.
 typedef struct CCVertex {
 	/// Vec4 position (x, y, z, w)
-	GLKVector4 position;
+	CCVector4 position;
 	/// 2xVec2 texture coordinates (x, y)
-	GLKVector2 texCoord1, texCoord2;
+	CCVector2 texCoord1, texCoord2;
 	/// Vec4 color (RGBA)
-	GLKVector4 color;
+	CCVector4 color;
 } CCVertex;
 
 /// Multiply the vertex's position by the given transform. Pass the rest.
 static inline CCVertex
-CCVertexApplyTransform(CCVertex v, const GLKMatrix4 *transform)
+CCVertexApplyTransform(CCVertex v, const CCMatrix4 *transform)
 {
 	return (CCVertex){
-		GLKMatrix4MultiplyVector4(*transform, v.position),
+		CCMatrix4MultiplyVector4(*transform, v.position),
 		v.texCoord1, v.texCoord2, v.color,
 	};
 }
@@ -52,10 +52,10 @@ static inline CCVertex
 CCVertexLerp(CCVertex a, CCVertex b, float t)
 {
 	return (CCVertex){
-		GLKVector4Lerp(a.position, b.position, t),
-		GLKVector2Lerp(a.texCoord1, b.texCoord1, t),
-		GLKVector2Lerp(a.texCoord2, b.texCoord2, t),
-		GLKVector4Lerp(a.color, b.color, t),
+		CCVector4Lerp(a.position, b.position, t),
+		CCVector2Lerp(a.texCoord1, b.texCoord1, t),
+		CCVector2Lerp(a.texCoord2, b.texCoord2, t),
+		CCVector4Lerp(a.color, b.color, t),
 	};
 }
 
@@ -100,10 +100,10 @@ CCRenderBufferSetLine(CCRenderBuffer buffer, int index, GLushort a, GLushort b)
 
 /// Check if the given bounding box as specified by it's center and extents (half with/height) is visible onscreen.	
 static inline BOOL
-CCRenderCheckVisbility(const GLKMatrix4 *transform, GLKVector2 center, GLKVector2 extents)
+CCRenderCheckVisbility(const CCMatrix4 *transform, CCVector2 center, CCVector2 extents)
 {
 	// Center point in clip coordinates.
-	GLKVector4 csc = GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(center.x, center.y, 0.0f, 1.0f));
+	CCVector4 csc = CCMatrix4MultiplyVector4(*transform, CCVector4Make(center.x, center.y, 0.0f, 1.0f));
 	
 	// x, y in clip space.
 	float cshx = fmaxf(fabsf(extents.x*transform->m00 + extents.y*transform->m10), fabsf(extents.x*transform->m00 - extents.y*transform->m10));
@@ -117,11 +117,11 @@ CCRenderCheckVisbility(const GLKMatrix4 *transform, GLKVector2 center, GLKVector
 
 @interface NSValue(CCRenderer)
 
-+(NSValue *)valueWithGLKVector2:(GLKVector2)vector;
-+(NSValue *)valueWithGLKVector3:(GLKVector3)vector;
-+(NSValue *)valueWithGLKVector4:(GLKVector4)vector;
++(NSValue *)valueWithCCVector2:(CCVector2)vector;
++(NSValue *)valueWithCCVector3:(CCVector3)vector;
++(NSValue *)valueWithCCVector4:(CCVector4)vector;
 
-+(NSValue *)valueWithGLKMatrix4:(GLKMatrix4)matrix;
++(NSValue *)valueWithCCMatrix4:(CCMatrix4)matrix;
 
 @end
 
@@ -188,7 +188,7 @@ extern const NSString *CCBlendEquationAlpha;
 
 /// Enqueue a OpenGL clear operation for the given buffers and the given values.
 /// Enqueued commands are sorted by their globalSortOrder value before rendering. Currently this value is 0 for everything except custom draw methods.
--(void)enqueueClear:(GLbitfield)mask color:(GLKVector4)color4 depth:(GLclampf)depth stencil:(GLint)stencil globalSortOrder:(NSInteger)globalSortOrder;
+-(void)enqueueClear:(GLbitfield)mask color:(CCVector4)color4 depth:(GLclampf)depth stencil:(GLint)stencil globalSortOrder:(NSInteger)globalSortOrder;
 
 /// Enqueue a drawing command for some triangles.
 /// Returns a CCRendereBuffer that you should fill using CCRenderBufferSetVertex() and CCRenderBufferSetTriangle().

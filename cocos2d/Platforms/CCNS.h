@@ -32,17 +32,125 @@
 
 #import <Foundation/Foundation.h> //	for NSObject
 
-#ifdef __CC_PLATFORM_IOS
+//#if __CC_PLATFORM_IOS 
+//
+//#define CCRectFromString(__r__)		CGRectFromString(__r__)
+//#define CCPointFromString(__p__)	CGPointFromString(__p__)
+//#define CCSizeFromString(__s__)		CGSizeFromString(__s__)
+//#define CCNSSizeToCGSize
+//#define CCNSRectToCGRect
+//#define CCNSPointToCGPoint
 
-#define CCRectFromString(__r__)		CGRectFromString(__r__)
-#define CCPointFromString(__p__)	CGPointFromString(__p__)
-#define CCSizeFromString(__s__)		CGSizeFromString(__s__)
+//#elif __CC_PLATFORM_ANDROID
+
+#if __CC_PLATFORM_ANDROID || __CC_PLATFORM_IOS
+
+#if 1
+//#ifndef __CC_CG_STRING_UTILS
+#define __CC_CG_STRING_UTILS
+
+static inline NSString *CCNSStringFromCGPoint(CGPoint point);
+static inline NSString *CCNSStringFromCGSize(CGSize size);
+static inline NSString *CCNSStringFromCGRect(CGRect rect);
+static inline NSString *CCNSStringFromCGAffineTransform(CGAffineTransform transform);
+static inline CGPoint CCCGPointFromString(NSString *string);
+static inline CGSize CCCGSizeFromString(NSString *string);
+static inline CGRect CCCGRectFromString(NSString *string);
+static inline CGAffineTransform CCCGAffineTransformFromString(NSString *string);
+
+static inline NSArray *CGFloatArrayFromString(NSString *string) {
+    static NSCharacterSet *ignoredCharacters = nil;
+    static dispatch_once_t once = 0L;
+    dispatch_once(&once, ^{
+        ignoredCharacters = [NSCharacterSet characterSetWithCharactersInString:@"{} ,"];
+    });
+    NSArray *components = [string componentsSeparatedByCharactersInSet:ignoredCharacters];
+    NSMutableArray *result = [[NSMutableArray alloc] init];
+    for (int i = 0; i < [components count]; i++) {
+        NSString *component = [components objectAtIndex:i];
+        if ([component length] > 0)
+            [result addObject:[components objectAtIndex:i]];
+    }
+    return result;
+}
+
+static inline CGSize CCCGSizeFromString(NSString *string) {
+    NSArray *components = CGFloatArrayFromString(string);
+    if ([components count] == 2) {
+        return CGSizeMake([[components objectAtIndex:0] floatValue],
+                          [[components objectAtIndex:1] floatValue]);
+    } else {
+        return CGSizeZero;
+    }
+}
+
+static inline CGPoint CCCGPointFromString(NSString *string) {
+    NSArray *components = CGFloatArrayFromString(string);
+    if ([components count] == 2) {
+        return CGPointMake([[components objectAtIndex:0] floatValue],
+                           [[components objectAtIndex:1] floatValue]);
+    } else {
+        return CGPointZero;
+    }
+}
+
+static inline CGRect CCCGRectFromString(NSString *string) {
+    NSArray *components = CGFloatArrayFromString(string);
+    if ([components count] == 4) {
+        return CGRectMake([[components objectAtIndex:0] floatValue],
+                          [[components objectAtIndex:1] floatValue],
+                          [[components objectAtIndex:2] floatValue],
+                          [[components objectAtIndex:3] floatValue]);
+    } else {
+        return CGRectZero;
+    }
+}
+
+static inline CGAffineTransform CCCGAffineTransformFromString(NSString *string) {
+    NSArray *components = CGFloatArrayFromString(string);
+    if ([components count] == 6) {
+        return CGAffineTransformMake([[components objectAtIndex:0] floatValue],
+                                     [[components objectAtIndex:1] floatValue],
+                                     [[components objectAtIndex:2] floatValue],
+                                     [[components objectAtIndex:3] floatValue],
+                                     [[components objectAtIndex:4] floatValue],
+                                     [[components objectAtIndex:5] floatValue]);
+    } else {
+        return CGAffineTransformIdentity;
+    }
+}
+
+static inline NSString *CCNSStringFromCGRect(CGRect r)
+{
+    return [NSString stringWithFormat:@"{{%g, %g}, {%g, %g}}", r.origin.x, r.origin.y, r.size.width, r.size.height];
+}
+
+static inline NSString *CCNSStringFromCGPoint(CGPoint point)
+{
+    return [NSString stringWithFormat:@"{%g, %g}", point.x, point.y];
+}
+
+static inline NSString *CCNSStringFromCGSize(CGSize size)
+{
+    return [NSString stringWithFormat:@"{%g, %g}", size.width, size.height];
+}
+
+static inline NSString *CCNSStringFromCGAffineTransform(CGAffineTransform m)
+{
+    return [NSString stringWithFormat:@"[%g, %g, %g, %g, %g, %g]", m.a, m.b, m.c, m.d, m.tx, m.ty];
+}
+
+
+#define CCRectFromString(__r__)		CCCGRectFromString(__r__)
+#define CCPointFromString(__p__)	CCCGPointFromString(__p__)
+#define CCSizeFromString(__s__)		CCCGSizeFromString(__s__)
 #define CCNSSizeToCGSize
 #define CCNSRectToCGRect
 #define CCNSPointToCGPoint
 
+#endif
 
-#elif defined(__CC_PLATFORM_MAC)
+#elif __CC_PLATFORM_MAC
 
 #define CCRectFromString(__r__)		NSRectToCGRect( NSRectFromString(__r__) )
 #define CCPointFromString(__p__)	NSPointToCGPoint( NSPointFromString(__p__) )

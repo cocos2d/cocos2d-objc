@@ -93,17 +93,17 @@
     [self configureRender];
 	NSAssert(_renderer, @"Cannot call [CCNode visit] without a currently bound renderer.");
     
-	GLKMatrix4 projection; [_renderer.globalShaderUniforms[CCShaderUniformProjection] getValue:&projection];
+	CCMatrix4 projection; [_renderer.globalShaderUniforms[CCShaderUniformProjection] getValue:&projection];
 	[self visit:_renderer parentTransform:&projection];
 }
 
--(void)visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
+-(void)visit:(CCRenderer *)renderer parentTransform:(const CCMatrix4 *)parentTransform
 {
 	// override visit.
 	// Don't call visit on its children
 	if(!_visible) return;
 	
-    GLKMatrix4 transform = [self transform:parentTransform];
+    CCMatrix4 transform = [self transform:parentTransform];
     
     [self draw:renderer transform:&transform];
 	
@@ -120,7 +120,7 @@
 		_renderer = [[CCRenderer alloc] init];
 		
 		NSMutableDictionary *uniforms = [[CCDirector sharedDirector].globalShaderUniforms mutableCopy];
-		uniforms[CCShaderUniformProjection] = [NSValue valueWithGLKMatrix4:_projection];
+		uniforms[CCShaderUniformProjection] = [NSValue valueWithCCMatrix4:_projection];
 		_renderer.globalShaderUniforms = uniforms;
 		
 		[CCRenderer bindRenderer:_renderer];
@@ -131,12 +131,12 @@
 		_oldGlobalUniforms = _renderer.globalShaderUniforms;
 		
 		NSMutableDictionary *uniforms = [_oldGlobalUniforms mutableCopy];
-		uniforms[CCShaderUniformProjection] = [NSValue valueWithGLKMatrix4:_projection];
+		uniforms[CCShaderUniformProjection] = [NSValue valueWithCCMatrix4:_projection];
 		_renderer.globalShaderUniforms = uniforms;
 	}
 }
 
--(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
+-(void)draw:(CCRenderer *)renderer transform:(const CCMatrix4 *)transform
 {
     [self configureRender];
 
@@ -158,41 +158,17 @@
 
     // Done pre-render
     
-    _sprite.texture = self.texture;
-    _effectRenderer.contentSize = self.texture.contentSize;
-    [_effectRenderer drawSprite:_sprite withEffect:_effect renderer:_renderer transform:transform];
-    
-    if (!_effect.supportsDirectRendering || !_effect)
+    if (_effect)
     {
-        // XXX We may want to make this post-render step overridable by the
-        // last effect in the stack. That would look like the code in the
-        // pre-render override comment above.
-        //
-        
-        // Draw accumulated results from the last textureinto the real framebuffer
-        // The texture property always points to the most recently allocated
-        // texture so it will contain any accumulated results for the effect stack.
-        [_renderer pushGroup];
-        
-        if (_effect)
-        {
-            _sprite.texture = _effectRenderer.outputTexture;
-        }
-        else
-        {
-            _sprite.texture = self.texture;
-        }
-        
+        _effectRenderer.contentSize = self.texture.contentSize;
+        [_effectRenderer drawSprite:_sprite withEffect:_effect renderer:_renderer transform:transform];
+    }
+    else
+    {
         _sprite.anchorPoint = ccp(0.0f, 0.0f);
         _sprite.position = ccp(0.0f, 0.0f);
-        _sprite.shader = [CCShader positionTextureColorShader];
         [_sprite visit:_renderer parentTransform:transform];
-        
-        [_renderer popGroupWithDebugLabel:@"CCEffectNode: Post-render composite pass" globalSortOrder:0];
-        
-        // Done framebuffer composite
     }
-    
     
     if(_privateRenderer == NO)
         _renderer.globalShaderUniforms = _oldGlobalUniforms;

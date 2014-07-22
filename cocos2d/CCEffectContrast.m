@@ -20,7 +20,7 @@ static float conditionContrast(float contrast);
 {
     CCEffectUniform* uniformContrast = [CCEffectUniform uniform:@"float" name:@"u_contrast" value:[NSNumber numberWithFloat:1.0f]];
     
-    if((self = [super initWithUniforms:@[uniformContrast] vertextUniforms:nil varying:nil]))
+    if((self = [super initWithFragmentUniforms:@[uniformContrast] vertextUniforms:nil varying:nil]))
     {
         self.debugName = @"CCEffectContrast";
         return self;
@@ -44,29 +44,28 @@ static float conditionContrast(float contrast);
 
 -(void)buildFragmentFunctions
 {
+    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" snippet:@"texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)"];
+
     NSString* effectBody = CC_GLSL(
-                                   vec4 inputValue = texture2D(cc_PreviousPassTexture, cc_FragTexCoord1);
                                    return vec4(((inputValue.rgb - vec3(0.5)) * vec3(u_contrast) + vec3(0.5)), inputValue.a);
                                    );
     
-    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"contrastEffect" body:effectBody returnType:@"vec4"];
+    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"contrastEffect" body:effectBody inputs:@[input] returnType:@"vec4"];
     [self.fragmentFunctions addObject:fragmentFunction];
 }
 
 -(void)buildRenderPasses
 {
     __weak CCEffectContrast *weakSelf = self;
-    __weak CCEffectRenderPass *weakPass = nil;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
-    weakPass = pass0;
     pass0.shader = self.shader;
     pass0.shaderUniforms = self.shaderUniforms;
-    pass0.beginBlock = ^(CCTexture *previousPassTexture){
-        weakPass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
-        weakPass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-        weakPass.shaderUniforms[@"u_contrast"] = [NSNumber numberWithFloat:weakSelf.contrast];
-    };
+    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
+        pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
+        pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_contrast"]] = [NSNumber numberWithFloat:weakSelf.contrast];
+    } copy]];
     
     self.renderPasses = @[pass0];
 }

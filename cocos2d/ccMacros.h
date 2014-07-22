@@ -39,10 +39,24 @@
  cocos2d helper macros
  */
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifndef __CC_USE_GL_QUEUE
+#define __CC_USE_GL_QUEUE 0
+#endif
+
+#if defined(__IPHONE_OS_VERSION_MAX_ALLOWED) && !defined(COCOS2D_ANDROID)
 #define __CC_PLATFORM_IOS 1
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#define __CC_PLATFORM_MAC 0
+#define __CC_PLATFORM_ANDROID_FIXME 1
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED) && !defined(COCOS2D_ANDROID)
 #define __CC_PLATFORM_MAC 1
+#define __CC_PLATFORM_IOS 0
+#endif
+
+#ifdef COCOS2D_ANDROID
+#define __CC_PLATFORM_MAC 0
+#define __CC_PLATFORM_IOS 0
+#define __CC_PLATFORM_ANDROID 1
+#define __CC_PLATFORM_ANDROID_FIXME 1
 #endif
 
 /*
@@ -68,6 +82,7 @@ NSLog(@"%s : %@",__FUNCTION__,[NSString stringWithFormat:(s), ##__VA_ARGS__])
 NSLog(@"%@",[NSString stringWithFormat:(s), ##__VA_ARGS__])
 
 
+#define COCOS2D_DEBUG 1
 #if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0
 #define CCLOG(...) do {} while (0)
 #define CCLOGWARN(...) do {} while (0)

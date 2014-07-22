@@ -83,14 +83,14 @@ const float CCSprite9SliceMarginDefault         = 1.0f/3.0f;
 // ---------------------------------------------------------------------
 #pragma mark - draw
 
-static GLKMatrix4
-PositionInterpolationMatrix(const CCSpriteVertexes *verts, const GLKMatrix4 *transform)
+static CCMatrix4
+PositionInterpolationMatrix(const CCSpriteVertexes *verts, const CCMatrix4 *transform)
 {
-	GLKVector4 origin = verts->bl.position;
-	GLKVector4 basisX = GLKVector4Subtract(verts->br.position, origin);
-	GLKVector4 basisY = GLKVector4Subtract(verts->tl.position, origin);
+	CCVector4 origin = verts->bl.position;
+	CCVector4 basisX = CCVector4Subtract(verts->br.position, origin);
+	CCVector4 basisY = CCVector4Subtract(verts->tl.position, origin);
 	
-	return GLKMatrix4Multiply(*transform, GLKMatrix4Make(
+	return CCMatrix4Multiply(*transform, CCMatrix4Make(
 		basisX.x, basisX.y, basisX.z, 0.0f,
 		basisY.x, basisY.y, basisY.z, 0.0f,
 				0.0f,     0.0f,     1.0f, 0.0f,
@@ -98,14 +98,14 @@ PositionInterpolationMatrix(const CCSpriteVertexes *verts, const GLKMatrix4 *tra
 	));
 }
 
-static GLKMatrix3
+static CCMatrix3
 TexCoordInterpolationMatrix(const CCSpriteVertexes *verts)
 {
-	GLKVector2 origin = verts->bl.texCoord1;
-	GLKVector2 basisX = GLKVector2Subtract(verts->br.texCoord1, origin);
-	GLKVector2 basisY = GLKVector2Subtract(verts->tl.texCoord1, origin);
+	CCVector2 origin = verts->bl.texCoord1;
+	CCVector2 basisX = CCVector2Subtract(verts->br.texCoord1, origin);
+	CCVector2 basisY = CCVector2Subtract(verts->tl.texCoord1, origin);
 	
-	return GLKMatrix3Make(
+	return CCMatrix3Make(
 		basisX.x, basisX.y, 0.0f,
 		basisY.x, basisY.y, 0.0f,
 		origin.x, origin.y, 1.0f
@@ -114,7 +114,7 @@ TexCoordInterpolationMatrix(const CCSpriteVertexes *verts)
 
 // TODO This is sort of brute force. Could probably use some optimization after profiling.
 // Could it be done in a vertex shader using the texCoord2 attribute?
--(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
+-(void)draw:(CCRenderer *)renderer transform:(const CCMatrix4 *)transform
 {
 	// Don't draw rects that were originally sizeless. CCButtons in tableviews are like this.
 	// Not really sure it's intended behavior or not.
@@ -145,18 +145,18 @@ TexCoordInterpolationMatrix(const CCSpriteVertexes *verts)
 	
 	// Interpolation matrices for the vertexes and texture coordinates
 	const CCSpriteVertexes *_verts = self.vertexes;
-	GLKMatrix4 interpolatePosition = PositionInterpolationMatrix(_verts, transform);
-	GLKMatrix3 interpolateTexCoord = TexCoordInterpolationMatrix(_verts);
-	GLKVector4 color = _verts->bl.color;
+	CCMatrix4 interpolatePosition = PositionInterpolationMatrix(_verts, transform);
+	CCMatrix3 interpolateTexCoord = TexCoordInterpolationMatrix(_verts);
+	CCVector4 color = _verts->bl.color;
 	
 	CCRenderBuffer buffer = [renderer enqueueTriangles:18 andVertexes:16 withState:self.renderState globalSortOrder:0];
 	
 	// Interpolate the vertexes!
 	for(int y=0; y<4; y++){
 		for(int x=0; x<4; x++){
-			GLKVector4 position = GLKMatrix4MultiplyVector4(interpolatePosition, GLKVector4Make(alphaX[x], alphaY[y], 0.0f, 1.0f));
-			GLKVector3 texCoord = GLKMatrix3MultiplyVector3(interpolateTexCoord, GLKVector3Make(alphaTexX[x], alphaTexY[y], 1.0f));
-			CCRenderBufferSetVertex(buffer, y*4 + x, (CCVertex){position, GLKVector2Make(texCoord.x, texCoord.y), GLKVector2Make(0.0f, 0.0f), color});
+			CCVector4 position = CCMatrix4MultiplyVector4(interpolatePosition, CCVector4Make(alphaX[x], alphaY[y], 0.0f, 1.0f));
+			CCVector3 texCoord = CCMatrix3MultiplyVector3(interpolateTexCoord, CCVector3Make(alphaTexX[x], alphaTexY[y], 1.0f));
+			CCRenderBufferSetVertex(buffer, y*4 + x, (CCVertex){position, CCVector2Make(texCoord.x, texCoord.y), CCVector2Make(0.0f, 0.0f), color});
 		}
 	}
 	

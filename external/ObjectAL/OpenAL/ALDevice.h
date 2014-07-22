@@ -27,10 +27,13 @@
 // Attribution is not required, but appreciated :)
 //
 
+#import "ccMacros.h"
+
 #import <Foundation/Foundation.h>
 #import <OpenAL/alc.h>
 #import "ALContext.h"
 #import "OALSuspendHandler.h"
+#import "ALWeakArray.h"
 
 
 #pragma mark ALDevice
@@ -42,7 +45,7 @@
 {
 	ALCdevice* device;
 	/** All contexts opened from this device. */
-	NSMutableArray* contexts;
+	ALWeakArray* contexts;
 	
 	/** Handles suspending and interrupting for this object. */
 	OALSuspendHandler* suspendHandler;
@@ -52,7 +55,7 @@
 #pragma mark Properties
 
 /** All contexts created on this device (ALContext*). */
-@property(nonatomic,readonly,retain) NSArray* contexts;
+@property(nonatomic,readonly,retain) ALWeakArray* contexts;
 
 /** The OpenAL device pointer. */
 @property(nonatomic,readonly,assign) ALCdevice* device;

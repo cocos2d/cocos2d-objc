@@ -27,4 +27,6 @@
 
 @interface CCSprite ()
 
+-(void)enqueueTriangles:(CCRenderer *)renderer transform:(const CCMatrix4 *)transform;
+
 @end

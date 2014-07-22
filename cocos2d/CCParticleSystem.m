@@ -51,7 +51,7 @@
 #import "CCTexture_Private.h"
 
 @implementation CCParticleSystem {
-	GLKVector2 _texCoord1[4];
+	CCVector2 _texCoord1[4];
 }
 
 // overriding the init method
@@ -115,10 +115,10 @@
 #endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 
 	for(NSUInteger i=0; i<_totalParticles; i++) {
-		_texCoord1[0] = GLKVector2Make(left, bottom);
-		_texCoord1[1] = GLKVector2Make(right, bottom);
-		_texCoord1[2] = GLKVector2Make(right, top);
-		_texCoord1[3] = GLKVector2Make(left, top);
+		_texCoord1[0] = CCVector2Make(left, bottom);
+		_texCoord1[1] = CCVector2Make(right, bottom);
+		_texCoord1[2] = CCVector2Make(right, top);
+		_texCoord1[3] = CCVector2Make(left, top);
 	}
 }
 
@@ -145,10 +145,10 @@
 	}
 }
 
-static inline void OutputParticle(CCRenderBuffer buffer, int i, _CCParticle *p, GLKVector2 pos, const GLKMatrix4 *transform, GLKVector2 *texCoord1)
+static inline void OutputParticle(CCRenderBuffer buffer, int i, _CCParticle *p, CCVector2 pos, const CCMatrix4 *transform, CCVector2 *texCoord1)
 {
-	const GLKVector2 zero = {{0, 0}};
-	GLKVector4 color = GLKVector4Make(p->color.r*p->color.a, p->color.g*p->color.a, p->color.b*p->color.a, p->color.a);
+	const CCVector2 zero = {{0, 0}};
+	CCVector4 color = CCVector4Make(p->color.r*p->color.a, p->color.g*p->color.a, p->color.b*p->color.a, p->color.a);
 
 //#warning TODO Can do some extra optimization to the vertex transform math.
 //#warning TODO Can pass the particle life and maybe another param using TexCoord2?
@@ -168,43 +168,43 @@ static inline void OutputParticle(CCRenderBuffer buffer, int i, _CCParticle *p, 
 		float dx = -hs * cr -  hs * sr + pos.x;
 		float dy = -hs * sr +  hs * cr + pos.y;
 		
-		CCRenderBufferSetVertex(buffer, 4*i + 0, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(ax, ay, 0.0f, 1.0f)), texCoord1[0], zero, color});
-		CCRenderBufferSetVertex(buffer, 4*i + 1, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(bx, by, 0.0f, 1.0f)), texCoord1[1], zero, color});
-		CCRenderBufferSetVertex(buffer, 4*i + 2, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(cx, cy, 0.0f, 1.0f)), texCoord1[2], zero, color});
-		CCRenderBufferSetVertex(buffer, 4*i + 3, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(dx, dy, 0.0f, 1.0f)), texCoord1[3], zero, color});
+		CCRenderBufferSetVertex(buffer, 4*i + 0, (CCVertex){CCMatrix4MultiplyVector4(*transform, CCVector4Make(ax, ay, 0.0f, 1.0f)), texCoord1[0], zero, color});
+		CCRenderBufferSetVertex(buffer, 4*i + 1, (CCVertex){CCMatrix4MultiplyVector4(*transform, CCVector4Make(bx, by, 0.0f, 1.0f)), texCoord1[1], zero, color});
+		CCRenderBufferSetVertex(buffer, 4*i + 2, (CCVertex){CCMatrix4MultiplyVector4(*transform, CCVector4Make(cx, cy, 0.0f, 1.0f)), texCoord1[2], zero, color});
+		CCRenderBufferSetVertex(buffer, 4*i + 3, (CCVertex){CCMatrix4MultiplyVector4(*transform, CCVector4Make(dx, dy, 0.0f, 1.0f)), texCoord1[3], zero, color});
 	} else {
-		CCRenderBufferSetVertex(buffer, 4*i + 0, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(pos.x - hs, pos.y - hs, 0.0f, 1.0f)), texCoord1[0], zero, color});
-		CCRenderBufferSetVertex(buffer, 4*i + 1, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(pos.x + hs, pos.y - hs, 0.0f, 1.0f)), texCoord1[1], zero, color});
-		CCRenderBufferSetVertex(buffer, 4*i + 2, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(pos.x + hs, pos.y + hs, 0.0f, 1.0f)), texCoord1[2], zero, color});
-		CCRenderBufferSetVertex(buffer, 4*i + 3, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(pos.x - hs, pos.y + hs, 0.0f, 1.0f)), texCoord1[3], zero, color});
+		CCRenderBufferSetVertex(buffer, 4*i + 0, (CCVertex){CCMatrix4MultiplyVector4(*transform, CCVector4Make(pos.x - hs, pos.y - hs, 0.0f, 1.0f)), texCoord1[0], zero, color});
+		CCRenderBufferSetVertex(buffer, 4*i + 1, (CCVertex){CCMatrix4MultiplyVector4(*transform, CCVector4Make(pos.x + hs, pos.y - hs, 0.0f, 1.0f)), texCoord1[1], zero, color});
+		CCRenderBufferSetVertex(buffer, 4*i + 2, (CCVertex){CCMatrix4MultiplyVector4(*transform, CCVector4Make(pos.x + hs, pos.y + hs, 0.0f, 1.0f)), texCoord1[2], zero, color});
+		CCRenderBufferSetVertex(buffer, 4*i + 3, (CCVertex){CCMatrix4MultiplyVector4(*transform, CCVector4Make(pos.x - hs, pos.y + hs, 0.0f, 1.0f)), texCoord1[3], zero, color});
 	}
 	
 	CCRenderBufferSetTriangle(buffer, 2*i + 0, 4*i + 0, 4*i + 1, 4*i + 2);
 	CCRenderBufferSetTriangle(buffer, 2*i + 1, 4*i + 0, 4*i + 2, 4*i + 3);
 }
 
--(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
+-(void)draw:(CCRenderer *)renderer transform:(const CCMatrix4 *)transform
 {
 	if(_particleCount == 0) return;
 	
-	GLKVector2 currentPosition = GLKVector2Make(0.0f, 0.0f);
+	CCVector2 currentPosition = CCVector2Make(0.0f, 0.0f);
 	if( _particlePositionType == CCParticleSystemPositionTypeFree ){
 		CGPoint p = [self convertToWorldSpace:CGPointZero];
-		currentPosition = GLKVector2Make(p.x, p.y);
+		currentPosition = CCVector2Make(p.x, p.y);
 	} else if( _particlePositionType == CCParticleSystemPositionTypeRelative ){
 		CGPoint p = self.position;
-		currentPosition = GLKVector2Make(p.x, p.y);
+		currentPosition = CCVector2Make(p.x, p.y);
 	}
 	
 	CCRenderBuffer buffer = [renderer enqueueTriangles:_particleCount*2 andVertexes:_particleCount*4 withState:self.renderState globalSortOrder:0];
 	
 	for(int i=0; i<_particleCount; i++){
 		_CCParticle *p = _particles + i;
-		GLKVector2 pos = p->pos;
+		CCVector2 pos = p->pos;
 		
 		if( _particlePositionType == CCParticleSystemPositionTypeFree || _particlePositionType == CCParticleSystemPositionTypeRelative ){
-			GLKVector2 diff = GLKVector2Subtract(currentPosition, p->startPos);
-			pos = GLKVector2Subtract(pos, diff);
+			CCVector2 diff = CCVector2Subtract(currentPosition, p->startPos);
+			pos = CCVector2Subtract(pos, diff);
 		}
 		
 		OutputParticle(buffer, i, p, pos, transform, _texCoord1);

@@ -35,9 +35,10 @@
 #import "Support/CGPointExtension.h"
 #import "CCNode_Private.h"
 
-#ifdef __CC_PLATFORM_IOS
+
+#if __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
-#elif defined(__CC_PLATFORM_MAC)
+#elif __CC_PLATFORM_MAC
 #import "Platforms/Mac/CCDirectorMac.h"
 #endif
 
@@ -53,7 +54,7 @@
 
 @implementation CCNodeColor {
 	@protected
-	GLKVector4	_colors[4];
+	CCVector4	_colors[4];
 }
 
 + (id) nodeWithColor:(CCColor*)color width:(GLfloat)w  height:(GLfloat) h
@@ -95,28 +96,28 @@
 
 - (void) updateColor
 {
-	GLKVector4 color = GLKVector4Make(_displayColor.r*_displayColor.a, _displayColor.g*_displayColor.a, _displayColor.b*_displayColor.a, _displayColor.a);
+	CCVector4 color = CCVector4Make(_displayColor.r*_displayColor.a, _displayColor.g*_displayColor.a, _displayColor.b*_displayColor.a, _displayColor.a);
 	for(int i=0; i<4; i++) _colors[i] = color;
 }
 
--(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
+-(void)draw:(CCRenderer *)renderer transform:(const CCMatrix4 *)transform
 {
-	CGSize size = self.contentSizeInPoints;
-	GLKVector2 hs = GLKVector2Make(size.width*0.5f, size.height*0.5f);
-	if(!CCRenderCheckVisbility(transform, hs, hs)) return;
-	
-	GLKVector2 zero = GLKVector2Make(0, 0);
-	
-	CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:self.renderState globalSortOrder:0];
-	
-	float w = size.width, h = size.height;
-	CCRenderBufferSetVertex(buffer, 0, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(0, 0, 0, 1)), zero, zero, _colors[0]});
-	CCRenderBufferSetVertex(buffer, 1, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(w, 0, 0, 1)), zero, zero, _colors[1]});
-	CCRenderBufferSetVertex(buffer, 2, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(w, h, 0, 1)), zero, zero, _colors[2]});
-	CCRenderBufferSetVertex(buffer, 3, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(0, h, 0, 1)), zero, zero, _colors[3]});
-	
-	CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
-	CCRenderBufferSetTriangle(buffer, 1, 0, 2, 3);
+    CGSize size = self.contentSizeInPoints;
+    CCVector2 hs = CCVector2Make(size.width*0.5f, size.height*0.5f);
+    if(!CCRenderCheckVisbility(transform, hs, hs)) return;
+    
+    CCVector2 zero = CCVector2Make(0, 0);
+    
+    CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:self.renderState globalSortOrder:0];
+    
+    float w = size.width, h = size.height;
+    CCRenderBufferSetVertex(buffer, 0, (CCVertex){CCMatrix4MultiplyVector4(*transform, CCVector4Make(0, 0, 0, 1)), zero, zero, _colors[0]});
+    CCRenderBufferSetVertex(buffer, 1, (CCVertex){CCMatrix4MultiplyVector4(*transform, CCVector4Make(w, 0, 0, 1)), zero, zero, _colors[1]});
+    CCRenderBufferSetVertex(buffer, 2, (CCVertex){CCMatrix4MultiplyVector4(*transform, CCVector4Make(w, h, 0, 1)), zero, zero, _colors[2]});
+    CCRenderBufferSetVertex(buffer, 3, (CCVertex){CCMatrix4MultiplyVector4(*transform, CCVector4Make(0, h, 0, 1)), zero, zero, _colors[3]});
+    
+    CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
+    CCRenderBufferSetTriangle(buffer, 1, 0, 2, 3);
 }
 
 #pragma mark Protocols
@@ -185,12 +186,12 @@
 	float gmin = MIN(MIN(g0, g1), MIN(g2, g3));
 	float gmax = MAX(MAX(g0, g1), MAX(g2, g3));
 	
-	GLKVector4 a = GLKVector4Make(_color.r*_color.a, _color.g*_color.a, _color.b*_color.a, _color.a);
-	GLKVector4 b = GLKVector4Make(_endColor.r*_endColor.a, _endColor.g*_endColor.a, _endColor.b*_endColor.a, _endColor.a);
-	_colors[0] =  GLKVector4Lerp(a, b, (g0 - gmin)/(gmax - gmin));
-	_colors[1] =  GLKVector4Lerp(a, b, (g1 - gmin)/(gmax - gmin));
-	_colors[2] =  GLKVector4Lerp(a, b, (g2 - gmin)/(gmax - gmin));
-	_colors[3] =  GLKVector4Lerp(a, b, (g3 - gmin)/(gmax - gmin));
+	CCVector4 a = CCVector4Make(_color.r*_color.a, _color.g*_color.a, _color.b*_color.a, _color.a);
+	CCVector4 b = CCVector4Make(_endColor.r*_endColor.a, _endColor.g*_endColor.a, _endColor.b*_endColor.a, _endColor.a);
+	_colors[0] =  CCVector4Lerp(a, b, (g0 - gmin)/(gmax - gmin));
+	_colors[1] =  CCVector4Lerp(a, b, (g1 - gmin)/(gmax - gmin));
+	_colors[2] =  CCVector4Lerp(a, b, (g2 - gmin)/(gmax - gmin));
+	_colors[3] =  CCVector4Lerp(a, b, (g3 - gmin)/(gmax - gmin));
 }
 
 -(CCColor*) startColor

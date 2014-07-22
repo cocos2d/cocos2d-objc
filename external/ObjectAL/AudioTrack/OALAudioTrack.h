@@ -27,6 +27,11 @@
 // Attribution is not required, but appreciated :)
 //
 
+
+#import "ccMacros.h"
+
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
+
 #import <AVFoundation/AVFoundation.h>
 #import "OALAction.h"
 #import "OALAudioTrackNotifications.h"
@@ -441,3 +446,6 @@
 - (float) peakPowerForChannel:(NSUInteger)channelNumber;
 
 @end
+
+
+#endif // __CC_PLATFORM_IOS || __CC_PLATFORM_MAC

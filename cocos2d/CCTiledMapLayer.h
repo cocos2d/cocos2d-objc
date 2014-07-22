@@ -28,6 +28,7 @@
 #import "CCSpriteBatchNode.h"
 #import "CCTMXXMLParser.h"
 #import "CCTiledMap.h"
+#import "CCMathTypes.h"
 
 @class CCTiledMapInfo;
 @class CCTiledMapLayerInfo;

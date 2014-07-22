@@ -21,7 +21,7 @@
 	return self;
 }
 
--(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
+-(void)draw:(CCRenderer *)renderer transform:(const CCMatrix4 *)transform
 {
 	// What we want to do here is draw the texture from (0, 0) to (width, height) in the node's coordinates like a regular sprite.
 	
@@ -36,8 +36,8 @@
 	
 	// The center and extents are easy to calculate in this case.
 	// They are actually the same value in this case, but that won't normally be true.
-	GLKVector2 center = GLKVector2Make(size.width/2.0, size.height/2.0);
-	GLKVector2 extents = GLKVector2Make(size.width/2.0, size.height/2.0);
+	CCVector2 center = CCVector2Make(size.width/2.0, size.height/2.0);
+	CCVector2 extents = CCVector2Make(size.width/2.0, size.height/2.0);
 	
 	// Now we just need to check if the sprite is visible.
 	if(CCRenderCheckVisbility(transform, center, extents)){
@@ -57,14 +57,14 @@
 		// You can probably guess, that the first two numbers are the x and y coordinates.
 		// The 3rd is the z-coordinate in case you want to do 3D effects.
 		// Always set the 4th coordinate to 1.0. (Google for "homogenous coordinates" if you want to learn what it is)
-		bottomLeft.position = GLKVector4Make(0.0, 0.0, 0.0, 1.0);
+		bottomLeft.position = CCVector4Make(0.0, 0.0, 0.0, 1.0);
 		// This is the position of the vertex relative to the texture in normalized coordinates.
 		// (0, 0) is the top left corner and (1, 1) is the bottom right.
 		// This is actually upside down compared to the OpenGL convention.
-		bottomLeft.texCoord1 = GLKVector2Make(0.0, 1.0);
+		bottomLeft.texCoord1 = CCVector2Make(0.0, 1.0);
 		// Lastly we need to set a "pre-multiplied" RGBA color.
 		// Premultiplied means that the RGB components have been multiplied by the alpha.
-		bottomLeft.color = GLKVector4Make(1.0, 1.0, 1.0, 1.0);
+		bottomLeft.color = CCVector4Make(1.0, 1.0, 1.0, 1.0);
 		
 		// Now we are almost ready to put the vertex into the buffer, but there is one last step.
 		// The positions of the vertexes need to be screen relative (OpenGL clip coordinates), but we made them node relative!
@@ -75,21 +75,21 @@
 		
 		// Now to fill in the other 3 vertexes the same way.
 		CCVertex bottomRight;
-		bottomRight.position = GLKVector4Make(0.0, size.width, 0.0, 1.0);
-		bottomRight.texCoord1 = GLKVector2Make(1.0, 1.0);
-		bottomRight.color = GLKVector4Make(1.0, 1.0, 1.0, 1.0);
+		bottomRight.position = CCVector4Make(0.0, size.width, 0.0, 1.0);
+		bottomRight.texCoord1 = CCVector2Make(1.0, 1.0);
+		bottomRight.color = CCVector4Make(1.0, 1.0, 1.0, 1.0);
 		CCRenderBufferSetVertex(buffer, 1, CCVertexApplyTransform(bottomRight, transform));
 		
 		CCVertex topRight;
-		topRight.position = GLKVector4Make(size.height, size.width, 0.0, 1.0);
-		topRight.texCoord1 = GLKVector2Make(1.0, 0.0);
-		topRight.color = GLKVector4Make(1.0, 1.0, 1.0, 1.0);
+		topRight.position = CCVector4Make(size.height, size.width, 0.0, 1.0);
+		topRight.texCoord1 = CCVector2Make(1.0, 0.0);
+		topRight.color = CCVector4Make(1.0, 1.0, 1.0, 1.0);
 		CCRenderBufferSetVertex(buffer, 2, CCVertexApplyTransform(topRight, transform));
 		
 		CCVertex topLeft;
-		topLeft.position = GLKVector4Make(size.height, 0.0, 0.0, 1.0);
-		topLeft.texCoord1 = GLKVector2Make(0.0, 0.0);
-		topLeft.color = GLKVector4Make(1.0, 1.0, 1.0, 1.0);
+		topLeft.position = CCVector4Make(size.height, 0.0, 0.0, 1.0);
+		topLeft.texCoord1 = CCVector2Make(0.0, 0.0);
+		topLeft.color = CCVector4Make(1.0, 1.0, 1.0, 1.0);
 		CCRenderBufferSetVertex(buffer, 3, CCVertexApplyTransform(topLeft, transform));
 		
 		// 4) Now that we are all done filling in the vertexes, we just need to make triangles with them.
@@ -115,9 +115,9 @@
 		// Alternatively, set up some rotating colors.
 //		float delay = 1.0f;
 //		[self scheduleBlock:^(CCTimer *timer) {
-//			GLKMatrix4 colorMatrix = GLKMatrix4MakeRotation(timer.invokeTime*1e0, 1, 1, 1);
-//			GLKVector4 color = GLKMatrix4MultiplyVector4(colorMatrix, GLKVector4Make(1, 0, 0, 1));
-//			self.scene.color = [CCColor colorWithGLKVector4:color];
+//			CCMatrix4 colorMatrix = CCMatrix4MakeRotation(timer.invokeTime*1e0, 1, 1, 1);
+//			CCVector4 color = CCMatrix4MultiplyVector4(colorMatrix, CCVector4Make(1, 0, 0, 1));
+//			self.scene.color = [CCColor colorWithCCVector4:color];
 //			
 //			[timer repeatOnceWithInterval:delay];
 //		} delay:delay];
@@ -250,12 +250,12 @@
 	
 	[self scheduleBlock:^(CCTimer *timer) {
 		// Set up a global uniform matrix to rotate colors counter-clockwise.
-		GLKMatrix4 colorMatrix1 = GLKMatrix4MakeRotation(2.0f*timer.invokeTime, 1.0f, 1.0f, 1.0f);
-		[CCDirector sharedDirector].globalShaderUniforms[@"u_ColorMatrix"] = [NSValue valueWithGLKMatrix4:colorMatrix1];
+		CCMatrix4 colorMatrix1 = CCMatrix4MakeRotation(2.0f*timer.invokeTime, 1.0f, 1.0f, 1.0f);
+		[CCDirector sharedDirector].globalShaderUniforms[@"u_ColorMatrix"] = [NSValue valueWithCCMatrix4:colorMatrix1];
 		
 		// Set just sprite3's matrix to rotate colors clockwise.
-		GLKMatrix4 colorMatrix2 = GLKMatrix4MakeRotation(-4.0f*timer.invokeTime, 1.0f, 1.0f, 1.0f);
-		sprite3.shaderUniforms[@"u_ColorMatrix"] = [NSValue valueWithGLKMatrix4:colorMatrix2];
+		CCMatrix4 colorMatrix2 = CCMatrix4MakeRotation(-4.0f*timer.invokeTime, 1.0f, 1.0f, 1.0f);
+		sprite3.shaderUniforms[@"u_ColorMatrix"] = [NSValue valueWithCCMatrix4:colorMatrix2];
 		
 		[timer repeatOnceWithInterval:1.0/60.0];
 	} delay:0.0f];
