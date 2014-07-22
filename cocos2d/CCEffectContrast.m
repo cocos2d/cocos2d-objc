@@ -17,7 +17,7 @@ static float conditionContrast(float contrast);
 
 @interface CCEffectContrast ()
 
-@property (nonatomic) float conditionedContrast;
+@property (nonatomic) NSNumber *conditionedContrast;
 
 @end
 
@@ -36,7 +36,7 @@ static float conditionContrast(float contrast);
     if((self = [super initWithFragmentUniforms:@[uniformContrast] vertexUniforms:nil varying:nil]))
     {
         _contrast = contrast;
-        _conditionedContrast = conditionContrast(contrast);
+        _conditionedContrast = [NSNumber numberWithFloat:conditionContrast(contrast)];
 
         self.debugName = @"CCEffectContrast";
     }
@@ -67,11 +67,13 @@ static float conditionContrast(float contrast);
     __weak CCEffectContrast *weakSelf = self;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
+    pass0.debugLabel = @"CCEffectContrast pass 0";
     pass0.shader = self.shader;
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
+        
         pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_contrast"]] = [NSNumber numberWithFloat:weakSelf.conditionedContrast];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_contrast"]] = weakSelf.conditionedContrast;
     } copy]];
     
     self.renderPasses = @[pass0];
@@ -80,7 +82,7 @@ static float conditionContrast(float contrast);
 -(void)setContrast:(float)contrast
 {
     _contrast = contrast;
-    _conditionedContrast = conditionContrast(contrast);
+    _conditionedContrast = [NSNumber numberWithFloat:conditionContrast(contrast)];
 }
 
 @end

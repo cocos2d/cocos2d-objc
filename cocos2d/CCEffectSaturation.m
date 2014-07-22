@@ -51,7 +51,7 @@ static float conditionSaturation(float saturation);
 
 @interface CCEffectSaturation ()
 
-@property (nonatomic) float conditionedSaturation;
+@property (nonatomic) NSNumber *conditionedSaturation;
 
 @end
 
@@ -70,7 +70,7 @@ static float conditionSaturation(float saturation);
     if((self = [super initWithFragmentUniforms:@[uniformSaturation] vertexUniforms:nil varying:nil]))
     {
         _saturation = saturation;
-        _conditionedSaturation = conditionSaturation(saturation);
+        _conditionedSaturation = [NSNumber numberWithFloat:conditionSaturation(saturation)];
 
         self.debugName = @"CCEffectSaturation";
     }
@@ -107,11 +107,13 @@ static float conditionSaturation(float saturation);
     __weak CCEffectSaturation *weakSelf = self;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
+    pass0.debugLabel = @"CCEffectSaturation pass 0";
     pass0.shader = self.shader;
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
+        
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_saturation"]] = [NSNumber numberWithFloat:weakSelf.conditionedSaturation];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_saturation"]] = weakSelf.conditionedSaturation;
     } copy]];
     
     self.renderPasses = @[pass0];
@@ -120,7 +122,7 @@ static float conditionSaturation(float saturation);
 -(void)setSaturation:(float)saturation
 {
     _saturation = saturation;
-    _conditionedSaturation = conditionSaturation(saturation);
+    _conditionedSaturation = [NSNumber numberWithFloat:conditionSaturation(saturation)];
 }
 @end
 

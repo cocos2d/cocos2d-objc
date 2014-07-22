@@ -22,6 +22,8 @@
 #import "CCEffectPixellate.h"
 #import "CCEffectSaturation.h"
 #import "CCEffectRefraction.h"
+#import "CCEffectReflection.h"
+#import "CCEffectGlass.h"
 
 
 #ifdef __CC_PLATFORM_IOS

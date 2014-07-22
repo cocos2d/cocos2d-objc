@@ -229,6 +229,7 @@
     
     // Copy the shader for this new pass from the stitched effect.
     CCEffectRenderPass *newPass = [[CCEffectRenderPass alloc] init];
+    newPass.debugLabel = @"CCEffectStack_Stitched pass 0";
     newPass.shader = stitchedEffect.shader;
     newPass.shaderUniforms = [[NSMutableDictionary alloc] init];
     
