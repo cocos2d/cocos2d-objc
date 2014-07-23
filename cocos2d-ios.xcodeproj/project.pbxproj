@@ -303,8 +303,6 @@
 		D285ECF1192EA92A009F4E88 /* CCGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = D285ECEF192EA92A009F4E88 /* CCGLView.m */; };
 		D285ECF8192EF5B2009F4E88 /* CCDirectorAndroid.h in Headers */ = {isa = PBXBuildFile; fileRef = D285ECF6192EF5B2009F4E88 /* CCDirectorAndroid.h */; };
 		D285ECF9192EF5B2009F4E88 /* CCDirectorAndroid.m in Sources */ = {isa = PBXBuildFile; fileRef = D285ECF7192EF5B2009F4E88 /* CCDirectorAndroid.m */; };
-		D285ED4A193814A1009F4E88 /* CCGLQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = D285ED48193814A1009F4E88 /* CCGLQueue.h */; };
-		D285ED4B193814A1009F4E88 /* CCGLQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = D285ED49193814A1009F4E88 /* CCGLQueue.m */; };
 		D289C1C2197440BD00B68E3D /* BridgeKitV3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D289C1C1197440BC00B68E3D /* BridgeKitV3.framework */; };
 		D28A2E161954F66E00ADC03D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D28A2E151954F66E00ADC03D /* UIKit.framework */; };
 		D28A2E1B1954F68D00ADC03D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D28A2E1A1954F68D00ADC03D /* QuartzCore.framework */; };
@@ -461,7 +459,6 @@
 		D2FEB6A2194F6C9E00FC0574 /* CCNode+Debug.h in Headers */ = {isa = PBXBuildFile; fileRef = A039EBFD155C686B0061EE37 /* CCNode+Debug.h */; };
 		D2FEB6A3194F6C9E00FC0574 /* CCDrawNode.h in Headers */ = {isa = PBXBuildFile; fileRef = A0DA0BC115BCDCA200E80A92 /* CCDrawNode.h */; };
 		D2FEB6A4194F6C9E00FC0574 /* CCClippingNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B192833163361B10049A044 /* CCClippingNode.h */; };
-		D2FEB6A5194F6C9E00FC0574 /* CCGLQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = D285ED48193814A1009F4E88 /* CCGLQueue.h */; };
 		D2FEB6A6194F6C9E00FC0574 /* CCSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = B7EE6A1C181AE34600B983FE /* CCSlider.h */; };
 		D2FEB6A7194F6C9E00FC0574 /* ccFPSImages.h in Headers */ = {isa = PBXBuildFile; fileRef = A003AC8B1657071100C7B792 /* ccFPSImages.h */; };
 		D2FEB6A8194F6C9E00FC0574 /* CCSprite9Slice.h in Headers */ = {isa = PBXBuildFile; fileRef = B74C2B9917BDA63A00A829C0 /* CCSprite9Slice.h */; };
@@ -988,9 +985,7 @@
 		D285ECEF192EA92A009F4E88 /* CCGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCGLView.m; path = Android/CCGLView.m; sourceTree = "<group>"; };
 		D285ECF6192EF5B2009F4E88 /* CCDirectorAndroid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCDirectorAndroid.h; path = Android/CCDirectorAndroid.h; sourceTree = "<group>"; };
 		D285ECF7192EF5B2009F4E88 /* CCDirectorAndroid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCDirectorAndroid.m; path = Android/CCDirectorAndroid.m; sourceTree = "<group>"; };
-		D285ED48193814A1009F4E88 /* CCGLQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGLQueue.h; sourceTree = "<group>"; };
-		D285ED49193814A1009F4E88 /* CCGLQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCGLQueue.m; sourceTree = "<group>"; };
-		D289C1C1197440BC00B68E3D /* BridgeKitV3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BridgeKitV3.framework; path = "System/Library/Frameworks/BridgeKitV3.framework"; sourceTree = SDKROOT; };
+		D289C1C1197440BC00B68E3D /* BridgeKitV3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BridgeKitV3.framework; path = System/Library/Frameworks/BridgeKitV3.framework; sourceTree = SDKROOT; };
 		D28A2E151954F66E00ADC03D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D28A2E1A1954F68D00ADC03D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D28A2E1C1954F7E000ADC03D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -1002,7 +997,7 @@
 		D2A3CFAC1947B713003B7D0B /* CCQuaternion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCQuaternion.h; sourceTree = "<group>"; };
 		D2A3CFAD1947B7A3003B7D0B /* CCMatrix3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMatrix3.h; sourceTree = "<group>"; };
 		D2A3CFAF1947B7EE003B7D0B /* CCMatrix4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMatrix4.h; sourceTree = "<group>"; };
-		D2A3CFB11947B84B003B7D0B /* ccMathUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCMathUtils.h; sourceTree = "<group>"; };
+		D2A3CFB11947B84B003B7D0B /* CCMathUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCMathUtils.h; sourceTree = "<group>"; };
 		D2A3CFB81947BFE8003B7D0B /* CCMatrix4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMatrix4.m; sourceTree = "<group>"; };
 		D2A3CFBC1947C083003B7D0B /* CCQuaternion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCQuaternion.m; sourceTree = "<group>"; };
 		D2B49102192146FB00C3443A /* CCEffectGaussianBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectGaussianBlur.h; sourceTree = "<group>"; };
@@ -1222,8 +1217,6 @@
 				B7E776201857A159004221AA /* CCColor.m */,
 				D380581E1889CE7700822437 /* CCCache.h */,
 				D380581F1889CE7700822437 /* CCCache.m */,
-				D285ED48193814A1009F4E88 /* CCGLQueue.h */,
-				D285ED49193814A1009F4E88 /* CCGLQueue.m */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -1762,7 +1755,7 @@
 				5B35BCDC19710BB8001734CF /* CCMatrix3.m */,
 				D2A3CFAF1947B7EE003B7D0B /* CCMatrix4.h */,
 				D2A3CFB81947BFE8003B7D0B /* CCMatrix4.m */,
-				D2A3CFB11947B84B003B7D0B /* ccMathUtils.h */,
+				D2A3CFB11947B84B003B7D0B /* CCMathUtils.h */,
 			);
 			name = Math;
 			sourceTree = "<group>";
@@ -1990,7 +1983,6 @@
 				A039EBFF155C686B0061EE37 /* CCNode+Debug.h in Headers */,
 				A0DA0BC315BCDCA200E80A92 /* CCDrawNode.h in Headers */,
 				2B192835163361B10049A044 /* CCClippingNode.h in Headers */,
-				D285ED4A193814A1009F4E88 /* CCGLQueue.h in Headers */,
 				B7EE6A1E181AE34600B983FE /* CCSlider.h in Headers */,
 				A003AC8C1657071100C7B792 /* ccFPSImages.h in Headers */,
 				B74C2B9B17BDA63A00A829C0 /* CCSprite9Slice.h in Headers */,
@@ -2163,7 +2155,6 @@
 				D2FEB6A2194F6C9E00FC0574 /* CCNode+Debug.h in Headers */,
 				D2FEB6A3194F6C9E00FC0574 /* CCDrawNode.h in Headers */,
 				D2FEB6A4194F6C9E00FC0574 /* CCClippingNode.h in Headers */,
-				D2FEB6A5194F6C9E00FC0574 /* CCGLQueue.h in Headers */,
 				D2FEB6A6194F6C9E00FC0574 /* CCSlider.h in Headers */,
 				D2FEB6A7194F6C9E00FC0574 /* ccFPSImages.h in Headers */,
 				D2FEB6A8194F6C9E00FC0574 /* CCSprite9Slice.h in Headers */,
@@ -2395,7 +2386,6 @@
 				D285ECF1192EA92A009F4E88 /* CCGLView.m in Sources */,
 				E01E6D8D121F130E001A484F /* CCLabelBMFont.m in Sources */,
 				E0EAD100121F4B4600B0C81C /* CCDirectorIOS.m in Sources */,
-				D285ED4B193814A1009F4E88 /* CCGLQueue.m in Sources */,
 				D24161011958F6EE003673BD /* CCAnimationManager+FrameAnimation.m in Sources */,
 				D285ECF9192EF5B2009F4E88 /* CCDirectorAndroid.m in Sources */,
 				E0EAD109121F4B4600B0C81C /* CCGLView.m in Sources */,
