@@ -9,6 +9,8 @@
 #ifndef __CC_MATH_TYPES_H
 #define __CC_MATH_TYPES_H
 
+#import "ccMacros.h"
+
 #if defined(__STRICT_ANSI__)
 struct _CCMatrix2
 {

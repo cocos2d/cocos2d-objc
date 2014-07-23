@@ -208,15 +208,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 	_context = [_renderer context];
 
-#if __CC_USE_GL_QUEUE
-    [[CCGLQueue mainQueueWithAPI:kEAGLRenderingAPIOpenGLES2] addOperation:^(EAGLContext *ctx) {
-
-        _discardFramebufferSupported = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
-    }];
-#else
     _discardFramebufferSupported = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
-#endif
-    
 
 	CC_CHECK_GL_ERROR_DEBUG();
 
@@ -231,20 +223,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void) layoutSubviews
 {
-#if __CC_USE_GL_QUEUE
-    
-    [[CCGLQueue mainQueueWithAPI:kEAGLRenderingAPIOpenGLES2] addOperation:^(EAGLContext *ctx) {
-    
-        [_renderer resizeFromLayer:(CAEAGLLayer*)self.layer ctx:ctx];
-
-        _size = [_renderer backingSize];
-
-        // Issue #914 #924
-        CCDirector *director = [CCDirector sharedDirector];
-        [director reshapeProjection:_size];
-    }];
-#else
-    
     [_renderer resizeFromLayer:(CAEAGLLayer*)self.layer];
     
 	_size = [_renderer backingSize];
@@ -252,8 +230,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	// Issue #914 #924
 	CCDirector *director = [CCDirector sharedDirector];
 	[director reshapeProjection:_size];
-
-#endif
 
 	// Avoid flicker. Issue #350
 	// Only draw if there is something to draw, otherwise it actually creates a flicker of the current glClearColor
@@ -265,59 +241,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void) swapBuffers
 {
-#if __CC_USE_GL_QUEUE
-    [[CCGLQueue mainQueueWithAPI:kEAGLRenderingAPIOpenGLES2] addOperation:^(EAGLContext *ctx) {
-        // IMPORTANT:
-        // - preconditions
-        //	-> _context MUST be the OpenGL context
-        //	-> renderbuffer_ must be the the RENDER BUFFER
-        
-        if (_multiSampling)
-        {
-            /* Resolve from msaaFramebuffer to resolveFramebuffer */
-            //glDisable(GL_SCISSOR_TEST);
-            glBindFramebuffer(GL_READ_FRAMEBUFFER_APPLE, [_renderer msaaFrameBuffer]);
-            glBindFramebuffer(GL_DRAW_FRAMEBUFFER_APPLE, [_renderer defaultFrameBuffer]);
-            glResolveMultisampleFramebufferAPPLE();
-        }
-        
-        if( _discardFramebufferSupported)
-        {
-            if (_multiSampling)
-            {
-                if (_depthFormat)
-                {
-                    GLenum attachments[] = {GL_COLOR_ATTACHMENT0, GL_DEPTH_ATTACHMENT};
-                    glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 2, attachments);
-                }
-                else
-                {
-                    GLenum attachments[] = {GL_COLOR_ATTACHMENT0};
-                    glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 1, attachments);
-                }
-                
-                glBindRenderbuffer(GL_RENDERBUFFER, [_renderer colorRenderBuffer]);
-                
-            }
-            
-            // not MSAA
-            else if (_depthFormat ) {
-                GLenum attachments[] = { GL_DEPTH_ATTACHMENT};
-                glDiscardFramebufferEXT(GL_FRAMEBUFFER, 1, attachments);
-            }
-        }
-        
-        if(![ctx presentRenderbuffer:GL_RENDERBUFFER])
-            CCLOG(@"cocos2d: Failed to swap renderbuffer in %s\n", __FUNCTION__);
-        
-        // We can safely re-bind the framebuffer here, since this will be the
-        // 1st instruction of the new main loop
-        if( _multiSampling )
-            glBindFramebuffer(GL_FRAMEBUFFER, [_renderer msaaFrameBuffer]);
-        
-        CC_CHECK_GL_ERROR_DEBUG();
-    }];
-#else
     // IMPORTANT:
 	// - preconditions
 	//	-> _context MUST be the OpenGL context
@@ -367,8 +290,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		glBindFramebuffer(GL_FRAMEBUFFER, [_renderer msaaFrameBuffer]);
     
 	CC_CHECK_GL_ERROR_DEBUG();
-#endif
-    
 }
 
 -(void) lockOpenGLContext

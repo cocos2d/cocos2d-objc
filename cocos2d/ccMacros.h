@@ -39,10 +39,6 @@
  cocos2d helper macros
  */
 
-#ifndef __CC_USE_GL_QUEUE
-#define __CC_USE_GL_QUEUE 0
-#endif
-
 #if defined(__IPHONE_OS_VERSION_MAX_ALLOWED) && !defined(COCOS2D_ANDROID)
 #define __CC_PLATFORM_IOS 1
 #define __CC_PLATFORM_MAC 0
