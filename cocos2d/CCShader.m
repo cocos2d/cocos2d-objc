@@ -212,9 +212,7 @@ CompileShader(GLenum type, const char *source)
 
 +(GLuint)createVAOforCCVertexBuffer:(GLuint)vbo elementBuffer:(GLuint)ebo
 {
-#if !__CC_PLATFORM_ANDROID
-	glPushGroupMarkerEXT(0, "CCShader: Creating vertex buffer");
-#endif
+	CCGL_DEBUG_PUSH_GROUP_MARKER("CCShader: Creating vertex buffer");
 	
 	GLuint vao = 0;
 	glGenVertexArrays(1, &vao);
@@ -237,9 +235,7 @@ CompileShader(GLenum type, const char *source)
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	
-#if !__CC_PLATFORM_ANDROID
-	glPopGroupMarkerEXT();
-#endif
+	CCGL_DEBUG_POP_GROUP_MARKER();
 	
 	return vao;
 }
@@ -413,9 +409,7 @@ SetMat4(NSString *name, GLint location)
 
 -(instancetype)initWithVertexShaderSource:(NSString *)vertexSource fragmentShaderSource:(NSString *)fragmentSource
 {
-#if !__CC_PLATFORM_ANDROID
-	glPushGroupMarkerEXT(0, "CCShader: Init");
-#endif
+	CCGL_DEBUG_PUSH_GROUP_MARKER("CCShader: Init");
 	
 	GLuint program = glCreateProgram();
 	glBindAttribLocation(program, CCAttributePosition, "cc_Position");
@@ -434,9 +428,8 @@ SetMat4(NSString *name, GLint location)
 	
 	glDeleteShader(vshader);
 	glDeleteShader(fshader);
-#if !__CC_PLATFORM_ANDROID
-	glPopGroupMarkerEXT();
-#endif
+	
+	CCGL_DEBUG_POP_GROUP_MARKER();
 	
 	return [self initWithProgram:program uniformSetters:[self uniformSettersForProgram:program] ownsProgram:YES];
 }
