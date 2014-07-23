@@ -72,7 +72,7 @@ static inline void __CC_CHECK_GL_ERROR_DEBUG(const char *function, int line)
 #endif
 
 
-#if DEBUG && defined(__CC_PLATFORM_IOS)
+#if DEBUG && __CC_PLATFORM_IOS
 
 /// Basic wrapper for glInsertEventMarkerEXT() depending on the current build settings and platform.
 #define CCGL_DEBUG_INSERT_EVENT_MARKER(__message__) glInsertEventMarkerEXT(0, __message__)
