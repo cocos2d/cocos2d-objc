@@ -16,9 +16,11 @@
 #include <arm_neon.h>
 #endif
 
-#import "CCMathTypes.h"
+#import "CCMathTypesAndroid.h"
 #import "CCVector3.h"
 #import "CCQuaternion.h"
+
+#if __CC_PLATFORM_ANDROID
 
 #ifdef __cplusplus
 extern "C" {
@@ -452,6 +454,45 @@ extern "C" {
     
 #ifdef __cplusplus
 }
+#endif
+
+#define GLKMatrix3Identity CCMatrix3Identity
+#define GLKMatrix3Invert CCMatrix3Invert
+#define GLKMatrix3InvertAndTranspose CCMatrix3InvertAndTranspose
+#define GLKMatrix3Make CCMatrix3Make
+#define GLKMatrix3MakeAndTranspose CCMatrix3MakeAndTranspose
+#define GLKMatrix3MakeWithArray CCMatrix3MakeWithArray
+#define GLKMatrix3MakeWithArrayAndTranspose CCMatrix3MakeWithArrayAndTranspose
+#define GLKMatrix3MakeWithRows CCMatrix3MakeWithRows
+#define GLKMatrix3MakeWithColumns CCMatrix3MakeWithColumns
+#define GLKMatrix3MakeWithQuaternion CCMatrix3MakeWithQuaternion
+#define GLKMatrix3MakeScale CCMatrix3MakeScale
+#define GLKMatrix3MakeRotation CCMatrix3MakeRotation
+#define GLKMatrix3MakeXRotation CCMatrix3MakeXRotation
+#define GLKMatrix3MakeYRotation CCMatrix3MakeYRotation
+#define GLKMatrix3MakeZRotation CCMatrix3MakeZRotation
+#define GLKMatrix3GetMatrix2 CCMatrix3GetMatrix2
+#define GLKMatrix3GetRow CCMatrix3GetRow
+#define GLKMatrix3GetColumn CCMatrix3GetColumn
+#define GLKMatrix3SetRow CCMatrix3SetRow
+#define GLKMatrix3SetColumn CCMatrix3SetColumn
+#define GLKMatrix3Transpose CCMatrix3Transpose
+#define GLKMatrix3Multiply CCMatrix3Multiply
+#define GLKMatrix3Add CCMatrix3Add
+#define GLKMatrix3Subtract CCMatrix3Subtract
+#define GLKMatrix3Scale CCMatrix3Scale
+#define GLKMatrix3ScaleWithVector3 CCMatrix3ScaleWithVector3
+#define GLKMatrix3ScaleWithVector4 CCMatrix3ScaleWithVector4
+#define GLKMatrix3Rotate CCMatrix3Rotate
+#define GLKMatrix3RotateWithVector3 CCMatrix3RotateWithVector3
+#define GLKMatrix3RotateWithVector4 CCMatrix3RotateWithVector4
+#define GLKMatrix3RotateX CCMatrix3RotateX
+#define GLKMatrix3RotateY CCMatrix3RotateY
+#define GLKMatrix3RotateZ CCMatrix3RotateZ
+#define GLKMatrix3MultiplyVector3 CCMatrix3MultiplyVector3
+#define GLKMatrix3MultiplyVector3Array CCMatrix3MultiplyVector3Array
+
+
 #endif
 
 #endif /* __CC_MATRIX_3_H */

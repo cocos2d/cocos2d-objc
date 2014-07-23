@@ -1,5 +1,5 @@
 //
-//  ccMathTypes.h
+//  CCMathTypesAndroid.h
 //  cocos2d-ios
 //
 //  Created by Oleg Osin on 6/10/14.
@@ -10,6 +10,8 @@
 #define __CC_MATH_TYPES_H
 
 #import "ccMacros.h"
+
+#if __CC_PLATFORM_ANDROID
 
 #if defined(__STRICT_ANSI__)
 struct _CCMatrix2
@@ -151,11 +153,15 @@ typedef union _CCQuaternion CCQuaternion;
 //}
 //#endif
 
-
-#if __CC_PLATFORM_ANDROID
-    
+#define GLKMatrix4 CCMatrix4
+#define GLKMatrix3 CCMatrix3
+#define GLKMatrix2 CCMatrix2
+#define GLKVector2 CCVector2
+#define GLKVector3 CCVector3
+#define GLKVector4 CCVector4
+#define CCQuaternion CCQuaternion
 
 #endif
 
-
 #endif // __CC_MATH_TYPES_H
+

@@ -39,7 +39,7 @@
 #endif
 
 
-#import "CCMathTypes.h"
+#import "CCMathTypesAndroid.h"
 
 #import "CCMatrix3.h"
 #import "CCMatrix4.h"
@@ -48,7 +48,7 @@
 #import "CCVector4.h"
 #import "CCQuaternion.h"
 
-#import "CCMathUtils.h"
+#import "CCMathUtilsAndroid.h"
 
 #import "Platforms/CCGL.h"
 

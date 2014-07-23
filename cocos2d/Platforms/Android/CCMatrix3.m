@@ -1,5 +1,7 @@
 #import "CCMatrix3.h"
 
+#if __CC_PLATFORM_ANDROID
+
 static inline float CCMatrixDeterminant(CCMatrix3 matrix) {
     float det = 0.0f;
     
@@ -52,3 +54,5 @@ CCMatrix3 CCMatrix3InvertAndTranspose(CCMatrix3 matrix, bool *isInvertible) {
     CCMatrix3 adjugate = CCMatrixAdjugate(matrix);
     return CCMatrix3Transpose(CCMatrix3Multiply(adjugate, matrix));
 }
+
+#endif

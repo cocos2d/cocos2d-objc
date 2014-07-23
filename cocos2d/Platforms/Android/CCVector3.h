@@ -12,7 +12,9 @@
 #include <stdbool.h>
 #include <math.h>
 
-#import "CCMathTypes.h"
+#import "CCMathTypesAndroid.h"
+
+#if __CC_PLATFORM_ANDROID
 
 #ifdef __cplusplus
 extern "C" {
@@ -260,5 +262,34 @@ extern "C" {
 }
 #endif
 
+#define GLKVector3Make CCVector3Make
+#define GLKVector3MakeWithArray CCVector3MakeWithArray
+#define GLKVector3Negate CCVector3Negate
+#define GLKVector3Add CCVector3Add
+#define GLKVector3Subtract CCVector3Subtract
+#define GLKVector3Multiply CCVector3Multiply
+#define GLKVector3Divide CCVector3Divide
+#define GLKVector3AddScalar CCVector3AddScalar
+#define GLKVector3SubtractScalar CCVector3SubtractScalar
+#define GLKVector3MultiplyScalar CCVector3MultiplyScalar
+#define GLKVector3DivideScalar CCVector3DivideScalar
+#define GLKVector3Maximum CCVector3Maximum
+#define GLKVector3Minimum CCVector3Minimum
+#define GLKVector3AllEqualToVector2 CCVector3AllEqualToVector2
+#define GLKVector3AllEqualToScalar CCVector3AllEqualToScalar
+#define GLKVector3AllGreaterThanVector2 CCVector3AllGreaterThanVector2
+#define GLKVector3AllGreaterThanScalar CCVector3AllGreaterThanScalar
+#define GLKVector3AllGreaterThanOrEqualToVector2 CCVector3AllGreaterThanOrEqualToVector2
+#define GLKVector3AllGreaterThanOrEqualToScalar CCVector3AllGreaterThanOrEqualToScalar
+#define GLKVector3Length CCVector3Length
+#define GLKVector3Normalize CCVector3Normalize
+#define GLKVector3DotProduct CCVector3DotProduct
+#define GLKVector3Distance GLKVect
+#define GLKVector3Lerp CCVector3Lerp
+#define GLKVector3Project CCVector3Project
+
+#endif
+
 #endif /* __CC_VECTOR_3_H */
+
 

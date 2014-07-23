@@ -17,7 +17,10 @@
 #include <arm_neon.h>
 #endif
 
-#import "CCMathTypes.h"
+#import "CCMathTypesAndroid.h"
+
+#if __CC_PLATFORM_ANDROID
+
 #import "CCVector3.h"
 #import "CCVector4.h"
 #import "CCQuaternion.h"
@@ -806,6 +809,50 @@ extern "C" {
     
 #ifdef __cplusplus
 }
+#endif
+
+#define GLKMatrix4Make CCMatrix4Make
+#define GLKMatrix4Identity CCMatrix4Identity
+#define GLKMatrix4Invert CCMatrix4Invert
+#define GLKMatrix4InvertAndTranspose CCMatrix4InvertAndTranspose
+#define GLKMatrix4MakeAndTranspose CCMatrix4MakeAndTranspose
+#define GLKMatrix4MakeWithArray CCMatrix4MakeWithArray
+#define GLKMatrix4MakeWithArrayAndTranspose CCMatrix4MakeWithArrayAndTranspose
+#define GLKMatrix4MakeWithRows CCMatrix4MakeWithRows
+#define GLKMatrix4MakeWithColumns CCMatrix4MakeWithColumns
+#define GLKMatrix4MakeWithQuaternion CCMatrix4MakeWithQuaternion
+#define GLKMatrix4MakeScale CCMatrix4MakeScale
+#define GLKMatrix4MakeRotation CCMatrix4MakeRotation
+#define GLKMatrix4MakeXRotation CCMatrix4MakeXRotation
+#define GLKMatrix4MakeYRotation CCMatrix4MakeYRotation
+#define GLKMatrix4MakeZRotation CCMatrix4MakeZRotation
+#define GLKMatrix4GetMatrix2 CCMatrix4GetMatrix2
+#define GLKMatrix4GetRow CCMatrix4GetRow
+#define GLKMatrix4GetColumn CCMatrix4GetColumn
+#define GLKMatrix4SetRow CCMatrix4SetRow
+#define GLKMatrix4SetColumn CCMatrix4SetColumn
+#define GLKMatrix4Transpose CCMatrix4Transpose
+#define GLKMatrix4Multiply CCMatrix4Multiply
+#define GLKMatrix4Add CCMatrix4Add
+#define GLKMatrix4Subtract CCMatrix4Subtract
+#define GLKMatrix4Scale CCMatrix4Scale
+#define GLKMatrix4ScaleWithVector3 CCMatrix4ScaleWithVector3
+#define GLKMatrix4ScaleWithVector4 CCMatrix4ScaleWithVector4
+#define GLKMatrix4Rotate CCMatrix4Rotate
+#define GLKMatrix4RotateWithVector3 CCMatrix4RotateWithVector3
+#define GLKMatrix4RotateWithVector4 CCMatrix4RotateWithVector4
+#define GLKMatrix4RotateX CCMatrix4RotateX
+#define GLKMatrix4RotateY CCMatrix4RotateY
+#define GLKMatrix4RotateZ CCMatrix4RotateZ
+#define GLKMatrix4MultiplyVector3 CCMatrix4MultiplyVector3
+#define GLKMatrix4MultiplyVector3Array CCMatrix4MultiplyVector3Array
+#define GLKMatrix4MultiplyAndProjectVector3 CCMatrix4MultiplyAndProjectVector3
+#define GLKMatrix4MultiplyAndProjectVector3Array CCMatrix4MultiplyAndProjectVector3Array
+#define GLKMatrix4MakeTranslation CCMatrix4MakeTranslation
+#define GLKMatrix4MakeOrtho CCMatrix4MakeOrtho
+#define GLKMatrix4MakePerspective CCMatrix4MakePerspective
+#define GLKMatrix4MultiplyVector4 CCMatrix4MultiplyVector4
+
 #endif
 
 #endif /* __CC_MATRIX_4_H */

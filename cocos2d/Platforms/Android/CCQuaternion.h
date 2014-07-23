@@ -12,7 +12,9 @@
 #include <stddef.h>
 #include <math.h>
 
-#import "CCMathTypes.h"
+#import "CCMathTypesAndroid.h"
+
+#if __CC_PLATFORM_ANDROID
 
 #import "CCVector3.h"
 #import "CCVector4.h"
@@ -257,6 +259,32 @@ extern "C" {
     
 #ifdef __cplusplus
 }
+#endif
+
+#define GLKQuaternionIdentity CCQuaternionIdentity
+#define GLKQuaternionMakeWithMatrix3 CCQuaternionMakeWithMatrix3
+#define GLKQuaternionAngle CCQuaternionAngle
+#define GLKQuaternionAxis CCQuaternionAxis
+#define GLKQuaternionSlerp CCQuaternionSlerp
+#define GLKQuaternionRotateVector3Array CCQuaternionRotateVector3Array
+#define GLKQuaternionMakeWithMatrix4 CCQuaternionMakeWithMatrix4
+#define GLKQuaternionRotateVector4Array CCQuaternionRotateVector4Array
+#define GLKQuaternionMake CCQuaternionMake
+#define GLKQuaternionMakeWithVector3 CCQuaternionMakeWithVector3
+#define GLKQuaternionMakeWithArray CCQuaternionMakeWithArray
+#define GLKQuaternionMakeWithAngleAndAxis CCQuaternionMakeWithAngleAndAxis
+#define GLKQuaternionIdentity CCQuaternionIdentity
+#define GLKQuaternionMakeWithAngleAndVector3Axis CCQuaternionMakeWithAngleAndVector3Axis
+#define GLKQuaternionAdd CCQuaternionAdd
+#define GLKQuaternionSubtract CCQuaternionSubtract
+#define GLKQuaternionMultiply CCQuaternionMultiply
+#define GLKQuaternionLength CCQuaternionLength
+#define GLKQuaternionConjugate CCQuaternionConjugate
+#define GLKQuaternionInvert CCQuaternionInvert
+#define GLKQuaternionNormalize CCQuaternionNormalize
+#define GLKQuaternionRotateVector3 CCQuaternionRotateVector3
+#define GLKQuaternionRotateVector4 CCQuaternionRotateVector4
+
 #endif
 
 #endif /* __CC_QUATERNION_H */

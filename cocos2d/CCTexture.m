@@ -190,7 +190,9 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 - (id) initWithData:(const void*)data pixelFormat:(CCTexturePixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSizeInPixels:(CGSize)sizeInPixels contentScale:(CGFloat)contentScale
 {
 	if((self = [super init])) {
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
 		glPushGroupMarkerEXT(0, "CCTexture: Init");
+#endif
 		
 		// XXX: 32 bits or POT textures uses UNPACK of 4 (is this correct ??? )
 		if( pixelFormat == CCTexturePixelFormat_RGBA8888 || ( CCNextPOT(width)==width && CCNextPOT(height)==height) )

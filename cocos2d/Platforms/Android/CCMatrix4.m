@@ -1,5 +1,10 @@
 #import "CCMatrix4.h"
+
+#if __CC_PLATFORM_ANDROID
+
 #include <string.h>
+
+
 
 static inline float get(const CCMatrix4 *pIn, int row, int col)
 {
@@ -108,4 +113,5 @@ CCMatrix4 CCMatrix4Invert(CCMatrix4 matrix, bool *isInvertible) {
     return inv;
 }
 
+#endif
 

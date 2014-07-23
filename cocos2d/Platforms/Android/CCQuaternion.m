@@ -1,6 +1,8 @@
 #import "CCQuaternion.h"
 #import "CCMatrix4.h"
 
+#if __CC_PLATFORM_ANDROID
+
 #define kCCEpsilon 0.0001f
 
 CCQuaternion CCQuaternionMakeWithMatrix3(CCMatrix3 matrix)
@@ -116,3 +118,7 @@ void CCQuaternionRotateVector4Array(CCQuaternion quaternion, CCVector4 *vectors,
         CCQuaternionRotateVector4(quaternion, vectors[idx]);
     }
 }
+
+#endif
+
+

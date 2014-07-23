@@ -16,7 +16,9 @@
 #include <arm_neon.h>
 #endif
 
-#import "CCMathTypes.h"
+#import "CCMathTypesAndroid.h"
+
+#if __CC_PLATFORM_ANDROID
 
 #ifdef __cplusplus
 extern "C" {
@@ -460,4 +462,33 @@ extern "C" {
 }
 #endif
 
+#define GLKVector4Make CCVector4Make
+#define GLKVector4MakeWithArray CCVector4MakeWithArray
+#define GLKVector4Negate CCVector4Negate
+#define GLKVector4Add CCVector4Add
+#define GLKVector4Subtract CCVector4Subtract
+#define GLKVector4Multiply CCVector4Multiply
+#define GLKVector4Divide CCVector4Divide
+#define GLKVector4AddScalar CCVector4AddScalar
+#define GLKVector4SubtractScalar CCVector4SubtractScalar
+#define GLKVector4MultiplyScalar CCVector4MultiplyScalar
+#define GLKVector4DivideScalar CCVector4DivideScalar
+#define GLKVector4Maximum CCVector4Maximum
+#define GLKVector4Minimum CCVector4Minimum
+#define GLKVector4AllEqualToVector2 CCVector4AllEqualToVector2
+#define GLKVector4AllEqualToScalar CCVector4AllEqualToScalar
+#define GLKVector4AllGreaterThanVector2 CCVector4AllGreaterThanVector2
+#define GLKVector4AllGreaterThanScalar CCVector4AllGreaterThanScalar
+#define GLKVector4AllGreaterThanOrEqualToVector2 CCVector4AllGreaterThanOrEqualToVector2
+#define GLKVector4AllGreaterThanOrEqualToScalar CCVector4AllGreaterThanOrEqualToScalar
+#define GLKVector4Length CCVector4Length
+#define GLKVector4Normalize CCVector4Normalize
+#define GLKVector4DotProduct CCVector4DotProduct
+#define GLKVector4Distance GLKVect
+#define GLKVector4Lerp CCVector4Lerp
+#define GLKVector4Project CCVector4Project
+
 #endif /* __CC_VECTOR_4_H */
+
+#endif
+
