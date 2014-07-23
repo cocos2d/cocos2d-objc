@@ -269,7 +269,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 
 - (void)renderOutgoing:(float)progress
 {
-    CCVector4 c = _outgoingScene.colorRGBA.CCVector4;
+    GLKVector4 c = _outgoingScene.colorRGBA.GLKVector4;
     [_outgoingTexture beginWithClear:c.r g:c.g b:c.b a:c.a depth:1.0 stencil:0];
     [_outgoingScene visit];
     [_outgoingTexture end];
@@ -277,7 +277,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 
 - (void)renderIncoming:(float)progress
 {
-    CCVector4 c = _outgoingScene.colorRGBA.CCVector4;
+    GLKVector4 c = _outgoingScene.colorRGBA.GLKVector4;
     [_incomingTexture beginWithClear:c.r g:c.g b:c.b a:c.a depth:1.0 stencil:0];
 	    [_incomingScene visit];
     [_incomingTexture end];
@@ -311,7 +311,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 
 // -----------------------------------------------------------------
 
--(void)draw:(CCRenderer *)renderer transform:(const CCMatrix4 *)transform
+-(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
 	typedef id (*Func)(id, SEL);
 	((Func)objc_msgSend)(self, _drawSelector);

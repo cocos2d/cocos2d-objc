@@ -35,6 +35,7 @@
 
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
 #import <CoreGraphics/CGGeometry.h>	// CGPoint
+#import <GLKit/GLKit.h>
 #endif
 
 

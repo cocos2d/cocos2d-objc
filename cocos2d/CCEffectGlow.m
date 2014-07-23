@@ -51,7 +51,7 @@
 -(id)init
 {
     CCEffectUniform* u_enableGlowMap = [CCEffectUniform uniform:@"float" name:@"u_enableGlowMap" value:[NSNumber numberWithFloat:0.0f]];
-    CCEffectUniform* u_blurDirection = [CCEffectUniform uniform:@"vec2" name:@"u_blurDirection" value:[NSValue valueWithCCVector2:CCVector2Make(0.0f, 0.0f)]];
+    CCEffectUniform* u_blurDirection = [CCEffectUniform uniform:@"vec2" name:@"u_blurDirection" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]];
     CCEffectVarying* v_centerTextureCoordinate = [CCEffectVarying varying:@"vec2" name:@"v_centerTextureCoordinate"];
     CCEffectVarying* v_twoStepsLeftTextureCoordinate = [CCEffectVarying varying:@"vec2" name:@"v_twoStepsLeftTextureCoordinate"];
     CCEffectVarying* v_oneStepLeftTextureCoordinate = [CCEffectVarying varying:@"vec2" name:@"v_oneStepLeftTextureCoordinate"];
@@ -155,7 +155,7 @@
         pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
         pass.shaderUniforms[self.uniformTranslationTable[@"u_enableGlowMap"]] = [NSNumber numberWithFloat:0.0f];
-        pass.shaderUniforms[self.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithCCVector2:CCVector2Make(weakSelf.blurStrength, 0.0f)];
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithGLKVector2:GLKVector2Make(weakSelf.blurStrength, 0.0f)];
     } copy]];
     
     
@@ -165,7 +165,7 @@
     pass1.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
         pass.shaderUniforms[self.uniformTranslationTable[@"u_enableGlowMap"]] = [NSNumber numberWithFloat:0.0f];
-        pass.shaderUniforms[self.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithCCVector2:CCVector2Make(0.0f, weakSelf.blurStrength)];
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithGLKVector2:GLKVector2Make(0.0f, weakSelf.blurStrength)];
     } copy]];
 
     

@@ -84,7 +84,7 @@ typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass);
 
 @property (nonatomic) NSInteger renderPassId;
 @property (nonatomic) CCRenderer* renderer;
-@property (nonatomic) CCMatrix4 transform;
+@property (nonatomic) GLKMatrix4 transform;
 @property (nonatomic) CCSpriteVertexes verts;
 @property (nonatomic) CCBlendMode* blendMode;
 @property (nonatomic) CCShader* shader;

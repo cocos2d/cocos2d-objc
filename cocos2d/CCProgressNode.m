@@ -173,15 +173,15 @@
 ///
 //	@returns the vertex position from the texture coordinate
 ///
--(CCVector2)textureCoordFromAlphaPoint:(CGPoint) alpha
+-(GLKVector2)textureCoordFromAlphaPoint:(CGPoint) alpha
 {
 	if (!_sprite) {
-		return CCVector2Make(0.0f, 0.0f);
+		return GLKVector2Make(0.0f, 0.0f);
 	}
 	
 	const CCSpriteVertexes *verts = _sprite.vertexes;
-	CCVector2 min = verts->bl.texCoord1;
-	CCVector2 max = verts->tr.texCoord1;
+	GLKVector2 min = verts->bl.texCoord1;
+	GLKVector2 max = verts->tr.texCoord1;
   //  Fix bug #1303 so that progress timer handles sprite frame texture rotation
   if (_sprite.textureRectRotated) {
     CC_SWAP(alpha.x, alpha.y);
@@ -189,22 +189,22 @@
 	
 	// As of 3.1, the x alpha needs to be flipped. Not really sure why.
 	alpha.x = 1.0 - alpha.x;
-	return CCVector2Make(min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y);
+	return GLKVector2Make(min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y);
 }
 
--(CCVector4)vertexFromAlphaPoint:(CGPoint) alpha
+-(GLKVector4)vertexFromAlphaPoint:(CGPoint) alpha
 {
 	if (!_sprite) {
-		return CCVector4Make(0.0f, 0.0f, 0.0f, 1.0f);
+		return GLKVector4Make(0.0f, 0.0f, 0.0f, 1.0f);
 	}
 	
 	const CCSpriteVertexes *verts = _sprite.vertexes;
-	CCVector4 min = verts->br.position;
-	CCVector4 max = verts->tl.position;
+	GLKVector4 min = verts->br.position;
+	GLKVector4 max = verts->tl.position;
 	
 	// As of 3.1, the x alpha needs to be flipped. Not really sure why.
 	alpha.x = 1.0 - alpha.x;
-	return CCVector4Make(min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y, 0.0f, 1.0f);
+	return GLKVector4Make(min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y, 0.0f, 1.0f);
 }
 
 -(void)updateColor
@@ -213,7 +213,7 @@
 		return;
 	}
 	if(_verts){
-		CCVector4 sc = _sprite.vertexes->br.color;
+		GLKVector4 sc = _sprite.vertexes->br.color;
 		for (int i=0; i < _vertexCount; ++i) {
 			_verts[i].color = sc;
 		}
@@ -498,12 +498,12 @@ BoundryTexCoord(int index)
 	[self updateColor];
 }
 
--(void)visit:(CCRenderer *)renderer parentTransform:(const CCMatrix4 *)parentTransform
+-(void)visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
 {
 	[super visit:renderer parentTransform:parentTransform];
 }
 
--(void)draw:(CCRenderer *)renderer transform:(const CCMatrix4 *)transform
+-(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
 	if (_needsUpdateProgress) {
 		[self updateProgress];

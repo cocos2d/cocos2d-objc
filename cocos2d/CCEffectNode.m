@@ -93,17 +93,17 @@
     [self configureRender];
 	NSAssert(_renderer, @"Cannot call [CCNode visit] without a currently bound renderer.");
     
-	CCMatrix4 projection; [_renderer.globalShaderUniforms[CCShaderUniformProjection] getValue:&projection];
+	GLKMatrix4 projection; [_renderer.globalShaderUniforms[CCShaderUniformProjection] getValue:&projection];
 	[self visit:_renderer parentTransform:&projection];
 }
 
--(void)visit:(CCRenderer *)renderer parentTransform:(const CCMatrix4 *)parentTransform
+-(void)visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
 {
 	// override visit.
 	// Don't call visit on its children
 	if(!_visible) return;
 	
-    CCMatrix4 transform = [self transform:parentTransform];
+    GLKMatrix4 transform = [self transform:parentTransform];
     
     [self draw:renderer transform:&transform];
 	
@@ -120,7 +120,7 @@
 		_renderer = [[CCRenderer alloc] init];
 		
 		NSMutableDictionary *uniforms = [[CCDirector sharedDirector].globalShaderUniforms mutableCopy];
-		uniforms[CCShaderUniformProjection] = [NSValue valueWithCCMatrix4:_projection];
+		uniforms[CCShaderUniformProjection] = [NSValue valueWithGLKMatrix4:_projection];
 		_renderer.globalShaderUniforms = uniforms;
 		
 		[CCRenderer bindRenderer:_renderer];
@@ -131,12 +131,12 @@
 		_oldGlobalUniforms = _renderer.globalShaderUniforms;
 		
 		NSMutableDictionary *uniforms = [_oldGlobalUniforms mutableCopy];
-		uniforms[CCShaderUniformProjection] = [NSValue valueWithCCMatrix4:_projection];
+		uniforms[CCShaderUniformProjection] = [NSValue valueWithGLKMatrix4:_projection];
 		_renderer.globalShaderUniforms = uniforms;
 	}
 }
 
--(void)draw:(CCRenderer *)renderer transform:(const CCMatrix4 *)transform
+-(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
     [self configureRender];
 

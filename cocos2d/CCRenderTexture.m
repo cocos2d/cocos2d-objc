@@ -134,7 +134,7 @@
 		_depthStencilFormat = depthStencilFormat;
 
 		// Flip the projection matrix on the y-axis since Cocos2D uses upside down textures.
-		_projection = CCMatrix4MakeOrtho(0.0f, width, 0.0f, height, -1024.0f, 1024.0f);
+		_projection = GLKMatrix4MakeOrtho(0.0f, width, 0.0f, height, -1024.0f, 1024.0f);
 		
 		_sprite = [CCRenderTextureSprite spriteWithTexture:[CCTexture none]];
 
@@ -341,7 +341,7 @@
 		_renderer = [[CCRenderer alloc] init];
 		
 		NSMutableDictionary *uniforms = [[CCDirector sharedDirector].globalShaderUniforms mutableCopy];
-		uniforms[CCShaderUniformProjection] = [NSValue valueWithCCMatrix4:_projection];
+		uniforms[CCShaderUniformProjection] = [NSValue valueWithGLKMatrix4:_projection];
 		_renderer.globalShaderUniforms = uniforms;
 		
 		[CCRenderer bindRenderer:_renderer];
@@ -350,7 +350,7 @@
 		_oldGlobalUniforms = _renderer.globalShaderUniforms;
 		
 		NSMutableDictionary *uniforms = [_oldGlobalUniforms mutableCopy];
-		uniforms[CCShaderUniformProjection] = [NSValue valueWithCCMatrix4:_projection];
+		uniforms[CCShaderUniformProjection] = [NSValue valueWithGLKMatrix4:_projection];
 		_renderer.globalShaderUniforms = uniforms;
 	}
 	
@@ -371,7 +371,7 @@
 -(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a depth:(float)depthValue stencil:(int)stencilValue flags:(GLbitfield)flags
 {
 	[self begin];
-	[_renderer enqueueClear:flags color:CCVector4Make(r, g, b, a) depth:depthValue stencil:stencilValue globalSortOrder:NSIntegerMin];
+	[_renderer enqueueClear:flags color:GLKVector4Make(r, g, b, a) depth:depthValue stencil:stencilValue globalSortOrder:NSIntegerMin];
 }
 
 -(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a
@@ -418,20 +418,20 @@
 - (void)clearDepth:(float)depthValue
 {
 	[self begin];
-		[_renderer enqueueClear:GL_DEPTH_BUFFER_BIT color:CCVector4Make(0, 0, 0, 0) depth:depthValue stencil:0 globalSortOrder:NSIntegerMin];
+		[_renderer enqueueClear:GL_DEPTH_BUFFER_BIT color:GLKVector4Make(0, 0, 0, 0) depth:depthValue stencil:0 globalSortOrder:NSIntegerMin];
 	[self end];
 }
 
 - (void)clearStencil:(int)stencilValue
 {
 	[self begin];
-		[_renderer enqueueClear:GL_DEPTH_BUFFER_BIT color:CCVector4Make(0, 0, 0, 0) depth:0.0 stencil:stencilValue globalSortOrder:NSIntegerMin];
+		[_renderer enqueueClear:GL_DEPTH_BUFFER_BIT color:GLKVector4Make(0, 0, 0, 0) depth:0.0 stencil:stencilValue globalSortOrder:NSIntegerMin];
 	[self end];
 }
 
 #pragma mark RenderTexture - "auto" update
 
-- (void)visit:(CCRenderer *)renderer parentTransform:(const CCMatrix4 *)parentTransform
+- (void)visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
 {
 	// override visit.
 	// Don't call visit on its children
@@ -460,7 +460,7 @@
 		[self end];
 	}
 	
-	CCMatrix4 transform = [self transform:parentTransform];
+	GLKMatrix4 transform = [self transform:parentTransform];
 	[_sprite visit:renderer parentTransform:&transform];
 	
 	_orderOfArrival = 0;
@@ -636,12 +636,12 @@
 
 - (CCColor*) clearColor
 {
-    return [CCColor colorWithCCVector4:_clearColor];
+    return [CCColor colorWithGLKVector4:_clearColor];
 }
 
 - (void) setClearColor:(CCColor *)clearColor
 {
-    _clearColor = clearColor.CCVector4;
+    _clearColor = clearColor.GLKVector4;
 }
 
 #pragma RenderTexture - Override
@@ -651,7 +651,7 @@
     // TODO: Fix CCRenderTexture so that it correctly handles this
 	// NSAssert(NO, @"You cannot change the content size of an already created CCRenderTexture. Recreate it");
     [super setContentSize:size];
-    _projection = CCMatrix4MakeOrtho(0.0f, size.width, 0.0f, size.height, -1024.0f, 1024.0f);
+    _projection = GLKMatrix4MakeOrtho(0.0f, size.width, 0.0f, size.height, -1024.0f, 1024.0f);
     _contentSizeChanged = YES;
 }
 

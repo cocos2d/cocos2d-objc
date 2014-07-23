@@ -65,6 +65,7 @@
 		B7EE69811818760700B983FE /* CCSprite9SliceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69801818760700B983FE /* CCSprite9SliceTest.m */; };
 		B7EE69CF1819D82300B983FE /* CCLayoutTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69CE1819D82300B983FE /* CCLayoutTest.m */; };
 		B7EE6A28181B075E00B983FE /* CCSliderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE6A27181B075E00B983FE /* CCSliderTest.m */; };
+		D24FAEED198014C80043E27D /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D34CD3C118ABEE9C00D8E537 /* GLKit.framework */; };
 		D275582A194F9B4E00CF3A08 /* libcocos2dAndroid.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FEB798194F6CC800FC0574 /* libcocos2dAndroid.a */; };
 		D28A2E181954F68200ADC03D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D28A2E171954F68200ADC03D /* UIKit.framework */; };
 		D28A2E1F1954F7E900ADC03D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D28A2E1E1954F7E900ADC03D /* OpenGLES.framework */; };
@@ -418,6 +419,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D24FAEED198014C80043E27D /* GLKit.framework in Frameworks */,
 				D28A2E1F1954F7E900ADC03D /* OpenGLES.framework in Frameworks */,
 				D28A2E181954F68200ADC03D /* UIKit.framework in Frameworks */,
 				B7E2623617E7D589007067F0 /* libcocos2d.a in Frameworks */,

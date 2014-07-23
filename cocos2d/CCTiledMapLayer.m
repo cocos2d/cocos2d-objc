@@ -266,7 +266,7 @@
 	}
 }
 
--(CCMatrix4)tileToNodeTransform
+-(GLKMatrix4)tileToNodeTransform
 {
 	float w = _tileWidth;
 	float h = _tileHeight;
@@ -274,7 +274,7 @@
 	
 	switch(_layerOrientation){
 		case CCTiledMapOrientationOrtho:
-			return CCMatrix4Make(
+			return GLKMatrix4Make(
 				   w, 0.0f, 0.0f, 0.0f,
 				0.0f,   -h, 0.0f, 0.0f,
 				0.0f, 0.0f, 1.0f, 0.0f,
@@ -282,7 +282,7 @@
 			);
 		case CCTiledMapOrientationIso: {
 			float offX = _mapColumns*w/2;
-			return CCMatrix4Make(
+			return GLKMatrix4Make(
 				 w/2, -h/2, 00.f, 0.0f,
 				-w/2, -h/2, 0.0f, 0.0f,
 				0.0f, 0.0f, 1.0f, 0.0f,
@@ -294,14 +294,14 @@
 
 -(CGPoint) positionAt:(CGPoint)pos
 {
-	CCVector4 p = CCMatrix4MultiplyVector4([self tileToNodeTransform], CCVector4Make(floorf(pos.x), floorf(pos.y), 0.0f, 1.0f));
+	GLKVector4 p = GLKMatrix4MultiplyVector4([self tileToNodeTransform], GLKVector4Make(floorf(pos.x), floorf(pos.y), 0.0f, 1.0f));
 	return ccp(p.x, p.y);
 }
 
 -(CGPoint)tileCoordinateAt:(CGPoint)pos
 {
-	CCMatrix4 nodeToTile = CCMatrix4Invert([self tileToNodeTransform], NULL);
-	CCVector4 p = CCMatrix4MultiplyVector4(nodeToTile, CCVector4Make(pos.x, pos.y, 0.0f, 1.0f));
+	GLKMatrix4 nodeToTile = GLKMatrix4Invert([self tileToNodeTransform], NULL);
+	GLKVector4 p = GLKMatrix4MultiplyVector4(nodeToTile, GLKVector4Make(pos.x, pos.y, 0.0f, 1.0f));
 	return ccp(floorf(p.x), floorf(p.y));
 }
 
@@ -322,11 +322,11 @@ AutomaticVertexZ(int tileX, int tileY, int mapColumns, int mapRows, CCTiledMapOr
 struct IntRect { int xmin, xmax, ymin, ymax; };
 
 // Calculate the range of tiles visible on the screen.
--(struct IntRect)tileBoundsForClipTransform:(CCMatrix4)tileToClip
+-(struct IntRect)tileBoundsForClipTransform:(GLKMatrix4)tileToClip
 {
 	// Inverting the matrix lets you convert from clip coordinates to tile coordinates.
 	bool isInvertible = YES;
-	CCMatrix4 clipToTile = CCMatrix4Invert(tileToClip, &isInvertible);
+	GLKMatrix4 clipToTile = GLKMatrix4Invert(tileToClip, &isInvertible);
 	NSAssert(isInvertible, @"Attempted to draw a tilemap using a bad transform. (Scale is zero maybe?)");
 	
 	// TODO Needs to handle perspective? Will make it easy to generate *huge* ranges.
@@ -341,7 +341,7 @@ struct IntRect { int xmin, xmax, ymin, ymax; };
 	}
 	
 	// Clip coordinates just go from [-1, 1] so it's fairly easy to convert the bounds to tile coordinates.
-	CCVector4 tileSpaceCenter = CCMatrix4GetColumn(clipToTile, 3);
+	GLKVector4 tileSpaceCenter = GLKMatrix4GetColumn(clipToTile, 3);
 	float tileSpaceHalfWidth = fmaxf(fabsf(clipToTile.m00 + clipToTile.m10), fabsf(clipToTile.m00 - clipToTile.m10)) + oversize;
 	float tileSpaceHalfHeight = fmaxf(fabsf(clipToTile.m01 + clipToTile.m11), fabsf(clipToTile.m01 - clipToTile.m11)) + oversize;
 	
@@ -366,10 +366,10 @@ struct IntRect { int xmin, xmax, ymin, ymax; };
 	}
 }
 
--(void)draw:(CCRenderer *)renderer transform:(const CCMatrix4 *)transform
+-(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
-	CCMatrix4 tileToNode = [self tileToNodeTransform];
-	struct IntRect tiles = [self tileBoundsForClipTransform:CCMatrix4Multiply(*transform, tileToNode)];
+	GLKMatrix4 tileToNode = [self tileToNodeTransform];
+	struct IntRect tiles = [self tileBoundsForClipTransform:GLKMatrix4Multiply(*transform, tileToNode)];
 	
 	// Count the number of tiles to be drawn.
 	int tileCount = 0;
@@ -387,8 +387,8 @@ struct IntRect { int xmin, xmax, ymin, ymax; };
 	// No tiles on screen. Skip rendering.
 	if(tileCount == 0) return;
 	
-	CCVector2 zero2 = CCVector2Make(0, 0);
-	CCVector4 color = CCVector4Make(_displayColor.r, _displayColor.g, _displayColor.b, _displayColor.a);
+	GLKVector2 zero2 = GLKVector2Make(0, 0);
+	GLKVector4 color = GLKVector4Make(_displayColor.r, _displayColor.g, _displayColor.b, _displayColor.a);
 	
 	CCTexture *tex = self.texture;
 	float scale = tex.contentScale;
@@ -416,7 +416,7 @@ struct IntRect { int xmin, xmax, ymin, ymax; };
 			
 			uint32_t flags = gidWithFlags & kCCFlipedAll;
 			uint32_t gid = gidWithFlags & kCCFlippedMask;
-			CCVector4 tileColor = color;
+			GLKVector4 tileColor = color;
 			
 			// Call the animation block to substitute tile values.
 			if(_animationBlock) _animationBlock(tileX, tileY, &gid, &flags, &tileColor);
@@ -430,13 +430,13 @@ struct IntRect { int xmin, xmax, ymin, ymax; };
 			BOOL verticalFlip   = !!(flags & kCCTMXTileVerticalFlag);
 			
 			// Calculate the vertex positions (in points).
-			CCVector4 pos = CCMatrix4MultiplyVector4(tileToNode, CCVector4Make(tileX, tileY, 0.0f, 1.0f));
+			GLKVector4 pos = GLKMatrix4MultiplyVector4(tileToNode, GLKVector4Make(tileX, tileY, 0.0f, 1.0f));
 			pos.y -= _tileHeight;
 			
-			CCVector2 v0 = CCVector2Make(tileBounds.xmin, tileBounds.ymin);
-			CCVector2 v1 = CCVector2Make(tileBounds.xmax, tileBounds.ymin);
-			CCVector2 v2 = CCVector2Make(tileBounds.xmax, tileBounds.ymax);
-			CCVector2 v3 = CCVector2Make(tileBounds.xmin, tileBounds.ymax);
+			GLKVector2 v0 = GLKVector2Make(tileBounds.xmin, tileBounds.ymin);
+			GLKVector2 v1 = GLKVector2Make(tileBounds.xmax, tileBounds.ymin);
+			GLKVector2 v2 = GLKVector2Make(tileBounds.xmax, tileBounds.ymax);
+			GLKVector2 v3 = GLKVector2Make(tileBounds.xmin, tileBounds.ymax);
 			
 			if(diagonalFlip){
 				CC_SWAP(v0.x, v0.y);
@@ -463,10 +463,10 @@ struct IntRect { int xmin, xmax, ymin, ymax; };
 			float z = (_useAutomaticVertexZ ? AutomaticVertexZ(tileX, tileY, _mapColumns, _mapRows, _layerOrientation) : _vertexZvalue);
 			
 			// Fill in the buffers and increment the cursors.
-			CCRenderBufferSetVertex(buffer, vertex_cursor + 0, (CCVertex){CCVector4Make(pos.x + v0.x, pos.y + v0.y, z, 1), CCVector2Make(txmin*scaleW, 1.0f - tymax*scaleH), zero2, tileColor});
-			CCRenderBufferSetVertex(buffer, vertex_cursor + 1, (CCVertex){CCVector4Make(pos.x + v1.x, pos.y + v1.y, z, 1), CCVector2Make(txmax*scaleW, 1.0f - tymax*scaleH), zero2, tileColor});
-			CCRenderBufferSetVertex(buffer, vertex_cursor + 2, (CCVertex){CCVector4Make(pos.x + v2.x, pos.y + v2.y, z, 1), CCVector2Make(txmax*scaleW, 1.0f - tymin*scaleH), zero2, tileColor});
-			CCRenderBufferSetVertex(buffer, vertex_cursor + 3, (CCVertex){CCVector4Make(pos.x + v3.x, pos.y + v3.y, z, 1), CCVector2Make(txmin*scaleW, 1.0f - tymin*scaleH), zero2, tileColor});
+			CCRenderBufferSetVertex(buffer, vertex_cursor + 0, (CCVertex){GLKVector4Make(pos.x + v0.x, pos.y + v0.y, z, 1), GLKVector2Make(txmin*scaleW, 1.0f - tymax*scaleH), zero2, tileColor});
+			CCRenderBufferSetVertex(buffer, vertex_cursor + 1, (CCVertex){GLKVector4Make(pos.x + v1.x, pos.y + v1.y, z, 1), GLKVector2Make(txmax*scaleW, 1.0f - tymax*scaleH), zero2, tileColor});
+			CCRenderBufferSetVertex(buffer, vertex_cursor + 2, (CCVertex){GLKVector4Make(pos.x + v2.x, pos.y + v2.y, z, 1), GLKVector2Make(txmax*scaleW, 1.0f - tymin*scaleH), zero2, tileColor});
+			CCRenderBufferSetVertex(buffer, vertex_cursor + 3, (CCVertex){GLKVector4Make(pos.x + v3.x, pos.y + v3.y, z, 1), GLKVector2Make(txmin*scaleW, 1.0f - tymin*scaleH), zero2, tileColor});
 			
 			CCRenderBufferSetTriangle(buffer, triangle_cursor + 0, vertex_cursor + 0, vertex_cursor + 1, vertex_cursor + 2);
 			CCRenderBufferSetTriangle(buffer, triangle_cursor + 1, vertex_cursor + 0, vertex_cursor + 2, vertex_cursor + 3);
@@ -477,7 +477,7 @@ struct IntRect { int xmin, xmax, ymin, ymax; };
 	}
 	
 	// Transform the vertexes in a loop to avoid invariance.
-	for(int i=0; i<4*tileCount; i++) buffer.vertexes[i].position = CCMatrix4MultiplyVector4(*transform, buffer.vertexes[i].position);
+	for(int i=0; i<4*tileCount; i++) buffer.vertexes[i].position = GLKMatrix4MultiplyVector4(*transform, buffer.vertexes[i].position);
 }
 
 @end

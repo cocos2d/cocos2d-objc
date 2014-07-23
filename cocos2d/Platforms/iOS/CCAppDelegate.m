@@ -109,7 +109,7 @@ const CGSize FIXED_SIZE = {568, 384};
 }
 
 // Projection delegate is only used if the fixed resolution mode is enabled
--(CCMatrix4)updateProjection
+-(GLKMatrix4)updateProjection
 {
 	CGSize sizePoint = [CCDirector sharedDirector].viewSize;
 	CGSize fixed = [CCDirector sharedDirector].designSize;
@@ -117,7 +117,7 @@ const CGSize FIXED_SIZE = {568, 384};
 	// Half of the extra size that will be cut off
 	CGPoint offset = ccpMult(ccp(fixed.width - sizePoint.width, fixed.height - sizePoint.height), 0.5);
 	
-	return CCMatrix4MakeOrtho(offset.x, sizePoint.width + offset.x, offset.y, sizePoint.height + offset.y, -1024, 1024);
+	return GLKMatrix4MakeOrtho(offset.x, sizePoint.width + offset.x, offset.y, sizePoint.height + offset.y, -1024, 1024);
 }
 
 // This is needed for iOS4 and iOS5 in order to ensure

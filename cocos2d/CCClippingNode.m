@@ -114,7 +114,7 @@ SetProgram(CCNode *n, CCShader *p, NSNumber *alpha) {
     [super onExit];
 }
 
-- (void)visit:(CCRenderer *)renderer parentTransform:(const CCMatrix4 *)parentTransform
+- (void)visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
 {
     // if stencil buffer disabled
 #if !__CC_PLATFORM_ANDROID && __CC_PLATFORM_ANDROID_FIXME
@@ -246,7 +246,7 @@ SetProgram(CCNode *n, CCShader *p, NSNumber *alpha) {
 		
     // draw the stencil node as if it was one of our child
     // (according to the stencil test func/op and alpha (or alpha shader) test)
-    CCMatrix4 transform = [self transform:parentTransform];
+    GLKMatrix4 transform = [self transform:parentTransform];
 		
 		[renderer pushGroup];
     [_stencil visit:renderer parentTransform:&transform];

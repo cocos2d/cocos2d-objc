@@ -34,7 +34,7 @@
     effectNode.positionType = CCPositionTypeNormalized;
     effectNode.position = ccp(0.1, 0.5);
     [effectNode addChild:sampleSprite];
-    CCEffectGaussianBlur* effect = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:CCVector2Make(1.0, 0.0)];
+    CCEffectGaussianBlur* effect = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:GLKVector2Make(1.0, 0.0)];
     effectNode.effect = effect;
     
     [self.contentNode addChild:effectNode];
@@ -48,7 +48,7 @@
     effectNode2.positionType = CCPositionTypeNormalized;
     effectNode2.position = ccp(0.21, 0.5);
     [effectNode2 addChild:sampleSprite2];
-    CCEffectGaussianBlur* effect2 = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:CCVector2Make(0.0, 1.0)];
+    CCEffectGaussianBlur* effect2 = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:GLKVector2Make(0.0, 1.0)];
     effectNode2.effect = effect2;
     
     [self.contentNode addChild:effectNode2];
@@ -64,7 +64,7 @@
     effectNode3.position = ccp(0.5, 0.5);
     effectNode3.anchorPoint = ccp(0.5, 0.5);
     [effectNode3 addChild:sampleSprite3];
-    CCEffectGaussianBlur* effect3 = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:CCVector2Make(1.0, 1.0)];
+    CCEffectGaussianBlur* effect3 = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:GLKVector2Make(1.0, 1.0)];
     effectNode3.effect = effect3;
     
     [self.contentNode addChild:effectNode3];
@@ -79,7 +79,7 @@
     effectNode4.positionType = CCPositionTypeNormalized;
     effectNode4.position = ccp(0.6, 0.5);
     [effectNode4 addChild:sampleSprite4];
-    CCEffectGaussianBlur* effect4 = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:CCVector2Make(-1.0, 1.0)];
+    CCEffectGaussianBlur* effect4 = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:GLKVector2Make(-1.0, 1.0)];
     effectNode4.effect = effect4;
     
     [self.contentNode addChild:effectNode4];
@@ -196,7 +196,7 @@
 //    CCEffect *brightness = [[CCEffectBrightness alloc] initWithBrightness:0.25f];
 //    CCEffect *contrast = [[CCEffectContrast alloc] initWithContrast:1.0f];
 //    CCEffect *pixellate = [[CCEffectPixellate alloc] initWithBlockSize:4.0f];
-//    CCEffect *blur = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:CCVector2Make(1.0, 1.0)];
+//    CCEffect *blur = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:GLKVector2Make(1.0, 1.0)];
     CCEffect *saturation = [[CCEffectSaturation alloc] initWithSaturation:0.0f];
     NSArray *effects = @[saturation];
     

@@ -132,7 +132,7 @@
 
 @optional
 /** Called by CCDirector when the projection is updated, and "custom" projection is used */
--(CCMatrix4) updateProjection;
+-(GLKMatrix4) updateProjection;
 
 #if __CC_PLATFORM_IOS
 /** Returns a Boolean value indicating whether the CCDirector supports the specified orientation. Default value is YES (supports all possible orientations) */

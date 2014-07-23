@@ -47,7 +47,7 @@
 
 -(id)init
 {
-    CCEffectUniform* u_blurDirection = [CCEffectUniform uniform:@"vec2" name:@"u_blurDirection" value:[NSValue valueWithCCVector2:CCVector2Make(0.0f, 0.0f)]];
+    CCEffectUniform* u_blurDirection = [CCEffectUniform uniform:@"vec2" name:@"u_blurDirection" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]];
     CCEffectVarying* v_centerTextureCoordinate = [CCEffectVarying varying:@"vec2" name:@"v_centerTextureCoordinate"];
     CCEffectVarying* v_twoStepsLeftTextureCoordinate = [CCEffectVarying varying:@"vec2" name:@"v_twoStepsLeftTextureCoordinate"];
     CCEffectVarying* v_oneStepLeftTextureCoordinate = [CCEffectVarying varying:@"vec2" name:@"v_oneStepLeftTextureCoordinate"];
@@ -69,7 +69,7 @@
 }
 
 
--(id)initWithbBurStrength:(float)blurStrength direction:(CCVector2)direction
+-(id)initWithbBurStrength:(float)blurStrength direction:(GLKVector2)direction
 {
     if((self = [self init]))
     {
@@ -81,7 +81,7 @@
     return self;
 }
 
-+(id)effectWithBlurStrength:(float)blurStrength direction:(CCVector2)direction
++(id)effectWithBlurStrength:(float)blurStrength direction:(GLKVector2)direction
 {
     return [[self alloc] initWithbBurStrength:blurStrength direction:direction];
 }
@@ -135,12 +135,12 @@
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
         if([self radialBlur])
         {
-            pass.shaderUniforms[self.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithCCVector2:CCVector2Make(weakSelf.blurStrength, 0.0f)];
+            pass.shaderUniforms[self.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithGLKVector2:GLKVector2Make(weakSelf.blurStrength, 0.0f)];
         }
         else
         {
-            CCVector2 dir = [self calculateBlurDirection];
-            pass.shaderUniforms[self.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithCCVector2:dir];
+            GLKVector2 dir = [self calculateBlurDirection];
+            pass.shaderUniforms[self.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithGLKVector2:dir];
         }
     } copy]];
 
@@ -151,7 +151,7 @@
     pass1.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass1.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-        pass.shaderUniforms[self.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithCCVector2:CCVector2Make(0.0f, weakSelf.blurStrength)];
+        pass.shaderUniforms[self.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithGLKVector2:GLKVector2Make(0.0f, weakSelf.blurStrength)];
     } copy]];
     
     self.renderPasses = @[pass0, pass1];
@@ -166,9 +166,9 @@
     return [self radialBlur] ? 2 : 1;
 }
 
--(CCVector2)calculateBlurDirection
+-(GLKVector2)calculateBlurDirection
 {
-    return CCVector2Make(_blurDirection.x * _blurStrength, _blurDirection.y * _blurStrength);
+    return GLKVector2Make(_blurDirection.x * _blurStrength, _blurDirection.y * _blurStrength);
 }
 
 -(BOOL)radialBlur

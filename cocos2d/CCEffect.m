@@ -193,7 +193,7 @@ static NSString* vertBase =
         CCEffectRenderPassUpdateBlock updateBlock = ^(CCEffectRenderPass *pass){
             if (pass.needsClear)
             {
-                [pass.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:[CCColor clearColor].CCVector4 depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
+                [pass.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:[CCColor clearColor].GLKVector4 depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
             }
             [pass enqueueTriangles];
         };

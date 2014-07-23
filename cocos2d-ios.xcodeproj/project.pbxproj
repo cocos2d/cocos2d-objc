@@ -286,6 +286,7 @@
 		D24161151958F738003673BD /* CCAnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D24160F81958F6EE003673BD /* CCAnimationManager.m */; };
 		D24161161958F738003673BD /* CCAnimationManager+FrameAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = D24160F91958F6EE003673BD /* CCAnimationManager+FrameAnimation.h */; };
 		D24161171958F738003673BD /* CCAnimationManager+FrameAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = D24160FA1958F6EE003673BD /* CCAnimationManager+FrameAnimation.m */; };
+		D24FAEEC198014B90043E27D /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24FAEEB198014B90043E27D /* GLKit.framework */; };
 		D25B4F4B194A499700DA9D60 /* CCTouch.h in Headers */ = {isa = PBXBuildFile; fileRef = D25B4F49194A499700DA9D60 /* CCTouch.h */; };
 		D25B4F4C194A499700DA9D60 /* CCTouch.m in Sources */ = {isa = PBXBuildFile; fileRef = D25B4F4A194A499700DA9D60 /* CCTouch.m */; };
 		D26A042A194B815500503BEC /* CCTouchEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = D26A0428194B815500503BEC /* CCTouchEvent.h */; };
@@ -966,6 +967,7 @@
 		D24161061958F72B003673BD /* CCEffectSaturation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectSaturation.h; sourceTree = "<group>"; };
 		D24161071958F72B003673BD /* CCEffectSaturation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectSaturation.m; sourceTree = "<group>"; };
 		D24161081958F72B003673BD /* CCEffectStackProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectStackProtocol.h; sourceTree = "<group>"; };
+		D24FAEEB198014B90043E27D /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		D25B4F49194A499700DA9D60 /* CCTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouch.h; sourceTree = "<group>"; };
 		D25B4F4A194A499700DA9D60 /* CCTouch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTouch.m; sourceTree = "<group>"; };
 		D26A0428194B815500503BEC /* CCTouchEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchEvent.h; sourceTree = "<group>"; };
@@ -1055,6 +1057,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D24FAEEC198014B90043E27D /* GLKit.framework in Frameworks */,
 				D28A2E211954F85700ADC03D /* AVFoundation.framework in Frameworks */,
 				D28A2E1D1954F7E000ADC03D /* OpenGLES.framework in Frameworks */,
 				D28A2E1B1954F68D00ADC03D /* QuartzCore.framework in Frameworks */,
@@ -1125,6 +1128,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D24FAEEB198014B90043E27D /* GLKit.framework */,
 				D289C1C1197440BC00B68E3D /* BridgeKitV3.framework */,
 				D28A2E201954F85700ADC03D /* AVFoundation.framework */,
 				D28A2E1C1954F7E000ADC03D /* OpenGLES.framework */,

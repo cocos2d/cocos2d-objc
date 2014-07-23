@@ -205,7 +205,7 @@ and when to execute the Scenes.
 @property(nonatomic, assign) CGSize designSize;
 
 /// Projection matrix used for rendering.
-@property(nonatomic, readonly) CCMatrix4 projectionMatrix;
+@property(nonatomic, readonly) GLKMatrix4 projectionMatrix;
 
 /// The current global shader values values.
 @property(nonatomic, readonly) NSMutableDictionary *globalShaderUniforms;

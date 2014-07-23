@@ -151,4 +151,11 @@ typedef union _CCQuaternion CCQuaternion;
 //}
 //#endif
 
+
+#if __CC_PLATFORM_ANDROID
+    
+
+#endif
+
+
 #endif // __CC_MATH_TYPES_H

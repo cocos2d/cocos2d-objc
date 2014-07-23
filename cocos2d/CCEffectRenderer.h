@@ -21,7 +21,7 @@
 @property (nonatomic, assign) float contentScale;
 
 -(id)init;
--(void)drawSprite:(CCSprite *)sprite withEffect:(CCEffect *)effect renderer:(CCRenderer *)renderer transform:(const CCMatrix4 *)transform;
+-(void)drawSprite:(CCSprite *)sprite withEffect:(CCEffect *)effect renderer:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
 
 @end
 #endif

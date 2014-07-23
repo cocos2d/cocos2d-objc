@@ -27,7 +27,7 @@
 
 @interface CCDirector () {
 	@protected
-	CCMatrix4 _projectionMatrix;
+	GLKMatrix4 _projectionMatrix;
 	__weak id<CCDirectorDelegate> _delegate;
 	__weak NSThread *_runningThread;
 }

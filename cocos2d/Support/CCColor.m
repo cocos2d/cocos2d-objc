@@ -285,9 +285,9 @@ static NSDictionary *namedColors() {
     return [[CCColor alloc] initWithCcColor4f:c];
 }
 
-+ (CCColor*) colorWithCCVector4:(CCVector4)c
++ (CCColor*) colorWithGLKVector4:(GLKVector4)c
 {
-    return [[CCColor alloc] initWithCCVector4:c];
+    return [[CCColor alloc] initWithGLKVector4:c];
 }
 
 - (CCColor*) initWithCcColor3b: (ccColor3B) c
@@ -305,7 +305,7 @@ static NSDictionary *namedColors() {
     return [self initWithRed:c.r green:c.g blue:c.b alpha:c.a];
 }
 
-- (CCColor*) initWithCCVector4: (CCVector4) c
+- (CCColor*) initWithGLKVector4: (GLKVector4) c
 {
     return [self initWithRed:c.r green:c.g blue:c.b alpha:c.a];
 }
@@ -325,9 +325,9 @@ static NSDictionary *namedColors() {
     return ccc4f(_r, _g, _b, _a);
 }
 
--(CCVector4)CCVector4
+-(GLKVector4)GLKVector4
 {
-	return CCVector4Make(_r, _g, _b, _a);
+	return GLKVector4Make(_r, _g, _b, _a);
 }
 
 @end

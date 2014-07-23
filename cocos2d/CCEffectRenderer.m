@@ -121,7 +121,7 @@
 
 @property (nonatomic, strong) NSMutableArray *allRenderTargets;
 @property (nonatomic, strong) NSMutableArray *freeRenderTargets;
-@property (nonatomic, assign) CCVector4 oldViewport;
+@property (nonatomic, assign) GLKVector4 oldViewport;
 @property (nonatomic, assign) GLint oldFBO;
 
 @end
@@ -146,7 +146,7 @@
     [self destroyAllRenderTargets];
 }
 
--(void)drawSprite:(CCSprite *)sprite withEffect:(CCEffect *)effect renderer:(CCRenderer *)renderer transform:(const CCMatrix4 *)transform
+-(void)drawSprite:(CCSprite *)sprite withEffect:(CCEffect *)effect renderer:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
     [effect prepareForRendering];
     [self freeAllRenderTargets];
@@ -187,7 +187,7 @@
         }
         else
         {
-            renderPass.transform = CCMatrix4MakeOrtho(0.0f, _contentSize.width, 0.0f, _contentSize.height, -1024.0f, 1024.0f);
+            renderPass.transform = GLKMatrix4MakeOrtho(0.0f, _contentSize.width, 0.0f, _contentSize.height, -1024.0f, 1024.0f);
 
             CGSize rtSize = CGSizeMake(_contentSize.width * _contentScale, _contentSize.height * _contentScale);
             rt = [self renderTargetWithSize:rtSize];

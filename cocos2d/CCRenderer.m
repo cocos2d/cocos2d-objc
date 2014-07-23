@@ -32,7 +32,6 @@
 #import "CCDirector_Private.h"
 #import "CCGL.h"
 
-
 @interface CCShader()
 +(GLuint)createVAOforCCVertexBuffer:(GLuint)vbo elementBuffer:(GLuint)ebo;
 @end
@@ -40,24 +39,24 @@
 //MARK: NSValue Additions.
 @implementation NSValue(CCRenderer)
 
-+(NSValue *)valueWithCCVector2:(CCVector2)vector
++(NSValue *)valueWithGLKVector2:(GLKVector2)vector
 {
-	return [NSValue valueWithBytes:&vector objCType:@encode(CCVector2)];
+	return [NSValue valueWithBytes:&vector objCType:@encode(GLKVector2)];
 }
 
-+(NSValue *)valueWithCCVector3:(CCVector3)vector
++(NSValue *)valueWithGLKVector3:(GLKVector3)vector
 {
-	return [NSValue valueWithBytes:&vector objCType:@encode(CCVector3)];
+	return [NSValue valueWithBytes:&vector objCType:@encode(GLKVector3)];
 }
 
-+(NSValue *)valueWithCCVector4:(CCVector4)vector
++(NSValue *)valueWithGLKVector4:(GLKVector4)vector
 {
-	return [NSValue valueWithBytes:&vector objCType:@encode(CCVector4)];
+	return [NSValue valueWithBytes:&vector objCType:@encode(GLKVector4)];
 }
 
-+(NSValue *)valueWithCCMatrix4:(CCMatrix4)matrix
++(NSValue *)valueWithGLKMatrix4:(GLKMatrix4)matrix
 {
-	return [NSValue valueWithBytes:&matrix objCType:@encode(CCMatrix4)];
+	return [NSValue valueWithBytes:&matrix objCType:@encode(GLKMatrix4)];
 }
 
 @end
@@ -723,7 +722,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	return;
 }
 
--(void)enqueueClear:(GLbitfield)mask color:(CCVector4)color4 depth:(GLclampf)depth stencil:(GLint)stencil globalSortOrder:(NSInteger)globalSortOrder
+-(void)enqueueClear:(GLbitfield)mask color:(GLKVector4)color4 depth:(GLclampf)depth stencil:(GLint)stencil globalSortOrder:(NSInteger)globalSortOrder
 {
 	[self enqueueBlock:^{
 		if(mask & GL_COLOR_BUFFER_BIT) glClearColor(color4.r, color4.g, color4.b, color4.a);
