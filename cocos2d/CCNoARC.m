@@ -1,5 +1,7 @@
 #import "CCNode_Private.h"
 #import "CCSprite_Private.h"
+#import "CCRenderer_Private.h"
+#import "CCShader_Private.h"
 
 
 @implementation CCNode(NoARC)
@@ -24,7 +26,7 @@ CCNodeTransform(CCNode *node, GLKMatrix4 parentTransform)
 	return CCNodeTransform(self, *parentTransform);
 }
 
--(void) visit:(__unsafe_unretained CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
+-(void) visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
 {
 	// quick return if not visible. children won't be drawn.
 	if (!_visible) return;
@@ -112,6 +114,127 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 -(void)enqueueTriangles:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
 	EnqueueTriangles(self, renderer, transform);
+}
+
+@end
+
+
+@implementation CCRenderer(NoARC)
+
+-(CCRenderBuffer)enqueueTriangles:(NSUInteger)triangleCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
+{
+	// Need to record the first vertex or element index before pushing more vertexes.
+	size_t firstVertex = _vertexBuffer.count;
+	size_t firstElement = _elementBuffer.count;
+	
+	size_t elementCount = 3*triangleCount;
+	CCVertex *vertexes = CCGraphicsBufferPushElements(&_vertexBuffer, vertexCount, self);
+	GLushort *elements = CCGraphicsBufferPushElements(&_elementBuffer, elementCount, self);
+	
+	CCRenderCommandDraw *previous = _lastDrawCommand;
+	if(previous && previous->_renderState == renderState && previous->_globalSortOrder == globalSortOrder){
+		// Batch with the previous command.
+		[previous batchElements:(GLsizei)elementCount];
+	} else {
+		// Start a new command.
+		CCRenderCommandDraw *command = [[CCRenderCommandDraw alloc] initWithMode:GL_TRIANGLES renderState:renderState first:(GLint)firstElement elements:(GLsizei)elementCount globalSortOrder:globalSortOrder];
+		[_queue addObject:command];
+		[command release];
+		
+		_lastDrawCommand = command;
+	}
+	
+	return (CCRenderBuffer){vertexes, elements, firstVertex};
+}
+
+-(CCRenderBuffer)enqueueLines:(NSUInteger)lineCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
+{
+	// Need to record the first vertex or element index before pushing more vertexes.
+	size_t firstVertex = _vertexBuffer.count;
+	size_t firstElement = _elementBuffer.count;
+	
+	size_t elementCount = 2*lineCount;
+	CCVertex *vertexes = CCGraphicsBufferPushElements(&_vertexBuffer, vertexCount, self);
+	GLushort *elements = CCGraphicsBufferPushElements(&_elementBuffer, elementCount, self);
+	
+	CCRenderCommandDraw *command = [[CCRenderCommandDraw alloc] initWithMode:GL_LINES renderState:renderState first:(GLint)firstElement elements:(GLsizei)elementCount globalSortOrder:globalSortOrder];
+	[_queue addObject:command];
+	[command release];
+	
+	// Line drawing commands are currently intended for debugging and cannot be batched.
+	_lastDrawCommand = nil;
+	
+	return(CCRenderBuffer){vertexes, elements, firstVertex};
+}
+
+@end
+
+
+@implementation CCRenderer(NoARCPrivate)
+
+-(void)setRenderState:(CCRenderState *)renderState
+{
+	[self bindVAO:YES];
+	if(renderState == _renderState) return;
+	
+	glPushGroupMarkerEXT(0, "CCRenderer: Render State");
+	
+	// Set the blending state.
+	NSDictionary *blendOptions = renderState->_blendMode->_options;
+	if(blendOptions != _blendOptions){
+		glInsertEventMarkerEXT(0, "Blending mode");
+		
+		if(blendOptions == CCBLEND_DISABLED_OPTIONS){
+			if(_blendOptions != CCBLEND_DISABLED_OPTIONS) glDisable(GL_BLEND);
+		} else {
+			if(_blendOptions == nil || _blendOptions == CCBLEND_DISABLED_OPTIONS) glEnable(GL_BLEND);
+			
+			glBlendFuncSeparate(
+				[blendOptions[CCBlendFuncSrcColor] unsignedIntValue],
+				[blendOptions[CCBlendFuncDstColor] unsignedIntValue],
+				[blendOptions[CCBlendFuncSrcAlpha] unsignedIntValue],
+				[blendOptions[CCBlendFuncDstAlpha] unsignedIntValue]
+			);
+			
+			glBlendEquationSeparate(
+				[blendOptions[CCBlendEquationColor] unsignedIntValue],
+				[blendOptions[CCBlendEquationAlpha] unsignedIntValue]
+			);
+		}
+		
+		_blendOptions = blendOptions;
+	}
+	
+	// Bind the shader.
+	CCShader *shader = renderState->_shader;
+	if(shader != _shader){
+		glInsertEventMarkerEXT(0, "Shader");
+		
+		glUseProgram(shader->_program);
+		
+		_shader = shader;
+		_shaderUniforms = nil;
+	}
+	
+	// Set the shader's uniform state.
+	NSDictionary *shaderUniforms = renderState->_shaderUniforms;
+	NSDictionary *globalShaderUniforms = _globalShaderUniforms;
+	if(shaderUniforms != _shaderUniforms){
+		glInsertEventMarkerEXT(0, "Uniforms");
+		
+		NSDictionary *setters = shader->_uniformSetters;
+		for(NSString *uniformName in setters){
+			CCUniformSetter setter = setters[uniformName];
+			setter(self, shaderUniforms, globalShaderUniforms);
+		}
+		_shaderUniforms = shaderUniforms;
+	}
+	
+	CC_CHECK_GL_ERROR_DEBUG();
+	glPopGroupMarkerEXT();
+	
+	_renderState = renderState;
+	return;
 }
 
 @end
