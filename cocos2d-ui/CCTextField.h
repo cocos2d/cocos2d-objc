@@ -76,7 +76,7 @@
 @property (nonatomic,readonly) float fontSizeInPoints;
 
 /** Padding from the edge of the text field's background to the native text field component. */
-@property (nonatomic,assign) float padding;
+@property (nonatomic,assign) CGFloat padding;
 
 /** The text displayed by the text field. */
 @property (nonatomic,strong) NSString* string;

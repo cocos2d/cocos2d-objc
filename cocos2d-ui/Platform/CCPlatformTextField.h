@@ -7,11 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreGraphics/CoreGraphics.h>
 
 @class CCControl;
 
 @interface CCPlatformTextField : NSObject
-- (void) positionInControl:(CCControl *)control padding:(float)padding;
+- (void) positionInControl:(CCControl *)control padding:(CGFloat)padding;
 - (void) onEnterTransitionDidFinish;
 - (void) onExitTransitionDidStart;
 - (void) setFontSize:(float)fontSize;
