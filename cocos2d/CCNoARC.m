@@ -58,7 +58,9 @@ CCNodeTransform(CCNode *node, GLKMatrix4 parentTransform)
 static inline void
 EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transform)
 {
-	CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:self.renderState globalSortOrder:0];
+	CCRenderState *state = self->_renderState ?: self.renderState;
+	CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:state globalSortOrder:0];
+	
 	CCRenderBufferSetVertex(buffer, 0, CCVertexApplyTransform(self->_verts.bl, transform));
 	CCRenderBufferSetVertex(buffer, 1, CCVertexApplyTransform(self->_verts.br, transform));
 	CCRenderBufferSetVertex(buffer, 2, CCVertexApplyTransform(self->_verts.tr, transform));
