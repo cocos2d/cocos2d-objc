@@ -494,7 +494,7 @@
 
 -(void)setupStackTest
 {
-    self.subTitle = @"Effect Performance Test";
+    self.subTitle = @"Effect Stacking Test";
     
     CCSprite *reflectEnvironment = [CCSprite spriteWithImageNamed:@"Images/MountainPanorama.jpg"];
     reflectEnvironment.positionType = CCPositionTypeNormalized;
