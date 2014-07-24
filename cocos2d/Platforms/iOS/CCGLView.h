@@ -74,6 +74,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #import "CCESRenderer.h"
 
+
+typedef void (^CCFrameCompletionHandler)();
+
+
 //CLASSES:
 
 @class CCGLView;
@@ -145,6 +149,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @property(nonatomic,readonly) EAGLContext *context;
 
 @property(nonatomic,readwrite) BOOL multiSampling;
+
+/// Schedule a block to be invoked when the frame completes.
+/// The block may not be invoked from the main thread.
+-(void)addFrameCompletionHandler:(CCFrameCompletionHandler)handler;
 
 /** CCGLView uses double-buffer. This method swaps the buffers */
 -(void) swapBuffers;

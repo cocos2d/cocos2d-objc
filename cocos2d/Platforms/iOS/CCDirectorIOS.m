@@ -117,21 +117,27 @@
 	 XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
 	if( _nextScene ) [self setNextScene];
 	
+	CCRenderer *renderer = [self rendererFromPool];
+	[CCRenderer bindRenderer:renderer];
+	
 	GLKMatrix4 projection = self.projectionMatrix;
-	_renderer.globalShaderUniforms = [self updateGlobalShaderUniforms];
+	renderer.globalShaderUniforms = [self updateGlobalShaderUniforms];
 	
-	[CCRenderer bindRenderer:_renderer];
-	[_renderer invalidateState];
 	
-	[_renderer enqueueClear:(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) color:_runningScene.colorRGBA.glkVector4 depth:1.0f stencil:0 globalSortOrder:NSIntegerMin];
+	[renderer enqueueClear:(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) color:_runningScene.colorRGBA.glkVector4 depth:1.0f stencil:0 globalSortOrder:NSIntegerMin];
 	
 	// Render
-	[_runningScene visit:_renderer parentTransform:&projection];
-	[_notificationNode visit:_renderer parentTransform:&projection];
+	[_runningScene visit:renderer parentTransform:&projection];
+	[_notificationNode visit:renderer parentTransform:&projection];
 	if( _displayStats ) [self showStats];
 	
-	[_renderer flush];
+	[renderer flush];
 	[CCRenderer bindRenderer:nil];
+	
+	[openGLview addFrameCompletionHandler:^{
+		// Return the renderer to the pool when the frame completes.
+		[self poolRenderer:renderer];
+	}];
 	
 	[openGLview swapBuffers];
 

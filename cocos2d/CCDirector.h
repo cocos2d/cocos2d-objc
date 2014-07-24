@@ -65,6 +65,9 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 #define CC_VIEWCONTROLLER NSObject
 #endif
 
+/// Block type used with [CCDirector addFrameCompletionHandler:].
+typedef void(^CCDirectorFrameCompletionHandler)();
+
 /**Class that creates and handle the main Window and manages how
 and when to execute the Scenes.
 
@@ -152,7 +155,7 @@ and when to execute the Scenes.
 	/*  OpenGLView. On iOS it is a copy of self.view */
 	CCGLView		*__view;
 	
-	CCRenderer *_renderer;
+	NSMutableArray *_rendererPool;
 }
 
 /** returns the cocos2d thread.
