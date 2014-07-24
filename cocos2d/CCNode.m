@@ -42,14 +42,6 @@
 #import "CCTexture_Private.h"
 #import "CCActionManager_Private.h"
 
-
-#if __CC_PLATFORM_IOS
-#import "Platforms/iOS/CCDirectorIOS.h"
-#elif __CC_PLATFORM_ANDROID
-#import "Platforms/Android/CCDirectorAndroid.h"
-#endif
-
-
 #if CC_NODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
 #else

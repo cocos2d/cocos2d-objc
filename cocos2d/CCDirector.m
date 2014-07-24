@@ -341,7 +341,7 @@ static CCDirector *_sharedDirector = nil;
 		// it could be nil
 		if( view ) {
             
-//			[self createStatsLabel]; // donotcheckin
+			[self createStatsLabel];
 			[self setProjection: _projection];
 
 #if !__CC_PLATFORM_ANDROID

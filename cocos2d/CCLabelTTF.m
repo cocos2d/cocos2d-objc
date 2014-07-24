@@ -37,6 +37,7 @@
 #import "CCConfiguration.h"
 #import "CCNode_Private.h"
 #import "CCDirector.h"
+#import <Foundation/Foundation.h>
 
 #if __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
@@ -465,9 +466,12 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     
 #elif __CC_PLATFORM_ANDROID_FIXME
     // You betcha not to have those attributes on Android, they are not supported
-    assert(!NSAttributedStringHasAttribute(formattedAttributedString, @"NSParagraphStyle"));
-    assert(!NSAttributedStringHasAttribute(formattedAttributedString, @"NSFont"));
-    assert(!NSAttributedStringHasAttribute(formattedAttributedString, @"NSForegroundColor"));
+    NSCAssert(!NSAttributedStringHasAttribute(formattedAttributedString, @"NSParagraphStyle"),
+              @"NSAttributedString is missing NSParagraphStyle");
+    NSCAssert(!NSAttributedStringHasAttribute(formattedAttributedString, @"NSFont"),
+              @"NSAttributedString is missing NSFont");
+    NSCAssert(!NSAttributedStringHasAttribute(formattedAttributedString, @"NSForegroundColor"),
+              @"NSAttributedString is missing NSForegroundColor");
     
     // Shadow (No CT alternative)
     if (NSAttributedStringHasAttribute(formattedAttributedString, @"NSShadow"))
@@ -1137,7 +1141,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     {
         // This is a file, register font with font manager
         NSString* fontPath = [[CCFileUtils sharedFileUtils] fullPathForFilename:fontFile];
-        assert(fontPath != nil);
+        NSCAssert(fontPath != nil, @"FontFile can not be located");
         NSURL* fontURL = [NSURL fileURLWithPath:fontPath];
         CTFontManagerRegisterFontsForURL((__bridge CFURLRef)fontURL, kCTFontManagerScopeProcess, NULL);
         

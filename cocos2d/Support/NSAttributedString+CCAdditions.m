@@ -30,6 +30,7 @@
 #import "cocos2d.h"
 #import <CoreText/CoreText.h>
 
+
 BOOL NSAttributedStringHasAttribute(NSAttributedString *attrString, NSString*attr){
     NSRange fullRange = NSMakeRange(0, attrString.length);
     __block BOOL hasAttribute = NO;
@@ -57,7 +58,7 @@ NSAttributedString* NSAttributedStringCopyAdjustedForContentScaleFactor(NSAttrib
     [copy enumerateAttribute:(id)kCTFontAttributeName inRange:fullRange options:0 usingBlock:^(id value, NSRange range, BOOL* stop){
         if (value)
         {
-            assert(CFGetTypeID((__bridge CFTypeRef)(value))==CTFontGetTypeID());
+            NSCAssert((CFGetTypeID((__bridge CFTypeRef)(value))==CTFontGetTypeID()), @"CFTypeID does not match");
             CTFontRef oldFont = (__bridge CTFontRef)value;
             CTFontRef font = CTFontCreateCopyWithAttributes(oldFont, CTFontGetSize(oldFont) * scale, NULL, NULL);
             [copy removeAttribute:(id)kCTFontAttributeName range:range];
@@ -108,7 +109,7 @@ float NSAttributedStringSingleFontSize(NSAttributedString *attrString){
     [attrString enumerateAttribute:(id)kCTFontAttributeName inRange:fullRange options:0 usingBlock:^(id value, NSRange range, BOOL* stop){
         if (value)
         {
-            assert(CFGetTypeID((__bridge CFTypeRef)(value))==CTFontGetTypeID());
+            NSCAssert((CFGetTypeID((__bridge CFTypeRef)(value))==CTFontGetTypeID()), @"CFTypeID does not match");
 
             CTFontRef font = (__bridge CTFontRef)(value);
             if (foundValue)
@@ -153,7 +154,7 @@ NSAttributedString *NSAttributedStringCopyWithNewFontSize(NSAttributedString *at
 
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
     CFTypeRef value = (__bridge CTFontRef)([attrString attribute:(id)kCTFontAttributeName atIndex:0 effectiveRange:NULL]);
-    assert(CFGetTypeID(value)==CTFontGetTypeID());
+    NSCAssert((CFGetTypeID(value)==CTFontGetTypeID()), @"CFTypeID does not match");
     CTFontRef font = (CTFontRef)value;
     CTFontRef newFont = CTFontCreateCopyWithAttributes(font, size, NULL, NULL);
     [copy addAttribute:(id)kCTFontAttributeName value:(__bridge id)(newFont) range:NSMakeRange(0, copy.length)];

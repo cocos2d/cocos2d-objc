@@ -66,13 +66,11 @@
 
 - (CGPoint)locationInView:(CCGLView *)view
 {
-    assert(0);
     return (CGPoint){0, 0};
 }
 
 - (CGPoint)previousLocationInView:(CCGLView *)view
 {
-    assert(0);
     return (CGPoint){0, 0};
 }
 
