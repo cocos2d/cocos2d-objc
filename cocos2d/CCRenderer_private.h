@@ -28,6 +28,9 @@
 #import "CCCache.h"
 
 
+struct CCGraphicsBuffer;
+
+
 extern id CCBLENDMODE_CACHE;
 extern id CCRENDERSTATE_CACHE;
 
@@ -72,4 +75,51 @@ extern id CCRENDERSTATE_CACHE;
 /// Render any currently queued commands.
 -(void)flush;
 
+/// Resize the capacity of a graphics buffer.
+-(void)resizeBuffer:(struct CCGraphicsBuffer *)buffer capacity:(size_t)capacity;
+
 @end
+
+
+/// Internal type used to abstract GPU buffers. (vertex, index buffers, etc)
+typedef struct CCGraphicsBuffer {
+	/// Elements currently in the buffer.
+	size_t count;
+	/// Element capacity of the buffer.
+	size_t capacity;
+	/// Size in bytes of elements in the buffer.
+	size_t elementSize;
+	
+	/// Pointer to the buffer memory.
+	void *ptr;
+	
+	/// Used to store GL VBO name for now.
+	intptr_t data;
+	/// GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER, etc.
+	intptr_t type;
+} CCGraphicsBuffer;
+
+
+/// Return a pointer to an array of elements that is 'requestedCount' in size.
+/// The buffer is resized by calling [CCRenderer resizeBuffer:] if necessary.
+static inline void *
+CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount, CCRenderer *renderer)
+{
+	NSCAssert(requestedCount > 0, @"Requested count must be positive.");
+	
+	size_t required = buffer->count + requestedCount;
+	size_t capacity = buffer->capacity;
+	if(required > capacity){
+		// Increase the buffer size until it fits.
+		// Why 1.5? https://github.com/facebook/folly/blob/master/folly/docs/FBVector.md
+		while(required >= buffer->capacity) buffer->capacity *= 1.5;
+		
+		[renderer resizeBuffer:buffer capacity:capacity];
+	}
+	
+	void *array = buffer->ptr + buffer->count*buffer->elementSize;
+	buffer->count += requestedCount;
+	
+	return array;
+}
+
