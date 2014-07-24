@@ -1406,7 +1406,8 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 
 - (CGAffineTransform)nodeToParentTransform
 {
-	CCPhysicsBody *physicsBody = GetBodyIfRunning(self);
+	// The body ivar cannot be changed while this method is running and it's ARC retain/release is 70% of the profile samples for this method.
+	__unsafe_unretained CCPhysicsBody *physicsBody = GetBodyIfRunning(self);
 	if(physicsBody){
         
 		CGAffineTransform rigidTransform;
