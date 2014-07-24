@@ -143,10 +143,7 @@ const NSString *CCBlendEquationAlpha = @"CCBlendEquationAlpha";
 @end
 
 
-@implementation CCBlendMode {
-	@public
-	NSDictionary *_options;
-}
+@implementation CCBlendMode
 
 -(instancetype)initWithOptions:(NSDictionary *)options
 {
@@ -166,7 +163,7 @@ static CCBlendMode *CCBLEND_PREMULTIPLIED_ALPHA = nil;
 static CCBlendMode *CCBLEND_ADD = nil;
 static CCBlendMode *CCBLEND_MULTIPLY = nil;
 
-static NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
+NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 
 +(void)initialize
 {
@@ -264,15 +261,7 @@ static NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 @end
 
 
-@implementation CCRenderState {
-	CCTexture *_mainTexture;
-	BOOL _immutable;
-	
-	@public
-	CCBlendMode *_blendMode;
-	CCShader *_shader;
-	NSDictionary *_shaderUniforms;
-}
+@implementation CCRenderState
 
 CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
 CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
@@ -355,29 +344,10 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 @end
 
 
-@interface CCRenderer()
--(void)bindVAO:(BOOL)bind;
--(void)setRenderState:(CCRenderState *)renderState;
-@end
-
-
 //MARK: Draw Command.
-@interface CCRenderCommandDraw : NSObject<CCRenderCommand>
-
-//@property(nonatomic, readonly) NSDictionary *renderOptions;
-@property(nonatomic, readonly) GLint first;
-@property(nonatomic, readonly) GLsizei elements;
-
-@end
 
 
-@implementation CCRenderCommandDraw {
-	GLenum _mode;
-	
-	@public
-	CCRenderState *_renderState;
-	NSInteger _globalSortOrder;
-}
+@implementation CCRenderCommandDraw
 
 -(instancetype)initWithMode:(GLenum)mode renderState:(CCRenderState *)renderState first:(GLint)first elements:(GLsizei)elements globalSortOrder:(NSInteger)globalSortOrder
 {
@@ -517,25 +487,7 @@ SortQueue(NSMutableArray *queue)
 //MARK: Render Queue
 
 
-@implementation CCRenderer {
-	GLuint _vao;
-	CCGraphicsBuffer _vertexBuffer;
-	CCGraphicsBuffer _elementBuffer;
-	
-	CCRenderState *_renderState;
-	NSDictionary *_blendOptions;
-	
-	CCShader *_shader;
-	NSDictionary *_shaderUniforms;
-	
-	BOOL _vaoBound;
-	
-	NSMutableArray *_queue;
-	NSMutableArray *_queueStack;
-	__unsafe_unretained CCRenderCommandDraw *_lastDrawCommand;
-	
-	NSUInteger _statDrawCommands;
-}
+@implementation CCRenderer
 
 -(void)invalidateState
 {
@@ -611,70 +563,10 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	}
 }
 
--(void)setRenderState:(CCRenderState *)renderState
-{
-	[self bindVAO:YES];
-	if(renderState == _renderState) return;
-	
-	glPushGroupMarkerEXT(0, "CCRenderer: Render State");
-	
-	// Set the blending state.
-	__unsafe_unretained NSDictionary *blendOptions = renderState->_blendMode->_options;
-	if(blendOptions != _blendOptions){
-		glInsertEventMarkerEXT(0, "Blending mode");
-		
-		if(blendOptions == CCBLEND_DISABLED_OPTIONS){
-			if(_blendOptions != CCBLEND_DISABLED_OPTIONS) glDisable(GL_BLEND);
-		} else {
-			if(_blendOptions == nil || _blendOptions == CCBLEND_DISABLED_OPTIONS) glEnable(GL_BLEND);
-			
-			glBlendFuncSeparate(
-				[blendOptions[CCBlendFuncSrcColor] unsignedIntValue],
-				[blendOptions[CCBlendFuncDstColor] unsignedIntValue],
-				[blendOptions[CCBlendFuncSrcAlpha] unsignedIntValue],
-				[blendOptions[CCBlendFuncDstAlpha] unsignedIntValue]
-			);
-			
-			glBlendEquationSeparate(
-				[blendOptions[CCBlendEquationColor] unsignedIntValue],
-				[blendOptions[CCBlendEquationAlpha] unsignedIntValue]
-			);
-		}
-		
-		_blendOptions = blendOptions;
-	}
-	
-	// Bind the shader.
-	__unsafe_unretained CCShader *shader = renderState->_shader;
-	if(shader != _shader){
-		glInsertEventMarkerEXT(0, "Shader");
-		
-		glUseProgram(shader->_program);
-		
-		_shader = shader;
-		_shaderUniforms = nil;
-	}
-	
-	// Set the shader's uniform state.
-	__unsafe_unretained NSDictionary *shaderUniforms = renderState->_shaderUniforms;
-	__unsafe_unretained NSDictionary *globalShaderUniforms = _globalShaderUniforms;
-	if(shaderUniforms != _shaderUniforms){
-		glInsertEventMarkerEXT(0, "Uniforms");
-		
-		__unsafe_unretained NSDictionary *setters = shader->_uniformSetters;
-		for(NSString *uniformName in setters){
-			__unsafe_unretained CCUniformSetter setter = setters[uniformName];
-			setter(self, shaderUniforms, globalShaderUniforms);
-		}
-		_shaderUniforms = shaderUniforms;
-	}
-	
-	CC_CHECK_GL_ERROR_DEBUG();
-	glPopGroupMarkerEXT();
-	
-	_renderState = renderState;
-	return;
-}
+//Implemented in CCNoARC.m
+//-(void)setRenderState:(CCRenderState *)renderState
+//-(CCRenderBuffer)enqueueTriangles:(NSUInteger)triangleCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
+//-(CCRenderBuffer)enqueueLines:(NSUInteger)lineCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
 
 -(void)enqueueClear:(GLbitfield)mask color:(GLKVector4)color4 depth:(GLclampf)depth stencil:(GLint)stencil globalSortOrder:(NSInteger)globalSortOrder
 {
@@ -685,51 +577,6 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 		
 		glClear(mask);
 	} globalSortOrder:globalSortOrder debugLabel:@"CCRenderer: Clear" threadSafe:YES];
-}
-
--(CCRenderBuffer)enqueueTriangles:(NSUInteger)triangleCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
-{
-	// Need to record the first vertex or element index before pushing more vertexes.
-	size_t firstVertex = _vertexBuffer.count;
-	size_t firstElement = _elementBuffer.count;
-	
-	size_t elementCount = 3*triangleCount;
-	CCVertex *vertexes = CCGraphicsBufferPushElements(&_vertexBuffer, vertexCount, self);
-	GLushort *elements = CCGraphicsBufferPushElements(&_elementBuffer, elementCount, self);
-	
-	__unsafe_unretained CCRenderCommandDraw *previous = _lastDrawCommand;
-	if(previous && previous->_renderState == renderState && previous->_globalSortOrder == globalSortOrder){
-		// Batch with the previous command.
-		[previous batchElements:(GLsizei)elementCount];
-	} else {
-		// Start a new command.
-		CCRenderCommandDraw *command = [[CCRenderCommandDraw alloc] initWithMode:GL_TRIANGLES renderState:renderState first:(GLint)firstElement elements:(GLsizei)elementCount globalSortOrder:globalSortOrder];
-		[_queue addObject:command];
-		_lastDrawCommand = command;
-	}
-	
-	_statDrawCommands++;
-	return (CCRenderBuffer){vertexes, elements, firstVertex};
-}
-
--(CCRenderBuffer)enqueueLines:(NSUInteger)lineCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
-{
-	// Need to record the first vertex or element index before pushing more vertexes.
-	size_t firstVertex = _vertexBuffer.count;
-	size_t firstElement = _elementBuffer.count;
-	
-	size_t elementCount = 2*lineCount;
-	CCVertex *vertexes = CCGraphicsBufferPushElements(&_vertexBuffer, vertexCount, self);
-	GLushort *elements = CCGraphicsBufferPushElements(&_elementBuffer, elementCount, self);
-	
-	CCRenderCommandDraw *command = [[CCRenderCommandDraw alloc] initWithMode:GL_LINES renderState:renderState first:(GLint)firstElement elements:(GLsizei)elementCount globalSortOrder:globalSortOrder];
-	[_queue addObject:command];
-	
-	// Line drawing commands are currently intended for debugging and cannot be batched.
-	_lastDrawCommand = nil;
-	
-	_statDrawCommands++;
-	return(CCRenderBuffer){vertexes, elements, firstVertex};
 }
 
 -(void)enqueueBlock:(void (^)())block globalSortOrder:(NSInteger)globalSortOrder debugLabel:(NSString *)debugLabel threadSafe:(BOOL)threadsafe
@@ -789,8 +636,6 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	for(id<CCRenderCommand> command in _queue) [command invokeOnRenderer:self];
 	[self bindVAO:NO];
 	
-//	NSLog(@"Draw commands: %d, Draw calls: %d", _statDrawCommands, _queue.count);
-	_statDrawCommands = 0;
 	[_queue removeAllObjects];
 	
 	[self prepareBuffer:&_vertexBuffer];
@@ -799,7 +644,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	glPopGroupMarkerEXT();
 	CC_CHECK_GL_ERROR_DEBUG();
 	
-//	CC_INCREMENT_GL_DRAWS(1);
+	[self invalidateState];
 }
 
 //MARK: Buffer Management Methods
