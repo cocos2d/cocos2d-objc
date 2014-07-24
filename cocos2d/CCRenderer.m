@@ -519,8 +519,8 @@ SortQueue(NSMutableArray *queue)
 
 @implementation CCRenderer {
 	GLuint _vao;
-	GLuint _vbo;
-	GLuint _ebo;
+	CCGraphicsBuffer _vertexBuffer;
+	CCGraphicsBuffer _elementBuffer;
 	
 	CCRenderState *_renderState;
 	NSDictionary *_blendOptions;
@@ -533,12 +533,6 @@ SortQueue(NSMutableArray *queue)
 	NSMutableArray *_queue;
 	NSMutableArray *_queueStack;
 	__unsafe_unretained CCRenderCommandDraw *_lastDrawCommand;
-	
-	CCVertex *_vertexes;
-	GLsizei _vertexCount, _vertexCapacity;
-	
-	GLushort *_elements;
-	GLsizei _elementCount, _elementCapacity;
 	
 	NSUInteger _statDrawCommands;
 }
@@ -556,22 +550,15 @@ SortQueue(NSMutableArray *queue)
 -(instancetype)init
 {
 	if((self = [super init])){
+		const NSUInteger CCRENDERER_INITIAL_VERTEX_CAPACITY = 16*1024;
+		[self initBuffer:&_vertexBuffer capacity:CCRENDERER_INITIAL_VERTEX_CAPACITY elementSize:sizeof(CCVertex) type:GL_ARRAY_BUFFER];
+		[self initBuffer:&_elementBuffer capacity:CCRENDERER_INITIAL_VERTEX_CAPACITY*1.5 elementSize:sizeof(uint16_t) type:GL_ELEMENT_ARRAY_BUFFER];
+		
 		glPushGroupMarkerEXT(0, "CCRenderer: Init");
-		
-		glGenBuffers(1, &_vbo);
-		glGenBuffers(1, &_ebo);
-		
-		_vao = [CCShader createVAOforCCVertexBuffer:_vbo elementBuffer:_ebo];
-		
+		_vao = [CCShader createVAOforCCVertexBuffer:(GLuint)_vertexBuffer.data elementBuffer:(GLuint)_elementBuffer.data];
 		glPopGroupMarkerEXT();
 		
 		_queue = [NSMutableArray array];
-		
-		_vertexCapacity = 2*1024;
-		_vertexes = calloc(_vertexCapacity, sizeof(*_vertexes));
-		
-		_elementCapacity = 2*1024;
-		_elements = calloc(_elementCapacity, sizeof(*_elements));
 	}
 	
 	return self;
@@ -580,15 +567,11 @@ SortQueue(NSMutableArray *queue)
 -(void)dealloc
 {
 	glPushGroupMarkerEXT(0, "CCRenderer: Dealloc");
-	
 	glDeleteVertexArrays(1, &_vao);
-	glDeleteBuffers(1, &_vbo);
-	glDeleteBuffers(1, &_ebo);
-	
 	glPopGroupMarkerEXT();
 	
-	free(_vertexes);
-	free(_elements);
+	[self destroyBuffer:&_vertexBuffer];
+	[self destroyBuffer:&_elementBuffer];
 }
 
 static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
@@ -704,79 +687,49 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	} globalSortOrder:globalSortOrder debugLabel:@"CCRenderer: Clear" threadSafe:YES];
 }
 
--(CCVertex *)ensureVertexCapacity:(NSUInteger)requestedCount
-{
-	NSAssert(requestedCount > 0, @"Vertex count must be positive.");
-	
-	GLsizei required = _vertexCount + (GLsizei)requestedCount;
-	if(required > _vertexCapacity){
-		// Double the size of the buffer until it fits.
-		while(required >= _vertexCapacity) _vertexCapacity *= 2;
-		
-		_vertexes = realloc(_vertexes, _vertexCapacity*sizeof(*_vertexes));
-	}
-	
-	// Return the triangle buffer pointer.
-	return &_vertexes[_vertexCount];
-}
-
--(GLushort *)ensureElementCapacity:(NSUInteger)requestedCount
-{
-	NSAssert(requestedCount > 0, @"Element count must be positive.");
-	
-	GLsizei required = _elementCount + (GLsizei)requestedCount;
-	if(required > _elementCapacity){
-		// Double the size of the buffer until it fits.
-		while(required >= _elementCapacity) _elementCapacity *= 2;
-		
-		_elements = realloc(_elements, _elementCapacity*sizeof(*_elements));
-	}
-	
-	// Return the triangle buffer pointer.
-	return &_elements[_elementCount];
-}
-
 -(CCRenderBuffer)enqueueTriangles:(NSUInteger)triangleCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
 {
-	__unsafe_unretained CCRenderCommandDraw *previous = _lastDrawCommand;
-	CCVertex *vertexes = [self ensureVertexCapacity:vertexCount];
-	GLushort *elements = [self ensureElementCapacity:3*triangleCount];
+	// Need to record the first vertex or element index before pushing more vertexes.
+	size_t firstVertex = _vertexBuffer.count;
+	size_t firstElement = _elementBuffer.count;
 	
+	size_t elementCount = 3*triangleCount;
+	CCVertex *vertexes = CCGraphicsBufferPushElements(&_vertexBuffer, vertexCount, self);
+	GLushort *elements = CCGraphicsBufferPushElements(&_elementBuffer, elementCount, self);
+	
+	__unsafe_unretained CCRenderCommandDraw *previous = _lastDrawCommand;
 	if(previous && previous->_renderState == renderState && previous->_globalSortOrder == globalSortOrder){
 		// Batch with the previous command.
-		[previous batchElements:(GLsizei)(3*triangleCount)];
+		[previous batchElements:(GLsizei)elementCount];
 	} else {
 		// Start a new command.
-		CCRenderCommandDraw *command = [[CCRenderCommandDraw alloc] initWithMode:GL_TRIANGLES renderState:renderState first:(GLint)_elementCount elements:(GLsizei)(3*triangleCount) globalSortOrder:globalSortOrder];
+		CCRenderCommandDraw *command = [[CCRenderCommandDraw alloc] initWithMode:GL_TRIANGLES renderState:renderState first:(GLint)firstElement elements:(GLsizei)elementCount globalSortOrder:globalSortOrder];
 		[_queue addObject:command];
 		_lastDrawCommand = command;
 	}
 	
-	CCRenderBuffer buffer = {vertexes, elements, _vertexCount};
-	_vertexCount += vertexCount;
-	_elementCount += 3*triangleCount;
-	
 	_statDrawCommands++;
-	return buffer;
+	return (CCRenderBuffer){vertexes, elements, firstVertex};
 }
 
 -(CCRenderBuffer)enqueueLines:(NSUInteger)lineCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
 {
-	CCVertex *vertexes = [self ensureVertexCapacity:vertexCount];
-	GLushort *elements = [self ensureElementCapacity:2*lineCount];
+	// Need to record the first vertex or element index before pushing more vertexes.
+	size_t firstVertex = _vertexBuffer.count;
+	size_t firstElement = _elementBuffer.count;
 	
-	CCRenderCommandDraw *command = [[CCRenderCommandDraw alloc] initWithMode:GL_LINES renderState:renderState first:(GLint)_elementCount elements:(GLsizei)(2*lineCount) globalSortOrder:globalSortOrder];
+	size_t elementCount = 2*lineCount;
+	CCVertex *vertexes = CCGraphicsBufferPushElements(&_vertexBuffer, vertexCount, self);
+	GLushort *elements = CCGraphicsBufferPushElements(&_elementBuffer, elementCount, self);
+	
+	CCRenderCommandDraw *command = [[CCRenderCommandDraw alloc] initWithMode:GL_LINES renderState:renderState first:(GLint)firstElement elements:(GLsizei)elementCount globalSortOrder:globalSortOrder];
 	[_queue addObject:command];
 	
 	// Line drawing commands are currently intended for debugging and cannot be batched.
 	_lastDrawCommand = nil;
 	
-	CCRenderBuffer buffer = {vertexes, elements, _vertexCount};
-	_vertexCount += vertexCount;
-	_elementCount += 2*lineCount;
-	
 	_statDrawCommands++;
-	return buffer;
+	return(CCRenderBuffer){vertexes, elements, firstVertex};
 }
 
 -(void)enqueueBlock:(void (^)())block globalSortOrder:(NSInteger)globalSortOrder debugLabel:(NSString *)debugLabel threadSafe:(BOOL)threadsafe
@@ -828,13 +781,8 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	
 	glInsertEventMarkerEXT(0, "Buffering");
 	
-	glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-	glBufferData(GL_ARRAY_BUFFER, _vertexCount*sizeof(*_vertexes), _vertexes, GL_STREAM_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, _elementCount*sizeof(*_elements), _elements, GL_STREAM_DRAW);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	[self commitBuffer:&_vertexBuffer];
+	[self commitBuffer:&_elementBuffer];
 	CC_CHECK_GL_ERROR_DEBUG();
 	
 	SortQueue(_queue);
@@ -843,15 +791,56 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	
 //	NSLog(@"Draw commands: %d, Draw calls: %d", _statDrawCommands, _queue.count);
 	_statDrawCommands = 0;
-	_queue = [[NSMutableArray alloc] init];
+	[_queue removeAllObjects];
 	
-	_vertexCount = 0;
-	_elementCount = 0;
+	[self prepareBuffer:&_vertexBuffer];
+	[self prepareBuffer:&_elementBuffer];
 	
 	glPopGroupMarkerEXT();
 	CC_CHECK_GL_ERROR_DEBUG();
 	
 //	CC_INCREMENT_GL_DRAWS(1);
+}
+
+//MARK: Buffer Management Methods
+
+-(void)initBuffer:(CCGraphicsBuffer *)buffer capacity:(NSUInteger)capacity elementSize:(size_t)elementSize type:(intptr_t)type
+{
+	buffer->count = 0;
+	buffer->capacity = capacity;
+	buffer->elementSize = elementSize;
+	
+	buffer->ptr = calloc(capacity, elementSize);
+	
+	GLuint glbuffer = 0;
+	glGenBuffers(1, &glbuffer);
+	buffer->data = (intptr_t)glbuffer;
+	buffer->type = type;
+}
+
+-(void)resizeBuffer:(CCGraphicsBuffer *)buffer capacity:(size_t)capacity
+{
+	buffer->ptr = realloc(buffer->ptr, capacity*buffer->elementSize);
+	buffer->capacity = capacity;
+}
+
+-(void)destroyBuffer:(CCGraphicsBuffer *)buffer
+{
+	free(buffer->ptr);
+	glDeleteBuffers(1, (GLuint *)&buffer->data);
+}
+
+-(void)prepareBuffer:(CCGraphicsBuffer *)buffer
+{
+	buffer->count = 0;
+}
+
+-(void)commitBuffer:(CCGraphicsBuffer *)buffer
+{
+	GLenum type = (GLenum)buffer->type;
+	glBindBuffer(type, (GLuint)buffer->data);
+	glBufferData(type, buffer->count*buffer->elementSize, buffer->ptr, GL_STREAM_DRAW);
+	glBindBuffer(type, 0);
 }
 
 @end
