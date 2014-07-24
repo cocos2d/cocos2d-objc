@@ -1618,7 +1618,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 - (BOOL)hitTestWithWorldPos:(CGPoint)pos
 {
     pos = [self convertToNodeSpace:pos];
-    CGPoint offset = ccp(-_hitAreaExpansion, -_hitAreaExpansion);
+    CGPoint offset = ccp(-self.hitAreaExpansion, -self.hitAreaExpansion);
     CGSize size = CGSizeMake(self.contentSizeInPoints.width - offset.x, self.contentSizeInPoints.height - offset.y);
     if ((pos.y < offset.y) || (pos.y > size.height) || (pos.x < offset.x) || (pos.x > size.width)) return(NO);
     
@@ -1626,7 +1626,6 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 }
 
 // -----------------------------------------------------------------
-
 
 #pragma mark - CCColor methods
 
