@@ -306,12 +306,20 @@ static CCTextureCache *sharedTextureCache;
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
 
 		else {
+#if __CC_PLATFORM_IOS
+            UIImage *image = [[UIImage alloc] initWithContentsOfFile:fullpath];
+			tex = [[CCTexture alloc] initWithCGImage:image.CGImage contentScale:contentScale];
+#else // Android
+            // TODO: add support for bmp
             BOOL png = [lowerCase hasSuffix:@".png"];
             CGDataProviderRef imgDataProvider = CGDataProviderCreateWithCFData((__bridge CFDataRef)[NSData dataWithContentsOfFile:fullpath]);
             CGImageRef image = (png) ? CGImageCreateWithPNGDataProvider(imgDataProvider, NULL, true, kCGRenderingIntentDefault) : CGImageCreateWithJPEGDataProvider(imgDataProvider, NULL, true, kCGRenderingIntentDefault) ;
             tex = [[CCTexture alloc] initWithCGImage:image contentScale:contentScale];
             CGDataProviderRelease(imgDataProvider);
             CGImageRelease(image);
+#endif
+            
+            
             
 			CCLOGINFO(@"Texture loaded: %@", path);
             
@@ -392,7 +400,7 @@ static CCTextureCache *sharedTextureCache;
 
 -(void) removeUnusedTextures
 {
-    [[CCRenderStateCache sharedInstance] flush];
+    [CCRENDERSTATE_CACHE flush];
 		
     dispatch_sync(_dictQueue, ^{
         NSArray *keys = [_textures allKeys];

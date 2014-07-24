@@ -88,16 +88,6 @@ const NSString *CCBlendEquationAlpha = @"CCBlendEquationAlpha";
 
 @implementation CCBlendModeCache
 
-+ (id)sharedInstance
-{
-    static CCBlendModeCache *sharedInstance = nil;
-    static dispatch_once_t once = 0L;
-    dispatch_once(&once, ^{
-        sharedInstance = [[CCBlendModeCache alloc] init];
-    });
-    return sharedInstance;
-}
-
 -(id)objectForKey:(id<NSCopying>)options
 {
 	CCBlendMode *blendMode = [self rawObjectForKey:options];
@@ -211,98 +201,43 @@ static NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 
 +(CCBlendMode *)blendModeWithOptions:(NSDictionary *)options
 {
-	return [[CCBlendModeCache sharedInstance] objectForKey:options];
+	return [CCBLENDMODE_CACHE objectForKey:options];
 }
 
 +(CCBlendMode *)disabledMode
 {
-    static CCBlendMode *mode = nil;
-    static dispatch_once_t once = 0L;
-    dispatch_once(&once, ^{
-        mode = [self blendModeWithOptions:@{}];
-    });
-	return mode;
+	return CCBLEND_DISABLED;
 }
 
 +(CCBlendMode *)alphaMode
 {
-    static CCBlendMode *mode = nil;
-    static dispatch_once_t once = 0L;
-    dispatch_once(&once, ^{
-        mode = [self blendModeWithOptions:@{
-            CCBlendFuncSrcColor: @(GL_SRC_ALPHA),
-            CCBlendFuncDstColor: @(GL_ONE_MINUS_SRC_ALPHA),
-        }];
-    });
-	return mode;
+	return CCBLEND_ALPHA;
 }
 
 +(CCBlendMode *)premultipliedAlphaMode
 {
-    static CCBlendMode *mode = nil;
-    static dispatch_once_t once = 0L;
-    dispatch_once(&once, ^{
-        mode = [self blendModeWithOptions:@{
-            CCBlendFuncSrcColor: @(GL_ONE),
-            CCBlendFuncDstColor: @(GL_ONE_MINUS_SRC_ALPHA),
-        }];
-    });
-	return mode;
+	return CCBLEND_PREMULTIPLIED_ALPHA;
 }
 
 +(CCBlendMode *)addMode
 {
-    static CCBlendMode *mode = nil;
-    static dispatch_once_t once = 0L;
-    dispatch_once(&once, ^{
-        mode = [self blendModeWithOptions:@{
-            CCBlendFuncSrcColor: @(GL_ONE),
-            CCBlendFuncDstColor: @(GL_ONE),
-        }];
-    });
-	return mode;
+	return CCBLEND_ADD;
 }
 
 +(CCBlendMode *)multiplyMode
 {
-    static CCBlendMode *mode = nil;
-    static dispatch_once_t once = 0L;
-    dispatch_once(&once, ^{
-        mode = [self blendModeWithOptions:@{
-            CCBlendFuncSrcColor: @(GL_DST_COLOR),
-            CCBlendFuncDstColor: @(GL_ZERO),
-        }];
-    });
-	return mode;
+	return CCBLEND_MULTIPLY;
 }
 
 @end
 
 
 //MARK: Render States.
-@interface CCRenderState() {
-	@public
-	CCBlendMode *_blendMode;
-	CCShader *_shader;
-	NSDictionary *_shaderUniforms;
-}
-
--(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms;
-
+@interface CCRenderStateCache : CCCache
 @end
 
 
 @implementation CCRenderStateCache
-
-+ (instancetype)sharedInstance
-{
-    static CCRenderStateCache *sharedInstance = nil;
-    static dispatch_once_t once = 0L;
-    dispatch_once(&once, ^{
-        sharedInstance = [[CCRenderStateCache alloc] init];
-    });
-    return sharedInstance;
-}
 
 -(id)createSharedDataForKey:(CCRenderState *)renderState
 {
@@ -331,6 +266,11 @@ static NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 @implementation CCRenderState {
 	CCTexture *_mainTexture;
 	BOOL _immutable;
+    
+@package
+	CCBlendMode *_blendMode;
+	CCShader *_shader;
+	NSDictionary *_shaderUniforms;
 }
 
 CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
@@ -374,7 +314,7 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 	CCRenderState *renderState = [[self alloc] initWithBlendMode:blendMode shader:shader shaderUniforms:@{CCShaderUniformMainTexture: mainTexture} copyUniforms:YES];
 	renderState->_mainTexture = mainTexture;
 	
-	return [[CCRenderStateCache sharedInstance] objectForKey:renderState];
+	return [CCRENDERSTATE_CACHE objectForKey:renderState];
 }
 
 -(id)copyWithZone:(NSZone *)zone
@@ -408,12 +348,7 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 
 +(instancetype)debugColor
 {
-    static CCRenderState *debugColor = nil;
-    static dispatch_once_t once = 0L;
-    dispatch_once(&once, ^{
-        debugColor = [[CCRenderState alloc] initWithBlendMode:[CCBlendMode disabledMode] shader:[CCShader positionColorShader] shaderUniforms:@{}];
-    });
-	return debugColor;
+	return CCRENDERSTATE_DEBUGCOLOR;
 }
 
 @end
@@ -701,28 +636,25 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	
 	// Set the blending state.
 	__unsafe_unretained NSDictionary *blendOptions = renderState->_blendMode->_options;
-	if (![blendOptions isEqual:_blendOptions]){
+	if(blendOptions != _blendOptions){
 		CCGL_DEBUG_INSERT_EVENT_MARKER("Blending mode");
 		
-		if ([blendOptions count] == 0) {
-            // NOTE: if the two dictionaries are not equal, then the current blend options can never be empty
-			glDisable(GL_BLEND);
+		if(blendOptions == CCBLEND_DISABLED_OPTIONS){
+			if(_blendOptions != CCBLEND_DISABLED_OPTIONS) glDisable(GL_BLEND);
 		} else {
-			if ([_blendOptions count] == 0) {
-                glEnable(GL_BLEND);
-            }
+			if(_blendOptions == nil || _blendOptions == CCBLEND_DISABLED_OPTIONS) glEnable(GL_BLEND);
 			
 			glBlendFuncSeparate(
-				[blendOptions[CCBlendFuncSrcColor] unsignedIntValue],
-				[blendOptions[CCBlendFuncDstColor] unsignedIntValue],
-				[blendOptions[CCBlendFuncSrcAlpha] unsignedIntValue],
-				[blendOptions[CCBlendFuncDstAlpha] unsignedIntValue]
-			);
+                                [blendOptions[CCBlendFuncSrcColor] unsignedIntValue],
+                                [blendOptions[CCBlendFuncDstColor] unsignedIntValue],
+                                [blendOptions[CCBlendFuncSrcAlpha] unsignedIntValue],
+                                [blendOptions[CCBlendFuncDstAlpha] unsignedIntValue]
+                                );
 			
 			glBlendEquationSeparate(
-				[blendOptions[CCBlendEquationColor] unsignedIntValue],
-				[blendOptions[CCBlendEquationAlpha] unsignedIntValue]
-			);
+                                    [blendOptions[CCBlendEquationColor] unsignedIntValue],
+                                    [blendOptions[CCBlendEquationAlpha] unsignedIntValue]
+                                    );
 		}
 		
 		_blendOptions = blendOptions;
@@ -757,7 +689,6 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	CC_CHECK_GL_ERROR_DEBUG();
 	
 	_renderState = renderState;
-    
 	return;
 }
 
