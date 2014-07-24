@@ -106,12 +106,12 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
                                    // Compute the combination of the sprite's color and texture.
                                    vec4 primaryColor = inputValue;
                                    
-                                   float fresnel = max(u_fresnelBias + (1.0 - u_fresnelBias) * pow((1.0 - nDotV), u_fresnelPower), 0.0);;
+                                   float fresnel = max(u_fresnelBias + (1.0 - u_fresnelBias) * pow((1.0 - nDotV), u_fresnelPower), 0.0);
                                    
                                    // If the refracted texture coordinates are within the bounds of the environment map
                                    // blend the primary color with the refracted environment. Multiplying by the normal
                                    // map alpha also allows the effect to be disabled for specific pixels.
-                                   primaryColor += normalMap.a * fresnel * texture2D(u_envMap, reflectTexCoords);                                   
+                                   primaryColor += normalMap.a * fresnel * texture2D(u_envMap, reflectTexCoords);
                                    return primaryColor;
                                    );
     

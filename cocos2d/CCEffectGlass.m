@@ -137,7 +137,7 @@
                                    
                                    // Add the reflected color modulated by the fresnel term. Multiplying by the normal
                                    // map alpha also allows the effect to be disabled for specific pixels.
-                                   float fresnel = max(u_fresnelBias + (1.0 - u_fresnelBias) * pow((1.0 - nDotV), u_fresnelPower), 0.0);;
+                                   float fresnel = max(u_fresnelBias + (1.0 - u_fresnelBias) * pow((1.0 - nDotV), u_fresnelPower), 0.0);
                                    vec4 reflection = normalMap.a * fresnel * texture2D(u_reflectEnvMap, reflectTexCoords);
 
                                    return primaryColor + refraction + reflection;
