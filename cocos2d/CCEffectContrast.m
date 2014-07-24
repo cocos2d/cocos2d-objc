@@ -14,25 +14,31 @@
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 static float conditionContrast(float contrast);
 
+
+@interface CCEffectContrast ()
+
+@property (nonatomic) NSNumber *conditionedContrast;
+
+@end
+
+
 @implementation CCEffectContrast
 
 -(id)init
 {
-    CCEffectUniform* uniformContrast = [CCEffectUniform uniform:@"float" name:@"u_contrast" value:[NSNumber numberWithFloat:1.0f]];
-    
-    if((self = [super initWithFragmentUniforms:@[uniformContrast] vertextUniforms:nil varying:nil]))
-    {
-        self.debugName = @"CCEffectContrast";
-        return self;
-    }
-    return self;
+    return [self initWithContrast:0.0f];
 }
 
 -(id)initWithContrast:(float)contrast
 {
-    if((self = [self init]))
+    CCEffectUniform* uniformContrast = [CCEffectUniform uniform:@"float" name:@"u_contrast" value:[NSNumber numberWithFloat:1.0f]];
+    
+    if((self = [super initWithFragmentUniforms:@[uniformContrast] vertexUniforms:nil varying:nil]))
     {
-        _contrast = conditionContrast(contrast);
+        _contrast = contrast;
+        _conditionedContrast = [NSNumber numberWithFloat:conditionContrast(contrast)];
+
+        self.debugName = @"CCEffectContrast";
     }
     return self;
 }
@@ -44,6 +50,8 @@ static float conditionContrast(float contrast);
 
 -(void)buildFragmentFunctions
 {
+    self.fragmentFunctions = [[NSMutableArray alloc] init];
+
     CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" snippet:@"texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)"];
 
     NSString* effectBody = CC_GLSL(
@@ -59,12 +67,13 @@ static float conditionContrast(float contrast);
     __weak CCEffectContrast *weakSelf = self;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
+    pass0.debugLabel = @"CCEffectContrast pass 0";
     pass0.shader = self.shader;
-    pass0.shaderUniforms = self.shaderUniforms;
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
+        
         pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-        pass.shaderUniforms[self.uniformTranslationTable[@"u_contrast"]] = [NSNumber numberWithFloat:weakSelf.contrast];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_contrast"]] = weakSelf.conditionedContrast;
     } copy]];
     
     self.renderPasses = @[pass0];
@@ -72,13 +81,16 @@ static float conditionContrast(float contrast);
 
 -(void)setContrast:(float)contrast
 {
-    _contrast = conditionContrast(contrast);
+    _contrast = contrast;
+    _conditionedContrast = [NSNumber numberWithFloat:conditionContrast(contrast)];
 }
 
 @end
 
 float conditionContrast(float contrast)
 {
+    NSCAssert((contrast >= -1.0) && (contrast <= 1.0), @"Supplied contrast out of range [-1..1].");
+
     // Yes, this value is somewhat magical. It was arrived at experimentally by comparing
     // our results at min and max contrast (-1 and 1 respectively) with the results from
     // various image editing applications at their own min and max contrast values.

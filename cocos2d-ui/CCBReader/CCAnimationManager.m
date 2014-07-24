@@ -52,11 +52,6 @@ static NSInteger ccbAnimationManagerID = 0;
     _nodeSequences = [[NSMutableDictionary alloc] init];
     _baseValues = [[NSMutableDictionary alloc] init];
     
-    // Scheduler
-    _scheduler = [[CCDirector sharedDirector] scheduler];
-    [_scheduler scheduleTarget:self];
-    [_scheduler setPaused:NO target:self];
-    
     // Current Sequence Actions
     _currentActions = [[NSMutableArray alloc] init];
     _playbackSpeed  = 1.0f;
@@ -81,9 +76,16 @@ static NSInteger ccbAnimationManagerID = 0;
     }
 }
 
+-(void) onEnter {
+    // Setup Scheduler
+    _scheduler = [[CCDirector sharedDirector] scheduler];
+    [_scheduler scheduleTarget:self];
+    [_scheduler setPaused:NO target:self];
+}
+
 - (void)addNode:(CCNode*)node andSequences:(NSDictionary*)seq
 {
-#ifdef DEBUG
+#if DEBUG
 	//Sanity check sequences;
 	
 	for (NSMutableDictionary* seqNodeProps in seq.allValues) {
@@ -199,7 +201,7 @@ static NSInteger ccbAnimationManagerID = 0;
     } else if ([name isEqualToString:@"rotationalSkewY"]) {
         return [CCActionRotateTo actionWithDuration:duration angleY:[kf1.value floatValue]];
     } else if ([name isEqualToString:@"opacity"]) {
-        return [CCActionFadeTo actionWithDuration:duration opacity:[kf1.value intValue]];
+        return [CCActionFadeTo actionWithDuration:duration opacity:[kf1.value floatValue]];
     } else if ([name isEqualToString:@"color"]) {
         CCColor* color = kf1.value;
         return [CCActionTintTo actionWithDuration:duration color:color];
@@ -237,8 +239,8 @@ static NSInteger ccbAnimationManagerID = 0;
             // Get relative position
             float x = [[value objectAtIndex:0] floatValue];
             float y = [[value objectAtIndex:1] floatValue];
-#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
-            [node setValue:[CCValue valueWithCGPoint:ccp(x,y)] forKey:name];
+#if __CC_PLATFORM_IOS
+            [node setValue:[NSValue valueWithCGPoint:ccp(x,y)] forKey:name];
 #elif __CC_PLATFORM_MAC
             [node setValue:[NSValue valueWithPoint:ccp(x,y)] forKey:name];
 #endif

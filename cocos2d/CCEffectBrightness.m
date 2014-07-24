@@ -14,26 +14,31 @@
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 static float conditionBrightness(float brightness);
 
+@interface CCEffectBrightness ()
+
+@property (nonatomic) NSNumber *conditionedBrightness;
+
+@end
+
+
 @implementation CCEffectBrightness
 
 -(id)init
 {
-    CCEffectUniform* uniformBrightness = [CCEffectUniform uniform:@"float" name:@"u_brightness" value:[NSNumber numberWithFloat:0.0f]];
-    
-    if((self = [super initWithFragmentUniforms:@[uniformBrightness] vertextUniforms:nil varying:nil]))
-    {
-        self.debugName = @"CCEffectBrightness";
-        return self;
-    }
-    return self;
+    return [self initWithBrightness:0.0f];
 }
 
 -(id)initWithBrightness:(float)brightness
 {
-    if((self = [self init]))
+    CCEffectUniform* uniformBrightness = [CCEffectUniform uniform:@"float" name:@"u_brightness" value:[NSNumber numberWithFloat:0.0f]];
+    
+    if((self = [super initWithFragmentUniforms:@[uniformBrightness] vertexUniforms:nil varying:nil]))
     {
-        _brightness = conditionBrightness(brightness);
-    }    
+        _brightness = brightness;
+        _conditionedBrightness = [NSNumber numberWithFloat:conditionBrightness(brightness)];
+        
+        self.debugName = @"CCEffectBrightness";
+    }
     return self;
 }
 
@@ -44,6 +49,8 @@ static float conditionBrightness(float brightness);
 
 -(void)buildFragmentFunctions
 {
+    self.fragmentFunctions = [[NSMutableArray alloc] init];
+
     CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" snippet:@"texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)"];
 
     NSString* effectBody = CC_GLSL(
@@ -59,12 +66,13 @@ static float conditionBrightness(float brightness);
     __weak CCEffectBrightness *weakSelf = self;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
+    pass0.debugLabel = @"CCEffectBrightness pass 0";
     pass0.shader = self.shader;
-    pass0.shaderUniforms = self.shaderUniforms;
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
+        
         pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-        pass.shaderUniforms[self.uniformTranslationTable[@"u_brightness"]] = [NSNumber numberWithFloat:weakSelf.brightness];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_brightness"]] = weakSelf.conditionedBrightness;
     } copy]];
     
     self.renderPasses = @[pass0];
@@ -72,13 +80,15 @@ static float conditionBrightness(float brightness);
 
 -(void)setBrightness:(float)brightness
 {
-    _brightness = conditionBrightness(brightness);
+    _brightness = brightness;
+    _conditionedBrightness = [NSNumber numberWithFloat:conditionBrightness(brightness)];
 }
 
 @end
 
 float conditionBrightness(float brightness)
 {
+    NSCAssert((brightness >= -1.0) && (brightness <= 1.0), @"Supplied brightness out of range [-1..1].");
     return clampf(brightness, -1.0f, 1.0f);
 }
 

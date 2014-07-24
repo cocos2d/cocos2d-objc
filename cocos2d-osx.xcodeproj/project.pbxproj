@@ -163,17 +163,6 @@
 		B7EE69ED1819EAAC00B983FE /* CCLayoutBox.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69E91819EAAC00B983FE /* CCLayoutBox.m */; };
 		B7EE6A34181B287300B983FE /* CCSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = B7EE6A32181B287300B983FE /* CCSlider.h */; };
 		B7EE6A35181B287300B983FE /* CCSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE6A33181B287300B983FE /* CCSlider.m */; };
-		D216F9181970A123000DEF7C /* CCMathTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = D216F90C1970A123000DEF7C /* CCMathTypes.h */; };
-		D216F9191970A123000DEF7C /* CCMathUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = D216F90D1970A123000DEF7C /* CCMathUtils.h */; };
-		D216F91A1970A123000DEF7C /* CCMatrix3.h in Headers */ = {isa = PBXBuildFile; fileRef = D216F90E1970A123000DEF7C /* CCMatrix3.h */; };
-		D216F91B1970A123000DEF7C /* CCMatrix4.h in Headers */ = {isa = PBXBuildFile; fileRef = D216F90F1970A123000DEF7C /* CCMatrix4.h */; };
-		D216F91C1970A123000DEF7C /* CCMatrix4.m in Sources */ = {isa = PBXBuildFile; fileRef = D216F9101970A123000DEF7C /* CCMatrix4.m */; };
-		D216F91D1970A123000DEF7C /* CCMatrixStack.h in Headers */ = {isa = PBXBuildFile; fileRef = D216F9111970A123000DEF7C /* CCMatrixStack.h */; };
-		D216F91F1970A123000DEF7C /* CCQuaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = D216F9131970A123000DEF7C /* CCQuaternion.h */; };
-		D216F9201970A123000DEF7C /* CCQuaternion.m in Sources */ = {isa = PBXBuildFile; fileRef = D216F9141970A123000DEF7C /* CCQuaternion.m */; };
-		D216F9211970A123000DEF7C /* CCVector2.h in Headers */ = {isa = PBXBuildFile; fileRef = D216F9151970A123000DEF7C /* CCVector2.h */; };
-		D216F9221970A123000DEF7C /* CCVector3.h in Headers */ = {isa = PBXBuildFile; fileRef = D216F9161970A123000DEF7C /* CCVector3.h */; };
-		D216F9231970A123000DEF7C /* CCVector4.h in Headers */ = {isa = PBXBuildFile; fileRef = D216F9171970A123000DEF7C /* CCVector4.h */; };
 		D216F92A1970A35A000DEF7C /* ALWeakArray.h in Headers */ = {isa = PBXBuildFile; fileRef = D216F9241970A35A000DEF7C /* ALWeakArray.h */; };
 		D216F92B1970A35A000DEF7C /* ALWeakArray.m in Sources */ = {isa = PBXBuildFile; fileRef = D216F9251970A35A000DEF7C /* ALWeakArray.m */; };
 		D216F92C1970A35A000DEF7C /* ALWeakDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = D216F9261970A35A000DEF7C /* ALWeakDictionary.h */; };
@@ -512,18 +501,6 @@
 		B7EE69E91819EAAC00B983FE /* CCLayoutBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLayoutBox.m; sourceTree = "<group>"; };
 		B7EE6A32181B287300B983FE /* CCSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCSlider.h; path = "cocos2d-ui/CCSlider.h"; sourceTree = "<group>"; };
 		B7EE6A33181B287300B983FE /* CCSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSlider.m; path = "cocos2d-ui/CCSlider.m"; sourceTree = "<group>"; };
-		D216F90C1970A123000DEF7C /* CCMathTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMathTypes.h; sourceTree = "<group>"; };
-		D216F90D1970A123000DEF7C /* CCMathUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMathUtils.h; sourceTree = "<group>"; };
-		D216F90E1970A123000DEF7C /* CCMatrix3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMatrix3.h; sourceTree = "<group>"; };
-		D216F90F1970A123000DEF7C /* CCMatrix4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMatrix4.h; sourceTree = "<group>"; };
-		D216F9101970A123000DEF7C /* CCMatrix4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMatrix4.m; sourceTree = "<group>"; };
-		D216F9111970A123000DEF7C /* CCMatrixStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMatrixStack.h; sourceTree = "<group>"; };
-		D216F9121970A123000DEF7C /* CCMatrixStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMatrixStack.m; sourceTree = "<group>"; };
-		D216F9131970A123000DEF7C /* CCQuaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCQuaternion.h; sourceTree = "<group>"; };
-		D216F9141970A123000DEF7C /* CCQuaternion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCQuaternion.m; sourceTree = "<group>"; };
-		D216F9151970A123000DEF7C /* CCVector2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVector2.h; sourceTree = "<group>"; };
-		D216F9161970A123000DEF7C /* CCVector3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVector3.h; sourceTree = "<group>"; };
-		D216F9171970A123000DEF7C /* CCVector4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVector4.h; sourceTree = "<group>"; };
 		D216F9241970A35A000DEF7C /* ALWeakArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWeakArray.h; sourceTree = "<group>"; };
 		D216F9251970A35A000DEF7C /* ALWeakArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALWeakArray.m; sourceTree = "<group>"; };
 		D216F9261970A35A000DEF7C /* ALWeakDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWeakDictionary.h; sourceTree = "<group>"; };
@@ -1066,25 +1043,6 @@
 			name = Layouts;
 			sourceTree = "<group>";
 		};
-		D216F90B1970A0F6000DEF7C /* Math */ = {
-			isa = PBXGroup;
-			children = (
-				D216F90C1970A123000DEF7C /* CCMathTypes.h */,
-				D216F90D1970A123000DEF7C /* CCMathUtils.h */,
-				D216F90E1970A123000DEF7C /* CCMatrix3.h */,
-				D216F90F1970A123000DEF7C /* CCMatrix4.h */,
-				D216F9101970A123000DEF7C /* CCMatrix4.m */,
-				D216F9111970A123000DEF7C /* CCMatrixStack.h */,
-				D216F9121970A123000DEF7C /* CCMatrixStack.m */,
-				D216F9131970A123000DEF7C /* CCQuaternion.h */,
-				D216F9141970A123000DEF7C /* CCQuaternion.m */,
-				D216F9151970A123000DEF7C /* CCVector2.h */,
-				D216F9161970A123000DEF7C /* CCVector3.h */,
-				D216F9171970A123000DEF7C /* CCVector4.h */,
-			);
-			name = Math;
-			sourceTree = "<group>";
-		};
 		D37EEAB8187D4F7A00CB5EF2 /* ObjectiveChipmunk */ = {
 			isa = PBXGroup;
 			children = (
@@ -1245,7 +1203,6 @@
 		E076E6281225EC7400DE0DA2 /* cocos2d */ = {
 			isa = PBXGroup;
 			children = (
-				D216F90B1970A0F6000DEF7C /* Math */,
 				E076E77B1225ED1100DE0DA2 /* Base Nodes */,
 				B7EE69E51819EA9600B983FE /* Layouts */,
 				E076E7721225EC8C00DE0DA2 /* Label Nodes */,
@@ -1526,7 +1483,6 @@
 				B7D273351822F5460054849B /* CCBuilderReader.h in Headers */,
 				B77060771831B0C40043CC67 /* ALChannelSource.h in Headers */,
 				E076E6D31225EC7400DE0DA2 /* CCActionEase.h in Headers */,
-				D216F91B1970A123000DEF7C /* CCMatrix4.h in Headers */,
 				E076E6D91225EC7400DE0DA2 /* CCActionInstant.h in Headers */,
 				E076E6DB1225EC7400DE0DA2 /* CCActionInterval.h in Headers */,
 				B7D2732F1822F5460054849B /* CCBReader.h in Headers */,
@@ -1540,7 +1496,6 @@
 				E076E6E51225EC7400DE0DA2 /* CCActionTween.h in Headers */,
 				B77060851831B0C40043CC67 /* ALWrapper.h in Headers */,
 				B770607F1831B0C40043CC67 /* ALSoundSource.h in Headers */,
-				D216F91F1970A123000DEF7C /* CCQuaternion.h in Headers */,
 				B770608E1831B0C40043CC67 /* IOSVersion.h in Headers */,
 				E076E6FC1225EC7400DE0DA2 /* CCLabelBMFont.h in Headers */,
 				E076E6FE1225EC7400DE0DA2 /* CCLabelTTF.h in Headers */,
@@ -1565,14 +1520,12 @@
 				E076E7241225EC7400DE0DA2 /* CCSpriteFrame.h in Headers */,
 				E076E7261225EC7400DE0DA2 /* CCSpriteFrameCache.h in Headers */,
 				B750162C18125C4A00708A2F /* CCControlSubclass.h in Headers */,
-				D216F9191970A123000DEF7C /* CCMathUtils.h in Headers */,
 				B77060801831B0C40043CC67 /* ALSoundSourcePool.h in Headers */,
 				E076E72A1225EC7400DE0DA2 /* CCTexture.h in Headers */,
 				B77060611831B0C40043CC67 /* OALAction.h in Headers */,
 				D216F92A1970A35A000DEF7C /* ALWeakArray.h in Headers */,
 				E076E72E1225EC7400DE0DA2 /* CCTextureCache.h in Headers */,
 				E076E7301225EC7400DE0DA2 /* CCTexturePVR.h in Headers */,
-				D216F91D1970A123000DEF7C /* CCMatrixStack.h in Headers */,
 				D389412818639DD400725CFC /* CCPhysicsJoint.h in Headers */,
 				B770607B1831B0C40043CC67 /* ALDevice.h in Headers */,
 				B77060651831B0C40043CC67 /* OALAudioActions.h in Headers */,
@@ -1590,7 +1543,6 @@
 				E076E7451225EC7400DE0DA2 /* CCGL.h in Headers */,
 				E076E7461225EC7400DE0DA2 /* CCNS.h in Headers */,
 				E076E7551225EC7400DE0DA2 /* CCDirectorMac.h in Headers */,
-				D216F9221970A123000DEF7C /* CCVector3.h in Headers */,
 				E076E7591225EC7400DE0DA2 /* CCGLView.h in Headers */,
 				E076E75C1225EC7400DE0DA2 /* base64.h in Headers */,
 				B7D273311822F5460054849B /* CCBSequence.h in Headers */,
@@ -1611,7 +1563,6 @@
 				B77060691831B0C40043CC67 /* OALAudioTrack.h in Headers */,
 				E076E7691225EC7400DE0DA2 /* TGAlib.h in Headers */,
 				B7C6239B17F10F3600928F91 /* CCTableView.h in Headers */,
-				D216F9211970A123000DEF7C /* CCVector2.h in Headers */,
 				D3AD531718C84F79005B6CF3 /* CCShader.h in Headers */,
 				E076E76D1225EC7400DE0DA2 /* uthash.h in Headers */,
 				E076E76E1225EC7400DE0DA2 /* utlist.h in Headers */,
@@ -1632,8 +1583,6 @@
 				A046E2B714C1E5000005BBF2 /* CCGLView.h in Headers */,
 				B7E7758C184FBA47004221AA /* CCNodeColor.h in Headers */,
 				B77060DB18342E540043CC67 /* CCBReader_Private.h in Headers */,
-				D216F9181970A123000DEF7C /* CCMathTypes.h in Headers */,
-				D216F9231970A123000DEF7C /* CCVector4.h in Headers */,
 				B7C6239D17F10F3600928F91 /* cocos2d-ui.h in Headers */,
 				B77060791831B0C40043CC67 /* ALContext.h in Headers */,
 				B7EE69EA1819EAAC00B983FE /* CCLayout.h in Headers */,
@@ -1654,7 +1603,6 @@
 				926B97E319385F8A00E345FB /* CCAnimationManager_Private.h in Headers */,
 				D3AD531618C84F79005B6CF3 /* CCShader_Private.h in Headers */,
 				B7D2732D1822F5460054849B /* CCBLocalizationManager.h in Headers */,
-				D216F91A1970A123000DEF7C /* CCMatrix3.h in Headers */,
 				A0D7D69115E2D2CC000CA0C4 /* ccTypes.h in Headers */,
 				A0D7D69415E2D2CC000CA0C4 /* CCConfiguration.h in Headers */,
 				A0D7D69615E2D2CC000CA0C4 /* CCDirector.h in Headers */,
@@ -1808,7 +1756,6 @@
 				B770607C1831B0C40043CC67 /* ALDevice.m in Sources */,
 				E076E6FD1225EC7400DE0DA2 /* CCLabelBMFont.m in Sources */,
 				E076E6FF1225EC7400DE0DA2 /* CCLabelTTF.m in Sources */,
-				D216F9201970A123000DEF7C /* CCQuaternion.m in Sources */,
 				B770606A1831B0C40043CC67 /* OALAudioTrack.m in Sources */,
 				E076E7081225EC7400DE0DA2 /* CCMotionStreak.m in Sources */,
 				E076E70A1225EC7400DE0DA2 /* CCNode.m in Sources */,
@@ -1861,7 +1808,6 @@
 				B77060811831B0C40043CC67 /* ALSoundSourcePool.m in Sources */,
 				B7E7762D1857A4C4004221AA /* CCColor.m in Sources */,
 				A0BE62FD140552BD00DAA336 /* CCVertex.m in Sources */,
-				D216F91C1970A123000DEF7C /* CCMatrix4.m in Sources */,
 				A0AAB80C1451BD3600850F2C /* CCParticleBatchNode.m in Sources */,
 				A046E2B314C1E5000005BBF2 /* CCDirectorIOS.m in Sources */,
 				D216F92F1970A35A000DEF7C /* ALWeakElement.m in Sources */,

@@ -48,29 +48,34 @@
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
 static float conditionBlockSize(float blockSize);
 
-@implementation CCEffectPixellate
+@interface CCEffectPixellate ()
 
+@property (nonatomic) float conditionedBlockSize;
+
+@end
+
+
+@implementation CCEffectPixellate
 
 -(id)init
 {
-    CCEffectUniform* uniformUStep = [CCEffectUniform uniform:@"float" name:@"u_uStep" value:[NSNumber numberWithFloat:1.0f]];
-    CCEffectUniform* uniformVStep = [CCEffectUniform uniform:@"float" name:@"u_vStep" value:[NSNumber numberWithFloat:1.0f]];
-    
-    if((self = [super initWithFragmentUniforms:@[uniformUStep, uniformVStep] vertextUniforms:nil varying:nil]))
-    {
-        self.debugName = @"CCEffectPixellate";
-        self.stitchFlags = CCEffectFunctionStitchAfter;
-        return self;
-    }
-    return self;
+    return [self initWithBlockSize:1.0f];
 }
 
 -(id)initWithBlockSize:(float)blockSize
 {
-    if((self = [self init]))
+    CCEffectUniform* uniformUStep = [CCEffectUniform uniform:@"float" name:@"u_uStep" value:[NSNumber numberWithFloat:1.0f]];
+    CCEffectUniform* uniformVStep = [CCEffectUniform uniform:@"float" name:@"u_vStep" value:[NSNumber numberWithFloat:1.0f]];
+    
+    if((self = [super initWithFragmentUniforms:@[uniformUStep, uniformVStep] vertexUniforms:nil varying:nil]))
     {
-        _blockSize = conditionBlockSize(blockSize);
+        _blockSize = blockSize;
+        _conditionedBlockSize = conditionBlockSize(blockSize);
+
+        self.debugName = @"CCEffectPixellate";
+        self.stitchFlags = CCEffectFunctionStitchAfter;
     }
+    
     return self;
 }
 
@@ -81,6 +86,8 @@ static float conditionBlockSize(float blockSize);
 
 -(void)buildFragmentFunctions
 {
+    self.fragmentFunctions = [[NSMutableArray alloc] init];
+
     // Image pixellation shader based on pixellation filter in GPUImage - https://github.com/BradLarson/GPUImage
     NSString* effectBody = CC_GLSL(
                                    vec2 samplePos = cc_FragTexCoord1 - mod(cc_FragTexCoord1, vec2(u_uStep, u_vStep)) + 0.5 * vec2(u_uStep, u_vStep);
@@ -96,20 +103,20 @@ static float conditionBlockSize(float blockSize);
     __weak CCEffectPixellate *weakSelf = self;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
+    pass0.debugLabel = @"CCEffectPixellate pass 0";
     pass0.shader = self.shader;
-    pass0.shaderUniforms = self.shaderUniforms;
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
-        
+
         pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
 
         float aspect = previousPassTexture.contentSize.width / previousPassTexture.contentSize.height;
-        float uStep = self.blockSize / previousPassTexture.contentSize.width;
+        float uStep = weakSelf.conditionedBlockSize / previousPassTexture.contentSize.width;
         float vStep = uStep * aspect;
         
-        pass.shaderUniforms[self.uniformTranslationTable[@"u_uStep"]] = [NSNumber numberWithFloat:uStep];
-        pass.shaderUniforms[self.uniformTranslationTable[@"u_vStep"]] = [NSNumber numberWithFloat:vStep];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_uStep"]] = [NSNumber numberWithFloat:uStep];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_vStep"]] = [NSNumber numberWithFloat:vStep];
     } copy]];
     
     self.renderPasses = @[pass0];
@@ -117,7 +124,8 @@ static float conditionBlockSize(float blockSize);
 
 -(void)setBlockSize:(float)blockSize
 {
-    _blockSize = conditionBlockSize(blockSize);
+    _blockSize = blockSize;
+    _conditionedBlockSize = conditionBlockSize(blockSize);
 }
 
 @end

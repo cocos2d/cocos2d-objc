@@ -54,6 +54,7 @@ const NSString *CCShaderUniformSinTime = @"cc_SinTime";
 const NSString *CCShaderUniformCosTime = @"cc_CosTime";
 const NSString *CCShaderUniformRandom01 = @"cc_Random01";
 const NSString *CCShaderUniformMainTexture = @"cc_MainTexture";
+const NSString *CCShaderUniformNormalMapTexture = @"cc_NormalMapTexture";
 const NSString *CCShaderUniformAlphaTestValue = @"cc_AlphaTestValue";
 
 
@@ -79,6 +80,7 @@ static const GLchar *CCShaderHeader =
 	"uniform highp vec4 cc_CosTime;\n"
 	"uniform highp vec4 cc_Random01;\n\n"
 	"uniform " XSTR(CC_SHADER_COLOR_PRECISION) " sampler2D cc_MainTexture;\n\n"
+	"uniform " XSTR(CC_SHADER_COLOR_PRECISION) " sampler2D cc_NormalMapTexture;\n\n"
 	"varying " XSTR(CC_SHADER_COLOR_PRECISION) " vec4 cc_FragColor;\n"
 	"varying highp vec2 cc_FragTexCoord1;\n"
 	"varying highp vec2 cc_FragTexCoord2;\n\n"
@@ -169,16 +171,6 @@ CompileShader(GLenum type, const char *source)
 @interface CCShaderCache : CCCache @end
 @implementation CCShaderCache
 
-+ (id)sharedInstance
-{
-    static CCShaderCache *sharedInstance = nil;
-    static dispatch_once_t once = 0L;
-    dispatch_once(&once, ^{
-        sharedInstance = [[CCShaderCache alloc] init];
-    });
-    return sharedInstance;
-}
-
 -(id)createSharedDataForKey:(id<NSCopying>)key
 {
 	NSString *shaderName = (NSString *)key;
@@ -212,7 +204,7 @@ CompileShader(GLenum type, const char *source)
 
 +(GLuint)createVAOforCCVertexBuffer:(GLuint)vbo elementBuffer:(GLuint)ebo
 {
-	CCGL_DEBUG_PUSH_GROUP_MARKER("CCShader: Creating vertex buffer");
+	glPushGroupMarkerEXT(0, "CCShader: Creating vertex buffer");
 	
 	GLuint vao = 0;
 	glGenVertexArrays(1, &vao);
@@ -235,7 +227,7 @@ CompileShader(GLenum type, const char *source)
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	
-	CCGL_DEBUG_POP_GROUP_MARKER();
+	glPopGroupMarkerEXT();
 	
 	return vao;
 }
@@ -321,7 +313,7 @@ SetVec4(NSString *name, GLint location)
 			GLKVector4 v; [value getValue:&v];
 			glUniform4f(location, v.x, v.y, v.z, v.w);
 		} else if([value isKindOfClass:[CCColor class]]){
-			GLKVector4 v = [(CCColor *)value GLKVector4];
+			GLKVector4 v = [(CCColor *)value glkVector4];
 			glUniform4f(location, v.x, v.y, v.z, v.w);
 		} else {
 			NSCAssert(NO, @"Shader uniformm 'vec4 %@' value must be passed using [NSValue valueWithGLKVector4:] or a CCColor object.", name);
@@ -409,7 +401,7 @@ SetMat4(NSString *name, GLint location)
 
 -(instancetype)initWithVertexShaderSource:(NSString *)vertexSource fragmentShaderSource:(NSString *)fragmentSource
 {
-	CCGL_DEBUG_PUSH_GROUP_MARKER("CCShader: Init");
+	glPushGroupMarkerEXT(0, "CCShader: Init");
 	
 	GLuint program = glCreateProgram();
 	glBindAttribLocation(program, CCAttributePosition, "cc_Position");
@@ -429,7 +421,7 @@ SetMat4(NSString *name, GLint location)
 	glDeleteShader(vshader);
 	glDeleteShader(fshader);
 	
-	CCGL_DEBUG_POP_GROUP_MARKER();
+	glPopGroupMarkerEXT();
 	
 	return [self initWithProgram:program uniformSetters:[self uniformSettersForProgram:program] ownsProgram:YES];
 }
@@ -451,59 +443,63 @@ SetMat4(NSString *name, GLint location)
 	return [[CCShader allocWithZone:zone] initWithProgram:_program uniformSetters:_uniformSetters ownsProgram:NO];
 }
 
+static CCShaderCache *CC_SHADER_CACHE = nil;
+static CCShader *CC_SHADER_POS_COLOR = nil;
+static CCShader *CC_SHADER_POS_TEX_COLOR = nil;
+static CCShader *CC_SHADER_POS_TEXA8_COLOR = nil;
+static CCShader *CC_SHADER_POS_TEX_COLOR_ALPHA_TEST = nil;
+
++(void)initialize
+{
+	// +initialize may be called due to loading a subclass.
+	if(self != [CCShader class]) return;
+	
+	CC_SHADER_CACHE = [[CCShaderCache alloc] init];
+	
+	// Setup the builtin shaders.
+	CC_SHADER_POS_COLOR = [[self alloc] initWithFragmentShaderSource:@"void main(){gl_FragColor = cc_FragColor;}"];
+	CC_SHADER_POS_COLOR.debugName = @"CCPositionColorShader";
+	
+	CC_SHADER_POS_TEX_COLOR = [[self alloc] initWithFragmentShaderSource:@"void main(){gl_FragColor = cc_FragColor*texture2D(cc_MainTexture, cc_FragTexCoord1);}"];
+	CC_SHADER_POS_TEX_COLOR.debugName = @"CCPositionTextureColorShader";
+	
+	CC_SHADER_POS_TEXA8_COLOR = [[self alloc] initWithFragmentShaderSource:@"void main(){gl_FragColor = cc_FragColor*texture2D(cc_MainTexture, cc_FragTexCoord1).a;}"];
+	CC_SHADER_POS_TEXA8_COLOR.debugName = @"CCPositionTextureA8ColorShader";
+	
+	CC_SHADER_POS_TEX_COLOR_ALPHA_TEST = [[self alloc] initWithFragmentShaderSource:CC_GLSL(
+		uniform float cc_AlphaTestValue;
+		void main(){
+			vec4 tex = texture2D(cc_MainTexture, cc_FragTexCoord1);
+			if(tex.a <= cc_AlphaTestValue) discard;
+			gl_FragColor = cc_FragColor*tex;
+		}
+	)];
+	CC_SHADER_POS_TEX_COLOR_ALPHA_TEST.debugName = @"CCPositionTextureColorAlphaTestShader";
+}
+
 +(instancetype)positionColorShader
 {
-    static CCShader *shader = nil;
-    static dispatch_once_t once = 0L;
-    dispatch_once(&once, ^{
-        shader = [[CCShader alloc] initWithFragmentShaderSource:@"void main(){gl_FragColor = cc_FragColor;}"];
-        shader.debugName = @"CCPositionColorShader";
-    });
-    return shader;
+	return CC_SHADER_POS_COLOR;
 }
 
 +(instancetype)positionTextureColorShader
 {
-    static CCShader *shader = nil;
-    static dispatch_once_t once = 0L;
-    dispatch_once(&once, ^{
-        shader = [[CCShader alloc] initWithFragmentShaderSource:@"void main(){gl_FragColor = cc_FragColor*texture2D(cc_MainTexture, cc_FragTexCoord1);}"];
-        shader.debugName = @"CCPositionTextureColorShader";
-    });
-    return shader;
-}
-
-+(instancetype)positionTextureA8ColorShader
-{
-    static CCShader *shader = nil;
-    static dispatch_once_t once = 0L;
-    dispatch_once(&once, ^{
-        shader = [[CCShader alloc] initWithFragmentShaderSource:@"void main(){gl_FragColor = cc_FragColor*texture2D(cc_MainTexture, cc_FragTexCoord1).a;}"];
-        shader.debugName = @"CCPositionTextureA8ColorShader";
-    });
-    return shader;
+	return CC_SHADER_POS_TEX_COLOR;
 }
 
 +(instancetype)positionTextureColorAlphaTestShader
 {
-    static CCShader *shader = nil;
-    static dispatch_once_t once = 0L;
-    dispatch_once(&once, ^{
-        shader = [[CCShader alloc] initWithFragmentShaderSource:CC_GLSL(
-            uniform float cc_AlphaTestValue;
-            void main(){
-                vec4 tex = texture2D(cc_MainTexture, cc_FragTexCoord1);
-                if(tex.a <= cc_AlphaTestValue) discard;
-                gl_FragColor = cc_FragColor*tex;
-            })];
-        shader.debugName = @"CCPositionTextureColorAlphaTestShader";
-	});
-    return shader;
+	return CC_SHADER_POS_TEX_COLOR_ALPHA_TEST;
+}
+
++(instancetype)positionTextureA8ColorShader
+{
+	return CC_SHADER_POS_TEXA8_COLOR;
 }
 
 +(instancetype)shaderNamed:(NSString *)shaderName
 {
-	return [[CCShaderCache sharedInstance] objectForKey:shaderName];
+	return [CC_SHADER_CACHE objectForKey:shaderName];
 }
 
 @end

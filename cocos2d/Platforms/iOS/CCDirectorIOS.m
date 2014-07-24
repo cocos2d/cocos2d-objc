@@ -124,7 +124,7 @@
 	[CCRenderer bindRenderer:_renderer];
 	[_renderer invalidateState];
 	
-	[_renderer enqueueClear:(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) color:_runningScene.colorRGBA.GLKVector4 depth:1.0f stencil:0 globalSortOrder:NSIntegerMin];
+	[_renderer enqueueClear:(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) color:_runningScene.colorRGBA.glkVector4 depth:1.0f stencil:0 globalSortOrder:NSIntegerMin];
 
 
     
@@ -436,7 +436,7 @@
 	if( _displayStats )
 		gettimeofday( &_lastUpdate, NULL);
 
-#ifdef DEBUG
+#if DEBUG
 	// If we are debugging our code, prevent big delta time
 	if( _dt > 0.2f )
 		_dt = 1/60.0f;

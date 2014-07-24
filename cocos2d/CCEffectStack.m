@@ -46,34 +46,6 @@
     return self;
 }
 
-- (void)addEffect:(CCEffect *)effect
-{
-    NSAssert(!effect.owningStack, @"Adding an effect to this stack that is already contained by another stack. That's not allowed.");
-    effect.owningStack = self;
-
-    [_effects addObject:effect];
-
-    _passesDirty = YES;
-    if (self.owningStack)
-    {
-        [self.owningStack passesDidChange:self];
-    }
-}
-
-- (void)removeEffect:(CCEffect *)effect
-{
-    NSAssert(effect.owningStack == self, @"Trying to remove an effect that is not contained by this stack.");
-    effect.owningStack = nil;
-
-    [_effects removeObject:effect];
-
-    _passesDirty = YES;
-    if (self.owningStack)
-    {
-        [self.owningStack passesDidChange:self];
-    }
-}
-
 - (NSUInteger)effectCount
 {
     return _effects.count;
@@ -87,8 +59,9 @@
 
 #pragma mark - CCEffect overrides
 
-- (BOOL)prepareForRendering
+- (CCEffectPrepareStatus)prepareForRendering
 {
+    CCEffectPrepareStatus result = CCEffectPrepareNothingToDo;
     if (_passesDirty)
     {
         // Start by populating the flattened list with this stack's effects.
@@ -178,8 +151,15 @@
         }
         self.renderPasses = [passes copy];
         _passesDirty = NO;
+        
+        result = CCEffectPrepareSuccess;
     }
-    return YES;
+    return result;
+}
+
+- (BOOL)readyForRendering
+{
+    return !_passesDirty;
 }
 
 #pragma mark - Internal
@@ -236,7 +216,7 @@
         effectIndex++;
     }
     
-    CCEffect* stitchedEffect = [[CCEffect alloc] initWithFragmentFunction:allFragFunctions vertexFunctions:allVertexFunctions fragmentUniforms:allFragUniforms vertextUniforms:allVertexUniforms varying:allVaryings];
+    CCEffect* stitchedEffect = [[CCEffect alloc] initWithFragmentFunction:allFragFunctions vertexFunctions:allVertexFunctions fragmentUniforms:allFragUniforms vertexUniforms:allVertexUniforms varying:allVaryings];
     stitchedEffect.debugName = @"CCEffectStack_Stitched";
     
     // Set the stitch flags of the resulting effect based on the flags of the first
@@ -245,10 +225,11 @@
     // set in the last effect then set it in the resulting effect.
     CCEffect *firstEffect = [effects firstObject];
     CCEffect *lastEffect = [effects lastObject];
-    stitchedEffect.stitchFlags = (firstEffect.stitchFlags & CCEffectFunctionStitchBefore) | (firstEffect.stitchFlags & CCEffectFunctionStitchAfter);
+    stitchedEffect.stitchFlags = (firstEffect.stitchFlags & CCEffectFunctionStitchBefore) | (lastEffect.stitchFlags & CCEffectFunctionStitchAfter);
     
     // Copy the shader for this new pass from the stitched effect.
     CCEffectRenderPass *newPass = [[CCEffectRenderPass alloc] init];
+    newPass.debugLabel = @"CCEffectStack_Stitched pass 0";
     newPass.shader = stitchedEffect.shader;
     newPass.shaderUniforms = [[NSMutableDictionary alloc] init];
     
@@ -346,10 +327,7 @@
     // change notification up the tree (if we're not at the
     // top).
     _passesDirty = YES;
-    if (self.owningStack)
-    {
-        [self.owningStack passesDidChange:self];
-    }
+    [self.owningStack passesDidChange:self];
 }
 
 

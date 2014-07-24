@@ -15,7 +15,7 @@
 -(id)initWithColor:(CCColor*)color
 {
 
-    CCEffectUniform* uniform = [CCEffectUniform uniform:@"vec4" name:@"u_effectColor" value:[NSValue valueWithGLKVector4:color.GLKVector4]];
+    CCEffectUniform* uniform = [CCEffectUniform uniform:@"vec4" name:@"u_effectColor" value:[NSValue valueWithGLKVector4:color.glkVector4]];
     
     if(self = [super initWithUniforms:[NSArray arrayWithObjects:uniform, nil] vertextUniforms:nil varying:nil])
     {

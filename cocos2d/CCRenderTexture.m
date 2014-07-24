@@ -43,23 +43,39 @@
 #endif
 
 
-@interface CCRenderTextureSprite : CCSprite @end
+@interface CCRenderTextureSprite : CCSprite
+
+@property (nonatomic, weak) CCRenderTexture *renderTexture;
+
+- (CGAffineTransform)nodeToWorldTransform;
+
+@end
+
 @implementation CCRenderTextureSprite
 
 -(CCRenderState *)renderState
 {
 	if(_renderState == nil){
-		if(_shaderUniforms.count > 1){
-			_renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms];
-		} else {
-			// Creating a regular, cached render state here would be mildly bad.
-			// The state would prevent the render texture from being released until the cache is flushed.
-			NSDictionary *uniforms = @{CCShaderUniformMainTexture:(_texture ?: [CCTexture none])};
-			_renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:uniforms];
-		}
+		// Allowing the uniforms to be copied speeds up the rendering by making the render state immutable.
+		// Copy the uniforms if custom uniforms are not being used.
+		BOOL copyUniforms = self.hasDefaultShaderUniforms;
+		
+		// Create an uncached renderstate so the texture can be released before the renderstate cache is flushed.
+		_renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:self.shaderUniforms copyUniforms:copyUniforms];
 	}
 	
 	return _renderState;
+}
+
+- (CGAffineTransform)nodeToWorldTransform
+{
+	CGAffineTransform t = [self nodeToParentTransform];
+    
+	for (CCNode *p = _renderTexture; p != nil; p = p.parent)
+    {
+		t = CGAffineTransformConcat(t, [p nodeToParentTransform]);
+    }
+	return t;
 }
 
 @end
@@ -72,6 +88,7 @@
 @property (nonatomic, readonly) GLuint stencilRenderBuffer;
 
 @end
+
 
 @implementation CCRenderTextureFBO
 
@@ -87,6 +104,7 @@
 }
 
 @end
+
 
 @implementation CCRenderTexture
 
@@ -136,13 +154,12 @@
 		// Flip the projection matrix on the y-axis since Cocos2D uses upside down textures.
 		_projection = GLKMatrix4MakeOrtho(0.0f, width, 0.0f, height, -1024.0f, 1024.0f);
 		
-		_sprite = [CCRenderTextureSprite spriteWithTexture:[CCTexture none]];
+        CCRenderTextureSprite *rtSprite = [CCRenderTextureSprite spriteWithTexture:[CCTexture none]];
+        rtSprite.renderTexture = self;
+        _sprite = rtSprite;
 
 		// Diabled by default.
 		_autoDraw = NO;
-		
-		// add sprite for backward compatibility
-		[self addChild:_sprite];
 	}
 	return self;
 }
@@ -177,6 +194,7 @@
 	void *data = calloc(powW*powH, 4);
 
 	CCTexture *texture = [[CCTexture alloc] initWithData:data pixelFormat:_pixelFormat pixelsWide:powW pixelsHigh:powH contentSizeInPixels:CGSizeMake(pixelW, pixelH) contentScale:_contentScale];
+
     self.texture = texture;
     
 	free(data);
@@ -240,7 +258,7 @@
 		//create and attach depth buffer
 		glGenRenderbuffers(1, &depthRenderBuffer);
 		glBindRenderbuffer(GL_RENDERBUFFER, depthRenderBuffer);
-		glRenderbufferStorage(GL_RENDERBUFFER, _depthStencilFormat, (GLsizei)powW, (GLsizei)powH);
+		glRenderbufferStorage(GL_RENDERBUFFER, _depthStencilFormat, (GLsizei)pixelW, (GLsizei)pixelH);
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthRenderBuffer);
 
 		// if depth format is the one with stencil part, bind same render buffer as stencil attachment
@@ -434,13 +452,11 @@
 	if(!_visible) return;
 	
 	if(_autoDraw){
-        
-        if(_contentSizeChanged)
-        {
-            [self destroy];
-            _contentSizeChanged = NO;
-        }
-        
+		if(_contentSizeChanged){
+			[self destroy];
+			_contentSizeChanged = NO;
+		}
+		
 		[self begin];
 		NSAssert(_renderer == renderer, @"CCRenderTexture error!");
 		
@@ -450,16 +466,27 @@
 		[self sortAllChildren];
 		
 		for(CCNode *child in _children){
-			if( child != _sprite) [child visit:renderer parentTransform:&_projection];
+			[child visit:renderer parentTransform:&_projection];
 		}
 		
 		[self end];
+		
+		GLKMatrix4 transform = [self transform:parentTransform];
+		[self draw:renderer transform:&transform];
+	} else {
+		// Render normally, v3.0 and earlier skipped this.
+		[super visit:renderer parentTransform:parentTransform];
 	}
 	
-	GLKMatrix4 transform = [self transform:parentTransform];
-	[_sprite visit:renderer parentTransform:&transform];
-	
 	_orderOfArrival = 0;
+}
+
+-(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
+{
+	NSAssert(_sprite.zOrder == 0, @"Changing the sprite's zOrder is not supported.");
+	
+	// Force the sprite to render itself.
+	[_sprite visit:renderer parentTransform:transform];
 }
 
 #pragma mark RenderTexture - Save Image
@@ -637,7 +664,7 @@
 
 - (void) setClearColor:(CCColor *)clearColor
 {
-    _clearColor = clearColor.GLKVector4;
+    _clearColor = clearColor.glkVector4;
 }
 
 #pragma RenderTexture - Override
@@ -647,7 +674,7 @@
     // TODO: Fix CCRenderTexture so that it correctly handles this
 	// NSAssert(NO, @"You cannot change the content size of an already created CCRenderTexture. Recreate it");
     [super setContentSize:size];
-    _projection = GLKMatrix4MakeOrtho(0.0f, size.width, 0.0f, size.height, -1024.0f, 1024.0f);
+	_projection = GLKMatrix4MakeOrtho(0.0f, size.width, 0.0f, size.height, -1024.0f, 1024.0f);
     _contentSizeChanged = YES;
 }
 

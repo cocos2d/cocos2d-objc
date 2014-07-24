@@ -58,10 +58,8 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
  */
 @interface CCRenderTexture : CCNode
 
-/** The CCSprite being used.
- The sprite, by default, will use the following blending function: GL_ONE, GL_ONE_MINUS_SRC_ALPHA.
- The blending function can be changed in runtime by calling:
-	- [[renderTexture sprite] setBlendFunc:(ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
+/** The CCSprite that is used for rendering.
+	A subtle change introduced in v3.1.1 is that this sprite is rendered explicitly and is not a child of the render texture.
 */
 @property (nonatomic,readwrite, strong) CCSprite* sprite;
 

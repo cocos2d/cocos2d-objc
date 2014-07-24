@@ -50,29 +50,13 @@
 {
     NSAssert(!_glResourcesAllocated, @"");
     
-    CCGL_DEBUG_PUSH_GROUP_MARKER("CCEffectRenderTarget: allocateRenderTarget");
-    
-	// Textures may need to be a power of two
-	NSUInteger powW;
-	NSUInteger powH;
-    
-	if( [[CCConfiguration sharedConfiguration] supportsNPOT] )
-    {
-		powW = size.width;
-		powH = size.height;
-	}
-    else
-    {
-		powW = CCNextPOT(size.width);
-		powH = CCNextPOT(size.height);
-	}
+    glPushGroupMarkerEXT(0, "CCEffectRenderTarget: allocateRenderTarget");
     
     static const CCTexturePixelFormat kRenderTargetDefaultPixelFormat = CCTexturePixelFormat_RGBA8888;
-    static const float kRenderTargetDefaultContentScale = 1.0f;
     
     // Create a new texture object for use as the color attachment of the new
     // FBO.
-	_texture = [[CCTexture alloc] initWithData:nil pixelFormat:kRenderTargetDefaultPixelFormat pixelsWide:powW pixelsHigh:powH contentSizeInPixels:size contentScale:kRenderTargetDefaultContentScale];
+	_texture = [[CCTexture alloc] initWithData:nil pixelFormat:kRenderTargetDefaultPixelFormat pixelsWide:size.width pixelsHigh:size.height contentSizeInPixels:size contentScale:[CCDirector sharedDirector].contentScaleFactor];
 	[_texture setAliasTexParameters];
 	
     // Save the old FBO binding so it can be restored after we create the new
@@ -94,7 +78,7 @@
 	glBindFramebuffer(GL_FRAMEBUFFER, oldFBO);
 	
 	CC_CHECK_GL_ERROR_DEBUG();
-	CCGL_DEBUG_POP_GROUP_MARKER();
+	glPopGroupMarkerEXT();
     
     _glResourcesAllocated = YES;
     return YES;
@@ -146,9 +130,9 @@
     [self destroyAllRenderTargets];
 }
 
--(void)drawSprite:(CCSprite *)sprite withEffect:(CCEffect *)effect renderer:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
+-(void)drawSprite:(CCSprite *)sprite withEffect:(CCEffect *)effect uniforms:(NSMutableDictionary *)uniforms renderer:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
-    [effect prepareForRendering];
+    NSAssert(effect.readyForRendering, @"Effect not ready for rendering. Call prepareForRendering first.");
     [self freeAllRenderTargets];
     
     CCEffectRenderTarget *previousPassRT = nil;
@@ -160,11 +144,12 @@
         CCTexture *previousPassTexture = nil;
         if (previousPassRT)
         {
+            NSAssert(previousPassRT.texture, @"Texture for render target unexpectedly nil.");
             previousPassTexture = previousPassRT.texture;
         }
         else
         {
-            previousPassTexture = sprite.texture;
+            previousPassTexture = sprite.texture ?: [CCTexture none];
         }
         
         CCEffectRenderPass* renderPass = [effect renderPassAtIndex:i];
@@ -173,6 +158,7 @@
         renderPass.verts = *(sprite.vertexes);
         renderPass.blendMode = [CCBlendMode premultipliedAlphaMode];
         renderPass.needsClear = !directRendering;
+        renderPass.shaderUniforms = uniforms;
         
         CCEffectRenderTarget *rt = nil;
         
@@ -198,7 +184,7 @@
             [self restoreRenderTargetWithRenderer:renderer];
             [renderPass end];
         }
-        [renderer popGroupWithDebugLabel:[NSString stringWithFormat:@"CCEffectRenderer: %@: Pass %d", effect.debugName, i] globalSortOrder:0];
+        [renderer popGroupWithDebugLabel:renderPass.debugLabel globalSortOrder:0];
         
         previousPassRT = rt;
     }

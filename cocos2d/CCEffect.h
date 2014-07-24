@@ -13,7 +13,21 @@
 #import "ccTypes.h"
 
 #if CC_ENABLE_EXPERIMENTAL_EFFECTS
-extern const NSString *CCShaderUniformPreviousPassTexture;
+extern NSString * const CCShaderUniformPreviousPassTexture;
+
+typedef NS_ENUM(NSUInteger, CCEffectFunctionStitchFlags)
+{
+    CCEffectFunctionStitchBefore     = 1 << 0,
+    CCEffectFunctionStitchAfter      = 1 << 1,
+    CCEffectFunctionStitchBoth       = (CCEffectFunctionStitchBefore | CCEffectFunctionStitchAfter),
+};
+
+typedef NS_ENUM(NSUInteger, CCEffectPrepareStatus)
+{
+    CCEffectPrepareNothingToDo   = 0,
+    CCEffectPrepareFailure       = 1,
+    CCEffectPrepareSuccess       = 2,
+};
 
 typedef NS_ENUM(NSUInteger, CCEffectFunctionStitchFlags)
 {
@@ -67,9 +81,12 @@ typedef NS_ENUM(NSUInteger, CCEffectFunctionStitchFlags)
 @property (nonatomic, readonly) NSString* name;
 @property (nonatomic, readonly) NSString* type;
 @property (nonatomic, readonly) NSString* declaration;
+@property (nonatomic, readonly) NSInteger count;
 
 -(id)initWithType:(NSString*)type name:(NSString*)name;
+-(id)initWithType:(NSString*)type name:(NSString*)name count:(NSInteger)count;
 +(id)varying:(NSString*)type name:(NSString*)name;
++(id)varying:(NSString*)type name:(NSString*)name count:(NSInteger)count;
 
 @end
 
@@ -93,6 +110,7 @@ typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass);
 @property (nonatomic,copy) NSArray* beginBlocks;
 @property (nonatomic,copy) NSArray* updateBlocks;
 @property (nonatomic,copy) NSArray* endBlocks;
+@property (nonatomic,copy) NSString *debugLabel;
 
 -(void)begin:(CCTexture *)previousPassTexture;
 -(void)update;
@@ -107,17 +125,20 @@ typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass);
 @property (nonatomic, readonly) NSMutableDictionary* shaderUniforms;
 @property (nonatomic, readonly) NSInteger renderPassesRequired;
 @property (nonatomic, readonly) BOOL supportsDirectRendering;
+@property (nonatomic, readonly) BOOL readyForRendering;
 @property (nonatomic, copy) NSString *debugName;
 
 
--(id)initWithFragmentUniforms:(NSArray*)fragmentUniforms vertextUniforms:(NSArray*)vertexUniforms varying:(NSArray*)varying;
--(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertextUniforms:(NSArray*)vertexUniforms varying:(NSArray*)varying;
--(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions vertexFunctions:(NSMutableArray*)vertextFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertextUniforms:(NSArray*)vertexUniforms varying:(NSArray*)varying;
+-(id)initWithFragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varying:(NSArray*)varying;
+-(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varying:(NSArray*)varying;
+-(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions vertexFunctions:(NSMutableArray*)vertexFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varying:(NSArray*)varying;
 
--(BOOL)prepareForRendering;
+-(CCEffectPrepareStatus)prepareForRendering;
 -(CCEffectRenderPass *)renderPassAtIndex:(NSInteger)passIndex;
 
 -(BOOL)stitchSupported:(CCEffectFunctionStitchFlags)stitch;
+
+-(void)setVarying:(NSArray*)varying;
 
 @end
 #endif

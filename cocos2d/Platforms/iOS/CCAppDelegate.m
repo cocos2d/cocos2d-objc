@@ -191,10 +191,8 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	
 	director.wantsFullScreenLayout = YES;
 	
-//#if DEBUG
 	// Display FSP and SPF
 	[director setDisplayStats:[config[CCSetupShowDebugStats] boolValue]];
-//#endif
 	
 	// set FPS at 60
 	NSTimeInterval animationInterval = [(config[CCSetupAnimationInterval] ?: @(1.0/60.0)) doubleValue];
