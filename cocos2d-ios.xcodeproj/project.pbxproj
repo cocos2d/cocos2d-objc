@@ -303,8 +303,6 @@
 		D268FE1E1980791400ECBCD0 /* CCEffectUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = D268FE171980791300ECBCD0 /* CCEffectUtils.h */; };
 		D268FE1F1980791400ECBCD0 /* CCEffectUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = D268FE181980791300ECBCD0 /* CCEffectUtils.m */; };
 		D268FE201980791400ECBCD0 /* CCEffectUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = D268FE181980791300ECBCD0 /* CCEffectUtils.m */; };
-		D268FE211980791C00ECBCD0 /* CCEffectColor.m in Sources */ = {isa = PBXBuildFile; fileRef = D272031B18FC89A000B100FF /* CCEffectColor.m */; };
-		D268FE221980791C00ECBCD0 /* CCEffectColorPulse.m in Sources */ = {isa = PBXBuildFile; fileRef = D272031D18FC89A000B100FF /* CCEffectColorPulse.m */; };
 		D268FE231980791C00ECBCD0 /* CCEffectStack_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D85671A191AE2CC00573093 /* CCEffectStack_Private.h */; };
 		D268FE241980791D00ECBCD0 /* CCEffectBloom.h in Headers */ = {isa = PBXBuildFile; fileRef = D268FE05198078FF00ECBCD0 /* CCEffectBloom.h */; };
 		D268FE251980791D00ECBCD0 /* CCEffectBloom.m in Sources */ = {isa = PBXBuildFile; fileRef = D268FE06198078FF00ECBCD0 /* CCEffectBloom.m */; };
@@ -314,8 +312,6 @@
 		D268FE291980791D00ECBCD0 /* CCEffectHue.m in Sources */ = {isa = PBXBuildFile; fileRef = D268FE0A198078FF00ECBCD0 /* CCEffectHue.m */; };
 		D268FE2A1980791D00ECBCD0 /* CCEffectReflection.h in Headers */ = {isa = PBXBuildFile; fileRef = D268FE0B198078FF00ECBCD0 /* CCEffectReflection.h */; };
 		D268FE2B1980791D00ECBCD0 /* CCEffectReflection.m in Sources */ = {isa = PBXBuildFile; fileRef = D268FE0C198078FF00ECBCD0 /* CCEffectReflection.m */; };
-		D268FE2C1980791D00ECBCD0 /* CCEffectColor.m in Sources */ = {isa = PBXBuildFile; fileRef = D272031B18FC89A000B100FF /* CCEffectColor.m */; };
-		D268FE2D1980791D00ECBCD0 /* CCEffectColorPulse.m in Sources */ = {isa = PBXBuildFile; fileRef = D272031D18FC89A000B100FF /* CCEffectColorPulse.m */; };
 		D268FE2E1980791D00ECBCD0 /* CCEffectStack_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D85671A191AE2CC00573093 /* CCEffectStack_Private.h */; };
 		D26A042A194B815500503BEC /* CCTouchEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = D26A0428194B815500503BEC /* CCTouchEvent.h */; };
 		D26A042B194B815500503BEC /* CCTouchEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = D26A0429194B815500503BEC /* CCTouchEvent.m */; };
@@ -1016,8 +1012,6 @@
 		D272031718FC89A000B100FF /* CCEffect_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffect_Private.h; sourceTree = "<group>"; };
 		D272031818FC89A000B100FF /* CCEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffect.h; sourceTree = "<group>"; };
 		D272031918FC89A000B100FF /* CCEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffect.m; sourceTree = "<group>"; };
-		D272031B18FC89A000B100FF /* CCEffectColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectColor.m; sourceTree = "<group>"; };
-		D272031D18FC89A000B100FF /* CCEffectColorPulse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectColorPulse.m; sourceTree = "<group>"; };
 		D272031E18FC89A000B100FF /* CCEffectNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectNode.h; sourceTree = "<group>"; };
 		D272031F18FC89A000B100FF /* CCEffectNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectNode.m; sourceTree = "<group>"; };
 		D272032018FC89A000B100FF /* CCEffectStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectStack.h; sourceTree = "<group>"; };
@@ -1760,8 +1754,6 @@
 				D272031718FC89A000B100FF /* CCEffect_Private.h */,
 				D272031818FC89A000B100FF /* CCEffect.h */,
 				D272031918FC89A000B100FF /* CCEffect.m */,
-				D272031B18FC89A000B100FF /* CCEffectColor.m */,
-				D272031D18FC89A000B100FF /* CCEffectColorPulse.m */,
 				D272032018FC89A000B100FF /* CCEffectStack.h */,
 				9D85671A191AE2CC00573093 /* CCEffectStack_Private.h */,
 				D272032118FC89A000B100FF /* CCEffectStack.m */,
@@ -2406,7 +2398,6 @@
 				D2DDB0A719805E8400233D80 /* CCMatrix3.m in Sources */,
 				D24161031958F6EE003673BD /* CCBAnimationManager.m in Sources */,
 				50A07B7B0E4CBCD300AAF0BB /* cocos2d.m in Sources */,
-				D268FE211980791C00ECBCD0 /* CCEffectColor.m in Sources */,
 				D2B49105192146FB00C3443A /* CCEffectGaussianBlur.m in Sources */,
 				B7D273181822F4AA0054849B /* CCBSequenceProperty.m in Sources */,
 				501CCFB40E99657C00B86F68 /* TGAlib.m in Sources */,
@@ -2454,7 +2445,6 @@
 				B7705FF51831A07B0043CC67 /* OpenALManager.m in Sources */,
 				50FBB2DB117613F500150761 /* CCActionTween.m in Sources */,
 				B7705FD71831A07B0043CC67 /* OALAudioTrack.m in Sources */,
-				D268FE221980791C00ECBCD0 /* CCEffectColorPulse.m in Sources */,
 				D37D197B18B6666E00B23FDE /* CCSpriteBatchNode.m in Sources */,
 				E0C54DCA11F9CF2700B9E4CB /* ccUtils.c in Sources */,
 				D268FE1F1980791400ECBCD0 /* CCEffectUtils.m in Sources */,
@@ -2601,7 +2591,6 @@
 				D2FEB6EF194F6C9E00FC0574 /* CCSpriteFrameCache.m in Sources */,
 				D2FEB6F0194F6C9E00FC0574 /* CCTexture.m in Sources */,
 				D2FEB6F1194F6C9E00FC0574 /* CCConfiguration.m in Sources */,
-				D268FE2C1980791D00ECBCD0 /* CCEffectColor.m in Sources */,
 				D2FEB6F2194F6C9E00FC0574 /* CCProfiling.m in Sources */,
 				D2FEB6F3194F6C9E00FC0574 /* CCActionProgressTimer.m in Sources */,
 				D24161151958F738003673BD /* CCAnimationManager.m in Sources */,
@@ -2630,7 +2619,6 @@
 				D2FEB709194F6C9E00FC0574 /* CCAnimation.m in Sources */,
 				D2FEB70A194F6C9E00FC0574 /* CCShader.m in Sources */,
 				D2FEB70B194F6C9E00FC0574 /* ALCaptureDevice.m in Sources */,
-				D268FE2D1980791D00ECBCD0 /* CCEffectColorPulse.m in Sources */,
 				D2FEB70E194F6C9E00FC0574 /* CCES2Renderer.m in Sources */,
 				D2FEB70F194F6C9E00FC0574 /* CCParticleBatchNode.m in Sources */,
 				D2FEB710194F6C9E00FC0574 /* CCDirectorMac.m in Sources */,

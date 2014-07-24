@@ -29,14 +29,6 @@ typedef NS_ENUM(NSUInteger, CCEffectPrepareStatus)
     CCEffectPrepareSuccess       = 2,
 };
 
-typedef NS_ENUM(NSUInteger, CCEffectFunctionStitchFlags)
-{
-    CCEffectFunctionStitchBefore     = 1 << 0,
-    CCEffectFunctionStitchAfter      = 1 << 1,
-    CCEffectFunctionStitchBoth       = (CCEffectFunctionStitchBefore | CCEffectFunctionStitchAfter),
-};
-
-
 @interface CCEffectFunction : NSObject
 
 @property (nonatomic, readonly) NSString* body;
