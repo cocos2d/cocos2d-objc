@@ -58,13 +58,7 @@
 @implementation CCSprite {
 	// Offset Position, used by sprite sheet editors.
 	CGPoint _unflippedOffsetPositionFromCenter;
-	
-	// Center of extents (half width/height) of the sprite for culling purposes.
-	GLKVector2 _vertexCenter, _vertexExtents;
 
-	// Vertex coords, texture coords and color info.
-	CCSpriteVertexes _verts;
-	
 	BOOL _flipX, _flipY;
     
     CCEffect *_effect;
@@ -353,63 +347,11 @@
 
 #pragma mark CCSprite - draw
 
-static inline void
-EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transform)
-{
-	CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:self.renderState globalSortOrder:0];
-	CCRenderBufferSetVertex(buffer, 0, CCVertexApplyTransform(self->_verts.bl, transform));
-	CCRenderBufferSetVertex(buffer, 1, CCVertexApplyTransform(self->_verts.br, transform));
-	CCRenderBufferSetVertex(buffer, 2, CCVertexApplyTransform(self->_verts.tr, transform));
-	CCRenderBufferSetVertex(buffer, 3, CCVertexApplyTransform(self->_verts.tl, transform));
+//Implemented in CCNoARC.m
+//-(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
 
-	CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
-	CCRenderBufferSetTriangle(buffer, 1, 0, 2, 3);
-}
-
--(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
-{
-	if(!CCRenderCheckVisbility(transform, _vertexCenter, _vertexExtents)) return;
-	
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
-	if (_effect)
-	{
-		_effectRenderer.contentSize = self.texture.contentSize;
-		if ([self.effect prepareForRendering] == CCEffectPrepareSuccess)
-		{
-			// Preparing an effect for rendering can modify its uniforms
-			// dictionary which means we need to reinitialize our copy of the
-			// uniforms.
-			[self updateShaderUniformsFromEffect];
-		}
-		[_effectRenderer drawSprite:self withEffect:self.effect uniforms:_shaderUniforms renderer:renderer transform:transform];
-	}
-	else
-#endif
-	{
-		EnqueueTriangles(self, renderer, transform);
-	}
-    
-#if CC_SPRITE_DEBUG_DRAW
-	const GLKVector2 zero = {{0, 0}};
-	const GLKVector4 white = {{1, 1, 1, 1}};
-	
-	CCRenderBuffer debug = [renderer enqueueLines:4 andVertexes:4 withState:[CCRenderState debugColor] globalSortOrder:0];
-	CCRenderBufferSetVertex(debug, 0, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts.bl.position), zero, zero, white});
-	CCRenderBufferSetVertex(debug, 1, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts.br.position), zero, zero, white});
-	CCRenderBufferSetVertex(debug, 2, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts.tr.position), zero, zero, white});
-	CCRenderBufferSetVertex(debug, 3, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts.tl.position), zero, zero, white});
-	
-	CCRenderBufferSetLine(debug, 0, 0, 1);
-	CCRenderBufferSetLine(debug, 1, 1, 2);
-	CCRenderBufferSetLine(debug, 2, 2, 3);
-	CCRenderBufferSetLine(debug, 3, 3, 0);
-#endif
-}
-
--(void)enqueueTriangles:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
-{
-	EnqueueTriangles(self, renderer, transform);
-}
+//Implemented in CCNoARC.m
+//-(void)enqueueTriangles:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 
 #pragma mark CCSprite - CCNode overrides
 

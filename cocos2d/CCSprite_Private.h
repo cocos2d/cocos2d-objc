@@ -25,9 +25,23 @@
 
 #import "CCSprite.h"
 
-@interface CCSprite ()
+@interface CCSprite () {
+	@private
+	
+	// Vertex coords, texture coords and color info.
+	CCSpriteVertexes _verts;
+	
+	// Center of extents (half width/height) of the sprite for culling purposes.
+	GLKVector2 _vertexCenter, _vertexExtents;
+}
 
 + (CCSpriteTexCoordSet)textureCoordsForTexture:(CCTexture *)texture withRect:(CGRect)rect rotated:(BOOL)rotated xFlipped:(BOOL)flipX yFlipped:(BOOL)flipY;
+
+@end
+
+
+@interface CCSprite(NoARC)
+
 -(void)enqueueTriangles:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
 
 @end
