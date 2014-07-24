@@ -115,6 +115,11 @@
 		[_cacheList setObject:entry forKey:alias];
 }
 
+- (BOOL)keyExists:(id<NSCopying>)key
+{
+    return([_cacheList objectForKey:key] != nil);
+}
+
 //------------------------------------------------------------------------------
 
 - (void)flush
