@@ -95,7 +95,7 @@ __attribute__((deprecated)) static const GLenum CC_BLEND_DST = GL_ONE_MINUS_SRC_
 
 
 // iOS
-#if __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
 #define	glClearDepth				glClearDepthf
 #define glDeleteVertexArrays		glDeleteVertexArraysOES
 #define glGenVertexArrays			glGenVertexArraysOES
@@ -104,18 +104,6 @@ __attribute__((deprecated)) static const GLenum CC_BLEND_DST = GL_ONE_MINUS_SRC_
 #define glUnmapBuffer				glUnmapBufferOES
 
 #define GL_DEPTH24_STENCIL8			GL_DEPTH24_STENCIL8_OES
-#define GL_WRITE_ONLY				GL_WRITE_ONLY_OES
-
-// Android
-#elif __CC_PLATFORM_ANDROID
-#define	glClearDepth				glClearDepthf
-#define glDeleteVertexArrays		glDeleteVertexArraysOES
-#define glGenVertexArrays			glGenVertexArraysOES
-#define glBindVertexArray			glBindVertexArrayOES
-#define glMapBuffer					glMapBufferOES
-#define glUnmapBuffer				glUnmapBufferOES
-
-#define GL_DEPTH24_STENCIL8			GL_DEPTH24_STENCIL8_OES //0x88F0
 #define GL_WRITE_ONLY				GL_WRITE_ONLY_OES
 
 // Mac
