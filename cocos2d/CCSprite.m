@@ -44,6 +44,7 @@
 #import "CCEffect.h"
 #import "CCEffectRenderer.h"
 #import "CCEffectStack.h"
+#import "CCEffect_Private.h"
 
 #pragma mark -
 #pragma mark CCSprite
