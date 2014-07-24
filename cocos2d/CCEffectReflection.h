@@ -18,7 +18,10 @@
 
 -(id)init;
 -(id)initWithEnvironment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap;
+-(id)initWithFresnelBias:(float)bias fresnelPower:(float)power environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap;
+
 +(id)effectWithEnvironment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap;
++(id)effectWithFresnelBias:(float)bias fresnelPower:(float)power environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap;
 
 @end
 #endif

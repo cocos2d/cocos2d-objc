@@ -518,7 +518,7 @@
                          [CCEffectHue effectWithHue:90.0f],
                          [CCEffectGlass effectWithRefraction:0.5f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment normalMap:nil],
                          [CCEffectRefraction effectWithRefraction:0.5f environment:refractEnvironment normalMap:nil],
-                         [CCEffectReflection effectWithEnvironment:reflectEnvironment normalMap:nil],
+                         [CCEffectReflection effectWithFresnelBias:0.2f fresnelPower:2.0f environment:reflectEnvironment normalMap:nil],
                          ];
     
     
@@ -566,7 +566,7 @@
                             [CCEffectHue effectWithHue:90.0f],
                             [CCEffectGlass effectWithRefraction:0.5f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment normalMap:nil],
                             [CCEffectRefraction effectWithRefraction:0.5f environment:refractEnvironment normalMap:nil],
-                            [CCEffectReflection effectWithEnvironment:reflectEnvironment normalMap:nil],
+                            [CCEffectReflection effectWithFresnelBias:0.1f fresnelPower:4.0f environment:reflectEnvironment normalMap:nil],
                             ];
     CCEffect *selectedEffect = allEffects[8];
 

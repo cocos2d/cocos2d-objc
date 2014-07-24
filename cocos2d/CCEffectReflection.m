@@ -36,8 +36,13 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
 
 -(id)initWithEnvironment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap
 {
+    return [self initWithFresnelBias:1.0f fresnelPower:0.0f environment:environment normalMap:normalMap];
+}
+
+-(id)initWithFresnelBias:(float)bias fresnelPower:(float)power environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap
+{
     NSArray *uniforms = @[
-                          [CCEffectUniform uniform:@"float" name:@"u_fresnelBias" value:[NSNumber numberWithFloat:0.0f]],
+                          [CCEffectUniform uniform:@"float" name:@"u_fresnelBias" value:[NSNumber numberWithFloat:1.0f]],
                           [CCEffectUniform uniform:@"float" name:@"u_fresnelPower" value:[NSNumber numberWithFloat:0.0f]],
                           [CCEffectUniform uniform:@"sampler2D" name:@"u_envMap" value:(NSValue*)[CCTexture none]],
                           [CCEffectUniform uniform:@"vec2" name:@"u_tangent" value:[NSValue valueWithGLKVector2:GLKVector2Make(1.0f, 0.0f)]],
@@ -49,6 +54,8 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
     {
         _environment = environment;
         _normalMap = normalMap;
+        _fresnelBias = bias;
+        _fresnelPower = power;
         
         self.debugName = @"CCEffectReflection";
     }
@@ -58,6 +65,11 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
 +(id)effectWithEnvironment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap
 {
     return [[self alloc] initWithEnvironment:environment normalMap:normalMap];
+}
+
++(id)effectWithFresnelBias:(float)bias fresnelPower:(float)power environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap
+{
+    return [[self alloc] initWithFresnelBias:bias fresnelPower:power environment:environment normalMap:normalMap];
 }
 
 -(void)buildFragmentFunctions
