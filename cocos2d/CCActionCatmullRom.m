@@ -77,7 +77,7 @@
 #if __CC_PLATFORM_MAC
 	NSValue *value = [NSValue valueWithPoint:NSPointFromCGPoint(controlPoint)];
 #elif __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
-	NSValue *value = [CCValue valueWithCGPoint:controlPoint];
+	NSValue *value = [NSValue valueWithCGPoint:controlPoint];
 #endif
 	
 	[_controlPoints addObject:value];
@@ -88,7 +88,7 @@
 #if __CC_PLATFORM_MAC
 	NSValue *value = [NSValue valueWithPoint:NSPointFromCGPoint(controlPoint)];
 #elif __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
-	NSValue *value = [CCValue valueWithCGPoint:controlPoint];
+	NSValue *value = [NSValue valueWithCGPoint:controlPoint];
 #endif
 	
 	[_controlPoints insertObject:value atIndex:index];
@@ -103,7 +103,7 @@
     NSValue *value = [_controlPoints objectAtIndex:index];
 	CGPoint point = NSPointToCGPoint([value pointValue]);
 #elif __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
-    CCValue *value = [_controlPoints objectAtIndex:index];
+    NSValue *value = [_controlPoints objectAtIndex:index];
 	CGPoint point = [value CGPointValue];
 #endif
 
@@ -115,7 +115,7 @@
 #if __CC_PLATFORM_MAC
 	NSValue *value = [NSValue valueWithPoint:NSPointFromCGPoint(controlPoint)];
 #elif __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
-	NSValue *value = [CCValue valueWithCGPoint:controlPoint];
+	NSValue *value = [NSValue valueWithCGPoint:controlPoint];
 #endif
 
 	[_controlPoints replaceObjectAtIndex:index withObject:value];

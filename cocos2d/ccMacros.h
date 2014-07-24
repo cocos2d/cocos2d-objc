@@ -78,7 +78,6 @@ NSLog(@"%s : %@",__FUNCTION__,[NSString stringWithFormat:(s), ##__VA_ARGS__])
 NSLog(@"%@",[NSString stringWithFormat:(s), ##__VA_ARGS__])
 
 
-#define COCOS2D_DEBUG 1
 #if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0
 #define CCLOG(...) do {} while (0)
 #define CCLOGWARN(...) do {} while (0)

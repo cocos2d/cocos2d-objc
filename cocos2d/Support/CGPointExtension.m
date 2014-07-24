@@ -195,7 +195,7 @@ float ccpAngle(CGPoint a, CGPoint b)
 	return angle;
 }
 
-@implementation CCValue
+@implementation NSValue (CCValue)
 
 + (NSValue *)valueWithCGPoint:(CGPoint)point
 {

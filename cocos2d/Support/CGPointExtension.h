@@ -307,8 +307,8 @@ BOOL ccpSegmentIntersect(CGPoint A, CGPoint B, CGPoint C, CGPoint D);
  ccpIntersectPoint returns the intersection point of line A-B, C-D
  */
 CGPoint ccpIntersectPoint(CGPoint A, CGPoint B, CGPoint C, CGPoint D);
-    
-@interface CCValue : NSValue
+
+@interface NSValue (CCValue)
 
 + (NSValue *)valueWithCGPoint:(CGPoint)point;
 + (NSValue *)valueWithCGSize:(CGSize)size;

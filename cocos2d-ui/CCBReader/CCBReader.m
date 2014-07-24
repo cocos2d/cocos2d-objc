@@ -407,7 +407,7 @@ static inline float readFloat(CCBReader *self)
         if (setProp)
         {
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
-            [node setValue:[CCValue valueWithCGPoint:ccp(x,y)] forKey:name];
+            [node setValue:[NSValue valueWithCGPoint:ccp(x,y)] forKey:name];
 #elif __CC_PLATFORM_MAC
             [node setValue:[NSValue valueWithPoint:ccp(x,y)] forKey:name];
 #endif
@@ -442,7 +442,7 @@ static inline float readFloat(CCBReader *self)
         {
             CGPoint pt = ccp(x,y);
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
-            [node setValue:[CCValue valueWithCGPoint:pt] forKey:name];
+            [node setValue:[NSValue valueWithCGPoint:pt] forKey:name];
 #else
             [node setValue:[NSValue valueWithPoint:NSPointFromCGPoint(pt)] forKey:name];
 #endif
@@ -463,7 +463,7 @@ static inline float readFloat(CCBReader *self)
         {
             CGSize size = CGSizeMake(w, h);
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
-            [node setValue:[CCValue valueWithCGSize:size] forKey:name];
+            [node setValue:[NSValue valueWithCGSize:size] forKey:name];
 #elif __CC_PLATFORM_MAC
             [node setValue:[NSValue valueWithSize:size] forKey:name];
 #endif
