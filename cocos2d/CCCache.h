@@ -37,7 +37,7 @@
 
 //------------------------------------------------------------------------------
 
-@interface CCCache : NSObject <NSCacheDelegate>
+@interface CCCache : NSObject
 
 //------------------------------------------------------------------------------
 
@@ -49,6 +49,7 @@
 - (id)rawObjectForKey:(id<NSCopying>)key;
 - (id)objectForKey:(id<NSCopying>)key;
 - (void)makeAlias:(id<NSCopying>)alias forKey:(id<NSCopying>)key;
+- (BOOL)keyExists:(id<NSCopying>)key;
 
 - (void)flush;
 
