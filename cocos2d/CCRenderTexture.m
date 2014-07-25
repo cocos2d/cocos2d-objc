@@ -350,9 +350,10 @@
 	[_renderer popGroupWithDebugLabel:@"CCRenderTexture begin/end" globalSortOrder:0];
 	
 	if(_privateRenderer){
-		[_renderer flush];
 		[CCRenderer bindRenderer:nil];
 		_privateRenderer = NO;
+		
+		(_renderer.threadsafe ? CCRenderQueueAsync : CCRenderQueueSync)(NO, ^{[_renderer flush];});
 	} else {
 		_renderer.globalShaderUniforms = _oldGlobalUniforms;
 	}

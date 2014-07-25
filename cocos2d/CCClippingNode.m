@@ -33,7 +33,7 @@
 #import "CGPointExtension.h"
 
 #import "CCNode_Private.h"
-//#import "CCDrawingPrimitives.h"
+#import "CCRenderQueue.h"
 
 static GLint _stencilBits = -1;
 
@@ -76,7 +76,9 @@ SetProgram(CCNode *n, CCShader *p, NSNumber *alpha) {
         // get (only once) the number of bits of the stencil buffer
         static dispatch_once_t once;
         dispatch_once(&once, ^{
-            glGetIntegerv(GL_STENCIL_BITS, &_stencilBits);
+            CCRenderQueueSync(NO, ^{
+                glGetIntegerv(GL_STENCIL_BITS, &_stencilBits);
+            });
             // warn if the stencil buffer is not enabled
             if (_stencilBits <= 0) {
 #if defined(__CC_PLATFORM_IOS)
