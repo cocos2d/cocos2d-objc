@@ -250,8 +250,10 @@
 		
 		offset = _winOffset;
 	}
-
-	glViewport(offset.x, offset.y, widthAspect, heightAspect);
+	
+	CCRenderQueueSync(^{
+		glViewport(offset.x, offset.y, widthAspect, heightAspect);
+	});
 }
 
 -(void) setProjection:(CCDirectorProjection)projection

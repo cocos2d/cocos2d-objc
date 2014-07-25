@@ -43,6 +43,7 @@
 #import "../../ccFPSImages.h"
 #import "../../CCConfiguration.h"
 #import "CCRenderer_private.h"
+#import "CCRenderQueue.h"
 
 // support imports
 #import "../../Support/CGPointExtension.h"
@@ -108,7 +109,6 @@
 	[self calculateDeltaTime];
 
 	CCGLView *openGLview = (CCGLView*)self.view;
-	[EAGLContext setCurrentContext:openGLview.context];
 
 	/* tick before glClear: issue #533 */
 	if( ! _isPaused ) [_scheduler update: _dt];
@@ -117,39 +117,45 @@
 	 XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
 	if( _nextScene ) [self setNextScene];
 	
-	CCRenderer *renderer = [self rendererFromPool];
-	[CCRenderer bindRenderer:renderer];
-	
-	GLKMatrix4 projection = self.projectionMatrix;
-	renderer.globalShaderUniforms = [self updateGlobalShaderUniforms];
-	
-	
-	[renderer enqueueClear:(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) color:_runningScene.colorRGBA.glkVector4 depth:1.0f stencil:0 globalSortOrder:NSIntegerMin];
-	
-	// Render
-	[_runningScene visit:renderer parentTransform:&projection];
-	[_notificationNode visit:renderer parentTransform:&projection];
-	if( _displayStats ) [self showStats];
-	
-	[renderer flush];
-	[CCRenderer bindRenderer:nil];
-	
-	[openGLview addFrameCompletionHandler:^{
-		// Return the renderer to the pool when the frame completes.
-		[self poolRenderer:renderer];
-	}];
-	
-	[openGLview swapBuffers];
-
-	_totalFrames++;
-
-	if( _displayStats ) [self calculateMPF];
+	if(CCRenderQueueReady()){
+		CCRenderer *renderer = [self rendererFromPool];
+		[CCRenderer bindRenderer:renderer];
+		
+		GLKMatrix4 projection = self.projectionMatrix;
+		renderer.globalShaderUniforms = [self updateGlobalShaderUniforms];
+		
+		
+		[renderer enqueueClear:(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) color:_runningScene.colorRGBA.glkVector4 depth:1.0f stencil:0 globalSortOrder:NSIntegerMin];
+		
+		// Render
+		[_runningScene visit:renderer parentTransform:&projection];
+		[_notificationNode visit:renderer parentTransform:&projection];
+		if( _displayStats ) [self showStats];
+		
+		[CCRenderer bindRenderer:nil];
+		
+		(renderer.threadsafe ? CCRenderQueueAsync : CCRenderQueueSync)(YES, ^{
+			[openGLview addFrameCompletionHandler:^{
+				// Return the renderer to the pool when the frame completes.
+				[self poolRenderer:renderer];
+			}];
+			
+			[renderer flush];
+			[openGLview swapBuffers];
+		});
+		
+		_totalFrames++;
+		
+		if( _displayStats ) [self calculateMPF];
+	}
 }
 
 -(void) setViewport
 {
 	CGSize size = _winSizeInPixels;
-	glViewport(0, 0, size.width, size.height );
+	CCRenderQueueSync(NO, ^{
+		glViewport(0, 0, size.width, size.height );
+	});
 }
 
 -(void) setProjection:(CCDirectorProjection)projection

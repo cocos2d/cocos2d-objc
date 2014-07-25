@@ -153,11 +153,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @end
 
 
-@interface CCGLView (Private)
-- (BOOL) setupSurfaceWithSharegroup:(EAGLSharegroup*)sharegroup;
-- (unsigned int) convertPixelFormat:(NSString*) pixelFormat;
-@end
-
 @implementation CCGLView {
 	NSMutableArray *_fences;
 }
@@ -184,25 +179,25 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth
 {
-	return [[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
+	return [[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:NO multiSampling:NO numberOfSamples:0];
 }
 
-+ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)multisampling numberOfSamples:(unsigned int)samples
++ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained multiSampling:(BOOL)multisampling numberOfSamples:(unsigned int)samples
 {
-	return [[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained sharegroup:sharegroup multiSampling:multisampling numberOfSamples:samples];
+	return [[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained multiSampling:multisampling numberOfSamples:samples];
 }
 
 - (id) initWithFrame:(CGRect)frame
 {
-	return [self initWithFrame:frame pixelFormat:kEAGLColorFormatRGB565 depthFormat:0 preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
+	return [self initWithFrame:frame pixelFormat:kEAGLColorFormatRGB565 depthFormat:0 preserveBackbuffer:NO multiSampling:NO numberOfSamples:0];
 }
 
 - (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format
 {
-	return [self initWithFrame:frame pixelFormat:format depthFormat:0 preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
+	return [self initWithFrame:frame pixelFormat:format depthFormat:0 preserveBackbuffer:NO multiSampling:NO numberOfSamples:0];
 }
 
-- (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)sampling numberOfSamples:(unsigned int)nSamples
+- (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained multiSampling:(BOOL)sampling numberOfSamples:(unsigned int)nSamples
 {
 	if((self = [super initWithFrame:frame]))
 	{
@@ -215,7 +210,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		// Default to "retina" being enabled.
 		self.contentScaleFactor = [UIScreen mainScreen].scale;
 
-		if( ! [self setupSurfaceWithSharegroup:sharegroup] ) {
+		if( ! [self setupSurface] ) {
 			return nil;
 		}
         
@@ -241,7 +236,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		_requestedSamples = 0;
 		_size = [eaglLayer bounds].size;
 		
-		if( ! [self setupSurfaceWithSharegroup:nil] ) {
+		if( ! [self setupSurface] ) {
 			return nil;
 		}
 
@@ -251,7 +246,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     return self;
 }
 
--(BOOL) setupSurfaceWithSharegroup:(EAGLSharegroup*)sharegroup
+-(BOOL) setupSurface
 {
 	CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
 
@@ -263,7 +258,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	// ES2 renderer only
 	_renderer = [[CCES2Renderer alloc] initWithDepthFormat:_depthFormat
 										 withPixelFormat:[self convertPixelFormat:_pixelformat]
-										  withSharegroup:sharegroup
 									   withMultiSampling:_multiSampling
 									 withNumberOfSamples:_requestedSamples];
 

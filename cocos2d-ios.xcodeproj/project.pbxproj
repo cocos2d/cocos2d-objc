@@ -277,6 +277,8 @@
 		D2B49104192146FB00C3443A /* CCEffectGaussianBlur.h in Headers */ = {isa = PBXBuildFile; fileRef = D2B49102192146FB00C3443A /* CCEffectGaussianBlur.h */; };
 		D2B49105192146FB00C3443A /* CCEffectGaussianBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = D2B49103192146FB00C3443A /* CCEffectGaussianBlur.m */; };
 		D309055018AC23110081BF11 /* CCRenderer_private.h in Headers */ = {isa = PBXBuildFile; fileRef = D309054F18AC23110081BF11 /* CCRenderer_private.h */; };
+		D3160DC81982293000D37591 /* CCRenderQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = D3160DC71982293000D37591 /* CCRenderQueue.h */; };
+		D3160DCA1982296400D37591 /* CCRenderQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = D3160DC91982296400D37591 /* CCRenderQueue.m */; };
 		D33803E318032ECE0072D8FE /* CCPhysicsBody.m in Sources */ = {isa = PBXBuildFile; fileRef = D33803E218032ECE0072D8FE /* CCPhysicsBody.m */; };
 		D33803E618032F390072D8FE /* CCPhysicsNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D33803E518032F390072D8FE /* CCPhysicsNode.m */; };
 		D33803EA180331A90072D8FE /* CCPhysicsJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = D33803E9180331A90072D8FE /* CCPhysicsJoint.m */; };
@@ -621,6 +623,8 @@
 		D2B49103192146FB00C3443A /* CCEffectGaussianBlur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectGaussianBlur.m; sourceTree = "<group>"; };
 		D2B840C31909F447008063EA /* CCRenderTexture_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCRenderTexture_Private.h; sourceTree = "<group>"; };
 		D309054F18AC23110081BF11 /* CCRenderer_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderer_private.h; sourceTree = "<group>"; };
+		D3160DC71982293000D37591 /* CCRenderQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderQueue.h; sourceTree = "<group>"; };
+		D3160DC91982296400D37591 /* CCRenderQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCRenderQueue.m; sourceTree = "<group>"; };
 		D33803DC18032E4F0072D8FE /* CCPhysics+ObjectiveChipmunk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCPhysics+ObjectiveChipmunk.h"; sourceTree = "<group>"; };
 		D33803E218032ECE0072D8FE /* CCPhysicsBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsBody.m; sourceTree = "<group>"; };
 		D33803E418032F250072D8FE /* CCPhysicsBody.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPhysicsBody.h; sourceTree = "<group>"; };
@@ -789,6 +793,8 @@
 				D38058181889AD6000822437 /* CCRenderer.h */,
 				D309054F18AC23110081BF11 /* CCRenderer_private.h */,
 				D38058191889AD6000822437 /* CCRenderer.m */,
+				D3160DC71982293000D37591 /* CCRenderQueue.h */,
+				D3160DC91982296400D37591 /* CCRenderQueue.m */,
 				D3B2010C19805F4500D92915 /* CCNoARC.m */,
 			);
 			path = cocos2d;
@@ -1434,6 +1440,7 @@
 				E0F924711224140400EF2362 /* CCTexturePVR.h in Headers */,
 				E0F92AC41224559800EF2362 /* CCNS.h in Headers */,
 				E02BB6D6126CA93A006E46A2 /* CCAnimationCache.h in Headers */,
+				D3160DC81982293000D37591 /* CCRenderQueue.h in Headers */,
 				E02BB704126CADEA006E46A2 /* CCAnimation.h in Headers */,
 				B7D273191822F4AA0054849B /* CCBuilderReader.h in Headers */,
 				B7E775D018527EF0004221AA /* CCAppDelegate.h in Headers */,
@@ -1632,6 +1639,7 @@
 				50E2A15110A45E7F00D894CE /* CCSpriteFrame.m in Sources */,
 				502C8BE110A661E200D137BA /* CCSpriteFrameCache.m in Sources */,
 				50E1357610ADEB1B00C9E7FA /* CCTexture.m in Sources */,
+				D3160DCA1982296400D37591 /* CCRenderQueue.m in Sources */,
 				503862E6110072BC005D2C92 /* CCConfiguration.m in Sources */,
 				0529445E11098D6F00E500F3 /* CCProfiling.m in Sources */,
 				5015043C113300F900A9CA65 /* CCActionProgressTimer.m in Sources */,

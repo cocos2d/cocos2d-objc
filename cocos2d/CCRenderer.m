@@ -31,6 +31,7 @@
 #import "CCShader_private.h"
 #import "CCDirector_Private.h"
 #import "CCGL.h"
+#import "CCRenderQueue.h"
 
 
 @interface CCShader()
@@ -502,14 +503,17 @@ SortQueue(NSMutableArray *queue)
 -(instancetype)init
 {
 	if((self = [super init])){
-		const NSUInteger CCRENDERER_INITIAL_VERTEX_CAPACITY = 16*1024;
-		[self initBuffer:&_vertexBuffer capacity:CCRENDERER_INITIAL_VERTEX_CAPACITY elementSize:sizeof(CCVertex) type:GL_ARRAY_BUFFER];
-		[self initBuffer:&_elementBuffer capacity:CCRENDERER_INITIAL_VERTEX_CAPACITY*1.5 elementSize:sizeof(uint16_t) type:GL_ELEMENT_ARRAY_BUFFER];
+		CCRenderQueueSync(NO, ^{
+			glPushGroupMarkerEXT(0, "CCRenderer: Init");
+			const NSUInteger CCRENDERER_INITIAL_VERTEX_CAPACITY = 16*1024;
+			[self initBuffer:&_vertexBuffer capacity:CCRENDERER_INITIAL_VERTEX_CAPACITY elementSize:sizeof(CCVertex) type:GL_ARRAY_BUFFER];
+			[self initBuffer:&_elementBuffer capacity:CCRENDERER_INITIAL_VERTEX_CAPACITY*1.5 elementSize:sizeof(uint16_t) type:GL_ELEMENT_ARRAY_BUFFER];
+			
+			_vao = [CCShader createVAOforCCVertexBuffer:(GLuint)_vertexBuffer.data elementBuffer:(GLuint)_elementBuffer.data];
+			glPopGroupMarkerEXT();
+		});
 		
-		glPushGroupMarkerEXT(0, "CCRenderer: Init");
-		_vao = [CCShader createVAOforCCVertexBuffer:(GLuint)_vertexBuffer.data elementBuffer:(GLuint)_elementBuffer.data];
-		glPopGroupMarkerEXT();
-		
+		_threadsafe = YES;
 		_queue = [NSMutableArray array];
 	}
 	
@@ -518,12 +522,14 @@ SortQueue(NSMutableArray *queue)
 
 -(void)dealloc
 {
-	glPushGroupMarkerEXT(0, "CCRenderer: Dealloc");
-	glDeleteVertexArrays(1, &_vao);
-	glPopGroupMarkerEXT();
-	
-	[self destroyBuffer:&_vertexBuffer];
-	[self destroyBuffer:&_elementBuffer];
+	CCRenderQueueSync(NO, ^{
+		glPushGroupMarkerEXT(0, "CCRenderer: Dealloc");
+		glDeleteVertexArrays(1, &_vao);
+		glPopGroupMarkerEXT();
+		
+		[self destroyBuffer:&_vertexBuffer];
+		[self destroyBuffer:&_elementBuffer];
+	});
 }
 
 static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
@@ -583,6 +589,8 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 {
 	[_queue addObject:[[CCRenderCommandCustom alloc] initWithBlock:block debugLabel:debugLabel globalSortOrder:globalSortOrder]];
 	_lastDrawCommand = nil;
+	
+	if(!threadsafe) _threadsafe = NO;
 }
 
 -(void)enqueueMethod:(SEL)selector target:(id)target
@@ -626,11 +634,8 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 {
 	glPushGroupMarkerEXT(0, "CCRenderer: Flush");
 	
-	glInsertEventMarkerEXT(0, "Buffering");
-	
 	[self commitBuffer:&_vertexBuffer];
 	[self commitBuffer:&_elementBuffer];
-	CC_CHECK_GL_ERROR_DEBUG();
 	
 	SortQueue(_queue);
 	for(id<CCRenderCommand> command in _queue) [command invokeOnRenderer:self];
@@ -645,6 +650,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	CC_CHECK_GL_ERROR_DEBUG();
 	
 	[self invalidateState];
+	_threadsafe = YES;
 }
 
 //MARK: Buffer Management Methods
@@ -669,7 +675,6 @@ UNMAP_BUFFER(GLenum target, size_t length, BOOL flush){
 
 -(void)initBuffer:(CCGraphicsBuffer *)buffer capacity:(NSUInteger)capacity elementSize:(size_t)elementSize type:(intptr_t)type
 {
-	NSLog(@"init");
 	GLuint glbuffer = 0;
 	glGenBuffers(1, &glbuffer);
 	CC_CHECK_GL_ERROR_DEBUG();
@@ -693,31 +698,33 @@ UNMAP_BUFFER(GLenum target, size_t length, BOOL flush){
 	// This is a little tricky.
 	// Need to resize the existing GL buffer object without creating a new name.
 	
-	// Make the buffer readable.
-	GLenum target = (GLenum)buffer->type;
-	glBindBuffer(target, (GLuint)buffer->data);
-	GLsizei oldLength = (GLsizei)(buffer->count*buffer->elementSize);
-	UNMAP_BUFFER(target, oldLength, YES);
-	void *oldBufferPtr = MAP_BUFFER(target, oldLength, BUFFER_ACCESS_READ);
-	
-	// Copy the old contents into a temp buffer.
-	GLsizei newLength = (GLsizei)(newCapacity*buffer->elementSize);
-	void *tempBufferPtr = malloc(newLength);
-	memcpy(tempBufferPtr, oldBufferPtr, oldLength);
-	
-	// Copy that into a new GL buffer.
-	UNMAP_BUFFER(target, 0, NO);
-	glBufferData(target, newLength, tempBufferPtr, GL_STREAM_DRAW);
-	void *newBufferPtr = MAP_BUFFER(target, newLength, BUFFER_ACCESS_WRITE);
-	
-	// Cleanup.
-	free(tempBufferPtr);
-	glBindBuffer(target, 0);
-	CC_CHECK_GL_ERROR_DEBUG();
-	
-	// Update values.
-	buffer->ptr = newBufferPtr;
-	buffer->capacity = newCapacity;
+	CCRenderQueueSync(NO, ^{
+		// Make the buffer readable.
+		GLenum target = (GLenum)buffer->type;
+		glBindBuffer(target, (GLuint)buffer->data);
+		GLsizei oldLength = (GLsizei)(buffer->count*buffer->elementSize);
+		UNMAP_BUFFER(target, oldLength, YES);
+		void *oldBufferPtr = MAP_BUFFER(target, oldLength, BUFFER_ACCESS_READ);
+		
+		// Copy the old contents into a temp buffer.
+		GLsizei newLength = (GLsizei)(newCapacity*buffer->elementSize);
+		void *tempBufferPtr = malloc(newLength);
+		memcpy(tempBufferPtr, oldBufferPtr, oldLength);
+		
+		// Copy that into a new GL buffer.
+		UNMAP_BUFFER(target, 0, NO);
+		glBufferData(target, newLength, tempBufferPtr, GL_STREAM_DRAW);
+		void *newBufferPtr = MAP_BUFFER(target, newLength, BUFFER_ACCESS_WRITE);
+		
+		// Cleanup.
+		free(tempBufferPtr);
+		glBindBuffer(target, 0);
+		CC_CHECK_GL_ERROR_DEBUG();
+		
+		// Update values.
+		buffer->ptr = newBufferPtr;
+		buffer->capacity = newCapacity;
+	});
 }
 
 -(void)destroyBuffer:(CCGraphicsBuffer *)buffer

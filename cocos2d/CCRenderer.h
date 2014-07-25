@@ -186,6 +186,9 @@ extern const NSString *CCBlendEquationAlpha;
 /// All drawing commands in Cocos2D must be sequenced using a CCRenderer.
 @interface CCRenderer : NSObject
 
+/// YES if the renderer contains only threadsafe rendering commands.
+@property(nonatomic, readonly) BOOL threadsafe;
+
 /// Mark the renderer's cached GL state as invalid executing custom OpenGL code.
 /// You only need to call this if you change the shader, texture or blending mode states.
 -(void)invalidateState;

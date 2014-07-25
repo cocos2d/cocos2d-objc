@@ -46,6 +46,7 @@
 #import "CCConfiguration.h"
 #import "CCTransition.h"
 #import "CCRenderer_private.h"
+#import "CCRenderQueue.h"
 
 // support imports
 #import "Platforms/CCGL.h"
@@ -249,15 +250,16 @@ static CCDirector *_sharedDirector = nil;
 -(CCRenderer *)rendererFromPool
 {
 	@synchronized(_rendererPool){
-		if(_rendererPool.count == 0){
-			return [[CCRenderer alloc] init];
-		} else {
+		if(_rendererPool.count > 0){
 			CCRenderer *renderer = _rendererPool.lastObject;
 			[_rendererPool removeLastObject];
 			
 			return renderer;
 		}
 	}
+	
+	// Allocate and return a new renderer.
+	return [[CCRenderer alloc] init];
 }
 
 -(void)poolRenderer:(CCRenderer *)renderer
@@ -366,8 +368,10 @@ static CCDirector *_sharedDirector = nil;
 			
 			// TODO this should probably migrate somewhere else.
 			if(view.depthFormat){
-				glEnable(GL_DEPTH_TEST);
-				glDepthFunc(GL_LEQUAL);
+				CCRenderQueueSync(NO, ^{
+					glEnable(GL_DEPTH_TEST);
+					glDepthFunc(GL_LEQUAL);
+				});
 			}
 		}
 
