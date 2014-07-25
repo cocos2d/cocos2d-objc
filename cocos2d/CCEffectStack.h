@@ -40,6 +40,8 @@
 /**
  *  Initializes an empty effect stack object.
  *
+ *  @param effects The array of effects to add to the stack.
+ *
  *  @return The CCEffectStack object.
  */
 - (id)initWithEffects:(NSArray *)effects;

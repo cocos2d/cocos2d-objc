@@ -53,10 +53,7 @@
 
 /**
  *  Initializes a CCEffectReflection object with the following default parameters:
- *    fresnelBias : 1.0
- *    fresnelPower : 0.0
- *    environment : nil
- *    normalMap : nil
+ *  fresnelBias = 1.0, fresnelPower = 0.0, environment = nil, normalMap = nil
  *
  *  @return The CCEffectReflection object.
  */
@@ -64,8 +61,7 @@
 
 /**
  *  Initializes a CCEffectReflection object with the specified environment and normal map and the following default parameters:
- *    fresnelBias : 1.0
- *    fresnelPower : 0.0
+ *  fresnelBias = 1.0, fresnelPower = 0.0
  *
  *  @param environment The environment image that will be reflected by the affected node.
  *  @param normalMap The normal map of the affected node. This can also be specified as a property of the affected sprite.
@@ -93,8 +89,7 @@
 
 /**
  *  Creates a CCEffectReflection object with the specified environment and normal map and the following default parameters:
- *    fresnelBias : 1.0
- *    fresnelPower : 0.0
+ *  fresnelBias = 1.0, fresnelPower = 0.0
  *
  *  @param environment The environment image that will be reflected by the affected node.
  *  @param normalMap The normal map of the affected node. This can also be specified as a property of the affected sprite.

@@ -43,9 +43,7 @@
 
 /**
  *  Initializes a CCEffectRefraction object with the following default parameters:
- *    refraction : 1.0
- *    environment : nil
- *    normalMap : nil
+ *  refraction = 1.0, environment = nil, normalMap = nil
  *
  *  @return The CCEffectRefraction object.
  */

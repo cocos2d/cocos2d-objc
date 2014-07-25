@@ -31,7 +31,7 @@
 
 /**
  *  Initializes a CCEffectGaussianBlur object with the following default parameters:
- *    blurRadius : 2
+ *  blurRadius = 2
  *
  *  @return The CCEffectGaussianBlur object.
  */

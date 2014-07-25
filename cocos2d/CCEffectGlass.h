@@ -66,12 +66,7 @@
 
 /**
  *  Initializes a CCEffectGlass object with the following default parameters:
- *    refraction : 1.0
- *    fresnelBias : 0.1
- *    fresnelPower : 2.0
- *    refractionEnvironment : nil
- *    reflectionEnvironment : nil
- *    normalMap : nil
+ *  refraction = 1.0, fresnelBias = 0.1, fresnelPower = 2.0, refractionEnvironment = nil, reflectionEnvironment = nil, normalMap = nil
  *
  *  @return The CCEffectGlass object.
  */

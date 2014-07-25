@@ -43,10 +43,8 @@
 /// -----------------------------------------------------------------------
 
 /**
- *  Initializes a CCEffectBloom object with the following default parameters:
- *    blurRadius : 2
- *    intensity : 1
- *    luminanceThreshold : 0
+ *  Initializes a CCEffectBloom object with the following default values:
+ *  blurRadius = 2, intensity = 1, luminanceThreshold = 0
  *
  *  @return The CCEffectBloom object.
  */
@@ -74,7 +72,7 @@
 /// -----------------------------------------------------------------------
 
 /**
- *  Creates a CCEffectBloom object with the following default parameters:
+ *  Creates a CCEffectBloom object with the specified parameters.
  *
  *  @param blurRadius number of pixels blur will extend to (6 is the maximum, because we are limited by the number
  *  of varying variables that can be passed to a glsl program).
