@@ -53,8 +53,8 @@
 {
     DemoCache *_cache;
     int _testStep;
-    NSValue *_A;
-    NSValue *_B;
+    NSValue *_valueA;
+    NSValue *_valueB;
 }
 
 - (NSArray*) testConstructors
@@ -94,12 +94,12 @@
             
         case 1:
             CCLOG(@"-- objectA in use");
-            _A = [_cache objectForKey:@"objectA"];
+            _valueA = [_cache objectForKey:@"objectA"];
             break;
             
         case 2:
             CCLOG(@"-- objectB in use");
-            _B = [_cache objectForKey:@"objectB"];
+            _valueB = [_cache objectForKey:@"objectB"];
             break;
             
         case 3:
@@ -109,7 +109,7 @@
             
         case 4:
             CCLOG(@"-- objectA not in use anymore");
-            _A = nil;
+            _valueA = nil;
             break;
             
         case 5:
@@ -119,13 +119,13 @@
             
         case 6:
             CCLOG(@"-- New objectA should be created");
-            _A = [_cache objectForKey:@"objectA"];
+            _valueA = [_cache objectForKey:@"objectA"];
             break;
             
         case 7:
             CCLOG(@"-- No new objectB should be created");
             [_cache flush];
-            _B = [_cache objectForKey:@"objectB"];
+            _valueB = [_cache objectForKey:@"objectB"];
             break;
             
         default:
