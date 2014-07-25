@@ -45,7 +45,6 @@
 #import "CCRenderer.h"
 #import "CCTexture.h"
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 static float conditionBlockSize(float blockSize);
 
 @interface CCEffectPixellate ()
@@ -137,4 +136,3 @@ float conditionBlockSize(float blockSize)
     return (blockSize <= 1.0f) ? 1.0f : blockSize;
 }
 
-#endif

@@ -17,7 +17,7 @@
 #import "CCEffect_Private.h"
 #import "CCSprite_Private.h"
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
+
 @interface CCEffectGlass ()
 
 @property (nonatomic) float conditionedRefraction;
@@ -223,4 +223,3 @@
     _conditionedRefraction = CCEffectUtilsConditionRefraction(refraction);
 }
 @end
-#endif

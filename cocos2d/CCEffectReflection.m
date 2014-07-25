@@ -17,7 +17,6 @@
 #import "CCEffect_Private.h"
 #import "CCSprite_Private.h"
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
 
 
@@ -177,4 +176,3 @@ GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at)
                           at.tx, at.ty, 0.0f,  1.0f);
 }
 
-#endif

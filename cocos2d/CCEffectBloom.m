@@ -45,7 +45,6 @@
 #import "CCRenderer.h"
 #import "CCTexture.h"
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @implementation CCEffectBloom {
     NSUInteger _numberOfOptimizedOffsets;
     GLfloat _sigma;
@@ -379,5 +378,4 @@
 }
 
 @end
-#endif
 

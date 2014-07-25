@@ -12,10 +12,8 @@
 #import "ccConfig.h"
 #import "ccTypes.h"
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffect : NSObject
 
 @property (nonatomic, copy) NSString *debugName;
 
 @end
-#endif

@@ -10,7 +10,6 @@
 #import "CCEffect_Private.h"
 #import "CCTexture.h"
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 NSString * const CCShaderUniformPreviousPassTexture = @"cc_PreviousPassTexture";
 
 static NSString* fragBase =
@@ -548,7 +547,6 @@ static NSString* vertBase =
 
 
 @end
-#endif
 
 
 

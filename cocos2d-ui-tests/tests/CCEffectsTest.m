@@ -4,7 +4,6 @@
 #import "CCEffectNode.h"
 #import "CCEffectGaussianBlur.h"
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 
 @interface CCEffectsTest : TestBase @end
 @implementation CCEffectsTest
@@ -711,5 +710,4 @@
 	[node addChild:sprite];
 }
 @end
-#endif
 

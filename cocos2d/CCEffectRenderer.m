@@ -18,7 +18,6 @@
 #import "CCSprite_Private.h"
 #import "CCTexture_Private.h"
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 
 @interface CCEffectRenderTarget : NSObject
 
@@ -279,4 +278,3 @@
 }
 
 @end
-#endif

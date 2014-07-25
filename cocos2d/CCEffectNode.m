@@ -28,7 +28,6 @@
 #import <ApplicationServices/ApplicationServices.h>
 #endif
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffectNode()
 {
     CCEffect *_effect;
@@ -208,4 +207,3 @@
 }
 
 @end
-#endif

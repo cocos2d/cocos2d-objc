@@ -12,7 +12,6 @@
 #import "CCEffectNode.h"
 #import "CCEffectGaussianBlur.h"
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 
 #define PADDLE_SCALE 0.5f
 #define PADDLE_X_OFFSET 10.0f
@@ -376,8 +375,4 @@ typedef enum { TEST_PONG_PLAYING, TESTS_PONG_GAMEOVER } TEST_PONG_STATE;
 }
 
 @end
-
-#endif
-
-
 

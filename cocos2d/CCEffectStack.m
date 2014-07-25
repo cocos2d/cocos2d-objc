@@ -10,7 +10,7 @@
 #import "CCEffectStack_Private.h"
 #import "CCEffect_Private.h"
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
+
 @implementation CCEffectStack
 
 #pragma mark - API
@@ -332,4 +332,3 @@
 
 
 @end
-#endif

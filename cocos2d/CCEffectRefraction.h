@@ -8,7 +8,6 @@
 
 #import "CCEffect.h"
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffectRefraction : CCEffect
 
 @property (nonatomic) float refraction;
@@ -20,4 +19,3 @@
 +(id)effectWithRefraction:(float)refraction environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap;
 
 @end
-#endif

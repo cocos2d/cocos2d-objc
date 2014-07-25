@@ -9,7 +9,7 @@
 #import "CCEffectStack.h"
 #import "CCEffectStackProtocol.h"
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
+
 @interface CCEffectStack () <CCEffectStackProtocol>
 
 @property (nonatomic) BOOL passesDirty;
@@ -17,4 +17,3 @@
 @property (nonatomic) NSMutableArray *effects;
 
 @end
-#endif
