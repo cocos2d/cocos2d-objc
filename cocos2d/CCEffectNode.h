@@ -19,8 +19,26 @@
 #import <UIKit/UIKit.h>
 #endif // iPHone
 
+
+/**
+ * CCEffectNode allows the user to apply effects to the collection of nodes that
+ * are its children.
+ */
+
 @interface CCEffectNode : CCRenderTexture <CCEffectProtocol>
 
+/// -----------------------------------------------------------------------
+/// @name Initializing a CCEffectNode object
+/// -----------------------------------------------------------------------
+
+/**
+ *  Initializes a CCEffectNode object with the specified parameters.
+ * 
+ *  @param w The width of the effect node in points.
+ *  @param h The height of the effect node in points.
+ *
+ *  @return The CCEffectNode object.
+ */
 -(id)initWithWidth:(int)w height:(int)h;
 
 @end
