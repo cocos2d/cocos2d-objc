@@ -48,7 +48,7 @@
  */
 @property (nonatomic) CCSprite *refractionEnvironment;
 
-/** The environment that will be refracted by the affected node. Typically this is a sprite
+/** The environment that will be reflected by the affected node. Typically this is a sprite
  *  that is not visible in the scene as it is conceptually "behind the viewer" and only visible
  *  where reflected by the affected node.
  */

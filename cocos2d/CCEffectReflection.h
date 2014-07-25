@@ -8,13 +8,20 @@
 
 #import "CCEffect.h"
 
+
+/**
+ * CCEffectReflection uses reflection to simulate the appearance of a shiny object contained within 
+ * an environment. Reflection is controlled with two fresnel reflectance values, the normal map, and 
+ * a reflection environment sprite.
+ *
+ */
 @interface CCEffectReflection : CCEffect
 
 /// -----------------------------------------------------------------------
 /// @name Accessing Effect Attributes
 /// -----------------------------------------------------------------------
 
-/** The environment that will be refracted by the affected node. Typically this is a sprite
+/** The environment that will be reflected by the affected node. Typically this is a sprite
  *  that is not visible in the scene as it is conceptually "behind the viewer" and only visible
  *  where reflected by the affected node.
  */
