@@ -8,10 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
+
 @protocol CCEffectStackProtocol <NSObject>
 
 - (void)passesDidChange:(id)sender;
 
 @end
-#endif

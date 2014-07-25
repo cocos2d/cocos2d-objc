@@ -22,12 +22,12 @@
 #import "CCNode_Private.h"
 #import "CCRenderer_private.h"
 #import "CCRenderTexture_Private.h"
+#import "CCEffect_Private.h"
 
 #if __CC_PLATFORM_MAC
 #import <ApplicationServices/ApplicationServices.h>
 #endif
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffectNode()
 {
     CCEffect *_effect;
@@ -207,4 +207,3 @@
 }
 
 @end
-#endif

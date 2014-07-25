@@ -45,7 +45,7 @@
 #import "CCRenderer.h"
 #import "CCTexture.h"
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
+
 static float conditionSaturation(float saturation);
 
 
@@ -139,4 +139,3 @@ float conditionSaturation(float saturation)
     float clampedSaturation = clampf(saturation, -1.0f, 1.0f);
     return clampedSaturation += 1.0f;
 }
-#endif

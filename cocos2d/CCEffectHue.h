@@ -8,7 +8,6 @@
 
 #import "CCEffect.h"
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffectHue : CCEffect
 
 @property (nonatomic) float hue;
@@ -18,4 +17,3 @@
 +(id)effectWithHue:(float)hue;
 
 @end
-#endif

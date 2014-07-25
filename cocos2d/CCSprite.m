@@ -44,6 +44,7 @@
 #import "CCEffect.h"
 #import "CCEffectRenderer.h"
 #import "CCEffectStack.h"
+#import "CCEffect_Private.h"
 
 #pragma mark -
 #pragma mark CCSprite
@@ -68,9 +69,7 @@
 	BOOL _flipX, _flipY;
     
     CCEffect *_effect;
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
     CCEffectRenderer *_effectRenderer;
-#endif
 }
 
 +(id)spriteWithImageNamed:(NSString*)imageName
@@ -146,9 +145,7 @@
 		[self setTexture:texture];
 		[self setTextureRect:rect rotated:rotated untrimmedSize:rect.size];
         
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
         _effectRenderer = [[CCEffectRenderer alloc] init];
-#endif
 	}
 	
 	return self;
@@ -370,7 +367,6 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 {
 	if(!CCRenderCheckVisbility(transform, _vertexCenter, _vertexExtents)) return;
 	
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 	if (_effect)
 	{
 		_effectRenderer.contentSize = self.texture.contentSize;
@@ -384,7 +380,6 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 		[_effectRenderer drawSprite:self withEffect:self.effect uniforms:_shaderUniforms renderer:renderer transform:transform];
 	}
 	else
-#endif
 	{
 		EnqueueTriangles(self, renderer, transform);
 	}
@@ -492,7 +487,6 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
     [self updateColor];
 }
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 -(CCEffect *)effect
 {
 	return _effect;
@@ -510,7 +504,6 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
         _shaderUniforms = nil;
     }
 }
-#endif
 
 //
 // Frames
@@ -573,7 +566,6 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 
 #pragma mark CCSprite - Effects
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 - (void)updateShaderUniformsFromEffect
 {
     // Initialize the shader uniforms dictionary with the sprite's main texture and
@@ -585,6 +577,5 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
     // And then copy the new effect's uniforms into the node's uniforms dictionary.
     [_shaderUniforms addEntriesFromDictionary:_effect.shaderUniforms];
 }
-#endif
 
 @end

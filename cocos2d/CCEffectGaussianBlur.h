@@ -8,7 +8,6 @@
 
 #import "CCEffect.h"
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffectGaussianBlur : CCEffect
 
 // blurRadius number of pixels blur will extend to (6 is the maximum, because we are limited by the number
@@ -24,7 +23,6 @@
 +(id)effectWithPixelBlurRadius:(NSUInteger)blurRadius;
 
 @end
-#endif
 
 
 

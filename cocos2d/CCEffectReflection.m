@@ -17,7 +17,6 @@
 #import "CCEffect_Private.h"
 #import "CCSprite_Private.h"
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
 
 
@@ -36,8 +35,13 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
 
 -(id)initWithEnvironment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap
 {
+    return [self initWithFresnelBias:1.0f fresnelPower:0.0f environment:environment normalMap:normalMap];
+}
+
+-(id)initWithFresnelBias:(float)bias fresnelPower:(float)power environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap
+{
     NSArray *uniforms = @[
-                          [CCEffectUniform uniform:@"float" name:@"u_fresnelBias" value:[NSNumber numberWithFloat:0.0f]],
+                          [CCEffectUniform uniform:@"float" name:@"u_fresnelBias" value:[NSNumber numberWithFloat:1.0f]],
                           [CCEffectUniform uniform:@"float" name:@"u_fresnelPower" value:[NSNumber numberWithFloat:0.0f]],
                           [CCEffectUniform uniform:@"sampler2D" name:@"u_envMap" value:(NSValue*)[CCTexture none]],
                           [CCEffectUniform uniform:@"vec2" name:@"u_tangent" value:[NSValue valueWithGLKVector2:GLKVector2Make(1.0f, 0.0f)]],
@@ -49,6 +53,8 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
     {
         _environment = environment;
         _normalMap = normalMap;
+        _fresnelBias = bias;
+        _fresnelPower = power;
         
         self.debugName = @"CCEffectReflection";
     }
@@ -60,11 +66,16 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
     return [[self alloc] initWithEnvironment:environment normalMap:normalMap];
 }
 
++(id)effectWithFresnelBias:(float)bias fresnelPower:(float)power environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap
+{
+    return [[self alloc] initWithFresnelBias:bias fresnelPower:power environment:environment normalMap:normalMap];
+}
+
 -(void)buildFragmentFunctions
 {
     self.fragmentFunctions = [[NSMutableArray alloc] init];
     
-    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" snippet:@"texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)"];
+    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" snippet:@"cc_FragColor * texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)"];
     
     NSString* effectBody = CC_GLSL(
                                    // Compute environment space texture coordinates from the screen space
@@ -92,14 +103,14 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
                                    reflectTexCoords.y = (1.0 - cos(reflectTexCoords.y * M_PI)) * 0.5;
                                    
                                    // Compute the combination of the sprite's color and texture.
-                                   vec4 primaryColor = cc_FragColor * texture2D(cc_MainTexture, cc_FragTexCoord1);
+                                   vec4 primaryColor = inputValue;
                                    
-                                   float fresnel = max(u_fresnelBias + (1.0 - u_fresnelBias) * pow((1.0 - nDotV), u_fresnelPower), 0.0);;
+                                   float fresnel = max(u_fresnelBias + (1.0 - u_fresnelBias) * pow((1.0 - nDotV), u_fresnelPower), 0.0);
                                    
                                    // If the refracted texture coordinates are within the bounds of the environment map
                                    // blend the primary color with the refracted environment. Multiplying by the normal
                                    // map alpha also allows the effect to be disabled for specific pixels.
-                                   primaryColor += normalMap.a * fresnel * texture2D(u_envMap, reflectTexCoords);                                   
+                                   primaryColor += normalMap.a * fresnel * texture2D(u_envMap, reflectTexCoords);
                                    return primaryColor;
                                    );
     
@@ -165,4 +176,3 @@ GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at)
                           at.tx, at.ty, 0.0f,  1.0f);
 }
 
-#endif

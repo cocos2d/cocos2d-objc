@@ -13,27 +13,14 @@
 #import "CCRenderTexture.h"
 #import "CCSprite.h"
 #import "CCTexture.h"
-#import "CCEffect.h"
-#import "CCEffectStack.h"
-#import "CCEffectBloom.h"
-#import "CCEffectBrightness.h"
-#import "CCEffectContrast.h"
-#import "CCEffectHue.h"
-#import "CCEffectPixellate.h"
-#import "CCEffectSaturation.h"
-#import "CCEffectRefraction.h"
-#import "CCEffectReflection.h"
-#import "CCEffectGlass.h"
 
 
 #ifdef __CC_PLATFORM_IOS
 #import <UIKit/UIKit.h>
 #endif // iPHone
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffectNode : CCRenderTexture <CCEffectProtocol>
 
 -(id)initWithWidth:(int)w height:(int)h;
 
 @end
-#endif

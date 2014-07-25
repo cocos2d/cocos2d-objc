@@ -8,7 +8,6 @@
 
 #import "CCEffect.h"
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffectPixellate : CCEffect
 
 @property (nonatomic) float blockSize;
@@ -18,4 +17,3 @@
 +(id)effectWithBlockSize:(float)blockSize;
 
 @end
-#endif

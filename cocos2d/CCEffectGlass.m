@@ -17,7 +17,7 @@
 #import "CCEffect_Private.h"
 #import "CCSprite_Private.h"
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
+
 @interface CCEffectGlass ()
 
 @property (nonatomic) float conditionedRefraction;
@@ -32,7 +32,7 @@
     return [self initWithRefraction:1.0f refractionEnvironment:nil reflectionEnvironment:nil normalMap:nil];
 }
 
--(id)initWithRefraction:(float)refraction refractionEnvironment:(CCSprite *)refractionEnvironment reflectionEnvironment:(CCSprite *)reflectionEnvironment normalMap:(CCSpriteFrame *)normalMap;
+-(id)initWithRefraction:(float)refraction refractionEnvironment:(CCSprite *)refractionEnvironment reflectionEnvironment:(CCSprite *)reflectionEnvironment normalMap:(CCSpriteFrame *)normalMap
 {
     NSArray *uniforms = @[
                           [CCEffectUniform uniform:@"float" name:@"u_refraction" value:[NSNumber numberWithFloat:1.0f]],
@@ -76,7 +76,7 @@
 {
     self.fragmentFunctions = [[NSMutableArray alloc] init];
     
-    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" snippet:@"texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)"];
+    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" snippet:@"cc_FragColor * texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)"];
     
     NSString* effectBody = CC_GLSL(
                                    // Index the normal map and expand the color value from [0..1] to [-1..1]
@@ -128,7 +128,7 @@
                                    
                                    
                                    // Compute the combination of the sprite's color and texture.
-                                   vec4 primaryColor = cc_FragColor * texture2D(cc_MainTexture, cc_FragTexCoord1);
+                                   vec4 primaryColor = inputValue;
                                    
                                    // If the refracted texture coordinates are within the bounds of the environment map
                                    // blend the primary color with the refracted environment. Multiplying by the normal
@@ -137,7 +137,7 @@
                                    
                                    // Add the reflected color modulated by the fresnel term. Multiplying by the normal
                                    // map alpha also allows the effect to be disabled for specific pixels.
-                                   float fresnel = max(u_fresnelBias + (1.0 - u_fresnelBias) * pow((1.0 - nDotV), u_fresnelPower), 0.0);;
+                                   float fresnel = max(u_fresnelBias + (1.0 - u_fresnelBias) * pow((1.0 - nDotV), u_fresnelPower), 0.0);
                                    vec4 reflection = normalMap.a * fresnel * texture2D(u_reflectEnvMap, reflectTexCoords);
 
                                    return primaryColor + refraction + reflection;
@@ -223,4 +223,3 @@
     _conditionedRefraction = CCEffectUtilsConditionRefraction(refraction);
 }
 @end
-#endif

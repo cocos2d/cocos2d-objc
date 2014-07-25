@@ -8,7 +8,6 @@
 
 #import "CCEffect.h"
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffectBloom : CCEffect
 
 // ranges between 0.0-1.0 - defines which part of the image should be glown via a luminance factor (brightness).
@@ -33,4 +32,3 @@
 +(id)effectWithPixelBlurRadius:(NSUInteger)blurRadius intensity:(float)intensity luminanceThreshold:(float)luminanceThreshold;
 
 @end
-#endif
