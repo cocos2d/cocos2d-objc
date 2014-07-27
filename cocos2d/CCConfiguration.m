@@ -44,6 +44,7 @@
 
 @synthesize maxTextureSize = _maxTextureSize, maxTextureUnits=_maxTextureUnits;
 @synthesize supportsPVRTC = _supportsPVRTC;
+@synthesize supportsNPOT = _supportsNPOT;
 @synthesize supportsBGRA8888 = _supportsBGRA8888;
 @synthesize supportsDiscardFramebuffer = _supportsDiscardFramebuffer;
 @synthesize supportsShareableVAO = _supportsShareableVAO;
@@ -181,6 +182,12 @@ static char * glExtensions;
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &_maxTextureSize);
 		glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &_maxTextureUnits );
 
+#ifdef __CC_PLATFORM_IOS
+		_supportsNPOT = YES;
+#elif defined(__CC_PLATFORM_MAC)
+		_supportsNPOT = [self checkForGLExtension:@"GL_ARB_texture_non_power_of_two"];
+#endif
+
 		_supportsPVRTC = [self checkForGLExtension:@"GL_IMG_texture_compression_pvrtc"];
 
 		// It seems that somewhere between firmware iOS 3.0 and 4.2 Apple renamed
@@ -213,6 +220,14 @@ static char * glExtensions;
 		[self getOpenGLvariables];
 
 	return _maxTextureUnits;
+}
+
+-(BOOL) supportsNPOT
+{
+	if( ! _openGLInitialized )
+		[self getOpenGLvariables];
+
+	return _supportsNPOT;
 }
 
 -(BOOL) supportsPVRTC
@@ -293,6 +308,7 @@ static char * glExtensions;
 	printf("cocos2d: GL_MAX_SAMPLES: %d\n", _maxSamplesAllowed);
 	printf("cocos2d: GL supports PVRTC: %s\n", (_supportsPVRTC ? "YES" : "NO") );
 	printf("cocos2d: GL supports BGRA8888 textures: %s\n", (_supportsBGRA8888 ? "YES" : "NO") );
+	printf("cocos2d: GL supports NPOT textures: %s\n", (_supportsNPOT ? "YES" : "NO") );
 	printf("cocos2d: GL supports discard_framebuffer: %s\n", (_supportsDiscardFramebuffer ? "YES" : "NO") );
 	printf("cocos2d: GL supports shareable VAO: %s\n", (_supportsShareableVAO ? "YES" : "NO") );
 	
