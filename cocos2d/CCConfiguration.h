@@ -75,6 +75,7 @@ typedef NS_ENUM(NSUInteger, CCDevice) {
 	
 	GLint			_maxTextureSize;
 	BOOL			_supportsPVRTC;
+	BOOL			_supportsNPOT;
 	BOOL			_supportsBGRA8888;
 	BOOL			_supportsDiscardFramebuffer;
 	BOOL			_supportsShareableVAO;
@@ -90,6 +91,12 @@ typedef NS_ENUM(NSUInteger, CCDevice) {
 /** returns the maximum texture units
  */
 @property (nonatomic, readonly) GLint maxTextureUnits;
+
+/** Whether or not the GPU supports NPOT (Non Power Of Two) textures.
+ OpenGL ES 2.0 already supports NPOT (iOS).
+
+ */
+@property (nonatomic, readonly) BOOL supportsNPOT;
 
 /** Whether or not PVR Texture Compressed is supported */
 @property (nonatomic, readonly) BOOL supportsPVRTC;
