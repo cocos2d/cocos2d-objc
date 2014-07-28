@@ -177,11 +177,8 @@ CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount, CC
 	size_t required = buffer->count + requestedCount;
 	size_t capacity = buffer->capacity;
 	if(required > capacity){
-		// Increase the buffer size until it fits.
 		// Why 1.5? https://github.com/facebook/folly/blob/master/folly/docs/FBVector.md
-		while(required >= buffer->capacity) buffer->capacity *= 1.5;
-		
-		[renderer resizeBuffer:buffer capacity:capacity];
+		[renderer resizeBuffer:buffer capacity:required*1.5];
 	}
 	
 	void *array = buffer->ptr + buffer->count*buffer->elementSize;
