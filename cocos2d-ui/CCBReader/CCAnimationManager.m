@@ -857,6 +857,13 @@ static NSInteger ccbAnimationManagerID = 0;
         
         CCActionInterval* action = [self actionFromKeyframe0:startKF andKeyframe1:endKF propertyName:seqProp.name node:node];
         
+        // Create delay to fix instant easing on non instant actions
+        if(startKF.easingType==kCCBKeyframeEasingInstant &&
+           ![seqProp.name isEqualToString:@"spriteFrame"] &&
+           ![seqProp.name isEqualToString:@"visible"]) {
+            [actions addObject:[CCActionDelay actionWithDuration:action.duration]];
+        }
+        
         if (action) {
             // Apply Easing
             action = [self easeAction:action easingType:startKF.easingType easingOpt:startKF.easingOpt];
