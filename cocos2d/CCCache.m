@@ -38,7 +38,7 @@
 
 @implementation CCCache
 {
-    NSCache *_cacheList;
+    NSMutableDictionary *_cacheList;
 }
 
 //------------------------------------------------------------------------------
@@ -56,20 +56,10 @@
     NSAssert(self, @"Unable to create class CCCache");
 
     // initialize
-    _cacheList = [[NSCache alloc] init];
-    [_cacheList setDelegate:self];
+    _cacheList = [NSMutableDictionary dictionary];
     
     // done
     return self;
-}
-
-- (void)cache:(NSCache *)cache willEvictObject:(id)obj
-{
-    CCCacheEntry *entry = (CCCacheEntry *)obj;
-    if (entry.sharedData != nil)
-    {
-        [self disposeOfSharedData:entry.sharedData];
-    }
 }
 
 //------------------------------------------------------------------------------
@@ -134,7 +124,24 @@
 
 - (void)flush
 {
-    [_cacheList removeAllObjects];
+    // iterate keys
+    for (id key in [_cacheList allKeys])
+    {
+        CCCacheEntry *entry = [_cacheList objectForKey:key];
+        
+        // if entry has no live public objects, delete the entry
+        if (entry.publicObject == nil)
+        {
+            // If the entry's shared data hasn't been disposed of by another alias, do it now.
+            if(entry.sharedData != nil)
+            {
+                [self disposeOfSharedData:entry.sharedData];
+                entry.sharedData = nil;
+            }
+            
+            [_cacheList removeObjectForKey:key];
+        }
+    }
 }
 
 //------------------------------------------------------------------------------

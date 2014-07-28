@@ -1142,16 +1142,33 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         // This is a file, register font with font manager
         NSString* fontPath = [[CCFileUtils sharedFileUtils] fullPathForFilename:fontFile];
         NSCAssert(fontPath != nil, @"FontFile can not be located");
+        
         NSURL* fontURL = [NSURL fileURLWithPath:fontPath];
         CTFontManagerRegisterFontsForURL((__bridge CFURLRef)fontURL, kCTFontManagerScopeProcess, NULL);
-        
-        CFArrayRef descriptors = CTFontManagerCreateFontDescriptorsFromURL((__bridge CFURLRef)fontURL);
-        if (!descriptors || CFArrayGetCount(descriptors)<1) {
-            return nil;
+        NSString *fontName = nil;
+#if __CC_PLATFORM_IOS
+        BOOL needsCGFontFailback = [[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending;
+#else
+        BOOL needsCGFontFailback = NO;
+#endif
+        if (!needsCGFontFailback) {
+            CFArrayRef descriptors = CTFontManagerCreateFontDescriptorsFromURL((__bridge CFURLRef)fontURL);
+            if (!descriptors || CFArrayGetCount(descriptors)<1) {
+                return nil;
+            }
+            CTFontDescriptorRef descriptor = CFArrayGetValueAtIndex(descriptors, 0);
+            fontName = (__bridge NSString *)CTFontDescriptorCopyAttribute(descriptor, kCTFontNameAttribute);
+            CFRelease(descriptors);
+            
+        } else {
+            CGDataProviderRef fontDataProvider = CGDataProviderCreateWithURL((__bridge CFURLRef)fontURL);
+            CGFontRef loadedFont = CGFontCreateWithDataProvider(fontDataProvider);
+            fontName = (__bridge NSString *)CGFontCopyPostScriptName(loadedFont);
+            
+            CGFontRelease(loadedFont);
+            CGDataProviderRelease(fontDataProvider);
         }
-        CTFontDescriptorRef descriptor = CFArrayGetValueAtIndex(descriptors, 0);
-        NSString * fontName = (__bridge NSString *)CTFontDescriptorCopyAttribute(descriptor, kCTFontFamilyNameAttribute);
-        CFRelease(descriptor);
+        
         [ccLabelTTF_registeredFonts setObject:fontName forKey:fontFile];
         return fontName;
     }
