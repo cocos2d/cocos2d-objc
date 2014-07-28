@@ -10,7 +10,7 @@
 #import "CCEffectStack_Private.h"
 #import "CCEffect_Private.h"
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
+
 @implementation CCEffectStack
 
 #pragma mark - API
@@ -229,6 +229,7 @@
     
     // Copy the shader for this new pass from the stitched effect.
     CCEffectRenderPass *newPass = [[CCEffectRenderPass alloc] init];
+    newPass.debugLabel = @"CCEffectStack_Stitched pass 0";
     newPass.shader = stitchedEffect.shader;
     newPass.shaderUniforms = [[NSMutableDictionary alloc] init];
     
@@ -331,4 +332,3 @@
 
 
 @end
-#endif

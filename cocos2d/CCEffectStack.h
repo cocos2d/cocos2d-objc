@@ -8,15 +8,56 @@
 
 #import "CCEffect.h"
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
+/**
+ * CCEffectStack allows multiple effects to be stacked together to form interesting
+ * visual combinations. Effect stacks are immutable in the sense that the effects they
+ * contain cannot be changed once the stack is created. However, the parameters of the
+ * contained effects can be changed.
+ *
+ */
+
 @interface CCEffectStack : CCEffect
 
+/// -----------------------------------------------------------------------
+/// @name Accessing Stack Attributes
+/// -----------------------------------------------------------------------
+
+/** The number of effects contained in the stack. */
 @property (nonatomic, readonly) NSUInteger effectCount;
 
+
+/// -----------------------------------------------------------------------
+/// @name Initializing a CCEffectStack object
+/// -----------------------------------------------------------------------
+
+/**
+ *  Initializes an empty effect stack object.
+ *
+ *  @return The CCEffectStack object.
+ */
 - (id)init;
+
+/**
+ *  Initializes an empty effect stack object.
+ *
+ *  @param effects The array of effects to add to the stack.
+ *
+ *  @return The CCEffectStack object.
+ */
 - (id)initWithEffects:(NSArray *)effects;
 
+
+/// -----------------------------------------------------------------------
+/// @name Accessing Contained Effects
+/// -----------------------------------------------------------------------
+
+/**
+ *  Retrieve a contained effect.
+ *
+ *  @param effectIndex The index of the effect object to retrieve.
+ *
+ *  @return The selected effect object.
+ */
 - (CCEffect *)effectAtIndex:(NSUInteger)effectIndex;
 
 @end
-#endif

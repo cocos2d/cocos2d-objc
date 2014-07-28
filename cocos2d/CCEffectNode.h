@@ -13,25 +13,32 @@
 #import "CCRenderTexture.h"
 #import "CCSprite.h"
 #import "CCTexture.h"
-#import "CCEffect.h"
-#import "CCEffectStack.h"
-#import "CCEffectBloom.h"
-#import "CCEffectBrightness.h"
-#import "CCEffectContrast.h"
-#import "CCEffectHue.h"
-#import "CCEffectPixellate.h"
-#import "CCEffectSaturation.h"
-#import "CCEffectRefraction.h"
 
 
 #ifdef __CC_PLATFORM_IOS
 #import <UIKit/UIKit.h>
 #endif // iPHone
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
+
+/**
+ * CCEffectNode allows the user to apply effects to the collection of nodes that
+ * are its children.
+ */
+
 @interface CCEffectNode : CCRenderTexture <CCEffectProtocol>
 
+/// -----------------------------------------------------------------------
+/// @name Initializing a CCEffectNode object
+/// -----------------------------------------------------------------------
+
+/**
+ *  Initializes a CCEffectNode object with the specified parameters.
+ * 
+ *  @param w The width of the effect node in points.
+ *  @param h The height of the effect node in points.
+ *
+ *  @return The CCEffectNode object.
+ */
 -(id)initWithWidth:(int)w height:(int)h;
 
 @end
-#endif

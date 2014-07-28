@@ -84,28 +84,28 @@
     CCCacheEntry *entry = [_cacheList objectForKey:key];
     
     if (entry == nil)
-		{
-				// Create the cached entry with the shared data.
+    {
+        // Create the cached entry with the shared data.
         entry = [[CCCacheEntry alloc] init];
-				entry.sharedData = [self createSharedDataForKey:key];
-				
+        entry.sharedData = [self createSharedDataForKey:key];
+        
         [_cacheList setObject:entry forKey:key];
     }
-		
-		return entry;
+    
+    return entry;
 }
 
 - (id)objectForKey:(id<NSCopying>)key
 {
     CCCacheEntry *entry = [self entryForKey:key];
 		
-		id object = entry.publicObject;
-		if (object == nil)
-		{
+    id object = entry.publicObject;
+    if (object == nil)
+    {
         // Create the public object from the shared data.
-		    object = entry.publicObject = [self createPublicObjectForSharedData:entry.sharedData];
-		}
-		
+        object = entry.publicObject = [self createPublicObjectForSharedData:entry.sharedData];
+    }
+    
     return object;
 }
 
@@ -113,6 +113,11 @@
 {
     CCCacheEntry *entry = [self entryForKey:key];
 		[_cacheList setObject:entry forKey:alias];
+}
+
+- (BOOL)keyExists:(id<NSCopying>)key
+{
+    return([_cacheList objectForKey:key] != nil);
 }
 
 //------------------------------------------------------------------------------

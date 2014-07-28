@@ -393,28 +393,6 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 /** The z order of the node relative to its "siblings": children of the same parent. */
 @property(nonatomic,assign) NSInteger zOrder;
 
-
-/// -----------------------------------------------------------------------
-/// @name Hit tests
-/// -----------------------------------------------------------------------
-
-/**
- *  Check if a touch is inside the node.
- *  To allow for custom detection, override this method.
- *
- *  @param pos World position.
- *
- *  @return Returns true, if the position is inside the node.
- */
-- (BOOL)hitTestWithWorldPos:(CGPoint)pos;
-
-/** 
- *  Expands ( or contracts ) the hit area of the node.
- *  The expansion is calculated as a margin around the sprite, in points.
- */
-@property (nonatomic, assign) float hitAreaExpansion;
-
-
 /// -----------------------------------------------------------------------
 /// @name Scene Management
 /// -----------------------------------------------------------------------

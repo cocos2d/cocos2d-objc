@@ -8,9 +8,8 @@
 
 #import "CCEffect.h"
 #import "CCEffect_Private.h"
-#import "CCtexture.h"
+#import "CCTexture.h"
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 NSString * const CCShaderUniformPreviousPassTexture = @"cc_PreviousPassTexture";
 
 static NSString* fragBase =
@@ -257,7 +256,7 @@ static NSString* vertBase =
 
 -(void)enqueueTriangles
 {
-    CCRenderState *renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms copyUniforms:NO];
+    CCRenderState *renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms copyUniforms:YES];
     
     CCRenderBuffer buffer = [_renderer enqueueTriangles:2 andVertexes:4 withState:renderState globalSortOrder:0];
 	CCRenderBufferSetVertex(buffer, 0, CCVertexApplyTransform(_verts.bl, &_transform));
@@ -537,7 +536,7 @@ static NSString* vertBase =
 -(CCEffectRenderPass *)renderPassAtIndex:(NSInteger)passIndex
 {
     NSAssert((passIndex >= 0) && (passIndex < _renderPasses.count), @"Pass index out of range.");
-    return _renderPasses[passIndex];;
+    return _renderPasses[passIndex];
 }
 
 -(BOOL)stitchSupported:(CCEffectFunctionStitchFlags)stitch
@@ -548,7 +547,6 @@ static NSString* vertBase =
 
 
 @end
-#endif
 
 
 
