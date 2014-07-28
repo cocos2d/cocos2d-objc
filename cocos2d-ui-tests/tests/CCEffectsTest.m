@@ -526,7 +526,7 @@
     sprite.position = ccp(0.1f, 0.9f);
     sprite.scale = 0.5f;
 
-    sprite.effect = [[CCEffectStack alloc] initWithEffects:@[effects[4]]];
+    sprite.effect = [[CCEffectStack alloc] initWithEffects:@[effects[9], effects[6]]];
     sprite.normalMapSpriteFrame = [CCSpriteFrame frameWithImageNamed:@"Images/ShinyBallNormals.png"];
     sprite.colorRGBA = [CCColor colorWithRed:0.75f green:0.75f blue:0.75f alpha:0.75f];
     
