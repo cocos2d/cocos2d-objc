@@ -515,9 +515,9 @@
                          [CCEffectPixellate effectWithBlockSize:8.0f],
                          [CCEffectSaturation effectWithSaturation:-1.0f],
                          [CCEffectHue effectWithHue:90.0f],
-                         [CCEffectGlass effectWithRefraction:0.5f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment],
-                         [CCEffectRefraction effectWithRefraction:0.5f environment:refractEnvironment],
-                         [CCEffectReflection effectWithFresnelBias:0.2f fresnelPower:2.0f environment:reflectEnvironment],
+                         [CCEffectGlass effectWithRefraction:0.75f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment],
+                         [CCEffectRefraction effectWithRefraction:0.75f environment:refractEnvironment],
+                         [CCEffectReflection effectWithFresnelBias:0.1f fresnelPower:2.0f environment:reflectEnvironment],
                          ];
     
     
