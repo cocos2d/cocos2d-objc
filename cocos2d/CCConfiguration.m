@@ -46,6 +46,7 @@
 
 @synthesize maxTextureSize = _maxTextureSize, maxTextureUnits=_maxTextureUnits;
 @synthesize supportsPVRTC = _supportsPVRTC;
+@synthesize supportsNPOT = _supportsNPOT;
 @synthesize supportsBGRA8888 = _supportsBGRA8888;
 @synthesize supportsDiscardFramebuffer = _supportsDiscardFramebuffer;
 @synthesize supportsShareableVAO = _supportsShareableVAO;
@@ -231,6 +232,14 @@ static char * glExtensions;
 	return _maxTextureUnits;
 }
 
+-(BOOL) supportsNPOT
+{
+	if( ! _openGLInitialized )
+		[self getOpenGLvariables];
+
+	return _supportsNPOT;
+}
+
 -(BOOL) supportsPVRTC
 {
 	if( ! _openGLInitialized )
@@ -319,6 +328,7 @@ static char * glExtensions;
 	printf("cocos2d: GL_MAX_SAMPLES: %d\n", _maxSamplesAllowed);
 	printf("cocos2d: GL supports PVRTC: %s\n", (_supportsPVRTC ? "YES" : "NO") );
 	printf("cocos2d: GL supports BGRA8888 textures: %s\n", (_supportsBGRA8888 ? "YES" : "NO") );
+	printf("cocos2d: GL supports NPOT textures: %s\n", (_supportsNPOT ? "YES" : "NO") );
 	printf("cocos2d: GL supports discard_framebuffer: %s\n", (_supportsDiscardFramebuffer ? "YES" : "NO") );
 	printf("cocos2d: GL supports shareable VAO: %s\n", (_supportsShareableVAO ? "YES" : "NO") );
 	

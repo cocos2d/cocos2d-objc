@@ -11,7 +11,6 @@
 #import "CCRenderer.h"
 #import "CCTexture.h"
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 static float conditionBrightness(float brightness);
 
 @interface CCEffectBrightness ()
@@ -91,5 +90,3 @@ float conditionBrightness(float brightness)
     NSCAssert((brightness >= -1.0) && (brightness <= 1.0), @"Supplied brightness out of range [-1..1].");
     return clampf(brightness, -1.0f, 1.0f);
 }
-
-#endif

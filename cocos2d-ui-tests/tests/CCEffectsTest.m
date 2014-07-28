@@ -4,7 +4,6 @@
 #import "CCEffectNode.h"
 #import "CCEffectGaussianBlur.h"
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 
 @interface CCEffectsTest : TestBase @end
 @implementation CCEffectsTest
@@ -492,23 +491,111 @@
     }
 }
 
+-(void)setupStackTest
+{
+    self.subTitle = @"Effect Stacking Test";
+    
+    CCSprite *reflectEnvironment = [CCSprite spriteWithImageNamed:@"Images/MountainPanorama.jpg"];
+    reflectEnvironment.positionType = CCPositionTypeNormalized;
+    reflectEnvironment.position = ccp(0.5f, 0.5f);
+    reflectEnvironment.visible = NO;
+    [self.contentNode addChild:reflectEnvironment];
+    
+    CCSprite *refractEnvironment = [CCSprite spriteWithImageNamed:@"Images/StoneWall.jpg"];
+    refractEnvironment.positionType = CCPositionTypeNormalized;
+    refractEnvironment.position = ccp(0.5f, 0.5f);
+    refractEnvironment.scale = 0.5;
+    [self.contentNode addChild:refractEnvironment];
+    
+    NSArray *effects = @[
+                         [CCEffectGaussianBlur effectWithPixelBlurRadius:7.0],
+                         [CCEffectBloom effectWithPixelBlurRadius:8 intensity:1.0f luminanceThreshold:0.0f],
+                         [CCEffectBrightness effectWithBrightness:0.25f],
+                         [CCEffectContrast effectWithContrast:1.0f],
+                         [CCEffectPixellate effectWithBlockSize:8.0f],
+                         [CCEffectSaturation effectWithSaturation:-1.0f],
+                         [CCEffectHue effectWithHue:90.0f],
+                         [CCEffectGlass effectWithRefraction:0.5f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment normalMap:nil],
+                         [CCEffectRefraction effectWithRefraction:0.5f environment:refractEnvironment normalMap:nil],
+                         [CCEffectReflection effectWithFresnelBias:0.2f fresnelPower:2.0f environment:reflectEnvironment normalMap:nil],
+                         ];
+    
+    
+    CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/ShinyBallColor.png"];
+    sprite.positionType = CCPositionTypeNormalized;
+    sprite.position = ccp(0.1f, 0.9f);
+    sprite.scale = 0.5f;
+
+    sprite.effect = [[CCEffectStack alloc] initWithEffects:@[effects[4]]];
+    sprite.normalMapSpriteFrame = [CCSpriteFrame frameWithImageNamed:@"Images/ShinyBallNormals.png"];
+    sprite.colorRGBA = [CCColor colorWithRed:0.75f green:0.75f blue:0.75f alpha:0.75f];
+    
+    [self.contentNode addChild:sprite];
+    
+    [sprite runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+                                                               [CCActionMoveTo actionWithDuration:8.0 position:ccp(0.9f, 0.9f)],
+                                                               [CCActionMoveTo actionWithDuration:8.0 position:ccp(0.9f, 0.1f)],
+                                                               [CCActionMoveTo actionWithDuration:8.0 position:ccp(0.1f, 0.1f)],
+                                                               [CCActionMoveTo actionWithDuration:8.0 position:ccp(0.1f, 0.9f)],
+                                                               nil
+                                                               ]]];
+}
+
 -(void)setupPerformanceTest
 {
     self.subTitle = @"Effect Performance Test";
+
+    CCSprite *reflectEnvironment = [CCSprite spriteWithImageNamed:@"Images/MountainPanorama.jpg"];
+    reflectEnvironment.positionType = CCPositionTypeNormalized;
+    reflectEnvironment.position = ccp(0.5f, 0.5f);
+    reflectEnvironment.visible = NO;
+
+    CCSprite *refractEnvironment = [CCSprite spriteWithImageNamed:@"Images/StoneWall.jpg"];
+    refractEnvironment.positionType = CCPositionTypeNormalized;
+    refractEnvironment.position = ccp(0.5f, 0.5f);
+    refractEnvironment.scale = 0.5;
     
-//    CCEffect *glow = [CCEffectGlow effectWithBlurStrength:0.02f];
-//    CCEffect *brightness = [[CCEffectBrightness alloc] initWithBrightness:0.25f];
-//    CCEffect *contrast = [[CCEffectContrast alloc] initWithContrast:1.0f];
-//    CCEffect *pixellate = [[CCEffectPixellate alloc] initWithBlockSize:4.0f];
-//    CCEffect *blur = [CCEffectGaussianBlur effectWithBlurStrength:0.02f direction:GLKVector2Make(1.0, 1.0)];
-    CCEffect *saturation = [[CCEffectSaturation alloc] initWithSaturation:0.0f];
-    NSArray *effects = @[saturation];
+    NSArray *allEffects = @[
+                            [CCEffectGaussianBlur effectWithPixelBlurRadius:7.0],
+                            [CCEffectBloom effectWithPixelBlurRadius:8 intensity:1.0f luminanceThreshold:0.0f],
+                            [CCEffectBrightness effectWithBrightness:0.25f],
+                            [CCEffectContrast effectWithContrast:1.0f],
+                            [CCEffectPixellate effectWithBlockSize:4.0f],
+                            [CCEffectSaturation effectWithSaturation:-1.0f],
+                            [CCEffectHue effectWithHue:90.0f],
+                            [CCEffectGlass effectWithRefraction:0.5f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment normalMap:nil],
+                            [CCEffectRefraction effectWithRefraction:0.5f environment:refractEnvironment normalMap:nil],
+                            [CCEffectReflection effectWithFresnelBias:0.1f fresnelPower:4.0f environment:reflectEnvironment normalMap:nil],
+                            ];
+    CCEffect *selectedEffect = allEffects[8];
+
+    
+    CCSpriteFrame *normalMap = nil;
+    if ([selectedEffect.debugName isEqualToString:@"CCEffectGlass"])
+    {
+        [self.contentNode addChild:reflectEnvironment];
+        [self.contentNode addChild:refractEnvironment];
+        normalMap = [CCSpriteFrame frameWithImageNamed:@"Images/ShinyBallNormals.png"];
+    }
+    else if ([selectedEffect.debugName isEqualToString:@"CCEffectRefraction"])
+    {
+        [self.contentNode addChild:refractEnvironment];
+        normalMap = [CCSpriteFrame frameWithImageNamed:@"Images/ShinyBallNormals.png"];
+    }
+    else if ([selectedEffect.debugName isEqualToString:@"CCEffectReflection"])
+    {
+        [self.contentNode addChild:reflectEnvironment];
+        normalMap = [CCSpriteFrame frameWithImageNamed:@"Images/ShinyBallNormals.png"];
+    }
+    
     
     CGSize containerSize = self.contentNode.contentSizeInPoints;
     
-    NSString *spriteImage = @"Images/snow.png";
     const float footprintScale = 1.1f;
-    CCSprite *sprite = [self spriteWithEffects:effects image:spriteImage atPosition:ccp(0, 0)];
+    
+    NSString *spriteImage = @"Images/r1.png";
+    CCSprite *sprite = [CCSprite spriteWithImageNamed:spriteImage];
+    
     CGSize spriteSize = sprite.contentSizeInPoints;
     CGSize spriteFootprint = CGSizeMake(spriteSize.width * footprintScale, spriteSize.height * footprintScale);
     CGSize allSpritesBounds = CGSizeMake(((int)(containerSize.width / spriteFootprint.width) * spriteFootprint.width),
@@ -521,10 +608,25 @@
     {
         for (float xPos = origin.x; (xPos + spriteFootprint.width) < containerSize.width; xPos += spriteFootprint.width)
         {
-            sprite = [self spriteWithEffects:effects image:spriteImage atPosition:ccp(xPos, yPos)];
-            sprite.anchorPoint = ccp(0.0f, 0.0f);
+            if (normalMap)
+            {
+                sprite = [[CCSprite alloc] init];
+                sprite.normalMapSpriteFrame = normalMap;
+                sprite.scale = 0.1f;
+                sprite.colorRGBA = [CCColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.0f];
+            }
+            else
+            {
+                sprite = [CCSprite spriteWithImageNamed:spriteImage];
+            }
+            
             sprite.positionType = CCPositionTypePoints;
+            sprite.position = ccp(xPos, yPos);
+            sprite.anchorPoint = ccp(0.0f, 0.0f);
+            sprite.effect = selectedEffect;
+
             [self.contentNode addChild:sprite];
+            
             count++;
         }
     }
@@ -608,5 +710,4 @@
 	[node addChild:sprite];
 }
 @end
-#endif
 

@@ -11,7 +11,6 @@
 #import "CCRenderer.h"
 #import "CCTexture.h"
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 static float conditionContrast(float contrast);
 
 
@@ -99,5 +98,3 @@ float conditionContrast(float contrast)
     float clampedExp = clampf(contrast, -1.0f, 1.0f);
     return powf(kContrastBase, clampedExp);
 }
-
-#endif

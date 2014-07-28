@@ -9,7 +9,6 @@
 #import "CCEffectUtils.h"
 
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 
 static const float CCEffectUtilsMinRefract = -0.25;
 static const float CCEffectUtilsMaxRefract = 0.043;
@@ -55,4 +54,3 @@ float CCEffectUtilsConditionRefraction(float refraction)
     }
 }
 
-#endif

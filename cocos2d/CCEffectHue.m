@@ -47,7 +47,7 @@
 
 #define CCEFFECTHUE_USES_COLOR_MATRIX 1
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
+
 static float conditionHue(float hue);
 
 #if CCEFFECTHUE_USES_COLOR_MATRIX
@@ -226,4 +226,3 @@ GLKMatrix4 matrixWithHue(float hue)
 }
 #endif
 
-#endif

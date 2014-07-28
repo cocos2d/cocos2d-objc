@@ -75,6 +75,7 @@ typedef NS_ENUM(NSUInteger, CCDevice) {
 	
 	GLint			_maxTextureSize;
 	BOOL			_supportsPVRTC;
+	BOOL			_supportsNPOT;
 	BOOL			_supportsBGRA8888;
 	BOOL			_supportsDiscardFramebuffer;
 	BOOL			_supportsShareableVAO;

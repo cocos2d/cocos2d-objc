@@ -43,7 +43,6 @@
 #import "CCEffectGaussianBlur.h"
 #import "CCTexture.h"
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 
 @implementation CCEffectGaussianBlur {
     NSUInteger _numberOfOptimizedOffsets;
@@ -315,5 +314,4 @@
 }
 
 @end
-#endif
 

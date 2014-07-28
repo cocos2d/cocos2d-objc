@@ -58,10 +58,8 @@
 
 @protocol CCEffectProtocol <NSObject>
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 /** Effect which will be applied to this sprite, NOTE: effect will overwrite any custom CCShader settings. */
 @property (nonatomic) CCEffect* effect;
-#endif
 
 @end
 
