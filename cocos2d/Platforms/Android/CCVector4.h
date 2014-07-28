@@ -487,6 +487,7 @@ extern "C" {
 #define GLKVector4Distance GLKVect
 #define GLKVector4Lerp CCVector4Lerp
 #define GLKVector4Project CCVector4Project
+#define GLKVector4CrossProduct CCVector4CrossProduct
 
 #endif /* __CC_VECTOR_4_H */
 

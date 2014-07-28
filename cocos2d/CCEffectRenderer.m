@@ -50,7 +50,7 @@
 {
     NSAssert(!_glResourcesAllocated, @"");
     
-    glPushGroupMarkerEXT(0, "CCEffectRenderTarget: allocateRenderTarget");
+    CCGL_DEBUG_PUSH_GROUP_MARKER("CCEffectRenderTarget: allocateRenderTarget");
     
 	// Textures may need to be a power of two
 	NSUInteger powW;
@@ -93,7 +93,7 @@
 	glBindFramebuffer(GL_FRAMEBUFFER, oldFBO);
 	
 	CC_CHECK_GL_ERROR_DEBUG();
-	glPopGroupMarkerEXT();
+	CCGL_DEBUG_POP_GROUP_MARKER();
     
     _glResourcesAllocated = YES;
     return YES;
