@@ -7,9 +7,7 @@
 //
 
 #import "TestBase.h"
-#if !__CC_PLATFORM_ANDROID_COMPILE_ON_IOS_LAWLZ
 #import "CCTextField.h"
-#endif
 
 @interface CCTextFieldTest : TestBase @end
 
@@ -24,7 +22,6 @@
 
 - (void) setupTextFieldBasicTest
 {
-#if !__CC_PLATFORM_ANDROID_COMPILE_ON_IOS_LAWLZ
     self.subTitle = @"Tests text fields.";
     
     CCSpriteFrame* bg = [CCSpriteFrame frameWithImageNamed:@"Tests/textfield-bg.png"];
@@ -41,16 +38,13 @@
     [textField setTarget:self selector:@selector(pressedEnter:)];
     
     [self.contentNode addChild:textField];
-#endif
 }
 
 - (void) pressedEnter:(id)sender
 {
-#if !__CC_PLATFORM_ANDROID_COMPILE_ON_IOS_LAWLZ
     CCTextField* textField = sender;
     
     NSLog(@"Finished editing: %@", textField.string);
-#endif
 }
 
 @end

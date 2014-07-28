@@ -39,10 +39,8 @@ extern const NSString *CARD_NAME[];
 
 - (void)touchMoved:(CCTouch *)touch withEvent:(CCTouchEvent *)event
 {
-#if !__CC_PLATFORM_ANDROID_COMPILE_ON_IOS_LAWLZ
     CGPoint pos = [self.parent convertToNodeSpace:touch.locationInWorld];
     self.position = pos;
-#endif
 }
 
 - (void)touchEnded:(CCTouch *)touch withEvent:(CCTouchEvent *)event
