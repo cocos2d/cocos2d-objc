@@ -414,30 +414,42 @@ static NSString* vertBase =
 
 -(void)buildEffectShader
 {
-    //Build varying vars
-    NSMutableString* varyingVarsToInsert = [[NSMutableString alloc] init];
-    for(CCEffectVarying* varying in _varyingVars)
-    {
-        [varyingVarsToInsert appendFormat:@"%@\n", varying.declaration];
-    }
+    NSString *fragBody = [self  buildShaderSourceFromBase:fragBase functions:_fragmentFunctions uniforms:_fragmentUniforms varyings:_varyingVars];
+//    NSLog(@"\n------------fragBody:\n%@", fragBody);
+    
+    NSString *vertBody = [self  buildShaderSourceFromBase:vertBase functions:_vertexFunctions uniforms:_vertexUniforms varyings:_varyingVars];
+//    NSLog(@"\n------------vertBody:\n%@", vertBody);
+    
+    _shader = [[CCShader alloc] initWithVertexShaderSource:vertBody fragmentShaderSource:fragBody];
 
-    
-    // Build fragment body
-    NSMutableString* fragUniforms = [[NSMutableString alloc] init];
-    for(CCEffectUniform* uniform in _fragmentUniforms)
+}
+
+-(NSString *)buildShaderSourceFromBase:(NSString *)shaderBase functions:(NSArray *)functions uniforms:(NSArray *)uniforms varyings:(NSArray *)varyings
+{
+    // Build the varying string
+    NSMutableString* varyingString = [[NSMutableString alloc] init];
+    for(CCEffectVarying* varying in varyings)
     {
-        [fragUniforms appendFormat:@"%@\n", uniform.declaration];
+        [varyingString appendFormat:@"%@\n", varying.declaration];
     }
     
-    NSMutableString* fragFunctions = [[NSMutableString alloc] init];
+    // Build the uniform string
+    NSMutableString* uniformString = [[NSMutableString alloc] init];
+    for(CCEffectUniform* uniform in uniforms)
+    {
+        [uniformString appendFormat:@"%@\n", uniform.declaration];
+    }
+    
+    // Build the function body strings
+    NSMutableString* functionString = [[NSMutableString alloc] init];
     NSMutableString* effectFunctionBody = [[NSMutableString alloc] init];
     [effectFunctionBody appendString:@"vec4 tmp;\n"];
     
-    for(CCEffectFunction* curFunction in _fragmentFunctions)
+    for(CCEffectFunction* curFunction in functions)
     {
-        [fragFunctions appendFormat:@"%@\n", curFunction.function];
+        [functionString appendFormat:@"%@\n", curFunction.function];
         
-        if([_fragmentFunctions firstObject] == curFunction)
+        if([functions firstObject] == curFunction)
         {
             for (CCEffectFunctionInput *input in curFunction.inputs)
             {
@@ -456,44 +468,11 @@ static NSString* vertBase =
     [effectFunctionBody appendString:@"return tmp;\n"];
     
     CCEffectFunction* effectFunction = [[CCEffectFunction alloc] initWithName:@"effectFunction" body:effectFunctionBody inputs:nil returnType:@"vec4"];
-    [fragFunctions appendFormat:@"%@\n", effectFunction.function];
+    [functionString appendFormat:@"%@\n", effectFunction.function];
     
-    NSString* fragBody = [NSString stringWithFormat:fragBase, fragUniforms, varyingVarsToInsert, fragFunctions, [effectFunction callStringWithInputs:nil]];
-//    NSLog(@"\n------------fragBody:\n%@", fragBody);
-    
-    
-    
-    // Build vertex body
-    NSMutableString* vertexUniforms = [[NSMutableString alloc] init];
-    for(CCEffectUniform* uniform in _vertexUniforms)
-    {
-        [vertexUniforms appendFormat:@"%@\n", uniform.declaration];
-    }
-
-    
-    NSMutableString* vertexFunctions = [[NSMutableString alloc] init];
-    effectFunctionBody = [[NSMutableString alloc] init];
-    [effectFunctionBody appendString:@"return "];
-    
-    for(CCEffectFunction* curFunction in _vertexFunctions)
-    {
-        [vertexFunctions appendFormat:@"%@\n", curFunction.function];
-        
-        [effectFunctionBody appendString:[curFunction callStringWithInputs:nil]];
-        if([_vertexFunctions lastObject] != curFunction)
-            [effectFunctionBody appendString:@" + "];
-        else
-            [effectFunctionBody appendString:@";"];
-    }
-    
-    effectFunction = [[CCEffectFunction alloc] initWithName:@"effectFunction" body:effectFunctionBody inputs:nil returnType:@"vec4"];
-    [vertexFunctions appendFormat:@"%@\n", effectFunction.function];
-    
-    NSString* vertBody = [NSString stringWithFormat:vertBase, vertexUniforms, varyingVarsToInsert, vertexFunctions, [effectFunction callStringWithInputs:nil]];
-//    NSLog(@"\n------------vertBody:\n%@", vertBody);
-    
-    _shader = [[CCShader alloc] initWithVertexShaderSource:vertBody fragmentShaderSource:fragBody];
-
+    // Put it all together
+    NSString *shaderSource = [NSString stringWithFormat:shaderBase, uniformString, varyingString, functionString, [effectFunction callStringWithInputs:nil]];
+    return shaderSource;
 }
 
 -(void)buildFragmentFunctions
