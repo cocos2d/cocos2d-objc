@@ -521,22 +521,29 @@
                          ];
     
     
-    CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/ShinyBallColor.png"];
+//    CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/ShinyBallColor.png"];
+    CCSprite *sprite = [[CCSprite alloc] init];
     sprite.positionType = CCPositionTypeNormalized;
-    sprite.position = ccp(0.1f, 0.9f);
+    sprite.position = ccp(0.5f, 0.5f);
     sprite.scale = 0.5f;
 
-    sprite.effect = [[CCEffectStack alloc] initWithEffects:@[effects[9], effects[6]]];
+    sprite.effect = [[CCEffectStack alloc] initWithEffects:@[effects[8], effects[9]]];
+//    sprite.effect = [[CCEffectStack alloc] initWithEffects:@[effects[7]]];
+    
     sprite.normalMapSpriteFrame = [CCSpriteFrame frameWithImageNamed:@"Images/ShinyBallNormals.png"];
     sprite.colorRGBA = [CCColor colorWithRed:0.75f green:0.75f blue:0.75f alpha:0.75f];
+    sprite.colorRGBA = [CCColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.0f];
     
     [self.contentNode addChild:sprite];
     
+    CGPoint p1 = CGPointMake(0.1f, 0.1f);
+    CGPoint p2 = CGPointMake(0.9f, 0.9f);
+    
     [sprite runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
-                                                               [CCActionMoveTo actionWithDuration:8.0 position:ccp(0.9f, 0.9f)],
-                                                               [CCActionMoveTo actionWithDuration:8.0 position:ccp(0.9f, 0.1f)],
-                                                               [CCActionMoveTo actionWithDuration:8.0 position:ccp(0.1f, 0.1f)],
-                                                               [CCActionMoveTo actionWithDuration:8.0 position:ccp(0.1f, 0.9f)],
+                                                               [CCActionMoveTo actionWithDuration:2.0 position:ccp(p1.x, p2.y)],
+                                                               [CCActionMoveTo actionWithDuration:4.0 position:ccp(p2.x, p2.y)],
+                                                               [CCActionMoveTo actionWithDuration:2.0 position:ccp(p2.x, p1.y)],
+                                                               [CCActionMoveTo actionWithDuration:4.0 position:ccp(p1.x, p1.y)],
                                                                nil
                                                                ]]];
 }
