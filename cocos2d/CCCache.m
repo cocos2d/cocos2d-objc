@@ -36,9 +36,9 @@
 
 //------------------------------------------------------------------------------
 
-@implementation CCCache 
+@implementation CCCache
 {
-    NSMutableDictionary *_cacheList;
+    NSCache *_cacheList;
 }
 
 //------------------------------------------------------------------------------
@@ -56,10 +56,20 @@
     NSAssert(self, @"Unable to create class CCCache");
 
     // initialize
-    _cacheList = [NSMutableDictionary dictionary];
+    _cacheList = [[NSCache alloc] init];
+    [_cacheList setDelegate:self];
     
     // done
     return self;
+}
+
+- (void)cache:(NSCache *)cache willEvictObject:(id)obj
+{
+    CCCacheEntry *entry = (CCCacheEntry *)obj;
+    if (entry.sharedData != nil)
+    {
+        [self disposeOfSharedData:entry.sharedData];
+    }
 }
 
 //------------------------------------------------------------------------------
@@ -112,31 +122,14 @@
 - (void)makeAlias:(id<NSCopying>)alias forKey:(id<NSCopying>)key
 {
     CCCacheEntry *entry = [self entryForKey:key];
-		[_cacheList setObject:entry forKey:alias];
+    [_cacheList setObject:entry forKey:alias];
 }
 
 //------------------------------------------------------------------------------
 
 - (void)flush
 {
-    // iterate keys
-    for (id key in [_cacheList allKeys])
-    {
-        CCCacheEntry *entry = [_cacheList objectForKey:key];
-        
-        // if entry has no live public objects, delete the entry
-        if (entry.publicObject == nil)
-        {
-				    // If the entry's shared data hasn't been disposed of by another alias, do it now.
-				    if(entry.sharedData != nil)
-						{
-                [self disposeOfSharedData:entry.sharedData];
-		    				entry.sharedData = nil;
-						}
-						
-            [_cacheList removeObjectForKey:key];
-        }
-    }
+    [_cacheList removeAllObjects];
 }
 
 //------------------------------------------------------------------------------
@@ -144,7 +137,7 @@
 //------------------------------------------------------------------------------
 
 // creates the data associated with the key
-// this could ex. be a GLKTextureInfo class for use with creating textures
+// this could ex. be a CCTextureInfo class for use with creating textures
 
 - (id)createSharedDataForKey:(id<NSCopying>)key
 {
@@ -164,7 +157,7 @@
 
 //------------------------------------------------------------------------------
 // dispose the underlying data
-// this could ex be disposal of the GLKTextureInfo class, used when creating textures
+// this could ex be disposal of the CCTextureInfo class, used when creating textures
 
 - (void)disposeOfSharedData:(id)data
 {

@@ -155,7 +155,8 @@ static CCFileUtils *fileUtils = nil;
 		_filenameLookup = [[NSMutableDictionary alloc] initWithCapacity:10];
 								  
 		
-#ifdef __CC_PLATFORM_IOS
+        // TODO: what would make sense for android?
+#if __CC_PLATFORM_IOS
 		_suffixesDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
 						 @"-ipad", CCFileUtilsSuffixiPad,
 						 @"-ipadhd", CCFileUtilsSuffixiPadHD,
@@ -176,7 +177,7 @@ static CCFileUtils *fileUtils = nil;
 							@"", CCFileUtilsSuffixDefault,
 							nil];
 
-#elif defined(__CC_PLATFORM_MAC)
+#elif __CC_PLATFORM_MAC
 		_suffixesDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
 						 @"", CCFileUtilsSuffixMac,
 						 @"-machd", CCFileUtilsSuffixMacHD,
@@ -214,10 +215,10 @@ static CCFileUtils *fileUtils = nil;
 - (void) buildSearchResolutionsOrder
 {
 	NSInteger device = [[CCConfiguration sharedConfiguration] runningDevice];
-
+    
 	[_searchResolutionsOrder removeAllObjects];
 	
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 	if (device == CCDeviceiPadRetinaDisplay)
 	{
 		[_searchResolutionsOrder addObject:CCFileUtilsSuffixiPadHD];
@@ -257,7 +258,7 @@ static CCFileUtils *fileUtils = nil;
 		[_searchResolutionsOrder addObject:CCFileUtilsSuffixiPhone];
 	}
 	
-#elif defined(__CC_PLATFORM_MAC)
+#elif __CC_PLATFORM_MAC
 	if (device == CCDeviceMacRetinaDisplay)
 	{
 		[_searchResolutionsOrder addObject:CCFileUtilsSuffixMacHD];
@@ -267,7 +268,12 @@ static CCFileUtils *fileUtils = nil;
 	{
 		[_searchResolutionsOrder addObject:CCFileUtilsSuffixMac];
 	}
-#endif	
+#elif __CC_PLATFORM_ANDROID
+    [_searchResolutionsOrder addObject:CCFileUtilsSuffixiPhone5HD];
+    [_searchResolutionsOrder addObject:CCFileUtilsSuffixiPhoneHD];
+    [_searchResolutionsOrder addObject:CCFileUtilsSuffixiPhone5];
+    [_searchResolutionsOrder addObject:CCFileUtilsSuffixiPhone];
+#endif
 	
 	[_searchResolutionsOrder addObject:CCFileUtilsSuffixDefault];
 }
@@ -385,7 +391,7 @@ static CCFileUtils *fileUtils = nil;
 		NSString *value = [dictionary objectForKey:key];
 		if( [value isEqualToString:k] ) {
 			
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
 			// XXX Add this in a Dictionary
 			if( [key isEqualToString:CCFileUtilsSuffixiPad] )
 				return 1.0*_iPadContentScaleFactor;
@@ -401,7 +407,7 @@ static CCFileUtils *fileUtils = nil;
 				return 2.0*_iPhoneContentScaleFactor;
 			if( [key isEqualToString:CCFileUtilsSuffixDefault] )
 				return 1.0;
-#elif defined(__CC_PLATFORM_MAC)
+#elif __CC_PLATFORM_MAC
 			if( [key isEqualToString:CCFileUtilsSuffixMac] )
 				return 1.0*_macContentScaleFactor;
 			if( [key isEqualToString:CCFileUtilsSuffixMacHD] )
@@ -607,7 +613,7 @@ static CCFileUtils *fileUtils = nil;
 	}
 }
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 
 -(void) setiPadRetinaDisplaySuffix:(NSString *)suffix
 {
@@ -634,7 +640,7 @@ static CCFileUtils *fileUtils = nil;
 	_iPadContentScaleFactor = scale;
 }
 
-#elif defined(__CC_PLATFORM_MAC)
+#elif __CC_PLATFORM_MAC
 
 -(void)setMacContentScaleFactor:(CGFloat)scale
 {
@@ -717,7 +723,7 @@ static CCFileUtils *fileUtils = nil;
 	return ( path != nil );
 }
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 
 -(BOOL) iPhoneRetinaDisplayFileExistsAtPath:(NSString*)path
 {

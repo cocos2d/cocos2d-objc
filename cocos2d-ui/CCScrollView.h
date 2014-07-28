@@ -38,20 +38,25 @@
 
 @end
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 
 // Class definition for iOS
 @interface CCScrollView : CCNode <UIGestureRecognizerDelegate>
 
-#elif defined(__CC_PLATFORM_MAC)
+#elif __CC_PLATFORM_MAC
 
 // Class definition for Mac
+@interface CCScrollView : CCNode
+
+
+#else
+
 @interface CCScrollView : CCNode
 
 #endif
 
 {
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
     UIPanGestureRecognizer* _panRecognizer;
     CCTapDownGestureRecognizer* _tapRecognizer;
 #endif

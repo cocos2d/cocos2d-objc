@@ -30,13 +30,11 @@
 #import "cocos2d.h"
 #import <CoreText/CoreText.h>
 
-@implementation NSAttributedString (CCAdditions)
 
-- (BOOL) hasAttribute:(NSString*)attr
-{
-    NSRange fullRange = NSMakeRange(0, self.length);
+BOOL NSAttributedStringHasAttribute(NSAttributedString *attrString, NSString*attr){
+    NSRange fullRange = NSMakeRange(0, attrString.length);
     __block BOOL hasAttribute = NO;
-    [self enumerateAttribute:attr inRange:fullRange options:0 usingBlock:^(id value, NSRange range, BOOL* stop){
+    [attrString enumerateAttribute:attr inRange:fullRange options:0 usingBlock:^(id value, NSRange range, BOOL* stop){
         if (value)
         {
             hasAttribute = YES;
@@ -47,35 +45,45 @@
     return hasAttribute;
 }
 
-- (NSAttributedString*) copyAdjustedForContentScaleFactor
-{
-    NSMutableAttributedString* copy = [self mutableCopy];
+NSAttributedString* NSAttributedStringCopyAdjustedForContentScaleFactor(NSAttributedString *attrString){
+    NSMutableAttributedString* copy = [attrString mutableCopy];
     
     NSRange fullRange = NSMakeRange(0, copy.length);
     
-		CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
-		
+    CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
+	
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
+
     // Update font size
-    [copy enumerateAttribute:NSFontAttributeName inRange:fullRange options:0 usingBlock:^(id value, NSRange range, BOOL* stop){
+    [copy enumerateAttribute:(id)kCTFontAttributeName inRange:fullRange options:0 usingBlock:^(id value, NSRange range, BOOL* stop){
         if (value)
         {
-#ifdef __CC_PLATFORM_IOS
-            UIFont* font = value;
-            font = [UIFont fontWithName:font.fontName size:font.pointSize * scale];
-#elif defined(__CC_PLATFORM_MAC)
-            NSFont* font = value;
-            font = [NSFont fontWithName:font.fontName size:font.pointSize * scale];
-#elif defined(__CC_PLATFORM_ANDROID)
-            CTFontRef font = CTFontCreateCopyWithAttributes(value, font.pointSize * scale, NULL, NULL);
-#endif
-            [copy removeAttribute:NSFontAttributeName range:range];
-            [copy addAttribute:NSFontAttributeName value:(id)font range:range];
-#if defined(__CC_PLATFORM_ANDROID)
+            NSCAssert((CFGetTypeID((__bridge CFTypeRef)(value))==CTFontGetTypeID()), @"CFTypeID does not match");
+            CTFontRef oldFont = (__bridge CTFontRef)value;
+            CTFontRef font = CTFontCreateCopyWithAttributes(oldFont, CTFontGetSize(oldFont) * scale, NULL, NULL);
+            [copy removeAttribute:(id)kCTFontAttributeName range:range];
+            [copy addAttribute:(id)kCTFontAttributeName value:(__bridge id)font range:range];
             CFRelease(font);
-#endif
         }
     }];
     
+    
+#elif __CC_PLATFORM_MAC
+
+    [copy enumerateAttribute:NSFontAttributeName inRange:fullRange options:0 usingBlock:^(id value, NSRange range, BOOL* stop){
+        if (value)
+        {
+
+            NSFont* font = value;
+            font = [NSFont fontWithName:font.fontName size:font.pointSize * scale];
+            [copy removeAttribute:NSFontAttributeName range:range];
+            [copy addAttribute:NSFontAttributeName value:(id)font range:range];
+            
+            
+        }
+    }];
+#endif
+#if 0 /*__CC_PLATFORM_ANDROID_FIXME*/
     // Update shadows
     [copy enumerateAttribute:NSShadowAttributeName inRange:fullRange options:0 usingBlock:^(id value, NSRange range, BOOL* stop){
         if (value)
@@ -88,70 +96,75 @@
             [copy addAttribute:NSShadowAttributeName value:shadow range:range];
         }
     }];
-    
+#endif
     return copy;
 }
 
-- (float) singleFontSize
-{
-    NSRange fullRange = NSMakeRange(0, self.length);
+float NSAttributedStringSingleFontSize(NSAttributedString *attrString){
+    NSRange fullRange = NSMakeRange(0, attrString.length);
     __block BOOL foundValue = NO;
     __block BOOL singleValue = YES;
     __block float fontSize = 0;
-    [self enumerateAttribute:NSFontAttributeName inRange:fullRange options:0 usingBlock:^(id value, NSRange range, BOOL* stop){
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
+    [attrString enumerateAttribute:(id)kCTFontAttributeName inRange:fullRange options:0 usingBlock:^(id value, NSRange range, BOOL* stop){
         if (value)
         {
-#ifdef __CC_PLATFORM_IOS
-            UIFont* font = value;
-#elif defined(__CC_PLATFORM_MAC)
-            NSFont* font = value;
-#elif defined(__CC_PLATFORM_ANDROID)
-            CTFontRef font = value;
-#endif
-            
+            NSCAssert((CFGetTypeID((__bridge CFTypeRef)(value))==CTFontGetTypeID()), @"CFTypeID does not match");
+
+            CTFontRef font = (__bridge CTFontRef)(value);
             if (foundValue)
             {
                 singleValue = NO;
                 *stop = YES;
             }
             foundValue = YES;
-#if defined(__CC_PLATFORM_ANDROID)
             fontSize = CTFontGetSize(font);
-#else
-            fontSize = font.pointSize;
-#endif
             if (!NSEqualRanges(fullRange, range)) singleValue = NO;
         }
     }];
+    
+    
+#elif __CC_PLATFORM_MAC
+
+    
+    [attrString enumerateAttribute:(id)kCTFontAttributeName inRange:fullRange options:0 usingBlock:^(id value, NSRange range, BOOL* stop){
+        if (value)
+        {
+            NSFont* font = value;
+            if (foundValue)
+            {
+                singleValue = NO;
+                *stop = YES;
+            }
+            foundValue = YES;
+            fontSize = font.pointSize;
+            if (!NSEqualRanges(fullRange, range)) singleValue = NO;
+        }
+    }];
+#endif
+
+    
     
     if (foundValue && singleValue) return fontSize;
     return 0;
 }
 
-- (NSAttributedString*) copyWithNewFontSize:(float) size
-{
-#ifdef __CC_PLATFORM_IOS
-    UIFont* font = [self attribute:NSFontAttributeName atIndex:0 effectiveRange:NULL];
-#elif defined(__CC_PLATFORM_MAC)
-    NSFont* font = [self attribute:NSFontAttributeName atIndex:0 effectiveRange:NULL];
-#elif defined(__CC_PLATFORM_ANDROID)
-    CTFontRef font = [self attribute:(__bridge NSString*)kCTFontAttributeName atIndex:0 effectiveRange:NULL];
-#endif
-    if (!font) return NULL;
+NSAttributedString *NSAttributedStringCopyWithNewFontSize(NSAttributedString *attrString, float size){
+    NSMutableAttributedString* copy = [attrString mutableCopy];
 
-#ifdef __CC_PLATFORM_IOS
-    UIFont* newFont = [UIFont fontWithName:font.fontName size:size];
-#elif defined(__CC_PLATFORM_MAC)
-    NSFont* newFont = [NSFont fontWithName:font.fontName size:size];
-#elif defined(__CC_PLATFORM_ANDROID)
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
+    CFTypeRef value = (__bridge CTFontRef)([attrString attribute:(id)kCTFontAttributeName atIndex:0 effectiveRange:NULL]);
+    NSCAssert((CFGetTypeID(value)==CTFontGetTypeID()), @"CFTypeID does not match");
+    CTFontRef font = (CTFontRef)value;
     CTFontRef newFont = CTFontCreateCopyWithAttributes(font, size, NULL, NULL);
-#endif
-    NSMutableAttributedString* copy = [self mutableCopy];
-    [copy addAttribute:NSFontAttributeName value:newFont range:NSMakeRange(0, copy.length)];
-#if defined(__CC_PLATFORM_ANDROID)
+    [copy addAttribute:(id)kCTFontAttributeName value:(__bridge id)(newFont) range:NSMakeRange(0, copy.length)];
     CFRelease(newFont);
+#elif __CC_PLATFORM_MAC
+    NSFont* font = [attrString attribute:NSFontAttributeName atIndex:0 effectiveRange:NULL];
+    NSFont* newFont = [NSFont fontWithName:font.fontName size:size];
+    [copy addAttribute:NSFontAttributeName value:newFont range:NSMakeRange(0, copy.length)];
+
 #endif
     return copy;
 }
 
-@end

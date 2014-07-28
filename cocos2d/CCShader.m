@@ -204,7 +204,8 @@ CompileShader(GLenum type, const char *source)
 
 +(GLuint)createVAOforCCVertexBuffer:(GLuint)vbo elementBuffer:(GLuint)ebo
 {
-	glPushGroupMarkerEXT(0, "CCShader: Creating vertex buffer");
+    
+	CCGL_DEBUG_PUSH_GROUP_MARKER("CCShader: Creating vertex buffer");
 	
 	GLuint vao = 0;
 	glGenVertexArrays(1, &vao);
@@ -227,7 +228,7 @@ CompileShader(GLenum type, const char *source)
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	
-	glPopGroupMarkerEXT();
+	CCGL_DEBUG_POP_GROUP_MARKER();
 	
 	return vao;
 }
@@ -401,7 +402,7 @@ SetMat4(NSString *name, GLint location)
 
 -(instancetype)initWithVertexShaderSource:(NSString *)vertexSource fragmentShaderSource:(NSString *)fragmentSource
 {
-	glPushGroupMarkerEXT(0, "CCShader: Init");
+	CCGL_DEBUG_PUSH_GROUP_MARKER("CCShader: Init");
 	
 	GLuint program = glCreateProgram();
 	glBindAttribLocation(program, CCAttributePosition, "cc_Position");
@@ -421,7 +422,7 @@ SetMat4(NSString *name, GLint location)
 	glDeleteShader(vshader);
 	glDeleteShader(fshader);
 	
-	glPopGroupMarkerEXT();
+	CCGL_DEBUG_POP_GROUP_MARKER();
 	
 	return [self initWithProgram:program uniformSetters:[self uniformSettersForProgram:program] ownsProgram:YES];
 }

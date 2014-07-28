@@ -68,7 +68,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 // Only compile this code on iOS. These files should NOT be included on your Mac project.
 // But in case they are included, it won't be compiled.
 #import "../../ccMacros.h"
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -78,6 +78,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "../../ccMacros.h"
 #import "../../CCConfiguration.h"
 #import "CCScene.h"
+#import "CCTouch.h"
+#import "CCTouchEvent.h"
 
 #import "CCDirector_Private.h"
 
@@ -88,7 +90,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 - (unsigned int) convertPixelFormat:(NSString*) pixelFormat;
 @end
 
-@implementation CCGLView
+@implementation CCGLView {
+    CCTouchEvent* _touchEvent;
+}
 
 @synthesize surfaceSize=_size;
 @synthesize pixelFormat=_pixelformat, depthFormat=_depthFormat;
@@ -152,6 +156,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
         self.multipleTouchEnabled = YES;
 
 		CC_CHECK_GL_ERROR_DEBUG();
+        
+        _touchEvent = [[CCTouchEvent alloc] init];
 	}
 
 	return self;
@@ -202,7 +208,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 	_context = [_renderer context];
 
-	_discardFramebufferSupported = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
+    _discardFramebufferSupported = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
 
 	CC_CHECK_GL_ERROR_DEBUG();
 
@@ -217,10 +223,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void) layoutSubviews
 {
-	[_renderer resizeFromLayer:(CAEAGLLayer*)self.layer];
-
+    [_renderer resizeFromLayer:(CAEAGLLayer*)self.layer];
+    
 	_size = [_renderer backingSize];
-
+    
 	// Issue #914 #924
 	CCDirector *director = [CCDirector sharedDirector];
 	[director reshapeProjection:_size];
@@ -235,11 +241,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void) swapBuffers
 {
-	// IMPORTANT:
+    // IMPORTANT:
 	// - preconditions
 	//	-> _context MUST be the OpenGL context
 	//	-> renderbuffer_ must be the the RENDER BUFFER
-
+    
 	if (_multiSampling)
 	{
 		/* Resolve from msaaFramebuffer to resolveFramebuffer */
@@ -248,7 +254,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER_APPLE, [_renderer defaultFrameBuffer]);
 		glResolveMultisampleFramebufferAPPLE();
 	}
-
+    
 	if( _discardFramebufferSupported)
 	{
 		if (_multiSampling)
@@ -263,26 +269,26 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 				GLenum attachments[] = {GL_COLOR_ATTACHMENT0};
 				glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 1, attachments);
 			}
-
+            
 			glBindRenderbuffer(GL_RENDERBUFFER, [_renderer colorRenderBuffer]);
-
+            
 		}
-
+        
 		// not MSAA
 		else if (_depthFormat ) {
 			GLenum attachments[] = { GL_DEPTH_ATTACHMENT};
 			glDiscardFramebufferEXT(GL_FRAMEBUFFER, 1, attachments);
 		}
 	}
-
+    
 	if(![_context presentRenderbuffer:GL_RENDERBUFFER])
 		CCLOG(@"cocos2d: Failed to swap renderbuffer in %s\n", __FUNCTION__);
-
+    
 	// We can safely re-bind the framebuffer here, since this will be the
 	// 1st instruction of the new main loop
 	if( _multiSampling )
 		glBindFramebuffer(GL_FRAMEBUFFER, [_renderer msaaFrameBuffer]);
-
+    
 	CC_CHECK_GL_ERROR_DEBUG();
 }
 
@@ -330,26 +336,31 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    // dispatch touch to responder manager
-    [[CCDirector sharedDirector].responderManager touchesBegan:touches withEvent:event];
+    _touchEvent.timestamp = event.timestamp;
+    [_touchEvent updateTouchesBegan:touches];
+    [[CCDirector sharedDirector].responderManager touchesBegan:_touchEvent.currentTouches withEvent:_touchEvent];
+    
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    // dispatch touch to responder manager
-    [[CCDirector sharedDirector].responderManager touchesMoved:touches withEvent:event];
+    _touchEvent.timestamp = event.timestamp;
+    [_touchEvent updateTouchesMoved:touches];
+    [[CCDirector sharedDirector].responderManager touchesMoved:_touchEvent.currentTouches withEvent:_touchEvent];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    // dispatch touch to responder manager
-    [[CCDirector sharedDirector].responderManager touchesEnded:touches withEvent:event];
+    _touchEvent.timestamp = event.timestamp;
+    [_touchEvent updateTouchesEnded:touches];
+    [[CCDirector sharedDirector].responderManager touchesEnded:_touchEvent.currentTouches withEvent:_touchEvent];
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    // dispatch touch to responder manager
-    [[CCDirector sharedDirector].responderManager touchesCancelled:touches withEvent:event];
+    _touchEvent.timestamp = event.timestamp;
+    [_touchEvent updateTouchesCancelled:touches];
+    [[CCDirector sharedDirector].responderManager touchesCancelled:_touchEvent.currentTouches withEvent:_touchEvent];
 }
  
 @end

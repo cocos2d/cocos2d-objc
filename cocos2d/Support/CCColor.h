@@ -93,7 +93,7 @@
  */
 - (CCColor *)colorWithAlphaComponent:(float)alpha;
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 /**
  *  Converts a UIColor object to its CCColor equivalent.
  *
@@ -152,7 +152,7 @@
  */
 - (CCColor *)initWithCGColor:(CGColorRef)cgColor;
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 /**
  *  Initializes and returns a UIColor object to its CCColor equivalent.
  *
@@ -281,12 +281,12 @@
 /** The Quartz color reference that corresponds to the CCColor color. */
 @property(nonatomic, readonly) CGColorRef CGColor;
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 /** The UIColor color reference that corresponds to the CCColor color. */
 @property (nonatomic, readonly) UIColor* UIColor;
 #endif
 
-#ifdef __CC_PLATFORM_MAC
+#if __CC_PLATFORM_MAC
 /** The NSColor color reference that corresponds to the CCColor color. */
 @property (nonatomic, readonly) NSColor* NSColor;
 #endif

@@ -386,7 +386,9 @@
 
 - (void)update:(CCTime)time
 {
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
     [[OALSimpleAudio sharedInstance] playEffect:_soundFile volume:_gain pitch:_pitch pan:_pan loop:NO];
+#endif
 }
 
 - (id)copyWithZone:(NSZone*)zone

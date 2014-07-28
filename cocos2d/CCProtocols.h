@@ -134,7 +134,7 @@
 /** Called by CCDirector when the projection is updated, and "custom" projection is used */
 -(GLKMatrix4) updateProjection;
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 /** Returns a Boolean value indicating whether the CCDirector supports the specified orientation. Default value is YES (supports all possible orientations) */
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
 
@@ -152,7 +152,7 @@
 
 #pragma mark - CCAccelerometerDelegate
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 /** CCAccelerometerDelegate delegate */
 @class UIAcceleration;
 @class UIAccelerometer;

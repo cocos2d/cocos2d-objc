@@ -182,11 +182,10 @@ static CCTexture *CCTextureNone = nil;
     return [[CCTextureCache sharedTextureCache] addImage:file];
 }
 
-
 - (id) initWithData:(const void*)data pixelFormat:(CCTexturePixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSizeInPixels:(CGSize)sizeInPixels contentScale:(CGFloat)contentScale
 {
 	if((self = [super init])) {
-		glPushGroupMarkerEXT(0, "CCTexture: Init");
+		CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Init");
 		
 		// XXX: 32 bits or POT textures uses UNPACK of 4 (is this correct ??? )
 		if( pixelFormat == CCTexturePixelFormat_RGBA8888 || ( CCNextPOT(width)==width && CCNextPOT(height)==height) )
@@ -247,7 +246,7 @@ static CCTexture *CCTextureNone = nil;
 
 		_contentScale = contentScale;
 		
-		glPopGroupMarkerEXT();
+		CCGL_DEBUG_POP_GROUP_MARKER();
 	}
 	return self;
 }
@@ -298,9 +297,9 @@ static CCTexture *CCTextureNone = nil;
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
 
 	if( _name ){
-		glPushGroupMarkerEXT(0, "CCTexture: Dealloc");
+		CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Dealloc");
 		glDeleteTextures(1, &_name);
-		glPopGroupMarkerEXT();
+		CCGL_DEBUG_POP_GROUP_MARKER();
 	}
 }
 
@@ -361,7 +360,7 @@ static CCTexture *CCTextureNone = nil;
 
 	info = CGImageGetAlphaInfo(cgImage);
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 
 	// Bug #886. It is present on iOS 4 only
 	unsigned int version = [conf OSVersion];
@@ -402,7 +401,7 @@ static CCTexture *CCTextureNone = nil;
 	textureWidth = CGImageGetWidth(cgImage);
 	textureHeight = CGImageGetHeight(cgImage);
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 
 	// iOS 5 BUG:
 	// If width is not word aligned, convert it to word aligned.
@@ -614,19 +613,19 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 
 -(void) generateMipmap
 {
-	glPushGroupMarkerEXT(0, "CCTexture: Generate Mipmap");
+	CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Generate Mipmap");
 	
 	NSAssert( _width == CCNextPOT(_width) && _height == CCNextPOT(_height), @"Mimpap texture only works in POT textures");
 	glBindTexture(GL_TEXTURE_2D, _name);
 	glGenerateMipmap(GL_TEXTURE_2D);
 	_hasMipmaps = YES;
 	
-	glPopGroupMarkerEXT();
+	CCGL_DEBUG_POP_GROUP_MARKER();
 }
 
 -(void) setTexParameters: (ccTexParams*) texParams
 {
-	glPushGroupMarkerEXT(0, "CCTexture: Set Texture Parameters");
+	CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Set Texture Parameters");
 	
 	NSAssert( (_width == CCNextPOT(_width) && _height == CCNextPOT(_height)) ||
 				(texParams->wrapS == GL_CLAMP_TO_EDGE && texParams->wrapT == GL_CLAMP_TO_EDGE),
@@ -638,12 +637,12 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, texParams->wrapS );
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, texParams->wrapT );
 	
-	glPopGroupMarkerEXT();
+	CCGL_DEBUG_POP_GROUP_MARKER();
 }
 
 -(void) setAliasTexParameters
 {
-	glPushGroupMarkerEXT(0, "CCTexture: Set Alias Texture Parameters");
+	CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Set Alias Texture Parameters");
 	
 	glBindTexture(GL_TEXTURE_2D, _name );
 	
@@ -656,12 +655,12 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 	
     _antialiased = NO;
 	
-	glPopGroupMarkerEXT();
+	CCGL_DEBUG_POP_GROUP_MARKER();
 }
 
 -(void) setAntiAliasTexParameters
 {
-	glPushGroupMarkerEXT(0, "CCTexture: Set Anti-alias Texture Parameters");
+	CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Set Anti-alias Texture Parameters");
 	
 	glBindTexture(GL_TEXTURE_2D, _name );
 	
@@ -674,7 +673,7 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
     
     _antialiased = YES;
 	
-	glPopGroupMarkerEXT();
+	CCGL_DEBUG_POP_GROUP_MARKER();
 }
 @end
 

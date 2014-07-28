@@ -27,6 +27,8 @@
 // Attribution is not required, but appreciated :)
 //
 
+#import "ccMacros.h"
+
 #import <Foundation/Foundation.h>
 #import "SynthesizeSingleton.h"
 #import "ALDevice.h"
@@ -81,8 +83,10 @@
 	uint pendingLoadCount;
 	
 	/** Audio track to play background music */
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
 	OALAudioTrack* backgroundTrack;
-	
+#endif
+    
 	bool muted;
 	bool bgMuted;
 	bool effectsMuted;
@@ -103,7 +107,9 @@
  *
  * Default value: YES
  */
+#if __CC_PLATFORM_IOS
 @property(nonatomic,readwrite,assign) bool allowIpod;
+#endif
 
 /** Determines what to do if no other application is playing audio and allowIpod = YES
  * (NOT SUPPORTED ON THE SIMULATOR). <br>
@@ -124,7 +130,9 @@
  *
  * Default value: YES
  */
+#if __CC_PLATFORM_IOS
 @property(nonatomic,readwrite,assign) bool useHardwareIfAvailable;
+#endif
 
 /** If true, mute when backgrounded, screen locked, or the ringer switch is
  * turned off (NOT SUPPORTED ON THE SIMULATOR). <br>
@@ -151,7 +159,9 @@
 @property(nonatomic,readonly,retain) NSURL* backgroundTrackURL;
 
 /** Background audio track */
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
 @property(nonatomic,readonly,retain) OALAudioTrack* backgroundTrack;
+#endif
 
 /** Pauses BG music playback */
 @property(nonatomic,readwrite,assign) bool bgPaused;

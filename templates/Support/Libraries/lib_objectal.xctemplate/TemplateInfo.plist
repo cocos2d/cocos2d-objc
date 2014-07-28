@@ -701,62 +701,6 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>Libraries/ObjectAL/Support/NSMutableArray+WeakReferences.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>Libraries</string>				
-				<string>ObjectAL</string>
-				<string>Support</string>
-			</array>
-			<key>Path</key>
-			<string>Libraries/ObjectAL/Support/NSMutableArray+WeakReferences.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-		<key>Libraries/ObjectAL/Support/NSMutableArray+WeakReferences.m</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>Libraries</string>				
-				<string>ObjectAL</string>
-				<string>Support</string>
-			</array>
-			<key>Path</key>
-			<string>Libraries/ObjectAL/Support/NSMutableArray+WeakReferences.m</string>
-            <key>TargetIndices</key>
-            <array>
-               <integer>0</integer>
-            </array>
-         </dict>
-		<key>Libraries/ObjectAL/Support/NSMutableDictionary+WeakReferences.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>Libraries</string>				
-				<string>ObjectAL</string>
-				<string>Support</string>
-			</array>
-			<key>Path</key>
-			<string>Libraries/ObjectAL/Support/NSMutableDictionary+WeakReferences.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-		<key>Libraries/ObjectAL/Support/NSMutableDictionary+WeakReferences.m</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>Libraries</string>				
-				<string>ObjectAL</string>
-				<string>Support</string>
-			</array>
-			<key>Path</key>
-			<string>Libraries/ObjectAL/Support/NSMutableDictionary+WeakReferences.m</string>
-            <key>TargetIndices</key>
-            <array>
-               <integer>0</integer>
-            </array>
-         </dict>
 		<key>Libraries/ObjectAL/Support/OALAudioFile.h</key>
 		<dict>
 			<key>Group</key>
@@ -852,6 +796,90 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>Libraries/ObjectAL/Support/ALWeakElement.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>			
+				<string>ObjectAL</string>
+				<string>Support</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/ObjectAL/Support/ALWeakElement.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>Libraries/ObjectAL/Support/ALWeakElement.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>			
+				<string>ObjectAL</string>
+				<string>Support</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/ObjectAL/Support/ALWeakElement.m</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
+		</dict>
+		<key>Libraries/ObjectAL/Support/ALWeakArray.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>			
+				<string>ObjectAL</string>
+				<string>Support</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/ObjectAL/Support/ALWeakArray.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>Libraries/ObjectAL/Support/ALWeakArray.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>			
+				<string>ObjectAL</string>
+				<string>Support</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/ObjectAL/Support/ALWeakArray.m</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
+		</dict>
+		<key>Libraries/ObjectAL/Support/ALWeakDictionary.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>			
+				<string>ObjectAL</string>
+				<string>Support</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/ObjectAL/Support/ALWeakDictionary.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>Libraries/ObjectAL/Support/ALWeakDictionary.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>			
+				<string>ObjectAL</string>
+				<string>Support</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/ObjectAL/Support/ALWeakDictionary.m</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
+		</dict>
 	</dict>
 	<key>Nodes</key>
 	<array>
@@ -905,15 +933,17 @@
 		<string>Libraries/ObjectAL/Support/IOSVersion.m</string>
 		<string>Libraries/ObjectAL/Support/mach_timing.c</string>
 		<string>Libraries/ObjectAL/Support/mach_timing.h</string>
-		<string>Libraries/ObjectAL/Support/NSMutableArray+WeakReferences.h</string>
-		<string>Libraries/ObjectAL/Support/NSMutableArray+WeakReferences.m</string>
-		<string>Libraries/ObjectAL/Support/NSMutableDictionary+WeakReferences.h</string>
-		<string>Libraries/ObjectAL/Support/NSMutableDictionary+WeakReferences.m</string>
 		<string>Libraries/ObjectAL/Support/OALAudioFile.h</string>
 		<string>Libraries/ObjectAL/Support/OALAudioFile.m</string>
 		<string>Libraries/ObjectAL/Support/OALNotifications.h</string>
 		<string>Libraries/ObjectAL/Support/OALTools.h</string>
 		<string>Libraries/ObjectAL/Support/OALTools.m</string>
+		<string>Libraries/ObjectAL/Support/ALWeakElement.h</string>
+		<string>Libraries/ObjectAL/Support/ALWeakElement.m</string>
+		<string>Libraries/ObjectAL/Support/ALWeakArray.h</string>
+		<string>Libraries/ObjectAL/Support/ALWeakArray.m</string>
+		<string>Libraries/ObjectAL/Support/ALWeakDictionary.h</string>
+		<string>Libraries/ObjectAL/Support/ALWeakDictionary.m</string>
 		<string>Libraries/ObjectAL/Support/ObjectALMacros.h</string>
 		<string>Libraries/ObjectAL/Support/SynthesizeSingleton.h</string>
 	</array>

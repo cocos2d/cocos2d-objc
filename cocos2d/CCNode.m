@@ -42,12 +42,6 @@
 #import "CCTexture_Private.h"
 #import "CCActionManager_Private.h"
 
-
-#ifdef __CC_PLATFORM_IOS
-#import "Platforms/iOS/CCDirectorIOS.h"
-#endif
-
-
 #if CC_NODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
 #else
@@ -929,8 +923,9 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		[child visit:renderer parentTransform:&transform];
 		}
 
-	if(!drawn) [self draw:renderer transform:&transform];
-
+	if(!drawn) {
+        [self draw:renderer transform:&transform];
+    }
 	// reset for next frame
 	_orderOfArrival = 0;
 }
@@ -952,7 +947,7 @@ NodeTransform(__unsafe_unretained CCNode *node, GLKMatrix4 parentTransform)
 	CGAffineTransform t = [node nodeToParentTransform];
 	float z = node->_vertexZ;
 	
-	// Convert to 4x4 column major GLK matrix.
+	// Convert to 4x4 column major CC matrix.
 	return GLKMatrix4Multiply(parentTransform, GLKMatrix4Make(
 		 t.a,  t.b, 0.0f, 0.0f,
 		 t.c,  t.d, 0.0f, 0.0f,

@@ -28,6 +28,9 @@
 //
 
 #import "OALAudioSession.h"
+
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
+
 #import <AudioToolbox/AudioToolbox.h>
 #import "ObjectALMacros.h"
 #import "ARCSafe_MemMgmt.h"
@@ -317,6 +320,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALAudioSession);
 - (UInt32) getIntProperty:(AudioSessionPropertyID) property
 {
 	UInt32 value = 0;
+    
 	UInt32 size = sizeof(value);
 	OSStatus result;
 	OPTIONALLY_SYNCHRONIZED(self)
@@ -324,6 +328,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALAudioSession);
 		result = AudioSessionGetProperty(property, &size, &value);
 	}
 	REPORT_AUDIOSESSION_CALL(result, @"Failed to get int property %08x", property);
+
 	return value;
 }
 
@@ -881,3 +886,5 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALAudioSession);
 @end
 
 #endif
+
+#endif // __CC_PLATFORM_IOS/MAC

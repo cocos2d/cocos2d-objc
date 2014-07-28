@@ -28,7 +28,7 @@
 // Only compile this code on iOS. These files should NOT be included on your Mac project.
 // But in case they are included, it won't be compiled.
 #import "../../ccMacros.h"
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 
 #import <unistd.h>
 
@@ -43,6 +43,7 @@
 #import "../../ccFPSImages.h"
 #import "../../CCConfiguration.h"
 #import "CCRenderer_private.h"
+#import "CCTouch.h"
 
 // support imports
 #import "../../Support/CGPointExtension.h"
@@ -117,14 +118,16 @@
 	 XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
 	if( _nextScene ) [self setNextScene];
 	
-	GLKMatrix4 projection = self.projectionMatrix;
+    GLKMatrix4 projection = self.projectionMatrix;
 	_renderer.globalShaderUniforms = [self updateGlobalShaderUniforms];
 	
 	[CCRenderer bindRenderer:_renderer];
 	[_renderer invalidateState];
 	
 	[_renderer enqueueClear:(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) color:_runningScene.colorRGBA.glkVector4 depth:1.0f stencil:0 globalSortOrder:NSIntegerMin];
-	
+
+
+    
 	// Render
 	[_runningScene visit:_renderer parentTransform:&projection];
 	[_notificationNode visit:_renderer parentTransform:&projection];
@@ -203,7 +206,7 @@
 
 #pragma mark Director Point Convertion
 
--(CGPoint)convertTouchToGL:(UITouch*)touch
+-(CGPoint)convertTouchToGL:(CCTouch*)touch
 {
 	CGPoint uiPoint = [touch locationInView: [touch view]];
 	return [self convertToGL:uiPoint];

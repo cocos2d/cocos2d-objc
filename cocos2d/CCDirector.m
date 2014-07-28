@@ -55,11 +55,14 @@
 #import "Support/CCProfiling.h"
 #import "Support/CCFileUtils.h"
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
 #define CC_DIRECTOR_DEFAULT CCDirectorDisplayLink
-#elif defined(__CC_PLATFORM_MAC)
+#elif __CC_PLATFORM_MAC
 #import "Platforms/Mac/CCDirectorMac.h"
+#define CC_DIRECTOR_DEFAULT CCDirectorDisplayLink
+#elif __CC_PLATFORM_ANDROID
+#import "Platforms/Android/CCDirectorAndroid.h"
 #define CC_DIRECTOR_DEFAULT CCDirectorDisplayLink
 #endif
 
@@ -315,15 +318,17 @@ static CCDirector *_sharedDirector = nil;
 
 	if( view != __view ) {
 	
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 		[super setView:view];
 #endif
 		__view = view;
 
 		// set size
 		CGSize size = CCNSSizeToCGSize(__view.bounds.size);
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 		CGFloat scale = __view.layer.contentsScale ?: 1.0;
+#elif __CC_PLATFORM_ANDROID
+        CGFloat scale = __view.contentScaleFactor;
 #else
 		//self.view.wantsBestResolutionOpenGLSurface = YES;
 		CGFloat scale = self.view.window.backingScaleFactor;
@@ -335,14 +340,17 @@ static CCDirector *_sharedDirector = nil;
 
 		// it could be nil
 		if( view ) {
+            
 			[self createStatsLabel];
 			[self setProjection: _projection];
-			
+
+#if !__CC_PLATFORM_ANDROID
 			// TODO this should probably migrate somewhere else.
 			if(view.depthFormat){
 				glEnable(GL_DEPTH_TEST);
 				glDepthFunc(GL_LEQUAL);
 			}
+#endif
 		}
 
 		// Dump info once OpenGL was initilized
@@ -350,7 +358,7 @@ static CCDirector *_sharedDirector = nil;
 
 		CC_CHECK_GL_ERROR_DEBUG();
 	}
-}
+} 
 
 -(CCGLView*) view
 {
@@ -503,7 +511,7 @@ static CCDirector *_sharedDirector = nil;
     
     [_scenesStack addObject:scene];
     _sendCleanupToScene = NO;
-    [transition performSelector:@selector(startTransition:) withObject:scene];
+    [transition startTransition:scene];
 }
 
 -(void) popScene
@@ -534,7 +542,7 @@ static CCDirector *_sharedDirector = nil;
         [_scenesStack removeLastObject];
         CCScene * incomingScene = [_scenesStack lastObject];
         _sendCleanupToScene = YES;
-        [transition performSelector:@selector(startTransition:) withObject:incomingScene];
+        [transition startTransition:incomingScene];
     }
 }
 
@@ -546,7 +554,7 @@ static CCDirector *_sharedDirector = nil;
 -(void) popToRootSceneWithTransition:(CCTransition *)transition {
 	[self popToRootScene];
 	_sendCleanupToScene = YES;
-	[transition performSelector:@selector(startTransition:) withObject:_nextScene];
+    [transition startTransition:_nextScene];
 }
 
 -(void) popToSceneStackLevel:(NSUInteger)level
@@ -604,7 +612,7 @@ static CCDirector *_sharedDirector = nil;
 {
     // the transition gets to become the running scene
     _sendCleanupToScene = YES;
-    [transition performSelector:@selector(startTransition:) withObject:scene];
+    [transition startTransition:scene];
 }
 
 // -----------------------------------------------------------------
@@ -803,10 +811,10 @@ static const float CCFPSLabelItemHeight = 32;
 		for(int i=0; i<CCFPSLabelChars; i++){
 			float tx0 = i*tx;
 			float tx1 = (i + 1)*tx;
-			_charVertexes[i].bl = (CCVertex){GLKVector4Make(0, 0, 0, 1), GLKVector2Make(tx0,  0), GLKVector2Make(0, 0), GLKVector4Make(1, 1, 1, 1)};
-			_charVertexes[i].br = (CCVertex){GLKVector4Make(w, 0, 0, 1), GLKVector2Make(tx1,  0), GLKVector2Make(0, 0), GLKVector4Make(1, 1, 1, 1)};
-			_charVertexes[i].tr = (CCVertex){GLKVector4Make(w, h, 0, 1), GLKVector2Make(tx1, ty), GLKVector2Make(0, 0), GLKVector4Make(1, 1, 1, 1)};
-			_charVertexes[i].tl = (CCVertex){GLKVector4Make(0, h, 0, 1), GLKVector2Make(tx0, ty), GLKVector2Make(0, 0), GLKVector4Make(1, 1, 1, 1)};
+			_charVertexes[i].bl = (CCVertex){GLKVector4Make(0.0f, 0.0f, 0.0f, 1.0f), GLKVector2Make(tx0, 0.0f), GLKVector2Make(0.0f, 0.0f), GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)};
+			_charVertexes[i].br = (CCVertex){GLKVector4Make(   w, 0.0f, 0.0f, 1.0f), GLKVector2Make(tx1, 0.0f), GLKVector2Make(0.0f, 0.0f), GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)};
+			_charVertexes[i].tr = (CCVertex){GLKVector4Make(   w,    h, 0.0f, 1.0f), GLKVector2Make(tx1,   ty), GLKVector2Make(0.0f, 0.0f), GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)};
+			_charVertexes[i].tl = (CCVertex){GLKVector4Make(0.0f,    h, 0.0f, 1.0f), GLKVector2Make(tx0,   ty), GLKVector2Make(0.0f, 0.0f), GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)};
 		}
 	}
 	

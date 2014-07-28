@@ -24,7 +24,7 @@
  */
 
 #import "../../ccMacros.h"
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 
 #import "CCAppDelegate.h"
 #import "CCTexture.h"

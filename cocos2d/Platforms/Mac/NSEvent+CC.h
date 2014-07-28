@@ -25,7 +25,7 @@
 
 #import "ccMacros.h"
 
-#ifdef __CC_PLATFORM_MAC
+#if __CC_PLATFORM_MAC
 
 #import <Cocoa/Cocoa.h>
 

@@ -27,7 +27,7 @@
 // Only compile this code on Mac. These files should not be included on your iOS project.
 // But in case they are included, it won't be compiled.
 #import "../../ccMacros.h"
-#ifdef __CC_PLATFORM_MAC
+#if __CC_PLATFORM_MAC
 
 #import <sys/time.h>
 
@@ -42,8 +42,6 @@
 #import "../../CCShader.h"
 #import "../../ccFPSImages.h"
  
-// external
-#import <GLKit/GLKMath.h>
 
 #import "CCDirector_Private.h"
 #import "CCRenderer_private.h"

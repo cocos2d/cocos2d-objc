@@ -27,6 +27,10 @@
 // Attribution is not required, but appreciated :)
 //
 
+#import "ccMacros.h"
+
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
+
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
 #import "SynthesizeSingleton.h"
@@ -198,3 +202,5 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(OALAudioSession);
 - (void) forceEndInterruption;
 
 @end
+
+#endif // __CC_PLATFORM_IOS

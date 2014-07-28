@@ -114,6 +114,19 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>Libraries/cocos2d/CCEffectGaussianBlur.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Effects</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCEffectGaussianBlur.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>Libraries/cocos2d/CCEffectPixellate.h</key>
 		<dict>
 			<key>Group</key>
@@ -124,6 +137,19 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/cocos2d/CCEffectPixellate.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>Libraries/cocos2d/CCEffectStackProtocol.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Effects</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCEffectStackProtocol.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -307,6 +333,21 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/cocos2d/CCEffectGlow.m</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
+		</dict>
+		<key>Libraries/cocos2d/CCEffectGaussianBlur.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Effects</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCEffectGaussianBlur.m</string>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
@@ -803,7 +844,7 @@
 				<integer>0</integer>
 			</array>
 		</dict>
-		<key>Libraries/cocos2d/ccConfig.h</key>
+		<key>Libraries/cocos2d/CCConfig.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -811,7 +852,7 @@
 				<string>cocos2d</string>
 			</array>
 			<key>Path</key>
-			<string>Libraries/cocos2d/ccConfig.h</string>
+			<string>Libraries/cocos2d/CCConfig.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -907,7 +948,7 @@
 				<integer>0</integer>
 			</array>
 		</dict>
-		<key>Libraries/cocos2d/ccFPSImages.h</key>
+		<key>Libraries/cocos2d/CCFPSImages.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -915,11 +956,11 @@
 				<string>cocos2d</string>
 			</array>
 			<key>Path</key>
-			<string>Libraries/cocos2d/ccFPSImages.h</string>
+			<string>Libraries/cocos2d/CCFPSImages.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>Libraries/cocos2d/ccFPSImages.m</key>
+		<key>Libraries/cocos2d/CCFPSImages.m</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -927,7 +968,7 @@
 				<string>cocos2d</string>
 			</array>
 			<key>Path</key>
-			<string>Libraries/cocos2d/ccFPSImages.m</string>
+			<string>Libraries/cocos2d/CCFPSImages.m</string>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
@@ -1086,7 +1127,7 @@
 				<integer>0</integer>
 			</array>
 		</dict>
-		<key>Libraries/cocos2d/ccMacros.h</key>
+		<key>Libraries/cocos2d/CCMacros.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -1094,7 +1135,7 @@
 				<string>cocos2d</string>
 			</array>
 			<key>Path</key>
-			<string>Libraries/cocos2d/ccMacros.h</string>
+			<string>Libraries/cocos2d/CCMacros.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -1636,6 +1677,62 @@
 				<integer>0</integer>
 			</array>
 		</dict>
+		<key>Libraries/cocos2d/CCTouch.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Touch &amp; Mouse Handling</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCTouch.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>Libraries/cocos2d/CCTouch.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Touch &amp; Mouse Handling</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCTouch.m</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
+		</dict>
+		<key>Libraries/cocos2d/CCTouchEvent.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Touch &amp; Mouse Handling</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCTouchEvent.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>Libraries/cocos2d/CCTouchEvent.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Touch &amp; Mouse Handling</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCTouchEvent.m</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
+		</dict>
 		<key>Libraries/cocos2d/CCScene.h</key>
 		<dict>
 			<key>Group</key>
@@ -2093,7 +2190,7 @@
 				<integer>0</integer>
 			</array>
 		</dict>
-		<key>Libraries/cocos2d/ccTypes.h</key>
+		<key>Libraries/cocos2d/CCTypes.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -2101,7 +2198,7 @@
 				<string>cocos2d</string>
 			</array>
 			<key>Path</key>
-			<string>Libraries/cocos2d/ccTypes.h</string>
+			<string>Libraries/cocos2d/CCTypes.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -2182,6 +2279,36 @@
 			</array>
 			<key>Path</key>
 			<string>Libraries/cocos2d/Platforms/iOS/CCDirectorIOS.m</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
+		</dict>
+		<key>Libraries/cocos2d/Platforms/iOS/CCTouchIOS.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Platforms</string>
+				<string>iOS</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/Platforms/iOS/CCTouchIOS.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>Libraries/cocos2d/Platforms/iOS/CCTouchIOS.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Platforms</string>
+				<string>iOS</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/Platforms/iOS/CCTouchIOS.m</string>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
@@ -2320,6 +2447,207 @@
 			<array>
 				<integer>0</integer>
 			</array>
+		</dict>
+		<key>Libraries/cocos2d/Platforms/Android/CCActivity.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Platforms</string>
+				<string>Android</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/Platforms/Android/CCActivity.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>Libraries/cocos2d/Platforms/Android/CCActivity.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Platforms</string>
+				<string>Android</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/Platforms/Android/CCActivity.m</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
+		</dict>
+		<key>Libraries/cocos2d/Platforms/Android/CCGLView.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Platforms</string>
+				<string>Android</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/Platforms/Android/CCGLView.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>Libraries/cocos2d/Platforms/Android/CCGLView.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Platforms</string>
+				<string>Android</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/Platforms/Android/CCGLView.m</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
+		</dict>
+		<key>Libraries/cocos2d/Platforms/Android/CCDirectorAndroid.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Platforms</string>
+				<string>Android</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/Platforms/Android/CCDirectorAndroid.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>Libraries/cocos2d/Platforms/Android/CCDirectorAndroid.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Platforms</string>
+				<string>Android</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/Platforms/Android/CCDirectorAndroid.m</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
+		</dict>
+		<key>Libraries/cocos2d/Platforms/Android/CCTouchAndroid.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Platforms</string>
+				<string>Android</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/Platforms/Android/CCTouchAndroid.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>Libraries/cocos2d/Platforms/Android/CCTouchAndroid.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Platforms</string>
+				<string>Android</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/Platforms/Android/CCTouchAndroid.m</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
+		</dict>
+		<key>Libraries/cocos2d/Platforms/Android/CCGestureListener.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Platforms</string>
+				<string>Android</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/Platforms/Android/CCGestureListener.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>Libraries/cocos2d/Platforms/Android/CCGestureListener.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Platforms</string>
+				<string>Android</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/Platforms/Android/CCGestureListener.m</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
+		</dict>
+		<key>Libraries/cocos2d/Platforms/Android/java/org/cocos2d/CCActivity.java</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Platforms</string>
+				<string>Android</string>
+				<string>org</string>
+				<string>java</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/Platforms/Android/java/org/cocos2d/CCActivity.java</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>Libraries/cocos2d/Platforms/Android/java/org/cocos2d/CCGLView.java</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Platforms</string>
+				<string>Android</string>
+				<string>org</string>
+				<string>java</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/Platforms/Android/java/org/cocos2d/CCGLView.java</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>Libraries/cocos2d/Platforms/Android/java/org/cocos2d/CCGestureListener.java</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Platforms</string>
+				<string>Android</string>
+				<string>org</string>
+				<string>java</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/Platforms/Android/java/org/cocos2d/CCGestureListener.java</string>
+			<key>TargetIndices</key>
+			<array/>
 		</dict>
 		<key>Libraries/cocos2d/Platforms/Mac/CCDirectorMac.h</key>
 		<dict>
@@ -2525,6 +2853,32 @@
 				<integer>0</integer>
 			</array>
 		</dict>
+		<key>Libraries/cocos2d/Support/CCGLQueue.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Support</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/Support/CCGLQueue.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>Libraries/cocos2d/Support/CCGLQueue.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Support</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/Support/CCGLQueue.m</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>Libraries/cocos2d/Support/CCProfiling.h</key>
 		<dict>
 			<key>Group</key>
@@ -2555,7 +2909,7 @@
 				<integer>0</integer>
 			</array>
 		</dict>
-		<key>Libraries/cocos2d/Support/ccUtils.c</key>
+		<key>Libraries/cocos2d/Support/CCUtils.c</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -2564,13 +2918,13 @@
 				<string>Support</string>
 			</array>
 			<key>Path</key>
-			<string>Libraries/cocos2d/Support/ccUtils.c</string>
+			<string>Libraries/cocos2d/Support/CCUtils.c</string>
 			<key>TargetIndices</key>
 			<array>
 				<integer>0</integer>
 			</array>
 		</dict>
-		<key>Libraries/cocos2d/Support/ccUtils.h</key>
+		<key>Libraries/cocos2d/Support/CCUtils.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -2579,39 +2933,9 @@
 				<string>Support</string>
 			</array>
 			<key>Path</key>
-			<string>Libraries/cocos2d/Support/ccUtils.h</string>
+			<string>Libraries/cocos2d/Support/CCUtils.h</string>
 			<key>TargetIndices</key>
 			<array/>
-		</dict>
-		<key>Libraries/cocos2d/Support/CCVertex.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>Libraries</string>
-				<string>cocos2d</string>
-				<string>Support</string>
-				<string>Math</string>
-			</array>
-			<key>Path</key>
-			<string>Libraries/cocos2d/Support/CCVertex.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-		<key>Libraries/cocos2d/Support/CCVertex.m</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>Libraries</string>
-				<string>cocos2d</string>
-				<string>Support</string>
-				<string>Math</string>
-			</array>
-			<key>Path</key>
-			<string>Libraries/cocos2d/Support/CCVertex.m</string>
-			<key>TargetIndices</key>
-			<array>
-				<integer>0</integer>
-			</array>
 		</dict>
 		<key>Libraries/cocos2d/Support/CGPointExtension.h</key>
 		<dict>
@@ -2794,6 +3118,171 @@
 			<key>Path</key>
 			<string>Libraries/LICENSE_cocos2d.txt</string>
 		</dict>
+		<key>Libraries/cocos2d/CCMathTypes.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Math</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCMathTypes.h</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
+		</dict>
+		<key>Libraries/cocos2d/CCVector2.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Math</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCVector2.h</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
+		</dict>
+		<key>Libraries/cocos2d/CCVector3.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Math</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCVector3.h</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
+		</dict>
+		<key>Libraries/cocos2d/CCVector4.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Math</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCVector4.h</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
+		</dict>
+		<key>Libraries/cocos2d/CCQuaternion.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Math</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCQuaternion.h</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
+		</dict>
+		<key>Libraries/cocos2d/CCQuaternion.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Math</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCQuaternion.m</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
+		</dict>
+		<key>Libraries/cocos2d/CCMatrix3.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Math</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCMatrix3.h</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
+		</dict>
+		<key>Libraries/cocos2d/CCMatrix4.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Math</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCMatrix4.h</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
+		</dict>
+		<key>Libraries/cocos2d/CCMatrix3.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Math</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCMatrix3.m</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
+		</dict>
+		<key>Libraries/cocos2d/CCMatrix4.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Math</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCMatrix4.m</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
+		</dict>
+		<key>Libraries/cocos2d/CCMathUtils.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>Libraries</string>
+				<string>cocos2d</string>
+				<string>Math</string>
+			</array>
+			<key>Path</key>
+			<string>Libraries/cocos2d/CCMathUtils.h</string>
+			<key>TargetIndices</key>
+			<array>
+				<integer>0</integer>
+			</array>
+		</dict>
 	</dict>
 	<key>Nodes</key>
 	<array>
@@ -2805,7 +3294,9 @@
 		<string>Libraries/cocos2d/CCEffectColor.h</string>
 		<string>Libraries/cocos2d/CCEffectColorPulse.h</string>
 		<string>Libraries/cocos2d/CCEffectGlow.h</string>
+		<string>Libraries/cocos2d/CCEffectGaussianBlur.h</string>
 		<string>Libraries/cocos2d/CCEffectPixellate.h</string>
+		<string>Libraries/cocos2d/CCEffectStackProtocol.h</string>
 		<string>Libraries/cocos2d/CCEffectNode.h</string>
 		<string>Libraries/cocos2d/CCEffectStack.h</string>
 		<string>Libraries/cocos2d/CCEffectTexture.h</string>
@@ -2819,6 +3310,7 @@
 		<string>Libraries/cocos2d/CCEffectColor.m</string>
 		<string>Libraries/cocos2d/CCEffectColorPulse.m</string>
 		<string>Libraries/cocos2d/CCEffectGlow.m</string>
+		<string>Libraries/cocos2d/CCEffectGaussianBlur.m</string>
 		<string>Libraries/cocos2d/CCEffectPixellate.m</string>
 		<string>Libraries/cocos2d/CCEffectNode.m</string>
 		<string>Libraries/cocos2d/CCEffectStack.m</string>
@@ -2854,7 +3346,7 @@
 		<string>Libraries/cocos2d/CCAnimationCache.m</string>
 		<string>Libraries/cocos2d/CCClippingNode.h</string>
 		<string>Libraries/cocos2d/CCClippingNode.m</string>
-		<string>Libraries/cocos2d/ccConfig.h</string>
+		<string>Libraries/cocos2d/CCConfig.h</string>
 		<string>Libraries/cocos2d/CCConfiguration.h</string>
 		<string>Libraries/cocos2d/CCConfiguration.m</string>
 		<string>Libraries/cocos2d/CCDirector_Private.h</string>
@@ -2862,8 +3354,8 @@
 		<string>Libraries/cocos2d/CCDirector.m</string>
 		<string>Libraries/cocos2d/CCDrawNode.h</string>
 		<string>Libraries/cocos2d/CCDrawNode.m</string>
-		<string>Libraries/cocos2d/ccFPSImages.h</string>
-		<string>Libraries/cocos2d/ccFPSImages.m</string>
+		<string>Libraries/cocos2d/CCFPSImages.h</string>
+		<string>Libraries/cocos2d/CCFPSImages.m</string>
 		<string>Libraries/cocos2d/CCLabelBMFont_Private.h</string>
 		<string>Libraries/cocos2d/CCLabelBMFont.h</string>
 		<string>Libraries/cocos2d/CCLabelBMFont.m</string>
@@ -2875,7 +3367,7 @@
 		<string>Libraries/cocos2d/CCLayout.m</string>
 		<string>Libraries/cocos2d/CCLayoutBox.h</string>
 		<string>Libraries/cocos2d/CCLayoutBox.m</string>
-		<string>Libraries/cocos2d/ccMacros.h</string>
+		<string>Libraries/cocos2d/CCMacros.h</string>
 		<string>Libraries/cocos2d/CCMotionStreak.h</string>
 		<string>Libraries/cocos2d/CCMotionStreak.m</string>
 		<string>Libraries/cocos2d/CCNode_Private.h</string>
@@ -2915,6 +3407,10 @@
 		<string>Libraries/cocos2d/CCResponder.m</string>
 		<string>Libraries/cocos2d/CCResponderManager.h</string>
 		<string>Libraries/cocos2d/CCResponderManager.m</string>
+		<string>Libraries/cocos2d/CCTouch.h</string>
+		<string>Libraries/cocos2d/CCTouch.m</string>
+		<string>Libraries/cocos2d/CCTouchEvent.h</string>
+		<string>Libraries/cocos2d/CCTouchEvent.m</string>
 		<string>Libraries/cocos2d/CCScene.h</string>
 		<string>Libraries/cocos2d/CCScene.m</string>
 		<string>Libraries/cocos2d/CCScheduler.h</string>
@@ -2948,13 +3444,15 @@
 		<string>Libraries/cocos2d/CCTMXXMLParser.m</string>
 		<string>Libraries/cocos2d/CCTransition.h</string>
 		<string>Libraries/cocos2d/CCTransition.m</string>
-		<string>Libraries/cocos2d/ccTypes.h</string>
+		<string>Libraries/cocos2d/CCTypes.h</string>
 		<string>Libraries/cocos2d/cocos2d.h</string>
 		<string>Libraries/cocos2d/cocos2d.m</string>
 		<string>Libraries/cocos2d/Platforms/CCGL.h</string>
 		<string>Libraries/cocos2d/Platforms/CCNS.h</string>
 		<string>Libraries/cocos2d/Platforms/iOS/CCDirectorIOS.h</string>
 		<string>Libraries/cocos2d/Platforms/iOS/CCDirectorIOS.m</string>
+		<string>Libraries/cocos2d/Platforms/iOS/CCTouchIOS.h</string>
+		<string>Libraries/cocos2d/Platforms/iOS/CCTouchIOS.m</string>
 		<string>Libraries/cocos2d/Platforms/iOS/CCES2Renderer.h</string>
 		<string>Libraries/cocos2d/Platforms/iOS/CCES2Renderer.m</string>
 		<string>Libraries/cocos2d/Platforms/iOS/CCESRenderer.h</string>
@@ -2976,14 +3474,14 @@
 		<string>Libraries/cocos2d/Support/base64.h</string>
 		<string>Libraries/cocos2d/Support/CCFileUtils.h</string>
 		<string>Libraries/cocos2d/Support/CCFileUtils.m</string>
+		<string>Libraries/cocos2d/Support/CCGLQueue.h</string>
+		<string>Libraries/cocos2d/Support/CCGLQueue.m</string>
 		<string>Libraries/cocos2d/Support/CCColor.h</string>
 		<string>Libraries/cocos2d/Support/CCColor.m</string>
 		<string>Libraries/cocos2d/Support/CCProfiling.h</string>
 		<string>Libraries/cocos2d/Support/CCProfiling.m</string>
-		<string>Libraries/cocos2d/Support/ccUtils.c</string>
-		<string>Libraries/cocos2d/Support/ccUtils.h</string>
-		<string>Libraries/cocos2d/Support/CCVertex.h</string>
-		<string>Libraries/cocos2d/Support/CCVertex.m</string>
+		<string>Libraries/cocos2d/Support/CCUtils.c</string>
+		<string>Libraries/cocos2d/Support/CCUtils.h</string>
 		<string>Libraries/cocos2d/Support/CGPointExtension.h</string>
 		<string>Libraries/cocos2d/Support/CGPointExtension.m</string>
 		<string>Libraries/cocos2d/Support/NSAttributedString+CCAdditions.h</string>
@@ -2996,6 +3494,30 @@
 		<string>Libraries/cocos2d/Support/utlist.h</string>
 		<string>Libraries/cocos2d/Support/ZipUtils.h</string>
 		<string>Libraries/cocos2d/Support/ZipUtils.m</string>
+		<string>Libraries/cocos2d/CCMathTypes.h</string>
+		<string>Libraries/cocos2d/CCVector2.h</string>
+		<string>Libraries/cocos2d/CCVector3.h</string>
+		<string>Libraries/cocos2d/CCVector4.h</string>
+		<string>Libraries/cocos2d/CCQuaternion.h</string>
+		<string>Libraries/cocos2d/CCQuaternion.m</string>
+		<string>Libraries/cocos2d/CCMatrix3.h</string>
+		<string>Libraries/cocos2d/CCMatrix3.m</string>
+		<string>Libraries/cocos2d/CCMatrix4.h</string>
+		<string>Libraries/cocos2d/CCMatrix4.m</string>
+		<string>Libraries/cocos2d/CCMathUtils.h</string>
+		<string>Libraries/cocos2d/Platforms/Android/CCGestureListener.h</string>
+		<string>Libraries/cocos2d/Platforms/Android/CCGestureListener.m</string>
+		<string>Libraries/cocos2d/Platforms/Android/CCTouchAndroid.h</string>
+		<string>Libraries/cocos2d/Platforms/Android/CCTouchAndroid.m</string>
+		<string>Libraries/cocos2d/Platforms/Android/CCDirectorAndroid.h</string>
+		<string>Libraries/cocos2d/Platforms/Android/CCDirectorAndroid.m</string>
+		<string>Libraries/cocos2d/Platforms/Android/CCGLView.h</string>
+		<string>Libraries/cocos2d/Platforms/Android/CCGLView.m</string>
+		<string>Libraries/cocos2d/Platforms/Android/CCActivity.h</string>
+		<string>Libraries/cocos2d/Platforms/Android/CCActivity.m</string>
+		<string>Libraries/cocos2d/Platforms/Android/java/org/cocos2d/CCActivity.java</string>
+		<string>Libraries/cocos2d/Platforms/Android/java/org/cocos2d/CCGLView.java</string>
+		<string>Libraries/cocos2d/Platforms/Android/java/org/cocos2d/CCGestureListener.java</string>
 		<string>Libraries/LICENSE_cocos2d.txt</string>
 	</array>
 </dict>
