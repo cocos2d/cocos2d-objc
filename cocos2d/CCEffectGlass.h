@@ -73,6 +73,17 @@
 -(id)init;
 
 /**
+ *  Initializes a CCEffectGlass object with the supplied parameters and a nil normal map.
+ *
+ *  @param refraction The refraction strength.
+ *  @param refractionEnvironment The environment image that will be refracted by the affected node.
+ *  @param reflectionEnvironment The environment image that will be reflected by the affected node.
+ *
+ *  @return The CCEffectGlass object.
+ */
+-(id)initWithRefraction:(float)refraction refractionEnvironment:(CCSprite *)refractionEnvironment reflectionEnvironment:(CCSprite *)reflectionEnvironment;
+
+/**
  *  Initializes a CCEffectGlass object with the supplied parameters.
  *
  *  @param refraction The refraction strength.
@@ -88,6 +99,18 @@
 /// -----------------------------------------------------------------------
 /// @name Creating a CCEffectGlass object
 /// -----------------------------------------------------------------------
+
+
+/**
+ *  Creates a CCEffectGlass object with the supplied parameters and a nil normal map.
+ *
+ *  @param refraction The refraction strength.
+ *  @param refractionEnvironment The environment image that will be refracted by the affected node.
+ *  @param reflectionEnvironment The environment image that will be reflected by the affected node.
+ *
+ *  @return The CCEffectGlass object.
+ */
++(id)effectWithRefraction:(float)refraction refractionEnvironment:(CCSprite *)refractionEnvironment reflectionEnvironment:(CCSprite *)reflectionEnvironment;
 
 /**
  *  Creates a CCEffectGlass object with the supplied parameters.

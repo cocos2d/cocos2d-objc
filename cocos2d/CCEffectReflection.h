@@ -61,6 +61,16 @@
 
 /**
  *  Initializes a CCEffectReflection object with the specified environment and normal map and the following default parameters:
+ *  fresnelBias = 1.0, fresnelPower = 0.0, normalMap = nil
+ *
+ *  @param environment The environment image that will be reflected by the affected node.
+ *
+ *  @return The CCEffectReflection object.
+ */
+-(id)initWithEnvironment:(CCSprite *)environment;
+
+/**
+ *  Initializes a CCEffectReflection object with the specified environment and normal map and the following default parameters:
  *  fresnelBias = 1.0, fresnelPower = 0.0
  *
  *  @param environment The environment image that will be reflected by the affected node.
@@ -69,6 +79,17 @@
  *  @return The CCEffectReflection object.
  */
 -(id)initWithEnvironment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap;
+
+/**
+ *  Initializes a CCEffectReflection object with the specified parameters and a nil normal map.
+ *
+ *  @param bias The bias term in the fresnel reflectance equation.
+ *  @param power The power term in the fresnel reflectance equation.
+ *  @param environment The environment image that will be reflected by the affected node.
+ *
+ *  @return The CCEffectReflection object.
+ */
+-(id)initWithFresnelBias:(float)bias fresnelPower:(float)power environment:(CCSprite *)environment;
 
 /**
  *  Initializes a CCEffectReflection object with the specified parameters.
@@ -88,6 +109,16 @@
 /// -----------------------------------------------------------------------
 
 /**
+ *  Creates a CCEffectReflection object with the specified environment and the following default parameters:
+ *  fresnelBias = 1.0, fresnelPower = 0.0, normalMap = nil
+ *
+ *  @param environment The environment image that will be reflected by the affected node.
+ *
+ *  @return The CCEffectReflection object.
+ */
++(id)effectWithEnvironment:(CCSprite *)environment;
+
+/**
  *  Creates a CCEffectReflection object with the specified environment and normal map and the following default parameters:
  *  fresnelBias = 1.0, fresnelPower = 0.0
  *
@@ -97,6 +128,17 @@
  *  @return The CCEffectReflection object.
  */
 +(id)effectWithEnvironment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap;
+
+/**
+ *  Creates a CCEffectReflection object with the specified parameters and nil normal map.
+ *
+ *  @param bias The bias term in the fresnel reflectance equation.
+ *  @param power The power term in the fresnel reflectance equation.
+ *  @param environment The environment image that will be reflected by the affected node.
+ *
+ *  @return The CCEffectReflection object.
+ */
++(id)effectWithFresnelBias:(float)bias fresnelPower:(float)power environment:(CCSprite *)environment;
 
 /**
  *  Creates a CCEffectReflection object with the specified parameters.

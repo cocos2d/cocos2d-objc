@@ -41,7 +41,7 @@
     
     
     CCSpriteFrame *normalMap = [CCSpriteFrame frameWithImageNamed:@"Images/ShinyBallNormals.png"];
-    CCEffectGlass *glass = [[CCEffectGlass alloc] initWithRefraction:1.0f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment normalMap:nil];
+    CCEffectGlass *glass = [[CCEffectGlass alloc] initWithRefraction:1.0f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment];
     glass.fresnelBias = 0.1f;
     glass.fresnelPower = 2.0f;
     glass.refraction = 0.75f;
@@ -81,7 +81,7 @@
     [self.contentNode addChild:environment];
     
     CCSpriteFrame *normalMap = [CCSpriteFrame frameWithImageNamed:@"Images/ShinyBallNormals.png"];
-    CCEffectReflection *reflection = [[CCEffectReflection alloc] initWithEnvironment:environment normalMap:nil];
+    CCEffectReflection *reflection = [[CCEffectReflection alloc] initWithEnvironment:environment];
     reflection.fresnelBias = 0.0f;
     reflection.fresnelPower = 0.0f;
     
@@ -148,7 +148,7 @@
     NSString *sphereTextureFile = @"Images/ShinyBallColor.png";
     CCTexture *sphereTexture = [CCTexture textureWithFile:sphereTextureFile];
     CCSpriteFrame *sphereNormalMap = [CCSpriteFrame frameWithImageNamed:@"Images/ShinyBallNormals.png"];
-    CCEffectRefraction *sphereRefraction = [[CCEffectRefraction alloc] initWithRefraction:0.1f environment:renderTexture.sprite normalMap:nil];
+    CCEffectRefraction *sphereRefraction = [[CCEffectRefraction alloc] initWithRefraction:0.1f environment:renderTexture.sprite];
     sphereRefraction.refraction = 0.75f;
     
     p1 = CGPointMake(0.1f, 0.8f);
@@ -515,9 +515,9 @@
                          [CCEffectPixellate effectWithBlockSize:8.0f],
                          [CCEffectSaturation effectWithSaturation:-1.0f],
                          [CCEffectHue effectWithHue:90.0f],
-                         [CCEffectGlass effectWithRefraction:0.5f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment normalMap:nil],
-                         [CCEffectRefraction effectWithRefraction:0.5f environment:refractEnvironment normalMap:nil],
-                         [CCEffectReflection effectWithFresnelBias:0.2f fresnelPower:2.0f environment:reflectEnvironment normalMap:nil],
+                         [CCEffectGlass effectWithRefraction:0.5f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment],
+                         [CCEffectRefraction effectWithRefraction:0.5f environment:refractEnvironment],
+                         [CCEffectReflection effectWithFresnelBias:0.2f fresnelPower:2.0f environment:reflectEnvironment],
                          ];
     
     
@@ -563,9 +563,9 @@
                             [CCEffectPixellate effectWithBlockSize:4.0f],
                             [CCEffectSaturation effectWithSaturation:-1.0f],
                             [CCEffectHue effectWithHue:90.0f],
-                            [CCEffectGlass effectWithRefraction:0.5f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment normalMap:nil],
-                            [CCEffectRefraction effectWithRefraction:0.5f environment:refractEnvironment normalMap:nil],
-                            [CCEffectReflection effectWithFresnelBias:0.1f fresnelPower:4.0f environment:reflectEnvironment normalMap:nil],
+                            [CCEffectGlass effectWithRefraction:0.5f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment],
+                            [CCEffectRefraction effectWithRefraction:0.5f environment:refractEnvironment],
+                            [CCEffectReflection effectWithFresnelBias:0.1f fresnelPower:4.0f environment:reflectEnvironment],
                             ];
     CCEffect *selectedEffect = allEffects[8];
 
