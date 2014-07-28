@@ -163,6 +163,9 @@ static CCTexture *CCTextureNone = nil;
 
 +(void)initialize
 {
+	// +initialize may be called due to loading a subclass.
+	if(self != [CCTexture class]) return;
+	
 	CCTextureNone = [self alloc];
 	CCTextureNone->_name = 0;
 	CCTextureNone->_format = CCTexturePixelFormat_RGBA8888;

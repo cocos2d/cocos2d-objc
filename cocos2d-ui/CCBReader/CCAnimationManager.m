@@ -85,7 +85,7 @@ static NSInteger ccbAnimationManagerID = 0;
 
 - (void)addNode:(CCNode*)node andSequences:(NSDictionary*)seq
 {
-#ifdef DEBUG
+#if DEBUG
 	//Sanity check sequences;
 	
 	for (NSMutableDictionary* seqNodeProps in seq.allValues) {

@@ -56,6 +56,9 @@ CCShader *SHADER = nil;
 
 +(void)initialize
 {
+	// +initialize may be called due to loading a subclass.
+	if(self != [CCDrawNode class]) return;
+	
 	SHADER = [[CCShader alloc] initWithFragmentShaderSource:FRAGMENT_SHADER_SOURCE];
 }
 

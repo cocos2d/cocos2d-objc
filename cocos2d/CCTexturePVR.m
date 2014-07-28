@@ -604,8 +604,7 @@ typedef struct {
 			return nil;
 		}
 		
-#if defined(__CC_PLATFORM_IOS) && defined(DEBUG)
-
+#if defined(__CC_PLATFORM_IOS) && DEBUG
 		GLenum pixelFormat = _pixelFormatInfo->ccPixelFormat;
 		CCConfiguration *conf = [CCConfiguration sharedConfiguration];
 		

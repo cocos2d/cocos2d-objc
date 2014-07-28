@@ -77,7 +77,7 @@ typedef enum ccTMXTileFlags_ {
 @property (nonatomic,readwrite)			BOOL visible;
 
 /** Layer Opacity. */
-@property (nonatomic,readwrite)			unsigned char opacity;
+@property (nonatomic,readwrite)			float opacity;
 
 /** True to release ownership of layer tiles. */
 @property (nonatomic,readwrite)			BOOL ownTiles;

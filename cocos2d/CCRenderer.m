@@ -170,6 +170,9 @@ static NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 
 +(void)initialize
 {
+	// +initialize may be called due to loading a subclass.
+	if(self != [CCBlendMode class]) return;
+	
 	CCBLENDMODE_CACHE = [[CCBlendModeCache alloc] init];
 	
 	// Add the default modes
@@ -276,6 +279,9 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 
 +(void)initialize
 {
+	// +initialize may be called due to loading a subclass.
+	if(self != [CCRenderState class]) return;
+	
 	CCRENDERSTATE_CACHE = [[CCRenderStateCache alloc] init];
 	CCRENDERSTATE_DEBUGCOLOR = [[self alloc] initWithBlendMode:CCBLEND_DISABLED shader:[CCShader positionColorShader] shaderUniforms:@{}];
 }
