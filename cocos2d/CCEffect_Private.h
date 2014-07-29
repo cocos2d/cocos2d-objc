@@ -11,7 +11,7 @@
 
 
 #ifndef GAUSSIANBLUR_OPTMIZIED_RADIUS_MAX
-#define GAUSSIANBLUR_OPTMIZIED_RADIUS_MAX 6
+#define GAUSSIANBLUR_OPTMIZIED_RADIUS_MAX 6UL
 #endif
 
 extern NSString * const CCShaderUniformPreviousPassTexture;
