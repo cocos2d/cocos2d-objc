@@ -81,7 +81,7 @@
     
     if(self = [super initWithFragmentUniforms:@[u_enableGlowMap, u_luminanceThreshold, u_intensity]
                                vertexUniforms:@[u_blurDirection]
-                                      varying:@[v_blurCoords]])
+                                     varyings:@[v_blurCoords]])
     {
         
         self.debugName = @"CCEffectBloom";
@@ -364,7 +364,7 @@
     {
         unsigned long count = (unsigned long)(1 + (_numberOfOptimizedOffsets * 2));
         CCEffectVarying* v_blurCoords = [CCEffectVarying varying:@"vec2" name:@"v_blurCoordinates" count:count];
-        [self setVarying:@[v_blurCoords]];
+        [self setVaryings:@[v_blurCoords]];
 
         [self buildFragmentFunctions];
         [self buildVertexFunctions];

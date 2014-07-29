@@ -65,7 +65,7 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
                           
                           ];
     
-    if((self = [super initWithFragmentUniforms:uniforms vertexUniforms:nil varying:nil]))
+    if((self = [super initWithFragmentUniforms:uniforms vertexUniforms:nil varyings:nil]))
     {
         _refraction = refraction;
         _conditionedRefraction = CCEffectUtilsConditionRefraction(refraction);

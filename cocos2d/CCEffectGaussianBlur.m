@@ -74,7 +74,7 @@
     
     if(self = [super initWithFragmentUniforms:nil
                                vertexUniforms:[NSArray arrayWithObjects:u_blurDirection, nil]
-                                      varying:[NSArray arrayWithObjects:v_blurCoords, nil]])
+                                     varyings:[NSArray arrayWithObjects:v_blurCoords, nil]])
     {
         
         self.debugName = @"CCEffectGaussianBlur";
@@ -300,7 +300,7 @@
     {
         unsigned long count = (unsigned long)(1 + (_numberOfOptimizedOffsets * 2));
         CCEffectVarying* v_blurCoords = [CCEffectVarying varying:@"vec2" name:@"v_blurCoordinates" count:count];
-        [self setVarying:@[v_blurCoords]];
+        [self setVaryings:@[v_blurCoords]];
 
         [self buildFragmentFunctions];
         [self buildVertexFunctions];
