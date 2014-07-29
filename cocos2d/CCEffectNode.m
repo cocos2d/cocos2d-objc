@@ -168,7 +168,7 @@
     
     if (_effect)
     {
-        _effectRenderer.contentSize = self.texture.contentSize;
+        _effectRenderer.contentSize = self.contentSize;
         if ([_effect prepareForRendering] == CCEffectPrepareSuccess)
         {
             // Preparing an effect for rendering can modify its uniforms

@@ -191,6 +191,9 @@
             renderPass.transform = GLKMatrix4MakeOrtho(0.0f, _contentSize.width, 0.0f, _contentSize.height, -1024.0f, 1024.0f);
 
             CGSize rtSize = CGSizeMake(_contentSize.width * _contentScale, _contentSize.height * _contentScale);
+            rtSize.width = (rtSize.width <= 1.0f) ? 1.0f : rtSize.width;
+            rtSize.height = (rtSize.height <= 1.0f) ? 1.0f : rtSize.height;
+            
             rt = [self renderTargetWithSize:rtSize];
             
             [renderPass begin:previousPassTexture];
@@ -249,6 +252,8 @@
 
 - (CCEffectRenderTarget *)renderTargetWithSize:(CGSize)size
 {
+    NSAssert((size.width > 0.0f) && (size.height > 0.0f), @"Render targets must have non-zero dimensions.");
+
     // If there is a free render target available for use, return that one. If
     // not, create a new one and return that.
     CCEffectRenderTarget *rt = nil;
