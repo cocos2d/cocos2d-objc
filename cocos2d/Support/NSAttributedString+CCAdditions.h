@@ -27,8 +27,19 @@
 
 #import <Foundation/Foundation.h>
 
+@class CCColor;
+#import "CCTypes.h"
+
 BOOL NSAttributedStringHasAttribute(NSAttributedString *attrString, NSString*attr);
+
 NSAttributedString* NSAttributedStringCopyAdjustedForContentScaleFactor(NSAttributedString *attrString);
+
 float NSAttributedStringSingleFontSize(NSAttributedString *attrString);
+
 NSAttributedString*  NSAttributedStringCopyWithNewFontSize(NSAttributedString *attrString, float fontSize);
 
+BOOL NSMutableAttributedStringFixPlatformSpecificAttributes(NSMutableAttributedString* string,
+                                                            CCColor* defaultColor,
+                                                            NSString* defaultFontName,
+                                                            CGFloat defaultFontSize,
+                                                            CCTextAlignment defaultHorizontalAlighment);
