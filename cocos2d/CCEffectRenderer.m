@@ -123,10 +123,23 @@
 @property (nonatomic, assign) GLKVector4 oldViewport;
 @property (nonatomic, assign) GLint oldFBO;
 
++(CCShader *)sharedCopyShader;
+
 @end
 
 
 @implementation CCEffectRenderer
+
++ (CCShader *)sharedCopyShader
+{
+	static dispatch_once_t once;
+	static CCShader *copyShader = nil;
+	dispatch_once(&once, ^{
+        copyShader = [[CCShader alloc] initWithFragmentShaderSource:@"void main(){gl_FragColor = texture2D(cc_MainTexture, cc_FragTexCoord1);}"];
+        copyShader.debugName = @"CCEffectRendererTextureCopyShader";
+	});
+	return copyShader;
+}
 
 -(id)init
 {
@@ -214,6 +227,7 @@
         [renderer pushGroup];
 
         CCTexture *backup = sprite.texture;
+        sprite.shader = [CCEffectRenderer sharedCopyShader];
         sprite.texture = previousPassRT.texture;
         [sprite enqueueTriangles:renderer transform:transform];
         sprite.texture = backup;
