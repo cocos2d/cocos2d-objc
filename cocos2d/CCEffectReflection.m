@@ -22,6 +22,9 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
 
 @interface CCEffectReflection ()
 
+@property (nonatomic) float conditionedShininess;
+@property (nonatomic) float conditionedFresnelBias;
+@property (nonatomic) float conditionedFresnelPower;
 
 @end
 
@@ -62,11 +65,17 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
     
     if((self = [super initWithFragmentUniforms:uniforms vertexUniforms:nil varying:nil]))
     {
+        _shininess = shininess;
+        _conditionedShininess = CCEffectUtilsConditionShininess(shininess);
+        
+        _fresnelBias = bias;
+        _conditionedFresnelBias = CCEffectUtilsConditionFresnelBias(bias);
+        
+        _fresnelPower = power;
+        _conditionedFresnelPower = CCEffectUtilsConditionFresnelPower(power);
+        
         _environment = environment;
         _normalMap = normalMap;
-        _shininess = shininess;
-        _fresnelBias = bias;
-        _fresnelPower = power;
         
         self.debugName = @"CCEffectReflection";
     }
@@ -164,9 +173,9 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
             pass.verts = verts;
         }
         
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_shininess"]] = [NSNumber numberWithFloat:weakSelf.shininess];
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fresnelBias"]] = [NSNumber numberWithFloat:weakSelf.fresnelBias];
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fresnelPower"]] = [NSNumber numberWithFloat:weakSelf.fresnelPower];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_shininess"]] = [NSNumber numberWithFloat:weakSelf.conditionedShininess];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fresnelBias"]] = [NSNumber numberWithFloat:weakSelf.conditionedFresnelBias];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fresnelPower"]] = [NSNumber numberWithFloat:weakSelf.conditionedFresnelPower];
         
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_envMap"]] = weakSelf.environment.texture ?: [CCTexture none];
         
@@ -189,6 +198,25 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
     
     self.renderPasses = @[pass0];
 }
+
+-(void)setShininess:(float)shininess
+{
+    _shininess = shininess;
+    _conditionedShininess = CCEffectUtilsConditionShininess(shininess);
+}
+
+-(void)setFresnelBias:(float)bias
+{
+    _fresnelBias = bias;
+    _conditionedFresnelBias = CCEffectUtilsConditionFresnelBias(bias);
+}
+
+-(void)setFresnelPower:(float)power
+{
+    _fresnelPower = power;
+    _conditionedFresnelPower = CCEffectUtilsConditionFresnelPower(power);
+}
+
 @end
 
 GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at)
