@@ -173,6 +173,7 @@ static void handler(NSException *e)
 
 - (void)runOnGameThread:(dispatch_block_t)block waitUntilDone:(BOOL)waitUntilDone
 {
+#if !USE_MAIN_THREAD
     if (!waitUntilDone)
     {
         CFRunLoopPerformBlock([_gameLoop getCFRunLoop], kCFRunLoopDefaultMode, block);
@@ -181,6 +182,12 @@ static void handler(NSException *e)
     {
         [[Block_copy(block) autorelease] performSelector:@selector(invoke) onThread:_thread withObject:nil waitUntilDone:YES];
     }
+#else
+    EGLContext ctx = [self pushApplicationContext];
+    block();
+    [self popApplicationContext:ctx];
+    
+#endif
 }
 
 - (void)surfaceCreated:(JavaObject<AndroidSurfaceHolder> *)holder
@@ -223,6 +230,48 @@ static void handler(NSException *e)
     return NO;
 }
 
+- (EGLContext)pushApplicationContext
+{
+    EGLDisplay display;
+    EGLSurface surfaceR;
+    EGLSurface surfaceD;
+    
+    EGLContext ctx = eglGetCurrentContext();
+    
+    EGLContext appContext = _glView.eglContext;
+    if (appContext != ctx)
+    {
+        display = eglGetCurrentDisplay();
+        surfaceD = eglGetCurrentSurface(EGL_DRAW);
+        surfaceR = eglGetCurrentSurface(EGL_READ);
+        
+        EGLSurface surface = _glView.eglSurface;
+        
+        eglMakeCurrent(_glView.eglDisplay, surface, surface, appContext);
+        return ctx;
+    }
+    
+    return NULL;
+}
+
+- (void)popApplicationContext:(EGLContext)ctx
+{
+    if (ctx != NULL)
+    {
+        EGLDisplay display;
+        EGLSurface surfaceR;
+        EGLSurface surfaceD;
+        
+        display = eglGetCurrentDisplay();
+        surfaceD = eglGetCurrentSurface(EGL_DRAW);
+        surfaceR = eglGetCurrentSurface(EGL_READ);
+        
+        eglMakeCurrent(display, surfaceD, surfaceR, ctx);
+    }
+}
+
 @end
 
 #endif
+
+

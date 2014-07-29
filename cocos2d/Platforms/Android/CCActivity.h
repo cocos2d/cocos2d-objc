@@ -10,6 +10,7 @@
 #if __CC_PLATFORM_ANDROID
 
 #import <BridgeKitV3/BridgeKit.h>
+#import "../../Platforms/CCGL.h"
 
 @class CCScene;
 @class AndroidRelativeLayout;
@@ -37,6 +38,10 @@ BRIDGE_CLASS("org.cocos2d.CCActivity")
 - (void)setupPaths;
 - (CCScene *)startScene;
 
+- (EGLContext)pushApplicationContext;
+- (void)popApplicationContext:(EGLContext)ctx;
+
 @end
 
 #endif
+

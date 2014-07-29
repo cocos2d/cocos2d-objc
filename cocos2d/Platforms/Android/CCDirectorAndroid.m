@@ -184,32 +184,11 @@
 
 -(void) mainLoop:(id)sender
 {
-    EGLDisplay display;
-    EGLSurface surfaceR;
-    EGLSurface surfaceD;
-
-    EGLContext ctx = eglGetCurrentContext();
-
-    BOOL needsRestore = NO;
-    EGLContext appContext = self.view.eglContext;
-    if (appContext != ctx)
-    {
-        display = eglGetCurrentDisplay();
-        surfaceD = eglGetCurrentSurface(EGL_DRAW);
-        surfaceR = eglGetCurrentSurface(EGL_READ);
-        
-        EGLSurface surface = self.view.eglSurface;
-        
-        eglMakeCurrent(self.view.eglDisplay, surface, surface, appContext);
-        needsRestore = YES;
-    }
+    EGLContext *ctx = [[CCActivity currentActivity] pushApplicationContext];
     
 	[self drawScene];
     
-    if (needsRestore)
-    {
-        eglMakeCurrent(display, surfaceD, surfaceR, ctx);
-    }
+    [[CCActivity currentActivity] popApplicationContext:ctx];
 }
 
 - (void)setAnimationInterval:(NSTimeInterval)interval
