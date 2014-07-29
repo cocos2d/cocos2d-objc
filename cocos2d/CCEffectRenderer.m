@@ -151,7 +151,7 @@
     [self freeAllRenderTargets];
     
     CCEffectRenderTarget *previousPassRT = nil;
-    for(int i = 0; i < effect.renderPassesRequired; i++)
+    for(NSUInteger i = 0; i < effect.renderPassesRequired; i++)
     {
         BOOL lastPass = (i == (effect.renderPassesRequired - 1));
         BOOL directRendering = lastPass && effect.supportsDirectRendering;

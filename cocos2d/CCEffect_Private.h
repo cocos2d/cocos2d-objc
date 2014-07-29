@@ -116,7 +116,7 @@ typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass);
 
 @property (nonatomic, readonly) CCShader* shader; // Note: consider adding multiple shaders (one for reach renderpass, this will help break up logic and avoid branching in a potential uber shader).
 @property (nonatomic, readonly) NSMutableDictionary* shaderUniforms;
-@property (nonatomic, readonly) NSInteger renderPassesRequired;
+@property (nonatomic, readonly) NSUInteger renderPassesRequired;
 @property (nonatomic, readonly) BOOL supportsDirectRendering;
 @property (nonatomic, readonly) BOOL readyForRendering;
 
@@ -136,7 +136,7 @@ typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass);
 -(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions vertexFunctions:(NSMutableArray*)vertexFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varying:(NSArray*)varying;
 
 -(CCEffectPrepareStatus)prepareForRendering;
--(CCEffectRenderPass *)renderPassAtIndex:(NSInteger)passIndex;
+-(CCEffectRenderPass *)renderPassAtIndex:(NSUInteger)passIndex;
 
 -(BOOL)stitchSupported:(CCEffectFunctionStitchFlags)stitch;
 

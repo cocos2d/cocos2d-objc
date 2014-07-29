@@ -492,7 +492,7 @@ static NSString* vertBase =
     self.renderPasses = @[];
 }
 
--(NSInteger)renderPassesRequired
+-(NSUInteger)renderPassesRequired
 {
     return _renderPasses.count;
 }
@@ -512,9 +512,9 @@ static NSString* vertBase =
     return CCEffectPrepareNothingToDo;
 }
 
--(CCEffectRenderPass *)renderPassAtIndex:(NSInteger)passIndex
+-(CCEffectRenderPass *)renderPassAtIndex:(NSUInteger)passIndex
 {
-    NSAssert((passIndex >= 0) && (passIndex < _renderPasses.count), @"Pass index out of range.");
+    NSAssert((passIndex < _renderPasses.count), @"Pass index out of range.");
     return _renderPasses[passIndex];
 }
 
