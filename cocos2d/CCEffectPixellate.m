@@ -78,7 +78,7 @@ static float conditionBlockSize(float blockSize);
     return self;
 }
 
-+(id)effectWithBlockSize:(float)blockSize;
++(id)effectWithBlockSize:(float)blockSize
 {
     return [[self alloc] initWithBlockSize:blockSize];
 }
