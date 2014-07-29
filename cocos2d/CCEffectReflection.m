@@ -17,8 +17,6 @@
 #import "CCEffect_Private.h"
 #import "CCSprite_Private.h"
 
-static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
-
 
 @interface CCEffectReflection ()
 
@@ -218,12 +216,4 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
 }
 
 @end
-
-GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at)
-{
-    return GLKMatrix4Make(at.a,  at.b,  0.0f,  0.0f,
-                          at.c,  at.d,  0.0f,  0.0f,
-                          0.0f,  0.0f,  1.0f,  0.0f,
-                          at.tx, at.ty, 0.0f,  1.0f);
-}
 
