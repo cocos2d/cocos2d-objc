@@ -27,7 +27,6 @@
 
 #import "ccMacros.h"
 
-#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
 
 #import "OALAudioTrack.h"
 #import "SynthesizeSingleton.h"
@@ -96,5 +95,4 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(OALAudioTracks);
 
 @end
 
-#endif //__CC_PLATFORM_IOS || __CC_PLATFORM_MAC
 
