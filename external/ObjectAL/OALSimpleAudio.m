@@ -102,18 +102,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 {
     [OpenALManager sharedInstance].currentContext = context;
     channel = [[ALChannelSource alloc] initWithSources:reservedSources];
-
-#if ANDROID
-#warning TODO: FIXME
-#else
+    
     backgroundTrack = [[OALAudioTrack alloc] init];
-#endif
     
 #if NS_BLOCKS_AVAILABLE && OBJECTAL_CFG_USE_BLOCKS
     oal_dispatch_queue	= dispatch_queue_create("objectal.simpleaudio.queue", NULL);
 #endif
     pendingLoadCount	= 0;
-
+    
     self.preloadCacheEnabled = YES;
     self.bgVolume = 1.0f;
     self.effectsVolume = 1.0f;
@@ -157,7 +153,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 #if NS_BLOCKS_AVAILABLE && OBJECTAL_CFG_USE_BLOCKS && !__has_feature(objc_arc)
 	dispatch_release(oal_dispatch_queue);
 #endif
-
+    
 	as_release(backgroundTrack);
 	[channel stop];
 	as_release(channel);
@@ -249,53 +245,30 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 
 - (bool) bgPaused
 {
-#if ANDROID
-#warning TODO: FIXME
-    return false;
-#else
 	return backgroundTrack.paused;
-#endif
 }
 
 - (void) setBgPaused:(bool) value
 {
-#if ANDROID
-#warning TODO: FIXME
-#else
 	backgroundTrack.paused = value;
-#endif
 }
 
 - (bool) bgPlaying
 {
-#if ANDROID
-#warning TODO: FIXME
-    return false;
-#else
 	return backgroundTrack.playing;
-#endif
 }
 
 - (float) bgVolume
 {
-#if ANDROID
-#warning TODO: FIXME
-    return 0.0f;
-#else
 	return backgroundTrack.gain;
-#endif
 }
 
 - (void) setBgVolume:(float) value
 {
-#if ANDROID
-#warning TODO: FIXME
-#else
 	OPTIONALLY_SYNCHRONIZED(self)
 	{
 		backgroundTrack.gain = value;
 	}
-#endif
 }
 
 - (bool) effectsPaused
@@ -363,15 +336,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 
 - (void) setBgMuted:(bool) value
 {
-#if ANDROID
-#warning TODO: FIXME
-#else
 	OPTIONALLY_SYNCHRONIZED(self)
 	{
 		bgMuted = value;
 		backgroundTrack.muted = bgMuted | muted;
 	}
-#endif
 }
 
 - (bool) effectsMuted
@@ -398,11 +367,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 	OPTIONALLY_SYNCHRONIZED(self)
 	{
 		muted = value;
-#if ANDROID
-#warning TODO: FIXME
-#else
 		backgroundTrack.muted = bgMuted | muted;
-#endif
 		[OpenALManager sharedInstance].currentContext.listener.muted = effectsMuted | muted;
 	}
 }
@@ -411,12 +376,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 
 - (NSURL *) backgroundTrackURL
 {
-#if ANDROID
-#warning TODO: FIXME
-    return nil;
-#else
 	return [backgroundTrack currentlyLoadedUrl];
-#endif
 }
 
 - (bool) preloadBg:(NSString*) filePath
@@ -431,16 +391,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 		OAL_LOG_ERROR(@"filePath was NULL");
 		return NO;
 	}
-#if ANDROID
-#warning TODO: FIXME
-    return false;
-#else
 	BOOL result = [backgroundTrack preloadFile:filePath seekTime:seekTime];
 	if(result){
 		backgroundTrack.numberOfLoops = 0;
 	}
 	return result;
-#endif
 }
 
 - (bool) playBg:(NSString*) filePath
@@ -455,12 +410,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 		OAL_LOG_ERROR(@"filePath was NULL");
 		return NO;
 	}
-#if ANDROID
-#warning TODO: FIXME
-    return NO;
-#else
 	return [backgroundTrack playFile:filePath loops:loop ? -1 : 0];
-#endif
 }
 
 - (bool) playBg:(NSString*) filePath
@@ -471,14 +421,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 	OAL_LOG_DEBUG(@"Play bg with vol %f, pan %f, loop %d, file %@", volume, pan, loop, filePath);
 	OPTIONALLY_SYNCHRONIZED(self)
 	{
-#if ANDROID
-#warning TODO: FIXME
-        return false;
-#else
 		backgroundTrack.gain = volume;
 		backgroundTrack.pan = pan;
 		return [backgroundTrack playFile:filePath loops:loop ? -1 : 0];
-#endif
 	}
 }
 
@@ -491,25 +436,16 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 {
 	OPTIONALLY_SYNCHRONIZED(self)
 	{
-#if ANDROID
-#warning TODO: FIXME
-        return false;
-#else
 		OAL_LOG_DEBUG(@"Play bg, loop %d", loop);
 		backgroundTrack.numberOfLoops = loop ? -1 : 0;
 		return [backgroundTrack play];
-#endif
 	}
 }
 
 - (void) stopBg
 {
 	OAL_LOG_DEBUG(@"Stop bg");
-#if ANDROID
-#warning TODO: FIXME
-#else
 	[backgroundTrack stop];
-#endif
 }
 
 
@@ -542,14 +478,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 			OAL_LOG_ERROR(@"Could not load effect %@", filePath);
 			return nil;
 		}
-
+        
         buffer.name = cacheKey;
 		OPTIONALLY_SYNCHRONIZED(self)
 		{
 			[preloadCache setObject:buffer forKey:cacheKey];
 		}
 	}
-
+    
 	return buffer;
 }
 
@@ -565,12 +501,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 		OAL_LOG_ERROR(@"filePath was NULL");
 		return nil;
 	}
-
+    
     if(pendingLoadCount > 0)
     {
         OAL_LOG_WARNING(@"You are loading an effect synchronously, but have pending async loads that have not completed. Your load will happen after those finish. Your thread is now stuck waiting. Next time just load everything async please.");
     }
-
+    
 #if NS_BLOCKS_AVAILABLE && OBJECTAL_CFG_USE_BLOCKS
 	//Using blocks with the same queue used to asynch load removes the need for locking
 	//BUT be warned that if you had called preloadEffects and then called this method, your app will stall until all of the loading is done.
@@ -600,12 +536,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 		completionBlock(nil);
 		return NO;
 	}
-
+    
 	pendingLoadCount++;
 	dispatch_async(oal_dispatch_queue,
                    ^{
                        OAL_LOG_INFO(@"Preloading effect: %@", filePath);
-
+                       
                        ALBuffer *retBuffer = [self internalPreloadEffect:filePath reduceToMono:reduceToMono];
                        if(!retBuffer)
                        {
@@ -631,15 +567,15 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 		progressBlock(0,0,0);
 		return;
 	}
-
+    
 	__block NSUInteger successCount = 0;
-
+    
 	pendingLoadCount += total;
 	dispatch_async(oal_dispatch_queue,
                    ^{
                        [filePaths enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
                         {
-                            #pragma unused(stop)
+#pragma unused(stop)
                             OAL_LOG_INFO(@"Preloading effect: %@", obj);
                             ALBuffer *result = [self internalPreloadEffect:(NSString *)obj reduceToMono:reduceToMono];
                             if(!result)
@@ -722,12 +658,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 		OAL_LOG_ERROR(@"filePath was NULL");
 		return nil;
 	}
-
+    
 #if __CC_PLATFORM_ANDROID
     // TODO: we are creating a player and throwing it away each time, and not taking into account if it was preloaded.
     // think about checking for preload and implement the player's asyncPrepare finish listener
     AndroidAssetFileDescriptor *assetFd = [[[CCActivity currentActivity] assets] openFdWithFileName:filePath];
-
+    
     if (assetFd.fileDescriptor && [assetFd.fileDescriptor valid]) {
         AndroidMediaPlayer *player = [[AndroidMediaPlayer alloc] init];
         [player reset];
@@ -736,7 +672,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
         [player prepare];
         [player start];
     }
-
+    
     if (assetFd) {
         [assetFd close];
     }

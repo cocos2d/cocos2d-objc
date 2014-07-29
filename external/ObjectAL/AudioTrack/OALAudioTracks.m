@@ -27,7 +27,6 @@
 
 #import "OALAudioTracks.h"
 
-#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
 
 #import "ALWeakArray.h"
 #import "ObjectALMacros.h"
@@ -67,13 +66,15 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALAudioTracks);
 	if(nil != (self = [super init]))
 	{
 		OAL_LOG_DEBUG(@"%@: Init", self);
-
+        
 		suspendHandler = [[OALSuspendHandler alloc] initWithTarget:nil selector:nil];
-
+        
 		tracks = [[ALWeakArray alloc] initWithCapacity:10];
 		
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
 		[[OALAudioSession sharedInstance] addSuspendListener:self];
-
+#endif
+        
         // Bug: Need to constantly poll deviceCurrentTime or else it resets to 0
         // on devices (doesn't happen in simulator).
         deviceTimePoller = [NSTimer scheduledTimerWithTimeInterval:1.0
@@ -88,9 +89,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALAudioTracks);
 - (void) dealloc
 {
 	OAL_LOG_DEBUG(@"%@: Dealloc", self);
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
 	[[OALAudioSession sharedInstance] removeSuspendListener:self];
+#endif
     [deviceTimePoller invalidate];
-
+    
 	as_release(tracks);
 	as_release(suspendHandler);
 	as_superdealloc();
@@ -227,5 +230,4 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALAudioTracks);
 
 @end
 
-#endif // __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
 

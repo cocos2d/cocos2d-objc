@@ -67,7 +67,7 @@
 	ALDevice* device;
 	/** The context we are using */
 	ALContext* context;
-
+    
 	/** The sound channel used by this object. */
 	ALChannelSource* channel;
 	/** Cache for preloaded sound samples. */
@@ -83,9 +83,7 @@
 	uint pendingLoadCount;
 	
 	/** Audio track to play background music */
-#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
 	OALAudioTrack* backgroundTrack;
-#endif
     
 	bool muted;
 	bool bgMuted;
@@ -242,7 +240,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(OALSimpleAudio);
  *
  * reservedSources is independent of this; it represents how many of the above
  * mentioned sources to reserve for OALSimpleAudio's use. <br>
- * 
+ *
  * <strong>Note:</strong> This method must be called ONLY ONCE, <em>BEFORE</em>
  * any attempt is made to access the shared instance. <br>
  *
@@ -402,7 +400,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(OALSimpleAudio);
  * @param completionBlock Executed when loading is complete.
  */
 - (BOOL) preloadEffect:(NSString*) filePath
-				  reduceToMono:(bool) reduceToMono
+          reduceToMono:(bool) reduceToMono
 	   completionBlock:(void(^)(ALBuffer *)) completionBlock;
 
 /** Asynchronous preload and cache multiple sound effects for later playback.
@@ -413,7 +411,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(OALSimpleAudio);
  * @param progressBlock Executed regularly while file loading is in progress.
  */
 - (void) preloadEffects:(NSArray*) filePaths
-				   reduceToMono:(bool) reduceToMono
+           reduceToMono:(bool) reduceToMono
 		  progressBlock:(void (^)(NSUInteger progress, NSUInteger successCount, NSUInteger total)) progressBlock;
 
 #endif
@@ -463,10 +461,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(OALSimpleAudio);
  *         keep this if you want to be able to stop a looped playback).
  */
 - (id<ALSoundSource>) playEffect:(NSString*) filePath
-						volume:(float) volume
-						 pitch:(float) pitch
-						   pan:(float) pan
-						  loop:(bool) loop;
+                          volume:(float) volume
+                           pitch:(float) pitch
+                             pan:(float) pan
+                            loop:(bool) loop;
 
 /** Play a sound effect from a user-supplied buffer.
  *

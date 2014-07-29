@@ -119,6 +119,7 @@
 		D242C50E1958D78700E7726D /* MainMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = D242C50B1958D78700E7726D /* MainMenu.m */; };
 		D242C50F1958D78700E7726D /* TestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = D242C50D1958D78700E7726D /* TestBase.m */; };
 		D242C5131958D87900E7726D /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D242C5121958D87900E7726D /* CoreText.framework */; };
+		D28F46271988175F006A017B /* Music in Resources */ = {isa = PBXBuildFile; fileRef = D28F46261988175F006A017B /* Music */; };
 		D2BBF573195280150005272F /* libEGL.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BBF572195280150005272F /* libEGL.so */; };
 		D2D0EDF81951262700E9103F /* libcocos2dAndroid.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2D0EDF3195125EF00E9103F /* libcocos2dAndroid.a */; };
 /* End PBXBuildFile section */
@@ -307,6 +308,7 @@
 		D242C50C1958D78700E7726D /* TestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestBase.h; path = "../../cocos2d-ui-tests/TestBase.h"; sourceTree = "<group>"; };
 		D242C50D1958D78700E7726D /* TestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestBase.m; path = "../../cocos2d-ui-tests/TestBase.m"; sourceTree = "<group>"; };
 		D242C5121958D87900E7726D /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		D28F46261988175F006A017B /* Music */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Music; path = ../../Resources/Music; sourceTree = "<group>"; };
 		D2952D3C19520B9A007C58A7 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		D2BBF54F195264EA0005272F /* libGLESv3.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLESv3.so; path = usr/lib/armeabi/libGLESv3.so; sourceTree = SDKROOT; };
 		D2BBF55419527B170005272F /* libGLESv3.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLESv3.so; path = usr/lib/armv7a/libGLESv3.so; sourceTree = SDKROOT; };
@@ -494,6 +496,7 @@
 		5B4D6CC61936ACE5004D1A0B /* Headless */ = {
 			isa = PBXGroup;
 			children = (
+				D28F46261988175F006A017B /* Music */,
 				5B0ED737196E550000F9868F /* Particles */,
 				5B0ED735196E54BD00F9868F /* Sounds */,
 				5B0ED731196E4DAA00F9868F /* TileMaps */,
@@ -725,6 +728,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D28F46271988175F006A017B /* Music in Resources */,
 				57E1452B1975DC340065F142 /* markerFelt.fnt in Resources */,
 				57E145071975DC340065F142 /* bitmapFontTest.png in Resources */,
 				57E145251975DC340065F142 /* larabie-16-hd.plist in Resources */,
