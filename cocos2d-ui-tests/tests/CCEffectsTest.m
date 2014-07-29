@@ -41,7 +41,7 @@
     
     
     CCSpriteFrame *normalMap = [CCSpriteFrame frameWithImageNamed:@"Images/ShinyBallNormals.png"];
-    CCEffectGlass *glass = [[CCEffectGlass alloc] initWithRefraction:1.0f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment];
+    CCEffectGlass *glass = [[CCEffectGlass alloc] initWithShininess:1.0f refraction:1.0f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment];
     glass.fresnelBias = 0.1f;
     glass.fresnelPower = 2.0f;
     glass.refraction = 0.75f;
@@ -515,7 +515,7 @@
                          [CCEffectPixellate effectWithBlockSize:8.0f],
                          [CCEffectSaturation effectWithSaturation:-1.0f],
                          [CCEffectHue effectWithHue:90.0f],
-                         [CCEffectGlass effectWithRefraction:0.75f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment],
+                         [CCEffectGlass effectWithShininess:1.0f refraction:0.75f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment],
                          [CCEffectRefraction effectWithRefraction:0.75f environment:refractEnvironment],
                          [CCEffectReflection effectWithShininess:1.0f fresnelBias:0.1f fresnelPower:2.0f environment:reflectEnvironment],
                          ];
@@ -570,7 +570,7 @@
                             [CCEffectPixellate effectWithBlockSize:4.0f],
                             [CCEffectSaturation effectWithSaturation:-1.0f],
                             [CCEffectHue effectWithHue:90.0f],
-                            [CCEffectGlass effectWithRefraction:0.5f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment],
+                            [CCEffectGlass effectWithShininess:1.0f refraction:0.5f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment],
                             [CCEffectRefraction effectWithRefraction:0.5f environment:refractEnvironment],
                             [CCEffectReflection effectWithShininess:1.0f fresnelBias:0.1f fresnelPower:4.0f environment:reflectEnvironment],
                             ];
