@@ -77,6 +77,8 @@
 		D2D0E6971950B16300E9103F /* libGLESv2.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D2D0E6941950B16300E9103F /* libGLESv2.so */; };
 		D2D0E6981950B16300E9103F /* libGLESv3.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D2D0E6951950B16300E9103F /* libGLESv3.so */; };
 		D2D0E69A1950B16800E9103F /* libEGL.so in Frameworks */ = {isa = PBXBuildFile; fileRef = D2D0E6991950B16800E9103F /* libEGL.so */; };
+		D2D59897198747DE00BDAF25 /* Music in Resources */ = {isa = PBXBuildFile; fileRef = D2D59896198747DE00BDAF25 /* Music */; };
+		D2D59898198747DE00BDAF25 /* Music in Resources */ = {isa = PBXBuildFile; fileRef = D2D59896198747DE00BDAF25 /* Music */; };
 		D2FEB754194F6CC600FC0574 /* TestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = B71B087B17EA5B490082EBC0 /* TestBase.m */; };
 		D2FEB755194F6CC600FC0574 /* SpritePerformanceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3870C5F18B440150033D885 /* SpritePerformanceTest.m */; };
 		D2FEB757194F6CC600FC0574 /* CCScrollViewTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B71B088117EA5B6A0082EBC0 /* CCScrollViewTest.m */; };
@@ -335,6 +337,7 @@
 		D2D0E6941950B16300E9103F /* libGLESv2.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLESv2.so; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/ApportableSDK1.0.sdk/usr/lib/armeabi/libGLESv2.so"; sourceTree = "<group>"; };
 		D2D0E6951950B16300E9103F /* libGLESv3.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLESv3.so; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/ApportableSDK1.0.sdk/usr/lib/armeabi/libGLESv3.so"; sourceTree = "<group>"; };
 		D2D0E6991950B16800E9103F /* libEGL.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libEGL.so; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/ApportableSDK1.0.sdk/usr/lib/armeabi/libEGL.so"; sourceTree = "<group>"; };
+		D2D59896198747DE00BDAF25 /* Music */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Music; path = Resources/Music; sourceTree = SOURCE_ROOT; };
 		D2FEB793194F6CC600FC0574 /* cocos2d-tests-iosAndroid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cocos2d-tests-iosAndroid.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3395F19187F83E600F22C74 /* CCMemoryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMemoryTests.m; sourceTree = "<group>"; };
 		D340E10C185660BE006E605C /* CCPhysicsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCPhysicsTest.m; path = "cocos2d-ui-tests/tests/CCPhysicsTest.m"; sourceTree = SOURCE_ROOT; };
@@ -487,6 +490,7 @@
 		758A6C6E1843E84D00D1A8D2 /* Test Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D2D59896198747DE00BDAF25 /* Music */,
 				D4AFE8D71977100000261299 /* Fonts */,
 				75F76496185A831B00E2FAFE /* Sounds */,
 				758A6C7F184410EE00D1A8D2 /* Particles */,
@@ -996,6 +1000,7 @@
 				D4AFE9191977100000261299 /* arial16.fnt in Resources */,
 				D4AFE94C1977100000261299 /* west_england-64.fnt in Resources */,
 				D4AFE9381977100000261299 /* konqa32.fnt in Resources */,
+				D2D59897198747DE00BDAF25 /* Music in Resources */,
 				D4AFE9411977100000261299 /* markerFelt.png in Resources */,
 				D4AFE9331977100000261299 /* geneva-32.fnt in Resources */,
 				B7E2621717E7D34D007067F0 /* Icon@2x.png in Resources */,
@@ -1023,6 +1028,7 @@
 				D2FEB783194F6CC600FC0574 /* Default-568h@2x.png in Resources */,
 				D2FEB784194F6CC600FC0574 /* Default-Landscape~ipad.png in Resources */,
 				D2FEB785194F6CC600FC0574 /* Default.png in Resources */,
+				D2D59898198747DE00BDAF25 /* Music in Resources */,
 				D2FEB786194F6CC600FC0574 /* Default@2x.png in Resources */,
 				D2FEB787194F6CC600FC0574 /* Icon-72.png in Resources */,
 				D2FEB788194F6CC600FC0574 /* Icon-Small-50.png in Resources */,
