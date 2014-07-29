@@ -81,7 +81,7 @@
     [self.contentNode addChild:environment];
     
     CCSpriteFrame *normalMap = [CCSpriteFrame frameWithImageNamed:@"Images/ShinyBallNormals.png"];
-    CCEffectReflection *reflection = [[CCEffectReflection alloc] initWithEnvironment:environment];
+    CCEffectReflection *reflection = [[CCEffectReflection alloc] initWithShininess:0.4f environment:environment];
     reflection.fresnelBias = 0.0f;
     reflection.fresnelPower = 0.0f;
     
@@ -517,7 +517,7 @@
                          [CCEffectHue effectWithHue:90.0f],
                          [CCEffectGlass effectWithRefraction:0.75f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment],
                          [CCEffectRefraction effectWithRefraction:0.75f environment:refractEnvironment],
-                         [CCEffectReflection effectWithFresnelBias:0.1f fresnelPower:2.0f environment:reflectEnvironment],
+                         [CCEffectReflection effectWithShininess:1.0f fresnelBias:0.1f fresnelPower:2.0f environment:reflectEnvironment],
                          ];
     
     
@@ -572,7 +572,7 @@
                             [CCEffectHue effectWithHue:90.0f],
                             [CCEffectGlass effectWithRefraction:0.5f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment],
                             [CCEffectRefraction effectWithRefraction:0.5f environment:refractEnvironment],
-                            [CCEffectReflection effectWithFresnelBias:0.1f fresnelPower:4.0f environment:reflectEnvironment],
+                            [CCEffectReflection effectWithShininess:1.0f fresnelBias:0.1f fresnelPower:4.0f environment:reflectEnvironment],
                             ];
     CCEffect *selectedEffect = allEffects[8];
 
