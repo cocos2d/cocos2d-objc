@@ -35,7 +35,7 @@
 #import "ccMacros.h"
 #import "ccConfig.h"
 #import "cocos2d.h"
-#import "CCRenderQueue.h"
+#import "CCRenderDispatch.h"
 
 @interface CCConfiguration ()
 -(void) getOpenGLvariables;
@@ -165,7 +165,7 @@ static char * glExtensions;
 -(void) getOpenGLvariables
 {
 	if( ! _openGLInitialized ) {
-		CCRenderQueueSync(NO, ^{
+		CCRenderDispatch(NO, ^{
 			glExtensions = (char*) glGetString(GL_EXTENSIONS);
 
 			NSAssert( glExtensions, @"OpenGL not initialized!");
@@ -286,7 +286,7 @@ static char * glExtensions;
 	printf("cocos2d: OS version: %s (0x%08x)\n", [OSVer UTF8String], _OSVersion);
 	printf("cocos2d: %ld bit runtime\n", 8*sizeof(long));
 	
-	CCRenderQueueSync(NO, ^{
+	CCRenderDispatch(NO, ^{
 		printf("cocos2d: GL_VENDOR:   %s\n", glGetString(GL_VENDOR) );
 		printf("cocos2d: GL_RENDERER: %s\n", glGetString ( GL_RENDERER   ) );
 		printf("cocos2d: GL_VERSION:  %s\n", glGetString ( GL_VERSION    ) );

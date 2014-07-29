@@ -22,19 +22,16 @@
  * THE SOFTWARE.
  */
 
-#import <OpenGLES/EAGL.h>
+#import "CCRenderDispatch.h"
 
+#if CC_RENDER_DISPATCH_ENABLED
 
-EAGLContext *CCRenderQueueSetup(void);
+// Setup the queue and return the context it uses.
+EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup *sharegroup);
 
-/// Returns true if the queue is ready to accept another frame.
-/// *Must* be matched with a call to CCRenderQueue[Async|Sync](..., YES)
-BOOL CCRenderQueueReady(void);
+#endif
 
-/// Queue a block to be executed asyncronously on the render queue.
-/// 'frame' should be YES when submitting a frame's render block, and it must be matched with a call to CCRenderQueueReady().
-void CCRenderQueueAsync(BOOL frame, void (^block)());
-
-/// Call a block syncronously on the render queue.
-/// 'frame' should be YES when submitting a frame's render block, and it must be matched with a call to CCRenderQueueReady().
-void CCRenderQueueSync(BOOL frame, void (^block)());
+// Check if the queue is ready to accept rendering a frame and execute it.
+// Must be called in pairs because of CC_GL_QUEUE_SEMAPHORE.
+BOOL CCRenderDispatchBeginFrame(void);
+void CCRenderDispatchCommitFrame(BOOL threadsafe, dispatch_block_t block);

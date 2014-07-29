@@ -38,7 +38,7 @@
 #import "CCNode_Private.h"
 #import "CCRenderer_private.h"
 #import "CCRenderTexture_Private.h"
-#import "CCRenderQueue.h"
+#import "CCRenderDispatch.h"
 
 #if __CC_PLATFORM_MAC
 #import <ApplicationServices/ApplicationServices.h>
@@ -180,7 +180,7 @@
 	
 	[self.texture setAliasTexParameters];
 	
-	CCRenderQueueSync(NO, ^{
+	CCRenderDispatch(NO, ^{
 		glPushGroupMarkerEXT(0, "CCRenderTexture: Create");
 		
 		glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
@@ -247,7 +247,7 @@
 	GLuint fbo = _FBO.FBO;
 	GLuint depthRenderBuffer = _FBO.depthRenderBuffer;
 	
-	CCRenderQueueAsync(NO, ^{
+	CCRenderDispatch(YES, ^{
 		glDeleteFramebuffers(1, &fbo);
 
 		if (depthRenderBuffer){
@@ -353,7 +353,7 @@
 		[CCRenderer bindRenderer:nil];
 		_privateRenderer = NO;
 		
-		(_renderer.threadsafe ? CCRenderQueueAsync : CCRenderQueueSync)(NO, ^{[_renderer flush];});
+		CCRenderDispatch(_renderer.threadsafe, ^{[_renderer flush];});
 	} else {
 		_renderer.globalShaderUniforms = _oldGlobalUniforms;
 	}

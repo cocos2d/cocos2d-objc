@@ -31,7 +31,7 @@
 #import "CCShader_private.h"
 #import "CCDirector_Private.h"
 #import "CCGL.h"
-#import "CCRenderQueue.h"
+#import "CCRenderDispatch.h"
 
 
 @interface CCShader()
@@ -503,7 +503,7 @@ SortQueue(NSMutableArray *queue)
 -(instancetype)init
 {
 	if((self = [super init])){
-		CCRenderQueueSync(NO, ^{
+		CCRenderDispatch(NO, ^{
 			glPushGroupMarkerEXT(0, "CCRenderer: Init");
 			const NSUInteger CCRENDERER_INITIAL_VERTEX_CAPACITY = 16*1024;
 			[self initBuffer:&_vertexBuffer capacity:CCRENDERER_INITIAL_VERTEX_CAPACITY elementSize:sizeof(CCVertex) type:GL_ARRAY_BUFFER];
@@ -522,7 +522,7 @@ SortQueue(NSMutableArray *queue)
 
 -(void)dealloc
 {
-	CCRenderQueueSync(NO, ^{
+	CCRenderDispatch(NO, ^{
 		glPushGroupMarkerEXT(0, "CCRenderer: Dealloc");
 		glDeleteVertexArrays(1, &_vao);
 		glPopGroupMarkerEXT();
@@ -604,6 +604,8 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 -(void)enqueueRenderCommand: (id<CCRenderCommand>) renderCommand {
 	[_queue addObject: renderCommand];
 	_lastDrawCommand = nil;
+	
+	_threadsafe = NO;
 }
 
 -(void)pushGroup;
@@ -698,7 +700,7 @@ UNMAP_BUFFER(GLenum target, size_t length, BOOL flush){
 	// This is a little tricky.
 	// Need to resize the existing GL buffer object without creating a new name.
 	
-	CCRenderQueueSync(NO, ^{
+	CCRenderDispatch(NO, ^{
 		// Make the buffer readable.
 		GLenum target = (GLenum)buffer->type;
 		glBindBuffer(target, (GLuint)buffer->data);

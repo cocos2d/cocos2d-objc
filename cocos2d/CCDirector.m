@@ -46,7 +46,7 @@
 #import "CCConfiguration.h"
 #import "CCTransition.h"
 #import "CCRenderer_private.h"
-#import "CCRenderQueue.h"
+#import "CCRenderDispatch.h"
 
 // support imports
 #import "Platforms/CCGL.h"
@@ -269,7 +269,7 @@ static CCDirector *_sharedDirector = nil;
 	}
 }
 
--(void)addFrameCompletionHandler:(CCFrameCompletionHandler)handler
+-(void)addFrameCompletionHandler:(dispatch_block_t)handler
 {
 	[(CCGLView *)self.view addFrameCompletionHandler:handler];
 }
@@ -368,7 +368,7 @@ static CCDirector *_sharedDirector = nil;
 			
 			// TODO this should probably migrate somewhere else.
 			if(view.depthFormat){
-				CCRenderQueueSync(NO, ^{
+				CCRenderDispatch(YES, ^{
 					glEnable(GL_DEPTH_TEST);
 					glDepthFunc(GL_LEQUAL);
 				});

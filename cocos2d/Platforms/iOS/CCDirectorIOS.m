@@ -43,7 +43,7 @@
 #import "../../ccFPSImages.h"
 #import "../../CCConfiguration.h"
 #import "CCRenderer_private.h"
-#import "CCRenderQueue.h"
+#import "CCRenderDispatch_Private.h"
 
 // support imports
 #import "../../Support/CGPointExtension.h"
@@ -117,7 +117,7 @@
 	 XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
 	if( _nextScene ) [self setNextScene];
 	
-	if(CCRenderQueueReady()){
+	if(CCRenderDispatchBeginFrame()){
 		CCRenderer *renderer = [self rendererFromPool];
 		[CCRenderer bindRenderer:renderer];
 		
@@ -134,7 +134,7 @@
 		
 		[CCRenderer bindRenderer:nil];
 		
-		(renderer.threadsafe ? CCRenderQueueAsync : CCRenderQueueSync)(YES, ^{
+		CCRenderDispatchCommitFrame(renderer.threadsafe, ^{
 			[openGLview addFrameCompletionHandler:^{
 				// Return the renderer to the pool when the frame completes.
 				[self poolRenderer:renderer];
@@ -153,7 +153,7 @@
 -(void) setViewport
 {
 	CGSize size = _winSizeInPixels;
-	CCRenderQueueSync(NO, ^{
+	CCRenderDispatch(YES, ^{
 		glViewport(0, 0, size.width, size.height );
 	});
 }

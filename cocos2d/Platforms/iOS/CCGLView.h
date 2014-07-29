@@ -74,10 +74,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #import "CCESRenderer.h"
 
-
-typedef void (^CCFrameCompletionHandler)();
-
-
 //CLASSES:
 
 @class CCGLView;
@@ -128,14 +124,14 @@ typedef void (^CCFrameCompletionHandler)();
 /** creates an initializes an CCGLView with a frame, a color buffer format, and a depth buffer. */
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth;
 /** creates an initializes an CCGLView with a frame, a color buffer format, a depth buffer format, a sharegroup, and multisamping */
-+ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained multiSampling:(BOOL)multisampling numberOfSamples:(unsigned int)samples;
++ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)multisampling numberOfSamples:(unsigned int)samples;
 
 /** Initializes an CCGLView with a frame and 0-bit depth buffer, and a RGB565 color buffer */
 - (id) initWithFrame:(CGRect)frame; //These also set the current context
 /** Initializes an CCGLView with a frame, a color buffer format, and 0-bit depth buffer */
 - (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format;
 /** Initializes an CCGLView with a frame, a color buffer format, a depth buffer format, a sharegroup and multisampling support */
-- (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained multiSampling:(BOOL)sampling numberOfSamples:(unsigned int)nSamples;
+- (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)sampling numberOfSamples:(unsigned int)nSamples;
 
 /** pixel format: it could be RGBA8 (32-bit) or RGB565 (16-bit) */
 @property(nonatomic,readonly) NSString* pixelFormat;
@@ -152,7 +148,7 @@ typedef void (^CCFrameCompletionHandler)();
 
 /// Schedule a block to be invoked when the frame completes.
 /// The block may not be invoked from the main thread.
--(void)addFrameCompletionHandler:(CCFrameCompletionHandler)handler;
+-(void)addFrameCompletionHandler:(dispatch_block_t)handler;
 
 /** CCGLView uses double-buffer. This method swaps the buffers */
 -(void) swapBuffers;

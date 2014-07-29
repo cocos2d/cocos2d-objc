@@ -33,7 +33,7 @@
 #ifdef __CC_PLATFORM_IOS
 
 #import "CCES2Renderer.h"
-#import "CCRenderQueue.h"
+#import "CCRenderDispatch_Private.h"
 
 #import "../CCGL.h"
 #import "../../ccMacros.h"
@@ -47,12 +47,20 @@
 @synthesize msaaFramebuffer=_msaaFramebuffer;
 
 // Create an OpenGL ES 2.0 context
-- (id) initWithDepthFormat:(unsigned int)depthFormat withPixelFormat:(unsigned int)pixelFormat withMultiSampling:(BOOL) multiSampling withNumberOfSamples:(unsigned int) requestedSamples
+- (id) initWithDepthFormat:(unsigned int)depthFormat withPixelFormat:(unsigned int)pixelFormat withSharegroup:(EAGLSharegroup*)sharegroup withMultiSampling:(BOOL) multiSampling withNumberOfSamples:(unsigned int) requestedSamples
 {
 	if((self = [super init])){
-		_context = CCRenderQueueSetup();
+#if CC_RENDER_DISPATCH_ENABLED
+		_context = CCRenderDispatchSetupGL(kEAGLRenderingAPIOpenGLES2, sharegroup);
+#else
+		_context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2 sharegroup:sharegroup];
 
-		CCRenderQueueSync(NO, ^{
+		if(!_context || ![EAGLContext setCurrentContext:_context]){
+			return nil;
+		}
+#endif
+
+		CCRenderDispatch(NO, ^{
 			_depthFormat = depthFormat;
 			_pixelFormat = pixelFormat;
 			_multiSampling = multiSampling;
@@ -87,7 +95,7 @@
 {
 	__block BOOL retval = YES;
 	
-	CCRenderQueueSync(NO, ^{
+	CCRenderDispatch(NO, ^{
 		// Allocate color buffer backing based on the current layer size
 		glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderbuffer);
 
@@ -200,8 +208,7 @@
 - (void)dealloc
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
-	
-	CCRenderQueueSync(NO, ^{
+	CCRenderDispatch(NO, ^{
 		// Tear down GL
 		if (_defaultFramebuffer) {
 				glDeleteFramebuffers(1, &_defaultFramebuffer);

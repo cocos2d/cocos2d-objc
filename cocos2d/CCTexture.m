@@ -79,7 +79,7 @@
 #import "CCTexturePVR.h"
 #import "CCShader.h"
 #import "CCDirector.h"
-#import "CCRenderQueue.h"
+#import "CCRenderDispatch.h"
 
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
@@ -187,7 +187,7 @@ static CCTexture *CCTextureNone = nil;
 - (id) initWithData:(const void*)data pixelFormat:(CCTexturePixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSizeInPixels:(CGSize)sizeInPixels contentScale:(CGFloat)contentScale
 {
 	if((self = [super init])) {
-		CCRenderQueueSync(NO, ^{
+		CCRenderDispatch(NO, ^{
 			glPushGroupMarkerEXT(0, "CCTexture: Init");
 			
 			// XXX: 32 bits or POT textures uses UNPACK of 4 (is this correct ??? )
@@ -301,7 +301,7 @@ static CCTexture *CCTextureNone = nil;
 	
 	GLuint name = _name;
 	if(name){
-		CCRenderQueueAsync(NO, ^{
+		CCRenderDispatch(YES, ^{
 			glPushGroupMarkerEXT(0, "CCTexture: Dealloc");
 			glDeleteTextures(1, &name);
 			glPopGroupMarkerEXT();
@@ -619,7 +619,7 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 
 -(void) generateMipmap
 {
-	CCRenderQueueSync(NO, ^{
+	CCRenderDispatch(NO, ^{
 		glPushGroupMarkerEXT(0, "CCTexture: Generate Mipmap");
 		
 		NSAssert( _width == CCNextPOT(_width) && _height == CCNextPOT(_height), @"Mimpap texture only works in POT textures");
@@ -634,7 +634,7 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 
 -(void) setTexParameters: (ccTexParams*) texParams
 {
-	CCRenderQueueSync(NO, ^{
+	CCRenderDispatch(NO, ^{
 		glPushGroupMarkerEXT(0, "CCTexture: Set Texture Parameters");
 		
 		NSAssert( (_width == CCNextPOT(_width) && _height == CCNextPOT(_height)) ||
@@ -654,7 +654,7 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 
 -(void) setAliasTexParameters
 {
-	CCRenderQueueSync(NO, ^{
+	CCRenderDispatch(NO, ^{
 		glPushGroupMarkerEXT(0, "CCTexture: Set Alias Texture Parameters");
 		
 		glBindTexture(GL_TEXTURE_2D, _name );
@@ -675,7 +675,7 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 
 -(void) setAntiAliasTexParameters
 {
-	CCRenderQueueSync(NO, ^{
+	CCRenderDispatch(NO, ^{
 		glPushGroupMarkerEXT(0, "CCTexture: Set Anti-alias Texture Parameters");
 		
 		glBindTexture(GL_TEXTURE_2D, _name );

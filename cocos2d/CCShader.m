@@ -35,7 +35,7 @@
 #import "CCDirector.h"
 #import "CCCache.h"
 #import "CCGL.h"
-#import "CCRenderQueue.h"
+#import "CCRenderDispatch.h"
 
 
 enum {
@@ -405,7 +405,7 @@ UniformSettersForProgram(GLuint program)
 {
 	__block typeof(self) blockself = self;
 	
-	CCRenderQueueSync(NO, ^{
+	CCRenderDispatch(NO, ^{
 		glPushGroupMarkerEXT(0, "CCShader: Init");
 		
 		GLuint program = glCreateProgram();
@@ -445,7 +445,7 @@ UniformSettersForProgram(GLuint program)
 
 	GLuint program = _program;
 	if(_ownsProgram && program){
-		CCRenderQueueAsync(NO, ^{
+		CCRenderDispatch(YES, ^{
 			glDeleteProgram(program);
 		});
 	}
