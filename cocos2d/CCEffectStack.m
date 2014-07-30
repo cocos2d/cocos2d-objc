@@ -46,6 +46,11 @@
     return self;
 }
 
++ (id)effectStackWithEffects:(NSArray *)effects
+{
+    return [[self alloc] initWithEffects:effects];
+}
+
 - (NSUInteger)effectCount
 {
     return _effects.count;

@@ -527,8 +527,8 @@
     sprite.position = ccp(0.5f, 0.5f);
     sprite.scale = 0.5f;
 
-    sprite.effect = [[CCEffectStack alloc] initWithEffects:@[effects[8], effects[9]]];
-//    sprite.effect = [[CCEffectStack alloc] initWithEffects:@[effects[7]]];
+    sprite.effect = [CCEffectStack effectStackWithEffects:@[effects[8], effects[9]]];
+//    sprite.effect = [CCEffectStack effectStackWithEffects:@[effects[7]]];
     
     sprite.normalMapSpriteFrame = [CCSpriteFrame frameWithImageNamed:@"Images/ShinyBallNormals.png"];
     sprite.colorRGBA = [CCColor colorWithRed:0.75f green:0.75f blue:0.75f alpha:0.75f];
@@ -662,7 +662,7 @@
     }
     else if (effects.count > 1)
     {
-        CCEffectStack *stack = [[CCEffectStack alloc] initWithEffects:effects];
+        CCEffectStack *stack = [CCEffectStack effectStackWithEffects:effects];
         effectNode.effect = stack;
     }
     
@@ -683,7 +683,7 @@
     }
     else if (effects.count > 1)
     {
-        CCEffectStack *stack = [[CCEffectStack alloc] initWithEffects:effects];
+        CCEffectStack *stack = [CCEffectStack effectStackWithEffects:effects];
         sprite.effect = stack;
     }
     
