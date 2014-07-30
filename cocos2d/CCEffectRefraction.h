@@ -50,6 +50,16 @@
 -(id)init;
 
 /**
+ *  Initializes a CCEffectRefraction object with the supplied parameters and a nil normal map.
+ *
+ *  @param refraction The refraction strength.
+ *  @param environment The environment image that will be refracted by the affected node.
+ *
+ *  @return The CCEffectRefraction object.
+ */
+-(id)initWithRefraction:(float)refraction environment:(CCSprite *)environment;
+
+/**
  *  Initializes a CCEffectRefraction object with the supplied parameters.
  *
  *  @param refraction The refraction strength.
@@ -64,6 +74,16 @@
 /// -----------------------------------------------------------------------
 /// @name Initializing a CCEffectRefraction object
 /// -----------------------------------------------------------------------
+
+/**
+ *  Creates a CCEffectRefraction object with the supplied parameters and a nil normal map.
+ *
+ *  @param refraction The refraction strength.
+ *  @param environment The environment image that will be refracted by the affected node.
+ *
+ *  @return The CCEffectRefraction object.
+ */
++(id)effectWithRefraction:(float)refraction environment:(CCSprite *)environment;
 
 /**
  *  Creates a CCEffectRefraction object with the supplied parameters.

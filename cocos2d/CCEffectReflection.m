@@ -30,12 +30,22 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
 
 -(id)init
 {
-    return [self initWithEnvironment:nil normalMap:nil];
+    return [self initWithEnvironment:nil];
+}
+
+-(id)initWithEnvironment:(CCSprite *)environment
+{
+    return [self initWithEnvironment:environment normalMap:nil];
 }
 
 -(id)initWithEnvironment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap
 {
     return [self initWithFresnelBias:1.0f fresnelPower:0.0f environment:environment normalMap:normalMap];
+}
+
+-(id)initWithFresnelBias:(float)bias fresnelPower:(float)power environment:(CCSprite *)environment
+{
+    return [self initWithFresnelBias:bias fresnelPower:power environment:environment normalMap:nil];
 }
 
 -(id)initWithFresnelBias:(float)bias fresnelPower:(float)power environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap
@@ -61,9 +71,19 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
     return self;
 }
 
++(id)effectWithEnvironment:(CCSprite *)environment
+{
+    return [[self alloc] initWithEnvironment:environment];
+}
+
 +(id)effectWithEnvironment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap
 {
     return [[self alloc] initWithEnvironment:environment normalMap:normalMap];
+}
+
++(id)effectWithFresnelBias:(float)bias fresnelPower:(float)power environment:(CCSprite *)environment
+{
+    return [[self alloc] initWithFresnelBias:bias fresnelPower:power environment:environment];
 }
 
 +(id)effectWithFresnelBias:(float)bias fresnelPower:(float)power environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap

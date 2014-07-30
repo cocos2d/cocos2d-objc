@@ -32,6 +32,11 @@
     return [self initWithRefraction:1.0f refractionEnvironment:nil reflectionEnvironment:nil normalMap:nil];
 }
 
+-(id)initWithRefraction:(float)refraction refractionEnvironment:(CCSprite *)refractionEnvironment reflectionEnvironment:(CCSprite *)reflectionEnvironment
+{
+    return [self initWithRefraction:refraction refractionEnvironment:refractionEnvironment reflectionEnvironment:reflectionEnvironment normalMap:nil];
+}
+
 -(id)initWithRefraction:(float)refraction refractionEnvironment:(CCSprite *)refractionEnvironment reflectionEnvironment:(CCSprite *)reflectionEnvironment normalMap:(CCSpriteFrame *)normalMap
 {
     NSArray *uniforms = @[
@@ -65,6 +70,10 @@
         self.debugName = @"CCEffectGlass";
     }
     return self;
+}
++(id)effectWithRefraction:(float)refraction refractionEnvironment:(CCSprite *)refractionEnvironment reflectionEnvironment:(CCSprite *)reflectionEnvironment
+{
+    return [[self alloc] initWithRefraction:refraction refractionEnvironment:refractionEnvironment reflectionEnvironment:reflectionEnvironment];
 }
 
 +(id)effectWithRefraction:(float)refraction refractionEnvironment:(CCSprite *)refractionEnvironment reflectionEnvironment:(CCSprite *)reflectionEnvironment normalMap:(CCSpriteFrame *)normalMap
