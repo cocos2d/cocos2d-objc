@@ -221,6 +221,57 @@
         GLKMatrix4 ndcToReflectEnvTextureMat = GLKMatrix4Multiply(worldToReflectEnvTextureMat, ndcToWorldMat);
 
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_ndcToEnv"]] = [NSValue valueWithGLKMatrix4:ndcToReflectEnvTextureMat];
+        
+#if 0
+        GLKVector4 result1, result2, result3, result4;
+
+        NSLog(@"Vertex transforms:");
+
+        result1 = GLKMatrix4MultiplyVector4(pass.transform, pass.verts.bl.position);
+        NSLog(@"      input: %f %f %f", pass.verts.bl.position.x, pass.verts.bl.position.y, pass.verts.bl.position.z);
+        NSLog(@"cc_Position: %f %f %f", result1.x, result1.y, result1.z);
+        result2 = GLKMatrix4MultiplyVector4(ndcToWorldMat, result1);
+        NSLog(@"     fergus: %f %f %f", result2.x, result2.y, result2.z);
+        result3 = GLKMatrix4MultiplyVector4(nodeToWorldMat, pass.verts.bl.position);
+        NSLog(@"    blergus: %f %f %f", result3.x, result3.y, result3.z);
+        result4 = GLKMatrix4MultiplyVector4(ndcToReflectEnvTextureMat, result1);
+        NSLog(@"     yergus: %f %f %f", result4.x, result4.y, result4.z);
+        NSLog(@"end");
+        
+        result1 = GLKMatrix4MultiplyVector4(pass.transform, pass.verts.br.position);
+        NSLog(@"      input: %f %f %f", pass.verts.br.position.x, pass.verts.br.position.y, pass.verts.br.position.z);
+        NSLog(@"cc_Position: %f %f %f", result1.x, result1.y, result1.z);
+        result2 = GLKMatrix4MultiplyVector4(ndcToWorldMat, result1);
+        NSLog(@"     fergus: %f %f %f", result2.x, result2.y, result2.z);
+        result3 = GLKMatrix4MultiplyVector4(nodeToWorldMat, pass.verts.br.position);
+        NSLog(@"    blergus: %f %f %f", result3.x, result3.y, result3.z);
+        result4 = GLKMatrix4MultiplyVector4(ndcToReflectEnvTextureMat, result1);
+        NSLog(@"     yergus: %f %f %f", result4.x, result4.y, result4.z);
+        NSLog(@"end");
+
+        result1 = GLKMatrix4MultiplyVector4(pass.transform, pass.verts.tr.position);
+        NSLog(@"      input: %f %f %f", pass.verts.tr.position.x, pass.verts.tr.position.y, pass.verts.tr.position.z);
+        NSLog(@"cc_Position: %f %f %f", result1.x, result1.y, result1.z);
+        result2 = GLKMatrix4MultiplyVector4(ndcToWorldMat, result1);
+        NSLog(@"     fergus: %f %f %f", result2.x, result2.y, result2.z);
+        result3 = GLKMatrix4MultiplyVector4(nodeToWorldMat, pass.verts.tr.position);
+        NSLog(@"    blergus: %f %f %f", result3.x, result3.y, result3.z);
+        result4 = GLKMatrix4MultiplyVector4(ndcToReflectEnvTextureMat, result1);
+        NSLog(@"     yergus: %f %f %f", result4.x, result4.y, result4.z);
+        NSLog(@"end");
+        
+        result1 = GLKMatrix4MultiplyVector4(pass.transform, pass.verts.tl.position);
+        NSLog(@"      input: %f %f %f", pass.verts.tl.position.x, pass.verts.tl.position.y, pass.verts.tl.position.z);
+        NSLog(@"cc_Position: %f %f %f", result1.x, result1.y, result1.z);
+        result2 = GLKMatrix4MultiplyVector4(ndcToWorldMat, result1);
+        NSLog(@"     fergus: %f %f %f", result2.x, result2.y, result2.z);
+        result3 = GLKMatrix4MultiplyVector4(nodeToWorldMat, pass.verts.tl.position);
+        NSLog(@"    blergus: %f %f %f", result3.x, result3.y, result3.z);
+        result4 = GLKMatrix4MultiplyVector4(ndcToReflectEnvTextureMat, result1);
+        NSLog(@"     yergus: %f %f %f", result4.x, result4.y, result4.z);
+        NSLog(@"end");
+#endif
+        
     } copy]];
     
     self.renderPasses = @[pass0];
