@@ -60,7 +60,7 @@
  *
  *  @return The CCEffectBlur object.
  */
-+(id)effectWithPixelBlurRadius:(NSUInteger)blurRadius;
++(id)effectWithBlurRadius:(NSUInteger)blurRadius;
 
 @end
 
