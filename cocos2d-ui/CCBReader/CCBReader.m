@@ -85,11 +85,19 @@
      @"", CCFileUtilsSuffixDefault,
      nil];
     
+#if __CC_PLATFORM_ANDROID
+    sharedFileUtils.searchPath =
+    [NSArray arrayWithObjects:
+     [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Published-Android"],
+     [[NSBundle mainBundle] resourcePath],
+     nil];
+#else
     sharedFileUtils.searchPath =
     [NSArray arrayWithObjects:
      [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Published-iOS"],
      [[NSBundle mainBundle] resourcePath],
      nil];
+#endif
     
 	sharedFileUtils.enableiPhoneResourcesOniPad = YES;
     sharedFileUtils.searchMode = CCFileUtilsSearchModeDirectory;
