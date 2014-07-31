@@ -19,6 +19,8 @@
 #import "CCTouchAndroid.h"
 #import <CoreGraphics/CGGeometry.h>
 
+#define IPHONE3G_WIDTH 320.0f
+
 static NSMutableDictionary *touches = nil;
 static CCTouchEvent *currentEvent = nil;
 
@@ -29,12 +31,13 @@ static CCTouchEvent *currentEvent = nil;
 @bridge (constructor) initWithContext:;
 @bridge (callback) onTouchEvent: = onTouchEvent;
 
-- (id)initWithContext:(AndroidContext *)context scaleFactor:(float)scaleFactor
+- (id)initWithContext:(AndroidContext *)context screenMode:(enum CCAndroidScreenMode)screenMode  scaleFactor:(float)scaleFactor
 {
     self = [self initWithContext:context];
     if (self)
     {
         _contentScaleFactor = scaleFactor;
+        _screenMode = screenMode;
     }
     return self;
 }
@@ -503,8 +506,36 @@ static inline void logConfig(EGLDisplay display, EGLConfig conf) {
         return NO;
     }
     
-    width /= _contentScaleFactor;
-    height /= _contentScaleFactor;
+    switch (_screenMode)
+    {
+        case CCNativeScreenMode:
+        {
+            width /= _contentScaleFactor;
+            height /= _contentScaleFactor;
+        }
+        break;
+        
+        case CCScreenScaledAspectFitEmulationMode:
+        {
+            if(width > height)
+            {
+                float h = height;
+                height = width;
+                width = h;
+            }
+
+            _contentScaleFactor = width / IPHONE3G_WIDTH;
+            
+            width /= _contentScaleFactor;
+            height /= _contentScaleFactor;
+        }
+        break;
+            
+        default:
+        break;
+            
+    }
+    
 //
 //    ANativeWindow_setBuffersGeometry(window, width, height, format);
     

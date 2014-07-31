@@ -17,11 +17,27 @@
 
 #import "../../Platforms/CCGL.h"
 
+enum CCAndroidScreenMode {
+    
+    /*
+     Keeps true to the device resolution and calculates a content scale
+     based on AndroidDisplayMetrics density property
+     */
+    CCNativeScreenMode,
+    
+    /* Provides a screen
+     that is 320pt wide and has the aspect ratio of the
+     device. The screen size in pixels matches the native
+     resolution.
+     */
+    CCScreenScaledAspectFitEmulationMode
+};
+
 BRIDGE_CLASS("org.cocos2d.CCGLView")
 @interface CCGLView : AndroidSurfaceView
 
 - (id)initWithContext:(AndroidContext *)context;
-- (id)initWithContext:(AndroidContext *)context scaleFactor:(float)scaleFactor;
+- (id)initWithContext:(AndroidContext *)context screenMode:(enum CCAndroidScreenMode)screenMode scaleFactor:(float)scaleFactor;
 - (BOOL)onTouchEvent:(AndroidMotionEvent *)event;
 
 - (BOOL)setupView:(ANativeWindow*)window;
@@ -33,6 +49,7 @@ BRIDGE_CLASS("org.cocos2d.CCGLView")
 @property (nonatomic, readonly) EGLSurface eglSurface;
 @property (nonatomic, readonly) EGLContext eglContext;
 @property (nonatomic, readonly) EGLConfig eglConfiguration;
+@property (nonatomic, readonly) enum CCAndroidScreenMode screenMode;
 
 - (void)addGestureDetector:(AndroidGestureDetector *)detector;
 - (void)removeGestureDetector:(AndroidGestureDetector *)detector;

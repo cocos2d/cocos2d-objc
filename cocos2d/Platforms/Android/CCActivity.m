@@ -87,7 +87,7 @@ static void handler(NSException *e)
     _layout = [[AndroidRelativeLayout alloc] initWithContext:self];
     AndroidDisplayMetrics *metrics = [[AndroidDisplayMetrics alloc] init];
     [self.windowManager.defaultDisplay getMetrics:metrics];
-    _glView = [[CCGLView alloc] initWithContext:self scaleFactor:metrics.density];
+    _glView = [[CCGLView alloc] initWithContext:self screenMode:CCScreenScaledAspectFitEmulationMode scaleFactor:metrics.density];
     [metrics release];
     [_glView.holder addCallback:self];
     [self.layout addView:_glView];
