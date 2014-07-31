@@ -34,26 +34,6 @@
 
 #import "OALSimpleAudio.h"
 
-NSString* const CCSetupPixelFormat = @"CCSetupPixelFormat";
-NSString* const CCSetupScreenMode = @"CCSetupScreenMode";
-NSString* const CCSetupScreenOrientation = @"CCSetupScreenOrientation";
-NSString* const CCSetupAnimationInterval = @"CCSetupAnimationInterval";
-NSString* const CCSetupFixedUpdateInterval = @"CCSetupFixedUpdateInterval";
-NSString* const CCSetupShowDebugStats = @"CCSetupShowDebugStats";
-NSString* const CCSetupTabletScale2X = @"CCSetupTabletScale2X";
-
-NSString* const CCSetupDepthFormat = @"CCSetupDepthFormat";
-NSString* const CCSetupPreserveBackbuffer = @"CCSetupPreserveBackbuffer";
-NSString* const CCSetupMultiSampling = @"CCSetupMultiSampling";
-NSString* const CCSetupNumberOfSamples = @"CCSetupNumberOfSamples";
-
-NSString* const CCScreenOrientationLandscape = @"CCScreenOrientationLandscape";
-NSString* const CCScreenOrientationPortrait = @"CCScreenOrientationPortrait";
-NSString* const CCScreenOrientationAll = @"CCScreenOrientationAll";
-
-NSString* const CCScreenModeFlexible = @"CCScreenModeFlexible";
-NSString* const CCScreenModeFixed = @"CCScreenModeFixed";
-
 // Fixed size. As wide as iPhone 5 at 2x and as high as the iPad at 2x.
 const CGSize FIXED_SIZE = {568, 384};
 

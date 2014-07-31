@@ -19,14 +19,19 @@
 
 enum CCAndroidScreenMode {
     
+    /* 
+     NOTE: Emulation modes are not ideal and are only inteded for quick prototyping, 
+     because emulation modes force a an aspect ratio that is not intended for the device.
+     */
+    
     /*
      Keeps true to the device resolution and calculates a content scale
      based on AndroidDisplayMetrics density property
      */
     CCNativeScreenMode,
     
-    /* Provides a screen
-     that is 320pt wide and has the aspect ratio of the
+    /* 
+     Provides a screen that is 320pt wide and has the aspect ratio of the
      device. The screen size in pixels matches the native
      resolution.
      */

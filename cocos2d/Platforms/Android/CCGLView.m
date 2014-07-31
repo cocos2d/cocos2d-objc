@@ -5,6 +5,7 @@
 //  Created by Oleg Osin on 5/22/14.
 //
 //
+
 #import "cocos2d.h"
 #import "CCGLView.h"
 
@@ -517,26 +518,24 @@ static inline void logConfig(EGLDisplay display, EGLConfig conf) {
         
         case CCScreenScaledAspectFitEmulationMode:
         {
-            if(width > height)
-            {
-                float h = height;
-                height = width;
-                width = h;
-            }
-
-            _contentScaleFactor = width / IPHONE3G_WIDTH;
+            CGSize size = CGSizeMake(width, height);
+            if (width > height)
+                size = CGSizeMake(height, width);
+            
+            _contentScaleFactor = size.width / IPHONE3G_WIDTH;
             
             width /= _contentScaleFactor;
             height /= _contentScaleFactor;
         }
         break;
             
+            
         default:
+            CCLOGWARN(@"WARNING: Failed to identify screen mode");
         break;
             
     }
     
-//
 //    ANativeWindow_setBuffersGeometry(window, width, height, format);
     
     if(eglGetError() != EGL_SUCCESS) { NSLog(@"EGL ERROR: %i", eglGetError()); };

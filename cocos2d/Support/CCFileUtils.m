@@ -153,10 +153,8 @@ static CCFileUtils *fileUtils = nil;
 		_searchPath = [[NSMutableArray alloc] initWithObjects:@"", nil];
 		
 		_filenameLookup = [[NSMutableDictionary alloc] initWithCapacity:10];
-								  
-		
-        // TODO: what would make sense for android?
-#if __CC_PLATFORM_IOS
+								
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
 		_suffixesDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
 						 @"-ipad", CCFileUtilsSuffixiPad,
 						 @"-ipadhd", CCFileUtilsSuffixiPadHD,
@@ -190,7 +188,7 @@ static CCFileUtils *fileUtils = nil;
 							@"", CCFileUtilsSuffixDefault,
 							nil];
 
-#endif // __CC_PLATFORM_IOS
+#endif
 		
 		_iPhoneContentScaleFactor = 1.0;
 		_iPadContentScaleFactor = 1.0;
@@ -218,7 +216,7 @@ static CCFileUtils *fileUtils = nil;
     
 	[_searchResolutionsOrder removeAllObjects];
 	
-#if __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
 	if (device == CCDeviceiPadRetinaDisplay)
 	{
 		[_searchResolutionsOrder addObject:CCFileUtilsSuffixiPadHD];
@@ -268,11 +266,6 @@ static CCFileUtils *fileUtils = nil;
 	{
 		[_searchResolutionsOrder addObject:CCFileUtilsSuffixMac];
 	}
-#elif __CC_PLATFORM_ANDROID
-    [_searchResolutionsOrder addObject:CCFileUtilsSuffixiPhone5HD];
-    [_searchResolutionsOrder addObject:CCFileUtilsSuffixiPhoneHD];
-    [_searchResolutionsOrder addObject:CCFileUtilsSuffixiPhone5];
-    [_searchResolutionsOrder addObject:CCFileUtilsSuffixiPhone];
 #endif
 	
 	[_searchResolutionsOrder addObject:CCFileUtilsSuffixDefault];
