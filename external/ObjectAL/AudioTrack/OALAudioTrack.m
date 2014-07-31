@@ -327,6 +327,18 @@
     }
     [player setVolume:left rightVolume:right];
 }
+
+@bridge (callback) onCompletion: = onCompletion;
+- (void)onCompletion:(AndroidMediaPlayer *)mp {
+    if (mp != player) {
+        return;
+    }
+    if (numberOfLoops > 0) {
+        [player start];
+        numberOfLoops--;
+    }
+}
+
 #endif
 
 - (float) pan
@@ -745,6 +757,8 @@
         if (assetFd) {
             [assetFd close];
         }
+
+        [player setOnCompletionListener:self];
 #endif
 		as_release(currentlyLoadedUrl);
 		currentlyLoadedUrl = as_retain(url);

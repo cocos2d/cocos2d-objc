@@ -45,6 +45,7 @@ static CCActivity *currentActivity = nil;
     NSThread *_thread;
     BOOL _running;
     NSRunLoop *_gameLoop;
+    NSMutableDictionary *_cocos2dSetupConfig;
 }
 @synthesize layout=_layout;
 
@@ -87,7 +88,24 @@ static void handler(NSException *e)
     _layout = [[AndroidRelativeLayout alloc] initWithContext:self];
     AndroidDisplayMetrics *metrics = [[AndroidDisplayMetrics alloc] init];
     [self.windowManager.defaultDisplay getMetrics:metrics];
-    _glView = [[CCGLView alloc] initWithContext:self scaleFactor:metrics.density];
+    
+    // Configure Cocos2d with the options set in SpriteBuilder
+    // TODO: repalce Published-iOS with Published-Android
+    NSString* configPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Published-iOS"];
+    
+    configPath = [configPath stringByAppendingPathComponent:@"configCocos2d.plist"];
+    
+    _cocos2dSetupConfig = [NSMutableDictionary dictionaryWithContentsOfFile:configPath];
+    
+    enum CCAndroidScreenMode screenMode = CCNativeScreenMode;
+    
+    if([_cocos2dSetupConfig[CCSetupScreenMode] isEqual:CCScreenModeFlexible] ||
+       [_cocos2dSetupConfig[CCSetupScreenMode] isEqual:CCScreenModeFixed])
+    {
+        screenMode = CCScreenScaledAspectFitEmulationMode;
+    }
+    
+    _glView = [[CCGLView alloc] initWithContext:self screenMode:screenMode scaleFactor:metrics.density];
     [metrics release];
     [_glView.holder addCallback:self];
     [self.layout addView:_glView];
@@ -117,7 +135,7 @@ static void handler(NSException *e)
     if(_glView == nil)
         return;
     
-    _glView.bounds = CGRectMake(0, 0, width/_glView.contentScaleFactor, height/_glView.contentScaleFactor); 
+    _glView.bounds = CGRectMake(0, 0, width/_glView.contentScaleFactor, height/_glView.contentScaleFactor);
     
 #if USE_MAIN_THREAD
     [self reshape:[NSValue valueWithCGSize:CGSizeMake(width, height)]];
@@ -147,9 +165,22 @@ static void handler(NSException *e)
         [self setupPaths];
         
         CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector sharedDirector];
+        director.delegate = self;
         director.contentScaleFactor = _glView.contentScaleFactor;
         [CCTexture setDefaultAlphaPixelFormat:CCTexturePixelFormat_RGBA8888];
         [director setView:_glView];
+        
+        if([_cocos2dSetupConfig[CCSetupScreenMode] isEqual:CCScreenModeFixed])
+        {
+            CGSize fixed = {568, 384};
+            if([_cocos2dSetupConfig[CCSetupScreenOrientation] isEqualToString:CCScreenOrientationPortrait])
+            {
+                CC_SWAP(fixed.width, fixed.height);
+            }
+            
+            director.designSize = fixed;
+            [director setProjection:CCDirectorProjectionCustom];
+        }
         
         [director runWithScene:[self startScene]];
         [director setAnimationInterval:1.0/60.0];
@@ -268,6 +299,20 @@ static void handler(NSException *e)
         
         eglMakeCurrent(display, surfaceD, surfaceR, ctx);
     }
+}
+
+#pragma mark CCDirector Delegate
+
+// Projection delegate is only used if the fixed resolution mode is enabled
+-(GLKMatrix4)updateProjection
+{
+	CGSize sizePoint = [CCDirector sharedDirector].viewSize;
+	CGSize fixed = [CCDirector sharedDirector].designSize;
+	
+	// Half of the extra size that will be cut off
+	CGPoint offset = ccpMult(ccp(fixed.width - sizePoint.width, fixed.height - sizePoint.height), 0.5);
+	
+	return CCMatrix4MakeOrtho(offset.x, sizePoint.width + offset.x, offset.y, sizePoint.height + offset.y, -1024, 1024);
 }
 
 @end
