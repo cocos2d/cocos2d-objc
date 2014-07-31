@@ -121,13 +121,13 @@
 
 - (void)setBlurRadiusAndDependents:(NSUInteger)blurRadius
 {
-    blurRadius = MIN(blurRadius, GAUSSIANBLUR_OPTMIZIED_RADIUS_MAX);
+    blurRadius = MIN(blurRadius, BLUR_OPTIMIZED_RADIUS_MAX);
     _blurRadius = blurRadius;
     _sigma = blurRadius / 2;
     if(_sigma == 0.0)
         _sigma = 1.0f;
     
-    _numberOfOptimizedOffsets = MIN(blurRadius / 2 + (blurRadius % 2), GAUSSIANBLUR_OPTMIZIED_RADIUS_MAX);
+    _numberOfOptimizedOffsets = MIN(blurRadius / 2 + (blurRadius % 2), BLUR_OPTIMIZED_RADIUS_MAX);
 }
 
 -(void)buildFragmentFunctions
@@ -157,7 +157,7 @@
     }
     
     // From these weights we calculate the offsets to read interpolated values from
-    NSUInteger numberOfOptimizedOffsets = MIN(_blurRadius / 2 + (_blurRadius % 2), GAUSSIANBLUR_OPTMIZIED_RADIUS_MAX);
+    NSUInteger numberOfOptimizedOffsets = MIN(_blurRadius / 2 + (_blurRadius % 2), BLUR_OPTIMIZED_RADIUS_MAX);
     NSUInteger trueNumberOfOptimizedOffsets = _blurRadius / 2 + (_blurRadius % 2);
     
     NSMutableString *shaderString = [[NSMutableString alloc] init];

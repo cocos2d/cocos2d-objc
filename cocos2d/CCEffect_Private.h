@@ -10,8 +10,8 @@
 #import "CCEffectStackProtocol.h"
 
 
-#ifndef GAUSSIANBLUR_OPTMIZIED_RADIUS_MAX
-#define GAUSSIANBLUR_OPTMIZIED_RADIUS_MAX 6UL
+#ifndef BLUR_OPTIMIZED_RADIUS_MAX
+#define BLUR_OPTIMIZED_RADIUS_MAX 6UL
 #endif
 
 extern NSString * const CCShaderUniformPreviousPassTexture;

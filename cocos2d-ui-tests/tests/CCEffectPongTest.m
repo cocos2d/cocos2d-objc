@@ -10,7 +10,7 @@
 #import "CCTextureCache.h"
 #import "CCNodeColor.h"
 #import "CCEffectNode.h"
-#import "CCEffectGaussianBlur.h"
+#import "CCEffectBlur.h"
 
 
 #define PADDLE_SCALE 0.5f
@@ -37,7 +37,7 @@ typedef enum { TEST_PONG_PLAYING, TESTS_PONG_GAMEOVER } TEST_PONG_STATE;
     CGSize _designSize;
     
     CCEffectNode* _ballEffectNode;
-    CCEffectGaussianBlur* _ballEffect;
+    CCEffectBlur* _ballEffect;
     
     CCNodeColor* _ceiling;
     CCNodeColor* _floor;
@@ -155,7 +155,7 @@ typedef enum { TEST_PONG_PLAYING, TESTS_PONG_GAMEOVER } TEST_PONG_STATE;
         _ballEffectNode.scale = 0.1f;
         [_ballEffectNode addChild:_ball];
         
-        _ballEffect = [CCEffectGaussianBlur effectWithPixelBlurRadius:2.0];
+        _ballEffect = [CCEffectBlur effectWithPixelBlurRadius:2.0];
         _ballEffectNode.effect = _ballEffect;
     }
     

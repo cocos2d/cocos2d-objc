@@ -2,7 +2,7 @@
 #import "CCTextureCache.h"
 #import "CCNodeColor.h"
 #import "CCEffectNode.h"
-#import "CCEffectGaussianBlur.h"
+#import "CCEffectBlur.h"
 
 
 @interface CCEffectsTest : TestBase @end
@@ -283,7 +283,7 @@
     effectNode.positionType = CCPositionTypeNormalized;
     effectNode.position = ccp(0.1, 0.5);
     [effectNode addChild:sampleSprite];
-    CCEffectGaussianBlur* effect = [CCEffectGaussianBlur effectWithPixelBlurRadius:1.0];
+    CCEffectBlur* effect = [CCEffectBlur effectWithPixelBlurRadius:1.0];
     effectNode.effect = effect;
     
     [self.contentNode addChild:effectNode];
@@ -297,7 +297,7 @@
     effectNode2.positionType = CCPositionTypeNormalized;
     effectNode2.position = ccp(0.21, 0.5);
     [effectNode2 addChild:sampleSprite2];
-    CCEffectGaussianBlur* effect2 = [CCEffectGaussianBlur effectWithPixelBlurRadius:7.0];
+    CCEffectBlur* effect2 = [CCEffectBlur effectWithPixelBlurRadius:7.0];
     effectNode2.effect = effect2;
     
     [self.contentNode addChild:effectNode2];
@@ -313,7 +313,7 @@
     effectNode3.position = ccp(0.5, 0.5);
     effectNode3.anchorPoint = ccp(0.5, 0.5);
     [effectNode3 addChild:sampleSprite3];
-    CCEffectGaussianBlur* effect3 = [CCEffectGaussianBlur effectWithPixelBlurRadius:1.0];
+    CCEffectBlur* effect3 = [CCEffectBlur effectWithPixelBlurRadius:1.0];
     effectNode3.effect = effect3;
     
     [self.contentNode addChild:effectNode3];
@@ -327,7 +327,7 @@
     effectNode4.positionType = CCPositionTypeNormalized;
     effectNode4.position = ccp(0.6, 0.5);
     [effectNode4 addChild:sampleSprite4];
-    CCEffectGaussianBlur* effect4 = [CCEffectGaussianBlur effectWithPixelBlurRadius:7.0];
+    CCEffectBlur* effect4 = [CCEffectBlur effectWithPixelBlurRadius:7.0];
     effectNode4.effect = effect4;
         
     [self.contentNode addChild:effectNode4];
@@ -508,7 +508,7 @@
     [self.contentNode addChild:refractEnvironment];
     
     NSArray *effects = @[
-                         [CCEffectGaussianBlur effectWithPixelBlurRadius:7.0],
+                         [CCEffectBlur effectWithPixelBlurRadius:7.0],
                          [CCEffectBloom effectWithPixelBlurRadius:8 intensity:1.0f luminanceThreshold:0.0f],
                          [CCEffectBrightness effectWithBrightness:0.25f],
                          [CCEffectContrast effectWithContrast:1.0f],
@@ -563,7 +563,7 @@
     refractEnvironment.scale = 0.5;
     
     NSArray *allEffects = @[
-                            [CCEffectGaussianBlur effectWithPixelBlurRadius:7.0],
+                            [CCEffectBlur effectWithPixelBlurRadius:7.0],
                             [CCEffectBloom effectWithPixelBlurRadius:8 intensity:1.0f luminanceThreshold:0.0f],
                             [CCEffectBrightness effectWithBrightness:0.25f],
                             [CCEffectContrast effectWithContrast:1.0f],
