@@ -254,6 +254,8 @@ static NSInteger ccbAnimationManagerID = 0;
         } else if ([name isEqualToString:@"skew"]) {
             node.skewX = [[value objectAtIndex:0] floatValue];
             node.skewY = [[value objectAtIndex:1] floatValue];
+        } else if ([name isEqualToString:@"visible"]) {
+            [(CCSprite*)node setVisible:[value boolValue]];
         } else if ([name isEqualToString:@"spriteFrame"]) {
             [(CCSprite*)node setSpriteFrame:value];
         } else {
@@ -463,11 +465,6 @@ static NSInteger ccbAnimationManagerID = 0;
     _paused = YES;
     [self clearAllActions];
 	
-	// Set the running scene
-    _runningSequence      = [self sequenceFromSequenceId:seqId];
-    _runningSequence.time = 0.0f;
-	_runningSequence.tween = tweenDuration;
-	
 	[self addSequenceCallBacks:seqId tweenDuration:tweenDuration startTime:0];
     
     // Contains all Sequence Propertys / Keyframe
@@ -493,7 +490,7 @@ static NSInteger ccbAnimationManagerID = 0;
         }
 		
         
-        if(_lastSequence.sequenceId!=seqId) {
+        if(_lastSequence.sequenceId!=seqId || _runningSequence.sequenceId!=seqId) {
             _loop = NO;
             
             // Reset the nodes that may have been changed by other timelines
@@ -504,16 +501,31 @@ static NSInteger ccbAnimationManagerID = 0;
                     
                     id value = [nodeBaseValues objectForKey:propName];
                     
-                    if (value) {
+                    if (value!=nil) {
                         [self setAnimatedProperty:propName forNode:node toValue:value tweenDuration:tweenDuration];
                     }
                 }
             }
+            
+            // Reset nodes that have sequence node properties, build first keyframe action sequence.
+            for (NSString* propName in seqNodeProps) {
+                CCBSequenceProperty* seqProp = [seqNodeProps objectForKey:propName];
+                [seqNodePropNames addObject:propName];
+                
+                // Reset Node State to First KeyFrame
+                [self setKeyFrameForNode:node sequenceProperty:seqProp tweenDuration:tweenDuration keyFrame:0];
+                
+                // Build First Key Frame Sequence
+                [self runActionsForNode:node sequenceProperty:seqProp tweenDuration:tweenDuration startKeyFrame:0];
+            }
         }
         
-
         
     }
+    
+    // Set the running scene
+    _runningSequence      = [self sequenceFromSequenceId:seqId];
+    _runningSequence.time = 0.0f;
     
     _paused = NO;
 }
@@ -844,6 +856,13 @@ static NSInteger ccbAnimationManagerID = 0;
         NSMutableArray* actions = [[NSMutableArray alloc] init];
         
         CCActionInterval* action = [self actionFromKeyframe0:startKF andKeyframe1:endKF propertyName:seqProp.name node:node];
+        
+        // Create delay to fix instant easing on non instant actions
+        if(startKF.easingType==kCCBKeyframeEasingInstant &&
+           ![seqProp.name isEqualToString:@"spriteFrame"] &&
+           ![seqProp.name isEqualToString:@"visible"]) {
+            [actions addObject:[CCActionDelay actionWithDuration:action.duration]];
+        }
         
         if (action) {
             // Apply Easing
