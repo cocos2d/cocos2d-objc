@@ -105,7 +105,7 @@
 -(void)setIntensity:(float)intensity
 {
     _intensity = clampf(intensity, 0.0f, 1.0f);
-    _transformedIntensity = 1.0f - _intensity;
+    _transformedIntensity = _intensity;
 }
 
 -(void)setBlurRadius:(NSUInteger)blurRadius
@@ -214,7 +214,7 @@
     // Choose one?
     // TODO: try using min(src, dst) to create a gloomEffect
     // NSString* additiveBlending =  @"src + dst";
-    NSString* screenBlending = @"(src + dst) - ((src * dst) * u_intensity)";
+    NSString* screenBlending = @"(src * u_intensity + dst) - ((src * dst) * u_intensity)";
     
     [shaderString appendFormat:@"\
      return %@;\n", screenBlending];
