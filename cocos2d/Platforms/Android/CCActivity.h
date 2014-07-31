@@ -11,11 +11,12 @@
 
 #import <BridgeKitV3/BridgeKit.h>
 #import "../../Platforms/CCGL.h"
+#import "CCProtocols.h"
 
 @class CCScene;
 @class AndroidRelativeLayout;
 BRIDGE_CLASS("org.cocos2d.CCActivity")
-@interface CCActivity : AndroidActivity <AndroidSurfaceHolderCallback>
+@interface CCActivity : AndroidActivity <AndroidSurfaceHolderCallback, CCDirectorDelegate>
 @property (readonly, nonatomic) AndroidRelativeLayout *layout;
 + (instancetype)currentActivity;
 

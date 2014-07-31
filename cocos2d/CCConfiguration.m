@@ -38,6 +38,27 @@
 #import "ccConfig.h"
 #import "cocos2d.h"
 
+NSString* const CCSetupPixelFormat = @"CCSetupPixelFormat";
+NSString* const CCSetupScreenMode = @"CCSetupScreenMode";
+NSString* const CCSetupScreenOrientation = @"CCSetupScreenOrientation";
+NSString* const CCSetupAnimationInterval = @"CCSetupAnimationInterval";
+NSString* const CCSetupFixedUpdateInterval = @"CCSetupFixedUpdateInterval";
+NSString* const CCSetupShowDebugStats = @"CCSetupShowDebugStats";
+NSString* const CCSetupTabletScale2X = @"CCSetupTabletScale2X";
+
+NSString* const CCSetupDepthFormat = @"CCSetupDepthFormat";
+NSString* const CCSetupPreserveBackbuffer = @"CCSetupPreserveBackbuffer";
+NSString* const CCSetupMultiSampling = @"CCSetupMultiSampling";
+NSString* const CCSetupNumberOfSamples = @"CCSetupNumberOfSamples";
+
+NSString* const CCScreenOrientationLandscape = @"CCScreenOrientationLandscape";
+NSString* const CCScreenOrientationPortrait = @"CCScreenOrientationPortrait";
+NSString* const CCScreenOrientationAll = @"CCScreenOrientationAll";
+
+NSString* const CCScreenModeFlexible = @"CCScreenModeFlexible";
+NSString* const CCScreenModeFixed = @"CCScreenModeFixed";
+
+
 @interface CCConfiguration ()
 -(void) getOpenGLvariables;
 @end
@@ -123,20 +144,16 @@ static char * glExtensions;
 {
 	NSInteger ret=-1;
 
-	/*
-#if defined(APPORTABLE)
-    if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-	{
-		ret = ([UIScreen mainScreen].scale > 1) ? CCDeviceiPadRetinaDisplay : CCDeviceiPad;
-	}
-	else if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone )
-	{
-		if( [UIScreen mainScreen].scale > 1 ) {
-			ret = CCDeviceiPhoneRetinaDisplay;
-		} else
-			ret = CCDeviceiPhone;
-	}
-#el*/#if __CC_PLATFORM_IOS
+#if __CC_PLATFORM_ANDROID
+    if([CCDirector sharedDirector].contentScaleFactor > 1.0)
+    {
+        ret = CCDeviceiPhoneRetinaDisplay;
+    }
+    else
+    {
+        ret = CCDeviceiPhone;
+    }
+#elif __CC_PLATFORM_IOS
 	
 	if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 	{

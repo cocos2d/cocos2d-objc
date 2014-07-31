@@ -46,11 +46,13 @@
  * Unlike AVAudioPlayer, however, it can be re-used to play another file.
  * Interruptions can be handled by OALAudioSupport (enabled by default).
  */
-@interface OALAudioTrack : NSObject <
+
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
-AVAudioPlayerDelegate,
+@interface OALAudioTrack : NSObject <AVAudioPlayerDelegate,OALSuspendManager>
+#elif __CC_PLATFORM_ANDROID
+BRIDGE_CLASS("com.spritebuilder.OALAudioTrack")
+@interface OALAudioTrack : JavaObject <AndroidMediaPlayerOnCompletionListener,OALSuspendManager>
 #endif
-OALSuspendManager>
 {
     /** If true, this track is recording metering data */
 	bool meteringEnabled;
@@ -431,6 +433,10 @@ delegate;
 /** Unload and clear all audio data, stop playing, and stop all operations.
  */
 - (void) clear;
+
+#if __CC_PLATFORM_ANDROID
+- (void) onCompletion:(AndroidMediaPlayer *)mp;
+#endif
 
 #pragma mark Metering
 
