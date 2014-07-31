@@ -21,7 +21,7 @@
 		929D1B6D1954C2A600B27340 /* CCEffectBrightness.m in Sources */ = {isa = PBXBuildFile; fileRef = 929D1B591954C2A600B27340 /* CCEffectBrightness.m */; };
 		929D1B6E1954C2A600B27340 /* CCEffectContrast.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D1B5A1954C2A600B27340 /* CCEffectContrast.h */; };
 		929D1B6F1954C2A600B27340 /* CCEffectContrast.m in Sources */ = {isa = PBXBuildFile; fileRef = 929D1B5B1954C2A600B27340 /* CCEffectContrast.m */; };
-		929D1B701954C2A600B27340 /* CCEffectGaussianBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = 929D1B5C1954C2A600B27340 /* CCEffectGaussianBlur.m */; };
+		929D1B701954C2A600B27340 /* CCEffectBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = 929D1B5C1954C2A600B27340 /* CCEffectBlur.m */; };
 		929D1B721954C2A600B27340 /* CCEffectNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D1B5E1954C2A600B27340 /* CCEffectNode.h */; };
 		929D1B731954C2A600B27340 /* CCEffectNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 929D1B5F1954C2A600B27340 /* CCEffectNode.m */; };
 		929D1B741954C2A600B27340 /* CCEffectPixellate.h in Headers */ = {isa = PBXBuildFile; fileRef = 929D1B601954C2A600B27340 /* CCEffectPixellate.h */; };
@@ -36,7 +36,7 @@
 		92D1343B1954FC7A003833C4 /* CCEffectStackProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 92D134361954FC7A003833C4 /* CCEffectStackProtocol.h */; };
 		92D1343C1954FC7A003833C4 /* CCRenderTexture_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 92D134371954FC7A003833C4 /* CCRenderTexture_Private.h */; };
 		92D1343E1954FC7A003833C4 /* CCActionManager_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 92D134391954FC7A003833C4 /* CCActionManager_Private.h */; };
-		92D1343F1954FC7A003833C4 /* CCEffectGaussianBlur.h in Headers */ = {isa = PBXBuildFile; fileRef = 92D1343A1954FC7A003833C4 /* CCEffectGaussianBlur.h */; };
+		92D1343F1954FC7A003833C4 /* CCEffectBlur.h in Headers */ = {isa = PBXBuildFile; fileRef = 92D1343A1954FC7A003833C4 /* CCEffectBlur.h */; };
 		9D23869C196F0BC4001B792B /* CCEffectHue.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D23869A196F0BC4001B792B /* CCEffectHue.h */; };
 		9D23869D196F0BC4001B792B /* CCEffectHue.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D23869B196F0BC4001B792B /* CCEffectHue.m */; };
 		9DB75994196E073200AF3E4A /* CCEffectBloom.h in Headers */ = {isa = PBXBuildFile; fileRef = 9DB75992196E073200AF3E4A /* CCEffectBloom.h */; };
@@ -381,7 +381,7 @@
 		929D1B591954C2A600B27340 /* CCEffectBrightness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectBrightness.m; sourceTree = "<group>"; };
 		929D1B5A1954C2A600B27340 /* CCEffectContrast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectContrast.h; sourceTree = "<group>"; };
 		929D1B5B1954C2A600B27340 /* CCEffectContrast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectContrast.m; sourceTree = "<group>"; };
-		929D1B5C1954C2A600B27340 /* CCEffectGaussianBlur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectGaussianBlur.m; sourceTree = "<group>"; };
+		929D1B5C1954C2A600B27340 /* CCEffectBlur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectBlur.m; sourceTree = "<group>"; };
 		929D1B5E1954C2A600B27340 /* CCEffectNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectNode.h; sourceTree = "<group>"; };
 		929D1B5F1954C2A600B27340 /* CCEffectNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectNode.m; sourceTree = "<group>"; };
 		929D1B601954C2A600B27340 /* CCEffectPixellate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectPixellate.h; sourceTree = "<group>"; };
@@ -396,7 +396,7 @@
 		92D134361954FC7A003833C4 /* CCEffectStackProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectStackProtocol.h; sourceTree = "<group>"; };
 		92D134371954FC7A003833C4 /* CCRenderTexture_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderTexture_Private.h; sourceTree = "<group>"; };
 		92D134391954FC7A003833C4 /* CCActionManager_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionManager_Private.h; sourceTree = "<group>"; };
-		92D1343A1954FC7A003833C4 /* CCEffectGaussianBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectGaussianBlur.h; sourceTree = "<group>"; };
+		92D1343A1954FC7A003833C4 /* CCEffectBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectBlur.h; sourceTree = "<group>"; };
 		9D23869A196F0BC4001B792B /* CCEffectHue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectHue.h; sourceTree = "<group>"; };
 		9D23869B196F0BC4001B792B /* CCEffectHue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectHue.m; sourceTree = "<group>"; };
 		9DB75992196E073200AF3E4A /* CCEffectBloom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectBloom.h; sourceTree = "<group>"; };
@@ -874,8 +874,8 @@
 				929D1B591954C2A600B27340 /* CCEffectBrightness.m */,
 				929D1B5A1954C2A600B27340 /* CCEffectContrast.h */,
 				929D1B5B1954C2A600B27340 /* CCEffectContrast.m */,
-				92D1343A1954FC7A003833C4 /* CCEffectGaussianBlur.h */,
-				929D1B5C1954C2A600B27340 /* CCEffectGaussianBlur.m */,
+				92D1343A1954FC7A003833C4 /* CCEffectBlur.h */,
+				929D1B5C1954C2A600B27340 /* CCEffectBlur.m */,
 				9D23869A196F0BC4001B792B /* CCEffectHue.h */,
 				9D23869B196F0BC4001B792B /* CCEffectHue.m */,
 				929D1B5E1954C2A600B27340 /* CCEffectNode.h */,
@@ -1685,7 +1685,7 @@
 				B74C2B9717BDA54600A829C0 /* CCSprite9Slice.h in Headers */,
 				B75C2E7717C5857F002B0E0D /* NSAttributedString+CCAdditions.h in Headers */,
 				B77060631831B0C40043CC67 /* OALActionManager.h in Headers */,
-				92D1343F1954FC7A003833C4 /* CCEffectGaussianBlur.h in Headers */,
+				92D1343F1954FC7A003833C4 /* CCEffectBlur.h in Headers */,
 				B77060711831B0C40043CC67 /* ObjectAL.h in Headers */,
 				A66680C317D4D73000ECDE6F /* CCResponder.h in Headers */,
 				A66680C517D4D73000ECDE6F /* CCResponderManager.h in Headers */,
@@ -1914,7 +1914,7 @@
 				B77060971831B0C40043CC67 /* OALAudioFile.m in Sources */,
 				2B192860163379400049A044 /* CCClippingNode.m in Sources */,
 				B77060741831B0C40043CC67 /* ALBuffer.m in Sources */,
-				929D1B701954C2A600B27340 /* CCEffectGaussianBlur.m in Sources */,
+				929D1B701954C2A600B27340 /* CCEffectBlur.m in Sources */,
 				B751D2611988896D00722D93 /* CCEffectReflection.m in Sources */,
 				A003ACA8165731D500C7B792 /* ccFPSImages.m in Sources */,
 				B74C2B9617BDA54600A829C0 /* CCSprite9Slice.m in Sources */,

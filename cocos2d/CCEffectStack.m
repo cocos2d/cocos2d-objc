@@ -46,6 +46,11 @@
     return self;
 }
 
++ (id)effectStackWithEffects:(NSArray *)effects
+{
+    return [[self alloc] initWithEffects:effects];
+}
+
 - (NSUInteger)effectCount
 {
     return _effects.count;
@@ -216,7 +221,7 @@
         effectIndex++;
     }
     
-    CCEffect* stitchedEffect = [[CCEffect alloc] initWithFragmentFunction:allFragFunctions vertexFunctions:allVertexFunctions fragmentUniforms:allFragUniforms vertexUniforms:allVertexUniforms varying:allVaryings];
+    CCEffect* stitchedEffect = [[CCEffect alloc] initWithFragmentFunction:allFragFunctions vertexFunctions:allVertexFunctions fragmentUniforms:allFragUniforms vertexUniforms:allVertexUniforms varyings:allVaryings];
     stitchedEffect.debugName = @"CCEffectStack_Stitched";
     
     // Set the stitch flags of the resulting effect based on the flags of the first
