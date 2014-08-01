@@ -83,12 +83,84 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 //CLASS IMPLEMENTATIONS:
 
+
+#define glFenceSync glFenceSyncAPPLE
+#define glClientWaitSync glClientWaitSyncAPPLE
+
+#define GL_SYNC_GPU_COMMANDS_COMPLETE GL_SYNC_GPU_COMMANDS_COMPLETE_APPLE
+#define GL_SYNC_FLUSH_COMMANDS_BIT GL_SYNC_FLUSH_COMMANDS_BIT_APPLE
+#define GL_ALREADY_SIGNALED GL_ALREADY_SIGNALED_APPLE
+
+
+@interface CCGLViewFence : NSObject
+
+/// Is the fence ready to be inserted?
+@property(nonatomic, readonly) BOOL isReady;
+@property(nonatomic, readonly) BOOL isCompleted;
+
+/// List of completion handlers to be called when the fence completes.
+@property(nonatomic, readonly, strong) NSMutableArray *handlers;
+
+@end
+
+
+@implementation CCGLViewFence {
+	GLsync _fence;
+	BOOL _invalidated;
+}
+
+-(instancetype)init
+{
+	if((self = [super init])){
+		_handlers = [NSMutableArray array];
+	}
+	
+	return self;
+}
+
+-(void)insertFence
+{
+	_fence = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
+	
+	CC_CHECK_GL_ERROR_DEBUG();
+}
+
+-(BOOL)isReady
+{
+	// If there is a GL fence assigned, then the fence is waiting on it and not ready.
+	return (_fence == NULL);
+}
+
+-(BOOL)isComplete
+{
+	if(_fence){
+		if(glClientWaitSyncAPPLE(_fence, GL_SYNC_FLUSH_COMMANDS_BIT, 0) == GL_ALREADY_SIGNALED){
+			glDeleteSyncAPPLE(_fence);
+			_fence = NULL;
+			
+			CC_CHECK_GL_ERROR_DEBUG();
+			return YES;
+		} else {
+			// Fence is still waiting
+			return NO;
+		}
+	} else {
+		// Fence has completed previously.
+		return YES;
+	}
+}
+
+@end
+
+
 @interface CCGLView (Private)
 - (BOOL) setupSurfaceWithSharegroup:(EAGLSharegroup*)sharegroup;
 - (unsigned int) convertPixelFormat:(NSString*) pixelFormat;
 @end
 
-@implementation CCGLView
+@implementation CCGLView {
+	NSMutableArray *_fences;
+}
 
 @synthesize surfaceSize=_size;
 @synthesize pixelFormat=_pixelformat, depthFormat=_depthFormat;
@@ -168,7 +240,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		_multiSampling= NO;
 		_requestedSamples = 0;
 		_size = [eaglLayer bounds].size;
-
+		
 		if( ! [self setupSurfaceWithSharegroup:nil] ) {
 			return nil;
 		}
@@ -233,13 +305,51 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 //	}
 }
 
+// Find or make a fence that is ready to use.
+-(CCGLViewFence *)getReadyFence
+{
+	// First checkf oldest (first in the array) fence is ready again.
+	CCGLViewFence *fence = _fences.firstObject;;
+	if(fence.isReady){
+		// Remove the fence so it can be inserted at the end of the queue again.
+		[_fences removeObjectAtIndex:0];
+		return fence;
+	} else {
+		// No existing fences ready. Make a new one.
+		return [[CCGLViewFence alloc] init];
+	}
+}
+
+-(void)addFrameCompletionHandler:(CCDirectorFrameCompletionHandler)handler
+{
+	if(_fences == nil){
+		_fences = [NSMutableArray arrayWithObject:[[CCGLViewFence alloc] init]];
+	}
+	
+	CCGLViewFence *fence = _fences.lastObject;
+	if(!fence.isReady){
+		fence = [self getReadyFence];
+		[_fences addObject:fence];
+	}
+	
+	[fence.handlers addObject:handler];
+}
+
 - (void) swapBuffers
 {
 	// IMPORTANT:
 	// - preconditions
 	//	-> _context MUST be the OpenGL context
 	//	-> renderbuffer_ must be the the RENDER BUFFER
-
+	
+	{
+		CCGLViewFence *fence = _fences.lastObject;
+		if(fence.isReady){
+			// If the fence is ready to be added, insert a sync point for it.
+			[fence insertFence];
+		}
+	}
+	
 	if (_multiSampling)
 	{
 		/* Resolve from msaaFramebuffer to resolveFramebuffer */
@@ -282,7 +392,17 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	// 1st instruction of the new main loop
 	if( _multiSampling )
 		glBindFramebuffer(GL_FRAMEBUFFER, [_renderer msaaFrameBuffer]);
-
+	
+	// Check the fences for completion.
+	for(CCGLViewFence *fence in _fences){
+		if(fence.isComplete){
+			for(CCDirectorFrameCompletionHandler handler in fence.handlers) handler();
+			[fence.handlers removeAllObjects];
+		} else {
+			break;
+		}
+	}
+	
 	CC_CHECK_GL_ERROR_DEBUG();
 }
 

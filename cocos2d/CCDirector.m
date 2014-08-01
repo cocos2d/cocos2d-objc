@@ -194,7 +194,7 @@ static CCDirector *_sharedDirector = nil;
 		__ccContentScaleFactor = 1;
 		self.UIScaleFactor = 1;
 		
-		_renderer = [[CCRenderer alloc] init];
+		_rendererPool = [NSMutableArray array];
 		_globalShaderUniforms = [NSMutableDictionary dictionary];
 	}
 
@@ -244,6 +244,32 @@ static CCDirector *_sharedDirector = nil;
 - (void) drawScene
 {
 	// Override me
+}
+
+-(CCRenderer *)rendererFromPool
+{
+	@synchronized(_rendererPool){
+		if(_rendererPool.count == 0){
+			return [[CCRenderer alloc] init];
+		} else {
+			CCRenderer *renderer = _rendererPool.lastObject;
+			[_rendererPool removeLastObject];
+			
+			return renderer;
+		}
+	}
+}
+
+-(void)poolRenderer:(CCRenderer *)renderer
+{
+	@synchronized(_rendererPool){
+		[_rendererPool addObject:renderer];
+	}
+}
+
+-(void)addFrameCompletionHandler:(CCFrameCompletionHandler)handler
+{
+	[(CCGLView *)self.view addFrameCompletionHandler:handler];
 }
 
 -(void) calculateDeltaTime
@@ -869,9 +895,11 @@ static const float CCFPSLabelItemHeight = 32;
 			[_drawsLabel setString:draws];
 		}
 		
-		[_drawsLabel visit:_renderer parentTransform:&_projectionMatrix];
-		[_FPSLabel visit:_renderer parentTransform:&_projectionMatrix];
-		[_SPFLabel visit:_renderer parentTransform:&_projectionMatrix];
+		// TODO should pass as a parameter instead? Requires changing method signatures...
+		CCRenderer *renderer = [CCRenderer currentRenderer];
+		[_drawsLabel visit:renderer parentTransform:&_projectionMatrix];
+		[_FPSLabel visit:renderer parentTransform:&_projectionMatrix];
+		[_SPFLabel visit:renderer parentTransform:&_projectionMatrix];
 	}
 	
 	__ccNumberOfDraws = 0;
