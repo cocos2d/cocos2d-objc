@@ -17,11 +17,12 @@
 #import "CCEffect_Private.h"
 #import "CCSprite_Private.h"
 
-static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
-
 
 @interface CCEffectReflection ()
 
+@property (nonatomic) float conditionedShininess;
+@property (nonatomic) float conditionedFresnelBias;
+@property (nonatomic) float conditionedFresnelPower;
 
 @end
 
@@ -30,27 +31,28 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
 
 -(id)init
 {
-    return [self initWithEnvironment:nil];
+    return [self initWithShininess:1.0f environment:nil];
 }
 
--(id)initWithEnvironment:(CCSprite *)environment
+-(id)initWithShininess:(float)shininess environment:(CCSprite *)environment
 {
-    return [self initWithEnvironment:environment normalMap:nil];
+    return [self initWithShininess:shininess environment:environment normalMap:nil];
 }
 
--(id)initWithEnvironment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap
+-(id)initWithShininess:(float)shininess environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap
 {
-    return [self initWithFresnelBias:1.0f fresnelPower:0.0f environment:environment normalMap:normalMap];
+    return [self initWithShininess:shininess fresnelBias:1.0f fresnelPower:0.0f environment:environment normalMap:normalMap];
 }
 
--(id)initWithFresnelBias:(float)bias fresnelPower:(float)power environment:(CCSprite *)environment
+-(id)initWithShininess:(float)shininess fresnelBias:(float)bias fresnelPower:(float)power environment:(CCSprite *)environment
 {
-    return [self initWithFresnelBias:bias fresnelPower:power environment:environment normalMap:nil];
+    return [self initWithShininess:shininess fresnelBias:bias fresnelPower:power environment:environment normalMap:nil];
 }
 
--(id)initWithFresnelBias:(float)bias fresnelPower:(float)power environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap
+-(id)initWithShininess:(float)shininess fresnelBias:(float)bias fresnelPower:(float)power environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap
 {
     NSArray *uniforms = @[
+                          [CCEffectUniform uniform:@"float" name:@"u_shininess" value:[NSNumber numberWithFloat:1.0f]],
                           [CCEffectUniform uniform:@"float" name:@"u_fresnelBias" value:[NSNumber numberWithFloat:1.0f]],
                           [CCEffectUniform uniform:@"float" name:@"u_fresnelPower" value:[NSNumber numberWithFloat:0.0f]],
                           [CCEffectUniform uniform:@"sampler2D" name:@"u_envMap" value:(NSValue*)[CCTexture none]],
@@ -59,36 +61,43 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
                           [CCEffectUniform uniform:@"mat4" name:@"u_screenToEnv" value:[NSValue valueWithGLKMatrix4:GLKMatrix4Identity]],
                           ];
     
-    if((self = [super initWithFragmentUniforms:uniforms vertexUniforms:nil varying:nil]))
+    if((self = [super initWithFragmentUniforms:uniforms vertexUniforms:nil varyings:nil]))
     {
+        _shininess = shininess;
+        _conditionedShininess = CCEffectUtilsConditionShininess(shininess);
+        
+        _fresnelBias = bias;
+        _conditionedFresnelBias = CCEffectUtilsConditionFresnelBias(bias);
+        
+        _fresnelPower = power;
+        _conditionedFresnelPower = CCEffectUtilsConditionFresnelPower(power);
+        
         _environment = environment;
         _normalMap = normalMap;
-        _fresnelBias = bias;
-        _fresnelPower = power;
         
         self.debugName = @"CCEffectReflection";
     }
     return self;
 }
 
-+(id)effectWithEnvironment:(CCSprite *)environment
++(id)effectWithShininess:(float)shininess environment:(CCSprite *)environment
 {
-    return [[self alloc] initWithEnvironment:environment];
+    return [[self alloc] initWithShininess:shininess environment:environment];
 }
 
-+(id)effectWithEnvironment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap
++(id)effectWithShininess:(float)shininess environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap
 {
-    return [[self alloc] initWithEnvironment:environment normalMap:normalMap];
+    return [[self alloc] initWithShininess:shininess environment:environment normalMap:normalMap];
 }
 
-+(id)effectWithFresnelBias:(float)bias fresnelPower:(float)power environment:(CCSprite *)environment
++(id)effectWithShininess:(float)shininess fresnelBias:(float)bias fresnelPower:(float)power environment:(CCSprite *)environment
 {
-    return [[self alloc] initWithFresnelBias:bias fresnelPower:power environment:environment];
+    return [[self alloc] initWithShininess:shininess fresnelBias:bias fresnelPower:power environment:environment];
 }
 
-+(id)effectWithFresnelBias:(float)bias fresnelPower:(float)power environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap
++(id)effectWithShininess:(float)shininess fresnelBias:(float)bias fresnelPower:(float)power environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap
 {
-    return [[self alloc] initWithFresnelBias:bias fresnelPower:power environment:environment normalMap:normalMap];
+    return [[self alloc] initWithShininess:shininess fresnelBias:bias fresnelPower:power environment:environment normalMap:normalMap];
 }
 
 -(void)buildFragmentFunctions
@@ -130,7 +139,7 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
                                    // If the refracted texture coordinates are within the bounds of the environment map
                                    // blend the primary color with the refracted environment. Multiplying by the normal
                                    // map alpha also allows the effect to be disabled for specific pixels.
-                                   primaryColor += normalMap.a * fresnel * texture2D(u_envMap, reflectTexCoords);
+                                   primaryColor += normalMap.a * fresnel * u_shininess * texture2D(u_envMap, reflectTexCoords);
                                    return primaryColor;
                                    );
     
@@ -162,8 +171,9 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
             pass.verts = verts;
         }
         
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fresnelBias"]] = [NSNumber numberWithFloat:weakSelf.fresnelBias];
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fresnelPower"]] = [NSNumber numberWithFloat:weakSelf.fresnelPower];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_shininess"]] = [NSNumber numberWithFloat:weakSelf.conditionedShininess];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fresnelBias"]] = [NSNumber numberWithFloat:weakSelf.conditionedFresnelBias];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fresnelPower"]] = [NSNumber numberWithFloat:weakSelf.conditionedFresnelPower];
         
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_envMap"]] = weakSelf.environment.texture ?: [CCTexture none];
         
@@ -186,13 +196,24 @@ static GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at);
     
     self.renderPasses = @[pass0];
 }
-@end
 
-GLKMatrix4 GLKMatrix4FromAffineTransform(CGAffineTransform at)
+-(void)setShininess:(float)shininess
 {
-    return GLKMatrix4Make(at.a,  at.b,  0.0f,  0.0f,
-                          at.c,  at.d,  0.0f,  0.0f,
-                          0.0f,  0.0f,  1.0f,  0.0f,
-                          at.tx, at.ty, 0.0f,  1.0f);
+    _shininess = shininess;
+    _conditionedShininess = CCEffectUtilsConditionShininess(shininess);
 }
+
+-(void)setFresnelBias:(float)bias
+{
+    _fresnelBias = bias;
+    _conditionedFresnelBias = CCEffectUtilsConditionFresnelBias(bias);
+}
+
+-(void)setFresnelPower:(float)power
+{
+    _fresnelPower = power;
+    _conditionedFresnelPower = CCEffectUtilsConditionFresnelPower(power);
+}
+
+@end
 

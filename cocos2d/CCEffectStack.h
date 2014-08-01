@@ -38,13 +38,27 @@
 - (id)init;
 
 /**
- *  Initializes an empty effect stack object.
+ *  Initializes an effect stack object with the specified array of effects.
  *
  *  @param effects The array of effects to add to the stack.
  *
  *  @return The CCEffectStack object.
  */
 - (id)initWithEffects:(NSArray *)effects;
+
+
+/// -----------------------------------------------------------------------
+/// @name Creating a CCEffectStack object
+/// -----------------------------------------------------------------------
+
+/**
+ *  Creates an effect stack object with the specified array of effects.
+ *
+ *  @param effects The array of effects to add to the stack.
+ *
+ *  @return The CCEffectStack object.
+ */
++ (id)effectStackWithEffects:(NSArray *)effects;
 
 
 /// -----------------------------------------------------------------------

@@ -123,10 +123,23 @@
 @property (nonatomic, assign) GLKVector4 oldViewport;
 @property (nonatomic, assign) GLint oldFBO;
 
++(CCShader *)sharedCopyShader;
+
 @end
 
 
 @implementation CCEffectRenderer
+
++ (CCShader *)sharedCopyShader
+{
+	static dispatch_once_t once;
+	static CCShader *copyShader = nil;
+	dispatch_once(&once, ^{
+        copyShader = [[CCShader alloc] initWithFragmentShaderSource:@"void main(){gl_FragColor = texture2D(cc_MainTexture, cc_FragTexCoord1);}"];
+        copyShader.debugName = @"CCEffectRendererTextureCopyShader";
+	});
+	return copyShader;
+}
 
 -(id)init
 {
@@ -151,7 +164,7 @@
     [self freeAllRenderTargets];
     
     CCEffectRenderTarget *previousPassRT = nil;
-    for(int i = 0; i < effect.renderPassesRequired; i++)
+    for(NSUInteger i = 0; i < effect.renderPassesRequired; i++)
     {
         BOOL lastPass = (i == (effect.renderPassesRequired - 1));
         BOOL directRendering = lastPass && effect.supportsDirectRendering;
@@ -191,6 +204,9 @@
             renderPass.transform = GLKMatrix4MakeOrtho(0.0f, _contentSize.width, 0.0f, _contentSize.height, -1024.0f, 1024.0f);
 
             CGSize rtSize = CGSizeMake(_contentSize.width * _contentScale, _contentSize.height * _contentScale);
+            rtSize.width = (rtSize.width <= 1.0f) ? 1.0f : rtSize.width;
+            rtSize.height = (rtSize.height <= 1.0f) ? 1.0f : rtSize.height;
+            
             rt = [self renderTargetWithSize:rtSize];
             
             [renderPass begin:previousPassTexture];
@@ -211,6 +227,7 @@
         [renderer pushGroup];
 
         CCTexture *backup = sprite.texture;
+        sprite.shader = [CCEffectRenderer sharedCopyShader];
         sprite.texture = previousPassRT.texture;
         [sprite enqueueTriangles:renderer transform:transform];
         sprite.texture = backup;
@@ -249,6 +266,8 @@
 
 - (CCEffectRenderTarget *)renderTargetWithSize:(CGSize)size
 {
+    NSAssert((size.width > 0.0f) && (size.height > 0.0f), @"Render targets must have non-zero dimensions.");
+
     // If there is a free render target available for use, return that one. If
     // not, create a new one and return that.
     CCEffectRenderTarget *rt = nil;

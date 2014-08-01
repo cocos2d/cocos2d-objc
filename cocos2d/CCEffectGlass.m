@@ -18,9 +18,16 @@
 #import "CCSprite_Private.h"
 
 
+static const float CCEffectGlassDefaultFresnelBias = 0.1f;
+static const float CCEffectGlassDefaultFresnelPower = 2.0f;
+
+
 @interface CCEffectGlass ()
 
 @property (nonatomic) float conditionedRefraction;
+@property (nonatomic) float conditionedShininess;
+@property (nonatomic) float conditionedFresnelBias;
+@property (nonatomic) float conditionedFresnelPower;
 
 @end
 
@@ -29,19 +36,20 @@
 
 -(id)init
 {
-    return [self initWithRefraction:1.0f refractionEnvironment:nil reflectionEnvironment:nil normalMap:nil];
+    return [self initWithShininess:1.0f refraction:1.0f refractionEnvironment:nil reflectionEnvironment:nil normalMap:nil];
 }
 
--(id)initWithRefraction:(float)refraction refractionEnvironment:(CCSprite *)refractionEnvironment reflectionEnvironment:(CCSprite *)reflectionEnvironment
+-(id)initWithShininess:(float)shininess refraction:(float)refraction refractionEnvironment:(CCSprite *)refractionEnvironment reflectionEnvironment:(CCSprite *)reflectionEnvironment
 {
-    return [self initWithRefraction:refraction refractionEnvironment:refractionEnvironment reflectionEnvironment:reflectionEnvironment normalMap:nil];
+    return [self initWithShininess:shininess refraction:refraction refractionEnvironment:refractionEnvironment reflectionEnvironment:reflectionEnvironment normalMap:nil];
 }
 
--(id)initWithRefraction:(float)refraction refractionEnvironment:(CCSprite *)refractionEnvironment reflectionEnvironment:(CCSprite *)reflectionEnvironment normalMap:(CCSpriteFrame *)normalMap
+-(id)initWithShininess:(float)shininess refraction:(float)refraction refractionEnvironment:(CCSprite *)refractionEnvironment reflectionEnvironment:(CCSprite *)reflectionEnvironment normalMap:(CCSpriteFrame *)normalMap
 {
     NSArray *uniforms = @[
                           [CCEffectUniform uniform:@"float" name:@"u_refraction" value:[NSNumber numberWithFloat:1.0f]],
                           
+                          [CCEffectUniform uniform:@"float" name:@"u_shininess" value:[NSNumber numberWithFloat:1.0f]],
                           [CCEffectUniform uniform:@"float" name:@"u_fresnelBias" value:[NSNumber numberWithFloat:0.0f]],
                           [CCEffectUniform uniform:@"float" name:@"u_fresnelPower" value:[NSNumber numberWithFloat:0.0f]],
                           
@@ -57,12 +65,20 @@
                           
                           ];
     
-    if((self = [super initWithFragmentUniforms:uniforms vertexUniforms:nil varying:nil]))
+    if((self = [super initWithFragmentUniforms:uniforms vertexUniforms:nil varyings:nil]))
     {
         _refraction = refraction;
-        _fresnelBias = 0.1f;
-        _fresnelPower = 2.0f;
         _conditionedRefraction = CCEffectUtilsConditionRefraction(refraction);
+        
+        _shininess = shininess;
+        _conditionedShininess = CCEffectUtilsConditionShininess(shininess);
+        
+        _fresnelBias = CCEffectGlassDefaultFresnelBias;
+        _conditionedFresnelBias = CCEffectUtilsConditionFresnelBias(CCEffectGlassDefaultFresnelBias);
+
+        _fresnelPower = CCEffectGlassDefaultFresnelPower;
+        _conditionedFresnelPower = CCEffectUtilsConditionFresnelPower(CCEffectGlassDefaultFresnelPower);
+        
         _refractionEnvironment = refractionEnvironment;
         _reflectionEnvironment = reflectionEnvironment;
         _normalMap = normalMap;
@@ -71,14 +87,15 @@
     }
     return self;
 }
-+(id)effectWithRefraction:(float)refraction refractionEnvironment:(CCSprite *)refractionEnvironment reflectionEnvironment:(CCSprite *)reflectionEnvironment
+
++(id)effectWithShininess:(float)shininess refraction:(float)refraction refractionEnvironment:(CCSprite *)refractionEnvironment reflectionEnvironment:(CCSprite *)reflectionEnvironment
 {
-    return [[self alloc] initWithRefraction:refraction refractionEnvironment:refractionEnvironment reflectionEnvironment:reflectionEnvironment];
+    return [[self alloc] initWithShininess:shininess refraction:refraction refractionEnvironment:refractionEnvironment reflectionEnvironment:reflectionEnvironment];
 }
 
-+(id)effectWithRefraction:(float)refraction refractionEnvironment:(CCSprite *)refractionEnvironment reflectionEnvironment:(CCSprite *)reflectionEnvironment normalMap:(CCSpriteFrame *)normalMap
++(id)effectWithShininess:(float)shininess refraction:(float)refraction refractionEnvironment:(CCSprite *)refractionEnvironment reflectionEnvironment:(CCSprite *)reflectionEnvironment normalMap:(CCSpriteFrame *)normalMap
 {
-    return [[self alloc] initWithRefraction:refraction refractionEnvironment:refractionEnvironment reflectionEnvironment:reflectionEnvironment normalMap:normalMap];
+    return [[self alloc] initWithShininess:shininess refraction:refraction refractionEnvironment:refractionEnvironment reflectionEnvironment:reflectionEnvironment normalMap:normalMap];
 }
 
 -(void)buildFragmentFunctions
@@ -147,7 +164,7 @@
                                    // Add the reflected color modulated by the fresnel term. Multiplying by the normal
                                    // map alpha also allows the effect to be disabled for specific pixels.
                                    float fresnel = max(u_fresnelBias + (1.0 - u_fresnelBias) * pow((1.0 - nDotV), u_fresnelPower), 0.0);
-                                   vec4 reflection = normalMap.a * fresnel * texture2D(u_reflectEnvMap, reflectTexCoords);
+                                   vec4 reflection = normalMap.a * fresnel * u_shininess * texture2D(u_reflectEnvMap, reflectTexCoords);
 
                                    return primaryColor + refraction + reflection;
                                    );
@@ -182,8 +199,9 @@
         
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_refraction"]] = [NSNumber numberWithFloat:weakSelf.conditionedRefraction];
         
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fresnelBias"]] = [NSNumber numberWithFloat:weakSelf.fresnelBias];
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fresnelPower"]] = [NSNumber numberWithFloat:weakSelf.fresnelPower];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_shininess"]] = [NSNumber numberWithFloat:weakSelf.conditionedShininess];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fresnelBias"]] = [NSNumber numberWithFloat:weakSelf.conditionedFresnelBias];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fresnelPower"]] = [NSNumber numberWithFloat:weakSelf.conditionedFresnelPower];
         
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_refractEnvMap"]] = weakSelf.refractionEnvironment.texture ?: [CCTexture none];
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_reflectEnvMap"]] = weakSelf.reflectionEnvironment.texture ?: [CCTexture none];
@@ -231,4 +249,23 @@
     _refraction = refraction;
     _conditionedRefraction = CCEffectUtilsConditionRefraction(refraction);
 }
+
+-(void)setShininess:(float)shininess
+{
+    _shininess = shininess;
+    _conditionedShininess = CCEffectUtilsConditionShininess(shininess);
+}
+
+-(void)setFresnelBias:(float)bias
+{
+    _fresnelBias = bias;
+    _conditionedFresnelBias = CCEffectUtilsConditionFresnelBias(bias);
+}
+
+-(void)setFresnelPower:(float)power
+{
+    _fresnelPower = power;
+    _conditionedFresnelPower = CCEffectUtilsConditionFresnelPower(power);
+}
+
 @end

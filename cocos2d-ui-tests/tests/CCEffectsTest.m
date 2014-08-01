@@ -2,7 +2,7 @@
 #import "CCTextureCache.h"
 #import "CCNodeColor.h"
 #import "CCEffectNode.h"
-#import "CCEffectGaussianBlur.h"
+#import "CCEffectBlur.h"
 
 
 @interface CCEffectsTest : TestBase @end
@@ -41,7 +41,7 @@
     
     
     CCSpriteFrame *normalMap = [CCSpriteFrame frameWithImageNamed:@"Images/ShinyBallNormals.png"];
-    CCEffectGlass *glass = [[CCEffectGlass alloc] initWithRefraction:1.0f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment];
+    CCEffectGlass *glass = [[CCEffectGlass alloc] initWithShininess:1.0f refraction:1.0f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment];
     glass.fresnelBias = 0.1f;
     glass.fresnelPower = 2.0f;
     glass.refraction = 0.75f;
@@ -81,7 +81,7 @@
     [self.contentNode addChild:environment];
     
     CCSpriteFrame *normalMap = [CCSpriteFrame frameWithImageNamed:@"Images/ShinyBallNormals.png"];
-    CCEffectReflection *reflection = [[CCEffectReflection alloc] initWithEnvironment:environment];
+    CCEffectReflection *reflection = [[CCEffectReflection alloc] initWithShininess:0.4f environment:environment];
     reflection.fresnelBias = 0.0f;
     reflection.fresnelPower = 0.0f;
     
@@ -283,7 +283,7 @@
     effectNode.positionType = CCPositionTypeNormalized;
     effectNode.position = ccp(0.1, 0.5);
     [effectNode addChild:sampleSprite];
-    CCEffectGaussianBlur* effect = [CCEffectGaussianBlur effectWithPixelBlurRadius:1.0];
+    CCEffectBlur* effect = [CCEffectBlur effectWithBlurRadius:1.0];
     effectNode.effect = effect;
     
     [self.contentNode addChild:effectNode];
@@ -297,7 +297,7 @@
     effectNode2.positionType = CCPositionTypeNormalized;
     effectNode2.position = ccp(0.21, 0.5);
     [effectNode2 addChild:sampleSprite2];
-    CCEffectGaussianBlur* effect2 = [CCEffectGaussianBlur effectWithPixelBlurRadius:7.0];
+    CCEffectBlur* effect2 = [CCEffectBlur effectWithBlurRadius:7.0];
     effectNode2.effect = effect2;
     
     [self.contentNode addChild:effectNode2];
@@ -313,7 +313,7 @@
     effectNode3.position = ccp(0.5, 0.5);
     effectNode3.anchorPoint = ccp(0.5, 0.5);
     [effectNode3 addChild:sampleSprite3];
-    CCEffectGaussianBlur* effect3 = [CCEffectGaussianBlur effectWithPixelBlurRadius:1.0];
+    CCEffectBlur* effect3 = [CCEffectBlur effectWithBlurRadius:1.0];
     effectNode3.effect = effect3;
     
     [self.contentNode addChild:effectNode3];
@@ -327,7 +327,7 @@
     effectNode4.positionType = CCPositionTypeNormalized;
     effectNode4.position = ccp(0.6, 0.5);
     [effectNode4 addChild:sampleSprite4];
-    CCEffectGaussianBlur* effect4 = [CCEffectGaussianBlur effectWithPixelBlurRadius:7.0];
+    CCEffectBlur* effect4 = [CCEffectBlur effectWithBlurRadius:7.0];
     effectNode4.effect = effect4;
         
     [self.contentNode addChild:effectNode4];
@@ -358,7 +358,7 @@
     glowEffectNode.positionType = CCPositionTypeNormalized;
     glowEffectNode.position = ccp(0.1, 0.5);
     [glowEffectNode addChild:sampleSprite];
-    CCEffectBloom* glowEffect = [CCEffectBloom effectWithPixelBlurRadius:8 intensity:1.0f luminanceThreshold:0.0f];
+    CCEffectBloom* glowEffect = [CCEffectBloom effectWithBlurRadius:8 intensity:1.0f luminanceThreshold:0.0f];
     glowEffectNode.effect = glowEffect;
     
     [self.contentNode addChild:glowEffectNode];
@@ -385,7 +385,7 @@
     glowEffectNode2.positionType = CCPositionTypeNormalized;
     glowEffectNode2.position = ccp(0.4, 0.5);
     [glowEffectNode2 addChild:sampleSprite2];
-    CCEffectBloom* glowEffect2 = [CCEffectBloom effectWithPixelBlurRadius:2 intensity:0.0f luminanceThreshold:0.0f];
+    CCEffectBloom* glowEffect2 = [CCEffectBloom effectWithBlurRadius:2 intensity:0.0f luminanceThreshold:0.0f];
     glowEffectNode2.effect = glowEffect2;
     
     [self.contentNode addChild:glowEffectNode2];
@@ -508,35 +508,42 @@
     [self.contentNode addChild:refractEnvironment];
     
     NSArray *effects = @[
-                         [CCEffectGaussianBlur effectWithPixelBlurRadius:7.0],
-                         [CCEffectBloom effectWithPixelBlurRadius:8 intensity:1.0f luminanceThreshold:0.0f],
+                         [CCEffectBlur effectWithBlurRadius:7.0],
+                         [CCEffectBloom effectWithBlurRadius:8 intensity:1.0f luminanceThreshold:0.0f],
                          [CCEffectBrightness effectWithBrightness:0.25f],
                          [CCEffectContrast effectWithContrast:1.0f],
                          [CCEffectPixellate effectWithBlockSize:8.0f],
                          [CCEffectSaturation effectWithSaturation:-1.0f],
                          [CCEffectHue effectWithHue:90.0f],
-                         [CCEffectGlass effectWithRefraction:0.5f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment],
-                         [CCEffectRefraction effectWithRefraction:0.5f environment:refractEnvironment],
-                         [CCEffectReflection effectWithFresnelBias:0.2f fresnelPower:2.0f environment:reflectEnvironment],
+                         [CCEffectGlass effectWithShininess:1.0f refraction:0.75f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment],
+                         [CCEffectRefraction effectWithRefraction:0.75f environment:refractEnvironment],
+                         [CCEffectReflection effectWithShininess:1.0f fresnelBias:0.1f fresnelPower:2.0f environment:reflectEnvironment],
                          ];
     
     
-    CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/ShinyBallColor.png"];
+//    CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/ShinyBallColor.png"];
+    CCSprite *sprite = [[CCSprite alloc] init];
     sprite.positionType = CCPositionTypeNormalized;
-    sprite.position = ccp(0.1f, 0.9f);
+    sprite.position = ccp(0.5f, 0.5f);
     sprite.scale = 0.5f;
 
-    sprite.effect = [[CCEffectStack alloc] initWithEffects:@[effects[4]]];
+    sprite.effect = [CCEffectStack effectStackWithEffects:@[effects[8], effects[9]]];
+//    sprite.effect = [CCEffectStack effectStackWithEffects:@[effects[7]]];
+    
     sprite.normalMapSpriteFrame = [CCSpriteFrame frameWithImageNamed:@"Images/ShinyBallNormals.png"];
     sprite.colorRGBA = [CCColor colorWithRed:0.75f green:0.75f blue:0.75f alpha:0.75f];
+    sprite.colorRGBA = [CCColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.0f];
     
     [self.contentNode addChild:sprite];
     
+    CGPoint p1 = CGPointMake(0.1f, 0.1f);
+    CGPoint p2 = CGPointMake(0.9f, 0.9f);
+    
     [sprite runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
-                                                               [CCActionMoveTo actionWithDuration:8.0 position:ccp(0.9f, 0.9f)],
-                                                               [CCActionMoveTo actionWithDuration:8.0 position:ccp(0.9f, 0.1f)],
-                                                               [CCActionMoveTo actionWithDuration:8.0 position:ccp(0.1f, 0.1f)],
-                                                               [CCActionMoveTo actionWithDuration:8.0 position:ccp(0.1f, 0.9f)],
+                                                               [CCActionMoveTo actionWithDuration:2.0 position:ccp(p1.x, p2.y)],
+                                                               [CCActionMoveTo actionWithDuration:4.0 position:ccp(p2.x, p2.y)],
+                                                               [CCActionMoveTo actionWithDuration:2.0 position:ccp(p2.x, p1.y)],
+                                                               [CCActionMoveTo actionWithDuration:4.0 position:ccp(p1.x, p1.y)],
                                                                nil
                                                                ]]];
 }
@@ -556,16 +563,16 @@
     refractEnvironment.scale = 0.5;
     
     NSArray *allEffects = @[
-                            [CCEffectGaussianBlur effectWithPixelBlurRadius:7.0],
-                            [CCEffectBloom effectWithPixelBlurRadius:8 intensity:1.0f luminanceThreshold:0.0f],
+                            [CCEffectBlur effectWithBlurRadius:7.0],
+                            [CCEffectBloom effectWithBlurRadius:8 intensity:1.0f luminanceThreshold:0.0f],
                             [CCEffectBrightness effectWithBrightness:0.25f],
                             [CCEffectContrast effectWithContrast:1.0f],
                             [CCEffectPixellate effectWithBlockSize:4.0f],
                             [CCEffectSaturation effectWithSaturation:-1.0f],
                             [CCEffectHue effectWithHue:90.0f],
-                            [CCEffectGlass effectWithRefraction:0.5f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment],
+                            [CCEffectGlass effectWithShininess:1.0f refraction:0.5f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment],
                             [CCEffectRefraction effectWithRefraction:0.5f environment:refractEnvironment],
-                            [CCEffectReflection effectWithFresnelBias:0.1f fresnelPower:4.0f environment:reflectEnvironment],
+                            [CCEffectReflection effectWithShininess:1.0f fresnelBias:0.1f fresnelPower:4.0f environment:reflectEnvironment],
                             ];
     CCEffect *selectedEffect = allEffects[8];
 
@@ -655,7 +662,7 @@
     }
     else if (effects.count > 1)
     {
-        CCEffectStack *stack = [[CCEffectStack alloc] initWithEffects:effects];
+        CCEffectStack *stack = [CCEffectStack effectStackWithEffects:effects];
         effectNode.effect = stack;
     }
     
@@ -676,7 +683,7 @@
     }
     else if (effects.count > 1)
     {
-        CCEffectStack *stack = [[CCEffectStack alloc] initWithEffects:effects];
+        CCEffectStack *stack = [CCEffectStack effectStackWithEffects:effects];
         sprite.effect = stack;
     }
     
