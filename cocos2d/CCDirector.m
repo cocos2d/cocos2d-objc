@@ -738,9 +738,10 @@ static CCDirector *_sharedDirector = nil;
 
 -(void) resume
 {
+    NSLog(@"OO - is paused: %i", _isPaused);
 	if( ! _isPaused )
 		return;
-
+    NSLog(@"OO - is RESUMING: %i", _isPaused);
 	[self setAnimationInterval: _oldAnimationInterval];
 
 	if( gettimeofday( &_lastUpdate, NULL) != 0 ) {
