@@ -451,6 +451,20 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 
 }
 
+- (void)applyShadowOnContext:(CGContextRef)context color:(CGColorRef)color blurRadius:(CGFloat)blurRadius offset:(CGPoint)offset {
+
+    CGContextSetShadowWithColor(context, CGSizeMake(offset.x, -offset.y), blurRadius, color);
+
+}
+
+- (void)applyOutlineOnContext:(CGContextRef)context color:(CGColorRef)color width:(CGFloat)width {
+    CGContextSetTextDrawingMode(context, kCGTextStroke);
+    CGContextSetLineWidth(context, width * 2);
+    CGContextSetLineJoin(context, kCGLineJoinRound);
+    CGContextSetStrokeColorWithColor(context, color);
+
+}
+
 - (CCTexture*) createTextureWithAttributedString:(NSAttributedString*)attributedString useFullColor:(BOOL) fullColor
 {
 	NSAssert(attributedString, @"Invalid attributedString");
@@ -589,36 +603,37 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         free(data);
         return NULL;
     }
-    // Handle shadow
-    if (hasShadow)
-    {
-        CGContextSetShadowWithColor(context, CGSizeMake(shadowOffset.x, -shadowOffset.y), shadowBlurRadius, _shadowColor.CGColor);
-    }
     
-    // Handle outline
-    if (hasOutline)
-    {
-        CGContextSetTextDrawingMode(context, kCGTextFillStroke);
-        CGContextSetLineWidth(context, outlineWidth * 2);
-        CGContextSetLineJoin(context, kCGLineJoinRound);
-        
-        NSMutableAttributedString* outlineString = [attributedString mutableCopy];
-        //[outlineString addAttribute:NSForegroundColorAttributeName value:(__bridge id)_outlineColor.CGColor range:NSMakeRange(0, outlineString.length)]; //donotcheckin
-        
-        [self drawAttributedString:outlineString inContext:context inRect:drawArea];
-        
-        // Don't draw shadow for main font
-        CGContextSetShadowWithColor(context, CGSizeZero, 0, NULL);
-        
-        if (hasShadow)
-        {
-            // Draw outline again because shadow overlap
-            [self drawAttributedString:outlineString inContext:context inRect:drawArea];
-        }
-        CGContextSetTextDrawingMode(context, kCGTextFill);
-    }
     
-    [self drawAttributedString:attributedString inContext:context inRect:drawArea];
+    if (!hasShadow && !hasOutline) {
+        [self drawAttributedString:attributedString inContext:context inRect:drawArea];
+
+    } else if (hasShadow && !hasOutline) {
+        [self applyShadowOnContext:context color:_shadowColor.CGColor blurRadius:shadowBlurRadius offset:shadowOffset];
+        [self drawAttributedString:attributedString inContext:context inRect:drawArea];
+
+    } else if (!hasShadow && hasOutline) {
+        CGContextSaveGState(context);
+        [self applyOutlineOnContext:context color:_outlineColor.CGColor width:outlineWidth];
+        [self drawAttributedString:attributedString inContext:context inRect:drawArea];
+        CGContextRestoreGState(context);
+        [self drawAttributedString:attributedString inContext:context inRect:drawArea];
+
+
+    } else if (hasShadow && hasOutline) {
+        CGContextSaveGState(context);
+        [self applyOutlineOnContext:context color:_outlineColor.CGColor width:outlineWidth];
+        [self applyShadowOnContext:context color:_shadowColor.CGColor blurRadius:shadowBlurRadius offset:shadowOffset];
+        [self drawAttributedString:attributedString inContext:context inRect:drawArea];
+        CGContextRestoreGState(context);
+        CGContextSaveGState(context);
+        [self applyOutlineOnContext:context color:_outlineColor.CGColor width:outlineWidth];
+        [self drawAttributedString:attributedString inContext:context inRect:drawArea];
+        CGContextRestoreGState(context);
+        [self drawAttributedString:attributedString inContext:context inRect:drawArea];
+
+
+    }
     
     CGContextRelease(context);
     

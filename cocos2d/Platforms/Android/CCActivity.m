@@ -90,8 +90,7 @@ static void handler(NSException *e)
     [self.windowManager.defaultDisplay getMetrics:metrics];
     
     // Configure Cocos2d with the options set in SpriteBuilder
-    // TODO: repalce Published-iOS with Published-Android
-    NSString* configPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Published-iOS"];
+    NSString* configPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Published-Android"];
     
     configPath = [configPath stringByAppendingPathComponent:@"configCocos2d.plist"];
     
