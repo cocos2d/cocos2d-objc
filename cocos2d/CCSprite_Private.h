@@ -42,6 +42,8 @@
 
 + (CCSpriteTexCoordSet)textureCoordsForTexture:(CCTexture *)texture withRect:(CGRect)rect rotated:(BOOL)rotated xFlipped:(BOOL)flipX yFlipped:(BOOL)flipY;
 
+- (void)updateShaderUniformsFromEffect;
+
 @end
 
 
