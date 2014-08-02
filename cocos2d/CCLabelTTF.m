@@ -1041,6 +1041,8 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     {
         // This is a file, register font with font manager
         NSString* fontPath = [[CCFileUtils sharedFileUtils] fullPathForFilename:fontFile];
+        if (!fontPath)
+            return;
         NSURL* fontURL = [NSURL fileURLWithPath:fontPath];
         CTFontManagerRegisterFontsForURL((__bridge CFURLRef)fontURL, kCTFontManagerScopeProcess, NULL);
     }
