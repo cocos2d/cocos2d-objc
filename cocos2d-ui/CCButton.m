@@ -321,6 +321,8 @@
             }
             
             [_label stopAllActions];
+            [_background stopAllActions];
+			
             if (_zoomWhenHighlighted)
             {
                 _label.scaleX = _originalScaleX;
