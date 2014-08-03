@@ -94,7 +94,7 @@ static NSInteger ccbAnimationManagerID = 0;
 		{
 			if(seqProp.keyframes.count > 0)
 			{
-				CCBKeyframe * keyFrameZero = seqProp.keyframes[0];
+				CCBKeyframe __attribute__((unused)) *keyFrameZero = seqProp.keyframes[0];
 				NSAssert(keyFrameZero.time == 0.0f, @"The first keyframe should always be at time Zero.");
 			}
 			
