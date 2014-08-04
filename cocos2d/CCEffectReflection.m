@@ -15,7 +15,6 @@
 #import "CCTexture.h"
 
 #import "CCEffect_Private.h"
-#import "CCRenderer_Private.h"
 #import "CCSprite_Private.h"
 
 
@@ -196,9 +195,6 @@
         
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_envMap"]] = weakSelf.environment.texture ?: [CCTexture none];
         
-        CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
-        CGAffineTransform screenToWorld = CGAffineTransformMake(1.0f / scale, 0.0f, 0.0f, 1.0f / scale, 0.0f, 0.0f);
-        
         // Get the transform from world space to environment texture space. This is
         // concatenated with the current transform to move from local node space to
         // environment texture space.
@@ -213,12 +209,9 @@
         
         // Setup the transform from normalized device coordinates (NDC, which is the space our vertex
         // positions are in) to environment texture space. We use this to compute environment texture
-        // coordinates in the vertex shader.
-        GLKMatrix4 ndcToWorldMat;
-        [pass.renderer.globalShaderUniforms[CCShaderUniformProjectionInv] getValue:&ndcToWorldMat];
-        
+        // coordinates in the vertex shader.s
         GLKMatrix4 worldToReflectEnvTextureMat = CCEffectUtilsMat4FromAffineTransform(worldToReflectEnvTexture);
-        GLKMatrix4 ndcToReflectEnvTextureMat = GLKMatrix4Multiply(worldToReflectEnvTextureMat, ndcToWorldMat);
+        GLKMatrix4 ndcToReflectEnvTextureMat = GLKMatrix4Multiply(worldToReflectEnvTextureMat, pass.ndcToWorld);
 
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_ndcToEnv"]] = [NSValue valueWithGLKMatrix4:ndcToReflectEnvTextureMat];
         

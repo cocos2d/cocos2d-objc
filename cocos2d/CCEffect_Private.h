@@ -96,6 +96,7 @@ typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass);
 @property (nonatomic) CCRenderer* renderer;
 @property (nonatomic) CCSpriteVertexes verts;
 @property (nonatomic) GLKMatrix4 transform;
+@property (nonatomic) GLKMatrix4 ndcToWorld;
 @property (nonatomic) CCBlendMode* blendMode;
 @property (nonatomic) CCShader* shader;
 @property (nonatomic) NSMutableDictionary* shaderUniforms;
