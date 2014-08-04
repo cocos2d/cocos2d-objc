@@ -223,6 +223,7 @@ static void handler(NSException *e)
 - (void)startGL:(JavaObject<AndroidSurfaceHolder> *)holder
 {
     @autoreleasepool {
+        
         _gameLoop = [NSRunLoop currentRunLoop];
         
         [self setupView:holder];
@@ -247,6 +248,7 @@ static void handler(NSException *e)
             [director setProjection:CCDirectorProjectionCustom];
         }
         
+
         [director runWithScene:[self startScene]];
         [director setAnimationInterval:1.0/60.0];
         [director startAnimation];
@@ -307,14 +309,12 @@ static void handler(NSException *e)
 
 - (void)surfaceDestroyed:(JavaObject<AndroidSurfaceHolder> *)holder
 {
-    CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector sharedDirector];
 #if USE_MAIN_THREAD
-    [director stopAnimation];
+    [self finish];
 #else
-    [director performSelector:@selector(stopAnimation) onThread:_thread withObject:nil waitUntilDone:NO modes:@[NSDefaultRunLoopMode]];
+    [self performSelector:@selector(finish) onThread:_thread withObject:nil waitUntilDone:NO modes:@[NSDefaultRunLoopMode]];
 #endif
 }
-
 
 - (BOOL)onKeyDown:(int32_t)keyCode keyEvent:(AndroidKeyEvent *)event
 {
