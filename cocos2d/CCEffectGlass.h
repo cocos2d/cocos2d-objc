@@ -51,18 +51,18 @@
  *  sprite that serves as the background for the affected node so it appears that the viewer
  *  is seeing the refracted environment through the refracting node.
  */
-@property (nonatomic) CCSprite *refractionEnvironment;
+@property (nonatomic, strong) CCSprite *refractionEnvironment;
 
 /** The environment that will be reflected by the affected node. Typically this is a sprite
  *  that is not visible in the scene as it is conceptually "behind the viewer" and only visible
  *  where reflected by the affected node.
  */
-@property (nonatomic) CCSprite *reflectionEnvironment;
+@property (nonatomic, strong) CCSprite *reflectionEnvironment;
 
 /** The normal map that encodes the normal vectors of the affected node. Each pixel in the normal
  *  map is a 3 component vector that is perpendicular to the surface of the sprite at that point.
  */
-@property (nonatomic) CCSpriteFrame *normalMap;
+@property (nonatomic, strong) CCSpriteFrame *normalMap;
 
 
 /// -----------------------------------------------------------------------
