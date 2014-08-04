@@ -205,6 +205,7 @@
 		D38C220618EB657100DD7599 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = Resources/Fonts; sourceTree = SOURCE_ROOT; };
 		D3B2A7E4187DD60B00406C5A /* CCBMFontTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBMFontTest.m; path = "cocos2d-ui-tests/tests/CCBMFontTest.m"; sourceTree = SOURCE_ROOT; };
 		D3C9C866188078B900C58900 /* CCSchedulerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSchedulerTest.m; path = "cocos2d-ui-tests/tests/CCSchedulerTest.m"; sourceTree = SOURCE_ROOT; };
+		D3CE52CF198FEC5F0010D593 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		D3D6CF5E18BD5F0500A51531 /* CCRendererTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCRendererTest.m; path = "cocos2d-ui-tests/tests/CCRendererTest.m"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -409,6 +410,7 @@
 		B7E2604A17E7D278007067F0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D3CE52CF198FEC5F0010D593 /* Metal.framework */,
 				D34CD3C118ABEE9C00D8E537 /* GLKit.framework */,
 				B7E2604B17E7D278007067F0 /* QuartzCore.framework */,
 				B7E2604D17E7D278007067F0 /* OpenGLES.framework */,
@@ -911,6 +913,12 @@
 					"-lsqlite3",
 					"-ObjC",
 				);
+				"OTHER_LDFLAGS[sdk=iphoneos8.0]" = (
+					"-lz",
+					"-lsqlite3",
+					"-ObjC",
+					"\"-weak_framework Metal\"",
+				);
 				PRODUCT_NAME = "cocos2d-tests-ios";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -932,6 +940,12 @@
 					"-lz",
 					"-lsqlite3",
 					"-ObjC",
+				);
+				"OTHER_LDFLAGS[sdk=iphoneos8.0]" = (
+					"-lz",
+					"-lsqlite3",
+					"-ObjC",
+					"\"-weak_framework Metal\"",
 				);
 				PRODUCT_NAME = "cocos2d-tests-ios";
 				PROVISIONING_PROFILE = "";

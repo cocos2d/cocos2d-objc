@@ -130,6 +130,14 @@
 #define CC_SPRITE_DEBUG_DRAW 0
 #endif
 
+/** @def CC_ENABLE_METAL_RENDERING
+ Enable rendering using Apple's Metal graphics API on supported platforms and hardware.
+ This can reduce the cost of rendering unbatched geometry, but not all Cocos2D features are supported.
+ */
+#ifndef CC_ENABLE_METAL_RENDERING
+#define CC_ENABLE_METAL_RENDERING 0
+#endif
+
 #ifndef CC_SHADER_COLOR_PRECISION
 #define CC_SHADER_COLOR_PRECISION lowp
 #endif
