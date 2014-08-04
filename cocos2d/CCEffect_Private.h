@@ -93,12 +93,12 @@ typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass);
 @interface CCEffectRenderPass : NSObject
 
 @property (nonatomic) NSInteger renderPassId;
-@property (nonatomic) CCRenderer* renderer;
+@property (nonatomic, strong) CCRenderer* renderer;
 @property (nonatomic) CCSpriteVertexes verts;
 @property (nonatomic) GLKMatrix4 transform;
-@property (nonatomic) CCBlendMode* blendMode;
-@property (nonatomic) CCShader* shader;
-@property (nonatomic) NSMutableDictionary* shaderUniforms;
+@property (nonatomic, strong) CCBlendMode* blendMode;
+@property (nonatomic, strong) CCShader* shader;
+@property (nonatomic, strong) NSMutableDictionary* shaderUniforms;
 @property (nonatomic) BOOL needsClear;
 @property (nonatomic,copy) NSArray* beginBlocks;
 @property (nonatomic,copy) NSArray* updateBlocks;

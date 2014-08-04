@@ -25,12 +25,12 @@
  *  that is not visible in the scene as it is conceptually "behind the viewer" and only visible
  *  where reflected by the affected node.
  */
-@property (nonatomic) CCSprite *environment;
+@property (nonatomic, strong) CCSprite *environment;
 
 /** The normal map that encodes the normal vectors of the affected node. Each pixel in the normal
  *  map is a 3 component vector that is perpendicular to the surface of the sprite at that point.
  */
-@property (nonatomic) CCSpriteFrame *normalMap;
+@property (nonatomic, strong) CCSpriteFrame *normalMap;
 
 /** The overall shininess of the attached sprite. This value is in the range [0..1] and it controls
  *  how much of the reflected environment contributes to the final color of the affected pixels.
