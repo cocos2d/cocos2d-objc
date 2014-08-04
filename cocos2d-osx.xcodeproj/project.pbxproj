@@ -198,6 +198,7 @@
 		B7EE69ED1819EAAC00B983FE /* CCLayoutBox.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69E91819EAAC00B983FE /* CCLayoutBox.m */; };
 		B7EE6A34181B287300B983FE /* CCSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = B7EE6A32181B287300B983FE /* CCSlider.h */; };
 		B7EE6A35181B287300B983FE /* CCSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE6A33181B287300B983FE /* CCSlider.m */; };
+		D35E903E1990183C00A9B9C2 /* CCNoARC.m in Sources */ = {isa = PBXBuildFile; fileRef = D35E903D1990183C00A9B9C2 /* CCNoARC.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D37EE9FE187D4E7800CB5EF2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D37EE9FD187D4E7800CB5EF2 /* Foundation.framework */; };
 		D37EEA6E187D4F5200CB5EF2 /* libObjectiveChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D37EE9FC187D4E7700CB5EF2 /* libObjectiveChipmunk.a */; };
 		D37EEB03187D4F9600CB5EF2 /* ChipmunkBody.m in Sources */ = {isa = PBXBuildFile; fileRef = D37EEADF187D4F9600CB5EF2 /* ChipmunkBody.m */; };
@@ -561,6 +562,7 @@
 		B7EE69E91819EAAC00B983FE /* CCLayoutBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLayoutBox.m; sourceTree = "<group>"; };
 		B7EE6A32181B287300B983FE /* CCSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCSlider.h; path = "cocos2d-ui/CCSlider.h"; sourceTree = "<group>"; };
 		B7EE6A33181B287300B983FE /* CCSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSlider.m; path = "cocos2d-ui/CCSlider.m"; sourceTree = "<group>"; };
+		D35E903D1990183C00A9B9C2 /* CCNoARC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCNoARC.m; sourceTree = "<group>"; };
 		D37EE9FC187D4E7700CB5EF2 /* libObjectiveChipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libObjectiveChipmunk.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D37EE9FD187D4E7800CB5EF2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D37EEA0B187D4E7800CB5EF2 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -1254,6 +1256,7 @@
 		E076E6281225EC7400DE0DA2 /* cocos2d */ = {
 			isa = PBXGroup;
 			children = (
+				D35E903D1990183C00A9B9C2 /* CCNoARC.m */,
 				929D1B541954C28100B27340 /* Effects */,
 				E076E77B1225ED1100DE0DA2 /* Base Nodes */,
 				B7EE69E51819EA9600B983FE /* Layouts */,
@@ -1917,6 +1920,7 @@
 				929D1B701954C2A600B27340 /* CCEffectBlur.m in Sources */,
 				B751D2611988896D00722D93 /* CCEffectReflection.m in Sources */,
 				A003ACA8165731D500C7B792 /* ccFPSImages.m in Sources */,
+				D35E903E1990183C00A9B9C2 /* CCNoARC.m in Sources */,
 				B74C2B9617BDA54600A829C0 /* CCSprite9Slice.m in Sources */,
 				B770609A1831B0C40043CC67 /* OALTools.m in Sources */,
 				D3AD532418C84FC9005B6CF3 /* CCRenderer.m in Sources */,
