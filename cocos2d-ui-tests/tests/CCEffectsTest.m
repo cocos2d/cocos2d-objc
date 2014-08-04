@@ -81,7 +81,7 @@
     [self.contentNode addChild:environment];
     
     CCSpriteFrame *normalMap = [CCSpriteFrame frameWithImageNamed:@"Images/ShinyBallNormals.png"];
-    CCEffectReflection *reflection = [[CCEffectReflection alloc] initWithShininess:0.4f environment:environment];
+    CCEffectReflection *reflection = [[CCEffectReflection alloc] initWithShininess:1.0f environment:environment];
     reflection.fresnelBias = 0.0f;
     reflection.fresnelPower = 0.0f;
     
@@ -543,7 +543,7 @@
     sprite.position = ccp(0.5f, 0.5f);
     sprite.scale = 0.5f;
 
-    sprite.effect = [CCEffectStack effects:effects[8], effects[9], nil];
+    sprite.effect = [CCEffectStack effects:effects[7], effects[4], nil];
     
     sprite.normalMapSpriteFrame = [CCSpriteFrame frameWithImageNamed:@"Images/ShinyBallNormals.png"];
     sprite.colorRGBA = [CCColor colorWithRed:0.75f green:0.75f blue:0.75f alpha:0.75f];
