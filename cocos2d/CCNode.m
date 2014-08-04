@@ -909,31 +909,8 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 -(void)draw:(__unsafe_unretained CCRenderer *)renderer transform:(const GLKMatrix4 *)transform {}
 
--(void) visit:(__unsafe_unretained CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
-{
-	// quick return if not visible. children won't be drawn.
-	if (!_visible)
-		return;
-    
-		[self sortAllChildren];
-
-	GLKMatrix4 transform = NodeTransform(self, *parentTransform);
-	BOOL drawn = NO;
-
-	for(CCNode *child in _children){
-		if(!drawn && child.zOrder >= 0){
-			[self draw:renderer transform:&transform];
-			drawn = YES;
-		}
-
-		[child visit:renderer parentTransform:&transform];
-		}
-
-	if(!drawn) [self draw:renderer transform:&transform];
-
-	// reset for next frame
-	_orderOfArrival = 0;
-}
+// Defined in CCNoARC.m
+// -(void) visit:(__unsafe_unretained CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
 
 -(void)visit
 {
@@ -946,25 +923,8 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 #pragma mark CCNode - Transformations
 
-static inline GLKMatrix4
-NodeTransform(__unsafe_unretained CCNode *node, GLKMatrix4 parentTransform)
-{
-	CGAffineTransform t = [node nodeToParentTransform];
-	float z = node->_vertexZ;
-	
-	// Convert to 4x4 column major GLK matrix.
-	return GLKMatrix4Multiply(parentTransform, GLKMatrix4Make(
-		 t.a,  t.b, 0.0f, 0.0f,
-		 t.c,  t.d, 0.0f, 0.0f,
-		0.0f, 0.0f, 1.0f, 0.0f,
-		t.tx, t.ty,    z, 1.0f
-	));
-}
-
--(GLKMatrix4)transform:(const GLKMatrix4 *)parentTransform
-{
-	return NodeTransform(self, *parentTransform);
-}
+// Implemented in CCNoARC.m
+//-(GLKMatrix4)transform:(const GLKMatrix4 *)parentTransform
 
 #pragma mark CCPhysics support.
 
@@ -1446,7 +1406,8 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 
 - (CGAffineTransform)nodeToParentTransform
 {
-	CCPhysicsBody *physicsBody = GetBodyIfRunning(self);
+	// The body ivar cannot be changed while this method is running and it's ARC retain/release is 70% of the profile samples for this method.
+	__unsafe_unretained CCPhysicsBody *physicsBody = GetBodyIfRunning(self);
 	if(physicsBody){
         
 		CGAffineTransform rigidTransform;
