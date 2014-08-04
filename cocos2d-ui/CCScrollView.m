@@ -114,7 +114,9 @@
     float y = node.position.y;
     
 	node.position = ccp(x,y);
-	block();
+	if (node.position.x == _endPosition) {
+        block();
+    }
 }
 @end
 
@@ -154,7 +156,9 @@
     float x = node.position.x;
     
 	node.position = ccp(x,y);
-	block();
+	if (node.position.y == _endPosition) {
+        block();
+    }
 }
 @end
 
