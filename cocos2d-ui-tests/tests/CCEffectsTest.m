@@ -333,9 +333,9 @@
     [self.contentNode addChild:effectNode4];
 }
 
--(void)setupGlowEffectNodeTest
+-(void)setupBloomEffectTest
 {
-    self.subTitle = @"Glow Effect Node Test";
+    self.subTitle = @"Bloom Effect Test";
     
     CCSprite *sampleSprite_base = [CCSprite spriteWithImageNamed:@"Images/sample_hollow_circle.png"];
     sampleSprite_base.anchorPoint = ccp(0.0, 0.0);
@@ -389,6 +389,22 @@
     glowEffectNode2.effect = glowEffect2;
     
     [self.contentNode addChild:glowEffectNode2];
+
+    // Create a sprite to blur
+    const int steps = 5;
+    for (int i = 0; i < steps; i++)
+    {
+        CCSprite *sampleSprite3 = [CCSprite spriteWithImageNamed:@"Images/grossini_dance_08.png"];
+        sampleSprite3.anchorPoint = ccp(0.5, 0.5);
+        sampleSprite3.position = ccp(0.1f + i * (0.8f / (steps - 1)), 0.2f);
+        sampleSprite3.positionType = CCPositionTypeNormalized;
+        
+        // Blend glow maps test
+        CCEffectBloom* glowEffect3 = [CCEffectBloom effectWithBlurRadius:8 intensity:1.0f luminanceThreshold:1.0f - ((float)i/(float)(steps-1))];
+        sampleSprite3.effect = glowEffect3;
+        
+        [self.contentNode addChild:sampleSprite3];
+    }
 }
 
 -(void)setupBrightnessAndContrastEffectNodeTest
@@ -527,8 +543,7 @@
     sprite.position = ccp(0.5f, 0.5f);
     sprite.scale = 0.5f;
 
-    sprite.effect = [CCEffectStack effectStackWithEffects:@[effects[8], effects[9]]];
-//    sprite.effect = [CCEffectStack effectStackWithEffects:@[effects[7]]];
+    sprite.effect = [CCEffectStack effects:effects[8], effects[9], nil];
     
     sprite.normalMapSpriteFrame = [CCSpriteFrame frameWithImageNamed:@"Images/ShinyBallNormals.png"];
     sprite.colorRGBA = [CCColor colorWithRed:0.75f green:0.75f blue:0.75f alpha:0.75f];
@@ -662,7 +677,7 @@
     }
     else if (effects.count > 1)
     {
-        CCEffectStack *stack = [CCEffectStack effectStackWithEffects:effects];
+        CCEffectStack *stack = [CCEffectStack effectWithArray:effects];
         effectNode.effect = stack;
     }
     
@@ -683,7 +698,7 @@
     }
     else if (effects.count > 1)
     {
-        CCEffectStack *stack = [CCEffectStack effectStackWithEffects:effects];
+        CCEffectStack *stack = [CCEffectStack effectWithArray:effects];
         sprite.effect = stack;
     }
     
