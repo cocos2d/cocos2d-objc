@@ -123,12 +123,12 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 -(CCRenderBuffer)enqueueTriangles:(NSUInteger)triangleCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
 {
 	// Need to record the first vertex or element index before pushing more vertexes.
-	size_t firstVertex = _vertexBuffer.count;
-	size_t firstElement = _elementBuffer.count;
+	size_t firstVertex = _vertexBuffer->_count;
+	size_t firstElement = _elementBuffer->_count;
 	
 	size_t elementCount = 3*triangleCount;
-	CCVertex *vertexes = CCGraphicsBufferPushElements(&_vertexBuffer, vertexCount, self);
-	GLushort *elements = CCGraphicsBufferPushElements(&_elementBuffer, elementCount, self);
+	CCVertex *vertexes = CCGraphicsBufferPushElements(_vertexBuffer, vertexCount, self);
+	GLushort *elements = CCGraphicsBufferPushElements(_elementBuffer, elementCount, self);
 	
 	CCRenderCommandDraw *previous = _lastDrawCommand;
 	if(previous && previous->_renderState == renderState && previous->_globalSortOrder == globalSortOrder){
@@ -149,12 +149,12 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 -(CCRenderBuffer)enqueueLines:(NSUInteger)lineCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
 {
 	// Need to record the first vertex or element index before pushing more vertexes.
-	size_t firstVertex = _vertexBuffer.count;
-	size_t firstElement = _elementBuffer.count;
+	size_t firstVertex = _vertexBuffer->_count;
+	size_t firstElement = _elementBuffer->_count;
 	
 	size_t elementCount = 2*lineCount;
-	CCVertex *vertexes = CCGraphicsBufferPushElements(&_vertexBuffer, vertexCount, self);
-	GLushort *elements = CCGraphicsBufferPushElements(&_elementBuffer, elementCount, self);
+	CCVertex *vertexes = CCGraphicsBufferPushElements(_vertexBuffer, vertexCount, self);
+	GLushort *elements = CCGraphicsBufferPushElements(_elementBuffer, elementCount, self);
 	
 	CCRenderCommandDraw *command = [[CCRenderCommandDraw alloc] initWithMode:GL_LINES renderState:renderState first:(GLint)firstElement elements:(GLsizei)elementCount globalSortOrder:globalSortOrder];
 	[_queue addObject:command];

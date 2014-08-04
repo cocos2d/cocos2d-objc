@@ -35,25 +35,6 @@ extern id CCRENDERSTATE_CACHE;
 extern NSDictionary *CCBLEND_DISABLED_OPTIONS;
 
 
-/// Internal type used to abstract GPU buffers. (vertex, index buffers, etc)
-typedef struct CCGraphicsBuffer {
-	/// Elements currently in the buffer.
-	size_t count;
-	/// Element capacity of the buffer.
-	size_t capacity;
-	/// Size in bytes of elements in the buffer.
-	size_t elementSize;
-	
-	/// Pointer to the buffer memory.
-	void *ptr;
-	
-	/// Used to store GL VBO name for now.
-	intptr_t data;
-	/// GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER, etc.
-	intptr_t type;
-} CCGraphicsBuffer;
-
-
 /**
  * Describes the behaviour for an command object that can be submitted to the queue of a 
  * CCRenderer in order to perform some drawing operations.
@@ -116,10 +97,60 @@ typedef struct CCGraphicsBuffer {
 @end
 
 
+/// Internal type used to abstract GPU buffers. (vertex, index buffers, etc)
+@interface CCGraphicsBuffer : NSObject{
+	@public
+	/// Elements currently in the buffer.
+	size_t _count;
+	/// Element capacity of the buffer.
+	size_t _capacity;
+	/// Size in bytes of elements in the buffer.
+	size_t _elementSize;
+	
+	/// Pointer to the buffer memory.
+	/// Only valid between 
+	void *_ptr;
+	
+	/// Used to store GL VBO name for now.
+	intptr_t _data;
+	/// GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER, etc.
+	intptr_t _type;
+}
+
+-(instancetype)initWithCapacity:(NSUInteger)capacity elementSize:(size_t)elementSize type:(intptr_t)type;
+-(void)resize:(size_t)newCapacity;
+
+-(void)prepare;
+-(void)commit;
+
+@end
+
+
+/// Return a pointer to an array of elements that is 'requestedCount' in size.
+/// The buffer is resized by calling [CCGraphicsBuffer resize:] if necessary.
+static inline void *
+CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount, CCRenderer *renderer)
+{
+	NSCAssert(requestedCount > 0, @"Requested count must be positive.");
+	
+	size_t required = buffer->_count + requestedCount;
+	size_t capacity = buffer->_capacity;
+	if(required > capacity){
+		// Why 1.5? https://github.com/facebook/folly/blob/master/folly/docs/FBVector.md
+		[buffer resize:required*1.5];
+	}
+	
+	void *array = buffer->_ptr + buffer->_count*buffer->_elementSize;
+	buffer->_count += requestedCount;
+	
+	return array;
+}
+
+
 @interface CCRenderer(){
 	GLuint _vao;
-	CCGraphicsBuffer _vertexBuffer;
-	CCGraphicsBuffer _elementBuffer;
+	CCGraphicsBuffer *_vertexBuffer;
+	CCGraphicsBuffer *_elementBuffer;
 	
 	NSDictionary *_globalShaderUniforms;
 	
@@ -154,9 +185,6 @@ typedef struct CCGraphicsBuffer {
 /// Bind the renderer's VAO if it is not currently bound.
 -(void)bindVAO:(BOOL)bind;
 
-/// Resize the capacity of a graphics buffer.
--(void)resizeBuffer:(struct CCGraphicsBuffer *)buffer capacity:(size_t)capacity;
-
 @end
 
 
@@ -165,25 +193,3 @@ typedef struct CCGraphicsBuffer {
 -(void)setRenderState:(CCRenderState *)renderState;
 
 @end
-
-
-/// Return a pointer to an array of elements that is 'requestedCount' in size.
-/// The buffer is resized by calling [CCRenderer resizeBuffer:] if necessary.
-static inline void *
-CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount, CCRenderer *renderer)
-{
-	NSCAssert(requestedCount > 0, @"Requested count must be positive.");
-	
-	size_t required = buffer->count + requestedCount;
-	size_t capacity = buffer->capacity;
-	if(required > capacity){
-		// Why 1.5? https://github.com/facebook/folly/blob/master/folly/docs/FBVector.md
-		[renderer resizeBuffer:buffer capacity:required*1.5];
-	}
-	
-	void *array = buffer->ptr + buffer->count*buffer->elementSize;
-	buffer->count += requestedCount;
-	
-	return array;
-}
-
