@@ -656,6 +656,190 @@
     NSLog(@"setupPerformanceTest: Laid out %d sprites.", count);
 }
 
+-(void)setupEffectNodeAnchorTest
+{
+    self.subTitle = @"Effect Node Anchor Point Test\nTransparent RGB quads from lower-left to upper-right.";
+    
+    CCSprite *background = [CCSprite spriteWithImageNamed:@"Images/gridBackground.png"];
+    background.positionType = CCPositionTypeNormalized;
+    background.position = ccp(0.5f, 0.5f);
+    [self.contentNode addChild:background];
+
+    {
+        CCEffectNode* effectNode = [[CCEffectNode alloc] init];
+        effectNode.clearFlags = GL_COLOR_BUFFER_BIT;
+        effectNode.clearColor = [CCColor colorWithRed:0.5f green:0.0f blue:0.0f alpha:0.5f];
+        effectNode.contentSize = CGSizeMake(80, 80);
+        effectNode.anchorPoint = ccp(1.0, 1.0);
+        effectNode.positionType = CCPositionTypeNormalized;
+        effectNode.position = ccp(0.5, 0.5);
+        
+        CCEffectHue *effect = [CCEffectHue effectWithHue:0.0f];
+        effectNode.effect = effect;
+
+        [self.contentNode addChild:effectNode];
+    }
+    
+    {
+        CCEffectNode* effectNode = [[CCEffectNode alloc] init];
+        effectNode.clearFlags = GL_COLOR_BUFFER_BIT;
+        effectNode.clearColor = [CCColor colorWithRed:0.5f green:0.0f blue:0.0f alpha:0.5f];
+        effectNode.contentSize = CGSizeMake(80, 80);
+        effectNode.anchorPoint = ccp(0.5, 0.5);
+        effectNode.positionType = CCPositionTypeNormalized;
+        effectNode.position = ccp(0.5, 0.5);
+        
+        CCEffectHue *effect = [CCEffectHue effectWithHue:120.0f];
+        effectNode.effect = effect;
+
+        [self.contentNode addChild:effectNode];
+    }
+
+    {
+        CCEffectNode* effectNode = [[CCEffectNode alloc] init];
+        effectNode.clearFlags = GL_COLOR_BUFFER_BIT;
+        effectNode.clearColor = [CCColor colorWithRed:0.5f green:0.0f blue:0.0f alpha:0.5f];
+        effectNode.contentSize = CGSizeMake(80, 80);
+        effectNode.anchorPoint = ccp(0.0, 0.0);
+        effectNode.positionType = CCPositionTypeNormalized;
+        effectNode.position = ccp(0.5, 0.5);
+        
+        CCEffectHue *effect = [CCEffectHue effectWithHue:-120.0f];
+        effectNode.effect = effect;
+        
+        [self.contentNode addChild:effectNode];
+    }
+}
+
+-(void)setupEffectNodeSizeTypeTest
+{
+    self.subTitle = @"Effect Node Size Type Test\nSmall red and big blue transparent quads.\nRed bar on left. Green bar on bottom.";
+    
+    CCSprite *background = [CCSprite spriteWithImageNamed:@"Images/gridBackground.png"];
+    background.positionType = CCPositionTypeNormalized;
+    background.position = ccp(0.5f, 0.5f);
+    [self.contentNode addChild:background];
+    
+    {
+        CCEffectNode* effectNode = [[CCEffectNode alloc] init];
+        effectNode.clearFlags = GL_COLOR_BUFFER_BIT;
+        effectNode.clearColor = [CCColor colorWithRed:0.5f green:0.0f blue:0.0f alpha:0.5f];
+        effectNode.contentSizeType = CCSizeTypeNormalized;
+        effectNode.contentSize = CGSizeMake(0.5f, 0.5f);
+        effectNode.anchorPoint = ccp(0.5f, 0.5f);
+        effectNode.positionType = CCPositionTypeNormalized;
+        effectNode.position = ccp(0.5f, 0.5f);
+        
+        CCEffectHue *effect = [CCEffectHue effectWithHue:-120.0f];
+        effectNode.effect = effect;
+        
+        [self.contentNode addChild:effectNode];
+    }
+
+    {
+        CCEffectNode* effectNode = [[CCEffectNode alloc] init];
+        effectNode.clearFlags = GL_COLOR_BUFFER_BIT;
+        effectNode.clearColor = [CCColor colorWithRed:0.5f green:0.0f blue:0.0f alpha:0.5f];
+        effectNode.contentSizeType = CCSizeTypePoints;
+        effectNode.contentSize = CGSizeMake(80.0f, 80.0f);
+        effectNode.anchorPoint = ccp(0.5f, 0.5f);
+        effectNode.positionType = CCPositionTypeNormalized;
+        effectNode.position = ccp(0.5f, 0.5f);
+        
+        CCEffectHue *effect = [CCEffectHue effectWithHue:0.0f];
+        effectNode.effect = effect;
+        
+        [self.contentNode addChild:effectNode];
+    }
+    
+    {
+        CCEffectNode* effectNode = [[CCEffectNode alloc] init];
+        effectNode.clearFlags = GL_COLOR_BUFFER_BIT;
+        effectNode.clearColor = [CCColor colorWithRed:1.0f green:0.0f blue:0.0f alpha:1.0f];
+        effectNode.contentSizeType = CCSizeTypeMake(CCSizeUnitPoints, CCSizeUnitNormalized);
+        effectNode.contentSize = CGSizeMake(20.0f, 0.9f);
+        effectNode.anchorPoint = ccp(0.0f, 0.0f);
+        effectNode.positionType = CCPositionTypeNormalized;
+        effectNode.position = ccp(0.05f, 0.05f);
+        
+        CCEffectHue *effect = [CCEffectHue effectWithHue:0.0f];
+        effectNode.effect = effect;
+        
+        [self.contentNode addChild:effectNode];
+    }
+
+    {
+        CCEffectNode* effectNode = [[CCEffectNode alloc] init];
+        effectNode.clearFlags = GL_COLOR_BUFFER_BIT;
+        effectNode.clearColor = [CCColor colorWithRed:1.0f green:0.0f blue:0.0f alpha:1.0f];
+        effectNode.contentSizeType = CCSizeTypeMake(CCSizeUnitNormalized, CCSizeUnitPoints);
+        effectNode.contentSize = CGSizeMake(0.9f, 20.0f);
+        effectNode.anchorPoint = ccp(0.0f, 0.0f);
+        effectNode.positionType = CCPositionTypeNormalized;
+        effectNode.position = ccp(0.05f, 0.05f);
+        
+        CCEffectHue *effect = [CCEffectHue effectWithHue:120.0f];
+        effectNode.effect = effect;
+        
+        [self.contentNode addChild:effectNode];
+    }
+}
+
+-(void)setupEffectNodeChildPositioningTest
+{
+    self.subTitle = @"Effect Node Child Positioning Test\nBig transparent purple quad and small opaque green quad (both with grossini).\n";
+    
+    CCSprite *background = [CCSprite spriteWithImageNamed:@"Images/gridBackground.png"];
+    background.positionType = CCPositionTypeNormalized;
+    background.position = ccp(0.5f, 0.5f);
+    [self.contentNode addChild:background];
+    
+    {
+        CCEffectNode* effectNode = [[CCEffectNode alloc] init];
+        effectNode.clearFlags = GL_COLOR_BUFFER_BIT;
+        effectNode.clearColor = [CCColor colorWithRed:0.5f green:0.0f blue:0.0f alpha:0.5f];
+        effectNode.contentSizeType = CCSizeTypeNormalized;
+        effectNode.contentSize = CGSizeMake(0.75, 0.75);
+        effectNode.anchorPoint = ccp(0.5, 0.5);
+        effectNode.positionType = CCPositionTypeNormalized;
+        effectNode.position = ccp(0.5, 0.5);
+        
+        CCEffectHue *effect = [CCEffectHue effectWithHue:-60.0f];
+        effectNode.effect = effect;
+        
+        [self.contentNode addChild:effectNode];
+        
+        CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
+        sprite.anchorPoint = ccp(0.5, 0.5);
+        sprite.positionType = CCPositionTypeNormalized;
+        sprite.position = ccp(0.25f, 0.5f);
+        [effectNode addChild:sprite];
+    }
+
+    {
+        CCEffectNode* effectNode = [[CCEffectNode alloc] init];
+        effectNode.clearFlags = GL_COLOR_BUFFER_BIT;
+        effectNode.clearColor = [CCColor colorWithRed:1.0f green:0.0f blue:0.0f alpha:1.0f];
+        effectNode.contentSizeType = CCSizeTypeMake(CCSizeUnitPoints, CCSizeUnitNormalized);
+        effectNode.contentSize = CGSizeMake(128, 0.5);
+        effectNode.anchorPoint = ccp(0.5, 0.5);
+        effectNode.positionType = CCPositionTypeNormalized;
+        effectNode.position = ccp(0.75, 0.5);
+        
+        CCEffectHue *effect = [CCEffectHue effectWithHue:120.0f];
+        effectNode.effect = effect;
+        
+        [self.contentNode addChild:effectNode];
+        
+        CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
+        sprite.anchorPoint = ccp(0.5, 0.5);
+        sprite.positionType = CCPositionTypeNormalized;
+        sprite.position = ccp(0.5f, 0.5f);
+        [effectNode addChild:sprite];
+    }
+}
+
+
 - (CCNode *)effectNodeWithEffects:(NSArray *)effects appliedToSpriteWithImage:(NSString *)spriteImage atPosition:(CGPoint)position
 {
     // Another sprite that will be added directly
