@@ -51,6 +51,8 @@ static CCActivity *currentActivity = nil;
 
 @bridge (callback) run = run;
 @bridge (callback) onDestroy = onDestroy;
+@bridge (callback) onPause = onPause;
+@bridge (callback) onResume = onResume;
 @bridge (callback) onLowMemory = onLowMemory;
 @bridge (callback) surfaceCreated: = surfaceCreated;
 @bridge (callback) surfaceDestroyed: = surfaceDestroyed;
@@ -114,13 +116,77 @@ static void handler(NSException *e)
 
 - (void)onDestroy
 {
+    [[CCDirector sharedDirector] end];
     [super onDestroy];
     exit(0);
 }
 
+- (void)onResume
+{
+#if USE_MAIN_THREAD
+    [self resume];
+#else
+    if(_thread == nil)
+    {
+        [super onResume];
+        return;
+    }
+    
+    [self performSelector:@selector(resume) onThread:_thread withObject:nil waitUntilDone:YES modes:@[NSDefaultRunLoopMode]];
+#endif
+    
+    [super onResume];
+}
+
+- (void)resume
+{
+    [[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
+    [[CCDirector sharedDirector] resume];
+}
+
+- (void)onPause
+{
+#if USE_MAIN_THREAD
+    [self pause];
+#else
+    if(_thread == nil)
+    {
+        [super onPause];
+        return;
+    }
+    
+    [self performSelector:@selector(pause) onThread:_thread withObject:nil waitUntilDone:YES modes:@[NSDefaultRunLoopMode]];
+#endif
+    
+    [super onPause];
+}
+
+- (void)pause
+{
+    [[CCDirector sharedDirector] pause];
+}
+
+
 - (void)onLowMemory
 {
-    // TODO: do something sensible here
+#if USE_MAIN_THREAD
+    [self purgeChaceData];
+#else
+    if(_thread == nil)
+    {
+        [super onLowMemory];
+        return;
+    }
+
+    [self performSelector:@selector(purgeChaceData) onThread:_thread withObject:nil waitUntilDone:YES modes:@[NSDefaultRunLoopMode]];
+#endif
+
+    [super onLowMemory];
+}
+
+- (void)purgeChaceData
+{
+    [[CCDirector sharedDirector] purgeCachedData];
 }
 
 - (void)reshape:(NSValue *)value
@@ -157,6 +223,7 @@ static void handler(NSException *e)
 - (void)startGL:(JavaObject<AndroidSurfaceHolder> *)holder
 {
     @autoreleasepool {
+        
         _gameLoop = [NSRunLoop currentRunLoop];
         
         [self setupView:holder];
@@ -181,6 +248,7 @@ static void handler(NSException *e)
             [director setProjection:CCDirectorProjectionCustom];
         }
         
+
         [director runWithScene:[self startScene]];
         [director setAnimationInterval:1.0/60.0];
         [director startAnimation];
@@ -241,14 +309,12 @@ static void handler(NSException *e)
 
 - (void)surfaceDestroyed:(JavaObject<AndroidSurfaceHolder> *)holder
 {
-    CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector sharedDirector];
 #if USE_MAIN_THREAD
-    [director stopAnimation];
+    [self finish];
 #else
-    [director performSelector:@selector(stopAnimation) onThread:_thread withObject:nil waitUntilDone:NO modes:@[NSDefaultRunLoopMode]];
+    [self performSelector:@selector(finish) onThread:_thread withObject:nil waitUntilDone:NO modes:@[NSDefaultRunLoopMode]];
 #endif
 }
-
 
 - (BOOL)onKeyDown:(int32_t)keyCode keyEvent:(AndroidKeyEvent *)event
 {

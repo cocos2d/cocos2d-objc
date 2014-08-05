@@ -740,7 +740,7 @@ static CCDirector *_sharedDirector = nil;
 {
 	if( ! _isPaused )
 		return;
-
+    
 	[self setAnimationInterval: _oldAnimationInterval];
 
 	if( gettimeofday( &_lastUpdate, NULL) != 0 ) {

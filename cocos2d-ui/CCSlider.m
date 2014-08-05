@@ -71,7 +71,7 @@
     _handle.position = ccp(size.width * _sliderValue, size.height/2.0f);
 }
 
-#if __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
 
 #pragma mark Handle touches
 

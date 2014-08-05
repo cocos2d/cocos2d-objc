@@ -673,6 +673,7 @@
 		E0F924711224140400EF2362 /* CCTexturePVR.h in Headers */ = {isa = PBXBuildFile; fileRef = E0F9246F1224140400EF2362 /* CCTexturePVR.h */; };
 		E0F924721224140400EF2362 /* CCTexturePVR.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F924701224140400EF2362 /* CCTexturePVR.m */; };
 		E0F92AC41224559800EF2362 /* CCNS.h in Headers */ = {isa = PBXBuildFile; fileRef = E0F92AC31224559800EF2362 /* CCNS.h */; };
+		FC55599E1991A26000E29CCE /* libtremor.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC55599B1991A25000E29CCE /* libtremor.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -696,6 +697,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = D309B21217EFE2EF00AA52C8;
 			remoteInfo = "ObjectiveChipmunk-iPhone";
+		};
+		FC55599A1991A25000E29CCE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FC5559951991A25000E29CCE /* tremor.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FC76226219919ECD0001BCF4;
+			remoteInfo = tremor;
+		};
+		FC55599C1991A25A00E29CCE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FC5559951991A25000E29CCE /* tremor.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = FC76226119919ECD0001BCF4;
+			remoteInfo = tremor;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -1089,6 +1104,8 @@
 		E0F9246F1224140400EF2362 /* CCTexturePVR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTexturePVR.h; sourceTree = "<group>"; };
 		E0F924701224140400EF2362 /* CCTexturePVR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTexturePVR.m; sourceTree = "<group>"; };
 		E0F92AC31224559800EF2362 /* CCNS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNS.h; sourceTree = "<group>"; };
+		FC5559951991A25000E29CCE /* tremor.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = tremor.xcodeproj; path = external/tremor/android/tremor/tremor.xcodeproj; sourceTree = "<group>"; };
+		FC55599F1991A26300E29CCE /* libogg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libogg.a; path = "external/ogg/android/ogg/build/Debug-android/libogg.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1122,6 +1139,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC55599E1991A26000E29CCE /* libtremor.a in Frameworks */,
 				D291DCC2195B2FA100278EC0 /* libObjectiveChipmunk-iPhone.a in Frameworks */,
 				D2FEB745194F6C9E00FC0574 /* CoreText.framework in Frameworks */,
 				D2FEB747194F6C9E00FC0574 /* Foundation.framework in Frameworks */,
@@ -1167,6 +1185,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FC55599F1991A26300E29CCE /* libogg.a */,
 				D24FAEEB198014B90043E27D /* GLKit.framework */,
 				D289C1C1197440BC00B68E3D /* BridgeKitV3.framework */,
 				D28A2E201954F85700ADC03D /* AVFoundation.framework */,
@@ -1187,6 +1206,7 @@
 		501756090F335CE900624901 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				FC5559951991A25000E29CCE /* tremor.xcodeproj */,
 				B759E5281880C66900E8166C /* Chipmunk7-ios.xcodeproj */,
 				B7705F8A1831A07B0043CC67 /* ObjectAL */,
 			);
@@ -1879,6 +1899,14 @@
 			path = iOS;
 			sourceTree = "<group>";
 		};
+		FC5559961991A25000E29CCE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FC55599B1991A25000E29CCE /* libtremor.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -2297,6 +2325,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				FC55599D1991A25A00E29CCE /* PBXTargetDependency */,
 				D2FEB60E194F6C9E00FC0574 /* PBXTargetDependency */,
 			);
 			name = cocos2dAndroid;
@@ -2330,6 +2359,10 @@
 					ProductGroup = B759E5291880C66900E8166C /* Products */;
 					ProjectRef = B759E5281880C66900E8166C /* Chipmunk7-ios.xcodeproj */;
 				},
+				{
+					ProductGroup = FC5559961991A25000E29CCE /* Products */;
+					ProjectRef = FC5559951991A25000E29CCE /* tremor.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -2347,6 +2380,13 @@
 			fileType = archive.ar;
 			path = "libObjectiveChipmunk-iPhone.a";
 			remoteRef = B759E52C1880C66900E8166C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FC55599B1991A25000E29CCE /* libtremor.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libtremor.a;
+			remoteRef = FC55599A1991A25000E29CCE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -2698,6 +2738,11 @@
 			name = "ObjectiveChipmunk-iPhone";
 			targetProxy = D2FEB60F194F6C9E00FC0574 /* PBXContainerItemProxy */;
 		};
+		FC55599D1991A25A00E29CCE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = tremor;
+			targetProxy = FC55599C1991A25A00E29CCE /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -2799,7 +2844,7 @@
 				MACOSX_DEPLOYMENT_TARGET = "$(inherited)";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = apportablesdk1.0;
+				SDKROOT = sbpbeta;
 			};
 			name = Debug;
 		};
@@ -2823,7 +2868,7 @@
 				MACOSX_DEPLOYMENT_TARGET = "$(inherited)";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = apportablesdk1.0;
+				SDKROOT = sbpbeta;
 			};
 			name = Release;
 		};
@@ -2985,11 +3030,12 @@
 					"$(SDKROOT)/usr/lib/armeabi",
 					"$(SDKROOT)/usr/lib/armv7a",
 					"$(SDKROOT)/usr/lib/x86",
+					"$(PROJECT_DIR)/external/ogg/android/ogg/build/Debug-android",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = cocos2dAndroid;
-				SDKROOT = apportablesdk1.0;
+				SDKROOT = sbpbeta;
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -3029,10 +3075,11 @@
 					"$(SDKROOT)/usr/lib/armeabi",
 					"$(SDKROOT)/usr/lib/armv7a",
 					"$(SDKROOT)/usr/lib/x86",
+					"$(PROJECT_DIR)/external/ogg/android/ogg/build/Debug-android",
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = cocos2dAndroid;
-				SDKROOT = apportablesdk1.0;
+				SDKROOT = sbpbeta;
 				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};

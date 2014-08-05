@@ -1,3 +1,11 @@
 [submodule "external/Chipmunk"]
 	path = external/Chipmunk
 url=https://github.com/slembcke/Chipmunk2D.git
+[submodule "external/ogg"]
+	path = external/ogg
+	url = git@github.com:apportable/ogg.git
+	branch = apportable
+[submodule "external/tremor"]
+	path = external/tremor
+	url = git@github.com:apportable/tremor.git
+	branch = apportable

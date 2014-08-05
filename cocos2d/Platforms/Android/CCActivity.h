@@ -24,6 +24,9 @@ BRIDGE_CLASS("org.cocos2d.CCActivity")
 
 - (void)onDestroy;
 
+- (void)onPause;
+- (void)onResume;
+
 - (void)onLowMemory;
 
 - (void)surfaceChanged:(JavaObject<AndroidSurfaceHolder> *)holder format:(int)format width:(int)width height:(int)height;
