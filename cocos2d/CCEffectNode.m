@@ -70,6 +70,18 @@
     }
 }
 
+-(void)create
+{
+    CGSize pointSize = self.contentSizeInPoints;
+    CGSize pixelSize = CGSizeMake(pointSize.width * _contentScale, pointSize.height * _contentScale);
+    [self createTextureAndFboWithPixelSize:pixelSize];
+
+    CGRect rect = CGRectMake(0, 0, pointSize.width, pointSize.height);
+	[_sprite setTextureRect:rect];
+    
+    _projection = GLKMatrix4MakeOrtho(0.0f, pointSize.width, 0.0f, pointSize.height, -1024.0f, 1024.0f);
+}
+
 -(void)begin
 {
 	CGSize pixelSize = self.texture.contentSizeInPixels;
@@ -204,6 +216,12 @@
     
     // And then copy the new effect's uniforms into the node's uniforms dictionary.
     [_shaderUniforms addEntriesFromDictionary:_effect.shaderUniforms];
+}
+
+- (void)setContentSizeType:(CCSizeType)contentSizeType
+{
+    [super setContentSizeType:contentSizeType];
+    _contentSizeChanged = YES;
 }
 
 @end
