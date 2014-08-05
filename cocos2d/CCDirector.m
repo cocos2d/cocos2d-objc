@@ -267,7 +267,7 @@ static CCDirector *_sharedDirector = nil;
 	}
 }
 
--(void)addFrameCompletionHandler:(CCFrameCompletionHandler)handler
+-(void)addFrameCompletionHandler:(dispatch_block_t)handler
 {
 	[(CCGLView *)self.view addFrameCompletionHandler:handler];
 }

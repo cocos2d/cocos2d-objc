@@ -91,7 +91,7 @@
 
 /// Add a block to be called when the GPU finishes rendering a frame.
 /// This is used to pool rendering resources (renderers, buffers, textures, etc) without stalling the GPU pipeline.
--(void)addFrameCompletionHandler:(CCDirectorFrameCompletionHandler)handler;
+-(void)addFrameCompletionHandler:(dispatch_block_t)handler;
 
 @end
 

@@ -320,7 +320,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	}
 }
 
--(void)addFrameCompletionHandler:(CCDirectorFrameCompletionHandler)handler
+-(void)addFrameCompletionHandler:(dispatch_block_t)handler
 {
 	if(_fences == nil){
 		_fences = [NSMutableArray arrayWithObject:[[CCGLViewFence alloc] init]];
@@ -396,7 +396,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	// Check the fences for completion.
 	for(CCGLViewFence *fence in _fences){
 		if(fence.isComplete){
-			for(CCDirectorFrameCompletionHandler handler in fence.handlers) handler();
+			for(dispatch_block_t handler in fence.handlers) handler();
 			[fence.handlers removeAllObjects];
 		} else {
 			break;

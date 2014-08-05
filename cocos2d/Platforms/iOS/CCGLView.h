@@ -75,9 +75,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "CCESRenderer.h"
 
 
-typedef void (^CCFrameCompletionHandler)();
-
-
 //CLASSES:
 
 @class CCGLView;
@@ -152,7 +149,7 @@ typedef void (^CCFrameCompletionHandler)();
 
 /// Schedule a block to be invoked when the frame completes.
 /// The block may not be invoked from the main thread.
--(void)addFrameCompletionHandler:(CCFrameCompletionHandler)handler;
+-(void)addFrameCompletionHandler:(dispatch_block_t)handler;
 
 /** CCGLView uses double-buffer. This method swaps the buffers */
 -(void) swapBuffers;
