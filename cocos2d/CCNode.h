@@ -615,6 +615,16 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  */
 - (CGPoint)convertToWorldSpaceAR:(CGPoint)nodePoint;
 
+/**
+ *  Converts a local Point to Window space coordinates.The result is in Points.
+ *  Treats the returned/received node point as anchor relative.
+ *
+ *  @param nodePoint Local position in points.
+ *
+ *  @return UI position in points.
+ */
+- (CGPoint)convertToWindowSpace:(CGPoint)nodePoint;
+
 
 /// -----------------------------------------------------------------------
 /// @name Rendering (Used by Subclasses)
