@@ -40,11 +40,21 @@
 /**
  *  Initializes an effect stack object with the specified array of effects.
  *
- *  @param effects The array of effects to add to the stack.
+ *  @param arrayOfEffects The array of effects to add to the stack.
  *
  *  @return The CCEffectStack object.
  */
-- (id)initWithEffects:(NSArray *)effects;
+- (id)initWithArray:(NSArray *)arrayOfEffects;
+
+/**
+ *  Initializes an effect stack object with the specified effects.
+ *
+ *  @param effect1 First effect to add to the stack.
+ *  @param ...     Nil terminated list of effects to stack.
+ *
+ *  @return The CCEffectStack object.
+ */
+- (id)initWithEffects:(CCEffect*)effect1, ... NS_REQUIRES_NIL_TERMINATION;
 
 
 /// -----------------------------------------------------------------------
@@ -54,11 +64,21 @@
 /**
  *  Creates an effect stack object with the specified array of effects.
  *
- *  @param effects The array of effects to add to the stack.
+ *  @param arrayOfEffects The array of effects to add to the stack.
  *
  *  @return The CCEffectStack object.
  */
-+ (id)effectStackWithEffects:(NSArray *)effects;
++ (id)effectWithArray:(NSArray*)arrayOfEffects;
+
+/**
+ *  Creates an effect stack object with the specified effects.
+ *
+ *  @param effect1 First effect to add to the stack.
+ *  @param ...     Nil terminated list of effects to stack.
+ *
+ *  @return The CCEffectStack object.
+ */
++ (id)effects:(CCEffect*)effect1, ... NS_REQUIRES_NIL_TERMINATION;
 
 
 /// -----------------------------------------------------------------------

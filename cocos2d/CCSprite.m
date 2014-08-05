@@ -226,13 +226,18 @@
 
 -(void) setTextureRect:(CGRect)rect rotated:(BOOL)rotated untrimmedSize:(CGSize)untrimmedSize
 {
-	_textureRectRotated = rotated;
+    [self setTextureRect:rect forTexture:self.texture rotated:rotated untrimmedSize:untrimmedSize];
+}
 
+- (void)setTextureRect:(CGRect)rect forTexture:(CCTexture*)texture rotated:(BOOL)rotated untrimmedSize:(CGSize)untrimmedSize
+{
+	_textureRectRotated = rotated;
+    
 	self.contentSizeType = CCSizeTypePoints;
 	[self setContentSize:untrimmedSize];
 	_textureRect = rect;
     
-	CCSpriteTexCoordSet texCoords = [CCSprite textureCoordsForTexture:self.texture withRect:rect rotated:rotated xFlipped:_flipX yFlipped:_flipY];
+	CCSpriteTexCoordSet texCoords = [CCSprite textureCoordsForTexture:texture withRect:rect rotated:rotated xFlipped:_flipX yFlipped:_flipY];
     _verts.bl.texCoord1 = texCoords.bl;
     _verts.br.texCoord1 = texCoords.br;
     _verts.tr.texCoord1 = texCoords.tr;
@@ -470,7 +475,7 @@
         // If there is no texture set on the sprite, set the sprite's texture rect from the
         // normal map's sprite frame. Note that setting the main texture, then the normal map,
         // and then removing the main texture will leave the texture rect from the main texture.
-        [self setTextureRect:frame.rect rotated:frame.rotated untrimmedSize:frame.originalSize];
+        [self setTextureRect:frame.rect forTexture:frame.texture rotated:frame.rotated untrimmedSize:frame.originalSize];
     }
 
     // Set the second texture coordinate set from the normal map's sprite frame.
