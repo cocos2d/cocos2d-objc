@@ -61,7 +61,6 @@
 #pragma mark -
 #pragma mark Helper classes
 
-
 #if __CC_PLATFORM_IOS
 @interface CCTapDownGestureRecognizer : UIGestureRecognizer
 @end
@@ -172,6 +171,7 @@
 #elif __CC_PLATFORM_ANDROID
     CCGestureListener *_listener;
     AndroidGestureDetector *_detector;
+    CGPoint _rawScrollTranslation;
 #endif
 }
 
@@ -214,7 +214,6 @@
         _listener = [[CCGestureListener alloc] init];
         _listener.delegate = (id<CCGestureListenerDelegate>)self;
         _detector = [[AndroidGestureDetector alloc] initWithContext:[CCActivity currentActivity] listener:_listener];
-        [[[CCDirector sharedDirector] view] addGestureDetector:_detector];
     });
 #elif __CC_PLATFORM_MAC
     
@@ -355,6 +354,8 @@
 	newPos.x = MAX(MIN(newPos.x, self.maxScrollX), self.minScrollX);
 	newPos.y = MAX(MIN(newPos.y, self.maxScrollY), self.minScrollY);
 
+    [self updateAndroidScrollTranslation:newPos];
+    
     BOOL xMoved = (newPos.x != self.scrollPosition.x);
     BOOL yMoved = (newPos.y != self.scrollPosition.y);
 
@@ -408,6 +409,14 @@
         _contentNode.position = ccpMult(newPos, -1);
     }
 }
+
+- (void)updateAndroidScrollTranslation:(CGPoint)worldPosition
+{
+#if __CC_PLATFORM_ANDROID
+    _rawScrollTranslation = [self convertToWindowSpace:worldPosition];
+#endif
+}
+
 
 - (void) xAnimationDone
 {
@@ -492,6 +501,8 @@
             
             _contentNode.position = ccpAdd(_contentNode.position, delta);
             
+            [self updateAndroidScrollTranslation:CGPointMake(_contentNode.position.x, _contentNode.position.y * -1)];
+
             // Deaccelerate layer
             float deaccelerationX = kCCScrollViewDeacceleration;
             float deaccelerationY = kCCScrollViewDeacceleration;
@@ -740,8 +751,11 @@
     return (otherGestureRecognizer == _panRecognizer || otherGestureRecognizer == _tapRecognizer);
 }
 
+#elif __CC_PLATFORM_ANDROID
+
 - (void) onEnterTransitionDidFinish
 {
+#if __CC_PLATFORM_IOS
     // Add recognizers to view
     UIView* view = [CCDirector sharedDirector].view;
     
@@ -751,12 +765,22 @@
     [recognizers insertObject:_tapRecognizer atIndex:0];
     
     view.gestureRecognizers = recognizers;
-    
+#elif __CC_PLATFORM_ANDROID
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if(_detector)
+        {
+            [[[CCDirector sharedDirector] view] addGestureDetector:_detector];
+        }
+    });
+#endif
     [super onEnterTransitionDidFinish];
 }
 
+
+
 - (void) onExitTransitionDidStart
 {
+#if __CC_PLATFORM_IOS
     // Remove recognizers from view
     UIView* view = [CCDirector sharedDirector].view;
     
@@ -765,11 +789,19 @@
     [recognizers removeObject:_tapRecognizer];
     
     view.gestureRecognizers = recognizers;
+#elif __CC_PLATFORM_ANDROID
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if(_detector)
+        {
+            [[[CCDirector sharedDirector] view] removeGestureDetector:_detector];
+        }
+    });
+#endif
     
     [super onExitTransitionDidStart];
 }
 
-#elif __CC_PLATFORM_ANDROID
+
 
 - (CCTouchPhase)handleGestureEvent:(AndroidMotionEvent *)start end:(AndroidMotionEvent *)end
 {
@@ -820,24 +852,23 @@
     _velocity = CGPointZero;
     
     // Note about start and end events: We will get a CCTouchPhaseBegan for the start event, followed by CCTouchPhaseMoved in the end event
-    static CGPoint rawTranslation;
     CCTouchPhase phase = [self handleGestureEvent:start end:end];
     
     if(phase == CCTouchPhaseCancelled || phase == CCTouchPhaseEnded)
-        rawTranslation = CGPointMake(0.0f, 0.0f);
+        _rawScrollTranslation = CGPointMake(0.0f, 0.0f);
     
     float scaleFactor = [[CCDirector sharedDirector] view].contentScaleFactor;
 
     dx /= scaleFactor;
     dy /= scaleFactor;
 
-    rawTranslation.x += dx;
-    rawTranslation.y -= dy;
+    _rawScrollTranslation.x += dx;
+    _rawScrollTranslation.y -= dy;
     
     CCDirector* dir = [CCDirector sharedDirector];
     [[CCActivity currentActivity] runOnGameThread:^{
         
-        CGPoint translation = [dir convertToGL:rawTranslation];
+        CGPoint translation = [dir convertToGL:_rawScrollTranslation];
         translation = [self convertToNodeSpace:translation];
         
         if (phase == CCTouchPhaseBegan)
@@ -868,6 +899,7 @@
             
             // Update position
             [self panLayerToTarget:newPos];
+            
         }
         else if (phase == CCTouchPhaseEnded)
         {
@@ -891,7 +923,7 @@
     static CGPoint rawTranslationFling;
 
     CCTouchPhase phase = [self handleGestureEvent:start end:end];
-   
+    
     if(phase == CCTouchPhaseCancelled || phase == CCTouchPhaseEnded)
         rawTranslationFling = CGPointMake(0.0f, 0.0f);
 
@@ -917,9 +949,6 @@
     
     CCDirector* dir = [CCDirector sharedDirector];
     [[CCActivity currentActivity] runOnGameThread:^{
-
-        CCResponderManager *mgr = [[CCDirector sharedDirector] responderManager];
-        [mgr removeAllResponders];
 
         CGPoint translation = [dir convertToGL:rawTranslationFling];
         translation = [self convertToNodeSpace:translation];

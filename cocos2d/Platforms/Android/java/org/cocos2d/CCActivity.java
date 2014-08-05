@@ -30,8 +30,10 @@ public class CCActivity extends Activity implements SurfaceHolder.Callback, Runn
     
     public native void runLoop();
     public native void run();
-    
+
     public native void onDestroy();
+    public native void onResume();
+    public native void onPause();
     
     public native void onLowMemory();
     

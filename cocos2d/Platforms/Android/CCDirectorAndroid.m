@@ -230,11 +230,7 @@
         return;
     
 	CCLOG(@"cocos2d: animation stopped");
-    
-	[_runningThread cancel];
-//	[_runningThread release];
-	_runningThread = nil;
-    
+        
 	[_displayLink invalidate];
 	_displayLink = nil;
     _animating = NO;

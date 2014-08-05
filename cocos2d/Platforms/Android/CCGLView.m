@@ -67,9 +67,11 @@ static CCTouchEvent *currentEvent = nil;
 {
     assert(pthread_main_np());
     @autoreleasepool {
+        BOOL cancelTouch = NO;
         for (AndroidGestureDetector *detector in _gestureDetectors) {
-            [detector onTouchEvent:event];
+            cancelTouch = [detector onTouchEvent:event];
         }
+        
         
         static dispatch_once_t once = 0L;
         dispatch_once(&once, ^{
@@ -96,6 +98,11 @@ static CCTouchEvent *currentEvent = nil;
                 break;
             default:
                 return NO;
+        }
+        
+        if(cancelTouch)
+        {
+            phase = CCTouchPhaseCancelled;
         }
         
         NSTimeInterval timestamp = event.eventTime * 1000.0;
