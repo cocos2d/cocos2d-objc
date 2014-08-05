@@ -515,8 +515,6 @@ static NSInteger ccbAnimationManagerID = 0;
                 // Reset Node State to First KeyFrame
                 [self setKeyFrameForNode:node sequenceProperty:seqProp tweenDuration:tweenDuration keyFrame:0];
                 
-                // Build First Key Frame Sequence
-                [self runActionsForNode:node sequenceProperty:seqProp tweenDuration:tweenDuration startKeyFrame:0];
             }
         }
         
