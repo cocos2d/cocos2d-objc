@@ -12,17 +12,56 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import "CCControl.h"
 #import "CCDirector.h"
+#import "CCEditText.h"
 
+extern void objc_retain(id);
+
+
+typedef void (^CCPlatformTextFieldAndroidTextViewOnEditorActionListenerCompletionBlock)(void);
+
+
+BRIDGE_CLASS("org.cocos2d.CCPlatformTextFieldAndroidTextViewOnEditorActionListener")
+@interface CCPlatformTextFieldAndroidTextViewOnEditorActionListener : JavaObject<AndroidTextViewOnEditorActionListener>
+- (BOOL)onEditorAction:(AndroidTextView *)v actionId:(int32_t)actionId keyEvent:(AndroidKeyEvent *)event;
+
+@end
+@implementation CCPlatformTextFieldAndroidTextViewOnEditorActionListener {
+    CCPlatformTextFieldAndroidTextViewOnEditorActionListenerCompletionBlock _completionBlock;
+}
+
+- (id) initWithCompletionBlock:(CCPlatformTextFieldAndroidTextViewOnEditorActionListenerCompletionBlock)completionBlock {
+    if (self = [super init]) {
+        _completionBlock = [completionBlock copy];
+    }
+    return self;
+    
+}
+
+@bridge(callback) onEditorAction:actionId:keyEvent: = onEditorAction;
+- (BOOL)onEditorAction:(AndroidTextView *)v actionId:(int32_t)actionId keyEvent:(AndroidKeyEvent *)event {
+    if (actionId == AndroidEditorInfoIME_ACTION_SEARCH ||
+       actionId == AndroidEditorInfoIME_ACTION_DONE
+//        || [event action] == KeyEvent.ACTION_DOWN && [event keyCode] == ANDROID_KEYCODE_ENTER
+        ) {
+        _completionBlock();
+    } else {
+        NSLog(@"nothing");
+    }
+    return NO;
+}
+
+@end
+ 
 @implementation CCPlatformTextFieldAndroid {
-    AndroidEditText *_editText;
+    CCEditText *_editText;
 }
 
 - (id) init {
     if (self=[super init]) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            _editText = [[AndroidEditText alloc] initWithContext:[CCActivity currentActivity]];
-            [_editText setBackground:[[AndroidColorDrawable alloc] initWithColor:AndroidColorTRANSPARENT]];
-            [_editText setTextColorByColor:AndroidColorBLACK];
+            _editText = [[CCEditText alloc] initWithContext:[CCActivity currentActivity]];
+//            [_editText setBackground:[[AndroidColorDrawable alloc] initWithColor:AndroidColorTRANSPARENT]];
+//            [_editText setTextColorByColor:AndroidColorBLACK];
         });
         
     }
@@ -40,30 +79,41 @@
     [self removeEditText];
 }
 
-- (void) positionInControl:(CCControl *)control padding:(CGFloat)padding {
+- (void) positionInControl:(CCControl *)control padding:(float)padding {
     CGPoint worldPos = [control convertToWorldSpace:CGPointZero];
     CGPoint viewPos = [[CCDirector sharedDirector] convertToUI:worldPos];
     viewPos.x += padding;
     viewPos.y += padding;
     
-    CGSize size = control.contentSizeInPoints;
-//    size.width *= _scaleMultiplier;
-//    size.height *= _scaleMultiplier;
+    CGFloat scale = [[CCDirector sharedDirector] contentScaleFactor];
     
-    viewPos.y -= size.height;
+    viewPos.x *= scale;
+    viewPos.y *= scale;
+    
+    CGSize size = control.contentSizeInPoints;
+    
     size.width -= padding * 2;
     size.height -= padding * 2;
+    size.width *= scale;
+    size.height *= scale *2;
+    viewPos.y -= size.height;
+
     
     CGRect frame = CGRectZero;
     frame.origin = viewPos;
     frame.size = size;
     dispatch_async(dispatch_get_main_queue(), ^{
         AndroidViewGroupLayoutParams *oldParams = [_editText layoutParams];
-        float yoffset = 20;
-        float heightoffset = 20;
-        AndroidRelativeLayoutLayoutParams *params = [[AndroidRelativeLayoutLayoutParams alloc] initWithWidth:frame.size.width height:frame.size.height+yoffset+heightoffset];
-        [params setMargins:frame.origin.x top:frame.origin.y-yoffset right:0 bottom:0];
+        AndroidRelativeLayoutLayoutParams *params = [[AndroidRelativeLayoutLayoutParams alloc] initWithWidth:frame.size.width height:frame.size.height];
+        [params setMargins:frame.origin.x top:frame.origin.y right:0 bottom:0];
         [_editText setLayoutParams:params];
+        
+        [_editText setOnEditorActionListener:[[CCPlatformTextFieldAndroidTextViewOnEditorActionListener alloc] initWithCompletionBlock:^{
+            if ([[self delegate] respondsToSelector:@selector(platformTextFieldDidFinishEditing:)]) {
+                [[self delegate] platformTextFieldDidFinishEditing:self];
+            }
+
+        }]];
     });
 }
 
@@ -83,11 +133,25 @@
 }
 
 - (void)setFontSize:(float)fontSize {
-//    NSLog(@"Set font size %f", fontSize);
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        [_editText setTextSize:0  size:fontSize];
-//    });
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // AndroidDisplayMetrics *metrics = [[AndroidDisplayMetrics alloc] init];
+        // [[CCActivity currentActivity].windowManager.defaultDisplay getMetrics:metrics];
+
+        [_editText setTextSizeDouble:fontSize];
+
+    });
+
 
 }
 
+- (void)setString:(NSString *)string {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_editText setText:string];
+    });
+}
+
+
+- (NSString *)string {
+    return _editText.text;
+}
 @end

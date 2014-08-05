@@ -105,6 +105,8 @@
 		571CD02B19649E03003D460C /* CCPlatformTextFieldIOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 571CD02219649E03003D460C /* CCPlatformTextFieldIOS.m */; };
 		57202D391970776100238D56 /* CCPlatformTextFieldAndroid.m in Sources */ = {isa = PBXBuildFile; fileRef = 571CD01D19649E03003D460C /* CCPlatformTextFieldAndroid.m */; };
 		577D72D11970AC59005ABDC0 /* CCPlatformTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 571CD01F19649E03003D460C /* CCPlatformTextField.m */; };
+		57BFF2B61991931300A3FE9C /* CCEditText.java in Sources */ = {isa = PBXBuildFile; fileRef = 57BFF2B51991931300A3FE9C /* CCEditText.java */; };
+		57BFF2BA1991937C00A3FE9C /* CCEditText.m in Sources */ = {isa = PBXBuildFile; fileRef = 57BFF2B81991937C00A3FE9C /* CCEditText.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		5B063DCC19637285002B1CDE /* ALWeakArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B063DCA19637285002B1CDE /* ALWeakArray.h */; };
 		5B063DCD19637285002B1CDE /* ALWeakArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B063DCB19637285002B1CDE /* ALWeakArray.m */; };
 		5B063DD019637291002B1CDE /* ALWeakDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B063DCE19637291002B1CDE /* ALWeakDictionary.h */; };
@@ -815,6 +817,9 @@
 		571CD02219649E03003D460C /* CCPlatformTextFieldIOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPlatformTextFieldIOS.m; sourceTree = "<group>"; };
 		571CD02419649E03003D460C /* CCPlatformTextFieldMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlatformTextFieldMac.h; sourceTree = "<group>"; };
 		571CD02519649E03003D460C /* CCPlatformTextFieldMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPlatformTextFieldMac.m; sourceTree = "<group>"; };
+		57BFF2B51991931300A3FE9C /* CCEditText.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; name = CCEditText.java; path = java/org/cocos2d/CCEditText.java; sourceTree = "<group>"; };
+		57BFF2B71991937C00A3FE9C /* CCEditText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEditText.h; path = java/CCEditText.h; sourceTree = "<group>"; };
+		57BFF2B81991937C00A3FE9C /* CCEditText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCEditText.m; path = java/CCEditText.m; sourceTree = "<group>"; };
 		5B063DCA19637285002B1CDE /* ALWeakArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWeakArray.h; sourceTree = "<group>"; };
 		5B063DCB19637285002B1CDE /* ALWeakArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALWeakArray.m; sourceTree = "<group>"; };
 		5B063DCE19637291002B1CDE /* ALWeakDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWeakDictionary.h; sourceTree = "<group>"; };
@@ -1452,6 +1457,9 @@
 			children = (
 				571CD01C19649E03003D460C /* CCPlatformTextFieldAndroid.h */,
 				571CD01D19649E03003D460C /* CCPlatformTextFieldAndroid.m */,
+				57BFF2B51991931300A3FE9C /* CCEditText.java */,
+				57BFF2B71991937C00A3FE9C /* CCEditText.h */,
+				57BFF2B81991937C00A3FE9C /* CCEditText.m */,
 			);
 			path = Android;
 			sourceTree = "<group>";
@@ -2521,6 +2529,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57BFF2B61991931300A3FE9C /* CCEditText.java in Sources */,
 				5BC3CB5C1962795500C4F0D0 /* CCGestureListener.java in Sources */,
 				5BF3268E195F8E0300D9A51A /* CCActivity.java in Sources */,
 				5BF3268F195F8E0300D9A51A /* CCGLView.java in Sources */,
@@ -2559,6 +2568,7 @@
 				D2FEB6D0194F6C9E00FC0574 /* TGAlib.m in Sources */,
 				D2FEB6D1194F6C9E00FC0574 /* CCTextField.m in Sources */,
 				D2FEB6D2194F6C9E00FC0574 /* CCActionEase.m in Sources */,
+				57BFF2BA1991937C00A3FE9C /* CCEditText.m in Sources */,
 				D2FEB6D3194F6C9E00FC0574 /* CCPhysicsShape.m in Sources */,
 				577D72D11970AC59005ABDC0 /* CCPlatformTextField.m in Sources */,
 				D2FEB6D4194F6C9E00FC0574 /* ALContext.m in Sources */,

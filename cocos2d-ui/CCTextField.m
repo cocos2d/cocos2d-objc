@@ -28,9 +28,9 @@
 #import "CCPlatformTextField.h"
 #if __CC_PLATFORM_IOS
 #import "CCPlatformTextFieldIOS.h"
-#endif
-
-#if __CC_PLATFORM_ANDROID
+#elif __CC_PLATFORM_MAC
+#import "CCPlatformTextFieldMac.h"
+#elif __CC_PLATFORM_ANDROID
 #import "CCPlatformTextFieldAndroid.h"
 #endif
 
@@ -66,10 +66,12 @@
     
 #if __CC_PLATFORM_IOS
     _platformTextField = [[CCPlatformTextFieldIOS alloc] init];
-#endif
-#if __CC_PLATFORM_ANDROID
+#elif __CC_PLATFORM_ANDROID
     _platformTextField = [[CCPlatformTextFieldAndroid alloc] init];
+#elif __CC_PLATFORM_MAC
+    _platformTextField = [[CCPlatformTextFieldMac alloc] init];
 #endif
+    _platformTextField.delegate = self;
     // Set default font size
     [self setFontSize: 17];
 
@@ -83,10 +85,20 @@
 - (UITextField *)textField {
     return _platformTextField.nativeTextField;
 }
+#elif __CC_PLATFORM_MAC
+- (NSTextField *)textField {
+    return _platformTextField.nativeTextField;
+}
 #endif
 
 
+- (void) setString:(NSString *)string {
+    _platformTextField.string = string;
+}
 
+- (NSString *)string {
+    return _platformTextField.string;
+}
 
 
 - (void) onEnter
@@ -183,6 +195,10 @@
     {
         return _fontSize;
     }
+}
+
+- (void) platformTextFieldDidFinishEditing:(CCPlatformTextField *) platformTextField {
+    [self triggerAction];
 }
 
 @end
