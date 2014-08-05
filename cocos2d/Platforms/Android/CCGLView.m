@@ -101,7 +101,9 @@ static CCTouchEvent *currentEvent = nil;
         }
         
         if(cancelTouch)
+        {
             phase = CCTouchPhaseCancelled;
+        }
         
         NSTimeInterval timestamp = event.eventTime * 1000.0;
         currentEvent.timestamp = timestamp;
