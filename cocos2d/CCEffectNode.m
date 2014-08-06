@@ -122,6 +122,12 @@
 	// override visit.
 	// Don't call visit on its children
 	if(!_visible) return;
+    
+    if(_contentSizeChanged)
+    {
+        [self destroy];
+        _contentSizeChanged = NO;
+    }
 	
     GLKMatrix4 transform = [self transform:parentTransform];
     

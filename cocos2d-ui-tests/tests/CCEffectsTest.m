@@ -785,6 +785,60 @@
     }
 }
 
+-(void)setupEffectNodeResizeTest
+{
+    NSArray *subTitles = @[
+                           @"Effect Node Resize Test\nSmall transparent blue node with grossini",
+                           @"Effect Node Resize Test\nMedium transparent blue node with grossini",
+                           @"Effect Node Resize Test\nBig transparent blue node with grossini"
+                           ];
+    
+    self.subTitle = subTitles[0];
+    
+    CCSprite *background = [CCSprite spriteWithImageNamed:@"Images/gridBackground.png"];
+    background.positionType = CCPositionTypeNormalized;
+    background.position = ccp(0.5f, 0.5f);
+    [self.contentNode addChild:background];
+    
+    CCEffectNode* effectNode = [[CCEffectNode alloc] init];
+    effectNode.clearFlags = GL_COLOR_BUFFER_BIT;
+    effectNode.clearColor = [CCColor colorWithRed:0.5f green:0.0f blue:0.0f alpha:0.5f];
+    effectNode.contentSizeType = CCSizeTypeNormalized;
+    effectNode.contentSize = CGSizeMake(0.25f, 0.25f);
+    effectNode.anchorPoint = ccp(0.5f, 0.5f);
+    effectNode.positionType = CCPositionTypeNormalized;
+    effectNode.position = ccp(0.5f, 0.5f);
+    
+    CCEffectHue *effect = [CCEffectHue effectWithHue:-120.0f];
+    effectNode.effect = effect;
+    
+    [self.contentNode addChild:effectNode];
+    
+    
+    CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
+    sprite.anchorPoint = ccp(0.5, 0.5);
+    sprite.positionType = CCPositionTypeNormalized;
+    sprite.position = ccp(0.5f, 0.5f);
+    [effectNode addChild:sprite];
+    
+    
+    __weak CCEffectsTest *weakSelf = self;
+    __block NSUInteger callCount = 0;
+    CCActionCallBlock *blockAction = [CCActionCallBlock actionWithBlock:^{
+        callCount = (callCount + 1) % 3;
+        
+        float nodeSize = 0.25f + 0.25f * callCount;
+        effectNode.contentSize = CGSizeMake(nodeSize, nodeSize);
+        
+        weakSelf.subTitle = subTitles[callCount];
+    }];
+    [effectNode runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+                                                                   [CCActionDelay actionWithDuration:1.0f],
+                                                                   blockAction,
+                                                                   nil
+                                                                   ]]];
+}
+
 -(void)setupEffectNodeChildPositioningTest
 {
     self.subTitle = @"Effect Node Child Positioning Test\nBig transparent purple quad and small opaque green quad (both with grossini).\n";
