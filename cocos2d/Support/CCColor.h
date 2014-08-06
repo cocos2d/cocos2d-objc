@@ -26,6 +26,12 @@
 #import "ccMacros.h"
 #import "ccTypes.h"
 
+
+#if __CC_PLATFORM_IOS
+#import <UIKit/UIColor.h>
+#endif
+
+
 /**
  *  A CCColor object represents color and sometimes opacity (alpha value) for use with Cocos2D objects.
  */

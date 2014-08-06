@@ -29,6 +29,11 @@
 #import "CCColor.h"
 
 
+#if __CC_PLATFORM_IOS
+#import <UIKit/UIApplication.h>
+#endif
+
+
 @class CCTexture;
 @class CCDirector;
 @class CCBlendMode;

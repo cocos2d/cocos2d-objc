@@ -153,11 +153,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @end
 
 
-@interface CCGLView (Private)
-- (BOOL) setupSurfaceWithSharegroup:(EAGLSharegroup*)sharegroup;
-- (unsigned int) convertPixelFormat:(NSString*) pixelFormat;
-@end
-
 @implementation CCGLView {
 	NSMutableArray *_fences;
 }
@@ -335,7 +330,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	[fence.handlers addObject:handler];
 }
 
-- (void) swapBuffers
+-(void)beginFrame {}
+
+-(void)presentFrame
 {
 	// IMPORTANT:
 	// - preconditions
@@ -406,16 +403,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	CC_CHECK_GL_ERROR_DEBUG();
 }
 
--(void) lockOpenGLContext
-{
-	// unused on iOS
-}
-
--(void) unlockOpenGLContext
-{
-	// unused on iOS
-}
-
 - (unsigned int) convertPixelFormat:(NSString*) pixelFormat
 {
 	// define the pixel format
@@ -428,22 +415,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		pFormat = GL_RGBA8_OES;
 
 	return pFormat;
-}
-
-#pragma mark CCGLView - Point conversion
-
-- (CGPoint) convertPointFromViewToSurface:(CGPoint)point
-{
-	CGRect bounds = [self bounds];
-
-	return CGPointMake((point.x - bounds.origin.x) / bounds.size.width * _size.width, (point.y - bounds.origin.y) / bounds.size.height * _size.height);
-}
-
-- (CGRect) convertRectFromViewToSurface:(CGRect)rect
-{
-	CGRect bounds = [self bounds];
-
-	return CGRectMake((rect.origin.x - bounds.origin.x) / bounds.size.width * _size.width, (rect.origin.y - bounds.origin.y) / bounds.size.height * _size.height, rect.size.width / bounds.size.width * _size.width, rect.size.height / bounds.size.height * _size.height);
 }
 
 #pragma mark CCGLView - Touch Delegate

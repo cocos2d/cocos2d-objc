@@ -917,7 +917,8 @@
 					"-lz",
 					"-lsqlite3",
 					"-ObjC",
-					"\"-weak_framework Metal\"",
+					"-weak_framework",
+					Metal,
 				);
 				PRODUCT_NAME = "cocos2d-tests-ios";
 				PROVISIONING_PROFILE = "";
@@ -945,7 +946,8 @@
 					"-lz",
 					"-lsqlite3",
 					"-ObjC",
-					"\"-weak_framework Metal\"",
+					"-weak_framework",
+					Metal,
 				);
 				PRODUCT_NAME = "cocos2d-tests-ios";
 				PROVISIONING_PROFILE = "";

@@ -73,6 +73,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import <OpenGLES/ES2/glext.h>
 
 #import "CCESRenderer.h"
+#import "CCDirectorView.h"
 
 
 //CLASSES:
@@ -101,7 +102,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
  - numberOfSamples: Only valid if multisampling is enabled
 	- Possible values: 0 to glGetIntegerv(GL_MAX_SAMPLES_APPLE)
  */
-@interface CCGLView : UIView
+@interface CCGLView : UIView <CCDirectorView>
 {
     id<CCESRenderer>		_renderer;
 	EAGLContext *_context; // weak ref
@@ -147,21 +148,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 @property(nonatomic,readwrite) BOOL multiSampling;
 
-/// Schedule a block to be invoked when the frame completes.
-/// The block may not be invoked from the main thread.
--(void)addFrameCompletionHandler:(dispatch_block_t)handler;
-
-/** CCGLView uses double-buffer. This method swaps the buffers */
--(void) swapBuffers;
-
-/** uses and locks the OpenGL context */
--(void) lockOpenGLContext;
-
-/** unlocks the openGL context */
--(void) unlockOpenGLContext;
-
-- (CGPoint) convertPointFromViewToSurface:(CGPoint)point;
-- (CGRect) convertRectFromViewToSurface:(CGRect)rect;
 @end
 
 #endif // __CC_PLATFORM_IOS

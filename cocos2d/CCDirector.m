@@ -203,7 +203,7 @@ static CCDirector *_sharedDirector = nil;
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %p | Size: %0.f x %0.f, view = %@>", [self class], self, _winSizeInPoints.width, _winSizeInPoints.height, __view];
+	return [NSString stringWithFormat:@"<%@ = %p | Size: %0.f x %0.f, view = %@>", [self class], self, _winSizeInPoints.width, _winSizeInPoints.height, self.view];
 }
 
 - (void) dealloc
@@ -269,7 +269,7 @@ static CCDirector *_sharedDirector = nil;
 
 -(void)addFrameCompletionHandler:(dispatch_block_t)handler
 {
-	[(CCGLView *)self.view addFrameCompletionHandler:handler];
+	[self.view addFrameCompletionHandler:handler];
 }
 
 -(void) calculateDeltaTime
@@ -335,21 +335,16 @@ static CCDirector *_sharedDirector = nil;
 
 #pragma mark Director Integration with a UIKit view
 
--(void) setView:(CCGLView*)view
+-(void) setView:(CC_VIEW<CCDirectorView> *)view
 {
-//	NSAssert( view, @"OpenGLView must be non-nil");
-
-	if( view != __view ) {
-	
 #ifdef __CC_PLATFORM_IOS
 		[super setView:view];
 #endif
-		__view = view;
 
 		// set size
-		CGSize size = CCNSSizeToCGSize(__view.bounds.size);
+		CGSize size = CCNSSizeToCGSize(view.bounds.size);
 #ifdef __CC_PLATFORM_IOS
-		CGFloat scale = __view.layer.contentsScale ?: 1.0;
+		CGFloat scale = view.layer.contentsScale ?: 1.0;
 #else
 		//self.view.wantsBestResolutionOpenGLSurface = YES;
 		CGFloat scale = self.view.window.backingScaleFactor;
@@ -364,8 +359,8 @@ static CCDirector *_sharedDirector = nil;
 			[self createStatsLabel];
 			[self setProjection: _projection];
 			
-			// TODO this should probably migrate somewhere else.
-			if(view.depthFormat){
+			#warning TODO this should probably migrate somewhere else.
+			if([(CCGLView *)view depthFormat]){
 				glEnable(GL_DEPTH_TEST);
 				glDepthFunc(GL_LEQUAL);
 			}
@@ -375,12 +370,6 @@ static CCDirector *_sharedDirector = nil;
 		[[CCConfiguration sharedConfiguration] dumpInfo];
 
 		CC_CHECK_GL_ERROR_DEBUG();
-	}
-}
-
--(CCGLView*) view
-{
-	return  __view;
 }
 
 
@@ -420,7 +409,7 @@ static CCDirector *_sharedDirector = nil;
 	// Calculate z=0 using -> transform*[0, 0, 0, 1]/w
 	float zClip = transform.m[14]/transform.m[15];
 	
-	CGSize glSize = __view.bounds.size;
+	CGSize glSize = self.view.bounds.size;
 	GLKVector3 clipCoord = GLKVector3Make(2.0*uiPoint.x/glSize.width - 1.0, 2.0*uiPoint.y/glSize.height - 1.0, zClip);
 	
 	clipCoord.y *= self.flipY;
@@ -435,7 +424,7 @@ static CCDirector *_sharedDirector = nil;
 		
 	GLKVector3 clipCoord = GLKMatrix4MultiplyAndProjectVector3(transform, GLKVector3Make(glPoint.x, glPoint.y, 0.0));
 	
-	CGSize glSize = __view.bounds.size;
+	CGSize glSize = self.view.bounds.size;
 	return ccp(glSize.width*(clipCoord.v[0]*0.5 + 0.5), glSize.height*(self.flipY*clipCoord.v[1]*0.5 + 0.5));
 }
 
@@ -951,7 +940,7 @@ static const float CCFPSLabelItemHeight = 32;
 
 	[CCTexture setDefaultAlphaPixelFormat:currentFormat];
 	
-	CGPoint offset = [self convertToGL:ccp(0, (self.flipY == 1.0) ? 0 : __view.bounds.size.height)];
+	CGPoint offset = [self convertToGL:ccp(0, (self.flipY == 1.0) ? 0 : self.view.bounds.size.height)];
 	CGPoint pos = ccpAdd(CC_DIRECTOR_STATS_POSITION, offset);
 	[_drawsLabel setPosition: ccpAdd( ccp(0,34), pos ) ];
 	[_SPFLabel setPosition: ccpAdd( ccp(0,17), pos ) ];

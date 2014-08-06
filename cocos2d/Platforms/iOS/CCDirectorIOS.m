@@ -107,15 +107,15 @@
     /* calculate "global" dt */
 	[self calculateDeltaTime];
 
-	CCGLView *openGLview = (CCGLView*)self.view;
-	[EAGLContext setCurrentContext:openGLview.context];
-
 	/* tick before glClear: issue #533 */
 	if( ! _isPaused ) [_scheduler update: _dt];
 
 	/* to avoid flickr, nextScene MUST be here: after tick and before draw.
 	 XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
 	if( _nextScene ) [self setNextScene];
+	
+	CC_VIEW<CCDirectorView> *ccview = self.view;
+	[ccview beginFrame];
 	
 	CCRenderer *renderer = [self rendererFromPool];
 	[CCRenderer bindRenderer:renderer];
@@ -134,12 +134,12 @@
 	[renderer flush];
 	[CCRenderer bindRenderer:nil];
 	
-	[openGLview addFrameCompletionHandler:^{
+	[ccview addFrameCompletionHandler:^{
 		// Return the renderer to the pool when the frame completes.
 		[self poolRenderer:renderer];
 	}];
 	
-	[openGLview swapBuffers];
+	[ccview presentFrame];
 
 	_totalFrames++;
 
@@ -224,9 +224,8 @@
 #pragma mark Director - UIViewController delegate
 
 
--(void) setView:(CCGLView *)view
+-(void) setView:(CC_VIEW<CCDirectorView> *)view
 {
-	if( view != __view) {
 		[super setView:view];
 
 		if( view ) {
@@ -235,7 +234,6 @@
 			CGSize size = view.bounds.size;
 			_winSizeInPixels = CGSizeMake(size.width * scale, size.height * scale);
 		}
-	}
 }
 
 // Override to allow orientations other than the default portrait orientation.

@@ -31,6 +31,7 @@
 #import "CCFileUtils.h"
 #import "CCDirector_Private.h"
 #import "CCScheduler.h"
+#import "CCGLView.h"
 
 #import "OALSimpleAudio.h"
 
@@ -164,7 +165,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
 	
-	// CCGLView creation
+	// CCView creation
 	// viewWithFrame: size of the OpenGL view. For full screen use [_window bounds]
 	//  - Possible values: any CGRect
 	// pixelFormat: Format of the render buffer. Use RGBA8 for better color precision (eg: gradients). But it takes more memory and it is slower
@@ -177,7 +178,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	//  - Possible values: YES, NO
 	// numberOfSamples: Only valid if multisampling is enabled
 	//  - Possible values: 0 to glGetIntegerv(GL_MAX_SAMPLES_APPLE)
-	CCGLView *glView = [CCGLView
+	CC_VIEW<CCDirectorView> *ccview = [CCGLView
 		viewWithFrame:[window_ bounds]
 		pixelFormat:config[CCSetupPixelFormat] ?: kEAGLColorFormatRGBA8
         depthFormat:[config[CCSetupDepthFormat] unsignedIntValue]
@@ -201,7 +202,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	director.fixedUpdateInterval = [(config[CCSetupFixedUpdateInterval] ?: @(1.0/60.0)) doubleValue];
 	
 	// attach the openglView to the director
-	[director setView:glView];
+	[director setView:ccview];
 	
 	if([config[CCSetupScreenMode] isEqual:CCScreenModeFixed]){
 		CGSize size = [CCDirector sharedDirector].viewSizeInPixels;

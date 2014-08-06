@@ -34,13 +34,11 @@
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
 #import <OpenGLES/EAGL.h>
-#import "iOS/CCGLView.h"
 
 #elif __CC_PLATFORM_MAC
 #import <OpenGL/gl.h>
 #import <OpenGL/glu.h>
 #import <Cocoa/Cocoa.h>	// needed for NSOpenGLView
-#import "Mac/CCGLView.h"
 #endif
 
 #if DEBUG
