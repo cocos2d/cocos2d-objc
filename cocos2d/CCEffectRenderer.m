@@ -15,6 +15,7 @@
 #import "ccUtils.h"
 
 #import "CCEffect_Private.h"
+#import "CCRenderer_Private.h"
 #import "CCSprite_Private.h"
 #import "CCTexture_Private.h"
 
@@ -194,6 +195,10 @@
         if (directRendering)
         {
             renderPass.transform = *transform;
+
+            GLKMatrix4 ndcToWorldMat;
+            [renderer.globalShaderUniforms[CCShaderUniformProjectionInv] getValue:&ndcToWorldMat];
+            renderPass.ndcToWorld = ndcToWorldMat;
             
             [renderPass begin:previousPassTexture];
             [renderPass update];
@@ -201,8 +206,22 @@
         }
         else
         {
-            renderPass.transform = GLKMatrix4MakeOrtho(0.0f, _contentSize.width, 0.0f, _contentSize.height, -1024.0f, 1024.0f);
+            BOOL inverted;
+            
+            GLKMatrix4 renderTargetProjection = GLKMatrix4MakeOrtho(0.0f, _contentSize.width, 0.0f, _contentSize.height, -1024.0f, 1024.0f);
+            GLKMatrix4 invRenderTargetProjection = GLKMatrix4Invert(renderTargetProjection, &inverted);
+            NSAssert(inverted, @"Unable to invert matrix.");
+            
+            GLKMatrix4 invGlobalProjection;
+            [renderer.globalShaderUniforms[CCShaderUniformProjectionInv] getValue:&invGlobalProjection];
+            
+            GLKMatrix4 ndcToNodeMat = invRenderTargetProjection;
+            GLKMatrix4 nodeToWorldMat = GLKMatrix4Multiply(invGlobalProjection, *transform);
+            GLKMatrix4 ndcToWorldMat = GLKMatrix4Multiply(nodeToWorldMat, ndcToNodeMat);
 
+            renderPass.transform = renderTargetProjection;
+            renderPass.ndcToWorld = ndcToWorldMat;
+            
             CGSize rtSize = CGSizeMake(_contentSize.width * _contentScale, _contentSize.height * _contentScale);
             rtSize.width = (rtSize.width <= 1.0f) ? 1.0f : rtSize.width;
             rtSize.height = (rtSize.height <= 1.0f) ? 1.0f : rtSize.height;

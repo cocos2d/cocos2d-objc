@@ -81,7 +81,7 @@
     [self.contentNode addChild:environment];
     
     CCSpriteFrame *normalMap = [CCSpriteFrame frameWithImageNamed:@"Images/ShinyBallNormals.png"];
-    CCEffectReflection *reflection = [[CCEffectReflection alloc] initWithShininess:0.4f environment:environment];
+    CCEffectReflection *reflection = [[CCEffectReflection alloc] initWithShininess:1.0f environment:environment];
     reflection.fresnelBias = 0.0f;
     reflection.fresnelPower = 0.0f;
     
@@ -333,9 +333,9 @@
     [self.contentNode addChild:effectNode4];
 }
 
--(void)setupGlowEffectNodeTest
+-(void)setupBloomEffectTest
 {
-    self.subTitle = @"Glow Effect Node Test";
+    self.subTitle = @"Bloom Effect Test";
     
     CCSprite *sampleSprite_base = [CCSprite spriteWithImageNamed:@"Images/sample_hollow_circle.png"];
     sampleSprite_base.anchorPoint = ccp(0.0, 0.0);
@@ -389,6 +389,22 @@
     glowEffectNode2.effect = glowEffect2;
     
     [self.contentNode addChild:glowEffectNode2];
+
+    // Create a sprite to blur
+    const int steps = 5;
+    for (int i = 0; i < steps; i++)
+    {
+        CCSprite *sampleSprite3 = [CCSprite spriteWithImageNamed:@"Images/grossini_dance_08.png"];
+        sampleSprite3.anchorPoint = ccp(0.5, 0.5);
+        sampleSprite3.position = ccp(0.1f + i * (0.8f / (steps - 1)), 0.2f);
+        sampleSprite3.positionType = CCPositionTypeNormalized;
+        
+        // Blend glow maps test
+        CCEffectBloom* glowEffect3 = [CCEffectBloom effectWithBlurRadius:8 intensity:1.0f luminanceThreshold:1.0f - ((float)i/(float)(steps-1))];
+        sampleSprite3.effect = glowEffect3;
+        
+        [self.contentNode addChild:sampleSprite3];
+    }
 }
 
 -(void)setupBrightnessAndContrastEffectNodeTest
@@ -454,15 +470,15 @@
                          ];
 
     // Effect nodes that use the effects in different combinations.
-    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[0]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.1, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[1]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.2, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[2]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.3, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[3]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.4, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[4]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.5, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[5]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.6, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[6]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.7, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[7]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.8, 0.5)]];
-    [self.contentNode addChild:[self effectNodeWithEffects:@[effects[8]] appliedToSpriteWithImage:@"Images/grossini.png" atPosition:ccp(0.9, 0.5)]];
+    [self.contentNode addChild:[self spriteWithEffects:@[effects[0]] image:@"Images/grossini.png" atPosition:ccp(0.1, 0.5)]];
+    [self.contentNode addChild:[self spriteWithEffects:@[effects[1]] image:@"Images/grossini.png" atPosition:ccp(0.2, 0.5)]];
+    [self.contentNode addChild:[self spriteWithEffects:@[effects[2]] image:@"Images/grossini.png" atPosition:ccp(0.3, 0.5)]];
+    [self.contentNode addChild:[self spriteWithEffects:@[effects[3]] image:@"Images/grossini.png" atPosition:ccp(0.4, 0.5)]];
+    [self.contentNode addChild:[self spriteWithEffects:@[effects[4]] image:@"Images/grossini.png" atPosition:ccp(0.5, 0.5)]];
+    [self.contentNode addChild:[self spriteWithEffects:@[effects[5]] image:@"Images/grossini.png" atPosition:ccp(0.6, 0.5)]];
+    [self.contentNode addChild:[self spriteWithEffects:@[effects[6]] image:@"Images/grossini.png" atPosition:ccp(0.7, 0.5)]];
+    [self.contentNode addChild:[self spriteWithEffects:@[effects[7]] image:@"Images/grossini.png" atPosition:ccp(0.8, 0.5)]];
+    [self.contentNode addChild:[self spriteWithEffects:@[effects[8]] image:@"Images/grossini.png" atPosition:ccp(0.9, 0.5)]];
 }
 
 -(void)setupHueEffectTest
@@ -527,8 +543,7 @@
     sprite.position = ccp(0.5f, 0.5f);
     sprite.scale = 0.5f;
 
-    sprite.effect = [CCEffectStack effectStackWithEffects:@[effects[8], effects[9]]];
-//    sprite.effect = [CCEffectStack effectStackWithEffects:@[effects[7]]];
+    sprite.effect = [CCEffectStack effects:effects[7], effects[4], nil];
     
     sprite.normalMapSpriteFrame = [CCSpriteFrame frameWithImageNamed:@"Images/ShinyBallNormals.png"];
     sprite.colorRGBA = [CCColor colorWithRed:0.75f green:0.75f blue:0.75f alpha:0.75f];
@@ -662,7 +677,7 @@
     }
     else if (effects.count > 1)
     {
-        CCEffectStack *stack = [CCEffectStack effectStackWithEffects:effects];
+        CCEffectStack *stack = [CCEffectStack effectWithArray:effects];
         effectNode.effect = stack;
     }
     
@@ -683,7 +698,7 @@
     }
     else if (effects.count > 1)
     {
-        CCEffectStack *stack = [CCEffectStack effectStackWithEffects:effects];
+        CCEffectStack *stack = [CCEffectStack effectWithArray:effects];
         sprite.effect = stack;
     }
     
