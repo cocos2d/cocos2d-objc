@@ -4,6 +4,7 @@
 #import "CCEffectNode.h"
 #import "CCEffectBlur.h"
 
+#import "CCEffectStack_Private.h"
 
 @interface CCEffectsTest : TestBase @end
 @implementation CCEffectsTest
@@ -654,6 +655,156 @@
     }
     
     NSLog(@"setupPerformanceTest: Laid out %d sprites.", count);
+}
+
+-(void)setupSpriteColorTest
+{
+    self.subTitle = @"Sprite Color + Effects Test\nThe bottom row should look like the top";
+
+    // Make a solid gray background (there's got to be a better way to do this).
+    CCEffectNode* background = [[CCEffectNode alloc] init];
+    background.clearFlags = GL_COLOR_BUFFER_BIT;
+    background.clearColor = [CCColor grayColor];
+    background.contentSizeType = CCSizeTypeNormalized;
+    background.contentSize = CGSizeMake(1.0f, 1.0f);
+    background.anchorPoint = ccp(0.5f, 0.5f);
+    background.positionType = CCPositionTypeNormalized;
+    background.position = ccp(0.5f, 0.5f);
+    
+    [self.contentNode addChild:background];
+
+    // Add row titles
+    CCLabelTTF *plainTitle = [CCLabelTTF labelWithString:@"No FX" fontName:@"HelveticaNeue-Light" fontSize:10 * [CCDirector sharedDirector].UIScaleFactor];
+    plainTitle.color = [CCColor blackColor];
+    plainTitle.positionType = CCPositionTypeNormalized;
+    plainTitle.position = ccp(0.1f, 0.7f);
+    plainTitle.horizontalAlignment = CCTextAlignmentRight;
+    
+    [self.contentNode addChild:plainTitle];
+    
+    
+    CCLabelTTF *effectTitle = [CCLabelTTF labelWithString:@"FX" fontName:@"HelveticaNeue-Light" fontSize:10 * [CCDirector sharedDirector].UIScaleFactor];
+    effectTitle.color = [CCColor blackColor];
+    effectTitle.positionType = CCPositionTypeNormalized;
+    effectTitle.position = ccp(0.1f, 0.3f);
+    effectTitle.horizontalAlignment = CCTextAlignmentRight;
+    
+    [self.contentNode addChild:effectTitle];
+
+    
+    // Sprite with solid red
+    {
+        CCEffect *saturation = [CCEffectSaturation effectWithSaturation:0.0f];
+
+        CCSprite *plainSprite = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
+        plainSprite.positionType = CCPositionTypeNormalized;
+        plainSprite.position = ccp(0.2f, 0.7f);
+        plainSprite.color = [CCColor redColor];
+        [self.contentNode addChild:plainSprite];
+
+        CCSprite *effectSprite = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
+        effectSprite.positionType = CCPositionTypeNormalized;
+        effectSprite.position = ccp(0.2f, 0.3f);
+        effectSprite.color = [CCColor redColor];
+        effectSprite.effect = saturation;
+        [self.contentNode addChild:effectSprite];
+
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Is color preserved?" fontName:@"HelveticaNeue-Light" fontSize:10 * [CCDirector sharedDirector].UIScaleFactor];
+        title.color = [CCColor blackColor];
+        title.positionType = CCPositionTypeNormalized;
+        title.position = ccp(0.2f, 0.05f);
+        title.horizontalAlignment = CCTextAlignmentCenter;
+        
+        [self.contentNode addChild:title];
+    }
+
+    
+    // Sprite with opacity = 0.5
+    {
+        CCEffect *saturation = [CCEffectSaturation effectWithSaturation:0.0f];
+
+        CCSprite *plainSprite = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
+        plainSprite.positionType = CCPositionTypeNormalized;
+        plainSprite.position = ccp(0.4f, 0.7f);
+        plainSprite.opacity = 0.5f;
+        [self.contentNode addChild:plainSprite];
+        
+        CCSprite *effectSprite = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
+        effectSprite.positionType = CCPositionTypeNormalized;
+        effectSprite.position = ccp(0.4f, 0.3f);
+        effectSprite.opacity = 0.5f;
+        effectSprite.effect = saturation;
+        [self.contentNode addChild:effectSprite];
+
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Opacity?" fontName:@"HelveticaNeue-Light" fontSize:10 * [CCDirector sharedDirector].UIScaleFactor];
+        title.color = [CCColor blackColor];
+        title.positionType = CCPositionTypeNormalized;
+        title.position = ccp(0.4f, 0.05f);
+        title.horizontalAlignment = CCTextAlignmentCenter;
+        
+        [self.contentNode addChild:title];
+    }
+
+
+    // Sprite with 50% transparent red
+    {
+        CCEffect *saturation = [CCEffectSaturation effectWithSaturation:0.0f];
+        CCEffect *hue = [CCEffectHue effectWithHue:0.0f];
+
+        CCEffectStack *stack = [CCEffectStack effectWithArray:@[saturation, hue]];
+        
+        CCSprite *plainSprite = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
+        plainSprite.positionType = CCPositionTypeNormalized;
+        plainSprite.position = ccp(0.6f, 0.7f);
+        plainSprite.color = [CCColor colorWithRed:0.5f green:0.0f blue:0.0f alpha:0.5f];
+        [self.contentNode addChild:plainSprite];
+        
+        CCSprite *effectSprite = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
+        effectSprite.positionType = CCPositionTypeNormalized;
+        effectSprite.position = ccp(0.6f, 0.3f);
+        effectSprite.color = [CCColor colorWithRed:0.5f green:0.0f blue:0.0f alpha:0.5f];
+        effectSprite.effect = stack;
+        [self.contentNode addChild:effectSprite];
+        
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Stack (with stitching)" fontName:@"HelveticaNeue-Light" fontSize:10 * [CCDirector sharedDirector].UIScaleFactor];
+        title.color = [CCColor blackColor];
+        title.positionType = CCPositionTypeNormalized;
+        title.position = ccp(0.6f, 0.05f);
+        title.horizontalAlignment = CCTextAlignmentCenter;
+        
+        [self.contentNode addChild:title];
+    }
+    
+    
+    // Sprite with 50% transparent red and two stacked effects
+    {
+        CCEffect *saturation = [CCEffectSaturation effectWithSaturation:0.0f];
+        CCEffect *hue = [CCEffectHue effectWithHue:0.0f];
+
+        CCEffectStack *stack = [CCEffectStack effectWithArray:@[saturation, hue]];
+        stack.stitchingEnabled = NO;
+        
+        CCSprite *plainSprite = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
+        plainSprite.positionType = CCPositionTypeNormalized;
+        plainSprite.position = ccp(0.8f, 0.7f);
+        plainSprite.color = [CCColor colorWithRed:0.5f green:0.0f blue:0.0f alpha:0.5f];
+        [self.contentNode addChild:plainSprite];
+        
+        CCSprite *effectSprite = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
+        effectSprite.positionType = CCPositionTypeNormalized;
+        effectSprite.position = ccp(0.8f, 0.3f);
+        effectSprite.color = [CCColor colorWithRed:0.5f green:0.0f blue:0.0f alpha:0.5f];
+        effectSprite.effect = stack;
+        [self.contentNode addChild:effectSprite];
+        
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Stack (no stitching)" fontName:@"HelveticaNeue-Light" fontSize:10 * [CCDirector sharedDirector].UIScaleFactor];
+        title.color = [CCColor blackColor];
+        title.positionType = CCPositionTypeNormalized;
+        title.position = ccp(0.8f, 0.05f);
+        title.horizontalAlignment = CCTextAlignmentCenter;
+        
+        [self.contentNode addChild:title];
+    }
 }
 
 -(void)setupEffectNodeAnchorTest
