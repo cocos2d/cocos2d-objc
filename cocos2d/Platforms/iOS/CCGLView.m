@@ -84,14 +84,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 //CLASS IMPLEMENTATIONS:
 
 
-#define glFenceSync glFenceSyncAPPLE
-#define glClientWaitSync glClientWaitSyncAPPLE
-
-#define GL_SYNC_GPU_COMMANDS_COMPLETE GL_SYNC_GPU_COMMANDS_COMPLETE_APPLE
-#define GL_SYNC_FLUSH_COMMANDS_BIT GL_SYNC_FLUSH_COMMANDS_BIT_APPLE
-#define GL_ALREADY_SIGNALED GL_ALREADY_SIGNALED_APPLE
-
-
+// TODO extract a common class for this?
 @interface CCGLViewFence : NSObject
 
 /// Is the fence ready to be inserted?
@@ -120,7 +113,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 -(void)insertFence
 {
-	_fence = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
+	_fence = glFenceSyncAPPLE(GL_SYNC_GPU_COMMANDS_COMPLETE_APPLE, 0);
 	
 	CC_CHECK_GL_ERROR_DEBUG();
 }
@@ -134,7 +127,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 -(BOOL)isComplete
 {
 	if(_fence){
-		if(glClientWaitSyncAPPLE(_fence, GL_SYNC_FLUSH_COMMANDS_BIT, 0) == GL_ALREADY_SIGNALED){
+		if(glClientWaitSyncAPPLE(_fence, GL_SYNC_FLUSH_COMMANDS_BIT_APPLE, 0) == GL_ALREADY_SIGNALED_APPLE){
 			glDeleteSyncAPPLE(_fence);
 			_fence = NULL;
 			
