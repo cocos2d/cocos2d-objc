@@ -713,7 +713,7 @@
 
 -(void)setupEffectNodeSizeTypeTest
 {
-    self.subTitle = @"Effect Node Size Type Test\nSmall red and big blue transparent quads.\nRed bar on left. Green bar on bottom.";
+    self.subTitle = @"Effect Node Size Type Test\nSmall red and big blue transparent quads centered on screen.\nRed bar on left. Green bar on bottom.";
     
     CCSprite *background = [CCSprite spriteWithImageNamed:@"Images/gridBackground.png"];
     background.positionType = CCPositionTypeNormalized;
