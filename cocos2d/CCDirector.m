@@ -238,12 +238,48 @@ static CCDirector *_sharedDirector = nil;
 	return _globalShaderUniforms;
 }
 
-//
-// Draw the Scene
-//
 - (void) drawScene
-{
-	// Override me
+{	
+    /* calculate "global" dt */
+	[self calculateDeltaTime];
+
+	/* tick before glClear: issue #533 */
+	if( ! _isPaused ) [_scheduler update: _dt];
+
+	/* to avoid flickr, nextScene MUST be here: after tick and before draw.
+	 XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
+	if( _nextScene ) [self setNextScene];
+	
+	CC_VIEW<CCDirectorView> *ccview = self.view;
+	[ccview beginFrame];
+	
+	CCRenderer *renderer = [self rendererFromPool];
+	[CCRenderer bindRenderer:renderer];
+	
+	GLKMatrix4 projection = self.projectionMatrix;
+	renderer.globalShaderUniforms = [self updateGlobalShaderUniforms];
+	
+	
+	[renderer enqueueClear:(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) color:_runningScene.colorRGBA.glkVector4 depth:1.0f stencil:0 globalSortOrder:NSIntegerMin];
+	
+	// Render
+	[_runningScene visit:renderer parentTransform:&projection];
+	[_notificationNode visit:renderer parentTransform:&projection];
+	if( _displayStats ) [self showStats];
+	
+	[renderer flush];
+	[CCRenderer bindRenderer:nil];
+	
+	[ccview addFrameCompletionHandler:^{
+		// Return the renderer to the pool when the frame completes.
+		[self poolRenderer:renderer];
+	}];
+	
+	[ccview presentFrame];
+
+	_totalFrames++;
+
+	if( _displayStats ) [self calculateMPF];
 }
 
 -(CCRenderer *)rendererFromPool
@@ -339,6 +375,8 @@ static CCDirector *_sharedDirector = nil;
 {
 #ifdef __CC_PLATFORM_IOS
 		[super setView:view];
+#else 
+		_view = view;
 #endif
 
 		// set size

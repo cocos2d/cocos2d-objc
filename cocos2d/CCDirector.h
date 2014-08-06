@@ -65,7 +65,7 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 #define CC_VIEW UIView
 #elif defined(__CC_PLATFORM_MAC)
 #define CC_VIEWCONTROLLER NSObject
-#define CC_VIEW NSView
+#define CC_VIEW NSOpenGLView
 #endif
 
 /**Class that creates and handle the main Window and manages how

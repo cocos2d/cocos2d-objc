@@ -32,7 +32,6 @@
 #import <sys/time.h>
 
 #import "CCDirectorMac.h"
-#import "CCGLView.h"
 #import "CCWindow.h"
 
 #import "../../CCNode.h"
@@ -119,17 +118,17 @@
     if (_isFullScreen == fullscreen)
 		return;
 
-	CCGLView *openGLview = (CCGLView*) self.view;
-    BOOL viewAcceptsTouchEvents = openGLview.acceptsTouchEvents;
+    CC_VIEW<CCDirectorView> *view = self.view;
+    BOOL viewAcceptsTouchEvents = view.acceptsTouchEvents;
 
     if( fullscreen ) {
-        _originalWinRect = [openGLview frame];
+        _originalWinRect = [view frame];
 
         // Cache normal window and superview of openGLView
         if(!_windowGLView)
-            _windowGLView = [openGLview window];
+            _windowGLView = [view window];
 
-        _superViewGLView = [openGLview superview];
+        _superViewGLView = [view superview];
 
 
         // Get screen size
@@ -139,13 +138,13 @@
         _fullScreenWindow = [[CCWindow alloc] initWithFrame:displayRect fullscreen:YES];
 
         // Remove glView from window
-        [openGLview removeFromSuperview];
+        [view removeFromSuperview];
 
         // Set new frame
-        [openGLview setFrame:displayRect];
+        [view setFrame:displayRect];
 
         // Attach glView to fullscreen window
-        [_fullScreenWindow setContentView:openGLview];
+        [_fullScreenWindow setContentView:view];
 
         // Show the fullscreen window
         [_fullScreenWindow makeKeyAndOrderFront:self];
@@ -157,16 +156,16 @@
     } else {
 
         // Remove glView from fullscreen window
-        [openGLview removeFromSuperview];
+        [view removeFromSuperview];
 
         // Release fullscreen window
         _fullScreenWindow = nil;
 
         // Attach glView to superview
-        [_superViewGLView addSubview:openGLview];
+        [_superViewGLView addSubview:view];
 
         // Set new frame
-        [openGLview setFrame:_originalWinRect];
+        [view setFrame:_originalWinRect];
 
         // Show the window
         [_windowGLView makeKeyAndOrderFront:self];
@@ -177,30 +176,28 @@
     }
 	
 	// issue #1189
-	[_windowGLView makeFirstResponder:openGLview];
+	[_windowGLView makeFirstResponder:view];
 
     _isFullScreen = fullscreen;
 
      // Retain +1
 
     // re-configure glView
-    [self setView:openGLview];
+    [self setView:view];
     
-    [openGLview setAcceptsTouchEvents:viewAcceptsTouchEvents];
+    [view setAcceptsTouchEvents:viewAcceptsTouchEvents];
     
      // Retain -1
 
-    [openGLview setNeedsDisplay:YES];
+    [view setNeedsDisplay:YES];
 #else
 #error Full screen is not supported for Mac OS 10.5 or older yet
 #error If you don't want FullScreen support, you can safely remove these 2 lines
 #endif
 }
 
--(void) setView:(CCGLView *)view
+-(void) setView:(CC_VIEW<CCDirectorView> *)view
 {
-	if( view != __view) {
-
 		[super setView:view];
 
 		// cache the NSWindow and NSOpenGLView created from the NIB
@@ -208,7 +205,6 @@
 		{
 			_originalWinSizeInPoints = _winSizeInPoints;
 		}
-	}
 }
 
 -(int) resizeMode
@@ -529,63 +525,15 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	}
 }
 
-//
-// Draw the Scene
-//
-- (void) drawScene
-{
-	/* calculate "global" dt */
-	[self calculateDeltaTime];
-
-	// We draw on a secondary thread through the display link
-	// When resizing the view, -reshape is called automatically on the main thread
-	// Add a mutex around to avoid the threads accessing the context simultaneously	when resizing
-
-	[self.view lockOpenGLContext];
-
-	/* tick before glClear: issue #533 */
-	if( ! _isPaused ) [_scheduler update: _dt];
-
-	/* to avoid flickr, nextScene MUST be here: after tick and before draw.
-	 XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
-	if( _nextScene ) [self setNextScene];
-
-	GLKMatrix4 projection = self.projectionMatrix;
-	_renderer.globalShaderUniforms = [self updateGlobalShaderUniforms];
-	
-	[CCRenderer bindRenderer:_renderer];
-	[_renderer invalidateState];
-	
-	[_renderer enqueueClear:(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) color:_runningScene.colorRGBA.glkVector4 depth:1.0f stencil:0 globalSortOrder:NSIntegerMin];
-	
-	// Render
-	[_runningScene visit];
-	[_notificationNode visit];
-	if( _displayStats ) [self showStats];
-	
-	[_renderer flush];
-	[CCRenderer bindRenderer:nil];
-
-	_totalFrames++;
-	
-
-	// flush buffer
-	[self.view.openGLContext flushBuffer];	
-
-	[self.view unlockOpenGLContext];
-
-	if( _displayStats ) [self calculateMPF];
-}
-
 // set the event dispatcher
--(void) setView:(CCGLView *)view
+-(void) setView:(CC_VIEW<CCDirectorView> *)view
 {
-	[super setView:view];
-
 	// Synchronize buffer swaps with vertical refresh rate
 	[[view openGLContext] makeCurrentContext];
 	GLint swapInt = 1;
 	[[view openGLContext] setValues:&swapInt forParameter:NSOpenGLCPSwapInterval];
+	
+	[super setView:view];
 }
 
 @end
