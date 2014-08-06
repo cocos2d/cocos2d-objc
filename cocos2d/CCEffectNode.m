@@ -180,7 +180,7 @@
     
     if (_effect)
     {
-        _effectRenderer.contentSize = self.contentSize;
+        _effectRenderer.contentSize = self.contentSizeInPoints;
         if ([_effect prepareForRendering] == CCEffectPrepareSuccess)
         {
             // Preparing an effect for rendering can modify its uniforms
