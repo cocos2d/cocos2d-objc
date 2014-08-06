@@ -31,6 +31,7 @@
 #import "CCShader_private.h"
 #import "CCDirector_Private.h"
 #import "CCGL.h"
+#import "CCRenderDispatch.h"
 
 
 @interface CCShader()
@@ -678,14 +679,17 @@ SortQueue(NSMutableArray *queue)
 		Class bufferType = [CCGraphicsBuffer class];
 #endif
 		
-		const NSUInteger CCRENDERER_INITIAL_VERTEX_CAPACITY = 16*1024;
-		_vertexBuffer = [[bufferType alloc] initWithCapacity:CCRENDERER_INITIAL_VERTEX_CAPACITY elementSize:sizeof(CCVertex) type:GL_ARRAY_BUFFER];
-		_elementBuffer = [[bufferType alloc] initWithCapacity:CCRENDERER_INITIAL_VERTEX_CAPACITY*1.5 elementSize:sizeof(uint16_t) type:GL_ELEMENT_ARRAY_BUFFER];
+		CCRenderDispatch(NO, ^{
+			const NSUInteger CCRENDERER_INITIAL_VERTEX_CAPACITY = 16*1024;
+			_vertexBuffer = [[bufferType alloc] initWithCapacity:CCRENDERER_INITIAL_VERTEX_CAPACITY elementSize:sizeof(CCVertex) type:GL_ARRAY_BUFFER];
+			_elementBuffer = [[bufferType alloc] initWithCapacity:CCRENDERER_INITIAL_VERTEX_CAPACITY*1.5 elementSize:sizeof(uint16_t) type:GL_ELEMENT_ARRAY_BUFFER];
+			
+			glPushGroupMarkerEXT(0, "CCRenderer: Init");
+			_vao = [CCShader createVAOforCCVertexBuffer:(GLuint)_vertexBuffer->_data elementBuffer:(GLuint)_elementBuffer->_data];
+			glPopGroupMarkerEXT();
+		});
 		
-		glPushGroupMarkerEXT(0, "CCRenderer: Init");
-		_vao = [CCShader createVAOforCCVertexBuffer:(GLuint)_vertexBuffer->_data elementBuffer:(GLuint)_elementBuffer->_data];
-		glPopGroupMarkerEXT();
-		
+		_threadsafe = YES;
 		_queue = [NSMutableArray array];
 	}
 	
@@ -694,9 +698,15 @@ SortQueue(NSMutableArray *queue)
 
 -(void)dealloc
 {
-	glPushGroupMarkerEXT(0, "CCRenderer: Dealloc");
-	glDeleteVertexArrays(1, &_vao);
-	glPopGroupMarkerEXT();
+	#warning Possible deadlock here when releasing the buffers.
+	
+	GLuint vao = _vao;
+	
+	CCRenderDispatch(NO, ^{
+		glPushGroupMarkerEXT(0, "CCRenderer: Dealloc");
+		glDeleteVertexArrays(1, &vao);
+		glPopGroupMarkerEXT();
+	});
 }
 
 static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
@@ -756,6 +766,8 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 {
 	[_queue addObject:[[CCRenderCommandCustom alloc] initWithBlock:block debugLabel:debugLabel globalSortOrder:globalSortOrder]];
 	_lastDrawCommand = nil;
+	
+	if(!threadsafe) _threadsafe = NO;
 }
 
 -(void)enqueueMethod:(SEL)selector target:(id)target
@@ -769,6 +781,8 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 -(void)enqueueRenderCommand: (id<CCRenderCommand>) renderCommand {
 	[_queue addObject: renderCommand];
 	_lastDrawCommand = nil;
+	
+	_threadsafe = NO;
 }
 
 -(void)pushGroup;
@@ -800,7 +814,6 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	glPushGroupMarkerEXT(0, "CCRenderer: Flush");
 	
 	glInsertEventMarkerEXT(0, "Buffering");
-	
 	[_vertexBuffer commit];
 	[_elementBuffer commit];
 	CC_CHECK_GL_ERROR_DEBUG();
@@ -818,6 +831,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	CC_CHECK_GL_ERROR_DEBUG();
 	
 	[self invalidateState];
+	_threadsafe = YES;
 }
 
 @end

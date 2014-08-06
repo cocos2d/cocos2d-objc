@@ -43,6 +43,7 @@
 #import "../../ccFPSImages.h"
 #import "../../CCConfiguration.h"
 #import "CCRenderer_private.h"
+#import "CCRenderDispatch_Private.h"
 
 // support imports
 #import "../../Support/CGPointExtension.h"
@@ -101,7 +102,9 @@
 -(void) setViewport
 {
 	CGSize size = _winSizeInPixels;
-	glViewport(0, 0, size.width, size.height );
+	CCRenderDispatch(YES, ^{
+		glViewport(0, 0, size.width, size.height );
+	});
 }
 
 -(void) setProjection:(CCDirectorProjection)projection

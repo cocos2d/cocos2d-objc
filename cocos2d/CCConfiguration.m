@@ -35,6 +35,7 @@
 #import "ccMacros.h"
 #import "ccConfig.h"
 #import "cocos2d.h"
+#import "CCRenderDispatch.h"
 
 @interface CCConfiguration ()
 -(void) getOpenGLvariables;
@@ -165,22 +166,22 @@ static char * glExtensions;
 -(void) getOpenGLvariables
 {
 	if( ! _openGLInitialized ) {
+		CCRenderDispatch(NO, ^{
+			glExtensions = (char*) glGetString(GL_EXTENSIONS);
 
-		glExtensions = (char*) glGetString(GL_EXTENSIONS);
-
-		NSAssert( glExtensions, @"OpenGL not initialized!");
+			NSAssert( glExtensions, @"OpenGL not initialized!");
 
 #ifdef __CC_PLATFORM_IOS
-		if( _OSVersion >= CCSystemVersion_iOS_4_0 )
-			glGetIntegerv(GL_MAX_SAMPLES_APPLE, &_maxSamplesAllowed);
-		else
-			_maxSamplesAllowed = 0;
+			if( _OSVersion >= CCSystemVersion_iOS_4_0 )
+				glGetIntegerv(GL_MAX_SAMPLES_APPLE, &_maxSamplesAllowed);
+			else
+				_maxSamplesAllowed = 0;
 #elif defined(__CC_PLATFORM_MAC)
-		glGetIntegerv(GL_MAX_SAMPLES, &_maxSamplesAllowed);
+			glGetIntegerv(GL_MAX_SAMPLES, &_maxSamplesAllowed);
 #endif
 
-		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &_maxTextureSize);
-		glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &_maxTextureUnits );
+			glGetIntegerv(GL_MAX_TEXTURE_SIZE, &_maxTextureSize);
+			glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &_maxTextureUnits );
 
 #ifdef __CC_PLATFORM_IOS
 		_supportsNPOT = YES;
@@ -190,20 +191,21 @@ static char * glExtensions;
 
 		_supportsPVRTC = [self checkForGLExtension:@"GL_IMG_texture_compression_pvrtc"];
 
-		// It seems that somewhere between firmware iOS 3.0 and 4.2 Apple renamed
-		// GL_IMG_... to GL_APPLE.... So we should check both names
+			// It seems that somewhere between firmware iOS 3.0 and 4.2 Apple renamed
+			// GL_IMG_... to GL_APPLE.... So we should check both names
 #ifdef __CC_PLATFORM_IOS
-		BOOL bgra8a = [self checkForGLExtension:@"GL_IMG_texture_format_BGRA8888"];
-		BOOL bgra8b = [self checkForGLExtension:@"GL_APPLE_texture_format_BGRA8888"];
-		_supportsBGRA8888 = bgra8a | bgra8b;
+			BOOL bgra8a = [self checkForGLExtension:@"GL_IMG_texture_format_BGRA8888"];
+			BOOL bgra8b = [self checkForGLExtension:@"GL_APPLE_texture_format_BGRA8888"];
+			_supportsBGRA8888 = bgra8a | bgra8b;
 #elif defined(__CC_PLATFORM_MAC)
-		_supportsBGRA8888 = [self checkForGLExtension:@"GL_EXT_bgra"];
+			_supportsBGRA8888 = [self checkForGLExtension:@"GL_EXT_bgra"];
 #endif
-		_supportsDiscardFramebuffer = [self checkForGLExtension:@"GL_EXT_discard_framebuffer"];
+			_supportsDiscardFramebuffer = [self checkForGLExtension:@"GL_EXT_discard_framebuffer"];
 
-		_supportsShareableVAO = [self checkForGLExtension:@"GL_APPLE_vertex_array_object"];
-		
-		_openGLInitialized = YES;
+			_supportsShareableVAO = [self checkForGLExtension:@"GL_APPLE_vertex_array_object"];
+			
+			_openGLInitialized = YES;
+		});
 	}
 }
 
@@ -297,11 +299,14 @@ static char * glExtensions;
 		  );
 
 	printf("cocos2d: OS version: %s (0x%08x)\n", [OSVer UTF8String], _OSVersion);
-	printf("cocos2d: %ld bit runtime\n", 8*sizeof(long));
+	printf("cocos2d: %ld bit runtime\n", 8*sizeof(long));	
+	printf("cocos2d: Multi-threaded rendering: %s\n", (CC_RENDER_DISPATCH_ENABLED ? "YES" : "NO"));
 	
-	printf("cocos2d: GL_VENDOR:   %s\n", glGetString(GL_VENDOR) );
-	printf("cocos2d: GL_RENDERER: %s\n", glGetString ( GL_RENDERER   ) );
-	printf("cocos2d: GL_VERSION:  %s\n", glGetString ( GL_VERSION    ) );
+	CCRenderDispatch(NO, ^{
+		printf("cocos2d: GL_VENDOR:   %s\n", glGetString(GL_VENDOR) );
+		printf("cocos2d: GL_RENDERER: %s\n", glGetString ( GL_RENDERER   ) );
+		printf("cocos2d: GL_VERSION:  %s\n", glGetString ( GL_VERSION    ) );
+	});
 	
 	printf("cocos2d: GL_MAX_TEXTURE_SIZE: %d\n", _maxTextureSize);
 	printf("cocos2d: GL_MAX_TEXTURE_UNITS: %d\n", _maxTextureUnits);

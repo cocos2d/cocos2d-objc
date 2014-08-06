@@ -46,6 +46,7 @@
 #import "CCConfiguration.h"
 #import "CCTransition.h"
 #import "CCRenderer_private.h"
+#import "CCRenderDispatch_Private.h"
 
 // support imports
 #import "Platforms/CCGL.h"
@@ -253,47 +254,52 @@ static CCDirector *_sharedDirector = nil;
 	CC_VIEW<CCDirectorView> *ccview = self.view;
 	[ccview beginFrame];
 	
-	CCRenderer *renderer = [self rendererFromPool];
-	[CCRenderer bindRenderer:renderer];
-	
-	GLKMatrix4 projection = self.projectionMatrix;
-	renderer.globalShaderUniforms = [self updateGlobalShaderUniforms];
-	
-	
-	[renderer enqueueClear:(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) color:_runningScene.colorRGBA.glkVector4 depth:1.0f stencil:0 globalSortOrder:NSIntegerMin];
-	
-	// Render
-	[_runningScene visit:renderer parentTransform:&projection];
-	[_notificationNode visit:renderer parentTransform:&projection];
-	if( _displayStats ) [self showStats];
-	
-	[renderer flush];
-	[CCRenderer bindRenderer:nil];
-	
-	[ccview addFrameCompletionHandler:^{
-		// Return the renderer to the pool when the frame completes.
-		[self poolRenderer:renderer];
-	}];
-	
-	[ccview presentFrame];
-
-	_totalFrames++;
-
-	if( _displayStats ) [self calculateMPF];
+	if(CCRenderDispatchBeginFrame()){
+		CCRenderer *renderer = [self rendererFromPool];
+		[CCRenderer bindRenderer:renderer];
+		
+		GLKMatrix4 projection = self.projectionMatrix;
+		renderer.globalShaderUniforms = [self updateGlobalShaderUniforms];
+		
+		
+		[renderer enqueueClear:(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) color:_runningScene.colorRGBA.glkVector4 depth:1.0f stencil:0 globalSortOrder:NSIntegerMin];
+		
+		// Render
+		[_runningScene visit:renderer parentTransform:&projection];
+		[_notificationNode visit:renderer parentTransform:&projection];
+		if( _displayStats ) [self showStats];
+		
+		[CCRenderer bindRenderer:nil];
+		
+		CCRenderDispatchCommitFrame(renderer.threadsafe, ^{
+			[ccview addFrameCompletionHandler:^{
+				// Return the renderer to the pool when the frame completes.
+				[self poolRenderer:renderer];
+			}];
+			
+			[renderer flush];
+			[ccview presentFrame];
+		});
+		
+		_totalFrames++;
+		
+		if( _displayStats ) [self calculateMPF];
+	}
 }
 
 -(CCRenderer *)rendererFromPool
 {
 	@synchronized(_rendererPool){
-		if(_rendererPool.count == 0){
-			return [[CCRenderer alloc] init];
-		} else {
+		if(_rendererPool.count > 0){
 			CCRenderer *renderer = _rendererPool.lastObject;
 			[_rendererPool removeLastObject];
 			
 			return renderer;
 		}
 	}
+	
+	// Allocate and return a new renderer.
+	return [[CCRenderer alloc] init];
 }
 
 -(void)poolRenderer:(CCRenderer *)renderer
@@ -399,8 +405,10 @@ static CCDirector *_sharedDirector = nil;
 			
 			#warning TODO this should probably migrate somewhere else.
 			if([(CCGLView *)view depthFormat]){
-				glEnable(GL_DEPTH_TEST);
-				glDepthFunc(GL_LEQUAL);
+				CCRenderDispatch(YES, ^{
+					glEnable(GL_DEPTH_TEST);
+					glDepthFunc(GL_LEQUAL);
+				});
 			}
 		}
 

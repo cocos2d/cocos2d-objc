@@ -228,7 +228,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		_multiSampling= NO;
 		_requestedSamples = 0;
 		_size = [eaglLayer bounds].size;
-		
+
 		if( ! [self setupSurfaceWithSharegroup:nil] ) {
 			return nil;
 		}
