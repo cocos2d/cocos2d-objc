@@ -22,8 +22,8 @@
  * THE SOFTWARE.
  */
 
-#import <OpenGLES/EAGL.h>
-#import "CCGL.h"
+#import <dispatch/dispatch.h>
+#import "ccMacros.h"
 
 /*
 	A multi-threaded rendering for iOS based on a serial dispatch queue.
@@ -52,7 +52,12 @@
 */
 
 /// Preprocessor token that can be used to detect if the GL queue is enabled.
-#define CC_RENDER_DISPATCH_ENABLED (__CC_PLATFORM_IOS && CC_DIRECTOR_IOS_THREADED_RENDERING)
+#warning TODO Fixme once merged with the headless branch.
+#if (__CC_PLATFORM_IOS && CC_DIRECTOR_IOS_THREADED_RENDERING)
+#define CC_RENDER_DISPATCH_ENABLED 1
+#else
+#define CC_RENDER_DISPATCH_ENABLED 0
+#endif
 
 /// Enqueue a block to be executed on the render queue.
 /// If 'threadsafe' is NO then the block will be executed synchronously.

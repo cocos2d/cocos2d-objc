@@ -46,6 +46,7 @@
 
 #import "CCDirector_Private.h"
 #import "CCRenderer_private.h"
+#import "CCRenderDispatch.h"
 
 #pragma mark -
 #pragma mark Director Mac extensions
@@ -247,7 +248,7 @@
 		offset = _winOffset;
 	}
 	
-	CCRenderQueueSync(^{
+	CCRenderDispatch(NO, ^{
 		glViewport(offset.x, offset.y, widthAspect, heightAspect);
 	});
 }

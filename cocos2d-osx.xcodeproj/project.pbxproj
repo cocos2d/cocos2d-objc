@@ -198,6 +198,10 @@
 		B7EE69ED1819EAAC00B983FE /* CCLayoutBox.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69E91819EAAC00B983FE /* CCLayoutBox.m */; };
 		B7EE6A34181B287300B983FE /* CCSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = B7EE6A32181B287300B983FE /* CCSlider.h */; };
 		B7EE6A35181B287300B983FE /* CCSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE6A33181B287300B983FE /* CCSlider.m */; };
+		D30226721992D4DC00878880 /* CCRenderDispatch.h in Headers */ = {isa = PBXBuildFile; fileRef = D30226701992D4DC00878880 /* CCRenderDispatch.h */; };
+		D30226731992D4DC00878880 /* CCRenderDispatch.m in Sources */ = {isa = PBXBuildFile; fileRef = D30226711992D4DC00878880 /* CCRenderDispatch.m */; };
+		D30226761992D4E400878880 /* CCDirectorView.h in Headers */ = {isa = PBXBuildFile; fileRef = D30226741992D4E400878880 /* CCDirectorView.h */; };
+		D30226771992D4E400878880 /* CCRenderDispatch_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D30226751992D4E400878880 /* CCRenderDispatch_Private.h */; };
 		D35E903E1990183C00A9B9C2 /* CCNoARC.m in Sources */ = {isa = PBXBuildFile; fileRef = D35E903D1990183C00A9B9C2 /* CCNoARC.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D37EE9FE187D4E7800CB5EF2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D37EE9FD187D4E7800CB5EF2 /* Foundation.framework */; };
 		D37EEA6E187D4F5200CB5EF2 /* libObjectiveChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D37EE9FC187D4E7700CB5EF2 /* libObjectiveChipmunk.a */; };
@@ -562,6 +566,10 @@
 		B7EE69E91819EAAC00B983FE /* CCLayoutBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLayoutBox.m; sourceTree = "<group>"; };
 		B7EE6A32181B287300B983FE /* CCSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCSlider.h; path = "cocos2d-ui/CCSlider.h"; sourceTree = "<group>"; };
 		B7EE6A33181B287300B983FE /* CCSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSlider.m; path = "cocos2d-ui/CCSlider.m"; sourceTree = "<group>"; };
+		D30226701992D4DC00878880 /* CCRenderDispatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderDispatch.h; sourceTree = "<group>"; };
+		D30226711992D4DC00878880 /* CCRenderDispatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCRenderDispatch.m; sourceTree = "<group>"; };
+		D30226741992D4E400878880 /* CCDirectorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCDirectorView.h; path = Platforms/CCDirectorView.h; sourceTree = "<group>"; };
+		D30226751992D4E400878880 /* CCRenderDispatch_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCRenderDispatch_Private.h; path = Platforms/CCRenderDispatch_Private.h; sourceTree = "<group>"; };
 		D35E903D1990183C00A9B9C2 /* CCNoARC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCNoARC.m; sourceTree = "<group>"; };
 		D37EE9FC187D4E7700CB5EF2 /* libObjectiveChipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libObjectiveChipmunk.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D37EE9FD187D4E7800CB5EF2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -1256,7 +1264,6 @@
 		E076E6281225EC7400DE0DA2 /* cocos2d */ = {
 			isa = PBXGroup;
 			children = (
-				D35E903D1990183C00A9B9C2 /* CCNoARC.m */,
 				929D1B541954C28100B27340 /* Effects */,
 				E076E77B1225ED1100DE0DA2 /* Base Nodes */,
 				B7EE69E51819EA9600B983FE /* Layouts */,
@@ -1292,6 +1299,11 @@
 				D3AD531F18C84FC9005B6CF3 /* CCRenderer_private.h */,
 				D3AD532018C84FC9005B6CF3 /* CCRenderer.h */,
 				D3AD532118C84FC9005B6CF3 /* CCRenderer.m */,
+				D35E903D1990183C00A9B9C2 /* CCNoARC.m */,
+				D30226741992D4E400878880 /* CCDirectorView.h */,
+				D30226751992D4E400878880 /* CCRenderDispatch_Private.h */,
+				D30226701992D4DC00878880 /* CCRenderDispatch.h */,
+				D30226711992D4DC00878880 /* CCRenderDispatch.m */,
 			);
 			path = cocos2d;
 			sourceTree = "<group>";
@@ -1674,10 +1686,12 @@
 				D3AD531618C84F79005B6CF3 /* CCShader_Private.h in Headers */,
 				B7D2732D1822F5460054849B /* CCBLocalizationManager.h in Headers */,
 				A0D7D69115E2D2CC000CA0C4 /* ccTypes.h in Headers */,
+				D30226721992D4DC00878880 /* CCRenderDispatch.h in Headers */,
 				A0D7D69415E2D2CC000CA0C4 /* CCConfiguration.h in Headers */,
 				A0D7D69615E2D2CC000CA0C4 /* CCDirector.h in Headers */,
 				B7EE6A34181B287300B983FE /* CCSlider.h in Headers */,
 				A0D7D69815E2D2CC000CA0C4 /* CCProtocols.h in Headers */,
+				D30226761992D4E400878880 /* CCDirectorView.h in Headers */,
 				929D1B741954C2A600B27340 /* CCEffectPixellate.h in Headers */,
 				92D1343E1954FC7A003833C4 /* CCActionManager_Private.h in Headers */,
 				A0D7D69915E2D2CC000CA0C4 /* CCScheduler.h in Headers */,
@@ -1696,6 +1710,7 @@
 				D389412618639DD400725CFC /* CCPhysicsBody.h in Headers */,
 				B7E2603517E7C774007067F0 /* NSEvent+CC.h in Headers */,
 				B77060961831B0C40043CC67 /* OALAudioFile.h in Headers */,
+				D30226771992D4E400878880 /* CCRenderDispatch_Private.h in Headers */,
 				B7E2603917E7C786007067F0 /* UITouch+CC.h in Headers */,
 				9D23869C196F0BC4001B792B /* CCEffectHue.h in Headers */,
 			);
@@ -1828,6 +1843,7 @@
 				D389412D18639DD400725CFC /* CCPhysicsShape.m in Sources */,
 				D3AD531818C84F79005B6CF3 /* CCShader.m in Sources */,
 				B770608F1831B0C40043CC67 /* IOSVersion.m in Sources */,
+				D30226731992D4DC00878880 /* CCRenderDispatch.m in Sources */,
 				B77060621831B0C40043CC67 /* OALAction.m in Sources */,
 				B770607C1831B0C40043CC67 /* ALDevice.m in Sources */,
 				E076E6FD1225EC7400DE0DA2 /* CCLabelBMFont.m in Sources */,

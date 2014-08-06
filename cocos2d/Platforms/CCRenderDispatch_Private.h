@@ -26,6 +26,8 @@
 
 #if CC_RENDER_DISPATCH_ENABLED
 
+#import <OpenGLES/EAGL.h>
+
 // Setup the queue and return the context it uses.
 EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup *sharegroup);
 
