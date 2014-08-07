@@ -126,7 +126,6 @@
 #else
 	ALBuffer* buffer = [OALAudioFile bufferFromUrl:url reduceToMono:reduceToMono];
 	[target performSelectorOnMainThread:selector withObject:buffer waitUntilDone:NO];
-#endif
 }
 
 @end

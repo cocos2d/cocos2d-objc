@@ -313,7 +313,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 - (bool) honorSilentSwitch
 {
 #if ANDROID
-#warning TODO: FIXME
+#warning honorSilentSwitch not implemented
     return false;
 #else
 	return [OALAudioSession sharedInstance].honorSilentSwitch;
@@ -323,7 +323,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 - (void) setHonorSilentSwitch:(bool) value
 {
 #if ANDROID
-#warning TODO: FIXME
+#warning setHonorSilentSwitch not implemented
 #else
 	[OALAudioSession sharedInstance].honorSilentSwitch = value;
 #endif
@@ -659,7 +659,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 		return nil;
 	}
     
-#if __CC_PLATFORM_ANDROID
+#if 0 // __CC_PLATFORM_ANDROID
     // TODO: we are creating a player and throwing it away each time, and not taking into account if it was preloaded.
     // think about checking for preload and implement the player's asyncPrepare finish listener
     AndroidAssetFileDescriptor *assetFd = [[[CCActivity currentActivity] assets] openFdWithFileName:filePath];
@@ -730,7 +730,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 - (bool) manuallySuspended
 {
 #if ANDROID
-#warning TODO: FIXME
+#warning manuallySuspended not implemented
     return false;
 #else
 	return [OALAudioSession sharedInstance].manuallySuspended;
@@ -740,7 +740,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 - (void) setManuallySuspended:(bool) value
 {
 #if ANDROID
-#warning TODO: FIXME
+#warning setManuallySuspended not implemented
 #else
 	[OALAudioSession sharedInstance].manuallySuspended = value;
 #endif
@@ -749,7 +749,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 - (bool) interrupted
 {
 #if ANDROID
-#warning TODO: FIXME
+#warning interrupted not implemented
     return false;
 #else
 	return [OALAudioSession sharedInstance].interrupted;
@@ -759,7 +759,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 - (bool) suspended
 {
 #if ANDROID
-#warning TODO: FIXME
+#warning suspended not implemented
     return false;
 #else
 	return [OALAudioSession sharedInstance].suspended;

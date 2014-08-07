@@ -897,7 +897,6 @@
             [player seekToMsec:(int32_t)(currentTime * 1000)];
         }
         [self _updateVolume];
-#warning  FIXME
         [player setLooping:(-1 == numberOfLoops) ? YES : NO];
         paused = NO;
         [player start];
@@ -929,7 +928,6 @@
         [player stop];
         [player seekToMsec:(int32_t)(currentTime * 1000)];
         [self _updateVolume];
-#warning FIXME looping
         [player setLooping:(-1 == numberOfLoops) ? YES : NO];
         paused = NO;
         [player start];
