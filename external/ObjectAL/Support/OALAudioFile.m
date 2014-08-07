@@ -128,37 +128,37 @@
 		}
 		
 #elif __CC_PLATFORM_ANDROID
-        // Open the file
-        oggPath = [[url path] UTF8String];
-        rawFILE = fopen(oggPath, "rb");
-        if (NULL == rawFILE) {
-            error = !noErr;
-            goto done;
-        }
-        error = ov_open(rawFILE, &oggFile, NULL, 0);
-        if (0 != error) {
-            fclose(rawFILE);
-            rawFILE = NULL;
-            error = !noErr;
-            goto done;
-        }
+		// Open the file
+		oggPath = [[url path] UTF8String];
+		rawFILE = fopen(oggPath, "rb");
+		if (NULL == rawFILE) {
+			error = !noErr;
+			goto done;
+		}
+		error = ov_open(rawFILE, &oggFile, NULL, 0);
+		if (0 != error) {
+			fclose(rawFILE);
+			rawFILE = NULL;
+			error = !noErr;
+			goto done;
+		}
 
-        // Get info
-        vorbis_info *info = ov_info(&oggFile, -1);
-        if (info) {
-            channelsPerFrame = info->channels;
-            sampleRate = (UInt32)info->rate;
-            bitsPerChannel = 16;
-            bytesPerFrame = (channelsPerFrame * bitsPerChannel) / 8;
-        } else {
-            fclose(rawFILE);
-            rawFILE = NULL;
-            error = !noErr;
-            goto done;
-        }
+		// Get info
+		vorbis_info *info = ov_info(&oggFile, -1);
+		if (info) {
+			channelsPerFrame = info->channels;
+			sampleRate = (UInt32)info->rate;
+			bitsPerChannel = 16;
+			bytesPerFrame = (channelsPerFrame * bitsPerChannel) / 8;
+		} else {
+			fclose(rawFILE);
+			rawFILE = NULL;
+			error = !noErr;
+			goto done;
+		}
 
-        // Get frame count
-        totalFrames = (SInt64) ov_pcm_total(&oggFile, -1);
+		// Get frame count
+		totalFrames = (SInt64) ov_pcm_total(&oggFile, -1);
 #endif
 	done:
 		if(noErr != error)
@@ -174,18 +174,18 @@
 - (void) dealloc
 {
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
-    if(nil != fileHandle)
-    {
-        REPORT_EXTAUDIO_CALL(ExtAudioFileDispose(fileHandle), @"Error closing file (url = %@)", url);
-        fileHandle = nil;
-    }
+	if(nil != fileHandle)
+	{
+		REPORT_EXTAUDIO_CALL(ExtAudioFileDispose(fileHandle), @"Error closing file (url = %@)", url);
+		fileHandle = nil;
+	}
 #elif __CC_PLATFORM_ANDROID
-    if (oggPath) {
-        free((void*)oggPath);
-    }
-    if (rawFILE) {
-        fclose(rawFILE);
-    }
+	if (oggPath) {
+		free((void*)oggPath);
+	}
+	if (rawFILE) {
+		fclose(rawFILE);
+	}
 #endif
 
 	as_release(url);
@@ -251,7 +251,7 @@
 	@synchronized(self)
 	{
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
-        if(nil == fileHandle)
+		if(nil == fileHandle)
 		{
 			OAL_LOG_ERROR(@"Attempted to read from closed file. Returning nil (url = %@)", url);
 			return nil;
@@ -259,8 +259,8 @@
 		
 		OSStatus error;
 		UInt32 numFramesRead;
-        AudioBufferList bufferList;
-        UInt32 bufferOffset = 0;
+		AudioBufferList bufferList;
+		UInt32 bufferOffset = 0;
 
 		
 		// < 0 means read to the end of the file.
@@ -288,32 +288,32 @@
 			goto onFail;
 		}
 		
-        
-        bufferList.mNumberBuffers = 1;
-        bufferList.mBuffers[0].mNumberChannels = streamDescription.mChannelsPerFrame;
-        for(UInt32 framesToRead = (UInt32) numFrames; framesToRead > 0; framesToRead -= numFramesRead)
-        {
-            bufferList.mBuffers[0].mDataByteSize = streamDescription.mBytesPerFrame * framesToRead;
-            bufferList.mBuffers[0].mData = (char*)streamData + bufferOffset;
-            
-            numFramesRead = framesToRead;
-            if(noErr != (error = ExtAudioFileRead(fileHandle, &numFramesRead, &bufferList)))
-            {
-                REPORT_EXTAUDIO_CALL(error, @"Could not read audio data in file (url = %@)",
-                                     url);
-                goto onFail;
-            }
-            bufferOffset += streamDescription.mBytesPerFrame * numFramesRead;
-            if(numFramesRead == 0)
-            {
-                // Sometimes the stream description was wrong and you hit an EOF prematurely
-                break;
-            }
-        }
+		
+		bufferList.mNumberBuffers = 1;
+		bufferList.mBuffers[0].mNumberChannels = streamDescription.mChannelsPerFrame;
+		for(UInt32 framesToRead = (UInt32) numFrames; framesToRead > 0; framesToRead -= numFramesRead)
+		{
+			bufferList.mBuffers[0].mDataByteSize = streamDescription.mBytesPerFrame * framesToRead;
+			bufferList.mBuffers[0].mData = (char*)streamData + bufferOffset;
+			
+			numFramesRead = framesToRead;
+			if(noErr != (error = ExtAudioFileRead(fileHandle, &numFramesRead, &bufferList)))
+			{
+				REPORT_EXTAUDIO_CALL(error, @"Could not read audio data in file (url = %@)",
+									 url);
+				goto onFail;
+			}
+			bufferOffset += streamDescription.mBytesPerFrame * numFramesRead;
+			if(numFramesRead == 0)
+			{
+				// Sometimes the stream description was wrong and you hit an EOF prematurely
+				break;
+			}
+		}
 		
 		if(nil != bufferSize)
 		{
-            // Use however many bytes were actually read
+			// Use however many bytes were actually read
 			*bufferSize = bufferOffset;
 		}
 		
@@ -327,7 +327,7 @@
 		return nil;
 #elif __CC_PLATFORM_ANDROID
 		UInt32 numFramesRead;
-        UInt32 bufferOffset = 0;
+		UInt32 bufferOffset = 0;
 
 		// < 0 means read to the end of the file.
 		if(numFrames < 0)
@@ -355,29 +355,29 @@
 			goto onFail;
 		}
 
-        int bitStream = 0;
-        int chunkSize = 0;
-        UInt32 bytesToRead = (UInt32) numFrames * bytesPerFrame;
-        UInt32 bytesRead = 0;
-        for(bytesRead = 0; bytesRead < bytesToRead; bytesRead += chunkSize)
-        {
-            chunkSize = (int) ov_read(&oggFile,
-                                (char*)(streamData + bytesRead),
-                                (int)(streamSizeInBytes - bytesRead),
-                                &bitStream);
-            if (chunkSize < 0)
-            {
-                REPORT_EXTAUDIO_CALL((OSStatus)chunkSize, @"Could not read audio data in file (url = %@)",
-                                     url);
-                goto onFail;
-            } else if (chunkSize == 0) {
-                break;
-            }
-        }
+		int bitStream = 0;
+		int chunkSize = 0;
+		UInt32 bytesToRead = (UInt32) numFrames * bytesPerFrame;
+		UInt32 bytesRead = 0;
+		for(bytesRead = 0; bytesRead < bytesToRead; bytesRead += chunkSize)
+		{
+			chunkSize = (int) ov_read(&oggFile,
+								(char*)(streamData + bytesRead),
+								(int)(streamSizeInBytes - bytesRead),
+								&bitStream);
+			if (chunkSize < 0)
+			{
+				REPORT_EXTAUDIO_CALL((OSStatus)chunkSize, @"Could not read audio data in file (url = %@)",
+									 url);
+				goto onFail;
+			} else if (chunkSize == 0) {
+				break;
+			}
+		}
 
 		if(nil != bufferSize)
 		{
-            // Use however many bytes were actually read
+			// Use however many bytes were actually read
 			*bufferSize = bytesRead;
 		}
 

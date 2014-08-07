@@ -57,15 +57,15 @@
 	ExtAudioFileRef fileHandle;
 
 #elif __CC_PLATFORM_ANDROID
-    FILE *rawFILE;
-    OggVorbis_File oggFile;
-    const char *oggPath;
-    UInt32 sampleRate;
-    UInt32 channelsPerFrame;
-    UInt32 bitsPerChannel;
-    UInt32 bytesPerFrame;
-    UInt32 framesPerPacket;
-    UInt32 bytesPerPacket;
+	FILE *rawFILE;
+	OggVorbis_File oggFile;
+	const char *oggPath;
+	UInt32 sampleRate;
+	UInt32 channelsPerFrame;
+	UInt32 bitsPerChannel;
+	UInt32 bytesPerFrame;
+	UInt32 framesPerPacket;
+	UInt32 bytesPerPacket;
 #endif
 
 	/** The actual number of channels in the audio data if not reducing to mono */
