@@ -149,13 +149,6 @@
         }
 
         NSMutableArray *stitchedEffects = [[NSMutableArray alloc] init];
-        if ((flattenedEffects.count == 1) || !_stitchingEnabled)
-        {
-            // If there's only one effect or if stitching is disabled, just
-            // use the original effects array.
-            [stitchedEffects addObjectsFromArray:flattenedEffects];
-        }
-        else if (flattenedEffects.count > 1)
         {
             NSMutableArray *stitchLists = [[NSMutableArray alloc] init];
             NSMutableArray *currentStitchList = [[NSMutableArray alloc] initWithArray:@[[flattenedEffects firstObject]]];
@@ -166,7 +159,7 @@
             for (CCEffect *effect in [flattenedEffects subarrayWithRange:NSMakeRange(1, flattenedEffects.count - 1)])
             {
                 CCEffect *prevEffect = [currentStitchList lastObject];
-                if ([prevEffect stitchSupported:CCEffectFunctionStitchAfter] && [effect stitchSupported:CCEffectFunctionStitchBefore])
+                if (_stitchingEnabled && [prevEffect stitchSupported:CCEffectFunctionStitchAfter] && [effect stitchSupported:CCEffectFunctionStitchBefore])
                 {
                     [currentStitchList addObject:effect];
                 }
@@ -177,17 +170,12 @@
                 }
             }
 
+            int effectIndex = 0;
             for (NSArray *stitchList in stitchLists)
             {
                 NSAssert(stitchList.count > 0, @"Encountered an empty stitch list which shouldn't happen.");
-                if (stitchList.count == 1)
-                {
-                    [stitchedEffects addObject:[stitchList firstObject]];
-                }
-                else
-                {
-                    [stitchedEffects addObject:[self stitchEffects:stitchList]];
-                }
+                [stitchedEffects addObject:[self stitchEffects:stitchList startIndex:effectIndex]];
+                effectIndex += stitchList.count;
             }
         }
         
@@ -216,7 +204,7 @@
 
 #pragma mark - Internal
 
--(CCEffect *)stitchEffects:(NSArray*)effects
+-(CCEffect *)stitchEffects:(NSArray*)effects startIndex:(int)startIndex
 {
     NSMutableArray* allFragFunctions = [[NSMutableArray alloc] init];
     NSMutableArray* allFragUniforms = [[NSMutableArray alloc] init];
@@ -224,7 +212,7 @@
     NSMutableArray* allVertexUniforms = [[NSMutableArray alloc] init];
     NSMutableArray* allVaryings = [[NSMutableArray alloc] init];
     
-    int effectIndex = 0;
+    int effectIndex = startIndex;
     for(CCEffect* effect in effects)
     {
         NSString *effectPrefix = [NSString stringWithFormat:@"%@_%d_", effect.debugName, effectIndex];
@@ -268,7 +256,8 @@
         effectIndex++;
     }
     
-    CCEffect* stitchedEffect = [[CCEffect alloc] initWithFragmentFunction:allFragFunctions vertexFunctions:allVertexFunctions fragmentUniforms:allFragUniforms vertexUniforms:allVertexUniforms varyings:allVaryings];
+    BOOL firstInStack = (startIndex == 0) ? YES : NO;
+    CCEffect* stitchedEffect = [[CCEffect alloc] initWithFragmentFunction:allFragFunctions vertexFunctions:allVertexFunctions fragmentUniforms:allFragUniforms vertexUniforms:allVertexUniforms varyings:allVaryings firstInStack:firstInStack];
     stitchedEffect.debugName = @"CCEffectStack_Stitched";
     
     // Set the stitch flags of the resulting effect based on the flags of the first

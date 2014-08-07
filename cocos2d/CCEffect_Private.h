@@ -50,10 +50,11 @@ typedef NS_ENUM(NSUInteger, CCEffectPrepareStatus)
 
 @property (nonatomic, readonly) NSString* type;
 @property (nonatomic, readonly) NSString* name;
+@property (nonatomic, readonly) NSString* initialSnippet;
 @property (nonatomic, readonly) NSString* snippet;
 
--(id)initWithType:(NSString*)type name:(NSString*)name snippet:(NSString*)snippet;
-+(id)inputWithType:(NSString*)type name:(NSString*)name snippet:(NSString*)snippet;
+-(id)initWithType:(NSString*)type name:(NSString*)name initialSnippet:(NSString*)initialSnippet snippet:(NSString*)snippet;
++(id)inputWithType:(NSString*)type name:(NSString*)name initialSnippet:(NSString*)initialSnippet snippet:(NSString*)snippet;
 
 @end
 
@@ -131,10 +132,13 @@ typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass);
 @property (nonatomic) CCEffectFunctionStitchFlags stitchFlags;
 @property (nonatomic) NSMutableDictionary* uniformTranslationTable;
 
+@property (nonatomic, readonly) BOOL firstInStack;
+
 
 -(id)initWithFragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings;
 -(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings;
 -(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions vertexFunctions:(NSMutableArray*)vertexFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings;
+-(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions vertexFunctions:(NSMutableArray*)vertexFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings firstInStack:(BOOL)firstInStack;
 
 -(CCEffectPrepareStatus)prepareForRendering;
 -(CCEffectRenderPass *)renderPassAtIndex:(NSUInteger)passIndex;
