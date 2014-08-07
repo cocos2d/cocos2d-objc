@@ -129,36 +129,36 @@
 		
 #elif __CC_PLATFORM_ANDROID
         // Open the file
-        oggPath = strdup([[url path] UTF8String]);
+        oggPath = [[url path] UTF8String];
         rawFILE = fopen(oggPath, "rb");
         if (NULL == rawFILE) {
-            if (NULL != oggPath) {
-                free((void*)oggPath);
-            }
             error = !noErr;
             goto done;
         }
-        error = ov_open(rawFILE, &(oggFile), NULL, 0);
+        error = ov_open(rawFILE, &oggFile, NULL, 0);
         if (0 != error) {
-            if (NULL != oggPath) {
-                free((void*)oggPath);
-            }
             fclose(rawFILE);
+            rawFILE = NULL;
             error = !noErr;
             goto done;
         }
 
         // Get info
-        vorbis_info *info = ov_info(&(oggFile), -1);
+        vorbis_info *info = ov_info(&oggFile, -1);
         if (info) {
             channelsPerFrame = info->channels;
             sampleRate = (UInt32)info->rate;
             bitsPerChannel = 16;
             bytesPerFrame = (channelsPerFrame * bitsPerChannel) / 8;
+        } else {
+            fclose(rawFILE);
+            rawFILE = NULL;
+            error = !noErr;
+            goto done;
         }
 
         // Get frame count
-        totalFrames = (SInt64) ov_pcm_total(&(oggFile), -1);
+        totalFrames = (SInt64) ov_pcm_total(&oggFile, -1);
 #endif
 	done:
 		if(noErr != error)
@@ -346,7 +346,7 @@
 			goto onFail;
 		}
 
-        int ov_res = ov_pcm_seek(&(oggFile), startFrame);
+		int ov_res = ov_pcm_seek(&oggFile, startFrame);
 		if(0 != ov_res)
 		{
 			REPORT_EXTAUDIO_CALL((OSStatus)ov_res, @"Could not seek to %lld in file (url = %@)",
