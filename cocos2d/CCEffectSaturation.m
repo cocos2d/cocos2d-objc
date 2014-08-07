@@ -67,7 +67,7 @@ static float conditionSaturation(float saturation);
 {
     CCEffectUniform* uniformSaturation = [CCEffectUniform uniform:@"float" name:@"u_saturation" value:[NSNumber numberWithFloat:1.0f]];
     
-    if((self = [super initWithFragmentUniforms:@[uniformSaturation] vertexUniforms:nil varying:nil]))
+    if((self = [super initWithFragmentUniforms:@[uniformSaturation] vertexUniforms:nil varyings:nil]))
     {
         _saturation = saturation;
         _conditionedSaturation = [NSNumber numberWithFloat:conditionSaturation(saturation)];

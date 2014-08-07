@@ -29,12 +29,12 @@
  *  sprite that serves as the background for the affected node so it appears that the viewer
  *  is seeing the refracted environment through the refracting node.
  */
-@property (nonatomic) CCSprite *environment;
+@property (nonatomic, strong) CCSprite *environment;
 
 /** The normal map that encodes the normal vectors of the affected node. Each pixel in the normal
  *  map is a 3 component vector that is perpendicular to the surface of the sprite at that point.
  */
-@property (nonatomic) CCSpriteFrame *normalMap;
+@property (nonatomic, strong) CCSpriteFrame *normalMap;
 
 
 /// -----------------------------------------------------------------------
@@ -48,6 +48,16 @@
  *  @return The CCEffectRefraction object.
  */
 -(id)init;
+
+/**
+ *  Initializes a CCEffectRefraction object with the supplied parameters and a nil normal map.
+ *
+ *  @param refraction The refraction strength.
+ *  @param environment The environment image that will be refracted by the affected node.
+ *
+ *  @return The CCEffectRefraction object.
+ */
+-(id)initWithRefraction:(float)refraction environment:(CCSprite *)environment;
 
 /**
  *  Initializes a CCEffectRefraction object with the supplied parameters.
@@ -64,6 +74,16 @@
 /// -----------------------------------------------------------------------
 /// @name Initializing a CCEffectRefraction object
 /// -----------------------------------------------------------------------
+
+/**
+ *  Creates a CCEffectRefraction object with the supplied parameters and a nil normal map.
+ *
+ *  @param refraction The refraction strength.
+ *  @param environment The environment image that will be refracted by the affected node.
+ *
+ *  @return The CCEffectRefraction object.
+ */
++(id)effectWithRefraction:(float)refraction environment:(CCSprite *)environment;
 
 /**
  *  Creates a CCEffectRefraction object with the supplied parameters.
