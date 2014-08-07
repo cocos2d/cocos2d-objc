@@ -257,7 +257,7 @@
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
     player.delegate = nil;
 #elif __CC_PLATFORM_ANDROID
-#warning missing delegate from android media player
+    [player setOnCompletionListener:nil];
 #endif
     [player stop];
     
