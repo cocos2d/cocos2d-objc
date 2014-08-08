@@ -179,17 +179,21 @@
             }
         }
         
-        // Extract passes from the stacked effects and build a flat list of
-        // passes.
+        // Extract passes and uniforms from the stacked and stitched effects and build a flat list of
+        // both.
         NSMutableArray *passes = [[NSMutableArray alloc] init];
+        NSMutableDictionary *uniforms = [[NSMutableDictionary alloc] init];
         for (CCEffect *effect in stitchedEffects)
         {
             for (CCEffectRenderPass *pass in effect.renderPasses)
             {
                 [passes addObject:pass];
             }
+            
+            [uniforms addEntriesFromDictionary:effect.shaderUniforms];
         }
         self.renderPasses = [passes copy];
+        self.shaderUniforms = uniforms;
         _passesDirty = NO;
         
         result = CCEffectPrepareSuccess;
@@ -268,25 +272,18 @@
     CCEffect *lastEffect = [effects lastObject];
     stitchedEffect.stitchFlags = (firstEffect.stitchFlags & CCEffectFunctionStitchBefore) | (lastEffect.stitchFlags & CCEffectFunctionStitchAfter);
     
-    // Copy the shader for this new pass from the stitched effect.
+    // Create a new render pass object and set its shader from the stitched effect
+    // that was created above.
     CCEffectRenderPass *newPass = [[CCEffectRenderPass alloc] init];
     newPass.debugLabel = @"CCEffectStack_Stitched pass 0";
     newPass.shader = stitchedEffect.shader;
-    newPass.shaderUniforms = [[NSMutableDictionary alloc] init];
     
     NSMutableArray *beginBlocks = [[NSMutableArray alloc] init];
     NSMutableArray *endBlocks = [[NSMutableArray alloc] init];
     
     for (CCEffect *effect in effects)
     {
-        // Copy the shader uniforms from each input effect to a shared
-        // dictionary for the new pass. For example, if we stitch two effects
-        // together, one with uniforms A and B and one with uniforms C and D,
-        // we will get one dictionary with A, B, C, and D.
-        //
-        // Similarly, copy the begin and end blocks from the input passes into
-        // the new pass.
-        [newPass.shaderUniforms addEntriesFromDictionary:effect.shaderUniforms];
+        // Copy the begin and end blocks from the input passes into the new pass.
         for (CCEffectRenderPass *pass in effect.renderPasses)
         {
             [beginBlocks addObjectsFromArray:pass.beginBlocks];

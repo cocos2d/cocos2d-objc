@@ -117,7 +117,7 @@ typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass);
 @interface CCEffect ()
 
 @property (nonatomic, readonly) CCShader* shader; // Note: consider adding multiple shaders (one for reach renderpass, this will help break up logic and avoid branching in a potential uber shader).
-@property (nonatomic, readonly) NSMutableDictionary* shaderUniforms;
+@property (nonatomic, strong) NSMutableDictionary* shaderUniforms;
 @property (nonatomic, readonly) NSUInteger renderPassesRequired;
 @property (nonatomic, readonly) BOOL supportsDirectRendering;
 @property (nonatomic, readonly) BOOL readyForRendering;
