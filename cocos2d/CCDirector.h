@@ -70,6 +70,7 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 
 #elif __CC_PLATFORM_ANDROID
 #define CC_VIEWCONTROLLER NSObject
+#define CC_VIEW CCGLView
 
 #endif
 

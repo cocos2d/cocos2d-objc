@@ -633,7 +633,6 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 		glGenerateMipmap(GL_TEXTURE_2D);
 		_hasMipmaps = YES;
 		
-		glPopGroupMarkerEXT();
 		CCGL_DEBUG_POP_GROUP_MARKER();
 	});
 }
