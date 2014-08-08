@@ -19,7 +19,7 @@
 
 @interface CCEffectRefraction ()
 
-@property (nonatomic) float conditionedRefraction;
+@property (nonatomic, assign) float conditionedRefraction;
 
 @end
 

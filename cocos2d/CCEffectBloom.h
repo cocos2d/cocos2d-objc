@@ -25,17 +25,17 @@
  *  This value is in the range [0..1]. Lower values mean that more pixels will
  *  contribute to the blurry bloom image.
  */
-@property (nonatomic) float luminanceThreshold;
+@property (nonatomic, assign) float luminanceThreshold;
 
 /** The intensity of the blurred out bloom image when added to the original
  *  unmodified image. This value is in the range [0..1]. 0 results in no bloom
  *  while higher values result in more bloom.
  */
-@property (nonatomic) float intensity;
+@property (nonatomic, assign) float intensity;
 
 /** The size of the blur of the bloom image. This value is in the range [0..6].
  */
-@property (nonatomic) NSUInteger blurRadius;
+@property (nonatomic, assign) NSUInteger blurRadius;
 
 
 /// -----------------------------------------------------------------------

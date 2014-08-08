@@ -51,7 +51,7 @@ static float conditionSaturation(float saturation);
 
 @interface CCEffectSaturation ()
 
-@property (nonatomic) NSNumber *conditionedSaturation;
+@property (nonatomic, strong) NSNumber *conditionedSaturation;
 
 @end
 

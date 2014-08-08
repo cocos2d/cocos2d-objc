@@ -26,7 +26,7 @@
  *  of -1 reduces the affected color to 0 (black), 0 results in no change, 1
  *  increases the affected color to 1 (white).
  */
-@property (nonatomic) float brightness;
+@property (nonatomic, assign) float brightness;
 
 
 /// -----------------------------------------------------------------------

@@ -22,7 +22,7 @@
 
 /** The size of the blur. This value is in the range [0..6].
  */
-@property (nonatomic) NSUInteger blurRadius;
+@property (nonatomic, assign) NSUInteger blurRadius;
 
 
 /// -----------------------------------------------------------------------

@@ -57,9 +57,9 @@ static GLKMatrix4 matrixWithHue(float hue);
 
 @interface CCEffectHue ()
 #if CCEFFECTHUE_USES_COLOR_MATRIX
-@property (nonatomic) NSValue *hueRotationMtx;
+@property (nonatomic, strong) NSValue *hueRotationMtx;
 #else
-@property (nonatomic) NSNumber *conditionedHue;
+@property (nonatomic, strong) NSNumber *conditionedHue;
 #endif
 @end
 

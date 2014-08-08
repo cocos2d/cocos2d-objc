@@ -24,10 +24,10 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
 
 @interface CCEffectGlass ()
 
-@property (nonatomic) float conditionedRefraction;
-@property (nonatomic) float conditionedShininess;
-@property (nonatomic) float conditionedFresnelBias;
-@property (nonatomic) float conditionedFresnelPower;
+@property (nonatomic, assign) float conditionedRefraction;
+@property (nonatomic, assign) float conditionedShininess;
+@property (nonatomic, assign) float conditionedFresnelBias;
+@property (nonatomic, assign) float conditionedFresnelPower;
 
 @end
 

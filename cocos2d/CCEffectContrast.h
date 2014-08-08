@@ -26,7 +26,7 @@
  *  an adjustment value of -1 scales the affected color by 0.25, 0 results in no
  *  change, and 1 scales the affected color by 4.
  */
-@property (nonatomic) float contrast;
+@property (nonatomic, assign) float contrast;
 
 
 /// -----------------------------------------------------------------------

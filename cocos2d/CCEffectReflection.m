@@ -20,9 +20,9 @@
 
 @interface CCEffectReflection ()
 
-@property (nonatomic) float conditionedShininess;
-@property (nonatomic) float conditionedFresnelBias;
-@property (nonatomic) float conditionedFresnelPower;
+@property (nonatomic, assign) float conditionedShininess;
+@property (nonatomic, assign) float conditionedFresnelBias;
+@property (nonatomic, assign) float conditionedFresnelPower;
 
 @end
 

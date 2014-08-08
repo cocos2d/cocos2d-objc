@@ -16,7 +16,7 @@ static float conditionContrast(float contrast);
 
 @interface CCEffectContrast ()
 
-@property (nonatomic) NSNumber *conditionedContrast;
+@property (nonatomic, strong) NSNumber *conditionedContrast;
 
 @end
 

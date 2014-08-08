@@ -15,7 +15,7 @@ static float conditionBrightness(float brightness);
 
 @interface CCEffectBrightness ()
 
-@property (nonatomic) NSNumber *conditionedBrightness;
+@property (nonatomic, strong) NSNumber *conditionedBrightness;
 
 @end
 
