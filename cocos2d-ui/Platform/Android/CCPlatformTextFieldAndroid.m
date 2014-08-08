@@ -60,8 +60,8 @@ BRIDGE_CLASS("org.cocos2d.CCPlatformTextFieldAndroidTextViewOnEditorActionListen
     if (self=[super init]) {
         dispatch_async(dispatch_get_main_queue(), ^{
             _editText = [[CCEditText alloc] initWithContext:[CCActivity currentActivity]];
-//            [_editText setBackground:[[AndroidColorDrawable alloc] initWithColor:AndroidColorTRANSPARENT]];
-//            [_editText setTextColorByColor:AndroidColorBLACK];
+            [_editText setBackground:[[AndroidColorDrawable alloc] initWithColor:AndroidColorTRANSPARENT]];
+            [_editText setTextColorByColor:AndroidColorBLACK];
         });
         
     }
@@ -83,7 +83,7 @@ BRIDGE_CLASS("org.cocos2d.CCPlatformTextFieldAndroidTextViewOnEditorActionListen
     CGPoint worldPos = [control convertToWorldSpace:CGPointZero];
     CGPoint viewPos = [[CCDirector sharedDirector] convertToUI:worldPos];
     viewPos.x += padding;
-    viewPos.y += padding;
+//    viewPos.y += padding;
     
     CGFloat scale = [[CCDirector sharedDirector] contentScaleFactor];
     
@@ -91,12 +91,11 @@ BRIDGE_CLASS("org.cocos2d.CCPlatformTextFieldAndroidTextViewOnEditorActionListen
     viewPos.y *= scale;
     
     CGSize size = control.contentSizeInPoints;
-    
     size.width -= padding * 2;
     size.height -= padding * 2;
     size.width *= scale;
-    size.height *= scale *2;
-    viewPos.y -= size.height;
+    size.height *= scale ;
+    viewPos.y -= size.height + padding *scale;
 
     
     CGRect frame = CGRectZero;
