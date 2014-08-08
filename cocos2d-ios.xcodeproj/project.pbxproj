@@ -259,6 +259,10 @@
 		B7EE69E31819E75700B983FE /* CCLayoutBox.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69DF1819E75700B983FE /* CCLayoutBox.m */; };
 		B7EE6A1E181AE34600B983FE /* CCSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = B7EE6A1C181AE34600B983FE /* CCSlider.h */; };
 		B7EE6A1F181AE34600B983FE /* CCSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE6A1D181AE34600B983FE /* CCSlider.m */; };
+		D208E79D1993FEDA00BD8D6B /* CCEffectDropShadow.h in Headers */ = {isa = PBXBuildFile; fileRef = D208E79B1993FEDA00BD8D6B /* CCEffectDropShadow.h */; };
+		D208E79E1993FEDA00BD8D6B /* CCEffectDropShadow.h in Headers */ = {isa = PBXBuildFile; fileRef = D208E79B1993FEDA00BD8D6B /* CCEffectDropShadow.h */; };
+		D208E79F1993FEDA00BD8D6B /* CCEffectDropShadow.m in Sources */ = {isa = PBXBuildFile; fileRef = D208E79C1993FEDA00BD8D6B /* CCEffectDropShadow.m */; };
+		D208E7A01993FEDA00BD8D6B /* CCEffectDropShadow.m in Sources */ = {isa = PBXBuildFile; fileRef = D208E79C1993FEDA00BD8D6B /* CCEffectDropShadow.m */; };
 		D23C5CB4194BC108007CA669 /* CCTouchIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = D23C5CB2194BC108007CA669 /* CCTouchIOS.h */; };
 		D23C5CB5194BC108007CA669 /* CCTouchIOS.m in Sources */ = {isa = PBXBuildFile; fileRef = D23C5CB3194BC108007CA669 /* CCTouchIOS.m */; };
 		D23C5CBC194BC500007CA669 /* CCTouchAndroid.h in Headers */ = {isa = PBXBuildFile; fileRef = D23C5CBA194BC500007CA669 /* CCTouchAndroid.h */; };
@@ -976,6 +980,8 @@
 		B7EE69DF1819E75700B983FE /* CCLayoutBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLayoutBox.m; sourceTree = "<group>"; };
 		B7EE6A1C181AE34600B983FE /* CCSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCSlider.h; path = "cocos2d-ui/CCSlider.h"; sourceTree = "<group>"; };
 		B7EE6A1D181AE34600B983FE /* CCSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSlider.m; path = "cocos2d-ui/CCSlider.m"; sourceTree = "<group>"; };
+		D208E79B1993FEDA00BD8D6B /* CCEffectDropShadow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectDropShadow.h; sourceTree = "<group>"; };
+		D208E79C1993FEDA00BD8D6B /* CCEffectDropShadow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectDropShadow.m; sourceTree = "<group>"; };
 		D23C5CB2194BC108007CA669 /* CCTouchIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchIOS.h; sourceTree = "<group>"; };
 		D23C5CB3194BC108007CA669 /* CCTouchIOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTouchIOS.m; sourceTree = "<group>"; };
 		D23C5CBA194BC500007CA669 /* CCTouchAndroid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTouchAndroid.h; path = Android/CCTouchAndroid.h; sourceTree = "<group>"; };
@@ -1765,6 +1771,8 @@
 				9DF37620191C594A00C6D27A /* CCEffectPixellate.m */,
 				D2B49102192146FB00C3443A /* CCEffectGaussianBlur.h */,
 				D2B49103192146FB00C3443A /* CCEffectGaussianBlur.m */,
+				D208E79B1993FEDA00BD8D6B /* CCEffectDropShadow.h */,
+				D208E79C1993FEDA00BD8D6B /* CCEffectDropShadow.m */,
 			);
 			name = Effects;
 			sourceTree = "<group>";
@@ -2048,6 +2056,7 @@
 				D268FE0D198078FF00ECBCD0 /* CCEffectBloom.h in Headers */,
 				B78AE46217E7AF1C0028BE0B /* CCButton.h in Headers */,
 				B798D15318205EFB00E7BFCD /* CCParticleSystem_Private.h in Headers */,
+				D208E79D1993FEDA00BD8D6B /* CCEffectDropShadow.h in Headers */,
 				D26A042A194B815500503BEC /* CCTouchEvent.h in Headers */,
 				B7705FD61831A07B0043CC67 /* OALAudioTrack.h in Headers */,
 				B78AE46417E7AF1C0028BE0B /* CCControl.h in Headers */,
@@ -2198,6 +2207,7 @@
 				D2FEB690194F6C9E00FC0574 /* CCDirectorMac.h in Headers */,
 				D2FEB691194F6C9E00FC0574 /* CCGLView.h in Headers */,
 				D2FEB692194F6C9E00FC0574 /* CCWindow.h in Headers */,
+				D208E79E1993FEDA00BD8D6B /* CCEffectDropShadow.h in Headers */,
 				D2FEB693194F6C9E00FC0574 /* CCProgressNode.h in Headers */,
 				D2DDB09419805E8400233D80 /* CCMathUtilsAndroid.h in Headers */,
 				D2FEB694194F6C9E00FC0574 /* CCLayout.h in Headers */,
@@ -2406,6 +2416,7 @@
 				50F7B2790F28DE7C00057537 /* CCActionEase.m in Sources */,
 				571CD02919649E03003D460C /* CCPlatformTextField.m in Sources */,
 				D3A2E7D3181E12750033614C /* CCPhysicsShape.m in Sources */,
+				D208E79F1993FEDA00BD8D6B /* CCEffectDropShadow.m in Sources */,
 				B7705FE71831A07B0043CC67 /* ALContext.m in Sources */,
 				B7EE6A1F181AE34600B983FE /* CCSlider.m in Sources */,
 				D37D197A18B6665700B23FDE /* CCTMXXMLParser.m in Sources */,
@@ -2608,6 +2619,7 @@
 				D2FEB6FC194F6C9E00FC0574 /* CCPhysicsNode.m in Sources */,
 				D2FEB6FD194F6C9E00FC0574 /* CCGLView.m in Sources */,
 				D2FEB6FE194F6C9E00FC0574 /* CCLabelBMFont.m in Sources */,
+				D208E7A01993FEDA00BD8D6B /* CCEffectDropShadow.m in Sources */,
 				D2FEB701194F6C9E00FC0574 /* CCDirectorAndroid.m in Sources */,
 				D2FEB702194F6C9E00FC0574 /* CCGLView.m in Sources */,
 				D2FEB703194F6C9E00FC0574 /* CCEffectBrightness.m in Sources */,

@@ -2,8 +2,6 @@
 #import "CCTextureCache.h"
 #import "CCNodeColor.h"
 #import "CCEffectNode.h"
-#import "CCEffectGaussianBlur.h"
-
 
 @interface CCEffectsTest : TestBase @end
 @implementation CCEffectsTest
@@ -16,6 +14,34 @@
 	}
 	
 	return self;
+}
+
+-(void)setupDropShadowEffectTest
+{
+    self.subTitle = @"DropShadow Effect Test";
+
+    CCSprite *environment = [CCSprite spriteWithImageNamed:@"Images/MountainPanorama.jpg"];
+    environment.positionType = CCPositionTypeNormalized;
+    environment.position = ccp(0.5f, 0.5f);
+
+    [self.contentNode addChild:environment];
+    
+    CCColor *shadowColor = [CCColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:0.5];
+    CCEffectDropShadow* effect = [CCEffectDropShadow effectWithShadowOffset:GLKVector2Make(2.0, -2.0) shadowColor:shadowColor];
+   
+    CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"Images/Ohm.png"];
+    sampleSprite.position = ccp(0.5, 0.5);
+    sampleSprite.positionType = CCPositionTypeNormalized;
+    
+    CCEffectNode* effectNode = [[CCEffectNode alloc] init];
+    effectNode.contentSize = CGSizeMake(300, 300);
+    effectNode.anchorPoint = ccp(0.5, 0.5);
+    effectNode.positionType = CCPositionTypeNormalized;
+    effectNode.position = ccp(0.5, 0.5);
+    [effectNode addChild:sampleSprite];
+    effectNode.effect = effect;
+    
+    [self.contentNode addChild:effectNode];
 }
 
 -(void)setupGlassEffectTest
