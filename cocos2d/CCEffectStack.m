@@ -219,31 +219,39 @@
     int effectIndex = startIndex;
     for(CCEffect* effect in effects)
     {
+        // Construct the prefix to use for name mangling.
         NSString *effectPrefix = [NSString stringWithFormat:@"%@_%d_", effect.debugName, effectIndex];
 
+        // Mangle the names of the current effect's varyings and record the results.
         NSDictionary *varyingReplacements = [CCEffectStack varyingsByApplyingPrefix:effectPrefix toVaryings:effect.varyingVars];
         [allVaryings addObjectsFromArray:varyingReplacements.allValues];
-        
+
+        // Mangle the names of the current effect's fragment uniforms and record the results.
         NSArray *fragmentUniforms = [CCEffectStack uniformsByRemovingUniformsFrom:effect.fragmentUniforms withNamesListedInSet:[CCEffect defaultEffectFragmentUniformNames]];
         NSDictionary *fragUniformReplacements = [CCEffectStack uniformsByApplyingPrefix:effectPrefix toUniforms:fragmentUniforms];
         [allFragUniforms addObjectsFromArray:fragUniformReplacements.allValues];
-        
+
+        // Mangle the names of the current effect's fragment functions.
         for(CCEffectFunction *function in effect.fragmentFunctions)
         {
             CCEffectFunction *prefixedFunction = [CCEffectStack effectFunctionByApplyingPrefix:effectPrefix uniformReplacements:fragUniformReplacements varyingReplacements:varyingReplacements toEffectFunction:function];
             [allFragFunctions addObject:prefixedFunction];
         }
-
+        
+        // Mangle the names of the current effect's vertex uniforms and record the results.
         NSArray *vertexUniforms = [CCEffectStack uniformsByRemovingUniformsFrom:effect.vertexUniforms withNamesListedInSet:[CCEffect defaultEffectVertexUniformNames]];
         NSDictionary *vtxUniformReplacements = [CCEffectStack uniformsByApplyingPrefix:effectPrefix toUniforms:vertexUniforms];
         [allVertexUniforms addObjectsFromArray:vtxUniformReplacements.allValues];
         
+        // Mangle the names of the current effect's vertex functions.
         for(CCEffectFunction* function in effect.vertexFunctions)
         {
             CCEffectFunction *prefixedFunction = [CCEffectStack effectFunctionByApplyingPrefix:effectPrefix uniformReplacements:vtxUniformReplacements varyingReplacements:varyingReplacements toEffectFunction:function];
             [allVertexFunctions addObject:prefixedFunction];
         }
         
+        // Update the original effect's translation table so it reflects the new mangled
+        // uniform names.
         effect.uniformTranslationTable = [[NSMutableDictionary alloc] init];
         for (NSString *key in vtxUniformReplacements)
         {
@@ -260,6 +268,7 @@
         effectIndex++;
     }
     
+    // Build a new effect that is the accumulation of all the mangled fragment and vertex functions.
     BOOL firstInStack = (startIndex == 0) ? YES : NO;
     CCEffect* stitchedEffect = [[CCEffect alloc] initWithFragmentFunction:allFragFunctions vertexFunctions:allVertexFunctions fragmentUniforms:allFragUniforms vertexUniforms:allVertexUniforms varyings:allVaryings firstInStack:firstInStack];
     stitchedEffect.debugName = @"CCEffectStack_Stitched";
