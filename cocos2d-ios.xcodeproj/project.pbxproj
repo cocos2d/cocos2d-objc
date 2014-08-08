@@ -2319,8 +2319,8 @@
 			buildConfigurationList = D2FEB74C194F6C9E00FC0574 /* Build configuration list for PBXNativeTarget "cocos2dAndroid" */;
 			buildPhases = (
 				D2FEB610194F6C9E00FC0574 /* Headers */,
-				D2FEB6B8194F6C9E00FC0574 /* Sources */,
 				D2FEB740194F6C9E00FC0574 /* Frameworks */,
+				D2FEB6B8194F6C9E00FC0574 /* Sources */,
 			);
 			buildRules = (
 			);
@@ -3023,6 +3023,8 @@
 					"$(SRCROOT)/external/Chipmunk/include",
 					"$(SRCROOT)/external/Chipmunk/objectivec/include",
 					"$(SRCROOT)/external/ObjectAL/**",
+					"$(SRCROOT)/external/tremor/include",
+					"$(SRCROOT)/external/ogg/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3068,6 +3070,8 @@
 					"$(SRCROOT)/external/Chipmunk/include",
 					"$(SRCROOT)/external/Chipmunk/objectivec/include",
 					"$(SRCROOT)/external/ObjectAL/**",
+					"$(SRCROOT)/external/tremor/include",
+					"$(SRCROOT)/external/ogg/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
