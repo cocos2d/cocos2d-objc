@@ -61,6 +61,7 @@
     {
         _effectRenderer = [[CCEffectRenderer alloc] init];
         _allocatedSize = CGSizeMake(0.0f, 0.0f);
+        self.clearFlags = GL_COLOR_BUFFER_BIT;
 	}
 	return self;
 }
@@ -208,7 +209,7 @@
     // remainder of the effects.
     [self begin];
 
-    [_renderer enqueueClear:GL_COLOR_BUFFER_BIT color:_clearColor depth:self.clearDepth stencil:self.clearStencil globalSortOrder:NSIntegerMin];
+    [_renderer enqueueClear:self.clearFlags color:_clearColor depth:self.clearDepth stencil:self.clearStencil globalSortOrder:NSIntegerMin];
     
     //! make sure all children are drawn
     [self sortAllChildren];
