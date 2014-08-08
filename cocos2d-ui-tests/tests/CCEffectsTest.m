@@ -990,7 +990,9 @@
     NSArray *subTitles = @[
                            @"Effect Node Resize Test\nSmall transparent blue node with grossini",
                            @"Effect Node Resize Test\nMedium transparent blue node with grossini",
-                           @"Effect Node Resize Test\nBig transparent blue node with grossini"
+                           @"Effect Node Resize Test\nBig transparent blue node with grossini",
+                           @"Effect Node Resize Test\nNothing",
+                           @"Effect Node Resize Test\nTransparent blue square with grossini"
                            ];
     
     self.subTitle = subTitles[0];
@@ -1025,10 +1027,117 @@
     __weak CCEffectsTest *weakSelf = self;
     __block NSUInteger callCount = 0;
     CCActionCallBlock *blockAction = [CCActionCallBlock actionWithBlock:^{
-        callCount = (callCount + 1) % 3;
+        callCount = (callCount + 1) % 5;
         
-        float nodeSize = 0.25f + 0.25f * callCount;
-        effectNode.contentSize = CGSizeMake(nodeSize, nodeSize);
+        if (callCount == 0)
+        {
+            effectNode.contentSizeType = CCSizeTypeNormalized;
+        }
+        
+        if (callCount == 3)
+        {
+            effectNode.contentSizeType = CCSizeTypePoints;
+        }
+        else if (callCount == 4)
+        {
+            effectNode.contentSize = CGSizeMake(256.0f, 256.0f);
+        }
+        else
+        {
+            float nodeSize = 0.25f + 0.25f * callCount;
+            effectNode.contentSize = CGSizeMake(nodeSize, nodeSize);
+        }
+        
+        weakSelf.subTitle = subTitles[callCount];
+    }];
+    [effectNode runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+                                                                   [CCActionDelay actionWithDuration:1.0f],
+                                                                   blockAction,
+                                                                   nil
+                                                                   ]]];
+}
+
+-(void)setupEffectNodeParentResizeTest
+{
+    NSArray *subTitles = @[
+                           @"Effect Node Parent Resize Test\nSmall transparent red rect with grossini",
+                           @"Effect Node Parent Resize Test\nMedium transparent red rect with grossini",
+                           @"Effect Node Parent Resize Test\nBig transparent red rect with grossini",
+                           @"Effect Node Parent Resize Test\nNothing",
+                           @"Effect Node Parent Resize Test\nTransparent red square with grossini"
+                           ];
+    
+    self.subTitle = subTitles[0];
+    
+    CCSprite *background = [CCSprite spriteWithImageNamed:@"Images/gridBackground.png"];
+    background.positionType = CCPositionTypeNormalized;
+    background.position = ccp(0.5f, 0.5f);
+    [self.contentNode addChild:background];
+
+    
+    CCNode *grandparent = [[CCNode alloc] init];
+    grandparent.contentSizeType = CCSizeTypeNormalized;
+    grandparent.contentSize = CGSizeMake(0.25f, 0.25f);
+    grandparent.anchorPoint = ccp(0.5f, 0.5f);
+    grandparent.positionType = CCPositionTypeNormalized;
+    grandparent.position = ccp(0.5f, 0.5f);
+    [self.contentNode addChild:grandparent];
+    
+    
+    CCNode *parent = [[CCNode alloc] init];
+    parent.contentSizeType = CCSizeTypeNormalized;
+    parent.contentSize = CGSizeMake(1.0f, 1.0f);
+    parent.anchorPoint = ccp(0.5f, 0.5f);
+    parent.positionType = CCPositionTypeNormalized;
+    parent.position = ccp(0.5f, 0.5f);
+    [grandparent addChild:parent];
+    
+    
+    CCEffectNode *effectNode = [[CCEffectNode alloc] init];
+    effectNode.clearFlags = GL_COLOR_BUFFER_BIT;
+    effectNode.clearColor = [CCColor colorWithRed:0.0f green:0.0f blue:0.5f alpha:0.5f];
+    effectNode.contentSizeType = CCSizeTypeNormalized;
+    effectNode.contentSize = CGSizeMake(1.0f, 1.0f);
+    effectNode.anchorPoint = ccp(0.5f, 0.5f);
+    effectNode.positionType = CCPositionTypeNormalized;
+    effectNode.position = ccp(0.5f, 0.5f);
+    
+    CCEffectHue *effect = [CCEffectHue effectWithHue:120.0f];
+    effectNode.effect = effect;
+    
+    [parent addChild:effectNode];
+    
+    
+    CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
+    sprite.anchorPoint = ccp(0.5, 0.5);
+    sprite.positionType = CCPositionTypeNormalized;
+    sprite.position = ccp(0.5f, 0.5f);
+    [effectNode addChild:sprite];
+    
+    
+    __weak CCEffectsTest *weakSelf = self;
+    __block NSUInteger callCount = 0;
+    CCActionCallBlock *blockAction = [CCActionCallBlock actionWithBlock:^{
+        callCount = (callCount + 1) % 5;
+        
+        if (callCount == 0)
+        {
+            grandparent.contentSizeType = CCSizeTypeNormalized;
+        }
+        
+        if (callCount == 3)
+        {
+            grandparent.contentSizeType = CCSizeTypePoints;
+        }
+        else if (callCount == 4)
+        {
+            grandparent.contentSize = CGSizeMake(256.0f, 256.0f);
+        }
+        else
+        {
+            float grandparentSize = 0.25f + 0.25f * callCount;
+            grandparent.contentSize = CGSizeMake(grandparentSize, grandparentSize);
+        }
         
         weakSelf.subTitle = subTitles[callCount];
     }];
