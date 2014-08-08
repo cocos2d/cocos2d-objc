@@ -32,6 +32,7 @@
 {
     CCEffect *_effect;
     CCEffectRenderer *_effectRenderer;
+    CGSize _allocatedSize;
 }
 
 @end
@@ -48,6 +49,7 @@
 {
 	if((self = [super initWithWidth:width height:height pixelFormat:CCTexturePixelFormat_Default])) {
         _effectRenderer = [[CCEffectRenderer alloc] init];
+        _allocatedSize = CGSizeMake(0.0f, 0.0f);
 	}
 	return self;
 }
@@ -72,14 +74,20 @@
 
 -(void)create
 {
-    CGSize pointSize = self.contentSizeInPoints;
-    CGSize pixelSize = CGSizeMake(pointSize.width * _contentScale, pointSize.height * _contentScale);
+    _allocatedSize = self.contentSizeInPoints;
+    CGSize pixelSize = CGSizeMake(_allocatedSize.width * _contentScale, _allocatedSize.height * _contentScale);
     [self createTextureAndFboWithPixelSize:pixelSize];
 
-    CGRect rect = CGRectMake(0, 0, pointSize.width, pointSize.height);
+    CGRect rect = CGRectMake(0, 0, _allocatedSize.width, _allocatedSize.height);
 	[_sprite setTextureRect:rect];
     
-    _projection = GLKMatrix4MakeOrtho(0.0f, pointSize.width, 0.0f, pointSize.height, -1024.0f, 1024.0f);
+    _projection = GLKMatrix4MakeOrtho(0.0f, _allocatedSize.width, 0.0f, _allocatedSize.height, -1024.0f, 1024.0f);
+}
+
+-(void)destroy
+{
+    [super destroy];
+    _allocatedSize = CGSizeMake(0.0f, 0.0f);
 }
 
 -(void)begin
@@ -123,9 +131,11 @@
 	// Don't call visit on its children
 	if(!_visible) return;
     
-    if(_contentSizeChanged)
+    CGSize pointSize = self.contentSizeInPoints;
+    if (!CGSizeEqualToSize(pointSize, _allocatedSize))
     {
         [self destroy];
+        [self contentSizeChanged];
         _contentSizeChanged = NO;
     }
 	
@@ -222,12 +232,6 @@
     
     // And then copy the new effect's uniforms into the node's uniforms dictionary.
     [_shaderUniforms addEntriesFromDictionary:_effect.shaderUniforms];
-}
-
-- (void)setContentSizeType:(CCSizeType)contentSizeType
-{
-    [super setContentSizeType:contentSizeType];
-    _contentSizeChanged = YES;
 }
 
 @end
