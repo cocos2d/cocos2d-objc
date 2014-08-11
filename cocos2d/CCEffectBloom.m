@@ -81,7 +81,7 @@
     
     if(self = [super initWithFragmentUniforms:@[u_enableGlowMap, u_luminanceThreshold, u_intensity]
                                vertexUniforms:@[u_blurDirection]
-                                      varying:@[v_blurCoords]])
+                                     varyings:@[v_blurCoords]])
     {
         
         self.debugName = @"CCEffectBloom";
@@ -92,7 +92,7 @@
     return self;
 }
 
-+(id)effectWithPixelBlurRadius:(NSUInteger)blurRadius intensity:(float)intensity luminanceThreshold:(float)luminanceThreshold
++(id)effectWithBlurRadius:(NSUInteger)blurRadius intensity:(float)intensity luminanceThreshold:(float)luminanceThreshold
 {
     return [[self alloc] initWithPixelBlurRadius:blurRadius intensity:intensity luminanceThreshold:luminanceThreshold];
 }
@@ -105,7 +105,7 @@
 -(void)setIntensity:(float)intensity
 {
     _intensity = clampf(intensity, 0.0f, 1.0f);
-    _transformedIntensity = 1.0f - _intensity;
+    _transformedIntensity = _intensity;
 }
 
 -(void)setBlurRadius:(NSUInteger)blurRadius
@@ -121,13 +121,13 @@
 
 - (void)setBlurRadiusAndDependents:(NSUInteger)blurRadius
 {
-    blurRadius = MIN(blurRadius, GAUSSIANBLUR_OPTMIZIED_RADIUS_MAX);
+    blurRadius = MIN(blurRadius, BLUR_OPTIMIZED_RADIUS_MAX);
     _blurRadius = blurRadius;
     _sigma = blurRadius / 2;
     if(_sigma == 0.0)
         _sigma = 1.0f;
     
-    _numberOfOptimizedOffsets = MIN(blurRadius / 2 + (blurRadius % 2), GAUSSIANBLUR_OPTMIZIED_RADIUS_MAX);
+    _numberOfOptimizedOffsets = MIN(blurRadius / 2 + (blurRadius % 2), BLUR_OPTIMIZED_RADIUS_MAX);
 }
 
 -(void)buildFragmentFunctions
@@ -157,7 +157,7 @@
     }
     
     // From these weights we calculate the offsets to read interpolated values from
-    NSUInteger numberOfOptimizedOffsets = MIN(_blurRadius / 2 + (_blurRadius % 2), GAUSSIANBLUR_OPTMIZIED_RADIUS_MAX);
+    NSUInteger numberOfOptimizedOffsets = MIN(_blurRadius / 2 + (_blurRadius % 2), BLUR_OPTIMIZED_RADIUS_MAX);
     NSUInteger trueNumberOfOptimizedOffsets = _blurRadius / 2 + (_blurRadius % 2);
     
     NSMutableString *shaderString = [[NSMutableString alloc] init];
@@ -169,17 +169,27 @@
     
     [shaderString appendString:@"if(u_enableGlowMap == 0.0) {\n"];
      
+    [shaderString appendString:@"const vec3 luminanceWeighting = vec3(0.2125, 0.7154, 0.0721);\n"];
+    [shaderString appendString:@"vec4 srcPixel; float luminanceCheck;\n"];
+
     // Inner texture loop
-    [shaderString appendFormat:@"src += texture2D(cc_PreviousPassTexture, v_blurCoordinates[0]) * %f;\n", standardGaussianWeights[0]];
+    [shaderString appendFormat:@"srcPixel = texture2D(cc_PreviousPassTexture, v_blurCoordinates[0]);\n"];
+    [shaderString appendString:@"luminanceCheck = step(u_luminanceThreshold, dot(srcPixel.rgb, luminanceWeighting));\n"];
+    [shaderString appendFormat:@"src += luminanceCheck * srcPixel * %f;\n", standardGaussianWeights[0]];
     
     for (NSUInteger currentBlurCoordinateIndex = 0; currentBlurCoordinateIndex < numberOfOptimizedOffsets; currentBlurCoordinateIndex++)
     {
         GLfloat firstWeight = standardGaussianWeights[currentBlurCoordinateIndex * 2 + 1];
         GLfloat secondWeight = standardGaussianWeights[currentBlurCoordinateIndex * 2 + 2];
         GLfloat optimizedWeight = firstWeight + secondWeight;
-        
-        [shaderString appendFormat:@"src += texture2D(cc_PreviousPassTexture, v_blurCoordinates[%lu]) * %f;\n", (unsigned long)((currentBlurCoordinateIndex * 2) + 1), optimizedWeight];
-        [shaderString appendFormat:@"src += texture2D(cc_PreviousPassTexture, v_blurCoordinates[%lu]) * %f;\n", (unsigned long)((currentBlurCoordinateIndex * 2) + 2), optimizedWeight];
+
+        [shaderString appendFormat:@"srcPixel = texture2D(cc_PreviousPassTexture, v_blurCoordinates[%lu]);\n", (unsigned long)((currentBlurCoordinateIndex * 2) + 1)];
+        [shaderString appendString:@"luminanceCheck = step(u_luminanceThreshold, dot(srcPixel.rgb, luminanceWeighting));\n"];
+        [shaderString appendFormat:@"src += luminanceCheck * srcPixel * %f;\n", optimizedWeight];
+
+        [shaderString appendFormat:@"srcPixel = texture2D(cc_PreviousPassTexture, v_blurCoordinates[%lu]);\n", (unsigned long)((currentBlurCoordinateIndex * 2) + 2)];
+        [shaderString appendString:@"luminanceCheck = step(u_luminanceThreshold, dot(srcPixel.rgb, luminanceWeighting));\n"];
+        [shaderString appendFormat:@"src += luminanceCheck * srcPixel * %f;\n", optimizedWeight];        
     }
     
     // If the number of required samples exceeds the amount we can pass in via varyings, we have to do dependent texture reads in the fragment shader
@@ -194,15 +204,16 @@
             
             GLfloat optimizedWeight = firstWeight + secondWeight;
             GLfloat optimizedOffset = (firstWeight * (currentOverlowTextureRead * 2 + 1) + secondWeight * (currentOverlowTextureRead * 2 + 2)) / optimizedWeight;
-            
-            [shaderString appendFormat:@"src += texture2D(cc_PreviousPassTexture, v_blurCoordinates[0] + singleStepOffset * %f) * %f;\n", optimizedOffset, optimizedWeight];
-            [shaderString appendFormat:@"src += texture2D(cc_PreviousPassTexture, v_blurCoordinates[0] - singleStepOffset * %f) * %f;\n", optimizedOffset, optimizedWeight];
+
+            [shaderString appendFormat:@"srcPixel = texture2D(cc_PreviousPassTexture, v_blurCoordinates[0] + singleStepOffset * %f);\n", optimizedOffset];
+            [shaderString appendString:@"luminanceCheck = step(u_luminanceThreshold, dot(srcPixel.rgb, luminanceWeighting));\n"];
+            [shaderString appendFormat:@"src += luminanceCheck * srcPixel * %f;\n", optimizedWeight];
+
+            [shaderString appendFormat:@"srcPixel = texture2D(cc_PreviousPassTexture, v_blurCoordinates[0] - singleStepOffset * %f);\n", optimizedOffset];
+            [shaderString appendString:@"luminanceCheck = step(u_luminanceThreshold, dot(srcPixel.rgb, luminanceWeighting));\n"];
+            [shaderString appendFormat:@"src += luminanceCheck * srcPixel * %f;\n", optimizedWeight];
         }
     }
-    
-    [shaderString appendString:@"const vec3 luminanceWeighting = vec3(0.2125, 0.7154, 0.0721);\n\
-     float luminance = dot(src.rgb, luminanceWeighting);\n\
-     if(luminance < u_luminanceThreshold)\n discard;\n"];
     
     [shaderString appendString:@"} else {\n"];
     [shaderString appendString:@"\
@@ -214,7 +225,7 @@
     // Choose one?
     // TODO: try using min(src, dst) to create a gloomEffect
     // NSString* additiveBlending =  @"src + dst";
-    NSString* screenBlending = @"(src + dst) - ((src * dst) * u_intensity)";
+    NSString* screenBlending = @"(src * u_intensity + dst) - ((src * dst) * u_intensity)";
     
     [shaderString appendFormat:@"\
      return %@;\n", screenBlending];
@@ -328,7 +339,7 @@
 
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_enableGlowMap"]] = [NSNumber numberWithFloat:0.0f];
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_luminanceThreshold"]] = [NSNumber numberWithFloat:_luminanceThreshold];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_luminanceThreshold"]] = [NSNumber numberWithFloat:0.0f];
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_intensity"]] = [NSNumber numberWithFloat:_transformedIntensity];
         
         GLKVector2 dur = GLKVector2Make(0.0, 1.0 / (previousPassTexture.pixelHeight / previousPassTexture.contentScale));
@@ -344,7 +355,7 @@
         
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_enableGlowMap"]] = [NSNumber numberWithFloat:1.0f];
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_luminanceThreshold"]] = [NSNumber numberWithFloat:_luminanceThreshold];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_luminanceThreshold"]] = [NSNumber numberWithFloat:0.0f];
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_intensity"]] = [NSNumber numberWithFloat:_transformedIntensity];
         
     } copy]];
@@ -364,7 +375,7 @@
     {
         unsigned long count = (unsigned long)(1 + (_numberOfOptimizedOffsets * 2));
         CCEffectVarying* v_blurCoords = [CCEffectVarying varying:@"vec2" name:@"v_blurCoordinates" count:count];
-        [self setVarying:@[v_blurCoords]];
+        [self setVaryings:@[v_blurCoords]];
 
         [self buildFragmentFunctions];
         [self buildVertexFunctions];
