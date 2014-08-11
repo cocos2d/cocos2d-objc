@@ -100,6 +100,7 @@ static const GLchar *CCVertexShaderHeader =
 static const GLchar *CCFragmentShaderHeader =
 	"#ifdef GL_ES\n"
 	"precision " XSTR(CC_SHADER_DEFAULT_FRAGMENT_PRECISION) " float;\n"
+    "#extension GL_OES_standard_derivatives : enable\n"
 	"#endif\n\n"
 	"// End Cocos2D fragment shader header.\n\n";
 

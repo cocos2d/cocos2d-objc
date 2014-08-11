@@ -16,6 +16,28 @@
 	return self;
 }
 
+-(void)setupOuterGlowEffectTest
+{
+    self.subTitle = @"OuterGlow Effect Test";
+    
+    CCNodeColor* environment = [CCNodeColor nodeWithColor:[CCColor whiteColor]];
+    environment.positionType = CCPositionTypeNormalized;
+    environment.anchorPoint = ccp(0.5, 0.5);
+    environment.position = ccp(0.5f, 0.5f);
+    
+    [self.contentNode addChild:environment];
+    
+    CCColor *glowColor = [CCColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:0.5];
+    CCEffectOuterGlow* effect = [CCEffectOuterGlow effectWithGlowColor:glowColor];
+    
+    CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"Images/dist4.tga"];
+    sampleSprite.position = ccp(0.5, 0.5);
+    sampleSprite.positionType = CCPositionTypeNormalized;
+    sampleSprite.effect = effect;
+    
+    [self.contentNode addChild:sampleSprite];
+}
+
 -(void)setupDropShadowEffectTest
 {
     self.subTitle = @"DropShadow Effect Test";
