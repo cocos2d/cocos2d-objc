@@ -29,6 +29,11 @@
 #import "CCColor.h"
 
 
+#if __CC_PLATFORM_IOS
+#import <UIKit/UIApplication.h>
+#endif
+
+
 @class CCTexture;
 @class CCDirector;
 @class CCBlendMode;
@@ -50,7 +55,7 @@
 @property(nonatomic, readonly) NSMutableDictionary *shaderUniforms;
 
 /// The rendering state this node will use when rendering.
-@property(nonatomic, readonly) CCRenderState *renderState;
+@property(nonatomic, readonly, strong) CCRenderState *renderState;
 
 @end
 
@@ -59,7 +64,7 @@
 @protocol CCEffectProtocol <NSObject>
 
 /** Effect which will be applied to this sprite, NOTE: effect will overwrite any custom CCShader settings. */
-@property (nonatomic) CCEffect* effect;
+@property (nonatomic, strong) CCEffect* effect;
 
 @end
 
@@ -75,7 +80,7 @@
 @property(nonatomic, readwrite, strong) CCBlendMode *blendMode;
 
 /// The rendering state this node will use when rendering.
-@property(nonatomic, readonly) CCRenderState *renderState;
+@property(nonatomic, readonly, strong) CCRenderState *renderState;
 
 /** set the source blending function for the texture */
 -(void) setBlendFunc:(ccBlendFunc)blendFunc __attribute__((deprecated));
@@ -103,7 +108,7 @@
 @property(nonatomic, strong) CCTexture *texture;
 
 /// The rendering state this node will use when rendering.
-@property(nonatomic, readonly) CCRenderState *renderState;
+@property(nonatomic, readonly, strong) CCRenderState *renderState;
 
 @end
 

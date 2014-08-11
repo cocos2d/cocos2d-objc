@@ -561,6 +561,20 @@ static inline void logConfig(EGLDisplay display, EGLConfig conf) {
     eglSwapBuffers(_eglDisplay, _eglSurface);
 }
 
+#warning TODO temporary
+-(void)addFrameCompletionHandler:(dispatch_block_t)handler
+{
+	handler();
+}
+
+-(void)beginFrame {}
+
+#warning TODO temporary
+-(void)presentFrame
+{
+	[self swapBuffers];
+}
+
 @end
 #endif // __CC_PLATFORM_ANDROID
 

@@ -31,6 +31,7 @@
 #import "CCShader_private.h"
 #import "CCDirector_Private.h"
 #import "CCGL.h"
+#import "CCRenderDispatch.h"
 
 @interface CCShader()
 +(GLuint)createVAOforCCVertexBuffer:(GLuint)vbo elementBuffer:(GLuint)ebo;
@@ -142,10 +143,7 @@ const NSString *CCBlendEquationAlpha = @"CCBlendEquationAlpha";
 @end
 
 
-@implementation CCBlendMode {
-	@public
-	NSDictionary *_options;
-}
+@implementation CCBlendMode
 
 -(instancetype)initWithOptions:(NSDictionary *)options
 {
@@ -165,7 +163,7 @@ static CCBlendMode *CCBLEND_PREMULTIPLIED_ALPHA = nil;
 static CCBlendMode *CCBLEND_ADD = nil;
 static CCBlendMode *CCBLEND_MULTIPLY = nil;
 
-static NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
+NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 
 +(void)initialize
 {
@@ -263,15 +261,7 @@ static NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 @end
 
 
-@implementation CCRenderState {
-	CCTexture *_mainTexture;
-	BOOL _immutable;
-    
-@package
-	CCBlendMode *_blendMode;
-	CCShader *_shader;
-	NSDictionary *_shaderUniforms;
-}
+@implementation CCRenderState
 
 CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
 CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
@@ -354,29 +344,10 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 @end
 
 
-@interface CCRenderer()
--(void)bindVAO:(BOOL)bind;
--(void)setRenderState:(CCRenderState *)renderState;
-@end
-
-
 //MARK: Draw Command.
-@interface CCRenderCommandDraw : NSObject<CCRenderCommand>
-
-//@property(nonatomic, readonly) NSDictionary *renderOptions;
-@property(nonatomic, readonly) GLint first;
-@property(nonatomic, readonly) GLsizei elements;
-
-@end
 
 
-@implementation CCRenderCommandDraw {
-	GLenum _mode;
-	
-@package
-	CCRenderState *_renderState;
-	NSInteger _globalSortOrder;
-}
+@implementation CCRenderCommandDraw
 
 -(instancetype)initWithMode:(GLenum)mode renderState:(CCRenderState *)renderState first:(GLint)first elements:(GLsizei)elements globalSortOrder:(NSInteger)globalSortOrder
 {
@@ -513,34 +484,179 @@ SortQueue(NSMutableArray *queue)
 @end
 
 
+// MARK: CCGraphicsBuffer
+
+
+@implementation CCGraphicsBuffer
+
+-(instancetype)initWithCapacity:(NSUInteger)capacity elementSize:(size_t)elementSize type:(intptr_t)type;
+{
+	if((self = [super init])){
+		_count = 0;
+		_capacity = capacity;
+		_elementSize = elementSize;
+
+		_ptr = calloc(capacity, elementSize);
+
+		GLuint glbuffer = 0;
+		glGenBuffers(1, &glbuffer);
+		_data = (intptr_t)glbuffer;
+		_type = type;
+	}
+	
+	return self;
+}
+
+-(void)destroy
+{
+	free(_ptr);
+	_ptr = NULL;
+	
+	glDeleteBuffers(1, (GLuint *)&_data);
+	_data = 0;
+}
+
+-(void)dealloc
+{
+	[self destroy];
+}
+
+-(void)resize:(size_t)newCapacity;
+{
+	_ptr = realloc(_ptr, newCapacity*_elementSize);
+	_capacity = newCapacity;
+}
+
+-(void)prepare;
+{
+	_count = 0;
+}
+
+-(void)commit;
+{
+	GLenum type = (GLenum)_type;
+	glBindBuffer(type, (GLuint)_data);
+	glBufferData(type, (GLsizei)(_count*_elementSize), _ptr, GL_STREAM_DRAW);
+	glBindBuffer(type, 0);
+}
+
+@end
+
+
+#warning TODO Android support. Need to check for GL_OES_mapbuffer and GL_EXT_map_buffer_range.
+#if __CC_PLATFORM_IOS
+
+@interface CCGraphicsBufferUnsynchronized : CCGraphicsBuffer @end
+@implementation CCGraphicsBufferUnsynchronized {
+	GLvoid *(*_mapBufferRange)(GLenum target, GLintptr offset, GLsizeiptr length, GLbitfield access);
+	GLvoid (*_flushMappedBufferRange)(GLenum target, GLintptr offset, GLsizeiptr length);
+	GLboolean (*_unmapBuffer)(GLenum target);
+}
+
+#define BUFFER_ACCESS_WRITE (GL_MAP_WRITE_BIT_EXT | GL_MAP_UNSYNCHRONIZED_BIT_EXT | GL_MAP_INVALIDATE_BUFFER_BIT_EXT | GL_MAP_FLUSH_EXPLICIT_BIT_EXT)
+#define BUFFER_ACCESS_READ (GL_MAP_READ_BIT_EXT)
+
+-(instancetype)initWithCapacity:(NSUInteger)capacity elementSize:(size_t)elementSize type:(intptr_t)type
+{
+	if((self = [super init])){
+		// TODO Does Android look up GL functions by name like Windows/Linux?
+		_mapBufferRange = glMapBufferRangeEXT;
+		_flushMappedBufferRange = glFlushMappedBufferRangeEXT;
+		_unmapBuffer = glUnmapBufferOES;
+		
+		GLuint glbuffer = 0;
+		glGenBuffers(1, &glbuffer);
+		CC_CHECK_GL_ERROR_DEBUG();
+		
+		_count = 0;
+		_capacity = capacity;
+		_elementSize = elementSize;
+		_data = (intptr_t)glbuffer;
+		_type = type;
+		
+		GLenum target = (GLenum)_type;
+		glBindBuffer(target, (GLuint)_data);
+		glBufferData(target, capacity*_elementSize, NULL, GL_STREAM_DRAW);
+		_ptr = _mapBufferRange(target, 0, (GLsizei)(_capacity*_elementSize), BUFFER_ACCESS_WRITE);
+		glBindBuffer(target, 0);
+		CC_CHECK_GL_ERROR_DEBUG();
+	}
+	
+	return self;
+}
+
+-(void)destroy
+{
+	glDeleteBuffers(1, (GLuint *)&_data);
+	_data = 0;
+	CC_CHECK_GL_ERROR_DEBUG();
+}
+
+-(void)resize:(size_t)newCapacity
+{
+	// This is a little tricky.
+	// Need to resize the existing GL buffer object without creating a new name.
+	
+	// Make the buffer readable.
+	GLenum target = (GLenum)_type;
+	glBindBuffer(target, (GLuint)_data);
+	GLsizei oldLength = (GLsizei)(_count*_elementSize);
+	_flushMappedBufferRange(target, 0, oldLength);
+	_unmapBuffer(target);
+	void *oldBufferPtr = _mapBufferRange(target, 0, oldLength, BUFFER_ACCESS_READ);
+	
+	// Copy the old contents into a temp buffer.
+	GLsizei newLength = (GLsizei)(newCapacity*_elementSize);
+	void *tempBufferPtr = malloc(newLength);
+	memcpy(tempBufferPtr, oldBufferPtr, oldLength);
+	
+	// Copy that into a new GL buffer.
+	_unmapBuffer(target);
+	glBufferData(target, newLength, tempBufferPtr, GL_STREAM_DRAW);
+	void *newBufferPtr = _mapBufferRange(target, 0, newLength, BUFFER_ACCESS_WRITE);
+	
+	// Cleanup.
+	free(tempBufferPtr);
+	glBindBuffer(target, 0);
+	CC_CHECK_GL_ERROR_DEBUG();
+	
+	// Update values.
+	_ptr = newBufferPtr;
+	_capacity = newCapacity;
+}
+
+-(void)prepare
+{
+	_count = 0;
+	
+	GLenum target = (GLenum)_type;
+	glBindBuffer(target, (GLuint)_data);
+	_ptr = _mapBufferRange(target, 0, (GLsizei)(_capacity*_elementSize), BUFFER_ACCESS_WRITE);
+	glBindBuffer(target, 0);
+	CC_CHECK_GL_ERROR_DEBUG();
+}
+
+-(void)commit
+{
+	GLenum target = (GLenum)_type;
+	glBindBuffer(target, (GLuint)_data);
+	_flushMappedBufferRange(target, 0, (GLsizei)(_count*_elementSize));
+	_unmapBuffer(target);
+	glBindBuffer(target, 0);
+	CC_CHECK_GL_ERROR_DEBUG();
+	
+	_ptr = NULL;
+}
+
+@end
+
+#endif
+
+
 //MARK: Render Queue
 
 
-@implementation CCRenderer {
-	GLuint _vao;
-	GLuint _vbo;
-	GLuint _ebo;
-	
-	CCRenderState *_renderState;
-	NSDictionary *_blendOptions;
-	
-	CCShader *_shader;
-	NSDictionary *_shaderUniforms;
-	
-	BOOL _vaoBound;
-	
-	NSMutableArray *_queue;
-	NSMutableArray *_queueStack;
-	__unsafe_unretained CCRenderCommandDraw *_lastDrawCommand;
-	
-	CCVertex *_vertexes;
-	GLsizei _vertexCount, _vertexCapacity;
-	
-	GLushort *_elements;
-	GLsizei _elementCount, _elementCapacity;
-	
-	NSUInteger _statDrawCommands;
-}
+@implementation CCRenderer
 
 -(void)invalidateState
 {
@@ -555,22 +671,25 @@ SortQueue(NSMutableArray *queue)
 -(instancetype)init
 {
 	if((self = [super init])){
-		CCGL_DEBUG_PUSH_GROUP_MARKER("CCRenderer: Init");
+#warning Temporary
+#if __CC_PLATFORM_IOS
+		Class bufferType = [CCGraphicsBufferUnsynchronized class];
+#else
+		Class bufferType = [CCGraphicsBuffer class];
+#endif
 		
-		glGenBuffers(1, &_vbo);
-		glGenBuffers(1, &_ebo);
-		
-		_vao = [CCShader createVAOforCCVertexBuffer:_vbo elementBuffer:_ebo];
-		
+		CCRenderDispatch(NO, ^{
+			const NSUInteger CCRENDERER_INITIAL_VERTEX_CAPACITY = 16*1024;
+			_vertexBuffer = [[bufferType alloc] initWithCapacity:CCRENDERER_INITIAL_VERTEX_CAPACITY elementSize:sizeof(CCVertex) type:GL_ARRAY_BUFFER];
+			_elementBuffer = [[bufferType alloc] initWithCapacity:CCRENDERER_INITIAL_VERTEX_CAPACITY*1.5 elementSize:sizeof(uint16_t) type:GL_ELEMENT_ARRAY_BUFFER];
+			
+			CCGL_DEBUG_PUSH_GROUP_MARKER("CCRenderer: Init");
+			_vao = [CCShader createVAOforCCVertexBuffer:(GLuint)_vertexBuffer->_data elementBuffer:(GLuint)_elementBuffer->_data];
 		CCGL_DEBUG_POP_GROUP_MARKER();
+		});
 		
+		_threadsafe = YES;
 		_queue = [NSMutableArray array];
-		
-		_vertexCapacity = 2*1024;
-		_vertexes = calloc(_vertexCapacity, sizeof(*_vertexes));
-		
-		_elementCapacity = 2*1024;
-		_elements = calloc(_elementCapacity, sizeof(*_elements));
 	}
 	
 	return self;
@@ -578,16 +697,15 @@ SortQueue(NSMutableArray *queue)
 
 -(void)dealloc
 {
-	CCGL_DEBUG_PUSH_GROUP_MARKER("CCRenderer: Dealloc");
+	#warning Possible deadlock here when releasing the buffers.
 	
-	glDeleteVertexArrays(1, &_vao);
-	glDeleteBuffers(1, &_vbo);
-	glDeleteBuffers(1, &_ebo);
+	GLuint vao = _vao;
 	
-	CCGL_DEBUG_POP_GROUP_MARKER();
-	
-	free(_vertexes);
-	free(_elements);
+	CCRenderDispatch(NO, ^{
+		CCGL_DEBUG_PUSH_GROUP_MARKER("CCRenderer: Dealloc");
+		glDeleteVertexArrays(1, &vao);
+		CCGL_DEBUG_POP_GROUP_MARKER();
+	});
 }
 
 static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
@@ -627,70 +745,10 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	}
 }
 
--(void)setRenderState:(CCRenderState *)renderState
-{
-	[self bindVAO:YES];
-	if(renderState == _renderState) return;
-	
-	CCGL_DEBUG_PUSH_GROUP_MARKER("CCRenderer: Render State");
-	
-	// Set the blending state.
-	__unsafe_unretained NSDictionary *blendOptions = renderState->_blendMode->_options;
-	if(blendOptions != _blendOptions){
-		CCGL_DEBUG_INSERT_EVENT_MARKER("Blending mode");
-		
-		if(blendOptions == CCBLEND_DISABLED_OPTIONS){
-			if(_blendOptions != CCBLEND_DISABLED_OPTIONS) glDisable(GL_BLEND);
-		} else {
-			if(_blendOptions == nil || _blendOptions == CCBLEND_DISABLED_OPTIONS) glEnable(GL_BLEND);
-			
-			glBlendFuncSeparate(
-                                [blendOptions[CCBlendFuncSrcColor] unsignedIntValue],
-                                [blendOptions[CCBlendFuncDstColor] unsignedIntValue],
-                                [blendOptions[CCBlendFuncSrcAlpha] unsignedIntValue],
-                                [blendOptions[CCBlendFuncDstAlpha] unsignedIntValue]
-                                );
-			
-			glBlendEquationSeparate(
-                                    [blendOptions[CCBlendEquationColor] unsignedIntValue],
-                                    [blendOptions[CCBlendEquationAlpha] unsignedIntValue]
-                                    );
-		}
-		
-		_blendOptions = blendOptions;
-	}
-	
-	// Bind the shader.
-	__unsafe_unretained CCShader *shader = renderState->_shader;
-	if(shader != _shader){
-		CCGL_DEBUG_INSERT_EVENT_MARKER("Shader");
-		
-		glUseProgram(shader->_program);
-		
-		_shader = shader;
-		_shaderUniforms = nil;
-	}
-	
-	// Set the shader's uniform state.
-	__unsafe_unretained NSDictionary *shaderUniforms = renderState->_shaderUniforms;
-	__unsafe_unretained NSDictionary *globalShaderUniforms = _globalShaderUniforms;
-	if(shaderUniforms != _shaderUniforms){
-		CCGL_DEBUG_INSERT_EVENT_MARKER("Uniforms");
-		
-		__unsafe_unretained NSDictionary *setters = shader->_uniformSetters;
-		for(NSString *uniformName in setters){
-			__unsafe_unretained CCUniformSetter setter = setters[uniformName];
-			setter(self, shaderUniforms, globalShaderUniforms);
-		}
-		_shaderUniforms = shaderUniforms;
-	}
-	
-	CCGL_DEBUG_POP_GROUP_MARKER();
-	CC_CHECK_GL_ERROR_DEBUG();
-	
-	_renderState = renderState;
-	return;
-}
+//Implemented in CCNoARC.m
+//-(void)setRenderState:(CCRenderState *)renderState
+//-(CCRenderBuffer)enqueueTriangles:(NSUInteger)triangleCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
+//-(CCRenderBuffer)enqueueLines:(NSUInteger)lineCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
 
 -(void)enqueueClear:(GLbitfield)mask color:(GLKVector4)color4 depth:(GLclampf)depth stencil:(GLint)stencil globalSortOrder:(NSInteger)globalSortOrder
 {
@@ -703,85 +761,12 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	} globalSortOrder:globalSortOrder debugLabel:@"CCRenderer: Clear" threadSafe:YES];
 }
 
--(CCVertex *)ensureVertexCapacity:(NSUInteger)requestedCount
-{
-	NSAssert(requestedCount > 0, @"Vertex count must be positive.");
-	
-	GLsizei required = _vertexCount + (GLsizei)requestedCount;
-	if(required > _vertexCapacity){
-		// Double the size of the buffer until it fits.
-		while(required >= _vertexCapacity) _vertexCapacity *= 2;
-		
-		_vertexes = realloc(_vertexes, _vertexCapacity*sizeof(*_vertexes));
-	}
-	
-	// Return the triangle buffer pointer.
-	return &_vertexes[_vertexCount];
-}
-
--(GLushort *)ensureElementCapacity:(NSUInteger)requestedCount
-{
-	NSAssert(requestedCount > 0, @"Element count must be positive.");
-	
-	GLsizei required = _elementCount + (GLsizei)requestedCount;
-	if(required > _elementCapacity){
-		// Double the size of the buffer until it fits.
-		while(required >= _elementCapacity) _elementCapacity *= 2;
-		
-		_elements = realloc(_elements, _elementCapacity*sizeof(*_elements));
-	}
-	
-	// Return the triangle buffer pointer.
-	return &_elements[_elementCount];
-}
-
--(CCRenderBuffer)enqueueTriangles:(NSUInteger)triangleCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
-{
-	__unsafe_unretained CCRenderCommandDraw *previous = _lastDrawCommand;
-	CCVertex *vertexes = [self ensureVertexCapacity:vertexCount];
-	GLushort *elements = [self ensureElementCapacity:3*triangleCount];
-	
-	if(previous && previous->_renderState == renderState && previous->_globalSortOrder == globalSortOrder){
-		// Batch with the previous command.
-		[previous batchElements:(GLsizei)(3*triangleCount)];
-	} else {
-		// Start a new command.
-		CCRenderCommandDraw *command = [[CCRenderCommandDraw alloc] initWithMode:GL_TRIANGLES renderState:renderState first:(GLint)_elementCount elements:(GLsizei)(3*triangleCount) globalSortOrder:globalSortOrder];
-		[_queue addObject:command];
-		_lastDrawCommand = command;
-	}
-	
-	CCRenderBuffer buffer = {vertexes, elements, _vertexCount};
-	_vertexCount += vertexCount;
-	_elementCount += 3*triangleCount;
-	
-	_statDrawCommands++;
-	return buffer;
-}
-
--(CCRenderBuffer)enqueueLines:(NSUInteger)lineCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
-{
-	CCVertex *vertexes = [self ensureVertexCapacity:vertexCount];
-	GLushort *elements = [self ensureElementCapacity:2*lineCount];
-	
-	CCRenderCommandDraw *command = [[CCRenderCommandDraw alloc] initWithMode:GL_LINES renderState:renderState first:(GLint)_elementCount elements:(GLsizei)(2*lineCount) globalSortOrder:globalSortOrder];
-	[_queue addObject:command];
-	
-	// Line drawing commands are currently intended for debugging and cannot be batched.
-	_lastDrawCommand = nil;
-	
-	CCRenderBuffer buffer = {vertexes, elements, _vertexCount};
-	_vertexCount += vertexCount;
-	_elementCount += 2*lineCount;
-	
-	_statDrawCommands++;
-	return buffer;
-}
-
 -(void)enqueueBlock:(void (^)())block globalSortOrder:(NSInteger)globalSortOrder debugLabel:(NSString *)debugLabel threadSafe:(BOOL)threadsafe
 {
-    [_queue addObject:[[CCRenderCommandCustom alloc] initWithBlock:block debugLabel:debugLabel globalSortOrder:globalSortOrder]];
-    _lastDrawCommand = nil;
+	[_queue addObject:[[CCRenderCommandCustom alloc] initWithBlock:block debugLabel:debugLabel globalSortOrder:globalSortOrder]];
+	_lastDrawCommand = nil;
+	
+	if(!threadsafe) _threadsafe = NO;
 }
 
 -(void)enqueueMethod:(SEL)selector target:(id)target
@@ -795,6 +780,8 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 -(void)enqueueRenderCommand: (id<CCRenderCommand>) renderCommand {
 	[_queue addObject: renderCommand];
 	_lastDrawCommand = nil;
+	
+	_threadsafe = NO;
 }
 
 -(void)pushGroup;
@@ -824,31 +811,26 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 -(void)flush
 {
 	CCGL_DEBUG_PUSH_GROUP_MARKER("CCRenderer: Flush");
-	CCGL_DEBUG_INSERT_EVENT_MARKER("Buffering");
-
-	glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-	glBufferData(GL_ARRAY_BUFFER, _vertexCount*sizeof(*_vertexes), _vertexes, GL_STREAM_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, _elementCount*sizeof(*_elements), _elements, GL_STREAM_DRAW);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	CCGL_DEBUG_INSERT_EVENT_MARKER("Buffering");
+	[_vertexBuffer commit];
+	[_elementBuffer commit];
 	CC_CHECK_GL_ERROR_DEBUG();
 	
 	SortQueue(_queue);
 	for(id<CCRenderCommand> command in _queue) [command invokeOnRenderer:self];
 	[self bindVAO:NO];
 	
-//	NSLog(@"Draw commands: %d, Draw calls: %d", _statDrawCommands, _queue.count);
-	_statDrawCommands = 0;
-    [_queue removeAllObjects];
+	[_queue removeAllObjects];
 	
-	_vertexCount = 0;
-	_elementCount = 0;
+	[_vertexBuffer prepare];
+	[_elementBuffer prepare];
+	
 	CCGL_DEBUG_POP_GROUP_MARKER();
 	CC_CHECK_GL_ERROR_DEBUG();
-    
-//	CC_INCREMENT_GL_DRAWS(1);
+	
+	[self invalidateState];
+	_threadsafe = YES;
 }
 
 @end

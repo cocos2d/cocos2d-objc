@@ -751,10 +751,8 @@
     return (otherGestureRecognizer == _panRecognizer || otherGestureRecognizer == _tapRecognizer);
 }
 
-
 - (void) onEnterTransitionDidFinish
 {
-#if __CC_PLATFORM_IOS
     // Add recognizers to view
     UIView* view = [CCDirector sharedDirector].view;
     
@@ -764,20 +762,11 @@
     [recognizers insertObject:_tapRecognizer atIndex:0];
     
     view.gestureRecognizers = recognizers;
-#elif __CC_PLATFORM_ANDROID
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if(_detector)
-        {
-            [[[CCDirector sharedDirector] view] addGestureDetector:_detector];
-        }
-    });
-#endif
     [super onEnterTransitionDidFinish];
 }
 
 - (void) onExitTransitionDidStart
 {
-
     // Remove recognizers from view
     UIView* view = [CCDirector sharedDirector].view;
     
@@ -786,7 +775,6 @@
     [recognizers removeObject:_tapRecognizer];
     
     view.gestureRecognizers = recognizers;
-
     [super onExitTransitionDidStart];
 }
 

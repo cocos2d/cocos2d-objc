@@ -81,7 +81,7 @@ static GLKMatrix4 matrixWithHue(float hue);
 #endif
                           ];
     
-    if((self = [super initWithFragmentUniforms:uniforms vertexUniforms:nil varying:nil]))
+    if((self = [super initWithFragmentUniforms:uniforms vertexUniforms:nil varyings:nil]))
     {
         _hue = hue;
 #if CCEFFECTHUE_USES_COLOR_MATRIX

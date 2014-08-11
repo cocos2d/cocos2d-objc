@@ -33,6 +33,7 @@
 #import "Platforms/CCGL.h"
 #import "CCResponderManager.h"
 #import "CCRenderer.h"
+#import "CCDirectorView.h"
 
 /**
  Possible OpenGL projections used by director
@@ -61,10 +62,16 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 
 #if __CC_PLATFORM_IOS
 #define CC_VIEWCONTROLLER UIViewController
+#define CC_VIEW UIView
+
 #elif __CC_PLATFORM_MAC
 #define CC_VIEWCONTROLLER NSObject
+#define CC_VIEW NSOpenGLView
+
 #elif __CC_PLATFORM_ANDROID
 #define CC_VIEWCONTROLLER NSObject
+#define CC_VIEW CCGLView
+
 #endif
 
 
@@ -153,10 +160,7 @@ and when to execute the Scenes.
     /* fixed timestep action manager associated with this director */
     CCActionManager *_actionManagerFixed;
 	
-	/*  OpenGLView. On iOS it is a copy of self.view */
-	CCGLView		*__view;
-	
-	CCRenderer *_renderer;
+	NSMutableArray *_rendererPool;
 }
 
 /** returns the cocos2d thread.
@@ -209,6 +213,9 @@ and when to execute the Scenes.
 
 /// The current global shader values values.
 @property(nonatomic, readonly) NSMutableDictionary *globalShaderUniforms;
+
+/// View used by the director for rendering.
+@property(nonatomic, strong) CC_VIEW<CCDirectorView> *view;
 
 /** returns a shared instance of the director */
 +(CCDirector*)sharedDirector;
@@ -383,16 +390,6 @@ and when to execute the Scenes.
  @warning Don't call this function to start the main loop. To run the main loop call runWithScene
  */
 -(void) startAnimation;
-
-
-#if __CC_PLATFORM_MAC || __CC_PLATFORM_ANDROID
-// XXX: Hack. Should be placed on CCDirectorMac.h. Refactoring needed
-// sets the openGL view
--(void) setView:(CCGLView*)view;
-
-/** returns the OpenGL view */
--(CCGLView*) view;
-#endif
 
 #pragma mark Director - Memory Helper
 

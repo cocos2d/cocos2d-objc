@@ -24,6 +24,7 @@
 
 #import "cocos2d.h"
 #import "CCControl.h"
+
 @class CCPlatformTextField;
 @protocol CCPlatformTextFieldDelegate;
 

@@ -35,6 +35,7 @@
 #import "CCDirector.h"
 #import "CCCache.h"
 #import "CCGL.h"
+#import "CCRenderDispatch.h"
 
 
 enum {
@@ -335,7 +336,8 @@ SetMat4(NSString *name, GLint location)
 	};
 }
 
--(NSDictionary *)uniformSettersForProgram:(GLuint)program
+static NSDictionary *
+UniformSettersForProgram(GLuint program)
 {
 	NSMutableDictionary *uniformSetters = [NSMutableDictionary dictionary];
 	
@@ -353,14 +355,14 @@ SetMat4(NSString *name, GLint location)
 		GLenum type = 0;
 		
 		glGetActiveUniform(program, i, sizeof(cname), &length, &size, &type, cname);
-		NSAssert(size == 1, @"Uniform arrays not supported. (yet?)");
+		NSCAssert(size == 1, @"Uniform arrays not supported. (yet?)");
 		
 		NSString *name = @(cname);
 		GLint location = glGetUniformLocation(program, cname);
 		
 		// Setup a block that is responsible for binding that uniform variable's value.
 		switch(type){
-			default: NSAssert(NO, @"Uniform type not supported. (yet?)");
+			default: NSCAssert(NO, @"Uniform type not supported. (yet?)");
 			case GL_FLOAT: uniformSetters[name] = SetFloat(name, location); break;
 			case GL_FLOAT_VEC2: uniformSetters[name] = SetVec2(name, location); break;
 			case GL_FLOAT_VEC3: uniformSetters[name] = SetVec3(name, location); break;
@@ -370,7 +372,7 @@ SetMat4(NSString *name, GLint location)
 				// Sampler setters are handled a differently since the real work is binding the texture and not setting the uniform value.
 				uniformSetters[name] = ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
 					CCTexture *texture = shaderUniforms[name] ?: globalShaderUniforms[name] ?: [CCTexture none];
-					NSAssert([texture isKindOfClass:[CCTexture class]], @"Shader uniform '%@' value must be a CCTexture object.", name);
+					NSCAssert([texture isKindOfClass:[CCTexture class]], @"Shader uniform '%@' value must be a CCTexture object.", name);
 					
 					// Bind the texture to the texture unit for the uniform.
 					glActiveTexture(GL_TEXTURE0 + textureUnit);
@@ -402,29 +404,35 @@ SetMat4(NSString *name, GLint location)
 
 -(instancetype)initWithVertexShaderSource:(NSString *)vertexSource fragmentShaderSource:(NSString *)fragmentSource
 {
-	CCGL_DEBUG_PUSH_GROUP_MARKER("CCShader: Init");
+	__block typeof(self) blockself = self;
 	
-	GLuint program = glCreateProgram();
-	glBindAttribLocation(program, CCAttributePosition, "cc_Position");
-	glBindAttribLocation(program, CCAttributeTexCoord1, "cc_TexCoord1");
-	glBindAttribLocation(program, CCAttributeTexCoord2, "cc_TexCoord2");
-	glBindAttribLocation(program, CCAttributeColor, "cc_Color");
+	CCRenderDispatch(NO, ^{
+		CCGL_DEBUG_PUSH_GROUP_MARKER("CCShader: Init");
+		
+		GLuint program = glCreateProgram();
+		glBindAttribLocation(program, CCAttributePosition, "cc_Position");
+		glBindAttribLocation(program, CCAttributeTexCoord1, "cc_TexCoord1");
+		glBindAttribLocation(program, CCAttributeTexCoord2, "cc_TexCoord2");
+		glBindAttribLocation(program, CCAttributeColor, "cc_Color");
+		
+		GLint vshader = CompileShader(GL_VERTEX_SHADER, vertexSource.UTF8String);
+		glAttachShader(program, vshader);
+		
+		GLint fshader = CompileShader(GL_FRAGMENT_SHADER, fragmentSource.UTF8String);
+		glAttachShader(program, fshader);
+		
+		glLinkProgram(program);
+		NSCAssert(CCCheckShaderError(program, GL_LINK_STATUS, glGetProgramiv, glGetProgramInfoLog), @"Error linking shader program");
+		
+		glDeleteShader(vshader);
+		glDeleteShader(fshader);
+		
+		CCGL_DEBUG_POP_GROUP_MARKER();
+		
+		blockself = [blockself initWithProgram:program uniformSetters:UniformSettersForProgram(program) ownsProgram:YES];
+	});
 	
-	GLint vshader = CompileShader(GL_VERTEX_SHADER, vertexSource.UTF8String);
-	glAttachShader(program, vshader);
-	
-	GLint fshader = CompileShader(GL_FRAGMENT_SHADER, fragmentSource.UTF8String);
-	glAttachShader(program, fshader);
-	
-	glLinkProgram(program);
-	NSCAssert(CCCheckShaderError(program, GL_LINK_STATUS, glGetProgramiv, glGetProgramInfoLog), @"Error linking shader program");
-	
-	glDeleteShader(vshader);
-	glDeleteShader(fshader);
-	
-	CCGL_DEBUG_POP_GROUP_MARKER();
-	
-	return [self initWithProgram:program uniformSetters:[self uniformSettersForProgram:program] ownsProgram:YES];
+	return blockself;
 }
 
 -(instancetype)initWithFragmentShaderSource:(NSString *)source
@@ -436,7 +444,12 @@ SetMat4(NSString *name, GLint location)
 {
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
 
-	if(_ownsProgram && _program) glDeleteProgram(_program);
+	GLuint program = _program;
+	if(_ownsProgram && program){
+		CCRenderDispatch(YES, ^{
+			glDeleteProgram(program);
+		});
+	}
 }
 
 -(instancetype)copyWithZone:(NSZone *)zone

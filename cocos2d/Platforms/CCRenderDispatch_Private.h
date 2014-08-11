@@ -1,7 +1,7 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * Copyright (c) 2013-2014 Cocos2D Authors
+ * Copyright (c) 2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,35 +20,20 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
  */
 
-#import "CCSprite.h"
-#import "CCEffectRenderer.h"
-#import "CCEffect_Private.h"
+#import "CCRenderDispatch.h"
 
-@interface CCSprite () {
-	@private
-	
-	// Vertex coords, texture coords and color info.
-	CCSpriteVertexes _verts;
-	
-	// Center of extents (half width/height) of the sprite for culling purposes.
-	GLKVector2 _vertexCenter, _vertexExtents;
-	
-	CCEffect *_effect;
-	CCEffectRenderer *_effectRenderer;
-}
+#if CC_RENDER_DISPATCH_ENABLED
 
-+ (CCSpriteTexCoordSet)textureCoordsForTexture:(CCTexture *)texture withRect:(CGRect)rect rotated:(BOOL)rotated xFlipped:(BOOL)flipX yFlipped:(BOOL)flipY;
+#import <OpenGLES/EAGL.h>
 
-- (void)updateShaderUniformsFromEffect;
+// Setup the queue and return the context it uses.
+EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup *sharegroup);
 
-@end
+#endif
 
-
-@interface CCSprite(NoARC)
-
--(void)enqueueTriangles:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
-
-@end
+// Check if the queue is ready to accept rendering a frame and execute it.
+// Must be called in pairs because of CC_GL_QUEUE_SEMAPHORE.
+BOOL CCRenderDispatchBeginFrame(void);
+void CCRenderDispatchCommitFrame(BOOL threadsafe, dispatch_block_t block);

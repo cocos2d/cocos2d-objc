@@ -38,6 +38,8 @@
 #import "CCNode_Private.h"
 #import "CCRenderer_private.h"
 #import "CCRenderTexture_Private.h"
+#import "CCRenderDispatch.h"
+
 #if __CC_PLATFORM_MAC
 #import <ApplicationServices/ApplicationServices.h>
 #endif
@@ -172,13 +174,10 @@
 
 -(void)create
 {
-	CCGL_DEBUG_PUSH_GROUP_MARKER("CCRenderTexture: Create");
 
 	int pixelW = _contentSize.width*_contentScale;
 	int pixelH = _contentSize.height*_contentScale;
     
-	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
-
 	// textures must be power of two
 	NSUInteger powW;
 	NSUInteger powH;
@@ -192,24 +191,29 @@
 	}
     
 	void *data = calloc(powW*powH, 4);
-
 	CCTexture *texture = [[CCTexture alloc] initWithData:data pixelFormat:_pixelFormat pixelsWide:powW pixelsHigh:powH contentSizeInPixels:CGSizeMake(pixelW, pixelH) contentScale:_contentScale];
 	self.texture = texture;
-    
 	free(data);
+	
+	[self.texture setAliasTexParameters];
+	
+	CCRenderDispatch(NO, ^{
+		CCGL_DEBUG_PUSH_GROUP_MARKER("CCRenderTexture: Create");
+		
+		glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
+	
+		GLint oldRBO;
+		glGetIntegerv(GL_RENDERBUFFER_BINDING, &oldRBO);
 
-	GLint oldRBO;
-	glGetIntegerv(GL_RENDERBUFFER_BINDING, &oldRBO);
+		// generate FBO
+		GLuint fbo;
+		glGenFramebuffers(1, &fbo);
+		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+		
+		// associate texture with FBO
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.name, 0);
 
-	// generate FBO
-	GLuint fbo;
-	glGenFramebuffers(1, &fbo);
-	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-
-	// associate texture with FBO
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.name, 0);
-
-	GLuint depthRenderBuffer = 0;
+		GLuint depthRenderBuffer = 0;
     GLuint stencilRenderBuffer = 0;
     
 #if __CC_PLATFORM_ANDROID
@@ -248,37 +252,48 @@
                 glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depthRenderBuffer);
             }
         }
-	}
+		}
     
 #else
-    
-	if(_depthStencilFormat)
-    {
-		//create and attach depth buffer
-		glGenRenderbuffers(1, &depthRenderBuffer);
-		glBindRenderbuffer(GL_RENDERBUFFER, depthRenderBuffer);
-		glRenderbufferStorage(GL_RENDERBUFFER, _depthStencilFormat, (GLsizei)powW, (GLsizei)powH);
-		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthRenderBuffer);
+		
+		if(_depthStencilFormat)
+			{
+			//create and attach depth buffer
+			glGenRenderbuffers(1, &depthRenderBuffer);
+			glBindRenderbuffer(GL_RENDERBUFFER, depthRenderBuffer);
+			glRenderbufferStorage(GL_RENDERBUFFER, _depthStencilFormat, (GLsizei)powW, (GLsizei)powH);
+			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthRenderBuffer);
 
-		// if depth format is the one with stencil part, bind same render buffer as stencil attachment
-		if(_depthStencilFormat == GL_DEPTH24_STENCIL8){
-			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depthRenderBuffer);
+			// associate texture with FBO
+			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.name, 0);
+
+			if(_depthStencilFormat){
+				//create and attach depth buffer
+				glGenRenderbuffers(1, &depthRenderBuffer);
+				glBindRenderbuffer(GL_RENDERBUFFER, depthRenderBuffer);
+				glRenderbufferStorage(GL_RENDERBUFFER, _depthStencilFormat, (GLsizei)pixelW, (GLsizei)pixelH);
+				glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthRenderBuffer);
+
+				// if depth format is the one with stencil part, bind same render buffer as stencil attachment
+				if(_depthStencilFormat == GL_DEPTH24_STENCIL8){
+					glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depthRenderBuffer);
+				}
+			}
 		}
-	}
+		
 #endif
-    
-	// check if it worked (probably worth doing :) )
-	NSAssert( glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, @"Could not attach texture to framebuffer");
-
-    _FBO = [[CCRenderTextureFBO alloc] initWithFBO:fbo depthRenderBuffer:depthRenderBuffer stencilRenderBuffer:stencilRenderBuffer];
-    
-	[texture setAliasTexParameters];
 	
-	glBindRenderbuffer(GL_RENDERBUFFER, oldRBO);
-	glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
-	
-	CCGL_DEBUG_POP_GROUP_MARKER();
-	CC_CHECK_GL_ERROR_DEBUG();
+		// check if it worked (probably worth doing :) )
+		NSAssert( glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, @"Could not attach texture to framebuffer");
+		
+		_FBO = [[CCRenderTextureFBO alloc] initWithFBO:fbo depthRenderBuffer:depthRenderBuffer stencilRenderBuffer:stencilRenderBuffer];
+		
+		glBindRenderbuffer(GL_RENDERBUFFER, oldRBO);
+		glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
+		
+		CCGL_DEBUG_POP_GROUP_MARKER();
+		CC_CHECK_GL_ERROR_DEBUG();
+	});
 	
 	CGRect rect = CGRectMake(0, 0, _contentSize.width, _contentSize.height);
 	
@@ -302,23 +317,26 @@
 
 -(void)destroy
 {
-    GLuint fbo = _FBO.FBO;
-    glDeleteFramebuffers(1, &fbo);
+	GLuint fbo = _FBO.FBO;
+	GLuint depthRenderBuffer = _FBO.depthRenderBuffer;
+	GLuint stencilRenderBuffer = _FBO.stencilRenderBuffer;
 	
-    GLuint depthRenderBuffer = _FBO.depthRenderBuffer;
+	CCRenderDispatch(YES, ^{
+    glDeleteFramebuffers(1, &fbo);
+		
     if (depthRenderBuffer)
     {
         glDeleteRenderbuffers(1, &depthRenderBuffer);
     }
     
-    GLuint stencilRenderBuffer = _FBO.stencilRenderBuffer;
     if (depthRenderBuffer)
     {
         glDeleteRenderbuffers(1, &stencilRenderBuffer);
     }
+	});
 
-    _FBO = nil;
-    self.texture = nil;
+	_FBO = nil;
+	self.texture = nil;
 }
 
 -(void)dealloc
@@ -412,9 +430,10 @@
 	[_renderer popGroupWithDebugLabel:@"CCRenderTexture begin/end" globalSortOrder:0];
 	
 	if(_privateRenderer){
-		[_renderer flush];
 		[CCRenderer bindRenderer:nil];
 		_privateRenderer = NO;
+		
+		CCRenderDispatch(_renderer.threadsafe, ^{[_renderer flush];});
 	} else {
 		_renderer.globalShaderUniforms = _oldGlobalUniforms;
 	}
@@ -516,8 +535,7 @@
 	}
 	
     [self begin];
-    [_renderer enqueueBlock:^
-    {
+    [_renderer enqueueBlock:^{
         glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, buffer);
     } globalSortOrder:NSIntegerMax debugLabel:@"CCRenderTexture reading pixels for new image" threadSafe:NO];
     [self end];

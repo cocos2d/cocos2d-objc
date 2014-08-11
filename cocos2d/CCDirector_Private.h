@@ -83,6 +83,18 @@
 
 - (void)startTransition:(CCTransition *)transition;
 
+/// Get a renderer object to use for rendering.
+/// This method is thread safe.
+-(CCRenderer *)rendererFromPool;
+
+/// Return a renderer to a pool after rendering.
+/// This method is thread safe.
+-(void)poolRenderer:(CCRenderer *)renderer;
+
+/// Add a block to be called when the GPU finishes rendering a frame.
+/// This is used to pool rendering resources (renderers, buffers, textures, etc) without stalling the GPU pipeline.
+-(void)addFrameCompletionHandler:(dispatch_block_t)handler;
+
 @end
 
 
