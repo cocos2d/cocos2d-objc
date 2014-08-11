@@ -751,7 +751,6 @@
     return (otherGestureRecognizer == _panRecognizer || otherGestureRecognizer == _tapRecognizer);
 }
 
-#elif __CC_PLATFORM_ANDROID
 
 - (void) onEnterTransitionDidFinish
 {
@@ -776,11 +775,9 @@
     [super onEnterTransitionDidFinish];
 }
 
-
-
 - (void) onExitTransitionDidStart
 {
-#if __CC_PLATFORM_IOS
+
     // Remove recognizers from view
     UIView* view = [CCDirector sharedDirector].view;
     
@@ -789,19 +786,34 @@
     [recognizers removeObject:_tapRecognizer];
     
     view.gestureRecognizers = recognizers;
+
+    [super onExitTransitionDidStart];
+}
+
 #elif __CC_PLATFORM_ANDROID
+
+- (void) onEnterTransitionDidFinish
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if(_detector)
+        {
+            [[[CCDirector sharedDirector] view] addGestureDetector:_detector];
+        }
+    });
+    [super onEnterTransitionDidFinish];
+}
+
+- (void) onExitTransitionDidStart
+{
     dispatch_async(dispatch_get_main_queue(), ^{
         if(_detector)
         {
             [[[CCDirector sharedDirector] view] removeGestureDetector:_detector];
         }
     });
-#endif
     
     [super onExitTransitionDidStart];
 }
-
-
 
 - (CCTouchPhase)handleGestureEvent:(AndroidMotionEvent *)start end:(AndroidMotionEvent *)end
 {
