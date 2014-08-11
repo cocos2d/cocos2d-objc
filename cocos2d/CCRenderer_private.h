@@ -80,19 +80,29 @@ extern NSDictionary *CCBLEND_DISABLED_OPTIONS;
 @end
 
 
+typedef NS_ENUM(NSUInteger, CCRenderCommandDrawMode){
+	CCRenderCommandDrawTriangles,
+	CCRenderCommandDrawLines,
+	// TODO more?
+};
+
+
 @interface CCRenderCommandDraw : NSObject<CCRenderCommand> {
 	@public
-	GLenum _mode;
+	CCRenderCommandDrawMode _mode;
 	CCRenderState *_renderState;
 	NSInteger _globalSortOrder;
+	
+	NSUInteger _first;
+	size_t _count;
 }
 
-@property(nonatomic, readonly) GLint first;
-@property(nonatomic, readonly) GLsizei elements;
+@property(nonatomic, readonly) NSUInteger first;
+@property(nonatomic, readonly) size_t count;
 
--(instancetype)initWithMode:(GLenum)mode renderState:(CCRenderState *)renderState first:(GLint)first elements:(GLsizei)elements globalSortOrder:(NSInteger)globalSortOrder;
+-(instancetype)initWithMode:(CCRenderCommandDrawMode)mode renderState:(CCRenderState *)renderState first:(NSUInteger)first count:(size_t)count globalSortOrder:(NSInteger)globalSortOrder;
 
--(void)batchElements:(GLsizei)elements;
+-(void)batch:(NSUInteger)count;
 
 @end
 
