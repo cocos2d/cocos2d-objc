@@ -16,6 +16,7 @@
 #import <BridgeKitV3/BridgeKit.h>
 
 #import "../../Platforms/CCGL.h"
+#import "CCDirectorView.h"
 
 enum CCAndroidScreenMode {
     
@@ -39,7 +40,7 @@ enum CCAndroidScreenMode {
 };
 
 BRIDGE_CLASS("org.cocos2d.CCGLView")
-@interface CCGLView : AndroidSurfaceView
+@interface CCGLView : AndroidSurfaceView <CCDirectorView>
 
 - (id)initWithContext:(AndroidContext *)context;
 - (id)initWithContext:(AndroidContext *)context screenMode:(enum CCAndroidScreenMode)screenMode scaleFactor:(float)scaleFactor;

@@ -79,6 +79,7 @@
 #import "CCTexturePVR.h"
 #import "CCShader.h"
 #import "CCDirector.h"
+#import "CCRenderDispatch.h"
 
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
@@ -185,51 +186,54 @@ static CCTexture *CCTextureNone = nil;
 - (id) initWithData:(const void*)data pixelFormat:(CCTexturePixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSizeInPixels:(CGSize)sizeInPixels contentScale:(CGFloat)contentScale
 {
 	if((self = [super init])) {
-		CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Init");
-		
-		// XXX: 32 bits or POT textures uses UNPACK of 4 (is this correct ??? )
-		if( pixelFormat == CCTexturePixelFormat_RGBA8888 || ( CCNextPOT(width)==width && CCNextPOT(height)==height) )
-			glPixelStorei(GL_UNPACK_ALIGNMENT,4);
-		else
-			glPixelStorei(GL_UNPACK_ALIGNMENT,1);
+		CCRenderDispatch(NO, ^{
+			CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Init");
+			
+			// XXX: 32 bits or POT textures uses UNPACK of 4 (is this correct ??? )
+			if( pixelFormat == CCTexturePixelFormat_RGBA8888 || ( CCNextPOT(width)==width && CCNextPOT(height)==height) )
+				glPixelStorei(GL_UNPACK_ALIGNMENT,4);
+			else
+				glPixelStorei(GL_UNPACK_ALIGNMENT,1);
 
-		glGenTextures(1, &_name);
-		glBindTexture(GL_TEXTURE_2D, _name);
-		
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
+			glGenTextures(1, &_name);
+			glBindTexture(GL_TEXTURE_2D, _name);
+			
+			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
+			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
 
-		// Specify OpenGL texture image
+			// Specify OpenGL texture image
 
-		switch(pixelFormat)
-		{
-			case CCTexturePixelFormat_RGBA8888:
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei) width, (GLsizei) height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-				break;
-			case CCTexturePixelFormat_RGBA4444:
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei) width, (GLsizei) height, 0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, data);
-				break;
-			case CCTexturePixelFormat_RGB5A1:
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei) width, (GLsizei) height, 0, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, data);
-				break;
-			case CCTexturePixelFormat_RGB565:
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei) width, (GLsizei) height, 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, data);
-				break;
-			case CCTexturePixelFormat_RGB888:
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei) width, (GLsizei) height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-				break;
-			case CCTexturePixelFormat_AI88:
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, (GLsizei) width, (GLsizei) height, 0, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, data);
-				break;
-			case CCTexturePixelFormat_A8:
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, (GLsizei) width, (GLsizei) height, 0, GL_ALPHA, GL_UNSIGNED_BYTE, data);
-				break;
-			default:
-				[NSException raise:NSInternalInconsistencyException format:@""];
-
-		}
+			switch(pixelFormat)
+			{
+				case CCTexturePixelFormat_RGBA8888:
+					glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei) width, (GLsizei) height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+					break;
+				case CCTexturePixelFormat_RGBA4444:
+					glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei) width, (GLsizei) height, 0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, data);
+					break;
+				case CCTexturePixelFormat_RGB5A1:
+					glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei) width, (GLsizei) height, 0, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, data);
+					break;
+				case CCTexturePixelFormat_RGB565:
+					glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei) width, (GLsizei) height, 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, data);
+					break;
+				case CCTexturePixelFormat_RGB888:
+					glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei) width, (GLsizei) height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+					break;
+				case CCTexturePixelFormat_AI88:
+					glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, (GLsizei) width, (GLsizei) height, 0, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, data);
+					break;
+				case CCTexturePixelFormat_A8:
+					glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, (GLsizei) width, (GLsizei) height, 0, GL_ALPHA, GL_UNSIGNED_BYTE, data);
+					break;
+				default:
+					[NSException raise:NSInternalInconsistencyException format:@""];
+			}
+			
+			CCGL_DEBUG_POP_GROUP_MARKER();
+		});
 
 		_sizeInPixels  = sizeInPixels;
 		_width = width;
@@ -241,12 +245,9 @@ static CCTexture *CCTextureNone = nil;
 		_premultipliedAlpha = NO;
 
 		_hasMipmaps = NO;
-        
-        _antialiased = YES;
-
-		_contentScale = contentScale;
+		_antialiased = YES;
 		
-		CCGL_DEBUG_POP_GROUP_MARKER();
+		_contentScale = contentScale;
 	}
 	return self;
 }
@@ -296,10 +297,13 @@ static CCTexture *CCTextureNone = nil;
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
 
-	if( _name ){
-		CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Dealloc");
-		glDeleteTextures(1, &_name);
-		CCGL_DEBUG_POP_GROUP_MARKER();
+	GLuint name = _name;
+	if(name){
+		CCRenderDispatch(YES, ^{
+			CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Dealloc");
+			glDeleteTextures(1, &name);
+			CCGL_DEBUG_POP_GROUP_MARKER();
+		});
 	}
 }
 
@@ -621,67 +625,78 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 
 -(void) generateMipmap
 {
-	CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Generate Mipmap");
-	
-	NSAssert( _width == CCNextPOT(_width) && _height == CCNextPOT(_height), @"Mimpap texture only works in POT textures");
-	glBindTexture(GL_TEXTURE_2D, _name);
-	glGenerateMipmap(GL_TEXTURE_2D);
-	_hasMipmaps = YES;
-	
-	CCGL_DEBUG_POP_GROUP_MARKER();
+	CCRenderDispatch(NO, ^{
+		CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Generate Mipmap");
+		
+		NSAssert( _width == CCNextPOT(_width) && _height == CCNextPOT(_height), @"Mimpap texture only works in POT textures");
+		glBindTexture(GL_TEXTURE_2D, _name);
+		glGenerateMipmap(GL_TEXTURE_2D);
+		_hasMipmaps = YES;
+		
+		CCGL_DEBUG_POP_GROUP_MARKER();
+	});
 }
 
 -(void) setTexParameters: (ccTexParams*) texParams
 {
-	CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Set Texture Parameters");
-	
-	NSAssert( (_width == CCNextPOT(_width) && _height == CCNextPOT(_height)) ||
-				(texParams->wrapS == GL_CLAMP_TO_EDGE && texParams->wrapT == GL_CLAMP_TO_EDGE),
-			@"GL_CLAMP_TO_EDGE should be used in NPOT dimensions");
+	CCRenderDispatch(NO, ^{
+		CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Set Texture Parameters");
+		
+		NSAssert( (_width == CCNextPOT(_width) && _height == CCNextPOT(_height)) ||
+					(texParams->wrapS == GL_CLAMP_TO_EDGE && texParams->wrapT == GL_CLAMP_TO_EDGE),
+				@"GL_CLAMP_TO_EDGE should be used in NPOT dimensions");
 
-	glBindTexture(GL_TEXTURE_2D, _name );
-	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texParams->minFilter );
-	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texParams->magFilter );
-	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, texParams->wrapS );
-	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, texParams->wrapT );
-	
-	CCGL_DEBUG_POP_GROUP_MARKER();
+		glBindTexture(GL_TEXTURE_2D, _name );
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texParams->minFilter );
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texParams->magFilter );
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, texParams->wrapS );
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, texParams->wrapT );
+		
+		CCGL_DEBUG_POP_GROUP_MARKER();
+		CC_CHECK_GL_ERROR_DEBUG();
+	});
 }
 
 -(void) setAliasTexParameters
 {
-	CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Set Alias Texture Parameters");
-	
-	glBindTexture(GL_TEXTURE_2D, _name );
-	
-	if( ! _hasMipmaps )
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
-	else
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST );
+	CCRenderDispatch(NO, ^{
+		CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Set Alias Texture Parameters");
+		
+		glBindTexture(GL_TEXTURE_2D, _name );
+		
+		if( ! _hasMipmaps ){
+			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+		} else {
+			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST );
+		}
 
-	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+		CCGL_DEBUG_POP_GROUP_MARKER();
+		CC_CHECK_GL_ERROR_DEBUG();
+	});
 	
-    _antialiased = NO;
-	
-	CCGL_DEBUG_POP_GROUP_MARKER();
+	_antialiased = NO;
 }
 
 -(void) setAntiAliasTexParameters
 {
-	CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Set Anti-alias Texture Parameters");
-	
-	glBindTexture(GL_TEXTURE_2D, _name );
-	
-	if( ! _hasMipmaps )
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-	else
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST );
+	CCRenderDispatch(NO, ^{
+		CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Set Anti-alias Texture Parameters");
+		
+		glBindTexture(GL_TEXTURE_2D, _name );
+		
+		if( ! _hasMipmaps )
+			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+		else
+			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST );
 
-	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-    
-    _antialiased = YES;
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+		
+		CCGL_DEBUG_POP_GROUP_MARKER();
+		CC_CHECK_GL_ERROR_DEBUG();
+	});
 	
-	CCGL_DEBUG_POP_GROUP_MARKER();
+	_antialiased = YES;
 }
 @end
 

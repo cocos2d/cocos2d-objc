@@ -30,29 +30,22 @@
 #if __CC_PLATFORM_MAC
 
 #import <Cocoa/Cocoa.h>
+#import <CCDirectorView.h>
 
-#import "../../ccConfig.h"
+//#import "../../ccConfig.h"
 
 /** CCGLView
 
  Only available for Mac OS X
  */
-@interface CCGLView : NSOpenGLView
+@interface CCGLView : NSOpenGLView <CCDirectorView>
 
 /** initializes the CCGLView with a frame rect and an OpenGL context */
 - (id) initWithFrame:(NSRect)frameRect shareContext:(NSOpenGLContext*)context;
 
-/** uses and locks the OpenGL context */
--(void) lockOpenGLContext;
-
-/** unlocks the openGL context */
--(void) unlockOpenGLContext;
-
 /** returns the depth format of the view in BPP */
 - (NSUInteger) depthFormat;
 
-// private
-+(void) load_;
 @end
 
 #endif // __CC_PLATFORM_MAC

@@ -178,8 +178,6 @@
 		D2D5986A1987132700BDAF25 /* CCEffectBrightness.m in Sources */ = {isa = PBXBuildFile; fileRef = D2D598481987132700BDAF25 /* CCEffectBrightness.m */; };
 		D2D5986B1987132700BDAF25 /* CCEffectContrast.h in Headers */ = {isa = PBXBuildFile; fileRef = D2D598491987132700BDAF25 /* CCEffectContrast.h */; };
 		D2D5986C1987132700BDAF25 /* CCEffectContrast.m in Sources */ = {isa = PBXBuildFile; fileRef = D2D5984A1987132700BDAF25 /* CCEffectContrast.m */; };
-		D2D5986D1987132700BDAF25 /* CCEffectGaussianBlur.h in Headers */ = {isa = PBXBuildFile; fileRef = D2D5984B1987132700BDAF25 /* CCEffectGaussianBlur.h */; };
-		D2D5986E1987132700BDAF25 /* CCEffectGaussianBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = D2D5984C1987132700BDAF25 /* CCEffectGaussianBlur.m */; };
 		D2D5986F1987132700BDAF25 /* CCEffectGlass.h in Headers */ = {isa = PBXBuildFile; fileRef = D2D5984D1987132700BDAF25 /* CCEffectGlass.h */; };
 		D2D598701987132700BDAF25 /* CCEffectGlass.m in Sources */ = {isa = PBXBuildFile; fileRef = D2D5984E1987132700BDAF25 /* CCEffectGlass.m */; };
 		D2D598721987132700BDAF25 /* CCEffectHue.h in Headers */ = {isa = PBXBuildFile; fileRef = D2D598501987132700BDAF25 /* CCEffectHue.h */; };
@@ -245,6 +243,8 @@
 		D389412B18639DD400725CFC /* CCPhysicsNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D389412318639DD400725CFC /* CCPhysicsNode.m */; };
 		D389412C18639DD400725CFC /* CCPhysicsShape.h in Headers */ = {isa = PBXBuildFile; fileRef = D389412418639DD400725CFC /* CCPhysicsShape.h */; };
 		D389412D18639DD400725CFC /* CCPhysicsShape.m in Sources */ = {isa = PBXBuildFile; fileRef = D389412518639DD400725CFC /* CCPhysicsShape.m */; };
+		D3903B03199527AA003AA81A /* CCEffectBlur.h in Headers */ = {isa = PBXBuildFile; fileRef = D3903B01199527AA003AA81A /* CCEffectBlur.h */; };
+		D3903B04199527AA003AA81A /* CCEffectBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = D3903B02199527AA003AA81A /* CCEffectBlur.m */; };
 		D3AD531218C84E7F005B6CF3 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3AD531118C84E7F005B6CF3 /* GLKit.framework */; };
 		D3AD531618C84F79005B6CF3 /* CCShader_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D3AD531318C84F79005B6CF3 /* CCShader_Private.h */; };
 		D3AD531718C84F79005B6CF3 /* CCShader.h in Headers */ = {isa = PBXBuildFile; fileRef = D3AD531418C84F79005B6CF3 /* CCShader.h */; };
@@ -549,8 +549,6 @@
 		D2D598481987132700BDAF25 /* CCEffectBrightness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectBrightness.m; sourceTree = "<group>"; };
 		D2D598491987132700BDAF25 /* CCEffectContrast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectContrast.h; sourceTree = "<group>"; };
 		D2D5984A1987132700BDAF25 /* CCEffectContrast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectContrast.m; sourceTree = "<group>"; };
-		D2D5984B1987132700BDAF25 /* CCEffectGaussianBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectGaussianBlur.h; sourceTree = "<group>"; };
-		D2D5984C1987132700BDAF25 /* CCEffectGaussianBlur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectGaussianBlur.m; sourceTree = "<group>"; };
 		D2D5984D1987132700BDAF25 /* CCEffectGlass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectGlass.h; sourceTree = "<group>"; };
 		D2D5984E1987132700BDAF25 /* CCEffectGlass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectGlass.m; sourceTree = "<group>"; };
 		D2D598501987132700BDAF25 /* CCEffectHue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectHue.h; sourceTree = "<group>"; };
@@ -652,6 +650,8 @@
 		D389412318639DD400725CFC /* CCPhysicsNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsNode.m; sourceTree = "<group>"; };
 		D389412418639DD400725CFC /* CCPhysicsShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsShape.h; sourceTree = "<group>"; };
 		D389412518639DD400725CFC /* CCPhysicsShape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsShape.m; sourceTree = "<group>"; };
+		D3903B01199527AA003AA81A /* CCEffectBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectBlur.h; sourceTree = "<group>"; };
+		D3903B02199527AA003AA81A /* CCEffectBlur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectBlur.m; sourceTree = "<group>"; };
 		D3AD531118C84E7F005B6CF3 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		D3AD531318C84F79005B6CF3 /* CCShader_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCShader_Private.h; sourceTree = "<group>"; };
 		D3AD531418C84F79005B6CF3 /* CCShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCShader.h; sourceTree = "<group>"; };
@@ -1112,6 +1112,8 @@
 		D2D598411987130500BDAF25 /* Effects */ = {
 			isa = PBXGroup;
 			children = (
+				D3903B01199527AA003AA81A /* CCEffectBlur.h */,
+				D3903B02199527AA003AA81A /* CCEffectBlur.m */,
 				D2D598421987132700BDAF25 /* CCEffect_Private.h */,
 				D2D598431987132700BDAF25 /* CCEffect.h */,
 				D2D598441987132700BDAF25 /* CCEffect.m */,
@@ -1121,8 +1123,6 @@
 				D2D598481987132700BDAF25 /* CCEffectBrightness.m */,
 				D2D598491987132700BDAF25 /* CCEffectContrast.h */,
 				D2D5984A1987132700BDAF25 /* CCEffectContrast.m */,
-				D2D5984B1987132700BDAF25 /* CCEffectGaussianBlur.h */,
-				D2D5984C1987132700BDAF25 /* CCEffectGaussianBlur.m */,
 				D2D5984D1987132700BDAF25 /* CCEffectGlass.h */,
 				D2D5984E1987132700BDAF25 /* CCEffectGlass.m */,
 				D2D598501987132700BDAF25 /* CCEffectHue.h */,
@@ -1697,6 +1697,7 @@
 				B77060871831B0C40043CC67 /* OpenALManager.h in Headers */,
 				B77060751831B0C40043CC67 /* ALCaptureDevice.h in Headers */,
 				B7D273331822F5460054849B /* CCBSequenceProperty.h in Headers */,
+				D3903B03199527AA003AA81A /* CCEffectBlur.h in Headers */,
 				A046E2B614C1E5000005BBF2 /* CCESRenderer.h in Headers */,
 				A046E2B714C1E5000005BBF2 /* CCGLView.h in Headers */,
 				B7E7758C184FBA47004221AA /* CCNodeColor.h in Headers */,
@@ -1724,7 +1725,6 @@
 				B7D2732D1822F5460054849B /* CCBLocalizationManager.h in Headers */,
 				A0D7D69115E2D2CC000CA0C4 /* ccTypes.h in Headers */,
 				A0D7D69415E2D2CC000CA0C4 /* CCConfiguration.h in Headers */,
-				D2D5986D1987132700BDAF25 /* CCEffectGaussianBlur.h in Headers */,
 				A0D7D69615E2D2CC000CA0C4 /* CCDirector.h in Headers */,
 				B7EE6A34181B287300B983FE /* CCSlider.h in Headers */,
 				A0D7D69815E2D2CC000CA0C4 /* CCProtocols.h in Headers */,
@@ -1900,6 +1900,7 @@
 				B77060831831B0C40043CC67 /* ALSource.m in Sources */,
 				E076E7191225EC7400DE0DA2 /* CCRenderTexture.m in Sources */,
 				E076E71D1225EC7400DE0DA2 /* CCScene.m in Sources */,
+				D3903B04199527AA003AA81A /* CCEffectBlur.m in Sources */,
 				B77060641831B0C40043CC67 /* OALActionManager.m in Sources */,
 				D2D5987F1987132700BDAF25 /* CCEffectSaturation.m in Sources */,
 				E076E7211225EC7400DE0DA2 /* CCSprite.m in Sources */,
@@ -1948,7 +1949,6 @@
 				A046E2B514C1E5000005BBF2 /* CCES2Renderer.m in Sources */,
 				A046E2B814C1E5000005BBF2 /* CCGLView.m in Sources */,
 				B770606E1831B0C40043CC67 /* OALAudioTracks.m in Sources */,
-				D2D5986E1987132700BDAF25 /* CCEffectGaussianBlur.m in Sources */,
 				D389412918639DD400725CFC /* CCPhysicsJoint.m in Sources */,
 				A0C879AD14F98F1C00C0E8B2 /* NSThread+performBlock.m in Sources */,
 				571CD04119649E22003D460C /* CCPlatformTextFieldMac.m in Sources */,

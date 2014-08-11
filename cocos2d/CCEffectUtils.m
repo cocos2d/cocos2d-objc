@@ -41,7 +41,7 @@ GLKMatrix4 CCEffectUtilsMat4FromAffineTransform(CGAffineTransform at)
 
 float CCEffectUtilsConditionRefraction(float refraction)
 {
-    NSCAssert((refraction >= -1.0) && (refraction <= 1.0), @"Supplied refraction out of range [-1..1].");
+    NSCAssert((refraction >= -1.0f) && (refraction <= 1.0f), @"Supplied refraction out of range [-1..1].");
     
     // Lerp between min and max
     if (refraction >= 0.0f)
@@ -53,4 +53,23 @@ float CCEffectUtilsConditionRefraction(float refraction)
         return CCEffectUtilsMinRefract * -refraction;
     }
 }
+
+float CCEffectUtilsConditionShininess(float shininess)
+{
+    NSCAssert((shininess >= 0.0f) && (shininess <= 1.0f), @"Supplied shininess out of range [0..1].");
+    return clampf(shininess, 0.0f, 1.0f);
+}
+
+float CCEffectUtilsConditionFresnelBias(float bias)
+{
+    NSCAssert((bias >= 0.0f) && (bias <= 1.0f), @"Supplied bias out of range [0..1].");
+    return clampf(bias, 0.0f, 1.0f);
+}
+
+float CCEffectUtilsConditionFresnelPower(float power)
+{
+    NSCAssert(power >= 0.0f, @"Supplied power out of range [0..inf].");
+    return (power < 0.0f) ? 0.0f : power;
+}
+
 

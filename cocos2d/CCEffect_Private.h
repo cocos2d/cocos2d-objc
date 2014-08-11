@@ -10,8 +10,8 @@
 #import "CCEffectStackProtocol.h"
 
 
-#ifndef GAUSSIANBLUR_OPTMIZIED_RADIUS_MAX
-#define GAUSSIANBLUR_OPTMIZIED_RADIUS_MAX 6
+#ifndef BLUR_OPTIMIZED_RADIUS_MAX
+#define BLUR_OPTIMIZED_RADIUS_MAX 6UL
 #endif
 
 extern NSString * const CCShaderUniformPreviousPassTexture;
@@ -93,12 +93,13 @@ typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass);
 @interface CCEffectRenderPass : NSObject
 
 @property (nonatomic) NSInteger renderPassId;
-@property (nonatomic) CCRenderer* renderer;
+@property (nonatomic, strong) CCRenderer* renderer;
 @property (nonatomic) CCSpriteVertexes verts;
 @property (nonatomic) GLKMatrix4 transform;
-@property (nonatomic) CCBlendMode* blendMode;
-@property (nonatomic) CCShader* shader;
-@property (nonatomic) NSMutableDictionary* shaderUniforms;
+@property (nonatomic) GLKMatrix4 ndcToWorld;
+@property (nonatomic, strong) CCBlendMode* blendMode;
+@property (nonatomic, strong) CCShader* shader;
+@property (nonatomic, strong) NSMutableDictionary* shaderUniforms;
 @property (nonatomic) BOOL needsClear;
 @property (nonatomic,copy) NSArray* beginBlocks;
 @property (nonatomic,copy) NSArray* updateBlocks;
@@ -116,7 +117,7 @@ typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass);
 
 @property (nonatomic, readonly) CCShader* shader; // Note: consider adding multiple shaders (one for reach renderpass, this will help break up logic and avoid branching in a potential uber shader).
 @property (nonatomic, readonly) NSMutableDictionary* shaderUniforms;
-@property (nonatomic, readonly) NSInteger renderPassesRequired;
+@property (nonatomic, readonly) NSUInteger renderPassesRequired;
 @property (nonatomic, readonly) BOOL supportsDirectRendering;
 @property (nonatomic, readonly) BOOL readyForRendering;
 
@@ -131,16 +132,16 @@ typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass);
 @property (nonatomic) NSMutableDictionary* uniformTranslationTable;
 
 
--(id)initWithFragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varying:(NSArray*)varying;
--(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varying:(NSArray*)varying;
--(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions vertexFunctions:(NSMutableArray*)vertexFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varying:(NSArray*)varying;
+-(id)initWithFragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings;
+-(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings;
+-(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions vertexFunctions:(NSMutableArray*)vertexFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings;
 
 -(CCEffectPrepareStatus)prepareForRendering;
--(CCEffectRenderPass *)renderPassAtIndex:(NSInteger)passIndex;
+-(CCEffectRenderPass *)renderPassAtIndex:(NSUInteger)passIndex;
 
 -(BOOL)stitchSupported:(CCEffectFunctionStitchFlags)stitch;
 
--(void)setVarying:(NSArray*)varying;
+-(void)setVaryings:(NSArray*)varyings;
 
 
 -(void)buildEffectShader;

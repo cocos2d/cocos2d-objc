@@ -17,10 +17,10 @@
 
 - (id)init
 {
-    return [self initWithEffects:nil];
+    return [self initWithArray:nil];
 }
 
-- (id)initWithEffects:(NSArray *)effects
+- (id)initWithArray:(NSArray *)effects
 {
     if ((self = [super init]))
     {
@@ -46,6 +46,50 @@
     return self;
 }
 
+- (id)initWithEffect:(CCEffect*)effect1 vaList:(va_list)args
+{
+    NSMutableArray *effects = [[NSMutableArray alloc] init];
+	
+    CCEffect *effect = effect1;
+	while(effect)
+    {
+        [effects addObject:effect];
+		effect = va_arg(args, CCEffect*);
+	}
+    
+	return [self initWithArray:effects];
+}
+
+- (id)initWithEffects:(CCEffect*)effect1, ...
+{
+	va_list args;
+	va_start(args, effect1);
+    
+	id ret = [self initWithEffect:effect1 vaList:args];
+    
+	va_end(args);
+    
+	return ret;
+}
+
+
++ (id)effectWithArray:(NSArray *)arrayOfEffects
+{
+    return [[self alloc] initWithArray:arrayOfEffects];
+}
+
++ (id)effects:(CCEffect*)effect1, ...
+{
+	va_list args;
+	va_start(args, effect1);
+    
+	id ret = [[self alloc] initWithEffect:effect1 vaList:args];
+    
+	va_end(args);
+    
+	return ret;
+}
+
 - (NSUInteger)effectCount
 {
     return _effects.count;
@@ -53,8 +97,16 @@
 
 - (CCEffect *)effectAtIndex:(NSUInteger)effectIndex
 {
-    NSAssert(effectIndex < _effects.count,@"Pass index out of range.");
+    NSAssert(effectIndex < _effects.count,@"Effect index out of range.");
     return _effects[effectIndex];
+}
+
+- (void)dealloc
+{
+    for (CCEffect *effect in _effects)
+    {
+        effect.owningStack = nil;
+    }
 }
 
 #pragma mark - CCEffect overrides
@@ -216,7 +268,7 @@
         effectIndex++;
     }
     
-    CCEffect* stitchedEffect = [[CCEffect alloc] initWithFragmentFunction:allFragFunctions vertexFunctions:allVertexFunctions fragmentUniforms:allFragUniforms vertexUniforms:allVertexUniforms varying:allVaryings];
+    CCEffect* stitchedEffect = [[CCEffect alloc] initWithFragmentFunction:allFragFunctions vertexFunctions:allVertexFunctions fragmentUniforms:allFragUniforms vertexUniforms:allVertexUniforms varyings:allVaryings];
     stitchedEffect.debugName = @"CCEffectStack_Stitched";
     
     // Set the stitch flags of the resulting effect based on the flags of the first

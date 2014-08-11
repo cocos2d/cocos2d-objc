@@ -28,6 +28,11 @@
  */
 @property (nonatomic) float refraction;
 
+/** The overall shininess of the attached sprite. This value is in the range [0..1] and it controls
+ *  how much of the reflected environment contributes to the final color of the affected pixels.
+ */
+@property (nonatomic) float shininess;
+
 /** The bias term in the fresnel reflectance equation:
  *    reflectance = max(0.0, fresnelBias + (1 - fresnelBias) * pow((1 - nDotV), fresnelPower))
  *  This value is in the range [0..1] and it controls the constant (view angle independent) contribution 
@@ -46,18 +51,18 @@
  *  sprite that serves as the background for the affected node so it appears that the viewer
  *  is seeing the refracted environment through the refracting node.
  */
-@property (nonatomic) CCSprite *refractionEnvironment;
+@property (nonatomic, strong) CCSprite *refractionEnvironment;
 
 /** The environment that will be reflected by the affected node. Typically this is a sprite
  *  that is not visible in the scene as it is conceptually "behind the viewer" and only visible
  *  where reflected by the affected node.
  */
-@property (nonatomic) CCSprite *reflectionEnvironment;
+@property (nonatomic, strong) CCSprite *reflectionEnvironment;
 
 /** The normal map that encodes the normal vectors of the affected node. Each pixel in the normal
  *  map is a 3 component vector that is perpendicular to the surface of the sprite at that point.
  */
-@property (nonatomic) CCSpriteFrame *normalMap;
+@property (nonatomic, strong) CCSpriteFrame *normalMap;
 
 
 /// -----------------------------------------------------------------------
@@ -73,8 +78,21 @@
 -(id)init;
 
 /**
+ *  Initializes a CCEffectGlass object with the supplied parameters and a nil normal map.
+ *
+ *  @param shininess The overall shininess.
+ *  @param refraction The refraction strength.
+ *  @param refractionEnvironment The environment image that will be refracted by the affected node.
+ *  @param reflectionEnvironment The environment image that will be reflected by the affected node.
+ *
+ *  @return The CCEffectGlass object.
+ */
+-(id)initWithShininess:(float)shininess refraction:(float)refraction refractionEnvironment:(CCSprite *)refractionEnvironment reflectionEnvironment:(CCSprite *)reflectionEnvironment;
+
+/**
  *  Initializes a CCEffectGlass object with the supplied parameters.
  *
+ *  @param shininess The overall shininess.
  *  @param refraction The refraction strength.
  *  @param refractionEnvironment The environment image that will be refracted by the affected node.
  *  @param reflectionEnvironment The environment image that will be reflected by the affected node.
@@ -82,16 +100,30 @@
  *
  *  @return The CCEffectGlass object.
  */
--(id)initWithRefraction:(float)refraction refractionEnvironment:(CCSprite *)refractionEnvironment reflectionEnvironment:(CCSprite *)reflectionEnvironment normalMap:(CCSpriteFrame *)normalMap;
+-(id)initWithShininess:(float)shininess refraction:(float)refraction refractionEnvironment:(CCSprite *)refractionEnvironment reflectionEnvironment:(CCSprite *)reflectionEnvironment normalMap:(CCSpriteFrame *)normalMap;
 
 
 /// -----------------------------------------------------------------------
 /// @name Creating a CCEffectGlass object
 /// -----------------------------------------------------------------------
 
+
+/**
+ *  Creates a CCEffectGlass object with the supplied parameters and a nil normal map.
+ *
+ *  @param shininess The overall shininess.
+ *  @param refraction The refraction strength.
+ *  @param refractionEnvironment The environment image that will be refracted by the affected node.
+ *  @param reflectionEnvironment The environment image that will be reflected by the affected node.
+ *
+ *  @return The CCEffectGlass object.
+ */
++(id)effectWithShininess:(float)shininess refraction:(float)refraction refractionEnvironment:(CCSprite *)refractionEnvironment reflectionEnvironment:(CCSprite *)reflectionEnvironment;
+
 /**
  *  Creates a CCEffectGlass object with the supplied parameters.
  *
+ *  @param shininess The overall shininess.
  *  @param refraction The refraction strength.
  *  @param refractionEnvironment The environment image that will be refracted by the affected node.
  *  @param reflectionEnvironment The environment image that will be reflected by the affected node.
@@ -99,6 +131,6 @@
  *
  *  @return The CCEffectGlass object.
  */
-+(id)effectWithRefraction:(float)refraction refractionEnvironment:(CCSprite *)refractionEnvironment reflectionEnvironment:(CCSprite *)reflectionEnvironment normalMap:(CCSpriteFrame *)normalMap;
++(id)effectWithShininess:(float)shininess refraction:(float)refraction refractionEnvironment:(CCSprite *)refractionEnvironment reflectionEnvironment:(CCSprite *)reflectionEnvironment normalMap:(CCSpriteFrame *)normalMap;
 
 @end

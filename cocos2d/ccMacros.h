@@ -55,6 +55,9 @@
 #define __CC_PLATFORM_ANDROID_FIXME 1
 #endif
 
+// Metal is only supported on iOS devices (currently does not include the simulator) and on iOS 8 and greater.
+#define __CC_METAL_SUPPORTED_AND_ENABLED (CC_ENABLE_METAL_RENDERING && __CC_PLATFORM_IOS && !TARGET_IPHONE_SIMULATOR && __IPHONE_8_0)
+
 /*
  * if COCOS2D_DEBUG is not defined, or if it is 0 then
  *	all CCLOGXXX macros will be disabled
