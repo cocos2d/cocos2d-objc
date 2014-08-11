@@ -137,13 +137,13 @@
 
 -(void)setupClippingNodeTest
 {
-	self.subTitle = @"ClippingNode test.";
+	self.subTitle = @"ClippingNode test - modified to show render texture problem.";
 	
 	CGSize size = [CCDirector sharedDirector].designSize;
-	
-//	CCNode *parent = self.contentNode;
-	
-	CCRenderTexture *parent = [CCRenderTexture renderTextureWithWidth:size.width height:size.height pixelFormat:CCTexturePixelFormat_RGBA8888 depthStencilFormat:GL_DEPTH24_STENCIL8];
+	CCRenderTexture *parent = [CCRenderTexture renderTextureWithWidth:size.width
+															   height:size.height
+														  pixelFormat:CCTexturePixelFormat_RGBA8888
+												   depthStencilFormat:GL_DEPTH24_STENCIL8];
 	parent.positionType = CCPositionTypeNormalized;
 	parent.position = ccp(0.5, 0.5);
 	parent.autoDraw = YES;
@@ -151,21 +151,43 @@
 	parent.clearDepth = 1.0;
 	parent.clearStencil = 0;
 	parent.clearFlags = GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT;
-	[self.contentNode addChild:parent];
 	
 	CCNodeGradient *grad = [CCNodeGradient nodeWithColor:[CCColor redColor] fadingTo:[CCColor blueColor] alongVector:ccp(1, 1)];
-//	[parent addChild:grad];
 	
-	CCNode *stencil = [CCSprite spriteWithImageNamed:@"Sprites/grossini.png"];
-//	[parent addChild:stencil];
+	// Swap these two lines around and it all works as expected - just the CCLabelTTF that shows a problem
+	//	CCNode *stencil = [CCSprite spriteWithImageNamed:@"Sprites/grossini.png"];
+	CCLabelTTF *stencil = [CCLabelTTF labelWithString:@"TESTING TEXT" fontName:nil fontSize:20.0f];
+	
 	stencil.position = ccp(size.width/2, size.height/2);
-	stencil.scale = 5.0;
-	[stencil runAction:[CCActionRepeatForever actionWithAction:[CCActionRotateBy actionWithDuration:1.0 angle:90.0]]];
+	stencil.scale = 1.0;
+	//[stencil runAction:[CCActionRepeatForever actionWithAction:[CCActionRotateBy actionWithDuration:1.0 angle:90.0]]];
 	
 	CCClippingNode *clip = [CCClippingNode clippingNodeWithStencil:stencil];
 	[parent addChild:clip];
-	clip.alphaThreshold = 0.5;
+	clip.alphaThreshold = 0.0;
 	[clip addChild:grad];
+	
+	[self.contentNode addChild:parent]; // Normal - just add the CCRenderTexture into the scene and let it draw normally
+	
+	// Render the CCRenderTexture directly and make an image from it - put that on the screen on top of the normal version
+	{
+		// CHANGE: Render the clipped gradient/stencil into the CCRenderTexture here rather than on normal scene draw and then
+		// turn the resulting image into a sprite and add that to the scene
+		[parent beginWithClear:0.0f g:0.0f b:0.0f a:0.0f depth:1.0f stencil:0];
+		[clip visit];
+		[parent end];
+		
+		// Capture the CCRenderTexture image and make a sprite from it to add to the scene
+		UIImage* parentImage = [parent getUIImage];
+		CCTexture* texture = [[CCTexture alloc] initWithCGImage:parentImage.CGImage contentScale:parentImage.scale];
+		
+		CCSprite *sprite = [CCSprite spriteWithTexture:texture];
+		sprite.scale = 1.0;
+		sprite.position = ccp(size.width/4.0, size.height/4.0);
+		//[sprite runAction:[CCActionRepeatForever actionWithAction:[CCActionRotateBy actionWithDuration:1.0 angle:90.0]]];
+		
+		[self.contentNode addChild:sprite z:2];
+	}
 }
 
 -(void)setupInfiniteWindowTest
