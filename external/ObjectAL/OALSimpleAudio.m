@@ -312,7 +312,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 
 - (bool) honorSilentSwitch
 {
-#if ANDROID
+#if __CC_PLATFORM_ANDROID
 #warning honorSilentSwitch not implemented
     return false;
 #else
@@ -322,7 +322,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 
 - (void) setHonorSilentSwitch:(bool) value
 {
-#if ANDROID
+#if __CC_PLATFORM_ANDROID
 #warning setHonorSilentSwitch not implemented
 #else
 	[OALAudioSession sharedInstance].honorSilentSwitch = value;
