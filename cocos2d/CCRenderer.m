@@ -525,23 +525,15 @@ SortQueue(NSMutableArray *queue)
 -(instancetype)init
 {
 	if((self = [super init])){
-#warning Temporary
-#if __CC_PLATFORM_IOS
-		Class bufferType = NSClassFromString(@"CCGraphicsBufferGLUnsynchronized");
-#else
-		Class bufferType = NSClassFromString(@"CCGraphicsBufferGLBasic");
-#endif
-		
 		CCRenderDispatch(NO, ^{
 			const NSUInteger CCRENDERER_INITIAL_VERTEX_CAPACITY = 16*1024;
-			_vertexBuffer = [[bufferType alloc] initWithCapacity:CCRENDERER_INITIAL_VERTEX_CAPACITY elementSize:sizeof(CCVertex) type:CCGraphicsBufferTypeVertex];
+			_vertexBuffer = [[CCGraphicsBufferClass alloc] initWithCapacity:CCRENDERER_INITIAL_VERTEX_CAPACITY elementSize:sizeof(CCVertex) type:CCGraphicsBufferTypeVertex];
 			[_vertexBuffer prepare];
 			
-			_elementBuffer = [[bufferType alloc] initWithCapacity:CCRENDERER_INITIAL_VERTEX_CAPACITY*1.5 elementSize:sizeof(uint16_t) type:CCGraphicsBufferTypeIndex];
+			_elementBuffer = [[CCGraphicsBufferClass alloc] initWithCapacity:CCRENDERER_INITIAL_VERTEX_CAPACITY*1.5 elementSize:sizeof(uint16_t) type:CCGraphicsBufferTypeIndex];
 			[_elementBuffer prepare];
 			
-			#warning Temporary
-			_bufferBindings = [NSClassFromString(@"CCGraphicsBufferBindingsGL") alloc];
+			_bufferBindings = [CCGraphicsBufferBindingsClass alloc];
 			_bufferBindings = [_bufferBindings initWithVertexBuffer:_vertexBuffer indexBuffer:_elementBuffer];
 		});
 		

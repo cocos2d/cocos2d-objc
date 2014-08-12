@@ -39,6 +39,10 @@
 #import "cocos2d.h"
 #import "CCRenderDispatch.h"
 
+Class CCGraphicsBufferClass;
+Class CCGraphicsBufferBindingsClass;
+Class CCRenderCommandDrawClass;
+
 NSString* const CCSetupPixelFormat = @"CCSetupPixelFormat";
 NSString* const CCSetupScreenMode = @"CCSetupScreenMode";
 NSString* const CCSetupScreenOrientation = @"CCSetupScreenOrientation";
@@ -129,6 +133,27 @@ static char * glExtensions;
 	CC_CHECK_GL_ERROR_DEBUG();
 
 	return self;
+}
+
+-(CCGraphicsAPI)graphicsAPI
+{
+	if(_graphicsAPI == CCGraphicsAPIInvalid){
+		if( __CC_METAL_SUPPORTED_AND_ENABLED && NSProtocolFromString(@"MTLDevice")){
+			CCGraphicsBufferClass = NSClassFromString(@"CCGraphicsBufferMetal");
+			CCGraphicsBufferBindingsClass = NSClassFromString(@"CCGraphicsBufferBindingsMetal");
+			CCRenderCommandDrawClass = NSClassFromString(@"CCRenderCommandDrawMetal");
+			
+			_graphicsAPI = CCGraphicsAPIMetal;
+		} else {
+			CCGraphicsBufferClass = NSClassFromString(@"CCGraphicsBufferGLBasic");
+			CCGraphicsBufferBindingsClass = NSClassFromString(@"CCGraphicsBufferBindingsGL");
+			CCRenderCommandDrawClass = NSClassFromString(@"CCRenderCommandDrawGL");
+			
+			_graphicsAPI = CCGraphicsAPIGL;
+		}
+	}
+	
+	return _graphicsAPI;
 }
 
 - (BOOL) checkForGLExtension:(NSString *)searchName
@@ -339,20 +364,26 @@ static char * glExtensions;
 	printf("cocos2d: %ld bit runtime\n", 8*sizeof(long));	
 	printf("cocos2d: Multi-threaded rendering: %s\n", (CC_RENDER_DISPATCH_ENABLED ? "YES" : "NO"));
 	
-	CCRenderDispatch(NO, ^{
-		printf("cocos2d: GL_VENDOR:   %s\n", glGetString(GL_VENDOR) );
-		printf("cocos2d: GL_RENDERER: %s\n", glGetString ( GL_RENDERER   ) );
-		printf("cocos2d: GL_VERSION:  %s\n", glGetString ( GL_VERSION    ) );
-	});
-	
-	printf("cocos2d: GL_MAX_TEXTURE_SIZE: %d\n", _maxTextureSize);
-	printf("cocos2d: GL_MAX_TEXTURE_UNITS: %d\n", _maxTextureUnits);
-	printf("cocos2d: GL_MAX_SAMPLES: %d\n", _maxSamplesAllowed);
-	printf("cocos2d: GL supports PVRTC: %s\n", (_supportsPVRTC ? "YES" : "NO") );
-	printf("cocos2d: GL supports BGRA8888 textures: %s\n", (_supportsBGRA8888 ? "YES" : "NO") );
-	printf("cocos2d: GL supports NPOT textures: %s\n", (_supportsNPOT ? "YES" : "NO") );
-	printf("cocos2d: GL supports discard_framebuffer: %s\n", (_supportsDiscardFramebuffer ? "YES" : "NO") );
-	printf("cocos2d: GL supports shareable VAO: %s\n", (_supportsShareableVAO ? "YES" : "NO") );
+	if(_graphicsAPI == CCGraphicsAPIGL){
+		printf("cocos2d: OpenGL Rendering enabled.");
+		
+		CCRenderDispatch(NO, ^{
+			printf("cocos2d: GL_VENDOR:   %s\n", glGetString(GL_VENDOR) );
+			printf("cocos2d: GL_RENDERER: %s\n", glGetString ( GL_RENDERER   ) );
+			printf("cocos2d: GL_VERSION:  %s\n", glGetString ( GL_VERSION    ) );
+		});
+		
+		printf("cocos2d: GL_MAX_TEXTURE_SIZE: %d\n", _maxTextureSize);
+		printf("cocos2d: GL_MAX_TEXTURE_UNITS: %d\n", _maxTextureUnits);
+		printf("cocos2d: GL_MAX_SAMPLES: %d\n", _maxSamplesAllowed);
+		printf("cocos2d: GL supports PVRTC: %s\n", (_supportsPVRTC ? "YES" : "NO") );
+		printf("cocos2d: GL supports BGRA8888 textures: %s\n", (_supportsBGRA8888 ? "YES" : "NO") );
+		printf("cocos2d: GL supports NPOT textures: %s\n", (_supportsNPOT ? "YES" : "NO") );
+		printf("cocos2d: GL supports discard_framebuffer: %s\n", (_supportsDiscardFramebuffer ? "YES" : "NO") );
+		printf("cocos2d: GL supports shareable VAO: %s\n", (_supportsShareableVAO ? "YES" : "NO") );
+	} else if(_graphicsAPI == CCGraphicsAPIMetal){
+		printf("cocos2d: Metal Rendering enabled.");
+	}
 	
 #endif // DEBUG
 }
