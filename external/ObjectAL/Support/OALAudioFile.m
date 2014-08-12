@@ -180,9 +180,6 @@
 		fileHandle = nil;
 	}
 #elif __CC_PLATFORM_ANDROID
-	if (oggPath) {
-		free((void*)oggPath);
-	}
 	if (rawFILE) {
 		fclose(rawFILE);
 	}
