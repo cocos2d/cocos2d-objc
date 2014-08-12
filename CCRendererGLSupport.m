@@ -88,7 +88,6 @@ static const CCGraphicsBufferType CCGraphicsBufferGLTypes[] = {
 @end
 
 
-#warning TODO Android support. Need to check for GL_OES_mapbuffer and GL_EXT_map_buffer_range.
 #if __CC_PLATFORM_IOS
 
 @interface CCGraphicsBufferGLUnsynchronized : CCGraphicsBufferGLBasic @end

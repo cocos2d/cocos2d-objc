@@ -257,6 +257,14 @@ static char * glExtensions;
 			_supportsShareableVAO = [self checkForGLExtension:@"GL_APPLE_vertex_array_object"];
 			
 			_openGLInitialized = YES;
+			
+			// Check if unsynchronized buffers are supported.
+			if(
+				[self checkForGLExtension:@"GL_OES_mapbuffer"] &&
+				[self checkForGLExtension:@"GL_EXT_map_buffer_range"]
+			){
+				CCGraphicsBufferClass = NSClassFromString(@"CCGraphicsBufferGLUnsynchronized");
+			}
 		});
 	}
 }
@@ -385,6 +393,9 @@ static char * glExtensions;
 		printf("cocos2d: Metal Rendering enabled.");
 	}
 	
+	printf("cocos2d: CCGraphicsBufferClass: %s\n", NSStringFromClass(CCGraphicsBufferClass).UTF8String);
+	printf("cocos2d: CCGraphicsBufferBindingsClass: %s\n", NSStringFromClass(CCGraphicsBufferBindingsClass).UTF8String);
+	printf("cocos2d: CCRenderCommandDrawClass: %s\n", NSStringFromClass(CCRenderCommandDrawClass).UTF8String);
 #endif // DEBUG
 }
 @end
