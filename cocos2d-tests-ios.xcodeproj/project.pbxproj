@@ -768,7 +768,7 @@
 						TestTargetID = B7E2604717E7D278007067F0;
 					};
 					B7E2604717E7D278007067F0 = {
-						DevelopmentTeam = NPYEFR2WH2;
+						DevelopmentTeam = 96LKF67VJA;
 					};
 				};
 			};
@@ -799,7 +799,7 @@
 /* Begin PBXReferenceProxy section */
 		57E144B61974C1E90065F142 /* cocos2dJava.jar */ = {
 			isa = PBXReferenceProxy;
-			fileType = compiled.java.jar;
+			fileType = file;
 			path = cocos2dJava.jar;
 			remoteRef = 57E144B51974C1E90065F142 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -1195,6 +1195,13 @@
 					"-lsqlite3",
 					"-ObjC",
 				);
+				"OTHER_LDFLAGS[sdk=iphoneos8.0]" = (
+					"-lz",
+					"-lsqlite3",
+					"-ObjC",
+					"-weak_framework",
+					Metal,
+				);
 				PRODUCT_NAME = "cocos2d-tests-ios";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -1217,6 +1224,13 @@
 					"-lz",
 					"-lsqlite3",
 					"-ObjC",
+				);
+				"OTHER_LDFLAGS[sdk=iphoneos8.0]" = (
+					"-lz",
+					"-lsqlite3",
+					"-ObjC",
+					"-weak_framework",
+					Metal,
 				);
 				PRODUCT_NAME = "cocos2d-tests-ios";
 				PROVISIONING_PROFILE = "";

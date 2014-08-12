@@ -20,35 +20,19 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
  */
 
-#import "CCSprite.h"
-#import "CCEffectRenderer.h"
-#import "CCEffect_Private.h"
+/// Protocol for a view that CCDirector will use to render into.
+@protocol CCDirectorView
 
-@interface CCSprite () {
-	@private
-	
-	// Vertex coords, texture coords and color info.
-	CCSpriteVertexes _verts;
-	
-	// Center of extents (half width/height) of the sprite for culling purposes.
-	GLKVector2 _vertexCenter, _vertexExtents;
-	
-	CCEffect *_effect;
-	CCEffectRenderer *_effectRenderer;
-}
+/// Prepare the view to render a new frame.
+-(void)beginFrame;
 
-+ (CCSpriteTexCoordSet)textureCoordsForTexture:(CCTexture *)texture withRect:(CGRect)rect rotated:(BOOL)rotated xFlipped:(BOOL)flipX yFlipped:(BOOL)flipY;
+/// Present the current frame to the display.
+-(void)presentFrame;
 
-- (void)updateShaderUniformsFromEffect;
-
-@end
-
-
-@interface CCSprite(NoARC)
-
--(void)enqueueTriangles:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
+/// Schedule a block to be invoked when the frame completes.
+/// The block may not be invoked from the main thread.
+-(void)addFrameCompletionHandler:(dispatch_block_t)handler;
 
 @end

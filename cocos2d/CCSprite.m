@@ -41,10 +41,6 @@
 #import "CCRenderer_private.h"
 #import "CCSprite_Private.h"
 #import "CCTexture_Private.h"
-#import "CCEffect.h"
-#import "CCEffectRenderer.h"
-#import "CCEffectStack.h"
-#import "CCEffect_Private.h"
 
 #pragma mark -
 #pragma mark CCSprite
@@ -59,17 +55,8 @@
 @implementation CCSprite {
 	// Offset Position, used by sprite sheet editors.
 	CGPoint _unflippedOffsetPositionFromCenter;
-	
-	// Center of extents (half width/height) of the sprite for culling purposes.
-	GLKVector2 _vertexCenter, _vertexExtents;
 
-	// Vertex coords, texture coords and color info.
-	CCSpriteVertexes _verts;
-	
 	BOOL _flipX, _flipY;
-    
-    CCEffect *_effect;
-    CCEffectRenderer *_effectRenderer;
 }
 
 +(id)spriteWithImageNamed:(NSString*)imageName
@@ -239,13 +226,18 @@
 
 -(void) setTextureRect:(CGRect)rect rotated:(BOOL)rotated untrimmedSize:(CGSize)untrimmedSize
 {
-	_textureRectRotated = rotated;
+    [self setTextureRect:rect forTexture:self.texture rotated:rotated untrimmedSize:untrimmedSize];
+}
 
+- (void)setTextureRect:(CGRect)rect forTexture:(CCTexture*)texture rotated:(BOOL)rotated untrimmedSize:(CGSize)untrimmedSize
+{
+	_textureRectRotated = rotated;
+    
 	self.contentSizeType = CCSizeTypePoints;
 	[self setContentSize:untrimmedSize];
 	_textureRect = rect;
     
-	CCSpriteTexCoordSet texCoords = [CCSprite textureCoordsForTexture:self.texture withRect:rect rotated:rotated xFlipped:_flipX yFlipped:_flipY];
+	CCSpriteTexCoordSet texCoords = [CCSprite textureCoordsForTexture:texture withRect:rect rotated:rotated xFlipped:_flipX yFlipped:_flipY];
     _verts.bl.texCoord1 = texCoords.bl;
     _verts.br.texCoord1 = texCoords.br;
     _verts.tr.texCoord1 = texCoords.tr;
@@ -350,61 +342,11 @@
 
 #pragma mark CCSprite - draw
 
-static inline void
-EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transform)
-{
-	CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:self.renderState globalSortOrder:0];
-	CCRenderBufferSetVertex(buffer, 0, CCVertexApplyTransform(self->_verts.bl, transform));
-	CCRenderBufferSetVertex(buffer, 1, CCVertexApplyTransform(self->_verts.br, transform));
-	CCRenderBufferSetVertex(buffer, 2, CCVertexApplyTransform(self->_verts.tr, transform));
-	CCRenderBufferSetVertex(buffer, 3, CCVertexApplyTransform(self->_verts.tl, transform));
+//Implemented in CCNoARC.m
+//-(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
 
-	CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
-	CCRenderBufferSetTriangle(buffer, 1, 0, 2, 3);
-}
-
--(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
-{
-	if(!CCRenderCheckVisbility(transform, _vertexCenter, _vertexExtents)) return;
-	
-	if (_effect)
-	{
-		_effectRenderer.contentSize = self.texture.contentSize;
-		if ([self.effect prepareForRendering] == CCEffectPrepareSuccess)
-		{
-			// Preparing an effect for rendering can modify its uniforms
-			// dictionary which means we need to reinitialize our copy of the
-			// uniforms.
-			[self updateShaderUniformsFromEffect];
-		}
-		[_effectRenderer drawSprite:self withEffect:self.effect uniforms:_shaderUniforms renderer:renderer transform:transform];
-	}
-	else
-	{
-		EnqueueTriangles(self, renderer, transform);
-	}
-    
-#if CC_SPRITE_DEBUG_DRAW
-	const GLKVector2 zero = {{0, 0}};
-	const GLKVector4 white = {{1, 1, 1, 1}};
-	
-	CCRenderBuffer debug = [renderer enqueueLines:4 andVertexes:4 withState:[CCRenderState debugColor] globalSortOrder:0];
-	CCRenderBufferSetVertex(debug, 0, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts.bl.position), zero, zero, white});
-	CCRenderBufferSetVertex(debug, 1, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts.br.position), zero, zero, white});
-	CCRenderBufferSetVertex(debug, 2, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts.tr.position), zero, zero, white});
-	CCRenderBufferSetVertex(debug, 3, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts.tl.position), zero, zero, white});
-	
-	CCRenderBufferSetLine(debug, 0, 0, 1);
-	CCRenderBufferSetLine(debug, 1, 1, 2);
-	CCRenderBufferSetLine(debug, 2, 2, 3);
-	CCRenderBufferSetLine(debug, 3, 3, 0);
-#endif
-}
-
--(void)enqueueTriangles:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
-{
-	EnqueueTriangles(self, renderer, transform);
-}
+//Implemented in CCNoARC.m
+//-(void)enqueueTriangles:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 
 #pragma mark CCSprite - CCNode overrides
 
@@ -533,7 +475,7 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
         // If there is no texture set on the sprite, set the sprite's texture rect from the
         // normal map's sprite frame. Note that setting the main texture, then the normal map,
         // and then removing the main texture will leave the texture rect from the main texture.
-        [self setTextureRect:frame.rect rotated:frame.rotated untrimmedSize:frame.originalSize];
+        [self setTextureRect:frame.rect forTexture:frame.texture rotated:frame.rotated untrimmedSize:frame.originalSize];
     }
 
     // Set the second texture coordinate set from the normal map's sprite frame.

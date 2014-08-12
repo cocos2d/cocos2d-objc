@@ -106,6 +106,14 @@
 #define CC_DIRECTOR_MAC_THREAD CC_MAC_USE_DISPLAY_LINK_THREAD
 #endif
 
+/**
+	Enable multi-threaded rendering on iOS.
+	Only valid for cocos2d-iOS. See CCGLQueue.h for more information.
+	*/
+#ifndef CC_DIRECTOR_IOS_THREADED_RENDERING
+#define CC_DIRECTOR_IOS_THREADED_RENDERING 0
+#endif
+
 /** @def CC_NODE_RENDER_SUBPIXEL
  If enabled, the CCNode objects (CCSprite, CCLabel,etc) will be able to render in subpixels.
  If disabled, integer pixels will be used.
@@ -128,6 +136,14 @@
  */
 #ifndef CC_SPRITE_DEBUG_DRAW
 #define CC_SPRITE_DEBUG_DRAW 0
+#endif
+
+/** @def CC_ENABLE_METAL_RENDERING
+ Enable rendering using Apple's Metal graphics API on supported platforms and hardware.
+ This can reduce the cost of rendering unbatched geometry, but not all Cocos2D features are supported.
+ */
+#ifndef CC_ENABLE_METAL_RENDERING
+#define CC_ENABLE_METAL_RENDERING 0
 #endif
 
 #ifndef CC_SHADER_COLOR_PRECISION
