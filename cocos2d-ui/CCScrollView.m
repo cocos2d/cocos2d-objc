@@ -775,6 +775,7 @@
     [recognizers removeObject:_tapRecognizer];
     
     view.gestureRecognizers = recognizers;
+    
     [super onExitTransitionDidStart];
 }
 
