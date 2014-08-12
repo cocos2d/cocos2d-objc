@@ -26,7 +26,7 @@
                           [CCEffectUniform uniform:@"vec4" name:@"u_glowColor" value: [NSValue valueWithGLKVector4:glowColor.glkVector4]]
                           ];
     
-    if((self = [super initWithFragmentUniforms:uniforms vertexUniforms:nil varying:nil]))
+    if((self = [super initWithFragmentUniforms:uniforms vertexUniforms:nil varyings:nil]))
     {
         _glowColor = glowColor;
         self.debugName = @"CCEffectOuterGlow";

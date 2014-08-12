@@ -25,7 +25,7 @@
                           [CCEffectUniform uniform:@"vec4" name:@"u_shadowColor" value: [NSValue valueWithGLKVector4:shadowColor.glkVector4]],
                           ];
     
-    if((self = [super initWithFragmentUniforms:uniforms vertexUniforms:nil varying:nil]))
+    if((self = [super initWithFragmentUniforms:uniforms vertexUniforms:nil varyings:nil]))
     {
         _shadowColor = shadowColor;
         _shadowOffset = shadowOffset;
