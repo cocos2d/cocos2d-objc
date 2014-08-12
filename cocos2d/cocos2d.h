@@ -66,7 +66,7 @@
 #import "CCEffectBloom.h"
 #import "CCEffectBrightness.h"
 #import "CCEffectContrast.h"
-#import "CCEffectGaussianBlur.h"
+#import "CCEffectBlur.h"
 #import "CCEffectGlass.h"
 #import "CCEffectHue.h"
 #import "CCEffectNode.h"

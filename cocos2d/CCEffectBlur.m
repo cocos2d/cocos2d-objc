@@ -1,5 +1,5 @@
 //
-//  CCEffectGaussianBlur.m
+//  CCEffectBlur.m
 //  cocos2d-ios
 //
 //  Created by Oleg Osin on 5/12/14.
@@ -40,11 +40,11 @@
 //  <End GPUImage license>
 
 #import "CCEffect_Private.h"
-#import "CCEffectGaussianBlur.h"
+#import "CCEffectBlur.h"
 #import "CCTexture.h"
 
 
-@implementation CCEffectGaussianBlur {
+@implementation CCEffectBlur {
     NSUInteger _numberOfOptimizedOffsets;
     NSUInteger _blurRadius;
     GLfloat _sigma;
@@ -74,10 +74,10 @@
     
     if(self = [super initWithFragmentUniforms:nil
                                vertexUniforms:[NSArray arrayWithObjects:u_blurDirection, nil]
-                                      varying:[NSArray arrayWithObjects:v_blurCoords, nil]])
+                                     varyings:[NSArray arrayWithObjects:v_blurCoords, nil]])
     {
         
-        self.debugName = @"CCEffectGaussianBlur";
+        self.debugName = @"CCEffectBlur";
         self.stitchFlags = 0;
         return self;
     }
@@ -85,7 +85,7 @@
     return self;
 }
 
-+(id)effectWithPixelBlurRadius:(NSUInteger)blurRadius
++(id)effectWithBlurRadius:(NSUInteger)blurRadius
 {
     return [[self alloc] initWithPixelBlurRadius:blurRadius];
 }
@@ -103,13 +103,13 @@
 
 - (void)setBlurRadiusAndDependents:(NSUInteger)blurRadius
 {
-    blurRadius = MIN(blurRadius, GAUSSIANBLUR_OPTMIZIED_RADIUS_MAX);
+    blurRadius = MIN(blurRadius, BLUR_OPTIMIZED_RADIUS_MAX);
     _blurRadius = blurRadius;
     _sigma = blurRadius / 2;
     if(_sigma == 0.0)
         _sigma = 1.0f;
     
-    _numberOfOptimizedOffsets = MIN(blurRadius / 2 + (blurRadius % 2), GAUSSIANBLUR_OPTMIZIED_RADIUS_MAX);
+    _numberOfOptimizedOffsets = MIN(blurRadius / 2 + (blurRadius % 2), BLUR_OPTIMIZED_RADIUS_MAX);
 }
 
 -(void)buildFragmentFunctions
@@ -139,7 +139,7 @@
     }
     
     // From these weights we calculate the offsets to read interpolated values from
-    NSUInteger numberOfOptimizedOffsets = MIN(_blurRadius / 2 + (_blurRadius % 2), GAUSSIANBLUR_OPTMIZIED_RADIUS_MAX);
+    NSUInteger numberOfOptimizedOffsets = MIN(_blurRadius / 2 + (_blurRadius % 2), BLUR_OPTIMIZED_RADIUS_MAX);
     NSUInteger trueNumberOfOptimizedOffsets = _blurRadius / 2 + (_blurRadius % 2);
     
     NSMutableString *shaderString = [[NSMutableString alloc] init];
@@ -261,10 +261,10 @@
     // pass 0: blurs (horizontal) texture[0] and outputs blurmap to texture[1]
     // pass 1: blurs (vertical) texture[1] and outputs to texture[2]
 
-    __weak CCEffectGaussianBlur *weakSelf = self;
+    __weak CCEffectBlur *weakSelf = self;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
-    pass0.debugLabel = @"CCEffectGaussianBlur pass 0";
+    pass0.debugLabel = @"CCEffectBlur pass 0";
     pass0.shader = self.shader;
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
@@ -279,7 +279,7 @@
 
     
     CCEffectRenderPass *pass1 = [[CCEffectRenderPass alloc] init];
-    pass1.debugLabel = @"CCEffectGaussianBlur pass 1";
+    pass1.debugLabel = @"CCEffectBlur pass 1";
     pass1.shader = self.shader;
     pass1.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass1.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
@@ -300,7 +300,7 @@
     {
         unsigned long count = (unsigned long)(1 + (_numberOfOptimizedOffsets * 2));
         CCEffectVarying* v_blurCoords = [CCEffectVarying varying:@"vec2" name:@"v_blurCoordinates" count:count];
-        [self setVarying:@[v_blurCoords]];
+        [self setVaryings:@[v_blurCoords]];
 
         [self buildFragmentFunctions];
         [self buildVertexFunctions];
