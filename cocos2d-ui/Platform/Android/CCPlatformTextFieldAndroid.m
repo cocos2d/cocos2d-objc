@@ -14,43 +14,6 @@
 #import "CCDirector.h"
 #import "CCEditText.h"
 
-extern void objc_retain(id);
-
-
-typedef void (^CCPlatformTextFieldAndroidTextViewOnEditorActionListenerCompletionBlock)(void);
-
-
-BRIDGE_CLASS("org.cocos2d.CCPlatformTextFieldAndroidTextViewOnEditorActionListener")
-@interface CCPlatformTextFieldAndroidTextViewOnEditorActionListener : JavaObject<AndroidTextViewOnEditorActionListener>
-- (BOOL)onEditorAction:(AndroidTextView *)v actionId:(int32_t)actionId keyEvent:(AndroidKeyEvent *)event;
-
-@end
-@implementation CCPlatformTextFieldAndroidTextViewOnEditorActionListener {
-    CCPlatformTextFieldAndroidTextViewOnEditorActionListenerCompletionBlock _completionBlock;
-}
-
-- (id) initWithCompletionBlock:(CCPlatformTextFieldAndroidTextViewOnEditorActionListenerCompletionBlock)completionBlock {
-    if (self = [super init]) {
-        _completionBlock = [completionBlock copy];
-    }
-    return self;
-    
-}
-
-@bridge(callback) onEditorAction:actionId:keyEvent: = onEditorAction;
-- (BOOL)onEditorAction:(AndroidTextView *)v actionId:(int32_t)actionId keyEvent:(AndroidKeyEvent *)event {
-    if (actionId == AndroidEditorInfoIME_ACTION_SEARCH ||
-       actionId == AndroidEditorInfoIME_ACTION_DONE
-//        || [event action] == KeyEvent.ACTION_DOWN && [event keyCode] == ANDROID_KEYCODE_ENTER
-        ) {
-        _completionBlock();
-    } else {
-        NSLog(@"nothing");
-    }
-    return NO;
-}
-
-@end
  
 @implementation CCPlatformTextFieldAndroid {
     CCEditText *_editText;
@@ -66,6 +29,11 @@ BRIDGE_CLASS("org.cocos2d.CCPlatformTextFieldAndroidTextViewOnEditorActionListen
         
     }
     return self;
+}
+
+- (void)dealloc
+{
+    _editText = nil;
 }
 
 
@@ -106,13 +74,16 @@ BRIDGE_CLASS("org.cocos2d.CCPlatformTextFieldAndroidTextViewOnEditorActionListen
         AndroidRelativeLayoutLayoutParams *params = [[AndroidRelativeLayoutLayoutParams alloc] initWithWidth:frame.size.width height:frame.size.height];
         [params setMargins:frame.origin.x top:frame.origin.y right:0 bottom:0];
         [_editText setLayoutParams:params];
+        [_editText setImeOptions:AndroidEditorInfoIME_FLAG_NO_EXTRACT_UI];
         
-        [_editText setOnEditorActionListener:[[CCPlatformTextFieldAndroidTextViewOnEditorActionListener alloc] initWithCompletionBlock:^{
-            if ([[self delegate] respondsToSelector:@selector(platformTextFieldDidFinishEditing:)]) {
-                [[self delegate] platformTextFieldDidFinishEditing:self];
+        
+        __weak id weakSelf = self;
+        [_editText setCompletionBlock:^{
+            if ([[weakSelf delegate] respondsToSelector:@selector(platformTextFieldDidFinishEditing:)]) {
+                [[weakSelf delegate] platformTextFieldDidFinishEditing:weakSelf];
             }
 
-        }]];
+        }];
     });
 }
 
@@ -153,4 +124,6 @@ BRIDGE_CLASS("org.cocos2d.CCPlatformTextFieldAndroidTextViewOnEditorActionListen
 - (NSString *)string {
     return _editText.text;
 }
+
+
 @end
