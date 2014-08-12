@@ -60,6 +60,7 @@
     NSMutableDictionary* actionManagers;
     NSMutableSet* animatedProps;
     NSMutableDictionary* nodeMapping;//Maps UUID -> Node
+	NSMutableArray * postDeserializationUUIDFixup;
 }
 
 /// -----------------------------------------------------------------------

@@ -52,14 +52,19 @@
 @interface CCBFile : CCNode
 {
     CCNode* ccbFile;
+
 }
 @property (nonatomic,strong) CCNode* ccbFile;
 @end
 
 
 @interface CCBReader()
+{
+
+}
 
 @property (nonatomic, copy) NSString *currentCCBFile;
+
 
 @end
 
@@ -115,7 +120,7 @@
     animationManager.rootContainerSize = [CCDirector sharedDirector].designSize;
     
     nodeMapping = [NSMutableDictionary dictionary];
-    
+    postDeserializationUUIDFixup = [NSMutableArray array];
     return self;
 }
 
@@ -905,10 +910,12 @@ static inline float readFloat(CCBReader *self)
     else if(type == kCCBPropTypeNodeReference)
     {
         int uuid = readIntWithSign(self, NO);
-        CCNode * mappedNode = nodeMapping[@(uuid)];
-        NSAssert(mappedNode != nil, @"CCBReader: Failed to find node UUID:%i", uuid);
-        [node setValue:mappedNode forKey:name];
-    }
+		
+		//Node references are fixed after the whole node graph is deserialized (since since the node ref may not be deserialized yet)
+		NSArray * queuedFixupTask = @[node, name, @(uuid)];
+		[postDeserializationUUIDFixup addObject:queuedFixupTask];
+		
+	}
     else if(type == kCCBPropTypeFloatCheck)
     {
         float f = readFloat(self);
@@ -939,7 +946,7 @@ static inline float readFloat(CCBReader *self)
 //Either returns a CCStackEffect or the one single effect.
 -(CCEffect*)readEffects
 {
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
+
 	int numberOfEffects = readIntWithSign(self, NO);
 	
 	NSMutableArray * effectsStack = [NSMutableArray array];
@@ -974,9 +981,7 @@ static inline float readFloat(CCBReader *self)
 	}
 	
 	return [[CCEffectStack alloc] initWithEffects:effectsStack];
-#else
-	return nil;
-#endif
+
 }
 
 - (BOOL)isPropertyKeySettable:(NSString *)key onInstance:(id)instance
@@ -1115,6 +1120,21 @@ static inline float readFloat(CCBReader *self)
 
 - (void) didLoadFromCCB
 {
+}
+
+-(void)postDeserialization
+{
+	//Post deserialization fixup.
+	for (NSArray * task in postDeserializationUUIDFixup) {
+		id node = task[0];
+		NSString * name = task[1];
+		int uuid = (int)[task[2] integerValue];
+		
+		CCNode * mappedNode = nodeMapping[@(uuid)];
+		NSAssert(mappedNode != nil, @"CCBReader: Failed to find node UUID:%i", uuid);
+		[node setValue:mappedNode forKey:name];
+
+	}
 }
 
 -(void)readJoints
@@ -1715,6 +1735,7 @@ static inline float readFloat(CCBReader *self)
     
     CCNode* node = [self readNodeGraphParent:NULL];
     [self readJoints];
+	[self postDeserialization];
     
     [actionManagers setObject:self.animationManager forKey:[NSValue valueWithPointer:(__bridge const void *)(node)]];
     
