@@ -242,12 +242,17 @@ static const CCGraphicsBufferType CCGraphicsBufferGLTypes[] = {
 @interface CCRenderCommandDrawGL : CCRenderCommandDraw @end
 @implementation CCRenderCommandDrawGL
 
+static const CCRenderCommandDrawMode GLDrawModes[] = {
+	GL_TRIANGLES,
+	GL_LINES,
+};
+
 -(void)invokeOnRenderer:(CCRenderer *)renderer
 {
 	CCGL_DEBUG_PUSH_GROUP_MARKER("CCRendererCommandDraw: Invoke");
 	
 	[renderer setRenderState:_renderState];
-	glDrawElements(_mode, _count, GL_UNSIGNED_SHORT, (GLvoid *)(_first*sizeof(GLushort)));
+	glDrawElements(GLDrawModes[_mode], (GLsizei)_count, GL_UNSIGNED_SHORT, (GLvoid *)(_first*sizeof(GLushort)));
 	CC_INCREMENT_GL_DRAWS(1);
 	
 	CCGL_DEBUG_POP_GROUP_MARKER();

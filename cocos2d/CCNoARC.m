@@ -136,8 +136,7 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 		[previous batch:elementCount];
 	} else {
 		// Start a new command.
-		#warning TODO GL_TRIANGLES
-		CCRenderCommandDraw *command = [[CCRenderCommandDrawClass alloc] initWithMode:GL_TRIANGLES renderState:renderState first:firstElement count:elementCount globalSortOrder:globalSortOrder];
+		CCRenderCommandDraw *command = [[CCRenderCommandDrawClass alloc] initWithMode:CCRenderCommandDrawTriangles renderState:renderState first:firstElement count:elementCount globalSortOrder:globalSortOrder];
 		[_queue addObject:command];
 		[command release];
 		
@@ -157,7 +156,7 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 	CCVertex *vertexes = CCGraphicsBufferPushElements(_vertexBuffer, vertexCount, self);
 	uint16_t *elements = CCGraphicsBufferPushElements(_elementBuffer, elementCount, self);
 	
-	CCRenderCommandDraw *command = [[CCRenderCommandDrawClass alloc] initWithMode:GL_LINES renderState:renderState first:firstElement count:elementCount globalSortOrder:globalSortOrder];
+	CCRenderCommandDraw *command = [[CCRenderCommandDrawClass alloc] initWithMode:CCRenderCommandDrawLines renderState:renderState first:firstElement count:elementCount globalSortOrder:globalSortOrder];
 	[_queue addObject:command];
 	[command release];
 	

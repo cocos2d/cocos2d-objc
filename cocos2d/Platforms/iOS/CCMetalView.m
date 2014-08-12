@@ -25,7 +25,7 @@
 
 + (Class) layerClass
 {
-	return [CAMetalLayer class];
+	return NSClassFromString(@"CAMetalLayer");
 }
 
 - (id) initWithFrame:(CGRect)frame

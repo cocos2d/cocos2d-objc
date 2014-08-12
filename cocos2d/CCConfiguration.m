@@ -138,7 +138,7 @@ static char * glExtensions;
 -(CCGraphicsAPI)graphicsAPI
 {
 	if(_graphicsAPI == CCGraphicsAPIInvalid){
-		if( __CC_METAL_SUPPORTED_AND_ENABLED && NSProtocolFromString(@"MTLDevice")){
+		if(__CC_METAL_SUPPORTED_AND_ENABLED && NSProtocolFromString(@"MTLDevice")){
 			CCGraphicsBufferClass = NSClassFromString(@"CCGraphicsBufferMetal");
 			CCGraphicsBufferBindingsClass = NSClassFromString(@"CCGraphicsBufferBindingsMetal");
 			CCRenderCommandDrawClass = NSClassFromString(@"CCRenderCommandDrawMetal");
