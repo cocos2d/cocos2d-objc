@@ -226,6 +226,8 @@ static void handler(NSException *e)
         
         _gameLoop = [NSRunLoop currentRunLoop];
         
+        [_gameLoop addPort:[NSPort port] forMode:NSDefaultRunLoopMode]; // Ensure that _gameLoop always has a source.
+        
         [self setupView:holder];
         
         [self setupPaths];
@@ -310,10 +312,15 @@ static void handler(NSException *e)
 - (void)surfaceDestroyed:(JavaObject<AndroidSurfaceHolder> *)holder
 {
 #if USE_MAIN_THREAD
-    [self finish];
+    [self handleDestroy];
 #else
-    [self performSelector:@selector(finish) onThread:_thread withObject:nil waitUntilDone:NO modes:@[NSDefaultRunLoopMode]];
+    [self performSelector:@selector(handleDestroy) onThread:_thread withObject:nil waitUntilDone:NO modes:@[NSDefaultRunLoopMode]];
 #endif
+}
+
+- (void)handleDestroy
+{
+    [[CCDirector sharedDirector] stopAnimation];
 }
 
 - (BOOL)onKeyDown:(int32_t)keyCode keyEvent:(AndroidKeyEvent *)event

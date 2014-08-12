@@ -257,7 +257,7 @@
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
     player.delegate = nil;
 #elif __CC_PLATFORM_ANDROID
-#warning missing delegate from android media player
+    [player setOnCompletionListener:nil];
 #endif
     [player stop];
     
@@ -897,7 +897,6 @@
             [player seekToMsec:(int32_t)(currentTime * 1000)];
         }
         [self _updateVolume];
-#warning  FIXME
         [player setLooping:(-1 == numberOfLoops) ? YES : NO];
         paused = NO;
         [player start];
@@ -929,7 +928,6 @@
         [player stop];
         [player seekToMsec:(int32_t)(currentTime * 1000)];
         [self _updateVolume];
-#warning FIXME looping
         [player setLooping:(-1 == numberOfLoops) ? YES : NO];
         paused = NO;
         [player start];

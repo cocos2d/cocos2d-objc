@@ -121,12 +121,8 @@
 
 - (void)main
 {
-#if ANDROID 
-#warning TODO: FIXME
-#else
 	ALBuffer* buffer = [OALAudioFile bufferFromUrl:url reduceToMono:reduceToMono];
 	[target performSelectorOnMainThread:selector withObject:buffer waitUntilDone:NO];
-#endif
 }
 
 @end
@@ -353,12 +349,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OpenALManager);
 
 - (ALBuffer*) bufferFromFile:(NSString*) filePath reduceToMono:(bool) reduceToMono
 {
-#if ANDROID
-#warning TODO: FIXME
-    return nil;
-#else
 	return [self bufferFromUrl:[OALTools urlForPath:filePath] reduceToMono:reduceToMono];
-#endif
 }
 
 - (ALBuffer*) bufferFromUrl:(NSURL*) url
@@ -369,12 +360,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OpenALManager);
 - (ALBuffer*) bufferFromUrl:(NSURL*) url reduceToMono:(bool) reduceToMono
 {
 	OAL_LOG_DEBUG(@"Load buffer from %@", url);
-#if ANDROID
-#warning TODO: FIXME
-    return nil;
-#else
 	return [OALAudioFile bufferFromUrl:url reduceToMono:reduceToMono];
-#endif
 }
 
 - (NSString*) bufferAsyncFromFile:(NSString*) filePath
@@ -392,15 +378,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OpenALManager);
 						   target:(id) target
 						 selector:(SEL) selector
 {
-#if ANDROID
-#warning TODO: FIXME
-    return nil;
-#else
 	return [self bufferAsyncFromUrl:[OALTools urlForPath:filePath]
 					   reduceToMono:reduceToMono
 							 target:target
 						   selector:selector];
-#endif
 }
 
 - (NSString*) bufferAsyncFromUrl:(NSURL*) url
