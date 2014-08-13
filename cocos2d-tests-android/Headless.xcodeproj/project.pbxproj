@@ -1044,8 +1044,8 @@
 				OTHER_LDFLAGS = (
 					"-landroid",
 					"-lgles_apportable",
-					"-ObjC",
 					"-all_load",
+					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;

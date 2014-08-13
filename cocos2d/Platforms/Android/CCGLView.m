@@ -491,10 +491,14 @@ static inline void logConfig(EGLDisplay display, EGLConfig conf) {
     
     if(eglGetError() != EGL_SUCCESS) { NSLog(@"EGL ERROR: %i", eglGetError()); };
     
-    if(!(_eglContext = eglCreateContext(_eglDisplay, _eglConfiguration, 0, contextAttribs)))
+    if(_eglContext == nil)
     {
-        NSLog(@"eglCreateContext() returned error %d", eglGetError());
-        return NO;
+        if(!(_eglContext = eglCreateContext(_eglDisplay, _eglConfiguration, 0, contextAttribs)))
+        {
+            NSLog(@"eglCreateContext() returned error %d", eglGetError());
+            return NO;
+        
+        }
     }
     
     if(eglGetError() != EGL_SUCCESS) { NSLog(@"EGL ERROR: %i", eglGetError()); };
