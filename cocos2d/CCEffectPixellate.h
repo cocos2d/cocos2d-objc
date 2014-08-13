@@ -22,7 +22,7 @@
  *  and is in the range [1..inf]. A value of 1 results in no change to the affected pixels
  *  and larger values result in larger output pixel blocks.
  */
-@property (nonatomic) float blockSize;
+@property (nonatomic, assign) float blockSize;
 
 
 /// -----------------------------------------------------------------------

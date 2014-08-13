@@ -4,6 +4,8 @@
 #import "CCEffectNode.h"
 #import "CCEffectBlur.h"
 
+#import "CCEffect_Private.h"
+#import "CCEffectStack_Private.h"
 
 @interface CCEffectsTest : TestBase @end
 @implementation CCEffectsTest
@@ -655,6 +657,586 @@
     
     NSLog(@"setupPerformanceTest: Laid out %d sprites.", count);
 }
+
+-(void)setupSpriteColorTest
+{
+    self.subTitle = @"Sprite Color + Effects Test\nThe bottom row should look like the top";
+
+    // Make a solid gray background (there's got to be a better way to do this).
+    CCEffectNode* background = [[CCEffectNode alloc] init];
+    background.clearFlags = GL_COLOR_BUFFER_BIT;
+    background.clearColor = [CCColor grayColor];
+    background.contentSizeType = CCSizeTypeNormalized;
+    background.contentSize = CGSizeMake(1.0f, 1.0f);
+    background.anchorPoint = ccp(0.5f, 0.5f);
+    background.positionType = CCPositionTypeNormalized;
+    background.position = ccp(0.5f, 0.5f);
+    
+    [self.contentNode addChild:background];
+
+    // Add row titles
+    CCLabelTTF *plainTitle = [CCLabelTTF labelWithString:@"No FX" fontName:@"HelveticaNeue-Light" fontSize:10 * [CCDirector sharedDirector].UIScaleFactor];
+    plainTitle.color = [CCColor blackColor];
+    plainTitle.positionType = CCPositionTypeNormalized;
+    plainTitle.position = ccp(0.05f, 0.7f);
+    plainTitle.horizontalAlignment = CCTextAlignmentRight;
+    
+    [self.contentNode addChild:plainTitle];
+    
+    
+    CCLabelTTF *effectTitle = [CCLabelTTF labelWithString:@"FX" fontName:@"HelveticaNeue-Light" fontSize:10 * [CCDirector sharedDirector].UIScaleFactor];
+    effectTitle.color = [CCColor blackColor];
+    effectTitle.positionType = CCPositionTypeNormalized;
+    effectTitle.position = ccp(0.05f, 0.3f);
+    effectTitle.horizontalAlignment = CCTextAlignmentRight;
+    
+    [self.contentNode addChild:effectTitle];
+
+    float x = 0.15f;
+    float step = 0.1875f;
+    
+    // Sprite with solid red
+    {
+        CCEffect *saturation = [CCEffectSaturation effectWithSaturation:0.0f];
+
+        CCSprite *plainSprite = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
+        plainSprite.positionType = CCPositionTypeNormalized;
+        plainSprite.position = ccp(x, 0.7f);
+        plainSprite.color = [CCColor redColor];
+        [self.contentNode addChild:plainSprite];
+
+        CCSprite *effectSprite = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
+        effectSprite.positionType = CCPositionTypeNormalized;
+        effectSprite.position = ccp(x, 0.3f);
+        effectSprite.color = [CCColor redColor];
+        effectSprite.effect = saturation;
+        [self.contentNode addChild:effectSprite];
+
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Is color preserved?" fontName:@"HelveticaNeue-Light" fontSize:10 * [CCDirector sharedDirector].UIScaleFactor];
+        title.color = [CCColor blackColor];
+        title.positionType = CCPositionTypeNormalized;
+        title.position = ccp(x, 0.05f);
+        title.horizontalAlignment = CCTextAlignmentCenter;
+        
+        [self.contentNode addChild:title];
+    
+        x += step;
+    }
+
+    
+    // Sprite with opacity = 0.5
+    {
+        CCEffect *saturation = [CCEffectSaturation effectWithSaturation:0.0f];
+
+        CCSprite *plainSprite = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
+        plainSprite.positionType = CCPositionTypeNormalized;
+        plainSprite.position = ccp(x, 0.7f);
+        plainSprite.opacity = 0.5f;
+        [self.contentNode addChild:plainSprite];
+        
+        CCSprite *effectSprite = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
+        effectSprite.positionType = CCPositionTypeNormalized;
+        effectSprite.position = ccp(x, 0.3f);
+        effectSprite.opacity = 0.5f;
+        effectSprite.effect = saturation;
+        [self.contentNode addChild:effectSprite];
+
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Opacity?" fontName:@"HelveticaNeue-Light" fontSize:10 * [CCDirector sharedDirector].UIScaleFactor];
+        title.color = [CCColor blackColor];
+        title.positionType = CCPositionTypeNormalized;
+        title.position = ccp(x, 0.05f);
+        title.horizontalAlignment = CCTextAlignmentCenter;
+        
+        [self.contentNode addChild:title];
+        
+        x += step;
+    }
+
+
+    // Sprite with 50% transparent red
+    {
+        CCEffect *saturation = [CCEffectSaturation effectWithSaturation:0.0f];
+        CCEffect *hue = [CCEffectHue effectWithHue:0.0f];
+
+        CCEffectStack *stack = [CCEffectStack effectWithArray:@[saturation, hue]];
+        
+        CCSprite *plainSprite = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
+        plainSprite.positionType = CCPositionTypeNormalized;
+        plainSprite.position = ccp(x, 0.7f);
+        plainSprite.color = [CCColor colorWithRed:0.5f green:0.0f blue:0.0f alpha:0.5f];
+        [self.contentNode addChild:plainSprite];
+        
+        CCSprite *effectSprite = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
+        effectSprite.positionType = CCPositionTypeNormalized;
+        effectSprite.position = ccp(x, 0.3f);
+        effectSprite.color = [CCColor colorWithRed:0.5f green:0.0f blue:0.0f alpha:0.5f];
+        effectSprite.effect = stack;
+        [self.contentNode addChild:effectSprite];
+        
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Stack (all stitching)" fontName:@"HelveticaNeue-Light" fontSize:10 * [CCDirector sharedDirector].UIScaleFactor];
+        title.color = [CCColor blackColor];
+        title.positionType = CCPositionTypeNormalized;
+        title.position = ccp(x, 0.05f);
+        title.horizontalAlignment = CCTextAlignmentCenter;
+        
+        [self.contentNode addChild:title];
+        
+        x += step;
+    }
+    
+    
+    // Sprite with 50% transparent red and three stacked effects but stitching disabled
+    // manually after the second effect
+    {
+        CCEffect *saturation = [CCEffectSaturation effectWithSaturation:0.0f];
+        CCEffect *brightness = [CCEffectBrightness effectWithBrightness:0.0f];
+        CCEffect *hue = [CCEffectHue effectWithHue:0.0f];
+
+        // Manually manipulate the brightness effect's stitch flags so it is stitched with
+        // saturation but not with hue.
+        brightness.stitchFlags = CCEffectFunctionStitchBefore;
+        
+        CCEffectStack *stack = [CCEffectStack effectWithArray:@[saturation, brightness, hue]];
+        
+        CCSprite *plainSprite = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
+        plainSprite.positionType = CCPositionTypeNormalized;
+        plainSprite.position = ccp(x, 0.7f);
+        plainSprite.color = [CCColor colorWithRed:0.5f green:0.0f blue:0.0f alpha:0.5f];
+        [self.contentNode addChild:plainSprite];
+        
+        CCSprite *effectSprite = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
+        effectSprite.positionType = CCPositionTypeNormalized;
+        effectSprite.position = ccp(x, 0.3f);
+        effectSprite.color = [CCColor colorWithRed:0.5f green:0.0f blue:0.0f alpha:0.5f];
+        effectSprite.effect = stack;
+        [self.contentNode addChild:effectSprite];
+        
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Stack (some stitching)" fontName:@"HelveticaNeue-Light" fontSize:10 * [CCDirector sharedDirector].UIScaleFactor];
+        title.color = [CCColor blackColor];
+        title.positionType = CCPositionTypeNormalized;
+        title.position = ccp(x, 0.05f);
+        title.horizontalAlignment = CCTextAlignmentCenter;
+        
+        [self.contentNode addChild:title];
+        
+        x += step;
+    }
+
+    
+    // Sprite with 50% transparent red and two stacked effects but no stitching
+    {
+        CCEffect *saturation = [CCEffectSaturation effectWithSaturation:0.0f];
+        CCEffect *hue = [CCEffectHue effectWithHue:0.0f];
+        
+        CCEffectStack *stack = [CCEffectStack effectWithArray:@[saturation, hue]];
+        stack.stitchingEnabled = NO;
+        
+        CCSprite *plainSprite = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
+        plainSprite.positionType = CCPositionTypeNormalized;
+        plainSprite.position = ccp(x, 0.7f);
+        plainSprite.color = [CCColor colorWithRed:0.5f green:0.0f blue:0.0f alpha:0.5f];
+        [self.contentNode addChild:plainSprite];
+        
+        CCSprite *effectSprite = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
+        effectSprite.positionType = CCPositionTypeNormalized;
+        effectSprite.position = ccp(x, 0.3f);
+        effectSprite.color = [CCColor colorWithRed:0.5f green:0.0f blue:0.0f alpha:0.5f];
+        effectSprite.effect = stack;
+        [self.contentNode addChild:effectSprite];
+        
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Stack (no stitching)" fontName:@"HelveticaNeue-Light" fontSize:10 * [CCDirector sharedDirector].UIScaleFactor];
+        title.color = [CCColor blackColor];
+        title.positionType = CCPositionTypeNormalized;
+        title.position = ccp(x, 0.05f);
+        title.horizontalAlignment = CCTextAlignmentCenter;
+        
+        [self.contentNode addChild:title];
+        
+        x += step;
+    }
+}
+
+-(void)setupClipWithEffectsTest
+{
+    self.subTitle = @"Clipping + Effects Test.";
+	
+	CGSize size = [CCDirector sharedDirector].designSize;
+    
+    CCNodeGradient *grad = [CCNodeGradient nodeWithColor:[CCColor redColor] fadingTo:[CCColor blueColor] alongVector:ccp(1, 0)];
+    
+	CCNode *stencil = [CCSprite spriteWithImageNamed:@"Sprites/grossini.png"];
+	stencil.position = ccp(size.width/2, size.height/2);
+	stencil.scale = 4.0;
+	[stencil runAction:[CCActionRepeatForever actionWithAction:[CCActionRotateBy actionWithDuration:1.0 angle:90.0]]];
+	
+	CCClippingNode *clip = [CCClippingNode clippingNodeWithStencil:stencil];
+	clip.alphaThreshold = 0.5;
+    
+    CCEffectNode* parent = [CCEffectNode effectNodeWithWidth:size.width height:size.height pixelFormat:CCTexturePixelFormat_RGBA8888 depthStencilFormat:GL_DEPTH24_STENCIL8];
+	parent.clearFlags = GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT;
+	parent.clearColor = [CCColor blackColor];
+	parent.clearDepth = 1.0;
+	parent.clearStencil = 0;
+    parent.contentSizeType = CCSizeTypeNormalized;
+    parent.contentSize = CGSizeMake(1.0f, 1.0f);
+    parent.anchorPoint = ccp(0.5f, 0.5f);
+    parent.positionType = CCPositionTypeNormalized;
+    parent.position = ccp(0.5f, 0.5f);
+    
+    CCEffectPixellate *effect = [CCEffectStack effectWithArray:@[[CCEffectPixellate effectWithBlockSize:4.0f], [CCEffectSaturation effectWithSaturation:1.0f]]];
+    parent.effect = effect;
+    
+    [clip addChild:grad];
+    [parent addChild:clip];
+    [self.contentNode addChild:parent];
+}
+
+-(void)setupEffectNodeAnchorTest
+{
+    self.subTitle = @"Effect Node Anchor Point Test\nTransparent RGB quads from lower-left to upper-right.";
+    
+    CCSprite *background = [CCSprite spriteWithImageNamed:@"Images/gridBackground.png"];
+    background.positionType = CCPositionTypeNormalized;
+    background.position = ccp(0.5f, 0.5f);
+    [self.contentNode addChild:background];
+
+    {
+        CCEffectNode* effectNode = [[CCEffectNode alloc] init];
+        effectNode.clearFlags = GL_COLOR_BUFFER_BIT;
+        effectNode.clearColor = [CCColor colorWithRed:0.5f green:0.0f blue:0.0f alpha:0.5f];
+        effectNode.contentSize = CGSizeMake(80, 80);
+        effectNode.anchorPoint = ccp(1.0, 1.0);
+        effectNode.positionType = CCPositionTypeNormalized;
+        effectNode.position = ccp(0.5, 0.5);
+        
+        CCEffectHue *effect = [CCEffectHue effectWithHue:0.0f];
+        effectNode.effect = effect;
+
+        [self.contentNode addChild:effectNode];
+    }
+    
+    {
+        CCEffectNode* effectNode = [[CCEffectNode alloc] init];
+        effectNode.clearFlags = GL_COLOR_BUFFER_BIT;
+        effectNode.clearColor = [CCColor colorWithRed:0.5f green:0.0f blue:0.0f alpha:0.5f];
+        effectNode.contentSize = CGSizeMake(80, 80);
+        effectNode.anchorPoint = ccp(0.5, 0.5);
+        effectNode.positionType = CCPositionTypeNormalized;
+        effectNode.position = ccp(0.5, 0.5);
+        
+        CCEffectHue *effect = [CCEffectHue effectWithHue:120.0f];
+        effectNode.effect = effect;
+
+        [self.contentNode addChild:effectNode];
+    }
+
+    {
+        CCEffectNode* effectNode = [[CCEffectNode alloc] init];
+        effectNode.clearFlags = GL_COLOR_BUFFER_BIT;
+        effectNode.clearColor = [CCColor colorWithRed:0.5f green:0.0f blue:0.0f alpha:0.5f];
+        effectNode.contentSize = CGSizeMake(80, 80);
+        effectNode.anchorPoint = ccp(0.0, 0.0);
+        effectNode.positionType = CCPositionTypeNormalized;
+        effectNode.position = ccp(0.5, 0.5);
+        
+        CCEffectHue *effect = [CCEffectHue effectWithHue:-120.0f];
+        effectNode.effect = effect;
+        
+        [self.contentNode addChild:effectNode];
+    }
+}
+
+-(void)setupEffectNodeSizeTypeTest
+{
+    self.subTitle = @"Effect Node Size Type Test\nSmall red and big blue transparent quads centered on screen.\nRed bar on left. Green bar on bottom.";
+    
+    CCSprite *background = [CCSprite spriteWithImageNamed:@"Images/gridBackground.png"];
+    background.positionType = CCPositionTypeNormalized;
+    background.position = ccp(0.5f, 0.5f);
+    [self.contentNode addChild:background];
+    
+    {
+        CCEffectNode* effectNode = [[CCEffectNode alloc] init];
+        effectNode.clearFlags = GL_COLOR_BUFFER_BIT;
+        effectNode.clearColor = [CCColor colorWithRed:0.5f green:0.0f blue:0.0f alpha:0.5f];
+        effectNode.contentSizeType = CCSizeTypeNormalized;
+        effectNode.contentSize = CGSizeMake(0.5f, 0.5f);
+        effectNode.anchorPoint = ccp(0.5f, 0.5f);
+        effectNode.positionType = CCPositionTypeNormalized;
+        effectNode.position = ccp(0.5f, 0.5f);
+        
+        CCEffectHue *effect = [CCEffectHue effectWithHue:-120.0f];
+        effectNode.effect = effect;
+        
+        [self.contentNode addChild:effectNode];
+    }
+
+    {
+        CCEffectNode* effectNode = [[CCEffectNode alloc] init];
+        effectNode.clearFlags = GL_COLOR_BUFFER_BIT;
+        effectNode.clearColor = [CCColor colorWithRed:0.5f green:0.0f blue:0.0f alpha:0.5f];
+        effectNode.contentSizeType = CCSizeTypePoints;
+        effectNode.contentSize = CGSizeMake(80.0f, 80.0f);
+        effectNode.anchorPoint = ccp(0.5f, 0.5f);
+        effectNode.positionType = CCPositionTypeNormalized;
+        effectNode.position = ccp(0.5f, 0.5f);
+        
+        CCEffectHue *effect = [CCEffectHue effectWithHue:0.0f];
+        effectNode.effect = effect;
+        
+        [self.contentNode addChild:effectNode];
+    }
+    
+    {
+        CCEffectNode* effectNode = [[CCEffectNode alloc] init];
+        effectNode.clearFlags = GL_COLOR_BUFFER_BIT;
+        effectNode.clearColor = [CCColor colorWithRed:1.0f green:0.0f blue:0.0f alpha:1.0f];
+        effectNode.contentSizeType = CCSizeTypeMake(CCSizeUnitPoints, CCSizeUnitNormalized);
+        effectNode.contentSize = CGSizeMake(20.0f, 0.9f);
+        effectNode.anchorPoint = ccp(0.0f, 0.0f);
+        effectNode.positionType = CCPositionTypeNormalized;
+        effectNode.position = ccp(0.05f, 0.05f);
+        
+        CCEffectHue *effect = [CCEffectHue effectWithHue:0.0f];
+        effectNode.effect = effect;
+        
+        [self.contentNode addChild:effectNode];
+    }
+
+    {
+        CCEffectNode* effectNode = [[CCEffectNode alloc] init];
+        effectNode.clearFlags = GL_COLOR_BUFFER_BIT;
+        effectNode.clearColor = [CCColor colorWithRed:1.0f green:0.0f blue:0.0f alpha:1.0f];
+        effectNode.contentSizeType = CCSizeTypeMake(CCSizeUnitNormalized, CCSizeUnitPoints);
+        effectNode.contentSize = CGSizeMake(0.9f, 20.0f);
+        effectNode.anchorPoint = ccp(0.0f, 0.0f);
+        effectNode.positionType = CCPositionTypeNormalized;
+        effectNode.position = ccp(0.05f, 0.05f);
+        
+        CCEffectHue *effect = [CCEffectHue effectWithHue:120.0f];
+        effectNode.effect = effect;
+        
+        [self.contentNode addChild:effectNode];
+    }
+}
+
+-(void)setupEffectNodeResizeTest
+{
+    NSArray *subTitles = @[
+                           @"Effect Node Resize Test\nSmall transparent blue node with grossini",
+                           @"Effect Node Resize Test\nMedium transparent blue node with grossini",
+                           @"Effect Node Resize Test\nBig transparent blue node with grossini",
+                           @"Effect Node Resize Test\nNothing",
+                           @"Effect Node Resize Test\nTransparent blue square with grossini"
+                           ];
+    
+    self.subTitle = subTitles[0];
+    
+    CCSprite *background = [CCSprite spriteWithImageNamed:@"Images/gridBackground.png"];
+    background.positionType = CCPositionTypeNormalized;
+    background.position = ccp(0.5f, 0.5f);
+    [self.contentNode addChild:background];
+    
+    CCEffectNode* effectNode = [[CCEffectNode alloc] init];
+    effectNode.clearFlags = GL_COLOR_BUFFER_BIT;
+    effectNode.clearColor = [CCColor colorWithRed:0.5f green:0.0f blue:0.0f alpha:0.5f];
+    effectNode.contentSizeType = CCSizeTypeNormalized;
+    effectNode.contentSize = CGSizeMake(0.25f, 0.25f);
+    effectNode.anchorPoint = ccp(0.5f, 0.5f);
+    effectNode.positionType = CCPositionTypeNormalized;
+    effectNode.position = ccp(0.5f, 0.5f);
+    
+    CCEffectHue *effect = [CCEffectHue effectWithHue:-120.0f];
+    effectNode.effect = effect;
+    
+    [self.contentNode addChild:effectNode];
+    
+    
+    CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
+    sprite.anchorPoint = ccp(0.5, 0.5);
+    sprite.positionType = CCPositionTypeNormalized;
+    sprite.position = ccp(0.5f, 0.5f);
+    [effectNode addChild:sprite];
+    
+    
+    __weak CCEffectsTest *weakSelf = self;
+    __block NSUInteger callCount = 0;
+    CCActionCallBlock *blockAction = [CCActionCallBlock actionWithBlock:^{
+        callCount = (callCount + 1) % 5;
+        
+        if (callCount == 0)
+        {
+            effectNode.contentSizeType = CCSizeTypeNormalized;
+        }
+        
+        if (callCount == 3)
+        {
+            effectNode.contentSizeType = CCSizeTypePoints;
+        }
+        else if (callCount == 4)
+        {
+            effectNode.contentSize = CGSizeMake(256.0f, 256.0f);
+        }
+        else
+        {
+            float nodeSize = 0.25f + 0.25f * callCount;
+            effectNode.contentSize = CGSizeMake(nodeSize, nodeSize);
+        }
+        
+        weakSelf.subTitle = subTitles[callCount];
+    }];
+    [effectNode runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+                                                                   [CCActionDelay actionWithDuration:1.0f],
+                                                                   blockAction,
+                                                                   nil
+                                                                   ]]];
+}
+
+-(void)setupEffectNodeParentResizeTest
+{
+    NSArray *subTitles = @[
+                           @"Effect Node Parent Resize Test\nSmall transparent red rect with grossini",
+                           @"Effect Node Parent Resize Test\nMedium transparent red rect with grossini",
+                           @"Effect Node Parent Resize Test\nBig transparent red rect with grossini",
+                           @"Effect Node Parent Resize Test\nNothing",
+                           @"Effect Node Parent Resize Test\nTransparent red square with grossini"
+                           ];
+    
+    self.subTitle = subTitles[0];
+    
+    CCSprite *background = [CCSprite spriteWithImageNamed:@"Images/gridBackground.png"];
+    background.positionType = CCPositionTypeNormalized;
+    background.position = ccp(0.5f, 0.5f);
+    [self.contentNode addChild:background];
+
+    
+    CCNode *grandparent = [[CCNode alloc] init];
+    grandparent.contentSizeType = CCSizeTypeNormalized;
+    grandparent.contentSize = CGSizeMake(0.25f, 0.25f);
+    grandparent.anchorPoint = ccp(0.5f, 0.5f);
+    grandparent.positionType = CCPositionTypeNormalized;
+    grandparent.position = ccp(0.5f, 0.5f);
+    [self.contentNode addChild:grandparent];
+    
+    
+    CCNode *parent = [[CCNode alloc] init];
+    parent.contentSizeType = CCSizeTypeNormalized;
+    parent.contentSize = CGSizeMake(1.0f, 1.0f);
+    parent.anchorPoint = ccp(0.5f, 0.5f);
+    parent.positionType = CCPositionTypeNormalized;
+    parent.position = ccp(0.5f, 0.5f);
+    [grandparent addChild:parent];
+    
+    
+    CCEffectNode *effectNode = [[CCEffectNode alloc] init];
+    effectNode.clearFlags = GL_COLOR_BUFFER_BIT;
+    effectNode.clearColor = [CCColor colorWithRed:0.0f green:0.0f blue:0.5f alpha:0.5f];
+    effectNode.contentSizeType = CCSizeTypeNormalized;
+    effectNode.contentSize = CGSizeMake(1.0f, 1.0f);
+    effectNode.anchorPoint = ccp(0.5f, 0.5f);
+    effectNode.positionType = CCPositionTypeNormalized;
+    effectNode.position = ccp(0.5f, 0.5f);
+    
+    CCEffectHue *effect = [CCEffectHue effectWithHue:120.0f];
+    effectNode.effect = effect;
+    
+    [parent addChild:effectNode];
+    
+    
+    CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
+    sprite.anchorPoint = ccp(0.5, 0.5);
+    sprite.positionType = CCPositionTypeNormalized;
+    sprite.position = ccp(0.5f, 0.5f);
+    [effectNode addChild:sprite];
+    
+    
+    __weak CCEffectsTest *weakSelf = self;
+    __block NSUInteger callCount = 0;
+    CCActionCallBlock *blockAction = [CCActionCallBlock actionWithBlock:^{
+        callCount = (callCount + 1) % 5;
+        
+        if (callCount == 0)
+        {
+            grandparent.contentSizeType = CCSizeTypeNormalized;
+        }
+        
+        if (callCount == 3)
+        {
+            grandparent.contentSizeType = CCSizeTypePoints;
+        }
+        else if (callCount == 4)
+        {
+            grandparent.contentSize = CGSizeMake(256.0f, 256.0f);
+        }
+        else
+        {
+            float grandparentSize = 0.25f + 0.25f * callCount;
+            grandparent.contentSize = CGSizeMake(grandparentSize, grandparentSize);
+        }
+        
+        weakSelf.subTitle = subTitles[callCount];
+    }];
+    [effectNode runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+                                                                   [CCActionDelay actionWithDuration:1.0f],
+                                                                   blockAction,
+                                                                   nil
+                                                                   ]]];
+}
+
+-(void)setupEffectNodeChildPositioningTest
+{
+    self.subTitle = @"Effect Node Child Positioning Test\nBig transparent purple quad and small opaque green quad (both with grossini).\n";
+    
+    CCSprite *background = [CCSprite spriteWithImageNamed:@"Images/gridBackground.png"];
+    background.positionType = CCPositionTypeNormalized;
+    background.position = ccp(0.5f, 0.5f);
+    [self.contentNode addChild:background];
+    
+    {
+        CCEffectNode* effectNode = [[CCEffectNode alloc] init];
+        effectNode.clearFlags = GL_COLOR_BUFFER_BIT;
+        effectNode.clearColor = [CCColor colorWithRed:0.5f green:0.0f blue:0.0f alpha:0.5f];
+        effectNode.contentSizeType = CCSizeTypeNormalized;
+        effectNode.contentSize = CGSizeMake(0.75, 0.75);
+        effectNode.anchorPoint = ccp(0.5, 0.5);
+        effectNode.positionType = CCPositionTypeNormalized;
+        effectNode.position = ccp(0.5, 0.5);
+        
+        CCEffectHue *effect = [CCEffectHue effectWithHue:-60.0f];
+        effectNode.effect = effect;
+        
+        [self.contentNode addChild:effectNode];
+        
+        CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
+        sprite.anchorPoint = ccp(0.5, 0.5);
+        sprite.positionType = CCPositionTypeNormalized;
+        sprite.position = ccp(0.25f, 0.5f);
+        [effectNode addChild:sprite];
+    }
+
+    {
+        CCEffectNode* effectNode = [[CCEffectNode alloc] init];
+        effectNode.clearFlags = GL_COLOR_BUFFER_BIT;
+        effectNode.clearColor = [CCColor colorWithRed:1.0f green:0.0f blue:0.0f alpha:1.0f];
+        effectNode.contentSizeType = CCSizeTypeMake(CCSizeUnitPoints, CCSizeUnitNormalized);
+        effectNode.contentSize = CGSizeMake(128, 0.5);
+        effectNode.anchorPoint = ccp(0.5, 0.5);
+        effectNode.positionType = CCPositionTypeNormalized;
+        effectNode.position = ccp(0.75, 0.5);
+        
+        CCEffectHue *effect = [CCEffectHue effectWithHue:120.0f];
+        effectNode.effect = effect;
+        
+        [self.contentNode addChild:effectNode];
+        
+        CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
+        sprite.anchorPoint = ccp(0.5, 0.5);
+        sprite.positionType = CCPositionTypeNormalized;
+        sprite.position = ccp(0.5f, 0.5f);
+        [effectNode addChild:sprite];
+    }
+}
+
 
 - (CCNode *)effectNodeWithEffects:(NSArray *)effects appliedToSpriteWithImage:(NSString *)spriteImage atPosition:(CGPoint)position
 {

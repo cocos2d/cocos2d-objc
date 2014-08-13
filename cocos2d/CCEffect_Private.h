@@ -50,10 +50,11 @@ typedef NS_ENUM(NSUInteger, CCEffectPrepareStatus)
 
 @property (nonatomic, readonly) NSString* type;
 @property (nonatomic, readonly) NSString* name;
+@property (nonatomic, readonly) NSString* initialSnippet;
 @property (nonatomic, readonly) NSString* snippet;
 
--(id)initWithType:(NSString*)type name:(NSString*)name snippet:(NSString*)snippet;
-+(id)inputWithType:(NSString*)type name:(NSString*)name snippet:(NSString*)snippet;
+-(id)initWithType:(NSString*)type name:(NSString*)name initialSnippet:(NSString*)initialSnippet snippet:(NSString*)snippet;
++(id)inputWithType:(NSString*)type name:(NSString*)name initialSnippet:(NSString*)initialSnippet snippet:(NSString*)snippet;
 
 @end
 
@@ -92,19 +93,19 @@ typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass);
 // Note to self: I don't like this pattern, refactor it. I think there should be a CCRenderPass that is used by CCEffect instead. NOTE: convert this to a CCRnderPassProtocol
 @interface CCEffectRenderPass : NSObject
 
-@property (nonatomic) NSInteger renderPassId;
+@property (nonatomic, assign) NSInteger renderPassId;
 @property (nonatomic, strong) CCRenderer* renderer;
-@property (nonatomic) CCSpriteVertexes verts;
-@property (nonatomic) GLKMatrix4 transform;
-@property (nonatomic) GLKMatrix4 ndcToWorld;
+@property (nonatomic, assign) CCSpriteVertexes verts;
+@property (nonatomic, assign) GLKMatrix4 transform;
+@property (nonatomic, assign) GLKMatrix4 ndcToWorld;
 @property (nonatomic, strong) CCBlendMode* blendMode;
 @property (nonatomic, strong) CCShader* shader;
 @property (nonatomic, strong) NSMutableDictionary* shaderUniforms;
-@property (nonatomic) BOOL needsClear;
-@property (nonatomic,copy) NSArray* beginBlocks;
-@property (nonatomic,copy) NSArray* updateBlocks;
-@property (nonatomic,copy) NSArray* endBlocks;
-@property (nonatomic,copy) NSString *debugLabel;
+@property (nonatomic, assign) BOOL needsClear;
+@property (nonatomic, copy) NSArray* beginBlocks;
+@property (nonatomic, copy) NSArray* updateBlocks;
+@property (nonatomic, copy) NSArray* endBlocks;
+@property (nonatomic, copy) NSString *debugLabel;
 
 -(void)begin:(CCTexture *)previousPassTexture;
 -(void)update;
@@ -116,25 +117,28 @@ typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass);
 @interface CCEffect ()
 
 @property (nonatomic, readonly) CCShader* shader; // Note: consider adding multiple shaders (one for reach renderpass, this will help break up logic and avoid branching in a potential uber shader).
-@property (nonatomic, readonly) NSMutableDictionary* shaderUniforms;
+@property (nonatomic, strong) NSMutableDictionary* shaderUniforms;
 @property (nonatomic, readonly) NSUInteger renderPassesRequired;
 @property (nonatomic, readonly) BOOL supportsDirectRendering;
 @property (nonatomic, readonly) BOOL readyForRendering;
 
 @property (nonatomic, weak) id<CCEffectStackProtocol> owningStack;
-@property (nonatomic) NSMutableArray* vertexFunctions;
-@property (nonatomic) NSMutableArray* fragmentFunctions;
-@property (nonatomic) NSArray* fragmentUniforms;
-@property (nonatomic) NSArray* vertexUniforms;
-@property (nonatomic) NSArray* varyingVars;
-@property (nonatomic) NSArray* renderPasses;
-@property (nonatomic) CCEffectFunctionStitchFlags stitchFlags;
-@property (nonatomic) NSMutableDictionary* uniformTranslationTable;
+@property (nonatomic, strong) NSMutableArray* vertexFunctions;
+@property (nonatomic, strong) NSMutableArray* fragmentFunctions;
+@property (nonatomic, strong) NSArray* fragmentUniforms;
+@property (nonatomic, strong) NSArray* vertexUniforms;
+@property (nonatomic, strong) NSArray* varyingVars;
+@property (nonatomic, strong) NSArray* renderPasses;
+@property (nonatomic, assign) CCEffectFunctionStitchFlags stitchFlags;
+@property (nonatomic, strong) NSMutableDictionary* uniformTranslationTable;
+
+@property (nonatomic, readonly) BOOL firstInStack;
 
 
 -(id)initWithFragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings;
 -(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings;
 -(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions vertexFunctions:(NSMutableArray*)vertexFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings;
+-(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions vertexFunctions:(NSMutableArray*)vertexFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings firstInStack:(BOOL)firstInStack;
 
 -(CCEffectPrepareStatus)prepareForRendering;
 -(CCEffectRenderPass *)renderPassAtIndex:(NSUInteger)passIndex;

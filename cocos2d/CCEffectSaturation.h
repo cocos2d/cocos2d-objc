@@ -23,7 +23,7 @@
  *  desaturates all affected pixels resulting in a grayscale image, 0 results in
  *  no change, 1 results in an increase in saturation by 100%.
  */
-@property (nonatomic) float saturation;
+@property (nonatomic, assign) float saturation;
 
 
 /// -----------------------------------------------------------------------

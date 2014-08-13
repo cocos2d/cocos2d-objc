@@ -35,21 +35,21 @@
 /** The overall shininess of the attached sprite. This value is in the range [0..1] and it controls
  *  how much of the reflected environment contributes to the final color of the affected pixels.
  */
-@property (nonatomic) float shininess;
+@property (nonatomic, assign) float shininess;
 
 /** The bias term in the fresnel reflectance equation:
  *    reflectance = max(0.0, fresnelBias + (1 - fresnelBias) * pow((1 - nDotV), fresnelPower))
  *  This value is in the range [0..1] and it controls the constant (view angle independent) contribution
  *  to the reflectance equation.
  */
-@property (nonatomic) float fresnelBias;
+@property (nonatomic, assign) float fresnelBias;
 
 /** The power term in the fresnel reflectance equation:
  *    reflectance = max(0.0, fresnelBias + (1 - fresnelBias) * pow((1 - nDotV), fresnelPower))
  *  This value is in the range [0..inf] and it controls the view angle dependent contribution
  *  to the reflectance equation.
  */
-@property (nonatomic) float fresnelPower;
+@property (nonatomic, assign) float fresnelPower;
 
 
 /// -----------------------------------------------------------------------

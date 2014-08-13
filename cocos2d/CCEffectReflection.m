@@ -20,9 +20,9 @@
 
 @interface CCEffectReflection ()
 
-@property (nonatomic) float conditionedShininess;
-@property (nonatomic) float conditionedFresnelBias;
-@property (nonatomic) float conditionedFresnelPower;
+@property (nonatomic, assign) float conditionedShininess;
+@property (nonatomic, assign) float conditionedFresnelBias;
+@property (nonatomic, assign) float conditionedFresnelPower;
 
 @end
 
@@ -111,7 +111,7 @@
 {
     self.fragmentFunctions = [[NSMutableArray alloc] init];
     
-    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" snippet:@"cc_FragColor * texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)"];
+    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:@"cc_FragColor * texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)" snippet:@"texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)"];
     
     NSString* effectBody = CC_GLSL(
                                    // Index the normal map and expand the color value from [0..1] to [-1..1]
