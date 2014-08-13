@@ -49,7 +49,11 @@
 
 - (void) playSimpleSound:(id)sender
 {
+#if ANDROID
+    [[OALSimpleAudio sharedInstance] playEffect:@"Sounds/sound.ogg"];
+#else
     [[OALSimpleAudio sharedInstance] playEffect:@"Sounds/sound.wav"];
+#endif
 }
 
 

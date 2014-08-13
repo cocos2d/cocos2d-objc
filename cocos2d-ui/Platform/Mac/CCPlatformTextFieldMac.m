@@ -31,7 +31,7 @@
     return self;
 }
 
-- (void) positionInControl:(CCControl *)control padding:(CGFloat)padding {
+- (void) positionInControl:(CCControl *)control padding:(float)padding {
     CGPoint worldPos = [control convertToWorldSpace:CGPointZero];
     CGPoint viewPos = [[CCDirector sharedDirector] convertToUI:worldPos];
     viewPos.x += padding;
@@ -51,7 +51,10 @@
 
 - (BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor
 {
-//    [self triggerAction];
+
+    if ([[self delegate] respondsToSelector:@selector(platformTextFieldDidFinishEditing:)]) {
+        [[self delegate]platformTextFieldDidFinishEditing:self];
+    }
     return YES;
 }
 
@@ -62,6 +65,26 @@
     
 }
 
+- (void)onEnterTransitionDidFinish {
+    [super onEnterTransitionDidFinish];
+    [self addUITextView];
+    
+}
+- (void) onExitTransitionDidStart
+{
+    [super onExitTransitionDidStart];
+    [self removeUITextView];
+}
+
+- (void) addUITextView
+{
+    [[[CCDirector sharedDirector] view] addSubview:_textField];
+}
+
+- (void) removeUITextView
+{
+    [_textField removeFromSuperview];
+}
 
 
 - (void) setString:(NSString *)string

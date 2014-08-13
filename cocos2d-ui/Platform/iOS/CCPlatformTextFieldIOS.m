@@ -118,7 +118,10 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
-//    [self triggerAction];
+    if ([[self delegate] respondsToSelector:@selector(platformTextFieldDidFinishEditing:)]) {
+        [[self delegate]platformTextFieldDidFinishEditing:self];
+    }
+
     
     return YES;
 }

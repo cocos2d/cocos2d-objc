@@ -105,6 +105,8 @@
 		571CD02B19649E03003D460C /* CCPlatformTextFieldIOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 571CD02219649E03003D460C /* CCPlatformTextFieldIOS.m */; };
 		57202D391970776100238D56 /* CCPlatformTextFieldAndroid.m in Sources */ = {isa = PBXBuildFile; fileRef = 571CD01D19649E03003D460C /* CCPlatformTextFieldAndroid.m */; };
 		577D72D11970AC59005ABDC0 /* CCPlatformTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 571CD01F19649E03003D460C /* CCPlatformTextField.m */; };
+		57BFF2B61991931300A3FE9C /* CCEditText.java in Sources */ = {isa = PBXBuildFile; fileRef = 57BFF2B51991931300A3FE9C /* CCEditText.java */; };
+		57BFF2BA1991937C00A3FE9C /* CCEditText.m in Sources */ = {isa = PBXBuildFile; fileRef = 57BFF2B81991937C00A3FE9C /* CCEditText.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		5B063DCC19637285002B1CDE /* ALWeakArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B063DCA19637285002B1CDE /* ALWeakArray.h */; };
 		5B063DCD19637285002B1CDE /* ALWeakArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B063DCB19637285002B1CDE /* ALWeakArray.m */; };
 		5B063DD019637291002B1CDE /* ALWeakDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B063DCE19637291002B1CDE /* ALWeakDictionary.h */; };
@@ -686,6 +688,7 @@
 		E0F924711224140400EF2362 /* CCTexturePVR.h in Headers */ = {isa = PBXBuildFile; fileRef = E0F9246F1224140400EF2362 /* CCTexturePVR.h */; };
 		E0F924721224140400EF2362 /* CCTexturePVR.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F924701224140400EF2362 /* CCTexturePVR.m */; };
 		E0F92AC41224559800EF2362 /* CCNS.h in Headers */ = {isa = PBXBuildFile; fileRef = E0F92AC31224559800EF2362 /* CCNS.h */; };
+		FC55599E1991A26000E29CCE /* libtremor.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC55599B1991A25000E29CCE /* libtremor.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -709,6 +712,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = D309B21217EFE2EF00AA52C8;
 			remoteInfo = "ObjectiveChipmunk-iPhone";
+		};
+		FC55599A1991A25000E29CCE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FC5559951991A25000E29CCE /* tremor.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FC76226219919ECD0001BCF4;
+			remoteInfo = tremor;
+		};
+		FC55599C1991A25A00E29CCE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FC5559951991A25000E29CCE /* tremor.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = FC76226119919ECD0001BCF4;
+			remoteInfo = tremor;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -830,6 +847,9 @@
 		571CD02219649E03003D460C /* CCPlatformTextFieldIOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPlatformTextFieldIOS.m; sourceTree = "<group>"; };
 		571CD02419649E03003D460C /* CCPlatformTextFieldMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlatformTextFieldMac.h; sourceTree = "<group>"; };
 		571CD02519649E03003D460C /* CCPlatformTextFieldMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPlatformTextFieldMac.m; sourceTree = "<group>"; };
+		57BFF2B51991931300A3FE9C /* CCEditText.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; name = CCEditText.java; path = java/org/cocos2d/CCEditText.java; sourceTree = "<group>"; };
+		57BFF2B71991937C00A3FE9C /* CCEditText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEditText.h; path = java/CCEditText.h; sourceTree = "<group>"; };
+		57BFF2B81991937C00A3FE9C /* CCEditText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCEditText.m; path = java/CCEditText.m; sourceTree = "<group>"; };
 		5B063DCA19637285002B1CDE /* ALWeakArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWeakArray.h; sourceTree = "<group>"; };
 		5B063DCB19637285002B1CDE /* ALWeakArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALWeakArray.m; sourceTree = "<group>"; };
 		5B063DCE19637291002B1CDE /* ALWeakDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWeakDictionary.h; sourceTree = "<group>"; };
@@ -1109,6 +1129,8 @@
 		E0F9246F1224140400EF2362 /* CCTexturePVR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTexturePVR.h; sourceTree = "<group>"; };
 		E0F924701224140400EF2362 /* CCTexturePVR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTexturePVR.m; sourceTree = "<group>"; };
 		E0F92AC31224559800EF2362 /* CCNS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNS.h; sourceTree = "<group>"; };
+		FC5559951991A25000E29CCE /* tremor.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = tremor.xcodeproj; path = external/tremor/android/tremor/tremor.xcodeproj; sourceTree = "<group>"; };
+		FC55599F1991A26300E29CCE /* libogg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libogg.a; path = "external/ogg/android/ogg/build/Debug-android/libogg.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1143,6 +1165,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC55599E1991A26000E29CCE /* libtremor.a in Frameworks */,
 				D291DCC2195B2FA100278EC0 /* libObjectiveChipmunk-iPhone.a in Frameworks */,
 				D2FEB745194F6C9E00FC0574 /* CoreText.framework in Frameworks */,
 				D2FEB747194F6C9E00FC0574 /* Foundation.framework in Frameworks */,
@@ -1188,6 +1211,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FC55599F1991A26300E29CCE /* libogg.a */,
 				D3903B1919952ABD003AA81A /* Metal.framework */,
 				D24FAEEB198014B90043E27D /* GLKit.framework */,
 				D289C1C1197440BC00B68E3D /* BridgeKitV3.framework */,
@@ -1209,6 +1233,7 @@
 		501756090F335CE900624901 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				FC5559951991A25000E29CCE /* tremor.xcodeproj */,
 				B759E5281880C66900E8166C /* Chipmunk7-ios.xcodeproj */,
 				B7705F8A1831A07B0043CC67 /* ObjectAL */,
 			);
@@ -1482,6 +1507,9 @@
 			children = (
 				571CD01C19649E03003D460C /* CCPlatformTextFieldAndroid.h */,
 				571CD01D19649E03003D460C /* CCPlatformTextFieldAndroid.m */,
+				57BFF2B51991931300A3FE9C /* CCEditText.java */,
+				57BFF2B71991937C00A3FE9C /* CCEditText.h */,
+				57BFF2B81991937C00A3FE9C /* CCEditText.m */,
 			);
 			path = Android;
 			sourceTree = "<group>";
@@ -1907,6 +1935,14 @@
 			path = iOS;
 			sourceTree = "<group>";
 		};
+		FC5559961991A25000E29CCE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FC55599B1991A25000E29CCE /* libtremor.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -2324,12 +2360,13 @@
 			buildConfigurationList = D2FEB74C194F6C9E00FC0574 /* Build configuration list for PBXNativeTarget "cocos2dAndroid" */;
 			buildPhases = (
 				D2FEB610194F6C9E00FC0574 /* Headers */,
-				D2FEB6B8194F6C9E00FC0574 /* Sources */,
 				D2FEB740194F6C9E00FC0574 /* Frameworks */,
+				D2FEB6B8194F6C9E00FC0574 /* Sources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				FC55599D1991A25A00E29CCE /* PBXTargetDependency */,
 				D2FEB60E194F6C9E00FC0574 /* PBXTargetDependency */,
 			);
 			name = cocos2dAndroid;
@@ -2363,6 +2400,10 @@
 					ProductGroup = B759E5291880C66900E8166C /* Products */;
 					ProjectRef = B759E5281880C66900E8166C /* Chipmunk7-ios.xcodeproj */;
 				},
+				{
+					ProductGroup = FC5559961991A25000E29CCE /* Products */;
+					ProjectRef = FC5559951991A25000E29CCE /* tremor.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -2380,6 +2421,13 @@
 			fileType = archive.ar;
 			path = "libObjectiveChipmunk-iPhone.a";
 			remoteRef = B759E52C1880C66900E8166C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FC55599B1991A25000E29CCE /* libtremor.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libtremor.a;
+			remoteRef = FC55599A1991A25000E29CCE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -2567,6 +2615,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57BFF2B61991931300A3FE9C /* CCEditText.java in Sources */,
 				5BC3CB5C1962795500C4F0D0 /* CCGestureListener.java in Sources */,
 				5BF3268E195F8E0300D9A51A /* CCActivity.java in Sources */,
 				5BF3268F195F8E0300D9A51A /* CCGLView.java in Sources */,
@@ -2604,6 +2653,7 @@
 				D2FEB6D0194F6C9E00FC0574 /* TGAlib.m in Sources */,
 				D2FEB6D1194F6C9E00FC0574 /* CCTextField.m in Sources */,
 				D2FEB6D2194F6C9E00FC0574 /* CCActionEase.m in Sources */,
+				57BFF2BA1991937C00A3FE9C /* CCEditText.m in Sources */,
 				D2FEB6D3194F6C9E00FC0574 /* CCPhysicsShape.m in Sources */,
 				577D72D11970AC59005ABDC0 /* CCPlatformTextField.m in Sources */,
 				D2FEB6D4194F6C9E00FC0574 /* ALContext.m in Sources */,
@@ -2737,6 +2787,11 @@
 			isa = PBXTargetDependency;
 			name = "ObjectiveChipmunk-iPhone";
 			targetProxy = D2FEB60F194F6C9E00FC0574 /* PBXContainerItemProxy */;
+		};
+		FC55599D1991A25A00E29CCE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = tremor;
+			targetProxy = FC55599C1991A25A00E29CCE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -3018,6 +3073,8 @@
 					"$(SRCROOT)/external/Chipmunk/include",
 					"$(SRCROOT)/external/Chipmunk/objectivec/include",
 					"$(SRCROOT)/external/ObjectAL/**",
+					"$(SRCROOT)/external/tremor/include",
+					"$(SRCROOT)/external/ogg/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3025,6 +3082,7 @@
 					"$(SDKROOT)/usr/lib/armeabi",
 					"$(SDKROOT)/usr/lib/armv7a",
 					"$(SDKROOT)/usr/lib/x86",
+					"$(PROJECT_DIR)/external/ogg/android/ogg/build/Debug-android",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
@@ -3062,6 +3120,8 @@
 					"$(SRCROOT)/external/Chipmunk/include",
 					"$(SRCROOT)/external/Chipmunk/objectivec/include",
 					"$(SRCROOT)/external/ObjectAL/**",
+					"$(SRCROOT)/external/tremor/include",
+					"$(SRCROOT)/external/ogg/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3069,6 +3129,7 @@
 					"$(SDKROOT)/usr/lib/armeabi",
 					"$(SDKROOT)/usr/lib/armv7a",
 					"$(SDKROOT)/usr/lib/x86",
+					"$(PROJECT_DIR)/external/ogg/android/ogg/build/Debug-android",
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = cocos2dAndroid;
