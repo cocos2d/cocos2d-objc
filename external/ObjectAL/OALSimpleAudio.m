@@ -659,31 +659,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 		return nil;
 	}
     
-#if 0 // __CC_PLATFORM_ANDROID
-    // TODO: we are creating a player and throwing it away each time, and not taking into account if it was preloaded.
-    // think about checking for preload and implement the player's asyncPrepare finish listener
-    AndroidAssetFileDescriptor *assetFd = [[[CCActivity currentActivity] assets] openFdWithFileName:filePath];
-    
-    if (assetFd.fileDescriptor && [assetFd.fileDescriptor valid]) {
-        AndroidMediaPlayer *player = [[AndroidMediaPlayer alloc] init];
-        [player reset];
-        [player setDataSource:assetFd.fileDescriptor offset:assetFd.startOffset length:assetFd.length];
-#warning TODO: note sure how to set on finished listener for player and call the player's release() (not objc release) in the callback to close fd
-        [player prepare];
-        [player start];
-    }
-    
-    if (assetFd) {
-        [assetFd close];
-    }
-    // TODO: convert to ALSoundSource and return
-#else
 	ALBuffer* buffer = [self internalPreloadEffect:filePath reduceToMono:NO];
 	if(nil != buffer)
 	{
 		return [channel play:buffer gain:volume pitch:pitch pan:pan loop:loop];
 	}
-#endif
 	return nil;
 }
 
