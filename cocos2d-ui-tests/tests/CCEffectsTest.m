@@ -48,7 +48,7 @@
 
     [self.contentNode addChild:environment];
     
-    CCColor *shadowColor = [CCColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:0.5];
+    CCColor *shadowColor = [CCColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:0.5];
     CCEffectDropShadow* effect = [CCEffectDropShadow effectWithShadowOffset:GLKVector2Make(2.0, -2.0) shadowColor:shadowColor];
    
     CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"Images/Ohm.png"];

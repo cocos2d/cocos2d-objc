@@ -51,18 +51,52 @@
                                    // shadowColor should be added at all.
                                    float shadowOffsetAlpha = texture2D(cc_MainTexture, cc_FragTexCoord1 - u_shadowOffset).a;
                                    
-                                   vec4 shadowColor = vec4(u_shadowColor.rgb, shadowOffsetAlpha * u_shadowColor.a);
-                                   
-                                   // Since we use premultiplied alpha, we need to be careful and avoid changing the
-                                   // output color of every fragment. If we add a non-zero shadowColor to the output, then
-                                   // we will end up tinting the whole quad with a shadowColor.
-                                   const float alphaThreshold = 0.2; // Maybe make this a uniform? it's kind of hacky..
-                                   if(shadowOffsetAlpha < alphaThreshold)
-                                       return outputColor; //shadowColor = vec4(0.0);
-                                   
-                                   // Ensures that the cc_MainTexture color does not get over written by the shadowcolor
+                                   vec4 shadowColor = u_shadowColor*shadowOffsetAlpha;
                                    outputColor = outputColor + (1.0 - outputColor.a) * shadowColor;
+                                   
+//                                   vec4 shadowColor = vec4(u_shadowColor.rgb, shadowOffsetAlpha * u_shadowColor.a);
+                                   
+//                                   // Since we use premultiplied alpha, we need to be careful and avoid changing the
+//                                   // output color of every fragment. If we add a non-zero shadowColor to the output, then
+//                                   // we will end up tinting the whole quad with a shadowColor.
+//                                   const float alphaThreshold = 0.2; // Maybe make this a uniform? it's kind of hacky..
+//                                   if(shadowOffsetAlpha < alphaThreshold)
+//                                       return outputColor; //shadowColor = vec4(0.0);
+//                                   
+//                                   // Ensures that the cc_MainTexture color does not get over written by the shadowcolor
+//                                   outputColor = outputColor + (1.0 - outputColor.a) * shadowColor;
+                                   
+                                   
+                                   const float sampleDist = 1.0;
+                                   const float sampleStrength = 2.2;
+                                   
+                                   float samples[10];
+                                   samples[0] = -0.08;
+                                   samples[1] = -0.05;
+                                   samples[2] = -0.03;
+                                   samples[3] = -0.02;
+                                   samples[4] = -0.01;
+                                   samples[5] =  0.01;
+                                   samples[6] =  0.02;
+                                   samples[7] =  0.03;
+                                   samples[8] =  0.05;
+                                   samples[9] =  0.08;
+                                   
+                                   vec2 dir = 0.5 - cc_FragTexCoord1;
+                                   float dist = sqrt(dir.x*dir.x + dir.y*dir.y); 
+                                   dir = dir/dist; 
+                                   
+                                   vec4 sum = outputColor;
+                                   
+                                   for (int i = 0; i < 10; i++)
+                                        sum += texture2D( cc_MainTexture, cc_FragTexCoord1 + dir * samples[i] * sampleDist );
+                                   
+                                   sum *= 1.0/11.0;
+                                   float t = dist * sampleStrength;
+                                   t = clamp( t ,0.0,1.0);
 
+                                   outputColor = mix( outputColor, sum, t );
+                                   
                                    return outputColor;
                                    );
     

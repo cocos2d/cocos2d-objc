@@ -45,22 +45,23 @@
     
     NSString* effectBody = CC_GLSL(
                                    
+                                   vec4 outputColor = vec4(0.0);
                                    // Make the color values to go from [-1, 1].
                                    vec4 distanceField = 2.0 * texture2D(cc_MainTexture, cc_FragTexCoord1) - 1.0;
                                    vec4 fw = fwidth(distanceField);
                                    vec4 mask = smoothstep(-fw, fw, distanceField);
                                    
-                                   float distAlphaMask = distanceField.a;
+                                   float distAlphaMask = distanceField.r;
                                    // outline
                                    const float min0 = 0.0;
-                                   const float min1 = 0.4;
+                                   const float min1 = 0.0;
                                    const float max0 = 0.4;
-                                   const float max1 = 0.9;
+                                   const float max1 = 0.8;
                                    
                                    bool less = distAlphaMask >= min0;
                                    bool more = distAlphaMask <= max1;
                                    
-                                   if(less && more)
+                                   if(less && more && false) // outline
                                    {
                                        float oFactor = 1.0;
                                        if(distAlphaMask <= min1)
@@ -72,28 +73,50 @@
                                            oFactor = smoothstep(max1, max0, distAlphaMask);
                                        }
                                        
-                                       mask = vec4(1.0, 0.0, 0.0, 1.0);//mix(mask, vec4(1.0, 1.0, 0.0, 1.0), oFactor);
+                                       mask = mix(mask, vec4(1.0, 0.0, 0.0, 1.0), oFactor);
                                        
                                    }
                                    
-                                   if(distAlphaMask >= 0.5)
-                                        mask.a = 1.0;
+                                   if(false) // soft edges
+                                   {
+                                       const float min = 0.2;
+                                       const float max = 0.8;
+                                       distanceField.r *= smoothstep(min, max, distAlphaMask);
+                                       distanceField.g *= smoothstep(min, max, distAlphaMask);
+                                       distanceField.b *= smoothstep(min, max, distAlphaMask);
+                                   }
                                    else
-                                        mask.a = 0.0;
+                                   {
+                                       if(distAlphaMask >= 0.5)
+                                       {
+//                                            distanceField.a = 1.0;
+                                           distanceField.rgb = vec3(1.0);
+                                       }
+                                       else
+                                       {
+                                            //distanceField.a = 0.0;
+                                            distanceField.rgb = vec3(0.0);
+                                       }
+                                   }
 
                                    
                                    
-                                   if(false) {
-                                   vec4 glowTexel = texture2D(cc_MainTexture, cc_FragTexCoord1);
-                                   vec4 glowc = vec4(1.0, 0.0, 0.0, 1.0) * smoothstep(0.0, 0.0, glowTexel.a);
-                                   
-                                   distanceField = mix(glowc, distanceField, mask);
-
-                                   vec4 outputColor = distanceField;
+                                   if(true) {
+                                       vec4 glowTexel = texture2D(cc_MainTexture, cc_FragTexCoord1);
+                                       vec4 glowc = vec4(1.0, 0.0, 0.0, 1.0) * smoothstep(0.2, 0.4, glowTexel.r);
+                                       
+                                       distanceField = mix(glowc, distanceField, mask);
+                                   }
+                                   //else
+                                   {
+                                       outputColor.r = distanceField.r + (1.0 - distanceField.r) * mask.r;
+                                       outputColor.g = distanceField.g + (1.0 - distanceField.g) * mask.g;
+                                       outputColor.b = distanceField.b + (1.0 - distanceField.b) * mask.b;
+                                       outputColor.a = distanceField.a;
+                                       //outputColor = distanceField + mask;
                                    }
                                    
-                                   
-                                   return mask;
+                                   return outputColor;
                                    );
     
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"outerGlowEffect"
