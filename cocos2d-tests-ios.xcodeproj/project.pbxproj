@@ -78,6 +78,7 @@
 		D34CD3C518ABF4AA00D8E537 /* CCRendererTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D34CD3C418ABF4AA00D8E537 /* CCRendererTests.m */; };
 		D3870C6018B440150033D885 /* SpritePerformanceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3870C5F18B440150033D885 /* SpritePerformanceTest.m */; };
 		D3B2A7E5187DD60B00406C5A /* CCBMFontTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B2A7E4187DD60B00406C5A /* CCBMFontTest.m */; };
+		D3C1281D199D43E0005D2119 /* CCShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = D3C1281C199D43E0005D2119 /* CCShaders.metal */; };
 		D3C9C867188078B900C58900 /* CCSchedulerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3C9C866188078B900C58900 /* CCSchedulerTest.m */; };
 		D3D6CF5F18BD5F0500A51531 /* CCRendererTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3D6CF5E18BD5F0500A51531 /* CCRendererTest.m */; };
 		D4AFE9131977100000261299 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8D81977100000261299 /* A Damn Mess.ttf */; };
@@ -281,6 +282,7 @@
 		D34CD3C418ABF4AA00D8E537 /* CCRendererTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCRendererTests.m; sourceTree = "<group>"; };
 		D3870C5F18B440150033D885 /* SpritePerformanceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpritePerformanceTest.m; path = "cocos2d-ui-tests/tests/SpritePerformanceTest.m"; sourceTree = SOURCE_ROOT; };
 		D3B2A7E4187DD60B00406C5A /* CCBMFontTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBMFontTest.m; path = "cocos2d-ui-tests/tests/CCBMFontTest.m"; sourceTree = SOURCE_ROOT; };
+		D3C1281C199D43E0005D2119 /* CCShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = CCShaders.metal; path = cocos2d/Platforms/iOS/CCShaders.metal; sourceTree = SOURCE_ROOT; };
 		D3C9C866188078B900C58900 /* CCSchedulerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSchedulerTest.m; path = "cocos2d-ui-tests/tests/CCSchedulerTest.m"; sourceTree = SOURCE_ROOT; };
 		D3D6CF5E18BD5F0500A51531 /* CCRendererTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCRendererTest.m; path = "cocos2d-ui-tests/tests/CCRendererTest.m"; sourceTree = SOURCE_ROOT; };
 		D4AFE8D81977100000261299 /* A Damn Mess.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "A Damn Mess.ttf"; sourceTree = "<group>"; };
@@ -595,6 +597,7 @@
 		B7E2620117E7D34D007067F0 /* Resources-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				D3C1281C199D43E0005D2119 /* CCShaders.metal */,
 				B7E2620217E7D34D007067F0 /* Default-568h@2x.png */,
 				B7E2620317E7D34D007067F0 /* Default-Landscape~ipad.png */,
 				B7E2620417E7D34D007067F0 /* Default.png */,
@@ -941,6 +944,7 @@
 				B71B088217EA5B6A0082EBC0 /* CCScrollViewTest.m in Sources */,
 				B7EE697918186D5200B983FE /* CCTextFieldTest.m in Sources */,
 				D29698121926DF7500BBB097 /* CCEffectPongTest.m in Sources */,
+				D3C1281D199D43E0005D2119 /* CCShaders.metal in Sources */,
 				B7E2620017E7D321007067F0 /* AppDelegate.m in Sources */,
 				0E28FE1A197FCE4500F78989 /* CCCacheTest.m in Sources */,
 				B77060AB1832E3310043CC67 /* CCTextureCacheTest.m in Sources */,
