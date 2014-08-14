@@ -123,20 +123,20 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 -(CCRenderBuffer)enqueueTriangles:(NSUInteger)triangleCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
 {
 	// Need to record the first vertex or element index before pushing more vertexes.
-	size_t firstVertex = _vertexBuffer->_count;
-	size_t firstElement = _elementBuffer->_count;
+	NSUInteger firstVertex = _vertexBuffer->_count;
+	NSUInteger firstElement = _elementBuffer->_count;
 	
-	size_t elementCount = 3*triangleCount;
+	NSUInteger elementCount = 3*triangleCount;
 	CCVertex *vertexes = CCGraphicsBufferPushElements(_vertexBuffer, vertexCount, self);
-	GLushort *elements = CCGraphicsBufferPushElements(_elementBuffer, elementCount, self);
+	uint16_t *elements = CCGraphicsBufferPushElements(_elementBuffer, elementCount, self);
 	
 	CCRenderCommandDraw *previous = _lastDrawCommand;
 	if(previous && previous->_renderState == renderState && previous->_globalSortOrder == globalSortOrder){
 		// Batch with the previous command.
-		[previous batchElements:(GLsizei)elementCount];
+		[previous batch:elementCount];
 	} else {
 		// Start a new command.
-		CCRenderCommandDraw *command = [[CCRenderCommandDraw alloc] initWithMode:GL_TRIANGLES renderState:renderState first:(GLint)firstElement elements:(GLsizei)elementCount globalSortOrder:globalSortOrder];
+		CCRenderCommandDraw *command = [[CCRenderCommandDrawClass alloc] initWithMode:CCRenderCommandDrawTriangles renderState:renderState first:firstElement count:elementCount globalSortOrder:globalSortOrder];
 		[_queue addObject:command];
 		[command release];
 		
@@ -149,14 +149,14 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 -(CCRenderBuffer)enqueueLines:(NSUInteger)lineCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
 {
 	// Need to record the first vertex or element index before pushing more vertexes.
-	size_t firstVertex = _vertexBuffer->_count;
-	size_t firstElement = _elementBuffer->_count;
+	NSUInteger firstVertex = _vertexBuffer->_count;
+	NSUInteger firstElement = _elementBuffer->_count;
 	
-	size_t elementCount = 2*lineCount;
+	NSUInteger elementCount = 2*lineCount;
 	CCVertex *vertexes = CCGraphicsBufferPushElements(_vertexBuffer, vertexCount, self);
-	GLushort *elements = CCGraphicsBufferPushElements(_elementBuffer, elementCount, self);
+	uint16_t *elements = CCGraphicsBufferPushElements(_elementBuffer, elementCount, self);
 	
-	CCRenderCommandDraw *command = [[CCRenderCommandDraw alloc] initWithMode:GL_LINES renderState:renderState first:(GLint)firstElement elements:(GLsizei)elementCount globalSortOrder:globalSortOrder];
+	CCRenderCommandDraw *command = [[CCRenderCommandDrawClass alloc] initWithMode:CCRenderCommandDrawLines renderState:renderState first:firstElement count:elementCount globalSortOrder:globalSortOrder];
 	[_queue addObject:command];
 	[command release];
 	
@@ -173,7 +173,7 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 
 -(void)setRenderState:(CCRenderState *)renderState
 {
-	[self bindVAO:YES];
+	[self bindBuffers:YES];
 	if(renderState == _renderState) return;
 	
 	CCGL_DEBUG_PUSH_GROUP_MARKER("CCRenderer: Render State");
