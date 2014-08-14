@@ -111,6 +111,7 @@ typedef NS_ENUM(NSUInteger, CCGraphicsAPI) {
 @interface CCConfiguration : NSObject {
 	CCGraphicsAPI _graphicsAPI;
 	
+	BOOL	_configured;
 	BOOL			_openGLInitialized;
 	
 	GLint			_maxTextureSize;

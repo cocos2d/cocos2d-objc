@@ -208,8 +208,6 @@ static char * glExtensions;
 
 #pragma mark OpenGL getters
 
-/** OpenGL Max texture size. */
-
 -(void) getOpenGLvariables
 {
 	if( ! _openGLInitialized ) {
@@ -256,8 +254,6 @@ static char * glExtensions;
 
 			_supportsShareableVAO = [self checkForGLExtension:@"GL_APPLE_vertex_array_object"];
 			
-			_openGLInitialized = YES;
-			
 			// Check if unsynchronized buffers are supported.
 			if(
 				[self checkForGLExtension:@"GL_OES_mapbuffer"] &&
@@ -265,70 +261,85 @@ static char * glExtensions;
 			){
 				CCGraphicsBufferClass = NSClassFromString(@"CCGraphicsBufferGLUnsynchronized");
 			}
+			
+			_openGLInitialized = YES;
 		});
+	}
+}
+
+/// Cache the current device configuration if it hasn't already been done.
+/// The naming here is admittedly terrible and generic but I couldn't think of something better.
+-(void)configure
+{
+	if(!_configured){
+		switch(self.graphicsAPI){
+			case CCGraphicsAPIGL:
+				[self getOpenGLvariables];
+				break;
+			case CCGraphicsAPIMetal:
+				// TODO Hard coding these for now... Does the Metal API even expose any queries for limits?
+				_maxTextureSize = 4096;
+				_supportsPVRTC = YES;
+				_supportsNPOT = YES;
+				_supportsBGRA8888 = YES;
+				_supportsDiscardFramebuffer = NO;
+				_supportsShareableVAO = NO;
+				_maxSamplesAllowed = 4;
+				_maxTextureUnits = 10;
+				_supportsPackedDepthStencil = YES;
+				break;
+			default: NSAssert(NO, @"Internal Error: Graphics API not set up?");
+		}
+		
+		_configured = YES;
 	}
 }
 
 -(GLint) maxTextureSize
 {
-	if( ! _openGLInitialized )
-		[self getOpenGLvariables];
+	[self configure];
 	return _maxTextureSize;
 }
 
 -(GLint) maxTextureUnits
 {
-	if( ! _openGLInitialized )
-		[self getOpenGLvariables];
-
+	[self configure];
 	return _maxTextureUnits;
 }
 
 -(BOOL) supportsNPOT
 {
-	if( ! _openGLInitialized )
-		[self getOpenGLvariables];
-
+	[self configure];
 	return _supportsNPOT;
 }
 
 -(BOOL) supportsPVRTC
 {
-	if( ! _openGLInitialized )
-		[self getOpenGLvariables];
-
+	[self configure];
 	return _supportsPVRTC;
 }
 
 -(BOOL) supportsPackedDepthStencil
 {
-	if( ! _openGLInitialized )
-		[self getOpenGLvariables];
-
-    return _supportsPackedDepthStencil;
+	[self configure];
+	return _supportsPackedDepthStencil;
 }
 
 -(BOOL) supportsBGRA8888
 {
-	if( ! _openGLInitialized )
-		[self getOpenGLvariables];
-
+	[self configure];
 	return _supportsBGRA8888;
 }
 
 -(BOOL) supportsDiscardFramebuffer
 {
-	if( ! _openGLInitialized )
-		[self getOpenGLvariables];
-
+	[self configure];
 	return _supportsDiscardFramebuffer;
 }
 
 -(BOOL) supportsShareableVAO
 {
-	if( ! _openGLInitialized )
-		[self getOpenGLvariables];
-
+	[self configure];
 	return _supportsShareableVAO;
 }
 
