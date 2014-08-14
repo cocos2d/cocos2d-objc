@@ -146,13 +146,34 @@ static char * glExtensions;
 	NSInteger ret=-1;
 
 #if __CC_PLATFORM_ANDROID
-    if([CCDirector sharedDirector].contentScaleFactor > 1.0)
-    {
-        ret = CCDeviceiPhoneRetinaDisplay;
-    }
-    else
-    {
-        ret = CCDeviceiPhone;
+   
+    
+    AndroidDisplayMetrics *metrics = [[AndroidDisplayMetrics alloc] init];
+    [[CCActivity currentActivity].windowManager.defaultDisplay getMetrics:metrics];
+    double yInches= metrics.heightPixels/metrics.ydpi;
+    double xInches= metrics.widthPixels/metrics.xdpi;
+    double diagonalInches = sqrt(xInches*xInches + yInches*yInches);
+    if (diagonalInches<=6){
+        
+        
+        if([CCDirector sharedDirector].contentScaleFactor > 1.0)
+        {
+            ret = CCDeviceiPhoneRetinaDisplay;
+        }
+        else
+        {
+            ret = CCDeviceiPhone;
+        }
+    } else {
+        if([CCDirector sharedDirector].contentScaleFactor > 1.0)
+        {
+            ret = CCDeviceiPadRetinaDisplay;
+        }
+        else
+        {
+            ret = CCDeviceiPad;
+        }
+        
     }
 #elif __CC_PLATFORM_IOS
 	
