@@ -157,6 +157,8 @@
 //	}
 	
 	id<CAMetalDrawable> drawable = [self.metalLayer nextDrawable];
+	[_context.currentCommandBuffer presentDrawable:drawable];
+	
 	_currentDrawable = drawable;
 	_context.destinationTexture = drawable.texture;
 }
@@ -164,8 +166,6 @@
 - (void)presentFrame
 {
 	[_context commitCurrentCommandBuffer];
-	
-	[_currentDrawable present];
 	_currentDrawable = nil;
 }
 

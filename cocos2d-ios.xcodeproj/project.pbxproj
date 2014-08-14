@@ -1075,6 +1075,7 @@
 		D39FA9C718C1BC6B00441627 /* CCShader_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCShader_Private.h; sourceTree = "<group>"; };
 		D3A2E7D0181E12750033614C /* CCPhysicsShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsShape.h; sourceTree = "<group>"; };
 		D3A2E7D1181E12750033614C /* CCPhysicsShape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsShape.m; sourceTree = "<group>"; };
+		D3C12815199D40AC005D2119 /* CCShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = CCShaders.metal; sourceTree = "<group>"; };
 		E01E6D8A121F130E001A484F /* CCLabelBMFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCLabelBMFont.h; sourceTree = "<group>"; };
 		E01E6D8B121F130E001A484F /* CCLabelBMFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCLabelBMFont.m; sourceTree = "<group>"; };
 		E02BB6D4126CA93A006E46A2 /* CCAnimationCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAnimationCache.h; sourceTree = "<group>"; };
@@ -1879,6 +1880,7 @@
 		E0EAD0E9121F4B4600B0C81C /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				D3C12815199D40AC005D2119 /* CCShaders.metal */,
 				D3903B12199528B6003AA81A /* CCMetalView.h */,
 				D3903B13199528B6003AA81A /* CCMetalView.m */,
 				B78AE46A17E7AF6C0028BE0B /* UITouch+CC.h */,
