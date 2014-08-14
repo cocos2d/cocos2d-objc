@@ -211,12 +211,12 @@ static NSInteger ccbAnimationManagerID = 0;
         return [CCActionTintTo actionWithDuration:duration color:color];
     } else if ([name isEqualToString:@"visible"]) {
         if ([kf1.value boolValue]) {
-            return [CCActionSequence actionOne:[CCActionDelay actionWithDuration:duration] two:[CCActionShow action]];
+            return [CCActionShow action];
         } else {
-            return [CCActionSequence actionOne:[CCActionDelay actionWithDuration:duration] two:[CCActionHide action]];
+            return [CCActionHide action];
         }
     } else if ([name isEqualToString:@"spriteFrame"]) {
-        return [CCActionSequence actionOne:[CCActionDelay actionWithDuration:duration] two:[CCActionSpriteFrame actionWithSpriteFrame:kf1.value]];
+        return [CCActionSpriteFrame actionWithSpriteFrame:kf1.value];
     } else {
         CCLOG(@"CCBReader: Failed to create animation for property: %@", name);
     }
@@ -360,7 +360,7 @@ static NSInteger ccbAnimationManagerID = 0;
     if(numKeyframes<1) return;
     
     // Action Sequence Builder
-        NSMutableArray* actions = [NSMutableArray array];
+    NSMutableArray* actions = [NSMutableArray array];
     int endFrame            = startFrame+1;
             
     if(endFrame==numKeyframes || endFrame<0)
@@ -862,10 +862,8 @@ static NSInteger ccbAnimationManagerID = 0;
         if (action) {
             
             // Instant
-            if(startKF.easingType==kCCBKeyframeEasingInstant &&
-               ![seqProp.name isEqualToString:@"spriteFrame"] &&
-               ![seqProp.name isEqualToString:@"visible"]) {
-                [actions addObject:[CCActionDelay actionWithDuration:action.duration]];
+            if(startKF.easingType==kCCBKeyframeEasingInstant) {
+                [actions addObject:[CCActionDelay actionWithDuration:endKF.time-startKF.time]];
             }
             
             // Apply Easing
