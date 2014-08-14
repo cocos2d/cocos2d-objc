@@ -34,10 +34,17 @@
 @interface CCMetalContext : NSObject
 
 @property(nonatomic, readonly) id<MTLDevice> device;
+@property(nonatomic, readonly) id<MTLCommandQueue> commandQueue;
+@property(nonatomic, readonly) id<MTLCommandBuffer> currentCommandBuffer;
+
+@property(nonatomic, strong) id<MTLTexture> destinationTexture;
 @property(nonatomic, readonly) id<MTLRenderCommandEncoder> currentRenderCommandEncoder;
 
 +(instancetype)currentContext;
 +(void)setCurrentContext:(CCMetalContext *)context;
+
+-(void)prepareCommandBuffer;
+-(void)commitCurrentCommandBuffer;
 
 @end
 

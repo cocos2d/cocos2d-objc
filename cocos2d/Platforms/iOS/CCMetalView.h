@@ -9,10 +9,6 @@
 
 @interface CCMetalView : UIView<CCDirectorView>
 
-@property(nonatomic, readonly) id<MTLDevice> device;
-@property(nonatomic, readonly) id<MTLCommandBuffer> currentCommandBuffer;
-@property(nonatomic, readonly) id<MTLTexture> currentFramebufferTexture;
-
 /** returns surface size in pixels */
 @property(nonatomic,readonly) CGSize surfaceSize;
 

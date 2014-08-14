@@ -33,6 +33,8 @@
 {
 	if((self = [super init])){
 		_device = MTLCreateSystemDefaultDevice();
+		_commandQueue = [_device newCommandQueue];
+		_currentCommandBuffer = [_commandQueue commandBuffer];
 	}
 	
 	return self;
@@ -52,6 +54,35 @@ NSString *CURRENT_CONTEXT_KEY = @"CURRENT_CONTEXT_KEY";
 	} else {
 		[[NSThread currentThread].threadDictionary removeObjectForKey:CURRENT_CONTEXT_KEY];
 	}
+}
+
+-(void)setDestinationTexture:(id<MTLTexture>)destinationTexture
+{
+	if(_destinationTexture != destinationTexture){
+		MTLRenderPassColorAttachmentDescriptor *colorAttachment = [MTLRenderPassColorAttachmentDescriptor new];
+		colorAttachment.texture = destinationTexture;
+		colorAttachment.loadAction = MTLLoadActionClear;
+		colorAttachment.clearColor = MTLClearColorMake(0, 0, 0, 0);
+		colorAttachment.storeAction = MTLStoreActionStore;
+
+		MTLRenderPassDescriptor *renderPassDescriptor = [MTLRenderPassDescriptor renderPassDescriptor];
+		renderPassDescriptor.colorAttachments[0] = colorAttachment;
+
+		_currentRenderCommandEncoder = [self.currentCommandBuffer renderCommandEncoderWithDescriptor:renderPassDescriptor];
+		_destinationTexture = destinationTexture;
+	}
+}
+
+-(void)prepareCommandBuffer
+{
+	_currentCommandBuffer = [_commandQueue commandBuffer];
+	_currentCommandBuffer.label = @"Main Cocos2D Command Buffer";
+}
+
+-(void)commitCurrentCommandBuffer
+{
+	[_currentCommandBuffer commit];
+	_currentCommandBuffer = nil;
 }
 
 @end

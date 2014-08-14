@@ -15,9 +15,13 @@
 #import "CCDirector_Private.h"
 #import "CCMetalSupport_Private.h"
 
+
+#define CC_METAL_MAX_QUEUED_FRAMES 3
+
+
 @implementation CCMetalView {
 	CCMetalContext *_context;
-	id<MTLCommandQueue> _queue;
+//	id<MTLCommandQueue> _queue;
 	id<MTLDrawable> _currentDrawable;
 	
 	dispatch_semaphore_t _queuedFramesSemaphore;
@@ -36,21 +40,17 @@
 	{
 		_context = [[CCMetalContext alloc] init];
 		
-		#warning Temporary
+		#warning Temporary. Move into CCRenderDispatch?
 		[CCMetalContext setCurrentContext:_context];
 		
-		_device = MTLCreateSystemDefaultDevice();
-		_queue = [_device newCommandQueue];
-		
-		#warning Magic number
-		_queuedFramesSemaphore = dispatch_semaphore_create(3);
+		_queuedFramesSemaphore = dispatch_semaphore_create(CC_METAL_MAX_QUEUED_FRAMES);
 		
 		CAMetalLayer *layer = self.metalLayer;
 		layer.opaque = YES;
 		layer.pixelFormat = MTLPixelFormatBGRA8Unorm;
 		layer.framebufferOnly = YES;
 		
-    layer.device = _device;
+    layer.device = _context.device;
     layer.pixelFormat = MTLPixelFormatBGRA8Unorm;
 		
 		self.opaque = YES;
@@ -141,12 +141,11 @@
 		_layerSizeDidUpdate = NO;
 	}
 	
-	_currentCommandBuffer = [_queue commandBuffer];
-	_currentCommandBuffer.label = @"Main Cocos2D Command Buffer";
+	[_context prepareCommandBuffer];
 	
 	// Prevent the block from retaining self via the ivar.
 	dispatch_semaphore_t sema = _queuedFramesSemaphore;
-	[_currentCommandBuffer addCompletedHandler:^(id<MTLCommandBuffer> buffer){
+	[_context.currentCommandBuffer addCompletedHandler:^(id<MTLCommandBuffer> buffer){
 		dispatch_semaphore_signal(sema);
 	}];
 	
@@ -159,20 +158,20 @@
 	
 	id<CAMetalDrawable> drawable = [self.metalLayer nextDrawable];
 	_currentDrawable = drawable;
-	_currentFramebufferTexture = drawable.texture;
+	_context.destinationTexture = drawable.texture;
 }
 
 - (void)presentFrame
 {
-	[_currentCommandBuffer presentDrawable:_currentDrawable];
-	[_currentCommandBuffer commit];
-	_currentCommandBuffer = nil;
+	[_context commitCurrentCommandBuffer];
+	
+	[_currentDrawable present];
 	_currentDrawable = nil;
 }
 
 -(void)addFrameCompletionHandler:(dispatch_block_t)handler
 {
-	[_currentCommandBuffer addCompletedHandler:^(id<MTLCommandBuffer> buffer) {handler();}];
+	[_context.currentCommandBuffer addCompletedHandler:^(id<MTLCommandBuffer> buffer) {handler();}];
 }
 
 #pragma mark CCMetalView - Point conversion
