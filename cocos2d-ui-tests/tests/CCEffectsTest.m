@@ -20,7 +20,8 @@
 {
     self.subTitle = @"OuterGlow Effect Test";
     
-    CCNodeColor* environment = [CCNodeColor nodeWithColor:[CCColor whiteColor]];
+//    CCNodeColor* environment = [CCNodeColor nodeWithColor:[CCColor whiteColor]];
+    CCSprite *environment = [CCSprite spriteWithImageNamed:@"Images/MountainPanorama.jpg"];
     environment.positionType = CCPositionTypeNormalized;
     environment.anchorPoint = ccp(0.5, 0.5);
     environment.position = ccp(0.5f, 0.5f);
@@ -30,7 +31,7 @@
     CCColor *glowColor = [CCColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:0.5];
     CCEffectOuterGlow* effect = [CCEffectOuterGlow effectWithGlowColor:glowColor];
     
-    CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"Images/dist4.tga"];
+    CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"Images/DistanceFieldX.png"];
     sampleSprite.position = ccp(0.5, 0.5);
     sampleSprite.positionType = CCPositionTypeNormalized;
     sampleSprite.effect = effect;
