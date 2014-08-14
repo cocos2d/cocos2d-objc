@@ -34,7 +34,7 @@
     textField.preferredSize = CGSizeMake(0.5, 50);
     textField.positionType = CCPositionTypeNormalized;
     textField.position = ccp(0.5f, 0.8f);
-    textField.padding = 6;
+    textField.padding = 10;
     textField.anchorPoint = ccp(0.5f, 0.5f);
     textField.string = @"Hello!";
     
