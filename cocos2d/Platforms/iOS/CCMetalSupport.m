@@ -150,6 +150,33 @@ NSString *CURRENT_CONTEXT_KEY = @"CURRENT_CONTEXT_KEY";
 @end
 
 
+@interface CCGraphicsBufferBindingsMetal : NSObject <CCGraphicsBufferBindings> @end
+@implementation CCGraphicsBufferBindingsMetal {
+	CCGraphicsBufferMetal *_vertexBuffer;
+	CCGraphicsBufferMetal *_indexBuffer;
+}
+
+-(instancetype)initWithVertexBuffer:(CCGraphicsBufferMetal *)vertexBuffer indexBuffer:(CCGraphicsBufferMetal *)indexBuffer
+{
+	if((self = [super init])){
+		_vertexBuffer = vertexBuffer;
+		_indexBuffer = indexBuffer;
+	}
+	
+	return self;
+}
+
+-(void)bind:(BOOL)bind
+{
+	id<MTLRenderCommandEncoder> renderEncoder = [CCMetalContext currentContext].currentRenderCommandEncoder;
+	
+	[renderEncoder insertDebugSignpost:@"CCGraphicsBufferBindingsMetal: Bind vertex array."];
+	[renderEncoder setVertexBuffer:_vertexBuffer->_buffer offset:0 atIndex:0];
+}
+
+@end
+
+
 @implementation CCRenderCommandDrawMetal
 
 static const MTLPrimitiveType MetalDrawModes[] = {
@@ -161,14 +188,12 @@ static const MTLPrimitiveType MetalDrawModes[] = {
 {
 	CCMetalContext *context = [CCMetalContext currentContext];
 	id<MTLRenderCommandEncoder> renderEncoder = context.currentRenderCommandEncoder;
-	
-	id<MTLBuffer> vertexBuffer = ((CCGraphicsBufferMetal *)renderer->_vertexBuffer)->_buffer;
 	id<MTLBuffer> indexBuffer = ((CCGraphicsBufferMetal *)renderer->_elementBuffer)->_buffer;
 	
 	[renderEncoder pushDebugGroup:@"CCRendererCommandDraw: Invoke"];
+	[renderer bindBuffers:YES];
 //	[renderer setRenderState:_renderState];
 	[renderEncoder setRenderPipelineState:context->_tempPiplelineState];
-	[renderEncoder setVertexBuffer:vertexBuffer offset:0 atIndex:0];
 	[renderEncoder drawIndexedPrimitives:MetalDrawModes[_mode] indexCount:_count indexType:MTLIndexTypeUInt16 indexBuffer:indexBuffer indexBufferOffset:2*_first];
 	[renderEncoder popDebugGroup];
 }
