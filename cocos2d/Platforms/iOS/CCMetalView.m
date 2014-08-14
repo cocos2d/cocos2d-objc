@@ -13,8 +13,10 @@
 #import "CCScene.h"
 
 #import "CCDirector_Private.h"
+#import "CCMetalSupport_Private.h"
 
 @implementation CCMetalView {
+	CCMetalContext *_context;
 	id<MTLCommandQueue> _queue;
 	id<MTLDrawable> _currentDrawable;
 	
@@ -32,6 +34,11 @@
 {
 	if((self = [super initWithFrame:frame]))
 	{
+		_context = [[CCMetalContext alloc] init];
+		
+		#warning Temporary
+		[CCMetalContext setCurrentContext:_context];
+		
 		_device = MTLCreateSystemDefaultDevice();
 		_queue = [_device newCommandQueue];
 		
@@ -161,6 +168,11 @@
 	[_currentCommandBuffer commit];
 	_currentCommandBuffer = nil;
 	_currentDrawable = nil;
+}
+
+-(void)addFrameCompletionHandler:(dispatch_block_t)handler
+{
+	[_currentCommandBuffer addCompletedHandler:^(id<MTLCommandBuffer> buffer) {handler();}];
 }
 
 #pragma mark CCMetalView - Point conversion

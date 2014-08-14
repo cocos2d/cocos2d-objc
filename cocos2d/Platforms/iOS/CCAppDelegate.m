@@ -148,6 +148,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	// Create the main window
 	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
+	CGRect bounds = [window_ bounds];
 	
 	// CCView creation
 	// viewWithFrame: size of the OpenGL view. For full screen use [_window bounds]
@@ -166,7 +167,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	switch([CCConfiguration sharedConfiguration].graphicsAPI){
 		case CCGraphicsAPIGL:
 			ccview = [CCGLView
-				viewWithFrame:[window_ bounds]
+				viewWithFrame:bounds
 				pixelFormat:config[CCSetupPixelFormat] ?: kEAGLColorFormatRGBA8
 				depthFormat:[config[CCSetupDepthFormat] unsignedIntValue]
 				preserveBackbuffer:[config[CCSetupPreserveBackbuffer] boolValue]
@@ -178,6 +179,8 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 		case CCGraphicsAPIMetal:
 			#warning TODO
+			ccview = [[CCMetalView alloc] initWithFrame:bounds];
+			break;
 #endif
 		default: NSAssert(NO, @"Internal error: Graphics API not set up.");
 	}

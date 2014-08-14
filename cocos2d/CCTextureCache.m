@@ -86,10 +86,14 @@ static CCTextureCache *sharedTextureCache;
 {
 	if( (self=[super init]) ) {
 		_textures = [NSMutableDictionary dictionaryWithCapacity: 10];
-
+		
 		// init "global" stuff
 		_loadingQueue = dispatch_queue_create("org.cocos2d.texturecacheloading", NULL);
 		_dictQueue = dispatch_queue_create("org.cocos2d.texturecachedict", NULL);
+		
+		#warning TODO
+		if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal) return self;
+		
 #if !__CC_PLATFORM_ANDROID
 		#warning TODO might not be a GL view.
 		CCGLView *view = (CCGLView*)[[CCDirector sharedDirector] view];

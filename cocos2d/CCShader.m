@@ -365,6 +365,9 @@ UniformSettersForProgram(GLuint program)
 
 -(instancetype)initWithVertexShaderSource:(NSString *)vertexSource fragmentShaderSource:(NSString *)fragmentSource
 {
+	#warning TODO
+	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal) return self;
+	
 	__block typeof(self) blockself = self;
 	
 	CCRenderDispatch(NO, ^{

@@ -27,21 +27,46 @@
 
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 
-#import <Metal/Metal.h>
+@implementation CCMetalContext
+
+-(instancetype)init
+{
+	if((self = [super init])){
+		_device = MTLCreateSystemDefaultDevice();
+	}
+	
+	return self;
+}
+
+NSString *CURRENT_CONTEXT_KEY = @"CURRENT_CONTEXT_KEY";
+
++(instancetype)currentContext
+{
+	return [NSThread currentThread].threadDictionary[CURRENT_CONTEXT_KEY];
+}
+
++(void)setCurrentContext:(CCMetalContext *)context
+{
+	if(context){
+		[NSThread currentThread].threadDictionary[CURRENT_CONTEXT_KEY] = context;
+	} else {
+		[[NSThread currentThread].threadDictionary removeObjectForKey:CURRENT_CONTEXT_KEY];
+	}
+}
+
+@end
 
 
 @implementation CCGraphicsBufferMetal {
+	@public
 	id<MTLBuffer> _buffer;
 }
 
 -(instancetype)initWithCapacity:(NSUInteger)capacity elementSize:(size_t)elementSize type:(CCGraphicsBufferType)type;
 {
-	if((self = [super init])){
-		#warning TODO
-		id<MTLDevice> device = nil;
-		
+	if((self = [super initWithCapacity:capacity elementSize:elementSize type:type])){
 		// Use write combining? Buffers are already write only for the GL renderer.
-		_buffer = [device newBufferWithLength:capacity*elementSize options:MTLResourceOptionCPUCacheModeDefault];
+		_buffer = [[CCMetalContext currentContext].device newBufferWithLength:capacity*elementSize options:MTLResourceOptionCPUCacheModeDefault];
 		
 		_ptr = _buffer.contents;
 	}
@@ -53,7 +78,12 @@
 
 -(void)resize:(size_t)newCapacity;
 {
-	#warning TODO
+	id<MTLBuffer> newBuffer = [[CCMetalContext currentContext].device newBufferWithLength:newCapacity*_elementSize options:MTLResourceOptionCPUCacheModeDefault];
+	memcpy(newBuffer.contents, _ptr, _capacity*_elementSize);
+	
+	_capacity = newCapacity;
+	_buffer = newBuffer;
+	_ptr = _buffer.contents;
 }
 
 -(void)prepare;
@@ -62,6 +92,27 @@
 }
 
 -(void)commit; {}
+
+@end
+
+
+@implementation CCRenderCommandDrawMetal
+
+static const MTLPrimitiveType MetalDrawModes[] = {
+	GL_TRIANGLES,
+	GL_LINES,
+};
+
+-(void)invokeOnRenderer:(CCRenderer *)renderer
+{
+	id<MTLRenderCommandEncoder> renderEncoder = [CCMetalContext currentContext].currentRenderCommandEncoder;
+	CCGraphicsBufferMetal *indexBuffer = (CCGraphicsBufferMetal *)renderer->_elementBuffer;
+	
+	[renderEncoder pushDebugGroup:@"CCRendererCommandDraw: Invoke"];
+	[renderer setRenderState:_renderState];
+	[renderEncoder drawIndexedPrimitives:MetalDrawModes[_mode] indexCount:_count indexType:MTLIndexTypeUInt16 indexBuffer:indexBuffer->_buffer indexBufferOffset:2*_first];
+	[renderEncoder popDebugGroup];
+}
 
 @end
 

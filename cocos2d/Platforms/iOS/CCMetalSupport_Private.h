@@ -24,12 +24,30 @@
  */
 
 #import "ccMacros.h"
-
 #if __CC_METAL_SUPPORTED_AND_ENABLED
+
+#import <Metal/Metal.h>
 
 #import "CCRenderer_Private.h"
 
+
+@interface CCMetalContext : NSObject
+
+@property(nonatomic, readonly) id<MTLDevice> device;
+@property(nonatomic, readonly) id<MTLRenderCommandEncoder> currentRenderCommandEncoder;
+
++(instancetype)currentContext;
++(void)setCurrentContext:(CCMetalContext *)context;
+
+@end
+
+
 @interface CCGraphicsBufferMetal : CCGraphicsBuffer
 @end
+
+
+@interface CCRenderCommandDrawMetal : CCRenderCommandDraw
+@end
+
 
 #endif

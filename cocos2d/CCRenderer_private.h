@@ -171,8 +171,11 @@ CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount, CC
 
 
 @interface CCRenderer(){
-	CCGraphicsBuffer *_vertexBuffer;
+	@public
 	CCGraphicsBuffer *_elementBuffer;
+	
+	@private
+	CCGraphicsBuffer *_vertexBuffer;
 	id<CCGraphicsBufferBindings> _bufferBindings;
 	
 	NSDictionary *_globalShaderUniforms;
