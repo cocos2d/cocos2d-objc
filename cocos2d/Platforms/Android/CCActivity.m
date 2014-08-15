@@ -106,6 +106,19 @@ static void handler(NSException *e)
         screenMode = CCScreenScaledAspectFitEmulationMode;
     }
     
+    if([_cocos2dSetupConfig[CCSetupScreenOrientation] isEqual:CCScreenOrientationPortrait])
+    {
+        self.requestedOrientation = AndroidActivityInfoScreenOrientationSensorPortrait;
+    }
+    else if([_cocos2dSetupConfig[CCSetupScreenOrientation] isEqual:CCScreenOrientationLandscape])
+    {
+        self.requestedOrientation = AndroidActivityInfoScreenOrientationSensorLandscape;
+    }
+    else
+    {
+        self.requestedOrientation = AndroidActivityInfoScreenOrientationUnspecified;
+    }
+    
     _glView = [[CCGLView alloc] initWithContext:self screenMode:screenMode scaleFactor:metrics.density];
     [metrics release];
     [_glView.holder addCallback:self];
