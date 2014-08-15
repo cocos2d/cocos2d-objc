@@ -133,6 +133,7 @@
 -(GLKMatrix4) updateProjection;
 
 #ifdef __CC_PLATFORM_IOS
+-(NSUInteger)supportedInterfaceOrientations;
 /** Returns a Boolean value indicating whether the CCDirector supports the specified orientation. Default value is YES (supports all possible orientations) */
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
 
