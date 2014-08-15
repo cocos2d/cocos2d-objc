@@ -170,7 +170,7 @@ NSString *CURRENT_CONTEXT_KEY = @"CURRENT_CONTEXT_KEY";
 {
 	id<MTLRenderCommandEncoder> renderEncoder = [CCMetalContext currentContext].currentRenderCommandEncoder;
 	
-	[renderEncoder insertDebugSignpost:@"CCGraphicsBufferBindingsMetal: Bind vertex array."];
+	CCMTL_DEBUG_INSERT_EVENT_MARKER(renderEncoder, @"CCGraphicsBufferBindingsMetal: Bind vertex array.");
 	[renderEncoder setVertexBuffer:_vertexBuffer->_buffer offset:0 atIndex:0];
 }
 
@@ -190,12 +190,12 @@ static const MTLPrimitiveType MetalDrawModes[] = {
 	id<MTLRenderCommandEncoder> renderEncoder = context.currentRenderCommandEncoder;
 	id<MTLBuffer> indexBuffer = ((CCGraphicsBufferMetal *)renderer->_elementBuffer)->_buffer;
 	
-	[renderEncoder pushDebugGroup:@"CCRendererCommandDraw: Invoke"];
+	CCMTL_DEBUG_PUSH_GROUP_MARKER(renderEncoder, @"CCRendererCommandDraw: Invoke");
 	[renderer bindBuffers:YES];
 //	[renderer setRenderState:_renderState];
 	[renderEncoder setRenderPipelineState:context->_tempPiplelineState];
 	[renderEncoder drawIndexedPrimitives:MetalDrawModes[_mode] indexCount:_count indexType:MTLIndexTypeUInt16 indexBuffer:indexBuffer indexBufferOffset:2*_first];
-	[renderEncoder popDebugGroup];
+	CCMTL_DEBUG_POP_GROUP_MARKER(renderEncoder);
 }
 
 @end

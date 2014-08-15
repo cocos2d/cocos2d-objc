@@ -31,6 +31,21 @@
 #import "CCRenderer_Private.h"
 
 
+#if DEBUG
+
+#define CCMTL_DEBUG_INSERT_EVENT_MARKER(__encoder__, __message__) 
+#define CCMTL_DEBUG_PUSH_GROUP_MARKER(__encoder__, __message__) [__encoder__ pushDebugGroup:__message__]
+#define CCMTL_DEBUG_POP_GROUP_MARKER(__encoder__) [__encoder__ popDebugGroup]
+
+#else
+
+#define CCMTL_DEBUG_INSERT_EVENT_MARKER(__encoder__, __message__) 
+#define CCMTL_DEBUG_PUSH_GROUP_MARKER(__encoder__, __message__)
+#define CCMTL_DEBUG_POP_GROUP_MARKER(__encoder__)
+
+#endif
+
+
 @interface CCMetalContext : NSObject
 
 @property(nonatomic, readonly) id<MTLDevice> device;
