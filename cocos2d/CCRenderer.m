@@ -302,6 +302,11 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 	return [CCRENDERSTATE_CACHE objectForKey:renderState];
 }
 
++(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms copyUniforms:(BOOL)copyUniforms
+{
+	return [[self alloc] initWithBlendMode:blendMode shader:shader shaderUniforms:shaderUniforms copyUniforms:copyUniforms];
+}
+
 -(id)copyWithZone:(NSZone *)zone
 {
 	if(_immutable){
