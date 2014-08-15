@@ -172,6 +172,8 @@
 		D2342007199AD36D00DF8FCD /* CCNoARC.m in Sources */ = {isa = PBXBuildFile; fileRef = D2342004199AD36D00DF8FCD /* CCNoARC.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D2342008199AD36D00DF8FCD /* CCRenderDispatch.h in Headers */ = {isa = PBXBuildFile; fileRef = D2342005199AD36D00DF8FCD /* CCRenderDispatch.h */; };
 		D2342009199AD36D00DF8FCD /* CCRenderDispatch.m in Sources */ = {isa = PBXBuildFile; fileRef = D2342006199AD36D00DF8FCD /* CCRenderDispatch.m */; };
+		D2570849199D81C900B56E04 /* CCDirectorView.h in Headers */ = {isa = PBXBuildFile; fileRef = D2570847199D81C900B56E04 /* CCDirectorView.h */; };
+		D257084A199D81C900B56E04 /* CCRenderDispatch_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D2570848199D81C900B56E04 /* CCRenderDispatch_Private.h */; };
 		D2D598641987132700BDAF25 /* CCEffect_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D2D598421987132700BDAF25 /* CCEffect_Private.h */; };
 		D2D598651987132700BDAF25 /* CCEffect.h in Headers */ = {isa = PBXBuildFile; fileRef = D2D598431987132700BDAF25 /* CCEffect.h */; };
 		D2D598661987132700BDAF25 /* CCEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = D2D598441987132700BDAF25 /* CCEffect.m */; };
@@ -203,6 +205,7 @@
 		D2D598831987132700BDAF25 /* CCEffectStackProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = D2D598611987132700BDAF25 /* CCEffectStackProtocol.h */; };
 		D2D598841987132700BDAF25 /* CCEffectUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = D2D598621987132700BDAF25 /* CCEffectUtils.h */; };
 		D2D598851987132700BDAF25 /* CCEffectUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = D2D598631987132700BDAF25 /* CCEffectUtils.m */; };
+		D2EC6034199D9F2E001A15E9 /* CCRendererGLSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = D2EC6033199D9F2E001A15E9 /* CCRendererGLSupport.m */; };
 		D37EE9FE187D4E7800CB5EF2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D37EE9FD187D4E7800CB5EF2 /* Foundation.framework */; };
 		D37EEA6E187D4F5200CB5EF2 /* libObjectiveChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D37EE9FC187D4E7700CB5EF2 /* libObjectiveChipmunk.a */; };
 		D37EEB03187D4F9600CB5EF2 /* ChipmunkBody.m in Sources */ = {isa = PBXBuildFile; fileRef = D37EEADF187D4F9600CB5EF2 /* ChipmunkBody.m */; };
@@ -546,6 +549,8 @@
 		D2342004199AD36D00DF8FCD /* CCNoARC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCNoARC.m; sourceTree = "<group>"; };
 		D2342005199AD36D00DF8FCD /* CCRenderDispatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderDispatch.h; sourceTree = "<group>"; };
 		D2342006199AD36D00DF8FCD /* CCRenderDispatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCRenderDispatch.m; sourceTree = "<group>"; };
+		D2570847199D81C900B56E04 /* CCDirectorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDirectorView.h; sourceTree = "<group>"; };
+		D2570848199D81C900B56E04 /* CCRenderDispatch_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderDispatch_Private.h; sourceTree = "<group>"; };
 		D2D598421987132700BDAF25 /* CCEffect_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffect_Private.h; sourceTree = "<group>"; };
 		D2D598431987132700BDAF25 /* CCEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffect.h; sourceTree = "<group>"; };
 		D2D598441987132700BDAF25 /* CCEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffect.m; sourceTree = "<group>"; };
@@ -577,6 +582,7 @@
 		D2D598611987132700BDAF25 /* CCEffectStackProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectStackProtocol.h; sourceTree = "<group>"; };
 		D2D598621987132700BDAF25 /* CCEffectUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectUtils.h; sourceTree = "<group>"; };
 		D2D598631987132700BDAF25 /* CCEffectUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectUtils.m; sourceTree = "<group>"; };
+		D2EC6033199D9F2E001A15E9 /* CCRendererGLSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCRendererGLSupport.m; sourceTree = SOURCE_ROOT; };
 		D37EE9FC187D4E7700CB5EF2 /* libObjectiveChipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libObjectiveChipmunk.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D37EE9FD187D4E7800CB5EF2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D37EEA0B187D4E7800CB5EF2 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -1346,6 +1352,7 @@
 				E076E6791225EC7400DE0DA2 /* CCScheduler.m */,
 				B706B19A1820A42300B27A2C /* CCDirector_Private.h */,
 				D3AD531F18C84FC9005B6CF3 /* CCRenderer_private.h */,
+				D2EC6033199D9F2E001A15E9 /* CCRendererGLSupport.m */,
 				D3AD532018C84FC9005B6CF3 /* CCRenderer.h */,
 				D3AD532118C84FC9005B6CF3 /* CCRenderer.m */,
 				D2342004199AD36D00DF8FCD /* CCNoARC.m */,
@@ -1358,6 +1365,8 @@
 		E076E69F1225EC7400DE0DA2 /* Platforms */ = {
 			isa = PBXGroup;
 			children = (
+				D2570847199D81C900B56E04 /* CCDirectorView.h */,
+				D2570848199D81C900B56E04 /* CCRenderDispatch_Private.h */,
 				E0D5D6FB1344056600A7B1B9 /* iOS */,
 				E076E6B11225EC7400DE0DA2 /* Mac */,
 				E076E6A01225EC7400DE0DA2 /* CCGL.h */,
@@ -1685,6 +1694,7 @@
 				B7E776531858EC79004221AA /* CCParticleSystemBase.h in Headers */,
 				B77060671831B0C40043CC67 /* OALUtilityActions.h in Headers */,
 				B770606D1831B0C40043CC67 /* OALAudioTracks.h in Headers */,
+				D2570849199D81C900B56E04 /* CCDirectorView.h in Headers */,
 				B77060991831B0C40043CC67 /* OALTools.h in Headers */,
 				D389412C18639DD400725CFC /* CCPhysicsShape.h in Headers */,
 				B77060691831B0C40043CC67 /* OALAudioTrack.h in Headers */,
@@ -1706,6 +1716,7 @@
 				B77060871831B0C40043CC67 /* OpenALManager.h in Headers */,
 				B77060751831B0C40043CC67 /* ALCaptureDevice.h in Headers */,
 				B7D273331822F5460054849B /* CCBSequenceProperty.h in Headers */,
+				D257084A199D81C900B56E04 /* CCRenderDispatch_Private.h in Headers */,
 				D3903B03199527AA003AA81A /* CCEffectBlur.h in Headers */,
 				A046E2B614C1E5000005BBF2 /* CCESRenderer.h in Headers */,
 				A046E2B714C1E5000005BBF2 /* CCGLView.h in Headers */,
@@ -1879,6 +1890,7 @@
 				D2D5987D1987132700BDAF25 /* CCEffectRenderer.m in Sources */,
 				E076E6DA1225EC7400DE0DA2 /* CCActionInstant.m in Sources */,
 				E076E6DC1225EC7400DE0DA2 /* CCActionInterval.m in Sources */,
+				D2EC6034199D9F2E001A15E9 /* CCRendererGLSupport.m in Sources */,
 				B77060901831B0C40043CC67 /* mach_timing.c in Sources */,
 				D2342009199AD36D00DF8FCD /* CCRenderDispatch.m in Sources */,
 				E076E6DE1225EC7400DE0DA2 /* CCActionManager.m in Sources */,

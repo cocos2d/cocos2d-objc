@@ -101,6 +101,7 @@ __attribute__((deprecated)) static const GLenum CC_BLEND_DST = GL_ONE_MINUS_SRC_
 #define glBindVertexArray			glBindVertexArrayOES
 #define glMapBuffer					glMapBufferOES
 #define glUnmapBuffer				glUnmapBufferOES
+#define glDeleteVertexArrays        glDeleteVertexArraysOES
 
 #define GL_DEPTH24_STENCIL8			GL_DEPTH24_STENCIL8_OES
 #define GL_WRITE_ONLY				GL_WRITE_ONLY_OES
