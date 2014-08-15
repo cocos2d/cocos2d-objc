@@ -227,7 +227,7 @@ static const CCGraphicsBufferType CCGraphicsBufferGLTypes[] = {
 -(void)dealloc
 {
 	GLuint vao = _vao;
-	CCRenderDispatch(YES, ^{glDeleteVertexArraysOES(1, &vao);});
+	CCRenderDispatch(YES, ^{glDeleteVertexArrays(1, &vao);});
 }
 
 -(void)bind:(BOOL)bind
