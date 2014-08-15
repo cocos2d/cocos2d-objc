@@ -173,7 +173,6 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 
 -(void)setRenderState:(CCRenderState *)renderState
 {
-	[self bindBuffers:YES];
 	if(renderState == _renderState) return;
 	
 	CCGL_DEBUG_PUSH_GROUP_MARKER("CCRenderer: Render State");

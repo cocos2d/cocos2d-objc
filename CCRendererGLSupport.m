@@ -251,7 +251,9 @@ static const CCRenderCommandDrawMode GLDrawModes[] = {
 {
 	CCGL_DEBUG_PUSH_GROUP_MARKER("CCRendererCommandDraw: Invoke");
 	
-	[renderer setRenderState:_renderState];
+	[renderer bindBuffers:YES];
+	renderer.renderState = _renderState;
+	
 	glDrawElements(GLDrawModes[_mode], (GLsizei)_count, GL_UNSIGNED_SHORT, (GLvoid *)(_first*sizeof(GLushort)));
 	CC_INCREMENT_GL_DRAWS(1);
 	
