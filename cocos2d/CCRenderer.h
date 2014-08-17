@@ -177,6 +177,9 @@ extern const NSString *CCBlendEquationAlpha;
 +(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms copyUniforms:(BOOL)copyUniforms;
 
 /// Initialize an uncached blending mode for a given blending mode, shader and set of uncopied uniform values.
+-(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms copyUniforms:(BOOL)copyUniforms;
+
+/// Initialize an uncached blending mode for a given blending mode, shader and set of uncopied uniform values.
 /// Use [CCRenderState renderStateWithBlendMode:blendMode shader:shader shaderUniforms:shaderUniforms copyUniforms:NO] instead.
 -(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms __deprecated;
 
