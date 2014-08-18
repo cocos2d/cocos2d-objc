@@ -30,6 +30,7 @@
 
 extern Class CCGraphicsBufferClass;
 extern Class CCGraphicsBufferBindingsClass;
+extern Class CCRenderStateClass;
 extern Class CCRenderCommandDrawClass;
 
 extern NSString* const CCSetupPixelFormat;

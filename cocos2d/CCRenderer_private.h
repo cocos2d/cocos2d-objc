@@ -77,6 +77,8 @@ extern NSDictionary *CCBLEND_DISABLED_OPTIONS;
 	NSDictionary *_shaderUniforms;
 }
 
+-(void)transitionRenderer:(CCRenderer *)renderer FromState:(CCRenderState *)previous;
+
 @end
 
 
@@ -174,8 +176,6 @@ CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount, CC
 	@public
 	CCGraphicsBuffer *_vertexBuffer;
 	CCGraphicsBuffer *_elementBuffer;
-	
-	@private
 	id<CCGraphicsBufferBindings> _bufferBindings;
 	
 	NSDictionary *_globalShaderUniforms;
@@ -186,9 +186,6 @@ CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount, CC
 	// Current renderer bindings for fast state checking.
 	// Invalidated at the end of each frame.
 	__unsafe_unretained CCRenderState *_renderState;
-	__unsafe_unretained NSDictionary *_blendOptions;
-	__unsafe_unretained CCShader *_shader;
-	__unsafe_unretained NSDictionary *_shaderUniforms;
 	__unsafe_unretained CCRenderCommandDraw *_lastDrawCommand;
 	BOOL _buffersBound;
 }

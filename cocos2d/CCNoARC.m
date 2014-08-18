@@ -168,24 +168,22 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 
 @end
 
+@interface CCRenderStateGL : CCRenderState @end
+@implementation CCRenderStateGL
 
-@implementation CCRenderer(NoARCPrivate)
-
--(void)setRenderState:(CCRenderState *)renderState
+-(void)transitionRenderer:(CCRenderer *)renderer FromState:(CCRenderState *)previous
 {
-	if(renderState == _renderState) return;
-	
-	CCGL_DEBUG_PUSH_GROUP_MARKER("CCRenderer: Render State");
+	CCGL_DEBUG_PUSH_GROUP_MARKER("CCRenderStateGL: Transition");
 	
 	// Set the blending state.
-	NSDictionary *blendOptions = renderState->_blendMode->_options;
-	if(blendOptions != _blendOptions){
+	if(previous ==  nil || _blendMode != previous->_blendMode){
 		CCGL_DEBUG_INSERT_EVENT_MARKER("Blending mode");
 		
+		NSDictionary *blendOptions = _blendMode->_options;
 		if(blendOptions == CCBLEND_DISABLED_OPTIONS){
-			if(_blendOptions != CCBLEND_DISABLED_OPTIONS) glDisable(GL_BLEND);
+			glDisable(GL_BLEND);
 		} else {
-			if(_blendOptions == nil || _blendOptions == CCBLEND_DISABLED_OPTIONS) glEnable(GL_BLEND);
+			glEnable(GL_BLEND);
 			
 			glBlendFuncSeparate(
 				[blendOptions[CCBlendFuncSrcColor] unsignedIntValue],
@@ -199,40 +197,29 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 				[blendOptions[CCBlendEquationAlpha] unsignedIntValue]
 			);
 		}
-		
-		_blendOptions = blendOptions;
 	}
 	
 	// Bind the shader.
-	CCShader *shader = renderState->_shader;
-	if(shader != _shader){
+	if(previous == nil || _shader != previous->_shader){
 		CCGL_DEBUG_INSERT_EVENT_MARKER("Shader");
 		
-		glUseProgram(shader->_program);
-		
-		_shader = shader;
-		_shaderUniforms = nil;
+		glUseProgram(_shader->_program);
 	}
 	
 	// Set the shader's uniform state.
-	NSDictionary *shaderUniforms = renderState->_shaderUniforms;
-	NSDictionary *globalShaderUniforms = _globalShaderUniforms;
-	if(shaderUniforms != _shaderUniforms){
+	if(previous == nil || _shaderUniforms != previous->_shaderUniforms){
 		CCGL_DEBUG_INSERT_EVENT_MARKER("Uniforms");
 		
-		NSDictionary *setters = shader->_uniformSetters;
+		NSDictionary *globalShaderUniforms = renderer->_globalShaderUniforms;
+		NSDictionary *setters = _shader->_uniformSetters;
 		for(NSString *uniformName in setters){
 			CCUniformSetter setter = setters[uniformName];
-			setter(self, shaderUniforms, globalShaderUniforms);
+			setter(renderer, _shaderUniforms, globalShaderUniforms);
 		}
-		_shaderUniforms = shaderUniforms;
 	}
 	
 	CCGL_DEBUG_POP_GROUP_MARKER();
 	CC_CHECK_GL_ERROR_DEBUG();
-	
-	_renderState = renderState;
-	return;
 }
 
 @end

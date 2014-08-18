@@ -41,6 +41,7 @@
 
 Class CCGraphicsBufferClass;
 Class CCGraphicsBufferBindingsClass;
+Class CCRenderStateClass;
 Class CCRenderCommandDrawClass;
 
 NSString* const CCSetupPixelFormat = @"CCSetupPixelFormat";
@@ -141,12 +142,14 @@ static char * glExtensions;
 		if(__CC_METAL_SUPPORTED_AND_ENABLED && NSProtocolFromString(@"MTLDevice") && !getenv("CC_FORCE_GL")){
 			CCGraphicsBufferClass = NSClassFromString(@"CCGraphicsBufferMetal");
 			CCGraphicsBufferBindingsClass = NSClassFromString(@"CCGraphicsBufferBindingsMetal");
+			CCRenderStateClass = NSClassFromString(@"CCRenderStateMetal");
 			CCRenderCommandDrawClass = NSClassFromString(@"CCRenderCommandDrawMetal");
 			
 			_graphicsAPI = CCGraphicsAPIMetal;
 		} else {
 			CCGraphicsBufferClass = NSClassFromString(@"CCGraphicsBufferGLBasic");
 			CCGraphicsBufferBindingsClass = NSClassFromString(@"CCGraphicsBufferBindingsGL");
+			CCRenderStateClass = NSClassFromString(@"CCRenderStateGL");
 			CCRenderCommandDrawClass = NSClassFromString(@"CCRenderCommandDrawGL");
 			
 			_graphicsAPI = CCGraphicsAPIGL;
