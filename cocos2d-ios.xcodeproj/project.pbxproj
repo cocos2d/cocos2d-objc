@@ -356,6 +356,7 @@
 		D2DDB0A619805E8400233D80 /* CCQuaternion.m in Sources */ = {isa = PBXBuildFile; fileRef = D2DDB09119805E8400233D80 /* CCQuaternion.m */; };
 		D2DDB0A719805E8400233D80 /* CCMatrix3.m in Sources */ = {isa = PBXBuildFile; fileRef = D2DDB09219805E8400233D80 /* CCMatrix3.m */; };
 		D2DDB0A819805E8400233D80 /* CCMatrix3.m in Sources */ = {isa = PBXBuildFile; fileRef = D2DDB09219805E8400233D80 /* CCMatrix3.m */; };
+		D2EC6039199D9F82001A15E9 /* CCRendererGLSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = D36DFA2719996EC500DEC135 /* CCRendererGLSupport.m */; };
 		D2FEB611194F6C9E00FC0574 /* CCBLocalizationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = B7D273041822F4AA0054849B /* CCBLocalizationManager.h */; };
 		D2FEB612194F6C9E00FC0574 /* CCAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2520DFDEAFF00C013A5 /* CCAction.h */; };
 		D2FEB613194F6C9E00FC0574 /* CCNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2540DFDEAFF00C013A5 /* CCNode.h */; };
@@ -628,10 +629,13 @@
 		D2FEB747194F6C9E00FC0574 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		D2FEB749194F6C9E00FC0574 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
 		D309055018AC23110081BF11 /* CCRenderer_private.h in Headers */ = {isa = PBXBuildFile; fileRef = D309054F18AC23110081BF11 /* CCRenderer_private.h */; };
+		D31C795019994126007921E1 /* CCMetalSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = D31C794F19994126007921E1 /* CCMetalSupport.m */; };
+		D31C795219994197007921E1 /* CCMetalSupport_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D31C795119994197007921E1 /* CCMetalSupport_Private.h */; };
 		D33803E318032ECE0072D8FE /* CCPhysicsBody.m in Sources */ = {isa = PBXBuildFile; fileRef = D33803E218032ECE0072D8FE /* CCPhysicsBody.m */; };
 		D33803E618032F390072D8FE /* CCPhysicsNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D33803E518032F390072D8FE /* CCPhysicsNode.m */; };
 		D33803EA180331A90072D8FE /* CCPhysicsJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = D33803E9180331A90072D8FE /* CCPhysicsJoint.m */; };
 		D36D31B718BD3CAA00E45F08 /* CCProgressNode.m in Sources */ = {isa = PBXBuildFile; fileRef = B791E85C182074C500DAE1D7 /* CCProgressNode.m */; };
+		D36DFA2819996EC500DEC135 /* CCRendererGLSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = D36DFA2719996EC500DEC135 /* CCRendererGLSupport.m */; };
 		D37D197718B6665700B23FDE /* CCTiledMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 509D0817101E4FCE007E1749 /* CCTiledMap.m */; };
 		D37D197818B6665700B23FDE /* CCTiledMapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 50D2AC9210E90DFA0068ECEB /* CCTiledMapLayer.m */; };
 		D37D197918B6665700B23FDE /* CCTiledMapObjectGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 50D2AC9410E90DFA0068ECEB /* CCTiledMapObjectGroup.m */; };
@@ -1066,6 +1070,8 @@
 		D2DDB09219805E8400233D80 /* CCMatrix3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCMatrix3.m; path = Platforms/Android/CCMatrix3.m; sourceTree = "<group>"; };
 		D2FEB74F194F6C9E00FC0574 /* libcocos2dAndroid.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2dAndroid.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D309054F18AC23110081BF11 /* CCRenderer_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderer_private.h; sourceTree = "<group>"; };
+		D31C794F19994126007921E1 /* CCMetalSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMetalSupport.m; sourceTree = "<group>"; };
+		D31C795119994197007921E1 /* CCMetalSupport_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMetalSupport_Private.h; sourceTree = "<group>"; };
 		D33803DC18032E4F0072D8FE /* CCPhysics+ObjectiveChipmunk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCPhysics+ObjectiveChipmunk.h"; sourceTree = "<group>"; };
 		D33803E218032ECE0072D8FE /* CCPhysicsBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsBody.m; sourceTree = "<group>"; };
 		D33803E418032F250072D8FE /* CCPhysicsBody.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPhysicsBody.h; sourceTree = "<group>"; };
@@ -1073,6 +1079,7 @@
 		D33803E718032F4A0072D8FE /* CCPhysicsNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPhysicsNode.h; sourceTree = "<group>"; };
 		D33803E81803319F0072D8FE /* CCPhysicsJoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPhysicsJoint.h; sourceTree = "<group>"; };
 		D33803E9180331A90072D8FE /* CCPhysicsJoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsJoint.m; sourceTree = "<group>"; };
+		D36DFA2719996EC500DEC135 /* CCRendererGLSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCRendererGLSupport.m; path = ../CCRendererGLSupport.m; sourceTree = "<group>"; };
 		D38058181889AD6000822437 /* CCRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderer.h; sourceTree = "<group>"; };
 		D38058191889AD6000822437 /* CCRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCRenderer.m; sourceTree = "<group>"; };
 		D380581E1889CE7700822437 /* CCCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCCache.h; path = ../CCCache.h; sourceTree = "<group>"; };
@@ -1089,6 +1096,7 @@
 		D39FA9C718C1BC6B00441627 /* CCShader_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCShader_Private.h; sourceTree = "<group>"; };
 		D3A2E7D0181E12750033614C /* CCPhysicsShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsShape.h; sourceTree = "<group>"; };
 		D3A2E7D1181E12750033614C /* CCPhysicsShape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsShape.m; sourceTree = "<group>"; };
+		D3C12815199D40AC005D2119 /* CCShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = CCShaders.metal; sourceTree = "<group>"; };
 		E01E6D8A121F130E001A484F /* CCLabelBMFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCLabelBMFont.h; sourceTree = "<group>"; };
 		E01E6D8B121F130E001A484F /* CCLabelBMFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCLabelBMFont.m; sourceTree = "<group>"; };
 		E02BB6D4126CA93A006E46A2 /* CCAnimationCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAnimationCache.h; sourceTree = "<group>"; };
@@ -1266,6 +1274,7 @@
 				D38058181889AD6000822437 /* CCRenderer.h */,
 				D309054F18AC23110081BF11 /* CCRenderer_private.h */,
 				D38058191889AD6000822437 /* CCRenderer.m */,
+				D36DFA2719996EC500DEC135 /* CCRendererGLSupport.m */,
 				D3903B0C1995288D003AA81A /* CCNoARC.m */,
 				D3903B0E199528A0003AA81A /* CCRenderDispatch.h */,
 				D3903B0F199528A0003AA81A /* CCRenderDispatch.m */,
@@ -1900,6 +1909,7 @@
 		E0EAD0E9121F4B4600B0C81C /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				D3C12815199D40AC005D2119 /* CCShaders.metal */,
 				D3903B12199528B6003AA81A /* CCMetalView.h */,
 				D3903B13199528B6003AA81A /* CCMetalView.m */,
 				B78AE46A17E7AF6C0028BE0B /* UITouch+CC.h */,
@@ -1915,6 +1925,8 @@
 				B7E775CF18527EF0004221AA /* CCAppDelegate.m */,
 				D23C5CB2194BC108007CA669 /* CCTouchIOS.h */,
 				D23C5CB3194BC108007CA669 /* CCTouchIOS.m */,
+				D31C795119994197007921E1 /* CCMetalSupport_Private.h */,
+				D31C794F19994126007921E1 /* CCMetalSupport.m */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -2005,6 +2017,7 @@
 				5B063DD419637443002B1CDE /* ALWeakElement.h in Headers */,
 				509D0818101E4FCE007E1749 /* CCTiledMap.h in Headers */,
 				50F29F6F102053370046CA73 /* base64.h in Headers */,
+				D31C795219994197007921E1 /* CCMetalSupport_Private.h in Headers */,
 				50F2A105102094550046CA73 /* ZipUtils.h in Headers */,
 				50CFAC391023660000175934 /* CCTMXXMLParser.h in Headers */,
 				50316AA610291280003ACFE7 /* CCRenderTexture.h in Headers */,
@@ -2460,6 +2473,7 @@
 				5018F2780DFDEAFF00C013A5 /* CCScene.m in Sources */,
 				5B063DD119637291002B1CDE /* ALWeakDictionary.m in Sources */,
 				5018F27E0DFDEAFF00C013A5 /* CCTextureCache.m in Sources */,
+				D31C795019994126007921E1 /* CCMetalSupport.m in Sources */,
 				B7705FE51831A07B0043CC67 /* ALChannelSource.m in Sources */,
 				D2DDB09D19805E8400233D80 /* CCMatrix4.m in Sources */,
 				5038B6B30E196CD8009A621E /* CCParticleSystemBase.m in Sources */,
@@ -2480,6 +2494,7 @@
 				D37D197A18B6665700B23FDE /* CCTMXXMLParser.m in Sources */,
 				509A79980F6188420032F449 /* CCSprite.m in Sources */,
 				D37D197718B6665700B23FDE /* CCTiledMap.m in Sources */,
+				D36DFA2819996EC500DEC135 /* CCRendererGLSupport.m in Sources */,
 				50C508C70F7C194400799124 /* CCFileUtils.m in Sources */,
 				B7705FD31831A07B0043CC67 /* OALAudioActions.m in Sources */,
 				D25B4F4C194A499700DA9D60 /* CCTouch.m in Sources */,
@@ -2642,6 +2657,7 @@
 				D2FEB6D9194F6C9E00FC0574 /* CCFileUtils.m in Sources */,
 				D2FEB6DA194F6C9E00FC0574 /* OALAudioActions.m in Sources */,
 				D2FEB6DB194F6C9E00FC0574 /* CCTouch.m in Sources */,
+				D2EC6039199D9F82001A15E9 /* CCRendererGLSupport.m in Sources */,
 				D2FEB6DC194F6C9E00FC0574 /* CCEffectNode.m in Sources */,
 				D2FEB6DD194F6C9E00FC0574 /* CCTiledMapObjectGroup.m in Sources */,
 				D2FEB6DE194F6C9E00FC0574 /* CGPointExtension.m in Sources */,

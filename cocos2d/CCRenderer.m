@@ -30,12 +30,7 @@
 #import "CCTexture_Private.h"
 #import "CCShader_private.h"
 #import "CCDirector_Private.h"
-#import "CCGL.h"
 #import "CCRenderDispatch.h"
-
-@interface CCShader()
-+(GLuint)createVAOforCCVertexBuffer:(GLuint)vbo elementBuffer:(GLuint)ebo;
-@end
 
 //MARK: NSValue Additions.
 @implementation NSValue(CCRenderer)
@@ -349,13 +344,13 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 
 @implementation CCRenderCommandDraw
 
--(instancetype)initWithMode:(GLenum)mode renderState:(CCRenderState *)renderState first:(GLint)first elements:(GLsizei)elements globalSortOrder:(NSInteger)globalSortOrder
+-(instancetype)initWithMode:(CCRenderCommandDrawMode)mode renderState:(CCRenderState *)renderState first:(NSUInteger)first count:(size_t)count globalSortOrder:(NSInteger)globalSortOrder
 {
 	if((self = [super init])){
 		_mode = mode;
 		_renderState = [renderState copy];
 		_first = first;
-		_elements = elements;
+		_count = count;
 		_globalSortOrder = globalSortOrder;
 	}
 	
@@ -367,21 +362,13 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 	return _globalSortOrder;
 }
 
--(void)batchElements:(GLsizei)elements
+-(void)batch:(NSUInteger)count
 {
-	_elements += elements;
+	_count += count;
 }
 
 -(void)invokeOnRenderer:(CCRenderer *)renderer
-{
-	CCGL_DEBUG_PUSH_GROUP_MARKER("CCRendererCommandDraw: Invoke");
-	
-	[renderer setRenderState:_renderState];
-	glDrawElements(_mode, _elements, GL_UNSIGNED_SHORT, (GLvoid *)(_first*sizeof(GLushort)));
-	CC_INCREMENT_GL_DRAWS(1);
-	
-	CCGL_DEBUG_POP_GROUP_MARKER();
-}
+{NSAssert(NO, @"Must be overridden.");}
 
 @end
 
@@ -420,7 +407,7 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 {
 	CCGL_DEBUG_PUSH_GROUP_MARKER(_debugLabel.UTF8String);
 	
-	[renderer bindVAO:NO];
+	[renderer bindBuffers:NO];
 	_block();
 	
 	CCGL_DEBUG_POP_GROUP_MARKER();
@@ -489,168 +476,35 @@ SortQueue(NSMutableArray *queue)
 
 @implementation CCGraphicsBuffer
 
--(instancetype)initWithCapacity:(NSUInteger)capacity elementSize:(size_t)elementSize type:(intptr_t)type;
+-(instancetype)initWithCapacity:(NSUInteger)capacity elementSize:(size_t)elementSize type:(CCGraphicsBufferType)type
 {
 	if((self = [super init])){
 		_count = 0;
 		_capacity = capacity;
 		_elementSize = elementSize;
-
-		_ptr = calloc(capacity, elementSize);
-
-		GLuint glbuffer = 0;
-		glGenBuffers(1, &glbuffer);
-		_data = (intptr_t)glbuffer;
-		_type = type;
 	}
 	
 	return self;
 }
 
+-(void)resize:(size_t)newCapacity
+{NSAssert(NO, @"Must be overridden.");}
+
 -(void)destroy
-{
-	free(_ptr);
-	_ptr = NULL;
-	
-	glDeleteBuffers(1, (GLuint *)&_data);
-	_data = 0;
-}
+{NSAssert(NO, @"Must be overridden.");}
+
+-(void)prepare
+{NSAssert(NO, @"Must be overridden.");}
+
+-(void)commit
+{NSAssert(NO, @"Must be overridden.");}
 
 -(void)dealloc
 {
 	[self destroy];
 }
 
--(void)resize:(size_t)newCapacity;
-{
-	_ptr = realloc(_ptr, newCapacity*_elementSize);
-	_capacity = newCapacity;
-}
-
--(void)prepare;
-{
-	_count = 0;
-}
-
--(void)commit;
-{
-	GLenum type = (GLenum)_type;
-	glBindBuffer(type, (GLuint)_data);
-	glBufferData(type, (GLsizei)(_count*_elementSize), _ptr, GL_STREAM_DRAW);
-	glBindBuffer(type, 0);
-}
-
 @end
-
-
-#warning TODO Android support. Need to check for GL_OES_mapbuffer and GL_EXT_map_buffer_range.
-#if __CC_PLATFORM_IOS
-
-@interface CCGraphicsBufferUnsynchronized : CCGraphicsBuffer @end
-@implementation CCGraphicsBufferUnsynchronized {
-	GLvoid *(*_mapBufferRange)(GLenum target, GLintptr offset, GLsizeiptr length, GLbitfield access);
-	GLvoid (*_flushMappedBufferRange)(GLenum target, GLintptr offset, GLsizeiptr length);
-	GLboolean (*_unmapBuffer)(GLenum target);
-}
-
-#define BUFFER_ACCESS_WRITE (GL_MAP_WRITE_BIT_EXT | GL_MAP_UNSYNCHRONIZED_BIT_EXT | GL_MAP_INVALIDATE_BUFFER_BIT_EXT | GL_MAP_FLUSH_EXPLICIT_BIT_EXT)
-#define BUFFER_ACCESS_READ (GL_MAP_READ_BIT_EXT)
-
--(instancetype)initWithCapacity:(NSUInteger)capacity elementSize:(size_t)elementSize type:(intptr_t)type
-{
-	if((self = [super init])){
-		// TODO Does Android look up GL functions by name like Windows/Linux?
-		_mapBufferRange = glMapBufferRangeEXT;
-		_flushMappedBufferRange = glFlushMappedBufferRangeEXT;
-		_unmapBuffer = glUnmapBufferOES;
-		
-		GLuint glbuffer = 0;
-		glGenBuffers(1, &glbuffer);
-		CC_CHECK_GL_ERROR_DEBUG();
-		
-		_count = 0;
-		_capacity = capacity;
-		_elementSize = elementSize;
-		_data = (intptr_t)glbuffer;
-		_type = type;
-		
-		GLenum target = (GLenum)_type;
-		glBindBuffer(target, (GLuint)_data);
-		glBufferData(target, capacity*_elementSize, NULL, GL_STREAM_DRAW);
-		_ptr = _mapBufferRange(target, 0, (GLsizei)(_capacity*_elementSize), BUFFER_ACCESS_WRITE);
-		glBindBuffer(target, 0);
-		CC_CHECK_GL_ERROR_DEBUG();
-	}
-	
-	return self;
-}
-
--(void)destroy
-{
-	glDeleteBuffers(1, (GLuint *)&_data);
-	_data = 0;
-	CC_CHECK_GL_ERROR_DEBUG();
-}
-
--(void)resize:(size_t)newCapacity
-{
-	// This is a little tricky.
-	// Need to resize the existing GL buffer object without creating a new name.
-	
-	// Make the buffer readable.
-	GLenum target = (GLenum)_type;
-	glBindBuffer(target, (GLuint)_data);
-	GLsizei oldLength = (GLsizei)(_count*_elementSize);
-	_flushMappedBufferRange(target, 0, oldLength);
-	_unmapBuffer(target);
-	void *oldBufferPtr = _mapBufferRange(target, 0, oldLength, BUFFER_ACCESS_READ);
-	
-	// Copy the old contents into a temp buffer.
-	GLsizei newLength = (GLsizei)(newCapacity*_elementSize);
-	void *tempBufferPtr = malloc(newLength);
-	memcpy(tempBufferPtr, oldBufferPtr, oldLength);
-	
-	// Copy that into a new GL buffer.
-	_unmapBuffer(target);
-	glBufferData(target, newLength, tempBufferPtr, GL_STREAM_DRAW);
-	void *newBufferPtr = _mapBufferRange(target, 0, newLength, BUFFER_ACCESS_WRITE);
-	
-	// Cleanup.
-	free(tempBufferPtr);
-	glBindBuffer(target, 0);
-	CC_CHECK_GL_ERROR_DEBUG();
-	
-	// Update values.
-	_ptr = newBufferPtr;
-	_capacity = newCapacity;
-}
-
--(void)prepare
-{
-	_count = 0;
-	
-	GLenum target = (GLenum)_type;
-	glBindBuffer(target, (GLuint)_data);
-	_ptr = _mapBufferRange(target, 0, (GLsizei)(_capacity*_elementSize), BUFFER_ACCESS_WRITE);
-	glBindBuffer(target, 0);
-	CC_CHECK_GL_ERROR_DEBUG();
-}
-
--(void)commit
-{
-	GLenum target = (GLenum)_type;
-	glBindBuffer(target, (GLuint)_data);
-	_flushMappedBufferRange(target, 0, (GLsizei)(_count*_elementSize));
-	_unmapBuffer(target);
-	glBindBuffer(target, 0);
-	CC_CHECK_GL_ERROR_DEBUG();
-	
-	_ptr = NULL;
-}
-
-@end
-
-#endif
 
 
 //MARK: Render Queue
@@ -665,27 +519,22 @@ SortQueue(NSMutableArray *queue)
 	_blendOptions = nil;
 	_shader = nil;
 	_shaderUniforms = nil;
-	_vaoBound = NO;
+	_buffersBound = NO;
 }
 
 -(instancetype)init
 {
 	if((self = [super init])){
-#warning Temporary
-#if __CC_PLATFORM_IOS
-		Class bufferType = [CCGraphicsBufferUnsynchronized class];
-#else
-		Class bufferType = [CCGraphicsBuffer class];
-#endif
-		
 		CCRenderDispatch(NO, ^{
 			const NSUInteger CCRENDERER_INITIAL_VERTEX_CAPACITY = 16*1024;
-			_vertexBuffer = [[bufferType alloc] initWithCapacity:CCRENDERER_INITIAL_VERTEX_CAPACITY elementSize:sizeof(CCVertex) type:GL_ARRAY_BUFFER];
-			_elementBuffer = [[bufferType alloc] initWithCapacity:CCRENDERER_INITIAL_VERTEX_CAPACITY*1.5 elementSize:sizeof(uint16_t) type:GL_ELEMENT_ARRAY_BUFFER];
+			_vertexBuffer = [[CCGraphicsBufferClass alloc] initWithCapacity:CCRENDERER_INITIAL_VERTEX_CAPACITY elementSize:sizeof(CCVertex) type:CCGraphicsBufferTypeVertex];
+			[_vertexBuffer prepare];
 			
-			CCGL_DEBUG_PUSH_GROUP_MARKER("CCRenderer: Init");
-			_vao = [CCShader createVAOforCCVertexBuffer:(GLuint)_vertexBuffer->_data elementBuffer:(GLuint)_elementBuffer->_data];
-		CCGL_DEBUG_POP_GROUP_MARKER();
+			_elementBuffer = [[CCGraphicsBufferClass alloc] initWithCapacity:CCRENDERER_INITIAL_VERTEX_CAPACITY*1.5 elementSize:sizeof(uint16_t) type:CCGraphicsBufferTypeIndex];
+			[_elementBuffer prepare];
+			
+			_bufferBindings = [CCGraphicsBufferBindingsClass alloc];
+			_bufferBindings = [_bufferBindings initWithVertexBuffer:_vertexBuffer indexBuffer:_elementBuffer];
 		});
 		
 		_threadsafe = YES;
@@ -693,19 +542,6 @@ SortQueue(NSMutableArray *queue)
 	}
 	
 	return self;
-}
-
--(void)dealloc
-{
-	#warning Possible deadlock here when releasing the buffers.
-	
-	GLuint vao = _vao;
-	
-	CCRenderDispatch(NO, ^{
-		CCGL_DEBUG_PUSH_GROUP_MARKER("CCRenderer: Dealloc");
-		glDeleteVertexArrays(1, &vao);
-		CCGL_DEBUG_POP_GROUP_MARKER();
-	});
 }
 
 static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
@@ -735,13 +571,11 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 #define glBindVertexArray glBindVertexArrayOES
 #endif
 
--(void)bindVAO:(BOOL)bind
+-(void)bindBuffers:(BOOL)bind
 {
- 	if(bind != _vaoBound){
-		CCGL_DEBUG_INSERT_EVENT_MARKER("CCRenderer: Bind VAO");
-		glBindVertexArray(bind ? _vao : 0);
-		
-		_vaoBound = bind;
+ 	if(bind != _buffersBound){
+		[_bufferBindings bind:bind];
+		_buffersBound = bind;
 	}
 }
 
@@ -819,7 +653,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	
 	SortQueue(_queue);
 	for(id<CCRenderCommand> command in _queue) [command invokeOnRenderer:self];
-	[self bindVAO:NO];
+	[self bindBuffers:NO];
 	
 	[_queue removeAllObjects];
 	

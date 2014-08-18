@@ -29,6 +29,9 @@
 #import "Platforms/CCGL.h"
 
 #define CC_MINIMUM_TABLET_SCREEN_DIAGONAL 6.0
+extern Class CCGraphicsBufferClass;
+extern Class CCGraphicsBufferBindingsClass;
+extern Class CCRenderCommandDrawClass;
 
 extern NSString* const CCSetupPixelFormat;
 extern NSString* const CCSetupScreenMode;
@@ -97,11 +100,19 @@ typedef NS_ENUM(NSUInteger, CCDevice) {
 	CCDeviceMacRetinaDisplay,
 };
 
+typedef NS_ENUM(NSUInteger, CCGraphicsAPI) {
+	CCGraphicsAPIInvalid = 0,
+	CCGraphicsAPIGL,
+	CCGraphicsAPIMetal,
+};
+
 /**
  CCConfiguration contains some openGL variables
   */
 @interface CCConfiguration : NSObject {
-
+	CCGraphicsAPI _graphicsAPI;
+	
+	BOOL	_configured;
 	BOOL			_openGLInitialized;
 	
 	GLint			_maxTextureSize;
@@ -116,6 +127,9 @@ typedef NS_ENUM(NSUInteger, CCDevice) {
 
 	unsigned int	_OSVersion;
 }
+
+/** Which graphics API Cococs2D is using. */
+@property (nonatomic, readonly) CCGraphicsAPI graphicsAPI;
 
 /** OpenGL Max texture size. */
 @property (nonatomic, readonly) GLint maxTextureSize;

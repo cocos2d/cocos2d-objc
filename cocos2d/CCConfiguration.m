@@ -39,6 +39,10 @@
 #import "cocos2d.h"
 #import "CCRenderDispatch.h"
 
+Class CCGraphicsBufferClass;
+Class CCGraphicsBufferBindingsClass;
+Class CCRenderCommandDrawClass;
+
 NSString* const CCSetupPixelFormat = @"CCSetupPixelFormat";
 NSString* const CCSetupScreenMode = @"CCSetupScreenMode";
 NSString* const CCSetupScreenOrientation = @"CCSetupScreenOrientation";
@@ -131,6 +135,27 @@ static char * glExtensions;
 	return self;
 }
 
+-(CCGraphicsAPI)graphicsAPI
+{
+	if(_graphicsAPI == CCGraphicsAPIInvalid){
+		if(__CC_METAL_SUPPORTED_AND_ENABLED && NSProtocolFromString(@"MTLDevice")){
+			CCGraphicsBufferClass = NSClassFromString(@"CCGraphicsBufferMetal");
+			CCGraphicsBufferBindingsClass = NSClassFromString(@"CCGraphicsBufferBindingsMetal");
+			CCRenderCommandDrawClass = NSClassFromString(@"CCRenderCommandDrawMetal");
+			
+			_graphicsAPI = CCGraphicsAPIMetal;
+		} else {
+			CCGraphicsBufferClass = NSClassFromString(@"CCGraphicsBufferGLBasic");
+			CCGraphicsBufferBindingsClass = NSClassFromString(@"CCGraphicsBufferBindingsGL");
+			CCRenderCommandDrawClass = NSClassFromString(@"CCRenderCommandDrawGL");
+			
+			_graphicsAPI = CCGraphicsAPIGL;
+		}
+	}
+	
+	return _graphicsAPI;
+}
+
 - (BOOL) checkForGLExtension:(NSString *)searchName
 {
 	// For best results, extensionsNames should be stored in your renderer so that it does not
@@ -203,8 +228,6 @@ static char * glExtensions;
 
 #pragma mark OpenGL getters
 
-/** OpenGL Max texture size. */
-
 -(void) getOpenGLvariables
 {
 	if( ! _openGLInitialized ) {
@@ -251,71 +274,92 @@ static char * glExtensions;
 
 			_supportsShareableVAO = [self checkForGLExtension:@"GL_APPLE_vertex_array_object"];
 			
+			// Check if unsynchronized buffers are supported.
+			if(
+				[self checkForGLExtension:@"GL_OES_mapbuffer"] &&
+				[self checkForGLExtension:@"GL_EXT_map_buffer_range"]
+			){
+				CCGraphicsBufferClass = NSClassFromString(@"CCGraphicsBufferGLUnsynchronized");
+			}
+			
 			_openGLInitialized = YES;
 		});
 	}
 }
 
+/// Cache the current device configuration if it hasn't already been done.
+/// The naming here is admittedly terrible and generic but I couldn't think of something better.
+-(void)configure
+{
+	if(!_configured){
+		switch(self.graphicsAPI){
+			case CCGraphicsAPIGL:
+				[self getOpenGLvariables];
+				break;
+			case CCGraphicsAPIMetal:
+				// TODO Hard coding these for now... Does the Metal API even expose any queries for limits?
+				_maxTextureSize = 4096;
+				_supportsPVRTC = YES;
+				_supportsNPOT = YES;
+				_supportsBGRA8888 = YES;
+				_supportsDiscardFramebuffer = NO;
+				_supportsShareableVAO = NO;
+				_maxSamplesAllowed = 4;
+				_maxTextureUnits = 10;
+				_supportsPackedDepthStencil = YES;
+				break;
+			default: NSAssert(NO, @"Internal Error: Graphics API not set up?");
+		}
+		
+		_configured = YES;
+	}
+}
+
 -(GLint) maxTextureSize
 {
-	if( ! _openGLInitialized )
-		[self getOpenGLvariables];
+	[self configure];
 	return _maxTextureSize;
 }
 
 -(GLint) maxTextureUnits
 {
-	if( ! _openGLInitialized )
-		[self getOpenGLvariables];
-
+	[self configure];
 	return _maxTextureUnits;
 }
 
 -(BOOL) supportsNPOT
 {
-	if( ! _openGLInitialized )
-		[self getOpenGLvariables];
-
+	[self configure];
 	return _supportsNPOT;
 }
 
 -(BOOL) supportsPVRTC
 {
-	if( ! _openGLInitialized )
-		[self getOpenGLvariables];
-
+	[self configure];
 	return _supportsPVRTC;
 }
 
 -(BOOL) supportsPackedDepthStencil
 {
-	if( ! _openGLInitialized )
-		[self getOpenGLvariables];
-
-    return _supportsPackedDepthStencil;
+	[self configure];
+	return _supportsPackedDepthStencil;
 }
 
 -(BOOL) supportsBGRA8888
 {
-	if( ! _openGLInitialized )
-		[self getOpenGLvariables];
-
+	[self configure];
 	return _supportsBGRA8888;
 }
 
 -(BOOL) supportsDiscardFramebuffer
 {
-	if( ! _openGLInitialized )
-		[self getOpenGLvariables];
-
+	[self configure];
 	return _supportsDiscardFramebuffer;
 }
 
 -(BOOL) supportsShareableVAO
 {
-	if( ! _openGLInitialized )
-		[self getOpenGLvariables];
-
+	[self configure];
 	return _supportsShareableVAO;
 }
 
@@ -359,21 +403,30 @@ static char * glExtensions;
 	printf("cocos2d: %ld bit runtime\n", 8*sizeof(long));	
 	printf("cocos2d: Multi-threaded rendering: %s\n", (CC_RENDER_DISPATCH_ENABLED ? "YES" : "NO"));
 	
-	CCRenderDispatch(NO, ^{
-		printf("cocos2d: GL_VENDOR:   %s\n", glGetString(GL_VENDOR) );
-		printf("cocos2d: GL_RENDERER: %s\n", glGetString ( GL_RENDERER   ) );
-		printf("cocos2d: GL_VERSION:  %s\n", glGetString ( GL_VERSION    ) );
-	});
+	if(_graphicsAPI == CCGraphicsAPIGL){
+		printf("cocos2d: OpenGL Rendering enabled.");
+		
+		CCRenderDispatch(NO, ^{
+			printf("cocos2d: GL_VENDOR:   %s\n", glGetString(GL_VENDOR) );
+			printf("cocos2d: GL_RENDERER: %s\n", glGetString ( GL_RENDERER   ) );
+			printf("cocos2d: GL_VERSION:  %s\n", glGetString ( GL_VERSION    ) );
+		});
+		
+		printf("cocos2d: GL_MAX_TEXTURE_SIZE: %d\n", _maxTextureSize);
+		printf("cocos2d: GL_MAX_TEXTURE_UNITS: %d\n", _maxTextureUnits);
+		printf("cocos2d: GL_MAX_SAMPLES: %d\n", _maxSamplesAllowed);
+		printf("cocos2d: GL supports PVRTC: %s\n", (_supportsPVRTC ? "YES" : "NO") );
+		printf("cocos2d: GL supports BGRA8888 textures: %s\n", (_supportsBGRA8888 ? "YES" : "NO") );
+		printf("cocos2d: GL supports NPOT textures: %s\n", (_supportsNPOT ? "YES" : "NO") );
+		printf("cocos2d: GL supports discard_framebuffer: %s\n", (_supportsDiscardFramebuffer ? "YES" : "NO") );
+		printf("cocos2d: GL supports shareable VAO: %s\n", (_supportsShareableVAO ? "YES" : "NO") );
+	} else if(_graphicsAPI == CCGraphicsAPIMetal){
+		printf("cocos2d: Metal Rendering enabled.");
+	}
 	
-	printf("cocos2d: GL_MAX_TEXTURE_SIZE: %d\n", _maxTextureSize);
-	printf("cocos2d: GL_MAX_TEXTURE_UNITS: %d\n", _maxTextureUnits);
-	printf("cocos2d: GL_MAX_SAMPLES: %d\n", _maxSamplesAllowed);
-	printf("cocos2d: GL supports PVRTC: %s\n", (_supportsPVRTC ? "YES" : "NO") );
-	printf("cocos2d: GL supports BGRA8888 textures: %s\n", (_supportsBGRA8888 ? "YES" : "NO") );
-	printf("cocos2d: GL supports NPOT textures: %s\n", (_supportsNPOT ? "YES" : "NO") );
-	printf("cocos2d: GL supports discard_framebuffer: %s\n", (_supportsDiscardFramebuffer ? "YES" : "NO") );
-	printf("cocos2d: GL supports shareable VAO: %s\n", (_supportsShareableVAO ? "YES" : "NO") );
-	
+	printf("cocos2d: CCGraphicsBufferClass: %s\n", NSStringFromClass(CCGraphicsBufferClass).UTF8String);
+	printf("cocos2d: CCGraphicsBufferBindingsClass: %s\n", NSStringFromClass(CCGraphicsBufferBindingsClass).UTF8String);
+	printf("cocos2d: CCRenderCommandDrawClass: %s\n", NSStringFromClass(CCRenderCommandDrawClass).UTF8String);
 #endif // DEBUG
 }
 @end
