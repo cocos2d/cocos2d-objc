@@ -28,6 +28,8 @@
 
 #import "Platforms/CCGL.h"
 
+#define CC_MINIMUM_TABLET_SCREEN_DIAGONAL 6.0
+
 extern NSString* const CCSetupPixelFormat;
 extern NSString* const CCSetupScreenMode;
 extern NSString* const CCSetupScreenOrientation;
