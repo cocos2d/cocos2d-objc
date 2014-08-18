@@ -206,7 +206,7 @@
         }
         else
         {
-            BOOL inverted;
+            bool inverted;
             
             GLKMatrix4 renderTargetProjection = GLKMatrix4MakeOrtho(0.0f, _contentSize.width, 0.0f, _contentSize.height, -1024.0f, 1024.0f);
             GLKMatrix4 invRenderTargetProjection = GLKMatrix4Invert(renderTargetProjection, &inverted);
