@@ -20,6 +20,49 @@
 	return self;
 }
 
+-(void)setupColorChannelOffsetTest
+{
+    self.subTitle = @"Color Channel Offset Effect Test";
+    
+    CCEffectColorChannelOffset *effect = [CCEffectColorChannelOffset effectWithRedOffset:GLKVector2Make(0.0f, 0.0f) greenOffset:GLKVector2Make(0.0f, 0.0f) blueOffset:GLKVector2Make(0.0f, 0.0f)];
+    
+    CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/particles.png"];
+    sprite.scale = 1.0f;
+    sprite.positionType = CCPositionTypeNormalized;
+    sprite.position = ccp(0.5f, 0.5f);
+    sprite.effect = effect;
+    
+    [self. contentNode addChild:sprite];
+    
+    const float thetaStep = CC_DEGREES_TO_RADIANS(10.0f);
+    __block float redTheta = CC_DEGREES_TO_RADIANS(0.0f);
+    __block float greenTheta = CC_DEGREES_TO_RADIANS(120.0f);
+    __block float blueTheta = CC_DEGREES_TO_RADIANS(240.0f);
+    void (^updateBlock)() = ^{
+        
+        float redRadius = 3.0f;
+        effect.redOffset = GLKVector2Make(redRadius * cosf(redTheta), redRadius * sinf(redTheta));
+        
+        float greenRadius = 3.0f;
+        effect.greenOffset = GLKVector2Make(greenRadius * cosf(greenTheta), greenRadius * sinf(greenTheta));
+        
+        float blueRadius = 3.0f;
+        effect.blueOffset = GLKVector2Make(blueRadius * cosf(blueTheta), blueRadius * sinf(blueTheta));
+        
+        redTheta += thetaStep;
+        greenTheta += thetaStep;
+        blueTheta += thetaStep;
+    };
+    updateBlock();
+    
+    [sprite runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+                                                               [CCActionDelay actionWithDuration:0.1f],
+                                                               [CCActionCallBlock actionWithBlock:updateBlock],
+                                                               nil
+                                                               ]]];
+
+}
+
 -(void)setupGlassEffectTest
 {
     self.subTitle = @"Glass Effect Test";
