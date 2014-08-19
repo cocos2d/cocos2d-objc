@@ -118,6 +118,8 @@
 		9D856722191B019900573093 /* CCEffectContrast.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D856720191B019900573093 /* CCEffectContrast.m */; };
 		9DB7599A196E09FF00AF3E4A /* CCEffectHue.h in Headers */ = {isa = PBXBuildFile; fileRef = 9DB75998196E09FF00AF3E4A /* CCEffectHue.h */; };
 		9DB7599B196E09FF00AF3E4A /* CCEffectHue.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DB75999196E09FF00AF3E4A /* CCEffectHue.m */; };
+		9DDF123919A3C1C500289178 /* CCEffectColorChannelOffset.h in Headers */ = {isa = PBXBuildFile; fileRef = 9DDF123719A3C1C500289178 /* CCEffectColorChannelOffset.h */; };
+		9DDF123A19A3C1C500289178 /* CCEffectColorChannelOffset.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DDF123819A3C1C500289178 /* CCEffectColorChannelOffset.m */; };
 		9DE8190D1974733200B1D8C3 /* CCEffectReflection.h in Headers */ = {isa = PBXBuildFile; fileRef = 9DE8190B1974733200B1D8C3 /* CCEffectReflection.h */; };
 		9DE8190E1974733200B1D8C3 /* CCEffectReflection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DE8190C1974733200B1D8C3 /* CCEffectReflection.m */; };
 		9DE90429192D630000AEB37A /* CCEffectRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9DE90427192D630000AEB37A /* CCEffectRenderer.h */; };
@@ -453,6 +455,8 @@
 		9D85B7DC195396E90039A9DB /* CCEffectStackProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCEffectStackProtocol.h; sourceTree = "<group>"; };
 		9DB75998196E09FF00AF3E4A /* CCEffectHue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectHue.h; sourceTree = "<group>"; };
 		9DB75999196E09FF00AF3E4A /* CCEffectHue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectHue.m; sourceTree = "<group>"; };
+		9DDF123719A3C1C500289178 /* CCEffectColorChannelOffset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectColorChannelOffset.h; sourceTree = "<group>"; };
+		9DDF123819A3C1C500289178 /* CCEffectColorChannelOffset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectColorChannelOffset.m; sourceTree = "<group>"; };
 		9DE8190B1974733200B1D8C3 /* CCEffectReflection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectReflection.h; sourceTree = "<group>"; };
 		9DE8190C1974733200B1D8C3 /* CCEffectReflection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectReflection.m; sourceTree = "<group>"; };
 		9DE90427192D630000AEB37A /* CCEffectRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectRenderer.h; sourceTree = "<group>"; };
@@ -1237,6 +1241,8 @@
 				D272033218FC9A4700B100FF /* CCEffectBloom.m */,
 				9D85671B191B018200573093 /* CCEffectBrightness.h */,
 				9D85671C191B018200573093 /* CCEffectBrightness.m */,
+				9DDF123719A3C1C500289178 /* CCEffectColorChannelOffset.h */,
+				9DDF123819A3C1C500289178 /* CCEffectColorChannelOffset.m */,
 				9D85671F191B019900573093 /* CCEffectContrast.h */,
 				9D856720191B019900573093 /* CCEffectContrast.m */,
 				9D6BE2FC1975E18B0082A327 /* CCEffectGlass.h */,
@@ -1432,6 +1438,7 @@
 				B77060061831A07B0043CC67 /* OALTools.h in Headers */,
 				9D1C03B81954F636007B6735 /* CCEffectRefraction.h in Headers */,
 				E0F924711224140400EF2362 /* CCTexturePVR.h in Headers */,
+				9DDF123919A3C1C500289178 /* CCEffectColorChannelOffset.h in Headers */,
 				E0F92AC41224559800EF2362 /* CCNS.h in Headers */,
 				E02BB6D6126CA93A006E46A2 /* CCAnimationCache.h in Headers */,
 				E02BB704126CADEA006E46A2 /* CCAnimation.h in Headers */,
@@ -1599,6 +1606,7 @@
 				50A07B7B0E4CBCD300AAF0BB /* cocos2d.m in Sources */,
 				D2B49105192146FB00C3443A /* CCEffectBlur.m in Sources */,
 				B7D273181822F4AA0054849B /* CCBSequenceProperty.m in Sources */,
+				9DDF123A19A3C1C500289178 /* CCEffectColorChannelOffset.m in Sources */,
 				501CCFB40E99657C00B86F68 /* TGAlib.m in Sources */,
 				B7E260D918171D2000A0E872 /* CCTextField.m in Sources */,
 				50F7B2790F28DE7C00057537 /* CCActionEase.m in Sources */,
