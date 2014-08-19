@@ -23,6 +23,7 @@
  */
 
 #import "ccTypes.h"
+#import "CCShader.h"
 
 
 @class CCTexture;
