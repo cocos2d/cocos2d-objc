@@ -151,7 +151,6 @@
 
 - (void)setAnimationInterval:(NSTimeInterval)interval
 {
-    
 	_animationInterval = interval;
 	if(_displayLink)
     {
@@ -186,6 +185,11 @@
 {
     if(!_animating)
         return;
+    
+    if([_delegate respondsToSelector:@selector(stopAnimation)])
+    {
+        [_delegate stopAnimation];
+    }
     
 	CCLOG(@"cocos2d: animation stopped");
         

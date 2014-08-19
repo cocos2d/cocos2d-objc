@@ -137,7 +137,7 @@ static void handler(NSException *e)
 - (void)onResume
 {
 #if USE_MAIN_THREAD
-    [self resume];
+    [self handleResume];
 #else
     if(_thread == nil)
     {
@@ -145,13 +145,13 @@ static void handler(NSException *e)
         return;
     }
     
-    [self performSelector:@selector(resume) onThread:_thread withObject:nil waitUntilDone:YES modes:@[NSDefaultRunLoopMode]];
+    [self performSelector:@selector(handleResume) onThread:_thread withObject:nil waitUntilDone:YES modes:@[NSDefaultRunLoopMode]];
 #endif
     
     [super onResume];
 }
 
-- (void)resume
+- (void)handleResume
 {
     [[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
     [[CCDirector sharedDirector] resume];
@@ -160,7 +160,7 @@ static void handler(NSException *e)
 - (void)onPause
 {
 #if USE_MAIN_THREAD
-    [self pause];
+    [self handlePause];
 #else
     if(_thread == nil)
     {
@@ -168,13 +168,13 @@ static void handler(NSException *e)
         return;
     }
     
-    [self performSelector:@selector(pause) onThread:_thread withObject:nil waitUntilDone:YES modes:@[NSDefaultRunLoopMode]];
+    [self performSelector:@selector(handlePause) onThread:_thread withObject:nil waitUntilDone:YES modes:@[NSDefaultRunLoopMode]];
 #endif
     
     [super onPause];
 }
 
-- (void)pause
+- (void)handlePause
 {
     [[CCDirector sharedDirector] pause];
 }
@@ -183,7 +183,7 @@ static void handler(NSException *e)
 - (void)onLowMemory
 {
 #if USE_MAIN_THREAD
-    [self purgeChaceData];
+    [self handleLowMemory];
 #else
     if(_thread == nil)
     {
@@ -191,13 +191,13 @@ static void handler(NSException *e)
         return;
     }
 
-    [self performSelector:@selector(purgeChaceData) onThread:_thread withObject:nil waitUntilDone:YES modes:@[NSDefaultRunLoopMode]];
+    [self performSelector:@selector(handleLowMemory) onThread:_thread withObject:nil waitUntilDone:YES modes:@[NSDefaultRunLoopMode]];
 #endif
 
     [super onLowMemory];
 }
 
-- (void)purgeChaceData
+- (void)handleLowMemory
 {
     [[CCDirector sharedDirector] purgeCachedData];
 }

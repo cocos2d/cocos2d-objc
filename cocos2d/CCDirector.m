@@ -349,6 +349,11 @@ static CCDirector *_sharedDirector = nil;
 
 -(void) purgeCachedData
 {
+    if([_delegate respondsToSelector:@selector(purgeCachedData)])
+    {
+        [_delegate purgeCachedData];
+    }
+    
 	[CCRENDERSTATE_CACHE flush];
 	[CCLabelBMFont purgeCachedData];
 	if ([_sharedDirector view])
@@ -689,6 +694,11 @@ static CCDirector *_sharedDirector = nil;
 
 -(void) end
 {
+    if([_delegate respondsToSelector:@selector(end)])
+    {
+        [_delegate end];
+    }
+    
 	[_runningScene onExitTransitionDidStart];
 	[_runningScene onExit];
 	[_runningScene cleanup];
@@ -784,6 +794,11 @@ static CCDirector *_sharedDirector = nil;
 	if( _isPaused )
 		return;
 
+    if([_delegate respondsToSelector:@selector(pause)])
+    {
+        [_delegate pause];
+    }
+    
 	_oldAnimationInterval = _animationInterval;
 
 	// when paused, don't consume CPU
@@ -798,6 +813,11 @@ static CCDirector *_sharedDirector = nil;
 {
 	if( ! _isPaused )
 		return;
+    
+    if([_delegate respondsToSelector:@selector(resume)])
+    {
+        [_delegate resume];
+    }
     
 	[self setAnimationInterval: _oldAnimationInterval];
 
@@ -814,6 +834,11 @@ static CCDirector *_sharedDirector = nil;
 
 - (void)startAnimation
 {
+    if([_delegate respondsToSelector:@selector(startAnimation)])
+    {
+        [_delegate startAnimation];
+    }
+    
 	_nextDeltaTimeZero = YES;
 }
 
