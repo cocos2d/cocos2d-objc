@@ -242,6 +242,10 @@
 		numberOfLoops = 0;
 		currentTime = 0.0;
 		
+#if __CC_PLATFORM_ANDROID
+        // We have to manually pause tracks
+        suspended = NO;
+#endif
 		[[OALAudioTracks sharedInstance] notifyTrackInitializing:self];
 		[[OALAudioTracks sharedInstance] addSuspendListener:self];
 	}
@@ -593,7 +597,6 @@
 	 * TODO: Need to find a way to avoid this situation.
 	 */
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
-#warning FIXME
 	OPTIONALLY_SYNCHRONIZED(self)
 	{
         if(value)
@@ -675,6 +678,21 @@
          }
          }
          */
+    }
+#elif __CC_PLATFORM_ANDROID
+	OPTIONALLY_SYNCHRONIZED(self)
+    {
+        if (value) {
+            if ([player isPlaying]) {
+                [player pause];
+                suspended = YES;
+            }
+        } else {
+            if (suspended) {
+                [player start];
+                suspended = NO;
+            }
+        }
     }
 #endif
 }
