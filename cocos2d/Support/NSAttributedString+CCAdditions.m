@@ -30,6 +30,9 @@
 #import "cocos2d.h"
 #import <CoreText/CoreText.h>
 
+BOOL NSMutableAttributedStringSetDefaultAttribute(NSMutableAttributedString *attrString, NSString*attr, id defaultValue);
+CGColorRef CGColorCreateWithPlatformSpecificColor(id platformColor);
+CTFontRef CTFontCreateWithPlatformSpecificFont(id font);
 
 BOOL NSMutableAttributedStringSetDefaultAttribute(NSMutableAttributedString *attrString, NSString*attr, id defaultValue){
     NSRange fullRange = NSMakeRange(0, attrString.length);

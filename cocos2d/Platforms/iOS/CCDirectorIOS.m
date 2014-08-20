@@ -173,7 +173,6 @@
 
 -(void) end
 {
-
 	[super end];
 }
 
@@ -362,6 +361,11 @@
     if(!_animating)
         return;
 
+    if([_delegate respondsToSelector:@selector(stopAnimation)])
+    {
+        [_delegate stopAnimation];
+    }
+    
 	CCLOG(@"cocos2d: animation stopped");
 
 #if CC_DIRECTOR_IOS_USE_BACKGROUND_THREAD

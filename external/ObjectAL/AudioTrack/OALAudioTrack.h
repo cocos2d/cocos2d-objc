@@ -67,6 +67,9 @@ BRIDGE_CLASS("com.spritebuilder.OALAudioTrack")
 	bool autoPreload;
 	bool paused;
 	bool muted;
+#if __CC_PLATFORM_ANDROID
+    bool suspended;
+#endif
 	float gain;
 	float pan;
 	NSInteger numberOfLoops;

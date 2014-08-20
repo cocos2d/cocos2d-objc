@@ -174,15 +174,14 @@ static char * glExtensions;
 	NSInteger ret=-1;
 
 #if __CC_PLATFORM_ANDROID
-   
     
     AndroidDisplayMetrics *metrics = [[AndroidDisplayMetrics alloc] init];
     [[CCActivity currentActivity].windowManager.defaultDisplay getMetrics:metrics];
     double yInches= metrics.heightPixels/metrics.ydpi;
     double xInches= metrics.widthPixels/metrics.xdpi;
     double diagonalInches = sqrt(xInches*xInches + yInches*yInches);
-    if (diagonalInches<=6){
-        
+    if (diagonalInches<=CC_MINIMUM_TABLET_SCREEN_DIAGONAL){
+
         
         if([CCDirector sharedDirector].contentScaleFactor > 1.0)
         {
@@ -201,7 +200,7 @@ static char * glExtensions;
         {
             ret = CCDeviceiPad;
         }
-        
+
     }
 #elif __CC_PLATFORM_IOS
 	

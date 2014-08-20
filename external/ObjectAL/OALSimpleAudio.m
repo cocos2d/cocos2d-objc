@@ -709,41 +709,22 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALSimpleAudio);
 
 - (bool) manuallySuspended
 {
-#if ANDROID
-#warning manuallySuspended not implemented
-    return false;
-#else
 	return [OALAudioSession sharedInstance].manuallySuspended;
-#endif
 }
 
 - (void) setManuallySuspended:(bool) value
 {
-#if ANDROID
-#warning setManuallySuspended not implemented
-#else
 	[OALAudioSession sharedInstance].manuallySuspended = value;
-#endif
 }
 
 - (bool) interrupted
 {
-#if ANDROID
-#warning interrupted not implemented
-    return false;
-#else
 	return [OALAudioSession sharedInstance].interrupted;
-#endif
 }
 
 - (bool) suspended
 {
-#if ANDROID
-#warning suspended not implemented
-    return false;
-#else
 	return [OALAudioSession sharedInstance].suspended;
-#endif
 }
 
 

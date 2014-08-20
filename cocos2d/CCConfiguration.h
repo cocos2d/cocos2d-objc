@@ -28,6 +28,7 @@
 
 #import "Platforms/CCGL.h"
 
+#define CC_MINIMUM_TABLET_SCREEN_DIAGONAL 6.0
 extern Class CCGraphicsBufferClass;
 extern Class CCGraphicsBufferBindingsClass;
 extern Class CCRenderStateClass;
