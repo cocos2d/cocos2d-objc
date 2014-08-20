@@ -26,6 +26,7 @@
 #import <Foundation/Foundation.h>
 #import "CCRenderer.h"
 #import "CCCache.h"
+#import "CCRenderDispatch.h"
 
 // TODO These should be made private to the module.
 extern id CCBLENDMODE_CACHE;
@@ -155,7 +156,7 @@ CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount, CC
 	size_t capacity = buffer->_capacity;
 	if(required > capacity){
 		// Why 1.5? https://github.com/facebook/folly/blob/master/folly/docs/FBVector.md
-		[buffer resize:required*1.5];
+		CCRenderDispatch(NO, ^{[buffer resize:required*1.5];});
 	}
 	
 	void *array = buffer->_ptr + buffer->_count*buffer->_elementSize;
