@@ -88,6 +88,10 @@
 #import "CCTextureCache.h"
 #import "CCSpriteFrame.h"
 
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+#import "CCMetalSupport_Private.h"
+#endif
+
 
 //CLASS IMPLEMENTATIONS:
 
@@ -113,7 +117,7 @@
 
 // Make concrete implementations for CCTexture methods commonly called at runtime.
 -(GLuint)name {return [(CCTexture *)_target name];}
--(CGFloat)contentScale {return [_target contentScale];}
+-(CGFloat)contentScale {return [(CCTexture *)_target contentScale];}
 -(CGSize)contentSize {return [_target contentSize];}
 -(NSUInteger)pixelWidth {return [_target pixelWidth];}
 -(NSUInteger)pixelHeight {return [_target pixelHeight];}
@@ -122,7 +126,7 @@
 
 // Make concrete implementations for CCSpriteFrame methods commonly called at runtime.
 -(CGRect)rect {return [_target rect];}
--(CGPoint)offset {return [_target offset];}
+-(CGPoint)offset {return [(CCSpriteFrame *)_target offset];}
 -(BOOL)rotated {return [_target rotated];}
 -(CGSize)originalSize {return [_target originalSize];}
 -(CCTexture *)texture {return [_target texture];}
@@ -152,7 +156,18 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 
 @implementation CCTexture
 {
-    CCProxy __weak *_proxy;
+	GLuint _name;
+	CGSize _sizeInPixels;
+	CGFloat _contentScale;
+	NSUInteger _width, _height;
+	CCTexturePixelFormat _format;
+	GLfloat _maxS, _maxT;
+	BOOL _premultipliedAlpha;
+	BOOL _hasMipmaps;
+	
+	BOOL _antialiased;
+	
+	CCProxy __weak *_proxy;
 }
 
 @synthesize contentSizeInPixels = _sizeInPixels, pixelFormat = _format, pixelWidth = _width, pixelHeight = _height, name = _name, maxS = _maxS, maxT = _maxT;
@@ -187,6 +202,42 @@ static CCTexture *CCTextureNone = nil;
 {
 	if((self = [super init])) {
 		CCRenderDispatch(NO, ^{
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+			if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+				id<MTLDevice> device = [CCMetalContext currentContext].device;
+				
+				MTLSamplerDescriptor *samplerDesc = [MTLSamplerDescriptor new];
+				samplerDesc.minFilter = MTLSamplerMinMagFilterLinear;
+				samplerDesc.magFilter = MTLSamplerMinMagFilterLinear;
+				samplerDesc.mipFilter = MTLSamplerMipFilterNotMipmapped;
+				samplerDesc.sAddressMode = MTLSamplerAddressModeClampToEdge;
+				samplerDesc.tAddressMode = MTLSamplerAddressModeClampToEdge;
+				
+				_metalSampler = [device newSamplerStateWithDescriptor:samplerDesc];
+				
+				static const MTLPixelFormat metalFormats[] = {
+					MTLPixelFormatRGBA8Unorm,
+					MTLPixelFormatInvalid, //CCTexturePixelFormat_RGB888,
+					MTLPixelFormatInvalid, //CCTexturePixelFormat_RGB565,
+					MTLPixelFormatA8Unorm, //CCTexturePixelFormat_A8,
+					MTLPixelFormatRG8Unorm, //CCTexturePixelFormat_I8,
+					MTLPixelFormatInvalid, //CCTexturePixelFormat_AI88,
+					MTLPixelFormatABGR4Unorm, //CCTexturePixelFormat_RGBA4444,
+					MTLPixelFormatInvalid, //CCTexturePixelFormat_RGB5A1,
+					MTLPixelFormatPVRTC_RGBA_4BPP, //CCTexturePixelFormat_PVRTC4,
+					MTLPixelFormatPVRTC_RGBA_2BPP, //CCTexturePixelFormat_PVRTC2,
+				};
+				MTLPixelFormat metalFormat = metalFormats[pixelFormat];
+				NSAssert(metalFormat != MTLPixelFormatInvalid, @"This texture format is not supported by Apple's Metal API.");
+				
+				MTLTextureDescriptor *textureDesc = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:metalFormat width:width height:height mipmapped:NO];
+				_metalTexture = [device newTextureWithDescriptor:textureDesc];
+				
+				NSUInteger bytesPerRow = width*[CCTexture bitsPerPixelForFormat:pixelFormat]/8;
+				[_metalTexture replaceRegion:MTLRegionMake2D(0, 0, width, height) mipmapLevel:0 withBytes:data bytesPerRow:bytesPerRow];
+			} else
+#endif
+			{
 			CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Init");
 			
 			// XXX: 32 bits or POT textures uses UNPACK of 4 (is this correct ??? )
@@ -233,6 +284,7 @@ static CCTexture *CCTextureNone = nil;
 			}
 			
 			CCGL_DEBUG_POP_GROUP_MARKER();
+			}
 		});
 
 		_sizeInPixels  = sizeInPixels;
@@ -296,7 +348,7 @@ static CCTexture *CCTextureNone = nil;
 - (void) dealloc
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
-
+	
 	GLuint name = _name;
 	if(name){
 		CCRenderDispatch(YES, ^{
@@ -617,6 +669,8 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 
 #pragma mark -
 #pragma mark CCTexture2D - GLFilter
+
+#warning Not implemented for Metal.
 
 //
 // Use to apply MIN/MAG filter

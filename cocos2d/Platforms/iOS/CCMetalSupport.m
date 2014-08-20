@@ -24,8 +24,9 @@
  */
 
 #import "CCMetalSupport_Private.h"
-
 #if __CC_METAL_SUPPORTED_AND_ENABLED
+
+#import "CCTexture_Private.h"
 
 @implementation CCMetalContext
 
@@ -44,6 +45,9 @@
 
 NSString *CURRENT_CONTEXT_KEY = @"CURRENT_CONTEXT_KEY";
 
+#warning TODO
+// This uses a pretty measurable piece of CPU time.
+// Access through the CCRenderer when possible somehow?
 static inline CCMetalContext *
 CCMetalContextCurrent(void)
 {
@@ -164,9 +168,19 @@ CCMetalContextCurrent(void)
 @end
 
 
+// This is effectively hardcoded to 10 by Apple's docs and there is no API to query capabilities...
+// Seems like an oversight, but whatever.
+#define CCMTL_MAX_TEXTURES 10
+
+
 @interface CCRenderStateMetal : CCRenderState @end
 @implementation CCRenderStateMetal {
 	id<MTLRenderPipelineState> _renderPipelineState;
+	
+	NSRange _textureRange;
+	// TODO should be unretained once the sampler issue is fixed.
+	id<MTLSamplerState> _samplers[CCMTL_MAX_TEXTURES];
+	__unsafe_unretained id<MTLTexture> _textures[CCMTL_MAX_TEXTURES];
 }
 
 // Using GL enums for CCBlendMode types should never have happened. Oops.
@@ -206,7 +220,7 @@ GLBLEND_TO_METAL(NSNumber *glenum)
 		id<MTLLibrary> library = context.library;
 		#warning TEMP Hard coded shaders.
 		pipelineStateDescriptor.vertexFunction = [library newFunctionWithName:@"CCVertexFunctionDefault"];
-    pipelineStateDescriptor.fragmentFunction = [library newFunctionWithName:@"CCFragmentFunctionDefaultColor"];
+    pipelineStateDescriptor.fragmentFunction = [library newFunctionWithName:@"CCFragmentFunctionDefaultTextureColor"];
     
 		NSDictionary *blendOptions = _blendMode.options;
     MTLRenderPipelineColorAttachmentDescriptor *colorDescriptor = [MTLRenderPipelineColorAttachmentDescriptor new];
@@ -221,13 +235,20 @@ GLBLEND_TO_METAL(NSNumber *glenum)
 		pipelineStateDescriptor.colorAttachments[0] = colorDescriptor;
 		
     _renderPipelineState = [context.device newRenderPipelineStateWithDescriptor:pipelineStateDescriptor error:nil];
+		
+		CCTexture *texture = _shaderUniforms[CCShaderUniformMainTexture] ?: [CCTexture none];
+		_textureRange = NSMakeRange(0, 1);
+		_samplers[0] = texture.metalSampler ?: [context.device newSamplerStateWithDescriptor:[MTLSamplerDescriptor new]];
+		_textures[0] = texture.metalTexture;
 	}
 }
 
 -(void)transitionRenderer:(CCRenderer *)renderer FromState:(CCRenderState *)previous
 {
-	// TODO Get the context more efficiently through the renderer perhaps?
-	[CCMetalContextCurrent().currentRenderCommandEncoder setRenderPipelineState:_renderPipelineState];
+	id<MTLRenderCommandEncoder> renderEncoder = CCMetalContextCurrent().currentRenderCommandEncoder;
+	[renderEncoder setRenderPipelineState:_renderPipelineState];
+	[renderEncoder setFragmentSamplerStates:_samplers withRange:_textureRange];
+	[renderEncoder setFragmentTextures:_textures withRange:_textureRange];
 }
 
 @end
