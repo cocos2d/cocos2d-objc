@@ -154,7 +154,7 @@
 #endif
 
 #elif __CC_PLATFORM_ANDROID
-#warning Not implemented
+#warning audioSessionDelegate not implemented
 #endif
 
 /** If true, the audio session is active */
