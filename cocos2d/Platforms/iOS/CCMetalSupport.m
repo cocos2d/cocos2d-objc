@@ -27,6 +27,7 @@
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 
 #import "CCTexture_Private.h"
+#import "CCShader_Private.h"
 
 @implementation CCMetalContext
 
@@ -215,7 +216,15 @@ GLBLEND_TO_METAL(NSNumber *glenum)
 		id<MTLLibrary> library = context.library;
 		#warning TEMP Hard coded shaders.
 		pipelineStateDescriptor.vertexFunction = [library newFunctionWithName:@"CCVertexFunctionDefault"];
-    pipelineStateDescriptor.fragmentFunction = [library newFunctionWithName:@"CCFragmentFunctionDefaultTextureColor"];
+		if(_shader == [CCShader positionColorShader]){
+	    pipelineStateDescriptor.fragmentFunction = [library newFunctionWithName:@"CCFragmentFunctionDefaultColor"];
+		} else if(_shader == [CCShader positionTextureColorShader]){
+	    pipelineStateDescriptor.fragmentFunction = [library newFunctionWithName:@"CCFragmentFunctionDefaultTextureColor"];
+		} else if(_shader == [CCShader positionTextureA8ColorShader]){
+	    pipelineStateDescriptor.fragmentFunction = [library newFunctionWithName:@"CCFragmentFunctionDefaultTextureA8Color"];
+		} else {
+	    pipelineStateDescriptor.fragmentFunction = [library newFunctionWithName:@"TempUnsupported"];
+		}
     
 		NSDictionary *blendOptions = _blendMode.options;
     MTLRenderPipelineColorAttachmentDescriptor *colorDescriptor = [MTLRenderPipelineColorAttachmentDescriptor new];

@@ -56,4 +56,13 @@ CCFragmentFunctionDefaultTextureA8Color(
 	return in.color*mainTexture.sample(mainTextureSampler, in.texCoord1).a;
 }
 
+fragment half4
+TempUnsupported(
+	CCFragData in [[stage_in]],
+	texture2d<half> mainTexture [[texture(0)]],
+	sampler mainTextureSampler [[sampler(0)]]
+){
+	return half4(1, 0, 1, 1);
+}
+
 // TODO "alpha test" shader
