@@ -32,7 +32,7 @@
     sprite.position = ccp(0.5f, 0.5f);
     sprite.effect = effect;
     
-    [self. contentNode addChild:sprite];
+    [self.contentNode addChild:sprite];
     
     const float thetaStep = CC_DEGREES_TO_RADIANS(10.0f);
     __block float redTheta = CC_DEGREES_TO_RADIANS(0.0f);
