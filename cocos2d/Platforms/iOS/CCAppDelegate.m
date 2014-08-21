@@ -291,8 +291,9 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 -(void) applicationWillEnterForeground:(UIApplication*)application
 {
-	if([CCDirector sharedDirector].animating == NO)
+	if([CCDirector sharedDirector].animating == NO) {
 		[[CCDirector sharedDirector] startAnimation];
+	}
 }
 
 // application will be killed
