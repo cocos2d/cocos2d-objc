@@ -186,6 +186,18 @@ static CCTexture *CCTextureNone = nil;
 	CCTextureNone->_name = 0;
 	CCTextureNone->_format = CCTexturePixelFormat_RGBA8888;
 	CCTextureNone->_contentScale = 1.0;
+	
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+		CCMetalContext *context = [CCMetalContext currentContext];
+		NSAssert(context, @"Metal context is nil.");
+		
+		CCTextureNone->_metalSampler = [context.device newSamplerStateWithDescriptor:[MTLSamplerDescriptor new]];
+		
+		MTLTextureDescriptor *textureDesc = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA8Unorm width:1 height:1 mipmapped:NO];
+		CCTextureNone->_metalTexture = [context.device newTextureWithDescriptor:textureDesc];
+	}
+#endif
 }
 
 +(instancetype)none

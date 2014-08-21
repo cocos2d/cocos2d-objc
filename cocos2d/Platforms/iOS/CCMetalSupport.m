@@ -238,7 +238,7 @@ GLBLEND_TO_METAL(NSNumber *glenum)
 		
 		CCTexture *texture = _shaderUniforms[CCShaderUniformMainTexture] ?: [CCTexture none];
 		_textureRange = NSMakeRange(0, 1);
-		_samplers[0] = texture.metalSampler ?: [context.device newSamplerStateWithDescriptor:[MTLSamplerDescriptor new]];
+		_samplers[0] = texture.metalSampler;
 		_textures[0] = texture.metalTexture;
 	}
 }
