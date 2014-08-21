@@ -176,11 +176,6 @@ CCMetalContextCurrent(void)
 @interface CCRenderStateMetal : CCRenderState @end
 @implementation CCRenderStateMetal {
 	id<MTLRenderPipelineState> _renderPipelineState;
-	
-	NSRange _textureRange;
-	// TODO should be unretained once the sampler issue is fixed.
-	id<MTLSamplerState> _samplers[CCMTL_MAX_TEXTURES];
-	__unsafe_unretained id<MTLTexture> _textures[CCMTL_MAX_TEXTURES];
 }
 
 // Using GL enums for CCBlendMode types should never have happened. Oops.
@@ -235,11 +230,6 @@ GLBLEND_TO_METAL(NSNumber *glenum)
 		pipelineStateDescriptor.colorAttachments[0] = colorDescriptor;
 		
     _renderPipelineState = [context.device newRenderPipelineStateWithDescriptor:pipelineStateDescriptor error:nil];
-		
-		CCTexture *texture = _shaderUniforms[CCShaderUniformMainTexture] ?: [CCTexture none];
-		_textureRange = NSMakeRange(0, 1);
-		_samplers[0] = texture.metalSampler;
-		_textures[0] = texture.metalTexture;
 	}
 }
 
@@ -247,8 +237,10 @@ GLBLEND_TO_METAL(NSNumber *glenum)
 {
 	id<MTLRenderCommandEncoder> renderEncoder = CCMetalContextCurrent().currentRenderCommandEncoder;
 	[renderEncoder setRenderPipelineState:_renderPipelineState];
-	[renderEncoder setFragmentSamplerStates:_samplers withRange:_textureRange];
-	[renderEncoder setFragmentTextures:_textures withRange:_textureRange];
+	
+	CCTexture *mainTexture = _shaderUniforms[CCShaderUniformMainTexture];
+	[renderEncoder setFragmentSamplerState:mainTexture.metalSampler atIndex:0];
+	[renderEncoder setFragmentTexture:mainTexture.metalTexture atIndex:0];
 }
 
 @end
@@ -281,6 +273,8 @@ static const MTLPrimitiveType MetalDrawModes[] = {
 	[renderer setRenderState:_renderState];
 	[renderEncoder drawIndexedPrimitives:MetalDrawModes[_mode] indexCount:_count indexType:MTLIndexTypeUInt16 indexBuffer:indexBuffer indexBufferOffset:2*_first];
 	CCMTL_DEBUG_POP_GROUP_MARKER(renderEncoder);
+	
+	CC_INCREMENT_GL_DRAWS(1);
 }
 
 @end

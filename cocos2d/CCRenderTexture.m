@@ -195,7 +195,8 @@
 	self.texture = texture;
 	free(data);
 	
-	[self.texture setAliasTexParameters];
+	// Render textures are nearest filtered for legacy reasons.
+	self.texture.antialiased = NO;
 	
 	CCRenderDispatch(NO, ^{
 		CCGL_DEBUG_PUSH_GROUP_MARKER("CCRenderTexture: Create");

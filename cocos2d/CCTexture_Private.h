@@ -129,25 +129,6 @@ typedef struct _ccTexParams {
  */
 -(void) setTexParameters: (ccTexParams*) texParams;
 
-/* sets antialias texture parameters:
- - GL_TEXTURE_MIN_FILTER = GL_LINEAR
- - GL_TEXTURE_MAG_FILTER = GL_LINEAR
- 
- @warning Calling this method could allocate additional texture memory.
- 
- */
-- (void) setAntiAliasTexParameters;
-
-/* sets alias texture parameters:
- - GL_TEXTURE_MIN_FILTER = GL_NEAREST
- - GL_TEXTURE_MAG_FILTER = GL_NEAREST
- 
- @warning Calling this method could allocate additional texture memory.
- 
- */
-- (void) setAliasTexParameters;
-
-
 /* Generates mipmap images for the texture.
  It only works if the texture size is POT (power of 2).
  */
