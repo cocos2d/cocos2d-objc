@@ -64,7 +64,7 @@
                                    vec4 greenSample = texture2D(cc_PreviousPassTexture, greenSamplePos);
                                    vec4 blueSample = texture2D(cc_PreviousPassTexture, blueSamplePos);
                                    
-                                   return vec4(redSample.r, greenSample.g, blueSample.b, 1.0);
+                                   return vec4(redSample.r, greenSample.g, blueSample.b, (redSample.r + greenSample.g + blueSample.b) / 3.0);
                                    );
     
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"pixellateEffect" body:effectBody inputs:nil returnType:@"vec4"];
