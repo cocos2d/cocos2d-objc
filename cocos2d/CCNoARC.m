@@ -200,14 +200,15 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 	}
 	
 	// Bind the shader.
-	if(previous == nil || _shader != previous->_shader){
+	BOOL bindShader = (previous == nil || _shader != previous->_shader);
+	if(bindShader){
 		CCGL_DEBUG_INSERT_EVENT_MARKER("Shader");
 		
 		glUseProgram(_shader->_program);
 	}
 	
 	// Set the shader's uniform state.
-	if(previous == nil || _shaderUniforms != previous->_shaderUniforms){
+	if(bindShader || _shaderUniforms != previous->_shaderUniforms){
 		CCGL_DEBUG_INSERT_EVENT_MARKER("Uniforms");
 		
 		NSDictionary *globalShaderUniforms = renderer->_globalShaderUniforms;
