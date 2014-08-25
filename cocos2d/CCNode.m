@@ -221,12 +221,6 @@ static NSUInteger globalOrderOfArrival = 1;
 - (void) dealloc
 {
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
-
-	// children
-    for (CCNode* child in _children)
-		child.parent = nil;
-
-
 }
 
 #pragma mark Setters
