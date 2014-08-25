@@ -26,7 +26,7 @@
  *  hue adjustment of 120 you will get a green sprite. Instead if you apply a hue adjustment
  *  of -120 you will get a blue sprite.
  */
-@property (nonatomic) float hue;
+@property (nonatomic, assign) float hue;
 
 
 /// -----------------------------------------------------------------------

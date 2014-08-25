@@ -41,4 +41,66 @@
  */
 -(id)initWithWidth:(int)w height:(int)h;
 
+/**
+ *  Initializes a CCEffectNode object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and no depth-stencil buffer.
+ *
+ *  @param w                  Width of render target.
+ *  @param h                  Height of render target.
+ *  @param format             Pixel format of render target.
+ *
+ *  @return An initialized CCRenderTarget object.
+ */
+-(id)initWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat)format;
+
+/**
+ *  Initializes a CCEffectNode object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format
+ *
+ *  @param w                  Width of render target.
+ *  @param h                  Height of render target.
+ *  @param format             Pixel format of render target.
+ *  @param depthStencilFormat Stencil format of render target.
+ *
+ *  @return An initialized CCRenderTarget object.
+ */
+-(id)initWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat)format depthStencilFormat:(GLuint)depthStencilFormat;
+
+
+/// -----------------------------------------------------------------------
+/// @name Creating a CCEffectNode object
+/// -----------------------------------------------------------------------
+
+/**
+ *  Creates a CCEffectNode object with width and height in points, the default color format and no depth-stencil buffer.
+ *
+ *  @param w      Width of render target.
+ *  @param h      Height of render target.
+ *
+ *  @return An initialized CCRenderTarget object.
+ */
++(id)effectNodeWithWidth:(int)w height:(int)h;
+
+/**
+ *  Creates a CCEffectNode object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and no depth-stencil buffer.
+ *
+ *  @param w                  Width of render target.
+ *  @param h                  Height of render target.
+ *  @param format             Pixel format of render target.
+ *
+ *  @return An initialized CCRenderTarget object.
+ */
++(id)effectNodeWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat)format;
+
+/**
+ *  Creates a CCEffectNode object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format
+ *
+ *  @param w                  Width of render target.
+ *  @param h                  Height of render target.
+ *  @param format             Pixel format of render target.
+ *  @param depthStencilFormat Stencil format of render target.
+ *
+ *  @return An initialized CCRenderTarget object.
+ */
++(id)effectNodeWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat)format depthStencilFormat:(GLuint)depthStencilFormat;
+
+
 @end

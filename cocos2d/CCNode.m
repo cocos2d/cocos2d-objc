@@ -221,12 +221,6 @@ static NSUInteger globalOrderOfArrival = 1;
 - (void) dealloc
 {
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
-
-	// children
-    for (CCNode* child in _children)
-		child.parent = nil;
-
-
 }
 
 #pragma mark Setters
@@ -1725,7 +1719,7 @@ CheckDefaultUniforms(NSDictionary *uniforms, CCTexture *texture)
 			_shaderUniforms = nil;
 		} else {
 			// Since the node has unique uniforms, it cannot be batched or use the fast path.
-			_renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms copyUniforms:NO];
+			_renderState = [CCRenderState renderStateWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms copyUniforms:NO];
 		}
 	}
 	

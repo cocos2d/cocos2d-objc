@@ -57,9 +57,9 @@ static GLKMatrix4 matrixWithHue(float hue);
 
 @interface CCEffectHue ()
 #if CCEFFECTHUE_USES_COLOR_MATRIX
-@property (nonatomic) NSValue *hueRotationMtx;
+@property (nonatomic, strong) NSValue *hueRotationMtx;
 #else
-@property (nonatomic) NSNumber *conditionedHue;
+@property (nonatomic, strong) NSNumber *conditionedHue;
 #endif
 @end
 
@@ -103,7 +103,7 @@ static GLKMatrix4 matrixWithHue(float hue);
 {
     self.fragmentFunctions = [[NSMutableArray alloc] init];
 
-    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" snippet:@"texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)"];
+    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:@"cc_FragColor * texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)" snippet:@"texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)"];
 
     // The non-color matrix shader is based on the hue filter in GPUImage - https://github.com/BradLarson/GPUImage
 #if CCEFFECTHUE_USES_COLOR_MATRIX

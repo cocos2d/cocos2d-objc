@@ -51,7 +51,7 @@ static float conditionSaturation(float saturation);
 
 @interface CCEffectSaturation ()
 
-@property (nonatomic) NSNumber *conditionedSaturation;
+@property (nonatomic, strong) NSNumber *conditionedSaturation;
 
 @end
 
@@ -86,7 +86,7 @@ static float conditionSaturation(float saturation);
 {
     self.fragmentFunctions = [[NSMutableArray alloc] init];
 
-    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" snippet:@"texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)"];
+    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:@"cc_FragColor * texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)" snippet:@"texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)"];
     
     // Image saturation shader based on saturation filter in GPUImage - https://github.com/BradLarson/GPUImage
     NSString* effectBody = CC_GLSL(

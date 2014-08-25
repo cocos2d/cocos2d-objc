@@ -1,13 +1,11 @@
-<img src="http://www.cocos2d-iphone.org/blog/wp-content/uploads/2014/03/angry_small.png">
+Cocos2D Swift
+=============
 
-cocos2d for iPhone
-==================
+[Cocos2D-Swift][1] is a framework for building 2D games, demos, and other
+graphical/interactive applications for iOS, Mac and Android.
+It is based on the [Cocos2D][2] design, but instead of using Python it uses Swift or Objective-C.
 
-[cocos2d for iPhone][1] is a framework for building 2D games, demos, and other
-graphical/interactive applications for iPod Touch, iPhone, iPad and Mac OS X.
-It is based on the [cocos2d][2] design, but instead of using Python it uses Objective-C.
-
-cocos2d for iPhone is:
+Cocos2D Swift is:
 
   * Fast
   * Free
@@ -15,21 +13,12 @@ cocos2d for iPhone is:
   * Community Supported
 
 
-Templates Installation
------------------------
+Creating New Projects
+---------------------
 
-1. Download the code from [Github][5]
+New Cocos2D projects are created with SpriteBuilder. SpriteBuilder is, just like Cocos2D, free and open source. You can get SpriteBuilder from [spritebuilder.com](http://spritebuilder.com) or from the Mac App Store. Projects created using SpriteBuilder contains the complete Cocos2D source code, and after the project has been created using SpriteBuilder is optional.
 
-2. Run the install script by executing `./install.sh` in Terminal  
-   (for more help and usage execute `./install.sh -h`)  
-
-    ```bash
-    Example:    
-    $ cd cocos2d-iphone # change directory to cocos2d-iphone
-    $ ./install.sh 	# execute the template installer script
-    ```
-
-3. And then open `Xcode → New → New Project → cocos2d v3.x`
+You can find the full Cocos2D documentation and user guide at our [documentation page](http://www.cocos2d-swift.org/docs).
 
 Features
 -------------
@@ -71,7 +60,7 @@ Mac OS X 10.6 (or newer), Xcode 4.2 (or newer)
 
 Runtime Requirements
 --------------------
-  * iOS 5.0 or newer for iOS games
+  * iOS 6.0 or newer for iOS games
   * Snow Leopard (v10.6) or newer for Mac games
 
 
@@ -83,16 +72,9 @@ Running Tests
 2. Then click on `Xcode → Product → Run`
 
 
-Contributing to the Project
---------------------------------
-
-Did you find a bug? Do you have feature request? Do you want to merge a feature?
-
-  * [contributing to cocos2d][3]
-
 Forum
 -----
-  * [cocos2d for iphone forum][4]
+  * [Cocos2D User Forum][4]
 
 
 Download from Github
@@ -107,6 +89,6 @@ Download from Github
 [1]: http://www.cocos2d-iphone.org "cocos2d for iPhone"
 [2]: http://www.cocos2d.org "cocos2d"
 [3]: http://www.cocos2d-iphone.org/wiki/doku.php/faq#i_found_a_bug_i_have_an_enhancement_proposal_what_should_i_do "contributing to cocos2d"
-[4]: http://www.cocos2d-iphone.org/forum "cocos2d for iPhone forum"
+[4]: http://forum.cocos2d-swift.org "cocos2d for iPhone forum"
 [5]: https://github.com/cocos2d/cocos2d-iphone/archive/develop-v3.zip
 [6]: http://www.chipmunk-physics.net

@@ -15,7 +15,7 @@ static float conditionBrightness(float brightness);
 
 @interface CCEffectBrightness ()
 
-@property (nonatomic) NSNumber *conditionedBrightness;
+@property (nonatomic, strong) NSNumber *conditionedBrightness;
 
 @end
 
@@ -50,7 +50,7 @@ static float conditionBrightness(float brightness);
 {
     self.fragmentFunctions = [[NSMutableArray alloc] init];
 
-    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" snippet:@"texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)"];
+    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:@"cc_FragColor * texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)" snippet:@"texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)"];
 
     NSString* effectBody = CC_GLSL(
                                    return vec4((inputValue.rgb + vec3(u_brightness * inputValue.a)), inputValue.a);

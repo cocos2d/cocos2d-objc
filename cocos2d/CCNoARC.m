@@ -78,7 +78,7 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 	
 	if (_effect)
 	{
-		_effectRenderer.contentSize = self.contentSize;
+		_effectRenderer.contentSize = self.contentSizeInPoints;
 		if ([self.effect prepareForRendering] == CCEffectPrepareSuccess)
 		{
 			// Preparing an effect for rendering can modify its uniforms

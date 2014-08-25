@@ -32,6 +32,7 @@
 {
     CCEffect *_effect;
     CCEffectRenderer *_effectRenderer;
+    CGSize _allocatedSize;
 }
 
 @end
@@ -46,10 +47,38 @@
 
 -(id)initWithWidth:(int)width height:(int)height
 {
-	if((self = [super initWithWidth:width height:height pixelFormat:CCTexturePixelFormat_Default])) {
+    return [self initWithWidth:width height:height pixelFormat:CCTexturePixelFormat_Default];
+}
+
+-(id)initWithWidth:(int)width height:(int)height pixelFormat:(CCTexturePixelFormat)format
+{
+    return [self initWithWidth:width height:height pixelFormat:format depthStencilFormat:0];
+}
+
+-(id)initWithWidth:(int)width height:(int)height pixelFormat:(CCTexturePixelFormat) format depthStencilFormat:(GLuint)depthStencilFormat
+{
+    if((self = [super initWithWidth:width height:height pixelFormat:CCTexturePixelFormat_Default depthStencilFormat:depthStencilFormat]))
+    {
         _effectRenderer = [[CCEffectRenderer alloc] init];
+        _allocatedSize = CGSizeMake(0.0f, 0.0f);
+        self.clearFlags = GL_COLOR_BUFFER_BIT;
 	}
 	return self;
+}
+
++(id)effectNodeWithWidth:(int)w height:(int)h
+{
+    return [[CCEffectNode alloc] initWithWidth:w height:h];
+}
+
++(id)effectNodeWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat)format
+{
+    return [[CCEffectNode alloc] initWithWidth:w height:h pixelFormat:format];
+}
+
++(id)effectNodeWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat)format depthStencilFormat:(GLuint)depthStencilFormat
+{
+    return [[CCEffectNode alloc] initWithWidth:w height:h pixelFormat:format depthStencilFormat:depthStencilFormat];
 }
 
 -(CCEffect *)effect
@@ -68,6 +97,24 @@
     {
         _shaderUniforms = nil;
     }
+}
+
+-(void)create
+{
+    _allocatedSize = self.contentSizeInPoints;
+    CGSize pixelSize = CGSizeMake(_allocatedSize.width * _contentScale, _allocatedSize.height * _contentScale);
+    [self createTextureAndFboWithPixelSize:pixelSize];
+
+    CGRect rect = CGRectMake(0, 0, _allocatedSize.width, _allocatedSize.height);
+	[_sprite setTextureRect:rect];
+    
+    _projection = GLKMatrix4MakeOrtho(0.0f, _allocatedSize.width, 0.0f, _allocatedSize.height, -1024.0f, 1024.0f);
+}
+
+-(void)destroy
+{
+    [super destroy];
+    _allocatedSize = CGSizeMake(0.0f, 0.0f);
 }
 
 -(void)begin
@@ -110,6 +157,14 @@
 	// override visit.
 	// Don't call visit on its children
 	if(!_visible) return;
+    
+    CGSize pointSize = self.contentSizeInPoints;
+    if (!CGSizeEqualToSize(pointSize, _allocatedSize))
+    {
+        [self destroy];
+        [self contentSizeChanged];
+        _contentSizeChanged = NO;
+    }
 	
     GLKMatrix4 transform = [self transform:parentTransform];
     
@@ -154,7 +209,7 @@
     // remainder of the effects.
     [self begin];
 
-    [_renderer enqueueClear:GL_COLOR_BUFFER_BIT color:_clearColor depth:self.clearDepth stencil:self.clearStencil globalSortOrder:NSIntegerMin];
+    [_renderer enqueueClear:self.clearFlags color:_clearColor depth:self.clearDepth stencil:self.clearStencil globalSortOrder:NSIntegerMin];
     
     //! make sure all children are drawn
     [self sortAllChildren];
@@ -168,7 +223,7 @@
     
     if (_effect)
     {
-        _effectRenderer.contentSize = self.contentSize;
+        _effectRenderer.contentSize = self.contentSizeInPoints;
         if ([_effect prepareForRendering] == CCEffectPrepareSuccess)
         {
             // Preparing an effect for rendering can modify its uniforms

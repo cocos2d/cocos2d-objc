@@ -49,7 +49,7 @@ static float conditionBlockSize(float blockSize);
 
 @interface CCEffectPixellate ()
 
-@property (nonatomic) float conditionedBlockSize;
+@property (nonatomic, assign) float conditionedBlockSize;
 
 @end
 
