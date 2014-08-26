@@ -73,7 +73,7 @@
     // Create a new texture object for use as the color attachment of the new
     // FBO.
 	_texture = [[CCTexture alloc] initWithData:nil pixelFormat:kRenderTargetDefaultPixelFormat pixelsWide:powW pixelsHigh:powH contentSizeInPixels:size contentScale:[CCDirector sharedDirector].contentScaleFactor];
-	[_texture setAliasTexParameters];
+	_texture.antialiased = NO;
 	
     // Save the old FBO binding so it can be restored after we create the new
     // one.

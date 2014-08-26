@@ -155,7 +155,7 @@
 	//  - easier to render
 	// cons:
 	//  - difficult to scale / rotate / etc.
-	[self.texture setAliasTexParameters];
+	self.texture.antialiased = NO;
 
 	// Parse cocos2d properties
 	[self parseInternalProperties];

@@ -24,13 +24,12 @@
  */
 
 #import "CCMetalSupport_Private.h"
-
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 
-@implementation CCMetalContext {
-	@public
-	id<MTLRenderPipelineState> _tempPiplelineState;
-}
+#import "CCTexture_Private.h"
+#import "CCShader_Private.h"
+
+@implementation CCMetalContext
 
 -(instancetype)init
 {
@@ -40,28 +39,12 @@
 		
 		_commandQueue = [_device newCommandQueue];
 		_currentCommandBuffer = [_commandQueue commandBuffer];
-		
-		#warning Temporary
-    id <MTLFunction> vertexProgram = [_library newFunctionWithName:@"CCVertexFunctionDefault"];
-    id <MTLFunction> fragmentProgram = [_library newFunctionWithName:@"CCFragmentFunctionDefaultColor"];
-		
-    MTLRenderPipelineDescriptor *pipelineStateDescriptor = [[MTLRenderPipelineDescriptor alloc] init];
-    [pipelineStateDescriptor setSampleCount: 1];
-    [pipelineStateDescriptor setVertexFunction:vertexProgram];
-    [pipelineStateDescriptor setFragmentFunction:fragmentProgram];
-    
-    MTLRenderPipelineColorAttachmentDescriptor *colorDescriptor = [MTLRenderPipelineColorAttachmentDescriptor new];
-    colorDescriptor.pixelFormat = MTLPixelFormatBGRA8Unorm;
-		colorDescriptor.blendingEnabled = NO;
-		pipelineStateDescriptor.colorAttachments[0] = colorDescriptor;
-		
-    _tempPiplelineState = [_device newRenderPipelineStateWithDescriptor:pipelineStateDescriptor error:nil];
 	}
 	
 	return self;
 }
 
-NSString *CURRENT_CONTEXT_KEY = @"CURRENT_CONTEXT_KEY";
+static NSString *CURRENT_CONTEXT_KEY = @"CURRENT_CONTEXT_KEY";
 
 +(instancetype)currentContext
 {
@@ -111,10 +94,7 @@ NSString *CURRENT_CONTEXT_KEY = @"CURRENT_CONTEXT_KEY";
 @end
 
 
-@implementation CCGraphicsBufferMetal {
-	@public
-	id<MTLBuffer> _buffer;
-}
+@implementation CCGraphicsBufferMetal
 
 -(instancetype)initWithCapacity:(NSUInteger)capacity elementSize:(size_t)elementSize type:(CCGraphicsBufferType)type;
 {
@@ -170,32 +150,8 @@ NSString *CURRENT_CONTEXT_KEY = @"CURRENT_CONTEXT_KEY";
 {
 	id<MTLRenderCommandEncoder> renderEncoder = [CCMetalContext currentContext].currentRenderCommandEncoder;
 	
-	[renderEncoder insertDebugSignpost:@"CCGraphicsBufferBindingsMetal: Bind vertex array."];
+	CCMTL_DEBUG_INSERT_EVENT_MARKER(renderEncoder, @"CCGraphicsBufferBindingsMetal: Bind vertex array.");
 	[renderEncoder setVertexBuffer:_vertexBuffer->_buffer offset:0 atIndex:0];
-}
-
-@end
-
-
-@implementation CCRenderCommandDrawMetal
-
-static const MTLPrimitiveType MetalDrawModes[] = {
-	MTLPrimitiveTypeTriangle,
-	MTLPrimitiveTypeLine,
-};
-
--(void)invokeOnRenderer:(CCRenderer *)renderer
-{
-	CCMetalContext *context = [CCMetalContext currentContext];
-	id<MTLRenderCommandEncoder> renderEncoder = context.currentRenderCommandEncoder;
-	id<MTLBuffer> indexBuffer = ((CCGraphicsBufferMetal *)renderer->_elementBuffer)->_buffer;
-	
-	[renderEncoder pushDebugGroup:@"CCRendererCommandDraw: Invoke"];
-	[renderer bindBuffers:YES];
-//	[renderer setRenderState:_renderState];
-	[renderEncoder setRenderPipelineState:context->_tempPiplelineState];
-	[renderEncoder drawIndexedPrimitives:MetalDrawModes[_mode] indexCount:_count indexType:MTLIndexTypeUInt16 indexBuffer:indexBuffer indexBufferOffset:2*_first];
-	[renderEncoder popDebugGroup];
 }
 
 @end

@@ -46,7 +46,6 @@ EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup *share
 	dispatch_once(&once, ^{
 		CC_RENDER_DISPATCH_CONTEXT = [[EAGLContext alloc] initWithAPI:api sharegroup:sharegroup];
 		
-		
 		CC_RENDER_DISPATCH_QUEUE = dispatch_queue_create("CCRenderQueue", DISPATCH_QUEUE_SERIAL);
 		CC_RENDER_DISPATCH_SEMAPHORE = dispatch_semaphore_create(CC_RENDER_DISPATCH_MAX_FRAMES);
 	});
@@ -72,7 +71,6 @@ static void CCRenderDispatchExecute(BOOL threadsafe, BOOL frame, dispatch_block_
 	});
 #else
 	block();
-	CC_CHECK_GL_ERROR_DEBUG();
 #endif
 }
 

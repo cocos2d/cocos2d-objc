@@ -26,6 +26,7 @@
 #import <Foundation/Foundation.h>
 #import "CCRenderer.h"
 #import "CCCache.h"
+#import "CCRenderDispatch.h"
 
 // TODO These should be made private to the module.
 extern id CCBLENDMODE_CACHE;
@@ -67,15 +68,15 @@ extern NSDictionary *CCBLEND_DISABLED_OPTIONS;
 
 
 @interface CCRenderState(){
-	@private
+	@public
 	CCTexture *_mainTexture;
 	BOOL _immutable;
-	
-	@public
 	CCBlendMode *_blendMode;
 	CCShader *_shader;
 	NSDictionary *_shaderUniforms;
 }
+
+-(void)transitionRenderer:(CCRenderer *)renderer FromState:(CCRenderState *)previous;
 
 @end
 
@@ -153,7 +154,7 @@ CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount, CC
 	size_t capacity = buffer->_capacity;
 	if(required > capacity){
 		// Why 1.5? https://github.com/facebook/folly/blob/master/folly/docs/FBVector.md
-		[buffer resize:required*1.5];
+		CCRenderDispatch(NO, ^{[buffer resize:required*1.5];});
 	}
 	
 	void *array = buffer->_ptr + buffer->_count*buffer->_elementSize;
@@ -174,8 +175,6 @@ CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount, CC
 	@public
 	CCGraphicsBuffer *_vertexBuffer;
 	CCGraphicsBuffer *_elementBuffer;
-	
-	@private
 	id<CCGraphicsBufferBindings> _bufferBindings;
 	
 	NSDictionary *_globalShaderUniforms;
@@ -186,11 +185,11 @@ CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount, CC
 	// Current renderer bindings for fast state checking.
 	// Invalidated at the end of each frame.
 	__unsafe_unretained CCRenderState *_renderState;
-	__unsafe_unretained NSDictionary *_blendOptions;
-	__unsafe_unretained CCShader *_shader;
-	__unsafe_unretained NSDictionary *_shaderUniforms;
 	__unsafe_unretained CCRenderCommandDraw *_lastDrawCommand;
 	BOOL _buffersBound;
+	
+	// Currently used for associating a metal context with a given renderer.
+	id _context;
 }
 
 /// Current global shader uniform values.
@@ -208,14 +207,14 @@ CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount, CC
 /// Render any currently queued commands.
 -(void)flush;
 
-/// Bind the renderer's VAO if it is not currently bound.
--(void)bindBuffers:(BOOL)bind;
-
 @end
 
 
 @interface CCRenderer(NoARCPrivate)
 
 -(void)setRenderState:(CCRenderState *)renderState;
+
+/// Bind the renderer's VAO if it is not currently bound.
+-(void)bindBuffers:(BOOL)bind;
 
 @end

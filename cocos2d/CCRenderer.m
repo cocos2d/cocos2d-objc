@@ -267,12 +267,13 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 	if(self != [CCRenderState class]) return;
 	
 	CCRENDERSTATE_CACHE = [[CCRenderStateCache alloc] init];
-	CCRENDERSTATE_DEBUGCOLOR = [[self alloc] initWithBlendMode:CCBLEND_DISABLED shader:[CCShader positionColorShader] shaderUniforms:@{}];
+	CCRENDERSTATE_DEBUGCOLOR = [[CCRenderStateClass alloc] initWithBlendMode:CCBLEND_DISABLED shader:[CCShader positionColorShader] shaderUniforms:@{}];
 }
 
 -(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms
 {
-	return [self initWithBlendMode:blendMode shader:shader shaderUniforms:shaderUniforms copyUniforms:NO];
+	// Allocate a new instance of the correct class instead of self. (This method was already deprecated).
+	return [[CCRenderStateClass alloc] initWithBlendMode:blendMode shader:shader shaderUniforms:shaderUniforms copyUniforms:NO];
 }
 
 -(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms copyUniforms:(BOOL)copyUniforms
@@ -296,10 +297,15 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 		mainTexture = [CCTexture none];
 	}
 	
-	CCRenderState *renderState = [[self alloc] initWithBlendMode:blendMode shader:shader shaderUniforms:@{CCShaderUniformMainTexture: mainTexture} copyUniforms:YES];
+	CCRenderState *renderState = [[CCRenderStateClass alloc] initWithBlendMode:blendMode shader:shader shaderUniforms:@{CCShaderUniformMainTexture: mainTexture} copyUniforms:YES];
 	renderState->_mainTexture = mainTexture;
 	
 	return [CCRENDERSTATE_CACHE objectForKey:renderState];
+}
+
++(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms copyUniforms:(BOOL)copyUniforms
+{
+	return [[CCRenderStateClass alloc] initWithBlendMode:blendMode shader:shader shaderUniforms:shaderUniforms copyUniforms:copyUniforms];
 }
 
 -(id)copyWithZone:(NSZone *)zone
@@ -307,14 +313,12 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 	if(_immutable){
 		return self;
 	} else {
-		return [[CCRenderState allocWithZone:zone] initWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms copyUniforms:YES];
+		return [[CCRenderStateClass allocWithZone:zone] initWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms copyUniforms:YES];
 	}
 }
 
 -(NSUInteger)hash
 {
-	NSAssert(_mainTexture, @"Attempting to cache a renderstate that was nort created with renderStateWithBlendMode.");
-	
 	// Not great, but acceptable. All values are unique by pointer.
 	return ((NSUInteger)_blendMode ^ (NSUInteger)_shader ^ (NSUInteger)_mainTexture);
 }
@@ -334,6 +338,11 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 +(instancetype)debugColor
 {
 	return CCRENDERSTATE_DEBUGCOLOR;
+}
+
+-(void)transitionRenderer:(CCRenderer *)renderer FromState:(CCRenderer *)previous
+{
+	NSAssert(NO, @"Must be overridden.");
 }
 
 @end
@@ -516,9 +525,6 @@ SortQueue(NSMutableArray *queue)
 {
 	_lastDrawCommand = nil;
 	_renderState = nil;
-	_blendOptions = nil;
-	_shader = nil;
-	_shaderUniforms = nil;
 	_buffersBound = NO;
 }
 
@@ -539,6 +545,10 @@ SortQueue(NSMutableArray *queue)
 		
 		_threadsafe = YES;
 		_queue = [NSMutableArray array];
+		
+		#warning TEMP
+		// Should probably change the init method to pass this in?
+		_context = [NSClassFromString(@"CCMetalContext") currentContext];
 	}
 	
 	return self;
@@ -571,15 +581,8 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 #define glBindVertexArray glBindVertexArrayOES
 #endif
 
--(void)bindBuffers:(BOOL)bind
-{
- 	if(bind != _buffersBound){
-		[_bufferBindings bind:bind];
-		_buffersBound = bind;
-	}
-}
-
 //Implemented in CCNoARC.m
+//-(void)bindBuffers:(BOOL)bind
 //-(void)setRenderState:(CCRenderState *)renderState
 //-(CCRenderBuffer)enqueueTriangles:(NSUInteger)triangleCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
 //-(CCRenderBuffer)enqueueLines:(NSUInteger)lineCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;

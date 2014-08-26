@@ -63,7 +63,7 @@
 		BOOL copyUniforms = self.hasDefaultShaderUniforms;
 		
 		// Create an uncached renderstate so the texture can be released before the renderstate cache is flushed.
-		_renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:self.shaderUniforms copyUniforms:copyUniforms];
+		_renderState = [CCRenderState renderStateWithBlendMode:_blendMode shader:_shader shaderUniforms:self.shaderUniforms copyUniforms:copyUniforms];
 	}
 	
 	return _renderState;
@@ -195,7 +195,8 @@
 	self.texture = texture;
 	free(data);
 	
-	[self.texture setAliasTexParameters];
+	// Render textures are nearest filtered for legacy reasons.
+	self.texture.antialiased = NO;
 	
 	CCRenderDispatch(NO, ^{
 		CCGL_DEBUG_PUSH_GROUP_MARKER("CCRenderTexture: Create");

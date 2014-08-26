@@ -37,6 +37,7 @@
 #import "CCConfiguration.h"
 #import "CCNode_Private.h"
 #import "CCDirector.h"
+#import "CCTexture_Private.h"
 #import <Foundation/Foundation.h>
 
 #if __CC_PLATFORM_IOS
@@ -53,15 +54,6 @@
 
 static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 
-
-@implementation CCTexture (CCLabelTTF)
-
-- (void) setPremultipliedAlpha:(BOOL)flag
-{
-    _premultipliedAlpha = flag;
-}
-
-@end
 
 #pragma mark CCLabelTTF
 
