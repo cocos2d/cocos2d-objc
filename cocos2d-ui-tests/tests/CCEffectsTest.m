@@ -16,29 +16,6 @@
 	return self;
 }
 
--(void)setupOuterGlowEffectTest
-{
-    self.subTitle = @"OuterGlow Effect Test";
-    
-//    CCNodeColor* environment = [CCNodeColor nodeWithColor:[CCColor whiteColor]];
-    CCSprite *environment = [CCSprite spriteWithImageNamed:@"Images/MountainPanorama.jpg"];
-    environment.positionType = CCPositionTypeNormalized;
-    environment.anchorPoint = ccp(0.5, 0.5);
-    environment.position = ccp(0.5f, 0.5f);
-    
-    [self.contentNode addChild:environment];
-    
-    CCColor *glowColor = [CCColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:0.5];
-    CCEffectOuterGlow* effect = [CCEffectOuterGlow effectWithGlowColor:glowColor];
-    
-    CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"Images/DistanceFieldX.png"];
-    sampleSprite.position = ccp(0.5, 0.5);
-    sampleSprite.positionType = CCPositionTypeNormalized;
-    sampleSprite.effect = effect;
-    
-    [self.contentNode addChild:sampleSprite];
-}
-
 -(void)setupDropShadowEffectTest
 {
     self.subTitle = @"DropShadow Effect Test";
@@ -50,7 +27,7 @@
     [self.contentNode addChild:environment];
     
     CCColor *shadowColor = [CCColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:0.5];
-    CCEffectDropShadow* effect = [CCEffectDropShadow effectWithShadowOffset:GLKVector2Make(2.0, -2.0) shadowColor:shadowColor];
+    CCEffectDropShadow* effect = [CCEffectDropShadow effectWithShadowOffset:GLKVector2Make(2.0, -2.0) shadowColor:shadowColor blurRadius:5];
    
     CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"Images/Ohm.png"];
     sampleSprite.position = ccp(0.5, 0.5);
@@ -449,7 +426,7 @@
         sampleSprite3.positionType = CCPositionTypeNormalized;
         
         // Blend glow maps test
-        CCEffectBloom* glowEffect3 = [CCEffectBloom effectWithBlurRadius:8 intensity:1.0f luminanceThreshold:1.0f - ((float)i/(float)(steps-1))];
+        CCEffectBloom* glowEffect3 = [CCEffectBloom effectWithBlurRadius:3 intensity:1.0f luminanceThreshold:1.0f - ((float)i/(float)(steps-1))];
         sampleSprite3.effect = glowEffect3;
         
         [self.contentNode addChild:sampleSprite3];
@@ -780,5 +757,32 @@
                                                                ]]];
 	[node addChild:sprite];
 }
-@end
 
+// Distance fields - work in progress
+
+// WIP
+//-(void)setupOuterGlowEffectTest_dist
+//{
+//    self.subTitle = @"OuterGlow Effect Test";
+//
+//    //    CCNodeColor* environment = [CCNodeColor nodeWithColor:[CCColor whiteColor]];
+//    CCSprite *environment = [CCSprite spriteWithImageNamed:@"Images/MountainPanorama.jpg"];
+//    environment.positionType = CCPositionTypeNormalized;
+//    environment.anchorPoint = ccp(0.5, 0.5);
+//    environment.position = ccp(0.5f, 0.5f);
+//
+//    [self.contentNode addChild:environment];
+//
+//    CCColor *glowColor = [CCColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:0.5];
+//    CCEffectOuterGlow* effect = [CCEffectOuterGlow effectWithGlowColor:glowColor];
+//
+//    CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"Images/output.png"];
+//    sampleSprite.position = ccp(0.5, 0.5);
+//    sampleSprite.positionType = CCPositionTypeNormalized;
+//    sampleSprite.effect = effect;
+//    sampleSprite.scale = 2.0f;
+//
+//    [self.contentNode addChild:sampleSprite];
+//}
+
+@end

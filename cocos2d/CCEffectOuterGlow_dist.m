@@ -49,7 +49,7 @@
                                    vec4 outputColor = vec4(0.0, 0.0, 0.0, 1.0);
                                    float distAlphaMask = texture2D(cc_MainTexture, cc_FragTexCoord1).r;
                                    
-                                   float center = 0.46;
+                                   float center = 0.5;
                                    float transition = fwidth(distAlphaMask) * 1.0;
                                    
                                    float min = center - transition;
@@ -62,8 +62,8 @@
                                    if(true)
                                    {
                                        vec4 glowTexel = texture2D(cc_MainTexture, cc_FragTexCoord1);
-                                       min -= 0.09;
-                                       max -= 0.05;
+                                       min -= 0.2;
+                                       max -= 0.2;
                                        vec4 glowc = u_glowColor * smoothstep(min, max, glowTexel.r);
                                        
                                        outputColor = mix(glowc, outputColor, outputColor.a);
