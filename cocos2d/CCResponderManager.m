@@ -433,7 +433,13 @@
 {
     for (CCRunningResponder *touchEntry in _runningResponderList)
     {
-        if (touchEntry.touch == touch) return(touchEntry);
+        if (touchEntry.touch == touch) {
+            CCNode *target = (CCNode *)touchEntry.target;
+            
+            if (target.userInteractionEnabled) {
+                return(touchEntry);
+            }
+        }
     }
     return(nil);
 }
