@@ -2,8 +2,6 @@
 #import "CCTextureCache.h"
 #import "CCNodeColor.h"
 #import "CCEffectNode.h"
-#import "CCEffectBlur.h"
-
 
 @interface CCEffectsTest : TestBase @end
 @implementation CCEffectsTest
@@ -16,6 +14,57 @@
 	}
 	
 	return self;
+}
+
+-(void)setupOuterGlowEffectTest
+{
+    self.subTitle = @"OuterGlow Effect Test";
+    
+//    CCNodeColor* environment = [CCNodeColor nodeWithColor:[CCColor whiteColor]];
+    CCSprite *environment = [CCSprite spriteWithImageNamed:@"Images/MountainPanorama.jpg"];
+    environment.positionType = CCPositionTypeNormalized;
+    environment.anchorPoint = ccp(0.5, 0.5);
+    environment.position = ccp(0.5f, 0.5f);
+    
+    [self.contentNode addChild:environment];
+    
+    CCColor *glowColor = [CCColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:0.5];
+    CCEffectOuterGlow* effect = [CCEffectOuterGlow effectWithGlowColor:glowColor];
+    
+    CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"Images/DistanceFieldX.png"];
+    sampleSprite.position = ccp(0.5, 0.5);
+    sampleSprite.positionType = CCPositionTypeNormalized;
+    sampleSprite.effect = effect;
+    
+    [self.contentNode addChild:sampleSprite];
+}
+
+-(void)setupDropShadowEffectTest
+{
+    self.subTitle = @"DropShadow Effect Test";
+
+    CCSprite *environment = [CCSprite spriteWithImageNamed:@"Images/MountainPanorama.jpg"];
+    environment.positionType = CCPositionTypeNormalized;
+    environment.position = ccp(0.5f, 0.5f);
+
+    [self.contentNode addChild:environment];
+    
+    CCColor *shadowColor = [CCColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:0.5];
+    CCEffectDropShadow* effect = [CCEffectDropShadow effectWithShadowOffset:GLKVector2Make(2.0, -2.0) shadowColor:shadowColor];
+   
+    CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"Images/Ohm.png"];
+    sampleSprite.position = ccp(0.5, 0.5);
+    sampleSprite.positionType = CCPositionTypeNormalized;
+    
+    CCEffectNode* effectNode = [[CCEffectNode alloc] init];
+    effectNode.contentSize = CGSizeMake(300, 300);
+    effectNode.anchorPoint = ccp(0.5, 0.5);
+    effectNode.positionType = CCPositionTypeNormalized;
+    effectNode.position = ccp(0.5, 0.5);
+    [effectNode addChild:sampleSprite];
+    effectNode.effect = effect;
+    
+    [self.contentNode addChild:effectNode];
 }
 
 -(void)setupGlassEffectTest
