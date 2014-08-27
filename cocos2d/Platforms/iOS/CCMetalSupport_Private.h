@@ -46,7 +46,10 @@
 #endif
 
 
-@interface CCMetalContext : NSObject
+@interface CCMetalContext : NSObject {
+	@public
+	id<MTLRenderCommandEncoder> _currentRenderCommandEncoder;
+}
 
 @property(nonatomic, readonly) id<MTLDevice> device;
 @property(nonatomic, readonly) id<MTLLibrary> library;
@@ -66,7 +69,11 @@
 @end
 
 
-@interface CCGraphicsBufferMetal : CCGraphicsBuffer
+@interface CCGraphicsBufferMetal : CCGraphicsBuffer {
+	@public
+	id<MTLBuffer> _buffer;
+}
+
 @end
 
 

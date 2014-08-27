@@ -44,20 +44,11 @@
 	return self;
 }
 
-NSString *CURRENT_CONTEXT_KEY = @"CURRENT_CONTEXT_KEY";
-
-#warning TODO
-// This uses a pretty measurable piece of CPU time.
-// Access through the CCRenderer when possible somehow?
-static inline CCMetalContext *
-CCMetalContextCurrent(void)
-{
-	return [NSThread currentThread].threadDictionary[CURRENT_CONTEXT_KEY];
-}
+static NSString *CURRENT_CONTEXT_KEY = @"CURRENT_CONTEXT_KEY";
 
 +(instancetype)currentContext
 {
-	return CCMetalContextCurrent();
+	return [NSThread currentThread].threadDictionary[CURRENT_CONTEXT_KEY];
 }
 
 +(void)setCurrentContext:(CCMetalContext *)context
@@ -103,16 +94,13 @@ CCMetalContextCurrent(void)
 @end
 
 
-@implementation CCGraphicsBufferMetal {
-	@public
-	id<MTLBuffer> _buffer;
-}
+@implementation CCGraphicsBufferMetal
 
 -(instancetype)initWithCapacity:(NSUInteger)capacity elementSize:(size_t)elementSize type:(CCGraphicsBufferType)type;
 {
 	if((self = [super initWithCapacity:capacity elementSize:elementSize type:type])){
 		// Use write combining? Buffers are already write only for the GL renderer.
-		_buffer = [CCMetalContextCurrent().device newBufferWithLength:capacity*elementSize options:MTLResourceOptionCPUCacheModeDefault];
+		_buffer = [[CCMetalContext currentContext].device newBufferWithLength:capacity*elementSize options:MTLResourceOptionCPUCacheModeDefault];
 		
 		_ptr = _buffer.contents;
 	}
@@ -124,7 +112,7 @@ CCMetalContextCurrent(void)
 
 -(void)resize:(size_t)newCapacity;
 {
-	id<MTLBuffer> newBuffer = [CCMetalContextCurrent().device newBufferWithLength:newCapacity*_elementSize options:MTLResourceOptionCPUCacheModeDefault];
+	id<MTLBuffer> newBuffer = [[CCMetalContext currentContext].device newBufferWithLength:newCapacity*_elementSize options:MTLResourceOptionCPUCacheModeDefault];
 	memcpy(newBuffer.contents, _ptr, _capacity*_elementSize);
 	
 	_capacity = newCapacity;
@@ -160,133 +148,10 @@ CCMetalContextCurrent(void)
 
 -(void)bind:(BOOL)bind
 {
-	id<MTLRenderCommandEncoder> renderEncoder = CCMetalContextCurrent().currentRenderCommandEncoder;
+	id<MTLRenderCommandEncoder> renderEncoder = [CCMetalContext currentContext].currentRenderCommandEncoder;
 	
 	CCMTL_DEBUG_INSERT_EVENT_MARKER(renderEncoder, @"CCGraphicsBufferBindingsMetal: Bind vertex array.");
 	[renderEncoder setVertexBuffer:_vertexBuffer->_buffer offset:0 atIndex:0];
-}
-
-@end
-
-
-// This is effectively hardcoded to 10 by Apple's docs and there is no API to query capabilities...
-// Seems like an oversight, but whatever.
-#define CCMTL_MAX_TEXTURES 10
-
-
-@interface CCRenderStateMetal : CCRenderState @end
-@implementation CCRenderStateMetal {
-	id<MTLRenderPipelineState> _renderPipelineState;
-}
-
-// Using GL enums for CCBlendMode types should never have happened. Oops.
-static NSUInteger
-GLBLEND_TO_METAL(NSNumber *glenum)
-{
-	switch(glenum.unsignedIntValue){
-		case GL_ZERO: return MTLBlendFactorZero;
-		case GL_ONE: return MTLBlendFactorOne;
-		case GL_SRC_COLOR: return MTLBlendFactorSourceColor;
-		case GL_ONE_MINUS_SRC_COLOR: return MTLBlendFactorOneMinusSourceColor;
-		case GL_SRC_ALPHA: return MTLBlendFactorSourceAlpha;
-		case GL_ONE_MINUS_SRC_ALPHA: return MTLBlendFactorOneMinusSourceAlpha;
-		case GL_DST_COLOR: return MTLBlendFactorDestinationColor;
-		case GL_ONE_MINUS_DST_COLOR: return MTLBlendFactorOneMinusDestinationColor;
-		case GL_DST_ALPHA: return MTLBlendFactorDestinationAlpha;
-		case GL_ONE_MINUS_DST_ALPHA: return MTLBlendFactorOneMinusDestinationAlpha;
-		case GL_FUNC_ADD: return MTLBlendOperationAdd;
-		case GL_FUNC_SUBTRACT: return MTLBlendOperationSubtract;
-		case GL_FUNC_REVERSE_SUBTRACT: return MTLBlendOperationReverseSubtract;
-		case GL_MIN_EXT: return MTLBlendOperationMin;
-		case GL_MAX_EXT: return MTLBlendOperationMax;
-		default:
-			NSCAssert(NO, @"Bad enumeration detected in a CCBlendMode. 0x%X", glenum.unsignedIntValue);
-			return 0;
-	}
-}
-
--(void)prepare
-{
-	if(_renderPipelineState == nil){
-		CCMetalContext *context = CCMetalContextCurrent();
-		
-    MTLRenderPipelineDescriptor *pipelineStateDescriptor = [[MTLRenderPipelineDescriptor alloc] init];
-    pipelineStateDescriptor.sampleCount = 1;
-		
-		pipelineStateDescriptor.vertexFunction = _shader->_vertexFunction;
-		pipelineStateDescriptor.fragmentFunction = _shader->_fragmentFunction;
-    
-		NSDictionary *blendOptions = _blendMode.options;
-    MTLRenderPipelineColorAttachmentDescriptor *colorDescriptor = [MTLRenderPipelineColorAttachmentDescriptor new];
-    colorDescriptor.pixelFormat = MTLPixelFormatBGRA8Unorm;
-		colorDescriptor.blendingEnabled = (blendOptions != CCBLEND_DISABLED_OPTIONS);
-		colorDescriptor.sourceRGBBlendFactor = GLBLEND_TO_METAL(blendOptions[CCBlendFuncSrcColor]);
-		colorDescriptor.sourceAlphaBlendFactor = GLBLEND_TO_METAL(blendOptions[CCBlendFuncSrcAlpha]);
-		colorDescriptor.destinationRGBBlendFactor = GLBLEND_TO_METAL(blendOptions[CCBlendFuncDstColor]);
-		colorDescriptor.destinationAlphaBlendFactor = GLBLEND_TO_METAL(blendOptions[CCBlendFuncDstAlpha]);
-		colorDescriptor.rgbBlendOperation = GLBLEND_TO_METAL(blendOptions[CCBlendEquationColor]);
-		colorDescriptor.alphaBlendOperation = GLBLEND_TO_METAL(blendOptions[CCBlendEquationAlpha]);
-		pipelineStateDescriptor.colorAttachments[0] = colorDescriptor;
-		
-    _renderPipelineState = [context.device newRenderPipelineStateWithDescriptor:pipelineStateDescriptor error:nil];
-	}
-}
-
--(void)transitionRenderer:(CCRenderer *)renderer FromState:(CCRenderState *)previous
-{
-	id<MTLRenderCommandEncoder> renderEncoder = CCMetalContextCurrent().currentRenderCommandEncoder;
-	[renderEncoder setRenderPipelineState:_renderPipelineState];
-	
-//	CCGraphicsBufferMetal *uniformGraphicsBuffer = nil;
-//	id<MTLBuffer> uniformMetalBuffer = uniformGraphicsBuffer->_buffer;
-//	
-//	// Set the global uniform buffers.
-//	[renderEncoder setVertexBuffer:uniformMetalBuffer offset:0 atIndex:1];
-//	[renderEncoder setFragmentBuffer:uniformMetalBuffer offset:0 atIndex:1];
-//	
-//	// Set the uniform buffers.
-//	CCGraphicsBufferPushElements(uniformGraphicsBuffer, # of bytes);
-//	[renderEncoder setVertexBuffer:uniformMetalBuffer offset:offset atIndex:2];
-//	[renderEncoder setFragmentBuffer:uniformMetalBuffer offset:offset atIndex:2];
-	
-	// Set textures and samplers.
-	CCTexture *mainTexture = _shaderUniforms[CCShaderUniformMainTexture];
-	[renderEncoder setFragmentSamplerState:mainTexture.metalSampler atIndex:0];
-	[renderEncoder setFragmentTexture:mainTexture.metalTexture atIndex:0];
-}
-
-@end
-
-
-@implementation CCRenderCommandDrawMetal
-
-static const MTLPrimitiveType MetalDrawModes[] = {
-	MTLPrimitiveTypeTriangle,
-	MTLPrimitiveTypeLine,
-};
-
--(instancetype)initWithMode:(CCRenderCommandDrawMode)mode renderState:(CCRenderState *)renderState first:(NSUInteger)first count:(size_t)count globalSortOrder:(NSInteger)globalSortOrder
-{
-	if((self = [super initWithMode:mode renderState:renderState first:first count:count globalSortOrder:globalSortOrder])){
-		[(CCRenderStateMetal *)_renderState prepare];
-	}
-	
-	return self;
-}
-
--(void)invokeOnRenderer:(CCRenderer *)renderer
-{
-	CCMetalContext *context = CCMetalContextCurrent();
-	id<MTLRenderCommandEncoder> renderEncoder = context.currentRenderCommandEncoder;
-	id<MTLBuffer> indexBuffer = ((CCGraphicsBufferMetal *)renderer->_elementBuffer)->_buffer;
-	
-	CCMTL_DEBUG_PUSH_GROUP_MARKER(renderEncoder, @"CCRendererCommandDraw: Invoke");
-	[renderer bindBuffers:YES];
-	[renderer setRenderState:_renderState];
-	[renderEncoder drawIndexedPrimitives:MetalDrawModes[_mode] indexCount:_count indexType:MTLIndexTypeUInt16 indexBuffer:indexBuffer indexBufferOffset:2*_first];
-	CCMTL_DEBUG_POP_GROUP_MARKER(renderEncoder);
-	
-	CC_INCREMENT_GL_DRAWS(1);
 }
 
 @end

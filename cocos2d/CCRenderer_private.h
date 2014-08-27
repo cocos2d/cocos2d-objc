@@ -68,11 +68,9 @@ extern NSDictionary *CCBLEND_DISABLED_OPTIONS;
 
 
 @interface CCRenderState(){
-	@private
+	@public
 	CCTexture *_mainTexture;
 	BOOL _immutable;
-	
-	@public
 	CCBlendMode *_blendMode;
 	CCShader *_shader;
 	NSDictionary *_shaderUniforms;
@@ -189,6 +187,9 @@ CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount)
 	__unsafe_unretained CCRenderState *_renderState;
 	__unsafe_unretained CCRenderCommandDraw *_lastDrawCommand;
 	BOOL _buffersBound;
+	
+	// Currently used for associating a metal context with a given renderer.
+	id _context;
 }
 
 /// Current global shader uniform values.
@@ -206,14 +207,14 @@ CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount)
 /// Render any currently queued commands.
 -(void)flush;
 
-/// Bind the renderer's VAO if it is not currently bound.
--(void)bindBuffers:(BOOL)bind;
-
 @end
 
 
 @interface CCRenderer(NoARCPrivate)
 
 -(void)setRenderState:(CCRenderState *)renderState;
+
+/// Bind the renderer's VAO if it is not currently bound.
+-(void)bindBuffers:(BOOL)bind;
 
 @end

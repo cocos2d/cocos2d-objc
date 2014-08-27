@@ -68,6 +68,8 @@
 #import "CCEffectContrast.h"
 #import "CCEffectBlur.h"
 #import "CCEffectGlass.h"
+#import "CCEffectDropShadow.h"
+#import "CCEffectOuterGlow.h"
 #import "CCEffectHue.h"
 #import "CCEffectNode.h"
 #import "CCEffectPixellate.h"

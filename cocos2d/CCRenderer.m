@@ -545,6 +545,10 @@ SortQueue(NSMutableArray *queue)
 		
 		_threadsafe = YES;
 		_queue = [NSMutableArray array];
+		
+		#warning TEMP
+		// Should probably change the init method to pass this in?
+		_context = [NSClassFromString(@"CCMetalContext") currentContext];
 	}
 	
 	return self;
@@ -577,23 +581,9 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 #define glBindVertexArray glBindVertexArrayOES
 #endif
 
--(void)bindBuffers:(BOOL)bind
-{
- 	if(bind != _buffersBound){
-		[_bufferBindings bind:bind];
-		_buffersBound = bind;
-	}
-}
-
--(void)setRenderState:(CCRenderState *)renderState
-{
-	if(renderState != _renderState){
-		[renderState transitionRenderer:self FromState:_renderState];
-		_renderState = renderState;
-	}
-}
-
 //Implemented in CCNoARC.m
+//-(void)bindBuffers:(BOOL)bind
+//-(void)setRenderState:(CCRenderState *)renderState
 //-(CCRenderBuffer)enqueueTriangles:(NSUInteger)triangleCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
 //-(CCRenderBuffer)enqueueLines:(NSUInteger)lineCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
 

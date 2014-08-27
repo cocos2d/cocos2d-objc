@@ -1,8 +1,12 @@
-#import "CCTexture.h"
+#import "CCTexture_Private.h"
 #import "CCNode_Private.h"
 #import "CCSprite_Private.h"
 #import "CCRenderer_Private.h"
 #import "CCShader_Private.h"
+
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+#import "CCMetalSupport_Private.h"
+#endif
 
 
 @implementation CCNode(NoARC)
@@ -166,20 +170,44 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 	return(CCRenderBuffer){vertexes, elements, firstVertex};
 }
 
+static inline void
+CCRendererBindBuffers(CCRenderer *self, BOOL bind)
+{
+ 	if(bind != self->_buffersBound){
+		[self->_bufferBindings bind:bind];
+		self->_buffersBound = bind;
+	}
+}
+
+-(void)bindBuffers:(BOOL)bind
+{
+	CCRendererBindBuffers(self, bind);
+}
+
+
+-(void)setRenderState:(CCRenderState *)renderState
+{
+	if(renderState != _renderState){
+		[renderState transitionRenderer:self FromState:_renderState];
+		_renderState = renderState;
+	}
+}
+
 @end
 
 @interface CCRenderStateGL : CCRenderState @end
 @implementation CCRenderStateGL
 
--(void)transitionRenderer:(CCRenderer *)renderer FromState:(CCRenderState *)previous
+static void
+CCRenderStateGLTransition(CCRenderStateGL *self, CCRenderer *renderer, CCRenderStateGL *previous)
 {
 	CCGL_DEBUG_PUSH_GROUP_MARKER("CCRenderStateGL: Transition");
 	
 	// Set the blending state.
-	if(previous ==  nil || _blendMode != previous->_blendMode){
+	if(previous ==  nil || self->_blendMode != previous->_blendMode){
 		CCGL_DEBUG_INSERT_EVENT_MARKER("Blending mode");
 		
-		NSDictionary *blendOptions = _blendMode->_options;
+		NSDictionary *blendOptions = self->_blendMode->_options;
 		if(blendOptions == CCBLEND_DISABLED_OPTIONS){
 			glDisable(GL_BLEND);
 		} else {
@@ -200,22 +228,22 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 	}
 	
 	// Bind the shader.
-	BOOL bindShader = (previous == nil || _shader != previous->_shader);
+	BOOL bindShader = (previous == nil || self->_shader != previous->_shader);
 	if(bindShader){
 		CCGL_DEBUG_INSERT_EVENT_MARKER("Shader");
 		
-		glUseProgram(_shader->_program);
+		glUseProgram(self->_shader->_program);
 	}
 	
 	// Set the shader's uniform state.
-	if(bindShader || _shaderUniforms != previous->_shaderUniforms){
+	if(bindShader || self->_shaderUniforms != previous->_shaderUniforms){
 		CCGL_DEBUG_INSERT_EVENT_MARKER("Uniforms");
 		
 		NSDictionary *globalShaderUniforms = renderer->_globalShaderUniforms;
-		NSDictionary *setters = _shader->_uniformSetters;
+		NSDictionary *setters = self->_shader->_uniformSetters;
 		for(NSString *uniformName in setters){
 			CCUniformSetter setter = setters[uniformName];
-			setter(renderer, _shaderUniforms, globalShaderUniforms);
+			setter(renderer, self->_shaderUniforms, globalShaderUniforms);
 		}
 	}
 	
@@ -223,4 +251,193 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 	CC_CHECK_GL_ERROR_DEBUG();
 }
 
+-(void)transitionRenderer:(CCRenderer *)renderer FromState:(CCRenderStateGL *)previous
+{
+	CCRenderStateGLTransition(self, renderer, previous);
+}
+
 @end
+
+@interface CCRenderCommandDrawGL : CCRenderCommandDraw @end
+@implementation CCRenderCommandDrawGL
+
+static const CCRenderCommandDrawMode GLDrawModes[] = {
+	GL_TRIANGLES,
+	GL_LINES,
+};
+
+-(void)invokeOnRenderer:(CCRenderer *)renderer
+{
+	CCGL_DEBUG_PUSH_GROUP_MARKER("CCRendererCommandDraw: Invoke");
+	
+	CCRendererBindBuffers(renderer, YES);
+	CCRenderStateGLTransition((CCRenderStateGL *)_renderState, renderer, (CCRenderStateGL *)renderer->_renderState);
+	renderer->_renderState = _renderState;
+	
+	glDrawElements(GLDrawModes[_mode], (GLsizei)_count, GL_UNSIGNED_SHORT, (GLvoid *)(_first*sizeof(GLushort)));
+	CC_INCREMENT_GL_DRAWS(1);
+	
+	CCGL_DEBUG_POP_GROUP_MARKER();
+}
+
+@end
+
+
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+
+// This is effectively hardcoded to 10 by Apple's docs and there is no API to query capabilities...
+// Seems like an oversight, but whatever.
+#define CCMTL_MAX_TEXTURES 10
+
+
+@interface CCRenderStateMetal : CCRenderState @end
+@implementation CCRenderStateMetal {
+	id<MTLRenderPipelineState> _renderPipelineState;
+	
+	NSRange _textureRange;
+	id<MTLSamplerState> _samplers[CCMTL_MAX_TEXTURES];
+	id<MTLTexture> _textures[CCMTL_MAX_TEXTURES];
+	
+	@public
+	BOOL _uniformsPrepared;
+}
+
+// Using GL enums for CCBlendMode types should never have happened. Oops.
+static NSUInteger
+GLBLEND_TO_METAL(NSNumber *glenum)
+{
+	switch(glenum.unsignedIntValue){
+		case GL_ZERO: return MTLBlendFactorZero;
+		case GL_ONE: return MTLBlendFactorOne;
+		case GL_SRC_COLOR: return MTLBlendFactorSourceColor;
+		case GL_ONE_MINUS_SRC_COLOR: return MTLBlendFactorOneMinusSourceColor;
+		case GL_SRC_ALPHA: return MTLBlendFactorSourceAlpha;
+		case GL_ONE_MINUS_SRC_ALPHA: return MTLBlendFactorOneMinusSourceAlpha;
+		case GL_DST_COLOR: return MTLBlendFactorDestinationColor;
+		case GL_ONE_MINUS_DST_COLOR: return MTLBlendFactorOneMinusDestinationColor;
+		case GL_DST_ALPHA: return MTLBlendFactorDestinationAlpha;
+		case GL_ONE_MINUS_DST_ALPHA: return MTLBlendFactorOneMinusDestinationAlpha;
+		case GL_FUNC_ADD: return MTLBlendOperationAdd;
+		case GL_FUNC_SUBTRACT: return MTLBlendOperationSubtract;
+		case GL_FUNC_REVERSE_SUBTRACT: return MTLBlendOperationReverseSubtract;
+		case GL_MIN_EXT: return MTLBlendOperationMin;
+		case GL_MAX_EXT: return MTLBlendOperationMax;
+		default:
+			NSCAssert(NO, @"Bad enumeration detected in a CCBlendMode. 0x%X", glenum.unsignedIntValue);
+			return 0;
+	}
+}
+
+static void
+CCRenderStateMetalPrepare(CCRenderStateMetal *self)
+{
+	if(self->_renderPipelineState == nil){
+		#warning Should get this from the renderer somehow.
+		CCMetalContext *context = [CCMetalContext currentContext];
+		
+		MTLRenderPipelineDescriptor *pipelineStateDescriptor = [[MTLRenderPipelineDescriptor alloc] init];
+		pipelineStateDescriptor.sampleCount = 1;
+		
+		pipelineStateDescriptor.vertexFunction = self->_shader->_vertexFunction;
+		pipelineStateDescriptor.fragmentFunction = self->_shader->_fragmentFunction;
+		
+		NSDictionary *blendOptions = self->_blendMode.options;
+		MTLRenderPipelineColorAttachmentDescriptor *colorDescriptor = [MTLRenderPipelineColorAttachmentDescriptor new];
+		colorDescriptor.pixelFormat = MTLPixelFormatBGRA8Unorm;
+		colorDescriptor.blendingEnabled = (blendOptions != CCBLEND_DISABLED_OPTIONS);
+		colorDescriptor.sourceRGBBlendFactor = GLBLEND_TO_METAL(blendOptions[CCBlendFuncSrcColor]);
+		colorDescriptor.sourceAlphaBlendFactor = GLBLEND_TO_METAL(blendOptions[CCBlendFuncSrcAlpha]);
+		colorDescriptor.destinationRGBBlendFactor = GLBLEND_TO_METAL(blendOptions[CCBlendFuncDstColor]);
+		colorDescriptor.destinationAlphaBlendFactor = GLBLEND_TO_METAL(blendOptions[CCBlendFuncDstAlpha]);
+		colorDescriptor.rgbBlendOperation = GLBLEND_TO_METAL(blendOptions[CCBlendEquationColor]);
+		colorDescriptor.alphaBlendOperation = GLBLEND_TO_METAL(blendOptions[CCBlendEquationAlpha]);
+		pipelineStateDescriptor.colorAttachments[0] = colorDescriptor;
+		
+		self->_renderPipelineState = [[context.device newRenderPipelineStateWithDescriptor:pipelineStateDescriptor error:nil] retain];
+	}
+	
+	if(!self->_uniformsPrepared){
+		CCTexture *mainTexture = self->_shaderUniforms[CCShaderUniformMainTexture];
+		
+		self->_textureRange = NSMakeRange(0, 1);
+		self->_samplers[0] = mainTexture.metalSampler;
+		self->_textures[0] = mainTexture.metalTexture;
+		
+		self->_uniformsPrepared = YES;
+	}
+}
+
+static void
+CCRenderStateMetalTransition(CCRenderStateMetal *self, CCRenderer *renderer, CCRenderStateMetal *previous)
+{
+	CCMetalContext *context = renderer->_context;
+	id<MTLRenderCommandEncoder> renderEncoder = context->_currentRenderCommandEncoder;
+	[renderEncoder setRenderPipelineState:self->_renderPipelineState];
+	
+//	CCGraphicsBufferMetal *uniformGraphicsBuffer = nil;
+//	id<MTLBuffer> uniformMetalBuffer = uniformGraphicsBuffer->_buffer;
+//	
+//	// Set the global uniform buffers.
+//	[renderEncoder setVertexBuffer:uniformMetalBuffer offset:0 atIndex:1];
+//	[renderEncoder setFragmentBuffer:uniformMetalBuffer offset:0 atIndex:1];
+//	
+//	// Set the uniform buffers.
+//	CCGraphicsBufferPushElements(uniformGraphicsBuffer, # of bytes);
+//	[renderEncoder setVertexBuffer:uniformMetalBuffer offset:offset atIndex:2];
+//	[renderEncoder setFragmentBuffer:uniformMetalBuffer offset:offset atIndex:2];
+	
+	NSRange range = self->_textureRange;
+	[renderEncoder setFragmentSamplerStates:self->_samplers withRange:range];
+	[renderEncoder setFragmentTextures:self->_textures withRange:range];
+}
+
+-(void)transitionRenderer:(CCRenderer *)renderer FromState:(CCRenderState *)previous
+{
+	CCRenderStateMetalTransition((CCRenderStateMetal *)self, renderer, (CCRenderStateMetal *)previous);
+}
+
+@end
+
+@implementation CCRenderCommandDrawMetal
+
+static const MTLPrimitiveType MetalDrawModes[] = {
+	MTLPrimitiveTypeTriangle,
+	MTLPrimitiveTypeLine,
+};
+
+-(instancetype)initWithMode:(CCRenderCommandDrawMode)mode renderState:(CCRenderState *)renderState first:(NSUInteger)first count:(size_t)count globalSortOrder:(NSInteger)globalSortOrder
+{
+	if((self = [super initWithMode:mode renderState:renderState first:first count:count globalSortOrder:globalSortOrder])){
+		CCRenderStateMetalPrepare((CCRenderStateMetal *)renderState);
+	}
+	
+	return self;
+}
+
+-(void)invokeOnRenderer:(CCRenderer *)renderer
+{
+	CCMetalContext *context = renderer->_context;
+	id<MTLRenderCommandEncoder> renderEncoder = context->_currentRenderCommandEncoder;
+	id<MTLBuffer> indexBuffer = ((CCGraphicsBufferMetal *)renderer->_elementBuffer)->_buffer;
+	
+	CCMTL_DEBUG_PUSH_GROUP_MARKER(renderEncoder, @"CCRendererCommandDraw: Invoke");
+	CCRendererBindBuffers(renderer, YES);
+	CCRenderStateMetalTransition((CCRenderStateMetal *)_renderState, renderer, (CCRenderStateMetal *)renderer->_renderState);
+	renderer->_renderState = _renderState;
+	
+	[renderEncoder drawIndexedPrimitives:MetalDrawModes[_mode] indexCount:_count indexType:MTLIndexTypeUInt16 indexBuffer:indexBuffer indexBufferOffset:2*_first];
+	CCMTL_DEBUG_POP_GROUP_MARKER(renderEncoder);
+	
+	if(!_renderState->_immutable){
+		// This is sort of a weird place to put this, but couldn't find somewhere better.
+		// Mutable render states need to have their uniforms redone at least once per frame.
+		// Putting it here ensures that it's been after all render commands for the frame have prepared it.
+		((CCRenderStateMetal *)_renderState)->_uniformsPrepared = NO;
+	}
+	
+	CC_INCREMENT_GL_DRAWS(1);
+}
+
+@end
+
+#endif
