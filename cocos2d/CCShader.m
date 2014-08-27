@@ -36,6 +36,7 @@
 #import "CCCache.h"
 #import "CCGL.h"
 #import "CCRenderDispatch.h"
+#import "CCMetalSupport_Private.h"
 
 
 const NSString *CCShaderUniformProjection = @"cc_Projection";
@@ -166,6 +167,7 @@ CompileShader(GLenum type, const char *source)
 
 -(id)createSharedDataForKey:(id<NSCopying>)key
 {
+#warning TODO Need Metal path here.
 	NSString *shaderName = (NSString *)key;
 	
 	NSString *fragmentName = [shaderName stringByAppendingPathExtension:@"fsh"];
@@ -352,12 +354,27 @@ UniformSettersForProgram(GLuint program)
 
 //MARK: Init Methods:
 
--(instancetype)initWithProgram:(GLuint)program uniformSetters:(NSDictionary *)uniformSetters ownsProgram:(BOOL)ownsProgram
+-(instancetype)initWithGLProgram:(GLuint)program uniformSetters:(NSDictionary *)uniformSetters ownsProgram:(BOOL)ownsProgram
 {
+	NSAssert([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIGL, @"GL graphics not configured.");
+	
 	if((self = [super init])){
 		_program = program;
 		_uniformSetters = uniformSetters;
 		_ownsProgram = ownsProgram;
+	}
+	
+	return self;
+}
+
+-(instancetype)initWithMetalVertexFunction:(id<MTLFunction>)vertexFunction fragmentFunction:(id<MTLFunction>)fragmentFunction
+{
+	if((self = [super init])){
+		_vertexFunction = vertexFunction;
+		_fragmentFunction = fragmentFunction;
+		
+		#warning TODO setup _uniformSetters
+//		_uniformSetters = uniformSetters;
 	}
 	
 	return self;
@@ -393,7 +410,7 @@ UniformSettersForProgram(GLuint program)
 		
 		CCGL_DEBUG_POP_GROUP_MARKER();
 		
-		blockself = [blockself initWithProgram:program uniformSetters:UniformSettersForProgram(program) ownsProgram:YES];
+		blockself = [blockself initWithGLProgram:program uniformSetters:UniformSettersForProgram(program) ownsProgram:YES];
 	});
 	
 	return blockself;
@@ -418,7 +435,7 @@ UniformSettersForProgram(GLuint program)
 
 -(instancetype)copyWithZone:(NSZone *)zone
 {
-	return [[CCShader allocWithZone:zone] initWithProgram:_program uniformSetters:_uniformSetters ownsProgram:NO];
+	return [[CCShader allocWithZone:zone] initWithGLProgram:_program uniformSetters:_uniformSetters ownsProgram:NO];
 }
 
 static CCShaderCache *CC_SHADER_CACHE = nil;
@@ -432,27 +449,49 @@ static CCShader *CC_SHADER_POS_TEX_COLOR_ALPHA_TEST = nil;
 	// +initialize may be called due to loading a subclass.
 	if(self != [CCShader class]) return;
 	
-	CC_SHADER_CACHE = [[CCShaderCache alloc] init];
+	NSAssert([CCConfiguration sharedConfiguration].graphicsAPI != CCGraphicsAPIInvalid, @"Graphics API not configured.");
 	
-	// Setup the builtin shaders.
-	CC_SHADER_POS_COLOR = [[self alloc] initWithFragmentShaderSource:@"void main(){gl_FragColor = cc_FragColor;}"];
-	CC_SHADER_POS_COLOR.debugName = @"CCPositionColorShader";
-	
-	CC_SHADER_POS_TEX_COLOR = [[self alloc] initWithFragmentShaderSource:@"void main(){gl_FragColor = cc_FragColor*texture2D(cc_MainTexture, cc_FragTexCoord1);}"];
-	CC_SHADER_POS_TEX_COLOR.debugName = @"CCPositionTextureColorShader";
-	
-	CC_SHADER_POS_TEXA8_COLOR = [[self alloc] initWithFragmentShaderSource:@"void main(){gl_FragColor = cc_FragColor*texture2D(cc_MainTexture, cc_FragTexCoord1).a;}"];
-	CC_SHADER_POS_TEXA8_COLOR.debugName = @"CCPositionTextureA8ColorShader";
-	
-	CC_SHADER_POS_TEX_COLOR_ALPHA_TEST = [[self alloc] initWithFragmentShaderSource:CC_GLSL(
-		uniform float cc_AlphaTestValue;
-		void main(){
-			vec4 tex = texture2D(cc_MainTexture, cc_FragTexCoord1);
-			if(tex.a <= cc_AlphaTestValue) discard;
-			gl_FragColor = cc_FragColor*tex;
-		}
-	)];
-	CC_SHADER_POS_TEX_COLOR_ALPHA_TEST.debugName = @"CCPositionTextureColorAlphaTestShader";
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+		id<MTLLibrary> library = [CCMetalContext currentContext].library;
+		id<MTLFunction> vertex = [library newFunctionWithName:@"CCVertexFunctionDefault"];
+		
+		CC_SHADER_POS_COLOR = [[self alloc] initWithMetalVertexFunction:vertex fragmentFunction:[library newFunctionWithName:@"CCFragmentFunctionDefaultColor"]];
+		CC_SHADER_POS_COLOR.debugName = @"CCPositionColorShader";
+		
+		CC_SHADER_POS_TEX_COLOR = [[self alloc] initWithMetalVertexFunction:vertex fragmentFunction:[library newFunctionWithName:@"CCFragmentFunctionDefaultTextureColor"]];
+		CC_SHADER_POS_TEX_COLOR.debugName = @"CCPositionTextureColorShader";
+		
+		CC_SHADER_POS_TEXA8_COLOR = [[self alloc] initWithMetalVertexFunction:vertex fragmentFunction:[library newFunctionWithName:@"CCFragmentFunctionDefaultTextureA8Color"]];
+		CC_SHADER_POS_TEXA8_COLOR.debugName = @"CCPositionTextureA8ColorShader";
+		
+		CC_SHADER_POS_TEX_COLOR_ALPHA_TEST = [[self alloc] initWithMetalVertexFunction:vertex fragmentFunction:[library newFunctionWithName:@"CCFragmentFunctionUnsupported"]];
+		CC_SHADER_POS_TEX_COLOR_ALPHA_TEST.debugName = @"CCPositionTextureColorAlphaTestShader";
+	} else
+#endif
+	{
+		CC_SHADER_CACHE = [[CCShaderCache alloc] init];
+		
+		// Setup the builtin shaders.
+		CC_SHADER_POS_COLOR = [[self alloc] initWithFragmentShaderSource:@"void main(){gl_FragColor = cc_FragColor;}"];
+		CC_SHADER_POS_COLOR.debugName = @"CCPositionColorShader";
+		
+		CC_SHADER_POS_TEX_COLOR = [[self alloc] initWithFragmentShaderSource:@"void main(){gl_FragColor = cc_FragColor*texture2D(cc_MainTexture, cc_FragTexCoord1);}"];
+		CC_SHADER_POS_TEX_COLOR.debugName = @"CCPositionTextureColorShader";
+		
+		CC_SHADER_POS_TEXA8_COLOR = [[self alloc] initWithFragmentShaderSource:@"void main(){gl_FragColor = cc_FragColor*texture2D(cc_MainTexture, cc_FragTexCoord1).a;}"];
+		CC_SHADER_POS_TEXA8_COLOR.debugName = @"CCPositionTextureA8ColorShader";
+		
+		CC_SHADER_POS_TEX_COLOR_ALPHA_TEST = [[self alloc] initWithFragmentShaderSource:CC_GLSL(
+			uniform float cc_AlphaTestValue;
+			void main(){
+				vec4 tex = texture2D(cc_MainTexture, cc_FragTexCoord1);
+				if(tex.a <= cc_AlphaTestValue) discard;
+				gl_FragColor = cc_FragColor*tex;
+			}
+		)];
+		CC_SHADER_POS_TEX_COLOR_ALPHA_TEST.debugName = @"CCPositionTextureColorAlphaTestShader";
+	}
 }
 
 +(instancetype)positionColorShader

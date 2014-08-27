@@ -127,8 +127,8 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 	NSUInteger firstElement = _elementBuffer->_count;
 	
 	NSUInteger elementCount = 3*triangleCount;
-	CCVertex *vertexes = CCGraphicsBufferPushElements(_vertexBuffer, vertexCount, self);
-	uint16_t *elements = CCGraphicsBufferPushElements(_elementBuffer, elementCount, self);
+	CCVertex *vertexes = CCGraphicsBufferPushElements(_vertexBuffer, vertexCount);
+	uint16_t *elements = CCGraphicsBufferPushElements(_elementBuffer, elementCount);
 	
 	CCRenderCommandDraw *previous = _lastDrawCommand;
 	if(previous && previous->_renderState == renderState && previous->_globalSortOrder == globalSortOrder){
@@ -153,8 +153,8 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 	NSUInteger firstElement = _elementBuffer->_count;
 	
 	NSUInteger elementCount = 2*lineCount;
-	CCVertex *vertexes = CCGraphicsBufferPushElements(_vertexBuffer, vertexCount, self);
-	uint16_t *elements = CCGraphicsBufferPushElements(_elementBuffer, elementCount, self);
+	CCVertex *vertexes = CCGraphicsBufferPushElements(_vertexBuffer, vertexCount);
+	uint16_t *elements = CCGraphicsBufferPushElements(_elementBuffer, elementCount);
 	
 	CCRenderCommandDraw *command = [[CCRenderCommandDrawClass alloc] initWithMode:CCRenderCommandDrawLines renderState:renderState first:firstElement count:elementCount globalSortOrder:globalSortOrder];
 	[_queue addObject:command];

@@ -148,7 +148,7 @@ typedef NS_ENUM(NSUInteger, CCGraphicsBufferType){
 /// Return a pointer to an array of elements that is 'requestedCount' in size.
 /// The buffer is resized by calling [CCGraphicsBuffer resize:] if necessary.
 static inline void *
-CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount, CCRenderer *renderer)
+CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount)
 {
 	NSCAssert(requestedCount > 0, @"Requested count must be positive.");
 	

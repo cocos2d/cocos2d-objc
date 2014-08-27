@@ -3,12 +3,14 @@
 
 using namespace metal;
 
+// Default vertex attributes.
 typedef struct CCVertex {
 	float4 position;
 	float2 texCoord1, texCoord2;
 	float4 color;
 } CCVertex;
 
+// Default fragment varyings.
 typedef struct CCFragData {
 	float4 position [[position]];
 	float2 texCoord1;
@@ -16,9 +18,24 @@ typedef struct CCFragData {
 	half4  color;
 } CCFragData;
 
+// Standard set of global uniform values.
+typedef struct CCGlobalUniforms {
+	float4x4 projection;
+	float4x4 projectionInv;
+	float2 viewSize;
+	float2 viewSizeInPixels;
+	float4 time;
+	float4 sinTime;
+	float4 cosTime;
+	float4 random01;
+} CCGlobalUniforms;
+
+// Default vertex function.
 vertex CCFragData
 CCVertexFunctionDefault(
-	device CCVertex* verts [[buffer(0)]],
+	const device CCVertex* verts [[buffer(0)]],
+	const device CCGlobalUniforms *globalUniforms [[buffer(1)]],
+	const device CCGlobalUniforms *uniforms [[buffer(2)]],
 	unsigned int vid [[vertex_id]]
 ){
 	CCFragData out;
@@ -33,14 +50,17 @@ CCVertexFunctionDefault(
 
 fragment half4
 CCFragmentFunctionDefaultColor(
-	CCFragData in [[stage_in]]
+	const CCFragData in [[stage_in]],
+	const device CCGlobalUniforms *globals [[buffer(0)]]
 ){
 	return in.color;
 }
 
 fragment half4
 CCFragmentFunctionDefaultTextureColor(
-	CCFragData in [[stage_in]],
+	const CCFragData in [[stage_in]],
+	const device CCGlobalUniforms *globalUniforms [[buffer(1)]],
+	const device CCGlobalUniforms *uniforms [[buffer(2)]],
 	texture2d<half> mainTexture [[texture(0)]],
 	sampler mainTextureSampler [[sampler(0)]]
 ){
@@ -49,7 +69,9 @@ CCFragmentFunctionDefaultTextureColor(
 
 fragment half4
 CCFragmentFunctionDefaultTextureA8Color(
-	CCFragData in [[stage_in]],
+	const CCFragData in [[stage_in]],
+	const device CCGlobalUniforms *globalUniforms [[buffer(1)]],
+	const device CCGlobalUniforms *uniforms [[buffer(2)]],
 	texture2d<half> mainTexture [[texture(0)]],
 	sampler mainTextureSampler [[sampler(0)]]
 ){
@@ -57,8 +79,10 @@ CCFragmentFunctionDefaultTextureA8Color(
 }
 
 fragment half4
-TempUnsupported(
-	CCFragData in [[stage_in]],
+CCFragmentFunctionUnsupported(
+	const CCFragData in [[stage_in]],
+	const device CCGlobalUniforms *globalUniforms [[buffer(1)]],
+	const device CCGlobalUniforms *uniforms [[buffer(2)]],
 	texture2d<half> mainTexture [[texture(0)]],
 	sampler mainTextureSampler [[sampler(0)]]
 ){

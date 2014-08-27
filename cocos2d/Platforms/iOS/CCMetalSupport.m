@@ -213,18 +213,8 @@ GLBLEND_TO_METAL(NSNumber *glenum)
     MTLRenderPipelineDescriptor *pipelineStateDescriptor = [[MTLRenderPipelineDescriptor alloc] init];
     pipelineStateDescriptor.sampleCount = 1;
 		
-		id<MTLLibrary> library = context.library;
-		#warning TEMP Hard coded shaders.
-		pipelineStateDescriptor.vertexFunction = [library newFunctionWithName:@"CCVertexFunctionDefault"];
-		if(_shader == [CCShader positionColorShader]){
-	    pipelineStateDescriptor.fragmentFunction = [library newFunctionWithName:@"CCFragmentFunctionDefaultColor"];
-		} else if(_shader == [CCShader positionTextureColorShader]){
-	    pipelineStateDescriptor.fragmentFunction = [library newFunctionWithName:@"CCFragmentFunctionDefaultTextureColor"];
-		} else if(_shader == [CCShader positionTextureA8ColorShader]){
-	    pipelineStateDescriptor.fragmentFunction = [library newFunctionWithName:@"CCFragmentFunctionDefaultTextureA8Color"];
-		} else {
-	    pipelineStateDescriptor.fragmentFunction = [library newFunctionWithName:@"TempUnsupported"];
-		}
+		pipelineStateDescriptor.vertexFunction = _shader->_vertexFunction;
+		pipelineStateDescriptor.fragmentFunction = _shader->_fragmentFunction;
     
 		NSDictionary *blendOptions = _blendMode.options;
     MTLRenderPipelineColorAttachmentDescriptor *colorDescriptor = [MTLRenderPipelineColorAttachmentDescriptor new];
@@ -247,6 +237,19 @@ GLBLEND_TO_METAL(NSNumber *glenum)
 	id<MTLRenderCommandEncoder> renderEncoder = CCMetalContextCurrent().currentRenderCommandEncoder;
 	[renderEncoder setRenderPipelineState:_renderPipelineState];
 	
+//	CCGraphicsBufferMetal *uniformGraphicsBuffer = nil;
+//	id<MTLBuffer> uniformMetalBuffer = uniformGraphicsBuffer->_buffer;
+//	
+//	// Set the global uniform buffers.
+//	[renderEncoder setVertexBuffer:uniformMetalBuffer offset:0 atIndex:1];
+//	[renderEncoder setFragmentBuffer:uniformMetalBuffer offset:0 atIndex:1];
+//	
+//	// Set the uniform buffers.
+//	CCGraphicsBufferPushElements(uniformGraphicsBuffer, # of bytes);
+//	[renderEncoder setVertexBuffer:uniformMetalBuffer offset:offset atIndex:2];
+//	[renderEncoder setFragmentBuffer:uniformMetalBuffer offset:offset atIndex:2];
+	
+	// Set textures and samplers.
 	CCTexture *mainTexture = _shaderUniforms[CCShaderUniformMainTexture];
 	[renderEncoder setFragmentSamplerState:mainTexture.metalSampler atIndex:0];
 	[renderEncoder setFragmentTexture:mainTexture.metalTexture atIndex:0];

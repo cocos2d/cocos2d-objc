@@ -227,6 +227,8 @@ static CCTexture *CCTextureNone = nil;
 
 - (id) initWithData:(const void*)data pixelFormat:(CCTexturePixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSizeInPixels:(CGSize)sizeInPixels contentScale:(CGFloat)contentScale
 {
+	NSAssert([CCConfiguration sharedConfiguration].graphicsAPI != CCGraphicsAPIInvalid, @"Graphics API not configured.");
+	
 	if((self = [super init])) {
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 		if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){

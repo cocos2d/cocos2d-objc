@@ -52,6 +52,7 @@
 /* texture name */
 @property(nonatomic,readonly) GLuint name;
 
+// TODO This should really be split into a separate subclass somehow.
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 @property(nonatomic,readonly) id<MTLTexture> metalTexture;
 @property(nonatomic,readonly) id<MTLSamplerState> metalSampler;
