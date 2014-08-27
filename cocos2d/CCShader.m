@@ -198,10 +198,10 @@ CompileShader(GLenum type, const char *source)
 	BOOL _ownsProgram;
 }
 
-//MARK: Uniform Setters:
+//MARK: GL Uniform Setters:
 
-static CCUniformSetter
-SetFloat(NSString *name, GLint location)
+static CCGLUniformSetter
+GLUniformSetFloat(NSString *name, GLint location)
 {
 	return ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
 		NSNumber *value = shaderUniforms[name] ?: globalShaderUniforms[name] ?: @(0.0);
@@ -211,8 +211,8 @@ SetFloat(NSString *name, GLint location)
 	};
 }
 
-static CCUniformSetter
-SetVec2(NSString *name, GLint location)
+static CCGLUniformSetter
+GLUniformSetVec2(NSString *name, GLint location)
 {
 	NSString *textureName = nil;
 	bool pixelSize = [name hasSuffix:@"PixelSize"];
@@ -254,8 +254,8 @@ SetVec2(NSString *name, GLint location)
 	};
 }
 
-static CCUniformSetter
-SetVec3(NSString *name, GLint location)
+static CCGLUniformSetter
+GLUniformSetVec3(NSString *name, GLint location)
 {
 	return ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
 		NSValue *value = shaderUniforms[name] ?: globalShaderUniforms[name] ?: [NSValue valueWithGLKVector3:GLKVector3Make(0.0f, 0.0f, 0.0f)];
@@ -267,8 +267,8 @@ SetVec3(NSString *name, GLint location)
 	};
 }
 
-static CCUniformSetter
-SetVec4(NSString *name, GLint location)
+static CCGLUniformSetter
+GLUniformSetVec4(NSString *name, GLint location)
 {
 	return ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
 		NSValue *value = shaderUniforms[name] ?: globalShaderUniforms[name] ?: [NSValue valueWithGLKVector4:GLKVector4Make(0.0f, 0.0f, 0.0f, 1.0f)];
@@ -287,8 +287,8 @@ SetVec4(NSString *name, GLint location)
 	};
 }
 
-static CCUniformSetter
-SetMat4(NSString *name, GLint location)
+static CCGLUniformSetter
+GLUniformSetMat4(NSString *name, GLint location)
 {
 	return ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
 		NSValue *value = shaderUniforms[name] ?: globalShaderUniforms[name] ?: [NSValue valueWithGLKMatrix4:GLKMatrix4Identity];
@@ -301,7 +301,7 @@ SetMat4(NSString *name, GLint location)
 }
 
 static NSDictionary *
-UniformSettersForProgram(GLuint program)
+GLUniformSettersForProgram(GLuint program)
 {
 	NSMutableDictionary *uniformSetters = [NSMutableDictionary dictionary];
 	
@@ -327,11 +327,11 @@ UniformSettersForProgram(GLuint program)
 		// Setup a block that is responsible for binding that uniform variable's value.
 		switch(type){
 			default: NSCAssert(NO, @"Uniform type not supported. (yet?)");
-			case GL_FLOAT: uniformSetters[name] = SetFloat(name, location); break;
-			case GL_FLOAT_VEC2: uniformSetters[name] = SetVec2(name, location); break;
-			case GL_FLOAT_VEC3: uniformSetters[name] = SetVec3(name, location); break;
-			case GL_FLOAT_VEC4: uniformSetters[name] = SetVec4(name, location); break;
-			case GL_FLOAT_MAT4: uniformSetters[name] = SetMat4(name, location); break;
+			case GL_FLOAT: uniformSetters[name] = GLUniformSetFloat(name, location); break;
+			case GL_FLOAT_VEC2: uniformSetters[name] = GLUniformSetVec2(name, location); break;
+			case GL_FLOAT_VEC3: uniformSetters[name] = GLUniformSetVec3(name, location); break;
+			case GL_FLOAT_VEC4: uniformSetters[name] = GLUniformSetVec4(name, location); break;
+			case GL_FLOAT_MAT4: uniformSetters[name] = GLUniformSetMat4(name, location); break;
 			case GL_SAMPLER_2D: {
 				// Sampler setters are handled a differently since the real work is binding the texture and not setting the uniform value.
 				uniformSetters[name] = ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
@@ -413,7 +413,7 @@ UniformSettersForProgram(GLuint program)
 		
 		CCGL_DEBUG_POP_GROUP_MARKER();
 		
-		blockself = [blockself initWithGLProgram:program uniformSetters:UniformSettersForProgram(program) ownsProgram:YES];
+		blockself = [blockself initWithGLProgram:program uniformSetters:GLUniformSettersForProgram(program) ownsProgram:YES];
 	});
 	
 	return blockself;

@@ -242,7 +242,7 @@ CCRenderStateGLTransition(CCRenderStateGL *self, CCRenderer *renderer, CCRenderS
 		NSDictionary *globalShaderUniforms = renderer->_globalShaderUniforms;
 		NSDictionary *setters = self->_shader->_uniformSetters;
 		for(NSString *uniformName in setters){
-			CCUniformSetter setter = setters[uniformName];
+			CCGLUniformSetter setter = setters[uniformName];
 			setter(renderer, self->_shaderUniforms, globalShaderUniforms);
 		}
 	}
