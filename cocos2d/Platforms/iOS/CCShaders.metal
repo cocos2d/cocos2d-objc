@@ -19,6 +19,7 @@ typedef struct CCFragData {
 } CCFragData;
 
 // Standard set of global uniform values.
+// NOTE: Must match the definition in CCRenderer_Private.h!
 typedef struct CCGlobalUniforms {
 	float4x4 projection;
 	float4x4 projectionInv;

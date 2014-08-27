@@ -28,6 +28,25 @@
 #import "CCCache.h"
 #import "CCRenderDispatch.h"
 
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+
+@class CCMetalContext;
+
+// Struct used for packing the global uniforms.
+// NOTE: Must match the definition in CCShaders.metal!
+typedef struct CCGlobalUniforms {
+	GLKMatrix4 projection;
+	GLKMatrix4 projectionInv;
+	GLKVector2 viewSize;
+	GLKVector2 viewSizeInPixels;
+	GLKVector4 time;
+	GLKVector4 sinTime;
+	GLKVector4 cosTime;
+	GLKVector4 random01;
+} CCGlobalUniforms;
+
+#endif
+
 // TODO These should be made private to the module.
 extern id CCBLENDMODE_CACHE;
 extern id CCRENDERSTATE_CACHE;
@@ -112,7 +131,7 @@ typedef NS_ENUM(NSUInteger, CCRenderCommandDrawMode){
 typedef NS_ENUM(NSUInteger, CCGraphicsBufferType){
 	CCGraphicsBufferTypeVertex,
 	CCGraphicsBufferTypeIndex,
-//	CCGraphicsBufferTypeUniform?
+	CCGraphicsBufferTypeUniform,
 };
 
 
@@ -175,6 +194,7 @@ CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount)
 	@public
 	CCGraphicsBuffer *_vertexBuffer;
 	CCGraphicsBuffer *_elementBuffer;
+	CCGraphicsBuffer *_uniformBuffer; // Currently only used by the Metal renderer.
 	id<CCGraphicsBufferBindings> _bufferBindings;
 	
 	NSDictionary *_globalShaderUniforms;
@@ -187,9 +207,10 @@ CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount)
 	__unsafe_unretained CCRenderState *_renderState;
 	__unsafe_unretained CCRenderCommandDraw *_lastDrawCommand;
 	BOOL _buffersBound;
-	
-	// Currently used for associating a metal context with a given renderer.
-	id _context;
+
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+	CCMetalContext *_metalContext;
+#endif
 }
 
 /// Current global shader uniform values.

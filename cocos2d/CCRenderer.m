@@ -546,9 +546,16 @@ SortQueue(NSMutableArray *queue)
 		_threadsafe = YES;
 		_queue = [NSMutableArray array];
 		
-		#warning TEMP
-		// Should probably change the init method to pass this in?
-		_context = [NSClassFromString(@"CCMetalContext") currentContext];
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+		if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+			// TODO: This is sort of gross. Would like it to move somewhere else.
+			_metalContext = (CCMetalContext *)[NSClassFromString(@"CCMetalContext") currentContext];
+			
+			// Default to half a megabyte of initial uniform storage.
+			NSUInteger uniformCapacity = 500*1024;
+			_uniformBuffer = [[CCGraphicsBufferClass alloc] initWithCapacity:uniformCapacity elementSize:1 type:CCGraphicsBufferTypeUniform];
+		}
+#endif
 	}
 	
 	return self;
@@ -649,23 +656,54 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 {
 	CCGL_DEBUG_PUSH_GROUP_MARKER("CCRenderer: Flush");
 	
+	// Commit the geometry buffers to be used by the rendering commmands.
 	CCGL_DEBUG_INSERT_EVENT_MARKER("Buffering");
 	[_vertexBuffer commit];
 	[_elementBuffer commit];
 	CC_CHECK_GL_ERROR_DEBUG();
 	
+	// The render commands build the uniform buffers. (only used by Metal currently)
+	[_uniformBuffer prepare];
+	
+	// TODO This should probably be moved eventually, but I'm not sure where.
+	// Probably never going to support uniform buffers in GL and making CCRenderer abstract is ugh...
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+	if(_metalContext){
+		CCGlobalUniforms globalUniforms = {};
+		const NSUInteger globalUniformBytes = sizeof(globalUniforms);
+		
+		[_globalShaderUniforms[CCShaderUniformProjection] getValue:&globalUniforms.projection];
+		[_globalShaderUniforms[CCShaderUniformProjectionInv] getValue:&globalUniforms.projectionInv];
+		[_globalShaderUniforms[CCShaderUniformViewSize] getValue:&globalUniforms.viewSize];
+		[_globalShaderUniforms[CCShaderUniformViewSizeInPixels] getValue:&globalUniforms.viewSizeInPixels];
+		[_globalShaderUniforms[CCShaderUniformTime] getValue:&globalUniforms.time];
+		[_globalShaderUniforms[CCShaderUniformSinTime] getValue:&globalUniforms.sinTime];
+		[_globalShaderUniforms[CCShaderUniformCosTime] getValue:&globalUniforms.cosTime];
+		[_globalShaderUniforms[CCShaderUniformRandom01] getValue:&globalUniforms.random01];
+		
+		void *buff = CCGraphicsBufferPushElements(_uniformBuffer, globalUniformBytes);
+		memcpy(buff, &globalUniforms, globalUniformBytes);
+	}
+#endif
+	
+	// Execute the rendering commands.
 	SortQueue(_queue);
 	for(id<CCRenderCommand> command in _queue) [command invokeOnRenderer:self];
 	[self bindBuffers:NO];
 	
 	[_queue removeAllObjects];
 	
+	// Commit the uniform buffers.
+	[_uniformBuffer commit];	
+	
+	// Prepare the geometry buffers for use next time the renderer is reused.
 	[_vertexBuffer prepare];
 	[_elementBuffer prepare];
 	
 	CCGL_DEBUG_POP_GROUP_MARKER();
 	CC_CHECK_GL_ERROR_DEBUG();
 	
+	// Reset the renderer's state.
 	[self invalidateState];
 	_threadsafe = YES;
 }

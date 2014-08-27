@@ -30,6 +30,14 @@
 
 #import "CCRenderer_Private.h"
 
+// This is effectively hardcoded to 10 by Apple's docs and there is no API to query capabilities...
+// Seems like an oversight, but whatever.
+#define CCMTL_MAX_TEXTURES 10
+
+// Maximum uniform bytes that can be passed to a shader.
+// This space is preallocated by all render states.
+#define CCMTL_MAX_UNIFORM_BYTES 32*4*4
+
 
 #if DEBUG
 

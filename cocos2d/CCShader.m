@@ -368,6 +368,7 @@ UniformSettersForProgram(GLuint program)
 	return self;
 }
 
+#if __CC_METAL_SUPPORTED_AND_ENABLED
 -(instancetype)initWithMetalVertexFunction:(id<MTLFunction>)vertexFunction fragmentFunction:(id<MTLFunction>)fragmentFunction
 {
 	if((self = [super init])){
@@ -380,6 +381,7 @@ UniformSettersForProgram(GLuint program)
 	
 	return self;
 }
+#endif
 
 -(instancetype)initWithVertexShaderSource:(NSString *)vertexSource fragmentShaderSource:(NSString *)fragmentSource
 {

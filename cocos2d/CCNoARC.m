@@ -285,11 +285,6 @@ static const CCRenderCommandDrawMode GLDrawModes[] = {
 
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 
-// This is effectively hardcoded to 10 by Apple's docs and there is no API to query capabilities...
-// Seems like an oversight, but whatever.
-#define CCMTL_MAX_TEXTURES 10
-
-
 @interface CCRenderStateMetal : CCRenderState @end
 @implementation CCRenderStateMetal {
 	id<MTLRenderPipelineState> _renderPipelineState;
@@ -360,8 +355,8 @@ CCRenderStateMetalPrepare(CCRenderStateMetal *self)
 		CCTexture *mainTexture = self->_shaderUniforms[CCShaderUniformMainTexture];
 		
 		self->_textureRange = NSMakeRange(0, 1);
-		self->_samplers[0] = mainTexture.metalSampler;
-		self->_textures[0] = mainTexture.metalTexture;
+		self->_samplers[0] = [mainTexture.metalSampler retain];
+		self->_textures[0] = [mainTexture.metalTexture retain];
 		
 		self->_uniformsPrepared = YES;
 	}
@@ -370,7 +365,7 @@ CCRenderStateMetalPrepare(CCRenderStateMetal *self)
 static void
 CCRenderStateMetalTransition(CCRenderStateMetal *self, CCRenderer *renderer, CCRenderStateMetal *previous)
 {
-	CCMetalContext *context = renderer->_context;
+	CCMetalContext *context = renderer->_metalContext;
 	id<MTLRenderCommandEncoder> renderEncoder = context->_currentRenderCommandEncoder;
 	[renderEncoder setRenderPipelineState:self->_renderPipelineState];
 	
@@ -416,7 +411,7 @@ static const MTLPrimitiveType MetalDrawModes[] = {
 
 -(void)invokeOnRenderer:(CCRenderer *)renderer
 {
-	CCMetalContext *context = renderer->_context;
+	CCMetalContext *context = renderer->_metalContext;
 	id<MTLRenderCommandEncoder> renderEncoder = context->_currentRenderCommandEncoder;
 	id<MTLBuffer> indexBuffer = ((CCGraphicsBufferMetal *)renderer->_elementBuffer)->_buffer;
 	
