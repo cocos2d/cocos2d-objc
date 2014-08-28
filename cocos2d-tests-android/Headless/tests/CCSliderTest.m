@@ -1,0 +1,1 @@
+../../../cocos2d-ui-tests/tests/CCSliderTest.m

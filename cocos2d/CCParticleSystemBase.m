@@ -265,15 +265,21 @@
 				NSAssert( deflated != NULL, @"CCParticleSystem: error ungzipping textureImageData");
 				NSData *data = [[NSData alloc] initWithBytes:deflated length:deflatedLen];
 
-#ifdef __CC_PLATFORM_IOS
-				UIImage *image = [[UIImage alloc] initWithData:data];
-#elif defined(__CC_PLATFORM_MAC)
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
+                BOOL png = [[[dictionary valueForKey:@"textureFileName"] lowercaseString] hasSuffix:@".png"];
+                CGDataProviderRef imgDataProvider = CGDataProviderCreateWithCFData((__bridge CFDataRef)data);
+                CGImageRef image = (png) ? CGImageCreateWithPNGDataProvider(imgDataProvider, NULL, true, kCGRenderingIntentDefault) : CGImageCreateWithJPEGDataProvider(imgDataProvider, NULL, true, kCGRenderingIntentDefault) ;
+				
+				[self setTexture:  [ [CCTextureCache sharedTextureCache] addCGImage:image forKey:textureName]];
+
+                CGDataProviderRelease(imgDataProvider);
+                CGImageRelease(image); 
+#elif __CC_PLATFORM_MAC
 				NSBitmapImageRep *image = [[NSBitmapImageRep alloc] initWithData:data];
+				[self setTexture:  [ [CCTextureCache sharedTextureCache] addCGImage:[image CGImage] forKey:textureName]];
 #endif
 
 				free(deflated); deflated = NULL;
-
-				[self setTexture:  [ [CCTextureCache sharedTextureCache] addCGImage:[image CGImage] forKey:textureName]];
 			}
 
 			NSAssert( [self texture] != NULL, @"CCParticleSystem: error loading the texture");

@@ -1,6 +1,6 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
- *
+ * 
  * Copyright (c) 2013 Apportable Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy

@@ -243,9 +243,9 @@ static NSInteger ccbAnimationManagerID = 0;
             // Get relative position
             float x = [[value objectAtIndex:0] floatValue];
             float y = [[value objectAtIndex:1] floatValue];
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
             [node setValue:[NSValue valueWithCGPoint:ccp(x,y)] forKey:name];
-#elif defined (__CC_PLATFORM_MAC)
+#elif __CC_PLATFORM_MAC
             [node setValue:[NSValue valueWithPoint:ccp(x,y)] forKey:name];
 #endif
         } else if ([name isEqualToString:@"scale"]) {
@@ -469,6 +469,11 @@ static NSInteger ccbAnimationManagerID = 0;
     _paused = YES;
     [self clearAllActions];
 	
+	// Set the running scene
+    _runningSequence      = [self sequenceFromSequenceId:seqId];
+    _runningSequence.time = 0.0f;
+	_runningSequence.tween = tweenDuration;
+	
 	[self addSequenceCallBacks:seqId tweenDuration:tweenDuration startTime:0];
     
     // Contains all Sequence Propertys / Keyframe
@@ -510,24 +515,11 @@ static NSInteger ccbAnimationManagerID = 0;
                     }
                 }
             }
-            
-            // Reset nodes that have sequence node properties, build first keyframe action sequence.
-            for (NSString* propName in seqNodeProps) {
-                CCBSequenceProperty* seqProp = [seqNodeProps objectForKey:propName];
-                [seqNodePropNames addObject:propName];
-                
-                // Reset Node State to First KeyFrame
-                [self setKeyFrameForNode:node sequenceProperty:seqProp tweenDuration:tweenDuration keyFrame:0];
-                
-            }
+        
         }
         
         
     }
-    
-    // Set the running scene
-    _runningSequence      = [self sequenceFromSequenceId:seqId];
-    _runningSequence.time = 0.0f;
     
     _paused = NO;
 }

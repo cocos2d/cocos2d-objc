@@ -28,6 +28,41 @@
 
 #import "Platforms/CCGL.h"
 
+#define CC_MINIMUM_TABLET_SCREEN_DIAGONAL 6.0
+extern Class CCGraphicsBufferClass;
+extern Class CCGraphicsBufferBindingsClass;
+extern Class CCRenderStateClass;
+extern Class CCRenderCommandDrawClass;
+
+extern NSString* const CCSetupPixelFormat;
+extern NSString* const CCSetupScreenMode;
+extern NSString* const CCSetupScreenOrientation;
+extern NSString* const CCSetupAnimationInterval;
+extern NSString* const CCSetupFixedUpdateInterval;
+extern NSString* const CCSetupShowDebugStats;
+extern NSString* const CCSetupTabletScale2X;
+
+extern NSString* const CCSetupDepthFormat;
+extern NSString* const CCSetupPreserveBackbuffer;
+extern NSString* const CCSetupMultiSampling;
+extern NSString* const CCSetupNumberOfSamples;
+
+// Landscape screen orientation. Used with CCSetupScreenOrientation.
+extern NSString* const CCScreenOrientationLandscape;
+
+// Portrait screen orientation.  Used with CCSetupScreenOrientation.
+extern NSString* const CCScreenOrientationPortrait;
+
+// Support all screen orientations.  Used with CCSetupScreenOrientation.
+extern NSString* const CCScreenOrientationAll;
+
+
+// The flexible screen mode is Cocos2d's default. It will give you an area that can vary slightly in size. In landscape mode the height will be 320 points for mobiles and 384 points for tablets. The width of the area can vary from 480 to 568 points.
+extern NSString* const CCScreenModeFlexible;
+
+// The fixed screen mode will setup the working area to be 568 x 384 points. Depending on the device, the outer edges may be cropped. The safe area, that will be displayed on all sorts of devices, is 480 x 320 points and placed in the center of the working area.
+extern NSString* const CCScreenModeFixed;
+
 /** OS version definitions. Includes both iOS and Mac OS versions
  */
 typedef NS_ENUM(NSUInteger, CCSystemVersion){
@@ -66,11 +101,19 @@ typedef NS_ENUM(NSUInteger, CCDevice) {
 	CCDeviceMacRetinaDisplay,
 };
 
+typedef NS_ENUM(NSUInteger, CCGraphicsAPI) {
+	CCGraphicsAPIInvalid = 0,
+	CCGraphicsAPIGL,
+	CCGraphicsAPIMetal,
+};
+
 /**
  CCConfiguration contains some openGL variables
   */
 @interface CCConfiguration : NSObject {
-
+	CCGraphicsAPI _graphicsAPI;
+	
+	BOOL	_configured;
 	BOOL			_openGLInitialized;
 	
 	GLint			_maxTextureSize;
@@ -81,9 +124,13 @@ typedef NS_ENUM(NSUInteger, CCDevice) {
 	BOOL			_supportsShareableVAO;
 	GLint			_maxSamplesAllowed;
 	GLint			_maxTextureUnits;
+    BOOL            _supportsPackedDepthStencil;
 
 	unsigned int	_OSVersion;
 }
+
+/** Which graphics API Cococs2D is using. */
+@property (nonatomic, readonly) CCGraphicsAPI graphicsAPI;
 
 /** OpenGL Max texture size. */
 @property (nonatomic, readonly) GLint maxTextureSize;
@@ -97,6 +144,11 @@ typedef NS_ENUM(NSUInteger, CCDevice) {
 
  */
 @property (nonatomic, readonly) BOOL supportsNPOT;
+
+/** Whether or not the GPU supports a combined depthc/stencil buffer.
+ All iOS/OSX devices support GL_DEPTH24_STENCIL8_OES
+ */
+@property (nonatomic, readonly) BOOL supportsPackedDepthStencil;
 
 /** Whether or not PVR Texture Compressed is supported */
 @property (nonatomic, readonly) BOOL supportsPVRTC;

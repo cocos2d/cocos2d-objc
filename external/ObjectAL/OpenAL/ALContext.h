@@ -27,6 +27,9 @@
 // Attribution is not required, but appreciated :)
 //
 
+
+#import "ccMacros.h"
+
 #import <Foundation/Foundation.h>
 #import <OpenAL/alc.h>
 #import "ALListener.h"
@@ -53,7 +56,7 @@
 {
 	ALCcontext* context;
 	/** All sound sources associated with this context. */
-	NSMutableArray* sources;
+	ALWeakArray* sources;
 	ALListener* listener;
 	bool suspended;
 	/** This context's attributes. */

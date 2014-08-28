@@ -6,7 +6,8 @@
 //
 
 #import "IOSVersion.h"
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#import "../ccMacros.h"
+#if __CC_PLATFORM_IOS
 #import <UIKit/UIKit.h>
 #endif
 
@@ -21,7 +22,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(IOSVersion);
 {
 	if(nil != (self = [super init]))
 	{
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if __CC_PLATFORM_IOS
 		NSString* versionStr = [[UIDevice currentDevice] systemVersion];
 		unichar ch = [versionStr characterAtIndex:0];
 		if(ch < '0' || ch > '9' || [versionStr characterAtIndex:1] != '.')

@@ -27,8 +27,13 @@
 // Attribution is not required, but appreciated :)
 //
 
+#import "ccMacros.h"
+
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
+#endif
+
 #import "SynthesizeSingleton.h"
 #import "OALSuspendHandler.h"
 
@@ -36,9 +41,13 @@
 /**
  * Handles the audio session and interrupts.
  */
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 @interface OALAudioSession : NSObject <AVAudioSessionDelegate, OALSuspendManager>
 #else
+@interface OALAudioSession : NSObject <OALSuspendManager>
+#endif
+#elif __CC_PLATFORM_ANDROID
 @interface OALAudioSession : NSObject <OALSuspendManager>
 #endif
 {
@@ -137,10 +146,15 @@
  */
 @property(nonatomic,readwrite,assign) bool handleInterruptions;
 
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 /** Delegate that will receive all audio session events (WEAK reference).
  */
 @property(nonatomic,readwrite,assign) id<AVAudioSessionDelegate> audioSessionDelegate;
+#endif
+
+#elif __CC_PLATFORM_ANDROID
+#warning audioSessionDelegate not implemented
 #endif
 
 /** If true, the audio session is active */
@@ -198,3 +212,4 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(OALAudioSession);
 - (void) forceEndInterruption;
 
 @end
+
