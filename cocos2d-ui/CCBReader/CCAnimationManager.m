@@ -171,7 +171,7 @@ static NSInteger ccbAnimationManagerID = 0;
 - (CCActionInterval*)actionFromKeyframe0:(CCBKeyframe*)kf0 andKeyframe1:(CCBKeyframe*)kf1 propertyName:(NSString*)name node:(CCNode*)node {
     float duration = kf1.time - kf0.time;
     
-    if(kf0.easingType==kCCBKeyframeEasingInstant) {
+    if(kf0 && kf0.easingType==kCCBKeyframeEasingInstant) {
         duration = 0;
     }
     
