@@ -328,6 +328,10 @@
 		D27451AB19AD430A006DA0A1 /* CCEffectDropShadow.h in Headers */ = {isa = PBXBuildFile; fileRef = D27451A819AD430A006DA0A1 /* CCEffectDropShadow.h */; };
 		D27451AC19AD430A006DA0A1 /* CCEffectDropShadow.m in Sources */ = {isa = PBXBuildFile; fileRef = D27451A919AD430A006DA0A1 /* CCEffectDropShadow.m */; };
 		D27451AD19AD430A006DA0A1 /* CCEffectDropShadow.m in Sources */ = {isa = PBXBuildFile; fileRef = D27451A919AD430A006DA0A1 /* CCEffectDropShadow.m */; };
+		D27451B719AE5517006DA0A1 /* CCEffectDistanceField.h in Headers */ = {isa = PBXBuildFile; fileRef = D27451B519AE5517006DA0A1 /* CCEffectDistanceField.h */; };
+		D27451B819AE5517006DA0A1 /* CCEffectDistanceField.m in Sources */ = {isa = PBXBuildFile; fileRef = D27451B619AE5517006DA0A1 /* CCEffectDistanceField.m */; };
+		D27451BD19AEC84C006DA0A1 /* CCEffectDistanceField.m in Sources */ = {isa = PBXBuildFile; fileRef = D27451B619AE5517006DA0A1 /* CCEffectDistanceField.m */; };
+		D27451BE19AEC84F006DA0A1 /* CCEffectDistanceField.h in Headers */ = {isa = PBXBuildFile; fileRef = D27451B519AE5517006DA0A1 /* CCEffectDistanceField.h */; };
 		D285ECF0192EA92A009F4E88 /* CCGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = D285ECEE192EA92A009F4E88 /* CCGLView.h */; };
 		D285ECF1192EA92A009F4E88 /* CCGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = D285ECEF192EA92A009F4E88 /* CCGLView.m */; };
 		D285ECF8192EF5B2009F4E88 /* CCDirectorAndroid.h in Headers */ = {isa = PBXBuildFile; fileRef = D285ECF6192EF5B2009F4E88 /* CCDirectorAndroid.h */; };
@@ -1053,6 +1057,8 @@
 		D272032118FC89A000B100FF /* CCEffectStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectStack.m; sourceTree = "<group>"; };
 		D27451A819AD430A006DA0A1 /* CCEffectDropShadow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectDropShadow.h; sourceTree = "<group>"; };
 		D27451A919AD430A006DA0A1 /* CCEffectDropShadow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectDropShadow.m; sourceTree = "<group>"; };
+		D27451B519AE5517006DA0A1 /* CCEffectDistanceField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectDistanceField.h; sourceTree = "<group>"; };
+		D27451B619AE5517006DA0A1 /* CCEffectDistanceField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectDistanceField.m; sourceTree = "<group>"; };
 		D285ECEE192EA92A009F4E88 /* CCGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCGLView.h; path = Android/CCGLView.h; sourceTree = "<group>"; };
 		D285ECEF192EA92A009F4E88 /* CCGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCGLView.m; path = Android/CCGLView.m; sourceTree = "<group>"; };
 		D285ECF6192EF5B2009F4E88 /* CCDirectorAndroid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCDirectorAndroid.h; path = Android/CCDirectorAndroid.h; sourceTree = "<group>"; };
@@ -1795,6 +1801,7 @@
 		D272031618FC897D00B100FF /* Effects */ = {
 			isa = PBXGroup;
 			children = (
+				D27451B419AE54C0006DA0A1 /* DistanceFields */,
 				D3903B081995285B003AA81A /* CCEffectBlur.h */,
 				D3903B091995285B003AA81A /* CCEffectBlur.m */,
 				D268FE151980791300ECBCD0 /* CCEffectRefraction.h */,
@@ -1830,6 +1837,15 @@
 				D27451A919AD430A006DA0A1 /* CCEffectDropShadow.m */,
 			);
 			name = Effects;
+			sourceTree = "<group>";
+		};
+		D27451B419AE54C0006DA0A1 /* DistanceFields */ = {
+			isa = PBXGroup;
+			children = (
+				D27451B519AE5517006DA0A1 /* CCEffectDistanceField.h */,
+				D27451B619AE5517006DA0A1 /* CCEffectDistanceField.m */,
+			);
+			name = DistanceFields;
 			sourceTree = "<group>";
 		};
 		D285ECED192E7E06009F4E88 /* Android */ = {
@@ -2027,6 +2043,7 @@
 				50F29F6F102053370046CA73 /* base64.h in Headers */,
 				D31C795219994197007921E1 /* CCMetalSupport_Private.h in Headers */,
 				50F2A105102094550046CA73 /* ZipUtils.h in Headers */,
+				D27451B719AE5517006DA0A1 /* CCEffectDistanceField.h in Headers */,
 				50CFAC391023660000175934 /* CCTMXXMLParser.h in Headers */,
 				50316AA610291280003ACFE7 /* CCRenderTexture.h in Headers */,
 				B7D273171822F4AA0054849B /* CCBSequenceProperty.h in Headers */,
@@ -2268,6 +2285,7 @@
 				D2FEB686194F6C9E00FC0574 /* CCBuilderReader.h in Headers */,
 				D2FEB687194F6C9E00FC0574 /* CCAppDelegate.h in Headers */,
 				D2FEB688194F6C9E00FC0574 /* CCShader.h in Headers */,
+				D27451BE19AEC84F006DA0A1 /* CCEffectDistanceField.h in Headers */,
 				D2FEB689194F6C9E00FC0574 /* CCES2Renderer.h in Headers */,
 				D268FE1E1980791400ECBCD0 /* CCEffectUtils.h in Headers */,
 				D2FEB68A194F6C9E00FC0574 /* OALAudioTrackNotifications.h in Headers */,
@@ -2582,6 +2600,7 @@
 				D2DDB0A519805E8400233D80 /* CCQuaternion.m in Sources */,
 				D36D31B718BD3CAA00E45F08 /* CCProgressNode.m in Sources */,
 				B7705FDD1831A07B0043CC67 /* OALSimpleAudio.m in Sources */,
+				D27451B819AE5517006DA0A1 /* CCEffectDistanceField.m in Sources */,
 				A0DA0BC415BCDCA200E80A92 /* CCDrawNode.m in Sources */,
 				B7705FF31831A07B0043CC67 /* ALWrapper.m in Sources */,
 				B7705FF91831A07B0043CC67 /* OALSuspendHandler.m in Sources */,
@@ -2676,6 +2695,7 @@
 				D2FEB6E0194F6C9E00FC0574 /* CCParallaxNode.m in Sources */,
 				D2FEB6E1194F6C9E00FC0574 /* CCActionManager.m in Sources */,
 				D2FEB6E2194F6C9E00FC0574 /* CCAppDelegate.m in Sources */,
+				D27451BD19AEC84C006DA0A1 /* CCEffectDistanceField.m in Sources */,
 				D2FEB6E3194F6C9E00FC0574 /* CCBReader.m in Sources */,
 				D2FEB6E5194F6C9E00FC0574 /* base64.c in Sources */,
 				D2FEB6E6194F6C9E00FC0574 /* OALAudioTrackNotifications.m in Sources */,

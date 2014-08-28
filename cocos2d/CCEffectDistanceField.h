@@ -1,5 +1,5 @@
 //
-//  CCEffectOuterGlow.h
+//  CCEffectDistanceField.h
 //  cocos2d-ios
 //
 //  Created by Oleg Osin on 8/8/14.
@@ -9,11 +9,11 @@
 #import "CCEffect.h"
 
 /**
- * CCEffectOuterGlow create a drop shadow.
+ * CCEffectDistanceField create a drop shadow.
  *
  */
 
-@interface CCEffectOuterGlow : CCEffect
+@interface CCEffectDistanceField : CCEffect
 
 /// -----------------------------------------------------------------------
 /// @name Accessing Effect Attributes
@@ -22,39 +22,47 @@
 /** Color of the shadow,
  * [CCColor blackColor] will result in an opaque black drop shadow.
  */
-@property (nonatomic) CCColor* glowColor;
+@property (nonatomic, strong) CCColor* glowColor;
+@property (nonatomic, strong) CCColor* fillColor;
+@property (nonatomic, strong) CCColor* outlineColor;
+
+@property (nonatomic) BOOL glow;
+@property (nonatomic) BOOL outline;
+@property (nonatomic) float outlineInnerWidth;
+@property (nonatomic) float outlineOuterWidth;
+@property (nonatomic) GLKVector2 glowOffset;
 
 /// -----------------------------------------------------------------------
-/// @name Initializing a CCEffectOuterGlow object
+/// @name Initializing a CCEffectDistanceField object
 /// -----------------------------------------------------------------------
 
 /**
- *  Initializes a CCEffectOuterGlow object with a (5, -5) black drop shadow offset .
+ *  Initializes a CCEffectDistanceField object with a (5, -5) black drop shadow offset .
  *
- *  @return The CCEffectOuterGlow object.
+ *  @return The CCEffectDistanceField object.
  */
 -(id)init;
 
 /**
- *  Initializes a CCEffectOuterGlow object with the supplied parameters.
+ *  Initializes a CCEffectDistanceField object with the supplied parameters.
  *
  *  @param glowColor Color of the glow, a [CCColor blackColor] will result in an opaque black drop shadow.
  *
- *  @return The CCEffectOuterGlow object.
+ *  @return The CCEffectDistanceField object.
  */
 -(id)initWithGlowColor:(CCColor*)glowColor;
 
 
 /// -----------------------------------------------------------------------
-/// @name Creating a CCEffectOuterGlow object
+/// @name Creating a CCEffectDistanceField object
 /// -----------------------------------------------------------------------
 
 /**
- *  Initializes a CCEffectOuterGlow object with the supplied parameters.
+ *  Initializes a CCEffectDistanceField object with the supplied parameters.
  *
  *  @param glowColor Color of the glow, a [CCColor blackColor] will result in an opaque black drop shadow.
  *
- *  @return The CCEffectOuterGlow object.
+ *  @return The CCEffectDistanceField object.
  */
 +(id)effectWithGlowColor:(CCColor*)glowColor;
 

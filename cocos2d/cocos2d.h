@@ -75,6 +75,7 @@
 #import "CCEffectReflection.h"
 #import "CCEffectRefraction.h"
 #import "CCEffectSaturation.h"
+#import "CCEffectDistanceField.h"
 #import "CCEffectStack.h"
 #import "CCLabelBMFont.h"
 #import "CCLabelTTF.h"

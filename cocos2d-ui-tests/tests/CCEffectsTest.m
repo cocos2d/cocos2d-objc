@@ -16,6 +16,36 @@
 	return self;
 }
 
+-(void)setupDistanceFieldEffectTest
+{
+    self.subTitle = @"Distance Field Effect Test";
+
+    //    CCNodeColor* environment = [CCNodeColor nodeWithColor:[CCColor whiteColor]];
+    CCSprite *environment = [CCSprite spriteWithImageNamed:@"Images/MountainPanorama.jpg"];
+    environment.positionType = CCPositionTypeNormalized;
+    environment.anchorPoint = ccp(0.5, 0.5);
+    environment.position = ccp(0.5f, 0.5f);
+
+    [self.contentNode addChild:environment];
+
+    CCColor *glowColor = [CCColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:1.0];
+    CCEffectDistanceField* effect = [CCEffectDistanceField effectWithGlowColor:glowColor];
+
+    CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"Images/output.png"];
+    sampleSprite.position = ccp(0.5, 0.5);
+    sampleSprite.positionType = CCPositionTypeNormalized;
+    sampleSprite.effect = effect;
+    sampleSprite.scale = 2.0f;
+    
+    CCNodeColor* node = [[CCNodeColor alloc] initWithColor:[CCColor redColor]];
+//    node.contentSizeInPoints = CGSizeMake(25, 25);
+    node.contentSize = CGSizeMake(6, 6);
+    node.position = ccp(10.0, 50.0);
+
+    [self.contentNode addChild:node];
+    [self.contentNode addChild:sampleSprite];
+}
+
 -(void)setupDropShadowEffectTest
 {
     self.subTitle = @"DropShadow Effect Test";
@@ -757,32 +787,5 @@
                                                                ]]];
 	[node addChild:sprite];
 }
-
-// Distance fields - work in progress
-
-// WIP
-//-(void)setupOuterGlowEffectTest_dist
-//{
-//    self.subTitle = @"OuterGlow Effect Test";
-//
-//    //    CCNodeColor* environment = [CCNodeColor nodeWithColor:[CCColor whiteColor]];
-//    CCSprite *environment = [CCSprite spriteWithImageNamed:@"Images/MountainPanorama.jpg"];
-//    environment.positionType = CCPositionTypeNormalized;
-//    environment.anchorPoint = ccp(0.5, 0.5);
-//    environment.position = ccp(0.5f, 0.5f);
-//
-//    [self.contentNode addChild:environment];
-//
-//    CCColor *glowColor = [CCColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:0.5];
-//    CCEffectOuterGlow* effect = [CCEffectOuterGlow effectWithGlowColor:glowColor];
-//
-//    CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"Images/output.png"];
-//    sampleSprite.position = ccp(0.5, 0.5);
-//    sampleSprite.positionType = CCPositionTypeNormalized;
-//    sampleSprite.effect = effect;
-//    sampleSprite.scale = 2.0f;
-//
-//    [self.contentNode addChild:sampleSprite];
-//}
 
 @end
