@@ -33,7 +33,7 @@
 #import "ARCSafe_MemMgmt.h"
 #import "OALNotifications.h"
 
-#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
+#if __CC_PLATFORM_IOS
 
 #import <AudioToolbox/AudioToolbox.h>
 #import "IOSVersion.h"
@@ -780,7 +780,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OALAudioSession);
 
 #endif /* __IPHONE_OS_VERSION_MAX_ALLOWED */
 
-#elif __CC_PLATFORM_ANDROID // ANDROID
+
+#elif __CC_PLATFORM_ANDROID || __CC_PLATFORM_MAC// ANDROID
 #pragma mark Android OALAudioSession
 #import "CCDirector.h"
 @implementation OALAudioSession
