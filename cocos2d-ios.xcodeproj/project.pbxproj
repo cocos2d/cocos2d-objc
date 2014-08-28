@@ -1801,7 +1801,7 @@
 		D272031618FC897D00B100FF /* Effects */ = {
 			isa = PBXGroup;
 			children = (
-				D27451B419AE54C0006DA0A1 /* DistanceFields */,
+				D27451BF19AFC44D006DA0A1 /* Experimental */,
 				D3903B081995285B003AA81A /* CCEffectBlur.h */,
 				D3903B091995285B003AA81A /* CCEffectBlur.m */,
 				D268FE151980791300ECBCD0 /* CCEffectRefraction.h */,
@@ -1839,13 +1839,13 @@
 			name = Effects;
 			sourceTree = "<group>";
 		};
-		D27451B419AE54C0006DA0A1 /* DistanceFields */ = {
+		D27451BF19AFC44D006DA0A1 /* Experimental */ = {
 			isa = PBXGroup;
 			children = (
 				D27451B519AE5517006DA0A1 /* CCEffectDistanceField.h */,
 				D27451B619AE5517006DA0A1 /* CCEffectDistanceField.m */,
 			);
-			name = DistanceFields;
+			name = Experimental;
 			sourceTree = "<group>";
 		};
 		D285ECED192E7E06009F4E88 /* Android */ = {

@@ -8,6 +8,8 @@
 
 #import "CCEffectDistanceField.h"
 
+#if CC_EFFECTS_EXPERIMENTAL
+
 #import "CCEffectDistanceField.h"
 #import "CCEffect_Private.h"
 #import "CCRenderer.h"
@@ -17,20 +19,21 @@
 
 -(id)init
 {
-    return [self initWithGlowColor:[CCColor blackColor]];
+    return [self initWithGlowColor:[CCColor blackColor] outlineColor:[CCColor blackColor]];
 }
 
--(id)initWithGlowColor:(CCColor*)glowColor
+-(id)initWithGlowColor:(CCColor*)glowColor outlineColor:(CCColor*)outlineColor
 {
     NSArray *uniforms = @[
                           [CCEffectUniform uniform:@"vec4" name:@"u_glowColor" value:[NSValue valueWithGLKVector4:glowColor.glkVector4]],
                           [CCEffectUniform uniform:@"vec4" name:@"u_fillColor" value:[NSValue valueWithGLKVector4:[CCColor blackColor].glkVector4]],
-                          [CCEffectUniform uniform:@"vec4" name:@"u_outlineColor" value:[NSValue valueWithGLKVector4:[CCColor redColor].glkVector4]],
+                          [CCEffectUniform uniform:@"vec4" name:@"u_outlineColor" value:[NSValue valueWithGLKVector4:outlineColor.glkVector4]],
                           [CCEffectUniform uniform:@"float" name:@"u_outline" value:[NSNumber numberWithFloat:1.0f]],
                           [CCEffectUniform uniform:@"float" name:@"u_glow" value:[NSNumber numberWithFloat:1.0f]],
                           [CCEffectUniform uniform:@"vec2" name:@"u_glowOffset" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0, 0.0)]],
                           [CCEffectUniform uniform:@"vec2" name:@"u_outlineOuterWidth" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.5, 1.0)]],
                           [CCEffectUniform uniform:@"vec2" name:@"u_outlineInnerWidth" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.4, 0.42)]],
+                          [CCEffectUniform uniform:@"vec2" name:@"u_glowWidth" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.3, 0.5)]],
                           ];
     
     if((self = [super initWithFragmentUniforms:uniforms vertexUniforms:nil varyings:nil]))
@@ -42,16 +45,17 @@
         _glowOffset = GLKVector2Make(0.0f, 0.0f);
         _glowColor = glowColor;
         _fillColor = [CCColor blackColor];
-        _outlineColor = [CCColor redColor];
+        _outlineColor = outlineColor;
+        _glowWidth = 0.4;
         
         self.debugName = @"CCEffectDistanceField";
     }
     return self;
 }
 
-+(id)effectWithGlowColor:(CCColor*)glowColor
++(id)effectWithGlowColor:(CCColor*)glowColor outlineColor:(CCColor*)outlineColor
 {
-    return [[self alloc] initWithGlowColor:glowColor];
+    return [[self alloc] initWithGlowColor:glowColor outlineColor:outlineColor];
 }
 
 -(void)buildFragmentFunctions
@@ -99,8 +103,8 @@
 //                                       min -= 0.2;
 //                                       max += 0.2;
                                        
-                                       min = 0.3;
-                                       max = 0.5;
+                                       min = u_glowWidth.x;
+                                       max = u_glowWidth.y;
 
                                        vec4 glowc = u_glowColor * smoothstep(min, max, glowTexel.r);
                                        
@@ -142,6 +146,10 @@
         float outerMax = 0.5;
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outlineOuterWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(outerMin, outerMax)];
         
+        float glowWidthMin = (0.5 * (1.0 - _glowWidth));
+        float glowWidthMax = 0.5;
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_glowWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(glowWidthMin, glowWidthMax)];
+        
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outline"]] = _outline ? [NSNumber numberWithFloat:1.0f] : [NSNumber numberWithFloat:0.0f];
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_glow"]] = _glow ? [NSNumber numberWithFloat:1.0f] : [NSNumber numberWithFloat:0.0f];
         
@@ -155,13 +163,19 @@
 
 -(void)setOutlineInnerWidth:(float)outlineInnerWidth
 {
-    _outlineInnerWidth = clampf(_outlineInnerWidth, 0.0f, 1.0f);
+    _outlineInnerWidth = clampf(outlineInnerWidth, 0.0f, 1.0f);
 }
 
 -(void)setOutlineOuterWidth:(float)outlineOuterWidth
 {
-    _outlineOuterWidth = clampf(_outlineOuterWidth, 0.0f, 1.0f);
+    _outlineOuterWidth = clampf(outlineOuterWidth, 0.0f, 1.0f);
 }
 
+-(void)setGlowWidth:(float)glowWidth
+{
+    _glowWidth = clampf(glowWidth, 0.0f, 1.0f);
+}
 
 @end
+
+#endif

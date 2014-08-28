@@ -8,6 +8,8 @@
 
 #import "CCEffect.h"
 
+#if CC_EFFECTS_EXPERIMENTAL
+
 /**
  * CCEffectDistanceField create a drop shadow.
  *
@@ -31,6 +33,7 @@
 @property (nonatomic) float outlineInnerWidth;
 @property (nonatomic) float outlineOuterWidth;
 @property (nonatomic) GLKVector2 glowOffset;
+@property (nonatomic) float glowWidth;
 
 /// -----------------------------------------------------------------------
 /// @name Initializing a CCEffectDistanceField object
@@ -50,7 +53,7 @@
  *
  *  @return The CCEffectDistanceField object.
  */
--(id)initWithGlowColor:(CCColor*)glowColor;
+-(id)initWithGlowColor:(CCColor*)glowColor outlineColor:(CCColor*)outlineColor;
 
 
 /// -----------------------------------------------------------------------
@@ -64,6 +67,8 @@
  *
  *  @return The CCEffectDistanceField object.
  */
-+(id)effectWithGlowColor:(CCColor*)glowColor;
++(id)effectWithGlowColor:(CCColor*)glowColor outlineColor:(CCColor*)outlineColor;
 
 @end
+
+#endif
