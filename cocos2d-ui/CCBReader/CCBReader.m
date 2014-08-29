@@ -939,8 +939,11 @@ static inline float readFloat(CCBReader *self)
 	{
 		CCEffect * effect  = [self readEffects];
 		
+		if(effect)
+		{
 		//Hmmm..... Force it to write to @"effect" property.
 		[node setValue:effect forKey:@"effect"];
+		}
 				
 	}
     else
@@ -956,6 +959,11 @@ static inline float readFloat(CCBReader *self)
 {
 
 	int numberOfEffects = readIntWithSign(self, NO);
+	
+	if(numberOfEffects == 0)
+	{
+		return nil;
+	}
 	
 	NSMutableArray * effectsStack = [NSMutableArray array];
 	
@@ -988,7 +996,7 @@ static inline float readFloat(CCBReader *self)
 		
 	}
 	
-	return [[CCEffectStack alloc] initWithEffects:effectsStack];
+	return [[CCEffectStack alloc] initWithArray:effectsStack];
 
 }
 
