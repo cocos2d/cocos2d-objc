@@ -25,11 +25,17 @@
 #import "CCTextField.h"
 #import "CCControlSubclass.h"
 #import "CCDirector_Private.h"
+#import "CCPlatformTextField.h"
+#if __CC_PLATFORM_IOS
+#import "CCPlatformTextFieldIOS.h"
+#elif __CC_PLATFORM_MAC
+#import "CCPlatformTextFieldMac.h"
+#elif __CC_PLATFORM_ANDROID
+#import "CCPlatformTextFieldAndroid.h"
+#endif
 
 @implementation CCTextField {
-#if defined(APPORTABLE)
-    BOOL _textFieldIsEditing;
-#endif
+
 }
 
 + (id) textFieldWithSpriteFrame:(CCSpriteFrame *)frame
@@ -58,91 +64,42 @@
     
     [self addChild:_background];
     
-#ifdef __CC_PLATFORM_IOS
-    
-    // Create UITextField and set it up
-    _textField = [[UITextField alloc] initWithFrame:CGRectZero];
-    _textField.delegate = self;
-    _textField.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
-    
-    // UIKit might not be running in the same scale as us.
-    _scaleMultiplier = [CCDirector sharedDirector].contentScaleFactor/[UIScreen mainScreen].scale;
-    
+#if __CC_PLATFORM_IOS
+    _platformTextField = [[CCPlatformTextFieldIOS alloc] init];
+#elif __CC_PLATFORM_ANDROID
+    _platformTextField = [[CCPlatformTextFieldAndroid alloc] init];
+#elif __CC_PLATFORM_MAC
+    _platformTextField = [[CCPlatformTextFieldMac alloc] init];
+#endif
+    _platformTextField.delegate = self;
     // Set default font size
     [self setFontSize: 17];
-    
-#elif defined(__CC_PLATFORM_MAC)
-    
-    // Create NSTextField and set it up
-    _textField = [[NSTextField alloc] initWithFrame: NSMakeRect(10, 10, 300, 40)];
-    _textField.delegate = self;
-    
-    [_textField setFont:[NSFont fontWithName:@"Helvetica" size:17]];
-    [_textField setBezeled:NO];
-    [_textField setBackgroundColor:[NSColor colorWithCalibratedRed:0 green:0 blue:0 alpha:0]];
-    [_textField setWantsLayer:YES];
-    
-		// TODO need to handle content sizing on Mac
-		_scaleMultiplier = 1.0;
-		
-#endif
+
     
     _padding = 4;
     
     return self;
 }
 
-- (void) positionTextField
-{
-#ifdef __CC_PLATFORM_IOS
-    CGPoint worldPos = [self convertToWorldSpace:CGPointZero];
-    CGPoint viewPos = [[CCDirector sharedDirector] convertToUI:worldPos];
-    viewPos.x += _padding;
-    viewPos.y += _padding;
-    
-    CGSize size = self.contentSizeInPoints;
-		size.width *= _scaleMultiplier;
-		size.height *= _scaleMultiplier;
-		
-    viewPos.y -= size.height;
-    size.width -= _padding * 2;
-    size.height -= _padding * 2;
-    
-    CGRect frame = CGRectZero;
-    frame.origin = viewPos;
-    frame.size = size;
-    
-    _textField.frame = frame;
-#elif defined(__CC_PLATFORM_MAC)
-    CGPoint worldPos = [self convertToWorldSpace:CGPointZero];
-    CGPoint viewPos = [[CCDirector sharedDirector] convertToUI:worldPos];
-    viewPos.x += _padding;
-    viewPos.y += _padding;
-    
-    CGSize size = self.contentSizeInPoints;
-    //viewPos.y -= size.height;
-    size.width -= _padding * 2;
-    size.height -= _padding * 2;
-    
-    CGRect frame = CGRectZero;
-    frame.origin = viewPos;
-    frame.size = size;
-    
-    _textField.frame = frame;
-    
+#if __CC_PLATFORM_IOS
+- (UITextField *)textField {
+    return _platformTextField.nativeTextField;
+}
+#elif __CC_PLATFORM_MAC
+- (NSTextField *)textField {
+    return _platformTextField.nativeTextField;
+}
 #endif
+
+
+- (void) setString:(NSString *)string {
+    _platformTextField.string = string;
 }
 
-- (void) addUITextView
-{
-    [[[CCDirector sharedDirector] view] addSubview:_textField];
-    [self positionTextField];
+- (NSString *)string {
+    return _platformTextField.string;
 }
 
-- (void) removeUITextView
-{
-    [_textField removeFromSuperview];
-}
 
 - (void) onEnter
 {
@@ -151,16 +108,19 @@
 
 - (void) onEnterTransitionDidFinish
 {
-    [self addUITextView];
     [super onEnterTransitionDidFinish];
-    [self registerForKeyboardNotifications];
+
+    [_platformTextField onEnterTransitionDidFinish];
+    [_platformTextField positionInControl:self padding:_padding];
+
 }
 
 - (void) onExitTransitionDidStart
 {
-    [self removeUITextView];
     [super onExitTransitionDidStart];
-    [self unregisterForKeyboardNotifications];
+
+    [_platformTextField onExitTransitionDidStart];
+
 }
 
 - (void) update:(CCTime)delta
@@ -173,9 +133,11 @@
     }
     
     // hide the UITextField if node is invisible
-    _textField.hidden = !isVisible;
+
+    _platformTextField.hidden = !isVisible;
+
     
-    if (isVisible) [self positionTextField];
+    if (isVisible)  [_platformTextField positionInControl:self padding:_padding];
 }
 
 - (void) layout
@@ -188,228 +150,24 @@
     
     self.contentSize = [self convertContentSizeFromPoints: sizeInPoints type:self.contentSizeType];
     
-#ifdef __CC_PLATFORM_IOS
-    UIFont *font = _textField.font;
-    _textField.font = [font fontWithSize:self.fontSizeInPoints*_scaleMultiplier];
-#elif defined(__CC_PLATFORM_MAC)
-    NSFont* font = _textField.font;
-    _textField.font = [NSFont fontWithName:font.fontName size:self.fontSizeInPoints];
-#endif
-    
+
+    [_platformTextField setFontSize:self.fontSizeInPoints];
     [super layout];
 }
 
 - (void) setEnabled:(BOOL)enabled {
-    _textField.enabled = enabled;
+//#if !__CC_PLATFORM_ANDROID
+//    _textField.enabled = enabled;
+//#endif
     [super setEnabled:enabled];
 }
 
-#pragma mark Text Field Delegate Methods
 
-#ifdef __CC_PLATFORM_IOS
-- (void)textFieldDidBeginEditing:(UITextField *)textField
-{
-#if defined(APPORTABLE)
-    _textFieldIsEditing = YES;
-#endif
-    
-    if (_keyboardIsShown)
-    {
-        [self focusOnTextField];
-    }
-}
 
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
-#if defined(APPORTABLE)
-    _textFieldIsEditing = NO;
-#endif
-    [self endFocusingOnTextField];
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [textField resignFirstResponder];
-    [self triggerAction];
-    
-    return YES;
-}
-
-#elif defined(__CC_PLATFORM_MAC)
-
-- (BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor
-{
-    [self triggerAction];
-    return YES;
-}
-
-#endif
-
-#pragma mark Keyboard Notifications
-
-- (void)registerForKeyboardNotifications
-{
-#ifdef __CC_PLATFORM_IOS
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWasShown:)
-                                                 name:UIKeyboardDidShowNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillBeHidden:)
-                                                 name:UIKeyboardWillHideNotification object:nil];
-#endif
-}
-
-- (void) unregisterForKeyboardNotifications
-{
-#ifdef __CC_PLATFORM_IOS
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-#endif
-}
-
-#ifdef __CC_PLATFORM_IOS
-- (void)keyboardWasShown:(NSNotification*)notification
-{
-    _keyboardIsShown = YES;
-    
-    UIView* view = [[CCDirector sharedDirector] view];
-    
-    NSDictionary* info = [notification userInfo];
-    NSValue* value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGRect frame = [value CGRectValue];
-    frame = [view.window convertRect:frame toView:view];
-    
-    CGSize kbSize = frame.size;
-    
-    _keyboardHeight = kbSize.height;
-    
-    BOOL focusOnTextField = _textField.isEditing;
-    
-#if defined(APPORTABLE)
-    focusOnTextField = _textFieldIsEditing;
-#endif
-    
-    if (focusOnTextField)
-    {
-        [self focusOnTextField];
-    }
-}
-
-- (void) keyboardWillBeHidden:(NSNotification*) notification
-{
-    _keyboardIsShown = NO;
-}
-
-#endif
-
-#pragma mark Focusing on Text Field
-
-#ifdef __CC_PLATFORM_IOS
-
-- (void) focusOnTextField
-{
-#if defined(APPORTABLE)
-    // Ensure that all textfields have actually been positioned before checkings textField.frame property,
-    // it's possible for the apportable keyboard notification to be fired before the mainloop has had a chance to kick of a scheduler update
-    CCDirector *director = [CCDirector sharedDirector];
-    [director.scheduler update:0.0];
-#endif
-    
-    CGSize windowSize = [[CCDirector sharedDirector] viewSize];
-    
-    // Find the location of the textField
-    float fieldCenterY = _textField.frame.origin.y - (_textField.frame.size.height/2);
-
-    // Upper third part of the screen
-    float upperThirdHeight = windowSize.height / 3;
-    
-    if (fieldCenterY > upperThirdHeight)
-    {
-        // Slide the main view up
-        
-        // Calculate offset
-        float dstYLocation = windowSize.height / 4;
-        float offset = -(fieldCenterY - dstYLocation);
-        
-        if (offset < -_keyboardHeight) offset = -_keyboardHeight;
-        
-#if defined(APPORTABLE)
-        // Apportable does not support changing the openglview position, so we will just change the current scenes position instead
-        CCScene *runningScene = [[CCDirector sharedDirector] runningScene];
-        CGPoint newPosition = runningScene.position;
-        newPosition.y = (offset * -1);
-        runningScene.position = newPosition;
-#else
-        // Calcualte target frame
-        UIView* view = [[CCDirector sharedDirector] view];
-        CGRect frame = view.frame;
-        frame.origin.y = offset;
-        
-        // Do animation
-        [UIView beginAnimations: @"textFieldAnim" context: nil];
-        [UIView setAnimationBeginsFromCurrentState: YES];
-        [UIView setAnimationDuration: 0.2f];
-
-        view.frame = frame;
-        [UIView commitAnimations];
-#endif
-    }
-}
-
-- (void) endFocusingOnTextField
-{
-    // Slide the main view back down
-    
-#if defined(APPORTABLE)
-    // Apportable does not support changing the openglview position, so we will just change the current scenes position instead
-    CCScene *runningScene = [[CCDirector sharedDirector] runningScene];
-    CGPoint newPosition = CGPointZero;
-    newPosition.y = 0.0f;
-    runningScene.position = newPosition;
-#else
-    UIView* view = [[CCDirector sharedDirector] view];
-    [UIView beginAnimations: @"textFieldAnim" context: nil];
-    [UIView setAnimationBeginsFromCurrentState: YES];
-    [UIView setAnimationDuration: 0.2f];
-    
-    CGRect frame = view.frame;
-    frame.origin = CGPointZero;
-    view.frame = frame;
-    
-    [UIView commitAnimations];
-#endif
-    
-}
-
-#endif
 
 #pragma mark Properties
 
-#ifdef __CC_PLATFORM_IOS
 
-- (void) setString:(NSString *)string
-{
-    _textField.text = string;
-}
-
-- (NSString*) string
-{
-    return _textField.text;
-}
-
-#elif defined(__CC_PLATFORM_MAC)
-
-- (void) setString:(NSString *)string
-{
-    _textField.stringValue = string;
-}
-
-- (NSString*) string
-{
-    return _textField.stringValue;
-}
-
-#endif
 
 - (void) setBackgroundSpriteFrame:(CCSpriteFrame*)spriteFrame
 {
@@ -437,6 +195,10 @@
     {
         return _fontSize;
     }
+}
+
+- (void) platformTextFieldDidFinishEditing:(CCPlatformTextField *) platformTextField {
+    [self triggerAction];
 }
 
 @end

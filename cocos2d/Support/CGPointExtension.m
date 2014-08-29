@@ -194,3 +194,57 @@ float ccpAngle(CGPoint a, CGPoint b)
 	if( fabs(angle) < kCGPointEpsilon ) return 0.f;
 	return angle;
 }
+
+@implementation NSValue (CCValue)
+
++ (NSValue *)valueWithCGPoint:(CGPoint)point
+{
+    return [NSValue value:&point withObjCType:@encode(CGPoint)];
+}
+
++ (NSValue *)valueWithCGRect:(CGRect)rect
+{
+    return [NSValue value:&rect withObjCType:@encode(CGRect)];
+}
+
++ (NSValue *)valueWithCGSize:(CGSize)size
+{
+    return [NSValue value:&size withObjCType:@encode(CGSize)];
+}
+
++ (NSValue *)valueWithCGAffineTransform:(CGAffineTransform)transform
+{
+    return [NSValue value:&transform withObjCType:@encode(CGAffineTransform)];
+}
+
+- (CGPoint)CGPointValue
+{
+	CGPoint pt = CGPointZero;
+    [self getValue:&pt];
+    return pt;
+}
+
+- (CGRect)CGRectValue
+{
+    CGRect r = CGRectZero;
+    [self getValue:&r];
+    return r;
+}
+
+- (CGSize)CGSizeValue
+{
+	CGSize sz = CGSizeZero;
+    [self getValue:&sz];
+    return sz;
+}
+
+- (CGAffineTransform)CGAffineTransformValue
+{
+    CGAffineTransform transform = CGAffineTransformIdentity;
+    [self getValue:&transform];
+    return transform;
+}
+
+@end
+
+

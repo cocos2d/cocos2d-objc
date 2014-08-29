@@ -27,6 +27,9 @@
 // Attribution is not required, but appreciated :)
 //
 
+
+#import "ccMacros.h"
+
 #import <Foundation/Foundation.h>
 
 /**
@@ -77,6 +80,7 @@
 
 @end
 
+@class ALWeakArray;
 
 /**
  * Provides two controls (interrupted and manuallySuspended) for suspending
@@ -99,7 +103,7 @@
 @interface OALSuspendHandler: NSObject
 {
 	/** Listeners that will receive manualSuspend and interrupt events. */
-	NSMutableArray* listeners;
+	ALWeakArray* listeners;
 	
 	/** Holder for the state of manualSuspend in listeners when this object is
 	 * manually suspended.

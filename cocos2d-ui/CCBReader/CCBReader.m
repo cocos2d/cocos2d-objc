@@ -91,11 +91,19 @@
      @"", CCFileUtilsSuffixDefault,
      nil];
     
+#if __CC_PLATFORM_ANDROID
+    sharedFileUtils.searchPath =
+    [NSArray arrayWithObjects:
+     [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Published-Android"],
+     [[NSBundle mainBundle] resourcePath],
+     nil];
+#else
     sharedFileUtils.searchPath =
     [NSArray arrayWithObjects:
      [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Published-iOS"],
      [[NSBundle mainBundle] resourcePath],
      nil];
+#endif
     
 	sharedFileUtils.enableiPhoneResourcesOniPad = YES;
     sharedFileUtils.searchMode = CCFileUtilsSearchModeDirectory;
@@ -412,9 +420,9 @@ static inline float readFloat(CCBReader *self)
 
         if (setProp)
         {
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
             [node setValue:[NSValue valueWithCGPoint:ccp(x,y)] forKey:name];
-#elif defined (__CC_PLATFORM_MAC)
+#elif __CC_PLATFORM_MAC
             [node setValue:[NSValue valueWithPoint:ccp(x,y)] forKey:name];
 #endif
             CCPositionType pType = CCPositionTypeMake(xUnit, yUnit, corner);
@@ -447,7 +455,7 @@ static inline float readFloat(CCBReader *self)
         if (setProp)
         {
             CGPoint pt = ccp(x,y);
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
             [node setValue:[NSValue valueWithCGPoint:pt] forKey:name];
 #else
             [node setValue:[NSValue valueWithPoint:NSPointFromCGPoint(pt)] forKey:name];
@@ -468,9 +476,9 @@ static inline float readFloat(CCBReader *self)
         if (setProp)
         {
             CGSize size = CGSizeMake(w, h);
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
             [node setValue:[NSValue valueWithCGSize:size] forKey:name];
-#elif defined (__CC_PLATFORM_MAC)
+#elif __CC_PLATFORM_MAC
             [node setValue:[NSValue valueWithSize:size] forKey:name];
 #endif
             
@@ -1169,8 +1177,6 @@ static inline float readFloat(CCBReader *self)
     float breakingForce = [properties[@"breakingForceEnabled"] boolValue] ? [properties[@"breakingForce"] floatValue] : INFINITY;
     float maxForce = [properties[@"maxForceEnabled"] boolValue] ? [properties[@"maxForce"] floatValue] : INFINITY;
     bool  collideBodies = [properties[@"collideBodies"] boolValue];
-    float referenceAngle = [properties[@"referenceAngle"] floatValue];
-    referenceAngle = CC_DEGREES_TO_RADIANS(referenceAngle);
     
     if([className isEqualToString:@"CCPhysicsPivotJoint"])
     {
@@ -1458,7 +1464,7 @@ static inline float readFloat(CCBReader *self)
     BOOL hasPhysicsBody = readBool(self);
     if (hasPhysicsBody)
     {
-//#ifdef __CC_PLATFORM_IOS
+//#if __CC_PLATFORM_IOS
 			// Read body shape
         int bodyShape = readIntWithSign(self, NO);
         float cornerRadius = readFloat(self);

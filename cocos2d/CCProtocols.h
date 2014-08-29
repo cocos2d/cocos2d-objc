@@ -29,6 +29,11 @@
 #import "CCColor.h"
 
 
+#if __CC_PLATFORM_IOS
+#import <UIKit/UIApplication.h>
+#endif
+
+
 @class CCTexture;
 @class CCDirector;
 @class CCBlendMode;
@@ -129,10 +134,47 @@
 @protocol CCDirectorDelegate <NSObject>
 
 @optional
+
+/** Ends the execution, releases the running scene.
+ It doesn't remove the OpenGL view from its parent. You have to do it manually.
+ */
+-(void) end;
+
+/** Pauses the running scene.
+ The running scene will be _drawed_ but all scheduled timers will be paused
+ While paused, the draw rate will be 4 FPS to reduce CPU consumption
+ */
+-(void) pause;
+
+/** Resumes the paused scene
+ The scheduled timers will be activated again.
+ The "delta time" will be 0 (as if the game wasn't paused)
+ */
+-(void) resume;
+
+/** Stops the animation. Nothing will be drawn. The main loop won't be triggered anymore.
+ If you want to pause your animation call [pause] instead.
+ */
+-(void) stopAnimation;
+
+/** The main loop is triggered again.
+ Call this function only if [stopAnimation] was called earlier
+ @warning Don't call this function to start the main loop. To run the main loop call runWithScene
+ */
+-(void) startAnimation;
+
+#pragma mark Director - Memory Helper
+
+/** Removes all the cocos2d data that was cached automatically.
+ It will purge the CCTextureCache, CCLabelBMFont cache.
+ IMPORTANT: The CCSpriteFrameCache won't be purged. If you want to purge it, you have to purge it manually.
+ */
+-(void) purgeCachedData;
+
 /** Called by CCDirector when the projection is updated, and "custom" projection is used */
 -(GLKMatrix4) updateProjection;
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 /** Returns a Boolean value indicating whether the CCDirector supports the specified orientation. Default value is YES (supports all possible orientations) */
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
 
@@ -150,7 +192,7 @@
 
 #pragma mark - CCAccelerometerDelegate
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 /** CCAccelerometerDelegate delegate */
 @class UIAcceleration;
 @class UIAccelerometer;

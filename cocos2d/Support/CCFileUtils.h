@@ -163,7 +163,7 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  */
 @property (nonatomic, readwrite, copy) NSMutableDictionary *filenameLookup;
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 /** 
  *  The iPhone RetinaDisplay suffixes to load resources.
  *  By default it is "-hd" and "" in that order.
@@ -208,7 +208,7 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  */
 -(void)setiPadContentScaleFactor:(CGFloat)scale;
 
-#elif defined(__CC_PLATFORM_MAC)
+#elif __CC_PLATFORM_MAC
 
 /** Sets the base contentScale of textures loaded on the Mac.
  Useful for when you manipulate CCDirector.contenScaleFactor.
@@ -380,7 +380,7 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  */
 -(NSString*) standarizePath:(NSString*)path;
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 
 /** 
  *  Returns whether or not a given path exists with the iPhone RetinaDisplay suffix.

@@ -42,12 +42,6 @@
 #import "CCTexture_Private.h"
 #import "CCActionManager_Private.h"
 
-
-#ifdef __CC_PLATFORM_IOS
-#import "Platforms/iOS/CCDirectorIOS.h"
-#endif
-
-
 #if CC_NODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
 #else

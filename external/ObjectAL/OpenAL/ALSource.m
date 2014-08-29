@@ -28,13 +28,14 @@
 //
 
 #import "ALSource.h"
+
 #import "ObjectALMacros.h"
 #import "ARCSafe_MemMgmt.h"
 #import "ALWrapper.h"
 #import "OpenALManager.h"
 #import "OALAudioActions.h"
 #import "OALUtilityActions.h"
-#import "NSMutableDictionary+WeakReferences.h"
+#import "ALWeakDictionary.h"
 
 
 #pragma mark -
@@ -65,7 +66,7 @@
 
 @implementation ALSource
 
-static NSMutableDictionary* g_allSourcesByID;
+static ALWeakDictionary* g_allSourcesByID;
 
 static ALvoid alSourceNotification(ALuint sid, ALuint notificationID, ALvoid* userData)
 {
@@ -80,7 +81,7 @@ static ALvoid alSourceNotification(ALuint sid, ALuint notificationID, ALvoid* us
 {
     if(g_allSourcesByID == nil)
     {
-        g_allSourcesByID = [NSMutableDictionary newMutableDictionaryUsingWeakReferencesWithCapacity:32];
+        g_allSourcesByID = [[ALWeakDictionary alloc] initWithCapacity:32];
     }
 }
 

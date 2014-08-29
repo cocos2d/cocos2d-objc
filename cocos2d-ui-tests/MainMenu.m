@@ -25,10 +25,15 @@
 #import "MainMenu.h"
 #import "TestBase.h"
 #import "CCTransition.h"
-
+#import "../cocos2d/CCMacros.h"
 #import <objc/runtime.h>
 
+#if __CC_PLATFORM_ANDROID
+#define kCCTestMenuItemHeight 88
+#else
 #define kCCTestMenuItemHeight 44
+#endif
+
 static CGPoint scrollPosition;
 
 @implementation MainMenu
@@ -53,24 +58,28 @@ static CGPoint scrollPosition;
 
 + (CCScene *) scene
 {
-	// 'scene' is an autorelease object.
-	CCScene *scene = [CCScene node];
-	
-	// 'layer' is an autorelease object.
-	MainMenu *node = [MainMenu node];
-	
-	// add layer as a child to scene
-	[scene addChild: node];
-	
-	// return the scene
-	return scene;
+    static CCScene *mainMenuScene = nil;
+    static dispatch_once_t once = 0L;
+    dispatch_once(&once, ^{
+        mainMenuScene = [CCScene node];
+        
+        // 'layer' is an autorelease object.
+        MainMenu *node = [MainMenu node];
+        
+        
+        // add layer as a child to scene
+        [mainMenuScene addChild: node];
+        
+        // return the scene
+    });
+
+	return mainMenuScene;
 }
 
 - (id) init
 {
     self = [super init];
     if (!self) return NULL;
-    
     // Make the node the same size as the parent container (i.e. the screen)
     self.contentSizeType = CCSizeTypeNormalized;
     self.contentSize = CGSizeMake(1, 1);
@@ -104,8 +113,15 @@ static CGPoint scrollPosition;
     [self addChild:tableView z:-1];
     
     [tableView setTarget:self selector:@selector(selectedRow:)];
-    
     return self;
+}
+
+- (void)loadNext
+{
+    CCScene* test = [TestBase sceneWithTestName:@"CCLabelTTFTest"];
+    CCTransition* transition = [CCTransition transitionMoveInWithDirection:CCTransitionDirectionLeft duration:0.3];
+    
+    [[CCDirector sharedDirector] replaceScene:test withTransition:transition];
 }
 
 - (void) selectedRow:(id)sender

@@ -25,6 +25,9 @@
 // Attribution is not required, but appreciated :)
 //
 
+#import "ccMacros.h"
+
+
 #import "OALAudioTrack.h"
 #import "SynthesizeSingleton.h"
 #import "OALSuspendHandler.h"
@@ -38,7 +41,7 @@
 @interface OALAudioTracks : NSObject <OALSuspendManager>
 {
 	/** All instantiated audio tracks. */
-	NSMutableArray* tracks;
+	ALWeakArray* tracks;
 	bool muted;
 	bool paused;
     
@@ -91,3 +94,5 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(OALAudioTracks);
 /** \endcond */
 
 @end
+
+

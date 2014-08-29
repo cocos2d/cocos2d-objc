@@ -68,7 +68,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 // Only compile this code on iOS. These files should NOT be included on your Mac project.
 // But in case they are included, it won't be compiled.
 #import "../../ccMacros.h"
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -78,17 +78,79 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "../../ccMacros.h"
 #import "../../CCConfiguration.h"
 #import "CCScene.h"
+#import "CCTouch.h"
+#import "CCTouchEvent.h"
 
 #import "CCDirector_Private.h"
 
 //CLASS IMPLEMENTATIONS:
 
-@interface CCGLView (Private)
-- (BOOL) setupSurfaceWithSharegroup:(EAGLSharegroup*)sharegroup;
-- (unsigned int) convertPixelFormat:(NSString*) pixelFormat;
+
+// TODO extract a common class for this?
+@interface CCGLViewFence : NSObject
+
+/// Is the fence ready to be inserted?
+@property(nonatomic, readonly) BOOL isReady;
+@property(nonatomic, readonly) BOOL isCompleted;
+
+/// List of completion handlers to be called when the fence completes.
+@property(nonatomic, readonly, strong) NSMutableArray *handlers;
+
 @end
 
-@implementation CCGLView
+
+@implementation CCGLViewFence {
+	GLsync _fence;
+	BOOL _invalidated;
+}
+
+-(instancetype)init
+{
+	if((self = [super init])){
+		_handlers = [NSMutableArray array];
+	}
+	
+	return self;
+}
+
+-(void)insertFence
+{
+	_fence = glFenceSyncAPPLE(GL_SYNC_GPU_COMMANDS_COMPLETE_APPLE, 0);
+	
+	CC_CHECK_GL_ERROR_DEBUG();
+}
+
+-(BOOL)isReady
+{
+	// If there is a GL fence assigned, then the fence is waiting on it and not ready.
+	return (_fence == NULL);
+}
+
+-(BOOL)isComplete
+{
+	if(_fence){
+		if(glClientWaitSyncAPPLE(_fence, GL_SYNC_FLUSH_COMMANDS_BIT_APPLE, 0) == GL_ALREADY_SIGNALED_APPLE){
+			glDeleteSyncAPPLE(_fence);
+			_fence = NULL;
+			
+			CC_CHECK_GL_ERROR_DEBUG();
+			return YES;
+		} else {
+			// Fence is still waiting
+			return NO;
+		}
+	} else {
+		// Fence has completed previously.
+		return YES;
+	}
+}
+
+@end
+
+@implementation CCGLView {
+    CCTouchEvent* _touchEvent;
+	NSMutableArray *_fences;
+}
 
 @synthesize surfaceSize=_size;
 @synthesize pixelFormat=_pixelformat, depthFormat=_depthFormat;
@@ -152,6 +214,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
         self.multipleTouchEnabled = YES;
 
 		CC_CHECK_GL_ERROR_DEBUG();
+        
+        _touchEvent = [[CCTouchEvent alloc] init];
 	}
 
 	return self;
@@ -202,7 +266,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 	_context = [_renderer context];
 
-	_discardFramebufferSupported = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
+    _discardFramebufferSupported = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
 
 	CC_CHECK_GL_ERROR_DEBUG();
 
@@ -217,10 +281,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void) layoutSubviews
 {
-	[_renderer resizeFromLayer:(CAEAGLLayer*)self.layer];
-
+    [_renderer resizeFromLayer:(CAEAGLLayer*)self.layer];
+    
 	_size = [_renderer backingSize];
-
+    
 	// Issue #914 #924
 	CCDirector *director = [CCDirector sharedDirector];
 	[director reshapeProjection:_size];
@@ -233,13 +297,53 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 //	}
 }
 
-- (void) swapBuffers
+// Find or make a fence that is ready to use.
+-(CCGLViewFence *)getReadyFence
 {
-	// IMPORTANT:
+	// First checkf oldest (first in the array) fence is ready again.
+	CCGLViewFence *fence = _fences.firstObject;;
+	if(fence.isReady){
+		// Remove the fence so it can be inserted at the end of the queue again.
+		[_fences removeObjectAtIndex:0];
+		return fence;
+	} else {
+		// No existing fences ready. Make a new one.
+		return [[CCGLViewFence alloc] init];
+	}
+}
+
+-(void)addFrameCompletionHandler:(dispatch_block_t)handler
+{
+	if(_fences == nil){
+		_fences = [NSMutableArray arrayWithObject:[[CCGLViewFence alloc] init]];
+	}
+	
+	CCGLViewFence *fence = _fences.lastObject;
+	if(!fence.isReady){
+		fence = [self getReadyFence];
+		[_fences addObject:fence];
+	}
+	
+	[fence.handlers addObject:handler];
+}
+
+-(void)beginFrame {}
+
+-(void)presentFrame
+{
+    // IMPORTANT:
 	// - preconditions
 	//	-> _context MUST be the OpenGL context
 	//	-> renderbuffer_ must be the the RENDER BUFFER
-
+	
+	{
+		CCGLViewFence *fence = _fences.lastObject;
+		if(fence.isReady){
+			// If the fence is ready to be added, insert a sync point for it.
+			[fence insertFence];
+		}
+	}
+	
 	if (_multiSampling)
 	{
 		/* Resolve from msaaFramebuffer to resolveFramebuffer */
@@ -248,7 +352,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER_APPLE, [_renderer defaultFrameBuffer]);
 		glResolveMultisampleFramebufferAPPLE();
 	}
-
+    
 	if( _discardFramebufferSupported)
 	{
 		if (_multiSampling)
@@ -263,37 +367,37 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 				GLenum attachments[] = {GL_COLOR_ATTACHMENT0};
 				glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 1, attachments);
 			}
-
+            
 			glBindRenderbuffer(GL_RENDERBUFFER, [_renderer colorRenderBuffer]);
-
+            
 		}
-
+        
 		// not MSAA
 		else if (_depthFormat ) {
 			GLenum attachments[] = { GL_DEPTH_ATTACHMENT};
 			glDiscardFramebufferEXT(GL_FRAMEBUFFER, 1, attachments);
 		}
 	}
-
+    
 	if(![_context presentRenderbuffer:GL_RENDERBUFFER])
 		CCLOG(@"cocos2d: Failed to swap renderbuffer in %s\n", __FUNCTION__);
-
+    
 	// We can safely re-bind the framebuffer here, since this will be the
 	// 1st instruction of the new main loop
 	if( _multiSampling )
 		glBindFramebuffer(GL_FRAMEBUFFER, [_renderer msaaFrameBuffer]);
-
+	
+	// Check the fences for completion.
+	for(CCGLViewFence *fence in _fences){
+		if(fence.isComplete){
+			for(dispatch_block_t handler in fence.handlers) handler();
+			[fence.handlers removeAllObjects];
+		} else {
+			break;
+		}
+	}
+	
 	CC_CHECK_GL_ERROR_DEBUG();
-}
-
--(void) lockOpenGLContext
-{
-	// unused on iOS
-}
-
--(void) unlockOpenGLContext
-{
-	// unused on iOS
 }
 
 - (unsigned int) convertPixelFormat:(NSString*) pixelFormat
@@ -310,46 +414,35 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	return pFormat;
 }
 
-#pragma mark CCGLView - Point conversion
-
-- (CGPoint) convertPointFromViewToSurface:(CGPoint)point
-{
-	CGRect bounds = [self bounds];
-
-	return CGPointMake((point.x - bounds.origin.x) / bounds.size.width * _size.width, (point.y - bounds.origin.y) / bounds.size.height * _size.height);
-}
-
-- (CGRect) convertRectFromViewToSurface:(CGRect)rect
-{
-	CGRect bounds = [self bounds];
-
-	return CGRectMake((rect.origin.x - bounds.origin.x) / bounds.size.width * _size.width, (rect.origin.y - bounds.origin.y) / bounds.size.height * _size.height, rect.size.width / bounds.size.width * _size.width, rect.size.height / bounds.size.height * _size.height);
-}
-
 #pragma mark CCGLView - Touch Delegate
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    // dispatch touch to responder manager
-    [[CCDirector sharedDirector].responderManager touchesBegan:touches withEvent:event];
+    _touchEvent.timestamp = event.timestamp;
+    [_touchEvent updateTouchesBegan:touches];
+    [[CCDirector sharedDirector].responderManager touchesBegan:_touchEvent.currentTouches withEvent:_touchEvent];
+    
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    // dispatch touch to responder manager
-    [[CCDirector sharedDirector].responderManager touchesMoved:touches withEvent:event];
+    _touchEvent.timestamp = event.timestamp;
+    [_touchEvent updateTouchesMoved:touches];
+    [[CCDirector sharedDirector].responderManager touchesMoved:_touchEvent.currentTouches withEvent:_touchEvent];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    // dispatch touch to responder manager
-    [[CCDirector sharedDirector].responderManager touchesEnded:touches withEvent:event];
+    _touchEvent.timestamp = event.timestamp;
+    [_touchEvent updateTouchesEnded:touches];
+    [[CCDirector sharedDirector].responderManager touchesEnded:_touchEvent.currentTouches withEvent:_touchEvent];
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    // dispatch touch to responder manager
-    [[CCDirector sharedDirector].responderManager touchesCancelled:touches withEvent:event];
+    _touchEvent.timestamp = event.timestamp;
+    [_touchEvent updateTouchesCancelled:touches];
+    [[CCDirector sharedDirector].responderManager touchesCancelled:_touchEvent.currentTouches withEvent:_touchEvent];
 }
  
 @end

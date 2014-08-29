@@ -27,6 +27,10 @@
 // Attribution is not required, but appreciated :)
 //
 
+
+#import "ccMacros.h"
+
+
 #import <Foundation/Foundation.h>
 
 
