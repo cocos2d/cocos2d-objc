@@ -3,11 +3,15 @@
 #import "CCNodeColor.h"
 #import "CCEffectNode.h"
 
+enum DFTest { DISTANCE_FIELD, OUTLINE };
+
 @interface CCEffectsTest : TestBase @end
 @implementation CCEffectsTest {
 #if CC_EFFECTS_EXPERIMENTAL
     CCEffectDistanceField* _distanceFieldEffect;
 #endif
+    CCEffectDFOutline* _outlineEffect;
+    enum DFTest _currentEffect;
 }
 
 -(id)init
@@ -20,11 +24,68 @@
 	return self;
 }
 
+#pragma mark Distance Fields
+
+-(void)setupDFOutlineEffectTest
+{
+    _currentEffect = OUTLINE;
+    self.subTitle = @"Distance Field Outline Test";
+    
+    CCSprite *environment = [CCSprite spriteWithImageNamed:@"Images/MountainPanorama.jpg"];
+    environment.positionType = CCPositionTypeNormalized;
+    environment.anchorPoint = ccp(0.5, 0.5);
+    environment.position = ccp(0.5f, 0.5f);
+    
+    _outlineEffect = [CCEffectDFOutline effectWithOutlineColor:[CCColor redColor] fillColor:[CCColor blackColor]];
+    
+    CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"Images/output.png"];
+    sampleSprite.position = ccp(0.5, 0.5);
+    sampleSprite.positionType = CCPositionTypeNormalized;
+    sampleSprite.effect = _outlineEffect;
+    sampleSprite.scale = 2.0f;
+    
+    CCSpriteFrame* background = [CCSpriteFrame frameWithImageNamed:@"Tests/slider-background.png"];
+    CCSpriteFrame* backgroundHilite = [CCSpriteFrame frameWithImageNamed:@"Tests/slider-background-hilite.png"];
+    CCSpriteFrame* handle = [CCSpriteFrame frameWithImageNamed:@"Tests/slider-handle.png"];
+    
+    CCSlider* slider = [[CCSlider alloc] initWithBackground:background andHandleImage:handle];
+    [slider setBackgroundSpriteFrame:backgroundHilite forState:CCControlStateHighlighted];
+    slider.positionType = CCPositionTypeNormalized;
+    slider.position = ccp(0.1f, 0.5f);
+    
+    slider.preferredSizeType = CCSizeTypeMake(CCSizeUnitNormalized, CCSizeUnitUIPoints);
+    slider.preferredSize = CGSizeMake(0.5f, 10);
+    slider.rotation = 90;
+    slider.anchorPoint = ccp(0.5f, 0.5f);
+    slider.scale = 0.8;
+    
+    [slider setTarget:self selector:@selector(outlineInnerWidthChange:)];
+    
+    CCSlider* slider2 = [[CCSlider alloc] initWithBackground:background andHandleImage:handle];
+    [slider2 setBackgroundSpriteFrame:backgroundHilite forState:CCControlStateHighlighted];
+    slider2.positionType = CCPositionTypeNormalized;
+    slider2.position = ccp(0.15f, 0.5f);
+    
+    slider2.preferredSizeType = CCSizeTypeMake(CCSizeUnitNormalized, CCSizeUnitUIPoints);
+    slider2.preferredSize = CGSizeMake(0.5f, 10);
+    slider2.rotation = 90;
+    slider2.anchorPoint = ccp(0.5f, 0.5f);
+    slider2.scale = 0.8;
+    
+    [slider2 setTarget:self selector:@selector(outlineOuterWidthChange:)];
+
+    [self.contentNode addChild:environment];
+    [self.contentNode addChild:slider];
+    [self.contentNode addChild:slider2];
+    [self.contentNode addChild:sampleSprite];
+}
+
 #if CC_EFFECTS_EXPERIMENTAL
 -(void)setupDistanceFieldEffectTest
 {
+    _currentEffect = DISTANCE_FIELD;
     self.subTitle = @"Distance Field Effect Test";
-
+    
     //    CCNodeColor* environment = [CCNodeColor nodeWithColor:[CCColor whiteColor]];
     CCSprite *environment = [CCSprite spriteWithImageNamed:@"Images/MountainPanorama.jpg"];
     environment.positionType = CCPositionTypeNormalized;
@@ -105,16 +166,25 @@
     [self.contentNode addChild:slider3];
 }
 
+#endif
+
 - (void)outlineInnerWidthChange:(id)sender
 {
     CCSlider* slider = sender;
-    _distanceFieldEffect.outlineInnerWidth = slider.sliderValue;
+    if(_currentEffect == DISTANCE_FIELD)
+        _distanceFieldEffect.outlineInnerWidth = slider.sliderValue;
+    else if(_currentEffect == OUTLINE)
+        _outlineEffect.outlineInnerWidth = slider.sliderValue;
+        
 }
 
 - (void)outlineOuterWidthChange:(id)sender
 {
     CCSlider* slider = sender;
-    _distanceFieldEffect.outlineOuterWidth = slider.sliderValue;
+    if(_currentEffect == DISTANCE_FIELD)
+        _distanceFieldEffect.outlineOuterWidth = slider.sliderValue;
+    else if(_currentEffect == OUTLINE)
+        _outlineEffect.outlineOuterWidth = slider.sliderValue;
 }
 
 - (void)glowWidthChange:(id)sender
@@ -133,7 +203,7 @@
     _distanceFieldEffect.outline = !_distanceFieldEffect.outline;
 }
 
-#endif
+#pragma mark DropShadow
 
 -(void)setupDropShadowEffectTest
 {
@@ -162,6 +232,8 @@
     
     [self.contentNode addChild:effectNode];
 }
+
+#pragma mark Glass
 
 -(void)setupGlassEffectTest
 {

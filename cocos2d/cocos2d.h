@@ -101,6 +101,7 @@
 #import "CCTiledMapLayer.h"
 #import "CCTiledMapObjectGroup.h"
 #import "CCTransition.h"
+#import "CCEffectDFOutline.h"
 
 // Layouts
 #import "CCLayout.h"
