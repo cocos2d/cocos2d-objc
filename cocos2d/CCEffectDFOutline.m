@@ -33,7 +33,7 @@
     
     if((self = [super initWithFragmentUniforms:uniforms vertexUniforms:nil varyings:nil]))
     {
-        _fieldScaleFactor = 32.0f; // 32 4096/128 (input distance field size / output df size)
+        _fieldScaleFactor = fieldScale; // 32 4096/128 (input distance field size / output df size)
         self.outlineWidth = 3;
         _fillColor = fillColor;
         _outlineColor = outlineColor;
