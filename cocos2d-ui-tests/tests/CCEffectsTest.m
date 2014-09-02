@@ -20,6 +20,38 @@
 	return self;
 }
 
+-(void)setupPaddingEffectTest
+{
+    self.subTitle = @"Glass Effect Test";
+
+    CCSprite *original = [CCSprite spriteWithImageNamed:@"Images/WhiteDiamond.png"];
+    original.positionType = CCPositionTypeNormalized;
+    original.position = ccp(0.25, 0.5);
+
+    [self.contentNode addChild:original];
+
+    
+    CCSprite *blurred = [CCSprite spriteWithImageNamed:@"Images/WhiteDiamond.png"];
+    blurred.positionType = CCPositionTypeNormalized;
+    blurred.position = ccp(0.5, 0.5);
+    
+    CCEffect *blur1 = [CCEffectBlur effectWithBlurRadius:4.0f];
+    blurred.effect = blur1;
+
+    [self.contentNode addChild:blurred];
+
+    
+    CCSprite *padded = [CCSprite spriteWithImageNamed:@"Images/WhiteDiamond.png"];
+    padded.positionType = CCPositionTypeNormalized;
+    padded.position = ccp(0.75, 0.5);
+
+    CCEffect *blur2 = [CCEffectBlur effectWithBlurRadius:4.0f];
+    blur2.padding = CGSizeMake(20.0f, 20.0f);
+    padded.effect = blur2;
+    
+    [self.contentNode addChild:padded];
+}
+
 -(void)setupGlassEffectTest
 {
     self.subTitle = @"Glass Effect Test";
