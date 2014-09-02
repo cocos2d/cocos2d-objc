@@ -360,7 +360,7 @@ static NSInteger ccbAnimationManagerID = 0;
     if(numKeyframes<1) return;
     
     // Action Sequence Builder
-    NSMutableArray* actions = [NSMutableArray array];
+        NSMutableArray* actions = [NSMutableArray array];
     int endFrame            = startFrame+1;
             
     if(endFrame==numKeyframes || endFrame<0)
