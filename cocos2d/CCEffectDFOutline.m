@@ -11,14 +11,18 @@
 #import "CCRenderer.h"
 #import "CCTexture.h"
 
-@implementation CCEffectDFOutline
+@implementation CCEffectDFOutline {
+    float _outerMin;
+    float _outerMax;
+    float _fieldScaleFactor;
+}
 
 -(id)init
 {
-    return [self initWithOutlineColor:[CCColor redColor] fillColor:[CCColor blackColor]];
+    return [self initWithOutlineColor:[CCColor redColor] fillColor:[CCColor blackColor] outlineWidth:3 fieldScale:32];
 }
 
--(id)initWithOutlineColor:(CCColor*)outlineColor fillColor:(CCColor*)fillColor
+-(id)initWithOutlineColor:(CCColor*)outlineColor fillColor:(CCColor*)fillColor outlineWidth:(int)outlineWidth fieldScale:(float)fieldScale
 {
     NSArray *uniforms = @[
                           [CCEffectUniform uniform:@"vec4" name:@"u_fillColor" value:[NSValue valueWithGLKVector4:[CCColor blackColor].glkVector4]],
@@ -29,8 +33,8 @@
     
     if((self = [super initWithFragmentUniforms:uniforms vertexUniforms:nil varyings:nil]))
     {
-        _outlineInnerWidth = 0.08;
-        _outlineOuterWidth = 0.08;
+        _fieldScaleFactor = 32.0f; // 32 4096/128 (input distance field size / output df size)
+        self.outlineWidth = 3;
         _fillColor = fillColor;
         _outlineColor = outlineColor;
         
@@ -39,9 +43,9 @@
     return self;
 }
 
-+(id)effectWithOutlineColor:(CCColor*)outlineColor fillColor:(CCColor*)fillColor
++(id)effectWithOutlineColor:(CCColor*)outlineColor fillColor:(CCColor*)fillColor outlineWidth:(int)outlineWidth fieldScale:(float)fieldScale
 {
-    return [[self alloc] initWithOutlineColor:outlineColor fillColor:fillColor];
+    return [[self alloc] initWithOutlineColor:outlineColor fillColor:fillColor outlineWidth:outlineWidth fieldScale:fieldScale];
 }
 
 -(void)buildFragmentFunctions
@@ -61,15 +65,14 @@
                                    
                                    // soft edges
                                    outputColor.a *= smoothstep(min, max, distAlphaMask);
-                                   
-                                   vec4 glowTexel = texture2D(cc_MainTexture, cc_FragTexCoord1);
-//                                       min -= 0.2;
-//                                       max += 0.2;
-                                   
+                                  
                                    min = u_outlineOuterWidth.x;
                                    max = u_outlineOuterWidth.y;
-                                   min = 0.3;
-                                   max = 0.34;
+                                   if(min == 0.5 && max == 0.5)
+                                       return outputColor;
+                                   
+                                   vec4 glowTexel = texture2D(cc_MainTexture, cc_FragTexCoord1);
+                                  
                                    
                                    vec4 glowc = u_outlineColor * smoothstep(min, max, glowTexel.r);
                                    
@@ -100,38 +103,25 @@
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fillColor"]] = [NSValue valueWithGLKVector4:weakSelf.fillColor.glkVector4];
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outlineColor"]] = [NSValue valueWithGLKVector4:weakSelf.outlineColor.glkVector4];
         
-        // 0.5 == center(edge),  < 0.5 == outside, > 0.5 == inside
-        float innerMin = 0.5;
-        float innerMax = (0.5 * _outlineInnerWidth) + innerMin;
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outlineInnerWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(innerMin, innerMax)];
-        
-        float outerMin = (0.5 * (1.0 - _outlineOuterWidth));
-        float outerMax = 0.5;
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outlineOuterWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(outerMin, outerMax)];
-        
-//        float glowWidthMin = (0.5 * (1.0 - _glowWidth));
-//        float glowWidthMax = 0.5;
-//        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_glowWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(glowWidthMin, glowWidthMax)];
-//        
-//        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outline"]] = _outline ? [NSNumber numberWithFloat:1.0f] : [NSNumber numberWithFloat:0.0f];
-//        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_glow"]] = _glow ? [NSNumber numberWithFloat:1.0f] : [NSNumber numberWithFloat:0.0f];
-//        
-//        GLKVector2 offset = GLKVector2Make(weakSelf.glowOffset.x /  previousPassTexture.contentSize.width, weakSelf.glowOffset.y /  previousPassTexture.contentSize.height);
-//        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_glowOffset"]] = [NSValue valueWithGLKVector2:offset];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outlineOuterWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(_outerMin, _outerMax)];
         
     } copy]];
     
     self.renderPasses = @[pass0];
 }
 
--(void)setOutlineInnerWidth:(float)outlineInnerWidth
+-(void)setOutlineWidth:(int)outlineWidth
 {
-    _outlineInnerWidth = clampf(outlineInnerWidth, 0.0f, 1.0f);
-}
+    
+    _outlineWidth = outlineWidth;//clampf(outlineOuterWidth, 0.0f, 1.0f);
+    
+    float outlineWidthNormalized = ((float)outlineWidth)/255.0 * _fieldScaleFactor;
+    float edgeSoftness = _outlineWidth * 0.1; // randomly chosen number that looks good to me, based on a 200 pixel spread (note: this should adjustable).
+    
+    // 0.5 == center(edge),  < 0.5 == outside, > 0.5 == inside
+    _outerMin = (0.5 * (1.0 - outlineWidthNormalized));
+    _outerMax = _outerMin + _outerMin * edgeSoftness;
 
--(void)setOutlineOuterWidth:(float)outlineOuterWidth
-{
-    _outlineOuterWidth = clampf(outlineOuterWidth, 0.0f, 1.0f);
 }
 
 @end

@@ -3,15 +3,12 @@
 #import "CCNodeColor.h"
 #import "CCEffectNode.h"
 
-enum DFTest { DISTANCE_FIELD, OUTLINE };
-
 @interface CCEffectsTest : TestBase @end
 @implementation CCEffectsTest {
 #if CC_EFFECTS_EXPERIMENTAL
     CCEffectDistanceField* _distanceFieldEffect;
 #endif
     CCEffectDFOutline* _outlineEffect;
-    enum DFTest _currentEffect;
 }
 
 -(id)init
@@ -28,7 +25,6 @@ enum DFTest { DISTANCE_FIELD, OUTLINE };
 
 -(void)setupDFOutlineEffectTest
 {
-    _currentEffect = OUTLINE;
     self.subTitle = @"Distance Field Outline Test";
     
     CCSprite *environment = [CCSprite spriteWithImageNamed:@"Images/MountainPanorama.jpg"];
@@ -36,7 +32,7 @@ enum DFTest { DISTANCE_FIELD, OUTLINE };
     environment.anchorPoint = ccp(0.5, 0.5);
     environment.position = ccp(0.5f, 0.5f);
     
-    _outlineEffect = [CCEffectDFOutline effectWithOutlineColor:[CCColor redColor] fillColor:[CCColor blackColor]];
+    _outlineEffect = [CCEffectDFOutline effectWithOutlineColor:[CCColor redColor] fillColor:[CCColor blackColor] outlineWidth:3 fieldScale:32];
     
     CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"Images/output.png"];
     sampleSprite.position = ccp(0.5, 0.5);
@@ -59,31 +55,31 @@ enum DFTest { DISTANCE_FIELD, OUTLINE };
     slider.anchorPoint = ccp(0.5f, 0.5f);
     slider.scale = 0.8;
     
-    [slider setTarget:self selector:@selector(outlineInnerWidthChange:)];
+    [slider setTarget:self selector:@selector(outlineWidthChagne:)];
     
-    CCSlider* slider2 = [[CCSlider alloc] initWithBackground:background andHandleImage:handle];
-    [slider2 setBackgroundSpriteFrame:backgroundHilite forState:CCControlStateHighlighted];
-    slider2.positionType = CCPositionTypeNormalized;
-    slider2.position = ccp(0.15f, 0.5f);
-    
-    slider2.preferredSizeType = CCSizeTypeMake(CCSizeUnitNormalized, CCSizeUnitUIPoints);
-    slider2.preferredSize = CGSizeMake(0.5f, 10);
-    slider2.rotation = 90;
-    slider2.anchorPoint = ccp(0.5f, 0.5f);
-    slider2.scale = 0.8;
-    
-    [slider2 setTarget:self selector:@selector(outlineOuterWidthChange:)];
-
     [self.contentNode addChild:environment];
     [self.contentNode addChild:slider];
-    [self.contentNode addChild:slider2];
     [self.contentNode addChild:sampleSprite];
+    
+    // 6 pixel block used for comparison;
+    CCNodeColor* block = [CCNodeColor nodeWithColor:[CCColor greenColor]];
+    block.contentSize = CGSizeMake(6.0, 6.0);
+    block.position = ccp(0.424, 0.324);
+    block.positionType = CCPositionTypeNormalized;
+    block.rotation = 32;
+//    [self.contentNode addChild:block];
+}
+
+- (void)outlineWidthChagne:(id)sender
+{
+    const int outlineWidthMax = 6;
+    CCSlider* slider = sender;
+    _outlineEffect.outlineWidth = slider.sliderValue * outlineWidthMax;
 }
 
 #if CC_EFFECTS_EXPERIMENTAL
 -(void)setupDistanceFieldEffectTest
 {
-    _currentEffect = DISTANCE_FIELD;
     self.subTitle = @"Distance Field Effect Test";
     
     //    CCNodeColor* environment = [CCNodeColor nodeWithColor:[CCColor whiteColor]];
@@ -166,25 +162,16 @@ enum DFTest { DISTANCE_FIELD, OUTLINE };
     [self.contentNode addChild:slider3];
 }
 
-#endif
-
 - (void)outlineInnerWidthChange:(id)sender
 {
     CCSlider* slider = sender;
-    if(_currentEffect == DISTANCE_FIELD)
-        _distanceFieldEffect.outlineInnerWidth = slider.sliderValue;
-    else if(_currentEffect == OUTLINE)
-        _outlineEffect.outlineInnerWidth = slider.sliderValue;
-        
+    _distanceFieldEffect.outlineInnerWidth = slider.sliderValue;
 }
 
 - (void)outlineOuterWidthChange:(id)sender
 {
     CCSlider* slider = sender;
-    if(_currentEffect == DISTANCE_FIELD)
-        _distanceFieldEffect.outlineOuterWidth = slider.sliderValue;
-    else if(_currentEffect == OUTLINE)
-        _outlineEffect.outlineOuterWidth = slider.sliderValue;
+    _distanceFieldEffect.outlineOuterWidth = slider.sliderValue;
 }
 
 - (void)glowWidthChange:(id)sender
@@ -202,6 +189,8 @@ enum DFTest { DISTANCE_FIELD, OUTLINE };
 {
     _distanceFieldEffect.outline = !_distanceFieldEffect.outline;
 }
+
+#endif
 
 #pragma mark DropShadow
 
