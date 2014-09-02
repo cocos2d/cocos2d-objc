@@ -26,6 +26,26 @@
 #import <Foundation/Foundation.h>
 #import "CCRenderer.h"
 #import "CCCache.h"
+#import "CCRenderDispatch.h"
+
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+
+@class CCMetalContext;
+
+// Struct used for packing the global uniforms.
+// NOTE: Must match the definition in CCShaders.metal!
+typedef struct CCGlobalUniforms {
+	GLKMatrix4 projection;
+	GLKMatrix4 projectionInv;
+	GLKVector2 viewSize;
+	GLKVector2 viewSizeInPixels;
+	GLKVector4 time;
+	GLKVector4 sinTime;
+	GLKVector4 cosTime;
+	GLKVector4 random01;
+} CCGlobalUniforms;
+
+#endif
 
 // TODO These should be made private to the module.
 extern id CCBLENDMODE_CACHE;
@@ -33,25 +53,6 @@ extern id CCRENDERSTATE_CACHE;
 
 /// Options dictionary for the disabled blending mode.
 extern NSDictionary *CCBLEND_DISABLED_OPTIONS;
-
-
-/// Internal type used to abstract GPU buffers. (vertex, index buffers, etc)
-typedef struct CCGraphicsBuffer {
-	/// Elements currently in the buffer.
-	size_t count;
-	/// Element capacity of the buffer.
-	size_t capacity;
-	/// Size in bytes of elements in the buffer.
-	size_t elementSize;
-	
-	/// Pointer to the buffer memory.
-	void *ptr;
-	
-	/// Used to store GL VBO name for now.
-	intptr_t data;
-	/// GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER, etc.
-	intptr_t type;
-} CCGraphicsBuffer;
 
 
 /**
@@ -86,40 +87,115 @@ typedef struct CCGraphicsBuffer {
 
 
 @interface CCRenderState(){
-	@private
+	@public
 	CCTexture *_mainTexture;
 	BOOL _immutable;
-	
-	@public
 	CCBlendMode *_blendMode;
 	CCShader *_shader;
 	NSDictionary *_shaderUniforms;
 }
 
+-(void)transitionRenderer:(CCRenderer *)renderer FromState:(CCRenderState *)previous;
+
 @end
+
+
+typedef NS_ENUM(NSUInteger, CCRenderCommandDrawMode){
+	CCRenderCommandDrawTriangles,
+	CCRenderCommandDrawLines,
+	// TODO more?
+};
 
 
 @interface CCRenderCommandDraw : NSObject<CCRenderCommand> {
 	@public
-	GLenum _mode;
+	CCRenderCommandDrawMode _mode;
 	CCRenderState *_renderState;
 	NSInteger _globalSortOrder;
+	
+	NSUInteger _first;
+	size_t _count;
 }
 
-@property(nonatomic, readonly) GLint first;
-@property(nonatomic, readonly) GLsizei elements;
+@property(nonatomic, readonly) NSUInteger first;
+@property(nonatomic, readonly) size_t count;
 
--(instancetype)initWithMode:(GLenum)mode renderState:(CCRenderState *)renderState first:(GLint)first elements:(GLsizei)elements globalSortOrder:(NSInteger)globalSortOrder;
+-(instancetype)initWithMode:(CCRenderCommandDrawMode)mode renderState:(CCRenderState *)renderState first:(NSUInteger)first count:(size_t)count globalSortOrder:(NSInteger)globalSortOrder;
 
--(void)batchElements:(GLsizei)elements;
+-(void)batch:(NSUInteger)count;
 
 @end
 
 
+/// Type of a CCGraphicsBuffer object.
+typedef NS_ENUM(NSUInteger, CCGraphicsBufferType){
+	CCGraphicsBufferTypeVertex,
+	CCGraphicsBufferTypeIndex,
+	CCGraphicsBufferTypeUniform,
+};
+
+
+/// Internal class used to abstract GPU buffers. (vertex, index buffers, etc)
+/// This is an abstract class instead of a protocol because of CCGraphicsBufferPushElements().
+@interface CCGraphicsBuffer : NSObject{
+	@public
+	/// Elements currently in the buffer.
+	size_t _count;
+	/// Element capacity of the buffer.
+	size_t _capacity;
+	/// Size in bytes of elements in the buffer.
+	size_t _elementSize;
+	
+	/// Pointer to the buffer memory.
+	/// Only valid between prepare and commmit method calls.
+	void *_ptr;
+}
+
+-(instancetype)initWithCapacity:(NSUInteger)capacity elementSize:(size_t)elementSize type:(CCGraphicsBufferType)type;
+-(void)resize:(size_t)newCapacity;
+
+-(void)destroy;
+
+-(void)prepare;
+-(void)commit;
+
+@end
+
+
+/// Return a pointer to an array of elements that is 'requestedCount' in size.
+/// The buffer is resized by calling [CCGraphicsBuffer resize:] if necessary.
+static inline void *
+CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount)
+{
+	NSCAssert(requestedCount > 0, @"Requested count must be positive.");
+	
+	size_t required = buffer->_count + requestedCount;
+	size_t capacity = buffer->_capacity;
+	if(required > capacity){
+		// Why 1.5? https://github.com/facebook/folly/blob/master/folly/docs/FBVector.md
+		CCRenderDispatch(NO, ^{[buffer resize:required*1.5];});
+	}
+	
+	void *array = buffer->_ptr + buffer->_count*buffer->_elementSize;
+	buffer->_count += requestedCount;
+	
+	return array;
+}
+
+
+/// Internal abstract class used to wrap vertex buffer state. (GL VAOs, etc)
+@protocol CCGraphicsBufferBindings
+-(instancetype)initWithVertexBuffer:(CCGraphicsBuffer *)vertexBuffer indexBuffer:(CCGraphicsBuffer *)indexBuffer;
+-(void)bind:(BOOL)bind;
+@end
+
+
 @interface CCRenderer(){
-	GLuint _vao;
-	CCGraphicsBuffer _vertexBuffer;
-	CCGraphicsBuffer _elementBuffer;
+	@public
+	CCGraphicsBuffer *_vertexBuffer;
+	CCGraphicsBuffer *_elementBuffer;
+	CCGraphicsBuffer *_uniformBuffer; // Currently only used by the Metal renderer.
+	id<CCGraphicsBufferBindings> _bufferBindings;
 	
 	NSDictionary *_globalShaderUniforms;
 	
@@ -129,11 +205,12 @@ typedef struct CCGraphicsBuffer {
 	// Current renderer bindings for fast state checking.
 	// Invalidated at the end of each frame.
 	__unsafe_unretained CCRenderState *_renderState;
-	__unsafe_unretained NSDictionary *_blendOptions;
-	__unsafe_unretained CCShader *_shader;
-	__unsafe_unretained NSDictionary *_shaderUniforms;
 	__unsafe_unretained CCRenderCommandDraw *_lastDrawCommand;
-	BOOL _vaoBound;
+	BOOL _buffersBound;
+
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+	CCMetalContext *_metalContext;
+#endif
 }
 
 /// Current global shader uniform values.
@@ -151,12 +228,6 @@ typedef struct CCGraphicsBuffer {
 /// Render any currently queued commands.
 -(void)flush;
 
-/// Bind the renderer's VAO if it is not currently bound.
--(void)bindVAO:(BOOL)bind;
-
-/// Resize the capacity of a graphics buffer.
--(void)resizeBuffer:(struct CCGraphicsBuffer *)buffer capacity:(size_t)capacity;
-
 @end
 
 
@@ -164,26 +235,7 @@ typedef struct CCGraphicsBuffer {
 
 -(void)setRenderState:(CCRenderState *)renderState;
 
+/// Bind the renderer's VAO if it is not currently bound.
+-(void)bindBuffers:(BOOL)bind;
+
 @end
-
-
-/// Return a pointer to an array of elements that is 'requestedCount' in size.
-/// The buffer is resized by calling [CCRenderer resizeBuffer:] if necessary.
-static inline void *
-CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount, CCRenderer *renderer)
-{
-	NSCAssert(requestedCount > 0, @"Requested count must be positive.");
-	
-	size_t required = buffer->count + requestedCount;
-	size_t capacity = buffer->capacity;
-	if(required > capacity){
-		// Why 1.5? https://github.com/facebook/folly/blob/master/folly/docs/FBVector.md
-		[renderer resizeBuffer:buffer capacity:required*1.5];
-	}
-	
-	void *array = buffer->ptr + buffer->count*buffer->elementSize;
-	buffer->count += requestedCount;
-	
-	return array;
-}
-

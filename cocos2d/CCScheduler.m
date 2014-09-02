@@ -308,7 +308,7 @@ CompareTimers(const void *a, const void *b, void *context)
 		_fixedUpdates = [NSMutableArray array];
 		
 		// Annoyance to avoid a retain cycle.
-		__block __weak __typeof(self) _self = self;
+        __weak __typeof(self) _self = self;
 		
 		// Schedule a timer to run the fixedUpdate: methods.
 		_fixedUpdateTimer = [self scheduleBlock:^(CCTimer *timer){

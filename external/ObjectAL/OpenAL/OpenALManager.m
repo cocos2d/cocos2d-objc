@@ -28,7 +28,8 @@
 //
 
 #import "OpenALManager.h"
-#import "NSMutableArray+WeakReferences.h"
+
+#import "ALWeakArray.h"
 #import "ObjectALMacros.h"
 #import "ARCSafe_MemMgmt.h"
 #import "ALWrapper.h"
@@ -170,7 +171,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OpenALManager);
 
 		suspendHandler = [[OALSuspendHandler alloc] initWithTarget:self selector:@selector(setSuspended:)];
 		
-		devices = [NSMutableArray newMutableArrayUsingWeakReferencesWithCapacity:5];
+		devices = [[ALWeakArray alloc] initWithCapacity:5];
 
 		operationQueue = [[NSOperationQueue alloc] init];
 
@@ -325,12 +326,18 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OpenALManager);
 {
 	if(value)
 	{
+#if __CC_PLATFORM_ANDROID
+        alcSuspend();
+#endif
 		[ALWrapper makeContextCurrent:nil];
 	}
 	else
 	{
 		[ALWrapper makeContextCurrent:self.realCurrentContext.context
 					  deviceReference:self.realCurrentContext.device.device];
+#if __CC_PLATFORM_ANDROID
+        alcResume();
+#endif
 	}
 }
 
@@ -355,7 +362,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(OpenALManager);
 - (ALBuffer*) bufferFromUrl:(NSURL*) url reduceToMono:(bool) reduceToMono
 {
 	OAL_LOG_DEBUG(@"Load buffer from %@", url);
-
 	return [OALAudioFile bufferFromUrl:url reduceToMono:reduceToMono];
 }
 

@@ -28,7 +28,8 @@
 //
 
 #import "ALDevice.h"
-#import "NSMutableArray+WeakReferences.h"
+
+
 #import "ObjectALMacros.h"
 #import "ARCSafe_MemMgmt.h"
 #import "ALWrapper.h"
@@ -50,7 +51,7 @@
 	{
 		suspendHandler = [[OALSuspendHandler alloc] initWithTarget:nil selector:nil];
 		
-		contexts = [NSMutableArray newMutableArrayUsingWeakReferencesWithCapacity:5];
+		contexts = [[ALWeakArray alloc] initWithCapacity:5];
 			
 		[[OpenALManager sharedInstance] notifyDeviceInitializing:self];
 		[[OpenALManager sharedInstance] addSuspendListener:self];

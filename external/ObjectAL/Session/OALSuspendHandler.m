@@ -28,9 +28,11 @@
 //
 
 #import "OALSuspendHandler.h"
-#import "NSMutableArray+WeakReferences.h"
+
+#import "ALWeakArray.h"
 #import "ObjectALMacros.h"
 #import "ARCSafe_MemMgmt.h"
+#import "ALWeakArray.h"
 #import <objc/message.h>
 
 /** \cond */
@@ -56,7 +58,7 @@
 {
 	if(nil != (self = [super init]))
 	{
-		listeners = [NSMutableArray newMutableArrayUsingWeakReferencesWithCapacity:10];
+		listeners = [[ALWeakArray alloc] initWithCapacity:10];
 		manualSuspendStates = [[NSMutableArray alloc] initWithCapacity:10];
 		suspendStatusChangeTarget = target;
 		suspendStatusChangeSelector = selector;
@@ -245,3 +247,4 @@
 }
 
 @end
+

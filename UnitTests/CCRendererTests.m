@@ -82,4 +82,22 @@
 	}
 }
 
+-(void)testRenderStateCacheFlush
+{
+	__weak CCRenderState *renderState = nil;
+	
+	@autoreleasepool {
+		CCBlendMode *mode = [CCBlendMode alphaMode];
+		CCShader *shader = [CCShader positionColorShader];
+		CCTexture *texture = [CCTexture textureWithFile:@"Images/grossini_dance_01.png"];
+		
+		renderState = [CCRenderState renderStateWithBlendMode:mode shader:shader mainTexture:texture];
+		XCTAssertNotNil(renderState, @"Render state was not created.");
+	}
+	
+	[CCRENDERSTATE_CACHE flush];
+	
+	XCTAssertNil(renderState, @"Render state was not released.");
+}
+
 @end
