@@ -277,15 +277,17 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 
 -(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms
 {
-	return [self initWithBlendMode:blendMode shader:shader shaderUniforms:shaderUniforms copyUniforms:NO];
+	return [self initWithBlendMode:blendMode shader:shader mainTexture:nil shaderUniforms:shaderUniforms copyUniforms:NO];
 }
 
--(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms copyUniforms:(BOOL)copyUniforms
+-(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader mainTexture:(CCTexture *)mainTexture shaderUniforms:(NSDictionary *)shaderUniforms copyUniforms:(BOOL)copyUniforms
 {
 	if((self = [super init])){
 		_blendMode = blendMode;
 		_shader = shader;
 		_shaderUniforms = (copyUniforms ? [shaderUniforms copy] : shaderUniforms);
+		
+		_mainTexture = mainTexture;
 		
 		// The renderstate as a whole is immutable if the uniforms are copied.
 		_immutable = copyUniforms;
@@ -301,10 +303,16 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 		mainTexture = [CCTexture none];
 	}
 	
-	CCRenderState *renderState = [[self alloc] initWithBlendMode:blendMode shader:shader shaderUniforms:@{CCShaderUniformMainTexture: mainTexture} copyUniforms:YES];
-	renderState->_mainTexture = mainTexture;
+	// The uniforms are immutable, but don't mark them to be copied.
+	// This forces the cache to create a unique public object for the shared/key values.
+	CCRenderState *renderState = [[self alloc] initWithBlendMode:blendMode shader:shader mainTexture:mainTexture shaderUniforms:@{CCShaderUniformMainTexture: mainTexture} copyUniforms:NO];
 	
 	return [CCRENDERSTATE_CACHE objectForKey:renderState];
+}
+
++(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms copyUniforms:(BOOL)copyUniforms
+{
+	return [[self alloc] initWithBlendMode:blendMode shader:shader mainTexture:nil shaderUniforms:shaderUniforms copyUniforms:copyUniforms];
 }
 
 -(id)copyWithZone:(NSZone *)zone
@@ -312,7 +320,7 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 	if(_immutable){
 		return self;
 	} else {
-		return [[CCRenderState allocWithZone:zone] initWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms copyUniforms:YES];
+		return [[CCRenderState allocWithZone:zone] initWithBlendMode:_blendMode shader:_shader mainTexture:_mainTexture shaderUniforms:_shaderUniforms copyUniforms:YES];
 	}
 }
 
