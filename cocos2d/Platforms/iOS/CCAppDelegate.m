@@ -24,35 +24,20 @@
  */
 
 #import "../../ccMacros.h"
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 
 #import "CCAppDelegate.h"
 #import "CCTexture.h"
 #import "CCFileUtils.h"
 #import "CCDirector_Private.h"
 #import "CCScheduler.h"
+#import "CCGLView.h"
 
 #import "OALSimpleAudio.h"
 
-NSString* const CCSetupPixelFormat = @"CCSetupPixelFormat";
-NSString* const CCSetupScreenMode = @"CCSetupScreenMode";
-NSString* const CCSetupScreenOrientation = @"CCSetupScreenOrientation";
-NSString* const CCSetupAnimationInterval = @"CCSetupAnimationInterval";
-NSString* const CCSetupFixedUpdateInterval = @"CCSetupFixedUpdateInterval";
-NSString* const CCSetupShowDebugStats = @"CCSetupShowDebugStats";
-NSString* const CCSetupTabletScale2X = @"CCSetupTabletScale2X";
-
-NSString* const CCSetupDepthFormat = @"CCSetupDepthFormat";
-NSString* const CCSetupPreserveBackbuffer = @"CCSetupPreserveBackbuffer";
-NSString* const CCSetupMultiSampling = @"CCSetupMultiSampling";
-NSString* const CCSetupNumberOfSamples = @"CCSetupNumberOfSamples";
-
-NSString* const CCScreenOrientationLandscape = @"CCScreenOrientationLandscape";
-NSString* const CCScreenOrientationPortrait = @"CCScreenOrientationPortrait";
-NSString* const CCScreenOrientationAll = @"CCScreenOrientationAll";
-
-NSString* const CCScreenModeFlexible = @"CCScreenModeFlexible";
-NSString* const CCScreenModeFixed = @"CCScreenModeFixed";
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+#import "CCMetalView.h"
+#endif
 
 // Fixed size. As wide as iPhone 5 at 2x and as high as the iPad at 2x.
 const CGSize FIXED_SIZE = {568, 384};
@@ -163,8 +148,9 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	// Create the main window
 	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
+	CGRect bounds = [window_ bounds];
 	
-	// CCGLView creation
+	// CCView creation
 	// viewWithFrame: size of the OpenGL view. For full screen use [_window bounds]
 	//  - Possible values: any CGRect
 	// pixelFormat: Format of the render buffer. Use RGBA8 for better color precision (eg: gradients). But it takes more memory and it is slower
@@ -177,15 +163,27 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	//  - Possible values: YES, NO
 	// numberOfSamples: Only valid if multisampling is enabled
 	//  - Possible values: 0 to glGetIntegerv(GL_MAX_SAMPLES_APPLE)
-	CCGLView *glView = [CCGLView
-		viewWithFrame:[window_ bounds]
-		pixelFormat:config[CCSetupPixelFormat] ?: kEAGLColorFormatRGBA8
-        depthFormat:[config[CCSetupDepthFormat] unsignedIntValue]
-		preserveBackbuffer:[config[CCSetupPreserveBackbuffer] boolValue]
-		sharegroup:nil
-		multiSampling:[config[CCSetupMultiSampling] boolValue]
-		numberOfSamples:[config[CCSetupNumberOfSamples] unsignedIntValue]
-	];
+	CC_VIEW<CCDirectorView> *ccview = nil;
+	switch([CCConfiguration sharedConfiguration].graphicsAPI){
+		case CCGraphicsAPIGL:
+			ccview = [CCGLView
+				viewWithFrame:bounds
+				pixelFormat:config[CCSetupPixelFormat] ?: kEAGLColorFormatRGBA8
+				depthFormat:[config[CCSetupDepthFormat] unsignedIntValue]
+				preserveBackbuffer:[config[CCSetupPreserveBackbuffer] boolValue]
+				sharegroup:nil
+				multiSampling:[config[CCSetupMultiSampling] boolValue]
+				numberOfSamples:[config[CCSetupNumberOfSamples] unsignedIntValue]
+			];
+			break;
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+		case CCGraphicsAPIMetal:
+			#warning TODO
+			ccview = [[CCMetalView alloc] initWithFrame:bounds];
+			break;
+#endif
+		default: NSAssert(NO, @"Internal error: Graphics API not set up.");
+	}
 	
 	CCDirectorIOS* director = (CCDirectorIOS*) [CCDirector sharedDirector];
 	
@@ -201,7 +199,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	director.fixedUpdateInterval = [(config[CCSetupFixedUpdateInterval] ?: @(1.0/60.0)) doubleValue];
 	
 	// attach the openglView to the director
-	[director setView:glView];
+	[director setView:ccview];
 	
 	if([config[CCSetupScreenMode] isEqual:CCScreenModeFixed]){
 		CGSize size = [CCDirector sharedDirector].viewSizeInPixels;

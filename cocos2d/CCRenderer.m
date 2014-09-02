@@ -30,12 +30,7 @@
 #import "CCTexture_Private.h"
 #import "CCShader_private.h"
 #import "CCDirector_Private.h"
-#import "CCGL.h"
-
-
-@interface CCShader()
-+(GLuint)createVAOforCCVertexBuffer:(GLuint)vbo elementBuffer:(GLuint)ebo;
-@end
+#import "CCRenderDispatch.h"
 
 //MARK: NSValue Additions.
 @implementation NSValue(CCRenderer)
@@ -272,20 +267,23 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 	if(self != [CCRenderState class]) return;
 	
 	CCRENDERSTATE_CACHE = [[CCRenderStateCache alloc] init];
-	CCRENDERSTATE_DEBUGCOLOR = [[self alloc] initWithBlendMode:CCBLEND_DISABLED shader:[CCShader positionColorShader] shaderUniforms:@{}];
+	CCRENDERSTATE_DEBUGCOLOR = [[CCRenderStateClass alloc] initWithBlendMode:CCBLEND_DISABLED shader:[CCShader positionColorShader] shaderUniforms:@{}];
 }
 
 -(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms
 {
-	return [self initWithBlendMode:blendMode shader:shader shaderUniforms:shaderUniforms copyUniforms:NO];
+	// Allocate a new instance of the correct class instead of self. (This method was already deprecated).
+	return [[CCRenderStateClass alloc] initWithBlendMode:blendMode shader:shader mainTexture:nil shaderUniforms:shaderUniforms copyUniforms:NO];
 }
 
--(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms copyUniforms:(BOOL)copyUniforms
+-(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader mainTexture:(CCTexture *)mainTexture shaderUniforms:(NSDictionary *)shaderUniforms copyUniforms:(BOOL)copyUniforms
 {
 	if((self = [super init])){
 		_blendMode = blendMode;
 		_shader = shader;
 		_shaderUniforms = (copyUniforms ? [shaderUniforms copy] : shaderUniforms);
+		
+		_mainTexture = mainTexture;
 		
 		// The renderstate as a whole is immutable if the uniforms are copied.
 		_immutable = copyUniforms;
@@ -301,10 +299,16 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 		mainTexture = [CCTexture none];
 	}
 	
-	CCRenderState *renderState = [[self alloc] initWithBlendMode:blendMode shader:shader shaderUniforms:@{CCShaderUniformMainTexture: mainTexture} copyUniforms:YES];
-	renderState->_mainTexture = mainTexture;
+	// The uniforms are immutable, but don't mark them to be copied.
+	// This forces the cache to create a unique public object for the shared/key values.
+	CCRenderState *renderState = [[self alloc] initWithBlendMode:blendMode shader:shader mainTexture:mainTexture shaderUniforms:@{CCShaderUniformMainTexture: mainTexture} copyUniforms:NO];
 	
 	return [CCRENDERSTATE_CACHE objectForKey:renderState];
+}
+
++(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms copyUniforms:(BOOL)copyUniforms
+{
+	return [[CCRenderStateClass alloc] initWithBlendMode:blendMode shader:shader mainTexture:nil shaderUniforms:shaderUniforms copyUniforms:copyUniforms];
 }
 
 -(id)copyWithZone:(NSZone *)zone
@@ -312,14 +316,12 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 	if(_immutable){
 		return self;
 	} else {
-		return [[CCRenderState allocWithZone:zone] initWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms copyUniforms:YES];
+		return [[CCRenderStateClass allocWithZone:zone] initWithBlendMode:_blendMode shader:_shader mainTexture:_mainTexture shaderUniforms:_shaderUniforms copyUniforms:YES];
 	}
 }
 
 -(NSUInteger)hash
 {
-	NSAssert(_mainTexture, @"Attempting to cache a renderstate that was nort created with renderStateWithBlendMode.");
-	
 	// Not great, but acceptable. All values are unique by pointer.
 	return ((NSUInteger)_blendMode ^ (NSUInteger)_shader ^ (NSUInteger)_mainTexture);
 }
@@ -341,6 +343,11 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 	return CCRENDERSTATE_DEBUGCOLOR;
 }
 
+-(void)transitionRenderer:(CCRenderer *)renderer FromState:(CCRenderer *)previous
+{
+	NSAssert(NO, @"Must be overridden.");
+}
+
 @end
 
 
@@ -349,13 +356,13 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 
 @implementation CCRenderCommandDraw
 
--(instancetype)initWithMode:(GLenum)mode renderState:(CCRenderState *)renderState first:(GLint)first elements:(GLsizei)elements globalSortOrder:(NSInteger)globalSortOrder
+-(instancetype)initWithMode:(CCRenderCommandDrawMode)mode renderState:(CCRenderState *)renderState first:(NSUInteger)first count:(size_t)count globalSortOrder:(NSInteger)globalSortOrder
 {
 	if((self = [super init])){
 		_mode = mode;
 		_renderState = [renderState copy];
 		_first = first;
-		_elements = elements;
+		_count = count;
 		_globalSortOrder = globalSortOrder;
 	}
 	
@@ -367,21 +374,13 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 	return _globalSortOrder;
 }
 
--(void)batchElements:(GLsizei)elements
+-(void)batch:(NSUInteger)count
 {
-	_elements += elements;
+	_count += count;
 }
 
 -(void)invokeOnRenderer:(CCRenderer *)renderer
-{
-	glPushGroupMarkerEXT(0, "CCRendererCommandDraw: Invoke");
-	
-	[renderer setRenderState:_renderState];
-	glDrawElements(_mode, _elements, GL_UNSIGNED_SHORT, (GLvoid *)(_first*sizeof(GLushort)));
-	CC_INCREMENT_GL_DRAWS(1);
-	
-	glPopGroupMarkerEXT();
-}
+{NSAssert(NO, @"Must be overridden.");}
 
 @end
 
@@ -418,12 +417,12 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 
 -(void)invokeOnRenderer:(CCRenderer *)renderer
 {
-	glPushGroupMarkerEXT(0, _debugLabel.UTF8String);
+	CCGL_DEBUG_PUSH_GROUP_MARKER(_debugLabel.UTF8String);
 	
-	[renderer bindVAO:NO];
+	[renderer bindBuffers:NO];
 	_block();
 	
-	glPopGroupMarkerEXT();
+	CCGL_DEBUG_POP_GROUP_MARKER();
 }
 
 @end
@@ -471,14 +470,50 @@ SortQueue(NSMutableArray *queue)
 {
 	SortQueue(_queue);
 	
-	glPushGroupMarkerEXT(0, _debugLabel.UTF8String);
+	CCGL_DEBUG_PUSH_GROUP_MARKER(_debugLabel.UTF8String);
 	for(id<CCRenderCommand> command in _queue) [command invokeOnRenderer:renderer];
-	glPopGroupMarkerEXT();
+	CCGL_DEBUG_POP_GROUP_MARKER();
 }
 
 -(NSInteger)globalSortOrder
 {
 	return _globalSortOrder;
+}
+
+@end
+
+
+// MARK: CCGraphicsBuffer
+
+
+@implementation CCGraphicsBuffer
+
+-(instancetype)initWithCapacity:(NSUInteger)capacity elementSize:(size_t)elementSize type:(CCGraphicsBufferType)type
+{
+	if((self = [super init])){
+		_count = 0;
+		_capacity = capacity;
+		_elementSize = elementSize;
+	}
+	
+	return self;
+}
+
+-(void)resize:(size_t)newCapacity
+{NSAssert(NO, @"Must be overridden.");}
+
+-(void)destroy
+{NSAssert(NO, @"Must be overridden.");}
+
+-(void)prepare
+{NSAssert(NO, @"Must be overridden.");}
+
+-(void)commit
+{NSAssert(NO, @"Must be overridden.");}
+
+-(void)dealloc
+{
+	[self destroy];
 }
 
 @end
@@ -493,37 +528,40 @@ SortQueue(NSMutableArray *queue)
 {
 	_lastDrawCommand = nil;
 	_renderState = nil;
-	_blendOptions = nil;
-	_shader = nil;
-	_shaderUniforms = nil;
-	_vaoBound = NO;
+	_buffersBound = NO;
 }
 
 -(instancetype)init
 {
 	if((self = [super init])){
-		const NSUInteger CCRENDERER_INITIAL_VERTEX_CAPACITY = 16*1024;
-		[self initBuffer:&_vertexBuffer capacity:CCRENDERER_INITIAL_VERTEX_CAPACITY elementSize:sizeof(CCVertex) type:GL_ARRAY_BUFFER];
-		[self initBuffer:&_elementBuffer capacity:CCRENDERER_INITIAL_VERTEX_CAPACITY*1.5 elementSize:sizeof(uint16_t) type:GL_ELEMENT_ARRAY_BUFFER];
+		CCRenderDispatch(NO, ^{
+			const NSUInteger CCRENDERER_INITIAL_VERTEX_CAPACITY = 16*1024;
+			_vertexBuffer = [[CCGraphicsBufferClass alloc] initWithCapacity:CCRENDERER_INITIAL_VERTEX_CAPACITY elementSize:sizeof(CCVertex) type:CCGraphicsBufferTypeVertex];
+			[_vertexBuffer prepare];
+			
+			_elementBuffer = [[CCGraphicsBufferClass alloc] initWithCapacity:CCRENDERER_INITIAL_VERTEX_CAPACITY*1.5 elementSize:sizeof(uint16_t) type:CCGraphicsBufferTypeIndex];
+			[_elementBuffer prepare];
+			
+			_bufferBindings = [CCGraphicsBufferBindingsClass alloc];
+			_bufferBindings = [_bufferBindings initWithVertexBuffer:_vertexBuffer indexBuffer:_elementBuffer];
+		});
 		
-		glPushGroupMarkerEXT(0, "CCRenderer: Init");
-		_vao = [CCShader createVAOforCCVertexBuffer:(GLuint)_vertexBuffer.data elementBuffer:(GLuint)_elementBuffer.data];
-		glPopGroupMarkerEXT();
-		
+		_threadsafe = YES;
 		_queue = [NSMutableArray array];
+		
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+		if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+			// TODO: This is sort of gross. Would like it to move somewhere else.
+			_metalContext = (CCMetalContext *)[NSClassFromString(@"CCMetalContext") currentContext];
+			
+			// Default to half a megabyte of initial uniform storage.
+			NSUInteger uniformCapacity = 500*1024;
+			_uniformBuffer = [[CCGraphicsBufferClass alloc] initWithCapacity:uniformCapacity elementSize:1 type:CCGraphicsBufferTypeUniform];
+		}
+#endif
 	}
 	
 	return self;
-}
-
--(void)dealloc
-{
-	glPushGroupMarkerEXT(0, "CCRenderer: Dealloc");
-	glDeleteVertexArrays(1, &_vao);
-	glPopGroupMarkerEXT();
-	
-	[self destroyBuffer:&_vertexBuffer];
-	[self destroyBuffer:&_elementBuffer];
 }
 
 static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
@@ -549,21 +587,12 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	[self invalidateState];
 }
 
-#if defined(__CC_PLATFORM_IOS)
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
 #define glBindVertexArray glBindVertexArrayOES
 #endif
 
--(void)bindVAO:(BOOL)bind
-{
-	if(bind != _vaoBound){
-		glInsertEventMarkerEXT(0, "CCRenderer: Bind VAO");
-		glBindVertexArray(bind ? _vao : 0);
-		
-		_vaoBound = bind;
-	}
-}
-
 //Implemented in CCNoARC.m
+//-(void)bindBuffers:(BOOL)bind
 //-(void)setRenderState:(CCRenderState *)renderState
 //-(CCRenderBuffer)enqueueTriangles:(NSUInteger)triangleCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
 //-(CCRenderBuffer)enqueueLines:(NSUInteger)lineCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
@@ -583,6 +612,8 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 {
 	[_queue addObject:[[CCRenderCommandCustom alloc] initWithBlock:block debugLabel:debugLabel globalSortOrder:globalSortOrder]];
 	_lastDrawCommand = nil;
+	
+	if(!threadsafe) _threadsafe = NO;
 }
 
 -(void)enqueueMethod:(SEL)selector target:(id)target
@@ -596,6 +627,8 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 -(void)enqueueRenderCommand: (id<CCRenderCommand>) renderCommand {
 	[_queue addObject: renderCommand];
 	_lastDrawCommand = nil;
+	
+	_threadsafe = NO;
 }
 
 -(void)pushGroup;
@@ -624,68 +657,58 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 
 -(void)flush
 {
-	glPushGroupMarkerEXT(0, "CCRenderer: Flush");
+	CCGL_DEBUG_PUSH_GROUP_MARKER("CCRenderer: Flush");
 	
-	glInsertEventMarkerEXT(0, "Buffering");
-	
-	[self commitBuffer:&_vertexBuffer];
-	[self commitBuffer:&_elementBuffer];
+	// Commit the geometry buffers to be used by the rendering commmands.
+	CCGL_DEBUG_INSERT_EVENT_MARKER("Buffering");
+	[_vertexBuffer commit];
+	[_elementBuffer commit];
 	CC_CHECK_GL_ERROR_DEBUG();
 	
+	// The render commands build the uniform buffers. (only used by Metal currently)
+	[_uniformBuffer prepare];
+	
+	// TODO This should probably be moved eventually, but I'm not sure where.
+	// Probably never going to support uniform buffers in GL and making CCRenderer abstract is ugh...
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+	if(_metalContext){
+		CCGlobalUniforms globalUniforms = {};
+		const NSUInteger globalUniformBytes = sizeof(globalUniforms);
+		
+		[_globalShaderUniforms[CCShaderUniformProjection] getValue:&globalUniforms.projection];
+		[_globalShaderUniforms[CCShaderUniformProjectionInv] getValue:&globalUniforms.projectionInv];
+		[_globalShaderUniforms[CCShaderUniformViewSize] getValue:&globalUniforms.viewSize];
+		[_globalShaderUniforms[CCShaderUniformViewSizeInPixels] getValue:&globalUniforms.viewSizeInPixels];
+		[_globalShaderUniforms[CCShaderUniformTime] getValue:&globalUniforms.time];
+		[_globalShaderUniforms[CCShaderUniformSinTime] getValue:&globalUniforms.sinTime];
+		[_globalShaderUniforms[CCShaderUniformCosTime] getValue:&globalUniforms.cosTime];
+		[_globalShaderUniforms[CCShaderUniformRandom01] getValue:&globalUniforms.random01];
+		
+		void *buff = CCGraphicsBufferPushElements(_uniformBuffer, globalUniformBytes);
+		memcpy(buff, &globalUniforms, globalUniformBytes);
+	}
+#endif
+	
+	// Execute the rendering commands.
 	SortQueue(_queue);
 	for(id<CCRenderCommand> command in _queue) [command invokeOnRenderer:self];
-	[self bindVAO:NO];
+	[self bindBuffers:NO];
 	
 	[_queue removeAllObjects];
 	
-	[self prepareBuffer:&_vertexBuffer];
-	[self prepareBuffer:&_elementBuffer];
+	// Commit the uniform buffers.
+	[_uniformBuffer commit];	
 	
-	glPopGroupMarkerEXT();
+	// Prepare the geometry buffers for use next time the renderer is reused.
+	[_vertexBuffer prepare];
+	[_elementBuffer prepare];
+	
+	CCGL_DEBUG_POP_GROUP_MARKER();
 	CC_CHECK_GL_ERROR_DEBUG();
 	
+	// Reset the renderer's state.
 	[self invalidateState];
-}
-
-//MARK: Buffer Management Methods
-
--(void)initBuffer:(CCGraphicsBuffer *)buffer capacity:(NSUInteger)capacity elementSize:(size_t)elementSize type:(intptr_t)type
-{
-	buffer->count = 0;
-	buffer->capacity = capacity;
-	buffer->elementSize = elementSize;
-	
-	buffer->ptr = calloc(capacity, elementSize);
-	
-	GLuint glbuffer = 0;
-	glGenBuffers(1, &glbuffer);
-	buffer->data = (intptr_t)glbuffer;
-	buffer->type = type;
-}
-
--(void)resizeBuffer:(CCGraphicsBuffer *)buffer capacity:(size_t)capacity
-{
-	buffer->ptr = realloc(buffer->ptr, capacity*buffer->elementSize);
-	buffer->capacity = capacity;
-}
-
--(void)destroyBuffer:(CCGraphicsBuffer *)buffer
-{
-	free(buffer->ptr);
-	glDeleteBuffers(1, (GLuint *)&buffer->data);
-}
-
--(void)prepareBuffer:(CCGraphicsBuffer *)buffer
-{
-	buffer->count = 0;
-}
-
--(void)commitBuffer:(CCGraphicsBuffer *)buffer
-{
-	GLenum type = (GLenum)buffer->type;
-	glBindBuffer(type, (GLuint)buffer->data);
-	glBufferData(type, buffer->count*buffer->elementSize, buffer->ptr, GL_STREAM_DRAW);
-	glBindBuffer(type, 0);
+	_threadsafe = YES;
 }
 
 @end

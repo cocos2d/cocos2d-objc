@@ -42,12 +42,6 @@
 #import "CCTexture_Private.h"
 #import "CCActionManager_Private.h"
 
-
-#ifdef __CC_PLATFORM_IOS
-#import "Platforms/iOS/CCDirectorIOS.h"
-#endif
-
-
 #if CC_NODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
 #else
@@ -221,12 +215,6 @@ static NSUInteger globalOrderOfArrival = 1;
 - (void) dealloc
 {
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
-
-	// children
-    for (CCNode* child in _children)
-		child.parent = nil;
-
-
 }
 
 #pragma mark Setters
@@ -1725,7 +1713,7 @@ CheckDefaultUniforms(NSDictionary *uniforms, CCTexture *texture)
 			_shaderUniforms = nil;
 		} else {
 			// Since the node has unique uniforms, it cannot be batched or use the fast path.
-			_renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms copyUniforms:NO];
+			_renderState = [CCRenderState renderStateWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms copyUniforms:NO];
 		}
 	}
 	

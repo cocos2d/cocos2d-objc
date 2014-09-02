@@ -41,7 +41,7 @@
 #import <objc/message.h>
 
 
-#ifdef __CC_PLATFORM_MAC
+#if __CC_PLATFORM_MAC
 #import "Platforms/Mac/CCDirectorMac.h"
 #endif
 
@@ -52,9 +52,9 @@
 //#import "CCActionManager.h"
 //#import "CCActionInstant.h"
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 static EAGLContext *_auxGLcontext = nil;
-#elif defined(__CC_PLATFORM_MAC)
+#elif __CC_PLATFORM_MAC
 static NSOpenGLContext *_auxGLcontext = nil;
 #endif
 
@@ -86,20 +86,26 @@ static CCTextureCache *sharedTextureCache;
 {
 	if( (self=[super init]) ) {
 		_textures = [NSMutableDictionary dictionaryWithCapacity: 10];
-
+		
 		// init "global" stuff
 		_loadingQueue = dispatch_queue_create("org.cocos2d.texturecacheloading", NULL);
 		_dictQueue = dispatch_queue_create("org.cocos2d.texturecachedict", NULL);
-
+		
+		#warning TODO
+		if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal) return self;
+		
+#if !__CC_PLATFORM_ANDROID
+		#warning TODO might not be a GL view.
 		CCGLView *view = (CCGLView*)[[CCDirector sharedDirector] view];
 		NSAssert(view, @"Do not initialize the TextureCache before the Director");
+#endif
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 		_auxGLcontext = [[EAGLContext alloc]
 						 initWithAPI:kEAGLRenderingAPIOpenGLES2
 						 sharegroup:[[view context] sharegroup]];
 
-#elif defined(__CC_PLATFORM_MAC)
+#elif __CC_PLATFORM_MAC
 		NSOpenGLPixelFormat *pf = [view pixelFormat];
 		NSOpenGLContext *share = [view openGLContext];
 
@@ -107,7 +113,9 @@ static CCTextureCache *sharedTextureCache;
 
 #endif // __CC_PLATFORM_MAC
 
+#if !__CC_PLATFORM_ANDROID
 		NSAssert( _auxGLcontext, @"TextureCache: Could not create EAGL context");
+#endif
 
 	}
 
@@ -132,7 +140,9 @@ static CCTextureCache *sharedTextureCache;
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
     
+#if !__CC_PLATFORM_ANDROID
 	_auxGLcontext = nil;
+#endif
 	sharedTextureCache = nil;
     
 	// dispatch_release(_loadingQueue);
@@ -170,7 +180,7 @@ static CCTextureCache *sharedTextureCache;
 
 		CCTexture *texture;
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 		if( [EAGLContext setCurrentContext:_auxGLcontext] ) {
 
 			// load / create the texture
@@ -186,7 +196,7 @@ static CCTextureCache *sharedTextureCache;
 			CCLOG(@"cocos2d: ERROR: TetureCache: Could not set EAGLContext");
 		}
 
-#elif defined(__CC_PLATFORM_MAC)
+#elif __CC_PLATFORM_MAC
 
 		[_auxGLcontext makeCurrentContext];
 
@@ -230,7 +240,7 @@ static CCTextureCache *sharedTextureCache;
 
 		CCTexture *texture;
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 		if( [EAGLContext setCurrentContext:_auxGLcontext] ) {
 
 			// load / create the texture
@@ -248,7 +258,7 @@ static CCTextureCache *sharedTextureCache;
 			CCLOG(@"cocos2d: ERROR: TetureCache: Could not set EAGLContext");
 		}
 
-#elif defined(__CC_PLATFORM_MAC)
+#elif __CC_PLATFORM_MAC
 
 		[_auxGLcontext makeCurrentContext];
 
@@ -298,12 +308,24 @@ static CCTextureCache *sharedTextureCache;
 		if ( [lowerCase hasSuffix:@".pvr"] || [lowerCase hasSuffix:@".pvr.gz"] || [lowerCase hasSuffix:@".pvr.ccz"] )
 			tex = [self addPVRImage:path];
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
 
 		else {
-            
-			UIImage *image = [[UIImage alloc] initWithContentsOfFile:fullpath];
+#if __CC_PLATFORM_IOS
+            UIImage *image = [[UIImage alloc] initWithContentsOfFile:fullpath];
 			tex = [[CCTexture alloc] initWithCGImage:image.CGImage contentScale:contentScale];
+#else // Android
+            // TODO: add support for bmp
+            BOOL png = [lowerCase hasSuffix:@".png"];
+            CGDataProviderRef imgDataProvider = CGDataProviderCreateWithCFData((__bridge CFDataRef)[NSData dataWithContentsOfFile:fullpath]);
+            CGImageRef image = (png) ? CGImageCreateWithPNGDataProvider(imgDataProvider, NULL, true, kCGRenderingIntentDefault) : CGImageCreateWithJPEGDataProvider(imgDataProvider, NULL, true, kCGRenderingIntentDefault) ;
+            tex = [[CCTexture alloc] initWithCGImage:image contentScale:contentScale];
+            CGDataProviderRelease(imgDataProvider);
+            CGImageRelease(image);
+#endif
+            
+            
+            
 			CCLOGINFO(@"Texture loaded: %@", path);
             
 			if( tex ){
@@ -317,7 +339,7 @@ static CCTextureCache *sharedTextureCache;
 		}
 
 
-#elif defined(__CC_PLATFORM_MAC)
+#elif __CC_PLATFORM_MAC
 		else {
 
 			NSData *data = [[NSData alloc] initWithContentsOfFile:fullpath];

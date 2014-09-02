@@ -27,7 +27,16 @@
 // Attribution is not required, but appreciated :)
 //
 
+
+#import "ccMacros.h"
+
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
+
 #import <AVFoundation/AVFoundation.h>
+#elif __CC_PLATFORM_ANDROID
+#import <BridgeKitV3/AndroidMediaPlayer.h>
+#endif
+
 #import "OALAction.h"
 #import "OALAudioTrackNotifications.h"
 #import "OALSuspendHandler.h"
@@ -37,28 +46,47 @@
  * Unlike AVAudioPlayer, however, it can be re-used to play another file.
  * Interruptions can be handled by OALAudioSupport (enabled by default).
  */
-@interface OALAudioTrack : NSObject <AVAudioPlayerDelegate, OALSuspendManager>
+
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
+@interface OALAudioTrack : NSObject <AVAudioPlayerDelegate,OALSuspendManager>
+#elif __CC_PLATFORM_ANDROID
+BRIDGE_CLASS("com.spritebuilder.OALAudioTrack")
+@interface OALAudioTrack : JavaObject <AndroidMediaPlayerOnCompletionListener,OALSuspendManager>
+#endif
 {
     /** If true, this track is recording metering data */
 	bool meteringEnabled;
 	bool interrupted;
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
 	AVAudioPlayer* player;
+#elif __CC_PLATFORM_ANDROID
+    AndroidMediaPlayer *player;
+#endif
 	NSURL* currentlyLoadedUrl;
 	bool preloaded;
 	bool autoPreload;
 	bool paused;
 	bool muted;
+#if __CC_PLATFORM_ANDROID
+    bool suspended;
+#endif
 	float gain;
 	float pan;
 	NSInteger numberOfLoops;
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
 	id<AVAudioPlayerDelegate> delegate; // Weak reference
+#else
+    id delegate;
+#endif
 	
 	/** When the simulator is running (and the playback fix is in use),
 	 * player will be copied to here, and then player set to nil.
 	 * This prevents other code from inadvertently raising the volume
 	 * and starting playback.
 	 */
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
 	AVAudioPlayer* simulatorPlayerRef;
+#endif
 	
 	/** Operation queue for running asynchronous operations.
 	 * <strong>Note:</strong> Only one asynchronous operation is allowed at a time.
@@ -93,7 +121,11 @@
  * <strong>Note:</strong> OALAudioTrack keeps a WEAK reference to delegate, so make sure you clear it
  * when your object is going to be deallocated.
  */
-@property(nonatomic,readwrite,assign) id<AVAudioPlayerDelegate> delegate;
+@property(nonatomic,readwrite,assign) id
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
+<AVAudioPlayerDelegate>
+#endif
+delegate;
 
 /** The gain (volume) for playback (0.0 - 1.0, where 1.0 = no attenuation). */
 @property(nonatomic,readwrite,assign) float gain;
@@ -128,7 +160,11 @@
  * WARNING: Be VERY careful when accessing this, as some methods could cause
  * it to fall out of sync with OALAudioTrack (particularly play/pause/stop methods).
  */
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
 @property(nonatomic,readonly,retain) AVAudioPlayer* player;
+#elif __CC_PLATFORM_ANDROID
+@property(nonatomic,readonly,retain) AndroidMediaPlayer* player;
+#endif
 
 /** If true, background music is currently playing. */
 @property(nonatomic,readonly,assign) bool playing;
@@ -384,9 +420,9 @@
  * a single parameter, which will be the object that performed the pan.
  */
 - (void) panTo:(float) pan
-	   duration:(float) duration
-		 target:(id) target
-	   selector:(SEL) selector;
+      duration:(float) duration
+        target:(id) target
+      selector:(SEL) selector;
 
 /** Stop the currently running pan operation, if any.
  *
@@ -400,6 +436,10 @@
 /** Unload and clear all audio data, stop playing, and stop all operations.
  */
 - (void) clear;
+
+#if __CC_PLATFORM_ANDROID
+- (void) onCompletion:(AndroidMediaPlayer *)mp;
+#endif
 
 #pragma mark Metering
 
@@ -441,3 +481,5 @@
 - (float) peakPowerForChannel:(NSUInteger)channelNumber;
 
 @end
+
+

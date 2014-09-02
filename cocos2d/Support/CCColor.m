@@ -9,7 +9,14 @@
 #import "CCColor.h"
 #import <CoreGraphics/CoreGraphics.h>
 
-@implementation CCColor
+@implementation CCColor {
+    CGColorRef _color;
+}
+
+- (void)dealloc
+{
+    CGColorRelease(_color);
+}
 
 + (CCColor*) colorWithWhite:(float)white alpha:(float)alpha
 {
@@ -31,7 +38,7 @@
     return [[CCColor alloc] initWithCGColor:cgColor];
 }
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 + (CCColor*) colorWithUIColor:(UIColor *)color
 {
     return [[CCColor alloc] initWithUIColor:color];
@@ -140,7 +147,7 @@
     return self;
 }
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 - (CCColor*) initWithUIColor:(UIColor *)color
 {
     self = [super init];
@@ -164,23 +171,21 @@
     {
         NSAssert(NO, @"UIColor has unsupported color space model");
     }
-    CGColorRelease(colorRef);
     
     return self;
 }
 #endif
 
-/// After using you must call CGColorRelease(color)
 - (CGColorRef) CGColor
 {
     CGFloat components[4] = {(CGFloat)_r, (CGFloat)_g, (CGFloat)_b, (CGFloat)_a};
     CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
-    CGColorRef color = CGColorCreate(colorspace, components);
+    _color = CGColorCreate(colorspace, components);
     CGColorSpaceRelease(colorspace);
-    return color;
+    return _color;
 }
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 
 - (UIColor*) UIColor
 {
@@ -189,7 +194,7 @@
 
 #endif
 
-#ifdef __CC_PLATFORM_MAC
+#if __CC_PLATFORM_MAC
 - (NSColor*) NSColor
 {
 	return [NSColor colorWithCalibratedRed:(CGFloat)_r green:(CGFloat)_g blue:(CGFloat)_b alpha:(CGFloat)_a];
@@ -219,59 +224,46 @@
 	return [CCColor colorWithCcColor4f:ccc4FInterpolated(self.ccColor4f, toColor.ccColor4f, t)];
 }
 
-static CCColor *BLACK_COLOR = nil;
-static CCColor *DARK_GRAY_COLOR = nil;
-static CCColor *LIGHT_GRAY_COLOR = nil;
-static CCColor *WHITE_COLOR = nil;
-static CCColor *GRAY_COLOR = nil;
-static CCColor *RED_COLOR = nil;
-static CCColor *GREEN_COLOR = nil;
-static CCColor *BLUE_COLOR = nil;
-static CCColor *CYAN_COLOR = nil;
-static CCColor *YELLOW_COLOR = nil;
-static CCColor *MAGENTA_COLOR = nil;
-static CCColor *ORANGE_COLOR = nil;
-static CCColor *PURPLE_COLOR = nil;
-static CCColor *BROWN_COLOR = nil;
-static CCColor *CLEAR_COLOR = nil;
-
-+(void)initialize
-{
-	// +initialize may be called due to loading a subclass.
-	if(self != [CCColor class]) return;
-	
-	BLACK_COLOR = [CCColor colorWithRed:0 green:0 blue:0 alpha:1];
-	DARK_GRAY_COLOR = [CCColor colorWithWhite:1.0/3.0 alpha:1];
-	LIGHT_GRAY_COLOR = [CCColor colorWithWhite:2.0/3.0 alpha:1];
-	WHITE_COLOR = [CCColor colorWithWhite:1 alpha:1];
-	GRAY_COLOR = [CCColor colorWithWhite:0.5 alpha:1];
-	RED_COLOR = [CCColor colorWithRed:1 green:0 blue:0 alpha:1];
-	GREEN_COLOR = [CCColor colorWithRed:0 green:1 blue:0 alpha:1];
-	BLUE_COLOR = [CCColor colorWithRed:0 green:0 blue:1 alpha:1];
-	CYAN_COLOR = [CCColor colorWithRed:0 green:1 blue:1 alpha:1];
-	YELLOW_COLOR = [CCColor colorWithRed:1 green:1 blue:0 alpha:1];
-	MAGENTA_COLOR = [CCColor colorWithRed:1 green:0 blue:1 alpha:1];
-	ORANGE_COLOR = [CCColor colorWithRed:1 green:0.5 blue:0 alpha:1];
-	PURPLE_COLOR = [CCColor colorWithRed:0.5 green:0 blue:0.5 alpha:1];
-	BROWN_COLOR = [CCColor colorWithRed:0.6 green:0.4 blue:0.2 alpha:1];
-	CLEAR_COLOR = [CCColor colorWithRed:0 green:0 blue:0 alpha:0];
+static NSDictionary *namedColors() {
+    static NSDictionary *namedColors = nil;
+    static dispatch_once_t once = 0L;
+    dispatch_once(&once, ^{
+        namedColors = @{
+            @"black": [CCColor colorWithRed:0 green:0 blue:0 alpha:1],
+            @"darkGray": [CCColor colorWithWhite:1.0/3.0 alpha:1],
+            @"lightGray": [CCColor colorWithWhite:2.0/3.0 alpha:1],
+            @"white": [CCColor colorWithWhite:1 alpha:1],
+            @"gray": [CCColor colorWithWhite:0.5 alpha:1],
+            @"red": [CCColor colorWithRed:1 green:0 blue:0 alpha:1],
+            @"green": [CCColor colorWithRed:0 green:1 blue:0 alpha:1],
+            @"blue": [CCColor colorWithRed:0 green:0 blue:1 alpha:1],
+            @"cyan": [CCColor colorWithRed:0 green:1 blue:1 alpha:1],
+            @"yellow": [CCColor colorWithRed:1 green:1 blue:0 alpha:1],
+            @"magenta": [CCColor colorWithRed:1 green:0 blue:1 alpha:1],
+            @"orange": [CCColor colorWithRed:1 green:0.5 blue:0 alpha:1],
+            @"purple": [CCColor colorWithRed:0.5 green:0 blue:0.5 alpha:1],
+            @"brown": [CCColor colorWithRed:0.6 green:0.4 blue:0.2 alpha:1],
+            @"clear": [CCColor colorWithRed:0 green:0 blue:0 alpha:0],
+        };
+    });
+    return namedColors;
 }
 
-+ (CCColor*) blackColor {return BLACK_COLOR;}
-+ (CCColor*) darkGrayColor {return DARK_GRAY_COLOR;}
-+ (CCColor*) lightGrayColor {return LIGHT_GRAY_COLOR;}
-+ (CCColor*) whiteColor {return WHITE_COLOR;}
-+ (CCColor*) grayColor {return GRAY_COLOR;}
-+ (CCColor*) redColor {return RED_COLOR;}
-+ (CCColor*) greenColor {return GREEN_COLOR;}
-+ (CCColor*) blueColor {return BLUE_COLOR;}
-+ (CCColor*) cyanColor {return CYAN_COLOR;}
-+ (CCColor*) yellowColor {return YELLOW_COLOR;}
-+ (CCColor*) magentaColor {return MAGENTA_COLOR;}
-+ (CCColor*) orangeColor {return ORANGE_COLOR;}
-+ (CCColor*) purpleColor {return PURPLE_COLOR;}
-+ (CCColor*) brownColor {return BROWN_COLOR;}
-+ (CCColor*) clearColor {return CLEAR_COLOR;}
++ (CCColor*) blackColor { return namedColors()[@"black"]; }
++ (CCColor*) darkGrayColor { return namedColors()[@"darkGray"]; }
++ (CCColor*) lightGrayColor { return namedColors()[@"lightGray"]; }
++ (CCColor*) whiteColor { return namedColors()[@"white"]; }
++ (CCColor*) grayColor { return namedColors()[@"gray"]; }
++ (CCColor*) redColor { return namedColors()[@"red"]; }
++ (CCColor*) greenColor { return namedColors()[@"green"]; }
++ (CCColor*) blueColor { return namedColors()[@"blue"]; }
++ (CCColor*) cyanColor { return namedColors()[@"cyan"]; }
++ (CCColor*) yellowColor { return namedColors()[@"yellow"]; }
++ (CCColor*) magentaColor { return namedColors()[@"magenta"]; }
++ (CCColor*) orangeColor { return namedColors()[@"orange"]; }
++ (CCColor*) purpleColor { return namedColors()[@"purple"]; }
++ (CCColor*) brownColor { return namedColors()[@"brown"]; }
++ (CCColor*) clearColor { return namedColors()[@"clear"]; }
 
 @end
 

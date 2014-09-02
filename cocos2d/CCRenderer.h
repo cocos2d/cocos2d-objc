@@ -23,6 +23,7 @@
  */
 
 #import "ccTypes.h"
+#import "CCShader.h"
 
 
 @class CCTexture;
@@ -172,12 +173,13 @@ extern const NSString *CCBlendEquationAlpha;
 /// Create a cached blending mode for a given blending mode, shader and main texture.
 +(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader mainTexture:(CCTexture *)mainTexture;
 
-/// Create an uncached blending mode for a given blending mode, shader and set of uncopied uniform values.
--(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms __deprecated;
-
 /// Create an uncached blending mode for a given blending mode, shader and set of uniform values.
 /// Allowing the uniform dictionary to be copied allows the render state to be immutable and used more optimally.
--(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms copyUniforms:(BOOL)copyUniforms;
++(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms copyUniforms:(BOOL)copyUniforms;
+
+/// Initialize an uncached blending mode for a given blending mode, shader and set of uncopied uniform values.
+/// Use [CCRenderState renderStateWithBlendMode:blendMode shader:shader shaderUniforms:shaderUniforms copyUniforms:NO] instead.
+-(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms __deprecated;
 
 @end
 
@@ -185,6 +187,9 @@ extern const NSString *CCBlendEquationAlpha;
 /// A rendering queue.
 /// All drawing commands in Cocos2D must be sequenced using a CCRenderer.
 @interface CCRenderer : NSObject
+
+/// YES if the renderer contains only threadsafe rendering commands.
+@property(nonatomic, readonly) BOOL threadsafe;
 
 /// Mark the renderer's cached GL state as invalid executing custom OpenGL code.
 /// You only need to call this if you change the shader, texture or blending mode states.

@@ -14,7 +14,16 @@
 
 - (void) setUp
 {
-	[[CCFileUtils sharedFileUtils] setSearchPath: @[ @"Images", kCCFileUtilsDefaultSearchPath] ];
+    NSArray *searchPath = [NSArray arrayWithObjects:
+                           [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Images"],
+                           [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Fonts"],
+                           [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Resources-shared"],
+                           [[NSBundle mainBundle] resourcePath],
+                           @"Images",
+                           kCCFileUtilsDefaultSearchPath,
+                           nil];
+    
+	[[CCFileUtils sharedFileUtils] setSearchPath:searchPath];
 }
 
 - (CCSprite *) loadAndDisplayImageNamed:(NSString*) fileName withTitle:(NSString*) title{
@@ -161,7 +170,7 @@
 	colorNode.position = ccp( s.width/2.0f - 100, s.height/2.0f - 100);
 	[self.contentNode addChild:colorNode];
 	
-	self.subTitle = @"Blue bottom left, red top right";
+	self.subTitle = @"Red bottom left, blue top right";
 }
 
 

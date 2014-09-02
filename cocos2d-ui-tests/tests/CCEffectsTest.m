@@ -52,6 +52,99 @@
     [self.contentNode addChild:padded];
 }
 
+-(void)setupColorChannelOffsetTest
+{
+    self.subTitle = @"Color Channel Offset Effect Test";
+    
+    CCEffectColorChannelOffset *effect = [CCEffectColorChannelOffset effectWithRedOffset:GLKVector2Make(0.0f, 0.0f) greenOffset:GLKVector2Make(0.0f, 0.0f) blueOffset:GLKVector2Make(0.0f, 0.0f)];
+    
+    CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/particles.png"];
+    sprite.scale = 1.0f;
+    sprite.positionType = CCPositionTypeNormalized;
+    sprite.position = ccp(0.5f, 0.5f);
+    sprite.effect = effect;
+    
+    [self.contentNode addChild:sprite];
+    
+    const float thetaStep = CC_DEGREES_TO_RADIANS(10.0f);
+    __block float redTheta = CC_DEGREES_TO_RADIANS(0.0f);
+    __block float greenTheta = CC_DEGREES_TO_RADIANS(120.0f);
+    __block float blueTheta = CC_DEGREES_TO_RADIANS(240.0f);
+    void (^updateBlock)() = ^{
+        
+        float redRadius = 3.0f;
+        effect.redOffset = GLKVector2Make(redRadius * cosf(redTheta), redRadius * sinf(redTheta));
+        
+        float greenRadius = 3.0f;
+        effect.greenOffset = GLKVector2Make(greenRadius * cosf(greenTheta), greenRadius * sinf(greenTheta));
+        
+        float blueRadius = 3.0f;
+        effect.blueOffset = GLKVector2Make(blueRadius * cosf(blueTheta), blueRadius * sinf(blueTheta));
+        
+        redTheta += thetaStep;
+        greenTheta += thetaStep;
+        blueTheta += thetaStep;
+    };
+    updateBlock();
+    
+    [sprite runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+                                                               [CCActionDelay actionWithDuration:0.1f],
+                                                               [CCActionCallBlock actionWithBlock:updateBlock],
+                                                               nil
+                                                               ]]];
+}
+
+-(void)setupOuterGlowEffectTest
+{
+    self.subTitle = @"OuterGlow Effect Test";
+    
+//    CCNodeColor* environment = [CCNodeColor nodeWithColor:[CCColor whiteColor]];
+    CCSprite *environment = [CCSprite spriteWithImageNamed:@"Images/MountainPanorama.jpg"];
+    environment.positionType = CCPositionTypeNormalized;
+    environment.anchorPoint = ccp(0.5, 0.5);
+    environment.position = ccp(0.5f, 0.5f);
+    
+    [self.contentNode addChild:environment];
+    
+    CCColor *glowColor = [CCColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:0.5];
+    CCEffectOuterGlow* effect = [CCEffectOuterGlow effectWithGlowColor:glowColor];
+    
+    CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"Images/DistanceFieldX.png"];
+    sampleSprite.position = ccp(0.5, 0.5);
+    sampleSprite.positionType = CCPositionTypeNormalized;
+    sampleSprite.effect = effect;
+    
+    [self.contentNode addChild:sampleSprite];
+}
+
+-(void)setupDropShadowEffectTest
+{
+    self.subTitle = @"DropShadow Effect Test";
+
+    CCSprite *environment = [CCSprite spriteWithImageNamed:@"Images/MountainPanorama.jpg"];
+    environment.positionType = CCPositionTypeNormalized;
+    environment.position = ccp(0.5f, 0.5f);
+
+    [self.contentNode addChild:environment];
+    
+    CCColor *shadowColor = [CCColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:0.5];
+    CCEffectDropShadow* effect = [CCEffectDropShadow effectWithShadowOffset:GLKVector2Make(2.0, -2.0) shadowColor:shadowColor];
+   
+    CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"Images/Ohm.png"];
+    sampleSprite.position = ccp(0.5, 0.5);
+    sampleSprite.positionType = CCPositionTypeNormalized;
+    
+    CCEffectNode* effectNode = [[CCEffectNode alloc] init];
+    effectNode.contentSize = CGSizeMake(300, 300);
+    effectNode.anchorPoint = ccp(0.5, 0.5);
+    effectNode.positionType = CCPositionTypeNormalized;
+    effectNode.position = ccp(0.5, 0.5);
+    [effectNode addChild:sampleSprite];
+    effectNode.effect = effect;
+    
+    [self.contentNode addChild:effectNode];
+}
+
 -(void)setupGlassEffectTest
 {
     self.subTitle = @"Glass Effect Test";

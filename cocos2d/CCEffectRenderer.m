@@ -54,7 +54,7 @@ static CCVertex padVertex(CCVertex input, GLKVector2 positionOffset, GLKVector2 
 {
     NSAssert(!_glResourcesAllocated, @"");
     
-    glPushGroupMarkerEXT(0, "CCEffectRenderTarget: allocateRenderTarget");
+    CCGL_DEBUG_PUSH_GROUP_MARKER("CCEffectRenderTarget: allocateRenderTarget");
     
 	// Textures may need to be a power of two
 	NSUInteger powW;
@@ -76,7 +76,7 @@ static CCVertex padVertex(CCVertex input, GLKVector2 positionOffset, GLKVector2 
     // Create a new texture object for use as the color attachment of the new
     // FBO.
 	_texture = [[CCTexture alloc] initWithData:nil pixelFormat:kRenderTargetDefaultPixelFormat pixelsWide:powW pixelsHigh:powH contentSizeInPixels:size contentScale:[CCDirector sharedDirector].contentScaleFactor];
-	[_texture setAliasTexParameters];
+	_texture.antialiased = NO;
 	
     // Save the old FBO binding so it can be restored after we create the new
     // one.
@@ -97,7 +97,7 @@ static CCVertex padVertex(CCVertex input, GLKVector2 positionOffset, GLKVector2 
 	glBindFramebuffer(GL_FRAMEBUFFER, oldFBO);
 	
 	CC_CHECK_GL_ERROR_DEBUG();
-	glPopGroupMarkerEXT();
+	CCGL_DEBUG_POP_GROUP_MARKER();
     
     _glResourcesAllocated = YES;
     return YES;

@@ -27,8 +27,14 @@
 // Attribution is not required, but appreciated :)
 //
 
-#import <Foundation/Foundation.h>
+#import "ccMacros.h"
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
 #import <AudioToolbox/AudioToolbox.h>
+#elif __CC_PLATFORM_ANDROID
+#import <tremor/ivorbisfile.h>
+#endif
+
+#import <Foundation/Foundation.h>
 #import "ALBuffer.h"
 
 
@@ -42,11 +48,25 @@
 	bool reduceToMono;
 	SInt64 totalFrames;
 
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
+
 	/** A description of the audio data in this file. */
 	AudioStreamBasicDescription streamDescription;
 
 	/** The OS specific file handle */
 	ExtAudioFileRef fileHandle;
+
+#elif __CC_PLATFORM_ANDROID
+	FILE *rawFILE;
+	OggVorbis_File oggFile;
+	const char *oggPath;
+	UInt32 sampleRate;
+	UInt32 channelsPerFrame;
+	UInt32 bitsPerChannel;
+	UInt32 bytesPerFrame;
+	UInt32 framesPerPacket;
+	UInt32 bytesPerPacket;
+#endif
 
 	/** The actual number of channels in the audio data if not reducing to mono */
 	UInt32 originalChannelsPerFrame;
@@ -55,8 +75,18 @@
 /** The URL of the audio file */
 @property(nonatomic,readonly,retain) NSURL* url;
 
+
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
 /** A description of the audio data in this file. */
 @property(nonatomic,readonly,assign) AudioStreamBasicDescription* streamDescription;
+#elif __CC_PLATFORM_ANDROID
+@property(nonatomic,readonly,assign) UInt32 sampleRate;
+@property(nonatomic,readonly,assign) UInt32 channelsPerFrame;
+@property(nonatomic,readonly,assign) UInt32 bitsPerChannel;
+@property(nonatomic,readonly,assign) UInt32 bytesPerFrame;
+@property(nonatomic,readonly,assign) UInt32 framesPerPacket;
+@property(nonatomic,readonly,assign) UInt32 bytesPerPacket;
+#endif
 
 /** The total number of audio frames in this file */
 @property(nonatomic,readonly,assign) SInt64 totalFrames;
@@ -117,3 +147,4 @@
 			   reduceToMono:(bool) reduceToMono;
 
 @end
+

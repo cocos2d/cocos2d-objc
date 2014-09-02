@@ -28,6 +28,8 @@
 //
 
 #import "OALAudioFile.h"
+
+
 #import "ObjectALMacros.h"
 #import "ARCSafe_MemMgmt.h"
 
@@ -58,6 +60,7 @@
 			goto done;
 		}
 
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
 		// Open the file
 		if(noErr != (error = ExtAudioFileOpenURL((as_bridge CFURLRef)url, &fileHandle)))
 		{
@@ -124,6 +127,39 @@
 			goto done;
 		}
 		
+#elif __CC_PLATFORM_ANDROID
+		// Open the file
+		oggPath = [[url path] UTF8String];
+		rawFILE = fopen(oggPath, "rb");
+		if (NULL == rawFILE) {
+			error = !noErr;
+			goto done;
+		}
+		error = ov_open(rawFILE, &oggFile, NULL, 0);
+		if (0 != error) {
+			fclose(rawFILE);
+			rawFILE = NULL;
+			error = !noErr;
+			goto done;
+		}
+
+		// Get info
+		vorbis_info *info = ov_info(&oggFile, -1);
+		if (info) {
+			channelsPerFrame = info->channels;
+			sampleRate = (UInt32)info->rate;
+			bitsPerChannel = 16;
+			bytesPerFrame = (channelsPerFrame * bitsPerChannel) / 8;
+		} else {
+			fclose(rawFILE);
+			rawFILE = NULL;
+			error = !noErr;
+			goto done;
+		}
+
+		// Get frame count
+		totalFrames = (SInt64) ov_pcm_total(&oggFile, -1);
+#endif
 	done:
 		if(noErr != error)
 		{
@@ -137,11 +173,17 @@
 
 - (void) dealloc
 {
-    if(nil != fileHandle)
-    {
-        REPORT_EXTAUDIO_CALL(ExtAudioFileDispose(fileHandle), @"Error closing file (url = %@)", url);
-        fileHandle = nil;
-    }
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
+	if(nil != fileHandle)
+	{
+		REPORT_EXTAUDIO_CALL(ExtAudioFileDispose(fileHandle), @"Error closing file (url = %@)", url);
+		fileHandle = nil;
+	}
+#elif __CC_PLATFORM_ANDROID
+	if (rawFILE) {
+		fclose(rawFILE);
+	}
+#endif
 
 	as_release(url);
 	as_superdealloc();
@@ -154,10 +196,19 @@
 
 @synthesize url;
 
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
 - (AudioStreamBasicDescription*) streamDescription
 {
 	return &streamDescription;
 }
+#elif __CC_PLATFORM_ANDROID
+@synthesize sampleRate;
+@synthesize channelsPerFrame;
+@synthesize bitsPerChannel;
+@synthesize bytesPerFrame;
+@synthesize framesPerPacket;
+@synthesize bytesPerPacket;
+#endif
 
 @synthesize totalFrames;
 
@@ -172,6 +223,7 @@
 	{
 		if(value != reduceToMono)
 		{
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
 			OSStatus error;
 			reduceToMono = value;
 			streamDescription.mChannelsPerFrame = reduceToMono ? 1 : originalChannelsPerFrame;
@@ -182,6 +234,9 @@
 			{
 				REPORT_EXTAUDIO_CALL(error, @"Could not set new audio format for file (url = %@)", url);
 			}
+#elif __CC_PLATFORM_ANDROID
+#warning setReduceToMono unimplemented
+#endif
 		}
 	}
 }
@@ -192,6 +247,7 @@
 {
 	@synchronized(self)
 	{
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
 		if(nil == fileHandle)
 		{
 			OAL_LOG_ERROR(@"Attempted to read from closed file. Returning nil (url = %@)", url);
@@ -200,8 +256,8 @@
 		
 		OSStatus error;
 		UInt32 numFramesRead;
-        AudioBufferList bufferList;
-        UInt32 bufferOffset = 0;
+		AudioBufferList bufferList;
+		UInt32 bufferOffset = 0;
 
 		
 		// < 0 means read to the end of the file.
@@ -229,32 +285,32 @@
 			goto onFail;
 		}
 		
-        
-        bufferList.mNumberBuffers = 1;
-        bufferList.mBuffers[0].mNumberChannels = streamDescription.mChannelsPerFrame;
-        for(UInt32 framesToRead = (UInt32) numFrames; framesToRead > 0; framesToRead -= numFramesRead)
-        {
-            bufferList.mBuffers[0].mDataByteSize = streamDescription.mBytesPerFrame * framesToRead;
-            bufferList.mBuffers[0].mData = (char*)streamData + bufferOffset;
-            
-            numFramesRead = framesToRead;
-            if(noErr != (error = ExtAudioFileRead(fileHandle, &numFramesRead, &bufferList)))
-            {
-                REPORT_EXTAUDIO_CALL(error, @"Could not read audio data in file (url = %@)",
-                                     url);
-                goto onFail;
-            }
-            bufferOffset += streamDescription.mBytesPerFrame * numFramesRead;
-            if(numFramesRead == 0)
-            {
-                // Sometimes the stream description was wrong and you hit an EOF prematurely
-                break;
-            }
-        }
+		
+		bufferList.mNumberBuffers = 1;
+		bufferList.mBuffers[0].mNumberChannels = streamDescription.mChannelsPerFrame;
+		for(UInt32 framesToRead = (UInt32) numFrames; framesToRead > 0; framesToRead -= numFramesRead)
+		{
+			bufferList.mBuffers[0].mDataByteSize = streamDescription.mBytesPerFrame * framesToRead;
+			bufferList.mBuffers[0].mData = (char*)streamData + bufferOffset;
+			
+			numFramesRead = framesToRead;
+			if(noErr != (error = ExtAudioFileRead(fileHandle, &numFramesRead, &bufferList)))
+			{
+				REPORT_EXTAUDIO_CALL(error, @"Could not read audio data in file (url = %@)",
+									 url);
+				goto onFail;
+			}
+			bufferOffset += streamDescription.mBytesPerFrame * numFramesRead;
+			if(numFramesRead == 0)
+			{
+				// Sometimes the stream description was wrong and you hit an EOF prematurely
+				break;
+			}
+		}
 		
 		if(nil != bufferSize)
 		{
-            // Use however many bytes were actually read
+			// Use however many bytes were actually read
 			*bufferSize = bufferOffset;
 		}
 		
@@ -266,6 +322,71 @@
 			free(streamData);
 		}
 		return nil;
+#elif __CC_PLATFORM_ANDROID
+		UInt32 numFramesRead;
+		UInt32 bufferOffset = 0;
+
+		// < 0 means read to the end of the file.
+		if(numFrames < 0)
+		{
+			numFrames = totalFrames - startFrame;
+		}
+
+		// Allocate some memory to hold the data
+		UInt32 streamSizeInBytes = (UInt32)(bytesPerFrame * numFrames);
+		char* streamData = malloc(streamSizeInBytes);
+		if(nil == streamData)
+		{
+			OAL_LOG_ERROR(@"Could not allocate %ld bytes for audio buffer from file (url = %@)",
+						  (long)streamSizeInBytes,
+						  url);
+			goto onFail;
+		}
+
+		int ov_res = ov_pcm_seek(&oggFile, startFrame);
+		if(0 != ov_res)
+		{
+			REPORT_EXTAUDIO_CALL((OSStatus)ov_res, @"Could not seek to %lld in file (url = %@)",
+								 startFrame,
+								 url);
+			goto onFail;
+		}
+
+		int bitStream = 0;
+		int chunkSize = 0;
+		UInt32 bytesToRead = (UInt32) numFrames * bytesPerFrame;
+		UInt32 bytesRead = 0;
+		for(bytesRead = 0; bytesRead < bytesToRead; bytesRead += chunkSize)
+		{
+			chunkSize = (int) ov_read(&oggFile,
+								(char*)(streamData + bytesRead),
+								(int)(streamSizeInBytes - bytesRead),
+								&bitStream);
+			if (chunkSize < 0)
+			{
+				REPORT_EXTAUDIO_CALL((OSStatus)chunkSize, @"Could not read audio data in file (url = %@)",
+									 url);
+				goto onFail;
+			} else if (chunkSize == 0) {
+				break;
+			}
+		}
+
+		if(nil != bufferSize)
+		{
+			// Use however many bytes were actually read
+			*bufferSize = bytesRead;
+		}
+
+		return (void*)streamData;
+
+	onFail:
+		if(nil != streamData)
+		{
+			free(streamData);
+		}
+		return nil;
+#endif
 	}
 }
 
@@ -276,6 +397,7 @@
 {
 	@synchronized(self)
 	{
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
 		if(nil == fileHandle)
 		{
 			OAL_LOG_ERROR(@"Attempted to read from closed file. Returning nil (url = %@)", url);
@@ -318,6 +440,44 @@
 								   size:(ALsizei)bufferSize
 								 format:audioFormat
 							  frequency:(ALsizei)streamDescription.mSampleRate];
+#elif __CC_PLATFORM_ANDROID
+		UInt32 bufferSize;
+		void* streamData = [self audioDataWithStartFrame:startFrame numFrames:numFrames bufferSize:&bufferSize];
+		if(nil == streamData)
+		{
+			return nil;
+		}
+
+		ALenum audioFormat;
+		if(1 == channelsPerFrame)
+		{
+			if(8 == bitsPerChannel)
+			{
+				audioFormat = AL_FORMAT_MONO8;
+			}
+			else
+			{
+				audioFormat = AL_FORMAT_MONO16;
+			}
+		}
+		else
+		{
+			if(8 == bitsPerChannel)
+			{
+				audioFormat = AL_FORMAT_STEREO8;
+			}
+			else
+			{
+				audioFormat = AL_FORMAT_STEREO16;
+			}
+		}
+
+		return [ALBuffer bufferWithName:name
+								   data:streamData
+								   size:(ALsizei)bufferSize
+								 format:audioFormat
+							  frequency:(ALsizei)sampleRate];
+#endif
 	}
 }
 
@@ -332,3 +492,4 @@
 }
 
 @end
+
