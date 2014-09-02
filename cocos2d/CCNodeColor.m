@@ -35,9 +35,10 @@
 #import "Support/CGPointExtension.h"
 #import "CCNode_Private.h"
 
-#ifdef __CC_PLATFORM_IOS
+
+#if __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
-#elif defined(__CC_PLATFORM_MAC)
+#elif __CC_PLATFORM_MAC
 #import "Platforms/Mac/CCDirectorMac.h"
 #endif
 
@@ -101,22 +102,22 @@
 
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
-	CGSize size = self.contentSizeInPoints;
-	GLKVector2 hs = GLKVector2Make(size.width*0.5f, size.height*0.5f);
-	if(!CCRenderCheckVisbility(transform, hs, hs)) return;
-	
-	GLKVector2 zero = GLKVector2Make(0, 0);
-	
-	CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:self.renderState globalSortOrder:0];
-	
-	float w = size.width, h = size.height;
-	CCRenderBufferSetVertex(buffer, 0, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(0, 0, 0, 1)), zero, zero, _colors[0]});
-	CCRenderBufferSetVertex(buffer, 1, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(w, 0, 0, 1)), zero, zero, _colors[1]});
-	CCRenderBufferSetVertex(buffer, 2, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(w, h, 0, 1)), zero, zero, _colors[2]});
-	CCRenderBufferSetVertex(buffer, 3, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(0, h, 0, 1)), zero, zero, _colors[3]});
-	
-	CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
-	CCRenderBufferSetTriangle(buffer, 1, 0, 2, 3);
+    CGSize size = self.contentSizeInPoints;
+    GLKVector2 hs = GLKVector2Make(size.width*0.5f, size.height*0.5f);
+    if(!CCRenderCheckVisbility(transform, hs, hs)) return;
+    
+    GLKVector2 zero = GLKVector2Make(0, 0);
+    
+    CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:self.renderState globalSortOrder:0];
+    
+    float w = size.width, h = size.height;
+    CCRenderBufferSetVertex(buffer, 0, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(0, 0, 0, 1)), zero, zero, _colors[0]});
+    CCRenderBufferSetVertex(buffer, 1, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(w, 0, 0, 1)), zero, zero, _colors[1]});
+    CCRenderBufferSetVertex(buffer, 2, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(w, h, 0, 1)), zero, zero, _colors[2]});
+    CCRenderBufferSetVertex(buffer, 3, (CCVertex){GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(0, h, 0, 1)), zero, zero, _colors[3]});
+    
+    CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
+    CCRenderBufferSetTriangle(buffer, 1, 0, 2, 3);
 }
 
 #pragma mark Protocols

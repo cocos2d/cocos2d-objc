@@ -41,7 +41,7 @@
 #import "CCSprite_Private.h"
 #import "CCTiledMapLayer_Private.h"
 #import "CCTexture_Private.h"
-
+#import "CCMathTypesAndroid.h"
 
 #pragma mark -
 #pragma mark CCTMXLayer
@@ -155,7 +155,7 @@
 	//  - easier to render
 	// cons:
 	//  - difficult to scale / rotate / etc.
-	[self.texture setAliasTexParameters];
+	self.texture.antialiased = NO;
 
 	// Parse cocos2d properties
 	[self parseInternalProperties];

@@ -76,24 +76,24 @@
 #pragma mark - iOS
 // -----------------------------------------------------------------
 
-#if ( TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR )
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
 
-- (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event
+- (void)touchBegan:(CCTouch *)touch withEvent:(CCTouchEvent *)event
 {    
     [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
-- (void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
+- (void)touchMoved:(CCTouch *)touch withEvent:(CCTouchEvent *)event
 {
     [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
-- (void)touchEnded:(UITouch *)touch withEvent:(UIEvent *)event
+- (void)touchEnded:(CCTouch *)touch withEvent:(CCTouchEvent *)event
 {
     [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
-- (void)touchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
+- (void)touchCancelled:(CCTouch *)touch withEvent:(CCTouchEvent *)event
 {
     [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }

@@ -26,8 +26,10 @@
 
 #import "ccMacros.h"
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 #import <UIKit/UIKit.h>		// Needed for UIDevice
+#elif __CC_PLATFORM_ANDROID
+#import <BridgeKitV3/BridgeKit.h> // Needed for AndroidBuild
 #endif
 
 #import "Platforms/CCGL.h"
@@ -35,6 +37,33 @@
 #import "ccMacros.h"
 #import "ccConfig.h"
 #import "cocos2d.h"
+#import "CCRenderDispatch.h"
+
+Class CCGraphicsBufferClass;
+Class CCGraphicsBufferBindingsClass;
+Class CCRenderStateClass;
+Class CCRenderCommandDrawClass;
+
+NSString* const CCSetupPixelFormat = @"CCSetupPixelFormat";
+NSString* const CCSetupScreenMode = @"CCSetupScreenMode";
+NSString* const CCSetupScreenOrientation = @"CCSetupScreenOrientation";
+NSString* const CCSetupAnimationInterval = @"CCSetupAnimationInterval";
+NSString* const CCSetupFixedUpdateInterval = @"CCSetupFixedUpdateInterval";
+NSString* const CCSetupShowDebugStats = @"CCSetupShowDebugStats";
+NSString* const CCSetupTabletScale2X = @"CCSetupTabletScale2X";
+
+NSString* const CCSetupDepthFormat = @"CCSetupDepthFormat";
+NSString* const CCSetupPreserveBackbuffer = @"CCSetupPreserveBackbuffer";
+NSString* const CCSetupMultiSampling = @"CCSetupMultiSampling";
+NSString* const CCSetupNumberOfSamples = @"CCSetupNumberOfSamples";
+
+NSString* const CCScreenOrientationLandscape = @"CCScreenOrientationLandscape";
+NSString* const CCScreenOrientationPortrait = @"CCScreenOrientationPortrait";
+NSString* const CCScreenOrientationAll = @"CCScreenOrientationAll";
+
+NSString* const CCScreenModeFlexible = @"CCScreenModeFlexible";
+NSString* const CCScreenModeFixed = @"CCScreenModeFixed";
+
 
 @interface CCConfiguration ()
 -(void) getOpenGLvariables;
@@ -72,8 +101,8 @@ static char * glExtensions;
 }
 
 
-#ifdef __CC_PLATFORM_IOS
-#elif defined(__CC_PLATFORM_MAC)
+#if __CC_PLATFORM_IOS
+#elif __CC_PLATFORM_MAC
 - (NSString*)getMacVersion
 {
     return([[NSProcessInfo processInfo] operatingSystemVersionString]);
@@ -86,10 +115,12 @@ static char * glExtensions;
 
 		// Obtain iOS version
 		_OSVersion = 0;
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 		NSString *OSVer = [[UIDevice currentDevice] systemVersion];
-#elif defined(__CC_PLATFORM_MAC)
+#elif __CC_PLATFORM_MAC
 		NSString *OSVer = [self getMacVersion];
+#elif __CC_PLATFORM_ANDROID
+        NSString *OSVer = @"?";//[AndroidBuild DISPLAY];
 #endif
 		NSArray *arr = [OSVer componentsSeparatedByString:@"."];
 		int idx = 0x01000000;
@@ -100,9 +131,30 @@ static char * glExtensions;
 		}
 	}
 
-	CC_CHECK_GL_ERROR_DEBUG();
-
 	return self;
+}
+
+-(CCGraphicsAPI)graphicsAPI
+{
+	if(_graphicsAPI == CCGraphicsAPIInvalid){
+		if(__CC_METAL_SUPPORTED_AND_ENABLED && NSProtocolFromString(@"MTLDevice") && !getenv("CC_FORCE_GL")){
+			CCGraphicsBufferClass = NSClassFromString(@"CCGraphicsBufferMetal");
+			CCGraphicsBufferBindingsClass = NSClassFromString(@"CCGraphicsBufferBindingsMetal");
+			CCRenderStateClass = NSClassFromString(@"CCRenderStateMetal");
+			CCRenderCommandDrawClass = NSClassFromString(@"CCRenderCommandDrawMetal");
+			
+			_graphicsAPI = CCGraphicsAPIMetal;
+		} else {
+			CCGraphicsBufferClass = NSClassFromString(@"CCGraphicsBufferGLBasic");
+			CCGraphicsBufferBindingsClass = NSClassFromString(@"CCGraphicsBufferBindingsGL");
+			CCRenderStateClass = NSClassFromString(@"CCRenderStateGL");
+			CCRenderCommandDrawClass = NSClassFromString(@"CCRenderCommandDrawGL");
+			
+			_graphicsAPI = CCGraphicsAPIGL;
+		}
+	}
+	
+	return _graphicsAPI;
 }
 
 - (BOOL) checkForGLExtension:(NSString *)searchName
@@ -118,20 +170,37 @@ static char * glExtensions;
 -(NSInteger) runningDevice
 {
 	NSInteger ret=-1;
-	
-#if defined(APPORTABLE)
-    if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-	{
-		ret = ([UIScreen mainScreen].scale > 1) ? CCDeviceiPadRetinaDisplay : CCDeviceiPad;
-	}
-	else if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone )
-	{
-		if( [UIScreen mainScreen].scale > 1 ) {
-			ret = CCDeviceiPhoneRetinaDisplay;
-		} else
-			ret = CCDeviceiPhone;
-	}
-#elif defined(__CC_PLATFORM_IOS)
+
+#if __CC_PLATFORM_ANDROID
+    
+    AndroidDisplayMetrics *metrics = [[AndroidDisplayMetrics alloc] init];
+    [[CCActivity currentActivity].windowManager.defaultDisplay getMetrics:metrics];
+    double yInches= metrics.heightPixels/metrics.ydpi;
+    double xInches= metrics.widthPixels/metrics.xdpi;
+    double diagonalInches = sqrt(xInches*xInches + yInches*yInches);
+    if (diagonalInches<=CC_MINIMUM_TABLET_SCREEN_DIAGONAL){
+
+        
+        if([CCDirector sharedDirector].contentScaleFactor > 1.0)
+        {
+            ret = CCDeviceiPhoneRetinaDisplay;
+        }
+        else
+        {
+            ret = CCDeviceiPhone;
+        }
+    } else {
+        if([CCDirector sharedDirector].contentScaleFactor > 1.0)
+        {
+            ret = CCDeviceiPadRetinaDisplay;
+        }
+        else
+        {
+            ret = CCDeviceiPad;
+        }
+
+    }
+#elif __CC_PLATFORM_IOS
 	
 	if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 	{
@@ -148,7 +217,7 @@ static char * glExtensions;
 			ret = isiPhone5 ? CCDeviceiPhone5 : CCDeviceiPhone;
 	}
 	
-#elif defined(__CC_PLATFORM_MAC)
+#elif __CC_PLATFORM_MAC
 	
 	// XXX: Add here support for Mac Retina Display
 	ret = CCDeviceMac;
@@ -160,105 +229,138 @@ static char * glExtensions;
 
 #pragma mark OpenGL getters
 
-/** OpenGL Max texture size. */
-
 -(void) getOpenGLvariables
 {
 	if( ! _openGLInitialized ) {
+		CCRenderDispatch(NO, ^{
+			glExtensions = (char*) glGetString(GL_EXTENSIONS);
 
-		glExtensions = (char*) glGetString(GL_EXTENSIONS);
+			NSAssert( glExtensions, @"OpenGL not initialized!");
 
-		NSAssert( glExtensions, @"OpenGL not initialized!");
-
-#ifdef __CC_PLATFORM_IOS
-		if( _OSVersion >= CCSystemVersion_iOS_4_0 )
-			glGetIntegerv(GL_MAX_SAMPLES_APPLE, &_maxSamplesAllowed);
-		else
-			_maxSamplesAllowed = 0;
-#elif defined(__CC_PLATFORM_MAC)
-		glGetIntegerv(GL_MAX_SAMPLES, &_maxSamplesAllowed);
+#if __CC_PLATFORM_IOS
+			if( _OSVersion >= CCSystemVersion_iOS_4_0 )
+				glGetIntegerv(GL_MAX_SAMPLES_APPLE, &_maxSamplesAllowed);
+			else
+				_maxSamplesAllowed = 0;
+#elif __CC_PLATFORM_MAC
+			glGetIntegerv(GL_MAX_SAMPLES, &_maxSamplesAllowed);
 #endif
 
-		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &_maxTextureSize);
-		glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &_maxTextureUnits );
+			glGetIntegerv(GL_MAX_TEXTURE_SIZE, &_maxTextureSize);
+			glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &_maxTextureUnits );
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 		_supportsNPOT = YES;
-#elif defined(__CC_PLATFORM_MAC)
+        _supportsPackedDepthStencil = YES;
+#elif __CC_PLATFORM_MAC
 		_supportsNPOT = [self checkForGLExtension:@"GL_ARB_texture_non_power_of_two"];
+        _supportsPackedDepthStencil = YES;
+#elif __CC_PLATFORM_ANDROID
+        // source: http://www.khronos.org/registry/gles/
+        _supportsNPOT = [self checkForGLExtension:@"GL_OES_texture_npot"] || [self checkForGLExtension:@"GL_NV_texture_npot_2D_mipmap"];
+        _supportsPackedDepthStencil = [self checkForGLExtension:@"GL_OES_packed_depth_stencil"];
 #endif
-
 		_supportsPVRTC = [self checkForGLExtension:@"GL_IMG_texture_compression_pvrtc"];
 
 		// It seems that somewhere between firmware iOS 3.0 and 4.2 Apple renamed
 		// GL_IMG_... to GL_APPLE.... So we should check both names
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 		BOOL bgra8a = [self checkForGLExtension:@"GL_IMG_texture_format_BGRA8888"];
 		BOOL bgra8b = [self checkForGLExtension:@"GL_APPLE_texture_format_BGRA8888"];
 		_supportsBGRA8888 = bgra8a | bgra8b;
-#elif defined(__CC_PLATFORM_MAC)
+#elif __CC_PLATFORM_MAC
 		_supportsBGRA8888 = [self checkForGLExtension:@"GL_EXT_bgra"];
 #endif
-		_supportsDiscardFramebuffer = [self checkForGLExtension:@"GL_EXT_discard_framebuffer"];
+			_supportsDiscardFramebuffer = [self checkForGLExtension:@"GL_EXT_discard_framebuffer"];
 
-		_supportsShareableVAO = [self checkForGLExtension:@"GL_APPLE_vertex_array_object"];
+			_supportsShareableVAO = [self checkForGLExtension:@"GL_APPLE_vertex_array_object"];
+			
+			// Check if unsynchronized buffers are supported.
+			if(
+				[self checkForGLExtension:@"GL_OES_mapbuffer"] &&
+				[self checkForGLExtension:@"GL_EXT_map_buffer_range"]
+			){
+				CCGraphicsBufferClass = NSClassFromString(@"CCGraphicsBufferGLUnsynchronized");
+			}
+			
+			_openGLInitialized = YES;
+		});
+	}
+}
+
+/// Cache the current device configuration if it hasn't already been done.
+/// The naming here is admittedly terrible and generic but I couldn't think of something better.
+-(void)configure
+{
+	if(!_configured){
+		switch(self.graphicsAPI){
+			case CCGraphicsAPIGL:
+				[self getOpenGLvariables];
+				break;
+			case CCGraphicsAPIMetal:
+				// TODO Hard coding these for now... Does the Metal API even expose any queries for limits?
+				_maxTextureSize = 4096;
+				_supportsPVRTC = YES;
+				_supportsNPOT = YES;
+				_supportsBGRA8888 = YES;
+				_supportsDiscardFramebuffer = NO;
+				_supportsShareableVAO = NO;
+				_maxSamplesAllowed = 4;
+				_maxTextureUnits = 10;
+				_supportsPackedDepthStencil = YES;
+				break;
+			default: NSAssert(NO, @"Internal Error: Graphics API not set up?");
+		}
 		
-		_openGLInitialized = YES;
+		_configured = YES;
 	}
 }
 
 -(GLint) maxTextureSize
 {
-	if( ! _openGLInitialized )
-		[self getOpenGLvariables];
+	[self configure];
 	return _maxTextureSize;
 }
 
 -(GLint) maxTextureUnits
 {
-	if( ! _openGLInitialized )
-		[self getOpenGLvariables];
-
+	[self configure];
 	return _maxTextureUnits;
 }
 
 -(BOOL) supportsNPOT
 {
-	if( ! _openGLInitialized )
-		[self getOpenGLvariables];
-
+	[self configure];
 	return _supportsNPOT;
 }
 
 -(BOOL) supportsPVRTC
 {
-	if( ! _openGLInitialized )
-		[self getOpenGLvariables];
-
+	[self configure];
 	return _supportsPVRTC;
+}
+
+-(BOOL) supportsPackedDepthStencil
+{
+	[self configure];
+	return _supportsPackedDepthStencil;
 }
 
 -(BOOL) supportsBGRA8888
 {
-	if( ! _openGLInitialized )
-		[self getOpenGLvariables];
-
+	[self configure];
 	return _supportsBGRA8888;
 }
 
 -(BOOL) supportsDiscardFramebuffer
 {
-	if( ! _openGLInitialized )
-		[self getOpenGLvariables];
-
+	[self configure];
 	return _supportsDiscardFramebuffer;
 }
 
 -(BOOL) supportsShareableVAO
 {
-	if( ! _openGLInitialized )
-		[self getOpenGLvariables];
-
+	[self configure];
 	return _supportsShareableVAO;
 }
 
@@ -270,13 +372,15 @@ static char * glExtensions;
 #if DEBUG
 	printf("cocos2d: %s\n", [cocos2dVersion() UTF8String] );
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 	NSString *OSVer = [[UIDevice currentDevice] systemVersion];
-#elif defined(__CC_PLATFORM_MAC)
+#elif __CC_PLATFORM_ANDROID
+    NSString *OSVer = @"?";//[AndroidBuild DISPLAY];
+#else //__CC_PLATFORM_MAC
 	NSString *OSVer = [self getMacVersion];
 #endif
 
-#ifdef __CC_PLATFORM_MAC
+#if __CC_PLATFORM_MAC
 	printf("cocos2d: Director's thread: %s\n",
 #if (CC_DIRECTOR_MAC_THREAD == CC_MAC_USE_MAIN_THREAD)
 		  "Main thread"
@@ -297,21 +401,33 @@ static char * glExtensions;
 		  );
 
 	printf("cocos2d: OS version: %s (0x%08x)\n", [OSVer UTF8String], _OSVersion);
-	printf("cocos2d: %ld bit runtime\n", 8*sizeof(long));
+	printf("cocos2d: %ld bit runtime\n", 8*sizeof(long));	
+	printf("cocos2d: Multi-threaded rendering: %s\n", (CC_RENDER_DISPATCH_ENABLED ? "YES" : "NO"));
 	
-	printf("cocos2d: GL_VENDOR:   %s\n", glGetString(GL_VENDOR) );
-	printf("cocos2d: GL_RENDERER: %s\n", glGetString ( GL_RENDERER   ) );
-	printf("cocos2d: GL_VERSION:  %s\n", glGetString ( GL_VERSION    ) );
+	if(_graphicsAPI == CCGraphicsAPIGL){
+		printf("cocos2d: OpenGL Rendering enabled.");
+		
+		CCRenderDispatch(NO, ^{
+			printf("cocos2d: GL_VENDOR:   %s\n", glGetString(GL_VENDOR) );
+			printf("cocos2d: GL_RENDERER: %s\n", glGetString ( GL_RENDERER   ) );
+			printf("cocos2d: GL_VERSION:  %s\n", glGetString ( GL_VERSION    ) );
+		});
+		
+		printf("cocos2d: GL_MAX_TEXTURE_SIZE: %d\n", _maxTextureSize);
+		printf("cocos2d: GL_MAX_TEXTURE_UNITS: %d\n", _maxTextureUnits);
+		printf("cocos2d: GL_MAX_SAMPLES: %d\n", _maxSamplesAllowed);
+		printf("cocos2d: GL supports PVRTC: %s\n", (_supportsPVRTC ? "YES" : "NO") );
+		printf("cocos2d: GL supports BGRA8888 textures: %s\n", (_supportsBGRA8888 ? "YES" : "NO") );
+		printf("cocos2d: GL supports NPOT textures: %s\n", (_supportsNPOT ? "YES" : "NO") );
+		printf("cocos2d: GL supports discard_framebuffer: %s\n", (_supportsDiscardFramebuffer ? "YES" : "NO") );
+		printf("cocos2d: GL supports shareable VAO: %s\n", (_supportsShareableVAO ? "YES" : "NO") );
+	} else if(_graphicsAPI == CCGraphicsAPIMetal){
+		printf("cocos2d: Metal Rendering enabled.");
+	}
 	
-	printf("cocos2d: GL_MAX_TEXTURE_SIZE: %d\n", _maxTextureSize);
-	printf("cocos2d: GL_MAX_TEXTURE_UNITS: %d\n", _maxTextureUnits);
-	printf("cocos2d: GL_MAX_SAMPLES: %d\n", _maxSamplesAllowed);
-	printf("cocos2d: GL supports PVRTC: %s\n", (_supportsPVRTC ? "YES" : "NO") );
-	printf("cocos2d: GL supports BGRA8888 textures: %s\n", (_supportsBGRA8888 ? "YES" : "NO") );
-	printf("cocos2d: GL supports NPOT textures: %s\n", (_supportsNPOT ? "YES" : "NO") );
-	printf("cocos2d: GL supports discard_framebuffer: %s\n", (_supportsDiscardFramebuffer ? "YES" : "NO") );
-	printf("cocos2d: GL supports shareable VAO: %s\n", (_supportsShareableVAO ? "YES" : "NO") );
-	
+	printf("cocos2d: CCGraphicsBufferClass: %s\n", NSStringFromClass(CCGraphicsBufferClass).UTF8String);
+	printf("cocos2d: CCGraphicsBufferBindingsClass: %s\n", NSStringFromClass(CCGraphicsBufferBindingsClass).UTF8String);
+	printf("cocos2d: CCRenderCommandDrawClass: %s\n", NSStringFromClass(CCRenderCommandDrawClass).UTF8String);
 #endif // DEBUG
 }
 @end
