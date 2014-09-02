@@ -11,6 +11,11 @@
 #import "CCTexture.h"
 
 NSString * const CCShaderUniformPreviousPassTexture = @"cc_PreviousPassTexture";
+NSString * const CCShaderUniformTexCoord1Center     = @"cc_FragTexCoord1Center";
+NSString * const CCShaderUniformTexCoord1Extents    = @"cc_FragTexCoord1Extents";
+NSString * const CCShaderUniformTexCoord2Center     = @"cc_FragTexCoord2Center";
+NSString * const CCShaderUniformTexCoord2Extents    = @"cc_FragTexCoord2Extents";
+
 
 static NSString* fragBase =
 @"%@\n\n"   // uniforms
@@ -278,7 +283,11 @@ static NSString* vertBase =
 + (NSArray *)defaultEffectFragmentUniforms
 {
     return @[
-             [CCEffectUniform uniform:@"sampler2D" name:CCShaderUniformPreviousPassTexture value:(NSValue *)[CCTexture none]]
+             [CCEffectUniform uniform:@"sampler2D" name:CCShaderUniformPreviousPassTexture value:(NSValue *)[CCTexture none]],
+             [CCEffectUniform uniform:@"vec2" name:CCShaderUniformTexCoord1Center value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]],
+             [CCEffectUniform uniform:@"vec2" name:CCShaderUniformTexCoord1Extents value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]],
+             [CCEffectUniform uniform:@"vec2" name:CCShaderUniformTexCoord2Center value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]],
+             [CCEffectUniform uniform:@"vec2" name:CCShaderUniformTexCoord2Extents value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]]
             ];
 }
 

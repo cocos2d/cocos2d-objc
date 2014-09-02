@@ -15,6 +15,11 @@
 #endif
 
 extern NSString * const CCShaderUniformPreviousPassTexture;
+extern NSString * const CCShaderUniformTexCoord1Center;
+extern NSString * const CCShaderUniformTexCoord1Extents;
+extern NSString * const CCShaderUniformTexCoord2Center;
+extern NSString * const CCShaderUniformTexCoord2Extents;
+
 
 typedef NS_ENUM(NSUInteger, CCEffectFunctionStitchFlags)
 {
@@ -98,6 +103,10 @@ typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass);
 @property (nonatomic, assign) CCSpriteVertexes verts;
 @property (nonatomic, assign) GLKMatrix4 transform;
 @property (nonatomic, assign) GLKMatrix4 ndcToWorld;
+@property (nonatomic, assign) GLKVector2 texCoord1Center;
+@property (nonatomic, assign) GLKVector2 texCoord1Extents;
+@property (nonatomic, assign) GLKVector2 texCoord2Center;
+@property (nonatomic, assign) GLKVector2 texCoord2Extents;
 @property (nonatomic, strong) CCBlendMode* blendMode;
 @property (nonatomic, strong) CCShader* shader;
 @property (nonatomic, strong) NSMutableDictionary* shaderUniforms;

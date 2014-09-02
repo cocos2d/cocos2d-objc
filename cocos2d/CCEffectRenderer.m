@@ -20,6 +20,9 @@
 #import "CCTexture_Private.h"
 
 
+static CCSpriteVertexes padVertices(const CCSpriteVertexes *input, CGSize padding, BOOL padVertices);
+static CCVertex padVertex(CCVertex input, GLKVector2 positionOffset, GLKVector2 texCoord1Offset, GLKVector2 texCoord2Offset);
+
 @interface CCEffectRenderTarget : NSObject
 
 @property (nonatomic, readonly) CCTexture *texture;
@@ -164,11 +167,24 @@
     NSAssert(effect.readyForRendering, @"Effect not ready for rendering. Call prepareForRendering first.");
     [self freeAllRenderTargets];
     
-    CCEffectRenderTarget *previousPassRT = nil;
-    for(NSUInteger i = 0; i < effect.renderPassesRequired; i++)
+    if (!effect.renderPassesRequired)
     {
-        BOOL lastPass = (i == (effect.renderPassesRequired - 1));
-        BOOL directRendering = lastPass && effect.supportsDirectRendering;
+        [sprite enqueueTriangles:renderer transform:transform];
+        return;
+    }
+    
+    NSUInteger effectPassCount = effect.renderPassesRequired;
+    NSUInteger extraPassCount = 0;
+    if (!effect.supportsDirectRendering)
+    {
+        extraPassCount = 1;
+    }
+    
+    CCEffectRenderTarget *previousPassRT = nil;
+    for(NSUInteger i = 0; i < (effectPassCount + extraPassCount); i++)
+    {
+        BOOL fromIntermediate = (i > 0);
+        BOOL toFramebuffer = (i == (effectPassCount + extraPassCount - 1));
         
         CCTexture *previousPassTexture = nil;
         if (previousPassRT)
@@ -181,18 +197,53 @@
             previousPassTexture = sprite.texture ?: [CCTexture none];
         }
         
-        CCEffectRenderPass* renderPass = [effect renderPassAtIndex:i];
+        CCEffectRenderPass* renderPass = nil;
+        if (i < effectPassCount)
+        {
+            renderPass = [effect renderPassAtIndex:i];
+        }
+        else
+        {
+            renderPass = [[CCEffectRenderPass alloc] init];
+            renderPass.debugLabel = @"CCEffectRenderer composite pass";
+            renderPass.shader = [CCEffectRenderer sharedCopyShader];
+            renderPass.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTex){
+                
+                pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTex;
+                pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTex;
+            } copy]];
+
+        }
         renderPass.renderer = renderer;
         renderPass.renderPassId = i;
-        renderPass.verts = *(sprite.vertexes);
+        
+        // The different render sources and destinations and how we need to handle padding.
+        // When the source of a render pass is the original sprite, we need to pad both the
+        // vertex positions and texture coordinates to make the rendered geometry larger without
+        // visibly scaling the sprite image. When the source of a render pass is an intermediate
+        // render target, we pad the vertex positions but not the texture coordinates because the
+        // render target has already been padded.
+        //
+        // - First pass directly into FB : Pad vertices and texture coordinates
+        // - First pass into intermediate RT : Pad vertices and texture coordinates, add padding to RT, adjust ortho matrix
+        // - Later pass into FB : Pad vertices but not texture coordiates
+        // - Later pass into intermediate RT : Pad vertices but not texture coordinates, add padding to RT, adjust ortho matrix
+        //
+        
+        renderPass.verts = padVertices(sprite.vertexes, effect.padding, !fromIntermediate);
+        renderPass.texCoord1Center = GLKVector2Make((sprite.vertexes->tr.texCoord1.s + sprite.vertexes->bl.texCoord1.s) * 0.5f, (sprite.vertexes->tr.texCoord1.t + sprite.vertexes->bl.texCoord1.t) * 0.5f);
+        renderPass.texCoord1Extents = GLKVector2Make((sprite.vertexes->tr.texCoord1.s - sprite.vertexes->bl.texCoord1.s) * 0.5f, (sprite.vertexes->tr.texCoord1.t - sprite.vertexes->bl.texCoord1.t) * 0.5f);
+        renderPass.texCoord2Center = GLKVector2Make((sprite.vertexes->tr.texCoord2.s + sprite.vertexes->bl.texCoord2.s) * 0.5f, (sprite.vertexes->tr.texCoord2.t + sprite.vertexes->bl.texCoord2.t) * 0.5f);
+        renderPass.texCoord2Extents = GLKVector2Make((sprite.vertexes->tr.texCoord2.s - sprite.vertexes->bl.texCoord2.s) * 0.5f, (sprite.vertexes->tr.texCoord2.t - sprite.vertexes->bl.texCoord2.t) * 0.5f);
+
         renderPass.blendMode = [CCBlendMode premultipliedAlphaMode];
-        renderPass.needsClear = !directRendering;
+        renderPass.needsClear = !toFramebuffer;
         renderPass.shaderUniforms = uniforms;
         
         CCEffectRenderTarget *rt = nil;
         
         [renderer pushGroup];
-        if (directRendering)
+        if (toFramebuffer)
         {
             renderPass.transform = *transform;
 
@@ -208,7 +259,7 @@
         {
             bool inverted;
             
-            GLKMatrix4 renderTargetProjection = GLKMatrix4MakeOrtho(0.0f, _contentSize.width, 0.0f, _contentSize.height, -1024.0f, 1024.0f);
+            GLKMatrix4 renderTargetProjection = GLKMatrix4MakeOrtho(-effect.padding.width, _contentSize.width + effect.padding.width, -effect.padding.height, _contentSize.height + effect.padding.height, -1024.0f, 1024.0f);
             GLKMatrix4 invRenderTargetProjection = GLKMatrix4Invert(renderTargetProjection, &inverted);
             NSAssert(inverted, @"Unable to invert matrix.");
             
@@ -222,7 +273,7 @@
             renderPass.transform = renderTargetProjection;
             renderPass.ndcToWorld = ndcToWorldMat;
             
-            CGSize rtSize = CGSizeMake(_contentSize.width * _contentScale, _contentSize.height * _contentScale);
+            CGSize rtSize = CGSizeMake((_contentSize.width + 2 * effect.padding.width) * _contentScale, (_contentSize.height + 2 * effect.padding.height) * _contentScale);
             rtSize.width = (rtSize.width <= 1.0f) ? 1.0f : rtSize.width;
             rtSize.height = (rtSize.height <= 1.0f) ? 1.0f : rtSize.height;
             
@@ -237,25 +288,6 @@
         [renderer popGroupWithDebugLabel:renderPass.debugLabel globalSortOrder:0];
         
         previousPassRT = rt;
-    }
-    
-    if (!effect.supportsDirectRendering)
-    {
-        // If the effect doesn't support direct renderering then we need one last
-        // draw to composite the effect results into the displayable framebuffer.
-        [renderer pushGroup];
-
-        CCTexture *backup = sprite.texture;
-        sprite.shader = [CCEffectRenderer sharedCopyShader];
-        sprite.texture = previousPassRT.texture;
-        [sprite enqueueTriangles:renderer transform:transform];
-        sprite.texture = backup;
-        
-        [renderer popGroupWithDebugLabel:@"CCEffectRenderer: Post-render composite pass" globalSortOrder:0];
-    }
-    else if (!effect.renderPassesRequired)
-    {
-        [sprite enqueueTriangles:renderer transform:transform];
     }
 }
 
@@ -331,3 +363,47 @@
 }
 
 @end
+
+CCSpriteVertexes padVertices(const CCSpriteVertexes *input, CGSize padding, BOOL padTexCoords)
+{
+    CCSpriteVertexes output;
+    if (CGSizeEqualToSize(CGSizeZero, padding))
+    {
+        output = *input;
+    }
+    else
+    {
+        GLKVector2 texCoord1Step = GLKVector2Make(0.0f, 0.0f);
+        GLKVector2 texCoord2Step = GLKVector2Make(0.0f, 0.0f);
+        if (padTexCoords)
+        {
+            texCoord1Step = GLKVector2Make(padding.width * (input->br.texCoord1.s - input->bl.texCoord1.s) / (input->br.position.x - input->bl.position.x),
+                                           padding.height * (input->tl.texCoord1.t - input->bl.texCoord1.t) / (input->tl.position.y - input->bl.position.y));
+            texCoord2Step = GLKVector2Make(padding.width * (input->br.texCoord2.s - input->bl.texCoord2.s) / (input->br.position.x - input->bl.position.x),
+                                           padding.height * (input->tl.texCoord2.t - input->bl.texCoord2.t) / (input->tl.position.y - input->bl.position.y));
+        }
+        
+        output.bl = padVertex(input->bl, GLKVector2Make(-padding.width, -padding.height), GLKVector2Make(-texCoord1Step.x, -texCoord1Step.y), GLKVector2Make(-texCoord2Step.x, -texCoord2Step.y));
+        output.br = padVertex(input->br, GLKVector2Make( padding.width, -padding.height), GLKVector2Make( texCoord1Step.x, -texCoord1Step.y), GLKVector2Make( texCoord2Step.x, -texCoord2Step.y));
+        output.tr = padVertex(input->tr, GLKVector2Make( padding.width,  padding.height), GLKVector2Make( texCoord1Step.x,  texCoord1Step.y), GLKVector2Make( texCoord2Step.x,  texCoord2Step.y));
+        output.tl = padVertex(input->tl, GLKVector2Make(-padding.width,  padding.height), GLKVector2Make(-texCoord1Step.x,  texCoord1Step.y), GLKVector2Make(-texCoord2Step.x,  texCoord2Step.y));
+    }
+    return output;
+}
+
+CCVertex padVertex(CCVertex input, GLKVector2 positionOffset, GLKVector2 texCoord1Offset, GLKVector2 texCoord2Offset)
+{
+    CCVertex output;
+    output.position.x = input.position.x + positionOffset.x;
+    output.position.y = input.position.y + positionOffset.y;
+    output.position.z = input.position.z;
+    output.position.w = input.position.w;
+    output.texCoord1.s = input.texCoord1.s + texCoord1Offset.x;
+    output.texCoord1.t = input.texCoord1.t + texCoord1Offset.y;
+    output.texCoord2.s = input.texCoord2.s + texCoord2Offset.x;
+    output.texCoord2.t = input.texCoord2.t + texCoord2Offset.y;
+    output.color = input.color;
+    
+    return output;
+}
+
