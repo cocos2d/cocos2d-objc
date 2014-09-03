@@ -95,7 +95,7 @@
 		XCTAssertNotNil(renderState, @"Render state was not created.");
 	}
 	
-	[CCRENDERSTATE_CACHE flush];
+	[CCRenderState flushCache];
 	
 	XCTAssertNil(renderState, @"Render state was not released.");
 }

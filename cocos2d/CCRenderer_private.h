@@ -47,10 +47,6 @@ typedef struct CCGlobalUniforms {
 
 #endif
 
-// TODO These should be made private to the module.
-extern id CCBLENDMODE_CACHE;
-extern id CCRENDERSTATE_CACHE;
-
 /// Options dictionary for the disabled blending mode.
 extern NSDictionary *CCBLEND_DISABLED_OPTIONS;
 
@@ -83,17 +79,23 @@ extern NSDictionary *CCBLEND_DISABLED_OPTIONS;
 	NSDictionary *_options;
 }
 
+/// Remove unused blend modes from the internal cache.
++(void)flushCache;
+
 @end
 
 
 @interface CCRenderState(){
 	@public
-	CCTexture *_mainTexture;
 	BOOL _immutable;
 	CCBlendMode *_blendMode;
 	CCShader *_shader;
 	NSDictionary *_shaderUniforms;
 }
+
+/// Remove unused render states from the internal cache.
+/// This is might be made public in the future.
++(void)flushCache;
 
 -(void)transitionRenderer:(CCRenderer *)renderer FromState:(CCRenderState *)previous;
 

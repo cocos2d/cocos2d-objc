@@ -149,7 +149,7 @@ const NSString *CCBlendEquationAlpha = @"CCBlendEquationAlpha";
 	return self;
 }
 
-CCBlendModeCache *CCBLENDMODE_CACHE = nil;
+static CCBlendModeCache *CCBLENDMODE_CACHE = nil;
 
 // Default modes
 static CCBlendMode *CCBLEND_DISABLED = nil;
@@ -192,6 +192,11 @@ NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 	}];
 }
 
++(void)flushCache
+{
+	[CCBLENDMODE_CACHE flush];
+}
+
 +(CCBlendMode *)blendModeWithOptions:(NSDictionary *)options
 {
 	return [CCBLENDMODE_CACHE objectForKey:options];
@@ -226,20 +231,70 @@ NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 
 
 //MARK: Render States.
+
+/// A simple key class for tracking render states.
+/// ivars are unretained so that it doesn't force textures to stay in memory.
+@interface CCRenderStateCacheKey : NSObject<NSCopying> @end
+@implementation CCRenderStateCacheKey {
+	@public
+	__unsafe_unretained CCBlendMode *_blendMode;
+	__unsafe_unretained CCShader *_shader;
+	__unsafe_unretained CCTexture *_mainTexture;
+}
+
+-(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader mainTexture:(CCTexture *)mainTexture
+{
+	if((self = [super init])){
+		_blendMode = blendMode;
+		_shader = shader;
+		_mainTexture = mainTexture;
+	}
+	
+	return self;
+}
+
+-(NSUInteger)hash
+{
+	// Not great, but acceptable. All values are unique by pointer.
+	return ((NSUInteger)_blendMode ^ (NSUInteger)_shader ^ (NSUInteger)_mainTexture);
+}
+
+-(BOOL)isEqual:(id)object
+{
+	CCRenderStateCacheKey *other = object;
+	
+	return (
+		[other isKindOfClass:[CCRenderStateCacheKey class]] &&
+		_blendMode == other->_blendMode &&
+		_shader == other->_shader &&
+		_mainTexture == other->_mainTexture
+	);
+}
+
+-(id)copyWithZone:(NSZone *)zone
+{
+	// Object is immutable.
+	return self;
+}
+
+@end
+
+
 @interface CCRenderStateCache : CCCache
 @end
 
 
 @implementation CCRenderStateCache
 
--(id)createSharedDataForKey:(CCRenderState *)renderState
+-(id)createSharedDataForKey:(CCRenderStateCacheKey *)key
 {
-	return renderState;
+	return key;
 }
 
--(id)createPublicObjectForSharedData:(CCRenderState *)renderState
+-(id)createPublicObjectForSharedData:(CCRenderStateCacheKey *)key
 {
-	return [renderState copy];
+	// Although the key ivars are unretained, this method is only ever called when a key has been freshly constructed using strong references to the necessary objects.
+	return [CCRenderStateClass renderStateWithBlendMode:key->_blendMode shader:key->_shader shaderUniforms:@{CCShaderUniformMainTexture:key->_mainTexture} copyUniforms:YES];
 }
 
 // Nothing special
@@ -258,8 +313,8 @@ NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 
 @implementation CCRenderState
 
-CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
-CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
+static CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
+static CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 
 +(void)initialize
 {
@@ -270,20 +325,23 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 	CCRENDERSTATE_DEBUGCOLOR = [[CCRenderStateClass alloc] initWithBlendMode:CCBLEND_DISABLED shader:[CCShader positionColorShader] shaderUniforms:@{}];
 }
 
++(void)flushCache
+{
+	[CCRENDERSTATE_CACHE flush];
+}
+
 -(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms
 {
 	// Allocate a new instance of the correct class instead of self. (This method was already deprecated).
-	return [[CCRenderStateClass alloc] initWithBlendMode:blendMode shader:shader mainTexture:nil shaderUniforms:shaderUniforms copyUniforms:NO];
+	return [[CCRenderStateClass alloc] initWithBlendMode:blendMode shader:shader shaderUniforms:shaderUniforms copyUniforms:NO];
 }
 
--(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader mainTexture:(CCTexture *)mainTexture shaderUniforms:(NSDictionary *)shaderUniforms copyUniforms:(BOOL)copyUniforms
+-(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms copyUniforms:(BOOL)copyUniforms
 {
 	if((self = [super init])){
 		_blendMode = blendMode;
 		_shader = shader;
 		_shaderUniforms = (copyUniforms ? [shaderUniforms copy] : shaderUniforms);
-		
-		_mainTexture = mainTexture;
 		
 		// The renderstate as a whole is immutable if the uniforms are copied.
 		_immutable = copyUniforms;
@@ -299,16 +357,12 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 		mainTexture = [CCTexture none];
 	}
 	
-	// The uniforms are immutable, but don't mark them to be copied.
-	// This forces the cache to create a unique public object for the shared/key values.
-	CCRenderState *renderState = [[self alloc] initWithBlendMode:blendMode shader:shader mainTexture:mainTexture shaderUniforms:@{CCShaderUniformMainTexture: mainTexture} copyUniforms:NO];
-	
-	return [CCRENDERSTATE_CACHE objectForKey:renderState];
+	return [CCRENDERSTATE_CACHE objectForKey:[[CCRenderStateCacheKey alloc] initWithBlendMode:blendMode shader:shader mainTexture:mainTexture]];
 }
 
 +(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms copyUniforms:(BOOL)copyUniforms
 {
-	return [[CCRenderStateClass alloc] initWithBlendMode:blendMode shader:shader mainTexture:nil shaderUniforms:shaderUniforms copyUniforms:copyUniforms];
+	return [[CCRenderStateClass alloc] initWithBlendMode:blendMode shader:shader shaderUniforms:shaderUniforms copyUniforms:copyUniforms];
 }
 
 -(id)copyWithZone:(NSZone *)zone
@@ -316,26 +370,8 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 	if(_immutable){
 		return self;
 	} else {
-		return [[CCRenderStateClass allocWithZone:zone] initWithBlendMode:_blendMode shader:_shader mainTexture:_mainTexture shaderUniforms:_shaderUniforms copyUniforms:YES];
+		return [[CCRenderStateClass allocWithZone:zone] initWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms copyUniforms:YES];
 	}
-}
-
--(NSUInteger)hash
-{
-	// Not great, but acceptable. All values are unique by pointer.
-	return ((NSUInteger)_blendMode ^ (NSUInteger)_shader ^ (NSUInteger)_mainTexture);
-}
-
--(BOOL)isEqual:(id)object
-{
-	CCRenderState *other = object;
-	
-	return (
-		[other isKindOfClass:[CCRenderState class]] &&
-		_blendMode == other->_blendMode &&
-		_shader == other->_shader &&
-		_mainTexture == other->_mainTexture
-	);
 }
 
 +(instancetype)debugColor

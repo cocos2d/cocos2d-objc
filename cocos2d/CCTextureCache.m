@@ -405,8 +405,6 @@ static CCTextureCache *sharedTextureCache;
 
 -(void) removeUnusedTextures
 {
-    [CCRENDERSTATE_CACHE flush];
-		
     dispatch_sync(_dictQueue, ^{
         NSArray *keys = [_textures allKeys];
         for(id key in keys)

@@ -354,7 +354,7 @@ static CCDirector *_sharedDirector = nil;
         [_delegate purgeCachedData];
     }
     
-	[CCRENDERSTATE_CACHE flush];
+	[CCRenderState flushCache];
 	[CCLabelBMFont purgeCachedData];
 	if ([_sharedDirector view])
 		[[CCTextureCache sharedTextureCache] removeUnusedTextures];
