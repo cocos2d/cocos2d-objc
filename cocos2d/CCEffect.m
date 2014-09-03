@@ -298,7 +298,13 @@ static NSString* vertBase =
 
 + (NSSet *)defaultEffectFragmentUniformNames
 {
-    return [[NSSet alloc] initWithArray:@[CCShaderUniformPreviousPassTexture]];
+    return [[NSSet alloc] initWithArray:@[
+                                          CCShaderUniformPreviousPassTexture,
+                                          CCShaderUniformTexCoord1Center,
+                                          CCShaderUniformTexCoord1Extents,
+                                          CCShaderUniformTexCoord2Center,
+                                          CCShaderUniformTexCoord2Extents
+                                          ]];
 }
 
 + (NSSet *)defaultEffectVertexUniformNames
