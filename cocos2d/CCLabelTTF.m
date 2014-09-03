@@ -656,6 +656,8 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         NSMutableAttributedString* outlineString = [attributedString mutableCopy];
         [outlineString addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0, outlineString.length)];
         
+        CGContextSetStrokeColorWithColor(context, color.CGColor);
+        
         [outlineString drawInRect:drawArea];
 
         // Don't draw shadow for main font
