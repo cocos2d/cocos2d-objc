@@ -8,7 +8,14 @@
 
 #import "CCRenderTexture.h"
 
-@class CCRenderTextureFBO;
+@interface CCRenderTextureFBO : NSObject
+
+- (id) initWithFBO: (GLuint)fbo depthRenderBuffer: (GLuint)depthBuffer;
+
+@property (nonatomic, readonly) GLuint FBO;
+@property (nonatomic, readonly) GLuint depthRenderBuffer;
+
+@end
 
 @interface CCRenderTexture() {
 
