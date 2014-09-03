@@ -22,7 +22,7 @@
 /** Color of the shadow,
  * [CCColor blackColor] will result in an opaque black drop shadow.
  */
-@property (nonatomic) CCColor* glowColor;
+@property (nonatomic, strong) CCColor* glowColor;
 
 /// -----------------------------------------------------------------------
 /// @name Initializing a CCEffectOuterGlow object

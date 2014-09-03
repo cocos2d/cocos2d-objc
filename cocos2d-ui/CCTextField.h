@@ -25,8 +25,9 @@
 #import "cocos2d.h"
 #import "CCControl.h"
 
+#import "CCPlatformTextField.h"
+
 @class CCPlatformTextField;
-@protocol CCPlatformTextFieldDelegate;
 
 /**
  The CCTextField is used for editing text by encapsulating a native text field (NSTextField on Mac and UITextField on iOS). An action callback will be sent when the text finishes editing or if the return key is pressed.

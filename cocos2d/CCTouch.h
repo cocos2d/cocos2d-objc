@@ -34,9 +34,9 @@ typedef NS_ENUM (NSInteger, CCTouchPhase) {
 @property (nonatomic, readonly) CCTouchPhase phase;
 @property (nonatomic, readonly) NSUInteger tapCount;
 @property (nonatomic, readonly) NSTimeInterval timestamp;
-@property (nonatomic) CCGLView *view;
+@property (nonatomic, strong) CCGLView *view;
 
-@property (nonatomic) PlatformTouch* uiTouch;
+@property (nonatomic, strong) PlatformTouch* uiTouch;
 
 - (instancetype)initWithPlatformTouch:(PlatformTouch*)touch;
 + (instancetype)touchWithPlatformTouch:(PlatformTouch*)touch;

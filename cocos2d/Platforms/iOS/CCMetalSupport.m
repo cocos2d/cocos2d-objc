@@ -156,9 +156,4 @@ static NSString *CURRENT_CONTEXT_KEY = @"CURRENT_CONTEXT_KEY";
 
 @end
 
-#else
-
-// Temporary
-#warning Metal disabled
-
 #endif

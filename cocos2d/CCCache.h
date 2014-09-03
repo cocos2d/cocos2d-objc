@@ -45,7 +45,6 @@
 - (instancetype)init;
 
 - (void)preload:(id<NSCopying>)key;
-- (BOOL)keyExists:(id<NSCopying>)key;
 
 - (id)rawObjectForKey:(id<NSCopying>)key;
 - (id)objectForKey:(id<NSCopying>)key;

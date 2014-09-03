@@ -137,14 +137,17 @@ static char * glExtensions;
 -(CCGraphicsAPI)graphicsAPI
 {
 	if(_graphicsAPI == CCGraphicsAPIInvalid){
-		if(__CC_METAL_SUPPORTED_AND_ENABLED && NSProtocolFromString(@"MTLDevice") && !getenv("CC_FORCE_GL")){
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+		if(NSProtocolFromString(@"MTLDevice") && !getenv("CC_FORCE_GL")){
 			CCGraphicsBufferClass = NSClassFromString(@"CCGraphicsBufferMetal");
 			CCGraphicsBufferBindingsClass = NSClassFromString(@"CCGraphicsBufferBindingsMetal");
 			CCRenderStateClass = NSClassFromString(@"CCRenderStateMetal");
 			CCRenderCommandDrawClass = NSClassFromString(@"CCRenderCommandDrawMetal");
 			
 			_graphicsAPI = CCGraphicsAPIMetal;
-		} else {
+		} else
+#endif
+		{
 			CCGraphicsBufferClass = NSClassFromString(@"CCGraphicsBufferGLBasic");
 			CCGraphicsBufferBindingsClass = NSClassFromString(@"CCGraphicsBufferBindingsGL");
 			CCRenderStateClass = NSClassFromString(@"CCRenderStateGL");
@@ -402,7 +405,7 @@ static char * glExtensions;
 
 	printf("cocos2d: OS version: %s (0x%08x)\n", [OSVer UTF8String], _OSVersion);
 	printf("cocos2d: %ld bit runtime\n", 8*sizeof(long));	
-	printf("cocos2d: Multi-threaded rendering: %s\n", (CC_RENDER_DISPATCH_ENABLED ? "YES" : "NO"));
+	printf("cocos2d: Multi-threaded rendering: %d\n", CC_RENDER_DISPATCH_ENABLED);
 	
 	if(_graphicsAPI == CCGraphicsAPIGL){
 		printf("cocos2d: OpenGL Rendering enabled.");

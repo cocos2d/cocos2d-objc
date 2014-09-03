@@ -27,7 +27,7 @@
 /** Color of the shadow, 
  * [CCColor blackColor] will result in an opaque black drop shadow.
  */
-@property (nonatomic) CCColor* shadowColor;
+@property (nonatomic, strong) CCColor* shadowColor;
 
 /// -----------------------------------------------------------------------
 /// @name Initializing a CCEffectDropShadow object

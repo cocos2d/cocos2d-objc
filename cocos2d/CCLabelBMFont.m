@@ -816,18 +816,18 @@ void FNTConfigRemoveCache( void )
 		else
 		{
 			// New Sprite ? Set correct color, opacity, etc...
-			if( 0 ) {
-				/* WIP: Doesn't support many features yet.
-				 But this code is super fast. It doesn't create any sprite.
-				 Ideal for big labels.
-				 */
-				fontChar = _reusedChar;
-				hasSprite = NO;
-			} else {
+//			if( 0 ) {
+//				/* WIP: Doesn't support many features yet.
+//				 But this code is super fast. It doesn't create any sprite.
+//				 Ideal for big labels.
+//				 */
+//				fontChar = _reusedChar;
+//				hasSprite = NO;
+//			} else {
 				fontChar = [[CCSprite alloc] initWithTexture:self.texture rect:rect];
 				[self addChild:fontChar z:i];
 				[self setTag:i forChild:fontChar];
-			}
+//			}
 			
 			// Color MUST be set before opacity due to premultiplied alpha.
 			[fontChar updateDisplayedColor:_displayColor];
