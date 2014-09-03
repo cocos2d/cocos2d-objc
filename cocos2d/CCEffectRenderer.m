@@ -20,8 +20,19 @@
 #import "CCTexture_Private.h"
 
 
-static CCSpriteVertexes padVertices(const CCSpriteVertexes *input, CGSize padding, BOOL padVertices);
-static CCVertex padVertex(CCVertex input, GLKVector2 positionOffset, GLKVector2 texCoord1Offset, GLKVector2 texCoord2Offset);
+typedef NS_ENUM(NSUInteger, CCEffectTexCoordTransform)
+{
+    CCEffectTexCoordNoChange   = 0,
+    CCEffectTexCoordOverwrite  = 1,
+    CCEffectTexCoordPad        = 2,
+};
+
+
+static CCSpriteVertexes padVertices(const CCSpriteVertexes *input, CGSize padding, CCEffectTexCoordTransform texCoordTransform);
+static CCVertex padVertex(CCVertex input, GLKVector2 positionOffset);
+static CCVertex padVertexAndTexCoords(CCVertex input, GLKVector2 positionOffset, GLKVector2 texCoord1Offset, GLKVector2 texCoord2Offset);
+static CCVertex padVertexAndOverwriteTexCoords(CCVertex input, GLKVector2 positionOffset, GLKVector2 texCoord1, GLKVector2 texCoord2);
+
 
 @interface CCEffectRenderTarget : NSObject
 
@@ -229,8 +240,9 @@ static CCVertex padVertex(CCVertex input, GLKVector2 positionOffset, GLKVector2 
         // - Later pass into FB : Pad vertices but not texture coordiates
         // - Later pass into intermediate RT : Pad vertices but not texture coordinates, add padding to RT, adjust ortho matrix
         //
+        CCEffectTexCoordTransform texCoordTransform = (fromIntermediate) ? CCEffectTexCoordOverwrite : CCEffectTexCoordPad;
         
-        renderPass.verts = padVertices(sprite.vertexes, effect.padding, !fromIntermediate);
+        renderPass.verts = padVertices(sprite.vertexes, effect.padding, texCoordTransform);
         renderPass.texCoord1Center = GLKVector2Make((sprite.vertexes->tr.texCoord1.s + sprite.vertexes->bl.texCoord1.s) * 0.5f, (sprite.vertexes->tr.texCoord1.t + sprite.vertexes->bl.texCoord1.t) * 0.5f);
         renderPass.texCoord1Extents = GLKVector2Make((sprite.vertexes->tr.texCoord1.s - sprite.vertexes->bl.texCoord1.s) * 0.5f, (sprite.vertexes->tr.texCoord1.t - sprite.vertexes->bl.texCoord1.t) * 0.5f);
         renderPass.texCoord2Center = GLKVector2Make((sprite.vertexes->tr.texCoord2.s + sprite.vertexes->bl.texCoord2.s) * 0.5f, (sprite.vertexes->tr.texCoord2.t + sprite.vertexes->bl.texCoord2.t) * 0.5f);
@@ -364,34 +376,53 @@ static CCVertex padVertex(CCVertex input, GLKVector2 positionOffset, GLKVector2 
 
 @end
 
-CCSpriteVertexes padVertices(const CCSpriteVertexes *input, CGSize padding, BOOL padTexCoords)
+CCSpriteVertexes padVertices(const CCSpriteVertexes *input, CGSize padding, CCEffectTexCoordTransform texCoordTransform)
 {
     CCSpriteVertexes output;
-    if (CGSizeEqualToSize(CGSizeZero, padding))
+    if (texCoordTransform == CCEffectTexCoordNoChange)
     {
-        output = *input;
+        output.bl = padVertex(input->bl, GLKVector2Make(-padding.width, -padding.height));
+        output.br = padVertex(input->br, GLKVector2Make( padding.width, -padding.height));
+        output.tr = padVertex(input->tr, GLKVector2Make( padding.width,  padding.height));
+        output.tl = padVertex(input->tl, GLKVector2Make(-padding.width,  padding.height));
     }
-    else
+    else if (texCoordTransform == CCEffectTexCoordOverwrite)
     {
-        GLKVector2 texCoord1Step = GLKVector2Make(0.0f, 0.0f);
-        GLKVector2 texCoord2Step = GLKVector2Make(0.0f, 0.0f);
-        if (padTexCoords)
-        {
-            texCoord1Step = GLKVector2Make(padding.width * (input->br.texCoord1.s - input->bl.texCoord1.s) / (input->br.position.x - input->bl.position.x),
-                                           padding.height * (input->tl.texCoord1.t - input->bl.texCoord1.t) / (input->tl.position.y - input->bl.position.y));
-            texCoord2Step = GLKVector2Make(padding.width * (input->br.texCoord2.s - input->bl.texCoord2.s) / (input->br.position.x - input->bl.position.x),
-                                           padding.height * (input->tl.texCoord2.t - input->bl.texCoord2.t) / (input->tl.position.y - input->bl.position.y));
-        }
+        output.bl = padVertexAndOverwriteTexCoords(input->bl, GLKVector2Make(-padding.width, -padding.height), GLKVector2Make(0.0f, 0.0f), GLKVector2Make(0.0f, 0.0f));
+        output.br = padVertexAndOverwriteTexCoords(input->br, GLKVector2Make( padding.width, -padding.height), GLKVector2Make(1.0f, 0.0f), GLKVector2Make(1.0f, 0.0f));
+        output.tr = padVertexAndOverwriteTexCoords(input->tr, GLKVector2Make( padding.width,  padding.height), GLKVector2Make(1.0f, 1.0f), GLKVector2Make(1.0f, 1.0f));
+        output.tl = padVertexAndOverwriteTexCoords(input->tl, GLKVector2Make(-padding.width,  padding.height), GLKVector2Make(0.0f, 1.0f), GLKVector2Make(0.0f, 1.0f));
+    }
+    else if (texCoordTransform == CCEffectTexCoordPad)
+    {
+        GLKVector2 texCoord1Step = GLKVector2Make(padding.width * (input->br.texCoord1.s - input->bl.texCoord1.s) / (input->br.position.x - input->bl.position.x),
+                                                  padding.height * (input->tl.texCoord1.t - input->bl.texCoord1.t) / (input->tl.position.y - input->bl.position.y));
+        GLKVector2 texCoord2Step = GLKVector2Make(padding.width * (input->br.texCoord2.s - input->bl.texCoord2.s) / (input->br.position.x - input->bl.position.x),
+                                                  padding.height * (input->tl.texCoord2.t - input->bl.texCoord2.t) / (input->tl.position.y - input->bl.position.y));
         
-        output.bl = padVertex(input->bl, GLKVector2Make(-padding.width, -padding.height), GLKVector2Make(-texCoord1Step.x, -texCoord1Step.y), GLKVector2Make(-texCoord2Step.x, -texCoord2Step.y));
-        output.br = padVertex(input->br, GLKVector2Make( padding.width, -padding.height), GLKVector2Make( texCoord1Step.x, -texCoord1Step.y), GLKVector2Make( texCoord2Step.x, -texCoord2Step.y));
-        output.tr = padVertex(input->tr, GLKVector2Make( padding.width,  padding.height), GLKVector2Make( texCoord1Step.x,  texCoord1Step.y), GLKVector2Make( texCoord2Step.x,  texCoord2Step.y));
-        output.tl = padVertex(input->tl, GLKVector2Make(-padding.width,  padding.height), GLKVector2Make(-texCoord1Step.x,  texCoord1Step.y), GLKVector2Make(-texCoord2Step.x,  texCoord2Step.y));
+        output.bl = padVertexAndTexCoords(input->bl, GLKVector2Make(-padding.width, -padding.height), GLKVector2Make(-texCoord1Step.x, -texCoord1Step.y), GLKVector2Make(-texCoord2Step.x, -texCoord2Step.y));
+        output.br = padVertexAndTexCoords(input->br, GLKVector2Make( padding.width, -padding.height), GLKVector2Make( texCoord1Step.x, -texCoord1Step.y), GLKVector2Make( texCoord2Step.x, -texCoord2Step.y));
+        output.tr = padVertexAndTexCoords(input->tr, GLKVector2Make( padding.width,  padding.height), GLKVector2Make( texCoord1Step.x,  texCoord1Step.y), GLKVector2Make( texCoord2Step.x,  texCoord2Step.y));
+        output.tl = padVertexAndTexCoords(input->tl, GLKVector2Make(-padding.width,  padding.height), GLKVector2Make(-texCoord1Step.x,  texCoord1Step.y), GLKVector2Make(-texCoord2Step.x,  texCoord2Step.y));
     }
     return output;
 }
 
-CCVertex padVertex(CCVertex input, GLKVector2 positionOffset, GLKVector2 texCoord1Offset, GLKVector2 texCoord2Offset)
+CCVertex padVertex(CCVertex input, GLKVector2 positionOffset)
+{
+    CCVertex output;
+    output.position.x = input.position.x + positionOffset.x;
+    output.position.y = input.position.y + positionOffset.y;
+    output.position.z = input.position.z;
+    output.position.w = input.position.w;
+    output.texCoord1 = input.texCoord1;
+    output.texCoord2 = input.texCoord2;
+    output.color = input.color;
+    
+    return output;
+}
+
+CCVertex padVertexAndTexCoords(CCVertex input, GLKVector2 positionOffset, GLKVector2 texCoord1Offset, GLKVector2 texCoord2Offset)
 {
     CCVertex output;
     output.position.x = input.position.x + positionOffset.x;
@@ -406,4 +437,19 @@ CCVertex padVertex(CCVertex input, GLKVector2 positionOffset, GLKVector2 texCoor
     
     return output;
 }
+
+CCVertex padVertexAndOverwriteTexCoords(CCVertex input, GLKVector2 positionOffset, GLKVector2 texCoord1, GLKVector2 texCoord2)
+{
+    CCVertex output;
+    output.position.x = input.position.x + positionOffset.x;
+    output.position.y = input.position.y + positionOffset.y;
+    output.position.z = input.position.z;
+    output.position.w = input.position.w;
+    output.texCoord1 = texCoord1;
+    output.texCoord2 = texCoord2;
+    output.color = input.color;
+    
+    return output;
+}
+
 
