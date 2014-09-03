@@ -80,9 +80,9 @@ Forum
 Download from Github
 --------------------
 
-    $ git clone git://github.com/cocos2d/cocos2d-iphone.git
+    $ git clone git://github.com/MaxGraey/cocos2d-iphone.git
     $ cd cocos2d-iphone
-    $ git checkout develop-v3
+    $ git checkout v3.2
     $ git submodule update --init
 
 
