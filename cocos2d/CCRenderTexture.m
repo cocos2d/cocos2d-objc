@@ -81,13 +81,6 @@
 @end
 
 
-@interface CCRenderTextureFBO : NSObject
-
-@property (nonatomic, readonly) GLuint FBO;
-@property (nonatomic, readonly) GLuint depthRenderBuffer;
-
-@end
-
 
 @implementation CCRenderTextureFBO
 
