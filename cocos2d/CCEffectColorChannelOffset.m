@@ -57,12 +57,19 @@
     // Image pixellation shader based on pixellation filter in GPUImage - https://github.com/BradLarson/GPUImage
     NSString* effectBody = CC_GLSL(
                                    vec2 redSamplePos = cc_FragTexCoord1 + u_redOffset;
+                                   vec2 redCompare = cc_FragTexCoord1Extents - abs(redSamplePos - cc_FragTexCoord1Center);
+                                   float redInBounds = step(0.0, min(redCompare.x, redCompare.y));
+                                   vec4 redSample = texture2D(cc_PreviousPassTexture, redSamplePos) * redInBounds;
+
                                    vec2 greenSamplePos = cc_FragTexCoord1 + u_greenOffset;
+                                   vec2 greenCompare = cc_FragTexCoord1Extents - abs(greenSamplePos - cc_FragTexCoord1Center);
+                                   float greenInBounds = step(0.0, min(greenCompare.x, greenCompare.y));
+                                   vec4 greenSample = texture2D(cc_PreviousPassTexture, greenSamplePos) * greenInBounds;
+
                                    vec2 blueSamplePos = cc_FragTexCoord1 + u_blueOffset;
-                                   
-                                   vec4 redSample = texture2D(cc_PreviousPassTexture, redSamplePos);
-                                   vec4 greenSample = texture2D(cc_PreviousPassTexture, greenSamplePos);
-                                   vec4 blueSample = texture2D(cc_PreviousPassTexture, blueSamplePos);
+                                   vec2 blueCompare = cc_FragTexCoord1Extents - abs(blueSamplePos - cc_FragTexCoord1Center);
+                                   float blueInBounds = step(0.0, min(blueCompare.x, blueCompare.y));
+                                   vec4 blueSample = texture2D(cc_PreviousPassTexture, blueSamplePos) * blueInBounds;
                                    
                                    return vec4(redSample.r, greenSample.g, blueSample.b, (redSample.r + greenSample.g + blueSample.b) / 3.0);
                                    );
@@ -83,6 +90,9 @@
         
         pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
+        
+        pass.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:pass.texCoord1Center];
+        pass.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:pass.texCoord1Extents];
         
         GLKVector2 scale = GLKVector2Make(-1.0f / previousPassTexture.contentSize.width, -1.0f / previousPassTexture.contentSize.height);
         GLKVector2 redOffsetUV = GLKVector2Multiply(weakSelf.redOffset, scale);

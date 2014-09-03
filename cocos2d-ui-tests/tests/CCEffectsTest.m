@@ -57,6 +57,7 @@
     self.subTitle = @"Color Channel Offset Effect Test";
     
     CCEffectColorChannelOffset *effect = [CCEffectColorChannelOffset effectWithRedOffset:GLKVector2Make(0.0f, 0.0f) greenOffset:GLKVector2Make(0.0f, 0.0f) blueOffset:GLKVector2Make(0.0f, 0.0f)];
+    effect.padding = CGSizeMake(5.0f, 5.0f);
     
     CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/particles.png"];
     sprite.scale = 1.0f;
