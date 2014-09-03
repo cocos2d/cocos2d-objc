@@ -39,7 +39,7 @@
 	if ((self = [super initWithDuration:aDuration])) {
 
 		_key	= [key copy];
-		_to		= to;
+		_to	= to;
 		_from	= from;
 
 	}
@@ -56,7 +56,7 @@
 
 - (void) update:(CCTime) dt
 {
-	[_target setValue:[NSNumber numberWithFloat:_to  - _delta * (1 - dt)] forKey:_key];
+	[_target setValue: [NSNumber numberWithFloat: _to  - _delta * (1 - dt)] forKeyPath: _key];
 }
 
 - (CCActionInterval *) reverse
