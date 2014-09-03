@@ -22,13 +22,21 @@
 
 -(void)setupPaddingEffectTest
 {
-    self.subTitle = @"Glass Effect Test";
+    self.subTitle = @"Effect Padding Test";
 
     CCSprite *original = [CCSprite spriteWithImageNamed:@"Images/WhiteDiamond.png"];
     original.positionType = CCPositionTypeNormalized;
     original.position = ccp(0.25, 0.5);
 
     [self.contentNode addChild:original];
+
+    CCLabelTTF *title1 = [CCLabelTTF labelWithString:@"Original Sprite" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector sharedDirector].UIScaleFactor];
+    title1.color = [CCColor whiteColor];
+    title1.positionType = CCPositionTypeNormalized;
+    title1.position = ccp(0.25f, 0.1f);
+    title1.horizontalAlignment = CCTextAlignmentCenter;
+    
+    [self.contentNode addChild:title1];
 
     
     CCSprite *blurred = [CCSprite spriteWithImageNamed:@"Images/WhiteDiamond.png"];
@@ -40,6 +48,14 @@
 
     [self.contentNode addChild:blurred];
 
+    CCLabelTTF *title2 = [CCLabelTTF labelWithString:@"Blur (no padding)" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector sharedDirector].UIScaleFactor];
+    title2.color = [CCColor whiteColor];
+    title2.positionType = CCPositionTypeNormalized;
+    title2.position = ccp(0.5f, 0.1f);
+    title2.horizontalAlignment = CCTextAlignmentCenter;
+    
+    [self.contentNode addChild:title2];
+
     
     CCSprite *padded = [CCSprite spriteWithImageNamed:@"Images/WhiteDiamond.png"];
     padded.positionType = CCPositionTypeNormalized;
@@ -50,6 +66,14 @@
     padded.effect = blur2;
     
     [self.contentNode addChild:padded];
+
+    CCLabelTTF *title3 = [CCLabelTTF labelWithString:@"Padded Blur" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector sharedDirector].UIScaleFactor];
+    title3.color = [CCColor whiteColor];
+    title3.positionType = CCPositionTypeNormalized;
+    title3.position = ccp(0.75f, 0.1f);
+    title3.horizontalAlignment = CCTextAlignmentCenter;
+    
+    [self.contentNode addChild:title3];
 }
 
 -(void)setupColorChannelOffsetTest
