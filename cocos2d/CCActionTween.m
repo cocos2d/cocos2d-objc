@@ -38,9 +38,9 @@
 
 	if ((self = [super initWithDuration:aDuration])) {
 
-		_key  = [key copy];
-		_to   = to;
-		_from = from;
+		_key	= [key copy];
+		_to	= to;
+		_from	= from;
 
 	}
 
