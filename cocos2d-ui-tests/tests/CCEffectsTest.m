@@ -24,53 +24,55 @@
 {
     self.subTitle = @"Effect Padding Test";
 
-    CCSprite *original = [CCSprite spriteWithImageNamed:@"Images/WhiteDiamond.png"];
+    CCSprite *original = [CCSprite spriteWithImageNamed:@"Images/particles.png"];
     original.positionType = CCPositionTypeNormalized;
-    original.position = ccp(0.25, 0.5);
+    original.position = ccp(0.75, 0.75);
 
     [self.contentNode addChild:original];
 
     CCLabelTTF *title1 = [CCLabelTTF labelWithString:@"Original Sprite" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector sharedDirector].UIScaleFactor];
     title1.color = [CCColor whiteColor];
     title1.positionType = CCPositionTypeNormalized;
-    title1.position = ccp(0.25f, 0.1f);
+    title1.position = ccp(0.25f, 0.75f);
     title1.horizontalAlignment = CCTextAlignmentCenter;
     
     [self.contentNode addChild:title1];
 
     
-    CCSprite *blurred = [CCSprite spriteWithImageNamed:@"Images/WhiteDiamond.png"];
-    blurred.positionType = CCPositionTypeNormalized;
-    blurred.position = ccp(0.5, 0.5);
+    \
+    CCSprite *affected = [CCSprite spriteWithImageNamed:@"Images/particles.png"];
+    affected.positionType = CCPositionTypeNormalized;
+    affected.position = ccp(0.75, 0.5);
     
-    CCEffect *blur1 = [CCEffectBlur effectWithBlurRadius:4.0f];
-    blurred.effect = blur1;
+    CCEffectColorChannelOffset *offset1 = [CCEffectColorChannelOffset effectWithRedOffset:GLKVector2Make(5.0f, 0.0f) greenOffset:GLKVector2Make(-4.0f, 4.0f) blueOffset:GLKVector2Make(-4.0f, -4.0f)];
+    affected.effect = offset1;
 
-    [self.contentNode addChild:blurred];
+    [self.contentNode addChild:affected];
 
-    CCLabelTTF *title2 = [CCLabelTTF labelWithString:@"Blur (no padding)" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector sharedDirector].UIScaleFactor];
+    CCLabelTTF *title2 = [CCLabelTTF labelWithString:@"Color channel offset (no padding)" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector sharedDirector].UIScaleFactor];
     title2.color = [CCColor whiteColor];
     title2.positionType = CCPositionTypeNormalized;
-    title2.position = ccp(0.5f, 0.1f);
+    title2.position = ccp(0.25f, 0.5f);
     title2.horizontalAlignment = CCTextAlignmentCenter;
     
     [self.contentNode addChild:title2];
 
     
-    CCSprite *padded = [CCSprite spriteWithImageNamed:@"Images/WhiteDiamond.png"];
+    
+    CCSprite *padded = [CCSprite spriteWithImageNamed:@"Images/particles.png"];
     padded.positionType = CCPositionTypeNormalized;
-    padded.position = ccp(0.75, 0.5);
+    padded.position = ccp(0.75, 0.25);
 
-    CCEffect *blur2 = [CCEffectBlur effectWithBlurRadius:4.0f];
-    blur2.padding = CGSizeMake(20.0f, 20.0f);
-    padded.effect = blur2;
+    CCEffectColorChannelOffset *offset2 = [CCEffectColorChannelOffset effectWithRedOffset:GLKVector2Make(5.0f, 0.0f) greenOffset:GLKVector2Make(-4.0f, 4.0f) blueOffset:GLKVector2Make(-4.0f, -4.0f)];
+    offset2.padding = CGSizeMake(5.0f, 5.0f);
+    padded.effect = offset2;
     
     [self.contentNode addChild:padded];
 
-    CCLabelTTF *title3 = [CCLabelTTF labelWithString:@"Padded Blur" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector sharedDirector].UIScaleFactor];
+    CCLabelTTF *title3 = [CCLabelTTF labelWithString:@"Color channel offset (with padding)" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector sharedDirector].UIScaleFactor];
     title3.color = [CCColor whiteColor];
     title3.positionType = CCPositionTypeNormalized;
-    title3.position = ccp(0.75f, 0.1f);
+    title3.position = ccp(0.25f, 0.25f);
     title3.horizontalAlignment = CCTextAlignmentCenter;
     
     [self.contentNode addChild:title3];
