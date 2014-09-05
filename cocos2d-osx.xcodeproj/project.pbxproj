@@ -880,7 +880,45 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		571CD02E19649E22003D460C /* Platform */ = {
+		929D1B541954C28100B27340 /* Effects */ = {
+			isa = PBXGroup;
+			children = (
+				B751D2581988896D00722D93 /* CCEffectGlass.h */,
+				B751D2591988896D00722D93 /* CCEffectGlass.m */,
+				B751D25A1988896D00722D93 /* CCEffectReflection.h */,
+				B751D25B1988896D00722D93 /* CCEffectReflection.m */,
+				B751D25C1988896D00722D93 /* CCEffectUtils.h */,
+				B751D25D1988896D00722D93 /* CCEffectUtils.m */,
+				929D1B551954C2A600B27340 /* CCEffect_Private.h */,
+				929D1B561954C2A600B27340 /* CCEffect.h */,
+				929D1B571954C2A600B27340 /* CCEffect.m */,
+				929D1B581954C2A600B27340 /* CCEffectBrightness.h */,
+				929D1B591954C2A600B27340 /* CCEffectBrightness.m */,
+				929D1B5A1954C2A600B27340 /* CCEffectContrast.h */,
+				929D1B5B1954C2A600B27340 /* CCEffectContrast.m */,
+				92D1343A1954FC7A003833C4 /* CCEffectBlur.h */,
+				929D1B5C1954C2A600B27340 /* CCEffectBlur.m */,
+				9D23869A196F0BC4001B792B /* CCEffectHue.h */,
+				9D23869B196F0BC4001B792B /* CCEffectHue.m */,
+				929D1B5E1954C2A600B27340 /* CCEffectNode.h */,
+				929D1B5F1954C2A600B27340 /* CCEffectNode.m */,
+				929D1B601954C2A600B27340 /* CCEffectPixellate.h */,
+				929D1B611954C2A600B27340 /* CCEffectPixellate.m */,
+				929D1B621954C2A600B27340 /* CCEffectRenderer.h */,
+				929D1B631954C2A600B27340 /* CCEffectRenderer.m */,
+				9DDFEF6819635F0600CCE3DF /* CCEffectRefraction.h */,
+				9DDFEF6919635F0600CCE3DF /* CCEffectRefraction.m */,
+				929D1B641954C2A600B27340 /* CCEffectSaturation.h */,
+				929D1B651954C2A600B27340 /* CCEffectSaturation.m */,
+				929D1B661954C2A600B27340 /* CCEffectStack_Private.h */,
+				92D134361954FC7A003833C4 /* CCEffectStackProtocol.h */,
+				929D1B671954C2A600B27340 /* CCEffectStack.h */,
+				929D1B681954C2A600B27340 /* CCEffectStack.m */,
+			);
+			name = Effects;
+			sourceTree = "<group>";
+		};
+	    571CD02E19649E22003D460C /* Platform */ = {
 			isa = PBXGroup;
 			children = (
 				571CD02F19649E22003D460C /* Android */,

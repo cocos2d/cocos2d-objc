@@ -37,6 +37,7 @@
 #import "CCDirector_Private.h"
 #import "CCPhysics+ObjectiveChipmunk.h"
 #import "CCAnimationManager_Private.h"
+#import "CCEffectStack.h"
 
 #ifdef CCB_ENABLE_UNZIP
 #import "SSZipArchive.h"
@@ -51,14 +52,19 @@
 @interface CCBFile : CCNode
 {
     CCNode* ccbFile;
+
 }
 @property (nonatomic,strong) CCNode* ccbFile;
 @end
 
 
 @interface CCBReader()
+{
+
+}
 
 @property (nonatomic, copy) NSString *currentCCBFile;
+
 
 @end
 
@@ -122,7 +128,7 @@
     animationManager.rootContainerSize = [CCDirector sharedDirector].designSize;
     
     nodeMapping = [NSMutableDictionary dictionary];
-    
+    postDeserializationUUIDFixup = [NSMutableArray array];
     return self;
 }
 
@@ -912,10 +918,12 @@ static inline float readFloat(CCBReader *self)
     else if(type == kCCBPropTypeNodeReference)
     {
         int uuid = readIntWithSign(self, NO);
-        CCNode * mappedNode = nodeMapping[@(uuid)];
-        NSAssert(mappedNode != nil, @"CCBReader: Failed to find node UUID:%i", uuid);
-        [node setValue:mappedNode forKey:name];
-    }
+		
+		//Node references are fixed after the whole node graph is deserialized (since since the node ref may not be deserialized yet)
+		NSArray * queuedFixupTask = @[node, name, @(uuid)];
+		[postDeserializationUUIDFixup addObject:queuedFixupTask];
+		
+	}
     else if(type == kCCBPropTypeFloatCheck)
     {
         float f = readFloat(self);
@@ -927,10 +935,69 @@ static inline float readFloat(CCBReader *self)
             [node setValue:@(f) forKey:name];
         }
     }
+	else if(type == kCCBPropTypeEffects)
+	{
+		CCEffect * effect  = [self readEffects];
+		
+		if(effect)
+		{
+		//Hmmm..... Force it to write to @"effect" property.
+		[node setValue:effect forKey:@"effect"];
+		}
+				
+	}
     else
     {
         NSAssert(false, @"[PROPERTY] %@ - Failed to read property type %d, node class name: \"%@\", name: \"%@\", in ccb file: \"%@\"", name, type, [node class], [node name], _currentCCBFile);
     }
+}
+
+
+
+//Either returns a CCStackEffect or the one single effect.
+-(CCEffect*)readEffects
+{
+
+	int numberOfEffects = readIntWithSign(self, NO);
+	
+	if(numberOfEffects == 0)
+	{
+		return nil;
+	}
+	
+	NSMutableArray * effectsStack = [NSMutableArray array];
+	
+	for (int i = 0; i < numberOfEffects; i++) {
+		NSString * className = [self readCachedString];
+		
+		Class nodeClass = NSClassFromString(className);
+		if (nodeClass == nil)
+		{
+			NSAssert(nil, @"CCBReader: Could not create class named: %@", className);
+			return nil;
+		}
+		
+		CCEffect* effect = [[nodeClass alloc] init];
+		
+		int propCount = readIntWithSign(self,NO);
+		
+		for(int propIndex = 0; propIndex < propCount; propIndex++)
+		{
+			//Just lie and let the property reader do its work.
+			[self readPropertyForNode:(CCNode*)effect parent:nil isExtraProp:NO];
+			
+		}
+		
+		if(numberOfEffects == 1)
+		{
+			return effect;
+		}
+		[effectsStack addObject:effect];
+		
+	}
+	
+	return [[CCEffectStack alloc] initWithArray:effectsStack];
+
 }
 
 - (BOOL)isPropertyKeySettable:(NSString *)key onInstance:(id)instance
@@ -1069,6 +1136,21 @@ static inline float readFloat(CCBReader *self)
 
 - (void) didLoadFromCCB
 {
+}
+
+-(void)postDeserialization
+{
+	//Post deserialization fixup.
+	for (NSArray * task in postDeserializationUUIDFixup) {
+		id node = task[0];
+		NSString * name = task[1];
+		int uuid = (int)[task[2] integerValue];
+		
+		CCNode * mappedNode = nodeMapping[@(uuid)];
+		NSAssert(mappedNode != nil, @"CCBReader: Failed to find node UUID:%i", uuid);
+		[node setValue:mappedNode forKey:name];
+
+	}
 }
 
 -(void)readJoints
@@ -1675,6 +1757,7 @@ static inline float readFloat(CCBReader *self)
     
     CCNode* node = [self readNodeGraphParent:NULL];
     [self readJoints];
+	[self postDeserialization];
     
     [actionManagers setObject:self.animationManager forKey:[NSValue valueWithPointer:(__bridge const void *)(node)]];
     
