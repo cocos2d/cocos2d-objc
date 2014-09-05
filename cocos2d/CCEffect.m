@@ -215,8 +215,18 @@ static NSString* vertBase =
 
 -(id)init
 {
+    return [self initWithIndex:0];
+}
+
+-(id)initWithIndex:(NSUInteger)indexInEffect
+{
     if((self = [super init]))
     {
+        _indexInEffect = indexInEffect;
+        
+        _texCoord1Mapping = CCEffectTexCoordMapPreviousPassTex;
+        _texCoord2Mapping = CCEffectTexCoordMapCustomTex;
+        
         _beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){} copy]];
         _endBlocks = @[[^(CCEffectRenderPass *pass){} copy]];
 
