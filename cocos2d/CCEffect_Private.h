@@ -19,6 +19,8 @@ extern NSString * const CCShaderUniformTexCoord1Center;
 extern NSString * const CCShaderUniformTexCoord1Extents;
 extern NSString * const CCShaderUniformTexCoord2Center;
 extern NSString * const CCShaderUniformTexCoord2Extents;
+extern NSString * const CCEffectDefaultInitialInputSnippet;
+extern NSString * const CCEffectDefaultInputSnippet;
 
 
 typedef NS_ENUM(NSUInteger, CCEffectFunctionStitchFlags)

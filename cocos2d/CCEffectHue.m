@@ -52,7 +52,7 @@ static GLKMatrix4 matrixWithHue(float hue);
 {
     self.fragmentFunctions = [[NSMutableArray alloc] init];
 
-    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:@"cc_FragColor * texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)" snippet:@"texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)"];
+    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:CCEffectDefaultInitialInputSnippet snippet:CCEffectDefaultInputSnippet];
 
     // The non-color matrix shader is based on the hue filter in GPUImage - https://github.com/BradLarson/GPUImage
     NSString* effectBody = CC_GLSL(
@@ -74,6 +74,9 @@ static GLKMatrix4 matrixWithHue(float hue);
 
         pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
+        pass.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:pass.texCoord1Center];
+        pass.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:pass.texCoord1Extents];
+
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_hueRotationMtx"]] = weakSelf.hueRotationMtx;
     } copy]];
     
