@@ -24,58 +24,102 @@
 {
     self.subTitle = @"Effect Padding Test";
 
-    CCSprite *original = [CCSprite spriteWithImageNamed:@"Images/particles.png"];
-    original.positionType = CCPositionTypeNormalized;
-    original.position = ccp(0.75, 0.75);
-
-    [self.contentNode addChild:original];
-
-    CCLabelTTF *title1 = [CCLabelTTF labelWithString:@"Original Sprite" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector sharedDirector].UIScaleFactor];
-    title1.color = [CCColor whiteColor];
-    title1.positionType = CCPositionTypeNormalized;
-    title1.position = ccp(0.25f, 0.75f);
-    title1.horizontalAlignment = CCTextAlignmentCenter;
+    {
+        CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/particles.png"];
+        sprite.positionType = CCPositionTypeNormalized;
+        sprite.position = ccp(0.75f, 0.8f);
+        
+        [self.contentNode addChild:sprite];
+        
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Original Sprite" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector sharedDirector].UIScaleFactor];
+        title.color = [CCColor whiteColor];
+        title.positionType = CCPositionTypeNormalized;
+        title.position = ccp(0.25f, 0.8f);
+        title.horizontalAlignment = CCTextAlignmentCenter;
+        
+        [self.contentNode addChild:title];
+    }
     
-    [self.contentNode addChild:title1];
+    {
+        CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/particles.png"];
+        sprite.positionType = CCPositionTypeNormalized;
+        sprite.position = ccp(0.75f, 0.65f);
+        
+        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffset:GLKVector2Make(5.0f, 0.0f) greenOffset:GLKVector2Make(-4.0f, 4.0f) blueOffset:GLKVector2Make(-4.0f, -4.0f)];
+        sprite.effect = offset;
+        
+        [self.contentNode addChild:sprite];
+        
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Color channel offset without padding" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector sharedDirector].UIScaleFactor];
+        title.color = [CCColor whiteColor];
+        title.positionType = CCPositionTypeNormalized;
+        title.position = ccp(0.25f, 0.65f);
+        title.horizontalAlignment = CCTextAlignmentCenter;
+        
+        [self.contentNode addChild:title];
+    }
+    
+    {
+        CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/particles.png"];
+        sprite.positionType = CCPositionTypeNormalized;
+        sprite.position = ccp(0.75f, 0.5f);
+        
+        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffset:GLKVector2Make(5.0f, 0.0f) greenOffset:GLKVector2Make(-4.0f, 4.0f) blueOffset:GLKVector2Make(-4.0f, -4.0f)];
+        offset.padding = CGSizeMake(5.0f, 5.0f);
+        sprite.effect = offset;
+        
+        [self.contentNode addChild:sprite];
+        
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Color channel offset with padding" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector sharedDirector].UIScaleFactor];
+        title.color = [CCColor whiteColor];
+        title.positionType = CCPositionTypeNormalized;
+        title.position = ccp(0.25f, 0.5f);
+        title.horizontalAlignment = CCTextAlignmentCenter;
+        
+        [self.contentNode addChild:title];
+    }
 
+    {
+        CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/particles.png"];
+        sprite.positionType = CCPositionTypeNormalized;
+        sprite.position = ccp(0.75f, 0.35f);
+        
+        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffset:GLKVector2Make(5.0f, 0.0f) greenOffset:GLKVector2Make(-4.0f, 4.0f) blueOffset:GLKVector2Make(-4.0f, -4.0f)];
+        offset.padding = CGSizeMake(5.0f, 5.0f);
+        CCEffectHue *hue = [CCEffectHue effectWithHue:60.0f];
+        sprite.effect = [CCEffectStack effectWithArray:@[offset, hue]];
+        
+        [self.contentNode addChild:sprite];
+        
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Padded effect stack (offset then hue)" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector sharedDirector].UIScaleFactor];
+        title.color = [CCColor whiteColor];
+        title.positionType = CCPositionTypeNormalized;
+        title.position = ccp(0.25f, 0.35f);
+        title.horizontalAlignment = CCTextAlignmentCenter;
+        
+        [self.contentNode addChild:title];
+    }
     
-    \
-    CCSprite *affected = [CCSprite spriteWithImageNamed:@"Images/particles.png"];
-    affected.positionType = CCPositionTypeNormalized;
-    affected.position = ccp(0.75, 0.5);
-    
-    CCEffectColorChannelOffset *offset1 = [CCEffectColorChannelOffset effectWithRedOffset:GLKVector2Make(5.0f, 0.0f) greenOffset:GLKVector2Make(-4.0f, 4.0f) blueOffset:GLKVector2Make(-4.0f, -4.0f)];
-    affected.effect = offset1;
-
-    [self.contentNode addChild:affected];
-
-    CCLabelTTF *title2 = [CCLabelTTF labelWithString:@"Color channel offset (no padding)" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector sharedDirector].UIScaleFactor];
-    title2.color = [CCColor whiteColor];
-    title2.positionType = CCPositionTypeNormalized;
-    title2.position = ccp(0.25f, 0.5f);
-    title2.horizontalAlignment = CCTextAlignmentCenter;
-    
-    [self.contentNode addChild:title2];
-
-    
-    
-    CCSprite *padded = [CCSprite spriteWithImageNamed:@"Images/particles.png"];
-    padded.positionType = CCPositionTypeNormalized;
-    padded.position = ccp(0.75, 0.25);
-
-    CCEffectColorChannelOffset *offset2 = [CCEffectColorChannelOffset effectWithRedOffset:GLKVector2Make(5.0f, 0.0f) greenOffset:GLKVector2Make(-4.0f, 4.0f) blueOffset:GLKVector2Make(-4.0f, -4.0f)];
-    offset2.padding = CGSizeMake(5.0f, 5.0f);
-    padded.effect = offset2;
-    
-    [self.contentNode addChild:padded];
-
-    CCLabelTTF *title3 = [CCLabelTTF labelWithString:@"Color channel offset (with padding)" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector sharedDirector].UIScaleFactor];
-    title3.color = [CCColor whiteColor];
-    title3.positionType = CCPositionTypeNormalized;
-    title3.position = ccp(0.25f, 0.25f);
-    title3.horizontalAlignment = CCTextAlignmentCenter;
-    
-    [self.contentNode addChild:title3];
+    {
+        CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/particles.png"];
+        sprite.positionType = CCPositionTypeNormalized;
+        sprite.position = ccp(0.75f, 0.2f);
+        
+        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffset:GLKVector2Make(5.0f, 0.0f) greenOffset:GLKVector2Make(-4.0f, 4.0f) blueOffset:GLKVector2Make(-4.0f, -4.0f)];
+        offset.padding = CGSizeMake(5.0f, 5.0f);
+        CCEffectHue *hue = [CCEffectHue effectWithHue:60.0f];
+        sprite.effect = [CCEffectStack effectWithArray:@[hue, offset]];
+        
+        [self.contentNode addChild:sprite];
+        
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Padded efect stack (hue then offset)" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector sharedDirector].UIScaleFactor];
+        title.color = [CCColor whiteColor];
+        title.positionType = CCPositionTypeNormalized;
+        title.position = ccp(0.25f, 0.2f);
+        title.horizontalAlignment = CCTextAlignmentCenter;
+        
+        [self.contentNode addChild:title];
+    }
 }
 
 -(void)setupColorChannelOffsetTest
@@ -548,13 +592,14 @@
     const int steps = 5;
     for (int i = 0; i < steps; i++)
     {
-        CCSprite *sampleSprite3 = [CCSprite spriteWithImageNamed:@"Images/grossini_dance_08.png"];
+        CCSprite *sampleSprite3 = [CCSprite spriteWithImageNamed:@"Images/f1.png"];
         sampleSprite3.anchorPoint = ccp(0.5, 0.5);
         sampleSprite3.position = ccp(0.1f + i * (0.8f / (steps - 1)), 0.2f);
         sampleSprite3.positionType = CCPositionTypeNormalized;
         
         // Blend glow maps test
         CCEffectBloom* glowEffect3 = [CCEffectBloom effectWithBlurRadius:8 intensity:1.0f luminanceThreshold:1.0f - ((float)i/(float)(steps-1))];
+        glowEffect3.padding = CGSizeMake(10.0f, 10.0f);
         sampleSprite3.effect = glowEffect3;
         
         [self.contentNode addChild:sampleSprite3];
