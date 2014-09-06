@@ -284,7 +284,7 @@
 
     __weak CCEffectBlur *weakSelf = self;
     
-    CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
+    CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] initWithIndex:0];
     pass0.debugLabel = @"CCEffectBlur pass 0";
     pass0.shader = self.shader;
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
@@ -302,7 +302,7 @@
     } copy]];
 
     
-    CCEffectRenderPass *pass1 = [[CCEffectRenderPass alloc] init];
+    CCEffectRenderPass *pass1 = [[CCEffectRenderPass alloc] initWithIndex:1];
     pass1.debugLabel = @"CCEffectBlur pass 1";
     pass1.shader = self.shader;
     pass1.blendMode = [CCBlendMode premultipliedAlphaMode];
