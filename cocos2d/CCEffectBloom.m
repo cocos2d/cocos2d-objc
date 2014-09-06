@@ -164,8 +164,12 @@
     
     // Header
     [shaderString appendFormat:@"\
-     lowp vec4 src = vec4(0.0);\
-     lowp vec4 dst = vec4(0.0);\n"];
+     lowp vec4 src = vec4(0.0);\n\
+     lowp vec4 dst = vec4(0.0);\n\
+     vec2 compare;\n\
+     float inBounds;\n\
+     vec2 blurCoords;\
+     "];
     
     [shaderString appendString:@"if(u_enableGlowMap == 0.0) {\n"];
      
@@ -173,9 +177,11 @@
     [shaderString appendString:@"vec4 srcPixel; float luminanceCheck;\n"];
 
     // Inner texture loop
+    [shaderString appendString:@"compare = cc_FragTexCoord1Extents - abs(v_blurCoordinates[0] - cc_FragTexCoord1Center);"];
+    [shaderString appendString:@"inBounds = step(0.0, min(compare.x, compare.y));"];
     [shaderString appendFormat:@"srcPixel = texture2D(cc_PreviousPassTexture, v_blurCoordinates[0]);\n"];
     [shaderString appendString:@"luminanceCheck = step(u_luminanceThreshold, dot(srcPixel.rgb, luminanceWeighting));\n"];
-    [shaderString appendFormat:@"src += luminanceCheck * srcPixel * %f;\n", standardGaussianWeights[0]];
+    [shaderString appendFormat:@"src += inBounds * luminanceCheck * srcPixel * %f;\n", standardGaussianWeights[0]];
     
     for (NSUInteger currentBlurCoordinateIndex = 0; currentBlurCoordinateIndex < numberOfOptimizedOffsets; currentBlurCoordinateIndex++)
     {
@@ -183,13 +189,19 @@
         GLfloat secondWeight = standardGaussianWeights[currentBlurCoordinateIndex * 2 + 2];
         GLfloat optimizedWeight = firstWeight + secondWeight;
 
-        [shaderString appendFormat:@"srcPixel = texture2D(cc_PreviousPassTexture, v_blurCoordinates[%lu]);\n", (unsigned long)((currentBlurCoordinateIndex * 2) + 1)];
+        [shaderString appendFormat:@"blurCoords = v_blurCoordinates[%lu];", (unsigned long)((currentBlurCoordinateIndex * 2) + 1)];
+        [shaderString appendString:@"compare = cc_FragTexCoord1Extents - abs(blurCoords - cc_FragTexCoord1Center);"];
+        [shaderString appendString:@"inBounds = step(0.0, min(compare.x, compare.y));"];
+        [shaderString appendFormat:@"srcPixel = texture2D(cc_PreviousPassTexture, blurCoords);\n"];
         [shaderString appendString:@"luminanceCheck = step(u_luminanceThreshold, dot(srcPixel.rgb, luminanceWeighting));\n"];
-        [shaderString appendFormat:@"src += luminanceCheck * srcPixel * %f;\n", optimizedWeight];
+        [shaderString appendFormat:@"src += inBounds * luminanceCheck * srcPixel * %f;\n", optimizedWeight];
 
-        [shaderString appendFormat:@"srcPixel = texture2D(cc_PreviousPassTexture, v_blurCoordinates[%lu]);\n", (unsigned long)((currentBlurCoordinateIndex * 2) + 2)];
+        [shaderString appendFormat:@"blurCoords = v_blurCoordinates[%lu];", (unsigned long)((currentBlurCoordinateIndex * 2) + 2)];
+        [shaderString appendString:@"compare = cc_FragTexCoord1Extents - abs(blurCoords - cc_FragTexCoord1Center);"];
+        [shaderString appendString:@"inBounds = step(0.0, min(compare.x, compare.y));"];
+        [shaderString appendFormat:@"srcPixel = texture2D(cc_PreviousPassTexture, blurCoords);\n"];
         [shaderString appendString:@"luminanceCheck = step(u_luminanceThreshold, dot(srcPixel.rgb, luminanceWeighting));\n"];
-        [shaderString appendFormat:@"src += luminanceCheck * srcPixel * %f;\n", optimizedWeight];        
+        [shaderString appendFormat:@"src += inBounds * luminanceCheck * srcPixel * %f;\n", optimizedWeight];
     }
     
     // If the number of required samples exceeds the amount we can pass in via varyings, we have to do dependent texture reads in the fragment shader
@@ -205,19 +217,27 @@
             GLfloat optimizedWeight = firstWeight + secondWeight;
             GLfloat optimizedOffset = (firstWeight * (currentOverlowTextureRead * 2 + 1) + secondWeight * (currentOverlowTextureRead * 2 + 2)) / optimizedWeight;
 
-            [shaderString appendFormat:@"srcPixel = texture2D(cc_PreviousPassTexture, v_blurCoordinates[0] + singleStepOffset * %f);\n", optimizedOffset];
+            [shaderString appendFormat:@"blurCoords = v_blurCoordinates[0] + singleStepOffset * %f);\n", optimizedOffset];
+            [shaderString appendString:@"compare = cc_FragTexCoord1Extents - abs(blurCoords - cc_FragTexCoord1Center);"];
+            [shaderString appendString:@"inBounds = step(0.0, min(compare.x, compare.y));"];
+            [shaderString appendFormat:@"srcPixel = texture2D(cc_PreviousPassTexture, blurCoords);\n"];
             [shaderString appendString:@"luminanceCheck = step(u_luminanceThreshold, dot(srcPixel.rgb, luminanceWeighting));\n"];
-            [shaderString appendFormat:@"src += luminanceCheck * srcPixel * %f;\n", optimizedWeight];
+            [shaderString appendFormat:@"src += inBounds * luminanceCheck * srcPixel * %f;\n", optimizedWeight];
 
-            [shaderString appendFormat:@"srcPixel = texture2D(cc_PreviousPassTexture, v_blurCoordinates[0] - singleStepOffset * %f);\n", optimizedOffset];
+            [shaderString appendFormat:@"blurCoords = v_blurCoordinates[0] - singleStepOffset * %f);\n", optimizedOffset];
+            [shaderString appendString:@"compare = cc_FragTexCoord1Extents - abs(blurCoords - cc_FragTexCoord1Center);"];
+            [shaderString appendString:@"inBounds = step(0.0, min(compare.x, compare.y));"];
+            [shaderString appendFormat:@"srcPixel = texture2D(cc_PreviousPassTexture, blurCoords);\n"];
             [shaderString appendString:@"luminanceCheck = step(u_luminanceThreshold, dot(srcPixel.rgb, luminanceWeighting));\n"];
-            [shaderString appendFormat:@"src += luminanceCheck * srcPixel * %f;\n", optimizedWeight];
+            [shaderString appendFormat:@"src += inBounds * luminanceCheck * srcPixel * %f;\n", optimizedWeight];
         }
     }
     
     [shaderString appendString:@"} else {\n"];
     [shaderString appendString:@"\
-        dst = texture2D(cc_MainTexture, cc_FragTexCoord1);\
+        compare = cc_FragTexCoord2Extents - abs(cc_FragTexCoord2 - cc_FragTexCoord2Center); \
+        inBounds = step(0.0, min(compare.x, compare.y)); \
+        dst = texture2D(cc_MainTexture, cc_FragTexCoord2) * inBounds;\
         src = texture2D(cc_PreviousPassTexture, cc_FragTexCoord1);\
      }\n"];
     
@@ -315,13 +335,16 @@
 
     __weak CCEffectBloom *weakSelf = self;
     
-    CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
+    CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] initWithIndex:0];
     pass0.debugLabel = @"CCEffectBloom pass 0";
     pass0.shader = self.shader;
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
         
         pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
+        pass.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:pass.texCoord1Center];
+        pass.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:pass.texCoord1Extents];
+
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_enableGlowMap"]] = [NSNumber numberWithFloat:0.0f];
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_luminanceThreshold"]] = [NSNumber numberWithFloat:_luminanceThreshold];
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_intensity"]] = [NSNumber numberWithFloat:_transformedIntensity];
@@ -332,12 +355,15 @@
     } copy]];
     
     
-    CCEffectRenderPass *pass1 = [[CCEffectRenderPass alloc] init];
+    CCEffectRenderPass *pass1 = [[CCEffectRenderPass alloc] initWithIndex:1];
     pass1.debugLabel = @"CCEffectBloom pass 1";
     pass1.shader = self.shader;
     pass1.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
 
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
+        pass.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:GLKVector2Make(0.5f, 0.5f)];
+        pass.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:GLKVector2Make(1.0f, 1.0f)];
+        
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_enableGlowMap"]] = [NSNumber numberWithFloat:0.0f];
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_luminanceThreshold"]] = [NSNumber numberWithFloat:0.0f];
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_intensity"]] = [NSNumber numberWithFloat:_transformedIntensity];
@@ -348,12 +374,19 @@
     } copy]];
 
     
-    CCEffectRenderPass *pass2 = [[CCEffectRenderPass alloc] init];
+    CCEffectRenderPass *pass2 = [[CCEffectRenderPass alloc] initWithIndex:2];
     pass2.debugLabel = @"CCEffectBloom pass 2";
     pass2.shader = self.shader;
+    pass2.texCoord1Mapping = CCEffectTexCoordMapPreviousPassTex;
+    pass2.texCoord2Mapping = CCEffectTexCoordMapMainTex;
     pass2.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
         
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
+        pass.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:GLKVector2Make(0.5f, 0.5f)];
+        pass.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:GLKVector2Make(1.0f, 1.0f)];
+        pass.shaderUniforms[CCShaderUniformTexCoord2Center] = [NSValue valueWithGLKVector2:pass.texCoord1Center];
+        pass.shaderUniforms[CCShaderUniformTexCoord2Extents] = [NSValue valueWithGLKVector2:pass.texCoord1Extents];
+
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_enableGlowMap"]] = [NSNumber numberWithFloat:1.0f];
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_luminanceThreshold"]] = [NSNumber numberWithFloat:0.0f];
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_intensity"]] = [NSNumber numberWithFloat:_transformedIntensity];
