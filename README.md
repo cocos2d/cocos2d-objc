@@ -80,15 +80,15 @@ Forum
 Download from Github
 --------------------
 
-    $ git clone git://github.com/MaxGraey/cocos2d-iphone.git
-    $ cd cocos2d-iphone
+    $ git clone git://github.com/MaxGraey/cocos2d-swift.git
+    $ cd cocos2d-swift
     $ git checkout v3.2
     $ git submodule update --init
 
 
-[1]: http://www.cocos2d-iphone.org "cocos2d for iPhone"
+[1]: http://www.cocos2d-swift.org "cocos2d for iPhone"
 [2]: http://www.cocos2d.org "cocos2d"
-[3]: http://www.cocos2d-iphone.org/wiki/doku.php/faq#i_found_a_bug_i_have_an_enhancement_proposal_what_should_i_do "contributing to cocos2d"
+[3]: http://www.cocos2d-swift.org/wiki/doku.php/faq#i_found_a_bug_i_have_an_enhancement_proposal_what_should_i_do "contributing to cocos2d"
 [4]: http://forum.cocos2d-swift.org "cocos2d for iPhone forum"
-[5]: https://github.com/cocos2d/cocos2d-iphone/archive/develop-v3.zip
+[5]: https://github.com/cocos2d/cocos2d-swift/archive/develop-v3.zip
 [6]: http://www.chipmunk-physics.net
