@@ -69,13 +69,13 @@
 #import "CCEffectBlur.h"
 #import "CCEffectGlass.h"
 #import "CCEffectDropShadow.h"
-#import "CCEffectOuterGlow.h"
 #import "CCEffectHue.h"
 #import "CCEffectNode.h"
 #import "CCEffectPixellate.h"
 #import "CCEffectReflection.h"
 #import "CCEffectRefraction.h"
 #import "CCEffectSaturation.h"
+#import "CCEffectDistanceField.h"
 #import "CCEffectStack.h"
 #import "CCLabelBMFont.h"
 #import "CCLabelTTF.h"
@@ -101,6 +101,7 @@
 #import "CCTiledMapLayer.h"
 #import "CCTiledMapObjectGroup.h"
 #import "CCTransition.h"
+#import "CCEffectDFOutline.h"
 
 // Layouts
 #import "CCLayout.h"
