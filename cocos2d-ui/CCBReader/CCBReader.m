@@ -1146,10 +1146,13 @@ static inline float readFloat(CCBReader *self)
 		NSString * name = task[1];
 		int uuid = (int)[task[2] integerValue];
 		
+		if(uuid == 0)
+			return;
+		
 		CCNode * mappedNode = nodeMapping[@(uuid)];
 		NSAssert(mappedNode != nil, @"CCBReader: Failed to find node UUID:%i", uuid);
 		[node setValue:mappedNode forKey:name];
-
+		
 	}
 }
 
