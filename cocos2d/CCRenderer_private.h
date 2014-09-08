@@ -241,3 +241,23 @@ CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount)
 -(void)bindBuffers:(BOOL)bind;
 
 @end
+
+
+// Cross-graphics API debug helpers.
+// Should these be made public to replace the existing GL ones?
+
+#if DEBUG
+
+void CCRENDERER_DEBUG_PUSH_GROUP_MARKER(NSString *label);
+void CCRENDERER_DEBUG_POP_GROUP_MARKER(void);
+void CCRENDERER_DEBUG_INSERT_EVENT_MARKER(NSString *label);
+void CCRENDERER_DEBUG_CHECK_ERRORS(void);
+
+#else
+
+#define CCRENDERER_DEBUG_PUSH_GROUP_MARKER(__label__);
+#define CCRENDERER_DEBUG_POP_GROUP_MARKER();
+#define CCRENDERER_DEBUG_INSERT_EVENT_MARKER(__label__);
+#define CCRENDERER_DEBUG_CHECK_ERRORS();
+
+#endif

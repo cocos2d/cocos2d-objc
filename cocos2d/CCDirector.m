@@ -424,8 +424,6 @@ static CCDirector *_sharedDirector = nil;
 
 		// Dump info once OpenGL was initilized
 		[[CCConfiguration sharedConfiguration] dumpInfo];
-
-		CC_CHECK_GL_ERROR_DEBUG();
 }
 
 

@@ -32,6 +32,10 @@
 #import "CCDirector_Private.h"
 #import "CCRenderDispatch.h"
 
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+#import "CCMetalSupport_Private.h"
+#endif
+
 //MARK: NSValue Additions.
 @implementation NSValue(CCRenderer)
 
@@ -57,7 +61,53 @@
 
 @end
 
-//MARK: Option Keys.
+//MARK: Graphics Debug Helpers:
+
+void CCRENDERER_DEBUG_PUSH_GROUP_MARKER(NSString *label){
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+		[[CCMetalContext currentContext].currentRenderCommandEncoder pushDebugGroup:label];
+	} else
+#endif
+	{
+		CCGL_DEBUG_PUSH_GROUP_MARKER(label.UTF8String);
+	}
+}
+
+void CCRENDERER_DEBUG_POP_GROUP_MARKER(void){
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+		[[CCMetalContext currentContext].currentRenderCommandEncoder popDebugGroup];
+	} else
+#endif
+	{
+		CCGL_DEBUG_POP_GROUP_MARKER();
+	}
+}
+
+void CCRENDERER_DEBUG_INSERT_EVENT_MARKER(NSString *label){
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+		[[CCMetalContext currentContext].currentRenderCommandEncoder insertDebugSignpost:label];
+	} else
+#endif
+	{
+		CCGL_DEBUG_INSERT_EVENT_MARKER(label.UTF8String);
+	}
+}
+
+void CCRENDERER_DEBUG_CHECK_ERRORS(void){
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+	} else
+#endif
+	{
+		CC_CHECK_GL_ERROR_DEBUG();
+	}
+}
+
+
+//MARK: Blend Option Keys.
 const NSString *CCRenderStateBlendMode = @"CCRenderStateBlendMode";
 const NSString *CCRenderStateShader = @"CCRenderStateShader";
 const NSString *CCRenderStateShaderUniforms = @"CCRenderStateShaderUniforms";
@@ -453,12 +503,12 @@ static CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 
 -(void)invokeOnRenderer:(CCRenderer *)renderer
 {
-	CCGL_DEBUG_PUSH_GROUP_MARKER(_debugLabel.UTF8String);
+	CCRENDERER_DEBUG_PUSH_GROUP_MARKER(_debugLabel);
 	
 	[renderer bindBuffers:NO];
 	_block();
 	
-	CCGL_DEBUG_POP_GROUP_MARKER();
+	CCRENDERER_DEBUG_POP_GROUP_MARKER();
 }
 
 @end
@@ -506,9 +556,9 @@ SortQueue(NSMutableArray *queue)
 {
 	SortQueue(_queue);
 	
-	CCGL_DEBUG_PUSH_GROUP_MARKER(_debugLabel.UTF8String);
+	CCRENDERER_DEBUG_PUSH_GROUP_MARKER(_debugLabel);
 	for(id<CCRenderCommand> command in _queue) [command invokeOnRenderer:renderer];
-	CCGL_DEBUG_POP_GROUP_MARKER();
+	CCRENDERER_DEBUG_POP_GROUP_MARKER();
 }
 
 -(NSInteger)globalSortOrder
@@ -623,10 +673,6 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	[self invalidateState];
 }
 
-#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
-#define glBindVertexArray glBindVertexArrayOES
-#endif
-
 //Implemented in CCNoARC.m
 //-(void)bindBuffers:(BOOL)bind
 //-(void)setRenderState:(CCRenderState *)renderState
@@ -635,6 +681,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 
 -(void)enqueueClear:(GLbitfield)mask color:(GLKVector4)color4 depth:(GLclampf)depth stencil:(GLint)stencil globalSortOrder:(NSInteger)globalSortOrder
 {
+	#warning GL code.
 	[self enqueueBlock:^{
 		if(mask & GL_COLOR_BUFFER_BIT) glClearColor(color4.r, color4.g, color4.b, color4.a);
 		if(mask & GL_DEPTH_BUFFER_BIT) glClearDepth(depth);
@@ -693,13 +740,13 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 
 -(void)flush
 {
-	CCGL_DEBUG_PUSH_GROUP_MARKER("CCRenderer: Flush");
+	CCRENDERER_DEBUG_PUSH_GROUP_MARKER(@"CCRenderer: Flush");
 	
 	// Commit the geometry buffers to be used by the rendering commmands.
-	CCGL_DEBUG_INSERT_EVENT_MARKER("Buffering");
+	CCRENDERER_DEBUG_INSERT_EVENT_MARKER(@"Buffering");
 	[_vertexBuffer commit];
 	[_elementBuffer commit];
-	CC_CHECK_GL_ERROR_DEBUG();
+	CCRENDERER_DEBUG_CHECK_ERRORS();
 	
 	// The render commands build the uniform buffers. (only used by Metal currently)
 	[_uniformBuffer prepare];
@@ -739,8 +786,8 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	[_vertexBuffer prepare];
 	[_elementBuffer prepare];
 	
-	CCGL_DEBUG_POP_GROUP_MARKER();
-	CC_CHECK_GL_ERROR_DEBUG();
+	CCRENDERER_DEBUG_POP_GROUP_MARKER();
+	CCRENDERER_DEBUG_CHECK_ERRORS();
 	
 	// Reset the renderer's state.
 	[self invalidateState];

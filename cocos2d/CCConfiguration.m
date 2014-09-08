@@ -155,6 +155,11 @@ static char * glExtensions;
 			
 			_graphicsAPI = CCGraphicsAPIGL;
 		}
+		
+		NSAssert(CCGraphicsBufferClass, @"CCGraphicsBufferClass not configured.");
+		NSAssert(CCGraphicsBufferBindingsClass, @"CCGraphicsBufferBindingsClass not configured.");
+		NSAssert(CCRenderStateClass, @"CCRenderStateClass not configured.");
+		NSAssert(CCRenderCommandDrawClass, @"CCRenderCommandDrawClass not configured.");
 	}
 	
 	return _graphicsAPI;
