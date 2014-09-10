@@ -221,23 +221,35 @@ static CCDirector *_sharedDirector = nil;
 
 -(NSDictionary *)updateGlobalShaderUniforms
 {
-	GLKMatrix4 projection = self.projectionMatrix;
-	_globalShaderUniforms[CCShaderUniformProjection] = [NSValue valueWithGLKMatrix4:projection];
-	_globalShaderUniforms[CCShaderUniformProjectionInv] = [NSValue valueWithGLKMatrix4:GLKMatrix4Invert(projection, NULL)];
+	// Group all of the standard globals into one value.
+	// Used by Metal, will be used eventually by a GL3 renderer.
+	CCGlobalUniforms globals = {};
+	
+	globals.projection = self.projectionMatrix;
+	globals.projectionInv = GLKMatrix4Invert(globals.projection, NULL);
+	_globalShaderUniforms[CCShaderUniformProjection] = [NSValue valueWithGLKMatrix4:globals.projection];
+	_globalShaderUniforms[CCShaderUniformProjectionInv] = [NSValue valueWithGLKMatrix4:globals.projectionInv];
 	
 	CGSize size = self.viewSize;
-	_globalShaderUniforms[CCShaderUniformViewSize] = [NSValue valueWithGLKVector2:GLKVector2Make(size.width, size.height)];
+	globals.viewSize = GLKVector2Make(size.width, size.height);
+	_globalShaderUniforms[CCShaderUniformViewSize] = [NSValue valueWithGLKVector2:globals.viewSize];
 	
 	CGSize pixelSize = self.viewSizeInPixels;
-	_globalShaderUniforms[CCShaderUniformViewSizeInPixels] = [NSValue valueWithGLKVector2:GLKVector2Make(pixelSize.width, pixelSize.height)];
+	globals.viewSizeInPixels = GLKVector2Make(pixelSize.width, pixelSize.height);
+	_globalShaderUniforms[CCShaderUniformViewSizeInPixels] = [NSValue valueWithGLKVector2:globals.viewSizeInPixels];
 	
 	CCTime t = self.scheduler.currentTime;
-	_globalShaderUniforms[CCShaderUniformTime] = [NSValue valueWithGLKVector4:GLKVector4Make(t, t/2.0f, t/8.0f, t/8.0f)];
-	_globalShaderUniforms[CCShaderUniformSinTime] = [NSValue valueWithGLKVector4:GLKVector4Make(sinf(t*2.0f), sinf(t), sinf(t/2.0f), sinf(t/4.0f))];
-	_globalShaderUniforms[CCShaderUniformCosTime] = [NSValue valueWithGLKVector4:GLKVector4Make(cosf(t*2.0f), cosf(t), cosf(t/2.0f), cosf(t/4.0f))];
+	globals.time = GLKVector4Make(t, t/2.0f, t/8.0f, t/8.0f);
+	globals.sinTime = GLKVector4Make(sinf(t*2.0f), sinf(t), sinf(t/2.0f), sinf(t/4.0f));
+	globals.cosTime = GLKVector4Make(cosf(t*2.0f), cosf(t), cosf(t/2.0f), cosf(t/4.0f));
+	_globalShaderUniforms[CCShaderUniformTime] = [NSValue valueWithGLKVector4:globals.time];
+	_globalShaderUniforms[CCShaderUniformSinTime] = [NSValue valueWithGLKVector4:globals.sinTime];
+	_globalShaderUniforms[CCShaderUniformCosTime] = [NSValue valueWithGLKVector4:globals.cosTime];
 	
-	GLKVector4 random = GLKVector4Make(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
-	_globalShaderUniforms[CCShaderUniformRandom01] = [NSValue valueWithGLKVector4:random];
+	globals.random01 = GLKVector4Make(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
+	_globalShaderUniforms[CCShaderUniformRandom01] = [NSValue valueWithGLKVector4:globals.random01];
+	
+	_globalShaderUniforms[CCShaderUniformDefaultGlobals] = [NSValue valueWithBytes:&globals objCType:@encode(CCGlobalUniforms)];
 	
 	return _globalShaderUniforms;
 }
@@ -258,12 +270,11 @@ static CCDirector *_sharedDirector = nil;
 	[ccview beginFrame];
 	
 	if(CCRenderDispatchBeginFrame()){
-		CCRenderer *renderer = [self rendererFromPool];
-		[CCRenderer bindRenderer:renderer];
-		
 		GLKMatrix4 projection = self.projectionMatrix;
-		renderer.globalShaderUniforms = [self updateGlobalShaderUniforms];
 		
+		CCRenderer *renderer = [self rendererFromPool];
+		[renderer prepareWithGlobals:[self updateGlobalShaderUniforms]];
+		[CCRenderer bindRenderer:renderer];
 		
 		[renderer enqueueClear:(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) color:_runningScene.colorRGBA.glkVector4 depth:1.0f stencil:0 globalSortOrder:NSIntegerMin];
 		

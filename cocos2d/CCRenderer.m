@@ -59,9 +59,109 @@
 	return [NSValue valueWithBytes:&matrix objCType:@encode(GLKMatrix4)];
 }
 
+static void
+AdvanceUntilAfter(const char **cursor, const char c)
+{
+	while(**cursor != c) (*cursor)++;
+	(*cursor)++;
+}
+
+static size_t
+ReadValue(const char **cursor)
+{
+	char c = (**cursor);
+	(*cursor)++;
+	
+	switch(c){
+		case 'c': return sizeof(char); break;
+		case 'i': return sizeof(int); break;
+		case 's': return sizeof(short); break;
+		case 'l': return sizeof(long); break;
+		case 'q': return sizeof(long long); break;
+		case 'C': return sizeof(unsigned char); break;
+		case 'I': return sizeof(unsigned int); break;
+		case 'S': return sizeof(unsigned short); break;
+		case 'L': return sizeof(unsigned long); break;
+		case 'Q': return sizeof(unsigned long long); break;
+		case 'f': return sizeof(float); break;
+		case 'd': return sizeof(double); break;
+		case 'B': return sizeof(_Bool); break;
+		
+		case '{': {
+			// struct
+			AdvanceUntilAfter(cursor, '=');
+			
+			size_t bytes = 0;
+			while(**cursor != '}'){
+				bytes += ReadValue(cursor);
+			}
+			
+			(*cursor)++;
+			return bytes;
+		}
+		
+		case '(': {
+			// Union
+			AdvanceUntilAfter(cursor, '=');
+			
+			size_t bytes = 0;
+			while(**cursor != ')'){
+				bytes = MAX(bytes, ReadValue(cursor));
+			}
+			
+			(*cursor)++;
+			return bytes;
+		}
+		
+		case '[': {
+			// array
+			size_t count = 0;
+			for(; '0' <= **cursor && **cursor <= '9'; (*cursor)++){
+				count = count*10 + (**cursor - '0');
+			}
+			
+			size_t elementSize = ReadValue(cursor);
+			
+			(*cursor)++;
+			return count*elementSize;
+		}
+		
+			case 'v': // void
+			case '*': // char *
+			case 'b': // bitfield
+			case '@': // object
+			case '#': // class
+			case ':': // selector
+			case '^': // pointer
+			default:
+				NSCAssert(NO, @"@encode() type %c is forbidden to use with shader uniforms.", c);
+				return 0;
+	}
+}
+
+// Partial implementation to calculate the size of an @encode() string.
+// Doesn't handle all types, alignment, etc.
+-(size_t)CCRendererSizeOf
+{
+	size_t bytes = 0;
+	
+	const char *objCType = self.objCType;
+	const char **cursor = &objCType;
+	
+	while(**cursor != '\0'){
+		bytes += ReadValue(cursor);
+	}
+	
+	return bytes;
+}
+
+
 @end
 
+
 //MARK: Graphics Debug Helpers:
+
+#if DEBUG
 
 void CCRENDERER_DEBUG_PUSH_GROUP_MARKER(NSString *label){
 #if __CC_METAL_SUPPORTED_AND_ENABLED
@@ -105,6 +205,8 @@ void CCRENDERER_DEBUG_CHECK_ERRORS(void){
 		CC_CHECK_GL_ERROR_DEBUG();
 	}
 }
+
+#endif
 
 
 //MARK: Blend Option Keys.
@@ -613,7 +715,7 @@ SortQueue(NSMutableArray *queue)
 // Base implementations do do nothing.
 -(void)prepare {}
 -(void)commit {}
--(void)bind {}
+-(void)bind:(BOOL)bind {}
 
 @end
 
@@ -659,10 +761,31 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	}
 }
 
--(void)setGlobalShaderUniforms:(NSDictionary *)globalShaderUniforms
+-(void)prepareWithGlobals:(NSDictionary *)globalShaderUniforms
 {
 	_globalShaderUniforms = [globalShaderUniforms copy];
-	[self invalidateState];
+	
+	// If we are using a uniform buffer (ex: Metal) copy the global uniforms into it.
+	CCGraphicsBuffer *uniformBuffer = _buffers->_uniformBuffer;
+	if(uniformBuffer){
+		NSMutableDictionary *offsets = [NSMutableDictionary dictionary];
+		size_t offset = 0;
+		
+		for(NSString *name in _globalShaderUniforms){
+			NSValue *value = _globalShaderUniforms[name];
+			size_t bytes = value.CCRendererSizeOf;
+			
+			void * buff = CCGraphicsBufferPushElements(uniformBuffer, bytes);
+			[value getValue:buff];
+			offsets[name] = @(offset);
+			
+			offset += bytes;
+		}
+		
+		_globalShaderUniformBufferOffsets = offsets;
+	}
+	
+	#warning Bind FBO.
 }
 
 //Implemented in CCNoARC.m
@@ -736,28 +859,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	
 	// Commit the buffers.
 	[_buffers commit];
-	
-	// TODO This should probably be moved eventually, but I'm not sure where.
-	// Probably never going to support uniform buffers in GL and making CCRenderer abstract is ugh...
-#if __CC_METAL_SUPPORTED_AND_ENABLED
-	if(_metalContext){
-		CCGlobalUniforms globalUniforms = {};
-		const NSUInteger globalUniformBytes = sizeof(globalUniforms);
 		
-		[_globalShaderUniforms[CCShaderUniformProjection] getValue:&globalUniforms.projection];
-		[_globalShaderUniforms[CCShaderUniformProjectionInv] getValue:&globalUniforms.projectionInv];
-		[_globalShaderUniforms[CCShaderUniformViewSize] getValue:&globalUniforms.viewSize];
-		[_globalShaderUniforms[CCShaderUniformViewSizeInPixels] getValue:&globalUniforms.viewSizeInPixels];
-		[_globalShaderUniforms[CCShaderUniformTime] getValue:&globalUniforms.time];
-		[_globalShaderUniforms[CCShaderUniformSinTime] getValue:&globalUniforms.sinTime];
-		[_globalShaderUniforms[CCShaderUniformCosTime] getValue:&globalUniforms.cosTime];
-		[_globalShaderUniforms[CCShaderUniformRandom01] getValue:&globalUniforms.random01];
-		
-		void *buff = CCGraphicsBufferPushElements(_uniformBuffer, globalUniformBytes);
-		memcpy(buff, &globalUniforms, globalUniformBytes);
-	}
-#endif
-	
 	// Execute the rendering commands.
 	SortQueue(_queue);
 	for(id<CCRenderCommand> command in _queue) [command invokeOnRenderer:self];

@@ -28,10 +28,6 @@
 #import "CCCache.h"
 #import "CCRenderDispatch.h"
 
-#if __CC_METAL_SUPPORTED_AND_ENABLED
-
-@class CCMetalContext;
-
 // Struct used for packing the global uniforms.
 // NOTE: Must match the definition in CCShaders.metal!
 typedef struct CCGlobalUniforms {
@@ -44,8 +40,6 @@ typedef struct CCGlobalUniforms {
 	GLKVector4 cosTime;
 	GLKVector4 random01;
 } CCGlobalUniforms;
-
-#endif
 
 /// Options dictionary for the disabled blending mode.
 extern NSDictionary *CCBLEND_DISABLED_OPTIONS;
@@ -212,6 +206,7 @@ CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount)
 	CCGraphicsBufferBindings *_buffers;
 	
 	NSDictionary *_globalShaderUniforms;
+	NSDictionary *_globalShaderUniformBufferOffsets;
 	
 	NSMutableArray *_queue;
 	NSMutableArray *_queueStack;
@@ -221,14 +216,10 @@ CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount)
 	__unsafe_unretained CCRenderState *_renderState;
 	__unsafe_unretained CCRenderCommandDraw *_lastDrawCommand;
 	BOOL _buffersBound;
-
-#if __CC_METAL_SUPPORTED_AND_ENABLED
-	CCMetalContext *_metalContext;
-#endif
 }
 
 /// Current global shader uniform values.
-@property(nonatomic, copy) NSDictionary *globalShaderUniforms;
+@property(nonatomic, readonly) NSDictionary *globalShaderUniforms;
 
 /// Retrieve the current renderer for the current thread.
 +(instancetype)currentRenderer;
@@ -246,6 +237,8 @@ CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount)
 
 
 @interface CCRenderer(NoARCPrivate)
+
+-(void)prepareWithGlobals:(NSDictionary *)globalShaderUniforms;
 
 -(void)setRenderState:(CCRenderState *)renderState;
 

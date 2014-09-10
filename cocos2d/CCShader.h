@@ -45,6 +45,7 @@ typedef NS_ENUM(NSUInteger, CCShaderAttribute){
 };
 
 
+extern const NSString *CCShaderUniformDefaultGlobals;
 extern const NSString *CCShaderUniformProjection;
 extern const NSString *CCShaderUniformProjectionInv;
 extern const NSString *CCShaderUniformViewSize;
