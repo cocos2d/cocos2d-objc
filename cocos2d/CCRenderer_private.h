@@ -186,18 +186,30 @@ CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount)
 
 
 /// Internal abstract class used to wrap vertex buffer state. (GL VAOs, etc)
-@protocol CCGraphicsBufferBindings
--(instancetype)initWithVertexBuffer:(CCGraphicsBuffer *)vertexBuffer indexBuffer:(CCGraphicsBuffer *)indexBuffer;
+@interface CCGraphicsBufferBindings : NSObject {
+	@public
+	CCGraphicsBuffer *_vertexBuffer;
+	CCGraphicsBuffer *_indexBuffer;
+	
+	// Not used by the GL2 renderer.
+	CCGraphicsBuffer *_uniformBuffer;
+}
+
+/// Prepare buffers for changes.
+-(void)prepare;
+
+/// Commit changes to buffers.
+-(void)commit;
+
+/// Bind the buffers. (Not used by Metal)
 -(void)bind:(BOOL)bind;
+
 @end
 
 
 @interface CCRenderer(){
 	@public
-	CCGraphicsBuffer *_vertexBuffer;
-	CCGraphicsBuffer *_elementBuffer;
-	CCGraphicsBuffer *_uniformBuffer; // Currently only used by the Metal renderer.
-	id<CCGraphicsBufferBindings> _bufferBindings;
+	CCGraphicsBufferBindings *_buffers;
 	
 	NSDictionary *_globalShaderUniforms;
 	

@@ -127,20 +127,20 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 -(CCRenderBuffer)enqueueTriangles:(NSUInteger)triangleCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
 {
 	// Need to record the first vertex or element index before pushing more vertexes.
-	NSUInteger firstVertex = _vertexBuffer->_count;
-	NSUInteger firstElement = _elementBuffer->_count;
+	NSUInteger firstVertex = _buffers->_vertexBuffer->_count;
+	NSUInteger firstIndex = _buffers->_indexBuffer->_count;
 	
-	NSUInteger elementCount = 3*triangleCount;
-	CCVertex *vertexes = CCGraphicsBufferPushElements(_vertexBuffer, vertexCount);
-	uint16_t *elements = CCGraphicsBufferPushElements(_elementBuffer, elementCount);
+	NSUInteger indexCount = 3*triangleCount;
+	CCVertex *vertexes = CCGraphicsBufferPushElements(_buffers->_vertexBuffer, vertexCount);
+	uint16_t *elements = CCGraphicsBufferPushElements(_buffers->_indexBuffer, indexCount);
 	
 	CCRenderCommandDraw *previous = _lastDrawCommand;
 	if(previous && previous->_renderState == renderState && previous->_globalSortOrder == globalSortOrder){
 		// Batch with the previous command.
-		[previous batch:elementCount];
+		[previous batch:indexCount];
 	} else {
 		// Start a new command.
-		CCRenderCommandDraw *command = [[CCRenderCommandDrawClass alloc] initWithMode:CCRenderCommandDrawTriangles renderState:renderState first:firstElement count:elementCount globalSortOrder:globalSortOrder];
+		CCRenderCommandDraw *command = [[CCRenderCommandDrawClass alloc] initWithMode:CCRenderCommandDrawTriangles renderState:renderState first:firstIndex count:indexCount globalSortOrder:globalSortOrder];
 		[_queue addObject:command];
 		[command release];
 		
@@ -153,14 +153,14 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 -(CCRenderBuffer)enqueueLines:(NSUInteger)lineCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
 {
 	// Need to record the first vertex or element index before pushing more vertexes.
-	NSUInteger firstVertex = _vertexBuffer->_count;
-	NSUInteger firstElement = _elementBuffer->_count;
+	NSUInteger firstVertex = _buffers->_vertexBuffer->_count;
+	NSUInteger firstIndex = _buffers->_indexBuffer->_count;
 	
-	NSUInteger elementCount = 2*lineCount;
-	CCVertex *vertexes = CCGraphicsBufferPushElements(_vertexBuffer, vertexCount);
-	uint16_t *elements = CCGraphicsBufferPushElements(_elementBuffer, elementCount);
+	NSUInteger indexCount = 2*lineCount;
+	CCVertex *vertexes = CCGraphicsBufferPushElements(_buffers->_vertexBuffer, vertexCount);
+	uint16_t *elements = CCGraphicsBufferPushElements(_buffers->_indexBuffer, indexCount);
 	
-	CCRenderCommandDraw *command = [[CCRenderCommandDrawClass alloc] initWithMode:CCRenderCommandDrawLines renderState:renderState first:firstElement count:elementCount globalSortOrder:globalSortOrder];
+	CCRenderCommandDraw *command = [[CCRenderCommandDrawClass alloc] initWithMode:CCRenderCommandDrawLines renderState:renderState first:firstIndex count:indexCount globalSortOrder:globalSortOrder];
 	[_queue addObject:command];
 	[command release];
 	
@@ -174,7 +174,7 @@ static inline void
 CCRendererBindBuffers(CCRenderer *self, BOOL bind)
 {
  	if(bind != self->_buffersBound){
-		[self->_bufferBindings bind:bind];
+		[self->_buffers bind:bind];
 		self->_buffersBound = bind;
 	}
 }

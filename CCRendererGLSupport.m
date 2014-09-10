@@ -185,40 +185,46 @@ static const CCGraphicsBufferType CCGraphicsBufferGLTypes[] = {
 #endif
 
 
-@interface CCGraphicsBufferBindingsGL : NSObject <CCGraphicsBufferBindings> @end
+@interface CCGraphicsBufferBindingsGL : CCGraphicsBufferBindings @end
 @implementation CCGraphicsBufferBindingsGL {
 	GLuint _vao;
 }
 
--(instancetype)initWithVertexBuffer:(CCGraphicsBufferGLBasic *)vertexBuffer indexBuffer:(CCGraphicsBufferGLBasic *)indexBuffer
+-(instancetype)init
 {
-	NSAssert([vertexBuffer isKindOfClass:[CCGraphicsBufferGLBasic class]], @"Wrong kind of buffer!");
-	NSAssert([indexBuffer isKindOfClass:[CCGraphicsBufferGLBasic class]], @"Wrong kind of buffer!");
-	
 	if((self = [super init])){
-		CCGL_DEBUG_PUSH_GROUP_MARKER("CCGraphicsBufferBindingsGL: Creating VAO");
-		
-		glGenVertexArrays(1, &_vao);
-		glBindVertexArray(_vao);
+		CCRenderDispatch(NO, ^{
+			const NSUInteger CCRENDERER_INITIAL_VERTEX_CAPACITY = 16*1024;
+			_vertexBuffer = [[CCGraphicsBufferClass alloc] initWithCapacity:CCRENDERER_INITIAL_VERTEX_CAPACITY elementSize:sizeof(CCVertex) type:CCGraphicsBufferTypeVertex];
+			[_vertexBuffer prepare];
+			
+			_indexBuffer = [[CCGraphicsBufferClass alloc] initWithCapacity:CCRENDERER_INITIAL_VERTEX_CAPACITY*1.5 elementSize:sizeof(uint16_t) type:CCGraphicsBufferTypeIndex];
+			[_indexBuffer prepare];
+			
+			CCGL_DEBUG_PUSH_GROUP_MARKER("CCGraphicsBufferBindingsGL: Creating VAO");
+			
+			glGenVertexArrays(1, &_vao);
+			glBindVertexArray(_vao);
 
-		glEnableVertexAttribArray(CCShaderAttributePosition);
-		glEnableVertexAttribArray(CCShaderAttributeTexCoord1);
-		glEnableVertexAttribArray(CCShaderAttributeTexCoord2);
-		glEnableVertexAttribArray(CCShaderAttributeColor);
-		
-		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer->_buffer);
-		glVertexAttribPointer(CCShaderAttributePosition, 4, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, position));
-		glVertexAttribPointer(CCShaderAttributeTexCoord1, 2, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, texCoord1));
-		glVertexAttribPointer(CCShaderAttributeTexCoord2, 2, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, texCoord2));
-		glVertexAttribPointer(CCShaderAttributeColor, 4, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, color));
-		
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer->_buffer);
+			glEnableVertexAttribArray(CCShaderAttributePosition);
+			glEnableVertexAttribArray(CCShaderAttributeTexCoord1);
+			glEnableVertexAttribArray(CCShaderAttributeTexCoord2);
+			glEnableVertexAttribArray(CCShaderAttributeColor);
+			
+			glBindBuffer(GL_ARRAY_BUFFER, ((CCGraphicsBufferGLBasic *)_vertexBuffer)->_buffer);
+			glVertexAttribPointer(CCShaderAttributePosition, 4, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, position));
+			glVertexAttribPointer(CCShaderAttributeTexCoord1, 2, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, texCoord1));
+			glVertexAttribPointer(CCShaderAttributeTexCoord2, 2, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, texCoord2));
+			glVertexAttribPointer(CCShaderAttributeColor, 4, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, color));
+			
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ((CCGraphicsBufferGLBasic *)_indexBuffer)->_buffer);
 
-		glBindVertexArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-		
-		CCGL_DEBUG_POP_GROUP_MARKER();
+			glBindVertexArray(0);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+			
+			CCGL_DEBUG_POP_GROUP_MARKER();
+		});
 	}
 	
 	return self;
@@ -234,6 +240,18 @@ static const CCGraphicsBufferType CCGraphicsBufferGLTypes[] = {
 {
 	CCGL_DEBUG_INSERT_EVENT_MARKER("CCGraphicsBufferBindingsGL: Bind VAO");
 	glBindVertexArray(bind ? _vao : 0);
+}
+
+-(void)prepare
+{
+	[_vertexBuffer prepare];
+	[_indexBuffer prepare];
+}
+
+-(void)commit
+{
+	[_vertexBuffer commit];
+	[_indexBuffer commit];
 }
 
 @end

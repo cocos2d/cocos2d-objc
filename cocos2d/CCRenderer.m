@@ -605,6 +605,19 @@ SortQueue(NSMutableArray *queue)
 @end
 
 
+//MARK: CCGraphicsBufferBindings
+
+
+@implementation CCGraphicsBufferBindings
+
+// Base implementations do do nothing.
+-(void)prepare {}
+-(void)commit {}
+-(void)bind {}
+
+@end
+
+
 //MARK: Render Queue
 
 
@@ -620,31 +633,10 @@ SortQueue(NSMutableArray *queue)
 -(instancetype)init
 {
 	if((self = [super init])){
-		CCRenderDispatch(NO, ^{
-			const NSUInteger CCRENDERER_INITIAL_VERTEX_CAPACITY = 16*1024;
-			_vertexBuffer = [[CCGraphicsBufferClass alloc] initWithCapacity:CCRENDERER_INITIAL_VERTEX_CAPACITY elementSize:sizeof(CCVertex) type:CCGraphicsBufferTypeVertex];
-			[_vertexBuffer prepare];
-			
-			_elementBuffer = [[CCGraphicsBufferClass alloc] initWithCapacity:CCRENDERER_INITIAL_VERTEX_CAPACITY*1.5 elementSize:sizeof(uint16_t) type:CCGraphicsBufferTypeIndex];
-			[_elementBuffer prepare];
-			
-			_bufferBindings = [CCGraphicsBufferBindingsClass alloc];
-			_bufferBindings = [_bufferBindings initWithVertexBuffer:_vertexBuffer indexBuffer:_elementBuffer];
-		});
-		
+		_buffers = [[CCGraphicsBufferBindingsClass alloc] init];
+				
 		_threadsafe = YES;
 		_queue = [NSMutableArray array];
-		
-#if __CC_METAL_SUPPORTED_AND_ENABLED
-		if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
-			// TODO: This is sort of gross. Would like it to move somewhere else.
-			_metalContext = (CCMetalContext *)[NSClassFromString(@"CCMetalContext") currentContext];
-			
-			// Default to half a megabyte of initial uniform storage.
-			NSUInteger uniformCapacity = 500*1024;
-			_uniformBuffer = [[CCGraphicsBufferClass alloc] initWithCapacity:uniformCapacity elementSize:1 type:CCGraphicsBufferTypeUniform];
-		}
-#endif
 	}
 	
 	return self;
@@ -742,14 +734,8 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 {
 	CCRENDERER_DEBUG_PUSH_GROUP_MARKER(@"CCRenderer: Flush");
 	
-	// Commit the geometry buffers to be used by the rendering commmands.
-	CCRENDERER_DEBUG_INSERT_EVENT_MARKER(@"Buffering");
-	[_vertexBuffer commit];
-	[_elementBuffer commit];
-	CCRENDERER_DEBUG_CHECK_ERRORS();
-	
-	// The render commands build the uniform buffers. (only used by Metal currently)
-	[_uniformBuffer prepare];
+	// Commit the buffers.
+	[_buffers commit];
 	
 	// TODO This should probably be moved eventually, but I'm not sure where.
 	// Probably never going to support uniform buffers in GL and making CCRenderer abstract is ugh...
@@ -779,12 +765,8 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	
 	[_queue removeAllObjects];
 	
-	// Commit the uniform buffers.
-	[_uniformBuffer commit];	
-	
-	// Prepare the geometry buffers for use next time the renderer is reused.
-	[_vertexBuffer prepare];
-	[_elementBuffer prepare];
+	// Prepare the buffers.
+	[_buffers prepare];
 	
 	CCRENDERER_DEBUG_POP_GROUP_MARKER();
 	CCRENDERER_DEBUG_CHECK_ERRORS();
