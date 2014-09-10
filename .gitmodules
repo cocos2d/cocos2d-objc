@@ -9,3 +9,7 @@ url=git@github.com:spritebuilder/ogg.git
 	path = external/tremor
 url=git@github.com:spritebuilder/tremor.git
 	branch = apportable
+[submodule "external/ObjectAL"]
+	path = external/ObjectAL
+	url = https://github.com/spritebuilder/ObjectAL-for-iPhone.git
+	branch = master
