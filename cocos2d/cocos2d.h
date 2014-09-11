@@ -75,7 +75,6 @@
 #import "CCEffectReflection.h"
 #import "CCEffectRefraction.h"
 #import "CCEffectSaturation.h"
-#import "CCEffectDistanceField.h"
 #import "CCEffectStack.h"
 #import "CCLabelBMFont.h"
 #import "CCLabelTTF.h"
@@ -101,7 +100,11 @@
 #import "CCTiledMapLayer.h"
 #import "CCTiledMapObjectGroup.h"
 #import "CCTransition.h"
+
+#if CC_EFFECTS_EXPERIMENTAL
 #import "CCEffectDFOutline.h"
+#import "CCEffectDistanceField.h"
+#endif
 
 // Layouts
 #import "CCLayout.h"

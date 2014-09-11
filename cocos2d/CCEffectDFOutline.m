@@ -7,6 +7,9 @@
 //
 
 #import "CCEffectDFOutline.h"
+
+#if CC_EFFECTS_EXPERIMENTAL
+
 #import "CCEffect_Private.h"
 #import "CCRenderer.h"
 #import "CCTexture.h"
@@ -19,10 +22,10 @@
 
 -(id)init
 {
-    return [self initWithOutlineColor:[CCColor redColor] fillColor:[CCColor blackColor] outlineWidth:3 fieldScale:32];
+    return [self initWithOutlineColor:[CCColor redColor] fillColor:[CCColor blackColor] outlineWidth:3 fieldScale:32 distanceField:[CCTexture none]];
 }
 
--(id)initWithOutlineColor:(CCColor*)outlineColor fillColor:(CCColor*)fillColor outlineWidth:(int)outlineWidth fieldScale:(float)fieldScale
+-(id)initWithOutlineColor:(CCColor*)outlineColor fillColor:(CCColor*)fillColor outlineWidth:(int)outlineWidth fieldScale:(float)fieldScale distanceField:(CCTexture*)distanceField
 {
     NSArray *uniforms = @[
                           [CCEffectUniform uniform:@"vec4" name:@"u_fillColor" value:[NSValue valueWithGLKVector4:[CCColor blackColor].glkVector4]],
@@ -37,15 +40,16 @@
         self.outlineWidth = 3;
         _fillColor = fillColor;
         _outlineColor = outlineColor;
+        _distanceField = distanceField;
         
         self.debugName = @"CCEffectDFOutline";
     }
     return self;
 }
 
-+(id)effectWithOutlineColor:(CCColor*)outlineColor fillColor:(CCColor*)fillColor outlineWidth:(int)outlineWidth fieldScale:(float)fieldScale
++(id)effectWithOutlineColor:(CCColor*)outlineColor fillColor:(CCColor*)fillColor outlineWidth:(int)outlineWidth fieldScale:(float)fieldScale distanceField:(CCTexture*)distanceField
 {
-    return [[self alloc] initWithOutlineColor:outlineColor fillColor:fillColor outlineWidth:outlineWidth fieldScale:fieldScale];
+    return [[self alloc] initWithOutlineColor:outlineColor fillColor:fillColor outlineWidth:outlineWidth fieldScale:fieldScale distanceField:distanceField];
 }
 
 -(void)buildFragmentFunctions
@@ -54,8 +58,10 @@
     
     NSString* effectBody = CC_GLSL(
                                    vec4 outputColor = u_fillColor;
-                                   outputColor.a = 1.0;
-                                   float distAlphaMask = texture2D(cc_MainTexture, cc_FragTexCoord1).r;
+                                   if(u_fillColor.a == 0.0)
+                                       outputColor = texture2D(cc_MainTexture, cc_FragTexCoord1);
+                                   
+                                   float distAlphaMask = texture2D(cc_NormalMapTexture, cc_FragTexCoord1).r;
                                    
                                    float center = 0.5;
                                    float transition = fwidth(distAlphaMask) * 1.0;
@@ -65,14 +71,14 @@
                                    
                                    // soft edges
                                    outputColor.a *= smoothstep(min, max, distAlphaMask);
-                                  
+                                   
                                    min = u_outlineOuterWidth.x;
                                    max = u_outlineOuterWidth.y;
+                                   
                                    if(min == 0.5 && max == 0.5)
                                        return outputColor;
                                    
-                                   vec4 glowTexel = texture2D(cc_MainTexture, cc_FragTexCoord1);
-                                  
+                                   vec4 glowTexel = texture2D(cc_NormalMapTexture, cc_FragTexCoord1);
                                    
                                    vec4 glowc = u_outlineColor * smoothstep(min, max, glowTexel.r);
                                    
@@ -97,6 +103,7 @@
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture) {
         
+        pass.shaderUniforms[CCShaderUniformNormalMapTexture] = weakSelf.distanceField;
         pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
         
@@ -125,3 +132,5 @@
 }
 
 @end
+
+#endif

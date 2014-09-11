@@ -11,8 +11,8 @@
 @implementation CCEffectsTest {
 #if CC_EFFECTS_EXPERIMENTAL
     CCEffectDistanceField* _distanceFieldEffect;
-#endif
     CCEffectDFOutline* _outlineEffect;
+#endif
 }
 
 -(id)init
@@ -27,6 +27,8 @@
 
 #pragma mark Distance Fields
 
+#if CC_EFFECTS_EXPERIMENTAL
+
 -(void)setupDFOutlineEffectTest
 {
     self.subTitle = @"Distance Field Outline Test";
@@ -36,13 +38,16 @@
     environment.anchorPoint = ccp(0.5, 0.5);
     environment.position = ccp(0.5f, 0.5f);
     
-    _outlineEffect = [CCEffectDFOutline effectWithOutlineColor:[CCColor redColor] fillColor:[CCColor blackColor] outlineWidth:3 fieldScale:32];
+    CCTexture* texture = [[CCTextureCache sharedTextureCache] addImage:@"Images/output.png"];
     
-    CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"Images/output.png"];
-    sampleSprite.position = ccp(0.5, 0.5);
-    sampleSprite.positionType = CCPositionTypeNormalized;
-    sampleSprite.effect = _outlineEffect;
-    sampleSprite.scale = 2.0f;
+    CCColor* fillColor = [CCColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0];
+    _outlineEffect = [CCEffectDFOutline effectWithOutlineColor:[CCColor redColor] fillColor:fillColor outlineWidth:3 fieldScale:32 distanceField:texture];
+
+    CCSprite *dfSprite = [CCSprite spriteWithImageNamed:@"Images/df_sprite.png"];
+    dfSprite.position = ccp(0.5, 0.5);
+    dfSprite.positionType = CCPositionTypeNormalized;
+    dfSprite.effect = _outlineEffect;
+    dfSprite.scale = 1.0f;
     
     CCSpriteFrame* background = [CCSpriteFrame frameWithImageNamed:@"Tests/slider-background.png"];
     CCSpriteFrame* backgroundHilite = [CCSpriteFrame frameWithImageNamed:@"Tests/slider-background-hilite.png"];
@@ -63,7 +68,7 @@
     
     [self.contentNode addChild:environment];
     [self.contentNode addChild:slider];
-    [self.contentNode addChild:sampleSprite];
+    [self.contentNode addChild:dfSprite];
     
     // 6 pixel block used for comparison;
     CCNodeColor* block = [CCNodeColor nodeWithColor:[CCColor greenColor]];
@@ -81,7 +86,6 @@
     _outlineEffect.outlineWidth = slider.sliderValue * outlineWidthMax;
 }
 
-#if CC_EFFECTS_EXPERIMENTAL
 -(void)setupDistanceFieldEffectTest
 {
     self.subTitle = @"Distance Field Effect Test";
@@ -101,7 +105,7 @@
     sampleSprite.position = ccp(0.5, 0.5);
     sampleSprite.positionType = CCPositionTypeNormalized;
     sampleSprite.effect = _distanceFieldEffect;
-    sampleSprite.scale = 2.0f;
+    sampleSprite.scale = 1.0f;
     
     CCSpriteFrame* background = [CCSpriteFrame frameWithImageNamed:@"Tests/slider-background.png"];
     CCSpriteFrame* backgroundHilite = [CCSpriteFrame frameWithImageNamed:@"Tests/slider-background-hilite.png"];

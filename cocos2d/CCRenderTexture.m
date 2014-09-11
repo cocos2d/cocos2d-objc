@@ -180,7 +180,7 @@
 
 -(void)createTextureAndFboWithPixelSize:(CGSize)pixelSize
 {
-	glPushGroupMarkerEXT(0, "CCRenderTexture: Create");
+	CCGL_DEBUG_PUSH_GROUP_MARKER("CCRenderTexture: Create");
 	
 	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
 
