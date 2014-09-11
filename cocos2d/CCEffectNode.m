@@ -22,16 +22,17 @@
 #import "CCNode_Private.h"
 #import "CCRenderer_private.h"
 #import "CCRenderTexture_Private.h"
+#import "CCEffect_Private.h"
 
 #if __CC_PLATFORM_MAC
 #import <ApplicationServices/ApplicationServices.h>
 #endif
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 @interface CCEffectNode()
 {
     CCEffect *_effect;
     CCEffectRenderer *_effectRenderer;
+    CGSize _allocatedSize;
 }
 
 @end
@@ -46,10 +47,38 @@
 
 -(id)initWithWidth:(int)width height:(int)height
 {
-	if((self = [super initWithWidth:width height:height pixelFormat:CCTexturePixelFormat_Default])) {
+    return [self initWithWidth:width height:height pixelFormat:CCTexturePixelFormat_Default];
+}
+
+-(id)initWithWidth:(int)width height:(int)height pixelFormat:(CCTexturePixelFormat)format
+{
+    return [self initWithWidth:width height:height pixelFormat:format depthStencilFormat:0];
+}
+
+-(id)initWithWidth:(int)width height:(int)height pixelFormat:(CCTexturePixelFormat) format depthStencilFormat:(GLuint)depthStencilFormat
+{
+    if((self = [super initWithWidth:width height:height pixelFormat:CCTexturePixelFormat_Default depthStencilFormat:depthStencilFormat]))
+    {
         _effectRenderer = [[CCEffectRenderer alloc] init];
+        _allocatedSize = CGSizeMake(0.0f, 0.0f);
+        self.clearFlags = GL_COLOR_BUFFER_BIT;
 	}
 	return self;
+}
+
++(id)effectNodeWithWidth:(int)w height:(int)h
+{
+    return [[CCEffectNode alloc] initWithWidth:w height:h];
+}
+
++(id)effectNodeWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat)format
+{
+    return [[CCEffectNode alloc] initWithWidth:w height:h pixelFormat:format];
+}
+
++(id)effectNodeWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat)format depthStencilFormat:(GLuint)depthStencilFormat
+{
+    return [[CCEffectNode alloc] initWithWidth:w height:h pixelFormat:format depthStencilFormat:depthStencilFormat];
 }
 
 -(CCEffect *)effect
@@ -60,6 +89,32 @@
 -(void)setEffect:(CCEffect *)effect
 {
     _effect = effect;
+    if (effect)
+    {
+        [self updateShaderUniformsFromEffect];
+    }
+    else
+    {
+        _shaderUniforms = nil;
+    }
+}
+
+-(void)create
+{
+    _allocatedSize = self.contentSizeInPoints;
+    CGSize pixelSize = CGSizeMake(_allocatedSize.width * _contentScale, _allocatedSize.height * _contentScale);
+    [self createTextureAndFboWithPixelSize:pixelSize];
+
+    CGRect rect = CGRectMake(0, 0, _allocatedSize.width, _allocatedSize.height);
+	[_sprite setTextureRect:rect];
+    
+    _projection = GLKMatrix4MakeOrtho(0.0f, _allocatedSize.width, 0.0f, _allocatedSize.height, -1024.0f, 1024.0f);
+}
+
+-(void)destroy
+{
+    [super destroy];
+    _allocatedSize = CGSizeMake(0.0f, 0.0f);
 }
 
 -(void)begin
@@ -102,6 +157,14 @@
 	// override visit.
 	// Don't call visit on its children
 	if(!_visible) return;
+    
+    CGSize pointSize = self.contentSizeInPoints;
+    if (!CGSizeEqualToSize(pointSize, _allocatedSize))
+    {
+        [self destroy];
+        [self contentSizeChanged];
+        _contentSizeChanged = NO;
+    }
 	
     GLKMatrix4 transform = [self transform:parentTransform];
     
@@ -146,7 +209,7 @@
     // remainder of the effects.
     [self begin];
 
-    [_renderer enqueueClear:GL_COLOR_BUFFER_BIT color:_clearColor depth:self.clearDepth stencil:self.clearStencil globalSortOrder:NSIntegerMin];
+    [_renderer enqueueClear:self.clearFlags color:_clearColor depth:self.clearDepth stencil:self.clearStencil globalSortOrder:NSIntegerMin];
     
     //! make sure all children are drawn
     [self sortAllChildren];
@@ -158,41 +221,24 @@
 
     // Done pre-render
     
-    _sprite.texture = self.texture;
-    _effectRenderer.contentSize = self.texture.contentSize;
-    [_effectRenderer drawSprite:_sprite withEffect:_effect renderer:_renderer transform:transform];
-    
-    if (!_effect.supportsDirectRendering || !_effect)
+    if (_effect)
     {
-        // XXX We may want to make this post-render step overridable by the
-        // last effect in the stack. That would look like the code in the
-        // pre-render override comment above.
-        //
-        
-        // Draw accumulated results from the last textureinto the real framebuffer
-        // The texture property always points to the most recently allocated
-        // texture so it will contain any accumulated results for the effect stack.
-        [_renderer pushGroup];
-        
-        if (_effect)
+        _effectRenderer.contentSize = self.contentSizeInPoints;
+        if ([_effect prepareForRendering] == CCEffectPrepareSuccess)
         {
-            _sprite.texture = _effectRenderer.outputTexture;
+            // Preparing an effect for rendering can modify its uniforms
+            // dictionary which means we need to reinitialize our copy of the
+            // uniforms.
+            [self updateShaderUniformsFromEffect];
         }
-        else
-        {
-            _sprite.texture = self.texture;
-        }
-        
+        [_effectRenderer drawSprite:_sprite withEffect:_effect uniforms:_shaderUniforms renderer:_renderer transform:transform];
+    }
+    else
+    {
         _sprite.anchorPoint = ccp(0.0f, 0.0f);
         _sprite.position = ccp(0.0f, 0.0f);
-        _sprite.shader = [CCShader positionTextureColorShader];
         [_sprite visit:_renderer parentTransform:transform];
-        
-        [_renderer popGroupWithDebugLabel:@"CCEffectNode: Post-render composite pass" globalSortOrder:0];
-        
-        // Done framebuffer composite
     }
-    
     
     if(_privateRenderer == NO)
         _renderer.globalShaderUniforms = _oldGlobalUniforms;
@@ -202,5 +248,17 @@
     _renderer = nil;
 }
 
+- (void)updateShaderUniformsFromEffect
+{
+    // Initialize the shader uniforms dictionary with the node's main texture and an
+    // empty entry for the normal map (because effect node's don't have normal maps
+    // like sprites do).
+    _shaderUniforms = [@{ CCShaderUniformMainTexture : (_texture ?: [CCTexture none]),
+                          CCShaderUniformNormalMapTexture : [CCTexture none]
+                          } mutableCopy];
+    
+    // And then copy the new effect's uniforms into the node's uniforms dictionary.
+    [_shaderUniforms addEntriesFromDictionary:_effect.shaderUniforms];
+}
+
 @end
-#endif

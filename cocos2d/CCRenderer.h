@@ -172,12 +172,13 @@ extern const NSString *CCBlendEquationAlpha;
 /// Create a cached blending mode for a given blending mode, shader and main texture.
 +(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader mainTexture:(CCTexture *)mainTexture;
 
-/// Create an uncached blending mode for a given blending mode, shader and set of uncopied uniform values.
--(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms __deprecated;
-
 /// Create an uncached blending mode for a given blending mode, shader and set of uniform values.
 /// Allowing the uniform dictionary to be copied allows the render state to be immutable and used more optimally.
--(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms copyUniforms:(BOOL)copyUniforms;
++(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms copyUniforms:(BOOL)copyUniforms;
+
+/// Initialize an uncached blending mode for a given blending mode, shader and set of uncopied uniform values.
+/// Use [CCRenderState renderStateWithBlendMode:blendMode shader:shader shaderUniforms:shaderUniforms copyUniforms:NO] instead.
+-(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms __deprecated;
 
 @end
 
@@ -193,17 +194,6 @@ extern const NSString *CCBlendEquationAlpha;
 /// Enqueue a OpenGL clear operation for the given buffers and the given values.
 /// Enqueued commands are sorted by their globalSortOrder value before rendering. Currently this value is 0 for everything except custom draw methods.
 -(void)enqueueClear:(GLbitfield)mask color:(GLKVector4)color4 depth:(GLclampf)depth stencil:(GLint)stencil globalSortOrder:(NSInteger)globalSortOrder;
-
-/// Enqueue a drawing command for some triangles.
-/// Returns a CCRendereBuffer that you should fill using CCRenderBufferSetVertex() and CCRenderBufferSetTriangle().
-/// Enqueued commands are sorted by their globalSortOrder value before rendering. Currently this value is 0 for everything except custom draw methods.
--(CCRenderBuffer)enqueueTriangles:(NSUInteger)triangleCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
-
-/// Enqueue a drawing command for some lines.
-/// Returns a CCRendereBuffer that you should fill using CCRenderBufferSetVertex() and CCRenderBufferSetLine().
-/// Note: These are primitive OpenGL lines that you'll only want to use for debug rendering. They are not batched.
-/// Enqueued commands are sorted by their globalSortOrder value before rendering. Currently this value is 0 for everything except custom draw methods.
--(CCRenderBuffer)enqueueLines:(NSUInteger)lineCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
 
 /// Enqueue a block that performs GL commands. The debugLabel is optional and will show up in in the GLES frame debugger.
 /// Enqueued commands are sorted by their globalSortOrder value before rendering. Currently this value is 0 for everything except custom draw methods.
@@ -222,3 +212,19 @@ extern const NSString *CCBlendEquationAlpha;
 -(void)popGroupWithDebugLabel:(NSString *)debugLabel globalSortOrder:(NSInteger)globalSortOrder;
 
 @end
+
+@interface CCRenderer(NoARC)
+
+/// Enqueue a drawing command for some triangles.
+/// Returns a CCRendereBuffer that you should fill using CCRenderBufferSetVertex() and CCRenderBufferSetTriangle().
+/// Enqueued commands are sorted by their globalSortOrder value before rendering. Currently this value is 0 for everything except custom draw methods.
+-(CCRenderBuffer)enqueueTriangles:(NSUInteger)triangleCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
+
+/// Enqueue a drawing command for some lines.
+/// Returns a CCRendereBuffer that you should fill using CCRenderBufferSetVertex() and CCRenderBufferSetLine().
+/// Note: These are primitive OpenGL lines that you'll only want to use for debug rendering. They are not batched.
+/// Enqueued commands are sorted by their globalSortOrder value before rendering. Currently this value is 0 for everything except custom draw methods.
+-(CCRenderBuffer)enqueueLines:(NSUInteger)lineCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
+
+@end
+

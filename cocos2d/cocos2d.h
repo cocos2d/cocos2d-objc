@@ -41,7 +41,7 @@
 
 // 0x00 HI ME LO
 // 00   03 01 01
-#define COCOS2D_VERSION 0x00030101
+#define COCOS2D_VERSION 0x00030201
 #define COCOS2D_BUILD @"release"
 //
 // all cocos2d include files
@@ -62,6 +62,19 @@
 #import "CCConfiguration.h"
 #import "CCDirector.h"
 #import "CCDrawNode.h"
+#import "CCEffect.h"
+#import "CCEffectBloom.h"
+#import "CCEffectBrightness.h"
+#import "CCEffectContrast.h"
+#import "CCEffectBlur.h"
+#import "CCEffectGlass.h"
+#import "CCEffectHue.h"
+#import "CCEffectNode.h"
+#import "CCEffectPixellate.h"
+#import "CCEffectReflection.h"
+#import "CCEffectRefraction.h"
+#import "CCEffectSaturation.h"
+#import "CCEffectStack.h"
 #import "CCLabelBMFont.h"
 #import "CCLabelTTF.h"
 #import "CCMotionStreak.h"

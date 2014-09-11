@@ -337,7 +337,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 		BOOL copyUniforms = self.hasDefaultShaderUniforms;
 		
 		// Create an uncached renderstate so the texture can be released before the renderstate cache is flushed.
-		_renderState = [[CCRenderState alloc] initWithBlendMode:_blendMode shader:_shader shaderUniforms:self.shaderUniforms copyUniforms:copyUniforms];
+		_renderState = [CCRenderState renderStateWithBlendMode:_blendMode shader:_shader shaderUniforms:self.shaderUniforms copyUniforms:copyUniforms];
 	}
 	
 	return _renderState;
@@ -655,6 +655,8 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 
         NSMutableAttributedString* outlineString = [attributedString mutableCopy];
         [outlineString addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0, outlineString.length)];
+        
+        CGContextSetStrokeColorWithColor(context, color.CGColor);
         
         [outlineString drawInRect:drawArea];
 

@@ -36,6 +36,7 @@
     BOOL _contentSizeChanged;
 }
 
+-(void)createTextureAndFboWithPixelSize:(CGSize)pixelSize;
 -(void)destroy;
 
 -(GLuint)fbo;

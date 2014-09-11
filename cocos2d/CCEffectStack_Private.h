@@ -7,14 +7,13 @@
 //
 
 #import "CCEffectStack.h"
+#import "CCEffectStackProtocol.h"
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
-@interface CCEffectStack ()
-{
-    NSMutableArray *_effects;
-}
 
-@property (nonatomic) BOOL passesDirty;
+@interface CCEffectStack () <CCEffectStackProtocol>
+
+@property (nonatomic, assign) BOOL passesDirty;
+@property (nonatomic, assign) BOOL stitchingEnabled;
+@property (nonatomic, strong) NSMutableArray *effects;
 
 @end
-#endif

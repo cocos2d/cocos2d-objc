@@ -14,9 +14,11 @@
 #import "CCTexture.h"
 #import "ccUtils.h"
 
+#import "CCEffect_Private.h"
+#import "CCRenderer_Private.h"
+#import "CCSprite_Private.h"
 #import "CCTexture_Private.h"
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 
 @interface CCEffectRenderTarget : NSObject
 
@@ -67,11 +69,10 @@
 	}
     
     static const CCTexturePixelFormat kRenderTargetDefaultPixelFormat = CCTexturePixelFormat_RGBA8888;
-    static const float kRenderTargetDefaultContentScale = 1.0f;
     
     // Create a new texture object for use as the color attachment of the new
     // FBO.
-	_texture = [[CCTexture alloc] initWithData:nil pixelFormat:kRenderTargetDefaultPixelFormat pixelsWide:powW pixelsHigh:powH contentSizeInPixels:size contentScale:kRenderTargetDefaultContentScale];
+	_texture = [[CCTexture alloc] initWithData:nil pixelFormat:kRenderTargetDefaultPixelFormat pixelsWide:powW pixelsHigh:powH contentSizeInPixels:size contentScale:[CCDirector sharedDirector].contentScaleFactor];
 	[_texture setAliasTexParameters];
 	
     // Save the old FBO binding so it can be restored after we create the new
@@ -122,12 +123,24 @@
 @property (nonatomic, strong) NSMutableArray *freeRenderTargets;
 @property (nonatomic, assign) GLKVector4 oldViewport;
 @property (nonatomic, assign) GLint oldFBO;
-@property (nonatomic, strong) CCTexture *outputTexture;
+
++(CCShader *)sharedCopyShader;
 
 @end
 
 
 @implementation CCEffectRenderer
+
++ (CCShader *)sharedCopyShader
+{
+	static dispatch_once_t once;
+	static CCShader *copyShader = nil;
+	dispatch_once(&once, ^{
+        copyShader = [[CCShader alloc] initWithFragmentShaderSource:@"void main(){gl_FragColor = texture2D(cc_MainTexture, cc_FragTexCoord1);}"];
+        copyShader.debugName = @"CCEffectRendererTextureCopyShader";
+	});
+	return copyShader;
+}
 
 -(id)init
 {
@@ -146,21 +159,13 @@
     [self destroyAllRenderTargets];
 }
 
--(void)drawSprite:(CCSprite *)sprite withEffect:(CCEffect *)effect renderer:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
+-(void)drawSprite:(CCSprite *)sprite withEffect:(CCEffect *)effect uniforms:(NSMutableDictionary *)uniforms renderer:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
-    if (effect && ![effect prepareForRendering])
-    {
-        NSAssert(0, @"Effect preparation failed.");
-        return;
-    }
-
+    NSAssert(effect.readyForRendering, @"Effect not ready for rendering. Call prepareForRendering first.");
     [self freeAllRenderTargets];
     
-    GLKMatrix4 projection = GLKMatrix4MakeOrtho(0.0f, _contentSize.width, _contentSize.height, 0.0f, -1024.0f, 1024.0f);
-    
     CCEffectRenderTarget *previousPassRT = nil;
-
-    for(int i = 0; i < effect.renderPassesRequired; i++)
+    for(NSUInteger i = 0; i < effect.renderPassesRequired; i++)
     {
         BOOL lastPass = (i == (effect.renderPassesRequired - 1));
         BOOL directRendering = lastPass && effect.supportsDirectRendering;
@@ -168,11 +173,12 @@
         CCTexture *previousPassTexture = nil;
         if (previousPassRT)
         {
+            NSAssert(previousPassRT.texture, @"Texture for render target unexpectedly nil.");
             previousPassTexture = previousPassRT.texture;
         }
         else
         {
-            previousPassTexture = sprite.texture;
+            previousPassTexture = sprite.texture ?: [CCTexture none];
         }
         
         CCEffectRenderPass* renderPass = [effect renderPassAtIndex:i];
@@ -181,6 +187,7 @@
         renderPass.verts = *(sprite.vertexes);
         renderPass.blendMode = [CCBlendMode premultipliedAlphaMode];
         renderPass.needsClear = !directRendering;
+        renderPass.shaderUniforms = uniforms;
         
         CCEffectRenderTarget *rt = nil;
         
@@ -188,30 +195,68 @@
         if (directRendering)
         {
             renderPass.transform = *transform;
+
+            GLKMatrix4 ndcToWorldMat;
+            [renderer.globalShaderUniforms[CCShaderUniformProjectionInv] getValue:&ndcToWorldMat];
+            renderPass.ndcToWorld = ndcToWorldMat;
             
-            renderPass.beginBlock(previousPassTexture);
-            renderPass.updateBlock();
-            renderPass.endBlock();
+            [renderPass begin:previousPassTexture];
+            [renderPass update];
+            [renderPass end];
         }
         else
         {
-            renderPass.transform = projection;
+            bool inverted;
+            
+            GLKMatrix4 renderTargetProjection = GLKMatrix4MakeOrtho(0.0f, _contentSize.width, 0.0f, _contentSize.height, -1024.0f, 1024.0f);
+            GLKMatrix4 invRenderTargetProjection = GLKMatrix4Invert(renderTargetProjection, &inverted);
+            NSAssert(inverted, @"Unable to invert matrix.");
+            
+            GLKMatrix4 invGlobalProjection;
+            [renderer.globalShaderUniforms[CCShaderUniformProjectionInv] getValue:&invGlobalProjection];
+            
+            GLKMatrix4 ndcToNodeMat = invRenderTargetProjection;
+            GLKMatrix4 nodeToWorldMat = GLKMatrix4Multiply(invGlobalProjection, *transform);
+            GLKMatrix4 ndcToWorldMat = GLKMatrix4Multiply(nodeToWorldMat, ndcToNodeMat);
+
+            renderPass.transform = renderTargetProjection;
+            renderPass.ndcToWorld = ndcToWorldMat;
             
             CGSize rtSize = CGSizeMake(_contentSize.width * _contentScale, _contentSize.height * _contentScale);
+            rtSize.width = (rtSize.width <= 1.0f) ? 1.0f : rtSize.width;
+            rtSize.height = (rtSize.height <= 1.0f) ? 1.0f : rtSize.height;
+            
             rt = [self renderTargetWithSize:rtSize];
             
-            renderPass.beginBlock(previousPassTexture);
+            [renderPass begin:previousPassTexture];
             [self bindRenderTarget:rt withRenderer:renderer];
-            renderPass.updateBlock();
+            [renderPass update];
             [self restoreRenderTargetWithRenderer:renderer];
-            renderPass.endBlock();
+            [renderPass end];
         }
-        [renderer popGroupWithDebugLabel:[NSString stringWithFormat:@"CCEffectRenderer: %@: Pass %d", effect.debugName, i] globalSortOrder:0];
+        [renderer popGroupWithDebugLabel:renderPass.debugLabel globalSortOrder:0];
         
         previousPassRT = rt;
     }
     
-    _outputTexture = previousPassRT.texture;
+    if (!effect.supportsDirectRendering)
+    {
+        // If the effect doesn't support direct renderering then we need one last
+        // draw to composite the effect results into the displayable framebuffer.
+        [renderer pushGroup];
+
+        CCTexture *backup = sprite.texture;
+        sprite.shader = [CCEffectRenderer sharedCopyShader];
+        sprite.texture = previousPassRT.texture;
+        [sprite enqueueTriangles:renderer transform:transform];
+        sprite.texture = backup;
+        
+        [renderer popGroupWithDebugLabel:@"CCEffectRenderer: Post-render composite pass" globalSortOrder:0];
+    }
+    else if (!effect.renderPassesRequired)
+    {
+        [sprite enqueueTriangles:renderer transform:transform];
+    }
 }
 
 - (void)bindRenderTarget:(CCEffectRenderTarget *)rt withRenderer:(CCRenderer *)renderer
@@ -240,6 +285,8 @@
 
 - (CCEffectRenderTarget *)renderTargetWithSize:(CGSize)size
 {
+    NSAssert((size.width > 0.0f) && (size.height > 0.0f), @"Render targets must have non-zero dimensions.");
+
     // If there is a free render target available for use, return that one. If
     // not, create a new one and return that.
     CCEffectRenderTarget *rt = nil;
@@ -284,4 +331,3 @@
 }
 
 @end
-#endif

@@ -159,7 +159,7 @@ static inline void alignBits(CCBReader *self)
 }
 
 
-static inline unsigned int readVariableLengthIntFromArray(const uint8_t* buffer, uint32_t * value) {
+static inline ptrdiff_t readVariableLengthIntFromArray(const uint8_t* buffer, uint32_t * value) {
     const uint8_t* ptr = buffer;
     uint32_t b;
     uint32_t result;
@@ -1244,6 +1244,14 @@ static inline float readFloat(CCBReader *self)
     }
     
     Class class = NSClassFromString(className);
+    if (!class)
+    {
+        // Class was not found. Maybe it's a Swift class?
+        // See http://stackoverflow.com/questions/24030814/swift-language-nsclassfromstring
+        NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"];
+        NSString *classStringName = [NSString stringWithFormat:@"_TtC%d%@%d%@", appName.length, appName, className.length, className];
+        class = NSClassFromString(classStringName);
+    }
     if (!class)
     {
 #if DEBUG

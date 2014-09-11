@@ -40,6 +40,9 @@
  */
 @interface CCResponder : NSObject
 
+/// -----------------------------------------------------------------------
+/// @name Basic responder control
+/// -----------------------------------------------------------------------
 
 /** Enables user interaction on a node. */
 @property ( nonatomic, assign, getter = isUserInteractionEnabled ) BOOL userInteractionEnabled;
@@ -61,6 +64,12 @@
  */
 @property (nonatomic, assign, getter = isExclusiveTouch) BOOL exclusiveTouch;
 
+/**
+ *  Expands ( or contracts ) the hit area of the node.
+ *  The expansion is calculated as a margin around the sprite, in points.
+ */
+@property (nonatomic, assign) float hitAreaExpansion;
+
 /// -----------------------------------------------------------------------
 /// @name Initializing a CCResponder Object
 /// -----------------------------------------------------------------------
@@ -72,8 +81,21 @@
  */
 - (id)init;
 
-#if ( TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR )
+/// -----------------------------------------------------------------------
+/// @name Hit tests
+/// -----------------------------------------------------------------------
 
+/**
+ *  Check if a touch is inside the node.
+ *  To allow for custom detection, override this method.
+ *
+ *  @param pos World position.
+ *
+ *  @return Returns true, if the position is inside the node.
+ */
+- (BOOL)hitTestWithWorldPos:(CGPoint)pos;
+
+#if ( TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR )
 
 #pragma mark -
 #pragma mark Touch Handling Methods

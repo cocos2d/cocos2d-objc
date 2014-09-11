@@ -41,9 +41,6 @@
 #import "CCRenderer_private.h"
 #import "CCSprite_Private.h"
 #import "CCTexture_Private.h"
-#import "CCEffect.h"
-#import "CCEffectRenderer.h"
-#import "CCEffectStack.h"
 
 #pragma mark -
 #pragma mark CCSprite
@@ -58,19 +55,8 @@
 @implementation CCSprite {
 	// Offset Position, used by sprite sheet editors.
 	CGPoint _unflippedOffsetPositionFromCenter;
-	
-	// Center of extents (half width/height) of the sprite for culling purposes.
-	GLKVector2 _vertexCenter, _vertexExtents;
 
-	// Vertex coords, texture coords and color info.
-	CCSpriteVertexes _verts;
-	
 	BOOL _flipX, _flipY;
-    
-    CCEffect *_effect;
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
-    CCEffectRenderer *_effectRenderer;
-#endif
 }
 
 +(id)spriteWithImageNamed:(NSString*)imageName
@@ -146,9 +132,7 @@
 		[self setTexture:texture];
 		[self setTextureRect:rect rotated:rotated untrimmedSize:rect.size];
         
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
         _effectRenderer = [[CCEffectRenderer alloc] init];
-#endif
 	}
 	
 	return self;
@@ -242,13 +226,24 @@
 
 -(void) setTextureRect:(CGRect)rect rotated:(BOOL)rotated untrimmedSize:(CGSize)untrimmedSize
 {
-	_textureRectRotated = rotated;
+    [self setTextureRect:rect forTexture:self.texture rotated:rotated untrimmedSize:untrimmedSize];
+}
 
+- (void)setTextureRect:(CGRect)rect forTexture:(CCTexture*)texture rotated:(BOOL)rotated untrimmedSize:(CGSize)untrimmedSize
+{
+	_textureRectRotated = rotated;
+    
 	self.contentSizeType = CCSizeTypePoints;
 	[self setContentSize:untrimmedSize];
 	_textureRect = rect;
-	[self setTextureCoords:rect];
-
+    
+	CCSpriteTexCoordSet texCoords = [CCSprite textureCoordsForTexture:texture withRect:rect rotated:rotated xFlipped:_flipX yFlipped:_flipY];
+    _verts.bl.texCoord1 = texCoords.bl;
+    _verts.br.texCoord1 = texCoords.br;
+    _verts.tr.texCoord1 = texCoords.tr;
+    _verts.tl.texCoord1 = texCoords.tl;
+    
+    
 	CGPoint relativeOffset = _unflippedOffsetPositionFromCenter;
 
 	// issue #732
@@ -274,17 +269,18 @@
 	_vertexExtents = GLKVector2Make((x2 - x1)*0.5f, (y2 - y1)*0.5f);
 }
 
--(void) setTextureCoords:(CGRect)rect
++ (CCSpriteTexCoordSet)textureCoordsForTexture:(CCTexture *)texture withRect:(CGRect)rect rotated:(BOOL)rotated xFlipped:(BOOL)flipX yFlipped:(BOOL)flipY
 {
-	if(!self.texture) return;
+    CCSpriteTexCoordSet result;
+	if(!texture) return result;
 	
-	CGFloat scale = self.texture.contentScale;
+	CGFloat scale = texture.contentScale;
 	rect = CC_RECT_SCALE(rect, scale);
 	
-	float atlasWidth = (float)self.texture.pixelWidth;
-	float atlasHeight = (float)self.texture.pixelHeight;
+	float atlasWidth = (float)texture.pixelWidth;
+	float atlasHeight = (float)texture.pixelHeight;
 
-	if(_textureRectRotated){
+	if(rotated){
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 		float left   = (2.0f*rect.origin.x + 1.0f)/(2.0f*atlasWidth);
 		float right  = left+(rect.size.height*2.0f - 2.0f)/(2.0f*atlasWidth);
@@ -297,13 +293,13 @@
 		float bottom = 1.0f - (rect.origin.y + rect.size.width)/atlasHeight;
 #endif
 
-		if( _flipX) CC_SWAP(top,bottom);
-		if( _flipY) CC_SWAP(left,right);
+		if(flipX) CC_SWAP(top,bottom);
+		if(flipY) CC_SWAP(left,right);
 		
-		_verts.bl.texCoord1 = GLKVector2Make( left,    top);
-		_verts.br.texCoord1 = GLKVector2Make( left, bottom);
-		_verts.tr.texCoord1 = GLKVector2Make(right, bottom);
-		_verts.tl.texCoord1 = GLKVector2Make(right,    top);
+		result.bl = GLKVector2Make( left,    top);
+		result.br = GLKVector2Make( left, bottom);
+		result.tr = GLKVector2Make(right, bottom);
+		result.tl = GLKVector2Make(right,    top);
 	} else {
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 		float left   = (2.0f*rect.origin.x + 1.0f)/(2.0f*atlasWidth);
@@ -317,14 +313,16 @@
 		float bottom = 1.0f - (rect.origin.y + rect.size.height)/atlasHeight;
 #endif
 
-		if( _flipX) CC_SWAP(left,right);
-		if( _flipY) CC_SWAP(top,bottom);
+		if(flipX) CC_SWAP(left,right);
+		if(flipY) CC_SWAP(top,bottom);
 
-		_verts.bl.texCoord1 = GLKVector2Make( left, bottom);
-		_verts.br.texCoord1 = GLKVector2Make(right, bottom);
-		_verts.tr.texCoord1 = GLKVector2Make(right,    top);
-		_verts.tl.texCoord1 = GLKVector2Make( left,    top);
+		result.bl = GLKVector2Make( left, bottom);
+		result.br = GLKVector2Make(right, bottom);
+		result.tr = GLKVector2Make(right,    top);
+		result.tl = GLKVector2Make( left,    top);
 	}
+    
+    return result;
 }
 
 -(const CCSpriteVertexes *)vertexes
@@ -332,60 +330,23 @@
 	return &_verts;
 }
 
+- (CGAffineTransform)nodeToTextureTransform
+{
+    CGFloat sx = (_verts.br.texCoord1.s - _verts.bl.texCoord1.s) / (_verts.br.position.x - _verts.bl.position.x);
+    CGFloat sy = (_verts.tl.texCoord1.t - _verts.bl.texCoord1.t) / (_verts.tl.position.y - _verts.bl.position.y);
+    CGFloat tx = (_verts.bl.texCoord1.s - _verts.bl.position.x * sx);
+    CGFloat ty = (_verts.bl.texCoord1.t - _verts.bl.position.y * sy);
+    
+	return CGAffineTransformMake(sx, 0.0f, 0.0f, sy, tx, ty);
+}
+
 #pragma mark CCSprite - draw
 
--(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
-{
-    if(!CCRenderCheckVisbility(transform, _vertexCenter, _vertexExtents)) return;
-    
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
-    if (self.effect)
-    {
-        _effectRenderer.contentSize = self.texture.contentSize;
-        [_effectRenderer drawSprite:self withEffect:self.effect renderer:renderer transform:transform];
-        
-        if (!self.effect.supportsDirectRendering)
-        {
-            CCTexture *backup = self.texture;
-            self.texture = _effectRenderer.outputTexture;
-            [self enqueueTriangles:renderer transform:transform];
-            self.texture = backup;
-        }
-    }
-    else
-#endif
-    {
-        [self enqueueTriangles:renderer transform:transform];
-	}
-    
-#if CC_SPRITE_DEBUG_DRAW
-	const GLKVector2 zero = {{0, 0}};
-	const GLKVector4 white = {{1, 1, 1, 1}};
-	
-	CCRenderBuffer debug = [renderer enqueueLines:4 andVertexes:4 withState:[CCRenderState debugColor] globalSortOrder:0];
-	CCRenderBufferSetVertex(debug, 0, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts.bl.position), zero, zero, white});
-	CCRenderBufferSetVertex(debug, 1, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts.br.position), zero, zero, white});
-	CCRenderBufferSetVertex(debug, 2, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts.tr.position), zero, zero, white});
-	CCRenderBufferSetVertex(debug, 3, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts.tl.position), zero, zero, white});
-	
-	CCRenderBufferSetLine(debug, 0, 0, 1);
-	CCRenderBufferSetLine(debug, 1, 1, 2);
-	CCRenderBufferSetLine(debug, 2, 2, 3);
-	CCRenderBufferSetLine(debug, 3, 3, 0);
-#endif
-}
+//Implemented in CCNoARC.m
+//-(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
 
--(void)enqueueTriangles:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
-{
-    CCRenderBuffer buffer = [renderer enqueueTriangles:2 andVertexes:4 withState:self.renderState globalSortOrder:0];
-    CCRenderBufferSetVertex(buffer, 0, CCVertexApplyTransform(_verts.bl, transform));
-    CCRenderBufferSetVertex(buffer, 1, CCVertexApplyTransform(_verts.br, transform));
-    CCRenderBufferSetVertex(buffer, 2, CCVertexApplyTransform(_verts.tr, transform));
-    CCRenderBufferSetVertex(buffer, 3, CCVertexApplyTransform(_verts.tl, transform));
-    
-    CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
-    CCRenderBufferSetTriangle(buffer, 1, 0, 2, 3);
-}
+//Implemented in CCNoARC.m
+//-(void)enqueueTriangles:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 
 #pragma mark CCSprite - CCNode overrides
 
@@ -468,7 +429,6 @@
     [self updateColor];
 }
 
-#if CC_ENABLE_EXPERIMENTAL_EFFECTS
 -(CCEffect *)effect
 {
 	return _effect;
@@ -477,8 +437,15 @@
 -(void)setEffect:(CCEffect *)effect
 {
     _effect = effect;
+    if (effect)
+    {
+        [self updateShaderUniformsFromEffect];
+    }
+    else
+    {
+        _shaderUniforms = nil;
+    }
 }
-#endif
 
 //
 // Frames
@@ -496,12 +463,35 @@
 	}
 
 	// update rect
-	_textureRectRotated = frame.rotated;
-
-	[self setTextureRect:frame.rect rotated:_textureRectRotated untrimmedSize:frame.originalSize];
+	[self setTextureRect:frame.rect rotated:frame.rotated untrimmedSize:frame.originalSize];
     
     _spriteFrame = frame;
 }
+
+-(void) setNormalMapSpriteFrame:(CCSpriteFrame*)frame
+{
+    if (!self.texture)
+    {
+        // If there is no texture set on the sprite, set the sprite's texture rect from the
+        // normal map's sprite frame. Note that setting the main texture, then the normal map,
+        // and then removing the main texture will leave the texture rect from the main texture.
+        [self setTextureRect:frame.rect forTexture:frame.texture rotated:frame.rotated untrimmedSize:frame.originalSize];
+    }
+
+    // Set the second texture coordinate set from the normal map's sprite frame.
+    CCSpriteTexCoordSet texCoords = [CCSprite textureCoordsForTexture:frame.texture withRect:frame.rect rotated:frame.rotated xFlipped:_flipX yFlipped:_flipY];
+    _verts.bl.texCoord2 = texCoords.bl;
+    _verts.br.texCoord2 = texCoords.br;
+    _verts.tr.texCoord2 = texCoords.tr;
+    _verts.tl.texCoord2 = texCoords.tl;
+    
+    // Set the normal map texture in the uniforms dictionary (if the dictionary exists).
+    self.shaderUniforms[CCShaderUniformNormalMapTexture] = (frame.texture ?: [CCTexture none]);
+    _renderState = nil;
+    
+    _normalMapSpriteFrame = frame;
+}
+
 
 //-(void) setSpriteFrameWithAnimationName: (NSString*) animationName index:(int) frameIndex
 //{
@@ -515,5 +505,19 @@
 //	
 //	self.spriteFrame = frame.spriteFrame;
 //}
+
+#pragma mark CCSprite - Effects
+
+- (void)updateShaderUniformsFromEffect
+{
+    // Initialize the shader uniforms dictionary with the sprite's main texture and
+    // normal map if it has them.
+    _shaderUniforms = [@{ CCShaderUniformMainTexture : (_texture ?: [CCTexture none]),
+                          CCShaderUniformNormalMapTexture : (_normalMapSpriteFrame.texture ?: [CCTexture none]),
+                          } mutableCopy];
+    
+    // And then copy the new effect's uniforms into the node's uniforms dictionary.
+    [_shaderUniforms addEntriesFromDictionary:_effect.shaderUniforms];
+}
 
 @end
