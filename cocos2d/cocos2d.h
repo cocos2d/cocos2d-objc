@@ -69,7 +69,6 @@
 #import "CCEffectBlur.h"
 #import "CCEffectGlass.h"
 #import "CCEffectDropShadow.h"
-#import "CCEffectOuterGlow.h"
 #import "CCEffectHue.h"
 #import "CCEffectNode.h"
 #import "CCEffectPixellate.h"
@@ -101,6 +100,11 @@
 #import "CCTiledMapLayer.h"
 #import "CCTiledMapObjectGroup.h"
 #import "CCTransition.h"
+
+#if CC_EFFECTS_EXPERIMENTAL
+#import "CCEffectDFOutline.h"
+#import "CCEffectDistanceField.h"
+#endif
 
 // Layouts
 #import "CCLayout.h"
