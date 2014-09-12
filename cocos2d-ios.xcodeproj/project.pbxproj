@@ -261,12 +261,6 @@
 		B7EE69E31819E75700B983FE /* CCLayoutBox.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69DF1819E75700B983FE /* CCLayoutBox.m */; };
 		B7EE6A1E181AE34600B983FE /* CCSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = B7EE6A1C181AE34600B983FE /* CCSlider.h */; };
 		B7EE6A1F181AE34600B983FE /* CCSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE6A1D181AE34600B983FE /* CCSlider.m */; };
-		D208E79F1993FEDA00BD8D6B /* CCEffectDropShadow.m in Sources */ = {isa = PBXBuildFile; fileRef = D208E79C1993FEDA00BD8D6B /* CCEffectDropShadow.m */; };
-		D208E7A01993FEDA00BD8D6B /* CCEffectDropShadow.m in Sources */ = {isa = PBXBuildFile; fileRef = D208E79C1993FEDA00BD8D6B /* CCEffectDropShadow.m */; };
-		D208E7AD19959A4800BD8D6B /* CCEffectOuterGlow.h in Headers */ = {isa = PBXBuildFile; fileRef = D208E7AB19959A4800BD8D6B /* CCEffectOuterGlow.h */; };
-		D208E7AE19959A4800BD8D6B /* CCEffectOuterGlow.h in Headers */ = {isa = PBXBuildFile; fileRef = D208E7AB19959A4800BD8D6B /* CCEffectOuterGlow.h */; };
-		D208E7AF19959A4800BD8D6B /* CCEffectOuterGlow.m in Sources */ = {isa = PBXBuildFile; fileRef = D208E7AC19959A4800BD8D6B /* CCEffectOuterGlow.m */; };
-		D208E7B019959A4800BD8D6B /* CCEffectOuterGlow.m in Sources */ = {isa = PBXBuildFile; fileRef = D208E7AC19959A4800BD8D6B /* CCEffectOuterGlow.m */; };
 		D23C5CB4194BC108007CA669 /* CCTouchIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = D23C5CB2194BC108007CA669 /* CCTouchIOS.h */; };
 		D23C5CB5194BC108007CA669 /* CCTouchIOS.m in Sources */ = {isa = PBXBuildFile; fileRef = D23C5CB3194BC108007CA669 /* CCTouchIOS.m */; };
 		D23C5CBC194BC500007CA669 /* CCTouchAndroid.h in Headers */ = {isa = PBXBuildFile; fileRef = D23C5CBA194BC500007CA669 /* CCTouchAndroid.h */; };
@@ -330,6 +324,18 @@
 		D272032C18FC89A000B100FF /* CCEffectNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D272031F18FC89A000B100FF /* CCEffectNode.m */; };
 		D272032D18FC89A000B100FF /* CCEffectStack.h in Headers */ = {isa = PBXBuildFile; fileRef = D272032018FC89A000B100FF /* CCEffectStack.h */; };
 		D272032E18FC89A000B100FF /* CCEffectStack.m in Sources */ = {isa = PBXBuildFile; fileRef = D272032118FC89A000B100FF /* CCEffectStack.m */; };
+		D27451AA19AD430A006DA0A1 /* CCEffectDropShadow.h in Headers */ = {isa = PBXBuildFile; fileRef = D27451A819AD430A006DA0A1 /* CCEffectDropShadow.h */; };
+		D27451AB19AD430A006DA0A1 /* CCEffectDropShadow.h in Headers */ = {isa = PBXBuildFile; fileRef = D27451A819AD430A006DA0A1 /* CCEffectDropShadow.h */; };
+		D27451AC19AD430A006DA0A1 /* CCEffectDropShadow.m in Sources */ = {isa = PBXBuildFile; fileRef = D27451A919AD430A006DA0A1 /* CCEffectDropShadow.m */; };
+		D27451AD19AD430A006DA0A1 /* CCEffectDropShadow.m in Sources */ = {isa = PBXBuildFile; fileRef = D27451A919AD430A006DA0A1 /* CCEffectDropShadow.m */; };
+		D27451B719AE5517006DA0A1 /* CCEffectDistanceField.h in Headers */ = {isa = PBXBuildFile; fileRef = D27451B519AE5517006DA0A1 /* CCEffectDistanceField.h */; };
+		D27451B819AE5517006DA0A1 /* CCEffectDistanceField.m in Sources */ = {isa = PBXBuildFile; fileRef = D27451B619AE5517006DA0A1 /* CCEffectDistanceField.m */; };
+		D27451BD19AEC84C006DA0A1 /* CCEffectDistanceField.m in Sources */ = {isa = PBXBuildFile; fileRef = D27451B619AE5517006DA0A1 /* CCEffectDistanceField.m */; };
+		D27451BE19AEC84F006DA0A1 /* CCEffectDistanceField.h in Headers */ = {isa = PBXBuildFile; fileRef = D27451B519AE5517006DA0A1 /* CCEffectDistanceField.h */; };
+		D27451C619B111A9006DA0A1 /* CCEffectDFOutline.h in Headers */ = {isa = PBXBuildFile; fileRef = D27451C419B111A9006DA0A1 /* CCEffectDFOutline.h */; };
+		D27451C719B111A9006DA0A1 /* CCEffectDFOutline.h in Headers */ = {isa = PBXBuildFile; fileRef = D27451C419B111A9006DA0A1 /* CCEffectDFOutline.h */; };
+		D27451C819B111A9006DA0A1 /* CCEffectDFOutline.m in Sources */ = {isa = PBXBuildFile; fileRef = D27451C519B111A9006DA0A1 /* CCEffectDFOutline.m */; };
+		D27451C919B111A9006DA0A1 /* CCEffectDFOutline.m in Sources */ = {isa = PBXBuildFile; fileRef = D27451C519B111A9006DA0A1 /* CCEffectDFOutline.m */; };
 		D285ECF0192EA92A009F4E88 /* CCGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = D285ECEE192EA92A009F4E88 /* CCGLView.h */; };
 		D285ECF1192EA92A009F4E88 /* CCGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = D285ECEF192EA92A009F4E88 /* CCGLView.m */; };
 		D285ECF8192EF5B2009F4E88 /* CCDirectorAndroid.h in Headers */ = {isa = PBXBuildFile; fileRef = D285ECF6192EF5B2009F4E88 /* CCDirectorAndroid.h */; };
@@ -1015,9 +1021,6 @@
 		B7EE69DF1819E75700B983FE /* CCLayoutBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLayoutBox.m; sourceTree = "<group>"; };
 		B7EE6A1C181AE34600B983FE /* CCSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCSlider.h; path = "cocos2d-ui/CCSlider.h"; sourceTree = "<group>"; };
 		B7EE6A1D181AE34600B983FE /* CCSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSlider.m; path = "cocos2d-ui/CCSlider.m"; sourceTree = "<group>"; };
-		D208E79C1993FEDA00BD8D6B /* CCEffectDropShadow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectDropShadow.m; sourceTree = "<group>"; };
-		D208E7AB19959A4800BD8D6B /* CCEffectOuterGlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectOuterGlow.h; sourceTree = "<group>"; };
-		D208E7AC19959A4800BD8D6B /* CCEffectOuterGlow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectOuterGlow.m; sourceTree = "<group>"; };
 		D23C5CB2194BC108007CA669 /* CCTouchIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTouchIOS.h; sourceTree = "<group>"; };
 		D23C5CB3194BC108007CA669 /* CCTouchIOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTouchIOS.m; sourceTree = "<group>"; };
 		D23C5CBA194BC500007CA669 /* CCTouchAndroid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTouchAndroid.h; path = Android/CCTouchAndroid.h; sourceTree = "<group>"; };
@@ -1058,6 +1061,12 @@
 		D272031F18FC89A000B100FF /* CCEffectNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectNode.m; sourceTree = "<group>"; };
 		D272032018FC89A000B100FF /* CCEffectStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectStack.h; sourceTree = "<group>"; };
 		D272032118FC89A000B100FF /* CCEffectStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectStack.m; sourceTree = "<group>"; };
+		D27451A819AD430A006DA0A1 /* CCEffectDropShadow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectDropShadow.h; sourceTree = "<group>"; };
+		D27451A919AD430A006DA0A1 /* CCEffectDropShadow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectDropShadow.m; sourceTree = "<group>"; };
+		D27451B519AE5517006DA0A1 /* CCEffectDistanceField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectDistanceField.h; sourceTree = "<group>"; };
+		D27451B619AE5517006DA0A1 /* CCEffectDistanceField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectDistanceField.m; sourceTree = "<group>"; };
+		D27451C419B111A9006DA0A1 /* CCEffectDFOutline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectDFOutline.h; sourceTree = "<group>"; };
+		D27451C519B111A9006DA0A1 /* CCEffectDFOutline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectDFOutline.m; sourceTree = "<group>"; };
 		D285ECEE192EA92A009F4E88 /* CCGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCGLView.h; path = Android/CCGLView.h; sourceTree = "<group>"; };
 		D285ECEF192EA92A009F4E88 /* CCGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCGLView.m; path = Android/CCGLView.m; sourceTree = "<group>"; };
 		D285ECF6192EF5B2009F4E88 /* CCDirectorAndroid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCDirectorAndroid.h; path = Android/CCDirectorAndroid.h; sourceTree = "<group>"; };
@@ -1079,7 +1088,6 @@
 		D2DDB09019805E8400233D80 /* CCVector2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCVector2.h; path = Platforms/Android/CCVector2.h; sourceTree = "<group>"; };
 		D2DDB09119805E8400233D80 /* CCQuaternion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCQuaternion.m; path = Platforms/Android/CCQuaternion.m; sourceTree = "<group>"; };
 		D2DDB09219805E8400233D80 /* CCMatrix3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCMatrix3.m; path = Platforms/Android/CCMatrix3.m; sourceTree = "<group>"; };
-		D2F78CC71999AB6E00229357 /* CCEffectDropShadow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectDropShadow.h; sourceTree = "<group>"; };
 		D2FEB74F194F6C9E00FC0574 /* libcocos2dAndroid.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2dAndroid.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D309054F18AC23110081BF11 /* CCRenderer_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderer_private.h; sourceTree = "<group>"; };
 		D31C794F19994126007921E1 /* CCMetalSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMetalSupport.m; sourceTree = "<group>"; };
@@ -1801,6 +1809,7 @@
 		D272031618FC897D00B100FF /* Effects */ = {
 			isa = PBXGroup;
 			children = (
+				D27451BF19AFC44D006DA0A1 /* DistanceField */,
 				D3903B081995285B003AA81A /* CCEffectBlur.h */,
 				D3903B091995285B003AA81A /* CCEffectBlur.m */,
 				D268FE151980791300ECBCD0 /* CCEffectRefraction.h */,
@@ -1832,12 +1841,21 @@
 				9D856720191B019900573093 /* CCEffectContrast.m */,
 				9DF3761F191C594A00C6D27A /* CCEffectPixellate.h */,
 				9DF37620191C594A00C6D27A /* CCEffectPixellate.m */,
-				D2F78CC71999AB6E00229357 /* CCEffectDropShadow.h */,
-				D208E79C1993FEDA00BD8D6B /* CCEffectDropShadow.m */,
-				D208E7AB19959A4800BD8D6B /* CCEffectOuterGlow.h */,
-				D208E7AC19959A4800BD8D6B /* CCEffectOuterGlow.m */,
+				D27451A819AD430A006DA0A1 /* CCEffectDropShadow.h */,
+				D27451A919AD430A006DA0A1 /* CCEffectDropShadow.m */,
 			);
 			name = Effects;
+			sourceTree = "<group>";
+		};
+		D27451BF19AFC44D006DA0A1 /* DistanceField */ = {
+			isa = PBXGroup;
+			children = (
+				D27451B519AE5517006DA0A1 /* CCEffectDistanceField.h */,
+				D27451B619AE5517006DA0A1 /* CCEffectDistanceField.m */,
+				D27451C419B111A9006DA0A1 /* CCEffectDFOutline.h */,
+				D27451C519B111A9006DA0A1 /* CCEffectDFOutline.m */,
+			);
+			name = DistanceField;
 			sourceTree = "<group>";
 		};
 		D285ECED192E7E06009F4E88 /* Android */ = {
@@ -1970,7 +1988,6 @@
 				B7705FE21831A07B0043CC67 /* ALCaptureDevice.h in Headers */,
 				5018F26F0DFDEAFF00C013A5 /* CCActionInstant.h in Headers */,
 				B7705FF21831A07B0043CC67 /* ALWrapper.h in Headers */,
-				D2F78CC81999AB6E00229357 /* CCEffectDropShadow.h in Headers */,
 				5018F2710DFDEAFF00C013A5 /* CCActionInterval.h in Headers */,
 				5018F2730DFDEAFF00C013A5 /* CCLabelTTF.h in Headers */,
 				5018F2750DFDEAFF00C013A5 /* CCNodeColor.h in Headers */,
@@ -1995,7 +2012,6 @@
 				B7705FF81831A07B0043CC67 /* OALSuspendHandler.h in Headers */,
 				D268FE0F198078FF00ECBCD0 /* CCEffectGlass.h in Headers */,
 				D24160FE1958F6EE003673BD /* CCAnimationManager.h in Headers */,
-				D208E7AD19959A4800BD8D6B /* CCEffectOuterGlow.h in Headers */,
 				50305AF40E40E33200F63373 /* cocos2d.h in Headers */,
 				D285ECF8192EF5B2009F4E88 /* CCDirectorAndroid.h in Headers */,
 				B7705FE81831A07B0043CC67 /* ALDevice.h in Headers */,
@@ -2037,6 +2053,7 @@
 				50F29F6F102053370046CA73 /* base64.h in Headers */,
 				D31C795219994197007921E1 /* CCMetalSupport_Private.h in Headers */,
 				50F2A105102094550046CA73 /* ZipUtils.h in Headers */,
+				D27451B719AE5517006DA0A1 /* CCEffectDistanceField.h in Headers */,
 				50CFAC391023660000175934 /* CCTMXXMLParser.h in Headers */,
 				50316AA610291280003ACFE7 /* CCRenderTexture.h in Headers */,
 				B7D273171822F4AA0054849B /* CCBSequenceProperty.h in Headers */,
@@ -2090,6 +2107,7 @@
 				E0F924711224140400EF2362 /* CCTexturePVR.h in Headers */,
 				E0F92AC41224559800EF2362 /* CCNS.h in Headers */,
 				E02BB6D6126CA93A006E46A2 /* CCAnimationCache.h in Headers */,
+				D27451AA19AD430A006DA0A1 /* CCEffectDropShadow.h in Headers */,
 				5B063DD019637291002B1CDE /* ALWeakDictionary.h in Headers */,
 				E02BB704126CADEA006E46A2 /* CCAnimation.h in Headers */,
 				B7D273191822F4AA0054849B /* CCBuilderReader.h in Headers */,
@@ -2112,6 +2130,7 @@
 				B791E84A182064BF00DAE1D7 /* CCTiledMapLayer_Private.h in Headers */,
 				B7705FEF1831A07B0043CC67 /* ALSource.h in Headers */,
 				B7705FED1831A07B0043CC67 /* ALSoundSourcePool.h in Headers */,
+				D27451C619B111A9006DA0A1 /* CCEffectDFOutline.h in Headers */,
 				B7705FDC1831A07B0043CC67 /* OALSimpleAudio.h in Headers */,
 				A6DC4E0918055DCC00C280A6 /* CCTransition.h in Headers */,
 				B791E85D182074C500DAE1D7 /* CCProgressNode_Private.h in Headers */,
@@ -2210,6 +2229,7 @@
 				D2FEB644194F6C9E00FC0574 /* CCLayoutBox.h in Headers */,
 				D2FEB645194F6C9E00FC0574 /* CCTouchIOS.h in Headers */,
 				D2FEB646194F6C9E00FC0574 /* CCEffect.h in Headers */,
+				D27451C719B111A9006DA0A1 /* CCEffectDFOutline.h in Headers */,
 				D24161141958F738003673BD /* CCAnimationManager.h in Headers */,
 				D2FEB647194F6C9E00FC0574 /* CCEffect_Private.h in Headers */,
 				D2FEB648194F6C9E00FC0574 /* CCEffectStack.h in Headers */,
@@ -2236,6 +2256,7 @@
 				D2FEB65F194F6C9E00FC0574 /* CCTexture.h in Headers */,
 				D2FEB660194F6C9E00FC0574 /* CCTiledMapLayer.h in Headers */,
 				D24161161958F738003673BD /* CCAnimationManager+FrameAnimation.h in Headers */,
+				D27451AB19AD430A006DA0A1 /* CCEffectDropShadow.h in Headers */,
 				D2FEB663194F6C9E00FC0574 /* ALListener.h in Headers */,
 				D2FEB664194F6C9E00FC0574 /* CCTiledMapObjectGroup.h in Headers */,
 				5BF32698195F947800D9A51A /* CCActivity.h in Headers */,
@@ -2276,6 +2297,7 @@
 				D2FEB686194F6C9E00FC0574 /* CCBuilderReader.h in Headers */,
 				D2FEB687194F6C9E00FC0574 /* CCAppDelegate.h in Headers */,
 				D2FEB688194F6C9E00FC0574 /* CCShader.h in Headers */,
+				D27451BE19AEC84F006DA0A1 /* CCEffectDistanceField.h in Headers */,
 				D2FEB689194F6C9E00FC0574 /* CCES2Renderer.h in Headers */,
 				D268FE1E1980791400ECBCD0 /* CCEffectUtils.h in Headers */,
 				D2FEB68A194F6C9E00FC0574 /* OALAudioTrackNotifications.h in Headers */,
@@ -2285,9 +2307,7 @@
 				D2FEB68F194F6C9E00FC0574 /* ObjectALConfig.h in Headers */,
 				D2FEB690194F6C9E00FC0574 /* CCDirectorMac.h in Headers */,
 				D2FEB691194F6C9E00FC0574 /* CCGLView.h in Headers */,
-				D208E7AE19959A4800BD8D6B /* CCEffectOuterGlow.h in Headers */,
 				D2FEB692194F6C9E00FC0574 /* CCWindow.h in Headers */,
-				D2E8E1861999ABA2004F18DF /* CCEffectDropShadow.h in Headers */,
 				D2FEB693194F6C9E00FC0574 /* CCProgressNode.h in Headers */,
 				D2DDB09419805E8400233D80 /* CCMathUtilsAndroid.h in Headers */,
 				D2FEB694194F6C9E00FC0574 /* CCLayout.h in Headers */,
@@ -2509,14 +2529,13 @@
 				50F7B2790F28DE7C00057537 /* CCActionEase.m in Sources */,
 				571CD02919649E03003D460C /* CCPlatformTextField.m in Sources */,
 				D3A2E7D3181E12750033614C /* CCPhysicsShape.m in Sources */,
-				D208E79F1993FEDA00BD8D6B /* CCEffectDropShadow.m in Sources */,
 				B7705FE71831A07B0043CC67 /* ALContext.m in Sources */,
 				B7EE6A1F181AE34600B983FE /* CCSlider.m in Sources */,
-				D208E7AF19959A4800BD8D6B /* CCEffectOuterGlow.m in Sources */,
 				D37D197A18B6665700B23FDE /* CCTMXXMLParser.m in Sources */,
 				509A79980F6188420032F449 /* CCSprite.m in Sources */,
 				D37D197718B6665700B23FDE /* CCTiledMap.m in Sources */,
 				D36DFA2819996EC500DEC135 /* CCRendererGLSupport.m in Sources */,
+				D27451C819B111A9006DA0A1 /* CCEffectDFOutline.m in Sources */,
 				50C508C70F7C194400799124 /* CCFileUtils.m in Sources */,
 				B7705FD31831A07B0043CC67 /* OALAudioActions.m in Sources */,
 				D25B4F4C194A499700DA9D60 /* CCTouch.m in Sources */,
@@ -2594,9 +2613,11 @@
 				D2DDB0A519805E8400233D80 /* CCQuaternion.m in Sources */,
 				D36D31B718BD3CAA00E45F08 /* CCProgressNode.m in Sources */,
 				B7705FDD1831A07B0043CC67 /* OALSimpleAudio.m in Sources */,
+				D27451B819AE5517006DA0A1 /* CCEffectDistanceField.m in Sources */,
 				A0DA0BC415BCDCA200E80A92 /* CCDrawNode.m in Sources */,
 				B7705FF31831A07B0043CC67 /* ALWrapper.m in Sources */,
 				B7705FF91831A07B0043CC67 /* OALSuspendHandler.m in Sources */,
+				D27451AC19AD430A006DA0A1 /* CCEffectDropShadow.m in Sources */,
 				B7705FDB1831A07B0043CC67 /* OALAudioTracks.m in Sources */,
 				B7705FEE1831A07B0043CC67 /* ALSoundSourcePool.m in Sources */,
 				B7EE69E11819E75700B983FE /* CCLayout.m in Sources */,
@@ -2680,6 +2701,7 @@
 				D2FEB6DA194F6C9E00FC0574 /* OALAudioActions.m in Sources */,
 				D2FEB6DB194F6C9E00FC0574 /* CCTouch.m in Sources */,
 				D2EC6039199D9F82001A15E9 /* CCRendererGLSupport.m in Sources */,
+				D27451C919B111A9006DA0A1 /* CCEffectDFOutline.m in Sources */,
 				D2FEB6DC194F6C9E00FC0574 /* CCEffectNode.m in Sources */,
 				D2FEB6DD194F6C9E00FC0574 /* CCTiledMapObjectGroup.m in Sources */,
 				D2FEB6DE194F6C9E00FC0574 /* CGPointExtension.m in Sources */,
@@ -2687,6 +2709,7 @@
 				D2FEB6E0194F6C9E00FC0574 /* CCParallaxNode.m in Sources */,
 				D2FEB6E1194F6C9E00FC0574 /* CCActionManager.m in Sources */,
 				D2FEB6E2194F6C9E00FC0574 /* CCAppDelegate.m in Sources */,
+				D27451BD19AEC84C006DA0A1 /* CCEffectDistanceField.m in Sources */,
 				D2FEB6E3194F6C9E00FC0574 /* CCBReader.m in Sources */,
 				D2FEB6E5194F6C9E00FC0574 /* base64.c in Sources */,
 				D2FEB6E6194F6C9E00FC0574 /* OALAudioTrackNotifications.m in Sources */,
@@ -2721,13 +2744,11 @@
 				D2FEB6FC194F6C9E00FC0574 /* CCPhysicsNode.m in Sources */,
 				D2FEB6FD194F6C9E00FC0574 /* CCGLView.m in Sources */,
 				D2FEB6FE194F6C9E00FC0574 /* CCLabelBMFont.m in Sources */,
-				D208E7A01993FEDA00BD8D6B /* CCEffectDropShadow.m in Sources */,
 				D2FEB701194F6C9E00FC0574 /* CCDirectorAndroid.m in Sources */,
 				D2FEB702194F6C9E00FC0574 /* CCGLView.m in Sources */,
 				D3903B18199528F3003AA81A /* CCEffectBlur.m in Sources */,
 				D2FEB703194F6C9E00FC0574 /* CCEffectBrightness.m in Sources */,
 				D24161171958F738003673BD /* CCAnimationManager+FrameAnimation.m in Sources */,
-				D208E7B019959A4800BD8D6B /* CCEffectOuterGlow.m in Sources */,
 				D2FEB705194F6C9E00FC0574 /* CCBKeyframe.m in Sources */,
 				D2FEB706194F6C9E00FC0574 /* CCTexturePVR.m in Sources */,
 				D2FEB707194F6C9E00FC0574 /* ALListener.m in Sources */,
@@ -2762,6 +2783,7 @@
 				D2DDB0A819805E8400233D80 /* CCMatrix3.m in Sources */,
 				D2FEB726194F6C9E00FC0574 /* ALSoundSourcePool.m in Sources */,
 				D2FEB727194F6C9E00FC0574 /* CCLayout.m in Sources */,
+				D27451AD19AD430A006DA0A1 /* CCEffectDropShadow.m in Sources */,
 				D2FEB728194F6C9E00FC0574 /* OALUtilityActions.m in Sources */,
 				D2FEB729194F6C9E00FC0574 /* CCClippingNode.m in Sources */,
 				D2FEB72B194F6C9E00FC0574 /* ccFPSImages.m in Sources */,
