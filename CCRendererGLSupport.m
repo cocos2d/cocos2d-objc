@@ -242,16 +242,4 @@ static const CCGraphicsBufferType CCGraphicsBufferGLTypes[] = {
 	glBindVertexArray(bind ? _vao : 0);
 }
 
--(void)prepare
-{
-	[_vertexBuffer prepare];
-	[_indexBuffer prepare];
-}
-
--(void)commit
-{
-	[_vertexBuffer commit];
-	[_indexBuffer commit];
-}
-
 @end

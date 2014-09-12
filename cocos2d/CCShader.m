@@ -201,7 +201,7 @@ CompileShader(GLenum type, const char *source)
 
 //MARK: GL Uniform Setters:
 
-static CCGLUniformSetter
+static CCUniformSetter
 GLUniformSetFloat(NSString *name, GLint location)
 {
 	return ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
@@ -212,7 +212,7 @@ GLUniformSetFloat(NSString *name, GLint location)
 	};
 }
 
-static CCGLUniformSetter
+static CCUniformSetter
 GLUniformSetVec2(NSString *name, GLint location)
 {
 	NSString *textureName = nil;
@@ -255,7 +255,7 @@ GLUniformSetVec2(NSString *name, GLint location)
 	};
 }
 
-static CCGLUniformSetter
+static CCUniformSetter
 GLUniformSetVec3(NSString *name, GLint location)
 {
 	return ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
@@ -268,7 +268,7 @@ GLUniformSetVec3(NSString *name, GLint location)
 	};
 }
 
-static CCGLUniformSetter
+static CCUniformSetter
 GLUniformSetVec4(NSString *name, GLint location)
 {
 	return ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
@@ -288,7 +288,7 @@ GLUniformSetVec4(NSString *name, GLint location)
 	};
 }
 
-static CCGLUniformSetter
+static CCUniformSetter
 GLUniformSetMat4(NSString *name, GLint location)
 {
 	return ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
@@ -370,14 +370,149 @@ GLUniformSettersForProgram(GLuint program)
 }
 
 #if __CC_METAL_SUPPORTED_AND_ENABLED
+
+static CCUniformSetter
+MetalUniformSetBuffer(NSString *name, MTLArgument *vertexArg, MTLArgument *fragmentArg)
+{
+	NSUInteger vertexIndex = vertexArg.index;
+	NSUInteger fragmentIndex = fragmentArg.index;
+	size_t bytes = vertexArg.bufferDataSize;
+	
+	CCMetalContext *context = [CCMetalContext currentContext];
+	
+	// Handle cc_VertexAttributes specially.
+	if([name isEqualToString:@"cc_VertexAttributes"]){
+		NSCAssert(vertexArg && !fragmentArg, @"cc_VertexAttributes should only be used by vertex functions.");
+		NSCAssert(bytes == sizeof(CCVertex), @"cc_VertexAttributes data size is not sizeof(CCVertex).");
+		
+		return ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
+			CCGraphicsBufferMetal *vertexBuffer = (CCGraphicsBufferMetal *)renderer->_buffers->_vertexBuffer;
+			id<MTLBuffer> metalBuffer = vertexBuffer->_buffer;
+			
+			[context->_currentRenderCommandEncoder setVertexBuffer:metalBuffer offset:0 atIndex:vertexIndex];
+		};
+	} else {
+		// If both args are active, they must match.
+		NSCAssert(!vertexArg || !fragmentArg || bytes == fragmentArg.bufferDataSize, @"Vertex and fragment argument type don't match for '%@'.", vertexArg.name);
+		
+		return ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
+			CCGraphicsBufferMetal *uniformBuffer = (CCGraphicsBufferMetal *)renderer->_buffers->_uniformBuffer;
+			id<MTLBuffer> metalBuffer = uniformBuffer->_buffer;
+			
+			NSNumber *globalOffset = renderer->_globalShaderUniformBufferOffsets[name];
+			NSUInteger offset = globalOffset.unsignedIntegerValue;
+			
+			if(!globalOffset){
+				void *buff = CCGraphicsBufferPushElements(uniformBuffer, bytes);
+				[shaderUniforms[name] getValue:buff];
+				
+				offset = buff - uniformBuffer->_ptr;
+			}
+			
+			id<MTLRenderCommandEncoder> renderEncoder = context->_currentRenderCommandEncoder;
+			if(vertexArg) [renderEncoder setVertexBuffer:metalBuffer offset:offset atIndex:vertexIndex];
+			if(fragmentArg) [renderEncoder setFragmentBuffer:metalBuffer offset:offset atIndex:fragmentIndex];
+		};
+	}
+}
+
+static CCUniformSetter
+MetalUniformSetSampler(NSString *name, MTLArgument *vertexArg, MTLArgument *fragmentArg)
+{
+	NSUInteger vertexIndex = vertexArg.index;
+	NSUInteger fragmentIndex = fragmentArg.index;
+	
+	// For now, samplers and textures are locked together like in GL.
+	NSString *textureName = [name substringToIndex:name.length - @"Sampler".length];
+	
+	CCMetalContext *context = [CCMetalContext currentContext];
+	
+	return ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
+		CCTexture *texture = shaderUniforms[name] ?: globalShaderUniforms[name] ?: [CCTexture none];
+		NSCAssert([texture isKindOfClass:[CCTexture class]], @"Shader uniform '%@' value must be a CCTexture object.", name);
+		
+		id<MTLSamplerState> sampler = texture.metalSampler;
+		
+		id<MTLRenderCommandEncoder> renderEncoder = context->_currentRenderCommandEncoder;
+		if(vertexArg) [renderEncoder setVertexSamplerState:sampler atIndex:vertexIndex];
+		if(fragmentArg) [renderEncoder setFragmentSamplerState:sampler atIndex:fragmentIndex];
+	};
+}
+
+static CCUniformSetter
+MetalUniformSetTexture(NSString *name, MTLArgument *vertexArg, MTLArgument *fragmentArg)
+{
+	NSUInteger vertexIndex = vertexArg.index;
+	NSUInteger fragmentIndex = fragmentArg.index;
+	
+	CCMetalContext *context = [CCMetalContext currentContext];
+	
+	return ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
+		CCTexture *texture = shaderUniforms[name] ?: globalShaderUniforms[name] ?: [CCTexture none];
+		NSCAssert([texture isKindOfClass:[CCTexture class]], @"Shader uniform '%@' value must be a CCTexture object.", name);
+		
+		id<MTLTexture> metalTexture = texture.metalTexture;
+		
+		id<MTLRenderCommandEncoder> renderEncoder = context->_currentRenderCommandEncoder;
+		if(vertexArg) [renderEncoder setVertexTexture:metalTexture atIndex:vertexIndex];
+		if(fragmentArg) [renderEncoder setFragmentTexture:metalTexture atIndex:fragmentIndex];
+	};
+}
+
+static NSDictionary *
+MetalUniformSettersForFunctions(id<MTLFunction> vertexFunction, id<MTLFunction> fragmentFunction)
+{
+	// Get the shader reflection information by making a dummy render pipeline state.
+	MTLRenderPipelineDescriptor *descriptor = [MTLRenderPipelineDescriptor new];
+	descriptor.vertexFunction = vertexFunction;
+	descriptor.fragmentFunction = fragmentFunction;
+	
+	NSError *error = nil;
+	MTLRenderPipelineReflection *reflection = nil;
+	[[CCMetalContext currentContext].device newRenderPipelineStateWithDescriptor:descriptor options:MTLPipelineOptionArgumentInfo reflection:&reflection error:&error];
+	
+	NSCAssert(!error, @"Error getting Metal shader arguments.");
+	
+	// Collect all of the arguments.
+	NSMutableDictionary *vertexArgs = [NSMutableDictionary dictionary];
+	for(MTLArgument *arg in reflection.vertexArguments){ if(arg.active){ vertexArgs[arg.name] = arg; }}
+	
+	NSMutableDictionary *fragmentArgs = [NSMutableDictionary dictionary];
+	for(MTLArgument *arg in reflection.fragmentArguments){ if(arg.active){ fragmentArgs[arg.name] = arg; }}
+	
+	NSSet *argSet = [[NSSet setWithArray:vertexArgs.allKeys] setByAddingObjectsFromArray:fragmentArgs.allKeys];
+	
+	// Make uniform setters.
+	NSMutableDictionary *uniformSetters = [NSMutableDictionary dictionary];
+	
+	for(NSString *name in argSet){
+		MTLArgument *vertexArg = vertexArgs[name];
+		MTLArgument *fragmentArg = fragmentArgs[name];
+		
+		// If neither argument is active. Skip.
+		if(!vertexArg.active && !fragmentArg.active) continue;
+		
+		MTLArgumentType type = (vertexArg ? vertexArg.type : fragmentArg.type);
+		NSCAssert(!vertexArg || !fragmentArg || type == fragmentArg.type, @"Vertex and fragment argument type don't match for '%@'.", name);
+		
+		switch(type){
+			case MTLArgumentTypeBuffer: uniformSetters[name] = MetalUniformSetBuffer(name, vertexArg, fragmentArg); break;
+			case MTLArgumentTypeSampler: uniformSetters[name] = MetalUniformSetSampler(name, vertexArg, fragmentArg); break;
+			case MTLArgumentTypeTexture: uniformSetters[name] = MetalUniformSetTexture(name, vertexArg, fragmentArg); break;
+			case MTLArgumentTypeThreadgroupMemory: NSCAssert(NO, @"Compute memory not supported. (yet?)"); break;
+		}
+	}
+	
+	return uniformSetters;
+}
+
 -(instancetype)initWithMetalVertexFunction:(id<MTLFunction>)vertexFunction fragmentFunction:(id<MTLFunction>)fragmentFunction
 {
 	if((self = [super init])){
 		_vertexFunction = vertexFunction;
 		_fragmentFunction = fragmentFunction;
 		
-		#warning TODO setup _uniformSetters
-//		_uniformSetters = uniformSetters;
+		_uniformSetters = MetalUniformSettersForFunctions(vertexFunction, fragmentFunction);
 	}
 	
 	return self;
@@ -458,6 +593,8 @@ static CCShader *CC_SHADER_POS_TEX_COLOR_ALPHA_TEST = nil;
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
 		id<MTLLibrary> library = [CCMetalContext currentContext].library;
+		NSAssert(library, @"Metal shader library not found.");
+		
 		id<MTLFunction> vertex = [library newFunctionWithName:@"CCVertexFunctionDefault"];
 		
 		CC_SHADER_POS_COLOR = [[self alloc] initWithMetalVertexFunction:vertex fragmentFunction:[library newFunctionWithName:@"CCFragmentFunctionDefaultColor"]];

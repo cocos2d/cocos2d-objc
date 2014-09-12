@@ -130,21 +130,20 @@ static NSString *CURRENT_CONTEXT_KEY = @"CURRENT_CONTEXT_KEY";
 @end
 
 
-@interface CCGraphicsBufferBindingsMetal : CCGraphicsBufferBindings @end
 @implementation CCGraphicsBufferBindingsMetal
 
 -(instancetype)init
 {
 	if((self = [super init])){
 		CCRenderDispatch(NO, ^{
+			_context = [CCMetalContext currentContext];
+			
 			const NSUInteger CCRENDERER_INITIAL_VERTEX_CAPACITY = 16*1024;
 			_vertexBuffer = [[CCGraphicsBufferMetal alloc] initWithCapacity:CCRENDERER_INITIAL_VERTEX_CAPACITY elementSize:sizeof(CCVertex) type:CCGraphicsBufferTypeVertex];
 			[_vertexBuffer prepare];
 			
 			_indexBuffer = [[CCGraphicsBufferMetal alloc] initWithCapacity:CCRENDERER_INITIAL_VERTEX_CAPACITY*1.5 elementSize:sizeof(uint16_t) type:CCGraphicsBufferTypeIndex];
 			[_indexBuffer prepare];
-			
-//			_metalContext = (CCMetalContext *)[NSClassFromString(@"CCMetalContext") currentContext];
 			
 			// Default to half a megabyte of initial uniform storage.
 			NSUInteger uniformCapacity = 500*1024;

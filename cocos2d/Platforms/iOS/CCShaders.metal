@@ -1,13 +1,27 @@
 #include <metal_stdlib>
 #include <simd/simd.h>
 
+
 using namespace metal;
+
+
+// Make aliases for GLKMath types so struct definitions can be shared.
+#if __METAL_VERSION__
+typedef float2 GLKVector2;
+typedef float3 GLKVector3;
+typedef float4 GLKVector4;
+typedef float2x2 GLKMatrix2;
+typedef float3x3 GLKMatrix3;
+typedef float4x4 GLKMatrix4;
+#endif
+
+
 
 // Default vertex attributes.
 typedef struct CCVertex {
-	float4 position;
-	float2 texCoord1, texCoord2;
-	float4 color;
+	GLKVector4 position;
+	GLKVector2 texCoord1, texCoord2;
+	GLKVector4 color;
 } CCVertex;
 
 // Default fragment varyings.
@@ -21,38 +35,35 @@ typedef struct CCFragData {
 // Standard set of global uniform values.
 // NOTE: Must match the definition in CCRenderer_Private.h!
 typedef struct CCGlobalUniforms {
-	float4x4 projection;
-	float4x4 projectionInv;
-	float2 viewSize;
-	float2 viewSizeInPixels;
-	float4 time;
-	float4 sinTime;
-	float4 cosTime;
-	float4 random01;
+	GLKMatrix4 projection;
+	GLKMatrix4 projectionInv;
+	GLKVector2 viewSize;
+	GLKVector2 viewSizeInPixels;
+	GLKVector4 time;
+	GLKVector4 sinTime;
+	GLKVector4 cosTime;
+	GLKVector4 random01;
 } CCGlobalUniforms;
 
 // Default vertex function.
 vertex CCFragData
 CCVertexFunctionDefault(
-	const device CCVertex* verts [[buffer(0)]],
-	const device CCGlobalUniforms *globalUniforms [[buffer(1)]],
-	const device CCGlobalUniforms *uniforms [[buffer(2)]],
+	const device CCVertex *cc_VertexAttributes [[buffer(0)]],
 	unsigned int vid [[vertex_id]]
 ){
 	CCFragData out;
 	
-	out.position = verts[vid].position;
-	out.texCoord1 = verts[vid].texCoord1;
-	out.texCoord2 = verts[vid].texCoord2;
-	out.color = clamp(half4(verts[vid].color), half4(0.0), half4(1.0));
+	out.position = cc_VertexAttributes[vid].position;
+	out.texCoord1 = cc_VertexAttributes[vid].texCoord1;
+	out.texCoord2 = cc_VertexAttributes[vid].texCoord2;
+	out.color = saturate(half4(cc_VertexAttributes[vid].color));
 	
 	return out;
 }
 
 fragment half4
 CCFragmentFunctionDefaultColor(
-	const CCFragData in [[stage_in]],
-	const device CCGlobalUniforms *globals [[buffer(0)]]
+	const CCFragData in [[stage_in]]
 ){
 	return in.color;
 }
@@ -60,32 +71,25 @@ CCFragmentFunctionDefaultColor(
 fragment half4
 CCFragmentFunctionDefaultTextureColor(
 	const CCFragData in [[stage_in]],
-	const device CCGlobalUniforms *globalUniforms [[buffer(1)]],
-	const device CCGlobalUniforms *uniforms [[buffer(2)]],
-	texture2d<half> mainTexture [[texture(0)]],
-	sampler mainTextureSampler [[sampler(0)]]
+	texture2d<half> cc_MainTexture [[texture(0)]],
+	sampler cc_MainTextureSampler [[sampler(0)]]
 ){
-	return in.color*mainTexture.sample(mainTextureSampler, in.texCoord1);
+	return in.color*cc_MainTexture.sample(cc_MainTextureSampler, in.texCoord1);
 }
 
 fragment half4
 CCFragmentFunctionDefaultTextureA8Color(
 	const CCFragData in [[stage_in]],
-	const device CCGlobalUniforms *globalUniforms [[buffer(1)]],
-	const device CCGlobalUniforms *uniforms [[buffer(2)]],
-	texture2d<half> mainTexture [[texture(0)]],
-	sampler mainTextureSampler [[sampler(0)]]
+	texture2d<half> cc_MainTexture [[texture(0)]],
+	sampler cc_MainTextureSampler [[sampler(0)]]
 ){
-	return in.color*mainTexture.sample(mainTextureSampler, in.texCoord1).a;
+	return in.color*cc_MainTexture.sample(cc_MainTextureSampler, in.texCoord1).a;
 }
 
 fragment half4
 CCFragmentFunctionUnsupported(
 	const CCFragData in [[stage_in]],
-	const device CCGlobalUniforms *globalUniforms [[buffer(1)]],
-	const device CCGlobalUniforms *uniforms [[buffer(2)]],
-	texture2d<half> mainTexture [[texture(0)]],
-	sampler mainTextureSampler [[sampler(0)]]
+	texture2d<half> cc_MainTexture [[texture(0)]]
 ){
 	return half4(1, 0, 1, 1);
 }

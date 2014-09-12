@@ -712,10 +712,21 @@ SortQueue(NSMutableArray *queue)
 
 @implementation CCGraphicsBufferBindings
 
-// Base implementations do do nothing.
--(void)prepare {}
--(void)commit {}
+// Base implementations does nothing.
 -(void)bind:(BOOL)bind {}
+
+-(void)prepare
+{
+	[_vertexBuffer prepare];
+	[_indexBuffer prepare];
+}
+
+-(void)commit
+{
+	[_vertexBuffer commit];
+	[_indexBuffer commit];
+}
+
 
 @end
 

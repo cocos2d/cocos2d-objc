@@ -242,7 +242,7 @@ CCRenderStateGLTransition(CCRenderStateGL *self, CCRenderer *renderer, CCRenderS
 		NSDictionary *globalShaderUniforms = renderer->_globalShaderUniforms;
 		NSDictionary *setters = self->_shader->_uniformSetters;
 		for(NSString *uniformName in setters){
-			CCGLUniformSetter setter = setters[uniformName];
+			CCUniformSetter setter = setters[uniformName];
 			setter(renderer, self->_shaderUniforms, globalShaderUniforms);
 		}
 	}
@@ -288,13 +288,6 @@ static const CCRenderCommandDrawMode GLDrawModes[] = {
 @interface CCRenderStateMetal : CCRenderState @end
 @implementation CCRenderStateMetal {
 	id<MTLRenderPipelineState> _renderPipelineState;
-	
-	NSRange _textureRange;
-	id<MTLSamplerState> _samplers[CCMTL_MAX_TEXTURES];
-	id<MTLTexture> _textures[CCMTL_MAX_TEXTURES];
-	
-	@public
-	BOOL _uniformsPrepared;
 }
 
 // Using GL enums for CCBlendMode types should never have happened. Oops.
@@ -350,40 +343,25 @@ CCRenderStateMetalPrepare(CCRenderStateMetal *self)
 		
 		self->_renderPipelineState = [[context.device newRenderPipelineStateWithDescriptor:pipelineStateDescriptor error:nil] retain];
 	}
-	
-	if(!self->_uniformsPrepared){
-		CCTexture *mainTexture = self->_shaderUniforms[CCShaderUniformMainTexture];
-		
-		self->_textureRange = NSMakeRange(0, 1);
-		self->_samplers[0] = [mainTexture.metalSampler retain];
-		self->_textures[0] = [mainTexture.metalTexture retain];
-		
-		self->_uniformsPrepared = YES;
-	}
 }
 
 static void
 CCRenderStateMetalTransition(CCRenderStateMetal *self, CCRenderer *renderer, CCRenderStateMetal *previous)
 {
-	CCMetalContext *context = renderer->_metalContext;
+	CCGraphicsBufferBindingsMetal *buffers = (CCGraphicsBufferBindingsMetal *)renderer->_buffers;
+	CCMetalContext *context = buffers->_context;
 	id<MTLRenderCommandEncoder> renderEncoder = context->_currentRenderCommandEncoder;
+	
+	// Bind pipeline state.
 	[renderEncoder setRenderPipelineState:self->_renderPipelineState];
 	
-//	CCGraphicsBufferMetal *uniformGraphicsBuffer = nil;
-//	id<MTLBuffer> uniformMetalBuffer = uniformGraphicsBuffer->_buffer;
-//	
-//	// Set the global uniform buffers.
-//	[renderEncoder setVertexBuffer:uniformMetalBuffer offset:0 atIndex:1];
-//	[renderEncoder setFragmentBuffer:uniformMetalBuffer offset:0 atIndex:1];
-//	
-//	// Set the uniform buffers.
-//	CCGraphicsBufferPushElements(uniformGraphicsBuffer, # of bytes);
-//	[renderEncoder setVertexBuffer:uniformMetalBuffer offset:offset atIndex:2];
-//	[renderEncoder setFragmentBuffer:uniformMetalBuffer offset:offset atIndex:2];
-	
-	NSRange range = self->_textureRange;
-	[renderEncoder setFragmentSamplerStates:self->_samplers withRange:range];
-	[renderEncoder setFragmentTextures:self->_textures withRange:range];
+	// Set shader arguments.
+	NSDictionary *globalShaderUniforms = renderer->_globalShaderUniforms;
+	NSDictionary *setters = self->_shader->_uniformSetters;
+	for(NSString *uniformName in setters){
+		CCUniformSetter setter = setters[uniformName];
+		setter(renderer, self->_shaderUniforms, globalShaderUniforms);
+	}
 }
 
 -(void)transitionRenderer:(CCRenderer *)renderer FromState:(CCRenderState *)previous
@@ -411,9 +389,10 @@ static const MTLPrimitiveType MetalDrawModes[] = {
 
 -(void)invokeOnRenderer:(CCRenderer *)renderer
 {
-	CCMetalContext *context = renderer->_metalContext;
+	CCGraphicsBufferBindingsMetal *buffers = (CCGraphicsBufferBindingsMetal *)renderer->_buffers;
+	CCMetalContext *context = buffers->_context;
 	id<MTLRenderCommandEncoder> renderEncoder = context->_currentRenderCommandEncoder;
-	id<MTLBuffer> indexBuffer = ((CCGraphicsBufferMetal *)renderer->_elementBuffer)->_buffer;
+	id<MTLBuffer> indexBuffer = ((CCGraphicsBufferMetal *)buffers->_indexBuffer)->_buffer;
 	
 	CCMTL_DEBUG_PUSH_GROUP_MARKER(renderEncoder, @"CCRendererCommandDraw: Invoke");
 	CCRendererBindBuffers(renderer, YES);
@@ -422,13 +401,6 @@ static const MTLPrimitiveType MetalDrawModes[] = {
 	
 	[renderEncoder drawIndexedPrimitives:MetalDrawModes[_mode] indexCount:_count indexType:MTLIndexTypeUInt16 indexBuffer:indexBuffer indexBufferOffset:2*_first];
 	CCMTL_DEBUG_POP_GROUP_MARKER(renderEncoder);
-	
-	if(!_renderState->_immutable){
-		// This is sort of a weird place to put this, but couldn't find somewhere better.
-		// Mutable render states need to have their uniforms redone at least once per frame.
-		// Putting it here ensures that it's been after all render commands for the frame have prepared it.
-		((CCRenderStateMetal *)_renderState)->_uniformsPrepared = NO;
-	}
 	
 	CC_INCREMENT_GL_DRAWS(1);
 }

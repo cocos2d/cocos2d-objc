@@ -189,14 +189,14 @@ CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount)
 	CCGraphicsBuffer *_uniformBuffer;
 }
 
+/// Make the buffers ready to use by drawing commands.
+-(void)bind:(BOOL)bind;
+
 /// Prepare buffers for changes.
 -(void)prepare;
 
 /// Commit changes to buffers.
 -(void)commit;
-
-/// Bind the buffers. (Not used by Metal)
--(void)bind:(BOOL)bind;
 
 @end
 

@@ -1,18 +1,21 @@
-#import "ccMacros.h"
+#import "CCShader.h"
+
 
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 #import <Metal/Metal.h>
+#import "CCMetalSupport_Private.h"
 #endif
 
-#import "CCShader.h"
 
 @class CCRenderer;
 
-typedef void (^CCGLUniformSetter)(
+
+typedef void (^CCUniformSetter)(
 	__unsafe_unretained CCRenderer *renderer,
 	__unsafe_unretained NSDictionary *shaderUniforms,
 	__unsafe_unretained NSDictionary *globalShaderUniforms
 );
+
 
 @interface CCShader() {
 	@public

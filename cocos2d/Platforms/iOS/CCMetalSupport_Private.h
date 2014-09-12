@@ -30,9 +30,10 @@
 
 #import "CCRenderer_Private.h"
 
-// This is effectively hardcoded to 10 by Apple's docs and there is no API to query capabilities...
-// Seems like an oversight, but whatever.
-#define CCMTL_MAX_TEXTURES 10
+// The number of buffer/texture/sampler cannot be queried.
+// They are only defined in the Metal docs to be 31/31/16.
+// Need to do something smarter here. (So does Apple...)
+#define CCMTL_MAX_ARGS 10
 
 // Maximum uniform bytes that can be passed to a shader.
 // This space is preallocated by all render states.
@@ -80,6 +81,14 @@
 @interface CCGraphicsBufferMetal : CCGraphicsBuffer {
 	@public
 	id<MTLBuffer> _buffer;
+}
+
+@end
+
+
+@interface CCGraphicsBufferBindingsMetal : CCGraphicsBufferBindings {
+	@public
+	CCMetalContext *_context;
 }
 
 @end
