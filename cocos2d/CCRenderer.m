@@ -765,17 +765,50 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 +(void)bindRenderer:(CCRenderer *)renderer
 {
 	if(renderer){
-		NSAssert(self.currentRenderer == nil, @"Internal Error: Already have a renderer bound.");
 		[NSThread currentThread].threadDictionary[CURRENT_RENDERER_KEY] = renderer;
 	} else {
 		[[NSThread currentThread].threadDictionary removeObjectForKey:CURRENT_RENDERER_KEY];
 	}
 }
 
--(void)prepareWithGlobals:(NSDictionary *)globalShaderUniforms
+-(void)prepareWithProjection:(const GLKMatrix4 *)projection viewSize:(CGSize)viewSize contentScale:(CGFloat)contentScale;
 {
-	_globalShaderUniforms = [globalShaderUniforms copy];
+	CCDirector *director = [CCDirector sharedDirector];
 	
+	// Copy in the globals from the director.
+	NSMutableDictionary *globalShaderUniforms = [director.globalShaderUniforms mutableCopy];
+	
+	// Group all of the standard globals into one value.
+	// Used by Metal, will be used eventually by a GL3 renderer.
+	CCGlobalUniforms globals = {};
+	
+	globals.projection = *projection;
+	globals.projectionInv = GLKMatrix4Invert(globals.projection, NULL);
+	globalShaderUniforms[CCShaderUniformProjection] = [NSValue valueWithGLKMatrix4:globals.projection];
+	globalShaderUniforms[CCShaderUniformProjectionInv] = [NSValue valueWithGLKMatrix4:globals.projectionInv];
+	
+	globals.viewSize = GLKVector2Make(viewSize.width, viewSize.height);
+	globalShaderUniforms[CCShaderUniformViewSize] = [NSValue valueWithGLKVector2:globals.viewSize];
+	
+	CGSize pixelSize = viewSize;//CC_SIZE_SCALE(viewSize, contentScale);
+	globals.viewSizeInPixels = GLKVector2Make(pixelSize.width, pixelSize.height);
+	globalShaderUniforms[CCShaderUniformViewSizeInPixels] = [NSValue valueWithGLKVector2:globals.viewSizeInPixels];
+	
+	CCTime t = director.scheduler.currentTime;
+	globals.time = GLKVector4Make(t, t/2.0f, t/8.0f, t/8.0f);
+	globals.sinTime = GLKVector4Make(sinf(t*2.0f), sinf(t), sinf(t/2.0f), sinf(t/4.0f));
+	globals.cosTime = GLKVector4Make(cosf(t*2.0f), cosf(t), cosf(t/2.0f), cosf(t/4.0f));
+	globalShaderUniforms[CCShaderUniformTime] = [NSValue valueWithGLKVector4:globals.time];
+	globalShaderUniforms[CCShaderUniformSinTime] = [NSValue valueWithGLKVector4:globals.sinTime];
+	globalShaderUniforms[CCShaderUniformCosTime] = [NSValue valueWithGLKVector4:globals.cosTime];
+	
+	globals.random01 = GLKVector4Make(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
+	globalShaderUniforms[CCShaderUniformRandom01] = [NSValue valueWithGLKVector4:globals.random01];
+	
+	globalShaderUniforms[CCShaderUniformDefaultGlobals] = [NSValue valueWithBytes:&globals objCType:@encode(CCGlobalUniforms)];
+	
+	_globalShaderUniforms = globalShaderUniforms;
+		
 	// If we are using a uniform buffer (ex: Metal) copy the global uniforms into it.
 	CCGraphicsBuffer *uniformBuffer = _buffers->_uniformBuffer;
 	if(uniformBuffer){

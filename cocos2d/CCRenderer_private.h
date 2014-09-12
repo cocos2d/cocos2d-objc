@@ -238,7 +238,7 @@ CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount)
 
 @interface CCRenderer(NoARCPrivate)
 
--(void)prepareWithGlobals:(NSDictionary *)globalShaderUniforms;
+-(void)prepareWithProjection:(const GLKMatrix4 *)projection viewSize:(CGSize)viewSize contentScale:(CGFloat)contentScale;
 
 -(void)setRenderState:(CCRenderState *)renderState;
 

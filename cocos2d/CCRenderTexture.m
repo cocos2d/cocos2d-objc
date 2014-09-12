@@ -376,47 +376,36 @@
     return _FBO.FBO;
 }
 
--(void)begin
+-(CCRenderer *)begin
 {
-	_renderer = [CCRenderer currentRenderer];
+	CCTexture *texture = self.texture;
 	
-	if(_renderer == nil){
-		_renderer = [[CCRenderer alloc] init];
-		
-		NSMutableDictionary *uniforms = [[CCDirector sharedDirector].globalShaderUniforms mutableCopy];
-		uniforms[CCShaderUniformProjection] = [NSValue valueWithGLKMatrix4:_projection];
-		#warning FIXME
-//		_renderer.globalShaderUniforms = uniforms;
-		
-		[CCRenderer bindRenderer:_renderer];
-		_privateRenderer = YES;
-	} else {
-		_oldGlobalUniforms = _renderer.globalShaderUniforms;
-		
-		NSMutableDictionary *uniforms = [_oldGlobalUniforms mutableCopy];
-		uniforms[CCShaderUniformProjection] = [NSValue valueWithGLKMatrix4:_projection];
-		#warning FIXME
-//		_renderer.globalShaderUniforms = uniforms;
-	}
+	CCRenderer *renderer = [[CCDirector sharedDirector] rendererFromPool];
+	[renderer prepareWithProjection:&_projection viewSize:texture.contentSize contentScale:texture.contentScale];
 	
-	CGSize pixelSize = self.texture.contentSizeInPixels;
+	_previousRenderer = [CCRenderer currentRenderer];
+	[CCRenderer bindRenderer:renderer];
+	
+	CGSize pixelSize = texture.contentSizeInPixels;
 	GLuint fbo = [self fbo];
 	
-	[_renderer pushGroup];
+	[renderer pushGroup];
 	
-	[_renderer enqueueBlock:^{
+	[renderer enqueueBlock:^{
 		glGetFloatv(GL_VIEWPORT, _oldViewport.v);
 		glViewport(0, 0, pixelSize.width, pixelSize.height );
 		
 		glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 	} globalSortOrder:NSIntegerMin debugLabel:@"CCRenderTexture: Bind FBO" threadSafe:NO];
+	
+	return renderer;
 }
 
 -(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a depth:(float)depthValue stencil:(int)stencilValue flags:(GLbitfield)flags
 {
-	[self begin];
-	[_renderer enqueueClear:flags color:GLKVector4Make(r, g, b, a) depth:depthValue stencil:stencilValue globalSortOrder:NSIntegerMin];
+	CCRenderer *renderer = [self begin];
+	[renderer enqueueClear:flags color:GLKVector4Make(r, g, b, a) depth:depthValue stencil:stencilValue globalSortOrder:NSIntegerMin];
 }
 
 -(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a
@@ -436,24 +425,26 @@
 
 -(void)end
 {
-	[_renderer enqueueBlock:^{
+	CCRenderer *renderer = [CCRenderer currentRenderer];
+	
+	[renderer enqueueBlock:^{
 		glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
 		glViewport(_oldViewport.v[0], _oldViewport.v[1], _oldViewport.v[2], _oldViewport.v[3]);
 	} globalSortOrder:NSIntegerMax debugLabel:@"CCRenderTexture: Restore FBO" threadSafe:NO];
 	
-	[_renderer popGroupWithDebugLabel:@"CCRenderTexture begin/end" globalSortOrder:0];
+	[renderer popGroupWithDebugLabel:@"CCRenderTexture begin/end" globalSortOrder:0];
 	
-	if(_privateRenderer){
-		[CCRenderer bindRenderer:nil];
-		_privateRenderer = NO;
+	__unsafe_unretained CCDirector *director = [CCDirector sharedDirector];
+	CCRenderDispatch(renderer.threadsafe, ^{
+		[director addFrameCompletionHandler:^{
+			// Return the renderer to the pool when the frame completes.
+			[director poolRenderer:renderer];
+		}];
 		
-		CCRenderDispatch(_renderer.threadsafe, ^{[_renderer flush];});
-	} else {
-		#warning FIXME
-//		_renderer.globalShaderUniforms = _oldGlobalUniforms;
-	}
+		[renderer flush];
+	});
 	
-	_renderer = nil;
+	[CCRenderer bindRenderer:_previousRenderer];
 }
 
 -(void)clear:(float)r g:(float)g b:(float)b a:(float)a
@@ -464,15 +455,15 @@
 
 - (void)clearDepth:(float)depthValue
 {
-	[self begin];
-		[_renderer enqueueClear:GL_DEPTH_BUFFER_BIT color:GLKVector4Make(0, 0, 0, 0) depth:depthValue stencil:0 globalSortOrder:NSIntegerMin];
+	CCRenderer *renderer = [self begin];
+		[renderer enqueueClear:GL_DEPTH_BUFFER_BIT color:GLKVector4Make(0, 0, 0, 0) depth:depthValue stencil:0 globalSortOrder:NSIntegerMin];
 	[self end];
 }
 
 - (void)clearStencil:(int)stencilValue
 {
-	[self begin];
-		[_renderer enqueueClear:GL_DEPTH_BUFFER_BIT color:GLKVector4Make(0, 0, 0, 0) depth:0.0 stencil:stencilValue globalSortOrder:NSIntegerMin];
+	CCRenderer *renderer = [self begin];
+		[renderer enqueueClear:GL_DEPTH_BUFFER_BIT color:GLKVector4Make(0, 0, 0, 0) depth:0.0 stencil:stencilValue globalSortOrder:NSIntegerMin];
 	[self end];
 }
 
@@ -490,16 +481,16 @@
 			_contentSizeChanged = NO;
 		}
 		
-		[self begin];
-		NSAssert(_renderer == renderer, @"CCRenderTexture error!");
+		CCRenderer *rtRenderer = [self begin];
+		NSAssert(renderer == renderer, @"CCRenderTexture error!");
 		
-		[_renderer enqueueClear:_clearFlags color:_clearColor depth:_clearDepth stencil:_clearStencil globalSortOrder:NSIntegerMin];
+		[rtRenderer enqueueClear:_clearFlags color:_clearColor depth:_clearDepth stencil:_clearStencil globalSortOrder:NSIntegerMin];
 		
 		//! make sure all children are drawn
 		[self sortAllChildren];
 		
 		for(CCNode *child in _children){
-			[child visit:renderer parentTransform:&_projection];
+			[child visit:rtRenderer parentTransform:&_projection];
 		}
 		
 		[self end];
@@ -549,8 +540,8 @@
 		return nil;
 	}
 	
-    [self begin];
-    [_renderer enqueueBlock:^{
+    CCRenderer *renderer = [self begin];
+    [renderer enqueueBlock:^{
         glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, buffer);
     } globalSortOrder:NSIntegerMax debugLabel:@"CCRenderTexture reading pixels for new image" threadSafe:NO];
     [self end];

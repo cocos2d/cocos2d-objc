@@ -178,27 +178,27 @@
     // bind renderer
     _renderer = [CCRenderer currentRenderer];
 	
-	if(_renderer == nil)
-    {
-		_renderer = [[CCRenderer alloc] init];
-		
-		NSMutableDictionary *uniforms = [[CCDirector sharedDirector].globalShaderUniforms mutableCopy];
-		uniforms[CCShaderUniformProjection] = [NSValue valueWithGLKMatrix4:_projection];
-		#warning FIXME
-//		_renderer.globalShaderUniforms = uniforms;
-		
-		[CCRenderer bindRenderer:_renderer];
-		_privateRenderer = YES;
-    }
-    else if(_privateRenderer == NO)
-    {
-		_oldGlobalUniforms = _renderer.globalShaderUniforms;
-		
-		NSMutableDictionary *uniforms = [_oldGlobalUniforms mutableCopy];
-		uniforms[CCShaderUniformProjection] = [NSValue valueWithGLKMatrix4:_projection];
-		#warning FIXME
-//		_renderer.globalShaderUniforms = uniforms;
-	}
+//	if(_renderer == nil)
+//    {
+//		_renderer = [[CCRenderer alloc] init];
+//		
+//		NSMutableDictionary *uniforms = [[CCDirector sharedDirector].globalShaderUniforms mutableCopy];
+//		uniforms[CCShaderUniformProjection] = [NSValue valueWithGLKMatrix4:_projection];
+//		#warning FIXME
+////		_renderer.globalShaderUniforms = uniforms;
+//		
+//		[CCRenderer bindRenderer:_renderer];
+//		_privateRenderer = YES;
+//    }
+//    else if(_privateRenderer == NO)
+//    {
+//		_oldGlobalUniforms = _renderer.globalShaderUniforms;
+//		
+//		NSMutableDictionary *uniforms = [_oldGlobalUniforms mutableCopy];
+//		uniforms[CCShaderUniformProjection] = [NSValue valueWithGLKMatrix4:_projection];
+//		#warning FIXME
+////		_renderer.globalShaderUniforms = uniforms;
+//	}
 }
 
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
@@ -242,12 +242,12 @@
         [_sprite visit:_renderer parentTransform:transform];
     }
     
-    if(_privateRenderer == NO)
-			;
-			#warning FIXME
-//        _renderer.globalShaderUniforms = _oldGlobalUniforms;
-    else
-        [CCRenderer bindRenderer:nil];
+//    if(_privateRenderer == NO)
+//			;
+//			#warning FIXME
+////        _renderer.globalShaderUniforms = _oldGlobalUniforms;
+//    else
+//        [CCRenderer bindRenderer:nil];
 
     _renderer = nil;
 }

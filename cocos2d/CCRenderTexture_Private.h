@@ -15,9 +15,11 @@
 @protected
     GLenum _pixelFormat;
     GLuint _depthStencilFormat;
-
+		
+		#warning TODO remove me.
     CCRenderer *_renderer;
-    BOOL _privateRenderer;
+		// Reference to the previous render to be restored by end.
+		CCRenderer *_previousRenderer;
 
     GLKVector4 _clearColor;
 
