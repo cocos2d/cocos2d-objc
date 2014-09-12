@@ -292,7 +292,7 @@
 #endif
 	
 		// check if it worked (probably worth doing :) )
-		NSAssert( glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, @"Could not attach texture to framebuffer");
+//		NSAssert( glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, @"Could not attach texture to framebuffer");
 		
 		_FBO = [[CCRenderTextureFBO alloc] initWithFBO:fbo depthRenderBuffer:depthRenderBuffer stencilRenderBuffer:stencilRenderBuffer];
 		
@@ -385,7 +385,8 @@
 		
 		NSMutableDictionary *uniforms = [[CCDirector sharedDirector].globalShaderUniforms mutableCopy];
 		uniforms[CCShaderUniformProjection] = [NSValue valueWithGLKMatrix4:_projection];
-		_renderer.globalShaderUniforms = uniforms;
+		#warning FIXME
+//		_renderer.globalShaderUniforms = uniforms;
 		
 		[CCRenderer bindRenderer:_renderer];
 		_privateRenderer = YES;
@@ -394,7 +395,8 @@
 		
 		NSMutableDictionary *uniforms = [_oldGlobalUniforms mutableCopy];
 		uniforms[CCShaderUniformProjection] = [NSValue valueWithGLKMatrix4:_projection];
-		_renderer.globalShaderUniforms = uniforms;
+		#warning FIXME
+//		_renderer.globalShaderUniforms = uniforms;
 	}
 	
 	CGSize pixelSize = self.texture.contentSizeInPixels;
@@ -447,7 +449,8 @@
 		
 		CCRenderDispatch(_renderer.threadsafe, ^{[_renderer flush];});
 	} else {
-		_renderer.globalShaderUniforms = _oldGlobalUniforms;
+		#warning FIXME
+//		_renderer.globalShaderUniforms = _oldGlobalUniforms;
 	}
 	
 	_renderer = nil;

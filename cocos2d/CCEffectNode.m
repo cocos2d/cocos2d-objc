@@ -184,7 +184,8 @@
 		
 		NSMutableDictionary *uniforms = [[CCDirector sharedDirector].globalShaderUniforms mutableCopy];
 		uniforms[CCShaderUniformProjection] = [NSValue valueWithGLKMatrix4:_projection];
-		_renderer.globalShaderUniforms = uniforms;
+		#warning FIXME
+//		_renderer.globalShaderUniforms = uniforms;
 		
 		[CCRenderer bindRenderer:_renderer];
 		_privateRenderer = YES;
@@ -195,7 +196,8 @@
 		
 		NSMutableDictionary *uniforms = [_oldGlobalUniforms mutableCopy];
 		uniforms[CCShaderUniformProjection] = [NSValue valueWithGLKMatrix4:_projection];
-		_renderer.globalShaderUniforms = uniforms;
+		#warning FIXME
+//		_renderer.globalShaderUniforms = uniforms;
 	}
 }
 
@@ -241,7 +243,9 @@
     }
     
     if(_privateRenderer == NO)
-        _renderer.globalShaderUniforms = _oldGlobalUniforms;
+			;
+			#warning FIXME
+//        _renderer.globalShaderUniforms = _oldGlobalUniforms;
     else
         [CCRenderer bindRenderer:nil];
 
