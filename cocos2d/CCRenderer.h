@@ -25,6 +25,8 @@
 #import "ccTypes.h"
 #import "CCShader.h"
 
+#import "NSValue+CCRenderer.h"
+
 
 @class CCTexture;
 
@@ -115,16 +117,6 @@ CCRenderCheckVisbility(const GLKMatrix4 *transform, GLKVector2 center, GLKVector
 	return ((fabs(csc.x) - cshx < w) && (fabs(csc.y) - cshy < w));
 }
 
-
-@interface NSValue(CCRenderer)
-
-+(NSValue *)valueWithGLKVector2:(GLKVector2)vector;
-+(NSValue *)valueWithGLKVector3:(GLKVector3)vector;
-+(NSValue *)valueWithGLKVector4:(GLKVector4)vector;
-
-+(NSValue *)valueWithGLKMatrix4:(GLKMatrix4)matrix;
-
-@end
 
 /// Key used to set the source color factor for [CCBlendMode blendModeWithOptions:].
 extern const NSString *CCBlendFuncSrcColor;
