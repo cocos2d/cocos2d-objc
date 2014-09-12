@@ -104,6 +104,7 @@
 #if CC_EFFECTS_EXPERIMENTAL
 #import "CCEffectDFOutline.h"
 #import "CCEffectDistanceField.h"
+#import "CCEffectDFInnerGlow.h"
 #endif
 
 // Layouts

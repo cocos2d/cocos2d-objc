@@ -346,6 +346,10 @@
 		D28A2E1D1954F7E000ADC03D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D28A2E1C1954F7E000ADC03D /* OpenGLES.framework */; };
 		D28A2E211954F85700ADC03D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D28A2E201954F85700ADC03D /* AVFoundation.framework */; };
 		D291DCC2195B2FA100278EC0 /* libObjectiveChipmunk-iPhone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B759E52D1880C66900E8166C /* libObjectiveChipmunk-iPhone.a */; };
+		D299CE7A19C2910B00519CBB /* CCEffectDFInnerGlow.h in Headers */ = {isa = PBXBuildFile; fileRef = D299CE7819C2910B00519CBB /* CCEffectDFInnerGlow.h */; };
+		D299CE7B19C2910B00519CBB /* CCEffectDFInnerGlow.h in Headers */ = {isa = PBXBuildFile; fileRef = D299CE7819C2910B00519CBB /* CCEffectDFInnerGlow.h */; };
+		D299CE7C19C2910B00519CBB /* CCEffectDFInnerGlow.m in Sources */ = {isa = PBXBuildFile; fileRef = D299CE7919C2910B00519CBB /* CCEffectDFInnerGlow.m */; };
+		D299CE7D19C2910B00519CBB /* CCEffectDFInnerGlow.m in Sources */ = {isa = PBXBuildFile; fileRef = D299CE7919C2910B00519CBB /* CCEffectDFInnerGlow.m */; };
 		D2DDB09319805E8400233D80 /* CCMathUtilsAndroid.h in Headers */ = {isa = PBXBuildFile; fileRef = D2DDB08819805E8400233D80 /* CCMathUtilsAndroid.h */; };
 		D2DDB09419805E8400233D80 /* CCMathUtilsAndroid.h in Headers */ = {isa = PBXBuildFile; fileRef = D2DDB08819805E8400233D80 /* CCMathUtilsAndroid.h */; };
 		D2DDB09519805E8400233D80 /* CCMatrix3.h in Headers */ = {isa = PBXBuildFile; fileRef = D2DDB08919805E8400233D80 /* CCMatrix3.h */; };
@@ -1074,6 +1078,8 @@
 		D28A2E1A1954F68D00ADC03D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D28A2E1C1954F7E000ADC03D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		D28A2E201954F85700ADC03D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		D299CE7819C2910B00519CBB /* CCEffectDFInnerGlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectDFInnerGlow.h; sourceTree = "<group>"; };
+		D299CE7919C2910B00519CBB /* CCEffectDFInnerGlow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectDFInnerGlow.m; sourceTree = "<group>"; };
 		D2B840C31909F447008063EA /* CCRenderTexture_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCRenderTexture_Private.h; sourceTree = "<group>"; };
 		D2DDB08819805E8400233D80 /* CCMathUtilsAndroid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCMathUtilsAndroid.h; path = Platforms/Android/CCMathUtilsAndroid.h; sourceTree = "<group>"; };
 		D2DDB08919805E8400233D80 /* CCMatrix3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCMatrix3.h; path = Platforms/Android/CCMatrix3.h; sourceTree = "<group>"; };
@@ -1852,6 +1858,8 @@
 				D27451B619AE5517006DA0A1 /* CCEffectDistanceField.m */,
 				D27451C419B111A9006DA0A1 /* CCEffectDFOutline.h */,
 				D27451C519B111A9006DA0A1 /* CCEffectDFOutline.m */,
+				D299CE7819C2910B00519CBB /* CCEffectDFInnerGlow.h */,
+				D299CE7919C2910B00519CBB /* CCEffectDFInnerGlow.m */,
 			);
 			name = DistanceField;
 			sourceTree = "<group>";
@@ -2018,6 +2026,7 @@
 				50F7B2780F28DE7C00057537 /* CCActionEase.h in Headers */,
 				571CD02819649E03003D460C /* CCPlatformTextField.h in Headers */,
 				B798D1451820305400E7BFCD /* CCSprite_Private.h in Headers */,
+				D299CE7A19C2910B00519CBB /* CCEffectDFInnerGlow.h in Headers */,
 				50BAF3990F33CCD8003F654C /* ccMacros.h in Headers */,
 				B798D13D181F2E4500E7BFCD /* CCNode_Private.h in Headers */,
 				509A79970F6188420032F449 /* CCSprite.h in Headers */,
@@ -2309,6 +2318,7 @@
 				D2FEB693194F6C9E00FC0574 /* CCProgressNode.h in Headers */,
 				D2DDB09419805E8400233D80 /* CCMathUtilsAndroid.h in Headers */,
 				D2FEB694194F6C9E00FC0574 /* CCLayout.h in Headers */,
+				D299CE7B19C2910B00519CBB /* CCEffectDFInnerGlow.h in Headers */,
 				D2FEB695194F6C9E00FC0574 /* NSThread+performBlock.h in Headers */,
 				D2FEB696194F6C9E00FC0574 /* CCTiledMapLayer_Private.h in Headers */,
 				D2FEB697194F6C9E00FC0574 /* ALSource.h in Headers */,
@@ -2496,6 +2506,7 @@
 			files = (
 				5018F26A0DFDEAFF00C013A5 /* CCAction.m in Sources */,
 				D3903B0B1995285B003AA81A /* CCEffectBlur.m in Sources */,
+				D299CE7C19C2910B00519CBB /* CCEffectDFInnerGlow.m in Sources */,
 				5018F26C0DFDEAFF00C013A5 /* CCNode.m in Sources */,
 				5018F26E0DFDEAFF00C013A5 /* CCDirector.m in Sources */,
 				5018F2700DFDEAFF00C013A5 /* CCActionInstant.m in Sources */,
@@ -2662,6 +2673,7 @@
 			files = (
 				57202D391970776100238D56 /* CCPlatformTextFieldAndroid.m in Sources */,
 				D2FEB6B9194F6C9E00FC0574 /* CCAction.m in Sources */,
+				D299CE7D19C2910B00519CBB /* CCEffectDFInnerGlow.m in Sources */,
 				D2FEB6BA194F6C9E00FC0574 /* CCNode.m in Sources */,
 				D2FEB6BB194F6C9E00FC0574 /* CCDirector.m in Sources */,
 				D2FEB6BC194F6C9E00FC0574 /* CCActionInstant.m in Sources */,
