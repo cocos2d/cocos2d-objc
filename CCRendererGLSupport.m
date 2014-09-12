@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-#import "CCRenderer_private.h"
+#import "CCRenderer_Private.h"
 
 #import "CCRenderDispatch.h"
 

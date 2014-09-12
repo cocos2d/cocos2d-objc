@@ -46,7 +46,7 @@
 #endif
 
 #import "CCTexture_Private.h"
-#import "CCRenderer_private.h"
+#import "CCRenderer_Private.h"
 
 // needed for CCCallFuncO in Mac-display_link version
 //#import "CCActionManager.h"

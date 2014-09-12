@@ -25,7 +25,7 @@
 #import "objc/message.h"
 
 #import "cocos2d.h"
-#import "CCRenderer_private.h"
+#import "CCRenderer_Private.h"
 #import "CCCache.h"
 #import "CCTexture_Private.h"
 #import "CCShader_private.h"

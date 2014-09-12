@@ -20,7 +20,7 @@
 #import "../../CCShader.h"
 #import "../../ccFPSImages.h"
 #import "../../CCConfiguration.h"
-#import "CCRenderer_private.h"
+#import "CCRenderer_Private.h"
 #import "CCTouch.h"
 
 

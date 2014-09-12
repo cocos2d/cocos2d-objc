@@ -30,7 +30,7 @@
 #import "ccMacros.h"
 #import "CCNode_Private.h"
 #import "CCTexture_Private.h"
-#import "CCRenderer_private.h"
+#import "CCRenderer_Private.h"
 
 #import "Support/CGPointExtension.h"
 

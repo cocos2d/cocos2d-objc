@@ -45,7 +45,7 @@
 #import "ccFPSImages.h"
 #import "CCConfiguration.h"
 #import "CCTransition.h"
-#import "CCRenderer_private.h"
+#import "CCRenderer_Private.h"
 #import "CCRenderDispatch_Private.h"
 
 // support imports
