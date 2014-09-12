@@ -3,9 +3,9 @@
 url=https://github.com/slembcke/Chipmunk2D.git
 [submodule "external/ogg"]
 	path = external/ogg
-url=git@github.com:spritebuilder/ogg.git
+url=https://github.com/spritebuilder/ogg.git
 	branch = apportable
 [submodule "external/tremor"]
 	path = external/tremor
-url=git@github.com:spritebuilder/tremor.git
+url=https://github.com/spritebuilder/tremor.git
 	branch = apportable
