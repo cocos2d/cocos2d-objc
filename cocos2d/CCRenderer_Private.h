@@ -27,6 +27,7 @@
 #import "CCRenderer.h"
 #import "CCCache.h"
 #import "CCRenderDispatch.h"
+#import "CCRendererBasicTypes_Private.h"
 
 // Struct used for packing the global uniforms.
 // NOTE: Must match the definition in CCShaders.metal!
@@ -79,23 +80,6 @@ extern NSDictionary *CCBLEND_DISABLED_OPTIONS;
 @end
 
 
-@interface CCRenderState(){
-	@public
-	BOOL _immutable;
-	CCBlendMode *_blendMode;
-	CCShader *_shader;
-	NSDictionary *_shaderUniforms;
-}
-
-/// Remove unused render states from the internal cache.
-/// This is might be made public in the future.
-+(void)flushCache;
-
--(void)transitionRenderer:(CCRenderer *)renderer FromState:(CCRenderState *)previous;
-
-@end
-
-
 typedef NS_ENUM(NSUInteger, CCRenderCommandDrawMode){
 	CCRenderCommandDrawTriangles,
 	CCRenderCommandDrawLines,
@@ -119,84 +103,6 @@ typedef NS_ENUM(NSUInteger, CCRenderCommandDrawMode){
 -(instancetype)initWithMode:(CCRenderCommandDrawMode)mode renderState:(CCRenderState *)renderState first:(NSUInteger)first count:(size_t)count globalSortOrder:(NSInteger)globalSortOrder;
 
 -(void)batch:(NSUInteger)count;
-
-@end
-
-
-/// Type of a CCGraphicsBuffer object.
-typedef NS_ENUM(NSUInteger, CCGraphicsBufferType){
-	CCGraphicsBufferTypeVertex,
-	CCGraphicsBufferTypeIndex,
-	CCGraphicsBufferTypeUniform,
-};
-
-
-/// Internal class used to abstract GPU buffers. (vertex, index buffers, etc)
-/// This is an abstract class instead of a protocol because of CCGraphicsBufferPushElements().
-@interface CCGraphicsBuffer : NSObject{
-	@public
-	/// Elements currently in the buffer.
-	size_t _count;
-	/// Element capacity of the buffer.
-	size_t _capacity;
-	/// Size in bytes of elements in the buffer.
-	size_t _elementSize;
-	
-	/// Pointer to the buffer memory.
-	/// Only valid between prepare and commmit method calls.
-	void *_ptr;
-}
-
--(instancetype)initWithCapacity:(NSUInteger)capacity elementSize:(size_t)elementSize type:(CCGraphicsBufferType)type;
--(void)resize:(size_t)newCapacity;
-
--(void)destroy;
-
--(void)prepare;
--(void)commit;
-
-@end
-
-
-/// Return a pointer to an array of elements that is 'requestedCount' in size.
-/// The buffer is resized by calling [CCGraphicsBuffer resize:] if necessary.
-static inline void *
-CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount)
-{
-	NSCAssert(requestedCount > 0, @"Requested count must be positive.");
-	
-	size_t required = buffer->_count + requestedCount;
-	size_t capacity = buffer->_capacity;
-	if(required > capacity){
-		// Why 1.5? https://github.com/facebook/folly/blob/master/folly/docs/FBVector.md
-		CCRenderDispatch(NO, ^{[buffer resize:required*1.5];});
-	}
-	
-	void *array = buffer->_ptr + buffer->_count*buffer->_elementSize;
-	buffer->_count += requestedCount;
-	
-	return array;
-}
-
-
-/// Internal abstract class used to wrap vertex buffer state. (GL VAOs, etc)
-@interface CCGraphicsBufferBindings : NSObject {
-	@public
-	CCGraphicsBuffer *_vertexBuffer;
-	CCGraphicsBuffer *_indexBuffer;
-	
-	// Not used by the GL2 renderer.
-	CCGraphicsBuffer *_uniformBuffer;
-}
-
-/// Make the buffers ready to use by drawing commands.
--(void)bind:(BOOL)bind;
-
-/// Prepare buffers for changes.
--(void)prepare;
-
-/// Commit changes to buffers.
--(void)commit;
 
 @end
 
