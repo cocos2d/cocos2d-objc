@@ -1906,15 +1906,15 @@
 				D34CAD6519C3A7A5009BED7A /* CCRendererBasicTypes.h */,
 				D34CAD6A19C3AA10009BED7A /* CCRendererBasicTypes_Private.h */,
 				D34CAD6819C3A7B3009BED7A /* CCRendererBasicTypes.m */,
-				D38058181889AD6000822437 /* CCRenderer.h */,
-				D309054F18AC23110081BF11 /* CCRenderer_Private.h */,
-				D38058191889AD6000822437 /* CCRenderer.m */,
-				D36DFA2719996EC500DEC135 /* CCRendererGLSupport.m */,
 				E0BC7D9B1342CE7B001B4DCC /* CCShader.h */,
 				D39FA9C718C1BC6B00441627 /* CCShader_Private.h */,
 				E0BC7D9C1342CE7B001B4DCC /* CCShader.m */,
 				D34CAD5F19C3A0B5009BED7A /* NSValue+CCRenderer.h */,
 				D34CAD6219C3A0FD009BED7A /* NSValue+CCRenderer.m */,
+				D38058181889AD6000822437 /* CCRenderer.h */,
+				D309054F18AC23110081BF11 /* CCRenderer_Private.h */,
+				D38058191889AD6000822437 /* CCRenderer.m */,
+				D36DFA2719996EC500DEC135 /* CCRendererGLSupport.m */,
 			);
 			name = Rendering;
 			sourceTree = "<group>";

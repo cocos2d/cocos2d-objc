@@ -266,7 +266,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	}
 }
 
--(void)prepareWithProjection:(const GLKMatrix4 *)projection viewSize:(CGSize)viewSize contentScale:(CGFloat)contentScale;
+-(void)prepareWithProjection:(const GLKMatrix4 *)projection framebuffer:(CCFrameBufferObject *)framebuffer
 {
 	CCDirector *director = [CCDirector sharedDirector];
 	
@@ -282,12 +282,13 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	globalShaderUniforms[CCShaderUniformProjection] = [NSValue valueWithGLKMatrix4:globals.projection];
 	globalShaderUniforms[CCShaderUniformProjectionInv] = [NSValue valueWithGLKMatrix4:globals.projectionInv];
 	
-	globals.viewSize = GLKVector2Make(viewSize.width, viewSize.height);
-	globalShaderUniforms[CCShaderUniformViewSize] = [NSValue valueWithGLKVector2:globals.viewSize];
-	
-	CGSize pixelSize = viewSize;//CC_SIZE_SCALE(viewSize, contentScale);
+	CGSize pixelSize = framebuffer.sizeInPixels;
 	globals.viewSizeInPixels = GLKVector2Make(pixelSize.width, pixelSize.height);
 	globalShaderUniforms[CCShaderUniformViewSizeInPixels] = [NSValue valueWithGLKVector2:globals.viewSizeInPixels];
+	
+	float coef = 1.0/framebuffer.contentScale;
+	globals.viewSize = GLKVector2Make(coef*pixelSize.width, coef*pixelSize.height);
+	globalShaderUniforms[CCShaderUniformViewSize] = [NSValue valueWithGLKVector2:globals.viewSize];
 	
 	CCTime t = director.scheduler.currentTime;
 	globals.time = GLKVector4Make(t, t/2.0f, t/8.0f, t/8.0f);
@@ -324,7 +325,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 		_globalShaderUniformBufferOffsets = offsets;
 	}
 	
-	#warning Bind FBO.
+	_framebuffer = framebuffer;
 }
 
 //Implemented in CCNoARC.m
@@ -396,6 +397,8 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 {
 	CCRENDERER_DEBUG_PUSH_GROUP_MARKER(@"CCRenderer: Flush");
 	
+	[_framebuffer bind];
+	
 	// Commit the buffers.
 	[_buffers commit];
 		
@@ -415,6 +418,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	// Reset the renderer's state.
 	[self invalidateState];
 	_threadsafe = YES;
+	_framebuffer = nil;
 }
 
 @end

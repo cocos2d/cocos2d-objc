@@ -104,7 +104,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
  */
 @interface CCGLView : UIView <CCDirectorView>
 {
-    id<CCESRenderer>		_renderer;
+	#warning TEMP
+	@public
+	
+	id<CCESRenderer>		_renderer;
 	EAGLContext *_context; // weak ref
 
 	NSString *_pixelformat;

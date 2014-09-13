@@ -96,7 +96,9 @@ extern NSString * cocos2dVersion(void);
 -(void) calculateMPF;
 @end
 
-@implementation CCDirector
+@implementation CCDirector {
+	CCFrameBufferObject *_framebuffer;
+}
 
 @synthesize animationInterval = _animationInterval;
 @synthesize runningScene = _runningScene;
@@ -200,6 +202,8 @@ static CCDirector *_sharedDirector = nil;
 		
 		_rendererPool = [NSMutableArray array];
 		_globalShaderUniforms = [NSMutableDictionary dictionary];
+		
+		_framebuffer = [[CCFrameBufferObject alloc] init];
 	}
 
 	return self;
@@ -237,8 +241,11 @@ static CCDirector *_sharedDirector = nil;
 	if(CCRenderDispatchBeginFrame()){
 		GLKMatrix4 projection = self.projectionMatrix;
 		
+		// Synchronize the framebuffer with the view.
+		[_framebuffer syncWithView:self.view];
+		
 		CCRenderer *renderer = [self rendererFromPool];
-		[renderer prepareWithProjection:&projection viewSize:self.viewSize contentScale:self.contentScaleFactor];
+		[renderer prepareWithProjection:&projection framebuffer:_framebuffer];
 		[CCRenderer bindRenderer:renderer];
 		
 		[renderer enqueueClear:(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) color:_runningScene.colorRGBA.glkVector4 depth:1.0f stencil:0 globalSortOrder:NSIntegerMin];

@@ -114,3 +114,28 @@ CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount)
 -(void)commit;
 
 @end
+
+
+#warning TODO make me abstract!
+@interface CCFrameBufferObject : NSObject {
+	CCTexture *_texture;
+	
+	CGSize _sizeInPixels;
+	CGFloat _contentScale;
+	
+	GLuint _fbo;
+	GLuint _depthRenderBuffer;
+	GLuint _stencilRenderBuffer;
+}
+
+@property(nonatomic, readonly) CGSize sizeInPixels;
+@property(nonatomic, readonly) CGFloat contentScale;
+
+-(instancetype)initWithTexture:(CCTexture *)texture depthStencilFormat:(GLuint)depthStencilFormat;
+
+-(void)syncWithView:(CC_VIEW<CCDirectorView> *)view;
+
+#warning TODO bind with clear.
+-(void)bind;
+
+@end

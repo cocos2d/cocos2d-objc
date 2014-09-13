@@ -111,6 +111,8 @@ typedef NS_ENUM(NSUInteger, CCRenderCommandDrawMode){
 	@public
 	CCGraphicsBufferBindings *_buffers;
 	
+	CCFrameBufferObject *_framebuffer;
+	
 	NSDictionary *_globalShaderUniforms;
 	NSDictionary *_globalShaderUniformBufferOffsets;
 	
@@ -144,7 +146,7 @@ typedef NS_ENUM(NSUInteger, CCRenderCommandDrawMode){
 
 @interface CCRenderer(NoARCPrivate)
 
--(void)prepareWithProjection:(const GLKMatrix4 *)projection viewSize:(CGSize)viewSize contentScale:(CGFloat)contentScale;
+-(void)prepareWithProjection:(const GLKMatrix4 *)projection framebuffer:(CCFrameBufferObject *)framebuffer;
 
 -(void)setRenderState:(CCRenderState *)renderState;
 
