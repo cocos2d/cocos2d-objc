@@ -367,9 +367,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 				GLenum attachments[] = {GL_COLOR_ATTACHMENT0};
 				glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 1, attachments);
 			}
-            
-			glBindRenderbuffer(GL_RENDERBUFFER, [_renderer colorRenderBuffer]);
-            
 		}
         
 		// not MSAA
@@ -379,13 +376,17 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		}
 	}
     
-	if(![_context presentRenderbuffer:GL_RENDERBUFFER])
+	glBindRenderbuffer(GL_RENDERBUFFER, [_renderer colorRenderBuffer]);
+	
+	if(![_context presentRenderbuffer:GL_RENDERBUFFER]){
 		CCLOG(@"cocos2d: Failed to swap renderbuffer in %s\n", __FUNCTION__);
+	}
     
 	// We can safely re-bind the framebuffer here, since this will be the
 	// 1st instruction of the new main loop
-	if( _multiSampling )
+	if( _multiSampling ){
 		glBindFramebuffer(GL_FRAMEBUFFER, [_renderer msaaFrameBuffer]);
+	}
 	
 	// Check the fences for completion.
 	for(CCGLViewFence *fence in _fences){
