@@ -43,6 +43,7 @@ Class CCGraphicsBufferClass;
 Class CCGraphicsBufferBindingsClass;
 Class CCRenderStateClass;
 Class CCRenderCommandDrawClass;
+Class CCFrameBufferObjectClass;
 
 NSString* const CCSetupPixelFormat = @"CCSetupPixelFormat";
 NSString* const CCSetupScreenMode = @"CCSetupScreenMode";
@@ -143,6 +144,7 @@ static char * glExtensions;
 			CCGraphicsBufferBindingsClass = NSClassFromString(@"CCGraphicsBufferBindingsMetal");
 			CCRenderStateClass = NSClassFromString(@"CCRenderStateMetal");
 			CCRenderCommandDrawClass = NSClassFromString(@"CCRenderCommandDrawMetal");
+			CCFrameBufferObjectClass = NSClassFromString(@"CCFrameBufferObjectMetal");
 			
 			_graphicsAPI = CCGraphicsAPIMetal;
 		} else
@@ -152,6 +154,7 @@ static char * glExtensions;
 			CCGraphicsBufferBindingsClass = NSClassFromString(@"CCGraphicsBufferBindingsGL");
 			CCRenderStateClass = NSClassFromString(@"CCRenderStateGL");
 			CCRenderCommandDrawClass = NSClassFromString(@"CCRenderCommandDrawGL");
+			CCFrameBufferObjectClass = NSClassFromString(@"CCFrameBufferObjectGL");
 			
 			_graphicsAPI = CCGraphicsAPIGL;
 		}
@@ -160,6 +163,7 @@ static char * glExtensions;
 		NSAssert(CCGraphicsBufferBindingsClass, @"CCGraphicsBufferBindingsClass not configured.");
 		NSAssert(CCRenderStateClass, @"CCRenderStateClass not configured.");
 		NSAssert(CCRenderCommandDrawClass, @"CCRenderCommandDrawClass not configured.");
+		NSAssert(CCFrameBufferObjectClass, @"CCFrameBufferObjectClass not configured.");
 	}
 	
 	return _graphicsAPI;

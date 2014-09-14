@@ -203,7 +203,7 @@ static CCDirector *_sharedDirector = nil;
 		_rendererPool = [NSMutableArray array];
 		_globalShaderUniforms = [NSMutableDictionary dictionary];
 		
-		_framebuffer = [[CCFrameBufferObject alloc] init];
+		_framebuffer = [[CCFrameBufferObjectClass alloc] init];
 	}
 
 	return self;

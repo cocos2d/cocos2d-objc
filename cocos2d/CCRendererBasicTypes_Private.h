@@ -116,20 +116,13 @@ CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount)
 @end
 
 
-#warning TODO make me abstract!
 @interface CCFrameBufferObject : NSObject {
 	CCTexture *_texture;
-	
-	CGSize _sizeInPixels;
-	CGFloat _contentScale;
-	
-	GLuint _fbo;
-	GLuint _depthRenderBuffer;
-	GLuint _stencilRenderBuffer;
 }
 
-@property(nonatomic, readonly) CGSize sizeInPixels;
-@property(nonatomic, readonly) CGFloat contentScale;
+// Setters should be treated as protected.
+@property(nonatomic, assign) CGSize sizeInPixels;
+@property(nonatomic, assign) CGFloat contentScale;
 
 -(instancetype)initWithTexture:(CCTexture *)texture depthStencilFormat:(GLuint)depthStencilFormat;
 

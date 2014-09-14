@@ -31,6 +31,7 @@ extern Class CCGraphicsBufferClass;
 extern Class CCGraphicsBufferBindingsClass;
 extern Class CCRenderStateClass;
 extern Class CCRenderCommandDrawClass;
+extern Class CCFrameBufferObjectClass;
 
 extern NSString* const CCSetupPixelFormat;
 extern NSString* const CCSetupScreenMode;

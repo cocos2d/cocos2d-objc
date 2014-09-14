@@ -177,7 +177,7 @@
 	// Render textures are nearest filtered for legacy reasons.
 	self.texture.antialiased = NO;
 	
-	_framebuffer = [[CCFrameBufferObject alloc] initWithTexture:texture depthStencilFormat:_depthStencilFormat];
+	_framebuffer = [[CCFrameBufferObjectClass alloc] initWithTexture:texture depthStencilFormat:_depthStencilFormat];
 	
     // XXX Thayer says: I think this is incorrect for any situations where the content
     // size type isn't (points, points). The call to setTextureRect below eventually arrives

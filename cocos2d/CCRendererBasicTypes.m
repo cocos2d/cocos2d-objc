@@ -428,128 +428,15 @@ static CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 		
 		_sizeInPixels = texture.contentSizeInPixels;
 		_contentScale = texture.contentScale;
-		
-		CCRenderDispatch(NO, ^{
-			CCGL_DEBUG_PUSH_GROUP_MARKER("CCRenderTexture: Create");
-			
-			// generate FBO
-			glGenFramebuffers(1, &_fbo);
-			glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
-			
-			// associate texture with FBO
-			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.name, 0);
-			
-			CGSize sizeInPixels = texture.contentSizeInPixels;
-			GLuint width = ceil(sizeInPixels.width);
-			GLuint height = ceil(sizeInPixels.height);
-
-#if __CC_PLATFORM_ANDROID
-			
-			// Some android devices *only* support combined depth buffers (like all iOS devices), some android devices do not
-			// support combined depth buffers, thus we have to create a seperate stencil buffer
-			if(_depthStencilFormat)
-			{
-					//create and attach depth buffer
-			
-					if(![[CCConfiguration sharedConfiguration] supportsPackedDepthStencil])
-					{
-							glGenRenderbuffers(1, &depthRenderBuffer);
-							glBindRenderbuffer(GL_RENDERBUFFER, depthRenderBuffer);
-							glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, width, height); //GL_DEPTH_COMPONENT24_OES
-							glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthRenderBuffer);
-
-							// if depth format is the one with stencil part, bind same render buffer as stencil attachment
-							if(_depthStencilFormat == GL_DEPTH24_STENCIL8)
-							{
-									glGenRenderbuffers(1, &stencilRenderBuffer);
-									glBindRenderbuffer(GL_RENDERBUFFER, stencilRenderBuffer);
-									glRenderbufferStorage(GL_RENDERBUFFER, GL_STENCIL_INDEX8, width, powH);
-									glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, stencilRenderBuffer);
-							}
-					}
-					else
-					{
-							glGenRenderbuffers(1, &depthRenderBuffer);
-							glBindRenderbuffer(GL_RENDERBUFFER, depthRenderBuffer);
-							glRenderbufferStorage(GL_RENDERBUFFER, _depthStencilFormat, width, height);
-							glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthRenderBuffer);
-							
-							// if depth format is the one with stencil part, bind same render buffer as stencil attachment
-							if(_depthStencilFormat == GL_DEPTH24_STENCIL8){
-									glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depthRenderBuffer);
-							}
-					}
-			}
-			
-#else
-			
-			if(depthStencilFormat){
-				//create and attach depth buffer
-				glGenRenderbuffers(1, &_depthRenderBuffer);
-				glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBuffer);
-				glRenderbufferStorage(GL_RENDERBUFFER, depthStencilFormat, width, height);
-				glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
-
-				// associate texture with FBO
-				glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.name, 0);
-
-				if(depthStencilFormat){
-					//create and attach depth buffer
-					glGenRenderbuffers(1, &_depthRenderBuffer);
-					glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBuffer);
-					glRenderbufferStorage(GL_RENDERBUFFER, depthStencilFormat, width, height);
-					glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
-
-					// if depth format is the one with stencil part, bind same render buffer as stencil attachment
-					if(depthStencilFormat == GL_DEPTH24_STENCIL8){
-						glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
-					}
-				}
-			}
-			
-#endif
-		
-			// check if it worked (probably worth doing :) )
-			NSAssert( glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, @"Could not attach texture to framebuffer");
-						
-			CCGL_DEBUG_POP_GROUP_MARKER();
-			CC_CHECK_GL_ERROR_DEBUG();
-		});
 	}
+	
 	return self;
 }
 
--(void)dealloc
-{
-	GLuint fbo = _fbo;
-	GLuint depthRenderBuffer = _depthRenderBuffer;
-	GLuint stencilRenderBuffer = _stencilRenderBuffer;
-	
-	CCRenderDispatch(YES, ^{
-		glDeleteFramebuffers(1, &fbo);
-		
-		if(depthRenderBuffer){
-			glDeleteRenderbuffers(1, &depthRenderBuffer);
-		}
-		
-		if(depthRenderBuffer){
-			glDeleteRenderbuffers(1, &stencilRenderBuffer);
-		}
-	});
-}
-
 -(void)bind
-{
-	glViewport(0, 0, _sizeInPixels.width, _sizeInPixels.height);
-	glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
-}
+{NSAssert(NO, @"Must be overridden.");}
 
 -(void)syncWithView:(CC_VIEW<CCDirectorView> *)view;
-{
-	CCGLView *glView = (CCGLView *)view;
-	_contentScale = view.contentScaleFactor;
-	_sizeInPixels = CC_SIZE_SCALE(view.bounds.size, _contentScale);
-	_fbo = glView->_renderer.defaultFrameBuffer;
-}
+{NSAssert(NO, @"Must be overridden.");}
 
 @end
