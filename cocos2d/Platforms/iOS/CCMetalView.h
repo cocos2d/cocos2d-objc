@@ -9,6 +9,8 @@
 
 @interface CCMetalView : UIView<CCDirectorView>
 
+@property(nonatomic, readonly, strong) id<MTLTexture> destinationTexture;
+
 /** returns surface size in pixels */
 @property(nonatomic,readonly) CGSize surfaceSize;
 

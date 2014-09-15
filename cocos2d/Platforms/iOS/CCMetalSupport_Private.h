@@ -66,14 +66,14 @@
 @property(nonatomic, readonly) id<MTLCommandQueue> commandQueue;
 @property(nonatomic, readonly) id<MTLCommandBuffer> currentCommandBuffer;
 
-@property(nonatomic, strong) id<MTLTexture> destinationTexture;
 @property(nonatomic, readonly) id<MTLRenderCommandEncoder> currentRenderCommandEncoder;
 
 +(instancetype)currentContext;
 +(void)setCurrentContext:(CCMetalContext *)context;
 
--(void)prepareCommandBuffer;
--(void)commitCurrentCommandBuffer;
+-(void)beginRenderPass:(id<MTLTexture>)destinationTexture;
+
+-(void)flushCommandBuffer;
 
 @end
 
@@ -97,5 +97,11 @@
 @interface CCRenderCommandDrawMetal : CCRenderCommandDraw
 @end
 
+
+@interface CCFrameBufferObjectMetal : CCFrameBufferObject
+
+@property(nonatomic, strong) id<MTLTexture> frameBufferTexture;
+
+@end
 
 #endif

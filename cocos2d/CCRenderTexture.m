@@ -127,7 +127,6 @@
 		_pixelFormat = format;
 		_depthStencilFormat = depthStencilFormat;
 
-		// Flip the projection matrix on the y-axis since Cocos2D uses upside down textures.
 		_projection = GLKMatrix4MakeOrtho(0.0f, width, 0.0f, height, -1024.0f, 1024.0f);
 		
 		CCRenderTextureSprite *rtSprite = [CCRenderTextureSprite spriteWithTexture:[CCTexture none]];
@@ -230,8 +229,17 @@
 		texture = self.texture;
 	}
 	
+	GLKMatrix4 projection = _projection;
+	
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+		// Metal texture coordinates are inverted compared to GL.
+		projection = GLKMatrix4Multiply(GLKMatrix4MakeScale(1.0, -1.0, 1.0), projection);
+	}
+#endif
+	
 	CCRenderer *renderer = [[CCDirector sharedDirector] rendererFromPool];
-	[renderer prepareWithProjection:&_projection framebuffer:_framebuffer];
+	[renderer prepareWithProjection:&projection framebuffer:_framebuffer];
 	
 	_previousRenderer = [CCRenderer currentRenderer];
 	[CCRenderer bindRenderer:renderer];

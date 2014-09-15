@@ -141,14 +141,6 @@
 		_layerSizeDidUpdate = NO;
 	}
 	
-	[_context prepareCommandBuffer];
-	
-	// Prevent the block from retaining self via the ivar.
-	dispatch_semaphore_t sema = _queuedFramesSemaphore;
-	[_context.currentCommandBuffer addCompletedHandler:^(id<MTLCommandBuffer> buffer){
-		dispatch_semaphore_signal(sema);
-	}];
-	
 //	id<CAMetalDrawable> drawable = nil;
 //	while(drawable == nil){
 //		drawable = [self.metalLayer nextDrawable];
@@ -160,12 +152,20 @@
 	[_context.currentCommandBuffer presentDrawable:drawable];
 	
 	_currentDrawable = drawable;
-	_context.destinationTexture = drawable.texture;
+	_destinationTexture = drawable.texture;
 }
 
 - (void)presentFrame
 {
-	[_context commitCurrentCommandBuffer];
+	// Prevent the block from retaining self via the ivar.
+	dispatch_semaphore_t sema = _queuedFramesSemaphore;
+	[_context.currentCommandBuffer addCompletedHandler:^(id<MTLCommandBuffer> buffer){
+		dispatch_semaphore_signal(sema);
+	}];
+	
+	[_context flushCommandBuffer];
+	
+	[_currentDrawable present];
 	_currentDrawable = nil;
 }
 

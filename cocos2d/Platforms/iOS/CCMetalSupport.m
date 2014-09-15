@@ -26,10 +26,13 @@
 #import "CCMetalSupport_Private.h"
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 
+#import "CCMetalView.h"
 #import "CCTexture_Private.h"
 #import "CCShader_Private.h"
 
-@implementation CCMetalContext
+@implementation CCMetalContext {
+	id<MTLTexture> _destinationTexture;
+}
 
 -(instancetype)init
 {
@@ -60,35 +63,37 @@ static NSString *CURRENT_CONTEXT_KEY = @"CURRENT_CONTEXT_KEY";
 	}
 }
 
--(void)setDestinationTexture:(id<MTLTexture>)destinationTexture
-{
-	if(_destinationTexture != destinationTexture){
-		MTLRenderPassColorAttachmentDescriptor *colorAttachment = [MTLRenderPassColorAttachmentDescriptor new];
-		colorAttachment.texture = destinationTexture;
-		colorAttachment.loadAction = MTLLoadActionClear;
-		colorAttachment.clearColor = MTLClearColorMake(0, 0, 0, 0);
-		colorAttachment.storeAction = MTLStoreActionStore;
-
-		MTLRenderPassDescriptor *renderPassDescriptor = [MTLRenderPassDescriptor renderPassDescriptor];
-		renderPassDescriptor.colorAttachments[0] = colorAttachment;
-
-		_currentRenderCommandEncoder = [self.currentCommandBuffer renderCommandEncoderWithDescriptor:renderPassDescriptor];
-		_destinationTexture = destinationTexture;
-	}
-}
-
--(void)prepareCommandBuffer
-{
-	_currentCommandBuffer = [_commandQueue commandBuffer];
-	_currentCommandBuffer.label = @"Main Cocos2D Command Buffer";
-}
-
--(void)commitCurrentCommandBuffer
+-(void)endRenderPass
 {
 	[_currentRenderCommandEncoder endEncoding];
+	_currentRenderCommandEncoder = nil;
+}
+
+-(void)beginRenderPass:(id<MTLTexture>)destinationTexture;
+{
+	// End the previous render pass.
+	[self endRenderPass];
 	
+	MTLRenderPassColorAttachmentDescriptor *colorAttachment = [MTLRenderPassColorAttachmentDescriptor new];
+	colorAttachment.texture = destinationTexture;
+	colorAttachment.loadAction = MTLLoadActionClear;
+	colorAttachment.clearColor = MTLClearColorMake(0, 0, 0, 0);
+	colorAttachment.storeAction = MTLStoreActionStore;
+
+	MTLRenderPassDescriptor *renderPassDescriptor = [MTLRenderPassDescriptor renderPassDescriptor];
+	renderPassDescriptor.colorAttachments[0] = colorAttachment;
+
+	_currentRenderCommandEncoder = [_currentCommandBuffer renderCommandEncoderWithDescriptor:renderPassDescriptor];
+	_destinationTexture = destinationTexture;
+}
+
+-(void)flushCommandBuffer
+{
+	[self endRenderPass];
 	[_currentCommandBuffer commit];
-	_currentCommandBuffer = nil;
+	
+	_currentCommandBuffer = [_commandQueue commandBuffer];
+	_currentCommandBuffer.label = @"Main Cocos2D Command Buffer";
 }
 
 @end
@@ -152,6 +157,36 @@ static NSString *CURRENT_CONTEXT_KEY = @"CURRENT_CONTEXT_KEY";
 	}
 	
 	return self;
+}
+
+@end
+
+
+@implementation CCFrameBufferObjectMetal
+
+-(instancetype)initWithTexture:(CCTexture *)texture depthStencilFormat:(GLuint)depthStencilFormat
+{
+	if((self = [super initWithTexture:texture depthStencilFormat:depthStencilFormat])){
+		self.sizeInPixels = texture.contentSizeInPixels;
+		self.contentScale = texture.contentScale;
+		_frameBufferTexture = texture.metalTexture;
+	}
+	
+	return self;
+}
+
+-(void)bind
+{
+	[[CCMetalContext currentContext] beginRenderPass:_frameBufferTexture];
+}
+
+-(void)syncWithView:(CC_VIEW<CCDirectorView> *)view;
+{
+	CCMetalView *metalView = (CCMetalView *)view;
+	self.sizeInPixels = CC_SIZE_SCALE(view.bounds.size, view.contentScaleFactor);
+	self.contentScale = view.contentScaleFactor;
+	
+	_frameBufferTexture = metalView.destinationTexture;
 }
 
 @end
