@@ -570,6 +570,7 @@
 		E0F924721224140400EF2362 /* CCTexturePVR.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F924701224140400EF2362 /* CCTexturePVR.m */; };
 		E0F92AC41224559800EF2362 /* CCNS.h in Headers */ = {isa = PBXBuildFile; fileRef = E0F92AC31224559800EF2362 /* CCNS.h */; };
 		FC39962219C3BBCF00C93E5E /* libObjectAL (Android).a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC39961F19C3B92F00C93E5E /* libObjectAL (Android).a */; };
+		FC64014019C79716003E595A /* libObjectAL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC39961B19C3B92F00C93E5E /* libObjectAL.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -621,6 +622,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = FC3995B019C3B80E00C93E5E;
 			remoteInfo = "ObjectAL (Android)";
+		};
+		FCFDA23D19C78E2D00B90910 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FC39961319C3B92F00C93E5E /* ObjectAL.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CBBAB311171D0B84009B955F;
+			remoteInfo = "ObjectAL (iOS)";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -974,6 +982,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC64014019C79716003E595A /* libObjectAL.a in Frameworks */,
 				D3903B1A19952ABD003AA81A /* Metal.framework in Frameworks */,
 				D24FAEEC198014B90043E27D /* GLKit.framework in Frameworks */,
 				D28A2E211954F85700ADC03D /* AVFoundation.framework in Frameworks */,
@@ -1991,6 +2000,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				FCFDA23E19C78E2D00B90910 /* PBXTargetDependency */,
 				B759E5321880C70A00E8166C /* PBXTargetDependency */,
 			);
 			name = cocos2d;
@@ -2417,6 +2427,11 @@
 			isa = PBXTargetDependency;
 			name = "ObjectAL (Android)";
 			targetProxy = FC39962019C3BB3A00C93E5E /* PBXContainerItemProxy */;
+		};
+		FCFDA23E19C78E2D00B90910 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "ObjectAL (iOS)";
+			targetProxy = FCFDA23D19C78E2D00B90910 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
