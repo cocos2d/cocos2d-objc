@@ -380,7 +380,7 @@ static const CCGraphicsBufferType CCGraphicsBufferGLTypes[] = {
 	self.contentScale = view.contentScaleFactor;
 	
 	#warning TODO does this need to handle MSAA specially?
-	_fbo = glView->_renderer.defaultFrameBuffer;
+	_fbo = glView.defaultFramebuffer;
 }
 
 @end

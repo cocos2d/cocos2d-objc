@@ -72,7 +72,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
 
-#import "CCESRenderer.h"
 #import "CCDirectorView.h"
 
 
@@ -104,13 +103,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
  */
 @interface CCGLView : UIView <CCDirectorView>
 {
-	#warning TEMP
-	@public
-	
-	id<CCESRenderer>		_renderer;
-	EAGLContext *_context; // weak ref
+	EAGLContext *_context;
 
-	NSString *_pixelformat;
+	NSString *_pixelFormat;
 	GLuint					_depthFormat;
 	BOOL					_preserveBackbuffer;
 
@@ -150,6 +145,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @property(nonatomic,readonly) EAGLContext *context;
 
 @property(nonatomic,readwrite) BOOL multiSampling;
+
+@property(nonatomic, readonly) GLuint defaultFramebuffer;
 
 @end
 

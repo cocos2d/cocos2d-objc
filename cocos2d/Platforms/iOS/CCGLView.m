@@ -73,7 +73,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import <QuartzCore/QuartzCore.h>
 
 #import "CCGLView.h"
-#import "CCES2Renderer.h"
 #import "../../CCDirector.h"
 #import "../../ccMacros.h"
 #import "../../CCConfiguration.h"
@@ -82,6 +81,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "CCTouchEvent.h"
 
 #import "CCDirector_Private.h"
+#import "CCRenderDispatch.h"
 
 //CLASS IMPLEMENTATIONS:
 
@@ -150,12 +150,18 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @implementation CCGLView {
     CCTouchEvent* _touchEvent;
 	NSMutableArray *_fences;
+	
+	GLuint _depthBuffer;
+	GLuint _colorRenderbuffer;
+	GLuint _defaultFramebuffer;
+	
+	GLuint	_msaaSamples;
+	GLuint _msaaFramebuffer;
+	GLuint _msaaColorbuffer;
+	
+	GLint _backingWidth;
+	GLint _backingHeight;
 }
-
-@synthesize surfaceSize=_size;
-@synthesize pixelFormat=_pixelformat, depthFormat=_depthFormat;
-@synthesize context=_context;
-@synthesize multiSampling=_multiSampling;
 
 + (Class) layerClass
 {
@@ -196,7 +202,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 {
 	if((self = [super initWithFrame:frame]))
 	{
-		_pixelformat = format;
+		_pixelFormat = format;
 		_depthFormat = depth;
 		_multiSampling = sampling;
 		_requestedSamples = nSamples;
@@ -227,7 +233,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 		CAEAGLLayer* eaglLayer = (CAEAGLLayer*)[self layer];
 
-		_pixelformat = kEAGLColorFormatRGB565;
+		_pixelFormat = kEAGLColorFormatRGB565;
 		_depthFormat = 0; // GL_DEPTH_COMPONENT24;
 		_multiSampling= NO;
 		_requestedSamples = 0;
@@ -250,23 +256,43 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	eaglLayer.opaque = YES;
 	eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
 									[NSNumber numberWithBool:_preserveBackbuffer], kEAGLDrawablePropertyRetainedBacking,
-									_pixelformat, kEAGLDrawablePropertyColorFormat, nil];
+									_pixelFormat, kEAGLDrawablePropertyColorFormat, nil];
 
 	// ES2 renderer only
-	_renderer = [[CCES2Renderer alloc] initWithDepthFormat:_depthFormat
-										 withPixelFormat:[self convertPixelFormat:_pixelformat]
-										  withSharegroup:sharegroup
-									   withMultiSampling:_multiSampling
-									 withNumberOfSamples:_requestedSamples];
+#if CC_RENDER_DISPATCH_ENABLED
+	_context = CCRenderDispatchSetupGL(kEAGLRenderingAPIOpenGLES2, sharegroup);
+#else
+	_context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2 sharegroup:sharegroup];
+	
+	if(!_context || ![EAGLContext setCurrentContext:_context]){
+		return nil;
+	}
+#endif
+	
+	CCRenderDispatch(NO, ^{
+		// Create default framebuffer object. The backing will be allocated for the current layer in -resizeFromLayer
+		glGenFramebuffers(1, &_defaultFramebuffer);
 
-	NSAssert( _renderer, @"OpenGL ES 2.0 is required");
+		glGenRenderbuffers(1, &_colorRenderbuffer);
 
-	if (!_renderer)
-		return NO;
+		glBindFramebuffer(GL_FRAMEBUFFER, _defaultFramebuffer);
+		glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderbuffer);
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, _colorRenderbuffer);
 
-	_context = [_renderer context];
+		if (_multiSampling){
+			GLint maxSamplesAllowed;
+			glGetIntegerv(GL_MAX_SAMPLES_APPLE, &maxSamplesAllowed);
+			_msaaSamples = MIN(maxSamplesAllowed, _requestedSamples);
 
-    _discardFramebufferSupported = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
+			/* Create the MSAA framebuffer (offscreen) */
+			glGenFramebuffers(1, &_msaaFramebuffer);
+			glBindFramebuffer(GL_FRAMEBUFFER, _msaaFramebuffer);
+		}
+
+		CC_CHECK_GL_ERROR_DEBUG();
+	});
+	
+	_discardFramebufferSupported = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
 
 	CC_CHECK_GL_ERROR_DEBUG();
 
@@ -279,11 +305,61 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 }
 
+-(void)resizeFromLayer:(CAEAGLLayer *)layer
+{
+	CCRenderDispatch(NO, ^{
+		glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderbuffer);
+
+		// Allocate color buffer backing based on the current layer size
+		BOOL rb_status = [_context renderbufferStorage:GL_RENDERBUFFER fromDrawable:layer];
+		NSAssert(rb_status, @"Failed to create renderbuffer.");
+
+		glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &_backingWidth);
+		glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &_backingHeight);
+
+		CCLOG(@"cocos2d: surface size: %dx%d", (int)_backingWidth, (int)_backingHeight);
+
+		if(_multiSampling){
+			glDeleteRenderbuffers(1, &_msaaColorbuffer);
+			glGenRenderbuffers(1, &_msaaColorbuffer);
+			
+			glBindRenderbuffer(GL_RENDERBUFFER, _msaaColorbuffer);
+			glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, _msaaSamples, [self convertPixelFormat:_pixelFormat] , _backingWidth, _backingHeight);
+			
+			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, _msaaColorbuffer);
+		}
+
+		CC_CHECK_GL_ERROR_DEBUG();
+
+		if(_depthFormat){
+			glDeleteRenderbuffers(1, &_depthBuffer);
+			glGenRenderbuffers(1, &_depthBuffer);
+
+			glBindRenderbuffer(GL_RENDERBUFFER, _depthBuffer);
+			
+			if(_multiSampling){
+				glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, _msaaSamples, _depthFormat,_backingWidth, _backingHeight);
+			} else {
+				glRenderbufferStorage(GL_RENDERBUFFER, _depthFormat, _backingWidth, _backingHeight);
+			}
+			
+			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthBuffer);
+
+			if(_depthFormat == GL_DEPTH24_STENCIL8_OES){
+				glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _depthBuffer);
+			}
+		}
+		
+		GLenum fb_status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+		NSAssert(fb_status == GL_FRAMEBUFFER_COMPLETE, @"Failed to make complete framebuffer object 0x%X", fb_status);
+		CC_CHECK_GL_ERROR_DEBUG();
+	});
+}
+
 - (void) layoutSubviews
 {
-    [_renderer resizeFromLayer:(CAEAGLLayer*)self.layer];
-    
-	_size = [_renderer backingSize];
+	[self resizeFromLayer:(CAEAGLLayer*)self.layer];
+	_size = CGSizeMake( _backingWidth, _backingHeight);
     
 	// Issue #914 #924
 	CCDirector *director = [CCDirector sharedDirector];
@@ -348,8 +424,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	{
 		/* Resolve from msaaFramebuffer to resolveFramebuffer */
 		//glDisable(GL_SCISSOR_TEST);
-		glBindFramebuffer(GL_READ_FRAMEBUFFER_APPLE, [_renderer msaaFrameBuffer]);
-		glBindFramebuffer(GL_DRAW_FRAMEBUFFER_APPLE, [_renderer defaultFrameBuffer]);
+		glBindFramebuffer(GL_READ_FRAMEBUFFER_APPLE, _msaaFramebuffer);
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER_APPLE, _defaultFramebuffer);
 		glResolveMultisampleFramebufferAPPLE();
 	}
     
@@ -376,7 +452,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		}
 	}
     
-	glBindRenderbuffer(GL_RENDERBUFFER, [_renderer colorRenderBuffer]);
+	glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderbuffer);
 	
 	if(![_context presentRenderbuffer:GL_RENDERBUFFER]){
 		CCLOG(@"cocos2d: Failed to swap renderbuffer in %s\n", __FUNCTION__);
@@ -385,7 +461,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	// We can safely re-bind the framebuffer here, since this will be the
 	// 1st instruction of the new main loop
 	if( _multiSampling ){
-		glBindFramebuffer(GL_FRAMEBUFFER, [_renderer msaaFrameBuffer]);
+		glBindFramebuffer(GL_FRAMEBUFFER, _msaaFramebuffer);
 	}
 	
 	// Check the fences for completion.
@@ -401,18 +477,13 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	CC_CHECK_GL_ERROR_DEBUG();
 }
 
-- (unsigned int) convertPixelFormat:(NSString*) pixelFormat
+-(GLenum)convertPixelFormat:(NSString*)pixelFormat
 {
-	// define the pixel format
-	GLenum pFormat;
-
-
-	if([pixelFormat isEqualToString:@"EAGLColorFormat565"])
-		pFormat = GL_RGB565;
-	else
-		pFormat = GL_RGBA8_OES;
-
-	return pFormat;
+	if([pixelFormat isEqualToString:@"EAGLColorFormat565"]){
+		return GL_RGB565;
+	} else {
+		return GL_RGBA8_OES;
+	}
 }
 
 #pragma mark CCGLView - Touch Delegate

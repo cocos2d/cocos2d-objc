@@ -6,7 +6,6 @@
 #import <Metal/Metal.h>
 
 #import "CCMetalView.h"
-#import "CCES2Renderer.h"
 #import "../../CCDirector.h"
 #import "../../ccMacros.h"
 #import "../../CCConfiguration.h"
