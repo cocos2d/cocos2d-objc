@@ -9,3 +9,6 @@ url=https://github.com/spritebuilder/ogg.git
 	path = external/tremor
 url=https://github.com/spritebuilder/tremor.git
 	branch = apportable
+[submodule "external/SSZipArchive"]
+	path = external/SSZipArchive
+	url = https://github.com/spritebuilder/ssziparchive.git
