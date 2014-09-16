@@ -428,6 +428,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	[self invalidateState];
 	_threadsafe = YES;
 	_framebuffer = nil;
+	_clearMask = 0;
 }
 
 @end
