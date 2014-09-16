@@ -374,13 +374,11 @@ static const CCGraphicsBufferType CCGraphicsBufferGLTypes[] = {
 
 -(void)syncWithView:(CC_VIEW<CCDirectorView> *)view;
 {
-	#warning TODO this won't work for Mac. Need to expand the view protocol.
 	CCGLView *glView = (CCGLView *)view;
 	self.sizeInPixels = CC_SIZE_SCALE(view.bounds.size, view.contentScaleFactor);
 	self.contentScale = view.contentScaleFactor;
 	
-	#warning TODO does this need to handle MSAA specially?
-	_fbo = glView.defaultFramebuffer;
+	_fbo = glView.fbo;
 }
 
 @end

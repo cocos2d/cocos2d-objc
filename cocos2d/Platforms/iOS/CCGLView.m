@@ -148,9 +148,16 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @end
 
 @implementation CCGLView {
-    CCTouchEvent* _touchEvent;
+	CCTouchEvent* _touchEvent;
 	NSMutableArray *_fences;
 	
+	EAGLContext *_context;
+
+	NSString *_pixelFormat;
+	GLuint _depthFormat;
+	BOOL _preserveBackbuffer;
+	BOOL _discardFramebufferSupported;
+
 	GLuint _depthBuffer;
 	GLuint _colorRenderbuffer;
 	GLuint _defaultFramebuffer;
@@ -205,8 +212,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		_pixelFormat = format;
 		_depthFormat = depth;
 		_multiSampling = sampling;
-		_requestedSamples = nSamples;
 		_preserveBackbuffer = retained;
+		
+		GLint maxSamplesAllowed;
+		glGetIntegerv(GL_MAX_SAMPLES_APPLE, &maxSamplesAllowed);
+		_msaaSamples = MIN(maxSamplesAllowed, nSamples);
 		
 		// Default to "retina" being enabled.
 		self.contentScaleFactor = [UIScreen mainScreen].scale;
@@ -236,8 +246,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		_pixelFormat = kEAGLColorFormatRGB565;
 		_depthFormat = 0; // GL_DEPTH_COMPONENT24;
 		_multiSampling= NO;
-		_requestedSamples = 0;
-		_size = [eaglLayer bounds].size;
+		_msaaSamples = 0;
 
 		if( ! [self setupSurfaceWithSharegroup:nil] ) {
 			return nil;
@@ -280,10 +289,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, _colorRenderbuffer);
 
 		if (_multiSampling){
-			GLint maxSamplesAllowed;
-			glGetIntegerv(GL_MAX_SAMPLES_APPLE, &maxSamplesAllowed);
-			_msaaSamples = MIN(maxSamplesAllowed, _requestedSamples);
-
 			/* Create the MSAA framebuffer (offscreen) */
 			glGenFramebuffers(1, &_msaaFramebuffer);
 			glBindFramebuffer(GL_FRAMEBUFFER, _msaaFramebuffer);
@@ -359,11 +364,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 - (void) layoutSubviews
 {
 	[self resizeFromLayer:(CAEAGLLayer*)self.layer];
-	_size = CGSizeMake( _backingWidth, _backingHeight);
     
 	// Issue #914 #924
 	CCDirector *director = [CCDirector sharedDirector];
-	[director reshapeProjection:_size];
+	[director reshapeProjection:CGSizeMake( _backingWidth, _backingHeight)];
 
 	// Avoid flicker. Issue #350
 	// Only draw if there is something to draw, otherwise it actually creates a flicker of the current glClearColor
@@ -475,6 +479,15 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	}
 	
 	CC_CHECK_GL_ERROR_DEBUG();
+}
+
+-(GLuint)fbo
+{
+	if(_multiSampling){
+		return _msaaFramebuffer;
+	} else {
+		return _defaultFramebuffer;
+	}
 }
 
 -(GLenum)convertPixelFormat:(NSString*)pixelFormat
