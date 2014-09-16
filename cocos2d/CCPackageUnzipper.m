@@ -1,7 +1,7 @@
 #import "CCPackageUnzipper.h"
 #import "CCPackageUnzipperDelegate.h"
 #import "CCPackage.h"
-// #import "SSZipArchive.h"
+#import "SSZipArchive.h"
 #import "CCPackageInstallData.h"
 #import "CCPackage+InstallData.h"
 #import "ccMacros.h"
@@ -58,15 +58,12 @@
         CCLOGINFO(@"[PACKAGE/UNZIP][INFO]: Unzipping package... %@", _package);
 
         NSError *error;
-        BOOL success = YES;
-/*
         BOOL success = [SSZipArchive unzipFileAtPath:installData.localDownloadURL.path
                                        toDestination:installData.unzipURL.path
                                            overwrite:YES
                                             password:_password
                                                error:&error
                                             delegate:self];
-*/
 
         if (success)
         {

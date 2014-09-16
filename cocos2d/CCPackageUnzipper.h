@@ -1,10 +1,10 @@
 #import <Foundation/Foundation.h>
-// #import "SSZipArchive.h"
+#import "SSZipArchive.h"
 
 @protocol CCPackageUnzipperDelegate;
 @class CCPackage;
 
-@interface CCPackageUnzipper : NSObject // <SSZipArchiveDelegate>
+@interface CCPackageUnzipper : NSObject <SSZipArchiveDelegate>
 
 @property (nonatomic, strong, readonly) CCPackage *package;
 @property (nonatomic, weak) id <CCPackageUnzipperDelegate> delegate;
