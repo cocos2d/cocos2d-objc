@@ -285,7 +285,20 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  */
 -(NSString*) fullPathFromRelativePathIgnoringResolutions:(NSString*)relPath;
 
-/** 
+/**
+ *  Returns all fullpaths of a filename in all search paths without taking into account the screen resolution suffixes or directories.
+ *  It will use the "searchPath" though.
+ *  If the file can't be found, it will return an empty array.
+ *
+ *  Useful for loading the fileLookup.plist and spriteFrameFileList.plist for packages
+ *
+ *  @param relPath Relative path.
+ *
+ *  @return Array of full paths.
+ */
+- (NSArray *)fullPathsOfFileNameInAllSearchPaths:(NSString *)filename;
+
+/**
  *  Returns the fullpath for a given filename.
  *  First it will try to get a new filename from the "filenameLookup" dictionary. If a new filename can't be found on the dictionary, it will use the original filename.
  *  Then it will try obtain the full path of the filename using the CCFileUtils search rules: resolutions, and search paths
@@ -357,6 +370,15 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  *  @param filename Filename to query.
  */
 -(void) loadFilenameLookupDictionaryFromFile:(NSString*)filename;
+
+/**
+ *  Loads the filenameLookup dictionary from the contents of a filename in all search paths.
+ *
+ *  Used for packages to merge filenameLookups found in different search paths.
+ *
+ *  @param filename Filename to query.
+ */
+- (void)loadFileNameLookupsInAllSearchPathsWithName:(NSString *)filename;
 
 /** 
  *  Removes the suffix from a path.
