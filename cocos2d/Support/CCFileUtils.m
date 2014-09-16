@@ -501,10 +501,10 @@ static CCFileUtils *fileUtils = nil;
 	BOOL found = NO;
 	NSString *ret = @"";
 	
-	for( NSString *path in _searchPath ) {
-		
-		// Search with Suffixes
-		for( NSString *device in _searchResolutionsOrder ) {
+    // Search with Suffixes
+    for( NSString *device in _searchResolutionsOrder ) {
+
+    	for( NSString *path in _searchPath ) {
 
 			NSString *fileWithPath = [path stringByAppendingPathComponent:newfilename];
 			
