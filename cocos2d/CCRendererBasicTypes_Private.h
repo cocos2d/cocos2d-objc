@@ -116,11 +116,10 @@ CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount)
 @end
 
 
-@interface CCFrameBufferObject : NSObject {
-	CCTexture *_texture;
-}
+@interface CCFrameBufferObject : NSObject
 
 // Setters should be treated as protected.
+@property(nonatomic, readonly) CCTexture *texture;
 @property(nonatomic, assign) CGSize sizeInPixels;
 @property(nonatomic, assign) CGFloat contentScale;
 
