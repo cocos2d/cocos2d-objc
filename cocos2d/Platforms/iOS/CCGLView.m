@@ -213,10 +213,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		_depthFormat = depth;
 		_multiSampling = sampling;
 		_preserveBackbuffer = retained;
-		
-		GLint maxSamplesAllowed;
-		glGetIntegerv(GL_MAX_SAMPLES_APPLE, &maxSamplesAllowed);
-		_msaaSamples = MIN(maxSamplesAllowed, nSamples);
+		_msaaSamples = nSamples;
 		
 		// Default to "retina" being enabled.
 		self.contentScaleFactor = [UIScreen mainScreen].scale;
@@ -281,10 +278,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	CCRenderDispatch(NO, ^{
 		// Create default framebuffer object. The backing will be allocated for the current layer in -resizeFromLayer
 		glGenFramebuffers(1, &_defaultFramebuffer);
-
-		glGenRenderbuffers(1, &_colorRenderbuffer);
-
 		glBindFramebuffer(GL_FRAMEBUFFER, _defaultFramebuffer);
+		
+		glGenRenderbuffers(1, &_colorRenderbuffer);
 		glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderbuffer);
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, _colorRenderbuffer);
 
@@ -313,6 +309,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 -(void)resizeFromLayer:(CAEAGLLayer *)layer
 {
 	CCRenderDispatch(NO, ^{
+		GLint maxSamples;
+		glGetIntegerv(GL_MAX_SAMPLES_APPLE, &maxSamples);
+		GLint msaaSamples = MIN(maxSamples, _msaaSamples);
+		
 		glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderbuffer);
 
 		// Allocate color buffer backing based on the current layer size
@@ -329,12 +329,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 			glGenRenderbuffers(1, &_msaaColorbuffer);
 			
 			glBindRenderbuffer(GL_RENDERBUFFER, _msaaColorbuffer);
-			glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, _msaaSamples, [self convertPixelFormat:_pixelFormat] , _backingWidth, _backingHeight);
+			glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, msaaSamples, [self convertPixelFormat:_pixelFormat] , _backingWidth, _backingHeight);
 			
 			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, _msaaColorbuffer);
 		}
-
-		CC_CHECK_GL_ERROR_DEBUG();
 
 		if(_depthFormat){
 			glDeleteRenderbuffers(1, &_depthBuffer);
@@ -343,7 +341,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 			glBindRenderbuffer(GL_RENDERBUFFER, _depthBuffer);
 			
 			if(_multiSampling){
-				glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, _msaaSamples, _depthFormat,_backingWidth, _backingHeight);
+				glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, msaaSamples, _depthFormat,_backingWidth, _backingHeight);
 			} else {
 				glRenderbufferStorage(GL_RENDERBUFFER, _depthFormat, _backingWidth, _backingHeight);
 			}
@@ -411,11 +409,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 -(void)presentFrame
 {
-    // IMPORTANT:
-	// - preconditions
-	//	-> _context MUST be the OpenGL context
-	//	-> renderbuffer_ must be the the RENDER BUFFER
-	
 	{
 		CCGLViewFence *fence = _fences.lastObject;
 		if(fence.isReady){
@@ -424,47 +417,33 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		}
 	}
 	
-	if (_multiSampling)
-	{
-		/* Resolve from msaaFramebuffer to resolveFramebuffer */
-		//glDisable(GL_SCISSOR_TEST);
+	if (_multiSampling){
 		glBindFramebuffer(GL_READ_FRAMEBUFFER_APPLE, _msaaFramebuffer);
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER_APPLE, _defaultFramebuffer);
 		glResolveMultisampleFramebufferAPPLE();
 	}
     
-	if( _discardFramebufferSupported)
-	{
-		if (_multiSampling)
-		{
-			if (_depthFormat)
-			{
+	if(_discardFramebufferSupported){
+		if(_multiSampling){
+			if(_depthFormat){
 				GLenum attachments[] = {GL_COLOR_ATTACHMENT0, GL_DEPTH_ATTACHMENT};
 				glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 2, attachments);
-			}
-			else
-			{
+			} else {
 				GLenum attachments[] = {GL_COLOR_ATTACHMENT0};
 				glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 1, attachments);
 			}
-		}
-        
-		// not MSAA
-		else if (_depthFormat ) {
+		} else if(_depthFormat){
 			GLenum attachments[] = { GL_DEPTH_ATTACHMENT};
 			glDiscardFramebufferEXT(GL_FRAMEBUFFER, 1, attachments);
 		}
 	}
     
 	glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderbuffer);
-	
 	if(![_context presentRenderbuffer:GL_RENDERBUFFER]){
 		CCLOG(@"cocos2d: Failed to swap renderbuffer in %s\n", __FUNCTION__);
 	}
     
-	// We can safely re-bind the framebuffer here, since this will be the
-	// 1st instruction of the new main loop
-	if( _multiSampling ){
+	if(_multiSampling){
 		glBindFramebuffer(GL_FRAMEBUFFER, _msaaFramebuffer);
 	}
 	
