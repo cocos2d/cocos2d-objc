@@ -128,7 +128,8 @@ CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount)
 
 -(void)syncWithView:(CC_VIEW<CCDirectorView> *)view;
 
-#warning TODO bind with clear.
--(void)bind;
+// Not ideal to use GL enumerations here.
+// It's out of convenience, and it's a private API.
+-(void)bindWithClear:(GLbitfield)mask color:(GLKVector4)color4 depth:(GLclampf)depth stencil:(GLint)stencil;
 
 @end

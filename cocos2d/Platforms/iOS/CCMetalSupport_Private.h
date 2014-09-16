@@ -71,7 +71,7 @@
 +(instancetype)currentContext;
 +(void)setCurrentContext:(CCMetalContext *)context;
 
--(void)beginRenderPass:(id<MTLTexture>)destinationTexture;
+-(void)beginRenderPass:(id<MTLTexture>)destinationTexture clearMask:(GLbitfield)mask color:(GLKVector4)color4 depth:(GLclampf)depth stencil:(GLint)stencil;
 
 -(void)flushCommandBuffer;
 

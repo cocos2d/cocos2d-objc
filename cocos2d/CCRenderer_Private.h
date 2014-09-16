@@ -119,6 +119,12 @@ typedef NS_ENUM(NSUInteger, CCRenderCommandDrawMode){
 	NSMutableArray *_queue;
 	NSMutableArray *_queueStack;
 	
+	// Handle clearing specially if it's the very first command.
+	GLbitfield _clearMask;
+	GLKVector4 _clearColor;
+	GLclampf _clearDepth;
+	GLint _clearStencil;
+	
 	// Current renderer bindings for fast state checking.
 	// Invalidated at the end of each frame.
 	__unsafe_unretained CCRenderState *_renderState;

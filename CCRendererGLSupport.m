@@ -365,11 +365,18 @@ static const CCGraphicsBufferType CCGraphicsBufferGLTypes[] = {
 	});
 }
 
--(void)bind
+-(void)bindWithClear:(GLbitfield)mask color:(GLKVector4)color4 depth:(GLclampf)depth stencil:(GLint)stencil
 {
+	glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
+	
 	CGSize size = self.sizeInPixels;
 	glViewport(0, 0, size.width, size.height);
-	glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
+	
+	if(mask & GL_COLOR_BUFFER_BIT) glClearColor(color4.r, color4.g, color4.b, color4.a);
+	if(mask & GL_DEPTH_BUFFER_BIT) glClearDepth(depth);
+	if(mask & GL_STENCIL_BUFFER_BIT) glClearStencil(stencil);
+	
+	glClear(mask);
 }
 
 -(void)syncWithView:(CC_VIEW<CCDirectorView> *)view;

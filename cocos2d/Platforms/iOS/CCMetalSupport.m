@@ -69,16 +69,23 @@ static NSString *CURRENT_CONTEXT_KEY = @"CURRENT_CONTEXT_KEY";
 	_currentRenderCommandEncoder = nil;
 }
 
--(void)beginRenderPass:(id<MTLTexture>)destinationTexture;
+-(void)beginRenderPass:(id<MTLTexture>)destinationTexture clearMask:(GLbitfield)mask color:(GLKVector4)color4 depth:(GLclampf)depth stencil:(GLint)stencil;
 {
 	// End the previous render pass.
 	[self endRenderPass];
 	
 	MTLRenderPassColorAttachmentDescriptor *colorAttachment = [MTLRenderPassColorAttachmentDescriptor new];
 	colorAttachment.texture = destinationTexture;
-	colorAttachment.loadAction = MTLLoadActionClear;
-	colorAttachment.clearColor = MTLClearColorMake(0, 0, 0, 0);
-	colorAttachment.storeAction = MTLStoreActionStore;
+	if(mask & GL_COLOR_BUFFER_BIT){
+		colorAttachment.loadAction = MTLLoadActionClear;
+		colorAttachment.clearColor = MTLClearColorMake(color4.r, color4.g, color4.b, color4.a);
+		colorAttachment.storeAction = MTLStoreActionStore;
+	} else {
+		colorAttachment.loadAction = MTLLoadActionDontCare;
+		colorAttachment.storeAction = MTLStoreActionStore;
+	}
+	
+	// TODO depth and stencil.
 
 	MTLRenderPassDescriptor *renderPassDescriptor = [MTLRenderPassDescriptor renderPassDescriptor];
 	renderPassDescriptor.colorAttachments[0] = colorAttachment;
@@ -175,9 +182,9 @@ static NSString *CURRENT_CONTEXT_KEY = @"CURRENT_CONTEXT_KEY";
 	return self;
 }
 
--(void)bind
+-(void)bindWithClear:(GLbitfield)mask color:(GLKVector4)color4 depth:(GLclampf)depth stencil:(GLint)stencil
 {
-	[[CCMetalContext currentContext] beginRenderPass:_frameBufferTexture];
+	[[CCMetalContext currentContext] beginRenderPass:_frameBufferTexture clearMask:mask color:color4 depth:depth stencil:stencil];
 }
 
 -(void)syncWithView:(CC_VIEW<CCDirectorView> *)view;

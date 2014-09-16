@@ -336,14 +336,23 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 
 -(void)enqueueClear:(GLbitfield)mask color:(GLKVector4)color4 depth:(GLclampf)depth stencil:(GLint)stencil globalSortOrder:(NSInteger)globalSortOrder
 {
-	#warning GL code.
-	[self enqueueBlock:^{
-		if(mask & GL_COLOR_BUFFER_BIT) glClearColor(color4.r, color4.g, color4.b, color4.a);
-		if(mask & GL_DEPTH_BUFFER_BIT) glClearDepth(depth);
-		if(mask & GL_STENCIL_BUFFER_BIT) glClearStencil(stencil);
+	// If a clear is the very first command, then handle it specially.
+	if(globalSortOrder == NSIntegerMin && _queue.count == 0 && _queueStack.count == 0){
+		_clearMask = mask;
+		_clearColor = color4;
+		_clearDepth = depth;
+		_clearStencil = stencil;
+	} else {
+		NSAssert([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIGL, @"Clear commands must be the first command in the queue unless using GL.");
 		
-		glClear(mask);
-	} globalSortOrder:globalSortOrder debugLabel:@"CCRenderer: Clear" threadSafe:YES];
+		[self enqueueBlock:^{
+			if(mask & GL_COLOR_BUFFER_BIT) glClearColor(color4.r, color4.g, color4.b, color4.a);
+			if(mask & GL_DEPTH_BUFFER_BIT) glClearDepth(depth);
+			if(mask & GL_STENCIL_BUFFER_BIT) glClearStencil(stencil);
+			
+			glClear(mask);
+		} globalSortOrder:globalSortOrder debugLabel:@"CCRenderer: Clear" threadSafe:YES];
+	}
 }
 
 -(void)enqueueBlock:(void (^)())block globalSortOrder:(NSInteger)globalSortOrder debugLabel:(NSString *)debugLabel threadSafe:(BOOL)threadsafe
@@ -397,7 +406,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 {
 	CCRENDERER_DEBUG_PUSH_GROUP_MARKER(@"CCRenderer: Flush");
 	
-	[_framebuffer bind];
+	[_framebuffer bindWithClear:_clearMask color:_clearColor depth:_clearDepth stencil:_clearStencil];
 	
 	// Commit the buffers.
 	[_buffers commit];
