@@ -192,7 +192,6 @@
 	
 	float gmin = MIN(MIN(g0, g1), MIN(g2, g3));
 	float gmax = MAX(MAX(g0, g1), MAX(g2, g3));
-	NSLog(@"RCB");
 	GLKVector4 a = GLKVector4Make(_color.r*_color.a*_displayColor.a, _color.g*_color.a*_displayColor.a, _color.b*_color.a*_displayColor.a, _color.a*_displayColor.a);
 	GLKVector4 b = GLKVector4Make(_endColor.r*_endColor.a*_displayColor.a, _endColor.g*_endColor.a*_displayColor.a, _endColor.b*_endColor.a*_displayColor.a, _endColor.a*_displayColor.a);
 	_colors[0] =  GLKVector4Lerp(a, b, (g0 - gmin)/(gmax - gmin));
