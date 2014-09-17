@@ -101,6 +101,7 @@
 		B7EE698518187BC900B983FE /* CCSprite9SliceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE698418187BC900B983FE /* CCSprite9SliceTest.m */; };
 		B7EE69F01819EB0E00B983FE /* CCLayoutTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69EF1819EB0E00B983FE /* CCLayoutTest.m */; };
 		B7EE6A30181B285700B983FE /* CCSliderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE6A2F181B285700B983FE /* CCSliderTest.m */; };
+		D3758C1119C8EBDE00B4E13A /* Music in Resources */ = {isa = PBXBuildFile; fileRef = D3758C1019C8EBDE00B4E13A /* Music */; };
 		D389410E18639CC900725CFC /* CCPhysicsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D389410D18639CC900725CFC /* CCPhysicsTest.m */; };
 		D3AD532618C85006005B6CF3 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3AD532518C85006005B6CF3 /* GLKit.framework */; };
 		D3AD532E18C856AC005B6CF3 /* CCBMFontTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AD532818C856AC005B6CF3 /* CCBMFontTest.m */; };
@@ -236,6 +237,7 @@
 		B7EE698418187BC900B983FE /* CCSprite9SliceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSprite9SliceTest.m; path = "cocos2d-ui-tests/tests/CCSprite9SliceTest.m"; sourceTree = SOURCE_ROOT; };
 		B7EE69EF1819EB0E00B983FE /* CCLayoutTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCLayoutTest.m; path = "cocos2d-ui-tests/tests/CCLayoutTest.m"; sourceTree = SOURCE_ROOT; };
 		B7EE6A2F181B285700B983FE /* CCSliderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSliderTest.m; path = "cocos2d-ui-tests/tests/CCSliderTest.m"; sourceTree = SOURCE_ROOT; };
+		D3758C1019C8EBDE00B4E13A /* Music */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Music; path = Resources/Music; sourceTree = SOURCE_ROOT; };
 		D389410D18639CC900725CFC /* CCPhysicsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCPhysicsTest.m; path = "cocos2d-ui-tests/tests/CCPhysicsTest.m"; sourceTree = SOURCE_ROOT; };
 		D389412F18639E4500725CFC /* libObjectiveChipmunk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libObjectiveChipmunk.a; path = DerivedData/cocos2d/Build/Products/Debug/libObjectiveChipmunk.a; sourceTree = "<group>"; };
 		D389413118639E5000725CFC /* libChipmunk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libChipmunk.a; path = external/Chipmunk/xcode/build/Debug/libChipmunk.a; sourceTree = "<group>"; };
@@ -336,6 +338,7 @@
 		75FCA70E185F89A0006E7468 /* Test Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D3758C1019C8EBDE00B4E13A /* Music */,
 				75FCA70A185F89A0006E7468 /* Sounds */,
 				75FCA70B185F89A0006E7468 /* Particles */,
 				75FCA70C185F89A0006E7468 /* TileMaps */,
@@ -586,6 +589,7 @@
 				57E145A11975E3230065F142 /* larabie-16.plist in Resources */,
 				57E145821975E3230065F142 /* bitmapFontTest2.fnt in Resources */,
 				57E145931975E3230065F142 /* fps_images.plist in Resources */,
+				D3758C1119C8EBDE00B4E13A /* Music in Resources */,
 				57E145A31975E3230065F142 /* markerFelt-hd.fnt in Resources */,
 				57E145941975E3230065F142 /* fps_images.png in Resources */,
 				57E145801975E3230065F142 /* bitmapFontTest.fnt in Resources */,
