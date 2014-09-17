@@ -1249,7 +1249,7 @@ static inline float readFloat(CCBReader *self)
         // Class was not found. Maybe it's a Swift class?
         // See http://stackoverflow.com/questions/24030814/swift-language-nsclassfromstring
         NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"];
-        NSString *classStringName = [NSString stringWithFormat:@"_TtC%d%@%d%@", appName.length, appName, className.length, className];
+        NSString *classStringName = [NSString stringWithFormat:@"_TtC%lu%@%lu%@", (unsigned long)appName.length, appName, (unsigned long)className.length, className];
         class = NSClassFromString(classStringName);
     }
     if (!class)
