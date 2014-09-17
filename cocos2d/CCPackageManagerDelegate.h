@@ -51,6 +51,7 @@
 
 /**
  *  Only called when the process of unzipping finished successfully
+ *  Note: This method will most likely return on a different thread than the main thread depending on the queue set for unzipping.
  *
  *  @param package The package for which the unzip process finished
  */
@@ -58,6 +59,7 @@
 
 /**
  *  Only called when the process of unzipping failed
+ *  Note: This method will most likely return on a different thread than the main thread depending on the queue set for unzipping.
  *
  *  @param package The package for which the unzip process failed
  *  @param error Pointer to an error object
@@ -67,6 +69,8 @@
 @optional
 /**
  *  Called whenever the process of unzipping reports a progress in bytes
+ *  Note: This method will most likely return on a different thread than the main thread depending on the queue set for unzipping.
+ *
  *
  *  @param package The package for which the unzip progress occured
  *  @param unzippedBytes Unzip progress in bytes
