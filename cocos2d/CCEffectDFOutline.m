@@ -37,7 +37,7 @@
     if((self = [super initWithFragmentUniforms:uniforms vertexUniforms:nil varyings:nil]))
     {
         _fieldScaleFactor = fieldScale; // 32 4096/128 (input distance field size / output df size)
-        self.outlineWidth = 3;
+        self.outlineWidth = outlineWidth;
         _fillColor = fillColor;
         _outlineColor = outlineColor;
         _distanceField = distanceField;
@@ -76,7 +76,11 @@
                                    max = u_outlineOuterWidth.y;
                                    
                                    if(min == 0.5 && max == 0.5)
+                                   {
+                                       vec4 glowc = u_fillColor * smoothstep(min, max, transition);
+                                       outputColor = mix(glowc, outputColor, outputColor.a);
                                        return outputColor;
+                                   }
                                    
                                    vec4 glowTexel = texture2D(cc_NormalMapTexture, cc_FragTexCoord1);
                                    
