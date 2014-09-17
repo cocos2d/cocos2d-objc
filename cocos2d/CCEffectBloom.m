@@ -219,14 +219,14 @@
             GLfloat optimizedWeight = firstWeight + secondWeight;
             GLfloat optimizedOffset = (firstWeight * (currentOverlowTextureRead * 2 + 1) + secondWeight * (currentOverlowTextureRead * 2 + 2)) / optimizedWeight;
 
-            [shaderString appendFormat:@"blurCoords = v_blurCoordinates[0] + singleStepOffset * %f);\n", optimizedOffset];
+            [shaderString appendFormat:@"blurCoords = v_blurCoordinates[0] + singleStepOffset * %f;\n", optimizedOffset];
             [shaderString appendString:@"compare = cc_FragTexCoord1Extents - abs(blurCoords - cc_FragTexCoord1Center);"];
             [shaderString appendString:@"inBounds = step(0.0, min(compare.x, compare.y));"];
             [shaderString appendFormat:@"srcPixel = texture2D(cc_PreviousPassTexture, blurCoords);\n"];
             [shaderString appendString:@"luminanceCheck = step(u_luminanceThreshold, dot(srcPixel.rgb, luminanceWeighting));\n"];
             [shaderString appendFormat:@"src += inBounds * luminanceCheck * srcPixel * %f;\n", optimizedWeight];
 
-            [shaderString appendFormat:@"blurCoords = v_blurCoordinates[0] - singleStepOffset * %f);\n", optimizedOffset];
+            [shaderString appendFormat:@"blurCoords = v_blurCoordinates[0] - singleStepOffset * %f;\n", optimizedOffset];
             [shaderString appendString:@"compare = cc_FragTexCoord1Extents - abs(blurCoords - cc_FragTexCoord1Center);"];
             [shaderString appendString:@"inBounds = step(0.0, min(compare.x, compare.y));"];
             [shaderString appendFormat:@"srcPixel = texture2D(cc_PreviousPassTexture, blurCoords);\n"];
