@@ -243,12 +243,6 @@
 	[self updateColor];
 }
 
-- (void)updateDisplayedOpacity:(CGFloat)parentOpacity
-{
-    [super updateDisplayedOpacity:parentOpacity];
-    [self updateColor];
-}
-
 -(void) setVector: (CGPoint) v
 {
 	_vector = v;
