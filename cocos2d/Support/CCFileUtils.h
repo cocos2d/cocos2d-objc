@@ -26,7 +26,6 @@
 
 
 #import <Foundation/Foundation.h>
-#import "../ccTypes.h"
 
 // keys used for the suffix or directory dictionaries
 extern NSString const *CCFileUtilsSuffixDefault;
