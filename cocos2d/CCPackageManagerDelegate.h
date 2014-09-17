@@ -74,6 +74,7 @@
  */
 - (void)packageUnzippingProgress:(CCPackage *)package unzippedBytes:(NSUInteger)unzippedBytes totalBytes:(NSUInteger)totalBytes;
 
+
 /**
  *  When a package is installed the root object of an unzipped package should be a folder named with the
  *  standard identifier(<NAME>-<OS>-<RESOLUTION>).
@@ -85,6 +86,8 @@
  *
  *  @param package The package for which the unzipped folder name should be determined
  *  @param packageContens A list of URLs of unzipped package's first level directory
+ *
+ *  @return The folder name of the package
  */
 - (NSString *)customFolderName:(CCPackage *)package packageContents:(NSArray *)packageContents;
 
@@ -92,7 +95,18 @@
  *  Provide this method if you want to set a password to unzip a protected zip archive.
  *
  *  @param package The package for which the password should be set
+ *
+ *  @return The password to be used to unzip a package archive
  */
 - (NSString *)passwordForPackageZipFile:(CCPackage *)package;
+
+/**
+ *  Provides the request before it is sent to let delegate adjust headers etc.
+ *  If there is a partial download which should be resumed a Range header will be set after this invocation.
+ *
+ *  @param request The request object that will be used for the download
+ *  @param download The download object which will start with the given request
+ */
+- (void)request:(NSMutableURLRequest *)request ofPackage:(CCPackage *)package;
 
 @end

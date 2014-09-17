@@ -12,6 +12,7 @@
 @property (nonatomic, strong) NSURLConnection *connection;
 @property (nonatomic, strong, readwrite) CCPackage *package;
 @property (nonatomic, copy) NSString *tempPath;
+@property (nonatomic, copy, readwrite) NSURL *localURL;
 
 @property (nonatomic, readwrite) NSUInteger totalBytes;
 @property (nonatomic, readwrite) NSUInteger downloadedBytes;
@@ -31,7 +32,6 @@
     if (self)
     {
         self.package = package;
-        self.packageURL = package.remoteURL;
         self.localURL = localURL;
         self.fileSize = [self fileSizeOfDownload];
         self.tempPath = [[_localURL.path stringByDeletingLastPathComponent] stringByAppendingPathComponent:[self createTempName]];
@@ -83,7 +83,7 @@
 
 - (NSString *)createTempName
 {
-    return [NSString stringWithFormat:@"%@_%@", [self sha1:[_packageURL absoluteString]], [_package standardIdentifier]];
+    return [NSString stringWithFormat:@"%@_%@", [self sha1:[_package.remoteURL absoluteString]], [_package standardIdentifier]];
 }
 
 - (NSString *)sha1:(NSString *)str
@@ -247,7 +247,7 @@
 
 - (NSURLRequest *)createRequest
 {
-    NSMutableURLRequest *result = [NSMutableURLRequest requestWithURL:_packageURL];
+    NSMutableURLRequest *result = [NSMutableURLRequest requestWithURL:_package.remoteURL];
 
     if ([_delegate respondsToSelector:@selector(request:ofDownload:)])
     {
@@ -465,7 +465,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"PACKAGE URL: %@, LOCAL URL: %@", _packageURL, _localURL];
+    return [NSString stringWithFormat:@"PACKAGE URL: %@, LOCAL URL: %@", _package.remoteURL, _localURL];
 }
 
 @end

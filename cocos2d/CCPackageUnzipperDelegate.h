@@ -1,15 +1,33 @@
 #import <Foundation/Foundation.h>
 
 @class CCPackageUnzipper;
-@class CCPackage;
 
 @protocol CCPackageUnzipperDelegate <NSObject>
 
 @optional
-- (void)unzipFinished:(CCPackageUnzipper *)package;
 
-- (void)unzipFailed:(CCPackageUnzipper *)package error:(NSError *)error;
+/**
+ *  Only called when the process of unzipping finished successfully
+ *
+ *  @param packageUnzipper The package unzipper
+ */
+- (void)unzipFinished:(CCPackageUnzipper *)packageUnzipper;
 
-- (void)unzipProgress:(CCPackageUnzipper *)unpacker unzippedBytes:(NSUInteger)unzippedBytes totalBytes:(NSUInteger)totalBytes;
+/**
+ *  Only called when the process of unzipping failed
+ *
+ *  @param packageUnzipper The package unzipper
+ *  @param error Pointer to an error object
+ */
+- (void)unzipFailed:(CCPackageUnzipper *)packageUnzipper error:(NSError *)error;
+
+/**
+ *  Called whenever the process of unzipping reports a progress in bytes
+ *
+ *  @param packageUnzipper The package unzipper
+ *  @param unzippedBytes Unzip progress in bytes
+ *  @param totalBytes Total size of the unzipping operation
+ */
+- (void)unzipProgress:(CCPackageUnzipper *)packageUnzipper unzippedBytes:(NSUInteger)unzippedBytes totalBytes:(NSUInteger)totalBytes;
 
 @end

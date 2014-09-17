@@ -22,6 +22,7 @@ char *const KEY_INSTALL_DATA = "installData";
 - (void)populateInstallDataWithDictionary:(NSDictionary *)dictionary
 {
     CCPackageInstallData *installData = [self installData];
+    NSAssert(installData != nil, @"Install data must not be nil");
 
     if (dictionary[PACKAGE_SERIALIZATION_KEY_LOCAL_DOWNLOAD_URL])
     {

@@ -490,14 +490,14 @@
     return NO;
 }
 
-- (BOOL)disablePackage:(CCPackage *)aPackage error:(NSError **)error
+- (BOOL)disablePackage:(CCPackage *)package error:(NSError **)error
 {
-    if (aPackage.status == CCPackageStatusInstalledDisabled)
+    if (package.status == CCPackageStatusInstalledDisabled)
     {
         return YES;
     }
 
-    if (aPackage.status != CCPackageStatusInstalledEnabled)
+    if (package.status != CCPackageStatusInstalledEnabled)
     {
         if (error)
         {
@@ -509,25 +509,25 @@
     }
 
     CCPackageCocos2dEnabler *packageCocos2dEnabler = [[CCPackageCocos2dEnabler alloc] init];
-    [packageCocos2dEnabler disablePackages:@[aPackage]];
+    [packageCocos2dEnabler disablePackages:@[package]];
 
-    [aPackage setValue:@(CCPackageStatusInstalledDisabled) forKey:@"status"];
+    [package setValue:@(CCPackageStatusInstalledDisabled) forKey:@"status"];
 
-    if (![_packages containsObject:aPackage])
+    if (![_packages containsObject:package])
     {
-        [_packages addObject:aPackage];
+        [_packages addObject:package];
     }
     return YES;
 }
 
-- (BOOL)enablePackage:(CCPackage *)aPackage error:(NSError **)error
+- (BOOL)enablePackage:(CCPackage *)package error:(NSError **)error
 {
-    if (aPackage.status == CCPackageStatusInstalledEnabled)
+    if (package.status == CCPackageStatusInstalledEnabled)
     {
         return YES;
     }
 
-    if (aPackage.status != CCPackageStatusInstalledDisabled)
+    if (package.status != CCPackageStatusInstalledDisabled)
     {
         if (error)
         {
@@ -539,29 +539,29 @@
     }
 
     CCPackageCocos2dEnabler *packageCocos2dEnabler = [[CCPackageCocos2dEnabler alloc] init];
-    [packageCocos2dEnabler enablePackages:@[aPackage]];
+    [packageCocos2dEnabler enablePackages:@[package]];
 
-    [aPackage setValue:@(CCPackageStatusInstalledEnabled) forKey:@"status"];
+    [package setValue:@(CCPackageStatusInstalledEnabled) forKey:@"status"];
 
-    if (![_packages containsObject:aPackage])
+    if (![_packages containsObject:package])
     {
-        [_packages addObject:aPackage];
+        [_packages addObject:package];
     }
     return YES;
 }
 
-- (BOOL)deletePackage:(CCPackage *)aPackage error:(NSError **)error
+- (BOOL)deletePackage:(CCPackage *)package error:(NSError **)error
 {
     CCPackageCocos2dEnabler *packageCocos2dEnabler = [[CCPackageCocos2dEnabler alloc] init];
-    [packageCocos2dEnabler disablePackages:@[aPackage]];
+    [packageCocos2dEnabler disablePackages:@[package]];
 
-    [_packages removeObject:aPackage];
+    [_packages removeObject:package];
     [self storePackages];
 
-    [_downloadManager cancelDownloadOfPackage:aPackage];
+    [_downloadManager cancelDownloadOfPackage:package];
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    CCPackageInstallData *installData = [aPackage installData];
+    CCPackageInstallData *installData = [package installData];
     if (installData.unzipURL
         && [fileManager fileExistsAtPath:installData.unzipURL.path]
         && (![fileManager removeItemAtURL:installData.unzipURL error:error]))
@@ -569,8 +569,8 @@
         return NO;
     }
 
-    BOOL result = ([fileManager fileExistsAtPath:aPackage.installURL.path]
-                   && [fileManager removeItemAtURL:aPackage.installURL error:error]);
+    BOOL result = ([fileManager fileExistsAtPath:package.installURL.path]
+                   && [fileManager removeItemAtURL:package.installURL error:error]);
 
     if (result)
     {
@@ -619,6 +619,14 @@
 - (void)resumeAllDownloads
 {
     [_downloadManager resumeAllDownloads];
+}
+
+- (void)request:(NSMutableURLRequest *)request ofPackage:(CCPackage *)package
+{
+    if ([_delegate respondsToSelector:@selector(request:ofPackage:)])
+    {
+        [_delegate request:request ofPackage:package];
+    }
 }
 
 @end
