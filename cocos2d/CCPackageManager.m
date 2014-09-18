@@ -128,10 +128,10 @@
 
     [_downloadManager pauseAllDownloads];
 
-    [self storePackages];
+    [self savePackages];
 }
 
-- (void)storePackages
+- (void)savePackages
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSMutableArray *packagesToSave = [NSMutableArray arrayWithCapacity:_packages.count];

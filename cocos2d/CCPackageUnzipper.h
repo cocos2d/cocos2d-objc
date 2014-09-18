@@ -23,6 +23,7 @@
 
 /**
  *  The queue on which unzipping of packages is achieved
+ *  On iOS 5.0, MacOS 10.7 and below you have to get rid of the queue after use if it's not a global one.
  */
 #if OS_OBJECT_HAVE_OBJC_SUPPORT == 1
 @property (nonatomic, strong, readonly) dispatch_queue_t queue;

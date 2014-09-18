@@ -1,5 +1,7 @@
 #import <Foundation/Foundation.h>
 
+@class CCPackage;
+
 @protocol CCPackageManagerDelegate <NSObject>
 
 @required

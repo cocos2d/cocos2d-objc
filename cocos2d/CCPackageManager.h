@@ -31,7 +31,7 @@
 
 /**
  *  The queue on which unzipping of packages is achieved, default is DISPATCH_QUEUE_PRIORITY_LOW.
- *  On iOS 5.0 and MacOS 10.7 and below you have to claim ownership of the queue if it's not a global one.
+ *  On iOS 5.0, MacOS 10.7 and below you have to get rid of the queue after use if it's not a global one.
  */
 #if OS_OBJECT_HAVE_OBJC_SUPPORT == 1
 @property (nonatomic, strong) dispatch_queue_t unzippingQueue;
@@ -52,11 +52,12 @@
 /**
  *  Persists all packages to user defaults. Save often! Suggestion is to save on Application will terminate and will enter background.
  */
-- (void)storePackages;
+- (void)savePackages;
 
 
 /**
- * Returns a package immediately which will be downloaded, unzipped and installed asynchronously to the Packages folder in /Library/Caches (default)
+ * The all inclsuive method to add a package to your app.
+ * Returns a new package immediately which will be downloaded, unzipped and installed asynchronously to the Packages folder in /Library/Caches (default)
  *
  * If a package with the same name and resolution already exists it won't be rescheduled for downloading.
  * If you need to update a package by re-downloading it you will have to delete it first.
