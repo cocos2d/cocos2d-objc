@@ -810,10 +810,12 @@
         sampleSprite3.positionType = CCPositionTypeNormalized;
         
         // Blend glow maps test
+        CCEffectHue *hueEffect = [CCEffectHue effectWithHue:60.0f];
         CCEffectBloom* glowEffect3 = [CCEffectBloom effectWithBlurRadius:8 intensity:1.0f luminanceThreshold:1.0f - ((float)i/(float)(steps-1))];
         glowEffect3.padding = CGSizeMake(10.0f, 10.0f);
-        sampleSprite3.effect = glowEffect3;
         
+        sampleSprite3.effect = [CCEffectStack effectWithArray:@[glowEffect3, hueEffect]];
+
         [self.contentNode addChild:sampleSprite3];
     }
 }

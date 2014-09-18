@@ -186,7 +186,6 @@
             int effectIndex = 0;
             for (NSArray *stitchList in stitchLists)
             {
-                NSAssert(stitchList.count > 0, @"Encountered an empty stitch list which shouldn't happen.");
                 [stitchedEffects addObject:[CCEffectStack stitchEffects:stitchList startIndex:effectIndex]];
                 effectIndex += stitchList.count;
             }
@@ -222,16 +221,20 @@
 
 #pragma mark - Internal
 
-+ (CCEffect *)stitchEffects:(NSArray*)effects startIndex:(int)startIndex
++ (CCEffect *)stitchEffects:(NSArray*)stitchList startIndex:(int)startIndex
 {
+    NSAssert(stitchList.count > 0, @"Encountered an empty stitch list which shouldn't happen.");
+
     NSMutableArray* allFragFunctions = [[NSMutableArray alloc] init];
     NSMutableArray* allFragUniforms = [[NSMutableArray alloc] init];
     NSMutableArray* allVertexFunctions = [[NSMutableArray alloc] init];
     NSMutableArray* allVertexUniforms = [[NSMutableArray alloc] init];
     NSMutableArray* allVaryings = [[NSMutableArray alloc] init];
     
+    // Even if we're only handed one effect in this stitch list, we have to run it through the
+    // name mangling code below because all effects in a stack share one uniform namespace.
     int effectIndex = startIndex;
-    for(CCEffect* effect in effects)
+    for(CCEffect* effect in stitchList)
     {
         // Construct the prefix to use for name mangling.
         NSString *effectPrefix = [NSString stringWithFormat:@"%@_%d_", effect.debugName, effectIndex];
@@ -291,34 +294,53 @@
     // and last effects in the stitch list. If the "stitch before" flag is set on the
     // first effect then set it in the resulting effect. If the "stitch after" flag is
     // set in the last effect then set it in the resulting effect.
-    CCEffect *firstEffect = [effects firstObject];
-    CCEffect *lastEffect = [effects lastObject];
+    CCEffect *firstEffect = [stitchList firstObject];
+    CCEffect *lastEffect = [stitchList lastObject];
     stitchedEffect.stitchFlags = (firstEffect.stitchFlags & CCEffectFunctionStitchBefore) | (lastEffect.stitchFlags & CCEffectFunctionStitchAfter);
     
-    // Create a new render pass object and set its shader from the stitched effect
-    // that was created above.
-    CCEffectRenderPass *newPass = [[CCEffectRenderPass alloc] init];
-    newPass.debugLabel = @"CCEffectStack_Stitched pass 0";
-    newPass.shader = stitchedEffect.shader;
-    
-    NSMutableArray *beginBlocks = [[NSMutableArray alloc] init];
-    NSMutableArray *endBlocks = [[NSMutableArray alloc] init];
-    
-    for (CCEffect *effect in effects)
+    if (stitchList.count == 1)
     {
-        // Copy the begin and end blocks from the input passes into the new pass.
-        for (CCEffectRenderPass *pass in effect.renderPasses)
+        // If there was only one effect in the stitch list copy its render
+        // passes into the output stitched effect. Update the copied passes
+        // so they point to the new shader in the stitched effect.
+
+        NSMutableArray *renderPasses = [[NSMutableArray alloc] init];
+        for (CCEffectRenderPass *pass in firstEffect.renderPasses)
         {
-            [beginBlocks addObjectsFromArray:pass.beginBlocks];
-            [endBlocks addObjectsFromArray:pass.endBlocks];
+            CCEffectRenderPass *newPass = [pass copy];
+            newPass.shader = stitchedEffect.shader;
+            [renderPasses addObject:newPass];
         }
+        stitchedEffect.renderPasses = renderPasses;
     }
-    
-    newPass.beginBlocks = beginBlocks;
-    newPass.endBlocks = endBlocks;
-    
-    stitchedEffect.renderPasses = @[newPass];
-    
+    else
+    {
+        // If there were multiple effects in the stitch list, create a new render
+        // pass object, set its shader to the shader from the stitched effect, and
+        // copy all blocks from the input passes.
+        CCEffectRenderPass *newPass = [[CCEffectRenderPass alloc] init];
+        newPass.debugLabel = @"CCEffectStack_Stitched pass 0";
+        newPass.shader = stitchedEffect.shader;
+
+        NSMutableArray *beginBlocks = [[NSMutableArray alloc] init];
+        NSMutableArray *endBlocks = [[NSMutableArray alloc] init];
+
+        for (CCEffect *effect in stitchList)
+        {
+            // Copy the begin and end blocks from the input passes into the new pass.
+            for (CCEffectRenderPass *pass in effect.renderPasses)
+            {
+                [beginBlocks addObjectsFromArray:pass.beginBlocks];
+                [endBlocks addObjectsFromArray:pass.endBlocks];
+            }
+        }
+
+        newPass.beginBlocks = beginBlocks;
+        newPass.endBlocks = endBlocks;
+
+        stitchedEffect.renderPasses = @[newPass];
+    }
+
     return stitchedEffect;
 }
 
@@ -328,7 +350,7 @@
     for(CCEffectVarying *varying in varyings)
     {
         NSString *prefixedName = [NSString stringWithFormat:@"%@%@", prefix, varying.name];
-        CCEffectVarying *prefixedVarying = [[CCEffectVarying alloc] initWithType:varying.type name:prefixedName];
+        CCEffectVarying *prefixedVarying = [[CCEffectVarying alloc] initWithType:varying.type name:prefixedName count:varying.count];
         [varyingReplacements setObject:prefixedVarying forKey:varying.name];
     }
     return [varyingReplacements copy];
