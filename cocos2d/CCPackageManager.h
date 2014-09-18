@@ -83,6 +83,17 @@
 - (CCPackage *)downloadPackageWithName:(NSString *)name resolution:(NSString *)resolution remoteURL:(NSURL *)remoteURL enableAfterDownload:(BOOL)enableAfterDownload;
 
 /**
+ * Downloads a package. This is supposed to work in conjunction with addPackage where a package is created without the package manager
+ * and should become managed.
+ * A download will only start if the status is CCPackageStatusInitial, CCPackageStatusDownloadFailed.
+ * A package with status CCPackageStatusDownloadPaused will be resumed if possible.
+ *
+ * @param name The package to be manager by the package manager
+ * @param enableAfterDownload If the package should be enabled in cocos2d after download. You can enable it with the enablePackage: method later on.
+ */
+- (BOOL)downloadPackage:(CCPackage *)package enableAfterDownload:(BOOL)enableAfterDownload;
+
+/**
  * Disables a package. Only packages with state CCPackageStatusInstalledEnabled can be disabled.
  * The package is removed from cocos2d's search, sprite sheets and filename lookups are reloaded.
  *
@@ -104,6 +115,13 @@
  * @return Success(YES) or failure(NO) of the operation
  */
 - (BOOL)enablePackage:(CCPackage *)package error:(NSError **)error;
+
+/**
+ * Adds a package to the package manager. Only packages with status initial can be added.
+ *
+ * @param package The package to be added to the package manager
+ */
+- (void)addPackage:(CCPackage *)package;
 
 /**
  * Deletes a package.

@@ -188,18 +188,35 @@
     return [self downloadPackageWithName:name resolution:resolution remoteURL:remoteURL enableAfterDownload:enableAfterDownload];
 }
 
-- (NSString *)currentOS
+- (BOOL)downloadPackage:(CCPackage *)package enableAfterDownload:(BOOL)enableAfterDownload
 {
-#ifdef __CC_PLATFORM_IOS
-    return @"iOS";
+    if (![_packages containsObject:package])
+    {
+        return NO;
+    }
 
-#elif defined(__CC_PLATFORM_MAC)
-    return @"Mac";
+    NSAssert(package, @"package must not be nil");
+    NSAssert(package.name, @"package.name must not be nil");
+    NSAssert(package.resolution, @"package.resolution must not be nil");
 
-#elif defined(__CC_PLATFORM_ANDROID)
-    return @"Android";
+    if (!package.remoteURL && !_baseURL)
+    {
+        return NO;
+    }
+    else if (!package.remoteURL)
+    {
+        NSString *packageName = [NSString stringWithFormat:@"%@-%@-%@.zip", package.name, package.os, package.resolution];
+        NSURL *remoteURL = [_baseURL URLByAppendingPathComponent:packageName];
+        [package setValue:remoteURL forKey:@"remoteURL"];
+    }
 
-#endif
+    [self attachNewInstallDataToPackage:package enableAfterDownload:enableAfterDownload];
+
+    CCLOGINFO(@"[PACKAGE][INFO]: adding package to download queue: %@", package);
+
+    [_downloadManager enqueuePackageForDownload:package];
+
+    return YES;
 }
 
 - (CCPackage *)downloadPackageWithName:(NSString *)name resolution:(NSString *)resolution remoteURL:(NSURL *)remoteURL enableAfterDownload:(BOOL)enableAfterDownload
@@ -210,10 +227,8 @@
         return aPackage;
     }
 
-    CCPackageInstallData *installData = [[CCPackageInstallData alloc] initWithPackage:package];
-    installData.enableOnDownload = enableAfterDownload;
-    [package setInstallData:installData];
     CCPackage *package = [[CCPackage alloc] initWithName:name resolution:resolution remoteURL:remoteURL];
+    [self attachNewInstallDataToPackage:package enableAfterDownload:enableAfterDownload];
 
     [_packages addObject:package];
 
@@ -222,6 +237,13 @@
     [_downloadManager enqueuePackageForDownload:package];
 
     return package;
+}
+
+- (void)attachNewInstallDataToPackage:(CCPackage *)package enableAfterDownload:(BOOL)enableAfterDownload
+{
+    CCPackageInstallData *installData = [[CCPackageInstallData alloc] initWithPackage:package];
+    installData.enableOnDownload = enableAfterDownload;
+    [package setInstallData:installData];
 }
 
 - (CCPackage *)packageWithName:(NSString *)name resolution:(NSString *)resolution
@@ -266,38 +288,47 @@
 
 - (void)unzipFinished:(CCPackageUnzipper *)packageUnzipper
 {
-    [self removeDownloadFile:packageUnzipper.package];
-
-    [_unzipTasks removeObject:packageUnzipper];
-
-    [packageUnzipper.package setValue:@(CCPackageStatusUnzipped) forKey:@"status"];
-
-    if ([_delegate respondsToSelector:@selector(packageUnzippingFinished:)])
+    [self runOnMainQueue:^
     {
-        [_delegate packageUnzippingFinished:packageUnzipper.package];
-    }
+        [self removeDownloadFile:packageUnzipper.package];
 
-    if (![self installPackage:packageUnzipper.package])
-    {
-        return;
-    }
+        [_unzipTasks removeObject:packageUnzipper];
 
-    [self tidyUpAfterInstallation:packageUnzipper.package];
+        [packageUnzipper.package setValue:@(CCPackageStatusUnzipped) forKey:@"status"];
+
+        if ([_delegate respondsToSelector:@selector(packageUnzippingFinished:)])
+        {
+            [_delegate packageUnzippingFinished:packageUnzipper.package];
+        }
+
+        if (![self installPackage:packageUnzipper.package])
+        {
+            return;
+        }
+
+        [self tidyUpAfterInstallation:packageUnzipper.package];
+    }];
 }
 
 - (void)unzipFailed:(CCPackageUnzipper *)packageUnzipper error:(NSError *)error
 {
-    [_unzipTasks removeObject:packageUnzipper];
+    [self runOnMainQueue:^
+    {
+        [_unzipTasks removeObject:packageUnzipper];
 
-    [_delegate packageUnzippingFailed:packageUnzipper.package error:error];
+        [_delegate packageUnzippingFailed:packageUnzipper.package error:error];
+    }];
 }
 
 - (void)unzipProgress:(CCPackageUnzipper *)packageUnzipper unzippedBytes:(NSUInteger)unzippedBytes totalBytes:(NSUInteger)totalBytes
 {
-    if ([_delegate respondsToSelector:@selector(packageUnzippingProgress:unzippedBytes:totalBytes:)])
+    [self runOnMainQueue:^
     {
-        [_delegate packageUnzippingProgress:packageUnzipper.package unzippedBytes:unzippedBytes totalBytes:totalBytes];
-    }
+        if ([_delegate respondsToSelector:@selector(packageUnzippingProgress:unzippedBytes:totalBytes:)])
+        {
+            [_delegate packageUnzippingProgress:packageUnzipper.package unzippedBytes:unzippedBytes totalBytes:totalBytes];
+        }
+    }];
 }
 
 
@@ -383,6 +414,7 @@
     {
         CCLOG(@"[PACKAGE][ERROR] Installation failed: %@", error);
 
+        [package setValue:@(CCPackageStatusInstallationFailed) forKey:NSStringFromSelector(@selector(status))];
         [_delegate packageInstallationFailed:package error:error];
         return NO;
     }
@@ -551,13 +583,27 @@
     return YES;
 }
 
+- (void)addPackage:(CCPackage *)package;
+{
+    NSAssert(package, @"package must not be nil");
+    NSAssert(package.status == CCPackageStatusInitial, @"package status must be CCPackageStatusInitial");
+
+    if ([_packages containsObject:package]
+        || [self packageWithName:package.name resolution:package.resolution])
+    {
+        return;
+    }
+
+    [_packages addObject:package];
+}
+
 - (BOOL)deletePackage:(CCPackage *)package error:(NSError **)error
 {
     CCPackageCocos2dEnabler *packageCocos2dEnabler = [[CCPackageCocos2dEnabler alloc] init];
     [packageCocos2dEnabler disablePackages:@[package]];
 
     [_packages removeObject:package];
-    [self storePackages];
+    [self savePackages];
 
     [_downloadManager cancelDownloadOfPackage:package];
 
@@ -599,7 +645,7 @@
 
     [_downloadManager cancelDownloadOfPackage:package];
 
-    [self storePackages];
+    [self savePackages];
 }
 
 - (void)pauseDownloadOfPackage:(CCPackage *)package
@@ -627,6 +673,18 @@
     if ([_delegate respondsToSelector:@selector(request:ofPackage:)])
     {
         [_delegate request:request ofPackage:package];
+    }
+}
+
+- (void)runOnMainQueue:(dispatch_block_t)block
+{
+    if ([NSThread isMainThread])
+    {
+        block();
+    }
+    else
+    {
+        dispatch_sync(dispatch_get_main_queue(), block);
     }
 }
 
