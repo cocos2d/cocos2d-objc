@@ -762,7 +762,7 @@ void FNTConfigRemoveCache( void )
 	// since the Y position needs to be calcualted before hand
 	for(NSUInteger i=0; i < stringLen-1;i++) {
 		unichar c = [_string characterAtIndex:i];
-		if( c=='\n')
+		if([[NSCharacterSet newlineCharacterSet] characterIsMember:c])
 			quantityOfLines++;
 	}
     
@@ -776,7 +776,7 @@ void FNTConfigRemoveCache( void )
 	for(NSUInteger i = 0; i<stringLen; i++) {
 		unichar c = [_string characterAtIndex:i];
         
-		if (c == '\n') {
+        if ([[NSCharacterSet newlineCharacterSet] characterIsMember:c]) {
 			nextFontPositionX = 0;
 			nextFontPositionY -= _configuration->_commonHeight;
 			continue;

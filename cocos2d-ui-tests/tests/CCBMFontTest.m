@@ -12,6 +12,7 @@
 static NSString *TEST_STRINGS[] = {
 	@"ABCDEFGHIJKLM\nNOPQRSTUVWXYZ",
 	@"abcdefghijklm\nnopqrstuvwxyz",
+	@"first line\u2028second line",
 	@",.?!;:'\"",
 	@"()[]{}<>\\|/\n",
 	@"@#$%^&*+-=_",
