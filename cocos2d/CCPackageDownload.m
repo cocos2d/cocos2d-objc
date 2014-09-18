@@ -434,7 +434,8 @@
 {
     return _fileSize > 0
         && (_fileSize != [httpResponse expectedContentLength])
-        && [httpResponse.allHeaderFields[@"Accept-Ranges"] isEqualToString:@"none"];
+        && ([httpResponse.allHeaderFields[@"Accept-Ranges"] isEqualToString:@"none"]
+            || !httpResponse.allHeaderFields[@"Accept-Ranges"]);
 }
 
 - (void)restartDownload
