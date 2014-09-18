@@ -1,6 +1,7 @@
 #import "CCPackage.h"
 #import "CCPackageInstallData.h"
 #import "CCPackage+InstallData.h"
+#import "CCPackageHelper.h"
 
 
 NSUInteger PACKAGE_SERIALIZATION_VERSION = 1;
@@ -46,6 +47,14 @@ NSString *const PACKAGE_SERIALIZATION_KEY_STATUS = @"status";
     }
 
     return self;
+}
+
+- (instancetype)initWithName:(NSString *)name resolution:(NSString *)resolution remoteURL:(NSURL *)remoteURL
+{
+    return [[CCPackage alloc] initWithName:name
+                                resolution:resolution
+                                        os:[CCPackageHelper currentOS]
+                                 remoteURL:remoteURL];
 }
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary

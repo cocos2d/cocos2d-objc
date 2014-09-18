@@ -9,6 +9,7 @@
 #import "CCPackage+InstallData.h"
 #import "CCPackageCocos2dEnabler.h"
 #import "ccMacros.h"
+#import "CCPackageHelper.h"
 
 
 @interface CCPackageManager()
@@ -181,7 +182,7 @@
 {
     NSAssert(_baseURL != nil, @"baseURL must not be nil");
 
-    NSString *packageName = [NSString stringWithFormat:@"%@-%@-%@.zip", name, [self currentOS], resolution];
+    NSString *packageName = [NSString stringWithFormat:@"%@-%@-%@.zip", name, [CCPackageHelper currentOS], resolution];
     NSURL *remoteURL = [_baseURL URLByAppendingPathComponent:packageName];
 
     return [self downloadPackageWithName:name resolution:resolution remoteURL:remoteURL enableAfterDownload:enableAfterDownload];
@@ -209,10 +210,10 @@
         return aPackage;
     }
 
-    CCPackage *package = [[CCPackage alloc] initWithName:name resolution:resolution os:[self currentOS] remoteURL:remoteURL];
     CCPackageInstallData *installData = [[CCPackageInstallData alloc] initWithPackage:package];
     installData.enableOnDownload = enableAfterDownload;
     [package setInstallData:installData];
+    CCPackage *package = [[CCPackage alloc] initWithName:name resolution:resolution remoteURL:remoteURL];
 
     [_packages addObject:package];
 

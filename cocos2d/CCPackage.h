@@ -41,7 +41,20 @@
  *
  *  @param name Name of the package
  *  @param resolution Resolution of the package
- *  @param os OS of the package
+ *  @param remoteURL Remote URL of the package
+ *
+ *  @return New instance of CCPackage
+ */
+- (instancetype)initWithName:(NSString *)name
+                  resolution:(NSString *)resolution
+                   remoteURL:(NSURL *)remoteURL;
+
+/**
+ *  Creates a new instance of a package.
+ *
+ *  @param name Name of the package
+ *  @param resolution Resolution of the package
+ *  @param os OS of the package, usally determined internally
  *  @param remoteURL Remote URL of the package
  *
  *  @return New instance of CCPackage
