@@ -187,7 +187,7 @@
             for (NSArray *stitchList in stitchLists)
             {
                 NSAssert(stitchList.count > 0, @"Encountered an empty stitch list which shouldn't happen.");
-                [stitchedEffects addObject:[self stitchEffects:stitchList startIndex:effectIndex]];
+                [stitchedEffects addObject:[CCEffectStack stitchEffects:stitchList startIndex:effectIndex]];
                 effectIndex += stitchList.count;
             }
         }
@@ -222,7 +222,7 @@
 
 #pragma mark - Internal
 
--(CCEffect *)stitchEffects:(NSArray*)effects startIndex:(int)startIndex
++ (CCEffect *)stitchEffects:(NSArray*)effects startIndex:(int)startIndex
 {
     NSMutableArray* allFragFunctions = [[NSMutableArray alloc] init];
     NSMutableArray* allFragUniforms = [[NSMutableArray alloc] init];
