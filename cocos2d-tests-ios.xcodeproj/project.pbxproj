@@ -66,6 +66,7 @@
 		B7EE69811818760700B983FE /* CCSprite9SliceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69801818760700B983FE /* CCSprite9SliceTest.m */; };
 		B7EE69CF1819D82300B983FE /* CCLayoutTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69CE1819D82300B983FE /* CCLayoutTest.m */; };
 		B7EE6A28181B075E00B983FE /* CCSliderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE6A27181B075E00B983FE /* CCSliderTest.m */; };
+		D23CD73119CB881200C7EB14 /* CCShaders.metal in Resources */ = {isa = PBXBuildFile; fileRef = D3C1281C199D43E0005D2119 /* CCShaders.metal */; };
 		D24FAEED198014C80043E27D /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D34CD3C118ABEE9C00D8E537 /* GLKit.framework */; };
 		D28A2E181954F68200ADC03D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D28A2E171954F68200ADC03D /* UIKit.framework */; };
 		D28A2E1F1954F7E900ADC03D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D28A2E1E1954F7E900ADC03D /* OpenGLES.framework */; };
@@ -78,7 +79,6 @@
 		D34CD3C518ABF4AA00D8E537 /* CCRendererTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D34CD3C418ABF4AA00D8E537 /* CCRendererTests.m */; };
 		D3870C6018B440150033D885 /* SpritePerformanceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3870C5F18B440150033D885 /* SpritePerformanceTest.m */; };
 		D3B2A7E5187DD60B00406C5A /* CCBMFontTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B2A7E4187DD60B00406C5A /* CCBMFontTest.m */; };
-		D3C1281D199D43E0005D2119 /* CCShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = D3C1281C199D43E0005D2119 /* CCShaders.metal */; };
 		D3C9C867188078B900C58900 /* CCSchedulerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3C9C866188078B900C58900 /* CCSchedulerTest.m */; };
 		D3D6CF5F18BD5F0500A51531 /* CCRendererTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3D6CF5E18BD5F0500A51531 /* CCRendererTest.m */; };
 		D4AFE9131977100000261299 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8D81977100000261299 /* A Damn Mess.ttf */; };
@@ -867,6 +867,7 @@
 				D4AFE9371977100000261299 /* konqa32-hd.png in Resources */,
 				D4AFE9161977100000261299 /* arial-unicode-26.fnt in Resources */,
 				B7E2621417E7D34D007067F0 /* Icon-Small.png in Resources */,
+				D23CD73119CB881200C7EB14 /* CCShaders.metal in Resources */,
 				D4AFE9361977100000261299 /* konqa32-hd.fnt in Resources */,
 				D4AFE93C1977100000261299 /* larabie-16.plist in Resources */,
 				D4AFE93A1977100000261299 /* larabie-16-hd.plist in Resources */,
@@ -944,7 +945,6 @@
 				D3870C6018B440150033D885 /* SpritePerformanceTest.m in Sources */,
 				B71B088217EA5B6A0082EBC0 /* CCScrollViewTest.m in Sources */,
 				B7EE697918186D5200B983FE /* CCTextFieldTest.m in Sources */,
-				D3C1281D199D43E0005D2119 /* CCShaders.metal in Sources */,
 				B7E2620017E7D321007067F0 /* AppDelegate.m in Sources */,
 				0E28FE1A197FCE4500F78989 /* CCCacheTest.m in Sources */,
 				B77060AB1832E3310043CC67 /* CCTextureCacheTest.m in Sources */,
