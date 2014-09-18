@@ -116,6 +116,8 @@
     CCEffectPrepareStatus result = CCEffectPrepareNothingToDo;
     if (_passesDirty)
     {
+        CGSize maxPadding = self.padding;
+        
         // Start by populating the flattened list with this stack's effects.
         NSMutableArray *flattenedEffects = [[NSMutableArray alloc] initWithArray:_effects];
         NSUInteger index = 0;
@@ -141,11 +143,22 @@
             }
         }
         
-        // Make sure all the contained effects are ready for rendering
-        // before we do anything else.
         for (CCEffect *effect in flattenedEffects)
         {
+            // Make sure all the contained effects are ready for rendering
+            // before we do anything else.
             [effect prepareForRendering];
+            
+            // And find the max padding values of all contained effects.
+            if (effect.padding.width > maxPadding.width)
+            {
+                maxPadding.width = effect.padding.width;
+            }
+            
+            if (effect.padding.height > maxPadding.height)
+            {
+                maxPadding.height = effect.padding.height;
+            }
         }
 
         NSMutableArray *stitchedEffects = [[NSMutableArray alloc] init];
@@ -194,8 +207,9 @@
         }
         self.renderPasses = [passes copy];
         self.shaderUniforms = uniforms;
-        _passesDirty = NO;
+        self.padding = maxPadding;
         
+        _passesDirty = NO;
         result = CCEffectPrepareSuccess;
     }
     return result;

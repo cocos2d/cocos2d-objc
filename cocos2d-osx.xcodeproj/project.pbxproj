@@ -18,6 +18,12 @@
 		926B97E519385F8A00E345FB /* CCAnimationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 926B97E019385F8A00E345FB /* CCAnimationManager.h */; };
 		926B97EA1938602200E345FB /* CCAnimationManager+FrameAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 926B97E81938602200E345FB /* CCAnimationManager+FrameAnimation.m */; };
 		926B97EB1938602200E345FB /* CCAnimationManager+FrameAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 926B97E91938602200E345FB /* CCAnimationManager+FrameAnimation.h */; };
+		9D9E341519B7AAB800ADD7CB /* CCEffectColorChannelOffset.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D9E340F19B7AAB800ADD7CB /* CCEffectColorChannelOffset.h */; };
+		9D9E341619B7AAB800ADD7CB /* CCEffectColorChannelOffset.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9E341019B7AAB800ADD7CB /* CCEffectColorChannelOffset.m */; };
+		9D9E341719B7AAB800ADD7CB /* CCEffectDropShadow.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D9E341119B7AAB800ADD7CB /* CCEffectDropShadow.h */; };
+		9D9E341819B7AAB800ADD7CB /* CCEffectDropShadow.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9E341219B7AAB800ADD7CB /* CCEffectDropShadow.m */; };
+		9D9E341919B7AAB800ADD7CB /* CCEffectOuterGlow.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D9E341319B7AAB800ADD7CB /* CCEffectOuterGlow.h */; };
+		9D9E341A19B7AAB800ADD7CB /* CCEffectOuterGlow.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9E341419B7AAB800ADD7CB /* CCEffectOuterGlow.m */; };
 		A003ACA7165731D500C7B792 /* ccFPSImages.h in Headers */ = {isa = PBXBuildFile; fileRef = A003ACA5165731D500C7B792 /* ccFPSImages.h */; };
 		A003ACA8165731D500C7B792 /* ccFPSImages.m in Sources */ = {isa = PBXBuildFile; fileRef = A003ACA6165731D500C7B792 /* ccFPSImages.m */; };
 		A03714D7154F1D9300081CBA /* CCNode+Debug.h in Headers */ = {isa = PBXBuildFile; fileRef = A03714D5154F1D9300081CBA /* CCNode+Debug.h */; };
@@ -371,6 +377,12 @@
 		926B97E019385F8A00E345FB /* CCAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCAnimationManager.h; path = "cocos2d-ui/CCBReader/CCAnimationManager.h"; sourceTree = "<group>"; };
 		926B97E81938602200E345FB /* CCAnimationManager+FrameAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "CCAnimationManager+FrameAnimation.m"; path = "cocos2d-ui/CCBReader/CCAnimationManager+FrameAnimation.m"; sourceTree = "<group>"; };
 		926B97E91938602200E345FB /* CCAnimationManager+FrameAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CCAnimationManager+FrameAnimation.h"; path = "cocos2d-ui/CCBReader/CCAnimationManager+FrameAnimation.h"; sourceTree = "<group>"; };
+		9D9E340F19B7AAB800ADD7CB /* CCEffectColorChannelOffset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectColorChannelOffset.h; sourceTree = "<group>"; };
+		9D9E341019B7AAB800ADD7CB /* CCEffectColorChannelOffset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectColorChannelOffset.m; sourceTree = "<group>"; };
+		9D9E341119B7AAB800ADD7CB /* CCEffectDropShadow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectDropShadow.h; sourceTree = "<group>"; };
+		9D9E341219B7AAB800ADD7CB /* CCEffectDropShadow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectDropShadow.m; sourceTree = "<group>"; };
+		9D9E341319B7AAB800ADD7CB /* CCEffectOuterGlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectOuterGlow.h; sourceTree = "<group>"; };
+		9D9E341419B7AAB800ADD7CB /* CCEffectOuterGlow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectOuterGlow.m; sourceTree = "<group>"; };
 		A003ACA5165731D500C7B792 /* ccFPSImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccFPSImages.h; sourceTree = "<group>"; };
 		A003ACA6165731D500C7B792 /* ccFPSImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccFPSImages.m; sourceTree = "<group>"; };
 		A0191EAA167FDBA40099349A /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
@@ -935,6 +947,8 @@
 				D3DBE16C19C8DED80009E45F /* CCEffectDistanceField.m */,
 				D3DBE16F19C8DED80009E45F /* CCEffectDropShadow.h */,
 				D3DBE17019C8DED80009E45F /* CCEffectDropShadow.m */,
+				9D9E340F19B7AAB800ADD7CB /* CCEffectColorChannelOffset.h */,
+				9D9E341019B7AAB800ADD7CB /* CCEffectColorChannelOffset.m */,
 				D3903B01199527AA003AA81A /* CCEffectBlur.h */,
 				D3903B02199527AA003AA81A /* CCEffectBlur.m */,
 				D2D598421987132700BDAF25 /* CCEffect_Private.h */,
@@ -1489,6 +1503,7 @@
 				E076E75C1225EC7400DE0DA2 /* base64.h in Headers */,
 				B7D273311822F5460054849B /* CCBSequence.h in Headers */,
 				E076E7601225EC7400DE0DA2 /* CCFileUtils.h in Headers */,
+				9D9E341519B7AAB800ADD7CB /* CCEffectColorChannelOffset.h in Headers */,
 				E076E7621225EC7400DE0DA2 /* CCProfiling.h in Headers */,
 				E076E7651225EC7400DE0DA2 /* ccUtils.h in Headers */,
 				D2D598801987132700BDAF25 /* CCEffectStack_Private.h in Headers */,
@@ -1785,6 +1800,7 @@
 				A046E2B514C1E5000005BBF2 /* CCES2Renderer.m in Sources */,
 				A046E2B814C1E5000005BBF2 /* CCGLView.m in Sources */,
 				D389412918639DD400725CFC /* CCPhysicsJoint.m in Sources */,
+				9D9E341619B7AAB800ADD7CB /* CCEffectColorChannelOffset.m in Sources */,
 				A0C879AD14F98F1C00C0E8B2 /* NSThread+performBlock.m in Sources */,
 				571CD04119649E22003D460C /* CCPlatformTextFieldMac.m in Sources */,
 				D2D5986A1987132700BDAF25 /* CCEffectBrightness.m in Sources */,

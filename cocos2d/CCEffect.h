@@ -29,4 +29,11 @@
 /** An identifier for debugging effects. */
 @property (nonatomic, copy) NSString *debugName;
 
+/** Padding in points that will be applied to affected sprites to avoid clipping the
+  * effect's visuals at the sprite's boundary. For example, if you create a blur effect
+  * whose radius will animate over time but will never exceed 8 points then you should
+  * set the padding to at least 8 to avoid clipping.
+  */
+@property (nonatomic, assign) CGSize padding;
+
 @end

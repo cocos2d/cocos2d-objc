@@ -251,6 +251,151 @@
 
 #endif
 
+-(void)setupPaddingEffectTest
+{
+    self.subTitle = @"Effect Padding Test";
+
+    {
+        CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/particles.png"];
+        sprite.positionType = CCPositionTypeNormalized;
+        sprite.position = ccp(0.75f, 0.8f);
+        
+        [self.contentNode addChild:sprite];
+        
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Original Sprite" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector sharedDirector].UIScaleFactor];
+        title.color = [CCColor whiteColor];
+        title.positionType = CCPositionTypeNormalized;
+        title.position = ccp(0.25f, 0.8f);
+        title.horizontalAlignment = CCTextAlignmentCenter;
+        
+        [self.contentNode addChild:title];
+    }
+    
+    {
+        CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/particles.png"];
+        sprite.positionType = CCPositionTypeNormalized;
+        sprite.position = ccp(0.75f, 0.65f);
+        
+        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffset:GLKVector2Make(5.0f, 0.0f) greenOffset:GLKVector2Make(-4.0f, 4.0f) blueOffset:GLKVector2Make(-4.0f, -4.0f)];
+        sprite.effect = offset;
+        
+        [self.contentNode addChild:sprite];
+        
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Color channel offset without padding" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector sharedDirector].UIScaleFactor];
+        title.color = [CCColor whiteColor];
+        title.positionType = CCPositionTypeNormalized;
+        title.position = ccp(0.25f, 0.65f);
+        title.horizontalAlignment = CCTextAlignmentCenter;
+        
+        [self.contentNode addChild:title];
+    }
+    
+    {
+        CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/particles.png"];
+        sprite.positionType = CCPositionTypeNormalized;
+        sprite.position = ccp(0.75f, 0.5f);
+        
+        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffset:GLKVector2Make(5.0f, 0.0f) greenOffset:GLKVector2Make(-4.0f, 4.0f) blueOffset:GLKVector2Make(-4.0f, -4.0f)];
+        offset.padding = CGSizeMake(5.0f, 5.0f);
+        sprite.effect = offset;
+        
+        [self.contentNode addChild:sprite];
+        
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Color channel offset with padding" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector sharedDirector].UIScaleFactor];
+        title.color = [CCColor whiteColor];
+        title.positionType = CCPositionTypeNormalized;
+        title.position = ccp(0.25f, 0.5f);
+        title.horizontalAlignment = CCTextAlignmentCenter;
+        
+        [self.contentNode addChild:title];
+    }
+
+    {
+        CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/particles.png"];
+        sprite.positionType = CCPositionTypeNormalized;
+        sprite.position = ccp(0.75f, 0.35f);
+        
+        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffset:GLKVector2Make(5.0f, 0.0f) greenOffset:GLKVector2Make(-4.0f, 4.0f) blueOffset:GLKVector2Make(-4.0f, -4.0f)];
+        offset.padding = CGSizeMake(5.0f, 5.0f);
+        CCEffectHue *hue = [CCEffectHue effectWithHue:60.0f];
+        sprite.effect = [CCEffectStack effectWithArray:@[offset, hue]];
+        
+        [self.contentNode addChild:sprite];
+        
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Padded effect stack (offset then hue)" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector sharedDirector].UIScaleFactor];
+        title.color = [CCColor whiteColor];
+        title.positionType = CCPositionTypeNormalized;
+        title.position = ccp(0.25f, 0.35f);
+        title.horizontalAlignment = CCTextAlignmentCenter;
+        
+        [self.contentNode addChild:title];
+    }
+    
+    {
+        CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/particles.png"];
+        sprite.positionType = CCPositionTypeNormalized;
+        sprite.position = ccp(0.75f, 0.2f);
+        
+        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffset:GLKVector2Make(5.0f, 0.0f) greenOffset:GLKVector2Make(-4.0f, 4.0f) blueOffset:GLKVector2Make(-4.0f, -4.0f)];
+        offset.padding = CGSizeMake(5.0f, 5.0f);
+        CCEffectHue *hue = [CCEffectHue effectWithHue:60.0f];
+        sprite.effect = [CCEffectStack effectWithArray:@[hue, offset]];
+        
+        [self.contentNode addChild:sprite];
+        
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Padded efect stack (hue then offset)" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector sharedDirector].UIScaleFactor];
+        title.color = [CCColor whiteColor];
+        title.positionType = CCPositionTypeNormalized;
+        title.position = ccp(0.25f, 0.2f);
+        title.horizontalAlignment = CCTextAlignmentCenter;
+        
+        [self.contentNode addChild:title];
+    }
+}
+
+-(void)setupColorChannelOffsetTest
+{
+    self.subTitle = @"Color Channel Offset Effect Test";
+    
+    CCEffectColorChannelOffset *effect = [CCEffectColorChannelOffset effectWithRedOffset:GLKVector2Make(0.0f, 0.0f) greenOffset:GLKVector2Make(0.0f, 0.0f) blueOffset:GLKVector2Make(0.0f, 0.0f)];
+    effect.padding = CGSizeMake(5.0f, 5.0f);
+    
+    CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/particles.png"];
+    sprite.scale = 1.0f;
+    sprite.positionType = CCPositionTypeNormalized;
+    sprite.position = ccp(0.5f, 0.5f);
+    sprite.effect = effect;
+    
+    [self.contentNode addChild:sprite];
+    
+    const float thetaStep = CC_DEGREES_TO_RADIANS(10.0f);
+    __block float redTheta = CC_DEGREES_TO_RADIANS(0.0f);
+    __block float greenTheta = CC_DEGREES_TO_RADIANS(120.0f);
+    __block float blueTheta = CC_DEGREES_TO_RADIANS(240.0f);
+    void (^updateBlock)() = ^{
+        
+        float redRadius = 3.0f;
+        effect.redOffset = GLKVector2Make(redRadius * cosf(redTheta), redRadius * sinf(redTheta));
+        
+        float greenRadius = 3.0f;
+        effect.greenOffset = GLKVector2Make(greenRadius * cosf(greenTheta), greenRadius * sinf(greenTheta));
+        
+        float blueRadius = 3.0f;
+        effect.blueOffset = GLKVector2Make(blueRadius * cosf(blueTheta), blueRadius * sinf(blueTheta));
+        
+        redTheta += thetaStep;
+        greenTheta += thetaStep;
+        blueTheta += thetaStep;
+    };
+    updateBlock();
+    
+    [sprite runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+                                                               [CCActionDelay actionWithDuration:0.1f],
+                                                               [CCActionCallBlock actionWithBlock:updateBlock],
+                                                               nil
+                                                               ]]];
+}
+
 #pragma mark DropShadow
 
 -(void)setupDropShadowEffectTest
@@ -659,13 +804,14 @@
     const int steps = 5;
     for (int i = 0; i < steps; i++)
     {
-        CCSprite *sampleSprite3 = [CCSprite spriteWithImageNamed:@"Images/grossini_dance_08.png"];
+        CCSprite *sampleSprite3 = [CCSprite spriteWithImageNamed:@"Images/f1.png"];
         sampleSprite3.anchorPoint = ccp(0.5, 0.5);
         sampleSprite3.position = ccp(0.1f + i * (0.8f / (steps - 1)), 0.2f);
         sampleSprite3.positionType = CCPositionTypeNormalized;
         
         // Blend glow maps test
-        CCEffectBloom* glowEffect3 = [CCEffectBloom effectWithBlurRadius:3 intensity:1.0f luminanceThreshold:1.0f - ((float)i/(float)(steps-1))];
+        CCEffectBloom* glowEffect3 = [CCEffectBloom effectWithBlurRadius:8 intensity:1.0f luminanceThreshold:1.0f - ((float)i/(float)(steps-1))];
+        glowEffect3.padding = CGSizeMake(10.0f, 10.0f);
         sampleSprite3.effect = glowEffect3;
         
         [self.contentNode addChild:sampleSprite3];
