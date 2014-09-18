@@ -60,7 +60,19 @@
 
 - (void)enqueuePackageForDownload:(CCPackage *)package
 {
+    if (package.status == CCPackageStatusDownloadPaused)
+    {
+        [self resumeDownloadOfPackage:package];
+        return;
+    }
+
     if ([self packageDownloadForPackage:package])
+    {
+        return;
+    }
+
+    if (!(package.status == CCPackageStatusDownloadFailed
+          || package.status == CCPackageStatusInitial))
     {
         return;
     }
