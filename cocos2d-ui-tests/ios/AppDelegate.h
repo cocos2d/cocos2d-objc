@@ -29,4 +29,6 @@
 {
 }
 
+- (void)configureFileUtilsSearchPathAndRegisterSpriteSheets;
+
 @end
