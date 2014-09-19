@@ -116,7 +116,9 @@ CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount)
 @end
 
 
-@interface CCFrameBufferObject : NSObject
+@interface CCFrameBufferObject : NSObject {
+	GLuint _depthStencilFormat;
+}
 
 // Setters should be treated as protected.
 @property(nonatomic, readonly) CCTexture *texture;

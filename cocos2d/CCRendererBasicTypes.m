@@ -430,12 +430,14 @@ static CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 		
 		_sizeInPixels = texture.contentSizeInPixels;
 		_contentScale = texture.contentScale;
+		
+		_depthStencilFormat = depthStencilFormat;
 	}
 	
 	return self;
 }
 
--(void)bind
+-(void)bindWithClear:(GLbitfield)mask color:(GLKVector4)color4 depth:(GLclampf)depth stencil:(GLint)stencil
 {NSAssert(NO, @"Must be overridden.");}
 
 -(void)syncWithView:(CC_VIEW<CCDirectorView> *)view;

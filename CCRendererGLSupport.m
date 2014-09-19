@@ -375,8 +375,13 @@ static const CCGraphicsBufferType CCGraphicsBufferGLTypes[] = {
 	if(mask & GL_COLOR_BUFFER_BIT) glClearColor(color4.r, color4.g, color4.b, color4.a);
 	if(mask & GL_DEPTH_BUFFER_BIT) glClearDepth(depth);
 	if(mask & GL_STENCIL_BUFFER_BIT) glClearStencil(stencil);
+	if(mask) glClear(mask);
 	
-	glClear(mask);
+	// Enabled depth testing if there is a depth buffer.
+	if(_depthStencilFormat){
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LEQUAL);
+	}
 }
 
 -(void)syncWithView:(CC_VIEW<CCDirectorView> *)view;
