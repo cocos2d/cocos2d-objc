@@ -15,7 +15,7 @@
     return @"Android";
 
 #endif
-    return nil;
+    return @"iOS";
 }
 
 @end
