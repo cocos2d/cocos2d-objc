@@ -942,7 +942,7 @@
                          [CCEffectBrightness effectWithBrightness:0.25f],
                          [CCEffectContrast effectWithContrast:1.0f],
                          [CCEffectPixellate effectWithBlockSize:8.0f],
-                         [CCEffectSaturation effectWithSaturation:-1.0f],
+                         [CCEffectSaturation effectWithSaturation:1.0f],
                          [CCEffectHue effectWithHue:90.0f],
                          [CCEffectGlass effectWithShininess:1.0f refraction:0.75f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment],
                          [CCEffectRefraction effectWithRefraction:0.75f environment:refractEnvironment],
@@ -956,7 +956,9 @@
     sprite.position = ccp(0.5f, 0.5f);
     sprite.scale = 0.5f;
 
-    sprite.effect = [CCEffectStack effects:effects[7], effects[4], nil];
+    CCEffectStack *stack1 = [CCEffectStack effects:effects[7], effects[6], nil];
+    CCEffectStack *stack2 = [CCEffectStack effects:effects[5], effects[4], nil];
+    sprite.effect = [CCEffectStack effects:stack1, stack2, nil];
     
     sprite.normalMapSpriteFrame = [CCSpriteFrame frameWithImageNamed:@"Images/ShinyBallNormals.png"];
     sprite.colorRGBA = [CCColor colorWithRed:0.75f green:0.75f blue:0.75f alpha:0.75f];
@@ -1026,7 +1028,7 @@
     
     CGSize containerSize = self.contentNode.contentSizeInPoints;
     
-    const float footprintScale = 1.1f;
+    const float footprintScale = 0.5f;
     
     NSString *spriteImage = @"Images/r1.png";
     CCSprite *sprite = [CCSprite spriteWithImageNamed:spriteImage];
