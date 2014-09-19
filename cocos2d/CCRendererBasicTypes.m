@@ -405,12 +405,14 @@ static CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 {
 	[_vertexBuffer prepare];
 	[_indexBuffer prepare];
+	[_uniformBuffer prepare];
 }
 
 -(void)commit
 {
 	[_vertexBuffer commit];
 	[_indexBuffer commit];
+	[_uniformBuffer commit];
 }
 
 @end
