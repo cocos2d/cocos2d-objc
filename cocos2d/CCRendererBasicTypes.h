@@ -23,17 +23,8 @@
  */
 
 #import "ccTypes.h"
+#import "CCRendererSharedTypes.h"
 
-
-/// Standard interleaved vertex format for Cocos2D.
-typedef struct CCVertex {
-	/// Vec4 position (x, y, z, w)
-	GLKVector4 position;
-	/// 2xVec2 texture coordinates (x, y)
-	GLKVector2 texCoord1, texCoord2;
-	/// Vec4 color (RGBA)
-	GLKVector4 color;
-} CCVertex;
 
 /// Multiply the vertex's position by the given transform. Pass the rest.
 static inline CCVertex

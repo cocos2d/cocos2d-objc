@@ -291,7 +291,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	globalShaderUniforms[CCShaderUniformViewSize] = [NSValue valueWithGLKVector2:globals.viewSize];
 	
 	CCTime t = director.scheduler.currentTime;
-	globals.time = GLKVector4Make(t, t/2.0f, t/8.0f, t/8.0f);
+	globals.time = GLKVector4Make(t, t/2.0f, t/4.0f, t/8.0f);
 	globals.sinTime = GLKVector4Make(sinf(t*2.0f), sinf(t), sinf(t/2.0f), sinf(t/4.0f));
 	globals.cosTime = GLKVector4Make(cosf(t*2.0f), cosf(t), cosf(t/2.0f), cosf(t/4.0f));
 	globalShaderUniforms[CCShaderUniformTime] = [NSValue valueWithGLKVector4:globals.time];

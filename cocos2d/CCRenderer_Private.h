@@ -29,19 +29,6 @@
 #import "CCRenderDispatch.h"
 #import "CCRendererBasicTypes_Private.h"
 
-// Struct used for packing the global uniforms.
-// NOTE: Must match the definition in CCShaders.metal!
-typedef struct CCGlobalUniforms {
-	GLKMatrix4 projection;
-	GLKMatrix4 projectionInv;
-	GLKVector2 viewSize;
-	GLKVector2 viewSizeInPixels;
-	GLKVector4 time;
-	GLKVector4 sinTime;
-	GLKVector4 cosTime;
-	GLKVector4 random01;
-} CCGlobalUniforms;
-
 /// Options dictionary for the disabled blending mode.
 extern NSDictionary *CCBLEND_DISABLED_OPTIONS;
 

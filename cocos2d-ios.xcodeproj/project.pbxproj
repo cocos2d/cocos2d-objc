@@ -675,6 +675,7 @@
 		D39FA9C818C1BC6B00441627 /* CCShader_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D39FA9C718C1BC6B00441627 /* CCShader_Private.h */; };
 		D3A2E7D2181E12750033614C /* CCPhysicsShape.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A2E7D0181E12750033614C /* CCPhysicsShape.h */; };
 		D3A2E7D3181E12750033614C /* CCPhysicsShape.m in Sources */ = {isa = PBXBuildFile; fileRef = D3A2E7D1181E12750033614C /* CCPhysicsShape.m */; };
+		D3E3752F19CC842A0076CDBB /* CCRendererSharedTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = D3E3752E19CC842A0076CDBB /* CCRendererSharedTypes.h */; };
 		E01E6D8C121F130E001A484F /* CCLabelBMFont.h in Headers */ = {isa = PBXBuildFile; fileRef = E01E6D8A121F130E001A484F /* CCLabelBMFont.h */; };
 		E01E6D8D121F130E001A484F /* CCLabelBMFont.m in Sources */ = {isa = PBXBuildFile; fileRef = E01E6D8B121F130E001A484F /* CCLabelBMFont.m */; };
 		E02BB6D6126CA93A006E46A2 /* CCAnimationCache.h in Headers */ = {isa = PBXBuildFile; fileRef = E02BB6D4126CA93A006E46A2 /* CCAnimationCache.h */; };
@@ -1119,6 +1120,7 @@
 		D3A2E7D0181E12750033614C /* CCPhysicsShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsShape.h; sourceTree = "<group>"; };
 		D3A2E7D1181E12750033614C /* CCPhysicsShape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsShape.m; sourceTree = "<group>"; };
 		D3C12815199D40AC005D2119 /* CCShaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = CCShaders.metal; sourceTree = "<group>"; };
+		D3E3752E19CC842A0076CDBB /* CCRendererSharedTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRendererSharedTypes.h; sourceTree = "<group>"; };
 		E01E6D8A121F130E001A484F /* CCLabelBMFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCLabelBMFont.h; sourceTree = "<group>"; };
 		E01E6D8B121F130E001A484F /* CCLabelBMFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCLabelBMFont.m; sourceTree = "<group>"; };
 		E02BB6D4126CA93A006E46A2 /* CCAnimationCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAnimationCache.h; sourceTree = "<group>"; };
@@ -1894,6 +1896,7 @@
 			children = (
 				D3903B0E199528A0003AA81A /* CCRenderDispatch.h */,
 				D3903B0F199528A0003AA81A /* CCRenderDispatch.m */,
+				D3E3752E19CC842A0076CDBB /* CCRendererSharedTypes.h */,
 				D34CAD6519C3A7A5009BED7A /* CCRendererBasicTypes.h */,
 				D34CAD6A19C3AA10009BED7A /* CCRendererBasicTypes_Private.h */,
 				D34CAD6819C3A7B3009BED7A /* CCRendererBasicTypes.m */,
@@ -2113,6 +2116,7 @@
 				5B063DD019637291002B1CDE /* ALWeakDictionary.h in Headers */,
 				E02BB704126CADEA006E46A2 /* CCAnimation.h in Headers */,
 				B7D273191822F4AA0054849B /* CCBuilderReader.h in Headers */,
+				D3E3752F19CC842A0076CDBB /* CCRendererSharedTypes.h in Headers */,
 				B7E775D018527EF0004221AA /* CCAppDelegate.h in Headers */,
 				E0BC7D9F1342CE7B001B4DCC /* CCShader.h in Headers */,
 				D2DDB09319805E8400233D80 /* CCMathUtilsAndroid.h in Headers */,
