@@ -103,7 +103,11 @@ void CCRENDERER_DEBUG_CHECK_ERRORS(void){
 {
 	if((self = [super init])){
 		_mode = mode;
+#if CC_DIRECTOR_IOS_THREADED_RENDERING
 		_renderState = [renderState copy];
+#else
+		_renderState = renderState;
+#endif
 		_first = first;
 		_count = count;
 		_globalSortOrder = globalSortOrder;
