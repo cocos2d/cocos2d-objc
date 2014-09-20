@@ -169,22 +169,40 @@ CompileShader(GLenum type, const char *source)
 
 -(id)createSharedDataForKey:(id<NSCopying>)key
 {
-#warning TODO Need Metal path here.
 	NSString *shaderName = (NSString *)key;
 	
-	NSString *fragmentName = [shaderName stringByAppendingPathExtension:@"fsh"];
-	NSString *fragmentPath = [[CCFileUtils sharedFileUtils] fullPathForFilename:fragmentName];
-	NSAssert(fragmentPath, @"Failed to find '%@'.", fragmentName);
-	NSString *fragmentSource = [NSString stringWithContentsOfFile:fragmentPath encoding:NSUTF8StringEncoding error:nil];
-	
-	NSString *vertexName = [shaderName stringByAppendingPathExtension:@"vsh"];
-	NSString *vertexPath = [[CCFileUtils sharedFileUtils] fullPathForFilename:vertexName];
-	NSString *vertexSource = (vertexPath ? [NSString stringWithContentsOfFile:vertexPath encoding:NSUTF8StringEncoding error:nil] : CCDefaultVShader);
-	
-	CCShader *shader = [[CCShader alloc] initWithVertexShaderSource:vertexSource fragmentShaderSource:fragmentSource];
-	shader.debugName = @"shaderName";
-	
-	return shader;
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+		id<MTLLibrary> library = [CCMetalContext currentContext].library;
+		
+		NSString *fragmentName = [shaderName stringByAppendingString:@"FS"];
+		id<MTLFunction> fragmentFunction = [library newFunctionWithName:fragmentName];
+		NSAssert(fragmentFunction, @"CCShader: Fragment function named %@ not found in the default library.", fragmentName);
+		
+		NSString *vertexName = [shaderName stringByAppendingPathExtension:@"VS"];
+		id<MTLFunction> vertexFunction = ([library newFunctionWithName:vertexName] ?: [library newFunctionWithName:@"CCVertexFunctionDefault"]);
+		
+		CCShader *shader = [[CCShader alloc] initWithMetalVertexFunction:vertexFunction fragmentFunction:fragmentFunction];
+		shader.debugName = shaderName;
+		
+		return shader;
+	} else
+#endif
+	{
+		NSString *fragmentName = [shaderName stringByAppendingPathExtension:@"fsh"];
+		NSString *fragmentPath = [[CCFileUtils sharedFileUtils] fullPathForFilename:fragmentName];
+		NSAssert(fragmentPath, @"Failed to find '%@'.", fragmentName);
+		NSString *fragmentSource = [NSString stringWithContentsOfFile:fragmentPath encoding:NSUTF8StringEncoding error:nil];
+		
+		NSString *vertexName = [shaderName stringByAppendingPathExtension:@"vsh"];
+		NSString *vertexPath = [[CCFileUtils sharedFileUtils] fullPathForFilename:vertexName];
+		NSString *vertexSource = (vertexPath ? [NSString stringWithContentsOfFile:vertexPath encoding:NSUTF8StringEncoding error:nil] : CCDefaultVShader);
+		
+		CCShader *shader = [[CCShader alloc] initWithVertexShaderSource:vertexSource fragmentShaderSource:fragmentSource];
+		shader.debugName = shaderName;
+		
+		return shader;
+	}
 }
 
 -(id)createPublicObjectForSharedData:(id)data
@@ -657,7 +675,14 @@ typedef struct CCGlobalUniforms {
 
 -(instancetype)copyWithZone:(NSZone *)zone
 {
-	return [[CCShader allocWithZone:zone] initWithGLProgram:_program uniformSetters:_uniformSetters ownsProgram:NO];
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+		return [[CCShader allocWithZone:zone] initWithMetalVertexFunction:_vertexFunction fragmentFunction:_fragmentFunction];
+	} else
+#endif
+	{
+		return [[CCShader allocWithZone:zone] initWithGLProgram:_program uniformSetters:_uniformSetters ownsProgram:NO];
+	}
 }
 
 static CCShaderCache *CC_SHADER_CACHE = nil;
@@ -672,6 +697,7 @@ static CCShader *CC_SHADER_POS_TEX_COLOR_ALPHA_TEST = nil;
 	if(self != [CCShader class]) return;
 	
 	NSAssert([CCConfiguration sharedConfiguration].graphicsAPI != CCGraphicsAPIInvalid, @"Graphics API not configured.");
+	CC_SHADER_CACHE = [[CCShaderCache alloc] init];
 	
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
@@ -694,8 +720,6 @@ static CCShader *CC_SHADER_POS_TEX_COLOR_ALPHA_TEST = nil;
 	} else
 #endif
 	{
-		CC_SHADER_CACHE = [[CCShaderCache alloc] init];
-		
 		// Setup the builtin shaders.
 		CC_SHADER_POS_COLOR = [[self alloc] initWithFragmentShaderSource:@"void main(){gl_FragColor = cc_FragColor;}"];
 		CC_SHADER_POS_COLOR.debugName = @"CCPositionColorShader";
