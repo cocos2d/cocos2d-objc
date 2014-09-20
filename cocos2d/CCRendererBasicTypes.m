@@ -309,6 +309,10 @@ static CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 -(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms copyUniforms:(BOOL)copyUniforms
 {
 	if((self = [super init])){
+		NSAssert(blendMode, @"CCRenderState: Blending mode is nil");
+		NSAssert(shader, @"CCRenderState: Shader is nil");
+		NSAssert(shaderUniforms, @"CCRenderState: shader uniform dictionary is nil.");
+		
 		_blendMode = blendMode;
 		_shader = shader;
 		_shaderUniforms = (copyUniforms ? [shaderUniforms copy] : shaderUniforms);
