@@ -73,8 +73,7 @@ CCFragmentFunctionDefaultTextureA8Color(
 
 fragment half4
 CCFragmentFunctionUnsupported(
-	const CCFragData in [[stage_in]],
-	texture2d<half> cc_MainTexture [[texture(0)]]
+	const CCFragData in [[stage_in]]
 ){
 	return half4(1, 0, 1, 1);
 }

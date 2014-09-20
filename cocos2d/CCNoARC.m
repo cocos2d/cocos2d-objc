@@ -320,7 +320,7 @@ static void
 CCRenderStateMetalPrepare(CCRenderStateMetal *self)
 {
 	if(self->_renderPipelineState == nil){
-		#warning Should get this from the renderer somehow.
+		// TODO Should get this from the renderer somehow?
 		CCMetalContext *context = [CCMetalContext currentContext];
 		
 		MTLRenderPipelineDescriptor *pipelineStateDescriptor = [[MTLRenderPipelineDescriptor alloc] init];
@@ -341,7 +341,11 @@ CCRenderStateMetalPrepare(CCRenderStateMetal *self)
 		colorDescriptor.alphaBlendOperation = GLBLEND_TO_METAL(blendOptions[CCBlendEquationAlpha]);
 		pipelineStateDescriptor.colorAttachments[0] = colorDescriptor;
 		
-		self->_renderPipelineState = [[context.device newRenderPipelineStateWithDescriptor:pipelineStateDescriptor error:nil] retain];
+		NSError *err = nil;
+		self->_renderPipelineState = [[context.device newRenderPipelineStateWithDescriptor:pipelineStateDescriptor error:&err] retain];
+		
+		if(err) CCLOG(@"Error creating metal render pipeline state. %@", err);
+		NSCAssert(self->_renderPipelineState, @"Could not create render pipeline state.");
 	}
 }
 
@@ -381,7 +385,8 @@ static const MTLPrimitiveType MetalDrawModes[] = {
 -(instancetype)initWithMode:(CCRenderCommandDrawMode)mode renderState:(CCRenderState *)renderState first:(NSUInteger)first count:(size_t)count globalSortOrder:(NSInteger)globalSortOrder
 {
 	if((self = [super initWithMode:mode renderState:renderState first:first count:count globalSortOrder:globalSortOrder])){
-		CCRenderStateMetalPrepare((CCRenderStateMetal *)renderState);
+		// The renderer may have copied the render state, use the ivar.
+		CCRenderStateMetalPrepare((CCRenderStateMetal *)_renderState);
 	}
 	
 	return self;

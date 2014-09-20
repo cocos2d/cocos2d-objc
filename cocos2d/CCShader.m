@@ -376,7 +376,9 @@ MetalUniformSetBuffer(NSString *name, MTLArgument *vertexArg, MTLArgument *fragm
 {
 	NSUInteger vertexIndex = vertexArg.index;
 	NSUInteger fragmentIndex = fragmentArg.index;
-	size_t bytes = vertexArg.bufferDataSize;
+	
+	// vertexArg may be nil.
+	size_t bytes = (vertexArg.bufferDataSize ?: fragmentArg.bufferDataSize);
 	
 	CCMetalContext *context = [CCMetalContext currentContext];
 	
@@ -393,20 +395,27 @@ MetalUniformSetBuffer(NSString *name, MTLArgument *vertexArg, MTLArgument *fragm
 		};
 	} else {
 		// If both args are active, they must match.
-		NSCAssert(!vertexArg || !fragmentArg || bytes == fragmentArg.bufferDataSize, @"Vertex and fragment argument type don't match for '%@'.", vertexArg.name);
+		NSCAssert(!vertexArg || !fragmentArg || vertexArg.bufferDataSize == fragmentArg.bufferDataSize, @"Vertex and fragment argument type don't match for '%@'.", vertexArg.name);
 		
 		return ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
 			CCGraphicsBufferMetal *uniformBuffer = (CCGraphicsBufferMetal *)renderer->_buffers->_uniformBuffer;
 			id<MTLBuffer> metalBuffer = uniformBuffer->_buffer;
 			
-			NSNumber *globalOffset = renderer->_globalShaderUniformBufferOffsets[name];
-			NSUInteger offset = globalOffset.unsignedIntegerValue;
+			NSUInteger offset = 0;
 			
-			if(!globalOffset){
+			NSValue *value = shaderUniforms[name];
+			if(value){
+				// Try finding a per-node value first and append it to the uniform buffer.
 				void *buff = CCGraphicsBufferPushElements(uniformBuffer, bytes);
-				[shaderUniforms[name] getValue:buff];
+				[value getValue:buff];
 				
 				offset = buff - uniformBuffer->_ptr;
+			} else {
+				// Look for a global offset instead.
+				NSNumber *globalOffset = renderer->_globalShaderUniformBufferOffsets[name];
+				NSCAssert(globalOffset, @"Shader value named '%@' not found.", name);
+				
+				offset = globalOffset.unsignedIntegerValue;
 			}
 			
 			id<MTLRenderCommandEncoder> renderEncoder = context->_currentRenderCommandEncoder;
@@ -509,6 +518,8 @@ MetalUniformSettersForFunctions(id<MTLFunction> vertexFunction, id<MTLFunction> 
 -(instancetype)initWithMetalVertexFunction:(id<MTLFunction>)vertexFunction fragmentFunction:(id<MTLFunction>)fragmentFunction
 {
 	if((self = [super init])){
+		NSAssert(vertexFunction && fragmentFunction, @"Must create have both a vertex and fragment function to make a CCShader.");
+		
 		_vertexFunction = vertexFunction;
 		_fragmentFunction = fragmentFunction;
 		
@@ -517,13 +528,73 @@ MetalUniformSettersForFunctions(id<MTLFunction> vertexFunction, id<MTLFunction> 
 	
 	return self;
 }
+
+-(instancetype)initWithMetalVertexShaderSource:(NSString *)vertexSource fragmentShaderSource:(NSString *)fragmentSource
+{
+	CCMetalContext *context = [CCMetalContext currentContext];
+	NSString *header = CC_METAL(
+using namespace metal;
+
+typedef struct CCVertex {
+	float4 position;
+	float2 texCoord1;
+	float2 texCoord2;
+	float4 color;
+} CCVertex;
+
+typedef struct CCFragData {
+	float4 position [[position]];
+	float2 texCoord1;
+	float2 texCoord2;
+	half4  color;
+} CCFragData;
+
+typedef struct CCGlobalUniforms {
+	float4x4 projection;
+	float4x4 projectionInv;
+	float2 viewSize;
+	float2 viewSizeInPixels;
+	float4 time;
+	float4 sinTime;
+	float4 cosTime;
+	float4 random01;
+} CCGlobalUniforms;
+
+	);
+	
+	id<MTLFunction> vertexFunction = nil;
+	if(vertexSource == CCDefaultVShader){
+		// Use the default vertex shader.
+		vertexFunction = [context.library newFunctionWithName:@"CCVertexFunctionDefault"];
+	} else {
+		// Append on the standard header since JIT compiled shaders can't use #import
+		vertexSource = [header stringByAppendingString:vertexSource];
+		
+		// Compile the vertex shader.
+		NSError *verr = nil;
+		id<MTLLibrary> vlib = [context.device newLibraryWithSource:vertexSource options:nil error:&verr];
+		if(verr) CCLOG(@"Error compiling metal vertex shader: %@", verr);
+		
+		vertexFunction = [vlib newFunctionWithName:@"ShaderMain"];
+	}
+	
+	// Append on the standard header since JIT compiled shaders can't use #import
+	fragmentSource = [header stringByAppendingString:fragmentSource];
+	
+	// compile the fragment shader.
+	NSError *ferr = nil;
+	id<MTLLibrary> flib = [context.device newLibraryWithSource:fragmentSource options:nil error:&ferr];
+	if(ferr) CCLOG(@"Error compiling metal fragment shader: %@", ferr);
+	
+	id<MTLFunction> fragmentFunction = [flib newFunctionWithName:@"ShaderMain"];
+	
+	// Done!
+	return [self initWithMetalVertexFunction:vertexFunction fragmentFunction:fragmentFunction];
+}
 #endif
 
--(instancetype)initWithVertexShaderSource:(NSString *)vertexSource fragmentShaderSource:(NSString *)fragmentSource
+-(instancetype)initWithGLVertexShaderSource:(NSString *)vertexSource fragmentShaderSource:(NSString *)fragmentSource
 {
-	#warning TODO
-	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal) return self;
-	
 	__block typeof(self) blockself = self;
 	
 	CCRenderDispatch(NO, ^{
@@ -553,6 +624,18 @@ MetalUniformSettersForFunctions(id<MTLFunction> vertexFunction, id<MTLFunction> 
 	});
 	
 	return blockself;
+}
+
+-(instancetype)initWithVertexShaderSource:(NSString *)vertexSource fragmentShaderSource:(NSString *)fragmentSource
+{
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+		return [self initWithMetalVertexShaderSource:vertexSource fragmentShaderSource:fragmentSource];
+	}
+#endif
+	{
+		return [self initWithGLVertexShaderSource:vertexSource fragmentShaderSource:fragmentSource];
+	}
 }
 
 -(instancetype)initWithFragmentShaderSource:(NSString *)source
