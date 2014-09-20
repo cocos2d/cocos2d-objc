@@ -39,7 +39,7 @@
 	{
 		_context = [[CCMetalContext alloc] init];
 		
-		#warning Temporary. Move into CCRenderDispatch?
+		//TODO Move into CCRenderDispatch to support threaded rendering with Metal?
 		[CCMetalContext setCurrentContext:_context];
 		
 		_queuedFramesSemaphore = dispatch_semaphore_create(CC_METAL_MAX_QUEUED_FRAMES);
