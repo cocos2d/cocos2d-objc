@@ -250,6 +250,20 @@ static NSString* vertBase =
     return self;
 }
 
+-(instancetype)copyWithZone:(NSZone *)zone
+{
+	CCEffectRenderPass *newPass = [[CCEffectRenderPass allocWithZone:zone] initWithIndex:_indexInEffect];
+    newPass.texCoord1Mapping = _texCoord1Mapping;
+    newPass.texCoord2Mapping = _texCoord2Mapping;
+    newPass.blendMode = _blendMode;
+    newPass.shader = _shader;
+    newPass.beginBlocks = _beginBlocks;
+    newPass.updateBlocks = _updateBlocks;
+    newPass.endBlocks = _endBlocks;
+    newPass.debugLabel = _debugLabel;
+    return newPass;
+}
+
 -(void)begin:(CCTexture *)previousPassTexture
 {
     for (CCEffectRenderPassBeginBlock block in _beginBlocks)
