@@ -57,14 +57,14 @@
 
 
     id<NSURLProtocolClient> client = [self client];
-    [client URLProtocol:self didLoadData:data];
     [client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
+    [client URLProtocol:self didLoadData:data];
     [client URLProtocolDidFinishLoading:self];
 }
 
 - (void)stopLoading
 {
-    NSLog(@"Package test: Something went wrong.");
+    // Nothing to do
 }
 
 @end
