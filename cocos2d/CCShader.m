@@ -111,6 +111,31 @@ static NSString *CCDefaultVShader =
 	@"	cc_FragTexCoord2 = cc_TexCoord2;\n"
 	@"}\n";
 
+static NSString *CCMetalShaderHeader = 
+	@"using namespace metal;\n\n"
+	@"typedef struct CCVertex {\n"
+	@"	float4 position;\n"
+	@"	float2 texCoord1;\n"
+	@"	float2 texCoord2;\n"
+	@"	float4 color;\n"
+	@"} CCVertex;\n"
+	@"typedef struct CCFragData {\n\n"
+	@"	float4 position [[position]];\n"
+	@"	float2 texCoord1;\n"
+	@"	float2 texCoord2;\n"
+	@"	half4  color;\n"
+	@"} CCFragData;\n"
+	@"typedef struct CCGlobalUniforms {\n\n"
+	@"	float4x4 projection;\n"
+	@"	float4x4 projectionInv;\n"
+	@"	float2 viewSize;\n"
+	@"	float2 viewSizeInPixels;\n"
+	@"	float4 time;\n"
+	@"	float4 sinTime;\n"
+	@"	float4 cosTime;\n"
+	@"	float4 random01;\n"
+	@"} CCGlobalUniforms;\n";
+
 typedef void (* GetShaderivFunc) (GLuint shader, GLenum pname, GLint* param);
 typedef void (* GetShaderInfoLogFunc) (GLuint shader, GLsizei bufSize, GLsizei* length, GLchar* infoLog);
 
@@ -554,43 +579,13 @@ MetalUniformSettersForFunctions(id<MTLFunction> vertexFunction, id<MTLFunction> 
 {
 	CCMetalContext *context = [CCMetalContext currentContext];
 	
-	// TODO this is a terrible terrible hack.
-	NSString *header = CC_METAL(
-using namespace metal;
-
-typedef struct CCVertex {
-	float4 position;
-	float2 texCoord1;
-	float2 texCoord2;
-	float4 color;
-} CCVertex;
-
-typedef struct CCFragData {
-	float4 position [[position]];
-	float2 texCoord1;
-	float2 texCoord2;
-	half4  color;
-} CCFragData;
-
-typedef struct CCGlobalUniforms {
-	float4x4 projection;
-	float4x4 projectionInv;
-	float2 viewSize;
-	float2 viewSizeInPixels;
-	float4 time;
-	float4 sinTime;
-	float4 cosTime;
-	float4 random01;
-} CCGlobalUniforms;
-	);
-	
 	id<MTLFunction> vertexFunction = nil;
 	if(vertexSource == CCDefaultVShader){
 		// Use the default vertex shader.
 		vertexFunction = [context.library newFunctionWithName:@"CCVertexFunctionDefault"];
 	} else {
 		// Append on the standard header since JIT compiled shaders can't use #import
-		vertexSource = [header stringByAppendingString:vertexSource];
+		vertexSource = [CCMetalShaderHeader stringByAppendingString:vertexSource];
 		
 		// Compile the vertex shader.
 		NSError *verr = nil;
@@ -601,7 +596,7 @@ typedef struct CCGlobalUniforms {
 	}
 	
 	// Append on the standard header since JIT compiled shaders can't use #import
-	fragmentSource = [header stringByAppendingString:fragmentSource];
+	fragmentSource = [CCMetalShaderHeader stringByAppendingString:fragmentSource];
 	
 	// compile the fragment shader.
 	NSError *ferr = nil;
