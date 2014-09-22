@@ -13,6 +13,65 @@
 #import "CCPackageConstants.h"
 #import "AppDelegate.h"
 
+
+
+@interface CCPackageTestURLProtocol : NSURLProtocol
+
+@end
+
+
+@implementation CCPackageTestURLProtocol
+
++ (BOOL)canInitWithRequest:(NSURLRequest*)theRequest
+{
+    return [theRequest.URL.scheme caseInsensitiveCompare:@"http"] == NSOrderedSame;
+}
+
++ (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)theRequest
+{
+    return theRequest;
+}
+
+- (void)startLoading
+{
+    NSString *fileName = [self.request.URL lastPathComponent];
+
+    NSString *pathToPackage = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"Resources-shared/Packages/%@", fileName] ofType:nil];
+    NSData *data = [NSData dataWithContentsOfFile:pathToPackage];
+
+    NSHTTPURLResponse *response;
+    if (pathToPackage)
+    {
+    response = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
+                                                              statusCode:200
+                                                             HTTPVersion:@"HTTP/1.1"
+                                                            headerFields:nil];
+    }
+    else
+    {
+        response = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
+                                                                  statusCode:404
+                                                                 HTTPVersion:@"HTTP/1.1"
+                                                                headerFields:nil];
+    }
+
+
+    id<NSURLProtocolClient> client = [self client];
+    [client URLProtocol:self didLoadData:data];
+    [client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
+    [client URLProtocolDidFinishLoading:self];
+}
+
+- (void)stopLoading
+{
+    NSLog(@"Package test: Something went wrong.");
+}
+
+@end
+
+
+#pragma mark - Test class
+
 @interface CCPackageTest : TestBase <CCPackageManagerDelegate>
 
 @property (nonatomic, strong) CCPackage *package;
@@ -24,10 +83,11 @@
 
 - (void) setupPackageTest
 {
+    [self setupLocalHTTPRequests];
+
     [self.contentNode removeAllChildren];
 
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:PACKAGE_STORAGE_USERDEFAULTS_KEY];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [self removePersistedPackages];
 
     [self removeAllPackages];
 
@@ -41,8 +101,19 @@
 
     self.package = [[CCPackageManager sharedManager] downloadPackageWithName:@"testpackage"
                                                                   resolution:@"phonehd"
-                                                                   remoteURL:[NSURL URLWithString:@"https://github.com/NickyWeber/cocos2d_test_resources/raw/master/testpackage-iOS-phonehd.zip?raw=true"]
+                                                                   remoteURL:[NSURL URLWithString:@"http://package.request.fake/testpackage-iOS-phonehd.zip"]
                                                          enableAfterDownload:YES];
+}
+
+- (void)setupLocalHTTPRequests
+{
+   [NSURLProtocol registerClass:[CCPackageTestURLProtocol class]];
+}
+
+- (void)removePersistedPackages
+{
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:PACKAGE_STORAGE_USERDEFAULTS_KEY];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)addLabels
@@ -138,26 +209,31 @@
 - (void)packageInstallationFailed:(CCPackage *)package error:(NSError *)error
 {
     self.subTitle = [NSString stringWithFormat:@"Test failed: installation failed."];
+    [NSURLProtocol unregisterClass:[CCPackageTestURLProtocol class]];
 }
 
 - (void)packageDownloadFinished:(CCPackage *)package
 {
     self.subTitle = [NSString stringWithFormat:@"Download finished"];
+    [NSURLProtocol unregisterClass:[CCPackageTestURLProtocol class]];
 }
 
 - (void)packageDownloadFailed:(CCPackage *)package error:(NSError *)error
 {
     self.subTitle = [NSString stringWithFormat:@"Test failed: download failed."];
+    [NSURLProtocol unregisterClass:[CCPackageTestURLProtocol class]];
 }
 
 - (void)packageUnzippingFinished:(CCPackage *)package
 {
     self.subTitle = [NSString stringWithFormat:@"Unzip finished"];
+    [NSURLProtocol unregisterClass:[CCPackageTestURLProtocol class]];
 }
 
 - (void)packageUnzippingFailed:(CCPackage *)package error:(NSError *)error
 {
     self.subTitle = [NSString stringWithFormat:@"Test failed: unzipping failed."];
+    [NSURLProtocol unregisterClass:[CCPackageTestURLProtocol class]];
 }
 
 - (void)packageDownloadProgress:(CCPackage *)package downloadedBytes:(NSUInteger)downloadedBytes totalBytes:(NSUInteger)totalBytes
@@ -169,6 +245,5 @@
 {
     NSLog(@"unzipping... %u / %u", unzippedBytes, totalBytes);
 }
-
 
 @end
