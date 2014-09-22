@@ -39,6 +39,7 @@
 #import "CCRenderer_Private.h"
 #import "CCRenderTexture_Private.h"
 #import "CCRenderDispatch.h"
+#import "CCMetalSupport_Private.h"
 
 #if __CC_PLATFORM_MAC
 #import <ApplicationServices/ApplicationServices.h>
@@ -385,6 +386,10 @@ FlipY(GLKMatrix4 projection)
 
 -(CGImageRef) newCGImage
 {
+	// TODO need to find out why getting pixels from a Metal texture doesn't seem to work.
+	// Workaround - use pixel buffers and a copy encoder?
+	NSAssert([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIGL, @"[CCRenderTexture -newCGImage] is only supported for GL.");
+	
 	NSAssert(_pixelFormat == CCTexturePixelFormat_RGBA8888,@"only RGBA8888 can be saved as image");
 	
 	CGSize s = [self.texture contentSizeInPixels];
@@ -415,7 +420,7 @@ FlipY(GLKMatrix4 projection)
     [self end];
 	
 	// make data provider with data.
-	
+	// TODO find out why iref can't be used as the return value.
 	CGBitmapInfo bitmapInfo	= kCGImageAlphaPremultipliedLast | kCGBitmapByteOrderDefault;
 	CGDataProviderRef provider = CGDataProviderCreateWithData(NULL, buffer, myDataLength, NULL);
 	CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();

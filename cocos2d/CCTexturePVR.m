@@ -506,6 +506,7 @@ typedef struct {
 
 - (BOOL)createGLTexture
 {
+	NSAssert([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIGL, @"PVR textures are not yet supported by Metal.");
 	__block BOOL retVal = NO;
 	
 CCRenderDispatch(NO, ^{
