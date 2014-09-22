@@ -17,6 +17,7 @@
 @property (nonatomic, strong) NSMutableArray *packages;
 @property (nonatomic, strong) NSMutableArray *unzipTasks;
 @property (nonatomic, strong) CCPackageDownloadManager *downloadManager;
+@property (nonatomic) BOOL initialized;
 
 @end
 
@@ -39,6 +40,8 @@
     self = [super init];
     if (self)
     {
+        self.initialized = NO;
+
         self.packages = [NSMutableArray array];
         self.unzipTasks = [NSMutableArray array];
 
@@ -61,6 +64,11 @@
 
 - (void)loadPackages
 {
+    if (_initialized)
+    {
+        return;
+    }
+
     [self loadPackagesFromUserDefaults];
 
     [self enablePackages];
@@ -68,18 +76,39 @@
     [self enqueuePausedDownloads];
 
     [self restartUnzippingTasks];
+
+    self.initialized = YES;
 }
 
 - (void)restartUnzippingTasks
 {
     for (CCPackage *aPackage in _packages)
     {
+        CCPackageUnzipper *unzipper = [self unzipperForPackage:aPackage];
+        if (unzipper)
+        {
+            continue;
+        }
+
         if (aPackage.status == CCPackageStatusUnzipped
             || aPackage.status == CCPackageStatusUnzipping)
         {
             [self unzipPackage:aPackage];
         }
     }
+}
+
+- (CCPackageUnzipper *)unzipperForPackage:(CCPackage *)aPackage
+{
+    for (CCPackageUnzipper *packageUnzipper in _unzipTasks)
+    {
+        if (packageUnzipper.package == aPackage)
+        {
+            return packageUnzipper;
+        }
+    }
+
+    return nil;
 }
 
 - (void)enqueuePausedDownloads
