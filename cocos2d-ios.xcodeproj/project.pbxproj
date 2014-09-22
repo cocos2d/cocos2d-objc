@@ -281,6 +281,7 @@
 		D28A2E1B1954F68D00ADC03D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D28A2E1A1954F68D00ADC03D /* QuartzCore.framework */; };
 		D28A2E1D1954F7E000ADC03D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D28A2E1C1954F7E000ADC03D /* OpenGLES.framework */; };
 		D28A2E211954F85700ADC03D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D28A2E201954F85700ADC03D /* AVFoundation.framework */; };
+		D28B2E7A19CBA89A00DC6E08 /* CCEffectColorChannelOffset.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DBCA31319B68BE400EFE96D /* CCEffectColorChannelOffset.m */; };
 		D291DCC2195B2FA100278EC0 /* libObjectiveChipmunk-iPhone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B759E52D1880C66900E8166C /* libObjectiveChipmunk-iPhone.a */; };
 		D299CE7A19C2910B00519CBB /* CCEffectDFInnerGlow.h in Headers */ = {isa = PBXBuildFile; fileRef = D299CE7819C2910B00519CBB /* CCEffectDFInnerGlow.h */; };
 		D299CE7B19C2910B00519CBB /* CCEffectDFInnerGlow.h in Headers */ = {isa = PBXBuildFile; fileRef = D299CE7819C2910B00519CBB /* CCEffectDFInnerGlow.h */; };
@@ -309,7 +310,6 @@
 		D2DDB0A719805E8400233D80 /* CCMatrix3.m in Sources */ = {isa = PBXBuildFile; fileRef = D2DDB09219805E8400233D80 /* CCMatrix3.m */; };
 		D2DDB0A819805E8400233D80 /* CCMatrix3.m in Sources */ = {isa = PBXBuildFile; fileRef = D2DDB09219805E8400233D80 /* CCMatrix3.m */; };
 		D2EC6039199D9F82001A15E9 /* CCRendererGLSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = D36DFA2719996EC500DEC135 /* CCRendererGLSupport.m */; };
-		D2F78CC81999AB6E00229357 /* CCEffectDropShadow.h in Headers */ = {isa = PBXBuildFile; fileRef = D2F78CC71999AB6E00229357 /* CCEffectDropShadow.h */; };
 		D2FEB611194F6C9E00FC0574 /* CCBLocalizationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = B7D273041822F4AA0054849B /* CCBLocalizationManager.h */; };
 		D2FEB612194F6C9E00FC0574 /* CCAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2520DFDEAFF00C013A5 /* CCAction.h */; };
 		D2FEB613194F6C9E00FC0574 /* CCNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2540DFDEAFF00C013A5 /* CCNode.h */; };
@@ -599,6 +599,13 @@
 			remoteGlobalIDString = D309B21217EFE2EF00AA52C8;
 			remoteInfo = "ObjectiveChipmunk-iPhone";
 		};
+		D28B2E7D19CBA89A00DC6E08 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FC39961319C3B92F00C93E5E /* ObjectAL.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D369B53219C8E73C00BA46EA;
+			remoteInfo = "ObjectAL (Mac)";
+		};
 		D2FEB60F194F6C9E00FC0574 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B759E5281880C66900E8166C /* Chipmunk7-ios.xcodeproj */;
@@ -612,13 +619,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = CBBAB312171D0B84009B955F;
 			remoteInfo = "ObjectAL (iOS)";
-		};
-		FC39961C19C3B92F00C93E5E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FC39961319C3B92F00C93E5E /* ObjectAL.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = CBBAB33D171D0BC4009B955F;
-			remoteInfo = "ObjectAL (OSX)";
 		};
 		FC39961E19C3B92F00C93E5E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1707,8 +1707,8 @@
 			isa = PBXGroup;
 			children = (
 				FC39961B19C3B92F00C93E5E /* libObjectAL.a */,
-				FC39961D19C3B92F00C93E5E /* ObjectAL.framework */,
 				FC39961F19C3B92F00C93E5E /* libObjectAL (Android).a */,
+				D28B2E7E19CBA89A00DC6E08 /* libObjectAL (Mac).a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2131,18 +2131,18 @@
 			remoteRef = B759E52C1880C66900E8166C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		D28B2E7E19CBA89A00DC6E08 /* libObjectAL (Mac).a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libObjectAL (Mac).a";
+			remoteRef = D28B2E7D19CBA89A00DC6E08 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		FC39961B19C3B92F00C93E5E /* libObjectAL.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libObjectAL.a;
 			remoteRef = FC39961A19C3B92F00C93E5E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		FC39961D19C3B92F00C93E5E /* ObjectAL.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ObjectAL.framework;
-			remoteRef = FC39961C19C3B92F00C93E5E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		FC39961F19C3B92F00C93E5E /* libObjectAL (Android).a */ = {
@@ -2375,6 +2375,7 @@
 				D2FEB6E7194F6C9E00FC0574 /* ZipUtils.m in Sources */,
 				D2FEB6EA194F6C9E00FC0574 /* CCEffectStack.m in Sources */,
 				D2FEB6EC194F6C9E00FC0574 /* CCRenderTexture.m in Sources */,
+				D28B2E7A19CBA89A00DC6E08 /* CCEffectColorChannelOffset.m in Sources */,
 				D2FEB6ED194F6C9E00FC0574 /* CCMotionStreak.m in Sources */,
 				D2FEB6EE194F6C9E00FC0574 /* CCSpriteFrame.m in Sources */,
 				D2FEB6EF194F6C9E00FC0574 /* CCSpriteFrameCache.m in Sources */,

@@ -261,6 +261,27 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	
 	// make main window visible
 	[window_ makeKeyAndVisible];
+    
+    [self forceOrientation];
+}
+
+// iOS8 hack around orientation bug
+-(void)forceOrientation
+{
+#if __CC_PLATFORM_IOS && defined(__IPHONE_8_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
+    if([navController_.screenOrientation isEqual:CCScreenOrientationAll])
+    {
+        [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationUnknown];
+    }
+    else if([navController_.screenOrientation isEqual:CCScreenOrientationPortrait])
+    {
+        [[UIApplication sharedApplication] setStatusBarOrientation:UIDeviceOrientationPortrait | UIDeviceOrientationPortraitUpsideDown];
+    }
+    else
+    {
+        [[UIApplication sharedApplication] setStatusBarOrientation:UIDeviceOrientationLandscapeLeft | UIDeviceOrientationLandscapeRight];
+    }
+#endif
 }
 
 // getting a call, pause the game
