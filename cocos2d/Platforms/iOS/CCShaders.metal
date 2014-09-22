@@ -72,6 +72,13 @@ CCFragmentFunctionDefaultTextureA8Color(
 }
 
 fragment half4
+CCFragmentFunctionDefaultDrawNode(
+	const CCFragData in [[stage_in]]
+){
+	return in.color*smoothstep(0.0, length(fwidth(in.texCoord1)), 1.0 - length(in.texCoord1));
+}
+
+fragment half4
 CCFragmentFunctionUnsupported(
 	const CCFragData in [[stage_in]]
 ){
