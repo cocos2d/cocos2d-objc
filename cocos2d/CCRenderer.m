@@ -317,13 +317,15 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 		
 		for(NSString *name in _globalShaderUniforms){
 			NSValue *value = _globalShaderUniforms[name];
-			size_t bytes = value.CCRendererSizeOf;
 			
-			void * buff = CCGraphicsBufferPushElements(uniformBuffer, bytes);
+			// Round up to the next multiple of 16 since Metal types have an alignment of 16 bytes at most.
+			size_t alignedBytes = ((value.CCRendererSizeOf - 1) | 0xF) + 1;
+			
+			void * buff = CCGraphicsBufferPushElements(uniformBuffer, alignedBytes);
 			[value getValue:buff];
 			offsets[name] = @(offset);
 			
-			offset += bytes;
+			offset += alignedBytes;
 		}
 		
 		_globalShaderUniformBufferOffsets = offsets;

@@ -415,6 +415,9 @@ MetalUniformSetBuffer(NSString *name, MTLArgument *vertexArg, MTLArgument *fragm
 		// If both args are active, they must match.
 		NSCAssert(!vertexArg || !fragmentArg || vertexArg.bufferDataSize == fragmentArg.bufferDataSize, @"Vertex and fragment argument type don't match for '%@'.", vertexArg.name);
 		
+		// Round up to the next multiple of 16 since Metal types have an alignment of 16 bytes at most.
+		size_t alignedBytes = ((bytes - 1) | 0xF) + 1;
+		
 		return ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
 			CCGraphicsBufferMetal *uniformBuffer = (CCGraphicsBufferMetal *)renderer->_buffers->_uniformBuffer;
 			id<MTLBuffer> metalBuffer = uniformBuffer->_buffer;
@@ -424,7 +427,7 @@ MetalUniformSetBuffer(NSString *name, MTLArgument *vertexArg, MTLArgument *fragm
 			NSValue *value = shaderUniforms[name];
 			if(value){
 				// Try finding a per-node value first and append it to the uniform buffer.
-				void *buff = CCGraphicsBufferPushElements(uniformBuffer, bytes);
+				void *buff = CCGraphicsBufferPushElements(uniformBuffer, alignedBytes);
 				[value getValue:buff];
 				
 				offset = buff - uniformBuffer->_ptr;
@@ -550,6 +553,8 @@ MetalUniformSettersForFunctions(id<MTLFunction> vertexFunction, id<MTLFunction> 
 -(instancetype)initWithMetalVertexShaderSource:(NSString *)vertexSource fragmentShaderSource:(NSString *)fragmentSource
 {
 	CCMetalContext *context = [CCMetalContext currentContext];
+	
+	// TODO this is a terrible terrible hack.
 	NSString *header = CC_METAL(
 using namespace metal;
 
@@ -577,7 +582,6 @@ typedef struct CCGlobalUniforms {
 	float4 cosTime;
 	float4 random01;
 } CCGlobalUniforms;
-
 	);
 	
 	id<MTLFunction> vertexFunction = nil;

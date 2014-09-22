@@ -114,7 +114,15 @@
 -(id)initWithWidth:(int)width height:(int)height pixelFormat:(CCTexturePixelFormat) format depthStencilFormat:(GLuint)depthStencilFormat
 {
 	if((self = [super init])){
-		NSAssert(format != CCTexturePixelFormat_A8, @"only RGB and RGBA formats are valid for a render texture");
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+		if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+			NSAssert(format == CCTexturePixelFormat_RGBA8888, @"Only RGBA8 pixel formats are supported for Metal render textures. (The internally created texture is actually BRGA8)");
+			format = CCTexturePixelFormat_BGRA8888;
+		} else
+#endif
+		{
+			NSAssert(format != CCTexturePixelFormat_A8, @"only RGB and RGBA formats are valid for a render texture");
+		}
 
 		CCDirector *director = [CCDirector sharedDirector];
 
