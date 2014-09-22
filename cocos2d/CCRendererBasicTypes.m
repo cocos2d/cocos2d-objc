@@ -445,6 +445,10 @@ static CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 {NSAssert(NO, @"Must be overridden.");}
 
 -(void)syncWithView:(CC_VIEW<CCDirectorView> *)view;
-{NSAssert(NO, @"Must be overridden.");}
+{
+	CCDirector *director = [CCDirector sharedDirector];
+	self.sizeInPixels = director.viewSizeInPixels;
+	self.contentScale = director.contentScaleFactor;
+}
 
 @end
