@@ -387,8 +387,10 @@ static const CCGraphicsBufferType CCGraphicsBufferGLTypes[] = {
 -(void)syncWithView:(CC_VIEW<CCDirectorView> *)view;
 {
 	CCGLView *glView = (CCGLView *)view;
-	self.sizeInPixels = CC_SIZE_SCALE(view.bounds.size, view.contentScaleFactor);
-	self.contentScale = view.contentScaleFactor;
+	
+	CGFloat contentScale = [CCDirector sharedDirector].contentScaleFactor;
+	self.sizeInPixels = CC_SIZE_SCALE(view.bounds.size, contentScale);
+	self.contentScale = contentScale;
 	
 	_fbo = glView.fbo;
 }

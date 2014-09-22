@@ -53,7 +53,9 @@
 #define CC_CHECK_GL_ERROR_DEBUG() __CC_CHECK_GL_ERROR_DEBUG(__FUNCTION__, __LINE__)
 static inline void __CC_CHECK_GL_ERROR_DEBUG(const char *function, int line)
 {
+#if __CC_PLATFORM_IOS
 	NSCAssert([EAGLContext currentContext], @"GL context is not set.");
+#endif
 	
 	GLenum error;
 	while((error = glGetError())){

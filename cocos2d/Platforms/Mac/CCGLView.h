@@ -52,6 +52,9 @@
 /** unlocks the openGL context */
 -(void) unlockOpenGLContext;
 
+-(GLuint)fbo;
+
+
 @end
 
 #endif // __CC_PLATFORM_MAC
