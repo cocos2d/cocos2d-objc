@@ -6,6 +6,7 @@
  *  Enables packages by adding to cocos2d's search path and loading sprite sheets and filename lookups.
  *  Note: This method won't check a package's status and it is meant to be used for initialization
  *  of packages on startup by the CCPackagesManager.
+ *  If a package is already among the search path then it won't be added again, spritesheets and file lookups not reloaded
  *
  *  @param packages An array of CCPackage instance to be enabled
  */

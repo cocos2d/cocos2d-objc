@@ -7,13 +7,21 @@
 
 @implementation CCPackageCocos2dEnabler
 
+- (BOOL)isPackagInSearchPath:(CCPackage *)package
+{
+    NSString *newPackagePath = package.installURL.path;
+
+    return [[CCFileUtils sharedFileUtils].searchPath containsObject:newPackagePath];
+}
+
 - (void)enablePackages:(NSArray *)packages
 {
-    [self addPackagestoSearchPath:packages];
+    if ([self addPackagestoSearchPath:packages]);
+    {
+        CCLOGINFO(@"[PACKAGE/INSTALL][INFO] Enable packages - Search path: %@", [CCFileUtils sharedFileUtils].searchPath);
 
-    CCLOGINFO(@"[PACKAGE/INSTALL][INFO] Enable packages - Search path: %@", [CCFileUtils sharedFileUtils].searchPath);
-
-    [self reloadCocos2dFiles];
+        [self reloadCocos2dFiles];
+    }
 }
 
 - (void)disablePackages:(NSArray *)array
@@ -25,8 +33,10 @@
     [self reloadCocos2dFiles];
 }
 
-- (void)addPackagestoSearchPath:(NSArray *)packages
+- (BOOL)addPackagestoSearchPath:(NSArray *)packages
 {
+    BOOL searchPathChanged = NO;
+
     for (CCPackage *aPackage in packages)
     {
         NSMutableArray *newSearchPath = [[CCFileUtils sharedFileUtils].searchPath mutableCopy];
@@ -35,10 +45,12 @@
         if (![newSearchPath containsObject:newPackagePath])
         {
             [newSearchPath insertObject:newPackagePath atIndex:0];
+            [CCFileUtils sharedFileUtils].searchPath = newSearchPath;
+            searchPathChanged = YES;
         }
-
-        [CCFileUtils sharedFileUtils].searchPath = newSearchPath;
     }
+
+    return searchPathChanged;
 }
 
 - (void)reloadCocos2dFiles
