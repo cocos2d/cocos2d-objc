@@ -30,7 +30,7 @@
 #if __CC_PLATFORM_MAC
 
 #import <Cocoa/Cocoa.h>
-#import <CCDirectorView.h>
+#import "CCDirectorView.h"
 
 //#import "../../ccConfig.h"
 

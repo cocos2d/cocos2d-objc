@@ -301,7 +301,7 @@
 - (void)clearStencil:(int)stencilValue
 {
 	CCRenderer *renderer = [self begin];
-		[renderer enqueueClear:GL_DEPTH_BUFFER_BIT color:GLKVector4Make(0, 0, 0, 0) depth:0.0 stencil:stencilValue globalSortOrder:NSIntegerMin];
+		[renderer enqueueClear:GL_STENCIL_BUFFER_BIT color:GLKVector4Make(0, 0, 0, 0) depth:0.0 stencil:stencilValue globalSortOrder:NSIntegerMin];
 	[self end];
 }
 

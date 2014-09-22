@@ -65,6 +65,7 @@
 #import "CCEffect.h"
 #import "CCEffectBloom.h"
 #import "CCEffectBrightness.h"
+#import "CCEffectColorChannelOffset.h"
 #import "CCEffectContrast.h"
 #import "CCEffectBlur.h"
 #import "CCEffectGlass.h"
@@ -104,6 +105,7 @@
 #if CC_EFFECTS_EXPERIMENTAL
 #import "CCEffectDFOutline.h"
 #import "CCEffectDistanceField.h"
+#import "CCEffectDFInnerGlow.h"
 #endif
 
 // Layouts
