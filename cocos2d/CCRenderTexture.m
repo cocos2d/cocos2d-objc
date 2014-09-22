@@ -135,7 +135,7 @@
 		_pixelFormat = format;
 		_depthStencilFormat = depthStencilFormat;
 
-		_projection = GLKMatrix4MakeOrtho(0.0f, width, 0.0f, height, -1024.0f, 1024.0f);
+		self.projection = GLKMatrix4MakeOrtho(0.0f, width, 0.0f, height, -1024.0f, 1024.0f);
 		
 		CCRenderTextureSprite *rtSprite = [CCRenderTextureSprite spriteWithTexture:[CCTexture none]];
 		rtSprite.renderTexture = self;
@@ -229,6 +229,37 @@
     return super.texture;
 }
 
+static GLKMatrix4
+FlipY(GLKMatrix4 projection)
+{
+	return GLKMatrix4Multiply(GLKMatrix4MakeScale(1.0, -1.0, 1.0), projection);
+}
+
+// Metal texture coordinates are inverted compared to GL so the projection must be flipped.
+-(GLKMatrix4)projection
+{
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+		return FlipY(_projection);
+	} else
+#endif
+	{
+		return _projection;
+	}
+}
+
+-(void)setProjection:(GLKMatrix4)projection
+{
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+		_projection = FlipY(projection);
+	} else
+#endif
+	{
+		_projection = projection;
+	}
+}
+
 -(CCRenderer *)begin
 {
 	CCTexture *texture = self.texture;
@@ -237,17 +268,8 @@
 		texture = self.texture;
 	}
 	
-	GLKMatrix4 projection = _projection;
-	
-#if __CC_METAL_SUPPORTED_AND_ENABLED
-	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
-		// Metal texture coordinates are inverted compared to GL.
-		projection = GLKMatrix4Multiply(GLKMatrix4MakeScale(1.0, -1.0, 1.0), projection);
-	}
-#endif
-	
 	CCRenderer *renderer = [[CCDirector sharedDirector] rendererFromPool];
-	[renderer prepareWithProjection:&projection framebuffer:_framebuffer];
+	[renderer prepareWithProjection:&_projection framebuffer:_framebuffer];
 	
 	_previousRenderer = [CCRenderer currentRenderer];
 	[CCRenderer bindRenderer:renderer];
@@ -547,7 +569,7 @@
     // XXX Thayer says: I'm pretty sure this is broken since the supplied content size could
     // be normalized, in points, in UI points, etc. We should get the size in points then convert
     // to pixels and use that to make the ortho matrix.
-	_projection = GLKMatrix4MakeOrtho(0.0f, size.width, 0.0f, size.height, -1024.0f, 1024.0f);
+	self.projection = GLKMatrix4MakeOrtho(0.0f, size.width, 0.0f, size.height, -1024.0f, 1024.0f);
     _contentSizeChanged = YES;
 }
 

@@ -22,6 +22,9 @@
     GLKVector4 _clearColor;
 
     float _contentScale;
+		
+		// Raw projection matrix used for rendering.
+		// For metal will be flipped on the y-axis compared to the .projection property.
     GLKMatrix4 _projection;
 
     CCSprite* _sprite;
