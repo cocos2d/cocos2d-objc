@@ -83,6 +83,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "CCDirector_Private.h"
 #import "CCRenderDispatch.h"
 
+
+extern EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup *sharegroup);
+
+
 //CLASS IMPLEMENTATIONS:
 
 
@@ -226,8 +230,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
          */
         self.multipleTouchEnabled = YES;
 
-		CC_CHECK_GL_ERROR_DEBUG();
-        
         _touchEvent = [[CCTouchEvent alloc] init];
 	}
 
@@ -248,8 +250,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		if( ! [self setupSurfaceWithSharegroup:nil] ) {
 			return nil;
 		}
-
-		CC_CHECK_GL_ERROR_DEBUG();
     }
 
     return self;
@@ -294,8 +294,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	});
 	
 	_discardFramebufferSupported = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
-
-	CC_CHECK_GL_ERROR_DEBUG();
 
 	return YES;
 }
