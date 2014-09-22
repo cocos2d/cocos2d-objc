@@ -91,7 +91,6 @@ static char * glExtensions;
 {
 	if (!_sharedConfiguration){
 		_sharedConfiguration = [[self alloc] init];
-		[_sharedConfiguration configure];
 	}
 
 	return _sharedConfiguration;
