@@ -32,6 +32,7 @@
 /**
  *  The queue on which unzipping of packages is achieved, default is DISPATCH_QUEUE_PRIORITY_LOW.
  *  On iOS 5.0, MacOS 10.7 and below you have to get rid of the queue after use if it's not a global one.
+ *  If set to nil, queue will be reset to default.
  */
 #if OS_OBJECT_HAVE_OBJC_SUPPORT == 1
 @property (nonatomic, strong) dispatch_queue_t unzippingQueue;

@@ -204,6 +204,17 @@
     [self didChangeValueForKey:@"installedPackagesPath"];
 }
 
+- (void)setUnzippingQueue:(dispatch_queue_t)unzippingQueue
+{
+    if (!unzippingQueue)
+    {
+        _unzippingQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0);
+        return;
+    }
+
+    _unzippingQueue = unzippingQueue;
+}
+
 
 #pragma mark - download
 
