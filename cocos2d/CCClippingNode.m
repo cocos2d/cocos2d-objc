@@ -34,6 +34,7 @@
 
 #import "CCNode_Private.h"
 #import "CCRenderDispatch.h"
+#import "CCConfiguration.h"
 
 static GLint _stencilBits = -1;
 
@@ -69,6 +70,8 @@ SetProgram(CCNode *n, CCShader *p, NSNumber *alpha) {
 
 - (id)initWithStencil:(CCNode *)stencil
 {
+    NSAssert([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIGL, @"CCClippingNode is not supported by the Metal renderer yet.");
+		
     if (self = [super init]) {
         self.stencil = stencil;
         self.alphaThreshold = 1;

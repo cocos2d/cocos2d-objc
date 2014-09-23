@@ -189,11 +189,8 @@ static NSString *CURRENT_CONTEXT_KEY = @"CURRENT_CONTEXT_KEY";
 
 -(void)syncWithView:(CC_VIEW<CCDirectorView> *)view;
 {
-	CCMetalView *metalView = (CCMetalView *)view;
-	self.sizeInPixels = CC_SIZE_SCALE(view.bounds.size, view.contentScaleFactor);
-	self.contentScale = view.contentScaleFactor;
-	
-	_frameBufferTexture = metalView.destinationTexture;
+	[super syncWithView:view];
+	_frameBufferTexture = [(CCMetalView *)view destinationTexture];
 }
 
 @end

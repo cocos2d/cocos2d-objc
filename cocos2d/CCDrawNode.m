@@ -32,6 +32,8 @@
 #import "Support/CGPointExtension.h"
 #import "CCNode_Private.h"
 #import "CCColor.h"
+#import "CCConfiguration.h"
+#import "CCMetalSupport_Private.h"
 
 #ifdef ANDROID // Many Android devices do NOT support GL_OES_standard_derivatives correctly
 static NSString *CCDrawNodeShaderSource =
@@ -59,12 +61,25 @@ static NSString *CCDrawNodeShaderSource =
 
 + (CCShader *)fragmentShader
 {
-    static CCShader *shader = nil;
-    static dispatch_once_t once = 0L;
-    dispatch_once(&once, ^{
-        shader = [[CCShader alloc] initWithFragmentShaderSource:CCDrawNodeShaderSource];
-    });
-    return shader;
+	static CCShader *shader = nil;
+	static dispatch_once_t once = 0L;
+	dispatch_once(&once, ^{
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+		if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+			id<MTLLibrary> library = [CCMetalContext currentContext].library;
+			NSAssert(library, @"Metal shader library not found.");
+			
+			id<MTLFunction> vertexFunc = [library newFunctionWithName:@"CCVertexFunctionDefault"];
+			
+			shader = [[CCShader alloc] initWithMetalVertexFunction:vertexFunc fragmentFunction:[library newFunctionWithName:@"CCFragmentFunctionDefaultDrawNode"]];
+			shader.debugName = @"CCFragmentFunctionDefaultDrawNode";
+		} else
+#endif
+		{
+			shader = [[CCShader alloc] initWithFragmentShaderSource:CCDrawNodeShaderSource];
+		}
+	});
+	return shader;
 }
 
 #pragma mark memory

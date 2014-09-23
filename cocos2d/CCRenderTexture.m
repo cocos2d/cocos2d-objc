@@ -39,6 +39,7 @@
 #import "CCRenderer_Private.h"
 #import "CCRenderTexture_Private.h"
 #import "CCRenderDispatch.h"
+#import "CCMetalSupport_Private.h"
 
 #if __CC_PLATFORM_MAC
 #import <ApplicationServices/ApplicationServices.h>
@@ -114,7 +115,15 @@
 -(id)initWithWidth:(int)width height:(int)height pixelFormat:(CCTexturePixelFormat) format depthStencilFormat:(GLuint)depthStencilFormat
 {
 	if((self = [super init])){
-		NSAssert(format != CCTexturePixelFormat_A8, @"only RGB and RGBA formats are valid for a render texture");
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+		if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+			NSAssert(format == CCTexturePixelFormat_RGBA8888, @"Only RGBA8 pixel formats are supported for Metal render textures. (The internally created texture is actually BRGA8)");
+			format = CCTexturePixelFormat_BGRA8888;
+		} else
+#endif
+		{
+			NSAssert(format != CCTexturePixelFormat_A8, @"only RGB and RGBA formats are valid for a render texture");
+		}
 
 		CCDirector *director = [CCDirector sharedDirector];
 
@@ -127,7 +136,7 @@
 		_pixelFormat = format;
 		_depthStencilFormat = depthStencilFormat;
 
-		_projection = GLKMatrix4MakeOrtho(0.0f, width, 0.0f, height, -1024.0f, 1024.0f);
+		self.projection = GLKMatrix4MakeOrtho(0.0f, width, 0.0f, height, -1024.0f, 1024.0f);
 		
 		CCRenderTextureSprite *rtSprite = [CCRenderTextureSprite spriteWithTexture:[CCTexture none]];
 		rtSprite.renderTexture = self;
@@ -221,6 +230,37 @@
     return super.texture;
 }
 
+static GLKMatrix4
+FlipY(GLKMatrix4 projection)
+{
+	return GLKMatrix4Multiply(GLKMatrix4MakeScale(1.0, -1.0, 1.0), projection);
+}
+
+// Metal texture coordinates are inverted compared to GL so the projection must be flipped.
+-(GLKMatrix4)projection
+{
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+		return FlipY(_projection);
+	} else
+#endif
+	{
+		return _projection;
+	}
+}
+
+-(void)setProjection:(GLKMatrix4)projection
+{
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+		_projection = FlipY(projection);
+	} else
+#endif
+	{
+		_projection = projection;
+	}
+}
+
 -(CCRenderer *)begin
 {
 	CCTexture *texture = self.texture;
@@ -229,17 +269,8 @@
 		texture = self.texture;
 	}
 	
-	GLKMatrix4 projection = _projection;
-	
-#if __CC_METAL_SUPPORTED_AND_ENABLED
-	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
-		// Metal texture coordinates are inverted compared to GL.
-		projection = GLKMatrix4Multiply(GLKMatrix4MakeScale(1.0, -1.0, 1.0), projection);
-	}
-#endif
-	
 	CCRenderer *renderer = [[CCDirector sharedDirector] rendererFromPool];
-	[renderer prepareWithProjection:&projection framebuffer:_framebuffer];
+	[renderer prepareWithProjection:&_projection framebuffer:_framebuffer];
 	
 	_previousRenderer = [CCRenderer currentRenderer];
 	[CCRenderer bindRenderer:renderer];
@@ -355,6 +386,10 @@
 
 -(CGImageRef) newCGImage
 {
+	// TODO need to find out why getting pixels from a Metal texture doesn't seem to work.
+	// Workaround - use pixel buffers and a copy encoder?
+	NSAssert([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIGL, @"[CCRenderTexture -newCGImage] is only supported for GL.");
+	
 	NSAssert(_pixelFormat == CCTexturePixelFormat_RGBA8888,@"only RGBA8888 can be saved as image");
 	
 	CGSize s = [self.texture contentSizeInPixels];
@@ -385,7 +420,7 @@
     [self end];
 	
 	// make data provider with data.
-	
+	// TODO find out why iref can't be used as the return value.
 	CGBitmapInfo bitmapInfo	= kCGImageAlphaPremultipliedLast | kCGBitmapByteOrderDefault;
 	CGDataProviderRef provider = CGDataProviderCreateWithData(NULL, buffer, myDataLength, NULL);
 	CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
@@ -539,7 +574,7 @@
     // XXX Thayer says: I'm pretty sure this is broken since the supplied content size could
     // be normalized, in points, in UI points, etc. We should get the size in points then convert
     // to pixels and use that to make the ortho matrix.
-	_projection = GLKMatrix4MakeOrtho(0.0f, size.width, 0.0f, size.height, -1024.0f, 1024.0f);
+	self.projection = GLKMatrix4MakeOrtho(0.0f, size.width, 0.0f, size.height, -1024.0f, 1024.0f);
     _contentSizeChanged = YES;
 }
 

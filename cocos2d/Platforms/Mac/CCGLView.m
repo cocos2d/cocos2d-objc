@@ -165,6 +165,9 @@
 	// Synchronize buffer swaps with vertical refresh rate
 	GLint swapInt = 1;
 	[[self openGLContext] setValues:&swapInt forParameter:NSOpenGLCPSwapInterval];	
+	
+	// Force the graphics API to be set up as early as possible.
+	[[CCConfiguration sharedConfiguration] graphicsAPI];
 
 //	GLint order = -1;
 //	[[self openGLContext] setValues:&order forParameter:NSOpenGLCPSurfaceOrder];
@@ -274,6 +277,11 @@
 	}
 	
 	[self unlockOpenGLContext];
+}
+
+-(GLuint)fbo
+{
+	return 0;
 }
 
 - (void) dealloc

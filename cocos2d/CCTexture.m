@@ -103,6 +103,7 @@ static const MTLPixelFormat MetalPixelFormats[] = {
 	MTLPixelFormatInvalid, //CCTexturePixelFormat_RGB5A1,
 	MTLPixelFormatPVRTC_RGBA_4BPP, //CCTexturePixelFormat_PVRTC4,
 	MTLPixelFormatPVRTC_RGBA_2BPP, //CCTexturePixelFormat_PVRTC2,
+	MTLPixelFormatBGRA8Unorm,
 };
 
 #endif
@@ -824,47 +825,29 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 
 +(NSUInteger) bitsPerPixelForFormat:(CCTexturePixelFormat)format
 {
-	NSUInteger ret=0;
-	
 	switch (format) {
 		case CCTexturePixelFormat_RGBA8888:
-			ret = 32;
-			break;
-		case CCTexturePixelFormat_RGB888:
+		case CCTexturePixelFormat_BGRA8888:
 			// It is 32 and not 24, since its internal representation uses 32 bits.
-			ret = 32;
-			break;
+		case CCTexturePixelFormat_RGB888:
+			return 32;
 		case CCTexturePixelFormat_RGB565:
-			ret = 16;
-			break;
 		case CCTexturePixelFormat_RGBA4444:
-			ret = 16;
-			break;
 		case CCTexturePixelFormat_RGB5A1:
-			ret = 16;
-			break;
 		case CCTexturePixelFormat_AI88:
-			ret = 16;
-			break;
+			return 16;
 		case CCTexturePixelFormat_A8:
-			ret = 8;
-			break;
 		case CCTexturePixelFormat_I8:
-			ret = 8;
-			break;
+			return 8;
 		case CCTexturePixelFormat_PVRTC4:
-			ret = 4;
-			break;
+			return 4;
 		case CCTexturePixelFormat_PVRTC2:
-			ret = 2;
-			break;
+			return 2;
 		default:
-			ret = -1;
 			NSAssert1(NO , @"bitsPerPixelForFormat: %ld, unrecognised pixel format", (long)format);
 			CCLOG(@"bitsPerPixelForFormat: %ld, cannot give useful result", (long)format);
-			break;
+			return -1;
 	}
-	return ret;
 }
 
 -(NSUInteger) bitsPerPixelForFormat
@@ -906,13 +889,14 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 		case CCTexturePixelFormat_PVRTC2:
 			return  @"PVRTC2";
 
+		case CCTexturePixelFormat_BGRA8888:
+			return  @"BGRA8888";
+
 		default:
 			NSAssert1(NO , @"stringForFormat: %ld, unrecognised pixel format", (long)_format);
 			CCLOG(@"stringForFormat: %ld, cannot give useful result", (long)_format);
-			break;
+			return  nil;
 	}
-	
-	return  nil;
 }
 @end
 

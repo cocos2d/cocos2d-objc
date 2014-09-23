@@ -69,6 +69,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "Support/CCFileUtils.h"
 #import "Support/ZipUtils.h"
 #import "CCGL.h"
+#import "CCRenderDispatch.h"
 
 #pragma mark -
 #pragma mark CCTexturePVR
@@ -505,6 +506,10 @@ typedef struct {
 
 - (BOOL)createGLTexture
 {
+	NSAssert([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIGL, @"PVR textures are not yet supported by Metal.");
+	__block BOOL retVal = NO;
+	
+CCRenderDispatch(NO, ^{
 	GLsizei width = _width;
 	GLsizei height = _height;
 	GLenum err;
@@ -543,7 +548,7 @@ typedef struct {
 	{
 		if( compressed && ! [[CCConfiguration sharedConfiguration] supportsPVRTC] ) {
 			CCLOGWARN(@"cocos2d: WARNING: PVRTC images are not supported");
-			return NO;
+			retVal = NO; return;
 		}
 
 		unsigned char *data = _mipmaps[i].address;
@@ -561,14 +566,17 @@ typedef struct {
 		if (err != GL_NO_ERROR)
 		{
 			CCLOGWARN(@"cocos2d: TexturePVR: Error uploading compressed texture level: %u . glError: 0x%04X", i, err);
-			return NO;
+			retVal = NO; return;
 		}
 
 		width = MAX(width >> 1, 1);
 		height = MAX(height >> 1, 1);
 	}
 	
-	return YES;
+	retVal = YES; return;
+});
+	
+	return retVal;
 }
 
 
@@ -701,10 +709,11 @@ typedef struct {
 - (void)dealloc
 {
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
-
-	if (_name != 0 && ! _retainName )
-		glDeleteTextures(1, &_name);
-
+	
+	if(_name != 0 && ! _retainName){
+		GLuint name = _name;
+		CCRenderDispatch(YES, ^{glDeleteTextures(1, &name);});
+	}
 }
 
 @end
