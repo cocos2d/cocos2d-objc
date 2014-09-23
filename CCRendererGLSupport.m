@@ -280,30 +280,30 @@ static const CCGraphicsBufferType CCGraphicsBufferGLTypes[] = {
 			
 					if(![[CCConfiguration sharedConfiguration] supportsPackedDepthStencil])
 					{
-							glGenRenderbuffers(1, &depthRenderBuffer);
-							glBindRenderbuffer(GL_RENDERBUFFER, depthRenderBuffer);
+							glGenRenderbuffers(1, &_depthRenderBuffer);
+							glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBuffer);
 							glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, width, height); //GL_DEPTH_COMPONENT24_OES
-							glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthRenderBuffer);
+							glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
 
 							// if depth format is the one with stencil part, bind same render buffer as stencil attachment
 							if(_depthStencilFormat == GL_DEPTH24_STENCIL8)
 							{
-									glGenRenderbuffers(1, &stencilRenderBuffer);
-									glBindRenderbuffer(GL_RENDERBUFFER, stencilRenderBuffer);
-									glRenderbufferStorage(GL_RENDERBUFFER, GL_STENCIL_INDEX8, width, powH);
-									glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, stencilRenderBuffer);
+									glGenRenderbuffers(1, &_stencilRenderBuffer);
+									glBindRenderbuffer(GL_RENDERBUFFER, _stencilRenderBuffer);
+									glRenderbufferStorage(GL_RENDERBUFFER, GL_STENCIL_INDEX8, width, height);
+									glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _stencilRenderBuffer);
 							}
 					}
 					else
 					{
-							glGenRenderbuffers(1, &depthRenderBuffer);
-							glBindRenderbuffer(GL_RENDERBUFFER, depthRenderBuffer);
+							glGenRenderbuffers(1, &_depthRenderBuffer);
+							glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBuffer);
 							glRenderbufferStorage(GL_RENDERBUFFER, _depthStencilFormat, width, height);
-							glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthRenderBuffer);
+							glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
 							
 							// if depth format is the one with stencil part, bind same render buffer as stencil attachment
 							if(_depthStencilFormat == GL_DEPTH24_STENCIL8){
-									glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depthRenderBuffer);
+									glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
 							}
 					}
 			}

@@ -60,6 +60,8 @@ BRIDGE_CLASS("org.cocos2d.CCGLView")
 - (void)addGestureDetector:(AndroidGestureDetector *)detector;
 - (void)removeGestureDetector:(AndroidGestureDetector *)detector;
 
+-(GLuint)fbo;
+
 @end
 #endif // __CC_PLATFORM_ANDROID
 
