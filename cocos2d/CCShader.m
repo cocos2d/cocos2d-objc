@@ -39,7 +39,7 @@
 #import "CCMetalSupport_Private.h"
 
 
-const NSString *CCShaderUniformDefaultGlobals = @"cc_DefaultGlobals";
+const NSString *CCShaderUniformDefaultGlobals = @"cc_GlobalUniforms";
 const NSString *CCShaderUniformProjection = @"cc_Projection";
 const NSString *CCShaderUniformProjectionInv = @"cc_ProjectionInv";
 const NSString *CCShaderUniformViewSize = @"cc_ViewSize";
