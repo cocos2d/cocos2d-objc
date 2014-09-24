@@ -39,7 +39,7 @@
     NSAssert(installData != nil, @"installData must not be nil");
     NSAssert(installData.unzipURL != nil, @"installData.unzipURL must not be nil");
 
-    if (![self packageExists:error])
+    if (![self unzippedPackageFolderExists:error])
     {
         [_package setValue:@(CCPackageStatusInstallationFailed) forKey:@"status"];
         return NO;
@@ -88,7 +88,7 @@
         [_package setValue:nil forKey:@"installURL"];
 
         [self setNewError:error
-                     code:PACKAGE_ERROR_INSTALL_COULD_NOT_MOVE_PACKAGE
+                     code:PACKAGE_ERROR_INSTALL_COULD_NOT_MOVE_PACKAGE_TO_INSTALL_FOLDER
                   message:[NSString stringWithFormat:@"Could not move package to install path \"%@\", underlying error: %@", _installPath, errorMove]
           underlyingError:errorMove];
 
@@ -100,7 +100,7 @@
     return YES;
 }
 
-- (BOOL)packageExists:(NSError **)error
+- (BOOL)unzippedPackageFolderExists:(NSError **)error
 {
     CCPackageInstallData *installData = [_package installData];
     NSAssert(installData.unzipURL, @"installData.unzipURL must not be nil");
@@ -109,7 +109,7 @@
     if (![fileManager fileExistsAtPath:installData.unzipURL.path])
     {
         [self setNewError:error
-                     code:PACKAGE_ERROR_INSTALL_PACKAGE_NOT_FOUND
+                     code:PACKAGE_ERROR_INSTALL_UNZIPPED_PACKAGE_NOT_FOUND
                   message:[NSString stringWithFormat:@"Package to install not found at path \"%@\"", installData.unzipURL]];
 
         CCLOG(@"[PACKAGE/INSTALL][ERROR] Moving unzipped package to installation folder, package already exists! %@", *error);
