@@ -10,6 +10,7 @@
 #import <Foundation/Foundation.h>
 #import "CCPackageInstallData.h"
 #import "CCPackage.h"
+#import "CCUnitTestAssertions.h"
 
 @interface CCPackageInstallDataTests : XCTestCase
 
@@ -49,15 +50,9 @@
 
     [_installData populateInstallDataWithDictionary:installDataDict];
 
-    NSURL *localDownloadURL = [NSURL fileURLWithPath:@"/downloadfolder/baa.zip"];
-    XCTAssertTrue([_installData.localDownloadURL isEqual:localDownloadURL], @"%@ is not equal to %@", _installData.localDownloadURL, localDownloadURL);
-
-    NSURL *unzipURL = [NSURL fileURLWithPath:@"/unzupfolder/foo"];
-    XCTAssertTrue([_installData.unzipURL isEqual:unzipURL], @"%@ is not equal to %@", _installData.unzipURL, unzipURL);
-
-    NSString *folderName = @"somename";
-    XCTAssertTrue([_installData.folderName isEqual:folderName], @"%@ is not equal to %@", _installData.folderName, folderName);
-
+    XCTAssertEqualObjects(_installData.localDownloadURL, [NSURL fileURLWithPath:@"/downloadfolder/baa.zip"]);
+    XCTAssertEqualObjects(_installData.unzipURL, [NSURL fileURLWithPath:@"/unzupfolder/foo"]);
+    CCAssertEqualStrings(_installData.folderName, @"somename");
     XCTAssertTrue(_installData.enableOnDownload);
 }
 
@@ -67,17 +62,14 @@
 
     [_installData writeInstallDataToDictionary:dictionary];
 
-    NSURL *localDownloadURL = [NSURL fileURLWithPath:@"/downloadfolder/baa.zip"];
     NSURL *dictDownloadURL = [NSURL URLWithString:dictionary[@"localDownloadURL"]];
-    XCTAssertTrue([dictDownloadURL isEqual:localDownloadURL], @"%@ is not equal to %@", dictDownloadURL, localDownloadURL);
+    XCTAssertEqualObjects(dictDownloadURL, [NSURL fileURLWithPath:@"/downloadfolder/baa.zip"]);
 
-    NSURL *localUnzipURL = [NSURL fileURLWithPath:@"/unzupfolder/foo"];
     NSURL *dictUnzipURL = [NSURL URLWithString:dictionary[@"localUnzipURL"]];
-    XCTAssertTrue([dictUnzipURL isEqual:localUnzipURL], @"%@ is not equal to %@", dictUnzipURL, localUnzipURL);
+    XCTAssertEqualObjects(dictUnzipURL, [NSURL fileURLWithPath:@"/unzupfolder/foo"]);
 
-    NSString *localFolderName = @"somename";
     NSString *dictFolderName = dictionary[@"folderName"];
-    XCTAssertTrue([dictFolderName isEqualToString:localFolderName], @"%@ is not equal to %@", dictFolderName, localFolderName);
+    CCAssertEqualStrings(dictFolderName, @"somename");
 
     XCTAssertFalse([dictionary[@"enableOnDownload"] boolValue]);
 }
