@@ -61,7 +61,7 @@ static NSString *const PACKAGE_SERIALIZATION_KEY_STATUS = @"status";
                                                       os:dictionary[PACKAGE_SERIALIZATION_KEY_OS]
                                                remoteURL:[NSURL URLWithString:dictionary[PACKAGE_SERIALIZATION_KEY_REMOTE_URL]]];
 
-    package.installURL = [NSURL URLWithString:dictionary[PACKAGE_SERIALIZATION_KEY_INSTALL_URL]];
+    package.installURL = [NSURL fileURLWithPath:dictionary[PACKAGE_SERIALIZATION_KEY_INSTALL_URL]];
     package.status = (CCPackageStatus) [dictionary[PACKAGE_SERIALIZATION_KEY_STATUS] unsignedIntegerValue];
 
     return package;
@@ -84,7 +84,7 @@ static NSString *const PACKAGE_SERIALIZATION_KEY_STATUS = @"status";
     dictionary[PACKAGE_SERIALIZATION_KEY_VERSION] = @(PACKAGE_SERIALIZATION_VERSION);
     if (_installURL)
     {
-        dictionary[PACKAGE_SERIALIZATION_KEY_INSTALL_URL] = [_installURL absoluteString];
+        dictionary[PACKAGE_SERIALIZATION_KEY_INSTALL_URL] = [_installURL path];
     }
 
     return dictionary;
