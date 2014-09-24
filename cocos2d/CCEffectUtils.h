@@ -16,4 +16,4 @@ float CCEffectUtilsConditionRefraction(float refraction);
 float CCEffectUtilsConditionShininess(float shininess);
 float CCEffectUtilsConditionFresnelBias(float bias);
 float CCEffectUtilsConditionFresnelPower(float power);
-
+void CCEffectUtilsPrintMatrix(NSString *label, GLKMatrix4 matrix);
