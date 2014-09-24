@@ -7,28 +7,126 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "CCPackage.h"
+#import "CCPackageInstallData.h"
+#import "CCPackage+InstallData.h"
+#import "CCPackageInstaller.h"
+#import "CCDirector.h"
+#import "CCFileUtils.h"
+#import "CCPackageConstants.h"
 
 @interface CCPackageInstallerTests : XCTestCase
 
+@property (nonatomic, strong) CCPackage *package;
+@property (nonatomic, strong) CCPackageInstallData *installData;
+@property (nonatomic, copy) NSString *installPath;
+@property (nonatomic, strong) CCPackageInstaller *installer;
+
 @end
+
 
 @implementation CCPackageInstallerTests
 
 - (void)setUp
 {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+
+    self.package = [[CCPackage alloc] initWithName:@"Test"
+                                        resolution:@"phonehd"
+                                                os:@"iOS"
+                                         remoteURL:[NSURL URLWithString:@"http://test.foo"]];
+
+    self.installData = [[CCPackageInstallData alloc] initWithPackage:_package];
+    [_package setInstallData:_installData];
+
+    NSString *cachesPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+    self.installPath = [cachesPath stringByAppendingPathComponent:@"tests.Packages"];
+
+    self.installer = [[CCPackageInstaller alloc] initWithPackage:_package installPath:_installPath];
+    
+    
+    [self deleteInstallData];
+
+    [self createPackageInstallFolder];
+}
+
+- (void)createPackageInstallFolder
+{
+    NSError *error;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if (![fileManager createDirectoryAtURL:[NSURL fileURLWithPath:_installPath]
+               withIntermediateDirectories:YES
+                                attributes:nil
+                                     error:&error])
+    {
+        NSLog(@"%@", error);
+    }
 }
 
 - (void)tearDown
 {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
+    [self deleteInstallData];
+
     [super tearDown];
 }
 
-- (void)testExample
+- (void)deleteInstallData
 {
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+
+    NSError *error;
+    if (![fileManager removeItemAtPath:_installPath error:&error])
+    {
+        // NSLog(@"%@", error);
+    }
+}
+
+- (void)testInstallWithoutEnablingPackage
+{
+    [self setupInstallablePackage];
+
+    NSError *error;
+    BOOL success = [_installer installWithError:&error];
+    XCTAssertTrue(success, @"Installation was unsuccessful: %@", error);
+    XCTAssertEqual(_package.status, CCPackageStatusInstalledDisabled);
+}
+
+- (void)setupInstallablePackage
+{
+    NSString *pathToPackage = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Resources-shared/Packages/testpackage-iOS-phonehd_unzipped"];
+
+    _installData.unzipURL = [NSURL fileURLWithPath:pathToPackage];
+    _installData.folderName = @"testpackage-iOS-phonehd";
+    _installData.enableOnDownload = NO;
+}
+
+- (void)testInstallFailingUnzippedPackageDoesNotExist
+{
+    NSString *pathToPackage = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Resources-shared/Packages/DOES_NOT_EXIST"];
+    _installData.unzipURL = [NSURL fileURLWithPath:pathToPackage];
+
+    NSError *error;
+    BOOL success = [_installer installWithError:&error];
+    XCTAssertFalse(success, @"Installation was successful: %@", error);
+    XCTAssertEqual(_package.status, CCPackageStatusInstallationFailed);
+    XCTAssertEqual(error.code, PACKAGE_ERROR_INSTALL_UNZIPPED_PACKAGE_NOT_FOUND);
+}
+
+- (void)testInstallFailingPackageAlreadyExists
+{
+    [self setupInstallablePackage];
+
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    [fileManager createDirectoryAtPath:[_installPath stringByAppendingPathComponent:@"testpackage-iOS-phonehd"]
+           withIntermediateDirectories:YES
+                            attributes:nil
+                                 error:nil];
+
+    NSError *error;
+    BOOL success = [_installer installWithError:&error];
+    XCTAssertFalse(success, @"Installation was successful: %@", error);
+    XCTAssertEqual(_package.status, CCPackageStatusInstallationFailed);
+    XCTAssertEqual(error.code, PACKAGE_ERROR_INSTALL_COULD_NOT_MOVE_PACKAGE_TO_INSTALL_FOLDER);
 }
 
 @end
