@@ -316,20 +316,9 @@ static const CCGraphicsBufferType CCGraphicsBufferGLTypes[] = {
 				glRenderbufferStorage(GL_RENDERBUFFER, depthStencilFormat, width, height);
 				glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
 
-				// associate texture with FBO
-				glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.name, 0);
-
-				if(depthStencilFormat){
-					//create and attach depth buffer
-					glGenRenderbuffers(1, &_depthRenderBuffer);
-					glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBuffer);
-					glRenderbufferStorage(GL_RENDERBUFFER, depthStencilFormat, width, height);
-					glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
-
-					// if depth format is the one with stencil part, bind same render buffer as stencil attachment
-					if(depthStencilFormat == GL_DEPTH24_STENCIL8){
-						glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
-					}
+				// if depth format is the one with stencil part, bind same render buffer as stencil attachment
+				if(depthStencilFormat == GL_DEPTH24_STENCIL8){
+					glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
 				}
 			}
 			
