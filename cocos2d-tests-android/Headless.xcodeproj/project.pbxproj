@@ -1065,7 +1065,6 @@
 		5B89B01819462F5900CD2A5E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				MACOSX_DEPLOYMENT_TARGET = "$(inherited)";
 				OTHER_LDFLAGS = "";
