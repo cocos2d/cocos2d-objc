@@ -1,17 +1,14 @@
 #import "CCPackage.h"
-#import "CCPackageInstallData.h"
-#import "CCPackage+InstallData.h"
 #import "CCPackageHelper.h"
 
-
-NSUInteger PACKAGE_SERIALIZATION_VERSION = 1;
-NSString *const PACKAGE_SERIALIZATION_KEY_NAME = @"name";
-NSString *const PACKAGE_SERIALIZATION_KEY_RESOLUTION = @"resolution";
-NSString *const PACKAGE_SERIALIZATION_KEY_OS = @"os";
-NSString *const PACKAGE_SERIALIZATION_KEY_REMOTE_URL = @"remoteURL";
-NSString *const PACKAGE_SERIALIZATION_KEY_INSTALL_URL = @"installURL";
-NSString *const PACKAGE_SERIALIZATION_KEY_VERSION = @"version";
-NSString *const PACKAGE_SERIALIZATION_KEY_STATUS = @"status";
+static NSUInteger PACKAGE_SERIALIZATION_VERSION = 1;
+static NSString *const PACKAGE_SERIALIZATION_KEY_NAME = @"name";
+static NSString *const PACKAGE_SERIALIZATION_KEY_RESOLUTION = @"resolution";
+static NSString *const PACKAGE_SERIALIZATION_KEY_OS = @"os";
+static NSString *const PACKAGE_SERIALIZATION_KEY_REMOTE_URL = @"remoteURL";
+static NSString *const PACKAGE_SERIALIZATION_KEY_INSTALL_URL = @"installURL";
+static NSString *const PACKAGE_SERIALIZATION_KEY_VERSION = @"version";
+static NSString *const PACKAGE_SERIALIZATION_KEY_STATUS = @"status";
 
 
 @interface CCPackage()
@@ -67,10 +64,6 @@ NSString *const PACKAGE_SERIALIZATION_KEY_STATUS = @"status";
     package.installURL = [NSURL URLWithString:dictionary[PACKAGE_SERIALIZATION_KEY_INSTALL_URL]];
     package.status = (CCPackageStatus) [dictionary[PACKAGE_SERIALIZATION_KEY_STATUS] unsignedIntegerValue];
 
-    CCPackageInstallData *installData = [[CCPackageInstallData alloc] initWithPackage:package];
-    [package setInstallData:installData];
-    [installData populateInstallDataWithDictionary:dictionary];
-
     return package;
 }
 
@@ -94,18 +87,7 @@ NSString *const PACKAGE_SERIALIZATION_KEY_STATUS = @"status";
         dictionary[PACKAGE_SERIALIZATION_KEY_INSTALL_URL] = [_installURL absoluteString];
     }
 
-    CCPackageInstallData *installData = [self installData];
-    [installData writeInstallDataToDictionary:dictionary];
-
     return dictionary;
-}
-
-- (NSString *)description
-{
-    CCPackageInstallData *installData = [self installData];
-
-    return [NSString stringWithFormat:@"Name: %@, resolution: %@, os: %@, status: %d, folder name: %@\nremoteURL: %@\ninstallURL: %@\nunzipURL: %@\ndownloadURL: %@\n",
-                                      _name, _resolution, _os, _status, installData.folderName, _remoteURL, _installURL, installData.unzipURL, installData.localDownloadURL];
 }
 
 - (NSString *)statusToString

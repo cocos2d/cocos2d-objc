@@ -131,6 +131,11 @@
     for (NSDictionary *aPackageDict in packages)
     {
         CCPackage *aPackage = [[CCPackage alloc] initWithDictionary:aPackageDict];
+
+        CCPackageInstallData *installData = [[CCPackageInstallData alloc] initWithPackage:aPackage];
+        [aPackage setInstallData:installData];
+        [installData populateInstallDataWithDictionary:aPackageDict];
+
         [_packages addObject:aPackage];
         CCLOGINFO(@"[PACKAGE][INFO] Package info added: %@: %@", [aPackage standardIdentifier], [aPackage statusToString]);
     }
@@ -167,7 +172,12 @@
 
     for (CCPackage *aPackage in _packages)
     {
-        NSDictionary *packageDict = [aPackage toDictionary];
+        NSMutableDictionary *packageDict = [NSMutableDictionary dictionary];
+        CCPackageInstallData *installData = [aPackage installData];
+        [installData writeInstallDataToDictionary:packageDict];
+
+        [packageDict addEntriesFromDictionary:[aPackage toDictionary]];
+
         if (packageDict)
         {
             [packagesToSave addObject:packageDict];

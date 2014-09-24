@@ -34,4 +34,12 @@ char *const KEY_INSTALL_DATA = "installData";
     objc_setAssociatedObject(self, KEY_INSTALL_DATA, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
+- (NSString *)description
+{
+    CCPackageInstallData *installData = [self installData];
+
+    return [NSString stringWithFormat:@"Name: %@, resolution: %@, os: %@, status: %d, folder name: %@\nremoteURL: %@\ninstallURL: %@\nunzipURL: %@\ndownloadURL: %@\n",
+                                      self.name, self.resolution, self.os, self.status, installData.folderName, self.remoteURL, self.installURL, installData.unzipURL, installData.localDownloadURL];
+}
+
 @end
