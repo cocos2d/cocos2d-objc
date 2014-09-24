@@ -69,7 +69,7 @@ NSString *const PACKAGE_SERIALIZATION_KEY_STATUS = @"status";
 
     CCPackageInstallData *installData = [[CCPackageInstallData alloc] initWithPackage:package];
     [package setInstallData:installData];
-    [package populateInstallDataWithDictionary:dictionary];
+    [installData populateInstallDataWithDictionary:dictionary];
 
     return package;
 }
@@ -94,7 +94,8 @@ NSString *const PACKAGE_SERIALIZATION_KEY_STATUS = @"status";
         dictionary[PACKAGE_SERIALIZATION_KEY_INSTALL_URL] = [_installURL absoluteString];
     }
 
-    [self writeInstallDataToDictionary:dictionary];
+    CCPackageInstallData *installData = [self installData];
+    [installData writeInstallDataToDictionary:dictionary];
 
     return dictionary;
 }
