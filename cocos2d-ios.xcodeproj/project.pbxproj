@@ -521,6 +521,7 @@
 		D2FEB745194F6C9E00FC0574 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C131728D5F600704732 /* CoreText.framework */; };
 		D2FEB747194F6C9E00FC0574 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		D2FEB749194F6C9E00FC0574 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
+		D3027C8719D33FFB00006004 /* NSValue+CCRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = D34CAD6219C3A0FD009BED7A /* NSValue+CCRenderer.m */; };
 		D309055018AC23110081BF11 /* CCRenderer_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D309054F18AC23110081BF11 /* CCRenderer_Private.h */; };
 		D31C795019994126007921E1 /* CCMetalSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = D31C794F19994126007921E1 /* CCMetalSupport.m */; };
 		D31C795219994197007921E1 /* CCMetalSupport_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D31C795119994197007921E1 /* CCMetalSupport_Private.h */; };
@@ -2334,6 +2335,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3027C8719D33FFB00006004 /* NSValue+CCRenderer.m in Sources */,
 				57202D391970776100238D56 /* CCPlatformTextFieldAndroid.m in Sources */,
 				D2FEB6B9194F6C9E00FC0574 /* CCAction.m in Sources */,
 				D299CE7D19C2910B00519CBB /* CCEffectDFInnerGlow.m in Sources */,

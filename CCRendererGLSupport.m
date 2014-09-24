@@ -266,9 +266,8 @@ static const CCGraphicsBufferType CCGraphicsBufferGLTypes[] = {
 			// associate texture with FBO
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.name, 0);
 			
-			CGSize sizeInPixels = texture.contentSizeInPixels;
-			GLuint width = ceil(sizeInPixels.width);
-			GLuint height = ceil(sizeInPixels.height);
+			GLuint width = texture.pixelWidth;
+			GLuint height = texture.pixelHeight;
 
 #if __CC_PLATFORM_ANDROID
 			

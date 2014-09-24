@@ -203,6 +203,9 @@ static CCDirector *_sharedDirector = nil;
 		_rendererPool = [NSMutableArray array];
 		_globalShaderUniforms = [NSMutableDictionary dictionary];
 		
+		// Force the graphics API to be selected if it hasn't already done so.
+		// Startup code is annoyingly different for iOS/Mac/Android.
+		[[CCConfiguration sharedConfiguration] graphicsAPI];
 		_framebuffer = [[CCFrameBufferObjectClass alloc] init];
 	}
 

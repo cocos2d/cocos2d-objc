@@ -983,6 +983,7 @@
 			buildSettings = {
 				ANDROID_MANIFEST = "$(SRCROOT)//Headless/src/main/AndroidManifest.xml";
 				ANDROID_RES_DIRS = "$(SRCROOT)//Headless/src/main/res";
+				APPORTABLE_TARGET = Android;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1020,6 +1021,7 @@
 			buildSettings = {
 				ANDROID_MANIFEST = "$(SRCROOT)//Headless/src/main/AndroidManifest.xml";
 				ANDROID_RES_DIRS = "$(SRCROOT)//Headless/src/main/res";
+				APPORTABLE_TARGET = Android;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
