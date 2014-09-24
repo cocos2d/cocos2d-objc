@@ -29,6 +29,23 @@
 #import "CCRendererBasicTypes.h"
 
 
+/// Check if the given bounding box as specified by it's center and extents (half with/height) is visible onscreen.	
+static inline BOOL
+CCRenderCheckVisbility(const GLKMatrix4 *transform, GLKVector2 center, GLKVector2 extents)
+{
+	// Center point in clip coordinates.
+	GLKVector4 csc = GLKMatrix4MultiplyVector4(*transform, GLKVector4Make(center.x, center.y, 0.0f, 1.0f));
+	
+	// x, y in clip space.
+	float cshx = fmaxf(fabsf(extents.x*transform->m00 + extents.y*transform->m10), fabsf(extents.x*transform->m00 - extents.y*transform->m10));
+	float cshy = fmaxf(fabsf(extents.x*transform->m01 + extents.y*transform->m11), fabsf(extents.x*transform->m01 - extents.y*transform->m11));
+	
+	// Check the bounds against the clip space viewport using a conservative w-value.
+	float w = fabsf(csc.w) + fmaxf(fabsf(extents.x*transform->m03 + extents.y*transform->m13), fabsf(extents.x*transform->m03 - extents.y*transform->m13));
+	return ((fabsf(csc.x) - cshx < w) && (fabsf(csc.y) - cshy < w));
+}
+
+
 /// A rendering queue.
 /// All drawing commands in Cocos2D must be sequenced using a CCRenderer.
 @interface CCRenderer : NSObject
