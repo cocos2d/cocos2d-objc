@@ -139,6 +139,7 @@ static NSString *CCMetalShaderHeader =
 typedef void (* GetShaderivFunc) (GLuint shader, GLenum pname, GLint* param);
 typedef void (* GetShaderInfoLogFunc) (GLuint shader, GLsizei bufSize, GLsizei* length, GLchar* infoLog);
 
+// Returns NO if there is an error
 static BOOL
 CCCheckShaderError(GLint obj, GLenum status, GetShaderivFunc getiv, GetShaderInfoLogFunc getInfoLog)
 {
@@ -183,9 +184,12 @@ CompileShader(GLenum type, const char *source)
 	glShaderSource(shader, 3, sources, NULL);
 	glCompileShader(shader);
 	
-	NSCAssert(CCCheckShaderError(shader, GL_COMPILE_STATUS, glGetShaderiv, glGetShaderInfoLog), @"Error compiling shader");
-	
-	return shader;
+	if(CCCheckShaderError(shader, GL_COMPILE_STATUS, glGetShaderiv, glGetShaderInfoLog)){
+		return shader;
+	} else {
+		glDeleteShader(shader);
+		return 0;
+	}
 }
 
 
@@ -564,7 +568,7 @@ MetalUniformSettersForFunctions(id<MTLFunction> vertexFunction, id<MTLFunction> 
 -(instancetype)initWithMetalVertexFunction:(id<MTLFunction>)vertexFunction fragmentFunction:(id<MTLFunction>)fragmentFunction
 {
 	if((self = [super init])){
-		NSAssert(vertexFunction && fragmentFunction, @"Must create have both a vertex and fragment function to make a CCShader.");
+		NSAssert(vertexFunction && fragmentFunction, @"Must have both a vertex and fragment function to make a CCShader.");
 		
 		_vertexFunction = vertexFunction;
 		_fragmentFunction = fragmentFunction;
@@ -630,14 +634,18 @@ MetalUniformSettersForFunctions(id<MTLFunction> vertexFunction, id<MTLFunction> 
 		glAttachShader(program, fshader);
 		
 		glLinkProgram(program);
-		NSCAssert(CCCheckShaderError(program, GL_LINK_STATUS, glGetProgramiv, glGetProgramInfoLog), @"Error linking shader program");
 		
 		glDeleteShader(vshader);
 		glDeleteShader(fshader);
 		
 		CCGL_DEBUG_POP_GROUP_MARKER();
 		
-		blockself = [blockself initWithGLProgram:program uniformSetters:GLUniformSettersForProgram(program) ownsProgram:YES];
+		if(CCCheckShaderError(program, GL_LINK_STATUS, glGetProgramiv, glGetProgramInfoLog)){
+			blockself = [blockself initWithGLProgram:program uniformSetters:GLUniformSettersForProgram(program) ownsProgram:YES];
+		} else {
+			glDeleteProgram(program);
+			blockself = nil;
+		}
 	});
 	
 	return blockself;
