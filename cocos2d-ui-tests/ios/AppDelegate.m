@@ -32,6 +32,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [self configureCocos2d];
+
+    return YES;
+}
+
+- (void)configureCocos2d
+{
     // Configure the file utils to work with SpriteBuilder, but use a custom resource path (Resources-shared instead of Published-iOS)
     [CCBReader configureCCFileUtils];
 
@@ -44,8 +51,6 @@
 			CCSetupTabletScale2X: @YES,
 //			CCSetupShowDebugStats: @YES,
 		}];
-
-    return YES;
 }
 
 - (void)configureFileUtilsSearchPathAndRegisterSpriteSheets

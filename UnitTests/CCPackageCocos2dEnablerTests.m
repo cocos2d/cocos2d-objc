@@ -11,6 +11,8 @@
 #import "CCPackage.h"
 #import "CCFileUtils.h"
 #import "CCSprite.h"
+#import "CCBReader.h"
+#import "AppDelegate.h"
 
 @interface CCPackageCocos2dEnablerTests : XCTestCase
 
@@ -25,6 +27,7 @@
 - (void)setUp
 {
     [super setUp];
+    [(AppController *)[UIApplication sharedApplication].delegate configureCocos2d];
 
     self.package = [[CCPackage alloc] initWithName:@"Foo"
                                         resolution:@"phonehd"
@@ -34,14 +37,6 @@
     NSString *pathToPackage = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Resources-shared/Packages/testpackage-iOS-phonehd_unzipped"];
     self.installURL = [[NSURL fileURLWithPath:pathToPackage] URLByAppendingPathComponent:@"testpackage-iOS-phonehd"];
     [_package setValue:_installURL forKey:NSStringFromSelector(@selector(installURL))];
-}
-
-- (void)tearDown
-{
-    CCPackageCocos2dEnabler *packageEnabler = [[CCPackageCocos2dEnabler alloc] init];
-    [packageEnabler disablePackages:@[_package]];
-
-    [super tearDown];
 }
 
 - (void)testEnablePackage
@@ -56,6 +51,7 @@
     XCTAssertNotNil(sprite);
 }
 
+/*
 - (void)testDisablePackage
 {
     [self testEnablePackage];
@@ -72,6 +68,7 @@
     NSString *path = [[CCFileUtils sharedFileUtils] fullPathForFilename:@"boredSmiley.png" contentScale:&scale];
     XCTAssertNil(path);
 }
+*/
 
 - (BOOL)isPackageInSearchPath
 {
