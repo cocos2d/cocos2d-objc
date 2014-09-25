@@ -137,13 +137,13 @@
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];
 
-    if (![fileManager fileExistsAtPath:_localURL.path])
+    if (![fileManager fileExistsAtPath:_tempPath])
     {
         return 0;
     }
 
     NSError *error;
-    NSDictionary *attributes = [fileManager attributesOfItemAtPath:_localURL.path error:&error];
+    NSDictionary *attributes = [fileManager attributesOfItemAtPath:_tempPath error:&error];
 
     if (error)
     {
@@ -424,7 +424,6 @@
             NSString *byteStr = [rangeValue substringWithRange:[match rangeAtIndex:1]];
             return (NSUInteger) [byteStr integerValue];
         }
-
     }
 
     return (NSUInteger) [response expectedContentLength];
