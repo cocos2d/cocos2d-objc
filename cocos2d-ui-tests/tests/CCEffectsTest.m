@@ -693,7 +693,7 @@
     effectNode.positionType = CCPositionTypeNormalized;
     effectNode.position = ccp(0.1, 0.5);
     [effectNode addChild:sampleSprite];
-    CCEffectBlur* effect = [CCEffectBlur effectWithBlurRadius:1.0];
+    CCEffectBlur* effect = [CCEffectBlur effectWithBlurRadius:4.0];
     effectNode.effect = effect;
     
     [self.contentNode addChild:effectNode];
@@ -707,12 +707,11 @@
     effectNode2.positionType = CCPositionTypeNormalized;
     effectNode2.position = ccp(0.21, 0.5);
     [effectNode2 addChild:sampleSprite2];
-    CCEffectBlur* effect2 = [CCEffectBlur effectWithBlurRadius:7.0];
+    CCEffectBlur* effect2 = [CCEffectBlur effectWithBlurRadius:10.0];
     effectNode2.effect = effect2;
     
     [self.contentNode addChild:effectNode2];
     
-    // Tilt shift
     CCSprite *sampleSprite3 = [CCSprite spriteWithImageNamed:@"Images/sample_hollow_circle.png"];
     sampleSprite3.position = ccp(0.5, 0.5);
     sampleSprite3.positionType = CCPositionTypeNormalized;
@@ -728,7 +727,6 @@
     
     [self.contentNode addChild:effectNode3];
     
-    // Tilt shift reversed
     CCSprite *sampleSprite4 = [CCSprite spriteWithImageNamed:@"Images/sample_hollow_circle.png"];
     sampleSprite4.position = ccp(0.5, 0.5);
     sampleSprite4.positionType = CCPositionTypeNormalized;
@@ -737,7 +735,7 @@
     effectNode4.positionType = CCPositionTypeNormalized;
     effectNode4.position = ccp(0.6, 0.5);
     [effectNode4 addChild:sampleSprite4];
-    CCEffectBlur* effect4 = [CCEffectBlur effectWithBlurRadius:7.0];
+    CCEffectBlur* effect4 = [CCEffectBlur effectWithBlurRadius:12.0];
     effectNode4.effect = effect4;
         
     [self.contentNode addChild:effectNode4];
