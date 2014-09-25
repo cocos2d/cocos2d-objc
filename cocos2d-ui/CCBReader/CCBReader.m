@@ -1182,6 +1182,9 @@ static inline float readFloat(CCBReader *self)
         [self readPropertyForNode:(CCNode*)properties parent:nil isExtraProp:NO];
     }
     
+    // TODO: This is a hack because things are happening in the wrong order, needs refactoring!
+    [self postDeserialization];
+    
     CCNode * nodeBodyA = properties[@"bodyA"];
     CCNode * nodeBodyB = properties[@"bodyB"];
     
