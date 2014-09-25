@@ -140,7 +140,6 @@ static BOOL __support_range_request = YES;
     self.downloadError = nil;
     self.downloadSuccessful = NO;
 
-
     self.package = [[CCPackage alloc] initWithName:@"testpackage"
                                         resolution:@"phonehd"
                                                 os:@"iOS"
@@ -186,18 +185,21 @@ static BOOL __support_range_request = YES;
 
 - (void)testDownloadPackage
 {
-    [self startDownloadAndWaitForDelegateToReturn];
+    [self waitForDelegateToReturnAfterRunningBlock:^
+    {
+        [_download start];
+    }];
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSDictionary *attribs = [fileManager attributesOfItemAtPath:_localURL.path error:nil];
-
+    XCTAssertTrue(_downloadSuccessful);
     XCTAssertTrue([fileManager fileExistsAtPath:_localURL.path]);
     XCTAssertEqual([attribs[NSFileSize] unsignedIntegerValue], __fileDownloadSize);
 }
 
-- (void)startDownloadAndWaitForDelegateToReturn
+- (void)waitForDelegateToReturnAfterRunningBlock:(dispatch_block_t)block
 {
-    [_download start];
+    block();
 
     while (!_downloadReturned)
     {
@@ -207,19 +209,27 @@ static BOOL __support_range_request = YES;
 
 - (void)testRangeRequest
 {
-    // Setting up partial download on disk
+    [self setupPartialDownloadOnDisk];
+
+    [self waitForDelegateToReturnAfterRunningBlock:^
+    {
+        [_download start];
+    }];
+
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSDictionary *attribs = [fileManager attributesOfItemAtPath:_localURL.path error:nil];
+    XCTAssertTrue(_downloadSuccessful);
+    XCTAssertTrue([fileManager fileExistsAtPath:_localURL.path]);
+    XCTAssertEqual([attribs[NSFileSize] unsignedIntegerValue], __fileDownloadSize);
+}
+
+- (void)setupPartialDownloadOnDisk
+{
     NSString *fileName = [_package.remoteURL lastPathComponent];
     NSString *pathToPackage = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"Resources-shared/Packages/%@", fileName] ofType:nil];
     NSData *data = [[NSData dataWithContentsOfFile:pathToPackage] subdataWithRange:NSMakeRange(0, 5000)];
     NSString *tempName = [_download performSelector:@selector(createTempName)];
     [data writeToFile:[[_localURL.path stringByDeletingLastPathComponent] stringByAppendingPathComponent:tempName] atomically:YES];
-
-    [self startDownloadAndWaitForDelegateToReturn];
-
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSDictionary *attribs = [fileManager attributesOfItemAtPath:_localURL.path error:nil];
-    XCTAssertTrue([fileManager fileExistsAtPath:_localURL.path]);
-    XCTAssertEqual([attribs[NSFileSize] unsignedIntegerValue], __fileDownloadSize);
 }
 
 /*
@@ -232,13 +242,21 @@ static BOOL __support_range_request = YES;
 {
 
 }
+*/
 
 
 - (void)testDownloadWith404Response
 {
+    [_package setValue:[NSURL URLWithString:@"http://package.request.fake/DOES_NOT_EXIST.zip"] forKey:NSStringFromSelector(@selector(remoteURL))];
 
+    [self waitForDelegateToReturnAfterRunningBlock:^
+    {
+        [_download start];
+    }];
+
+    XCTAssertFalse(_downloadSuccessful);
+    XCTAssertNotNil(_downloadError);
 }
-*/
 
 
 #pragma mark - CCPackageDownloadDelegate
