@@ -105,6 +105,9 @@ typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
 	///! 2-bit PVRTC-compressed texture: PVRTC2
 	CCTexturePixelFormat_PVRTC2,
 
+	///! 32-bit texture: BGRA8888
+	CCTexturePixelFormat_BGRA8888,
+    
 	///! Default texture format: RGBA8888
 	CCTexturePixelFormat_Default = CCTexturePixelFormat_RGBA8888,
 };

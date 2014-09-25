@@ -8,38 +8,34 @@
 
 #import "CCRenderTexture.h"
 
-@class CCRenderTextureFBO;
+@class CCFrameBufferObject;
 
 @interface CCRenderTexture() {
 
 @protected
     GLenum _pixelFormat;
     GLuint _depthStencilFormat;
-
-    CCRenderer *_renderer;
-    BOOL _privateRenderer;
+		
+		// Reference to the previous render to be restored by end.
+		CCRenderer *_previousRenderer;
 
     GLKVector4 _clearColor;
 
-    GLKVector4 _oldViewport;
-    GLint _oldFBO;
-    NSDictionary *_oldGlobalUniforms;
-
-
     float _contentScale;
+		
+		// Raw projection matrix used for rendering.
+		// For metal will be flipped on the y-axis compared to the .projection property.
     GLKMatrix4 _projection;
 
     CCSprite* _sprite;
     
-    CCRenderTextureFBO *_FBO;
+    CCFrameBufferObject *_framebuffer;
     
     BOOL _contentSizeChanged;
 }
 
 -(void)createTextureAndFboWithPixelSize:(CGSize)pixelSize;
 -(void)destroy;
-
--(GLuint)fbo;
 
 -(void)assignSpriteTexture;
 

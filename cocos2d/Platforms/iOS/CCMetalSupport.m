@@ -26,10 +26,13 @@
 #import "CCMetalSupport_Private.h"
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 
+#import "CCMetalView.h"
 #import "CCTexture_Private.h"
 #import "CCShader_Private.h"
 
-@implementation CCMetalContext
+@implementation CCMetalContext {
+	id<MTLTexture> _destinationTexture;
+}
 
 -(instancetype)init
 {
@@ -60,35 +63,44 @@ static NSString *CURRENT_CONTEXT_KEY = @"CURRENT_CONTEXT_KEY";
 	}
 }
 
--(void)setDestinationTexture:(id<MTLTexture>)destinationTexture
-{
-	if(_destinationTexture != destinationTexture){
-		MTLRenderPassColorAttachmentDescriptor *colorAttachment = [MTLRenderPassColorAttachmentDescriptor new];
-		colorAttachment.texture = destinationTexture;
-		colorAttachment.loadAction = MTLLoadActionClear;
-		colorAttachment.clearColor = MTLClearColorMake(0, 0, 0, 0);
-		colorAttachment.storeAction = MTLStoreActionStore;
-
-		MTLRenderPassDescriptor *renderPassDescriptor = [MTLRenderPassDescriptor renderPassDescriptor];
-		renderPassDescriptor.colorAttachments[0] = colorAttachment;
-
-		_currentRenderCommandEncoder = [self.currentCommandBuffer renderCommandEncoderWithDescriptor:renderPassDescriptor];
-		_destinationTexture = destinationTexture;
-	}
-}
-
--(void)prepareCommandBuffer
-{
-	_currentCommandBuffer = [_commandQueue commandBuffer];
-	_currentCommandBuffer.label = @"Main Cocos2D Command Buffer";
-}
-
--(void)commitCurrentCommandBuffer
+-(void)endRenderPass
 {
 	[_currentRenderCommandEncoder endEncoding];
+	_currentRenderCommandEncoder = nil;
+}
+
+-(void)beginRenderPass:(id<MTLTexture>)destinationTexture clearMask:(GLbitfield)mask color:(GLKVector4)color4 depth:(GLclampf)depth stencil:(GLint)stencil;
+{
+	// End the previous render pass.
+	[self endRenderPass];
 	
+	MTLRenderPassColorAttachmentDescriptor *colorAttachment = [MTLRenderPassColorAttachmentDescriptor new];
+	colorAttachment.texture = destinationTexture;
+	if(mask & GL_COLOR_BUFFER_BIT){
+		colorAttachment.loadAction = MTLLoadActionClear;
+		colorAttachment.clearColor = MTLClearColorMake(color4.r, color4.g, color4.b, color4.a);
+		colorAttachment.storeAction = MTLStoreActionStore;
+	} else {
+		colorAttachment.loadAction = MTLLoadActionDontCare;
+		colorAttachment.storeAction = MTLStoreActionStore;
+	}
+	
+	// TODO depth and stencil.
+
+	MTLRenderPassDescriptor *renderPassDescriptor = [MTLRenderPassDescriptor renderPassDescriptor];
+	renderPassDescriptor.colorAttachments[0] = colorAttachment;
+
+	_currentRenderCommandEncoder = [_currentCommandBuffer renderCommandEncoderWithDescriptor:renderPassDescriptor];
+	_destinationTexture = destinationTexture;
+}
+
+-(void)flushCommandBuffer
+{
+	[self endRenderPass];
 	[_currentCommandBuffer commit];
-	_currentCommandBuffer = nil;
+	
+	_currentCommandBuffer = [_commandQueue commandBuffer];
+	_currentCommandBuffer.label = @"Main Cocos2D Command Buffer";
 }
 
 @end
@@ -130,35 +142,57 @@ static NSString *CURRENT_CONTEXT_KEY = @"CURRENT_CONTEXT_KEY";
 @end
 
 
-@interface CCGraphicsBufferBindingsMetal : NSObject <CCGraphicsBufferBindings> @end
-@implementation CCGraphicsBufferBindingsMetal {
-	CCGraphicsBufferMetal *_vertexBuffer;
-	CCGraphicsBufferMetal *_indexBuffer;
-}
+@implementation CCGraphicsBufferBindingsMetal
 
--(instancetype)initWithVertexBuffer:(CCGraphicsBufferMetal *)vertexBuffer indexBuffer:(CCGraphicsBufferMetal *)indexBuffer
+-(instancetype)init
 {
 	if((self = [super init])){
-		_vertexBuffer = vertexBuffer;
-		_indexBuffer = indexBuffer;
+		CCRenderDispatch(NO, ^{
+			_context = [CCMetalContext currentContext];
+			
+			const NSUInteger CCRENDERER_INITIAL_VERTEX_CAPACITY = 16*1024;
+			_vertexBuffer = [[CCGraphicsBufferMetal alloc] initWithCapacity:CCRENDERER_INITIAL_VERTEX_CAPACITY elementSize:sizeof(CCVertex) type:CCGraphicsBufferTypeVertex];
+			[_vertexBuffer prepare];
+			
+			_indexBuffer = [[CCGraphicsBufferMetal alloc] initWithCapacity:CCRENDERER_INITIAL_VERTEX_CAPACITY*1.5 elementSize:sizeof(uint16_t) type:CCGraphicsBufferTypeIndex];
+			[_indexBuffer prepare];
+			
+			// Default to half a megabyte of initial uniform storage.
+			NSUInteger uniformCapacity = 500*1024;
+			_uniformBuffer = [[CCGraphicsBufferClass alloc] initWithCapacity:uniformCapacity elementSize:1 type:CCGraphicsBufferTypeUniform];
+		});
 	}
 	
 	return self;
 }
 
--(void)bind:(BOOL)bind
+@end
+
+
+@implementation CCFrameBufferObjectMetal
+
+-(instancetype)initWithTexture:(CCTexture *)texture depthStencilFormat:(GLuint)depthStencilFormat
 {
-	id<MTLRenderCommandEncoder> renderEncoder = [CCMetalContext currentContext].currentRenderCommandEncoder;
+	if((self = [super initWithTexture:texture depthStencilFormat:depthStencilFormat])){
+		self.sizeInPixels = texture.contentSizeInPixels;
+		self.contentScale = texture.contentScale;
+		_frameBufferTexture = texture.metalTexture;
+	}
 	
-	CCMTL_DEBUG_INSERT_EVENT_MARKER(renderEncoder, @"CCGraphicsBufferBindingsMetal: Bind vertex array.");
-	[renderEncoder setVertexBuffer:_vertexBuffer->_buffer offset:0 atIndex:0];
+	return self;
+}
+
+-(void)bindWithClear:(GLbitfield)mask color:(GLKVector4)color4 depth:(GLclampf)depth stencil:(GLint)stencil
+{
+	[[CCMetalContext currentContext] beginRenderPass:_frameBufferTexture clearMask:mask color:color4 depth:depth stencil:stencil];
+}
+
+-(void)syncWithView:(CC_VIEW<CCDirectorView> *)view;
+{
+	[super syncWithView:view];
+	_frameBufferTexture = [(CCMetalView *)view destinationTexture];
 }
 
 @end
-
-#else
-
-// Temporary
-#warning Metal disabled
 
 #endif

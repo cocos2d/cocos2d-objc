@@ -178,7 +178,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 			break;
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 		case CCGraphicsAPIMetal:
-			#warning TODO
+			// TODO support MSAA, depth buffers, etc.
 			ccview = [[CCMetalView alloc] initWithFrame:bounds];
 			break;
 #endif

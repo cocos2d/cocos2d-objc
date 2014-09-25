@@ -43,6 +43,7 @@ Class CCGraphicsBufferClass;
 Class CCGraphicsBufferBindingsClass;
 Class CCRenderStateClass;
 Class CCRenderCommandDrawClass;
+Class CCFrameBufferObjectClass;
 
 NSString* const CCSetupPixelFormat = @"CCSetupPixelFormat";
 NSString* const CCSetupScreenMode = @"CCSetupScreenMode";
@@ -88,8 +89,9 @@ static char * glExtensions;
 
 + (CCConfiguration *)sharedConfiguration
 {
-	if (!_sharedConfiguration)
+	if (!_sharedConfiguration){
 		_sharedConfiguration = [[self alloc] init];
+	}
 
 	return _sharedConfiguration;
 }
@@ -137,21 +139,32 @@ static char * glExtensions;
 -(CCGraphicsAPI)graphicsAPI
 {
 	if(_graphicsAPI == CCGraphicsAPIInvalid){
-		if(__CC_METAL_SUPPORTED_AND_ENABLED && NSProtocolFromString(@"MTLDevice") && !getenv("CC_FORCE_GL")){
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+		if(NSProtocolFromString(@"MTLDevice") && !getenv("CC_FORCE_GL")){
 			CCGraphicsBufferClass = NSClassFromString(@"CCGraphicsBufferMetal");
 			CCGraphicsBufferBindingsClass = NSClassFromString(@"CCGraphicsBufferBindingsMetal");
 			CCRenderStateClass = NSClassFromString(@"CCRenderStateMetal");
 			CCRenderCommandDrawClass = NSClassFromString(@"CCRenderCommandDrawMetal");
+			CCFrameBufferObjectClass = NSClassFromString(@"CCFrameBufferObjectMetal");
 			
 			_graphicsAPI = CCGraphicsAPIMetal;
-		} else {
+		} else
+#endif
+		{
 			CCGraphicsBufferClass = NSClassFromString(@"CCGraphicsBufferGLBasic");
 			CCGraphicsBufferBindingsClass = NSClassFromString(@"CCGraphicsBufferBindingsGL");
 			CCRenderStateClass = NSClassFromString(@"CCRenderStateGL");
 			CCRenderCommandDrawClass = NSClassFromString(@"CCRenderCommandDrawGL");
+			CCFrameBufferObjectClass = NSClassFromString(@"CCFrameBufferObjectGL");
 			
 			_graphicsAPI = CCGraphicsAPIGL;
 		}
+		
+		NSAssert(CCGraphicsBufferClass, @"CCGraphicsBufferClass not configured.");
+		NSAssert(CCGraphicsBufferBindingsClass, @"CCGraphicsBufferBindingsClass not configured.");
+		NSAssert(CCRenderStateClass, @"CCRenderStateClass not configured.");
+		NSAssert(CCRenderCommandDrawClass, @"CCRenderCommandDrawClass not configured.");
+		NSAssert(CCFrameBufferObjectClass, @"CCFrameBufferObjectClass not configured.");
 	}
 	
 	return _graphicsAPI;
@@ -402,7 +415,7 @@ static char * glExtensions;
 
 	printf("cocos2d: OS version: %s (0x%08x)\n", [OSVer UTF8String], _OSVersion);
 	printf("cocos2d: %ld bit runtime\n", 8*sizeof(long));	
-	printf("cocos2d: Multi-threaded rendering: %s\n", (CC_RENDER_DISPATCH_ENABLED ? "YES" : "NO"));
+	printf("cocos2d: Multi-threaded rendering: %d\n", CC_RENDER_DISPATCH_ENABLED);
 	
 	if(_graphicsAPI == CCGraphicsAPIGL){
 		printf("cocos2d: OpenGL Rendering enabled.");

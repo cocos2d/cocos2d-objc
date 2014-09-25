@@ -46,7 +46,7 @@
 #endif
 
 #import "CCTexture_Private.h"
-#import "CCRenderer_private.h"
+#import "CCRenderer_Private.h"
 
 // needed for CCCallFuncO in Mac-display_link version
 //#import "CCActionManager.h"
@@ -91,11 +91,10 @@ static CCTextureCache *sharedTextureCache;
 		_loadingQueue = dispatch_queue_create("org.cocos2d.texturecacheloading", NULL);
 		_dictQueue = dispatch_queue_create("org.cocos2d.texturecachedict", NULL);
 		
-		#warning TODO
+		// Skip the GL context sharegroup code for Metal.
 		if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal) return self;
 		
 #if !__CC_PLATFORM_ANDROID
-		#warning TODO might not be a GL view.
 		CCGLView *view = (CCGLView*)[[CCDirector sharedDirector] view];
 		NSAssert(view, @"Do not initialize the TextureCache before the Director");
 #endif
@@ -405,8 +404,6 @@ static CCTextureCache *sharedTextureCache;
 
 -(void) removeUnusedTextures
 {
-    [CCRENDERSTATE_CACHE flush];
-		
     dispatch_sync(_dictQueue, ^{
         NSArray *keys = [_textures allKeys];
         for(id key in keys)

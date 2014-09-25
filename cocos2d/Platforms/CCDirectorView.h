@@ -35,10 +35,4 @@
 /// The block may not be invoked from the main thread.
 -(void)addFrameCompletionHandler:(dispatch_block_t)handler;
 
-/** uses and locks the OpenGL context */
--(void) lockOpenGLContext;
-
-/** unlocks the openGL context */
--(void) unlockOpenGLContext;
-
 @end

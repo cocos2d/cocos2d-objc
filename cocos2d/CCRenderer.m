@@ -25,330 +25,73 @@
 #import "objc/message.h"
 
 #import "cocos2d.h"
-#import "CCRenderer_private.h"
+#import "CCRenderer_Private.h"
 #import "CCCache.h"
 #import "CCTexture_Private.h"
 #import "CCShader_private.h"
 #import "CCDirector_Private.h"
 #import "CCRenderDispatch.h"
 
-//MARK: NSValue Additions.
-@implementation NSValue(CCRenderer)
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+#import "CCMetalSupport_Private.h"
+#endif
 
-+(NSValue *)valueWithGLKVector2:(GLKVector2)vector
-{
-	return [NSValue valueWithBytes:&vector objCType:@encode(GLKVector2)];
-}
+@interface NSValue()
 
-+(NSValue *)valueWithGLKVector3:(GLKVector3)vector
-{
-	return [NSValue valueWithBytes:&vector objCType:@encode(GLKVector3)];
-}
-
-+(NSValue *)valueWithGLKVector4:(GLKVector4)vector
-{
-	return [NSValue valueWithBytes:&vector objCType:@encode(GLKVector4)];
-}
-
-+(NSValue *)valueWithGLKMatrix4:(GLKMatrix4)matrix
-{
-	return [NSValue valueWithBytes:&matrix objCType:@encode(GLKMatrix4)];
-}
-
-@end
-
-//MARK: Option Keys.
-const NSString *CCRenderStateBlendMode = @"CCRenderStateBlendMode";
-const NSString *CCRenderStateShader = @"CCRenderStateShader";
-const NSString *CCRenderStateShaderUniforms = @"CCRenderStateShaderUniforms";
-
-const NSString *CCBlendFuncSrcColor = @"CCBlendFuncSrcColor";
-const NSString *CCBlendFuncDstColor = @"CCBlendFuncDstColor";
-const NSString *CCBlendEquationColor = @"CCBlendEquationColor";
-const NSString *CCBlendFuncSrcAlpha = @"CCBlendFuncSrcAlpha";
-const NSString *CCBlendFuncDstAlpha = @"CCBlendFuncDstAlpha";
-const NSString *CCBlendEquationAlpha = @"CCBlendEquationAlpha";
-
-
-//MARK: Blend Modes.
-@interface CCBlendMode()
-
--(instancetype)initWithOptions:(NSDictionary *)options;
+// Defined in NSValue+CCRenderer.m.
+-(size_t)CCRendererSizeOf;
 
 @end
 
 
-@interface CCBlendModeCache : CCCache
-@end
+//MARK: Graphics Debug Helpers:
 
+#if DEBUG
 
-@implementation CCBlendModeCache
-
--(id)objectForKey:(id<NSCopying>)options
-{
-	CCBlendMode *blendMode = [self rawObjectForKey:options];
-	if(blendMode) return blendMode;
-	
-	// Normalize the blending mode to use for the key.
-	id src = (options[CCBlendFuncSrcColor] ?: @(GL_ONE));
-	id dst = (options[CCBlendFuncDstColor] ?: @(GL_ZERO));
-	id equation = (options[CCBlendEquationColor] ?: @(GL_FUNC_ADD));
-	
-	NSDictionary *normalized = @{
-		CCBlendFuncSrcColor: src,
-		CCBlendFuncDstColor: dst,
-		CCBlendEquationColor: equation,
-		
-		// Assume they meant non-separate blending if they didn't fill in the keys.
-		CCBlendFuncSrcAlpha: (options[CCBlendFuncSrcAlpha] ?: src),
-		CCBlendFuncDstAlpha: (options[CCBlendFuncDstAlpha] ?: dst),
-		CCBlendEquationAlpha: (options[CCBlendEquationAlpha] ?: equation),
-	};
-	
-	// Create the key using the normalized blending mode.
-	blendMode = [super objectForKey:normalized];
-	
-	// Make an alias for the unnormalized version
-	[self makeAlias:options forKey:normalized];
-	
-	return blendMode;
-}
-
--(id)createSharedDataForKey:(NSDictionary *)options
-{
-	return options;
-}
-
--(id)createPublicObjectForSharedData:(NSDictionary *)options
-{
-	return [[CCBlendMode alloc] initWithOptions:options];
-}
-
-// Nothing special
--(void)disposeOfSharedData:(id)data {}
-
--(void)flush
-{
-	// Since blending modes are used for keys, need to wrap the flush call in a pool.
-	@autoreleasepool {
-		[super flush];
+void CCRENDERER_DEBUG_PUSH_GROUP_MARKER(NSString *label){
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+		[[CCMetalContext currentContext].currentRenderCommandEncoder pushDebugGroup:label];
+	} else
+#endif
+	{
+		CCGL_DEBUG_PUSH_GROUP_MARKER(label.UTF8String);
 	}
 }
 
-@end
-
-
-@implementation CCBlendMode
-
--(instancetype)initWithOptions:(NSDictionary *)options
-{
-	if((self = [super init])){
-		_options = options;
-	}
-	
-	return self;
-}
-
-CCBlendModeCache *CCBLENDMODE_CACHE = nil;
-
-// Default modes
-static CCBlendMode *CCBLEND_DISABLED = nil;
-static CCBlendMode *CCBLEND_ALPHA = nil;
-static CCBlendMode *CCBLEND_PREMULTIPLIED_ALPHA = nil;
-static CCBlendMode *CCBLEND_ADD = nil;
-static CCBlendMode *CCBLEND_MULTIPLY = nil;
-
-NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
-
-+(void)initialize
-{
-	// +initialize may be called due to loading a subclass.
-	if(self != [CCBlendMode class]) return;
-	
-	CCBLENDMODE_CACHE = [[CCBlendModeCache alloc] init];
-	
-	// Add the default modes
-	CCBLEND_DISABLED = [self blendModeWithOptions:@{}];
-	CCBLEND_DISABLED_OPTIONS = CCBLEND_DISABLED.options;
-	
-	CCBLEND_ALPHA = [self blendModeWithOptions:@{
-		CCBlendFuncSrcColor: @(GL_SRC_ALPHA),
-		CCBlendFuncDstColor: @(GL_ONE_MINUS_SRC_ALPHA),
-	}];
-	
-	CCBLEND_PREMULTIPLIED_ALPHA = [self blendModeWithOptions:@{
-		CCBlendFuncSrcColor: @(GL_ONE),
-		CCBlendFuncDstColor: @(GL_ONE_MINUS_SRC_ALPHA),
-	}];
-	
-	CCBLEND_ADD = [self blendModeWithOptions:@{
-		CCBlendFuncSrcColor: @(GL_ONE),
-		CCBlendFuncDstColor: @(GL_ONE),
-	}];
-	
-	CCBLEND_MULTIPLY = [self blendModeWithOptions:@{
-		CCBlendFuncSrcColor: @(GL_DST_COLOR),
-		CCBlendFuncDstColor: @(GL_ZERO),
-	}];
-}
-
-+(CCBlendMode *)blendModeWithOptions:(NSDictionary *)options
-{
-	return [CCBLENDMODE_CACHE objectForKey:options];
-}
-
-+(CCBlendMode *)disabledMode
-{
-	return CCBLEND_DISABLED;
-}
-
-+(CCBlendMode *)alphaMode
-{
-	return CCBLEND_ALPHA;
-}
-
-+(CCBlendMode *)premultipliedAlphaMode
-{
-	return CCBLEND_PREMULTIPLIED_ALPHA;
-}
-
-+(CCBlendMode *)addMode
-{
-	return CCBLEND_ADD;
-}
-
-+(CCBlendMode *)multiplyMode
-{
-	return CCBLEND_MULTIPLY;
-}
-
-@end
-
-
-//MARK: Render States.
-@interface CCRenderStateCache : CCCache
-@end
-
-
-@implementation CCRenderStateCache
-
--(id)createSharedDataForKey:(CCRenderState *)renderState
-{
-	return renderState;
-}
-
--(id)createPublicObjectForSharedData:(CCRenderState *)renderState
-{
-	return [renderState copy];
-}
-
-// Nothing special
--(void)disposeOfSharedData:(id)data {}
-
--(void)flush
-{
-	// Since render states are used for keys, need to wrap the flush call in a pool.
-	@autoreleasepool {
-		[super flush];
+void CCRENDERER_DEBUG_POP_GROUP_MARKER(void){
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+		[[CCMetalContext currentContext].currentRenderCommandEncoder popDebugGroup];
+	} else
+#endif
+	{
+		CCGL_DEBUG_POP_GROUP_MARKER();
 	}
 }
 
-@end
-
-
-@implementation CCRenderState
-
-CCRenderStateCache *CCRENDERSTATE_CACHE = nil;
-CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
-
-+(void)initialize
-{
-	// +initialize may be called due to loading a subclass.
-	if(self != [CCRenderState class]) return;
-	
-	CCRENDERSTATE_CACHE = [[CCRenderStateCache alloc] init];
-	CCRENDERSTATE_DEBUGCOLOR = [[CCRenderStateClass alloc] initWithBlendMode:CCBLEND_DISABLED shader:[CCShader positionColorShader] shaderUniforms:@{}];
-}
-
--(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms
-{
-	// Allocate a new instance of the correct class instead of self. (This method was already deprecated).
-	return [[CCRenderStateClass alloc] initWithBlendMode:blendMode shader:shader mainTexture:nil shaderUniforms:shaderUniforms copyUniforms:NO];
-}
-
--(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader mainTexture:(CCTexture *)mainTexture shaderUniforms:(NSDictionary *)shaderUniforms copyUniforms:(BOOL)copyUniforms
-{
-	if((self = [super init])){
-		_blendMode = blendMode;
-		_shader = shader;
-		_shaderUniforms = (copyUniforms ? [shaderUniforms copy] : shaderUniforms);
-		
-		_mainTexture = mainTexture;
-		
-		// The renderstate as a whole is immutable if the uniforms are copied.
-		_immutable = copyUniforms;
-	}
-	
-	return self;
-}
-
-+(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader mainTexture:(CCTexture *)mainTexture;
-{
-	if(mainTexture == nil){
-		CCLOGWARN(@"nil Texture passed to CCRenderState");
-		mainTexture = [CCTexture none];
-	}
-	
-	// The uniforms are immutable, but don't mark them to be copied.
-	// This forces the cache to create a unique public object for the shared/key values.
-	CCRenderState *renderState = [[self alloc] initWithBlendMode:blendMode shader:shader mainTexture:mainTexture shaderUniforms:@{CCShaderUniformMainTexture: mainTexture} copyUniforms:NO];
-	
-	return [CCRENDERSTATE_CACHE objectForKey:renderState];
-}
-
-+(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms copyUniforms:(BOOL)copyUniforms
-{
-	return [[CCRenderStateClass alloc] initWithBlendMode:blendMode shader:shader mainTexture:nil shaderUniforms:shaderUniforms copyUniforms:copyUniforms];
-}
-
--(id)copyWithZone:(NSZone *)zone
-{
-	if(_immutable){
-		return self;
-	} else {
-		return [[CCRenderStateClass allocWithZone:zone] initWithBlendMode:_blendMode shader:_shader mainTexture:_mainTexture shaderUniforms:_shaderUniforms copyUniforms:YES];
+void CCRENDERER_DEBUG_INSERT_EVENT_MARKER(NSString *label){
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+		[[CCMetalContext currentContext].currentRenderCommandEncoder insertDebugSignpost:label];
+	} else
+#endif
+	{
+		CCGL_DEBUG_INSERT_EVENT_MARKER(label.UTF8String);
 	}
 }
 
--(NSUInteger)hash
-{
-	// Not great, but acceptable. All values are unique by pointer.
-	return ((NSUInteger)_blendMode ^ (NSUInteger)_shader ^ (NSUInteger)_mainTexture);
+void CCRENDERER_DEBUG_CHECK_ERRORS(void){
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+	} else
+#endif
+	{
+		CC_CHECK_GL_ERROR_DEBUG();
+	}
 }
 
--(BOOL)isEqual:(id)object
-{
-	CCRenderState *other = object;
-	
-	return (
-		[other isKindOfClass:[CCRenderState class]] &&
-		_blendMode == other->_blendMode &&
-		_shader == other->_shader &&
-		_mainTexture == other->_mainTexture
-	);
-}
-
-+(instancetype)debugColor
-{
-	return CCRENDERSTATE_DEBUGCOLOR;
-}
-
--(void)transitionRenderer:(CCRenderer *)renderer FromState:(CCRenderer *)previous
-{
-	NSAssert(NO, @"Must be overridden.");
-}
-
-@end
+#endif
 
 
 //MARK: Draw Command.
@@ -360,7 +103,11 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 {
 	if((self = [super init])){
 		_mode = mode;
+#if CC_DIRECTOR_IOS_THREADED_RENDERING
 		_renderState = [renderState copy];
+#else
+		_renderState = renderState;
+#endif
 		_first = first;
 		_count = count;
 		_globalSortOrder = globalSortOrder;
@@ -417,12 +164,12 @@ CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 
 -(void)invokeOnRenderer:(CCRenderer *)renderer
 {
-	CCGL_DEBUG_PUSH_GROUP_MARKER(_debugLabel.UTF8String);
+	CCRENDERER_DEBUG_PUSH_GROUP_MARKER(_debugLabel);
 	
 	[renderer bindBuffers:NO];
 	_block();
 	
-	CCGL_DEBUG_POP_GROUP_MARKER();
+	CCRENDERER_DEBUG_POP_GROUP_MARKER();
 }
 
 @end
@@ -470,50 +217,14 @@ SortQueue(NSMutableArray *queue)
 {
 	SortQueue(_queue);
 	
-	CCGL_DEBUG_PUSH_GROUP_MARKER(_debugLabel.UTF8String);
+	CCRENDERER_DEBUG_PUSH_GROUP_MARKER(_debugLabel);
 	for(id<CCRenderCommand> command in _queue) [command invokeOnRenderer:renderer];
-	CCGL_DEBUG_POP_GROUP_MARKER();
+	CCRENDERER_DEBUG_POP_GROUP_MARKER();
 }
 
 -(NSInteger)globalSortOrder
 {
 	return _globalSortOrder;
-}
-
-@end
-
-
-// MARK: CCGraphicsBuffer
-
-
-@implementation CCGraphicsBuffer
-
--(instancetype)initWithCapacity:(NSUInteger)capacity elementSize:(size_t)elementSize type:(CCGraphicsBufferType)type
-{
-	if((self = [super init])){
-		_count = 0;
-		_capacity = capacity;
-		_elementSize = elementSize;
-	}
-	
-	return self;
-}
-
--(void)resize:(size_t)newCapacity
-{NSAssert(NO, @"Must be overridden.");}
-
--(void)destroy
-{NSAssert(NO, @"Must be overridden.");}
-
--(void)prepare
-{NSAssert(NO, @"Must be overridden.");}
-
--(void)commit
-{NSAssert(NO, @"Must be overridden.");}
-
--(void)dealloc
-{
-	[self destroy];
 }
 
 @end
@@ -534,31 +245,10 @@ SortQueue(NSMutableArray *queue)
 -(instancetype)init
 {
 	if((self = [super init])){
-		CCRenderDispatch(NO, ^{
-			const NSUInteger CCRENDERER_INITIAL_VERTEX_CAPACITY = 16*1024;
-			_vertexBuffer = [[CCGraphicsBufferClass alloc] initWithCapacity:CCRENDERER_INITIAL_VERTEX_CAPACITY elementSize:sizeof(CCVertex) type:CCGraphicsBufferTypeVertex];
-			[_vertexBuffer prepare];
-			
-			_elementBuffer = [[CCGraphicsBufferClass alloc] initWithCapacity:CCRENDERER_INITIAL_VERTEX_CAPACITY*1.5 elementSize:sizeof(uint16_t) type:CCGraphicsBufferTypeIndex];
-			[_elementBuffer prepare];
-			
-			_bufferBindings = [CCGraphicsBufferBindingsClass alloc];
-			_bufferBindings = [_bufferBindings initWithVertexBuffer:_vertexBuffer indexBuffer:_elementBuffer];
-		});
-		
+		_buffers = [[CCGraphicsBufferBindingsClass alloc] init];
+				
 		_threadsafe = YES;
 		_queue = [NSMutableArray array];
-		
-#if __CC_METAL_SUPPORTED_AND_ENABLED
-		if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
-			// TODO: This is sort of gross. Would like it to move somewhere else.
-			_metalContext = (CCMetalContext *)[NSClassFromString(@"CCMetalContext") currentContext];
-			
-			// Default to half a megabyte of initial uniform storage.
-			NSUInteger uniformCapacity = 500*1024;
-			_uniformBuffer = [[CCGraphicsBufferClass alloc] initWithCapacity:uniformCapacity elementSize:1 type:CCGraphicsBufferTypeUniform];
-		}
-#endif
 	}
 	
 	return self;
@@ -574,22 +264,76 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 +(void)bindRenderer:(CCRenderer *)renderer
 {
 	if(renderer){
-		NSAssert(self.currentRenderer == nil, @"Internal Error: Already have a renderer bound.");
 		[NSThread currentThread].threadDictionary[CURRENT_RENDERER_KEY] = renderer;
 	} else {
 		[[NSThread currentThread].threadDictionary removeObjectForKey:CURRENT_RENDERER_KEY];
 	}
 }
 
--(void)setGlobalShaderUniforms:(NSDictionary *)globalShaderUniforms
+-(void)prepareWithProjection:(const GLKMatrix4 *)projection framebuffer:(CCFrameBufferObject *)framebuffer
 {
-	_globalShaderUniforms = [globalShaderUniforms copy];
-	[self invalidateState];
+	NSAssert(framebuffer, @"Framebuffer cannot be nil.");
+	CCDirector *director = [CCDirector sharedDirector];
+	
+	// Copy in the globals from the director.
+	NSMutableDictionary *globalShaderUniforms = [director.globalShaderUniforms mutableCopy];
+	
+	// Group all of the standard globals into one value.
+	// Used by Metal, will be used eventually by a GL3 renderer.
+	CCGlobalUniforms globals = {};
+	
+	globals.projection = *projection;
+	globals.projectionInv = GLKMatrix4Invert(globals.projection, NULL);
+	globalShaderUniforms[CCShaderUniformProjection] = [NSValue valueWithGLKMatrix4:globals.projection];
+	globalShaderUniforms[CCShaderUniformProjectionInv] = [NSValue valueWithGLKMatrix4:globals.projectionInv];
+	
+	CGSize pixelSize = framebuffer.sizeInPixels;
+	globals.viewSizeInPixels = GLKVector2Make(pixelSize.width, pixelSize.height);
+	globalShaderUniforms[CCShaderUniformViewSizeInPixels] = [NSValue valueWithGLKVector2:globals.viewSizeInPixels];
+	
+	float coef = 1.0/framebuffer.contentScale;
+	globals.viewSize = GLKVector2Make(coef*pixelSize.width, coef*pixelSize.height);
+	globalShaderUniforms[CCShaderUniformViewSize] = [NSValue valueWithGLKVector2:globals.viewSize];
+	
+	CCTime t = director.scheduler.currentTime;
+	globals.time = GLKVector4Make(t, t/2.0f, t/4.0f, t/8.0f);
+	globals.sinTime = GLKVector4Make(sinf(t*2.0f), sinf(t), sinf(t/2.0f), sinf(t/4.0f));
+	globals.cosTime = GLKVector4Make(cosf(t*2.0f), cosf(t), cosf(t/2.0f), cosf(t/4.0f));
+	globalShaderUniforms[CCShaderUniformTime] = [NSValue valueWithGLKVector4:globals.time];
+	globalShaderUniforms[CCShaderUniformSinTime] = [NSValue valueWithGLKVector4:globals.sinTime];
+	globalShaderUniforms[CCShaderUniformCosTime] = [NSValue valueWithGLKVector4:globals.cosTime];
+	
+	globals.random01 = GLKVector4Make(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
+	globalShaderUniforms[CCShaderUniformRandom01] = [NSValue valueWithGLKVector4:globals.random01];
+	
+	globalShaderUniforms[CCShaderUniformDefaultGlobals] = [NSValue valueWithBytes:&globals objCType:@encode(CCGlobalUniforms)];
+	
+	_globalShaderUniforms = globalShaderUniforms;
+		
+	// If we are using a uniform buffer (ex: Metal) copy the global uniforms into it.
+	CCGraphicsBuffer *uniformBuffer = _buffers->_uniformBuffer;
+	if(uniformBuffer){
+		NSMutableDictionary *offsets = [NSMutableDictionary dictionary];
+		size_t offset = 0;
+		
+		for(NSString *name in _globalShaderUniforms){
+			NSValue *value = _globalShaderUniforms[name];
+			
+			// Round up to the next multiple of 16 since Metal types have an alignment of 16 bytes at most.
+			size_t alignedBytes = ((value.CCRendererSizeOf - 1) | 0xF) + 1;
+			
+			void * buff = CCGraphicsBufferPushElements(uniformBuffer, alignedBytes);
+			[value getValue:buff];
+			offsets[name] = @(offset);
+			
+			offset += alignedBytes;
+		}
+		
+		_globalShaderUniformBufferOffsets = offsets;
+	}
+	
+	_framebuffer = framebuffer;
 }
-
-#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
-#define glBindVertexArray glBindVertexArrayOES
-#endif
 
 //Implemented in CCNoARC.m
 //-(void)bindBuffers:(BOOL)bind
@@ -599,13 +343,23 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 
 -(void)enqueueClear:(GLbitfield)mask color:(GLKVector4)color4 depth:(GLclampf)depth stencil:(GLint)stencil globalSortOrder:(NSInteger)globalSortOrder
 {
-	[self enqueueBlock:^{
-		if(mask & GL_COLOR_BUFFER_BIT) glClearColor(color4.r, color4.g, color4.b, color4.a);
-		if(mask & GL_DEPTH_BUFFER_BIT) glClearDepth(depth);
-		if(mask & GL_STENCIL_BUFFER_BIT) glClearStencil(stencil);
+	// If a clear is the very first command, then handle it specially.
+	if(globalSortOrder == NSIntegerMin && _queue.count == 0 && _queueStack.count == 0){
+		_clearMask = mask;
+		_clearColor = color4;
+		_clearDepth = depth;
+		_clearStencil = stencil;
+	} else {
+		NSAssert([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIGL, @"Clear commands must be the first command in the queue unless using GL.");
 		
-		glClear(mask);
-	} globalSortOrder:globalSortOrder debugLabel:@"CCRenderer: Clear" threadSafe:YES];
+		[self enqueueBlock:^{
+			if(mask & GL_COLOR_BUFFER_BIT) glClearColor(color4.r, color4.g, color4.b, color4.a);
+			if(mask & GL_DEPTH_BUFFER_BIT) glClearDepth(depth);
+			if(mask & GL_STENCIL_BUFFER_BIT) glClearStencil(stencil);
+			
+			glClear(mask);
+		} globalSortOrder:globalSortOrder debugLabel:@"CCRenderer: Clear" threadSafe:YES];
+	}
 }
 
 -(void)enqueueBlock:(void (^)())block globalSortOrder:(NSInteger)globalSortOrder debugLabel:(NSString *)debugLabel threadSafe:(BOOL)threadsafe
@@ -657,38 +411,13 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 
 -(void)flush
 {
-	CCGL_DEBUG_PUSH_GROUP_MARKER("CCRenderer: Flush");
+	CCRENDERER_DEBUG_PUSH_GROUP_MARKER(@"CCRenderer: Flush");
 	
-	// Commit the geometry buffers to be used by the rendering commmands.
-	CCGL_DEBUG_INSERT_EVENT_MARKER("Buffering");
-	[_vertexBuffer commit];
-	[_elementBuffer commit];
-	CC_CHECK_GL_ERROR_DEBUG();
+	[_framebuffer bindWithClear:_clearMask color:_clearColor depth:_clearDepth stencil:_clearStencil];
 	
-	// The render commands build the uniform buffers. (only used by Metal currently)
-	[_uniformBuffer prepare];
-	
-	// TODO This should probably be moved eventually, but I'm not sure where.
-	// Probably never going to support uniform buffers in GL and making CCRenderer abstract is ugh...
-#if __CC_METAL_SUPPORTED_AND_ENABLED
-	if(_metalContext){
-		CCGlobalUniforms globalUniforms = {};
-		const NSUInteger globalUniformBytes = sizeof(globalUniforms);
+	// Commit the buffers.
+	[_buffers commit];
 		
-		[_globalShaderUniforms[CCShaderUniformProjection] getValue:&globalUniforms.projection];
-		[_globalShaderUniforms[CCShaderUniformProjectionInv] getValue:&globalUniforms.projectionInv];
-		[_globalShaderUniforms[CCShaderUniformViewSize] getValue:&globalUniforms.viewSize];
-		[_globalShaderUniforms[CCShaderUniformViewSizeInPixels] getValue:&globalUniforms.viewSizeInPixels];
-		[_globalShaderUniforms[CCShaderUniformTime] getValue:&globalUniforms.time];
-		[_globalShaderUniforms[CCShaderUniformSinTime] getValue:&globalUniforms.sinTime];
-		[_globalShaderUniforms[CCShaderUniformCosTime] getValue:&globalUniforms.cosTime];
-		[_globalShaderUniforms[CCShaderUniformRandom01] getValue:&globalUniforms.random01];
-		
-		void *buff = CCGraphicsBufferPushElements(_uniformBuffer, globalUniformBytes);
-		memcpy(buff, &globalUniforms, globalUniformBytes);
-	}
-#endif
-	
 	// Execute the rendering commands.
 	SortQueue(_queue);
 	for(id<CCRenderCommand> command in _queue) [command invokeOnRenderer:self];
@@ -696,19 +425,17 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	
 	[_queue removeAllObjects];
 	
-	// Commit the uniform buffers.
-	[_uniformBuffer commit];	
+	// Prepare the buffers.
+	[_buffers prepare];
 	
-	// Prepare the geometry buffers for use next time the renderer is reused.
-	[_vertexBuffer prepare];
-	[_elementBuffer prepare];
-	
-	CCGL_DEBUG_POP_GROUP_MARKER();
-	CC_CHECK_GL_ERROR_DEBUG();
+	CCRENDERER_DEBUG_POP_GROUP_MARKER();
+	CCRENDERER_DEBUG_CHECK_ERRORS();
 	
 	// Reset the renderer's state.
 	[self invalidateState];
 	_threadsafe = YES;
+	_framebuffer = nil;
+	_clearMask = 0;
 }
 
 @end

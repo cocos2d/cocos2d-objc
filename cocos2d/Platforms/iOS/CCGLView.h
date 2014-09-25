@@ -72,7 +72,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
 
-#import "CCESRenderer.h"
 #import "CCDirectorView.h"
 
 
@@ -103,21 +102,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	- Possible values: 0 to glGetIntegerv(GL_MAX_SAMPLES_APPLE)
  */
 @interface CCGLView : UIView <CCDirectorView>
-{
-    id<CCESRenderer>		_renderer;
-	EAGLContext *_context; // weak ref
-
-	NSString *_pixelformat;
-	GLuint					_depthFormat;
-	BOOL					_preserveBackbuffer;
-
-	CGSize					_size;
-	BOOL					_discardFramebufferSupported;
-
-	//fsaa addition
-	BOOL					_multisampling;
-	unsigned int			_requestedSamples;
-}
 
 /** creates an initializes an CCGLView with a frame and 0-bit depth buffer, and a RGB565 color buffer. */
 + (id) viewWithFrame:(CGRect)frame;
@@ -147,6 +131,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @property(nonatomic,readonly) EAGLContext *context;
 
 @property(nonatomic,readwrite) BOOL multiSampling;
+
+@property(nonatomic, readonly) GLuint fbo;
 
 @end
 

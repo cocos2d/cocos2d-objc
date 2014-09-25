@@ -127,20 +127,20 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 -(CCRenderBuffer)enqueueTriangles:(NSUInteger)triangleCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
 {
 	// Need to record the first vertex or element index before pushing more vertexes.
-	NSUInteger firstVertex = _vertexBuffer->_count;
-	NSUInteger firstElement = _elementBuffer->_count;
+	NSUInteger firstVertex = _buffers->_vertexBuffer->_count;
+	NSUInteger firstIndex = _buffers->_indexBuffer->_count;
 	
-	NSUInteger elementCount = 3*triangleCount;
-	CCVertex *vertexes = CCGraphicsBufferPushElements(_vertexBuffer, vertexCount);
-	uint16_t *elements = CCGraphicsBufferPushElements(_elementBuffer, elementCount);
+	NSUInteger indexCount = 3*triangleCount;
+	CCVertex *vertexes = CCGraphicsBufferPushElements(_buffers->_vertexBuffer, vertexCount);
+	uint16_t *elements = CCGraphicsBufferPushElements(_buffers->_indexBuffer, indexCount);
 	
 	CCRenderCommandDraw *previous = _lastDrawCommand;
 	if(previous && previous->_renderState == renderState && previous->_globalSortOrder == globalSortOrder){
 		// Batch with the previous command.
-		[previous batch:elementCount];
+		[previous batch:indexCount];
 	} else {
 		// Start a new command.
-		CCRenderCommandDraw *command = [[CCRenderCommandDrawClass alloc] initWithMode:CCRenderCommandDrawTriangles renderState:renderState first:firstElement count:elementCount globalSortOrder:globalSortOrder];
+		CCRenderCommandDraw *command = [[CCRenderCommandDrawClass alloc] initWithMode:CCRenderCommandDrawTriangles renderState:renderState first:firstIndex count:indexCount globalSortOrder:globalSortOrder];
 		[_queue addObject:command];
 		[command release];
 		
@@ -153,14 +153,14 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 -(CCRenderBuffer)enqueueLines:(NSUInteger)lineCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
 {
 	// Need to record the first vertex or element index before pushing more vertexes.
-	NSUInteger firstVertex = _vertexBuffer->_count;
-	NSUInteger firstElement = _elementBuffer->_count;
+	NSUInteger firstVertex = _buffers->_vertexBuffer->_count;
+	NSUInteger firstIndex = _buffers->_indexBuffer->_count;
 	
-	NSUInteger elementCount = 2*lineCount;
-	CCVertex *vertexes = CCGraphicsBufferPushElements(_vertexBuffer, vertexCount);
-	uint16_t *elements = CCGraphicsBufferPushElements(_elementBuffer, elementCount);
+	NSUInteger indexCount = 2*lineCount;
+	CCVertex *vertexes = CCGraphicsBufferPushElements(_buffers->_vertexBuffer, vertexCount);
+	uint16_t *elements = CCGraphicsBufferPushElements(_buffers->_indexBuffer, indexCount);
 	
-	CCRenderCommandDraw *command = [[CCRenderCommandDrawClass alloc] initWithMode:CCRenderCommandDrawLines renderState:renderState first:firstElement count:elementCount globalSortOrder:globalSortOrder];
+	CCRenderCommandDraw *command = [[CCRenderCommandDrawClass alloc] initWithMode:CCRenderCommandDrawLines renderState:renderState first:firstIndex count:indexCount globalSortOrder:globalSortOrder];
 	[_queue addObject:command];
 	[command release];
 	
@@ -174,7 +174,7 @@ static inline void
 CCRendererBindBuffers(CCRenderer *self, BOOL bind)
 {
  	if(bind != self->_buffersBound){
-		[self->_bufferBindings bind:bind];
+		[self->_buffers bind:bind];
 		self->_buffersBound = bind;
 	}
 }
@@ -242,7 +242,7 @@ CCRenderStateGLTransition(CCRenderStateGL *self, CCRenderer *renderer, CCRenderS
 		NSDictionary *globalShaderUniforms = renderer->_globalShaderUniforms;
 		NSDictionary *setters = self->_shader->_uniformSetters;
 		for(NSString *uniformName in setters){
-			CCGLUniformSetter setter = setters[uniformName];
+			CCUniformSetter setter = setters[uniformName];
 			setter(renderer, self->_shaderUniforms, globalShaderUniforms);
 		}
 	}
@@ -288,13 +288,6 @@ static const CCRenderCommandDrawMode GLDrawModes[] = {
 @interface CCRenderStateMetal : CCRenderState @end
 @implementation CCRenderStateMetal {
 	id<MTLRenderPipelineState> _renderPipelineState;
-	
-	NSRange _textureRange;
-	id<MTLSamplerState> _samplers[CCMTL_MAX_TEXTURES];
-	id<MTLTexture> _textures[CCMTL_MAX_TEXTURES];
-	
-	@public
-	BOOL _uniformsPrepared;
 }
 
 // Using GL enums for CCBlendMode types should never have happened. Oops.
@@ -327,7 +320,7 @@ static void
 CCRenderStateMetalPrepare(CCRenderStateMetal *self)
 {
 	if(self->_renderPipelineState == nil){
-		#warning Should get this from the renderer somehow.
+		// TODO Should get this from the renderer somehow?
 		CCMetalContext *context = [CCMetalContext currentContext];
 		
 		MTLRenderPipelineDescriptor *pipelineStateDescriptor = [[MTLRenderPipelineDescriptor alloc] init];
@@ -348,42 +341,31 @@ CCRenderStateMetalPrepare(CCRenderStateMetal *self)
 		colorDescriptor.alphaBlendOperation = GLBLEND_TO_METAL(blendOptions[CCBlendEquationAlpha]);
 		pipelineStateDescriptor.colorAttachments[0] = colorDescriptor;
 		
-		self->_renderPipelineState = [[context.device newRenderPipelineStateWithDescriptor:pipelineStateDescriptor error:nil] retain];
-	}
-	
-	if(!self->_uniformsPrepared){
-		CCTexture *mainTexture = self->_shaderUniforms[CCShaderUniformMainTexture];
+		NSError *err = nil;
+		self->_renderPipelineState = [[context.device newRenderPipelineStateWithDescriptor:pipelineStateDescriptor error:&err] retain];
 		
-		self->_textureRange = NSMakeRange(0, 1);
-		self->_samplers[0] = [mainTexture.metalSampler retain];
-		self->_textures[0] = [mainTexture.metalTexture retain];
-		
-		self->_uniformsPrepared = YES;
+		if(err) CCLOG(@"Error creating metal render pipeline state. %@", err);
+		NSCAssert(self->_renderPipelineState, @"Could not create render pipeline state.");
 	}
 }
 
 static void
 CCRenderStateMetalTransition(CCRenderStateMetal *self, CCRenderer *renderer, CCRenderStateMetal *previous)
 {
-	CCMetalContext *context = renderer->_metalContext;
+	CCGraphicsBufferBindingsMetal *buffers = (CCGraphicsBufferBindingsMetal *)renderer->_buffers;
+	CCMetalContext *context = buffers->_context;
 	id<MTLRenderCommandEncoder> renderEncoder = context->_currentRenderCommandEncoder;
+	
+	// Bind pipeline state.
 	[renderEncoder setRenderPipelineState:self->_renderPipelineState];
 	
-//	CCGraphicsBufferMetal *uniformGraphicsBuffer = nil;
-//	id<MTLBuffer> uniformMetalBuffer = uniformGraphicsBuffer->_buffer;
-//	
-//	// Set the global uniform buffers.
-//	[renderEncoder setVertexBuffer:uniformMetalBuffer offset:0 atIndex:1];
-//	[renderEncoder setFragmentBuffer:uniformMetalBuffer offset:0 atIndex:1];
-//	
-//	// Set the uniform buffers.
-//	CCGraphicsBufferPushElements(uniformGraphicsBuffer, # of bytes);
-//	[renderEncoder setVertexBuffer:uniformMetalBuffer offset:offset atIndex:2];
-//	[renderEncoder setFragmentBuffer:uniformMetalBuffer offset:offset atIndex:2];
-	
-	NSRange range = self->_textureRange;
-	[renderEncoder setFragmentSamplerStates:self->_samplers withRange:range];
-	[renderEncoder setFragmentTextures:self->_textures withRange:range];
+	// Set shader arguments.
+	NSDictionary *globalShaderUniforms = renderer->_globalShaderUniforms;
+	NSDictionary *setters = self->_shader->_uniformSetters;
+	for(NSString *uniformName in setters){
+		CCUniformSetter setter = setters[uniformName];
+		setter(renderer, self->_shaderUniforms, globalShaderUniforms);
+	}
 }
 
 -(void)transitionRenderer:(CCRenderer *)renderer FromState:(CCRenderState *)previous
@@ -403,7 +385,8 @@ static const MTLPrimitiveType MetalDrawModes[] = {
 -(instancetype)initWithMode:(CCRenderCommandDrawMode)mode renderState:(CCRenderState *)renderState first:(NSUInteger)first count:(size_t)count globalSortOrder:(NSInteger)globalSortOrder
 {
 	if((self = [super initWithMode:mode renderState:renderState first:first count:count globalSortOrder:globalSortOrder])){
-		CCRenderStateMetalPrepare((CCRenderStateMetal *)renderState);
+		// The renderer may have copied the render state, use the ivar.
+		CCRenderStateMetalPrepare((CCRenderStateMetal *)_renderState);
 	}
 	
 	return self;
@@ -411,9 +394,10 @@ static const MTLPrimitiveType MetalDrawModes[] = {
 
 -(void)invokeOnRenderer:(CCRenderer *)renderer
 {
-	CCMetalContext *context = renderer->_metalContext;
+	CCGraphicsBufferBindingsMetal *buffers = (CCGraphicsBufferBindingsMetal *)renderer->_buffers;
+	CCMetalContext *context = buffers->_context;
 	id<MTLRenderCommandEncoder> renderEncoder = context->_currentRenderCommandEncoder;
-	id<MTLBuffer> indexBuffer = ((CCGraphicsBufferMetal *)renderer->_elementBuffer)->_buffer;
+	id<MTLBuffer> indexBuffer = ((CCGraphicsBufferMetal *)buffers->_indexBuffer)->_buffer;
 	
 	CCMTL_DEBUG_PUSH_GROUP_MARKER(renderEncoder, @"CCRendererCommandDraw: Invoke");
 	CCRendererBindBuffers(renderer, YES);
@@ -422,13 +406,6 @@ static const MTLPrimitiveType MetalDrawModes[] = {
 	
 	[renderEncoder drawIndexedPrimitives:MetalDrawModes[_mode] indexCount:_count indexType:MTLIndexTypeUInt16 indexBuffer:indexBuffer indexBufferOffset:2*_first];
 	CCMTL_DEBUG_POP_GROUP_MARKER(renderEncoder);
-	
-	if(!_renderState->_immutable){
-		// This is sort of a weird place to put this, but couldn't find somewhere better.
-		// Mutable render states need to have their uniforms redone at least once per frame.
-		// Putting it here ensures that it's been after all render commands for the frame have prepared it.
-		((CCRenderStateMetal *)_renderState)->_uniformsPrepared = NO;
-	}
 	
 	CC_INCREMENT_GL_DRAWS(1);
 }

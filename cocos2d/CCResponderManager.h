@@ -58,7 +58,7 @@
 /**
  *  Holds the current touch. Note that touches must not be retained.
  */
-@property (nonatomic/*, weak*/) CCTouch *touch;
+@property (nonatomic, weak) CCTouch *touch;
 
 /**
  *  Holdes the current event. Note that events must not be retained.

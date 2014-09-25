@@ -46,6 +46,15 @@
 /** returns the depth format of the view in BPP */
 - (NSUInteger) depthFormat;
 
+/** uses and locks the OpenGL context */
+-(void) lockOpenGLContext;
+
+/** unlocks the openGL context */
+-(void) unlockOpenGLContext;
+
+-(GLuint)fbo;
+
+
 @end
 
 #endif // __CC_PLATFORM_MAC

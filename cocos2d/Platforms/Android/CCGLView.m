@@ -579,6 +579,11 @@ static inline void logConfig(EGLDisplay display, EGLConfig conf) {
 	[self swapBuffers];
 }
 
+-(GLuint)fbo
+{
+	return 0;
+}
+
 @end
 #endif // __CC_PLATFORM_ANDROID
 

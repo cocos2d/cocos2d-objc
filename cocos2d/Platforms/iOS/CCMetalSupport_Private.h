@@ -30,9 +30,10 @@
 
 #import "CCRenderer_Private.h"
 
-// This is effectively hardcoded to 10 by Apple's docs and there is no API to query capabilities...
-// Seems like an oversight, but whatever.
-#define CCMTL_MAX_TEXTURES 10
+// The number of buffer/texture/sampler cannot be queried.
+// They are only defined in the Metal docs to be 31/31/16.
+// Need to do something smarter here. (So does Apple...)
+#define CCMTL_MAX_ARGS 10
 
 // Maximum uniform bytes that can be passed to a shader.
 // This space is preallocated by all render states.
@@ -65,14 +66,14 @@
 @property(nonatomic, readonly) id<MTLCommandQueue> commandQueue;
 @property(nonatomic, readonly) id<MTLCommandBuffer> currentCommandBuffer;
 
-@property(nonatomic, strong) id<MTLTexture> destinationTexture;
 @property(nonatomic, readonly) id<MTLRenderCommandEncoder> currentRenderCommandEncoder;
 
 +(instancetype)currentContext;
 +(void)setCurrentContext:(CCMetalContext *)context;
 
--(void)prepareCommandBuffer;
--(void)commitCurrentCommandBuffer;
+-(void)beginRenderPass:(id<MTLTexture>)destinationTexture clearMask:(GLbitfield)mask color:(GLKVector4)color4 depth:(GLclampf)depth stencil:(GLint)stencil;
+
+-(void)flushCommandBuffer;
 
 @end
 
@@ -85,8 +86,22 @@
 @end
 
 
+@interface CCGraphicsBufferBindingsMetal : CCGraphicsBufferBindings {
+	@public
+	CCMetalContext *_context;
+}
+
+@end
+
+
 @interface CCRenderCommandDrawMetal : CCRenderCommandDraw
 @end
 
+
+@interface CCFrameBufferObjectMetal : CCFrameBufferObject
+
+@property(nonatomic, strong) id<MTLTexture> frameBufferTexture;
+
+@end
 
 #endif
