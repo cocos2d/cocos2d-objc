@@ -158,6 +158,7 @@
     if ([self fileAlreadyDownloaded]
         && [self keepDownload])
     {
+        [self finishDownload];
         return;
     }
 
@@ -341,6 +342,11 @@
         return;
     }
 
+    [self finishDownload];
+}
+
+- (void)finishDownload
+{
     CCLOGINFO(@"[PACKAGE/DOWNLOAD][INFO] Download finished");
     CCLOGINFO(@"[PACKAGE/DOWNLOAD][INFO] local file: %@", _localURL.path);
 

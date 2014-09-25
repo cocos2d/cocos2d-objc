@@ -11,6 +11,7 @@
 #import "CCPackageDownload.h"
 #import "CCPackage.h"
 #import "CCPackageDownloadDelegate.h"
+#import "CCDirector.h"
 
 static NSUInteger __fileDownloadSize = 0;
 static BOOL __support_range_request = YES;
@@ -57,7 +58,6 @@ static BOOL __support_range_request = YES;
 - (void)startLoading
 {
     NSMutableDictionary *headers = [NSMutableDictionary dictionary];
-
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *fileName = [self.request.URL lastPathComponent];
@@ -120,6 +120,7 @@ static BOOL __support_range_request = YES;
 @property (nonatomic) BOOL downloadSuccessful;
 @property (nonatomic, strong) NSError *downloadError;
 @property (nonatomic, copy) NSURL *localURL;
+@property (nonatomic) BOOL shouldOverwriteDownloadedFile;
 
 @end
 
@@ -128,6 +129,9 @@ static BOOL __support_range_request = YES;
 - (void)setUp
 {
     [super setUp];
+
+    [[CCDirector sharedDirector] stopAnimation];
+
 
     [NSURLProtocol registerClass:[CCPackageDownloadTestURLProtocol class]];
 
@@ -139,6 +143,7 @@ static BOOL __support_range_request = YES;
     self.downloadReturned = NO;
     self.downloadError = nil;
     self.downloadSuccessful = NO;
+    self.shouldOverwriteDownloadedFile;
 
     self.package = [[CCPackage alloc] initWithName:@"testpackage"
                                         resolution:@"phonehd"
@@ -153,6 +158,8 @@ static BOOL __support_range_request = YES;
 - (void)tearDown
 {
     [NSURLProtocol unregisterClass:[CCPackageDownloadTestURLProtocol class]];
+
+    [[CCDirector sharedDirector] startAnimation];
 
     [super tearDown];
 }
@@ -182,7 +189,6 @@ static BOOL __support_range_request = YES;
 
 
 #pragma mark - tests
-
 - (void)testDownloadPackage
 {
     [self waitForDelegateToReturnAfterRunningBlock:^
@@ -207,7 +213,10 @@ static BOOL __support_range_request = YES;
     }
 }
 
-- (void)testRangeRequest
+/*
+
+
+- (void)testResumeDownloadAKARangeRequest
 {
     [self setupPartialDownloadOnDisk];
 
@@ -232,18 +241,52 @@ static BOOL __support_range_request = YES;
     [data writeToFile:[[_localURL.path stringByDeletingLastPathComponent] stringByAppendingPathComponent:tempName] atomically:YES];
 }
 
-/*
-- (void)testResumeDownloadedPackage
+- (void)testDownloadOfExistingFile
 {
+    self.shouldOverwriteDownloadedFile = NO;
 
+    NSUInteger filesize = [self createDownloadFile];
+
+    [self waitForDelegateToReturnAfterRunningBlock:^
+    {
+        [_download start];
+    }];
+
+    NSFileManager *fileManager = [NSFileManager defaultManager];;
+    NSDictionary *attribs = [fileManager attributesOfItemAtPath:_localURL.path error:nil];
+    XCTAssertTrue(_downloadSuccessful);
+    XCTAssertTrue([fileManager fileExistsAtPath:_localURL.path]);
+    XCTAssertEqual([attribs[NSFileSize] unsignedIntegerValue], filesize);
 }
 
-- (void)testPauseDownload
+- (void)testOverwriteExistingDownload
 {
+    self.shouldOverwriteDownloadedFile = YES;
 
+    [self createDownloadFile];
+
+    [self waitForDelegateToReturnAfterRunningBlock:^
+    {
+        [_download start];
+    }];
+
+    NSFileManager *fileManager = [NSFileManager defaultManager];;
+    NSDictionary *attribs = [fileManager attributesOfItemAtPath:_localURL.path error:nil];
+    XCTAssertTrue(_downloadSuccessful);
+    XCTAssertTrue([fileManager fileExistsAtPath:_localURL.path]);
+    XCTAssertEqual([attribs[NSFileSize] unsignedIntegerValue], __fileDownloadSize);
 }
-*/
 
+- (NSUInteger)createDownloadFile
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    [fileManager createFileAtPath:_localURL.path
+                         contents:[@"nothing in here, really" dataUsingEncoding:NSUTF8StringEncoding]
+                       attributes:nil];
+
+    NSDictionary *attribs = [fileManager attributesOfItemAtPath:_localURL.path error:nil];
+    return [attribs[NSFileSize] unsignedIntegerValue];
+}
 
 - (void)testDownloadWith404Response
 {
@@ -257,7 +300,7 @@ static BOOL __support_range_request = YES;
     XCTAssertFalse(_downloadSuccessful);
     XCTAssertNotNil(_downloadError);
 }
-
+*/
 
 #pragma mark - CCPackageDownloadDelegate
 
@@ -278,5 +321,11 @@ static BOOL __support_range_request = YES;
 {
     return YES;
 }
+
+- (BOOL)shouldOverwriteDownloadedFile:(CCPackageDownload *)download
+{
+    return _shouldOverwriteDownloadedFile;
+}
+
 
 @end
