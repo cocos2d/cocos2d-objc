@@ -7,6 +7,7 @@
  *  Note: This method won't check a package's status and it is meant to be used for initialization
  *  of packages on startup by the CCPackagesManager.
  *  If a package is already among the search path then it won't be added again, spritesheets and file lookups not reloaded
+ *  Sets the package's status to CCPackageStatusInstalledEnabled
  *
  *  @param packages An array of CCPackage instance to be enabled
  */
@@ -17,6 +18,7 @@
  *  of remaining search paths.
  *  Note: This method won't check a package's status and it is meant to be used for initialization
  *  of packages on startup by the CCPackagesManager.
+ *  Sets the package's status to CCPackageStatusInstalledDisabled*
  *
  *  @param packages An array of CCPackage instance to be disabled
  */

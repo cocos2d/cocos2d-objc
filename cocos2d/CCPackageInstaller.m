@@ -51,23 +51,9 @@
         return NO;
     }
 
-    if (installData.enableOnDownload)
-    {
-        [self enablePackageInCocos2d];
-        [_package setValue:@(CCPackageStatusInstalledEnabled) forKey:@"status"];
-    }
-    else
-    {
-        [_package setValue:@(CCPackageStatusInstalledDisabled) forKey:@"status"];
-    }
+    [_package setValue:@(CCPackageStatusInstalledDisabled) forKey:@"status"];
 
     return YES;
-}
-
-- (void)enablePackageInCocos2d
-{
-    CCPackageCocos2dEnabler *packageCocos2dEnabler = [[CCPackageCocos2dEnabler alloc] init];
-    [packageCocos2dEnabler enablePackages:@[_package]];
 }
 
 - (BOOL)movePackageToInstallPathWithError:(NSError **)error

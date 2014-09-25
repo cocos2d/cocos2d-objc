@@ -39,11 +39,15 @@
 
     for (CCPackage *aPackage in packages)
     {
+        NSAssert(aPackage.installURL != nil, @"aPackage.installURL must not be nil for package %@", aPackage);
+
         NSMutableArray *newSearchPath = [[CCFileUtils sharedFileUtils].searchPath mutableCopy];
         NSString *newPackagePath = aPackage.installURL.path;
 
         if (![newSearchPath containsObject:newPackagePath])
         {
+            [aPackage setValue:@(CCPackageStatusInstalledEnabled) forKey:NSStringFromSelector(@selector(status))];
+
             [newSearchPath insertObject:newPackagePath atIndex:0];
             [CCFileUtils sharedFileUtils].searchPath = newSearchPath;
             searchPathChanged = YES;
@@ -70,6 +74,8 @@
     {
         NSMutableArray *newSearchPath = [[CCFileUtils sharedFileUtils].searchPath mutableCopy];
         NSString *packagePathToRemove = aPackage.installURL.path;
+
+        [aPackage setValue:@(CCPackageStatusInstalledDisabled) forKey:NSStringFromSelector(@selector(status))];
 
         if ([newSearchPath containsObject:packagePathToRemove])
         {

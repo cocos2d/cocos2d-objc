@@ -156,15 +156,6 @@
     [packageCocos2dEnabler enablePackages:packagesToEnable];
 }
 
-- (void)storePackagesAndPauseDownloads
-{
-    CCLOGINFO(@"[PACKAGE][INFO] Packages info saved to userdefaults.");
-
-    [_downloadManager pauseAllDownloads];
-
-    [self savePackages];
-}
-
 - (void)savePackages
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -469,6 +460,13 @@
         return NO;
     }
 
+    CCPackageInstallData *installData = [package installData];
+    if (installData.enableOnDownload)
+    {
+        CCPackageCocos2dEnabler *packageCocos2dEnabler = [[CCPackageCocos2dEnabler alloc] init];
+        [packageCocos2dEnabler enablePackages:@[package]];
+    }
+
     CCLOGINFO(@"[PACKAGE/INSTALL][INFO] Installation of package successful! Package enabled: %d", [package installData].enableOnDownload);
 
     [_delegate packageInstallationFinished:package];
@@ -594,8 +592,6 @@
     CCPackageCocos2dEnabler *packageCocos2dEnabler = [[CCPackageCocos2dEnabler alloc] init];
     [packageCocos2dEnabler disablePackages:@[package]];
 
-    [package setValue:@(CCPackageStatusInstalledDisabled) forKey:@"status"];
-
     if (![_packages containsObject:package])
     {
         [_packages addObject:package];
@@ -623,8 +619,6 @@
 
     CCPackageCocos2dEnabler *packageCocos2dEnabler = [[CCPackageCocos2dEnabler alloc] init];
     [packageCocos2dEnabler enablePackages:@[package]];
-
-    [package setValue:@(CCPackageStatusInstalledEnabled) forKey:@"status"];
 
     if (![_packages containsObject:package])
     {
