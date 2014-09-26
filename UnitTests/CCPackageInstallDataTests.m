@@ -38,6 +38,9 @@
 
 }
 
+
+#pragma mark - Tests
+
 - (void)testPopulateInstallDataWithDictionary
 {
     // Constants for dict keys are only used internally, not making them public

@@ -100,6 +100,7 @@
     [fileManager removeItemAtPath:_downloadPath error:nil];
 }
 
+
 #pragma mark - Tests
 
 - (void)testSetDownloadPath
@@ -208,6 +209,7 @@
 
     return package;
 }
+
 
 #pragma mark - CCPackageDownloadManagerDelegate
 

@@ -39,6 +39,9 @@
     [_package setValue:_installURL forKey:NSStringFromSelector(@selector(installURL))];
 }
 
+
+#pragma mark - Tests
+
 - (void)testEnablePackage
 {
     CCPackageCocos2dEnabler *packageEnabler = [[CCPackageCocos2dEnabler alloc] init];
@@ -51,7 +54,6 @@
     XCTAssertNotNil(sprite);
 }
 
-/*
 - (void)testDisablePackage
 {
     [self testEnablePackage];
@@ -68,7 +70,9 @@
     NSString *path = [[CCFileUtils sharedFileUtils] fullPathForFilename:@"boredSmiley.png" contentScale:&scale];
     XCTAssertNil(path);
 }
-*/
+
+
+#pragma mark - Helper
 
 - (BOOL)isPackageInSearchPath
 {

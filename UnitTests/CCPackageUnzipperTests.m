@@ -84,6 +84,9 @@
     [fileManager removeItemAtPath:_unzipFolderPath error:nil];
 }
 
+
+#pragma mark - Tests
+
 - (void)testUnzipping
 {
     [self unzipUntilDelegateMethodsReturn:nil];
@@ -107,16 +110,18 @@
     XCTAssertFalse(_unzippingSuccessful);
 }
 
-// This test is not working as SSZipArchive will return succes although file operations fail
+// This test is not working as SSZipArchive will return success although file operations fail
 // This requires some modifications of SSZipArchive
+/*
 - (void)testUnzippingOfInaccessibleUnzipFolder
 {
     _installData.unzipURL = [NSURL fileURLWithPath:@"/temp/surelynotexistingfolder"];
 
-    // [self unzipUntilDelegateMethodsReturn:];
+    [self unzipUntilDelegateMethodsReturn:];
 
-    // XCTAssertFalse(_unzippingSuccessful);
+    XCTAssertFalse(_unzippingSuccessful);
 }
+*/
 
 - (void)testUnzipOfPasswordProtectedPackage
 {
@@ -131,6 +136,28 @@
     XCTAssertNil(error);
     CCAssertEqualStrings(contentsOfSecretFile, @"unzipping successful");
 }
+
+
+#pragma mark - CCPackageUnzipperDelegate
+
+- (void)unzipFinished:(CCPackageUnzipper *)packageUnzipper
+{
+    self.unzippingSuccessful = YES;
+    self.unzipperReturned = YES;
+    [_condition signal];
+}
+
+- (void)unzipFailed:(CCPackageUnzipper *)packageUnzipper error:(NSError *)error
+{
+    self.unzippingSuccessful = NO;
+    self.unzippingError = error;
+
+    self.unzipperReturned = YES;
+    [_condition signal];
+}
+
+
+#pragma mark - Helper
 
 - (void)unzipUntilDelegateMethodsReturn:(NSString *)password
 {
@@ -147,22 +174,6 @@
         [_condition wait];
     }
     [_condition unlock];
-}
-
-- (void)unzipFinished:(CCPackageUnzipper *)packageUnzipper
-{
-    self.unzippingSuccessful = YES;
-    self.unzipperReturned = YES;
-    [_condition signal];
-}
-
-- (void)unzipFailed:(CCPackageUnzipper *)packageUnzipper error:(NSError *)error
-{
-    self.unzippingSuccessful = NO;
-    self.unzippingError = error;
-
-    self.unzipperReturned = YES;
-    [_condition signal];
 }
 
 @end

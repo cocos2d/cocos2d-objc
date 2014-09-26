@@ -109,8 +109,6 @@ static BOOL __support_range_request = YES;
 @end
 
 
-#pragma mark - test
-
 @interface CCPackageDownloadTests : XCTestCase <CCPackageDownloadDelegate>
 
 @property (nonatomic, strong) CCPackageDownload *download;
@@ -190,7 +188,7 @@ static BOOL __support_range_request = YES;
 }
 
 
-#pragma mark - tests
+#pragma mark - Tests
 
 - (void)testDownloadPackage
 {
@@ -335,6 +333,7 @@ static BOOL __support_range_request = YES;
     XCTAssertEqual([attribs[NSFileSize] unsignedIntegerValue], __fileDownloadSize);
 }
 
+
 #pragma mark - Helper
 
 - (void)setupPartialDownloadOnDisk
@@ -390,6 +389,5 @@ static BOOL __support_range_request = YES;
 {
     return _shouldOverwriteDownloadedFile;
 }
-
 
 @end

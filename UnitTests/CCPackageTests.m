@@ -31,6 +31,9 @@
     XCTAssertEqual(package.status, CCPackageStatusInitial);
 }
 
+
+#pragma mark - Tests
+
 - (void)testStandardIdentifier
 {
     CCPackage *package = [[CCPackage alloc] initWithName:@"DLC"

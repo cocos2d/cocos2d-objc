@@ -33,6 +33,9 @@
     self.installData = [[CCPackageInstallData alloc] initWithPackage:_package];
 }
 
+
+#pragma mark - Tests
+
 - (void)testSetAndGetInstallData
 {
     [_package setInstallData:_installData];

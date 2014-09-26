@@ -81,6 +81,9 @@
     }
 }
 
+
+#pragma mark - Tests
+
 - (void)testInstallWithoutEnablingPackage
 {
     [self setupInstallablePackage];
@@ -89,15 +92,6 @@
     BOOL success = [_installer installWithError:&error];
     XCTAssertTrue(success, @"Installation was unsuccessful: %@", error);
     XCTAssertEqual(_package.status, CCPackageStatusInstalledDisabled);
-}
-
-- (void)setupInstallablePackage
-{
-    NSString *pathToPackage = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Resources-shared/Packages/testpackage-iOS-phonehd_unzipped"];
-
-    _installData.unzipURL = [NSURL fileURLWithPath:pathToPackage];
-    _installData.folderName = @"testpackage-iOS-phonehd";
-    _installData.enableOnDownload = NO;
 }
 
 - (void)testInstallFailingUnzippedPackageDoesNotExist
@@ -127,6 +121,18 @@
     XCTAssertFalse(success, @"Installation was successful: %@", error);
     XCTAssertEqual(_package.status, CCPackageStatusInstallationFailed);
     XCTAssertEqual(error.code, PACKAGE_ERROR_INSTALL_COULD_NOT_MOVE_PACKAGE_TO_INSTALL_FOLDER);
+}
+
+
+#pragma mark - Helper
+
+- (void)setupInstallablePackage
+{
+    NSString *pathToPackage = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Resources-shared/Packages/testpackage-iOS-phonehd_unzipped"];
+
+    _installData.unzipURL = [NSURL fileURLWithPath:pathToPackage];
+    _installData.folderName = @"testpackage-iOS-phonehd";
+    _installData.enableOnDownload = NO;
 }
 
 @end
