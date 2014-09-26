@@ -392,6 +392,8 @@
 
     [self cancel];
 
+    [_package setValue:@(CCPackageStatusDownloadFailed) forKey:@"status"];
+
     [_delegate downloadFailed:self error:error];
 }
 
@@ -401,11 +403,13 @@
 - (void)forwardResponseErrorToDelegate:(NSHTTPURLResponse *)httpResponse
 {
     NSError *error = [NSError errorWithDomain:@"Cocos2d"
-                                             code:PACKAGE_ERROR_DOWNLOAD_SERVER_RESPONSE_NOT_OK
-                                         userInfo:@{
-                                                 NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Error: The host respondeded with status code %d.", [httpResponse statusCode]],
-                                                 @"HTTPResponse" : httpResponse
-                                         }];
+                                         code:PACKAGE_ERROR_DOWNLOAD_SERVER_RESPONSE_NOT_OK
+                                     userInfo:@{
+                                             NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Error: The host respondeded with status code %d.", [httpResponse statusCode]],
+                                             @"HTTPResponse" : httpResponse
+                                     }];
+
+    [_package setValue:@(CCPackageStatusDownloadFailed) forKey:@"status"];
 
     [_delegate downloadFailed:self error:error];
 }

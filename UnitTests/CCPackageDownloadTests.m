@@ -194,7 +194,10 @@ static BOOL __support_range_request = YES;
 
 - (void)testDownloadPackage
 {
-    [self startDownloadAndWaitForDelegateToReturn];
+    [_download start];
+    XCTAssertEqual(_package.status, CCPackageStatusDownloading);
+
+    [self waitForDelegateToReturn];
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSDictionary *attribs = [fileManager attributesOfItemAtPath:_localURL.path error:nil];
@@ -207,7 +210,10 @@ static BOOL __support_range_request = YES;
 {
     [self setupPartialDownloadOnDisk];
 
-    [self startDownloadAndWaitForDelegateToReturn];
+    [_download start];
+    XCTAssertEqual(_package.status, CCPackageStatusDownloading);
+
+    [self waitForDelegateToReturn];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSDictionary *attribs = [fileManager attributesOfItemAtPath:_localURL.path error:nil];
     XCTAssertTrue(_downloadSuccessful);
@@ -221,7 +227,10 @@ static BOOL __support_range_request = YES;
 
     NSUInteger filesize = [self createDownloadFile];
 
-    [self startDownloadAndWaitForDelegateToReturn];
+    [_download start];
+    XCTAssertEqual(_package.status, CCPackageStatusDownloaded);
+
+    [self waitForDelegateToReturn];
 
     NSFileManager *fileManager = [NSFileManager defaultManager];;
     NSDictionary *attribs = [fileManager attributesOfItemAtPath:_localURL.path error:nil];
@@ -236,7 +245,10 @@ static BOOL __support_range_request = YES;
 
     [self createDownloadFile];
 
-    [self startDownloadAndWaitForDelegateToReturn];
+    [_download start];
+    XCTAssertEqual(_package.status, CCPackageStatusDownloading);
+
+    [self waitForDelegateToReturn];
 
     NSFileManager *fileManager = [NSFileManager defaultManager];;
     NSDictionary *attribs = [fileManager attributesOfItemAtPath:_localURL.path error:nil];
@@ -249,10 +261,14 @@ static BOOL __support_range_request = YES;
 {
     [_package setValue:[NSURL URLWithString:@"http://package.request.fake/DOES_NOT_EXIST.zip"] forKey:NSStringFromSelector(@selector(remoteURL))];
 
-    [self startDownloadAndWaitForDelegateToReturn];
+    [_download start];
+    XCTAssertEqual(_package.status, CCPackageStatusDownloading);
+
+    [self waitForDelegateToReturn];
 
     XCTAssertFalse(_downloadSuccessful);
     XCTAssertNotNil(_downloadError);
+    XCTAssertEqual(_package.status, CCPackageStatusDownloadFailed);
 }
 
 - (void)testDownloadFolderNotAccessible
@@ -260,10 +276,63 @@ static BOOL __support_range_request = YES;
     // Writing to root level is supposed to fail
     [_download setValue:[NSURL fileURLWithPath:@"/test.zip"] forKey:NSStringFromSelector(@selector(localURL))];
 
-    [self startDownloadAndWaitForDelegateToReturn];
+    [_download start];
+
+    [self waitForDelegateToReturn];
 
     XCTAssertFalse(_downloadSuccessful);
     XCTAssertNotNil(_downloadError);
+    XCTAssertEqual(_package.status, CCPackageStatusDownloadFailed);
+}
+
+- (void)testCancelDownload
+{
+    [_download start];
+    [_download cancel];
+
+    // Can't wait for delegate since cancelling won't trigger them
+    // Just wait a short amount of time and see if nothing has been written to disk
+    [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeInterval:0.5 sinceDate:[NSDate date]]];
+
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    XCTAssertFalse([fileManager fileExistsAtPath:_download.localURL.path]);
+}
+
+- (void)testPauseDownload
+{
+    [_download start];
+    [_download pause];
+
+    // Can't wait for delegate since cancelling won't trigger them
+    // Just wait a short amount of time and see if nothing has been written to disk
+    [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeInterval:0.5 sinceDate:[NSDate date]]];
+
+    XCTAssertEqual(_package.status, CCPackageStatusDownloadPaused);
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *tempName = [_download performSelector:@selector(createTempName)];
+
+    BOOL success = [fileManager fileExistsAtPath:[[_localURL.path stringByDeletingLastPathComponent] stringByAppendingPathComponent:tempName]]
+                   || [fileManager fileExistsAtPath:_download.localURL.path];
+
+    XCTAssertTrue(success, @"Temp file nor downloaded file exists.");
+}
+
+- (void)testResumeDownload
+{
+    [_download start];
+    [_download pause];
+    [_download resume];
+
+    while (!_downloadReturned)
+    {
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+    }
+
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSDictionary *attribs = [fileManager attributesOfItemAtPath:_localURL.path error:nil];
+    XCTAssertTrue(_downloadSuccessful);
+    XCTAssertTrue([fileManager fileExistsAtPath:_localURL.path]);
+    XCTAssertEqual([attribs[NSFileSize] unsignedIntegerValue], __fileDownloadSize);
 }
 
 #pragma mark - Helper
@@ -277,10 +346,8 @@ static BOOL __support_range_request = YES;
     [data writeToFile:[[_localURL.path stringByDeletingLastPathComponent] stringByAppendingPathComponent:tempName] atomically:YES];
 }
 
-- (void)startDownloadAndWaitForDelegateToReturn
+- (void)waitForDelegateToReturn
 {
-    [_download start];
-
     while (!_downloadReturned)
     {
         [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
