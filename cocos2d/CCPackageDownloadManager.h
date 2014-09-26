@@ -8,7 +8,14 @@
 @interface CCPackageDownloadManager : NSObject <CCPackageDownloadDelegate>
 
 /**
- *  The download folder path for all downloads
+ *  All active downloads
+ */
+@property (nonatomic, strong, readonly) NSArray *allDownloads;
+
+/**
+ *  The download folder path for all downloads.
+ *  If the path does not exist it will be created.
+ *  In case the creation of that new download path failed the value will remain unchanged.
  */
 @property (nonatomic, copy) NSString *downloadPath;
 

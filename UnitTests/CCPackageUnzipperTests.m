@@ -7,7 +7,6 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <MacTypes.h>
 #import "CCPackageUnzipper.h"
 #import "CCPackage.h"
 #import "CCPackageInstallData.h"

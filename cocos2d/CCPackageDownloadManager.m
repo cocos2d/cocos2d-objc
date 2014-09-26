@@ -32,30 +32,35 @@
     return self;
 }
 
-- (void)setDownloadPath:(NSString *)downloadPath
+- (void)setDownloadPath:(NSString *)newDownloadPath
 {
-    if ([_downloadPath isEqualToString:downloadPath])
+    if ([_downloadPath isEqualToString:newDownloadPath])
     {
         return;
     }
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    if (![fileManager fileExistsAtPath:_downloadPath])
+    if (![fileManager fileExistsAtPath:newDownloadPath])
     {
         NSError *error;
-        if (![fileManager createDirectoryAtPath:downloadPath
+        if (![fileManager createDirectoryAtPath:newDownloadPath
                     withIntermediateDirectories:YES
                                      attributes:nil
                                           error:&error])
         {
-            CCLOG(@"[PACKAGE/DOWNLOAD][ERROR] Setting installation path to %@ - %@", downloadPath, error);
+            CCLOG(@"[PACKAGE/DOWNLOAD][ERROR] Setting installation path to %@ - %@", newDownloadPath, error);
             return;
         }
     }
 
     [self willChangeValueForKey:@"downloadPath"];
-    _downloadPath = downloadPath;
+    _downloadPath = [newDownloadPath copy];
     [self didChangeValueForKey:@"downloadPath"];
+}
+
+- (NSArray *)allDownloads
+{
+    return _downloads;
 }
 
 - (void)enqueuePackageForDownload:(CCPackage *)package
@@ -83,6 +88,7 @@
                                                                            localURL:[NSURL fileURLWithPath:[_downloadPath stringByAppendingPathComponent:fileName]]];
 
     CCPackageInstallData *installData = [package installData];
+    NSAssert(installData != nil, @"installData must not be nil");
     installData.localDownloadURL = [NSURL fileURLWithPath:[_downloadPath stringByAppendingPathComponent:fileName]];
 
     packageDownload.delegate = self;
@@ -160,8 +166,6 @@
 - (void)downloadFailed:(CCPackageDownload *)download error:(NSError *)error
 {
     [_downloads removeObject:download];
-
-    [download.package setValue:@(CCPackageStatusDownloadFailed) forKey:@"status"];
 
     [_delegate downloadFailedOfPackage:download.package error:error];
 }
