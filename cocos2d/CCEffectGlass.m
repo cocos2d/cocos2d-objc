@@ -233,7 +233,7 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
         
         
         // Get the transform from the affected node's local coordinates to the environment node.
-        GLKMatrix4 effectNodeToRefractEnvNode = CCEffectUtilsTransformFromNodeToNode(pass.node, weakSelf.refractionEnvironment, nil);
+        GLKMatrix4 effectNodeToRefractEnvNode = weakSelf.refractionEnvironment ? CCEffectUtilsTransformFromNodeToNode(pass.node, weakSelf.refractionEnvironment, nil) : GLKMatrix4Identity;
         
         // Concatenate the node to environment transform with the environment node to environment texture transform.
         // The result takes us from the affected node's coordinates to the environment's texture coordinates. We need
@@ -256,7 +256,7 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
         
         
         // Get the transform from the affected node's local coordinates to the environment node.
-        GLKMatrix4 effectNodeToReflectEnvNode = CCEffectUtilsTransformFromNodeToNode(pass.node, weakSelf.reflectionEnvironment, nil);
+        GLKMatrix4 effectNodeToReflectEnvNode = weakSelf.reflectionEnvironment ? CCEffectUtilsTransformFromNodeToNode(pass.node, weakSelf.reflectionEnvironment, nil) : GLKMatrix4Identity;
         
         // Concatenate the node to environment transform with the environment node to environment texture transform.
         // The result takes us from the affected node's coordinates to the environment's texture coordinates. We need
