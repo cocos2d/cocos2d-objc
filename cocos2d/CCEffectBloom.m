@@ -136,9 +136,9 @@
 {
     self.fragmentFunctions = [[NSMutableArray alloc] init];
 
-    GLfloat *standardGaussianWeights = calloc(_trueBlurRadius + 1, sizeof(GLfloat));
+    GLfloat *standardGaussianWeights = calloc(_trueBlurRadius + 2, sizeof(GLfloat));
     GLfloat sumOfWeights = 0.0;
-    for (NSUInteger currentGaussianWeightIndex = 0; currentGaussianWeightIndex < _trueBlurRadius + 1; currentGaussianWeightIndex++)
+    for (NSUInteger currentGaussianWeightIndex = 0; currentGaussianWeightIndex < _trueBlurRadius + 2; currentGaussianWeightIndex++)
     {
         standardGaussianWeights[currentGaussianWeightIndex] = (1.0 / sqrt(2.0 * M_PI * pow(_sigma, 2.0))) * exp(-pow(currentGaussianWeightIndex, 2.0) / (2.0 * pow(_sigma, 2.0)));
         
@@ -153,14 +153,14 @@
     }
     
     // Next, normalize these weights to prevent the clipping of the Gaussian curve at the end of the discrete samples from reducing luminance
-    for (NSUInteger currentGaussianWeightIndex = 0; currentGaussianWeightIndex < _trueBlurRadius + 1; currentGaussianWeightIndex++)
+    for (NSUInteger currentGaussianWeightIndex = 0; currentGaussianWeightIndex < _trueBlurRadius + 2; currentGaussianWeightIndex++)
     {
         standardGaussianWeights[currentGaussianWeightIndex] = standardGaussianWeights[currentGaussianWeightIndex] / sumOfWeights;
     }
     
     // From these weights we calculate the offsets to read interpolated values from
-    NSUInteger numberOfOptimizedOffsets = MIN(_blurRadius / 2 + (_blurRadius % 2), BLUR_OPTIMIZED_RADIUS_MAX);
-    NSUInteger trueNumberOfOptimizedOffsets = _trueBlurRadius / 2 + (_trueBlurRadius % 2);
+    NSUInteger numberOfOptimizedOffsets = _numberOfOptimizedOffsets;
+    NSUInteger trueNumberOfOptimizedOffsets = _trueBlurRadius / 2;
     
     NSMutableString *shaderString = [[NSMutableString alloc] init];
     
@@ -183,7 +183,7 @@
     [shaderString appendString:@"inBounds = step(0.0, min(compare.x, compare.y));"];
     [shaderString appendFormat:@"srcPixel = texture2D(cc_PreviousPassTexture, v_blurCoordinates[0]);\n"];
     [shaderString appendString:@"luminanceCheck = step(u_luminanceThreshold, dot(srcPixel.rgb, luminanceWeighting));\n"];
-    [shaderString appendFormat:@"src += inBounds * luminanceCheck * srcPixel * %f;\n", standardGaussianWeights[0]];
+    [shaderString appendFormat:@"src += inBounds * luminanceCheck * srcPixel * %f;\n", (_trueBlurRadius == 0) ? 1.0 : standardGaussianWeights[0]];
     
     for (NSUInteger currentBlurCoordinateIndex = 0; currentBlurCoordinateIndex < numberOfOptimizedOffsets; currentBlurCoordinateIndex++)
     {
