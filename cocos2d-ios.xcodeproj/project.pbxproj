@@ -634,14 +634,14 @@
 			remoteGlobalIDString = 83409DDB19D5B65C004B7EB9;
 			remoteInfo = SSZipArchiveTests;
 		};
-		83409E3919D5B7A4004B7EB9 /* PBXContainerItemProxy */ = {
+		83409E3B19D5B7DB004B7EB9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83409E2A19D5B791004B7EB9 /* SSZipArchive.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 83409DCD19D5B65B004B7EB9;
+			remoteGlobalIDString = 21CC41A417DB7D1300201DDC;
 			remoteInfo = SSZipArchive;
 		};
-		83409E3B19D5B7DB004B7EB9 /* PBXContainerItemProxy */ = {
+		83409E4C19D5E8A1004B7EB9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83409E2A19D5B791004B7EB9 /* SSZipArchive.xcodeproj */;
 			proxyType = 1;
@@ -2206,7 +2206,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				83409E3A19D5B7A4004B7EB9 /* PBXTargetDependency */,
+				83409E4D19D5E8A1004B7EB9 /* PBXTargetDependency */,
 				FCFDA23E19C78E2D00B90910 /* PBXTargetDependency */,
 				B759E5321880C70A00E8166C /* PBXTargetDependency */,
 			);
@@ -2667,15 +2667,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		83409E3A19D5B7A4004B7EB9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SSZipArchive;
-			targetProxy = 83409E3919D5B7A4004B7EB9 /* PBXContainerItemProxy */;
-		};
 		83409E3C19D5B7DB004B7EB9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SSZipArchive;
 			targetProxy = 83409E3B19D5B7DB004B7EB9 /* PBXContainerItemProxy */;
+		};
+		83409E4D19D5E8A1004B7EB9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SSZipArchive;
+			targetProxy = 83409E4C19D5E8A1004B7EB9 /* PBXContainerItemProxy */;
 		};
 		B759E5321880C70A00E8166C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2728,6 +2728,7 @@
 					"$(SRCROOT)/external/Chipmunk/include",
 					"$(SRCROOT)/external/Chipmunk/objectivec/include",
 					"$(SRCROOT)/external/ObjectAL/**",
+					"$(SRCROOT)/external/SSZipArchive/**",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2762,6 +2763,7 @@
 					"$(SRCROOT)/external/Chipmunk/include",
 					"$(SRCROOT)/external/Chipmunk/objectivec/include",
 					"$(SRCROOT)/external/ObjectAL/**",
+					"$(SRCROOT)/external/SSZipArchive/**",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

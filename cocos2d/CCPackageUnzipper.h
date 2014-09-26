@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import "SSZipArchive.h"
+#import <SSZipArchive/SSZipArchive.h>
 
 @protocol CCPackageUnzipperDelegate;
 @class CCPackage;
