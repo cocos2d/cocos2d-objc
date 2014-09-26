@@ -8,6 +8,8 @@
 
 #import "CCRenderTexture.h"
 
+#import "CCNode_Private.h"
+
 @class CCFrameBufferObject;
 
 @interface CCRenderTexture() {
@@ -40,3 +42,14 @@
 -(void)assignSpriteTexture;
 
 @end
+
+
+
+@interface CCRenderTextureSprite : CCSprite
+
+@property (nonatomic, weak) CCRenderTexture *renderTexture;
+
+- (CGAffineTransform)nodeToWorldTransform;
+
+@end
+

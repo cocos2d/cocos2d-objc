@@ -8,9 +8,8 @@
 
 #import "CCSprite.h"
 
+GLKMatrix4 CCEffectUtilsTransformFromNodeToNode(CCNode *first, CCNode *second, BOOL *isPossible);
 
-CGAffineTransform CCEffectUtilsWorldToEnvironmentTransform(CCSprite *environment);
-GLKVector4 CCEffectUtilsTangentInEnvironmentSpace(GLKMatrix4 effectToWorldMat, GLKMatrix4 worldToEnvMat);
 GLKMatrix4 CCEffectUtilsMat4FromAffineTransform(CGAffineTransform at);
 float CCEffectUtilsConditionRefraction(float refraction);
 float CCEffectUtilsConditionShininess(float shininess);
