@@ -2587,7 +2587,7 @@
 				MACOSX_DEPLOYMENT_TARGET = "$(inherited)";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = sbpbeta;
+				SDKROOT = sbandroid;
 			};
 			name = Debug;
 		};
@@ -2611,7 +2611,7 @@
 				MACOSX_DEPLOYMENT_TARGET = "$(inherited)";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = sbpbeta;
+				SDKROOT = sbandroid;
 			};
 			name = Release;
 		};
@@ -2783,7 +2783,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = cocos2dAndroid;
-				SDKROOT = sbpbeta;
+				SDKROOT = sbandroid;
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -2828,7 +2828,7 @@
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = cocos2dAndroid;
-				SDKROOT = sbpbeta;
+				SDKROOT = sbandroid;
 				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
