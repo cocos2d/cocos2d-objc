@@ -11,8 +11,8 @@
 #import "CCDirector.h"
 #import "CCEffect.h"
 #import "CCEffectStack.h"
+#import "CCEffectUtils.h"
 #import "CCTexture.h"
-#import "ccUtils.h"
 
 #import "CCEffect_Private.h"
 #import "CCRenderer_Private.h"
@@ -249,6 +249,7 @@ static GLKVector2 selectTexCoordPadding(CCEffectTexCoordSource tcSource, GLKVect
         }
         renderPass.renderer = renderer;
         renderPass.renderPassId = i;
+        renderPass.node = sprite;
         
         if (fromIntermediate && (renderPass.indexInEffect == 0))
         {
@@ -288,10 +289,7 @@ static GLKVector2 selectTexCoordPadding(CCEffectTexCoordSource tcSource, GLKVect
         if (toFramebuffer)
         {
             renderPass.transform = *transform;
-
-            GLKMatrix4 ndcToWorldMat;
-            [renderer.globalShaderUniforms[CCShaderUniformProjectionInv] getValue:&ndcToWorldMat];
-            renderPass.ndcToWorld = ndcToWorldMat;
+            renderPass.ndcToNodeLocal = GLKMatrix4Invert(*transform, nil);
             
             [renderPass begin:previousPassTexture];
             [renderPass update];
@@ -305,15 +303,8 @@ static GLKVector2 selectTexCoordPadding(CCEffectTexCoordSource tcSource, GLKVect
             GLKMatrix4 invRenderTargetProjection = GLKMatrix4Invert(renderTargetProjection, &inverted);
             NSAssert(inverted, @"Unable to invert matrix.");
             
-            GLKMatrix4 invGlobalProjection;
-            [renderer.globalShaderUniforms[CCShaderUniformProjectionInv] getValue:&invGlobalProjection];
-            
-            GLKMatrix4 ndcToNodeMat = invRenderTargetProjection;
-            GLKMatrix4 nodeToWorldMat = GLKMatrix4Multiply(invGlobalProjection, *transform);
-            GLKMatrix4 ndcToWorldMat = GLKMatrix4Multiply(nodeToWorldMat, ndcToNodeMat);
-
             renderPass.transform = renderTargetProjection;
-            renderPass.ndcToWorld = ndcToWorldMat;
+            renderPass.ndcToNodeLocal = invRenderTargetProjection;
             
             CGSize rtSize = CGSizeMake((_contentSize.width + 2 * effect.padding.width) * _contentScale, (_contentSize.height + 2 * effect.padding.height) * _contentScale);
             rtSize.width = (rtSize.width <= 1.0f) ? 1.0f : rtSize.width;
