@@ -55,6 +55,7 @@
 
 @end
 
+
 @interface CCPackageDownloadManagerTests : XCTestCase <CCPackageDownloadManagerDelegate>
 
 @property (nonatomic, strong) CCPackageDownloadManager *downloadManager;
@@ -99,6 +100,8 @@
     [fileManager removeItemAtPath:_downloadPath error:nil];
 }
 
+#pragma mark - Tests
+
 - (void)testSetDownloadPath
 {
     NSString *newPath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"NewDownloads"];
@@ -114,35 +117,21 @@
 
 - (void)testTwoDownloads
 {
-    CCPackage *package1 = [[CCPackage alloc] initWithName:@"package1" resolution:@"phonehd" os:@"iOS" remoteURL:[NSURL URLWithString:@"http://package.fake/package1"]];
-    CCPackageInstallData  *installData1 = [[CCPackageInstallData  alloc] init];
-    [package1 setInstallData:installData1];
+    NSArray *packages = @[[self completePackageWithName:@"package1"], [self completePackageWithName:@"package2"]];
 
-    CCPackage *package2 = [[CCPackage alloc] initWithName:@"package2" resolution:@"phonehd" os:@"iOS" remoteURL:[NSURL URLWithString:@"http://package.fake/package2"]];
-    CCPackageInstallData  *installData2 = [[CCPackageInstallData  alloc] init];
-    [package2 setInstallData:installData2];
-
-    [_downloadManager enqueuePackageForDownload:package1];
-    [_downloadManager enqueuePackageForDownload:package2];
-
-    while (!_allDownloadsReturned)
+    for (CCPackage *aPackage in packages)
     {
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+        [_downloadManager enqueuePackageForDownload:aPackage];
     }
 
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    XCTAssertTrue([fileManager fileExistsAtPath:[package1 installData].localDownloadURL.path]);
-    XCTAssertTrue([fileManager fileExistsAtPath:[package2 installData].localDownloadURL.path]);
+    [self waitUntilDelegateReturns];
 
-    CCAssertEqualStrings(@"package1", [NSString stringWithContentsOfFile:[package1 installData].localDownloadURL.path encoding:NSUTF8StringEncoding error:nil]);
-    CCAssertEqualStrings(@"package2", [NSString stringWithContentsOfFile:[package2 installData].localDownloadURL.path encoding:NSUTF8StringEncoding error:nil]);
+    [self assertPackagesDownloadedAndContentsAreAsExpected:packages];
 }
 
 - (void)testCancelDownload
 {
-    CCPackage *package1 = [[CCPackage alloc] initWithName:@"package1" resolution:@"phonehd" os:@"iOS" remoteURL:[NSURL URLWithString:@"http://package.fake/package1"]];
-    CCPackageInstallData  *installData1 = [[CCPackageInstallData  alloc] init];
-    [package1 setInstallData:installData1];
+    CCPackage *package1 = [self completePackageWithName:@"package1"];
 
     [_downloadManager enqueuePackageForDownload:package1];
     [_downloadManager cancelDownloadOfPackage:package1];
@@ -155,8 +144,72 @@
     XCTAssertFalse([fileManager fileExistsAtPath:[package1 installData].localDownloadURL.path]);
 }
 
+- (void)testPauseAndResumeAllDownloads
+{
+    NSArray *packages = @[[self completePackageWithName:@"package1"],
+                          [self completePackageWithName:@"package2"],
+                          [self completePackageWithName:@"package3"]];
 
-#pragma mark -
+    for (CCPackage *aPackage in packages)
+    {
+        [_downloadManager enqueuePackageForDownload:aPackage];
+    }
+
+    [_downloadManager pauseAllDownloads];
+    [_downloadManager resumeAllDownloads];
+
+    [self waitUntilDelegateReturns];
+
+    [self assertPackagesDownloadedAndContentsAreAsExpected:packages];
+}
+
+- (void)testEnqueuePausedPackage
+{
+    CCPackage *package1 = [self completePackageWithName:@"package1"];
+
+    [_downloadManager enqueuePackageForDownload:package1];
+    [_downloadManager pauseDownloadOfPackage:package1];
+    [_downloadManager enqueuePackageForDownload:package1];
+
+    [self waitUntilDelegateReturns];
+
+    [self assertPackagesDownloadedAndContentsAreAsExpected:@[package1]];
+}
+
+- (void)waitUntilDelegateReturns
+{
+    while (!_allDownloadsReturned)
+    {
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+    }
+}
+
+
+#pragma mark - Helpers
+
+- (void)assertPackagesDownloadedAndContentsAreAsExpected:(NSArray *)packages
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    for (CCPackage *aPackage in packages)
+    {
+        XCTAssertTrue([fileManager fileExistsAtPath:[aPackage installData].localDownloadURL.path]);
+        CCAssertEqualStrings(aPackage.name, [NSString stringWithContentsOfFile:[aPackage installData].localDownloadURL.path encoding:NSUTF8StringEncoding error:nil]);
+    }
+}
+
+
+#pragma mark - Fixtures
+
+- (CCPackage *)completePackageWithName:(NSString *)name
+{
+    CCPackage *package = [[CCPackage alloc] initWithName:name resolution:@"phonehd" os:@"iOS" remoteURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://package.fake/%@", name]]];
+    CCPackageInstallData  *installData = [[CCPackageInstallData  alloc] init];
+    [package setInstallData:installData];
+
+    return package;
+}
+
+#pragma mark - CCPackageDownloadManagerDelegate
 
 - (void)downloadFinishedOfPackage:(CCPackage *)package
 {
