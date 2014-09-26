@@ -48,6 +48,10 @@ GLKMatrix4 CCEffectUtilsTransformFromNodeToNode(CCNode *first, CCNode *second, B
     {
         *isPossible = (commonAncestor != nil);
     }
+    if (commonAncestor == nil)
+    {
+        return GLKMatrix4Identity;
+    }
 
     // Compute the transform from this node to the common ancestor
     CGAffineTransform t1 = [first nodeToParentTransform];
