@@ -230,30 +230,53 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_refractEnvMap"]] = weakSelf.refractionEnvironment.texture ?: [CCTexture none];
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_reflectEnvMap"]] = weakSelf.reflectionEnvironment.texture ?: [CCTexture none];
         
-        // Setup the NDC space to refract environment space matrix.
-        CGAffineTransform worldToRefractEnvTexture =  CCEffectUtilsWorldToEnvironmentTransform(weakSelf.refractionEnvironment);
-        GLKMatrix4 ndcToRefractEnvTextureMat = GLKMatrix4Multiply(CCEffectUtilsMat4FromAffineTransform(worldToRefractEnvTexture), pass.ndcToWorld);
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_ndcToRefractEnv"]] = [NSValue valueWithGLKMatrix4:ndcToRefractEnvTextureMat];
         
-        // Setup the NDC space to reflect environment space matrix.
-        CGAffineTransform worldToReflectEnvTexture = CCEffectUtilsWorldToEnvironmentTransform(weakSelf.reflectionEnvironment);
-        GLKMatrix4 ndcToReflectEnvTextureMat = GLKMatrix4Multiply(CCEffectUtilsMat4FromAffineTransform(worldToReflectEnvTexture), pass.ndcToWorld);
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_ndcToReflectEnv"]] = [NSValue valueWithGLKMatrix4:ndcToReflectEnvTextureMat];
+        
+        // Get the transform from the affected node's local coordinates to the environment node.
+        GLKMatrix4 effectNodeToRefractEnvNode = CCEffectUtilsTransformFromNodeToNode(pass.node, weakSelf.refractionEnvironment, nil);
+        
+        // Concatenate the node to environment transform with the environment node to environment texture transform.
+        // The result takes us from the affected node's coordinates to the environment's texture coordinates. We need
+        // this when computing the tangent and normal vectors below.
+        GLKMatrix4 effectNodeToRefractEnvTexture = GLKMatrix4Multiply(CCEffectUtilsMat4FromAffineTransform(weakSelf.refractionEnvironment.nodeToTextureTransform), effectNodeToRefractEnvNode);
+        
+        // Concatenate the node to environment texture transform together with the transform from NDC to local node
+        // coordinates. (NDC == normalized device coordinates == render target coordinates that are normalized to the
+        // range 0..1). The shader uses this to map from NDC directly to environment texture coordinates.
+        GLKMatrix4 ndcToRefractEnvTexture = GLKMatrix4Multiply(effectNodeToRefractEnvTexture, pass.ndcToNodeLocal);
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_ndcToRefractEnv"]] = [NSValue valueWithGLKMatrix4:ndcToRefractEnvTexture];
         
         // Setup the tangent and binormal vectors for the refraction environment
-        GLKVector4 refractTangent = CCEffectUtilsTangentInEnvironmentSpace(pass.transform, CCEffectUtilsMat4FromAffineTransform(worldToRefractEnvTexture));
+        GLKVector4 refractTangent = GLKVector4Normalize(GLKMatrix4MultiplyVector4(effectNodeToRefractEnvTexture, GLKVector4Make(1.0f, 0.0f, 0.0f, 0.0f)));
         GLKVector4 refractNormal = GLKVector4Make(0.0f, 0.0f, 1.0f, 1.0f);
         GLKVector4 refractBinormal = GLKVector4CrossProduct(refractNormal, refractTangent);
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_refractTangent"]] = [NSValue valueWithGLKVector2:GLKVector2Make(refractTangent.x, refractTangent.y)];
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_refractBinormal"]] = [NSValue valueWithGLKVector2:GLKVector2Make(refractBinormal.x, refractBinormal.y)];
 
-        // Setup the tangent and binormal vectors for the reflection environment.
-        GLKVector4 reflectTangent = CCEffectUtilsTangentInEnvironmentSpace(pass.transform, CCEffectUtilsMat4FromAffineTransform(worldToReflectEnvTexture));
+        
+        
+        // Get the transform from the affected node's local coordinates to the environment node.
+        GLKMatrix4 effectNodeToReflectEnvNode = CCEffectUtilsTransformFromNodeToNode(pass.node, weakSelf.reflectionEnvironment, nil);
+        
+        // Concatenate the node to environment transform with the environment node to environment texture transform.
+        // The result takes us from the affected node's coordinates to the environment's texture coordinates. We need
+        // this when computing the tangent and normal vectors below.
+        GLKMatrix4 effectNodeToReflectEnvTexture = GLKMatrix4Multiply(CCEffectUtilsMat4FromAffineTransform(weakSelf.reflectionEnvironment.nodeToTextureTransform), effectNodeToReflectEnvNode);
+        
+        // Concatenate the node to environment texture transform together with the transform from NDC to local node
+        // coordinates. (NDC == normalized device coordinates == render target coordinates that are normalized to the
+        // range 0..1). The shader uses this to map from NDC directly to environment texture coordinates.
+        GLKMatrix4 ndcToReflectEnvTexture = GLKMatrix4Multiply(effectNodeToReflectEnvTexture, pass.ndcToNodeLocal);
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_ndcToReflectEnv"]] = [NSValue valueWithGLKMatrix4:ndcToReflectEnvTexture];
+        
+        // Setup the tangent and binormal vectors for the reflection environment
+        GLKVector4 reflectTangent = GLKVector4Normalize(GLKMatrix4MultiplyVector4(effectNodeToReflectEnvTexture, GLKVector4Make(1.0f, 0.0f, 0.0f, 0.0f)));
         GLKVector4 reflectNormal = GLKVector4Make(0.0f, 0.0f, 1.0f, 1.0f);
         GLKVector4 reflectBinormal = GLKVector4CrossProduct(reflectNormal, reflectTangent);
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_reflectTangent"]] = [NSValue valueWithGLKVector2:GLKVector2Make(reflectTangent.x, reflectTangent.y)];
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_reflectBinormal"]] = [NSValue valueWithGLKVector2:GLKVector2Make(reflectBinormal.x, reflectBinormal.y)];
-
+        
+        
     } copy]];
     
     self.renderPasses = @[pass0];
