@@ -114,6 +114,8 @@
 		5BF3268F195F8E0300D9A51A /* CCGLView.java in Sources */ = {isa = PBXBuildFile; fileRef = 5BF3268D195F8E0300D9A51A /* CCGLView.java */; };
 		5BF32698195F947800D9A51A /* CCActivity.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BF32696195F947800D9A51A /* CCActivity.h */; };
 		5BF32699195F947800D9A51A /* CCActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF32697195F947800D9A51A /* CCActivity.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -O0"; }; };
+		83409E4919D5BADC004B7EB9 /* libSSZipArchive.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83409E3619D5B791004B7EB9 /* libSSZipArchive.a */; };
+		83B7DB7B19D32FD800B9A452 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E1A88D19C8C19D000A3BCA /* libz.dylib */; };
 		83E1A86219C8ACA0000A3BCA /* CCPackage.h in Headers */ = {isa = PBXBuildFile; fileRef = 83E1A85A19C8ACA0000A3BCA /* CCPackage.h */; };
 		83E1A86319C8ACA0000A3BCA /* CCPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E1A85B19C8ACA0000A3BCA /* CCPackage.m */; };
 		83E1A86419C8ACA0000A3BCA /* CCPackageConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 83E1A85C19C8ACA0000A3BCA /* CCPackageConstants.h */; };
@@ -127,7 +129,6 @@
 		83E1A86F19C8ACAF000A3BCA /* CCPackageUnzipperDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 83E1A86C19C8ACAF000A3BCA /* CCPackageUnzipperDelegate.h */; };
 		83E1A87619C8ACC1000A3BCA /* CCPackageDownload.h in Headers */ = {isa = PBXBuildFile; fileRef = 83E1A87019C8ACC1000A3BCA /* CCPackageDownload.h */; };
 		83E1A87719C8ACC1000A3BCA /* CCPackageDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E1A87119C8ACC1000A3BCA /* CCPackageDownload.m */; };
-		83E1A87819C8ACC1000A3BCA /* PBXBuildFile */ = {isa = PBXBuildFile; fileRef = 83E1A87219C8ACC1000A3BCA /* CCPackageDownloadDelegate.h */; };
 		83E1A87919C8ACC1000A3BCA /* CCPackageDownloadManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 83E1A87319C8ACC1000A3BCA /* CCPackageDownloadManager.h */; };
 		83E1A87A19C8ACC1000A3BCA /* CCPackageDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E1A87419C8ACC1000A3BCA /* CCPackageDownloadManager.m */; };
 		83E1A87B19C8ACC1000A3BCA /* CCPackageDownloadManagerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 83E1A87519C8ACC1000A3BCA /* CCPackageDownloadManagerDelegate.h */; };
@@ -139,7 +140,6 @@
 		83E1A88919C8ACDC000A3BCA /* CCPackageInstallData.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E1A88119C8ACDC000A3BCA /* CCPackageInstallData.m */; };
 		83E1A88A19C8ACDC000A3BCA /* CCPackageInstaller.h in Headers */ = {isa = PBXBuildFile; fileRef = 83E1A88219C8ACDC000A3BCA /* CCPackageInstaller.h */; };
 		83E1A88B19C8ACDC000A3BCA /* CCPackageInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E1A88319C8ACDC000A3BCA /* CCPackageInstaller.m */; };
-		83E1A88E19C8C19D000A3BCA /* PBXBuildFile */ = {isa = PBXBuildFile; fileRef = 83E1A88D19C8C19D000A3BCA /* libz.dylib */; };
 		9D85671D191B018200573093 /* CCEffectBrightness.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D85671B191B018200573093 /* CCEffectBrightness.h */; };
 		9D85671E191B018200573093 /* CCEffectBrightness.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D85671C191B018200573093 /* CCEffectBrightness.m */; };
 		9D856721191B019900573093 /* CCEffectContrast.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D85671F191B019900573093 /* CCEffectContrast.h */; };
@@ -606,6 +606,55 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		83409E3119D5B791004B7EB9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83409E2A19D5B791004B7EB9 /* SSZipArchive.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 21CC41A517DB7D1300201DDC;
+			remoteInfo = SSZipArchiveExampleApp;
+		};
+		83409E3319D5B791004B7EB9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83409E2A19D5B791004B7EB9 /* SSZipArchive.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 21CC41C017DB7D1300201DDC;
+			remoteInfo = SSZipArchiveTests;
+		};
+		83409E3519D5B791004B7EB9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83409E2A19D5B791004B7EB9 /* SSZipArchive.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 83409DCE19D5B65B004B7EB9;
+			remoteInfo = SSZipArchive;
+		};
+		83409E3719D5B791004B7EB9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83409E2A19D5B791004B7EB9 /* SSZipArchive.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 83409DDB19D5B65C004B7EB9;
+			remoteInfo = SSZipArchiveTests;
+		};
+		83409E3919D5B7A4004B7EB9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83409E2A19D5B791004B7EB9 /* SSZipArchive.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 83409DCD19D5B65B004B7EB9;
+			remoteInfo = SSZipArchive;
+		};
+		83409E3B19D5B7DB004B7EB9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83409E2A19D5B791004B7EB9 /* SSZipArchive.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 83409DCD19D5B65B004B7EB9;
+			remoteInfo = SSZipArchive;
+		};
+		839B148519CC1D6A0000E5E2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FC39961319C3B92F00C93E5E /* ObjectAL.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D369B53219C8E73C00BA46EA;
+			remoteInfo = "ObjectAL (Mac)";
+		};
 		B759E52C1880C66900E8166C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B759E5281880C66900E8166C /* Chipmunk7-ios.xcodeproj */;
@@ -633,13 +682,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = CBBAB312171D0B84009B955F;
 			remoteInfo = "ObjectAL (iOS)";
-		};
-		FC39961C19C3B92F00C93E5E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FC39961319C3B92F00C93E5E /* ObjectAL.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = CBBAB33D171D0BC4009B955F;
-			remoteInfo = "ObjectAL (OSX)";
 		};
 		FC39961E19C3B92F00C93E5E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -788,11 +830,12 @@
 		5BC3CB5219626E4F00C4F0D0 /* CCGestureListener.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = CCGestureListener.java; sourceTree = "<group>"; };
 		5BC3CB5719626FA000C4F0D0 /* CCGestureListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCGestureListener.h; path = Android/CCGestureListener.h; sourceTree = "<group>"; };
 		5BC3CB5819626FA000C4F0D0 /* CCGestureListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCGestureListener.m; path = Android/CCGestureListener.m; sourceTree = "<group>"; };
-		5BF3267A195F8D8800D9A51A /* cocos2dJava.jar */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = file; path = cocos2dJava.jar; sourceTree = BUILT_PRODUCTS_DIR; };
+		5BF3267A195F8D8800D9A51A /* cocos2dJava.jar */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = archive.jar; path = cocos2dJava.jar; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BF3268C195F8E0300D9A51A /* CCActivity.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = CCActivity.java; sourceTree = "<group>"; };
 		5BF3268D195F8E0300D9A51A /* CCGLView.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = CCGLView.java; sourceTree = "<group>"; };
 		5BF32696195F947800D9A51A /* CCActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCActivity.h; path = Android/CCActivity.h; sourceTree = "<group>"; };
 		5BF32697195F947800D9A51A /* CCActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCActivity.m; path = Android/CCActivity.m; sourceTree = "<group>"; };
+		83409E2A19D5B791004B7EB9 /* SSZipArchive.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SSZipArchive.xcodeproj; path = external/SSZipArchive/SSZipArchive.xcodeproj; sourceTree = "<group>"; };
 		83E1A85A19C8ACA0000A3BCA /* CCPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackage.h; sourceTree = "<group>"; };
 		83E1A85B19C8ACA0000A3BCA /* CCPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackage.m; sourceTree = "<group>"; };
 		83E1A85C19C8ACA0000A3BCA /* CCPackageConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackageConstants.h; sourceTree = "<group>"; };
@@ -1044,6 +1087,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83409E4919D5BADC004B7EB9 /* libSSZipArchive.a in Frameworks */,
+				83B7DB7B19D32FD800B9A452 /* libz.dylib in Frameworks */,
 				FC64014019C79716003E595A /* libObjectAL.a in Frameworks */,
 				D3903B1A19952ABD003AA81A /* Metal.framework in Frameworks */,
 				D24FAEEC198014B90043E27D /* GLKit.framework in Frameworks */,
@@ -1141,6 +1186,7 @@
 		501756090F335CE900624901 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				83409E2A19D5B791004B7EB9 /* SSZipArchive.xcodeproj */,
 				FC39961319C3B92F00C93E5E /* ObjectAL.xcodeproj */,
 				B759E5281880C66900E8166C /* Chipmunk7-ios.xcodeproj */,
 			);
@@ -1466,6 +1512,17 @@
 				5BC3CB5219626E4F00C4F0D0 /* CCGestureListener.java */,
 			);
 			path = cocos2d;
+			sourceTree = "<group>";
+		};
+		83409E2B19D5B791004B7EB9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				83409E3219D5B791004B7EB9 /* SSZipArchive.app */,
+				83409E3419D5B791004B7EB9 /* SSZipArchiveTests.xctest */,
+				83409E3619D5B791004B7EB9 /* libSSZipArchive.a */,
+				83409E3819D5B791004B7EB9 /* SSZipArchiveTests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		83E1A85619C8AC2A000A3BCA /* Packages */ = {
@@ -1808,8 +1865,8 @@
 			isa = PBXGroup;
 			children = (
 				FC39961B19C3B92F00C93E5E /* libObjectAL.a */,
-				FC39961D19C3B92F00C93E5E /* ObjectAL.framework */,
 				FC39961F19C3B92F00C93E5E /* libObjectAL (Android).a */,
+				839B148619CC1D6A0000E5E2 /* libObjectAL (Mac).a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2149,6 +2206,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				83409E3A19D5B7A4004B7EB9 /* PBXTargetDependency */,
 				FCFDA23E19C78E2D00B90910 /* PBXTargetDependency */,
 				B759E5321880C70A00E8166C /* PBXTargetDependency */,
 			);
@@ -2187,6 +2245,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				83409E3C19D5B7DB004B7EB9 /* PBXTargetDependency */,
 				FC39962119C3BB3A00C93E5E /* PBXTargetDependency */,
 				D2FEB60E194F6C9E00FC0574 /* PBXTargetDependency */,
 			);
@@ -2225,6 +2284,10 @@
 					ProductGroup = FC39961419C3B92F00C93E5E /* Products */;
 					ProjectRef = FC39961319C3B92F00C93E5E /* ObjectAL.xcodeproj */;
 				},
+				{
+					ProductGroup = 83409E2B19D5B791004B7EB9 /* Products */;
+					ProjectRef = 83409E2A19D5B791004B7EB9 /* SSZipArchive.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -2237,6 +2300,42 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		83409E3219D5B791004B7EB9 /* SSZipArchive.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			name = SSZipArchive.app;
+			path = SSZipArchiveExampleApp.app;
+			remoteRef = 83409E3119D5B791004B7EB9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		83409E3419D5B791004B7EB9 /* SSZipArchiveTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SSZipArchiveTests.xctest;
+			remoteRef = 83409E3319D5B791004B7EB9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		83409E3619D5B791004B7EB9 /* libSSZipArchive.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSSZipArchive.a;
+			remoteRef = 83409E3519D5B791004B7EB9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		83409E3819D5B791004B7EB9 /* SSZipArchiveTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SSZipArchiveTests.xctest;
+			remoteRef = 83409E3719D5B791004B7EB9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		839B148619CC1D6A0000E5E2 /* libObjectAL (Mac).a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libObjectAL (Mac).a";
+			remoteRef = 839B148519CC1D6A0000E5E2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		B759E52D1880C66900E8166C /* libObjectiveChipmunk-iPhone.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -2249,13 +2348,6 @@
 			fileType = archive.ar;
 			path = libObjectAL.a;
 			remoteRef = FC39961A19C3B92F00C93E5E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		FC39961D19C3B92F00C93E5E /* ObjectAL.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ObjectAL.framework;
-			remoteRef = FC39961C19C3B92F00C93E5E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		FC39961F19C3B92F00C93E5E /* libObjectAL (Android).a */ = {
@@ -2575,6 +2667,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		83409E3A19D5B7A4004B7EB9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SSZipArchive;
+			targetProxy = 83409E3919D5B7A4004B7EB9 /* PBXContainerItemProxy */;
+		};
+		83409E3C19D5B7DB004B7EB9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SSZipArchive;
+			targetProxy = 83409E3B19D5B7DB004B7EB9 /* PBXContainerItemProxy */;
+		};
 		B759E5321880C70A00E8166C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "ObjectiveChipmunk-iPhone";
@@ -2626,7 +2728,6 @@
 					"$(SRCROOT)/external/Chipmunk/include",
 					"$(SRCROOT)/external/Chipmunk/objectivec/include",
 					"$(SRCROOT)/external/ObjectAL/**",
-					"$(SRCROOT)/external/SSZipArchive/SSZipArchive/**",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2661,7 +2762,6 @@
 					"$(SRCROOT)/external/Chipmunk/include",
 					"$(SRCROOT)/external/Chipmunk/objectivec/include",
 					"$(SRCROOT)/external/ObjectAL/**",
-					"$(SRCROOT)/external/SSZipArchive/SSZipArchive/**",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2781,6 +2881,7 @@
 					external/Chipmunk/include,
 					external/Chipmunk/objectivec/include,
 					"external/ObjectAL/**",
+					"external/SSZipArchive/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
@@ -2831,6 +2932,7 @@
 					external/Chipmunk/include,
 					external/Chipmunk/objectivec/include,
 					"external/ObjectAL/**",
+					"external/SSZipArchive/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = NO;

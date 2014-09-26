@@ -7,4 +7,4 @@ url=https://github.com/slembcke/Chipmunk2D.git
 	branch = apportable
 [submodule "external/SSZipArchive"]
 	path = external/SSZipArchive
-	url = https://github.com/spritebuilder/ssziparchive.git
+	url = https://github.com/NickyWeber/ssziparchive.git
