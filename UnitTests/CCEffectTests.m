@@ -29,6 +29,37 @@
     XCTAssertFalse(commonAncestor, @"Common ancestor found where there is none.");
 }
 
+-(void)testSameNode
+{
+    CCSprite *s1 = [CCSprite spriteWithImageNamed:@"f1.png"];
+    
+    BOOL commonAncestor = NO;
+    GLKMatrix4 transform;
+    
+    transform = CCEffectUtilsTransformFromNodeToNode(s1, s1, &commonAncestor);
+    XCTAssertTrue(commonAncestor, @"No common ancestor found where there is one.");
+
+    XCTAssertEqual(transform.m00, 1.0f, @"Unexpected transform value.");
+    XCTAssertEqual(transform.m01, 0.0f, @"Unexpected transform value.");
+    XCTAssertEqual(transform.m02, 0.0f, @"Unexpected transform value.");
+    XCTAssertEqual(transform.m03, 0.0f, @"Unexpected transform value.");
+    
+    XCTAssertEqual(transform.m10, 0.0f, @"Unexpected transform value.");
+    XCTAssertEqual(transform.m11, 1.0f, @"Unexpected transform value.");
+    XCTAssertEqual(transform.m12, 0.0f, @"Unexpected transform value.");
+    XCTAssertEqual(transform.m13, 0.0f, @"Unexpected transform value.");
+    
+    XCTAssertEqual(transform.m20, 0.0f, @"Unexpected transform value.");
+    XCTAssertEqual(transform.m21, 0.0f, @"Unexpected transform value.");
+    XCTAssertEqual(transform.m22, 1.0f, @"Unexpected transform value.");
+    XCTAssertEqual(transform.m23, 0.0f, @"Unexpected transform value.");
+    
+    XCTAssertEqual(transform.m30, 0.0f, @"Unexpected transform value.");
+    XCTAssertEqual(transform.m31, 0.0f, @"Unexpected transform value.");
+    XCTAssertEqual(transform.m32, 0.0f, @"Unexpected transform value.");
+    XCTAssertEqual(transform.m33, 1.0f, @"Unexpected transform value.");
+}
+
 -(void)testSiblingTransforms
 {
     CCSprite *root = [CCSprite spriteWithImageNamed:@"f1.png"];
