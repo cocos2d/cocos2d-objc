@@ -168,8 +168,10 @@
         return;
     }
 
-    if (![self createFileHandle])
+    NSError *error;
+    if (![self createFileHandle:&error])
     {
+        [self connection:_connection didFailWithError:error];
         return;
     }
 
@@ -264,16 +266,15 @@
     return result;
 }
 
-- (BOOL)createFileHandle
+- (BOOL)createFileHandle:(NSError **)error
 {
-    NSError *error;
-    NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingToURL:[NSURL fileURLWithPath:_tempPath] error:&error];
+    NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingToURL:[NSURL fileURLWithPath:_tempPath] error:error];
     CCLOGINFO(@"[PACKAGE/DOWNLOAD][INFO] Opening/Creating file for download: %@", _tempPath);
 
     if (!fileHandle)
     {
         [[NSFileManager defaultManager] createFileAtPath:_tempPath contents:nil attributes:nil];
-        fileHandle = [NSFileHandle fileHandleForWritingToURL:[NSURL fileURLWithPath:_tempPath] error:&error];
+        fileHandle = [NSFileHandle fileHandleForWritingToURL:[NSURL fileURLWithPath:_tempPath] error:error];
     }
 
     if (!fileHandle)

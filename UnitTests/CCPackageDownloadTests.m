@@ -111,7 +111,6 @@ static BOOL __support_range_request = YES;
 
 #pragma mark - test
 
-
 @interface CCPackageDownloadTests : XCTestCase <CCPackageDownloadDelegate>
 
 @property (nonatomic, strong) CCPackageDownload *download;
@@ -133,7 +132,7 @@ static BOOL __support_range_request = YES;
 
     [(AppController *)[UIApplication sharedApplication].delegate configureCocos2d];
     [[CCDirector sharedDirector] stopAnimation];
-    // Sping the runloop a bit otherwise nondeterministic exceptions are thrown in the CCScheduler.
+    // Spin the runloop a bit otherwise nondeterministic exceptions are thrown in the CCScheduler.
     [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeInterval:0.2 sinceDate:[NSDate date]]];
 
     [NSURLProtocol registerClass:[CCPackageDownloadTestURLProtocol class]];
@@ -256,6 +255,16 @@ static BOOL __support_range_request = YES;
     XCTAssertNotNil(_downloadError);
 }
 
+- (void)testDownloadFolderNotAccessible
+{
+    // Writing to root level is supposed to fail
+    [_download setValue:[NSURL fileURLWithPath:@"/test.zip"] forKey:NSStringFromSelector(@selector(localURL))];
+
+    [self startDownloadAndWaitForDelegateToReturn];
+
+    XCTAssertFalse(_downloadSuccessful);
+    XCTAssertNotNil(_downloadError);
+}
 
 #pragma mark - Helper
 
