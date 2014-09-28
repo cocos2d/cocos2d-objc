@@ -1190,6 +1190,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 	return [self schedule:selector interval:interval repeat:CCTimerRepeatForever delay:interval];
 }
 
+<<<<<<< HEAD
 -(CCTimer*) reschedule:(SEL)selector interval:(CCTime)interval
 {
 	NSString *selectorName = NSStringFromSelector(selector);
@@ -1214,6 +1215,32 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 	}
 
 	return currentTimerForSelector;
+=======
+-(CCTimer*)reschedule:(SEL)selector interval:(CCTime)interval
+{
+    NSString *selectorName = NSStringFromSelector(selector);
+    
+    CCTimer *currentTimerForSelector = nil;
+    
+    for (CCTimer *timer in [_scheduler timersForTarget:self])
+    {
+        if([selectorName isEqual:timer.userData])
+        {
+            CCLOG(@"%@ was already scheduled on %@. Updating interval from %f to %f",NSStringFromSelector(selector),self,timer.repeatInterval,interval);
+            timer.repeatInterval = interval;
+            currentTimerForSelector = timer;
+            break;
+        }
+    }
+    
+    if (currentTimerForSelector == nil)
+    {
+        CCLOG(@"%@ was never scheduled. Scheduling for the first time.",selectorName);
+        currentTimerForSelector = [self schedule:selector interval:interval];
+    }
+
+    return currentTimerForSelector;
+>>>>>>> FETCH_HEAD
 }
 
 -(BOOL)unschedule_private:(SEL)selector
