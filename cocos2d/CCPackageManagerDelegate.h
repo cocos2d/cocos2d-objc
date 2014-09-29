@@ -64,7 +64,7 @@
  *  @param package The package for which the unzip process failed
  *  @param error Pointer to an error object
  */
-- (void)packageUnzippingFailed:(CCPackage *)package error:(NSError *)error;;
+- (void)packageUnzippingFailed:(CCPackage *)package error:(NSError *)error;
 
 @optional
 /**

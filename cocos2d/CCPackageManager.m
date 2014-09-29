@@ -74,7 +74,7 @@
 
     [self enablePackages];
 
-    [self enqueuePausedDownloads];
+    [self resumePausedDownloads];
 
     [self restartUnzippingTasks];
 
@@ -114,7 +114,7 @@
     return nil;
 }
 
-- (void)enqueuePausedDownloads
+- (void)resumePausedDownloads
 {
     for (CCPackage *aPackage in _packages)
     {

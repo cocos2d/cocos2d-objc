@@ -83,7 +83,8 @@
  * @param name Name of the package
   * @param enableAfterDownload If the package should be enabled in cocos2d after download. You can enable it with the enablePackage: method later on.
  */
-- (CCPackage *)downloadPackageWithName:(NSString *)name enableAfterDownload:(BOOL)enableAfterDownload;
+- (CCPackage *)downloadPackageWithName:(NSString *)name
+                   enableAfterDownload:(BOOL)enableAfterDownload;
 
 /**
  * Like the method above. Instead of using the baseURL, name and resolution you can provide the URL directly.
@@ -94,7 +95,9 @@
  * @param resolution Resolution of the package, e.g. phonehd, tablethd etc.
  * @param enableAfterDownload If the package should be enabled in cocos2d after download. You can enable it with the enablePackage: method later on.
  */
-- (CCPackage *)downloadPackageWithName:(NSString *)name resolution:(NSString *)resolution enableAfterDownload:(BOOL)enableAfterDownload;
+- (CCPackage *)downloadPackageWithName:(NSString *)name
+                            resolution:(NSString *)resolution
+                   enableAfterDownload:(BOOL)enableAfterDownload;
 
 /**
  * Like the method above. Instead of using the baseURL and name  you can provide the URL directly.
@@ -104,7 +107,9 @@
  * @param remoteURL URL of the package to be downloaded
  * @param enableAfterDownload If the package should be enabled in cocos2d after download. You can enable it with the enablePackage: method later on.
  */
-- (CCPackage *)downloadPackageWithName:(NSString *)name remoteURL:(NSURL *)remoteURL enableAfterDownload:(BOOL)enableAfterDownload;
+- (CCPackage *)downloadPackageWithName:(NSString *)name
+                             remoteURL:(NSURL *)remoteURL
+                   enableAfterDownload:(BOOL)enableAfterDownload;
 
 /**
  * Like the method above. Instead of using the baseURL, name and resolution you can provide the URL directly.
@@ -115,7 +120,10 @@
  * @param remoteURL URL of the package to be downloaded
  * @param enableAfterDownload If the package should be enabled in cocos2d after download. You can enable it with the enablePackage: method later on.
  */
-- (CCPackage *)downloadPackageWithName:(NSString *)name resolution:(NSString *)resolution remoteURL:(NSURL *)remoteURL enableAfterDownload:(BOOL)enableAfterDownload;
+- (CCPackage *)downloadPackageWithName:(NSString *)name
+                            resolution:(NSString *)resolution
+                             remoteURL:(NSURL *)remoteURL
+                   enableAfterDownload:(BOOL)enableAfterDownload;
 
 /**
  * Downloads a package. This is supposed to work in conjunction with addPackage where a package is created without the package manager
