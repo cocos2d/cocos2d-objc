@@ -1,3 +1,4 @@
+#import <MacTypes.h>
 #import "CCPackage.h"
 #import "CCPackageHelper.h"
 
@@ -50,6 +51,14 @@ static NSString *const PACKAGE_SERIALIZATION_KEY_STATUS = @"status";
 {
     return [[CCPackage alloc] initWithName:name
                                 resolution:resolution
+                                        os:[CCPackageHelper currentOS]
+                                 remoteURL:remoteURL];
+}
+
+- (instancetype)initWithName:(NSString *)name remoteURL:(NSURL *)remoteURL
+{
+    return [[CCPackage alloc] initWithName:name
+                                resolution:[CCPackageHelper defaultResolution]
                                         os:[CCPackageHelper currentOS]
                                  remoteURL:remoteURL];
 }

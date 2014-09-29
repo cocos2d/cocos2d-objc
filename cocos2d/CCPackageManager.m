@@ -219,6 +219,13 @@
 
 #pragma mark - download
 
+- (CCPackage *)downloadPackageWithName:(NSString *)name enableAfterDownload:(BOOL)enableAfterDownload
+{
+    return [self downloadPackageWithName:name
+                              resolution:[CCPackageHelper defaultResolution]
+                     enableAfterDownload:enableAfterDownload];
+}
+
 - (CCPackage *)downloadPackageWithName:(NSString *)name resolution:(NSString *)resolution enableAfterDownload:(BOOL)enableAfterDownload
 {
     NSAssert(_baseURL != nil, @"baseURL must not be nil");
@@ -260,6 +267,14 @@
     return YES;
 }
 
+- (CCPackage *)downloadPackageWithName:(NSString *)name remoteURL:(NSURL *)remoteURL enableAfterDownload:(BOOL)enableAfterDownload
+{
+    return [self downloadPackageWithName:name
+                              resolution:[CCPackageHelper defaultResolution]
+                               remoteURL:remoteURL
+                     enableAfterDownload:enableAfterDownload];
+}
+
 - (CCPackage *)downloadPackageWithName:(NSString *)name resolution:(NSString *)resolution remoteURL:(NSURL *)remoteURL enableAfterDownload:(BOOL)enableAfterDownload
 {
     CCPackage *aPackage = [self packageWithName:name resolution:resolution];
@@ -285,6 +300,13 @@
     CCPackageInstallData *installData = [[CCPackageInstallData alloc] initWithPackage:package];
     installData.enableOnDownload = enableAfterDownload;
     [package setInstallData:installData];
+}
+
+- (CCPackage *)packageWithName:(NSString *)name
+{
+    NSString *resolution = [CCPackageHelper defaultResolution];
+
+    return [self packageWithName:name resolution:resolution];
 }
 
 - (CCPackage *)packageWithName:(NSString *)name resolution:(NSString *)resolution

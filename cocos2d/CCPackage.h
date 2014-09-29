@@ -35,9 +35,21 @@
  */
 @property (nonatomic, readonly) CCPackageStatus status;
 
+/**
+ *  Creates a new instance of a package.
+ *  OS and resolution are determined implicitly. Resolution is derived from CCFileUtils' searchResolutionsOrder first entry.
+ *
+ *  @param name Name of the package
+ *  @param remoteURL Remote URL of the package
+ *
+ *  @return New instance of CCPackage
+ */
+- (instancetype)initWithName:(NSString *)name
+                   remoteURL:(NSURL *)remoteURL;
 
 /**
  *  Creates a new instance of a package.
+ *  OS is determined implicitly.
  *
  *  @param name Name of the package
  *  @param resolution Resolution of the package

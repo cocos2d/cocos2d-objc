@@ -55,10 +55,17 @@
  */
 - (void)savePackages;
 
+/**
+ *  Returns a package identified by name. Resolution and OS are determined implicitly.
+ *
+ *  @param name Name of the package
+ */
+- (CCPackage *)packageWithName:(NSString *)name;
 
 /**
  * The all inclsuive method to add a package to your app.
  * Returns a new package immediately which will be downloaded, unzipped and installed asynchronously to the Packages folder in /Library/Caches (default)
+ * OS and resolution are determined implicitly. Resolution is derived from CCFileUtils' searchResolutionsOrder first entry.
  *
  * If a package with the same name and resolution already exists it won't be rescheduled for downloading.
  * If you need to update a package by re-downloading it you will have to delete it first.
@@ -68,13 +75,34 @@
  * Example: base is http://foo, name: DLC, os: iOS (determined by manager), resolution: phonehd => http://foo/DLC-iOS-phonehd.zip
  *
  * @param name Name of the package
+  * @param enableAfterDownload If the package should be enabled in cocos2d after download. You can enable it with the enablePackage: method later on.
+ */
+- (CCPackage *)downloadPackageWithName:(NSString *)name enableAfterDownload:(BOOL)enableAfterDownload;
+
+/**
+ * Like the method above. Instead of using the baseURL, name and resolution you can provide the URL directly.
+ * Returns a new package immediately which will be downloaded, unzipped and installed asynchronously to the Packages folder in /Library/Caches (default)
+ * OS is determined implicitly.
+ *
+ * @param name Name of the package
  * @param resolution Resolution of the package, e.g. phonehd, tablethd etc.
  * @param enableAfterDownload If the package should be enabled in cocos2d after download. You can enable it with the enablePackage: method later on.
  */
 - (CCPackage *)downloadPackageWithName:(NSString *)name resolution:(NSString *)resolution enableAfterDownload:(BOOL)enableAfterDownload;
 
 /**
+ * Like the method above. Instead of using the baseURL and name  you can provide the URL directly.
+ * OS and resolution are determined implicitly. Resolution is derived from CCFileUtils' searchResolutionsOrder first entry.
+ *
+ * @param name Name of the package
+ * @param remoteURL URL of the package to be downloaded
+ * @param enableAfterDownload If the package should be enabled in cocos2d after download. You can enable it with the enablePackage: method later on.
+ */
+- (CCPackage *)downloadPackageWithName:(NSString *)name remoteURL:(NSURL *)remoteURL enableAfterDownload:(BOOL)enableAfterDownload;
+
+/**
  * Like the method above. Instead of using the baseURL, name and resolution you can provide the URL directly.
+ * OS is determined implicitly.
  *
  * @param name Name of the package
  * @param resolution Resolution of the package, e.g. phonehd, tablethd etc.

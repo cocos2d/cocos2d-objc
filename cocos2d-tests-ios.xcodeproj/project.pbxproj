@@ -143,6 +143,7 @@
 		D4AFE94D1977100000261299 /* west_england-64.png in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE9121977100000261299 /* west_england-64.png */; };
 		E525F033EECC363CA8EAF2A6 /* CCPackageDownloadManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F2B770C5914D0810E4C2 /* CCPackageDownloadManagerTests.m */; };
 		E525F23949076BAB5337F7AD /* CCPackage+InstallDataTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F935C2ECADF41CA1B1F2 /* CCPackage+InstallDataTests.m */; };
+		E525F4D0568A8A4176684936 /* CCPackageHelperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F99055258F35DFF00ECD /* CCPackageHelperTests.m */; };
 		E525F5DB1E3086DDE0296CEC /* CCPackageDownloadTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F5FACFF098F0ACBA6419 /* CCPackageDownloadTests.m */; };
 		E525F7C977339D17470FC149 /* CCPackageInstallerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FBF58DFECF27272F5D6F /* CCPackageInstallerTests.m */; };
 		E525F7FD04A53FA8700B4890 /* CCPackageInstallDataTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FA40B9446D6820F622B4 /* CCPackageInstallDataTests.m */; };
@@ -363,6 +364,7 @@
 		E525F771C583AAF68EB42E15 /* CCPackageTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageTests.m; sourceTree = "<group>"; };
 		E525F832B569117922DA339E /* CCUnitTestAssertions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUnitTestAssertions.h; sourceTree = "<group>"; };
 		E525F935C2ECADF41CA1B1F2 /* CCPackage+InstallDataTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCPackage+InstallDataTests.m"; sourceTree = "<group>"; };
+		E525F99055258F35DFF00ECD /* CCPackageHelperTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageHelperTests.m; sourceTree = "<group>"; };
 		E525FA40B9446D6820F622B4 /* CCPackageInstallDataTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageInstallDataTests.m; sourceTree = "<group>"; };
 		E525FB8A3CC89D071A8377B1 /* CCPackageCocos2dEnablerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageCocos2dEnablerTests.m; sourceTree = "<group>"; };
 		E525FBF58DFECF27272F5D6F /* CCPackageInstallerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageInstallerTests.m; sourceTree = "<group>"; };
@@ -763,6 +765,7 @@
 				E525F544D63123C8E948AA05 /* Unzip */,
 				E525F771C583AAF68EB42E15 /* CCPackageTests.m */,
 				E525F395FE85323D86232416 /* CCPackageManagerTests.m */,
+				E525F99055258F35DFF00ECD /* CCPackageHelperTests.m */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
@@ -1009,6 +1012,7 @@
 				E525FF2E8351476CDD7DEAC4 /* CCPackageManagerTests.m in Sources */,
 				E525F033EECC363CA8EAF2A6 /* CCPackageDownloadManagerTests.m in Sources */,
 				E525F7FD04A53FA8700B4890 /* CCPackageInstallDataTests.m in Sources */,
+				E525F4D0568A8A4176684936 /* CCPackageHelperTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

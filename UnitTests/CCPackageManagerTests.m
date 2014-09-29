@@ -7,8 +7,13 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "CCPackageManager.h"
+#import "CCPackage.h"
+#import "CCFileUtils.h"
 
 @interface CCPackageManagerTests : XCTestCase
+
+@property (nonatomic, strong) CCPackageManager *packageManager;
 
 @end
 
@@ -17,18 +22,26 @@
 - (void)setUp
 {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+    self.packageManager = [[CCPackageManager alloc] init];
 }
 
-- (void)tearDown
+- (void)testPackageWithName
 {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
-}
+    // NOTE: This will kill many other tests due to a bug in CCFileUtils
+    // So we assume until the bug's fixed that phonehd is the default resolution
+    // [CCFileUtils sharedFileUtils].searchResolutionsOrder = @[CCFileUtilsSuffixiPadHD];
 
-- (void)testExample
-{
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+    CCPackage *aPackage = [[CCPackage alloc] initWithName:@"foo"
+                                               // resolution:@"tablethd" // See note above
+                                               resolution:@"phonehd"
+                                                       os:@"iOS"
+                                                remoteURL:[NSURL URLWithString:@"http://foo.fake"]];
+
+    [_packageManager addPackage:aPackage];
+
+    CCPackage *result = [_packageManager packageWithName:@"foo"];
+
+    XCTAssertEqual(aPackage, result);
 }
 
 @end
