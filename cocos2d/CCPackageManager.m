@@ -77,6 +77,8 @@
 
     [self restartUnzippingTasks];
 
+    CCLOGINFO(@"[PACKAGES] Packages loaded (%u): %@", _packages.count, _packages);
+
     self.initialized = YES;
 }
 
