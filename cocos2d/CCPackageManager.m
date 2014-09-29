@@ -50,6 +50,7 @@
 
         self.downloadManager = [[CCPackageDownloadManager alloc] init];
         _downloadManager.delegate = self;
+        _downloadManager.resumeDownloads = YES;
 
         self.unzippingQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0);
     }
@@ -216,6 +217,16 @@
     }
 
     _unzippingQueue = unzippingQueue;
+}
+
+- (void)setResumeDownloads:(BOOL)resumeDownloads
+{
+    _downloadManager.resumeDownloads = resumeDownloads;
+}
+
+- (BOOL)resumeDownloads
+{
+    return _downloadManager.resumeDownloads;
 }
 
 

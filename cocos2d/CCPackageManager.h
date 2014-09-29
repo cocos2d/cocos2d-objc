@@ -25,6 +25,12 @@
 @property (nonatomic, readonly) NSArray *allPackages;
 
 /**
+ *  If downloads should be resumed if partial downloads found
+ *  Default is YES
+ */
+@property (nonatomic) BOOL resumeDownloads;
+
+/**
  *  Package manager's delegate
  */
 @property (nonatomic, weak) id <CCPackageManagerDelegate> delegate;
