@@ -416,9 +416,9 @@ static const MTLPrimitiveType MetalDrawModes[] = {
 	MTLPrimitiveTypeLine,
 };
 
--(instancetype)initWithMode:(CCRenderCommandDrawMode)mode renderState:(CCRenderState *)renderState first:(NSUInteger)first count:(size_t)count globalSortOrder:(NSInteger)globalSortOrder
+-(instancetype)initWithMode:(CCRenderCommandDrawMode)mode renderState:(CCRenderState *)renderState firstIndex:(NSUInteger)firstIndex vertexPage:(NSUInteger)vertexPage count:(size_t)count globalSortOrder:(NSInteger)globalSortOrder;
 {
-	if((self = [super initWithMode:mode renderState:renderState first:first count:count globalSortOrder:globalSortOrder])){
+	if((self = [super initWithMode:mode renderState:renderState firstIndex:firstIndex vertexPage:vertexPage count:count globalSortOrder:globalSortOrder])){
 		// The renderer may have copied the render state, use the ivar.
 		CCRenderStateMetalPrepare((CCRenderStateMetal *)_renderState);
 	}
@@ -434,11 +434,11 @@ static const MTLPrimitiveType MetalDrawModes[] = {
 	id<MTLBuffer> indexBuffer = ((CCGraphicsBufferMetal *)buffers->_indexBuffer)->_buffer;
 	
 	CCMTL_DEBUG_PUSH_GROUP_MARKER(renderEncoder, @"CCRendererCommandDraw: Invoke");
-	CCRendererBindBuffers(renderer, YES);
+	CCRendererBindBuffers(renderer, YES, _vertexPage);
 	CCRenderStateMetalTransition((CCRenderStateMetal *)_renderState, renderer, (CCRenderStateMetal *)renderer->_renderState);
 	renderer->_renderState = _renderState;
 	
-	[renderEncoder drawIndexedPrimitives:MetalDrawModes[_mode] indexCount:_count indexType:MTLIndexTypeUInt16 indexBuffer:indexBuffer indexBufferOffset:2*_first];
+	[renderEncoder drawIndexedPrimitives:MetalDrawModes[_mode] indexCount:_count indexType:MTLIndexTypeUInt16 indexBuffer:indexBuffer indexBufferOffset:2*_firstIndex];
 	CCMTL_DEBUG_POP_GROUP_MARKER(renderEncoder);
 	
 	CC_INCREMENT_GL_DRAWS(1);

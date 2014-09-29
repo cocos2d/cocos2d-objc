@@ -438,7 +438,8 @@ MetalUniformSetBuffer(NSString *name, MTLArgument *vertexArg, MTLArgument *fragm
 			CCGraphicsBufferMetal *vertexBuffer = (CCGraphicsBufferMetal *)renderer->_buffers->_vertexBuffer;
 			id<MTLBuffer> metalBuffer = vertexBuffer->_buffer;
 			
-			[context->_currentRenderCommandEncoder setVertexBuffer:metalBuffer offset:0 atIndex:vertexIndex];
+			NSUInteger pageOffset = renderer->_vertexPageBound*(1<<16)*sizeof(CCVertex);
+			[context->_currentRenderCommandEncoder setVertexBuffer:metalBuffer offset:pageOffset atIndex:vertexIndex];
 		};
 	} else {
 		// If both args are active, they must match.
