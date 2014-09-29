@@ -99,7 +99,7 @@ void CCRENDERER_DEBUG_CHECK_ERRORS(void){
 
 @implementation CCRenderCommandDraw
 
--(instancetype)initWithMode:(CCRenderCommandDrawMode)mode renderState:(CCRenderState *)renderState first:(NSUInteger)first count:(size_t)count globalSortOrder:(NSInteger)globalSortOrder
+-(instancetype)initWithMode:(CCRenderCommandDrawMode)mode renderState:(CCRenderState *)renderState firstIndex:(NSUInteger)firstIndex vertexPage:(NSUInteger)vertexPage count:(size_t)count globalSortOrder:(NSInteger)globalSortOrder;
 {
 	if((self = [super init])){
 		_mode = mode;
@@ -108,7 +108,8 @@ void CCRENDERER_DEBUG_CHECK_ERRORS(void){
 #else
 		_renderState = renderState;
 #endif
-		_first = first;
+		_firstIndex = firstIndex;
+		_vertexPage = vertexPage;
 		_count = count;
 		_globalSortOrder = globalSortOrder;
 	}
@@ -166,7 +167,7 @@ void CCRENDERER_DEBUG_CHECK_ERRORS(void){
 {
 	CCRENDERER_DEBUG_PUSH_GROUP_MARKER(_debugLabel);
 	
-	[renderer bindBuffers:NO];
+	[renderer bindBuffers:NO vertexPage:0];
 	_block();
 	
 	CCRENDERER_DEBUG_POP_GROUP_MARKER();
@@ -421,7 +422,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	// Execute the rendering commands.
 	SortQueue(_queue);
 	for(id<CCRenderCommand> command in _queue) [command invokeOnRenderer:self];
-	[self bindBuffers:NO];
+	[self bindBuffers:NO vertexPage:0];
 	
 	[_queue removeAllObjects];
 	

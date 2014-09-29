@@ -189,6 +189,26 @@ static const CCGraphicsBufferType CCGraphicsBufferGLTypes[] = {
 @interface CCGraphicsBufferBindingsGL : CCGraphicsBufferBindings @end
 @implementation CCGraphicsBufferBindingsGL {
 	GLuint _vao;
+	
+	// Cache the currently bound page to avoid switching it if possible
+	NSUInteger _currentPage;
+}
+
+static inline void
+BindVertexPage(CCGraphicsBufferBindingsGL *self, NSUInteger page)
+{
+	if(page != self->_currentPage){
+		size_t pageOffset = page*(1<<16)*sizeof(CCVertex);
+		
+		glBindBuffer(GL_ARRAY_BUFFER, ((CCGraphicsBufferGLBasic *)self->_vertexBuffer)->_buffer);
+		glVertexAttribPointer(CCShaderAttributePosition, 4, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)(pageOffset + offsetof(CCVertex, position)));
+		glVertexAttribPointer(CCShaderAttributeTexCoord1, 2, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)(pageOffset + offsetof(CCVertex, texCoord1)));
+		glVertexAttribPointer(CCShaderAttributeTexCoord2, 2, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)(pageOffset + offsetof(CCVertex, texCoord2)));
+		glVertexAttribPointer(CCShaderAttributeColor, 4, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)(pageOffset + offsetof(CCVertex, color)));
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		
+		self->_currentPage = page;
+	}
 }
 
 -(instancetype)init
@@ -212,16 +232,12 @@ static const CCGraphicsBufferType CCGraphicsBufferGLTypes[] = {
 			glEnableVertexAttribArray(CCShaderAttributeTexCoord2);
 			glEnableVertexAttribArray(CCShaderAttributeColor);
 			
-			glBindBuffer(GL_ARRAY_BUFFER, ((CCGraphicsBufferGLBasic *)_vertexBuffer)->_buffer);
-			glVertexAttribPointer(CCShaderAttributePosition, 4, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, position));
-			glVertexAttribPointer(CCShaderAttributeTexCoord1, 2, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, texCoord1));
-			glVertexAttribPointer(CCShaderAttributeTexCoord2, 2, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, texCoord2));
-			glVertexAttribPointer(CCShaderAttributeColor, 4, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, color));
+			_currentPage = NSUIntegerMax; // Start with an invalid value.
+			BindVertexPage(self, 0);
 			
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ((CCGraphicsBufferGLBasic *)_indexBuffer)->_buffer);
 
 			glBindVertexArray(0);
-			glBindBuffer(GL_ARRAY_BUFFER, 0);
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 			
 			CCGL_DEBUG_POP_GROUP_MARKER();
@@ -237,10 +253,16 @@ static const CCGraphicsBufferType CCGraphicsBufferGLTypes[] = {
 	CCRenderDispatch(YES, ^{glDeleteVertexArrays(1, &vao);});
 }
 
--(void)bind:(BOOL)bind
+-(void)bind:(BOOL)bind vertexPage:(NSUInteger)vertexPage
 {
 	CCGL_DEBUG_INSERT_EVENT_MARKER("CCGraphicsBufferBindingsGL: Bind VAO");
-	glBindVertexArray(bind ? _vao : 0);
+	
+	if(bind){
+		glBindVertexArray(_vao);
+		BindVertexPage(self, vertexPage);
+	} else {
+		glBindVertexArray(0);
+	}
 }
 
 @end

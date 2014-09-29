@@ -80,14 +80,14 @@ typedef NS_ENUM(NSUInteger, CCRenderCommandDrawMode){
 	CCRenderState *_renderState;
 	NSInteger _globalSortOrder;
 	
-	NSUInteger _first;
+	NSUInteger _firstIndex, _vertexPage;
 	size_t _count;
 }
 
 @property(nonatomic, readonly) NSUInteger first;
 @property(nonatomic, readonly) size_t count;
 
--(instancetype)initWithMode:(CCRenderCommandDrawMode)mode renderState:(CCRenderState *)renderState first:(NSUInteger)first count:(size_t)count globalSortOrder:(NSInteger)globalSortOrder;
+-(instancetype)initWithMode:(CCRenderCommandDrawMode)mode renderState:(CCRenderState *)renderState firstIndex:(NSUInteger)firstIndex vertexPage:(NSUInteger)vertexPage count:(size_t)count globalSortOrder:(NSInteger)globalSortOrder;
 
 -(void)batch:(NSUInteger)count;
 
@@ -117,6 +117,7 @@ typedef NS_ENUM(NSUInteger, CCRenderCommandDrawMode){
 	__unsafe_unretained CCRenderState *_renderState;
 	__unsafe_unretained CCRenderCommandDraw *_lastDrawCommand;
 	BOOL _buffersBound;
+	NSUInteger _vertexPageBound;
 }
 
 /// Current global shader uniform values.
@@ -144,7 +145,7 @@ typedef NS_ENUM(NSUInteger, CCRenderCommandDrawMode){
 -(void)setRenderState:(CCRenderState *)renderState;
 
 /// Bind the renderer's VAO if it is not currently bound.
--(void)bindBuffers:(BOOL)bind;
+-(void)bindBuffers:(BOOL)bind vertexPage:(NSUInteger)vertexPage;
 
 @end
 

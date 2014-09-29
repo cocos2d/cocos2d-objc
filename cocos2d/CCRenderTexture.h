@@ -158,7 +158,7 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
  *  @param b Blue color.
  *  @param a Alpha.
  */
--(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a;
+-(CCRenderer *)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a;
 
 /**
  *  starts rendering to the texture while clearing the texture first.
@@ -170,7 +170,7 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
  *  @param a Alpha.
  *  @param depthValue Depth value.
  */
-- (void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a depth:(float)depthValue;
+- (CCRenderer *)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a depth:(float)depthValue;
 
 /**
  *  starts rendering to the texture while clearing the texture first.
@@ -183,7 +183,7 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
  *  @param depthValue Depth value.
  *  @param stencilValue Stencil value.
  */
-- (void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a depth:(float)depthValue stencil:(int)stencilValue;
+- (CCRenderer *)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a depth:(float)depthValue stencil:(int)stencilValue;
 
 /** 
  *  Ends grabbing 

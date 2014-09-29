@@ -135,6 +135,35 @@
 //	[self.contentNode addChild:sprite];
 //}
 
+-(void)setupVertexPagingTest
+{
+	self.subTitle = @"Should draw a bird.";
+	
+	CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/bird.png"];
+	sprite.position = ccp(50, 50);
+	
+	CCRenderTexture *rt = [CCRenderTexture renderTextureWithWidth:100 height:100];
+	rt.positionType = CCPositionTypeNormalized;
+	rt.position = ccp(0.5, 0.5);
+	
+	// Wrap the drawing in a render texture since this will give it a unique renderer. (undefined, but currently true)
+	CCRenderer *renderer = [rt beginWithClear:0 g:0 b:0 a:0];
+		// Artificially use up all of the vertex indices.
+		// You can fit 2^16 vertexes per page. So 66*1000 will use slightly more than a page worth of vertexes.
+		// I'm specifically avoiding POT sized allocations of vertexes below.
+		// If paging is not working, it will skip drawing the sprite.
+		for(int i=0; i<66; i++){
+			CCRenderBuffer buffer = [renderer enqueueTriangles:1 andVertexes:1000 withState:[CCRenderState debugColor] globalSortOrder:0];
+			// Tell it to draw a degerenate triangle for the entire batch of vertices.
+			CCRenderBufferSetTriangle(buffer, 0, 0, 0, 0);
+		}
+		
+		[sprite visit];
+	[rt end];
+	
+	[self.contentNode addChild:rt];
+}
+
 #if !__CC_METAL_SUPPORTED_AND_ENABLED
 -(void)setupClippingNodeTest
 {

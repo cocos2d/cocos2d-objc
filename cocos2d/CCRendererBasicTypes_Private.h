@@ -105,7 +105,7 @@ CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount)
 }
 
 /// Make the buffers ready to use by drawing commands.
--(void)bind:(BOOL)bind;
+-(void)bind:(BOOL)bind vertexPage:(NSUInteger)vertexPage;
 
 /// Prepare buffers for changes.
 -(void)prepare;

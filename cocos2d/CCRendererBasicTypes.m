@@ -402,8 +402,8 @@ static CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 
 @implementation CCGraphicsBufferBindings
 
-// Base implementations does nothing.
--(void)bind:(BOOL)bind {}
+// Base implementation does nothing.
+-(void)bind:(BOOL)bind vertexPage:(NSUInteger)vertexPage {}
 
 -(void)prepare
 {

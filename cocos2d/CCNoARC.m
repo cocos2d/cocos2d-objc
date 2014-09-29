@@ -124,30 +124,55 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 
 @implementation CCRenderer(NoARC)
 
+// Positive offset of the vertex allocation to prevent overlapping a boundary.
+static inline NSUInteger
+PageOffset(NSUInteger firstVertex, NSUInteger vertexCount)
+{
+	NSCAssert(vertexCount < UINT16_MAX + 1, @"Too many vertexes for a single draw count.");
+	
+	// Space remaining on the current vertex page.
+	NSUInteger remain = (firstVertex | UINT16_MAX) - firstVertex + 1;
+	
+	if(remain >= vertexCount){
+		// Allocation will not overlap a page boundary. 
+		return 0;
+	} else {
+		return remain;
+	}
+}
+
 -(CCRenderBuffer)enqueueTriangles:(NSUInteger)triangleCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
 {
 	// Need to record the first vertex or element index before pushing more vertexes.
 	NSUInteger firstVertex = _buffers->_vertexBuffer->_count;
 	NSUInteger firstIndex = _buffers->_indexBuffer->_count;
 	
+	// Value is 0 unless there a page boundary overlap would occur.
+	NSUInteger vertexPageOffset = PageOffset(firstVertex, vertexCount);
+	
+	// Split vertexes into pages of 2^16 vertexes since GLES2 requires indexing with shorts.
+	NSUInteger vertexPage = (firstVertex + vertexPageOffset) >> 16;
+	NSUInteger vertexPageIndex = (firstVertex + vertexPageOffset) & 0xFFFF;
+	
+	// Ensure that the buffers have enough storage space.
 	NSUInteger indexCount = 3*triangleCount;
-	CCVertex *vertexes = CCGraphicsBufferPushElements(_buffers->_vertexBuffer, vertexCount);
+	CCVertex *vertexes = CCGraphicsBufferPushElements(_buffers->_vertexBuffer, vertexCount + vertexPageOffset);
 	uint16_t *elements = CCGraphicsBufferPushElements(_buffers->_indexBuffer, indexCount);
 	
 	CCRenderCommandDraw *previous = _lastDrawCommand;
-	if(previous && previous->_renderState == renderState && previous->_globalSortOrder == globalSortOrder){
+	if(previous && previous->_renderState == renderState && previous->_globalSortOrder == globalSortOrder && previous->_vertexPage == vertexPage){
 		// Batch with the previous command.
 		[previous batch:indexCount];
 	} else {
 		// Start a new command.
-		CCRenderCommandDraw *command = [[CCRenderCommandDrawClass alloc] initWithMode:CCRenderCommandDrawTriangles renderState:renderState first:firstIndex count:indexCount globalSortOrder:globalSortOrder];
+		CCRenderCommandDraw *command = [[CCRenderCommandDrawClass alloc] initWithMode:CCRenderCommandDrawTriangles renderState:renderState firstIndex:firstIndex vertexPage:vertexPage count:indexCount globalSortOrder:globalSortOrder];
 		[_queue addObject:command];
 		[command release];
 		
 		_lastDrawCommand = command;
 	}
 	
-	return (CCRenderBuffer){vertexes, elements, firstVertex};
+	return (CCRenderBuffer){vertexes, elements, vertexPageIndex};
 }
 
 -(CCRenderBuffer)enqueueLines:(NSUInteger)lineCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
@@ -156,32 +181,41 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 	NSUInteger firstVertex = _buffers->_vertexBuffer->_count;
 	NSUInteger firstIndex = _buffers->_indexBuffer->_count;
 	
+	// Value is 0 unless there a page boundary overlap would occur.
+	NSUInteger vertexPageOffset = PageOffset(firstVertex, vertexCount);
+	
+	// Split vertexes into pages of 2^16 vertexes since GLES2 requires indexing with shorts.
+	NSUInteger vertexPage = (firstVertex + vertexPageOffset) >> 16;
+	NSUInteger vertexPageIndex = (firstVertex + vertexPageOffset) & 0xFFFF;
+	
+	// Ensure that the buffers have enough storage space.
 	NSUInteger indexCount = 2*lineCount;
-	CCVertex *vertexes = CCGraphicsBufferPushElements(_buffers->_vertexBuffer, vertexCount);
+	CCVertex *vertexes = CCGraphicsBufferPushElements(_buffers->_vertexBuffer, vertexCount + vertexPageOffset);
 	uint16_t *elements = CCGraphicsBufferPushElements(_buffers->_indexBuffer, indexCount);
 	
-	CCRenderCommandDraw *command = [[CCRenderCommandDrawClass alloc] initWithMode:CCRenderCommandDrawLines renderState:renderState first:firstIndex count:indexCount globalSortOrder:globalSortOrder];
+	CCRenderCommandDraw *command = [[CCRenderCommandDrawClass alloc] initWithMode:CCRenderCommandDrawLines renderState:renderState firstIndex:firstIndex vertexPage:vertexPage count:indexCount globalSortOrder:globalSortOrder];
 	[_queue addObject:command];
 	[command release];
 	
 	// Line drawing commands are currently intended for debugging and cannot be batched.
 	_lastDrawCommand = nil;
 	
-	return(CCRenderBuffer){vertexes, elements, firstVertex};
+	return(CCRenderBuffer){vertexes, elements, vertexPageIndex};
 }
 
 static inline void
-CCRendererBindBuffers(CCRenderer *self, BOOL bind)
+CCRendererBindBuffers(CCRenderer *self, BOOL bind, NSUInteger vertexPage)
 {
- 	if(bind != self->_buffersBound){
-		[self->_buffers bind:bind];
+ 	if(bind != self->_buffersBound || vertexPage != self->_vertexPageBound){
+		[self->_buffers bind:bind vertexPage:vertexPage];
 		self->_buffersBound = bind;
+		self->_vertexPageBound = vertexPage;
 	}
 }
 
--(void)bindBuffers:(BOOL)bind
+-(void)bindBuffers:(BOOL)bind vertexPage:(NSUInteger)vertexPage
 {
-	CCRendererBindBuffers(self, bind);
+	CCRendererBindBuffers(self, bind, vertexPage);
 }
 
 
@@ -270,11 +304,11 @@ static const CCRenderCommandDrawMode GLDrawModes[] = {
 {
 	CCGL_DEBUG_PUSH_GROUP_MARKER("CCRendererCommandDraw: Invoke");
 	
-	CCRendererBindBuffers(renderer, YES);
+	CCRendererBindBuffers(renderer, YES, _vertexPage);
 	CCRenderStateGLTransition((CCRenderStateGL *)_renderState, renderer, (CCRenderStateGL *)renderer->_renderState);
 	renderer->_renderState = _renderState;
 	
-	glDrawElements(GLDrawModes[_mode], (GLsizei)_count, GL_UNSIGNED_SHORT, (GLvoid *)(_first*sizeof(GLushort)));
+	glDrawElements(GLDrawModes[_mode], (GLsizei)_count, GL_UNSIGNED_SHORT, (GLvoid *)(_firstIndex*sizeof(GLushort)));
 	CC_INCREMENT_GL_DRAWS(1);
 	
 	CCGL_DEBUG_POP_GROUP_MARKER();
