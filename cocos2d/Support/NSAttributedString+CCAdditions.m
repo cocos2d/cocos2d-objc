@@ -220,7 +220,7 @@ CTFontRef CTFontCreateWithPlatformSpecificFont(id font) {
 }
 
 #if !__CC_PLATFORM_ANDROID
-NSTextAlignment NSTextAlignmentFromCCTextAlignment(CCTextAlignment ccAligment) {
+static NSTextAlignment NSTextAlignmentFromCCTextAlignment(CCTextAlignment ccAligment) {
 #if __CC_PLATFORM_IOS
     switch (ccAligment) {
         case CCTextAlignmentLeft:

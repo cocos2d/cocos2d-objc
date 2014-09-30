@@ -49,7 +49,7 @@
 //			CCSetupScreenMode: CCScreenModeFixed,
 //			CCSetupScreenOrientation: CCScreenOrientationPortrait,
 			CCSetupTabletScale2X: @YES,
-//			CCSetupShowDebugStats: @YES,
+			CCSetupShowDebugStats: @(getenv("SHOW_DEBUG_STATS") != nil),
 		}];
 }
 

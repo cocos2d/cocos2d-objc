@@ -135,6 +135,7 @@
 //	[self.contentNode addChild:sprite];
 //}
 
+#if !__CC_METAL_SUPPORTED_AND_ENABLED
 -(void)setupClippingNodeTest
 {
 	self.subTitle = @"ClippingNode test.";
@@ -202,6 +203,7 @@
 		[timer repeatOnceWithInterval:0.125];
 	} delay:0.0];
 }
+#endif
 
 -(CCSprite *)simpleShaderTestHelper
 {
@@ -218,13 +220,31 @@
 	
 	// Normally you'd load shaders from a file using the [CCShader shaderNamed:] method to use the shader cache.
 	// Embedding shaders in the source code is handy when they are short though.
-	CCShader *shader = [[CCShader alloc] initWithFragmentShaderSource:CC_GLSL(
-		uniform lowp mat4 u_ColorMatrix;
-		
-		void main(void){
-			gl_FragColor = u_ColorMatrix*texture2D(cc_MainTexture, cc_FragTexCoord1);
-		}
-	)];
+	CCShader *shader = nil;
+	
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+		shader = [[CCShader alloc] initWithFragmentShaderSource:CC_METAL(
+			fragment half4 ShaderMain(
+				const CCFragData in [[stage_in]],
+				const device float4x4 *u_ColorMatrix [[buffer(0)]],
+				texture2d<float> cc_MainTexture [[texture(0)]],
+				sampler cc_MainTextureSampler [[sampler(0)]]
+			){
+				return half4((*u_ColorMatrix)*cc_MainTexture.sample(cc_MainTextureSampler, in.texCoord1));
+			}
+		)];
+	} else
+#endif
+	{
+		shader = [[CCShader alloc] initWithFragmentShaderSource:CC_GLSL(
+			uniform lowp mat4 u_ColorMatrix;
+			
+			void main(void){
+				gl_FragColor = u_ColorMatrix*texture2D(cc_MainTexture, cc_FragTexCoord1);
+			}
+		)];
+	}
 	
 	CCSprite *sprite1 = [self simpleShaderTestHelper];
 	sprite1.position = ccp(0.3, 0.4);
@@ -247,6 +267,8 @@
 	label2.positionType = CCPositionTypeNormalized;
 	label2.position = ccp(0.7, 0.3);
 	[self.contentNode addChild:label2];
+	
+	[CCDirector sharedDirector].globalShaderUniforms[@"u_ColorMatrix"] = [NSValue valueWithGLKMatrix4:GLKMatrix4Identity];
 	
 	[self scheduleBlock:^(CCTimer *timer) {
 		// Set up a global uniform matrix to rotate colors counter-clockwise.

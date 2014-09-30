@@ -983,6 +983,7 @@
 			buildSettings = {
 				ANDROID_MANIFEST = "$(SRCROOT)//Headless/src/main/AndroidManifest.xml";
 				ANDROID_RES_DIRS = "$(SRCROOT)//Headless/src/main/res";
+				APPORTABLE_TARGET = Android;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1020,6 +1021,7 @@
 			buildSettings = {
 				ANDROID_MANIFEST = "$(SRCROOT)//Headless/src/main/AndroidManifest.xml";
 				ANDROID_RES_DIRS = "$(SRCROOT)//Headless/src/main/res";
+				APPORTABLE_TARGET = Android;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1065,7 +1067,6 @@
 		5B89B01819462F5900CD2A5E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				MACOSX_DEPLOYMENT_TARGET = "$(inherited)";
 				OTHER_LDFLAGS = "";

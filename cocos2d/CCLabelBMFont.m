@@ -762,7 +762,7 @@ void FNTConfigRemoveCache( void )
 	// since the Y position needs to be calcualted before hand
 	for(NSUInteger i=0; i < stringLen-1;i++) {
 		unichar c = [_string characterAtIndex:i];
-		if( c=='\n')
+		if([[NSCharacterSet newlineCharacterSet] characterIsMember:c])
 			quantityOfLines++;
 	}
     
@@ -776,7 +776,7 @@ void FNTConfigRemoveCache( void )
 	for(NSUInteger i = 0; i<stringLen; i++) {
 		unichar c = [_string characterAtIndex:i];
         
-		if (c == '\n') {
+        if ([[NSCharacterSet newlineCharacterSet] characterIsMember:c]) {
 			nextFontPositionX = 0;
 			nextFontPositionY -= _configuration->_commonHeight;
 			continue;
@@ -816,18 +816,18 @@ void FNTConfigRemoveCache( void )
 		else
 		{
 			// New Sprite ? Set correct color, opacity, etc...
-			if( 0 ) {
-				/* WIP: Doesn't support many features yet.
-				 But this code is super fast. It doesn't create any sprite.
-				 Ideal for big labels.
-				 */
-				fontChar = _reusedChar;
-				hasSprite = NO;
-			} else {
+//			if( 0 ) {
+//				/* WIP: Doesn't support many features yet.
+//				 But this code is super fast. It doesn't create any sprite.
+//				 Ideal for big labels.
+//				 */
+//				fontChar = _reusedChar;
+//				hasSprite = NO;
+//			} else {
 				fontChar = [[CCSprite alloc] initWithTexture:self.texture rect:rect];
 				[self addChild:fontChar z:i];
 				[self setTag:i forChild:fontChar];
-			}
+//			}
 			
 			// Color MUST be set before opacity due to premultiplied alpha.
 			[fontChar updateDisplayedColor:_displayColor];

@@ -10,7 +10,7 @@
 
 @implementation CCPlatformTextField
 @synthesize delegate=_delegate;
-- (void) positionInControl:(CCControl *)control padding:(float)padding {
+- (void) positionInControl:(CCControl *)control padding:(CGFloat)padding {
     
 }
 - (void) onEnterTransitionDidFinish {

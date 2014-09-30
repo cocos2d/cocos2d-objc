@@ -179,7 +179,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 			break;
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 		case CCGraphicsAPIMetal:
-			#warning TODO
+			// TODO support MSAA, depth buffers, etc.
 			ccview = [[CCMetalView alloc] initWithFrame:bounds];
 			break;
 #endif
@@ -262,37 +262,61 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	
 	// make main window visible
 	[window_ makeKeyAndVisible];
+    
+    [self forceOrientation];
 
-    [[CCPackageManager sharedManager] loadPackages];
+	[[CCPackageManager sharedManager] loadPackages];
+}
+
+// iOS8 hack around orientation bug
+-(void)forceOrientation
+{
+#if __CC_PLATFORM_IOS && defined(__IPHONE_8_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
+    if([navController_.screenOrientation isEqual:CCScreenOrientationAll])
+    {
+        [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationUnknown];
+    }
+    else if([navController_.screenOrientation isEqual:CCScreenOrientationPortrait])
+    {
+        [[UIApplication sharedApplication] setStatusBarOrientation:UIDeviceOrientationPortrait | UIDeviceOrientationPortraitUpsideDown];
+    }
+    else
+    {
+        [[UIApplication sharedApplication] setStatusBarOrientation:UIDeviceOrientationLandscapeLeft | UIDeviceOrientationLandscapeRight];
+    }
+#endif
 }
 
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {
-	if( [navController_ visibleViewController] == [CCDirector sharedDirector] )
+	if([CCDirector sharedDirector].paused == NO) {
 		[[CCDirector sharedDirector] pause];
+	}
 }
 
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
 	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
-	if( [navController_ visibleViewController] == [CCDirector sharedDirector] )
+	if([CCDirector sharedDirector].paused) {
 		[[CCDirector sharedDirector] resume];
+	}
 }
 
 -(void) applicationDidEnterBackground:(UIApplication*)application
 {
-	if( [navController_ visibleViewController] == [CCDirector sharedDirector] )
+	if([CCDirector sharedDirector].animating) {
 		[[CCDirector sharedDirector] stopAnimation];
-
-    [[CCPackageManager sharedManager] savePackages];
+	}
 }
 
 -(void) applicationWillEnterForeground:(UIApplication*)application
 {
-	if( [navController_ visibleViewController] == [CCDirector sharedDirector] )
+	if([CCDirector sharedDirector].animating == NO) {
 		[[CCDirector sharedDirector] startAnimation];
+	}
+	[[CCPackageManager sharedManager] savePackages];
 }
 
 // application will be killed

@@ -38,7 +38,7 @@
 #import "CCShader.h"
 #import "CCPhysics+ObjectiveChipmunk.h"
 #import "CCDirector_Private.h"
-#import "CCRenderer_private.h"
+#import "CCRenderer_Private.h"
 #import "CCTexture_Private.h"
 #import "CCActionManager_Private.h"
 
@@ -1184,6 +1184,32 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 	return [self schedule:selector interval:interval repeat:CCTimerRepeatForever delay:interval];
 }
 
+-(CCTimer*)reschedule:(SEL)selector interval:(CCTime)interval
+{
+    NSString *selectorName = NSStringFromSelector(selector);
+    
+    CCTimer *currentTimerForSelector = nil;
+    
+    for (CCTimer *timer in [_scheduler timersForTarget:self])
+    {
+        if([selectorName isEqual:timer.userData])
+        {
+            CCLOG(@"%@ was already scheduled on %@. Updating interval from %f to %f",NSStringFromSelector(selector),self,timer.repeatInterval,interval);
+            timer.repeatInterval = interval;
+            currentTimerForSelector = timer;
+            break;
+        }
+    }
+    
+    if (currentTimerForSelector == nil)
+    {
+        CCLOG(@"%@ was never scheduled. Scheduling for the first time.",selectorName);
+        currentTimerForSelector = [self schedule:selector interval:interval];
+    }
+
+    return currentTimerForSelector;
+}
+
 -(BOOL)unschedule_private:(SEL)selector
 {
 	NSString *selectorName = NSStringFromSelector(selector);
@@ -1727,6 +1753,7 @@ CheckDefaultUniforms(NSDictionary *uniforms, CCTexture *texture)
 
 -(void)setShader:(CCShader *)shader
 {
+	NSAssert(shader, @"CCNode.shader cannot be nil.");
 	_shader = shader;
 	_renderState = nil;
 }
@@ -1768,6 +1795,7 @@ CheckDefaultUniforms(NSDictionary *uniforms, CCTexture *texture)
 
 -(void)setBlendMode:(CCBlendMode *)blendMode
 {
+	NSAssert(blendMode, @"CCNode.blendMode cannot be nil.");
 	if(_blendMode != blendMode){
 		_blendMode = blendMode;
 		_renderState = nil;

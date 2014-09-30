@@ -6,7 +6,6 @@
 #import <Metal/Metal.h>
 
 #import "CCMetalView.h"
-#import "CCES2Renderer.h"
 #import "../../CCDirector.h"
 #import "../../ccMacros.h"
 #import "../../CCConfiguration.h"
@@ -40,7 +39,7 @@
 	{
 		_context = [[CCMetalContext alloc] init];
 		
-		#warning Temporary. Move into CCRenderDispatch?
+		//TODO Move into CCRenderDispatch to support threaded rendering with Metal?
 		[CCMetalContext setCurrentContext:_context];
 		
 		_queuedFramesSemaphore = dispatch_semaphore_create(CC_METAL_MAX_QUEUED_FRAMES);
@@ -141,14 +140,6 @@
 		_layerSizeDidUpdate = NO;
 	}
 	
-	[_context prepareCommandBuffer];
-	
-	// Prevent the block from retaining self via the ivar.
-	dispatch_semaphore_t sema = _queuedFramesSemaphore;
-	[_context.currentCommandBuffer addCompletedHandler:^(id<MTLCommandBuffer> buffer){
-		dispatch_semaphore_signal(sema);
-	}];
-	
 //	id<CAMetalDrawable> drawable = nil;
 //	while(drawable == nil){
 //		drawable = [self.metalLayer nextDrawable];
@@ -160,12 +151,20 @@
 	[_context.currentCommandBuffer presentDrawable:drawable];
 	
 	_currentDrawable = drawable;
-	_context.destinationTexture = drawable.texture;
+	_destinationTexture = drawable.texture;
 }
 
 - (void)presentFrame
 {
-	[_context commitCurrentCommandBuffer];
+	// Prevent the block from retaining self via the ivar.
+	dispatch_semaphore_t sema = _queuedFramesSemaphore;
+	[_context.currentCommandBuffer addCompletedHandler:^(id<MTLCommandBuffer> buffer){
+		dispatch_semaphore_signal(sema);
+	}];
+	
+	[_context flushCommandBuffer];
+	
+	[_currentDrawable present];
 	_currentDrawable = nil;
 }
 

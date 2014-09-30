@@ -43,7 +43,7 @@
  
 
 #import "CCDirector_Private.h"
-#import "CCRenderer_private.h"
+#import "CCRenderer_Private.h"
 #import "CCRenderDispatch.h"
 
 #pragma mark -

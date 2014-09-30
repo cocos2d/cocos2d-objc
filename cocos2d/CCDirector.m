@@ -45,7 +45,7 @@
 #import "ccFPSImages.h"
 #import "CCConfiguration.h"
 #import "CCTransition.h"
-#import "CCRenderer_private.h"
+#import "CCRenderer_Private.h"
 #import "CCRenderDispatch_Private.h"
 
 // support imports
@@ -96,7 +96,9 @@ extern NSString * cocos2dVersion(void);
 -(void) calculateMPF;
 @end
 
-@implementation CCDirector
+@implementation CCDirector {
+	CCFrameBufferObject *_framebuffer;
+}
 
 @synthesize animationInterval = _animationInterval;
 @synthesize runningScene = _runningScene;
@@ -200,6 +202,11 @@ static CCDirector *_sharedDirector = nil;
 		
 		_rendererPool = [NSMutableArray array];
 		_globalShaderUniforms = [NSMutableDictionary dictionary];
+		
+		// Force the graphics API to be selected if it hasn't already done so.
+		// Startup code is annoyingly different for iOS/Mac/Android.
+		[[CCConfiguration sharedConfiguration] graphicsAPI];
+		_framebuffer = [[CCFrameBufferObjectClass alloc] init];
 	}
 
 	return self;
@@ -219,29 +226,6 @@ static CCDirector *_sharedDirector = nil;
 
 }
 
--(NSDictionary *)updateGlobalShaderUniforms
-{
-	GLKMatrix4 projection = self.projectionMatrix;
-	_globalShaderUniforms[CCShaderUniformProjection] = [NSValue valueWithGLKMatrix4:projection];
-	_globalShaderUniforms[CCShaderUniformProjectionInv] = [NSValue valueWithGLKMatrix4:GLKMatrix4Invert(projection, NULL)];
-	
-	CGSize size = self.viewSize;
-	_globalShaderUniforms[CCShaderUniformViewSize] = [NSValue valueWithGLKVector2:GLKVector2Make(size.width, size.height)];
-	
-	CGSize pixelSize = self.viewSizeInPixels;
-	_globalShaderUniforms[CCShaderUniformViewSizeInPixels] = [NSValue valueWithGLKVector2:GLKVector2Make(pixelSize.width, pixelSize.height)];
-	
-	CCTime t = self.scheduler.currentTime;
-	_globalShaderUniforms[CCShaderUniformTime] = [NSValue valueWithGLKVector4:GLKVector4Make(t, t/2.0f, t/8.0f, t/8.0f)];
-	_globalShaderUniforms[CCShaderUniformSinTime] = [NSValue valueWithGLKVector4:GLKVector4Make(sinf(t*2.0f), sinf(t), sinf(t/2.0f), sinf(t/4.0f))];
-	_globalShaderUniforms[CCShaderUniformCosTime] = [NSValue valueWithGLKVector4:GLKVector4Make(cosf(t*2.0f), cosf(t), cosf(t/2.0f), cosf(t/4.0f))];
-	
-	GLKVector4 random = GLKVector4Make(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
-	_globalShaderUniforms[CCShaderUniformRandom01] = [NSValue valueWithGLKVector4:random];
-	
-	return _globalShaderUniforms;
-}
-
 - (void) drawScene
 {	
     /* calculate "global" dt */
@@ -258,12 +242,14 @@ static CCDirector *_sharedDirector = nil;
 	[ccview beginFrame];
 	
 	if(CCRenderDispatchBeginFrame()){
-		CCRenderer *renderer = [self rendererFromPool];
-		[CCRenderer bindRenderer:renderer];
-		
 		GLKMatrix4 projection = self.projectionMatrix;
-		renderer.globalShaderUniforms = [self updateGlobalShaderUniforms];
 		
+		// Synchronize the framebuffer with the view.
+		[_framebuffer syncWithView:self.view];
+		
+		CCRenderer *renderer = [self rendererFromPool];
+		[renderer prepareWithProjection:&projection framebuffer:_framebuffer];
+		[CCRenderer bindRenderer:renderer];
 		
 		[renderer enqueueClear:(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) color:_runningScene.colorRGBA.glkVector4 depth:1.0f stencil:0 globalSortOrder:NSIntegerMin];
 		
@@ -354,7 +340,7 @@ static CCDirector *_sharedDirector = nil;
         [_delegate purgeCachedData];
     }
     
-	[CCRENDERSTATE_CACHE flush];
+	[CCRenderState flushCache];
 	[CCLabelBMFont purgeCachedData];
 	if ([_sharedDirector view])
 		[[CCTextureCache sharedTextureCache] removeUnusedTextures];
@@ -413,19 +399,10 @@ static CCDirector *_sharedDirector = nil;
             
 			[self createStatsLabel];
 			[self setProjection: _projection];
-			#warning TODO this should probably migrate somewhere else.
-//			if([(CCGLView *)view depthFormat]){
-//				CCRenderDispatch(YES, ^{
-//					glEnable(GL_DEPTH_TEST);
-//					glDepthFunc(GL_LEQUAL);
-//				});
-//			}
 		}
 
 		// Dump info once OpenGL was initilized
 		[[CCConfiguration sharedConfiguration] dumpInfo];
-
-		CC_CHECK_GL_ERROR_DEBUG();
 }
 
 

@@ -27,7 +27,7 @@
 /** Color of the shadow,
  * [CCColor blackColor] will result in an opaque black drop shadow.
  */
-@property (nonatomic) CCColor* shadowColor;
+@property (nonatomic, strong) CCColor* shadowColor;
 
 /** The size of the blur. This value is in the range [0..6] anything higher than 6 pixel blur radius will yeild a performance decrease.
  */

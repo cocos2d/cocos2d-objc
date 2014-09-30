@@ -22,7 +22,8 @@
  * THE SOFTWARE.
  */
 
-#import "CCRenderer_private.h"
+#import "CCRenderer_Private.h"
+#import "CCTexture_Private.h"
 
 #import "CCRenderDispatch.h"
 
@@ -185,40 +186,46 @@ static const CCGraphicsBufferType CCGraphicsBufferGLTypes[] = {
 #endif
 
 
-@interface CCGraphicsBufferBindingsGL : NSObject <CCGraphicsBufferBindings> @end
+@interface CCGraphicsBufferBindingsGL : CCGraphicsBufferBindings @end
 @implementation CCGraphicsBufferBindingsGL {
 	GLuint _vao;
 }
 
--(instancetype)initWithVertexBuffer:(CCGraphicsBufferGLBasic *)vertexBuffer indexBuffer:(CCGraphicsBufferGLBasic *)indexBuffer
+-(instancetype)init
 {
-	NSAssert([vertexBuffer isKindOfClass:[CCGraphicsBufferGLBasic class]], @"Wrong kind of buffer!");
-	NSAssert([indexBuffer isKindOfClass:[CCGraphicsBufferGLBasic class]], @"Wrong kind of buffer!");
-	
 	if((self = [super init])){
-		CCGL_DEBUG_PUSH_GROUP_MARKER("CCGraphicsBufferBindingsGL: Creating VAO");
-		
-		glGenVertexArrays(1, &_vao);
-		glBindVertexArray(_vao);
+		CCRenderDispatch(NO, ^{
+			const NSUInteger CCRENDERER_INITIAL_VERTEX_CAPACITY = 16*1024;
+			_vertexBuffer = [[CCGraphicsBufferClass alloc] initWithCapacity:CCRENDERER_INITIAL_VERTEX_CAPACITY elementSize:sizeof(CCVertex) type:CCGraphicsBufferTypeVertex];
+			[_vertexBuffer prepare];
+			
+			_indexBuffer = [[CCGraphicsBufferClass alloc] initWithCapacity:CCRENDERER_INITIAL_VERTEX_CAPACITY*1.5 elementSize:sizeof(uint16_t) type:CCGraphicsBufferTypeIndex];
+			[_indexBuffer prepare];
+			
+			CCGL_DEBUG_PUSH_GROUP_MARKER("CCGraphicsBufferBindingsGL: Creating VAO");
+			
+			glGenVertexArrays(1, &_vao);
+			glBindVertexArray(_vao);
 
-		glEnableVertexAttribArray(CCShaderAttributePosition);
-		glEnableVertexAttribArray(CCShaderAttributeTexCoord1);
-		glEnableVertexAttribArray(CCShaderAttributeTexCoord2);
-		glEnableVertexAttribArray(CCShaderAttributeColor);
-		
-		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer->_buffer);
-		glVertexAttribPointer(CCShaderAttributePosition, 4, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, position));
-		glVertexAttribPointer(CCShaderAttributeTexCoord1, 2, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, texCoord1));
-		glVertexAttribPointer(CCShaderAttributeTexCoord2, 2, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, texCoord2));
-		glVertexAttribPointer(CCShaderAttributeColor, 4, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, color));
-		
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer->_buffer);
+			glEnableVertexAttribArray(CCShaderAttributePosition);
+			glEnableVertexAttribArray(CCShaderAttributeTexCoord1);
+			glEnableVertexAttribArray(CCShaderAttributeTexCoord2);
+			glEnableVertexAttribArray(CCShaderAttributeColor);
+			
+			glBindBuffer(GL_ARRAY_BUFFER, ((CCGraphicsBufferGLBasic *)_vertexBuffer)->_buffer);
+			glVertexAttribPointer(CCShaderAttributePosition, 4, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, position));
+			glVertexAttribPointer(CCShaderAttributeTexCoord1, 2, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, texCoord1));
+			glVertexAttribPointer(CCShaderAttributeTexCoord2, 2, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, texCoord2));
+			glVertexAttribPointer(CCShaderAttributeColor, 4, GL_FLOAT, GL_FALSE, sizeof(CCVertex), (void *)offsetof(CCVertex, color));
+			
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ((CCGraphicsBufferGLBasic *)_indexBuffer)->_buffer);
 
-		glBindVertexArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-		
-		CCGL_DEBUG_POP_GROUP_MARKER();
+			glBindVertexArray(0);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+			
+			CCGL_DEBUG_POP_GROUP_MARKER();
+		});
 	}
 	
 	return self;
@@ -234,6 +241,141 @@ static const CCGraphicsBufferType CCGraphicsBufferGLTypes[] = {
 {
 	CCGL_DEBUG_INSERT_EVENT_MARKER("CCGraphicsBufferBindingsGL: Bind VAO");
 	glBindVertexArray(bind ? _vao : 0);
+}
+
+@end
+
+
+@interface CCFrameBufferObjectGL : CCFrameBufferObject @end
+@implementation CCFrameBufferObjectGL {
+	GLuint _fbo;
+	GLuint _depthRenderBuffer;
+	GLuint _stencilRenderBuffer;
+}
+
+-(instancetype)initWithTexture:(CCTexture *)texture depthStencilFormat:(GLuint)depthStencilFormat
+{
+	if((self = [super initWithTexture:texture depthStencilFormat:depthStencilFormat])){
+		CCRenderDispatch(NO, ^{
+			CCGL_DEBUG_PUSH_GROUP_MARKER("CCRenderTexture: Create");
+			
+			// generate FBO
+			glGenFramebuffers(1, &_fbo);
+			glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
+			
+			// associate texture with FBO
+			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.name, 0);
+			
+			GLuint width = texture.pixelWidth;
+			GLuint height = texture.pixelHeight;
+
+#if __CC_PLATFORM_ANDROID
+			
+			// Some android devices *only* support combined depth buffers (like all iOS devices), some android devices do not
+			// support combined depth buffers, thus we have to create a seperate stencil buffer
+			if(_depthStencilFormat)
+			{
+					//create and attach depth buffer
+			
+					if(![[CCConfiguration sharedConfiguration] supportsPackedDepthStencil])
+					{
+							glGenRenderbuffers(1, &_depthRenderBuffer);
+							glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBuffer);
+							glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, width, height); //GL_DEPTH_COMPONENT24_OES
+							glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
+
+							// if depth format is the one with stencil part, bind same render buffer as stencil attachment
+							if(_depthStencilFormat == GL_DEPTH24_STENCIL8)
+							{
+									glGenRenderbuffers(1, &_stencilRenderBuffer);
+									glBindRenderbuffer(GL_RENDERBUFFER, _stencilRenderBuffer);
+									glRenderbufferStorage(GL_RENDERBUFFER, GL_STENCIL_INDEX8, width, height);
+									glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _stencilRenderBuffer);
+							}
+					}
+					else
+					{
+							glGenRenderbuffers(1, &_depthRenderBuffer);
+							glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBuffer);
+							glRenderbufferStorage(GL_RENDERBUFFER, _depthStencilFormat, width, height);
+							glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
+							
+							// if depth format is the one with stencil part, bind same render buffer as stencil attachment
+							if(_depthStencilFormat == GL_DEPTH24_STENCIL8){
+									glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
+							}
+					}
+			}
+			
+#else
+			
+			if(depthStencilFormat){
+				//create and attach depth buffer
+				glGenRenderbuffers(1, &_depthRenderBuffer);
+				glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBuffer);
+				glRenderbufferStorage(GL_RENDERBUFFER, depthStencilFormat, width, height);
+				glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
+
+				// if depth format is the one with stencil part, bind same render buffer as stencil attachment
+				if(depthStencilFormat == GL_DEPTH24_STENCIL8){
+					glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
+				}
+			}
+			
+#endif
+		
+			// check if it worked (probably worth doing :) )
+			NSAssert( glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, @"Could not attach texture to framebuffer");
+						
+			CCGL_DEBUG_POP_GROUP_MARKER();
+			CC_CHECK_GL_ERROR_DEBUG();
+		});
+	}
+	return self;
+}
+
+-(void)dealloc
+{
+	GLuint fbo = _fbo;
+	GLuint depthRenderBuffer = _depthRenderBuffer;
+	GLuint stencilRenderBuffer = _stencilRenderBuffer;
+	
+	CCRenderDispatch(YES, ^{
+		glDeleteFramebuffers(1, &fbo);
+		
+		if(depthRenderBuffer){
+			glDeleteRenderbuffers(1, &depthRenderBuffer);
+		}
+		
+		if(depthRenderBuffer){
+			glDeleteRenderbuffers(1, &stencilRenderBuffer);
+		}
+	});
+}
+
+-(void)bindWithClear:(GLbitfield)mask color:(GLKVector4)color4 depth:(GLclampf)depth stencil:(GLint)stencil
+{
+	glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
+	
+	CGSize size = self.sizeInPixels;
+	glViewport(0, 0, size.width, size.height);
+	
+	if(mask & GL_COLOR_BUFFER_BIT) glClearColor(color4.r, color4.g, color4.b, color4.a);
+	if(mask & GL_DEPTH_BUFFER_BIT) glClearDepth(depth);
+	if(mask & GL_STENCIL_BUFFER_BIT) glClearStencil(stencil);
+	if(mask) glClear(mask);
+	
+	// Enabled depth testing if there is a depth buffer.
+	if(_depthStencilFormat){
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LEQUAL);
+	}
+}
+
+-(void)syncWithView:(CC_VIEW<CCDirectorView> *)view;
+{
+	[super syncWithView:view];
+	_fbo = [(CCGLView *)view fbo];
 }
 
 @end

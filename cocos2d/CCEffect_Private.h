@@ -15,6 +15,13 @@
 #endif
 
 extern NSString * const CCShaderUniformPreviousPassTexture;
+extern NSString * const CCShaderUniformTexCoord1Center;
+extern NSString * const CCShaderUniformTexCoord1Extents;
+extern NSString * const CCShaderUniformTexCoord2Center;
+extern NSString * const CCShaderUniformTexCoord2Extents;
+extern NSString * const CCEffectDefaultInitialInputSnippet;
+extern NSString * const CCEffectDefaultInputSnippet;
+
 
 typedef NS_ENUM(NSUInteger, CCEffectFunctionStitchFlags)
 {
@@ -28,6 +35,14 @@ typedef NS_ENUM(NSUInteger, CCEffectPrepareStatus)
     CCEffectPrepareNothingToDo   = 0,
     CCEffectPrepareFailure       = 1,
     CCEffectPrepareSuccess       = 2,
+};
+
+typedef NS_ENUM(NSUInteger, CCEffectTexCoordMapping)
+{
+    CCEffectTexCoordMapMainTex              = 0,
+    CCEffectTexCoordMapPreviousPassTex      = 1,
+    CCEffectTexCoordMapCustomTex            = 2,
+    CCEffectTexCoordMapCustomTexNoTransform = 3
 };
 
 @interface CCEffectFunction : NSObject
@@ -93,11 +108,19 @@ typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass);
 // Note to self: I don't like this pattern, refactor it. I think there should be a CCRenderPass that is used by CCEffect instead. NOTE: convert this to a CCRnderPassProtocol
 @interface CCEffectRenderPass : NSObject
 
+@property (nonatomic, readonly) NSUInteger indexInEffect;
 @property (nonatomic, assign) NSInteger renderPassId;
 @property (nonatomic, strong) CCRenderer* renderer;
+@property (nonatomic, strong) CCNode *node;
 @property (nonatomic, assign) CCSpriteVertexes verts;
 @property (nonatomic, assign) GLKMatrix4 transform;
-@property (nonatomic, assign) GLKMatrix4 ndcToWorld;
+@property (nonatomic, assign) GLKMatrix4 ndcToNodeLocal;
+@property (nonatomic, assign) CCEffectTexCoordMapping texCoord1Mapping;
+@property (nonatomic, assign) GLKVector2 texCoord1Center;
+@property (nonatomic, assign) GLKVector2 texCoord1Extents;
+@property (nonatomic, assign) CCEffectTexCoordMapping texCoord2Mapping;
+@property (nonatomic, assign) GLKVector2 texCoord2Center;
+@property (nonatomic, assign) GLKVector2 texCoord2Extents;
 @property (nonatomic, strong) CCBlendMode* blendMode;
 @property (nonatomic, strong) CCShader* shader;
 @property (nonatomic, strong) NSMutableDictionary* shaderUniforms;
@@ -106,6 +129,8 @@ typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass);
 @property (nonatomic, copy) NSArray* updateBlocks;
 @property (nonatomic, copy) NSArray* endBlocks;
 @property (nonatomic, copy) NSString *debugLabel;
+
+-(id)initWithIndex:(NSUInteger)indexInEffect;
 
 -(void)begin:(CCTexture *)previousPassTexture;
 -(void)update;

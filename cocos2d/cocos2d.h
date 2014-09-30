@@ -41,8 +41,8 @@
 
 // 0x00 HI ME LO
 // 00   03 01 01
-#define COCOS2D_VERSION 0x00030200
-#define COCOS2D_BUILD @"release"
+#define COCOS2D_VERSION 0x00030300
+#define COCOS2D_BUILD @"develop"
 //
 // all cocos2d include files
 //
@@ -65,6 +65,7 @@
 #import "CCEffect.h"
 #import "CCEffectBloom.h"
 #import "CCEffectBrightness.h"
+#import "CCEffectColorChannelOffset.h"
 #import "CCEffectContrast.h"
 #import "CCEffectBlur.h"
 #import "CCEffectGlass.h"
@@ -104,6 +105,7 @@
 #if CC_EFFECTS_EXPERIMENTAL
 #import "CCEffectDFOutline.h"
 #import "CCEffectDistanceField.h"
+#import "CCEffectDFInnerGlow.h"
 #endif
 
 // Layouts

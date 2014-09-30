@@ -60,9 +60,6 @@
 /// Rect of the visible screen area in GL coordinates.
 @property(nonatomic, readonly) CGRect viewportRect;
 
-/// Update the list of default globals and return them.
--(NSDictionary *)updateGlobalShaderUniforms;
-
 /* Sets the glViewport*/
 -(void) setViewport;
 

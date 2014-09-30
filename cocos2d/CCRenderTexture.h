@@ -147,7 +147,7 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
 /** 
  *  Starts rendering to the texture whitout clearing the texture first. 
  */
--(void)begin;
+-(CCRenderer *)begin;
 
 /**
  *  starts rendering to the texture while clearing the texture first.

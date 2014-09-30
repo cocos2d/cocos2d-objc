@@ -20,7 +20,7 @@
 /// @name Accessing Effect Attributes
 /// -----------------------------------------------------------------------
 
-/** The size of the blur. This value is in the range [0..6].
+/** The size of the blur. This value is in the range [0..n].
  */
 @property (nonatomic, assign) NSUInteger blurRadius;
 
