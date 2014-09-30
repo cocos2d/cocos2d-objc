@@ -29,4 +29,8 @@
 {
 }
 
+- (void)configureCocos2d;
+
+- (void)configureFileUtilsSearchPathAndRegisterSpriteSheets;
+
 @end

@@ -468,6 +468,68 @@ static CCFileUtils *fileUtils = nil;
 	return ret;
 }
 
+- (NSArray *)fullPathsOfFileNameInAllSearchPaths:(NSString *)filename
+{
+    NSMutableArray *result = [NSMutableArray array];
+
+    for (NSString *path in self.searchPath)
+    {
+        NSString *aPath = [path stringByAppendingPathComponent:filename];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+
+        if ([fileManager fileExistsAtPath:aPath])
+        {
+            [result addObject:aPath];
+            continue;
+        }
+
+        NSString *file = [aPath lastPathComponent];
+        NSString *file_path = [aPath stringByDeletingLastPathComponent];
+        // Default to normal resource directory
+        NSString *foundPath = [[NSBundle mainBundle] pathForResource:file
+                                                              ofType:nil
+                                                         inDirectory:file_path];
+        if (foundPath)
+        {
+            [result addObject:aPath];
+        }
+    }
+
+    return result;
+}
+
+- (void)loadAndAddFilenameLookupDictionaryFromFile:(NSString *)filename
+{
+	NSString *fullpath = [self fullPathForFilenameIgnoringResolutions:filename];
+	if( fullpath ) {
+		NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:fullpath];
+
+		NSDictionary *metadata = dict[@"metadata"];
+		NSInteger version = [metadata[@"version"] integerValue];
+		if( version != 1) {
+			CCLOG(@"cocos2d: ERROR: Invalid filenameLookup dictionary version: %ld. Filename: %@", (long)version, filename);
+			return;
+		}
+
+		NSDictionary *filenames = dict[@"filenames"];
+        NSMutableDictionary *newFileLookup = [NSMutableDictionary dictionary];
+        [newFileLookup addEntriesFromDictionary:filenames];
+        [newFileLookup addEntriesFromDictionary:_filenameLookup];
+
+        self.filenameLookup = newFileLookup;
+	}
+}
+
+- (void)loadFileNameLookupsInAllSearchPathsWithName:(NSString *)filename
+{
+    NSArray *paths = [self fullPathsOfFileNameInAllSearchPaths:filename];
+
+    for (NSString *fileLookupFullPath in paths)
+    {
+        [self loadAndAddFilenameLookupDictionaryFromFile:fileLookupFullPath];
+    }
+}
+
 -(NSString*) fullPathForFilename:(NSString*)filename
 {
 	return [self fullPathForFilename:filename contentScale:NULL];
@@ -501,10 +563,10 @@ static CCFileUtils *fileUtils = nil;
 	BOOL found = NO;
 	NSString *ret = @"";
 	
-	for( NSString *path in _searchPath ) {
-		
-		// Search with Suffixes
-		for( NSString *device in _searchResolutionsOrder ) {
+    // Search with Suffixes
+    for( NSString *device in _searchResolutionsOrder ) {
+
+    	for( NSString *path in _searchPath ) {
 
 			NSString *fileWithPath = [path stringByAppendingPathComponent:newfilename];
 			

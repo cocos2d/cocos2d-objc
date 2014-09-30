@@ -11,6 +11,7 @@
 
 #import "CCPhysics+ObjectiveChipmunk.h"
 #import "CCDirector_Private.h"
+#import "AppDelegate.h"
 
 @interface CCScheduler(Test)
 
@@ -24,6 +25,14 @@
 
 
 @implementation CCPhysicsTests
+
+- (void)setUp
+{
+    [super setUp];
+
+    [(AppController *)[UIApplication sharedApplication].delegate configureCocos2d];
+    [[CCDirector sharedDirector] startAnimation];
+}
 
 static void
 TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCNode *node, CCPhysicsBody *body)

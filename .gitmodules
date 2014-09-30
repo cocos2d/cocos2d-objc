@@ -5,3 +5,6 @@ url=https://github.com/slembcke/Chipmunk2D.git
 	path = external/ObjectAL
 	url = https://github.com/spritebuilder/ObjectAL-for-Cocos2D.git
 	branch = apportable
+[submodule "external/SSZipArchive"]
+	path = external/SSZipArchive
+	url = https://github.com/spritebuilder/ssziparchive.git
