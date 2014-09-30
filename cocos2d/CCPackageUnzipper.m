@@ -2,8 +2,6 @@
 #import "CCPackageUnzipperDelegate.h"
 #import "CCPackage.h"
 #import "SSZipArchive.h"
-#import "CCPackageInstallData.h"
-#import "CCPackage+InstallData.h"
 #import "ccMacros.h"
 
 
@@ -43,12 +41,10 @@
 
 - (void)unpackPackageOnQueue:(dispatch_queue_t)queue
 {
-    CCPackageInstallData *installData = [_package installData];
-
     NSAssert(queue != nil, @"queue must not be nil");
-    NSAssert(installData != nil, @"installData must not be nil");
-    NSAssert(installData.localDownloadURL != nil, @"package.localDownloadURL must not be nil");
-    NSAssert(installData.unzipURL != nil, @"package.unzipURL must not be nil");
+    NSAssert(_package != nil, @"package must not be nil");
+    NSAssert(_package.localDownloadURL != nil, @"package.localDownloadURL must not be nil");
+    NSAssert(_package.unzipURL != nil, @"package.unzipURL must not be nil");
 
     self.queue = queue;
     [_package setValue:@(CCPackageStatusUnzipping) forKey:@"status"];
@@ -58,8 +54,8 @@
         CCLOGINFO(@"[PACKAGE/UNZIP][INFO]: Unzipping package... %@", _package);
 
         NSError *error;
-        BOOL success = [SSZipArchive unzipFileAtPath:installData.localDownloadURL.path
-                                       toDestination:installData.unzipURL.path
+        BOOL success = [SSZipArchive unzipFileAtPath:_package.localDownloadURL.path
+                                       toDestination:_package.unzipURL.path
                                            overwrite:YES
                                             password:_password
                                                error:&error

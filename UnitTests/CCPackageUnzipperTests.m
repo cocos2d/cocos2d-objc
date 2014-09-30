@@ -9,16 +9,14 @@
 #import <XCTest/XCTest.h>
 #import "CCPackageUnzipper.h"
 #import "CCPackage.h"
-#import "CCPackageInstallData.h"
-#import "CCPackage+InstallData.h"
 #import "CCPackageConstants.h"
 #import "CCPackageUnzipperDelegate.h"
 #import "CCUnitTestAssertions.h"
+#import "CCPackage_private.h"
 
 @interface CCPackageUnzipperTests : XCTestCase <CCPackageUnzipperDelegate>
 
 @property (nonatomic, strong) CCPackage *package;
-@property (nonatomic, strong) CCPackageInstallData *installData;
 @property (nonatomic, copy) NSString *unzipFolderPath;
 @property (nonatomic, strong) NSCondition *condition;
 @property (nonatomic) BOOL unzipperReturned;
@@ -38,7 +36,6 @@
     self.unzipperReturned = NO;
     self.unzippingError = nil;
     self.unzippingSuccessful = NO;
-
     self.unzipFolderPath = [NSTemporaryDirectory() stringByAppendingPathComponent:PACKAGE_REL_UNZIP_FOLDER];
 
     [self createUnzipFolder];
@@ -48,14 +45,9 @@
                                                 os:@"iOS"
                                          remoteURL:[NSURL URLWithString:@"http://foo.fake/Foo-iOS-phonehd.zip"]];
 
-    self.installData = [[CCPackageInstallData alloc] initWithPackage:_package];
-    [_package setInstallData:_installData];
-
     NSString *pathToZip = [[NSBundle mainBundle] pathForResource:@"Resources-shared/Packages/testpackage-iOS-phonehd" ofType:@"zip"];
-    _installData.localDownloadURL = [NSURL fileURLWithPath:pathToZip];
-    _installData.unzipURL = [NSURL fileURLWithPath:[_unzipFolderPath stringByAppendingPathComponent:[_package standardIdentifier]]];
-
-    NSLog(@"%@", _installData.unzipURL.path);
+    _package.localDownloadURL = [NSURL fileURLWithPath:pathToZip];
+    _package.unzipURL = [NSURL fileURLWithPath:[_unzipFolderPath stringByAppendingPathComponent:[_package standardIdentifier]]];
 }
 
 - (void)createUnzipFolder
@@ -92,7 +84,7 @@
     [self unzipUntilDelegateMethodsReturn:nil];
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSArray *contents = [fileManager contentsOfDirectoryAtURL:[_installData.unzipURL URLByAppendingPathComponent:@"testpackage-iOS-phonehd"]
+    NSArray *contents = [fileManager contentsOfDirectoryAtURL:[_package.unzipURL URLByAppendingPathComponent:@"testpackage-iOS-phonehd"]
                                    includingPropertiesForKeys:@[NSURLNameKey, NSURLIsDirectoryKey]
                                                       options:NSDirectoryEnumerationSkipsSubdirectoryDescendants
                                                         error:nil];
@@ -103,7 +95,7 @@
 
 - (void)testUnzippingOfNonExistingArchive
 {
-    _installData.localDownloadURL = [NSURL fileURLWithPath:@"/foo.zip"];
+    _package.localDownloadURL = [NSURL fileURLWithPath:@"/foo.zip"];
 
     [self unzipUntilDelegateMethodsReturn:nil];
 
@@ -126,11 +118,11 @@
 - (void)testUnzipOfPasswordProtectedPackage
 {
     NSString *pathToZip = [[NSBundle mainBundle] pathForResource:@"Resources-shared/Packages/password-iOS-phone" ofType:@"zip"];
-    _installData.localDownloadURL = [NSURL fileURLWithPath:pathToZip];
+    _package.localDownloadURL = [NSURL fileURLWithPath:pathToZip];
 
     [self unzipUntilDelegateMethodsReturn:@"foobar"];
 
-    NSString *secretFilePath = [_installData.unzipURL.path stringByAppendingPathComponent:@"password-iOS-phone/secret.txt"];
+    NSString *secretFilePath = [_package.unzipURL.path stringByAppendingPathComponent:@"password-iOS-phone/secret.txt"];
     NSError *error;
     NSString *contentsOfSecretFile = [NSString stringWithContentsOfFile:secretFilePath encoding:NSUTF8StringEncoding error:&error];
     XCTAssertNil(error);
