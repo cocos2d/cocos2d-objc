@@ -5,11 +5,10 @@
 #import "CCPackageInstaller.h"
 #import "CCPackageManagerDelegate.h"
 #import "CCPackageConstants.h"
-#import "CCPackageInstallData.h"
-#import "CCPackage+InstallData.h"
 #import "CCPackageCocos2dEnabler.h"
 #import "ccMacros.h"
 #import "CCPackageHelper.h"
+#import "CCPackage_private.h"
 
 
 @interface CCPackageManager()
@@ -135,9 +134,11 @@
     {
         CCPackage *aPackage = [[CCPackage alloc] initWithDictionary:aPackageDict];
 
+/*      TODO
         CCPackageInstallData *installData = [[CCPackageInstallData alloc] initWithPackage:aPackage];
         [aPackage setInstallData:installData];
         [installData populateInstallDataWithDictionary:aPackageDict];
+*/
 
         [_packages addObject:aPackage];
         CCLOGINFO(@"[PACKAGE][INFO] Package info added: %@: %@", [aPackage standardIdentifier], [aPackage statusToString]);
@@ -166,16 +167,7 @@
 
     for (CCPackage *aPackage in _packages)
     {
-        NSMutableDictionary *packageDict = [NSMutableDictionary dictionary];
-        CCPackageInstallData *installData = [aPackage installData];
-        [installData writeInstallDataToDictionary:packageDict];
-
-        [packageDict addEntriesFromDictionary:[aPackage toDictionary]];
-
-        if (packageDict)
-        {
-            [packagesToSave addObject:packageDict];
-        }
+        [packagesToSave addObject:[aPackage toDictionary]];
     }
 
     [userDefaults setObject:packagesToSave forKey:PACKAGE_STORAGE_USERDEFAULTS_KEY];
@@ -271,7 +263,7 @@
         [package setValue:remoteURL forKey:@"remoteURL"];
     }
 
-    [self attachNewInstallDataToPackage:package enableAfterDownload:enableAfterDownload];
+    package.enableOnDownload = enableAfterDownload;
 
     CCLOGINFO(@"[PACKAGE][INFO]: adding package to download queue: %@", package);
 
@@ -297,7 +289,7 @@
     }
 
     CCPackage *package = [[CCPackage alloc] initWithName:name resolution:resolution remoteURL:remoteURL];
-    [self attachNewInstallDataToPackage:package enableAfterDownload:enableAfterDownload];
+    package.enableOnDownload = enableAfterDownload;
 
     [_packages addObject:package];
 
@@ -306,13 +298,6 @@
     [_downloadManager enqueuePackageForDownload:package];
 
     return package;
-}
-
-- (void)attachNewInstallDataToPackage:(CCPackage *)package enableAfterDownload:(BOOL)enableAfterDownload
-{
-    CCPackageInstallData *installData = [[CCPackageInstallData alloc] initWithPackage:package];
-    installData.enableOnDownload = enableAfterDownload;
-    [package setInstallData:installData];
 }
 
 - (CCPackage *)packageWithName:(NSString *)name
@@ -413,21 +398,16 @@
 - (void)tidyUpAfterInstallation:(CCPackage *)package
 {
     [self removeUnzippedPackage:package];
-
-    [package removeInstallData];
 }
 
 - (void)unzipPackage:(CCPackage *)package
 {
-    CCPackageInstallData *installData = [package installData];
-    NSAssert(installData, @"installData must not be nil");
-
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    if ([fileManager fileExistsAtPath:installData.unzipURL.path])
+    if ([fileManager fileExistsAtPath:package.unzipURL.path])
     {
         NSError *error;
         CCLOGINFO(@"[PACKAGE/UNZIP][INFO] Removing incomplete unzipped archive: %@", installData.unzipURL.path);
-        if ([fileManager removeItemAtURL:installData.unzipURL error:&error])
+        if ([fileManager removeItemAtURL:package.unzipURL error:&error])
         {
             CCLOG(@"[PACKAGE/UNZIP][ERROR] Removing incomplete unzipped archive: %@", error);
         }
@@ -435,7 +415,7 @@
 
     // Note: This is done on purpose in case a zip contains more than the expected root package folder or something completely different which can lead to a mess
     // The content is checked later on after unzipping finishes
-    installData.unzipURL = [NSURL fileURLWithPath:[[NSTemporaryDirectory() stringByAppendingPathComponent:PACKAGE_REL_UNZIP_FOLDER] stringByAppendingPathComponent:[package standardIdentifier]]];
+    package.unzipURL = [NSURL fileURLWithPath:[[NSTemporaryDirectory() stringByAppendingPathComponent:PACKAGE_REL_UNZIP_FOLDER] stringByAppendingPathComponent:[package standardIdentifier]]];
     CCPackageUnzipper *packageUnzipper = [[CCPackageUnzipper alloc] initWithPackage:package];
 
     [_unzipTasks addObject:packageUnzipper];
@@ -454,8 +434,7 @@
     NSFileManager *fileManager = [NSFileManager defaultManager];
 
     NSError *error;
-    CCPackageInstallData *installData = [package installData];
-    if (![fileManager removeItemAtPath:[installData localDownloadURL].path error:&error])
+    if (![fileManager removeItemAtPath:package.localDownloadURL.path error:&error])
     {
         CCLOG(@"[PACKAGE][ERROR] Removing download file: %@", error);
     }
@@ -463,11 +442,10 @@
 
 - (void)removeUnzippedPackage:(CCPackage *)package
 {
-    CCPackageInstallData *installData = [package installData];
-    NSAssert(installData.unzipURL, @"installData.unzipURL must not be nil");
+    NSAssert(package.unzipURL, @"installData.unzipURL must not be nil");
 
     NSError *error;
-    if (![[NSFileManager defaultManager] removeItemAtURL:installData.unzipURL error:&error])
+    if (![[NSFileManager defaultManager] removeItemAtURL:package.unzipURL error:&error])
     {
         CCLOG(@"[PACKAGE][ERROR] removing unzipped package after successful installation: %@", error);
     }
@@ -495,8 +473,7 @@
         return NO;
     }
 
-    CCPackageInstallData *installData = [package installData];
-    if (installData.enableOnDownload)
+    if (package.enableOnDownload)
     {
         CCPackageCocos2dEnabler *packageCocos2dEnabler = [[CCPackageCocos2dEnabler alloc] init];
         [packageCocos2dEnabler enablePackages:@[package]];
@@ -510,11 +487,10 @@
 
 - (BOOL)determinePackageFolderNameInUnzippedFile:(CCPackage *)package error:(NSError **)error
 {
-    CCPackageInstallData *installData = [package installData];
-    NSAssert(installData.unzipURL, @"installData.unzipURL must not be nil");
+    NSAssert(package.unzipURL, @"installData.unzipURL must not be nil");
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSArray *files = [fileManager contentsOfDirectoryAtURL:installData.unzipURL
+    NSArray *files = [fileManager contentsOfDirectoryAtURL:package.unzipURL
                                 includingPropertiesForKeys:@[NSURLIsDirectoryKey, NSURLNameKey]
                                                    options:NSDirectoryEnumerationSkipsHiddenFiles | NSDirectoryEnumerationSkipsSubdirectoryDescendants
                                                      error:nil];
@@ -555,31 +531,29 @@
 
 - (void)setPackageEmptyError:(NSError **)error package:(CCPackage *)package
 {
-    CCPackageInstallData *installData = [package installData];
-    NSAssert(installData.unzipURL, @"installData.unzipURL must not be nil");
+    NSAssert(package.unzipURL, @"installData.unzipURL must not be nil");
 
     if (error)
     {
         *error = [NSError errorWithDomain:@"cocos2d"
                                      code:PACKAGE_ERROR_INSTALL_PACKAGE_EMPTY
                                  userInfo:
-                                         @{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"The zip file is empty: \"%@\"", installData.unzipURL],
+                                         @{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"The zip file is empty: \"%@\"", package.unzipURL],
                                          @"package" : package}];
     }
 }
 
 - (BOOL)askDelegateForCustomFolderName:(CCPackage *)package files:(NSArray *)files
 {
-    CCPackageInstallData *installData = [package installData];
-    NSAssert(installData.unzipURL, @"installData.unzipURL must not be nil");
+    NSAssert(package.unzipURL, @"installData.unzipURL must not be nil");
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if ([_delegate respondsToSelector:@selector(customFolderName:packageContents:)])
     {
         NSString *customFolderNameToUse = [_delegate customFolderName:package packageContents:files];
-        if ([fileManager fileExistsAtPath:[installData.unzipURL.path stringByAppendingPathComponent:customFolderNameToUse]])
+        if ([fileManager fileExistsAtPath:[package.unzipURL.path stringByAppendingPathComponent:customFolderNameToUse]])
         {
-            installData.folderName = customFolderNameToUse;
+            package.folderName = customFolderNameToUse;
             return YES;
         }
     }
@@ -588,9 +562,6 @@
 
 - (BOOL)searchForStandardFolderNameFiles:(NSArray *)files package:(CCPackage *)package
 {
-    CCPackageInstallData *installData = [package installData];
-    NSAssert(installData != nil, @"installData must not be nil");
-
     for (NSURL *fileURL in files)
     {
         NSDictionary *resourceValues = [fileURL resourceValuesForKeys:@[NSURLIsDirectoryKey, NSURLNameKey] error:nil];
@@ -599,7 +570,7 @@
 
         if (isDir && [name isEqualToString:[package standardIdentifier]])
         {
-            installData.folderName = [package standardIdentifier];
+            package.folderName = [package standardIdentifier];
             return YES;
         }
     }
@@ -687,10 +658,9 @@
     [_downloadManager cancelDownloadOfPackage:package];
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    CCPackageInstallData *installData = [package installData];
-    if (installData.unzipURL
-        && [fileManager fileExistsAtPath:installData.unzipURL.path]
-        && (![fileManager removeItemAtURL:installData.unzipURL error:error]))
+    if (package.unzipURL
+        && [fileManager fileExistsAtPath:package.unzipURL.path]
+        && (![fileManager removeItemAtURL:package.unzipURL error:error]))
     {
         return NO;
     }
