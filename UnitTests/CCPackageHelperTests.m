@@ -20,31 +20,30 @@
 
 @implementation CCPackageHelperTests
 
-/*
+
 - (void)testDefaultResolution
 {
     // Standard test
-    [CCFileUtils sharedFileUtils].searchResolutionsOrder = @[CCFileUtilsSuffixiPhoneHD, CCFileUtilsSuffixiPadHD];
+    [CCFileUtils sharedFileUtils].searchResolutionsOrder = [@[CCFileUtilsSuffixiPhoneHD, CCFileUtilsSuffixiPadHD] mutableCopy];
     NSString *mappedResolution = [CCPackageHelper ccFileUtilsSuffixToResolution:CCFileUtilsSuffixiPhoneHD];
     NSString *defaultResolution = [CCPackageHelper defaultResolution];
     CCAssertEqualStrings(defaultResolution, mappedResolution);
 
     // Ignore non mappable entriy and pick next
-    [CCFileUtils sharedFileUtils].searchResolutionsOrder = @[@"weird_nonsense", CCFileUtilsSuffixiPadHD];
+    [CCFileUtils sharedFileUtils].searchResolutionsOrder = [@[@"weird_nonsense", CCFileUtilsSuffixiPadHD] mutableCopy];
     NSString *mappedResolution2 = [CCPackageHelper ccFileUtilsSuffixToResolution:CCFileUtilsSuffixiPadHD];
     NSString *defaultResolution2 = [CCPackageHelper defaultResolution];
     CCAssertEqualStrings(defaultResolution2, mappedResolution2);
 
     // Return default since nothing can be mapped
-    [CCFileUtils sharedFileUtils].searchResolutionsOrder = @[@"nothing_to_be_mapped"];
+    [CCFileUtils sharedFileUtils].searchResolutionsOrder = [@[@"nothing_to_be_mapped"] mutableCopy];
     NSString *defaultResolution3 = [CCPackageHelper defaultResolution];
     CCAssertEqualStrings(defaultResolution3, @"phonehd");
 
     // Empty array
-    [CCFileUtils sharedFileUtils].searchResolutionsOrder = @[];
+    [CCFileUtils sharedFileUtils].searchResolutionsOrder = [@[] mutableCopy];
     NSString *defaultResolution4 = [CCPackageHelper defaultResolution];
     CCAssertEqualStrings(defaultResolution4, @"phonehd");
 }
-*/
 
 @end

@@ -27,13 +27,10 @@
 
 - (void)testPackageWithName
 {
-    // NOTE: This will kill many other tests due to a bug in CCFileUtils
-    // So we assume until the bug's fixed that phonehd is the default resolution
-    // [CCFileUtils sharedFileUtils].searchResolutionsOrder = @[CCFileUtilsSuffixiPadHD];
+    [CCFileUtils sharedFileUtils].searchResolutionsOrder = [@[CCFileUtilsSuffixiPadHD] mutableCopy];
 
     CCPackage *aPackage = [[CCPackage alloc] initWithName:@"foo"
-                                               // resolution:@"tablethd" // See note above
-                                               resolution:@"phonehd"
+                                               resolution:@"tablethd" // See note above
                                                        os:@"iOS"
                                                 remoteURL:[NSURL URLWithString:@"http://foo.fake"]];
 

@@ -133,7 +133,7 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  If the property "enableiPhoneResourcesOniPad" is enabled, it will also search for iPhone resources if you are in an iPad.
  
  */
-@property (nonatomic, copy) NSArray *searchResolutionsOrder;
+@property (nonatomic, strong) NSMutableArray *searchResolutionsOrder;
 
 /** Array of search paths.
  You can use this array to modify the search path of the resources.
