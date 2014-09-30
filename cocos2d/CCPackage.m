@@ -1,6 +1,7 @@
-#import <MacTypes.h>
+#import <Foundation/Foundation.h>
 #import "CCPackage.h"
 #import "CCPackageHelper.h"
+#import "CCPackage_private.h"
 
 static NSUInteger PACKAGE_SERIALIZATION_VERSION = 1;
 static NSString *const PACKAGE_SERIALIZATION_KEY_NAME = @"name";
@@ -10,19 +11,10 @@ static NSString *const PACKAGE_SERIALIZATION_KEY_REMOTE_URL = @"remoteURL";
 static NSString *const PACKAGE_SERIALIZATION_KEY_INSTALL_URL = @"installURL";
 static NSString *const PACKAGE_SERIALIZATION_KEY_VERSION = @"version";
 static NSString *const PACKAGE_SERIALIZATION_KEY_STATUS = @"status";
-
-
-@interface CCPackage()
-
-@property (nonatomic, copy, readwrite) NSString *name;
-@property (nonatomic, copy, readwrite) NSString *resolution;
-@property (nonatomic, copy, readwrite) NSString *os;
-@property (nonatomic, copy, readwrite) NSURL *remoteURL;
-@property (nonatomic, copy, readwrite) NSString *folderName;
-@property (nonatomic, copy, readwrite) NSURL *installURL;
-@property (nonatomic, readwrite) CCPackageStatus status;
-
-@end
+static NSString *const PACKAGE_SERIALIZATION_KEY_LOCAL_DOWNLOAD_URL = @"localDownloadURL";
+static NSString *const PACKAGE_SERIALIZATION_KEY_LOCAL_UNZIP_URL = @"localUnzipURL";
+static NSString *const PACKAGE_SERIALIZATION_KEY_FOLDER_NAME = @"folderName";
+static NSString *const PACKAGE_SERIALIZATION_KEY_ENABLE_ON_DOWNLOAD = @"enableOnDownload";
 
 
 @implementation CCPackage

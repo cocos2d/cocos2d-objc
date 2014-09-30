@@ -31,9 +31,34 @@
 @property (nonatomic, copy, readonly) NSURL *installURL;
 
 /**
+ *  Local URL of the download file when download finishes. While downloading a temp name
+ *  is used which won't be accessible.
+ */
+@property (nonatomic, copy, readonly) NSURL *localDownloadURL;
+
+/**
+ *  Local URL of the folder the package is unzipped to
+ */
+@property (nonatomic, copy, readonly) NSURL *unzipURL;
+
+/**
+ *  Name of the folder inside the unzip folder. A zipped package is supposed to contain a folder named
+ *  like this <NAME>-<OS>-<RESOLUTION>. Example: DLC-iOS-phonehd.
+ *  This name can vary though and can be determined by delegation if a standard name was not found
+ *  during installation.
+ */
+@property (nonatomic, copy, readonly) NSString *folderName;
+
+/**
+ *  Whether or not the the package should be enabled in cocos2d after installation.
+ */
+@property (nonatomic, readonly) BOOL enableOnDownload;
+
+/**
  *  The current status of the package
  */
 @property (nonatomic, readonly) CCPackageStatus status;
+
 
 /**
  *  Creates a new instance of a package.
