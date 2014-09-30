@@ -13,8 +13,6 @@
 #import "CCDirector.h"
 #import "AppDelegate.h"
 #import "CCUnitTestAssertions.h"
-#import "CCPackageInstallData.h"
-#import "CCPackage+InstallData.h"
 
 @interface CCPackageDownloadManagerTestURLProtocol : NSURLProtocol @end
 
@@ -142,7 +140,7 @@
     [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeInterval:0.5 sinceDate:[NSDate date]]];
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    XCTAssertFalse([fileManager fileExistsAtPath:[package1 installData].localDownloadURL.path]);
+    XCTAssertFalse([fileManager fileExistsAtPath:package1.localDownloadURL.path]);
 }
 
 - (void)testPauseAndResumeAllDownloads
@@ -193,8 +191,8 @@
     NSFileManager *fileManager = [NSFileManager defaultManager];
     for (CCPackage *aPackage in packages)
     {
-        XCTAssertTrue([fileManager fileExistsAtPath:[aPackage installData].localDownloadURL.path]);
-        CCAssertEqualStrings(aPackage.name, [NSString stringWithContentsOfFile:[aPackage installData].localDownloadURL.path encoding:NSUTF8StringEncoding error:nil]);
+        XCTAssertTrue([fileManager fileExistsAtPath:aPackage.localDownloadURL.path]);
+        CCAssertEqualStrings(aPackage.name, [NSString stringWithContentsOfFile:aPackage.localDownloadURL.path encoding:NSUTF8StringEncoding error:nil]);
     }
 }
 
@@ -204,9 +202,6 @@
 - (CCPackage *)completePackageWithName:(NSString *)name
 {
     CCPackage *package = [[CCPackage alloc] initWithName:name resolution:@"phonehd" os:@"iOS" remoteURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://package.fake/%@", name]]];
-    CCPackageInstallData  *installData = [[CCPackageInstallData  alloc] init];
-    [package setInstallData:installData];
-
     return package;
 }
 

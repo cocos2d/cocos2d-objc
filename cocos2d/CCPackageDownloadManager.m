@@ -2,10 +2,9 @@
 #import "CCPackage.h"
 #import "CCPackageDownload.h"
 #import "CCPackageDownloadManagerDelegate.h"
-#import "CCPackageInstallData.h"
-#import "CCPackage+InstallData.h"
 #import "CCPackageConstants.h"
 #import "ccMacros.h"
+#import "CCPackage_private.h"
 
 
 @interface CCPackageDownloadManager()
@@ -87,10 +86,7 @@
     CCPackageDownload *packageDownload = [[CCPackageDownload alloc] initWithPackage:package
                                                                            localURL:[NSURL fileURLWithPath:[_downloadPath stringByAppendingPathComponent:fileName]]];
 
-    CCPackageInstallData *installData = [package installData];
-    NSAssert(installData != nil, @"installData must not be nil");
-    installData.localDownloadURL = [NSURL fileURLWithPath:[_downloadPath stringByAppendingPathComponent:fileName]];
-
+    package.localDownloadURL = [NSURL fileURLWithPath:[_downloadPath stringByAppendingPathComponent:fileName]];
     packageDownload.delegate = self;
 
     [_downloads addObject:packageDownload];
