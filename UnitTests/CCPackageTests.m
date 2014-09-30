@@ -10,7 +10,6 @@
 #import "CCPackage.h"
 #import "CCPackage_private.h"
 #import "CCUnitTestAssertions.h"
-#import "CCPackage+InstallData.h"
 
 @interface CCPackageTests : XCTestCase
 
