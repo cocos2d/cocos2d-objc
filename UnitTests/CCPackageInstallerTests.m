@@ -8,17 +8,14 @@
 
 #import <XCTest/XCTest.h>
 #import "CCPackage.h"
-#import "CCPackageInstallData.h"
-#import "CCPackage+InstallData.h"
 #import "CCPackageInstaller.h"
-#import "CCDirector.h"
-#import "CCFileUtils.h"
 #import "CCPackageConstants.h"
+#import "CCPackage_private.h"
+
 
 @interface CCPackageInstallerTests : XCTestCase
 
 @property (nonatomic, strong) CCPackage *package;
-@property (nonatomic, strong) CCPackageInstallData *installData;
 @property (nonatomic, copy) NSString *installPath;
 @property (nonatomic, strong) CCPackageInstaller *installer;
 
@@ -35,9 +32,6 @@
                                         resolution:@"phonehd"
                                                 os:@"iOS"
                                          remoteURL:[NSURL URLWithString:@"http://test.foo"]];
-
-    self.installData = [[CCPackageInstallData alloc] initWithPackage:_package];
-    [_package setInstallData:_installData];
 
     NSString *cachesPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
     self.installPath = [cachesPath stringByAppendingPathComponent:@"tests.Packages"];
@@ -97,7 +91,7 @@
 - (void)testInstallFailingUnzippedPackageDoesNotExist
 {
     NSString *pathToPackage = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Resources-shared/Packages/DOES_NOT_EXIST"];
-    _installData.unzipURL = [NSURL fileURLWithPath:pathToPackage];
+    _package.unzipURL = [NSURL fileURLWithPath:pathToPackage];
 
     NSError *error;
     BOOL success = [_installer installWithError:&error];
@@ -130,9 +124,9 @@
 {
     NSString *pathToPackage = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Resources-shared/Packages/testpackage-iOS-phonehd_unzipped"];
 
-    _installData.unzipURL = [NSURL fileURLWithPath:pathToPackage];
-    _installData.folderName = @"testpackage-iOS-phonehd";
-    _installData.enableOnDownload = NO;
+    _package.unzipURL = [NSURL fileURLWithPath:pathToPackage];
+    _package.folderName = @"testpackage-iOS-phonehd";
+    _package.enableOnDownload = NO;
 }
 
 @end
