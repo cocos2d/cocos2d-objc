@@ -26,6 +26,7 @@
 		758A6C7B18440D5C00D1A8D2 /* ParticleTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 758A6C7A18440D5C00D1A8D2 /* ParticleTest.m */; };
 		758A6C80184410EE00D1A8D2 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 758A6C7F184410EE00D1A8D2 /* Particles */; };
 		75F76497185A831B00E2FAFE /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 75F76496185A831B00E2FAFE /* Sounds */; };
+		839B149F19CC1E440000E5E2 /* CCPackageTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 839B149E19CC1E440000E5E2 /* CCPackageTest.m */; };
 		92324E2A18EB635500D78D3F /* CCReaderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 92324E2918EB635500D78D3F /* CCReaderTest.m */; };
 		9269312A1923D8A700CE6285 /* Resources-shared in Resources */ = {isa = PBXBuildFile; fileRef = B7C6237517EA695100928F91 /* Resources-shared */; };
 		92FE241118F5F06F00647961 /* CCAnimationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 92FE241018F5F06F00647961 /* CCAnimationTest.m */; };
@@ -143,6 +144,15 @@
 		D4AFE94B1977100000261299 /* tuffy_bold_italic-charmap.png in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE9101977100000261299 /* tuffy_bold_italic-charmap.png */; };
 		D4AFE94C1977100000261299 /* west_england-64.fnt in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE9111977100000261299 /* west_england-64.fnt */; };
 		D4AFE94D1977100000261299 /* west_england-64.png in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE9121977100000261299 /* west_england-64.png */; };
+		E525F033EECC363CA8EAF2A6 /* CCPackageDownloadManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F2B770C5914D0810E4C2 /* CCPackageDownloadManagerTests.m */; };
+		E525F4D0568A8A4176684936 /* CCPackageHelperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F99055258F35DFF00ECD /* CCPackageHelperTests.m */; };
+		E525F5DB1E3086DDE0296CEC /* CCPackageDownloadTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F5FACFF098F0ACBA6419 /* CCPackageDownloadTests.m */; };
+		E525F7C977339D17470FC149 /* CCPackageInstallerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FBF58DFECF27272F5D6F /* CCPackageInstallerTests.m */; };
+		E525F81797DA5573FC26BEBB /* CCPackageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F771C583AAF68EB42E15 /* CCPackageTests.m */; };
+		E525FA44681404CC22A3A8D9 /* CCPackageUnzipperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F30DA34A6712527102E5 /* CCPackageUnzipperTests.m */; };
+		E525FCAF2CC6D200B8065E2E /* CCPackageCocos2dEnablerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FB8A3CC89D071A8377B1 /* CCPackageCocos2dEnablerTests.m */; };
+		E525FF2E8351476CDD7DEAC4 /* CCPackageManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F395FE85323D86232416 /* CCPackageManagerTests.m */; };
+		E525FFABB4646A7446269A98 /* CCUnitTestAssertions.h in Resources */ = {isa = PBXBuildFile; fileRef = E525F832B569117922DA339E /* CCUnitTestAssertions.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -224,6 +234,7 @@
 		75EA924B1860BFC800BF914A /* PerformanceTextureTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceTextureTest.h; sourceTree = "<group>"; };
 		75EA924C1860BFC800BF914A /* PerformanceTextureTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerformanceTextureTest.m; sourceTree = "<group>"; };
 		75F76496185A831B00E2FAFE /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sounds; path = Resources/Sounds; sourceTree = SOURCE_ROOT; };
+		839B149E19CC1E440000E5E2 /* CCPackageTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCPackageTest.m; path = "cocos2d-ui-tests/tests/CCPackageTest.m"; sourceTree = SOURCE_ROOT; };
 		92324E2918EB635500D78D3F /* CCReaderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCReaderTest.m; sourceTree = "<group>"; };
 		92FE241018F5F06F00647961 /* CCAnimationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAnimationTest.m; sourceTree = "<group>"; };
 		9D96557219D6113500428E79 /* CCEffectTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectTests.m; sourceTree = "<group>"; };
@@ -350,6 +361,15 @@
 		D4AFE9101977100000261299 /* tuffy_bold_italic-charmap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tuffy_bold_italic-charmap.png"; sourceTree = "<group>"; };
 		D4AFE9111977100000261299 /* west_england-64.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "west_england-64.fnt"; sourceTree = "<group>"; };
 		D4AFE9121977100000261299 /* west_england-64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "west_england-64.png"; sourceTree = "<group>"; };
+		E525F2B770C5914D0810E4C2 /* CCPackageDownloadManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageDownloadManagerTests.m; sourceTree = "<group>"; };
+		E525F30DA34A6712527102E5 /* CCPackageUnzipperTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageUnzipperTests.m; sourceTree = "<group>"; };
+		E525F395FE85323D86232416 /* CCPackageManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageManagerTests.m; sourceTree = "<group>"; };
+		E525F5FACFF098F0ACBA6419 /* CCPackageDownloadTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageDownloadTests.m; sourceTree = "<group>"; };
+		E525F771C583AAF68EB42E15 /* CCPackageTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageTests.m; sourceTree = "<group>"; };
+		E525F832B569117922DA339E /* CCUnitTestAssertions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUnitTestAssertions.h; sourceTree = "<group>"; };
+		E525F99055258F35DFF00ECD /* CCPackageHelperTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageHelperTests.m; sourceTree = "<group>"; };
+		E525FB8A3CC89D071A8377B1 /* CCPackageCocos2dEnablerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageCocos2dEnablerTests.m; sourceTree = "<group>"; };
+		E525FBF58DFECF27272F5D6F /* CCPackageInstallerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageInstallerTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -410,6 +430,8 @@
 				92324E2918EB635500D78D3F /* CCReaderTest.m */,
 				D32FDE8519B645CA0078CC16 /* CCTextureTests.m */,
 				755569EC1856361100ED1B0F /* Supporting Files */,
+				E525F25081EB1E197CD567E4 /* Packages */,
+				E525F832B569117922DA339E /* CCUnitTestAssertions.h */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -527,6 +549,7 @@
 				D3B2A7E4187DD60B00406C5A /* CCBMFontTest.m */,
 				A6167B92189A7D4D0044D391 /* VertexZTest.m */,
 				A664A4EE18A3D9B8006184B8 /* PositioningTest.m */,
+				839B149E19CC1E440000E5E2 /* CCPackageTest.m */,
 				D3269DE719CC985900406282 /* TestShaders.metal */,
 			);
 			name = Tests;
@@ -541,6 +564,7 @@
 				B7E2605F17E7D278007067F0 /* cocos2d-tests-ios */,
 				B7E2604A17E7D278007067F0 /* Frameworks */,
 				B7E2604917E7D278007067F0 /* Products */,
+				E525F171C7FA9B056FA8C500,
 			);
 			sourceTree = "<group>";
 		};
@@ -728,6 +752,45 @@
 			path = Resources/Fonts;
 			sourceTree = SOURCE_ROOT;
 		};
+		E525F18C1684DF1CDDEBE3AE /* Install */ = {
+			isa = PBXGroup;
+			children = (
+				E525FBF58DFECF27272F5D6F /* CCPackageInstallerTests.m */,
+				E525FB8A3CC89D071A8377B1 /* CCPackageCocos2dEnablerTests.m */,
+			);
+			name = Install;
+			sourceTree = "<group>";
+		};
+		E525F25081EB1E197CD567E4 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				E525FC81EFFEFE098ED2ADD3 /* Download */,
+				E525F18C1684DF1CDDEBE3AE /* Install */,
+				E525F544D63123C8E948AA05 /* Unzip */,
+				E525F771C583AAF68EB42E15 /* CCPackageTests.m */,
+				E525F395FE85323D86232416 /* CCPackageManagerTests.m */,
+				E525F99055258F35DFF00ECD /* CCPackageHelperTests.m */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		E525F544D63123C8E948AA05 /* Unzip */ = {
+			isa = PBXGroup;
+			children = (
+				E525F30DA34A6712527102E5 /* CCPackageUnzipperTests.m */,
+			);
+			name = Unzip;
+			sourceTree = "<group>";
+		};
+		E525FC81EFFEFE098ED2ADD3 /* Download */ = {
+			isa = PBXGroup;
+			children = (
+				E525F5FACFF098F0ACBA6419 /* CCPackageDownloadTests.m */,
+				E525F2B770C5914D0810E4C2 /* CCPackageDownloadManagerTests.m */,
+			);
+			name = Download;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -840,6 +903,7 @@
 				9269312A1923D8A700CE6285 /* Resources-shared in Resources */,
 				75556A1B1856374700ED1B0F /* InfoPlist.strings in Resources */,
 				75556A15185636FB00ED1B0F /* powered.png in Resources */,
+				E525FFABB4646A7446269A98 /* CCUnitTestAssertions.h in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -945,6 +1009,14 @@
 				75556A181856370A00ED1B0F /* CCPhysicsTests.m in Sources */,
 				D34CD3C518ABF4AA00D8E537 /* CCRendererTests.m in Sources */,
 				75556A191856370A00ED1B0F /* CCSchedulerTests.m in Sources */,
+				E525F81797DA5573FC26BEBB /* CCPackageTests.m in Sources */,
+				E525F5DB1E3086DDE0296CEC /* CCPackageDownloadTests.m in Sources */,
+				E525FA44681404CC22A3A8D9 /* CCPackageUnzipperTests.m in Sources */,
+				E525F7C977339D17470FC149 /* CCPackageInstallerTests.m in Sources */,
+				E525FCAF2CC6D200B8065E2E /* CCPackageCocos2dEnablerTests.m in Sources */,
+				E525FF2E8351476CDD7DEAC4 /* CCPackageManagerTests.m in Sources */,
+				E525F033EECC363CA8EAF2A6 /* CCPackageDownloadManagerTests.m in Sources */,
+				E525F4D0568A8A4176684936 /* CCPackageHelperTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -974,6 +1046,7 @@
 				7587BDB3185A0A6900EEEFDE /* TextureTest.m in Sources */,
 				D3C9C867188078B900C58900 /* CCSchedulerTest.m in Sources */,
 				7587BDB7185A64AD00EEEFDE /* ColorTest.m in Sources */,
+				839B149F19CC1E440000E5E2 /* CCPackageTest.m in Sources */,
 				D340E10F185660BE006E605C /* TilemapTest.m in Sources */,
 				B7E2622117E7D3B2007067F0 /* MainMenu.m in Sources */,
 				D3D6CF5F18BD5F0500A51531 /* CCRendererTest.m in Sources */,
