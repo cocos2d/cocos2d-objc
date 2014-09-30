@@ -13,6 +13,7 @@
 #import "CCSprite.h"
 #import "CCBReader.h"
 #import "AppDelegate.h"
+#import "CCPackage_private.h"
 
 @interface CCPackageCocos2dEnablerTests : XCTestCase
 
@@ -36,7 +37,7 @@
 
     NSString *pathToPackage = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Resources-shared/Packages/testpackage-iOS-phonehd_unzipped"];
     self.installURL = [[NSURL fileURLWithPath:pathToPackage] URLByAppendingPathComponent:@"testpackage-iOS-phonehd"];
-    [_package setValue:_installURL forKey:NSStringFromSelector(@selector(installURL))];
+    _package.installURL = _installURL;
 }
 
 
