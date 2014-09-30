@@ -134,12 +134,6 @@
     {
         CCPackage *aPackage = [[CCPackage alloc] initWithDictionary:aPackageDict];
 
-/*      TODO
-        CCPackageInstallData *installData = [[CCPackageInstallData alloc] initWithPackage:aPackage];
-        [aPackage setInstallData:installData];
-        [installData populateInstallDataWithDictionary:aPackageDict];
-*/
-
         [_packages addObject:aPackage];
         CCLOGINFO(@"[PACKAGE][INFO] Package info added: %@: %@", [aPackage standardIdentifier], [aPackage statusToString]);
     }
@@ -233,8 +227,6 @@
 
 - (CCPackage *)downloadPackageWithName:(NSString *)name resolution:(NSString *)resolution enableAfterDownload:(BOOL)enableAfterDownload
 {
-    NSAssert(_baseURL != nil, @"baseURL must not be nil");
-
     NSString *packageName = [NSString stringWithFormat:@"%@-%@-%@.zip", name, [CCPackageHelper currentOS], resolution];
     NSURL *remoteURL = [_baseURL URLByAppendingPathComponent:packageName];
 
@@ -557,6 +549,11 @@
     if ([_delegate respondsToSelector:@selector(customFolderName:packageContents:)])
     {
         NSString *customFolderNameToUse = [_delegate customFolderName:package packageContents:files];
+        if (!customFolderNameToUse)
+        {
+            return NO;
+        }
+
         if ([fileManager fileExistsAtPath:[package.unzipURL.path stringByAppendingPathComponent:customFolderNameToUse]])
         {
             package.folderName = customFolderNameToUse;
