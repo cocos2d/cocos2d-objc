@@ -238,6 +238,12 @@
     NSString *packageName = [NSString stringWithFormat:@"%@-%@-%@.zip", name, [CCPackageHelper currentOS], resolution];
     NSURL *remoteURL = [_baseURL URLByAppendingPathComponent:packageName];
 
+    if (!_baseURL)
+    {
+        [_delegate packageDownloadFailed:nil error:[NSError errorWithDomain:@"cocos2d" code:PACKAGE_ERROR_MANAGER_NO_BASE_URL_SET userInfo:nil]];
+        return nil;
+    }
+
     return [self downloadPackageWithName:name resolution:resolution remoteURL:remoteURL enableAfterDownload:enableAfterDownload];
 }
 
