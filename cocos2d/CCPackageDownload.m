@@ -1,10 +1,11 @@
+#include <CommonCrypto/CommonDigest.h>
+
 #import "CCPackageDownload.h"
 #import "CCPackageDownloadDelegate.h"
 #import "CCPackage.h"
 #import "CCPackageConstants.h"
 #import "ccMacros.h"
-#include <CommonCrypto/CommonDigest.h>
-
+#import "CCPackage_private.h"
 
 @interface CCPackageDownload()
 
@@ -68,7 +69,7 @@
 {
     CCLOGINFO(@"[PACKAGE/DOWNLOAD][INFO] Pause");
 
-    [_package setValue:@(CCPackageStatusDownloadPaused) forKey:@"status"];
+    _package.status = CCPackageStatusDownloadPaused;
 
     [self closeConnectionAndFileHandle];
 }
@@ -109,7 +110,7 @@
 
     CCLOGINFO(@"[PACKAGE/DOWNLOAD][INFO] starting download of %@", _package);
 
-    [_package setValue:@(CCPackageStatusDownloading) forKey:@"status"];
+    _package.status = CCPackageStatusDownloading;
 
     [_connection start];
 }
@@ -196,7 +197,7 @@
         CCLOGINFO(@"[PACKAGE/DOWNLOAD][INFO] Download file exists %@", _localURL);
         [self closeConnectionAndFileHandle];
 
-        [_package setValue:@(CCPackageStatusDownloaded) forKey:@"status"];
+        _package.status = CCPackageStatusDownloaded;
 
         if ([_delegate respondsToSelector:@selector(downloadFinished:)])
         {
@@ -353,7 +354,7 @@
 
     [self closeConnectionAndFileHandle];
 
-    [_package setValue:@(CCPackageStatusDownloaded) forKey:@"status"];
+    _package.status = CCPackageStatusDownloaded;
 
     [_delegate downloadFinished:self];
 }
@@ -392,7 +393,7 @@
 
     [self cancel];
 
-    [_package setValue:@(CCPackageStatusDownloadFailed) forKey:@"status"];
+    _package.status = CCPackageStatusDownloadFailed;
 
     [_delegate downloadFailed:self error:error];
 }
@@ -409,7 +410,7 @@
                                              @"HTTPResponse" : httpResponse
                                      }];
 
-    [_package setValue:@(CCPackageStatusDownloadFailed) forKey:@"status"];
+    _package.status = CCPackageStatusDownloadFailed;
 
     [_delegate downloadFailed:self error:error];
 }
