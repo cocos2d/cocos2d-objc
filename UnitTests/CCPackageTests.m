@@ -8,7 +8,9 @@
 
 #import <XCTest/XCTest.h>
 #import "CCPackage.h"
+#import "CCPackage_private.h"
 #import "CCUnitTestAssertions.h"
+#import "CCPackage+InstallData.h"
 
 @interface CCPackageTests : XCTestCase
 
@@ -53,6 +55,10 @@
         @"remoteURL" : @"http://foo.fake",
         @"installURL" : @"/Library/Caches/Packages",
         @"status" : @(CCPackageStatusInstalledDisabled),
+        @"localDownloadURL" : @"/downloadfolder/baa.zip",
+        @"localUnzipURL" : @"/unzupfolder/foo",
+        @"folderName" : @"somename",
+        @"enableOnDownload" : @(YES)
     };
 
     CCPackage *package = [[CCPackage alloc] initWithDictionary:dictionary];
@@ -63,6 +69,10 @@
     XCTAssertEqualObjects(package.remoteURL, [NSURL URLWithString:@"http://foo.fake"]);
     XCTAssertEqualObjects(package.installURL, [NSURL fileURLWithPath:@"/Library/Caches/Packages"]);
     XCTAssertEqual(package.status, CCPackageStatusInstalledDisabled);
+    XCTAssertEqualObjects(package.localDownloadURL, [NSURL fileURLWithPath:@"/downloadfolder/baa.zip"]);
+    XCTAssertEqualObjects(package.unzipURL, [NSURL fileURLWithPath:@"/unzupfolder/foo"]);
+    CCAssertEqualStrings(package.folderName, @"somename");
+    XCTAssertTrue(package.enableOnDownload);
 }
 
 - (void)testToDictionary
@@ -72,8 +82,12 @@
                                                       os:@"iOS"
                                                remoteURL:[NSURL URLWithString:@"http://foo.fake"]];
 
-    [package setValue:@(CCPackageStatusInstalledDisabled) forKey:@"status"];
-    [package setValue:[NSURL fileURLWithPath:@"/Library/Caches/Packages"] forKey:@"installURL"];
+    package.status = CCPackageStatusInstalledDisabled;
+    package.installURL = [NSURL fileURLWithPath:@"/Library/Caches/Packages"];
+    package.unzipURL = [NSURL fileURLWithPath:@"/unzupfolder/foo"];
+    package.folderName = @"somename";
+    package.localDownloadURL = [NSURL fileURLWithPath:@"/downloadfolder/baa.zip"];
+    package.enableOnDownload = NO;
 
     NSDictionary *dictionary = [package toDictionary];
 
@@ -83,6 +97,10 @@
     CCAssertEqualStrings(dictionary[@"remoteURL"], @"http://foo.fake");
     CCAssertEqualStrings(dictionary[@"installURL"], @"/Library/Caches/Packages");
     XCTAssertEqual([dictionary[@"status"] integerValue], CCPackageStatusInstalledDisabled);
+    CCAssertEqualStrings(dictionary[@"localDownloadURL"], @"/downloadfolder/baa.zip");
+    CCAssertEqualStrings(dictionary[@"localUnzipURL"], @"/unzupfolder/foo");
+    CCAssertEqualStrings(dictionary[@"folderName"], @"somename");
+    XCTAssertFalse([dictionary[@"enableOnDownload"] boolValue]);
 }
 
 @end

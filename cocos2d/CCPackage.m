@@ -65,6 +65,26 @@ static NSString *const PACKAGE_SERIALIZATION_KEY_ENABLE_ON_DOWNLOAD = @"enableOn
     package.installURL = [NSURL fileURLWithPath:dictionary[PACKAGE_SERIALIZATION_KEY_INSTALL_URL]];
     package.status = (CCPackageStatus) [dictionary[PACKAGE_SERIALIZATION_KEY_STATUS] unsignedIntegerValue];
 
+    if (dictionary[PACKAGE_SERIALIZATION_KEY_LOCAL_DOWNLOAD_URL])
+    {
+        package.localDownloadURL = [NSURL fileURLWithPath:dictionary[PACKAGE_SERIALIZATION_KEY_LOCAL_DOWNLOAD_URL]];
+    }
+
+    if (dictionary[PACKAGE_SERIALIZATION_KEY_LOCAL_UNZIP_URL])
+    {
+        package.unzipURL = [NSURL fileURLWithPath:dictionary[PACKAGE_SERIALIZATION_KEY_LOCAL_UNZIP_URL]];
+    }
+
+    if (dictionary[PACKAGE_SERIALIZATION_KEY_FOLDER_NAME])
+    {
+        package.folderName = dictionary[PACKAGE_SERIALIZATION_KEY_FOLDER_NAME];
+    }
+
+    if (dictionary[PACKAGE_SERIALIZATION_KEY_FOLDER_NAME])
+    {
+        package.enableOnDownload = [dictionary[PACKAGE_SERIALIZATION_KEY_ENABLE_ON_DOWNLOAD] boolValue];
+    }
+
     return package;
 }
 
@@ -87,6 +107,23 @@ static NSString *const PACKAGE_SERIALIZATION_KEY_ENABLE_ON_DOWNLOAD = @"enableOn
     {
         dictionary[PACKAGE_SERIALIZATION_KEY_INSTALL_URL] = [_installURL path];
     }
+
+    if (_localDownloadURL)
+    {
+        dictionary[PACKAGE_SERIALIZATION_KEY_LOCAL_DOWNLOAD_URL] = [_localDownloadURL path];
+    }
+
+    if (_unzipURL)
+    {
+        dictionary[PACKAGE_SERIALIZATION_KEY_LOCAL_UNZIP_URL] = [_unzipURL path];
+    }
+
+    if (_folderName)
+    {
+        dictionary[PACKAGE_SERIALIZATION_KEY_FOLDER_NAME] = _folderName;
+    }
+
+    dictionary[PACKAGE_SERIALIZATION_KEY_ENABLE_ON_DOWNLOAD] = @(_enableOnDownload);
 
     return dictionary;
 }
