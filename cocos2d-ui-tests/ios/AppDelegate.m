@@ -32,24 +32,18 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [self configureCocos2d];
+
+    return YES;
+}
+
+- (void)configureCocos2d
+{
     // Configure the file utils to work with SpriteBuilder, but use a custom resource path (Resources-shared instead of Published-iOS)
     [CCBReader configureCCFileUtils];
-    
-    CCFileUtils* sharedFileUtils = [CCFileUtils sharedFileUtils];
-    
-    sharedFileUtils.searchPath =
-    [NSArray arrayWithObjects:
-     [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Images"],
-     [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Fonts"],
-     [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Resources-shared"],
-     [[NSBundle mainBundle] resourcePath],
-     nil];
-    
-    // Register spritesheets.
-    [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"Interface.plist"];
-    [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"Sprites.plist"];
-    [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"TilesAtlassed.plist"];
-    
+
+    [self configureFileUtilsSearchPathAndRegisterSpriteSheets];
+
     [self setupCocos2dWithOptions:@{
 			CCSetupDepthFormat: @GL_DEPTH24_STENCIL8,
 //			CCSetupScreenMode: CCScreenModeFixed,
@@ -57,8 +51,24 @@
 			CCSetupTabletScale2X: @YES,
 			CCSetupShowDebugStats: @(getenv("SHOW_DEBUG_STATS") != nil),
 		}];
-    
-    return YES;
+}
+
+- (void)configureFileUtilsSearchPathAndRegisterSpriteSheets
+{
+    CCFileUtils* sharedFileUtils = [CCFileUtils sharedFileUtils];
+
+    sharedFileUtils.searchPath =
+    [NSArray arrayWithObjects:
+     [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Images"],
+     [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Fonts"],
+     [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Resources-shared"],
+     [[NSBundle mainBundle] resourcePath],
+     nil];
+
+    // Register spritesheets.
+    [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"Interface.plist"];
+    [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"Sprites.plist"];
+    [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"TilesAtlassed.plist"];
 }
 
 - (CCScene*) startScene

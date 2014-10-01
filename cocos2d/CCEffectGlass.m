@@ -160,9 +160,20 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
                                    // map alpha also allows the effect to be disabled for specific pixels.
                                    vec4 refraction = normalMap.a * inBounds * texture2D(u_refractEnvMap, refractTexCoords) * (1.0 - primaryColor.a);
                                    
+                                   // Compute Schlick's approximation (http://en.wikipedia.org/wiki/Schlick's_approximation) of the
+                                   // fresnel reflectance.
+                                   float fresnel = max(u_fresnelBias + (1.0 - u_fresnelBias) * pow((1.0 - nDotV), u_fresnelPower), 0.0);
+                                   
+                                   // Apply a cutoff to nDotV to reduce the aliasing that occurs in the reflected
+                                   // image. As the surface normal approaches a 90 degree angle relative to the viewing
+                                   // direction, the sampling of the reflection map becomes more and more compressed
+                                   // which can lead to undesirable aliasing artifacts. The cutoff threshold reduces
+                                   // the contribution of these pixels to the final image and hides this aliasing.
+                                   const float NDOTV_CUTOFF = 0.2;
+                                   fresnel *= smoothstep(0.0, NDOTV_CUTOFF, nDotV);
+                                   
                                    // Add the reflected color modulated by the fresnel term. Multiplying by the normal
                                    // map alpha also allows the effect to be disabled for specific pixels.
-                                   float fresnel = max(u_fresnelBias + (1.0 - u_fresnelBias) * pow((1.0 - nDotV), u_fresnelPower), 0.0);
                                    vec4 reflection = normalMap.a * fresnel * u_shininess * texture2D(u_reflectEnvMap, reflectTexCoords);
 
                                    return primaryColor + refraction + reflection;

@@ -34,6 +34,7 @@
 #import "CCGLView.h"
 
 #import "OALSimpleAudio.h"
+#import "CCPackageManager.h"
 
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 #import "CCMetalView.h"
@@ -263,6 +264,8 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	[window_ makeKeyAndVisible];
     
     [self forceOrientation];
+
+	[[CCPackageManager sharedManager] loadPackages];
 }
 
 // iOS8 hack around orientation bug
@@ -313,18 +316,23 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	if([CCDirector sharedDirector].animating == NO) {
 		[[CCDirector sharedDirector] startAnimation];
 	}
+	[[CCPackageManager sharedManager] savePackages];
 }
 
 // application will be killed
 - (void)applicationWillTerminate:(UIApplication *)application
 {
 	[[CCDirector sharedDirector] end];
+
+    [[CCPackageManager sharedManager] savePackages];
 }
 
 // purge memory
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
 {
 	[[CCDirector sharedDirector] purgeCachedData];
+
+    [[CCPackageManager sharedManager] savePackages];
 }
 
 // next delta time will be zero

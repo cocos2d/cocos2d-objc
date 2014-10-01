@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>frames</key>
+	<dict>
+		<key>smileys/angrySmiley.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1, 29}, {42, 30}}</string>
+			<key>offset</key>
+			<string>{1, 2}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{5, 8}, {42, 30}}</string>
+			<key>sourceSize</key>
+			<string>{50, 50}</string>
+		</dict>
+		<key>smileys/boredSmiley.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1, 1}, {44, 26}}</string>
+			<key>offset</key>
+			<string>{1, -1}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{4, 13}, {44, 26}}</string>
+			<key>sourceSize</key>
+			<string>{50, 50}</string>
+		</dict>
+	</dict>
+	<key>metadata</key>
+	<dict>
+		<key>format</key>
+		<integer>2</integer>
+		<key>size</key>
+		<string>{64, 64}</string>
+		<key>textureFileName</key>
+		<string>smileys.png</string>
+	</dict>
+</dict>
+</plist>
