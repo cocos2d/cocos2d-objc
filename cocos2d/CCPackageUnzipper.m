@@ -1,7 +1,7 @@
 #import "CCPackageUnzipper.h"
 #import "CCPackageUnzipperDelegate.h"
 #import "CCPackage.h"
-#import "SSZipArchive.h"
+#import <SSZipArchive/SSZipArchive.h>
 #import "ccMacros.h"
 
 

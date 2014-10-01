@@ -30,6 +30,7 @@
 		92324E2A18EB635500D78D3F /* CCReaderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 92324E2918EB635500D78D3F /* CCReaderTest.m */; };
 		9269312A1923D8A700CE6285 /* Resources-shared in Resources */ = {isa = PBXBuildFile; fileRef = B7C6237517EA695100928F91 /* Resources-shared */; };
 		92FE241118F5F06F00647961 /* CCAnimationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 92FE241018F5F06F00647961 /* CCAnimationTest.m */; };
+		9D96557319D6113500428E79 /* CCEffectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D96557219D6113500428E79 /* CCEffectTests.m */; };
 		A6167B93189A7D4D0044D391 /* VertexZTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A6167B92189A7D4D0044D391 /* VertexZTest.m */; };
 		A664A4EF18A3D9B8006184B8 /* PositioningTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A664A4EE18A3D9B8006184B8 /* PositioningTest.m */; };
 		B70AFC30180F2D7400516435 /* CCTransitionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B70AFC2F180F2D7400516435 /* CCTransitionTest.m */; };
@@ -236,6 +237,7 @@
 		839B149E19CC1E440000E5E2 /* CCPackageTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCPackageTest.m; path = "cocos2d-ui-tests/tests/CCPackageTest.m"; sourceTree = SOURCE_ROOT; };
 		92324E2918EB635500D78D3F /* CCReaderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCReaderTest.m; sourceTree = "<group>"; };
 		92FE241018F5F06F00647961 /* CCAnimationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAnimationTest.m; sourceTree = "<group>"; };
+		9D96557219D6113500428E79 /* CCEffectTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectTests.m; sourceTree = "<group>"; };
 		A6167B92189A7D4D0044D391 /* VertexZTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VertexZTest.m; path = "cocos2d-ui-tests/tests/VertexZTest.m"; sourceTree = SOURCE_ROOT; };
 		A664A4EE18A3D9B8006184B8 /* PositioningTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PositioningTest.m; path = "cocos2d-ui-tests/tests/PositioningTest.m"; sourceTree = SOURCE_ROOT; };
 		B70AFC2F180F2D7400516435 /* CCTransitionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTransitionTest.m; path = "cocos2d-ui-tests/tests/CCTransitionTest.m"; sourceTree = SOURCE_ROOT; };
@@ -418,6 +420,7 @@
 			isa = PBXGroup;
 			children = (
 				92FE241018F5F06F00647961 /* CCAnimationTest.m */,
+				9D96557219D6113500428E79 /* CCEffectTests.m */,
 				755569E31856361100ED1B0F /* CCFileUtilTests.m */,
 				755569E41856361100ED1B0F /* CCNodeTests.m */,
 				755569E51856361100ED1B0F /* CCPhysicsTests.m */,
@@ -998,6 +1001,7 @@
 			files = (
 				92324E2A18EB635500D78D3F /* CCReaderTest.m in Sources */,
 				D32FDE8619B645CA0078CC16 /* CCTextureTests.m in Sources */,
+				9D96557319D6113500428E79 /* CCEffectTests.m in Sources */,
 				75556A161856370A00ED1B0F /* CCFileUtilTests.m in Sources */,
 				92FE241118F5F06F00647961 /* CCAnimationTest.m in Sources */,
 				75556A171856370A00ED1B0F /* CCNodeTests.m in Sources */,
