@@ -629,6 +629,7 @@
 		E525F0F74C7C69C4371E20EE /* CCPackageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F9EA4B5DD37D0418869E /* CCPackageHelper.m */; };
 		E525F3A2BBCBB446B67D8260 /* CCPackage_private.h in Headers */ = {isa = PBXBuildFile; fileRef = E525FE4C98BCF1228ECC9623 /* CCPackage_private.h */; };
 		E525FCC2CF72D3667DE4D71B /* CCPackageHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = E525FF8C7C018BF691F36044 /* CCPackageHelper.h */; };
+		E525FF1A60724C91275720C5 /* CCPackageManager_private.h in Headers */ = {isa = PBXBuildFile; fileRef = E525F94C08B1D716E9173061 /* CCPackageManager_private.h */; };
 		FC39962219C3BBCF00C93E5E /* libObjectAL (Android).a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC39961F19C3B92F00C93E5E /* libObjectAL (Android).a */; };
 		FC64014019C79716003E595A /* libObjectAL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC39961B19C3B92F00C93E5E /* libObjectAL.a */; };
 /* End PBXBuildFile section */
@@ -1107,6 +1108,7 @@
 		E0F9246F1224140400EF2362 /* CCTexturePVR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTexturePVR.h; sourceTree = "<group>"; };
 		E0F924701224140400EF2362 /* CCTexturePVR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTexturePVR.m; sourceTree = "<group>"; };
 		E0F92AC31224559800EF2362 /* CCNS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNS.h; sourceTree = "<group>"; };
+		E525F94C08B1D716E9173061 /* CCPackageManager_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackageManager_private.h; sourceTree = "<group>"; };
 		E525F9EA4B5DD37D0418869E /* CCPackageHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageHelper.m; sourceTree = "<group>"; };
 		E525FE4C98BCF1228ECC9623 /* CCPackage_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackage_private.h; sourceTree = "<group>"; };
 		E525FF8C7C018BF691F36044 /* CCPackageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackageHelper.h; sourceTree = "<group>"; };
@@ -1569,6 +1571,7 @@
 				E525FF8C7C018BF691F36044 /* CCPackageHelper.h */,
 				E525F9EA4B5DD37D0418869E /* CCPackageHelper.m */,
 				E525FE4C98BCF1228ECC9623 /* CCPackage_private.h */,
+				E525F94C08B1D716E9173061 /* CCPackageManager_private.h */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
@@ -2081,6 +2084,7 @@
 				B7D2730F1822F4AA0054849B /* CCBKeyframe.h in Headers */,
 				E525FCC2CF72D3667DE4D71B /* CCPackageHelper.h in Headers */,
 				E525F3A2BBCBB446B67D8260 /* CCPackage_private.h in Headers */,
+				E525FF1A60724C91275720C5 /* CCPackageManager_private.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

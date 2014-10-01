@@ -16,6 +16,8 @@
 #import "CCUnitTestAssertions.h"
 #import "CCDirector.h"
 #import "AppDelegate.h"
+#import "CCPackageCocos2dEnabler.h"
+#import "CCPackageManager_private.h"
 
 
 static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
@@ -271,11 +273,7 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 
     _packageManager.installedPackagesPath = customInstallPath;
 
-    CCPackage *package = [[CCPackage alloc] initWithName:@"testpackage"
-                                              resolution:@"phonehd"
-                                                      os:@"iOS"
-                                               remoteURL:[[NSURL URLWithString:PACKAGE_BASE_URL]
-                                                                 URLByAppendingPathComponent:@"testpackage-iOS-phonehd.zip"]];
+    CCPackage *package = [self testPackage];
 
     [_packageManager downloadPackage:package enableAfterDownload:NO];
 
@@ -286,28 +284,114 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
     XCTAssertEqual(package.status, CCPackageStatusInstalledDisabled);
 }
 
-/*
-- (void)testLoadPackages
+- (void)testEnablePackage
 {
-    XCTFail(@"Not implemented yet.");
+    CCPackage *package = [self testPackage];
+
+    NSString *pathToPackage = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Resources-shared/Packages/testpackage-iOS-phonehd_unzipped"];
+    package.installURL = [[NSURL fileURLWithPath:pathToPackage] URLByAppendingPathComponent:@"testpackage-iOS-phonehd"];
+    package.status = CCPackageStatusInstalledDisabled;
+
+    NSError *error;
+    BOOL success = [_packageManager enablePackage:package error:&error];
+
+    XCTAssertTrue(success);
+    XCTAssertNil(error);
+    XCTAssertNotNil([_packageManager packageWithName:@"testpackage"]);
+    XCTAssertEqual(package.status, CCPackageStatusInstalledEnabled);
+}
+
+- (void)testEnableNonDisabledPackage
+{
+    CCPackage *package = [self testPackageWithStatus:CCPackageStatusDownloaded];
+
+    NSError *error;
+    BOOL success = [_packageManager enablePackage:package error:&error];
+
+    XCTAssertFalse(success);
+    XCTAssertEqual(error.code, PACKAGE_ERROR_MANAGER_CANNOT_ENABLE_NON_DISABLED_PACKAGE);
+    XCTAssertNotNil([_packageManager packageWithName:@"testpackage"]);
+    XCTAssertEqual(package.status, CCPackageStatusDownloaded);
 }
 
 - (void)testDisablePackage
 {
-    XCTFail(@"Not implemented yet.");
+    CCPackage *package = [self testPackageWithStatus:CCPackageStatusInstalledEnabled];
+
+    NSError *error;
+    BOOL success = [_packageManager disablePackage:package error:&error];
+
+    XCTAssertTrue(success);
+    XCTAssertNil(error);
+    XCTAssertNotNil([_packageManager packageWithName:@"testpackage"]);
+    XCTAssertEqual(package.status, CCPackageStatusInstalledDisabled);
 }
 
-- (void)testEnablePackage
+- (void)testDisableNonEnabledPackage
 {
-    XCTFail(@"Not implemented yet.");
+    CCPackage *package = [self testPackageWithStatus:CCPackageStatusUnzipped];
+
+    NSError *error;
+    BOOL success = [_packageManager disablePackage:package error:&error];
+
+    XCTAssertFalse(success);
+    XCTAssertEqual(error.code, PACKAGE_ERROR_MANAGER_CANNOT_DISABLE_NON_ENABLED_PACKAGE);
+    XCTAssertNotNil([_packageManager packageWithName:@"testpackage"]);
+    XCTAssertEqual(package.status, CCPackageStatusUnzipped);
 }
 
-- (void)testDeletePackage
+- (void)testDeleteInstalledPackage
 {
-    XCTFail(@"Not implemented yet.");
+    CCPackage *package = [self testPackageWithStatus:CCPackageStatusInstalledEnabled];
+    [_packageManager.packages addObject:package];
+
+    NSError *error;
+    BOOL success = [_packageManager deletePackage:package error:&error];
+
+    XCTAssertTrue(success);
+
+    BOOL isInSearchPath = NO;
+    for (NSString *aSearchPath in [CCFileUtils sharedFileUtils].searchPath)
+    {
+        if ([aSearchPath isEqualToString:package.installURL.path])
+        {
+            isInSearchPath = YES;
+        }
+    }
+
+    XCTAssertFalse(isInSearchPath);
+
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    XCTAssertFalse([fileManager fileExistsAtPath:package.installURL.path]);
+    XCTAssertNil([_packageManager packageWithName:@"testpackage"]);
 }
 
+- (void)testDeleteUnzippingPackage
+{
+    CCPackage *package = [self testPackage];
+    package.status = CCPackageStatusUnzipping;
+    [_packageManager.packages addObject:package];
+
+    NSError *error;
+    BOOL success = [_packageManager deletePackage:package error:&error];
+
+    XCTAssertFalse(success);
+    XCTAssertEqual(error.code, PACKAGE_ERROR_MANAGER_CANNOT_DELETE_UNZIPPING_PACKAGE);
+    XCTAssertNotNil([_packageManager packageWithName:@"testpackage"]);
+}
+
+- (void)testDeleteDownloadingPackage
+{
+
+}
+
+/*
 - (void)testCancelDownload
+{
+    XCTFail(@"Not implemented yet.");
+}
+
+- (void)testLoadPackages
 {
     XCTFail(@"Not implemented yet.");
 }
@@ -367,7 +451,45 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 
 
 
-#pragma mark - helper
+
+#pragma mark - Fixtures
+
+- (CCPackage *)testPackage
+{
+    return [self testPackageWithStatus:CCPackageStatusInitial];
+}
+
+- (CCPackage *)testPackageWithStatus:(CCPackageStatus)status
+{
+    CCPackage *package = [[CCPackage alloc] initWithName:@"testpackage"
+                                              resolution:@"phonehd"
+                                                      os:@"iOS"
+                                               remoteURL:[[NSURL URLWithString:PACKAGE_BASE_URL]
+                                                                 URLByAppendingPathComponent:@"testpackage-iOS-phonehd.zip"]];
+    package.status = status;
+
+    if (status == CCPackageStatusInstalledDisabled
+        || status == CCPackageStatusInstalledEnabled)
+    {
+        NSString *pathToPackage = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Resources-shared/Packages/testpackage-iOS-phonehd_unzipped/testpackage-iOS-phonehd"];
+
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+
+        package.installURL = [NSURL fileURLWithPath:[_packageManager.installedPackagesPath stringByAppendingPathComponent:@"testpackage-iOS-phonehd"]];
+
+        [fileManager copyItemAtPath:pathToPackage toPath:package.installURL.path error:nil];
+    }
+
+    if (status == CCPackageStatusInstalledEnabled)
+    {
+        CCPackageCocos2dEnabler *packageEnabler = [[CCPackageCocos2dEnabler alloc] init];
+        [packageEnabler enablePackages:@[package]];
+    }
+
+    return package;
+}
+
+#pragma mark - Helper
 
 - (void)waitForDelegateToReturn
 {

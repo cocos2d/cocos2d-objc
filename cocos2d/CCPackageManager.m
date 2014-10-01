@@ -232,7 +232,9 @@
 
     if (!_baseURL)
     {
-        [_delegate packageDownloadFailed:nil error:[NSError errorWithDomain:@"cocos2d" code:PACKAGE_ERROR_MANAGER_NO_BASE_URL_SET userInfo:nil]];
+        [_delegate packageDownloadFailed:nil error:[NSError errorWithDomain:@"cocos2d"
+                                                                       code:PACKAGE_ERROR_MANAGER_NO_BASE_URL_SET
+                                                                   userInfo:@{NSLocalizedDescriptionKey: @"No baseURL set for package manager."}]];
         return nil;
     }
 
@@ -570,6 +572,11 @@
 
 - (BOOL)disablePackage:(CCPackage *)package error:(NSError **)error
 {
+    if (![_packages containsObject:package])
+    {
+        [_packages addObject:package];
+    }
+
     if (package.status == CCPackageStatusInstalledDisabled)
     {
         return YES;
@@ -589,15 +596,16 @@
     CCPackageCocos2dEnabler *packageCocos2dEnabler = [[CCPackageCocos2dEnabler alloc] init];
     [packageCocos2dEnabler disablePackages:@[package]];
 
-    if (![_packages containsObject:package])
-    {
-        [_packages addObject:package];
-    }
     return YES;
 }
 
 - (BOOL)enablePackage:(CCPackage *)package error:(NSError **)error
 {
+    if (![_packages containsObject:package])
+    {
+        [_packages addObject:package];
+    }
+
     if (package.status == CCPackageStatusInstalledEnabled)
     {
         return YES;
@@ -617,10 +625,6 @@
     CCPackageCocos2dEnabler *packageCocos2dEnabler = [[CCPackageCocos2dEnabler alloc] init];
     [packageCocos2dEnabler enablePackages:@[package]];
 
-    if (![_packages containsObject:package])
-    {
-        [_packages addObject:package];
-    }
     return YES;
 }
 
@@ -640,11 +644,21 @@
 
 - (BOOL)deletePackage:(CCPackage *)package error:(NSError **)error
 {
+    if (package.status == CCPackageStatusUnzipping)
+    {
+        if (error)
+        {
+            *error = [NSError errorWithDomain:@"cocos2d"
+                                         code:PACKAGE_ERROR_MANAGER_CANNOT_DELETE_UNZIPPING_PACKAGE
+                                     userInfo:@{NSLocalizedDescriptionKey:@"Cannot delete a package being unzipped. Please try after unzipping finished"}];
+        }
+        return NO;
+    }
+
     CCPackageCocos2dEnabler *packageCocos2dEnabler = [[CCPackageCocos2dEnabler alloc] init];
     [packageCocos2dEnabler disablePackages:@[package]];
 
     [_packages removeObject:package];
-    [self savePackages];
 
     [_downloadManager cancelDownloadOfPackage:package];
 

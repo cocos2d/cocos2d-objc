@@ -138,6 +138,7 @@
 /**
  * Disables a package. Only packages with state CCPackageStatusInstalledEnabled can be disabled.
  * The package is removed from cocos2d's search, sprite sheets and filename lookups are reloaded.
+ * Package will be added to managed packages if it was not.
  *
  * @param package The package to be disabled
  * @param error Error pointer with details about a failed operation
@@ -148,6 +149,7 @@
 
 /**
  * Enables a package. Only packages with state CCPackageStatusInstalledDisabled can be enabled.
+ * Package will be added to managed packages if it was not.
  *
  * The package is added to cocos2d's search, sprite sheets getting loaded as well as filename lookups
  *
@@ -168,6 +170,7 @@
 /**
  * Deletes a package.
  * Will disable the package first and delete it from disk. Temp download and unzip files will be removed as well.
+ * A package that is being unzipped cannot be deleted. Try after the unzipping finished.
  *
  * @param package The package to be deleted
  * @param error Error pointer with details about a failed operation
