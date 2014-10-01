@@ -126,15 +126,14 @@
                    enableAfterDownload:(BOOL)enableAfterDownload;
 
 /**
- * Downloads a package. This is supposed to work in conjunction with addPackage where a package is created without the package manager
- * and should become managed.
+ * Downloads a package. If the package was not managed before it will be added to the managed packages.
  * A download will only start if the status is CCPackageStatusInitial, CCPackageStatusDownloadFailed.
  * A package with status CCPackageStatusDownloadPaused will be resumed if possible.
  *
  * @param name The package to be manager by the package manager
  * @param enableAfterDownload If the package should be enabled in cocos2d after download. You can enable it with the enablePackage: method later on.
  */
-- (BOOL)downloadPackage:(CCPackage *)package enableAfterDownload:(BOOL)enableAfterDownload;
+- (void)downloadPackage:(CCPackage *)package enableAfterDownload:(BOOL)enableAfterDownload;
 
 /**
  * Disables a package. Only packages with state CCPackageStatusInstalledEnabled can be disabled.

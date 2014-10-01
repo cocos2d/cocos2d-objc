@@ -176,7 +176,7 @@
     }
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    if (![fileManager fileExistsAtPath:_installedPackagesPath])
+    if (![fileManager fileExistsAtPath:installedPackagesPath])
     {
         NSError *error;
         if (![fileManager createDirectoryAtPath:installedPackagesPath
@@ -239,26 +239,16 @@
     return [self downloadPackageWithName:name resolution:resolution remoteURL:remoteURL enableAfterDownload:enableAfterDownload];
 }
 
-- (BOOL)downloadPackage:(CCPackage *)package enableAfterDownload:(BOOL)enableAfterDownload
+- (void)downloadPackage:(CCPackage *)package enableAfterDownload:(BOOL)enableAfterDownload
 {
-    if (![_packages containsObject:package])
-    {
-        return NO;
-    }
-
     NSAssert(package, @"package must not be nil");
     NSAssert(package.name, @"package.name must not be nil");
     NSAssert(package.resolution, @"package.resolution must not be nil");
+    NSAssert(package.remoteURL, @"package.remoteURL must not be nil");
 
-    if (!package.remoteURL && !_baseURL)
+    if (![_packages containsObject:package])
     {
-        return NO;
-    }
-    else if (!package.remoteURL)
-    {
-        NSString *packageName = [NSString stringWithFormat:@"%@-%@-%@.zip", package.name, package.os, package.resolution];
-        NSURL *remoteURL = [_baseURL URLByAppendingPathComponent:packageName];
-        [package setValue:remoteURL forKey:@"remoteURL"];
+        [self addPackage:package];
     }
 
     package.enableOnDownload = enableAfterDownload;
@@ -266,8 +256,6 @@
     CCLOGINFO(@"[PACKAGE][INFO]: adding package to download queue: %@", package);
 
     [_downloadManager enqueuePackageForDownload:package];
-
-    return YES;
 }
 
 - (CCPackage *)downloadPackageWithName:(NSString *)name remoteURL:(NSURL *)remoteURL enableAfterDownload:(BOOL)enableAfterDownload

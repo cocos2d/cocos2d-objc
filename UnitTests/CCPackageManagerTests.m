@@ -13,6 +13,10 @@
 #import "CCPackage_private.h"
 #import "CCPackageConstants.h"
 #import "CCPackageManagerDelegate.h"
+#import "CCUnitTestAssertions.h"
+#import "CCDirector.h"
+#import "AppDelegate.h"
+
 
 static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 
@@ -73,6 +77,7 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 @property (nonatomic) BOOL managerReturnedFailed;
 @property (nonatomic, copy) NSString *customFolderName;
 @property (nonatomic, strong) NSError *managerReturnedWithError;
+@property (nonatomic, strong) NSMutableSet *cleanPathsArrayOnTearDown;
 
 @end
 
@@ -82,9 +87,27 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 - (void)setUp
 {
     [super setUp];
+
+    [(AppController *)[UIApplication sharedApplication].delegate configureCocos2d];
+    [[CCDirector sharedDirector] stopAnimation];
+
     self.packageManager = [[CCPackageManager alloc] init];
+    _packageManager.delegate = self;
+
     self.managerReturnedSuccessfully = NO;
     self.managerReturnedFailed = NO;
+    self.managerReturnedWithError = nil;
+    self.customFolderName = nil;
+
+    // A set of paths to be removed on tear down
+    self.cleanPathsArrayOnTearDown = [NSMutableSet set];
+    [_cleanPathsArrayOnTearDown addObject:[NSTemporaryDirectory() stringByAppendingPathComponent:PACKAGE_REL_UNZIP_FOLDER]];
+    [_cleanPathsArrayOnTearDown addObject:[NSTemporaryDirectory() stringByAppendingPathComponent:PACKAGE_REL_DOWNLOAD_FOLDER]];
+    [_cleanPathsArrayOnTearDown addObject:_packageManager.installedPackagesPath];
+
+    // Important for the standard identifier of packages which most often determined internally instead
+    // of provided by the user. In this case resolution will default to phonehd.
+    [CCFileUtils sharedFileUtils].searchResolutionsOrder = [@[CCFileUtilsSuffixiPhoneHD] mutableCopy];
 
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:PACKAGE_STORAGE_USERDEFAULTS_KEY];
 
@@ -95,11 +118,11 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 {
     [NSURLProtocol unregisterClass:[CCPackageManagerTestURLProtocol class]];
 
-    // Delete all relevant folders: Download, unzip, install
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    [fileManager removeItemAtPath:[NSTemporaryDirectory() stringByAppendingPathComponent:PACKAGE_REL_UNZIP_FOLDER] error:nil];
-    [fileManager removeItemAtPath:[NSTemporaryDirectory() stringByAppendingPathComponent:PACKAGE_REL_DOWNLOAD_FOLDER] error:nil];
-    [fileManager removeItemAtPath:_packageManager.installedPackagesPath error:nil];
+    for (NSString *path in _cleanPathsArrayOnTearDown)
+    {
+        [fileManager removeItemAtPath:path error:nil];
+    }
 
     [super tearDown];
 }
@@ -151,23 +174,20 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
     // Note: Persistency of CCPackage is tested in CCPackageTests
 }
 
-- (void)testLoadPackages
+- (void)testDownloadWithNameAndBaseURLAndUnzipOnCustomQueue
 {
-    XCTFail(@"Not implemented yet.");
-}
-
-- (void)testDownloadWithNameAndBaseURL
-{
-    [CCFileUtils sharedFileUtils].searchResolutionsOrder = [@[CCFileUtilsSuffixiPhoneHD] mutableCopy];
-
     _packageManager.baseURL = [NSURL URLWithString:PACKAGE_BASE_URL];
-    _packageManager.delegate = self;
+
     CCPackage *package = [_packageManager downloadPackageWithName:@"testpackage" enableAfterDownload:YES];
+
+    dispatch_queue_t queue = dispatch_queue_create("testqueue", DISPATCH_QUEUE_CONCURRENT);
+    _packageManager.unzippingQueue = queue;
 
     [self waitForDelegateToReturn];
 
     XCTAssertNotNil(package);
     XCTAssertTrue(_managerReturnedSuccessfully);
+    XCTAssertEqual(package.status, CCPackageStatusInstalledEnabled);
 }
 
 - (void)testDownloadWithCustomFolderNameInPackage
@@ -179,7 +199,6 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
     [CCFileUtils sharedFileUtils].searchResolutionsOrder = [@[CCFileUtilsSuffixiPhoneHD] mutableCopy];
 
     _packageManager.baseURL = [NSURL URLWithString:PACKAGE_BASE_URL];
-    _packageManager.delegate = self;
 
     self.customFolderName = @"testpackage-iOS-phonehd";
 
@@ -196,7 +215,6 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
     // Like in testDownloadWithCustomFolderNameInPackage but this time we expect an error and a failing delegate method
 
     _packageManager.baseURL = [NSURL URLWithString:PACKAGE_BASE_URL];
-    _packageManager.delegate = self;
 
     CCPackage *package = [_packageManager downloadPackageWithName:@"Foo" enableAfterDownload:YES];
 
@@ -209,7 +227,6 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 
 - (void)testDownloadWithoutBaseURLShouldFail
 {
-    _packageManager.delegate = self;
     CCPackage *package = [_packageManager downloadPackageWithName:@"testpackage" enableAfterDownload:YES];
 
     [self waitForDelegateToReturn];
@@ -219,17 +236,59 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
     XCTAssertEqual(_managerReturnedWithError.code, PACKAGE_ERROR_MANAGER_NO_BASE_URL_SET);
 }
 
-- (void)testDownloadWithNameAndWithoutBaseURLUnzipOnACustomQueue
+- (void)testSetInstallPath
 {
-    // Use a custom queue for unzipping
-    XCTFail(@"Not implemented yet.");
+    // Test: set a non existing path
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+
+    NSString *customInstallPath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"FooBar"];
+    [_cleanPathsArrayOnTearDown addObject:customInstallPath];
+
+    _packageManager.installedPackagesPath = customInstallPath;
+
+    XCTAssertTrue([fileManager fileExistsAtPath:customInstallPath]);
+    CCAssertEqualStrings(customInstallPath, _packageManager.installedPackagesPath);
+
+
+    // Test2: set an existing path
+    NSString *customInstallPath2 = [NSTemporaryDirectory() stringByAppendingPathComponent:@"FooBar2"];
+    [_cleanPathsArrayOnTearDown addObject:customInstallPath2];
+
+    [fileManager createDirectoryAtPath:customInstallPath2 withIntermediateDirectories:YES attributes:nil error:nil];
+
+    _packageManager.installedPackagesPath = customInstallPath2;
+    XCTAssertTrue([fileManager fileExistsAtPath:customInstallPath]);
+    CCAssertEqualStrings(customInstallPath2, _packageManager.installedPackagesPath);
 }
 
 - (void)testDownloadOfPackageWithDifferentInstallPath
 {
-    // add CCPackage and download:package
-    // use different installPath
+    NSString *customInstallPath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"PackagesInstall"];
 
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    [fileManager removeItemAtPath:customInstallPath error:nil];
+    [_cleanPathsArrayOnTearDown addObject:customInstallPath];
+
+    _packageManager.installedPackagesPath = customInstallPath;
+
+    CCPackage *package = [[CCPackage alloc] initWithName:@"testpackage"
+                                              resolution:@"phonehd"
+                                                      os:@"iOS"
+                                               remoteURL:[[NSURL URLWithString:PACKAGE_BASE_URL]
+                                                                 URLByAppendingPathComponent:@"testpackage-iOS-phonehd.zip"]];
+
+    [_packageManager downloadPackage:package enableAfterDownload:NO];
+
+    [self waitForDelegateToReturn];
+
+    XCTAssertNotNil(package);
+    XCTAssertTrue(_managerReturnedSuccessfully);
+    XCTAssertEqual(package.status, CCPackageStatusInstalledDisabled);
+}
+
+/*
+- (void)testLoadPackages
+{
     XCTFail(@"Not implemented yet.");
 }
 
@@ -252,6 +311,7 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 {
     XCTFail(@"Not implemented yet.");
 }
+*/
 
 - (void)testAllOtherDownloadRelatedMethods
 {
