@@ -79,7 +79,7 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 
 +(void)purgeSharedSpriteFrameCache
 {
-	_sharedSpriteFrameCache = nil;
+	[[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFrames];
 }
 
 -(id) init
@@ -88,7 +88,7 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 		_spriteFrames = [[NSMutableDictionary alloc] initWithCapacity: 100];
 		_spriteFramesAliases = [[NSMutableDictionary alloc] initWithCapacity:10];
 		_loadedFilenames = [[NSMutableSet alloc] initWithCapacity:30];
-        _spriteFrameFileLookup = [[NSMutableDictionary alloc] init];
+		_spriteFrameFileLookup = [[NSMutableDictionary alloc] init];
 	}
 
 	return self;
