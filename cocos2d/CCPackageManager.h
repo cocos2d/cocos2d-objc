@@ -171,6 +171,8 @@
  * Deletes a package.
  * Will disable the package first and delete it from disk. Temp download and unzip files will be removed as well.
  * A package that is being unzipped cannot be deleted. Try after the unzipping finished.
+ * The status will become CCPackageStatusDeleted in case you still hold a reference to the object.
+ * localDownloURL, unzipURL and installURL will be nil after a succesful deletion.
  *
  * @param package The package to be deleted
  * @param error Error pointer with details about a failed operation

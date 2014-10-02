@@ -644,6 +644,7 @@
 
 - (BOOL)deletePackage:(CCPackage *)package error:(NSError **)error
 {
+    BOOL result = YES;
     if (package.status == CCPackageStatusUnzipping)
     {
         if (error)
@@ -662,24 +663,48 @@
 
     [_downloadManager cancelDownloadOfPackage:package];
 
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if (package.unzipURL
-        && [fileManager fileExistsAtPath:package.unzipURL.path]
-        && (![fileManager removeItemAtURL:package.unzipURL error:error]))
+    if (![self deleteURLSelector:@selector(localDownloadURL) ofPackage:package error:error])
     {
-        return NO;
+        result = NO;
     }
 
-    BOOL result = ([fileManager fileExistsAtPath:package.installURL.path]
-                   && [fileManager removeItemAtURL:package.installURL error:error]);
+    if (![self deleteURLSelector:@selector(unzipURL) ofPackage:package error:error])
+    {
+        result = NO;
+    }
+
+    if (![self deleteURLSelector:@selector(installURL) ofPackage:package error:error])
+    {
+        result = NO;
+    }
 
     if (result)
     {
+        package.localDownloadURL = nil;
+        package.unzipURL = nil;
+        package.installURL = nil;
+        package.status = CCPackageStatusDeleted;
+
         CCLOGINFO(@"[PACKAGE/INSTALL][INFO] Package deletion successful!");
     }
     else
     {
         CCLOG(@"[PACKAGE/INSTALL][ERROR] Package deletion failed: %@", *error);
+    }
+
+    return result;
+}
+
+- (BOOL)deleteURLSelector:(SEL)urlSelector ofPackage:(CCPackage *)aPackage error:(NSError **)error
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+
+    NSURL *url = [aPackage valueForKey:NSStringFromSelector(urlSelector)];
+
+    BOOL result = YES;
+    if (url && [fileManager fileExistsAtPath:url.path])
+    {
+        result = [fileManager removeItemAtURL:url error:error];
     }
 
     return result;
