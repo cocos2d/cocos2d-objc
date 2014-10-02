@@ -126,9 +126,23 @@
 
 - (void)resumeDownloadOfPackage:(CCPackage *)package
 {
+    [self createDownloadIfNotExistForPackage:package];
+
     CCLOGINFO(@"[PACKAGE/DOWNLOADS][INFO] Resuming download of package %@.", package);
     CCPackageDownload *packageDownload = [self packageDownloadForPackage:package];
     [packageDownload resume];
+}
+
+- (void)createDownloadIfNotExistForPackage:(CCPackage *)package
+{
+    if (![self packageDownloadForPackage:package])
+    {
+        CCPackageDownload *packageDownload = [[CCPackageDownload alloc] initWithPackage:package
+                                                                               localURL:package.localDownloadURL];
+        packageDownload.delegate = self;
+
+        [_downloads addObject:packageDownload];
+    }
 }
 
 - (void)pauseAllDownloads
