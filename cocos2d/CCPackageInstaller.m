@@ -2,6 +2,7 @@
 #import "CCPackageConstants.h"
 #import "CCPackage.h"
 #import "ccMacros.h"
+#import "CCPackage_private.h"
 
 
 @interface CCPackageInstaller ()
@@ -31,14 +32,6 @@
 
 - (BOOL)installWithError:(NSError **)error
 {
-
-/*  TODO
-    CCPackageInstallData *installData = [_package installData];
-
-    NSAssert(installData != nil, @"installData must not be nil");
-    NSAssert(installData.unzipURL != nil, @"installData.unzipURL must not be nil");
-*/
-
     if (![self unzippedPackageFolderExists:error])
     {
         [_package setValue:@(CCPackageStatusInstallationFailed) forKey:@"status"];
@@ -58,13 +51,10 @@
 
 - (BOOL)movePackageToInstallPathWithError:(NSError **)error
 {
-    // TODO
-    // CCPackageInstallData *installData = [_package installData];
-
     NSAssert(_package.unzipURL != nil, @"package.unzipURL must not be nil.");
     NSAssert(_package.folderName != nil, @"package.folderName must not be nil.");
 
-    [_package setValue:[NSURL fileURLWithPath:[_installPath stringByAppendingPathComponent:_package.folderName]] forKey:@"installURL"];
+    _package.installURL = [NSURL fileURLWithPath:[_installPath stringByAppendingPathComponent:_package.folderName]];
 
     NSError *errorMove;
     NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -89,10 +79,6 @@
 
 - (BOOL)unzippedPackageFolderExists:(NSError **)error
 {
-/*  TODO
-    CCPackageInstallData *installData = [_package installData];
-    NSAssert(installData.unzipURL, @"installData.unzipURL must not be nil");
-*/
     NSAssert(_package.unzipURL != nil, @"package.unzipURL must not be nil.");
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
