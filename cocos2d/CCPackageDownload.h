@@ -49,11 +49,12 @@
 
 /**
  *  Stops the download and deletes the download file
+ *  Status of package is reset to CCPackageStatusInitial.
  */
 - (void)cancel;
 
 /**
- *  Stops the download
+ *  Pauses the download.
  */
 - (void)pause;
 

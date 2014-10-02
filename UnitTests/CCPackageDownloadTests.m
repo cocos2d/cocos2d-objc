@@ -294,6 +294,7 @@ static BOOL __support_range_request = YES;
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
     XCTAssertFalse([fileManager fileExistsAtPath:_download.localURL.path]);
+    XCTAssertEqual(_package.status, CCPackageStatusInitial);
 }
 
 - (void)testPauseDownload
