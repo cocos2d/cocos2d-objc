@@ -182,9 +182,9 @@
 - (BOOL)deletePackage:(CCPackage *)package error:(NSError **)error;
 
 /**
- * Cancels the download of a package.
- * This will remove the package from the download manager as well from the package manager if the status is in one of the download states:
+ * Cancels the download of a package if the package has one of the following status:
  *    CCPackageStatusDownloadPaused, CCPackageStatusDownloading, CCPackageStatusDownloaded, CCPackageStatusDownloadFailed
+ * Status of package is reset to CCPackageStatusInitial.
  *
  * @param package The package which download should be cancelled
  */

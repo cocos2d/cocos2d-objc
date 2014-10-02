@@ -18,7 +18,8 @@
 #import "AppDelegate.h"
 #import "CCPackageCocos2dEnabler.h"
 #import "CCPackageManager_private.h"
-#import "CCPackagesTestFixtures.h"
+#import "CCPackagesTestFixturesAndHelpers.h"
+#import "CCPackageDownloadManager.h"
 
 
 static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
@@ -113,6 +114,7 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
     [CCFileUtils sharedFileUtils].searchResolutionsOrder = [@[CCFileUtilsSuffixiPhoneHD] mutableCopy];
 
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:PACKAGE_STORAGE_USERDEFAULTS_KEY];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 
     [NSURLProtocol registerClass:[CCPackageManagerTestURLProtocol class]];
 }
@@ -274,7 +276,7 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 
     _packageManager.installedPackagesPath = customInstallPath;
 
-    CCPackage *package = [CCPackagesTestFixtures testPackageWithInstallFolderPath:_packageManager.installedPackagesPath];
+    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageInitial];
 
     [_packageManager downloadPackage:package enableAfterDownload:NO];
 
@@ -287,7 +289,7 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 
 - (void)testEnablePackage
 {
-    CCPackage *package = [CCPackagesTestFixtures testPackageWithInstallFolderPath:_packageManager.installedPackagesPath];
+    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageInitial];
 
     NSString *pathToPackage = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Resources-shared/Packages/testpackage-iOS-phonehd_unzipped"];
     package.installURL = [[NSURL fileURLWithPath:pathToPackage] URLByAppendingPathComponent:@"testpackage-iOS-phonehd"];
@@ -304,7 +306,8 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 
 - (void)testEnableNonDisabledPackage
 {
-    CCPackage *package = [CCPackagesTestFixtures testPackageWithStatus:CCPackageStatusInitial installFolderPath:_packageManager.installedPackagesPath];
+    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageWithStatus:CCPackageStatusInitial installFolderPath:_packageManager
+            .installedPackagesPath];
 
     NSError *error;
     BOOL success = [_packageManager enablePackage:package error:&error];
@@ -317,7 +320,8 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 
 - (void)testDisablePackage
 {
-    CCPackage *package = [CCPackagesTestFixtures testPackageWithStatus:CCPackageStatusInstalledEnabled installFolderPath:_packageManager.installedPackagesPath];
+    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageWithStatus:CCPackageStatusInstalledEnabled installFolderPath:_packageManager
+            .installedPackagesPath];
 
     NSError *error;
     BOOL success = [_packageManager disablePackage:package error:&error];
@@ -330,7 +334,8 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 
 - (void)testDisableNonEnabledPackage
 {
-    CCPackage *package = [CCPackagesTestFixtures testPackageWithStatus:CCPackageStatusInitial installFolderPath:_packageManager.installedPackagesPath];
+    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageWithStatus:CCPackageStatusInitial installFolderPath:_packageManager
+            .installedPackagesPath];
 
     NSError *error;
     BOOL success = [_packageManager disablePackage:package error:&error];
@@ -343,7 +348,8 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 
 - (void)testDeleteInstalledPackage
 {
-    CCPackage *package = [CCPackagesTestFixtures testPackageWithStatus:CCPackageStatusInstalledEnabled installFolderPath:_packageManager.installedPackagesPath];
+    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageWithStatus:CCPackageStatusInstalledEnabled installFolderPath:_packageManager
+            .installedPackagesPath];
     [_packageManager.packages addObject:package];
 
     NSArray *urls = [self copyOfURLsOfPackage:package];
@@ -353,16 +359,7 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 
     XCTAssertTrue(success);
 
-    BOOL isInSearchPath = NO;
-    for (NSString *aSearchPath in [CCFileUtils sharedFileUtils].searchPath)
-    {
-        if ([aSearchPath isEqualToString:package.installURL.path])
-        {
-            isInSearchPath = YES;
-        }
-    }
-
-    XCTAssertFalse(isInSearchPath);
+    XCTAssertFalse([CCPackagesTestFixturesAndHelpers isURLInCocos2dSearchPath:package.installURL]);
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
     XCTAssertFalse([fileManager fileExistsAtPath:package.installURL.path]);
@@ -374,7 +371,8 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 
 - (void)testDeleteUnzippedPackage
 {
-    CCPackage *package = [CCPackagesTestFixtures testPackageWithStatus:CCPackageStatusUnzipped installFolderPath:_packageManager.installedPackagesPath];
+    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageWithStatus:CCPackageStatusUnzipped installFolderPath:_packageManager
+            .installedPackagesPath];
     [_packageManager.packages addObject:package];
 
     NSArray *urls = [self copyOfURLsOfPackage:package];
@@ -391,7 +389,8 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 
 - (void)testDeleteDownloadedPackage
 {
-    CCPackage *package = [CCPackagesTestFixtures testPackageWithStatus:CCPackageStatusDownloaded installFolderPath:_packageManager.installedPackagesPath];
+    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageWithStatus:CCPackageStatusDownloaded installFolderPath:_packageManager
+            .installedPackagesPath];
     [_packageManager.packages addObject:package];
 
     NSArray *urls = [self copyOfURLsOfPackage:package];
@@ -416,7 +415,7 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 
 - (void)testDeleteUnzippingPackage
 {
-    CCPackage *package = [CCPackagesTestFixtures testPackageWithInstallFolderPath:_packageManager.installedPackagesPath];
+    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageInitial];
     package.status = CCPackageStatusUnzipping;
     package.localDownloadURL = [NSURL fileURLWithPath:@"/Foo"];
     package.unzipURL = [NSURL fileURLWithPath:@"/Baa"];
@@ -436,17 +435,31 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
     XCTAssertEqual(package.status, CCPackageStatusUnzipping);
 }
 
-/*
 - (void)testCancelDownload
 {
-    XCTFail(@"Not implemented yet.");
+    _packageManager.baseURL = [NSURL URLWithString:PACKAGE_BASE_URL];
+    CCPackage *package = [_packageManager downloadPackageWithName:@"testpackage" enableAfterDownload:YES];
+
+    [_packageManager cancelDownloadOfPackage:package];
+
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSArray *filesInDownloadFolder = [fileManager contentsOfDirectoryAtPath:_packageManager.downloadManager.downloadPath error:nil];
+
+    XCTAssertEqual(filesInDownloadFolder.count, 0);
+    XCTAssertEqual(_packageManager.downloadManager.allDownloads.count, 0);
+    XCTAssertEqual(package.status, CCPackageStatusInitial);
+    XCTAssertEqual(_packageManager.allPackages.count, 1);
 }
 
-- (void)testLoadPackages
+- (void)testCancelDownloadOfPackageThatIsInstalled
 {
-    XCTFail(@"Not implemented yet.");
+    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageWithStatus:CCPackageStatusInstalledDisabled installFolderPath:_packageManager
+            .installedPackagesPath];
+
+    [_packageManager cancelDownloadOfPackage:package];
+
+    XCTAssertEqual(package.status, CCPackageStatusInstalledDisabled);
 }
-*/
 
 - (void)testAllOtherDownloadRelatedMethods
 {
@@ -457,6 +470,67 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
  *
  * These should be already tests in the CCPackageDownloadManagerTests class as CCPackageManager is just delegating the class to that class.
  */
+}
+
+- (void)testLoadPackagesReEnable
+{
+    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageWithStatus:CCPackageStatusInstalledDisabled installFolderPath:_packageManager.installedPackagesPath];
+    // To simulate the loadPackages we need an installed but not actually enabled package just the status has to state it is enabled.
+    package.status = CCPackageStatusInstalledEnabled;
+
+    CCPackage *package2 = [CCPackagesTestFixturesAndHelpers testPackageInitial];
+
+    NSArray *packages = @[[package toDictionary], [package2 toDictionary]];
+
+    [[NSUserDefaults standardUserDefaults] setValue:packages forKey:PACKAGE_STORAGE_USERDEFAULTS_KEY];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
+    [_packageManager loadPackages];
+
+    XCTAssertEqual(_packageManager.allPackages.count, 2);
+    XCTAssertTrue([CCPackagesTestFixturesAndHelpers isURLInCocos2dSearchPath:package.installURL]);
+}
+
+- (void)testLoadPackagesResumeDownloads
+{
+    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageInitial];
+    package.status = CCPackageStatusDownloadPaused;
+    package.enableOnDownload = NO;
+
+    NSString *fileName = [NSString stringWithFormat:@"%@.zip", [package standardIdentifier]];
+    package.localDownloadURL = [NSURL fileURLWithPath:[_packageManager.downloadManager.downloadPath stringByAppendingPathComponent:fileName]];
+
+    NSArray *packages = @[[package toDictionary]];
+
+    [[NSUserDefaults standardUserDefaults] setValue:packages forKey:PACKAGE_STORAGE_USERDEFAULTS_KEY];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
+    [_packageManager loadPackages];
+
+    [self waitForDelegateToReturn];
+
+    XCTAssertTrue(_managerReturnedSuccessfully);
+    CCPackage *loadedPackage = _packageManager.allPackages[0];
+    XCTAssertEqual(loadedPackage.status, CCPackageStatusInstalledDisabled);
+}
+
+- (void)testLoadPackagesRestartUnzipping
+{
+    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageWithStatus:CCPackageStatusDownloaded installFolderPath:_packageManager.installedPackagesPath];
+    package.enableOnDownload = NO;
+
+    NSArray *packages = @[[package toDictionary]];
+
+    [[NSUserDefaults standardUserDefaults] setValue:packages forKey:PACKAGE_STORAGE_USERDEFAULTS_KEY];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
+    [_packageManager loadPackages];
+
+    [self waitForDelegateToReturn];
+
+    XCTAssertTrue(_managerReturnedSuccessfully);
+    CCPackage *loadedPackage = _packageManager.allPackages[0];
+    XCTAssertEqual(loadedPackage.status, CCPackageStatusInstalledDisabled);
 }
 
 
@@ -505,7 +579,7 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 
 - (void)waitForDelegateToReturn
 {
-    [CCPackagesTestFixtures waitForCondition:^bool {
+    [CCPackagesTestFixturesAndHelpers waitForCondition:^bool {
         return !_managerReturnedFailed && !_managerReturnedSuccessfully;
     }];
 }

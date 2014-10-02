@@ -92,7 +92,8 @@
             continue;
         }
 
-        if (aPackage.status == CCPackageStatusUnzipped
+        if (aPackage.status == CCPackageStatusDownloaded
+            || aPackage.status == CCPackageStatusUnzipped
             || aPackage.status == CCPackageStatusUnzipping)
         {
             [self unzipPackage:aPackage];
@@ -720,11 +721,7 @@
         return;
     }
 
-    [_packages removeObject:package];
-
     [_downloadManager cancelDownloadOfPackage:package];
-
-    [self savePackages];
 }
 
 - (void)pauseDownloadOfPackage:(CCPackage *)package

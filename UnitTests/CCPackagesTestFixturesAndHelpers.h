@@ -6,12 +6,14 @@
 typedef bool(^WaitConditionBlock)(void);
 
 
-@interface CCPackagesTestFixtures : NSObject
+@interface CCPackagesTestFixturesAndHelpers : NSObject
 
-+ (CCPackage *)testPackageWithInstallFolderPath:(NSString *)installFolderPath;
++ (CCPackage *)testPackageInitial;
 
 + (CCPackage *)testPackageWithStatus:(CCPackageStatus)status installFolderPath:(NSString *)installFolderPath;
 
 + (void)waitForCondition:(WaitConditionBlock)waitConditionBlock;
+
++ (BOOL)isURLInCocos2dSearchPath:(NSURL *)URL;
 
 @end

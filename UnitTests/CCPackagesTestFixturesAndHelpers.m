@@ -1,16 +1,16 @@
-#import "CCPackagesTestFixtures.h"
+#import "CCPackagesTestFixturesAndHelpers.h"
 #import "CCPackageTypes.h"
 #import "CCPackage.h"
 #import "CCPackageCocos2dEnabler.h"
 #import "CCPackage_private.h"
+#import "CCFileUtils.h"
 
 
+@implementation CCPackagesTestFixturesAndHelpers
 
-@implementation CCPackagesTestFixtures
-
-+ (CCPackage *)testPackageWithInstallFolderPath:(NSString *)installFolderPath
++ (CCPackage *)testPackageInitial
 {
-    return [self testPackageWithStatus:CCPackageStatusInitial installFolderPath:installFolderPath];
+    return [self testPackageWithStatus:CCPackageStatusInitial installFolderPath:nil];
 }
 
 + (CCPackage *)testPackageWithStatus:(CCPackageStatus)status installFolderPath:(NSString *)installFolderPath
@@ -45,7 +45,7 @@
         NSString *pathDownloadFolder = [NSTemporaryDirectory() stringByAppendingPathComponent:@"Downloads"];
         [fileManager createDirectoryAtPath:pathDownloadFolder withIntermediateDirectories:YES attributes:nil error:nil];
 
-        package.localDownloadURL = [NSURL fileURLWithPath:[pathDownloadFolder stringByAppendingPathComponent:@"testpackage-iOS-phonehd"]];
+        package.localDownloadURL = [NSURL fileURLWithPath:[pathDownloadFolder stringByAppendingPathComponent:@"testpackage-iOS-phonehd.zip"]];
 
         [fileManager copyItemAtPath:pathToZippedPackage toPath:package.localDownloadURL.path error:nil];
     }
@@ -69,6 +69,18 @@
     {
         [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
     }
+}
+
++ (BOOL)isURLInCocos2dSearchPath:(NSURL *)URL
+{
+    for (NSString *aSearchPath in [CCFileUtils sharedFileUtils].searchPath)
+    {
+        if ([aSearchPath isEqualToString:URL.path])
+        {
+            return YES;
+        }
+    }
+    return NO;
 }
 
 @end
