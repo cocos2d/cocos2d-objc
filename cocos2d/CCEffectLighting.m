@@ -36,16 +36,19 @@
                               ];
     
     NSArray *vertUniforms = @[
-                              [CCEffectUniform uniform:@"vec2" name:@"u_lightPosition" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]]
+                              [CCEffectUniform uniform:@"mat4" name:@"u_ndcToTangentSpace" value:[NSValue valueWithGLKMatrix4:GLKMatrix4Identity]],
+                              [CCEffectUniform uniform:@"vec4" name:@"u_lightPosition" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]]
                               ];
     
     NSArray *varyings = @[
-                          [CCEffectVarying varying:@"vec2" name:@"v_tangentSpaceLightDir"]
+                          [CCEffectVarying varying:@"vec4" name:@"v_tangentSpaceLightDir"]
                           ];
     
     if((self = [super initWithFragmentUniforms:fragUniforms vertexUniforms:vertUniforms varyings:varyings]))
     {
         self.debugName = @"CCEffectLighting";
+        
+        _light = light;
     }
     return self;
 }
@@ -62,16 +65,14 @@
     CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:CCEffectDefaultInitialInputSnippet snippet:CCEffectDefaultInputSnippet];
     
     NSString* effectBody = CC_GLSL(
-                                   vec4 tangentSpaceLightDir = vec4(v_tangentSpaceLightDir, 0.0, 0.0);
-                                   
                                    // Index the normal map and expand the color value from [0..1] to [-1..1]
                                    vec4 normalMap = texture2D(cc_NormalMapTexture, cc_FragTexCoord2);
                                    vec4 tangentSpaceNormal = normalMap * 2.0 - 1.0;
                                    
-                                   float luminance = dot(tangentSpaceNormal, tangentSpaceLightDir);
+                                   float NdotL = dot(tangentSpaceNormal, v_tangentSpaceLightDir);
                                    if (normalMap.a > 0.0)
                                    {
-                                       return vec4(luminance, luminance, luminance, 1.0);
+                                       return inputValue * u_lightColor * NdotL;
                                    }
                                    else
                                    {
@@ -88,12 +89,12 @@
     self.vertexFunctions = [[NSMutableArray alloc] init];
     
     NSString* effectBody = CC_GLSL(
-                                   // Compute the tangent space lighting direction vector
-                                   // for each vertex.
-                                   vec4 tangentSpaceLightDir = vec4(u_lightPosition, 0.0, 0.0) - cc_Position;
-                                   tangentSpaceLightDir.z = 0.0;
-                                   tangentSpaceLightDir.w = 1.0;
-                                   v_tangentSpaceLightDir = tangentSpaceLightDir.xy;
+                                   // Compute the tangent space lighting direction vector for each
+                                   // vertex. cc_Position was transformed on the CPU so we need to
+                                   // back it out from NDC (normalized device coords) to tangent
+                                   // space before using it to compute the light direction.
+                                   vec4 tangentSpacePosition = u_ndcToTangentSpace * cc_Position;
+                                   v_tangentSpaceLightDir = normalize(u_lightPosition - tangentSpacePosition);
                                    return cc_Position;
                                    );
     
@@ -119,9 +120,11 @@
         GLKMatrix4 lightNodeToEffectNode = weakSelf.light ? CCEffectUtilsTransformFromNodeToNode(weakSelf.light, pass.node, nil) : GLKMatrix4Identity;
         
         // Compute the light's position in the effect node's coordinate system.
-        GLKVector4 lightPosition = GLKMatrix4MultiplyVector4(lightNodeToEffectNode, GLKVector4Make(weakSelf.light.positionInPoints.x, weakSelf.light.positionInPoints.y, 0.0f, 1.0f));
+        GLKVector4 lightPosition = GLKMatrix4MultiplyVector4(lightNodeToEffectNode, GLKVector4Make(weakSelf.light.anchorPointInPoints.x, weakSelf.light.anchorPointInPoints.y, 500.0f, 1.0f));
         
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_lightPosition"]] = [NSValue valueWithGLKVector2:GLKVector2Make(lightPosition.x, lightPosition.y)];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_lightColor"]] = [NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_lightPosition"]] = [NSValue valueWithGLKVector4:lightPosition];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_ndcToTangentSpace"]] = [NSValue valueWithGLKMatrix4:pass.ndcToNodeLocal];
         
     } copy]];
     
