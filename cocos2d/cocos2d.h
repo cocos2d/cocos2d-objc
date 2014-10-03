@@ -71,6 +71,7 @@
 #import "CCEffectGlass.h"
 #import "CCEffectDropShadow.h"
 #import "CCEffectHue.h"
+#import "CCEffectLighting.h"
 #import "CCEffectNode.h"
 #import "CCEffectPixellate.h"
 #import "CCEffectReflection.h"
