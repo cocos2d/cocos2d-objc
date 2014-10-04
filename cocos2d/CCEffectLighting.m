@@ -122,7 +122,9 @@
         // Compute the light's position in the effect node's coordinate system.
         GLKVector4 lightPosition = GLKMatrix4MultiplyVector4(lightNodeToEffectNode, GLKVector4Make(weakSelf.light.anchorPointInPoints.x, weakSelf.light.anchorPointInPoints.y, 500.0f, 1.0f));
         
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_lightColor"]] = [NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)];
+        GLKVector4 lightColor = GLKVector4MultiplyScalar(weakSelf.light.color.glkVector4, weakSelf.light.intensity);
+        
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_lightColor"]] = [NSValue valueWithGLKVector4:lightColor];
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_lightPosition"]] = [NSValue valueWithGLKVector4:lightPosition];
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_ndcToTangentSpace"]] = [NSValue valueWithGLKMatrix4:pass.ndcToNodeLocal];
         

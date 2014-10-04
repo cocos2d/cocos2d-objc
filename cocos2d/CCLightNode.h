@@ -37,6 +37,14 @@
 /// @name Initializing a CCLightNode object
 /// -----------------------------------------------------------------------
 
+
+/**
+ *  Initializes a CCLightNode object with a white color and full intensity.
+ *
+ *  @return The CCLightNode object.
+ */
+-(id)init;
+
 /**
  *  Initializes a CCLightNode object with the specified parameters.
  *

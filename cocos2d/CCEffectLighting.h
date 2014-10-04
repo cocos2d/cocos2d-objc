@@ -7,6 +7,7 @@
 //
 
 #import "CCEffect.h"
+#import "CCLightNode.h"
 
 /**
  * CCEffectLighting uses a normal map and a collection of light nodes to compute the Phong
@@ -18,9 +19,10 @@
 /// @name Accessing Effect Attributes
 /// -----------------------------------------------------------------------
 
-/** The node that will light the affected node.
+/** The lights that will contribute to the lighting of the affected
+ *  node.
  */
-@property (nonatomic, strong) CCNode *light;
+@property (nonatomic, strong) CCLightNode *light;
 
 
 /// -----------------------------------------------------------------------
@@ -41,7 +43,7 @@
  *
  *  @return The CCEffectLighting object.
  */
--(id)initWithLight:(CCNode *)light;
+-(id)initWithLight:(CCLightNode *)light;
 
 
 /// -----------------------------------------------------------------------
@@ -55,6 +57,6 @@
  *
  *  @return The CCEffectLighting object.
  */
-+(id)effectWithLight:(CCNode *)light;
++(id)effectWithLight:(CCLightNode *)light;
 
 @end
