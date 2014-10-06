@@ -33,7 +33,7 @@
 {
     NSArray *fragUniforms = @[
                               [CCEffectUniform uniform:@"vec4" name:@"u_lightColor" value:[NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)]],
-                              [CCEffectUniform uniform:@"vec4" name:@"u_ambientColor" value:[NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)]],
+                              [CCEffectUniform uniform:@"vec4" name:@"u_globalAmbientColor" value:[NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)]],
                               ];
     
     NSArray *vertUniforms = @[
@@ -70,10 +70,10 @@
                                    vec4 normalMap = texture2D(cc_NormalMapTexture, cc_FragTexCoord2);
                                    vec4 tangentSpaceNormal = normalMap * 2.0 - 1.0;
                                    
-                                   float NdotL = dot(tangentSpaceNormal, v_tangentSpaceLightDir);
+                                   vec4 lightContribution = u_lightColor * dot(tangentSpaceNormal, v_tangentSpaceLightDir);
                                    if (normalMap.a > 0.0)
                                    {
-                                       return inputValue * (u_lightColor * NdotL + u_ambientColor);
+                                       return inputValue * (lightContribution + u_globalAmbientColor);
                                    }
                                    else
                                    {
@@ -94,8 +94,7 @@
                                    // vertex. cc_Position was transformed on the CPU so we need to
                                    // back it out from NDC (normalized device coords) to tangent
                                    // space before using it to compute the light direction.
-                                   vec4 tangentSpacePosition = u_ndcToTangentSpace * cc_Position;
-                                   v_tangentSpaceLightDir = normalize(u_lightPosition - tangentSpacePosition);
+                                   v_tangentSpaceLightDir = normalize(u_lightPosition - u_ndcToTangentSpace * cc_Position);
                                    return cc_Position;
                                    );
     
@@ -128,7 +127,7 @@
         
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_lightColor"]] = [NSValue valueWithGLKVector4:lightColor];
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_lightPosition"]] = [NSValue valueWithGLKVector4:lightPosition];
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_ambientColor"]] = [NSValue valueWithGLKVector4:ambientColor];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_globalAmbientColor"]] = [NSValue valueWithGLKVector4:ambientColor];
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_ndcToTangentSpace"]] = [NSValue valueWithGLKMatrix4:pass.ndcToNodeLocal];
         
     } copy]];
