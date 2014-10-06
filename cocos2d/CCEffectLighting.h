@@ -26,7 +26,7 @@
 
 
 /// -----------------------------------------------------------------------
-/// @name Initializing a CCEffectRefraction object
+/// @name Initializing a CCEffectLighting object
 /// -----------------------------------------------------------------------
 
 /**
