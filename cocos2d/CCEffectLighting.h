@@ -19,11 +19,6 @@
 /// @name Accessing Effect Attributes
 /// -----------------------------------------------------------------------
 
-/** The lights that will contribute to the lighting of the affected
- *  node.
- */
-@property (nonatomic, strong) CCLightNode *light;
-
 
 /// -----------------------------------------------------------------------
 /// @name Initializing a CCEffectLighting object
@@ -39,11 +34,11 @@
 /**
  *  Initializes a CCEffectLighting object with the supplied parameters.
  *
- *  @param environment The node that will light the affected node.
+ *  @param environment The array of lights that will light the affected node.
  *
  *  @return The CCEffectLighting object.
  */
--(id)initWithLight:(CCLightNode *)light;
+-(id)initWithLights:(NSArray *)lights;
 
 
 /// -----------------------------------------------------------------------
@@ -53,10 +48,35 @@
 /**
  *  Creates a CCEffectLighting object with the supplied parameters.
  *
- *  @param environment The node that will light the affected node.
+ *  @param environment The array of lights that will light the affected node.
  *
  *  @return The CCEffectLighting object.
  */
-+(id)effectWithLight:(CCLightNode *)light;
++(id)effectWithLights:(NSArray *)lights;
+
+
+/// -----------------------------------------------------------------------
+/// @name Adding and removing lights
+/// -----------------------------------------------------------------------
+
+/**
+ *  Adds a light to the effect.
+ *
+ *  @param light CCLightNode to add.
+ */
+-(void) addLight:(CCLightNode *)light;
+
+/**
+ *  Removes a light from the effect.
+ *
+ *  @param light The light node to remove.
+ */
+-(void) removeLight:(CCLightNode *)light;
+
+/**
+ *  Removes all lights from the effect.
+ */
+-(void) removeAllLights;
+
 
 @end
