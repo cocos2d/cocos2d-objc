@@ -330,7 +330,7 @@
     if (!_pagingEnabled) return 0;
     if (!self.contentSizeInPoints.width || !_contentNode.contentSizeInPoints.width) return 0;
     
-    return _contentNode.contentSizeInPoints.width / self.contentSizeInPoints.width;
+    return roundf(_contentNode.contentSizeInPoints.width / self.contentSizeInPoints.width);
 }
 
 - (int) numVerticalPages
@@ -338,7 +338,7 @@
     if (!_pagingEnabled) return 0;
     if (!self.contentSizeInPoints.height || !_contentNode.contentSizeInPoints.height) return 0;
     
-    return _contentNode.contentSizeInPoints.height / self.contentSizeInPoints.height;
+    return roundf(_contentNode.contentSizeInPoints.height / self.contentSizeInPoints.height);
 }
 
 #pragma mark Panning and setting position
@@ -413,7 +413,7 @@
 - (void)updateAndroidScrollTranslation:(CGPoint)worldPosition
 {
 #if __CC_PLATFORM_ANDROID
-    _rawScrollTranslation = [self convertToWindowSpace:worldPosition];
+    _rawScrollTranslation = [self convertToWindowSpace:CGPointMake(-worldPosition.x, worldPosition.y)];
 #endif
 }
 
@@ -501,7 +501,7 @@
             
             _contentNode.position = ccpAdd(_contentNode.position, delta);
             
-            [self updateAndroidScrollTranslation:CGPointMake(_contentNode.position.x, _contentNode.position.y * -1)];
+            [self updateAndroidScrollTranslation:CGPointMake(_contentNode.position.x * -1, _contentNode.position.y * -1)];
 
             // Deaccelerate layer
             float deaccelerationX = kCCScrollViewDeacceleration;
@@ -863,7 +863,7 @@
     dx /= scaleFactor;
     dy /= scaleFactor;
 
-    _rawScrollTranslation.x += dx;
+    _rawScrollTranslation.x -= dx;
     _rawScrollTranslation.y -= dy;
     
     CCDirector* dir = [CCDirector sharedDirector];
