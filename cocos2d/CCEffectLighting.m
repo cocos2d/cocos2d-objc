@@ -29,10 +29,11 @@
     return [self initWithLight:nil];
 }
 
--(id)initWithLight:(CCNode *)light
+-(id)initWithLight:(CCLightNode *)light
 {
     NSArray *fragUniforms = @[
                               [CCEffectUniform uniform:@"vec4" name:@"u_lightColor" value:[NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)]],
+                              [CCEffectUniform uniform:@"vec4" name:@"u_ambientColor" value:[NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)]],
                               ];
     
     NSArray *vertUniforms = @[
@@ -53,7 +54,7 @@
     return self;
 }
 
-+(id)effectWithLight:(CCNode *)light
++(id)effectWithLight:(CCLightNode *)light
 {
     return [[self alloc] initWithLight:light];
 }
@@ -72,7 +73,7 @@
                                    float NdotL = dot(tangentSpaceNormal, v_tangentSpaceLightDir);
                                    if (normalMap.a > 0.0)
                                    {
-                                       return inputValue * u_lightColor * NdotL;
+                                       return inputValue * (u_lightColor * NdotL + u_ambientColor);
                                    }
                                    else
                                    {
@@ -123,9 +124,11 @@
         GLKVector4 lightPosition = GLKMatrix4MultiplyVector4(lightNodeToEffectNode, GLKVector4Make(weakSelf.light.anchorPointInPoints.x, weakSelf.light.anchorPointInPoints.y, 500.0f, 1.0f));
         
         GLKVector4 lightColor = GLKVector4MultiplyScalar(weakSelf.light.color.glkVector4, weakSelf.light.intensity);
+        GLKVector4 ambientColor = GLKVector4MultiplyScalar(weakSelf.light.ambientColor.glkVector4, weakSelf.light.ambientIntensity);
         
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_lightColor"]] = [NSValue valueWithGLKVector4:lightColor];
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_lightPosition"]] = [NSValue valueWithGLKVector4:lightPosition];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_ambientColor"]] = [NSValue valueWithGLKVector4:ambientColor];
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_ndcToTangentSpace"]] = [NSValue valueWithGLKMatrix4:pass.ndcToNodeLocal];
         
     } copy]];

@@ -8,23 +8,32 @@
 
 #import "CCLightNode.h"
 
+
 @implementation CCLightNode
 
--(id)initWithColor:(CCColor *)color intensity:(float)intensity
+-(id)init
+{
+    return [self initWithType:CCLightNodePoint color:[CCColor whiteColor] intensity:1.0f ambientColor:[CCColor whiteColor] ambientIntensity:0.5f];
+}
+
+
+-(id)initWithType:(CCLightNodeType)type color:(CCColor *)color intensity:(float)intensity ambientColor:(CCColor *)ambientColor ambientIntensity:(float)ambientIntensity
 {
     if ((self = [super init]))
     {
+        _type = type;
         _color = color.ccColor4f;
         _intensity = intensity;
+        _ambientColor = ambientColor;
+        _ambientIntensity = ambientIntensity;
     }
     
     return self;
 }
 
-+(id)lightWithColor:(CCColor *)color intensity:(float)intensity
++(id)lightWithType:(CCLightNodeType)type color:(CCColor *)color intensity:(float)intensity ambientColor:(CCColor *)ambientColor ambientIntensity:(float)ambientIntensity
 {
-    return [[self alloc] initWithColor:color intensity:intensity];
+    return [[self alloc] initWithType:type color:color intensity:intensity ambientColor:ambientColor ambientIntensity:ambientIntensity];
 }
-
 
 @end
