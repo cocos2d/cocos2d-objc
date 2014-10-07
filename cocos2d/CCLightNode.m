@@ -36,4 +36,16 @@
     return [[self alloc] initWithType:type color:color intensity:intensity ambientColor:ambientColor ambientIntensity:ambientIntensity];
 }
 
+-(void)setIntensity:(float)intensity
+{
+    NSCAssert((intensity >= 0.0) && (intensity <= 1.0), @"Supplied intensity out of range [0..1].");
+    _intensity = intensity;
+}
+
+-(void)setAmbientIntensity:(float)intensity
+{
+    NSCAssert((intensity >= 0.0) && (intensity <= 1.0), @"Supplied intensity out of range [0..1].");
+    _ambientIntensity = intensity;
+}
+
 @end
