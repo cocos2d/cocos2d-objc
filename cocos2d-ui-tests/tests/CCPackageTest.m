@@ -39,9 +39,17 @@
 
     [self addLabels];
 
+
+
+    #if __CC_PLATFORM_ANDROID
+    NSURL *remoteURL = [NSURL URLWithString:@"https://github.com/NickyWeber/cocos2d_test_resources/blob/master/testpackage-Android-phonehd.zip?raw=true"];
+    #elif __CC_PLATFORM_IOS
+    NSURL *remoteURL = [NSURL URLWithString:@"https://github.com/NickyWeber/cocos2d_test_resources/blob/master/testpackage-iOS-phonehd.zip?raw=true"];
+    #endif
+
     self.package = [[CCPackageManager sharedManager] downloadPackageWithName:@"testpackage"
                                                                   resolution:@"phonehd"
-                                                                   remoteURL:[NSURL URLWithString:@"https://github.com/NickyWeber/cocos2d_test_resources/blob/master/testpackage-iOS-phonehd.zip?raw=true"]
+                                                                   remoteURL:remoteURL
                                                          enableAfterDownload:YES];
 }
 
