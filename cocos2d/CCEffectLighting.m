@@ -167,7 +167,15 @@
             GLKMatrix4 lightNodeToEffectNode = CCEffectUtilsTransformFromNodeToNode(light, pass.node, nil);
             
             // Compute the light's position in the effect node's coordinate system.
-            GLKVector4 lightPosition = GLKMatrix4MultiplyVector4(lightNodeToEffectNode, GLKVector4Make(light.anchorPointInPoints.x, light.anchorPointInPoints.y, 500.0f, 1.0f));
+            GLKVector4 lightVector = GLKVector4Make(0.0f, 0.0f, 0.0f, 0.0f);
+            if (light.type == CCLightNodeDirectional)
+            {
+                lightVector = GLKMatrix4MultiplyVector4(lightNodeToEffectNode, GLKVector4Make(0.0f, 1.0f, 1.0f, 0.0f));
+            }
+            else
+            {
+                lightVector = GLKMatrix4MultiplyVector4(lightNodeToEffectNode, GLKVector4Make(light.anchorPointInPoints.x, light.anchorPointInPoints.y, 50.0f, 1.0f));
+            }
             
             // Compute the real light color based on color and intensity.
             GLKVector4 lightColor = GLKVector4MultiplyScalar(light.color.glkVector4, light.intensity);
@@ -176,7 +184,7 @@
             NSString *lightVectorLabel = [NSString stringWithFormat:@"u_lightVector%lu", (unsigned long)lightIndex];
             
             pass.shaderUniforms[weakSelf.uniformTranslationTable[lightColorLabel]] = [NSValue valueWithGLKVector4:lightColor];
-            pass.shaderUniforms[weakSelf.uniformTranslationTable[lightVectorLabel]] = [NSValue valueWithGLKVector4:lightPosition];
+            pass.shaderUniforms[weakSelf.uniformTranslationTable[lightVectorLabel]] = [NSValue valueWithGLKVector4:lightVector];
         }
 
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_globalAmbientColor"]] = [NSValue valueWithGLKVector4:globalAmbientColor];
