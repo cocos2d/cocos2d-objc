@@ -122,7 +122,7 @@
     {
         CCLightNode *light = lights[lightIndex];
         
-        if (light.type == CCLightNodeDirectional)
+        if (light.type == CCLightDirectional)
         {
             [effectBody appendFormat:@"v_tangentSpaceLightDir%lu = u_lightVector%lu;", (unsigned long)lightIndex, (unsigned long)lightIndex];
         }
@@ -168,7 +168,7 @@
             
             // Compute the light's position in the effect node's coordinate system.
             GLKVector4 lightVector = GLKVector4Make(0.0f, 0.0f, 0.0f, 0.0f);
-            if (light.type == CCLightNodeDirectional)
+            if (light.type == CCLightDirectional)
             {
                 lightVector = GLKMatrix4MultiplyVector4(lightNodeToEffectNode, GLKVector4Make(0.0f, 1.0f, 1.0f, 0.0f));
             }

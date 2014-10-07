@@ -9,12 +9,13 @@
 #import "CCNode.h"
 
 
-typedef NS_ENUM(NSUInteger, CCLightNodeType)
+typedef NS_ENUM(NSUInteger, CCLightType)
 {
-    CCLightNodePoint       = 0,
-    CCLightNodeDirectional = 1,
-    CCLightNodeSpot        = 2,
+    CCLightPoint       = 0,
+    CCLightDirectional = 1,
+    CCLightSpot        = 2,
 };
+
 
 /**
  * CCLightNode allows the user to define lights that will be used with
@@ -36,7 +37,7 @@ typedef NS_ENUM(NSUInteger, CCLightNodeType)
  *  the light to the node exceeds the cutoff angle then the light no longer
  *  contributes to the lighting of the node.
  */
-@property (nonatomic, assign) CCLightNodeType type;
+@property (nonatomic, assign) CCLightType type;
 
 /** The primary color of the light. As described below, the color is modulated by the
  *  intensity value to determine the contribution of the light to the lighting
@@ -91,7 +92,7 @@ typedef NS_ENUM(NSUInteger, CCLightNodeType)
  *
  *  @return The CCLighttNode object.
  */
--(id)initWithType:(CCLightNodeType)type color:(CCColor *)color intensity:(float)intensity ambientColor:(CCColor *)ambientColor ambientIntensity:(float)ambientIntensity;
+-(id)initWithType:(CCLightType)type color:(CCColor *)color intensity:(float)intensity ambientColor:(CCColor *)ambientColor ambientIntensity:(float)ambientIntensity;
 
 
 /// -----------------------------------------------------------------------
@@ -109,7 +110,7 @@ typedef NS_ENUM(NSUInteger, CCLightNodeType)
  *
  *  @return An initialized CCLightNode object.
  */
-+(id)lightWithType:(CCLightNodeType)type color:(CCColor *)color intensity:(float)intensity ambientColor:(CCColor *)ambientColor ambientIntensity:(float)ambientIntensity;
++(id)lightWithType:(CCLightType)type color:(CCColor *)color intensity:(float)intensity ambientColor:(CCColor *)ambientColor ambientIntensity:(float)ambientIntensity;
 
 
 @end

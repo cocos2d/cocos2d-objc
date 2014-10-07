@@ -13,11 +13,11 @@
 
 -(id)init
 {
-    return [self initWithType:CCLightNodePoint color:[CCColor whiteColor] intensity:1.0f ambientColor:[CCColor whiteColor] ambientIntensity:0.5f];
+    return [self initWithType:CCLightPoint color:[CCColor whiteColor] intensity:1.0f ambientColor:[CCColor whiteColor] ambientIntensity:0.5f];
 }
 
 
--(id)initWithType:(CCLightNodeType)type color:(CCColor *)color intensity:(float)intensity ambientColor:(CCColor *)ambientColor ambientIntensity:(float)ambientIntensity
+-(id)initWithType:(CCLightType)type color:(CCColor *)color intensity:(float)intensity ambientColor:(CCColor *)ambientColor ambientIntensity:(float)ambientIntensity
 {
     if ((self = [super init]))
     {
@@ -31,7 +31,7 @@
     return self;
 }
 
-+(id)lightWithType:(CCLightNodeType)type color:(CCColor *)color intensity:(float)intensity ambientColor:(CCColor *)ambientColor ambientIntensity:(float)ambientIntensity
++(id)lightWithType:(CCLightType)type color:(CCColor *)color intensity:(float)intensity ambientColor:(CCColor *)ambientColor ambientIntensity:(float)ambientIntensity
 {
     return [[self alloc] initWithType:type color:color intensity:intensity ambientColor:ambientColor ambientIntensity:ambientIntensity];
 }
