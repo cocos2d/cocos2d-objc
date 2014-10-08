@@ -251,46 +251,60 @@
 
 #endif
 
--(void)setupLightingEffectTest
+-(void)setupSimpleLightingTest
 {
-    self.subTitle = @"Lighting Effect Test";
+    self.subTitle = @"Simple Lighting Test";
     
     NSString *normalMapImage = @"Images/ShinyTorusNormals.png";
     NSString *diffuseImage = @"Images/ShinyTorusColor.png";
     
-    CCLightNode *light = [[CCLightNode alloc] init];
-    light.positionType = CCPositionTypePoints;
-    light.position = ccp(100.0f, 0.0f);
-    light.anchorPoint = ccp(0.5f, 0.5f);
-    light.intensity = 1.0f;
-    light.ambientIntensity = 0.2f;
-    light.cutoffRadius = 0.0f;
-    light.depth = 250.0f;
-    
-    CCSprite *lightSprite = [CCSprite spriteWithImageNamed:@"Images/snow.png"];
-    [light addChild:lightSprite];
+    void (^setupBlock)(CGPoint position, CCLightType type, float lightDepth, NSString *title) = ^void(CGPoint position, CCLightType type, float lightDepth, NSString *title)
+    {
+        CCLightNode *light = [[CCLightNode alloc] init];
+        light.type = type;
+        light.positionType = CCPositionTypeNormalized;
+        light.position = ccp(0.5f, 0.5f);
+        light.anchorPoint = ccp(0.5f, 0.5f);
+        light.intensity = 1.0f;
+        light.ambientIntensity = 0.2f;
+        light.cutoffRadius = 0.0f;
+        light.depth = lightDepth;
+        
+        CCSprite *lightSprite = [CCSprite spriteWithImageNamed:@"Images/snow.png"];
+        [light addChild:lightSprite];
+        
+        CCEffectLighting *lightingEffect = [[CCEffectLighting alloc] initWithLights:@[light]];
+        
+        CCSprite *sprite = [CCSprite spriteWithImageNamed:diffuseImage];
+        sprite.positionType = CCPositionTypeNormalized;
+        sprite.position = position;
+        sprite.normalMapSpriteFrame = [CCSpriteFrame frameWithImageNamed:normalMapImage];
+        sprite.effect = lightingEffect;
+        sprite.scale = 0.5f;
+        
+        [self.contentNode addChild:sprite];
+        
+        [sprite addChild:light];
+        
+        CCLabelTTF *label = [CCLabelTTF labelWithString:title fontName:@"HelveticaNeue-Light" fontSize:18 * [CCDirector sharedDirector].UIScaleFactor];
+        label.color = [CCColor whiteColor];
+        label.positionType = CCPositionTypeNormalized;
+        label.position = ccp(0.5f, 1.1f);
+        label.horizontalAlignment = CCTextAlignmentCenter;
+        
+        [sprite addChild:label];
 
-    CCNode *node = [[CCNode alloc] init];
-    node.positionType = CCPositionTypeNormalized;
-    node.position = ccp(0.65f, 0.5f);
-    node.anchorPoint = ccp(0.5f, 0.5f);
-    
-    [node addChild:light];
-
-    CCEffectLighting *lightingEffect = [[CCEffectLighting alloc] initWithLights:@[light]];
-    
-    CCSprite *sprite = [CCSprite spriteWithImageNamed:diffuseImage];
-    sprite.positionType = CCPositionTypeNormalized;
-    sprite.position = ccp(0.5f, 0.5f);
-    sprite.normalMapSpriteFrame = [CCSpriteFrame frameWithImageNamed:normalMapImage];
-    sprite.effect = lightingEffect;
-    sprite.scale = 0.5f;
-    
-    [self.contentNode addChild:sprite];
-    [self.contentNode addChild:node];
-    
-    [node runAction:[CCActionRepeatForever actionWithAction:[CCActionRotateBy actionWithDuration:1.0 angle:45.0]]];
-    [light runAction:[CCActionRepeatForever actionWithAction:[CCActionRotateBy actionWithDuration:1.0 angle:-45.0]]];
+        
+        [light runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+                                                                  [CCActionMoveTo actionWithDuration:1.0 position:ccp(1.0f, 1.0f)],
+                                                                  [CCActionMoveTo actionWithDuration:2.0 position:ccp(0.0f, 0.0f)],
+                                                                  [CCActionRotateBy actionWithDuration:5.0 angle:360.0],
+                                                                  [CCActionMoveTo actionWithDuration:1.0 position:ccp(0.5f, 0.5f)],
+                                                                  nil
+                                                                  ]]];
+    };
+    setupBlock(ccp(0.25f, 0.5f), CCLightPoint, 250.0f, @"Point Light\nPosition matters, orientation does not.");
+    setupBlock(ccp(0.75f, 0.5f), CCLightDirectional, 1.0f, @"Directional Light\nPosition does not matter, orientation does.");
 }
 
 -(void)setupPaddingEffectTest
