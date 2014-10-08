@@ -12,8 +12,7 @@
 typedef NS_ENUM(NSUInteger, CCLightType)
 {
     CCLightPoint       = 0,
-    CCLightDirectional = 1,
-    CCLightSpot        = 2,
+    CCLightDirectional = 1
 };
 
 
