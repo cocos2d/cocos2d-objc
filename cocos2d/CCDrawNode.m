@@ -39,9 +39,10 @@
 // Faster for draw nodes that draw many vertexes, but can't be batched.
 static NSString *CCDrawNodeHWTransformVertexShaderSource =
 	@"uniform highp mat4 u_MVP;\n"
+	@"uniform highp vec4 u_TintColor;\n"
 	@"void main(){\n"
 	@"	gl_Position = u_MVP*cc_Position;\n"
-	@"	cc_FragColor = clamp(cc_Color, 0.0, 1.0);\n"
+	@"	cc_FragColor = clamp(u_TintColor*cc_Color, 0.0, 1.0);\n"
 	@"	cc_FragTexCoord1 = cc_TexCoord1;\n"
 	@"}\n";
 
@@ -161,6 +162,7 @@ CCShader *CCDRAWNODE_BATCH_SHADER = nil;
 	_useBatchMode = YES;
 	
 	if(_shader == CCDRAWNODE_HWTRANSFORM_SHADER){
+		CCLOGINFO(@"Changing the blend mode or shader of a CCBatchNode disables GPU accelerated transform and tinting.");
 		_shader = CCDRAWNODE_BATCH_SHADER;
 	}
 	
@@ -188,6 +190,9 @@ CCShader *CCDRAWNODE_BATCH_SHADER = nil;
 		// If batch mode is disabled (default), update the MVP matrix in the uniforms.
 		if(!_useBatchMode){
 			self.shaderUniforms[@"u_MVP"] = [NSValue valueWithGLKMatrix4:*transform];
+			
+			GLKVector4 color = Premultiply(GLKVector4Make(_displayColor.r, _displayColor.g, _displayColor.b, _displayColor.a));
+			self.shaderUniforms[@"u_TintColor"] = [NSValue valueWithGLKVector4:color];
 		}
 		
     CCRenderBuffer buffer = [renderer enqueueTriangles:_indexCount/3 andVertexes:_vertexCount withState:self.renderState globalSortOrder:0];
