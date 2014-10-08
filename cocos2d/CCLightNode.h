@@ -67,6 +67,13 @@ typedef NS_ENUM(NSUInteger, CCLightType)
  */
 @property (nonatomic, assign) float ambientIntensity;
 
+/** The radius of influence of a point light. When the distance from a sprite to this light
+ *  is less than or equal to the radius, the sprite will be lit by this light. If the
+ *  distance is greater, the sprite will not be lit by this light. This distance is
+ *  measured in points. This propery has no effect on directional lights.
+ */
+@property (nonatomic, assign) float cutoffRadius;
+
 
 
 /// -----------------------------------------------------------------------

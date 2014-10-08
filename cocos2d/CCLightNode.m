@@ -26,6 +26,7 @@
         _intensity = intensity;
         _ambientColor = ambientColor;
         _ambientIntensity = ambientIntensity;
+        _cutoffRadius = 0.0f;
     }
     
     return self;

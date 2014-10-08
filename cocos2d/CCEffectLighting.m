@@ -53,8 +53,15 @@
         
         for (NSUInteger lightIndex = 0; lightIndex < lights.count; lightIndex++)
         {
+            CCLightNode *light = lights[lightIndex];
+
             [vertUniforms addObject:[CCEffectUniform uniform:@"vec4" name:[NSString stringWithFormat:@"u_lightVector%lu", (unsigned long)lightIndex] value:[NSValue valueWithGLKVector4:GLKVector4Make(0.0f, 0.0f, 0.0f, 1.0f)]]];
             [fragUniforms addObject:[CCEffectUniform uniform:@"vec4" name:[NSString stringWithFormat:@"u_lightColor%lu", (unsigned long)lightIndex] value:[NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)]]];
+            
+            if (light.type != CCLightDirectional)
+            {
+                [fragUniforms addObject:[CCEffectUniform uniform:@"float" name:[NSString stringWithFormat:@"u_lightFalloff%lu", (unsigned long)lightIndex] value:[NSNumber numberWithFloat:1.0f]]];
+            }
             
             [varyings addObject:[CCEffectVarying varying:@"vec4" name:[NSString stringWithFormat:@"v_tangentSpaceLightDir%lu", (unsigned long)lightIndex]]];
         }
@@ -102,12 +109,28 @@
                                      {
                                          return vec4(0,0,0,0);
                                      }
+                                     
+                                     vec4 lightColor;
+                                     vec4 tangentSpaceLightDir;
                                      vec4 resultColor = u_globalAmbientColor;
+                                     float lightDist;
                                      )];
 
     for (NSUInteger lightIndex = 0; lightIndex < lights.count; lightIndex++)
     {
-        [effectBody appendFormat:@"resultColor += u_lightColor%lu * dot(tangentSpaceNormal, v_tangentSpaceLightDir%lu);\n", (unsigned long)lightIndex, (unsigned long)lightIndex];
+        CCLightNode *light = lights[lightIndex];
+        if (light.type == CCLightDirectional)
+        {
+            [effectBody appendFormat:@"tangentSpaceLightDir = v_tangentSpaceLightDir%lu;\n", (unsigned long)lightIndex];
+            [effectBody appendFormat:@"lightColor = u_lightColor%lu;\n", (unsigned long)lightIndex];
+        }
+        else
+        {
+            [effectBody appendFormat:@"tangentSpaceLightDir = normalize(v_tangentSpaceLightDir%lu);\n", (unsigned long)lightIndex];
+            [effectBody appendFormat:@"lightDist = length(v_tangentSpaceLightDir%lu);\n", (unsigned long)lightIndex];
+            [effectBody appendFormat:@"lightColor = u_lightColor%lu * max(0.0, (1.0 - lightDist * u_lightFalloff%lu));\n", (unsigned long)lightIndex, (unsigned long)lightIndex];
+        }
+        [effectBody appendFormat:@"resultColor += lightColor * max(0.0, dot(tangentSpaceNormal, tangentSpaceLightDir));\n"];
     }
     [effectBody appendString:@"return resultColor * inputValue;\n"];
     
@@ -128,7 +151,7 @@
         }
         else
         {
-            [effectBody appendFormat:@"v_tangentSpaceLightDir%lu = normalize(u_lightVector%lu - u_ndcToTangentSpace * cc_Position);", (unsigned long)lightIndex, (unsigned long)lightIndex];
+            [effectBody appendFormat:@"v_tangentSpaceLightDir%lu = u_lightVector%lu - u_ndcToTangentSpace * cc_Position;", (unsigned long)lightIndex, (unsigned long)lightIndex];
         }
     }
     [effectBody appendString:@"return cc_Position;"];
@@ -175,15 +198,19 @@
             else
             {
                 lightVector = GLKMatrix4MultiplyVector4(lightNodeToEffectNode, GLKVector4Make(light.anchorPointInPoints.x, light.anchorPointInPoints.y, 500.0f, 1.0f));
+
+                float falloff = (light.cutoffRadius > 0.0f) ? 1.0f / light.cutoffRadius : 0.0f;
+                NSString *lightFalloffLabel = [NSString stringWithFormat:@"u_lightFalloff%lu", (unsigned long)lightIndex];
+                pass.shaderUniforms[weakSelf.uniformTranslationTable[lightFalloffLabel]] = [NSNumber numberWithFloat:falloff];
             }
             
             // Compute the real light color based on color and intensity.
             GLKVector4 lightColor = GLKVector4MultiplyScalar(light.color.glkVector4, light.intensity);
             
             NSString *lightColorLabel = [NSString stringWithFormat:@"u_lightColor%lu", (unsigned long)lightIndex];
-            NSString *lightVectorLabel = [NSString stringWithFormat:@"u_lightVector%lu", (unsigned long)lightIndex];
-            
             pass.shaderUniforms[weakSelf.uniformTranslationTable[lightColorLabel]] = [NSValue valueWithGLKVector4:lightColor];
+
+            NSString *lightVectorLabel = [NSString stringWithFormat:@"u_lightVector%lu", (unsigned long)lightIndex];
             pass.shaderUniforms[weakSelf.uniformTranslationTable[lightVectorLabel]] = [NSValue valueWithGLKVector4:lightVector];
         }
 
