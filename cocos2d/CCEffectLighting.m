@@ -193,7 +193,7 @@
             GLKVector4 lightVector = GLKVector4Make(0.0f, 0.0f, 0.0f, 0.0f);
             if (light.type == CCLightDirectional)
             {
-                lightVector = GLKMatrix4MultiplyVector4(lightNodeToEffectNode, GLKVector4Make(0.0f, 1.0f, 1.0f, 0.0f));
+                lightVector = GLKVector4Normalize(GLKMatrix4MultiplyVector4(lightNodeToEffectNode, GLKVector4Make(0.0f, 1.0f, 1.0f, 0.0f)));
             }
             else
             {
