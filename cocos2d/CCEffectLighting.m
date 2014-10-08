@@ -193,11 +193,11 @@
             GLKVector4 lightVector = GLKVector4Make(0.0f, 0.0f, 0.0f, 0.0f);
             if (light.type == CCLightDirectional)
             {
-                lightVector = GLKVector4Normalize(GLKMatrix4MultiplyVector4(lightNodeToEffectNode, GLKVector4Make(0.0f, 1.0f, 1.0f, 0.0f)));
+                lightVector = GLKVector4Normalize(GLKMatrix4MultiplyVector4(lightNodeToEffectNode, GLKVector4Make(0.0f, 1.0f, light.depth, 0.0f)));
             }
             else
             {
-                lightVector = GLKMatrix4MultiplyVector4(lightNodeToEffectNode, GLKVector4Make(light.anchorPointInPoints.x, light.anchorPointInPoints.y, 500.0f, 1.0f));
+                lightVector = GLKMatrix4MultiplyVector4(lightNodeToEffectNode, GLKVector4Make(light.anchorPointInPoints.x, light.anchorPointInPoints.y, light.depth, 1.0f));
 
                 float falloff = (light.cutoffRadius > 0.0f) ? 1.0f / light.cutoffRadius : 0.0f;
                 NSString *lightFalloffLabel = [NSString stringWithFormat:@"u_lightFalloff%lu", (unsigned long)lightIndex];

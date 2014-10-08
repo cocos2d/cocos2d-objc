@@ -74,6 +74,16 @@ typedef NS_ENUM(NSUInteger, CCLightType)
  */
 @property (nonatomic, assign) float cutoffRadius;
 
+/** The light's depth value within the scene. This value is independent of the node
+ *  z-order which is used for sorting and is instead used by the lighting equations
+ *  when computing the light's direction vector relative to the nodes it is lighting.
+ *  Only values greater than or equal to 0 are valid. A depth value of 0 makes the light 
+ *  coplanar with any nodes it is lighting which results in a very hard looking side light. 
+ *  Increasingly positive values move the light farther and farther out of the plane of 
+ *  the lit nodes resulting in a softer looking front light.
+ */
+@property (nonatomic, assign) float depth;
+
 
 
 /// -----------------------------------------------------------------------

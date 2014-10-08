@@ -27,6 +27,14 @@
         _ambientColor = ambientColor;
         _ambientIntensity = ambientIntensity;
         _cutoffRadius = 0.0f;
+        if (type == CCLightDirectional)
+        {
+            _depth = 1.0f;
+        }
+        else
+        {
+            _depth = 500.0f;
+        }
     }
     
     return self;
