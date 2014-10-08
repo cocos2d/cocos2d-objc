@@ -17,9 +17,12 @@
 #import "CCEffect_Private.h"
 #import "CCSprite_Private.h"
 
+static const NSUInteger CCEffectLightingMaxLightCount = 16;
+
 @interface CCEffectLighting ()
 
 @property (nonatomic, strong) NSMutableArray *lights;
+@property (nonatomic, assign) NSUInteger lightKey;
 
 @end
 
@@ -45,31 +48,7 @@
         {
             _lights = [[NSMutableArray alloc] init];
         }
-
-        
-        NSMutableArray *fragUniforms = [[NSMutableArray alloc] initWithArray:@[[CCEffectUniform uniform:@"vec4" name:@"u_globalAmbientColor" value:[NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)]]]];
-        NSMutableArray *vertUniforms = [[NSMutableArray alloc] initWithArray:@[[CCEffectUniform uniform:@"mat4" name:@"u_ndcToTangentSpace" value:[NSValue valueWithGLKMatrix4:GLKMatrix4Identity]]]];
-        NSMutableArray *varyings = [[NSMutableArray alloc] init];
-        
-        for (NSUInteger lightIndex = 0; lightIndex < lights.count; lightIndex++)
-        {
-            CCLightNode *light = lights[lightIndex];
-
-            [vertUniforms addObject:[CCEffectUniform uniform:@"vec4" name:[NSString stringWithFormat:@"u_lightVector%lu", (unsigned long)lightIndex] value:[NSValue valueWithGLKVector4:GLKVector4Make(0.0f, 0.0f, 0.0f, 1.0f)]]];
-            [fragUniforms addObject:[CCEffectUniform uniform:@"vec4" name:[NSString stringWithFormat:@"u_lightColor%lu", (unsigned long)lightIndex] value:[NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)]]];
-            
-            if (light.type != CCLightDirectional)
-            {
-                [fragUniforms addObject:[CCEffectUniform uniform:@"float" name:[NSString stringWithFormat:@"u_lightFalloff%lu", (unsigned long)lightIndex] value:[NSNumber numberWithFloat:1.0f]]];
-            }
-            
-            [varyings addObject:[CCEffectVarying varying:@"vec4" name:[NSString stringWithFormat:@"v_tangentSpaceLightDir%lu", (unsigned long)lightIndex]]];
-        }
-        
-        NSMutableArray *fragFunctions = [CCEffectLighting buildFragmentFunctionsWithLights:lights];
-        NSMutableArray *vertFunctions = [CCEffectLighting buildVertexFunctionsWithLights:lights];
-        
-        [self buildEffectWithFragmentFunction:fragFunctions vertexFunctions:vertFunctions fragmentUniforms:fragUniforms vertexUniforms:vertUniforms varyings:varyings firstInStack:YES];
+        _lightKey = 0;
     }
     return self;
 }
@@ -81,11 +60,14 @@
 
 -(void)addLight:(CCLightNode *)light
 {
+    NSAssert(_lights.count < 16, @"CCEffectLighting only supports 16 lights.");
+    NSAssert(![_lights containsObject:light], @"Adding a light to effect that is already here.");
     [_lights addObject:light];
 }
 
 -(void)removeLight:(CCLightNode *)light
 {
+    NSAssert([_lights containsObject:light], @"Removing a light from effect that is not here.");
     [_lights removeObject:light];
 }
 
@@ -219,6 +201,65 @@
     } copy]];
     
     self.renderPasses = @[pass0];
+}
+
+- (CCEffectPrepareStatus)prepareForRendering
+{
+    CCEffectPrepareStatus result = CCEffectPrepareNothingToDo;
+
+    NSUInteger newLightKey = [CCEffectLighting computeLightKey:_lights];
+    if (newLightKey != _lightKey)
+    {
+        _lightKey = newLightKey;
+        
+        NSMutableArray *fragUniforms = [[NSMutableArray alloc] initWithArray:@[[CCEffectUniform uniform:@"vec4" name:@"u_globalAmbientColor" value:[NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)]]]];
+        NSMutableArray *vertUniforms = [[NSMutableArray alloc] initWithArray:@[[CCEffectUniform uniform:@"mat4" name:@"u_ndcToTangentSpace" value:[NSValue valueWithGLKMatrix4:GLKMatrix4Identity]]]];
+        NSMutableArray *varyings = [[NSMutableArray alloc] init];
+        
+        for (NSUInteger lightIndex = 0; lightIndex < _lights.count; lightIndex++)
+        {
+            CCLightNode *light = _lights[lightIndex];
+            
+            [vertUniforms addObject:[CCEffectUniform uniform:@"vec4" name:[NSString stringWithFormat:@"u_lightVector%lu", (unsigned long)lightIndex] value:[NSValue valueWithGLKVector4:GLKVector4Make(0.0f, 0.0f, 0.0f, 1.0f)]]];
+            [fragUniforms addObject:[CCEffectUniform uniform:@"vec4" name:[NSString stringWithFormat:@"u_lightColor%lu", (unsigned long)lightIndex] value:[NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)]]];
+            
+            if (light.type != CCLightDirectional)
+            {
+                [fragUniforms addObject:[CCEffectUniform uniform:@"float" name:[NSString stringWithFormat:@"u_lightFalloff%lu", (unsigned long)lightIndex] value:[NSNumber numberWithFloat:1.0f]]];
+            }
+            
+            [varyings addObject:[CCEffectVarying varying:@"vec4" name:[NSString stringWithFormat:@"v_tangentSpaceLightDir%lu", (unsigned long)lightIndex]]];
+        }
+        
+        NSMutableArray *fragFunctions = [CCEffectLighting buildFragmentFunctionsWithLights:_lights];
+        NSMutableArray *vertFunctions = [CCEffectLighting buildVertexFunctionsWithLights:_lights];
+        
+        [self buildEffectWithFragmentFunction:fragFunctions vertexFunctions:vertFunctions fragmentUniforms:fragUniforms vertexUniforms:vertUniforms varyings:varyings firstInStack:YES];
+
+        result = CCEffectPrepareSuccess;
+    }
+    return result;
+}
+
++(NSUInteger)computeLightKey:(NSArray*)lights
+{
+    static const NSUInteger CCEffectLightingPointOffset = 0;
+    static const NSUInteger CCEffectLightingDirectionalOffset = CCEffectLightingMaxLightCount;
+   
+    NSUInteger lightKey = 0;
+    for (NSUInteger lightIndex = 0; lightIndex < lights.count; lightIndex++)
+    {
+        CCLightNode *light = lights[lightIndex];
+        if (light.type == CCLightPoint)
+        {
+            lightKey |= (1 << (lightIndex + CCEffectLightingPointOffset));
+        }
+        else if (light.type == CCLightDirectional)
+        {
+            lightKey |= (1 << (lightIndex + CCEffectLightingDirectionalOffset));
+        }
+    }
+    return lightKey;
 }
 
 @end
