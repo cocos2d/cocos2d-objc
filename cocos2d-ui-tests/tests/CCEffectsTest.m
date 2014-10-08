@@ -251,6 +251,48 @@
 
 #endif
 
+-(void)setupLightingEffectTest
+{
+    self.subTitle = @"Lighting Effect Test";
+    
+    NSString *normalMapImage = @"Images/ShinyTorusNormals.png";
+    NSString *diffuseImage = @"Images/ShinyTorusColor.png";
+    
+    CCLightNode *light = [[CCLightNode alloc] init];
+    light.positionType = CCPositionTypePoints;
+    light.position = ccp(100.0f, 0.0f);
+    light.anchorPoint = ccp(0.5f, 0.5f);
+    light.intensity = 1.0f;
+    light.ambientIntensity = 0.2f;
+    light.cutoffRadius = 0.0f;
+    light.depth = 250.0f;
+    
+    CCSprite *lightSprite = [CCSprite spriteWithImageNamed:@"Images/snow.png"];
+    [light addChild:lightSprite];
+
+    CCNode *node = [[CCNode alloc] init];
+    node.positionType = CCPositionTypeNormalized;
+    node.position = ccp(0.65f, 0.5f);
+    node.anchorPoint = ccp(0.5f, 0.5f);
+    
+    [node addChild:light];
+
+    CCEffectLighting *lightingEffect = [[CCEffectLighting alloc] initWithLights:@[light]];
+    
+    CCSprite *sprite = [CCSprite spriteWithImageNamed:diffuseImage];
+    sprite.positionType = CCPositionTypeNormalized;
+    sprite.position = ccp(0.5f, 0.5f);
+    sprite.normalMapSpriteFrame = [CCSpriteFrame frameWithImageNamed:normalMapImage];
+    sprite.effect = lightingEffect;
+    sprite.scale = 0.5f;
+    
+    [self.contentNode addChild:sprite];
+    [self.contentNode addChild:node];
+    
+    [node runAction:[CCActionRepeatForever actionWithAction:[CCActionRotateBy actionWithDuration:1.0 angle:45.0]]];
+    [light runAction:[CCActionRepeatForever actionWithAction:[CCActionRotateBy actionWithDuration:1.0 angle:-45.0]]];
+}
+
 -(void)setupPaddingEffectTest
 {
     self.subTitle = @"Effect Padding Test";
