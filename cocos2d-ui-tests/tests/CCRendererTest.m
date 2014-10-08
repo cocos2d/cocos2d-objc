@@ -135,9 +135,13 @@
 //	[self.contentNode addChild:sprite];
 //}
 
+// Tests that vertex paging works so that render passes are not limited to 64k vertexes.
+// If vertex paging is broken, rendering will be broken in a very obvious (but undefined) way.
 -(void)setupVertexPagingTest
 {
-	self.subTitle = @"Should draw a bird.";
+	self.subTitle =
+		@"Vertex paging test:\n"
+		@"Should draw a bird.";
 	
 	CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/bird.png"];
 	sprite.position = ccp(50, 50);
@@ -165,9 +169,12 @@
 }
 
 #if !__CC_METAL_SUPPORTED_AND_ENABLED
+// Test CCClippingNode.
 -(void)setupClippingNodeTest
 {
-	self.subTitle = @"ClippingNode test.";
+	self.subTitle =
+		@"ClippingNode test.\n"
+		@"Should draw a gradient clipped by the shape of a human.";
 	
 	CGSize size = [CCDirector sharedDirector].designSize;
 	
@@ -198,9 +205,12 @@
 	[clip addChild:grad];
 }
 
+// Tests [CCRenderTexture newCGImage]
 -(void)setupInfiniteWindowTest
 {
-	self.subTitle = @"Should draw an infinite window";
+	self.subTitle =
+		@"Should draw an infinite window\n"
+		@"Let it run for 10 - 20 seconds to check for memory leaks.";
 	
 	CCNode *contentNode = self.contentNode;
 	CGSize size = [CCDirector sharedDirector].designSize;
@@ -234,6 +244,7 @@
 }
 #endif
 
+// Tests creating a shader using inline shader code and passing global/per-node uniforms.
 -(CCSprite *)simpleShaderTestHelper
 {
 	CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/bird.png"];
@@ -283,7 +294,11 @@
 	sprite2.position = ccp(0.3, 0.6);
 	sprite2.shader = shader;
 	
-	CCLabelTTF *label1 = [CCLabelTTF labelWithString:@"Using CCDirector.globalShaderUniforms" fontName:@"Helvetica" fontSize:10.0];
+	NSString *label1Text =
+		@"Using CCDirector.globalShaderUniforms:\n"
+		@"Both nodes above should\n"
+		@"cycle colors at the same speed.";
+	CCLabelTTF *label1 = [CCLabelTTF labelWithString:label1Text fontName:@"Helvetica" fontSize:8.0];
 	label1.positionType = CCPositionTypeNormalized;
 	label1.position = ccp(0.3, 0.3);
 	[self.contentNode addChild:label1];
@@ -292,7 +307,11 @@
 	sprite3.position = ccp(0.7, 0.5);
 	sprite3.shader = shader;
 	
-	CCLabelTTF *label2 = [CCLabelTTF labelWithString:@"Using CCNode.shaderUniforms" fontName:@"Helvetica" fontSize:10.0];
+	NSString *label2Text =
+		@"Using CCNode.shaderUniforms:\n"
+		@"The node above should\n"
+		@"cycle colors twice as fast as the left nodes.";
+	CCLabelTTF *label2 = [CCLabelTTF labelWithString:label2Text fontName:@"Helvetica" fontSize:8.0];
 	label2.positionType = CCPositionTypeNormalized;
 	label2.position = ccp(0.7, 0.3);
 	[self.contentNode addChild:label2];
@@ -338,9 +357,12 @@
 	[node addChild:sprite];
 }
 
+// Tests that render textures work as expected. (flipping, blending, etc)
 -(void)setupRenderTextureTest
 {
-	self.subTitle = @"Testing CCRenderTexture.";
+	self.subTitle =
+		@"Testing CCRenderTexture.\n"
+		@"Right side should draw the same as the left, but clipped.";
 	
 	CGSize size = CGSizeMake(128, 128);
 	
@@ -367,7 +389,8 @@
 	renderTexture.autoDraw = YES;
 }
 
--(void)setupShader1Test
+// TODO, this should really be turned into a unit test instead.
+-(void)setupShaderNamedTest_
 {
 	self.subTitle = @"Useless fragment shader.";
 	
@@ -379,6 +402,8 @@
 	[self.contentNode addChild:node];
 }
 
+// Tests that CCMotionStreak works like it should.
+// CCMotionStreak assumes non-premultiplied textures so this test will look a little funny.
 - (void)setupMotionStreakNodeTest
 {
 	self.subTitle = @"Testing CCMotionStreak";
@@ -393,7 +418,7 @@
 	
 	// Maybe want to find a better texture than a random tile graphic?
 	{
-		CCMotionStreak *streak = [CCMotionStreak streakWithFade:15.0 minSeg:5 width:3 color:[CCColor whiteColor] textureFilename:@"Tiles/05.png"];
+		CCMotionStreak *streak = [CCMotionStreak streakWithFade:15.0 minSeg:5 width:3 color:[CCColor whiteColor] textureFilename:@"Images/fire.png"];
 		[stage addChild:streak];
 		
 		[streak scheduleBlock:^(CCTimer *timer) {
@@ -405,7 +430,7 @@
 			[timer repeatOnceWithInterval:0.01];
 		} delay:0.0];
 	}{
-		CCMotionStreak *streak = [CCMotionStreak streakWithFade:0.5 minSeg:5 width:3 color:[CCColor redColor] textureFilename:@"Tiles/05.png"];
+		CCMotionStreak *streak = [CCMotionStreak streakWithFade:0.5 minSeg:5 width:3 color:[CCColor redColor] textureFilename:@"Images/fire.png"];
 		[stage addChild:streak];
 		
 		[streak scheduleBlock:^(CCTimer *timer) {
@@ -668,14 +693,16 @@ ProgressPercent(CCTime t)
 
 - (void)setupDrawNodeTest
 {
-	self.subTitle = @"Testing CCDrawNode";
+	self.subTitle =
+		@"Testing CCDrawNode:\n"
+		@"Should draw various shapes.";
 	
 	CCDrawNode *draw = [CCDrawNode node];
 	
 	[draw drawDot:ccp(100, 100) radius:50 color:[CCColor colorWithRed:0.5 green:0.0 blue:0.0 alpha:0.75]];
 	
 	// This yellow dot should not be visible.
-	[draw drawDot:ccp(150, 150) radius:50 color:[CCColor colorWithRed:0.5 green:0.5 blue:0.0 alpha:0.0]];
+	[draw drawDot:ccp(150, 150) radius:50 color:[CCColor colorWithRed:0.5 green:0.5 blue:0.0 alpha:0.5]];
 	
 	[draw drawSegmentFrom:ccp(100, 200) to:ccp(200, 200) radius:25 color:[CCColor colorWithRed:0.0 green:0.0 blue:0.5 alpha:0.75]];
 	
@@ -691,11 +718,12 @@ ProgressPercent(CCTime t)
 	
 	CGPoint points2[] = {
 		{325, 125},
-		{375, 125},
 		{350, 200},
+		{375, 125},
 	};
 	[draw drawPolyWithVerts:points2 count:sizeof(points2)/sizeof(*points2) fillColor:[CCColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.75] borderWidth:0.0 borderColor:[CCColor whiteColor]];
 	
+	[draw runAction:[CCActionFadeIn actionWithDuration:0.25]];
 	[self.contentNode addChild:draw];
 }
 
