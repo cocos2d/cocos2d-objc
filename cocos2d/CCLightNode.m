@@ -8,6 +8,7 @@
 
 #import "CCLightNode.h"
 
+#if CC_EFFECTS_EXPERIMENTAL
 
 @implementation CCLightNode
 
@@ -58,3 +59,5 @@
 }
 
 @end
+
+#endif

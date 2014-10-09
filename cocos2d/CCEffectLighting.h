@@ -9,6 +9,8 @@
 #import "CCEffect.h"
 #import "CCLightNode.h"
 
+#if CC_EFFECTS_EXPERIMENTAL
+
 /**
  * CCEffectLighting uses a normal map and a collection of light nodes to compute the Phong
  * lighting on the affected node.
@@ -93,3 +95,6 @@
 
 
 @end
+
+#endif
+

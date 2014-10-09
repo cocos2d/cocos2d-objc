@@ -8,6 +8,7 @@
 
 #import "CCNode.h"
 
+#if CC_EFFECTS_EXPERIMENTAL
 
 typedef NS_ENUM(NSUInteger, CCLightType)
 {
@@ -130,3 +131,5 @@ typedef NS_ENUM(NSUInteger, CCLightType)
 
 
 @end
+
+#endif

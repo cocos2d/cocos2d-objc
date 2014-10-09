@@ -249,8 +249,6 @@
     _distanceFieldEffect.outline = !_distanceFieldEffect.outline;
 }
 
-#endif
-
 -(void)setupSimpleLightingTest
 {
     self.subTitle = @"Simple Lighting Test";
@@ -481,6 +479,8 @@
                                                               nil
                                                               ]]];
 }
+
+#endif
 
 
 -(void)setupPaddingEffectTest
