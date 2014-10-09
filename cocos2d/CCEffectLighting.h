@@ -19,6 +19,19 @@
 /// @name Accessing Effect Attributes
 /// -----------------------------------------------------------------------
 
+/**
+ *  The specular color of the affected node. This color is combined with the light's
+ *  color and the effect's shininess value to determine the color of specular highlights
+ *  that appear when lighting shiny surfaces.
+ */
+@property (nonatomic, strong) CCColor* specularColor;
+
+/** 
+ *  The shininess of the affected node. This value controls the tightness of specular
+ *  highlights. 0 results in no specular contribution to the lighting equations and
+ *  increasing values result in tighter highlights.
+ */
+@property (nonatomic, assign) float shininess;
 
 /// -----------------------------------------------------------------------
 /// @name Initializing a CCEffectLighting object

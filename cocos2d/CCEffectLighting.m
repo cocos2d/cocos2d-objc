@@ -17,12 +17,24 @@
 #import "CCEffect_Private.h"
 #import "CCSprite_Private.h"
 
-static const NSUInteger CCEffectLightingMaxLightCount = 16;
+typedef struct _CCLightKey
+{
+    NSUInteger pointLightMask;
+    NSUInteger directionalLightMask;
+
+} CCLightKey;
+
+static CCLightKey CCLightKeyMake(NSArray *lights);
+static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
+
+
 
 @interface CCEffectLighting ()
 
 @property (nonatomic, strong) NSMutableArray *lights;
-@property (nonatomic, assign) NSUInteger lightKey;
+@property (nonatomic, assign) CCLightKey lightKey;
+@property (nonatomic, readonly) BOOL hasSpecular;
+@property (nonatomic, assign) BOOL previousHasSpecular;
 
 @end
 
@@ -48,7 +60,12 @@ static const NSUInteger CCEffectLightingMaxLightCount = 16;
         {
             _lights = [[NSMutableArray alloc] init];
         }
-        _lightKey = 0;
+        
+        _specularColor = [CCColor whiteColor];
+        _shininess = 5.0f;
+        
+        _lightKey = CCLightKeyMake(nil);
+        _previousHasSpecular = NO;
     }
     return self;
 }
@@ -77,7 +94,7 @@ static const NSUInteger CCEffectLightingMaxLightCount = 16;
 }
 
 
-+(NSMutableArray *)buildFragmentFunctionsWithLights:(NSArray*)lights
++(NSMutableArray *)buildFragmentFunctionsWithLights:(NSArray*)lights andSpecular:(BOOL)hasSpecular
 {
     CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:CCEffectDefaultInitialInputSnippet snippet:CCEffectDefaultInputSnippet];
     
@@ -94,7 +111,7 @@ static const NSUInteger CCEffectLightingMaxLightCount = 16;
                                      
                                      vec4 lightColor;
                                      vec4 diffuseLightColor = u_globalAmbientColor;
-                                     vec4 specularLightColor = vec4(0,0,0,1);
+                                     vec4 specularLightColor = vec4(0,0,0,0);
                                      
                                      vec3 tangentSpaceLightDir;
                                      vec3 halfAngleDir;
@@ -123,11 +140,19 @@ static const NSUInteger CCEffectLightingMaxLightCount = 16;
         [effectBody appendString:@"diffuseTerm = max(0.0, dot(tangentSpaceNormal, tangentSpaceLightDir));\n"];
         [effectBody appendString:@"diffuseLightColor += lightColor * diffuseTerm;\n"];
         
-        [effectBody appendString:@"halfAngleDir = (2.0 * dot(tangentSpaceLightDir, tangentSpaceNormal) * tangentSpaceNormal - tangentSpaceLightDir);\n"];
-        [effectBody appendString:@"specularTerm = max(0.0, dot(halfAngleDir, vec3(0,0,1))) * step(0.0, diffuseTerm);\n"];
-        [effectBody appendString:@"specularLightColor += lightColor * pow(specularTerm, 10.0);\n"];
+        if (hasSpecular)
+        {
+            [effectBody appendString:@"halfAngleDir = (2.0 * dot(tangentSpaceLightDir, tangentSpaceNormal) * tangentSpaceNormal - tangentSpaceLightDir);\n"];
+            [effectBody appendString:@"specularTerm = max(0.0, dot(halfAngleDir, vec3(0,0,1))) * step(0.0, diffuseTerm);\n"];
+            [effectBody appendString:@"specularLightColor += lightColor * pow(specularTerm, u_specularExponent);\n"];
+        }
     }
-    [effectBody appendString:@"return diffuseLightColor * inputValue + specularLightColor;\n"];
+    [effectBody appendString:@"vec4 resultColor = diffuseLightColor * inputValue;\n"];
+    if (hasSpecular)
+    {
+        [effectBody appendString:@"resultColor += specularLightColor * u_specularColor;\n"];
+    }
+    [effectBody appendString:@"return vec4(resultColor.xyz, inputValue.a);\n"];
     
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"lightingEffectFrag" body:effectBody inputs:@[input] returnType:@"vec4"];
     return [NSMutableArray arrayWithObject:fragmentFunction];
@@ -210,6 +235,8 @@ static const NSUInteger CCEffectLightingMaxLightCount = 16;
         }
 
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_globalAmbientColor"]] = [NSValue valueWithGLKVector4:globalAmbientColor];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_specularExponent"]] = [NSNumber numberWithFloat:weakSelf.shininess];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_specularColor"]] = [NSValue valueWithGLKVector4:weakSelf.specularColor.glkVector4];
 
     } copy]];
     
@@ -220,10 +247,12 @@ static const NSUInteger CCEffectLightingMaxLightCount = 16;
 {
     CCEffectPrepareStatus result = CCEffectPrepareNothingToDo;
 
-    NSUInteger newLightKey = [CCEffectLighting computeLightKey:_lights];
-    if (newLightKey != _lightKey)
+    CCLightKey newLightKey = CCLightKeyMake(_lights);
+    if (!CCLightKeyCompare(newLightKey, _lightKey) ||
+        (_previousHasSpecular != self.hasSpecular))
     {
         _lightKey = newLightKey;
+        _previousHasSpecular = self.hasSpecular;
         
         NSMutableArray *fragUniforms = [[NSMutableArray alloc] initWithArray:@[[CCEffectUniform uniform:@"vec4" name:@"u_globalAmbientColor" value:[NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)]]]];
         NSMutableArray *vertUniforms = [[NSMutableArray alloc] initWithArray:@[[CCEffectUniform uniform:@"mat4" name:@"u_ndcToTangentSpace" value:[NSValue valueWithGLKMatrix4:GLKMatrix4Identity]]]];
@@ -244,7 +273,13 @@ static const NSUInteger CCEffectLightingMaxLightCount = 16;
             [varyings addObject:[CCEffectVarying varying:@"vec4" name:[NSString stringWithFormat:@"v_tangentSpaceLightDir%lu", (unsigned long)lightIndex]]];
         }
         
-        NSMutableArray *fragFunctions = [CCEffectLighting buildFragmentFunctionsWithLights:_lights];
+        if (self.hasSpecular)
+        {
+            [fragUniforms addObject:[CCEffectUniform uniform:@"float" name:@"u_specularExponent" value:[NSNumber numberWithFloat:5.0f]]];
+            [fragUniforms addObject:[CCEffectUniform uniform:@"vec4" name:@"u_specularColor" value:[NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)]]];
+        }
+        
+        NSMutableArray *fragFunctions = [CCEffectLighting buildFragmentFunctionsWithLights:_lights andSpecular:self.hasSpecular];
         NSMutableArray *vertFunctions = [CCEffectLighting buildVertexFunctionsWithLights:_lights];
         
         [self buildEffectWithFragmentFunction:fragFunctions vertexFunctions:vertFunctions fragmentUniforms:fragUniforms vertexUniforms:vertUniforms varyings:varyings firstInStack:YES];
@@ -254,26 +289,38 @@ static const NSUInteger CCEffectLightingMaxLightCount = 16;
     return result;
 }
 
-+(NSUInteger)computeLightKey:(NSArray*)lights
+- (BOOL)hasSpecular
 {
-    static const NSUInteger CCEffectLightingPointOffset = 0;
-    static const NSUInteger CCEffectLightingDirectionalOffset = CCEffectLightingMaxLightCount;
-   
-    NSUInteger lightKey = 0;
+    return (!ccc4FEqual(_specularColor.ccColor4f, ccc4f(0.0f, 0.0f, 0.0f, 0.0f)) && (_shininess > 0.0f));
+}
+
+@end
+
+CCLightKey CCLightKeyMake(NSArray *lights)
+{
+    CCLightKey lightKey;
+    lightKey.pointLightMask = 0;
+    lightKey.directionalLightMask = 0;
+    
     for (NSUInteger lightIndex = 0; lightIndex < lights.count; lightIndex++)
     {
         CCLightNode *light = lights[lightIndex];
         if (light.type == CCLightPoint)
         {
-            lightKey |= (1 << (lightIndex + CCEffectLightingPointOffset));
+            lightKey.pointLightMask |= (1 << lightIndex);
         }
         else if (light.type == CCLightDirectional)
         {
-            lightKey |= (1 << (lightIndex + CCEffectLightingDirectionalOffset));
+            lightKey.directionalLightMask |= (1 << lightIndex);
         }
     }
     return lightKey;
 }
 
-@end
+BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b)
+{
+    return (((a.pointLightMask) == (b.pointLightMask)) &&
+            ((a.directionalLightMask) == (b.directionalLightMask)));
+}
+
 
