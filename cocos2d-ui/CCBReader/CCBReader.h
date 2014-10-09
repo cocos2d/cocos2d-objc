@@ -31,7 +31,6 @@
 #import "cocos2d.h"
 #endif
 
-@class CCAnimationManager;
 
 /**
  The CCBReader loads node graphs created by SpriteBuilder (or other editors using the same format). If you are using SpriteBuilder it's strongly recommended that you set up the CCFileUtils using the configureCCFileUtils method or use the Xcode project file created by SpriteBuilder.
@@ -60,6 +59,7 @@
     NSMutableDictionary* actionManagers;
     NSMutableSet* animatedProps;
     NSMutableDictionary* nodeMapping;//Maps UUID -> Node
+	NSMutableArray * postDeserializationUUIDFixup;
 }
 
 /// -----------------------------------------------------------------------

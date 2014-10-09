@@ -11,6 +11,15 @@
 #import "CCTexture.h"
 
 NSString * const CCShaderUniformPreviousPassTexture = @"cc_PreviousPassTexture";
+NSString * const CCShaderUniformTexCoord1Center     = @"cc_FragTexCoord1Center";
+NSString * const CCShaderUniformTexCoord1Extents    = @"cc_FragTexCoord1Extents";
+NSString * const CCShaderUniformTexCoord2Center     = @"cc_FragTexCoord2Center";
+NSString * const CCShaderUniformTexCoord2Extents    = @"cc_FragTexCoord2Extents";
+
+NSString * const CCEffectDefaultInitialInputSnippet = @"cc_FragColor * texture2D(cc_PreviousPassTexture, cc_FragTexCoord1); vec2 compare = cc_FragTexCoord1Extents - abs(cc_FragTexCoord1 - cc_FragTexCoord1Center); tmp *= step(0.0, min(compare.x, compare.y))";
+NSString * const CCEffectDefaultInputSnippet = @"texture2D(cc_PreviousPassTexture, cc_FragTexCoord1); vec2 compare = cc_FragTexCoord1Extents - abs(cc_FragTexCoord1 - cc_FragTexCoord1Center); tmp *= step(0.0, min(compare.x, compare.y))";
+
+
 
 static NSString* fragBase =
 @"%@\n\n"   // uniforms
@@ -210,8 +219,18 @@ static NSString* vertBase =
 
 -(id)init
 {
+    return [self initWithIndex:0];
+}
+
+-(id)initWithIndex:(NSUInteger)indexInEffect
+{
     if((self = [super init]))
     {
+        _indexInEffect = indexInEffect;
+        
+        _texCoord1Mapping = CCEffectTexCoordMapPreviousPassTex;
+        _texCoord2Mapping = CCEffectTexCoordMapCustomTex;
+        
         _beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){} copy]];
         _endBlocks = @[[^(CCEffectRenderPass *pass){} copy]];
 
@@ -229,6 +248,20 @@ static NSString* vertBase =
     }
     
     return self;
+}
+
+-(instancetype)copyWithZone:(NSZone *)zone
+{
+	CCEffectRenderPass *newPass = [[CCEffectRenderPass allocWithZone:zone] initWithIndex:_indexInEffect];
+    newPass.texCoord1Mapping = _texCoord1Mapping;
+    newPass.texCoord2Mapping = _texCoord2Mapping;
+    newPass.blendMode = _blendMode;
+    newPass.shader = _shader;
+    newPass.beginBlocks = _beginBlocks;
+    newPass.updateBlocks = _updateBlocks;
+    newPass.endBlocks = _endBlocks;
+    newPass.debugLabel = _debugLabel;
+    return newPass;
 }
 
 -(void)begin:(CCTexture *)previousPassTexture
@@ -278,7 +311,11 @@ static NSString* vertBase =
 + (NSArray *)defaultEffectFragmentUniforms
 {
     return @[
-             [CCEffectUniform uniform:@"sampler2D" name:CCShaderUniformPreviousPassTexture value:(NSValue *)[CCTexture none]]
+             [CCEffectUniform uniform:@"sampler2D" name:CCShaderUniformPreviousPassTexture value:(NSValue *)[CCTexture none]],
+             [CCEffectUniform uniform:@"vec2" name:CCShaderUniformTexCoord1Center value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]],
+             [CCEffectUniform uniform:@"vec2" name:CCShaderUniformTexCoord1Extents value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]],
+             [CCEffectUniform uniform:@"vec2" name:CCShaderUniformTexCoord2Center value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]],
+             [CCEffectUniform uniform:@"vec2" name:CCShaderUniformTexCoord2Extents value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]]
             ];
 }
 
@@ -289,7 +326,13 @@ static NSString* vertBase =
 
 + (NSSet *)defaultEffectFragmentUniformNames
 {
-    return [[NSSet alloc] initWithArray:@[CCShaderUniformPreviousPassTexture]];
+    return [[NSSet alloc] initWithArray:@[
+                                          CCShaderUniformPreviousPassTexture,
+                                          CCShaderUniformTexCoord1Center,
+                                          CCShaderUniformTexCoord1Extents,
+                                          CCShaderUniformTexCoord2Center,
+                                          CCShaderUniformTexCoord2Extents
+                                          ]];
 }
 
 + (NSSet *)defaultEffectVertexUniformNames

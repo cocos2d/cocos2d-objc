@@ -32,11 +32,31 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [self configureCocos2d];
+
+    return YES;
+}
+
+- (void)configureCocos2d
+{
     // Configure the file utils to work with SpriteBuilder, but use a custom resource path (Resources-shared instead of Published-iOS)
     [CCBReader configureCCFileUtils];
-    
+
+    [self configureFileUtilsSearchPathAndRegisterSpriteSheets];
+
+    [self setupCocos2dWithOptions:@{
+			CCSetupDepthFormat: @GL_DEPTH24_STENCIL8,
+//			CCSetupScreenMode: CCScreenModeFixed,
+//			CCSetupScreenOrientation: CCScreenOrientationPortrait,
+			CCSetupTabletScale2X: @YES,
+			CCSetupShowDebugStats: @(getenv("SHOW_DEBUG_STATS") != nil),
+		}];
+}
+
+- (void)configureFileUtilsSearchPathAndRegisterSpriteSheets
+{
     CCFileUtils* sharedFileUtils = [CCFileUtils sharedFileUtils];
-    
+
     sharedFileUtils.searchPath =
     [NSArray arrayWithObjects:
      [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Images"],
@@ -44,21 +64,11 @@
      [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Resources-shared"],
      [[NSBundle mainBundle] resourcePath],
      nil];
-    
+
     // Register spritesheets.
     [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"Interface.plist"];
     [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"Sprites.plist"];
     [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"TilesAtlassed.plist"];
-    
-    [self setupCocos2dWithOptions:@{
-			CCSetupDepthFormat: @GL_DEPTH24_STENCIL8,
-//			CCSetupScreenMode: CCScreenModeFixed,
-//			CCSetupScreenOrientation: CCScreenOrientationPortrait,
-			CCSetupTabletScale2X: @YES,
-//			CCSetupShowDebugStats: @YES,
-		}];
-    
-    return YES;
 }
 
 - (CCScene*) startScene

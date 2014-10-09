@@ -36,7 +36,7 @@
 
 //------------------------------------------------------------------------------
 
-@implementation CCCache 
+@implementation CCCache
 {
     NSMutableDictionary *_cacheList;
 }
@@ -112,7 +112,7 @@
 - (void)makeAlias:(id<NSCopying>)alias forKey:(id<NSCopying>)key
 {
     CCCacheEntry *entry = [self entryForKey:key];
-		[_cacheList setObject:entry forKey:alias];
+    [_cacheList setObject:entry forKey:alias];
 }
 
 - (BOOL)keyExists:(id<NSCopying>)key
@@ -132,13 +132,13 @@
         // if entry has no live public objects, delete the entry
         if (entry.publicObject == nil)
         {
-				    // If the entry's shared data hasn't been disposed of by another alias, do it now.
-				    if(entry.sharedData != nil)
-						{
+            // If the entry's shared data hasn't been disposed of by another alias, do it now.
+            if(entry.sharedData != nil)
+            {
                 [self disposeOfSharedData:entry.sharedData];
-		    				entry.sharedData = nil;
-						}
-						
+                entry.sharedData = nil;
+            }
+            
             [_cacheList removeObjectForKey:key];
         }
     }
@@ -149,7 +149,7 @@
 //------------------------------------------------------------------------------
 
 // creates the data associated with the key
-// this could ex. be a GLKTextureInfo class for use with creating textures
+// this could ex. be a CCTextureInfo class for use with creating textures
 
 - (id)createSharedDataForKey:(id<NSCopying>)key
 {
@@ -169,7 +169,7 @@
 
 //------------------------------------------------------------------------------
 // dispose the underlying data
-// this could ex be disposal of the GLKTextureInfo class, used when creating textures
+// this could ex be disposal of the CCTextureInfo class, used when creating textures
 
 - (void)disposeOfSharedData:(id)data
 {

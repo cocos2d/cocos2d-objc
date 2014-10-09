@@ -79,7 +79,7 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 
 +(void)purgeSharedSpriteFrameCache
 {
-	_sharedSpriteFrameCache = nil;
+	[[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFrames];
 }
 
 -(id) init
@@ -88,7 +88,7 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 		_spriteFrames = [[NSMutableDictionary alloc] initWithCapacity: 100];
 		_spriteFramesAliases = [[NSMutableDictionary alloc] initWithCapacity:10];
 		_loadedFilenames = [[NSMutableSet alloc] initWithCapacity:30];
-        _spriteFrameFileLookup = [[NSMutableDictionary alloc] init];
+		_spriteFrameFileLookup = [[NSMutableDictionary alloc] init];
 	}
 
 	return self;
@@ -127,6 +127,30 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
             [self registerSpriteFramesFile:spriteFrameFile];
         }
 	}
+}
+
+- (void)loadSpriteFrameLookupsInAllSearchPathsWithName:(NSString *)filename
+{
+    NSArray *paths = [[CCFileUtils sharedFileUtils] fullPathsOfFileNameInAllSearchPaths:filename];
+
+    for (NSString *spriteFrameLookupFullPath in paths)
+    {
+        NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:spriteFrameLookupFullPath];
+
+        NSDictionary *metadata = dict[@"metadata"];
+        NSInteger version = [metadata[@"version"] integerValue];
+        if (version != 1)
+        {
+            CCLOG(@"cocos2d: ERROR: Invalid filenameLookup dictionary version: %ld. Filename: %@", (long) version, filename);
+            return;
+        }
+
+        NSArray *spriteFrameFiles = dict[@"spriteFrameFiles"];
+        for (NSString *spriteFrameFile in spriteFrameFiles)
+        {
+            [self registerSpriteFramesFile:spriteFrameFile];
+        }
+    }
 }
 
 - (void) registerSpriteFramesFile:(NSString*)plist

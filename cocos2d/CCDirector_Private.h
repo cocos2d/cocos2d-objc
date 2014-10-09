@@ -23,13 +23,13 @@
  */
 
 #import "CCDirector.h"
+#import "CCTransition.h"
 
 @interface CCDirector () {
 	@protected
 	GLKMatrix4 _projectionMatrix;
 	__weak id<CCDirectorDelegate> _delegate;
 	__weak NSThread *_runningThread;
-
 }
 
 /* Whether or not the replaced scene will receive the cleanup message.
@@ -60,9 +60,6 @@
 /// Rect of the visible screen area in GL coordinates.
 @property(nonatomic, readonly) CGRect viewportRect;
 
-/// Update the list of default globals and return them.
--(NSDictionary *)updateGlobalShaderUniforms;
-
 /* Sets the glViewport*/
 -(void) setViewport;
 
@@ -81,12 +78,32 @@
  */
 -(void) drawScene;
 
+- (void)startTransition:(CCTransition *)transition;
+
+/// Get a renderer object to use for rendering.
+/// This method is thread safe.
+-(CCRenderer *)rendererFromPool;
+
+/// Return a renderer to a pool after rendering.
+/// This method is thread safe.
+-(void)poolRenderer:(CCRenderer *)renderer;
+
+/// Add a block to be called when the GPU finishes rendering a frame.
+/// This is used to pool rendering resources (renderers, buffers, textures, etc) without stalling the GPU pipeline.
+-(void)addFrameCompletionHandler:(dispatch_block_t)handler;
+
 @end
 
 
 @interface CCDirector(Stats)
 
 -(void) createStatsLabel;
+
+@end
+
+@interface CCTransition (Private)
+
+- (void)startTransition:(CCScene *)scene;
 
 @end
 

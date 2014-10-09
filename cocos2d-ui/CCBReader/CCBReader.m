@@ -37,6 +37,7 @@
 #import "CCDirector_Private.h"
 #import "CCPhysics+ObjectiveChipmunk.h"
 #import "CCAnimationManager_Private.h"
+#import "CCEffectStack.h"
 
 #ifdef CCB_ENABLE_UNZIP
 #import "SSZipArchive.h"
@@ -51,14 +52,19 @@
 @interface CCBFile : CCNode
 {
     CCNode* ccbFile;
+
 }
 @property (nonatomic,strong) CCNode* ccbFile;
 @end
 
 
 @interface CCBReader()
+{
+
+}
 
 @property (nonatomic, copy) NSString *currentCCBFile;
+
 
 @end
 
@@ -85,11 +91,19 @@
      @"", CCFileUtilsSuffixDefault,
      nil];
     
+#if __CC_PLATFORM_ANDROID
+    sharedFileUtils.searchPath =
+    [NSArray arrayWithObjects:
+     [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Published-Android"],
+     [[NSBundle mainBundle] resourcePath],
+     nil];
+#else
     sharedFileUtils.searchPath =
     [NSArray arrayWithObjects:
      [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Published-iOS"],
      [[NSBundle mainBundle] resourcePath],
      nil];
+#endif
     
 	sharedFileUtils.enableiPhoneResourcesOniPad = YES;
     sharedFileUtils.searchMode = CCFileUtilsSearchModeDirectory;
@@ -114,7 +128,7 @@
     animationManager.rootContainerSize = [CCDirector sharedDirector].designSize;
     
     nodeMapping = [NSMutableDictionary dictionary];
-    
+    postDeserializationUUIDFixup = [NSMutableArray array];
     return self;
 }
 
@@ -406,9 +420,9 @@ static inline float readFloat(CCBReader *self)
 
         if (setProp)
         {
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
             [node setValue:[NSValue valueWithCGPoint:ccp(x,y)] forKey:name];
-#elif defined (__CC_PLATFORM_MAC)
+#elif __CC_PLATFORM_MAC
             [node setValue:[NSValue valueWithPoint:ccp(x,y)] forKey:name];
 #endif
             CCPositionType pType = CCPositionTypeMake(xUnit, yUnit, corner);
@@ -441,7 +455,7 @@ static inline float readFloat(CCBReader *self)
         if (setProp)
         {
             CGPoint pt = ccp(x,y);
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
             [node setValue:[NSValue valueWithCGPoint:pt] forKey:name];
 #else
             [node setValue:[NSValue valueWithPoint:NSPointFromCGPoint(pt)] forKey:name];
@@ -462,9 +476,9 @@ static inline float readFloat(CCBReader *self)
         if (setProp)
         {
             CGSize size = CGSizeMake(w, h);
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
             [node setValue:[NSValue valueWithCGSize:size] forKey:name];
-#elif defined (__CC_PLATFORM_MAC)
+#elif __CC_PLATFORM_MAC
             [node setValue:[NSValue valueWithSize:size] forKey:name];
 #endif
             
@@ -904,10 +918,12 @@ static inline float readFloat(CCBReader *self)
     else if(type == kCCBPropTypeNodeReference)
     {
         int uuid = readIntWithSign(self, NO);
-        CCNode * mappedNode = nodeMapping[@(uuid)];
-        NSAssert(mappedNode != nil, @"CCBReader: Failed to find node UUID:%i", uuid);
-        [node setValue:mappedNode forKey:name];
-    }
+		
+		//Node references are fixed after the whole node graph is deserialized (since since the node ref may not be deserialized yet)
+		NSArray * queuedFixupTask = @[node, name, @(uuid)];
+		[postDeserializationUUIDFixup addObject:queuedFixupTask];
+		
+	}
     else if(type == kCCBPropTypeFloatCheck)
     {
         float f = readFloat(self);
@@ -919,10 +935,69 @@ static inline float readFloat(CCBReader *self)
             [node setValue:@(f) forKey:name];
         }
     }
+	else if(type == kCCBPropTypeEffects)
+	{
+		CCEffect * effect  = [self readEffects];
+		
+		if(effect)
+		{
+		//Hmmm..... Force it to write to @"effect" property.
+		[node setValue:effect forKey:@"effect"];
+		}
+				
+	}
     else
     {
         NSAssert(false, @"[PROPERTY] %@ - Failed to read property type %d, node class name: \"%@\", name: \"%@\", in ccb file: \"%@\"", name, type, [node class], [node name], _currentCCBFile);
     }
+}
+
+
+
+//Either returns a CCStackEffect or the one single effect.
+-(CCEffect*)readEffects
+{
+
+	int numberOfEffects = readIntWithSign(self, NO);
+	
+	if(numberOfEffects == 0)
+	{
+		return nil;
+	}
+	
+	NSMutableArray * effectsStack = [NSMutableArray array];
+	
+	for (int i = 0; i < numberOfEffects; i++) {
+		NSString * className = [self readCachedString];
+		
+		Class nodeClass = NSClassFromString(className);
+		if (nodeClass == nil)
+		{
+			NSAssert(nil, @"CCBReader: Could not create class named: %@", className);
+			return nil;
+		}
+		
+		CCEffect* effect = [[nodeClass alloc] init];
+		
+		int propCount = readIntWithSign(self,NO);
+		
+		for(int propIndex = 0; propIndex < propCount; propIndex++)
+		{
+			//Just lie and let the property reader do its work.
+			[self readPropertyForNode:(CCNode*)effect parent:nil isExtraProp:NO];
+			
+		}
+		
+		if(numberOfEffects == 1)
+		{
+			return effect;
+		}
+		[effectsStack addObject:effect];
+		
+	}
+	
+	return [[CCEffectStack alloc] initWithArray:effectsStack];
+
 }
 
 - (BOOL)isPropertyKeySettable:(NSString *)key onInstance:(id)instance
@@ -1063,6 +1138,24 @@ static inline float readFloat(CCBReader *self)
 {
 }
 
+-(void)postDeserialization
+{
+	//Post deserialization fixup.
+	for (NSArray * task in postDeserializationUUIDFixup) {
+		id node = task[0];
+		NSString * name = task[1];
+		int uuid = (int)[task[2] integerValue];
+		
+		if(uuid == 0)
+			return;
+		
+		CCNode * mappedNode = nodeMapping[@(uuid)];
+		NSAssert(mappedNode != nil, @"CCBReader: Failed to find node UUID:%i", uuid);
+		[node setValue:mappedNode forKey:name];
+		
+	}
+}
+
 -(void)readJoints
 {
     int numJoints = readIntWithSign(self, NO);
@@ -1089,14 +1182,15 @@ static inline float readFloat(CCBReader *self)
         [self readPropertyForNode:(CCNode*)properties parent:nil isExtraProp:NO];
     }
     
+    // TODO: This is a hack because things are happening in the wrong order, needs refactoring!
+    [self postDeserialization];
+    
     CCNode * nodeBodyA = properties[@"bodyA"];
     CCNode * nodeBodyB = properties[@"bodyB"];
     
     float breakingForce = [properties[@"breakingForceEnabled"] boolValue] ? [properties[@"breakingForce"] floatValue] : INFINITY;
     float maxForce = [properties[@"maxForceEnabled"] boolValue] ? [properties[@"maxForce"] floatValue] : INFINITY;
     bool  collideBodies = [properties[@"collideBodies"] boolValue];
-    float referenceAngle = [properties[@"referenceAngle"] floatValue];
-    referenceAngle = CC_DEGREES_TO_RADIANS(referenceAngle);
     
     if([className isEqualToString:@"CCPhysicsPivotJoint"])
     {
@@ -1384,7 +1478,7 @@ static inline float readFloat(CCBReader *self)
     BOOL hasPhysicsBody = readBool(self);
     if (hasPhysicsBody)
     {
-//#ifdef __CC_PLATFORM_IOS
+//#if __CC_PLATFORM_IOS
 			// Read body shape
         int bodyShape = readIntWithSign(self, NO);
         float cornerRadius = readFloat(self);
@@ -1669,6 +1763,7 @@ static inline float readFloat(CCBReader *self)
     
     CCNode* node = [self readNodeGraphParent:NULL];
     [self readJoints];
+	[self postDeserialization];
     
     [actionManagers setObject:self.animationManager forKey:[NSValue valueWithPointer:(__bridge const void *)(node)]];
     

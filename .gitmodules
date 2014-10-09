@@ -1,3 +1,10 @@
 [submodule "external/Chipmunk"]
 	path = external/Chipmunk
 url=https://github.com/slembcke/Chipmunk2D.git
+[submodule "external/ObjectAL"]
+	path = external/ObjectAL
+	url = https://github.com/spritebuilder/ObjectAL-for-Cocos2D.git
+	branch = apportable
+[submodule "external/SSZipArchive"]
+	path = external/SSZipArchive
+	url = https://github.com/spritebuilder/ssziparchive.git

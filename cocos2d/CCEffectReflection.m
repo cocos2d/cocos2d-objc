@@ -111,8 +111,8 @@
 {
     self.fragmentFunctions = [[NSMutableArray alloc] init];
     
-    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:@"cc_FragColor * texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)" snippet:@"texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)"];
-    
+    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:CCEffectDefaultInitialInputSnippet snippet:CCEffectDefaultInputSnippet];
+
     NSString* effectBody = CC_GLSL(
                                    // Index the normal map and expand the color value from [0..1] to [-1..1]
                                    vec4 normalMap = texture2D(cc_NormalMapTexture, cc_FragTexCoord2);
@@ -137,10 +137,20 @@
                                    // Compute the combination of the sprite's color and texture.
                                    vec4 primaryColor = inputValue;
                                    
+                                   // Compute Schlick's approximation (http://en.wikipedia.org/wiki/Schlick's_approximation) of the
+                                   // fresnel reflectance.
                                    float fresnel = max(u_fresnelBias + (1.0 - u_fresnelBias) * pow((1.0 - nDotV), u_fresnelPower), 0.0);
                                    
-                                   // If the refracted texture coordinates are within the bounds of the environment map
-                                   // blend the primary color with the refracted environment. Multiplying by the normal
+                                   // Apply a cutoff to nDotV to reduce the aliasing that occurs in the reflected
+                                   // image. As the surface normal approaches a 90 degree angle relative to the viewing
+                                   // direction, the sampling of the reflection map becomes more and more compressed
+                                   // which can lead to undesirable aliasing artifacts. The cutoff threshold reduces
+                                   // the contribution of these pixels to the final image and hides this aliasing.
+                                   const float NDOTV_CUTOFF = 0.2;
+                                   fresnel *= smoothstep(0.0, NDOTV_CUTOFF, nDotV);
+
+                                   // If the reflected texture coordinates are within the bounds of the environment map
+                                   // blend the primary color with the reflected environment. Multiplying by the normal
                                    // map alpha also allows the effect to be disabled for specific pixels.
                                    primaryColor += normalMap.a * fresnel * u_shininess * texture2D(u_envMap, reflectTexCoords);
                                    return primaryColor;
@@ -176,6 +186,9 @@
         
         pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
+        pass.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:pass.texCoord1Center];
+        pass.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:pass.texCoord1Extents];
+
         if (weakSelf.normalMap)
         {
             pass.shaderUniforms[CCShaderUniformNormalMapTexture] = weakSelf.normalMap.texture;
@@ -195,25 +208,27 @@
         
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_envMap"]] = weakSelf.environment.texture ?: [CCTexture none];
         
-        // Get the transform from world space to environment texture space. This is
-        // concatenated with the current transform to move from local node space to
-        // environment texture space.
-        CGAffineTransform worldToReflectEnvTexture =  CCEffectUtilsWorldToEnvironmentTransform(weakSelf.environment);
         
-        // Setup the tangent and binormal vectors for the refraction environment
-        GLKVector4 reflectTangent = CCEffectUtilsTangentInEnvironmentSpace(pass.transform, CCEffectUtilsMat4FromAffineTransform(worldToReflectEnvTexture));
+        // Get the transform from the affected node's local coordinates to the environment node.
+        GLKMatrix4 effectNodeToReflectEnvNode = weakSelf.environment ? CCEffectUtilsTransformFromNodeToNode(pass.node, weakSelf.environment, nil) : GLKMatrix4Identity;
+        
+        // Concatenate the node to environment transform with the environment node to environment texture transform.
+        // The result takes us from the affected node's coordinates to the environment's texture coordinates. We need
+        // this when computing the tangent and normal vectors below.
+        GLKMatrix4 effectNodeToReflectEnvTexture = GLKMatrix4Multiply(CCEffectUtilsMat4FromAffineTransform(weakSelf.environment.nodeToTextureTransform), effectNodeToReflectEnvNode);
+        
+        // Concatenate the node to environment texture transform together with the transform from NDC to local node
+        // coordinates. (NDC == normalized device coordinates == render target coordinates that are normalized to the
+        // range 0..1). The shader uses this to map from NDC directly to environment texture coordinates.
+        GLKMatrix4 ndcToReflectEnvTexture = GLKMatrix4Multiply(effectNodeToReflectEnvTexture, pass.ndcToNodeLocal);
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_ndcToEnv"]] = [NSValue valueWithGLKMatrix4:ndcToReflectEnvTexture];
+        
+        // Setup the tangent and binormal vectors for the reflection environment
+        GLKVector4 reflectTangent = GLKVector4Normalize(GLKMatrix4MultiplyVector4(effectNodeToReflectEnvTexture, GLKVector4Make(1.0f, 0.0f, 0.0f, 0.0f)));
         GLKVector4 reflectNormal = GLKVector4Make(0.0f, 0.0f, 1.0f, 1.0f);
         GLKVector4 reflectBinormal = GLKVector4CrossProduct(reflectNormal, reflectTangent);
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_tangent"]] = [NSValue valueWithGLKVector2:GLKVector2Make(reflectTangent.x, reflectTangent.y)];
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_binormal"]] = [NSValue valueWithGLKVector2:GLKVector2Make(reflectBinormal.x, reflectBinormal.y)];
-        
-        // Setup the transform from normalized device coordinates (NDC, which is the space our vertex
-        // positions are in) to environment texture space. We use this to compute environment texture
-        // coordinates in the vertex shader.s
-        GLKMatrix4 worldToReflectEnvTextureMat = CCEffectUtilsMat4FromAffineTransform(worldToReflectEnvTexture);
-        GLKMatrix4 ndcToReflectEnvTextureMat = GLKMatrix4Multiply(worldToReflectEnvTextureMat, pass.ndcToWorld);
-
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_ndcToEnv"]] = [NSValue valueWithGLKMatrix4:ndcToReflectEnvTextureMat];
         
     } copy]];
     

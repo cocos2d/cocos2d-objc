@@ -80,8 +80,8 @@
 {
     self.fragmentFunctions = [[NSMutableArray alloc] init];
 
-    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:@"cc_FragColor * texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)" snippet:@"texture2D(cc_PreviousPassTexture, cc_FragTexCoord1)"];
-    
+    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:CCEffectDefaultInitialInputSnippet snippet:CCEffectDefaultInputSnippet];
+
     NSString* effectBody = CC_GLSL(
                                    // Index the normal map and expand the color value from [0..1] to [-1..1]
                                    vec4 normalMap = texture2D(cc_NormalMapTexture, cc_FragTexCoord2);
@@ -142,6 +142,9 @@
         
         pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
         pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
+        pass.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:pass.texCoord1Center];
+        pass.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:pass.texCoord1Extents];
+
         if (weakSelf.normalMap)
         {
             pass.shaderUniforms[CCShaderUniformNormalMapTexture] = weakSelf.normalMap.texture;
@@ -158,26 +161,27 @@
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_refraction"]] = [NSNumber numberWithFloat:weakSelf.conditionedRefraction];
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_envMap"]] = weakSelf.environment.texture ?: [CCTexture none];
         
-        // Get the transform from world space to environment texture space. This is
-        // concatenated with the current transform to move from local node space to
-        // environment texture space.
-        CGAffineTransform worldToRefractEnvTexture =  CCEffectUtilsWorldToEnvironmentTransform(weakSelf.environment);
+        // Get the transform from the affected node's local coordinates to the environment node.
+        GLKMatrix4 effectNodeToRefractEnvNode = weakSelf.environment ? CCEffectUtilsTransformFromNodeToNode(pass.node, weakSelf.environment, nil) : GLKMatrix4Identity;
+
+        // Concatenate the node to environment transform with the environment node to environment texture transform.
+        // The result takes us from the affected node's coordinates to the environment's texture coordinates. We need
+        // this when computing the tangent and normal vectors below.
+        GLKMatrix4 effectNodeToRefractEnvTexture = GLKMatrix4Multiply(CCEffectUtilsMat4FromAffineTransform(weakSelf.environment.nodeToTextureTransform), effectNodeToRefractEnvNode);
+
+        // Concatenate the node to environment texture transform together with the transform from NDC to local node
+        // coordinates. (NDC == normalized device coordinates == render target coordinates that are normalized to the
+        // range 0..1). The shader uses this to map from NDC directly to environment texture coordinates.
+        GLKMatrix4 ndcToRefractEnvTexture = GLKMatrix4Multiply(effectNodeToRefractEnvTexture, pass.ndcToNodeLocal);
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_ndcToEnv"]] = [NSValue valueWithGLKMatrix4:ndcToRefractEnvTexture];
         
         // Setup the tangent and binormal vectors for the refraction environment
-        GLKVector4 refractTangent = CCEffectUtilsTangentInEnvironmentSpace(pass.transform, CCEffectUtilsMat4FromAffineTransform(worldToRefractEnvTexture));
+        GLKVector4 refractTangent = GLKVector4Normalize(GLKMatrix4MultiplyVector4(effectNodeToRefractEnvTexture, GLKVector4Make(1.0f, 0.0f, 0.0f, 0.0f)));
         GLKVector4 refractNormal = GLKVector4Make(0.0f, 0.0f, 1.0f, 1.0f);
         GLKVector4 refractBinormal = GLKVector4CrossProduct(refractNormal, refractTangent);
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_tangent"]] = [NSValue valueWithGLKVector2:GLKVector2Make(refractTangent.x, refractTangent.y)];
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_binormal"]] = [NSValue valueWithGLKVector2:GLKVector2Make(refractBinormal.x, refractBinormal.y)];
         
-        // Setup the transform from normalized device coordinates (NDC, which is the space our vertex
-        // positions are in) to environment texture space. We use this to compute environment texture
-        // coordinates in the vertex shader.s
-        GLKMatrix4 worldToRefractEnvTextureMat = CCEffectUtilsMat4FromAffineTransform(worldToRefractEnvTexture);
-        GLKMatrix4 ndcToRefractEnvTextureMat = GLKMatrix4Multiply(worldToRefractEnvTextureMat, pass.ndcToWorld);
-        
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_ndcToEnv"]] = [NSValue valueWithGLKMatrix4:ndcToRefractEnvTextureMat];
-
     } copy]];
     
     self.renderPasses = @[pass0];

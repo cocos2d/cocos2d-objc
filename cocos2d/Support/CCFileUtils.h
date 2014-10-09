@@ -26,7 +26,7 @@
 
 
 #import <Foundation/Foundation.h>
-#import "../ccTypes.h"
+#import <CoreGraphics/CoreGraphics.h>
 
 // keys used for the suffix or directory dictionaries
 extern NSString const *CCFileUtilsSuffixDefault;
@@ -133,7 +133,7 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  If the property "enableiPhoneResourcesOniPad" is enabled, it will also search for iPhone resources if you are in an iPad.
  
  */
-@property (nonatomic, copy) NSArray *searchResolutionsOrder;
+@property (nonatomic, strong) NSMutableArray *searchResolutionsOrder;
 
 /** Array of search paths.
  You can use this array to modify the search path of the resources.
@@ -163,7 +163,7 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  */
 @property (nonatomic, readwrite, copy) NSMutableDictionary *filenameLookup;
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 /** 
  *  The iPhone RetinaDisplay suffixes to load resources.
  *  By default it is "-hd" and "" in that order.
@@ -208,7 +208,7 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  */
 -(void)setiPadContentScaleFactor:(CGFloat)scale;
 
-#elif defined(__CC_PLATFORM_MAC)
+#elif __CC_PLATFORM_MAC
 
 /** Sets the base contentScale of textures loaded on the Mac.
  Useful for when you manipulate CCDirector.contenScaleFactor.
@@ -285,7 +285,20 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  */
 -(NSString*) fullPathFromRelativePathIgnoringResolutions:(NSString*)relPath;
 
-/** 
+/**
+ *  Returns all fullpaths of a filename in all search paths without taking into account the screen resolution suffixes or directories.
+ *  It will use the "searchPath" though.
+ *  If the file can't be found, it will return an empty array.
+ *
+ *  Useful for loading the fileLookup.plist and spriteFrameFileList.plist for packages
+ *
+ *  @param relPath Relative path.
+ *
+ *  @return Array of full paths.
+ */
+- (NSArray *)fullPathsOfFileNameInAllSearchPaths:(NSString *)filename;
+
+/**
  *  Returns the fullpath for a given filename.
  *  First it will try to get a new filename from the "filenameLookup" dictionary. If a new filename can't be found on the dictionary, it will use the original filename.
  *  Then it will try obtain the full path of the filename using the CCFileUtils search rules: resolutions, and search paths
@@ -358,6 +371,15 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  */
 -(void) loadFilenameLookupDictionaryFromFile:(NSString*)filename;
 
+/**
+ *  Loads the filenameLookup dictionary from the contents of a filename in all search paths.
+ *
+ *  Used for packages to merge filenameLookups found in different search paths.
+ *
+ *  @param filename Filename to query.
+ */
+- (void)loadFileNameLookupsInAllSearchPathsWithName:(NSString *)filename;
+
 /** 
  *  Removes the suffix from a path.
  *  On iPhone RetinaDisplay it will remove the -hd suffix
@@ -380,7 +402,7 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  */
 -(NSString*) standarizePath:(NSString*)path;
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 
 /** 
  *  Returns whether or not a given path exists with the iPhone RetinaDisplay suffix.

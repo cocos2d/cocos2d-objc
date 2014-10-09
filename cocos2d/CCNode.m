@@ -38,15 +38,9 @@
 #import "CCShader.h"
 #import "CCPhysics+ObjectiveChipmunk.h"
 #import "CCDirector_Private.h"
-#import "CCRenderer_private.h"
+#import "CCRenderer_Private.h"
 #import "CCTexture_Private.h"
 #import "CCActionManager_Private.h"
-
-
-#ifdef __CC_PLATFORM_IOS
-#import "Platforms/iOS/CCDirectorIOS.h"
-#endif
-
 
 #if CC_NODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
@@ -1759,6 +1753,7 @@ CheckDefaultUniforms(NSDictionary *uniforms, CCTexture *texture)
 
 -(void)setShader:(CCShader *)shader
 {
+	NSAssert(shader, @"CCNode.shader cannot be nil.");
 	_shader = shader;
 	_renderState = nil;
 }
@@ -1800,6 +1795,7 @@ CheckDefaultUniforms(NSDictionary *uniforms, CCTexture *texture)
 
 -(void)setBlendMode:(CCBlendMode *)blendMode
 {
+	NSAssert(blendMode, @"CCNode.blendMode cannot be nil.");
 	if(_blendMode != blendMode){
 		_blendMode = blendMode;
 		_renderState = nil;

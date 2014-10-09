@@ -32,10 +32,28 @@
 #import "ccMacros.h"
 #import "Platforms/CCGL.h"
 
-/// Macro to embed GLSL source
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+#import <Metal/Metal.h>
+
+/// Macro to embed Metal shading language source.
+#define CC_METAL(x) @#x
+#endif
+
+
+/// Macro to embed GLSL source.
 #define CC_GLSL(x) @#x
 
 
+/// GL attribute locations for built-in Cocos2D vertex attributes.
+typedef NS_ENUM(NSUInteger, CCShaderAttribute){
+	CCShaderAttributePosition,
+	CCShaderAttributeTexCoord1,
+	CCShaderAttributeTexCoord2,
+	CCShaderAttributeColor,
+};
+
+
+extern const NSString *CCShaderUniformDefaultGlobals;
 extern const NSString *CCShaderUniformProjection;
 extern const NSString *CCShaderUniformProjectionInv;
 extern const NSString *CCShaderUniformViewSize;
@@ -57,6 +75,10 @@ extern const NSString *CCShaderUniformAlphaTestValue;
 
 -(instancetype)initWithVertexShaderSource:(NSString *)vertexSource fragmentShaderSource:(NSString *)fragmentSource;
 -(instancetype)initWithFragmentShaderSource:(NSString *)source;
+
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+-(instancetype)initWithMetalVertexFunction:(id<MTLFunction>)vertexFunction fragmentFunction:(id<MTLFunction>)fragmentFunction;
+#endif
 
 +(instancetype)positionColorShader;
 +(instancetype)positionTextureColorShader;

@@ -31,7 +31,7 @@
 // Only compile this code on Mac. These files should not be included on your iOS project.
 // But in case they are included, it won't be compiled.
 #import "../../ccMacros.h"
-#ifdef __CC_PLATFORM_MAC
+#if __CC_PLATFORM_MAC
 
 #import "../../Platforms/CCGL.h"
 #import "CCGLView.h"
@@ -41,11 +41,70 @@
 
 #import "CCDirector_Private.h"
 
-@implementation CCGLView
 
-+(void) load_
+@interface CCGLViewFence : NSObject
+
+/// Is the fence ready to be inserted?
+@property(nonatomic, readonly) BOOL isReady;
+@property(nonatomic, readonly) BOOL isCompleted;
+
+/// List of completion handlers to be called when the fence completes.
+@property(nonatomic, readonly, strong) NSMutableArray *handlers;
+
+@end
+
+
+@implementation CCGLViewFence {
+	GLsync _fence;
+	BOOL _invalidated;
+}
+
+-(instancetype)init
 {
-	CCLOG(@"%@ loaded", self);
+	if((self = [super init])){
+		_handlers = [NSMutableArray array];
+	}
+	
+	return self;
+}
+
+-(void)insertFence
+{
+	_fence = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
+	
+	CC_CHECK_GL_ERROR_DEBUG();
+}
+
+-(BOOL)isReady
+{
+	// If there is a GL fence assigned, then the fence is waiting on it and not ready.
+	return (_fence == NULL);
+}
+
+-(BOOL)isComplete
+{
+	if(_fence){
+		if(glClientWaitSync(_fence, GL_SYNC_FLUSH_COMMANDS_BIT, 0) == GL_ALREADY_SIGNALED){
+			glDeleteSync(_fence);
+			_fence = NULL;
+			
+			CC_CHECK_GL_ERROR_DEBUG();
+			return YES;
+		} else {
+			// Fence is still waiting
+			return NO;
+		}
+	} else {
+		// Fence has completed previously.
+		return YES;
+	}
+}
+
+@end
+
+
+@implementation CCGLView {
+	NSMutableArray *_fences;
 }
 
 - (id) initWithFrame:(NSRect)frameRect
@@ -106,7 +165,7 @@
 	// Synchronize buffer swaps with vertical refresh rate
 	GLint swapInt = 1;
 	[[self openGLContext] setValues:&swapInt forParameter:NSOpenGLCPSwapInterval];	
-
+	
 //	GLint order = -1;
 //	[[self openGLContext] setValues:&order forParameter:NSOpenGLCPSurfaceOrder];
 }
@@ -157,10 +216,74 @@
 	CGLUnlockContext([glContext CGLContextObj]);
 }
 
+// Find or make a fence that is ready to use.
+-(CCGLViewFence *)getReadyFence
+{
+	// First checkf oldest (first in the array) fence is ready again.
+	CCGLViewFence *fence = _fences.firstObject;;
+	if(fence.isReady){
+		// Remove the fence so it can be inserted at the end of the queue again.
+		[_fences removeObjectAtIndex:0];
+		return fence;
+	} else {
+		// No existing fences ready. Make a new one.
+		return [[CCGLViewFence alloc] init];
+	}
+}
+
+-(void)addFrameCompletionHandler:(dispatch_block_t)handler
+{
+	if(_fences == nil){
+		_fences = [NSMutableArray arrayWithObject:[[CCGLViewFence alloc] init]];
+	}
+	
+	CCGLViewFence *fence = _fences.lastObject;
+	if(!fence.isReady){
+		fence = [self getReadyFence];
+		[_fences addObject:fence];
+	}
+	
+	[fence.handlers addObject:handler];
+}
+
+-(void)beginFrame
+{
+	[self lockOpenGLContext];
+}
+
+-(void)presentFrame
+{
+	{
+		CCGLViewFence *fence = _fences.lastObject;
+		if(fence.isReady){
+			// If the fence is ready to be added, insert a sync point for it.
+			[fence insertFence];
+		}
+	}
+	
+	[self.openGLContext flushBuffer];
+	
+	// Check the fences for completion.
+	for(CCGLViewFence *fence in _fences){
+		if(fence.isComplete){
+			for(dispatch_block_t handler in fence.handlers) handler();
+			[fence.handlers removeAllObjects];
+		} else {
+			break;
+		}
+	}
+	
+	[self unlockOpenGLContext];
+}
+
+-(GLuint)fbo
+{
+	return 0;
+}
+
 - (void) dealloc
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
-
 }
 
 #pragma mark CCGLView - Mouse Delegate

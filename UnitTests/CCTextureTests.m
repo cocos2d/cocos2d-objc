@@ -2,11 +2,21 @@
 #import "cocos2d.h"
 
 #import "CCTextureCache.h"
+#import "CCBReader.h"
+#import "AppDelegate.h"
 
 @interface CCTextureTests : XCTestCase
 @end
 
 @implementation CCTextureTests
+
+
+- (void)setUp
+{
+    [super setUp];
+
+    [(AppController *)[UIApplication sharedApplication].delegate configureCocos2d];
+}
 
 -(void)testTextureCache
 {

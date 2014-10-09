@@ -10,7 +10,6 @@
 		0E28FE1A197FCE4500F78989 /* CCCacheTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E28FE19197FCE4500F78989 /* CCCacheTest.m */; };
 		75556A04185636F100ED1B0F /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75556A03185636F100ED1B0F /* XCTest.framework */; };
 		75556A05185636F100ED1B0F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605717E7D278007067F0 /* Foundation.framework */; };
-		75556A06185636F100ED1B0F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605517E7D278007067F0 /* UIKit.framework */; };
 		75556A15185636FB00ED1B0F /* powered.png in Resources */ = {isa = PBXBuildFile; fileRef = 755569E71856361100ED1B0F /* powered.png */; };
 		75556A161856370A00ED1B0F /* CCFileUtilTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 755569E31856361100ED1B0F /* CCFileUtilTests.m */; };
 		75556A171856370A00ED1B0F /* CCNodeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 755569E41856361100ED1B0F /* CCNodeTests.m */; };
@@ -27,9 +26,11 @@
 		758A6C7B18440D5C00D1A8D2 /* ParticleTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 758A6C7A18440D5C00D1A8D2 /* ParticleTest.m */; };
 		758A6C80184410EE00D1A8D2 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 758A6C7F184410EE00D1A8D2 /* Particles */; };
 		75F76497185A831B00E2FAFE /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 75F76496185A831B00E2FAFE /* Sounds */; };
+		839B149F19CC1E440000E5E2 /* CCPackageTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 839B149E19CC1E440000E5E2 /* CCPackageTest.m */; };
 		92324E2A18EB635500D78D3F /* CCReaderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 92324E2918EB635500D78D3F /* CCReaderTest.m */; };
 		9269312A1923D8A700CE6285 /* Resources-shared in Resources */ = {isa = PBXBuildFile; fileRef = B7C6237517EA695100928F91 /* Resources-shared */; };
 		92FE241118F5F06F00647961 /* CCAnimationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 92FE241018F5F06F00647961 /* CCAnimationTest.m */; };
+		9D96557319D6113500428E79 /* CCEffectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D96557219D6113500428E79 /* CCEffectTests.m */; };
 		A6167B93189A7D4D0044D391 /* VertexZTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A6167B92189A7D4D0044D391 /* VertexZTest.m */; };
 		A664A4EF18A3D9B8006184B8 /* PositioningTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A664A4EE18A3D9B8006184B8 /* PositioningTest.m */; };
 		B70AFC30180F2D7400516435 /* CCTransitionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B70AFC2F180F2D7400516435 /* CCTransitionTest.m */; };
@@ -41,11 +42,9 @@
 		B7C6237617EA695100928F91 /* Resources-shared in Resources */ = {isa = PBXBuildFile; fileRef = B7C6237517EA695100928F91 /* Resources-shared */; };
 		B7C6238C17ECDF6A00928F91 /* CCTableViewTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C6238B17ECDF6A00928F91 /* CCTableViewTest.m */; };
 		B7E2604C17E7D278007067F0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2604B17E7D278007067F0 /* QuartzCore.framework */; };
-		B7E2604E17E7D278007067F0 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2604D17E7D278007067F0 /* OpenGLES.framework */; };
 		B7E2605017E7D278007067F0 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2604F17E7D278007067F0 /* OpenAL.framework */; };
 		B7E2605217E7D278007067F0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605117E7D278007067F0 /* AudioToolbox.framework */; };
 		B7E2605417E7D278007067F0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605317E7D278007067F0 /* AVFoundation.framework */; };
-		B7E2605617E7D278007067F0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605517E7D278007067F0 /* UIKit.framework */; };
 		B7E2605817E7D278007067F0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605717E7D278007067F0 /* Foundation.framework */; };
 		B7E2605A17E7D278007067F0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605917E7D278007067F0 /* CoreGraphics.framework */; };
 		B7E2605C17E7D278007067F0 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605B17E7D278007067F0 /* CoreText.framework */; };
@@ -69,21 +68,101 @@
 		B7EE69811818760700B983FE /* CCSprite9SliceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69801818760700B983FE /* CCSprite9SliceTest.m */; };
 		B7EE69CF1819D82300B983FE /* CCLayoutTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69CE1819D82300B983FE /* CCLayoutTest.m */; };
 		B7EE6A28181B075E00B983FE /* CCSliderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE6A27181B075E00B983FE /* CCSliderTest.m */; };
+		D23CD73119CB881200C7EB14 /* CCShaders.metal in Resources */ = {isa = PBXBuildFile; fileRef = D3C1281C199D43E0005D2119 /* CCShaders.metal */; };
+		D24FAEED198014C80043E27D /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D34CD3C118ABEE9C00D8E537 /* GLKit.framework */; };
+		D28A2E181954F68200ADC03D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D28A2E171954F68200ADC03D /* UIKit.framework */; };
+		D28A2E1F1954F7E900ADC03D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D28A2E1E1954F7E900ADC03D /* OpenGLES.framework */; };
 		D2B4894C1917EE6700C3443A /* CCEffectsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D2B4894B1917EE6700C3443A /* CCEffectsTest.m */; };
+		D2D59897198747DE00BDAF25 /* Music in Resources */ = {isa = PBXBuildFile; fileRef = D2D59896198747DE00BDAF25 /* Music */; };
+		D3269DE819CC985900406282 /* TestShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = D3269DE719CC985900406282 /* TestShaders.metal */; };
+		D3269DEA19CCC11800406282 /* CCRendererSharedTypes.h in Resources */ = {isa = PBXBuildFile; fileRef = D3269DE919CCC11800406282 /* CCRendererSharedTypes.h */; };
 		D32FDE8619B645CA0078CC16 /* CCTextureTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D32FDE8519B645CA0078CC16 /* CCTextureTests.m */; };
 		D3395F1A187F83E600F22C74 /* CCMemoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D3395F19187F83E600F22C74 /* CCMemoryTests.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D340E10E185660BE006E605C /* CCPhysicsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D340E10C185660BE006E605C /* CCPhysicsTest.m */; };
 		D340E10F185660BE006E605C /* TilemapTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D340E10D185660BE006E605C /* TilemapTest.m */; };
-		D34CD3C218ABEE9C00D8E537 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D34CD3C118ABEE9C00D8E537 /* GLKit.framework */; };
 		D34CD3C518ABF4AA00D8E537 /* CCRendererTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D34CD3C418ABF4AA00D8E537 /* CCRendererTests.m */; };
 		D3870C6018B440150033D885 /* SpritePerformanceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3870C5F18B440150033D885 /* SpritePerformanceTest.m */; };
-		D38C220718EB657100DD7599 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = D38C220618EB657100DD7599 /* Fonts */; };
 		D3B2A7E5187DD60B00406C5A /* CCBMFontTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B2A7E4187DD60B00406C5A /* CCBMFontTest.m */; };
 		D3C9C867188078B900C58900 /* CCSchedulerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3C9C866188078B900C58900 /* CCSchedulerTest.m */; };
 		D3D6CF5F18BD5F0500A51531 /* CCRendererTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3D6CF5E18BD5F0500A51531 /* CCRendererTest.m */; };
+		D4AFE9131977100000261299 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8D81977100000261299 /* A Damn Mess.ttf */; };
+		D4AFE9141977100000261299 /* Abberancy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8D91977100000261299 /* Abberancy.ttf */; };
+		D4AFE9151977100000261299 /* ThisFontIsAbdFont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8DA1977100000261299 /* ThisFontIsAbdFont.ttf */; };
+		D4AFE9161977100000261299 /* arial-unicode-26.fnt in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8DB1977100000261299 /* arial-unicode-26.fnt */; };
+		D4AFE9171977100000261299 /* arial-unicode-26.GlyphProject in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8DC1977100000261299 /* arial-unicode-26.GlyphProject */; };
+		D4AFE9181977100000261299 /* arial-unicode-26.png in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8DD1977100000261299 /* arial-unicode-26.png */; };
+		D4AFE9191977100000261299 /* arial16.fnt in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8DE1977100000261299 /* arial16.fnt */; };
+		D4AFE91A1977100000261299 /* arial16.png in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8DF1977100000261299 /* arial16.png */; };
+		D4AFE91B1977100000261299 /* bitmapFontTest.fnt in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8E01977100000261299 /* bitmapFontTest.fnt */; };
+		D4AFE91C1977100000261299 /* bitmapFontTest.png in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8E11977100000261299 /* bitmapFontTest.png */; };
+		D4AFE91D1977100000261299 /* bitmapFontTest2.fnt in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8E21977100000261299 /* bitmapFontTest2.fnt */; };
+		D4AFE91E1977100000261299 /* bitmapFontTest3.fnt in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8E31977100000261299 /* bitmapFontTest3.fnt */; };
+		D4AFE91F1977100000261299 /* bitmapFontTest3.png in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8E41977100000261299 /* bitmapFontTest3.png */; };
+		D4AFE9201977100000261299 /* bitmapFontTest4.fnt in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8E51977100000261299 /* bitmapFontTest4.fnt */; };
+		D4AFE9211977100000261299 /* bitmapFontTest4.png in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8E61977100000261299 /* bitmapFontTest4.png */; };
+		D4AFE9221977100000261299 /* bitmapFontTest5.fnt in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8E71977100000261299 /* bitmapFontTest5.fnt */; };
+		D4AFE9231977100000261299 /* bitmapFontTest5.png in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8E81977100000261299 /* bitmapFontTest5.png */; };
+		D4AFE9241977100000261299 /* boundsTestFont.fnt in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8E91977100000261299 /* boundsTestFont.fnt */; };
+		D4AFE9251977100000261299 /* boundsTestFont.png in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8EA1977100000261299 /* boundsTestFont.png */; };
+		D4AFE9261977100000261299 /* font-issue1343-hd.fnt in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8EB1977100000261299 /* font-issue1343-hd.fnt */; };
+		D4AFE9271977100000261299 /* font-issue1343-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8EC1977100000261299 /* font-issue1343-hd.png */; };
+		D4AFE9281977100000261299 /* font-issue1343.fnt in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8ED1977100000261299 /* font-issue1343.fnt */; };
+		D4AFE9291977100000261299 /* font-issue1343.png in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8EE1977100000261299 /* font-issue1343.png */; };
+		D4AFE92A1977100000261299 /* fps_images-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8EF1977100000261299 /* fps_images-hd.plist */; };
+		D4AFE92B1977100000261299 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8F01977100000261299 /* fps_images-hd.png */; };
+		D4AFE92C1977100000261299 /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8F11977100000261299 /* fps_images-ipadhd.png */; };
+		D4AFE92D1977100000261299 /* fps_images.GlyphProject in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8F21977100000261299 /* fps_images.GlyphProject */; };
+		D4AFE92E1977100000261299 /* fps_images.plist in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8F31977100000261299 /* fps_images.plist */; };
+		D4AFE92F1977100000261299 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8F41977100000261299 /* fps_images.png */; };
+		D4AFE9301977100000261299 /* futura-48.fnt in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8F51977100000261299 /* futura-48.fnt */; };
+		D4AFE9311977100000261299 /* futura-48.GlyphProject in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8F61977100000261299 /* futura-48.GlyphProject */; };
+		D4AFE9321977100000261299 /* futura-48.png in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8F71977100000261299 /* futura-48.png */; };
+		D4AFE9331977100000261299 /* geneva-32.fnt in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8F81977100000261299 /* geneva-32.fnt */; };
+		D4AFE9341977100000261299 /* helvetica-32.fnt in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8F91977100000261299 /* helvetica-32.fnt */; };
+		D4AFE9351977100000261299 /* helvetica-geneva-32.png in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8FA1977100000261299 /* helvetica-geneva-32.png */; };
+		D4AFE9361977100000261299 /* konqa32-hd.fnt in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8FB1977100000261299 /* konqa32-hd.fnt */; };
+		D4AFE9371977100000261299 /* konqa32-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8FC1977100000261299 /* konqa32-hd.png */; };
+		D4AFE9381977100000261299 /* konqa32.fnt in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8FD1977100000261299 /* konqa32.fnt */; };
+		D4AFE9391977100000261299 /* konqa32.png in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8FE1977100000261299 /* konqa32.png */; };
+		D4AFE93A1977100000261299 /* larabie-16-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8FF1977100000261299 /* larabie-16-hd.plist */; };
+		D4AFE93B1977100000261299 /* larabie-16-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE9001977100000261299 /* larabie-16-hd.png */; };
+		D4AFE93C1977100000261299 /* larabie-16.plist in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE9011977100000261299 /* larabie-16.plist */; };
+		D4AFE93D1977100000261299 /* larabie-16.png in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE9021977100000261299 /* larabie-16.png */; };
+		D4AFE93E1977100000261299 /* markerFelt-hd.fnt in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE9031977100000261299 /* markerFelt-hd.fnt */; };
+		D4AFE93F1977100000261299 /* markerFelt-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE9041977100000261299 /* markerFelt-hd.png */; };
+		D4AFE9401977100000261299 /* markerFelt.fnt in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE9051977100000261299 /* markerFelt.fnt */; };
+		D4AFE9411977100000261299 /* markerFelt.png in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE9061977100000261299 /* markerFelt.png */; };
+		D4AFE9421977100000261299 /* Paint Boy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE9071977100000261299 /* Paint Boy.ttf */; };
+		D4AFE9431977100000261299 /* RobotoSlab-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE9081977100000261299 /* RobotoSlab-Bold.ttf */; };
+		D4AFE9441977100000261299 /* RobotoSlab-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE9091977100000261299 /* RobotoSlab-Light.ttf */; };
+		D4AFE9451977100000261299 /* RobotoSlab-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE90A1977100000261299 /* RobotoSlab-Regular.ttf */; };
+		D4AFE9461977100000261299 /* RobotoSlab-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE90B1977100000261299 /* RobotoSlab-Thin.ttf */; };
+		D4AFE9471977100000261299 /* Schwarzwald Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE90C1977100000261299 /* Schwarzwald Regular.ttf */; };
+		D4AFE9481977100000261299 /* Scissor Cuts.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE90D1977100000261299 /* Scissor Cuts.ttf */; };
+		D4AFE9491977100000261299 /* tuffy_bold_italic-charmap-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE90E1977100000261299 /* tuffy_bold_italic-charmap-hd.plist */; };
+		D4AFE94A1977100000261299 /* tuffy_bold_italic-charmap.plist in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE90F1977100000261299 /* tuffy_bold_italic-charmap.plist */; };
+		D4AFE94B1977100000261299 /* tuffy_bold_italic-charmap.png in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE9101977100000261299 /* tuffy_bold_italic-charmap.png */; };
+		D4AFE94C1977100000261299 /* west_england-64.fnt in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE9111977100000261299 /* west_england-64.fnt */; };
+		D4AFE94D1977100000261299 /* west_england-64.png in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE9121977100000261299 /* west_england-64.png */; };
+		E525F033EECC363CA8EAF2A6 /* CCPackageDownloadManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F2B770C5914D0810E4C2 /* CCPackageDownloadManagerTests.m */; };
+		E525F4D0568A8A4176684936 /* CCPackageHelperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F99055258F35DFF00ECD /* CCPackageHelperTests.m */; };
+		E525F5DB1E3086DDE0296CEC /* CCPackageDownloadTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F5FACFF098F0ACBA6419 /* CCPackageDownloadTests.m */; };
+		E525F7C977339D17470FC149 /* CCPackageInstallerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FBF58DFECF27272F5D6F /* CCPackageInstallerTests.m */; };
+		E525F81797DA5573FC26BEBB /* CCPackageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F771C583AAF68EB42E15 /* CCPackageTests.m */; };
+		E525FA44681404CC22A3A8D9 /* CCPackageUnzipperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F30DA34A6712527102E5 /* CCPackageUnzipperTests.m */; };
+		E525FCAF2CC6D200B8065E2E /* CCPackageCocos2dEnablerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FB8A3CC89D071A8377B1 /* CCPackageCocos2dEnablerTests.m */; };
+		E525FF2E8351476CDD7DEAC4 /* CCPackageManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F395FE85323D86232416 /* CCPackageManagerTests.m */; };
+		E525FFABB4646A7446269A98 /* CCUnitTestAssertions.h in Resources */ = {isa = PBXBuildFile; fileRef = E525F832B569117922DA339E /* CCUnitTestAssertions.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		57E144B51974C1E90065F142 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B7E2622317E7D3D8007067F0 /* cocos2d-ios.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5BF3267A195F8D8800D9A51A;
+			remoteInfo = cocos2dJava;
+		};
 		75556A10185636F100ED1B0F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B7E2604017E7D278007067F0 /* Project object */;
@@ -104,6 +183,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
+		};
+		D2FEB797194F6CC800FC0574 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B7E2622317E7D3D8007067F0 /* cocos2d-ios.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2FEB74F194F6C9E00FC0574;
+			remoteInfo = cocos2dAndroid;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -148,8 +234,10 @@
 		75EA924B1860BFC800BF914A /* PerformanceTextureTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceTextureTest.h; sourceTree = "<group>"; };
 		75EA924C1860BFC800BF914A /* PerformanceTextureTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerformanceTextureTest.m; sourceTree = "<group>"; };
 		75F76496185A831B00E2FAFE /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sounds; path = Resources/Sounds; sourceTree = SOURCE_ROOT; };
+		839B149E19CC1E440000E5E2 /* CCPackageTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCPackageTest.m; path = "cocos2d-ui-tests/tests/CCPackageTest.m"; sourceTree = SOURCE_ROOT; };
 		92324E2918EB635500D78D3F /* CCReaderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCReaderTest.m; sourceTree = "<group>"; };
 		92FE241018F5F06F00647961 /* CCAnimationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAnimationTest.m; sourceTree = "<group>"; };
+		9D96557219D6113500428E79 /* CCEffectTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectTests.m; sourceTree = "<group>"; };
 		A6167B92189A7D4D0044D391 /* VertexZTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VertexZTest.m; path = "cocos2d-ui-tests/tests/VertexZTest.m"; sourceTree = SOURCE_ROOT; };
 		A664A4EE18A3D9B8006184B8 /* PositioningTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PositioningTest.m; path = "cocos2d-ui-tests/tests/PositioningTest.m"; sourceTree = SOURCE_ROOT; };
 		B70AFC2F180F2D7400516435 /* CCTransitionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTransitionTest.m; path = "cocos2d-ui-tests/tests/CCTransitionTest.m"; sourceTree = SOURCE_ROOT; };
@@ -163,11 +251,9 @@
 		B7C6238B17ECDF6A00928F91 /* CCTableViewTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTableViewTest.m; path = "cocos2d-ui-tests/tests/CCTableViewTest.m"; sourceTree = SOURCE_ROOT; };
 		B7E2604817E7D278007067F0 /* cocos2d-tests-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cocos2d-tests-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7E2604B17E7D278007067F0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		B7E2604D17E7D278007067F0 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		B7E2604F17E7D278007067F0 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		B7E2605117E7D278007067F0 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		B7E2605317E7D278007067F0 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		B7E2605517E7D278007067F0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		B7E2605717E7D278007067F0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B7E2605917E7D278007067F0 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		B7E2605B17E7D278007067F0 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
@@ -194,7 +280,17 @@
 		B7EE69801818760700B983FE /* CCSprite9SliceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSprite9SliceTest.m; path = "cocos2d-ui-tests/tests/CCSprite9SliceTest.m"; sourceTree = SOURCE_ROOT; };
 		B7EE69CE1819D82300B983FE /* CCLayoutTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCLayoutTest.m; path = "cocos2d-ui-tests/tests/CCLayoutTest.m"; sourceTree = SOURCE_ROOT; };
 		B7EE6A27181B075E00B983FE /* CCSliderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSliderTest.m; path = "cocos2d-ui-tests/tests/CCSliderTest.m"; sourceTree = SOURCE_ROOT; };
+		D28A2E171954F68200ADC03D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		D28A2E1E1954F7E900ADC03D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		D2B4894B1917EE6700C3443A /* CCEffectsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCEffectsTest.m; path = "cocos2d-ui-tests/tests/CCEffectsTest.m"; sourceTree = SOURCE_ROOT; };
+		D2D0E6911950B15800E9103F /* BridgeKitV3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BridgeKitV3.framework; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/ApportableSDK1.0.sdk/System/Library/Frameworks/BridgeKitV3.framework"; sourceTree = "<group>"; };
+		D2D0E6931950B16300E9103F /* libGLESv1_CM.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLESv1_CM.so; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/ApportableSDK1.0.sdk/usr/lib/armeabi/libGLESv1_CM.so"; sourceTree = "<group>"; };
+		D2D0E6941950B16300E9103F /* libGLESv2.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLESv2.so; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/ApportableSDK1.0.sdk/usr/lib/armeabi/libGLESv2.so"; sourceTree = "<group>"; };
+		D2D0E6951950B16300E9103F /* libGLESv3.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLESv3.so; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/ApportableSDK1.0.sdk/usr/lib/armeabi/libGLESv3.so"; sourceTree = "<group>"; };
+		D2D0E6991950B16800E9103F /* libEGL.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libEGL.so; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/ApportableSDK1.0.sdk/usr/lib/armeabi/libEGL.so"; sourceTree = "<group>"; };
+		D2D59896198747DE00BDAF25 /* Music */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Music; path = Resources/Music; sourceTree = SOURCE_ROOT; };
+		D3269DE719CC985900406282 /* TestShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = TestShaders.metal; path = "cocos2d-ui-tests/tests/TestShaders.metal"; sourceTree = SOURCE_ROOT; };
+		D3269DE919CCC11800406282 /* CCRendererSharedTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CCRendererSharedTypes.h; path = cocos2d/CCRendererSharedTypes.h; sourceTree = "<group>"; };
 		D32FDE8519B645CA0078CC16 /* CCTextureTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTextureTests.m; sourceTree = "<group>"; };
 		D3395F19187F83E600F22C74 /* CCMemoryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMemoryTests.m; sourceTree = "<group>"; };
 		D340E10C185660BE006E605C /* CCPhysicsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCPhysicsTest.m; path = "cocos2d-ui-tests/tests/CCPhysicsTest.m"; sourceTree = SOURCE_ROOT; };
@@ -202,10 +298,78 @@
 		D34CD3C118ABEE9C00D8E537 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		D34CD3C418ABF4AA00D8E537 /* CCRendererTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCRendererTests.m; sourceTree = "<group>"; };
 		D3870C5F18B440150033D885 /* SpritePerformanceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpritePerformanceTest.m; path = "cocos2d-ui-tests/tests/SpritePerformanceTest.m"; sourceTree = SOURCE_ROOT; };
-		D38C220618EB657100DD7599 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = Resources/Fonts; sourceTree = SOURCE_ROOT; };
 		D3B2A7E4187DD60B00406C5A /* CCBMFontTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBMFontTest.m; path = "cocos2d-ui-tests/tests/CCBMFontTest.m"; sourceTree = SOURCE_ROOT; };
+		D3C1281C199D43E0005D2119 /* CCShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = CCShaders.metal; path = cocos2d/Platforms/iOS/CCShaders.metal; sourceTree = SOURCE_ROOT; };
 		D3C9C866188078B900C58900 /* CCSchedulerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSchedulerTest.m; path = "cocos2d-ui-tests/tests/CCSchedulerTest.m"; sourceTree = SOURCE_ROOT; };
 		D3D6CF5E18BD5F0500A51531 /* CCRendererTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCRendererTest.m; path = "cocos2d-ui-tests/tests/CCRendererTest.m"; sourceTree = SOURCE_ROOT; };
+		D4AFE8D81977100000261299 /* A Damn Mess.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "A Damn Mess.ttf"; sourceTree = "<group>"; };
+		D4AFE8D91977100000261299 /* Abberancy.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Abberancy.ttf; sourceTree = "<group>"; };
+		D4AFE8DA1977100000261299 /* ThisFontIsAbdFont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ThisFontIsAbdFont.ttf; sourceTree = "<group>"; };
+		D4AFE8DB1977100000261299 /* arial-unicode-26.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "arial-unicode-26.fnt"; sourceTree = "<group>"; };
+		D4AFE8DC1977100000261299 /* arial-unicode-26.GlyphProject */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "arial-unicode-26.GlyphProject"; sourceTree = "<group>"; };
+		D4AFE8DD1977100000261299 /* arial-unicode-26.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arial-unicode-26.png"; sourceTree = "<group>"; };
+		D4AFE8DE1977100000261299 /* arial16.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = arial16.fnt; sourceTree = "<group>"; };
+		D4AFE8DF1977100000261299 /* arial16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arial16.png; sourceTree = "<group>"; };
+		D4AFE8E01977100000261299 /* bitmapFontTest.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bitmapFontTest.fnt; sourceTree = "<group>"; };
+		D4AFE8E11977100000261299 /* bitmapFontTest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bitmapFontTest.png; sourceTree = "<group>"; };
+		D4AFE8E21977100000261299 /* bitmapFontTest2.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bitmapFontTest2.fnt; sourceTree = "<group>"; };
+		D4AFE8E31977100000261299 /* bitmapFontTest3.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bitmapFontTest3.fnt; sourceTree = "<group>"; };
+		D4AFE8E41977100000261299 /* bitmapFontTest3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bitmapFontTest3.png; sourceTree = "<group>"; };
+		D4AFE8E51977100000261299 /* bitmapFontTest4.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bitmapFontTest4.fnt; sourceTree = "<group>"; };
+		D4AFE8E61977100000261299 /* bitmapFontTest4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bitmapFontTest4.png; sourceTree = "<group>"; };
+		D4AFE8E71977100000261299 /* bitmapFontTest5.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bitmapFontTest5.fnt; sourceTree = "<group>"; };
+		D4AFE8E81977100000261299 /* bitmapFontTest5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bitmapFontTest5.png; sourceTree = "<group>"; };
+		D4AFE8E91977100000261299 /* boundsTestFont.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = boundsTestFont.fnt; sourceTree = "<group>"; };
+		D4AFE8EA1977100000261299 /* boundsTestFont.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boundsTestFont.png; sourceTree = "<group>"; };
+		D4AFE8EB1977100000261299 /* font-issue1343-hd.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "font-issue1343-hd.fnt"; sourceTree = "<group>"; };
+		D4AFE8EC1977100000261299 /* font-issue1343-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "font-issue1343-hd.png"; sourceTree = "<group>"; };
+		D4AFE8ED1977100000261299 /* font-issue1343.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "font-issue1343.fnt"; sourceTree = "<group>"; };
+		D4AFE8EE1977100000261299 /* font-issue1343.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "font-issue1343.png"; sourceTree = "<group>"; };
+		D4AFE8EF1977100000261299 /* fps_images-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "fps_images-hd.plist"; sourceTree = "<group>"; };
+		D4AFE8F01977100000261299 /* fps_images-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fps_images-hd.png"; sourceTree = "<group>"; };
+		D4AFE8F11977100000261299 /* fps_images-ipadhd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fps_images-ipadhd.png"; sourceTree = "<group>"; };
+		D4AFE8F21977100000261299 /* fps_images.GlyphProject */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = fps_images.GlyphProject; sourceTree = "<group>"; };
+		D4AFE8F31977100000261299 /* fps_images.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = fps_images.plist; sourceTree = "<group>"; };
+		D4AFE8F41977100000261299 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fps_images.png; sourceTree = "<group>"; };
+		D4AFE8F51977100000261299 /* futura-48.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "futura-48.fnt"; sourceTree = "<group>"; };
+		D4AFE8F61977100000261299 /* futura-48.GlyphProject */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "futura-48.GlyphProject"; sourceTree = "<group>"; };
+		D4AFE8F71977100000261299 /* futura-48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "futura-48.png"; sourceTree = "<group>"; };
+		D4AFE8F81977100000261299 /* geneva-32.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "geneva-32.fnt"; sourceTree = "<group>"; };
+		D4AFE8F91977100000261299 /* helvetica-32.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "helvetica-32.fnt"; sourceTree = "<group>"; };
+		D4AFE8FA1977100000261299 /* helvetica-geneva-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "helvetica-geneva-32.png"; sourceTree = "<group>"; };
+		D4AFE8FB1977100000261299 /* konqa32-hd.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "konqa32-hd.fnt"; sourceTree = "<group>"; };
+		D4AFE8FC1977100000261299 /* konqa32-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "konqa32-hd.png"; sourceTree = "<group>"; };
+		D4AFE8FD1977100000261299 /* konqa32.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = konqa32.fnt; sourceTree = "<group>"; };
+		D4AFE8FE1977100000261299 /* konqa32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = konqa32.png; sourceTree = "<group>"; };
+		D4AFE8FF1977100000261299 /* larabie-16-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "larabie-16-hd.plist"; sourceTree = "<group>"; };
+		D4AFE9001977100000261299 /* larabie-16-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "larabie-16-hd.png"; sourceTree = "<group>"; };
+		D4AFE9011977100000261299 /* larabie-16.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "larabie-16.plist"; sourceTree = "<group>"; };
+		D4AFE9021977100000261299 /* larabie-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "larabie-16.png"; sourceTree = "<group>"; };
+		D4AFE9031977100000261299 /* markerFelt-hd.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "markerFelt-hd.fnt"; sourceTree = "<group>"; };
+		D4AFE9041977100000261299 /* markerFelt-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "markerFelt-hd.png"; sourceTree = "<group>"; };
+		D4AFE9051977100000261299 /* markerFelt.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = markerFelt.fnt; sourceTree = "<group>"; };
+		D4AFE9061977100000261299 /* markerFelt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = markerFelt.png; sourceTree = "<group>"; };
+		D4AFE9071977100000261299 /* Paint Boy.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Paint Boy.ttf"; sourceTree = "<group>"; };
+		D4AFE9081977100000261299 /* RobotoSlab-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoSlab-Bold.ttf"; sourceTree = "<group>"; };
+		D4AFE9091977100000261299 /* RobotoSlab-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoSlab-Light.ttf"; sourceTree = "<group>"; };
+		D4AFE90A1977100000261299 /* RobotoSlab-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoSlab-Regular.ttf"; sourceTree = "<group>"; };
+		D4AFE90B1977100000261299 /* RobotoSlab-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoSlab-Thin.ttf"; sourceTree = "<group>"; };
+		D4AFE90C1977100000261299 /* Schwarzwald Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Schwarzwald Regular.ttf"; sourceTree = "<group>"; };
+		D4AFE90D1977100000261299 /* Scissor Cuts.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Scissor Cuts.ttf"; sourceTree = "<group>"; };
+		D4AFE90E1977100000261299 /* tuffy_bold_italic-charmap-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "tuffy_bold_italic-charmap-hd.plist"; sourceTree = "<group>"; };
+		D4AFE90F1977100000261299 /* tuffy_bold_italic-charmap.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "tuffy_bold_italic-charmap.plist"; sourceTree = "<group>"; };
+		D4AFE9101977100000261299 /* tuffy_bold_italic-charmap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tuffy_bold_italic-charmap.png"; sourceTree = "<group>"; };
+		D4AFE9111977100000261299 /* west_england-64.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "west_england-64.fnt"; sourceTree = "<group>"; };
+		D4AFE9121977100000261299 /* west_england-64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "west_england-64.png"; sourceTree = "<group>"; };
+		E525F2B770C5914D0810E4C2 /* CCPackageDownloadManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageDownloadManagerTests.m; sourceTree = "<group>"; };
+		E525F30DA34A6712527102E5 /* CCPackageUnzipperTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageUnzipperTests.m; sourceTree = "<group>"; };
+		E525F395FE85323D86232416 /* CCPackageManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageManagerTests.m; sourceTree = "<group>"; };
+		E525F5FACFF098F0ACBA6419 /* CCPackageDownloadTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageDownloadTests.m; sourceTree = "<group>"; };
+		E525F771C583AAF68EB42E15 /* CCPackageTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageTests.m; sourceTree = "<group>"; };
+		E525F832B569117922DA339E /* CCUnitTestAssertions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUnitTestAssertions.h; sourceTree = "<group>"; };
+		E525F99055258F35DFF00ECD /* CCPackageHelperTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageHelperTests.m; sourceTree = "<group>"; };
+		E525FB8A3CC89D071A8377B1 /* CCPackageCocos2dEnablerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageCocos2dEnablerTests.m; sourceTree = "<group>"; };
+		E525FBF58DFECF27272F5D6F /* CCPackageInstallerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageInstallerTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,7 +379,6 @@
 			files = (
 				7575B5FC1856535200CA09C8 /* libcocos2d.a in Frameworks */,
 				75556A04185636F100ED1B0F /* XCTest.framework in Frameworks */,
-				75556A06185636F100ED1B0F /* UIKit.framework in Frameworks */,
 				75556A05185636F100ED1B0F /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -224,14 +387,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D34CD3C218ABEE9C00D8E537 /* GLKit.framework in Frameworks */,
+				D24FAEED198014C80043E27D /* GLKit.framework in Frameworks */,
+				D28A2E1F1954F7E900ADC03D /* OpenGLES.framework in Frameworks */,
+				D28A2E181954F68200ADC03D /* UIKit.framework in Frameworks */,
 				B7E2623617E7D589007067F0 /* libcocos2d.a in Frameworks */,
 				B7E2604C17E7D278007067F0 /* QuartzCore.framework in Frameworks */,
-				B7E2604E17E7D278007067F0 /* OpenGLES.framework in Frameworks */,
 				B7E2605017E7D278007067F0 /* OpenAL.framework in Frameworks */,
 				B7E2605217E7D278007067F0 /* AudioToolbox.framework in Frameworks */,
 				B7E2605417E7D278007067F0 /* AVFoundation.framework in Frameworks */,
-				B7E2605617E7D278007067F0 /* UIKit.framework in Frameworks */,
 				B7E2605817E7D278007067F0 /* Foundation.framework in Frameworks */,
 				B7E2605A17E7D278007067F0 /* CoreGraphics.framework in Frameworks */,
 				B7E2605C17E7D278007067F0 /* CoreText.framework in Frameworks */,
@@ -257,6 +420,7 @@
 			isa = PBXGroup;
 			children = (
 				92FE241018F5F06F00647961 /* CCAnimationTest.m */,
+				9D96557219D6113500428E79 /* CCEffectTests.m */,
 				755569E31856361100ED1B0F /* CCFileUtilTests.m */,
 				755569E41856361100ED1B0F /* CCNodeTests.m */,
 				755569E51856361100ED1B0F /* CCPhysicsTests.m */,
@@ -266,6 +430,8 @@
 				92324E2918EB635500D78D3F /* CCReaderTest.m */,
 				D32FDE8519B645CA0078CC16 /* CCTextureTests.m */,
 				755569EC1856361100ED1B0F /* Supporting Files */,
+				E525F25081EB1E197CD567E4 /* Packages */,
+				E525F832B569117922DA339E /* CCUnitTestAssertions.h */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -273,7 +439,8 @@
 		758A6C6E1843E84D00D1A8D2 /* Test Resources */ = {
 			isa = PBXGroup;
 			children = (
-				D38C220618EB657100DD7599 /* Fonts */,
+				D2D59896198747DE00BDAF25 /* Music */,
+				D4AFE8D71977100000261299 /* Fonts */,
 				75F76496185A831B00E2FAFE /* Sounds */,
 				758A6C7F184410EE00D1A8D2 /* Particles */,
 				758A6C6A1843E5BE00D1A8D2 /* TileMaps */,
@@ -382,6 +549,8 @@
 				D3B2A7E4187DD60B00406C5A /* CCBMFontTest.m */,
 				A6167B92189A7D4D0044D391 /* VertexZTest.m */,
 				A664A4EE18A3D9B8006184B8 /* PositioningTest.m */,
+				839B149E19CC1E440000E5E2 /* CCPackageTest.m */,
+				D3269DE719CC985900406282 /* TestShaders.metal */,
 			);
 			name = Tests;
 			path = "cocos2d-ui-tests/tests";
@@ -390,10 +559,12 @@
 		B7E2603F17E7D278007067F0 = {
 			isa = PBXGroup;
 			children = (
+				D3269DE919CCC11800406282 /* CCRendererSharedTypes.h */,
 				755569ED1856361100ED1B0F /* UnitTests */,
 				B7E2605F17E7D278007067F0 /* cocos2d-tests-ios */,
 				B7E2604A17E7D278007067F0 /* Frameworks */,
 				B7E2604917E7D278007067F0 /* Products */,
+				E525F171C7FA9B056FA8C500,
 			);
 			sourceTree = "<group>";
 		};
@@ -409,13 +580,18 @@
 		B7E2604A17E7D278007067F0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D28A2E1E1954F7E900ADC03D /* OpenGLES.framework */,
+				D28A2E171954F68200ADC03D /* UIKit.framework */,
+				D2D0E6991950B16800E9103F /* libEGL.so */,
+				D2D0E6931950B16300E9103F /* libGLESv1_CM.so */,
+				D2D0E6941950B16300E9103F /* libGLESv2.so */,
+				D2D0E6951950B16300E9103F /* libGLESv3.so */,
+				D2D0E6911950B15800E9103F /* BridgeKitV3.framework */,
 				D34CD3C118ABEE9C00D8E537 /* GLKit.framework */,
 				B7E2604B17E7D278007067F0 /* QuartzCore.framework */,
-				B7E2604D17E7D278007067F0 /* OpenGLES.framework */,
 				B7E2604F17E7D278007067F0 /* OpenAL.framework */,
 				B7E2605117E7D278007067F0 /* AudioToolbox.framework */,
 				B7E2605317E7D278007067F0 /* AVFoundation.framework */,
-				B7E2605517E7D278007067F0 /* UIKit.framework */,
 				B7E2605717E7D278007067F0 /* Foundation.framework */,
 				B7E2605917E7D278007067F0 /* CoreGraphics.framework */,
 				B7E2605B17E7D278007067F0 /* CoreText.framework */,
@@ -454,6 +630,7 @@
 		B7E2620117E7D34D007067F0 /* Resources-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				D3C1281C199D43E0005D2119 /* CCShaders.metal */,
 				B7E2620217E7D34D007067F0 /* Default-568h@2x.png */,
 				B7E2620317E7D34D007067F0 /* Default-Landscape~ipad.png */,
 				B7E2620417E7D34D007067F0 /* Default.png */,
@@ -502,8 +679,116 @@
 			isa = PBXGroup;
 			children = (
 				B7E2622D17E7D3D8007067F0 /* libcocos2d.a */,
+				D2FEB798194F6CC800FC0574 /* libcocos2dAndroid.a */,
+				57E144B61974C1E90065F142 /* cocos2dJava.jar */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		D4AFE8D71977100000261299 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				D4AFE8D81977100000261299 /* A Damn Mess.ttf */,
+				D4AFE8D91977100000261299 /* Abberancy.ttf */,
+				D4AFE8DA1977100000261299 /* ThisFontIsAbdFont.ttf */,
+				D4AFE8DB1977100000261299 /* arial-unicode-26.fnt */,
+				D4AFE8DC1977100000261299 /* arial-unicode-26.GlyphProject */,
+				D4AFE8DD1977100000261299 /* arial-unicode-26.png */,
+				D4AFE8DE1977100000261299 /* arial16.fnt */,
+				D4AFE8DF1977100000261299 /* arial16.png */,
+				D4AFE8E01977100000261299 /* bitmapFontTest.fnt */,
+				D4AFE8E11977100000261299 /* bitmapFontTest.png */,
+				D4AFE8E21977100000261299 /* bitmapFontTest2.fnt */,
+				D4AFE8E31977100000261299 /* bitmapFontTest3.fnt */,
+				D4AFE8E41977100000261299 /* bitmapFontTest3.png */,
+				D4AFE8E51977100000261299 /* bitmapFontTest4.fnt */,
+				D4AFE8E61977100000261299 /* bitmapFontTest4.png */,
+				D4AFE8E71977100000261299 /* bitmapFontTest5.fnt */,
+				D4AFE8E81977100000261299 /* bitmapFontTest5.png */,
+				D4AFE8E91977100000261299 /* boundsTestFont.fnt */,
+				D4AFE8EA1977100000261299 /* boundsTestFont.png */,
+				D4AFE8EB1977100000261299 /* font-issue1343-hd.fnt */,
+				D4AFE8EC1977100000261299 /* font-issue1343-hd.png */,
+				D4AFE8ED1977100000261299 /* font-issue1343.fnt */,
+				D4AFE8EE1977100000261299 /* font-issue1343.png */,
+				D4AFE8EF1977100000261299 /* fps_images-hd.plist */,
+				D4AFE8F01977100000261299 /* fps_images-hd.png */,
+				D4AFE8F11977100000261299 /* fps_images-ipadhd.png */,
+				D4AFE8F21977100000261299 /* fps_images.GlyphProject */,
+				D4AFE8F31977100000261299 /* fps_images.plist */,
+				D4AFE8F41977100000261299 /* fps_images.png */,
+				D4AFE8F51977100000261299 /* futura-48.fnt */,
+				D4AFE8F61977100000261299 /* futura-48.GlyphProject */,
+				D4AFE8F71977100000261299 /* futura-48.png */,
+				D4AFE8F81977100000261299 /* geneva-32.fnt */,
+				D4AFE8F91977100000261299 /* helvetica-32.fnt */,
+				D4AFE8FA1977100000261299 /* helvetica-geneva-32.png */,
+				D4AFE8FB1977100000261299 /* konqa32-hd.fnt */,
+				D4AFE8FC1977100000261299 /* konqa32-hd.png */,
+				D4AFE8FD1977100000261299 /* konqa32.fnt */,
+				D4AFE8FE1977100000261299 /* konqa32.png */,
+				D4AFE8FF1977100000261299 /* larabie-16-hd.plist */,
+				D4AFE9001977100000261299 /* larabie-16-hd.png */,
+				D4AFE9011977100000261299 /* larabie-16.plist */,
+				D4AFE9021977100000261299 /* larabie-16.png */,
+				D4AFE9031977100000261299 /* markerFelt-hd.fnt */,
+				D4AFE9041977100000261299 /* markerFelt-hd.png */,
+				D4AFE9051977100000261299 /* markerFelt.fnt */,
+				D4AFE9061977100000261299 /* markerFelt.png */,
+				D4AFE9071977100000261299 /* Paint Boy.ttf */,
+				D4AFE9081977100000261299 /* RobotoSlab-Bold.ttf */,
+				D4AFE9091977100000261299 /* RobotoSlab-Light.ttf */,
+				D4AFE90A1977100000261299 /* RobotoSlab-Regular.ttf */,
+				D4AFE90B1977100000261299 /* RobotoSlab-Thin.ttf */,
+				D4AFE90C1977100000261299 /* Schwarzwald Regular.ttf */,
+				D4AFE90D1977100000261299 /* Scissor Cuts.ttf */,
+				D4AFE90E1977100000261299 /* tuffy_bold_italic-charmap-hd.plist */,
+				D4AFE90F1977100000261299 /* tuffy_bold_italic-charmap.plist */,
+				D4AFE9101977100000261299 /* tuffy_bold_italic-charmap.png */,
+				D4AFE9111977100000261299 /* west_england-64.fnt */,
+				D4AFE9121977100000261299 /* west_england-64.png */,
+			);
+			name = Fonts;
+			path = Resources/Fonts;
+			sourceTree = SOURCE_ROOT;
+		};
+		E525F18C1684DF1CDDEBE3AE /* Install */ = {
+			isa = PBXGroup;
+			children = (
+				E525FBF58DFECF27272F5D6F /* CCPackageInstallerTests.m */,
+				E525FB8A3CC89D071A8377B1 /* CCPackageCocos2dEnablerTests.m */,
+			);
+			name = Install;
+			sourceTree = "<group>";
+		};
+		E525F25081EB1E197CD567E4 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				E525FC81EFFEFE098ED2ADD3 /* Download */,
+				E525F18C1684DF1CDDEBE3AE /* Install */,
+				E525F544D63123C8E948AA05 /* Unzip */,
+				E525F771C583AAF68EB42E15 /* CCPackageTests.m */,
+				E525F395FE85323D86232416 /* CCPackageManagerTests.m */,
+				E525F99055258F35DFF00ECD /* CCPackageHelperTests.m */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		E525F544D63123C8E948AA05 /* Unzip */ = {
+			isa = PBXGroup;
+			children = (
+				E525F30DA34A6712527102E5 /* CCPackageUnzipperTests.m */,
+			);
+			name = Unzip;
+			sourceTree = "<group>";
+		};
+		E525FC81EFFEFE098ED2ADD3 /* Download */ = {
+			isa = PBXGroup;
+			children = (
+				E525F5FACFF098F0ACBA6419 /* CCPackageDownloadTests.m */,
+				E525F2B770C5914D0810E4C2 /* CCPackageDownloadManagerTests.m */,
+			);
+			name = Download;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -551,7 +836,7 @@
 		B7E2604017E7D278007067F0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = Cocos2d;
 				TargetAttributes = {
 					75556A01185636F100ED1B0F = {
@@ -587,11 +872,25 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		57E144B61974C1E90065F142 /* cocos2dJava.jar */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.jar;
+			path = cocos2dJava.jar;
+			remoteRef = 57E144B51974C1E90065F142 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		B7E2622D17E7D3D8007067F0 /* libcocos2d.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libcocos2d.a;
 			remoteRef = B7E2622C17E7D3D8007067F0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D2FEB798194F6CC800FC0574 /* libcocos2dAndroid.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcocos2dAndroid.a;
+			remoteRef = D2FEB797194F6CC800FC0574 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -604,6 +903,7 @@
 				9269312A1923D8A700CE6285 /* Resources-shared in Resources */,
 				75556A1B1856374700ED1B0F /* InfoPlist.strings in Resources */,
 				75556A15185636FB00ED1B0F /* powered.png in Resources */,
+				E525FFABB4646A7446269A98 /* CCUnitTestAssertions.h in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -611,23 +911,84 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3269DEA19CCC11800406282 /* CCRendererSharedTypes.h in Resources */,
+				D4AFE91B1977100000261299 /* bitmapFontTest.fnt in Resources */,
+				D4AFE9231977100000261299 /* bitmapFontTest5.png in Resources */,
 				758A6C6C1843E5CB00D1A8D2 /* TileMaps in Resources */,
 				758A6C6D1843E5CB00D1A8D2 /* Images in Resources */,
 				75F76497185A831B00E2FAFE /* Sounds in Resources */,
+				D4AFE9211977100000261299 /* bitmapFontTest4.png in Resources */,
+				D4AFE9291977100000261299 /* font-issue1343.png in Resources */,
+				D4AFE9281977100000261299 /* font-issue1343.fnt in Resources */,
+				D4AFE9451977100000261299 /* RobotoSlab-Regular.ttf in Resources */,
 				758A6C80184410EE00D1A8D2 /* Particles in Resources */,
+				D4AFE9131977100000261299 /* A Damn Mess.ttf in Resources */,
 				B7E2620E17E7D34D007067F0 /* Default-568h@2x.png in Resources */,
+				D4AFE9351977100000261299 /* helvetica-geneva-32.png in Resources */,
+				D4AFE91D1977100000261299 /* bitmapFontTest2.fnt in Resources */,
 				B7E2620F17E7D34D007067F0 /* Default-Landscape~ipad.png in Resources */,
 				B7E2621017E7D34D007067F0 /* Default.png in Resources */,
+				D4AFE9421977100000261299 /* Paint Boy.ttf in Resources */,
+				D4AFE9151977100000261299 /* ThisFontIsAbdFont.ttf in Resources */,
 				B7E2621117E7D34D007067F0 /* Default@2x.png in Resources */,
+				D4AFE93F1977100000261299 /* markerFelt-hd.png in Resources */,
+				D4AFE93E1977100000261299 /* markerFelt-hd.fnt in Resources */,
+				D4AFE9321977100000261299 /* futura-48.png in Resources */,
 				B7E2621217E7D34D007067F0 /* Icon-72.png in Resources */,
+				D4AFE9271977100000261299 /* font-issue1343-hd.png in Resources */,
+				D4AFE9311977100000261299 /* futura-48.GlyphProject in Resources */,
 				B7E2621317E7D34D007067F0 /* Icon-Small-50.png in Resources */,
+				D4AFE9371977100000261299 /* konqa32-hd.png in Resources */,
+				D4AFE9161977100000261299 /* arial-unicode-26.fnt in Resources */,
 				B7E2621417E7D34D007067F0 /* Icon-Small.png in Resources */,
+				D23CD73119CB881200C7EB14 /* CCShaders.metal in Resources */,
+				D4AFE9361977100000261299 /* konqa32-hd.fnt in Resources */,
+				D4AFE93C1977100000261299 /* larabie-16.plist in Resources */,
+				D4AFE93A1977100000261299 /* larabie-16-hd.plist in Resources */,
+				D4AFE91E1977100000261299 /* bitmapFontTest3.fnt in Resources */,
+				D4AFE9221977100000261299 /* bitmapFontTest5.fnt in Resources */,
+				D4AFE9261977100000261299 /* font-issue1343-hd.fnt in Resources */,
+				D4AFE92B1977100000261299 /* fps_images-hd.png in Resources */,
+				D4AFE91A1977100000261299 /* arial16.png in Resources */,
+				D4AFE9431977100000261299 /* RobotoSlab-Bold.ttf in Resources */,
+				D4AFE9461977100000261299 /* RobotoSlab-Thin.ttf in Resources */,
+				D4AFE91F1977100000261299 /* bitmapFontTest3.png in Resources */,
+				D4AFE9441977100000261299 /* RobotoSlab-Light.ttf in Resources */,
+				D4AFE9471977100000261299 /* Schwarzwald Regular.ttf in Resources */,
+				D4AFE93B1977100000261299 /* larabie-16-hd.png in Resources */,
+				D4AFE9301977100000261299 /* futura-48.fnt in Resources */,
 				B7C6237617EA695100928F91 /* Resources-shared in Resources */,
+				D4AFE9491977100000261299 /* tuffy_bold_italic-charmap-hd.plist in Resources */,
+				D4AFE9391977100000261299 /* konqa32.png in Resources */,
+				D4AFE9341977100000261299 /* helvetica-32.fnt in Resources */,
+				D4AFE9181977100000261299 /* arial-unicode-26.png in Resources */,
 				B7E2621517E7D34D007067F0 /* Icon-Small@2x.png in Resources */,
-				D38C220718EB657100DD7599 /* Fonts in Resources */,
+				D4AFE9481977100000261299 /* Scissor Cuts.ttf in Resources */,
+				D4AFE91C1977100000261299 /* bitmapFontTest.png in Resources */,
+				D4AFE9251977100000261299 /* boundsTestFont.png in Resources */,
+				D4AFE94A1977100000261299 /* tuffy_bold_italic-charmap.plist in Resources */,
+				D4AFE92D1977100000261299 /* fps_images.GlyphProject in Resources */,
+				D4AFE9141977100000261299 /* Abberancy.ttf in Resources */,
 				B7E2621617E7D34D007067F0 /* Icon.png in Resources */,
+				D4AFE9201977100000261299 /* bitmapFontTest4.fnt in Resources */,
+				D4AFE94D1977100000261299 /* west_england-64.png in Resources */,
+				D4AFE9191977100000261299 /* arial16.fnt in Resources */,
+				D4AFE94C1977100000261299 /* west_england-64.fnt in Resources */,
+				D4AFE9381977100000261299 /* konqa32.fnt in Resources */,
+				D2D59897198747DE00BDAF25 /* Music in Resources */,
+				D4AFE9411977100000261299 /* markerFelt.png in Resources */,
+				D4AFE9331977100000261299 /* geneva-32.fnt in Resources */,
 				B7E2621717E7D34D007067F0 /* Icon@2x.png in Resources */,
+				D4AFE92C1977100000261299 /* fps_images-ipadhd.png in Resources */,
+				D4AFE94B1977100000261299 /* tuffy_bold_italic-charmap.png in Resources */,
+				D4AFE92A1977100000261299 /* fps_images-hd.plist in Resources */,
+				D4AFE92E1977100000261299 /* fps_images.plist in Resources */,
+				D4AFE9171977100000261299 /* arial-unicode-26.GlyphProject in Resources */,
+				D4AFE9401977100000261299 /* markerFelt.fnt in Resources */,
+				D4AFE9241977100000261299 /* boundsTestFont.fnt in Resources */,
+				D4AFE93D1977100000261299 /* larabie-16.png in Resources */,
 				B7E2621917E7D34D007067F0 /* iTunesArtwork in Resources */,
+				D4AFE92F1977100000261299 /* fps_images.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -640,6 +1001,7 @@
 			files = (
 				92324E2A18EB635500D78D3F /* CCReaderTest.m in Sources */,
 				D32FDE8619B645CA0078CC16 /* CCTextureTests.m in Sources */,
+				9D96557319D6113500428E79 /* CCEffectTests.m in Sources */,
 				75556A161856370A00ED1B0F /* CCFileUtilTests.m in Sources */,
 				92FE241118F5F06F00647961 /* CCAnimationTest.m in Sources */,
 				75556A171856370A00ED1B0F /* CCNodeTests.m in Sources */,
@@ -647,6 +1009,14 @@
 				75556A181856370A00ED1B0F /* CCPhysicsTests.m in Sources */,
 				D34CD3C518ABF4AA00D8E537 /* CCRendererTests.m in Sources */,
 				75556A191856370A00ED1B0F /* CCSchedulerTests.m in Sources */,
+				E525F81797DA5573FC26BEBB /* CCPackageTests.m in Sources */,
+				E525F5DB1E3086DDE0296CEC /* CCPackageDownloadTests.m in Sources */,
+				E525FA44681404CC22A3A8D9 /* CCPackageUnzipperTests.m in Sources */,
+				E525F7C977339D17470FC149 /* CCPackageInstallerTests.m in Sources */,
+				E525FCAF2CC6D200B8065E2E /* CCPackageCocos2dEnablerTests.m in Sources */,
+				E525FF2E8351476CDD7DEAC4 /* CCPackageManagerTests.m in Sources */,
+				E525F033EECC363CA8EAF2A6 /* CCPackageDownloadManagerTests.m in Sources */,
+				E525F4D0568A8A4176684936 /* CCPackageHelperTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -654,6 +1024,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3269DE819CC985900406282 /* TestShaders.metal in Sources */,
 				B71B087C17EA5B490082EBC0 /* TestBase.m in Sources */,
 				D3870C6018B440150033D885 /* SpritePerformanceTest.m in Sources */,
 				B71B088217EA5B6A0082EBC0 /* CCScrollViewTest.m in Sources */,
@@ -675,6 +1046,7 @@
 				7587BDB3185A0A6900EEEFDE /* TextureTest.m in Sources */,
 				D3C9C867188078B900C58900 /* CCSchedulerTest.m in Sources */,
 				7587BDB7185A64AD00EEEFDE /* ColorTest.m in Sources */,
+				839B149F19CC1E440000E5E2 /* CCPackageTest.m in Sources */,
 				D340E10F185660BE006E605C /* TilemapTest.m in Sources */,
 				B7E2622117E7D3B2007067F0 /* MainMenu.m in Sources */,
 				D3D6CF5F18BD5F0500A51531 /* CCRendererTest.m in Sources */,
@@ -823,8 +1195,10 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -863,8 +1237,10 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
@@ -899,17 +1275,26 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "cocos2d-ui-tests/ios/Prefix.pch";
 				INFOPLIST_FILE = "cocos2d-ui-tests/ios/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				MTL_HEADER_SEARCH_PATHS = "/Users/slembcke/Development/cocos2d-iphone/cocos2d";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-lz",
 					"-lsqlite3",
 					"-ObjC",
+				);
+				"OTHER_LDFLAGS[sdk=iphoneos8.0]" = (
+					"-lz",
+					"-lsqlite3",
+					"-ObjC",
+					"-weak_framework",
+					Metal,
 				);
 				PRODUCT_NAME = "cocos2d-tests-ios";
 				PROVISIONING_PROFILE = "";
@@ -923,15 +1308,24 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "cocos2d-ui-tests/ios/Prefix.pch";
 				INFOPLIST_FILE = "cocos2d-ui-tests/ios/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				MTL_HEADER_SEARCH_PATHS = "/Users/slembcke/Development/cocos2d-iphone/cocos2d";
 				OTHER_LDFLAGS = (
 					"-lz",
 					"-lsqlite3",
 					"-ObjC",
+				);
+				"OTHER_LDFLAGS[sdk=iphoneos8.0]" = (
+					"-lz",
+					"-lsqlite3",
+					"-ObjC",
+					"-weak_framework",
+					Metal,
 				);
 				PRODUCT_NAME = "cocos2d-tests-ios";
 				PROVISIONING_PROFILE = "";

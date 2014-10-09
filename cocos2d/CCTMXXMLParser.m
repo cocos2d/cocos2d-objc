@@ -192,16 +192,16 @@
 
 - (void) parseXMLData:(NSData*)data
 {
-	NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];
-
-	// we'll do the parsing
-	[parser setDelegate:self];
-	[parser setShouldProcessNamespaces:NO];
-	[parser setShouldReportNamespacePrefixes:NO];
-	[parser setShouldResolveExternalEntities:NO];
-	[parser parse];
-	
-     NSAssert1( ![parser parserError], @"Error parsing TMX data: %@.", [NSString stringWithCharacters:[data bytes] length:[data length]] );
+    NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];
+    
+    // we'll do the parsing
+    [parser setDelegate:self];
+    [parser setShouldProcessNamespaces:NO];
+    [parser setShouldReportNamespacePrefixes:NO];
+    [parser setShouldResolveExternalEntities:NO];
+    [parser parse];
+    
+    NSAssert1( ![parser parserError], @"Error parsing TMX data: %@.", [NSString stringWithCharacters:[data bytes] length:[data length]] );
 }
 
 - (void) parseXMLString:(NSString *)xmlString
@@ -252,7 +252,13 @@
 
 			_currentFirstGID = [[attributeDict objectForKey:@"firstgid"] intValue];
 		
-			[self parseXMLFile:externalTilesetFilename];
+            // since the xml parser is not reentrant, we need to invoke each child xml parser in its own queue
+            dispatch_queue_t reentrantAvoidanceQueue = dispatch_queue_create("xmlParserSafeQueue", DISPATCH_QUEUE_SERIAL);
+            dispatch_async(reentrantAvoidanceQueue, ^{
+                [self parseXMLFile:externalTilesetFilename];
+            });
+            dispatch_sync(reentrantAvoidanceQueue, ^{ });
+            
 		} else {
 			CCTiledMapTilesetInfo *tileset = [CCTiledMapTilesetInfo new];
 			tileset.name = [attributeDict objectForKey:@"name"];

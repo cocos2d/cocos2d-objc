@@ -8,7 +8,13 @@
 #import "CCEffectStack_Private.h"
 
 @interface CCEffectsTest : TestBase @end
-@implementation CCEffectsTest
+@implementation CCEffectsTest {
+#if CC_EFFECTS_EXPERIMENTAL
+    CCEffectDistanceField* _distanceFieldEffect;
+    CCEffectDFOutline* _outlineEffect;
+    CCEffectDFInnerGlow* _innerGlowEffect;
+#endif
+}
 
 -(id)init
 {
@@ -19,6 +25,408 @@
 	
 	return self;
 }
+
+#pragma mark Distance Fields
+
+#if CC_EFFECTS_EXPERIMENTAL
+
+-(void)setupDFInnerGlowTest
+{
+    self.subTitle = @"Distance Field Inner Glow Test";
+    
+    CCSprite *environment = [CCSprite spriteWithImageNamed:@"Images/MountainPanorama.jpg"];
+    environment.positionType = CCPositionTypeNormalized;
+    environment.anchorPoint = ccp(0.5, 0.5);
+    environment.position = ccp(0.5f, 0.5f);
+    
+    CCTexture* texture = [[CCTextureCache sharedTextureCache] addImage:@"Images/output.png"];
+    
+    CCColor* fillColor = [CCColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:0.5];
+    _innerGlowEffect = [CCEffectDFInnerGlow effectWithGlowColor:[CCColor redColor] fillColor:fillColor glowWidth:2 fieldScale:32 distanceField:texture];
+    
+    CCSprite *dfSprite = [CCSprite spriteWithImageNamed:@"Images/df_sprite.png"];
+    dfSprite.position = ccp(0.5, 0.5);
+    dfSprite.positionType = CCPositionTypeNormalized;
+    dfSprite.effect = _innerGlowEffect;
+    dfSprite.scale = 1.0f;
+    
+    CCSpriteFrame* background = [CCSpriteFrame frameWithImageNamed:@"Tests/slider-background.png"];
+    CCSpriteFrame* backgroundHilite = [CCSpriteFrame frameWithImageNamed:@"Tests/slider-background-hilite.png"];
+    CCSpriteFrame* handle = [CCSpriteFrame frameWithImageNamed:@"Tests/slider-handle.png"];
+    
+    CCSlider* slider = [[CCSlider alloc] initWithBackground:background andHandleImage:handle];
+    [slider setBackgroundSpriteFrame:backgroundHilite forState:CCControlStateHighlighted];
+    slider.positionType = CCPositionTypeNormalized;
+    slider.position = ccp(0.1f, 0.5f);
+    slider.sliderValue = 0.3;
+    slider.preferredSizeType = CCSizeTypeMake(CCSizeUnitNormalized, CCSizeUnitUIPoints);
+    slider.preferredSize = CGSizeMake(0.5f, 10);
+    slider.rotation = 90;
+    slider.anchorPoint = ccp(0.5f, 0.5f);
+    slider.scale = 0.8;
+    
+    [slider setTarget:self selector:@selector(innerGlowWidthChanged:)];
+    
+    [self.contentNode addChild:environment];
+    [self.contentNode addChild:slider];
+    [self.contentNode addChild:dfSprite];
+}
+
+- (void)innerGlowWidthChanged:(id)sender
+{
+    const int innerGloWMax = 6;
+    CCSlider* slider = sender;
+    _innerGlowEffect.glowWidth = slider.sliderValue * innerGloWMax;
+}
+
+
+-(void)setupDFOutlineEffectTest
+{
+    self.subTitle = @"Distance Field Outline Test";
+    
+    CCSprite *environment = [CCSprite spriteWithImageNamed:@"Images/MountainPanorama.jpg"];
+    environment.positionType = CCPositionTypeNormalized;
+    environment.anchorPoint = ccp(0.5, 0.5);
+    environment.position = ccp(0.5f, 0.5f);
+    
+    CCTexture* texture = [[CCTextureCache sharedTextureCache] addImage:@"Images/output.png"];
+    
+    CCColor* fillColor = [CCColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:0.0];
+    _outlineEffect = [CCEffectDFOutline effectWithOutlineColor:[CCColor redColor] fillColor:fillColor outlineWidth:1 fieldScale:32 distanceField:texture];
+
+    CCSprite *dfSprite = [CCSprite spriteWithImageNamed:@"Images/df_sprite.png"];
+    dfSprite.position = ccp(0.5, 0.5);
+    dfSprite.positionType = CCPositionTypeNormalized;
+    dfSprite.effect = _outlineEffect;
+    dfSprite.scale = 1.0f;
+    
+    CCSpriteFrame* background = [CCSpriteFrame frameWithImageNamed:@"Tests/slider-background.png"];
+    CCSpriteFrame* backgroundHilite = [CCSpriteFrame frameWithImageNamed:@"Tests/slider-background-hilite.png"];
+    CCSpriteFrame* handle = [CCSpriteFrame frameWithImageNamed:@"Tests/slider-handle.png"];
+    
+    CCSlider* slider = [[CCSlider alloc] initWithBackground:background andHandleImage:handle];
+    [slider setBackgroundSpriteFrame:backgroundHilite forState:CCControlStateHighlighted];
+    slider.positionType = CCPositionTypeNormalized;
+    slider.position = ccp(0.1f, 0.5f);
+    slider.preferredSizeType = CCSizeTypeMake(CCSizeUnitNormalized, CCSizeUnitUIPoints);
+    slider.preferredSize = CGSizeMake(0.5f, 10);
+    slider.rotation = 90;
+    slider.anchorPoint = ccp(0.5f, 0.5f);
+    slider.scale = 0.8;
+    slider.sliderValue = 0.1;
+    
+    [slider setTarget:self selector:@selector(outlineWidthChagne:)];
+    
+    [self.contentNode addChild:environment];
+    [self.contentNode addChild:slider];
+    [self.contentNode addChild:dfSprite];
+    
+    // 6 pixel block used for comparison;
+    CCNodeColor* block = [CCNodeColor nodeWithColor:[CCColor greenColor]];
+    block.contentSize = CGSizeMake(6.0, 6.0);
+    block.position = ccp(0.424, 0.324);
+    block.positionType = CCPositionTypeNormalized;
+    block.rotation = 32;
+//    [self.contentNode addChild:block];
+}
+
+- (void)outlineWidthChagne:(id)sender
+{
+    const int outlineWidthMax = 6;
+    CCSlider* slider = sender;
+    _outlineEffect.outlineWidth = slider.sliderValue * outlineWidthMax;
+}
+
+-(void)setupDistanceFieldEffectTest
+{
+    self.subTitle = @"Distance Field Effect Test";
+    
+    //    CCNodeColor* environment = [CCNodeColor nodeWithColor:[CCColor whiteColor]];
+    CCSprite *environment = [CCSprite spriteWithImageNamed:@"Images/MountainPanorama.jpg"];
+    environment.positionType = CCPositionTypeNormalized;
+    environment.anchorPoint = ccp(0.5, 0.5);
+    environment.position = ccp(0.5f, 0.5f);
+
+    [self.contentNode addChild:environment];
+
+    CCColor *glowColor = [CCColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:1.0];
+    _distanceFieldEffect = [CCEffectDistanceField effectWithGlowColor:glowColor outlineColor:[CCColor redColor]];
+
+    CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"Images/output.png"];
+    sampleSprite.position = ccp(0.5, 0.5);
+    sampleSprite.positionType = CCPositionTypeNormalized;
+    sampleSprite.effect = _distanceFieldEffect;
+    sampleSprite.scale = 1.0f;
+    
+    CCSpriteFrame* background = [CCSpriteFrame frameWithImageNamed:@"Tests/slider-background.png"];
+    CCSpriteFrame* backgroundHilite = [CCSpriteFrame frameWithImageNamed:@"Tests/slider-background-hilite.png"];
+    CCSpriteFrame* handle = [CCSpriteFrame frameWithImageNamed:@"Tests/slider-handle.png"];
+    
+    CCSlider* slider = [[CCSlider alloc] initWithBackground:background andHandleImage:handle];
+    [slider setBackgroundSpriteFrame:backgroundHilite forState:CCControlStateHighlighted];
+    slider.positionType = CCPositionTypeNormalized;
+    slider.position = ccp(0.1f, 0.5f);
+    
+    slider.preferredSizeType = CCSizeTypeMake(CCSizeUnitNormalized, CCSizeUnitUIPoints);
+    slider.preferredSize = CGSizeMake(0.5f, 10);
+    slider.rotation = 90;
+    slider.anchorPoint = ccp(0.5f, 0.5f);
+    slider.scale = 0.8;
+    
+    [slider setTarget:self selector:@selector(outlineInnerWidthChange:)];
+    
+    CCSlider* slider2 = [[CCSlider alloc] initWithBackground:background andHandleImage:handle];
+    [slider2 setBackgroundSpriteFrame:backgroundHilite forState:CCControlStateHighlighted];
+    slider2.positionType = CCPositionTypeNormalized;
+    slider2.position = ccp(0.15f, 0.5f);
+    
+    slider2.preferredSizeType = CCSizeTypeMake(CCSizeUnitNormalized, CCSizeUnitUIPoints);
+    slider2.preferredSize = CGSizeMake(0.5f, 10);
+    slider2.rotation = 90;
+    slider2.anchorPoint = ccp(0.5f, 0.5f);
+    slider2.scale = 0.8;
+    
+    [slider2 setTarget:self selector:@selector(outlineOuterWidthChange:)];
+    
+    CCSlider* slider3 = [[CCSlider alloc] initWithBackground:background andHandleImage:handle];
+    [slider3 setBackgroundSpriteFrame:backgroundHilite forState:CCControlStateHighlighted];
+    slider3.positionType = CCPositionTypeNormalized;
+    slider3.position = ccp(0.20f, 0.5f);
+    
+    slider3.preferredSizeType = CCSizeTypeMake(CCSizeUnitNormalized, CCSizeUnitUIPoints);
+    slider3.preferredSize = CGSizeMake(0.5f, 10);
+    slider3.rotation = 90;
+    slider3.anchorPoint = ccp(0.5f, 0.5f);
+    slider3.scale = 0.8;
+    
+    [slider3 setTarget:self selector:@selector(glowWidthChange:)];
+    
+    CCButton* enableGlow = [CCButton buttonWithTitle:@"Outer Glow"];
+    enableGlow.positionType = CCPositionTypeNormalized;
+    enableGlow.anchorPoint = ccp(0.5f, 0.5f);
+    enableGlow.position = ccp(0.9, 0.8);
+    [enableGlow setTarget:self selector:@selector(enableGlow:)];
+    
+    CCButton* enableOutline = [CCButton buttonWithTitle:@"Outline"];
+    enableOutline.positionType = CCPositionTypeNormalized;
+    enableOutline.anchorPoint = ccp(0.5f, 0.5f);
+    enableOutline.position = ccp(0.9, 0.7);
+    [enableOutline setTarget:self selector:@selector(enableOutline:)];
+
+    [self.contentNode addChild:enableOutline];
+    [self.contentNode addChild:enableGlow];
+    [self.contentNode addChild:sampleSprite];
+    [self.contentNode addChild:slider];
+    [self.contentNode addChild:slider2];
+    [self.contentNode addChild:slider3];
+}
+
+- (void)outlineInnerWidthChange:(id)sender
+{
+    CCSlider* slider = sender;
+    _distanceFieldEffect.outlineInnerWidth = slider.sliderValue;
+}
+
+- (void)outlineOuterWidthChange:(id)sender
+{
+    CCSlider* slider = sender;
+    _distanceFieldEffect.outlineOuterWidth = slider.sliderValue;
+}
+
+- (void)glowWidthChange:(id)sender
+{
+    CCSlider* slider = sender;
+    _distanceFieldEffect.glowWidth = slider.sliderValue;
+}
+
+- (void)enableGlow:(id)sender
+{
+    _distanceFieldEffect.glow = !_distanceFieldEffect.glow;
+}
+
+- (void)enableOutline:(id)sender
+{
+    _distanceFieldEffect.outline = !_distanceFieldEffect.outline;
+}
+
+#endif
+
+-(void)setupPaddingEffectTest
+{
+    self.subTitle = @"Effect Padding Test";
+
+    {
+        CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/particles.png"];
+        sprite.positionType = CCPositionTypeNormalized;
+        sprite.position = ccp(0.75f, 0.8f);
+        
+        [self.contentNode addChild:sprite];
+        
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Original Sprite" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector sharedDirector].UIScaleFactor];
+        title.color = [CCColor whiteColor];
+        title.positionType = CCPositionTypeNormalized;
+        title.position = ccp(0.25f, 0.8f);
+        title.horizontalAlignment = CCTextAlignmentCenter;
+        
+        [self.contentNode addChild:title];
+    }
+    
+    {
+        CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/particles.png"];
+        sprite.positionType = CCPositionTypeNormalized;
+        sprite.position = ccp(0.75f, 0.65f);
+        
+        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffset:GLKVector2Make(5.0f, 0.0f) greenOffset:GLKVector2Make(-4.0f, 4.0f) blueOffset:GLKVector2Make(-4.0f, -4.0f)];
+        sprite.effect = offset;
+        
+        [self.contentNode addChild:sprite];
+        
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Color channel offset without padding" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector sharedDirector].UIScaleFactor];
+        title.color = [CCColor whiteColor];
+        title.positionType = CCPositionTypeNormalized;
+        title.position = ccp(0.25f, 0.65f);
+        title.horizontalAlignment = CCTextAlignmentCenter;
+        
+        [self.contentNode addChild:title];
+    }
+    
+    {
+        CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/particles.png"];
+        sprite.positionType = CCPositionTypeNormalized;
+        sprite.position = ccp(0.75f, 0.5f);
+        
+        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffset:GLKVector2Make(5.0f, 0.0f) greenOffset:GLKVector2Make(-4.0f, 4.0f) blueOffset:GLKVector2Make(-4.0f, -4.0f)];
+        offset.padding = CGSizeMake(5.0f, 5.0f);
+        sprite.effect = offset;
+        
+        [self.contentNode addChild:sprite];
+        
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Color channel offset with padding" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector sharedDirector].UIScaleFactor];
+        title.color = [CCColor whiteColor];
+        title.positionType = CCPositionTypeNormalized;
+        title.position = ccp(0.25f, 0.5f);
+        title.horizontalAlignment = CCTextAlignmentCenter;
+        
+        [self.contentNode addChild:title];
+    }
+
+    {
+        CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/particles.png"];
+        sprite.positionType = CCPositionTypeNormalized;
+        sprite.position = ccp(0.75f, 0.35f);
+        
+        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffset:GLKVector2Make(5.0f, 0.0f) greenOffset:GLKVector2Make(-4.0f, 4.0f) blueOffset:GLKVector2Make(-4.0f, -4.0f)];
+        offset.padding = CGSizeMake(5.0f, 5.0f);
+        CCEffectHue *hue = [CCEffectHue effectWithHue:60.0f];
+        sprite.effect = [CCEffectStack effectWithArray:@[offset, hue]];
+        
+        [self.contentNode addChild:sprite];
+        
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Padded effect stack (offset then hue)" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector sharedDirector].UIScaleFactor];
+        title.color = [CCColor whiteColor];
+        title.positionType = CCPositionTypeNormalized;
+        title.position = ccp(0.25f, 0.35f);
+        title.horizontalAlignment = CCTextAlignmentCenter;
+        
+        [self.contentNode addChild:title];
+    }
+    
+    {
+        CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/particles.png"];
+        sprite.positionType = CCPositionTypeNormalized;
+        sprite.position = ccp(0.75f, 0.2f);
+        
+        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffset:GLKVector2Make(5.0f, 0.0f) greenOffset:GLKVector2Make(-4.0f, 4.0f) blueOffset:GLKVector2Make(-4.0f, -4.0f)];
+        offset.padding = CGSizeMake(5.0f, 5.0f);
+        CCEffectHue *hue = [CCEffectHue effectWithHue:60.0f];
+        sprite.effect = [CCEffectStack effectWithArray:@[hue, offset]];
+        
+        [self.contentNode addChild:sprite];
+        
+        CCLabelTTF *title = [CCLabelTTF labelWithString:@"Padded efect stack (hue then offset)" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector sharedDirector].UIScaleFactor];
+        title.color = [CCColor whiteColor];
+        title.positionType = CCPositionTypeNormalized;
+        title.position = ccp(0.25f, 0.2f);
+        title.horizontalAlignment = CCTextAlignmentCenter;
+        
+        [self.contentNode addChild:title];
+    }
+}
+
+-(void)setupColorChannelOffsetTest
+{
+    self.subTitle = @"Color Channel Offset Effect Test";
+    
+    CCEffectColorChannelOffset *effect = [CCEffectColorChannelOffset effectWithRedOffset:GLKVector2Make(0.0f, 0.0f) greenOffset:GLKVector2Make(0.0f, 0.0f) blueOffset:GLKVector2Make(0.0f, 0.0f)];
+    effect.padding = CGSizeMake(5.0f, 5.0f);
+    
+    CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/particles.png"];
+    sprite.scale = 1.0f;
+    sprite.positionType = CCPositionTypeNormalized;
+    sprite.position = ccp(0.5f, 0.5f);
+    sprite.effect = effect;
+    
+    [self.contentNode addChild:sprite];
+    
+    const float thetaStep = CC_DEGREES_TO_RADIANS(10.0f);
+    __block float redTheta = CC_DEGREES_TO_RADIANS(0.0f);
+    __block float greenTheta = CC_DEGREES_TO_RADIANS(120.0f);
+    __block float blueTheta = CC_DEGREES_TO_RADIANS(240.0f);
+    void (^updateBlock)() = ^{
+        
+        float redRadius = 3.0f;
+        effect.redOffset = GLKVector2Make(redRadius * cosf(redTheta), redRadius * sinf(redTheta));
+        
+        float greenRadius = 3.0f;
+        effect.greenOffset = GLKVector2Make(greenRadius * cosf(greenTheta), greenRadius * sinf(greenTheta));
+        
+        float blueRadius = 3.0f;
+        effect.blueOffset = GLKVector2Make(blueRadius * cosf(blueTheta), blueRadius * sinf(blueTheta));
+        
+        redTheta += thetaStep;
+        greenTheta += thetaStep;
+        blueTheta += thetaStep;
+    };
+    updateBlock();
+    
+    [sprite runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+                                                               [CCActionDelay actionWithDuration:0.1f],
+                                                               [CCActionCallBlock actionWithBlock:updateBlock],
+                                                               nil
+                                                               ]]];
+}
+
+#pragma mark DropShadow
+
+-(void)setupDropShadowEffectTest
+{
+    self.subTitle = @"DropShadow Effect Test";
+
+    CCSprite *environment = [CCSprite spriteWithImageNamed:@"Images/MountainPanorama.jpg"];
+    environment.positionType = CCPositionTypeNormalized;
+    environment.position = ccp(0.5f, 0.5f);
+
+    [self.contentNode addChild:environment];
+    
+    CCColor *shadowColor = [CCColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:0.5];
+    CCEffectDropShadow* effect = [CCEffectDropShadow effectWithShadowOffset:GLKVector2Make(2.0, -2.0) shadowColor:shadowColor blurRadius:5];
+   
+    CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"Images/Ohm.png"];
+    sampleSprite.position = ccp(0.5, 0.5);
+    sampleSprite.positionType = CCPositionTypeNormalized;
+    
+    CCEffectNode* effectNode = [[CCEffectNode alloc] init];
+    effectNode.contentSize = CGSizeMake(300, 300);
+    effectNode.anchorPoint = ccp(0.5, 0.5);
+    effectNode.positionType = CCPositionTypeNormalized;
+    effectNode.position = ccp(0.5, 0.5);
+    [effectNode addChild:sampleSprite];
+    effectNode.effect = effect;
+    
+    [self.contentNode addChild:effectNode];
+}
+
+#pragma mark Glass
 
 -(void)setupGlassEffectTest
 {
@@ -285,7 +693,7 @@
     effectNode.positionType = CCPositionTypeNormalized;
     effectNode.position = ccp(0.1, 0.5);
     [effectNode addChild:sampleSprite];
-    CCEffectBlur* effect = [CCEffectBlur effectWithBlurRadius:1.0];
+    CCEffectBlur* effect = [CCEffectBlur effectWithBlurRadius:4.0];
     effectNode.effect = effect;
     
     [self.contentNode addChild:effectNode];
@@ -299,12 +707,11 @@
     effectNode2.positionType = CCPositionTypeNormalized;
     effectNode2.position = ccp(0.21, 0.5);
     [effectNode2 addChild:sampleSprite2];
-    CCEffectBlur* effect2 = [CCEffectBlur effectWithBlurRadius:7.0];
+    CCEffectBlur* effect2 = [CCEffectBlur effectWithBlurRadius:10.0];
     effectNode2.effect = effect2;
     
     [self.contentNode addChild:effectNode2];
     
-    // Tilt shift
     CCSprite *sampleSprite3 = [CCSprite spriteWithImageNamed:@"Images/sample_hollow_circle.png"];
     sampleSprite3.position = ccp(0.5, 0.5);
     sampleSprite3.positionType = CCPositionTypeNormalized;
@@ -320,7 +727,6 @@
     
     [self.contentNode addChild:effectNode3];
     
-    // Tilt shift reversed
     CCSprite *sampleSprite4 = [CCSprite spriteWithImageNamed:@"Images/sample_hollow_circle.png"];
     sampleSprite4.position = ccp(0.5, 0.5);
     sampleSprite4.positionType = CCPositionTypeNormalized;
@@ -329,7 +735,7 @@
     effectNode4.positionType = CCPositionTypeNormalized;
     effectNode4.position = ccp(0.6, 0.5);
     [effectNode4 addChild:sampleSprite4];
-    CCEffectBlur* effect4 = [CCEffectBlur effectWithBlurRadius:7.0];
+    CCEffectBlur* effect4 = [CCEffectBlur effectWithBlurRadius:12.0];
     effectNode4.effect = effect4;
         
     [self.contentNode addChild:effectNode4];
@@ -396,15 +802,18 @@
     const int steps = 5;
     for (int i = 0; i < steps; i++)
     {
-        CCSprite *sampleSprite3 = [CCSprite spriteWithImageNamed:@"Images/grossini_dance_08.png"];
+        CCSprite *sampleSprite3 = [CCSprite spriteWithImageNamed:@"Images/f1.png"];
         sampleSprite3.anchorPoint = ccp(0.5, 0.5);
         sampleSprite3.position = ccp(0.1f + i * (0.8f / (steps - 1)), 0.2f);
         sampleSprite3.positionType = CCPositionTypeNormalized;
         
         // Blend glow maps test
+        CCEffectHue *hueEffect = [CCEffectHue effectWithHue:60.0f];
         CCEffectBloom* glowEffect3 = [CCEffectBloom effectWithBlurRadius:8 intensity:1.0f luminanceThreshold:1.0f - ((float)i/(float)(steps-1))];
-        sampleSprite3.effect = glowEffect3;
+        glowEffect3.padding = CGSizeMake(10.0f, 10.0f);
         
+        sampleSprite3.effect = [CCEffectStack effectWithArray:@[glowEffect3, hueEffect]];
+
         [self.contentNode addChild:sampleSprite3];
     }
 }
@@ -531,7 +940,7 @@
                          [CCEffectBrightness effectWithBrightness:0.25f],
                          [CCEffectContrast effectWithContrast:1.0f],
                          [CCEffectPixellate effectWithBlockSize:8.0f],
-                         [CCEffectSaturation effectWithSaturation:-1.0f],
+                         [CCEffectSaturation effectWithSaturation:1.0f],
                          [CCEffectHue effectWithHue:90.0f],
                          [CCEffectGlass effectWithShininess:1.0f refraction:0.75f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment],
                          [CCEffectRefraction effectWithRefraction:0.75f environment:refractEnvironment],
@@ -545,7 +954,9 @@
     sprite.position = ccp(0.5f, 0.5f);
     sprite.scale = 0.5f;
 
-    sprite.effect = [CCEffectStack effects:effects[7], effects[4], nil];
+    CCEffectStack *stack1 = [CCEffectStack effects:effects[7], effects[6], nil];
+    CCEffectStack *stack2 = [CCEffectStack effects:effects[5], effects[4], nil];
+    sprite.effect = [CCEffectStack effects:stack1, stack2, nil];
     
     sprite.normalMapSpriteFrame = [CCSpriteFrame frameWithImageNamed:@"Images/ShinyBallNormals.png"];
     sprite.colorRGBA = [CCColor colorWithRed:0.75f green:0.75f blue:0.75f alpha:0.75f];
@@ -615,7 +1026,7 @@
     
     CGSize containerSize = self.contentNode.contentSizeInPoints;
     
-    const float footprintScale = 1.1f;
+    const float footprintScale = 0.5f;
     
     NSString *spriteImage = @"Images/r1.png";
     CCSprite *sprite = [CCSprite spriteWithImageNamed:spriteImage];
@@ -1287,7 +1698,6 @@
     return sprite;
 }
 
-
 -(void)renderTextureHelper:(CCNode *)stage size:(CGSize)size
 {
 	CCColor *color = [CCColor colorWithRed:0.0 green:0.0 blue:0.5 alpha:0.5];
@@ -1313,5 +1723,5 @@
                                                                ]]];
 	[node addChild:sprite];
 }
-@end
 
+@end

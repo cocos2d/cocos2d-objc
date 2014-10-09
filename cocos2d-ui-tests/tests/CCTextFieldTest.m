@@ -28,9 +28,9 @@
     CCTextField* textField = [[CCTextField alloc] initWithSpriteFrame:bg];
     
     textField.preferredSizeType = CCSizeTypeMake(CCSizeUnitNormalized, CCSizeUnitPoints);
-    textField.preferredSize = CGSizeMake(0.5, 36);
+    textField.preferredSize = CGSizeMake(0.5, 50);
     textField.positionType = CCPositionTypeNormalized;
-    textField.position = ccp(0.5f, 0.5f);
+    textField.position = ccp(0.5f, 0.8f);
     textField.padding = 6;
     textField.anchorPoint = ccp(0.5f, 0.5f);
     textField.string = @"Hello!";
@@ -45,6 +45,8 @@
     CCTextField* textField = sender;
     
     NSLog(@"Finished editing: %@", textField.string);
+    
+    self.subTitle = [NSString stringWithFormat:@"Editing: '%@'", textField.string];
 }
 
 @end

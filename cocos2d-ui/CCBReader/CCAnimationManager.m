@@ -170,7 +170,7 @@ static NSInteger ccbAnimationManagerID = 0;
 
 - (CCActionInterval*)actionFromKeyframe0:(CCBKeyframe*)kf0 andKeyframe1:(CCBKeyframe*)kf1 propertyName:(NSString*)name node:(CCNode*)node {
     float duration = kf1.time - kf0.time;
-
+    
     if(kf0 && kf0.easingType==kCCBKeyframeEasingInstant) {
         duration = 0;
     }
@@ -243,9 +243,9 @@ static NSInteger ccbAnimationManagerID = 0;
             // Get relative position
             float x = [[value objectAtIndex:0] floatValue];
             float y = [[value objectAtIndex:1] floatValue];
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
             [node setValue:[NSValue valueWithCGPoint:ccp(x,y)] forKey:name];
-#elif defined (__CC_PLATFORM_MAC)
+#elif __CC_PLATFORM_MAC
             [node setValue:[NSValue valueWithPoint:ccp(x,y)] forKey:name];
 #endif
         } else if ([name isEqualToString:@"scale"]) {
@@ -515,13 +515,13 @@ static NSInteger ccbAnimationManagerID = 0;
                     }
                 }
             }
-           
+        
         }
         
         
     }
     
-	    _paused = NO;
+    _paused = NO;
 }
 
 - (void)runAnimationsForSequenceNamed:(NSString*)name tweenDuration:(float)tweenDuration {
@@ -856,8 +856,8 @@ static NSInteger ccbAnimationManagerID = 0;
             // Instant
             if(startKF.easingType==kCCBKeyframeEasingInstant) {
                 [actions addObject:[CCActionDelay actionWithDuration:endKF.time-startKF.time]];
-        }
-        
+            }
+            
             // Apply Easing
             action = [self easeAction:action easingType:startKF.easingType easingOpt:startKF.easingOpt];
             [actions addObject:action];

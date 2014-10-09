@@ -30,13 +30,36 @@
 #import "cocos2d.h"
 #import <CoreText/CoreText.h>
 
-@implementation NSAttributedString (CCAdditions)
+BOOL NSMutableAttributedStringSetDefaultAttribute(NSMutableAttributedString *attrString, NSString*attr, id defaultValue);
+CGColorRef CGColorCreateWithPlatformSpecificColor(id platformColor);
+CTFontRef CTFontCreateWithPlatformSpecificFont(id font);
 
-- (BOOL) hasAttribute:(NSString*)attr
-{
-    NSRange fullRange = NSMakeRange(0, self.length);
+BOOL NSMutableAttributedStringSetDefaultAttribute(NSMutableAttributedString *attrString, NSString*attr, id defaultValue){
+    NSRange fullRange = NSMakeRange(0, attrString.length);
+    __block BOOL result = YES;
+    NSMutableArray *rangesAndValues = [[NSMutableArray alloc] init];
+    [attrString enumerateAttribute:attr inRange:fullRange options:0 usingBlock:^(id value, NSRange range, BOOL *stop) {
+        if (value) {
+            //only special case
+            if (fullRange.location==range.location && fullRange.length == range.length){
+                result = NO;
+            }
+            NSArray *rangeAndValue = @[value, [NSValue valueWithRange:range]];
+            [rangesAndValues addObject:rangeAndValue];
+        };
+    }];
+    [attrString addAttribute:attr value:defaultValue range:fullRange];
+    [rangesAndValues enumerateObjectsUsingBlock:^(NSArray *rangeAndValue, NSUInteger idx, BOOL *stop) {
+        NSRange range = [(NSValue *)[rangeAndValue objectAtIndex:1] rangeValue];
+        [attrString addAttribute:attr value:[rangeAndValue objectAtIndex:0] range:range];
+    }];
+    return result;
+}
+
+BOOL NSAttributedStringHasAttribute(NSAttributedString *attrString, NSString*attr){
+    NSRange fullRange = NSMakeRange(0, attrString.length);
     __block BOOL hasAttribute = NO;
-    [self enumerateAttribute:attr inRange:fullRange options:0 usingBlock:^(id value, NSRange range, BOOL* stop){
+    [attrString enumerateAttribute:attr inRange:fullRange options:0 usingBlock:^(id value, NSRange range, BOOL* stop){
         if (value)
         {
             hasAttribute = YES;
@@ -47,35 +70,45 @@
     return hasAttribute;
 }
 
-- (NSAttributedString*) copyAdjustedForContentScaleFactor
-{
-    NSMutableAttributedString* copy = [self mutableCopy];
+NSAttributedString* NSAttributedStringCopyAdjustedForContentScaleFactor(NSAttributedString *attrString){
+    NSMutableAttributedString* copy = [attrString mutableCopy];
     
     NSRange fullRange = NSMakeRange(0, copy.length);
     
-		CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
-		
+    CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
+	
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
+
     // Update font size
-    [copy enumerateAttribute:NSFontAttributeName inRange:fullRange options:0 usingBlock:^(id value, NSRange range, BOOL* stop){
+    [copy enumerateAttribute:(id)kCTFontAttributeName inRange:fullRange options:0 usingBlock:^(id value, NSRange range, BOOL* stop){
         if (value)
         {
-#ifdef __CC_PLATFORM_IOS
-            UIFont* font = value;
-            font = [UIFont fontWithName:font.fontName size:font.pointSize * scale];
-#elif defined(__CC_PLATFORM_MAC)
-            NSFont* font = value;
-            font = [NSFont fontWithName:font.fontName size:font.pointSize * scale];
-#elif defined(__CC_PLATFORM_ANDROID)
-            CTFontRef font = CTFontCreateCopyWithAttributes(value, font.pointSize * scale, NULL, NULL);
-#endif
-            [copy removeAttribute:NSFontAttributeName range:range];
-            [copy addAttribute:NSFontAttributeName value:(id)font range:range];
-#if defined(__CC_PLATFORM_ANDROID)
+            NSCAssert((CFGetTypeID((__bridge CFTypeRef)(value))==CTFontGetTypeID()), @"CFTypeID does not match");
+            CTFontRef oldFont = (__bridge CTFontRef)value;
+            CTFontRef font = CTFontCreateCopyWithAttributes(oldFont, CTFontGetSize(oldFont) * scale, NULL, NULL);
+            [copy removeAttribute:(id)kCTFontAttributeName range:range];
+            [copy addAttribute:(id)kCTFontAttributeName value:(__bridge id)font range:range];
             CFRelease(font);
-#endif
         }
     }];
     
+    
+#elif __CC_PLATFORM_MAC
+
+    [copy enumerateAttribute:NSFontAttributeName inRange:fullRange options:0 usingBlock:^(id value, NSRange range, BOOL* stop){
+        if (value)
+        {
+
+            NSFont* font = value;
+            font = [NSFont fontWithName:font.fontName size:font.pointSize * scale];
+            [copy removeAttribute:NSFontAttributeName range:range];
+            [copy addAttribute:NSFontAttributeName value:(id)font range:range];
+            
+            
+        }
+    }];
+#endif
+#if 0 /*__CC_PLATFORM_ANDROID_FIXME*/
     // Update shadows
     [copy enumerateAttribute:NSShadowAttributeName inRange:fullRange options:0 usingBlock:^(id value, NSRange range, BOOL* stop){
         if (value)
@@ -88,70 +121,218 @@
             [copy addAttribute:NSShadowAttributeName value:shadow range:range];
         }
     }];
-    
+#endif
     return copy;
 }
 
-- (float) singleFontSize
-{
-    NSRange fullRange = NSMakeRange(0, self.length);
+float NSAttributedStringSingleFontSize(NSAttributedString *attrString){
+    NSRange fullRange = NSMakeRange(0, attrString.length);
     __block BOOL foundValue = NO;
     __block BOOL singleValue = YES;
     __block float fontSize = 0;
-    [self enumerateAttribute:NSFontAttributeName inRange:fullRange options:0 usingBlock:^(id value, NSRange range, BOOL* stop){
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
+    [attrString enumerateAttribute:(id)kCTFontAttributeName inRange:fullRange options:0 usingBlock:^(id value, NSRange range, BOOL* stop){
         if (value)
         {
-#ifdef __CC_PLATFORM_IOS
-            UIFont* font = value;
-#elif defined(__CC_PLATFORM_MAC)
-            NSFont* font = value;
-#elif defined(__CC_PLATFORM_ANDROID)
-            CTFontRef font = value;
-#endif
-            
+            NSCAssert((CFGetTypeID((__bridge CFTypeRef)(value))==CTFontGetTypeID()), @"CFTypeID does not match");
+
+            CTFontRef font = (__bridge CTFontRef)(value);
             if (foundValue)
             {
                 singleValue = NO;
                 *stop = YES;
             }
             foundValue = YES;
-#if defined(__CC_PLATFORM_ANDROID)
             fontSize = CTFontGetSize(font);
-#else
-            fontSize = font.pointSize;
-#endif
             if (!NSEqualRanges(fullRange, range)) singleValue = NO;
         }
     }];
+    
+    
+#elif __CC_PLATFORM_MAC
+
+    
+    [attrString enumerateAttribute:(id)kCTFontAttributeName inRange:fullRange options:0 usingBlock:^(id value, NSRange range, BOOL* stop){
+        if (value)
+        {
+            NSFont* font = value;
+            if (foundValue)
+            {
+                singleValue = NO;
+                *stop = YES;
+            }
+            foundValue = YES;
+            fontSize = font.pointSize;
+            if (!NSEqualRanges(fullRange, range)) singleValue = NO;
+        }
+    }];
+#endif
+
+    
     
     if (foundValue && singleValue) return fontSize;
     return 0;
 }
 
-- (NSAttributedString*) copyWithNewFontSize:(float) size
-{
-#ifdef __CC_PLATFORM_IOS
-    UIFont* font = [self attribute:NSFontAttributeName atIndex:0 effectiveRange:NULL];
-#elif defined(__CC_PLATFORM_MAC)
-    NSFont* font = [self attribute:NSFontAttributeName atIndex:0 effectiveRange:NULL];
-#elif defined(__CC_PLATFORM_ANDROID)
-    CTFontRef font = [self attribute:(__bridge NSString*)kCTFontAttributeName atIndex:0 effectiveRange:NULL];
-#endif
-    if (!font) return NULL;
+NSAttributedString *NSAttributedStringCopyWithNewFontSize(NSAttributedString *attrString, float size){
+    NSMutableAttributedString* copy = [attrString mutableCopy];
 
-#ifdef __CC_PLATFORM_IOS
-    UIFont* newFont = [UIFont fontWithName:font.fontName size:size];
-#elif defined(__CC_PLATFORM_MAC)
-    NSFont* newFont = [NSFont fontWithName:font.fontName size:size];
-#elif defined(__CC_PLATFORM_ANDROID)
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
+    CFTypeRef value = (__bridge CTFontRef)([attrString attribute:(id)kCTFontAttributeName atIndex:0 effectiveRange:NULL]);
+    NSCAssert((CFGetTypeID(value)==CTFontGetTypeID()), @"CFTypeID does not match");
+    CTFontRef font = (CTFontRef)value;
     CTFontRef newFont = CTFontCreateCopyWithAttributes(font, size, NULL, NULL);
-#endif
-    NSMutableAttributedString* copy = [self mutableCopy];
-    [copy addAttribute:NSFontAttributeName value:newFont range:NSMakeRange(0, copy.length)];
-#if defined(__CC_PLATFORM_ANDROID)
+    [copy addAttribute:(id)kCTFontAttributeName value:(__bridge id)(newFont) range:NSMakeRange(0, copy.length)];
     CFRelease(newFont);
+#elif __CC_PLATFORM_MAC
+    NSFont* font = [attrString attribute:NSFontAttributeName atIndex:0 effectiveRange:NULL];
+    NSFont* newFont = [NSFont fontWithName:font.fontName size:size];
+    [copy addAttribute:NSFontAttributeName value:newFont range:NSMakeRange(0, copy.length)];
+
 #endif
     return copy;
 }
 
-@end
+CGColorRef CGColorCreateWithPlatformSpecificColor(id platformColor) {
+#if __CC_PLATFORM_IOS
+    return CGColorRetain(((UIColor *)platformColor).CGColor);
+#elif __CC_PLATFORM_MAC
+    return CGColorRetain(((NSColor *)platformColor).CGColor);
+#elif __CC_PLATFORM_ANDROID_ANDROID_COLOR
+    int32_t androidColor = (int32_t)[(NSNumber *)platformColor intValue];
+    return CGColorCreateGenericRGB([AndroidColor redWithColor:androidColor]/255.0,
+                                   [AndroidColor greenWithColor:androidColor]/255.0,
+                                   [AndroidColor blueWithColor:androidColor]/255.0,
+                                   [AndroidColor alphaWithColor:androidColor]/255.0);
+#else
+    return NULL;
+#endif
+}
+
+CTFontRef CTFontCreateWithPlatformSpecificFont(id font) {
+#if __CC_PLATFORM_IOS
+    return CTFontCreateWithName((__bridge CFStringRef)((UIFont *)font).fontName, ((UIFont *)font).pointSize, NULL);
+#elif __CC_PLATFORM_MAC
+    return CTFontCreateWithName((__bridge CFStringRef)((NSFont *)font).fontName, ((NSFont *)font).pointSize, NULL);
+#else
+    return NULL;
+#endif
+}
+
+#if !__CC_PLATFORM_ANDROID
+static NSTextAlignment NSTextAlignmentFromCCTextAlignment(CCTextAlignment ccAligment) {
+#if __CC_PLATFORM_IOS
+    switch (ccAligment) {
+        case CCTextAlignmentLeft:
+            return NSTextAlignmentLeft;
+        case CCTextAlignmentRight:
+            return NSTextAlignmentRight;
+        case CCTextAlignmentCenter:
+            return NSTextAlignmentCenter;
+        default:
+            return 0;
+    }
+#elif __CC_PLATFORM_MAC
+    switch (ccAligment) {
+        case CCTextAlignmentLeft:
+            return NSLeftTextAlignment;
+        case CCTextAlignmentRight:
+            return NSRightTextAlignment;
+        case CCTextAlignmentCenter:
+            return NSCenterTextAlignment;
+        default:
+            return 0;
+    }
+#else
+    return 0;
+#endif
+    
+    
+}
+#endif
+
+
+BOOL NSMutableAttributedStringFixPlatformSpecificAttributes(NSMutableAttributedString* string, CCColor* defaultColor, NSString* defaultFontName, CGFloat defaultFontSize, CCTextAlignment defaultHorizontalAlignment){
+    NSRange fullRange = NSMakeRange(0, string.length);
+    BOOL useFullColor = NO;
+#if !__CC_PLATFORM_ANDROID
+    if (NSAttributedStringHasAttribute(string, NSForegroundColorAttributeName)) {
+        CGColorRef color = CGColorCreateWithPlatformSpecificColor([string attribute:NSForegroundColorAttributeName atIndex:0 effectiveRange:NULL]);
+        [string addAttribute:(id)kCTForegroundColorFromContextAttributeName value:(__bridge id)color range:fullRange];
+        CGColorRelease(color);
+    }
+    if (NSAttributedStringHasAttribute(string, NSFontAttributeName)) {
+        id font = [string attribute:NSFontAttributeName atIndex:0 effectiveRange:NULL];
+        CTFontRef ctFont = CTFontCreateWithPlatformSpecificFont(font);
+        [string addAttribute:(id)kCTFontAttributeName value:(__bridge id)ctFont range:fullRange];
+        CFRelease(ctFont);
+    }
+    
+    // Shadow
+    if (NSAttributedStringHasAttribute(string, NSShadowAttributeName))
+    {
+        useFullColor = YES;
+    }
+    
+    // Text alignment
+    
+    NSMutableParagraphStyle* style = [[NSMutableParagraphStyle alloc] init];
+    style.alignment = NSTextAlignmentFromCCTextAlignment(defaultHorizontalAlignment);
+    NSMutableAttributedStringSetDefaultAttribute(string, NSParagraphStyleAttributeName, style);
+    
+    
+    
+#else
+    // You betcha not to have those attributes on Android, they are not supported
+    assert(!NSAttributedStringHasAttribute(string, @"NSParagraphStyle"));
+    assert(!NSAttributedStringHasAttribute(string, @"NSFont"));
+    assert(!NSAttributedStringHasAttribute(string, @"NSForegroundColor"));
+    
+    // Shadow (No CT alternative)
+    if (NSAttributedStringHasAttribute(string, @"NSShadow"))
+    {
+        useFullColor = YES;
+    }
+    
+    
+    CTTextAlignment alignment;
+    if (defaultHorizontalAlignment == CCTextAlignmentLeft) alignment = kCTTextAlignmentLeft;
+    else if (defaultHorizontalAlignment == CCTextAlignmentCenter) alignment = kCTTextAlignmentCenter;
+    else if (defaultHorizontalAlignment == CCTextAlignmentRight) alignment = kCTTextAlignmentRight;
+    
+    
+    CTParagraphStyleSetting paragraphStyleSettings[] = {
+        {
+            .spec = kCTParagraphStyleSpecifierAlignment,
+            .valueSize = sizeof(typeof(alignment)),
+            .value = &alignment
+        },
+    };
+    
+    CTParagraphStyleRef style = CTParagraphStyleCreate(paragraphStyleSettings, sizeof(paragraphStyleSettings) / sizeof(CTParagraphStyleSetting));
+    NSMutableAttributedStringSetDefaultAttribute(string, (NSString *)kCTParagraphStyleAttributeName, (__bridge id)style);
+    
+    CFRelease(style);
+    
+    
+#endif
+    
+    
+    
+#if !__CC_PLATFORM_ANDROID
+    NSString *foregroundColorAttributeName = NSForegroundColorAttributeName;
+#else
+    NSString *foregroundColorAttributeName = (__bridge id)kCTForegroundColorAttributeName;
+#endif
+    BOOL colorChanged = NSMutableAttributedStringSetDefaultAttribute(string, foregroundColorAttributeName, (__bridge id)defaultColor.CGColor);
+    useFullColor |= (![defaultColor isEqualToColor:[CCColor whiteColor]]) && colorChanged;
+    
+    // Font
+    CTFontRef font = CTFontCreateWithName((__bridge CFStringRef)defaultFontName, defaultFontSize, NULL);
+    if (font == NULL) font = CTFontCreateWithName(CFSTR("Helvetica"), defaultFontSize, NULL);
+    [string addAttribute:(NSString *)kCTFontAttributeName value:(__bridge id)font range:fullRange];
+    NSMutableAttributedStringSetDefaultAttribute(string, (NSString *)kCTFontAttributeName, (__bridge id)font);
+    CFRelease(font);
+    return useFullColor;
+}
+

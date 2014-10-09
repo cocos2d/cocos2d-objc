@@ -41,8 +41,8 @@
 
 // 0x00 HI ME LO
 // 00   03 01 01
-#define COCOS2D_VERSION 0x00030201
-#define COCOS2D_BUILD @"release"
+#define COCOS2D_VERSION 0x00030300
+#define COCOS2D_BUILD @"develop"
 //
 // all cocos2d include files
 //
@@ -65,9 +65,11 @@
 #import "CCEffect.h"
 #import "CCEffectBloom.h"
 #import "CCEffectBrightness.h"
+#import "CCEffectColorChannelOffset.h"
 #import "CCEffectContrast.h"
 #import "CCEffectBlur.h"
 #import "CCEffectGlass.h"
+#import "CCEffectDropShadow.h"
 #import "CCEffectHue.h"
 #import "CCEffectNode.h"
 #import "CCEffectPixellate.h"
@@ -99,6 +101,12 @@
 #import "CCTiledMapLayer.h"
 #import "CCTiledMapObjectGroup.h"
 #import "CCTransition.h"
+
+#if CC_EFFECTS_EXPERIMENTAL
+#import "CCEffectDFOutline.h"
+#import "CCEffectDistanceField.h"
+#import "CCEffectDFInnerGlow.h"
+#endif
 
 // Layouts
 #import "CCLayout.h"
@@ -138,17 +146,25 @@
 #import "Platforms/CCGL.h"
 #import "Platforms/CCNS.h"
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 #import "CCAppDelegate.h"
 #import "Platforms/iOS/CCGLView.h"
 #import "Platforms/iOS/CCDirectorIOS.h"
-#import "Platforms/iOS/UITouch+CC.h"
+//#import "Platforms/iOS/PlatformTouch+CC.h"
 
-#elif defined(__CC_PLATFORM_MAC)
+#elif __CC_PLATFORM_MAC
 #import "Platforms/Mac/CCGLView.h"
 #import "Platforms/Mac/CCDirectorMac.h"
 #import "Platforms/Mac/CCWindow.h"
 #import "Platforms/Mac/NSEvent+CC.h"
+
+#elif __CC_PLATFORM_ANDROID
+#import "Platforms/Android/CCActivity.h"
+#import "Platforms/Android/CCGLView.h"
+#import "Platforms/Android/CCDirectorAndroid.h"
+#import <BridgeKitV3/BridgeKit.h>
+#import <android/native_window.h>
+#import <bridge/runtime.h>
 #endif
 
 //
@@ -176,7 +192,7 @@ NSString * cocos2dVersion(void);
 #endif
 
 	
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 #ifndef __IPHONE_4_0
 #error "If you are targeting iPad, you should set BASE SDK = 4.0 (or 4.1, or 4.2), and set the 'iOS deploy target' = 3.2"
 #endif

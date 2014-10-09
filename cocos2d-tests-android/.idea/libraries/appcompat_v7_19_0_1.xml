@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="appcompat-v7-19.0.1">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/Headless/build/exploded-aar/com.android.support/appcompat-v7/19.0.1/res" />
+      <root url="jar://$PROJECT_DIR$/Headless/build/exploded-aar/com.android.support/appcompat-v7/19.0.1/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

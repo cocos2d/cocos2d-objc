@@ -33,7 +33,8 @@
 #import "CGPointExtension.h"
 
 #import "CCNode_Private.h"
-//#import "CCDrawingPrimitives.h"
+#import "CCRenderDispatch.h"
+#import "CCConfiguration.h"
 
 static GLint _stencilBits = -1;
 
@@ -69,6 +70,8 @@ SetProgram(CCNode *n, CCShader *p, NSNumber *alpha) {
 
 - (id)initWithStencil:(CCNode *)stencil
 {
+    NSAssert([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIGL, @"CCClippingNode is not supported by the Metal renderer yet.");
+		
     if (self = [super init]) {
         self.stencil = stencil;
         self.alphaThreshold = 1;
@@ -76,12 +79,14 @@ SetProgram(CCNode *n, CCShader *p, NSNumber *alpha) {
         // get (only once) the number of bits of the stencil buffer
         static dispatch_once_t once;
         dispatch_once(&once, ^{
-            glGetIntegerv(GL_STENCIL_BITS, &_stencilBits);
+            CCRenderDispatch(NO, ^{
+                glGetIntegerv(GL_STENCIL_BITS, &_stencilBits);
+            });
             // warn if the stencil buffer is not enabled
             if (_stencilBits <= 0) {
-#if defined(__CC_PLATFORM_IOS)
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
                 CCLOGWARN(@"Stencil buffer is not enabled; enable it by passing GL_DEPTH24_STENCIL8_OES into the depthFormat parrameter when initializing CCGLView. Until then, everything will be drawn without stencil.");
-#elif defined(__CC_PLATFORM_MAC)
+#elif __CC_PLATFORM_MAC
                 CCLOGWARN(@"Stencil buffer is not enabled; enable it by setting the Stencil attribue to 8 bit in the Attributes inspector of the CCGLView view object in MainMenu.xib, or programmatically by adding NSOpenGLPFAStencilSize and 8 in the NSOpenGLPixelFormatAttribute array of the NSOpenGLPixelFormat used when initializing CCGLView. Until then, everything will be drawn without stencil.");
 #endif
             }
@@ -117,6 +122,7 @@ SetProgram(CCNode *n, CCShader *p, NSNumber *alpha) {
 - (void)visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
 {
     // if stencil buffer disabled
+#if !__CC_PLATFORM_ANDROID && __CC_PLATFORM_ANDROID_FIXME
     if (_stencilBits < 1) {
         // draw everything, as if there where no stencil
         [super visit:renderer parentTransform:parentTransform];
@@ -133,12 +139,13 @@ SetProgram(CCNode *n, CCShader *p, NSNumber *alpha) {
         }
         return;
     }
+#endif
 
     // store the current stencil layer (position in the stencil buffer),
     // this will allow nesting up to n CCClippingNode,
     // where n is the number of bits of the stencil buffer.
     static GLint layer = -1;
-    
+#if !__CC_PLATFORM_ANDROID && __CC_PLATFORM_ANDROID_FIXME
     // all the _stencilBits are in use?
     if (layer + 1 == _stencilBits) {
         // warn once
@@ -150,6 +157,7 @@ SetProgram(CCNode *n, CCShader *p, NSNumber *alpha) {
         [super visit:renderer parentTransform:parentTransform];
         return;
     }
+#endif
     
     ///////////////////////////////////
     // INIT

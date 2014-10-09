@@ -28,7 +28,7 @@
 // Only compile this code on iOS. These files should NOT be included on your Mac project.
 // But in case they are included, it won't be compiled.
 #import "../../ccMacros.h"
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS
 
 #import <unistd.h>
 
@@ -42,7 +42,9 @@
 #import "../../CCShader.h"
 #import "../../ccFPSImages.h"
 #import "../../CCConfiguration.h"
-#import "CCRenderer_private.h"
+#import "CCRenderer_Private.h"
+#import "CCTouch.h"
+#import "CCRenderDispatch_Private.h"
 
 // support imports
 #import "../../Support/CGPointExtension.h"
@@ -98,52 +100,12 @@
 	return self;
 }
 
-
-//
-// Draw the Scene
-//
-- (void) drawScene
-{	
-    /* calculate "global" dt */
-	[self calculateDeltaTime];
-
-	CCGLView *openGLview = (CCGLView*)self.view;
-	[EAGLContext setCurrentContext:openGLview.context];
-
-	/* tick before glClear: issue #533 */
-	if( ! _isPaused ) [_scheduler update: _dt];
-
-	/* to avoid flickr, nextScene MUST be here: after tick and before draw.
-	 XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
-	if( _nextScene ) [self setNextScene];
-	
-	GLKMatrix4 projection = self.projectionMatrix;
-	_renderer.globalShaderUniforms = [self updateGlobalShaderUniforms];
-	
-	[CCRenderer bindRenderer:_renderer];
-	[_renderer invalidateState];
-	
-	[_renderer enqueueClear:(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) color:_runningScene.colorRGBA.glkVector4 depth:1.0f stencil:0 globalSortOrder:NSIntegerMin];
-	
-	// Render
-	[_runningScene visit:_renderer parentTransform:&projection];
-	[_notificationNode visit:_renderer parentTransform:&projection];
-	if( _displayStats ) [self showStats];
-	
-	[_renderer flush];
-	[CCRenderer bindRenderer:nil];
-	
-	[openGLview swapBuffers];
-
-	_totalFrames++;
-
-	if( _displayStats ) [self calculateMPF];
-}
-
 -(void) setViewport
 {
 	CGSize size = _winSizeInPixels;
-	glViewport(0, 0, size.width, size.height );
+	CCRenderDispatch(YES, ^{
+		glViewport(0, 0, size.width, size.height );
+	});
 }
 
 -(void) setProjection:(CCDirectorProjection)projection
@@ -203,7 +165,7 @@
 
 #pragma mark Director Point Convertion
 
--(CGPoint)convertTouchToGL:(UITouch*)touch
+-(CGPoint)convertTouchToGL:(CCTouch*)touch
 {
 	CGPoint uiPoint = [touch locationInView: [touch view]];
 	return [self convertToGL:uiPoint];
@@ -211,16 +173,14 @@
 
 -(void) end
 {
-
 	[super end];
 }
 
 #pragma mark Director - UIViewController delegate
 
 
--(void) setView:(CCGLView *)view
+-(void) setView:(CC_VIEW<CCDirectorView> *)view
 {
-	if( view != __view) {
 		[super setView:view];
 
 		if( view ) {
@@ -229,7 +189,6 @@
 			CGSize size = view.bounds.size;
 			_winSizeInPixels = CGSizeMake(size.width * scale, size.height * scale);
 		}
-	}
 }
 
 // Override to allow orientations other than the default portrait orientation.
@@ -402,6 +361,11 @@
     if(!_animating)
         return;
 
+    if([_delegate respondsToSelector:@selector(stopAnimation)])
+    {
+        [_delegate stopAnimation];
+    }
+    
 	CCLOG(@"cocos2d: animation stopped");
 
 #if CC_DIRECTOR_IOS_USE_BACKGROUND_THREAD

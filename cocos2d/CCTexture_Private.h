@@ -25,6 +25,11 @@
 
 #import "CCTexture.h"
 
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+#import <Metal/Metal.h>
+#endif
+
+
 // -------------------------------------------------------------
 
 // Proxy object returned in place of a CCTexture or CCSpriteFrame by the texture cache.
@@ -47,10 +52,18 @@
 /* texture name */
 @property(nonatomic,readonly) GLuint name;
 
+// TODO This should really be split into a separate subclass somehow.
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+@property(nonatomic,readonly) id<MTLTexture> metalTexture;
+@property(nonatomic,readonly) id<MTLSamplerState> metalSampler;
+#endif
+
 /* texture max S */
 @property(nonatomic,readwrite) GLfloat maxS;
 /* texture max T */
 @property(nonatomic,readwrite) GLfloat maxT;
+
+@property(nonatomic,readwrite) BOOL premultipliedAlpha;
 
 // Check if the texture's weakly retained proxy still exists.
 @property(atomic, readonly) BOOL hasProxy;
@@ -116,25 +129,6 @@ typedef struct _ccTexParams {
  
  */
 -(void) setTexParameters: (ccTexParams*) texParams;
-
-/* sets antialias texture parameters:
- - GL_TEXTURE_MIN_FILTER = GL_LINEAR
- - GL_TEXTURE_MAG_FILTER = GL_LINEAR
- 
- @warning Calling this method could allocate additional texture memory.
- 
- */
-- (void) setAntiAliasTexParameters;
-
-/* sets alias texture parameters:
- - GL_TEXTURE_MIN_FILTER = GL_NEAREST
- - GL_TEXTURE_MAG_FILTER = GL_NEAREST
- 
- @warning Calling this method could allocate additional texture memory.
- 
- */
-- (void) setAliasTexParameters;
-
 
 /* Generates mipmap images for the texture.
  It only works if the texture size is POT (power of 2).

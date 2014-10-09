@@ -69,6 +69,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "Support/CCFileUtils.h"
 #import "Support/ZipUtils.h"
 #import "CCGL.h"
+#import "CCRenderDispatch.h"
 
 #pragma mark -
 #pragma mark CCTexturePVR
@@ -81,27 +82,30 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 // XXX DO NO ALTER THE ORDER IN THIS LIST XXX
 //
 static const ccPVRTexturePixelFormatInfo PVRTableFormats[] = {
-	
-	// 0: BGRA_8888
-	{GL_RGBA, GL_BGRA, GL_UNSIGNED_BYTE, 32, NO, YES, CCTexturePixelFormat_RGBA8888},
-	// 1: RGBA_8888
+
+	// 0: RGBA_8888
 	{GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE, 32, NO, YES, CCTexturePixelFormat_RGBA8888},
-	// 2: RGBA_4444
+	// 1: RGBA_4444
 	{GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, 16, NO, YES, CCTexturePixelFormat_RGBA4444},
-	// 3: RGBA_5551
+	// 2: RGBA_5551
 	{GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, 16, NO, YES, CCTexturePixelFormat_RGB5A1},
-	// 4: RGB_565
+	// 3: RGB_565
 	{GL_RGB, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, 16, NO, NO, CCTexturePixelFormat_RGB565},
-	// 5: RGB_888
+	// 4: RGB_888
 	{GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, 24, NO, NO, CCTexturePixelFormat_RGB888},
-	// 6: A_8
+	// 5: A_8
 	{GL_ALPHA, GL_ALPHA, GL_UNSIGNED_BYTE, 8, NO, NO, CCTexturePixelFormat_A8},
-	// 7: L_8
+	// 6: L_8
 	{GL_LUMINANCE, GL_LUMINANCE, GL_UNSIGNED_BYTE, 8, NO, NO, CCTexturePixelFormat_I8},
-	// 8: LA_88
+	// 7: LA_88
 	{GL_LUMINANCE_ALPHA, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, 16, NO, YES, CCTexturePixelFormat_AI88},
-	
-#ifdef __CC_PLATFORM_IOS
+
+	// 8: BGRA_8888
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
+	{GL_RGBA, GL_BGRA, GL_UNSIGNED_BYTE, 32, NO, YES, CCTexturePixelFormat_RGBA8888},
+#endif
+
+#if __CC_PLATFORM_IOS
 	// 9: PVRTC 2BPP RGB
 	{GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG, -1, -1, 2, YES, NO, CCTexturePixelFormat_PVRTC2},
 	// 10: PVRTC 2BPP RGBA
@@ -181,17 +185,20 @@ typedef enum {
 // v2
 static struct _pixel_formathash v2_pixel_formathash[] = {
 
-	{ kPVR2TexturePixelFormat_BGRA_8888,	&PVRTableFormats[0] },
-	{ kPVR2TexturePixelFormat_RGBA_8888,	&PVRTableFormats[1] },
-	{ kPVR2TexturePixelFormat_RGBA_4444,	&PVRTableFormats[2] },
-	{ kPVR2TexturePixelFormat_RGBA_5551,	&PVRTableFormats[3] },
-	{ kPVR2TexturePixelFormat_RGB_565,		&PVRTableFormats[4] },
-	{ kPVR2TexturePixelFormat_RGB_888,		&PVRTableFormats[5] },
-	{ kPVR2TexturePixelFormat_A_8,			&PVRTableFormats[6] },
-	{ kPVR2TexturePixelFormat_I_8,			&PVRTableFormats[7] },
-	{ kPVR2TexturePixelFormat_AI_88,		&PVRTableFormats[8] },
+	{ kPVR2TexturePixelFormat_RGBA_8888,	&PVRTableFormats[0] },
+	{ kPVR2TexturePixelFormat_RGBA_4444,	&PVRTableFormats[1] },
+	{ kPVR2TexturePixelFormat_RGBA_5551,	&PVRTableFormats[2] },
+	{ kPVR2TexturePixelFormat_RGB_565,		&PVRTableFormats[3] },
+	{ kPVR2TexturePixelFormat_RGB_888,		&PVRTableFormats[4] },
+	{ kPVR2TexturePixelFormat_A_8,			&PVRTableFormats[5] },
+	{ kPVR2TexturePixelFormat_I_8,			&PVRTableFormats[6] },
+	{ kPVR2TexturePixelFormat_AI_88,		&PVRTableFormats[7] },
 
-#ifdef __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
+    { kPVR2TexturePixelFormat_BGRA_8888,	&PVRTableFormats[8] },
+#endif
+
+#if __CC_PLATFORM_IOS
 	{ kPVR2TexturePixelFormat_PVRTC_2BPP_RGBA,	&PVRTableFormats[10] },
 	{ kPVR2TexturePixelFormat_PVRTC_4BPP_RGBA,	&PVRTableFormats[12] },
 #endif // iphone only
@@ -201,18 +208,21 @@ static struct _pixel_formathash v2_pixel_formathash[] = {
 
 // v3
 struct _pixel_formathash v3_pixel_formathash[] = {
-	
-	{kPVR3TexturePixelFormat_BGRA_8888,	&PVRTableFormats[0] },
-	{kPVR3TexturePixelFormat_RGBA_8888,	&PVRTableFormats[1] },
-	{kPVR3TexturePixelFormat_RGBA_4444, &PVRTableFormats[2] },
-	{kPVR3TexturePixelFormat_RGBA_5551, &PVRTableFormats[3] },
-	{kPVR3TexturePixelFormat_RGB_565,	&PVRTableFormats[4] },
-	{kPVR3TexturePixelFormat_RGB_888,	&PVRTableFormats[5] },
-	{kPVR3TexturePixelFormat_A_8,		&PVRTableFormats[6] },
-	{kPVR3TexturePixelFormat_L_8,		&PVRTableFormats[7] },
-	{kPVR3TexturePixelFormat_LA_88,		&PVRTableFormats[8] },
-	
-#ifdef __CC_PLATFORM_IOS
+
+	{kPVR3TexturePixelFormat_RGBA_8888,	&PVRTableFormats[0] },
+	{kPVR3TexturePixelFormat_RGBA_4444, &PVRTableFormats[1] },
+	{kPVR3TexturePixelFormat_RGBA_5551, &PVRTableFormats[2] },
+	{kPVR3TexturePixelFormat_RGB_565,	&PVRTableFormats[3] },
+	{kPVR3TexturePixelFormat_RGB_888,	&PVRTableFormats[4] },
+	{kPVR3TexturePixelFormat_A_8,		&PVRTableFormats[5] },
+	{kPVR3TexturePixelFormat_L_8,		&PVRTableFormats[6] },
+	{kPVR3TexturePixelFormat_LA_88,		&PVRTableFormats[7] },
+
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
+    {kPVR3TexturePixelFormat_BGRA_8888,	&PVRTableFormats[8] },
+#endif
+
+#if __CC_PLATFORM_IOS
 	{kPVR3TexturePixelFormat_PVRTC_2BPP_RGB,	&PVRTableFormats[9] },
 	{kPVR3TexturePixelFormat_PVRTC_2BPP_RGBA,	&PVRTableFormats[10] },
 	{kPVR3TexturePixelFormat_PVRTC_4BPP_RGB,	&PVRTableFormats[11] },
@@ -496,6 +506,10 @@ typedef struct {
 
 - (BOOL)createGLTexture
 {
+	NSAssert([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIGL, @"PVR textures are not yet supported by Metal.");
+	__block BOOL retVal = NO;
+	
+CCRenderDispatch(NO, ^{
 	GLsizei width = _width;
 	GLsizei height = _height;
 	GLenum err;
@@ -534,7 +548,7 @@ typedef struct {
 	{
 		if( compressed && ! [[CCConfiguration sharedConfiguration] supportsPVRTC] ) {
 			CCLOGWARN(@"cocos2d: WARNING: PVRTC images are not supported");
-			return NO;
+			retVal = NO; return;
 		}
 
 		unsigned char *data = _mipmaps[i].address;
@@ -552,14 +566,17 @@ typedef struct {
 		if (err != GL_NO_ERROR)
 		{
 			CCLOGWARN(@"cocos2d: TexturePVR: Error uploading compressed texture level: %u . glError: 0x%04X", i, err);
-			return NO;
+			retVal = NO; return;
 		}
 
 		width = MAX(width >> 1, 1);
 		height = MAX(height >> 1, 1);
 	}
 	
-	return YES;
+	retVal = YES; return;
+});
+	
+	return retVal;
 }
 
 
@@ -604,7 +621,7 @@ typedef struct {
 			return nil;
 		}
 		
-#if defined(__CC_PLATFORM_IOS) && DEBUG
+#if __CC_PLATFORM_IOS && defined(DEBUG)
 		GLenum pixelFormat = _pixelFormatInfo->ccPixelFormat;
 		CCConfiguration *conf = [CCConfiguration sharedConfiguration];
 		
@@ -692,10 +709,11 @@ typedef struct {
 - (void)dealloc
 {
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
-
-	if (_name != 0 && ! _retainName )
-		glDeleteTextures(1, &_name);
-
+	
+	if(_name != 0 && ! _retainName){
+		GLuint name = _name;
+		CCRenderDispatch(YES, ^{glDeleteTextures(1, &name);});
+	}
 }
 
 @end
