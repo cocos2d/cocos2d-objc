@@ -85,7 +85,7 @@ static const NSUInteger CCEffectLightingMaxLightCount = 16;
     [effectBody appendString:CC_GLSL(
                                      // Index the normal map and expand the color value from [0..1] to [-1..1]
                                      vec4 normalMap = texture2D(cc_NormalMapTexture, cc_FragTexCoord2);
-                                     vec4 tangentSpaceNormal = normalMap * 2.0 - 1.0;
+                                     vec3 tangentSpaceNormal = normalize(normalMap.xyz * 2.0 - 1.0);
                                      
                                      if (normalMap.a == 0.0)
                                      {
@@ -93,9 +93,16 @@ static const NSUInteger CCEffectLightingMaxLightCount = 16;
                                      }
                                      
                                      vec4 lightColor;
-                                     vec4 tangentSpaceLightDir;
-                                     vec4 resultColor = u_globalAmbientColor;
+                                     vec4 diffuseLightColor = u_globalAmbientColor;
+                                     vec4 specularLightColor = vec4(0,0,0,1);
+                                     
+                                     vec3 tangentSpaceLightDir;
+                                     vec3 halfAngleDir;
+                                     
                                      float lightDist;
+                                     float falloffTerm;
+                                     float diffuseTerm;
+                                     float specularTerm;
                                      )];
 
     for (NSUInteger lightIndex = 0; lightIndex < lights.count; lightIndex++)
@@ -103,18 +110,24 @@ static const NSUInteger CCEffectLightingMaxLightCount = 16;
         CCLightNode *light = lights[lightIndex];
         if (light.type == CCLightDirectional)
         {
-            [effectBody appendFormat:@"tangentSpaceLightDir = v_tangentSpaceLightDir%lu;\n", (unsigned long)lightIndex];
+            [effectBody appendFormat:@"tangentSpaceLightDir = v_tangentSpaceLightDir%lu.xyz;\n", (unsigned long)lightIndex];
             [effectBody appendFormat:@"lightColor = u_lightColor%lu;\n", (unsigned long)lightIndex];
         }
         else
         {
-            [effectBody appendFormat:@"tangentSpaceLightDir = normalize(v_tangentSpaceLightDir%lu);\n", (unsigned long)lightIndex];
-            [effectBody appendFormat:@"lightDist = length(v_tangentSpaceLightDir%lu);\n", (unsigned long)lightIndex];
-            [effectBody appendFormat:@"lightColor = u_lightColor%lu * max(0.0, (1.0 - lightDist * u_lightFalloff%lu));\n", (unsigned long)lightIndex, (unsigned long)lightIndex];
+            [effectBody appendFormat:@"tangentSpaceLightDir = normalize(v_tangentSpaceLightDir%lu.xyz);\n", (unsigned long)lightIndex];
+            [effectBody appendFormat:@"lightDist = length(v_tangentSpaceLightDir%lu.xyz);\n", (unsigned long)lightIndex];
+            [effectBody appendFormat:@"falloffTerm = max(0.0, (1.0 - lightDist * u_lightFalloff%lu));\n", (unsigned long)lightIndex];
+            [effectBody appendFormat:@"lightColor = u_lightColor%lu * falloffTerm;\n", (unsigned long)lightIndex];
         }
-        [effectBody appendFormat:@"resultColor += lightColor * max(0.0, dot(tangentSpaceNormal, tangentSpaceLightDir));\n"];
+        [effectBody appendString:@"diffuseTerm = max(0.0, dot(tangentSpaceNormal, tangentSpaceLightDir));\n"];
+        [effectBody appendString:@"diffuseLightColor += lightColor * diffuseTerm;\n"];
+        
+        [effectBody appendString:@"halfAngleDir = (2.0 * dot(tangentSpaceLightDir, tangentSpaceNormal) * tangentSpaceNormal - tangentSpaceLightDir);\n"];
+        [effectBody appendString:@"specularTerm = max(0.0, dot(halfAngleDir, vec3(0,0,1))) * step(0.0, diffuseTerm);\n"];
+        [effectBody appendString:@"specularLightColor += lightColor * pow(specularTerm, 10.0);\n"];
     }
-    [effectBody appendString:@"return resultColor * inputValue;\n"];
+    [effectBody appendString:@"return diffuseLightColor * inputValue + specularLightColor;\n"];
     
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"lightingEffectFrag" body:effectBody inputs:@[input] returnType:@"vec4"];
     return [NSMutableArray arrayWithObject:fragmentFunction];
