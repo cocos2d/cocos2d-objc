@@ -190,6 +190,10 @@
 		D3B2A7E5187DD60B00406C5A /* CCBMFontTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B2A7E4187DD60B00406C5A /* CCBMFontTest.m */; };
 		D3C9C867188078B900C58900 /* CCSchedulerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3C9C866188078B900C58900 /* CCSchedulerTest.m */; };
 		D3D6CF5F18BD5F0500A51531 /* CCRendererTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3D6CF5E18BD5F0500A51531 /* CCRendererTest.m */; };
+		D3DACC7B19E74BC000629E97 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3763D9719E7356C006C050D /* MainMenu.xib */; };
+		D3DACC7C19E74BD100629E97 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3763D9519E7356C006C050D /* InfoPlist.strings */; };
+		D3DACC7D19E74BD500629E97 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = D3763D9819E7356C006C050D /* icon.icns */; };
+		D3DACC7E19E74BD800629E97 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D3763D9919E7356C006C050D /* Info.plist */; };
 		D4AFE9131977100000261299 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8D81977100000261299 /* A Damn Mess.ttf */; };
 		D4AFE9141977100000261299 /* Abberancy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8D91977100000261299 /* Abberancy.ttf */; };
 		D4AFE9151977100000261299 /* ThisFontIsAbdFont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8DA1977100000261299 /* ThisFontIsAbdFont.ttf */; };
@@ -433,7 +437,6 @@
 		D34CD3C418ABF4AA00D8E537 /* CCRendererTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCRendererTests.m; sourceTree = "<group>"; };
 		D3763BB019E72F85006C050D /* cocos2d.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = cocos2d.xcodeproj; sourceTree = "<group>"; };
 		D3763C5A19E73188006C050D /* cocos2d-tests-mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cocos2d-tests-mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D3763C5B19E73188006C050D /* cocos2d-tests-ios copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "cocos2d-tests-ios copy-Info.plist"; path = "/Volumes/Macintosh HD/Users/slembcke/Development/cocos2d-iphone/cocos2d-tests-ios copy-Info.plist"; sourceTree = "<absolute>"; };
 		D3763D5419E73513006C050D /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = "cocos2d-ui-tests/osx/AppDelegate.h"; sourceTree = SOURCE_ROOT; };
 		D3763D5519E73513006C050D /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = "cocos2d-ui-tests/osx/AppDelegate.m"; sourceTree = SOURCE_ROOT; };
 		D3763D5719E7352F006C050D /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "cocos2d-ui-tests/osx/main.m"; sourceTree = SOURCE_ROOT; };
@@ -663,7 +666,6 @@
 				D3763D9A19E7356C006C050D /* Resources-Mac */,
 				B7E2604A17E7D278007067F0 /* Frameworks */,
 				B7E2604917E7D278007067F0 /* Products */,
-				D3763C5B19E73188006C050D /* cocos2d-tests-ios copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1066,7 +1068,7 @@
 		};
 		D3763BBD19E72F85006C050D /* cocos2dJava.jar */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.jar;
+			fileType = compiled.java.jar;
 			path = cocos2dJava.jar;
 			remoteRef = D3763BBC19E72F85006C050D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -1192,6 +1194,7 @@
 				D344723519E73AD1000093A3 /* bitmapFontTest.fnt in Resources */,
 				D344723619E73AD1000093A3 /* bitmapFontTest.png in Resources */,
 				D344723719E73AD1000093A3 /* bitmapFontTest2.fnt in Resources */,
+				D3DACC7B19E74BC000629E97 /* MainMenu.xib in Resources */,
 				D344723819E73AD1000093A3 /* bitmapFontTest3.fnt in Resources */,
 				D344723919E73AD1000093A3 /* bitmapFontTest3.png in Resources */,
 				D344723A19E73AD1000093A3 /* bitmapFontTest4.fnt in Resources */,
@@ -1211,6 +1214,7 @@
 				D344724819E73AD1000093A3 /* fps_images.plist in Resources */,
 				D344724919E73AD1000093A3 /* fps_images.png in Resources */,
 				D344724A19E73AD1000093A3 /* futura-48.fnt in Resources */,
+				D3DACC7C19E74BD100629E97 /* InfoPlist.strings in Resources */,
 				D344724B19E73AD1000093A3 /* futura-48.GlyphProject in Resources */,
 				D344724C19E73AD1000093A3 /* futura-48.png in Resources */,
 				D344724D19E73AD1000093A3 /* geneva-32.fnt in Resources */,
@@ -1223,6 +1227,7 @@
 				D344725419E73AD1000093A3 /* larabie-16-hd.plist in Resources */,
 				D344725519E73AD1000093A3 /* larabie-16-hd.png in Resources */,
 				D344725619E73AD1000093A3 /* larabie-16.plist in Resources */,
+				D3DACC7E19E74BD800629E97 /* Info.plist in Resources */,
 				D344725719E73AD1000093A3 /* larabie-16.png in Resources */,
 				D344725819E73AD1000093A3 /* markerFelt-hd.fnt in Resources */,
 				D344725919E73AD1000093A3 /* markerFelt-hd.png in Resources */,
@@ -1235,6 +1240,7 @@
 				D344726019E73AD1000093A3 /* RobotoSlab-Thin.ttf in Resources */,
 				D344726119E73AD1000093A3 /* Schwarzwald Regular.ttf in Resources */,
 				D344726219E73AD1000093A3 /* Scissor Cuts.ttf in Resources */,
+				D3DACC7D19E74BD500629E97 /* icon.icns in Resources */,
 				D344726319E73AD1000093A3 /* tuffy_bold_italic-charmap-hd.plist in Resources */,
 				D344726419E73AD1000093A3 /* tuffy_bold_italic-charmap.plist in Resources */,
 				D344726519E73AD1000093A3 /* tuffy_bold_italic-charmap.png in Resources */,
