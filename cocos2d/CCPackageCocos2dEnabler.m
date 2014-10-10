@@ -16,7 +16,7 @@
 
 - (void)enablePackages:(NSArray *)packages
 {
-    if ([self addPackagestoSearchPath:packages]);
+    if ([self addPackagestoSearchPath:packages])
     {
         CCLOGINFO(@"[PACKAGE/INSTALL][INFO] Enable packages - Search path: %@", [CCFileUtils sharedFileUtils].searchPath);
 

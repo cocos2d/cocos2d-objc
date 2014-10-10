@@ -280,7 +280,7 @@
 
     if (!fileHandle)
     {
-        CCLOG(@"[PACKAGE/DOWNLOAD][ERROR] %@, cannot open file for writing download %@", error, _tempPath);
+        CCLOG(@"[PACKAGE/DOWNLOAD][ERROR] %@, cannot open file for writing download %@", *error, _tempPath);
         return NO;
     }
 

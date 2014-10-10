@@ -14,6 +14,10 @@
 #import "CCDirector.h"
 #import "AppDelegate.h"
 
+@interface CCPackageDownload()
+- (NSString *)createTempName;
+@end
+
 static NSUInteger __fileDownloadSize = 0;
 static BOOL __support_range_request = YES;
 
@@ -143,7 +147,7 @@ static BOOL __support_range_request = YES;
     self.downloadReturned = NO;
     self.downloadError = nil;
     self.downloadSuccessful = NO;
-    self.shouldOverwriteDownloadedFile;
+    [self shouldOverwriteDownloadedFile];
 
     self.package = [[CCPackage alloc] initWithName:@"testpackage"
                                         resolution:@"phonehd"
@@ -307,7 +311,7 @@ static BOOL __support_range_request = YES;
 
     XCTAssertEqual(_package.status, CCPackageStatusDownloadPaused);
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *tempName = [_download performSelector:@selector(createTempName)];
+    NSString *tempName = [_download createTempName];
 
     BOOL success = [fileManager fileExistsAtPath:[[_localURL.path stringByDeletingLastPathComponent] stringByAppendingPathComponent:tempName]]
                    || [fileManager fileExistsAtPath:_download.localURL.path];
@@ -341,7 +345,7 @@ static BOOL __support_range_request = YES;
     NSString *fileName = [_package.remoteURL lastPathComponent];
     NSString *pathToPackage = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"Resources-shared/Packages/%@", fileName] ofType:nil];
     NSData *data = [[NSData dataWithContentsOfFile:pathToPackage] subdataWithRange:NSMakeRange(0, 5000)];
-    NSString *tempName = [_download performSelector:@selector(createTempName)];
+    NSString *tempName = [_download createTempName];
     [data writeToFile:[[_localURL.path stringByDeletingLastPathComponent] stringByAppendingPathComponent:tempName] atomically:YES];
 }
 
