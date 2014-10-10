@@ -106,7 +106,7 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
                                      vec4 normalMap = texture2D(cc_NormalMapTexture, cc_FragTexCoord2);
                                      vec3 tangentSpaceNormal = normalize(normalMap.xyz * 2.0 - 1.0);
                                      
-                                     if (normalMap.a == 0.0)
+                                     if ((inputValue.a * normalMap.a) == 0.0)
                                      {
                                          return vec4(0,0,0,0);
                                      }
