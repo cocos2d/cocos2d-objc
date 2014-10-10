@@ -16,7 +16,6 @@
 		75556A181856370A00ED1B0F /* CCPhysicsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 755569E51856361100ED1B0F /* CCPhysicsTests.m */; };
 		75556A191856370A00ED1B0F /* CCSchedulerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 755569E61856361100ED1B0F /* CCSchedulerTests.m */; };
 		75556A1B1856374700ED1B0F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 755569EA1856361100ED1B0F /* InfoPlist.strings */; };
-		7575B5FC1856535200CA09C8 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2622D17E7D3D8007067F0 /* libcocos2d.a */; };
 		7587BDB3185A0A6900EEEFDE /* TextureTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7587BDB2185A0A6900EEEFDE /* TextureTest.m */; };
 		7587BDB7185A64AD00EEEFDE /* ColorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7587BDB6185A64AD00EEEFDE /* ColorTest.m */; };
 		758A690F1843E18700D1A8D2 /* ParallaxTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 758A690E1843E18700D1A8D2 /* ParallaxTest.m */; };
@@ -67,13 +66,11 @@
 		B7EE69811818760700B983FE /* CCSprite9SliceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69801818760700B983FE /* CCSprite9SliceTest.m */; };
 		B7EE69CF1819D82300B983FE /* CCLayoutTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69CE1819D82300B983FE /* CCLayoutTest.m */; };
 		B7EE6A28181B075E00B983FE /* CCSliderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE6A27181B075E00B983FE /* CCSliderTest.m */; };
-		D23CD73119CB881200C7EB14 /* CCShaders.metal in Resources */ = {isa = PBXBuildFile; fileRef = D3C1281C199D43E0005D2119 /* CCShaders.metal */; };
 		D24FAEED198014C80043E27D /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D34CD3C118ABEE9C00D8E537 /* GLKit.framework */; };
 		D28A2E181954F68200ADC03D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D28A2E171954F68200ADC03D /* UIKit.framework */; };
 		D28A2E1F1954F7E900ADC03D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D28A2E1E1954F7E900ADC03D /* OpenGLES.framework */; };
 		D2B4894C1917EE6700C3443A /* CCEffectsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D2B4894B1917EE6700C3443A /* CCEffectsTest.m */; };
 		D2D59897198747DE00BDAF25 /* Music in Resources */ = {isa = PBXBuildFile; fileRef = D2D59896198747DE00BDAF25 /* Music */; };
-		D3269DE819CC985900406282 /* TestShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = D3269DE719CC985900406282 /* TestShaders.metal */; };
 		D3269DEA19CCC11800406282 /* CCRendererSharedTypes.h in Resources */ = {isa = PBXBuildFile; fileRef = D3269DE919CCC11800406282 /* CCRendererSharedTypes.h */; };
 		D32FDE8619B645CA0078CC16 /* CCTextureTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D32FDE8519B645CA0078CC16 /* CCTextureTests.m */; };
 		D3395F1A187F83E600F22C74 /* CCMemoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D3395F19187F83E600F22C74 /* CCMemoryTests.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -194,6 +191,7 @@
 		D3DACC7C19E74BD100629E97 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3763D9519E7356C006C050D /* InfoPlist.strings */; };
 		D3DACC7D19E74BD500629E97 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = D3763D9819E7356C006C050D /* icon.icns */; };
 		D3DACC7E19E74BD800629E97 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D3763D9919E7356C006C050D /* Info.plist */; };
+		D3E1842B19E861FC00A08B01 /* MetalShaders in Resources */ = {isa = PBXBuildFile; fileRef = D3E1842A19E861FC00A08B01 /* MetalShaders */; };
 		D4AFE9131977100000261299 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8D81977100000261299 /* A Damn Mess.ttf */; };
 		D4AFE9141977100000261299 /* Abberancy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8D91977100000261299 /* Abberancy.ttf */; };
 		D4AFE9151977100000261299 /* ThisFontIsAbdFont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8DA1977100000261299 /* ThisFontIsAbdFont.ttf */; };
@@ -265,40 +263,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		57E144B51974C1E90065F142 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B7E2622317E7D3D8007067F0 /* cocos2d-ios.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5BF3267A195F8D8800D9A51A;
-			remoteInfo = cocos2dJava;
-		};
 		75556A10185636F100ED1B0F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B7E2604017E7D278007067F0 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = B7E2604717E7D278007067F0;
 			remoteInfo = "cocos2d-ui-tests-ios";
-		};
-		B7E2622C17E7D3D8007067F0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B7E2622317E7D3D8007067F0 /* cocos2d-ios.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5018F24D0DFDEAC400C013A5;
-			remoteInfo = cocos2d;
-		};
-		B7E2623217E7D578007067F0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B7E2622317E7D3D8007067F0 /* cocos2d-ios.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
-			remoteInfo = cocos2d;
-		};
-		D2FEB797194F6CC800FC0574 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B7E2622317E7D3D8007067F0 /* cocos2d-ios.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D2FEB74F194F6C9E00FC0574;
-			remoteInfo = cocos2dAndroid;
 		};
 		D3763BB819E72F85006C050D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -334,13 +304,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = "cocos2d-ios";
-		};
-		D3763BDA19E73188006C050D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B7E2622317E7D3D8007067F0 /* cocos2d-ios.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
-			remoteInfo = cocos2d;
 		};
 		D3763C5C19E731BA006C050D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -413,7 +376,6 @@
 		B7E2621B17E7D370007067F0 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Prefix.pch; path = "cocos2d-ui-tests/ios/Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		B7E2621F17E7D3B2007067F0 /* MainMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainMenu.h; path = "cocos2d-ui-tests/MainMenu.h"; sourceTree = SOURCE_ROOT; };
 		B7E2622017E7D3B2007067F0 /* MainMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainMenu.m; path = "cocos2d-ui-tests/MainMenu.m"; sourceTree = SOURCE_ROOT; };
-		B7E2622317E7D3D8007067F0 /* cocos2d-ios.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "cocos2d-ios.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		B7EE697818186D5200B983FE /* CCTextFieldTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTextFieldTest.m; path = "cocos2d-ui-tests/tests/CCTextFieldTest.m"; sourceTree = SOURCE_ROOT; };
 		B7EE69801818760700B983FE /* CCSprite9SliceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSprite9SliceTest.m; path = "cocos2d-ui-tests/tests/CCSprite9SliceTest.m"; sourceTree = SOURCE_ROOT; };
 		B7EE69CE1819D82300B983FE /* CCLayoutTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCLayoutTest.m; path = "cocos2d-ui-tests/tests/CCLayoutTest.m"; sourceTree = SOURCE_ROOT; };
@@ -427,7 +389,6 @@
 		D2D0E6951950B16300E9103F /* libGLESv3.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLESv3.so; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/ApportableSDK1.0.sdk/usr/lib/armeabi/libGLESv3.so"; sourceTree = "<group>"; };
 		D2D0E6991950B16800E9103F /* libEGL.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libEGL.so; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/ApportableSDK1.0.sdk/usr/lib/armeabi/libEGL.so"; sourceTree = "<group>"; };
 		D2D59896198747DE00BDAF25 /* Music */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Music; path = Resources/Music; sourceTree = SOURCE_ROOT; };
-		D3269DE719CC985900406282 /* TestShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = TestShaders.metal; path = "cocos2d-ui-tests/tests/TestShaders.metal"; sourceTree = SOURCE_ROOT; };
 		D3269DE919CCC11800406282 /* CCRendererSharedTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CCRendererSharedTypes.h; path = cocos2d/CCRendererSharedTypes.h; sourceTree = "<group>"; };
 		D32FDE8519B645CA0078CC16 /* CCTextureTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTextureTests.m; sourceTree = "<group>"; };
 		D3395F19187F83E600F22C74 /* CCMemoryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMemoryTests.m; sourceTree = "<group>"; };
@@ -451,6 +412,7 @@
 		D3C1281C199D43E0005D2119 /* CCShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = CCShaders.metal; path = cocos2d/Platforms/iOS/CCShaders.metal; sourceTree = SOURCE_ROOT; };
 		D3C9C866188078B900C58900 /* CCSchedulerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSchedulerTest.m; path = "cocos2d-ui-tests/tests/CCSchedulerTest.m"; sourceTree = SOURCE_ROOT; };
 		D3D6CF5E18BD5F0500A51531 /* CCRendererTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCRendererTest.m; path = "cocos2d-ui-tests/tests/CCRendererTest.m"; sourceTree = SOURCE_ROOT; };
+		D3E1842A19E861FC00A08B01 /* MetalShaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = MetalShaders; path = "cocos2d-ui-tests/MetalShaders"; sourceTree = SOURCE_ROOT; };
 		D4AFE8D81977100000261299 /* A Damn Mess.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "A Damn Mess.ttf"; sourceTree = "<group>"; };
 		D4AFE8D91977100000261299 /* Abberancy.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Abberancy.ttf; sourceTree = "<group>"; };
 		D4AFE8DA1977100000261299 /* ThisFontIsAbdFont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ThisFontIsAbdFont.ttf; sourceTree = "<group>"; };
@@ -526,7 +488,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7575B5FC1856535200CA09C8 /* libcocos2d.a in Frameworks */,
 				75556A04185636F100ED1B0F /* XCTest.framework in Frameworks */,
 				75556A05185636F100ED1B0F /* Foundation.framework in Frameworks */,
 			);
@@ -647,7 +608,6 @@
 				A6167B92189A7D4D0044D391 /* VertexZTest.m */,
 				A664A4EE18A3D9B8006184B8 /* PositioningTest.m */,
 				839B149E19CC1E440000E5E2 /* CCPackageTest.m */,
-				D3269DE719CC985900406282 /* TestShaders.metal */,
 			);
 			name = Tests;
 			path = "cocos2d-ui-tests/tests";
@@ -711,7 +671,7 @@
 				B7E2621D17E7D38D007067F0 /* AppDelegate */,
 				B7E2621E17E7D398007067F0 /* Testbed */,
 				B71B087F17EA5B500082EBC0 /* Tests */,
-				B7E2622217E7D3CA007067F0 /* libs */,
+				D3E1842A19E861FC00A08B01 /* MetalShaders */,
 				B7E261EC17E7D27A007067F0 /* Platform/iOS */,
 				D3763D2D19E73311006C050D /* Platform/Mac */,
 			);
@@ -766,24 +726,6 @@
 				B71B087B17EA5B490082EBC0 /* TestBase.m */,
 			);
 			name = Testbed;
-			sourceTree = "<group>";
-		};
-		B7E2622217E7D3CA007067F0 /* libs */ = {
-			isa = PBXGroup;
-			children = (
-				B7E2622317E7D3D8007067F0 /* cocos2d-ios.xcodeproj */,
-			);
-			name = libs;
-			sourceTree = "<group>";
-		};
-		B7E2622417E7D3D8007067F0 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				B7E2622D17E7D3D8007067F0 /* libcocos2d.a */,
-				D2FEB798194F6CC800FC0574 /* libcocos2dAndroid.a */,
-				57E144B61974C1E90065F142 /* cocos2dJava.jar */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		D3763BB119E72F85006C050D /* Products */ = {
@@ -952,13 +894,13 @@
 			buildPhases = (
 				B7E2604417E7D278007067F0 /* Sources */,
 				B7E2604517E7D278007067F0 /* Frameworks */,
+				D3E1842919E8572700A08B01 /* Compile Metal Shaders */,
 				B7E2604617E7D278007067F0 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				D3763BD119E72FA8006C050D /* PBXTargetDependency */,
-				B7E2623317E7D578007067F0 /* PBXTargetDependency */,
 			);
 			name = "cocos2d-tests-ios";
 			productName = "cocos2d-ui-tests-ios";
@@ -977,7 +919,6 @@
 			);
 			dependencies = (
 				D3763C5D19E731BA006C050D /* PBXTargetDependency */,
-				D3763BD919E73188006C050D /* PBXTargetDependency */,
 			);
 			name = "cocos2d-tests-mac";
 			productName = "cocos2d-ui-tests-ios";
@@ -1013,10 +954,6 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = B7E2622417E7D3D8007067F0 /* Products */;
-					ProjectRef = B7E2622317E7D3D8007067F0 /* cocos2d-ios.xcodeproj */;
-				},
-				{
 					ProductGroup = D3763BB119E72F85006C050D /* Products */;
 					ProjectRef = D3763BB019E72F85006C050D /* cocos2d.xcodeproj */;
 				},
@@ -1031,27 +968,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		57E144B61974C1E90065F142 /* cocos2dJava.jar */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.jar;
-			path = cocos2dJava.jar;
-			remoteRef = 57E144B51974C1E90065F142 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B7E2622D17E7D3D8007067F0 /* libcocos2d.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libcocos2d.a;
-			remoteRef = B7E2622C17E7D3D8007067F0 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D2FEB798194F6CC800FC0574 /* libcocos2dAndroid.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libcocos2dAndroid.a;
-			remoteRef = D2FEB797194F6CC800FC0574 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		D3763BB919E72F85006C050D /* libcocos2d.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1128,7 +1044,6 @@
 				D4AFE9371977100000261299 /* konqa32-hd.png in Resources */,
 				D4AFE9161977100000261299 /* arial-unicode-26.fnt in Resources */,
 				B7E2621417E7D34D007067F0 /* Icon-Small.png in Resources */,
-				D23CD73119CB881200C7EB14 /* CCShaders.metal in Resources */,
 				D4AFE9361977100000261299 /* konqa32-hd.fnt in Resources */,
 				D4AFE93C1977100000261299 /* larabie-16.plist in Resources */,
 				D4AFE93A1977100000261299 /* larabie-16-hd.plist in Resources */,
@@ -1151,6 +1066,7 @@
 				D4AFE9181977100000261299 /* arial-unicode-26.png in Resources */,
 				B7E2621517E7D34D007067F0 /* Icon-Small@2x.png in Resources */,
 				D4AFE9481977100000261299 /* Scissor Cuts.ttf in Resources */,
+				D3E1842B19E861FC00A08B01 /* MetalShaders in Resources */,
 				D4AFE91C1977100000261299 /* bitmapFontTest.png in Resources */,
 				D4AFE9251977100000261299 /* boundsTestFont.png in Resources */,
 				D4AFE94A1977100000261299 /* tuffy_bold_italic-charmap.plist in Resources */,
@@ -1256,6 +1172,26 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		D3E1842919E8572700A08B01 /* Compile Metal Shaders */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/cocos2d-ui-tests/MetalShaders/*.metal",
+				"$(SRCROOT)/cocos2d/Platforms/iOS/CCShaders.metal",
+			);
+			name = "Compile Metal Shaders";
+			outputPaths = (
+				"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/default.metallib",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /usr/bin/ruby;
+			shellScript = "SDK = ENV[\"PLATFORM_NAME\"]\nOBJECT_FILE_DIR = ENV[\"OBJECT_FILE_DIR\"]\nSRCROOT = ENV[\"SRCROOT\"]\nBUILT_PRODUCTS_DIR = ENV[\"BUILT_PRODUCTS_DIR\"]\nPRODUCT_NAME = ENV[\"PRODUCT_NAME\"]\n\n# User variables\n# Directory with your custom .metal files in it.\nSHADER_DIR = \"#{SRCROOT}/cocos2d-ui-tests/MetalShaders\"\n# Location of the cocos2d library directory.\nCOCOS2D_DIR = \"#{SRCROOT}/cocos2d\"\n\nMETAL_ARGS = [\n\t\"-arch air64\",\n\t\"-emit-llvm\",\n\t\"-c\",\n\t\"-gline-tables-only\",\n\t\"-ffast-math\",\n\t\"-std=ios-metal1.0\",\n    %{-I \"#{COCOS2D_DIR}\"},\n].join(\" \")\n\ndef system(cmd)\n\tputs cmd\n    Kernel.system cmd\nend\n\nPRODUCTS = \"#{OBJECT_FILE_DIR}/CCMetalShaders\"\nARCHIVE = \"#{PRODUCTS}/default.metal-ar\"\n\ndef compile_shader(src)\n\tdst = \"#{PRODUCTS}/#{File.basename(src, \".metal\")}.air\"\n\t\n\t# Compile the shader.\n\tsystem %{xcrun -sdk #{SDK} metal #{METAL_ARGS} \"#{src}\" -o \"#{dst}\"}\n\t\n\t# Archive the shader.\n\tsystem %{xcrun -sdk #{SDK} ar r \"#{ARCHIVE}\" \"#{dst}\"}\nend\n\nif SDK == \"iphoneos\"\n\t# Cannot use default.metallib to avoid clashing with Xcode build magic.\n\t# This is part of a workaround due to the iOS simulator not supporting Metal and may go away in the future.\n\tmetal_lib = \"#{BUILT_PRODUCTS_DIR}/#{PRODUCT_NAME}.app/CCShaders.metallib\"\n    \n\t# Delete the old products dir and metal lib.\n\tsystem %{rm -rf \"#{PRODUCTS}\"}\n    system %{rm -f \"#{metal_lib}\"}\n    system %{mkdir -p \"#{PRODUCTS}\"}\n    \n    # Compile the builtin shaders.\n    compile_shader(%{#{COCOS2D_DIR}/Platforms/iOS/CCShaders.metal})\n    \n\t# Compile/archive all the shaders in the shader directory.\n    Dir.glob(\"#{SHADER_DIR}/*.metal\").each{|src| compile_shader(src)}\n    \n\t# Link all shaders into default lib.\n\tsystem %{xcrun -sdk #{SDK} metallib -o \"#{metal_lib}\" \"#{ARCHIVE}\"}\nend\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		755569FE185636F100ED1B0F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -1286,7 +1222,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D3269DE819CC985900406282 /* TestShaders.metal in Sources */,
 				B71B087C17EA5B490082EBC0 /* TestBase.m in Sources */,
 				D3870C6018B440150033D885 /* SpritePerformanceTest.m in Sources */,
 				B71B088217EA5B6A0082EBC0 /* CCScrollViewTest.m in Sources */,
@@ -1364,20 +1299,10 @@
 			target = B7E2604717E7D278007067F0 /* cocos2d-tests-ios */;
 			targetProxy = 75556A10185636F100ED1B0F /* PBXContainerItemProxy */;
 		};
-		B7E2623317E7D578007067F0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = cocos2d;
-			targetProxy = B7E2623217E7D578007067F0 /* PBXContainerItemProxy */;
-		};
 		D3763BD119E72FA8006C050D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "cocos2d-ios";
 			targetProxy = D3763BD019E72FA8006C050D /* PBXContainerItemProxy */;
-		};
-		D3763BD919E73188006C050D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = cocos2d;
-			targetProxy = D3763BDA19E73188006C050D /* PBXContainerItemProxy */;
 		};
 		D3763C5D19E731BA006C050D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
