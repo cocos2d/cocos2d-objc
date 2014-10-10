@@ -269,29 +269,35 @@
         light.depth = lightDepth;
         
         CCSprite *lightSprite = [CCSprite spriteWithImageNamed:@"Images/snow.png"];
-        [light addChild:lightSprite];
         
         CCEffectLighting *lightingEffect = [[CCEffectLighting alloc] initWithLights:@[light]];
         lightingEffect.shininess = 10.0f;
         
         CCSprite *sprite = [CCSprite spriteWithImageNamed:diffuseImage];
         sprite.positionType = CCPositionTypeNormalized;
-        sprite.position = position;
+        sprite.position = ccp(0.5f, 0.5f);
         sprite.normalMapSpriteFrame = [CCSpriteFrame frameWithImageNamed:normalMapImage];
         sprite.effect = lightingEffect;
         sprite.scale = 0.5f;
         
-        [self.contentNode addChild:sprite];
-        
-        [sprite addChild:light];
-        
-        CCLabelTTF *label = [CCLabelTTF labelWithString:title fontName:@"HelveticaNeue-Light" fontSize:18 * [CCDirector sharedDirector].UIScaleFactor];
+        CCNode *root = [[CCNode alloc] init];
+        root.positionType = CCPositionTypeNormalized;
+        root.position = position;
+        root.anchorPoint = ccp(0.5f, 0.5f);
+        root.contentSizeType = CCSizeTypePoints;
+        root.contentSize = CGSizeMake(200.0f, 200.0f);
+
+        CCLabelTTF *label = [CCLabelTTF labelWithString:title fontName:@"HelveticaNeue-Light" fontSize:12 * [CCDirector sharedDirector].UIScaleFactor];
         label.color = [CCColor whiteColor];
         label.positionType = CCPositionTypeNormalized;
-        label.position = ccp(0.5f, 1.1f);
+        label.position = ccp(0.5f, 1.0f);
         label.horizontalAlignment = CCTextAlignmentCenter;
         
-        [sprite addChild:label];
+        [self.contentNode addChild:root];
+        [root addChild:label];
+        [root addChild:sprite];
+        [root addChild:light];
+        [light addChild:lightSprite];
 
         [light runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
                                                                   [CCActionMoveTo actionWithDuration:1.0 position:ccp(1.0f, 1.0f)],
