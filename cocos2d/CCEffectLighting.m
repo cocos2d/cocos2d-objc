@@ -35,8 +35,9 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
 
 @property (nonatomic, strong) NSMutableArray *lights;
 @property (nonatomic, assign) CCLightKey lightKey;
-@property (nonatomic, readonly) BOOL hasSpecular;
-@property (nonatomic, assign) BOOL previousHasSpecular;
+@property (nonatomic, readonly) BOOL needsSpecular;
+@property (nonatomic, assign) BOOL shaderHasSpecular;
+@property (nonatomic, assign) BOOL shaderHasNormalMap;
 
 @end
 
@@ -66,8 +67,9 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
         _specularColor = [CCColor whiteColor];
         _shininess = 5.0f;
         
-        _lightKey = CCLightKeyMake(nil);
-        _previousHasSpecular = NO;
+        _lightKey = CCLightKeyMake(lights);
+        _shaderHasSpecular = NO;
+        _shaderHasNormalMap = NO;
     }
     return self;
 }
@@ -96,21 +98,12 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
 }
 
 
-+(NSMutableArray *)buildFragmentFunctionsWithLights:(NSArray*)lights andSpecular:(BOOL)hasSpecular
++(NSMutableArray *)buildFragmentFunctionsWithLights:(NSArray*)lights normalMap:(BOOL)needsNormalMap specular:(BOOL)needsSpecular
 {
     CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:CCEffectDefaultInitialInputSnippet snippet:CCEffectDefaultInputSnippet];
     
     NSMutableString *effectBody = [[NSMutableString alloc] init];
     [effectBody appendString:CC_GLSL(
-                                     // Index the normal map and expand the color value from [0..1] to [-1..1]
-                                     vec4 normalMap = texture2D(cc_NormalMapTexture, cc_FragTexCoord2);
-                                     vec3 tangentSpaceNormal = normalize(normalMap.xyz * 2.0 - 1.0);
-                                     
-                                     if ((inputValue.a * normalMap.a) == 0.0)
-                                     {
-                                         return vec4(0,0,0,0);
-                                     }
-                                     
                                      vec4 lightColor;
                                      vec4 diffuseLightColor = u_globalAmbientColor;
                                      vec4 specularLightColor = vec4(0,0,0,0);
@@ -122,8 +115,30 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
                                      float falloffTerm;
                                      float diffuseTerm;
                                      float specularTerm;
+                                     float composedAlpha = inputValue.a;
                                      )];
 
+    if (needsNormalMap)
+    {
+        [effectBody appendString:CC_GLSL(
+                                         // Index the normal map and expand the color value from [0..1] to [-1..1]
+                                         vec4 normalMap = texture2D(cc_NormalMapTexture, cc_FragTexCoord2);
+                                         vec3 tangentSpaceNormal = normalize(normalMap.xyz * 2.0 - 1.0);
+                                         composedAlpha *= normalMap.a;
+                                         )];
+    }
+    else
+    {
+        [effectBody appendString:@"vec3 tangentSpaceNormal = vec3(0,0,1);\n"];
+    }
+    
+    [effectBody appendString:CC_GLSL(
+                                     if (composedAlpha == 0.0)
+                                     {
+                                         return vec4(0,0,0,0);
+                                     }
+                                     )];
+    
     for (NSUInteger lightIndex = 0; lightIndex < lights.count; lightIndex++)
     {
         CCLightNode *light = lights[lightIndex];
@@ -142,7 +157,7 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
         [effectBody appendString:@"diffuseTerm = max(0.0, dot(tangentSpaceNormal, tangentSpaceLightDir));\n"];
         [effectBody appendString:@"diffuseLightColor += lightColor * diffuseTerm;\n"];
         
-        if (hasSpecular)
+        if (needsSpecular)
         {
             [effectBody appendString:@"halfAngleDir = (2.0 * dot(tangentSpaceLightDir, tangentSpaceNormal) * tangentSpaceNormal - tangentSpaceLightDir);\n"];
             [effectBody appendString:@"specularTerm = max(0.0, dot(halfAngleDir, vec3(0,0,1))) * step(0.0, diffuseTerm);\n"];
@@ -150,7 +165,7 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
         }
     }
     [effectBody appendString:@"vec4 resultColor = diffuseLightColor * inputValue;\n"];
-    if (hasSpecular)
+    if (needsSpecular)
     {
         [effectBody appendString:@"resultColor += specularLightColor * u_specularColor;\n"];
     }
@@ -249,12 +264,17 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
 {
     CCEffectPrepareStatus result = CCEffectPrepareNothingToDo;
 
+    BOOL needsNormalMap = (sprite.normalMapSpriteFrame != nil);
+    
     CCLightKey newLightKey = CCLightKeyMake(_lights);
-    if (!CCLightKeyCompare(newLightKey, _lightKey) ||
-        (_previousHasSpecular != self.hasSpecular))
+    if (!self.shader ||
+        !CCLightKeyCompare(newLightKey, _lightKey) ||
+        (_shaderHasSpecular != self.needsSpecular) ||
+        (_shaderHasNormalMap != needsNormalMap))
     {
         _lightKey = newLightKey;
-        _previousHasSpecular = self.hasSpecular;
+        _shaderHasSpecular = self.needsSpecular;
+        _shaderHasNormalMap = needsNormalMap;
         
         NSMutableArray *fragUniforms = [[NSMutableArray alloc] initWithArray:@[[CCEffectUniform uniform:@"vec4" name:@"u_globalAmbientColor" value:[NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)]]]];
         NSMutableArray *vertUniforms = [[NSMutableArray alloc] initWithArray:@[[CCEffectUniform uniform:@"mat4" name:@"u_ndcToTangentSpace" value:[NSValue valueWithGLKMatrix4:GLKMatrix4Identity]]]];
@@ -275,13 +295,13 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
             [varyings addObject:[CCEffectVarying varying:@"vec4" name:[NSString stringWithFormat:@"v_tangentSpaceLightDir%lu", (unsigned long)lightIndex]]];
         }
         
-        if (self.hasSpecular)
+        if (self.needsSpecular)
         {
             [fragUniforms addObject:[CCEffectUniform uniform:@"float" name:@"u_specularExponent" value:[NSNumber numberWithFloat:5.0f]]];
             [fragUniforms addObject:[CCEffectUniform uniform:@"vec4" name:@"u_specularColor" value:[NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)]]];
         }
         
-        NSMutableArray *fragFunctions = [CCEffectLighting buildFragmentFunctionsWithLights:_lights andSpecular:self.hasSpecular];
+        NSMutableArray *fragFunctions = [CCEffectLighting buildFragmentFunctionsWithLights:_lights normalMap:needsNormalMap specular:self.needsSpecular];
         NSMutableArray *vertFunctions = [CCEffectLighting buildVertexFunctionsWithLights:_lights];
         
         [self buildEffectWithFragmentFunction:fragFunctions vertexFunctions:vertFunctions fragmentUniforms:fragUniforms vertexUniforms:vertUniforms varyings:varyings firstInStack:YES];
@@ -291,7 +311,7 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
     return result;
 }
 
-- (BOOL)hasSpecular
+- (BOOL)needsSpecular
 {
     return (!ccc4FEqual(_specularColor.ccColor4f, ccc4f(0.0f, 0.0f, 0.0f, 0.0f)) && (_shininess > 0.0f));
 }
