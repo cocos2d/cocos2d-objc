@@ -572,7 +572,7 @@ static NSString* vertBase =
     return YES;
 }
 
-- (CCEffectPrepareStatus)prepareForRendering
+- (CCEffectPrepareStatus)prepareForRenderingWithSprite:(CCSprite *)sprite
 {
     return CCEffectPrepareNothingToDo;
 }

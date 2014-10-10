@@ -245,7 +245,7 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
     self.renderPasses = @[pass0];
 }
 
-- (CCEffectPrepareStatus)prepareForRendering
+- (CCEffectPrepareStatus)prepareForRenderingWithSprite:(CCSprite *)sprite
 {
     CCEffectPrepareStatus result = CCEffectPrepareNothingToDo;
 

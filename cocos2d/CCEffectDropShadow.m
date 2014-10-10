@@ -332,7 +332,7 @@
     self.renderPasses = @[pass0, pass1, pass3];
 }
 
-- (CCEffectPrepareStatus)prepareForRendering
+- (CCEffectPrepareStatus)prepareForRenderingWithSprite:(CCSprite *)sprite
 {
     CCEffectPrepareStatus result = CCEffectPrepareNothingToDo;
     if (_shaderDirty)
