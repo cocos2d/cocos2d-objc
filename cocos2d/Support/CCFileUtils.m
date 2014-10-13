@@ -31,18 +31,18 @@
 #import "../ccConfig.h"
 #import "../ccTypes.h"
 
-NSString *CCFileUtilsSuffixDefault = @"default";
+NSString * const CCFileUtilsSuffixDefault = @"default";
 
-NSString *CCFileUtilsSuffixiPad = @"ipad";
-NSString *CCFileUtilsSuffixiPadHD = @"ipadhd";
-NSString *CCFileUtilsSuffixiPhone = @"iphone";
-NSString *CCFileUtilsSuffixiPhoneHD = @"iphonehd";
-NSString *CCFileUtilsSuffixiPhone5 = @"iphone5";
-NSString *CCFileUtilsSuffixiPhone5HD = @"iphone5hd";
-NSString *CCFileUtilsSuffixMac = @"mac";
-NSString *CCFileUtilsSuffixMacHD = @"machd";
+NSString * const CCFileUtilsSuffixiPad = @"ipad";
+NSString * const CCFileUtilsSuffixiPadHD = @"ipadhd";
+NSString * const CCFileUtilsSuffixiPhone = @"iphone";
+NSString * const CCFileUtilsSuffixiPhoneHD = @"iphonehd";
+NSString * const CCFileUtilsSuffixiPhone5 = @"iphone5";
+NSString * const CCFileUtilsSuffixiPhone5HD = @"iphone5hd";
+NSString * const CCFileUtilsSuffixMac = @"mac";
+NSString * const CCFileUtilsSuffixMacHD = @"machd";
 
-NSString *kCCFileUtilsDefaultSearchPath = @"";
+NSString * const kCCFileUtilsDefaultSearchPath = @"";
 
 #pragma mark - Helper free functions
 

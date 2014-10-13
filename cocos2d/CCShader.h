@@ -53,18 +53,18 @@ typedef NS_ENUM(NSUInteger, CCShaderAttribute){
 };
 
 
-extern const NSString *CCShaderUniformDefaultGlobals;
-extern const NSString *CCShaderUniformProjection;
-extern const NSString *CCShaderUniformProjectionInv;
-extern const NSString *CCShaderUniformViewSize;
-extern const NSString *CCShaderUniformViewSizeInPixels;
-extern const NSString *CCShaderUniformTime;
-extern const NSString *CCShaderUniformSinTime;
-extern const NSString *CCShaderUniformCosTime;
-extern const NSString *CCShaderUniformRandom01;
-extern const NSString *CCShaderUniformMainTexture;
-extern const NSString *CCShaderUniformNormalMapTexture;
-extern const NSString *CCShaderUniformAlphaTestValue;
+extern NSString * const CCShaderUniformDefaultGlobals;
+extern NSString * const CCShaderUniformProjection;
+extern NSString * const CCShaderUniformProjectionInv;
+extern NSString * const CCShaderUniformViewSize;
+extern NSString * const CCShaderUniformViewSizeInPixels;
+extern NSString * const CCShaderUniformTime;
+extern NSString * const CCShaderUniformSinTime;
+extern NSString * const CCShaderUniformCosTime;
+extern NSString * const CCShaderUniformRandom01;
+extern NSString * const CCShaderUniformMainTexture;
+extern NSString * const CCShaderUniformNormalMapTexture;
+extern NSString * const CCShaderUniformAlphaTestValue;
 
 
 @interface CCShader : NSObject<NSCopying>

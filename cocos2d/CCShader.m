@@ -39,18 +39,18 @@
 #import "CCMetalSupport_Private.h"
 
 
-const NSString *CCShaderUniformDefaultGlobals = @"cc_GlobalUniforms";
-const NSString *CCShaderUniformProjection = @"cc_Projection";
-const NSString *CCShaderUniformProjectionInv = @"cc_ProjectionInv";
-const NSString *CCShaderUniformViewSize = @"cc_ViewSize";
-const NSString *CCShaderUniformViewSizeInPixels = @"cc_ViewSizeInPixels";
-const NSString *CCShaderUniformTime = @"cc_Time";
-const NSString *CCShaderUniformSinTime = @"cc_SinTime";
-const NSString *CCShaderUniformCosTime = @"cc_CosTime";
-const NSString *CCShaderUniformRandom01 = @"cc_Random01";
-const NSString *CCShaderUniformMainTexture = @"cc_MainTexture";
-const NSString *CCShaderUniformNormalMapTexture = @"cc_NormalMapTexture";
-const NSString *CCShaderUniformAlphaTestValue = @"cc_AlphaTestValue";
+NSString * const CCShaderUniformDefaultGlobals = @"cc_GlobalUniforms";
+NSString * const CCShaderUniformProjection = @"cc_Projection";
+NSString * const CCShaderUniformProjectionInv = @"cc_ProjectionInv";
+NSString * const CCShaderUniformViewSize = @"cc_ViewSize";
+NSString * const CCShaderUniformViewSizeInPixels = @"cc_ViewSizeInPixels";
+NSString * const CCShaderUniformTime = @"cc_Time";
+NSString * const CCShaderUniformSinTime = @"cc_SinTime";
+NSString * const CCShaderUniformCosTime = @"cc_CosTime";
+NSString * const CCShaderUniformRandom01 = @"cc_Random01";
+NSString * const CCShaderUniformMainTexture = @"cc_MainTexture";
+NSString * const CCShaderUniformNormalMapTexture = @"cc_NormalMapTexture";
+NSString * const CCShaderUniformAlphaTestValue = @"cc_AlphaTestValue";
 
 
 // Stringify macros

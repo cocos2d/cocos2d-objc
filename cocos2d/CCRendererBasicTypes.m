@@ -28,16 +28,16 @@
 #import "CCCache.h"
 
 //MARK: Blend Option Keys.
-const NSString *CCRenderStateBlendMode = @"CCRenderStateBlendMode";
-const NSString *CCRenderStateShader = @"CCRenderStateShader";
-const NSString *CCRenderStateShaderUniforms = @"CCRenderStateShaderUniforms";
+NSString * const CCRenderStateBlendMode = @"CCRenderStateBlendMode";
+NSString * const CCRenderStateShader = @"CCRenderStateShader";
+NSString * const CCRenderStateShaderUniforms = @"CCRenderStateShaderUniforms";
 
-const NSString *CCBlendFuncSrcColor = @"CCBlendFuncSrcColor";
-const NSString *CCBlendFuncDstColor = @"CCBlendFuncDstColor";
-const NSString *CCBlendEquationColor = @"CCBlendEquationColor";
-const NSString *CCBlendFuncSrcAlpha = @"CCBlendFuncSrcAlpha";
-const NSString *CCBlendFuncDstAlpha = @"CCBlendFuncDstAlpha";
-const NSString *CCBlendEquationAlpha = @"CCBlendEquationAlpha";
+NSString * const CCBlendFuncSrcColor = @"CCBlendFuncSrcColor";
+NSString * const CCBlendFuncDstColor = @"CCBlendFuncDstColor";
+NSString * const CCBlendEquationColor = @"CCBlendEquationColor";
+NSString * const CCBlendFuncSrcAlpha = @"CCBlendFuncSrcAlpha";
+NSString * const CCBlendFuncDstAlpha = @"CCBlendFuncDstAlpha";
+NSString * const CCBlendEquationAlpha = @"CCBlendEquationAlpha";
 
 
 //MARK: Blend Modes.

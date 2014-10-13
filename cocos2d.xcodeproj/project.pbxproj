@@ -441,7 +441,6 @@
 		7A97912A19E646D8001FFC4D /* libObjectiveChipmunk-Android.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A40377B19E36EFF007B6E8F /* libObjectiveChipmunk-Android.a */; };
 		7A97912B19E646F9001FFC4D /* libSSZipArchiveAndroid.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A40378319E36EFF007B6E8F /* libSSZipArchiveAndroid.a */; };
 		83409E4919D5BADC004B7EB9 /* libSSZipArchive.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83409E3619D5B791004B7EB9 /* libSSZipArchive.a */; };
-		83B7DB7B19D32FD800B9A452 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E1A88D19C8C19D000A3BCA /* libz.dylib */; };
 		83E1A86219C8ACA0000A3BCA /* CCPackage.h in Headers */ = {isa = PBXBuildFile; fileRef = 83E1A85A19C8ACA0000A3BCA /* CCPackage.h */; };
 		83E1A86319C8ACA0000A3BCA /* CCPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E1A85B19C8ACA0000A3BCA /* CCPackage.m */; };
 		83E1A86419C8ACA0000A3BCA /* CCPackageConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 83E1A85C19C8ACA0000A3BCA /* CCPackageConstants.h */; };
@@ -1484,7 +1483,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				83409E4919D5BADC004B7EB9 /* libSSZipArchive.a in Frameworks */,
-				83B7DB7B19D32FD800B9A452 /* libz.dylib in Frameworks */,
 				FC64014019C79716003E595A /* libObjectAL.a in Frameworks */,
 				D3903B1A19952ABD003AA81A /* Metal.framework in Frameworks */,
 				D24FAEEC198014B90043E27D /* GLKit.framework in Frameworks */,

@@ -29,17 +29,17 @@
 #import <CoreGraphics/CoreGraphics.h>
 
 // keys used for the suffix or directory dictionaries
-extern NSString const *CCFileUtilsSuffixDefault;
-extern NSString const *CCFileUtilsSuffixiPad;
-extern NSString const *CCFileUtilsSuffixiPadHD;
-extern NSString const *CCFileUtilsSuffixiPhone;
-extern NSString const *CCFileUtilsSuffixiPhoneHD;
-extern NSString const *CCFileUtilsSuffixiPhone5;
-extern NSString const *CCFileUtilsSuffixiPhone5HD;
-extern NSString const *CCFileUtilsSuffixMac;
-extern NSString const *CCFileUtilsSuffixMacHD;
+extern NSString * const CCFileUtilsSuffixDefault;
+extern NSString * const CCFileUtilsSuffixiPad;
+extern NSString * const CCFileUtilsSuffixiPadHD;
+extern NSString * const CCFileUtilsSuffixiPhone;
+extern NSString * const CCFileUtilsSuffixiPhoneHD;
+extern NSString * const CCFileUtilsSuffixiPhone5;
+extern NSString * const CCFileUtilsSuffixiPhone5HD;
+extern NSString * const CCFileUtilsSuffixMac;
+extern NSString * const CCFileUtilsSuffixMacHD;
 
-extern NSString const *kCCFileUtilsDefaultSearchPath;
+extern NSString * const kCCFileUtilsDefaultSearchPath;
 
 typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
 	CCFileUtilsSearchModeSuffix,

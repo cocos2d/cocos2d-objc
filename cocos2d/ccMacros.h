@@ -142,7 +142,7 @@ CCRANDOM_ON_UNIT_CIRCLE()
 	while(TRUE){
 		CGPoint p = ccp(CCRANDOM_MINUS1_1(), CCRANDOM_MINUS1_1());
 		CGFloat lsq = ccpLengthSQ(p);
-		if(0.1 < lsq && lsq < 1.0f) return ccpMult(p, 1.0/sqrt(lsq));
+		if(0.1 < lsq && lsq < 1.0) return ccpMult(p, (CGFloat)(1.0/sqrt(lsq)));
 	}
 }
 
