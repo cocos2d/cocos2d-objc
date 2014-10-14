@@ -403,7 +403,7 @@
     return !_shaderDirty;
 }
 
-- (CCEffectPrepareStatus)prepareForRendering
+- (CCEffectPrepareStatus)prepareForRenderingWithSprite:(CCSprite *)sprite
 {
     CCEffectPrepareStatus result = CCEffectPrepareNothingToDo;
     if (_shaderDirty)

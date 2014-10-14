@@ -111,7 +111,7 @@
 
 #pragma mark - CCEffect overrides
 
-- (CCEffectPrepareStatus)prepareForRendering
+- (CCEffectPrepareStatus)prepareForRenderingWithSprite:(CCSprite *)sprite
 {
     CCEffectPrepareStatus result = CCEffectPrepareNothingToDo;
     if (_passesDirty)
@@ -147,7 +147,7 @@
         {
             // Make sure all the contained effects are ready for rendering
             // before we do anything else.
-            [effect prepareForRendering];
+            [effect prepareForRenderingWithSprite:sprite];
             
             // And find the max padding values of all contained effects.
             if (effect.padding.width > maxPadding.width)

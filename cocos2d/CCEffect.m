@@ -16,8 +16,8 @@ NSString * const CCShaderUniformTexCoord1Extents    = @"cc_FragTexCoord1Extents"
 NSString * const CCShaderUniformTexCoord2Center     = @"cc_FragTexCoord2Center";
 NSString * const CCShaderUniformTexCoord2Extents    = @"cc_FragTexCoord2Extents";
 
-NSString * const CCEffectDefaultInitialInputSnippet = @"cc_FragColor * texture2D(cc_PreviousPassTexture, cc_FragTexCoord1); vec2 compare = cc_FragTexCoord1Extents - abs(cc_FragTexCoord1 - cc_FragTexCoord1Center); tmp *= step(0.0, min(compare.x, compare.y))";
-NSString * const CCEffectDefaultInputSnippet = @"texture2D(cc_PreviousPassTexture, cc_FragTexCoord1); vec2 compare = cc_FragTexCoord1Extents - abs(cc_FragTexCoord1 - cc_FragTexCoord1Center); tmp *= step(0.0, min(compare.x, compare.y))";
+NSString * const CCEffectDefaultInitialInputSnippet = @"cc_FragColor * texture2D(cc_PreviousPassTexture, cc_FragTexCoord1);\nvec2 compare = cc_FragTexCoord1Extents - abs(cc_FragTexCoord1 - cc_FragTexCoord1Center);\ntmp *= step(0.0, min(compare.x, compare.y))";
+NSString * const CCEffectDefaultInputSnippet = @"texture2D(cc_PreviousPassTexture, cc_FragTexCoord1);\nvec2 compare = cc_FragTexCoord1Extents - abs(cc_FragTexCoord1 - cc_FragTexCoord1Center);\ntmp *= step(0.0, min(compare.x, compare.y))";
 
 
 
@@ -572,7 +572,7 @@ static NSString* vertBase =
     return YES;
 }
 
-- (CCEffectPrepareStatus)prepareForRendering
+- (CCEffectPrepareStatus)prepareForRenderingWithSprite:(CCSprite *)sprite
 {
     return CCEffectPrepareNothingToDo;
 }

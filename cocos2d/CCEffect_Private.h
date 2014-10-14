@@ -165,14 +165,14 @@ typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass);
 -(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions vertexFunctions:(NSMutableArray*)vertexFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings;
 -(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions vertexFunctions:(NSMutableArray*)vertexFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings firstInStack:(BOOL)firstInStack;
 
--(CCEffectPrepareStatus)prepareForRendering;
+-(CCEffectPrepareStatus)prepareForRenderingWithSprite:(CCSprite *)sprite;
 -(CCEffectRenderPass *)renderPassAtIndex:(NSUInteger)passIndex;
 
 -(BOOL)stitchSupported:(CCEffectFunctionStitchFlags)stitch;
 
 -(void)setVaryings:(NSArray*)varyings;
 
-
+-(void)buildEffectWithFragmentFunction:(NSMutableArray*) fragmentFunctions vertexFunctions:(NSMutableArray*)vertexFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings firstInStack:(BOOL)firstInStack;
 -(void)buildEffectShader;
 -(void)buildFragmentFunctions;
 -(void)buildVertexFunctions;
