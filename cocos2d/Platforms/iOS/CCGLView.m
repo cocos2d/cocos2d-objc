@@ -271,7 +271,7 @@ extern EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup
 	_context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2 sharegroup:sharegroup];
 	
 	if(!_context || ![EAGLContext setCurrentContext:_context]){
-		return nil;
+		return NO;
 	}
 #endif
 	

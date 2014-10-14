@@ -67,8 +67,7 @@
     XCTAssertFalse([self isPackageInSearchPath]);
 
     // Can't use [CCSprite spriteWithImageNamed:@"boredSmiley.png"], assertion exception is screwing up test result
-    CGFloat *scale;
-    NSString *path = [[CCFileUtils sharedFileUtils] fullPathForFilename:@"boredSmiley.png" contentScale:&scale];
+    NSString *path = [[CCFileUtils sharedFileUtils] fullPathForFilename:@"boredSmiley.png" contentScale:NULL];
     XCTAssertNil(path);
 }
 

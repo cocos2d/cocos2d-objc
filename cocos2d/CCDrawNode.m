@@ -35,13 +35,24 @@
 #import "CCConfiguration.h"
 #import "CCMetalSupport_Private.h"
 
+// Vertex shader that performs the modelview-projection multiplication on the GPU.
+// Faster for draw nodes that draw many vertexes, but can't be batched.
+static NSString *CCDrawNodeHWTransformVertexShaderSource =
+	@"uniform highp mat4 u_MVP;\n"
+	@"uniform highp vec4 u_TintColor;\n"
+	@"void main(){\n"
+	@"	gl_Position = u_MVP*cc_Position;\n"
+	@"	cc_FragColor = clamp(u_TintColor*cc_Color, 0.0, 1.0);\n"
+	@"	cc_FragTexCoord1 = cc_TexCoord1;\n"
+	@"}\n";
+
 #ifdef ANDROID // Many Android devices do NOT support GL_OES_standard_derivatives correctly
-static NSString *CCDrawNodeShaderSource =
+static NSString *CCDrawNodeFragmentShaderSource =
     @"void main(){\n"
     @"  gl_FragColor = cc_FragColor*step(0.0, 1.0 - length(cc_FragTexCoord1));\n"
     @"}\n";
 #else
-static NSString *CCDrawNodeShaderSource =
+static NSString *CCDrawNodeFragmentShaderSource =
 	@"#ifdef GL_ES\n"
 	@"#extension GL_OES_standard_derivatives : enable\n"
 	@"#endif\n"
@@ -55,31 +66,35 @@ static NSString *CCDrawNodeShaderSource =
     GLsizei _vertexCount, _vertexCapacity;
     CCVertex *_vertexes;
     
-    GLsizei _elementCount, _elementCapacity;
-    GLushort *_elements;
+    GLsizei _indexCount, _indexCapacity;
+    GLushort *_indexes;
+		
+		BOOL _useBatchMode;
 }
 
-+ (CCShader *)fragmentShader
+CCShader *CCDRAWNODE_HWTRANSFORM_SHADER = nil;
+CCShader *CCDRAWNODE_BATCH_SHADER = nil;
+
++(void)initialize
 {
-	static CCShader *shader = nil;
-	static dispatch_once_t once = 0L;
-	dispatch_once(&once, ^{
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-		if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
-			id<MTLLibrary> library = [CCMetalContext currentContext].library;
-			NSAssert(library, @"Metal shader library not found.");
-			
-			id<MTLFunction> vertexFunc = [library newFunctionWithName:@"CCVertexFunctionDefault"];
-			
-			shader = [[CCShader alloc] initWithMetalVertexFunction:vertexFunc fragmentFunction:[library newFunctionWithName:@"CCFragmentFunctionDefaultDrawNode"]];
-			shader.debugName = @"CCFragmentFunctionDefaultDrawNode";
-		} else
+	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+		id<MTLLibrary> library = [CCMetalContext currentContext].library;
+		NSAssert(library, @"Metal shader library not found.");
+		
+		id<MTLFunction> vertexFunc = [library newFunctionWithName:@"CCVertexFunctionDefault"];
+		
+		CCDRAWNODE_BATCH_SHADER = [[CCShader alloc] initWithMetalVertexFunction:vertexFunc fragmentFunction:[library newFunctionWithName:@"CCFragmentFunctionDefaultDrawNode"]];
+		CCDRAWNODE_BATCH_SHADER.debugName = @"CCFragmentFunctionDefaultDrawNode";
+	} else
 #endif
-		{
-			shader = [[CCShader alloc] initWithFragmentShaderSource:CCDrawNodeShaderSource];
-		}
-	});
-	return shader;
+	{
+		CCDRAWNODE_HWTRANSFORM_SHADER = [[CCShader alloc] initWithVertexShaderSource:CCDrawNodeHWTransformVertexShaderSource fragmentShaderSource:CCDrawNodeFragmentShaderSource];
+		CCDRAWNODE_HWTRANSFORM_SHADER.debugName = @"CCDRAWNODE_HWTRANSFORM_SHADER";
+		
+		CCDRAWNODE_BATCH_SHADER = [[CCShader alloc] initWithFragmentShaderSource:CCDrawNodeFragmentShaderSource];
+		CCDRAWNODE_BATCH_SHADER.debugName = @"CCDRAWNODE_BATCH_SHADER";
+	}
 }
 
 #pragma mark memory
@@ -88,29 +103,25 @@ static NSString *CCDrawNodeShaderSource =
 {
     GLsizei requiredVertexes = _vertexCount + vertexCount;
     if(requiredVertexes > _vertexCapacity){
-        // Double the size of the buffer until it fits.
-        while(requiredVertexes >= _vertexCapacity) _vertexCapacity *= 2;
-        
+		    _vertexCapacity = requiredVertexes*1.5;
         _vertexes = realloc(_vertexes, _vertexCapacity*sizeof(*_vertexes));
     }
     
-    GLsizei elementCount = 3*triangleCount;
-    GLsizei requiredElements = _elementCount + elementCount;
-    if(requiredElements > _elementCapacity){
-        // Double the size of the buffer until it fits.
-        while(requiredElements >= _elementCapacity) _elementCapacity *= 2;
-        
-        _elements = realloc(_elements, _elementCapacity*sizeof(*_elements));
+    GLsizei indexCount = 3*triangleCount;
+    GLsizei requiredIndexes = _indexCount + indexCount;
+    if(requiredIndexes > _indexCapacity){
+        _indexCapacity = requiredIndexes*1.5;
+        _indexes = realloc(_indexes, _indexCapacity*sizeof(*_indexes));
     }
     
     CCRenderBuffer buffer = {
         _vertexes + _vertexCount,
-        _elements + _elementCount,
+        _indexes + _indexCount,
         _vertexCount
     };
     
     _vertexCount += vertexCount;
-    _elementCount += elementCount;
+    _indexCount += indexCount;
     
     return buffer;
 }
@@ -118,14 +129,21 @@ static NSString *CCDrawNodeShaderSource =
 -(id)init
 {
     if((self = [super init])){
-        self.blendMode = [CCBlendMode premultipliedAlphaMode];
-        self.shader = [CCDrawNode fragmentShader];
+        _blendMode = [CCBlendMode premultipliedAlphaMode];
+				
+        if(CCDRAWNODE_HWTRANSFORM_SHADER){
+        	_shader = CCDRAWNODE_HWTRANSFORM_SHADER;
+        } else {
+        // HWTransform shader not currently supported for Metal rendering.
+        	_shader = CCDRAWNODE_BATCH_SHADER;
+        	_useBatchMode = YES;
+        }
         
         _vertexCapacity = 128;
         _vertexes = calloc(_vertexCapacity, sizeof(*_vertexes));
         
-        _elementCapacity = 128;
-        _elements = calloc(_elementCapacity, sizeof(*_elements));
+        _indexCapacity = 128;
+        _indexes = calloc(_indexCapacity, sizeof(*_indexes));
     }
     
     return self;
@@ -134,25 +152,65 @@ static NSString *CCDrawNodeShaderSource =
 -(void)dealloc
 {
     free(_vertexes); _vertexes = NULL;
-    free(_elements); _elements = NULL;
+    free(_indexes); _indexes = NULL;
 }
 
 #pragma mark Rendering
 
+-(void)enableBatchMode
+{
+	_useBatchMode = YES;
+	
+	if(_shader == CCDRAWNODE_HWTRANSFORM_SHADER){
+		CCLOGINFO(@"Changing the blend mode or shader of a CCBatchNode disables GPU accelerated transform and tinting.");
+		_shader = CCDRAWNODE_BATCH_SHADER;
+	}
+	
+	// Reset the render state.
+	_renderState = nil;
+}
+
+// Force batch mode on if the user changes the blendmode or shader.
+-(void)setBlendMode:(CCBlendMode *)blendMode
+{
+	[super setBlendMode:blendMode];
+	[self enableBatchMode];
+}
+
+-(void)setShader:(CCShader *)shader
+{
+	[super setShader:shader];
+	[self enableBatchMode];
+}
+
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
-    if(_elementCount == 0) return;
+    if(_indexCount == 0) return;
+		
+		// If batch mode is disabled (default), update the MVP matrix in the uniforms.
+		if(!_useBatchMode){
+			self.shaderUniforms[@"u_MVP"] = [NSValue valueWithGLKMatrix4:*transform];
+			
+			GLKVector4 color = Premultiply(GLKVector4Make(_displayColor.r, _displayColor.g, _displayColor.b, _displayColor.a));
+			self.shaderUniforms[@"u_TintColor"] = [NSValue valueWithGLKVector4:color];
+		}
+		
+    CCRenderBuffer buffer = [renderer enqueueTriangles:_indexCount/3 andVertexes:_vertexCount withState:self.renderState globalSortOrder:0];
     
-    CCRenderBuffer buffer = [renderer enqueueTriangles:_elementCount/3 andVertexes:_vertexCount withState:self.renderState globalSortOrder:0];
+		if(_useBatchMode){
+			// Transform the vertexes on the CPU.
+			for(int i=0; i<_vertexCount; i++){
+				CCRenderBufferSetVertex(buffer, i, CCVertexApplyTransform(_vertexes[i], transform));
+			}
+		} else {
+			// memcpy() the buffer and let the GPU handle the transform.
+			memcpy(buffer.vertexes, _vertexes, _vertexCount*sizeof(*_vertexes));
+		}
     
-    // TODO Maybe it would be even better to skip the CPU transform and use a uniform matrix?
-    for(int i=0; i<_vertexCount; i++){
-        CCRenderBufferSetVertex(buffer, i, CCVertexApplyTransform(_vertexes[i], transform));
-    }
-    
-    for(int i=0; i<_elementCount; i++){
-        buffer.elements[i] = _elements[i] + buffer.startIndex;
-    }
+		// Offset the indices.
+    for(int i=0; i<_indexCount; i++){
+			buffer.elements[i] = _indexes[i] + buffer.startIndex;
+		}
 }
 
 #pragma mark Immediate Mode
@@ -290,7 +348,7 @@ SetVertex(CCRenderBuffer buffer, int index, GLKVector2 v, GLKVector2 texCoord, G
 -(void)clear
 {
     _vertexCount = 0;
-    _elementCount = 0;
+    _indexCount = 0;
 }
 
 @end

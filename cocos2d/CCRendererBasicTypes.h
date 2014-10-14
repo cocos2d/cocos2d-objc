@@ -89,17 +89,17 @@ CCRenderBufferSetLine(CCRenderBuffer buffer, int index, GLushort a, GLushort b)
 
 
 /// Key used to set the source color factor for [CCBlendMode blendModeWithOptions:].
-extern const NSString *CCBlendFuncSrcColor;
+extern NSString * const CCBlendFuncSrcColor;
 /// Key used to set the destination color factor for [CCBlendMode blendModeWithOptions:].
-extern const NSString *CCBlendFuncDstColor;
+extern NSString * const CCBlendFuncDstColor;
 /// Key used to set the color equation for [CCBlendMode blendModeWithOptions:].
-extern const NSString *CCBlendEquationColor;
+extern NSString * const CCBlendEquationColor;
 /// Key used to set the source alpha factor for [CCBlendMode blendModeWithOptions:].
-extern const NSString *CCBlendFuncSrcAlpha;
+extern NSString * const CCBlendFuncSrcAlpha;
 /// Key used to set the destination alpha factor for [CCBlendMode blendModeWithOptions:].
-extern const NSString *CCBlendFuncDstAlpha;
+extern NSString * const CCBlendFuncDstAlpha;
 /// Key used to set the alpha equation for [CCBlendMode blendModeWithOptions:].
-extern const NSString *CCBlendEquationAlpha;
+extern NSString * const CCBlendEquationAlpha;
 
 
 /// Blending mode identifiers used with CCNode.blendMode.

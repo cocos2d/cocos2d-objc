@@ -38,7 +38,14 @@
 {
 	if((self = [super init])){
 		_device = MTLCreateSystemDefaultDevice();
-		_library = [_device newDefaultLibrary];
+		
+		// Cannot use default.metallib to avoid clashing with Xcode build magic.
+		// This is part of a workaround due to the iOS simulator not supporting Metal and may go away in the future.
+		NSURL *url = [[NSBundle mainBundle] URLForResource:@"CCShaders.metallib" withExtension:nil];
+		
+		NSError *error = nil;
+		_library = [_device newLibraryWithFile:[url path] error:&error];
+		NSAssert(!error, @"Cannot load default CCShaders.metallib: %@", error);
 		
 		_commandQueue = [_device newCommandQueue];
 		_currentCommandBuffer = [_commandQueue commandBuffer];
