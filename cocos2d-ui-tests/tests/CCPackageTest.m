@@ -11,7 +11,6 @@
 #import "CCPackageManagerDelegate.h"
 #import "CCPackage.h"
 #import "CCPackageConstants.h"
-#import "AppDelegate.h"
 
 
 @interface CCPackageTest : TestBase <CCPackageManagerDelegate>
@@ -83,7 +82,21 @@
 
 - (void)resetCocos2d
 {
-    [(AppController *) [UIApplication sharedApplication].delegate configureFileUtilsSearchPathAndRegisterSpriteSheets];
+    //on android, we can't rely on UIKit (eg, -[UIApplication delegate], so don't.
+    CCFileUtils* sharedFileUtils = [CCFileUtils sharedFileUtils];
+    
+    sharedFileUtils.searchPath =
+    [NSArray arrayWithObjects:
+     [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Images"],
+     [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Fonts"],
+     [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Resources-shared"],
+     [[NSBundle mainBundle] resourcePath],
+     nil];
+    
+    // Register spritesheets.
+    [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"Interface.plist"];
+    [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"Sprites.plist"];
+    [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"TilesAtlassed.plist"];
 }
 
 - (void)cleanDirectories
