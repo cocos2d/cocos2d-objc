@@ -103,6 +103,7 @@
 		5BA67A56196CA1220010FFB7 /* HeadlessActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA67A55196CA1220010FFB7 /* HeadlessActivity.m */; settings = {COMPILER_FLAGS = "-O0"; }; };
 		5BE088C9194132E600BEA3FF /* BridgeKitV3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BCE504E1941161500E057D0 /* BridgeKitV3.framework */; };
 		7DC84E44194AB6F000D2C575 /* BridgeKitV3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BCE504E1941161500E057D0 /* BridgeKitV3.framework */; };
+		BC9F4EE119DCB1B200B25F01 /* CCPackageTest.m in Sources */ = {isa = PBXBuildFile; fileRef = BC9F4EE019DCB1B200B25F01 /* CCPackageTest.m */; };
 		D23DE6761958DBA0000483A8 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D23DE66A1958DBA0000483A8 /* Default-568h@2x.png */; };
 		D23DE6771958DBA0000483A8 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = D23DE66B1958DBA0000483A8 /* Default-Landscape~ipad.png */; };
 		D23DE6781958DBA0000483A8 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = D23DE66C1958DBA0000483A8 /* Default.png */; };
@@ -289,6 +290,7 @@
 		5BAF85A21936C8A90085EA39 /* libGLESv3.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLESv3.so; path = "usr/lib/armv7a-neon/libGLESv3.so"; sourceTree = SDKROOT; };
 		5BCE504E1941161500E057D0 /* BridgeKitV3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BridgeKitV3.framework; path = System/Library/Frameworks/BridgeKitV3.framework; sourceTree = SDKROOT; };
 		5BCE505B1941181E00E057D0 /* libbridge_runtime.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbridge_runtime.so; path = "usr/local/lib/armv7a-neon/libbridge_runtime.so"; sourceTree = SDKROOT; };
+		BC9F4EE019DCB1B200B25F01 /* CCPackageTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCPackageTest.m; path = "../../../cocos2d-ui-tests/tests/CCPackageTest.m"; sourceTree = "<group>"; };
 		D23DE66A1958DBA0000483A8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../../cocos2d-ui-tests/ios/Resources/Default-568h@2x.png"; sourceTree = "<group>"; };
 		D23DE66B1958DBA0000483A8 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape~ipad.png"; path = "../../cocos2d-ui-tests/ios/Resources/Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		D23DE66C1958DBA0000483A8 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = "../../cocos2d-ui-tests/ios/Resources/Default.png"; sourceTree = "<group>"; };
@@ -419,6 +421,7 @@
 				5B165F4B195CE564002338B1 /* CCEffectsTest.m */,
 				5B165F4C195CE564002338B1 /* CCLabelTTFTest.m */,
 				5B165F4D195CE564002338B1 /* CCLayoutTest.m */,
+				BC9F4EE019DCB1B200B25F01 /* CCPackageTest.m */,
 				5B165F4E195CE564002338B1 /* CCPhysicsTest.m */,
 				5B165F4F195CE564002338B1 /* CCRendererTest.m */,
 				5B165F50195CE564002338B1 /* CCResponderTest.m */,
@@ -839,6 +842,7 @@
 				5B165F7C195CE564002338B1 /* VertexZTest.m in Sources */,
 				5B165F63195CE564002338B1 /* CCBMFontTest.m in Sources */,
 				5B165F66195CE564002338B1 /* CCLabelTTFTest.m in Sources */,
+				BC9F4EE119DCB1B200B25F01 /* CCPackageTest.m in Sources */,
 				5B165F6C195CE564002338B1 /* CCScrollViewTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1546,7 +1546,7 @@
 		83409E2B19D5B791004B7EB9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				83409E3219D5B791004B7EB9 /* SSZipArchive.app */,
+				83409E3219D5B791004B7EB9 /* SSZipArchiveExampleApp.app */,
 				83409E3419D5B791004B7EB9 /* SSZipArchiveTests.xctest */,
 				83409E3619D5B791004B7EB9 /* libSSZipArchive.a */,
 				83409E3819D5B791004B7EB9 /* SSZipArchiveTests.xctest */,
@@ -2355,10 +2355,9 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		83409E3219D5B791004B7EB9 /* SSZipArchive.app */ = {
+		83409E3219D5B791004B7EB9 /* SSZipArchiveExampleApp.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
-			name = SSZipArchive.app;
 			path = SSZipArchiveExampleApp.app;
 			remoteRef = 83409E3119D5B791004B7EB9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
