@@ -41,9 +41,9 @@
 
 
     #if __CC_PLATFORM_ANDROID
-    NSURL *remoteURL = [NSURL URLWithString:@"https://github.com/NickyWeber/cocos2d_test_resources/blob/master/testpackage-Android-phonehd.zip?raw=true"];
+    NSURL *remoteURL = [NSURL URLWithString:@"http://siner.de/cocos2d_test_resources/testpackage-Android-phonehd.zip"];
     #elif __CC_PLATFORM_IOS
-    NSURL *remoteURL = [NSURL URLWithString:@"https://github.com/NickyWeber/cocos2d_test_resources/blob/master/testpackage-iOS-phonehd.zip?raw=true"];
+    NSURL *remoteURL = [NSURL URLWithString:@"http://siner.de/cocos2d_test_resources/testpackage-iOS-phonehd.zip"];
     #endif
 
     self.package = [[CCPackageManager sharedManager] downloadPackageWithName:@"testpackage"
