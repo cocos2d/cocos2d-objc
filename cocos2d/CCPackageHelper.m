@@ -1,23 +1,20 @@
 #import <MacTypes.h>
 #import "CCPackageHelper.h"
 #import "CCFileUtils.h"
+#import "ccMacros.h"
 
 
 @implementation CCPackageHelper
 
 + (NSString *)currentOS
 {
-#ifdef __CC_PLATFORM_IOS
-    return @"iOS";
-
-#elif defined(__CC_PLATFORM_MAC)
-    return @"Mac";
-
-#elif defined(__CC_PLATFORM_ANDROID)
+#if __CC_PLATFORM_ANDROID
     return @"Android";
-
-#endif
+#elif __CC_PLATFORM_MAC
+    return @"Mac";
+#else
     return @"iOS";
+#endif
 }
 
 + (NSString *)ccFileUtilsSuffixToResolution:(NSString *)suffix

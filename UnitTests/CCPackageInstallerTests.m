@@ -122,10 +122,21 @@
 
 - (void)setupInstallablePackage
 {
-    NSString *pathToPackage = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Resources-shared/Packages/testpackage-iOS-phonehd_unzipped"];
-
-    _package.unzipURL = [NSURL fileURLWithPath:pathToPackage];
     _package.folderName = @"testpackage-iOS-phonehd";
+
+    NSString *pathToPackage = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Resources-shared/Packages/testpackage-iOS-phonehd_unzipped"];
+    NSString *unzipPath = [NSTemporaryDirectory() stringByAppendingPathComponent:_package.folderName];
+
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error;
+    [fileManager removeItemAtPath:unzipPath error:nil];
+    if (![fileManager copyItemAtPath:pathToPackage toPath:unzipPath error:&error])
+    {
+        NSLog(@"%@", error);
+    }
+
+    _package.unzipURL = [NSURL fileURLWithPath:unzipPath];
+
     _package.enableOnDownload = NO;
 }
 

@@ -27,6 +27,7 @@
 #import "AppDelegate.h"
 #import "MainMenu.h"
 #import "TestBase.h"
+#import "CCPackageConstants.h"
 
 @implementation AppController
 
@@ -55,6 +56,9 @@
 
 - (void)configureFileUtilsSearchPathAndRegisterSpriteSheets
 {
+    [[NSUserDefaults standardUserDefaults] setValue:nil forKey:PACKAGE_STORAGE_USERDEFAULTS_KEY];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
     CCFileUtils* sharedFileUtils = [CCFileUtils sharedFileUtils];
 
     sharedFileUtils.searchPath =

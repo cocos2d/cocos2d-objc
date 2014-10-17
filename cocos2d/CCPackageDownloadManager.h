@@ -45,7 +45,8 @@
 - (void)enqueuePackageForDownload:(CCPackage *)package;
 
 /**
- *  Cancels a download of a given package. Downloaded file will be deleted.
+ *  Cancels a download of a given package. Downloaded data will be deleted.
+ *  Status of package is reset to CCPackageStatusInitial.
  *
  *  @param package The package that should be cancelled
  */
