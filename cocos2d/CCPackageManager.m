@@ -9,6 +9,7 @@
 #import "ccMacros.h"
 #import "CCPackageHelper.h"
 #import "CCPackage_private.h"
+#import "CCDirector.h"
 
 
 @interface CCPackageManager()
@@ -338,7 +339,7 @@
 
 - (void)unzipFinished:(CCPackageUnzipper *)packageUnzipper
 {
-    [self runOnMainQueue:^
+    [self runOnCocosThread:^
     {
         [self removeDownloadFile:packageUnzipper.package];
 
@@ -362,7 +363,7 @@
 
 - (void)unzipFailed:(CCPackageUnzipper *)packageUnzipper error:(NSError *)error
 {
-    [self runOnMainQueue:^
+    [self runOnCocosThread:^
     {
         [_unzipTasks removeObject:packageUnzipper];
 
@@ -372,7 +373,7 @@
 
 - (void)unzipProgress:(CCPackageUnzipper *)packageUnzipper unzippedBytes:(NSUInteger)unzippedBytes totalBytes:(NSUInteger)totalBytes
 {
-    [self runOnMainQueue:^
+    [self runOnCocosThread:^
     {
         if ([_delegate respondsToSelector:@selector(packageUnzippingProgress:unzippedBytes:totalBytes:)])
         {
@@ -752,15 +753,15 @@
     }
 }
 
-- (void)runOnMainQueue:(dispatch_block_t)block
+- (void)runOnCocosThread:(dispatch_block_t)block
 {
-    if ([NSThread isMainThread])
+    if ([[NSThread currentThread] isEqual:[[CCDirector sharedDirector] runningThread]])
     {
         block();
     }
     else
     {
-        dispatch_sync(dispatch_get_main_queue(), block);
+        [self performSelector:_cmd onThread:[[CCDirector sharedDirector] runningThread] withObject:block waitUntilDone:YES];
     }
 }
 
