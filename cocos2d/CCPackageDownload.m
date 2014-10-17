@@ -6,6 +6,7 @@
 #import "CCPackageConstants.h"
 #import "ccMacros.h"
 #import "CCPackage_private.h"
+#import "CCFileUtils.h"
 
 @interface CCPackageDownload()
 
@@ -322,8 +323,6 @@
         if (_fileSize == _totalBytes)
         {
             CCLOGINFO(@"[PACKAGE/DOWNLOAD][INFO] Download already finished. Stopping download request.");
-            [self connectionDidFinishLoading:_connection];
-            [self closeConnectionAndFileHandle];
         }
         else if (_fileSize > _totalBytes)
         {
@@ -339,8 +338,9 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
+    [self closeConnectionAndFileHandle];
     NSError *error;
-    if (![[NSFileManager defaultManager] moveItemAtURL:[NSURL fileURLWithPath:_tempPath] toURL:_localURL error:&error])
+    if (![[[CCFileUtils sharedFileUtils] fileManager] moveItemAtURL:[NSURL fileURLWithPath:_tempPath] toURL:_localURL error:&error])
     {
         [self connection:connection didFailWithError:error];
         return;
