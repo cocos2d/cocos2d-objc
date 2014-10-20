@@ -108,7 +108,11 @@ Joints cannot be reactivated once they are invalidated.
  *
  *  @return The CCPhysicsJoint Object.
  */
-+(CCPhysicsJoint *)connectedRotarySpringJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB restAngle:(CGFloat)restAngle stifness:(CGFloat)stiffness damping:(CGFloat)damping;
++(CCPhysicsJoint *)connectedRotarySpringJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB restAngle:(CGFloat)restAngle stiffness:(CGFloat)stiffness damping:(CGFloat)damping;
+
+
+/// This method was misspelled. Please change "stifness" to "stiffness".
++(CCPhysicsJoint *)connectedRotarySpringJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB restAngle:(CGFloat)restAngle stifness:(CGFloat)stiffness damping:(CGFloat)damping __attribute__((deprecated));
 
 
 
