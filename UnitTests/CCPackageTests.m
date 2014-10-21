@@ -74,6 +74,31 @@
     XCTAssertTrue(package.enableOnDownload);
 }
 
+- (void)testInitWithDictionaryMinimumValuesSet
+{
+    NSDictionary *dictionary = @{
+        @"name" : @"DLC",
+        @"resolution" : @"tablethd",
+        @"os" : @"iOS",
+        @"remoteURL" : @"http://foo.fake",
+        @"status" : @(CCPackageStatusInitial),
+        @"enableOnDownload" : @(NO)
+    };
+
+    CCPackage *package = [[CCPackage alloc] initWithDictionary:dictionary];
+
+    CCAssertEqualStrings(package.name, @"DLC");
+    CCAssertEqualStrings(package.resolution, @"tablethd");
+    CCAssertEqualStrings(package.os, @"iOS");
+    XCTAssertEqualObjects(package.remoteURL, [NSURL URLWithString:@"http://foo.fake"]);
+    XCTAssertNil(package.installURL);
+    XCTAssertEqual(package.status, CCPackageStatusInitial);
+    XCTAssertNil(package.localDownloadURL);
+    XCTAssertNil(package.unzipURL);
+    XCTAssertNil(package.folderName);
+    XCTAssertFalse(package.enableOnDownload);
+}
+
 - (void)testToDictionary
 {
     CCPackage *package = [[CCPackage alloc] initWithName:@"DLC"

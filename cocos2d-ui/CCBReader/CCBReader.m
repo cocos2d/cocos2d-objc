@@ -1215,7 +1215,7 @@ static inline float readFloat(CCBReader *self)
             float   damping = properties[@"dampedSpringDamping"] ? [properties[@"dampedSpringDamping"] floatValue] : 4.0f;
             damping *= 100.0f;
 
-            CCPhysicsJoint * rotarySpringJoint = [CCPhysicsJoint connectedRotarySpringJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody restAngle:restAngle stifness:stiffness damping:damping];
+            CCPhysicsJoint * rotarySpringJoint = [CCPhysicsJoint connectedRotarySpringJointWithBodyA:nodeBodyA.physicsBody bodyB:nodeBodyB.physicsBody restAngle:restAngle stiffness:stiffness damping:damping];
             
             rotarySpringJoint.maxForce = maxForce;
             rotarySpringJoint.breakingForce = breakingForce;

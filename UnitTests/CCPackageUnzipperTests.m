@@ -115,6 +115,18 @@
 }
 */
 
+- (void)testUnzipTrash
+{
+    NSString *pathToZip = [NSTemporaryDirectory() stringByAppendingPathComponent:@"trash.zip"];
+
+    [@"asdiuhaiudhweudiuwefi" writeToFile:pathToZip atomically:YES encoding:NSUTF8StringEncoding error:nil];
+
+    _package.localDownloadURL = [NSURL fileURLWithPath:pathToZip];
+
+    [self unzipUntilDelegateMethodsReturn:nil];
+    XCTAssertFalse(_unzippingSuccessful);
+}
+
 - (void)testUnzipOfPasswordProtectedPackage
 {
     NSString *pathToZip = [[NSBundle mainBundle] pathForResource:@"Resources-shared/Packages/password-iOS-phone" ofType:@"zip"];

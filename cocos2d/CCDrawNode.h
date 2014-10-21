@@ -62,7 +62,8 @@
 -(void)drawSegmentFrom:(CGPoint)a to:(CGPoint)b radius:(CGFloat)radius color:(CCColor *)color;
 
 /**
- *  Draw a polygon with a fill color and line color.
+ *  Draw a convex polygon with a fill color and line color.
+ *  The polygon winding must be clockwise.
  *
  *  @param verts Array of CGPoints, containing the vertices.
  *  @param count Number of vertices.

@@ -49,7 +49,7 @@
 @end
 
 @interface CCPhysicsRotarySpring : CCPhysicsJoint
--(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB restAngle:(cpFloat)restAngle stifness:(cpFloat)stiffness damping:(cpFloat)damping;
+-(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB restAngle:(cpFloat)restAngle stiffness:(cpFloat)stiffness damping:(cpFloat)damping;
 @end
 
 @interface CCPhysicsMotorJoint : CCPhysicsJoint
@@ -146,7 +146,15 @@
                                         stifness:(CGFloat)stiffness
                                          damping:(CGFloat)damping
 {
-    CCPhysicsRotarySpring * joint  = [[CCPhysicsRotarySpring alloc] initWithBodyA:bodyA bodyB:bodyB restAngle:restAngle stifness:stiffness damping:damping];
+	return [self connectedRotarySpringJointWithBodyA:bodyA bodyB:bodyB restAngle:restAngle stifness:stiffness damping:damping];
+}
+
++(CCPhysicsJoint *)connectedRotarySpringJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
+                                       restAngle:(CGFloat)restAngle
+                                        stiffness:(CGFloat)stiffness
+                                         damping:(CGFloat)damping
+{
+    CCPhysicsRotarySpring * joint  = [[CCPhysicsRotarySpring alloc] initWithBodyA:bodyA bodyB:bodyB restAngle:restAngle stiffness:stiffness damping:damping];
     
     [bodyA addJoint:joint];
 	[bodyB addJoint:joint];
@@ -289,7 +297,7 @@ BreakConstraint(cpConstraint *constraint, cpSpace *space)
 
 }
 
--(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB restAngle:(cpFloat)_restAngle stifness:(cpFloat)stiffness damping:(cpFloat)damping
+-(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB restAngle:(cpFloat)_restAngle stiffness:(cpFloat)stiffness damping:(cpFloat)damping
 {
 	if((self = [super init])){
 		_constraint = [ChipmunkDampedRotarySpring dampedRotarySpringWithBodyA:bodyA.body bodyB:bodyB.body restAngle:_restAngle stiffness:stiffness damping:damping];

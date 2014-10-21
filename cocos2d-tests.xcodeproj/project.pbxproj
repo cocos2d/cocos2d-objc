@@ -256,8 +256,10 @@
 		E525F5DB1E3086DDE0296CEC /* CCPackageDownloadTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F5FACFF098F0ACBA6419 /* CCPackageDownloadTests.m */; };
 		E525F7C977339D17470FC149 /* CCPackageInstallerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FBF58DFECF27272F5D6F /* CCPackageInstallerTests.m */; };
 		E525F81797DA5573FC26BEBB /* CCPackageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F771C583AAF68EB42E15 /* CCPackageTests.m */; };
+		E525FA366EFEEF054FB0C74A /* CCSpriteFrameCacheTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FE52BE5D10499A27CE7C /* CCSpriteFrameCacheTests.m */; };
 		E525FA44681404CC22A3A8D9 /* CCPackageUnzipperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F30DA34A6712527102E5 /* CCPackageUnzipperTests.m */; };
 		E525FCAF2CC6D200B8065E2E /* CCPackageCocos2dEnablerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FB8A3CC89D071A8377B1 /* CCPackageCocos2dEnablerTests.m */; };
+		E525FCD390330D4F4EBD76CC /* CCPackagesTestFixturesAndHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FF94F200689F83438E37 /* CCPackagesTestFixturesAndHelpers.m */; };
 		E525FF2E8351476CDD7DEAC4 /* CCPackageManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F395FE85323D86232416 /* CCPackageManagerTests.m */; };
 		E525FFABB4646A7446269A98 /* CCUnitTestAssertions.h in Resources */ = {isa = PBXBuildFile; fileRef = E525F832B569117922DA339E /* CCUnitTestAssertions.h */; };
 /* End PBXBuildFile section */
@@ -481,6 +483,9 @@
 		E525F99055258F35DFF00ECD /* CCPackageHelperTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageHelperTests.m; sourceTree = "<group>"; };
 		E525FB8A3CC89D071A8377B1 /* CCPackageCocos2dEnablerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageCocos2dEnablerTests.m; sourceTree = "<group>"; };
 		E525FBF58DFECF27272F5D6F /* CCPackageInstallerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageInstallerTests.m; sourceTree = "<group>"; };
+		E525FCB52B23A4F29E8D6D64 /* CCPackagesTestFixturesAndHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackagesTestFixturesAndHelpers.h; sourceTree = "<group>"; };
+		E525FE52BE5D10499A27CE7C /* CCSpriteFrameCacheTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteFrameCacheTests.m; sourceTree = "<group>"; };
+		E525FF94F200689F83438E37 /* CCPackagesTestFixturesAndHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackagesTestFixturesAndHelpers.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -561,6 +566,7 @@
 				755569EC1856361100ED1B0F /* Supporting Files */,
 				E525F25081EB1E197CD567E4 /* Packages */,
 				E525F832B569117922DA339E /* CCUnitTestAssertions.h */,
+				E525FE52BE5D10499A27CE7C /* CCSpriteFrameCacheTests.m */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -846,6 +852,8 @@
 				E525F771C583AAF68EB42E15 /* CCPackageTests.m */,
 				E525F395FE85323D86232416 /* CCPackageManagerTests.m */,
 				E525F99055258F35DFF00ECD /* CCPackageHelperTests.m */,
+				E525FF94F200689F83438E37 /* CCPackagesTestFixturesAndHelpers.m */,
+				E525FCB52B23A4F29E8D6D64 /* CCPackagesTestFixturesAndHelpers.h */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
@@ -1188,7 +1196,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /usr/bin/ruby;
-			shellScript = "SDK = ENV[\"PLATFORM_NAME\"]\nOBJECT_FILE_DIR = ENV[\"OBJECT_FILE_DIR\"]\nSRCROOT = ENV[\"SRCROOT\"]\nBUILT_PRODUCTS_DIR = ENV[\"BUILT_PRODUCTS_DIR\"]\nPRODUCT_NAME = ENV[\"PRODUCT_NAME\"]\n\n# User variables\n# Directory with your custom .metal files in it.\nSHADER_DIR = \"#{SRCROOT}/cocos2d-ui-tests/MetalShaders\"\n# Location of the cocos2d library directory.\nCOCOS2D_DIR = \"#{SRCROOT}/cocos2d\"\n\nMETAL_ARGS = [\n\t\"-arch air64\",\n\t\"-emit-llvm\",\n\t\"-c\",\n\t\"-gline-tables-only\",\n\t\"-ffast-math\",\n\t\"-std=ios-metal1.0\",\n    %{-I \"#{COCOS2D_DIR}\"},\n].join(\" \")\n\ndef system(cmd)\n\tputs cmd\n    Kernel.system cmd\nend\n\nPRODUCTS = \"#{OBJECT_FILE_DIR}/CCMetalShaders\"\nARCHIVE = \"#{PRODUCTS}/default.metal-ar\"\n\ndef compile_shader(src)\n\tdst = \"#{PRODUCTS}/#{File.basename(src, \".metal\")}.air\"\n\t\n\t# Compile the shader.\n\tsystem %{xcrun -sdk #{SDK} metal #{METAL_ARGS} \"#{src}\" -o \"#{dst}\"}\n\t\n\t# Archive the shader.\n\tsystem %{xcrun -sdk #{SDK} ar r \"#{ARCHIVE}\" \"#{dst}\"}\nend\n\nif SDK == \"iphoneos\"\n\t# Cannot use default.metallib to avoid clashing with Xcode build magic.\n\t# This is part of a workaround due to the iOS simulator not supporting Metal and may go away in the future.\n\tmetal_lib = \"#{BUILT_PRODUCTS_DIR}/#{PRODUCT_NAME}.app/CCShaders.metallib\"\n    \n\t# Delete the old products dir and metal lib.\n\tsystem %{rm -rf \"#{PRODUCTS}\"}\n    system %{rm -f \"#{metal_lib}\"}\n    system %{mkdir -p \"#{PRODUCTS}\"}\n    \n    # Compile the builtin shaders.\n    compile_shader(%{#{COCOS2D_DIR}/Platforms/iOS/CCShaders.metal})\n    \n\t# Compile/archive all the shaders in the shader directory.\n    Dir.glob(\"#{SHADER_DIR}/*.metal\").each{|src| compile_shader(src)}\n    \n\t# Link all shaders into default lib.\n\tsystem %{xcrun -sdk #{SDK} metallib -o \"#{metal_lib}\" \"#{ARCHIVE}\"}\nend\n";
+			shellScript = "# Special thanks to Filip Iliescu at Apple for the help with this.\n\n# Environment variables.\nSDK = ENV[\"PLATFORM_NAME\"]\nOBJECT_FILE_DIR = ENV[\"OBJECT_FILE_DIR\"]\nSRCROOT = ENV[\"SRCROOT\"]\nBUILT_PRODUCTS_DIR = ENV[\"BUILT_PRODUCTS_DIR\"]\nPRODUCT_NAME = ENV[\"PRODUCT_NAME\"]\n\n# User variables\n# Directory with your custom .metal files in it.\nSHADER_DIR = \"#{SRCROOT}/cocos2d-ui-tests/MetalShaders\"\n# Location of the cocos2d library directory.\nCOCOS2D_DIR = \"#{SRCROOT}/cocos2d\"\n\nMETAL_ARGS = [\n\t\"-arch air64\",\n\t\"-emit-llvm\",\n\t\"-c\",\n\t\"-gline-tables-only\",\n\t\"-ffast-math\",\n\t\"-std=ios-metal1.0\",\n\t%{-I \"#{COCOS2D_DIR}\"},\n]\n\ndef system(cmd)\n\tputs cmd\n\tKernel.system cmd\nend\n\nPRODUCTS = \"#{OBJECT_FILE_DIR}/CCMetalShaders\"\nARCHIVE = \"#{PRODUCTS}/default.metal-ar\"\n\ndef compile_shader(src)\n\tdst = \"#{PRODUCTS}/#{File.basename(src, \".metal\")}.air\"\n\t\n\t# Compile and archive the shader.\n\tsystem %{xcrun -sdk #{SDK} metal #{METAL_ARGS.join(\" \")} \"#{src}\" -o \"#{dst}\"}\n\tsystem %{xcrun -sdk #{SDK} ar r \"#{ARCHIVE}\" \"#{dst}\"}\nend\n\nif SDK == \"iphoneos\"\n\t# Cannot use default.metallib to avoid clashing with Xcode build magic.\n\t# This is part of a workaround due to the iOS simulator not supporting Metal and may go away in the future.\n\tmetal_lib = \"#{BUILT_PRODUCTS_DIR}/#{PRODUCT_NAME}.app/CCShaders.metallib\"\n\t\t\n\t# Delete the old products dir and metal lib.\n\tsystem %{rm -rf \"#{PRODUCTS}\"}\n\tsystem %{rm -f \"#{metal_lib}\"}\n\tsystem %{mkdir -p \"#{PRODUCTS}\"}\n\t\n\t# Compile the builtin shaders.\n\tcompile_shader(%{#{COCOS2D_DIR}/Platforms/iOS/CCShaders.metal})\n\t\n\t# Compile/archive all the shaders in the shader directory.\n\tDir.glob(\"#{SHADER_DIR}/*.metal\").each{|src| compile_shader(src)}\n\t\n\t# Link all shaders into default lib.\n\tsystem %{xcrun -sdk #{SDK} metallib -o \"#{metal_lib}\" \"#{ARCHIVE}\"}\nend\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1215,6 +1223,8 @@
 				E525FF2E8351476CDD7DEAC4 /* CCPackageManagerTests.m in Sources */,
 				E525F033EECC363CA8EAF2A6 /* CCPackageDownloadManagerTests.m in Sources */,
 				E525F4D0568A8A4176684936 /* CCPackageHelperTests.m in Sources */,
+				E525FCD390330D4F4EBD76CC /* CCPackagesTestFixturesAndHelpers.m in Sources */,
+				E525FA366EFEEF054FB0C74A /* CCSpriteFrameCacheTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

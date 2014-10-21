@@ -34,6 +34,7 @@ static NSString *const PACKAGE_SERIALIZATION_KEY_ENABLE_ON_DOWNLOAD = @"enableOn
         self.os = os;
         self.remoteURL = remoteURL;
         self.status = CCPackageStatusInitial;
+        self.enableOnDownload = NO;
     }
 
     return self;
@@ -62,8 +63,13 @@ static NSString *const PACKAGE_SERIALIZATION_KEY_ENABLE_ON_DOWNLOAD = @"enableOn
                                                       os:dictionary[PACKAGE_SERIALIZATION_KEY_OS]
                                                remoteURL:[NSURL URLWithString:dictionary[PACKAGE_SERIALIZATION_KEY_REMOTE_URL]]];
 
-    package.installURL = [NSURL fileURLWithPath:dictionary[PACKAGE_SERIALIZATION_KEY_INSTALL_URL]];
     package.status = (CCPackageStatus) [dictionary[PACKAGE_SERIALIZATION_KEY_STATUS] unsignedIntegerValue];
+    package.enableOnDownload = [dictionary[PACKAGE_SERIALIZATION_KEY_ENABLE_ON_DOWNLOAD] boolValue];
+
+    if (dictionary[PACKAGE_SERIALIZATION_KEY_INSTALL_URL])
+    {
+        package.installURL = [NSURL fileURLWithPath:dictionary[PACKAGE_SERIALIZATION_KEY_INSTALL_URL]];
+    }
 
     if (dictionary[PACKAGE_SERIALIZATION_KEY_LOCAL_DOWNLOAD_URL])
     {
@@ -78,11 +84,6 @@ static NSString *const PACKAGE_SERIALIZATION_KEY_ENABLE_ON_DOWNLOAD = @"enableOn
     if (dictionary[PACKAGE_SERIALIZATION_KEY_FOLDER_NAME])
     {
         package.folderName = dictionary[PACKAGE_SERIALIZATION_KEY_FOLDER_NAME];
-    }
-
-    if (dictionary[PACKAGE_SERIALIZATION_KEY_FOLDER_NAME])
-    {
-        package.enableOnDownload = [dictionary[PACKAGE_SERIALIZATION_KEY_ENABLE_ON_DOWNLOAD] boolValue];
     }
 
     return package;
@@ -103,6 +104,8 @@ static NSString *const PACKAGE_SERIALIZATION_KEY_ENABLE_ON_DOWNLOAD = @"enableOn
     dictionary[PACKAGE_SERIALIZATION_KEY_OS] = _os;
     dictionary[PACKAGE_SERIALIZATION_KEY_REMOTE_URL] = [_remoteURL absoluteString];
     dictionary[PACKAGE_SERIALIZATION_KEY_VERSION] = @(PACKAGE_SERIALIZATION_VERSION);
+    dictionary[PACKAGE_SERIALIZATION_KEY_ENABLE_ON_DOWNLOAD] = @(_enableOnDownload);
+
     if (_installURL)
     {
         dictionary[PACKAGE_SERIALIZATION_KEY_INSTALL_URL] = [_installURL path];
@@ -122,8 +125,6 @@ static NSString *const PACKAGE_SERIALIZATION_KEY_ENABLE_ON_DOWNLOAD = @"enableOn
     {
         dictionary[PACKAGE_SERIALIZATION_KEY_FOLDER_NAME] = _folderName;
     }
-
-    dictionary[PACKAGE_SERIALIZATION_KEY_ENABLE_ON_DOWNLOAD] = @(_enableOnDownload);
 
     return dictionary;
 }

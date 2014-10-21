@@ -11,66 +11,7 @@
 #import "CCPackageManagerDelegate.h"
 #import "CCPackage.h"
 #import "CCPackageConstants.h"
-#import "AppDelegate.h"
 
-
-
-@interface CCPackageTestURLProtocol : NSURLProtocol
-
-@end
-
-
-@implementation CCPackageTestURLProtocol
-
-+ (BOOL)canInitWithRequest:(NSURLRequest*)theRequest
-{
-    return [theRequest.URL.scheme caseInsensitiveCompare:@"http"] == NSOrderedSame;
-}
-
-+ (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)theRequest
-{
-    return theRequest;
-}
-
-- (void)startLoading
-{
-    NSString *fileName = [self.request.URL lastPathComponent];
-
-    NSString *pathToPackage = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"Resources-shared/Packages/%@", fileName] ofType:nil];
-    NSData *data = [NSData dataWithContentsOfFile:pathToPackage];
-
-    NSHTTPURLResponse *response;
-    if (pathToPackage)
-    {
-    response = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
-                                                              statusCode:200
-                                                             HTTPVersion:@"HTTP/1.1"
-                                                            headerFields:nil];
-    }
-    else
-    {
-        response = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
-                                                                  statusCode:404
-                                                                 HTTPVersion:@"HTTP/1.1"
-                                                                headerFields:nil];
-    }
-
-
-    id<NSURLProtocolClient> client = [self client];
-    [client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
-    [client URLProtocol:self didLoadData:data];
-    [client URLProtocolDidFinishLoading:self];
-}
-
-- (void)stopLoading
-{
-    // Nothing to do
-}
-
-@end
-
-
-#pragma mark - Test class
 
 @interface CCPackageTest : TestBase <CCPackageManagerDelegate>
 
@@ -83,8 +24,6 @@
 
 - (void) setupPackageTest
 {
-    [self setupLocalHTTPRequests];
-
     [self.contentNode removeAllChildren];
 
     [self removePersistedPackages];
@@ -99,15 +38,18 @@
 
     [self addLabels];
 
+
+
+    #if __CC_PLATFORM_ANDROID
+    NSURL *remoteURL = [NSURL URLWithString:@"http://siner.de/cocos2d_test_resources/testpackage-Android-phonehd.zip"];
+    #elif __CC_PLATFORM_IOS
+    NSURL *remoteURL = [NSURL URLWithString:@"http://siner.de/cocos2d_test_resources/testpackage-iOS-phonehd.zip"];
+    #endif
+
     self.package = [[CCPackageManager sharedManager] downloadPackageWithName:@"testpackage"
                                                                   resolution:@"phonehd"
-                                                                   remoteURL:[NSURL URLWithString:@"http://package.request.fake/testpackage-iOS-phonehd.zip"]
+                                                                   remoteURL:remoteURL
                                                          enableAfterDownload:YES];
-}
-
-- (void)setupLocalHTTPRequests
-{
-   [NSURLProtocol registerClass:[CCPackageTestURLProtocol class]];
 }
 
 - (void)removePersistedPackages
@@ -140,7 +82,21 @@
 
 - (void)resetCocos2d
 {
-    [(AppController *) [UIApplication sharedApplication].delegate configureFileUtilsSearchPathAndRegisterSpriteSheets];
+    //on android, we can't rely on UIKit (eg, -[UIApplication delegate], so don't.
+    CCFileUtils* sharedFileUtils = [CCFileUtils sharedFileUtils];
+    
+    sharedFileUtils.searchPath =
+    [NSArray arrayWithObjects:
+     [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Images"],
+     [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Fonts"],
+     [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Resources-shared"],
+     [[NSBundle mainBundle] resourcePath],
+     nil];
+    
+    // Register spritesheets.
+    [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"Interface.plist"];
+    [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"Sprites.plist"];
+    [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"TilesAtlassed.plist"];
 }
 
 - (void)cleanDirectories
@@ -209,31 +165,26 @@
 - (void)packageInstallationFailed:(CCPackage *)package error:(NSError *)error
 {
     self.subTitle = [NSString stringWithFormat:@"Test failed: installation failed."];
-    [NSURLProtocol unregisterClass:[CCPackageTestURLProtocol class]];
 }
 
 - (void)packageDownloadFinished:(CCPackage *)package
 {
     self.subTitle = [NSString stringWithFormat:@"Download finished"];
-    [NSURLProtocol unregisterClass:[CCPackageTestURLProtocol class]];
-}
+    }
 
 - (void)packageDownloadFailed:(CCPackage *)package error:(NSError *)error
 {
     self.subTitle = [NSString stringWithFormat:@"Test failed: download failed."];
-    [NSURLProtocol unregisterClass:[CCPackageTestURLProtocol class]];
 }
 
 - (void)packageUnzippingFinished:(CCPackage *)package
 {
     self.subTitle = [NSString stringWithFormat:@"Unzip finished"];
-    [NSURLProtocol unregisterClass:[CCPackageTestURLProtocol class]];
 }
 
 - (void)packageUnzippingFailed:(CCPackage *)package error:(NSError *)error
 {
     self.subTitle = [NSString stringWithFormat:@"Test failed: unzipping failed."];
-    [NSURLProtocol unregisterClass:[CCPackageTestURLProtocol class]];
 }
 
 - (void)packageDownloadProgress:(CCPackage *)package downloadedBytes:(NSUInteger)downloadedBytes totalBytes:(NSUInteger)totalBytes
