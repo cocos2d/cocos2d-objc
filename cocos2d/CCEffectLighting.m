@@ -105,8 +105,9 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
     NSMutableString *effectBody = [[NSMutableString alloc] init];
     [effectBody appendString:CC_GLSL(
                                      vec4 lightColor;
-                                     vec4 diffuseLightColor = u_globalAmbientColor;
-                                     vec4 specularLightColor = vec4(0,0,0,0);
+                                     vec4 lightSpecularColor;
+                                     vec4 diffuseSum = u_globalAmbientColor;
+                                     vec4 specularSum = vec4(0,0,0,0);
                                      
                                      vec3 tangentSpaceLightDir;
                                      vec3 halfAngleDir;
@@ -146,6 +147,7 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
         {
             [effectBody appendFormat:@"tangentSpaceLightDir = v_tangentSpaceLightDir%lu.xyz;\n", (unsigned long)lightIndex];
             [effectBody appendFormat:@"lightColor = u_lightColor%lu;\n", (unsigned long)lightIndex];
+            [effectBody appendFormat:@"lightSpecularColor = u_lightSpecularColor%lu;\n", (unsigned long)lightIndex];
         }
         else
         {
@@ -153,21 +155,25 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
             [effectBody appendFormat:@"lightDist = length(v_tangentSpaceLightDir%lu.xyz);\n", (unsigned long)lightIndex];
             [effectBody appendFormat:@"falloffTerm = max(0.0, (1.0 - lightDist * u_lightFalloff%lu));\n", (unsigned long)lightIndex];
             [effectBody appendFormat:@"lightColor = u_lightColor%lu * falloffTerm;\n", (unsigned long)lightIndex];
+            if (needsSpecular)
+            {
+                [effectBody appendFormat:@"lightSpecularColor = u_lightSpecularColor%lu * falloffTerm;\n", (unsigned long)lightIndex];
+            }
         }
         [effectBody appendString:@"diffuseTerm = max(0.0, dot(tangentSpaceNormal, tangentSpaceLightDir));\n"];
-        [effectBody appendString:@"diffuseLightColor += lightColor * diffuseTerm;\n"];
+        [effectBody appendString:@"diffuseSum += lightColor * diffuseTerm;\n"];
         
         if (needsSpecular)
         {
             [effectBody appendString:@"halfAngleDir = (2.0 * dot(tangentSpaceLightDir, tangentSpaceNormal) * tangentSpaceNormal - tangentSpaceLightDir);\n"];
             [effectBody appendString:@"specularTerm = max(0.0, dot(halfAngleDir, vec3(0,0,1))) * step(0.0, diffuseTerm);\n"];
-            [effectBody appendString:@"specularLightColor += lightColor * pow(specularTerm, u_specularExponent);\n"];
+            [effectBody appendString:@"specularSum += lightSpecularColor * pow(specularTerm, u_specularExponent);\n"];
         }
     }
-    [effectBody appendString:@"vec4 resultColor = diffuseLightColor * inputValue;\n"];
+    [effectBody appendString:@"vec4 resultColor = diffuseSum * inputValue;\n"];
     if (needsSpecular)
     {
-        [effectBody appendString:@"resultColor += specularLightColor * u_specularColor;\n"];
+        [effectBody appendString:@"resultColor += specularSum * u_specularColor;\n"];
     }
     [effectBody appendString:@"return vec4(resultColor.xyz, inputValue.a);\n"];
     
@@ -249,12 +255,24 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
 
             NSString *lightVectorLabel = [NSString stringWithFormat:@"u_lightVector%lu", (unsigned long)lightIndex];
             pass.shaderUniforms[weakSelf.uniformTranslationTable[lightVectorLabel]] = [NSValue valueWithGLKVector4:lightVector];
+
+            if (self.needsSpecular)
+            {
+                GLKVector4 lightSpecularColor = GLKVector4MultiplyScalar(light.specularColor.glkVector4, light.specularIntensity);
+
+                NSString *lightSpecularColorLabel = [NSString stringWithFormat:@"u_lightSpecularColor%lu", (unsigned long)lightIndex];
+                pass.shaderUniforms[weakSelf.uniformTranslationTable[lightSpecularColorLabel]] = [NSValue valueWithGLKVector4:lightSpecularColor];
+            }
         }
 
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_globalAmbientColor"]] = [NSValue valueWithGLKVector4:globalAmbientColor];
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_specularExponent"]] = [NSNumber numberWithFloat:weakSelf.shininess];
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_specularColor"]] = [NSValue valueWithGLKVector4:weakSelf.specularColor.glkVector4];
-
+        
+        if (self.needsSpecular)
+        {
+            pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_specularExponent"]] = [NSNumber numberWithFloat:weakSelf.shininess];
+            pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_specularColor"]] = [NSValue valueWithGLKVector4:weakSelf.specularColor.glkVector4];
+        }
+        
     } copy]];
     
     self.renderPasses = @[pass0];
@@ -286,6 +304,10 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
             
             [vertUniforms addObject:[CCEffectUniform uniform:@"vec4" name:[NSString stringWithFormat:@"u_lightVector%lu", (unsigned long)lightIndex] value:[NSValue valueWithGLKVector4:GLKVector4Make(0.0f, 0.0f, 0.0f, 1.0f)]]];
             [fragUniforms addObject:[CCEffectUniform uniform:@"vec4" name:[NSString stringWithFormat:@"u_lightColor%lu", (unsigned long)lightIndex] value:[NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)]]];
+            if (self.needsSpecular)
+            {
+                [fragUniforms addObject:[CCEffectUniform uniform:@"vec4" name:[NSString stringWithFormat:@"u_lightSpecularColor%lu", (unsigned long)lightIndex] value:[NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)]]];
+            }
             
             if (light.type != CCLightDirectional)
             {

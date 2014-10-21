@@ -313,7 +313,7 @@
 
 -(void)setupLightingParameterTest
 {
-    self.subTitle = @"Lighting Parameter Test";
+    self.subTitle = @"Varying Light Parameter Test";
     
     NSString *normalMapImage = @"Images/ShinyTorusNormals.png";
     NSString *diffuseImage = @"Images/ShinyTorusColor.png";
@@ -365,14 +365,17 @@
     CCSprite *sprite = nil;
     CCEffectLighting *lighting = nil;
 
-    light = setupBlock(ccp(0.2f, 0.65f), @"Varying Intensity", [CCActionRepeatForever actionWithAction:[CCActionSequence actions:
-                                                                                                         [CCActionTween actionWithDuration:2 key:@"intensity" from:0.0f to:1.0f],
-                                                                                                         [CCActionDelay actionWithDuration:2],
-                                                                                                         [CCActionTween actionWithDuration:2 key:@"intensity" from:1.0f to:0.0f],
-                                                                                                         nil
-                                                                                                         ]]);
+    
+    // Primary color
+    //
+    light = setupBlock(ccp(0.1f, 0.65f), @"Primary Intensity", [CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+                                                                                                        [CCActionTween actionWithDuration:2 key:@"intensity" from:0.0f to:1.0f],
+                                                                                                        [CCActionDelay actionWithDuration:2],
+                                                                                                        [CCActionTween actionWithDuration:2 key:@"intensity" from:1.0f to:0.0f],
+                                                                                                        nil
+                                                                                                        ]]);
     light.ambientIntensity = 0.0f;
-    light = setupBlock(ccp(0.2f, 0.25f), @"Varying Color", [CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+    light = setupBlock(ccp(0.1f, 0.25f), @"Primary Color", [CCActionRepeatForever actionWithAction:[CCActionSequence actions:
                                                                                                      [CCActionTintTo actionWithDuration:2 color:[CCColor redColor]],
                                                                                                      [CCActionDelay actionWithDuration:1],
                                                                                                      [CCActionTintTo actionWithDuration:2 color:[CCColor greenColor]],
@@ -385,13 +388,15 @@
                                                                                                      ]]);
 
     
-    light = setupBlock(ccp(0.4f, 0.65f), @"Varying Ambient Intensity", [CCActionRepeatForever actionWithAction:[CCActionSequence actions:
-                                                                                                                [CCActionTween actionWithDuration:2 key:@"ambientIntensity" from:0.0f to:1.0f],
-                                                                                                                [CCActionDelay actionWithDuration:2],
-                                                                                                                [CCActionTween actionWithDuration:2 key:@"ambientIntensity" from:1.0f to:0.0f],
-                                                                                                                nil
-                                                                                                                ]]);
-    light = setupBlock(ccp(0.4f, 0.25f), @"Varying Ambient Color", nil);
+    // Ambient color
+    //
+    light = setupBlock(ccp(0.3f, 0.65f), @"Ambient Intensity", [CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+                                                                                                        [CCActionTween actionWithDuration:2 key:@"ambientIntensity" from:0.0f to:1.0f],
+                                                                                                        [CCActionDelay actionWithDuration:2],
+                                                                                                        [CCActionTween actionWithDuration:2 key:@"ambientIntensity" from:1.0f to:0.0f],
+                                                                                                        nil
+                                                                                                        ]]);
+    light = setupBlock(ccp(0.3f, 0.25f), @"Ambient Color", nil);
     light.intensity = 0.5f;
     light.ambientIntensity = 0.5f;
     
@@ -415,17 +420,26 @@
         return lerpBlock;
     };
 
-    AmbientLerpBlock whiteRedLerp = ambientLerpBuilder(ccc4f(0.0f, -delta, -delta, 0.0f));
-    CCActionInterval *whiteRedLerpAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:whiteRedLerp]] times:120];
+    AmbientLerpBlock whiteRedLerp;
+    AmbientLerpBlock redGreenLerp;
+    AmbientLerpBlock greenBlueLerp;
+    AmbientLerpBlock blueWhiteLerp;
+    CCActionInterval *whiteRedLerpAction;
+    CCActionInterval *redGreenLerpAction;
+    CCActionInterval *greenBlueLerpAction;
+    CCActionInterval *blueWhiteLerpAction;
     
-    AmbientLerpBlock redGreenLerp = ambientLerpBuilder(ccc4f(-delta, delta, 0.0f, 0.0f));
-    CCActionInterval *redGreenLerpAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:redGreenLerp]] times:120];
+    whiteRedLerp = ambientLerpBuilder(ccc4f(0.0f, -delta, -delta, 0.0f));
+    whiteRedLerpAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:whiteRedLerp]] times:120];
     
-    AmbientLerpBlock greenBlueLerp = ambientLerpBuilder(ccc4f(0.0f, -delta, delta, 0.0f));
-    CCActionInterval *greenBlueLerpAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:greenBlueLerp]] times:120];
+    redGreenLerp = ambientLerpBuilder(ccc4f(-delta, delta, 0.0f, 0.0f));
+    redGreenLerpAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:redGreenLerp]] times:120];
     
-    AmbientLerpBlock blueWhiteLerp = ambientLerpBuilder(ccc4f(delta, delta, 0.0f, 0.0f));
-    CCActionInterval *blueWhiteLerpAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:blueWhiteLerp]] times:120];
+    greenBlueLerp = ambientLerpBuilder(ccc4f(0.0f, -delta, delta, 0.0f));
+    greenBlueLerpAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:greenBlueLerp]] times:120];
+    
+    blueWhiteLerp = ambientLerpBuilder(ccc4f(delta, delta, 0.0f, 0.0f));
+    blueWhiteLerpAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:blueWhiteLerp]] times:120];
     
     CCAction *ambientLerpAction = [CCActionRepeatForever actionWithAction:[CCActionSequence actions:
                                                                            whiteRedLerpAction,
@@ -440,24 +454,66 @@
                                                                            ]];
     [light runAction:ambientLerpAction];
 
-    light = setupBlock(ccp(0.6f, 0.65f), @"Varying Cutoff", [CCActionRepeatForever actionWithAction:[CCActionSequence actions:
-                                                                                                      [CCActionTween actionWithDuration:2 key:@"cutoffRadius" from:1.0f to:500.0f],
-                                                                                                      [CCActionTween actionWithDuration:2 key:@"cutoffRadius" from:500.0f to:1.0f],
-                                                                                                      nil
-                                                                                                      ]]);
-    light.cutoffRadius = 1.0f;
-    light = setupBlock(ccp(0.6f, 0.25f), @"Varying Depth", [CCActionRepeatForever actionWithAction:[CCActionSequence actions:
-                                                                                                     [CCActionTween actionWithDuration:2 key:@"depth" from:1.0f to:500.0f],
-                                                                                                     [CCActionTween actionWithDuration:2 key:@"depth" from:500.0f to:1.0f],
-                                                                                                     nil
-                                                                                                     ]]);
-    light.depth = 1.0f;
-    sprite = (CCSprite *)light.parent;
-    lighting = (CCEffectLighting *)sprite.effect;
-    lighting.shininess = 20.0f;
     
+    // Specular color
+    //
+    light = setupBlock(ccp(0.5f, 0.65f), @"Specular Intensity", [CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+                                                                                                         [CCActionTween actionWithDuration:2 key:@"specularIntensity" from:0.0f to:1.0f],
+                                                                                                         [CCActionDelay actionWithDuration:2],
+                                                                                                         [CCActionTween actionWithDuration:2 key:@"specularIntensity" from:1.0f to:0.0f],
+                                                                                                         nil
+                                                                                                         ]]);
+    light = setupBlock(ccp(0.5f, 0.25f), @"Specular Color", nil);
+    light.intensity = 0.5f;
+    light.ambientIntensity = 0.5f;
+    light.specularIntensity = 1.0f;
     
-    light = setupBlock(ccp(0.8f, 0.65f), @"Varying Shininess", nil);
+    typedef void (^SpecularLerpBlock)();
+    typedef void (^SpecularLerpBuilderBlock)(ccColor4F deltaC);
+    
+    weakLight = light;
+    SpecularLerpBlock (^specularLerpBuilder)(ccColor4F deltaC) = ^SpecularLerpBlock(ccColor4F deltaC)
+    {
+        SpecularLerpBlock lerpBlock = ^{
+            ccColor4F c = weakLight.specularColor.ccColor4f;
+            c.r += deltaC.r;
+            c.g += deltaC.g;
+            c.b += deltaC.b;
+            weakLight.specularColor = [CCColor colorWithCcColor4f:c];
+        };
+        return lerpBlock;
+    };
+    
+    whiteRedLerp = specularLerpBuilder(ccc4f(0.0f, -delta, -delta, 0.0f));
+    whiteRedLerpAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:whiteRedLerp]] times:120];
+    
+    redGreenLerp = specularLerpBuilder(ccc4f(-delta, delta, 0.0f, 0.0f));
+    redGreenLerpAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:redGreenLerp]] times:120];
+    
+    greenBlueLerp = specularLerpBuilder(ccc4f(0.0f, -delta, delta, 0.0f));
+    greenBlueLerpAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:greenBlueLerp]] times:120];
+    
+    blueWhiteLerp = specularLerpBuilder(ccc4f(delta, delta, 0.0f, 0.0f));
+    blueWhiteLerpAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:blueWhiteLerp]] times:120];
+    
+    CCAction *specularLerpAction = [CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+                                                                            whiteRedLerpAction,
+                                                                            [CCActionDelay actionWithDuration:1],
+                                                                            redGreenLerpAction,
+                                                                            [CCActionDelay actionWithDuration:1],
+                                                                            greenBlueLerpAction,
+                                                                            [CCActionDelay actionWithDuration:1],
+                                                                            blueWhiteLerpAction,
+                                                                            [CCActionDelay actionWithDuration:1],
+                                                                            nil
+                                                                            ]];
+    [light runAction:specularLerpAction];
+    
+
+    // Cutoff, depth, and shininess
+    //
+    
+    light = setupBlock(ccp(0.7f, 0.65f), @"Shininess", nil);
     sprite = (CCSprite *)light.parent;
     lighting = (CCEffectLighting *)sprite.effect;
     lighting.shininess = 4.0f;
@@ -474,16 +530,36 @@
     
     ShininessLerpBlock shininessRampUp = shininessLerpBuilder(delta * 50.0f);
     CCActionInterval *shininessRampUpAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:shininessRampUp]] times:120];
-
+    
     ShininessLerpBlock shininessRampDown = shininessLerpBuilder(-delta * 50.0f);
     CCActionInterval *shininessRampDownAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:shininessRampDown]] times:120];
     
     [light runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
                                                               shininessRampUpAction,
-                                                              [CCActionDelay actionWithDuration:1],
+                                                              [CCActionDelay actionWithDuration:2],
                                                               shininessRampDownAction,
                                                               nil
                                                               ]]];
+
+    light = setupBlock(ccp(0.7f, 0.25f), @"Cutoff", [CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+                                                                                             [CCActionTween actionWithDuration:2 key:@"cutoffRadius" from:1.0f to:1000.0f],
+                                                                                             [CCActionDelay actionWithDuration:2],
+                                                                                             [CCActionTween actionWithDuration:2 key:@"cutoffRadius" from:1000.0f to:1.0f],
+                                                                                             nil
+                                                                                             ]]);
+    light.cutoffRadius = 1.0f;
+    light.ambientIntensity = 0.0f;
+    light.intensity = 1.0f;
+    light = setupBlock(ccp(0.9f, 0.65f), @"Depth", [CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+                                                                                            [CCActionTween actionWithDuration:2 key:@"depth" from:1.0f to:500.0f],
+                                                                                            [CCActionTween actionWithDuration:2 key:@"depth" from:500.0f to:1.0f],
+                                                                                            nil
+                                                                                            ]]);
+    light.depth = 1.0f;
+    sprite = (CCSprite *)light.parent;
+    lighting = (CCEffectLighting *)sprite.effect;
+    lighting.shininess = 20.0f;
+    
 }
 
 #endif
