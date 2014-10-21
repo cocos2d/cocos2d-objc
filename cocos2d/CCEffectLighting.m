@@ -252,9 +252,13 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
         }
 
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_globalAmbientColor"]] = [NSValue valueWithGLKVector4:globalAmbientColor];
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_specularExponent"]] = [NSNumber numberWithFloat:weakSelf.shininess];
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_specularColor"]] = [NSValue valueWithGLKVector4:weakSelf.specularColor.glkVector4];
-
+        
+        if (self.needsSpecular)
+        {
+            pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_specularExponent"]] = [NSNumber numberWithFloat:weakSelf.shininess];
+            pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_specularColor"]] = [NSValue valueWithGLKVector4:weakSelf.specularColor.glkVector4];
+        }
+        
     } copy]];
     
     self.renderPasses = @[pass0];
