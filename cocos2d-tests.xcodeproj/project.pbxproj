@@ -47,7 +47,6 @@
 		B7E2605817E7D278007067F0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605717E7D278007067F0 /* Foundation.framework */; };
 		B7E2605A17E7D278007067F0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605917E7D278007067F0 /* CoreGraphics.framework */; };
 		B7E2605C17E7D278007067F0 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605B17E7D278007067F0 /* CoreText.framework */; };
-		B7E2605E17E7D278007067F0 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605D17E7D278007067F0 /* GameKit.framework */; };
 		B7E2620017E7D321007067F0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E261FF17E7D321007067F0 /* AppDelegate.m */; };
 		B7E2620E17E7D34D007067F0 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E2620217E7D34D007067F0 /* Default-568h@2x.png */; };
 		B7E2620F17E7D34D007067F0 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = B7E2620317E7D34D007067F0 /* Default-Landscape~ipad.png */; };
@@ -150,7 +149,6 @@
 		D3763C0419E73188006C050D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605717E7D278007067F0 /* Foundation.framework */; };
 		D3763C0519E73188006C050D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605917E7D278007067F0 /* CoreGraphics.framework */; };
 		D3763C0619E73188006C050D /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605B17E7D278007067F0 /* CoreText.framework */; };
-		D3763C0719E73188006C050D /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605D17E7D278007067F0 /* GameKit.framework */; };
 		D3763D3819E734C5006C050D /* MainMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E2622017E7D3B2007067F0 /* MainMenu.m */; };
 		D3763D3919E734C5006C050D /* TestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = B71B087B17EA5B490082EBC0 /* TestBase.m */; };
 		D3763D3A19E734C5006C050D /* CCCacheTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E28FE19197FCE4500F78989 /* CCCacheTest.m */; };
@@ -360,7 +358,6 @@
 		B7E2605717E7D278007067F0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B7E2605917E7D278007067F0 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		B7E2605B17E7D278007067F0 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
-		B7E2605D17E7D278007067F0 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		B7E261FE17E7D321007067F0 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = "cocos2d-ui-tests/ios/AppDelegate.h"; sourceTree = SOURCE_ROOT; };
 		B7E261FF17E7D321007067F0 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = "cocos2d-ui-tests/ios/AppDelegate.m"; sourceTree = SOURCE_ROOT; };
 		B7E2620217E7D34D007067F0 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -513,7 +510,6 @@
 				B7E2605817E7D278007067F0 /* Foundation.framework in Frameworks */,
 				B7E2605A17E7D278007067F0 /* CoreGraphics.framework in Frameworks */,
 				B7E2605C17E7D278007067F0 /* CoreText.framework in Frameworks */,
-				B7E2605E17E7D278007067F0 /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -532,7 +528,6 @@
 				D3763C0419E73188006C050D /* Foundation.framework in Frameworks */,
 				D3763C0519E73188006C050D /* CoreGraphics.framework in Frameworks */,
 				D3763C0619E73188006C050D /* CoreText.framework in Frameworks */,
-				D3763C0719E73188006C050D /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -665,7 +660,6 @@
 				B7E2605717E7D278007067F0 /* Foundation.framework */,
 				B7E2605917E7D278007067F0 /* CoreGraphics.framework */,
 				B7E2605B17E7D278007067F0 /* CoreText.framework */,
-				B7E2605D17E7D278007067F0 /* GameKit.framework */,
 				75556A03185636F100ED1B0F /* XCTest.framework */,
 			);
 			name = Frameworks;
@@ -947,6 +941,11 @@
 					};
 					B7E2604717E7D278007067F0 = {
 						DevelopmentTeam = 96LKF67VJA;
+						SystemCapabilities = {
+							com.apple.GameCenter = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -1573,9 +1572,10 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = YES;
+				COPY_PHASE_STRIP = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "cocos2d-ui-tests/ios/Prefix.pch";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = "cocos2d-ui-tests/ios/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				MTL_HEADER_SEARCH_PATHS = "/Users/slembcke/Development/cocos2d-iphone/cocos2d";

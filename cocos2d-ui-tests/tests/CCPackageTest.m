@@ -189,12 +189,12 @@
 
 - (void)packageDownloadProgress:(CCPackage *)package downloadedBytes:(NSUInteger)downloadedBytes totalBytes:(NSUInteger)totalBytes
 {
-    NSLog(@"downloading... %u / %u", downloadedBytes, totalBytes);
+    NSLog(@"downloading... %u / %u", (unsigned int)downloadedBytes, (unsigned int)totalBytes);
 }
 
 - (void)packageUnzippingProgress:(CCPackage *)package unzippedBytes:(NSUInteger)unzippedBytes totalBytes:(NSUInteger)totalBytes
 {
-    NSLog(@"unzipping... %u / %u", unzippedBytes, totalBytes);
+    NSLog(@"unzipping... %u / %u", (unsigned int)unzippedBytes, (unsigned int)totalBytes);
 }
 
 @end
