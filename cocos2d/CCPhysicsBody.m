@@ -234,6 +234,7 @@ NotAffectedByGravity
 	cpBodySetVelocityUpdateFunc(self.body.body, func);
 	
 	_affectedByGravity = affectedByGravity;
+	[_body activate];
 }
 
 -(BOOL)allowsRotation {
@@ -367,6 +368,24 @@ CCPhysicsBodyUpdatePosition(cpBody *body, cpFloat dt)
 }
 
 -(BOOL)sleeping {return _body.isSleeping;}
+-(void)setSleeping:(BOOL)sleep
+{
+	if(_body.type != CP_BODY_TYPE_DYNAMIC){
+		CCLOGWARN(@"Warning: [CCPhysicsBody setSleeping:] has no effect on static bodies.");
+		return;
+	}
+	
+	if(_body.space == nil){
+		CCLOGWARN(@"Warning: [CCPhysicsBody setSleeping:] has no effect on bodies before they are added to a scene.");
+		return;
+	}
+	
+	if(sleep){
+		[_body sleep];
+	} else {
+		[_body activate];
+	}
+}
 
 @end
 
