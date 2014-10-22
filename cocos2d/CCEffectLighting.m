@@ -152,7 +152,7 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
         else
         {
             [effectBody appendFormat:@"tangentSpaceLightDir = normalize(v_tangentSpaceLightDir%lu.xyz);\n", (unsigned long)lightIndex];
-            [effectBody appendFormat:@"lightDist = length(v_tangentSpaceLightDir%lu.xyz);\n", (unsigned long)lightIndex];
+            [effectBody appendFormat:@"lightDist = length(v_tangentSpaceLightDir%lu.xy);\n", (unsigned long)lightIndex];
             [effectBody appendFormat:@"falloffTerm = max(0.0, (1.0 - lightDist * u_lightFalloff%lu));\n", (unsigned long)lightIndex];
             [effectBody appendFormat:@"lightColor = u_lightColor%lu * falloffTerm;\n", (unsigned long)lightIndex];
             if (needsSpecular)

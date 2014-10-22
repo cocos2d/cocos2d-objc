@@ -44,7 +44,7 @@
         }
         else
         {
-            _depth = 500.0f;
+            _depth = 100.0f;
         }
     }
     
