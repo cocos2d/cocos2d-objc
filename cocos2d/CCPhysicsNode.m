@@ -93,6 +93,11 @@
 	return cpArbiterIgnore(self.arb);
 }
 
+-(BOOL)firstContact
+{
+	return cpArbiterIsFirstContact(self.arb);
+}
+
 @end
 
 
