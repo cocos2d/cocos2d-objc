@@ -113,6 +113,9 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
                                      vec3 halfAngleDir;
                                      
                                      float lightDist;
+                                     float falloffTermA;
+                                     float falloffTermB;
+                                     float falloffSelect;
                                      float falloffTerm;
                                      float diffuseTerm;
                                      float specularTerm;
@@ -153,7 +156,12 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
         {
             [effectBody appendFormat:@"tangentSpaceLightDir = normalize(v_tangentSpaceLightDir%lu.xyz);\n", (unsigned long)lightIndex];
             [effectBody appendFormat:@"lightDist = length(v_tangentSpaceLightDir%lu.xy);\n", (unsigned long)lightIndex];
-            [effectBody appendFormat:@"falloffTerm = max(0.0, (1.0 - lightDist * u_lightFalloff%lu));\n", (unsigned long)lightIndex];
+            
+            [effectBody appendFormat:@"falloffTermA = clamp((lightDist * u_lightFalloff%lu.y + 1.0), 0.0, 1.0);\n", (unsigned long)lightIndex];
+            [effectBody appendFormat:@"falloffTermB = clamp((lightDist * u_lightFalloff%lu.z + u_lightFalloff%lu.w), 0.0, 1.0);\n", (unsigned long)lightIndex, (unsigned long)lightIndex];
+            [effectBody appendFormat:@"falloffSelect = step(u_lightFalloff%lu.x, lightDist);\n", (unsigned long)lightIndex];
+            [effectBody appendFormat:@"falloffTerm = (1.0 - falloffSelect) * falloffTermA + falloffSelect * falloffTermB;\n"];
+
             [effectBody appendFormat:@"lightColor = u_lightColor%lu * falloffTerm;\n", (unsigned long)lightIndex];
             if (needsSpecular)
             {
@@ -242,9 +250,38 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
             {
                 lightVector = GLKMatrix4MultiplyVector4(lightNodeToEffectNode, GLKVector4Make(light.anchorPointInPoints.x, light.anchorPointInPoints.y, light.depth, 1.0f));
 
-                float falloff = (light.cutoffRadius > 0.0f) ? 1.0f / light.cutoffRadius : 0.0f;
+                GLKVector4 falloffTerms = GLKVector4Make(0.0f, 0.0f, 0.0f, 1.0f);
+                if (light.cutoffRadius > 0.0f)
+                {
+                    float xIntercept = light.cutoffRadius * light.halfRadius;
+                    float r1 = 2.0f * xIntercept;
+                    float r2 = light.cutoffRadius;
+                    
+                    falloffTerms.x = xIntercept;
+                    
+                    if (light.halfRadius > 0.0f)
+                    {
+                        falloffTerms.y = -1.0f / r1;
+                    }
+                    else
+                    {
+                        falloffTerms.y = 0.0f;
+                    }
+                    
+                    if (light.halfRadius < 1.0f)
+                    {
+                        falloffTerms.z = -0.5f / (r2 - xIntercept);
+                        falloffTerms.w = 0.5f - xIntercept * falloffTerms.z;
+                    }
+                    else
+                    {
+                        falloffTerms.z = 0.0f;
+                        falloffTerms.w = 0.0f;
+                    }
+                }
+                
                 NSString *lightFalloffLabel = [NSString stringWithFormat:@"u_lightFalloff%lu", (unsigned long)lightIndex];
-                pass.shaderUniforms[weakSelf.uniformTranslationTable[lightFalloffLabel]] = [NSNumber numberWithFloat:falloff];
+                pass.shaderUniforms[weakSelf.uniformTranslationTable[lightFalloffLabel]] = [NSValue valueWithGLKVector4:falloffTerms];
             }
             
             // Compute the real light color based on color and intensity.
@@ -311,7 +348,7 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
             
             if (light.type != CCLightDirectional)
             {
-                [fragUniforms addObject:[CCEffectUniform uniform:@"float" name:[NSString stringWithFormat:@"u_lightFalloff%lu", (unsigned long)lightIndex] value:[NSNumber numberWithFloat:1.0f]]];
+                [fragUniforms addObject:[CCEffectUniform uniform:@"vec4" name:[NSString stringWithFormat:@"u_lightFalloff%lu", (unsigned long)lightIndex] value:[NSValue valueWithGLKVector4:GLKVector4Make(-1.0f, 1.0f, -1.0f, 1.0f)]]];
             }
             
             [varyings addObject:[CCEffectVarying varying:@"vec4" name:[NSString stringWithFormat:@"v_tangentSpaceLightDir%lu", (unsigned long)lightIndex]]];
