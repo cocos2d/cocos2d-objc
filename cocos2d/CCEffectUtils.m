@@ -16,7 +16,8 @@ static const float CCEffectUtilsMaxRefract = 0.043;
 static CCNode* CCEffectUtilsGetNodeParent(CCNode *node);
 
 
-GLKMatrix4 CCEffectUtilsTransformFromNodeToNode(CCNode *first, CCNode *second, BOOL *isPossible)
+
+CCNode* CCEffectUtilsFindCommonAncestor(CCNode *first, CCNode *second)
 {
     NSCAssert(first, @"CCEffectUtilsTransformFromNodeToNode supplied nil node.");
     NSCAssert(second, @"CCEffectUtilsTransformFromNodeToNode supplied nil node.");
@@ -44,9 +45,15 @@ GLKMatrix4 CCEffectUtilsTransformFromNodeToNode(CCNode *first, CCNode *second, B
         }
     }
 
-    if (isPossible)
+    return commonAncestor;
+}
+
+GLKMatrix4 CCEffectUtilsTransformFromNodeToNode(CCNode *first, CCNode *second, BOOL *success)
+{
+    CCNode *commonAncestor = CCEffectUtilsFindCommonAncestor(first, second);
+    if (success)
     {
-        *isPossible = (commonAncestor != nil);
+        *success = (commonAncestor != nil);
     }
     if (commonAncestor == nil)
     {
