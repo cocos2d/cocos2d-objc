@@ -264,12 +264,18 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
             {
                 lightVector = GLKMatrix4MultiplyVector4(lightNodeToWorld, GLKVector4Make(light.anchorPointInPoints.x, light.anchorPointInPoints.y, light.depth, 1.0f));
 
+                float scale0 = GLKVector4Length(GLKMatrix4GetColumn(lightNodeToWorld, 0));
+                float scale1 = GLKVector4Length(GLKMatrix4GetColumn(lightNodeToWorld, 1));
+                float maxScale = MAX(scale0, scale1);
+
+                float cutoffRadius = light.cutoffRadius * maxScale;
+
                 GLKVector4 falloffTerms = GLKVector4Make(0.0f, 0.0f, 0.0f, 1.0f);
-                if (light.cutoffRadius > 0.0f)
+                if (cutoffRadius > 0.0f)
                 {
-                    float xIntercept = light.cutoffRadius * light.halfRadius;
+                    float xIntercept = cutoffRadius * light.halfRadius;
                     float r1 = 2.0f * xIntercept;
-                    float r2 = light.cutoffRadius;
+                    float r2 = cutoffRadius;
                     
                     falloffTerms.x = xIntercept;
                     
