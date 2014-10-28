@@ -232,11 +232,13 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
         GLKMatrix4 nodeLocalToWorld = CCEffectUtilsMat4FromAffineTransform(pass.node.nodeToWorldTransform);
         GLKMatrix4 ndcToWorld = GLKMatrix4Multiply(nodeLocalToWorld, pass.ndcToNodeLocal);
         
-        GLKVector4 reflectTangent = GLKVector4Normalize(GLKMatrix4MultiplyVector4(nodeLocalToWorld, GLKVector4Make(1.0f, 0.0f, 0.0f, 0.0f)));
-        GLKVector4 reflectNormal = GLKVector4Make(0.0f, 0.0f, 1.0f, 1.0f);
-        GLKVector4 reflectBinormal = GLKVector4CrossProduct(reflectNormal, reflectTangent);
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_worldSpaceTangent"]] = [NSValue valueWithGLKVector2:GLKVector2Make(reflectTangent.x, reflectTangent.y)];
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_worldSpaceBinormal"]] = [NSValue valueWithGLKVector2:GLKVector2Make(reflectBinormal.x, reflectBinormal.y)];
+
+        GLKMatrix2 tangentMatrix = CCEffectUtilsMatrix2InvertAndTranspose(GLKMatrix4GetMatrix2(nodeLocalToWorld), nil);
+        GLKVector2 reflectTangent = GLKVector2Normalize(CCEffectUtilsMatrix2MultiplyVector2(tangentMatrix, GLKVector2Make(1.0f, 0.0f)));
+        GLKVector2 reflectBinormal = GLKVector2Make(-reflectTangent.y, reflectTangent.x);
+
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_worldSpaceTangent"]] = [NSValue valueWithGLKVector2:reflectTangent];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_worldSpaceBinormal"]] = [NSValue valueWithGLKVector2:reflectBinormal];
 
         
         // Matrix for converting NDC (normalized device coordinates (aka normalized render target coordinates)
