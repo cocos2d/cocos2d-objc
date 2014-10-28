@@ -114,6 +114,41 @@ GLKMatrix4 CCEffectUtilsMat4FromAffineTransform(CGAffineTransform at)
                           at.tx, at.ty, 0.0f,  1.0f);
 }
 
+GLKMatrix2 CCEffectUtilsMatrix2InvertAndTranspose(GLKMatrix2 matrix, bool *isInvertible)
+{
+    GLKMatrix2 result;
+
+    float det = matrix.m00 * matrix.m11 - matrix.m01 * matrix.m10;
+    if (fabsf(det) < FLT_EPSILON)
+    {
+        if (isInvertible)
+        {
+            *isInvertible = NO;
+        }
+        result.m00 = result.m11 = 1.0f;
+        result.m01 = result.m10 = 0.0f;
+    }
+    else
+    {
+        if (isInvertible)
+        {
+            *isInvertible = YES;
+        }
+        float invDet = 1.0f / det;
+        result.m00 =  matrix.m11 * invDet; result.m01 = -matrix.m01 * invDet;
+        result.m10 = -matrix.m10 * invDet; result.m11 =  matrix.m00 * invDet;
+    }
+    
+    return result;
+}
+
+GLKVector2 CCEffectUtilsMatrix2MultiplyVector2(GLKMatrix2 m, GLKVector2 v)
+{
+    GLKVector2 result = { m.m[0] * v.v[0] + m.m[2] * v.v[1],
+                          m.m[1] * v.v[0] + m.m[3] * v.v[1] };
+    return result;
+}
+
 float CCEffectUtilsConditionRefraction(float refraction)
 {
     NSCAssert((refraction >= -1.0f) && (refraction <= 1.0f), @"Supplied refraction out of range [-1..1].");
