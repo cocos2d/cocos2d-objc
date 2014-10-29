@@ -116,6 +116,15 @@ typedef struct CCContactSet {
  */
 -(BOOL)ignore;
 
+/**
+ *  Returns true if called on the first fixed timestep of a collision.
+ *  Normally you would use a ccPhysicsCollisionBegin method to check for this, but firstContact can be used in combination with the pre/postSolve methods.
+ *  For instance, you might want to play a sound from the postSolve callback only if it's the first step of a collision and the impact was hard enough.
+ *
+ *  @return FALSE
+ */
+-(BOOL)firstContact;
+
 @end
 
 

@@ -3,6 +3,7 @@
 #import "CCNodeColor.h"
 #import "CCEffectNode.h"
 #import "CCEffectBlur.h"
+#import "CCEffectInvert.h"
 
 #import "CCEffect_Private.h"
 #import "CCEffectStack_Private.h"
@@ -564,6 +565,30 @@
 
 #endif
 
+-(void)setupInvertTest
+{
+    self.subTitle = @"Invert Test";
+    
+    CGSize winSize = [CCDirector sharedDirector].viewSize;
+    
+    CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
+    sprite.position = ccp((CGFloat) (winSize.width / 2.0 + 80.0), (CGFloat) (winSize.height / 2.0));
+    [self.contentNode addChild:sprite];
+    
+    CCSprite *sprite2 = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
+    sprite2.position = ccp((CGFloat) (winSize.width / 2.0 + 140.0), (CGFloat) (winSize.height / 2.0));
+    [self.contentNode addChild:sprite2];
+    sprite2.effect = [[CCEffectInvert alloc] init];
+    
+    CCSprite *sprite3 = [CCSprite spriteWithImageNamed:@"Images/palette.png"];
+    sprite3.position = ccp((CGFloat) (winSize.width / 2.0 - 40.0), (CGFloat) (winSize.height / 2.0));
+    [self.contentNode addChild:sprite3];
+    
+    CCSprite *sprite4 = [CCSprite spriteWithImageNamed:@"Images/palette.png"];
+    sprite4.position = ccp((CGFloat) (winSize.width / 2.0 - 150.0), (CGFloat) (winSize.height / 2.0));
+    [self.contentNode addChild:sprite4];
+    sprite4.effect = [[CCEffectInvert alloc] init];    
+}
 
 -(void)setupPaddingEffectTest
 {

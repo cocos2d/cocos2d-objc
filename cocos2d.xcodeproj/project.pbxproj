@@ -441,6 +441,10 @@
 		7A97912A19E646D8001FFC4D /* libObjectiveChipmunk-Android.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A40377B19E36EFF007B6E8F /* libObjectiveChipmunk-Android.a */; };
 		7A97912B19E646F9001FFC4D /* libSSZipArchiveAndroid.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A40378319E36EFF007B6E8F /* libSSZipArchiveAndroid.a */; };
 		83409E4919D5BADC004B7EB9 /* libSSZipArchive.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83409E3619D5B791004B7EB9 /* libSSZipArchive.a */; };
+		839CE58619FFB139003369F0 /* CCEffectInvert.h in Headers */ = {isa = PBXBuildFile; fileRef = 839CE58419FFB139003369F0 /* CCEffectInvert.h */; };
+		839CE58719FFB139003369F0 /* CCEffectInvert.m in Sources */ = {isa = PBXBuildFile; fileRef = 839CE58519FFB139003369F0 /* CCEffectInvert.m */; };
+		839CE58A19FFB145003369F0 /* CCEffectInvert.m in Sources */ = {isa = PBXBuildFile; fileRef = 839CE58519FFB139003369F0 /* CCEffectInvert.m */; };
+		839CE58B19FFB146003369F0 /* CCEffectInvert.m in Sources */ = {isa = PBXBuildFile; fileRef = 839CE58519FFB139003369F0 /* CCEffectInvert.m */; };
 		83E1A86219C8ACA0000A3BCA /* CCPackage.h in Headers */ = {isa = PBXBuildFile; fileRef = 83E1A85A19C8ACA0000A3BCA /* CCPackage.h */; };
 		83E1A86319C8ACA0000A3BCA /* CCPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E1A85B19C8ACA0000A3BCA /* CCPackage.m */; };
 		83E1A86419C8ACA0000A3BCA /* CCPackageConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 83E1A85C19C8ACA0000A3BCA /* CCPackageConstants.h */; };
@@ -1221,7 +1225,7 @@
 		5BC3CB5219626E4F00C4F0D0 /* CCGestureListener.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = CCGestureListener.java; sourceTree = "<group>"; };
 		5BC3CB5719626FA000C4F0D0 /* CCGestureListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCGestureListener.h; path = Android/CCGestureListener.h; sourceTree = "<group>"; };
 		5BC3CB5819626FA000C4F0D0 /* CCGestureListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCGestureListener.m; path = Android/CCGestureListener.m; sourceTree = "<group>"; };
-		5BF3267A195F8D8800D9A51A /* cocos2dJava.jar */ = {isa = PBXFileReference; explicitFileType = compiled.java.jar; includeInIndex = 0; path = cocos2dJava.jar; sourceTree = BUILT_PRODUCTS_DIR; };
+		5BF3267A195F8D8800D9A51A /* cocos2dJava.jar */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = archive.jar; path = cocos2dJava.jar; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BF3268C195F8E0300D9A51A /* CCActivity.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = CCActivity.java; sourceTree = "<group>"; };
 		5BF3268D195F8E0300D9A51A /* CCGLView.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = CCGLView.java; sourceTree = "<group>"; };
 		5BF32696195F947800D9A51A /* CCActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCActivity.h; path = Android/CCActivity.h; sourceTree = "<group>"; };
@@ -1232,6 +1236,8 @@
 		7A4037C519E37126007B6E8F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		7A4037C719E3712A007B6E8F /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/OpenGL.framework; sourceTree = DEVELOPER_DIR; };
 		83409E2A19D5B791004B7EB9 /* SSZipArchive.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SSZipArchive.xcodeproj; path = external/SSZipArchive/SSZipArchive.xcodeproj; sourceTree = "<group>"; };
+		839CE58419FFB139003369F0 /* CCEffectInvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEffectInvert.h; sourceTree = "<group>"; };
+		839CE58519FFB139003369F0 /* CCEffectInvert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectInvert.m; sourceTree = "<group>"; };
 		83E1A85A19C8ACA0000A3BCA /* CCPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackage.h; sourceTree = "<group>"; };
 		83E1A85B19C8ACA0000A3BCA /* CCPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackage.m; sourceTree = "<group>"; };
 		83E1A85C19C8ACA0000A3BCA /* CCPackageConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackageConstants.h; sourceTree = "<group>"; };
@@ -1938,7 +1944,6 @@
 			isa = PBXGroup;
 			children = (
 				83409E3219D5B791004B7EB9 /* SSZipArchiveExampleApp.app */,
-				83409E3419D5B791004B7EB9 /* SSZipArchiveTests.xctest */,
 				83409E3619D5B791004B7EB9 /* libSSZipArchive.a */,
 				7A40378319E36EFF007B6E8F /* libSSZipArchiveAndroid.a */,
 				7A59498219E38C8300F65F90 /* libSSZipArchiveMac.a */,
@@ -2126,44 +2131,46 @@
 		D272031618FC897D00B100FF /* Effects */ = {
 			isa = PBXGroup;
 			children = (
-				D27451BF19AFC44D006DA0A1 /* DistanceField */,
-				9DBCA31219B68BE400EFE96D /* CCEffectColorChannelOffset.h */,
-				9DBCA31319B68BE400EFE96D /* CCEffectColorChannelOffset.m */,
-				D3903B081995285B003AA81A /* CCEffectBlur.h */,
-				D3903B091995285B003AA81A /* CCEffectBlur.m */,
-				D268FE151980791300ECBCD0 /* CCEffectRefraction.h */,
-				D268FE161980791300ECBCD0 /* CCEffectRefraction.m */,
-				D268FE171980791300ECBCD0 /* CCEffectUtils.h */,
-				D268FE181980791300ECBCD0 /* CCEffectUtils.m */,
+				D272031718FC89A000B100FF /* CCEffect_Private.h */,
+				D272031818FC89A000B100FF /* CCEffect.h */,
+				D272031918FC89A000B100FF /* CCEffect.m */,
 				D268FE05198078FF00ECBCD0 /* CCEffectBloom.h */,
 				D268FE06198078FF00ECBCD0 /* CCEffectBloom.m */,
+				D3903B081995285B003AA81A /* CCEffectBlur.h */,
+				D3903B091995285B003AA81A /* CCEffectBlur.m */,
+				9D85671B191B018200573093 /* CCEffectBrightness.h */,
+				9D85671C191B018200573093 /* CCEffectBrightness.m */,
+				9DBCA31219B68BE400EFE96D /* CCEffectColorChannelOffset.h */,
+				9DBCA31319B68BE400EFE96D /* CCEffectColorChannelOffset.m */,
+				9D85671F191B019900573093 /* CCEffectContrast.h */,
+				9D856720191B019900573093 /* CCEffectContrast.m */,
+				D27451A819AD430A006DA0A1 /* CCEffectDropShadow.h */,
+				D27451A919AD430A006DA0A1 /* CCEffectDropShadow.m */,
 				D268FE07198078FF00ECBCD0 /* CCEffectGlass.h */,
 				D268FE08198078FF00ECBCD0 /* CCEffectGlass.m */,
 				D268FE09198078FF00ECBCD0 /* CCEffectHue.h */,
 				D268FE0A198078FF00ECBCD0 /* CCEffectHue.m */,
+				839CE58419FFB139003369F0 /* CCEffectInvert.h */,
+				839CE58519FFB139003369F0 /* CCEffectInvert.m */,
 				9DDD047C19DE154400687820 /* CCEffectLighting.h */,
 				9DDD047D19DE154400687820 /* CCEffectLighting.m */,
+				9DF3761F191C594A00C6D27A /* CCEffectPixellate.h */,
+				9DF37620191C594A00C6D27A /* CCEffectPixellate.m */,
 				D268FE0B198078FF00ECBCD0 /* CCEffectReflection.h */,
 				D268FE0C198078FF00ECBCD0 /* CCEffectReflection.m */,
+				D268FE151980791300ECBCD0 /* CCEffectRefraction.h */,
+				D268FE161980791300ECBCD0 /* CCEffectRefraction.m */,
 				D24161041958F72B003673BD /* CCEffectRenderer.h */,
 				D24161051958F72B003673BD /* CCEffectRenderer.m */,
 				D24161061958F72B003673BD /* CCEffectSaturation.h */,
 				D24161071958F72B003673BD /* CCEffectSaturation.m */,
-				D24161081958F72B003673BD /* CCEffectStackProtocol.h */,
-				D272031718FC89A000B100FF /* CCEffect_Private.h */,
-				D272031818FC89A000B100FF /* CCEffect.h */,
-				D272031918FC89A000B100FF /* CCEffect.m */,
-				D272032018FC89A000B100FF /* CCEffectStack.h */,
 				9D85671A191AE2CC00573093 /* CCEffectStack_Private.h */,
+				D272032018FC89A000B100FF /* CCEffectStack.h */,
 				D272032118FC89A000B100FF /* CCEffectStack.m */,
-				9D85671B191B018200573093 /* CCEffectBrightness.h */,
-				9D85671C191B018200573093 /* CCEffectBrightness.m */,
-				9D85671F191B019900573093 /* CCEffectContrast.h */,
-				9D856720191B019900573093 /* CCEffectContrast.m */,
-				9DF3761F191C594A00C6D27A /* CCEffectPixellate.h */,
-				9DF37620191C594A00C6D27A /* CCEffectPixellate.m */,
-				D27451A819AD430A006DA0A1 /* CCEffectDropShadow.h */,
-				D27451A919AD430A006DA0A1 /* CCEffectDropShadow.m */,
+				D24161081958F72B003673BD /* CCEffectStackProtocol.h */,
+				D268FE171980791300ECBCD0 /* CCEffectUtils.h */,
+				D268FE181980791300ECBCD0 /* CCEffectUtils.m */,
+				D27451BF19AFC44D006DA0A1 /* DistanceField */,
 			);
 			name = Effects;
 			sourceTree = "<group>";
@@ -2421,6 +2428,7 @@
 				B798D143181F469100E7BFCD /* CCLabelBMFont_Private.h in Headers */,
 				D3903B0A1995285B003AA81A /* CCEffectBlur.h in Headers */,
 				E0EAD19D121F4D7300B0C81C /* CCGL.h in Headers */,
+				839CE58619FFB139003369F0 /* CCEffectInvert.h in Headers */,
 				E0EAD1F1121F522A00B0C81C /* CCConfiguration.h in Headers */,
 				9D85671D191B018200573093 /* CCEffectBrightness.h in Headers */,
 				D272032B18FC89A000B100FF /* CCEffectNode.h in Headers */,
@@ -2978,13 +2986,6 @@
 			remoteRef = 7A40377A19E36EFF007B6E8F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		83409E3219D5B791004B7EB9 /* SSZipArchiveExampleApp.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = SSZipArchiveExampleApp.app;
-			remoteRef = 83409E3119D5B791004B7EB9 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		7A40378319E36EFF007B6E8F /* libSSZipArchiveAndroid.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -3215,6 +3216,7 @@
 				B78AE46D17E7AF6C0028BE0B /* UITouch+CC.m in Sources */,
 				D33803E318032ECE0072D8FE /* CCPhysicsBody.m in Sources */,
 				D268FE12198078FF00ECBCD0 /* CCEffectHue.m in Sources */,
+				839CE58719FFB139003369F0 /* CCEffectInvert.m in Sources */,
 				E525F0F74C7C69C4371E20EE /* CCPackageHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3236,6 +3238,7 @@
 			files = (
 				7A59479119E3759800F65F90 /* CCEffectDistanceField.m in Sources */,
 				7A59479319E3759800F65F90 /* CCEffectDFOutline.m in Sources */,
+				839CE58B19FFB146003369F0 /* CCEffectInvert.m in Sources */,
 				7A59479519E3759800F65F90 /* CCEffectDFInnerGlow.m in Sources */,
 				7A59479719E3759800F65F90 /* CCEffectColorChannelOffset.m in Sources */,
 				7A59479919E3759900F65F90 /* CCEffectBlur.m in Sources */,
@@ -3376,6 +3379,7 @@
 			files = (
 				D3027C8719D33FFB00006004 /* NSValue+CCRenderer.m in Sources */,
 				57202D391970776100238D56 /* CCPlatformTextFieldAndroid.m in Sources */,
+				839CE58A19FFB145003369F0 /* CCEffectInvert.m in Sources */,
 				D2FEB6B9194F6C9E00FC0574 /* CCAction.m in Sources */,
 				D299CE7D19C2910B00519CBB /* CCEffectDFInnerGlow.m in Sources */,
 				D2FEB6BA194F6C9E00FC0574 /* CCNode.m in Sources */,
@@ -3575,6 +3579,7 @@
 					DEBUG,
 					"COCOS2D_DEBUG=1",
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
@@ -3610,6 +3615,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
@@ -3771,6 +3777,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COMBINE_HIDPI_IMAGES = YES;
 				COMPRESS_PNG_FILES = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = ".git *.nib *.lproj *.framework *.gch *.xcode* (*) CVS .svn";
@@ -3825,6 +3832,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COMBINE_HIDPI_IMAGES = YES;
 				COMPRESS_PNG_FILES = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = ".git *.nib *.lproj *.framework *.gch *.xcode* (*) CVS .svn";

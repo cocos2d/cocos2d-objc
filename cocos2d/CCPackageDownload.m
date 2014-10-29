@@ -94,7 +94,7 @@
 {
     const char *cStr = [str UTF8String];
     unsigned char result[CC_SHA1_DIGEST_LENGTH];
-    CC_SHA1(cStr, strlen(cStr), result);
+    CC_SHA1(cStr, (CC_LONG)strlen(cStr), result);
     NSString *hash = [NSString stringWithFormat:
                                     @"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
                                     result[0], result[1], result[2], result[3], result[4],
@@ -263,7 +263,7 @@
 
     if (_fileSize > 0)
     {
-        NSString *requestRange = [NSString stringWithFormat:@"bytes=%d-", _fileSize];
+        NSString *requestRange = [NSString stringWithFormat:@"bytes=%d-", (unsigned int)_fileSize];
         [result setValue:requestRange forHTTPHeaderField:@"Range"];
     }
 
@@ -326,7 +326,7 @@
         }
         else if (_fileSize > _totalBytes)
         {
-            CCLOG(@"[PACKAGE/DOWNLOAD][ERROR] Restarting download: Size mismatch: File is larger(%u) than expected download size(%u)", _fileSize, _totalBytes);
+            CCLOG(@"[PACKAGE/DOWNLOAD][ERROR] Restarting download: Size mismatch: File is larger(%lu) than expected download size(%lu)", _fileSize, _totalBytes);
             [self restartDownload];
         }
     }
@@ -408,7 +408,7 @@
     NSError *error = [NSError errorWithDomain:@"Cocos2d"
                                          code:PACKAGE_ERROR_DOWNLOAD_SERVER_RESPONSE_NOT_OK
                                      userInfo:@{
-                                             NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Error: The host respondeded with status code %d.", [httpResponse statusCode]],
+                                             NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Error: The host respondeded with status code %d.", (unsigned int)[httpResponse statusCode]],
                                              @"HTTPResponse" : httpResponse
                                      }];
 

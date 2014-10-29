@@ -80,11 +80,8 @@ Forum
 Download from Github
 --------------------
 
-    $ git clone git://github.com/cocos2d/cocos2d-iphone.git
-    $ cd cocos2d-iphone
-    $ git checkout develop-v3
-    $ git submodule update --init
-
+    $ git clone --recursive https://github.com/cocos2d/cocos2d-swift.git
+    $ cd cocos2d-swift
 
 [1]: http://www.cocos2d-iphone.org "cocos2d for iPhone"
 [2]: http://www.cocos2d.org "cocos2d"
