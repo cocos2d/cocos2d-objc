@@ -569,9 +569,17 @@ void FNTConfigRemoveCache( void )
 
 -(void)setTag:(NSUInteger)tag forChild:(CCSprite *)child
 {
-	// Insert NSNull to fill holes if necessary.
-	while(_childForTag.count < tag) [_childForTag addObject:[NSNull null]];
-	[_childForTag addObject:child];
+    // When label is reused, incoming tag could be larger than count.
+    if(_childForTag.count > tag){
+        id obj = [_childForTag objectAtIndex:tag];
+        [_childForTag insertObject:child atIndex:tag];
+        [_childForTag removeObject:obj];
+        return;
+    }
+    
+    // Insert NSNull to fill holes if necessary.        
+    while(_childForTag.count < tag) [_childForTag addObject:[NSNull null]];
+    [_childForTag addObject:child];
 }
 
 
@@ -650,11 +658,11 @@ void FNTConfigRemoveCache( void )
             //Do not put lastWord on current line. Add "\n" to current line to start a new line
             //Append to lastWord
             if (characterSprite.position.x + characterSprite.contentSize.width/2 - startOfLine >  _width) {
-                lastWord = [lastWord stringByAppendingFormat:@"%C", character];
-                NSString *trimmedString = [multilineString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-                multilineString = [trimmedString stringByAppendingString:@"\n"];
+                NSString *trimmedString = [lastWord stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                lastWord = [[trimmedString stringByAppendingString:@"\n"] stringByAppendingFormat:@"%C", character];
                 line++;
                 startOfLine = -1;
+                startOfWord = -1;
                 i++;
                 continue;
             } else {
