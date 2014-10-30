@@ -261,6 +261,7 @@
     {
         CCLightNode *light = [[CCLightNode alloc] init];
         light.type = type;
+        light.groups = @[title];
         light.positionType = CCPositionTypeNormalized;
         light.position = ccp(0.5f, 0.5f);
         light.anchorPoint = ccp(0.5f, 0.5f);
@@ -271,7 +272,8 @@
         
         CCSprite *lightSprite = [CCSprite spriteWithImageNamed:@"Images/snow.png"];
         
-        CCEffectLighting *lightingEffect = [[CCEffectLighting alloc] initWithLights:@[light]];
+        CCEffectLighting *lightingEffect = [[CCEffectLighting alloc] init];
+        lightingEffect.groups = @[title];
         lightingEffect.shininess = 10.0f;
         
         CCSprite *sprite = [CCSprite spriteWithImageNamed:diffuseImage];
@@ -322,6 +324,7 @@
     CCLightNode* (^setupBlock)(CGPoint position, NSString *title, CCAction *action) = ^CCLightNode*(CGPoint position, NSString *title, CCAction *action)
     {
         CCLightNode *light = [[CCLightNode alloc] init];
+        light.groups = @[title];
         light.positionType = CCPositionTypeNormalized;
         light.position = ccp(1.0f, 1.0f);
         light.anchorPoint = ccp(0.5f, 0.5f);
@@ -333,7 +336,8 @@
         CCSprite *lightSprite = [CCSprite spriteWithImageNamed:@"Images/snow.png"];
         [light addChild:lightSprite];
         
-        CCEffectLighting *lightingEffect = [[CCEffectLighting alloc] initWithLights:@[light]];
+        CCEffectLighting *lightingEffect = [[CCEffectLighting alloc] init];
+        lightingEffect.groups = @[title];
         
         CCSprite *sprite = [CCSprite spriteWithImageNamed:diffuseImage];
         sprite.positionType = CCPositionTypeNormalized;

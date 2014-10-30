@@ -7,7 +7,6 @@
 //
 
 #import "CCEffect.h"
-#import "CCLightNode.h"
 
 #if CC_EFFECTS_EXPERIMENTAL
 
@@ -20,6 +19,14 @@
 /// -----------------------------------------------------------------------
 /// @name Accessing Effect Attributes
 /// -----------------------------------------------------------------------
+
+
+/** The groups that this effect belongs to. Instances of CCLightNode also
+ *  belong to groups. The intersection of a light effect's groups and a light
+ *  node's groups determine whether or not a light node contributes to a light
+ *  effect.
+ */
+@property (nonatomic, copy) NSArray *groups;
 
 /**
  *  The specular color of the affected node. This color is combined with the light's
@@ -40,7 +47,7 @@
 /// -----------------------------------------------------------------------
 
 /**
- *  Initializes a CCEffectLighting object with no lights.
+ *  Initializes a CCEffectLighting object.
  *
  *  @return The CCEffectLighting object.
  */
@@ -49,11 +56,13 @@
 /**
  *  Initializes a CCEffectLighting object with the supplied parameters.
  *
- *  @param environment The array of lights that will light the affected node.
+ *  @param groups         The light groups this effect belongs to.
+ *  @param specularColor  The specular color of this effect.
+ *  @param shininess      The overall shininess of the effect.
  *
  *  @return The CCEffectLighting object.
  */
--(id)initWithLights:(NSArray *)lights;
+-(id)initWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess;
 
 
 /// -----------------------------------------------------------------------
@@ -61,38 +70,15 @@
 /// -----------------------------------------------------------------------
 
 /**
- *  Creates a CCEffectLighting object with the supplied parameters.
+ *  Creates and initializes a CCEffectLighting object with the supplied parameters.
  *
- *  @param environment The array of lights that will light the affected node.
+ *  @param groups         The light groups this effect belongs to.
+ *  @param specularColor  The specular color of this effect.
+ *  @param shininess      The overall shininess of the effect.
  *
  *  @return The CCEffectLighting object.
  */
-+(id)effectWithLights:(NSArray *)lights;
-
-
-/// -----------------------------------------------------------------------
-/// @name Adding and removing lights
-/// -----------------------------------------------------------------------
-
-/**
- *  Adds a light to the effect.
- *
- *  @param light CCLightNode to add.
- */
--(void) addLight:(CCLightNode *)light;
-
-/**
- *  Removes a light from the effect.
- *
- *  @param light The light node to remove.
- */
--(void) removeLight:(CCLightNode *)light;
-
-/**
- *  Removes all lights from the effect.
- */
--(void) removeAllLights;
-
++(id)effectWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess;
 
 @end
 

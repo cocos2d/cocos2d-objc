@@ -7,6 +7,11 @@
 //
 
 #import "CCLightNode.h"
+#import "CCLightCollection.h"
+#import "CCScene.h"
+
+#import "CCLightNode_Private.h"
+
 
 #if CC_EFFECTS_EXPERIMENTAL
 
@@ -14,19 +19,21 @@
 
 -(id)init
 {
-    return [self initWithType:CCLightPoint color:[CCColor whiteColor] intensity:1.0f];
+    return [self initWithType:CCLightPoint groups:nil color:[CCColor whiteColor] intensity:1.0f];
 }
 
--(id)initWithType:(CCLightType)type color:(CCColor *)color intensity:(float)intensity
+-(id)initWithType:(CCLightType)type groups:(NSArray*)groups color:(CCColor *)color intensity:(float)intensity
 {
-    return [self initWithType:type color:color intensity:intensity specularColor:color specularIntensity:intensity ambientColor:[CCColor whiteColor] ambientIntensity:0.5f];
+    return [self initWithType:type groups:groups color:color intensity:intensity specularColor:color specularIntensity:intensity ambientColor:[CCColor whiteColor] ambientIntensity:0.5f];
 }
 
--(id)initWithType:(CCLightType)type color:(CCColor *)color intensity:(float)intensity specularColor:(CCColor *)specularColor specularIntensity:(float)specularIntensity ambientColor:(CCColor *)ambientColor ambientIntensity:(float)ambientIntensity
+-(id)initWithType:(CCLightType)type groups:(NSArray*)groups color:(CCColor *)color intensity:(float)intensity specularColor:(CCColor *)specularColor specularIntensity:(float)specularIntensity ambientColor:(CCColor *)ambientColor ambientIntensity:(float)ambientIntensity
 {
     if ((self = [super init]))
     {
         _type = type;
+        
+        _groups = [groups copy];
         
         _color = color.ccColor4f;
         _intensity = intensity;
@@ -53,14 +60,40 @@
     return self;
 }
 
-+(id)lightWithType:(CCLightType)type color:(CCColor *)color intensity:(float)intensity
++(id)lightWithType:(CCLightType)type groups:(NSArray*)groups color:(CCColor *)color intensity:(float)intensity
 {
-    return [[self alloc] initWithType:type color:color intensity:intensity];
+    return [[self alloc] initWithType:type groups:groups color:color intensity:intensity];
 }
 
-+(id)lightWithType:(CCLightType)type color:(CCColor *)color intensity:(float)intensity specularColor:(CCColor *)specularColor specularIntensity:(float)specularIntensity ambientColor:(CCColor *)ambientColor ambientIntensity:(float)ambientIntensity
++(id)lightWithType:(CCLightType)type groups:(NSArray*)groups color:(CCColor *)color intensity:(float)intensity specularColor:(CCColor *)specularColor specularIntensity:(float)specularIntensity ambientColor:(CCColor *)ambientColor ambientIntensity:(float)ambientIntensity
 {
-    return [[self alloc] initWithType:type color:color intensity:intensity specularColor:specularColor specularIntensity:specularIntensity ambientColor:ambientColor ambientIntensity:ambientIntensity];
+    return [[self alloc] initWithType:type groups:groups color:color intensity:intensity specularColor:specularColor specularIntensity:specularIntensity ambientColor:ambientColor ambientIntensity:ambientIntensity];
+}
+
+- (void)onEnter
+{
+    [super onEnter];
+    [self.scene.lights addLight:self];
+
+    CCLightCollection *lightCollection = self.scene.lights;
+    NSAssert(lightCollection, @"The light node is in a scene but there's no light collection.");
+    _groupMask = [lightCollection maskForGroups:_groups];
+}
+
+- (void)onExit
+{
+    _groupMask = 0;
+    
+    [self.scene.lights removeLight:self];
+    [super onExit];
+}
+
+-(void)setGroups:(NSArray *)groups
+{
+    _groups = [groups copy];
+
+    CCLightCollection *lightCollection = self.scene.lights;
+    _groupMask = [lightCollection maskForGroups:_groups];
 }
 
 -(void)setIntensity:(float)intensity
