@@ -567,6 +567,66 @@
     
 }
 
+-(void)setupLightingCollectionTest
+{
+    self.subTitle = @"Lighting Collection Test";
+    
+    NSString *normalMapImage = @"Images/ShinyTorusNormals.png";
+    NSString *diffuseImage = @"Images/ShinyTorusColor.png";
+    
+    CCLightNode* (^setupBlock)(CGPoint position, float depth) = ^CCLightNode *(CGPoint position, float depth)
+    {
+        CCLightNode *light = [[CCLightNode alloc] init];
+        light.type = CCLightPoint;
+        light.positionType = CCPositionTypeNormalized;
+        light.position = position;
+        light.anchorPoint = ccp(0.5f, 0.5f);
+        light.intensity = 0.2f;
+        light.ambientIntensity = 0.0f;
+        light.cutoffRadius = 0.0f;
+        light.depth = depth;
+        
+        CCSprite *lightSprite = [CCSprite spriteWithImageNamed:@"Images/snow.png"];
+        
+        [light addChild:lightSprite];
+        
+        return light;
+    };
+    
+    // Bottom row
+    [self.contentNode addChild:setupBlock(ccp(0.25f, 0.25f), 50.0f)];
+    [self.contentNode addChild:setupBlock(ccp(0.5f,  0.25f), 50.0f)];
+    [self.contentNode addChild:setupBlock(ccp(0.75f, 0.25f), 50.0f)];
+    
+    // Middle row
+    [self.contentNode addChild:setupBlock(ccp(0.25f, 0.5f), 50.0f)];
+    [self.contentNode addChild:setupBlock(ccp(0.75f, 0.5f), 50.0f)];
+    
+    // Top row
+    [self.contentNode addChild:setupBlock(ccp(0.25f, 0.75f), 50.0f)];
+    [self.contentNode addChild:setupBlock(ccp(0.5f,  0.75f), 50.0f)];
+    [self.contentNode addChild:setupBlock(ccp(0.75f, 0.75f), 50.0f)];
+    
+    // Outliers
+    [self.contentNode addChild:setupBlock(ccp(0.2f, 0.4f), 50.0f)];
+    [self.contentNode addChild:setupBlock(ccp(0.8f, 0.4f), 50.0f)];
+    [self.contentNode addChild:setupBlock(ccp(0.2f, 0.6f), 50.0f)];
+    [self.contentNode addChild:setupBlock(ccp(0.8f, 0.6f), 50.0f)];
+    
+    
+    CCEffectLighting *lightingEffect = [[CCEffectLighting alloc] init];
+    lightingEffect.shininess = 100.0f;
+    
+    CCSprite *sprite = [CCSprite spriteWithImageNamed:diffuseImage];
+    sprite.positionType = CCPositionTypeNormalized;
+    sprite.position = ccp(0.5f, 0.5f);
+    sprite.normalMapSpriteFrame = [CCSpriteFrame frameWithImageNamed:normalMapImage];
+    sprite.effect = lightingEffect;
+    sprite.scale = 0.3f;
+    
+    [self.contentNode addChild:sprite];
+}
+
 #endif
 
 -(void)setupInvertTest

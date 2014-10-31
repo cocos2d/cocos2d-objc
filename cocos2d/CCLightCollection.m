@@ -78,20 +78,25 @@ static const NSUInteger CCLightCollectionMaxGroupCount = sizeof(NSUInteger) * 8;
 
 - (NSArray*)findClosestKLights:(NSUInteger)count toPoint:(CGPoint)point withMask:(CCLightGroupMask)mask
 {
-    __block NSUInteger matchCount = 0;
-    NSPredicate *groupsMatch = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-        CCLightNode *light = (CCLightNode*)evaluatedObject;
-        
-        BOOL match = ((light.groupMask & mask) != 0);
-        if (match)
-        {
-            matchCount++;
-        }
-        
-        return match && (matchCount <= count);
-    }];
-    NSArray *results = [self.lights filteredArrayUsingPredicate:groupsMatch];
-    return results;
+    NSPredicate *groupsMatch = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings)
+                                {
+                                    CCLightNode *light = (CCLightNode*)evaluatedObject;
+                                    return ((light.groupMask & mask) != 0);
+                                }];
+    
+    NSMutableArray *maskedLights = [[self.lights filteredArrayUsingPredicate:groupsMatch] mutableCopy];
+    
+    if (maskedLights.count <= count)
+    {
+        // If we only have as many lights as are being requested, just return them.
+        return [maskedLights copy];
+    }
+    else
+    {
+        // If we have more lights than are being requested, use quick select to find the
+        // closest ones.
+        return [CCLightCollection selectClosestKLights:count inArray:maskedLights forPoint:point];
+    }
 }
 
 
@@ -128,6 +133,77 @@ static const NSUInteger CCLightCollectionMaxGroupCount = sizeof(NSUInteger) * 8;
     }
     
     return [_groupNames indexOfObject:groupName];
+}
+
++ (NSArray *)selectClosestKLights:(NSUInteger)count inArray:(NSMutableArray *)array forPoint:(CGPoint)refPoint
+{
+    NSMutableArray *results = [[NSMutableArray alloc] init];
+    if (array.count == 0)
+    {
+        return [results copy];
+    }
+    else if (array.count == 1)
+    {
+        [results addObject:array[0]];
+        return [results copy];
+    }
+    
+    NSUInteger leftIndex = 0;
+    NSUInteger rightIndex = array.count - 1;
+
+    while (1)
+    {
+        NSUInteger pivotIndex = leftIndex + arc4random_uniform((uint32_t)(rightIndex - leftIndex + 1));        
+        pivotIndex = [CCLightCollection partitionArray:array forPoint:refPoint withLeftIndex:leftIndex rightIndex:rightIndex pivotIndex:pivotIndex];
+        
+        if ((count - 1) == pivotIndex)
+        {
+            for (NSUInteger i = 0; i < count; i++)
+            {
+                [results addObject:array[i]];
+            }
+            break;
+        }
+        else if ((count - 1) < pivotIndex)
+        {
+            rightIndex = pivotIndex - 1;
+        }
+        else
+        {
+            leftIndex = pivotIndex + 1;
+        }
+    }
+
+    return [results copy];
+}
+
++ (NSUInteger)partitionArray:(NSMutableArray *)array forPoint:(CGPoint)refPoint withLeftIndex:(NSUInteger)leftIndex rightIndex:(NSUInteger)rightIndex pivotIndex:(NSUInteger)pivotIndex
+{
+    float pivotValue = [CCLightCollection distanceFromLight:(CCLightNode *)array[pivotIndex] toPoint:refPoint];
+    [array exchangeObjectAtIndex:pivotIndex withObjectAtIndex:rightIndex];
+    
+    NSUInteger storeIndex = leftIndex;
+    for (NSUInteger i = leftIndex; i < rightIndex; i++)
+    {
+        CCLightNode *light = (CCLightNode*)array[i];
+        float currentValue = [CCLightCollection distanceFromLight:light toPoint:refPoint];
+        if (currentValue < pivotValue)
+        {
+            [array exchangeObjectAtIndex:storeIndex withObjectAtIndex:i];
+            storeIndex++;
+        }
+    }
+    [array exchangeObjectAtIndex:rightIndex withObjectAtIndex:storeIndex];
+    return storeIndex;
+}
+
++ (float)distanceFromLight:(CCLightNode*)light toPoint:(CGPoint)refPoint
+{
+    CGPoint lightPosition = CGPointApplyAffineTransform(light.anchorPointInPoints, light.nodeToWorldTransform);
+    CGPoint delta = CGPointMake(lightPosition.x - refPoint.x, lightPosition.y - refPoint.y);
+    
+    float distSquared = delta.x * delta.x + delta.y * delta.y;
+    return distSquared;
 }
 
 @end
