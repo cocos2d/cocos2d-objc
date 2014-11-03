@@ -180,14 +180,14 @@ static const NSUInteger CCLightCollectionMaxGroupCount = sizeof(NSUInteger) * 8;
 
 + (NSUInteger)partitionArray:(NSMutableArray *)array forPoint:(CGPoint)refPoint withLeftIndex:(NSUInteger)leftIndex rightIndex:(NSUInteger)rightIndex pivotIndex:(NSUInteger)pivotIndex
 {
-    float pivotValue = [CCLightCollection distanceFromLight:(CCLightNode *)array[pivotIndex] toPoint:refPoint];
+    float pivotValue = [CCLightCollection distanceSquaredFromLight:(CCLightNode *)array[pivotIndex] toPoint:refPoint];
     [array exchangeObjectAtIndex:pivotIndex withObjectAtIndex:rightIndex];
     
     NSUInteger storeIndex = leftIndex;
     for (NSUInteger i = leftIndex; i < rightIndex; i++)
     {
         CCLightNode *light = (CCLightNode*)array[i];
-        float currentValue = [CCLightCollection distanceFromLight:light toPoint:refPoint];
+        float currentValue = [CCLightCollection distanceSquaredFromLight:light toPoint:refPoint];
         if (currentValue < pivotValue)
         {
             [array exchangeObjectAtIndex:storeIndex withObjectAtIndex:i];
@@ -198,7 +198,7 @@ static const NSUInteger CCLightCollectionMaxGroupCount = sizeof(NSUInteger) * 8;
     return storeIndex;
 }
 
-+ (float)distanceFromLight:(CCLightNode*)light toPoint:(CGPoint)refPoint
++ (float)distanceSquaredFromLight:(CCLightNode*)light toPoint:(CGPoint)refPoint
 {
     CGPoint lightPosition = CGPointApplyAffineTransform(light.anchorPointInPoints, light.nodeToWorldTransform);
     CGPoint delta = CGPointMake(lightPosition.x - refPoint.x, lightPosition.y - refPoint.y);
@@ -212,8 +212,8 @@ static const NSUInteger CCLightCollectionMaxGroupCount = sizeof(NSUInteger) * 8;
     BOOL groupsIntersect = ((light.groupMask & groupMask) != 0);
     BOOL distanceMatters = (light.cutoffRadius > 0.0f);
 
-    float distance = [CCLightCollection distanceFromLight:light toPoint:point];
-    BOOL inRange = (distance < light.cutoffRadius);
+    float dSquared = [CCLightCollection distanceSquaredFromLight:light toPoint:point];
+    BOOL inRange = (dSquared < (light.cutoffRadius * light.cutoffRadius));
     
     return groupsIntersect && (!distanceMatters || inRange);
 }
