@@ -553,6 +553,7 @@
                                                                                              nil
                                                                                              ]]);
     light.cutoffRadius = 1.0f;
+    light.halfRadius = 1.0f;
     light.ambientIntensity = 0.0f;
     light.intensity = 1.0f;
     light = setupBlock(ccp(0.9f, 0.65f), @"Depth", [CCActionRepeatForever actionWithAction:[CCActionSequence actions:
