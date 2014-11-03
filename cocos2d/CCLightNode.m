@@ -38,13 +38,15 @@
         _ambientIntensity = ambientIntensity;
         
         _cutoffRadius = 0.0f;
+        _halfRadius = 0.5f;
+        
         if (type == CCLightDirectional)
         {
             _depth = 1.0f;
         }
         else
         {
-            _depth = 500.0f;
+            _depth = 100.0f;
         }
     }
     
@@ -64,19 +66,31 @@
 -(void)setIntensity:(float)intensity
 {
     NSCAssert((intensity >= 0.0) && (intensity <= 1.0), @"Supplied intensity out of range [0..1].");
-    _intensity = intensity;
+    _intensity = clampf(intensity, 0.0f, 1.0f);
 }
 
 -(void)setSpecularIntensity:(float)intensity
 {
     NSCAssert((intensity >= 0.0) && (intensity <= 1.0), @"Supplied intensity out of range [0..1].");
-    _specularIntensity = intensity;
+    _specularIntensity = clampf(intensity, 0.0f, 1.0f);
 }
 
 -(void)setAmbientIntensity:(float)intensity
 {
     NSCAssert((intensity >= 0.0) && (intensity <= 1.0), @"Supplied intensity out of range [0..1].");
-    _ambientIntensity = intensity;
+    _ambientIntensity = clampf(intensity, 0.0f, 1.0f);
+}
+
+-(void)setCutoffRadius:(float)radius
+{
+    NSCAssert(radius >= 0.0, @"Supplied radius out of range [0..inf).");
+    _cutoffRadius = MAX(0.0f, radius);
+}
+
+-(void)setHalfRadius:(float)radius
+{
+    NSCAssert((radius >= 0.0) && (radius <= 1.0), @"Supplied radius out of range [0..1].");
+    _halfRadius = clampf(radius, 0.0f, 1.0f);
 }
 
 @end

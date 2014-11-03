@@ -84,9 +84,16 @@ typedef NS_ENUM(NSUInteger, CCLightType)
 /** The radius of influence of a point light. When the distance from a sprite to this light
  *  is less than or equal to the radius, the sprite will be lit by this light. If the
  *  distance is greater, the sprite will not be lit by this light. This distance is
- *  measured in points. This propery has no effect on directional lights.
+ *  measured in points. Setting this value to zero disables light cutoff. This propery 
+ *  has no effect on directional lights.
  */
 @property (nonatomic, assign) float cutoffRadius;
+
+/** The radius at which point the light's intensity has fallen off to half of its maximum
+ *  value. The value is specified in normalized units where 0 equals 0 points, and 1 equals
+ *  cutoffRadius points. This propery has no effect on directional lights.
+ */
+@property (nonatomic, assign) float halfRadius;
 
 /** The light's depth value within the scene. This value is independent of the node
  *  z-order which is used for sorting and is instead used by the lighting equations

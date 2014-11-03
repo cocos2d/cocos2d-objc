@@ -109,10 +109,13 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
                                      vec4 diffuseSum = u_globalAmbientColor;
                                      vec4 specularSum = vec4(0,0,0,0);
                                      
-                                     vec3 tangentSpaceLightDir;
+                                     vec3 worldSpaceLightDir;
                                      vec3 halfAngleDir;
                                      
                                      float lightDist;
+                                     float falloffTermA;
+                                     float falloffTermB;
+                                     float falloffSelect;
                                      float falloffTerm;
                                      float diffuseTerm;
                                      float specularTerm;
@@ -125,12 +128,16 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
                                          // Index the normal map and expand the color value from [0..1] to [-1..1]
                                          vec4 normalMap = texture2D(cc_NormalMapTexture, cc_FragTexCoord2);
                                          vec3 tangentSpaceNormal = normalize(normalMap.xyz * 2.0 - 1.0);
+                                         
+                                         // Convert the normal vector from tangent space to world space
+                                         vec3 worldSpaceNormal = normalize(vec3(u_worldSpaceTangent, 0.0) * tangentSpaceNormal.x + vec3(u_worldSpaceBinormal, 0.0) * tangentSpaceNormal.y + vec3(0.0, 0.0, tangentSpaceNormal.z));
+
                                          composedAlpha *= normalMap.a;
                                          )];
     }
     else
     {
-        [effectBody appendString:@"vec3 tangentSpaceNormal = vec3(0,0,1);\n"];
+        [effectBody appendString:@"vec3 worldSpaceNormal = vec3(0,0,1);\n"];
     }
     
     [effectBody appendString:CC_GLSL(
@@ -145,27 +152,32 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
         CCLightNode *light = lights[lightIndex];
         if (light.type == CCLightDirectional)
         {
-            [effectBody appendFormat:@"tangentSpaceLightDir = v_tangentSpaceLightDir%lu.xyz;\n", (unsigned long)lightIndex];
+            [effectBody appendFormat:@"worldSpaceLightDir = v_worldSpaceLightDir%lu.xyz;\n", (unsigned long)lightIndex];
             [effectBody appendFormat:@"lightColor = u_lightColor%lu;\n", (unsigned long)lightIndex];
             [effectBody appendFormat:@"lightSpecularColor = u_lightSpecularColor%lu;\n", (unsigned long)lightIndex];
         }
         else
         {
-            [effectBody appendFormat:@"tangentSpaceLightDir = normalize(v_tangentSpaceLightDir%lu.xyz);\n", (unsigned long)lightIndex];
-            [effectBody appendFormat:@"lightDist = length(v_tangentSpaceLightDir%lu.xyz);\n", (unsigned long)lightIndex];
-            [effectBody appendFormat:@"falloffTerm = max(0.0, (1.0 - lightDist * u_lightFalloff%lu));\n", (unsigned long)lightIndex];
+            [effectBody appendFormat:@"worldSpaceLightDir = normalize(v_worldSpaceLightDir%lu.xyz);\n", (unsigned long)lightIndex];
+            [effectBody appendFormat:@"lightDist = length(v_worldSpaceLightDir%lu.xy);\n", (unsigned long)lightIndex];
+            
+            [effectBody appendFormat:@"falloffTermA = clamp((lightDist * u_lightFalloff%lu.y + 1.0), 0.0, 1.0);\n", (unsigned long)lightIndex];
+            [effectBody appendFormat:@"falloffTermB = clamp((lightDist * u_lightFalloff%lu.z + u_lightFalloff%lu.w), 0.0, 1.0);\n", (unsigned long)lightIndex, (unsigned long)lightIndex];
+            [effectBody appendFormat:@"falloffSelect = step(u_lightFalloff%lu.x, lightDist);\n", (unsigned long)lightIndex];
+            [effectBody appendFormat:@"falloffTerm = (1.0 - falloffSelect) * falloffTermA + falloffSelect * falloffTermB;\n"];
+
             [effectBody appendFormat:@"lightColor = u_lightColor%lu * falloffTerm;\n", (unsigned long)lightIndex];
             if (needsSpecular)
             {
                 [effectBody appendFormat:@"lightSpecularColor = u_lightSpecularColor%lu * falloffTerm;\n", (unsigned long)lightIndex];
             }
         }
-        [effectBody appendString:@"diffuseTerm = max(0.0, dot(tangentSpaceNormal, tangentSpaceLightDir));\n"];
+        [effectBody appendString:@"diffuseTerm = max(0.0, dot(worldSpaceNormal, worldSpaceLightDir));\n"];
         [effectBody appendString:@"diffuseSum += lightColor * diffuseTerm;\n"];
         
         if (needsSpecular)
         {
-            [effectBody appendString:@"halfAngleDir = (2.0 * dot(tangentSpaceLightDir, tangentSpaceNormal) * tangentSpaceNormal - tangentSpaceLightDir);\n"];
+            [effectBody appendString:@"halfAngleDir = (2.0 * dot(worldSpaceLightDir, worldSpaceNormal) * worldSpaceNormal - worldSpaceLightDir);\n"];
             [effectBody appendString:@"specularTerm = max(0.0, dot(halfAngleDir, vec3(0,0,1))) * step(0.0, diffuseTerm);\n"];
             [effectBody appendString:@"specularSum += lightSpecularColor * pow(specularTerm, u_specularExponent);\n"];
         }
@@ -190,11 +202,11 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
         
         if (light.type == CCLightDirectional)
         {
-            [effectBody appendFormat:@"v_tangentSpaceLightDir%lu = u_lightVector%lu;", (unsigned long)lightIndex, (unsigned long)lightIndex];
+            [effectBody appendFormat:@"v_worldSpaceLightDir%lu = u_lightVector%lu;", (unsigned long)lightIndex, (unsigned long)lightIndex];
         }
         else
         {
-            [effectBody appendFormat:@"v_tangentSpaceLightDir%lu = u_lightVector%lu - u_ndcToTangentSpace * cc_Position;", (unsigned long)lightIndex, (unsigned long)lightIndex];
+            [effectBody appendFormat:@"v_worldSpaceLightDir%lu = u_lightVector%lu - (u_ndcToWorld * cc_Position).xyz;", (unsigned long)lightIndex, (unsigned long)lightIndex];
         }
     }
     [effectBody appendString:@"return cc_Position;"];
@@ -217,9 +229,21 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
         pass.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:pass.texCoord1Center];
         pass.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:pass.texCoord1Extents];
 
+        GLKMatrix4 nodeLocalToWorld = CCEffectUtilsMat4FromAffineTransform(pass.node.nodeToWorldTransform);
+        GLKMatrix4 ndcToWorld = GLKMatrix4Multiply(nodeLocalToWorld, pass.ndcToNodeLocal);
+        
+
+        GLKMatrix2 tangentMatrix = CCEffectUtilsMatrix2InvertAndTranspose(GLKMatrix4GetMatrix2(nodeLocalToWorld), nil);
+        GLKVector2 reflectTangent = GLKVector2Normalize(CCEffectUtilsMatrix2MultiplyVector2(tangentMatrix, GLKVector2Make(1.0f, 0.0f)));
+        GLKVector2 reflectBinormal = GLKVector2Make(-reflectTangent.y, reflectTangent.x);
+
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_worldSpaceTangent"]] = [NSValue valueWithGLKVector2:reflectTangent];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_worldSpaceBinormal"]] = [NSValue valueWithGLKVector2:reflectBinormal];
+
+        
         // Matrix for converting NDC (normalized device coordinates (aka normalized render target coordinates)
         // to node local coordinates.
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_ndcToTangentSpace"]] = [NSValue valueWithGLKMatrix4:pass.ndcToNodeLocal];
+        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_ndcToWorld"]] = [NSValue valueWithGLKMatrix4:ndcToWorld];
 
         GLKVector4 globalAmbientColor = GLKVector4Make(0.0f, 0.0f, 0.0f, 1.0f);
         for (NSUInteger lightIndex = 0; lightIndex < weakSelf.lights.count; lightIndex++)
@@ -230,21 +254,56 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
             globalAmbientColor = GLKVector4Add(globalAmbientColor, GLKVector4MultiplyScalar(light.ambientColor.glkVector4, light.ambientIntensity));
 
             // Get the transform from the light's coordinate space to the effect's coordinate space.
-            GLKMatrix4 lightNodeToEffectNode = CCEffectUtilsTransformFromNodeToNode(light, pass.node, nil);
+            GLKMatrix4 lightNodeToWorld = CCEffectUtilsMat4FromAffineTransform(light.nodeToWorldTransform);
             
             // Compute the light's position in the effect node's coordinate system.
             GLKVector4 lightVector = GLKVector4Make(0.0f, 0.0f, 0.0f, 0.0f);
             if (light.type == CCLightDirectional)
             {
-                lightVector = GLKVector4Normalize(GLKMatrix4MultiplyVector4(lightNodeToEffectNode, GLKVector4Make(0.0f, 1.0f, light.depth, 0.0f)));
+                lightVector = GLKVector4Normalize(GLKMatrix4MultiplyVector4(lightNodeToWorld, GLKVector4Make(0.0f, 1.0f, light.depth, 0.0f)));
             }
             else
             {
-                lightVector = GLKMatrix4MultiplyVector4(lightNodeToEffectNode, GLKVector4Make(light.anchorPointInPoints.x, light.anchorPointInPoints.y, light.depth, 1.0f));
+                lightVector = GLKMatrix4MultiplyVector4(lightNodeToWorld, GLKVector4Make(light.anchorPointInPoints.x, light.anchorPointInPoints.y, light.depth, 1.0f));
 
-                float falloff = (light.cutoffRadius > 0.0f) ? 1.0f / light.cutoffRadius : 0.0f;
+                float scale0 = GLKVector4Length(GLKMatrix4GetColumn(lightNodeToWorld, 0));
+                float scale1 = GLKVector4Length(GLKMatrix4GetColumn(lightNodeToWorld, 1));
+                float maxScale = MAX(scale0, scale1);
+
+                float cutoffRadius = light.cutoffRadius * maxScale;
+
+                GLKVector4 falloffTerms = GLKVector4Make(0.0f, 0.0f, 0.0f, 1.0f);
+                if (cutoffRadius > 0.0f)
+                {
+                    float xIntercept = cutoffRadius * light.halfRadius;
+                    float r1 = 2.0f * xIntercept;
+                    float r2 = cutoffRadius;
+                    
+                    falloffTerms.x = xIntercept;
+                    
+                    if (light.halfRadius > 0.0f)
+                    {
+                        falloffTerms.y = -1.0f / r1;
+                    }
+                    else
+                    {
+                        falloffTerms.y = 0.0f;
+                    }
+                    
+                    if (light.halfRadius < 1.0f)
+                    {
+                        falloffTerms.z = -0.5f / (r2 - xIntercept);
+                        falloffTerms.w = 0.5f - xIntercept * falloffTerms.z;
+                    }
+                    else
+                    {
+                        falloffTerms.z = 0.0f;
+                        falloffTerms.w = 0.0f;
+                    }
+                }
+                
                 NSString *lightFalloffLabel = [NSString stringWithFormat:@"u_lightFalloff%lu", (unsigned long)lightIndex];
-                pass.shaderUniforms[weakSelf.uniformTranslationTable[lightFalloffLabel]] = [NSNumber numberWithFloat:falloff];
+                pass.shaderUniforms[weakSelf.uniformTranslationTable[lightFalloffLabel]] = [NSValue valueWithGLKVector4:falloffTerms];
             }
             
             // Compute the real light color based on color and intensity.
@@ -254,7 +313,7 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
             pass.shaderUniforms[weakSelf.uniformTranslationTable[lightColorLabel]] = [NSValue valueWithGLKVector4:lightColor];
 
             NSString *lightVectorLabel = [NSString stringWithFormat:@"u_lightVector%lu", (unsigned long)lightIndex];
-            pass.shaderUniforms[weakSelf.uniformTranslationTable[lightVectorLabel]] = [NSValue valueWithGLKVector4:lightVector];
+            pass.shaderUniforms[weakSelf.uniformTranslationTable[lightVectorLabel]] = [NSValue valueWithGLKVector3:GLKVector3Make(lightVector.x, lightVector.y, lightVector.z)];
 
             if (self.needsSpecular)
             {
@@ -294,15 +353,21 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
         _shaderHasSpecular = self.needsSpecular;
         _shaderHasNormalMap = needsNormalMap;
         
-        NSMutableArray *fragUniforms = [[NSMutableArray alloc] initWithArray:@[[CCEffectUniform uniform:@"vec4" name:@"u_globalAmbientColor" value:[NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)]]]];
-        NSMutableArray *vertUniforms = [[NSMutableArray alloc] initWithArray:@[[CCEffectUniform uniform:@"mat4" name:@"u_ndcToTangentSpace" value:[NSValue valueWithGLKMatrix4:GLKMatrix4Identity]]]];
+        NSMutableArray *fragUniforms = [[NSMutableArray alloc] initWithArray:@[
+                                                                               [CCEffectUniform uniform:@"vec4" name:@"u_globalAmbientColor" value:[NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)]],
+                                                                               [CCEffectUniform uniform:@"vec2" name:@"u_worldSpaceTangent" value:[NSValue valueWithGLKVector2:GLKVector2Make(1.0f, 0.0f)]],
+                                                                               [CCEffectUniform uniform:@"vec2" name:@"u_worldSpaceBinormal" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 1.0f)]]
+                                                                               ]];
+        NSMutableArray *vertUniforms = [[NSMutableArray alloc] initWithArray:@[
+                                                                               [CCEffectUniform uniform:@"mat4" name:@"u_ndcToWorld" value:[NSValue valueWithGLKMatrix4:GLKMatrix4Identity]]
+                                                                               ]];
         NSMutableArray *varyings = [[NSMutableArray alloc] init];
         
         for (NSUInteger lightIndex = 0; lightIndex < _lights.count; lightIndex++)
         {
             CCLightNode *light = _lights[lightIndex];
             
-            [vertUniforms addObject:[CCEffectUniform uniform:@"vec4" name:[NSString stringWithFormat:@"u_lightVector%lu", (unsigned long)lightIndex] value:[NSValue valueWithGLKVector4:GLKVector4Make(0.0f, 0.0f, 0.0f, 1.0f)]]];
+            [vertUniforms addObject:[CCEffectUniform uniform:@"vec3" name:[NSString stringWithFormat:@"u_lightVector%lu", (unsigned long)lightIndex] value:[NSValue valueWithGLKVector3:GLKVector3Make(0.0f, 0.0f, 0.0f)]]];
             [fragUniforms addObject:[CCEffectUniform uniform:@"vec4" name:[NSString stringWithFormat:@"u_lightColor%lu", (unsigned long)lightIndex] value:[NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)]]];
             if (self.needsSpecular)
             {
@@ -311,10 +376,10 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
             
             if (light.type != CCLightDirectional)
             {
-                [fragUniforms addObject:[CCEffectUniform uniform:@"float" name:[NSString stringWithFormat:@"u_lightFalloff%lu", (unsigned long)lightIndex] value:[NSNumber numberWithFloat:1.0f]]];
+                [fragUniforms addObject:[CCEffectUniform uniform:@"vec4" name:[NSString stringWithFormat:@"u_lightFalloff%lu", (unsigned long)lightIndex] value:[NSValue valueWithGLKVector4:GLKVector4Make(-1.0f, 1.0f, -1.0f, 1.0f)]]];
             }
             
-            [varyings addObject:[CCEffectVarying varying:@"vec4" name:[NSString stringWithFormat:@"v_tangentSpaceLightDir%lu", (unsigned long)lightIndex]]];
+            [varyings addObject:[CCEffectVarying varying:@"vec3" name:[NSString stringWithFormat:@"v_worldSpaceLightDir%lu", (unsigned long)lightIndex]]];
         }
         
         if (self.needsSpecular)
