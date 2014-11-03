@@ -81,10 +81,9 @@ static const NSUInteger CCLightCollectionMaxGroupCount = sizeof(NSUInteger) * 8;
     NSPredicate *groupsMatch = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings)
                                 {
                                     CCLightNode *light = (CCLightNode*)evaluatedObject;
-                                    return ((light.groupMask & mask) != 0);
+                                    return [CCLightCollection light:light hasEffectOnGroups:mask atPoint:point];
                                 }];
-    
-    NSMutableArray *maskedLights = [[self.lights filteredArrayUsingPredicate:groupsMatch] mutableCopy];
+    NSArray *maskedLights = [self.lights filteredArrayUsingPredicate:groupsMatch];
     
     if (maskedLights.count <= count)
     {
@@ -135,8 +134,10 @@ static const NSUInteger CCLightCollectionMaxGroupCount = sizeof(NSUInteger) * 8;
     return [_groupNames indexOfObject:groupName];
 }
 
-+ (NSArray *)selectClosestKLights:(NSUInteger)count inArray:(NSMutableArray *)array forPoint:(CGPoint)refPoint
++ (NSArray *)selectClosestKLights:(NSUInteger)count inArray:(NSArray *)array forPoint:(CGPoint)refPoint
 {
+    NSMutableArray *sortedArray = [array mutableCopy];
+    
     NSMutableArray *results = [[NSMutableArray alloc] init];
     if (array.count == 0)
     {
@@ -154,13 +155,13 @@ static const NSUInteger CCLightCollectionMaxGroupCount = sizeof(NSUInteger) * 8;
     while (1)
     {
         NSUInteger pivotIndex = leftIndex + arc4random_uniform((uint32_t)(rightIndex - leftIndex + 1));        
-        pivotIndex = [CCLightCollection partitionArray:array forPoint:refPoint withLeftIndex:leftIndex rightIndex:rightIndex pivotIndex:pivotIndex];
+        pivotIndex = [CCLightCollection partitionArray:sortedArray forPoint:refPoint withLeftIndex:leftIndex rightIndex:rightIndex pivotIndex:pivotIndex];
         
         if ((count - 1) == pivotIndex)
         {
             for (NSUInteger i = 0; i < count; i++)
             {
-                [results addObject:array[i]];
+                [results addObject:sortedArray[i]];
             }
             break;
         }
@@ -204,6 +205,17 @@ static const NSUInteger CCLightCollectionMaxGroupCount = sizeof(NSUInteger) * 8;
     
     float distSquared = delta.x * delta.x + delta.y * delta.y;
     return distSquared;
+}
+
++ (BOOL)light:(CCLightNode *)light hasEffectOnGroups:(CCLightGroupMask)groupMask atPoint:(CGPoint)point
+{
+    BOOL groupsIntersect = ((light.groupMask & groupMask) != 0);
+    BOOL distanceMatters = (light.cutoffRadius > 0.0f);
+
+    float distance = [CCLightCollection distanceFromLight:light toPoint:point];
+    BOOL inRange = (distance < light.cutoffRadius);
+    
+    return groupsIntersect && (!distanceMatters || inRange);
 }
 
 @end

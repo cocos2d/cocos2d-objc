@@ -574,7 +574,7 @@
     NSString *normalMapImage = @"Images/ShinyTorusNormals.png";
     NSString *diffuseImage = @"Images/ShinyTorusColor.png";
     
-    CCLightNode* (^setupBlock)(CGPoint position, float depth) = ^CCLightNode *(CGPoint position, float depth)
+    CCLightNode* (^setupBlock)(CGPoint position, float depth, float radius) = ^CCLightNode *(CGPoint position, float depth, float radius)
     {
         CCLightNode *light = [[CCLightNode alloc] init];
         light.type = CCLightPoint;
@@ -583,7 +583,7 @@
         light.anchorPoint = ccp(0.5f, 0.5f);
         light.intensity = 0.2f;
         light.ambientIntensity = 0.0f;
-        light.cutoffRadius = 0.0f;
+        light.cutoffRadius = radius;
         light.depth = depth;
         
         CCSprite *lightSprite = [CCSprite spriteWithImageNamed:@"Images/snow.png"];
@@ -593,25 +593,26 @@
         return light;
     };
     
+    static const float nearRadius = 0.0f;
+    static const float farRadius = 10.0f;
+    
     // Bottom row
-    [self.contentNode addChild:setupBlock(ccp(0.25f, 0.25f), 50.0f)];
-    [self.contentNode addChild:setupBlock(ccp(0.5f,  0.25f), 50.0f)];
-    [self.contentNode addChild:setupBlock(ccp(0.75f, 0.25f), 50.0f)];
+    [self.contentNode addChild:setupBlock(ccp(0.25f,  0.25f), 50.0f, nearRadius)];
+    [self.contentNode addChild:setupBlock(ccp(0.375f, 0.25f), 50.0f, farRadius)];
+    [self.contentNode addChild:setupBlock(ccp(0.5f,   0.25f), 50.0f, nearRadius)];
+    [self.contentNode addChild:setupBlock(ccp(0.625f, 0.25f), 50.0f, farRadius)];
+    [self.contentNode addChild:setupBlock(ccp(0.75f,  0.25f), 50.0f, nearRadius)];
     
     // Middle row
-    [self.contentNode addChild:setupBlock(ccp(0.25f, 0.5f), 50.0f)];
-    [self.contentNode addChild:setupBlock(ccp(0.75f, 0.5f), 50.0f)];
+    [self.contentNode addChild:setupBlock(ccp(0.25f, 0.5f), 50.0f, nearRadius)];
+    [self.contentNode addChild:setupBlock(ccp(0.75f, 0.5f), 50.0f, nearRadius)];
     
     // Top row
-    [self.contentNode addChild:setupBlock(ccp(0.25f, 0.75f), 50.0f)];
-    [self.contentNode addChild:setupBlock(ccp(0.5f,  0.75f), 50.0f)];
-    [self.contentNode addChild:setupBlock(ccp(0.75f, 0.75f), 50.0f)];
-    
-    // Outliers
-    [self.contentNode addChild:setupBlock(ccp(0.2f, 0.4f), 50.0f)];
-    [self.contentNode addChild:setupBlock(ccp(0.8f, 0.4f), 50.0f)];
-    [self.contentNode addChild:setupBlock(ccp(0.2f, 0.6f), 50.0f)];
-    [self.contentNode addChild:setupBlock(ccp(0.8f, 0.6f), 50.0f)];
+    [self.contentNode addChild:setupBlock(ccp(0.25f,  0.75f), 50.0f, nearRadius)];
+    [self.contentNode addChild:setupBlock(ccp(0.375f, 0.75f), 50.0f, farRadius)];
+    [self.contentNode addChild:setupBlock(ccp(0.5f,   0.75f), 50.0f, nearRadius)];
+    [self.contentNode addChild:setupBlock(ccp(0.625f, 0.75f), 50.0f, farRadius)];
+    [self.contentNode addChild:setupBlock(ccp(0.75f,  0.75f), 50.0f, nearRadius)];
     
     
     CCEffectLighting *lightingEffect = [[CCEffectLighting alloc] init];
