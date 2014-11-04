@@ -94,8 +94,8 @@ static const GLchar *CCVertexShaderHeader =
 
 static const GLchar *CCFragmentShaderHeader =
 	"#ifdef GL_ES\n"
-	"precision " XSTR(CC_SHADER_DEFAULT_FRAGMENT_PRECISION) " float;\n"
     "#extension GL_OES_standard_derivatives : enable\n"
+	"precision " XSTR(CC_SHADER_DEFAULT_FRAGMENT_PRECISION) " float;\n"
 	"#endif\n\n"
 	"// End Cocos2D fragment shader header.\n\n";
 
@@ -176,14 +176,14 @@ CompileShader(GLenum type, const char *source)
 	GLint shader = glCreateShader(type);
 	
 	const GLchar *sources[] = {
+        CCShaderTypeHeader(type),
 		CCShaderHeader,
-		CCShaderTypeHeader(type),
 		source,
 	};
-	
+
 	glShaderSource(shader, 3, sources, NULL);
 	glCompileShader(shader);
-	
+	    
 	if(CCCheckShaderError(shader, GL_COMPILE_STATUS, glGetShaderiv, glGetShaderInfoLog)){
 		return shader;
 	} else {
