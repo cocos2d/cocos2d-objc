@@ -668,10 +668,6 @@
     
     CCNode* (^setupLightBlock)(CGPoint position, float radius, float speed, CCColor *specularColor) = ^CCNode *(CGPoint position, float radius, float speed, CCColor *specularColor)
     {
-        CCSprite *lightSprite = [CCSprite spriteWithImageNamed:@"Images/snow.png"];
-        lightSprite.scale = 0.2f;
-        lightSprite.color = specularColor;
-        
         CCLightNode *light = [[CCLightNode alloc] init];
         light.type = CCLightPoint;
         light.positionType = CCPositionTypePoints;
@@ -685,8 +681,6 @@
         light.specularColor = specularColor;
         light.cutoffRadius = 0.0f;
         light.depth = 50.0;
-        
-        [light addChild:lightSprite];
         
         CCNode *parent = [[CCNode alloc] init];
         parent.positionType = CCPositionTypeNormalized;
@@ -705,7 +699,7 @@
         [CCColor yellowColor]
     };
     
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 8; i++)
     {
         int c = arc4random_uniform(4);
         
