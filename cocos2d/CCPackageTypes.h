@@ -9,6 +9,7 @@ typedef enum {
     CCPackageStatusUnzipFailed = 7,
     CCPackageStatusInstallationFailed = 9,
     CCPackageStatusInstalledEnabled = 10,
-    CCPackageStatusInstalledDisabled = 11
+    CCPackageStatusInstalledDisabled = 11,
+    CCPackageStatusDeleted = 12
 }
 CCPackageStatus;

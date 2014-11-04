@@ -20,7 +20,6 @@
 
 @implementation CCPackageHelperTests
 
-
 - (void)testDefaultResolution
 {
     // Standard test

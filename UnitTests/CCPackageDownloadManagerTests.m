@@ -13,6 +13,7 @@
 #import "CCDirector.h"
 #import "AppDelegate.h"
 #import "CCUnitTestAssertions.h"
+#import "CCPackage_private.h"
 
 @interface CCPackageDownloadManagerTestURLProtocol : NSURLProtocol @end
 
@@ -173,6 +174,22 @@
     [self waitUntilDelegateReturns];
 
     [self assertPackagesDownloadedAndContentsAreAsExpected:@[package1]];
+}
+
+- (void)testResumeDownloadAfterLoadingPackages
+{
+    // This test aims at the situation when coming back from persistency and
+    // the package manager resume downloads.
+
+    CCPackage *package = [self completePackageWithName:@"package"];
+    package.status = CCPackageStatusDownloadPaused;
+    package.localDownloadURL = [NSURL fileURLWithPath:[_downloadManager.downloadPath stringByAppendingPathComponent:@"foo.zip"]];
+
+    [_downloadManager enqueuePackageForDownload:package];
+
+    [self waitUntilDelegateReturns];
+
+    [self assertPackagesDownloadedAndContentsAreAsExpected:@[package]];
 }
 
 - (void)waitUntilDelegateReturns

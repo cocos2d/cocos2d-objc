@@ -16,7 +16,8 @@ static const float CCEffectUtilsMaxRefract = 0.043;
 static CCNode* CCEffectUtilsGetNodeParent(CCNode *node);
 
 
-GLKMatrix4 CCEffectUtilsTransformFromNodeToNode(CCNode *first, CCNode *second, BOOL *isPossible)
+
+CCNode* CCEffectUtilsFindCommonAncestor(CCNode *first, CCNode *second)
 {
     NSCAssert(first, @"CCEffectUtilsTransformFromNodeToNode supplied nil node.");
     NSCAssert(second, @"CCEffectUtilsTransformFromNodeToNode supplied nil node.");
@@ -44,37 +45,52 @@ GLKMatrix4 CCEffectUtilsTransformFromNodeToNode(CCNode *first, CCNode *second, B
         }
     }
 
-    if (isPossible)
+    return commonAncestor;
+}
+
+GLKMatrix4 CCEffectUtilsTransformFromNodeToAncestor(CCNode *descendant, CCNode *ancestor, BOOL *success)
+{
+    // Compute the transform from this node to the common ancestor
+    CGAffineTransform t = [descendant nodeToParentTransform];
+    CCNode *p = nil;;
+    for (p = CCEffectUtilsGetNodeParent(descendant); (p != nil) && (p != CCEffectUtilsGetNodeParent(ancestor)); p = CCEffectUtilsGetNodeParent(p))
     {
-        *isPossible = (commonAncestor != nil);
+        t = CGAffineTransformConcat(t, [p nodeToParentTransform]);
+    }
+    
+    if (success)
+    {
+        *success = (p != nil);
+    }
+    return CCEffectUtilsMat4FromAffineTransform(t);
+}
+
+GLKMatrix4 CCEffectUtilsTransformFromNodeToNode(CCNode *first, CCNode *second, BOOL *success)
+{
+    // Find the common ancestor if there is one.
+    CCNode *commonAncestor = CCEffectUtilsFindCommonAncestor(first, second);
+    if (success)
+    {
+        *success = (commonAncestor != nil);
     }
     if (commonAncestor == nil)
     {
         return GLKMatrix4Identity;
     }
 
-    // Compute the transform from this node to the common ancestor
-    CGAffineTransform t1 = [first nodeToParentTransform];
-    for (CCNode *p = CCEffectUtilsGetNodeParent(first); p != CCEffectUtilsGetNodeParent(commonAncestor); p = CCEffectUtilsGetNodeParent(p))
-    {
-        t1 = CGAffineTransformConcat(t1, [p nodeToParentTransform]);
-    }
+    BOOL gotTransform;
+    
+    // Find the transforms to the common ancestor.
+    GLKMatrix4 t1 = CCEffectUtilsTransformFromNodeToAncestor(first, commonAncestor, &gotTransform);
+    NSCAssert(gotTransform, @"Could not find the transform to a known ancestor");
+    
+    GLKMatrix4 t2 = CCEffectUtilsTransformFromNodeToAncestor(second, commonAncestor, &gotTransform);
+    NSCAssert(gotTransform, @"Could not find the transform to a known ancestor");
+    
 
-    // Compute the transform from this node to the common ancestor
-    CGAffineTransform t2 = [second nodeToParentTransform];
-    for (CCNode *p = CCEffectUtilsGetNodeParent(second); p != CCEffectUtilsGetNodeParent(commonAncestor); p = CCEffectUtilsGetNodeParent(p))
-    {
-        t2 = CGAffineTransformConcat(t2, [p nodeToParentTransform]);
-    }
-
-    // Invert the second transform since we're interested in the transform
-    // from the common ancestor to the second node and we currently have
-    // the reverse of this.
-    CGAffineTransform invt2 = CGAffineTransformInvert(t2);
-
-    // Concatenate t1 and invt2 to give us the transform from the first node
+    // Concatenate t1 and the inverse of t2 to give us the transform from the first node
     // to the second.
-    return CCEffectUtilsMat4FromAffineTransform(CGAffineTransformConcat(t1, invt2));
+    return GLKMatrix4Multiply(GLKMatrix4Invert(t2, nil), t1);
 }
 
 CCNode* CCEffectUtilsGetNodeParent(CCNode *node)
@@ -96,6 +112,41 @@ GLKMatrix4 CCEffectUtilsMat4FromAffineTransform(CGAffineTransform at)
                           at.c,  at.d,  0.0f,  0.0f,
                           0.0f,  0.0f,  1.0f,  0.0f,
                           at.tx, at.ty, 0.0f,  1.0f);
+}
+
+GLKMatrix2 CCEffectUtilsMatrix2InvertAndTranspose(GLKMatrix2 matrix, bool *isInvertible)
+{
+    GLKMatrix2 result;
+
+    float det = matrix.m00 * matrix.m11 - matrix.m01 * matrix.m10;
+    if (fabsf(det) < FLT_EPSILON)
+    {
+        if (isInvertible)
+        {
+            *isInvertible = NO;
+        }
+        result.m00 = result.m11 = 1.0f;
+        result.m01 = result.m10 = 0.0f;
+    }
+    else
+    {
+        if (isInvertible)
+        {
+            *isInvertible = YES;
+        }
+        float invDet = 1.0f / det;
+        result.m00 =  matrix.m11 * invDet; result.m01 = -matrix.m01 * invDet;
+        result.m10 = -matrix.m10 * invDet; result.m11 =  matrix.m00 * invDet;
+    }
+    
+    return result;
+}
+
+GLKVector2 CCEffectUtilsMatrix2MultiplyVector2(GLKMatrix2 m, GLKVector2 v)
+{
+    GLKVector2 result = { m.m[0] * v.v[0] + m.m[2] * v.v[1],
+                          m.m[1] * v.v[0] + m.m[3] * v.v[1] };
+    return result;
 }
 
 float CCEffectUtilsConditionRefraction(float refraction)

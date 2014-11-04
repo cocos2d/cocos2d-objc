@@ -488,7 +488,7 @@ MetalUniformSetSampler(NSString *name, MTLArgument *vertexArg, MTLArgument *frag
 	CCMetalContext *context = [CCMetalContext currentContext];
 	
 	return ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
-		CCTexture *texture = shaderUniforms[name] ?: globalShaderUniforms[name] ?: [CCTexture none];
+		CCTexture *texture = shaderUniforms[textureName] ?: globalShaderUniforms[textureName] ?: [CCTexture none];
 		NSCAssert([texture isKindOfClass:[CCTexture class]], @"Shader uniform '%@' value must be a CCTexture object.", name);
 		
 		id<MTLSamplerState> sampler = texture.metalSampler;

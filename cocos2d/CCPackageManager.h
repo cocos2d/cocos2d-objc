@@ -126,19 +126,19 @@
                    enableAfterDownload:(BOOL)enableAfterDownload;
 
 /**
- * Downloads a package. This is supposed to work in conjunction with addPackage where a package is created without the package manager
- * and should become managed.
+ * Downloads a package. If the package was not managed before it will be added to the managed packages.
  * A download will only start if the status is CCPackageStatusInitial, CCPackageStatusDownloadFailed.
  * A package with status CCPackageStatusDownloadPaused will be resumed if possible.
  *
  * @param name The package to be manager by the package manager
  * @param enableAfterDownload If the package should be enabled in cocos2d after download. You can enable it with the enablePackage: method later on.
  */
-- (BOOL)downloadPackage:(CCPackage *)package enableAfterDownload:(BOOL)enableAfterDownload;
+- (void)downloadPackage:(CCPackage *)package enableAfterDownload:(BOOL)enableAfterDownload;
 
 /**
  * Disables a package. Only packages with state CCPackageStatusInstalledEnabled can be disabled.
  * The package is removed from cocos2d's search, sprite sheets and filename lookups are reloaded.
+ * Package will be added to managed packages if it was not.
  *
  * @param package The package to be disabled
  * @param error Error pointer with details about a failed operation
@@ -149,6 +149,7 @@
 
 /**
  * Enables a package. Only packages with state CCPackageStatusInstalledDisabled can be enabled.
+ * Package will be added to managed packages if it was not.
  *
  * The package is added to cocos2d's search, sprite sheets getting loaded as well as filename lookups
  *
@@ -169,6 +170,9 @@
 /**
  * Deletes a package.
  * Will disable the package first and delete it from disk. Temp download and unzip files will be removed as well.
+ * A package that is being unzipped cannot be deleted. Try after the unzipping finished.
+ * The status will become CCPackageStatusDeleted in case you still hold a reference to the object.
+ * localDownloURL, unzipURL and installURL will be nil after a succesful deletion.
  *
  * @param package The package to be deleted
  * @param error Error pointer with details about a failed operation
@@ -178,9 +182,9 @@
 - (BOOL)deletePackage:(CCPackage *)package error:(NSError **)error;
 
 /**
- * Cancels the download of a package.
- * This will remove the package from the download manager as well from the package manager if the status is in one of the download states:
+ * Cancels the download of a package if the package has one of the following status:
  *    CCPackageStatusDownloadPaused, CCPackageStatusDownloading, CCPackageStatusDownloaded, CCPackageStatusDownloadFailed
+ * Status of package is reset to CCPackageStatusInitial.
  *
  * @param package The package which download should be cancelled
  */

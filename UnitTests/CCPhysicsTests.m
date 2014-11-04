@@ -1112,6 +1112,62 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
 	[physics onExit];
 }
 
+-(void)testBodySleep
+{
+	CCPhysicsNode *physics = [CCPhysicsNode node];
+	[physics onEnter];
+	
+	CCNode *staticNode = [CCNode node];
+	staticNode.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1 andCenter:CGPointZero];
+	staticNode.physicsBody.type = CCPhysicsBodyTypeStatic;
+	[physics addChild:staticNode];
+	
+	CCNode *node = [CCNode node];
+	node.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1 andCenter:CGPointZero];
+	node.physicsBody.mass = 5;
+	
+	// Bodies default to being active.
+	XCTAssertFalse(node.physicsBody.sleeping, @"");
+	
+	// Setting the sleeping property before adding to a scene should be ignored.
+	node.physicsBody.sleeping = YES;
+	XCTAssertFalse(node.physicsBody.sleeping, @"");
+	
+	[physics addChild:node];
+	
+	node.physicsBody.sleeping = YES;
+	XCTAssertTrue(node.physicsBody.sleeping, @"");
+	
+	node.physicsBody.sleeping = NO;
+	XCTAssertFalse(node.physicsBody.sleeping, @"");
+	
+	// Changing various flags should wake a body up.
+	node.physicsBody.sleeping = YES;
+	XCTAssertTrue(node.physicsBody.sleeping, @"");
+	node.physicsBody.affectedByGravity = YES;
+	XCTAssertFalse(node.physicsBody.sleeping, @"");
+	
+	node.physicsBody.sleeping = YES;
+	XCTAssertTrue(node.physicsBody.sleeping, @"");
+	node.physicsBody.mass = 1.0;
+	XCTAssertFalse(node.physicsBody.sleeping, @"");
+	
+	// Removing the node from the scene and re-adding it should wake up its body.
+	node.physicsBody.sleeping = YES;
+	XCTAssertTrue(node.physicsBody.sleeping, @"");
+	[node removeFromParent];
+	[physics addChild:node];
+	XCTAssertFalse(node.physicsBody.sleeping, @"");
+	
+	// Adding joints should wake up a body.
+	node.physicsBody.sleeping = YES;
+	XCTAssertTrue(node.physicsBody.sleeping, @"");
+	[CCPhysicsJoint connectedMotorJointWithBodyA:node.physicsBody bodyB:staticNode.physicsBody rate:1.0];
+	XCTAssertFalse(node.physicsBody.sleeping, @"");
+	
+	[physics onExit];
+}
+
 // TODO
 // * Check that body and shape settings are preserved through multiple add/remove cycles and are actually applied to the cpBody.
 // * Check that changing properties before and after adding to an active physics node updates the properties correctly.

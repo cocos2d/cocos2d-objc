@@ -3,6 +3,7 @@
 #import "CCPackage.h"
 #import "CCFileUtils.h"
 #import "CCSpriteFrameCache.h"
+#import "CCPackage_private.h"
 
 
 @implementation CCPackageCocos2dEnabler
@@ -46,7 +47,7 @@
 
         if (![newSearchPath containsObject:newPackagePath])
         {
-            [aPackage setValue:@(CCPackageStatusInstalledEnabled) forKey:NSStringFromSelector(@selector(status))];
+            aPackage.status = CCPackageStatusInstalledEnabled;
 
             [newSearchPath insertObject:newPackagePath atIndex:0];
             [CCFileUtils sharedFileUtils].searchPath = newSearchPath;

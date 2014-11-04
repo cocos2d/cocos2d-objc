@@ -53,6 +53,20 @@ typedef NS_ENUM(NSUInteger, CCLightType)
  */
 @property (nonatomic, assign) float intensity;
 
+/** The specular color of the light. As described below, the color is modulated by the
+ *  specular intensity value to determine the contribution of the light to the lighting
+ *  effect. This color is used when computing the light's specular (shiny) contribution
+ *  to the lighting effect.
+ */
+@property (nonatomic, strong) CCColor* specularColor;
+
+/** The brightness of the light's specular color. This value is in the range [0..1]
+ *  with 0 resulting in no contribution from the specular color to the final image
+ *  (the specular color effectively becomes black) and 1 resulting in full contribution
+ *  from this light.
+ */
+@property (nonatomic, assign) float specularIntensity;
+
 /** The ambient color of the light. As described below, the color is modulated by the
  *  ambient intensity value to determine the contribution of the light to the lighting
  *  effect. The ambient color contributes to the lighting effect independent of the light's
@@ -70,9 +84,16 @@ typedef NS_ENUM(NSUInteger, CCLightType)
 /** The radius of influence of a point light. When the distance from a sprite to this light
  *  is less than or equal to the radius, the sprite will be lit by this light. If the
  *  distance is greater, the sprite will not be lit by this light. This distance is
- *  measured in points. This propery has no effect on directional lights.
+ *  measured in points. Setting this value to zero disables light cutoff. This propery 
+ *  has no effect on directional lights.
  */
 @property (nonatomic, assign) float cutoffRadius;
+
+/** The radius at which point the light's intensity has fallen off to half of its maximum
+ *  value. The value is specified in normalized units where 0 equals 0 points, and 1 equals
+ *  cutoffRadius points. This propery has no effect on directional lights.
+ */
+@property (nonatomic, assign) float halfRadius;
 
 /** The light's depth value within the scene. This value is independent of the node
  *  z-order which is used for sorting and is instead used by the lighting equations
@@ -101,15 +122,28 @@ typedef NS_ENUM(NSUInteger, CCLightType)
 /**
  *  Initializes a CCLightNode object with the specified parameters.
  *
- *  @param type             The type of the light.
- *  @param color            The primary color of the light.
- *  @param intensity        The brightness of the light's primary color.
- *  @param ambientColor     The ambient color of the light.
- *  @param ambientIntensity The brightness of the light's ambient color.
+ *  @param type              The type of the light.
+ *  @param color             The primary color of the light.
+ *  @param intensity         The brightness of the light's primary color.
  *
  *  @return The CCLighttNode object.
  */
--(id)initWithType:(CCLightType)type color:(CCColor *)color intensity:(float)intensity ambientColor:(CCColor *)ambientColor ambientIntensity:(float)ambientIntensity;
+-(id)initWithType:(CCLightType)type color:(CCColor *)color intensity:(float)intensity;
+
+/**
+ *  Initializes a CCLightNode object with the specified parameters.
+ *
+ *  @param type              The type of the light.
+ *  @param color             The primary color of the light.
+ *  @param intensity         The brightness of the light's primary color.
+ *  @param specularColor     The specular color of the light.
+ *  @param specularIntensity The brightness of the light's specular color.
+ *  @param ambientColor      The ambient color of the light.
+ *  @param ambientIntensity  The brightness of the light's ambient color.
+ *
+ *  @return The CCLighttNode object.
+ */
+-(id)initWithType:(CCLightType)type color:(CCColor *)color intensity:(float)intensity specularColor:(CCColor *)specularColor specularIntensity:(float)specularIntensity ambientColor:(CCColor *)ambientColor ambientIntensity:(float)ambientIntensity;
 
 
 /// -----------------------------------------------------------------------
@@ -119,15 +153,28 @@ typedef NS_ENUM(NSUInteger, CCLightType)
 /**
  *  Creates a CCLightNode object with the specified parameters.
  *
- *  @param type             The type of the light.
- *  @param color            The primary color of the light.
- *  @param intensity        The brightness of the light's primary color.
- *  @param ambientColor     The ambient color of the light.
- *  @param ambientIntensity The brightness of the light's ambient color.
+ *  @param type              The type of the light.
+ *  @param color             The primary color of the light.
+ *  @param intensity         The brightness of the light's primary color.
  *
  *  @return An initialized CCLightNode object.
  */
-+(id)lightWithType:(CCLightType)type color:(CCColor *)color intensity:(float)intensity ambientColor:(CCColor *)ambientColor ambientIntensity:(float)ambientIntensity;
++(id)lightWithType:(CCLightType)type color:(CCColor *)color intensity:(float)intensity;
+
+/**
+ *  Creates a CCLightNode object with the specified parameters.
+ *
+ *  @param type              The type of the light.
+ *  @param color             The primary color of the light.
+ *  @param intensity         The brightness of the light's primary color.
+ *  @param specularColor     The specular color of the light.
+ *  @param specularIntensity The brightness of the light's specular color.
+ *  @param ambientColor      The ambient color of the light.
+ *  @param ambientIntensity  The brightness of the light's ambient color.
+ *
+ *  @return An initialized CCLightNode object.
+ */
++(id)lightWithType:(CCLightType)type color:(CCColor *)color intensity:(float)intensity specularColor:(CCColor *)specularColor specularIntensity:(float)specularIntensity ambientColor:(CCColor *)ambientColor ambientIntensity:(float)ambientIntensity;
 
 
 @end

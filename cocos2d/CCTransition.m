@@ -180,18 +180,20 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 
 - (void)startTransition:(CCScene *)scene
 {
+    CCDirector *director = [CCDirector sharedDirector];
+		
     _incomingScene = scene;
     [_incomingScene onEnter];
     _incomingPauseState = _incomingScene.paused;
     _incomingScene.paused = _incomingScene.paused || !_incomingSceneAnimated;
     
-    _outgoingScene = [CCDirector sharedDirector].runningScene;
+    _outgoingScene = director.runningScene;
     [_outgoingScene onExitTransitionDidStart];
     _outgoingScene.paused = _outgoingScene.paused || !_outgoingSceneAnimated;
 
     // create render textures
     // get viewport size
-    CGRect rect = [CCDirector sharedDirector].viewportRect;
+    CGRect rect = director.viewportRect;
 		CGSize size = rect.size;
 		
 		// Make sure we aren't rounding down.
@@ -202,12 +204,14 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     _outgoingTexture = [CCRenderTexture renderTextureWithWidth:size.width height:size.height pixelFormat:_transitionPixelFormat depthStencilFormat:_transitionDepthStencilFormat];
     _outgoingTexture.position = CGPointMake(size.width * 0.5f + rect.origin.x, size.height * 0.5f + rect.origin.y);
     _outgoingTexture.contentScale /= _outgoingDownScale;
+		_outgoingTexture.projection = director.projectionMatrix;
     [self addChild:_outgoingTexture z:_outgoingOverIncoming];
     
     // create texture for incoming scene
     _incomingTexture = [CCRenderTexture renderTextureWithWidth:size.width height:size.height pixelFormat:_transitionPixelFormat depthStencilFormat:_transitionDepthStencilFormat];
     _incomingTexture.position = CGPointMake(size.width * 0.5f + rect.origin.x, size.height * 0.5f + rect.origin.y);
     _incomingTexture.contentScale /= _incomingDownScale;
+		_incomingTexture.projection = director.projectionMatrix;
     [self addChild:_incomingTexture];
     
     // make sure scene is rendered at least once at progress 0.0
@@ -215,7 +219,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     [self renderIncoming:0];
     
     // switch to transition scene
-    [[CCDirector sharedDirector] startTransition:self];
+    [director startTransition:self];
 }
 
 // -----------------------------------------------------------------

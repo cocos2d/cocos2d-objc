@@ -75,7 +75,7 @@ static BOOL __support_range_request = YES;
     {
         byteRangeStart = [self parseRangeHeaderValue:self.request.allHTTPHeaderFields[@"Range"]];
         headers[@"Accept-Ranges"] = @"bytes";
-        headers[@"Content-Range"] = [NSString stringWithFormat:@"bytes %u-%u/%u", byteRangeStart, fileSize - 1, fileSize];
+        headers[@"Content-Range"] = [NSString stringWithFormat:@"bytes %u-%u/%u", (unsigned int)byteRangeStart, (unsigned int)fileSize - 1, (unsigned int)fileSize];
     }
 
     NSData *data = [[NSData dataWithContentsOfFile:pathToPackage] subdataWithRange:NSMakeRange(byteRangeStart, fileSize - byteRangeStart)];
@@ -85,7 +85,7 @@ static BOOL __support_range_request = YES;
     NSHTTPURLResponse *response;
     if (pathToPackage)
     {
-        headers[@"Content-Length"] = [NSString stringWithFormat:@"%u", [data length]];
+        headers[@"Content-Length"] = [NSString stringWithFormat:@"%u", (unsigned int)[data length]];
         response = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
                                                               statusCode:200
                                                              HTTPVersion:@"HTTP/1.1"
@@ -298,6 +298,7 @@ static BOOL __support_range_request = YES;
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
     XCTAssertFalse([fileManager fileExistsAtPath:_download.localURL.path]);
+    XCTAssertEqual(_package.status, CCPackageStatusInitial);
 }
 
 - (void)testPauseDownload

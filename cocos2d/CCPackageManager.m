@@ -9,6 +9,7 @@
 #import "ccMacros.h"
 #import "CCPackageHelper.h"
 #import "CCPackage_private.h"
+#import "CCDirector.h"
 
 
 @interface CCPackageManager()
@@ -92,7 +93,8 @@
             continue;
         }
 
-        if (aPackage.status == CCPackageStatusUnzipped
+        if (aPackage.status == CCPackageStatusDownloaded
+            || aPackage.status == CCPackageStatusUnzipped
             || aPackage.status == CCPackageStatusUnzipping)
         {
             [self unzipPackage:aPackage];
@@ -133,12 +135,6 @@
     for (NSDictionary *aPackageDict in packages)
     {
         CCPackage *aPackage = [[CCPackage alloc] initWithDictionary:aPackageDict];
-
-/*      TODO
-        CCPackageInstallData *installData = [[CCPackageInstallData alloc] initWithPackage:aPackage];
-        [aPackage setInstallData:installData];
-        [installData populateInstallDataWithDictionary:aPackageDict];
-*/
 
         [_packages addObject:aPackage];
         CCLOGINFO(@"[PACKAGE][INFO] Package info added: %@: %@", [aPackage standardIdentifier], [aPackage statusToString]);
@@ -182,7 +178,7 @@
     }
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    if (![fileManager fileExistsAtPath:_installedPackagesPath])
+    if (![fileManager fileExistsAtPath:installedPackagesPath])
     {
         NSError *error;
         if (![fileManager createDirectoryAtPath:installedPackagesPath
@@ -233,34 +229,30 @@
 
 - (CCPackage *)downloadPackageWithName:(NSString *)name resolution:(NSString *)resolution enableAfterDownload:(BOOL)enableAfterDownload
 {
-    NSAssert(_baseURL != nil, @"baseURL must not be nil");
-
     NSString *packageName = [NSString stringWithFormat:@"%@-%@-%@.zip", name, [CCPackageHelper currentOS], resolution];
     NSURL *remoteURL = [_baseURL URLByAppendingPathComponent:packageName];
+
+    if (!_baseURL)
+    {
+        [_delegate packageDownloadFailed:nil error:[NSError errorWithDomain:@"cocos2d"
+                                                                       code:PACKAGE_ERROR_MANAGER_NO_BASE_URL_SET
+                                                                   userInfo:@{NSLocalizedDescriptionKey: @"No baseURL set for package manager."}]];
+        return nil;
+    }
 
     return [self downloadPackageWithName:name resolution:resolution remoteURL:remoteURL enableAfterDownload:enableAfterDownload];
 }
 
-- (BOOL)downloadPackage:(CCPackage *)package enableAfterDownload:(BOOL)enableAfterDownload
+- (void)downloadPackage:(CCPackage *)package enableAfterDownload:(BOOL)enableAfterDownload
 {
-    if (![_packages containsObject:package])
-    {
-        return NO;
-    }
-
     NSAssert(package, @"package must not be nil");
     NSAssert(package.name, @"package.name must not be nil");
     NSAssert(package.resolution, @"package.resolution must not be nil");
+    NSAssert(package.remoteURL, @"package.remoteURL must not be nil");
 
-    if (!package.remoteURL && !_baseURL)
+    if (![_packages containsObject:package])
     {
-        return NO;
-    }
-    else if (!package.remoteURL)
-    {
-        NSString *packageName = [NSString stringWithFormat:@"%@-%@-%@.zip", package.name, package.os, package.resolution];
-        NSURL *remoteURL = [_baseURL URLByAppendingPathComponent:packageName];
-        [package setValue:remoteURL forKey:@"remoteURL"];
+        [self addPackage:package];
     }
 
     package.enableOnDownload = enableAfterDownload;
@@ -268,8 +260,6 @@
     CCLOGINFO(@"[PACKAGE][INFO]: adding package to download queue: %@", package);
 
     [_downloadManager enqueuePackageForDownload:package];
-
-    return YES;
 }
 
 - (CCPackage *)downloadPackageWithName:(NSString *)name remoteURL:(NSURL *)remoteURL enableAfterDownload:(BOOL)enableAfterDownload
@@ -349,7 +339,7 @@
 
 - (void)unzipFinished:(CCPackageUnzipper *)packageUnzipper
 {
-    [self runOnMainQueue:^
+    [self runOnCocosThread:^
     {
         [self removeDownloadFile:packageUnzipper.package];
 
@@ -373,7 +363,7 @@
 
 - (void)unzipFailed:(CCPackageUnzipper *)packageUnzipper error:(NSError *)error
 {
-    [self runOnMainQueue:^
+    [self runOnCocosThread:^
     {
         [_unzipTasks removeObject:packageUnzipper];
 
@@ -383,7 +373,7 @@
 
 - (void)unzipProgress:(CCPackageUnzipper *)packageUnzipper unzippedBytes:(NSUInteger)unzippedBytes totalBytes:(NSUInteger)totalBytes
 {
-    [self runOnMainQueue:^
+    [self runOnCocosThread:^
     {
         if ([_delegate respondsToSelector:@selector(packageUnzippingProgress:unzippedBytes:totalBytes:)])
         {
@@ -551,6 +541,11 @@
     if ([_delegate respondsToSelector:@selector(customFolderName:packageContents:)])
     {
         NSString *customFolderNameToUse = [_delegate customFolderName:package packageContents:files];
+        if (!customFolderNameToUse)
+        {
+            return NO;
+        }
+
         if ([fileManager fileExistsAtPath:[package.unzipURL.path stringByAppendingPathComponent:customFolderNameToUse]])
         {
             package.folderName = customFolderNameToUse;
@@ -579,6 +574,11 @@
 
 - (BOOL)disablePackage:(CCPackage *)package error:(NSError **)error
 {
+    if (![_packages containsObject:package])
+    {
+        [_packages addObject:package];
+    }
+
     if (package.status == CCPackageStatusInstalledDisabled)
     {
         return YES;
@@ -598,15 +598,16 @@
     CCPackageCocos2dEnabler *packageCocos2dEnabler = [[CCPackageCocos2dEnabler alloc] init];
     [packageCocos2dEnabler disablePackages:@[package]];
 
-    if (![_packages containsObject:package])
-    {
-        [_packages addObject:package];
-    }
     return YES;
 }
 
 - (BOOL)enablePackage:(CCPackage *)package error:(NSError **)error
 {
+    if (![_packages containsObject:package])
+    {
+        [_packages addObject:package];
+    }
+
     if (package.status == CCPackageStatusInstalledEnabled)
     {
         return YES;
@@ -626,10 +627,6 @@
     CCPackageCocos2dEnabler *packageCocos2dEnabler = [[CCPackageCocos2dEnabler alloc] init];
     [packageCocos2dEnabler enablePackages:@[package]];
 
-    if (![_packages containsObject:package])
-    {
-        [_packages addObject:package];
-    }
     return YES;
 }
 
@@ -649,32 +646,67 @@
 
 - (BOOL)deletePackage:(CCPackage *)package error:(NSError **)error
 {
+    BOOL result = YES;
+    if (package.status == CCPackageStatusUnzipping)
+    {
+        if (error)
+        {
+            *error = [NSError errorWithDomain:@"cocos2d"
+                                         code:PACKAGE_ERROR_MANAGER_CANNOT_DELETE_UNZIPPING_PACKAGE
+                                     userInfo:@{NSLocalizedDescriptionKey:@"Cannot delete a package being unzipped. Please try after unzipping finished"}];
+        }
+        return NO;
+    }
+
     CCPackageCocos2dEnabler *packageCocos2dEnabler = [[CCPackageCocos2dEnabler alloc] init];
     [packageCocos2dEnabler disablePackages:@[package]];
 
     [_packages removeObject:package];
-    [self savePackages];
 
     [_downloadManager cancelDownloadOfPackage:package];
 
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if (package.unzipURL
-        && [fileManager fileExistsAtPath:package.unzipURL.path]
-        && (![fileManager removeItemAtURL:package.unzipURL error:error]))
+    if (![self deleteURLSelector:@selector(localDownloadURL) ofPackage:package error:error])
     {
-        return NO;
+        result = NO;
     }
 
-    BOOL result = ([fileManager fileExistsAtPath:package.installURL.path]
-                   && [fileManager removeItemAtURL:package.installURL error:error]);
+    if (![self deleteURLSelector:@selector(unzipURL) ofPackage:package error:error])
+    {
+        result = NO;
+    }
+
+    if (![self deleteURLSelector:@selector(installURL) ofPackage:package error:error])
+    {
+        result = NO;
+    }
 
     if (result)
     {
+        package.localDownloadURL = nil;
+        package.unzipURL = nil;
+        package.installURL = nil;
+        package.status = CCPackageStatusDeleted;
+
         CCLOGINFO(@"[PACKAGE/INSTALL][INFO] Package deletion successful!");
     }
     else
     {
         CCLOG(@"[PACKAGE/INSTALL][ERROR] Package deletion failed: %@", *error);
+    }
+
+    return result;
+}
+
+- (BOOL)deleteURLSelector:(SEL)urlSelector ofPackage:(CCPackage *)aPackage error:(NSError **)error
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+
+    NSURL *url = [aPackage valueForKey:NSStringFromSelector(urlSelector)];
+
+    BOOL result = YES;
+    if (url && [fileManager fileExistsAtPath:url.path])
+    {
+        result = [fileManager removeItemAtURL:url error:error];
     }
 
     return result;
@@ -690,11 +722,7 @@
         return;
     }
 
-    [_packages removeObject:package];
-
     [_downloadManager cancelDownloadOfPackage:package];
-
-    [self savePackages];
 }
 
 - (void)pauseDownloadOfPackage:(CCPackage *)package
@@ -725,15 +753,15 @@
     }
 }
 
-- (void)runOnMainQueue:(dispatch_block_t)block
+- (void)runOnCocosThread:(dispatch_block_t)block
 {
-    if ([NSThread isMainThread])
+    if ([[NSThread currentThread] isEqual:[[CCDirector sharedDirector] runningThread]])
     {
         block();
     }
     else
     {
-        dispatch_sync(dispatch_get_main_queue(), block);
+        [self performSelector:_cmd onThread:[[CCDirector sharedDirector] runningThread] withObject:block waitUntilDone:YES];
     }
 }
 
