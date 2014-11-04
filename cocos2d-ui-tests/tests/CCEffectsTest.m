@@ -31,6 +31,8 @@
 
 #if CC_EFFECTS_EXPERIMENTAL
 
+#define TEMPORARILY_DISABLE_SDF_TESTS 1
+#if !TEMPORARILY_DISABLE_SDF_TESTS
 -(void)setupDFInnerGlowTest
 {
     self.subTitle = @"Distance Field Inner Glow Test";
@@ -249,6 +251,7 @@
 {
     _distanceFieldEffect.outline = !_distanceFieldEffect.outline;
 }
+#endif
 
 -(void)setupSimpleLightingTest
 {
