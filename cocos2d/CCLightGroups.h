@@ -1,9 +1,7 @@
 /*
- * cocos2d for iPhone: http://www.cocos2d-iphone.org
+ * cocos2d swift: http://www.cocos2d-swift.org
  *
- * Copyright (c) 2008-2010 Ricardo Quesada
- * Copyright (c) 2011 Zynga Inc.
- * Copyright (c) 2013-2014 Cocos2D Authors
+ * Copyright (c) 2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,32 +20,11 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
  */
 
-#import "CCNode.h"
-
-@class CCLightCollection;
-
-/** CCScene is a subclass of CCNode and must be the parent of all your nodes. 
- 
- - In previous versions of Cocos2D, CCLayer was used to group nodes placed in a CCScene.
- - In V3, this is changed, so that a simple CCNode is used in stead.
- - Touch handling is now pr. node, so no touch setup is needed. Just set userInteractionEnabled.
- - To reduce the footprint of a scene, when not active, resources can be loaded in onEnter, and released in onExit.
- 
- */
-@interface CCScene : CCNode
 
 #if CC_EFFECTS_EXPERIMENTAL
-@property (nonatomic, readonly, strong) CCLightCollection *lights;
+
+typedef NSUInteger CCLightGroupMask;
+
 #endif
-
-/// -----------------------------------------------------------------------
-/// @name Initializing a CCScene Object
-/// -----------------------------------------------------------------------
-
-/** Initialize the node. */
-- (id)init;
-
-@end
