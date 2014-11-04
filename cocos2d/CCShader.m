@@ -83,7 +83,7 @@ static const GLchar *CCShaderHeader =
 
 static const GLchar *CCVertexShaderHeader =
 	"#ifdef GL_ES\n"
-	"precision highp float;\n\n"
+	"precision highp float;\n"
 	"#endif\n\n"
 	"#define CC_NODE_RENDER_SUBPIXEL " XSTR(CC_NODE_RENDER_SUBPIXEL) "\n"
 	"attribute highp vec4 cc_Position;\n"
@@ -95,7 +95,6 @@ static const GLchar *CCVertexShaderHeader =
 static const GLchar *CCFragmentShaderHeader =
 	"#ifdef GL_ES\n"
 	"precision " XSTR(CC_SHADER_DEFAULT_FRAGMENT_PRECISION) " float;\n"
-    "#extension GL_OES_standard_derivatives : enable\n"
 	"#endif\n\n"
 	"// End Cocos2D fragment shader header.\n\n";
 
@@ -118,14 +117,14 @@ static NSString *CCMetalShaderHeader =
 	@"	float2 texCoord1;\n"
 	@"	float2 texCoord2;\n"
 	@"	float4 color;\n"
-	@"} CCVertex;\n"
-	@"typedef struct CCFragData {\n\n"
+	@"} CCVertex;\n\n"
+	@"typedef struct CCFragData {\n"
 	@"	float4 position [[position]];\n"
 	@"	float2 texCoord1;\n"
 	@"	float2 texCoord2;\n"
 	@"	half4  color;\n"
-	@"} CCFragData;\n"
-	@"typedef struct CCGlobalUniforms {\n\n"
+	@"} CCFragData;\n\n"
+	@"typedef struct CCGlobalUniforms {\n"
 	@"	float4x4 projection;\n"
 	@"	float4x4 projectionInv;\n"
 	@"	float2 viewSize;\n"
@@ -176,14 +175,14 @@ CompileShader(GLenum type, const char *source)
 	GLint shader = glCreateShader(type);
 	
 	const GLchar *sources[] = {
+        CCShaderTypeHeader(type),
 		CCShaderHeader,
-		CCShaderTypeHeader(type),
 		source,
 	};
-	
+
 	glShaderSource(shader, 3, sources, NULL);
 	glCompileShader(shader);
-	
+	    
 	if(CCCheckShaderError(shader, GL_COMPILE_STATUS, glGetShaderiv, glGetShaderInfoLog)){
 		return shader;
 	} else {
