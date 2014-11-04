@@ -652,8 +652,8 @@
         return sprite;
     };
     
-    int xCount = 20;
-    int yCount = 10;
+    int xCount = 2;
+    int yCount = 2;
     for (int y = 0; y < yCount; y++)
     {
         for (int x = 0; x < xCount; x++)
