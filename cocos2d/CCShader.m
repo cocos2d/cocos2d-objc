@@ -175,8 +175,8 @@ CompileShader(GLenum type, const char *source)
 	GLint shader = glCreateShader(type);
 	
 	const GLchar *sources[] = {
-        CCShaderTypeHeader(type),
 		CCShaderHeader,
+		CCShaderTypeHeader(type),
 		source,
 	};
 
