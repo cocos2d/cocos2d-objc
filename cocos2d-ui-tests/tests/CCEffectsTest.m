@@ -31,6 +31,8 @@
 
 #if CC_EFFECTS_EXPERIMENTAL
 
+#define TEMPORARILY_DISABLE_SDF_TESTS 1
+#if !TEMPORARILY_DISABLE_SDF_TESTS
 -(void)setupDFInnerGlowTest
 {
     self.subTitle = @"Distance Field Inner Glow Test";
@@ -249,6 +251,7 @@
 {
     _distanceFieldEffect.outline = !_distanceFieldEffect.outline;
 }
+#endif
 
 -(void)setupSimpleLightingTest
 {
@@ -261,6 +264,7 @@
     {
         CCLightNode *light = [[CCLightNode alloc] init];
         light.type = type;
+        light.groups = @[title];
         light.positionType = CCPositionTypeNormalized;
         light.position = ccp(0.5f, 0.5f);
         light.anchorPoint = ccp(0.5f, 0.5f);
@@ -271,7 +275,8 @@
         
         CCSprite *lightSprite = [CCSprite spriteWithImageNamed:@"Images/snow.png"];
         
-        CCEffectLighting *lightingEffect = [[CCEffectLighting alloc] initWithLights:@[light]];
+        CCEffectLighting *lightingEffect = [[CCEffectLighting alloc] init];
+        lightingEffect.groups = @[title];
         lightingEffect.shininess = 10.0f;
         
         CCSprite *sprite = [CCSprite spriteWithImageNamed:diffuseImage];
@@ -322,6 +327,7 @@
     CCLightNode* (^setupBlock)(CGPoint position, NSString *title, CCAction *action) = ^CCLightNode*(CGPoint position, NSString *title, CCAction *action)
     {
         CCLightNode *light = [[CCLightNode alloc] init];
+        light.groups = @[title];
         light.positionType = CCPositionTypeNormalized;
         light.position = ccp(1.0f, 1.0f);
         light.anchorPoint = ccp(0.5f, 0.5f);
@@ -333,7 +339,8 @@
         CCSprite *lightSprite = [CCSprite spriteWithImageNamed:@"Images/snow.png"];
         [light addChild:lightSprite];
         
-        CCEffectLighting *lightingEffect = [[CCEffectLighting alloc] initWithLights:@[light]];
+        CCEffectLighting *lightingEffect = [[CCEffectLighting alloc] init];
+        lightingEffect.groups = @[title];
         
         CCSprite *sprite = [CCSprite spriteWithImageNamed:diffuseImage];
         sprite.positionType = CCPositionTypeNormalized;
@@ -549,6 +556,7 @@
                                                                                              nil
                                                                                              ]]);
     light.cutoffRadius = 1.0f;
+    light.halfRadius = 1.0f;
     light.ambientIntensity = 0.0f;
     light.intensity = 1.0f;
     light = setupBlock(ccp(0.9f, 0.65f), @"Depth", [CCActionRepeatForever actionWithAction:[CCActionSequence actions:
@@ -561,6 +569,153 @@
     lighting = (CCEffectLighting *)sprite.effect;
     lighting.shininess = 20.0f;
     
+}
+
+-(void)setupLightingCollectionTest
+{
+    self.subTitle = @"Lighting Collection Test";
+    
+    NSString *normalMapImage = @"Images/ShinyTorusNormals.png";
+    NSString *diffuseImage = @"Images/ShinyTorusColor.png";
+    
+    CCLightNode* (^setupBlock)(CGPoint position, float depth, float radius) = ^CCLightNode *(CGPoint position, float depth, float radius)
+    {
+        CCLightNode *light = [[CCLightNode alloc] init];
+        light.type = CCLightPoint;
+        light.positionType = CCPositionTypeNormalized;
+        light.position = position;
+        light.anchorPoint = ccp(0.5f, 0.5f);
+        light.intensity = 0.2f;
+        light.ambientIntensity = 0.0f;
+        light.cutoffRadius = radius;
+        light.depth = depth;
+        
+        CCSprite *lightSprite = [CCSprite spriteWithImageNamed:@"Images/snow.png"];
+        
+        [light addChild:lightSprite];
+        
+        return light;
+    };
+    
+    static const float nearRadius = 0.0f;
+    static const float farRadius = 10.0f;
+    
+    // Bottom row
+    [self.contentNode addChild:setupBlock(ccp(0.25f,  0.25f), 50.0f, nearRadius)];
+    [self.contentNode addChild:setupBlock(ccp(0.375f, 0.25f), 50.0f, farRadius)];
+    [self.contentNode addChild:setupBlock(ccp(0.5f,   0.25f), 50.0f, nearRadius)];
+    [self.contentNode addChild:setupBlock(ccp(0.625f, 0.25f), 50.0f, farRadius)];
+    [self.contentNode addChild:setupBlock(ccp(0.75f,  0.25f), 50.0f, nearRadius)];
+    
+    // Middle row
+    [self.contentNode addChild:setupBlock(ccp(0.25f, 0.5f), 50.0f, nearRadius)];
+    [self.contentNode addChild:setupBlock(ccp(0.75f, 0.5f), 50.0f, nearRadius)];
+    
+    // Top row
+    [self.contentNode addChild:setupBlock(ccp(0.25f,  0.75f), 50.0f, nearRadius)];
+    [self.contentNode addChild:setupBlock(ccp(0.375f, 0.75f), 50.0f, farRadius)];
+    [self.contentNode addChild:setupBlock(ccp(0.5f,   0.75f), 50.0f, nearRadius)];
+    [self.contentNode addChild:setupBlock(ccp(0.625f, 0.75f), 50.0f, farRadius)];
+    [self.contentNode addChild:setupBlock(ccp(0.75f,  0.75f), 50.0f, nearRadius)];
+    
+    
+    CCEffectLighting *lightingEffect = [[CCEffectLighting alloc] init];
+    lightingEffect.shininess = 100.0f;
+    
+    CCSprite *sprite = [CCSprite spriteWithImageNamed:diffuseImage];
+    sprite.positionType = CCPositionTypeNormalized;
+    sprite.position = ccp(0.5f, 0.5f);
+    sprite.normalMapSpriteFrame = [CCSpriteFrame frameWithImageNamed:normalMapImage];
+    sprite.effect = lightingEffect;
+    sprite.scale = 0.3f;
+    
+    [self.contentNode addChild:sprite];
+}
+
+-(void)setupLightingPerformanceTest
+{
+    self.subTitle = @"Lighting Performance Test";
+    
+    NSString *normalMapImage = @"Images/ShinyTorusNormals.png";
+    NSString *diffuseImage = @"Images/ShinyTorusColor.png";
+    
+    CCSprite* (^setupSpriteBlock)(CGPoint position) = ^CCSprite*(CGPoint position)
+    {
+        CCEffectLighting *lightingEffect = [[CCEffectLighting alloc] init];
+        lightingEffect.shininess = 100.0f;
+        
+        CCSprite *sprite = [CCSprite spriteWithImageNamed:diffuseImage];
+        sprite.positionType = CCPositionTypeNormalized;
+        sprite.position = position;
+        sprite.anchorPoint = ccp(0.0f, 0.0f);
+        sprite.normalMapSpriteFrame = [CCSpriteFrame frameWithImageNamed:normalMapImage];
+        sprite.effect = lightingEffect;
+        sprite.scale = 0.1f;
+        
+        return sprite;
+    };
+    
+    int xCount = 2;
+    int yCount = 2;
+    for (int y = 0; y < yCount; y++)
+    {
+        for (int x = 0; x < xCount; x++)
+        {
+            CCSprite *sprite = setupSpriteBlock(ccp((float)x/(float)xCount, (float)y/(float)yCount));
+            [self.contentNode addChild:sprite];
+        }
+    }
+    
+    NSLog(@"setupPerformanceTest: Laid out %d sprites.", xCount * yCount);
+
+    
+    CCNode* (^setupLightBlock)(CGPoint position, float radius, float speed, CCColor *specularColor) = ^CCNode *(CGPoint position, float radius, float speed, CCColor *specularColor)
+    {
+        CCLightNode *light = [[CCLightNode alloc] init];
+        light.type = CCLightPoint;
+        light.positionType = CCPositionTypePoints;
+        light.position = ccp(radius, 0.0f);
+        light.anchorPoint = ccp(0.5f, 0.5f);
+        light.intensity = 0.2f;
+        light.color = [CCColor whiteColor];
+        light.ambientIntensity = 0.0f;
+        light.ambientColor = [CCColor whiteColor];
+        light.specularIntensity = 1.0f;
+        light.specularColor = specularColor;
+        light.cutoffRadius = 0.0f;
+        light.depth = 50.0;
+        
+        CCNode *parent = [[CCNode alloc] init];
+        parent.positionType = CCPositionTypeNormalized;
+        parent.position = position;
+        [parent addChild:light];
+        
+        [parent runAction:[CCActionRepeatForever actionWithAction:[CCActionRotateBy actionWithDuration:speed angle:90.0]]];
+        
+        return parent;
+    };
+    
+    CCColor *colors[] = {
+        [CCColor whiteColor],
+        [CCColor redColor],
+        [CCColor greenColor],
+        [CCColor yellowColor]
+    };
+    
+    for (int i = 0; i < 8; i++)
+    {
+        int c = arc4random_uniform(4);
+        
+        float x = arc4random_uniform(1000) / 1000.0f;
+        float y = arc4random_uniform(1000) / 1000.0f;
+        
+        float r = arc4random_uniform(1000) / 10.0f + 50.0f;
+        float d = 2.0f * r * M_PI;
+        float v = arc4random_uniform(1000) / 2.0f + 100.0f;
+        float t = d / v;
+        
+        [self.contentNode addChild:setupLightBlock(ccp(x,y), r, t, colors[c])];
+    }
 }
 
 #endif
