@@ -182,8 +182,8 @@ static char * glExtensions;
 // XXX: Optimization: This should be called only once
 -(NSInteger) runningDevice
 {
-	NSInteger ret=-1;
-
+	// TODO: This method really needs to go very away in v4
+	
 #if __CC_PLATFORM_ANDROID
     
     AndroidDisplayMetrics *metrics = [[AndroidDisplayMetrics alloc] init];
@@ -196,11 +196,11 @@ static char * glExtensions;
         
         if([CCDirector sharedDirector].contentScaleFactor > 1.0)
         {
-            ret = CCDeviceiPhoneRetinaDisplay;
+            return CCDeviceiPhoneRetinaDisplay;
         }
         else
         {
-            ret = CCDeviceiPhone;
+            return CCDeviceiPhone;
         }
     } else {
         if([CCDirector sharedDirector].contentScaleFactor > 1.0)
@@ -209,7 +209,7 @@ static char * glExtensions;
         }
         else
         {
-            ret = CCDeviceiPad;
+            return CCDeviceiPad;
         }
 
     }
@@ -217,27 +217,30 @@ static char * glExtensions;
 	
 	if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 	{
-		ret = ([UIScreen mainScreen].scale == 2) ? CCDeviceiPadRetinaDisplay : CCDeviceiPad;
+		return ([UIScreen mainScreen].scale == 2) ? CCDeviceiPadRetinaDisplay : CCDeviceiPad;
 	}
 	else if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone )
 	{
-		// From http://stackoverflow.com/a/12535566
-		BOOL isiPhone5 = CGSizeEqualToSize([[UIScreen mainScreen] preferredMode].size,CGSizeMake(640, 1136));
+		CGSize preferredSize = [[UIScreen mainScreen] preferredMode].size;
 		
-		if( [UIScreen mainScreen].scale == 2 ) {
-			ret = isiPhone5 ? CCDeviceiPhone5RetinaDisplay : CCDeviceiPhoneRetinaDisplay;
-		} else
-			ret = isiPhone5 ? CCDeviceiPhone5 : CCDeviceiPhone;
+		if(preferredSize.height == 960){
+			return ([UIScreen mainScreen].scale == 2 ? CCDeviceiPhoneRetinaDisplay : CCDeviceiPhone);
+		} else if(preferredSize.height == 1136){
+			return CCDeviceiPhone5RetinaDisplay;
+		} else {
+			return ([UIScreen mainScreen].scale == 2 ? CCDeviceiPhone6 : CCDeviceiPhone6Plus);
+		}
 	}
 	
 #elif __CC_PLATFORM_MAC
 	
 	// XXX: Add here support for Mac Retina Display
-	ret = CCDeviceMac;
+	return CCDeviceMac;
 	
 #endif // __CC_PLATFORM_MAC
 	
-	return ret;
+	// This is what it used to do before, but it seems quite wrong...
+	return -1;
 }
 
 #pragma mark OpenGL getters
