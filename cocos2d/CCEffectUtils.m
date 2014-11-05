@@ -144,8 +144,8 @@ GLKMatrix2 CCEffectUtilsMatrix2InvertAndTranspose(GLKMatrix2 matrix, bool *isInv
 
 GLKVector2 CCEffectUtilsMatrix2MultiplyVector2(GLKMatrix2 m, GLKVector2 v)
 {
-    GLKVector2 result = { m.m[0] * v.v[0] + m.m[2] * v.v[1],
-                          m.m[1] * v.v[0] + m.m[3] * v.v[1] };
+    GLKVector2 result = {{ m.m[0] * v.v[0] + m.m[2] * v.v[1],
+                           m.m[1] * v.v[0] + m.m[3] * v.v[1] }};
     return result;
 }
 
