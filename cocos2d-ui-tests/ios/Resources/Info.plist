@@ -40,6 +40,8 @@
 		<string>Abduction.ttf</string>
 		<string>Paint Boy.ttf</string>
 	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>Launch Screen</string>
 	<key>UIPrerenderedIcon</key>
 	<true/>
 	<key>UIRequiredDeviceCapabilities</key>

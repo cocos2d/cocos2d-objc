@@ -219,8 +219,13 @@ extern EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup
 		_preserveBackbuffer = retained;
 		_msaaSamples = nSamples;
 		
-		// Default to "retina" being enabled.
-		self.contentScaleFactor = [UIScreen mainScreen].scale;
+		// Default to the screen's native scale.
+		UIScreen *screen = [UIScreen mainScreen];
+		if([screen respondsToSelector:@selector(nativeScale)]){
+			self.contentScaleFactor = screen.nativeScale;
+		} else {
+			self.contentScaleFactor = screen.scale;
+		}
 
 		if( ! [self setupSurfaceWithSharegroup:sharegroup] ) {
 			return nil;
