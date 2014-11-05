@@ -72,6 +72,7 @@
 		D2D59897198747DE00BDAF25 /* Music in Resources */ = {isa = PBXBuildFile; fileRef = D2D59896198747DE00BDAF25 /* Music */; };
 		D3269DEA19CCC11800406282 /* CCRendererSharedTypes.h in Resources */ = {isa = PBXBuildFile; fileRef = D3269DE919CCC11800406282 /* CCRendererSharedTypes.h */; };
 		D32FDE8619B645CA0078CC16 /* CCTextureTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D32FDE8519B645CA0078CC16 /* CCTextureTests.m */; };
+		D3383AB81A099D7200E13478 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3383AB71A099D7200E13478 /* Launch Screen.xib */; };
 		D3395F1A187F83E600F22C74 /* CCMemoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D3395F19187F83E600F22C74 /* CCMemoryTests.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D340E10E185660BE006E605C /* CCPhysicsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D340E10C185660BE006E605C /* CCPhysicsTest.m */; };
 		D340E10F185660BE006E605C /* TilemapTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D340E10D185660BE006E605C /* TilemapTest.m */; };
@@ -390,6 +391,7 @@
 		D2D59896198747DE00BDAF25 /* Music */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Music; path = Resources/Music; sourceTree = SOURCE_ROOT; };
 		D3269DE919CCC11800406282 /* CCRendererSharedTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CCRendererSharedTypes.h; path = cocos2d/CCRendererSharedTypes.h; sourceTree = "<group>"; };
 		D32FDE8519B645CA0078CC16 /* CCTextureTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTextureTests.m; sourceTree = "<group>"; };
+		D3383AB71A099D7200E13478 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
 		D3395F19187F83E600F22C74 /* CCMemoryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMemoryTests.m; sourceTree = "<group>"; };
 		D340E10C185660BE006E605C /* CCPhysicsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCPhysicsTest.m; path = "cocos2d-ui-tests/tests/CCPhysicsTest.m"; sourceTree = SOURCE_ROOT; };
 		D340E10D185660BE006E605C /* TilemapTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TilemapTest.m; path = "cocos2d-ui-tests/tests/TilemapTest.m"; sourceTree = SOURCE_ROOT; };
@@ -705,6 +707,7 @@
 				B7E2620A17E7D34D007067F0 /* Icon.png */,
 				B7E2620B17E7D34D007067F0 /* Icon@2x.png */,
 				B7E2620D17E7D34D007067F0 /* iTunesArtwork */,
+				D3383AB71A099D7200E13478 /* Launch Screen.xib */,
 			);
 			name = "Resources-iOS";
 			path = "cocos2d-ui-tests/ios/Resources";
@@ -1090,6 +1093,7 @@
 				D4AFE9331977100000261299 /* geneva-32.fnt in Resources */,
 				B7E2621717E7D34D007067F0 /* Icon@2x.png in Resources */,
 				D4AFE92C1977100000261299 /* fps_images-ipadhd.png in Resources */,
+				D3383AB81A099D7200E13478 /* Launch Screen.xib in Resources */,
 				D4AFE94B1977100000261299 /* tuffy_bold_italic-charmap.png in Resources */,
 				D4AFE92A1977100000261299 /* fps_images-hd.plist in Resources */,
 				D4AFE92E1977100000261299 /* fps_images.plist in Resources */,
@@ -1544,7 +1548,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "cocos2d-ui-tests/ios/Prefix.pch";
 				INFOPLIST_FILE = "cocos2d-ui-tests/ios/Resources/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				MTL_HEADER_SEARCH_PATHS = "/Users/slembcke/Development/cocos2d-iphone/cocos2d";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -1577,7 +1581,7 @@
 				GCC_PREFIX_HEADER = "cocos2d-ui-tests/ios/Prefix.pch";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = "cocos2d-ui-tests/ios/Resources/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				MTL_HEADER_SEARCH_PATHS = "/Users/slembcke/Development/cocos2d-iphone/cocos2d";
 				OTHER_LDFLAGS = (
 					"-lz",

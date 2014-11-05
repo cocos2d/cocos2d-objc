@@ -94,6 +94,8 @@ typedef NS_ENUM(NSUInteger, CCDevice) {
 	CCDeviceiPhoneRetinaDisplay,
 	CCDeviceiPhone5,
 	CCDeviceiPhone5RetinaDisplay,
+	CCDeviceiPhone6,
+	CCDeviceiPhone6Plus,
 	CCDeviceiPad,
 	CCDeviceiPadRetinaDisplay,
 
