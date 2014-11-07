@@ -12,7 +12,11 @@
 
 #import "CCDirector.h"
 #import "CCEffectUtils.h"
+#import "CCLightCollection.h"
+#import "CCLightGroups.h"
+#import "CCLightNode.h"
 #import "CCRenderer.h"
+#import "CCScene.h"
 #import "CCSpriteFrame.h"
 #import "CCTexture.h"
 
@@ -26,6 +30,8 @@ typedef struct _CCLightKey
 
 } CCLightKey;
 
+static const NSUInteger CCEffectLightingMaxLightCount = 8;
+
 static CCLightKey CCLightKeyMake(NSArray *lights);
 static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
 
@@ -33,7 +39,9 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
 
 @interface CCEffectLighting ()
 
-@property (nonatomic, strong) NSMutableArray *lights;
+@property (nonatomic, assign) CCLightGroupMask groupMask;
+@property (nonatomic, assign) BOOL groupMaskDirty;
+@property (nonatomic, copy) NSArray *closestLights;
 @property (nonatomic, assign) CCLightKey lightKey;
 @property (nonatomic, readonly) BOOL needsSpecular;
 @property (nonatomic, assign) BOOL shaderHasSpecular;
@@ -46,55 +54,34 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
 
 -(id)init
 {
-    return [self initWithLights:nil];
+    return [self initWithGroups:nil specularColor:[CCColor whiteColor] shininess:5.0f];
 }
 
--(id)initWithLights:(NSArray *)lights
+-(id)initWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess
 {
     if((self = [super init]))
     {
         self.debugName = @"CCEffectLighting";
         
-        if (lights)
-        {
-            _lights = [lights mutableCopy];
-        }
-        else
-        {
-            _lights = [[NSMutableArray alloc] init];
-        }
+        _groups = [groups copy];
+        _groupMask = CCLightCollectionAllGroups;
+        _groupMaskDirty = YES;
+        _closestLights = nil;
         
-        _specularColor = [CCColor whiteColor];
-        _shininess = 5.0f;
+        _specularColor = specularColor;
+        _shininess = shininess;
         
-        _lightKey = CCLightKeyMake(lights);
+        _lightKey = CCLightKeyMake(nil);
         _shaderHasSpecular = NO;
         _shaderHasNormalMap = NO;
     }
     return self;
 }
 
-+(id)effectWithLights:(NSArray *)lights
-{
-    return [[self alloc] initWithLights:lights];
-}
 
--(void)addLight:(CCLightNode *)light
++(id)effectWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess
 {
-    NSAssert(_lights.count < 16, @"CCEffectLighting only supports 16 lights.");
-    NSAssert(![_lights containsObject:light], @"Adding a light to effect that is already here.");
-    [_lights addObject:light];
-}
-
--(void)removeLight:(CCLightNode *)light
-{
-    NSAssert([_lights containsObject:light], @"Removing a light from effect that is not here.");
-    [_lights removeObject:light];
-}
-
--(void)removeAllLights
-{
-    [_lights removeAllObjects];
+    return [[self alloc] initWithGroups:groups specularColor:specularColor shininess:shininess];
 }
 
 
@@ -246,9 +233,9 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
         pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_ndcToWorld"]] = [NSValue valueWithGLKMatrix4:ndcToWorld];
 
         GLKVector4 globalAmbientColor = GLKVector4Make(0.0f, 0.0f, 0.0f, 1.0f);
-        for (NSUInteger lightIndex = 0; lightIndex < weakSelf.lights.count; lightIndex++)
+        for (NSUInteger lightIndex = 0; lightIndex < weakSelf.closestLights.count; lightIndex++)
         {
-            CCLightNode *light = weakSelf.lights[lightIndex];
+            CCLightNode *light = weakSelf.closestLights[lightIndex];
             
             // Add this light's ambient contribution to the global ambient light color.
             globalAmbientColor = GLKVector4Add(globalAmbientColor, GLKVector4MultiplyScalar(light.ambientColor.glkVector4, light.ambientIntensity));
@@ -343,7 +330,19 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
 
     BOOL needsNormalMap = (sprite.normalMapSpriteFrame != nil);
     
-    CCLightKey newLightKey = CCLightKeyMake(_lights);
+    CGAffineTransform spriteTransform = sprite.nodeToWorldTransform;
+    CGPoint spritePosition = CGPointApplyAffineTransform(sprite.anchorPointInPoints, sprite.nodeToWorldTransform);
+    
+    CCLightCollection *lightCollection = sprite.scene.lights;
+    if (self.groupMaskDirty)
+    {
+        self.groupMask = [lightCollection maskForGroups:self.groups];
+        self.groupMaskDirty = NO;
+    }
+    
+    self.closestLights = [lightCollection findClosestKLights:CCEffectLightingMaxLightCount toPoint:spritePosition withMask:self.groupMask];
+    CCLightKey newLightKey = CCLightKeyMake(self.closestLights);
+    
     if (!self.shader ||
         !CCLightKeyCompare(newLightKey, _lightKey) ||
         (_shaderHasSpecular != self.needsSpecular) ||
@@ -363,9 +362,9 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
                                                                                ]];
         NSMutableArray *varyings = [[NSMutableArray alloc] init];
         
-        for (NSUInteger lightIndex = 0; lightIndex < _lights.count; lightIndex++)
+        for (NSUInteger lightIndex = 0; lightIndex < self.closestLights.count; lightIndex++)
         {
-            CCLightNode *light = _lights[lightIndex];
+            CCLightNode *light = self.closestLights[lightIndex];
             
             [vertUniforms addObject:[CCEffectUniform uniform:@"vec3" name:[NSString stringWithFormat:@"u_lightVector%lu", (unsigned long)lightIndex] value:[NSValue valueWithGLKVector3:GLKVector3Make(0.0f, 0.0f, 0.0f)]]];
             [fragUniforms addObject:[CCEffectUniform uniform:@"vec4" name:[NSString stringWithFormat:@"u_lightColor%lu", (unsigned long)lightIndex] value:[NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)]]];
@@ -379,7 +378,7 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
                 [fragUniforms addObject:[CCEffectUniform uniform:@"vec4" name:[NSString stringWithFormat:@"u_lightFalloff%lu", (unsigned long)lightIndex] value:[NSValue valueWithGLKVector4:GLKVector4Make(-1.0f, 1.0f, -1.0f, 1.0f)]]];
             }
             
-            [varyings addObject:[CCEffectVarying varying:@"vec3" name:[NSString stringWithFormat:@"v_worldSpaceLightDir%lu", (unsigned long)lightIndex]]];
+            [varyings addObject:[CCEffectVarying varying:@"highp vec3" name:[NSString stringWithFormat:@"v_worldSpaceLightDir%lu", (unsigned long)lightIndex]]];
         }
         
         if (self.needsSpecular)
@@ -388,8 +387,8 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
             [fragUniforms addObject:[CCEffectUniform uniform:@"vec4" name:@"u_specularColor" value:[NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)]]];
         }
         
-        NSMutableArray *fragFunctions = [CCEffectLighting buildFragmentFunctionsWithLights:_lights normalMap:needsNormalMap specular:self.needsSpecular];
-        NSMutableArray *vertFunctions = [CCEffectLighting buildVertexFunctionsWithLights:_lights];
+        NSMutableArray *fragFunctions = [CCEffectLighting buildFragmentFunctionsWithLights:self.closestLights normalMap:needsNormalMap specular:self.needsSpecular];
+        NSMutableArray *vertFunctions = [CCEffectLighting buildVertexFunctionsWithLights:self.closestLights];
         
         [self buildEffectWithFragmentFunction:fragFunctions vertexFunctions:vertFunctions fragmentUniforms:fragUniforms vertexUniforms:vertUniforms varyings:varyings firstInStack:YES];
 
@@ -401,6 +400,12 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
 - (BOOL)needsSpecular
 {
     return (!ccc4FEqual(_specularColor.ccColor4f, ccc4f(0.0f, 0.0f, 0.0f, 0.0f)) && (_shininess > 0.0f));
+}
+
+-(void)setGroups:(NSArray *)groups
+{
+    _groups = [groups copy];
+    _groupMaskDirty = YES;
 }
 
 @end

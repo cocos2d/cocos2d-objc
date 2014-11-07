@@ -9,7 +9,7 @@
 #import "CCSprite.h"
 
 CCNode* CCEffectUtilsFindCommonAncestor(CCNode *first, CCNode *second);
-GLKMatrix4 CCEffectUtilsTransformFromNodeToAncestor(CCNode *descendant, CCNode *ancestor, BOOL *success);
+GLKMatrix4 CCEffectUtilsTransformFromNodeToAncestor(CCNode *descendant, CCNode *ancestor);
 GLKMatrix4 CCEffectUtilsTransformFromNodeToNode(CCNode *first, CCNode *second, BOOL *isPossible);
 
 GLKMatrix4 CCEffectUtilsMat4FromAffineTransform(CGAffineTransform at);

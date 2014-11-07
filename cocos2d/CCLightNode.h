@@ -39,6 +39,13 @@ typedef NS_ENUM(NSUInteger, CCLightType)
  */
 @property (nonatomic, assign) CCLightType type;
 
+/** The groups that this light belongs to. Instances of CCEffectLighting also
+ *  belong to groups. The intersection of a light effect's groups and a light
+ *  node's groups determine whether or not a light node contributes to a light
+ *  effect.
+ */
+@property (nonatomic, copy) NSArray *groups;
+
 /** The primary color of the light. As described below, the color is modulated by the
  *  intensity value to determine the contribution of the light to the lighting
  *  effect. This color is used when computing the light's position and orientation
@@ -123,17 +130,19 @@ typedef NS_ENUM(NSUInteger, CCLightType)
  *  Initializes a CCLightNode object with the specified parameters.
  *
  *  @param type              The type of the light.
+ *  @param groups            The groups this light belongs to.
  *  @param color             The primary color of the light.
  *  @param intensity         The brightness of the light's primary color.
  *
  *  @return The CCLighttNode object.
  */
--(id)initWithType:(CCLightType)type color:(CCColor *)color intensity:(float)intensity;
+-(id)initWithType:(CCLightType)type groups:(NSArray*)groups color:(CCColor *)color intensity:(float)intensity;
 
 /**
  *  Initializes a CCLightNode object with the specified parameters.
  *
  *  @param type              The type of the light.
+ *  @param groups            The groups this light belongs to.
  *  @param color             The primary color of the light.
  *  @param intensity         The brightness of the light's primary color.
  *  @param specularColor     The specular color of the light.
@@ -143,7 +152,7 @@ typedef NS_ENUM(NSUInteger, CCLightType)
  *
  *  @return The CCLighttNode object.
  */
--(id)initWithType:(CCLightType)type color:(CCColor *)color intensity:(float)intensity specularColor:(CCColor *)specularColor specularIntensity:(float)specularIntensity ambientColor:(CCColor *)ambientColor ambientIntensity:(float)ambientIntensity;
+-(id)initWithType:(CCLightType)type groups:(NSArray*)groups color:(CCColor *)color intensity:(float)intensity specularColor:(CCColor *)specularColor specularIntensity:(float)specularIntensity ambientColor:(CCColor *)ambientColor ambientIntensity:(float)ambientIntensity;
 
 
 /// -----------------------------------------------------------------------
@@ -154,17 +163,19 @@ typedef NS_ENUM(NSUInteger, CCLightType)
  *  Creates a CCLightNode object with the specified parameters.
  *
  *  @param type              The type of the light.
+ *  @param groups            The groups this light belongs to.
  *  @param color             The primary color of the light.
  *  @param intensity         The brightness of the light's primary color.
  *
  *  @return An initialized CCLightNode object.
  */
-+(id)lightWithType:(CCLightType)type color:(CCColor *)color intensity:(float)intensity;
++(id)lightWithType:(CCLightType)type groups:(NSArray*)groups color:(CCColor *)color intensity:(float)intensity;
 
 /**
  *  Creates a CCLightNode object with the specified parameters.
  *
  *  @param type              The type of the light.
+ *  @param groups            The groups this light belongs to.
  *  @param color             The primary color of the light.
  *  @param intensity         The brightness of the light's primary color.
  *  @param specularColor     The specular color of the light.
@@ -174,7 +185,7 @@ typedef NS_ENUM(NSUInteger, CCLightType)
  *
  *  @return An initialized CCLightNode object.
  */
-+(id)lightWithType:(CCLightType)type color:(CCColor *)color intensity:(float)intensity specularColor:(CCColor *)specularColor specularIntensity:(float)specularIntensity ambientColor:(CCColor *)ambientColor ambientIntensity:(float)ambientIntensity;
++(id)lightWithType:(CCLightType)type groups:(NSArray*)groups color:(CCColor *)color intensity:(float)intensity specularColor:(CCColor *)specularColor specularIntensity:(float)specularIntensity ambientColor:(CCColor *)ambientColor ambientIntensity:(float)ambientIntensity;
 
 
 @end

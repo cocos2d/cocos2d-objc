@@ -234,6 +234,7 @@ static CCFileUtils *fileUtils = nil;
 			[_searchResolutionsOrder addObject:CCFileUtilsSuffixiPhoneHD];
 		}
 	}
+#if __CC_PLATFORM_IOS
 	else if (device == CCDeviceiPhone6Plus)
 	{
 		// Terrible, terrible iPhone 6+ hack.
@@ -245,6 +246,7 @@ static CCFileUtils *fileUtils = nil;
 		[_searchResolutionsOrder addObject:CCFileUtilsSuffixiPhone5];
 		[_searchResolutionsOrder addObject:CCFileUtilsSuffixiPhone];
 	}
+#endif
 	else if (device == CCDeviceiPhone5RetinaDisplay || device == CCDeviceiPhone6)
 	{
 		[_searchResolutionsOrder addObject:CCFileUtilsSuffixiPhone5HD];

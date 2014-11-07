@@ -326,7 +326,7 @@
         }
         else if (_fileSize > _totalBytes)
         {
-            CCLOG(@"[PACKAGE/DOWNLOAD][ERROR] Restarting download: Size mismatch: File is larger(%lu) than expected download size(%lu)", _fileSize, _totalBytes);
+            CCLOG(@"[PACKAGE/DOWNLOAD][ERROR] Restarting download: Size mismatch: File is larger(%lu) than expected download size(%lu)", (unsigned long)_fileSize, (unsigned long)_totalBytes);
             [self restartDownload];
         }
     }

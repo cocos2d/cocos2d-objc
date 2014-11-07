@@ -14,13 +14,14 @@ static const float CCEffectUtilsMinRefract = -0.25;
 static const float CCEffectUtilsMaxRefract = 0.043;
 
 static CCNode* CCEffectUtilsGetNodeParent(CCNode *node);
+static BOOL CCEffectUtilsNodeIsDescendantOfNode(CCNode *descendant, CCNode *ancestor);
 
 
 
 CCNode* CCEffectUtilsFindCommonAncestor(CCNode *first, CCNode *second)
 {
-    NSCAssert(first, @"CCEffectUtilsTransformFromNodeToNode supplied nil node.");
-    NSCAssert(second, @"CCEffectUtilsTransformFromNodeToNode supplied nil node.");
+    NSCAssert(first, @"First node is nil.");
+    NSCAssert(second, @"Second node is nil.");
 
     // First find the common ancestor of the two nodes. If there isn't
     // one then don't do anything else.
@@ -48,19 +49,15 @@ CCNode* CCEffectUtilsFindCommonAncestor(CCNode *first, CCNode *second)
     return commonAncestor;
 }
 
-GLKMatrix4 CCEffectUtilsTransformFromNodeToAncestor(CCNode *descendant, CCNode *ancestor, BOOL *success)
+GLKMatrix4 CCEffectUtilsTransformFromNodeToAncestor(CCNode *descendant, CCNode *ancestor)
 {
+    NSCAssert(CCEffectUtilsNodeIsDescendantOfNode(descendant, ancestor), @"The supplied nodes are not related to each other.");
+                                                  
     // Compute the transform from this node to the common ancestor
     CGAffineTransform t = [descendant nodeToParentTransform];
-    CCNode *p = nil;;
-    for (p = CCEffectUtilsGetNodeParent(descendant); (p != nil) && (p != CCEffectUtilsGetNodeParent(ancestor)); p = CCEffectUtilsGetNodeParent(p))
+    for (CCNode *p = CCEffectUtilsGetNodeParent(descendant); p != CCEffectUtilsGetNodeParent(ancestor); p = CCEffectUtilsGetNodeParent(p))
     {
         t = CGAffineTransformConcat(t, [p nodeToParentTransform]);
-    }
-    
-    if (success)
-    {
-        *success = (p != nil);
     }
     return CCEffectUtilsMat4FromAffineTransform(t);
 }
@@ -77,16 +74,10 @@ GLKMatrix4 CCEffectUtilsTransformFromNodeToNode(CCNode *first, CCNode *second, B
     {
         return GLKMatrix4Identity;
     }
-
-    BOOL gotTransform;
     
     // Find the transforms to the common ancestor.
-    GLKMatrix4 t1 = CCEffectUtilsTransformFromNodeToAncestor(first, commonAncestor, &gotTransform);
-    NSCAssert(gotTransform, @"Could not find the transform to a known ancestor");
-    
-    GLKMatrix4 t2 = CCEffectUtilsTransformFromNodeToAncestor(second, commonAncestor, &gotTransform);
-    NSCAssert(gotTransform, @"Could not find the transform to a known ancestor");
-    
+    GLKMatrix4 t1 = CCEffectUtilsTransformFromNodeToAncestor(first, commonAncestor);
+    GLKMatrix4 t2 = CCEffectUtilsTransformFromNodeToAncestor(second, commonAncestor);
 
     // Concatenate t1 and the inverse of t2 to give us the transform from the first node
     // to the second.
@@ -104,6 +95,19 @@ CCNode* CCEffectUtilsGetNodeParent(CCNode *node)
     {
         return node.parent;
     }
+}
+
+BOOL CCEffectUtilsNodeIsDescendantOfNode(CCNode *descendant, CCNode *ancestor)
+{
+    NSCAssert(descendant != nil, @"Descendant node is nil.");
+    NSCAssert(ancestor != nil, @"Ancestor node is nil.");
+
+    CCNode *n = nil;
+    for (n = descendant; (n != nil) && (n != ancestor); n = CCEffectUtilsGetNodeParent(n))
+    {
+    }
+    
+    return (n == ancestor);
 }
 
 GLKMatrix4 CCEffectUtilsMat4FromAffineTransform(CGAffineTransform at)
@@ -144,8 +148,8 @@ GLKMatrix2 CCEffectUtilsMatrix2InvertAndTranspose(GLKMatrix2 matrix, bool *isInv
 
 GLKVector2 CCEffectUtilsMatrix2MultiplyVector2(GLKMatrix2 m, GLKVector2 v)
 {
-    GLKVector2 result = { m.m[0] * v.v[0] + m.m[2] * v.v[1],
-                          m.m[1] * v.v[0] + m.m[3] * v.v[1] };
+    GLKVector2 result = {{ m.m[0] * v.v[0] + m.m[2] * v.v[1],
+                           m.m[1] * v.v[0] + m.m[3] * v.v[1] }};
     return result;
 }
 
