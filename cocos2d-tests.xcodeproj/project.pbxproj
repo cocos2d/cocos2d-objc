@@ -1618,6 +1618,7 @@
 				);
 				INFOPLIST_FILE = "cocos2d-ui-tests/osx/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				MTL_HEADER_SEARCH_PATHS = "/Users/slembcke/Development/cocos2d-iphone/cocos2d";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -1654,6 +1655,7 @@
 				);
 				INFOPLIST_FILE = "cocos2d-ui-tests/osx/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				MTL_HEADER_SEARCH_PATHS = "/Users/slembcke/Development/cocos2d-iphone/cocos2d";
 				OTHER_LDFLAGS = (
 					"-lz",
