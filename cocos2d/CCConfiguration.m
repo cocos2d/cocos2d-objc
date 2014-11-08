@@ -205,7 +205,7 @@ static char * glExtensions;
     } else {
         if([CCDirector sharedDirector].contentScaleFactor > 1.0)
         {
-            ret = CCDeviceiPadRetinaDisplay;
+            return CCDeviceiPadRetinaDisplay;
         }
         else
         {
