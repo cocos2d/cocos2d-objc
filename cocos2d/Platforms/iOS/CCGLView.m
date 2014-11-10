@@ -73,9 +73,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import <QuartzCore/QuartzCore.h>
 
 #import "CCGLView.h"
-#import "../../CCDirector.h"
-#import "../../ccMacros.h"
-#import "../../CCConfiguration.h"
+#import "CCDirector.h"
+#import "ccMacros.h"
+#import "CCDeviceInfo.h"
 #import "CCScene.h"
 #import "CCTouch.h"
 #import "CCTouchEvent.h"
@@ -298,7 +298,7 @@ extern EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup
 		CC_CHECK_GL_ERROR_DEBUG();
 	});
 	
-	_discardFramebufferSupported = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
+	_discardFramebufferSupported = [[CCDeviceInfo sharedDeviceInfo] supportsDiscardFramebuffer];
 
 	return YES;
 }

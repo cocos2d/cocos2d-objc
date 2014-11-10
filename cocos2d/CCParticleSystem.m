@@ -39,7 +39,7 @@
 #import "CCSpriteFrame.h"
 #import "CCDirector.h"
 #import "CCShader.h"
-#import "CCConfiguration.h"
+#import "CCDeviceInfo.h"
 
 // support
 #import "Support/CGPointExtension.h"

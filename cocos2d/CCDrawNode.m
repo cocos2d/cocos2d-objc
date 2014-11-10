@@ -32,7 +32,7 @@
 #import "Support/CGPointExtension.h"
 #import "CCNode_Private.h"
 #import "CCColor.h"
-#import "CCConfiguration.h"
+#import "CCDeviceInfo.h"
 #import "CCMetalSupport_Private.h"
 
 // Vertex shader that performs the modelview-projection multiplication on the GPU.

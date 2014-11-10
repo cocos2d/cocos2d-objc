@@ -39,7 +39,7 @@
 #import "ccMacros.h"
 #import "CCLabelBMFont.h"
 #import "CCSprite.h"
-#import "CCConfiguration.h"
+#import "CCDeviceInfo.h"
 #import "CCTexture.h"
 #import "CCTextureCache.h"
 #import "Support/CCFileUtils.h"
@@ -341,11 +341,11 @@ void FNTConfigRemoveCache( void )
     
 	// scaleW. sanity check
 	propertyValue = [nse nextObject];
-	NSAssert( [propertyValue intValue] <= [[CCConfiguration sharedConfiguration] maxTextureSize], @"CCLabelBMFont: page can't be larger than supported");
+	NSAssert( [propertyValue intValue] <= [[CCDeviceInfo sharedDeviceInfo] maxTextureSize], @"CCLabelBMFont: page can't be larger than supported");
     
 	// scaleH. sanity check
 	propertyValue = [nse nextObject];
-	NSAssert( [propertyValue intValue] <= [[CCConfiguration sharedConfiguration] maxTextureSize], @"CCLabelBMFont: page can't be larger than supported");
+	NSAssert( [propertyValue intValue] <= [[CCDeviceInfo sharedDeviceInfo] maxTextureSize], @"CCLabelBMFont: page can't be larger than supported");
     
 	// pages. sanity check
 	propertyValue = [nse nextObject];

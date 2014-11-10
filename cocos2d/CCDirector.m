@@ -43,7 +43,7 @@
 #import "CCTexture.h"
 #import "CCLabelBMFont.h"
 #import "ccFPSImages.h"
-#import "CCConfiguration.h"
+#import "CCDeviceInfo.h"
 #import "CCTransition.h"
 #import "CCRenderer_Private.h"
 #import "CCRenderDispatch_Private.h"
@@ -205,7 +205,7 @@ static CCDirector *_sharedDirector = nil;
 		
 		// Force the graphics API to be selected if it hasn't already done so.
 		// Startup code is annoyingly different for iOS/Mac/Android.
-		[[CCConfiguration sharedConfiguration] graphicsAPI];
+		[[CCDeviceInfo sharedDeviceInfo] graphicsAPI];
 		_framebuffer = [[CCFrameBufferObjectClass alloc] init];
 	}
 
@@ -402,7 +402,7 @@ static CCDirector *_sharedDirector = nil;
 		}
 
 		// Dump info once OpenGL was initilized
-		[[CCConfiguration sharedConfiguration] dumpInfo];
+		[[CCDeviceInfo sharedDeviceInfo] dumpInfo];
 }
 
 

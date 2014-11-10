@@ -26,7 +26,7 @@
 
 
 #import "CCFileUtils.h"
-#import "../CCConfiguration.h"
+#import "../CCDeviceInfo.h"
 #import "../ccMacros.h"
 #import "../ccConfig.h"
 #import "../ccTypes.h"
@@ -212,7 +212,7 @@ static CCFileUtils *fileUtils = nil;
 
 - (void) buildSearchResolutionsOrder
 {
-	NSInteger device = [[CCConfiguration sharedConfiguration] runningDevice];
+	NSInteger device = [[CCDeviceInfo sharedDeviceInfo] runningDevice];
     
 	[_searchResolutionsOrder removeAllObjects];
 	

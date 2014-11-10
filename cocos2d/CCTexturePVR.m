@@ -64,7 +64,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #import "CCTexturePVR.h"
 #import "ccMacros.h"
-#import "CCConfiguration.h"
+#import "CCDeviceInfo.h"
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
 #import "Support/ZipUtils.h"
@@ -301,7 +301,7 @@ typedef struct {
 		return NO;
 	}
 
-	CCConfiguration *configuration = [CCConfiguration sharedConfiguration];
+	CCDeviceInfo *configuration = [CCDeviceInfo sharedDeviceInfo];
 
 	flags = CFSwapInt32LittleToHost(header->flags);
 	formatFlags = flags & PVR_TEXTURE_FLAG_TYPE_MASK;
@@ -349,7 +349,7 @@ typedef struct {
 						heightBlocks = height / 4;
 						break;
 					case kPVR2TexturePixelFormat_BGRA_8888:
-						if( ! [[CCConfiguration sharedConfiguration] supportsBGRA8888] ) {
+						if( ! [[CCDeviceInfo sharedDeviceInfo] supportsBGRA8888] ) {
 							CCLOG(@"cocos2d: TexturePVR. BGRA8888 not supported on this device");
 							return NO;
 						}
@@ -468,7 +468,7 @@ typedef struct {
 				heightBlocks = height / 4;
 				break;
 			case kPVR3TexturePixelFormat_BGRA_8888:
-				if( ! [[CCConfiguration sharedConfiguration] supportsBGRA8888] ) {
+				if( ! [[CCDeviceInfo sharedDeviceInfo] supportsBGRA8888] ) {
 					CCLOG(@"cocos2d: TexturePVR. BGRA8888 not supported on this device");
 					return NO;
 				}
@@ -506,7 +506,7 @@ typedef struct {
 
 - (BOOL)createGLTexture
 {
-	NSAssert([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIGL, @"PVR textures are not yet supported by Metal.");
+	NSAssert([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIGL, @"PVR textures are not yet supported by Metal.");
 	__block BOOL retVal = NO;
 	
 CCRenderDispatch(NO, ^{
@@ -546,7 +546,7 @@ CCRenderDispatch(NO, ^{
 	// Generate textures with mipmaps
 	for (GLint i=0; i < _numberOfMipmaps; i++)
 	{
-		if( compressed && ! [[CCConfiguration sharedConfiguration] supportsPVRTC] ) {
+		if( compressed && ! [[CCDeviceInfo sharedDeviceInfo] supportsPVRTC] ) {
 			CCLOGWARN(@"cocos2d: WARNING: PVRTC images are not supported");
 			retVal = NO; return;
 		}
@@ -623,9 +623,9 @@ CCRenderDispatch(NO, ^{
 		
 #if __CC_PLATFORM_IOS && defined(DEBUG)
 		GLenum pixelFormat = _pixelFormatInfo->ccPixelFormat;
-		CCConfiguration *conf = [CCConfiguration sharedConfiguration];
+		CCDeviceInfo *info = [CCDeviceInfo sharedDeviceInfo];
 		
-		if( [conf OSVersion] >= CCSystemVersion_iOS_5_0 )
+		if( [info OSVersion] >= CCSystemVersion_iOS_5_0 )
 		{
 			
 			// iOS 5 BUG:

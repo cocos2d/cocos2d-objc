@@ -112,7 +112,7 @@ typedef NS_ENUM(NSUInteger, CCGraphicsAPI) {
 /**
  CCConfiguration contains some openGL variables
   */
-@interface CCConfiguration : NSObject {
+@interface CCDeviceInfo : NSObject {
 	CCGraphicsAPI _graphicsAPI;
 	
 	BOOL	_configured;
@@ -178,7 +178,7 @@ typedef NS_ENUM(NSUInteger, CCGraphicsAPI) {
 
 
 /** returns a shared instance of the CCConfiguration */
-+(CCConfiguration *) sharedConfiguration;
++(CCDeviceInfo *) sharedDeviceInfo;
 
 /** returns whether or not an OpenGL is supported */
 - (BOOL) checkForGLExtension:(NSString *)searchName;

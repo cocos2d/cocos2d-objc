@@ -7,7 +7,7 @@
 //
 
 #import "CCEffectRenderer.h"
-#import "CCConfiguration.h"
+#import "CCDeviceInfo.h"
 #import "CCDirector.h"
 #import "CCEffect.h"
 #import "CCEffectStack.h"
@@ -92,7 +92,7 @@ static GLKVector2 selectTexCoordPadding(CCEffectTexCoordSource tcSource, GLKVect
 	NSUInteger powW;
 	NSUInteger powH;
     
-	if( [[CCConfiguration sharedConfiguration] supportsNPOT] )
+	if( [[CCDeviceInfo sharedDeviceInfo] supportsNPOT] )
     {
 		powW = size.width;
 		powH = size.height;

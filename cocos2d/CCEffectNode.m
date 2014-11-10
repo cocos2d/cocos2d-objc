@@ -12,7 +12,7 @@
 #import "CCDirector.h"
 #import "ccMacros.h"
 #import "CCShader.h"
-#import "CCConfiguration.h"
+#import "CCDeviceInfo.h"
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
 #import "Support/CGPointExtension.h"

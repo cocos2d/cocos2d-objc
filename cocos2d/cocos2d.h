@@ -59,7 +59,7 @@
 #import "CCActionTween.h"
 #import "CCClippingNode.h"
 #import "CCColor.h"
-#import "CCConfiguration.h"
+#import "CCDeviceInfo.h"
 #import "CCDirector.h"
 #import "CCDrawNode.h"
 #import "CCEffect.h"

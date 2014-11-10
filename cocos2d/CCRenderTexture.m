@@ -28,7 +28,7 @@
 #import "CCDirector.h"
 #import "ccMacros.h"
 #import "CCShader.h"
-#import "CCConfiguration.h"
+#import "CCDeviceInfo.h"
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
 #import "Support/CGPointExtension.h"
@@ -164,7 +164,7 @@
 	NSUInteger powW;
 	NSUInteger powH;
 
-	if( [[CCConfiguration sharedConfiguration] supportsNPOT] ) {
+	if( [[CCDeviceInfo sharedDeviceInfo] supportsNPOT] ) {
 		powW = pixelSize.width;
 		powH = pixelSize.height;
 	} else {
@@ -385,7 +385,7 @@ FlipY(GLKMatrix4 projection)
 {
 	// TODO need to find out why getting pixels from a Metal texture doesn't seem to work.
 	// Workaround - use pixel buffers and a copy encoder?
-	NSAssert([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIGL, @"[CCRenderTexture -newCGImage] is only supported for GL.");
+	NSAssert([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIGL, @"[CCRenderTexture -newCGImage] is only supported for GL.");
 	
 	NSAssert(_pixelFormat == CCTexturePixelFormat_RGBA8888,@"only RGBA8888 can be saved as image");
 	

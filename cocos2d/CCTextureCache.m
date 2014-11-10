@@ -30,7 +30,7 @@
 #import "CCTextureCache.h"
 #import "CCTexture.h"
 #import "CCTexturePVR.h"
-#import "CCConfiguration.h"
+#import "CCDeviceInfo.h"
 #import "CCDirector.h"
 #import "ccConfig.h"
 #import "ccTypes.h"
@@ -92,7 +92,7 @@ static CCTextureCache *sharedTextureCache;
 		_dictQueue = dispatch_queue_create("org.cocos2d.texturecachedict", NULL);
 		
 		// Skip the GL context sharegroup code for Metal.
-		if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal) return self;
+		if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal) return self;
 		
 #if !__CC_PLATFORM_ANDROID
 		CCGLView *view = (CCGLView*)[[CCDirector sharedDirector] view];
