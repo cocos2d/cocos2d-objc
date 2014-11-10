@@ -49,7 +49,6 @@
 // cocos2d
 #import "ccConfig.h"
 #import "CCParticleSystemBase.h"
-#import "CCParticleBatchNode.h"
 #import "CCTexture.h"
 #import "CCTextureCache.h"
 #import "ccMacros.h"
@@ -59,7 +58,6 @@
 // support
 #import "Support/CGPointExtension.h"
 #import "Support/base64.h"
-#import "Support/ZipUtils.h"
 #import "Support/CCFileUtils.h"
 
 #import "CCParticleSystemBase_Private.h"
@@ -259,7 +257,8 @@
 				NSAssert( buffer != NULL, @"CCParticleSystem: error decoding textureImageData");
 
 				unsigned char *deflated = NULL;
-				NSUInteger deflatedLen = ccInflateMemory(buffer, len, &deflated);
+				#warning TODO
+				NSUInteger deflatedLen = 0;//ccInflateMemory(buffer, len, &deflated);
 				free( buffer );
 
 				NSAssert( deflated != NULL, @"CCParticleSystem: error ungzipping textureImageData");

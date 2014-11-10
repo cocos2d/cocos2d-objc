@@ -183,17 +183,3 @@
 #endif // __CC_PLATFORM_IOS
 
 @end
-
-
-#pragma mark - CCAccelerometerDelegate
-
-#if __CC_PLATFORM_IOS
-/** CCAccelerometerDelegate delegate */
-@class UIAcceleration;
-@class UIAccelerometer;
-@protocol CCAccelerometerDelegate <NSObject>
-
-@optional
-- (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration;
-@end
-#endif // __CC_PLATFORM_IOS

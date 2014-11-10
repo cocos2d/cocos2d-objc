@@ -33,7 +33,6 @@
 #import "CCTiledMap.h"
 #import "CCTMXXMLParser.h"
 #import "CCSprite.h"
-#import "CCSpriteBatchNode.h"
 #import "CCTextureCache.h"
 #import "CCShader.h"
 #import "Support/CGPointExtension.h"

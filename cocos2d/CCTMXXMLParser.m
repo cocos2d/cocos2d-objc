@@ -39,7 +39,6 @@
 #import "CCTiledMap.h"
 #import "CCTiledMapObjectGroup.h"
 #import "Support/base64.h"
-#import "Support/ZipUtils.h"
 #import "Support/CCFileUtils.h"
 
 #pragma mark -
@@ -493,8 +492,9 @@
 			unsigned char *deflated;
 			CGSize s = [layer layerSize];
 			int sizeHint = s.width * s.height * sizeof(uint32_t);
-
-			int inflatedLen = ccInflateMemoryWithHint(buffer, len, &deflated, sizeHint);
+			
+			#warning TODO
+			int inflatedLen = 0;//ccInflateMemoryWithHint(buffer, len, &deflated, sizeHint);
 			NSAssert( inflatedLen == sizeHint, @"CCTMXXMLParser: Hint failed!");
 
 			inflatedLen = (int)&inflatedLen; // XXX: to avoid warings in compiler

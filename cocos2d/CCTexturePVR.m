@@ -67,7 +67,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "CCDeviceInfo.h"
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
-#import "Support/ZipUtils.h"
 #import "CCGL.h"
 #import "CCRenderDispatch.h"
 
@@ -589,10 +588,12 @@ CCRenderDispatch(NO, ^{
 		NSString *lowerCase = [path lowercaseString];
 
         if ( [lowerCase hasSuffix:@".ccz"])
-			pvrlen = ccInflateCCZFile( [path UTF8String], &pvrdata );
+			#warning TODO
+			pvrlen = 0;//ccInflateCCZFile( [path UTF8String], &pvrdata );
 
 		else if( [lowerCase hasSuffix:@".gz"] )
-			pvrlen = ccInflateGZipFile( [path UTF8String], &pvrdata );
+			#warning TODO
+			pvrlen = 0;//ccInflateGZipFile( [path UTF8String], &pvrdata );
 
 		else
 			pvrlen = ccLoadFileIntoMemory( [path UTF8String], &pvrdata );

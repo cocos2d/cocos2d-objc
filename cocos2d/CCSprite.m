@@ -26,7 +26,6 @@
  */
 
 #import "ccConfig.h"
-#import "CCSpriteBatchNode.h"
 #import "CCSprite.h"
 #import "CCSpriteFrame.h"
 #import "CCSpriteFrameCache.h"

@@ -33,7 +33,6 @@
 // cocos2d
 #import "ccConfig.h"
 #import "CCParticleSystem.h"
-#import "CCParticleBatchNode.h"
 #import "CCTextureCache.h"
 #import "ccMacros.h"
 #import "CCSpriteFrame.h"
@@ -43,7 +42,6 @@
 
 // support
 #import "Support/CGPointExtension.h"
-#import "Support/NSThread+performBlock.h"
 
 #import "CCNode_Private.h"
 #import "CCParticleSystemBase_Private.h"
