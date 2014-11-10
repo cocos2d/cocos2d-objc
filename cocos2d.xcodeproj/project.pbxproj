@@ -381,7 +381,6 @@
 		7A59484519E375AB00F65F90 /* CGPointExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 503798C50F912C2000986724 /* CGPointExtension.m */; };
 		7A59484719E375AB00F65F90 /* CCProfiling.m in Sources */ = {isa = PBXBuildFile; fileRef = 0529445A11098D6F00E500F3 /* CCProfiling.m */; };
 		7A59484819E375AB00F65F90 /* ccUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = E0C54DC811F9CF2700B9E4CB /* ccUtils.c */; };
-		7A59484919E375AB00F65F90 /* ccUtils.h in Sources */ = {isa = PBXBuildFile; fileRef = E0C54DC911F9CF2700B9E4CB /* ccUtils.h */; };
 		7A59484B19E375AB00F65F90 /* CCFileUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C508C50F7C194400799124 /* CCFileUtils.m */; };
 		7A59484D19E375AB00F65F90 /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 50F29F5510204FD60046CA73 /* base64.c */; };
 		7A59484F19E375AC00F65F90 /* ZipUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F2A102102094550046CA73 /* ZipUtils.m */; };
@@ -391,7 +390,6 @@
 		7A59485719E375AD00F65F90 /* CCCache.m in Sources */ = {isa = PBXBuildFile; fileRef = D380581F1889CE7700822437 /* CCCache.m */; };
 		7A59485919E375AD00F65F90 /* CCRenderDispatch.m in Sources */ = {isa = PBXBuildFile; fileRef = D3903B0F199528A0003AA81A /* CCRenderDispatch.m */; };
 		7A59485D19E375AD00F65F90 /* CCRendererBasicTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = D34CAD6819C3A7B3009BED7A /* CCRendererBasicTypes.m */; };
-		7A59485E19E375AE00F65F90 /* CCShader.h in Sources */ = {isa = PBXBuildFile; fileRef = E0BC7D9B1342CE7B001B4DCC /* CCShader.h */; };
 		7A59486019E375AE00F65F90 /* CCShader.m in Sources */ = {isa = PBXBuildFile; fileRef = E0BC7D9C1342CE7B001B4DCC /* CCShader.m */; };
 		7A59486219E375AE00F65F90 /* NSValue+CCRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = D34CAD6219C3A0FD009BED7A /* NSValue+CCRenderer.m */; };
 		7A59486519E375AE00F65F90 /* CCRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = D38058191889AD6000822437 /* CCRenderer.m */; };
@@ -410,7 +408,6 @@
 		7A59488F19E375B300F65F90 /* CCDirectorMac.m in Sources */ = {isa = PBXBuildFile; fileRef = A046E28C14C1DB7D0005BBF2 /* CCDirectorMac.m */; };
 		7A59489119E375B400F65F90 /* CCGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = A046E29014C1DB7D0005BBF2 /* CCGLView.m */; };
 		7A59489319E375B400F65F90 /* CCWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = A046E29214C1DB7D0005BBF2 /* CCWindow.m */; };
-		7A59489519E375B400F65F90 /* CCNS.h in Sources */ = {isa = PBXBuildFile; fileRef = E0F92AC31224559800EF2362 /* CCNS.h */; };
 		7A59489719E375B400F65F90 /* cocos2d.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A07B7A0E4CBCD300AAF0BB /* cocos2d.m */; };
 		7A59489919E375B500F65F90 /* ccFPSImages.m in Sources */ = {isa = PBXBuildFile; fileRef = A003AC8E16572D6000C7B792 /* ccFPSImages.m */; };
 		7A59489C19E375B500F65F90 /* CCDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F2570DFDEAFF00C013A5 /* CCDirector.m */; };
@@ -426,7 +423,6 @@
 		7A5948BD19E375BB00F65F90 /* CCBReader.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D273071822F4AA0054849B /* CCBReader.m */; };
 		7A5948BF19E375BB00F65F90 /* CCBsequence.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D273091822F4AA0054849B /* CCBsequence.m */; };
 		7A5948C119E375BB00F65F90 /* CCBSequenceProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D2730B1822F4AA0054849B /* CCBSequenceProperty.m */; };
-		7A5948C319E375BC00F65F90 /* CCBReader_Private.h in Sources */ = {isa = PBXBuildFile; fileRef = B77060CE18341AD50043CC67 /* CCBReader_Private.h */; };
 		7A5948C719E375BC00F65F90 /* CCControl.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE45D17E7AF1C0028BE0B /* CCControl.m */; };
 		7A5948C919E375BD00F65F90 /* CCButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE45B17E7AF1C0028BE0B /* CCButton.m */; };
 		7A5948CB19E375BD00F65F90 /* CCTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B79F905917FE2A2E00908504 /* CCTableView.m */; };
@@ -3353,7 +3349,6 @@
 				7A59484519E375AB00F65F90 /* CGPointExtension.m in Sources */,
 				7A59484719E375AB00F65F90 /* CCProfiling.m in Sources */,
 				7A59484819E375AB00F65F90 /* ccUtils.c in Sources */,
-				7A59484919E375AB00F65F90 /* ccUtils.h in Sources */,
 				7A59484B19E375AB00F65F90 /* CCFileUtils.m in Sources */,
 				7A59484D19E375AB00F65F90 /* base64.c in Sources */,
 				7A59484F19E375AC00F65F90 /* ZipUtils.m in Sources */,
@@ -3363,7 +3358,6 @@
 				7A59485719E375AD00F65F90 /* CCCache.m in Sources */,
 				7A59485919E375AD00F65F90 /* CCRenderDispatch.m in Sources */,
 				7A59485D19E375AD00F65F90 /* CCRendererBasicTypes.m in Sources */,
-				7A59485E19E375AE00F65F90 /* CCShader.h in Sources */,
 				7A59486019E375AE00F65F90 /* CCShader.m in Sources */,
 				7A59486219E375AE00F65F90 /* NSValue+CCRenderer.m in Sources */,
 				7A59486519E375AE00F65F90 /* CCRenderer.m in Sources */,
@@ -3382,7 +3376,6 @@
 				7A59488F19E375B300F65F90 /* CCDirectorMac.m in Sources */,
 				7A59489119E375B400F65F90 /* CCGLView.m in Sources */,
 				7A59489319E375B400F65F90 /* CCWindow.m in Sources */,
-				7A59489519E375B400F65F90 /* CCNS.h in Sources */,
 				7A59494019E3810500F65F90 /* CCPlatformTextField.m in Sources */,
 				7A59489719E375B400F65F90 /* cocos2d.m in Sources */,
 				7A59489919E375B500F65F90 /* ccFPSImages.m in Sources */,
@@ -3400,7 +3393,6 @@
 				7A5948BF19E375BB00F65F90 /* CCBsequence.m in Sources */,
 				9D03A5F81A02F8C600C651C8 /* CCEffectLighting.m in Sources */,
 				7A5948C119E375BB00F65F90 /* CCBSequenceProperty.m in Sources */,
-				7A5948C319E375BC00F65F90 /* CCBReader_Private.h in Sources */,
 				7A5948C719E375BC00F65F90 /* CCControl.m in Sources */,
 				7A5948C919E375BD00F65F90 /* CCButton.m in Sources */,
 				7A5948CB19E375BD00F65F90 /* CCTableView.m in Sources */,
@@ -3756,8 +3748,6 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3782,8 +3772,6 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
