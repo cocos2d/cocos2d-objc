@@ -85,27 +85,6 @@
 #define CC_DIRECTOR_STATS_POSITION ccp(0,0)
 #endif
 
-#define CC_MAC_USE_DISPLAY_LINK_THREAD 0
-#define CC_MAC_USE_OWN_THREAD 1
-#define CC_MAC_USE_MAIN_THREAD 2
-
-/** @def CC_DIRECTOR_MAC_THREAD
- cocos2d-mac can run on its own thread, on the Display Link thread, or in the  main thread.
- If you are developing a game, the Display Link or Own thread are the best alternatives.
- If you are developing an editor that uses AppKit, you might need to use the Main Thread (only if you are lazy and don't want to create a sync queue).
-
- Options:
-	CC_MAC_USE_DISPLAY_LINK_THREAD  (default)
-	CC_MAC_USE_OWN_THREAD
-	CC_MAC_USE_MAIN_THREAD
- 
- Only valid for cocos2d-mac. Not supported on cocos2d-ios.
-
- */
-#ifndef CC_DIRECTOR_MAC_THREAD
-#define CC_DIRECTOR_MAC_THREAD CC_MAC_USE_MAIN_THREAD
-#endif
-
 /**
 	Enable multi-threaded rendering on iOS.
 	Only valid for cocos2d-iOS. See CCGLQueue.h for more information.
