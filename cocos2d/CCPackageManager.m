@@ -45,8 +45,14 @@
         self.packages = [NSMutableArray array];
         self.unzipTasks = [NSMutableArray array];
 
+        #if __CC_PLATFORM_MAC
+        NSString *applicationSupportPath = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) lastObject];
+        NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+        self.installedPackagesPath = [[applicationSupportPath stringByAppendingPathComponent:bundleIdentifier] stringByAppendingPathComponent:@"Packages"];
+        #else
         NSString *cachesPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
         self.installedPackagesPath = [cachesPath stringByAppendingPathComponent:@"Packages"];
+        #endif
 
         self.downloadManager = [[CCPackageDownloadManager alloc] init];
         _downloadManager.delegate = self;
