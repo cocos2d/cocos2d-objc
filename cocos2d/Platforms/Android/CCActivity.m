@@ -177,6 +177,7 @@ static void handler(NSException *e)
 - (void)handlePause
 {
     [[CCDirector sharedDirector] pause];
+    [[CCPackageManager sharedManager] savePackages];
 }
 
 
@@ -200,6 +201,7 @@ static void handler(NSException *e)
 - (void)handleLowMemory
 {
     [[CCDirector sharedDirector] purgeCachedData];
+    [[CCPackageManager sharedManager] savePackages];
 }
 
 - (void)reshape:(NSValue *)value
@@ -262,7 +264,8 @@ static void handler(NSException *e)
             director.designSize = fixed;
             [director setProjection:CCDirectorProjectionCustom];
         }
-        
+
+        [[CCPackageManager sharedManager] loadPackages];
 
         [director runWithScene:[self startScene]];
         [director setAnimationInterval:1.0/60.0];
