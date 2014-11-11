@@ -70,14 +70,14 @@ static GLKMatrix4 matrixWithHue(float hue);
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.debugLabel = @"CCEffectHue pass 0";
     pass0.shader = self.shader;
-    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
+    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
 
-        pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
-        pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-        pass.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:pass.texCoord1Center];
-        pass.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:pass.texCoord1Extents];
+        passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;
+        passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
+        passInputs.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:passInputs.texCoord1Center];
+        passInputs.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:passInputs.texCoord1Extents];
 
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_hueRotationMtx"]] = weakSelf.hueRotationMtx;
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_hueRotationMtx"]] = weakSelf.hueRotationMtx;
     } copy]];
     
     self.renderPasses = @[pass0];

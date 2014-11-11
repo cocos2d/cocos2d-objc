@@ -138,31 +138,31 @@
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.debugLabel = @"CCEffectRefraction pass 0";
     pass0.shader = self.shader;
-    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
+    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
         
-        pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
-        pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-        pass.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:pass.texCoord1Center];
-        pass.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:pass.texCoord1Extents];
+        passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;
+        passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
+        passInputs.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:passInputs.texCoord1Center];
+        passInputs.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:passInputs.texCoord1Extents];
 
         if (weakSelf.normalMap)
         {
-            pass.shaderUniforms[CCShaderUniformNormalMapTexture] = weakSelf.normalMap.texture;
+            passInputs.shaderUniforms[CCShaderUniformNormalMapTexture] = weakSelf.normalMap.texture;
 
             CCSpriteTexCoordSet texCoords = [CCSprite textureCoordsForTexture:weakSelf.normalMap.texture withRect:weakSelf.normalMap.rect rotated:weakSelf.normalMap.rotated xFlipped:NO yFlipped:NO];
-            CCSpriteVertexes verts = pass.verts;
+            CCSpriteVertexes verts = passInputs.verts;
             verts.bl.texCoord2 = texCoords.bl;
             verts.br.texCoord2 = texCoords.br;
             verts.tr.texCoord2 = texCoords.tr;
             verts.tl.texCoord2 = texCoords.tl;
-            pass.verts = verts;
+            passInputs.verts = verts;
         }
         
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_refraction"]] = [NSNumber numberWithFloat:weakSelf.conditionedRefraction];
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_envMap"]] = weakSelf.environment.texture ?: [CCTexture none];
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_refraction"]] = [NSNumber numberWithFloat:weakSelf.conditionedRefraction];
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_envMap"]] = weakSelf.environment.texture ?: [CCTexture none];
         
         // Get the transform from the affected node's local coordinates to the environment node.
-        GLKMatrix4 effectNodeToRefractEnvNode = weakSelf.environment ? CCEffectUtilsTransformFromNodeToNode(pass.node, weakSelf.environment, nil) : GLKMatrix4Identity;
+        GLKMatrix4 effectNodeToRefractEnvNode = weakSelf.environment ? CCEffectUtilsTransformFromNodeToNode(passInputs.node, weakSelf.environment, nil) : GLKMatrix4Identity;
 
         // Concatenate the node to environment transform with the environment node to environment texture transform.
         // The result takes us from the affected node's coordinates to the environment's texture coordinates. We need
@@ -172,15 +172,15 @@
         // Concatenate the node to environment texture transform together with the transform from NDC to local node
         // coordinates. (NDC == normalized device coordinates == render target coordinates that are normalized to the
         // range 0..1). The shader uses this to map from NDC directly to environment texture coordinates.
-        GLKMatrix4 ndcToRefractEnvTexture = GLKMatrix4Multiply(effectNodeToRefractEnvTexture, pass.ndcToNodeLocal);
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_ndcToEnv"]] = [NSValue valueWithGLKMatrix4:ndcToRefractEnvTexture];
+        GLKMatrix4 ndcToRefractEnvTexture = GLKMatrix4Multiply(effectNodeToRefractEnvTexture, passInputs.ndcToNodeLocal);
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_ndcToEnv"]] = [NSValue valueWithGLKMatrix4:ndcToRefractEnvTexture];
         
         // Setup the tangent and binormal vectors for the refraction environment
         GLKVector4 refractTangent = GLKVector4Normalize(GLKMatrix4MultiplyVector4(effectNodeToRefractEnvTexture, GLKVector4Make(1.0f, 0.0f, 0.0f, 0.0f)));
         GLKVector4 refractNormal = GLKVector4Make(0.0f, 0.0f, 1.0f, 1.0f);
         GLKVector4 refractBinormal = GLKVector4CrossProduct(refractNormal, refractTangent);
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_tangent"]] = [NSValue valueWithGLKVector2:GLKVector2Make(refractTangent.x, refractTangent.y)];
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_binormal"]] = [NSValue valueWithGLKVector2:GLKVector2Make(refractBinormal.x, refractBinormal.y)];
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_tangent"]] = [NSValue valueWithGLKVector2:GLKVector2Make(refractTangent.x, refractTangent.y)];
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_binormal"]] = [NSValue valueWithGLKVector2:GLKVector2Make(refractBinormal.x, refractBinormal.y)];
         
     } copy]];
     
