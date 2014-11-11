@@ -111,6 +111,8 @@
 			<string>___PACKAGENAME___</string>
 			<key>SharedSettings</key>
 			<dict>
+				<key>CLANG_ENABLE_MODULES</key>
+				<string>YES</string>
 				<key>ARCHS</key>
 				<string>$(ARCHS_STANDARD)</string>
 				<key>ALWAYS_SEARCH_USER_PATHS</key>
@@ -119,6 +121,11 @@
 				<string>$(TARGET_NAME)</string>
 				<key>WRAPPER_EXTENSION</key>
 				<string>app</string>
+				<key>OTHER_LDFLAGS</key>
+				<array>
+					<string>-lz</string>
+					<string>-ObjC</string>
+				</array>
 			</dict>
 			<key>BuildPhases</key>
 			<array>
