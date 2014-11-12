@@ -427,7 +427,7 @@ static char * glExtensions;
 			printf("cocos2d: GL_VENDOR:    %s\n", glGetString(GL_VENDOR) );
 			printf("cocos2d: GL_RENDERER:  %s\n", glGetString ( GL_RENDERER   ) );
 			printf("cocos2d: GL_VERSION:   %s\n", glGetString ( GL_VERSION    ) );
-            printf("cocos2d: GLSL_VERSION: %s\n", glGetString ( GL_SHADING_LANGUAGE_VERSION ) );
+			printf("cocos2d: GLSL_VERSION: %s\n", glGetString ( GL_SHADING_LANGUAGE_VERSION ) );
 		});
 		
 		printf("cocos2d: GL_MAX_TEXTURE_SIZE: %d\n", _maxTextureSize);

@@ -637,7 +637,7 @@ MetalUniformSettersForFunctions(id<MTLFunction> vertexFunction, id<MTLFunction> 
 		glBindAttribLocation(program, CCShaderAttributeTexCoord2, "cc_TexCoord2");
 		glBindAttribLocation(program, CCShaderAttributeColor, "cc_Color");
 		
-        GLint vshader = CompileShaderSources(GL_VERTEX_SHADER, vertexSources);
+		GLint vshader = CompileShaderSources(GL_VERTEX_SHADER, vertexSources);
 		glAttachShader(program, vshader);
 		
 		GLint fshader = CompileShaderSources(GL_FRAGMENT_SHADER, fragmentSources);
@@ -900,7 +900,7 @@ static CCShader *CC_SHADER_POS_TEX_COLOR_ALPHA_TEST = nil;
 		CC_SHADER_POS_TEX_COLOR = [[self alloc] initWithRawVertexShaderSource:CCPosTexColorVertexShader rawFragmentShaderSource:CCPosTexColorFragmentShader];
 		CC_SHADER_POS_TEX_COLOR.debugName = @"CCPositionTextureColorShader";
 		
-        CC_SHADER_POS_TEXA8_COLOR = [[self alloc] initWithRawVertexShaderSource:CCPosTexColorVertexShader rawFragmentShaderSource:CCPosTexA8ColorFragmentShader];
+		CC_SHADER_POS_TEXA8_COLOR = [[self alloc] initWithRawVertexShaderSource:CCPosTexColorVertexShader rawFragmentShaderSource:CCPosTexA8ColorFragmentShader];
 		CC_SHADER_POS_TEXA8_COLOR.debugName = @"CCPositionTextureA8ColorShader";
 		
 		CC_SHADER_POS_TEX_COLOR_ALPHA_TEST = [[self alloc] initWithRawVertexShaderSource:CCPosTexColorVertexShader rawFragmentShaderSource:CCPosTexColorAlphaTestFragmentShader];
