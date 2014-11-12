@@ -9,15 +9,18 @@
 #import "CCEffectInvert.h"
 #import "CCEffect_Private.h"
 
-static float conditionContrast(float contrast);
 
-@implementation CCEffectInvert
+@interface CCEffectInvertImpl : CCEffectImpl
+
+@end
+
+@implementation CCEffectInvertImpl
 
 -(id)init
 {
     if((self = [super initWithFragmentUniforms:nil vertexUniforms:nil varyings:nil]))
     {
-        self.debugName = @"CCEffectInvert";
+        self.debugName = @"CCEffectInvertImpl";
     }
     return self;
 }
@@ -54,3 +57,24 @@ static float conditionContrast(float contrast);
 }
 
 @end
+
+
+@implementation CCEffectInvert
+
+-(id)init
+{
+    if((self = [super init]))
+    {
+        self.effectImpl = [[CCEffectInvertImpl alloc] init];
+        self.debugName = @"CCEffectInvert";
+    }
+    return self;
+}
+
++(id)effect
+{
+    return [[self alloc] init];
+}
+
+@end
+

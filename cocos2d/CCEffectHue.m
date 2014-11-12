@@ -16,17 +16,12 @@ static float conditionHue(float hue);
 static GLKMatrix4 matrixWithHue(float hue);
 
 
-@interface CCEffectHue ()
+@interface CCEffectHueImpl : CCEffectImpl
 @property (nonatomic, strong) NSValue *hueRotationMtx;
 @end
 
 
-@implementation CCEffectHue
-
--(id)init
-{
-    return [self initWithHue:0.0f];
-}
+@implementation CCEffectHueImpl
 
 -(id)initWithHue:(float)hue
 {
@@ -36,16 +31,11 @@ static GLKMatrix4 matrixWithHue(float hue);
     
     if((self = [super initWithFragmentUniforms:uniforms vertexUniforms:nil varyings:nil]))
     {
-        _hue = hue;
         _hueRotationMtx = [NSValue valueWithGLKMatrix4:matrixWithHue(conditionHue(hue))];
-        self.debugName = @"CCEffectHue";
+        
+        self.debugName = @"CCEffectHueImpl";
     }
     return self;
-}
-
-+(id)effectWithHue:(float)hue
-{
-    return [[self alloc] initWithHue:hue];
 }
 
 -(void)buildFragmentFunctions
@@ -65,7 +55,7 @@ static GLKMatrix4 matrixWithHue(float hue);
 
 -(void)buildRenderPasses
 {
-    __weak CCEffectHue *weakSelf = self;
+    __weak CCEffectHueImpl *weakSelf = self;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.debugLabel = @"CCEffectHue pass 0";
@@ -85,11 +75,49 @@ static GLKMatrix4 matrixWithHue(float hue);
 
 -(void)setHue:(float)hue
 {
-    _hue = hue;
     _hueRotationMtx = [NSValue valueWithGLKMatrix4:matrixWithHue(conditionHue(hue))];
 }
 
 @end
+
+
+
+@implementation CCEffectHue
+
+-(id)init
+{
+    return [self initWithHue:0.0f];
+}
+
+-(id)initWithHue:(float)hue
+{
+    if((self = [super init]))
+    {
+        _hue = hue;
+        
+        self.effectImpl = [[CCEffectHueImpl alloc] initWithHue:hue];
+        self.debugName = @"CCEffectHue";
+    }
+    return self;
+}
+
++(id)effectWithHue:(float)hue
+{
+    return [[self alloc] initWithHue:hue];
+}
+
+-(void)setHue:(float)hue
+{
+    _hue = hue;
+    
+    CCEffectHueImpl *hueImpl = (CCEffectHueImpl *)self.effectImpl;
+    [hueImpl setHue:hue];
+}
+
+@end
+
+
+
 
 float conditionHue(float hue)
 {

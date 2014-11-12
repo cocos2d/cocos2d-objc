@@ -216,7 +216,7 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:passInputs.texCoord1Center];
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:passInputs.texCoord1Extents];
 
-        GLKMatrix4 nodeLocalToWorld = CCEffectUtilsMat4FromAffineTransform(passInputs.node.nodeToWorldTransform);
+        GLKMatrix4 nodeLocalToWorld = CCEffectUtilsMat4FromAffineTransform(passInputs.sprite.nodeToWorldTransform);
         GLKMatrix4 ndcToWorld = GLKMatrix4Multiply(nodeLocalToWorld, passInputs.ndcToNodeLocal);
         
 

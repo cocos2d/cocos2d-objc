@@ -44,23 +44,17 @@
 #import "CCTexture.h"
 
 
-@implementation CCEffectBlur {
+@interface CCEffectBlurImpl : CCEffectImpl
+
+@end
+
+@implementation CCEffectBlurImpl {
     NSUInteger _numberOfOptimizedOffsets;
+    NSUInteger _blurRadius;
     NSUInteger _trueBlurRadius;
     GLfloat _sigma;
     BOOL _shaderDirty;
 }
-
--(id)init
-{
-    if((self = [self initWithPixelBlurRadius:2]))
-    {
-        return self;
-    }
-    
-    return self;
-}
-
 
 -(id)initWithPixelBlurRadius:(NSUInteger)blurRadius
 {
@@ -78,7 +72,7 @@
                                      varyings:[NSArray arrayWithObjects:v_blurCoords, nil]])
     {
         
-        self.debugName = @"CCEffectBlur";
+        self.debugName = @"CCEffectBlurImpl";
         self.stitchFlags = 0;
         return self;
     }
@@ -86,20 +80,13 @@
     return self;
 }
 
-+(id)effectWithBlurRadius:(NSUInteger)blurRadius
-{
-    return [[self alloc] initWithPixelBlurRadius:blurRadius];
-}
-
 -(void)setBlurRadius:(NSUInteger)blurRadius
 {
     [self setBlurRadiusAndDependents:blurRadius];
     
     // The shader is constructed dynamically based on the blur radius
-    // so mark it dirty and make sure this propagates up to any containing
-    // effect stacks.
+    // so mark it dirty.
     _shaderDirty = YES;
-    [self.owningStack passesDidChange:self];
 }
 
 - (void)setBlurRadiusAndDependents:(NSUInteger)blurRadius
@@ -284,7 +271,7 @@
     // pass 0: blurs (horizontal) texture[0] and outputs blurmap to texture[1]
     // pass 1: blurs (vertical) texture[1] and outputs to texture[2]
 
-    __weak CCEffectBlur *weakSelf = self;
+    __weak CCEffectBlurImpl *weakSelf = self;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] initWithIndex:0];
     pass0.debugLabel = @"CCEffectBlur pass 0";
@@ -345,3 +332,44 @@
 
 @end
 
+
+@implementation CCEffectBlur
+
+-(id)init
+{
+    if((self = [self initWithPixelBlurRadius:2]))
+    {
+        return self;
+    }
+    
+    return self;
+}
+
+-(id)initWithPixelBlurRadius:(NSUInteger)blurRadius
+{
+    if(self = [super init])
+    {
+        self.effectImpl = [[CCEffectBlurImpl alloc] initWithPixelBlurRadius:blurRadius];
+        self.debugName = @"CCEffectBlur";
+        return self;
+    }
+    
+    return self;
+}
+
++(id)effectWithBlurRadius:(NSUInteger)blurRadius
+{
+    return [[self alloc] initWithPixelBlurRadius:blurRadius];
+}
+
+-(void)setBlurRadius:(NSUInteger)blurRadius
+{
+    _blurRadius = blurRadius;
+    
+    CCEffectBlurImpl *blurImpl = (CCEffectBlurImpl *)self.effectImpl;
+    [blurImpl setBlurRadius:blurRadius];
+    
+    [self.owningStack passesDidChange:self];
+}
+
+@end

@@ -1565,7 +1565,7 @@
 
 -(void)setupSpriteColorTest
 {
-    self.subTitle = @"Sprite Color + Effects Test\nThe bottom row should look like the top";
+    self.subTitle = @"Sprite Color + Effects Test\nColors in the bottom row should look like the top";
 
     // Make a solid gray background (there's got to be a better way to do this).
     CCEffectNode* background = [[CCEffectNode alloc] init];
@@ -1690,18 +1690,16 @@
     }
     
     
-    // Sprite with 50% transparent red and three stacked effects but stitching disabled
-    // manually after the second effect
+    // Sprite with 50% transparent red and three stacked effects, the third of which
+    // does not support being stitched to the effect before it. This tests that the
+    // sprite color and texture are multiplied together at the begining of the stack
+    // but not also by the input snippet to the third effect.
     {
         CCEffect *saturation = [CCEffectSaturation effectWithSaturation:0.0f];
         CCEffect *brightness = [CCEffectBrightness effectWithBrightness:0.0f];
-        CCEffect *hue = [CCEffectHue effectWithHue:0.0f];
-
-        // Manually manipulate the brightness effect's stitch flags so it is stitched with
-        // saturation but not with hue.
-        brightness.stitchFlags = CCEffectFunctionStitchBefore;
+        CCEffect *pixellate = [CCEffectPixellate effectWithBlockSize:1.0f];
         
-        CCEffectStack *stack = [CCEffectStack effectWithArray:@[saturation, brightness, hue]];
+        CCEffectStack *stack = [CCEffectStack effectWithArray:@[saturation, brightness, pixellate]];
         
         CCSprite *plainSprite = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
         plainSprite.positionType = CCPositionTypeNormalized;
