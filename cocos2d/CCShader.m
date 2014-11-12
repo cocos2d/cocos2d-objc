@@ -761,24 +761,149 @@ static CCShader *CC_SHADER_POS_TEX_COLOR_ALPHA_TEST = nil;
 	} else
 #endif
 	{
+        static NSString *CCPosColorVertexShader =
+            @"#ifndef GL_ES\n"
+            @"#define lowp\n"
+            @"#define mediump\n"
+            @"#define highp\n"
+            @"#endif\n\n"
+            @"varying " XSTR(CC_SHADER_COLOR_PRECISION) " vec4 cc_FragColor;\n"
+            @"\n"
+            @"#ifdef GL_ES\n"
+            @"precision highp float;\n"
+            @"#endif\n\n"
+            @"#define CC_NODE_RENDER_SUBPIXEL " XSTR(CC_NODE_RENDER_SUBPIXEL) "\n"
+            @"attribute highp vec4 cc_Position;\n"
+            @"attribute highp vec2 cc_TexCoord1;\n"
+            @"attribute highp vec2 cc_TexCoord2;\n"
+            @"attribute highp vec4 cc_Color;\n\n"
+            @"\n"
+            @"void main(){\n"
+            @"	gl_Position = cc_Position;\n"
+            @"#if !CC_NODE_RENDER_SUBPIXEL\n"
+            @"	vec2 pixelPos = (0.5*gl_Position.xy/gl_Position.w + 0.5)*cc_ViewSizeInPixels;\n"
+            @"	gl_Position.xy = (2.0*floor(pixelPos)/cc_ViewSizeInPixels - 1.0)*gl_Position.w;\n"
+            @"#endif\n\n"
+            @"	cc_FragColor = clamp(cc_Color, 0.0, 1.0);\n"
+            @"}\n";
+        
+        
+        static NSString *CCPosTexColorVertexShader =
+            @"#ifndef GL_ES\n"
+            @"#define lowp\n"
+            @"#define mediump\n"
+            @"#define highp\n"
+            @"#endif\n\n"
+            @"varying " XSTR(CC_SHADER_COLOR_PRECISION) " vec4 cc_FragColor;\n"
+            @"varying highp vec2 cc_FragTexCoord1;\n"
+            @"\n"
+            @"#ifdef GL_ES\n"
+            @"precision highp float;\n"
+            @"#endif\n\n"
+            @"#define CC_NODE_RENDER_SUBPIXEL " XSTR(CC_NODE_RENDER_SUBPIXEL) "\n"
+            @"attribute highp vec4 cc_Position;\n"
+            @"attribute highp vec2 cc_TexCoord1;\n"
+            @"attribute highp vec2 cc_TexCoord2;\n"
+            @"attribute highp vec4 cc_Color;\n\n"
+            @"\n"
+            @"void main(){\n"
+            @"	gl_Position = cc_Position;\n"
+            @"#if !CC_NODE_RENDER_SUBPIXEL\n"
+            @"	vec2 pixelPos = (0.5*gl_Position.xy/gl_Position.w + 0.5)*cc_ViewSizeInPixels;\n"
+            @"	gl_Position.xy = (2.0*floor(pixelPos)/cc_ViewSizeInPixels - 1.0)*gl_Position.w;\n"
+            @"#endif\n\n"
+            @"	cc_FragColor = clamp(cc_Color, 0.0, 1.0);\n"
+            @"	cc_FragTexCoord1 = cc_TexCoord1;\n"
+            @"}\n";
+
+        static NSString *CCPosColorFragmentShader =
+            @"#ifndef GL_ES\n"
+            @"#define lowp\n"
+            @"#define mediump\n"
+            @"#define highp\n"
+            @"#endif\n\n"
+            @"varying " XSTR(CC_SHADER_COLOR_PRECISION) " vec4 cc_FragColor;\n"
+            @"\n"
+            @"#ifdef GL_ES\n"
+            @"precision " XSTR(CC_SHADER_DEFAULT_FRAGMENT_PRECISION) " float;\n"
+            @"#endif\n\n"
+            @"\n"
+            @"void main()\n"
+            @"{\n"
+            @"    gl_FragColor = cc_FragColor;\n"
+            @"}";
+
+        static NSString *CCPosTexColorFragmentShader =
+            @"#ifndef GL_ES\n"
+            @"#define lowp\n"
+            @"#define mediump\n"
+            @"#define highp\n"
+            @"#endif\n\n"
+            @"uniform " XSTR(CC_SHADER_COLOR_PRECISION) " sampler2D cc_MainTexture;\n\n"
+            @"varying " XSTR(CC_SHADER_COLOR_PRECISION) " vec4 cc_FragColor;\n"
+            @"varying highp vec2 cc_FragTexCoord1;\n"
+            @"\n"
+            @"#ifdef GL_ES\n"
+            @"precision " XSTR(CC_SHADER_DEFAULT_FRAGMENT_PRECISION) " float;\n"
+            @"#endif\n\n"
+            @"\n"
+            @"void main()\n"
+            @"{\n"
+            @"    gl_FragColor = cc_FragColor*texture2D(cc_MainTexture, cc_FragTexCoord1);\n"
+            @"}";
+
+        static NSString *CCPosTexA8ColorFragmentShader =
+            @"#ifndef GL_ES\n"
+            @"#define lowp\n"
+            @"#define mediump\n"
+            @"#define highp\n"
+            @"#endif\n\n"
+            @"uniform " XSTR(CC_SHADER_COLOR_PRECISION) " sampler2D cc_MainTexture;\n\n"
+            @"varying " XSTR(CC_SHADER_COLOR_PRECISION) " vec4 cc_FragColor;\n"
+            @"varying highp vec2 cc_FragTexCoord1;\n"
+            @"\n"
+            @"#ifdef GL_ES\n"
+            @"precision " XSTR(CC_SHADER_DEFAULT_FRAGMENT_PRECISION) " float;\n"
+            @"#endif\n\n"
+            @"\n"
+            @"void main()\n"
+            @"{\n"
+            @"    gl_FragColor = cc_FragColor*texture2D(cc_MainTexture, cc_FragTexCoord1).a;\n"
+            @"}";
+
+        static NSString *CCPosTexColorAlphaTestFragmentShader =
+            @"#ifndef GL_ES\n"
+            @"#define lowp\n"
+            @"#define mediump\n"
+            @"#define highp\n"
+            @"#endif\n\n"
+            @"uniform " XSTR(CC_SHADER_COLOR_PRECISION) " sampler2D cc_MainTexture;\n\n"
+            @"varying " XSTR(CC_SHADER_COLOR_PRECISION) " vec4 cc_FragColor;\n"
+            @"varying highp vec2 cc_FragTexCoord1;\n"
+            @"\n"
+            @"#ifdef GL_ES\n"
+            @"precision " XSTR(CC_SHADER_DEFAULT_FRAGMENT_PRECISION) " float;\n"
+            @"#endif\n\n"
+            @"\n"
+            @"uniform float cc_AlphaTestValue;"
+            @"void main()\n"
+            @"{\n"
+            @"    vec4 tex = texture2D(cc_MainTexture, cc_FragTexCoord1);\n"
+            @"    if(tex.a <= cc_AlphaTestValue) discard;\n"
+            @"    gl_FragColor = cc_FragColor*tex;\n"
+            @"}";
+
 		// Setup the builtin shaders.
-		CC_SHADER_POS_COLOR = [[self alloc] initWithFragmentShaderSource:@"void main(){gl_FragColor = cc_FragColor;}"];
+		CC_SHADER_POS_COLOR = [[self alloc] initWithRawVertexShaderSource:CCPosColorVertexShader rawFragmentShaderSource:CCPosColorFragmentShader];
 		CC_SHADER_POS_COLOR.debugName = @"CCPositionColorShader";
 		
-		CC_SHADER_POS_TEX_COLOR = [[self alloc] initWithFragmentShaderSource:@"void main(){gl_FragColor = cc_FragColor*texture2D(cc_MainTexture, cc_FragTexCoord1);}"];
+		CC_SHADER_POS_TEX_COLOR = [[self alloc] initWithRawVertexShaderSource:CCPosTexColorVertexShader rawFragmentShaderSource:CCPosTexColorFragmentShader];
 		CC_SHADER_POS_TEX_COLOR.debugName = @"CCPositionTextureColorShader";
 		
-		CC_SHADER_POS_TEXA8_COLOR = [[self alloc] initWithFragmentShaderSource:@"void main(){gl_FragColor = cc_FragColor*texture2D(cc_MainTexture, cc_FragTexCoord1).a;}"];
+        CC_SHADER_POS_TEXA8_COLOR = [[self alloc] initWithRawVertexShaderSource:CCPosTexColorVertexShader rawFragmentShaderSource:CCPosTexA8ColorFragmentShader];
 		CC_SHADER_POS_TEXA8_COLOR.debugName = @"CCPositionTextureA8ColorShader";
 		
-		CC_SHADER_POS_TEX_COLOR_ALPHA_TEST = [[self alloc] initWithFragmentShaderSource:CC_GLSL(
-			uniform float cc_AlphaTestValue;
-			void main(){
-				vec4 tex = texture2D(cc_MainTexture, cc_FragTexCoord1);
-				if(tex.a <= cc_AlphaTestValue) discard;
-				gl_FragColor = cc_FragColor*tex;
-			}
-		)];
+		CC_SHADER_POS_TEX_COLOR_ALPHA_TEST = [[self alloc] initWithRawVertexShaderSource:CCPosTexColorVertexShader rawFragmentShaderSource:CCPosTexColorAlphaTestFragmentShader];
 		CC_SHADER_POS_TEX_COLOR_ALPHA_TEST.debugName = @"CCPositionTextureColorAlphaTestShader";
 	}
 }
