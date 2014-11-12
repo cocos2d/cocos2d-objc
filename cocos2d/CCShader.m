@@ -60,43 +60,43 @@ NSString * const CCShaderUniformAlphaTestValue = @"cc_AlphaTestValue";
 /*
 	main texture size points/pixels?
 */
-static const GLchar *CCShaderHeader =
-	"#ifndef GL_ES\n"
-	"#define lowp\n"
-	"#define mediump\n"
-	"#define highp\n"
-	"#endif\n\n"
-	"uniform highp mat4 cc_Projection;\n"
-	"uniform highp mat4 cc_ProjectionInv;\n"
-	"uniform highp vec2 cc_ViewSize;\n"
-	"uniform highp vec2 cc_ViewSizeInPixels;\n"
-	"uniform highp vec4 cc_Time;\n"
-	"uniform highp vec4 cc_SinTime;\n"
-	"uniform highp vec4 cc_CosTime;\n"
-	"uniform highp vec4 cc_Random01;\n\n"
-	"uniform " XSTR(CC_SHADER_COLOR_PRECISION) " sampler2D cc_MainTexture;\n\n"
-	"uniform " XSTR(CC_SHADER_COLOR_PRECISION) " sampler2D cc_NormalMapTexture;\n\n"
-	"varying " XSTR(CC_SHADER_COLOR_PRECISION) " vec4 cc_FragColor;\n"
-	"varying highp vec2 cc_FragTexCoord1;\n"
-	"varying highp vec2 cc_FragTexCoord2;\n\n"
-	"// End Cocos2D shader header.\n\n";
+static NSString *CCShaderHeader =
+	@"#ifndef GL_ES\n"
+	@"#define lowp\n"
+	@"#define mediump\n"
+	@"#define highp\n"
+	@"#endif\n\n"
+	@"uniform highp mat4 cc_Projection;\n"
+	@"uniform highp mat4 cc_ProjectionInv;\n"
+	@"uniform highp vec2 cc_ViewSize;\n"
+	@"uniform highp vec2 cc_ViewSizeInPixels;\n"
+	@"uniform highp vec4 cc_Time;\n"
+	@"uniform highp vec4 cc_SinTime;\n"
+	@"uniform highp vec4 cc_CosTime;\n"
+	@"uniform highp vec4 cc_Random01;\n\n"
+	@"uniform " XSTR(CC_SHADER_COLOR_PRECISION) " sampler2D cc_MainTexture;\n\n"
+	@"uniform " XSTR(CC_SHADER_COLOR_PRECISION) " sampler2D cc_NormalMapTexture;\n\n"
+	@"varying " XSTR(CC_SHADER_COLOR_PRECISION) " vec4 cc_FragColor;\n"
+	@"varying highp vec2 cc_FragTexCoord1;\n"
+	@"varying highp vec2 cc_FragTexCoord2;\n\n"
+	@"// End Cocos2D shader header.\n\n";
 
-static const GLchar *CCVertexShaderHeader =
-	"#ifdef GL_ES\n"
-	"precision highp float;\n"
-	"#endif\n\n"
-	"#define CC_NODE_RENDER_SUBPIXEL " XSTR(CC_NODE_RENDER_SUBPIXEL) "\n"
-	"attribute highp vec4 cc_Position;\n"
-	"attribute highp vec2 cc_TexCoord1;\n"
-	"attribute highp vec2 cc_TexCoord2;\n"
-	"attribute highp vec4 cc_Color;\n\n"
-	"// End Cocos2D vertex shader header.\n\n";
+static NSString *CCVertexShaderHeader =
+	@"#ifdef GL_ES\n"
+	@"precision highp float;\n"
+	@"#endif\n\n"
+	@"#define CC_NODE_RENDER_SUBPIXEL " XSTR(CC_NODE_RENDER_SUBPIXEL) "\n"
+	@"attribute highp vec4 cc_Position;\n"
+	@"attribute highp vec2 cc_TexCoord1;\n"
+	@"attribute highp vec2 cc_TexCoord2;\n"
+	@"attribute highp vec4 cc_Color;\n\n"
+	@"// End Cocos2D vertex shader header.\n\n";
 
-static const GLchar *CCFragmentShaderHeader =
-	"#ifdef GL_ES\n"
-	"precision " XSTR(CC_SHADER_DEFAULT_FRAGMENT_PRECISION) " float;\n"
-	"#endif\n\n"
-	"// End Cocos2D fragment shader header.\n\n";
+static NSString *CCFragmentShaderHeader =
+	@"#ifdef GL_ES\n"
+	@"precision " XSTR(CC_SHADER_DEFAULT_FRAGMENT_PRECISION) " float;\n"
+	@"#endif\n\n"
+	@"// End Cocos2D fragment shader header.\n\n";
 
 static NSString *CCDefaultVShader =
 	@"void main(){\n"
@@ -159,36 +159,46 @@ CCCheckShaderError(GLint obj, GLenum status, GetShaderivFunc getiv, GetShaderInf
 	}
 }
 
-static const GLchar *
-CCShaderTypeHeader(GLenum type)
+static void CCLogShader(NSArray *sources)
 {
-	switch(type){
-		case GL_VERTEX_SHADER: return CCVertexShaderHeader;
-		case GL_FRAGMENT_SHADER: return CCFragmentShaderHeader;
-		default: NSCAssert(NO, @"Bad shader type enumeration."); return NULL;
-	}
+    NSMutableString *allSource = [[NSMutableString alloc] init];
+    for (NSString *source in sources)
+    {
+        [allSource appendString:source];
+    }
+    
+    NSArray *sourceLines = [allSource componentsSeparatedByString:@"\n"];
+    int lineNumber = 1;
+    for (NSString *line in sourceLines)
+    {
+        NSLog(@"%4d: %@", lineNumber, line);
+        lineNumber++;
+    }
 }
 
 static GLint
-CompileShader(GLenum type, const char *source)
+CompileShaderSources(GLenum type, NSArray *sources)
 {
-	GLint shader = glCreateShader(type);
-	
-	const GLchar *sources[] = {
-		CCShaderHeader,
-		CCShaderTypeHeader(type),
-		source,
-	};
-
-	glShaderSource(shader, 3, sources, NULL);
-	glCompileShader(shader);
-	    
-	if(CCCheckShaderError(shader, GL_COMPILE_STATUS, glGetShaderiv, glGetShaderInfoLog)){
-		return shader;
-	} else {
-		glDeleteShader(shader);
-		return 0;
-	}
+    const GLchar **charSources = malloc(sizeof(GLchar*) * sources.count);
+    int i = 0;
+    for (NSString *source in sources)
+    {
+        charSources[i++] = source.UTF8String;
+    };
+    
+    GLint shader = glCreateShader(type);
+    glShaderSource(shader, (int)sources.count, charSources, NULL);
+    glCompileShader(shader);
+    
+    free(charSources);
+    
+    if(CCCheckShaderError(shader, GL_COMPILE_STATUS, glGetShaderiv, glGetShaderInfoLog)){
+        return shader;
+    } else {
+        CCLogShader(sources);
+        glDeleteShader(shader);
+        return 0;
+    }
 }
 
 
@@ -614,7 +624,7 @@ MetalUniformSettersForFunctions(id<MTLFunction> vertexFunction, id<MTLFunction> 
 }
 #endif
 
--(instancetype)initWithGLVertexShaderSource:(NSString *)vertexSource fragmentShaderSource:(NSString *)fragmentSource
+-(instancetype)initWithGLVertexShaderSources:(NSArray *)vertexSources fragmentShaderSources:(NSArray *)fragmentSources
 {
 	__block typeof(self) blockself = self;
 	
@@ -627,10 +637,10 @@ MetalUniformSettersForFunctions(id<MTLFunction> vertexFunction, id<MTLFunction> 
 		glBindAttribLocation(program, CCShaderAttributeTexCoord2, "cc_TexCoord2");
 		glBindAttribLocation(program, CCShaderAttributeColor, "cc_Color");
 		
-		GLint vshader = CompileShader(GL_VERTEX_SHADER, vertexSource.UTF8String);
+        GLint vshader = CompileShaderSources(GL_VERTEX_SHADER, vertexSources);
 		glAttachShader(program, vshader);
 		
-		GLint fshader = CompileShader(GL_FRAGMENT_SHADER, fragmentSource.UTF8String);
+		GLint fshader = CompileShaderSources(GL_FRAGMENT_SHADER, fragmentSources);
 		glAttachShader(program, fshader);
 		
 		glLinkProgram(program);
@@ -659,13 +669,37 @@ MetalUniformSettersForFunctions(id<MTLFunction> vertexFunction, id<MTLFunction> 
 	}
 #endif
 	{
-		return [self initWithGLVertexShaderSource:vertexSource fragmentShaderSource:fragmentSource];
+        NSArray *prefixedVertexSources = @[
+                                           CCShaderHeader,
+                                           CCVertexShaderHeader,
+                                           vertexSource
+                                           ];
+        
+        NSArray *prefixedFragmentSources = @[
+                                             CCShaderHeader,
+                                             CCFragmentShaderHeader,
+                                             fragmentSource
+                                             ];
+        
+        return [self initWithGLVertexShaderSources:prefixedVertexSources fragmentShaderSources:prefixedFragmentSources];
 	}
 }
 
 -(instancetype)initWithFragmentShaderSource:(NSString *)source
 {
 	return [self initWithVertexShaderSource:CCDefaultVShader fragmentShaderSource:source];
+}
+
+-(instancetype)initWithRawVertexShaderSource:(NSString *)vertexSource rawFragmentShaderSource:(NSString *)fragmentSource
+{
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+    if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+        return [self initWithMetalVertexShaderSource:vertexSource fragmentShaderSource:fragmentSource];
+    }
+#endif
+    {
+        return [self initWithGLVertexShaderSources:@[vertexSource] fragmentShaderSources:@[fragmentSource]];
+    }
 }
 
 - (void)dealloc

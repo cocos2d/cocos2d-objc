@@ -76,6 +76,8 @@ extern NSString * const CCShaderUniformAlphaTestValue;
 -(instancetype)initWithVertexShaderSource:(NSString *)vertexSource fragmentShaderSource:(NSString *)fragmentSource;
 -(instancetype)initWithFragmentShaderSource:(NSString *)source;
 
+-(instancetype)initWithRawVertexShaderSource:(NSString *)vertexSource rawFragmentShaderSource:(NSString *)fragmentSource;
+
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 -(instancetype)initWithMetalVertexFunction:(id<MTLFunction>)vertexFunction fragmentFunction:(id<MTLFunction>)fragmentFunction;
 #endif
