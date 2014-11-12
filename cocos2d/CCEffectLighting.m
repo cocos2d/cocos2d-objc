@@ -330,8 +330,8 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
 
     BOOL needsNormalMap = (sprite.normalMapSpriteFrame != nil);
     
-    CGAffineTransform spriteTransform = sprite.nodeToWorldTransform;
-    CGPoint spritePosition = CGPointApplyAffineTransform(sprite.anchorPointInPoints, sprite.nodeToWorldTransform);
+    GLKMatrix4 spriteTransform = sprite.nodeToWorldTransform;
+    CGPoint spritePosition = CGPointApplyGLKMatrix4(sprite.anchorPointInPoints, sprite.nodeToWorldTransform);
     
     CCLightCollection *lightCollection = sprite.scene.lights;
     if (self.groupMaskDirty)

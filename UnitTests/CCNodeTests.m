@@ -485,13 +485,13 @@
 	
 	[scene addChild:first z:0];
 	
-	CGAffineTransform nodeToWorld = [first nodeToWorldTransform];
-	XCTAssertEqualWithAccuracy(nodeToWorld.a, 2.0, 0.001, @""); // Node Scale *does* change the transform scale.
-	XCTAssertEqualWithAccuracy(nodeToWorld.b, 0.0, 0.001, @"");
-	XCTAssertEqualWithAccuracy(nodeToWorld.c, 0.0, 0.001, @"");
-	XCTAssertEqualWithAccuracy(nodeToWorld.d, 2.0, 0.001, @"");
-	XCTAssertEqualWithAccuracy(nodeToWorld.tx, 10.0, 0.001, @"");
-	XCTAssertEqualWithAccuracy(nodeToWorld.ty, 15.0, 0.001, @"");
+	GLKMatrix4 nodeToWorld = [first nodeToWorldTransform];
+	XCTAssertEqualWithAccuracy(nodeToWorld.m[ 0],  2.0, 0.001, @""); // Node Scale *does* change the transform scale.
+	XCTAssertEqualWithAccuracy(nodeToWorld.m[ 1],  0.0, 0.001, @"");
+	XCTAssertEqualWithAccuracy(nodeToWorld.m[ 4],  0.0, 0.001, @"");
+	XCTAssertEqualWithAccuracy(nodeToWorld.m[ 5],  2.0, 0.001, @"");
+	XCTAssertEqualWithAccuracy(nodeToWorld.m[12], 10.0, 0.001, @"");
+	XCTAssertEqualWithAccuracy(nodeToWorld.m[13], 15.0, 0.001, @"");
 	
 	// Changing node transform scale does not change the content size, which is local to the node.
 	XCTAssertEqualWithAccuracy(first.contentSize.width, 1.0, 0.001, @"");

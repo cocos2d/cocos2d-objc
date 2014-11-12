@@ -258,7 +258,7 @@ typedef struct CCSpriteTexCoordSet {
 
 /** Returns the matrix that transforms the sprite's (local) space coordinates into the sprite's texture space coordinates.
  */
-- (CGAffineTransform)nodeToTextureTransform;
+- (GLKMatrix4)nodeToTextureTransform;
 
 
 

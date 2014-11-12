@@ -14,16 +14,8 @@
 static inline GLKMatrix4
 CCNodeTransform(CCNode *node, GLKMatrix4 parentTransform)
 {
-	CGAffineTransform t = [node nodeToParentTransform];
-	float z = node->_vertexZ;
-	
-	// Convert to 4x4 column major GLK matrix.
-	return GLKMatrix4Multiply(parentTransform, GLKMatrix4Make(
-		 t.a,  t.b, 0.0f, 0.0f,
-		 t.c,  t.d, 0.0f, 0.0f,
-		0.0f, 0.0f, 1.0f, 0.0f,
-		t.tx, t.ty,    z, 1.0f
-	));
+	GLKMatrix4 t = [node nodeToParentTransform];
+	return GLKMatrix4Multiply(parentTransform, t);
 }
 
 -(GLKMatrix4)transform:(const GLKMatrix4 *)parentTransform

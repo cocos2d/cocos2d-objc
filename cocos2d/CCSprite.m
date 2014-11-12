@@ -330,14 +330,19 @@
 	return &_verts;
 }
 
-- (CGAffineTransform)nodeToTextureTransform
+- (GLKMatrix4)nodeToTextureTransform
 {
     CGFloat sx = (_verts.br.texCoord1.s - _verts.bl.texCoord1.s) / (_verts.br.position.x - _verts.bl.position.x);
     CGFloat sy = (_verts.tl.texCoord1.t - _verts.bl.texCoord1.t) / (_verts.tl.position.y - _verts.bl.position.y);
     CGFloat tx = (_verts.bl.texCoord1.s - _verts.bl.position.x * sx);
     CGFloat ty = (_verts.bl.texCoord1.t - _verts.bl.position.y * sy);
     
-	return CGAffineTransformMake(sx, 0.0f, 0.0f, sy, tx, ty);
+	return GLKMatrix4Make(
+		  sx, 0.0f, 0.0f, 0.0f,
+		0.0f,   sy, 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		  tx,   ty, 0.0f, 1.0f
+	);
 }
 
 #pragma mark CCSprite - draw

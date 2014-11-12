@@ -64,13 +64,13 @@
 	return _renderState;
 }
 
-- (CGAffineTransform)nodeToWorldTransform
+- (GLKMatrix4)nodeToWorldTransform
 {
-	CGAffineTransform t = [self nodeToParentTransform];
+	GLKMatrix4 t = [self nodeToParentTransform];
     
 	for (CCNode *p = _renderTexture; p != nil; p = p.parent)
     {
-		t = CGAffineTransformConcat(t, [p nodeToParentTransform]);
+		t = GLKMatrix4Multiply([p nodeToParentTransform], t);
     }
 	return t;
 }

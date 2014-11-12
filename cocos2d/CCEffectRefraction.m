@@ -167,7 +167,7 @@
         // Concatenate the node to environment transform with the environment node to environment texture transform.
         // The result takes us from the affected node's coordinates to the environment's texture coordinates. We need
         // this when computing the tangent and normal vectors below.
-        GLKMatrix4 effectNodeToRefractEnvTexture = GLKMatrix4Multiply(CCEffectUtilsMat4FromAffineTransform(weakSelf.environment.nodeToTextureTransform), effectNodeToRefractEnvNode);
+        GLKMatrix4 effectNodeToRefractEnvTexture = GLKMatrix4Multiply(weakSelf.environment.nodeToTextureTransform, effectNodeToRefractEnvNode);
 
         // Concatenate the node to environment texture transform together with the transform from NDC to local node
         // coordinates. (NDC == normalized device coordinates == render target coordinates that are normalized to the
