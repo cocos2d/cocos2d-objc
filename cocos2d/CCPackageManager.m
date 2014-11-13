@@ -45,14 +45,7 @@
         self.packages = [NSMutableArray array];
         self.unzipTasks = [NSMutableArray array];
 
-        #if __CC_PLATFORM_MAC
-        NSString *applicationSupportPath = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) lastObject];
-        NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
-        self.installedPackagesPath = [[applicationSupportPath stringByAppendingPathComponent:bundleIdentifier] stringByAppendingPathComponent:@"Packages"];
-        #else
-        NSString *cachesPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
-        self.installedPackagesPath = [cachesPath stringByAppendingPathComponent:@"Packages"];
-        #endif
+        self.installRelPath = @"Packages";
 
         self.downloadManager = [[CCPackageDownloadManager alloc] init];
         _downloadManager.delegate = self;
@@ -176,30 +169,35 @@
     [userDefaults synchronize];
 }
 
-- (void)setInstalledPackagesPath:(NSString *)installedPackagesPath
+- (void)setInstallRelPath:(NSString *)newInstallRelPath
 {
-    if ([_installedPackagesPath isEqualToString:installedPackagesPath])
+    if ([_installRelPath isEqualToString:newInstallRelPath]
+        || !newInstallRelPath
+        || [newInstallRelPath length] == 0
+        || ![[newInstallRelPath stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length])
     {
         return;
     }
 
+    NSString *fullPath = [[CCPackageHelper cachesFolder] stringByAppendingPathComponent:newInstallRelPath];
+
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    if (![fileManager fileExistsAtPath:installedPackagesPath])
+    if (![fileManager fileExistsAtPath:fullPath])
     {
         NSError *error;
-        if (![fileManager createDirectoryAtPath:installedPackagesPath
+        if (![fileManager createDirectoryAtPath:fullPath
                     withIntermediateDirectories:YES
                                      attributes:nil
                                           error:&error])
         {
-            CCLOGINFO(@"[PACKAGE][Error] Setting installation path to %@ - %@", installedPackagesPath, error);
+            CCLOGINFO(@"[PACKAGE][Error] Setting installation path to %@ - %@", fullPath, error);
             return;
         }
     }
 
-    [self willChangeValueForKey:@"installedPackagesPath"];
-    _installedPackagesPath = installedPackagesPath;
-    [self didChangeValueForKey:@"installedPackagesPath"];
+    [self willChangeValueForKey:@"installRelPath"];
+    _installRelPath = [newInstallRelPath copy];
+    [self didChangeValueForKey:@"installRelPath"];
 }
 
 - (void)setUnzippingQueue:(dispatch_queue_t)unzippingQueue
@@ -458,7 +456,7 @@
         return NO;
     }
 
-    CCPackageInstaller *packageInstaller = [[CCPackageInstaller alloc] initWithPackage:package installPath:_installedPackagesPath];
+    CCPackageInstaller *packageInstaller = [[CCPackageInstaller alloc] initWithPackage:package installRelPath:_installRelPath];
 
     if (![packageInstaller installWithError:&error])
     {

@@ -9,9 +9,10 @@
 @interface CCPackageManager : NSObject <CCPackageDownloadManagerDelegate, CCPackageUnzipperDelegate>
 
 /**
- *  The path where all installed packages are stored. Default is /Library/Caches/Packages
+ *  The path where all installed packages are stored. This path is relative to the caches folder which location is depending
+ *  on the OS. Default is "Packages".
  */
-@property (nonatomic, copy) NSString *installedPackagesPath;
+@property (nonatomic, copy) NSString *installRelPath;
 
 /**
  *  URL used as base to locate packages. A package standard identifier is added to create a full URL.
