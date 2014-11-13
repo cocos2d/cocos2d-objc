@@ -461,6 +461,7 @@
 		83E1A88719C8ACDC000A3BCA /* CCPackageCocos2dEnabler.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E1A87F19C8ACDC000A3BCA /* CCPackageCocos2dEnabler.m */; };
 		83E1A88A19C8ACDC000A3BCA /* CCPackageInstaller.h in Headers */ = {isa = PBXBuildFile; fileRef = 83E1A88219C8ACDC000A3BCA /* CCPackageInstaller.h */; };
 		83E1A88B19C8ACDC000A3BCA /* CCPackageInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E1A88319C8ACDC000A3BCA /* CCPackageInstaller.m */; };
+		83E21C001A121EB5000D1695 /* CCPackageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E1A85F19C8ACA0000A3BCA /* CCPackageManager.m */; };
 		9D03A5EB1A02F61700C651C8 /* CCLightNode_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D1B4A941A02D51600B2DD9B /* CCLightNode_Private.h */; };
 		9D03A5EC1A02F61A00C651C8 /* CCLightNode_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D1B4A941A02D51600B2DD9B /* CCLightNode_Private.h */; };
 		9D03A5ED1A02F61B00C651C8 /* CCLightNode_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D1B4A941A02D51600B2DD9B /* CCLightNode_Private.h */; };
@@ -3272,6 +3273,7 @@
 				7A59479319E3759800F65F90 /* CCEffectDFOutline.m in Sources */,
 				839CE58B19FFB146003369F0 /* CCEffectInvert.m in Sources */,
 				7A59479519E3759800F65F90 /* CCEffectDFInnerGlow.m in Sources */,
+				83E21C001A121EB5000D1695 /* CCPackageManager.m in Sources */,
 				7A59479719E3759800F65F90 /* CCEffectColorChannelOffset.m in Sources */,
 				7A59479919E3759900F65F90 /* CCEffectBlur.m in Sources */,
 				7A59479B19E3759900F65F90 /* CCEffectRefraction.m in Sources */,

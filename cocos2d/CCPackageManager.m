@@ -45,8 +45,14 @@
         self.packages = [NSMutableArray array];
         self.unzipTasks = [NSMutableArray array];
 
+        #if __CC_PLATFORM_MAC
+        NSString *applicationSupportPath = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) lastObject];
+        NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+        self.installedPackagesPath = [[applicationSupportPath stringByAppendingPathComponent:bundleIdentifier] stringByAppendingPathComponent:@"Packages"];
+        #else
         NSString *cachesPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
         self.installedPackagesPath = [cachesPath stringByAppendingPathComponent:@"Packages"];
+        #endif
 
         self.downloadManager = [[CCPackageDownloadManager alloc] init];
         _downloadManager.delegate = self;
@@ -396,7 +402,7 @@
     if ([fileManager fileExistsAtPath:package.unzipURL.path])
     {
         NSError *error;
-        CCLOGINFO(@"[PACKAGE/UNZIP][INFO] Removing incomplete unzipped archive: %@", installData.unzipURL.path);
+        CCLOGINFO(@"[PACKAGE/UNZIP][INFO] Removing incomplete unzipped archive: %@", package.unzipURL.path);
         if ([fileManager removeItemAtURL:package.unzipURL error:&error])
         {
             CCLOG(@"[PACKAGE/UNZIP][ERROR] Removing incomplete unzipped archive: %@", error);
@@ -432,7 +438,7 @@
 
 - (void)removeUnzippedPackage:(CCPackage *)package
 {
-    NSAssert(package.unzipURL, @"installData.unzipURL must not be nil");
+    NSAssert(package.unzipURL, @"package.unzipURL must not be nil");
 
     NSError *error;
     if (![[NSFileManager defaultManager] removeItemAtURL:package.unzipURL error:&error])
@@ -469,7 +475,7 @@
         [packageCocos2dEnabler enablePackages:@[package]];
     }
 
-    CCLOGINFO(@"[PACKAGE/INSTALL][INFO] Installation of package successful! Package enabled: %d", [package installData].enableOnDownload);
+    CCLOGINFO(@"[PACKAGE/INSTALL][INFO] Installation of package successful! Package enabled: %d", package.enableOnDownload);
 
     [_delegate packageInstallationFinished:package];
     return YES;
@@ -477,7 +483,7 @@
 
 - (BOOL)determinePackageFolderNameInUnzippedFile:(CCPackage *)package error:(NSError **)error
 {
-    NSAssert(package.unzipURL, @"installData.unzipURL must not be nil");
+    NSAssert(package.unzipURL, @"package.unzipURL must not be nil");
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSArray *files = [fileManager contentsOfDirectoryAtURL:package.unzipURL
@@ -521,7 +527,7 @@
 
 - (void)setPackageEmptyError:(NSError **)error package:(CCPackage *)package
 {
-    NSAssert(package.unzipURL, @"installData.unzipURL must not be nil");
+    NSAssert(package.unzipURL, @"package.unzipURL must not be nil");
 
     if (error)
     {
@@ -535,7 +541,7 @@
 
 - (BOOL)askDelegateForCustomFolderName:(CCPackage *)package files:(NSArray *)files
 {
-    NSAssert(package.unzipURL, @"installData.unzipURL must not be nil");
+    NSAssert(package.unzipURL, @"package.unzipURL must not be nil");
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if ([_delegate respondsToSelector:@selector(customFolderName:packageContents:)])
