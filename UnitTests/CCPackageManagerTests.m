@@ -126,9 +126,24 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
     [NSURLProtocol unregisterClass:[CCPackageManagerTestURLProtocol class]];
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
+
+    NSError *error;
     for (NSString *path in _cleanPathsArrayOnTearDown)
     {
-        [fileManager removeItemAtPath:path error:nil];
+        if (![fileManager removeItemAtPath:path error:&error] && error.code != 4)
+        {
+            NSLog(@"ERROR: tearDown remove item %@ - %@", path, error);
+        }
+    }
+
+    NSArray *array = [fileManager contentsOfDirectoryAtPath:[CCPackageHelper cachesFolder] error:nil];
+    for (NSString *filename in array)
+    {
+        NSString *filePath = [[CCPackageHelper cachesFolder] stringByAppendingPathComponent:filename];
+        if (![fileManager removeItemAtPath:filePath error:&error] && error.code != 4)
+        {
+            NSLog(@"ERROR: tearDown remove packages install folder %@", error);
+        }
     }
 
     [super tearDown];
@@ -284,13 +299,7 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 
 - (void)testDownloadOfPackageWithDifferentInstallPath
 {
-    NSString *customInstallPath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"PackagesInstall"];
-
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    [fileManager removeItemAtPath:customInstallPath error:nil];
-    [_cleanPathsArrayOnTearDown addObject:customInstallPath];
-
-    _packageManager.installRelPath = customInstallPath;
+    _packageManager.installRelPath = @"PackagesInstall";
 
     CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageInitial];
 
@@ -490,8 +499,8 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 
 - (void)testLoadPackagesReEnable
 {
-    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageWithStatus:CCPackageStatusInstalledDisabled installFolderPath:_packageManager
-            .installRelPath];
+    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageWithStatus:CCPackageStatusInstalledDisabled
+                                                               installFolderPath:_packageManager.installRelPath];
     // To simulate the loadPackages we need an installed but not actually enabled package just the status has to state it is enabled.
     package.status = CCPackageStatusInstalledEnabled;
 

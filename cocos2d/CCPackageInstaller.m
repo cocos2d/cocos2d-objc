@@ -39,7 +39,7 @@
         return NO;
     }
 
-    if (![self movePackageToInstallPathWithError:error])
+    if (![self movePackageToInstallRelPathWithError:error])
     {
         [_package setValue:@(CCPackageStatusInstallationFailed) forKey:@"status"];
         return NO;
@@ -50,7 +50,7 @@
     return YES;
 }
 
-- (BOOL)movePackageToInstallPathWithError:(NSError **)error
+- (BOOL)movePackageToInstallRelPathWithError:(NSError **)error
 {
     NSAssert(_package.unzipURL != nil, @"package.unzipURL must not be nil.");
     NSAssert(_package.folderName != nil, @"package.folderName must not be nil.");

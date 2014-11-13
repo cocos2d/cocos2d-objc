@@ -4,6 +4,7 @@
 #import "CCPackageCocos2dEnabler.h"
 #import "CCPackage_private.h"
 #import "CCFileUtils.h"
+#import "CCPackageHelper.h"
 
 
 @implementation CCPackagesTestFixturesAndHelpers
@@ -29,7 +30,7 @@
     if (status == CCPackageStatusInstalledDisabled
         || status == CCPackageStatusInstalledEnabled)
     {
-        package.installRelURL = [NSURL fileURLWithPath:[installFolderPath stringByAppendingPathComponent:@"testpackage-iOS-phonehd"]];
+        package.installRelURL = [NSURL URLWithString:@"Packages/testpackage-iOS-phonehd"];
 
         [fileManager copyItemAtPath:pathToUnzippedPackage toPath:package.installRelURL.path error:nil];
     }
@@ -75,7 +76,8 @@
 {
     for (NSString *aSearchPath in [CCFileUtils sharedFileUtils].searchPath)
     {
-        if ([aSearchPath isEqualToString:URL.path])
+        NSString *fullPath = [[CCPackageHelper cachesFolder] stringByAppendingPathComponent:URL.path];
+        if ([aSearchPath isEqualToString:fullPath])
         {
             return YES;
         }
