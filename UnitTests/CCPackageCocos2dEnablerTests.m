@@ -14,6 +14,7 @@
 #import "CCBReader.h"
 #import "AppDelegate.h"
 #import "CCPackage_private.h"
+#import "CCPackageHelper.h"
 
 @interface CCPackageCocos2dEnablerTests : XCTestCase
 
@@ -35,9 +36,31 @@
                                                 os:@"iOS"
                                          remoteURL:[NSURL URLWithString:@"http://foo.fake/Foo-iOS-phonehd.zip"]];
 
-    NSString *pathToPackage = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Resources-shared/Packages/testpackage-iOS-phonehd_unzipped"];
-    self.installURL = [[NSURL fileURLWithPath:pathToPackage] URLByAppendingPathComponent:@"testpackage-iOS-phonehd"];
-    _package.installRelURL = _installURL;
+    [self installPackage];
+
+
+    self.installURL = [NSURL URLWithString:@"testpackage-iOS-phonehd"];
+}
+
+- (void)installPackage
+{
+    NSString *pathToPackage = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Resources-shared/Packages/testpackage-iOS-phonehd_unzipped/testpackage-iOS-phonehd"];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+
+    _package.installRelURL = [NSURL URLWithString:@"Packages/testpackage-iOS-phonehd"];
+    NSString *packageInstalledFullPath = [[CCPackageHelper cachesFolder] stringByAppendingPathComponent:_package.installRelURL.path];
+
+    [fileManager createDirectoryAtPath:packageInstalledFullPath withIntermediateDirectories:YES attributes:nil error:nil];
+
+    [fileManager removeItemAtPath:packageInstalledFullPath error:nil];
+
+    NSError *error;
+    if (![fileManager copyItemAtPath:pathToPackage
+                         toPath:packageInstalledFullPath
+                          error:&error])
+    {
+        NSLog(@"%@", error);
+    }
 }
 
 
@@ -78,7 +101,9 @@
 {
     for (NSString *aSearchPath in [CCFileUtils sharedFileUtils].searchPath)
     {
-        if ([aSearchPath isEqualToString:_package.installRelURL.path])
+        NSString *fullPath = [[CCPackageHelper cachesFolder] stringByAppendingPathComponent:_package.installRelURL.path];
+
+        if ([aSearchPath isEqualToString:fullPath])
         {
             return YES;
         }

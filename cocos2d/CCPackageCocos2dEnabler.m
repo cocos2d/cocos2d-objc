@@ -4,6 +4,7 @@
 #import "CCFileUtils.h"
 #import "CCSpriteFrameCache.h"
 #import "CCPackage_private.h"
+#import "CCPackageHelper.h"
 
 
 @implementation CCPackageCocos2dEnabler
@@ -43,7 +44,7 @@
         NSAssert(aPackage.installRelURL != nil, @"aPackage.installRelURL must not be nil for package %@", aPackage);
 
         NSMutableArray *newSearchPath = [[CCFileUtils sharedFileUtils].searchPath mutableCopy];
-        NSString *newPackagePath = aPackage.installRelURL.path;
+        NSString *newPackagePath = [[CCPackageHelper cachesFolder] stringByAppendingPathComponent:aPackage.installRelURL.path];
 
         if (![newSearchPath containsObject:newPackagePath])
         {
@@ -74,7 +75,7 @@
     for (CCPackage *aPackage in packages)
     {
         NSMutableArray *newSearchPath = [[CCFileUtils sharedFileUtils].searchPath mutableCopy];
-        NSString *packagePathToRemove = aPackage.installRelURL.path;
+        NSString *packagePathToRemove = [[CCPackageHelper cachesFolder] stringByAppendingPathComponent:aPackage.installRelURL.path];
 
         [aPackage setValue:@(CCPackageStatusInstalledDisabled) forKey:NSStringFromSelector(@selector(status))];
 
