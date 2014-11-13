@@ -66,6 +66,7 @@ static CCActivity *currentActivity = nil;
     [_glView release];
     [_layout release];
     [_thread release];
+    [_cocos2dSetupConfig release];
     [super dealloc];
 }
 
@@ -96,7 +97,7 @@ static void handler(NSException *e)
     
     configPath = [configPath stringByAppendingPathComponent:@"configCocos2d.plist"];
     
-    _cocos2dSetupConfig = [NSMutableDictionary dictionaryWithContentsOfFile:configPath];
+    _cocos2dSetupConfig = [[NSMutableDictionary dictionaryWithContentsOfFile:configPath] retain];
     
     enum CCAndroidScreenMode screenMode = CCNativeScreenMode;
     
