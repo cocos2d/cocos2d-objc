@@ -29,9 +29,9 @@
     if (status == CCPackageStatusInstalledDisabled
         || status == CCPackageStatusInstalledEnabled)
     {
-        package.installURL = [NSURL fileURLWithPath:[installFolderPath stringByAppendingPathComponent:@"testpackage-iOS-phonehd"]];
+        package.installRelURL = [NSURL fileURLWithPath:[installFolderPath stringByAppendingPathComponent:@"testpackage-iOS-phonehd"]];
 
-        [fileManager copyItemAtPath:pathToUnzippedPackage toPath:package.installURL.path error:nil];
+        [fileManager copyItemAtPath:pathToUnzippedPackage toPath:package.installRelURL.path error:nil];
     }
 
     if (status == CCPackageStatusInstalledEnabled)

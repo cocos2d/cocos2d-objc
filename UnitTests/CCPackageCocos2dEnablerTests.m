@@ -37,7 +37,7 @@
 
     NSString *pathToPackage = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Resources-shared/Packages/testpackage-iOS-phonehd_unzipped"];
     self.installURL = [[NSURL fileURLWithPath:pathToPackage] URLByAppendingPathComponent:@"testpackage-iOS-phonehd"];
-    _package.installURL = _installURL;
+    _package.installRelURL = _installURL;
 }
 
 
@@ -78,7 +78,7 @@
 {
     for (NSString *aSearchPath in [CCFileUtils sharedFileUtils].searchPath)
     {
-        if ([aSearchPath isEqualToString:_package.installURL.path])
+        if ([aSearchPath isEqualToString:_package.installRelURL.path])
         {
             return YES;
         }

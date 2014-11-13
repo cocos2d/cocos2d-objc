@@ -26,9 +26,10 @@
 @property (nonatomic, copy, readonly) NSURL *remoteURL;
 
 /**
- *  The local URL where the package is installed. This value will be initially nil and set only if installation was successful.
+ *  The relative local URL where the package is installed. The URL is relative to the caches folder.
+ *  This value will be initially nil and set only if installation was successful.
  */
-@property (nonatomic, copy, readonly) NSURL *installURL;
+@property (nonatomic, copy, readonly) NSURL *installRelURL;
 
 /**
  *  Local URL of the download file when download finishes. While downloading a temp name

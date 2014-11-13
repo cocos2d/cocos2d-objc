@@ -679,7 +679,7 @@
         result = NO;
     }
 
-    if (![self deleteURLSelector:@selector(installURL) ofPackage:package error:error])
+    if (![self deleteURLSelector:@selector(installRelURL) ofPackage:package error:error])
     {
         result = NO;
     }
@@ -688,7 +688,7 @@
     {
         package.localDownloadURL = nil;
         package.unzipURL = nil;
-        package.installURL = nil;
+        package.installRelURL = nil;
         package.status = CCPackageStatusDeleted;
 
         CCLOGINFO(@"[PACKAGE/INSTALL][INFO] Package deletion successful!");

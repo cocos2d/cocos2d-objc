@@ -55,9 +55,9 @@
     NSAssert(_package.unzipURL != nil, @"package.unzipURL must not be nil.");
     NSAssert(_package.folderName != nil, @"package.folderName must not be nil.");
 
-    _package.installURL = [NSURL URLWithString:[_installRelPath stringByAppendingPathComponent:_package.folderName]];
+    _package.installRelURL = [NSURL URLWithString:[_installRelPath stringByAppendingPathComponent:_package.folderName]];
 
-    NSString *fullInstallPath = [[CCPackageHelper cachesFolder] stringByAppendingPathComponent:_package.installURL.path];
+    NSString *fullInstallPath = [[CCPackageHelper cachesFolder] stringByAppendingPathComponent:_package.installRelURL.path];
 
     NSError *errorMove;
     NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -65,7 +65,7 @@
                               toPath:fullInstallPath
                                error:&errorMove])
     {
-        _package.installURL = nil;
+        _package.installRelURL = nil;
 
         [self setNewError:error
                      code:PACKAGE_ERROR_INSTALL_COULD_NOT_MOVE_PACKAGE_TO_INSTALL_FOLDER

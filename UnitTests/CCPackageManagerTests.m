@@ -159,7 +159,7 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
                                                resolution:@"phonehd"
                                                        os:@"iOS"
                                                 remoteURL:[NSURL URLWithString:@"http://foo.fake"]];
-    package1.installURL = [NSURL fileURLWithPath:@"/packages/DLC1-iOS-phonehd"];
+    package1.installRelURL = [NSURL fileURLWithPath:@"/packages/DLC1-iOS-phonehd"];
     package1.status = CCPackageStatusInitial;
 
 
@@ -167,7 +167,7 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
                                                resolution:@"tablethd"
                                                        os:@"iOS"
                                                 remoteURL:[NSURL URLWithString:@"http://baa.fake"]];
-    package2.installURL = [NSURL fileURLWithPath:@"/packages/DLC2-iOS-tablethd"];
+    package2.installRelURL = [NSURL fileURLWithPath:@"/packages/DLC2-iOS-tablethd"];
     package2.status = CCPackageStatusInitial;
 
     [_packageManager addPackage:package1];
@@ -308,7 +308,7 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
     CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageInitial];
 
     NSString *pathToPackage = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Resources-shared/Packages/testpackage-iOS-phonehd_unzipped"];
-    package.installURL = [[NSURL fileURLWithPath:pathToPackage] URLByAppendingPathComponent:@"testpackage-iOS-phonehd"];
+    package.installRelURL = [[NSURL fileURLWithPath:pathToPackage] URLByAppendingPathComponent:@"testpackage-iOS-phonehd"];
     package.status = CCPackageStatusInstalledDisabled;
 
     NSError *error;
@@ -375,10 +375,10 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 
     XCTAssertTrue(success);
 
-    XCTAssertFalse([CCPackagesTestFixturesAndHelpers isURLInCocos2dSearchPath:package.installURL]);
+    XCTAssertFalse([CCPackagesTestFixturesAndHelpers isURLInCocos2dSearchPath:package.installRelURL]);
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    XCTAssertFalse([fileManager fileExistsAtPath:package.installURL.path]);
+    XCTAssertFalse([fileManager fileExistsAtPath:package.installRelURL.path]);
     XCTAssertNil([_packageManager packageWithName:@"testpackage"]);
     XCTAssertTrue([self allURLsInArrayDontExistOnDisk:urls]);
 
@@ -425,7 +425,7 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 {
     XCTAssertNil(package.localDownloadURL);
     XCTAssertNil(package.unzipURL);
-    XCTAssertNil(package.installURL);
+    XCTAssertNil(package.installRelURL);
     XCTAssertEqual(package.status, CCPackageStatusDeleted);
 }
 
@@ -435,7 +435,7 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
     package.status = CCPackageStatusUnzipping;
     package.localDownloadURL = [NSURL fileURLWithPath:@"/Foo"];
     package.unzipURL = [NSURL fileURLWithPath:@"/Baa"];
-    package.installURL = [NSURL fileURLWithPath:@"/Fubar"];
+    package.installRelURL = [NSURL fileURLWithPath:@"/Fubar"];
 
     [_packageManager.packages addObject:package];
 
@@ -447,7 +447,7 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
     XCTAssertNotNil([_packageManager packageWithName:@"testpackage"]);
     XCTAssertNotNil(package.localDownloadURL);
     XCTAssertNotNil(package.unzipURL);
-    XCTAssertNotNil(package.installURL);
+    XCTAssertNotNil(package.installRelURL);
     XCTAssertEqual(package.status, CCPackageStatusUnzipping);
 }
 
@@ -505,7 +505,7 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
     [_packageManager loadPackages];
 
     XCTAssertEqual(_packageManager.allPackages.count, 2);
-    XCTAssertTrue([CCPackagesTestFixturesAndHelpers isURLInCocos2dSearchPath:package.installURL]);
+    XCTAssertTrue([CCPackagesTestFixturesAndHelpers isURLInCocos2dSearchPath:package.installRelURL]);
 }
 
 - (void)testLoadPackagesResumeDownloads
@@ -606,9 +606,9 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 {
     NSMutableArray *result = [NSMutableArray array];
 
-    if (package.installURL)
+    if (package.installRelURL)
     {
-        [result addObject:[package.installURL copy]];
+        [result addObject:[package.installRelURL copy]];
     }
 
     if (package.localDownloadURL)
