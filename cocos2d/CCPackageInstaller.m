@@ -3,28 +3,29 @@
 #import "CCPackage.h"
 #import "ccMacros.h"
 #import "CCPackage_private.h"
+#import "CCPackageHelper.h"
 
 
 @interface CCPackageInstaller ()
 
 @property (nonatomic, strong, readwrite) CCPackage *package;
-@property (nonatomic, copy, readwrite) NSString *installPath;
+@property (nonatomic, copy, readwrite) NSString *installRelPath;
 
 @end
 
 
 @implementation CCPackageInstaller
 
-- (instancetype)initWithPackage:(CCPackage *)package installPath:(NSString *)installPath
+- (instancetype)initWithPackage:(CCPackage *)package installRelPath:(NSString *)installRelPath
 {
     NSAssert(package != nil, @"package must not be nil");
-    NSAssert(installPath != nil, @"installPath must not be nil");
+    NSAssert(installRelPath != nil, @"installRelPath must not be nil");
 
     self = [super init];
     if (self)
     {
         self.package = package;
-        self.installPath = installPath;
+        self.installRelPath = installRelPath;
     }
 
     return self;
@@ -54,19 +55,21 @@
     NSAssert(_package.unzipURL != nil, @"package.unzipURL must not be nil.");
     NSAssert(_package.folderName != nil, @"package.folderName must not be nil.");
 
-    _package.installURL = [NSURL fileURLWithPath:[_installPath stringByAppendingPathComponent:_package.folderName]];
+    _package.installURL = [NSURL URLWithString:[_installRelPath stringByAppendingPathComponent:_package.folderName]];
+
+    NSString *fullInstallPath = [[CCPackageHelper cachesFolder] stringByAppendingPathComponent:_package.installURL.path];
 
     NSError *errorMove;
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if (![fileManager moveItemAtPath:[_package.unzipURL.path stringByAppendingPathComponent:_package.folderName]
-                              toPath:_package.installURL.path
+                              toPath:fullInstallPath
                                error:&errorMove])
     {
-        [_package setValue:nil forKey:@"installURL"];
+        _package.installURL = nil;
 
         [self setNewError:error
                      code:PACKAGE_ERROR_INSTALL_COULD_NOT_MOVE_PACKAGE_TO_INSTALL_FOLDER
-                  message:[NSString stringWithFormat:@"Could not move package to install path \"%@\", underlying error: %@", _installPath, errorMove]
+                  message:[NSString stringWithFormat:@"Could not move package to install path \"%@\", underlying error: %@", fullInstallPath, errorMove]
           underlyingError:errorMove];
 
         CCLOG(@"[PACKAGE/INSTALL][ERROR] Moving unzipped package to installation folder: %@", *error);

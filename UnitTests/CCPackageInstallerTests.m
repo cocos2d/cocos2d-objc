@@ -16,7 +16,7 @@
 @interface CCPackageInstallerTests : XCTestCase
 
 @property (nonatomic, strong) CCPackage *package;
-@property (nonatomic, copy) NSString *installPath;
+@property (nonatomic, copy) NSString *installRelPath;
 @property (nonatomic, strong) CCPackageInstaller *installer;
 
 @end
@@ -33,10 +33,9 @@
                                                 os:@"iOS"
                                          remoteURL:[NSURL URLWithString:@"http://test.foo"]];
 
-    NSString *cachesPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
-    self.installPath = [cachesPath stringByAppendingPathComponent:@"tests.Packages"];
+    self.installRelPath = @"tests.Packages";
 
-    self.installer = [[CCPackageInstaller alloc] initWithPackage:_package installPath:_installPath];
+    self.installer = [[CCPackageInstaller alloc] initWithPackage:_package installRelPath:_installRelPath];
     
     
     [self deleteInstallData];
@@ -46,9 +45,12 @@
 
 - (void)createPackageInstallFolder
 {
+    NSString *cachesPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *installPath = [cachesPath stringByAppendingPathComponent:_installRelPath];
+
     NSError *error;
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    if (![fileManager createDirectoryAtURL:[NSURL fileURLWithPath:_installPath]
+    if (![fileManager createDirectoryAtURL:[NSURL fileURLWithPath:installPath]
                withIntermediateDirectories:YES
                                 attributes:nil
                                      error:&error])
@@ -66,10 +68,13 @@
 
 - (void)deleteInstallData
 {
+    NSString *cachesPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *installPath = [cachesPath stringByAppendingPathComponent:_installRelPath];
+
     NSFileManager *fileManager = [NSFileManager defaultManager];
 
     NSError *error;
-    if (![fileManager removeItemAtPath:_installPath error:&error])
+    if (![fileManager removeItemAtPath:installPath error:&error])
     {
         // NSLog(@"%@", error);
     }
@@ -102,10 +107,13 @@
 
 - (void)testInstallFailingPackageAlreadyExists
 {
+    NSString *cachesPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *installPath = [cachesPath stringByAppendingPathComponent:_installRelPath];
+
     [self setupInstallablePackage];
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    [fileManager createDirectoryAtPath:[_installPath stringByAppendingPathComponent:@"testpackage-iOS-phonehd"]
+    [fileManager createDirectoryAtPath:[installPath stringByAppendingPathComponent:@"testpackage-iOS-phonehd"]
            withIntermediateDirectories:YES
                             attributes:nil
                                  error:nil];
