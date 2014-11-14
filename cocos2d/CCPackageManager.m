@@ -266,14 +266,6 @@
     [_downloadManager enqueuePackageForDownload:package];
 }
 
-- (CCPackage *)downloadPackageWithName:(NSString *)name remoteURL:(NSURL *)remoteURL enableAfterDownload:(BOOL)enableAfterDownload
-{
-    return [self downloadPackageWithName:name
-                              resolution:[CCPackageHelper defaultResolution]
-                               remoteURL:remoteURL
-                     enableAfterDownload:enableAfterDownload];
-}
-
 - (CCPackage *)downloadPackageWithName:(NSString *)name resolution:(NSString *)resolution remoteURL:(NSURL *)remoteURL enableAfterDownload:(BOOL)enableAfterDownload
 {
     CCPackage *aPackage = [self packageWithName:name resolution:resolution];
