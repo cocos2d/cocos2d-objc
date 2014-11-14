@@ -49,7 +49,11 @@
                           [CCEffectVarying varying:@"vec2" name:@"v_envSpaceTexCoords"]
                          ];
     
-    if((self = [super initWithFragmentUniforms:fragUniforms vertexUniforms:vertUniforms varyings:varyings]))
+    NSArray *fragFunctions = [CCEffectReflectionImpl buildFragmentFunctions];
+    NSArray *vertFunctions = [CCEffectReflectionImpl buildVertexFunctions];
+    NSArray *renderPasses = [self buildRenderPasses];
+    
+    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:vertFunctions fragmentUniforms:fragUniforms vertexUniforms:vertUniforms varyings:varyings firstInStack:YES]))
     {
         _conditionedShininess = CCEffectUtilsConditionShininess(interface.shininess);
         _conditionedFresnelBias = CCEffectUtilsConditionFresnelBias(interface.fresnelBias);
@@ -61,10 +65,8 @@
     return self;
 }
 
--(void)buildFragmentFunctions
++ (NSArray *)buildFragmentFunctions
 {
-    self.fragmentFunctions = [[NSMutableArray alloc] init];
-    
     CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:CCEffectDefaultInitialInputSnippet snippet:CCEffectDefaultInputSnippet];
 
     NSString* effectBody = CC_GLSL(
@@ -111,13 +113,11 @@
                                    );
     
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"reflectionEffectFrag" body:effectBody inputs:@[input] returnType:@"vec4"];
-    [self.fragmentFunctions addObject:fragmentFunction];
+    return @[fragmentFunction];
 }
 
--(void)buildVertexFunctions
++ (NSArray *)buildVertexFunctions
 {
-    self.vertexFunctions = [[NSMutableArray alloc] init];
-
     NSString* effectBody = CC_GLSL(
                                    // Compute environment space texture coordinates from the vertex positions.
                                    vec4 envSpaceTexCoords = u_ndcToEnv * cc_Position;
@@ -126,10 +126,10 @@
                                    );
     
     CCEffectFunction *vertexFunction = [[CCEffectFunction alloc] initWithName:@"reflectionEffectVtx" body:effectBody inputs:nil returnType:@"vec4"];
-    [self.vertexFunctions addObject:vertexFunction];
+    return @[vertexFunction];
 }
 
--(void)buildRenderPasses
+- (NSArray *)buildRenderPasses
 {
     __weak CCEffectReflectionImpl *weakSelf = self;
     
@@ -185,7 +185,7 @@
         
     } copy]];
     
-    self.renderPasses = @[pass0];
+    return @[pass0];
 }
 
 -(void)setShininess:(float)shininess

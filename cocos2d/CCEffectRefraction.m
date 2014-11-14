@@ -45,8 +45,11 @@
                           [CCEffectVarying varying:@"vec2" name:@"v_envSpaceTexCoords"],
                           ];
     
-
-    if((self = [super initWithFragmentUniforms:fragUniforms vertexUniforms:vertUniforms varyings:varyings]))
+    NSArray *fragFunctions = [CCEffectRefractionImpl buildFragmentFunctions];
+    NSArray *vertFunctions = [CCEffectRefractionImpl buildVertexFunctions];
+    NSArray *renderPasses = [self buildRenderPasses];
+    
+    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:vertFunctions fragmentUniforms:fragUniforms vertexUniforms:vertUniforms varyings:varyings firstInStack:YES]))
     {
         _conditionedRefraction = CCEffectUtilsConditionRefraction(interface.refraction);
 
@@ -56,10 +59,8 @@
     return self;
 }
 
--(void)buildFragmentFunctions
++ (NSArray *)buildFragmentFunctions
 {
-    self.fragmentFunctions = [[NSMutableArray alloc] init];
-
     CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:CCEffectDefaultInitialInputSnippet snippet:CCEffectDefaultInputSnippet];
 
     NSString* effectBody = CC_GLSL(
@@ -93,13 +94,11 @@
                                    );
     
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"refractionEffectFrag" body:effectBody inputs:@[input] returnType:@"vec4"];
-    [self.fragmentFunctions addObject:fragmentFunction];
+    return @[fragmentFunction];
 }
 
--(void)buildVertexFunctions
++ (NSArray *)buildVertexFunctions
 {
-    self.vertexFunctions = [[NSMutableArray alloc] init];
-    
     NSString* effectBody = CC_GLSL(
                                    // Compute environment space texture coordinates from the vertex positions.
                                    vec4 envSpaceTexCoords = u_ndcToEnv * cc_Position;
@@ -108,10 +107,10 @@
                                    );
     
     CCEffectFunction *vertexFunction = [[CCEffectFunction alloc] initWithName:@"refractionEffectVtx" body:effectBody inputs:nil returnType:@"vec4"];
-    [self.vertexFunctions addObject:vertexFunction];
+    return @[vertexFunction];
 }
 
--(void)buildRenderPasses
+- (NSArray *)buildRenderPasses
 {
     __weak CCEffectRefractionImpl *weakSelf = self;
     
@@ -164,7 +163,7 @@
         
     } copy]];
     
-    self.renderPasses = @[pass0];
+    return @[pass0];
 }
 
 -(void)setRefraction:(float)refraction

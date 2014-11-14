@@ -33,8 +33,11 @@
                           [CCEffectUniform uniform:@"vec2" name:@"u_outlineOuterWidth" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.5, 1.0)]],
                           [CCEffectUniform uniform:@"vec2" name:@"u_outlineInnerWidth" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.4, 0.42)]]
                           ];
-    
-    if((self = [super initWithFragmentUniforms:uniforms vertexUniforms:nil varyings:nil]))
+  
+    NSArray *fragFunctions = [CCEffectDFOutlineImpl buildFragmentFunctions];
+    NSArray *renderPasses = [self buildRenderPasses];
+
+    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:uniforms vertexUniforms:nil varyings:nil firstInStack:YES]))
     {
         self.interface = interface;
         self.debugName = @"CCEffectDFOutlineImpl";
@@ -42,10 +45,8 @@
     return self;
 }
 
--(void)buildFragmentFunctions
++ (NSArray *)buildFragmentFunctions
 {
-    self.fragmentFunctions = [[NSMutableArray alloc] init];
-
     NSString* effectPrefix =
         @"#ifdef GL_ES\n"
         @"#ifdef GL_OES_standard_derivatives\n"
@@ -91,10 +92,10 @@
     
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"outlineEffect"
                                                                            body:[effectPrefix stringByAppendingString:effectBody] inputs:nil returnType:@"vec4"];
-    [self.fragmentFunctions addObject:fragmentFunction];
+    return @[fragmentFunction];
 }
 
--(void)buildRenderPasses
+-(NSArray *)buildRenderPasses
 {
     __weak CCEffectDFOutlineImpl *weakSelf = self;
     
@@ -115,7 +116,7 @@
         
     } copy]];
     
-    self.renderPasses = @[pass0];
+    return @[pass0];
 }
 
 -(void)setNormalizedOutlineWidth:(float)normalizedOutlineWidth andEdgeSoftness:(float)edgeSoftness

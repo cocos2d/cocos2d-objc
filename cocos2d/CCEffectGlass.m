@@ -64,7 +64,11 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
                           [CCEffectVarying varying:@"vec2" name:@"v_reflectEnvSpaceTexCoords"]
                           ];
     
-    if((self = [super initWithFragmentUniforms:fragUniforms vertexUniforms:vertUniforms varyings:varyings]))
+    NSArray *fragFunctions = [CCEffectGlassImpl buildFragmentFunctions];
+    NSArray *vertFunctions = [CCEffectGlassImpl buildVertexFunctions];
+    NSArray *renderPasses = [self buildRenderPasses];
+    
+    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:vertFunctions fragmentUniforms:fragUniforms vertexUniforms:vertUniforms varyings:varyings firstInStack:YES]))
     {
         _conditionedRefraction = CCEffectUtilsConditionRefraction(interface.refraction);
         _conditionedShininess = CCEffectUtilsConditionShininess(interface.shininess);
@@ -77,10 +81,8 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
     return self;
 }
 
--(void)buildFragmentFunctions
++ (NSArray *)buildFragmentFunctions
 {
-    self.fragmentFunctions = [[NSMutableArray alloc] init];
-    
     CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:CCEffectDefaultInitialInputSnippet snippet:CCEffectDefaultInputSnippet];
     
     NSString* effectBody = CC_GLSL(
@@ -151,13 +153,11 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
                                    );
     
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"glassEffectFrag" body:effectBody inputs:@[input] returnType:@"vec4"];
-    [self.fragmentFunctions addObject:fragmentFunction];
+    return @[fragmentFunction];
 }
 
--(void)buildVertexFunctions
++ (NSArray *)buildVertexFunctions
 {
-    self.vertexFunctions = [[NSMutableArray alloc] init];
-    
     NSString* effectBody = CC_GLSL(
                                    // Compute environment space texture coordinates from the vertex positions.
                                    
@@ -173,10 +173,10 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
                                    );
     
     CCEffectFunction *vertexFunction = [[CCEffectFunction alloc] initWithName:@"glassEffectVtx" body:effectBody inputs:nil returnType:@"vec4"];
-    [self.vertexFunctions addObject:vertexFunction];
+    return @[vertexFunction];
 }
 
--(void)buildRenderPasses
+- (NSArray *)buildRenderPasses
 {
     __weak CCEffectGlassImpl *weakSelf = self;
     
@@ -261,7 +261,7 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
         
     } copy]];
     
-    self.renderPasses = @[pass0];
+    return @[pass0];
 }
 
 -(void)setRefraction:(float)refraction

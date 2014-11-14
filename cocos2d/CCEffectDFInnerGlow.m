@@ -38,7 +38,10 @@
                                              value:[NSValue valueWithGLKVector2:GLKVector2Make(0.47, 0.5)]]
                           ];
     
-    if((self = [super initWithFragmentUniforms:uniforms vertexUniforms:nil varyings:nil]))
+    NSArray *fragFunctions = [CCEffectDFInnerGlowImpl buildFragmentFunctions];
+    NSArray *renderPasses = [self buildRenderPasses];
+    
+    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:uniforms vertexUniforms:nil varyings:nil firstInStack:YES]))
     {
         self.interface = interface;
         self.debugName = @"CCEffectDFInnerGlowImpl";
@@ -46,10 +49,8 @@
     return self;
 }
 
--(void)buildFragmentFunctions
++(NSArray *)buildFragmentFunctions
 {
-    self.fragmentFunctions = [[NSMutableArray alloc] init];
-
     NSString* effectPrefix =
         @"#ifdef GL_ES\n"
         @"#ifdef GL_OES_standard_derivatives\n"
@@ -122,10 +123,10 @@
     
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"outlineEffect"
                                                                            body:[effectPrefix stringByAppendingString:effectBody] inputs:nil returnType:@"vec4"];
-    [self.fragmentFunctions addObject:fragmentFunction];
+    return @[fragmentFunction];
 }
 
--(void)buildRenderPasses
+-(NSArray *)buildRenderPasses
 {
     __weak CCEffectDFInnerGlowImpl *weakSelf = self;
     
@@ -146,7 +147,7 @@
         
     } copy]];
     
-    self.renderPasses = @[pass0];
+    return @[pass0];
 }
 
 -(void)setNormalizedGlowWidth:(float)normalizedGlowWidth

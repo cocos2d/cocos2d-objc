@@ -62,7 +62,10 @@ static float conditionSaturation(float saturation);
 {
     CCEffectUniform* uniformSaturation = [CCEffectUniform uniform:@"float" name:@"u_saturation" value:[NSNumber numberWithFloat:1.0f]];
     
-    if((self = [super initWithFragmentUniforms:@[uniformSaturation] vertexUniforms:nil varyings:nil]))
+    NSArray *fragFunctions = [CCEffectSaturationImpl buildFragmentFunctions];
+    NSArray *renderPasses = [self buildRenderPasses];
+    
+    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:@[uniformSaturation] vertexUniforms:nil varyings:nil firstInStack:YES]))
     {
         _conditionedSaturation = [NSNumber numberWithFloat:conditionSaturation(saturation)];
 
@@ -71,10 +74,8 @@ static float conditionSaturation(float saturation);
     return self;
 }
 
--(void)buildFragmentFunctions
++ (NSArray *)buildFragmentFunctions
 {
-    self.fragmentFunctions = [[NSMutableArray alloc] init];
-
     CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:CCEffectDefaultInitialInputSnippet snippet:CCEffectDefaultInputSnippet];
 
     // Image saturation shader based on saturation filter in GPUImage - https://github.com/BradLarson/GPUImage
@@ -88,10 +89,10 @@ static float conditionSaturation(float saturation);
                                    );
 
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"saturationEffect" body:effectBody inputs:@[input] returnType:@"vec4"];
-    [self.fragmentFunctions addObject:fragmentFunction];
+    return @[fragmentFunction];
 }
 
--(void)buildRenderPasses
+- (NSArray *)buildRenderPasses
 {
     __weak CCEffectSaturationImpl *weakSelf = self;
     
@@ -108,7 +109,7 @@ static float conditionSaturation(float saturation);
         passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_saturation"]] = weakSelf.conditionedSaturation;
     } copy]];
     
-    self.renderPasses = @[pass0];
+    return @[pass0];
 }
 
 -(void)setSaturation:(float)saturation

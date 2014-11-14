@@ -29,7 +29,10 @@
                               [CCEffectUniform uniform:@"vec2" name:@"u_blueOffset" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]]
                               ];
     
-    if((self = [super initWithFragmentUniforms:fragUniforms vertexUniforms:nil varyings:nil]))
+    NSArray *fragFunctions = [CCEffectColorChannelOffsetImpl buildFragmentFunctions];
+    NSArray *renderPasses = [self buildRenderPasses];
+    
+    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:fragUniforms vertexUniforms:nil varyings:nil firstInStack:YES]))
     {
         self.interface = interface;
         self.debugName = @"CCEffectColorChannelOffsetImpl";
@@ -39,10 +42,8 @@
     return self;
 }
 
--(void)buildFragmentFunctions
++ (NSArray *)buildFragmentFunctions
 {
-    self.fragmentFunctions = [[NSMutableArray alloc] init];
-    
     // Image pixellation shader based on pixellation filter in GPUImage - https://github.com/BradLarson/GPUImage
     NSString* effectBody = CC_GLSL(
                                    vec2 redSamplePos = cc_FragTexCoord1 + u_redOffset;
@@ -64,10 +65,10 @@
                                    );
     
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"colorChannelOffsetEffect" body:effectBody inputs:nil returnType:@"vec4"];
-    [self.fragmentFunctions addObject:fragmentFunction];
+    return @[fragmentFunction];
 }
 
--(void)buildRenderPasses
+- (NSArray *)buildRenderPasses
 {
     __weak CCEffectColorChannelOffsetImpl *weakSelf = self;
     
@@ -94,7 +95,7 @@
         
     } copy]];
     
-    self.renderPasses = @[pass0];
+    return @[pass0];
 }
 
 @end

@@ -203,9 +203,7 @@
             
             [uniforms addEntriesFromDictionary:effectImpl.shaderUniforms];
         }
-        self.effectImpl = [[CCEffectImpl alloc] init];
-        self.effectImpl.renderPasses = [passes copy];
-        self.effectImpl.shaderUniforms = uniforms;
+        self.effectImpl = [[CCEffectImpl alloc] initWithRenderPasses:passes shaderUniforms:uniforms];
         self.padding = maxPadding;
         
         _passesDirty = NO;
@@ -264,7 +262,6 @@
         
         // Update the original effect's translation table so it reflects the new mangled
         // uniform names.
-        effectImpl.uniformTranslationTable = [[NSMutableDictionary alloc] init];
         for (NSString *key in vtxUniformReplacements)
         {
             CCEffectUniform *uniform = vtxUniformReplacements[key];
@@ -282,16 +279,11 @@
     
     // Build a new effect that is the accumulation of all the mangled fragment and vertex functions.
     BOOL firstInStack = (startIndex == 0) ? YES : NO;
-    CCEffectImpl* stitchedEffectImpl = [[CCEffectImpl alloc] initWithFragmentFunction:allFragFunctions vertexFunctions:allVertexFunctions fragmentUniforms:allFragUniforms vertexUniforms:allVertexUniforms varyings:allVaryings firstInStack:firstInStack];
     
-    // Set the stitch flags of the resulting effect based on the flags of the first
-    // and last effects in the stitch list. If the "stitch before" flag is set on the
-    // first effect then set it in the resulting effect. If the "stitch after" flag is
-    // set in the last effect then set it in the resulting effect.
     CCEffectImpl *firstEffectImpl = [stitchList firstObject];
     CCEffectImpl *lastEffectImpl = [stitchList lastObject];
-    stitchedEffectImpl.stitchFlags = (firstEffectImpl.stitchFlags & CCEffectFunctionStitchBefore) | (lastEffectImpl.stitchFlags & CCEffectFunctionStitchAfter);
-    
+
+    CCEffectImpl* stitchedEffectImpl = nil;
     if (stitchList.count == 1)
     {
         // If there was only one effect in the stitch list copy its render
@@ -305,7 +297,8 @@
             newPass.shader = stitchedEffectImpl.shader;
             [renderPasses addObject:newPass];
         }
-        stitchedEffectImpl.renderPasses = renderPasses;
+
+        stitchedEffectImpl = [[CCEffectImpl alloc] initWithRenderPasses:renderPasses fragmentFunctions:allFragFunctions vertexFunctions:allVertexFunctions fragmentUniforms:allFragUniforms vertexUniforms:allVertexUniforms varyings:allVaryings firstInStack:firstInStack];
     }
     else
     {
@@ -332,8 +325,14 @@
         newPass.beginBlocks = beginBlocks;
         newPass.endBlocks = endBlocks;
 
-        stitchedEffectImpl.renderPasses = @[newPass];
+        stitchedEffectImpl = [[CCEffectImpl alloc] initWithRenderPasses:@[newPass] fragmentFunctions:allFragFunctions vertexFunctions:allVertexFunctions fragmentUniforms:allFragUniforms vertexUniforms:allVertexUniforms varyings:allVaryings firstInStack:firstInStack];
     }
+
+    // Set the stitch flags of the resulting effect based on the flags of the first
+    // and last effects in the stitch list. If the "stitch before" flag is set on the
+    // first effect then set it in the resulting effect. If the "stitch after" flag is
+    // set in the last effect then set it in the resulting effect.
+    stitchedEffectImpl.stitchFlags = (firstEffectImpl.stitchFlags & CCEffectFunctionStitchBefore) | (lastEffectImpl.stitchFlags & CCEffectFunctionStitchAfter);
 
     return stitchedEffectImpl;
 }

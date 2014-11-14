@@ -37,18 +37,22 @@ static CCLightKey CCLightKeyMake(NSArray *lights);
 static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
 
 
+@interface CCEffectLighting ()
 
-@interface CCEffectLightingImpl : CCEffectImpl
-
-@property (nonatomic, weak) CCEffectLighting *interface;
 @property (nonatomic, assign) CCLightGroupMask groupMask;
 @property (nonatomic, assign) BOOL groupMaskDirty;
 @property (nonatomic, copy) NSArray *closestLights;
 @property (nonatomic, assign) CCLightKey lightKey;
 @property (nonatomic, readonly) BOOL needsSpecular;
+@property (nonatomic, readonly) BOOL needsNormalMap;
 @property (nonatomic, assign) BOOL shaderHasSpecular;
 @property (nonatomic, assign) BOOL shaderHasNormalMap;
 
+@end
+
+
+@interface CCEffectLightingImpl : CCEffectImpl
+@property (nonatomic, weak) CCEffectLighting *interface;
 @end
 
 
@@ -56,22 +60,54 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
 
 -(id)initWithInterface:(CCEffectLighting *)interface
 {
-    if((self = [super init]))
+    NSMutableArray *fragUniforms = [[NSMutableArray alloc] initWithArray:@[
+                                                                           [CCEffectUniform uniform:@"vec4" name:@"u_globalAmbientColor" value:[NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)]],
+                                                                           [CCEffectUniform uniform:@"vec2" name:@"u_worldSpaceTangent" value:[NSValue valueWithGLKVector2:GLKVector2Make(1.0f, 0.0f)]],
+                                                                           [CCEffectUniform uniform:@"vec2" name:@"u_worldSpaceBinormal" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 1.0f)]]
+                                                                           ]];
+    NSMutableArray *vertUniforms = [[NSMutableArray alloc] initWithArray:@[
+                                                                           [CCEffectUniform uniform:@"mat4" name:@"u_ndcToWorld" value:[NSValue valueWithGLKMatrix4:GLKMatrix4Identity]]
+                                                                           ]];
+    NSMutableArray *varyings = [[NSMutableArray alloc] init];
+    
+    for (NSUInteger lightIndex = 0; lightIndex < interface.closestLights.count; lightIndex++)
     {
-        _groupMask = CCLightCollectionAllGroups;
-        _groupMaskDirty = YES;
-        _closestLights = nil;
-        _lightKey = CCLightKeyMake(nil);
-        _shaderHasSpecular = NO;
-        _shaderHasNormalMap = NO;
-
+        CCLightNode *light = interface.closestLights[lightIndex];
+        
+        [vertUniforms addObject:[CCEffectUniform uniform:@"vec3" name:[NSString stringWithFormat:@"u_lightVector%lu", (unsigned long)lightIndex] value:[NSValue valueWithGLKVector3:GLKVector3Make(0.0f, 0.0f, 0.0f)]]];
+        [fragUniforms addObject:[CCEffectUniform uniform:@"vec4" name:[NSString stringWithFormat:@"u_lightColor%lu", (unsigned long)lightIndex] value:[NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)]]];
+        if (interface.needsSpecular)
+        {
+            [fragUniforms addObject:[CCEffectUniform uniform:@"vec4" name:[NSString stringWithFormat:@"u_lightSpecularColor%lu", (unsigned long)lightIndex] value:[NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)]]];
+        }
+        
+        if (light.type != CCLightDirectional)
+        {
+            [fragUniforms addObject:[CCEffectUniform uniform:@"vec4" name:[NSString stringWithFormat:@"u_lightFalloff%lu", (unsigned long)lightIndex] value:[NSValue valueWithGLKVector4:GLKVector4Make(-1.0f, 1.0f, -1.0f, 1.0f)]]];
+        }
+        
+        [varyings addObject:[CCEffectVarying varying:@"highp vec3" name:[NSString stringWithFormat:@"v_worldSpaceLightDir%lu", (unsigned long)lightIndex]]];
+    }
+    
+    if (interface.needsSpecular)
+    {
+        [fragUniforms addObject:[CCEffectUniform uniform:@"float" name:@"u_specularExponent" value:[NSNumber numberWithFloat:5.0f]]];
+        [fragUniforms addObject:[CCEffectUniform uniform:@"vec4" name:@"u_specularColor" value:[NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)]]];
+    }
+    
+    NSArray *fragFunctions = [CCEffectLightingImpl buildFragmentFunctionsWithLights:interface.closestLights normalMap:interface.needsNormalMap specular:interface.needsSpecular];
+    NSArray *vertFunctions = [CCEffectLightingImpl buildVertexFunctionsWithLights:interface.closestLights];
+    NSArray *renderPasses = [self buildRenderPassesWithInterface:interface];
+    
+    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:vertFunctions fragmentUniforms:fragUniforms vertexUniforms:vertUniforms varyings:varyings firstInStack:YES]))
+    {
         self.interface = interface;
         self.debugName = @"CCEffectLightingImpl";
     }
     return self;
 }
 
-+(NSMutableArray *)buildFragmentFunctionsWithLights:(NSArray*)lights normalMap:(BOOL)needsNormalMap specular:(BOOL)needsSpecular
++(NSArray *)buildFragmentFunctionsWithLights:(NSArray*)lights normalMap:(BOOL)needsNormalMap specular:(BOOL)needsSpecular
 {
     CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:CCEffectDefaultInitialInputSnippet snippet:CCEffectDefaultInputSnippet];
     
@@ -163,10 +199,10 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
     [effectBody appendString:@"return vec4(resultColor.xyz, inputValue.a);\n"];
     
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"lightingEffectFrag" body:effectBody inputs:@[input] returnType:@"vec4"];
-    return [NSMutableArray arrayWithObject:fragmentFunction];
+    return @[fragmentFunction];
 }
 
-+(NSMutableArray *)buildVertexFunctionsWithLights:(NSArray*)lights
++(NSArray *)buildVertexFunctionsWithLights:(NSArray*)lights
 {
     NSMutableString *effectBody = [[NSMutableString alloc] init];
     for (NSUInteger lightIndex = 0; lightIndex < lights.count; lightIndex++)
@@ -185,10 +221,10 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
     [effectBody appendString:@"return cc_Position;"];
     
     CCEffectFunction *vertexFunction = [[CCEffectFunction alloc] initWithName:@"lightingEffectVtx" body:effectBody inputs:nil returnType:@"vec4"];
-    return [NSMutableArray arrayWithObject:vertexFunction];
+    return @[vertexFunction];
 }
 
--(void)buildRenderPasses
+-(NSArray *)buildRenderPassesWithInterface:(CCEffectLighting *)interface
 {
     __weak CCEffectLightingImpl *weakSelf = self;
     
@@ -219,9 +255,9 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
         passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_ndcToWorld"]] = [NSValue valueWithGLKMatrix4:ndcToWorld];
 
         GLKVector4 globalAmbientColor = GLKVector4Make(0.0f, 0.0f, 0.0f, 1.0f);
-        for (NSUInteger lightIndex = 0; lightIndex < weakSelf.closestLights.count; lightIndex++)
+        for (NSUInteger lightIndex = 0; lightIndex < interface.closestLights.count; lightIndex++)
         {
-            CCLightNode *light = weakSelf.closestLights[lightIndex];
+            CCLightNode *light = interface.closestLights[lightIndex];
             
             // Add this light's ambient contribution to the global ambient light color.
             globalAmbientColor = GLKVector4Add(globalAmbientColor, GLKVector4MultiplyScalar(light.ambientColor.glkVector4, light.ambientIntensity));
@@ -288,7 +324,7 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
             NSString *lightVectorLabel = [NSString stringWithFormat:@"u_lightVector%lu", (unsigned long)lightIndex];
             passInputs.shaderUniforms[weakSelf.uniformTranslationTable[lightVectorLabel]] = [NSValue valueWithGLKVector3:GLKVector3Make(lightVector.x, lightVector.y, lightVector.z)];
 
-            if (self.needsSpecular)
+            if (interface.needsSpecular)
             {
                 GLKVector4 lightSpecularColor = GLKVector4MultiplyScalar(light.specularColor.glkVector4, light.specularIntensity);
 
@@ -299,93 +335,15 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
 
         passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_globalAmbientColor"]] = [NSValue valueWithGLKVector4:globalAmbientColor];
         
-        if (self.needsSpecular)
+        if (interface.needsSpecular)
         {
-            passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_specularExponent"]] = [NSNumber numberWithFloat:weakSelf.interface.shininess];
-            passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_specularColor"]] = [NSValue valueWithGLKVector4:weakSelf.interface.specularColor.glkVector4];
+            passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_specularExponent"]] = [NSNumber numberWithFloat:interface.shininess];
+            passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_specularColor"]] = [NSValue valueWithGLKVector4:interface.specularColor.glkVector4];
         }
         
     } copy]];
     
-    self.renderPasses = @[pass0];
-}
-
-- (CCEffectPrepareStatus)prepareForRenderingWithSprite:(CCSprite *)sprite
-{
-    CCEffectPrepareStatus result = CCEffectPrepareNothingToDo;
-
-    BOOL needsNormalMap = (sprite.normalMapSpriteFrame != nil);
-    
-    CGAffineTransform spriteTransform = sprite.nodeToWorldTransform;
-    CGPoint spritePosition = CGPointApplyAffineTransform(sprite.anchorPointInPoints, sprite.nodeToWorldTransform);
-    
-    CCLightCollection *lightCollection = sprite.scene.lights;
-    if (self.groupMaskDirty)
-    {
-        self.groupMask = [lightCollection maskForGroups:self.interface.groups];
-        self.groupMaskDirty = NO;
-    }
-    
-    self.closestLights = [lightCollection findClosestKLights:CCEffectLightingMaxLightCount toPoint:spritePosition withMask:self.groupMask];
-    CCLightKey newLightKey = CCLightKeyMake(self.closestLights);
-    
-    if (!self.shader ||
-        !CCLightKeyCompare(newLightKey, _lightKey) ||
-        (_shaderHasSpecular != self.needsSpecular) ||
-        (_shaderHasNormalMap != needsNormalMap))
-    {
-        _lightKey = newLightKey;
-        _shaderHasSpecular = self.needsSpecular;
-        _shaderHasNormalMap = needsNormalMap;
-        
-        NSMutableArray *fragUniforms = [[NSMutableArray alloc] initWithArray:@[
-                                                                               [CCEffectUniform uniform:@"vec4" name:@"u_globalAmbientColor" value:[NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)]],
-                                                                               [CCEffectUniform uniform:@"vec2" name:@"u_worldSpaceTangent" value:[NSValue valueWithGLKVector2:GLKVector2Make(1.0f, 0.0f)]],
-                                                                               [CCEffectUniform uniform:@"vec2" name:@"u_worldSpaceBinormal" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 1.0f)]]
-                                                                               ]];
-        NSMutableArray *vertUniforms = [[NSMutableArray alloc] initWithArray:@[
-                                                                               [CCEffectUniform uniform:@"mat4" name:@"u_ndcToWorld" value:[NSValue valueWithGLKMatrix4:GLKMatrix4Identity]]
-                                                                               ]];
-        NSMutableArray *varyings = [[NSMutableArray alloc] init];
-        
-        for (NSUInteger lightIndex = 0; lightIndex < self.closestLights.count; lightIndex++)
-        {
-            CCLightNode *light = self.closestLights[lightIndex];
-            
-            [vertUniforms addObject:[CCEffectUniform uniform:@"vec3" name:[NSString stringWithFormat:@"u_lightVector%lu", (unsigned long)lightIndex] value:[NSValue valueWithGLKVector3:GLKVector3Make(0.0f, 0.0f, 0.0f)]]];
-            [fragUniforms addObject:[CCEffectUniform uniform:@"vec4" name:[NSString stringWithFormat:@"u_lightColor%lu", (unsigned long)lightIndex] value:[NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)]]];
-            if (self.needsSpecular)
-            {
-                [fragUniforms addObject:[CCEffectUniform uniform:@"vec4" name:[NSString stringWithFormat:@"u_lightSpecularColor%lu", (unsigned long)lightIndex] value:[NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)]]];
-            }
-            
-            if (light.type != CCLightDirectional)
-            {
-                [fragUniforms addObject:[CCEffectUniform uniform:@"vec4" name:[NSString stringWithFormat:@"u_lightFalloff%lu", (unsigned long)lightIndex] value:[NSValue valueWithGLKVector4:GLKVector4Make(-1.0f, 1.0f, -1.0f, 1.0f)]]];
-            }
-            
-            [varyings addObject:[CCEffectVarying varying:@"highp vec3" name:[NSString stringWithFormat:@"v_worldSpaceLightDir%lu", (unsigned long)lightIndex]]];
-        }
-        
-        if (self.needsSpecular)
-        {
-            [fragUniforms addObject:[CCEffectUniform uniform:@"float" name:@"u_specularExponent" value:[NSNumber numberWithFloat:5.0f]]];
-            [fragUniforms addObject:[CCEffectUniform uniform:@"vec4" name:@"u_specularColor" value:[NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)]]];
-        }
-        
-        NSMutableArray *fragFunctions = [CCEffectLightingImpl buildFragmentFunctionsWithLights:self.closestLights normalMap:needsNormalMap specular:self.needsSpecular];
-        NSMutableArray *vertFunctions = [CCEffectLightingImpl buildVertexFunctionsWithLights:self.closestLights];
-        
-        [self buildEffectWithFragmentFunction:fragFunctions vertexFunctions:vertFunctions fragmentUniforms:fragUniforms vertexUniforms:vertUniforms varyings:varyings firstInStack:YES];
-
-        result = CCEffectPrepareSuccess;
-    }
-    return result;
-}
-
-- (BOOL)needsSpecular
-{
-    return (!ccc4FEqual(self.interface.specularColor.ccColor4f, ccc4f(0.0f, 0.0f, 0.0f, 0.0f)) && (self.interface.shininess > 0.0f));
+    return @[pass0];
 }
 
 @end
@@ -406,6 +364,7 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
         self.debugName = @"CCEffectLighting";
         
         _groups = [groups copy];
+        _groupMaskDirty = YES;
         _specularColor = specularColor;
         _shininess = shininess;
     }
@@ -418,12 +377,49 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
     return [[self alloc] initWithGroups:groups specularColor:specularColor shininess:shininess];
 }
 
+- (CCEffectPrepareStatus)prepareForRenderingWithSprite:(CCSprite *)sprite
+{
+    CCEffectPrepareStatus result = CCEffectPrepareNothingToDo;
+    
+    _needsNormalMap = (sprite.normalMapSpriteFrame != nil);
+    
+    CGAffineTransform spriteTransform = sprite.nodeToWorldTransform;
+    CGPoint spritePosition = CGPointApplyAffineTransform(sprite.anchorPointInPoints, sprite.nodeToWorldTransform);
+    
+    CCLightCollection *lightCollection = sprite.scene.lights;
+    if (self.groupMaskDirty)
+    {
+        self.groupMask = [lightCollection maskForGroups:self.groups];
+        self.groupMaskDirty = NO;
+    }
+    
+    self.closestLights = [lightCollection findClosestKLights:CCEffectLightingMaxLightCount toPoint:spritePosition withMask:self.groupMask];
+    CCLightKey newLightKey = CCLightKeyMake(self.closestLights);
+    
+    if (!CCLightKeyCompare(newLightKey, _lightKey) ||
+        (_shaderHasSpecular != self.needsSpecular) ||
+        (_shaderHasNormalMap != _needsNormalMap))
+    {
+        _lightKey = newLightKey;
+        _shaderHasSpecular = self.needsSpecular;
+        _shaderHasNormalMap = _needsNormalMap;
+        
+        self.effectImpl = [[CCEffectLightingImpl alloc] initWithInterface:self];
+
+        result = CCEffectPrepareSuccess;
+    }
+    return result;
+}
+
+- (BOOL)needsSpecular
+{
+    return (!ccc4FEqual(self.specularColor.ccColor4f, ccc4f(0.0f, 0.0f, 0.0f, 0.0f)) && (self.shininess > 0.0f));
+}
+
 -(void)setGroups:(NSArray *)groups
 {
     _groups = [groups copy];
-
-    CCEffectLightingImpl *lightingImpl = (CCEffectLightingImpl *)self.effectImpl;
-    lightingImpl.groupMaskDirty = YES;
+    _groupMaskDirty = YES;
 }
 
 @end

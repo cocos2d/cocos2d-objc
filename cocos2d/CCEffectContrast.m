@@ -27,7 +27,10 @@ static float conditionContrast(float contrast);
 {
     CCEffectUniform* uniformContrast = [CCEffectUniform uniform:@"float" name:@"u_contrast" value:[NSNumber numberWithFloat:1.0f]];
     
-    if((self = [super initWithFragmentUniforms:@[uniformContrast] vertexUniforms:nil varyings:nil]))
+    NSArray *fragFunctions = [CCEffectContrastImpl buildFragmentFunctions];
+    NSArray *renderPasses = [self buildRenderPasses];
+
+    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:@[uniformContrast] vertexUniforms:nil varyings:nil firstInStack:YES]))
     {
         _conditionedContrast = [NSNumber numberWithFloat:conditionContrast(contrast)];
 
@@ -36,10 +39,8 @@ static float conditionContrast(float contrast);
     return self;
 }
 
--(void)buildFragmentFunctions
++ (NSArray *)buildFragmentFunctions
 {
-    self.fragmentFunctions = [[NSMutableArray alloc] init];
-
     CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:CCEffectDefaultInitialInputSnippet snippet:CCEffectDefaultInputSnippet];
 
     NSString* effectBody = CC_GLSL(
@@ -48,10 +49,10 @@ static float conditionContrast(float contrast);
                                    );
     
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"contrastEffect" body:effectBody inputs:@[input] returnType:@"vec4"];
-    [self.fragmentFunctions addObject:fragmentFunction];
+    return @[fragmentFunction];
 }
 
--(void)buildRenderPasses
+- (NSArray *)buildRenderPasses
 {
     __weak CCEffectContrastImpl *weakSelf = self;
     
@@ -68,7 +69,7 @@ static float conditionContrast(float contrast);
         passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_contrast"]] = weakSelf.conditionedContrast;
     } copy]];
     
-    self.renderPasses = @[pass0];
+    return @[pass0];
 }
 
 -(void)setContrast:(float)contrast

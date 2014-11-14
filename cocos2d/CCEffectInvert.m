@@ -18,14 +18,17 @@
 
 -(id)init
 {
-    if((self = [super initWithFragmentUniforms:nil vertexUniforms:nil varyings:nil]))
+    NSArray *fragFunctions = [CCEffectInvertImpl buildFragmentFunctions];
+    NSArray *renderPasses = [self buildRenderPasses];
+    
+    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:nil vertexUniforms:nil varyings:nil firstInStack:YES]))
     {
         self.debugName = @"CCEffectInvertImpl";
     }
     return self;
 }
 
--(void)buildFragmentFunctions
++ (NSArray *)buildFragmentFunctions
 {
     NSString* effectBody = CC_GLSL(
             vec4 color = cc_FragColor * texture2D(cc_PreviousPassTexture, cc_FragTexCoord1);
@@ -37,11 +40,10 @@
                                                                          inputs:nil
                                                                      returnType:@"vec4"];
 
-    self.fragmentFunctions = [[NSMutableArray alloc] init];
-    [self.fragmentFunctions addObject:fragmentFunction];
+    return @[fragmentFunction];
 }
 
--(void)buildRenderPasses
+- (NSArray *)buildRenderPasses
 {
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.debugLabel = @"CCEffectInvert pass 0";
@@ -53,7 +55,7 @@
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
     } copy]];
     
-    self.renderPasses = @[pass0];
+    return @[pass0];
 }
 
 @end
