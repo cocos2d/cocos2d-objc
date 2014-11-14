@@ -30,7 +30,7 @@ static float conditionBrightness(float brightness);
     NSArray *fragFunctions = [CCEffectBrightnessImpl buildFragmentFunctions];
     NSArray *renderPasses = [self buildRenderPasses];
     
-    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:@[uniformBrightness] vertexUniforms:nil varyings:nil firstInStack:YES]))
+    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:@[uniformBrightness] vertexUniforms:nil varyings:nil]))
     {
         _conditionedBrightness = [NSNumber numberWithFloat:conditionBrightness(brightness)];
         
@@ -65,7 +65,7 @@ static float conditionBrightness(float brightness);
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:passInputs.texCoord1Center];
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:passInputs.texCoord1Extents];
 
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_brightness"]] = weakSelf.conditionedBrightness;
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_brightness"]] = weakSelf.conditionedBrightness;
     } copy]];
     
     return @[pass0];

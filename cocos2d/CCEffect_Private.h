@@ -133,6 +133,7 @@ typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass, CCEffectRen
 @property (nonatomic, assign) CCEffectTexCoordMapping texCoord2Mapping;
 @property (nonatomic, strong) CCBlendMode* blendMode;
 @property (nonatomic, strong) CCShader* shader;
+@property (nonatomic, strong) NSDictionary* uniformTranslationTable;
 @property (nonatomic, copy) NSArray* beginBlocks;
 @property (nonatomic, copy) NSArray* updateBlocks;
 @property (nonatomic, copy) NSArray* endBlocks;
@@ -173,7 +174,6 @@ typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass, CCEffectRen
 
 @property (nonatomic, readonly) CCShader* shader;
 @property (nonatomic, readonly) NSMutableDictionary* shaderUniforms;
-@property (nonatomic, readonly) NSMutableDictionary* uniformTranslationTable;
 @property (nonatomic, readonly) NSArray* vertexFunctions;
 @property (nonatomic, readonly) NSArray* fragmentFunctions;
 @property (nonatomic, readonly) NSArray* fragmentUniforms;
@@ -186,7 +186,9 @@ typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass, CCEffectRen
 @property (nonatomic, readonly) BOOL firstInStack;
 
 
--(id)initWithRenderPasses:(NSArray *)renderPasses fragmentFunctions:(NSArray*)fragmentFunctions vertexFunctions:(NSArray*)vertexFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings firstInStack:(BOOL)firstInStack;
+-(id)initWithRenderPasses:(NSArray *)renderPasses fragmentFunctions:(NSArray*)fragmentFunctions vertexFunctions:(NSArray*)vertexFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings uniformTranslationTable:(NSDictionary*)translations firstInStack:(BOOL)firstInStack;
+-(id)initWithRenderPasses:(NSArray *)renderPasses fragmentFunctions:(NSArray*)fragmentFunctions vertexFunctions:(NSArray*)vertexFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings;
+
 -(id)initWithRenderPasses:(NSArray *)renderPasses shaderUniforms:(NSMutableDictionary *)uniforms;
 
 -(CCEffectPrepareStatus)prepareForRenderingWithSprite:(CCSprite *)sprite;

@@ -223,6 +223,7 @@
     NSMutableArray* allVertexFunctions = [[NSMutableArray alloc] init];
     NSMutableArray* allVertexUniforms = [[NSMutableArray alloc] init];
     NSMutableArray* allVaryings = [[NSMutableArray alloc] init];
+    NSMutableDictionary* uniformTranslationTable = [[NSMutableDictionary alloc] init];
     
     // Even if we're only handed one effect in this stitch list, we have to run it through the
     // name mangling code below because all effects in a stack share one uniform namespace.
@@ -259,19 +260,19 @@
             CCEffectFunction *prefixedFunction = [CCEffectStack effectFunctionByApplyingPrefix:effectPrefix uniformReplacements:vtxUniformReplacements varyingReplacements:varyingReplacements toEffectFunction:function];
             [allVertexFunctions addObject:prefixedFunction];
         }
-        
-        // Update the original effect's translation table so it reflects the new mangled
+
+        // Build a new translation table from the mangled vertex and fragment
         // uniform names.
         for (NSString *key in vtxUniformReplacements)
         {
             CCEffectUniform *uniform = vtxUniformReplacements[key];
-            effectImpl.uniformTranslationTable[key] = uniform.name;
+            uniformTranslationTable[key] = uniform.name;
         }
 
         for (NSString *key in fragUniformReplacements)
         {
             CCEffectUniform *uniform = fragUniformReplacements[key];
-            effectImpl.uniformTranslationTable[key] = uniform.name;
+            uniformTranslationTable[key] = uniform.name;
         }
 
         effectIndex++;
@@ -298,7 +299,14 @@
             [renderPasses addObject:newPass];
         }
 
-        stitchedEffectImpl = [[CCEffectImpl alloc] initWithRenderPasses:renderPasses fragmentFunctions:allFragFunctions vertexFunctions:allVertexFunctions fragmentUniforms:allFragUniforms vertexUniforms:allVertexUniforms varyings:allVaryings firstInStack:firstInStack];
+        stitchedEffectImpl = [[CCEffectImpl alloc] initWithRenderPasses:renderPasses
+                                                      fragmentFunctions:allFragFunctions
+                                                        vertexFunctions:allVertexFunctions
+                                                       fragmentUniforms:allFragUniforms
+                                                         vertexUniforms:allVertexUniforms
+                                                               varyings:allVaryings
+                                                uniformTranslationTable:uniformTranslationTable
+                                                           firstInStack:firstInStack];
     }
     else
     {
@@ -325,7 +333,14 @@
         newPass.beginBlocks = beginBlocks;
         newPass.endBlocks = endBlocks;
 
-        stitchedEffectImpl = [[CCEffectImpl alloc] initWithRenderPasses:@[newPass] fragmentFunctions:allFragFunctions vertexFunctions:allVertexFunctions fragmentUniforms:allFragUniforms vertexUniforms:allVertexUniforms varyings:allVaryings firstInStack:firstInStack];
+        stitchedEffectImpl = [[CCEffectImpl alloc] initWithRenderPasses:@[newPass]
+                                                      fragmentFunctions:allFragFunctions
+                                                        vertexFunctions:allVertexFunctions
+                                                       fragmentUniforms:allFragUniforms
+                                                         vertexUniforms:allVertexUniforms
+                                                               varyings:allVaryings
+                                                uniformTranslationTable:uniformTranslationTable
+                                                           firstInStack:firstInStack];
     }
 
     // Set the stitch flags of the resulting effect based on the flags of the first

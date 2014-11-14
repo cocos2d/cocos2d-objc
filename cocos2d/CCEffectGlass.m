@@ -68,7 +68,7 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
     NSArray *vertFunctions = [CCEffectGlassImpl buildVertexFunctions];
     NSArray *renderPasses = [self buildRenderPasses];
     
-    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:vertFunctions fragmentUniforms:fragUniforms vertexUniforms:vertUniforms varyings:varyings firstInStack:YES]))
+    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:vertFunctions fragmentUniforms:fragUniforms vertexUniforms:vertUniforms varyings:varyings]))
     {
         _conditionedRefraction = CCEffectUtilsConditionRefraction(interface.refraction);
         _conditionedShininess = CCEffectUtilsConditionShininess(interface.shininess);
@@ -203,14 +203,14 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
             passInputs.verts = verts;
         }
         
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_refraction"]] = [NSNumber numberWithFloat:weakSelf.conditionedRefraction];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_refraction"]] = [NSNumber numberWithFloat:weakSelf.conditionedRefraction];
         
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_shininess"]] = [NSNumber numberWithFloat:weakSelf.conditionedShininess];
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fresnelBias"]] = [NSNumber numberWithFloat:weakSelf.conditionedFresnelBias];
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fresnelPower"]] = [NSNumber numberWithFloat:weakSelf.conditionedFresnelPower];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_shininess"]] = [NSNumber numberWithFloat:weakSelf.conditionedShininess];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_fresnelBias"]] = [NSNumber numberWithFloat:weakSelf.conditionedFresnelBias];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_fresnelPower"]] = [NSNumber numberWithFloat:weakSelf.conditionedFresnelPower];
         
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_refractEnvMap"]] = weakSelf.interface.refractionEnvironment.texture ?: [CCTexture none];
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_reflectEnvMap"]] = weakSelf.interface.reflectionEnvironment.texture ?: [CCTexture none];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_refractEnvMap"]] = weakSelf.interface.refractionEnvironment.texture ?: [CCTexture none];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_reflectEnvMap"]] = weakSelf.interface.reflectionEnvironment.texture ?: [CCTexture none];
         
         
         
@@ -226,14 +226,14 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
         // coordinates. (NDC == normalized device coordinates == render target coordinates that are normalized to the
         // range 0..1). The shader uses this to map from NDC directly to environment texture coordinates.
         GLKMatrix4 ndcToRefractEnvTexture = GLKMatrix4Multiply(effectNodeToRefractEnvTexture, passInputs.ndcToNodeLocal);
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_ndcToRefractEnv"]] = [NSValue valueWithGLKMatrix4:ndcToRefractEnvTexture];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_ndcToRefractEnv"]] = [NSValue valueWithGLKMatrix4:ndcToRefractEnvTexture];
         
         // Setup the tangent and binormal vectors for the refraction environment
         GLKVector4 refractTangent = GLKVector4Normalize(GLKMatrix4MultiplyVector4(effectNodeToRefractEnvTexture, GLKVector4Make(1.0f, 0.0f, 0.0f, 0.0f)));
         GLKVector4 refractNormal = GLKVector4Make(0.0f, 0.0f, 1.0f, 1.0f);
         GLKVector4 refractBinormal = GLKVector4CrossProduct(refractNormal, refractTangent);
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_refractTangent"]] = [NSValue valueWithGLKVector2:GLKVector2Make(refractTangent.x, refractTangent.y)];
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_refractBinormal"]] = [NSValue valueWithGLKVector2:GLKVector2Make(refractBinormal.x, refractBinormal.y)];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_refractTangent"]] = [NSValue valueWithGLKVector2:GLKVector2Make(refractTangent.x, refractTangent.y)];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_refractBinormal"]] = [NSValue valueWithGLKVector2:GLKVector2Make(refractBinormal.x, refractBinormal.y)];
 
         
         
@@ -249,14 +249,14 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
         // coordinates. (NDC == normalized device coordinates == render target coordinates that are normalized to the
         // range 0..1). The shader uses this to map from NDC directly to environment texture coordinates.
         GLKMatrix4 ndcToReflectEnvTexture = GLKMatrix4Multiply(effectNodeToReflectEnvTexture, passInputs.ndcToNodeLocal);
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_ndcToReflectEnv"]] = [NSValue valueWithGLKMatrix4:ndcToReflectEnvTexture];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_ndcToReflectEnv"]] = [NSValue valueWithGLKMatrix4:ndcToReflectEnvTexture];
         
         // Setup the tangent and binormal vectors for the reflection environment
         GLKVector4 reflectTangent = GLKVector4Normalize(GLKMatrix4MultiplyVector4(effectNodeToReflectEnvTexture, GLKVector4Make(1.0f, 0.0f, 0.0f, 0.0f)));
         GLKVector4 reflectNormal = GLKVector4Make(0.0f, 0.0f, 1.0f, 1.0f);
         GLKVector4 reflectBinormal = GLKVector4CrossProduct(reflectNormal, reflectTangent);
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_reflectTangent"]] = [NSValue valueWithGLKVector2:GLKVector2Make(reflectTangent.x, reflectTangent.y)];
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_reflectBinormal"]] = [NSValue valueWithGLKVector2:GLKVector2Make(reflectBinormal.x, reflectBinormal.y)];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_reflectTangent"]] = [NSValue valueWithGLKVector2:GLKVector2Make(reflectTangent.x, reflectTangent.y)];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_reflectBinormal"]] = [NSValue valueWithGLKVector2:GLKVector2Make(reflectBinormal.x, reflectBinormal.y)];
         
         
     } copy]];

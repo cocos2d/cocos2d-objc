@@ -53,7 +53,7 @@
     NSArray *vertFunctions = [CCEffectReflectionImpl buildVertexFunctions];
     NSArray *renderPasses = [self buildRenderPasses];
     
-    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:vertFunctions fragmentUniforms:fragUniforms vertexUniforms:vertUniforms varyings:varyings firstInStack:YES]))
+    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:vertFunctions fragmentUniforms:fragUniforms vertexUniforms:vertUniforms varyings:varyings]))
     {
         _conditionedShininess = CCEffectUtilsConditionShininess(interface.shininess);
         _conditionedFresnelBias = CCEffectUtilsConditionFresnelBias(interface.fresnelBias);
@@ -156,11 +156,11 @@
             passInputs.verts = verts;
         }
         
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_shininess"]] = [NSNumber numberWithFloat:weakSelf.conditionedShininess];
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fresnelBias"]] = [NSNumber numberWithFloat:weakSelf.conditionedFresnelBias];
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fresnelPower"]] = [NSNumber numberWithFloat:weakSelf.conditionedFresnelPower];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_shininess"]] = [NSNumber numberWithFloat:weakSelf.conditionedShininess];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_fresnelBias"]] = [NSNumber numberWithFloat:weakSelf.conditionedFresnelBias];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_fresnelPower"]] = [NSNumber numberWithFloat:weakSelf.conditionedFresnelPower];
         
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_envMap"]] = weakSelf.interface.environment.texture ?: [CCTexture none];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_envMap"]] = weakSelf.interface.environment.texture ?: [CCTexture none];
         
         // Get the transform from the affected node's local coordinates to the environment node.
         GLKMatrix4 effectNodeToReflectEnvNode = weakSelf.interface.environment ? CCEffectUtilsTransformFromNodeToNode(passInputs.sprite, weakSelf.interface.environment, nil) : GLKMatrix4Identity;
@@ -174,14 +174,14 @@
         // coordinates. (NDC == normalized device coordinates == render target coordinates that are normalized to the
         // range 0..1). The shader uses this to map from NDC directly to environment texture coordinates.
         GLKMatrix4 ndcToReflectEnvTexture = GLKMatrix4Multiply(effectNodeToReflectEnvTexture, passInputs.ndcToNodeLocal);
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_ndcToEnv"]] = [NSValue valueWithGLKMatrix4:ndcToReflectEnvTexture];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_ndcToEnv"]] = [NSValue valueWithGLKMatrix4:ndcToReflectEnvTexture];
         
         // Setup the tangent and binormal vectors for the reflection environment
         GLKVector4 reflectTangent = GLKVector4Normalize(GLKMatrix4MultiplyVector4(effectNodeToReflectEnvTexture, GLKVector4Make(1.0f, 0.0f, 0.0f, 0.0f)));
         GLKVector4 reflectNormal = GLKVector4Make(0.0f, 0.0f, 1.0f, 1.0f);
         GLKVector4 reflectBinormal = GLKVector4CrossProduct(reflectNormal, reflectTangent);
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_tangent"]] = [NSValue valueWithGLKVector2:GLKVector2Make(reflectTangent.x, reflectTangent.y)];
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_binormal"]] = [NSValue valueWithGLKVector2:GLKVector2Make(reflectBinormal.x, reflectBinormal.y)];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_tangent"]] = [NSValue valueWithGLKVector2:GLKVector2Make(reflectTangent.x, reflectTangent.y)];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_binormal"]] = [NSValue valueWithGLKVector2:GLKVector2Make(reflectBinormal.x, reflectBinormal.y)];
         
     } copy]];
     

@@ -65,7 +65,7 @@ static float conditionSaturation(float saturation);
     NSArray *fragFunctions = [CCEffectSaturationImpl buildFragmentFunctions];
     NSArray *renderPasses = [self buildRenderPasses];
     
-    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:@[uniformSaturation] vertexUniforms:nil varyings:nil firstInStack:YES]))
+    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:@[uniformSaturation] vertexUniforms:nil varyings:nil]))
     {
         _conditionedSaturation = [NSNumber numberWithFloat:conditionSaturation(saturation)];
 
@@ -106,7 +106,7 @@ static float conditionSaturation(float saturation);
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:passInputs.texCoord1Center];
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:passInputs.texCoord1Extents];
 
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_saturation"]] = weakSelf.conditionedSaturation;
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_saturation"]] = weakSelf.conditionedSaturation;
     } copy]];
     
     return @[pass0];

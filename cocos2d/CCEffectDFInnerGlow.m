@@ -41,7 +41,7 @@
     NSArray *fragFunctions = [CCEffectDFInnerGlowImpl buildFragmentFunctions];
     NSArray *renderPasses = [self buildRenderPasses];
     
-    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:uniforms vertexUniforms:nil varyings:nil firstInStack:YES]))
+    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:uniforms vertexUniforms:nil varyings:nil]))
     {
         self.interface = interface;
         self.debugName = @"CCEffectDFInnerGlowImpl";
@@ -140,10 +140,10 @@
         passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
         
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fillColor"]] = [NSValue valueWithGLKVector4:weakSelf.interface.fillColor.glkVector4];
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_glowColor"]] = [NSValue valueWithGLKVector4:weakSelf.interface.glowColor.glkVector4];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_fillColor"]] = [NSValue valueWithGLKVector4:weakSelf.interface.fillColor.glkVector4];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_glowColor"]] = [NSValue valueWithGLKVector4:weakSelf.interface.glowColor.glkVector4];
         
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_glowInnerWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(_innerMin, _innerMax)];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_glowInnerWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(_innerMin, _innerMax)];
         
     } copy]];
     

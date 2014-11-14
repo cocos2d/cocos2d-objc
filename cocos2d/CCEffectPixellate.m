@@ -66,7 +66,7 @@ static float conditionBlockSize(float blockSize);
     NSArray *fragFunctions = [CCEffectPixellateImpl buildFragmentFunctions];
     NSArray *renderPasses = [self buildRenderPasses];
     
-    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:fragUniforms vertexUniforms:nil varyings:nil firstInStack:YES]))
+    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:fragUniforms vertexUniforms:nil varyings:nil]))
     {
         _conditionedBlockSize = conditionBlockSize(blockSize);
 
@@ -106,8 +106,8 @@ static float conditionBlockSize(float blockSize);
         float uStep = weakSelf.conditionedBlockSize / passInputs.previousPassTexture.contentSize.width;
         float vStep = uStep * aspect;
         
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_uStep"]] = [NSNumber numberWithFloat:uStep];
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_vStep"]] = [NSNumber numberWithFloat:vStep];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_uStep"]] = [NSNumber numberWithFloat:uStep];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_vStep"]] = [NSNumber numberWithFloat:vStep];
     } copy]];
     
     return @[pass0];

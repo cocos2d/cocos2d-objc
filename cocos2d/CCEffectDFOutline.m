@@ -37,7 +37,7 @@
     NSArray *fragFunctions = [CCEffectDFOutlineImpl buildFragmentFunctions];
     NSArray *renderPasses = [self buildRenderPasses];
 
-    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:uniforms vertexUniforms:nil varyings:nil firstInStack:YES]))
+    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:uniforms vertexUniforms:nil varyings:nil]))
     {
         self.interface = interface;
         self.debugName = @"CCEffectDFOutlineImpl";
@@ -109,10 +109,10 @@
         passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
         
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fillColor"]] = [NSValue valueWithGLKVector4:weakSelf.interface.fillColor.glkVector4];
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outlineColor"]] = [NSValue valueWithGLKVector4:weakSelf.interface.outlineColor.glkVector4];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_fillColor"]] = [NSValue valueWithGLKVector4:weakSelf.interface.fillColor.glkVector4];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_outlineColor"]] = [NSValue valueWithGLKVector4:weakSelf.interface.outlineColor.glkVector4];
         
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outlineOuterWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(_outerMin, _outerMax)];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_outlineOuterWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(_outerMin, _outerMax)];
         
     } copy]];
     

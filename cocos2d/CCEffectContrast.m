@@ -30,7 +30,7 @@ static float conditionContrast(float contrast);
     NSArray *fragFunctions = [CCEffectContrastImpl buildFragmentFunctions];
     NSArray *renderPasses = [self buildRenderPasses];
 
-    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:@[uniformContrast] vertexUniforms:nil varyings:nil firstInStack:YES]))
+    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:@[uniformContrast] vertexUniforms:nil varyings:nil]))
     {
         _conditionedContrast = [NSNumber numberWithFloat:conditionContrast(contrast)];
 
@@ -66,7 +66,7 @@ static float conditionContrast(float contrast);
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:passInputs.texCoord1Center];
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:passInputs.texCoord1Extents];
 
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_contrast"]] = weakSelf.conditionedContrast;
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_contrast"]] = weakSelf.conditionedContrast;
     } copy]];
     
     return @[pass0];

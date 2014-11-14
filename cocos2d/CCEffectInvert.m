@@ -21,7 +21,7 @@
     NSArray *fragFunctions = [CCEffectInvertImpl buildFragmentFunctions];
     NSArray *renderPasses = [self buildRenderPasses];
     
-    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:nil vertexUniforms:nil varyings:nil firstInStack:YES]))
+    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:nil vertexUniforms:nil varyings:nil]))
     {
         self.debugName = @"CCEffectInvertImpl";
     }

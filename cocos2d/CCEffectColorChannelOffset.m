@@ -32,7 +32,7 @@
     NSArray *fragFunctions = [CCEffectColorChannelOffsetImpl buildFragmentFunctions];
     NSArray *renderPasses = [self buildRenderPasses];
     
-    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:fragUniforms vertexUniforms:nil varyings:nil firstInStack:YES]))
+    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:fragUniforms vertexUniforms:nil varyings:nil]))
     {
         self.interface = interface;
         self.debugName = @"CCEffectColorChannelOffsetImpl";
@@ -89,9 +89,9 @@
         GLKVector2 greenOffsetUV = GLKVector2Multiply(weakSelf.interface.greenOffset, scale);
         GLKVector2 blueOffsetUV = GLKVector2Multiply(weakSelf.interface.blueOffset, scale);
         
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_redOffset"]] = [NSValue valueWithGLKVector2:redOffsetUV];
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_greenOffset"]] = [NSValue valueWithGLKVector2:greenOffsetUV];
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_blueOffset"]] = [NSValue valueWithGLKVector2:blueOffsetUV];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_redOffset"]] = [NSValue valueWithGLKVector2:redOffsetUV];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_greenOffset"]] = [NSValue valueWithGLKVector2:greenOffsetUV];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_blueOffset"]] = [NSValue valueWithGLKVector2:blueOffsetUV];
         
     } copy]];
     

@@ -72,7 +72,7 @@
     NSArray *vertFunctions = [CCEffectBlurImpl buildVertexFunctionsWithBlurRadius:_trueBlurRadius numberOfOptimizedOffsets:_numberOfOptimizedOffsets sigma:_sigma];
     NSArray *renderPasses = [self buildRenderPasses];
     
-    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:vertFunctions fragmentUniforms:uniforms vertexUniforms:uniforms varyings:varyings firstInStack:YES]))
+    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:vertFunctions fragmentUniforms:uniforms vertexUniforms:uniforms varyings:varyings]))
     {
         
         self.debugName = @"CCEffectBlurImpl";
@@ -276,7 +276,7 @@
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:passInputs.texCoord1Extents];
         
         GLKVector2 dur = GLKVector2Make(1.0 / (passInputs.previousPassTexture.pixelWidth / passInputs.previousPassTexture.contentScale), 0.0);
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithGLKVector2:dur];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithGLKVector2:dur];
         
     } copy]];
 
@@ -293,7 +293,7 @@
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:GLKVector2Make(1.0f, 1.0f)];
         
         GLKVector2 dur = GLKVector2Make(0.0, 1.0 / (passInputs.previousPassTexture.pixelHeight / passInputs.previousPassTexture.contentScale));
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithGLKVector2:dur];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithGLKVector2:dur];
         
     } copy]];
     
