@@ -48,6 +48,7 @@
 
     self.package = [[CCPackageManager sharedManager] downloadPackageWithName:@"testpackage"
                                                                   resolution:@"phonehd"
+                                                                          os:@"iOS"
                                                                    remoteURL:remoteURL
                                                          enableAfterDownload:YES];
 }

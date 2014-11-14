@@ -26,7 +26,7 @@
 @property (nonatomic, readonly) NSArray *allPackages;
 
 /**
- *  If downloads should be resumed if partial downloads found
+ *  If downloads should be resumed if partial download found
  *  Default is YES
  */
 @property (nonatomic) BOOL resumeDownloads;
@@ -122,10 +122,12 @@
  * @param name Name of the package
  * @param resolution Resolution of the package, e.g. phonehd, tablethd etc.
  * @param remoteURL URL of the package to be downloaded
+ * @param os operating system of the package to be downloaded
  * @param enableAfterDownload If the package should be enabled in cocos2d after download. You can enable it with the enablePackage: method later on.
  */
 - (CCPackage *)downloadPackageWithName:(NSString *)name
                             resolution:(NSString *)resolution
+                                    os:(NSString *)os
                              remoteURL:(NSURL *)remoteURL
                    enableAfterDownload:(BOOL)enableAfterDownload;
 

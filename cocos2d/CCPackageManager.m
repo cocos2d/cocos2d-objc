@@ -253,7 +253,7 @@
         return nil;
     }
 
-    return [self downloadPackageWithName:name resolution:resolution remoteURL:remoteURL enableAfterDownload:enableAfterDownload];
+    return [self downloadPackageWithName:name resolution:resolution os:[CCPackageHelper currentOS] remoteURL:remoteURL enableAfterDownload:enableAfterDownload];
 }
 
 - (void)downloadPackage:(CCPackage *)package enableAfterDownload:(BOOL)enableAfterDownload
@@ -261,6 +261,7 @@
     NSAssert(package, @"package must not be nil");
     NSAssert(package.name, @"package.name must not be nil");
     NSAssert(package.resolution, @"package.resolution must not be nil");
+    NSAssert(package.os, @"package.os must not be nil");
     NSAssert(package.remoteURL, @"package.remoteURL must not be nil");
 
     if (![_packages containsObject:package])
@@ -275,7 +276,7 @@
     [_downloadManager enqueuePackageForDownload:package];
 }
 
-- (CCPackage *)downloadPackageWithName:(NSString *)name resolution:(NSString *)resolution remoteURL:(NSURL *)remoteURL enableAfterDownload:(BOOL)enableAfterDownload
+- (CCPackage *)downloadPackageWithName:(NSString *)name resolution:(NSString *)resolution os:(NSString *)os remoteURL:(NSURL *)remoteURL enableAfterDownload:(BOOL)enableAfterDownload
 {
     CCPackage *aPackage = [self packageWithName:name resolution:resolution];
     if (aPackage)
