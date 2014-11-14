@@ -32,6 +32,12 @@
 @property (nonatomic, copy, readonly) NSURL *installRelURL;
 
 /**
+ *  Full local URL where the package is installed.
+ *  This value will be initially nil and set only if installation was successful.
+ */
+@property (nonatomic, copy, readonly) NSURL *installFullURL;
+
+/**
  *  Local URL of the download file when download finishes. While downloading a temp name
  *  is used which won't be accessible.
  */

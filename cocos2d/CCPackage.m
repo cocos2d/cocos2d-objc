@@ -154,4 +154,14 @@ static NSString *const PACKAGE_SERIALIZATION_KEY_ENABLE_ON_DOWNLOAD = @"enableOn
     }
 }
 
+- (NSURL *)installFullURL
+{
+    return [NSURL fileURLWithPath:[[CCPackageHelper cachesFolder] stringByAppendingPathComponent:_installRelURL.path]];
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"name: %@, res: %@, os: %@, status: %@, remote url: %@, unzip url: %@, install url: %@",_name, _resolution, _os, [self statusToString], _remoteURL, _unzipURL, [self installFullURL]];
+}
+
 @end
