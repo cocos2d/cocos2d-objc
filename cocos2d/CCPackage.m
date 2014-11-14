@@ -40,22 +40,6 @@ static NSString *const PACKAGE_SERIALIZATION_KEY_ENABLE_ON_DOWNLOAD = @"enableOn
     return self;
 }
 
-- (instancetype)initWithName:(NSString *)name resolution:(NSString *)resolution remoteURL:(NSURL *)remoteURL
-{
-    return [[CCPackage alloc] initWithName:name
-                                resolution:resolution
-                                        os:[CCPackageHelper currentOS]
-                                 remoteURL:remoteURL];
-}
-
-- (instancetype)initWithName:(NSString *)name remoteURL:(NSURL *)remoteURL
-{
-    return [[CCPackage alloc] initWithName:name
-                                resolution:[CCPackageHelper defaultResolution]
-                                        os:[CCPackageHelper currentOS]
-                                 remoteURL:remoteURL];
-}
-
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary
 {
     CCPackage *package = [[CCPackage alloc] initWithName:dictionary[PACKAGE_SERIALIZATION_KEY_NAME]

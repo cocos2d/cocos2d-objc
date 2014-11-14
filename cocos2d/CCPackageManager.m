@@ -284,7 +284,11 @@
         return aPackage;
     }
 
-    CCPackage *package = [[CCPackage alloc] initWithName:name resolution:resolution remoteURL:remoteURL];
+    CCPackage *package = [[CCPackage alloc] initWithName:name
+                                              resolution:resolution
+                                                      os:os
+                                               remoteURL:remoteURL];
+
     package.enableOnDownload = enableAfterDownload;
 
     [_packages addObject:package];
