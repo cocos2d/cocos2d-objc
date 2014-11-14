@@ -313,12 +313,12 @@
         return;
     }
 
-    CCLOGINFO(@"[PACKAGE/DOWNLOAD][INFO] response received - %d %@", [httpResponse statusCode], [NSHTTPURLResponse localizedStringForStatusCode:[httpResponse statusCode]]);
+    CCLOGINFO(@"[PACKAGE/DOWNLOAD][INFO] response received - %ld %@", [httpResponse statusCode], [NSHTTPURLResponse localizedStringForStatusCode:[httpResponse statusCode]]);
 
     if ([httpResponse expectedContentLength] != NSURLResponseUnknownLength)
     {
         self.totalBytes = [self extractTotalBytesFromResponse:httpResponse];
-        CCLOGINFO(@"[PACKAGE/DOWNLOAD][INFO] Download Content-Length: %u", _totalBytes);
+        CCLOGINFO(@"[PACKAGE/DOWNLOAD][INFO] Download Content-Length: %lu", _totalBytes);
 
         if (_fileSize == _totalBytes)
         {

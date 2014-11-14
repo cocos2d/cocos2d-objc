@@ -500,7 +500,7 @@ FlipY(GLKMatrix4 projection)
 #elif __CC_PLATFORM_MAC
     CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:filePath];
 
-    CGImageDestinationRef dest;
+    CGImageDestinationRef dest = nil;
 
     if( format == CCRenderTextureImageFormatPNG )
         dest = 	CGImageDestinationCreateWithURL(url, kUTTypePNG, 1, NULL);
