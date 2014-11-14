@@ -52,7 +52,7 @@
         @"resolution" : @"tablethd",
         @"os" : @"iOS",
         @"remoteURL" : @"http://foo.fake",
-        @"installRelURL" : @"Packages",
+        @"installURL" : @"Packages",
         @"status" : @(CCPackageStatusInstalledDisabled),
         @"localDownloadURL" : @"/downloadfolder/baa.zip",
         @"localUnzipURL" : @"/unzupfolder/foo",
@@ -119,7 +119,7 @@
     CCAssertEqualStrings(dictionary[@"resolution"], @"tablethd");
     CCAssertEqualStrings(dictionary[@"os"], @"iOS");
     CCAssertEqualStrings(dictionary[@"remoteURL"], @"http://foo.fake");
-    CCAssertEqualStrings(dictionary[@"installRelURL"], @"Packages");
+    CCAssertEqualStrings(dictionary[@"installURL"], @"Packages");
     XCTAssertEqual([dictionary[@"status"] integerValue], CCPackageStatusInstalledDisabled);
     CCAssertEqualStrings(dictionary[@"localDownloadURL"], @"/downloadfolder/baa.zip");
     CCAssertEqualStrings(dictionary[@"localUnzipURL"], @"/unzupfolder/foo");
