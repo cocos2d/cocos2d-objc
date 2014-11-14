@@ -24,6 +24,21 @@
     }
 }
 
++ (void)cleanTempFolder
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error;
+    NSArray *array = [fileManager contentsOfDirectoryAtPath:NSTemporaryDirectory() error:nil];
+    for (NSString *filename in array)
+    {
+        NSString *filePath = [[CCPackageHelper cachesFolder] stringByAppendingPathComponent:filename];
+        if (![fileManager removeItemAtPath:filePath error:&error] && error.code != 4)
+        {
+            NSLog(@"ERROR: tearDown remove packages install folder %@", error);
+        }
+    }
+}
+
 + (CCPackage *)testPackageInitial
 {
     return [self testPackageWithStatus:CCPackageStatusInitial installRelPath:nil];
@@ -34,6 +49,11 @@
     NSString *pathToUnzippedPackage = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Resources-shared/Packages/testpackage-iOS-phonehd_unzipped/testpackage-iOS-phonehd"];
     NSString *pathToZippedPackage = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Resources-shared/Packages/testpackage-iOS-phonehd.zip"];
     NSFileManager *fileManager = [NSFileManager defaultManager];
+
+    [fileManager createDirectoryAtPath:[[CCPackageHelper cachesFolder] stringByAppendingPathComponent:installFolderPath]
+           withIntermediateDirectories:YES
+                            attributes:nil
+                                 error:nil];
 
     CCPackage *package = [[CCPackage alloc] initWithName:@"testpackage"
                                               resolution:@"phonehd"
@@ -70,12 +90,21 @@
 
     if (status == CCPackageStatusUnzipped)
     {
-        NSString *pathUnzipFolder = [NSTemporaryDirectory() stringByAppendingPathComponent:@"Unzipped"];
-        [fileManager createDirectoryAtPath:pathUnzipFolder withIntermediateDirectories:YES attributes:nil error:nil];
+        package.folderName = @"testpackage-iOS-phonehd";
 
-        package.unzipURL = [NSURL fileURLWithPath:[pathUnzipFolder stringByAppendingPathComponent:@"testpackage-iOS-phonehd"]];
+        NSString *pathToUnzippedPackageContents = [pathToUnzippedPackage stringByDeletingLastPathComponent];
+        NSString *unzipPath = [NSTemporaryDirectory() stringByAppendingPathComponent:package.folderName];
 
-        [fileManager copyItemAtPath:pathToUnzippedPackage toPath:package.unzipURL.path error:nil];
+        NSError *error;
+        [fileManager removeItemAtPath:unzipPath error:nil];
+        if (![fileManager copyItemAtPath:pathToUnzippedPackageContents toPath:unzipPath error:&error])
+        {
+            NSLog(@"%@", error);
+        }
+
+        package.unzipURL = [NSURL fileURLWithPath:unzipPath];
+
+        package.enableOnDownload = NO;
     }
 
     return package;

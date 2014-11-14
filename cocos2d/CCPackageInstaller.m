@@ -35,7 +35,7 @@
 {
     if (![self unzippedPackageFolderExists:error])
     {
-        [_package setValue:@(CCPackageStatusInstallationFailed) forKey:@"status"];
+        _package.status = CCPackageStatusInstallationFailed;
         return NO;
     }
 
@@ -55,12 +55,32 @@
     NSAssert(_package.unzipURL != nil, @"package.unzipURL must not be nil.");
     NSAssert(_package.folderName != nil, @"package.folderName must not be nil.");
 
+
     _package.installRelURL = [NSURL URLWithString:[_installRelPath stringByAppendingPathComponent:_package.folderName]];
 
     NSString *fullInstallPath = _package.installFullURL.path;
 
-    NSError *errorMove;
     NSFileManager *fileManager = [NSFileManager defaultManager];
+
+    NSError *errorDelete;
+    if ([fileManager fileExistsAtPath:fullInstallPath])
+    {
+        if (![fileManager removeItemAtPath:fullInstallPath error:&errorDelete])
+        {
+            _package.installRelURL = nil;
+
+            [self setNewError:error
+                         code:PACKAGE_ERROR_INSTALL_COULD_NOT_DELETE_EXISTING_FOLDER_BEFORE_MOVING_TO_INSTALL_FOLDER
+                      message:[NSString stringWithFormat:@"Could not remove existing folder at path \"%@\" before moving package to be installed. Underlying error: %@", fullInstallPath, errorDelete]
+              underlyingError:errorDelete];
+
+            CCLOG(@"[PACKAGE/INSTALL][ERROR] Could remove existing folder before moving package: %@  with error: %@", _package, *error);
+
+            return NO;
+        }
+    }
+
+    NSError *errorMove;
     if (![fileManager moveItemAtPath:[_package.unzipURL.path stringByAppendingPathComponent:_package.folderName]
                               toPath:fullInstallPath
                                error:&errorMove])

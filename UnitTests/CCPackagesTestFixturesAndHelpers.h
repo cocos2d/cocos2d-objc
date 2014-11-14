@@ -10,6 +10,8 @@ typedef bool(^WaitConditionBlock)(void);
 
 + (void)cleanCachesFolder;
 
++ (void)cleanTempFolder;
+
 + (CCPackage *)testPackageInitial;
 
 + (CCPackage *)testPackageWithStatus:(CCPackageStatus)status installRelPath:(NSString *)installFolderPath;
