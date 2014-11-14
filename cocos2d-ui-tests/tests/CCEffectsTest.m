@@ -33,6 +33,9 @@
 
 #define TEMPORARILY_DISABLE_SDF_TESTS 1
 #if !TEMPORARILY_DISABLE_SDF_TESTS
+
+#define INNER_GLOW_MAX_WIDTH 6
+
 -(void)setupDFInnerGlowTest
 {
     self.subTitle = @"Distance Field Inner Glow Test";
@@ -45,7 +48,7 @@
     CCTexture* texture = [[CCTextureCache sharedTextureCache] addImage:@"Images/output.png"];
     
     CCColor* fillColor = [CCColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:0.5];
-    _innerGlowEffect = [CCEffectDFInnerGlow effectWithGlowColor:[CCColor redColor] fillColor:fillColor glowWidth:2 fieldScale:32 distanceField:texture];
+    _innerGlowEffect = [CCEffectDFInnerGlow effectWithGlowColor:[CCColor redColor] fillColor:fillColor glowWidth:INNER_GLOW_MAX_WIDTH fieldScale:32 distanceField:texture];
     
     CCSprite *dfSprite = [CCSprite spriteWithImageNamed:@"Images/df_sprite.png"];
     dfSprite.position = ccp(0.5, 0.5);
@@ -61,12 +64,13 @@
     [slider setBackgroundSpriteFrame:backgroundHilite forState:CCControlStateHighlighted];
     slider.positionType = CCPositionTypeNormalized;
     slider.position = ccp(0.1f, 0.5f);
-    slider.sliderValue = 0.3;
+    slider.sliderValue = 1.0;
     slider.preferredSizeType = CCSizeTypeMake(CCSizeUnitNormalized, CCSizeUnitUIPoints);
     slider.preferredSize = CGSizeMake(0.5f, 10);
     slider.rotation = 90;
     slider.anchorPoint = ccp(0.5f, 0.5f);
     slider.scale = 0.8;
+    slider.continuous = YES;
     
     [slider setTarget:self selector:@selector(innerGlowWidthChanged:)];
     
@@ -77,11 +81,12 @@
 
 - (void)innerGlowWidthChanged:(id)sender
 {
-    const int innerGloWMax = 6;
+    const int innerGloWMax = INNER_GLOW_MAX_WIDTH;
     CCSlider* slider = sender;
     _innerGlowEffect.glowWidth = slider.sliderValue * innerGloWMax;
 }
 
+#define OUTLINE_MAX_WIDTH 6
 
 -(void)setupDFOutlineEffectTest
 {
@@ -95,7 +100,7 @@
     CCTexture* texture = [[CCTextureCache sharedTextureCache] addImage:@"Images/output.png"];
     
     CCColor* fillColor = [CCColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:0.0];
-    _outlineEffect = [CCEffectDFOutline effectWithOutlineColor:[CCColor redColor] fillColor:fillColor outlineWidth:1 fieldScale:32 distanceField:texture];
+    _outlineEffect = [CCEffectDFOutline effectWithOutlineColor:[CCColor redColor] fillColor:fillColor outlineWidth:OUTLINE_MAX_WIDTH fieldScale:32 distanceField:texture];
 
     CCSprite *dfSprite = [CCSprite spriteWithImageNamed:@"Images/df_sprite.png"];
     dfSprite.position = ccp(0.5, 0.5);
@@ -116,7 +121,8 @@
     slider.rotation = 90;
     slider.anchorPoint = ccp(0.5f, 0.5f);
     slider.scale = 0.8;
-    slider.sliderValue = 0.1;
+    slider.sliderValue = 1.0;
+    slider.continuous = YES;
     
     [slider setTarget:self selector:@selector(outlineWidthChagne:)];
     
@@ -135,7 +141,7 @@
 
 - (void)outlineWidthChagne:(id)sender
 {
-    const int outlineWidthMax = 6;
+    const int outlineWidthMax = OUTLINE_MAX_WIDTH;
     CCSlider* slider = sender;
     _outlineEffect.outlineWidth = slider.sliderValue * outlineWidthMax;
 }
@@ -175,6 +181,7 @@
     slider.rotation = 90;
     slider.anchorPoint = ccp(0.5f, 0.5f);
     slider.scale = 0.8;
+    slider.continuous = YES;
     
     [slider setTarget:self selector:@selector(outlineInnerWidthChange:)];
     
@@ -188,6 +195,7 @@
     slider2.rotation = 90;
     slider2.anchorPoint = ccp(0.5f, 0.5f);
     slider2.scale = 0.8;
+    slider2.continuous = YES;
     
     [slider2 setTarget:self selector:@selector(outlineOuterWidthChange:)];
     
@@ -201,7 +209,8 @@
     slider3.rotation = 90;
     slider3.anchorPoint = ccp(0.5f, 0.5f);
     slider3.scale = 0.8;
-    
+    slider3.continuous = YES;
+
     [slider3 setTarget:self selector:@selector(glowWidthChange:)];
     
     CCButton* enableGlow = [CCButton buttonWithTitle:@"Outer Glow"];

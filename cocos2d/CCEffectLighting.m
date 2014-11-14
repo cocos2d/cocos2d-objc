@@ -23,6 +23,7 @@
 #import "CCEffect_Private.h"
 #import "CCSprite_Private.h"
 
+
 typedef struct _CCLightKey
 {
     NSUInteger pointLightMask;
@@ -37,8 +38,9 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
 
 
 
-@interface CCEffectLighting ()
+@interface CCEffectLightingImpl : CCEffectImpl
 
+@property (nonatomic, weak) CCEffectLighting *interface;
 @property (nonatomic, assign) CCLightGroupMask groupMask;
 @property (nonatomic, assign) BOOL groupMaskDirty;
 @property (nonatomic, copy) NSArray *closestLights;
@@ -50,40 +52,24 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
 @end
 
 
-@implementation CCEffectLighting
+@implementation CCEffectLightingImpl
 
--(id)init
-{
-    return [self initWithGroups:nil specularColor:[CCColor whiteColor] shininess:5.0f];
-}
-
--(id)initWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess
+-(id)initWithInterface:(CCEffectLighting *)interface
 {
     if((self = [super init]))
     {
-        self.debugName = @"CCEffectLighting";
-        
-        _groups = [groups copy];
         _groupMask = CCLightCollectionAllGroups;
         _groupMaskDirty = YES;
         _closestLights = nil;
-        
-        _specularColor = specularColor;
-        _shininess = shininess;
-        
         _lightKey = CCLightKeyMake(nil);
         _shaderHasSpecular = NO;
         _shaderHasNormalMap = NO;
+
+        self.interface = interface;
+        self.debugName = @"CCEffectLightingImpl";
     }
     return self;
 }
-
-
-+(id)effectWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess
-{
-    return [[self alloc] initWithGroups:groups specularColor:specularColor shininess:shininess];
-}
-
 
 +(NSMutableArray *)buildFragmentFunctionsWithLights:(NSArray*)lights normalMap:(BOOL)needsNormalMap specular:(BOOL)needsSpecular
 {
@@ -204,7 +190,7 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
 
 -(void)buildRenderPasses
 {
-    __weak CCEffectLighting *weakSelf = self;
+    __weak CCEffectLightingImpl *weakSelf = self;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.debugLabel = @"CCEffectLighting pass 0";
@@ -315,8 +301,8 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
         
         if (self.needsSpecular)
         {
-            passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_specularExponent"]] = [NSNumber numberWithFloat:weakSelf.shininess];
-            passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_specularColor"]] = [NSValue valueWithGLKVector4:weakSelf.specularColor.glkVector4];
+            passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_specularExponent"]] = [NSNumber numberWithFloat:weakSelf.interface.shininess];
+            passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_specularColor"]] = [NSValue valueWithGLKVector4:weakSelf.interface.specularColor.glkVector4];
         }
         
     } copy]];
@@ -336,7 +322,7 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
     CCLightCollection *lightCollection = sprite.scene.lights;
     if (self.groupMaskDirty)
     {
-        self.groupMask = [lightCollection maskForGroups:self.groups];
+        self.groupMask = [lightCollection maskForGroups:self.interface.groups];
         self.groupMaskDirty = NO;
     }
     
@@ -387,8 +373,8 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
             [fragUniforms addObject:[CCEffectUniform uniform:@"vec4" name:@"u_specularColor" value:[NSValue valueWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f)]]];
         }
         
-        NSMutableArray *fragFunctions = [CCEffectLighting buildFragmentFunctionsWithLights:self.closestLights normalMap:needsNormalMap specular:self.needsSpecular];
-        NSMutableArray *vertFunctions = [CCEffectLighting buildVertexFunctionsWithLights:self.closestLights];
+        NSMutableArray *fragFunctions = [CCEffectLightingImpl buildFragmentFunctionsWithLights:self.closestLights normalMap:needsNormalMap specular:self.needsSpecular];
+        NSMutableArray *vertFunctions = [CCEffectLightingImpl buildVertexFunctionsWithLights:self.closestLights];
         
         [self buildEffectWithFragmentFunction:fragFunctions vertexFunctions:vertFunctions fragmentUniforms:fragUniforms vertexUniforms:vertUniforms varyings:varyings firstInStack:YES];
 
@@ -399,16 +385,49 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
 
 - (BOOL)needsSpecular
 {
-    return (!ccc4FEqual(_specularColor.ccColor4f, ccc4f(0.0f, 0.0f, 0.0f, 0.0f)) && (_shininess > 0.0f));
+    return (!ccc4FEqual(self.interface.specularColor.ccColor4f, ccc4f(0.0f, 0.0f, 0.0f, 0.0f)) && (self.interface.shininess > 0.0f));
+}
+
+@end
+
+
+@implementation CCEffectLighting
+
+-(id)init
+{
+    return [self initWithGroups:nil specularColor:[CCColor whiteColor] shininess:5.0f];
+}
+
+-(id)initWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess
+{
+    if((self = [super init]))
+    {
+        self.effectImpl = [[CCEffectLightingImpl alloc] initWithInterface:self];
+        self.debugName = @"CCEffectLighting";
+        
+        _groups = [groups copy];
+        _specularColor = specularColor;
+        _shininess = shininess;
+    }
+    return self;
+}
+
+
++(id)effectWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess
+{
+    return [[self alloc] initWithGroups:groups specularColor:specularColor shininess:shininess];
 }
 
 -(void)setGroups:(NSArray *)groups
 {
     _groups = [groups copy];
-    _groupMaskDirty = YES;
+
+    CCEffectLightingImpl *lightingImpl = (CCEffectLightingImpl *)self.effectImpl;
+    lightingImpl.groupMaskDirty = YES;
 }
 
 @end
+
 
 CCLightKey CCLightKeyMake(NSArray *lights)
 {
