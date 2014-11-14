@@ -8,12 +8,16 @@ typedef bool(^WaitConditionBlock)(void);
 
 @interface CCPackagesTestFixturesAndHelpers : NSObject
 
++ (void)cleanCachesFolder;
+
 + (CCPackage *)testPackageInitial;
 
-+ (CCPackage *)testPackageWithStatus:(CCPackageStatus)status installFolderPath:(NSString *)installFolderPath;
++ (CCPackage *)testPackageWithStatus:(CCPackageStatus)status installRelPath:(NSString *)installFolderPath;
 
 + (void)waitForCondition:(WaitConditionBlock)waitConditionBlock;
 
 + (BOOL)isURLInCocos2dSearchPath:(NSURL *)URL;
+
++ (BOOL)isPackageInSearchPath:(CCPackage *)package;
 
 @end

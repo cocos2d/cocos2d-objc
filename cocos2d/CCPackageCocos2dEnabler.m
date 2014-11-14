@@ -44,13 +44,12 @@
         NSAssert(aPackage.installRelURL != nil, @"aPackage.installRelURL must not be nil for package %@", aPackage);
 
         NSMutableArray *newSearchPath = [[CCFileUtils sharedFileUtils].searchPath mutableCopy];
-        NSString *newPackagePath = [[CCPackageHelper cachesFolder] stringByAppendingPathComponent:aPackage.installRelURL.path];
 
-        if (![newSearchPath containsObject:newPackagePath])
+        if (![newSearchPath containsObject:aPackage.installFullURL.path])
         {
             aPackage.status = CCPackageStatusInstalledEnabled;
 
-            [newSearchPath insertObject:newPackagePath atIndex:0];
+            [newSearchPath insertObject:aPackage.installFullURL.path atIndex:0];
             [CCFileUtils sharedFileUtils].searchPath = newSearchPath;
             searchPathChanged = YES;
         }
@@ -75,7 +74,7 @@
     for (CCPackage *aPackage in packages)
     {
         NSMutableArray *newSearchPath = [[CCFileUtils sharedFileUtils].searchPath mutableCopy];
-        NSString *packagePathToRemove = [[CCPackageHelper cachesFolder] stringByAppendingPathComponent:aPackage.installRelURL.path];
+        NSString *packagePathToRemove = aPackage.installFullURL.path;
 
         [aPackage setValue:@(CCPackageStatusInstalledDisabled) forKey:NSStringFromSelector(@selector(status))];
 

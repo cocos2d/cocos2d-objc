@@ -57,7 +57,7 @@
 
     _package.installRelURL = [NSURL URLWithString:[_installRelPath stringByAppendingPathComponent:_package.folderName]];
 
-    NSString *fullInstallPath = [[CCPackageHelper cachesFolder] stringByAppendingPathComponent:_package.installRelURL.path];
+    NSString *fullInstallPath = _package.installFullURL.path;
 
     NSError *errorMove;
     NSFileManager *fileManager = [NSFileManager defaultManager];

@@ -136,6 +136,9 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
         }
     }
 
+    [CCPackagesTestFixturesAndHelpers cleanCachesFolder];
+
+/*
     NSArray *array = [fileManager contentsOfDirectoryAtPath:[CCPackageHelper cachesFolder] error:nil];
     for (NSString *filename in array)
     {
@@ -145,6 +148,7 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
             NSLog(@"ERROR: tearDown remove packages install folder %@", error);
         }
     }
+*/
 
     [super tearDown];
 }
@@ -331,8 +335,8 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 
 - (void)testEnableNonDisabledPackage
 {
-    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageWithStatus:CCPackageStatusInitial installFolderPath:_packageManager
-            .installRelPath];
+    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageWithStatus:CCPackageStatusInitial
+                                                                  installRelPath:_packageManager.installRelPath];
 
     NSError *error;
     BOOL success = [_packageManager enablePackage:package error:&error];
@@ -345,8 +349,8 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 
 - (void)testDisablePackage
 {
-    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageWithStatus:CCPackageStatusInstalledEnabled installFolderPath:_packageManager
-            .installRelPath];
+    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageWithStatus:CCPackageStatusInstalledEnabled
+                                                                  installRelPath:_packageManager.installRelPath];
 
     NSError *error;
     BOOL success = [_packageManager disablePackage:package error:&error];
@@ -359,8 +363,8 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 
 - (void)testDisableNonEnabledPackage
 {
-    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageWithStatus:CCPackageStatusInitial installFolderPath:_packageManager
-            .installRelPath];
+    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageWithStatus:CCPackageStatusInitial
+                                                                  installRelPath:_packageManager.installRelPath];
 
     NSError *error;
     BOOL success = [_packageManager disablePackage:package error:&error];
@@ -373,8 +377,8 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 
 - (void)testDeleteInstalledPackage
 {
-    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageWithStatus:CCPackageStatusInstalledEnabled installFolderPath:_packageManager
-            .installRelPath];
+    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageWithStatus:CCPackageStatusInstalledEnabled
+                                                                  installRelPath:_packageManager.installRelPath];
     [_packageManager.packages addObject:package];
 
     NSArray *urls = [self copyOfURLsOfPackage:package];
@@ -396,8 +400,8 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 
 - (void)testDeleteUnzippedPackage
 {
-    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageWithStatus:CCPackageStatusUnzipped installFolderPath:_packageManager
-            .installRelPath];
+    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageWithStatus:CCPackageStatusUnzipped
+                                                                  installRelPath:_packageManager.installRelPath];
     [_packageManager.packages addObject:package];
 
     NSArray *urls = [self copyOfURLsOfPackage:package];
@@ -414,8 +418,8 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 
 - (void)testDeleteDownloadedPackage
 {
-    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageWithStatus:CCPackageStatusDownloaded installFolderPath:_packageManager
-            .installRelPath];
+    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageWithStatus:CCPackageStatusDownloaded
+                                                                  installRelPath:_packageManager.installRelPath];
     [_packageManager.packages addObject:package];
 
     NSArray *urls = [self copyOfURLsOfPackage:package];
@@ -478,8 +482,8 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 
 - (void)testCancelDownloadOfPackageThatIsInstalled
 {
-    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageWithStatus:CCPackageStatusInstalledDisabled installFolderPath:_packageManager
-            .installRelPath];
+    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageWithStatus:CCPackageStatusInstalledDisabled
+                                                                  installRelPath:_packageManager.installRelPath];
 
     [_packageManager cancelDownloadOfPackage:package];
 
@@ -500,7 +504,7 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 - (void)testLoadPackagesReEnable
 {
     CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageWithStatus:CCPackageStatusInstalledDisabled
-                                                               installFolderPath:_packageManager.installRelPath];
+                                                                  installRelPath:_packageManager.installRelPath];
     // To simulate the loadPackages we need an installed but not actually enabled package just the status has to state it is enabled.
     package.status = CCPackageStatusInstalledEnabled;
 
@@ -542,8 +546,8 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 
 - (void)testLoadPackagesRestartUnzipping
 {
-    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageWithStatus:CCPackageStatusDownloaded installFolderPath:_packageManager
-            .installRelPath];
+    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageWithStatus:CCPackageStatusDownloaded
+                                                                  installRelPath:_packageManager.installRelPath];
     package.enableOnDownload = NO;
 
     NSArray *packages = @[[package toDictionary]];
