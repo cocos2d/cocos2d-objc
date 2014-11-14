@@ -94,9 +94,6 @@
 	if (self = [super init])
 	{
 		self.texture = tex;
-
-		// no lazy alloc in this node
-		_children = [[NSMutableArray alloc] initWithCapacity:capacity];
 	}
 
 	return self;
@@ -113,7 +110,7 @@
 
 -(NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %p | Tag = %@>", [self class], self, _name ];
+	return [NSString stringWithFormat:@"<%@ = %p | Tag = %@>", [self class], self, self.name ];
 }
 
 @end

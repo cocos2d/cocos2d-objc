@@ -121,7 +121,7 @@
 {
 	// override visit.
 	// Don't call visit on its children
-	if(!_visible) return;
+	if(!self.visible) return;
     
     CGSize pointSize = self.contentSizeInPoints;
     if (!CGSizeEqualToSize(pointSize, _allocatedSize))
@@ -134,8 +134,6 @@
     GLKMatrix4 transform = [self transform:parentTransform];
     
     [self draw:renderer transform:&transform];
-	
-	_orderOfArrival = 0;
 }
 
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
@@ -149,7 +147,7 @@
     //! make sure all children are drawn
     [self sortAllChildren];
     
-    for(CCNode *child in _children){
+    for(CCNode *child in self.children){
         if( child != _sprite) [child visit:rtRenderer parentTransform:&_projection];
     }
     [self end];

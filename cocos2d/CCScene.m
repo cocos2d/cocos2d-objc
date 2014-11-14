@@ -47,7 +47,7 @@
 -( id )init {
 	if((self = [ super init ])){
 		CGSize s = [CCDirector sharedDirector].designSize;
-		_anchorPoint = ccp(0.0f, 0.0f);
+		self.anchorPoint = ccp(0.0f, 0.0f);
 		[self setContentSize:s];
 		
 		self.colorRGBA = [CCColor blackColor];

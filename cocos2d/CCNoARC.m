@@ -51,9 +51,6 @@ CCNodeTransform(CCNode *node, GLKMatrix4 parentTransform)
 	}
 	
 	if(!drawn) [self draw:renderer transform:&transform];
-
-	// reset for next frame
-	_orderOfArrival = 0;
 }
 
 @end

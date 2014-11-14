@@ -508,7 +508,7 @@
 			[self stopSystem];
 	}
 
-	if (_visible)
+	if (self.visible)
 	{
 		for(int i=0; i < _particleCount;)
 		{
@@ -576,7 +576,7 @@
 				_particleCount--;
 
 				if( _particleCount == 0 && _autoRemoveOnFinish ) {
-					[_parent removeChild:self cleanup:YES];
+					[self.parent removeChild:self cleanup:YES];
 					return;
 				}
 			}

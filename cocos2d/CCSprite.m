@@ -122,7 +122,7 @@
 		_flipY = _flipX = NO;
 
 		// default transform anchor: center
-		_anchorPoint =  ccp(0.5f, 0.5f);
+		self.anchorPoint =  ccp(0.5f, 0.5f);
 
 		// zwoptex default values
 		_offsetPosition = CGPointZero;
@@ -215,7 +215,7 @@
 - (NSString*) description
 {
 	return [NSString stringWithFormat:@"<%@ = %p | Rect = (%.2f,%.2f,%.2f,%.2f) | tag = %@ >",
-		[self class], self, _textureRect.origin.x, _textureRect.origin.y, _textureRect.size.width, _textureRect.size.height, _name
+		[self class], self, _textureRect.origin.x, _textureRect.origin.y, _textureRect.size.width, _textureRect.size.height, self.name
 	];
 }
 
@@ -249,9 +249,10 @@
 	// issue #732
 	if(_flipX) relativeOffset.x = -relativeOffset.x;
 	if(_flipY) relativeOffset.y = -relativeOffset.y;
-
-	_offsetPosition.x = relativeOffset.x + (_contentSize.width - _textureRect.size.width) / 2;
-	_offsetPosition.y = relativeOffset.y + (_contentSize.height - _textureRect.size.height) / 2;
+	
+	CGSize size = self.contentSize;
+	_offsetPosition.x = relativeOffset.x + (size.width - _textureRect.size.width) / 2;
+	_offsetPosition.y = relativeOffset.y + (size.height - _textureRect.size.height) / 2;
 
 	// Atlas: Vertex
 	float x1 = _offsetPosition.x;
@@ -360,7 +361,7 @@
 {
 	if( _flipX != b ) {
 		_flipX = b;
-		[self setTextureRect:_textureRect rotated:_textureRectRotated untrimmedSize:_contentSize];
+		[self setTextureRect:_textureRect rotated:_textureRectRotated untrimmedSize:self.contentSize];
 	}
 }
 -(BOOL) flipX
@@ -372,7 +373,7 @@
 {
 	if( _flipY != b ) {
 		_flipY = b;
-		[self setTextureRect:_textureRect rotated:_textureRectRotated untrimmedSize:_contentSize];
+		[self setTextureRect:_textureRect rotated:_textureRectRotated untrimmedSize:self.contentSize];
 	}
 }
 -(BOOL) flipY

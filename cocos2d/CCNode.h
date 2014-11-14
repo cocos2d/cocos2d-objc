@@ -71,7 +71,12 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  */
 
 @interface CCNode : CCResponder < CCSchedulerTarget > {
-    
+	// TODO
+	// DisplayColor and Color are kept separate to allow for cascading color and alpha changes through node children.
+	// Alphas tend to be multiplied together so you can fade groups of objects that are colored differently.
+	ccColor4F	_displayColor, _color;
+
+@private
 	// Rotation angle.
 	float _rotationalSkewX, _rotationalSkewY;
 
@@ -117,23 +122,15 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 	// User data field.
 	id _userObject;
 
-	// Used to preserve sequence while sorting children with the same zOrder.
-	NSUInteger _orderOfArrival;
-	
 	// True when visible.
 	BOOL _visible;
 
     // True to ensure reorder.
 	BOOL _isReorderChildDirty;
 	
-	// DisplayColor and Color are kept separate to allow for cascading color and alpha changes through node children.
-	// Alphas tend to be multiplied together so you can fade groups of objects that are colored differently.
-	ccColor4F	_displayColor, _color;
-
 	// Opacity/Color propagates into children that conform to if cascadeOpacity/cascadeColor is enabled.
 	BOOL		_cascadeColorEnabled, _cascadeOpacityEnabled;
 	
-@private
 	// Physics Body.
 	CCPhysicsBody* _physicsBody;
 	

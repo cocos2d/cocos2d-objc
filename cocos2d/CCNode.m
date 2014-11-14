@@ -115,9 +115,6 @@ RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
 	return CGAffineTransformConcat(body.absoluteTransform, CGAffineTransformInvert(NodeToPhysicsTransform(node.parent)));
 }
 
-// XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
-static NSUInteger globalOrderOfArrival = 1;
-
 @synthesize children = _children;
 @synthesize visible = _visible;
 @synthesize parent = _parent;
@@ -125,7 +122,6 @@ static NSUInteger globalOrderOfArrival = 1;
 @synthesize name = _name;
 @synthesize vertexZ = _vertexZ;
 @synthesize userObject = _userObject;
-@synthesize orderOfArrival = _orderOfArrival;
 @synthesize physicsBody = _physicsBody;
 
 #pragma mark CCNode - Transform related properties
@@ -173,8 +169,6 @@ static NSUInteger globalOrderOfArrival = 1;
 
 		_shader = [CCShader positionColorShader];
 		_blendMode = [CCBlendMode premultipliedAlphaMode];
-
-		_orderOfArrival = 0;
 
 		// set default scheduler and actionManager
 		CCDirector *director = [CCDirector sharedDirector];
@@ -691,8 +685,6 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 	[child setParent: self];
 
-	[child setOrderOfArrival: globalOrderOfArrival++];
-	
 	// Update pausing parameters
 	child->_pausedAncestors = _pausedAncestors + (_paused ? 1 : 0);
 	RecursivelyIncrementPausedAncestors(child, child->_pausedAncestors);
@@ -847,42 +839,25 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 	_isReorderChildDirty = YES;
 
-	[child setOrderOfArrival: globalOrderOfArrival++];
 	[child _setZOrder:z];
-}
-
-- (NSComparisonResult) compareZOrderToNode:(CCNode*)node
-{
-    if (node->_zOrder == _zOrder)
-    {
-        if (node->_orderOfArrival == _orderOfArrival)
-        {
-            return NSOrderedSame;
-        }
-        else if (node->_orderOfArrival < _orderOfArrival)
-        {
-            return NSOrderedDescending;
-        }
-        else
-        {
-            return NSOrderedAscending;
-        }
-    }
-    else if (node->_zOrder < _zOrder)
-    {
-        return NSOrderedDescending;
-    }
-    else
-    {
-        return NSOrderedAscending;
-    }
 }
 
 - (void) sortAllChildren
 {
 	if (_isReorderChildDirty)
 	{
-        [_children sortUsingSelector:@selector(compareZOrderToNode:)];
+        [_children sortWithOptions:NSSortStable usingComparator:^NSComparisonResult(id obj1, id obj2) {
+            NSInteger z1 = [(CCNode *)obj1 zOrder];
+            NSInteger z2 = [(CCNode *)obj2 zOrder];
+            
+            if(z1 < z2){
+                return NSOrderedAscending;
+            } else if(z1 > z2){
+                return NSOrderedDescending;
+            } else {
+                return NSOrderedSame;
+            }
+        }];
 
 		//don't need to check children recursively, that's done in visit of each child
         

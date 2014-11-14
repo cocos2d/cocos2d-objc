@@ -115,7 +115,7 @@
 
 -(CGPoint) absolutePosition_
 {
-	CGPoint ret = _position;
+	CGPoint ret = self.position;
 
 	CCNode *cn = self;
 

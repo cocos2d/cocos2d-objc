@@ -242,7 +242,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 - (CGSize) contentSize
 {
     [self updateTexture];
-    return _contentSize;
+    return super.contentSize;
 }
 
 -(void) setHorizontalAlignment:(CCTextAlignment)alignment

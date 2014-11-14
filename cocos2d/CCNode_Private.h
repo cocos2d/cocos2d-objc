@@ -61,9 +61,6 @@ CGAffineTransform CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 
 @property (nonatomic,readonly) BOOL isPhysicsNode;
 
-/* used internally for zOrder sorting, don't change this manually */
-@property(nonatomic,readwrite) NSUInteger orderOfArrival;
-
 /* CCActionManager used by all the actions.
  IMPORTANT: If you set a new CCActionManager, then previously created actions are going to be removed.
  */
@@ -76,9 +73,6 @@ CGAffineTransform CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 
 /* Reads and writes the animation manager for this node.*/
 @property (nonatomic, readwrite) CCAnimationManager * animationManager;
-
-/* Compares two nodes in respect to zOrder and orderOfArrival (used for sorting sprites in display list) */
-- (NSComparisonResult) compareZOrderToNode:(CCNode*)node;
 
 /* Reorders a child according to a new z value.
  * The child MUST be already added.
