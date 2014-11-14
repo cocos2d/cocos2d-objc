@@ -31,9 +31,6 @@
 
 #if CC_EFFECTS_EXPERIMENTAL
 
-#define TEMPORARILY_DISABLE_SDF_TESTS 1
-#if !TEMPORARILY_DISABLE_SDF_TESTS
-
 #define INNER_GLOW_MAX_WIDTH 6
 
 -(void)setupDFInnerGlowTest
@@ -160,7 +157,10 @@
 
     CCColor *glowColor = [CCColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:1.0];
     _distanceFieldEffect = [CCEffectDistanceField effectWithGlowColor:glowColor outlineColor:[CCColor redColor]];
-
+    _distanceFieldEffect.outlineInnerWidth = 1.0f;
+    _distanceFieldEffect.outlineOuterWidth = 1.0f;
+    _distanceFieldEffect.glowWidth = 1.0f;
+    
     CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"Images/output.png"];
     sampleSprite.position = ccp(0.5, 0.5);
     sampleSprite.positionType = CCPositionTypeNormalized;
@@ -181,6 +181,7 @@
     slider.rotation = 90;
     slider.anchorPoint = ccp(0.5f, 0.5f);
     slider.scale = 0.8;
+    slider.sliderValue = 1.0;
     slider.continuous = YES;
     
     [slider setTarget:self selector:@selector(outlineInnerWidthChange:)];
@@ -195,6 +196,7 @@
     slider2.rotation = 90;
     slider2.anchorPoint = ccp(0.5f, 0.5f);
     slider2.scale = 0.8;
+    slider2.sliderValue = 1.0;
     slider2.continuous = YES;
     
     [slider2 setTarget:self selector:@selector(outlineOuterWidthChange:)];
@@ -209,6 +211,7 @@
     slider3.rotation = 90;
     slider3.anchorPoint = ccp(0.5f, 0.5f);
     slider3.scale = 0.8;
+    slider3.sliderValue = 1.0;
     slider3.continuous = YES;
 
     [slider3 setTarget:self selector:@selector(glowWidthChange:)];
@@ -260,7 +263,6 @@
 {
     _distanceFieldEffect.outline = !_distanceFieldEffect.outline;
 }
-#endif
 
 -(void)setupSimpleLightingTest
 {
