@@ -155,7 +155,7 @@
     [packageCocos2dEnabler enablePackages:packagesToEnable];
 }
 
-- (void)savePackages
+- (void)savePackagesForceWriteToDefaults:(BOOL)forceWrite
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSMutableArray *packagesToSave = [NSMutableArray arrayWithCapacity:_packages.count];
@@ -166,7 +166,16 @@
     }
 
     [userDefaults setObject:packagesToSave forKey:PACKAGE_STORAGE_USERDEFAULTS_KEY];
-    [userDefaults synchronize];
+
+    if (forceWrite)
+    {
+        [userDefaults synchronize];
+    }
+}
+
+- (void)savePackages
+{
+    [self savePackagesForceWriteToDefaults:YES];
 }
 
 - (void)setInstallRelPath:(NSString *)newInstallRelPath
@@ -283,6 +292,8 @@
 
     [_downloadManager enqueuePackageForDownload:package];
 
+    [self savePackagesForceWriteToDefaults:NO];
+
     return package;
 }
 
@@ -322,12 +333,16 @@
 {
     [_delegate packageDownloadFinished:package];
 
+    [self savePackagesForceWriteToDefaults:NO];
+
     [self unzipPackage:package];
 }
 
 - (void)downloadFailedOfPackage:(CCPackage *)package error:(NSError *)error
 {
     [_delegate packageDownloadFailed:package error:error];
+
+    [self savePackagesForceWriteToDefaults:NO];
 }
 
 - (void)downloadProgressOfPackage:(CCPackage *)package downloadedBytes:(NSUInteger)downloadedBytes totalBytes:(NSUInteger)totalBytes
@@ -356,6 +371,8 @@
             [_delegate packageUnzippingFinished:packageUnzipper.package];
         }
 
+        [self savePackagesForceWriteToDefaults:NO];
+
         if (![self installPackage:packageUnzipper.package])
         {
             return;
@@ -372,6 +389,8 @@
         [_unzipTasks removeObject:packageUnzipper];
 
         [_delegate packageUnzippingFailed:packageUnzipper.package error:error];
+
+        [self savePackagesForceWriteToDefaults:NO];
     }];
 }
 
@@ -476,6 +495,9 @@
     CCLOGINFO(@"[PACKAGE/INSTALL][INFO] Installation of package successful! Package enabled: %d", package.enableOnDownload);
 
     [_delegate packageInstallationFinished:package];
+
+    [self savePackagesForceWriteToDefaults:YES];
+
     return YES;
 }
 
@@ -602,6 +624,8 @@
     CCPackageCocos2dEnabler *packageCocos2dEnabler = [[CCPackageCocos2dEnabler alloc] init];
     [packageCocos2dEnabler disablePackages:@[package]];
 
+    [self savePackagesForceWriteToDefaults:YES];
+
     return YES;
 }
 
@@ -631,6 +655,8 @@
     CCPackageCocos2dEnabler *packageCocos2dEnabler = [[CCPackageCocos2dEnabler alloc] init];
     [packageCocos2dEnabler enablePackages:@[package]];
 
+    [self savePackagesForceWriteToDefaults:YES];
+
     return YES;
 }
 
@@ -646,6 +672,8 @@
     }
 
     [_packages addObject:package];
+
+    [self savePackagesForceWriteToDefaults:NO];
 }
 
 - (BOOL)deletePackage:(CCPackage *)package error:(NSError **)error
@@ -692,6 +720,8 @@
         package.status = CCPackageStatusDeleted;
 
         CCLOGINFO(@"[PACKAGE/INSTALL][INFO] Package deletion successful!");
+
+        [self savePackagesForceWriteToDefaults:YES];
     }
     else
     {
