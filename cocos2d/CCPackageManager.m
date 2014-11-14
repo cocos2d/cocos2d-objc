@@ -289,16 +289,24 @@
 - (CCPackage *)packageWithName:(NSString *)name
 {
     NSString *resolution = [CCPackageHelper defaultResolution];
+    NSString *os = [CCPackageHelper currentOS];
 
-    return [self packageWithName:name resolution:resolution];
+    return [self packageWithName:name resolution:resolution os:os];
 }
 
 - (CCPackage *)packageWithName:(NSString *)name resolution:(NSString *)resolution
 {
+    NSString *os = [CCPackageHelper currentOS];
+    return [self packageWithName:name resolution:resolution os:os];
+}
+
+- (CCPackage *)packageWithName:(NSString *)name resolution:(NSString *)resolution os:(NSString *)os
+{
     for (CCPackage *aPackage in _packages)
     {
         if ([aPackage.name isEqualToString:name]
-            && [aPackage.resolution isEqualToString:resolution])
+            && [aPackage.resolution isEqualToString:resolution]
+            && [aPackage.os isEqualToString:os])
         {
             return aPackage;
         }

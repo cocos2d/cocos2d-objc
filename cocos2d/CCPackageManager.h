@@ -70,6 +70,22 @@
 - (CCPackage *)packageWithName:(NSString *)name;
 
 /**
+ *  Returns a package identified by name and resolution. OS is determined implicitly.
+ *  Helpful if you are using packages of a different resolution.
+ *
+ *  @param name Name of the package
+ */
+- (CCPackage *)packageWithName:(NSString *)name resolution:(NSString *)resolution;
+
+/**
+ *  Returns a package identified by name and resolution.
+ *  Helpful if you are using packages of a different resolution and os
+ *
+ *  @param name Name of the package
+ */
+- (CCPackage *)packageWithName:(NSString *)name resolution:(NSString *)resolution os:(NSString *)os;
+
+/**
  * The all inclsuive method to add a package to your app.
  * Returns a new package immediately which will be downloaded, unzipped and installed asynchronously to the Packages folder in /Library/Caches (default)
  * OS and resolution are determined implicitly. Resolution is derived from CCFileUtils' searchResolutionsOrder first entry.

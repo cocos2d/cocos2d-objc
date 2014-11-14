@@ -172,6 +172,38 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
     XCTAssertEqual(aPackage, result);
 }
 
+- (void)testPackageWithNameResolution
+{
+    [CCFileUtils sharedFileUtils].searchResolutionsOrder = [@[CCFileUtilsSuffixiPadHD] mutableCopy];
+
+    CCPackage *aPackage = [[CCPackage alloc] initWithName:@"foo3"
+                                               resolution:@"foobarresolution" // See note above
+                                                       os:@"iOS"
+                                                remoteURL:[NSURL URLWithString:@"http://foo.fake"]];
+
+    [_packageManager addPackage:aPackage];
+
+    CCPackage *result = [_packageManager packageWithName:@"foo3" resolution:@"foobarresolution"];
+
+    XCTAssertEqual(aPackage, result);
+}
+
+- (void)testPackageWithNameResolutionOS
+{
+    [CCFileUtils sharedFileUtils].searchResolutionsOrder = [@[CCFileUtilsSuffixiPadHD] mutableCopy];
+
+    CCPackage *aPackage = [[CCPackage alloc] initWithName:@"foo2"
+                                               resolution:@"phonehd" // See note above
+                                                       os:@"Mac"
+                                                remoteURL:[NSURL URLWithString:@"http://foo.fake"]];
+
+    [_packageManager addPackage:aPackage];
+
+    CCPackage *result = [_packageManager packageWithName:@"foo2" resolution:@"phonehd" os:@"Mac"];
+
+    XCTAssertEqual(aPackage, result);
+}
+
 - (void)testSavePackages
 {
     CCPackage *package1 = [[CCPackage alloc] initWithName:@"DLC1"
