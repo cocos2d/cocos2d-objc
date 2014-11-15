@@ -74,7 +74,7 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 	// TODO
 	// DisplayColor and Color are kept separate to allow for cascading color and alpha changes through node children.
 	// Alphas tend to be multiplied together so you can fade groups of objects that are colored differently.
-	ccColor4F	_displayColor, _color;
+	GLKVector4	_displayColor, _color;
 
 @private
 	// Rotation angle.
@@ -667,7 +667,7 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  *
  *  @param color Color used for update.
  */
-- (void)updateDisplayedColor:(ccColor4F)color;
+- (void)updateDisplayedColor:(GLKVector4)color;
 
 /** 
  *  Sets and returns the opacity.

@@ -10,6 +10,7 @@
 #import <CoreGraphics/CoreGraphics.h>
 
 @implementation CCColor {
+    GLKVector4 _vec4;
     CGColorRef _color;
 }
 
@@ -47,7 +48,7 @@
 
 - (CCColor*) colorWithAlphaComponent:(float)alpha
 {
-    return [CCColor colorWithRed:_r green:_g blue:_b alpha:alpha];
+    return [CCColor colorWithRed:_vec4.r green:_vec4.g blue:_vec4.b alpha:alpha];
 }
 
 - (CCColor*) initWithWhite:(float)white alpha:(float)alpha
@@ -55,10 +56,10 @@
     self = [super init];
     if (!self) return NULL;
     
-    _r = white;
-    _g = white;
-    _b = white;
-    _a = alpha;
+    _vec4.r = white;
+    _vec4.g = white;
+    _vec4.b = white;
+    _vec4.a = alpha;
     
     return self;
 }
@@ -74,7 +75,7 @@
 	float chroma = saturation * brightness;
 	float hueSection = hue / 60.0f;
 	float X = chroma *  (1.0f - ABS(fmod(hueSection, 2.0f) - 1.0f));
-	ccColor4F rgb = (ccColor4F){};
+	GLKVector4 rgb = {};
 
 	if(hueSection < 1.0) {
 		rgb.r = chroma;
@@ -103,7 +104,7 @@
 	rgb.b += Min;
 	rgb.a = alpha;
 
-	return [CCColor colorWithCcColor4f:rgb];
+	return [CCColor colorWithGLKVector4:rgb];
 }
 
 - (CCColor*) initWithRed:(float)red green:(float)green blue:(float)blue alpha:(float)alpha
@@ -111,10 +112,10 @@
     self = [super init];
     if (!self) return NULL;
     
-    _r = red;
-    _g = green;
-    _b = blue;
-    _a = alpha;
+    _vec4.r = red;
+    _vec4.g = green;
+    _vec4.b = blue;
+    _vec4.a = alpha;
     
     return self;
 }
@@ -124,10 +125,10 @@
     self = [super init];
     if (!self) return NULL;
     
-    _r = red;
-    _g = green;
-    _b = blue;
-    _a = 1;
+    _vec4.r = red;
+    _vec4.g = green;
+    _vec4.b = blue;
+    _vec4.a = 1;
     
     return self;
 }
@@ -139,10 +140,10 @@
     
     const CGFloat *components = CGColorGetComponents(cgColor);
     
-    _r = (float) components[0];
-    _g = (float) components[1];
-    _b = (float) components[2];
-    _a = (float) components[3];
+    _vec4.r = (float) components[0];
+    _vec4.g = (float) components[1];
+    _vec4.b = (float) components[2];
+    _vec4.a = (float) components[3];
     
     return self;
 }
@@ -159,13 +160,13 @@
     {
 		    CGFloat r, g, b, a;
         [color getRed:&r green:&g blue:&b alpha:&a];
-				_r = r, _g = g, _b = b, _a = a;
+				_vec4.r = r, _vec4.g = g, _vec4.b = b, _vec4.a = a;
     }
     else if (csModel == kCGColorSpaceModelMonochrome)
     {
         CGFloat w, a;
         [color getWhite:&w alpha:&a];
-        _r = w, _g = w, _b = w, _a = a;
+        _vec4.r = w, _vec4.g = w, _vec4.b = w, _vec4.a = a;
     }
     else
     {
@@ -178,7 +179,7 @@
 
 - (CGColorRef) CGColor
 {
-    CGFloat components[4] = {(CGFloat)_r, (CGFloat)_g, (CGFloat)_b, (CGFloat)_a};
+    CGFloat components[4] = {(CGFloat)_vec4.r, (CGFloat)_vec4.g, (CGFloat)_vec4.b, (CGFloat)_vec4.a};
     CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
     _color = CGColorCreate(colorspace, components);
     CGColorSpaceRelease(colorspace);
@@ -189,7 +190,7 @@
 
 - (UIColor*) UIColor
 {
-    return [UIColor colorWithRed:_r green:_g blue:_b alpha:_a];
+    return [UIColor colorWithRed:_vec4.r green:_vec4.g blue:_vec4.b alpha:_vec4.a];
 }
 
 #endif
@@ -197,31 +198,31 @@
 #if __CC_PLATFORM_MAC
 - (NSColor*) NSColor
 {
-	return [NSColor colorWithCalibratedRed:(CGFloat)_r green:(CGFloat)_g blue:(CGFloat)_b alpha:(CGFloat)_a];
+	return [NSColor colorWithCalibratedRed:(CGFloat)_vec4.r green:(CGFloat)_vec4.g blue:(CGFloat)_vec4.b alpha:(CGFloat)_vec4.a];
 }
 #endif
 
 - (BOOL) getRed:(float *)red green:(float *)green blue:(float *)blue alpha:(float *)alpha
 {
-    *red = _r;
-    *green = _g;
-    *blue = _b;
-    *alpha = _a;
+    *red = _vec4.r;
+    *green = _vec4.g;
+    *blue = _vec4.b;
+    *alpha = _vec4.a;
     
     return YES;
 }
 
 - (BOOL) getWhite:(float *)white alpha:(float *)alpha
 {
-    *white = (_r + _g + _b) / 3.0; // Just use an average of the components
-    *alpha = _a;
+    *white = (_vec4.r + _vec4.g + _vec4.b) / 3.0; // Just use an average of the components
+    *alpha = _vec4.a;
     
     return YES;
 }
 
 - (CCColor*) interpolateTo:(CCColor *) toColor alpha:(float) t
 {
-	return [CCColor colorWithCcColor4f:ccc4FInterpolated(self.ccColor4f, toColor.ccColor4f, t)];
+	return [CCColor colorWithGLKVector4:GLKVector4Lerp(_vec4, toColor.glkVector4, t)];
 }
 
 static NSDictionary *namedColors() {
@@ -312,22 +313,22 @@ static NSDictionary *namedColors() {
 
 - (ccColor3B) ccColor3b
 {
-    return (ccColor3B){(GLubyte)(_r*255), (GLubyte)(_g*255), (GLubyte)(_b*255)};
+    return (ccColor3B){(GLubyte)(_vec4.r*255), (GLubyte)(_vec4.g*255), (GLubyte)(_vec4.b*255)};
 }
 
 - (ccColor4B) ccColor4b
 {
-    return (ccColor4B){(GLubyte)(_r*255), (GLubyte)(_g*255), (GLubyte)(_b*255), (GLubyte)(_a*255)};
+    return (ccColor4B){(GLubyte)(_vec4.r*255), (GLubyte)(_vec4.g*255), (GLubyte)(_vec4.b*255), (GLubyte)(_vec4.a*255)};
 }
 
 - (ccColor4F) ccColor4f
 {
-    return ccc4f(_r, _g, _b, _a);
+    return ccc4f(_vec4.r, _vec4.g, _vec4.b, _vec4.a);
 }
 
 -(GLKVector4)glkVector4
 {
-	return GLKVector4Make(_r, _g, _b, _a);
+	return GLKVector4Make(_vec4.r, _vec4.g, _vec4.b, _vec4.a);
 }
 
 @end
@@ -336,33 +337,31 @@ static NSDictionary *namedColors() {
 
 - (float) red
 {
-    return _r;
+    return _vec4.r;
 }
 
 - (float) green
 {
-    return _g;
+    return _vec4.g;
 }
 
 - (float) blue
 {
-    return _b;
+    return _vec4.b;
 }
 
 - (float) alpha
 {
-    return _a;
+    return _vec4.a;
 }
 
 - (BOOL) isEqual:(id)color
 {
     if (self == color) return YES;
     if (![color isKindOfClass:[CCColor class]]) return NO;
-    
-    ccColor4F c4f0 = self.ccColor4f;
-    ccColor4F c4f1 = ((CCColor*)color).ccColor4f;
-    
-    return ccc4FEqual(c4f0, c4f1);
+	
+		GLKVector4 c = [(CCColor *)color glkVector4];
+    return (_vec4.r == c.r && _vec4.g == c.g && _vec4.b == c.b && _vec4.a == c.a);
 }
 
 - (BOOL) isEqualToColor:(CCColor*) color

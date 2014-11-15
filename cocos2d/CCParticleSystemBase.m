@@ -138,25 +138,25 @@
 		g = [[dictionary valueForKey:@"startColorGreen"] floatValue];
 		b = [[dictionary valueForKey:@"startColorBlue"] floatValue];
 		a = [[dictionary valueForKey:@"startColorAlpha"] floatValue];
-		_startColor = (ccColor4F) {r,g,b,a};
+		_startColor = GLKVector4Make(r,g,b,a);
 
 		r = [[dictionary valueForKey:@"startColorVarianceRed"] floatValue];
 		g = [[dictionary valueForKey:@"startColorVarianceGreen"] floatValue];
 		b = [[dictionary valueForKey:@"startColorVarianceBlue"] floatValue];
 		a = [[dictionary valueForKey:@"startColorVarianceAlpha"] floatValue];
-		_startColorVar = (ccColor4F) {r,g,b,a};
+		_startColorVar = GLKVector4Make(r,g,b,a);
 
 		r = [[dictionary valueForKey:@"finishColorRed"] floatValue];
 		g = [[dictionary valueForKey:@"finishColorGreen"] floatValue];
 		b = [[dictionary valueForKey:@"finishColorBlue"] floatValue];
 		a = [[dictionary valueForKey:@"finishColorAlpha"] floatValue];
-		_endColor = (ccColor4F) {r,g,b,a};
+		_endColor = GLKVector4Make(r,g,b,a);
 
 		r = [[dictionary valueForKey:@"finishColorVarianceRed"] floatValue];
 		g = [[dictionary valueForKey:@"finishColorVarianceGreen"] floatValue];
 		b = [[dictionary valueForKey:@"finishColorVarianceBlue"] floatValue];
 		a = [[dictionary valueForKey:@"finishColorVarianceAlpha"] floatValue];
-		_endColorVar = (ccColor4F) {r,g,b,a};
+		_endColorVar = GLKVector4Make(r,g,b,a);
 
 		// particle size
 		_startSize = [[dictionary valueForKey:@"startParticleSize"] floatValue];
@@ -801,42 +801,42 @@
 
 - (void) setStartColor:(CCColor *)startColor
 {
-    _startColor = startColor.ccColor4f;
+    _startColor = startColor.glkVector4;
 }
 
 - (CCColor*) startColor
 {
-    return [CCColor colorWithCcColor4f:_startColor];
+    return [CCColor colorWithGLKVector4:_startColor];
 }
 
 - (void) setStartColorVar:(CCColor *)startColorVar
 {
-    _startColorVar = startColorVar.ccColor4f;
+    _startColorVar = startColorVar.glkVector4;
 }
 
 - (CCColor*) startColorVar
 {
-    return [CCColor colorWithCcColor4f:_startColorVar];
+    return [CCColor colorWithGLKVector4:_startColorVar];
 }
 
 - (void) setEndColor:(CCColor *)endColor
 {
-    _endColor = endColor.ccColor4f;
+    _endColor = endColor.glkVector4;
 }
 
 - (CCColor*) endColor
 {
-    return [CCColor colorWithCcColor4f:_endColor];
+    return [CCColor colorWithGLKVector4:_endColor];
 }
 
 - (void) setEndColorVar:(CCColor *)endColorVar
 {
-    _endColorVar = endColorVar.ccColor4f;
+    _endColorVar = endColorVar.glkVector4;
 }
 
 - (CCColor*) endColorVar
 {
-    return [CCColor colorWithCcColor4f:_endColorVar];
+    return [CCColor colorWithGLKVector4:_endColorVar];
 }
 
 @end

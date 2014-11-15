@@ -63,15 +63,15 @@
 extern "C" {
 #endif
 
-typedef struct _ccColor3B
+typedef struct __attribute__((deprecated)) _ccColor3B
 {
 	GLubyte	r;
 	GLubyte	g;
 	GLubyte b;
-} ccColor3B;
+} ccColor3B __attribute__((deprecated));
 
 //! helper macro that creates an ccColor3B type
-static inline ccColor3B
+__attribute__((deprecated)) static inline ccColor3B
 ccc3(const GLubyte r, const GLubyte g, const GLubyte b)
 {
 	ccColor3B c = {r, g, b};
@@ -80,35 +80,36 @@ ccc3(const GLubyte r, const GLubyte g, const GLubyte b)
 
 	//ccColor3B predefined colors
 //! White color (255,255,255)
-static const ccColor3B ccWHITE = {255,255,255};
+__attribute__((deprecated)) static const ccColor3B ccWHITE = {255,255,255};
 //! Yellow color (255,255,0)
-static const ccColor3B ccYELLOW = {255,255,0};
+__attribute__((deprecated)) static const ccColor3B ccYELLOW = {255,255,0};
 //! Blue color (0,0,255)
-static const ccColor3B ccBLUE = {0,0,255};
+__attribute__((deprecated)) static const ccColor3B ccBLUE = {0,0,255};
 //! Green Color (0,255,0)
-static const ccColor3B ccGREEN = {0,255,0};
+__attribute__((deprecated)) static const ccColor3B ccGREEN = {0,255,0};
 //! Red Color (255,0,0,)
-static const ccColor3B ccRED = {255,0,0};
+__attribute__((deprecated)) static const ccColor3B ccRED = {255,0,0};
 //! Magenta Color (255,0,255)
-static const ccColor3B ccMAGENTA = {255,0,255};
+__attribute__((deprecated)) static const ccColor3B ccMAGENTA = {255,0,255};
 //! Black Color (0,0,0)
-static const ccColor3B ccBLACK = {0,0,0};
+__attribute__((deprecated)) static const ccColor3B ccBLACK = {0,0,0};
 //! Orange Color (255,127,0)
-static const ccColor3B ccORANGE = {255,127,0};
+__attribute__((deprecated)) static const ccColor3B ccORANGE = {255,127,0};
 //! Gray Color (166,166,166)
-static const ccColor3B ccGRAY = {166,166,166};
+__attribute__((deprecated)) static const ccColor3B ccGRAY = {166,166,166};
 
 /** RGBA color composed of 4 bytes
 */
-typedef struct _ccColor4B
+typedef struct __attribute__((deprecated)) _ccColor4B
 {
 	GLubyte	r;
 	GLubyte	g;
 	GLubyte	b;
 	GLubyte a;
-} ccColor4B;
+} ccColor4B __attribute__((deprecated));
+
 //! helper macro that creates an ccColor4B type
-static inline ccColor4B
+__attribute__((deprecated)) static inline ccColor4B
 ccc4(const GLubyte r, const GLubyte g, const GLubyte b, const GLubyte o)
 {
 	ccColor4B c = {r, g, b, o};
@@ -117,43 +118,43 @@ ccc4(const GLubyte r, const GLubyte g, const GLubyte b, const GLubyte o)
 
 /** returns YES if both ccColor4F are equal. Otherwise it returns NO.
  */
-static inline BOOL ccc4BEqual(ccColor4B a, ccColor4B b)
+__attribute__((deprecated)) static inline BOOL ccc4BEqual(ccColor4B a, ccColor4B b)
 {
     return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a;
 }
 
 /** RGBA color composed of 4 floats
 */
-typedef struct _ccColor4F {
+typedef struct __attribute__((deprecated)) _ccColor4F {
 	GLfloat r;
 	GLfloat g;
 	GLfloat b;
 	GLfloat a;
-} ccColor4F;
+} ccColor4F __attribute__((deprecated));
 
 //! helper that creates a ccColor4f type
-static inline ccColor4F ccc4f(const GLfloat r, const GLfloat g, const GLfloat b, const GLfloat a)
+__attribute__((deprecated)) static inline ccColor4F ccc4f(const GLfloat r, const GLfloat g, const GLfloat b, const GLfloat a)
 {
 	return (ccColor4F){r, g, b, a};
 }
 
 /** Returns a ccColor4F from a ccColor3B. Alpha will be 1.
  */
-static inline ccColor4F ccc4FFromccc3B(ccColor3B c)
+__attribute__((deprecated)) static inline ccColor4F ccc4FFromccc3B(ccColor3B c)
 {
 	return (ccColor4F){c.r/255.f, c.g/255.f, c.b/255.f, 1.f};
 }
 
 /** Returns a ccColor4F from a ccColor4B.
  */
-static inline ccColor4F ccc4FFromccc4B(ccColor4B c)
+__attribute__((deprecated)) static inline ccColor4F ccc4FFromccc4B(ccColor4B c)
 {
 	return (ccColor4F){c.r/255.f, c.g/255.f, c.b/255.f, c.a/255.f};
 }
 	
 /** returns YES if both ccColor4F are equal. Otherwise it returns NO.
  */
-static inline BOOL ccc4FEqual(ccColor4F a, ccColor4F b)
+__attribute__((deprecated)) static inline BOOL ccc4FEqual(ccColor4F a, ccColor4F b)
 {
 	return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a;
 }
@@ -161,7 +162,7 @@ static inline BOOL ccc4FEqual(ccColor4F a, ccColor4F b)
 /**
  * Returns a ccColor4B from a ccColor4F.
  */
-static inline ccColor4B ccc4BFromccc4F(ccColor4F c)
+__attribute__((deprecated)) static inline ccColor4B ccc4BFromccc4F(ccColor4F c)
 {
 	return (ccColor4B){
 		(GLubyte)(clampf(c.r, 0, 1)*255),
@@ -174,7 +175,7 @@ static inline ccColor4B ccc4BFromccc4F(ccColor4F c)
 /**
  * Returns a ccColor3B from a ccColor4F.
  */
-static inline ccColor3B ccc3BFromccc4F(ccColor4F c)
+__attribute__((deprecated)) static inline ccColor3B ccc3BFromccc4F(ccColor4F c)
 {
 	return (ccColor3B){
 		(GLubyte)(clampf(c.r, 0, 1)*255),
@@ -186,7 +187,7 @@ static inline ccColor3B ccc3BFromccc4F(ccColor4F c)
 /**
  * Returns a ccColor3B from a ccColor4F.
  */
-static inline ccColor4F ccc4FInterpolated(ccColor4F start, ccColor4F end, float t)
+__attribute__((deprecated)) static inline ccColor4F ccc4FInterpolated(ccColor4F start, ccColor4F end, float t)
 {
 	end.r = start.r + (end.r - start.r ) * t;
 	end.g = start.g	+ (end.g - start.g ) * t;
@@ -197,56 +198,56 @@ static inline ccColor4F ccc4FInterpolated(ccColor4F start, ccColor4F end, float 
 
 /** A vertex composed of 2 GLfloats: x, y
  */
-typedef struct _ccVertex2F
+typedef struct __attribute__((deprecated)) _ccVertex2F
 {
 	GLfloat x;
 	GLfloat y;
-} ccVertex2F;
+} ccVertex2F __attribute__((deprecated));
 
 /** A vertex composed of 2 floats: x, y
  */
-typedef struct _ccVertex3F
+typedef struct __attribute__((deprecated)) _ccVertex3F
 {
 	GLfloat x;
 	GLfloat y;
 	GLfloat z;
-} ccVertex3F;
+} ccVertex3F __attribute__((deprecated));
 
 /** A texcoord composed of 2 floats: u, y
  */
-typedef struct _ccTex2F {
+typedef struct __attribute__((deprecated)) _ccTex2F {
 	 GLfloat u;
 	 GLfloat v;
-} ccTex2F;
+} ccTex2F __attribute__((deprecated));
 
 
 //! Point Sprite component
-typedef struct _ccPointSprite
+typedef struct __attribute__((deprecated)) _ccPointSprite
 {
 	ccVertex2F	pos;		// 8 bytes
 	ccColor4B	color;		// 4 bytes
 	GLfloat		size;		// 4 bytes
-} ccPointSprite;
+} ccPointSprite __attribute__((deprecated));
 
 //!	A 2D Quad. 4 * 2 floats
-typedef struct _ccQuad2 {
+typedef struct __attribute__((deprecated)) _ccQuad2 {
 	ccVertex2F		tl;
 	ccVertex2F		tr;
 	ccVertex2F		bl;
 	ccVertex2F		br;
-} ccQuad2;
+} ccQuad2 __attribute__((deprecated));
 
 
 //!	A 3D Quad. 4 * 3 floats
-typedef struct _ccQuad3 {
+typedef struct __attribute__((deprecated)) _ccQuad3 {
 	ccVertex3F		bl;
 	ccVertex3F		br;
 	ccVertex3F		tl;
 	ccVertex3F		tr;
-} ccQuad3;
+} ccQuad3 __attribute__((deprecated));
 
 //! a Point with a vertex point, a tex coord point and a color 4B
-typedef struct _ccV2F_C4B_T2F
+typedef struct __attribute__((deprecated)) _ccV2F_C4B_T2F
 {
 	//! vertices (2F)
 	ccVertex2F		vertices;
@@ -254,10 +255,10 @@ typedef struct _ccV2F_C4B_T2F
 	ccColor4B		colors;
 	//! tex coords (2F)
 	ccTex2F			texCoords;
-} ccV2F_C4B_T2F;
+} ccV2F_C4B_T2F __attribute__((deprecated));
 
 //! a Point with a vertex point, a tex coord point and a color 4F
-typedef struct _ccV2F_C4F_T2F
+typedef struct __attribute__((deprecated)) _ccV2F_C4F_T2F
 {
 	//! vertices (2F)
 	ccVertex2F		vertices;
@@ -265,10 +266,10 @@ typedef struct _ccV2F_C4F_T2F
 	ccColor4F		colors;
 	//! tex coords (2F)
 	ccTex2F			texCoords;
-} ccV2F_C4F_T2F;
+} ccV2F_C4F_T2F __attribute__((deprecated));
 
 //! a Point with a vertex point, a tex coord point and a color 4F
-typedef struct _ccV3F_C4F_T2F
+typedef struct __attribute__((deprecated)) _ccV3F_C4F_T2F
 {
 	//! vertices (3F)
 	ccVertex3F		vertices;
@@ -276,10 +277,10 @@ typedef struct _ccV3F_C4F_T2F
 	ccColor4F		colors;
 	//! tex coords (2F)
 	ccTex2F			texCoords;
-} ccV3F_C4F_T2F;
+} ccV3F_C4F_T2F __attribute__((deprecated));
 
 //! 4 ccV3F_C4F_T2F
-typedef struct _ccV3F_C4F_T2F_Quad
+typedef struct __attribute__((deprecated)) _ccV3F_C4F_T2F_Quad
 {
 	//! top left
 	ccV3F_C4F_T2F	tl;
@@ -289,10 +290,10 @@ typedef struct _ccV3F_C4F_T2F_Quad
 	ccV3F_C4F_T2F	tr;
 	//! bottom right
 	ccV3F_C4F_T2F	br;
-} ccV3F_C4F_T2F_Quad;
+} ccV3F_C4F_T2F_Quad __attribute__((deprecated));
 
 //! a Point with a vertex point, a tex coord point and a color 4B
-typedef struct _ccV3F_C4B_T2F
+typedef struct __attribute__((deprecated)) _ccV3F_C4B_T2F
 {
 	//! vertices (3F)
 	ccVertex3F		vertices;			// 12 bytes
@@ -304,11 +305,11 @@ typedef struct _ccV3F_C4B_T2F
 
 	// tex coords (2F)
 	ccTex2F			texCoords;			// 8 byts
-} ccV3F_C4B_T2F;
+} ccV3F_C4B_T2F __attribute__((deprecated));
 
 	
 //! A Triangle of ccV2F_C4B_T2F 
-typedef struct _ccV2F_C4B_T2F_Triangle
+typedef struct __attribute__((deprecated)) _ccV2F_C4B_T2F_Triangle
 {
 	//! Point A
 	ccV2F_C4B_T2F a;
@@ -316,10 +317,10 @@ typedef struct _ccV2F_C4B_T2F_Triangle
 	ccV2F_C4B_T2F b;
 	//! Point B
 	ccV2F_C4B_T2F c;
-} ccV2F_C4B_T2F_Triangle;
+} ccV2F_C4B_T2F_Triangle __attribute__((deprecated));
 	
 //! A Quad of ccV2F_C4B_T2F
-typedef struct _ccV2F_C4B_T2F_Quad
+typedef struct __attribute__((deprecated)) _ccV2F_C4B_T2F_Quad
 {
 	//! bottom left
 	ccV2F_C4B_T2F	bl;
@@ -329,10 +330,10 @@ typedef struct _ccV2F_C4B_T2F_Quad
 	ccV2F_C4B_T2F	tl;
 	//! top right
 	ccV2F_C4B_T2F	tr;
-} ccV2F_C4B_T2F_Quad;
+} ccV2F_C4B_T2F_Quad __attribute__((deprecated));
 
 //! 4 ccVertex3FTex2FColor4B
-typedef struct _ccV3F_C4B_T2F_Quad
+typedef struct __attribute__((deprecated)) _ccV3F_C4B_T2F_Quad
 {
 	//! top left
 	ccV3F_C4B_T2F	tl;
@@ -342,10 +343,10 @@ typedef struct _ccV3F_C4B_T2F_Quad
 	ccV3F_C4B_T2F	tr;
 	//! bottom right
 	ccV3F_C4B_T2F	br;
-} ccV3F_C4B_T2F_Quad;
+} ccV3F_C4B_T2F_Quad __attribute__((deprecated));
 
 //! 4 ccVertex2FTex2FColor4F Quad
-typedef struct _ccV2F_C4F_T2F_Quad
+typedef struct __attribute__((deprecated)) _ccV2F_C4F_T2F_Quad
 {
 	//! bottom left
 	ccV2F_C4F_T2F	bl;
@@ -355,10 +356,10 @@ typedef struct _ccV2F_C4F_T2F_Quad
 	ccV2F_C4F_T2F	tl;
 	//! top right
 	ccV2F_C4F_T2F	tr;
-} ccV2F_C4F_T2F_Quad;
+} ccV2F_C4F_T2F_Quad __attribute__((deprecated));
 
 //! Blend Function used for textures
-typedef struct _ccBlendFunc
+__attribute__((deprecated)) typedef struct _ccBlendFunc
 {
 	//! source blend function
 	GLenum src;
@@ -366,7 +367,7 @@ typedef struct _ccBlendFunc
 	GLenum dst;
 } ccBlendFunc;
 
-static const ccBlendFunc kCCBlendFuncDisable = {GL_ONE, GL_ZERO};
+__attribute__((deprecated)) static const ccBlendFunc kCCBlendFuncDisable = {GL_ONE, GL_ZERO};
 
 // XXX: If any of these enums are edited and/or reordered, update CCTexture2D.m
 //! Vertical text alignment type

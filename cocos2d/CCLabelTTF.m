@@ -857,7 +857,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     // Handle outline
     if (hasOutline)
     {
-        ccColor4F outlineColor = _outlineColor.ccColor4f;
+        GLKVector4 outlineColor = _outlineColor.glkVector4;
         
         CGContextSetTextDrawingMode(context, kCGTextFillStroke);
         CGContextSetRGBStrokeColor(context, outlineColor.r, outlineColor.g, outlineColor.b, outlineColor.a);

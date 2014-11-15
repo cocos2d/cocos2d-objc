@@ -111,7 +111,7 @@
  *  If ' compressedInterpolation' is enabled (default mode) you will see both the start and end colors of the gradient.
  */
 @interface CCNodeGradient : CCNodeColor {
-	ccColor4F _endColor;
+	GLKVector4 _endColor;
 	CGPoint _vector;
 }
 

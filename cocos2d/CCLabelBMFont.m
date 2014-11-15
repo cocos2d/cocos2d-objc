@@ -538,7 +538,7 @@ void FNTConfigRemoveCache( void )
 		_width = width;
 		_alignment = alignment;
 		
-		_displayColor = _color = [CCColor whiteColor].ccColor4f;
+		self.color = [CCColor whiteColor];
 		self.cascadeOpacityEnabled = YES;
 		self.cascadeColorEnabled = YES;
 		

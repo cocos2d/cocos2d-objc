@@ -59,7 +59,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     //
     CCTransitionFixedFunction _fixedFunction;
     CCTransitionDirection _direction;
-    ccColor4F _color;
+    GLKVector4 _color;
     SEL _drawSelector;
     BOOL _outgoingOverIncoming;
     CGPoint _outgoingDestination;
@@ -69,32 +69,32 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 
 + (CCTransition *)transitionCrossFadeWithDuration:(NSTimeInterval)duration
 {
-    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionCrossFade direction:CCTransitionDirectionInvalid color:ccBLACK]);
+    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionCrossFade direction:CCTransitionDirectionInvalid color:[CCColor blackColor]]);
 }
 
 + (CCTransition *)transitionFadeWithColor:(CCColor*)color duration:(NSTimeInterval)duration
 {
-    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionFadeWithColor direction:CCTransitionDirectionInvalid color:color.ccColor3b]);
+    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionFadeWithColor direction:CCTransitionDirectionInvalid color:color]);
 }
 
 + (CCTransition *)transitionFadeWithDuration:(NSTimeInterval)duration
 {
-    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionFadeWithColor direction:CCTransitionDirectionInvalid color:ccBLACK]);
+    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionFadeWithColor direction:CCTransitionDirectionInvalid color:[CCColor blackColor]]);
 }
 
 + (CCTransition *)transitionMoveInWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration
 {
-    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionMoveIn direction:direction color:ccBLACK]);
+    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionMoveIn direction:direction color:[CCColor blackColor]]);
 }
 
 + (CCTransition *)transitionPushWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration
 {
-    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionPush direction:direction color:ccBLACK]);
+    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionPush direction:direction color:[CCColor blackColor]]);
 }
 
 + (CCTransition *)transitionRevealWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration
 {
-    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionReveal direction:direction color:ccBLACK]);
+    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionReveal direction:direction color:[CCColor blackColor]]);
 }
 
 // -----------------------------------------------------------------
@@ -102,14 +102,14 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 - (id)initWithDuration:(NSTimeInterval)duration
          fixedFunction:(CCTransitionFixedFunction)function
              direction:(CCTransitionDirection)direction
-                 color:(ccColor3B)color
+                 color:(CCColor *)color
 {
     self = [self initWithDuration:duration];
 
     // set up fixed function transition
     _fixedFunction = function;
     _direction = direction;
-    self.colorRGBA = [CCColor colorWithCcColor4f:(ccColor4F){(float)color.r / 255, (float)color.g / 255, (float)color.b / 255, 1}];
+    self.colorRGBA = [CCColor colorWithRed:color.red green:color.green blue:color.blue];
     _drawSelector = @selector(drawFixedFunction);
     _outgoingOverIncoming = NO;
     

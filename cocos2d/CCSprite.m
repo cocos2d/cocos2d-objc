@@ -412,7 +412,7 @@
 	[self updateColor];
 }
 
--(void)updateDisplayedColor:(ccColor4F) parentColor
+-(void)updateDisplayedColor:(GLKVector4) parentColor
 {
 	[super updateDisplayedColor:parentColor];
 	[self updateColor];

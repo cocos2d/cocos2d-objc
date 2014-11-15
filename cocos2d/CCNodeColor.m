@@ -79,7 +79,7 @@
 	if( (self=[super init]) ) {
 		self.blendMode = [CCBlendMode premultipliedAlphaMode];
 
-		_displayColor = _color = color.ccColor4f;
+		self.colorRGBA = color;
 		[self updateColor];
 		[self setContentSize:CGSizeMake(w, h) ];
 
@@ -173,8 +173,8 @@
 
 - (id) initWithColor: (CCColor*) start fadingTo: (CCColor*) end alongVector: (CGPoint) v
 {
-	_color = start.ccColor4f;
-	_endColor = end.ccColor4f;
+	_color = start.glkVector4;
+	_endColor = end.glkVector4;
 	_vector = v;
 
 	return [super initWithColor:start];
@@ -202,7 +202,7 @@
 
 -(CCColor*) startColor
 {
-	return [CCColor colorWithCcColor4f: _color];
+	return [CCColor colorWithGLKVector4: _color];
 }
 
 -(void) setStartColor:(CCColor*)color
@@ -212,12 +212,12 @@
 
 - (CCColor*) endColor
 {
-	return [CCColor colorWithCcColor4f:_endColor];
+	return [CCColor colorWithGLKVector4:_endColor];
 }
 
 -(void) setEndColor:(CCColor*)color
 {
-	_endColor = color.ccColor4f;
+	_endColor = color.glkVector4;
 	[self updateColor];
 }
 
