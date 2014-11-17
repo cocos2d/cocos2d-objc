@@ -220,6 +220,10 @@
         _environment = environment;
         _normalMap = normalMap;
         
+        _conditionedShininess = CCEffectUtilsConditionShininess(_shininess);
+        _conditionedFresnelBias = CCEffectUtilsConditionFresnelBias(_fresnelBias);
+        _conditionedFresnelPower = CCEffectUtilsConditionFresnelPower(_fresnelPower);
+        
         self.effectImpl = [[CCEffectReflectionImpl alloc] initWithInterface:self];
         self.debugName = @"CCEffectReflection";
     }

@@ -128,10 +128,11 @@ static float conditionBlockSize(float blockSize);
 {
     if((self = [super init]))
     {
+        _blockSize = blockSize;
+        _conditionedBlockSize = conditionBlockSize(blockSize);
+
         self.effectImpl = [[CCEffectPixellateImpl alloc] initWithInterface:self];
         self.debugName = @"CCEffectPixellate";
-
-        self.blockSize = blockSize;
     }
     return self;
 }

@@ -127,10 +127,11 @@ static float conditionSaturation(float saturation);
 {
     if((self = [super init]))
     {
+        _saturation = saturation;
+        _conditionedSaturation = [NSNumber numberWithFloat:conditionSaturation(saturation)];
+
         self.effectImpl = [[CCEffectSaturationImpl alloc] initWithInterface:self];
         self.debugName = @"CCEffectSaturation";
-        
-        self.saturation = saturation;
     }
     return self;
 }

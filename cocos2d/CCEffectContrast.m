@@ -86,10 +86,11 @@ static float conditionContrast(float contrast);
 {
     if((self = [super init]))
     {
+        _contrast = contrast;
+        _conditionedContrast = [NSNumber numberWithFloat:conditionContrast(contrast)];
+
         self.effectImpl = [[CCEffectContrastImpl alloc] initWithInterface:self];
         self.debugName = @"CCEffectContrast";
-
-        self.contrast = contrast;
     }
     return self;
 }

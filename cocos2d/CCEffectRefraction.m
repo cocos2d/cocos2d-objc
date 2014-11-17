@@ -192,6 +192,8 @@
         _environment = environment;
         _normalMap = normalMap;
 
+        _conditionedRefraction = CCEffectUtilsConditionRefraction(refraction);
+        
         self.effectImpl = [[CCEffectRefractionImpl alloc] initWithInterface:self];
         self.debugName = @"CCEffectRefraction";
     }

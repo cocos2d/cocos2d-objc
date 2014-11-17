@@ -286,6 +286,11 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
         _refractionEnvironment = refractionEnvironment;
         _reflectionEnvironment = reflectionEnvironment;
         _normalMap = normalMap;
+        
+        _conditionedRefraction = CCEffectUtilsConditionRefraction(_refraction);
+        _conditionedShininess = CCEffectUtilsConditionShininess(_shininess);
+        _conditionedFresnelBias = CCEffectUtilsConditionFresnelBias(_fresnelBias);
+        _conditionedFresnelPower = CCEffectUtilsConditionFresnelPower(_fresnelPower);
 
         self.effectImpl = [[CCEffectGlassImpl alloc] initWithInterface:self];
         self.debugName = @"CCEffectGlass";

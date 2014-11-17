@@ -84,10 +84,11 @@ static float conditionBrightness(float brightness);
 {
     if((self = [super init]))
     {
+        _brightness = brightness;
+        _conditionedBrightness = [NSNumber numberWithFloat:conditionBrightness(brightness)];
+
         self.effectImpl = [[CCEffectBrightnessImpl alloc] initWithInterface:self];
         self.debugName = @"CCEffectBrightness";
-
-        self.brightness = brightness;
     }
     return self;
 }
