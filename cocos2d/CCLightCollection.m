@@ -98,6 +98,19 @@ static const NSUInteger CCLightCollectionMaxGroupCount = sizeof(NSUInteger) * 8;
     }
 }
 
+- (CCColor*)findAmbientSumForLightsWithMask:(CCLightGroupMask)mask
+{
+    GLKVector4 sum = GLKVector4Make(0.0f, 0.0f, 0.0f, 0.0f);
+    for (CCLightNode* light in self.lights)
+    {
+        if (light.groupMask & mask)
+        {
+            sum = GLKVector4Add(sum, GLKVector4MultiplyScalar(light.ambientColor.glkVector4, light.ambientIntensity));
+        }
+    }
+    return [CCColor colorWithGLKVector4:sum];
+}
+
 
 #pragma mark - Group management
 
@@ -119,6 +132,10 @@ static const NSUInteger CCLightCollectionMaxGroupCount = sizeof(NSUInteger) * 8;
     }
 }
 
+- (void)flushGroupNames
+{
+    [self.groupNames removeAllObjects];
+}
 
 #pragma mark - Private helpers
 
@@ -210,12 +227,7 @@ static const NSUInteger CCLightCollectionMaxGroupCount = sizeof(NSUInteger) * 8;
 + (BOOL)light:(CCLightNode *)light hasEffectOnGroups:(CCLightGroupMask)groupMask atPoint:(CGPoint)point
 {
     BOOL groupsIntersect = ((light.groupMask & groupMask) != 0);
-    BOOL distanceMatters = (light.cutoffRadius > 0.0f);
-
-    float dSquared = [CCLightCollection distanceSquaredFromLight:light toPoint:point];
-    BOOL inRange = (dSquared < (light.cutoffRadius * light.cutoffRadius));
-    
-    return groupsIntersect && (!distanceMatters || inRange);
+    return groupsIntersect;
 }
 
 @end

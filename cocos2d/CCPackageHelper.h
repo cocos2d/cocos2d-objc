@@ -9,6 +9,11 @@
 + (NSString *)currentOS;
 
 /**
+ * Returns the full path to the caches folder, this may differ depending on OS
+ */
++ (NSString *)cachesFolder;
+
+/**
  * Returns a spritebuilder resolution(phone, phonehd, tablet, tablethd) for a CCFileUtil's device/resolution suffix like CCFileUtilsSuffixiPadHD
  * If none given or not found it'll return nil.
  *

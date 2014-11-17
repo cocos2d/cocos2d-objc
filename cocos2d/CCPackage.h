@@ -26,9 +26,16 @@
 @property (nonatomic, copy, readonly) NSURL *remoteURL;
 
 /**
- *  The local URL where the package is installed. This value will be initially nil and set only if installation was successful.
+ *  The relative local URL where the package is installed. The URL is relative to the caches folder.
+ *  This value will be initially nil and set only if installation was successful.
  */
-@property (nonatomic, copy, readonly) NSURL *installURL;
+@property (nonatomic, copy, readonly) NSURL *installRelURL;
+
+/**
+ *  Full local URL where the package is installed.
+ *  This value will be initially nil and set only if installation was successful.
+ */
+@property (nonatomic, copy, readonly) NSURL *installFullURL;
 
 /**
  *  Local URL of the download file when download finishes. While downloading a temp name
@@ -59,40 +66,13 @@
  */
 @property (nonatomic, readonly) CCPackageStatus status;
 
-
-/**
- *  Creates a new instance of a package.
- *  OS and resolution are determined implicitly. Resolution is derived from CCFileUtils' searchResolutionsOrder first entry.
- *
- *  @param name Name of the package
- *  @param remoteURL Remote URL of the package
- *
- *  @return New instance of CCPackage
- */
-- (instancetype)initWithName:(NSString *)name
-                   remoteURL:(NSURL *)remoteURL;
-
-/**
- *  Creates a new instance of a package.
- *  OS is determined implicitly.
- *
- *  @param name Name of the package
- *  @param resolution Resolution of the package
- *  @param remoteURL Remote URL of the package
- *
- *  @return New instance of CCPackage
- */
-- (instancetype)initWithName:(NSString *)name
-                  resolution:(NSString *)resolution
-                   remoteURL:(NSURL *)remoteURL;
-
 /**
  *  Creates a new instance of a package.
  *
- *  @param name Name of the package
- *  @param resolution Resolution of the package
- *  @param os OS of the package, usally determined internally
- *  @param remoteURL Remote URL of the package
+ *  @param name Name of the package, must not be nil
+ *  @param resolution Resolution of the package, must not be nil
+ *  @param os OS of the package, usally determined internally, must not be nil
+ *  @param remoteURL Remote URL of the package, must not be nil
  *
  *  @return New instance of CCPackage
  */
