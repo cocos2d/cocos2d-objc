@@ -218,14 +218,10 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
         // to node local coordinates.
         passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_ndcToWorld"]] = [NSValue valueWithGLKMatrix4:ndcToWorld];
 
-        GLKVector4 globalAmbientColor = GLKVector4Make(0.0f, 0.0f, 0.0f, 1.0f);
         for (NSUInteger lightIndex = 0; lightIndex < weakSelf.closestLights.count; lightIndex++)
         {
             CCLightNode *light = weakSelf.closestLights[lightIndex];
             
-            // Add this light's ambient contribution to the global ambient light color.
-            globalAmbientColor = GLKVector4Add(globalAmbientColor, GLKVector4MultiplyScalar(light.ambientColor.glkVector4, light.ambientIntensity));
-
             // Get the transform from the light's coordinate space to the effect's coordinate space.
             GLKMatrix4 lightNodeToWorld = CCEffectUtilsMat4FromAffineTransform(light.nodeToWorldTransform);
             
@@ -297,7 +293,8 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
             }
         }
 
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_globalAmbientColor"]] = [NSValue valueWithGLKVector4:globalAmbientColor];
+        CCColor *ambientColor = [passInputs.node.scene.lights findAmbientSumForLightsWithMask:self.groupMask];
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_globalAmbientColor"]] = [NSValue valueWithGLKVector4:ambientColor.glkVector4];
         
         if (self.needsSpecular)
         {

@@ -31,7 +31,7 @@
     return self;
 }
 
-- (void) positionInControl:(CCControl *)control padding:(float)padding {
+- (void) positionInControl:(CCControl *)control padding:(CGFloat)padding {
     CGPoint worldPos = [control convertToWorldSpace:CGPointZero];
     CGPoint viewPos = [[CCDirector sharedDirector] convertToUI:worldPos];
     viewPos.x += padding;

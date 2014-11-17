@@ -259,13 +259,13 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	
 	// set the Navigation Controller as the root view controller
 	[window_ setRootViewController:navController_];
-	
+
+	[[CCPackageManager sharedManager] loadPackages];
+
 	// make main window visible
 	[window_ makeKeyAndVisible];
     
     [self forceOrientation];
-
-	[[CCPackageManager sharedManager] loadPackages];
 }
 
 // iOS8 hack around orientation bug
@@ -309,6 +309,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	if([CCDirector sharedDirector].animating) {
 		[[CCDirector sharedDirector] stopAnimation];
 	}
+	[[CCPackageManager sharedManager] savePackages];
 }
 
 -(void) applicationWillEnterForeground:(UIApplication*)application
@@ -316,7 +317,6 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	if([CCDirector sharedDirector].animating == NO) {
 		[[CCDirector sharedDirector] startAnimation];
 	}
-	[[CCPackageManager sharedManager] savePackages];
 }
 
 // application will be killed
