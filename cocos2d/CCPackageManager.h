@@ -9,9 +9,10 @@
 @interface CCPackageManager : NSObject <CCPackageDownloadManagerDelegate, CCPackageUnzipperDelegate>
 
 /**
- *  The path where all installed packages are stored. Default is /Library/Caches/Packages
+ *  The path where all installed packages are stored. This path is relative to the caches folder which location is depending
+ *  on the OS. Default is "Packages".
  */
-@property (nonatomic, copy) NSString *installedPackagesPath;
+@property (nonatomic, copy) NSString *installRelPath;
 
 /**
  *  URL used as base to locate packages. A package standard identifier is added to create a full URL.
@@ -25,7 +26,7 @@
 @property (nonatomic, readonly) NSArray *allPackages;
 
 /**
- *  If downloads should be resumed if partial downloads found
+ *  If downloads should be resumed if partial download found
  *  Default is YES
  */
 @property (nonatomic) BOOL resumeDownloads;
@@ -69,6 +70,22 @@
 - (CCPackage *)packageWithName:(NSString *)name;
 
 /**
+ *  Returns a package identified by name and resolution. OS is determined implicitly.
+ *  Helpful if you are using packages of a different resolution.
+ *
+ *  @param name Name of the package
+ */
+- (CCPackage *)packageWithName:(NSString *)name resolution:(NSString *)resolution;
+
+/**
+ *  Returns a package identified by name and resolution.
+ *  Helpful if you are using packages of a different resolution and os
+ *
+ *  @param name Name of the package
+ */
+- (CCPackage *)packageWithName:(NSString *)name resolution:(NSString *)resolution os:(NSString *)os;
+
+/**
  * The all inclsuive method to add a package to your app.
  * Returns a new package immediately which will be downloaded, unzipped and installed asynchronously to the Packages folder in /Library/Caches (default)
  * OS and resolution are determined implicitly. Resolution is derived from CCFileUtils' searchResolutionsOrder first entry.
@@ -100,28 +117,17 @@
                    enableAfterDownload:(BOOL)enableAfterDownload;
 
 /**
- * Like the method above. Instead of using the baseURL and name  you can provide the URL directly.
- * OS and resolution are determined implicitly. Resolution is derived from CCFileUtils' searchResolutionsOrder first entry.
- *
- * @param name Name of the package
- * @param remoteURL URL of the package to be downloaded
- * @param enableAfterDownload If the package should be enabled in cocos2d after download. You can enable it with the enablePackage: method later on.
- */
-- (CCPackage *)downloadPackageWithName:(NSString *)name
-                             remoteURL:(NSURL *)remoteURL
-                   enableAfterDownload:(BOOL)enableAfterDownload;
-
-/**
  * Like the method above. Instead of using the baseURL, name and resolution you can provide the URL directly.
- * OS is determined implicitly.
  *
  * @param name Name of the package
  * @param resolution Resolution of the package, e.g. phonehd, tablethd etc.
  * @param remoteURL URL of the package to be downloaded
+ * @param os operating system of the package to be downloaded
  * @param enableAfterDownload If the package should be enabled in cocos2d after download. You can enable it with the enablePackage: method later on.
  */
 - (CCPackage *)downloadPackageWithName:(NSString *)name
                             resolution:(NSString *)resolution
+                                    os:(NSString *)os
                              remoteURL:(NSURL *)remoteURL
                    enableAfterDownload:(BOOL)enableAfterDownload;
 
@@ -172,7 +178,7 @@
  * Will disable the package first and delete it from disk. Temp download and unzip files will be removed as well.
  * A package that is being unzipped cannot be deleted. Try after the unzipping finished.
  * The status will become CCPackageStatusDeleted in case you still hold a reference to the object.
- * localDownloURL, unzipURL and installURL will be nil after a succesful deletion.
+ * localDownloURL, unzipURL and installRelURL will be nil after a succesful deletion.
  *
  * @param package The package to be deleted
  * @param error Error pointer with details about a failed operation
