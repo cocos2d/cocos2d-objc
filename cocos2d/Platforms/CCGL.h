@@ -36,7 +36,7 @@
 #import <OpenGLES/EAGL.h>
 
 #elif __CC_PLATFORM_MAC
-//#import <OpenGL/gl.h>
+#import <OpenGL/gl.h>
 #import <OpenGL/glu.h>
 #import <Cocoa/Cocoa.h>	// needed for NSOpenGLView
 #import "Mac/CCGLView.h"
