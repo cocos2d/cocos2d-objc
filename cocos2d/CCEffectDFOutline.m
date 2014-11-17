@@ -15,15 +15,19 @@
 #import "CCTexture.h"
 
 
+@interface CCEffectDFOutline ()
+
+@property (nonatomic, assign) float outerMin;
+@property (nonatomic, assign) float outerMax;
+
+@end
+
+
 @interface CCEffectDFOutlineImpl : CCEffectImpl
 @property (nonatomic, weak) CCEffectDFOutline *interface;
 @end
 
-
-@implementation CCEffectDFOutlineImpl {
-    float _outerMin;
-    float _outerMax;
-}
+@implementation CCEffectDFOutlineImpl
 
 -(id)initWithInterface:(CCEffectDFOutline *)interface
 {
@@ -35,7 +39,7 @@
                           ];
   
     NSArray *fragFunctions = [CCEffectDFOutlineImpl buildFragmentFunctions];
-    NSArray *renderPasses = [self buildRenderPasses];
+    NSArray *renderPasses = [CCEffectDFOutlineImpl buildRenderPassesWithInterface:interface];
 
     if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:uniforms vertexUniforms:nil varyings:nil]))
     {
@@ -95,39 +99,31 @@
     return @[fragmentFunction];
 }
 
--(NSArray *)buildRenderPasses
++ (NSArray *)buildRenderPassesWithInterface:(CCEffectDFOutline *)interface
 {
-    __weak CCEffectDFOutlineImpl *weakSelf = self;
-    
+    __weak CCEffectDFOutline *weakInterface = interface;
+
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.debugLabel = @"CCEffectDFOutline pass 0";
-    pass0.shader = self.shader;
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs) {
         
-        passInputs.shaderUniforms[CCShaderUniformNormalMapTexture] = weakSelf.interface.distanceField;
+        passInputs.shaderUniforms[CCShaderUniformNormalMapTexture] = weakInterface.distanceField;
         passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
         
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_fillColor"]] = [NSValue valueWithGLKVector4:weakSelf.interface.fillColor.glkVector4];
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_outlineColor"]] = [NSValue valueWithGLKVector4:weakSelf.interface.outlineColor.glkVector4];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_fillColor"]] = [NSValue valueWithGLKVector4:weakInterface.fillColor.glkVector4];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_outlineColor"]] = [NSValue valueWithGLKVector4:weakInterface.outlineColor.glkVector4];
         
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_outlineOuterWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(_outerMin, _outerMax)];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_outlineOuterWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(weakInterface.outerMin, weakInterface.outerMax)];
         
     } copy]];
     
     return @[pass0];
 }
 
--(void)setNormalizedOutlineWidth:(float)normalizedOutlineWidth andEdgeSoftness:(float)edgeSoftness
-{
-    // 0.5 == center(edge),  < 0.5 == outside, > 0.5 == inside
-    _outerMin = (0.5 * (1.0 - normalizedOutlineWidth));
-    _outerMax = _outerMin + _outerMin * edgeSoftness;
-}
-
-
 @end
+
 
 @implementation CCEffectDFOutline
 {
@@ -168,8 +164,9 @@
     float outlineWidthNormalized = ((float)outlineWidth)/255.0 * _fieldScaleFactor;
     float edgeSoftness = _outlineWidth * 0.1; // randomly chosen number that looks good to me, based on a 200 pixel spread (note: this should adjustable).
 
-    CCEffectDFOutlineImpl *outlineImpl = (CCEffectDFOutlineImpl *)self.effectImpl;
-    [outlineImpl setNormalizedOutlineWidth:outlineWidthNormalized andEdgeSoftness:edgeSoftness];
+    // 0.5 == center(edge),  < 0.5 == outside, > 0.5 == inside
+    _outerMin = (0.5 * (1.0 - outlineWidthNormalized));
+    _outerMax = _outerMin + _outerMin * edgeSoftness;
 }
 
 @end

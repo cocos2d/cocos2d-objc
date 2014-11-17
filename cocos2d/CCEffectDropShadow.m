@@ -83,7 +83,7 @@
 
     NSArray *fragFunctions = [CCEffectDropShadowImpl buildFragmentFunctionsWithBlurRadius:_trueBlurRadius numberOfOptimizedOffsets:_numberOfOptimizedOffsets sigma:_sigma];
     NSArray *vertFunctions = [CCEffectDropShadowImpl buildVertexFunctionsWithBlurRadius:_trueBlurRadius numberOfOptimizedOffsets:_numberOfOptimizedOffsets sigma:_sigma];
-    NSArray *renderPasses = [self buildRenderPasses];
+    NSArray *renderPasses = [CCEffectDropShadowImpl buildRenderPassesWithInterface:interface];
     
     if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:vertFunctions fragmentUniforms:fragUniforms vertexUniforms:vertUniforms varyings:varyings]))
     {
@@ -257,17 +257,16 @@
     return @[vertexFunction];
 }
 
-- (NSArray *)buildRenderPasses
++ (NSArray *)buildRenderPassesWithInterface:(CCEffectDropShadow *)interface
 {
     // optmized approach based on linear sampling - http://rastergrid.com/blog/2010/09/efficient-gaussian-blur-with-linear-sampling/ and GPUImage - https://github.com/BradLarson/GPUImage
     // pass 0: blurs (horizontal) texture[0] and outputs blurmap to texture[1]
     // pass 1: blurs (vertical) texture[1] and outputs to texture[2]
-
-    __weak CCEffectDropShadowImpl *weakSelf = self;
     
+    __weak CCEffectDropShadow *weakInterface = interface;
+
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.debugLabel = @"CCEffectDropShadow pass 0";
-    pass0.shader = self.shader;
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
 
@@ -283,7 +282,6 @@
     
     CCEffectRenderPass *pass1 = [[CCEffectRenderPass alloc] init];
     pass1.debugLabel = @"CCEffectDropShadow pass 1";
-    pass1.shader = self.shader;
     pass1.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass1.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
 
@@ -296,7 +294,6 @@
     
     CCEffectRenderPass *pass3 = [[CCEffectRenderPass alloc] init];
     pass3.debugLabel = @"CCEffectDropShadow pass 3";
-    pass3.shader = self.shader;
     pass3.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass3.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
         
@@ -305,10 +302,10 @@
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithGLKVector2:dur];
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_composite"]] = [NSNumber numberWithFloat:1.0f];
         
-        GLKVector2 offset = GLKVector2Make(weakSelf.interface.shadowOffset.x / passInputs.previousPassTexture.contentSize.width, weakSelf.interface.shadowOffset.y / passInputs.previousPassTexture.contentSize.height);
+        GLKVector2 offset = GLKVector2Make(weakInterface.shadowOffset.x / passInputs.previousPassTexture.contentSize.width, weakInterface.shadowOffset.y / passInputs.previousPassTexture.contentSize.height);
         
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_shadowOffset"]] = [NSValue valueWithGLKVector2:offset];
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_shadowColor"]] = [NSValue valueWithGLKVector4:weakSelf.interface.shadowColor.glkVector4];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_shadowColor"]] = [NSValue valueWithGLKVector4:weakInterface.shadowColor.glkVector4];
         
     } copy]];
     

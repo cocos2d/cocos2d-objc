@@ -47,16 +47,19 @@
 
 static float conditionBlockSize(float blockSize);
 
-@interface CCEffectPixellateImpl : CCEffectImpl
 
+@interface CCEffectPixellate ()
 @property (nonatomic, assign) float conditionedBlockSize;
+@end
 
+@interface CCEffectPixellateImpl : CCEffectImpl
+@property (nonatomic, weak) CCEffectPixellate *interface;
 @end
 
 
 @implementation CCEffectPixellateImpl
 
--(id)initWithBlockSize:(float)blockSize
+-(id)initWithInterface:(CCEffectPixellate *)interface
 {
     NSArray *fragUniforms = @[
                               [CCEffectUniform uniform:@"float" name:@"u_uStep" value:[NSNumber numberWithFloat:1.0f]],
@@ -64,12 +67,11 @@ static float conditionBlockSize(float blockSize);
                               ];
     
     NSArray *fragFunctions = [CCEffectPixellateImpl buildFragmentFunctions];
-    NSArray *renderPasses = [self buildRenderPasses];
+    NSArray *renderPasses = [CCEffectPixellateImpl buildRenderPassesWithInterface:interface];
     
     if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:fragUniforms vertexUniforms:nil varyings:nil]))
     {
-        _conditionedBlockSize = conditionBlockSize(blockSize);
-
+        self.interface = interface;
         self.debugName = @"CCEffectPixellateImpl";
         self.stitchFlags = CCEffectFunctionStitchAfter;
     }
@@ -89,13 +91,12 @@ static float conditionBlockSize(float blockSize);
     return @[fragmentFunction];
 }
 
-- (NSArray *)buildRenderPasses
++ (NSArray *)buildRenderPassesWithInterface:(CCEffectPixellate *)interface
 {
-    __weak CCEffectPixellateImpl *weakSelf = self;
-    
+    __weak CCEffectPixellate *weakInterface = interface;
+
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.debugLabel = @"CCEffectPixellate pass 0";
-    pass0.shader = self.shader;
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
 
@@ -103,7 +104,7 @@ static float conditionBlockSize(float blockSize);
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
 
         float aspect = passInputs.previousPassTexture.contentSize.width / passInputs.previousPassTexture.contentSize.height;
-        float uStep = weakSelf.conditionedBlockSize / passInputs.previousPassTexture.contentSize.width;
+        float uStep = weakInterface.conditionedBlockSize / passInputs.previousPassTexture.contentSize.width;
         float vStep = uStep * aspect;
         
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_uStep"]] = [NSNumber numberWithFloat:uStep];
@@ -111,11 +112,6 @@ static float conditionBlockSize(float blockSize);
     } copy]];
     
     return @[pass0];
-}
-
--(void)setBlockSize:(float)blockSize
-{
-    _conditionedBlockSize = conditionBlockSize(blockSize);
 }
 
 @end
@@ -132,10 +128,10 @@ static float conditionBlockSize(float blockSize);
 {
     if((self = [super init]))
     {
-        _blockSize = blockSize;
-        
-        self.effectImpl = [[CCEffectPixellateImpl alloc] initWithBlockSize:blockSize];
+        self.effectImpl = [[CCEffectPixellateImpl alloc] initWithInterface:self];
         self.debugName = @"CCEffectPixellate";
+
+        self.blockSize = blockSize;
     }
     return self;
 }
@@ -148,9 +144,7 @@ static float conditionBlockSize(float blockSize);
 -(void)setBlockSize:(float)blockSize
 {
     _blockSize = blockSize;
-    
-    CCEffectPixellateImpl *pixellateImpl = (CCEffectPixellateImpl *)self.effectImpl;
-    [pixellateImpl setBlockSize:blockSize];
+    _conditionedBlockSize = conditionBlockSize(blockSize);
 }
 
 @end

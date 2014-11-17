@@ -30,7 +30,7 @@
                               ];
     
     NSArray *fragFunctions = [CCEffectColorChannelOffsetImpl buildFragmentFunctions];
-    NSArray *renderPasses = [self buildRenderPasses];
+    NSArray *renderPasses = [CCEffectColorChannelOffsetImpl buildRenderPassesWithInterface:interface];
     
     if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:fragUniforms vertexUniforms:nil varyings:nil]))
     {
@@ -68,13 +68,12 @@
     return @[fragmentFunction];
 }
 
-- (NSArray *)buildRenderPasses
++ (NSArray *)buildRenderPassesWithInterface:(CCEffectColorChannelOffset *)interface
 {
-    __weak CCEffectColorChannelOffsetImpl *weakSelf = self;
+    __weak CCEffectColorChannelOffset *weakInterface = interface;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.debugLabel = @"CCEffectPixellate pass 0";
-    pass0.shader = self.shader;
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
         
@@ -85,9 +84,9 @@
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:passInputs.texCoord1Extents];
         
         GLKVector2 scale = GLKVector2Make(-1.0f / passInputs.previousPassTexture.contentSize.width, -1.0f / passInputs.previousPassTexture.contentSize.height);
-        GLKVector2 redOffsetUV = GLKVector2Multiply(weakSelf.interface.redOffset, scale);
-        GLKVector2 greenOffsetUV = GLKVector2Multiply(weakSelf.interface.greenOffset, scale);
-        GLKVector2 blueOffsetUV = GLKVector2Multiply(weakSelf.interface.blueOffset, scale);
+        GLKVector2 redOffsetUV = GLKVector2Multiply(weakInterface.redOffset, scale);
+        GLKVector2 greenOffsetUV = GLKVector2Multiply(weakInterface.greenOffset, scale);
+        GLKVector2 blueOffsetUV = GLKVector2Multiply(weakInterface.blueOffset, scale);
         
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_redOffset"]] = [NSValue valueWithGLKVector2:redOffsetUV];
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_greenOffset"]] = [NSValue valueWithGLKVector2:greenOffsetUV];

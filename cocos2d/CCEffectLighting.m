@@ -97,7 +97,7 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
     
     NSArray *fragFunctions = [CCEffectLightingImpl buildFragmentFunctionsWithLights:interface.closestLights normalMap:interface.needsNormalMap specular:interface.needsSpecular];
     NSArray *vertFunctions = [CCEffectLightingImpl buildVertexFunctionsWithLights:interface.closestLights];
-    NSArray *renderPasses = [self buildRenderPassesWithInterface:interface];
+    NSArray *renderPasses = [CCEffectLightingImpl buildRenderPassesWithInterface:interface];
     
     if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:vertFunctions fragmentUniforms:fragUniforms vertexUniforms:vertUniforms varyings:varyings]))
     {
@@ -224,13 +224,12 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
     return @[vertexFunction];
 }
 
--(NSArray *)buildRenderPassesWithInterface:(CCEffectLighting *)interface
++(NSArray *)buildRenderPassesWithInterface:(CCEffectLighting *)interface
 {
-    __weak CCEffectLightingImpl *weakSelf = self;
-    
+    __weak CCEffectLighting *weakInterface = interface;
+
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.debugLabel = @"CCEffectLighting pass 0";
-    pass0.shader = self.shader;
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
         
         passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;
@@ -255,9 +254,9 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_ndcToWorld"]] = [NSValue valueWithGLKMatrix4:ndcToWorld];
 
         GLKVector4 globalAmbientColor = GLKVector4Make(0.0f, 0.0f, 0.0f, 1.0f);
-        for (NSUInteger lightIndex = 0; lightIndex < interface.closestLights.count; lightIndex++)
+        for (NSUInteger lightIndex = 0; lightIndex < weakInterface.closestLights.count; lightIndex++)
         {
-            CCLightNode *light = interface.closestLights[lightIndex];
+            CCLightNode *light = weakInterface.closestLights[lightIndex];
             
             // Add this light's ambient contribution to the global ambient light color.
             globalAmbientColor = GLKVector4Add(globalAmbientColor, GLKVector4MultiplyScalar(light.ambientColor.glkVector4, light.ambientIntensity));
@@ -324,7 +323,7 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
             NSString *lightVectorLabel = [NSString stringWithFormat:@"u_lightVector%lu", (unsigned long)lightIndex];
             passInputs.shaderUniforms[pass.uniformTranslationTable[lightVectorLabel]] = [NSValue valueWithGLKVector3:GLKVector3Make(lightVector.x, lightVector.y, lightVector.z)];
 
-            if (interface.needsSpecular)
+            if (weakInterface.needsSpecular)
             {
                 GLKVector4 lightSpecularColor = GLKVector4MultiplyScalar(light.specularColor.glkVector4, light.specularIntensity);
 
@@ -335,10 +334,10 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
 
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_globalAmbientColor"]] = [NSValue valueWithGLKVector4:globalAmbientColor];
         
-        if (interface.needsSpecular)
+        if (weakInterface.needsSpecular)
         {
-            passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_specularExponent"]] = [NSNumber numberWithFloat:interface.shininess];
-            passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_specularColor"]] = [NSValue valueWithGLKVector4:interface.specularColor.glkVector4];
+            passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_specularExponent"]] = [NSNumber numberWithFloat:weakInterface.shininess];
+            passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_specularColor"]] = [NSValue valueWithGLKVector4:weakInterface.specularColor.glkVector4];
         }
         
     } copy]];

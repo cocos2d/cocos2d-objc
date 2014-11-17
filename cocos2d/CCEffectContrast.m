@@ -13,27 +13,28 @@
 
 static float conditionContrast(float contrast);
 
+@interface CCEffectContrast ()
+@property (nonatomic, strong) NSNumber *conditionedContrast;
+@end
+
 
 @interface CCEffectContrastImpl : CCEffectImpl
-
-@property (nonatomic, strong) NSNumber *conditionedContrast;
-
+@property (nonatomic, weak) CCEffectContrast *interface;
 @end
 
 
 @implementation CCEffectContrastImpl
 
--(id)initWithContrast:(float)contrast
+-(id)initWithInterface:(CCEffectContrast *)interface
 {
     CCEffectUniform* uniformContrast = [CCEffectUniform uniform:@"float" name:@"u_contrast" value:[NSNumber numberWithFloat:1.0f]];
     
     NSArray *fragFunctions = [CCEffectContrastImpl buildFragmentFunctions];
-    NSArray *renderPasses = [self buildRenderPasses];
+    NSArray *renderPasses = [CCEffectContrastImpl buildRenderPassesWithInterface:interface];
 
     if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:@[uniformContrast] vertexUniforms:nil varyings:nil]))
     {
-        _conditionedContrast = [NSNumber numberWithFloat:conditionContrast(contrast)];
-
+        self.interface = interface;
         self.debugName = @"CCEffectContrastImpl";
     }
     return self;
@@ -52,13 +53,12 @@ static float conditionContrast(float contrast);
     return @[fragmentFunction];
 }
 
-- (NSArray *)buildRenderPasses
++ (NSArray *)buildRenderPassesWithInterface:(CCEffectContrast *)interface
 {
-    __weak CCEffectContrastImpl *weakSelf = self;
+    __weak CCEffectContrast *weakInterface = interface;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.debugLabel = @"CCEffectContrast pass 0";
-    pass0.shader = self.shader;
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
         
         passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;
@@ -66,15 +66,10 @@ static float conditionContrast(float contrast);
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:passInputs.texCoord1Center];
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:passInputs.texCoord1Extents];
 
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_contrast"]] = weakSelf.conditionedContrast;
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_contrast"]] = weakInterface.conditionedContrast;
     } copy]];
     
     return @[pass0];
-}
-
--(void)setContrast:(float)contrast
-{
-    _conditionedContrast = [NSNumber numberWithFloat:conditionContrast(contrast)];
 }
 
 @end
@@ -91,10 +86,10 @@ static float conditionContrast(float contrast);
 {
     if((self = [super init]))
     {
-        _contrast = contrast;
-
-        self.effectImpl = [[CCEffectContrastImpl alloc] initWithContrast:contrast];
+        self.effectImpl = [[CCEffectContrastImpl alloc] initWithInterface:self];
         self.debugName = @"CCEffectContrast";
+
+        self.contrast = contrast;
     }
     return self;
 }
@@ -107,9 +102,7 @@ static float conditionContrast(float contrast);
 -(void)setContrast:(float)contrast
 {
     _contrast = contrast;
-    
-    CCEffectContrastImpl *contrastImpl = (CCEffectContrastImpl *)self.effectImpl;
-    [contrastImpl setContrast:contrast];
+    _conditionedContrast = [NSNumber numberWithFloat:conditionContrast(contrast)];
 }
 
 @end

@@ -15,27 +15,28 @@ static float conditionHue(float hue);
 
 static GLKMatrix4 matrixWithHue(float hue);
 
-
-@interface CCEffectHueImpl : CCEffectImpl
+@interface CCEffectHue ()
 @property (nonatomic, strong) NSValue *hueRotationMtx;
 @end
 
 
+@interface CCEffectHueImpl : CCEffectImpl
+@property (nonatomic, weak) CCEffectHue *interface;
+@end
+
 @implementation CCEffectHueImpl
 
--(id)initWithHue:(float)hue
+-(id)initWithInterface:(CCEffectHue *)interface
 {
     NSArray *uniforms = @[
                           [CCEffectUniform uniform:@"mat4" name:@"u_hueRotationMtx" value:[NSValue valueWithGLKMatrix4:GLKMatrix4Identity]]
                           ];
     
     NSArray *fragFunctions = [CCEffectHueImpl buildFragmentFunctions];
-    NSArray *renderPasses = [self buildRenderPasses];
+    NSArray *renderPasses = [CCEffectHueImpl buildRenderPassesWithInterface:interface];
     
     if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:uniforms vertexUniforms:nil varyings:nil]))
     {
-        _hueRotationMtx = [NSValue valueWithGLKMatrix4:matrixWithHue(conditionHue(hue))];
-        
         self.debugName = @"CCEffectHueImpl";
     }
     return self;
@@ -54,13 +55,12 @@ static GLKMatrix4 matrixWithHue(float hue);
     return @[fragmentFunction];
 }
 
-- (NSArray *)buildRenderPasses
++ (NSArray *)buildRenderPassesWithInterface:(CCEffectHue *)interface
 {
-    __weak CCEffectHueImpl *weakSelf = self;
-    
+    __weak CCEffectHue *weakInterface = interface;
+
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.debugLabel = @"CCEffectHue pass 0";
-    pass0.shader = self.shader;
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
 
         passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;
@@ -68,15 +68,10 @@ static GLKMatrix4 matrixWithHue(float hue);
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:passInputs.texCoord1Center];
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:passInputs.texCoord1Extents];
 
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_hueRotationMtx"]] = weakSelf.hueRotationMtx;
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_hueRotationMtx"]] = weakInterface.hueRotationMtx;
     } copy]];
     
     return @[pass0];
-}
-
--(void)setHue:(float)hue
-{
-    _hueRotationMtx = [NSValue valueWithGLKMatrix4:matrixWithHue(conditionHue(hue))];
 }
 
 @end
@@ -94,10 +89,10 @@ static GLKMatrix4 matrixWithHue(float hue);
 {
     if((self = [super init]))
     {
-        _hue = hue;
-        
-        self.effectImpl = [[CCEffectHueImpl alloc] initWithHue:hue];
+        self.effectImpl = [[CCEffectHueImpl alloc] initWithInterface:self];
         self.debugName = @"CCEffectHue";
+
+        self.hue = hue;
     }
     return self;
 }
@@ -110,9 +105,7 @@ static GLKMatrix4 matrixWithHue(float hue);
 -(void)setHue:(float)hue
 {
     _hue = hue;
-    
-    CCEffectHueImpl *hueImpl = (CCEffectHueImpl *)self.effectImpl;
-    [hueImpl setHue:hue];
+    _hueRotationMtx = [NSValue valueWithGLKMatrix4:matrixWithHue(conditionHue(hue))];
 }
 
 @end

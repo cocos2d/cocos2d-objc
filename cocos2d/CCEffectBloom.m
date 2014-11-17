@@ -47,27 +47,22 @@
 
 
 @interface CCEffectBloomImpl : CCEffectImpl
-
+@property (nonatomic, weak) CCEffectBloom *interface;
+@property (nonatomic, assign) float intensity;
+@property (nonatomic, assign) float luminanceThreshold;
 @end
 
 @implementation CCEffectBloomImpl {
-    float _intensity;
-    float _luminanceThreshold;
     NSUInteger _blurRadius;
     NSUInteger _numberOfOptimizedOffsets;
     GLfloat _sigma;
     NSUInteger _trueBlurRadius;
 }
 
--(id)initWithPixelBlurRadius:(NSUInteger)blurRadius intensity:(float)intensity luminanceThreshold:(float)luminanceThreshold
+-(id)initWithInterface:(CCEffectBloom *)interface
 {
-    self.intensity = intensity;
-    self.luminanceThreshold = luminanceThreshold;
-
-    [self setBlurRadiusAndDependents:blurRadius];
-    
-    CCEffectUniform* u_intensity = [CCEffectUniform uniform:@"float" name:@"u_intensity" value:[NSNumber numberWithFloat:_intensity]];
-    CCEffectUniform* u_luminanceThreshold = [CCEffectUniform uniform:@"float" name:@"u_luminanceThreshold" value:[NSNumber numberWithFloat:_luminanceThreshold]];
+    CCEffectUniform* u_intensity = [CCEffectUniform uniform:@"float" name:@"u_intensity" value:[NSNumber numberWithFloat:0.0f]];
+    CCEffectUniform* u_luminanceThreshold = [CCEffectUniform uniform:@"float" name:@"u_luminanceThreshold" value:[NSNumber numberWithFloat:0.0f]];
     CCEffectUniform* u_enableGlowMap = [CCEffectUniform uniform:@"float" name:@"u_enableGlowMap" value:[NSNumber numberWithFloat:0.0f]];
     CCEffectUniform* u_blurDirection = [CCEffectUniform uniform:@"highp vec2" name:@"u_blurDirection"
                                                           value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]];
@@ -81,11 +76,11 @@
     
     NSArray *fragFunctions = [CCEffectBloomImpl buildFragmentFunctionsWithBlurRadius:_trueBlurRadius numberOfOptimizedOffsets:_numberOfOptimizedOffsets sigma:_sigma];
     NSArray *vertFunctions = [CCEffectBloomImpl buildVertexFunctionsWithBlurRadius:_trueBlurRadius numberOfOptimizedOffsets:_numberOfOptimizedOffsets sigma:_sigma];
-    NSArray *renderPasses = [self buildRenderPasses];
+    NSArray *renderPasses = [CCEffectBloomImpl buildRenderPassesWithInterface:interface];
 
     if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:vertFunctions fragmentUniforms:fragUniforms vertexUniforms:vertUniforms varyings:varyings]))
     {
-        
+        self.interface = interface;
         self.debugName = @"CCEffectBloomImpl";
         self.stitchFlags = 0;
         return self;
@@ -306,28 +301,31 @@
     return @[vertexFunction];
 }
 
-- (NSArray *)buildRenderPasses
++ (NSArray *)buildRenderPassesWithInterface:(CCEffectBloom *)interface
 {
     // optmized approach based on linear sampling - http://rastergrid.com/blog/2010/09/efficient-gaussian-blur-with-linear-sampling/ and GPUImage - https://github.com/BradLarson/GPUImage
     // pass 0: blurs (horizontal) texture[0] and outputs blurmap to texture[1]
     // pass 1: blurs (vertical) texture[1] and outputs to texture[2]
     // pass 2: blends texture[0] and texture[2] and outputs to texture[3]
 
-    __weak CCEffectBloomImpl *weakSelf = self;
-    
+    __weak CCEffectBloom *weakInterface = interface;
+
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] initWithIndex:0];
     pass0.debugLabel = @"CCEffectBloom pass 0";
-    pass0.shader = self.shader;
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
-        
+
+        // Why not just use self (or "__weak self" really)? Because at the time these blocks are created,
+        // self is not necesssarily valid.
+        CCEffectBloomImpl *impl = (CCEffectBloomImpl *)weakInterface.effectImpl;
+
         passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:passInputs.texCoord1Center];
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:passInputs.texCoord1Extents];
 
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_enableGlowMap"]] = [NSNumber numberWithFloat:0.0f];
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_luminanceThreshold"]] = [NSNumber numberWithFloat:_luminanceThreshold];
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_intensity"]] = [NSNumber numberWithFloat:_intensity];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_luminanceThreshold"]] = [NSNumber numberWithFloat:impl.luminanceThreshold];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_intensity"]] = [NSNumber numberWithFloat:impl.intensity];
         
         GLKVector2 dur = GLKVector2Make(1.0 / (passInputs.previousPassTexture.pixelWidth / passInputs.previousPassTexture.contentScale), 0.0);
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithGLKVector2:dur];
@@ -337,8 +335,11 @@
     
     CCEffectRenderPass *pass1 = [[CCEffectRenderPass alloc] initWithIndex:1];
     pass1.debugLabel = @"CCEffectBloom pass 1";
-    pass1.shader = self.shader;
     pass1.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
+
+        // Why not just use self (or "__weak self" really)? Because at the time these blocks are created,
+        // self is not necesssarily valid.
+        CCEffectBloomImpl *impl = (CCEffectBloomImpl *)weakInterface.effectImpl;
 
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:GLKVector2Make(0.5f, 0.5f)];
@@ -346,7 +347,7 @@
         
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_enableGlowMap"]] = [NSNumber numberWithFloat:0.0f];
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_luminanceThreshold"]] = [NSNumber numberWithFloat:0.0f];
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_intensity"]] = [NSNumber numberWithFloat:_intensity];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_intensity"]] = [NSNumber numberWithFloat:impl.intensity];
         
         GLKVector2 dur = GLKVector2Make(0.0, 1.0 / (passInputs.previousPassTexture.pixelHeight / passInputs.previousPassTexture.contentScale));
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithGLKVector2:dur];
@@ -356,11 +357,14 @@
     
     CCEffectRenderPass *pass2 = [[CCEffectRenderPass alloc] initWithIndex:2];
     pass2.debugLabel = @"CCEffectBloom pass 2";
-    pass2.shader = self.shader;
     pass2.texCoord1Mapping = CCEffectTexCoordMapPreviousPassTex;
     pass2.texCoord2Mapping = CCEffectTexCoordMapMainTex;
     pass2.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
-        
+
+        // Why not just use self (or "__weak self" really)? Because at the time these blocks are created,
+        // self is not necesssarily valid.
+        CCEffectBloomImpl *impl = (CCEffectBloomImpl *)weakInterface.effectImpl;
+
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:GLKVector2Make(0.5f, 0.5f)];
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:GLKVector2Make(1.0f, 1.0f)];
@@ -369,7 +373,7 @@
 
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_enableGlowMap"]] = [NSNumber numberWithFloat:1.0f];
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_luminanceThreshold"]] = [NSNumber numberWithFloat:0.0f];
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_intensity"]] = [NSNumber numberWithFloat:_intensity];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_intensity"]] = [NSNumber numberWithFloat:impl.intensity];
         
     } copy]];
 
@@ -402,7 +406,7 @@
         self.intensity = intensity;
         self.luminanceThreshold = luminanceThreshold;
         
-        self.effectImpl = [[CCEffectBloomImpl alloc] initWithPixelBlurRadius:blurRadius intensity:(float)intensity luminanceThreshold:(float)luminanceThreshold];
+        self.effectImpl = [[CCEffectBloomImpl alloc] initWithInterface:self];
         self.debugName = @"CCEffectBloom";
         return self;
     }
@@ -451,7 +455,7 @@
     CCEffectPrepareStatus result = CCEffectPrepareNothingToDo;
     if (_shaderDirty)
     {
-        self.effectImpl = [[CCEffectBloomImpl alloc] initWithPixelBlurRadius:_blurRadius intensity:(float)_intensity luminanceThreshold:(float)_luminanceThreshold];
+        self.effectImpl = [[CCEffectBloomImpl alloc] initWithInterface:self];
         
         _shaderDirty = NO;
         result = CCEffectPrepareSuccess;
