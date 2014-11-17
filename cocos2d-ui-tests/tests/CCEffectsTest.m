@@ -7,6 +7,7 @@
 
 #import "CCEffect_Private.h"
 #import "CCEffectStack_Private.h"
+#import "CCLightCollection.h"
 
 @interface CCEffectsTest : TestBase @end
 @implementation CCEffectsTest {
@@ -257,6 +258,8 @@
 {
     self.subTitle = @"Simple Lighting Test";
     
+    [self.contentNode.scene.lights flushGroupNames];
+    
     NSString *normalMapImage = @"Images/ShinyTorusNormals.png";
     NSString *diffuseImage = @"Images/ShinyTorusColor.png";
     
@@ -321,6 +324,8 @@
 {
     self.subTitle = @"Varying Light Parameter Test";
     
+    [self.contentNode.scene.lights flushGroupNames];
+
     NSString *normalMapImage = @"Images/ShinyTorusNormals.png";
     NSString *diffuseImage = @"Images/ShinyTorusColor.png";
     
@@ -575,6 +580,8 @@
 {
     self.subTitle = @"Lighting Collection Test";
     
+    [self.contentNode.scene.lights flushGroupNames];
+    
     NSString *normalMapImage = @"Images/ShinyTorusNormals.png";
     NSString *diffuseImage = @"Images/ShinyTorusColor.png";
     
@@ -635,6 +642,8 @@
 -(void)setupLightingPerformanceTest
 {
     self.subTitle = @"Lighting Performance Test";
+    
+    [self.contentNode.scene.lights flushGroupNames];
     
     NSString *normalMapImage = @"Images/ShinyTorusNormals.png";
     NSString *diffuseImage = @"Images/ShinyTorusColor.png";

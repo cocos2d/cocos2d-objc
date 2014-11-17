@@ -48,6 +48,7 @@
 
     self.package = [[CCPackageManager sharedManager] downloadPackageWithName:@"testpackage"
                                                                   resolution:@"phonehd"
+                                                                          os:@"iOS"
                                                                    remoteURL:remoteURL
                                                          enableAfterDownload:YES];
 }
@@ -101,7 +102,7 @@
 
 - (void)cleanDirectories
 {
-    NSString *installFolder = [CCPackageManager sharedManager].installedPackagesPath;
+    NSString *installFolder = [CCPackageManager sharedManager].installRelPath;
     NSString *unzipFolder = [NSTemporaryDirectory() stringByAppendingPathComponent:PACKAGE_REL_UNZIP_FOLDER];
     NSString *downloadFolder = [NSTemporaryDirectory() stringByAppendingPathComponent:PACKAGE_REL_DOWNLOAD_FOLDER];
 

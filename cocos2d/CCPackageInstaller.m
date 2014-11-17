@@ -3,28 +3,29 @@
 #import "CCPackage.h"
 #import "ccMacros.h"
 #import "CCPackage_private.h"
+#import "CCPackageHelper.h"
 
 
 @interface CCPackageInstaller ()
 
 @property (nonatomic, strong, readwrite) CCPackage *package;
-@property (nonatomic, copy, readwrite) NSString *installPath;
+@property (nonatomic, copy, readwrite) NSString *installRelPath;
 
 @end
 
 
 @implementation CCPackageInstaller
 
-- (instancetype)initWithPackage:(CCPackage *)package installPath:(NSString *)installPath
+- (instancetype)initWithPackage:(CCPackage *)package installRelPath:(NSString *)installRelPath
 {
     NSAssert(package != nil, @"package must not be nil");
-    NSAssert(installPath != nil, @"installPath must not be nil");
+    NSAssert(installRelPath != nil, @"installRelPath must not be nil");
 
     self = [super init];
     if (self)
     {
         self.package = package;
-        self.installPath = installPath;
+        self.installRelPath = installRelPath;
     }
 
     return self;
@@ -34,11 +35,11 @@
 {
     if (![self unzippedPackageFolderExists:error])
     {
-        [_package setValue:@(CCPackageStatusInstallationFailed) forKey:@"status"];
+        _package.status = CCPackageStatusInstallationFailed;
         return NO;
     }
 
-    if (![self movePackageToInstallPathWithError:error])
+    if (![self movePackageToInstallRelPathWithError:error])
     {
         [_package setValue:@(CCPackageStatusInstallationFailed) forKey:@"status"];
         return NO;
@@ -49,24 +50,46 @@
     return YES;
 }
 
-- (BOOL)movePackageToInstallPathWithError:(NSError **)error
+- (BOOL)movePackageToInstallRelPathWithError:(NSError **)error
 {
     NSAssert(_package.unzipURL != nil, @"package.unzipURL must not be nil.");
     NSAssert(_package.folderName != nil, @"package.folderName must not be nil.");
 
-    _package.installURL = [NSURL fileURLWithPath:[_installPath stringByAppendingPathComponent:_package.folderName]];
+
+    _package.installRelURL = [NSURL URLWithString:[_installRelPath stringByAppendingPathComponent:_package.folderName]];
+
+    NSString *fullInstallPath = _package.installFullURL.path;
+
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+
+    NSError *errorDelete;
+    if ([fileManager fileExistsAtPath:fullInstallPath])
+    {
+        if (![fileManager removeItemAtPath:fullInstallPath error:&errorDelete])
+        {
+            _package.installRelURL = nil;
+
+            [self setNewError:error
+                         code:PACKAGE_ERROR_INSTALL_COULD_NOT_DELETE_EXISTING_FOLDER_BEFORE_MOVING_TO_INSTALL_FOLDER
+                      message:[NSString stringWithFormat:@"Could not remove existing folder at path \"%@\" before moving package to be installed. Underlying error: %@", fullInstallPath, errorDelete]
+              underlyingError:errorDelete];
+
+            CCLOG(@"[PACKAGE/INSTALL][ERROR] Could remove existing folder before moving package: %@  with error: %@", _package, *error);
+
+            return NO;
+        }
+    }
 
     NSError *errorMove;
-    NSFileManager *fileManager = [NSFileManager defaultManager];
     if (![fileManager moveItemAtPath:[_package.unzipURL.path stringByAppendingPathComponent:_package.folderName]
-                              toPath:_package.installURL.path
+                              toPath:fullInstallPath
                                error:&errorMove])
     {
-        [_package setValue:nil forKey:@"installURL"];
+        _package.installRelURL = nil;
 
         [self setNewError:error
                      code:PACKAGE_ERROR_INSTALL_COULD_NOT_MOVE_PACKAGE_TO_INSTALL_FOLDER
-                  message:[NSString stringWithFormat:@"Could not move package to install path \"%@\", underlying error: %@", _installPath, errorMove]
+                  message:[NSString stringWithFormat:@"Could not move package to install path \"%@\", underlying error: %@", fullInstallPath, errorMove]
           underlyingError:errorMove];
 
         CCLOG(@"[PACKAGE/INSTALL][ERROR] Moving unzipped package to installation folder: %@", *error);

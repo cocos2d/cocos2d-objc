@@ -630,7 +630,10 @@
 				B7E2604A17E7D278007067F0 /* Frameworks */,
 				B7E2604917E7D278007067F0 /* Products */,
 			);
+			indentWidth = 4;
 			sourceTree = "<group>";
+			tabWidth = 4;
+			usesTabs = 0;
 		};
 		B7E2604917E7D278007067F0 /* Products */ = {
 			isa = PBXGroup;

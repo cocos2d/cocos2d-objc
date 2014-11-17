@@ -52,7 +52,7 @@
         @"resolution" : @"tablethd",
         @"os" : @"iOS",
         @"remoteURL" : @"http://foo.fake",
-        @"installURL" : @"/Library/Caches/Packages",
+        @"installURL" : @"Packages",
         @"status" : @(CCPackageStatusInstalledDisabled),
         @"localDownloadURL" : @"/downloadfolder/baa.zip",
         @"localUnzipURL" : @"/unzupfolder/foo",
@@ -66,7 +66,7 @@
     CCAssertEqualStrings(package.resolution, @"tablethd");
     CCAssertEqualStrings(package.os, @"iOS");
     XCTAssertEqualObjects(package.remoteURL, [NSURL URLWithString:@"http://foo.fake"]);
-    XCTAssertEqualObjects(package.installURL, [NSURL fileURLWithPath:@"/Library/Caches/Packages"]);
+    XCTAssertEqualObjects(package.installRelURL, [NSURL fileURLWithPath:@"Packages"]);
     XCTAssertEqual(package.status, CCPackageStatusInstalledDisabled);
     XCTAssertEqualObjects(package.localDownloadURL, [NSURL fileURLWithPath:@"/downloadfolder/baa.zip"]);
     XCTAssertEqualObjects(package.unzipURL, [NSURL fileURLWithPath:@"/unzupfolder/foo"]);
@@ -91,7 +91,7 @@
     CCAssertEqualStrings(package.resolution, @"tablethd");
     CCAssertEqualStrings(package.os, @"iOS");
     XCTAssertEqualObjects(package.remoteURL, [NSURL URLWithString:@"http://foo.fake"]);
-    XCTAssertNil(package.installURL);
+    XCTAssertNil(package.installRelURL);
     XCTAssertEqual(package.status, CCPackageStatusInitial);
     XCTAssertNil(package.localDownloadURL);
     XCTAssertNil(package.unzipURL);
@@ -107,7 +107,7 @@
                                                remoteURL:[NSURL URLWithString:@"http://foo.fake"]];
 
     package.status = CCPackageStatusInstalledDisabled;
-    package.installURL = [NSURL fileURLWithPath:@"/Library/Caches/Packages"];
+    package.installRelURL = [NSURL URLWithString:@"Packages"];
     package.unzipURL = [NSURL fileURLWithPath:@"/unzupfolder/foo"];
     package.folderName = @"somename";
     package.localDownloadURL = [NSURL fileURLWithPath:@"/downloadfolder/baa.zip"];
@@ -119,7 +119,7 @@
     CCAssertEqualStrings(dictionary[@"resolution"], @"tablethd");
     CCAssertEqualStrings(dictionary[@"os"], @"iOS");
     CCAssertEqualStrings(dictionary[@"remoteURL"], @"http://foo.fake");
-    CCAssertEqualStrings(dictionary[@"installURL"], @"/Library/Caches/Packages");
+    CCAssertEqualStrings(dictionary[@"installURL"], @"Packages");
     XCTAssertEqual([dictionary[@"status"] integerValue], CCPackageStatusInstalledDisabled);
     CCAssertEqualStrings(dictionary[@"localDownloadURL"], @"/downloadfolder/baa.zip");
     CCAssertEqualStrings(dictionary[@"localUnzipURL"], @"/unzupfolder/foo");
