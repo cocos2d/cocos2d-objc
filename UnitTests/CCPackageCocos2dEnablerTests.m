@@ -14,11 +14,10 @@
 #import "CCBReader.h"
 #import "AppDelegate.h"
 #import "CCPackage_private.h"
+#import "CCPackageHelper.h"
+#import "CCPackagesTestFixturesAndHelpers.h"
 
 @interface CCPackageCocos2dEnablerTests : XCTestCase
-
-@property (nonatomic, strong) CCPackage *package;
-@property (nonatomic, copy) NSURL *installURL;
 
 @end
 
@@ -29,15 +28,6 @@
 {
     [super setUp];
     [(AppController *)[UIApplication sharedApplication].delegate configureCocos2d];
-
-    self.package = [[CCPackage alloc] initWithName:@"Foo"
-                                        resolution:@"phonehd"
-                                                os:@"iOS"
-                                         remoteURL:[NSURL URLWithString:@"http://foo.fake/Foo-iOS-phonehd.zip"]];
-
-    NSString *pathToPackage = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Resources-shared/Packages/testpackage-iOS-phonehd_unzipped"];
-    self.installURL = [[NSURL fileURLWithPath:pathToPackage] URLByAppendingPathComponent:@"testpackage-iOS-phonehd"];
-    _package.installURL = _installURL;
 }
 
 
@@ -45,11 +35,13 @@
 
 - (void)testEnablePackage
 {
-    CCPackageCocos2dEnabler *packageEnabler = [[CCPackageCocos2dEnabler alloc] init];
-    [packageEnabler enablePackages:@[_package]];
+    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageWithStatus:CCPackageStatusInstalledDisabled installRelPath:@"Packages"];
 
-    XCTAssertTrue([self isPackageInSearchPath]);
-    XCTAssertEqual(_package.status, CCPackageStatusInstalledEnabled);
+    CCPackageCocos2dEnabler *packageEnabler = [[CCPackageCocos2dEnabler alloc] init];
+    [packageEnabler enablePackages:@[package]];
+
+    XCTAssertTrue([CCPackagesTestFixturesAndHelpers isPackageInSearchPath:package]);
+    XCTAssertEqual(package.status, CCPackageStatusInstalledEnabled);
 
     CCSprite *sprite = [CCSprite spriteWithImageNamed:@"boredSmiley.png"];
     XCTAssertNotNil(sprite);
@@ -57,33 +49,20 @@
 
 - (void)testDisablePackage
 {
+    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageWithStatus:CCPackageStatusInstalledDisabled installRelPath:@"Packages"];
+
     [self testEnablePackage];
 
     CCPackageCocos2dEnabler *packageEnabler = [[CCPackageCocos2dEnabler alloc] init];
-    [packageEnabler disablePackages:@[_package]];
+    [packageEnabler disablePackages:@[package]];
 
-    XCTAssertEqual(_package.status, CCPackageStatusInstalledDisabled);
+    XCTAssertEqual(package.status, CCPackageStatusInstalledDisabled);
 
-    XCTAssertFalse([self isPackageInSearchPath]);
+    XCTAssertFalse([CCPackagesTestFixturesAndHelpers isPackageInSearchPath:package]);
 
     // Can't use [CCSprite spriteWithImageNamed:@"boredSmiley.png"], assertion exception is screwing up test result
     NSString *path = [[CCFileUtils sharedFileUtils] fullPathForFilename:@"boredSmiley.png" contentScale:NULL];
     XCTAssertNil(path);
-}
-
-
-#pragma mark - Helper
-
-- (BOOL)isPackageInSearchPath
-{
-    for (NSString *aSearchPath in [CCFileUtils sharedFileUtils].searchPath)
-    {
-        if ([aSearchPath isEqualToString:_package.installURL.path])
-        {
-            return YES;
-        }
-    }
-    return NO;
 }
 
 @end
