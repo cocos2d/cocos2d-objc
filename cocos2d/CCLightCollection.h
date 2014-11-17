@@ -23,7 +23,7 @@
  */
 
 #import "ccTypes.h"
-
+#import "CCColor.h"
 #import "CCLightGroups.h"
 
 
@@ -85,10 +85,19 @@ extern const CCLightGroupMask CCLightCollectionAllGroups;
 /**
  *  Finds the closest lights to the supplied point.
  *
- *  @param count The number of lights to return.
- *  @param point The reference point.
+ *  @param count   The number of lights to return.
+ *  @param point   The query point.
+ *  @param mask    The light group mask to match.
  */
 - (NSArray*)findClosestKLights:(NSUInteger)count toPoint:(CGPoint)point withMask:(CCLightGroupMask)mask;
+
+/**
+ *  Return the sum of ambient colors for all lights matching the
+ *  supplied mask.
+ *
+ *  @param mask    The light group mask to match.
+ */
+- (CCColor*)findAmbientSumForLightsWithMask:(CCLightGroupMask)mask;
 
 
 /// -----------------------------------------------------------------------
@@ -104,6 +113,12 @@ extern const CCLightGroupMask CCLightCollectionAllGroups;
  *  @return Bitmask.
  */
 - (CCLightGroupMask)maskForGroups:(NSArray *)groups;
+
+/**
+ *  Reset the group name to group mask mapping. This invalidates any outstanding
+ *  group masks.
+ */
+- (void)flushGroupNames;
 
 @end
 

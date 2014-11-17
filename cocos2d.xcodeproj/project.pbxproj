@@ -486,6 +486,10 @@
 		9D9205D71A0173D600FF2D6D /* CCLightCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9205D11A0173D600FF2D6D /* CCLightCollection.m */; };
 		9DBCA31419B68BE400EFE96D /* CCEffectColorChannelOffset.h in Headers */ = {isa = PBXBuildFile; fileRef = 9DBCA31219B68BE400EFE96D /* CCEffectColorChannelOffset.h */; };
 		9DBCA31519B68BE400EFE96D /* CCEffectColorChannelOffset.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DBCA31319B68BE400EFE96D /* CCEffectColorChannelOffset.m */; };
+		9DC780B71A1175F000DD5A4B /* CCLightNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D69E6D419DF604800C2749C /* CCLightNode.h */; };
+		9DC780BA1A1175F100DD5A4B /* CCLightNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D69E6D419DF604800C2749C /* CCLightNode.h */; };
+		9DC780BB1A11760A00DD5A4B /* CCLightNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D69E6D519DF604800C2749C /* CCLightNode.m */; };
+		9DC780BC1A11760B00DD5A4B /* CCLightNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D69E6D519DF604800C2749C /* CCLightNode.m */; };
 		9DDD047E19DE154400687820 /* CCEffectLighting.h in Headers */ = {isa = PBXBuildFile; fileRef = 9DDD047C19DE154400687820 /* CCEffectLighting.h */; };
 		9DDD047F19DE154400687820 /* CCEffectLighting.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DDD047D19DE154400687820 /* CCEffectLighting.m */; };
 		9DF37621191C594A00C6D27A /* CCEffectPixellate.h in Headers */ = {isa = PBXBuildFile; fileRef = 9DF3761F191C594A00C6D27A /* CCEffectPixellate.h */; };
@@ -2692,6 +2696,7 @@
 				7A59476019E3731400F65F90 /* CCPlatformTextField.h in Headers */,
 				7A59476219E3731400F65F90 /* CCPlatformTextFieldIOS.h in Headers */,
 				7A59476419E3731500F65F90 /* CCPlatformTextFieldMac.h in Headers */,
+				9DC780BA1A1175F100DD5A4B /* CCLightNode.h in Headers */,
 				7A59476619E3731600F65F90 /* CCAnimationManager_Private.h in Headers */,
 				7A59476719E3731600F65F90 /* CCAnimationManager.h in Headers */,
 				7A59476919E3731700F65F90 /* CCAnimationManager+FrameAnimation.h in Headers */,
@@ -2844,6 +2849,7 @@
 				D2FEB691194F6C9E00FC0574 /* CCGLView.h in Headers */,
 				D2FEB692194F6C9E00FC0574 /* CCWindow.h in Headers */,
 				D2FEB693194F6C9E00FC0574 /* CCProgressNode.h in Headers */,
+				9DC780B71A1175F000DD5A4B /* CCLightNode.h in Headers */,
 				D2DDB09419805E8400233D80 /* CCMathUtilsAndroid.h in Headers */,
 				D2FEB694194F6C9E00FC0574 /* CCLayout.h in Headers */,
 				D299CE7B19C2910B00519CBB /* CCEffectDFInnerGlow.h in Headers */,
@@ -3348,6 +3354,7 @@
 				7A59483619E375A900F65F90 /* CCActionProgressTimer.m in Sources */,
 				7A59483819E375A900F65F90 /* CCActionTween.m in Sources */,
 				7A59483A19E375A900F65F90 /* CCTexturePVR.m in Sources */,
+				9DC780BC1A11760B00DD5A4B /* CCLightNode.m in Sources */,
 				7A59483C19E375A900F65F90 /* CCTexture.m in Sources */,
 				7A59483F19E375AA00F65F90 /* CCTextureCache.m in Sources */,
 				7A59484219E375AA00F65F90 /* TGAlib.m in Sources */,
@@ -3487,6 +3494,7 @@
 				D2FEB6F9194F6C9E00FC0574 /* CCSpriteBatchNode.m in Sources */,
 				D2FEB6FA194F6C9E00FC0574 /* ccUtils.c in Sources */,
 				D2FEB6FB194F6C9E00FC0574 /* CCTouchAndroid.m in Sources */,
+				9DC780BB1A11760A00DD5A4B /* CCLightNode.m in Sources */,
 				BC9F4E9119DB633500B25F01 /* CCPackageDownload.m in Sources */,
 				D3903B16199528DB003AA81A /* CCNoARC.m in Sources */,
 				D268FE1C1980791400ECBCD0 /* CCEffectRefraction.m in Sources */,
