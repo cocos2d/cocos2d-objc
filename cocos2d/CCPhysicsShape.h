@@ -150,7 +150,7 @@ Using simple shapes instead of composite ones can make collision handling code s
 /**
  *  An array of NSString category names of which this shape is a member. Up to 32 unique categories can be used in a single physics node.
  *  A value of nil means that a shape exists in all possible collision categories.
- *  The deefault is nil.
+ *  The default is nil.
  */
 @property(nonatomic, copy) NSArray *collisionCategories;
 

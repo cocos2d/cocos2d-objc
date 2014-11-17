@@ -11,12 +11,14 @@
 #import "CCPackageInstaller.h"
 #import "CCPackageConstants.h"
 #import "CCPackage_private.h"
+#import "CCPackagesTestFixturesAndHelpers.h"
+#import "CCPackageHelper.h"
 
 
 @interface CCPackageInstallerTests : XCTestCase
 
 @property (nonatomic, strong) CCPackage *package;
-@property (nonatomic, copy) NSString *installPath;
+@property (nonatomic, copy) NSString *installRelPath;
 @property (nonatomic, strong) CCPackageInstaller *installer;
 
 @end
@@ -27,52 +29,15 @@
 - (void)setUp
 {
     [super setUp];
-
-    self.package = [[CCPackage alloc] initWithName:@"Test"
-                                        resolution:@"phonehd"
-                                                os:@"iOS"
-                                         remoteURL:[NSURL URLWithString:@"http://test.foo"]];
-
-    NSString *cachesPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
-    self.installPath = [cachesPath stringByAppendingPathComponent:@"tests.Packages"];
-
-    self.installer = [[CCPackageInstaller alloc] initWithPackage:_package installPath:_installPath];
-    
-    
-    [self deleteInstallData];
-
-    [self createPackageInstallFolder];
-}
-
-- (void)createPackageInstallFolder
-{
-    NSError *error;
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if (![fileManager createDirectoryAtURL:[NSURL fileURLWithPath:_installPath]
-               withIntermediateDirectories:YES
-                                attributes:nil
-                                     error:&error])
-    {
-        NSLog(@"%@", error);
-    }
 }
 
 - (void)tearDown
 {
-    [self deleteInstallData];
+    [CCPackagesTestFixturesAndHelpers cleanCachesFolder];
+
+    [CCPackagesTestFixturesAndHelpers cleanTempFolder];
 
     [super tearDown];
-}
-
-- (void)deleteInstallData
-{
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-
-    NSError *error;
-    if (![fileManager removeItemAtPath:_installPath error:&error])
-    {
-        // NSLog(@"%@", error);
-    }
 }
 
 
@@ -80,64 +45,47 @@
 
 - (void)testInstallWithoutEnablingPackage
 {
-    [self setupInstallablePackage];
+    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageWithStatus:CCPackageStatusUnzipped installRelPath:@"tests.Packages"];
 
     NSError *error;
-    BOOL success = [_installer installWithError:&error];
-    XCTAssertTrue(success, @"Installation was unsuccessful: %@", error);
-    XCTAssertEqual(_package.status, CCPackageStatusInstalledDisabled);
+    CCPackageInstaller *installer = [[CCPackageInstaller alloc] initWithPackage:package installRelPath:@"tests.Packages"];
+    BOOL success = [installer installWithError:&error];
+
+    XCTAssertTrue(success, @"Installation failed: %@", error);
+    XCTAssertEqual(package.status, CCPackageStatusInstalledDisabled);
 }
 
 - (void)testInstallFailingUnzippedPackageDoesNotExist
 {
+    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageWithStatus:CCPackageStatusUnzipped installRelPath:@"tests.Packages"];
+
     NSString *pathToPackage = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Resources-shared/Packages/DOES_NOT_EXIST"];
-    _package.unzipURL = [NSURL fileURLWithPath:pathToPackage];
+    package.unzipURL = [NSURL fileURLWithPath:pathToPackage];
 
     NSError *error;
-    BOOL success = [_installer installWithError:&error];
+    CCPackageInstaller *installer = [[CCPackageInstaller alloc] initWithPackage:package installRelPath:@"tests.Packages"];
+    BOOL success = [installer installWithError:&error];
     XCTAssertFalse(success, @"Installation was successful: %@", error);
-    XCTAssertEqual(_package.status, CCPackageStatusInstallationFailed);
+    XCTAssertEqual(package.status, CCPackageStatusInstallationFailed);
     XCTAssertEqual(error.code, PACKAGE_ERROR_INSTALL_UNZIPPED_PACKAGE_NOT_FOUND);
 }
 
-- (void)testInstallFailingPackageAlreadyExists
+- (void)testInstallSuccessfulPackageAlreadyExists
 {
-    [self setupInstallablePackage];
+    CCPackage *package = [CCPackagesTestFixturesAndHelpers testPackageWithStatus:CCPackageStatusUnzipped installRelPath:@"tests.Packages"];
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    [fileManager createDirectoryAtPath:[_installPath stringByAppendingPathComponent:@"testpackage-iOS-phonehd"]
+    [fileManager createDirectoryAtPath:[[CCPackageHelper cachesFolder] stringByAppendingPathComponent:@"tests.Packages/testpackage-iOS-phonehd"]
            withIntermediateDirectories:YES
                             attributes:nil
                                  error:nil];
 
     NSError *error;
-    BOOL success = [_installer installWithError:&error];
-    XCTAssertFalse(success, @"Installation was successful: %@", error);
-    XCTAssertEqual(_package.status, CCPackageStatusInstallationFailed);
-    XCTAssertEqual(error.code, PACKAGE_ERROR_INSTALL_COULD_NOT_MOVE_PACKAGE_TO_INSTALL_FOLDER);
-}
+    CCPackageInstaller *installer = [[CCPackageInstaller alloc] initWithPackage:package installRelPath:@"tests.Packages"];
+    BOOL success = [installer installWithError:&error];
 
-
-#pragma mark - Helper
-
-- (void)setupInstallablePackage
-{
-    _package.folderName = @"testpackage-iOS-phonehd";
-
-    NSString *pathToPackage = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Resources-shared/Packages/testpackage-iOS-phonehd_unzipped"];
-    NSString *unzipPath = [NSTemporaryDirectory() stringByAppendingPathComponent:_package.folderName];
-
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSError *error;
-    [fileManager removeItemAtPath:unzipPath error:nil];
-    if (![fileManager copyItemAtPath:pathToPackage toPath:unzipPath error:&error])
-    {
-        NSLog(@"%@", error);
-    }
-
-    _package.unzipURL = [NSURL fileURLWithPath:unzipPath];
-
-    _package.enableOnDownload = NO;
+    XCTAssertTrue(success, @"Installation was failed: %@", error);
+    XCTAssertEqual(package.status, CCPackageStatusInstalledDisabled);
 }
 
 @end

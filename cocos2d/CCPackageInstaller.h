@@ -12,21 +12,21 @@
 /**
  *  The local installation path for the package
  */
-@property (nonatomic, copy, readonly) NSString *installPath;
+@property (nonatomic, copy, readonly) NSString *installRelPath;
 
 /**
  *  Returns a new instance of a CCPackageInstaller
  *
  *  @param package The package that should be installed
- *  @param installPath The path to the folder where the package should be installed to
+ *  @param installRelPath The path relative to the caches folder where the package should be installed to
  *
  *  @return A new instance of a CCPackageInstaller
  */
-- (instancetype)initWithPackage:(CCPackage *)package installPath:(NSString *)installPath;
+- (instancetype)initWithPackage:(CCPackage *)package installRelPath:(NSString *)installRelPath;
 
 /**
  *  Installs the package. The contents of the unzipped packages folder are moved to the
- *  installPath folder.
+ *  installRelPath folder.
  *
  *  @param error Error pointer to an error object containing details if installation failed
  *
