@@ -331,8 +331,8 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 
 /**Pops out all scenes from the queue until the root scene in the queue, using a transition
  *
- * This scene will replace the running one.
- * Internally it will call `popToRootScene`
+ * This scene will replace the running one. Internally it will call `popToRootScene`
+ * @param transition The transition to play.
  */
 -(void) popToRootSceneWithTransition:(CCTransition *)transition;
 

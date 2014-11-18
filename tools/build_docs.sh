@@ -77,6 +77,7 @@ tools/appledoc \
 --ignore CCPackageInstaller.h \
 --ignore CCPackageManager.h \
 --ignore CCPackageManagerDelegate.h \
+--ignore CCPackageTypes.h \
 --ignore CCPackageUnzipper.h \
 --ignore CCPackageUnzipperDelegate.h \
 --ignore CCParticleBatchNode.h \
