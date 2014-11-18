@@ -8,8 +8,6 @@
 
 #import "CCEffectLighting.h"
 
-#if CC_EFFECTS_EXPERIMENTAL
-
 #import "CCDirector.h"
 #import "CCEffectUtils.h"
 #import "CCLightCollection.h"
@@ -433,5 +431,3 @@ BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b)
     return (((a.pointLightMask) == (b.pointLightMask)) &&
             ((a.directionalLightMask) == (b.directionalLightMask)));
 }
-
-#endif

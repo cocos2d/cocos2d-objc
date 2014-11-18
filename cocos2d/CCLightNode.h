@@ -8,8 +8,6 @@
 
 #import "CCNode.h"
 
-#if CC_EFFECTS_EXPERIMENTAL
-
 typedef NS_ENUM(NSUInteger, CCLightType)
 {
     CCLightPoint       = 0,
@@ -187,7 +185,4 @@ typedef NS_ENUM(NSUInteger, CCLightType)
  */
 +(id)lightWithType:(CCLightType)type groups:(NSArray*)groups color:(CCColor *)color intensity:(float)intensity specularColor:(CCColor *)specularColor specularIntensity:(float)specularIntensity ambientColor:(CCColor *)ambientColor ambientIntensity:(float)ambientIntensity;
 
-
 @end
-
-#endif

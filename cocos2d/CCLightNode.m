@@ -13,8 +13,6 @@
 #import "CCLightNode_Private.h"
 
 
-#if CC_EFFECTS_EXPERIMENTAL
-
 @implementation CCLightNode
 
 -(id)init
@@ -127,5 +125,3 @@
 }
 
 @end
-
-#endif

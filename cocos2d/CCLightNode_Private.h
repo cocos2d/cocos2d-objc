@@ -26,12 +26,8 @@
 #import "CCLightGroups.h"
 
 
-#if CC_EFFECTS_EXPERIMENTAL
-
 @interface CCLightNode ()
 
 @property (nonatomic, assign) CCLightGroupMask groupMask;
 
 @end
-
-#endif

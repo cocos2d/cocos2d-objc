@@ -22,9 +22,4 @@
  * THE SOFTWARE.
  */
 
-
-#if CC_EFFECTS_EXPERIMENTAL
-
 typedef NSUInteger CCLightGroupMask;
-
-#endif

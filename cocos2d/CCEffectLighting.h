@@ -8,8 +8,6 @@
 
 #import "CCEffect.h"
 
-#if CC_EFFECTS_EXPERIMENTAL
-
 /**
  * CCEffectLighting uses a normal map and a collection of light nodes to compute the Phong
  * lighting on the affected node.
@@ -81,6 +79,4 @@
 +(id)effectWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess;
 
 @end
-
-#endif
 

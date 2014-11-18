@@ -29,9 +29,6 @@
 #import "CCLightNode_Private.h"
 
 
-#if CC_EFFECTS_EXPERIMENTAL
-
-
 const CCLightGroupMask CCLightCollectionAllGroups = ~((CCLightGroupMask)0);
 static const NSUInteger CCLightCollectionMaxGroupCount = sizeof(NSUInteger) * 8;
 
@@ -231,5 +228,3 @@ static const NSUInteger CCLightCollectionMaxGroupCount = sizeof(NSUInteger) * 8;
 }
 
 @end
-
-#endif
