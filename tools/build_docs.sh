@@ -68,6 +68,15 @@ tools/appledoc \
 --ignore ccMacros.h \
 --ignore CCMetalView.h \
 --ignore CCNS.h \
+--ignore CCPackageCocos2DEnabler.h \
+--ignore CCPackageDownload.h \
+--ignore CCPackageDownloadDelegate.h \
+--ignore CCPackageDownloadManager.h \
+--ignore CCPackageDownloadManagerDelegate.h \
+--ignore CCPackageInstaller.h \
+--ignore CCPackageTypes.h \
+--ignore CCPackageUnzipper.h \
+--ignore CCPackageUnzipperDelegate.h \
 --ignore CCParticleBatchNode.h \
 --ignore CCPhysics+ObjectiveChipmunk.h \
 --ignore CCProfiling.h \
