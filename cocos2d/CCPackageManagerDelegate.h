@@ -2,6 +2,9 @@
 
 @class CCPackage;
 
+/** CCPackageManagerDelegate protocol provides feedback on the lifecycle of packages in general and may ask a delegate for some information in special cases.
+ 
+ */
 @protocol CCPackageManagerDelegate <NSObject>
 
 @required
