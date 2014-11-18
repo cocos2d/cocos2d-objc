@@ -76,23 +76,28 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 
 
 
-/**Class that creates and handle the main Window and manages how
-and when to execute the Scenes.
+/** Class that creates and handle the main Window and manages how and when to execute the Scenes.
+ 
+ CCDirector inherits from CC_VIEWCONTROLLER which is equivalent to UIViewController on iOS, and NSObject on OS X and Android.
 
  The CCDirector is also responsible for:
+ 
   - initializing the OpenGL ES context
   - setting the OpenGL pixel format (default on is RGB565)
   - setting the OpenGL buffer depth (default one is 0-bit)
   - setting the projection (default one is 3D)
 
- Since the CCDirector is a singleton, the standard way to use it is by calling:
-  - [[CCDirector sharedDirector] methodName];
+ Since the CCDirector is a singleton, the standard way to use its methods and properties is:
+ 
+ - `[[CCDirector sharedDirector] methodName];`
+ - `[CCDirector sharedDirector].aProperty;`
 
  The CCDirector also sets the default OpenGL context:
-  - GL_TEXTURE_2D is enabled
-  - GL_VERTEX_ARRAY is enabled
-  - GL_COLOR_ARRAY is enabled
-  - GL_TEXTURE_COORD_ARRAY is enabled
+ 
+  - `GL_TEXTURE_2D` is enabled
+  - `GL_VERTEX_ARRAY` is enabled
+  - `GL_COLOR_ARRAY` is enabled
+  - `GL_TEXTURE_COORD_ARRAY` is enabled
 */
 @interface CCDirector : CC_VIEWCONTROLLER
 {
