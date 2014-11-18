@@ -301,7 +301,7 @@
  *
  *  @param duration Action duration.
  *  @param angle    Angle to rotate to (degrees).
- *  @param direct   Simple rotation, no smart checks.
+ *  @param simple   Simple rotation, no smart checks.
  *
  *  @return New rotate action.
  */
@@ -312,7 +312,7 @@
  *
  *  @param duration Action duration.
  *  @param angle    Angle to rotate to (degrees).
- *  @param direct   Simple rotation, no smart checks.
+ *  @param simple   Simple rotation, no smart checks.
  *
  *  @return New rotate action
  */
