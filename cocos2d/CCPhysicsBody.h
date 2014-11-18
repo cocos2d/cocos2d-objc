@@ -245,7 +245,7 @@ By default physics bodies collide with all other physics bodies. Since 2D games 
 /**
  *  An array of NSString category names of which this physics body is a member. Up to 32 unique categories can be used in a single physics node.
  *  A value of nil means that a body exists in all possible collision categories.
- *  The deefault is nil.
+ *  The default is nil.
  */
 @property(nonatomic, copy) NSArray *collisionCategories;
 
