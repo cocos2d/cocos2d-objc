@@ -1,5 +1,10 @@
 #import <Foundation/Foundation.h>
 
+/** CCPackageCocos2dEnabler class enables or disables installed packages.
+ 
+ An package getting enabled will be added to cocos2d's search path.
+ 
+ */
 @interface CCPackageCocos2dEnabler : NSObject
 
 /**

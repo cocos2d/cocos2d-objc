@@ -2,6 +2,12 @@
 
 @class CCPackageDownload;
 
+
+/** CCPackageDownloadDelegate is the common interface for a CCPackageDownload's delegate.
+ 
+ It describes providing feedback of the download as well as asking how to act in certain situations.
+ 
+ */
 @protocol CCPackageDownloadDelegate <NSObject>
 
 @required
