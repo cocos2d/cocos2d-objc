@@ -19,7 +19,7 @@ tools/appledoc \
 --project-name "Cocos2D" \
 --project-company "3.3.0" \
 --company-id "org.cocos2d-swift" \
---docset-atom-filename "testpath4.atom" \
+--docset-atom-filename "cocos2d-swift.atom" \
 --docset-feed-url "${companyURL}/${company}/%DOCSETATOMFILENAME" \
 --docset-package-url "${companyURL}/${company}/%DOCSETPACKAGEFILENAME" \
 --docset-fallback-url "${companyURL}/${company}" \
@@ -33,6 +33,7 @@ tools/appledoc \
 --keep-intermediate-files \
 --no-repeat-first-par \
 --no-warn-invalid-crossref \
+--prefix-merged-sections \
 --exit-threshold 2 \
 --verbose 2 \
 --ignore .m \
