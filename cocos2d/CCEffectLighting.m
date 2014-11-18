@@ -293,7 +293,7 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
             }
         }
 
-        CCColor *ambientColor = [passInputs.node.scene.lights findAmbientSumForLightsWithMask:self.groupMask];
+        CCColor *ambientColor = [passInputs.sprite.scene.lights findAmbientSumForLightsWithMask:self.groupMask];
         passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_globalAmbientColor"]] = [NSValue valueWithGLKVector4:ambientColor.glkVector4];
         
         if (self.needsSpecular)
