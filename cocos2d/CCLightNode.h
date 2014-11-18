@@ -10,9 +10,12 @@
 
 #if CC_EFFECTS_EXPERIMENTAL
 
+/** Light Types */
 typedef NS_ENUM(NSUInteger, CCLightType)
 {
+    /** A point light source. */
     CCLightPoint       = 0,
+    /** A directional light source. */
     CCLightDirectional = 1
 };
 
