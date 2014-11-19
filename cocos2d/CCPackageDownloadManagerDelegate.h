@@ -2,6 +2,11 @@
 
 @class CCPackage;
 
+/** CCPackageDownloadManagerDelegate protocol describes an interface for the CCPackageDownloadManager's delegate.
+ 
+ It defines methods to report progress and lifecycle events of a download. A special case is, if implemented to, provide the request object before starting the download to allow the delegate to adjust details.
+ 
+ */
 @protocol CCPackageDownloadManagerDelegate <NSObject>
 
 @required

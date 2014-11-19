@@ -4,6 +4,11 @@
 @protocol CCPackageUnzipperDelegate;
 @class CCPackage;
 
+/** CCPackageUnzipper is a class to encapsulate the unpacking of a zipped package file.
+ 
+ Unpacking is done on a queue and by default DISPATCH_QUEUE_PRIORITY_LOW.
+ 
+ */
 @interface CCPackageUnzipper : NSObject <SSZipArchiveDelegate>
 
 /**
