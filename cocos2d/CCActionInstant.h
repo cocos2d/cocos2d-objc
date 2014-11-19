@@ -36,14 +36,14 @@
 @end
 
 
-/** This action will remove the target from its parent node. */
+/** This action will remove the node running this action from its parent. */
 @interface CCActionRemove : CCActionInstant
 
 @end
 
 
 /** 
- *  This action will make the target visible.
+ *  This action will make the target visible by setting its `visible` property to YES.
  */
 @interface CCActionShow : CCActionInstant
 
@@ -51,7 +51,7 @@
 
 
 /** 
- *  This action will hide the target.
+ *  This action will hide the target by setting its `visible` property to NO.
  */
 @interface CCActionHide : CCActionInstant
 
@@ -59,7 +59,7 @@
 
 
 /** 
- *  This action toggles the target's visibility.
+ *  This action toggles the target's visibility by altering the `visible` property.
  */
 @interface CCActionToggleVisibility : CCActionInstant
 
@@ -67,7 +67,9 @@
 
 
 /** 
- *  This action flips the target in x direction.
+ This action flips the target in x direction.
+ 
+ @note Target must be a CCSprite node or inherit from CCSprite.
  */
 @interface CCActionFlipX : CCActionInstant {
 	BOOL	_flipX;
@@ -105,7 +107,9 @@
 
 
 /** 
- *  This action will lips the target in y direction.
+ This action will lips the target in y direction.
+ 
+ @note Target must be a CCSprite node or inherit from CCSprite.
  */
 @interface CCActionFlipY : CCActionInstant {
 	BOOL	_flipY;
@@ -143,7 +147,7 @@
 
 
 /** 
- *  This action will teleport a target to the specififed position.
+ *  This action will set the target's `position` property.
  */
 @interface CCActionPlace : CCActionInstant <NSCopying> {
 	CGPoint _position;
@@ -181,7 +185,23 @@
 
 
 /**
- *  This action allows a custom function to be called.
+ This action allows a custom selector (method) to be called. The selector takes no arguments and returns nothing.
+ 
+ Example usage:
+ 
+    id callFunc = [CCActionCallFunc actionWithTarget:self selector@selector(myCallFuncMethod)];
+    [self runAction:callFunc];
+ 
+ The method needs to be declared as follows within the target's class (here: the class `self` is an instance of):
+ 
+    -(void) myCallFuncMethod {
+        NSLog(@"call func action ran my method");
+    }
+ 
+ Note that this simple example above is equivalent (but not as efficient) than simply calling the method directly:
+ 
+    [self myCallFuncMethod];
+ 
  */
 @interface CCActionCallFunc : CCActionInstant <NSCopying> {
 	__weak id _targetCallback;
@@ -200,7 +220,7 @@
  *  Creates the action with the callback.
  *
  *  @param t Target the selector is sent to.
- *  @param s Selector to execute.
+ *  @param s Selector to execute. Selector takes no parameters and returns nothing.
  *
  *  @return The call func action object.
  */
@@ -215,7 +235,7 @@
  *  Initializes the action with the callback.
  *
  *  @param t Target the selector is sent to
- *  @param s Selector to execute
+ *  @param s Selector to execute. Selector takes no parameters and returns nothing.
  *
  *  @return An initialized call func action object.
  */
@@ -228,7 +248,31 @@
 
 
 /** 
- *  This actions executes a code block.
+ This action executes a code block. The block takes no parameters and returns nothing.
+ 
+ Blocks can access all variables in scope, both variables local to the method as
+ well as instance variables. Local variables require to be declared with the `__block` keyword if the block needs to
+ modify the variable.
+ 
+ To avoid potential memory management issues it is recommended to use a weak self reference inside
+ the block. If you are knowledgeable about [memory management with ARC and blocks](http://stackoverflow.com/questions/20030873/always-pass-weak-reference-of-self-into-block-in-arc)
+ you can omit the weakSelf reference at your discretion.
+ 
+ Example block that reads and modifies a variable in scope and rotates a node to illustrate the code syntax:
+
+    __weak typeof(self) weakSelf = self;
+    __block BOOL blockDidRun = NO;
+ 
+    id callBlock = [CCActionCallBlock actionWithBlock:^{
+        if (blockDidRun == NO) {
+            blockDidRun = YES;
+            weakSelf.rotation += 90;
+        }
+    }];
+ 
+    [self runAction:callBlock];
+ 
+ @see [Blocks Programming Guide](https://developer.apple.com/library/ios/documentation/cocoa/Conceptual/Blocks/Articles/00_Introduction.html)
  */
 @interface CCActionCallBlock : CCActionInstant<NSCopying> {
 	void (^_block)();
@@ -241,11 +285,11 @@
 
 /**
  *  Creates the action with the specified block, to be used as a callback.
- *  The block will be "copied".
+ *  The block will be copied.
  *
- *  @param block Block to execute.
+ *  @param block Block to execute. Block takes no parameters, returns nothing.
  *
- *  @return The call block action object.
+ *  @return The call block action.
  */
 + (id)actionWithBlock:(void(^)())block;
 
@@ -256,11 +300,11 @@
 
 /**
  *  Initializes the action with the specified block, to be used as a callback.
- *  The block will be "copied".
+ *  The block will be copied.
  *
- *  @param block Block to execute.
+ *  @param block Block to execute. Block takes no parameters, returns nothing.
  *
- *  @return An initialized call block action object.
+ *  @return An initialized call block action.
  */
 - (id)initWithBlock:(void(^)())block;
 
@@ -271,7 +315,9 @@
 
 
 /**
- *  This actions changes the target sprite frame.
+ This actions changes the target's `spriteFrame` property.
+ 
+ @note The target node must be a CCSprite or subclass of CCSprite or have a `CCSpriteFrame* spriteFrame` property.
  */
 @interface CCActionSpriteFrame : CCActionInstant <NSCopying>
 {
@@ -307,8 +353,10 @@
 @end
 
 /**
- *  This actions plays a sound effect.
- */
+ This actions plays a sound effect through OALSimpleAudio. To play back music use a CCActionCallBlock or CCActionCallFunc
+ so that you can use the playBg method of OALSimpleAudio.
+ 
+ @note The action ends immediately, it does not wait for the sound to end. */
 @interface CCActionSoundEffect : CCActionInstant
 {
     NSString* _soundFile;
@@ -317,16 +365,30 @@
     float _gain;
 }
 
-/// -----------------------------------------------------------------------
-/// @name Creating a CCActionSoundEffect Object
-/// -----------------------------------------------------------------------
+/**
+ Creates a sound effect action.
+ 
+ @param file The audio file to play.
+ @param pitch The playback pitch. 1.0 equals *normal* pitch.
+ @param pan Stereo panning, values from -1.0 (far left) to 1.0 (far right).
+ @param gain Gain (loudness), default 1.0 equals *normal* volume.
+ 
+ @see OALSimpleAudio
+ @see [OALSimpleAudio playEffect:volume:pitch:pan:loop:]
+ */
 +(id) actionWithSoundFile:(NSString*)file pitch:(float)pitch pan:(float) pan gain:(float)gain;
 
-
-/// -----------------------------------------------------------------------
-/// @name Initializing a CCActionSoundEffect Object
-/// -----------------------------------------------------------------------
-
+/**
+ Creates a sound effect action.
+ 
+ @param file The audio file to play.
+ @param pitch The playback pitch. 1.0 equals *normal* pitch.
+ @param pan Stereo panning, values from -1.0 (far left) to 1.0 (far right).
+ @param gain Gain (loudness), default 1.0 equals *normal* volume.
+ 
+ @see OALSimpleAudio
+ @see [OALSimpleAudio playEffect:volume:pitch:pan:loop:]
+ */
 -(id) initWithSoundFile:(NSString*)file pitch:(float)pitch pan:(float) pan gain:(float)gain;
 
 @end
