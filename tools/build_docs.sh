@@ -35,6 +35,8 @@ tools/appledoc \
 --keep-intermediate-files \
 --no-repeat-first-par \
 --no-warn-invalid-crossref \
+--merge-categories \
+--no-merge-category-comment \
 --prefix-merged-sections \
 --warn-undocumented-object \
 --warn-undocumented-member \
@@ -43,6 +45,7 @@ tools/appledoc \
 --warn-missing-arg \
 --exit-threshold 2 \
 --verbose 2 \
+--index-desc API-Index.md \
 --ignore .m \
 --ignore _Private.h \
 --ignore _frag.h \
