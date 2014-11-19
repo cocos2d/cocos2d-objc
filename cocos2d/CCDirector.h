@@ -76,21 +76,21 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 
 
 
-/** Class that creates and handle the main Window and manages how and when to execute the Scenes.
+/** The director creates and handles the main Window and the Cocos2D view. It also presents Scenes and initiates scene updates and drawing.
  
  CCDirector inherits from CC_VIEWCONTROLLER which is equivalent to UIViewController on iOS, and NSObject on OS X and Android.
-
- The CCDirector is also responsible for:
- 
-  - initializing the OpenGL ES context
-  - setting the OpenGL pixel format (default on is RGB565)
-  - setting the OpenGL buffer depth (default one is 0-bit)
-  - setting the projection (default one is 3D)
 
  Since the CCDirector is a singleton, the standard way to use its methods and properties is:
  
  - `[[CCDirector sharedDirector] methodName];`
  - `[CCDirector sharedDirector].aProperty;`
+
+ The CCDirector is responsible for:
+ 
+  - initializing the OpenGL ES / Metal context
+  - setting the pixel format (default on is RGB565)
+  - setting the buffer depth (default one is 0-bit)
+  - setting the projection (default one is 3D)
 
  The CCDirector also sets the default OpenGL context:
  
@@ -168,38 +168,36 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 	NSMutableArray *_rendererPool;
 }
 
-/** returns the cocos2d thread.
- If you want to run any cocos2d task, run it in this thread.
- Typically this is the main thread.
- */
+/** @name Singleton Accessor */
+
+/** returns a shared instance of the director */
++(CCDirector*)sharedDirector;
+
+/** @name Accessing OpenGL Thread */
+
+/** If you want to run any Cocos2D task, run it in this thread. Any task that modifies Cocos2D's OpenGL state must be
+ executed on this thread due to OpenGL state changes only being allowed on the OpenGL thread.
+ 
+ @returns The Cocos2D thread, typically this will be the main thread. */
 @property (weak, readonly, nonatomic ) NSThread *runningThread;
-/** The current running Scene. Director can only run one Scene at the time */
-@property (nonatomic, readonly) CCScene* runningScene;
-/** The FPS value */
-@property (nonatomic, readwrite, assign) CCTime animationInterval;
-@property (nonatomic, readwrite, assign) CCTime fixedUpdateInterval;
-/** Whether or not to display director statistics */
-@property (nonatomic, readwrite, assign) BOOL displayStats;
-/** whether or not the next delta time will be zero */
-@property (nonatomic,readwrite,assign,getter=isNextDeltaTimeZero) BOOL nextDeltaTimeZero;
-/** Whether or not the Director is paused */
-@property (nonatomic, readonly,getter=isPaused) BOOL paused;
-/** Whether or not the Director is active (animating) */
-@property (nonatomic, readonly,getter=isAnimating) BOOL animating;
-/** Sets an OpenGL projection */
-@property (nonatomic, readwrite) CCDirectorProjection projection;
-/** How many frames were called since the director started */
-@property (nonatomic, readonly) NSUInteger totalFrames;
-/** seconds per frame */
-@property (nonatomic, readonly) CCTime secondsPerFrame;
+
+/** @name Accessing Responder Manager */
 
 /** Sets the touch manager
  */
 @property ( nonatomic, strong ) CCResponderManager* responderManager;
 
+/** @name Director Delegate */
+
 /** CCDirector delegate. It shall implement the CCDirectorDelegate protocol
  */
 @property (nonatomic, readwrite, weak) id<CCDirectorDelegate> delegate;
+
+#pragma mark Director - Stats
+
+#pragma mark Director - View Size
+
+/** @name View Scale */
 
 /** Content scaling factor. Sets the ratio of Cocos2D "points" to pixels. Default value is initalized from the content scale of the GL view used by the director.
  */
@@ -213,22 +211,22 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 /// Defaults to the view size.
 @property(nonatomic, assign) CGSize designSize;
 
+
+/** @name Working with View and Projection */
+
+/** Sets an OpenGL projection */
+@property (nonatomic, readwrite) CCDirectorProjection projection;
+/// View used by the director for rendering.
+@property(nonatomic, strong) CC_VIEW<CCDirectorView> *view;
 /// Projection matrix used for rendering.
 @property(nonatomic, readonly) GLKMatrix4 projectionMatrix;
 
 /// The current global shader values values.
 @property(nonatomic, readonly) NSMutableDictionary *globalShaderUniforms;
+/** Whether or not to display statistics in the view's lower left corner. From top to bottom the numbers are:
+ number of draw calls, time per frame (in seconds), framerate (average over most recent frames). */
+@property (nonatomic, readwrite, assign) BOOL displayStats;
 
-/// View used by the director for rendering.
-@property(nonatomic, strong) CC_VIEW<CCDirectorView> *view;
-
-/** returns a shared instance of the director */
-+(CCDirector*)sharedDirector;
-
-
-#pragma mark Director - Stats
-
-#pragma mark Director - View Size
 /** returns the size of the OpenGL view in points */
 - (CGSize) viewSize;
 
@@ -267,6 +265,11 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 -(CGPoint) convertToUI:(CGPoint)p;
 
 #pragma mark Director - Scene Management
+
+/** @name Presenting Scenes */
+
+/** The current running Scene. Director can only run one Scene at the time */
+@property (nonatomic, readonly) CCScene* runningScene;
 
 /**
  *  Presents a new scene.
@@ -368,6 +371,24 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
  */
 - (void)popSceneWithTransition:(CCTransition *)transition;
 
+/** @name Animating the Active Scene */
+
+/** The animation interval is the time per frame. Typically specified as `1.0 / 60.0` where the latter number defines
+ the framerate. The lowest value is 0.0166 (1/60). */
+@property (nonatomic, readwrite, assign) CCTime animationInterval;
+/** The fixed animation interval is used to run "fixed updates" at a fixed rate, independently of the framerate. Used primarly by the physics engine. */
+@property (nonatomic, readwrite, assign) CCTime fixedUpdateInterval;
+/** whether or not the next delta time will be zero */
+@property (nonatomic,readwrite,assign,getter=isNextDeltaTimeZero) BOOL nextDeltaTimeZero;
+/** Whether or not the Director is paused */
+@property (nonatomic, readonly,getter=isPaused) BOOL paused;
+/** Whether or not the Director is active (animating) */
+@property (nonatomic, readonly,getter=isAnimating) BOOL animating;
+/** How many frames were called since the director started */
+@property (nonatomic, readonly) NSUInteger totalFrames;
+/** seconds per frame */
+@property (nonatomic, readonly) CCTime secondsPerFrame;
+
 /** Ends the execution, releases the running scene.
  It doesn't remove the OpenGL view from its parent. You have to do it manually.
  */
@@ -397,6 +418,8 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 -(void) startAnimation;
 
 #pragma mark Director - Memory Helper
+
+/** @name Purging Caches */
 
 /** Removes all the cocos2d data that was cached automatically.
  It will purge the CCTextureCache, CCLabelBMFont cache.
