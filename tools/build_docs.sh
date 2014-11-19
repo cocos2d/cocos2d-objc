@@ -113,4 +113,8 @@ tools/appledoc \
 --ignore uthash.h \
 --ignore utlist.h \
 --ignore ZipUtils.h \
-cocos2d cocos2d-ui
+cocos2d \
+cocos2d-ui \
+external/ObjectAL/ObjectAL/ObjectAL/OALSimpleAudio.h \
+external/ObjectAL/ObjectAL/ObjectAL/AudioTrack \
+external/ObjectAL/ObjectAL/ObjectAL/Session \
