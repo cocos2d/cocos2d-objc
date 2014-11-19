@@ -2,69 +2,256 @@
 #import "CCRenderer_Private.h"
 #import "CCNode_Private.h"
 #import "chipmunk/chipmunk.h"
+#import <objc/message.h>
+
+
+@protocol CCProjectionDelegate
+@property(nonatomic, readonly) GLKMatrix4 projection;
+@end
 
 
 @interface CCViewportNode : CCNode
 
+// Position/rotation/zoom of the viewport's camera.
 @property(nonatomic, assign) CGPoint cameraPosition;
 @property(nonatomic, assign) float cameraRotation;
 @property(nonatomic, assign) float cameraZoom;
 
-@property(nonatomic, assign) GLKMatrix4 projection;
+-(instancetype)initWithProjection:(GLKMatrix4)projection;
 
-// TODO
-//@property(nonatomic, assign) CCRenderTexture *renderTarget;
+// Convenience constructors to create screen sized viewports.
++(instancetype)centered:(CGSize)designSize;
++(instancetype)scaleToFill:(CGSize)designSize;
++(instancetype)scaleToFit:(CGSize)designSize;
++(instancetype)scaleToFitWidth:(CGSize)designSize;
++(instancetype)scaleToFitHeight:(CGSize)designSize;
+
+// Power user functionality.
+
+// If non-identity, this overrides the position/rotation/zoom properties.
+@property(nonatomic, assign) GLKMatrix4 customCameraTransform;
+
+// Delegate that is responsible for calculating the projection each frame.
+@property(nonatomic, strong) id<CCProjectionDelegate> projectionDelegate;
+
+// Setting the projection explicitly is an error if the projectionDelegate is non-nil;
+@property(nonatomic, assign) GLKMatrix4 projection;
 
 @end
 
 
-@implementation CCViewportNode {
+@interface CCAbstractProjection : NSObject @end
+@implementation CCAbstractProjection {
+    @protected
+    __weak CCNode *_target;
 }
 
--(instancetype)init
+-(instancetype)initWithTarget:(CCNode *)target
 {
     if((self = [super init])){
-        _cameraPosition = CGPointZero;
-        _cameraRotation = 0.0f;
-        _cameraZoom = 1.0f;
+        _target = target;
     }
     
     return self;
 }
 
--(GLKMatrix4)projectionForSize:(CGSize)size
+@end
+
+
+@interface CCCentereredOrthoProjection : CCAbstractProjection<CCProjectionDelegate> @end
+@implementation CCCentereredOrthoProjection
+
+-(GLKMatrix4)projection
 {
-    float w = size.width;
-    float h = size.height;
+    CGSize size = _target.contentSizeInPoints;
+    float w = size.width, h = size.height;
     
-    // Lower left origin:
-//    return GLKMatrix4MakeOrtho(0, w, 0, h, -1024, 1024);
-    
-    // Centered:
+    // TODO magic numbers
     return GLKMatrix4MakeOrtho(-w/2, w/2, -h/2, h/2, -1024, 1024);
 }
 
--(void)setContentSize:(CGSize)size
+@end
+
+
+@interface CCParallaxProjection : CCAbstractProjection<CCProjectionDelegate> @end
+@implementation CCParallaxProjection {
+    SEL _cameraPositionSelector;
+}
+
+-(instancetype)initWithTarget:(CCNode *)target cameraPositionSelector:(SEL)cameraPositionSelector
 {
-    _projection = [self projectionForSize:size];
+    if((self = [super initWithTarget:target])){
+        _cameraPositionSelector = cameraPositionSelector;
+    }
     
-    [super setContentSize:size];
+    return self;
+}
+
+-(GLKMatrix4)projection
+{
+    CGSize size = _target.contentSizeInPoints;
+    float w = size.width, h = size.height;
+    
+    // TODO this is kind of a dumb hack.
+    typedef CGPoint (*Func)(id, SEL);
+    CGPoint p = ((Func)objc_msgSend)(_target, _cameraPositionSelector);
+    
+    return GLKMatrix4Multiply(
+        GLKMatrix4MakeOrtho(-w/2, w/2, -h/2, h/2, -1024, 1024),
+        GLKMatrix4Make(
+            1.0f, 0.0f, 0.0f, 0.0f,
+            0.0f, 1.0f, 0.0f, 0.0f,
+            -p.x, -p.y, 1.0f, 0.0f,
+            0.0f, 0.0f, 0.0f, 1.0f
+        )
+    );
+}
+
+@end
+
+
+@interface CCPerspectiveProjection : CCAbstractProjection<CCProjectionDelegate> @end
+@implementation CCPerspectiveProjection
+
+-(GLKMatrix4)projection
+{
+    CGSize size = _target.contentSizeInPoints;
+    float w = size.width, h = size.height;
+    
+    // TODO magic numbers
+    float eye = 1;
+    float near = eye;
+    float far = eye + 1;
+    float s = 2.0*eye/near;
+    
+    return GLKMatrix4Multiply(
+        GLKMatrix4MakeFrustum(-w/s, w/s, -h/s, h/s, near, far),
+        GLKMatrix4MakeTranslation(0, 0, -eye)
+    );
+}
+
+@end
+
+
+@implementation CCViewportNode {
+    BOOL _useCustomCamera;
+    GLKMatrix4 _projection;
+}
+
+-(instancetype)init
+{
+    return [self initWithProjection:GLKMatrix4Identity];
+}
+
+-(instancetype)initWithProjection:(GLKMatrix4)projection;
+{
+    if((self = [super init])){
+        _cameraPosition = CGPointZero;
+        _cameraRotation = 0.0f;
+        _cameraZoom = 1.0f;
+        
+        _useCustomCamera = NO;
+        _customCameraTransform = GLKMatrix4Identity;
+        
+        _projection = projection;
+    }
+    
+    return self;
+}
+
++(instancetype)centered:(CGSize)designSize;
+{
+    CGSize size = [CCDirector sharedDirector].viewSize;
+    
+    GLKMatrix4 projection = GLKMatrix4MakeOrtho(-size.width/2.0, size.width/2.0, -size.height/2.0, size.height/2.0, -1024, 1024);
+    CCViewportNode *viewport = [[self alloc] initWithProjection:projection];
+    viewport.contentSize = size;
+    viewport.cameraPosition = ccp(designSize.width/2.0, designSize.height/2.0);
+    
+    return viewport;
+}
+
++(instancetype)scaleToFill:(CGSize)designSize;
+{
+    CGSize size = [CCDirector sharedDirector].viewSize;
+    float scale = MIN(designSize.width/size.width, designSize.height/size.height)/2.0;
+    
+    GLKMatrix4 projection = GLKMatrix4MakeOrtho(-scale*size.width, scale*size.width, -scale*size.height, scale*size.height, -1024, 1024);
+    CCViewportNode *viewport = [[self alloc] initWithProjection:projection];
+    viewport.contentSize = size;
+    viewport.cameraPosition = ccp(designSize.width/2.0, designSize.height/2.0);
+    
+    return viewport;
+}
+
++(instancetype)scaleToFit:(CGSize)designSize;
+{
+    CGSize size = [CCDirector sharedDirector].viewSize;
+    float scale = MAX(designSize.width/size.width, designSize.height/size.height)/2.0;
+    
+    GLKMatrix4 projection = GLKMatrix4MakeOrtho(-scale*size.width, scale*size.width, -scale*size.height, scale*size.height, -1024, 1024);
+    CCViewportNode *viewport = [[self alloc] initWithProjection:projection];
+    viewport.contentSize = size;
+    viewport.cameraPosition = ccp(designSize.width/2.0, designSize.height/2.0);
+    
+    return viewport;
+}
+
++(instancetype)scaleToFitWidth:(CGSize)designSize;
+{
+    CGSize size = [CCDirector sharedDirector].viewSize;
+    float scale = designSize.width/size.width/2.0;
+    
+    GLKMatrix4 projection = GLKMatrix4MakeOrtho(-scale*size.width, scale*size.width, -scale*size.height, scale*size.height, -1024, 1024);
+    CCViewportNode *viewport = [[self alloc] initWithProjection:projection];
+    viewport.contentSize = size;
+    viewport.cameraPosition = ccp(designSize.width/2.0, designSize.height/2.0);
+    
+    return viewport;
+}
+
++(instancetype)scaleToFitHeight:(CGSize)designSize;
+{
+    CGSize size = [CCDirector sharedDirector].viewSize;
+    float scale = designSize.height/size.height/2.0;
+    
+    GLKMatrix4 projection = GLKMatrix4MakeOrtho(-scale*size.width, scale*size.width, -scale*size.height, scale*size.height, -1024, 1024);
+    CCViewportNode *viewport = [[self alloc] initWithProjection:projection];
+    viewport.contentSize = size;
+    viewport.cameraPosition = ccp(designSize.width/2.0, designSize.height/2.0);
+    
+    return viewport;
+}
+
+-(GLKMatrix4)projection
+{
+    return (_projectionDelegate ? _projectionDelegate.projection : _projection);
+}
+
+-(void)setProjection:(GLKMatrix4)projection
+{
+    NSAssert(_projectionDelegate == nil, @"Cannot set the projection explicitly when a projection delegate is set.");
+    _projection = projection;
 }
 
 -(GLKMatrix4)cameraTransform
 {
-    float x = -_cameraPosition.x;
-    float y = -_cameraPosition.y;
-    
-    float c = _cameraZoom*cosf(-CC_DEGREES_TO_RADIANS(_cameraRotation));
-    float s = _cameraZoom*sinf(-CC_DEGREES_TO_RADIANS(_cameraRotation));
-    
-    return GLKMatrix4Make(
-           c,   -s, 0.0f, 0.0f,
-           s,    c, 0.0f, 0.0f,
-        0.0f, 0.0f, 1.0f, 0.0f,
-           x,    y, 0.0f, 1.0f
-    );
+    if(_useCustomCamera){
+        return _customCameraTransform;
+    } else {
+        float x = -_cameraPosition.x;
+        float y = -_cameraPosition.y;
+        
+        float c = _cameraZoom*cosf(-CC_DEGREES_TO_RADIANS(_cameraRotation));
+        float s = _cameraZoom*sinf(-CC_DEGREES_TO_RADIANS(_cameraRotation));
+        
+        return GLKMatrix4Make(
+               c,   -s, 0.0f, 0.0f,
+               s,    c, 0.0f, 0.0f,
+            0.0f, 0.0f, 1.0f, 0.0f,
+               x,    y, 0.0f, 1.0f
+        );
+    }
 }
 
 -(void)visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
@@ -94,7 +281,7 @@
     [renderer enqueueBlock:^{glViewport(minx, miny, maxx - minx, maxy - miny);} globalSortOrder:NSIntegerMin debugLabel:@"CCViewportNode: Set viewport" threadSafe:YES];
     
     // TODO Need to do something to fix rotations when using clipping mode.
-    GLKMatrix4 transform = GLKMatrix4Multiply(_projection, self.cameraTransform);
+    GLKMatrix4 transform = GLKMatrix4Multiply(self.projection, self.cameraTransform);
     
     // Render children.
 	[self sortAllChildren];
@@ -115,9 +302,12 @@
     CCTime _time;
     
     CCViewportNode *_viewport;
+    id<CCProjectionDelegate> _orthoProjectionDelegate;
+    id<CCProjectionDelegate> _parallaxProjectionDelegate;
+    id<CCProjectionDelegate> _perspectiveProjectionDelegate;
 }
 
-- (void) setupViewPortTest
+- (void)setupViewPortTest
 {
     _viewport = [[CCViewportNode alloc] init];
     _viewport.anchorPoint = ccp(0.5, 0.5);
@@ -126,9 +316,15 @@
     _viewport.contentSize = [CCDirector sharedDirector].viewSize;
     [self.contentNode addChild:_viewport];
     
+    _orthoProjectionDelegate = [[CCCentereredOrthoProjection alloc] initWithTarget:_viewport];
+    _parallaxProjectionDelegate = [[CCParallaxProjection alloc] initWithTarget:_viewport cameraPositionSelector:@selector(cameraPosition)];
+    _perspectiveProjectionDelegate = [[CCPerspectiveProjection alloc] initWithTarget:_viewport];
+    _viewport.projectionDelegate = _orthoProjectionDelegate;
+    
     CCNodeColor *grey = [CCNodeColor nodeWithColor:[CCColor grayColor]];
     grey.contentSize = CGSizeMake(10000, 10000);
     grey.position = ccp(-5000, -5000);
+    grey.vertexZ = -1.0;
     [_viewport addChild:grey z:-1000];
     
     for(int y=0; y<30; y++){
@@ -154,7 +350,7 @@ typedef void (^AnimationBlock)(CCTime t);
     CCTime step = 1.0/60.0;
     NSUInteger repeats = duration/step;
     
-    CCTimer *timer = [self scheduleBlock:^(CCTimer *timer) {
+    CCTimer *timer = [_viewport scheduleBlock:^(CCTimer *timer) {
         CCTime t = (CCTime)(repeats - timer.repeatCount)/(CCTime)repeats;
         
         block(t);
@@ -195,9 +391,7 @@ typedef void (^AnimationBlock)(CCTime t);
 {
     self.subTitle = @"The viewport camera has a separate position/rotation/zoom.";
     
-    CGSize size = _viewport.contentSize;
-    float w = size.width, h = size.height;
-    _viewport.projection = GLKMatrix4MakeOrtho(-w/2, w/2, -h/2, h/2, -1024, 1024);
+    _viewport.projectionDelegate = _orthoProjectionDelegate;
     
     [self animationDuration:2.0 block:^(CCTime t) {
         float phase = 2*M_PI*(t + 0.25);
@@ -209,40 +403,27 @@ typedef void (^AnimationBlock)(CCTime t);
     }];
 }
 
-static GLKMatrix4
-GLKMatrix4MakeAxonometric(CGSize size, CGPoint p)
-{
-    float w = size.width, h = size.height;
-    
-    return GLKMatrix4Multiply(
-        GLKMatrix4MakeOrtho(-w/2, w/2, -h/2, h/2, -1024, 1024),
-        GLKMatrix4Make(
-            1.0f, 0.0f, 0.0f, 0.0f,
-            0.0f, 1.0f, 0.0f, 0.0f,
-            -p.x, -p.y, 1.0f, 0.0f,
-            0.0f, 0.0f, 0.0f, 1.0f
-        )
-    );
-}
-
 -(void)animateAxonometric
 {
     self.subTitle = @"The viewport projection can be controlled for parallax effects.";
     
-    CGSize size = _viewport.contentSize;
+    _viewport.projectionDelegate = _parallaxProjectionDelegate;
     
     [self animationDuration:2.0 block:^(CCTime t) {
         float phase = 2*M_PI*(t + 0.25);
         _viewport.cameraPosition = ccp(30*cos(phase), 30*sin(2*phase));
-        _viewport.projection = GLKMatrix4MakeAxonometric(size, _viewport.cameraPosition);
         
         if(t == 1.0) [self animatePerspective];
     }];
 }
 
--(void)animateProjectionTo:(GLKMatrix4)end after:(dispatch_block_t)after
+-(void)animateProjectionTo:(id<CCProjectionDelegate>)delegate after:(dispatch_block_t)after
 {
     GLKMatrix4 begin = _viewport.projection;
+    GLKMatrix4 end = delegate.projection;
+    
+    _viewport.projectionDelegate = nil;
+    _viewport.projection = begin;
     
     [self animationDuration:0.25 block:^(CCTime t) {
         GLKMatrix4 m = {};
@@ -253,7 +434,10 @@ GLKMatrix4MakeAxonometric(CGSize size, CGPoint p)
         
         _viewport.projection = m;
         
-        if(t == 1.0) after();
+        if(t == 1.0){
+            _viewport.projectionDelegate = delegate;
+            after();
+        }
     }];
 }
 
@@ -261,20 +445,7 @@ GLKMatrix4MakeAxonometric(CGSize size, CGPoint p)
 {
     self.subTitle = @"... or 3D perspective effects.";
     
-    CGSize size = _viewport.contentSize;
-    float w = size.width, h = size.height;
-    
-    float eye = 1;
-    float near = eye;
-    float far = eye + 1;
-    float s = 2.0*eye/near;
-    
-    GLKMatrix4 projection = GLKMatrix4Multiply(
-        GLKMatrix4MakeFrustum(-w/s, w/s, -h/s, h/s, near, far),
-        GLKMatrix4MakeTranslation(0, 0, -eye)
-    );
-    
-    [self animateProjectionTo:projection after:^{
+    [self animateProjectionTo:_perspectiveProjectionDelegate after:^{
         [self animationDuration:2.0 block:^(CCTime t) {
             float phase = 2*M_PI*(t + 0.25);
             _viewport.cameraPosition = ccp(30*cos(phase), 30*sin(2*phase));
@@ -290,15 +461,78 @@ GLKMatrix4MakeAxonometric(CGSize size, CGPoint p)
     
     CGSize a = _viewport.contentSize;
     CGSize b = [CCDirector sharedDirector].viewSize;
-    GLKMatrix4 projection = [_viewport projectionForSize:a];
     
-    [self animateProjectionTo:projection after:^{
+    [self animateProjectionTo:_orthoProjectionDelegate after:^{
+        _viewport.projectionDelegate = _orthoProjectionDelegate;
+        
         [self animationDuration:0.5 block:^(CCTime t) {
             _viewport.contentSize = CGSizeMake(cpflerp(a.width, b.width, t), cpflerp(a.height, b.height, t));
             
             if(t == 1.0) [self animateContentSize];
         }];
     }];
+}
+
+CGSize DesignSize = {300, 300};
+
+-(void)setupCenteredTest
+{
+    self.subTitle = @"Centered";
+    
+    CCViewportNode *viewport = [CCViewportNode centered:DesignSize];
+    [self.contentNode addChild:viewport];
+    
+    CCDrawNode *draw = [CCDrawNode node];
+    [draw drawDot:ccp(DesignSize.width/2.0, DesignSize.height/2.0) radius:DesignSize.width/2.0 color:[CCColor redColor]];
+    [viewport addChild:draw];
+}
+
+-(void)setupScaleToFillTest
+{
+    self.subTitle = @"Scale to fill";
+    
+    CCViewportNode *viewport = [CCViewportNode scaleToFill:DesignSize];
+    [self.contentNode addChild:viewport];
+    
+    CCDrawNode *draw = [CCDrawNode node];
+    [draw drawDot:ccp(DesignSize.width/2.0, DesignSize.height/2.0) radius:DesignSize.width/2.0 color:[CCColor redColor]];
+    [viewport addChild:draw];
+}
+
+-(void)setupScaleToFitTest
+{
+    self.subTitle = @"Scale to fit";
+    
+    CCViewportNode *viewport = [CCViewportNode scaleToFit:DesignSize];
+    [self.contentNode addChild:viewport];
+    
+    CCDrawNode *draw = [CCDrawNode node];
+    [draw drawDot:ccp(DesignSize.width/2.0, DesignSize.height/2.0) radius:DesignSize.width/2.0 color:[CCColor redColor]];
+    [viewport addChild:draw];
+}
+
+-(void)setupScaleToFitWidthTest
+{
+    self.subTitle = @"Scale to fit width";
+    
+    CCViewportNode *viewport = [CCViewportNode scaleToFitWidth:DesignSize];
+    [self.contentNode addChild:viewport];
+    
+    CCDrawNode *draw = [CCDrawNode node];
+    [draw drawDot:ccp(DesignSize.width/2.0, DesignSize.height/2.0) radius:DesignSize.width/2.0 color:[CCColor redColor]];
+    [viewport addChild:draw];
+}
+
+-(void)setupScaleToFitHeightTest
+{
+    self.subTitle = @"Scale to fit height";
+    
+    CCViewportNode *viewport = [CCViewportNode scaleToFitHeight:DesignSize];
+    [self.contentNode addChild:viewport];
+    
+    CCDrawNode *draw = [CCDrawNode node];
+    [draw drawDot:ccp(DesignSize.width/2.0, DesignSize.height/2.0) radius:DesignSize.width/2.0 color:[CCColor redColor]];
+    [viewport addChild:draw];
 }
 
 @end
