@@ -25,10 +25,10 @@ tools/appledoc \
 --docset-feed-url "${companyURL}/${company}/%DOCSETATOMFILENAME" \
 --docset-package-url "${companyURL}/${company}/%DOCSETPACKAGEFILENAME" \
 --docset-fallback-url "${companyURL}/${company}" \
---output "${outputPath}" \
+--docset-platform-family "${target}" \
 --publish-docset \
 --install-docset \
---docset-platform-family "${target}" \
+--output "${outputPath}" \
 --logformat xcode \
 --no-keep-undocumented-members \
 --no-search-undocumented-doc \
