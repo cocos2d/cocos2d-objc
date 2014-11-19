@@ -168,9 +168,14 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 	NSMutableArray *_rendererPool;
 }
 
+// Undocumented members (considered private)
+@property ( nonatomic, strong ) CCResponderManager* responderManager;
+@property (nonatomic, readwrite, weak) id<CCDirectorDelegate> delegate;
+
+
 /** @name Singleton Accessor */
 
-/** returns a shared instance of the director */
+/** @returns The shared director instance. */
 +(CCDirector*)sharedDirector;
 
 /** @name Accessing OpenGL Thread */
@@ -181,29 +186,20 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
  @returns The Cocos2D thread, typically this will be the main thread. */
 @property (weak, readonly, nonatomic ) NSThread *runningThread;
 
-/** @name Accessing Responder Manager */
-
-/** Sets the touch manager
- */
-@property ( nonatomic, strong ) CCResponderManager* responderManager;
-
-/** @name Director Delegate */
-
-/** CCDirector delegate. It shall implement the CCDirectorDelegate protocol
- */
-@property (nonatomic, readwrite, weak) id<CCDirectorDelegate> delegate;
-
 #pragma mark Director - Stats
 
 #pragma mark Director - View Size
 
 /** @name View Scale */
 
-/** Content scaling factor. Sets the ratio of Cocos2D "points" to pixels. Default value is initalized from the content scale of the GL view used by the director.
+/** Content scaling factor. Sets the ratio of points to pixels. Default value is initalized from the content scale of the GL view used by the director.
+ @see UIScaleFactor
+ @see [UIView contentScaleFactor](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIView_Class/#//apple_ref/occ/instp/UIView/contentScaleFactor)
  */
 @property(nonatomic, assign) CGFloat contentScaleFactor;
 
 /** UI scaling factor, default value is 1. Positions and content sizes are scale by this factor if the position type is set to scale.
+ @see contentScaleFactor
  */
 @property (nonatomic,readwrite,assign) float UIScaleFactor;
 
@@ -214,24 +210,32 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 
 /** @name Working with View and Projection */
 
-/** Sets an OpenGL projection */
-@property (nonatomic, readwrite) CCDirectorProjection projection;
-/// View used by the director for rendering.
+/// View used by the director for rendering. The CC_VIEW macro equals UIView on iOS, NSOpenGLView on OS X and CCGLView on Android.
+/// @see CCDirectorView
 @property(nonatomic, strong) CC_VIEW<CCDirectorView> *view;
+/** Sets an OpenGL projection
+ @see CCDirectorProjection
+ @see projectionMatrix */
+@property (nonatomic, readwrite) CCDirectorProjection projection;
 /// Projection matrix used for rendering.
+/// @see projection
 @property(nonatomic, readonly) GLKMatrix4 projectionMatrix;
 
 /// The current global shader values values.
 @property(nonatomic, readonly) NSMutableDictionary *globalShaderUniforms;
 /** Whether or not to display statistics in the view's lower left corner. From top to bottom the numbers are:
- number of draw calls, time per frame (in seconds), framerate (average over most recent frames). */
+ number of draw calls, time per frame (in seconds), framerate (average over most recent frames).
+ @see totalFrames
+ @see secondsPerFrame */
 @property (nonatomic, readwrite, assign) BOOL displayStats;
 
-/** returns the size of the OpenGL view in points */
+/** @returns The size of the view in points.
+ @see viewSizeInPixels */
 - (CGSize) viewSize;
 
-/** returns the size of the OpenGL view in pixels.
+/** @returns The size of the view in pixels.
  On Mac winSize and winSizeInPixels return the same value.
+ @see viewSize
  */
 - (CGSize) viewSizeInPixels;
 
@@ -268,7 +272,8 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 
 /** @name Presenting Scenes */
 
-/** The current running Scene. Director can only run one Scene at the time */
+/** The current running Scene. Director can only run one Scene at a time.
+ @see presentScene: */
 @property (nonatomic, readonly) CCScene* runningScene;
 
 /**
@@ -279,6 +284,7 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
  *  If another scene is currently running, this scene will be stopped, and the new scene started.
  *
  *  @param scene Scene to start.
+ *  @see presentScene:withTransition:
  */
 - (void)presentScene:(CCScene *)scene;
 
@@ -290,38 +296,37 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
  *  If another scene is currently running, this scene will be stopped, and the new scene started, according to the provided transition.
  *
  *  @param scene Scene to start.
- *  @param transition Transition to use.
+ *  @param transition Transition to use. Can be nil.
+ *  @see presentScene:
  */
 - (void)presentScene:(CCScene *)scene withTransition:(CCTransition *)transition;
 
-/**
- *  Enters the Director's main loop with the given Scene.
- *
- *  Call it to run only your FIRST scene.
- *  Don't call it if there is already a running scene.
- *
- *  It will call pushScene: and then it will call startAnimation
- *
- *  @param scene Scene to run.
- */
+// purposefully undocumented: is the same as calling presentScene:
 - (void) runWithScene:(CCScene*) scene;
 
 /**
  * Suspends the execution of the running scene, pushing it on the stack of suspended scenes.
  *
- * The new scene will be executed.
+ * The new scene will be executed, the previous scene remains in memory.
  * Try to avoid big stacks of pushed scenes to reduce memory allocation.
  *
- * ONLY call it if there is a running scene.
+ *  @warning ONLY call it if there is already a running scene.
  *
  *  @param scene New scene to start.
+ *  @see pushScene:withTransition:
+ *  @see popScene
+ *  @see popToRootScene
  */
 - (void) pushScene:(CCScene*) scene;
 
-/** Pops out a scene from the queue.
- * This scene will replace the running one.
+/** Pops out a scene from the queue. This scene will replace the running one.
  * The running scene will be deleted. If there are no more scenes in the stack the execution is terminated.
- * ONLY call it if there is a running scene.
+ *
+ *  @warning ONLY call it if there is a running scene.
+ *
+ *  @see pushScene:
+ *  @see popSceneWithTransition:
+ *  @see popToRootScene
  */
 - (void) popScene;
 
@@ -329,6 +334,8 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
  *
  * This scene will replace the running one.
  * Internally it will call `popToSceneStackLevel:1`
+ *  @see popScene
+ *  @see pushScene:
  */
 - (void) popToRootScene;
 
@@ -336,24 +343,14 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
  *
  * This scene will replace the running one. Internally it will call `popToRootScene`
  * @param transition The transition to play.
+ *  @see popToRootScene
  */
 -(void) popToRootSceneWithTransition:(CCTransition *)transition;
 
-/** Replaces the running scene with a new one. The running scene is terminated.
- *
- * ONLY call it if there is a running scene.
- *
- *  @param scene New scene to start.
- */
+// purposefully undocumented: is the same as calling presentScene:
 -(void) replaceScene: (CCScene*) scene;
 
-/**
- *  Presents a new scene by either starting first scene, or replacing the running
- *  Performs a transition between the outgoing and the incoming scene
- *
- *  @param scene      The incoming scene
- *  @param transition The transition to perform
- */
+// purposefully undocumented: is the same as calling presentScene:withTransition:
 - (void)replaceScene:(CCScene *)scene withTransition:(CCTransition *)transition;
 
 /**
@@ -361,6 +358,7 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
  *
  *  @param scene      The scene to present
  *  @param transition The transition to use
+ *  @see pushScene:
  */
 - (void)pushScene:(CCScene *)scene withTransition:(CCTransition *)transition;
 
@@ -368,63 +366,78 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
  *  Replaces the running scene, with the last scene pushed to the stack, using a transition
  *
  *  @param transition The transition to use
+ *	@see popScene
  */
 - (void)popSceneWithTransition:(CCTransition *)transition;
 
 /** @name Animating the Active Scene */
 
 /** The animation interval is the time per frame. Typically specified as `1.0 / 60.0` where the latter number defines
- the framerate. The lowest value is 0.0166 (1/60). */
+ the framerate. The lowest value is 0.0166 (1/60).
+ @see fixedUpdateInterval */
 @property (nonatomic, readwrite, assign) CCTime animationInterval;
-/** The fixed animation interval is used to run "fixed updates" at a fixed rate, independently of the framerate. Used primarly by the physics engine. */
+/** The fixed animation interval is used to run "fixed updates" at a fixed rate, independently of the framerate. Used primarly by the physics engine.
+ @see animationInterval */
 @property (nonatomic, readwrite, assign) CCTime fixedUpdateInterval;
 /** whether or not the next delta time will be zero */
 @property (nonatomic,readwrite,assign,getter=isNextDeltaTimeZero) BOOL nextDeltaTimeZero;
-/** Whether or not the Director is paused */
+/** Whether or not the Director is paused.
+ @see animating
+ @see pause
+ @see resume */
 @property (nonatomic, readonly,getter=isPaused) BOOL paused;
-/** Whether or not the Director is active (animating) */
+/** Whether or not the Director is active (animating).
+ @see paused
+ @see startAnimation
+ @see stopAnimation */
 @property (nonatomic, readonly,getter=isAnimating) BOOL animating;
-/** How many frames were called since the director started */
+/** How many frames were called since the director started
+ @see secondsPerFrame
+ @see displayStats */
 @property (nonatomic, readonly) NSUInteger totalFrames;
-/** seconds per frame */
+/** Time it took to render the most recent frames, in seconds per frame.
+ @see totalFrames
+ @see displayStats */
 @property (nonatomic, readonly) CCTime secondsPerFrame;
 
 /** Ends the execution, releases the running scene.
- It doesn't remove the OpenGL view from its parent. You have to do it manually.
+ It doesn't remove the view from the view hierarchy. You have to do it manually.
  */
 -(void) end;
 
-/** Pauses the running scene.
- The running scene will be _drawed_ but all scheduled timers will be paused
- While paused, the draw rate will be 4 FPS to reduce CPU consumption
+/** Pauses the running scene. All scheduled timers and actions will be paused.
+ When paused, the director refreshes the screen at a very low framerate (4 fps) to conserve battery power.
+ @see resume
  */
 -(void) pause;
 
-/** Resumes the paused scene
- The scheduled timers will be activated again.
- The "delta time" will be 0 (as if the game wasn't paused)
+/** Resumes the paused scene and its scheduled timers and actions.
+ The "delta time" will be set to 0 as if the game wasn't paused.
+ @see pause
+ @see nextDeltaTimeZero
  */
 -(void) resume;
 
-/** Stops the animation. Nothing will be drawn. The main loop won't be triggered anymore.
- If you want to pause your animation call [pause] instead.
+/** Stops the animation. All scheduled updates and actions are effectively paused. 
+
+ When not animating, the director doesn't redraw the view at all. It is best to hide the view when not animating the director.
+ If you need to keep showing the director's view use pause instead.
+ 
+ @see startAnimation
  */
 -(void) stopAnimation;
 
-/** The main loop is triggered again.
- Call this function only if [stopAnimation] was called earlier
- @warning Don't call this function to start the main loop. To run the main loop call runWithScene
- */
+/** Begins drawing the screen. Scheduled timers and actions will run.
+ 
+ @warning Don't call this function to start the main loop. To run the main loop call presentScene:
+ @see stopAnimation */
 -(void) startAnimation;
 
 #pragma mark Director - Memory Helper
 
 /** @name Purging Caches */
 
-/** Removes all the cocos2d data that was cached automatically.
- It will purge the CCTextureCache, CCLabelBMFont cache.
- IMPORTANT: The CCSpriteFrameCache won't be purged. If you want to purge it, you have to purge it manually.
- */
+/** Removes all the cocos2d resources that have been previously loaded and automatically cached, textures for instance. */
 -(void) purgeCachedData;
 
 @end
