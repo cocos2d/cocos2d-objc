@@ -178,11 +178,11 @@ enum {
 @class CCActionInterval;
 
 /**
- *  Repeats an action for ever.
+ *  Repeats an action indefinitely (until stopped).
  *  To repeat the action for a limited number of times use the CCActionRepeat action.
  *
- *  Note:
- *  This action can't be Sequence-able because it is not an IntervalAction
+ *  @note This action can not be used within a CCActionSequence because it is not an CCActionInterval action.
+ *  However you can use CCActionRepeatForever to repeat a CCActionSequence.
  */
 @interface CCActionRepeatForever : CCAction <NSCopying> {
 	CCActionInterval *_innerAction;
@@ -229,11 +229,41 @@ enum {
 #pragma mark - CCActionSpeed
 
 /**
- *  Changes the speed of an action.
- *  Useful to simulate slow motion or fast forward effects.
- *
- *  Note:
- *  This action can't be Sequence-able because it is not an CCIntervalAction.
+ Allows you to change the speed of an action while the action is running. Useful to simulate slow motion or fast forward effects.
+ Can also be used to implement custom easing effects without having to create your own CCActionEase subclass.
+ 
+ You will need to keep a reference to the speed action in order to change its `speed` property. It is best to assign
+ the speed action to an ivar or property with the `__weak` (ivar) or `weak` (@property) keyword.
+ 
+ For instance:
+ 
+    @implementation YourClass
+    {
+        __weak CCActionSpeed* _speed;
+    }
+ 
+ Now you can create an action whose speed you want to be able to alter while the action is running:
+ 
+    id move = [CCMoveBy actionWithDuration:60 position:ccp(600, 0)];
+    _speed = [CCActionSpeed actionWithAction:move speed:1];
+ 
+ The speed factor of 1 will start running the `move` action at its normal speed. Later when you determined that it's
+ time to change the speed of the `move` action, just change the `_speed` action's `speed` property:
+ 
+    -(void) update:(CCTime)deltaTime
+    {
+        if (slowMotionMode) {
+            _speed.speed = 0.2f; // move at one fifth of the regular speed
+        } else {
+            _speed.speed = 1.0f; // move at regular speed
+        }
+    }
+ 
+ When the move action has run to completion it will end and thanks to the `__weak` keyword and ARC the `_speed` ivar will
+ automatically become `nil`.
+ 
+ @note CCActionSpeed can not be added to a CCActionSequence because it does not inherit from CCActionFiniteTime.
+ It can however be used to control the speed of an entire CCActionSequence.
  */
 @interface CCActionSpeed : CCAction <NSCopying> {
 	CCActionInterval	*_innerAction;
@@ -246,14 +276,15 @@ enum {
 /// -----------------------------------------------------------------------
 
 /** 
- * Alter the speed of the inner function in runtime.
+ * Alter the speed of the controlled action at runtime.
  *
- * - Speeds below 1 will make the action run slower.
- * - Speeds above 1 will make the action run faster.
+ * - Speeds below 1.0 will make the action run slower.
+ * - Speeds above 1.0 will make the action run faster.
  */
 @property (nonatomic,readwrite) CGFloat speed;
 
-/** Inner action of CCSpeed. */
+// purposefully undocumented: it seems this shouldn't be user-assignable as newly assigned actions
+// may be left in an undefined state (they don't get the start message send)
 @property (nonatomic, readwrite, strong) CCActionInterval *innerAction;
 
 
@@ -293,13 +324,25 @@ enum {
 @class CCNode;
 
 /**
- *  Creates an action which follows a node.
- *
- *  Note:
- *  In stead of using CCCamera to follow a node, use this action.
- *
- *  Example:
- *  [layer runAction: [CCFollow actionWithTarget:hero]];
+ Creates an action which follows a node. The followed node can be moved by any means available 
+ (ie move action, physics velocity, changing position property). The target node will be moved in the opposite direction
+ to keep it centered on the followed node.
+ 
+ A boundary can be specified to prevent the target's position to leave a certain area. Note that this area must be smaller
+ to account for the fact that the followed node is at the center but you will probably want the following to stop when
+ the border of the target node reaches the boundary (ie typicall the screen border).
+ 
+ Smoothly following a node or keeping it off-center is not supported. Look at the CCActionFollow code to create a 
+ custom action with those features. There's also an explanation [Centering the Scene on a Node](https://developer.apple.com/library/ios/documentation/GraphicsAnimation/Conceptual/SpriteKit_PG/Actions/Actions.html#//apple_ref/doc/uid/TP40013043-CH4-SW32)
+ in the Sprite Kit documentation - the same principle can be applied to Cocos2D and is used by CCActionFollow.
+ 
+ Usage example:
+ 
+    id follow = [CCFollow actionWithTarget:playerNode];
+    [gameLayerNode runAction:follow];
+
+ Whenever `playerNode` changes its position, the position of `gameLayerNode` will be updated (moved in the opposite direction)
+ to keep `playerNode` centered.
  */
 @interface CCActionFollow : CCAction <NSCopying> {
     

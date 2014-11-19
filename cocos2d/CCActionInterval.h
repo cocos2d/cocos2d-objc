@@ -108,7 +108,23 @@
 
 
 /** 
- *  This action allows actions to be executed sequentially e.g. one after another.
+ This action allows actions to be executed sequentially, meaning *one after another*.
+ 
+ Usage example with action1 through action3 being already declared actions which directly or indirectly inherit from CCActionFiniteTime:
+ 
+    NSArray* actionsArray = @[action1, action2, action3];
+    id sequence = [CCActionSequence actionsWithArray:actionsArray];
+    [self runAction:sequence];
+
+ The traditional way still works, is less verbose but potentially dangerous, see warning below:
+ 
+    id sequence = [CCActionSequence actions:action1, action2, action3, nil];
+    [self runAction:sequence];
+ 
+ @warning Terminating the actions: list with nil is mandatory. Failure to do so will result in a compiler warning: *"Missing sentinal in method dispatch"*.
+ If you run the app anyway it will cause a crash (EXC_BAD_ACCESS) when creating the sequence.
+ 
+ @note In order to spawn multiple actions at the same time from within the sequence, use CCActionSpawn.
  */
 @interface CCActionSequence : CCActionInterval <NSCopying> {
 	CCActionFiniteTime *_actions[2];
@@ -117,27 +133,29 @@
 }
 
 /**
- *  Helper constructor to create an array of sequence-able actions.
+ *  Helper constructor to create an array of sequence-able actions. 
+ *  @warning List must be nil-terminated. Not doing so results in "Missing sentinal in method dispatch" warning, which will crash the app if ignored.
  *
  *  @param action1 First action to add to sequence.
- *  @param ...     Nil terminated list of actions to sequence.
+ *  @param ...     nil-terminated list of actions to sequence.
  *
  *  @return A New action sequence.
  */
 + (id)actions: (CCActionFiniteTime*)action1, ... NS_REQUIRES_NIL_TERMINATION;
 
 /**
- *  Helper constructor to create an array of sequence-able actions.
+ *  Helper constructor to create an array of sequence-able actions. 
+ *  @note The usual C/C++ memory management and [va_list usage principles](http://en.wikipedia.org/wiki/Stdarg.h) apply.
  *
  *  @param action1 Action to sequence.
- *  @param args    C++ style list of actions.
+ *  @param args    C/C++ variadic arguments list (va_list) of actions.
  *
  *  @return New action sequence.
  */
 + (id)actions:(CCActionFiniteTime*)action1 vaList:(va_list) args;
 
 /**
- *  Helper constructor to create an array of sequence-able actions given an array.
+ *  Helper constructor to create an array of sequence-able actions given an array. **Recommended, safe initializer.**
  *
  *  @param arrayOfActions Array of actions to sequence.
  *
@@ -145,24 +163,10 @@
  */
 + (id)actionWithArray: (NSArray*) arrayOfActions;
 
-/**
- *  Creates an action sequence from two actions.
- *
- *  @param actionOne Action one.
- *  @param actionTwo Action two.
- *
- *  @return New action sequence.
- */
+// purposefully undocumented: no point in having this documented if you can just create a list/array with 2 actions
 + (id)actionOne:(CCActionFiniteTime*)actionOne two:(CCActionFiniteTime*)actionTwo;
 
-/**
- *  Initializes an action sequence with two actions.
- *
- *  @param actionOne Action one.
- *  @param actionTwo Action two.
- *
- *  @return New action sequence.
- */
+// purposefully undocumented: no point in having this documented if you can just create a list/array with 2 actions
 - (id)initOne:(CCActionFiniteTime*)actionOne two:(CCActionFiniteTime*)actionTwo;
 
 @end
@@ -170,7 +174,7 @@
 
 /**
  *  This action will repeat the specified action a number of times.
- *  If you wish to repeat an action forever, please use the CCRepeatForever action.
+ *  If you wish to repeat an action forever, use CCActionRepeatForever.
  */
 @interface CCActionRepeat : CCActionInterval <NSCopying> {
 	NSUInteger _times;
@@ -208,8 +212,27 @@
 @end
 
 
-/** 
- * This action can be used to execute two to actions in parallel.
+/** This action can be used in a CCActionSequence to allow the sequence to spawn 2 or more actions that run in parallel to the sequence.
+
+ Usage example with a sequence, assuming actionX and spawnActionX are previously declared, assigned and initialized with a CCActionFiniteTime or subclass:
+ 
+    id spawn = [CCActionSpawn actionsWithArray:@[spawnAction1, spawnAction2]];
+ 
+    NSArray* actionsArray = @[action1, spawn, action2];
+    id sequence = [CCActionSequence actionsWithArray:actionsArray];
+    [self runAction:sequence];
+ 
+ This will run action1 to completion. Then spawnAction1 and spawnAction2 will run in parallel to completion. Then action4 will run after
+ both spawnAction1 and spawnAction2 have run to completion. Note that if spawnAction1 and spawnAction2 have different duration, the duration
+ of the longer running action will become the duration of the spawn action.
+ 
+ @note To generally run actions in parallel you can simply call runAction: for each action rather than creating a sequence with a spawn action.
+ For example, this suffices to run two actions in parallel:
+ 
+    [self runAction:action1];
+    [self runAction:action2];
+ 
+ @note It is not meaningful to use CCActionSpawn with just one action.
  */
 @interface CCActionSpawn : CCActionInterval <NSCopying> {
 	CCActionFiniteTime *_one;
@@ -217,52 +240,44 @@
 }
 
 /**
- *  Helper constructor to create an array of spawned actions.
+ *  Helper constructor to create an array of spawned actions. Usage: `id spawn = [CCActionSpawn actions:spawnAction1, spawnAction2, nil];`
+ *
+ *  @warning List must be nil-terminated. Not doing so results in "Missing sentinal in method dispatch" warning, which will crash the app if ignored.
  *
  *  @param action1 First action to spawn.
  *  @param ...     Nil terminated list of action to spawn.
  *
  *  @return New action spawn.
+ *  @see CCActionSequence
  */
 + (id)actions:(CCActionFiniteTime*)action1, ... NS_REQUIRES_NIL_TERMINATION;
 
 /**
  *  Helper constructor to create an array of spawned actions.
+ *  @note The usual C/C++ memory management and [va_list usage principles](http://en.wikipedia.org/wiki/Stdarg.h) apply.
  *
  *  @param action1 Action to spawn.
  *  @param args    C++ style list of actions.
  *
  *  @return New action spawn.
+ *  @see CCActionSequence
  */
 + (id)actions:(CCActionFiniteTime*)action1 vaList:(va_list)args;
 
 /**
- *  Helper constructor to create an array of spawned actions given an array.
+ *  Helper constructor to create an array of spawned actions given an array. **Recommended, safe initializer.**
  *
  *  @param arrayOfActions Array of actions to spawn.
  *
  *  @return New action spawn.
+ *  @see CCActionSequence
  */
 + (id)actionWithArray:(NSArray*)arrayOfActions;
 
-/**
- *  Creates the Spawn action from two actions
- *
- *  @param one Action one.
- *  @param two Action two.
- *
- *  @return New action spawn.
- */
+// purposefully undocumented: no point in having this documented if you can just create a list/array with 2 actions
 + (id)actionOne:(CCActionFiniteTime*)one two:(CCActionFiniteTime*)two;
 
-/**
- *  Initializes the Spawn action with the 2 actions to spawn.
- *
- *  @param one Action one.
- *  @param two Action two.
- *
- *  @return New action spawn.
- */
+// purposefully undocumented: no point in having this documented if you can just create a list/array with 2 actions
 - (id)initOne:(CCActionFiniteTime*)one two:(CCActionFiniteTime*)two;
 
 @end
@@ -492,7 +507,7 @@
 
 
 /**
- *  This action skews the target to the specified angles.
+ *  This action skews the target to the specified angles. Skewing changes the rectangular shape of the node to that of a parallelogram.
  */
 @interface CCActionSkewTo : CCActionInterval <NSCopying> {
 	float _skewX;
@@ -509,8 +524,8 @@
  *  Creates the action.
  *
  *  @param t  Action duration.
- *  @param sx X skew value.
- *  @param sy Y skew value.
+ *  @param sx X skew value in degrees, between -90 and 90.
+ *  @param sy Y skew value in degrees, between -90 and 90.
  *
  *  @return New skew action.
  */
@@ -520,8 +535,8 @@
  *  Initializes the action.
  *
  *  @param t  Action duration.
- *  @param sx X skew value in degrees.
- *  @param sy Y skew value in degrees.
+ *  @param sx X skew value in degrees, between -90 and 90.
+ *  @param sy Y skew value in degrees, between -90 and 90.
  *
  *  @return New skew action.
  */
@@ -530,7 +545,7 @@
 @end
 
 /**
- *  This action skews a target by the specified skewX and skewY degrees values.
+ *  This action skews a target by the specified skewX and skewY degrees values. Skewing changes the rectangular shape of the node to that of a parallelogram.
  */
 @interface CCActionSkewBy : CCActionSkewTo <NSCopying> {
 }
@@ -539,8 +554,8 @@
  *  Initializes the action.
  *
  *  @param t  Action duration.
- *  @param sx X skew delta value in degrees.
- *  @param sy Y skew delta value in degrees.
+ *  @param sx X skew delta value in degrees, between -90 and 90.
+ *  @param sy Y skew delta value in degrees, between -90 and 90.
  *
  *  @return New skew action.
  */
@@ -549,9 +564,8 @@
 @end
 
 
-/**
- *  This action moves the target simulating a parabolic jump movement by modifying its position attribute.
- */
+// purposefully undocumented: jump action is pretty much useless, especially when using it for game logic.
+// Rounding errors will not make it come back down to the exact same height as before.
 @interface CCActionJumpBy : CCActionInterval <NSCopying> {
 	CGPoint _startPosition;
 	CGPoint _delta;
@@ -560,36 +574,16 @@
 	CGPoint _previousPos;
 }
 
-/**
- *  Creates the action.
- *
- *  @param duration Action duration.
- *  @param position Delta position.
- *  @param height   Height of jump.
- *  @param jumps    Number of jumps to perform.
- *
- *  @return New jump action.
- */
+// purposefully undocumented: see note above @interface
 + (id)actionWithDuration:(CCTime)duration position:(CGPoint)position height:(CCTime)height jumps:(NSUInteger)jumps;
 
-/**
- *  Initializes the action.
- *
- *  @param duration Action duration.
- *  @param position Delta position.
- *  @param height   Height of jump.
- *  @param jumps    Number of jumps to perform.
- *
- *  @return New jump action
- */
+// purposefully undocumented: see note above @interface
 - (id)initWithDuration:(CCTime)duration position:(CGPoint)position height:(CCTime)height jumps:(NSUInteger)jumps;
 
 @end
 
 
-/**
- * This action moves the target to the specified position simulating a parabolic jump movement.
- */
+// purposefully undocumented: see note above in CCActionJumpBy interface
 @interface CCActionJumpTo : CCActionJumpBy <NSCopying>
 
 @end
@@ -650,8 +644,7 @@ typedef struct _ccBezierConfig {
 /**
  *  This action scales the target to the specified factor value.
  *
- *  Note:
- *  This action doesn't support "reverse"
+ *  @note This action is not reversible.
  */
 @interface CCActionScaleTo : CCActionInterval <NSCopying> {
 	float _scaleX;
@@ -711,6 +704,8 @@ typedef struct _ccBezierConfig {
 
 /**
  *  This action scales the target by the specified factor value.
+ *
+ *  @note Unlike CCActionScaleTo, this action can be reversed.
  */
 @interface CCActionScaleBy : CCActionScaleTo <NSCopying>
 
@@ -718,7 +713,7 @@ typedef struct _ccBezierConfig {
 
 
 /**
- *  This action performs a blinks effect on the target.
+ *  This action performs a blinks effect on the target by altering its `visible` property periodically.
  */
 @interface CCActionBlink : CCActionInterval <NSCopying> {
 	NSUInteger _times;
@@ -802,10 +797,9 @@ typedef struct _ccBezierConfig {
 
 
 /**
- *  This action tints the target from current tint to the specified value.
+ *  This action tints (colorizes) the target from current color to the specified color.
  *
- *  Note:
- *  This action doesn't support "reverse"
+ *  @note This action is not reversible.
  */
 @interface CCActionTintTo : CCActionInterval <NSCopying> {
 	CCColor* _to;
@@ -836,7 +830,8 @@ typedef struct _ccBezierConfig {
 
 
 /**
- *  This action tints the target from current tint by the value specified.
+ *  This action tints (colorizes) the target from current color to the specified color.
+ *  @note Contrary to CCActionTintTo, this action is reversible.
  */
 @interface CCActionTintBy : CCActionInterval <NSCopying> {
 	CGFloat _deltaR, _deltaG, _deltaB;
@@ -870,7 +865,7 @@ typedef struct _ccBezierConfig {
 @end
 
 /**
- *  This action creates a delay by the time specified, useful in sequences.
+ *  This action waits for the time specified. Used in sequences to delay (pause) the sequence for a given time.
  */
 @interface CCActionDelay : CCActionInterval <NSCopying>
 
@@ -879,8 +874,7 @@ typedef struct _ccBezierConfig {
 /**
  *  This action executes the specified action in reverse order.
  *
- *  Note:
- *  Use this action carefully. This action is not sequence-able. 
+ *  @note This action can not be used in a CCActionSequence. Not all actions are reversible.
  *  Use it as the default "reversed" method of your own actions, but using it outside the "reversed" scope is not recommended.
  */
 @interface CCActionReverse : CCActionInterval <NSCopying> {

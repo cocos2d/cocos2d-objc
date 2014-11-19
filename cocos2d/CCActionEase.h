@@ -29,7 +29,30 @@
 
 #pragma mark - Ease Actions
 /**
- *  CCActionEase adds the ability to modify existing actions to create more realistic effects.
+ CCActionEase is an abstract class that adds the ability to interpolate an action over time using quadratic functions. Easing essentially
+ will have the action animate in non-linear fashion, for instance starting slow and then speeding up, or overshooting beyond
+ the target value before honing in on the target value.
+ 
+ @warning You should not create an instance of the abstract CCActionEase classe. Instead use one of its subclasses:
+ 
+ - CCActionEaseBackIn
+ - CCActionEaseBackInOut
+ - CCActionEaseBackOut
+ - CCActionEaseBounce
+ - CCActionEaseBounceIn
+ - CCActionEaseBounceInOut
+ - CCActionEaseBounceOut
+ - CCActionEaseElastic
+ - CCActionEaseElasticIn
+ - CCActionEaseElasticInOut
+ - CCActionEaseElasticOut
+ - CCActionEaseRate
+ - CCActionEaseIn
+ - CCActionEaseInOut
+ - CCActionEaseOut
+ - CCActionEaseSineIn
+ - CCActionEaseSineInOut
+ - CCActionEaseSineOut
  */
 @interface CCActionEase : CCActionInterval <NSCopying> {
 	CCActionInterval *_inner;
@@ -39,7 +62,7 @@
 @property (nonatomic, readonly) CCActionInterval *inner;
 
 /**
- *  Creates a new basic ease action.
+ *  Creates a new ease action.
  *
  *  @param action Interval action.
  *
@@ -48,7 +71,7 @@
 + (id)actionWithAction:(CCActionInterval*)action;
 
 /**
- *  Initializes a new basic ease action.
+ *  Initializes a new ease action.
  *
  *  @param action Interval action.
  *

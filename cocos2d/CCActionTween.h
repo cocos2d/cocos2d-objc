@@ -27,16 +27,16 @@
 #import <Foundation/Foundation.h>
 #import "CCActionInterval.h"
 
-/**
- *  CCActionTween is an action that lets you modify over time any property of a node.
- *
- *  Examples: 
- *
- *  1) Modify the width property of a target from 200 to 300 in 2 seconds:
- *  - [target runAction:[CCActionTween actionWithDuration:2 key:@"width" from:200 to:300]]
- *
- *  2) Modify the scale property from 1 to 3 in 5 seconds
- *  - [target runAction:[CCActionTween actionWithDuration:5 key:@"scale" from:1 to:3]]
+/** CCActionTween lets you modify a node property over time.
+ 
+ Usage Example that modifies the `rotationalSkewX` property of a target from 0 to 89 in 2.5 seconds:
+ 
+    id tween = [CCActionTween actionWithDuration:2.5 key:@"rotationalSkewX" from:0 to:89];
+    [target runAction:tween];
+ 
+ @warning The tweened property must be a float or double type.
+ @note The value is updated using the KVC method `setValue:forKey:` and thus must be wrapped in NSNumber on every update.
+ It is therefore recommended to avoid using many tween actions simultaneously.
  */
 @interface CCActionTween : CCActionInterval {
 	NSString		*_key;
@@ -48,7 +48,7 @@
  *  Creates an initializes a tween action.
  *
  *  @param aDuration Action duration.
- *  @param key       Property key to modify.
+ *  @param key       Name of property to modify. Property be a float or double type.
  *  @param from      Value to tween from.
  *  @param to        Value to tween to.
  *
@@ -60,7 +60,7 @@
  *  Initializes an initializes a tween action.
  *
  *  @param aDuration Action duration.
- *  @param key       Property key to modify.
+ *  @param key       Name of property to modify. Property be a float or double type.
  *  @param from      Value to tween from.
  *  @param to        Value to tween to.
  *
