@@ -9,11 +9,13 @@ outputPath="api-docs";
 # End constants
 
 # Note about ignore list:
-# For some reason you can use "--ignore Path" only to ignore files that *end in* Path
-# but you can't use "--ignore *Package*" (any wildcard combo) to ignore files that begin with or contain Path.
+# You can use "--ignore Path" only to ignore files that *end in* Path
+# You can't use "--ignore *Package*" (any wildcard combo) to ignore files that begin with or contain Path
+# Ignore list is case-sensitive!
 
-# Adding ignore items:
-# Please try to keep the ignore list sorted alphabetically for easier maintenance.
+####################################
+# Req: Please keep the ignore list sorted alphabetically.
+####################################
 
 tools/appledoc \
 --project-name "Cocos2D" \
@@ -34,6 +36,11 @@ tools/appledoc \
 --no-repeat-first-par \
 --no-warn-invalid-crossref \
 --prefix-merged-sections \
+--warn-undocumented-object \
+--warn-undocumented-member \
+--warn-empty-description \
+--warn-unknown-directive \
+--warn-missing-arg \
 --exit-threshold 2 \
 --verbose 2 \
 --ignore .m \
@@ -69,7 +76,7 @@ tools/appledoc \
 --ignore ccMacros.h \
 --ignore CCMetalView.h \
 --ignore CCNS.h \
---ignore CCPackageCocos2DEnabler.h \
+--ignore CCPackageCocos2dEnabler.h \
 --ignore CCPackageDownload.h \
 --ignore CCPackageDownloadDelegate.h \
 --ignore CCPackageDownloadManager.h \

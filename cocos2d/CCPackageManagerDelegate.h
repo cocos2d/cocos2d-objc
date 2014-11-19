@@ -90,7 +90,7 @@
  *  If finding the standard identifier fails and this method is not implemented the installation will fail-
  *
  *  @param package The package for which the unzipped folder name should be determined
- *  @param packageContens A list of URLs of unzipped package's first level directory
+ *  @param packageContents A list of URLs of unzipped package's first level directory
  *
  *  @return The folder name of the package
  */
@@ -110,7 +110,7 @@
  *  If there is a partial download which should be resumed a Range header will be set after this invocation.
  *
  *  @param request The request object that will be used for the download
- *  @param download The download object which will start with the given request
+ *  @param package The requested package
  */
 - (void)request:(NSMutableURLRequest *)request ofPackage:(CCPackage *)package;
 

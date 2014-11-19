@@ -16,10 +16,10 @@
 + (NSString *)cachesFolder;
 
 /**
- * Returns a spritebuilder resolution(phone, phonehd, tablet, tablethd) for a CCFileUtil's device/resolution suffix like CCFileUtilsSuffixiPadHD
- * If none given or not found it'll return nil.
+ * Maps a CCFileUtil's device/resolution suffix string, for instance `CCFileUtilsSuffixiPadHD`, to a SpriteBuilder resolution string, for instance `tablethd`.
  *
- * @param suffix
+ * @param suffix A CCFileUtils resolution suffix, as defined by the CCFileUtilsSuffix* constants.
+ * @returns A SpriteBuilder resolution string, one of: `phone`, `phonehd`, `tablet`, `tablethd`. Returns nil if there is no matching SpriteBuilder suffix for the given input suffix.
  */
 + (NSString *)ccFileUtilsSuffixToResolution:(NSString *)suffix;
 

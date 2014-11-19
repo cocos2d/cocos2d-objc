@@ -90,6 +90,7 @@
  *  Helpful if you are using packages of a different resolution.
  *
  *  @param name Name of the package
+ *  @param resolution SpriteBuilder resolution string (ie `phonehd`)
  */
 - (CCPackage *)packageWithName:(NSString *)name resolution:(NSString *)resolution;
 
@@ -98,6 +99,8 @@
  *  Helpful if you are using packages of a different resolution and os
  *
  *  @param name Name of the package
+ *  @param resolution SpriteBuilder resolution string (ie `phonehd`)
+ *  @param os operating system string (ie iOS, Android, Mac)
  */
 - (CCPackage *)packageWithName:(NSString *)name resolution:(NSString *)resolution os:(NSString *)os;
 
@@ -152,7 +155,7 @@
  * A download will only start if the status is CCPackageStatusInitial, CCPackageStatusDownloadFailed.
  * A package with status CCPackageStatusDownloadPaused will be resumed if possible.
  *
- * @param name The package to be manager by the package manager
+ * @param package The package to be managed by the package manager
  * @param enableAfterDownload If the package should be enabled in cocos2d after download. You can enable it with the enablePackage: method later on.
  */
 - (void)downloadPackage:(CCPackage *)package enableAfterDownload:(BOOL)enableAfterDownload;
