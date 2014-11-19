@@ -33,7 +33,10 @@
 
 
 /**
- *  A CCColor object represents color and sometimes opacity (alpha value) for use with Cocos2D objects.
+ A CCColor object represents color and sometimes opacity (alpha value) for use with Cocos2D objects.
+ 
+ It is the Cocos2D equivalent of [UIColor](https://developer.apple.com/library/ios/DOCUMENTATION/UIKit/Reference/UIColor_Class/index.html)
+ respectively [NSColor](https://developer.apple.com/library/Mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSColor_Class/index.html).
  */
 @interface CCColor : NSObject {
     GLfloat _r;
