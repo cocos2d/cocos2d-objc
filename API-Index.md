@@ -1,0 +1,1 @@
+This is the Cocos2D Class Reference. To learn how to use Cocos2D/SpriteBuilder read the [**Developer Guide**](http://makegameswith.us/docs/).
