@@ -127,33 +127,33 @@
     pass0.debugLabel = @"CCEffectDistanceField pass 0";
     pass0.shader = self.shader;
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
-    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture) {
+    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs) {
         
-        pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
-        pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
+        passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;
+        passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
         
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_glowColor"]] = [NSValue valueWithGLKVector4:weakSelf.glowColor.glkVector4];
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fillColor"]] = [NSValue valueWithGLKVector4:weakSelf.fillColor.glkVector4];
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outlineColor"]] = [NSValue valueWithGLKVector4:weakSelf.outlineColor.glkVector4];
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_glowColor"]] = [NSValue valueWithGLKVector4:weakSelf.glowColor.glkVector4];
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fillColor"]] = [NSValue valueWithGLKVector4:weakSelf.fillColor.glkVector4];
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outlineColor"]] = [NSValue valueWithGLKVector4:weakSelf.outlineColor.glkVector4];
         
         // 0.5 == center(edge),  < 0.5 == outside, > 0.5 == inside
         float innerMin = 0.5;
         float innerMax = (0.5 * _outlineInnerWidth) + innerMin;
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outlineInnerWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(innerMin, innerMax)];
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outlineInnerWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(innerMin, innerMax)];
         
         float outerMin = (0.5 * (1.0 - _outlineOuterWidth));
         float outerMax = 0.5;
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outlineOuterWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(outerMin, outerMax)];
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outlineOuterWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(outerMin, outerMax)];
         
         float glowWidthMin = (0.5 * (1.0 - _glowWidth));
         float glowWidthMax = 0.5;
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_glowWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(glowWidthMin, glowWidthMax)];
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_glowWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(glowWidthMin, glowWidthMax)];
         
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outline"]] = _outline ? [NSNumber numberWithFloat:1.0f] : [NSNumber numberWithFloat:0.0f];
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_glow"]] = _glow ? [NSNumber numberWithFloat:1.0f] : [NSNumber numberWithFloat:0.0f];
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outline"]] = _outline ? [NSNumber numberWithFloat:1.0f] : [NSNumber numberWithFloat:0.0f];
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_glow"]] = _glow ? [NSNumber numberWithFloat:1.0f] : [NSNumber numberWithFloat:0.0f];
         
-        GLKVector2 offset = GLKVector2Make(weakSelf.glowOffset.x /  previousPassTexture.contentSize.width, weakSelf.glowOffset.y /  previousPassTexture.contentSize.height);
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_glowOffset"]] = [NSValue valueWithGLKVector2:offset];
+        GLKVector2 offset = GLKVector2Make(weakSelf.glowOffset.x / passInputs.previousPassTexture.contentSize.width, weakSelf.glowOffset.y / passInputs.previousPassTexture.contentSize.height);
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_glowOffset"]] = [NSValue valueWithGLKVector2:offset];
         
     } copy]];
     

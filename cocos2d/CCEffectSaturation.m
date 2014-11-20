@@ -110,13 +110,13 @@ static float conditionSaturation(float saturation);
     pass0.debugLabel = @"CCEffectSaturation pass 0";
     pass0.shader = self.shader;
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
-    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){
+    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
         
-        pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-        pass.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:pass.texCoord1Center];
-        pass.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:pass.texCoord1Extents];
+        passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
+        passInputs.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:passInputs.texCoord1Center];
+        passInputs.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:passInputs.texCoord1Extents];
 
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_saturation"]] = weakSelf.conditionedSaturation;
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_saturation"]] = weakSelf.conditionedSaturation;
     } copy]];
     
     self.renderPasses = @[pass0];
