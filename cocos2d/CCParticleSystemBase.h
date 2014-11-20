@@ -26,7 +26,7 @@
  */
 
 #import "CCProtocols.h"
-#import "CCNode.h"
+#import "CCRenderableNode.h"
 #import "ccTypes.h"
 #import "ccConfig.h"
 
@@ -151,7 +151,7 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
  - Radius direction (Radius mode) (Particle Designer supports outwards to inwards direction only)
 
  */
-@interface CCParticleSystemBase : CCNode <CCTextureProtocol, CCShaderProtocol, CCBlendProtocol>
+@interface CCParticleSystemBase : CCRenderableNode <CCTextureProtocol, CCShaderProtocol, CCBlendProtocol>
 {
 	// True if the the particle system is active.
 	BOOL _active;

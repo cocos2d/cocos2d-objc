@@ -615,7 +615,7 @@ static CCDirector *_sharedDirector = nil;
 	// pop stack until reaching desired level
 	while (c > level) {
 		CCScene *current = [_scenesStack lastObject];
-		if( current.runningInActiveScene ){
+		if( current.isRunningInActiveScene ){
 			[current onExitTransitionDidStart];
 			[current onExit];
 		}
@@ -842,7 +842,7 @@ static CCDirector *_sharedDirector = nil;
 @end
 
 
-@interface CCFPSLabel : CCNode<CCTextureProtocol>
+@interface CCFPSLabel : CCRenderableNode<CCTextureProtocol, CCShaderProtocol>
 @property(nonatomic, strong) NSString *string;
 @end
 

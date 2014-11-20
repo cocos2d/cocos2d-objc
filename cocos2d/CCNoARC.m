@@ -3,49 +3,11 @@
 #import "CCSprite_Private.h"
 #import "CCRenderer_Private.h"
 #import "CCShader_Private.h"
+#import "CCRenderableNode_Private.h"
 
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 #import "CCMetalSupport_Private.h"
 #endif
-
-
-@implementation CCNode(NoARC)
-
-static inline GLKMatrix4
-CCNodeTransform(CCNode *node, GLKMatrix4 parentTransform)
-{
-	GLKMatrix4 t = [node nodeToParentTransform];
-	return GLKMatrix4Multiply(parentTransform, t);
-}
-
--(GLKMatrix4)transform:(const GLKMatrix4 *)parentTransform
-{
-	return CCNodeTransform(self, *parentTransform);
-}
-
--(void) visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
-{
-	// quick return if not visible. children won't be drawn.
-	if (!_visible) return;
-	
-	[self sortAllChildren];
-	
-	GLKMatrix4 transform = CCNodeTransform(self, *parentTransform);
-	BOOL drawn = NO;
-	
-	for(CCNode *child in _children){
-		if(!drawn && child.zOrder >= 0){
-			[self draw:renderer transform:&transform];
-			drawn = YES;
-		}
-		
-		[child visit:renderer parentTransform:&transform];
-	}
-	
-	if(!drawn) [self draw:renderer transform:&transform];
-}
-
-@end
 
 
 @implementation CCSprite(NoARC)

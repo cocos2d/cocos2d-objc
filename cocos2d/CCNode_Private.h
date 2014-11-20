@@ -40,23 +40,7 @@ CGPointApplyGLKMatrix4(CGPoint p, GLKMatrix4 m){
 	return CGPointMake(v.x, v.y);
 }
 
-@interface CCNode()<CCShaderProtocol, CCBlendProtocol, CCTextureProtocol> {
-	@protected
-	CCRenderState *_renderState;
-	
-	CCShader *_shader;
-	NSMutableDictionary *_shaderUniforms;
-	
-	CCBlendMode *_blendMode;
-	CCTexture *_texture;
-}
-
-/// Returns true if the node is not using custom uniforms.
--(BOOL)hasDefaultShaderUniforms;
-
-/// Cache and return the current render state.
-/// Should be set to nil whenever changing a property that affects the renderstate.
-@property(nonatomic, strong) CCRenderState *renderState;
+@interface CCNode()
 
 /* The real openGL Z vertex.
  Differences between openGL Z vertex and cocos2d Z order:
@@ -67,25 +51,13 @@ CGPointApplyGLKMatrix4(CGPoint p, GLKMatrix4 m){
  */
 @property (nonatomic,readwrite) float vertexZ;
 
-@property (nonatomic,readonly) BOOL isPhysicsNode;
-
 /* CCActionManager used by all the actions.
  IMPORTANT: If you set a new CCActionManager, then previously created actions are going to be removed.
  */
 @property (nonatomic, readwrite, strong) CCActionManager *actionManager;
 
-/* CCScheduler used to schedule all "updates" and timers.
- IMPORTANT: If you set a new CCScheduler, then previously created timers/update are going to be removed.
- */
-@property (nonatomic, readwrite, strong) CCScheduler *scheduler;
-
 /* Reads and writes the animation manager for this node.*/
 @property (nonatomic, readwrite) CCAnimationManager * animationManager;
-
-/* Reorders a child according to a new z value.
- * The child MUST be already added.
- */
--(void) reorderChild:(CCNode*)child z:(NSInteger)zOrder;
 
 /* performance improvement, Sort the children array once before drawing, instead of every time when a child is added or reordered
  don't call this manually unless a child added needs to be removed in the same frame */
@@ -97,11 +69,6 @@ CGPointApplyGLKMatrix4(CGPoint p, GLKMatrix4 m){
  If you override cleanup, you shall call [super cleanup]
  */
 -(void) cleanup;
-
-///* performs OpenGL view-matrix transformation of its ancestors.
-// Generally the ancestors are already transformed, but in certain cases (eg: attaching a FBO) it is necessary to transform the ancestors again.
-// */
-//-(void) transformAncestors;
 
 /* final method called to actually remove a child node from the children.
  *  @param node    The child node to remove

@@ -83,6 +83,7 @@
 #import "CCLightNode.h"
 #import "CCMotionStreak.h"
 #import "CCNode.h"
+#import "CCRenderableNode.h"
 #import "CCNodeColor.h"
 #import "CCParticleExamples.h"
 #import "CCParticleSystem.h"

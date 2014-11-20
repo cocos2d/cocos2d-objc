@@ -41,8 +41,10 @@
 
 // -----------------------------------------------------------------
 
-// Private method used by the CCNode.scene property.
--(BOOL)isScene {return YES;}
+-(CCScene *)scene
+{
+    return self;
+}
 
 -( id )init {
 	if((self = [ super init ])){

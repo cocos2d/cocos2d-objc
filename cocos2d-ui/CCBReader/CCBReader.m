@@ -752,10 +752,10 @@ static inline float readFloat(CCBReader *self)
 
         if (setProp)
         {
-						node.blendMode = [CCBlendMode blendModeWithOptions:@{
+						[(id<CCBlendProtocol>)node setBlendMode:[CCBlendMode blendModeWithOptions:@{
 							CCBlendFuncSrcColor:@(src),
 							CCBlendFuncDstColor:@(dst),
-						}];
+						}]];
         }
     }
     else if (type == kCCBPropTypeFntFile)

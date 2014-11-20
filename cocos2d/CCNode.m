@@ -50,22 +50,38 @@
 
 #pragma mark - Node
 
-@interface CCNode ()
-// lazy allocs
--(void) childrenAlloc;
-// helper that reorder a child
--(void) insertChild:(CCNode*)child z:(NSInteger)z;
-// used internally to alter the zOrder variable. DON'T call this method manually
--(void) _setZOrder:(NSInteger) z;
--(void) detachChild:(CCNode *)child cleanup:(BOOL)doCleanup;
-@end
-
 @implementation CCNode {
-
+	// Rotation angle.
+	float _rotationalSkewX, _rotationalSkewY;
+    
+	// Position of the node.
+	CGPoint _position;
+    
+	// Transform.
+	GLKMatrix4 _transform, _inverse;
+	BOOL _isTransformDirty, _isInverseDirty;
+    
+	// Array of children.
+	NSMutableArray *_children;
+    
+    // True to ensure reorder.
+	BOOL _isReorderChildDirty;
+	
+	// Scheduler used to schedule timers and updates/
+	CCScheduler *_scheduler;
+	
+	// ActionManager used to handle all the actions.
+	CCActionManager	*_actionManager;
+	
+    //Animation Manager used to handle CCB animations
+    CCAnimationManager * _animationManager;
+	
+	// YES if the node is added to an active scene.
+	BOOL _isInActiveScene;
+	
+	// Number of paused parent or ancestor nodes.
+	int _pausedAncestors;
 }
-
-// Suppress automatic ivar creation.
-@dynamic runningInActiveScene;
 
 static inline
 CCPhysicsBody *
@@ -115,22 +131,6 @@ RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
 	return GLKMatrix4Multiply(GLKMatrix4Invert(NodeToPhysicsTransform(node.parent), NULL), body.absoluteTransform);
 }
 
-@synthesize children = _children;
-@synthesize visible = _visible;
-@synthesize parent = _parent;
-@synthesize zOrder = _zOrder;
-@synthesize name = _name;
-@synthesize vertexZ = _vertexZ;
-@synthesize userObject = _userObject;
-@synthesize physicsBody = _physicsBody;
-
-#pragma mark CCNode - Transform related properties
-
-@synthesize scaleX = _scaleX, scaleY = _scaleY;
-@synthesize anchorPoint = _anchorPoint, anchorPointInPoints = _anchorPointInPoints;
-@synthesize contentSize = _contentSize;
-@synthesize skewX = _skewX, skewY = _skewY;
-
 #pragma mark CCNode - Init & cleanup
 
 +(id) node
@@ -166,9 +166,6 @@ RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
 
 		//initialize parent to nil
 		_parent = nil;
-
-		_shader = [CCShader positionColorShader];
-		_blendMode = [CCBlendMode premultipliedAlphaMode];
 
 		// set default scheduler and actionManager
 		CCDirector *director = [CCDirector sharedDirector];
@@ -611,18 +608,16 @@ TransformPointAsVector(CGPoint p, GLKMatrix4 t)
 
 - (void) setZOrder:(NSInteger)zOrder
 {
-    if (_parent)
-        [_parent reorderChild:self z:zOrder];
-    else
-    	[self _setZOrder:zOrder]; // issue #598
+    if(_zOrder != zOrder){
+        _zOrder = zOrder;
+        
+        if(_parent){
+            _parent->_isReorderChildDirty = YES;
+        }
+    }
 }
 
 #pragma mark CCNode Composition
-
--(void) childrenAlloc
-{
-	_children = [[NSMutableArray alloc] init];
-}
 
 // Recursively get a child by name, but don't return the root of the search.
 -(CCNode*) getChildByNameRecursive:(NSString *)name root:(CCNode *)root
@@ -661,7 +656,7 @@ static void
 RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 {
 	for(CCNode *child in node->_children){
-		BOOL wasRunning = child.runningInActiveScene;
+		BOOL wasRunning = child.isRunningInActiveScene;
 		child->_pausedAncestors += increment;
 		[child wasRunning:wasRunning];
 		
@@ -678,14 +673,16 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( child.parent == nil, @"child already added to another node. It can't be added again");
 
-	if( ! _children )
-		[self childrenAlloc];
+	if(! _children){
+        _children = [[NSMutableArray alloc] init];
+    }
 
-	[self insertChild:child z:z];
-
+    child->_zOrder = z;
 	child.name = name;
+	child->_parent = self;
 
-	[child setParent: self];
+    [_children addObject:child];
+	_isReorderChildDirty=YES;
 
 	// Update pausing parameters
 	child->_pausedAncestors = _pausedAncestors + (_paused ? 1 : 0);
@@ -784,7 +781,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 			[c cleanup];
 
 		// set parent nil at the end (issue #476)
-		[c setParent:nil];
+		c->_parent = nil;
         
         [[[CCDirector sharedDirector] responderManager] markAsDirty];
 
@@ -813,35 +810,11 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		[child cleanup];
 
 	// set parent nil at the end (issue #476)
-	[child setParent:nil];
+	child->_parent = nil;
 
 	[[[CCDirector sharedDirector] responderManager] markAsDirty];
 
 	[_children removeObject:child];
-}
-
-// used internally to alter the zOrder variable. DON'T call this method manually
--(void) _setZOrder:(NSInteger) z
-{
-	_zOrder = z;
-}
-
-// helper used by reorderChild & add
--(void) insertChild:(CCNode*)child z:(NSInteger)z
-{
-	_isReorderChildDirty=YES;
-
-    [_children addObject:child];
-	[child _setZOrder:z];
-}
-
--(void) reorderChild:(CCNode*) child z:(NSInteger)z
-{
-	NSAssert( child != nil, @"Child must be non-nil");
-
-	_isReorderChildDirty = YES;
-
-	[child _setZOrder:z];
 }
 
 - (void) sortAllChildren
@@ -864,9 +837,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		//don't need to check children recursively, that's done in visit of each child
         
 		_isReorderChildDirty = NO;
-        
         [[[CCDirector sharedDirector] responderManager] markAsDirty];
-
 	}
 }
 
@@ -874,8 +845,47 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 -(void)draw:(__unsafe_unretained CCRenderer *)renderer transform:(const GLKMatrix4 *)transform {}
 
-// Defined in CCNoARC.m
-// -(void) visit:(__unsafe_unretained CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
+static inline GLKMatrix4
+CCNodeTransform(CCNode *node, GLKMatrix4 parentTransform)
+{
+	CGAffineTransform t = [node nodeToParentTransform];
+	float z = node->_vertexZ;
+	
+	// Convert to 4x4 column major GLK matrix.
+	return GLKMatrix4Multiply(parentTransform, GLKMatrix4Make(
+		 t.a,  t.b, 0.0f, 0.0f,
+		 t.c,  t.d, 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		t.tx, t.ty,    z, 1.0f
+	));
+}
+
+-(GLKMatrix4)transform:(const GLKMatrix4 *)parentTransform
+{
+	return CCNodeTransform(self, *parentTransform);
+}
+
+-(void) visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
+{
+	// quick return if not visible. children won't be drawn.
+	if (!_visible) return;
+	
+	[self sortAllChildren];
+	
+	GLKMatrix4 transform = CCNodeTransform(self, *parentTransform);
+	BOOL drawn = NO;
+	
+	for(CCNode *child in _children){
+		if(!drawn && child.zOrder >= 0){
+			[self draw:renderer transform:&transform];
+			drawn = YES;
+		}
+		
+		[child visit:renderer parentTransform:&transform];
+	}
+	
+	if(!drawn) [self draw:renderer transform:&transform];
+}
 
 -(void)visit
 {
@@ -1012,9 +1022,10 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 
 #pragma mark CCNode SceneManagement
 
-// Overriden by CCScene to return YES.
--(BOOL)isScene {return NO;}
--(CCScene *)scene {return (self.isScene ? (CCScene *)self : self.parent.scene);}
+-(CCScene *)scene
+{
+    return _parent.scene;
+}
 
 -(void) onEnter
 {
@@ -1023,7 +1034,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 	[self setupPhysicsBody:_physicsBody];
 	[_scheduler scheduleTarget:self];
 	
-	BOOL wasRunning = self.runningInActiveScene;
+	BOOL wasRunning = self.isRunningInActiveScene;
 	_isInActiveScene = YES;
 	
 	//If there's a physics node in the hierarchy, all actions should run on a fixed timestep.
@@ -1060,7 +1071,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 {
 	[self teardownPhysics];
 	
-	BOOL wasRunning = self.runningInActiveScene;
+	BOOL wasRunning = self.isRunningInActiveScene;
 	_isInActiveScene = NO;
 	[self wasRunning:wasRunning];
 	
@@ -1087,7 +1098,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 {
 	NSAssert( action != nil, @"Argument must be non-nil");
 
-	[_actionManager addAction:action target:self paused:!self.runningInActiveScene];
+	[_actionManager addAction:action target:self paused:!self.isRunningInActiveScene];
 	return action;
 }
 
@@ -1126,13 +1137,8 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
     }
     else
     {
-        return self.parent.animationManager;
+        return _parent.animationManager;
     }
-}
-
--(void)setAnimationManager:(CCAnimationManager *)animationManager
-{
-    _animationManager = animationManager;
 }
 
 #pragma mark CCNode - Scheduler
@@ -1250,7 +1256,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 // Used to pause/unpause a node's actions and timers when it's isRunning state changes.
 -(void)wasRunning:(BOOL)wasRunning
 {
-	BOOL isRunning = self.runningInActiveScene;
+	BOOL isRunning = self.isRunningInActiveScene;
 	
 	if(isRunning && !wasRunning){
 		[_scheduler setPaused:NO target:self];
@@ -1272,7 +1278,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 -(void)setPaused:(BOOL)paused
 {
 	if(_paused != paused){
-		BOOL wasRunning = self.runningInActiveScene;
+		BOOL wasRunning = self.isRunningInActiveScene;
 		_paused = paused;
 		[self wasRunning:wasRunning];
 		
@@ -1559,6 +1565,8 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 	return [self convertToWorldSpace:nodePoint];
 }
 
+// Looks like this is legacy functionality for Mac.
+#warning TODO UI space is the same as world space?
 - (CGPoint)convertToWindowSpace:(CGPoint)nodePoint
 {
     CGPoint worldPoint = [self convertToWorldSpace:nodePoint];
@@ -1585,9 +1593,6 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 // -----------------------------------------------------------------
 
 #pragma mark - CCColor methods
-
-@synthesize cascadeColorEnabled=_cascadeColorEnabled;
-@synthesize cascadeOpacityEnabled=_cascadeOpacityEnabled;
 
 -(CGFloat) opacity
 {
@@ -1684,120 +1689,6 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 			[item updateDisplayedOpacity:_displayColor.a];
 		}
 	// }
-}
-
--(void) setOpacityModifyRGB:(BOOL)boolean{
-	// Ignored in CCNode. Implemented in subclasses
-}
-
--(BOOL) doesOpacityModifyRGB{
-	return YES;
-}
-
-#pragma mark - RenderState Methods
-
-// The default dictionary is either nil or only contains the main texture.
-static inline BOOL
-CheckDefaultUniforms(NSDictionary *uniforms, CCTexture *texture)
-{
-	if(uniforms == nil){
-		return YES;
-	} else {
-		// Check that the uniforms has only one key for the main texture.
-		return (uniforms.count == 1 && uniforms[CCShaderUniformMainTexture] == texture);
-	}
-}
-
--(CCRenderState *)renderState
-{
-	if(_renderState == nil){
-		CCTexture *texture = (_texture ?: [CCTexture none]);
-		
-		if(CheckDefaultUniforms(_shaderUniforms, texture)){
-			// Create a cached render state so we can use the fast path.
-			_renderState = [CCRenderState renderStateWithBlendMode:_blendMode shader:_shader mainTexture:texture];
-			
-			// If the uniform dictionary was set, it was the default. Throw it away.
-			_shaderUniforms = nil;
-		} else {
-			// Since the node has unique uniforms, it cannot be batched or use the fast path.
-			_renderState = [CCRenderState renderStateWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms copyUniforms:NO];
-		}
-	}
-	
-	return _renderState;
-}
-
--(CCShader *)shader
-{
-	return _shader;
-}
-
--(void)setShader:(CCShader *)shader
-{
-	NSAssert(shader, @"CCNode.shader cannot be nil.");
-	_shader = shader;
-	_renderState = nil;
-}
-
--(CCBlendMode *)blendMode
-{
-	return _blendMode;
-}
-
--(BOOL)hasDefaultShaderUniforms
-{
-	CCTexture *texture = (_texture ?: [CCTexture none]);
-	if(CheckDefaultUniforms(_shaderUniforms, texture)){
-		// If the uniform dictionary was set, it was the default. Throw it away.
-		_shaderUniforms = nil;
-		
-		return YES;
-	} else {
-		return NO;
-	}
-}
-
--(NSMutableDictionary *)shaderUniforms
-{
-	if(_shaderUniforms == nil){
-		_shaderUniforms = [NSMutableDictionary dictionaryWithObject:(_texture ?: [CCTexture none]) forKey:CCShaderUniformMainTexture];
-		
-		_renderState = nil;
-	}
-	
-	return _shaderUniforms;
-}
-
-//-(void)setShaderUniforms:(NSMutableDictionary *)shaderUniforms
-//{
-//	_shaderUniforms = shaderUniforms;
-//	_renderState = nil;
-//}
-
--(void)setBlendMode:(CCBlendMode *)blendMode
-{
-	NSAssert(blendMode, @"CCNode.blendMode cannot be nil.");
-	if(_blendMode != blendMode){
-		_blendMode = blendMode;
-		_renderState = nil;
-	}
-}
-
--(CCTexture*)texture
-{
-	return _texture;
-}
-
--(void)setTexture:(CCTexture *)texture
-{
-	if(_texture != texture){
-		_texture = texture;
-		_renderState = nil;
-		
-		// Set the main texture in the uniforms dictionary (if the dictionary exists).
-		_shaderUniforms[CCShaderUniformMainTexture] = (_texture ?: [CCTexture none]);
-	}
 }
 
 @end

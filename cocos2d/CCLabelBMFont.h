@@ -50,7 +50,7 @@
  
  */
 
-@interface CCLabelBMFont : CCNode <CCLabelProtocol, CCTextureProtocol>
+@interface CCLabelBMFont : CCNode <CCLabelProtocol>
 
 /// -----------------------------------------------------------------------
 /// @name Accessing the Text Attributes
