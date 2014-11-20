@@ -25,28 +25,12 @@
  * THE SOFTWARE.
  */
 
-#import "CCNode.h"
 #import "CCNode_Private.h"
-#import "CCDirector.h"
-#import "CCActionManager.h"
-#import "CCAnimationManager.h"
-#import "CCScheduler.h"
-#import "ccConfig.h"
-#import "ccMacros.h"
-#import "Support/CGPointExtension.h"
-#import "ccMacros.h"
-#import "CCShader.h"
-#import "CCPhysics+ObjectiveChipmunk.h"
 #import "CCDirector_Private.h"
-#import "CCRenderer_Private.h"
-#import "CCTexture_Private.h"
 #import "CCActionManager_Private.h"
-
-#if CC_NODE_RENDER_SUBPIXEL
-#define RENDER_IN_SUBPIXEL
-#else
-#define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
-#endif
+#import "CCAnimationManager.h"
+#import "CCRenderer_Private.h"
+#import "CCPhysics+ObjectiveChipmunk.h"
 
 #pragma mark - Node
 
@@ -58,8 +42,8 @@
 	CGPoint _position;
     
 	// Transform.
-	GLKMatrix4 _transform, _inverse;
-	BOOL _isTransformDirty, _isInverseDirty;
+	GLKMatrix4 _transform;
+	BOOL _isTransformDirty;
     
 	// Array of children.
 	NSMutableArray *_children;
@@ -150,7 +134,7 @@ RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
         _contentSize = CGSizeZero;
 		_anchorPointInPoints = _anchorPoint = CGPointZero;
 
-		_isTransformDirty = _isInverseDirty = YES;
+		_isTransformDirty = YES;
 
 		_vertexZ = 0;
 
@@ -223,7 +207,7 @@ RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
 	} else {
 		_rotationalSkewX = newRotation;
 		_rotationalSkewY = newRotation;
-		_isTransformDirty = _isInverseDirty = YES;
+		_isTransformDirty = YES;
 	}
 }
 
@@ -252,7 +236,7 @@ RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
 	NSAssert(_physicsBody == nil, @"Currently physics nodes don't support skewing.");
 	
 	_rotationalSkewX = newX;
-	_isTransformDirty = _isInverseDirty = YES;
+	_isTransformDirty = YES;
 }
 
 -(float)rotationalSkewY
@@ -270,19 +254,19 @@ RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
 	NSAssert(_physicsBody == nil, @"Currently physics nodes don't support skewing.");
 	
 	_rotationalSkewY = newY;
-	_isTransformDirty = _isInverseDirty = YES;
+	_isTransformDirty = YES;
 }
 
 -(void) setScaleX: (float)newScaleX
 {
 	_scaleX = newScaleX;
-	_isTransformDirty = _isInverseDirty = YES;
+	_isTransformDirty = YES;
 }
 
 -(void) setScaleY: (float)newScaleY
 {
 	_scaleY = newScaleY;
-	_isTransformDirty = _isInverseDirty = YES;
+	_isTransformDirty = YES;
 }
 
 -(void) setSkewX:(float)newSkewX
@@ -290,7 +274,7 @@ RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
 	NSAssert(_physicsBody == nil, @"Currently physics nodes don't support skewing.");
 	
 	_skewX = newSkewX;
-	_isTransformDirty = _isInverseDirty = YES;
+	_isTransformDirty = YES;
 }
 
 -(void) setSkewY:(float)newSkewY
@@ -298,7 +282,7 @@ RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
 	NSAssert(_physicsBody == nil, @"Currently physics nodes don't support skewing.");
 	
 	_skewY = newSkewY;
-	_isTransformDirty = _isInverseDirty = YES;
+	_isTransformDirty = YES;
 }
 
 inline CGPoint
@@ -337,14 +321,14 @@ TransformPointAsVector(CGPoint p, GLKMatrix4 t)
         body.relativePosition = newPositionInPoints;
 	} else {
 		_position = newPosition;
-		_isTransformDirty = _isInverseDirty = YES;
+		_isTransformDirty = YES;
 	}
 }
 
 -(void)setPositionType:(CCPositionType)positionType
 {
 	_positionType = positionType;
-	_isTransformDirty = _isInverseDirty = YES;
+	_isTransformDirty = YES;
 }
 
 -(void) setAnchorPoint:(CGPoint)point
@@ -353,7 +337,7 @@ TransformPointAsVector(CGPoint p, GLKMatrix4 t)
 		_anchorPoint = point;
         CGSize contentSizeInPoints = self.contentSizeInPoints;
 		_anchorPointInPoints = ccp( contentSizeInPoints.width * _anchorPoint.x, contentSizeInPoints.height * _anchorPoint.y );
-		_isTransformDirty = _isInverseDirty = YES;
+		_isTransformDirty = YES;
 	}
 }
 
@@ -377,7 +361,7 @@ TransformPointAsVector(CGPoint p, GLKMatrix4 t)
     // Update children
     CGSize contentSizeInPoints = self.contentSizeInPoints;
     _anchorPointInPoints = ccp( contentSizeInPoints.width * _anchorPoint.x, contentSizeInPoints.height * _anchorPoint.y );
-    _isTransformDirty = _isInverseDirty = YES;
+    _isTransformDirty = YES;
     
     if ([_parent isKindOfClass:[CCLayout class]])
     {
@@ -391,7 +375,7 @@ TransformPointAsVector(CGPoint p, GLKMatrix4 t)
         if (!CCPositionTypeIsBasicPoints(child->_positionType))
         {
             // This is a position type affected by content size
-            child->_isTransformDirty = _isInverseDirty = YES;
+            child->_isTransformDirty = YES;
         }
     }
 }
@@ -570,7 +554,7 @@ TransformPointAsVector(CGPoint p, GLKMatrix4 t)
 - (void) setScaleType:(CCScaleType)scaleType
 {
     _scaleType = scaleType;
-    _isTransformDirty = _isInverseDirty = YES;
+    _isTransformDirty = YES;
 }
 
 - (CGRect) boundingBox
@@ -603,7 +587,7 @@ TransformPointAsVector(CGPoint p, GLKMatrix4 t)
 -(void) setScale:(float) s
 {
 	_scaleX = _scaleY = s;
-	_isTransformDirty = _isInverseDirty = YES;
+	_isTransformDirty = YES;
 }
 
 - (void) setZOrder:(NSInteger)zOrder
@@ -1499,13 +1483,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 
 - (GLKMatrix4)parentToNodeTransform
 {
-	// TODO Need to find a better way to mark physics transforms as dirty
-	if ( _isInverseDirty || GetBodyIfRunning(self) ) {
-		_inverse = GLKMatrix4Invert([self nodeToParentTransform], NULL);
-		_isInverseDirty = NO;
-	}
-
-	return _inverse;
+	return GLKMatrix4Invert([self nodeToParentTransform], NULL);
 }
 
 - (GLKMatrix4)nodeToWorldTransform
