@@ -16,6 +16,24 @@
  */
 @interface CCPackage : NSObject
 
+/** @name Initializing a Package */
+
+/**
+ *  Creates a new instance of a package.
+ *
+ *  @param name Name of the package, must not be nil
+ *  @param resolution Resolution of the package, must not be nil
+ *  @param os OS of the package, usally determined internally, must not be nil
+ *  @param remoteURL Remote URL of the package, must not be nil
+ *
+ *  @return New instance of CCPackage
+ *  @since v3.3 and later
+ */
+- (instancetype)initWithName:(NSString *)name
+                  resolution:(NSString *)resolution
+                          os:(NSString *)os
+                   remoteURL:(NSURL *)remoteURL;
+
 /** @name Accessing Package Information */
 
 /**
@@ -119,30 +137,9 @@
  */
 - (NSString *)statusToString;
 
-/** @name Initializing a Package */
-
-/**
- *  Creates a new instance of a package.
- *
- *  @param name Name of the package, must not be nil
- *  @param resolution Resolution of the package, must not be nil
- *  @param os OS of the package, usally determined internally, must not be nil
- *  @param remoteURL Remote URL of the package, must not be nil
- *
- *  @return New instance of CCPackage
- *  @since v3.3 and later
- */
-- (instancetype)initWithName:(NSString *)name
-                  resolution:(NSString *)resolution
-                          os:(NSString *)os
-                   remoteURL:(NSURL *)remoteURL;
-
-/** @name Serializing Packages */
-
-/**
+/*
  *  Creates a new instance of a package populated with the contents of the dictionary.
  *  Used in context of serialization.
- *  @note The initializer initWithDictionary is for internal use only to persist packages.
  *
  *  @param dictionary Dictionary containing values to populate the package with.
  *
@@ -150,9 +147,10 @@
  *  @since v3.3 and later
  *  @see toDictionary
  */
+// purposefully undocumented: The initializer initWithDictionary is for internal use only to persist packages.
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
-/**
+/*
  *  Returns a dictionary containing the values of the package's properties.
  *  Used in context of serialization.
  *
@@ -160,6 +158,7 @@
  *  @since v3.3 and later
  *  @see initWithDictionary:
  */
+// purposefully undocumented: The initializer initWithDictionary and related toDictionary are for internal use only to persist packages.
 - (NSDictionary *)toDictionary;
 
 @end
