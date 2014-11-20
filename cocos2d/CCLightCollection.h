@@ -49,7 +49,7 @@ extern const CCLightGroupMask CCLightCollectionAllGroups;
  *  Initializes an empty CCLightCollection object.
  *
  *  @return The CCLightCollection object.
- *  @since v?.? and later
+ *  @since v3.4 and later
  */
 - (id)init;
 
@@ -62,7 +62,7 @@ extern const CCLightGroupMask CCLightCollectionAllGroups;
  *  Adds a light to the collection.
  *
  *  @param light CCLightNode to add.
- *  @since v?.? and later
+ *  @since v3.4 and later
  */
 - (void)addLight:(CCLightNode *)light;
 
@@ -70,13 +70,13 @@ extern const CCLightGroupMask CCLightCollectionAllGroups;
  *  Removes a light from the collection.
  *
  *  @param light The light node to remove.
- *  @since v?.? and later
+ *  @since v3.4 and later
  */
 - (void)removeLight:(CCLightNode *)light;
 
 /**
  *  Removes all lights from the collection.
- *  @since v?.? and later
+ *  @since v3.4 and later
  */
 - (void)removeAllLights;
 
@@ -92,7 +92,7 @@ extern const CCLightGroupMask CCLightCollectionAllGroups;
  *  @param count The number of lights to return.
  *  @param point The reference point.
  *  @param mask The light group mask.
- *  @since v?.? and later
+ *  @since v3.4 and later
  */
 - (NSArray*)findClosestKLights:(NSUInteger)count toPoint:(CGPoint)point withMask:(CCLightGroupMask)mask;
 
@@ -108,7 +108,7 @@ extern const CCLightGroupMask CCLightCollectionAllGroups;
  *  @param groups Array of groups.
  *
  *  @return Bitmask.
- *  @since v?.? and later
+ *  @since v3.4 and later
  */
 - (CCLightGroupMask)maskForGroups:(NSArray *)groups;
 
