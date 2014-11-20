@@ -86,7 +86,7 @@ static inline cpTransform CGAFFINETRANSFORM_TO_CPTRANSFORM(CGAffineTransform t){
 @property(nonatomic, assign) CGFloat relativeRotation;
 
 /** The transform of the body relative to the space. */
-@property(nonatomic, readonly) CGAffineTransform absoluteTransform;
+@property(nonatomic, readonly) GLKMatrix4 absoluteTransform;
 
 /** Chipmunk Body. */
 @property(nonatomic, readonly) ChipmunkBody *body;
@@ -118,7 +118,7 @@ static inline cpTransform CGAFFINETRANSFORM_TO_CPTRANSFORM(CGAffineTransform t){
  *  @param physics Physics node.
  *  @param transform Transform to use.
  */
--(void)willAddToPhysicsNode:(CCPhysicsNode *)physics nonRigidTransform:(cpTransform)transform;
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics nonRigidTransform:(GLKMatrix4)transform;
 
 /**
  *  Used for deferring collision type setup until there is access to the physics node.
@@ -160,7 +160,7 @@ static inline cpTransform CGAFFINETRANSFORM_TO_CPTRANSFORM(CGAffineTransform t){
  *  @param physics Physics node.
  *  @param transform Transform to use.
  */
--(void)willAddToPhysicsNode:(CCPhysicsNode *)physics nonRigidTransform:(cpTransform)transform;
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics nonRigidTransform:(GLKMatrix4)transform;
 
 /**
  *  Used for deferring collision type setup until there is access to the physics node.

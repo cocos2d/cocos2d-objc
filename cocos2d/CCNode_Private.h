@@ -26,11 +26,19 @@
 
 CGPoint NodeToPhysicsScale(CCNode * node);
 float NodeToPhysicsRotation(CCNode *node);
-CGAffineTransform NodeToPhysicsTransform(CCNode *node);
-CGAffineTransform RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body);
+GLKMatrix4 NodeToPhysicsTransform(CCNode *node);
+GLKMatrix4 RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body);
 CGPoint GetPositionFromBody(CCNode *node, CCPhysicsBody *body);
-CGPoint TransformPointAsVector(CGPoint p, CGAffineTransform t);
-CGAffineTransform CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians);
+CGPoint TransformPointAsVector(CGPoint p, GLKMatrix4 t);
+GLKMatrix4 GLKMatrix4MakeRigid(CGPoint translate, CGFloat radians);
+
+// TODO Doesn't really belong here, but the header includes are such a sphagetti mess it's hard to find anywhere else.
+/// Transform and project a CGPoint by a 4x4 matrix. Throw away the resulting z value.
+static inline CGPoint
+CGPointApplyGLKMatrix4(CGPoint p, GLKMatrix4 m){
+	GLKVector3 v = GLKMatrix4MultiplyAndProjectVector3(m, GLKVector3Make(p.x, p.y, 0.0));
+	return CGPointMake(v.x, v.y);
+}
 
 @interface CCNode()<CCShaderProtocol, CCBlendProtocol, CCTextureProtocol> {
 	@protected

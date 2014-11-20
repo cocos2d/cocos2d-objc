@@ -74,12 +74,12 @@ GetBodyIfRunning(CCNode *node)
 	return (node->_isInActiveScene ? node->_physicsBody : nil);
 }
 
-CGAffineTransform
+GLKMatrix4
 NodeToPhysicsTransform(CCNode *node)
 {
-	CGAffineTransform transform = CGAffineTransformIdentity;
+	GLKMatrix4 transform = GLKMatrix4Identity;
 	for(CCNode *n = node; n && !n.isPhysicsNode; n = n.parent){
-		transform = CGAffineTransformConcat(transform, n.nodeToParentTransform);
+	transform = GLKMatrix4Multiply(n.nodeToParentTransform, transform);
 	}
 	
 	return transform;
@@ -109,10 +109,10 @@ NodeToPhysicsScale(CCNode * node)
 	
 }
 
-inline CGAffineTransform
+inline GLKMatrix4
 RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
 {
-	return CGAffineTransformConcat(body.absoluteTransform, CGAffineTransformInvert(NodeToPhysicsTransform(node.parent)));
+	return GLKMatrix4Multiply(GLKMatrix4Invert(NodeToPhysicsTransform(node.parent), NULL), body.absoluteTransform);
 }
 
 @synthesize children = _children;
@@ -307,7 +307,7 @@ RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
 inline CGPoint
 GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 {
-	return CGPointApplyAffineTransform(node->_anchorPointInPoints, [node nodeToParentTransform]);
+	return CGPointApplyGLKMatrix4(node->_anchorPointInPoints, [node nodeToParentTransform]);
 }
 
 -(CGPoint)position
@@ -322,9 +322,10 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 
 // Urg. CGPoint types. -_-
 inline CGPoint
-TransformPointAsVector(CGPoint p, CGAffineTransform t)
+TransformPointAsVector(CGPoint p, GLKMatrix4 t)
 {
-  return (CGPoint){t.a*p.x + t.c*p.y, t.b*p.x + t.d*p.y};
+	GLKVector4 v = GLKMatrix4MultiplyVector4(t, GLKVector4Make(p.x, p.y, 0.0f, 0.0f));
+	return CGPointMake(v.x, v.y);
 }
 
 -(void) setPosition: (CGPoint)newPosition
@@ -579,7 +580,8 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
 {
     CGSize contentSize = self.contentSizeInPoints;
     CGRect rect = CGRectMake(0, 0, contentSize.width, contentSize.height);
-    return CGRectApplyAffineTransform(rect, [self nodeToParentTransform]);
+    GLKMatrix4 t = [self nodeToParentTransform];
+    return CGRectApplyAffineTransform(rect, CGAffineTransformMake(t.m[0], t.m[1], t.m[4], t.m[5], t.m[12], t.m[13]));
 }
 
 -(void) setVertexZ:(float)vertexZ
@@ -891,28 +893,33 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 #pragma mark CCPhysics support.
 
-inline CGAffineTransform
-CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
+inline GLKMatrix4
+GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 {
 	CGPoint rot = ccpForAngle(radians);
-	return CGAffineTransformMake(rot.x, rot.y, -rot.y, rot.x, translate.x, translate.y);
+	return GLKMatrix4Make(
+		 rot.x, rot.y, 0.0f, 0.0f,
+		-rot.y, rot.x, 0.0f, 0.0f,
+		  0.0f,  0.0f, 1.0f, 0.0f,
+		 pos.x, pos.y, 0.0f, 1.0f
+	);
 }
 
 // Private method used to extract the non-rigid part of the node's transform relative to a CCPhysicsNode.
 // This method can only be called in very specific circumstances.
--(CGAffineTransform)nonRigidTransform
+-(GLKMatrix4)nonRigidTransform
 {
-	CGAffineTransform toPhysics = NodeToPhysicsTransform(self);
+	GLKMatrix4 toPhysics = NodeToPhysicsTransform(self);
 	
 	CCPhysicsBody *body = GetBodyIfRunning(self);
 	if(body){
-		return CGAffineTransformConcat(toPhysics, CGAffineTransformInvert(body.absoluteTransform));
+		return GLKMatrix4Multiply(GLKMatrix4Invert(body.absoluteTransform, NULL), toPhysics);
 	} else {
 		// Body is not active yet, so this is more of a mess. :-\
 		// Need to guess the rigid part of the transform.
 		float radians = CC_DEGREES_TO_RADIANS(NodeToPhysicsRotation(self));
-		CGAffineTransform absolute = CGAffineTransformMakeRigid(ccp(toPhysics.tx, toPhysics.ty), radians);
-		return CGAffineTransformConcat(toPhysics, CGAffineTransformInvert(absolute));
+		GLKMatrix4 absolute = GLKMatrix4MakeRigid(ccp(toPhysics.m[12], toPhysics.m[13]), radians);
+		return GLKMatrix4Multiply(GLKMatrix4Invert(absolute, NULL), toPhysics);
 	}
 }
 
@@ -937,14 +944,14 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 		physicsBody.absoluteRadians = CC_DEGREES_TO_RADIANS(NodeToPhysicsRotation(self));
 		
 		// Grab the origin position of the node from it's transform.
-		CGAffineTransform transform = NodeToPhysicsTransform(self);
-		physicsBody.absolutePosition = ccp(transform.tx, transform.ty);
+		GLKMatrix4 transform = NodeToPhysicsTransform(self);
+		physicsBody.absolutePosition = ccp(transform.m[12], transform.m[13]);
         
         physicsBody.relativePosition = self.positionInPoints;
 		physicsBody.relativeRotation = self.rotation;
         
-		CGAffineTransform nonRigid = self.nonRigidTransform;
-		[_physicsBody willAddToPhysicsNode:physics nonRigidTransform:CGAFFINETRANSFORM_TO_CPTRANSFORM(nonRigid)];
+		GLKMatrix4 nonRigid = self.nonRigidTransform;
+		[_physicsBody willAddToPhysicsNode:physics nonRigidTransform:nonRigid];
 		[physics.space smartAdd:physicsBody];
 		[_physicsBody didAddToPhysicsNode:physics];
 		
@@ -1393,30 +1400,30 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 	self.position = [self convertPositionFromPoints:positionInPoints type:self.positionType];
 }
 
-- (CGAffineTransform)nodeToParentTransform
+- (GLKMatrix4)nodeToParentTransform
 {
 	// The body ivar cannot be changed while this method is running and it's ARC retain/release is 70% of the profile samples for this method.
 	__unsafe_unretained CCPhysicsBody *physicsBody = GetBodyIfRunning(self);
 	if(physicsBody){
         
-		CGAffineTransform rigidTransform;
+		GLKMatrix4 rigidTransform;
 		
 		if(physicsBody.type == CCPhysicsBodyTypeKinematic)
 		{
 			CGPoint anchorPointInPointsScaled = ccpCompMult(_anchorPointInPoints,
 															ccp(_scaleX, _scaleY));
 			CGPoint rot = ccpRotateByAngle(anchorPointInPointsScaled, CGPointZero, -CC_DEGREES_TO_RADIANS(physicsBody.relativeRotation));
-			rigidTransform = CGAffineTransformMakeRigid(ccpSub(physicsBody.relativePosition , rot ), -CC_DEGREES_TO_RADIANS(physicsBody.relativeRotation));
+			rigidTransform = GLKMatrix4MakeRigid(ccpSub(physicsBody.relativePosition , rot ), -CC_DEGREES_TO_RADIANS(physicsBody.relativeRotation));
 		}
 		else
 		{
 			CGPoint scaleToParent = NodeToPhysicsScale(self.parent);
-			CGAffineTransform nodeToPhysics = NodeToPhysicsTransform(self.parent);
-			rigidTransform = CGAffineTransformConcat(physicsBody.absoluteTransform, CGAffineTransformInvert(nodeToPhysics));
-			rigidTransform = CGAffineTransformConcat(CGAffineTransformMakeScale(scaleToParent.x, scaleToParent.y), rigidTransform);
+			GLKMatrix4 nodeToPhysics = NodeToPhysicsTransform(self.parent);
+			rigidTransform = GLKMatrix4Multiply(GLKMatrix4Invert(nodeToPhysics, NULL), physicsBody.absoluteTransform);
+			rigidTransform = GLKMatrix4Multiply(rigidTransform, GLKMatrix4MakeScale(scaleToParent.x, scaleToParent.y, 1.0f));
 		}
-
-		_transform = CGAffineTransformConcat(CGAffineTransformMakeScale(_scaleX , _scaleY), rigidTransform);
+		
+		_transform = GLKMatrix4Multiply(rigidTransform, GLKMatrix4MakeScale(_scaleX, _scaleY, 1.0));
 	} else if ( _isTransformDirty ) {
         
         // Get content size
@@ -1479,21 +1486,23 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 
 		// Build Transform Matrix
 		// Adjusted transfor m calculation for rotational skew
-		_transform = CGAffineTransformMake( cy * _scaleX * scaleFactor, sy * _scaleX * scaleFactor,
-										   -sx * _scaleY * scaleFactor, cx * _scaleY * scaleFactor,
-										   x, y );
+		_transform = GLKMatrix4Make( cy * _scaleX * scaleFactor, sy * _scaleX * scaleFactor, 0.0f, 0.0f,
+										   -sx * _scaleY * scaleFactor, cx * _scaleY * scaleFactor, 0.0f, 0.0f,
+											 0.0f, 0.0f, 1.0f, 0.0f,
+										   x, y, _vertexZ, 1.0f);
 
 		// XXX: Try to inline skew
 		// If skew is needed, apply skew and then anchor point
 		if( needsSkewMatrix ) {
-			CGAffineTransform skewMatrix = CGAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(_skewY)),
-																 tanf(CC_DEGREES_TO_RADIANS(_skewX)), 1.0f,
-																 0.0f, 0.0f );
-			_transform = CGAffineTransformConcat(skewMatrix, _transform);
+			GLKMatrix4 skewMatrix = GLKMatrix4Make(1.0f, tanf(CC_DEGREES_TO_RADIANS(_skewY)), 0.0f, 0.0f,
+																 tanf(CC_DEGREES_TO_RADIANS(_skewX)), 1.0f, 0.0f, 0.0f,
+											 0.0f, 0.0f, 1.0f, 0.0f,
+																 0.0f, 0.0f, 0.0f, 1.0f);
+			_transform = GLKMatrix4Multiply(_transform, skewMatrix);
 
 			// adjust anchor point
 			if( ! CGPointEqualToPoint(_anchorPointInPoints, CGPointZero) )
-				_transform = CGAffineTransformTranslate(_transform, -_anchorPointInPoints.x, -_anchorPointInPoints.y);
+				_transform = GLKMatrix4Translate(_transform, -_anchorPointInPoints.x, -_anchorPointInPoints.y, 0.0f);
 		}
 
 		_isTransformDirty = NO;
@@ -1502,42 +1511,40 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 	return _transform;
 }
 
-- (CGAffineTransform)parentToNodeTransform
+- (GLKMatrix4)parentToNodeTransform
 {
 	// TODO Need to find a better way to mark physics transforms as dirty
 	if ( _isInverseDirty || GetBodyIfRunning(self) ) {
-		_inverse = CGAffineTransformInvert([self nodeToParentTransform]);
+		_inverse = GLKMatrix4Invert([self nodeToParentTransform], NULL);
 		_isInverseDirty = NO;
 	}
 
 	return _inverse;
 }
 
-- (CGAffineTransform)nodeToWorldTransform
+- (GLKMatrix4)nodeToWorldTransform
 {
-	CGAffineTransform t = [self nodeToParentTransform];
+	GLKMatrix4 t = [self nodeToParentTransform];
 
 	for (CCNode *p = _parent; p != nil; p = p.parent)
-		t = CGAffineTransformConcat(t, [p nodeToParentTransform]);
+		t = GLKMatrix4Multiply([p nodeToParentTransform], t);
 
 	return t;
 }
 
-- (CGAffineTransform)worldToNodeTransform
+- (GLKMatrix4)worldToNodeTransform
 {
-	return CGAffineTransformInvert([self nodeToWorldTransform]);
+	return GLKMatrix4Invert([self nodeToWorldTransform], NULL);
 }
 
 - (CGPoint)convertToNodeSpace:(CGPoint)worldPoint
 {
-	CGPoint ret = CGPointApplyAffineTransform(worldPoint, [self worldToNodeTransform]);
-	return ret;
+	return CGPointApplyGLKMatrix4(worldPoint, [self worldToNodeTransform]);
 }
 
 - (CGPoint)convertToWorldSpace:(CGPoint)nodePoint
 {
-	CGPoint ret = CGPointApplyAffineTransform(nodePoint, [self nodeToWorldTransform]);
-	return ret;
+	return CGPointApplyGLKMatrix4(nodePoint, [self nodeToWorldTransform]);
 }
 
 - (CGPoint)convertToNodeSpaceAR:(CGPoint)worldPoint

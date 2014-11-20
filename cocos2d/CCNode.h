@@ -102,7 +102,7 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 	CGSize	_contentSize;
 
 	// Transform.
-	CGAffineTransform _transform, _inverse;
+	GLKMatrix4 _transform, _inverse;
 
 	BOOL _isTransformDirty;
 	BOOL _isInverseDirty;
@@ -565,7 +565,7 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 /** Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
  The matrix is in Pixels.
  */
-- (CGAffineTransform)nodeToParentTransform;
+- (GLKMatrix4)nodeToParentTransform;
 
 - (CGPoint) convertPositionToPoints:(CGPoint)position type:(CCPositionType)type;
 - (CGPoint) convertPositionFromPoints:(CGPoint)positionInPoints type:(CCPositionType) type;
@@ -574,13 +574,13 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 - (CGSize) convertContentSizeFromPoints:(CGSize)pointSize type:(CCSizeType) type;
 
 /** Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates. The matrix is in Pixels. */
-- (CGAffineTransform)parentToNodeTransform;
+- (GLKMatrix4)parentToNodeTransform;
 
 /** Returns the world affine transform matrix. The matrix is in Pixels. */
-- (CGAffineTransform)nodeToWorldTransform;
+- (GLKMatrix4)nodeToWorldTransform;
 
 /** Returns the inverse world affine transform matrix. The matrix is in Pixels. */
-- (CGAffineTransform)worldToNodeTransform;
+- (GLKMatrix4)worldToNodeTransform;
 
 /**
  *  Converts a Point to node (local) space coordinates. The result is in Points.
