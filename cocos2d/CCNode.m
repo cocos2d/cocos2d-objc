@@ -50,18 +50,37 @@
 
 #pragma mark - Node
 
-@interface CCNode ()
-// lazy allocs
--(void) childrenAlloc;
-// helper that reorder a child
--(void) insertChild:(CCNode*)child z:(NSInteger)z;
-// used internally to alter the zOrder variable. DON'T call this method manually
--(void) _setZOrder:(NSInteger) z;
--(void) detachChild:(CCNode *)child cleanup:(BOOL)doCleanup;
-@end
-
 @implementation CCNode {
-
+	// Rotation angle.
+	float _rotationalSkewX, _rotationalSkewY;
+    
+	// Position of the node.
+	CGPoint _position;
+    
+	// Transform.
+	CGAffineTransform _transform, _inverse;
+	BOOL _isTransformDirty, _isInverseDirty;
+    
+	// Array of children.
+	NSMutableArray *_children;
+    
+    // True to ensure reorder.
+	BOOL _isReorderChildDirty;
+	
+	// Scheduler used to schedule timers and updates/
+	CCScheduler *_scheduler;
+	
+	// ActionManager used to handle all the actions.
+	CCActionManager	*_actionManager;
+	
+    //Animation Manager used to handle CCB animations
+    CCAnimationManager * _animationManager;
+	
+	// YES if the node is added to an active scene.
+	BOOL _isInActiveScene;
+	
+	// Number of paused parent or ancestor nodes.
+	int _pausedAncestors;
 }
 
 // Suppress automatic ivar creation.
@@ -114,22 +133,6 @@ RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
 {
 	return CGAffineTransformConcat(body.absoluteTransform, CGAffineTransformInvert(NodeToPhysicsTransform(node.parent)));
 }
-
-@synthesize children = _children;
-@synthesize visible = _visible;
-@synthesize parent = _parent;
-@synthesize zOrder = _zOrder;
-@synthesize name = _name;
-@synthesize vertexZ = _vertexZ;
-@synthesize userObject = _userObject;
-@synthesize physicsBody = _physicsBody;
-
-#pragma mark CCNode - Transform related properties
-
-@synthesize scaleX = _scaleX, scaleY = _scaleY;
-@synthesize anchorPoint = _anchorPoint, anchorPointInPoints = _anchorPointInPoints;
-@synthesize contentSize = _contentSize;
-@synthesize skewX = _skewX, skewY = _skewY;
 
 #pragma mark CCNode - Init & cleanup
 
@@ -683,7 +686,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 	child.name = name;
 
-	[child setParent: self];
+	child->_parent = self;
 
 	// Update pausing parameters
 	child->_pausedAncestors = _pausedAncestors + (_paused ? 1 : 0);
@@ -782,7 +785,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 			[c cleanup];
 
 		// set parent nil at the end (issue #476)
-		[c setParent:nil];
+		c->_parent = nil;
         
         [[[CCDirector sharedDirector] responderManager] markAsDirty];
 
@@ -811,7 +814,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		[child cleanup];
 
 	// set parent nil at the end (issue #476)
-	[child setParent:nil];
+	child->_parent = nil;
 
 	[[[CCDirector sharedDirector] responderManager] markAsDirty];
 
@@ -872,8 +875,47 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 -(void)draw:(__unsafe_unretained CCRenderer *)renderer transform:(const GLKMatrix4 *)transform {}
 
-// Defined in CCNoARC.m
-// -(void) visit:(__unsafe_unretained CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
+static inline GLKMatrix4
+CCNodeTransform(CCNode *node, GLKMatrix4 parentTransform)
+{
+	CGAffineTransform t = [node nodeToParentTransform];
+	float z = node->_vertexZ;
+	
+	// Convert to 4x4 column major GLK matrix.
+	return GLKMatrix4Multiply(parentTransform, GLKMatrix4Make(
+		 t.a,  t.b, 0.0f, 0.0f,
+		 t.c,  t.d, 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		t.tx, t.ty,    z, 1.0f
+	));
+}
+
+-(GLKMatrix4)transform:(const GLKMatrix4 *)parentTransform
+{
+	return CCNodeTransform(self, *parentTransform);
+}
+
+-(void) visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
+{
+	// quick return if not visible. children won't be drawn.
+	if (!_visible) return;
+	
+	[self sortAllChildren];
+	
+	GLKMatrix4 transform = CCNodeTransform(self, *parentTransform);
+	BOOL drawn = NO;
+	
+	for(CCNode *child in _children){
+		if(!drawn && child.zOrder >= 0){
+			[self draw:renderer transform:&transform];
+			drawn = YES;
+		}
+		
+		[child visit:renderer parentTransform:&transform];
+	}
+	
+	if(!drawn) [self draw:renderer transform:&transform];
+}
 
 -(void)visit
 {

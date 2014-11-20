@@ -75,82 +75,6 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 	// DisplayColor and Color are kept separate to allow for cascading color and alpha changes through node children.
 	// Alphas tend to be multiplied together so you can fade groups of objects that are colored differently.
 	GLKVector4	_displayColor, _color;
-
-@private
-	// Rotation angle.
-	float _rotationalSkewX, _rotationalSkewY;
-
-	// Scaling factors.
-	float _scaleX, _scaleY;
-
-	// OpenGL real Z vertex.
-	float _vertexZ;
-
-	// Position of the node.
-	CGPoint _position;
-
-	// Skew angles.
-	float _skewX, _skewY;
-
-	// Anchor point in points.
-	CGPoint _anchorPointInPoints;
-    
-	// Anchor point normalized (NOT in points).
-	CGPoint _anchorPoint;
-
-	// Untransformed size of the node.
-	CGSize	_contentSize;
-
-	// Transform.
-	CGAffineTransform _transform, _inverse;
-
-	BOOL _isTransformDirty;
-	BOOL _isInverseDirty;
-
-	// Z-order value.
-	NSInteger _zOrder;
-
-	// Array of children.
-	NSMutableArray *_children;
-
-	// Weak ref to parent.
-	__weak CCNode *_parent;
-
-	// A tag any name you want to assign to the node
-    NSString* _name;
-
-	// User data field.
-	id _userObject;
-
-	// True when visible.
-	BOOL _visible;
-
-    // True to ensure reorder.
-	BOOL _isReorderChildDirty;
-	
-	// Opacity/Color propagates into children that conform to if cascadeOpacity/cascadeColor is enabled.
-	BOOL		_cascadeColorEnabled, _cascadeOpacityEnabled;
-	
-	// Physics Body.
-	CCPhysicsBody* _physicsBody;
-	
-	// Scheduler used to schedule timers and updates/
-	CCScheduler		*_scheduler;
-	
-	// ActionManager used to handle all the actions.
-	CCActionManager	*_actionManager;
-	
-    //Animation Manager used to handle CCB animations
-    CCAnimationManager * _animationManager;
-	
-	// YES if the node is added to an active scene.
-	BOOL _isInActiveScene;
-	
-    // True if paused.
-	BOOL _paused;
-	
-	// Number of paused parent or ancestor nodes.
-	int _pausedAncestors;
 }
 
 
@@ -371,7 +295,7 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 -(void) removeAllChildrenWithCleanup:(BOOL)cleanup;
 
 /** A weak reference to the parent. */
-@property(nonatomic,readwrite,weak) CCNode* parent;
+@property(nonatomic, readonly, unsafe_unretained) CCNode* parent;
 
 /** Array of child nodes. */
 @property(nonatomic,readonly) NSArray *children;

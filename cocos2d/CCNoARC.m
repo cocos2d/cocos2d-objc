@@ -9,53 +9,6 @@
 #endif
 
 
-@implementation CCNode(NoARC)
-
-static inline GLKMatrix4
-CCNodeTransform(CCNode *node, GLKMatrix4 parentTransform)
-{
-	CGAffineTransform t = [node nodeToParentTransform];
-	float z = node->_vertexZ;
-	
-	// Convert to 4x4 column major GLK matrix.
-	return GLKMatrix4Multiply(parentTransform, GLKMatrix4Make(
-		 t.a,  t.b, 0.0f, 0.0f,
-		 t.c,  t.d, 0.0f, 0.0f,
-		0.0f, 0.0f, 1.0f, 0.0f,
-		t.tx, t.ty,    z, 1.0f
-	));
-}
-
--(GLKMatrix4)transform:(const GLKMatrix4 *)parentTransform
-{
-	return CCNodeTransform(self, *parentTransform);
-}
-
--(void) visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
-{
-	// quick return if not visible. children won't be drawn.
-	if (!_visible) return;
-	
-	[self sortAllChildren];
-	
-	GLKMatrix4 transform = CCNodeTransform(self, *parentTransform);
-	BOOL drawn = NO;
-	
-	for(CCNode *child in _children){
-		if(!drawn && child.zOrder >= 0){
-			[self draw:renderer transform:&transform];
-			drawn = YES;
-		}
-		
-		[child visit:renderer parentTransform:&transform];
-	}
-	
-	if(!drawn) [self draw:renderer transform:&transform];
-}
-
-@end
-
-
 @implementation CCSprite(NoARC)
 
 static inline void
