@@ -11,7 +11,7 @@
 #if CC_EFFECTS_EXPERIMENTAL
 
 /**
- * CCEffectDistanceField create a drop shadow.
+ * CCEffectDistanceField creates a drop shadow.
  *
  */
 
@@ -23,6 +23,7 @@
 
 /** Color of the shadow,
  * [CCColor blackColor] will result in an opaque black drop shadow.
+ * @since v3.3 and later
  */
 @property (nonatomic, strong) CCColor* glowColor;
 @property (nonatomic, strong) CCColor* fillColor;
@@ -43,6 +44,7 @@
  *  Initializes a CCEffectDistanceField object with a (5, -5) black drop shadow offset .
  *
  *  @return The CCEffectDistanceField object.
+ *  @since v3.3 and later
  */
 -(id)init;
 
@@ -53,6 +55,7 @@
  *  @param outlineColor Color of the outline.
  *
  *  @return The CCEffectDistanceField object.
+ *  @since v3.3 and later
  */
 -(id)initWithGlowColor:(CCColor*)glowColor outlineColor:(CCColor*)outlineColor;
 
@@ -68,6 +71,7 @@
  *  @param outlineColor Color of the outline.
  *
  *  @return The CCEffectDistanceField object.
+ *  @since v3.3 and later
  */
 +(id)effectWithGlowColor:(CCColor*)glowColor outlineColor:(CCColor*)outlineColor;
 

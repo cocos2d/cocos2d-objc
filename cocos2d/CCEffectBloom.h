@@ -24,16 +24,19 @@
 /** The luminance threshold at which pixels will contribute to the bloom.
  *  This value is in the range [0..1]. Lower values mean that more pixels will
  *  contribute to the blurry bloom image.
+ *  @since v3.2 and later
  */
 @property (nonatomic, assign) float luminanceThreshold;
 
 /** The intensity of the blurred out bloom image when added to the original
  *  unmodified image. This value is in the range [0..1]. 0 results in no bloom
  *  while higher values result in more bloom.
+ *  @since v3.2 and later
  */
 @property (nonatomic, assign) float intensity;
 
 /** The size of the blur of the bloom image. This value is in the range [0..6].
+ *  @since v3.2 and later
  */
 @property (nonatomic, assign) NSUInteger blurRadius;
 
@@ -47,6 +50,7 @@
  *  blurRadius = 2, intensity = 1, luminanceThreshold = 0
  *
  *  @return The CCEffectBloom object.
+ *  @since v3.2 and later
  */
 -(id)init;
 
@@ -62,7 +66,7 @@
  *  A value of 0.0 will apply bloom to the whole image, a value of 1.0 will only apply bloom to the brightest part of the image.
  *
  *  @return The CCEffectBloom object.
- *
+ *  @since v3.2 and later
  */
 -(id)initWithPixelBlurRadius:(NSUInteger)blurRadius intensity:(float)intensity luminanceThreshold:(float)luminanceThreshold;
 
@@ -83,7 +87,7 @@
  *  A value of 0.0 will apply bloom to the whole image, a value of 1.0 will only apply bloom to the brightest part of the image.
  *
  *  @return The CCEffectBloom object.
- *
+ *  @since v3.2 and later
  */
 +(id)effectWithBlurRadius:(NSUInteger)blurRadius intensity:(float)intensity luminanceThreshold:(float)luminanceThreshold;
 

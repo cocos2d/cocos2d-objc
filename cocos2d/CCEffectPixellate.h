@@ -21,6 +21,7 @@
 /** The resulting size of the pixel blocks of the affected node. This value is specified in points
  *  and is in the range [1..inf]. A value of 1 results in no change to the affected pixels
  *  and larger values result in larger output pixel blocks.
+ *  @since v3.2 and later
  */
 @property (nonatomic, assign) float blockSize;
 
@@ -33,6 +34,7 @@
  *  Initializes a CCEffectPixellate object with a block size of 1.
  *
  *  @return The CCEffectPixellate object.
+ *  @since v3.2 and later
  */
 -(id)init;
 
@@ -42,6 +44,7 @@
  *  @param blockSize The desired block size.
  *
  *  @return The CCEffectPixellate object.
+ *  @since v3.2 and later
  */
 -(id)initWithBlockSize:(float)blockSize;
 
@@ -56,6 +59,7 @@
  *  @param blockSize The desired block size.
  *
  *  @return The CCEffectPixellate object.
+ *  @since v3.2 and later
  */
 +(id)effectWithBlockSize:(float)blockSize;
 

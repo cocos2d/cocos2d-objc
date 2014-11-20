@@ -21,6 +21,7 @@
 /// -----------------------------------------------------------------------
 
 /** The size of the blur. This value is in the range [0..n].
+ *  @since v3.2 and later
  */
 @property (nonatomic, assign) NSUInteger blurRadius;
 
@@ -34,6 +35,7 @@
  *  blurRadius = 2
  *
  *  @return The CCEffectBlur object.
+ *  @since v3.2 and later
  */
 -(id)init;
 
@@ -44,6 +46,7 @@
  *  of varying variables that can be passed to a glsl program).
  *
  *  @return The CCEffectBlur object.
+ *  @since v3.2 and later
  */
 -(id)initWithPixelBlurRadius:(NSUInteger)blurRadius;
 
@@ -59,6 +62,7 @@
  *  of varying variables that can be passed to a glsl program).
  *
  *  @return The CCEffectBlur object.
+ *  @since v3.2 and later
  */
 +(id)effectWithBlurRadius:(NSUInteger)blurRadius;
 

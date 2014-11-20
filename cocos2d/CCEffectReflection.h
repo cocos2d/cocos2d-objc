@@ -24,16 +24,19 @@
 /** The environment that will be reflected by the affected node. Typically this is a sprite
  *  that is not visible in the scene as it is conceptually "behind the viewer" and only visible
  *  where reflected by the affected node.
+ *  @since v3.2 and later
  */
 @property (nonatomic, strong) CCSprite *environment;
 
 /** The normal map that encodes the normal vectors of the affected node. Each pixel in the normal
  *  map is a 3 component vector that is perpendicular to the surface of the sprite at that point.
+ *  @since v3.2 and later
  */
 @property (nonatomic, strong) CCSpriteFrame *normalMap;
 
 /** The overall shininess of the attached sprite. This value is in the range [0..1] and it controls
  *  how much of the reflected environment contributes to the final color of the affected pixels.
+ *  @since v3.2 and later
  */
 @property (nonatomic, assign) float shininess;
 
@@ -41,6 +44,7 @@
  *    reflectance = max(0.0, fresnelBias + (1 - fresnelBias) * pow((1 - nDotV), fresnelPower))
  *  This value is in the range [0..1] and it controls the constant (view angle independent) contribution
  *  to the reflectance equation.
+ *  @since v3.2 and later
  */
 @property (nonatomic, assign) float fresnelBias;
 
@@ -48,6 +52,7 @@
  *    reflectance = max(0.0, fresnelBias + (1 - fresnelBias) * pow((1 - nDotV), fresnelPower))
  *  This value is in the range [0..inf] and it controls the view angle dependent contribution
  *  to the reflectance equation.
+ *  @since v3.2 and later
  */
 @property (nonatomic, assign) float fresnelPower;
 
@@ -61,6 +66,7 @@
  *  fresnelBias = 1.0, fresnelPower = 0.0, environment = nil, normalMap = nil
  *
  *  @return The CCEffectReflection object.
+ *  @since v3.2 and later
  */
 -(id)init;
 
@@ -72,6 +78,7 @@
  *  @param environment The environment image that will be reflected by the affected node.
  *
  *  @return The CCEffectReflection object.
+ *  @since v3.2 and later
  */
 -(id)initWithShininess:(float)shininess environment:(CCSprite *)environment;
 
@@ -84,6 +91,7 @@
  *  @param normalMap The normal map of the affected node. This can also be specified as a property of the affected sprite.
  *
  *  @return The CCEffectReflection object.
+ *  @since v3.2 and later
  */
 -(id)initWithShininess:(float)shininess environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap;
 
@@ -96,6 +104,7 @@
  *  @param environment The environment image that will be reflected by the affected node.
  *
  *  @return The CCEffectReflection object.
+ *  @since v3.2 and later
  */
 -(id)initWithShininess:(float)shininess fresnelBias:(float)bias fresnelPower:(float)power environment:(CCSprite *)environment;
 
@@ -109,6 +118,7 @@
  *  @param normalMap The normal map of the affected node. This can also be specified as a property of the affected sprite.
  *
  *  @return The CCEffectReflection object.
+ *  @since v3.2 and later
  */
 -(id)initWithShininess:(float)shininess fresnelBias:(float)bias fresnelPower:(float)power environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap;
 
@@ -125,6 +135,7 @@
  *  @param environment The environment image that will be reflected by the affected node.
  *
  *  @return The CCEffectReflection object.
+ *  @since v3.2 and later
  */
 +(id)effectWithShininess:(float)shininess environment:(CCSprite *)environment;
 
@@ -137,6 +148,7 @@
  *  @param normalMap The normal map of the affected node. This can also be specified as a property of the affected sprite.
  *
  *  @return The CCEffectReflection object.
+ *  @since v3.2 and later
  */
 +(id)effectWithShininess:(float)shininess environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap;
 
@@ -149,6 +161,7 @@
  *  @param environment The environment image that will be reflected by the affected node.
  *
  *  @return The CCEffectReflection object.
+ *  @since v3.2 and later
  */
 +(id)effectWithShininess:(float)shininess fresnelBias:(float)bias fresnelPower:(float)power environment:(CCSprite *)environment;
 
@@ -162,6 +175,7 @@
  *  @param normalMap The normal map of the affected node. This can also be specified as a property of the affected sprite.
  *
  *  @return The CCEffectReflection object.
+ *  @since v3.2 and later
  */
 +(id)effectWithShininess:(float)shininess fresnelBias:(float)bias fresnelPower:(float)power environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap;
 

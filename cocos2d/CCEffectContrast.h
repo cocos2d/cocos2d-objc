@@ -25,6 +25,7 @@
  *  to the color scale factor is: pow(4.0, contrast). This means that
  *  an adjustment value of -1 scales the affected color by 0.25, 0 results in no
  *  change, and 1 scales the affected color by 4.
+ *  @since v3.2 and later
  */
 @property (nonatomic, assign) float contrast;
 
@@ -37,6 +38,7 @@
  *  Initializes a CCEffectContrast object with a contrast adjustment of 0.
  *
  *  @return The CCEffectContrast object.
+ *  @since v3.2 and later
  */
 -(id)init;
 
@@ -46,6 +48,7 @@
  *  @param contrast The desired contrast adjustment.
  *
  *  @return The CCEffectContrast object.
+ *  @since v3.2 and later
  */
 -(id)initWithContrast:(float)contrast;
 
@@ -60,6 +63,7 @@
  *  @param contrast The desired contrast adjustment.
  *
  *  @return The CCEffectContrast object.
+ *  @since v3.2 and later
  */
 +(id)effectWithContrast:(float)contrast;
 

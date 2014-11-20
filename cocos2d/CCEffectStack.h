@@ -13,16 +13,16 @@
  * visual combinations. Effect stacks are immutable in the sense that the effects they
  * contain cannot be changed once the stack is created. However, the parameters of the
  * contained effects can be changed.
- *
  */
-
 @interface CCEffectStack : CCEffect
 
 /// -----------------------------------------------------------------------
 /// @name Accessing Stack Attributes
 /// -----------------------------------------------------------------------
 
-/** The number of effects contained in the stack. */
+/** The number of effects contained in the stack.
+ @since v3.2 and later
+*/
 @property (nonatomic, readonly) NSUInteger effectCount;
 
 
@@ -34,6 +34,7 @@
  *  Initializes an empty effect stack object.
  *
  *  @return The CCEffectStack object.
+ *  @since v3.2 and later
  */
 - (id)init;
 
@@ -43,6 +44,7 @@
  *  @param arrayOfEffects The array of effects to add to the stack.
  *
  *  @return The CCEffectStack object.
+ *  @since v3.2 and later
  */
 - (id)initWithArray:(NSArray *)arrayOfEffects;
 
@@ -53,6 +55,7 @@
  *  @param ...     Nil terminated list of effects to stack.
  *
  *  @return The CCEffectStack object.
+ *  @since v3.2 and later
  */
 - (id)initWithEffects:(CCEffect*)effect1, ... NS_REQUIRES_NIL_TERMINATION;
 
@@ -67,6 +70,7 @@
  *  @param arrayOfEffects The array of effects to add to the stack.
  *
  *  @return The CCEffectStack object.
+ *  @since v3.2 and later
  */
 + (id)effectWithArray:(NSArray*)arrayOfEffects;
 
@@ -77,6 +81,7 @@
  *  @param ...     Nil terminated list of effects to stack.
  *
  *  @return The CCEffectStack object.
+ *  @since v3.2 and later
  */
 + (id)effects:(CCEffect*)effect1, ... NS_REQUIRES_NIL_TERMINATION;
 
@@ -91,6 +96,7 @@
  *  @param effectIndex The index of the effect object to retrieve.
  *
  *  @return The selected effect object.
+ *  @since v3.2 and later
  */
 - (CCEffect *)effectAtIndex:(NSUInteger)effectIndex;
 

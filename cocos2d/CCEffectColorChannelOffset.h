@@ -19,14 +19,17 @@
 /// -----------------------------------------------------------------------
 
 /** The offset, in points, of the red color channel. 
+ @since v3.2 and later
  */
 @property (nonatomic, assign) GLKVector2 redOffset;
 
 /** The offset, in points, of the green color channel.
+ @since v3.2 and later
  */
 @property (nonatomic, assign) GLKVector2 greenOffset;
 
 /** The offset, in points, of the blue color channel.
+ @since v3.2 and later
  */
 @property (nonatomic, assign) GLKVector2 blueOffset;
 
@@ -39,6 +42,7 @@
  *  Initializes a CCEffectColorChannelOffset object with zero length color channel offsets.
  *
  *  @return The CCEffectColorChannelOffset object.
+ *  @since v3.2 and later
  */
 -(id)init;
 
@@ -50,6 +54,7 @@
  *  @param blueOffset The blue color channel ofset.
  *
  *  @return The CCEffectColorChannelOffset object.
+ *  @since v3.2 and later
  */
 -(id)initWithRedOffset:(GLKVector2)redOffset greenOffset:(GLKVector2)greenOffset blueOffset:(GLKVector2)blueOffset;
 
@@ -66,6 +71,7 @@
  *  @param blueOffset The blue color channel ofset.
  *
  *  @return The CCEffectColorChannelOffset object.
+ *  @since v3.2 and later
  */
 +(id)effectWithRedOffset:(GLKVector2)redOffset greenOffset:(GLKVector2)greenOffset blueOffset:(GLKVector2)blueOffset;
 

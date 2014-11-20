@@ -13,6 +13,7 @@
 /**
  * CCEffectLighting uses a normal map and a collection of light nodes to compute the Phong
  * lighting on the affected node.
+ *  @since v?.? and later
  */
 @interface CCEffectLighting : CCEffect
 
@@ -25,6 +26,7 @@
  *  belong to groups. The intersection of a light effect's groups and a light
  *  node's groups determine whether or not a light node contributes to a light
  *  effect.
+ *  @since v?.? and later
  */
 @property (nonatomic, copy) NSArray *groups;
 
@@ -32,6 +34,7 @@
  *  The specular color of the affected node. This color is combined with the light's
  *  color and the effect's shininess value to determine the color of specular highlights
  *  that appear when lighting shiny surfaces.
+ *  @since v?.? and later
  */
 @property (nonatomic, strong) CCColor* specularColor;
 
@@ -39,6 +42,7 @@
  *  The shininess of the affected node. This value controls the tightness of specular
  *  highlights. 0 results in no specular contribution to the lighting equations and
  *  increasing values result in tighter highlights.
+ *  @since v?.? and later
  */
 @property (nonatomic, assign) float shininess;
 
@@ -50,6 +54,7 @@
  *  Initializes a CCEffectLighting object.
  *
  *  @return The CCEffectLighting object.
+ *  @since v?.? and later
  */
 -(id)init;
 
@@ -61,6 +66,7 @@
  *  @param shininess      The overall shininess of the effect.
  *
  *  @return The CCEffectLighting object.
+ *  @since v?.? and later
  */
 -(id)initWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess;
 
@@ -77,6 +83,7 @@
  *  @param shininess      The overall shininess of the effect.
  *
  *  @return The CCEffectLighting object.
+ *  @since v?.? and later
  */
 +(id)effectWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess;
 
