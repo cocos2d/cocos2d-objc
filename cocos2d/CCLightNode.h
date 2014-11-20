@@ -23,6 +23,7 @@ typedef NS_ENUM(NSUInteger, CCLightType)
 /**
  * CCLightNode allows the user to define lights that will be used with
  * CCEffectLighting.
+ *  @since v?.? and later
  */
 
 @interface CCLightNode : CCNode
@@ -39,6 +40,7 @@ typedef NS_ENUM(NSUInteger, CCLightType)
  *  If the angle between the light's direction vector and the vector from
  *  the light to the node exceeds the cutoff angle then the light no longer
  *  contributes to the lighting of the node.
+ *  @since v?.? and later
  */
 @property (nonatomic, assign) CCLightType type;
 
@@ -46,6 +48,7 @@ typedef NS_ENUM(NSUInteger, CCLightType)
  *  belong to groups. The intersection of a light effect's groups and a light
  *  node's groups determine whether or not a light node contributes to a light
  *  effect.
+ *  @since v?.? and later
  */
 @property (nonatomic, copy) NSArray *groups;
 
@@ -53,6 +56,7 @@ typedef NS_ENUM(NSUInteger, CCLightType)
  *  intensity value to determine the contribution of the light to the lighting
  *  effect. This color is used when computing the light's position and orientation
  *  dependent contribution to the lighting effect.
+ *  @since v?.? and later
  */
 @property (nonatomic, strong) CCColor* color;
 
@@ -60,6 +64,7 @@ typedef NS_ENUM(NSUInteger, CCLightType)
  *  with 0 resulting in no contribution from this light in the final image (the light
  *  effectively becomes black) and 1 resulting in full contribution from this
  *  light.
+ *  @since v?.? and later
  */
 @property (nonatomic, assign) float intensity;
 
@@ -67,6 +72,7 @@ typedef NS_ENUM(NSUInteger, CCLightType)
  *  specular intensity value to determine the contribution of the light to the lighting
  *  effect. This color is used when computing the light's specular (shiny) contribution
  *  to the lighting effect.
+ *  @since v?.? and later
  */
 @property (nonatomic, strong) CCColor* specularColor;
 
@@ -74,6 +80,7 @@ typedef NS_ENUM(NSUInteger, CCLightType)
  *  with 0 resulting in no contribution from the specular color to the final image
  *  (the specular color effectively becomes black) and 1 resulting in full contribution
  *  from this light.
+ *  @since v?.? and later
  */
 @property (nonatomic, assign) float specularIntensity;
 
@@ -81,6 +88,7 @@ typedef NS_ENUM(NSUInteger, CCLightType)
  *  ambient intensity value to determine the contribution of the light to the lighting
  *  effect. The ambient color contributes to the lighting effect independent of the light's
  *  position and orientation relative to the affected node.
+ *  @since v?.? and later
  */
 @property (nonatomic, strong) CCColor* ambientColor;
 
@@ -88,6 +96,7 @@ typedef NS_ENUM(NSUInteger, CCLightType)
  *  with 0 resulting in no contribution from the ambient color to the final image 
  *  (the ambient color effectively becomes black) and 1 resulting in full contribution 
  *  from this light.
+ *  @since v?.? and later
  */
 @property (nonatomic, assign) float ambientIntensity;
 
@@ -96,12 +105,14 @@ typedef NS_ENUM(NSUInteger, CCLightType)
  *  distance is greater, the sprite will not be lit by this light. This distance is
  *  measured in points. Setting this value to zero disables light cutoff. This propery 
  *  has no effect on directional lights.
+ *  @since v?.? and later
  */
 @property (nonatomic, assign) float cutoffRadius;
 
 /** The radius at which point the light's intensity has fallen off to half of its maximum
  *  value. The value is specified in normalized units where 0 equals 0 points, and 1 equals
  *  cutoffRadius points. This propery has no effect on directional lights.
+ *  @since v?.? and later
  */
 @property (nonatomic, assign) float halfRadius;
 
@@ -112,6 +123,7 @@ typedef NS_ENUM(NSUInteger, CCLightType)
  *  coplanar with any nodes it is lighting which results in a very hard looking side light. 
  *  Increasingly positive values move the light farther and farther out of the plane of 
  *  the lit nodes resulting in a softer looking front light.
+ *  @since v?.? and later
  */
 @property (nonatomic, assign) float depth;
 
@@ -126,6 +138,7 @@ typedef NS_ENUM(NSUInteger, CCLightType)
  *  Initializes a point light with a white color and full intensity.
  *
  *  @return The CCLightNode object.
+ *  @since v?.? and later
  */
 -(id)init;
 
@@ -138,6 +151,7 @@ typedef NS_ENUM(NSUInteger, CCLightType)
  *  @param intensity         The brightness of the light's primary color.
  *
  *  @return The CCLighttNode object.
+ *  @since v?.? and later
  */
 -(id)initWithType:(CCLightType)type groups:(NSArray*)groups color:(CCColor *)color intensity:(float)intensity;
 
@@ -154,6 +168,7 @@ typedef NS_ENUM(NSUInteger, CCLightType)
  *  @param ambientIntensity  The brightness of the light's ambient color.
  *
  *  @return The CCLighttNode object.
+ *  @since v?.? and later
  */
 -(id)initWithType:(CCLightType)type groups:(NSArray*)groups color:(CCColor *)color intensity:(float)intensity specularColor:(CCColor *)specularColor specularIntensity:(float)specularIntensity ambientColor:(CCColor *)ambientColor ambientIntensity:(float)ambientIntensity;
 
@@ -171,6 +186,7 @@ typedef NS_ENUM(NSUInteger, CCLightType)
  *  @param intensity         The brightness of the light's primary color.
  *
  *  @return An initialized CCLightNode object.
+ *  @since v?.? and later
  */
 +(id)lightWithType:(CCLightType)type groups:(NSArray*)groups color:(CCColor *)color intensity:(float)intensity;
 
@@ -187,6 +203,7 @@ typedef NS_ENUM(NSUInteger, CCLightType)
  *  @param ambientIntensity  The brightness of the light's ambient color.
  *
  *  @return An initialized CCLightNode object.
+ *  @since v?.? and later
  */
 +(id)lightWithType:(CCLightType)type groups:(NSArray*)groups color:(CCColor *)color intensity:(float)intensity specularColor:(CCColor *)specularColor specularIntensity:(float)specularIntensity ambientColor:(CCColor *)ambientColor ambientIntensity:(float)ambientIntensity;
 
