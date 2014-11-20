@@ -69,7 +69,6 @@ tools/appledoc \
 --ignore CCDirectorMac.h \
 --ignore CCDrawingPrimitives.h \
 --ignore CCEffectDistanceField.h \
---ignore CCEffectLighting.h \
 --ignore CCES2Renderer.h \
 --ignore CCESRenderer.h \
 --ignore ccFPSImages.h \
@@ -77,8 +76,6 @@ tools/appledoc \
 --ignore CCGLProgram.h \
 --ignore CCGLView.h \
 --ignore CCLabelAtlas.h \
---ignore CCLightCollection.h \
---ignore CCLightNode.h \
 --ignore ccMacros.h \
 --ignore CCMetalView.h \
 --ignore CCNS.h \
