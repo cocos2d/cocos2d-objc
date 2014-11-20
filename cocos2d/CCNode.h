@@ -567,10 +567,6 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  */
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
 
-#warning TODO Can this be removed after merging the transform branch?
-/** Returns the 4x4 drawing transformation for this node. Really only useful when overriding visit:parentTransform: */
--(GLKMatrix4)transform:(const GLKMatrix4 *)parentTransform;
-
 /** Recursive method that visit its children and draw them. */
 -(void) visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform;
 

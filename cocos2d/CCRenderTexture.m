@@ -366,7 +366,7 @@ FlipY(GLKMatrix4 projection)
 		
 		[self end];
 		
-		GLKMatrix4 transform = [self transform:parentTransform];
+		GLKMatrix4 transform = GLKMatrix4Multiply(*parentTransform, [self nodeToParentTransform]);
 		[self draw:renderer transform:&transform];
 	} else {
 		// Render normally, v3.0 and earlier skipped this.

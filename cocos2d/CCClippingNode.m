@@ -253,7 +253,7 @@ SetProgram(CCNode *n, CCShader *p, NSNumber *alpha) {
 		
     // draw the stencil node as if it was one of our child
     // (according to the stencil test func/op and alpha (or alpha shader) test)
-    GLKMatrix4 transform = [self transform:parentTransform];
+    GLKMatrix4 transform = GLKMatrix4Multiply(*parentTransform, [self nodeToParentTransform]);
 		
 		[renderer pushGroup];
     [_stencil visit:renderer parentTransform:&transform];
