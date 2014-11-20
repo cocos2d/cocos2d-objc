@@ -13,6 +13,9 @@
 /**
  * CCEffectLighting uses a normal map and a collection of light nodes to compute the Phong
  * lighting on the affected node.
+ *
+ * @note This class is currently considered experimental. Set the `CC_EFFECTS_EXPERIMENTAL` macro to 1 in ccConfig.h if you want to use this class.
+ *
  *  @since v3.4 and later
  */
 @interface CCEffectLighting : CCEffect
