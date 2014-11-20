@@ -1044,9 +1044,10 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 
 #pragma mark CCNode SceneManagement
 
-// Overriden by CCScene to return YES.
--(BOOL)isScene {return NO;}
--(CCScene *)scene {return (self.isScene ? (CCScene *)self : self.parent.scene);}
+-(CCScene *)scene
+{
+    return _parent.scene;
+}
 
 -(void) onEnter
 {
