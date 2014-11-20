@@ -111,7 +111,7 @@
  *  If ' compressedInterpolation' is enabled (default mode) you will see both the start and end colors of the gradient.
  */
 @interface CCNodeGradient : CCNodeColor {
-	ccColor4F _endColor;
+	GLKVector4 _endColor;
 	CGPoint _vector;
 }
 
@@ -194,73 +194,3 @@
 @property (nonatomic, readwrite) BOOL compressedInterpolation __attribute__((deprecated));
 
 @end
-
-#pragma mark - CCNodeMultiplexer
-
-/** CCNodeMultiplexer is a CCNode with the ability to multiplex its children.
- *
- *  Features:
- *
- *  - It supports one or more children
- *  - Only one child will be active a time
- */
-@interface CCNodeMultiplexer : CCNode {
-	unsigned int _enabledNode;
-	NSMutableArray *_nodes;
-}
-
-
-/// -----------------------------------------------------------------------
-/// @name Creating a CCNodeMultiplexer Object
-/// -----------------------------------------------------------------------
-
-/**
- *  Creates a CCNodeMultiplexer with an array of nodes.
- *
- *  @param arrayOfNodes Array of nodes.
- *
- *  @return The CCNodeMultiplexer object.
- */
-+(id)nodeWithArray:(NSArray*)arrayOfNodes;
-
-/** Creates a CCMultiplexLayer with one or more nodes using a variable argument list.
- *  Example: 
- *  @code mux = [CCNodeMultiplexer nodeWithNodes:nodeA, nodeB, nodeC, nil];
- *  
- *  @param node List of nodes.
- *  @param ... Nil terminator.
- *  @return The CCNodeMultiplexer object.
- */
-+(id)nodeWithNodes:(CCNode*)node, ... NS_REQUIRES_NIL_TERMINATION;
-
-
-/// -----------------------------------------------------------------------
-/// @name Initializing a CCNodeMultiplexer Object
-/// -----------------------------------------------------------------------
-
-/**
- *  Initializes a CCNodeMultiplexer with an array of nodes.
- *
- *  @param arrayOfNodes Array of nodes.
- *
- *  @return An initialized CCNodeMultiplexer Object.
- */
-
--(id)initWithArray:(NSArray*)arrayOfNodes;
-
-
-/// -----------------------------------------------------------------------
-/// @name CCNodeMultiplexer Management
-/// -----------------------------------------------------------------------
-
-/**
- *  Switches to a certain node indexed by n.
- *
- *  The current (old) node will be removed from its parent with 'cleanup:YES'.
- *
- *  @param n Index of node to switch to.
- */
--(void)switchTo:(unsigned int) n;
-
-@end
-

@@ -92,7 +92,7 @@
  *  @param filename Image file to load.
  *  @param block    Block to execute when image loaded.
  */
--(void) addImageAsync:(NSString*) filename withBlock:(void(^)(CCTexture *tex))block;
+//-(void) addImageAsync:(NSString*) filename withBlock:(void(^)(CCTexture *tex))block;
 
 
 /**

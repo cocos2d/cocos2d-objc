@@ -75,7 +75,7 @@
 #import "CCTexture.h"
 #import "ccConfig.h"
 #import "ccMacros.h"
-#import "CCConfiguration.h"
+#import "CCDeviceInfo.h"
 #import "CCTexturePVR.h"
 #import "CCShader.h"
 #import "CCDirector.h"
@@ -228,7 +228,7 @@ static CCTexture *CCTextureNone = nil;
 
 - (id) initWithData:(const void*)data pixelFormat:(CCTexturePixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSizeInPixels:(CGSize)sizeInPixels contentScale:(CGFloat)contentScale
 {
-	NSAssert([CCConfiguration sharedConfiguration].graphicsAPI != CCGraphicsAPIInvalid, @"Graphics API not configured.");
+	NSAssert([CCDeviceInfo sharedDeviceInfo].graphicsAPI != CCGraphicsAPIInvalid, @"Graphics API not configured.");
 	
 	if((self = [super init])) {
 #if __CC_METAL_SUPPORTED_AND_ENABLED
@@ -459,7 +459,7 @@ static CCTexture *CCTextureNone = nil;
 		return nil;
 	}
 
-	CCConfiguration *conf = [CCConfiguration sharedConfiguration];
+	CCDeviceInfo *conf = [CCDeviceInfo sharedDeviceInfo];
 
 	info = CGImageGetAlphaInfo(cgImage);
 
@@ -787,7 +787,7 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 	CCRenderDispatch(NO, ^{
 		CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Set Texture Parameters");
 		
-		NSAssert([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIGL, @"Not implemented for Metal.");
+		NSAssert([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIGL, @"Not implemented for Metal.");
 		NSAssert( (_width == CCNextPOT(_width) && _height == CCNextPOT(_height)) ||
 					(texParams->wrapS == GL_CLAMP_TO_EDGE && texParams->wrapT == GL_CLAMP_TO_EDGE),
 				@"GL_CLAMP_TO_EDGE should be used in NPOT dimensions");

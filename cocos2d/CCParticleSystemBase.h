@@ -247,16 +247,16 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
 	float _lifeVar;
 
 	// Start color of the particles.
-	ccColor4F _startColor;
+	GLKVector4 _startColor;
     
 	// Start color variance.
-	ccColor4F _startColorVar;
+	GLKVector4 _startColorVar;
     
 	// End color of the particles.
-	ccColor4F _endColor;
+	GLKVector4 _endColor;
     
 	// End color variance.
-	ccColor4F _endColorVar;
+	GLKVector4 _endColorVar;
 
 	// Start angle of the particles.
 	float _startSpin;

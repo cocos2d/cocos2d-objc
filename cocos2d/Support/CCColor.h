@@ -35,13 +35,7 @@
 /**
  *  A CCColor object represents color and sometimes opacity (alpha value) for use with Cocos2D objects.
  */
-@interface CCColor : NSObject {
-    GLfloat _r;
-    GLfloat _g;
-    GLfloat _b;
-    GLfloat _a;
-}
-
+@interface CCColor : NSObject
 
 #pragma mark - Creating a CCColor Object from Component Values
 /// -----------------------------------------------------------------------
@@ -329,18 +323,19 @@
 // Helper category for OpenGL compatible color creating/accessing.
 @interface CCColor (OpenGL)
 
-+ (CCColor*)colorWithCcColor3b: (ccColor3B) c;
-+ (CCColor*)colorWithCcColor4b: (ccColor4B) c;
-+ (CCColor*)colorWithCcColor4f: (ccColor4F) c;
++ (CCColor*)colorWithCcColor3b: (ccColor3B) c __attribute__((deprecated));
++ (CCColor*)colorWithCcColor4b: (ccColor4B) c __attribute__((deprecated));
++ (CCColor*)colorWithCcColor4f: (ccColor4F) c __attribute__((deprecated));
 + (CCColor*)colorWithGLKVector4: (GLKVector4) c;
 
-- (CCColor*)initWithCcColor3b: (ccColor3B) c;
-- (CCColor*)initWithCcColor4b: (ccColor4B) c;
+- (CCColor*)initWithCcColor3b: (ccColor3B) c __attribute__((deprecated));
+- (CCColor*)initWithCcColor4b: (ccColor4B) c __attribute__((deprecated));
+- (CCColor*) initWithCcColor4f: (ccColor4F) c __attribute__((deprecated));
 - (CCColor*)initWithGLKVector4: (GLKVector4) c;
 
-@property (nonatomic, readonly) ccColor3B ccColor3b;
-@property (nonatomic, readonly) ccColor4B ccColor4b;
-@property (nonatomic, readonly) ccColor4F ccColor4f;
+@property (nonatomic, readonly) ccColor3B ccColor3b __attribute__((deprecated));
+@property (nonatomic, readonly) ccColor4B ccColor4b __attribute__((deprecated));
+@property (nonatomic, readonly) ccColor4F ccColor4f __attribute__((deprecated));
 @property (nonatomic, readonly) GLKVector4 glkVector4;
 
 @end

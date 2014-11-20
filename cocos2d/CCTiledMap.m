@@ -180,7 +180,7 @@
 
 -(CCTiledMapLayer*) layerNamed:(NSString *)layerName
 {
-    for (CCTiledMapLayer *layer in _children) {
+    for (CCTiledMapLayer *layer in self.children) {
 		if([layer isKindOfClass:[CCTiledMapLayer class]])
 			if([layer.layerName isEqual:layerName])
 				return layer;

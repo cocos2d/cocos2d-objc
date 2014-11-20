@@ -82,11 +82,6 @@
 /// The rendering state this node will use when rendering.
 @property(nonatomic, readonly, strong) CCRenderState *renderState;
 
-/** set the source blending function for the texture */
--(void) setBlendFunc:(ccBlendFunc)blendFunc __attribute__((deprecated));
-/** returns the blending function used for the texture */
--(ccBlendFunc) blendFunc __attribute__((deprecated));
-
 @end
 
 
@@ -188,17 +183,3 @@
 #endif // __CC_PLATFORM_IOS
 
 @end
-
-
-#pragma mark - CCAccelerometerDelegate
-
-#if __CC_PLATFORM_IOS
-/** CCAccelerometerDelegate delegate */
-@class UIAcceleration;
-@class UIAccelerometer;
-@protocol CCAccelerometerDelegate <NSObject>
-
-@optional
-- (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration;
-@end
-#endif // __CC_PLATFORM_IOS

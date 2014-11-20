@@ -39,7 +39,7 @@
 #import "ccMacros.h"
 #import "CCLabelBMFont.h"
 #import "CCSprite.h"
-#import "CCConfiguration.h"
+#import "CCDeviceInfo.h"
 #import "CCTexture.h"
 #import "CCTextureCache.h"
 #import "Support/CCFileUtils.h"
@@ -341,11 +341,11 @@ void FNTConfigRemoveCache( void )
     
 	// scaleW. sanity check
 	propertyValue = [nse nextObject];
-	NSAssert( [propertyValue intValue] <= [[CCConfiguration sharedConfiguration] maxTextureSize], @"CCLabelBMFont: page can't be larger than supported");
+	NSAssert( [propertyValue intValue] <= [[CCDeviceInfo sharedDeviceInfo] maxTextureSize], @"CCLabelBMFont: page can't be larger than supported");
     
 	// scaleH. sanity check
 	propertyValue = [nse nextObject];
-	NSAssert( [propertyValue intValue] <= [[CCConfiguration sharedConfiguration] maxTextureSize], @"CCLabelBMFont: page can't be larger than supported");
+	NSAssert( [propertyValue intValue] <= [[CCDeviceInfo sharedDeviceInfo] maxTextureSize], @"CCLabelBMFont: page can't be larger than supported");
     
 	// pages. sanity check
 	propertyValue = [nse nextObject];
@@ -538,13 +538,13 @@ void FNTConfigRemoveCache( void )
 		_width = width;
 		_alignment = alignment;
 		
-		_displayColor = _color = [CCColor whiteColor].ccColor4f;
-		_cascadeOpacityEnabled = YES;
-		_cascadeColorEnabled = YES;
+		self.color = [CCColor whiteColor];
+		self.cascadeOpacityEnabled = YES;
+		self.cascadeColorEnabled = YES;
 		
-		_contentSize = CGSizeZero;
+		self.contentSize = CGSizeZero;
 		
-		_anchorPoint = ccp(0.5f, 0.5f);
+		self.anchorPoint = ccp(0.5f, 0.5f);
         
 		_imageOffset = offset;
         
@@ -590,7 +590,7 @@ void FNTConfigRemoveCache( void )
         float startOfLine = -1, startOfWord = -1;
         int skip = 0;
         //Go through each character and insert line breaks as necessary
-        for (int j = 0; j < [_children count]; j++) {
+        for (int j = 0; j < [self.children count]; j++) {
             CCSprite *characterSprite;
             int justSkipped = 0;
             while(!(characterSprite = [self childForTag:j+skip+justSkipped]))
@@ -890,7 +890,7 @@ void FNTConfigRemoveCache( void )
         _initialString = [newString copy];
     }
     
-    for (CCSprite* child in _children)
+    for (CCSprite* child in self.children)
         child.visible = NO;
 	
 	[self createFontChars];
@@ -902,7 +902,7 @@ void FNTConfigRemoveCache( void )
 #pragma mark LabelBMFont - AnchorPoint
 -(void) setAnchorPoint:(CGPoint)point
 {
-	if( ! CGPointEqualToPoint(point, _anchorPoint) ) {
+	if( ! CGPointEqualToPoint(point, self.anchorPoint) ) {
 		[super setAnchorPoint:point];
 		[self createFontChars];
 	}

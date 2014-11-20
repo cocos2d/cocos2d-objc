@@ -115,9 +115,6 @@ RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
 	return CGAffineTransformConcat(body.absoluteTransform, CGAffineTransformInvert(NodeToPhysicsTransform(node.parent)));
 }
 
-// XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
-static NSUInteger globalOrderOfArrival = 1;
-
 @synthesize children = _children;
 @synthesize visible = _visible;
 @synthesize parent = _parent;
@@ -125,7 +122,6 @@ static NSUInteger globalOrderOfArrival = 1;
 @synthesize name = _name;
 @synthesize vertexZ = _vertexZ;
 @synthesize userObject = _userObject;
-@synthesize orderOfArrival = _orderOfArrival;
 @synthesize physicsBody = _physicsBody;
 
 #pragma mark CCNode - Transform related properties
@@ -174,8 +170,6 @@ static NSUInteger globalOrderOfArrival = 1;
 		_shader = [CCShader positionColorShader];
 		_blendMode = [CCBlendMode premultipliedAlphaMode];
 
-		_orderOfArrival = 0;
-
 		// set default scheduler and actionManager
 		CCDirector *director = [CCDirector sharedDirector];
 		_actionManager = [director actionManager];
@@ -184,7 +178,7 @@ static NSUInteger globalOrderOfArrival = 1;
 		// set default touch handling
 		self.hitAreaExpansion = 0.0f;
     
-		_displayColor = _color = [CCColor whiteColor].ccColor4f;
+		_displayColor = _color = GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f);
 		_cascadeOpacityEnabled = NO;
 		_cascadeColorEnabled = NO;
 	}
@@ -691,8 +685,6 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 	[child setParent: self];
 
-	[child setOrderOfArrival: globalOrderOfArrival++];
-	
 	// Update pausing parameters
 	child->_pausedAncestors = _pausedAncestors + (_paused ? 1 : 0);
 	RecursivelyIncrementPausedAncestors(child, child->_pausedAncestors);
@@ -847,42 +839,25 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 	_isReorderChildDirty = YES;
 
-	[child setOrderOfArrival: globalOrderOfArrival++];
 	[child _setZOrder:z];
-}
-
-- (NSComparisonResult) compareZOrderToNode:(CCNode*)node
-{
-    if (node->_zOrder == _zOrder)
-    {
-        if (node->_orderOfArrival == _orderOfArrival)
-        {
-            return NSOrderedSame;
-        }
-        else if (node->_orderOfArrival < _orderOfArrival)
-        {
-            return NSOrderedDescending;
-        }
-        else
-        {
-            return NSOrderedAscending;
-        }
-    }
-    else if (node->_zOrder < _zOrder)
-    {
-        return NSOrderedDescending;
-    }
-    else
-    {
-        return NSOrderedAscending;
-    }
 }
 
 - (void) sortAllChildren
 {
 	if (_isReorderChildDirty)
 	{
-        [_children sortUsingSelector:@selector(compareZOrderToNode:)];
+        [_children sortWithOptions:NSSortStable usingComparator:^NSComparisonResult(id obj1, id obj2) {
+            NSInteger z1 = [(CCNode *)obj1 zOrder];
+            NSInteger z2 = [(CCNode *)obj2 zOrder];
+            
+            if(z1 < z2){
+                return NSOrderedAscending;
+            } else if(z1 > z2){
+                return NSOrderedDescending;
+            } else {
+                return NSOrderedSame;
+            }
+        }];
 
 		//don't need to check children recursively, that's done in visit of each child
         
@@ -1625,12 +1600,12 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 
 -(CCColor*) color
 {
-	return [CCColor colorWithCcColor4f:_color];
+	return [CCColor colorWithGLKVector4:_color];
 }
 
 -(CCColor*) displayedColor
 {
-	return [CCColor colorWithCcColor4f:_displayColor];
+	return [CCColor colorWithGLKVector4:_displayColor];
 }
 
 
@@ -1638,7 +1613,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 {
 	// Retain old alpha.
 	float alpha = _color.a;
-	_displayColor = _color = color.ccColor4f;
+	_displayColor = _color = color.glkVector4;
 	_displayColor.a = _color.a = alpha;
 	
 	[self cascadeColorIfNeeded];
@@ -1646,13 +1621,13 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 
 -(CCColor*) colorRGBA
 {
-	return [CCColor colorWithCcColor4f:_color];
+	return [CCColor colorWithGLKVector4:_color];
 }
 
 - (void) setColorRGBA:(CCColor*)color
 {
 	// apply the new alpha too.
-	_displayColor = _color = color.ccColor4f;
+	_displayColor = _color = color.glkVector4;
 	
 	[self cascadeColorIfNeeded];
 	[self cascadeOpacityIfNeeded];
@@ -1665,12 +1640,12 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 		CCColor* parentColor = [CCColor whiteColor];
 		if( _parent.isCascadeColorEnabled )
 			parentColor = [_parent displayedColor];
-		[self updateDisplayedColor:parentColor.ccColor4f];
+		[self updateDisplayedColor:parentColor.glkVector4];
 	}
 }
 
 // Used internally to recurse through children, thus the parameter is not a CCColor*
-- (void)updateDisplayedColor:(ccColor4F) parentColor
+- (void)updateDisplayedColor:(GLKVector4) parentColor
 {
 	_displayColor.r = _color.r * parentColor.r;
 	_displayColor.g = _color.g * parentColor.g;
@@ -1800,22 +1775,6 @@ CheckDefaultUniforms(NSDictionary *uniforms, CCTexture *texture)
 		_blendMode = blendMode;
 		_renderState = nil;
 	}
-}
-
--(ccBlendFunc)blendFunc
-{
-	return (ccBlendFunc){
-		[_blendMode.options[CCBlendFuncSrcColor] unsignedIntValue],
-		[_blendMode.options[CCBlendFuncDstColor] unsignedIntValue],
-	};
-}
-
--(void)setBlendFunc:(ccBlendFunc)blendFunc
-{
-	self.blendMode = [CCBlendMode blendModeWithOptions:@{
-		CCBlendFuncSrcColor: @(blendFunc.src),
-		CCBlendFuncDstColor: @(blendFunc.dst),
-	}];
 }
 
 -(CCTexture*)texture

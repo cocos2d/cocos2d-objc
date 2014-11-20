@@ -34,14 +34,14 @@
 
 // cocos2d imports
 #import "CCDirectorIOS.h"
-#import "../../CCScheduler.h"
-#import "../../CCActionManager.h"
-#import "../../CCTextureCache.h"
-#import "../../ccMacros.h"
-#import "../../CCScene.h"
-#import "../../CCShader.h"
-#import "../../ccFPSImages.h"
-#import "../../CCConfiguration.h"
+#import "CCScheduler.h"
+#import "CCActionManager.h"
+#import "CCTextureCache.h"
+#import "ccMacros.h"
+#import "CCScene.h"
+#import "CCShader.h"
+#import "ccFPSImages.h"
+#import "CCDeviceInfo.h"
 #import "CCRenderer_Private.h"
 #import "CCTouch.h"
 #import "CCRenderDispatch_Private.h"
@@ -283,7 +283,7 @@
 
 -(void)getFPSImageData:(unsigned char**)datapointer length:(NSUInteger*)len contentScale:(CGFloat *)scale
 {
-	NSInteger device = [[CCConfiguration sharedConfiguration] runningDevice];
+	NSInteger device = [[CCDeviceInfo sharedDeviceInfo] runningDevice];
 
 	if( device == CCDeviceiPadRetinaDisplay) {
 		*datapointer = cc_fps_images_ipadhd_png;
@@ -343,15 +343,8 @@
 	_displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(mainLoop:)];
 	[_displayLink setFrameInterval:frameInterval];
 
-#if CC_DIRECTOR_IOS_USE_BACKGROUND_THREAD
-	//
-	_runningThread = [[NSThread alloc] initWithTarget:self selector:@selector(threadMainLoop) object:nil];
-	[_runningThread start];
-
-#else
 	// setup DisplayLink in main thread
 	[_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-#endif
 
     _animating = YES;
 }
@@ -367,12 +360,6 @@
     }
     
 	CCLOG(@"cocos2d: animation stopped");
-
-#if CC_DIRECTOR_IOS_USE_BACKGROUND_THREAD
-	[_runningThread cancel];
-	[_runningThread release];
-	_runningThread = nil;
-#endif
 
 	[_displayLink invalidate];
 	_displayLink = nil;

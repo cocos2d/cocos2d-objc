@@ -28,7 +28,7 @@
 #import "CCDirector.h"
 #import "ccMacros.h"
 #import "CCShader.h"
-#import "CCConfiguration.h"
+#import "CCDeviceInfo.h"
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
 #import "Support/CGPointExtension.h"
@@ -151,7 +151,8 @@
 
 -(void)create
 {
-    CGSize pixelSize = CGSizeMake(_contentSize.width * _contentScale, _contentSize.height * _contentScale);
+    CGSize size = self.contentSize;
+    CGSize pixelSize = CGSizeMake(size.width * _contentScale, size.height * _contentScale);
     [self createTextureAndFboWithPixelSize:pixelSize];
 }
 
@@ -163,7 +164,7 @@
 	NSUInteger powW;
 	NSUInteger powH;
 
-	if( [[CCConfiguration sharedConfiguration] supportsNPOT] ) {
+	if( [[CCDeviceInfo sharedDeviceInfo] supportsNPOT] ) {
 		powW = pixelSize.width;
 		powH = pixelSize.height;
 	} else {
@@ -186,7 +187,9 @@
     // at some code that assumes the supplied size is in points so, if the size is not in points,
     // things break.
 	[self assignSpriteTexture];
-	[_sprite setTextureRect:CGRectMake(0, 0, _contentSize.width, _contentSize.height)];
+	
+	CGSize size = self.contentSize;
+	[_sprite setTextureRect:CGRectMake(0, 0, size.width, size.height)];
 }
 
 -(void)assignSpriteTexture
@@ -338,7 +341,7 @@ FlipY(GLKMatrix4 projection)
 {
 	// override visit.
 	// Don't call visit on its children
-	if(!_visible) return;
+	if(!self.visible) return;
 	
 	if(_autoDraw){
 		if(_contentSizeChanged){
@@ -354,7 +357,7 @@ FlipY(GLKMatrix4 projection)
 		//! make sure all children are drawn
 		[self sortAllChildren];
 		
-		for(CCNode *child in _children){
+		for(CCNode *child in self.children){
 			[child visit:rtRenderer parentTransform:&_projection];
 		}
 		
@@ -366,8 +369,6 @@ FlipY(GLKMatrix4 projection)
 		// Render normally, v3.0 and earlier skipped this.
 		[super visit:renderer parentTransform:parentTransform];
 	}
-	
-	_orderOfArrival = 0;
 }
 
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
@@ -384,7 +385,7 @@ FlipY(GLKMatrix4 projection)
 {
 	// TODO need to find out why getting pixels from a Metal texture doesn't seem to work.
 	// Workaround - use pixel buffers and a copy encoder?
-	NSAssert([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIGL, @"[CCRenderTexture -newCGImage] is only supported for GL.");
+	NSAssert([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIGL, @"[CCRenderTexture -newCGImage] is only supported for GL.");
 	
 	NSAssert(_pixelFormat == CCTexturePixelFormat_RGBA8888,@"only RGBA8888 can be saved as image");
 	

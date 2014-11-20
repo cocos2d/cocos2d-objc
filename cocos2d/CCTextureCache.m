@@ -30,13 +30,12 @@
 #import "CCTextureCache.h"
 #import "CCTexture.h"
 #import "CCTexturePVR.h"
-#import "CCConfiguration.h"
+#import "CCDeviceInfo.h"
 #import "CCDirector.h"
 #import "ccConfig.h"
 #import "ccTypes.h"
 
 #import "Support/CCFileUtils.h"
-#import "Support/NSThread+performBlock.h"
 
 #import <objc/message.h>
 
@@ -92,7 +91,7 @@ static CCTextureCache *sharedTextureCache;
 		_dictQueue = dispatch_queue_create("org.cocos2d.texturecachedict", NULL);
 		
 		// Skip the GL context sharegroup code for Metal.
-		if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal) return self;
+		if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal) return self;
 		
 #if !__CC_PLATFORM_ANDROID
 		CCGLView *view = (CCGLView*)[[CCDirector sharedDirector] view];
@@ -214,68 +213,68 @@ static CCTextureCache *sharedTextureCache;
 	});
 }
 
--(void) addImageAsync:(NSString*)path withBlock:(void(^)(CCTexture *tex))block
-{
-	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nil");
-
-	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)
-	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
-	path = [fileUtils standarizePath:path];
-
-	// optimization
-	__block CCTexture * tex;
-
-	dispatch_sync(_dictQueue, ^{
-		tex = [_textures objectForKey:path];
-	});
-
-	if(tex) {
-		block(tex);
-		return;
-	}
-
-	// dispatch it serially
-	dispatch_async( _loadingQueue, ^{
-
-		CCTexture *texture;
-
-#if __CC_PLATFORM_IOS
-		if( [EAGLContext setCurrentContext:_auxGLcontext] ) {
-
-			// load / create the texture
-			texture = [self addImage:path];
-
-			glFlush();
-            
-            [EAGLContext setCurrentContext:nil];
-
-			// callback should be executed in cocos2d thread
-			NSThread *thread = [[CCDirector sharedDirector] runningThread];
-			[thread performBlock:block withObject:texture waitUntilDone:NO];
-        
-		} else {
-			CCLOG(@"cocos2d: ERROR: TetureCache: Could not set EAGLContext");
-		}
-
-#elif __CC_PLATFORM_MAC
-
-		[_auxGLcontext makeCurrentContext];
-
-		// load / create the texture
-		texture = [self addImage:path];
-
-		glFlush();
-        
-        [NSOpenGLContext clearCurrentContext];
-
-		// callback should be executed in cocos2d thread
-		NSThread *thread = [[CCDirector sharedDirector] runningThread];
-		[thread performBlock:block withObject:texture waitUntilDone:NO];
-
-#endif // __CC_PLATFORM_MAC
-
-	});
-}
+//-(void) addImageAsync:(NSString*)path withBlock:(void(^)(CCTexture *tex))block
+//{
+//	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nil");
+//
+//	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)
+//	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
+//	path = [fileUtils standarizePath:path];
+//
+//	// optimization
+//	__block CCTexture * tex;
+//
+//	dispatch_sync(_dictQueue, ^{
+//		tex = [_textures objectForKey:path];
+//	});
+//
+//	if(tex) {
+//		block(tex);
+//		return;
+//	}
+//
+//	// dispatch it serially
+//	dispatch_async( _loadingQueue, ^{
+//
+//		CCTexture *texture;
+//
+//#if __CC_PLATFORM_IOS
+//		if( [EAGLContext setCurrentContext:_auxGLcontext] ) {
+//
+//			// load / create the texture
+//			texture = [self addImage:path];
+//
+//			glFlush();
+//            
+//            [EAGLContext setCurrentContext:nil];
+//
+//			// callback should be executed in cocos2d thread
+//			NSThread *thread = [[CCDirector sharedDirector] runningThread];
+//			[thread performBlock:block withObject:texture waitUntilDone:NO];
+//        
+//		} else {
+//			CCLOG(@"cocos2d: ERROR: TetureCache: Could not set EAGLContext");
+//		}
+//
+//#elif __CC_PLATFORM_MAC
+//
+//		[_auxGLcontext makeCurrentContext];
+//
+//		// load / create the texture
+//		texture = [self addImage:path];
+//
+//		glFlush();
+//        
+//        [NSOpenGLContext clearCurrentContext];
+//
+//		// callback should be executed in cocos2d thread
+//		NSThread *thread = [[CCDirector sharedDirector] runningThread];
+//		[thread performBlock:block withObject:texture waitUntilDone:NO];
+//
+//#endif // __CC_PLATFORM_MAC
+//
+//	});
+//}
 
 -(CCTexture*) addImage: (NSString*) path
 {
