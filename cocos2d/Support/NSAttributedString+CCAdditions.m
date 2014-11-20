@@ -25,10 +25,16 @@
  *
  */
 
-#import "NSAttributedString+CCAdditions.h"
-#import "ccMacros.h"
-#import "cocos2d.h"
+
 #import <CoreText/CoreText.h>
+
+#import "ccMacros.h"
+
+#import "NSAttributedString+CCAdditions.h"
+
+#import "CCDirector.h"
+#import "CCColor.h"
+
 
 BOOL NSMutableAttributedStringSetDefaultAttribute(NSMutableAttributedString *attrString, NSString*attr, id defaultValue);
 CGColorRef CGColorCreateWithPlatformSpecificColor(id platformColor);

@@ -28,10 +28,10 @@
 // -----------------------------------------------------------------
 
 #import "CCScene.h"
-#import "Support/CGPointExtension.h"
-#import "CCDirector.h"
+
 #import "CCDirector_Private.h"
 #import "CCLightCollection.h"
+#import "CCColor.h"
 
 // -----------------------------------------------------------------
 

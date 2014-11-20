@@ -40,6 +40,7 @@
 #import "CCTexture_Private.h"
 #import <Foundation/Foundation.h>
 #import "CCRenderableNode_Private.h"
+#import "CCColor.h"
 
 #if __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"

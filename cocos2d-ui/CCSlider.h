@@ -7,7 +7,10 @@
 //
 
 #import "CCControl.h"
-#import "cocos2d.h"
+
+@class CCSprite;
+@class CCSpriteFrame;
+@class CCSprite9Slice;
 
 /**
  *  A CCSlider object is a visual control used to select a single value from a continuous range of values. An indicator, or an handle, notes the current value of the slider and can be moved by the user to change the setting.

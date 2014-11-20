@@ -28,32 +28,24 @@
 /* Idea of decoupling Window from Director taken from OC3D project: http://code.google.com/p/oc3d/
  */
 
-#import <unistd.h>
+#import "CCDirector_Private.h"
+#import "CCNode_Private.h"
+#import "CCRenderer_Private.h"
+#import "CCRenderDispatch_Private.h"
 
-// cocos2d imports
-#import "CCDirector.h"
 #import "CCScheduler.h"
 #import "CCActionManager.h"
 #import "CCTextureCache.h"
 #import "CCAnimationCache.h"
 #import "CCLabelBMFont.h"
-#import "ccMacros.h"
 #import "CCScene.h"
+#import "CCColor.h"
 #import "CCSpriteFrameCache.h"
 #import "CCTexture.h"
-#import "CCLabelBMFont.h"
 #import "ccFPSImages.h"
 #import "CCDeviceInfo.h"
 #import "CCTransition.h"
-#import "CCRenderer_Private.h"
-#import "CCRenderDispatch_Private.h"
-
-// support imports
-#import "Platforms/CCGL.h"
 #import "Platforms/CCNS.h"
-
-#import "Support/CGPointExtension.h"
-#import "Support/CCProfiling.h"
 #import "Support/CCFileUtils.h"
 
 #if __CC_PLATFORM_IOS
@@ -67,13 +59,10 @@
 #define CC_DIRECTOR_DEFAULT CCDirectorDisplayLink
 #endif
 
-#import "CCDirector_Private.h"
-#import "CCNode_Private.h"
-
 #pragma mark -
 #pragma mark Director - global variables (optimization)
 
-CGFloat	__ccContentScaleFactor = 1;
+float __ccContentScaleFactor = 1;
 
 // XXX it shoul be a Director ivar. Move it there once support for multiple directors is added
 NSUInteger	__ccNumberOfDraws = 0;

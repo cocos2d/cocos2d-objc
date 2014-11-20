@@ -22,8 +22,15 @@
  * THE SOFTWARE.
  */
 
-#import "CCNode.h"
 
+#import "CCNode.h"
+#import "CCProtocols.h"
+
+
+@class CCTexture;
+@class CCBlendMode;
+@class CCShader;
+@class CCRenderState;
 
 @interface CCRenderableNode : CCNode {
     // TODO Should all of these be in the public header?

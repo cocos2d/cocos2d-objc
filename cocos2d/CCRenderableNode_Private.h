@@ -23,7 +23,6 @@
  */
 
 #import "CCRenderableNode.h"
-#import "CCProtocols.h"
 
 
 @interface CCRenderableNode()<CCShaderProtocol, CCBlendProtocol, CCTextureProtocol>

@@ -110,14 +110,6 @@ BOOL CCEffectUtilsNodeIsDescendantOfNode(CCNode *descendant, CCNode *ancestor)
     return (n == ancestor);
 }
 
-GLKMatrix4 CCEffectUtilsMat4FromAffineTransform(CGAffineTransform at)
-{
-    return GLKMatrix4Make(at.a,  at.b,  0.0f,  0.0f,
-                          at.c,  at.d,  0.0f,  0.0f,
-                          0.0f,  0.0f,  1.0f,  0.0f,
-                          at.tx, at.ty, 0.0f,  1.0f);
-}
-
 GLKMatrix2 CCEffectUtilsMatrix2InvertAndTranspose(GLKMatrix2 matrix, bool *isInvertible)
 {
     GLKMatrix2 result;

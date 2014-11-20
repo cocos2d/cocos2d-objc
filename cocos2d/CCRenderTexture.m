@@ -24,27 +24,21 @@
  *
  */
 
-#import "CCRenderTexture.h"
-#import "CCDirector.h"
 #import "ccMacros.h"
-#import "CCShader.h"
-#import "CCDeviceInfo.h"
-#import "Support/ccUtils.h"
-#import "Support/CCFileUtils.h"
-#import "Support/CGPointExtension.h"
+#import "ccUtils.h"
 
-#import "CCTexture_Private.h"
-#import "CCDirector_Private.h"
-#import "CCNode_Private.h"
-#import "CCRenderer_Private.h"
 #import "CCRenderTexture_Private.h"
+#import "CCRenderer_Private.h"
+#import "CCDirector_Private.h"
 #import "CCRenderDispatch.h"
-#import "CCMetalSupport_Private.h"
 #import "CCRenderableNode_Private.h"
 
-#if __CC_PLATFORM_MAC
-#import <ApplicationServices/ApplicationServices.h>
-#endif
+#import "CCDeviceInfo.h"
+#import "CCColor.h"
+
+//#if __CC_PLATFORM_MAC
+//#import <ApplicationServices/ApplicationServices.h>
+//#endif
 
 
 @implementation CCRenderTextureSprite
@@ -402,8 +396,8 @@ FlipY(GLKMatrix4 projection)
 	int bytesPerRow = bytesPerPixel * tx;
 	NSInteger myDataLength = bytesPerRow * ty;
 	
-	GLubyte *buffer	= calloc(myDataLength,1);
-	GLubyte *pixels	= calloc(myDataLength,1);
+	uint8_t *buffer	= calloc(myDataLength,1);
+	uint8_t *pixels	= calloc(myDataLength,1);
 	
 	
 	if( ! (buffer && pixels) ) {

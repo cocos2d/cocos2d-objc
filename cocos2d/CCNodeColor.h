@@ -31,7 +31,6 @@
 
 #endif
 
-#import "CCProtocols.h"
 #import "CCRenderableNode.h"
 
 #pragma mark - CCNodeColor

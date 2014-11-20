@@ -27,14 +27,13 @@
  *
  */
 
+#import "ccMacros.h"
+
 #import "CCDrawNode.h"
-#import "CCShader.h"
-#import "Support/CGPointExtension.h"
-#import "CCNode_Private.h"
-#import "CCColor.h"
-#import "CCDeviceInfo.h"
-#import "CCMetalSupport_Private.h"
 #import "CCRenderableNode_Private.h"
+
+#import "CCRenderer.h"
+#import "CCColor.h"
 
 // Vertex shader that performs the modelview-projection multiplication on the GPU.
 // Faster for draw nodes that draw many vertexes, but can't be batched.

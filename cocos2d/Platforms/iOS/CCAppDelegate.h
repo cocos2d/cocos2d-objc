@@ -27,7 +27,10 @@
 #if __CC_PLATFORM_IOS
 
 #import <Foundation/Foundation.h>
+
+#warning TODO need to track down the places that import all of UIKit/AppKit when they don't need to.
 #import <UIKit/UIKit.h>
+
 #import "CCDirectorIOS.h"
 
 @class CCAppDelegate;

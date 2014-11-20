@@ -37,7 +37,6 @@
 
 #if (TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR)
 #if !__CC_PLATFORM_ANDROID
-#import <UIKit/UIKit.h>
 #define RESPONDER UIResponder
 #else
 #define RESPONDER NSObject
@@ -127,6 +126,9 @@ enum
 {
     CCResponderManagerBufferSize        = 128,
 };
+
+
+#warning TODO does this really need to inherit from UI/NSResponder?
 
 /**
  *  The responder manager handles touches.

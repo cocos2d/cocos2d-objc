@@ -34,7 +34,8 @@
 
 
 #import "ccMacros.h"
-#import "Support/CGPointExtension.h"
+#import "CCNS.h"
+
 #import "CCActionCatmullRom.h"
 
 #pragma mark - CCPointArray

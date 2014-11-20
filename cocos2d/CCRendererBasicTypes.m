@@ -25,7 +25,9 @@
 #import "CCRendererBasicTypes.h"
 #import "CCRenderer_Private.h"
 #import "CCTexture_Private.h"
+
 #import "CCCache.h"
+#import "CCDeviceInfo.h"
 
 //MARK: Blend Option Keys.
 NSString * const CCRenderStateBlendMode = @"CCRenderStateBlendMode";

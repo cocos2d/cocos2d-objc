@@ -23,7 +23,10 @@
  */
 
 #import "CCRenderableNode_Private.h"
+
 #import "CCTexture.h"
+#import "CCShader.h"
+#import "CCRendererBasicTypes.h"
 
 
 @implementation CCRenderableNode

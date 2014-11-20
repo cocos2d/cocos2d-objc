@@ -7,7 +7,8 @@
 //
 
 #import "CCColor.h"
-#import <CoreGraphics/CoreGraphics.h>
+
+#import "CCDeprecated.h"
 
 @implementation CCColor {
     GLKVector4 _vec4;
@@ -313,12 +314,12 @@ static NSDictionary *namedColors() {
 
 - (ccColor3B) ccColor3b
 {
-    return (ccColor3B){(GLubyte)(_vec4.r*255), (GLubyte)(_vec4.g*255), (GLubyte)(_vec4.b*255)};
+    return (ccColor3B){(uint8_t)(_vec4.r*255), (uint8_t)(_vec4.g*255), (uint8_t)(_vec4.b*255)};
 }
 
 - (ccColor4B) ccColor4b
 {
-    return (ccColor4B){(GLubyte)(_vec4.r*255), (GLubyte)(_vec4.g*255), (GLubyte)(_vec4.b*255), (GLubyte)(_vec4.a*255)};
+    return (ccColor4B){(uint8_t)(_vec4.r*255), (uint8_t)(_vec4.g*255), (uint8_t)(_vec4.b*255), (uint8_t)(_vec4.a*255)};
 }
 
 - (ccColor4F) ccColor4f

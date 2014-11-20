@@ -24,6 +24,9 @@
 
 #import "CCNode.h"
 
+@class CCActionManager;
+@class CCAnimationManager;
+
 CGPoint NodeToPhysicsScale(CCNode * node);
 float NodeToPhysicsRotation(CCNode *node);
 GLKMatrix4 NodeToPhysicsTransform(CCNode *node);

@@ -28,19 +28,18 @@
 // Common layer for OpenGL stuff
 //
 
-#import "../ccMacros.h"
+#import "ccMacros.h"
 
 #if __CC_PLATFORM_IOS
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
 #import <OpenGLES/EAGL.h>
-
+#import "iOS/CCGLView.h"
 #elif __CC_PLATFORM_MAC
 #import <OpenGL/gl.h>
 #import <OpenGL/glu.h>
-#import <Cocoa/Cocoa.h>	// needed for NSOpenGLView
+#import <Cocoa/Cocoa.h>
 #import "Mac/CCGLView.h"
-
 #elif __CC_PLATFORM_ANDROID
 #define GL_GLEXT_PROTOTYPES 1
 #include <EGL/egl.h> // requires ndk r5 or newer

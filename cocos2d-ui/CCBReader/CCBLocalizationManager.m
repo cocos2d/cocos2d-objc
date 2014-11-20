@@ -24,6 +24,7 @@
 
 #import "CCBLocalizationManager.h"
 #import "CCBReader.h"
+#import "CCFileUtils.h"
 
 @implementation CCBLocalizationManager
 

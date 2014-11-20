@@ -26,6 +26,7 @@
  */
 
 #import "CCSprite.h"
+#import "CCProtocols.h"
 
 @class CCBMFontConfiguration;
 

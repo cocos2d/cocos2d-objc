@@ -22,6 +22,10 @@
  * THE SOFTWARE.
  */
 
+
+#import "CCDirector.h"
+
+
 @interface CCRenderState(){
 	@public
 	BOOL _immutable;

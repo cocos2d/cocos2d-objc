@@ -54,9 +54,9 @@ typedef struct CCRenderBuffer {
 	/// Read only pointer to the start of the vertex buffer.
 	CCVertex *vertexes;
 	/// Read only pointer to the start of the element index buffer.
-	GLushort *elements;
+	uint16_t *elements;
 	/// Offset of the first vertex in the buffer.
-	GLushort startIndex;
+	uint16_t startIndex;
 } CCRenderBuffer;
 
 /// Set a vertex in the buffer.
@@ -69,7 +69,7 @@ CCRenderBufferSetVertex(CCRenderBuffer buffer, int index, CCVertex vertex)
 /// Set a triangle in the buffer.
 /// The CCRenderBuffer must have been created using [CCRenderer enqueueTriangles:andVertexes:withState:].
 static inline void
-CCRenderBufferSetTriangle(CCRenderBuffer buffer, int index, GLushort a, GLushort b, GLushort c)
+CCRenderBufferSetTriangle(CCRenderBuffer buffer, int index, uint16_t a, uint16_t b, uint16_t c)
 {
 	uint16_t offset = buffer.startIndex;
 	buffer.elements[3*index + 0] = a + offset;
@@ -80,7 +80,7 @@ CCRenderBufferSetTriangle(CCRenderBuffer buffer, int index, GLushort a, GLushort
 /// Set a line in the buffer.
 /// The CCRenderBuffer must have been created using [CCRenderer enqueueLines:andVertexes:withState:].
 static inline void
-CCRenderBufferSetLine(CCRenderBuffer buffer, int index, GLushort a, GLushort b)
+CCRenderBufferSetLine(CCRenderBuffer buffer, int index, uint16_t a, uint16_t b)
 {
 	uint16_t offset = buffer.startIndex;
 	buffer.elements[2*index + 0] = a + offset;

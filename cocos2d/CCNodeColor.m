@@ -24,23 +24,12 @@
  */
 
 
-#import <stdarg.h>
-
-#import "Platforms/CCGL.h"
+#import "ccTypes.h"
 
 #import "CCNodeColor.h"
 #import "CCDirector.h"
-#import "ccMacros.h"
-#import "CCShader.h"
-#import "Support/CGPointExtension.h"
-#import "CCNode_Private.h"
-
-
-#if __CC_PLATFORM_IOS
-#import "Platforms/iOS/CCDirectorIOS.h"
-#elif __CC_PLATFORM_MAC
-#import "Platforms/Mac/CCDirectorMac.h"
-#endif
+#import "CCColor.h"
+#import "CCRendererBasicTypes.h"
 
 #pragma mark -
 #pragma mark Layer

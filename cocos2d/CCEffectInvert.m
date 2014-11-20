@@ -8,6 +8,8 @@
 
 #import "CCEffectInvert.h"
 #import "CCEffect_Private.h"
+#import "CCProtocols.h"
+#import "CCRendererBasicTypes.h"
 
 static float conditionContrast(float contrast);
 

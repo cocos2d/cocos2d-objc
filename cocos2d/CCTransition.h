@@ -25,9 +25,8 @@
  *
  */
 
-#import <Foundation/Foundation.h>
-#import "cocos2d.h"
 #import "CCScene.h"
+#import "CCTexture.h"
 
 /**
  *  Defines the direction that the transition will move in.
@@ -80,13 +79,6 @@ typedef NS_ENUM(NSInteger, CCTransitionDirection)
  *  Default 1.0.
  */
 @property (nonatomic, assign) float incomingDownScale;
-
-/**
- *  Transition will be performed in retina resolution.
- *  Will force outgoingDownScale and incomingDownScale to 1.0 on non retina devices, and 2.0 on retina devices if not set.
- *  Default YES.
- */
-@property (nonatomic, getter = isRetinaTransition) BOOL retinaTransition;
 
 /**
  *  Pixel format used for transition.

@@ -25,9 +25,9 @@
  *
  */
 
+#import "CCRenderableNode.h"
 #import "CCTMXXMLParser.h"
 #import "CCTiledMap.h"
-#import "CCMathTypesAndroid.h"
 
 @class CCTiledMapInfo;
 @class CCTiledMapLayerInfo;
@@ -45,7 +45,7 @@
  
  */
 
-@interface CCTiledMapLayer : CCNode<CCShaderProtocol, CCTextureProtocol, CCBlendProtocol> 
+@interface CCTiledMapLayer : CCRenderableNode<CCShaderProtocol, CCTextureProtocol, CCBlendProtocol> 
 
 /// -----------------------------------------------------------------------
 /// @name Accessing the Tile Map Layer Attributes

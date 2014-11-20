@@ -25,12 +25,17 @@
  * THE SOFTWARE.
  */
 
+#import "ccUtils.h"
+
 #import "CCNode_Private.h"
+
 #import "CCDirector_Private.h"
 #import "CCActionManager_Private.h"
 #import "CCAnimationManager.h"
 #import "CCRenderer_Private.h"
 #import "CCPhysics+ObjectiveChipmunk.h"
+#import "CCColor.h"
+#import "CCLayout.h"
 
 #pragma mark - Node
 

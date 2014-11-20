@@ -22,19 +22,24 @@
  * THE SOFTWARE.
  */
 
-#import "CCAnimationManager.h"
+
+#import <objc/runtime.h>
+
 #import "CCAnimationManager_Private.h"
+#import "CCDirector_Private.h"
+#import "CCBReader_Private.h"
+
 #import "CCBKeyframe.h"
 #import "CCBSequence.h"
 #import "CCBSequenceProperty.h"
 #import "CCBReader.h"
 #import "CCBKeyframe.h"
 #import "OALSimpleAudio.h"
-#import <objc/runtime.h>
-
-#import "CCDirector_Private.h"
-#import "CCBReader_Private.h"
 #import "CCActionManager.h"
+#import "CCActionInterval.h"
+#import "CCActionInstant.h"
+#import "CCActionEase.h"
+#import "CCSprite.h"
 
 // Unique Manager ID
 static NSInteger ccbAnimationManagerID = 0;

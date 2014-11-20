@@ -6,6 +6,8 @@
 //
 //
 
+#import "ccUtils.h"
+
 #import "CCEffectRenderer.h"
 #import "CCDeviceInfo.h"
 #import "CCDirector.h"

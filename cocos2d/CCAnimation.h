@@ -25,14 +25,20 @@
  *
  */
 
-#import <Foundation/Foundation.h>
-#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
-#import <CoreGraphics/CoreGraphics.h>
-#endif
+
+#import "ccTypes.h"
+
 
 @class CCSpriteFrame;
 @class CCTexture;
 @class CCSpriteFrame;
+
+
+/** @def CCAnimationFrameDisplayedNotification
+ Notification name when a CCSpriteFrame is displayed
+ */
+#define CCAnimationFrameDisplayedNotification @"CCAnimationFrameDisplayedNotification"
+
 
 /**
  CCAnimationFrame contains core information relating to a single animation frame.

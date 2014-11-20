@@ -24,13 +24,16 @@
 
 #import "objc/message.h"
 
-#import "cocos2d.h"
+#import "ccUtils.h"
+
 #import "CCRenderer_Private.h"
-#import "CCCache.h"
 #import "CCTexture_Private.h"
 #import "CCShader_private.h"
 #import "CCDirector_Private.h"
+
+#import "CCCache.h"
 #import "CCRenderDispatch.h"
+#import "CCDeviceInfo.h"
 
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 #import "CCMetalSupport_Private.h"

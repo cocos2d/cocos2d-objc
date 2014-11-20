@@ -4,6 +4,7 @@
 #import "CCRenderer_Private.h"
 #import "CCShader_Private.h"
 #import "CCRenderableNode_Private.h"
+#import "CCDeviceInfo.h"
 
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 #import "CCMetalSupport_Private.h"
@@ -260,7 +261,9 @@ static const CCRenderCommandDrawMode GLDrawModes[] = {
 	renderer->_renderState = _renderState;
 	
 	glDrawElements(GLDrawModes[_mode], (GLsizei)_count, GL_UNSIGNED_SHORT, (GLvoid *)(_firstIndex*sizeof(GLushort)));
-	CC_INCREMENT_GL_DRAWS(1);
+    
+    #warning TODO
+//	CC_INCREMENT_GL_DRAWS(1);
 	
 	CCGL_DEBUG_POP_GROUP_MARKER();
 }

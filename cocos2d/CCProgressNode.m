@@ -24,19 +24,20 @@
  *
  */
 
-#import "CCProgressNode.h"
 
 #import "ccMacros.h"
+#import "ccUtils.h"
+
+#import "CCProgressNode.h"
+#import "CCNode_Private.h"
+#import "CCTexture_Private.h"
+#import "CCSprite_Private.h"
+
 #import "CCTextureCache.h"
 #import "CCShader.h"
 #import "CCDirector.h"
 #import "Support/CGPointExtension.h"
-#import "CCSprite_Private.h"
 
-#import "CCNode_Private.h"
-#import "CCProgressNode_Private.h"
-
-#import "CCTexture_Private.h"
 
 @implementation CCProgressNode {
 	CCProgressNodeType _type;

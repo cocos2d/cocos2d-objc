@@ -9,6 +9,9 @@
 #import "CCSlider.h"
 #import "CCControlSubclass.h"
 #import "CCTouch.h"
+#import "CCSprite.h"
+#import "CCSprite9Slice.h"
+#import "CCSpriteFrameCache.h"
 
 @interface CCSlider (Inputs)
 - (void) inputEnteredWithWorlPos:(CGPoint)worldLocation;

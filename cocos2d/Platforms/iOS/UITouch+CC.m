@@ -28,6 +28,8 @@
 #if __CC_PLATFORM_IOS
 
 #import "UITouch+CC.h"
+#import "CCDirector.h"
+#import "CCNode.h"
 
 @implementation PlatformTouch (CC)
 

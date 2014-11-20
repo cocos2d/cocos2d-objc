@@ -24,15 +24,13 @@
  *
  */
 
+#import "ccMacros.h"
+
 #import "CCClippingNode.h"
 
-#import "CCGL.h"
+#import "CCProtocols.h"
+#import "CCRenderer.h"
 #import "CCShader.h"
-
-#import "CCDirector.h"
-#import "CGPointExtension.h"
-
-#import "CCNode_Private.h"
 #import "CCRenderDispatch.h"
 #import "CCDeviceInfo.h"
 

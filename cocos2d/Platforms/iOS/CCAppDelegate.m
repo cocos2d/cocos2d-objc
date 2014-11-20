@@ -23,16 +23,17 @@
  *
  */
 
-#import "../../ccMacros.h"
+#import "ccMacros.h"
+
 #if __CC_PLATFORM_IOS
 
+#import "ccTypes.h"
+#import "ccUtils.h"
+
 #import "CCAppDelegate.h"
+#import "CCDeviceInfo.h"
 #import "CCTexture.h"
 #import "CCFileUtils.h"
-#import "CCDirector_Private.h"
-#import "CCScheduler.h"
-#import "CCGLView.h"
-
 #import "OALSimpleAudio.h"
 #import "CCPackageManager.h"
 

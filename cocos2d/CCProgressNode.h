@@ -24,7 +24,6 @@
  *
  */
 
-#import <Foundation/Foundation.h>
 #import "CCRenderableNode.h"
 #import "CCSprite.h"
 

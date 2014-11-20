@@ -22,10 +22,13 @@
  * THE SOFTWARE.
  */
 
+#import <UIKit/UIGestureRecognizer.h>
+
 #import "CCNode.h"
 
 @class CCTapDownGestureRecognizer;
 @class CCScrollView;
+@class UIPanGestureRecognizer;
 
 @protocol CCScrollViewDelegate <NSObject>
 

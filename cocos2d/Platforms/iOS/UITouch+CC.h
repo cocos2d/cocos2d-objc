@@ -28,8 +28,7 @@
 
 #if __CC_PLATFORM_IOS
 
-#import "cocos2d.h"
-#import <UIKit/UIKit.h>
+#import "CCTouch.h"
 
 @interface PlatformTouch (CC)
 

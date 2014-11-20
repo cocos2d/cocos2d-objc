@@ -35,18 +35,16 @@
  *   http://www.angelcode.com/products/bmfont/ (Free, Windows only)
  */
 
-#import "ccConfig.h"
-#import "ccMacros.h"
-#import "CCLabelBMFont.h"
-#import "CCSprite.h"
+
+#import "CCLabelBMFont_Private.h"
+
 #import "CCDeviceInfo.h"
 #import "CCTexture.h"
 #import "CCTextureCache.h"
-#import "Support/CCFileUtils.h"
-#import "Support/CGPointExtension.h"
-#import "Support/uthash.h"
-#import "CCLabelBMFont_Private.h"
-#import "CCSprite_Private.h"
+#import "CCFileUtils.h"
+#import "CCColor.h"
+#import "ccUtils.h"
+
 
 #pragma mark -
 #pragma mark FNTConfig Cache - free functions

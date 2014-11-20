@@ -26,8 +26,10 @@
  */
 
 
+#import <CoreGraphics/CGImage.h>
+
 #import "CCRenderableNode.h"
-#import "CCProtocols.h"
+#import "CCRendererSharedTypes.h"
 
 @class CCSpriteBatchNode;
 @class CCSpriteFrame;

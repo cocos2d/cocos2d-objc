@@ -27,26 +27,15 @@
  */
 
 
-// opengl
-#import "Platforms/CCGL.h"
+#import "ccTypes.h"
 
-// cocos2d
-#import "ccConfig.h"
-#import "CCParticleSystem.h"
-#import "CCTextureCache.h"
-#import "ccMacros.h"
-#import "CCSpriteFrame.h"
-#import "CCDirector.h"
-#import "CCShader.h"
-#import "CCDeviceInfo.h"
-
-// support
-#import "Support/CGPointExtension.h"
-
-#import "CCNode_Private.h"
-#import "CCParticleSystemBase_Private.h"
 #import "CCParticleSystem_Private.h"
-#import "CCTexture_Private.h"
+#import "CCShader.h"
+#import "CCTexture.h"
+#import "CCSpriteFrame.h"
+#import "CCRenderer.h"
+#import "ccUtils.h"
+
 
 @implementation CCParticleSystem {
 	GLKVector2 _texCoord1[4];

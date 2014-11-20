@@ -26,7 +26,7 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "cocos2d.h"
+#import "CCSprite.h"
 
 /**
  *  CCSprite9Slice will render a single image as nine quads, keeping the margins fixed, and stretching the center quads, to fit the content size.

@@ -8,6 +8,7 @@
 
 #import "CCAnimationManager.h"
 
+
 @interface CCAnimationManager (FrameAnimation)
 
 - (void)animationWithSpriteFrames:animFrames delay:(float)delay name:(NSString*)name node:(CCNode*)node loop:(BOOL)loop;

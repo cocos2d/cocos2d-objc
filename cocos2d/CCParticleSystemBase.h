@@ -25,10 +25,7 @@
  *
  */
 
-#import "CCProtocols.h"
 #import "CCRenderableNode.h"
-#import "ccTypes.h"
-#import "ccConfig.h"
 
 @class CCParticleBatchNode;
 @class CCTexture;

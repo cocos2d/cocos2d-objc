@@ -60,15 +60,17 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 */
 
-#import <Foundation/Foundation.h> //	for NSObject
+#import <Foundation/Foundation.h>
+#import <CoreGraphics/CGImage.h>
 
 #import "ccTypes.h"
 #import "ccMacros.h"
 
-#import "Platforms/CCGL.h" // OpenGL stuff
-#import "Platforms/CCNS.h" // Next-Step stuff
+#import "Platforms/CCGL.h"
+
 
 @class CCSpriteFrame;
+
 
 /**
  *  Possible texture pixel formats

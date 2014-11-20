@@ -26,17 +26,18 @@
 //	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-#import "CCShader_private.h"
 #import "ccMacros.h"
-#import "Support/CCFileUtils.h"
-#import "Support/uthash.h"
+
+#import "CCShader_private.h"
 #import "CCRenderer_Private.h"
 #import "CCTexture_private.h"
-#import "CCDirector.h"
-#import "CCCache.h"
-#import "CCGL.h"
-#import "CCRenderDispatch.h"
 #import "CCMetalSupport_Private.h"
+
+#import "CCFileUtils.h"
+#import "CCCache.h"
+#import "CCRenderDispatch.h"
+#import "CCDeviceInfo.h"
+#import "CCColor.h"
 
 
 NSString * const CCShaderUniformDefaultGlobals = @"cc_GlobalUniforms";

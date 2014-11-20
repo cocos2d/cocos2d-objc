@@ -89,7 +89,3 @@ enum
     kCCBKeyframeEasingBackOut,
     kCCBKeyframeEasingBackInOut,
 };
-
-@interface CCBReader ()
-
-@end
