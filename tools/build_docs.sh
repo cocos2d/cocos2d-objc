@@ -68,14 +68,17 @@ tools/appledoc \
 --ignore CCDirectorIOS.h \
 --ignore CCDirectorMac.h \
 --ignore CCDrawingPrimitives.h \
+--ignore CCEffectDistanceField.h \
+--ignore CCEffectLighting.h \
 --ignore CCES2Renderer.h \
 --ignore CCESRenderer.h \
---ignore CCFileUtils.h \
 --ignore ccFPSImages.h \
 --ignore CCGL.h \
 --ignore CCGLProgram.h \
 --ignore CCGLView.h \
 --ignore CCLabelAtlas.h \
+--ignore CCLightCollection.h \
+--ignore CCLightNode.h \
 --ignore ccMacros.h \
 --ignore CCMetalView.h \
 --ignore CCNS.h \
@@ -98,7 +101,7 @@ tools/appledoc \
 --ignore ccShaders.h \
 --ignore CCTextureAtlas.h \
 --ignore CCTexturePVR.h \
---ignore CCTouch.h \
+--ignore CCTouchAndroid.h \
 --ignore ccTypes.h \
 --ignore ccUtils.h \
 --ignore CCVertex.h \
