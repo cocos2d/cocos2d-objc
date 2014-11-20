@@ -32,14 +32,14 @@
 #endif
 
 #import "CCProtocols.h"
-#import "CCNode.h"
+#import "CCRenderableNode.h"
 
 #pragma mark - CCNodeColor
 
 /**
  * CCNodeColor is a subclass of CCNode that is used to generate solid colors.
  */
-@interface CCNodeColor : CCNode <CCShaderProtocol, CCBlendProtocol>
+@interface CCNodeColor : CCRenderableNode <CCShaderProtocol, CCBlendProtocol>
 
 /// -----------------------------------------------------------------------
 /// @name Creating a CCNodeColor Object

@@ -40,12 +40,11 @@
 #import "CCRenderTexture_Private.h"
 #import "CCRenderDispatch.h"
 #import "CCMetalSupport_Private.h"
+#import "CCRenderableNode_Private.h"
 
 #if __CC_PLATFORM_MAC
 #import <ApplicationServices/ApplicationServices.h>
 #endif
-
-
 
 
 @implementation CCRenderTextureSprite
@@ -55,7 +54,7 @@
 	if(_renderState == nil){
 		// Allowing the uniforms to be copied speeds up the rendering by making the render state immutable.
 		// Copy the uniforms if custom uniforms are not being used.
-		BOOL copyUniforms = self.hasDefaultShaderUniforms;
+		BOOL copyUniforms = !self.usesCustomShaderUniforms;
 		
 		// Create an uncached renderstate so the texture can be released before the renderstate cache is flushed.
 		_renderState = [CCRenderState renderStateWithBlendMode:_blendMode shader:_shader shaderUniforms:self.shaderUniforms copyUniforms:copyUniforms];
@@ -75,6 +74,10 @@
 	return t;
 }
 
+@end
+
+
+@interface CCRenderTexture()<CCTextureProtocol>
 @end
 
 

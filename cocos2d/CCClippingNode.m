@@ -40,8 +40,10 @@ static GLint _stencilBits = -1;
 
 static void
 SetProgram(CCNode *n, CCShader *p, NSNumber *alpha) {
-	n.shader = p;
-	n.shaderUniforms[CCShaderUniformAlphaTestValue] = alpha;
+    if([n respondsToSelector:@selector(setShader:)]){
+        [(id<CCShaderProtocol>)n setShader:p];
+        [(id<CCShaderProtocol>)n shaderUniforms][CCShaderUniformAlphaTestValue] = alpha;
+    }
 	
 	if(!n.children) return;
 	for(CCNode* c in n.children) SetProgram(c,p, alpha);

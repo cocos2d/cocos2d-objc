@@ -53,6 +53,9 @@
 @property(nonatomic, strong) CCShader *shader;
 /// The dictionary of shader uniform values that will be passed to the shader.
 @property(nonatomic, readonly) NSMutableDictionary *shaderUniforms;
+/// True if the node is not using custom uniforms.
+@property(nonatomic, readonly) BOOL usesCustomShaderUniforms;
+
 
 /// The rendering state this node will use when rendering.
 @property(nonatomic, readonly, strong) CCRenderState *renderState;

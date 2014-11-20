@@ -25,6 +25,7 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "CCRenderableNode.h"
 #import "CCSprite.h"
 
 /** Progress Node Type. */
@@ -56,7 +57,7 @@ typedef NS_ENUM(NSUInteger, CCProgressNodeType) {
   
  */
 
-@interface CCProgressNode : CCNode
+@interface CCProgressNode : CCRenderableNode
 
 
 /// -----------------------------------------------------------------------

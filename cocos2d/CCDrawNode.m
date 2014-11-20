@@ -34,6 +34,7 @@
 #import "CCColor.h"
 #import "CCDeviceInfo.h"
 #import "CCMetalSupport_Private.h"
+#import "CCRenderableNode_Private.h"
 
 // Vertex shader that performs the modelview-projection multiplication on the GPU.
 // Faster for draw nodes that draw many vertexes, but can't be batched.
@@ -61,6 +62,9 @@ static NSString *CCDrawNodeFragmentShaderSource =
 	@"	gl_FragColor = cc_FragColor*smoothstep(0.0, length(fwidth(cc_FragTexCoord1)), 1.0 - length(cc_FragTexCoord1));\n"
 	@"}\n";
 #endif
+
+@interface CCDrawNode()<CCShaderProtocol>
+@end
 
 @implementation CCDrawNode {
     GLsizei _vertexCount, _vertexCapacity;

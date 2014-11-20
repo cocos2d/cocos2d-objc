@@ -27,7 +27,7 @@
 #import <Foundation/Foundation.h>
 
 #import "ccMacros.h"
-#import "CCNode.h"
+#import "CCRenderableNode.h"
 #import "CCSprite.h"
 #import "CCTexture.h"
 
@@ -56,7 +56,7 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
  There are also functions for saving the render texture to disk in PNG or JPG format.
 
  */
-@interface CCRenderTexture : CCNode
+@interface CCRenderTexture : CCRenderableNode
 
 /** The CCSprite that is used for rendering.
 	A subtle change introduced in v3.1.1 is that this sprite is rendered explicitly and is not a child of the render texture.

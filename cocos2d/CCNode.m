@@ -170,9 +170,6 @@ RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
 		//initialize parent to nil
 		_parent = nil;
 
-		_shader = [CCShader positionColorShader];
-		_blendMode = [CCBlendMode premultipliedAlphaMode];
-
 		// set default scheduler and actionManager
 		CCDirector *director = [CCDirector sharedDirector];
 		_actionManager = [director actionManager];
@@ -1727,112 +1724,6 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 
 -(BOOL) doesOpacityModifyRGB{
 	return YES;
-}
-
-#pragma mark - RenderState Methods
-
-// The default dictionary is either nil or only contains the main texture.
-static inline BOOL
-CheckDefaultUniforms(NSDictionary *uniforms, CCTexture *texture)
-{
-	if(uniforms == nil){
-		return YES;
-	} else {
-		// Check that the uniforms has only one key for the main texture.
-		return (uniforms.count == 1 && uniforms[CCShaderUniformMainTexture] == texture);
-	}
-}
-
--(CCRenderState *)renderState
-{
-	if(_renderState == nil){
-		CCTexture *texture = (_texture ?: [CCTexture none]);
-		
-		if(CheckDefaultUniforms(_shaderUniforms, texture)){
-			// Create a cached render state so we can use the fast path.
-			_renderState = [CCRenderState renderStateWithBlendMode:_blendMode shader:_shader mainTexture:texture];
-			
-			// If the uniform dictionary was set, it was the default. Throw it away.
-			_shaderUniforms = nil;
-		} else {
-			// Since the node has unique uniforms, it cannot be batched or use the fast path.
-			_renderState = [CCRenderState renderStateWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms copyUniforms:NO];
-		}
-	}
-	
-	return _renderState;
-}
-
--(CCShader *)shader
-{
-	return _shader;
-}
-
--(void)setShader:(CCShader *)shader
-{
-	NSAssert(shader, @"CCNode.shader cannot be nil.");
-	_shader = shader;
-	_renderState = nil;
-}
-
--(CCBlendMode *)blendMode
-{
-	return _blendMode;
-}
-
--(BOOL)hasDefaultShaderUniforms
-{
-	CCTexture *texture = (_texture ?: [CCTexture none]);
-	if(CheckDefaultUniforms(_shaderUniforms, texture)){
-		// If the uniform dictionary was set, it was the default. Throw it away.
-		_shaderUniforms = nil;
-		
-		return YES;
-	} else {
-		return NO;
-	}
-}
-
--(NSMutableDictionary *)shaderUniforms
-{
-	if(_shaderUniforms == nil){
-		_shaderUniforms = [NSMutableDictionary dictionaryWithObject:(_texture ?: [CCTexture none]) forKey:CCShaderUniformMainTexture];
-		
-		_renderState = nil;
-	}
-	
-	return _shaderUniforms;
-}
-
-//-(void)setShaderUniforms:(NSMutableDictionary *)shaderUniforms
-//{
-//	_shaderUniforms = shaderUniforms;
-//	_renderState = nil;
-//}
-
--(void)setBlendMode:(CCBlendMode *)blendMode
-{
-	NSAssert(blendMode, @"CCNode.blendMode cannot be nil.");
-	if(_blendMode != blendMode){
-		_blendMode = blendMode;
-		_renderState = nil;
-	}
-}
-
--(CCTexture*)texture
-{
-	return _texture;
-}
-
--(void)setTexture:(CCTexture *)texture
-{
-	if(_texture != texture){
-		_texture = texture;
-		_renderState = nil;
-		
-		// Set the main texture in the uniforms dictionary (if the dictionary exists).
-		_shaderUniforms[CCShaderUniformMainTexture] = (_texture ?: [CCTexture none]);
-	}
 }
 
 @end

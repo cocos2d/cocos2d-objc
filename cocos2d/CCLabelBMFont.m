@@ -463,6 +463,8 @@ void FNTConfigRemoveCache( void )
 	// Replacement for the old CCNode.tag property which was
 	// used heavily in the original code.
 	NSMutableArray *_childForTag;
+    
+    CCTexture *_texture;
 }
 
 @synthesize alignment = _alignment;
@@ -534,7 +536,7 @@ void FNTConfigRemoveCache( void )
 			_fntFile = [fntFile copy];
 		}
 		
-		self.texture = texture;
+		_texture = texture;
 		_width = width;
 		_alignment = alignment;
 		
@@ -548,7 +550,7 @@ void FNTConfigRemoveCache( void )
         
 		_imageOffset = offset;
         
-		_reusedChar = [[CCSprite alloc] initWithTexture:self.texture rect:CGRectMake(0, 0, 0, 0) rotated:NO];
+		_reusedChar = [[CCSprite alloc] initWithTexture:_texture rect:CGRectMake(0, 0, 0, 0) rotated:NO];
 		_childForTag = [NSMutableArray array];
 		
 		[self setString:theString updateLabel:YES];
@@ -771,7 +773,7 @@ void FNTConfigRemoveCache( void )
     CGRect rect;
     ccBMFontDef fontDef = (ccBMFontDef){};
 	
-	CGFloat contentScale = 1.0/self.texture.contentScale;
+	CGFloat contentScale = 1.0/_texture.contentScale;
 	
 	for(NSUInteger i = 0; i<stringLen; i++) {
 		unichar c = [_string characterAtIndex:i];
@@ -824,7 +826,7 @@ void FNTConfigRemoveCache( void )
 //				fontChar = _reusedChar;
 //				hasSprite = NO;
 //			} else {
-				fontChar = [[CCSprite alloc] initWithTexture:self.texture rect:rect];
+				fontChar = [[CCSprite alloc] initWithTexture:_texture rect:rect];
 				[self addChild:fontChar z:i];
 				[self setTag:i forChild:fontChar];
 //			}
@@ -841,7 +843,7 @@ void FNTConfigRemoveCache( void )
 		// See issue 1343. cast( signed short + unsigned integer ) == unsigned integer (sign is lost!)
 		NSInteger yOffset = _configuration->_commonHeight - fontDef.yOffset;
 		CGPoint fontPos = ccp( (CGFloat)nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width*0.5f + kerningAmount,
-							  (CGFloat)nextFontPositionY + yOffset - rect.size.height*0.5f * self.texture.contentScale );
+							  (CGFloat)nextFontPositionY + yOffset - rect.size.height*0.5f * _texture.contentScale );
 		fontChar.position = ccpMult(fontPos, contentScale);
 		
 		// update kerning
@@ -940,7 +942,7 @@ void FNTConfigRemoveCache( void )
         
         _childForTag = [NSMutableArray array];
 
-		self.texture = [CCTexture textureWithFile:_configuration.atlasName];
+		_texture = [CCTexture textureWithFile:_configuration.atlasName];
 		[self createFontChars];
 	}
 }

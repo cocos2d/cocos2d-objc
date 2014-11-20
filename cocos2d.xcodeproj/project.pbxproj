@@ -856,6 +856,15 @@
 		D2FEB747194F6C9E00FC0574 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		D2FEB749194F6C9E00FC0574 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
 		D3027C8719D33FFB00006004 /* NSValue+CCRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = D34CAD6219C3A0FD009BED7A /* NSValue+CCRenderer.m */; };
+		D304BC211A1DA3BD005A0260 /* CCRenderableNode.h in Headers */ = {isa = PBXBuildFile; fileRef = D304BC201A1DA3BD005A0260 /* CCRenderableNode.h */; };
+		D304BC221A1DA3BD005A0260 /* CCRenderableNode.h in Headers */ = {isa = PBXBuildFile; fileRef = D304BC201A1DA3BD005A0260 /* CCRenderableNode.h */; };
+		D304BC231A1DA3BD005A0260 /* CCRenderableNode.h in Headers */ = {isa = PBXBuildFile; fileRef = D304BC201A1DA3BD005A0260 /* CCRenderableNode.h */; };
+		D304BC271A1DA3CA005A0260 /* CCRenderableNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D304BC261A1DA3CA005A0260 /* CCRenderableNode.m */; };
+		D304BC281A1DA3CA005A0260 /* CCRenderableNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D304BC261A1DA3CA005A0260 /* CCRenderableNode.m */; };
+		D304BC291A1DA3CA005A0260 /* CCRenderableNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D304BC261A1DA3CA005A0260 /* CCRenderableNode.m */; };
+		D304BC2B1A1DA8E5005A0260 /* CCRenderableNode_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D304BC2A1A1DA8E5005A0260 /* CCRenderableNode_Private.h */; };
+		D304BC2C1A1DA8E5005A0260 /* CCRenderableNode_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D304BC2A1A1DA8E5005A0260 /* CCRenderableNode_Private.h */; };
+		D304BC2D1A1DA8E5005A0260 /* CCRenderableNode_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D304BC2A1A1DA8E5005A0260 /* CCRenderableNode_Private.h */; };
 		D309055018AC23110081BF11 /* CCRenderer_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D309054F18AC23110081BF11 /* CCRenderer_Private.h */; };
 		D31C795019994126007921E1 /* CCMetalSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = D31C794F19994126007921E1 /* CCMetalSupport.m */; };
 		D31C795219994197007921E1 /* CCMetalSupport_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D31C795119994197007921E1 /* CCMetalSupport_Private.h */; };
@@ -1371,6 +1380,9 @@
 		D2DDB09119805E8400233D80 /* CCQuaternion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCQuaternion.m; path = Platforms/Android/CCQuaternion.m; sourceTree = "<group>"; };
 		D2DDB09219805E8400233D80 /* CCMatrix3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCMatrix3.m; path = Platforms/Android/CCMatrix3.m; sourceTree = "<group>"; };
 		D2FEB74F194F6C9E00FC0574 /* libcocos2dAndroid.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2dAndroid.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D304BC201A1DA3BD005A0260 /* CCRenderableNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderableNode.h; sourceTree = "<group>"; };
+		D304BC261A1DA3CA005A0260 /* CCRenderableNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCRenderableNode.m; sourceTree = "<group>"; };
+		D304BC2A1A1DA8E5005A0260 /* CCRenderableNode_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderableNode_Private.h; sourceTree = "<group>"; };
 		D309054F18AC23110081BF11 /* CCRenderer_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderer_Private.h; sourceTree = "<group>"; };
 		D31C794F19994126007921E1 /* CCMetalSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMetalSupport.m; sourceTree = "<group>"; };
 		D31C795119994197007921E1 /* CCMetalSupport_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMetalSupport_Private.h; sourceTree = "<group>"; };
@@ -1734,6 +1746,9 @@
 				5018F2540DFDEAFF00C013A5 /* CCNode.h */,
 				5018F2550DFDEAFF00C013A5 /* CCNode.m */,
 				B798D13C181F2E4500E7BFCD /* CCNode_Private.h */,
+				D304BC201A1DA3BD005A0260 /* CCRenderableNode.h */,
+				D304BC2A1A1DA8E5005A0260 /* CCRenderableNode_Private.h */,
+				D304BC261A1DA3CA005A0260 /* CCRenderableNode.m */,
 			);
 			name = "Base Nodes";
 			sourceTree = "<group>";
@@ -2307,6 +2322,7 @@
 				9D03A5EB1A02F61700C651C8 /* CCLightNode_Private.h in Headers */,
 				D272032D18FC89A000B100FF /* CCEffectStack.h in Headers */,
 				B7E260D818171D2000A0E872 /* CCTextField.h in Headers */,
+				D304BC2B1A1DA8E5005A0260 /* CCRenderableNode_Private.h in Headers */,
 				D34CAD6C19C3AA10009BED7A /* CCRendererBasicTypes_Private.h in Headers */,
 				D268FE13198078FF00ECBCD0 /* CCEffectReflection.h in Headers */,
 				B7D273131822F4AA0054849B /* CCBReader.h in Headers */,
@@ -2324,6 +2340,7 @@
 				83E1A86819C8ACA0000A3BCA /* CCPackageManagerDelegate.h in Headers */,
 				D38058201889CE7700822437 /* CCCache.h in Headers */,
 				D309055018AC23110081BF11 /* CCRenderer_Private.h in Headers */,
+				D304BC211A1DA3BD005A0260 /* CCRenderableNode.h in Headers */,
 				83E1A87619C8ACC1000A3BCA /* CCPackageDownload.h in Headers */,
 				505462FC1062768000AB7C52 /* ccConfig.h in Headers */,
 				50E2A15010A45E7F00D894CE /* CCSpriteFrame.h in Headers */,
@@ -2492,6 +2509,7 @@
 				7A5946BB19E372F400F65F90 /* CCClippingNode.h in Headers */,
 				7A5946BD19E372F400F65F90 /* CCMotionStreak.h in Headers */,
 				7A5946BF19E372F400F65F90 /* CCProgressNode.h in Headers */,
+				D304BC231A1DA3BD005A0260 /* CCRenderableNode.h in Headers */,
 				7A5946C119E372F400F65F90 /* CCRenderTexture.h in Headers */,
 				7A5946C319E372F400F65F90 /* CCProgressNode_Private.h in Headers */,
 				7A5946C419E372F400F65F90 /* CCRenderTexture_Private.h in Headers */,
@@ -2577,6 +2595,7 @@
 				7A59475419E3731000F65F90 /* CCDeviceInfo.h in Headers */,
 				7A59475619E3731100F65F90 /* CCProtocols.h in Headers */,
 				7A59475719E3731100F65F90 /* CCScheduler.h in Headers */,
+				D304BC2D1A1DA8E5005A0260 /* CCRenderableNode_Private.h in Headers */,
 				7A59475919E3731100F65F90 /* CCDirector_Private.h in Headers */,
 				7A59476019E3731400F65F90 /* CCPlatformTextField.h in Headers */,
 				7A59476219E3731400F65F90 /* CCPlatformTextFieldIOS.h in Headers */,
@@ -2611,6 +2630,7 @@
 				D2FEB612194F6C9E00FC0574 /* CCAction.h in Headers */,
 				D2FEB613194F6C9E00FC0574 /* CCNode.h in Headers */,
 				D2FEB614194F6C9E00FC0574 /* CCDirector.h in Headers */,
+				D304BC2C1A1DA8E5005A0260 /* CCRenderableNode_Private.h in Headers */,
 				D2FEB616194F6C9E00FC0574 /* CCActionInstant.h in Headers */,
 				D2FEB618194F6C9E00FC0574 /* CCActionInterval.h in Headers */,
 				D268FE281980791D00ECBCD0 /* CCEffectHue.h in Headers */,
@@ -2675,6 +2695,7 @@
 				D2FEB656194F6C9E00FC0574 /* CCCache.h in Headers */,
 				D2FEB657194F6C9E00FC0574 /* CCRenderer_Private.h in Headers */,
 				D2FEB659194F6C9E00FC0574 /* ccConfig.h in Headers */,
+				D304BC221A1DA3BD005A0260 /* CCRenderableNode.h in Headers */,
 				D2FEB65A194F6C9E00FC0574 /* CCSpriteFrame.h in Headers */,
 				D2FEB65B194F6C9E00FC0574 /* CCColor.h in Headers */,
 				D2FEB65C194F6C9E00FC0574 /* CCProtocols.h in Headers */,
@@ -3071,6 +3092,7 @@
 				D285ECF1192EA92A009F4E88 /* CCGLView.m in Sources */,
 				9DDD047F19DE154400687820 /* CCEffectLighting.m in Sources */,
 				E01E6D8D121F130E001A484F /* CCLabelBMFont.m in Sources */,
+				D304BC271A1DA3CA005A0260 /* CCRenderableNode.m in Sources */,
 				E0EAD100121F4B4600B0C81C /* CCDirectorIOS.m in Sources */,
 				D24161011958F6EE003673BD /* CCAnimationManager+FrameAnimation.m in Sources */,
 				D285ECF9192EF5B2009F4E88 /* CCDirectorAndroid.m in Sources */,
@@ -3233,6 +3255,7 @@
 				7A59487019E375B000F65F90 /* CCQuaternion.m in Sources */,
 				7A59487119E375B000F65F90 /* CCMatrix3.m in Sources */,
 				7A59487619E375B000F65F90 /* CCActivity.m in Sources */,
+				D304BC291A1DA3CA005A0260 /* CCRenderableNode.m in Sources */,
 				7A59487A19E375B100F65F90 /* CCDirectorAndroid.m in Sources */,
 				7A59487E19E375B100F65F90 /* CCGestureListener.m in Sources */,
 				7A59488119E375B200F65F90 /* CCMetalView.m in Sources */,
@@ -3318,6 +3341,7 @@
 				D2FEB6E2194F6C9E00FC0574 /* CCAppDelegate.m in Sources */,
 				D27451BD19AEC84C006DA0A1 /* CCEffectDistanceField.m in Sources */,
 				D2FEB6E3194F6C9E00FC0574 /* CCBReader.m in Sources */,
+				D304BC281A1DA3CA005A0260 /* CCRenderableNode.m in Sources */,
 				D2FEB6E5194F6C9E00FC0574 /* base64.c in Sources */,
 				BC9F4E9219DB633B00B25F01 /* CCPackageDownloadManager.m in Sources */,
 				D3903B17199528DF003AA81A /* CCRenderDispatch.m in Sources */,

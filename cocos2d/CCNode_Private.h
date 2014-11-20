@@ -32,19 +32,7 @@ CGPoint GetPositionFromBody(CCNode *node, CCPhysicsBody *body);
 CGPoint TransformPointAsVector(CGPoint p, CGAffineTransform t);
 CGAffineTransform CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians);
 
-@interface CCNode()<CCShaderProtocol, CCBlendProtocol, CCTextureProtocol> {
-	@protected
-	CCRenderState *_renderState;
-	
-	CCShader *_shader;
-	NSMutableDictionary *_shaderUniforms;
-	
-	CCBlendMode *_blendMode;
-	CCTexture *_texture;
-}
-
-/// Returns true if the node is not using custom uniforms.
--(BOOL)hasDefaultShaderUniforms;
+@interface CCNode()
 
 /* The real openGL Z vertex.
  Differences between openGL Z vertex and cocos2d Z order:
@@ -54,8 +42,6 @@ CGAffineTransform CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
  @warning: Use it at your own risk since it might break the cocos2d parent-children z order
  */
 @property (nonatomic,readwrite) float vertexZ;
-
-//@property (nonatomic,readonly) BOOL isPhysicsNode;
 
 /* CCActionManager used by all the actions.
  IMPORTANT: If you set a new CCActionManager, then previously created actions are going to be removed.

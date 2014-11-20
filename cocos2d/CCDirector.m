@@ -842,7 +842,7 @@ static CCDirector *_sharedDirector = nil;
 @end
 
 
-@interface CCFPSLabel : CCNode<CCTextureProtocol>
+@interface CCFPSLabel : CCRenderableNode<CCTextureProtocol, CCShaderProtocol>
 @property(nonatomic, strong) NSString *string;
 @end
 
