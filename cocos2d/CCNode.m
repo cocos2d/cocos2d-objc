@@ -606,18 +606,16 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
 
 - (void) setZOrder:(NSInteger)zOrder
 {
-    if (_parent)
-        [_parent reorderChild:self z:zOrder];
-    else
-    	[self _setZOrder:zOrder]; // issue #598
+    if(_zOrder != zOrder){
+        _zOrder = zOrder;
+        
+        if(_parent){
+            _parent->_isReorderChildDirty = YES;
+        }
+    }
 }
 
 #pragma mark CCNode Composition
-
--(void) childrenAlloc
-{
-	_children = [[NSMutableArray alloc] init];
-}
 
 // Recursively get a child by name, but don't return the root of the search.
 -(CCNode*) getChildByNameRecursive:(NSString *)name root:(CCNode *)root
@@ -673,14 +671,16 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( child.parent == nil, @"child already added to another node. It can't be added again");
 
-	if( ! _children )
-		[self childrenAlloc];
+	if(! _children){
+        _children = [[NSMutableArray alloc] init];
+    }
 
-	[self insertChild:child z:z];
-
+    child->_zOrder = z;
 	child.name = name;
-
 	child->_parent = self;
+
+    [_children addObject:child];
+	_isReorderChildDirty=YES;
 
 	// Update pausing parameters
 	child->_pausedAncestors = _pausedAncestors + (_paused ? 1 : 0);
@@ -815,30 +815,6 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	[_children removeObject:child];
 }
 
-// used internally to alter the zOrder variable. DON'T call this method manually
--(void) _setZOrder:(NSInteger) z
-{
-	_zOrder = z;
-}
-
-// helper used by reorderChild & add
--(void) insertChild:(CCNode*)child z:(NSInteger)z
-{
-	_isReorderChildDirty=YES;
-
-    [_children addObject:child];
-	[child _setZOrder:z];
-}
-
--(void) reorderChild:(CCNode*) child z:(NSInteger)z
-{
-	NSAssert( child != nil, @"Child must be non-nil");
-
-	_isReorderChildDirty = YES;
-
-	[child _setZOrder:z];
-}
-
 - (void) sortAllChildren
 {
 	if (_isReorderChildDirty)
@@ -859,9 +835,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		//don't need to check children recursively, that's done in visit of each child
         
 		_isReorderChildDirty = NO;
-        
         [[[CCDirector sharedDirector] responderManager] markAsDirty];
-
 	}
 }
 
@@ -1156,13 +1130,8 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
     }
     else
     {
-        return self.parent.animationManager;
+        return _parent.animationManager;
     }
-}
-
--(void)setAnimationManager:(CCAnimationManager *)animationManager
-{
-    _animationManager = animationManager;
 }
 
 #pragma mark CCNode - Scheduler
@@ -1589,6 +1558,8 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 	return [self convertToWorldSpace:nodePoint];
 }
 
+// Looks like this is legacy functionality for Mac.
+#warning TODO UI space is the same as world space?
 - (CGPoint)convertToWindowSpace:(CGPoint)nodePoint
 {
     CGPoint worldPoint = [self convertToWorldSpace:nodePoint];
@@ -1615,9 +1586,6 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 // -----------------------------------------------------------------
 
 #pragma mark - CCColor methods
-
-@synthesize cascadeColorEnabled=_cascadeColorEnabled;
-@synthesize cascadeOpacityEnabled=_cascadeOpacityEnabled;
 
 -(CGFloat) opacity
 {
@@ -1714,14 +1682,6 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 			[item updateDisplayedOpacity:_displayColor.a];
 		}
 	// }
-}
-
--(void) setOpacityModifyRGB:(BOOL)boolean{
-	// Ignored in CCNode. Implemented in subclasses
-}
-
--(BOOL) doesOpacityModifyRGB{
-	return YES;
 }
 
 @end

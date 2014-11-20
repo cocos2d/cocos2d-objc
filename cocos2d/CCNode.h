@@ -567,6 +567,13 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  */
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
 
+#warning TODO Can this be removed after merging the transform branch?
+/** Returns the 4x4 drawing transformation for this node. Really only useful when overriding visit:parentTransform: */
+-(GLKMatrix4)transform:(const GLKMatrix4 *)parentTransform;
+
+/** Recursive method that visit its children and draw them. */
+-(void) visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform;
+
 /** Calls visit:parentTransform using the current renderer and projection. */
 -(void) visit;
 
@@ -617,33 +624,4 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  */
 - (void)updateDisplayedOpacity:(CGFloat)opacity;
 
-/**
- *  Sets the premultipliedAlphaOpacity property.
- *
- *  If set to NO then opacity will be applied as: glColor(R,G,B,opacity);
- *
- *  If set to YES then opacity will be applied as: glColor(opacity, opacity, opacity, opacity );
- *
- *  Textures with premultiplied alpha will have this property by default on YES. Otherwise the default value is NO.
- *
- *  @param boolean Enables or disables setting of opacity with color.
- */
--(void) setOpacityModifyRGB:(BOOL)boolean __attribute__((deprecated));
-
-/** Returns whether or not the opacity will be applied using glColor(R,G,B,opacity) or glColor(opacity, opacity, opacity, opacity).
- */
--(BOOL) doesOpacityModifyRGB __attribute__((deprecated));
-
 @end
-
-
-@interface CCNode(NoARC)
-
-/** Returns the 4x4 drawing transformation for this node. Really only useful when overriding visit:parentTransform: */
--(GLKMatrix4)transform:(const GLKMatrix4 *)parentTransform;
-
-/** Recursive method that visit its children and draw them. */
--(void) visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform;
-
-@end
-
