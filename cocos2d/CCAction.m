@@ -327,7 +327,7 @@
 
 -(BOOL) isDone
 {
-	return !_followedNode.runningInActiveScene;
+	return !_followedNode.isRunningInActiveScene;
 }
 
 -(void) stop

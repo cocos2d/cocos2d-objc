@@ -83,9 +83,6 @@
 	int _pausedAncestors;
 }
 
-// Suppress automatic ivar creation.
-@dynamic runningInActiveScene;
-
 static inline
 CCPhysicsBody *
 GetBodyIfRunning(CCNode *node)
@@ -659,7 +656,7 @@ static void
 RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 {
 	for(CCNode *child in node->_children){
-		BOOL wasRunning = child.runningInActiveScene;
+		BOOL wasRunning = child.isRunningInActiveScene;
 		child->_pausedAncestors += increment;
 		[child wasRunning:wasRunning];
 		
@@ -1056,7 +1053,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 	[self setupPhysicsBody:_physicsBody];
 	[_scheduler scheduleTarget:self];
 	
-	BOOL wasRunning = self.runningInActiveScene;
+	BOOL wasRunning = self.isRunningInActiveScene;
 	_isInActiveScene = YES;
 	
 	//If there's a physics node in the hierarchy, all actions should run on a fixed timestep.
@@ -1093,7 +1090,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 {
 	[self teardownPhysics];
 	
-	BOOL wasRunning = self.runningInActiveScene;
+	BOOL wasRunning = self.isRunningInActiveScene;
 	_isInActiveScene = NO;
 	[self wasRunning:wasRunning];
 	
@@ -1120,7 +1117,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 {
 	NSAssert( action != nil, @"Argument must be non-nil");
 
-	[_actionManager addAction:action target:self paused:!self.runningInActiveScene];
+	[_actionManager addAction:action target:self paused:!self.isRunningInActiveScene];
 	return action;
 }
 
@@ -1283,7 +1280,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 // Used to pause/unpause a node's actions and timers when it's isRunning state changes.
 -(void)wasRunning:(BOOL)wasRunning
 {
-	BOOL isRunning = self.runningInActiveScene;
+	BOOL isRunning = self.isRunningInActiveScene;
 	
 	if(isRunning && !wasRunning){
 		[_scheduler setPaused:NO target:self];
@@ -1305,7 +1302,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 -(void)setPaused:(BOOL)paused
 {
 	if(_paused != paused){
-		BOOL wasRunning = self.runningInActiveScene;
+		BOOL wasRunning = self.isRunningInActiveScene;
 		_paused = paused;
 		[self wasRunning:wasRunning];
 		

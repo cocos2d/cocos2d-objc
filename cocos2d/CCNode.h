@@ -348,7 +348,7 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 @property(nonatomic, readonly) CCScene *scene;
 
 /** Returns YES if the node is added to an active scene and neither it nor any of it's ancestors is paused. */
-@property(nonatomic,readonly,getter=isRunningInActiveScene) BOOL runningInActiveScene;
+@property(nonatomic, readonly) BOOL isRunningInActiveScene;
 
 /// -----------------------------------------------------------------------
 /// @name Physics
