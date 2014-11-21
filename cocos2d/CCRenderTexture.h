@@ -31,10 +31,6 @@
 #import "CCSprite.h"
 #import "CCTexture.h"
 
-#if __CC_PLATFORM_IOS
-#import <UIKit/UIKit.h>
-#endif // iPHone
-
 /**
  *  Image format when saving render textures
  */

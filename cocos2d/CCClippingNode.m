@@ -297,12 +297,12 @@ SetProgram(CCNode *n, CCShader *p, NSNumber *alpha) {
     layer--;
 }
 
--(GLfloat)alphaThreshold
+-(float)alphaThreshold
 {
 	return _alphaThreshold.floatValue;
 }
 
--(void)setAlphaThreshold:(GLfloat)alphaThreshold
+-(void)setAlphaThreshold:(float)alphaThreshold
 {
 	_alphaThreshold = @(alphaThreshold);
 }

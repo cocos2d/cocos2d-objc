@@ -46,7 +46,7 @@
 	GLKVector4	_colors[4];
 }
 
-+ (id) nodeWithColor:(CCColor*)color width:(GLfloat)w  height:(GLfloat) h
++ (id) nodeWithColor:(CCColor*)color width:(float)w  height:(float) h
 {
 	return [[self alloc] initWithColor:color width:w height:h];
 }
@@ -63,7 +63,7 @@
 }
 
 // Designated initializer
-- (id) initWithColor:(CCColor*)color width:(GLfloat)w  height:(GLfloat) h
+- (id) initWithColor:(CCColor*)color width:(float)w  height:(float) h
 {
 	if( (self=[super init]) ) {
 		self.blendMode = [CCBlendMode premultipliedAlphaMode];

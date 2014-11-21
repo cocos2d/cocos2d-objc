@@ -25,8 +25,9 @@
  *
  */
 
-// Only compile this code on iOS. These files should NOT be included on your Mac project.
-// But in case they are included, it won't be compiled.
+#warning We should not be using some monotonic time function instead of gettimeofday()
+#include <sys/time.h>
+
 #import "ccMacros.h"
 #if __CC_PLATFORM_IOS
 

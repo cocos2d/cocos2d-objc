@@ -262,9 +262,6 @@ static const CCRenderCommandDrawMode GLDrawModes[] = {
 	
 	glDrawElements(GLDrawModes[_mode], (GLsizei)_count, GL_UNSIGNED_SHORT, (GLvoid *)(_firstIndex*sizeof(GLushort)));
     
-    #warning TODO
-//	CC_INCREMENT_GL_DRAWS(1);
-	
 	CCGL_DEBUG_POP_GROUP_MARKER();
 }
 

@@ -86,19 +86,19 @@
 							 pointRect.size.width * scale,
 							 pointRect.size.height * scale );
 
-	GLfloat wide = [self.texture pixelWidth];
-	GLfloat high = [self.texture pixelHeight];
+	float wide = [self.texture pixelWidth];
+	float high = [self.texture pixelHeight];
 
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
-	GLfloat left = (rect.origin.x*2+1) / (wide*2);
-	GLfloat bottom = (rect.origin.y*2+1) / (high*2);
-	GLfloat right = left + (rect.size.width*2-2) / (wide*2);
-	GLfloat top = bottom + (rect.size.height*2-2) / (high*2);
+	float left = (rect.origin.x*2+1) / (wide*2);
+	float bottom = (rect.origin.y*2+1) / (high*2);
+	float right = left + (rect.size.width*2-2) / (wide*2);
+	float top = bottom + (rect.size.height*2-2) / (high*2);
 #else
-	GLfloat left = rect.origin.x / wide;
-	GLfloat bottom = rect.origin.y / high;
-	GLfloat right = left + rect.size.width / wide;
-	GLfloat top = bottom + rect.size.height / high;
+	float left = rect.origin.x / wide;
+	float bottom = rect.origin.y / high;
+	float right = left + rect.size.width / wide;
+	float top = bottom + rect.size.height / high;
 #endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 
 	for(NSUInteger i=0; i<_totalParticles; i++) {

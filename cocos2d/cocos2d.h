@@ -63,6 +63,9 @@
 #import "CCTexturePVR.h"
 #import "CCSpriteFrame.h"
 #import "CCShader.h"
+#import "CCResponder.h"
+#import "CCTouch.h"
+#import "CCTouchEvent.h"
 
 // Basic Node Types:
 #import "CCNode.h"
@@ -139,6 +142,8 @@
 #import "Support/ccUtils.h"
 #import "Support/uthash.h"
 #import "Support/utlist.h"
+#import "UITouch+CC.h"
+#import "NSEvent+CC.h"
 
 // UI
 #import "cocos2d-ui.h"

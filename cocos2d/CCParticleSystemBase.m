@@ -42,6 +42,12 @@
 // 'Radius Mode' in Particle Designer uses a fixed emit rate of 30 hz. Since that can't be guarateed in cocos2d,
 //  cocos2d uses a another approach, but the results are almost identical.
 
+#import "ccMacros.h"
+
+#if __CC_PLATFORM_MAC
+#import <AppKit/NSBitmapImageRep.h>
+#endif
+
 #import "CCParticleSystemBase_Private.h"
 #import "CCFileUtils.h"
 #import "CCRendererBasicTypes.h"

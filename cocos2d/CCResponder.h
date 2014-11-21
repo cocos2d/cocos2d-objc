@@ -31,6 +31,7 @@
 
 @class CCTouch;
 @class CCTouchEvent;
+@class NSEvent;
 
 
 /**

@@ -25,7 +25,6 @@
  *
  */
 
-#warning TODO delete me!
 #import "ccMacros.h"
 #import "CCParticleSystem.h"
 

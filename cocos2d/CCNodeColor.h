@@ -25,12 +25,6 @@
 
 #import "ccMacros.h"
 
-#if __CC_PLATFORM_IOS
-#import <UIKit/UIKit.h>									// Needed for UIAccelerometerDelegate
-#elif __CC_PLATFORM_MAC
-
-#endif
-
 #import "CCRenderableNode.h"
 
 #pragma mark - CCNodeColor
@@ -53,7 +47,7 @@
  *
  *  @return The CCNodeColor Object.
  */
-+(id) nodeWithColor: (CCColor*)color width:(GLfloat)w height:(GLfloat)h;
++(id) nodeWithColor: (CCColor*)color width:(float)w height:(float)h;
 
 /**
  *  Creates a node with color. Width and height are the window size.
@@ -78,7 +72,7 @@
  *
  *  @return An initialized CCNodeColor Object.
  */
--(id) initWithColor:(CCColor*)color width:(GLfloat)w height:(GLfloat)h;
+-(id) initWithColor:(CCColor*)color width:(float)w height:(float)h;
 
 /**
  *  Initializes a node with color. Width and height are the window size.

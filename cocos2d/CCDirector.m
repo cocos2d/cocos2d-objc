@@ -28,6 +28,9 @@
 /* Idea of decoupling Window from Director taken from OC3D project: http://code.google.com/p/oc3d/
  */
 
+#warning We should not be using some monotonic time function instead of gettimeofday()
+#include <sys/time.h>
+
 #import "CCDirector_Private.h"
 #import "CCNode_Private.h"
 #import "CCRenderer_Private.h"
@@ -63,9 +66,6 @@
 #pragma mark Director - global variables (optimization)
 
 float __ccContentScaleFactor = 1;
-
-// XXX it shoul be a Director ivar. Move it there once support for multiple directors is added
-NSUInteger	__ccNumberOfDraws = 0;
 
 #define kDefaultFPS		60.0	// 60 frames per second
 
@@ -922,7 +922,7 @@ static const float CCFPSLabelItemHeight = 32;
 			[_FPSLabel setString:fpsstr];
 			
 			// Subtract one for the stat label's own batch. This caused a lot of confusion on the forums...
-			NSString *draws = [[NSString alloc] initWithFormat:@"%4lu", (unsigned long)__ccNumberOfDraws - 1];
+			NSString *draws = [[NSString alloc] initWithFormat:@"%4lu", (unsigned long)0 - 1];
 			[_drawsLabel setString:draws];
 		}
 		
@@ -932,8 +932,6 @@ static const float CCFPSLabelItemHeight = 32;
 		[_FPSLabel visit:renderer parentTransform:&_projectionMatrix];
 		[_SPFLabel visit:renderer parentTransform:&_projectionMatrix];
 	}
-	
-	__ccNumberOfDraws = 0;
 }
 
 -(void) calculateMPF

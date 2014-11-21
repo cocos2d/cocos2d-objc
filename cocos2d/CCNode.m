@@ -1636,7 +1636,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 - (void) cascadeOpacityIfNeeded
 {
 	if( _cascadeOpacityEnabled ) {
-		GLfloat parentOpacity = 1.0f;
+		float parentOpacity = 1.0f;
 		if( [_parent isCascadeOpacityEnabled] )
 			parentOpacity = [_parent displayedOpacity];
 		[self updateDisplayedOpacity:parentOpacity];

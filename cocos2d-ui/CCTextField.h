@@ -25,7 +25,6 @@
 
 #import "ccMacros.h"
 
-#warning TODO
 #if __CC_PLATFORM_IOS
 #import <UIKit/UITextField.h>
 #elif __CC_PLATFORM_MAC

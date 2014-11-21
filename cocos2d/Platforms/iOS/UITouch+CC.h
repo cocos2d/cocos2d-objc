@@ -25,8 +25,9 @@
  */
 
 #import "ccMacros.h"
-
 #if __CC_PLATFORM_IOS
+
+#import <UIKit/UITouch.h>
 
 #import "CCTouch.h"
 

@@ -27,13 +27,16 @@
 
 #import "ccConfig.h"
 #import "ccTypes.h"
-#import "ccMacros.h"
 
 #import "Platforms/CCGL.h"
 #import "CCResponderManager.h"
 #import "CCRenderer.h"
 #import "CCDirectorView.h"
 
+#warning should remove this one we clean up the delegate
+#if __CC_PLATFORM_IOS
+#import <UIKit/UIKit.h>
+#endif
 
 @class CCDirector;
 
