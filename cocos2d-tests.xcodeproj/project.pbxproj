@@ -188,7 +188,6 @@
 		D3DACC7B19E74BC000629E97 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3763D9719E7356C006C050D /* MainMenu.xib */; };
 		D3DACC7C19E74BD100629E97 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3763D9519E7356C006C050D /* InfoPlist.strings */; };
 		D3DACC7D19E74BD500629E97 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = D3763D9819E7356C006C050D /* icon.icns */; };
-		D3DACC7E19E74BD800629E97 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D3763D9919E7356C006C050D /* Info.plist */; };
 		D3E1842B19E861FC00A08B01 /* MetalShaders in Resources */ = {isa = PBXBuildFile; fileRef = D3E1842A19E861FC00A08B01 /* MetalShaders */; };
 		D4AFE9131977100000261299 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8D81977100000261299 /* A Damn Mess.ttf */; };
 		D4AFE9141977100000261299 /* Abberancy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8D91977100000261299 /* Abberancy.ttf */; };
@@ -940,7 +939,7 @@
 		B7E2604017E7D278007067F0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = Cocos2d;
 				TargetAttributes = {
 					75556A01185636F100ED1B0F = {
@@ -1158,7 +1157,6 @@
 				D344725419E73AD1000093A3 /* larabie-16-hd.plist in Resources */,
 				D344725519E73AD1000093A3 /* larabie-16-hd.png in Resources */,
 				D344725619E73AD1000093A3 /* larabie-16.plist in Resources */,
-				D3DACC7E19E74BD800629E97 /* Info.plist in Resources */,
 				D344725719E73AD1000093A3 /* larabie-16.png in Resources */,
 				D344725819E73AD1000093A3 /* markerFelt-hd.fnt in Resources */,
 				D344725919E73AD1000093A3 /* markerFelt-hd.png in Resources */,
@@ -1612,6 +1610,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1650,6 +1649,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (

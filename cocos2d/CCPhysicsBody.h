@@ -23,8 +23,6 @@
  */
 
 
-#import <Foundation/Foundation.h>
-
 #import "ccTypes.h"
 
 

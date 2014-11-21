@@ -22,6 +22,15 @@
  * THE SOFTWARE.
  */
 
+#import "ccMacros.h"
+
+#if __CC_PLATFORM_IOS
+#import <UIKit/UIGestureRecognizerSubclass.h>
+#elif __CC_PLATFORM_ANDROID
+#import "CCActivity.h"
+#import "CCGestureListener.h"
+#endif
+
 #import "CCScrollView.h"
 #import "CCDirector.h"
 #import "CGPointExtension.h"
@@ -30,18 +39,6 @@
 #import "CCActionInstant.h"
 #import "CCResponderManager.h"
 #import "CCTouch.h"
-#if __CC_PLATFORM_IOS
-
-// Includes for iOS
-//#import "PlatformTouch+CC.h"
-#import <UIKit/UIGestureRecognizerSubclass.h>
-#elif __CC_PLATFORM_ANDROID
-#import "CCActivity.h"
-#import "CCGestureListener.h"
-// Includes for Mac
-#elif __CC_PLATFORM_MAC
-
-#endif
 
 #pragma mark Constants
 

@@ -1528,8 +1528,6 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 	return [self convertToWorldSpace:nodePoint];
 }
 
-// Looks like this is legacy functionality for Mac.
-#warning TODO UI space is the same as world space?
 - (CGPoint)convertToWindowSpace:(CGPoint)nodePoint
 {
     CGPoint worldPoint = [self convertToWorldSpace:nodePoint];

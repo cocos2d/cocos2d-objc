@@ -25,7 +25,6 @@
  */
 
 #import "ccTypes.h"
-#import "ccMacros.h"
 
 #if __CC_PLATFORM_ANDROID || __CC_PLATFORM_IOS
 

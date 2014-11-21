@@ -22,11 +22,13 @@
  * THE SOFTWARE.
  */
 
-#import "ccTypes.h"
-#import "CCShader.h"
 
-#import "NSValue+CCRenderer.h"
+#import "ccTypes.h"
+#import "CCGL.h"
+
 #import "CCRendererBasicTypes.h"
+#import "CCShader.h"
+#import "NSValue+CCRenderer.h"
 
 
 /// Check if the given bounding box as specified by it's center and extents (half with/height) is visible onscreen.	

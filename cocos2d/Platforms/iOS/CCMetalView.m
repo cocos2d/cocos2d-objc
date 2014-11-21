@@ -6,9 +6,9 @@
 #import <Metal/Metal.h>
 
 #import "CCMetalView.h"
-#import "../../CCDirector.h"
-#import "../../ccMacros.h"
-#import "../../CCConfiguration.h"
+#import "CCDirector.h"
+#import "ccMacros.h"
+#import "CCDeviceInfo.h"
 #import "CCScene.h"
 
 #import "CCDirector_Private.h"

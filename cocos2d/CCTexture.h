@@ -60,11 +60,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 */
 
-#import <Foundation/Foundation.h>
 #import <CoreGraphics/CGImage.h>
 
 #import "ccTypes.h"
-#import "ccMacros.h"
 
 #import "Platforms/CCGL.h"
 

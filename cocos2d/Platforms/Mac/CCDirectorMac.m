@@ -26,20 +26,21 @@
 
 // Only compile this code on Mac. These files should not be included on your iOS project.
 // But in case they are included, it won't be compiled.
-#import "../../ccMacros.h"
+#import "ccMacros.h"
 #if __CC_PLATFORM_MAC
 
+#warning TODO gettimeofday
 #import <sys/time.h>
 
 #import "CCDirectorMac.h"
 #import "CCWindow.h"
 
-#import "../../CCNode.h"
-#import "../../CCScene.h"
-#import "../../CCScheduler.h"
-#import "../../ccMacros.h"
-#import "../../CCShader.h"
-#import "../../ccFPSImages.h"
+#import "CCNode.h"
+#import "CCScene.h"
+#import "CCScheduler.h"
+#import "ccMacros.h"
+#import "CCShader.h"
+#import "ccFPSImages.h"
  
 
 #import "CCDirector_Private.h"
