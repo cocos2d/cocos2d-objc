@@ -138,28 +138,16 @@ RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
         _position = CGPointZero;
         _contentSize = CGSizeZero;
 		_anchorPointInPoints = _anchorPoint = CGPointZero;
-
+        
 		_isTransformDirty = YES;
 
+		_zOrder = 0;
 		_vertexZ = 0;
-
 		_visible = YES;
 
-		_zOrder = 0;
-
-		// children (lazy allocs)
-		_children = nil;
-
-		// userObject is always inited as nil
-		_userObject = nil;
-
-		//initialize parent to nil
-		_parent = nil;
-
-		// set default scheduler and actionManager
 		CCDirector *director = [CCDirector sharedDirector];
-		_actionManager = [director actionManager];
-		_scheduler = [director scheduler];
+		_actionManager = [[director actionManager] retain];
+		_scheduler = [[director scheduler] retain];
         
 		// set default touch handling
 		self.hitAreaExpansion = 0.0f;
@@ -183,8 +171,6 @@ RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
     
     // CCAnimationManager Cleanup (Set by SpriteBuilder)
     [_animationManager performSelector:@selector(cleanup)];
-    
-    _userObject = nil;
 }
 
 - (NSString*) description
@@ -195,6 +181,17 @@ RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
 - (void) dealloc
 {
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
+    
+    [_name release];
+    [_userObject release];
+    [_children release];
+    
+    [_scheduler release];
+    [_actionManager release];
+    [_animationManager release];
+    [_physicsBody release];
+    
+    [super dealloc];
 }
 
 #pragma mark Setters
@@ -570,11 +567,6 @@ TransformPointAsVector(CGPoint p, GLKMatrix4 t)
     return CGRectApplyAffineTransform(rect, CGAffineTransformMake(t.m[0], t.m[1], t.m[4], t.m[5], t.m[12], t.m[13]));
 }
 
--(void) setVertexZ:(float)vertexZ
-{
-	_vertexZ = vertexZ;
-}
-
 - (void)setVisible:(BOOL)visible
 {
     if (visible == _visible) return;
@@ -914,7 +906,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 		if(physics == nil)
         {
             CCLOGWARN(@"Failed to find a parent CCPhysicsNode for this CCPhysicsBody. The CCPhysicsBody requires it be the child of a CCPhysicsNode when onEnter is called.");
-            _physicsBody = nil;
+            [_physicsBody release]; _physicsBody = nil;
             return;
         }
 		
@@ -984,7 +976,8 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 		// nil out the old body's node reference.
 		_physicsBody.node = nil;
 		
-		_physicsBody = physicsBody;
+        [_physicsBody autorelease];
+		_physicsBody = [physicsBody retain];
 		_physicsBody.node = self;
 	}
 }
@@ -1053,8 +1046,9 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 {
 	if( actionManager != _actionManager ) {
 		[self stopAllActions];
-
-		_actionManager = actionManager;
+        
+        [_actionManager autorelease];
+		_actionManager = [actionManager retain];
 	}
 }
 
@@ -1126,8 +1120,9 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 {
 	if( scheduler != _scheduler ) {
 		[_scheduler unscheduleTarget:self];
-
-		_scheduler = scheduler;
+        
+        [_scheduler autorelease];
+		_scheduler = [scheduler retain];
 	}
 }
 
