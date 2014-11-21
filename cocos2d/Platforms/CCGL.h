@@ -92,10 +92,6 @@ static inline void __CC_CHECK_GL_ERROR_DEBUG(const char *function, int line)
 #endif
 
 
-__attribute__((deprecated)) static const GLenum CC_BLEND_SRC = GL_ONE;
-__attribute__((deprecated)) static const GLenum CC_BLEND_DST = GL_ONE_MINUS_SRC_ALPHA;
-
-
 // iOS
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
 #define	glClearDepth				glClearDepthf

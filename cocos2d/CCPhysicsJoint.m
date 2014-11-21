@@ -143,14 +143,6 @@
 
 +(CCPhysicsJoint *)connectedRotarySpringJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
                                        restAngle:(CGFloat)restAngle
-                                        stifness:(CGFloat)stiffness
-                                         damping:(CGFloat)damping
-{
-	return [self connectedRotarySpringJointWithBodyA:bodyA bodyB:bodyB restAngle:restAngle stifness:stiffness damping:damping];
-}
-
-+(CCPhysicsJoint *)connectedRotarySpringJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
-                                       restAngle:(CGFloat)restAngle
                                         stiffness:(CGFloat)stiffness
                                          damping:(CGFloat)damping
 {

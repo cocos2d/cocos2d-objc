@@ -143,8 +143,4 @@ extern NSString * const CCBlendEquationAlpha;
 /// Allowing the uniform dictionary to be copied allows the render state to be immutable and used more optimally.
 +(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms copyUniforms:(BOOL)copyUniforms;
 
-/// Initialize an uncached blending mode for a given blending mode, shader and set of uncopied uniform values.
-/// Use [CCRenderState renderStateWithBlendMode:blendMode shader:shader shaderUniforms:shaderUniforms copyUniforms:NO] instead.
--(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms __deprecated;
-
 @end

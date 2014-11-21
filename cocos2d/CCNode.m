@@ -84,7 +84,7 @@ NodeToPhysicsTransform(CCNode *node)
 {
 	GLKMatrix4 transform = GLKMatrix4Identity;
 	for(CCNode *n = node; n && !n.isPhysicsNode; n = n.parent){
-	transform = GLKMatrix4Multiply(n.nodeToParentTransform, transform);
+	transform = GLKMatrix4Multiply(n.nodeToParentMatrix, transform);
 	}
 	
 	return transform;
@@ -293,7 +293,7 @@ RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
 inline CGPoint
 GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 {
-	return CGPointApplyGLKMatrix4(node->_anchorPointInPoints, [node nodeToParentTransform]);
+	return CGPointApplyGLKMatrix4(node->_anchorPointInPoints, [node nodeToParentMatrix]);
 }
 
 -(CGPoint)position
@@ -566,7 +566,7 @@ TransformPointAsVector(CGPoint p, GLKMatrix4 t)
 {
     CGSize contentSize = self.contentSizeInPoints;
     CGRect rect = CGRectMake(0, 0, contentSize.width, contentSize.height);
-    GLKMatrix4 t = [self nodeToParentTransform];
+    GLKMatrix4 t = [self nodeToParentMatrix];
     return CGRectApplyAffineTransform(rect, CGAffineTransformMake(t.m[0], t.m[1], t.m[4], t.m[5], t.m[12], t.m[13]));
 }
 
@@ -841,7 +841,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	
 	[self sortAllChildren];
 	
-	GLKMatrix4 transform = GLKMatrix4Multiply(*parentTransform, [self nodeToParentTransform]);
+	GLKMatrix4 transform = GLKMatrix4Multiply(*parentTransform, [self nodeToParentMatrix]);
 	BOOL drawn = NO;
 	
 	for(CCNode *child in _children){
@@ -1375,7 +1375,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 	self.position = [self convertPositionFromPoints:positionInPoints type:self.positionType];
 }
 
-- (GLKMatrix4)nodeToParentTransform
+- (GLKMatrix4)nodeToParentMatrix
 {
 	// The body ivar cannot be changed while this method is running and it's ARC retain/release is 70% of the profile samples for this method.
 	__unsafe_unretained CCPhysicsBody *physicsBody = GetBodyIfRunning(self);
@@ -1486,34 +1486,34 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 	return _transform;
 }
 
-- (GLKMatrix4)parentToNodeTransform
+- (GLKMatrix4)parentToNodeMatrix
 {
-	return GLKMatrix4Invert([self nodeToParentTransform], NULL);
+	return GLKMatrix4Invert([self nodeToParentMatrix], NULL);
 }
 
-- (GLKMatrix4)nodeToWorldTransform
+- (GLKMatrix4)nodeToWorldMatrix
 {
-	GLKMatrix4 t = [self nodeToParentTransform];
+	GLKMatrix4 t = [self nodeToParentMatrix];
 
 	for (CCNode *p = _parent; p != nil; p = p.parent)
-		t = GLKMatrix4Multiply([p nodeToParentTransform], t);
+		t = GLKMatrix4Multiply([p nodeToParentMatrix], t);
 
 	return t;
 }
 
-- (GLKMatrix4)worldToNodeTransform
+- (GLKMatrix4)worldToNodeMatrix
 {
-	return GLKMatrix4Invert([self nodeToWorldTransform], NULL);
+	return GLKMatrix4Invert([self nodeToWorldMatrix], NULL);
 }
 
 - (CGPoint)convertToNodeSpace:(CGPoint)worldPoint
 {
-	return CGPointApplyGLKMatrix4(worldPoint, [self worldToNodeTransform]);
+	return CGPointApplyGLKMatrix4(worldPoint, [self worldToNodeMatrix]);
 }
 
 - (CGPoint)convertToWorldSpace:(CGPoint)nodePoint
 {
-	return CGPointApplyGLKMatrix4(nodePoint, [self nodeToWorldTransform]);
+	return CGPointApplyGLKMatrix4(nodePoint, [self nodeToWorldMatrix]);
 }
 
 - (CGPoint)convertToNodeSpaceAR:(CGPoint)worldPoint

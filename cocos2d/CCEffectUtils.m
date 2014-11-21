@@ -54,10 +54,10 @@ GLKMatrix4 CCEffectUtilsTransformFromNodeToAncestor(CCNode *descendant, CCNode *
     NSCAssert(CCEffectUtilsNodeIsDescendantOfNode(descendant, ancestor), @"The supplied nodes are not related to each other.");
                                                   
     // Compute the transform from this node to the common ancestor
-    GLKMatrix4 t = [descendant nodeToParentTransform];
+    GLKMatrix4 t = [descendant nodeToParentMatrix];
     for (CCNode *p = CCEffectUtilsGetNodeParent(descendant); p != CCEffectUtilsGetNodeParent(ancestor); p = CCEffectUtilsGetNodeParent(p))
     {
-		    t = GLKMatrix4Multiply([p nodeToParentTransform], t);
+		    t = GLKMatrix4Multiply([p nodeToParentMatrix], t);
     }
     return t;
 }

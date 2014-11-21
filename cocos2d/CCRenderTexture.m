@@ -59,11 +59,11 @@
 
 - (GLKMatrix4)nodeToWorldTransform
 {
-	GLKMatrix4 t = [self nodeToParentTransform];
+	GLKMatrix4 t = [self nodeToParentMatrix];
     
 	for (CCNode *p = _renderTexture; p != nil; p = p.parent)
     {
-		t = GLKMatrix4Multiply([p nodeToParentTransform], t);
+		t = GLKMatrix4Multiply([p nodeToParentMatrix], t);
     }
 	return t;
 }
@@ -360,7 +360,7 @@ FlipY(GLKMatrix4 projection)
 		
 		[self end];
 		
-		GLKMatrix4 transform = GLKMatrix4Multiply(*parentTransform, [self nodeToParentTransform]);
+		GLKMatrix4 transform = GLKMatrix4Multiply(*parentTransform, [self nodeToParentMatrix]);
 		[self draw:renderer transform:&transform];
 	} else {
 		// Render normally, v3.0 and earlier skipped this.

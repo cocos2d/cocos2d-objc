@@ -485,7 +485,7 @@
 	
 	[scene addChild:first z:0];
 	
-	GLKMatrix4 nodeToWorld = [first nodeToWorldTransform];
+	GLKMatrix4 nodeToWorld = [first nodeToWorldMatrix];
 	XCTAssertEqualWithAccuracy(nodeToWorld.m[ 0],  2.0, 0.001, @""); // Node Scale *does* change the transform scale.
 	XCTAssertEqualWithAccuracy(nodeToWorld.m[ 1],  0.0, 0.001, @"");
 	XCTAssertEqualWithAccuracy(nodeToWorld.m[ 4],  0.0, 0.001, @"");

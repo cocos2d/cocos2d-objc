@@ -872,6 +872,9 @@
 		D36DFA2819996EC500DEC135 /* CCRendererGLSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = D36DFA2719996EC500DEC135 /* CCRendererGLSupport.m */; };
 		D3737E341A1F130700782024 /* NSEvent+CC.h in Headers */ = {isa = PBXBuildFile; fileRef = D3737E321A1F130700782024 /* NSEvent+CC.h */; };
 		D3737E351A1F130700782024 /* NSEvent+CC.m in Sources */ = {isa = PBXBuildFile; fileRef = D3737E331A1F130700782024 /* NSEvent+CC.m */; };
+		D3737E3C1A1F229600782024 /* CCDeprecated.m in Sources */ = {isa = PBXBuildFile; fileRef = D3737E3B1A1F229600782024 /* CCDeprecated.m */; };
+		D3737E3D1A1F22FB00782024 /* CCDeprecated.m in Sources */ = {isa = PBXBuildFile; fileRef = D3737E3B1A1F229600782024 /* CCDeprecated.m */; };
+		D3737E3E1A1F22FB00782024 /* CCDeprecated.m in Sources */ = {isa = PBXBuildFile; fileRef = D3737E3B1A1F229600782024 /* CCDeprecated.m */; };
 		D37D197718B6665700B23FDE /* CCTiledMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 509D0817101E4FCE007E1749 /* CCTiledMap.m */; };
 		D37D197818B6665700B23FDE /* CCTiledMapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 50D2AC9210E90DFA0068ECEB /* CCTiledMapLayer.m */; };
 		D37D197918B6665700B23FDE /* CCTiledMapObjectGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 50D2AC9410E90DFA0068ECEB /* CCTiledMapObjectGroup.m */; };
@@ -1392,6 +1395,7 @@
 		D36DFA2719996EC500DEC135 /* CCRendererGLSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCRendererGLSupport.m; path = ../CCRendererGLSupport.m; sourceTree = "<group>"; };
 		D3737E321A1F130700782024 /* NSEvent+CC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSEvent+CC.h"; sourceTree = "<group>"; };
 		D3737E331A1F130700782024 /* NSEvent+CC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSEvent+CC.m"; sourceTree = "<group>"; };
+		D3737E3B1A1F229600782024 /* CCDeprecated.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDeprecated.m; sourceTree = "<group>"; };
 		D38058181889AD6000822437 /* CCRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderer.h; sourceTree = "<group>"; };
 		D38058191889AD6000822437 /* CCRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCRenderer.m; sourceTree = "<group>"; };
 		D380581E1889CE7700822437 /* CCCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCCache.h; path = ../CCCache.h; sourceTree = "<group>"; };
@@ -1604,6 +1608,7 @@
 				50BAF3970F33CCD8003F654C /* ccMacros.h */,
 				50F9E8160E1AA34E000E7616 /* ccTypes.h */,
 				D36369D21A1E85DF007EE5FC /* CCDeprecated.h */,
+				D3737E3B1A1F229600782024 /* CCDeprecated.m */,
 				E0EAD1F0121F522A00B0C81C /* CCDeviceInfo.h */,
 				503862D911007181005D2C92 /* CCDeviceInfo.m */,
 				50E2A25110A46CC600D894CE /* CCProtocols.h */,
@@ -3112,6 +3117,7 @@
 				B7E776221857A159004221AA /* CCColor.m in Sources */,
 				A6DC4E0A18055DCC00C280A6 /* CCTransition.m in Sources */,
 				A6A0734617C788EB004343C8 /* CCResponderManager.m in Sources */,
+				D3737E3C1A1F229600782024 /* CCDeprecated.m in Sources */,
 				83E1A88B19C8ACDC000A3BCA /* CCPackageInstaller.m in Sources */,
 				D23C5CB5194BC108007CA669 /* CCTouchIOS.m in Sources */,
 				A6A0734B17C78EF3004343C8 /* CCResponder.m in Sources */,
@@ -3180,6 +3186,7 @@
 				7A5947D919E3759F00F65F90 /* CCResponder.m in Sources */,
 				7A5947DB19E3759F00F65F90 /* CCResponderManager.m in Sources */,
 				7A5947E119E375A000F65F90 /* CCParticleSystemBase.m in Sources */,
+				D3737E3E1A1F22FB00782024 /* CCDeprecated.m in Sources */,
 				7A5947E319E375A000F65F90 /* CCParticleSystem.m in Sources */,
 				7A5947ED19E375A100F65F90 /* CCTiledMap.m in Sources */,
 				7A5947EF19E375A100F65F90 /* CCTiledMapLayer.m in Sources */,
@@ -3303,6 +3310,7 @@
 				57BFF2BA1991937C00A3FE9C /* CCEditText.m in Sources */,
 				D2FEB6D3194F6C9E00FC0574 /* CCPhysicsShape.m in Sources */,
 				577D72D11970AC59005ABDC0 /* CCPlatformTextField.m in Sources */,
+				D3737E3D1A1F22FB00782024 /* CCDeprecated.m in Sources */,
 				D2FEB6D5194F6C9E00FC0574 /* CCSlider.m in Sources */,
 				D2FEB6D6194F6C9E00FC0574 /* CCTMXXMLParser.m in Sources */,
 				D2FEB6D7194F6C9E00FC0574 /* CCSprite.m in Sources */,

@@ -238,8 +238,4 @@
 	[self updateColor];
 }
 
-// Deprecated
--(BOOL) compressedInterpolation {return YES; }
--(void) setCompressedInterpolation:(BOOL)compress {}
-
 @end
