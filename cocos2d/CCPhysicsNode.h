@@ -362,7 +362,9 @@ For simplicity, CCPhysicsNode does not use [SI units](http://en.wikipedia.org/wi
 
 /** @name Physics */
 /** Nearest CCPhysicsNode ancestor of this node, or nil if none. 
- *  Unlike [CCPhysicsBody physicsNode], this will return a value before onEnter is called on the node.
+ Unlike [CCPhysicsBody physicsNode], this will return a value before onEnter is called on the node.
+ @see CCPhysicsNode
+ @see physicsBody
  */
 -(CCPhysicsNode *)physicsNode;
 
