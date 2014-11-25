@@ -19,14 +19,13 @@
 /// @name Accessing Effect Attributes
 /// -----------------------------------------------------------------------
 
-/** Adjust which direction the shadow should point. A value of (5.0, -5,0) will
+/** Adjust which direction the shadow should point. A value of (5.0, -5.0) will
  *  place the drop shadow at the bottom right.
  *  @since v3.3 and later
  */
 @property (nonatomic) GLKVector2 shadowOffset;
 
-/** Color of the shadow,
- * [CCColor blackColor] will result in an opaque black drop shadow.
+/** Color of the shadow. [CCColor blackColor] will result in an opaque black drop shadow.
  *  @since v3.3 and later
  */
 @property (nonatomic, strong) CCColor* shadowColor;
@@ -51,7 +50,7 @@
 /**
  *  Initializes a CCEffectDropShadow object with the supplied parameters.
  *
- *  @param shadowOffset A value of (5.0, -5,0) will place the drop shadow at the bottom right.
+ *  @param shadowOffset A value of (5.0, -5.0) will place the drop shadow at the bottom right.
  *  @param shadowColor Color of the shadow, a [CCColor blackColor] will result in an opaque black drop shadow.
  *  @param blurRadius The size of the blur. This value is in the range [0..6] anything higher than 6 pixel blur radius will yeild a performance decrease.
  *
@@ -68,7 +67,7 @@
 /**
  *  Initializes a CCEffectDropShadow object with the supplied parameters.
  *
- *  @param shadowOffset A value of (5.0, -5,0) will place the drop shadow at the bottom right.
+ *  @param shadowOffset A value of (5.0, -5.0) will place the drop shadow at the bottom right.
  *  @param shadowColor Color of the shadow, a [CCColor blackColor] will result in an opaque black drop shadow.
  *  @param blurRadius The size of the blur. This value is in the range [0..6] anything higher than 6 pixel blur radius will yeild a performance decrease.
  *
