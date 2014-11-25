@@ -94,7 +94,6 @@ tools/appledoc \
 --ignore CCProtocols.h \
 --ignore CCResponderManager.h \
 --ignore CCScheduler.h \
---ignore CCShader.h \
 --ignore ccShaders.h \
 --ignore CCTextureAtlas.h \
 --ignore CCTexturePVR.h \
