@@ -1,3 +1,4 @@
+#!/bin/bash
 #appledoc Xcode script
 
 # Start constants
@@ -6,7 +7,22 @@ companyID="testpath2";
 companyURL="http://www.cocos2d-swift.org";
 target="iphoneos";
 outputPath="api-docs";
+atomfilename="cocos2d-swift.atom"
+feedurl="${companyURL}/${company}/%DOCSETATOMFILENAME"
+packageurl="${companyURL}/${company}/%DOCSETPACKAGEFILENAME"
+fallbackurl="${companyURL}/${company}"
 # End constants
+
+# -q parameter "quickens" html doc generation by skipping the docsets (maybe 10% faster, not much)
+docsets="--docset-atom-filename ${atomfilename} --docset-feed-url ${feedurl} --docset-package-url ${packageurl} --docset-fallback-url ${fallbackurl} --docset-platform-family ${target} --publish-docset --install-docset"
+
+while getopts ":q" opt; do
+	case $opt in
+	q)
+   		docsets=""
+		;;
+  esac
+done
 
 # Note about ignore list:
 # You can use "--ignore Path" only to ignore files that *end in* Path
@@ -21,13 +37,7 @@ tools/appledoc \
 --project-name "Cocos2D" \
 --project-company "3.3.0" \
 --company-id "org.cocos2d-swift" \
---docset-atom-filename "cocos2d-swift.atom" \
---docset-feed-url "${companyURL}/${company}/%DOCSETATOMFILENAME" \
---docset-package-url "${companyURL}/${company}/%DOCSETPACKAGEFILENAME" \
---docset-fallback-url "${companyURL}/${company}" \
---docset-platform-family "${target}" \
---publish-docset \
---install-docset \
+${docsets} \
 --output "${outputPath}" \
 --logformat xcode \
 --no-keep-undocumented-members \
@@ -93,12 +103,10 @@ tools/appledoc \
 --ignore CCProfiling.h \
 --ignore CCProtocols.h \
 --ignore CCResponderManager.h \
---ignore CCScheduler.h \
 --ignore ccShaders.h \
 --ignore CCTextureAtlas.h \
 --ignore CCTexturePVR.h \
 --ignore CCTouchAndroid.h \
---ignore ccTypes.h \
 --ignore ccUtils.h \
 --ignore CCVertex.h \
 --ignore CCWindow.h \
