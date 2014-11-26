@@ -946,6 +946,15 @@ static inline float readFloat(CCBReader *self)
 		}
 				
 	}
+    else if(type == kCCBPropTypeTokenArray)
+    {
+        NSString *arrayString = [self readCachedString];
+        if(![arrayString isEqualToString:@""])
+        {
+            NSArray *array = [arrayString componentsSeparatedByString:@";"];
+            [node setValue:array forKey:name];
+        }        
+    }
     else
     {
         NSAssert(false, @"[PROPERTY] %@ - Failed to read property type %d, node class name: \"%@\", name: \"%@\", in ccb file: \"%@\"", name, type, [node class], [node name], _currentCCBFile);

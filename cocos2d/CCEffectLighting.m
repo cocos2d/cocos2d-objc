@@ -52,11 +52,14 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
 
 -(id)init
 {
-    return [self initWithGroups:nil specularColor:[CCColor whiteColor] shininess:5.0f];
+    return [self initWithGroups:@[] specularColor:[CCColor whiteColor] shininess:5.0f];
 }
 
 -(id)initWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess
 {
+    NSAssert(groups, @"CCEffectLighting was passed a nil group array.");
+    NSAssert(specularColor, @"CCEffectLighting was passed a nil specular color.");
+
     if((self = [super init]))
     {
         self.debugName = @"CCEffectLighting";
@@ -319,9 +322,9 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
     self.renderPasses = @[pass0];
 }
 
-- (CCEffectPrepareStatus)prepareForRenderingWithSprite:(CCSprite *)sprite
+- (CCEffectPrepareResult)prepareForRenderingWithSprite:(CCSprite *)sprite
 {
-    CCEffectPrepareStatus result = CCEffectPrepareNothingToDo;
+    CCEffectPrepareResult result = CCEffectPrepareNoop;
 
     BOOL needsNormalMap = (sprite.normalMapSpriteFrame != nil);
     
@@ -386,8 +389,9 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
         NSMutableArray *vertFunctions = [CCEffectLighting buildVertexFunctionsWithLights:self.closestLights];
         
         [self buildEffectWithFragmentFunction:fragFunctions vertexFunctions:vertFunctions fragmentUniforms:fragUniforms vertexUniforms:vertUniforms varyings:varyings firstInStack:YES];
-
-        result = CCEffectPrepareSuccess;
+        
+        result.status = CCEffectPrepareSuccess;
+        result.changes = CCEffectPrepareShaderChanged | CCEffectPrepareUniformsChanged;
     }
     return result;
 }
@@ -399,8 +403,15 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
 
 -(void)setGroups:(NSArray *)groups
 {
+    NSAssert(groups, @"CCEffectLighting was passed a nil group array.");
     _groups = [groups copy];
     _groupMaskDirty = YES;
+}
+
+-(void)setSpecularColor:(CCColor *)specularColor
+{
+    NSAssert(specularColor, @"CCEffectLighting was passed a nil specular color.");
+    _specularColor = specularColor;
 }
 
 @end
