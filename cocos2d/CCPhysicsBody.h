@@ -32,7 +32,7 @@ typedef NS_ENUM(NSUInteger, CCPhysicsBodyType){
 	/** A regular rigid body that is affected by gravity, forces and collisions. */
 	CCPhysicsBodyTypeDynamic,
 	
-//	/** A body that is immovable by gravity, forces or collisions, but is moved using code.  */
+	/** A body that is immovable by gravity, forces or collisions, but is moved using code.  */
 	CCPhysicsBodyTypeKinematic,
 	
 	/** A body that is immovable such as a wall or the ground. */
