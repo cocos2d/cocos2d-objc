@@ -28,11 +28,9 @@
 #import "CCNode.h"
 
 /** 
- CCParallaxNode is a node that simulates a classic parallax scroller.
-
- Child nodes will be moved faster / slower than the parent node according to the parallax ratio specified.
+ Moving the parallax node via actions or by changing its position will move its child nodes
+ based on parallax ratios. This allows you to create parallax layers of nodes.
  */
-
 @interface CCParallaxNode : CCNode {
     
     // Parallax child ratios.
@@ -44,7 +42,7 @@
 
 
 /// -----------------------------------------------------------------------
-/// @name Accessing the Parallax Node Attributes
+/// @name Accessing Parallax Ratios
 /// -----------------------------------------------------------------------
 
 /** Array that holds the offset / ratio of the child nodes. */
@@ -52,16 +50,17 @@
 
 
 /// -----------------------------------------------------------------------
-/// @name CCParallaxNode Child Management
+/// @name Adding Parallax Nodes
 /// -----------------------------------------------------------------------
 
 /**
- *  Adds the specified child node with z-order, ratio and offset values to the container.
+ *  Adds the specified child node with zOrder, ratio and offset values to the parallax node.
  *
- *  @param node           Node to use.
- *  @param z              Z Order to use.
- *  @param c              Parallax ratio to use.
- *  @param positionOffset Parallax offset to use.
+ *  @param node           Node to add.
+ *  @param z              zOrder to use for the added node.
+ *  @param c              Parallax ratio to use for the added node.
+ *  @param positionOffset Parallax offset to use for the added node.
+ *  @see CCNode
  */
 -(void) addChild: (CCNode*)node z:(NSInteger)z parallaxRatio:(CGPoint)c positionOffset:(CGPoint)positionOffset;
 
