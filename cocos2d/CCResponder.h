@@ -237,7 +237,7 @@
  *
  *  @param theEvent The event created.
  *  @see [NSEvent](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSEvent_Class/)
- */ccno
+ */
 - (void)scrollWheel:(NSEvent *)theEvent;
 
 #endif
