@@ -39,9 +39,7 @@
  */
 @interface CCScene : CCNode
 
-#if CC_EFFECTS_EXPERIMENTAL
 @property (nonatomic, readonly, strong) CCLightCollection *lights;
-#endif
 
 /// -----------------------------------------------------------------------
 /// @name Initializing a CCScene Object

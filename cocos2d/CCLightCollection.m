@@ -29,9 +29,6 @@
 #import "CCLightNode_Private.h"
 
 
-#if CC_EFFECTS_EXPERIMENTAL
-
-
 const CCLightGroupMask CCLightCollectionAllGroups = ~((CCLightGroupMask)0);
 static const NSUInteger CCLightCollectionMaxGroupCount = sizeof(NSUInteger) * 8;
 
@@ -116,7 +113,9 @@ static const NSUInteger CCLightCollectionMaxGroupCount = sizeof(NSUInteger) * 8;
 
 - (CCLightGroupMask)maskForGroups:(NSArray *)groups
 {
-    if (groups)
+    // If the groups array is non-nil and non-empty convert its contents
+    // into a bitmask.
+    if (groups.count)
     {
         CCLightGroupMask bitmask = 0;
         for(NSString *group in groups)
@@ -127,7 +126,7 @@ static const NSUInteger CCLightCollectionMaxGroupCount = sizeof(NSUInteger) * 8;
     }
     else
     {
-        // nil (the default value) is equivalent to all groups.
+        // The groups array is nil or empty which is equivalent to all groups.
         return CCLightCollectionAllGroups;
     }
 }
@@ -231,5 +230,3 @@ static const NSUInteger CCLightCollectionMaxGroupCount = sizeof(NSUInteger) * 8;
 }
 
 @end
-
-#endif

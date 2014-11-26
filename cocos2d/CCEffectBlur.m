@@ -99,7 +99,6 @@
     // so mark it dirty and make sure this propagates up to any containing
     // effect stacks.
     _shaderDirty = YES;
-    [self.owningStack passesDidChange:self];
 }
 
 - (void)setBlurRadiusAndDependents:(NSUInteger)blurRadius
@@ -323,9 +322,9 @@
     self.renderPasses = @[pass0, pass1];
 }
 
-- (CCEffectPrepareStatus)prepareForRenderingWithSprite:(CCSprite *)sprite
+- (CCEffectPrepareResult)prepareForRenderingWithSprite:(CCSprite *)sprite
 {
-    CCEffectPrepareStatus result = CCEffectPrepareNothingToDo;
+    CCEffectPrepareResult result = CCEffectPrepareNoop;
     if (_shaderDirty)
     {
         unsigned long count = (unsigned long)(1 + (_numberOfOptimizedOffsets * 2));
@@ -338,7 +337,9 @@
         [self buildRenderPasses];
         
         _shaderDirty = NO;
-        result = CCEffectPrepareSuccess;
+        
+        result.status = CCEffectPrepareSuccess;
+        result.changes = CCEffectPrepareShaderChanged;
     }
     return result;
 }
