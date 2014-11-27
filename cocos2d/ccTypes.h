@@ -369,7 +369,7 @@ typedef struct _ccBlendFunc
 static const ccBlendFunc kCCBlendFuncDisable = {GL_ONE, GL_ZERO};
 
 // XXX: If any of these enums are edited and/or reordered, update CCTexture2D.m
-/// Vertical text alignment type
+/// Vertical text alignment type. Used by CCLabelTTF and CCButton.
 typedef NS_ENUM(NSUInteger, CCVerticalTextAlignment)
 {
     /** Top aligned */
@@ -382,7 +382,7 @@ typedef NS_ENUM(NSUInteger, CCVerticalTextAlignment)
 
 // XXX: If any of these enums are edited and/or reordered, update CCTexture2D.m
 // NOTE: changed enum from 'unsigned char' to 'uint8_t' because appledoc v2 apparently doesn't handle enum types with a space in between them (creates an enum named 'comma')
-/// Horizontal text alignment type
+/// Horizontal text alignment type. Used by the label nodes CCLabelTTF and CCLabelBMFont.
 typedef NS_ENUM(uint8_t, CCTextAlignment)
 {
     /** Left aligned */
@@ -412,7 +412,7 @@ typedef double CCTime;
 //typedef float CCMat4[16];
 
 // NOTE: changed enum from 'unsigned char' to 'uint8_t' because appledoc v2 apparently doesn't handle enum types with a space in between them (creates an enum named 'comma')
-/* Position unit types alter how a node's position property values are interpreted. */
+/** Position unit types alter how a node's position property values are interpreted. Used by, for instance, [CCNode setPositionType:]. */
 typedef NS_ENUM(uint8_t, CCPositionUnit)
 {
     /// Position is set in points (this is the default)
@@ -427,7 +427,7 @@ typedef NS_ENUM(uint8_t, CCPositionUnit)
 };
 
 // NOTE: changed enum from 'unsigned char' to 'uint8_t' because appledoc v2 apparently doesn't handle enum types with a space in between them (creates an enum named 'comma')
-/** Size unit types alter how a node's contentSize property values are interpreted. */
+/** Size unit types alter how a node's contentSize property values are interpreted. Used by, for instance, [CCNode setContentSizeType:]. */
 typedef NS_ENUM(uint8_t, CCSizeUnit)
 {
     /// Content size is set in points (this is the default)
@@ -448,7 +448,7 @@ typedef NS_ENUM(uint8_t, CCSizeUnit)
 };
     
 // NOTE: changed enum from 'unsigned char' to 'uint8_t' because appledoc v2 apparently doesn't handle enum types with a space in between them (creates an enum named 'comma')
-/** Reference corner determines a node's origin and affects how the position property values are interpreted. */
+/** Reference corner determines a node's origin and affects how the position property values are interpreted. Used by, for instance, [CCNode setPositionType:]. */
 typedef NS_ENUM(uint8_t, CCPositionReferenceCorner)
 {
     /// Position is relative to the bottom left corner of the parent container (this is the default)
@@ -509,7 +509,7 @@ static const CCSizeType CCSizeTypeUIPoints = {CCSizeUnitUIPoints, CCSizeUnitUIPo
 static const CCSizeType CCSizeTypeNormalized = {CCSizeUnitNormalized, CCSizeUnitNormalized};
 
 // NOTE: changed enum from 'char' to 'int8_t' for consistency with above enums that had to be renamed from "unsigned char" due to an appledoc bug
-/** Scale types alter how a node's scale property values are interpreted. */
+/** Scale types alter how a node's scale property values are interpreted. Used by, for instance, [CCNode setScaleType:]. */
 typedef NS_ENUM(int8_t, CCScaleType) {
     /** Scale is assumed to be in points */
     CCScaleTypePoints,

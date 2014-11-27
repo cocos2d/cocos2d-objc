@@ -36,7 +36,7 @@
 #import "CCDirectorView.h"
 
 /**
- Possible OpenGL projections used by director
+ Possible OpenGL projections used by CCDirector.
  */
 typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 	/// sets a 2D projection (orthogonal projection).
