@@ -31,7 +31,8 @@
 #pragma mark Animation Manager Delegate
 
 /**
- * The animation manager delegate receives callbacks when animation sequences finishes playing.
+ The animation manager delegate receives callbacks when animation sequences finishes playing.
+ Used by CCAnimationManager.
  */
 @protocol CCBAnimationManagerDelegate <NSObject>
 
