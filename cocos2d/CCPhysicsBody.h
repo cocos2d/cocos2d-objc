@@ -26,7 +26,9 @@
 
 @class CCPhysicsCollisionPair;
 
-/** The type of physics body to use. The type affects a body's influence by gravity, whether it can collide with other bodies,
+/** The type of physics body to use, used by CCPhysicsBody.
+ 
+ The type affects a body's influence by gravity, whether it can collide with other bodies,
  whether it is affected by forces, and whether it can be moved/rotated via move/rotate actions. */
 typedef NS_ENUM(NSUInteger, CCPhysicsBodyType){
     
@@ -93,7 +95,7 @@ By default physics bodies collide with all other physics bodies. Since 2D games 
 
 
 /// -----------------------------------------------------------------------
-/// @name Creating a CCPhysicsBody Object
+/// @name Creating a Physics Body
 /// -----------------------------------------------------------------------
 
 /**
@@ -176,7 +178,7 @@ By default physics bodies collide with all other physics bodies. Since 2D games 
 
 
 /// -----------------------------------------------------------------------
-/// @name Accessing Basic Body Attributes
+/// @name Basic Body Properties
 /// -----------------------------------------------------------------------
 
 /**
@@ -224,7 +226,7 @@ By default physics bodies collide with all other physics bodies. Since 2D games 
 
 
 /// -----------------------------------------------------------------------
-/// @name Accessing Simulation Attributes
+/// @name Simulation Settings
 /// -----------------------------------------------------------------------
 
 /**
@@ -254,7 +256,7 @@ By default physics bodies collide with all other physics bodies. Since 2D games 
 @property(nonatomic, assign) BOOL sleeping;
 
 /// -----------------------------------------------------------------------
-/// @name Accessing Collision and Contact Attributes
+/// @name Collision and Contact Properties
 /// -----------------------------------------------------------------------
 
 /**
@@ -299,12 +301,13 @@ By default physics bodies collide with all other physics bodies. Since 2D games 
  *  @note The CCPhysicsCollisionPair object is shared so you should not store a reference to it.
  *
  *  @param block Collision block.
+ *  @see CCPhysicsCollisionPair
  */
 -(void)eachCollisionPair:(void (^)(CCPhysicsCollisionPair *pair))block;
 
 
 /// -----------------------------------------------------------------------
-/// @name Accessing Velocity Attributes
+/// @name Velocity
 /// -----------------------------------------------------------------------
 
 /**
@@ -319,7 +322,7 @@ By default physics bodies collide with all other physics bodies. Since 2D games 
 
 
 /// -----------------------------------------------------------------------
-/// @name Accessing Forces and Torques Attributes
+/// @name Force and Torque
 /// -----------------------------------------------------------------------
 
 /**
@@ -425,6 +428,7 @@ By default physics bodies collide with all other physics bodies. Since 2D games 
 /// -----------------------------------------------------------------------
 
 /** The CCNode to which this physics body is attached. Is nil until the body was assigned to the physicsBody property of a node.
+ @see CCNode
  */
 @property(nonatomic, readonly, weak) CCNode *node;
 

@@ -38,7 +38,7 @@ A CCPhysicsJoint connects two CCPhysicsBody objects together, like a joint betwe
 
 
 /// -----------------------------------------------------------------------
-/// @name Creating Physics Joints
+/// @name Creating Pivot Joints
 /// -----------------------------------------------------------------------
 
 /**
@@ -54,6 +54,10 @@ A CCPhysicsJoint connects two CCPhysicsBody objects together, like a joint betwe
 +(CCPhysicsJoint *)connectedPivotJointWithBodyA:(CCPhysicsBody *)bodyA
                                           bodyB:(CCPhysicsBody *)bodyB
                                         anchorA:(CGPoint)anchorA;
+
+/// -----------------------------------------------------------------------
+/// @name Creating Distance Joints
+/// -----------------------------------------------------------------------
 
 /**
  *  Creates and returns a pivot joint between the two bodies and keeps the distance of the two anchor points constant.
@@ -93,6 +97,10 @@ A CCPhysicsJoint connects two CCPhysicsBody objects together, like a joint betwe
                                            anchorB:(CGPoint)anchorB
                                        minDistance:(CGFloat)min
                                        maxDistance:(CGFloat)max;
+
+/// -----------------------------------------------------------------------
+/// @name Creating Spring Joints
+/// -----------------------------------------------------------------------
 
 /**
  *  Creates and returns a spring joint between the two bodies at the specified anchor points. 
@@ -141,6 +149,9 @@ A CCPhysicsJoint connects two CCPhysicsBody objects together, like a joint betwe
 +(CCPhysicsJoint *)connectedRotarySpringJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB restAngle:(CGFloat)restAngle stifness:(CGFloat)stiffness damping:(CGFloat)damping __attribute__((deprecated));
 
 
+/// -----------------------------------------------------------------------
+/// @name Creating Motor Joints
+/// -----------------------------------------------------------------------
 
 /**
  *  Creates and returns a Motor joint between the two bodies. 
@@ -157,6 +168,10 @@ A CCPhysicsJoint connects two CCPhysicsBody objects together, like a joint betwe
                                           bodyB:(CCPhysicsBody *)bodyB
                                            rate:(CGFloat)rate;
 
+
+/// -----------------------------------------------------------------------
+/// @name Creating Rotary Limit Joints
+/// -----------------------------------------------------------------------
 
 /**
  *  Creates and returns joint whereby the angle of rotation between too bodies is limited. 
@@ -176,6 +191,9 @@ A CCPhysicsJoint connects two CCPhysicsBody objects together, like a joint betwe
                                                   max:(CGFloat)max;
 
 
+/// -----------------------------------------------------------------------
+/// @name Creating Ratchet Joints
+/// -----------------------------------------------------------------------
 
 /**
  *  Creates and returns [ratchet](http://en.wikipedia.org/wiki/Ratchet_%28device%29) joint whereby the angle of rotation between too bodies can go forward smoothly,
@@ -203,7 +221,7 @@ A CCPhysicsJoint connects two CCPhysicsBody objects together, like a joint betwe
 -(void)invalidate;
 
 /// -----------------------------------------------------------------------
-/// @name Accessing Physics Joint Attributes
+/// @name Accessing Connected Physics Bodies
 /// -----------------------------------------------------------------------
 
 /** The first body this joint is attached to.
@@ -214,11 +232,12 @@ A CCPhysicsJoint connects two CCPhysicsBody objects together, like a joint betwe
   @see CCPhysicsBody */
 @property(nonatomic, readonly) CCPhysicsBody *bodyB;
 
+/// -----------------------------------------------------------------------
+/// @name Force and Impulse Settings
+/// -----------------------------------------------------------------------
+
 /** Maxium foce this joint is allowed to use. Defaults to INFINITY. */
 @property(nonatomic, assign) CGFloat maxForce;
-
-/** Whether the connected bodies are allowed to collide with each other. Defaults to YES. */
-@property(nonatomic, assign) BOOL collideBodies;
 
 /** Depending on the joint, either the magnitude of the linear or the angular impulse that this joint applied on the previous fixed time step. */
 @property(nonatomic, readonly) CGFloat impulse;
@@ -229,6 +248,13 @@ A CCPhysicsJoint connects two CCPhysicsBody objects together, like a joint betwe
  *  @note To avoid problems with solver accuracy, make sure that breakingForce is lower than [CCPhysicsJoint maxForce].
  */
 @property(nonatomic, assign) CGFloat breakingForce;
+
+/// -----------------------------------------------------------------------
+/// @name Joint Properties
+/// -----------------------------------------------------------------------
+
+/** Whether the connected bodies are allowed to collide with each other. Defaults to YES. */
+@property(nonatomic, assign) BOOL collideBodies;
 
 /** Check if the joint is still valid and active. */
 @property(nonatomic, readonly) BOOL valid;

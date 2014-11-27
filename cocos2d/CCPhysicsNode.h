@@ -204,6 +204,7 @@ In those cases, its possible to have have multiple active collisions between two
  *
  *  @return BOOL
  *  @see CCPhysicsCollisionPair
+ *  @see CCNode
  */
 -(BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair typeA:(CCNode *)nodeA typeB:(CCNode *)nodeB;
 
@@ -222,6 +223,7 @@ In those cases, its possible to have have multiple active collisions between two
  *
  *  @return BOOL
  *  @see CCPhysicsCollisionPair
+ *  @see CCNode
  */
 -(BOOL)ccPhysicsCollisionPreSolve:(CCPhysicsCollisionPair *)pair typeA:(CCNode *)nodeA typeB:(CCNode *)nodeB;
 
@@ -234,6 +236,7 @@ In those cases, its possible to have have multiple active collisions between two
  *  @param nodeA One of the two colliding nodes.
  *  @param nodeB One of the two colliding nodes.
  *  @see CCPhysicsCollisionPair
+ *  @see CCNode
  */
 -(void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair typeA:(CCNode *)nodeA typeB:(CCNode *)nodeB;
 
@@ -244,6 +247,7 @@ In those cases, its possible to have have multiple active collisions between two
  *  @param nodeA One of the two colliding nodes.
  *  @param nodeB One of the two colliding nodes.
  *  @see CCPhysicsCollisionPair
+ *  @see CCNode
  */
 -(void)ccPhysicsCollisionSeparate:(CCPhysicsCollisionPair *)pair typeA:(CCNode *)nodeA typeB:(CCNode *)nodeB;
 
@@ -252,6 +256,12 @@ In those cases, its possible to have have multiple active collisions between two
 
 /**
 A CCNode that enables physics simulation in it's children. Sometimes referred to as the "physics world" node.
+ 
+ ### Creating a Physics Node
+ 
+ The physics node has no designated initializer. You can create it with the standard `node` class method:
+ 
+    CCPhysicsNode* physicsNode = [CCPhysicsNode node];
  
  ### Using Physics
  

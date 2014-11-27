@@ -38,7 +38,7 @@ Using simple shapes instead of composite ones can make collision handling code s
 @interface CCPhysicsShape : NSObject
 
 /// -----------------------------------------------------------------------
-/// @name Creating a CCPhysicsShape Object
+/// @name Creating a Physics Shape
 /// -----------------------------------------------------------------------
 
 /**
@@ -92,7 +92,7 @@ Using simple shapes instead of composite ones can make collision handling code s
 
 
 /// -----------------------------------------------------------------------
-/// @name Accessing Basic Shape Attributes
+/// @name Basic Shape Properties
 /// -----------------------------------------------------------------------
 
 /**
@@ -137,7 +137,7 @@ Using simple shapes instead of composite ones can make collision handling code s
 
 
 /// -----------------------------------------------------------------------
-/// @name Accessing Collision and Contact Attributes
+/// @name Collision and Contact Properties
 /// -----------------------------------------------------------------------
 
 /**
@@ -177,7 +177,8 @@ Using simple shapes instead of composite ones can make collision handling code s
 /// @name Accessing the Shape's Node
 /// -----------------------------------------------------------------------
 
-/** The CCNode to which this physics shape is attached. */
+/** The CCNode to which this physics shape is attached.
+ @see CCNode */
 @property(nonatomic, readonly) CCNode *node;
 
 @end
