@@ -17,7 +17,7 @@
 
 
 /// -----------------------------------------------------------------------
-/// @name Accessing Effect Attributes
+/// @name Blur Radius
 /// -----------------------------------------------------------------------
 
 /** The size of the blur. This value is in the range [0..n].
@@ -27,8 +27,19 @@
 
 
 /// -----------------------------------------------------------------------
-/// @name Initializing a CCEffectBlur object
+/// @name Creating a Blur Effect
 /// -----------------------------------------------------------------------
+
+/**
+ *  Creates a CCEffectBlur object with the specified parameters.
+ *
+ *  @param blurRadius number of pixels blur will extend to (6 is the maximum, because we are limited by the number
+ *  of varying variables that can be passed to a glsl program).
+ *
+ *  @return The CCEffectBlur object.
+ *  @since v3.2 and later
+ */
++(id)effectWithBlurRadius:(NSUInteger)blurRadius;
 
 /**
  *  Initializes a CCEffectBlur object with the following default parameters:
@@ -49,22 +60,6 @@
  *  @since v3.2 and later
  */
 -(id)initWithPixelBlurRadius:(NSUInteger)blurRadius;
-
-
-/// -----------------------------------------------------------------------
-/// @name Creating a CCEffectBlur object
-/// -----------------------------------------------------------------------
-
-/**
- *  Creates a CCEffectBlur object with the specified parameters.
- *
- *  @param blurRadius number of pixels blur will extend to (6 is the maximum, because we are limited by the number
- *  of varying variables that can be passed to a glsl program).
- *
- *  @return The CCEffectBlur object.
- *  @since v3.2 and later
- */
-+(id)effectWithBlurRadius:(NSUInteger)blurRadius;
 
 @end
 

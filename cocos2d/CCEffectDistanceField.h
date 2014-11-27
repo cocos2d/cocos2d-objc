@@ -18,27 +18,20 @@
 @interface CCEffectDistanceField : CCEffect
 
 /// -----------------------------------------------------------------------
-/// @name Accessing Effect Attributes
+/// @name Creating a Distance Field Effect
 /// -----------------------------------------------------------------------
 
-/** Color of the shadow,
- * [CCColor blackColor] will result in an opaque black drop shadow.
- * @since v3.3 and later
+/**
+ *  Initializes a CCEffectDistanceField object with the supplied parameters.
+ *
+ *  @param glowColor Color of the glow, a [CCColor blackColor] will result in an opaque black drop shadow.
+ *  @param outlineColor Color of the outline.
+ *
+ *  @return The CCEffectDistanceField object.
+ *  @since v3.3 and later
+ *  @see CCColor
  */
-@property (nonatomic, strong) CCColor* glowColor;
-@property (nonatomic, strong) CCColor* fillColor;
-@property (nonatomic, strong) CCColor* outlineColor;
-
-@property (nonatomic) BOOL glow;
-@property (nonatomic) BOOL outline;
-@property (nonatomic) float outlineInnerWidth;
-@property (nonatomic) float outlineOuterWidth;
-@property (nonatomic) GLKVector2 glowOffset;
-@property (nonatomic) float glowWidth;
-
-/// -----------------------------------------------------------------------
-/// @name Initializing a CCEffectDistanceField object
-/// -----------------------------------------------------------------------
++(id)effectWithGlowColor:(CCColor*)glowColor outlineColor:(CCColor*)outlineColor;
 
 /**
  *  Initializes a CCEffectDistanceField object with a (5, -5) black drop shadow offset .
@@ -56,24 +49,40 @@
  *
  *  @return The CCEffectDistanceField object.
  *  @since v3.3 and later
+ *  @see CCColor
  */
 -(id)initWithGlowColor:(CCColor*)glowColor outlineColor:(CCColor*)outlineColor;
 
-
 /// -----------------------------------------------------------------------
-/// @name Creating a CCEffectDistanceField object
+/// @name Effect Color
 /// -----------------------------------------------------------------------
 
-/**
- *  Initializes a CCEffectDistanceField object with the supplied parameters.
- *
- *  @param glowColor Color of the glow, a [CCColor blackColor] will result in an opaque black drop shadow.
- *  @param outlineColor Color of the outline.
- *
- *  @return The CCEffectDistanceField object.
- *  @since v3.3 and later
+/** Fill Color
+ * [CCColor blackColor] will result in an opaque black drop shadow.
+ * @since v3.3 and later
  */
-+(id)effectWithGlowColor:(CCColor*)glowColor outlineColor:(CCColor*)outlineColor;
+@property (nonatomic, strong) CCColor* glowColor;
+/** .. */
+@property (nonatomic, strong) CCColor* fillColor;
+/** .. */
+@property (nonatomic, strong) CCColor* outlineColor;
+
+/// -----------------------------------------------------------------------
+/// @name Glow and Outline Properties
+/// -----------------------------------------------------------------------
+
+/** .. */
+@property (nonatomic) BOOL glow;
+/** .. */
+@property (nonatomic) BOOL outline;
+/** .. */
+@property (nonatomic) float outlineInnerWidth;
+/** .. */
+@property (nonatomic) float outlineOuterWidth;
+/** .. */
+@property (nonatomic) GLKVector2 glowOffset;
+/** .. */
+@property (nonatomic) float glowWidth;
 
 @end
 

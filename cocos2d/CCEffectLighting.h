@@ -21,37 +21,21 @@
 @interface CCEffectLighting : CCEffect
 
 /// -----------------------------------------------------------------------
-/// @name Accessing Effect Attributes
+/// @name Creating a Lighting Effect
 /// -----------------------------------------------------------------------
-
-
-/** The groups that this effect belongs to. Instances of CCLightNode also
- *  belong to groups. The intersection of a light effect's groups and a light
- *  node's groups determine whether or not a light node contributes to a light
- *  effect.
- *  @since v3.4 and later
- */
-@property (nonatomic, copy) NSArray *groups;
 
 /**
- *  The specular color of the affected node. This color is combined with the light's
- *  color and the effect's shininess value to determine the color of specular highlights
- *  that appear when lighting shiny surfaces.
+ *  Creates and initializes a CCEffectLighting object with the supplied parameters.
+ *
+ *  @param groups         The light groups this effect belongs to.
+ *  @param specularColor  The specular color of this effect.
+ *  @param shininess      The overall shininess of the effect.
+ *
+ *  @return The CCEffectLighting object.
  *  @since v3.4 and later
+ *  @see CCColor
  */
-@property (nonatomic, strong) CCColor* specularColor;
-
-/** 
- *  The shininess of the affected node. This value controls the tightness of specular
- *  highlights. 0 results in no specular contribution to the lighting equations and
- *  increasing values result in tighter highlights.
- *  @since v3.4 and later
- */
-@property (nonatomic, assign) float shininess;
-
-/// -----------------------------------------------------------------------
-/// @name Initializing a CCEffectLighting object
-/// -----------------------------------------------------------------------
++(id)effectWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess;
 
 /**
  *  Initializes a CCEffectLighting object.
@@ -70,25 +54,39 @@
  *
  *  @return The CCEffectLighting object.
  *  @since v3.4 and later
+ *  @see CCColor
  */
 -(id)initWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess;
 
-
 /// -----------------------------------------------------------------------
-/// @name Creating a CCEffectLighting object
+/// @name Lighting Properties
 /// -----------------------------------------------------------------------
 
-/**
- *  Creates and initializes a CCEffectLighting object with the supplied parameters.
- *
- *  @param groups         The light groups this effect belongs to.
- *  @param specularColor  The specular color of this effect.
- *  @param shininess      The overall shininess of the effect.
- *
- *  @return The CCEffectLighting object.
+
+/** The groups that this effect belongs to. Instances of CCLightNode also
+ *  belong to groups. The intersection of a light effect's groups and a light
+ *  node's groups determine whether or not a light node contributes to a light
+ *  effect.
  *  @since v3.4 and later
  */
-+(id)effectWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess;
+@property (nonatomic, copy) NSArray *groups;
+
+/**
+ *  The specular color of the affected node. This color is combined with the light's
+ *  color and the effect's shininess value to determine the color of specular highlights
+ *  that appear when lighting shiny surfaces.
+ *  @since v3.4 and later
+ *  @see CCColor
+ */
+@property (nonatomic, strong) CCColor* specularColor;
+
+/**
+ *  The shininess of the affected node. This value controls the tightness of specular
+ *  highlights. 0 results in no specular contribution to the lighting equations and
+ *  increasing values result in tighter highlights.
+ *  @since v3.4 and later
+ */
+@property (nonatomic, assign) float shininess;
 
 @end
 

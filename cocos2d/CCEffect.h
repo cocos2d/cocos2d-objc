@@ -14,17 +14,24 @@
 
 
 /**
- * CCEffect is the foundation of the Cocos2D effects system. Subclasses of CCEffect can be
- * used to easily add exciting visual effects such has blur, bloom, reflection, refraction, and
- * other image processing filters to your applications.
- *
- *  @since v3.2 and later
+ CCEffect is the abstract base class of the Cocos2D effects classes. Subclasses of CCEffect can be used to easily add exciting
+ visual effects such has blur, bloom, reflection, refraction, and other image processing filters to your applications.
+ 
+ ### Subclasses
+ 
+ - CCEffectBloom
+ - CCEffectBlur, CCEffectPixellate
+ - CCEffectBrightness, CCEffectContrast, CCEffectHue, CCEffectSaturation, CCEffectInvert, CCEffectColorChannelOffset
+ - CCEffectDFInnerGlow, CCEffectDFOutline
+ - CCEffectDropShadow
+ - CCEffectGlass, CCEffectReflection, CCEffectRefraction
+ - CCEffectLighting
+ - CCEffectStack
  */
-
 @interface CCEffect : NSObject
 
 /// -----------------------------------------------------------------------
-/// @name Accessing Effect Attributes
+/// @name Effect Properties
 /// -----------------------------------------------------------------------
 
 /** An identifier for debugging effects.
