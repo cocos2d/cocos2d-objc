@@ -37,6 +37,7 @@
 /**
  *  Package manager's delegate
  *  @since v3.3 and later
+ *  @see CCPackageManagerDelegate
  */
 @property (nonatomic, weak) id <CCPackageManagerDelegate> delegate;
 
@@ -60,6 +61,7 @@
  *
  *  @param name Name of the package
  *  @since v3.3 and later
+ *  @see CCPackage
  */
 - (CCPackage *)packageWithName:(NSString *)name;
 
@@ -70,6 +72,7 @@
  *  @param name Name of the package
  *  @param resolution SpriteBuilder resolution string (ie `phonehd`)
  *  @since v3.3 and later
+ *  @see CCPackage
  */
 - (CCPackage *)packageWithName:(NSString *)name resolution:(NSString *)resolution;
 
@@ -81,6 +84,7 @@
  *  @param resolution SpriteBuilder resolution string (ie `phonehd`)
  *  @param os operating system string (ie iOS, Android, Mac)
  *  @since v3.3 and later
+ *  @see CCPackage
  */
 - (CCPackage *)packageWithName:(NSString *)name resolution:(NSString *)resolution os:(NSString *)os;
 
@@ -106,6 +110,7 @@
  *
  * @param package The package to be added to the package manager
  * @since v3.3 and later
+ *  @see CCPackage
  */
 - (void)addPackage:(CCPackage *)package;
 
@@ -121,6 +126,7 @@
  *
  * @return Success(YES) or failure(NO) of the operation
  * @since v3.3 and later
+ *  @see CCPackage
  */
 - (BOOL)deletePackage:(CCPackage *)package error:(NSError **)error;
 
@@ -136,6 +142,7 @@
  *
  * @return Success(YES) or failure(NO) of the operation
  * @since v3.3 and later
+ *  @see CCPackage
  */
 - (BOOL)disablePackage:(CCPackage *)package error:(NSError **)error;
 
@@ -150,6 +157,7 @@
  *
  * @return Success(YES) or failure(NO) of the operation
  * @since v3.3 and later
+ *  @see CCPackage
  */
 - (BOOL)enablePackage:(CCPackage *)package error:(NSError **)error;
 
@@ -178,6 +186,7 @@
  * @param name Name of the package
  * @param enableAfterDownload If the package should be enabled in cocos2d after download. You can enable it with the enablePackage: method later on.
  * @since v3.3 and later
+ *  @see CCPackage
  */
 - (CCPackage *)downloadPackageWithName:(NSString *)name
                    enableAfterDownload:(BOOL)enableAfterDownload;
@@ -191,6 +200,7 @@
  * @param resolution Resolution of the package, e.g. phonehd, tablethd etc.
  * @param enableAfterDownload If the package should be enabled in cocos2d after download. You can enable it with the enablePackage: method later on.
  * @since v3.3 and later
+ *  @see CCPackage
  */
 - (CCPackage *)downloadPackageWithName:(NSString *)name
                             resolution:(NSString *)resolution
@@ -205,6 +215,7 @@
  * @param os operating system of the package to be downloaded
  * @param enableAfterDownload If the package should be enabled in cocos2d after download. You can enable it with the enablePackage: method later on.
  * @since v3.3 and later
+ *  @see CCPackage
  */
 - (CCPackage *)downloadPackageWithName:(NSString *)name
                             resolution:(NSString *)resolution
@@ -220,6 +231,7 @@
  * @param package The package to be managed by the package manager
  * @param enableAfterDownload If the package should be enabled in cocos2d after download. You can enable it with the enablePackage: method later on.
  * @since v3.3 and later
+ *  @see CCPackage
  */
 - (void)downloadPackage:(CCPackage *)package enableAfterDownload:(BOOL)enableAfterDownload;
 
@@ -240,6 +252,7 @@
  *
  * @param package The package which download should be cancelled
  * @since v3.3 and later
+ *  @see CCPackage
  */
 - (void)cancelDownloadOfPackage:(CCPackage *)package;
 
@@ -248,6 +261,7 @@
  *
  * @param package The package which download should be paused
  * @since v3.3 and later
+ *  @see CCPackage
  */
 - (void)pauseDownloadOfPackage:(CCPackage *)package;
 
@@ -256,6 +270,7 @@
  *
  * @param package The package which download should be resumed
  * @since v3.3 and later
+ *  @see CCPackage
  */
 - (void)resumeDownloadOfPackage:(CCPackage *)package;
 
