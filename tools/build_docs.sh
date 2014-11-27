@@ -29,14 +29,16 @@ done
 # You can't use "--ignore *Package*" (any wildcard combo) to ignore files that begin with or contain Path
 # Ignore list is case-sensitive!
 
+# --company-id "org" <-- This should be just "org", combined with project-name this creates the .docset filename
+
 ####################################
 # Req: Please keep the ignore list sorted alphabetically.
 ####################################
 
 tools/appledoc \
---project-name "Cocos2D" \
---project-company "3.3.0" \
---company-id "org.cocos2d-swift" \
+--project-name "Cocos2D-Swift v3.3" \
+--project-company "v3.3" \
+--company-id "org" \
 ${docsets} \
 --output "${outputPath}" \
 --logformat xcode \
