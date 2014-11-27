@@ -44,7 +44,7 @@
 #define CC_GLSL(x) @#x
 
 
-/// GL attribute locations for built-in Cocos2D vertex attributes.
+/// GL attribute locations for built-in Cocos2D vertex attributes. Used by CCShader.
 typedef NS_ENUM(NSUInteger, CCShaderAttribute){
     /** Position */
 	CCShaderAttributePosition,
@@ -74,24 +74,13 @@ extern NSString * const CCShaderUniformAlphaTestValue;
 /** A wrapper for OpenGL or Metal shader programs. Also gives you access to the built-in shaders used by Cocos2D. */
 @interface CCShader : NSObject<NSCopying>
 
-/** @name Debugging */
-
-/** The shader's name for debugging purposes. */
-@property(nonatomic, copy) NSString *debugName;
-
-/** @name Getting a Shader */
-
-/** Returns the shader with the given name. Returns nil if there's no shader for this name.
- @param shaderName The shader's unique name. */
-+(instancetype)shaderNamed:(NSString *)shaderName;
-
 /** @name Creating a OpenGL Shader */
 
 /** Creates a OpenGL shader with the given vertex and fragment shader source code as strings.
  @param vertexSource The vertex shader's source code string. Must not be nil.
  @param fragmentSource The fragment shader's source code string. Must not be nil.
  @returns The created CCShader instance, or nil if there was a compile error in either of the two shader programs.
-*/
+ */
 -(instancetype)initWithVertexShaderSource:(NSString *)vertexSource fragmentShaderSource:(NSString *)fragmentSource;
 /** Creates a OpenGL shader with the given fragment shader source code as string.
  @param source The fragment shader's source code string. Must not be nil.
@@ -112,6 +101,12 @@ extern NSString * const CCShaderUniformAlphaTestValue;
 -(instancetype)initWithMetalVertexFunction:(id<MTLFunction>)vertexFunction fragmentFunction:(id<MTLFunction>)fragmentFunction;
 #endif
 
+/** @name Getting a Shader by its Name */
+
+/** Returns the shader with the given name. Returns nil if there's no shader for this name.
+ @param shaderName The shader's unique name. */
++(instancetype)shaderNamed:(NSString *)shaderName;
+
 /** @name Obtaining a Built-In Shader */
 
 /** @returns A solide color shader. */
@@ -122,5 +117,10 @@ extern NSString * const CCShaderUniformAlphaTestValue;
 +(instancetype)positionTextureColorAlphaTestShader;
 /** @returns An 8-bit color texture shader. */
 +(instancetype)positionTextureA8ColorShader;
+
+/** @name Setting a Shader's Debug Name */
+
+/** The shader's name for debugging purposes. */
+@property(nonatomic, copy) NSString *debugName;
 
 @end

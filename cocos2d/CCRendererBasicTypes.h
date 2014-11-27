@@ -147,7 +147,9 @@ extern NSString * const CCBlendEquationAlpha;
 /// @param blendMode A blend mode.
 /// @param shader The shader to use.
 /// @param mainTexture The mainTexture to use.
-/// @see CCBlendMode, CCShader, CCTexture
+/// @see CCBlendMode
+/// @see CCShader
+/// @see CCTexture
 +(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader mainTexture:(CCTexture *)mainTexture;
 
 /// Creates an **uncached** blending mode for a given blending mode, shader and set of uniform values.
@@ -156,7 +158,8 @@ extern NSString * const CCBlendEquationAlpha;
 /// @param shader The shader to use.
 /// @param shaderUniforms The shader uniforms.
 /// @param copyUniforms Whether to copy the uniforms. If set to YES the render state is assumed to be immutable which is more efficient.
-/// @see CCBlendMode, CCShader
+/// @see CCBlendMode
+/// @see CCShader
 +(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms copyUniforms:(BOOL)copyUniforms;
 
 // Purposefully undocumented: marked as deprecated
@@ -165,7 +168,8 @@ extern NSString * const CCBlendEquationAlpha;
 // @param blendMode A blend mode.
 // @param shader The shader to use.
 // @param shaderUniforms The shader uniforms.
-// @see CCBlendMode, CCShader
+// @see CCBlendMode
+// @see CCShader
 -(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms __deprecated;
 
 /// @name Obtaining the Debug Render State
