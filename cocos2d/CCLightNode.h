@@ -10,7 +10,7 @@
 
 #if CC_EFFECTS_EXPERIMENTAL
 
-/** Light Types */
+/** Light Types used by CCLightNode. */
 typedef NS_ENUM(NSUInteger, CCLightType)
 {
     /** A point light source. */
@@ -73,8 +73,7 @@ typedef NS_ENUM(NSUInteger, CCLightType)
   ambientIntensity:(float)ambientIntensity;
 
 
-// purposefully undocumented: default initializer inherited by NSObject
-/*
+/**
  *  Initializes a point light with a white color and full intensity.
  *
  *  @return The CCLightNode object.

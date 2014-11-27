@@ -45,7 +45,7 @@ extern const CCLightGroupMask CCLightCollectionAllGroups;
 @interface CCLightCollection : NSObject
 
 /// -----------------------------------------------------------------------
-/// @name Initializing a CCLightCollection object
+/// @name Creating a Light Collection
 /// -----------------------------------------------------------------------
 
 /**
@@ -66,6 +66,7 @@ extern const CCLightGroupMask CCLightCollectionAllGroups;
  *
  *  @param light CCLightNode to add.
  *  @since v3.4 and later
+ *  @see CCLightNode
  */
 - (void)addLight:(CCLightNode *)light;
 
@@ -74,6 +75,7 @@ extern const CCLightGroupMask CCLightCollectionAllGroups;
  *
  *  @param light The light node to remove.
  *  @since v3.4 and later
+ *  @see CCLightNode
  */
 - (void)removeLight:(CCLightNode *)light;
 
@@ -92,6 +94,8 @@ extern const CCLightGroupMask CCLightCollectionAllGroups;
 /**
  *  Finds the closest lights to the supplied point.
  *
+ *  @note CCLightGroupMask is declared as NSUInteger
+ *
  *  @param count The number of lights to return.
  *  @param point The reference point.
  *  @param mask The light group mask.
@@ -101,12 +105,14 @@ extern const CCLightGroupMask CCLightCollectionAllGroups;
 
 
 /// -----------------------------------------------------------------------
-/// @name Light groups
+/// @name Getting a Light Groups Mask
 /// -----------------------------------------------------------------------
 
 /**
  *  Convert an array of light group identifiers into a group bitmask.
  *  The groups are retained and assigned indexes.
+ *
+ *  @note CCLightGroupMask is declared as NSUInteger
  *
  *  @param groups Array of groups.
  *
