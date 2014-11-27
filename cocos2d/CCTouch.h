@@ -21,7 +21,8 @@
 @class CCGLView;
 @class CCNode;
 
-/** Touch phases, equivalent to [UITouch phases](https://developer.apple.com/library/ios/documentation/uikit/reference/UITouch_Class/index.html#//apple_ref/c/tdef/UITouchPhase). */
+/** Touch phases, equivalent to [UITouch phases](https://developer.apple.com/library/ios/documentation/uikit/reference/UITouch_Class/index.html#//apple_ref/c/tdef/UITouchPhase).
+ Used by touch events received through CCResponder. */
 typedef NS_ENUM (NSInteger, CCTouchPhase) {
     /** A finger just touched the screen. */
     CCTouchPhaseBegan,
@@ -36,7 +37,9 @@ typedef NS_ENUM (NSInteger, CCTouchPhase) {
 };
 
 /** Thin wrapper around platform-specific touch events (ie [UITouch](https://developer.apple.com/library/ios/documentation/uikit/reference/UITouch_Class/index.html)).
- CCTouch is platform independent version of the touch event objects sent by iOS, Android and OS X. */
+ CCTouch is platform independent version of the touch event objects sent by iOS, Android and OS X.
+ 
+ @note You should never create instances of CCTouch. */
 @interface CCTouch : NSObject
 
 /** @name Touch Information */

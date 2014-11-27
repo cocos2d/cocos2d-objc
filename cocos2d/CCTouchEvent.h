@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-/** Thin wrapper around platform-specific touch event objects. */
+/** Thin wrapper around platform-specific touch event objects.
+  @note You should never create instances of CCTouchEvent.
+ */
 @interface CCTouchEvent : NSObject
 
 /** Timestamp for this event. */
