@@ -49,24 +49,6 @@
     BOOL _inverted;
 }
 
-/// -----------------------------------------------------------------------
-/// @name Accessing the Stencil (Mask) Node
-/// -----------------------------------------------------------------------
-
-/** The stencil node's content will define which area is clipped (masked). */
-@property (nonatomic, strong) CCNode *stencil;
-
-/// -----------------------------------------------------------------------
-/// @name Modify Clipping Behavior
-/// -----------------------------------------------------------------------
-
-/** The alpha threshold determines the minimum alpha value that is considered as masked. 
- Defaults to 1.0 (any pixel not fully opaque will clip/mask contents). */
-@property (nonatomic) GLfloat alphaThreshold;
-
-/** If inverted, the alpha-based clipping will be reversed such that pixels with alphaThreshold or higher will clip/mask out content. */
-@property (nonatomic) BOOL inverted;
-
 
 /// -----------------------------------------------------------------------
 /// @name Creating a CCClippingNode
@@ -102,5 +84,23 @@
  *  @see clippingNodeWithStencil:
  */
 -(id) initWithStencil:(CCNode *)stencil;
+
+/// -----------------------------------------------------------------------
+/// @name Accessing the Stencil (Mask) Node
+/// -----------------------------------------------------------------------
+
+/** The stencil node's content will define which area is clipped (masked). */
+@property (nonatomic, strong) CCNode *stencil;
+
+/// -----------------------------------------------------------------------
+/// @name Modify Clipping Behavior
+/// -----------------------------------------------------------------------
+
+/** The alpha threshold determines the minimum alpha value that is considered as masked. 
+ Defaults to 1.0 (any pixel not fully opaque will clip/mask contents). */
+@property (nonatomic) GLfloat alphaThreshold;
+
+/** If inverted, the alpha-based clipping will be reversed such that pixels with alphaThreshold or higher will clip/mask out content. */
+@property (nonatomic) BOOL inverted;
 
 @end

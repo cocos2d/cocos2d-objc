@@ -25,7 +25,7 @@
 #import "CCControl.h"
 
 /** Methods Used by Sub-Classes */
-@interface CCControl (Subclass)
+@interface CCControl (Implemented_by_Subclasses)
 
 /** @name Controls */
 

@@ -42,7 +42,7 @@
 /** The starting radius of the particle is equal to the ending radius.  */
 #define CCParticleSystemStartRadiusEqualToEndRadius -1
 
-/** Particle system mode. */
+/** Particle system mode used by CCParticleSystemBase. */
 typedef NS_ENUM(NSUInteger, CCParticleSystemMode) {
     
 	/** Gravity mode (mode A). */
@@ -52,7 +52,7 @@ typedef NS_ENUM(NSUInteger, CCParticleSystemMode) {
 	CCParticleSystemModeRadius,
 };
 
-/** Particle system position type. */
+/** Particle system position type used by CCParticleSystemBase. */
 typedef NS_ENUM(NSUInteger, CCParticleSystemPositionType) {
     
 	/** Living particles are attached to the world and are unaffected by emitter repositioning. */
