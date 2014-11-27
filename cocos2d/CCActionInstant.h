@@ -28,22 +28,41 @@
 #import "CCAction.h"
 #import "CCSpriteFrame.h"
 
-//
-// Base class for instant actions, e.g. they are performed immediately.
-//
+/**
+ Base class for instant actions, ie actions which perform their task immediately and quit.
+ 
+ ### Subclasses
+ 
+ - CCActionCallBlock, CCActionCallFunc (runs a block or runs a selector on a given target)
+ - CCActionFlipX, CCActionFlipY (sets the flipX / flipY properties of a CCSprite)
+ - CCActionPlace (sets the position property of a CCNode)
+ - CCActionRemove (removes a CCNode from its parent by calling removeFromParent)
+ - CCActionShow, CCActionHide, CCActionToggleVisibility (sets the visible property of a CCNode)
+ - CCActionSoundEffect (plays a sound effect via OALSimpleAudio)
+ - CCActionSpriteFrame (sets the spriteFrame property of a CCSprite)
+*/
 @interface CCActionInstant : CCActionFiniteTime <NSCopying>
 
 @end
 
 
-/** This action will remove the node running this action from its parent. */
+/** This action will remove the node running this action from its parent.
+ 
+ The action is created using the default CCAction initializer:
+ 
+    id action = [CCActionRemove action];
+ */
 @interface CCActionRemove : CCActionInstant
 
 @end
 
 
 /** 
- *  This action will make the target visible by setting its `visible` property to YES.
+ This action will make the target visible by setting its `visible` property to YES.
+
+ The action is created using the default CCAction initializer:
+ 
+    id action = [CCActionShow action];
  */
 @interface CCActionShow : CCActionInstant
 
@@ -51,7 +70,11 @@
 
 
 /** 
- *  This action will hide the target by setting its `visible` property to NO.
+ This action will hide the target by setting its `visible` property to NO.
+ 
+ The action is created using the default CCAction initializer:
+ 
+    id action = [CCActionHide action];
  */
 @interface CCActionHide : CCActionInstant
 
@@ -59,7 +82,11 @@
 
 
 /** 
- *  This action toggles the target's visibility by altering the `visible` property.
+ This action toggles the target's visibility by altering the `visible` property.
+
+ The action is created using the default CCAction initializer:
+ 
+    id action = [CCActionToggleVisibility action];
  */
 @interface CCActionToggleVisibility : CCActionInstant
 
@@ -68,7 +95,7 @@
 
 /** 
  This action flips the target in x direction.
- 
+
  @note Target must be a CCSprite node or inherit from CCSprite.
  */
 @interface CCActionFlipX : CCActionInstant {
@@ -77,7 +104,7 @@
 
 
 /// -----------------------------------------------------------------------
-/// @name Creating a CCActionFlipX Object
+/// @name Creating a Flip Action
 /// -----------------------------------------------------------------------
 
 /**
@@ -88,11 +115,6 @@
  *  @return The flip action object.
  */
 + (id)actionWithFlipX:(BOOL)x;
-
-
-/// -----------------------------------------------------------------------
-/// @name Initializing a CCActionFlipX Object
-/// -----------------------------------------------------------------------
 
 /**
  *  Initializes a flip action with x direction flipped or non flipped.
@@ -117,7 +139,7 @@
 
 
 /// -----------------------------------------------------------------------
-/// @name Creating a CCActionFlipY Object
+/// @name Creating a Flip Action
 /// -----------------------------------------------------------------------
 
 /**
@@ -128,11 +150,6 @@
  *  @return The flip action object.
  */
 + (id)actionWithFlipY:(BOOL)y;
-
-
-/// -----------------------------------------------------------------------
-/// @name Initializing a CCActionFlipY Object
-/// -----------------------------------------------------------------------
 
 /**
  *  Initializes a flip action with y direction flipped or non flipped
@@ -155,7 +172,7 @@
 
 
 /// -----------------------------------------------------------------------
-/// @name Creating a CCActionPlace Object
+/// @name Creating a Place Action
 /// -----------------------------------------------------------------------
 
 /**
@@ -166,11 +183,6 @@
  *  @return The place action object.
  */
 + (id)actionWithPosition:(CGPoint)pos;
-
-
-/// -----------------------------------------------------------------------
-/// @name Initializing a CCActionPlace Object
-/// -----------------------------------------------------------------------
 
 /**
  *  Initializes a place action using the specified position.
@@ -185,9 +197,15 @@
 
 
 /**
- This action allows a custom selector (method) to be called. The selector takes no arguments and returns nothing.
+ This action allows a custom selector to be called. The selector takes no arguments and returns nothing.
+
+ ### Passing Parameters
  
- Example usage:
+ The selector takes no parameters. Any parameter that the selector needs would have to be in an ivar or property.
+ 
+ It is often preferable to use CCActionCallBlock if you need to "pass in data" without having to add and assign a ivar/property.
+
+ ### Code Example
  
     id callFunc = [CCActionCallFunc actionWithTarget:self selector@selector(myCallFuncMethod)];
     [self runAction:callFunc];
@@ -201,19 +219,19 @@
  Note that this simple example above is equivalent (but not as efficient) than simply calling the method directly:
  
     [self myCallFuncMethod];
- 
  */
 @interface CCActionCallFunc : CCActionInstant <NSCopying> {
 	__weak id _targetCallback;
 	SEL _selector;
 }
 
-/** Target function that will be called. */
+// purposefully undocumented: there's little to no need to change the action's target
+/* Target for the selector that will be called. */
 @property (nonatomic, readwrite, weak) id targetCallback;
 
 
 /// -----------------------------------------------------------------------
-/// @name Creating a CCActionCallFunc Object
+/// @name Creating a Perform Selector Action
 /// -----------------------------------------------------------------------
 
 /**
@@ -225,11 +243,6 @@
  *  @return The call func action object.
  */
 + (id)actionWithTarget:(id)t selector:(SEL)s;
-
-
-/// -----------------------------------------------------------------------
-/// @name Initializing a CCActionCallFunc Object
-/// -----------------------------------------------------------------------
 
 /**
  *  Initializes the action with the callback.
@@ -250,13 +263,20 @@
 /** 
  This action executes a code block. The block takes no parameters and returns nothing.
  
- Blocks can access all variables in scope, both variables local to the method as
- well as instance variables. Local variables require to be declared with the `__block` keyword if the block needs to
- modify the variable.
+ ### Passing Parameters
+ 
+ Blocks can access all variables in scope, both variables local to the method as well as instance variables. 
+ Local variables require to be declared with the `__block` keyword if the block needs to modify the variable.
+ 
+ Running a block is often preferable to running a selector because the CCActionCallFunc selector can not accept parameters.
+ 
+ ### Memory Management
  
  To avoid potential memory management issues it is recommended to use a weak self reference inside
  the block. If you are knowledgeable about [memory management with ARC and blocks](http://stackoverflow.com/questions/20030873/always-pass-weak-reference-of-self-into-block-in-arc)
  you can omit the weakSelf reference at your discretion.
+ 
+ ### Code Example
  
  Example block that reads and modifies a variable in scope and rotates a node to illustrate the code syntax:
 
@@ -280,29 +300,24 @@
 
 
 /// -----------------------------------------------------------------------
-/// @name Creating a CCActionCallBlock Object
+/// @name Creating a Run Block Action
 /// -----------------------------------------------------------------------
 
 /**
  *  Creates the action with the specified block, to be used as a callback.
  *  The block will be copied.
  *
- *  @param block Block to execute. Block takes no parameters, returns nothing.
+ *  @param block Block to run. Block takes no parameters, returns nothing.
  *
  *  @return The call block action.
  */
 + (id)actionWithBlock:(void(^)())block;
 
-
-/// -----------------------------------------------------------------------
-/// @name Initializing a CCActionCallBlock Object
-/// -----------------------------------------------------------------------
-
 /**
  *  Initializes the action with the specified block, to be used as a callback.
  *  The block will be copied.
  *
- *  @param block Block to execute. Block takes no parameters, returns nothing.
+ *  @param block Block to run. Block takes no parameters, returns nothing.
  *
  *  @return An initialized call block action.
  */
@@ -325,7 +340,7 @@
 }
 
 /// -----------------------------------------------------------------------
-/// @name Creating a CCActionSpriteFrame Object
+/// @name Creating a Sprite Frame Action
 /// -----------------------------------------------------------------------
 
 /**
@@ -334,12 +349,9 @@
  *  @param spriteFrame SpriteFrame to use.
  *
  *  @return The sprite frame action object.
+ *  @see CCSpriteFrame
  */
 +(id) actionWithSpriteFrame:(CCSpriteFrame*)spriteFrame;
-
-/// -----------------------------------------------------------------------
-/// @name Initializing a CCActionSpriteFrame Object
-/// -----------------------------------------------------------------------
 
 /**
  *  Initializes the action action with the specified sprite frame.
@@ -347,6 +359,7 @@
  *  @param spriteFrame SpriteFrame to use.
  *
  *  @return An initialized sprite frame action object.
+ *  @see CCSpriteFrame
  */
 -(id) initWithSpriteFrame:(CCSpriteFrame*)spriteFrame;
 
@@ -356,7 +369,7 @@
  This actions plays a sound effect through OALSimpleAudio. To play back music use a CCActionCallBlock or CCActionCallFunc
  so that you can use the playBg method of OALSimpleAudio.
  
- @note The action ends immediately, it does not wait for the sound to end. */
+ @note The action ends immediately, it does not wait for the sound to stop playing. */
 @interface CCActionSoundEffect : CCActionInstant
 {
     NSString* _soundFile;
@@ -364,6 +377,8 @@
     float _pan;
     float _gain;
 }
+
+/** @name Creating a Sound Effect Action */
 
 /**
  Creates a sound effect action.

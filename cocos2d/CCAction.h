@@ -36,12 +36,25 @@ enum {
 };
 
 /**
- * CCAction forms the foundation for one the great areas of Cocos2D functionality.
- * The manipulatinon of node properties such as position, rotation, scale and opacity over time, to create fun effects.
- *
- * - Actions can be modified with easing actions to create more realistic animations. 
- * - Actions can be put in sequence to create more complex animation sequences.
- *
+ CCAction is an abstract base class for all actions. Actions animate nodes by manipulating node properties over time
+ such as position, rotation, scale and opacity.
+ 
+ For more information see the Concepts:Actions article in the [Developer Guide](https://www.makeschool.com/docs)
+ 
+ ### Subclasses
+ 
+ The following actions inherit directly from CCAction and can be used "as is":
+ 
+ - CCActionFollow (parent node follows the target node's movement)
+ - CCActionRepeatForever (runs a CCActionInterval in an endless loop until stopped)
+ - CCActionSpeed (modifies the speed of a CCActionInterval action while it is running)
+ 
+ These action subclasses are abstract base classes for instant and "over time" actions, see their references for more information:
+ 
+ - CCActionFiniteTime
+    - CCActionInstant
+    - CCActionInterval
+ 
  */
 @interface CCAction : NSObject <NSCopying> {
 	id			__unsafe_unretained _originalTarget;
@@ -50,40 +63,20 @@ enum {
 }
 
 
-/// -----------------------------------------------------------------------
-/// @name Accessing Action Attributes
-/// -----------------------------------------------------------------------
-
-/**
- *  The "target". The action will modify the target properties.
- *  The target will be set with the 'startWithTarget' method.
- *  When the 'stop' method is called, target will be set to nil.
- *  The target is 'assigned', it is not 'retained'.
- */
-@property (nonatomic,readonly,unsafe_unretained) id target;
-
-/** The original target, since target can be nil. */
-@property (nonatomic,readonly,unsafe_unretained) id originalTarget;
-
-/** The action tag. An identifier of the action. */
-@property (nonatomic,readwrite,assign) NSInteger tag;
-
 
 /// -----------------------------------------------------------------------
-/// @name Creating a CCAction Object
+/// @name Creating an Action
 /// -----------------------------------------------------------------------
 
 /**
- *  Creates and returns an action object.
- *
- *  @return The CCAction Object.
+ Creates and returns an action.
+ 
+ @warning If a CCAction subclass provides designated initializers you will have to use
+ those over this one.
+ 
+ @return The CCAction Object.
  */
 + (id)action;
-
-
-/// -----------------------------------------------------------------------
-/// @name Initializing a CCAction Object
-/// -----------------------------------------------------------------------
 
 /**
  *  Initializes and returns an action object.
@@ -92,12 +85,36 @@ enum {
  */
 - (id)init;
 
+
+/// -----------------------------------------------------------------------
+/// @name Action Targets
+/// -----------------------------------------------------------------------
+
+/**
+ The "target" is typically the node instance that received the [CCNode runAction:] message.
+ The action will modify the target properties. The target will be set with the 'startWithTarget' method.
+ When the 'stop' method is called, target will be set to nil. 
+ 
+ @warning The target is 'assigned' (unsafe unretained), it is not 'retained' nor managed by ARC.
+ */
+@property (nonatomic,readonly,unsafe_unretained) id target;
+
+/** The original target, since target can be nil. */
+@property (nonatomic,readonly,unsafe_unretained) id originalTarget;
+
+/// -----------------------------------------------------------------------
+/// @name Identifying an Action
+/// -----------------------------------------------------------------------
+
+/** The action tag. An identifier of the action. */
+@property (nonatomic,readwrite,assign) NSInteger tag;
+
 // NSCopying support.
 - (id)copyWithZone:(NSZone*) zone;
 
 
 /// -----------------------------------------------------------------------
-/// @name Action Management
+/// @name Action Methods Implemented by Subclasses
 /// -----------------------------------------------------------------------
 
 /**
@@ -149,26 +166,39 @@ enum {
 
 #pragma mark - CCActionFiniteTime
 
-//
-//  Base class for actions that have a finite time duration.
-//
-//  Possible actions:
-//  - An action with a duration of 0 seconds.
-//  - An action with a duration of 35.5 seconds.
-//
+/**
+ Abstract base class for actions that (can) have a duration or can be reversed.
+ 
+ Not all actions support reversing. See individual class references to find out if a certain action does not support reversing.
+ 
+ ### Subclasses
+ 
+ The CCActionFiniteTime class has two additional subclasses (also abstract) which contain more information about actions
+ that run instantly (completed within the same frame) vs. actions that run over time (typically taking more than a frame to complete).
+ 
+ - CCActionInstant
+ - CCActionInterval
+
+*/
 @interface CCActionFiniteTime : CCAction <NSCopying> {
 	// Duration in seconds.
 	CCTime _duration;
 }
 
-// Duration of the action in seconds.
+/** @name Duration */
+
+/** Duration of the action in seconds. */
 @property (nonatomic,readwrite) CCTime duration;
 
-//
-//  Returns a reversed action.
-//
-//  @return The reversed action object.
-//
+/** @name Reversing an Action */
+
+/**
+ Returns an action that runs in reverse (does the opposite).
+ 
+ @note Not all actions support reversing. See individual action's class references.
+
+ @return The reversed action.
+ */
 - (CCActionFiniteTime *)reverse;
 
 @end
@@ -188,17 +218,13 @@ enum {
 	CCActionInterval *_innerAction;
 }
 
-
-/// -----------------------------------------------------------------------
-/// @name Accessing the Repeat Forever Action Attributes
-/// -----------------------------------------------------------------------
-
-/** Inner action. */
+// purposefully undocumented: user does not need to access inner action
+/* Inner action. */
 @property (nonatomic, readwrite, strong) CCActionInterval *innerAction;
 
 
 /// -----------------------------------------------------------------------
-/// @name Creating a CCActionRepeatForever Object
+/// @name Creating a Repeat Forever Action
 /// -----------------------------------------------------------------------
 
 /**
@@ -209,11 +235,6 @@ enum {
  *  @return The repeat action object.
  */
 + (id)actionWithAction:(CCActionInterval *) action;
-
-
-/// -----------------------------------------------------------------------
-/// @name Initializing a CCActionRepeatForever Object
-/// -----------------------------------------------------------------------
 
 /**
  *  Initalizes the repeat forever action.
@@ -270,26 +291,8 @@ enum {
 	CGFloat _speed;
 }
 
-
 /// -----------------------------------------------------------------------
-/// @name Accessing the Speed Action Attributes
-/// -----------------------------------------------------------------------
-
-/** 
- * Alter the speed of the controlled action at runtime.
- *
- * - Speeds below 1.0 will make the action run slower.
- * - Speeds above 1.0 will make the action run faster.
- */
-@property (nonatomic,readwrite) CGFloat speed;
-
-// purposefully undocumented: it seems this shouldn't be user-assignable as newly assigned actions
-// may be left in an undefined state (they don't get the start message send)
-@property (nonatomic, readwrite, strong) CCActionInterval *innerAction;
-
-
-/// -----------------------------------------------------------------------
-/// @name Creating a CCActionSpeed Object
+/// @name Creating a Speed Action
 /// -----------------------------------------------------------------------
 
 /**
@@ -302,11 +305,6 @@ enum {
  */
 + (id)actionWithAction:(CCActionInterval *)action speed:(CGFloat)value;
 
-
-/// -----------------------------------------------------------------------
-/// @name Initializing a CCActionSpeed Object
-/// -----------------------------------------------------------------------
-
 /**
  *  Initalizes the speed action.
  *
@@ -316,6 +314,23 @@ enum {
  *  @return An initialized CCActionSpeed object.
  */
 - (id)initWithAction:(CCActionInterval *)action speed:(CGFloat)value;
+
+
+/// -----------------------------------------------------------------------
+/// @name Modifying Speed
+/// -----------------------------------------------------------------------
+
+/**
+ * Alter the speed of the controlled action at runtime.
+ *
+ * - Speeds below 1.0 will make the action run slower.
+ * - Speeds above 1.0 will make the action run faster.
+ */
+@property (nonatomic,readwrite) CGFloat speed;
+
+// purposefully undocumented: it seems this shouldn't be user-assignable as newly assigned actions
+// may be left in an undefined state (they don't get the start message send)
+@property (nonatomic, readwrite, strong) CCActionInterval *innerAction;
 
 @end
 
@@ -366,17 +381,8 @@ enum {
 	float _bottomBoundary;
 }
 
-
 /// -----------------------------------------------------------------------
-/// @name Accessing the Follow Action Attributes
-/// -----------------------------------------------------------------------
-
-/** Turns boundary behaviour on / off.  If set to YES, movement will be clamped to boundaries. */
-@property (nonatomic,readwrite) BOOL boundarySet;
-
-
-/// -----------------------------------------------------------------------
-/// @name Creating a CCActionFollow Object
+/// @name Creating a Follow Action
 /// -----------------------------------------------------------------------
 
 /**
@@ -398,11 +404,6 @@ enum {
  */
 + (id)actionWithTarget:(CCNode *)followedNode worldBoundary:(CGRect)rect;
 
-
-/// -----------------------------------------------------------------------
-/// @name Initializing a CCActionFollow Object
-/// -----------------------------------------------------------------------
-
 /**
  *  Initalizes a follow action with no boundaries.
  *
@@ -421,6 +422,12 @@ enum {
  *  @return The initalized follow action object.
  */
 - (id)initWithTarget:(CCNode *)followedNode worldBoundary:(CGRect)rect;
+
+
+// purposefully undocumented: needn't be changed while action is running
+/* Turns boundary behaviour on / off.  If set to YES, movement will be clamped to boundaries. */
+@property (nonatomic,readwrite) BOOL boundarySet;
+
 
 @end
 

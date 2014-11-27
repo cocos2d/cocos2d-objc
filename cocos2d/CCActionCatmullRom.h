@@ -83,7 +83,7 @@ extern "C" {
 @property (nonatomic,readwrite,strong) NSMutableArray *controlPoints;
 
 /// -----------------------------------------------------------------------
-/// @name Creating a CCPointArray
+/// @name Creating a Point Array
 /// -----------------------------------------------------------------------
 
 /**
@@ -201,6 +201,8 @@ extern "C" {
 /* The array of control points associated with the cardinal spline. */
 @property (nonatomic,readwrite,strong) CCPointArray *points;
 
+/** @name Creating a Spline Action */
+
 /**
  *  Creates a cardinal spline action, based on control points and tension.
  *  A tension of 0, will return a curve following the straight lines in the point array.
@@ -238,7 +240,6 @@ extern "C" {
  *
  *  Adds a start position to the spline.
  *  @note See CCActionCardinalSplineTo for further information.
- *  @see CCPointArray
  */
 @interface CCActionCardinalSplineBy : CCActionCardinalSplineTo {
 	CGPoint		_startPosition;
@@ -253,9 +254,10 @@ extern "C" {
  *
  *  A Catmull Rom is a Cardinal Spline with a tension of 0.5.
  *  @note See CCActionCardinalSplineTo for further information.
- *  @see CCPointArray
  */
 @interface CCActionCatmullRomTo : CCActionCardinalSplineTo
+
+/** @name Creating a Spline Action */
 
 /**
  *  Creates an action, performing a catmull-rom spline.
@@ -292,6 +294,8 @@ extern "C" {
  *  @note See CCActionCardinalSplineTo for further information.
  */
 @interface CCActionCatmullRomBy : CCActionCardinalSplineBy
+
+/** @name Creating a Spline Action */
 
 /**
  *  Creates an action, performing a catmull-rom spline.

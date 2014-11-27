@@ -37,6 +37,8 @@
 	float _from;
 }
 
+/** @name Creating a Progress Action */
+
 /**
  *  Creates a progress action.
  *
@@ -68,6 +70,8 @@
 	float _to;
 	float _from;
 }
+
+/** @name Creating a Progress Action */
 
 /**
  *  Creates a progress action.

@@ -34,15 +34,18 @@
     id tween = [CCActionTween actionWithDuration:2.5 key:@"rotationalSkewX" from:0 to:89];
     [target runAction:tween];
  
- @warning The tweened property must be a float or double type.
- @note The value is updated using the KVC method `setValue:forKey:` and thus must be wrapped in NSNumber on every update.
- It is therefore recommended to avoid using many tween actions simultaneously.
+ @note The tweened property must be a float or double type.
+ @warning The value is updated using the KVC method `setValue:forKey:` and thus must be wrapped in NSNumber on every update.
+ It is therefore recommended to avoid using many tween actions at the same time as the NSNumber overhead can
+ add up and adversely affect performance.
  */
 @interface CCActionTween : CCActionInterval {
 	NSString		*_key;
 	float			_from, _to;
 	float			_delta;
 }
+
+/** @name Creating a Tween Action */
 
 /**
  *  Creates an initializes a tween action.
