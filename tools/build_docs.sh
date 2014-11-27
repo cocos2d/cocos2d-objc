@@ -63,7 +63,6 @@ ${docsets} \
 --ignore base64.h \
 --ignore Cache.h \
 --ignore CCActionManager.h \
---ignore CCAnimation.h \
 --ignore CCAtlasNode.h \
 --ignore CCBAnimationManager.h \
 --ignore CCBKeyFrame.h \
@@ -104,6 +103,7 @@ ${docsets} \
 --ignore CCProtocols.h \
 --ignore CCResponderManager.h \
 --ignore ccShaders.h \
+--ignore CCSpriteBatchNode.h \
 --ignore CCTextureAtlas.h \
 --ignore CCTexturePVR.h \
 --ignore CCTouchAndroid.h \
