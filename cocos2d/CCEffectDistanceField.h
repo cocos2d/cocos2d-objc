@@ -50,6 +50,7 @@
  *  Initializes a CCEffectDistanceField object with the supplied parameters.
  *
  *  @param glowColor Color of the glow, a [CCColor blackColor] will result in an opaque black drop shadow.
+ *  @param outlineColor Color of the outline.
  *
  *  @return The CCEffectDistanceField object.
  */
@@ -64,6 +65,7 @@
  *  Initializes a CCEffectDistanceField object with the supplied parameters.
  *
  *  @param glowColor Color of the glow, a [CCColor blackColor] will result in an opaque black drop shadow.
+ *  @param outlineColor Color of the outline.
  *
  *  @return The CCEffectDistanceField object.
  */

@@ -33,6 +33,7 @@
 
 /// Schedule a block to be invoked when the frame completes.
 /// The block may not be invoked from the main thread.
+/// @param handler The completion block. The block takes no arguments and has no return value.
 -(void)addFrameCompletionHandler:(dispatch_block_t)handler;
 
 @end

@@ -109,6 +109,7 @@ extern NSString * const CCBlendEquationAlpha;
 @property(nonatomic, readonly) NSDictionary *options;
 
 /// Return a cached blending mode with the given options.
+/// @param options dictionary with blend mode options
 +(CCBlendMode *)blendModeWithOptions:(NSDictionary *)options;
 
 /// Disabled blending mode. Use this with fully opaque surfaces for extra performance.
@@ -137,14 +138,24 @@ extern NSString * const CCBlendEquationAlpha;
 +(instancetype)debugColor;
 
 /// Create a cached blending mode for a given blending mode, shader and main texture.
+/// @param blendMode A blend mode.
+/// @param shader The shader to use.
+/// @param mainTexture The mainTexture to use.
 +(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader mainTexture:(CCTexture *)mainTexture;
 
 /// Create an uncached blending mode for a given blending mode, shader and set of uniform values.
 /// Allowing the uniform dictionary to be copied allows the render state to be immutable and used more optimally.
+/// @param blendMode A blend mode.
+/// @param shader The shader to use.
+/// @param shaderUniforms The shader uniforms.
+/// @param copyUniforms Whether to copy the uniforms. If set to YES the render state is assumed to be immutable.
 +(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms copyUniforms:(BOOL)copyUniforms;
 
 /// Initialize an uncached blending mode for a given blending mode, shader and set of uncopied uniform values.
 /// Use [CCRenderState renderStateWithBlendMode:blendMode shader:shader shaderUniforms:shaderUniforms copyUniforms:NO] instead.
+/// @param blendMode A blend mode.
+/// @param shader The shader to use.
+/// @param shaderUniforms The shader uniforms.
 -(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms __deprecated;
 
 @end

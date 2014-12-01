@@ -49,10 +49,11 @@
  *  @param glowColor Color of the glow, a [CCColor blackColor] will result in an opaque black glow.
  *  @param fillColor Color of the fillColor, a [CCColor blackColor] will result in an opaque black fillColor.
  *  @param glowWidth pixel width of the glow.
- *  @param fieldScale, defined by the distance field generation proccess, for example a distance field that
+ *  @param fieldScale defined by the distance field generation process, for example a distance field that
  *  was generated with a 4096/4096 input and output a 128/128 texture would have a fieldScale of 32 (
  *  input size / output size). Note: this parameter could be automatically calculated if we assume that all
  *  distance fields are generated from a 4096 input.
+ *  @param distanceField Distance field texture.
  *
  *  @return The CCEffectDFInnerGlow object.
  */
@@ -69,10 +70,11 @@
  *  @param glowColor Color of the glow, a [CCColor blackColor] will result in an opaque black glow.
  *  @param fillColor Color of the fillColor, a [CCColor blackColor] will result in an opaque black fillColor.
  *  @param glowWidth pixel width of the glow.
- *  @param fieldScale, defined by the distance field generation proccess, for example a distance field that
+ *  @param fieldScale defined by the distance field generation proccess, for example a distance field that
  *  was generated with a 4096/4096 input and output a 128/128 texture would have a fieldScale of 32 (
  *  input size / output size). Note: this parameter could be automatically calculated if we assume that all
  *  distance fields are generated from a 4096 input.
+ *  @param distanceField Distance field texture.
  *
  *  @return The CCEffectDFInnerGlow object.
  */

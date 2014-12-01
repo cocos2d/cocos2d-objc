@@ -274,6 +274,7 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  *
  * This implementation simply propagates the same method to the children.
  * Subclasses may override to actually do something when the view resizes.
+ * @param newViewSize The new size of the view after it has been resized.
  */
 -(void) viewDidResizeTo: (CGSize) newViewSize;
 
@@ -642,7 +643,9 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  * Override this method to draw your own node.
  * You should use cocos2d's GL API to enable/disable the GL state / shaders.
  * For further info, please see ccGLstate.h.
- * You shall NOT call [super draw];
+ * You should **NOT** call `[super draw];`
+ * @param renderer The CCRenderer instance to use for drawing.
+ * @param transform The parent node's transform.
  */
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
 
@@ -718,10 +721,14 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 
 @interface CCNode(NoARC)
 
-/** Returns the 4x4 drawing transformation for this node. Really only useful when overriding visit:parentTransform: */
+/** Returns the 4x4 drawing transformation for this node. Really only useful when overriding `visit:parentTransform:`
+ @param parentTransform The parent node's transform. */
 -(GLKMatrix4)transform:(const GLKMatrix4 *)parentTransform;
 
-/** Recursive method that visit its children and draw them. */
+/** Recursive method that visit its children and draw them.
+ * @param renderer The CCRenderer instance to use for drawing.
+ * @param parentTransform The parent node's transform.
+ */
 -(void) visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform;
 
 @end
