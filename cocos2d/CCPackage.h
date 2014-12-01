@@ -3,6 +3,16 @@
 
 @class CCPackageManager;
 
+/** CCPackage represents a Spritebuilder package. It's a data object managed by CCPackageManager describing the details of a package.
+
+ Most of the properties are readonly and are not meant to be set by a developer. They are set by the CCPackageManager.
+
+ The properties can be key value observed. Especially the status property can provide fine grained information about the package's lifecycle.
+
+ You can use the convenience methods of CCPackageManager to create CCPackage instances as well as the provided initializer.
+
+ Don't use the standard initialier -init. The initializer initWithDictionary is for internal use only to persist packages.
+ */
 @interface CCPackage : NSObject
 
 /**

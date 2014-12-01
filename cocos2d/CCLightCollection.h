@@ -82,9 +82,9 @@ extern const CCLightGroupMask CCLightCollectionAllGroups;
 /**
  *  Finds the closest lights to the supplied point.
  *
- *  @param count   The number of lights to return.
- *  @param point   The query point.
- *  @param mask    The light group mask to match.
+ *  @param count The number of lights to return.
+ *  @param point The reference point.
+ *  @param mask The light group mask.
  */
 - (NSArray*)findClosestKLights:(NSUInteger)count toPoint:(CGPoint)point withMask:(CCLightGroupMask)mask;
 
@@ -103,9 +103,9 @@ extern const CCLightGroupMask CCLightCollectionAllGroups;
 
 /**
  *  Convert an array of light group identifiers into a group bitmask.
- *  The categories are retained and assigned indexes.
+ *  The groups are retained and assigned indexes.
  *
- *  @param categories Array of categories.
+ *  @param groups Array of groups.
  *
  *  @return Bitmask.
  */

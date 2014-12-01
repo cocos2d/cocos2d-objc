@@ -38,7 +38,7 @@
 #endif
 
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
-#import <GLKit/GLKit.h>
+#import <GLKit/GLKMath.h>
 #endif
 
 #if __CC_PLATFORM_ANDROID

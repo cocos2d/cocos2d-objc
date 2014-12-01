@@ -5,7 +5,23 @@
 @class CCPackage;
 @protocol CCPackageManagerDelegate;
 
+/** CCPackageManager is the central organ of the packages feature.
 
+ The CCPackageManager is meant to be used as singleton, use the class method sharedManager to get an instance.
+ 
+ In general it manages all packages: You can download a packages, enable/disable an installed one or remove it again from disk.
+ 
+ The manager provides a delegate property to report progress of the different lifecycle steps of a package. The CCPackageManagerDelegate protocol describes the common interface.
+
+ ### General lifecycle
+ - Not installed/initial - The package does not exist within the app or the download has not been started yet
+ - download - A packages starts its life as a downloadble zip file on a remote host
+ - unzip - Download finished, the zip file is unpacked
+ - install - The contents of the zip file are copied to an installation folder
+ - enabled/disabled - If the package gets enabled and content becomes available in cocos2d
+ 
+ You can find more technical documentation on the wiki: https://github.com/spritebuilder/SpriteBuilder/wiki/Packages.
+ */
 @interface CCPackageManager : NSObject <CCPackageDownloadManagerDelegate, CCPackageUnzipperDelegate>
 
 /**
