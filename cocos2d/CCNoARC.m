@@ -83,7 +83,11 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 	if (_effect)
 	{
 		_effectRenderer.contentSize = self.contentSizeInPoints;
-		if ([self.effect prepareForRenderingWithSprite:self] == CCEffectPrepareSuccess)
+        
+        CCEffectPrepareResult prepResult = [self.effect prepareForRenderingWithSprite:self];
+        NSAssert(prepResult.status == CCEffectPrepareSuccess, @"Effect preparation failed.");
+        
+        if (prepResult.changes & CCEffectPrepareUniformsChanged)
 		{
 			// Preparing an effect for rendering can modify its uniforms
 			// dictionary which means we need to reinitialize our copy of the

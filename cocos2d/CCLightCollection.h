@@ -26,9 +26,6 @@
 #import "CCColor.h"
 #import "CCLightGroups.h"
 
-
-#if CC_EFFECTS_EXPERIMENTAL
-
 extern const CCLightGroupMask CCLightCollectionAllGroups;
 
 @class CCLightNode;
@@ -121,5 +118,3 @@ extern const CCLightGroupMask CCLightCollectionAllGroups;
 - (void)flushGroupNames;
 
 @end
-
-#endif

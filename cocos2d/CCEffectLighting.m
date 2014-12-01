@@ -8,8 +8,6 @@
 
 #import "CCEffectLighting.h"
 
-#if CC_EFFECTS_EXPERIMENTAL
-
 #import "CCDirector.h"
 #import "CCEffectUtils.h"
 #import "CCLightCollection.h"
@@ -54,7 +52,7 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
 
 -(id)init
 {
-    return [self initWithGroups:nil specularColor:[CCColor whiteColor] shininess:5.0f];
+    return [self initWithGroups:@[] specularColor:[CCColor whiteColor] shininess:5.0f];
 }
 
 -(id)initWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess
@@ -321,9 +319,9 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
     self.renderPasses = @[pass0];
 }
 
-- (CCEffectPrepareStatus)prepareForRenderingWithSprite:(CCSprite *)sprite
+- (CCEffectPrepareResult)prepareForRenderingWithSprite:(CCSprite *)sprite
 {
-    CCEffectPrepareStatus result = CCEffectPrepareNothingToDo;
+    CCEffectPrepareResult result = CCEffectPrepareNoop;
 
     BOOL needsNormalMap = (sprite.normalMapSpriteFrame != nil);
     
@@ -388,8 +386,9 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
         NSMutableArray *vertFunctions = [CCEffectLighting buildVertexFunctionsWithLights:self.closestLights];
         
         [self buildEffectWithFragmentFunction:fragFunctions vertexFunctions:vertFunctions fragmentUniforms:fragUniforms vertexUniforms:vertUniforms varyings:varyings firstInStack:YES];
-
-        result = CCEffectPrepareSuccess;
+        
+        result.status = CCEffectPrepareSuccess;
+        result.changes = CCEffectPrepareShaderChanged | CCEffectPrepareUniformsChanged;
     }
     return result;
 }
@@ -433,5 +432,3 @@ BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b)
     return (((a.pointLightMask) == (b.pointLightMask)) &&
             ((a.directionalLightMask) == (b.directionalLightMask)));
 }
-
-#endif
