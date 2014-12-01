@@ -8,8 +8,6 @@
 
 #import "CCEffectLighting.h"
 
-#if CC_EFFECTS_EXPERIMENTAL
-
 #import "CCDirector.h"
 #import "CCEffectUtils.h"
 #import "CCLightCollection.h"
@@ -349,7 +347,7 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
 
 -(id)init
 {
-    return [self initWithGroups:nil specularColor:[CCColor whiteColor] shininess:5.0f];
+    return [self initWithGroups:@[] specularColor:[CCColor whiteColor] shininess:5.0f];
 }
 
 -(id)initWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess
@@ -373,10 +371,10 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
     return [[self alloc] initWithGroups:groups specularColor:specularColor shininess:shininess];
 }
 
-- (CCEffectPrepareStatus)prepareForRenderingWithSprite:(CCSprite *)sprite
+- (CCEffectPrepareResult)prepareForRenderingWithSprite:(CCSprite *)sprite
 {
-    CCEffectPrepareStatus result = CCEffectPrepareNothingToDo;
-    
+    CCEffectPrepareResult result = CCEffectPrepareNoop;
+
     _needsNormalMap = (sprite.normalMapSpriteFrame != nil);
     
     CGAffineTransform spriteTransform = sprite.nodeToWorldTransform;
@@ -392,17 +390,18 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
     self.closestLights = [lightCollection findClosestKLights:CCEffectLightingMaxLightCount toPoint:spritePosition withMask:self.groupMask];
     CCLightKey newLightKey = CCLightKeyMake(self.closestLights);
     
-    if (!CCLightKeyCompare(newLightKey, _lightKey) ||
-        (_shaderHasSpecular != self.needsSpecular) ||
-        (_shaderHasNormalMap != _needsNormalMap))
+    if (!CCLightKeyCompare(newLightKey, self.lightKey) ||
+        (self.shaderHasSpecular != self.needsSpecular) ||
+        (self.shaderHasNormalMap != self.needsNormalMap))
     {
-        _lightKey = newLightKey;
-        _shaderHasSpecular = self.needsSpecular;
-        _shaderHasNormalMap = _needsNormalMap;
+        self.lightKey = newLightKey;
+        self.shaderHasSpecular = self.needsSpecular;
+        self.shaderHasNormalMap = _needsNormalMap;
         
         self.effectImpl = [[CCEffectLightingImpl alloc] initWithInterface:self];
 
-        result = CCEffectPrepareSuccess;
+        result.status = CCEffectPrepareSuccess;
+        result.changes = CCEffectPrepareShaderChanged | CCEffectPrepareUniformsChanged;
     }
     return result;
 }
@@ -447,5 +446,3 @@ BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b)
     return (((a.pointLightMask) == (b.pointLightMask)) &&
             ((a.directionalLightMask) == (b.directionalLightMask)));
 }
-
-#endif

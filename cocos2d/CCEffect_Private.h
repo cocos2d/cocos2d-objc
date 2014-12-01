@@ -23,18 +23,33 @@ extern NSString * const CCEffectDefaultInitialInputSnippet;
 extern NSString * const CCEffectDefaultInputSnippet;
 
 
+typedef NS_ENUM(NSUInteger, CCEffectPrepareStatus)
+{
+    CCEffectPrepareFailure       = 0,
+    CCEffectPrepareSuccess       = 1,
+};
+
+typedef NS_OPTIONS(NSUInteger, CCEffectPrepareWhatChanged)
+{
+    CCEffectPrepareNothingChanged  = 0,
+    CCEffectPreparePassesChanged   = (1 << 0),
+    CCEffectPrepareShaderChanged   = (1 << 1),
+    CCEffectPrepareUniformsChanged = (1 << 2)
+};
+
+typedef struct CCEffectPrepareResult
+{
+    CCEffectPrepareStatus status;
+    CCEffectPrepareWhatChanged changes;
+} CCEffectPrepareResult;
+
+extern const CCEffectPrepareResult CCEffectPrepareNoop;
+
 typedef NS_ENUM(NSUInteger, CCEffectFunctionStitchFlags)
 {
     CCEffectFunctionStitchBefore     = 1 << 0,
     CCEffectFunctionStitchAfter      = 1 << 1,
     CCEffectFunctionStitchBoth       = (CCEffectFunctionStitchBefore | CCEffectFunctionStitchAfter),
-};
-
-typedef NS_ENUM(NSUInteger, CCEffectPrepareStatus)
-{
-    CCEffectPrepareNothingToDo   = 0,
-    CCEffectPrepareFailure       = 1,
-    CCEffectPrepareSuccess       = 2,
 };
 
 typedef NS_ENUM(NSUInteger, CCEffectTexCoordMapping)
@@ -158,9 +173,8 @@ typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass, CCEffectRen
 
 @property (nonatomic, readonly) BOOL supportsDirectRendering;
 @property (nonatomic, readonly) NSUInteger renderPassCount;
-@property (nonatomic, weak) id<CCEffectStackProtocol> owningStack;
 
--(CCEffectPrepareStatus)prepareForRenderingWithSprite:(CCSprite *)sprite;;
+-(CCEffectPrepareResult)prepareForRenderingWithSprite:(CCSprite *)sprite;;
 -(CCEffectRenderPass *)renderPassAtIndex:(NSUInteger)passIndex;
 
 @end
@@ -191,7 +205,7 @@ typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass, CCEffectRen
 
 -(id)initWithRenderPasses:(NSArray *)renderPasses shaderUniforms:(NSMutableDictionary *)uniforms;
 
--(CCEffectPrepareStatus)prepareForRenderingWithSprite:(CCSprite *)sprite;
+-(CCEffectPrepareResult)prepareForRenderingWithSprite:(CCSprite *)sprite;
 -(CCEffectRenderPass *)renderPassAtIndex:(NSUInteger)passIndex;
 
 -(BOOL)stitchSupported:(CCEffectFunctionStitchFlags)stitch;

@@ -445,20 +445,19 @@
     // The shader is constructed dynamically based on the blur radius
     // so mark it dirty.
     _shaderDirty = YES;
-    
-    // Now inform any containing stacks that this effect is dirty.
-    [self.owningStack passesDidChange:self];
 }
 
-- (CCEffectPrepareStatus)prepareForRendering
+- (CCEffectPrepareResult)prepareForRenderingWithSprite:(CCSprite *)sprite
 {
-    CCEffectPrepareStatus result = CCEffectPrepareNothingToDo;
+    CCEffectPrepareResult result = CCEffectPrepareNoop;
     if (_shaderDirty)
     {
         self.effectImpl = [[CCEffectBloomImpl alloc] initWithInterface:self];
         
         _shaderDirty = NO;
-        result = CCEffectPrepareSuccess;
+        
+        result.status = CCEffectPrepareSuccess;
+        result.changes = CCEffectPrepareShaderChanged;
     }
     return result;
 }

@@ -2,6 +2,9 @@
 
 @class CCPackage;
 
+/** CCPackageInstaller class takes care of copying the contents of a package to the installation folder.
+ 
+ */
 @interface CCPackageInstaller : NSObject
 
 /**
