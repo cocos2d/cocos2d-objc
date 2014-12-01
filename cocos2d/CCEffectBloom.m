@@ -387,9 +387,9 @@
     self.renderPasses = @[pass0, pass1, pass2];
 }
 
-- (CCEffectPrepareStatus)prepareForRenderingWithSprite:(CCSprite *)sprite
+- (CCEffectPrepareResult)prepareForRenderingWithSprite:(CCSprite *)sprite
 {
-    CCEffectPrepareStatus result = CCEffectPrepareNothingToDo;
+    CCEffectPrepareResult result = CCEffectPrepareNoop;
     if (_shaderDirty)
     {
         unsigned long count = (unsigned long)(1 + (_numberOfOptimizedOffsets * 2));
@@ -402,7 +402,9 @@
         [self buildRenderPasses];
         
         _shaderDirty = NO;
-        result = CCEffectPrepareSuccess;
+
+        result.status = CCEffectPrepareSuccess;
+        result.changes = CCEffectPrepareShaderChanged;
     }
     return result;
 }
@@ -465,8 +467,6 @@
 
     CCEffectBloomImpl *bloomImpl = (CCEffectBloomImpl *)self.effectImpl;
     [bloomImpl setBlurRadius:blurRadius];
-    
-    [self.owningStack passesDidChange:self];
 }
 
 @end

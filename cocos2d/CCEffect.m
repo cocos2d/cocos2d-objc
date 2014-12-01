@@ -19,7 +19,7 @@ NSString * const CCShaderUniformTexCoord2Extents    = @"cc_FragTexCoord2Extents"
 NSString * const CCEffectDefaultInitialInputSnippet = @"cc_FragColor * texture2D(cc_PreviousPassTexture, cc_FragTexCoord1);\nvec2 compare = cc_FragTexCoord1Extents - abs(cc_FragTexCoord1 - cc_FragTexCoord1Center);\ntmp *= step(0.0, min(compare.x, compare.y))";
 NSString * const CCEffectDefaultInputSnippet = @"texture2D(cc_PreviousPassTexture, cc_FragTexCoord1);\nvec2 compare = cc_FragTexCoord1Extents - abs(cc_FragTexCoord1 - cc_FragTexCoord1Center);\ntmp *= step(0.0, min(compare.x, compare.y))";
 
-
+const CCEffectPrepareResult CCEffectPrepareNoop     = { CCEffectPrepareSuccess, CCEffectPrepareNothingChanged };
 
 static NSString* fragBase =
 @"%@\n\n"   // uniforms
@@ -582,9 +582,9 @@ static NSString* vertBase =
     return YES;
 }
 
-- (CCEffectPrepareStatus)prepareForRenderingWithSprite:(CCSprite *)sprite
+- (CCEffectPrepareResult)prepareForRenderingWithSprite:(CCSprite *)sprite
 {
-    return CCEffectPrepareNothingToDo;
+    return CCEffectPrepareNoop;
 }
 
 -(CCEffectRenderPass *)renderPassAtIndex:(NSUInteger)passIndex
@@ -623,7 +623,7 @@ static NSString* vertBase =
     return _effectImpl.renderPasses.count;
 }
 
-- (CCEffectPrepareStatus)prepareForRenderingWithSprite:(CCSprite *)sprite;
+- (CCEffectPrepareResult)prepareForRenderingWithSprite:(CCSprite *)sprite;
 {
     NSAssert(_effectImpl, @"The effect has a nil implementation. Something is terribly wrong.");
     return [_effectImpl prepareForRenderingWithSprite:sprite];

@@ -264,6 +264,7 @@
 {
     _distanceFieldEffect.outline = !_distanceFieldEffect.outline;
 }
+#endif
 
 -(void)setupSimpleLightingTest
 {
@@ -737,8 +738,6 @@
         [self.contentNode addChild:setupLightBlock(ccp(x,y), r, t, colors[c])];
     }
 }
-
-#endif
 
 -(void)setupInvertTest
 {

@@ -8,11 +8,12 @@
 
 #import "CCNode.h"
 
-#if CC_EFFECTS_EXPERIMENTAL
-
+/** Light Types */
 typedef NS_ENUM(NSUInteger, CCLightType)
 {
+    /** A point light source. */
     CCLightPoint       = 0,
+    /** A directional light source. */
     CCLightDirectional = 1
 };
 
@@ -187,7 +188,4 @@ typedef NS_ENUM(NSUInteger, CCLightType)
  */
 +(id)lightWithType:(CCLightType)type groups:(NSArray*)groups color:(CCColor *)color intensity:(float)intensity specularColor:(CCColor *)specularColor specularIntensity:(float)specularIntensity ambientColor:(CCColor *)ambientColor ambientIntensity:(float)ambientIntensity;
 
-
 @end
-
-#endif

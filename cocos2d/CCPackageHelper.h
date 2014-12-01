@@ -1,6 +1,8 @@
 #import <Foundation/Foundation.h>
 
+/** CCPackageHelper provides methods to determine information about the running app relevant for packages used throughout the packages feature.
 
+ */
 @interface CCPackageHelper : NSObject
 
 /**

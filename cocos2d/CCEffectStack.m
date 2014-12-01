@@ -22,24 +22,38 @@
 
 - (id)initWithArray:(NSArray *)effects
 {
+    NSAssert(effects.count, @"CCEffectStack unexpectedly supplied a nil or empty effects array.");
     if ((self = [super init]))
     {
-        if (effects)
-        {
-            _effects = [effects mutableCopy];
-            for (CCEffect *effect in _effects)
-            {
-                NSAssert(!effect.owningStack, @"Adding an effect to this stack that is already contained by another stack. That's not allowed.");
-                effect.owningStack = self;
-            }
-        }
-        else
-        {
-            _effects = [[NSMutableArray alloc] init];
-        }
-        _passesDirty = YES;
+        _effects = [effects copy];
         _stitchingEnabled = YES;
 
+        // Flatten the supplied effects array, collapsing any sub-stacks up into this one.
+        NSMutableArray *flattenedEffects = [[NSMutableArray alloc] initWithArray:_effects];
+        NSUInteger index = 0;
+        while (index < flattenedEffects.count)
+        {
+            // Visit each effect in the current flattened list.
+            CCEffect *effect = flattenedEffects[index];
+            if ([effect isKindOfClass:[CCEffectStack class]])
+            {
+                // If the current effect is a stack, get the effects it contains
+                // and put them in our flattened list. Don't increment index though
+                // because the first effect that we just inserted might also be
+                // a stack so we need to stay at this position and inspect it in
+                // the next loop iteration.
+                CCEffectStack *stack = (CCEffectStack *)effect;
+                [flattenedEffects replaceObjectsInRange:NSMakeRange(index, 1) withObjectsFromArray:stack.effects];
+            }
+            else
+            {
+                // The current effect is not a stack so just advance to the
+                // next effect.
+                index++;
+            }
+        }
+        _flattenedEffects = [flattenedEffects copy];
+        
         self.debugName = @"CCEffectStack";
     }
     return self;
@@ -100,76 +114,48 @@
     return _effects[effectIndex];
 }
 
-- (void)dealloc
-{
-    for (CCEffect *effect in _effects)
-    {
-        effect.owningStack = nil;
-    }
-}
-
 #pragma mark - CCEffect overrides
 
-- (CCEffectPrepareStatus)prepareForRenderingWithSprite:(CCSprite *)sprite
+- (CCEffectPrepareResult)prepareForRenderingWithSprite:(CCSprite *)sprite
 {
-    CCEffectPrepareStatus result = CCEffectPrepareNothingToDo;
-    if (_passesDirty)
-    {
-        CGSize maxPadding = self.padding;
-        
-        // Start by populating the flattened list with this stack's effects.
-        NSMutableArray *flattenedEffects = [[NSMutableArray alloc] initWithArray:_effects];
-        NSUInteger index = 0;
-        while (index < flattenedEffects.count)
-        {
-            // Visit each effect in the current flattened list.
-            CCEffect *effect = flattenedEffects[index];
-            if ([effect isKindOfClass:[CCEffectStack class]])
-            {
-                // If the current effect is a stack, get the effects it contains
-                // and put them in our flattened list. Don't increment index though
-                // because the first effect that we just inserted might also be
-                // a stack so we need to stay at this position and inspect it in
-                // the next loop iteration.
-                CCEffectStack *stack = (CCEffectStack *)effect;
-                [flattenedEffects replaceObjectsInRange:NSMakeRange(index, 1) withObjectsFromArray:stack.effects];
-            }
-            else
-            {
-                // The current effect is not a stack so just advance to the
-                // next effect.
-                index++;
-            }
-        }
-        
-        for (CCEffect *effect in flattenedEffects)
-        {
-            // Make sure all the contained effects are ready for rendering
-            // before we do anything else.
-            [effect prepareForRenderingWithSprite:sprite];
-            
-            // And find the max padding values of all contained effects.
-            if (effect.padding.width > maxPadding.width)
-            {
-                maxPadding.width = effect.padding.width;
-            }
-            
-            if (effect.padding.height > maxPadding.height)
-            {
-                maxPadding.height = effect.padding.height;
-            }
-        }
+    CCEffectPrepareResult finalResult = CCEffectPrepareNoop;
 
+    CGSize maxPadding = CGSizeZero;;
+    for (CCEffect *effect in _flattenedEffects)
+    {
+        // Make sure all the contained effects are ready for rendering
+        // before we do anything else.
+        CCEffectPrepareResult prepResult = [effect prepareForRenderingWithSprite:sprite];
+        NSAssert(prepResult.status == CCEffectPrepareSuccess, @"Effect preparation failed.");
+        
+        // Anything that changed in a sub-effect should be flagged as changed for the entire stack.
+        finalResult.changes |= prepResult.changes;
+        
+        // And find the max padding values of all contained effects.
+        if (effect.padding.width > maxPadding.width)
+        {
+            maxPadding.width = effect.padding.width;
+        }
+        
+        if (effect.padding.height > maxPadding.height)
+        {
+            maxPadding.height = effect.padding.height;
+        }
+    }
+    self.padding = maxPadding;
+    
+    if (!self.effectImpl.renderPasses.count || finalResult.changes)
+    {
         NSMutableArray *stitchedEffects = [[NSMutableArray alloc] init];
         NSMutableArray *stitchLists = [[NSMutableArray alloc] init];
         
-        CCEffect *firstEffect = [flattenedEffects firstObject];
+        CCEffect *firstEffect = [_flattenedEffects firstObject];
         NSMutableArray *currentStitchList = [[NSMutableArray alloc] initWithArray:@[firstEffect.effectImpl]];
         [stitchLists addObject:currentStitchList];
         
         // Iterate over the original effects array building sets of effects
         // that can be stitched together based on their stitch flags.
-        for (CCEffect *effect in [flattenedEffects subarrayWithRange:NSMakeRange(1, flattenedEffects.count - 1)])
+        for (CCEffect *effect in [_flattenedEffects subarrayWithRange:NSMakeRange(1, _flattenedEffects.count - 1)])
         {
             CCEffectImpl *prevEffectImpl = [currentStitchList lastObject];
             if (_stitchingEnabled && [prevEffectImpl stitchSupported:CCEffectFunctionStitchAfter] && [effect.effectImpl stitchSupported:CCEffectFunctionStitchBefore])
@@ -203,15 +189,18 @@
             
             [uniforms addEntriesFromDictionary:effectImpl.shaderUniforms];
         }
+        
         self.effectImpl = [[CCEffectImpl alloc] init];
         self.effectImpl.renderPasses = [passes copy];
         self.effectImpl.shaderUniforms = uniforms;
-        self.padding = maxPadding;
         
-        _passesDirty = NO;
-        result = CCEffectPrepareSuccess;
+        // Stitching and name mangling changes the uniform dictionary so flag it
+        // as changed. If we're here then the render passes are already flagged
+        // as changed so we don't have to do that now.
+        finalResult.changes |= CCEffectPrepareUniformsChanged;
     }
-    return result;
+    
+    return finalResult;
 }
 
 #pragma mark - Internal
@@ -395,17 +384,5 @@
     
     return body;
 }
-
-#pragma mark - CCEffectStackProtocol
-
-- (void)passesDidChange:(id)sender
-{
-    // Mark this stack's passes as dirty and propagate the
-    // change notification up the tree (if we're not at the
-    // top).
-    _passesDirty = YES;
-    [self.owningStack passesDidChange:self];
-}
-
 
 @end

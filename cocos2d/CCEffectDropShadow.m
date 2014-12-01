@@ -323,9 +323,9 @@
     self.renderPasses = @[pass0, pass1, pass3];
 }
 
-- (CCEffectPrepareStatus)prepareForRenderingWithSprite:(CCSprite *)sprite
+- (CCEffectPrepareResult)prepareForRenderingWithSprite:(CCSprite *)sprite
 {
-    CCEffectPrepareStatus result = CCEffectPrepareNothingToDo;
+    CCEffectPrepareResult result = CCEffectPrepareNoop;
     if (_shaderDirty)
     {
         unsigned long count = (unsigned long)(1 + (_numberOfOptimizedOffsets * 2));
@@ -338,7 +338,9 @@
         [self buildRenderPasses];
         
         _shaderDirty = NO;
-        result = CCEffectPrepareSuccess;
+        
+        result.status = CCEffectPrepareSuccess;
+        result.changes = CCEffectPrepareShaderChanged;
     }
     return result;
 }
@@ -378,8 +380,6 @@
     
     CCEffectDropShadowImpl *dropShadowImpl = (CCEffectDropShadowImpl *)self.effectImpl;
     [dropShadowImpl setBlurRadius:blurRadius];
-    
-    [self.owningStack passesDidChange:self];
 }
 
 @end
