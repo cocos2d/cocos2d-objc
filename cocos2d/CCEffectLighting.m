@@ -21,6 +21,7 @@
 #import "CCEffect_Private.h"
 #import "CCSprite_Private.h"
 
+
 typedef struct _CCLightKey
 {
     NSUInteger pointLightMask;
@@ -32,6 +33,7 @@ static const NSUInteger CCEffectLightingMaxLightCount = 8;
 
 static CCLightKey CCLightKeyMake(NSArray *lights);
 static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
+static float conditionShininess(float shininess);
 
 
 
@@ -44,6 +46,7 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
 @property (nonatomic, readonly) BOOL needsSpecular;
 @property (nonatomic, assign) BOOL shaderHasSpecular;
 @property (nonatomic, assign) BOOL shaderHasNormalMap;
+@property (nonatomic, strong) NSNumber *conditionedShininess;
 
 @end
 
@@ -52,7 +55,7 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
 
 -(id)init
 {
-    return [self initWithGroups:@[] specularColor:[CCColor whiteColor] shininess:5.0f];
+    return [self initWithGroups:@[] specularColor:[CCColor whiteColor] shininess:0.5f];
 }
 
 -(id)initWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess
@@ -68,6 +71,7 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
         
         _specularColor = specularColor;
         _shininess = shininess;
+        _conditionedShininess = [NSNumber numberWithFloat:conditionShininess(shininess)];
         
         _lightKey = CCLightKeyMake(nil);
         _shaderHasSpecular = NO;
@@ -310,7 +314,7 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
         
         if (self.needsSpecular)
         {
-            passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_specularExponent"]] = [NSNumber numberWithFloat:weakSelf.shininess];
+            passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_specularExponent"]] = weakSelf.conditionedShininess;
             passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_specularColor"]] = [NSValue valueWithGLKVector4:weakSelf.specularColor.glkVector4];
         }
         
@@ -404,6 +408,12 @@ static BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b);
     _groupMaskDirty = YES;
 }
 
+-(void)setShininess:(float)shininess
+{
+    _shininess = shininess;
+    _conditionedShininess = [NSNumber numberWithFloat:conditionShininess(shininess)];
+}
+
 @end
 
 CCLightKey CCLightKeyMake(NSArray *lights)
@@ -432,3 +442,12 @@ BOOL CCLightKeyCompare(CCLightKey a, CCLightKey b)
     return (((a.pointLightMask) == (b.pointLightMask)) &&
             ((a.directionalLightMask) == (b.directionalLightMask)));
 }
+
+float conditionShininess(float shininess)
+{
+    // Map supplied shininess from [0..1] to [1..100]
+    NSCAssert((shininess >= 0.0f) && (shininess <= 1.0f), @"Supplied shininess out of range [0..1].");
+    shininess = clampf(shininess, 0.0f, 1.0f);
+    return ((shininess * 99.0f) + 1.0f);
+}
+

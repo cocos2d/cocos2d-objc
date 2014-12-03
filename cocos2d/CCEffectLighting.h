@@ -80,8 +80,8 @@
 
 /**
  *  The shininess of the affected node. This value controls the tightness of specular
- *  highlights. 0 results in no specular contribution to the lighting equations and
- *  increasing values result in tighter highlights.
+ *  highlights and is in the range [0..1]. 0 results in no specular contribution to the 
+ *  lighting equations and increasing values result in tighter highlights.
  *  @since v3.4 and later
  */
 @property (nonatomic, assign) float shininess;

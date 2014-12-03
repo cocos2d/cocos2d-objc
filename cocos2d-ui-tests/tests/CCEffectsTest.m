@@ -281,7 +281,7 @@
         
         CCEffectLighting *lightingEffect = [[CCEffectLighting alloc] init];
         lightingEffect.groups = @[title];
-        lightingEffect.shininess = 10.0f;
+        lightingEffect.shininess = 0.1f;
         
         CCSprite *sprite = [CCSprite spriteWithImageNamed:diffuseImage];
         sprite.positionType = CCPositionTypeNormalized;
@@ -530,7 +530,7 @@
     light = setupBlock(ccp(0.7f, 0.65f), @"Shininess", nil);
     sprite = (CCSprite *)light.parent;
     lighting = (CCEffectLighting *)sprite.effect;
-    lighting.shininess = 4.0f;
+    lighting.shininess = 0.1f;
     
     typedef void (^ShininessLerpBlock)();
     typedef void (^ShininessLerpBuilderBlock)(float delta);
@@ -542,10 +542,10 @@
         return lerpBlock;
     };
     
-    ShininessLerpBlock shininessRampUp = shininessLerpBuilder(delta * 50.0f);
+    ShininessLerpBlock shininessRampUp = shininessLerpBuilder(delta * 0.5f);
     CCActionInterval *shininessRampUpAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:shininessRampUp]] times:120];
     
-    ShininessLerpBlock shininessRampDown = shininessLerpBuilder(-delta * 50.0f);
+    ShininessLerpBlock shininessRampDown = shininessLerpBuilder(-delta * 0.5f);
     CCActionInterval *shininessRampDownAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:shininessRampDown]] times:120];
     
     [light runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
@@ -573,7 +573,7 @@
     light.depth = 1.0f;
     sprite = (CCSprite *)light.parent;
     lighting = (CCEffectLighting *)sprite.effect;
-    lighting.shininess = 20.0f;
+    lighting.shininess = 0.2f;
     
 }
 
@@ -628,7 +628,7 @@
     
     
     CCEffectLighting *lightingEffect = [[CCEffectLighting alloc] init];
-    lightingEffect.shininess = 100.0f;
+    lightingEffect.shininess = 1.0f;
     
     CCSprite *sprite = [CCSprite spriteWithImageNamed:diffuseImage];
     sprite.positionType = CCPositionTypeNormalized;
@@ -652,7 +652,7 @@
     CCSprite* (^setupSpriteBlock)(CGPoint position) = ^CCSprite*(CGPoint position)
     {
         CCEffectLighting *lightingEffect = [[CCEffectLighting alloc] init];
-        lightingEffect.shininess = 100.0f;
+        lightingEffect.shininess = 1.0f;
         
         CCSprite *sprite = [CCSprite spriteWithImageNamed:diffuseImage];
         sprite.positionType = CCPositionTypeNormalized;
