@@ -30,7 +30,7 @@
 #import "CCNode.h"
 
 /**
- CCMotionStreak creates a motion trail special effect.
+ CCMotionStreak creates a motion trail special effect. The trail fades out after a short period of time.
  
  ### Notes
  - Segments controls how smooth the shape of the trail appears.
@@ -39,15 +39,7 @@
 @interface CCMotionStreak : CCNode <CCTextureProtocol, CCShaderProtocol, CCBlendProtocol>
 
 /// -----------------------------------------------------------------------
-/// @name Accessing Motion Streak Attributes
-/// -----------------------------------------------------------------------
-
-/** Fast mode toggle. */
-@property (nonatomic, readwrite, assign, getter = isFastMode) BOOL fastMode;
-
-
-/// -----------------------------------------------------------------------
-/// @name Creating a CCMotionStreak Object
+/// @name Creating a Motion Streak
 /// -----------------------------------------------------------------------
 
 /**
@@ -60,6 +52,7 @@
  *  @param path   Texture file path.
  *
  *  @return The CCMotionStreak object.
+ *  @see CCColor
  */
 +(id)streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(CCColor*)color textureFilename:(NSString*)path;
 
@@ -73,13 +66,10 @@
  *  @param texture Texture.
  *
  *  @return The CCMotionStreak object.
+ *  @see CCColor
+ *  @see CCTexture
  */
 +(id)streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(CCColor*)color texture:(CCTexture*)texture;
-
-
-/// -----------------------------------------------------------------------
-/// @name Initializing a CCMotionStreak Object
-/// -----------------------------------------------------------------------
 
 /**
  *  Initializes and returns a motion streak object from the specified fade time, segments, stroke, color and texture file path values.
@@ -91,6 +81,7 @@
  *  @param path   Texture file path.
  *
  *  @return An initialized CCMotionStreak object.
+ *  @see CCColor
  */
 -(id)initWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(CCColor*)color textureFilename:(NSString*)path;
 
@@ -104,10 +95,23 @@
  *  @param texture Texture.
  *
  *  @return An initialized CCMotionStreak object.
+ *  @see CCColor
+ *  @see CCTexture
  */
 -(id)initWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(CCColor*)color texture:(CCTexture*)texture;
 
+/// -----------------------------------------------------------------------
+/// @name Resetting the Motion Streak
+/// -----------------------------------------------------------------------
+
 /** Remove all living segments. */
 -(void)reset;
+
+/// -----------------------------------------------------------------------
+/// @name Accessing Motion Streak Attributes
+/// -----------------------------------------------------------------------
+
+/** Toggles "faster but less precise" mode. */
+@property (nonatomic, readwrite, assign, getter = isFastMode) BOOL fastMode;
 
 @end

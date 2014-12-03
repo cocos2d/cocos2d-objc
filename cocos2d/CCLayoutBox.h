@@ -26,29 +26,35 @@
 #import "CCLayout.h"
 
 /**
- *  Declares the possible directions for laying out nodes in a CCLayoutBox.
+ Declares the possible directions for laying out nodes in a CCLayoutBox.
  */
 typedef NS_ENUM(NSUInteger, CCLayoutBoxDirection)
 {
-    /// The children will be layout out in a horizontal line.
+    /// The children will be horizontally aligned.
     CCLayoutBoxDirectionHorizontal,
     
-    /// The children will be layout out in a vertical line.
+    /// The children will be vertically aligned.
     CCLayoutBoxDirectionVertical,
 };
 
 /**
- *  The box layout lays out its children in a horizontal or vertical row. Optionally you can set a spacing between the child nodes.
+ The box layout lays out its child nodes in a horizontal row or a vertical column. Optionally you can set a spacing between the child nodes.
+ 
+ @note In order to layout nodes in a grid, you can add one or more CCLayoutBox as child node with the opposite layout direction, ie the parent
+ box layout node uses vertical and the child box layout nodes use horizontal CCLayoutBoxDirection to create a grid of nodes.
  */
 @interface CCLayoutBox : CCLayout
 
+/** @name Layout Options */
+
 /**
- *  The direction is either horizontal or vertical.
+ The direction is either horizontal or vertical.
+ @see CCLayoutBoxDirection
  */
 @property (nonatomic,assign) CCLayoutBoxDirection direction;
 
 /**
- *  The spacing in points between the child nodes.
+ The spacing in points between the child nodes.
  */
 @property (nonatomic,assign) float spacing;
 

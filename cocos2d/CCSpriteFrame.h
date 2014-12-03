@@ -34,8 +34,8 @@
 
  You can easily modify the sprite frame of a CCSprite using the following handy method:
 
- CCSpriteFrame *frame = [CCSpriteFrame frameWithImageNamed:@"jump.png"];
- [sprite setSpriteFrame:frame];
+    CCSpriteFrame *frame = [CCSpriteFrame frameWithImageNamed:@"jump.png"];
+    [sprite setSpriteFrame:frame];
  */
 
 @class CCProxy;
@@ -43,34 +43,12 @@
 @interface CCSpriteFrame : NSObject <NSCopying>
 
 /// -----------------------------------------------------------------------
-/// @name Accessing Sprite Frame Attributes
-/// -----------------------------------------------------------------------
-
-/** Rectangle of the frame in points. If it is updated, then rectInPixels will also be updated. */
-@property (nonatomic, readonly) CGRect rect;
-
-/** Is the frame rectangle is rotated. */
-@property (nonatomic, readonly) BOOL rotated;
-
-/** Offset of the frame in points.  If it is updated, then offsetInPixels will also be updated. */
-@property (nonatomic, readonly) CGPoint offset;
-
-/** Original size of the trimmed image in points. */
-@property (nonatomic, readonly) CGSize originalSize;
-
-/** Texture of the frame. */
-@property (nonatomic, strong, readonly) CCTexture *texture;
-
-/** Texture image file name, when created from a texture image. */
-@property (nonatomic, strong, readonly) NSString *textureFilename;
-
-
-/// -----------------------------------------------------------------------
-/// @name Creating a CCSpriteFrame Object
+/// @name Creating a Sprite Frame
 /// -----------------------------------------------------------------------
 
 /**
- *  Create and return a sprite frame object from the specified image name.  On first attempt it will check CCSpriteFrameCache and if not available will then try and create from an image file of the same name.
+ *  Create and return a sprite frame object from the specified image name.  On first attempt it will check the internal texture/frame cache
+ *  and if not available will then try and create the frame from an image file of the same name.
  *
  *  @param imageName Image name.
  *
@@ -88,6 +66,7 @@
  *  @param originalSize Original size (in pixels) before being trimmed.
  *
  *  @return The CCSpriteFrame Object.
+ *  @see CCTexture
  */
 +(id) frameWithTexture:(CCTexture*)texture rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize;
 
@@ -104,11 +83,6 @@
  */
 +(id) frameWithTextureFilename:(NSString*)filename rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize;
 
-
-/// -----------------------------------------------------------------------
-/// @name Initializing a CCSpriteFrame Object
-/// -----------------------------------------------------------------------
-
 /**
  *  Initializes and returns a sprite frame object from the specified texture, texture rectangle, rotation status, offset and originalSize values.
  *
@@ -119,6 +93,7 @@
  *  @param originalSize Original size (in pixels) before being trimmed.
  *
  *  @return An initialized CCSpriteFrame Object.
+ *  @see CCTexture
  */
 -(id) initWithTexture:(CCTexture*)texture rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize;
 
@@ -134,6 +109,33 @@
  *  @return An initialized CCSpriteFrame Object.
  */
 -(id) initWithTextureFilename:(NSString*)filename rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize;
+
+/// -----------------------------------------------------------------------
+/// @name Sprite Frame Properties
+/// -----------------------------------------------------------------------
+
+/** Rectangle of the frame within the texture, in points. If it is updated, then rectInPixels will also be updated. */
+@property (nonatomic, readonly) CGRect rect;
+
+/** If YES, the frame rectangle is rotated. */
+@property (nonatomic, readonly) BOOL rotated;
+
+/** Offset of the frame from the texture's origin, in points. If it is updated, then offsetInPixels will also be updated. */
+@property (nonatomic, readonly) CGPoint offset;
+
+/** Original size of the trimmed image, in points. */
+@property (nonatomic, readonly) CGSize originalSize;
+
+/// -----------------------------------------------------------------------
+/// @name Texture Properties
+/// -----------------------------------------------------------------------
+
+/** Texture used by the frame.
+ @see CCTexture */
+@property (nonatomic, strong, readonly) CCTexture *texture;
+
+/** Texture image file name used to create the texture. */
+@property (nonatomic, strong, readonly) NSString *textureFilename;
 
 @end
 

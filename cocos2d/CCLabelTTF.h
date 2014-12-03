@@ -30,17 +30,43 @@
 #import "Platforms/CCNS.h"
 
 /**
- CCLabelTTF displays a rendered TTF font texture. The label is created from a platform font.
- Attributed strings are supported on Mac and iOS6+ which allows for greater text formatting control.
+ CCLabelTTF displays text rendered using a TrueType (TTF, OTF) font.
  
- ### Notes
+ Attributed strings are supported on Mac and iOS6+ which allow for greater text formatting control.
  
- Each time you modify the label text you are effectivley creating a new CCLabelTTF so there may be a performance hit if you need to frequently update the label.  In this scenario you should also look at CCLabelBMFont which does not have this overhead.
+ ### Performance Note
  
- ### Resources
+ Each time the label's string property changes a new CCLabelTTF texture is created and rendered, and the previous one discarded.
+ This adds a **huge performance penalty on every text change**. If you need to frequently update a label's text, you have two options:
+
+ - Use CCLabelBMFont which does not incur such a penalty. Requires creating a font with an external bitmap font editing tool.
+ - Create and cache all possible string variants as individual CCLabelTTF. Only suitable if the number of possible string
+    permutations is low and all strings are known beforehand. For example, assuming you use a fixed-width font you could use
+    label nodes with digits 0 through 9 and create your own digit counter node using n times ten label nodes, where n stands
+    for the total number of digits you expect to display at most. However consider the next paragraph.
  
- - http://iosfonts.com/ (Please use Safari for accurate font rendering)
+ ### Memory Usage Note
  
+ Each label, even when using the same string and font and all other properties being identical, will still create its own texture.
+ 
+ So if you have 100 label nodes with a "Hello" string you will have 100 "Hello" textures in memory. This behavior is unlike other
+ nodes, for instace sprites created from the same image file load and share identical textures.
+ 
+ If you use many labels in the same scene you should look into bitmap fonts and CCLabelBMFont.
+ 
+ ### iOS Fonts List
+ 
+ Here's a [list of fonts built into iOS](http://iosfonts.com) and their font names. Fonts not in this list will have iOS 
+ automatically pick the font that closely resembles the desired font, or a default font.
+ 
+ ### Custom Fonts
+ 
+ It is possible to add custom truetype fonts to an iOS application and use the font with CCLabelTTF.
+ For instructions and troubleshooting carefully [read this Q&A post](http://stackoverflow.com/questions/360751/can-i-embed-a-custom-font-in-an-iphone-application).
+ 
+ Note that a very common mistake is to assume the font filename or family name as the fontName property. Assuming you have
+ a font named "Avenir Condensed" then you need to find out the actual font identifier, which may be labelled `AvenirNextCondensed-HeavyItalic`.
+ That's the identifier you need to use. A typical giveaway that you got the wrong identifier is if the string contains a space character.
  */
 
 @interface CCLabelTTF : CCSprite <CCLabelProtocol> {
@@ -49,86 +75,8 @@
     BOOL _isTextureDirty;
 }
 
-
 /// -----------------------------------------------------------------------
-/// @name Accessing the Text Attributes
-/// -----------------------------------------------------------------------
-
-/** The label text. */
-@property (nonatomic,copy) NSString* string;
-
-/** The label attributed text. */
-@property (nonatomic,copy) NSAttributedString* attributedString;
-
-/** The platform font to use for the text. */
-@property (nonatomic,strong) NSString* fontName;
-
-/** The font size of the text. */
-@property (nonatomic,assign) CGFloat fontSize;
-
-/** The color of the text (If not using shadow or outline). */
-@property (nonatomic,strong) CCColor* fontColor;
-
-/** The horizontal alignment technique of the text. */
-@property (nonatomic,assign) CCTextAlignment horizontalAlignment;
-
-/** The vertical alignment technique of the text. */
-@property (nonatomic,assign) CCVerticalTextAlignment verticalAlignment;
-
-
-/// -----------------------------------------------------------------------
-/// @name Sizing the Label
-/// -----------------------------------------------------------------------
-
-/** Dimensions of the label in Points. */
-@property (nonatomic,assign) CGSize dimensions;
-
-/** Dimension type of the label. */
-@property (nonatomic,assign) CCSizeType dimensionsType;
-
-/** If true, the label will be scaled down to fit into the size provided by the dimensions property. Only has an effect if dimensions are set. */
-@property (nonatomic,assign) BOOL adjustsFontSizeToFit;
-
-/** Used together with adjustsFontSizeToFit. Fonts will not be scaled down below this size (the label will instead be clipped). */
-@property (nonatomic,assign) CGFloat minimumFontSize;
-
-/** Adjusts the fonts baseline, the value is set in points. */
-@property (nonatomic,assign) CGFloat baselineAdjustment;
-
-
-/// -----------------------------------------------------------------------
-/// @name Drawing a Shadow
-/// -----------------------------------------------------------------------
-
-/** The color of the text shadow. If the color is transparent, no shadow will be used. */
-@property (nonatomic,strong) CCColor* shadowColor;
-
-/** The offset of the shadow. */
-@property (nonatomic,assign) CGPoint shadowOffset;
-
-/** The offset of the shadow in points */
-@property(nonatomic,readonly) CGPoint shadowOffsetInPoints;
-
-/** The position type to be used for the shadow offset. */
-@property (nonatomic,assign) CCPositionType shadowOffsetType;
-
-/** The blur radius of the shadow. */
-@property (nonatomic,assign) CGFloat shadowBlurRadius;
-
-
-/// -----------------------------------------------------------------------
-/// @name Drawing an Outline
-/// -----------------------------------------------------------------------
-
-/** The color of the text's outline. */
-@property (nonatomic,strong) CCColor* outlineColor;
-
-/** The width of the text's outline. */
-@property (nonatomic,assign) CGFloat outlineWidth;
-
-
-/// -----------------------------------------------------------------------
-/// @name Creating a CCLabelTTF Object
+/// @name Creating a Truetype Font Label
 /// -----------------------------------------------------------------------
 
 /**
@@ -155,34 +103,6 @@
 +(id) labelWithString:(NSString *)string fontName:(NSString *)name fontSize:(CGFloat)size dimensions:(CGSize)dimensions;
 
 /**
- *  Creates and returns a label object using the specified attributed text.
- *
- *  @param attrString Label Attributed text.
- *
- *  @since Available in iOS 6.0+ and OS X.
- *
- *  @return The CCLabelTTF Object.
- */
-+(id) labelWithAttributedString:(NSAttributedString *)attrString;
-
-/**
- *  Creates and returns a label object using the specified attributed text and dimensions.
- *
- *  @param attrString Label Attributed text.
- *  @param dimensions Label dimensions.
- *  
- *  @since Available in iOS 6.0+ and OS X.
- *
- *  @return The CCLabelTTF Object.
- */
-+(id) labelWithAttributedString:(NSAttributedString *)attrString dimensions:(CGSize)dimensions;
-
-
-/// -----------------------------------------------------------------------
-/// @name Initializing a CCLabelTTF Object
-/// -----------------------------------------------------------------------
-
-/**
  *  Initializes and returns a label object using the specified text, font name and font size.
  *
  *  @param string   Label text.
@@ -204,6 +124,33 @@
  *  @return An initialized CCLabelTTF Object.
  */
 -(id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size dimensions:(CGSize)dimensions;
+
+/// -----------------------------------------------------------------------
+/// @name Creating an Attributed Truetype Font Label
+/// -----------------------------------------------------------------------
+
+/**
+ *  Creates and returns a label object using the specified attributed text.
+ *
+ *  @param attrString Label Attributed text.
+ *
+ *  @since Available in iOS 6.0+ and OS X.
+ *
+ *  @return The CCLabelTTF Object.
+ */
++(id) labelWithAttributedString:(NSAttributedString *)attrString;
+
+/**
+ *  Creates and returns a label object using the specified attributed text and dimensions.
+ *
+ *  @param attrString Label Attributed text.
+ *  @param dimensions Label dimensions.
+ *
+ *  @since Available in iOS 6.0+ and OS X.
+ *
+ *  @return The CCLabelTTF Object.
+ */
++(id) labelWithAttributedString:(NSAttributedString *)attrString dimensions:(CGSize)dimensions;
 
 /**
  *  Initializes and returns a label object using the specified attributed text.
@@ -230,29 +177,112 @@
 
 
 /// -----------------------------------------------------------------------
-/// @name OS X
+/// @name Text Attributes
 /// -----------------------------------------------------------------------
 
+/** The label text. */
+@property (nonatomic,copy) NSString* string;
+
+/** The label's attributed text. */
+@property (nonatomic,copy) NSAttributedString* attributedString;
+
+/** The platform font name to use for the text. */
+@property (nonatomic,strong) NSString* fontName;
+
+/** The font size of the text. */
+@property (nonatomic,assign) CGFloat fontSize;
+
+/** The color of the text. Does not apply if you are using shadow or outline effects.
+ @see CCColor */
+@property (nonatomic,strong) CCColor* fontColor;
+
+/** The horizontal alignment of the text.
+ @see CCTextAlignment */
+@property (nonatomic,assign) CCTextAlignment horizontalAlignment;
+
+/** The vertical alignment of the text.
+  @see CCVerticalTextAlignment */
+@property (nonatomic,assign) CCVerticalTextAlignment verticalAlignment;
+
+
+/// -----------------------------------------------------------------------
+/// @name Sizing the Label
+/// -----------------------------------------------------------------------
+
+/** Dimensions of the label in Points, including padding. */
+@property (nonatomic,assign) CGSize dimensions;
+
+/** Dimension type of the label.
+ @see CCSizeType, CCSizeUnit */
+@property (nonatomic,assign) CCSizeType dimensionsType;
+
+/** If YES, the label will be scaled down to fit into the size provided by the dimensions property. Only has an effect if dimensions are set. */
+@property (nonatomic,assign) BOOL adjustsFontSizeToFit;
+
+/** Used together with adjustsFontSizeToFit. Fonts will not be scaled down below this size (the label will instead be clipped). */
+@property (nonatomic,assign) CGFloat minimumFontSize;
+
+/** Adjusts the font's baseline, the value is in points. */
+@property (nonatomic,assign) CGFloat baselineAdjustment;
+
+
+/// -----------------------------------------------------------------------
+/// @name Drawing a Shadow
+/// -----------------------------------------------------------------------
+
+/** The color of the text shadow. If the color is fully transparent, no shadow will be used. */
+@property (nonatomic,strong) CCColor* shadowColor;
+
+/** The offset of the shadow. */
+@property (nonatomic,assign) CGPoint shadowOffset;
+
+/** The offset of the shadow in points */
+@property(nonatomic,readonly) CGPoint shadowOffsetInPoints;
+
+/** The position type to be used for the shadow offset.
+ @see CCPositionType, CCPositionUnit, CCPositionReferenceCorner */
+@property (nonatomic,assign) CCPositionType shadowOffsetType;
+
+/** The blur radius of the shadow. */
+@property (nonatomic,assign) CGFloat shadowBlurRadius;
+
+
+/// -----------------------------------------------------------------------
+/// @name Drawing an Outline
+/// -----------------------------------------------------------------------
+
+/** The color of the text's outline.
+ @see CCColor */
+@property (nonatomic,strong) CCColor* outlineColor;
+
+/** The width of the text's outline. */
+@property (nonatomic,assign) CGFloat outlineWidth;
+
 #if __CC_PLATFORM_MAC
+/// -----------------------------------------------------------------------
+/// @name HTML String (OS X only)
+/// -----------------------------------------------------------------------
+
 /**
- *  (OS X) HTML Label
+ *  Creates an attributed string from HTML text.
  *
- *  @param html HTML Description.
+ *  @param html HTML string.
+ *  @since Only available on OS X.
  */
 - (void) setHTML:(NSString*) html;
 #endif
 
 
 /// -----------------------------------------------------------------------
-/// @name TTF Management
+/// @name Register a Custom Truetype Font
 /// -----------------------------------------------------------------------
 
 /**
- *  Register a TTF font resource.
+ *  Register a TTF font resource added to the project/bundle.
  *
- *  @param fontFile Font file path.
+ *  @param fontFile Full or relative path to font file.
  *
- *  @return Registered font name
+ *  @return Registered font name. Returns nil if the font file failed to register.
  */
 +(NSString *) registerCustomTTF:(NSString*)fontFile;
 
