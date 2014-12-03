@@ -143,7 +143,10 @@ static float conditionShininess(float shininess);
         {
             [effectBody appendFormat:@"worldSpaceLightDir = v_worldSpaceLightDir%lu.xyz;\n", (unsigned long)lightIndex];
             [effectBody appendFormat:@"lightColor = u_lightColor%lu;\n", (unsigned long)lightIndex];
-            [effectBody appendFormat:@"lightSpecularColor = u_lightSpecularColor%lu;\n", (unsigned long)lightIndex];
+            if (needsSpecular)
+            {
+                [effectBody appendFormat:@"lightSpecularColor = u_lightSpecularColor%lu;\n", (unsigned long)lightIndex];
+            }
         }
         else
         {
