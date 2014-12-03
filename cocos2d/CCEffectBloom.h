@@ -17,36 +17,33 @@
 
 @interface CCEffectBloom : CCEffect
 
+
 /// -----------------------------------------------------------------------
-/// @name Accessing Effect Attributes
+/// @name Creating a Bloom Effect
 /// -----------------------------------------------------------------------
 
-/** The luminance threshold at which pixels will contribute to the bloom.
- *  This value is in the range [0..1]. Lower values mean that more pixels will
- *  contribute to the blurry bloom image.
+/**
+ *  Creates a CCEffectBloom object with the specified parameters.
+ *
+ *  @param blurRadius number of pixels blur will extend to (6 is the maximum, because we are limited by the number
+ *  of varying variables that can be passed to a glsl program).
+ *
+ *  @param intensity ranges between 0.0-1.0 - defines the contrast of the glowing image. A higher value will make the glow more prevelant.
+ *
+ *  @param luminanceThreshold ranges between 0.0-1.0 - defines which part of the image should be glown via a luminance factor (brightness).
+ *  A value of 0.0 will apply bloom to the whole image, a value of 1.0 will only apply bloom to the brightest part of the image.
+ *
+ *  @return The CCEffectBloom object.
+ *  @since v3.2 and later
  */
-@property (nonatomic, assign) float luminanceThreshold;
-
-/** The intensity of the blurred out bloom image when added to the original
- *  unmodified image. This value is in the range [0..1]. 0 results in no bloom
- *  while higher values result in more bloom.
- */
-@property (nonatomic, assign) float intensity;
-
-/** The size of the blur of the bloom image. This value is in the range [0..6].
- */
-@property (nonatomic, assign) NSUInteger blurRadius;
-
-
-/// -----------------------------------------------------------------------
-/// @name Initializing a CCEffectBloom object
-/// -----------------------------------------------------------------------
++(id)effectWithBlurRadius:(NSUInteger)blurRadius intensity:(float)intensity luminanceThreshold:(float)luminanceThreshold;
 
 /**
  *  Initializes a CCEffectBloom object with the following default values:
  *  blurRadius = 2, intensity = 1, luminanceThreshold = 0
  *
  *  @return The CCEffectBloom object.
+ *  @since v3.2 and later
  */
 -(id)init;
 
@@ -62,29 +59,32 @@
  *  A value of 0.0 will apply bloom to the whole image, a value of 1.0 will only apply bloom to the brightest part of the image.
  *
  *  @return The CCEffectBloom object.
- *
+ *  @since v3.2 and later
  */
 -(id)initWithPixelBlurRadius:(NSUInteger)blurRadius intensity:(float)intensity luminanceThreshold:(float)luminanceThreshold;
 
-
 /// -----------------------------------------------------------------------
-/// @name Creating a CCEffectBloom object
+/// @name Effect Properties
 /// -----------------------------------------------------------------------
 
-/**
- *  Creates a CCEffectBloom object with the specified parameters.
- *
- *  @param blurRadius number of pixels blur will extend to (6 is the maximum, because we are limited by the number
- *  of varying variables that can be passed to a glsl program).
- *
- *  @param intensity ranges between 0.0-1.0 - defines the contrast of the glowing image. A higher value will make the glow more prevelant.
- *
- *  @param luminanceThreshold ranges between 0.0-1.0 - defines which part of the image should be glown via a luminance factor (brightness).
- *  A value of 0.0 will apply bloom to the whole image, a value of 1.0 will only apply bloom to the brightest part of the image.
- *
- *  @return The CCEffectBloom object.
- *
+/** The luminance threshold at which pixels will contribute to the bloom.
+ *  This value is in the range [0..1]. Lower values mean that more pixels will
+ *  contribute to the blurry bloom image.
+ *  @since v3.2 and later
  */
-+(id)effectWithBlurRadius:(NSUInteger)blurRadius intensity:(float)intensity luminanceThreshold:(float)luminanceThreshold;
+@property (nonatomic, assign) float luminanceThreshold;
+
+/** The intensity of the blurred out bloom image when added to the original
+ *  unmodified image. This value is in the range [0..1]. 0 results in no bloom
+ *  while higher values result in more bloom.
+ *  @since v3.2 and later
+ */
+@property (nonatomic, assign) float intensity;
+
+/** The size of the blur of the bloom image. This value is in the range [0..6].
+ *  @since v3.2 and later
+ */
+@property (nonatomic, assign) NSUInteger blurRadius;
+
 
 @end

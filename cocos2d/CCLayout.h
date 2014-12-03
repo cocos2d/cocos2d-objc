@@ -26,15 +26,24 @@
 #import "CCNode.h"
 
 /**
- *  A layout will take control of its childrens' positions. Any node added as a child will be position according to the rules of the specific layout type. If you are using a layout you should not set the position of the children manually.
+ The layout node is an abstract class. It will take control of its childrens' positions. 
  
- ### Subclassing
+ Do not create instances of CCLayout, instead use one of its subclasses:
  
- CCLayout is an abstract super class of all layouts. You should subclass this class and implement the layout method if you want to create your own layout.
+ - CCLayoutBox
+ 
+ **Note:** If you are using a layout node you should not set the positions of the layout node's children manually or via move actions.
+ 
+ ### Subclassing Note
+ 
+ CCLayout is an abstract class for nodes that provide layouts. You should subclass CCLayout to create your own layout node.
+ Implement the layout method to create your own layout.
  */
 @interface CCLayout : CCNode {
     BOOL _needsLayout;
 }
+
+/** @name Methods Implemented by Subclasses */
 
 /**
  *  Called whenever the node needs to layout its children again. Normally, there is no need to call this method directly.
@@ -42,8 +51,10 @@
 - (void) needsLayout;
 
 /**
- *  The layout method layouts the children according to the rules of the specific layout.
+ The layout method layouts the children according to the rules implemented in a CCLayout subclass.
+ @note Your subclass must call `[super layout]` to reset the _needsLayout flag. Not calling super could cause the layout
+ to unnecessarily run the layout method every frame.
  */
-- (void) layout;
+- (void) layout __attribute__((objc_requires_super));
 
 @end

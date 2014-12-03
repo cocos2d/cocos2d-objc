@@ -30,7 +30,7 @@
 #import "CCScene.h"
 
 /**
- *  Defines the direction that the transition will move in.
+ *  Defines the direction that a directional transition will move. Used by CCTransition.
  *
  *  If the direction is upwards, an exiting scene will ex. slide out the top, and an entering scene will slide in the bottom.
  */
@@ -48,24 +48,95 @@ typedef NS_ENUM(NSInteger, CCTransitionDirection)
     /** Transition moves leftwards. */
     CCTransitionDirectionLeft,
     
-    /** Invalid transition direction. */
+    /** An invalid transition direction. */
     CCTransitionDirectionInvalid = -1,
 };
 
 /**
- *  Creates a transition.
- *  The transition will replace the outgoing scene, with the incoming scene.
- *  Both scenes can be animated during the transition ( default disabled ).
- *
- *  Complex animated scenes on retina devices might run slow during transitions. 
- *  In that case, try disabling retina transitions, and check if the render quality is adequate.
+ A transition animates the presentation of a new scene while moving the current scene out of view.
+ A transition is optionally played when calling one of the presentScene:withTransition: methods of CCDirector.
+
+ @note Since both scenes remain in memory and are being rendered, a transition may raise performance issues or
+ memory warnings. If two complex scenes can not be reliably transitioned from/to it is best to not use transitions
+ or to introduce an in-between scene that is presented only for a short period of time (ie a loading scene or merely
+ a "fade to black" scene).
  */
 @interface CCTransition : CCScene
 
+
 /// -----------------------------------------------------------------------
-/// @name Accessing the Transition Attributes
+/// @name Creating a Fade Scene Transition
 /// -----------------------------------------------------------------------
 
+/**
+ *  Creates a cross fade transition directly from outgoing to incoming scene.
+ *
+ *  @param duration The duration of the transition in seconds.
+ *
+ *  @return The CCTransition Object.
+ */
++ (CCTransition *)transitionCrossFadeWithDuration:(NSTimeInterval)duration;
+
+/**
+ *  Creates a fade transition from outgoing to incoming scene, through color.
+ *
+ *  @param color    The color to fade through
+ *  @param duration The duration of the transition in seconds.
+ *
+ *  @return The CCTransition Object.
+ *  @see CCColor
+ */
++ (CCTransition *)transitionFadeWithColor:(CCColor*)color duration:(NSTimeInterval)duration;
+
+/**
+ *  Creates a fade transition from outgoing to incoming scene, through black.
+ *
+ *  @param duration The duration of the transition in seconds.
+ *
+ *  @return The CCTransition Object.
+ */
++ (CCTransition *)transitionFadeWithDuration:(NSTimeInterval)duration;
+
+/// -----------------------------------------------------------------------
+/// @name Creating a Directional Scene Transition
+/// -----------------------------------------------------------------------
+
+/**
+ *  Creates a transition where the incoming scene is moved in over the outgoing scene.
+ *
+ *  @param direction Direction to move the incoming scene.
+ *  @param duration  The duration of the transition in seconds.
+ *
+ *  @return The CCTransition Object.
+ *  @see CCTransitionDirection
+ */
++ (CCTransition *)transitionMoveInWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration;
+
+/**
+ *  Creates a transition where the incoming scene pushed the outgoing scene out.
+ *
+ *  @param direction Direction to move incoming and outgoing scenes.
+ *  @param duration  The duration of the transition in seconds.
+ *
+ *  @return The CCTransition Object.
+ *  @see CCTransitionDirection
+ */
++ (CCTransition *)transitionPushWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration;
+
+/**
+ *  Creates a transition where the incoming scene is revealed by sliding the outgoing scene out.
+ *
+ *  @param direction Direction to slide outcoing scene.
+ *  @param duration  The duration of the transition in seconds.
+ *
+ *  @return The CCTransition Object.
+ *  @see CCTransitionDirection
+ */
++ (CCTransition *)transitionRevealWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration;
+
+/// -----------------------------------------------------------------------
+/// @name Transition Performance Settings
+/// -----------------------------------------------------------------------
 
 /**
  *  Will downscale outgoing scene.
@@ -89,16 +160,21 @@ typedef NS_ENUM(NSInteger, CCTransitionDirection)
 @property (nonatomic, getter = isRetinaTransition) BOOL retinaTransition;
 
 /**
- *  Pixel format used for transition.
- *  Default CCTexturePixelFormat_RGBA8888.
+ Pixel format used for transition.
+ Default `CCTexturePixelFormat_RGBA8888`.
+ @see CCTexturePixelFormat
  */
 @property (nonatomic, assign) CCTexturePixelFormat transitionPixelFormat;
 
 /**
  *  Depth/stencil format used for transition.
- *  Default GL_DEPTH24_STENCIL8_OES.
+ *  Default `GL_DEPTH24_STENCIL8_OES`.
  */
 @property (nonatomic, assign) GLuint transitionDepthStencilFormat;
+
+/// -----------------------------------------------------------------------
+/// @name Controlling Scene Animation during Transition
+/// -----------------------------------------------------------------------
 
 /**
  *  Defines whether outgoing scene will be animated during transition.
@@ -112,73 +188,15 @@ typedef NS_ENUM(NSInteger, CCTransitionDirection)
  */
 @property (nonatomic, getter = isIncomingSceneAnimated) BOOL incomingSceneAnimated;
 
+/// -----------------------------------------------------------------------
+/// @name Transition Running Time and Progress
+/// -----------------------------------------------------------------------
+
 /** The actual transition runtime in seconds. */
 @property (nonatomic, readonly) NSTimeInterval runTime;
 
-/** Normalized transition progress. */
+/** Normalized (percentage) transition progress in the range 0.0 to 1.0. */
 @property (nonatomic, readonly) float progress;
 
-
-/// -----------------------------------------------------------------------
-/// @name Creating a CCTransition Object
-/// -----------------------------------------------------------------------
-
-/**
- *  Creates a cross fade transition directly from outgoing to incoming scene.
- *
- *  @param duration The duration of the transition in seconds.
- *
- *  @return The CCTransition Object.
- */
-+ (CCTransition *)transitionCrossFadeWithDuration:(NSTimeInterval)duration;
-
-/**
- *  Creates a fade transition from outgoing to incoming scene, through color.
- *
- *  @param color    The color to fade through
- *  @param duration The duration of the transition in seconds.
- *
- *  @return The CCTransition Object.
- */
-+ (CCTransition *)transitionFadeWithColor:(CCColor*)color duration:(NSTimeInterval)duration;
-
-/**
- *  Creates a fade transition from outgoing to incoming scene, through black.
- *
- *  @param duration The duration of the transition in seconds.
- *
- *  @return The CCTransition Object.
- */
-+ (CCTransition *)transitionFadeWithDuration:(NSTimeInterval)duration;
-
-/**
- *  Creates a transition where the incoming scene is moved in over the outgoing scene.
- *
- *  @param direction Direction to move the incoming scene.
- *  @param duration  The duration of the transition in seconds.
- *
- *  @return The CCTransition Object.
- */
-+ (CCTransition *)transitionMoveInWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration;
-
-/**
- *  Creates a transition where the incoming scene pushed the outgoing scene out.
- *
- *  @param direction Direction to move incoming and outgoing scenes.
- *  @param duration  The duration of the transition in seconds.
- *
- *  @return The CCTransition Object.
- */
-+ (CCTransition *)transitionPushWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration;
-
-/**
- *  Creates a transition where the incoming scene is revealed by sliding the outgoing scene out.
- *
- *  @param direction Direction to slide outcoing scene.
- *  @param duration  The duration of the transition in seconds.
- *
- *  @return The CCTransition Object.
- */
-+ (CCTransition *)transitionRevealWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration;
 
 @end

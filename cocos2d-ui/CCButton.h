@@ -28,10 +28,17 @@
 @class CCLabelTTF;
 @class CCSpriteFrame;
 
-/**
- The CCButton represents a button on the screen. The button is presented with a stretchable background image and/or a title label. Different images, colors and opacity can be set for each of the buttons different states.
+/** A button represents an area of the screen that reacts to touches/clicks. The button creates a CCSprite9Slice node for its background
+ image and a CCLabelTTF for its text.
  
- Methods for setting callbacks for the button is inherited from CCControl through the setTarget:selector: method or the block property.
+ The button is presented with a stretchable background image and/or a title label. 
+ Different images, colors and opacity can be set for each of the button's different states.
+ 
+ Methods for setting callbacks for the button are inherited from CCControl, see [CCControl setTarget:selector:] and [CCControl setBlock:].
+ 
+ @note It is worth noting that background and label are optional. If you hide both, you can have an invisible button that still reacts to touches.
+ 
+ @note You should not add child nodes to a button, nor remove the existing background and label nodes.
  */
 @interface CCButton : CCControl
 {
@@ -46,16 +53,8 @@
     float _originalHitAreaExpansion;
 }
 
-@property (nonatomic,readonly) CCSprite9Slice* background;
-@property (nonatomic,readonly) CCLabelTTF* label;
-@property (nonatomic,assign) BOOL zoomWhenHighlighted;
-@property (nonatomic,assign) float horizontalPadding;
-@property (nonatomic,assign) float verticalPadding;
-@property (nonatomic,strong) NSString* title;
-@property (nonatomic,assign) BOOL togglesSelectedState;
-
 /// -----------------------------------------------------------------------
-/// @name Creating Buttons
+/// @name Creating a Button
 /// -----------------------------------------------------------------------
 
 /**
@@ -85,6 +84,7 @@
  *  @param spriteFrame Stretchable background image.
  *
  *  @return A new button.
+ *  @see CCSpriteFrame
  */
 + (id) buttonWithTitle:(NSString*) title spriteFrame:(CCSpriteFrame*) spriteFrame;
 
@@ -97,6 +97,7 @@
  *  @param disabled    Stretchable background image for the disabled state.
  *
  *  @return A new button.
+ *  @see CCSpriteFrame
  */
 + (id) buttonWithTitle:(NSString*) title spriteFrame:(CCSpriteFrame*) spriteFrame highlightedSpriteFrame:(CCSpriteFrame*) highlighted disabledSpriteFrame:(CCSpriteFrame*) disabled;
 
@@ -127,6 +128,7 @@
  *  @param spriteFrame Stretchable background image.
  *
  *  @return A new button.
+ *  @see CCSpriteFrame
  */
 - (id) initWithTitle:(NSString*) title spriteFrame:(CCSpriteFrame*) spriteFrame;
 
@@ -139,14 +141,58 @@
  *  @param disabled    Stretchable background image for the disabled state.
  *
  *  @return A new button.
+ *  @see CCSpriteFrame
  */
 - (id) initWithTitle:(NSString*) title spriteFrame:(CCSpriteFrame*) spriteFrame highlightedSpriteFrame:(CCSpriteFrame*) highlighted disabledSpriteFrame:(CCSpriteFrame*) disabled;
+
+/// -----------------------------------------------------------------------
+/// @name Button Child Nodes
+/// -----------------------------------------------------------------------
+
+/** The CCSprite9Slice instance used as the button's background.
+ @see CCSprite9Slice */
+@property (nonatomic,readonly) CCSprite9Slice* background;
+/** The CCLabelTTFF instance used as the button's text label.
+ @warning Setting the [CCLabelTTF setString:] directly will prevent the button from resizing if the label's dimensions change.
+ Instead use the title property to change the button's label text.
+ @see CCLabelTTF
+ @see title */
+@property (nonatomic,readonly) CCLabelTTF* label;
+
+/// -----------------------------------------------------------------------
+/// @name Button Behavior
+/// -----------------------------------------------------------------------
+
+/** If YES, will slightly enlarge the button while the button is highlighted (mouse/finger "hovering" over button).
+ Similar to what CCMenuItem did. */
+@property (nonatomic,assign) BOOL zoomWhenHighlighted;
+/** If YES, changes the button to a toggle button that toggles between turned on (pressed) and off (normal) states every time
+ it is tapped/clicked. */
+@property (nonatomic,assign) BOOL togglesSelectedState;
+
+/// -----------------------------------------------------------------------
+/// @name Padding and Title
+/// -----------------------------------------------------------------------
+
+/** Adds horizontal padding to both sides of the label, increasing its width by 2x horizontalPadding. */
+@property (nonatomic,assign) float horizontalPadding;
+/** Adds vertical padding to both sides of the label, increasing its height by 2x verticalPadding. */
+@property (nonatomic,assign) float verticalPadding;
+/** The button's title. Use this to change the label.
+ @warning Setting the [CCLabelTTF setString:] directly will prevent the button from resizing if the label's dimensions change. */
+@property (nonatomic,strong) NSString* title;
+
+/// -----------------------------------------------------------------------
+/// @name Background Properties
+/// -----------------------------------------------------------------------
 
 /**
  *  Sets the background color for the specified state. The color is multiplied into the background sprite frame.
  *
  *  @param color Color applied to background image.
  *  @param state State to apply the color to.
+ *  @see CCColor
+ *  @see CCControlState
  */
 - (void) setBackgroundColor:(CCColor*) color forState:(CCControlState) state;
 
@@ -156,6 +202,8 @@
  *  @param state State to get the color for.
  *
  *  @return Background color.
+ *  @see CCColor
+ *  @see CCControlState
  */
 - (CCColor*) backgroundColorForState:(CCControlState)state;
 
@@ -164,6 +212,7 @@
  *
  *  @param opacity Opacity to apply to the background image
  *  @param state   State to apply the opacity to.
+ *  @see CCControlState
  */
 - (void) setBackgroundOpacity:(CGFloat) opacity forState:(CCControlState) state;
 
@@ -173,55 +222,17 @@
  *  @param state State to get the opacity for.
  *
  *  @return Opacity.
+ *  @see CCControlState
  */
 - (CGFloat) backgroundOpacityForState:(CCControlState)state;
-
-/**
- *  Will set the label's color for the normal state.
- *
- *  @param color Color applied to the label.
- */
-- (void) setColor:(CCColor *)color;
-
-/**
- *  Sets the label's color for the specified state.
- *
- *  @param color Color applied to the label.
- *  @param state State to set the color for.
- */
-- (void) setLabelColor:(CCColor*) color forState:(CCControlState) state;
-
-/**
- *  Gets the label's color for the specified state.
- *
- *  @param state State to get the color for.
- *
- *  @return Label color.
- */
-- (CCColor*) labelColorForState:(CCControlState) state;
-
-/**
- *  Sets the label's opacity for the specified state.
- *
- *  @param opacity Opacity applied to the label.
- *  @param state   State to set the opacity for.
- */
-- (void) setLabelOpacity:(CGFloat) opacity forState:(CCControlState) state;
-
-/**
- *  Gets the label's opacity for the specified state.
- *
- *  @param state State to get the opacity for.
- *
- *  @return Label opacity.
- */
-- (CGFloat) labelOpacityForState:(CCControlState) state;
 
 /**
  *  Sets the background's sprite frame for the specified state. The sprite frame will be stretched to the preferred size of the label. If set to `NULL` no background will be drawn.
  *
  *  @param spriteFrame Sprite frame to use for drawing the background.
  *  @param state       State to set the background for.
+ *  @see CCSpriteFrame
+ *  @see CCControlState
  */
 - (void) setBackgroundSpriteFrame:(CCSpriteFrame*)spriteFrame forState:(CCControlState)state;
 
@@ -231,7 +242,61 @@
  *  @param state State to get the sprite frame for.
  *
  *  @return Background sprite frame.
+ *  @see CCSpriteFrame
+ *  @see CCControlState
  */
 - (CCSpriteFrame*) backgroundSpriteFrameForState:(CCControlState)state;
+
+/// -----------------------------------------------------------------------
+/// @name Label Properties
+/// -----------------------------------------------------------------------
+
+/**
+ *  Will set the label's color for the normal state.
+ *
+ *  @param color Color applied to the label.
+ *  @see CCColor
+ */
+- (void) setColor:(CCColor *)color;
+
+/**
+ *  Sets the label's color for the specified state.
+ *
+ *  @param color Color applied to the label.
+ *  @param state State to set the color for.
+ *  @see CCColor
+ *  @see CCControlState
+ */
+- (void) setLabelColor:(CCColor*) color forState:(CCControlState) state;
+
+/**
+ *  Gets the label's color for the specified state.
+ *
+ *  @param state State to get the color for.
+ *
+ *  @return Label color.
+ *  @see CCColor
+ *  @see CCControlState
+ */
+- (CCColor*) labelColorForState:(CCControlState) state;
+
+/**
+ *  Sets the label's opacity for the specified state.
+ *
+ *  @param opacity Opacity applied to the label.
+ *  @param state   State to set the opacity for.
+ *  @see CCControlState
+ */
+- (void) setLabelOpacity:(CGFloat) opacity forState:(CCControlState) state;
+
+/**
+ *  Gets the label's opacity for the specified state.
+ *
+ *  @param state State to get the opacity for.
+ *
+ *  @return Label opacity.
+ *  @see CCControlState
+ */
+- (CGFloat) labelOpacityForState:(CCControlState) state;
 
 @end
