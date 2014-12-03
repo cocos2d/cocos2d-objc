@@ -41,26 +41,28 @@
 
 
 #import "CCEffectBloom.h"
+#import "CCEFfectUtils.h"
 #import "CCEffect_Private.h"
 #import "CCRenderer.h"
 #import "CCTexture.h"
 
 
-@interface CCEffectBloomImpl : CCEffectImpl
-@property (nonatomic, weak) CCEffectBloom *interface;
-@property (nonatomic, assign) float intensity;
-@property (nonatomic, assign) float luminanceThreshold;
+@interface CCEffectBloom ()
+@property (nonatomic, strong) NSNumber *conditionedIntensity;
+@property (nonatomic, strong) NSNumber *conditionedThreshold;
 @end
 
-@implementation CCEffectBloomImpl {
-    NSUInteger _blurRadius;
-    NSUInteger _numberOfOptimizedOffsets;
-    GLfloat _sigma;
-    NSUInteger _trueBlurRadius;
-}
+
+@interface CCEffectBloomImpl : CCEffectImpl
+@property (nonatomic, weak) CCEffectBloom *interface;
+@end
+
+@implementation CCEffectBloomImpl
 
 -(id)initWithInterface:(CCEffectBloom *)interface
 {
+    CCEffectBlurParams blurParams = CCEffectUtilsComputeBlurParams(interface.blurRadius);
+
     CCEffectUniform* u_intensity = [CCEffectUniform uniform:@"float" name:@"u_intensity" value:[NSNumber numberWithFloat:0.0f]];
     CCEffectUniform* u_luminanceThreshold = [CCEffectUniform uniform:@"float" name:@"u_luminanceThreshold" value:[NSNumber numberWithFloat:0.0f]];
     CCEffectUniform* u_enableGlowMap = [CCEffectUniform uniform:@"float" name:@"u_enableGlowMap" value:[NSNumber numberWithFloat:0.0f]];
@@ -70,12 +72,12 @@
     NSArray *fragUniforms = @[u_enableGlowMap, u_luminanceThreshold, u_intensity, u_blurDirection];
     NSArray *vertUniforms = @[u_blurDirection];
     
-    unsigned long count = (unsigned long)(1 + (_numberOfOptimizedOffsets * 2));
+    unsigned long count = (unsigned long)(1 + (blurParams.numberOfOptimizedOffsets * 2));
     CCEffectVarying* v_blurCoords = [CCEffectVarying varying:@"vec2" name:@"v_blurCoordinates" count:count];
     NSArray *varyings = @[v_blurCoords];
     
-    NSArray *fragFunctions = [CCEffectBloomImpl buildFragmentFunctionsWithBlurRadius:_trueBlurRadius numberOfOptimizedOffsets:_numberOfOptimizedOffsets sigma:_sigma];
-    NSArray *vertFunctions = [CCEffectBloomImpl buildVertexFunctionsWithBlurRadius:_trueBlurRadius numberOfOptimizedOffsets:_numberOfOptimizedOffsets sigma:_sigma];
+    NSArray *fragFunctions = [CCEffectBloomImpl buildFragmentFunctionsWithBlurParams:blurParams];
+    NSArray *vertFunctions = [CCEffectBloomImpl buildVertexFunctionsWithBlurParams:blurParams];
     NSArray *renderPasses = [CCEffectBloomImpl buildRenderPassesWithInterface:interface];
 
     if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:vertFunctions fragmentUniforms:fragUniforms vertexUniforms:vertUniforms varyings:varyings]))
@@ -89,40 +91,13 @@
     return self;
 }
 
--(void)setLuminanceThreshold:(float)luminanceThreshold
++ (NSArray *)buildFragmentFunctionsWithBlurParams:(CCEffectBlurParams)blurParams
 {
-    _luminanceThreshold = clampf(luminanceThreshold, 0.0f, 1.0f);
-}
-
--(void)setIntensity:(float)intensity
-{
-    _intensity = clampf(intensity, 0.0f, 1.0f);
-}
-
--(void)setBlurRadius:(NSUInteger)blurRadius
-{
-    [self setBlurRadiusAndDependents:blurRadius];
-}
-
-- (void)setBlurRadiusAndDependents:(NSUInteger)blurRadius
-{
-    _trueBlurRadius = blurRadius;
-    blurRadius = MIN(blurRadius, BLUR_OPTIMIZED_RADIUS_MAX);
-    _blurRadius = blurRadius;
-    _sigma = _trueBlurRadius / 2;
-    if(_sigma == 0.0)
-        _sigma = 1.0f;
-    
-    _numberOfOptimizedOffsets = MIN(blurRadius / 2 + (blurRadius % 2), BLUR_OPTIMIZED_RADIUS_MAX);
-}
-
-+ (NSArray *)buildFragmentFunctionsWithBlurRadius:(NSUInteger)trueBlurRadius numberOfOptimizedOffsets:(NSUInteger)numberOfOptimizedOffsets sigma:(GLfloat)sigma
-{
-    GLfloat *standardGaussianWeights = calloc(trueBlurRadius + 2, sizeof(GLfloat));
+    GLfloat *standardGaussianWeights = calloc(blurParams.trueRadius + 2, sizeof(GLfloat));
     GLfloat sumOfWeights = 0.0;
-    for (NSUInteger currentGaussianWeightIndex = 0; currentGaussianWeightIndex < trueBlurRadius + 2; currentGaussianWeightIndex++)
+    for (NSUInteger currentGaussianWeightIndex = 0; currentGaussianWeightIndex < blurParams.trueRadius + 2; currentGaussianWeightIndex++)
     {
-        standardGaussianWeights[currentGaussianWeightIndex] = (1.0 / sqrt(2.0 * M_PI * pow(sigma, 2.0))) * exp(-pow(currentGaussianWeightIndex, 2.0) / (2.0 * pow(sigma, 2.0)));
+        standardGaussianWeights[currentGaussianWeightIndex] = (1.0 / sqrt(2.0 * M_PI * pow(blurParams.sigma, 2.0))) * exp(-pow(currentGaussianWeightIndex, 2.0) / (2.0 * pow(blurParams.sigma, 2.0)));
         
         if (currentGaussianWeightIndex == 0)
         {
@@ -135,13 +110,13 @@
     }
     
     // Next, normalize these weights to prevent the clipping of the Gaussian curve at the end of the discrete samples from reducing luminance
-    for (NSUInteger currentGaussianWeightIndex = 0; currentGaussianWeightIndex < trueBlurRadius + 2; currentGaussianWeightIndex++)
+    for (NSUInteger currentGaussianWeightIndex = 0; currentGaussianWeightIndex < blurParams.trueRadius + 2; currentGaussianWeightIndex++)
     {
         standardGaussianWeights[currentGaussianWeightIndex] = standardGaussianWeights[currentGaussianWeightIndex] / sumOfWeights;
     }
     
     // From these weights we calculate the offsets to read interpolated values from
-    NSUInteger trueNumberOfOptimizedOffsets = trueBlurRadius / 2;
+    NSUInteger trueNumberOfOptimizedOffsets = blurParams.trueRadius / 2;
     
     NSMutableString *shaderString = [[NSMutableString alloc] init];
     
@@ -164,9 +139,9 @@
     [shaderString appendString:@"inBounds = step(0.0, min(compare.x, compare.y));"];
     [shaderString appendFormat:@"srcPixel = texture2D(cc_PreviousPassTexture, v_blurCoordinates[0]);\n"];
     [shaderString appendString:@"luminanceCheck = step(u_luminanceThreshold, dot(srcPixel.rgb, luminanceWeighting));\n"];
-    [shaderString appendFormat:@"src += inBounds * luminanceCheck * srcPixel * %f;\n", (trueBlurRadius == 0) ? 1.0 : standardGaussianWeights[0]];
+    [shaderString appendFormat:@"src += inBounds * luminanceCheck * srcPixel * %f;\n", (blurParams.trueRadius == 0) ? 1.0 : standardGaussianWeights[0]];
     
-    for (NSUInteger currentBlurCoordinateIndex = 0; currentBlurCoordinateIndex < numberOfOptimizedOffsets; currentBlurCoordinateIndex++)
+    for (NSUInteger currentBlurCoordinateIndex = 0; currentBlurCoordinateIndex < blurParams.numberOfOptimizedOffsets; currentBlurCoordinateIndex++)
     {
         GLfloat firstWeight = standardGaussianWeights[currentBlurCoordinateIndex * 2 + 1];
         GLfloat secondWeight = standardGaussianWeights[currentBlurCoordinateIndex * 2 + 2];
@@ -188,11 +163,11 @@
     }
     
     // If the number of required samples exceeds the amount we can pass in via varyings, we have to do dependent texture reads in the fragment shader
-    if (trueNumberOfOptimizedOffsets > numberOfOptimizedOffsets)
+    if (trueNumberOfOptimizedOffsets > blurParams.numberOfOptimizedOffsets)
     {
         [shaderString appendString:@"highp vec2 singleStepOffset = u_blurDirection;\n"];
         
-        for (NSUInteger currentOverlowTextureRead = numberOfOptimizedOffsets; currentOverlowTextureRead < trueNumberOfOptimizedOffsets; currentOverlowTextureRead++)
+        for (NSUInteger currentOverlowTextureRead = blurParams.numberOfOptimizedOffsets; currentOverlowTextureRead < trueNumberOfOptimizedOffsets; currentOverlowTextureRead++)
         {
             GLfloat firstWeight = standardGaussianWeights[currentOverlowTextureRead * 2 + 1];
             GLfloat secondWeight = standardGaussianWeights[currentOverlowTextureRead * 2 + 2];
@@ -239,13 +214,13 @@
     return @[fragmentFunction];
 }
 
-+ (NSArray *)buildVertexFunctionsWithBlurRadius:(NSUInteger)trueBlurRadius numberOfOptimizedOffsets:(NSUInteger)numberOfOptimizedOffsets sigma:(GLfloat)sigma
++ (NSArray *)buildVertexFunctionsWithBlurParams:(CCEffectBlurParams)blurParams
 {
-    GLfloat* standardGaussianWeights = calloc(trueBlurRadius + 1, sizeof(GLfloat));
+    GLfloat* standardGaussianWeights = calloc(blurParams.trueRadius + 1, sizeof(GLfloat));
     GLfloat sumOfWeights = 0.0;
-    for (NSUInteger currentGaussianWeightIndex = 0; currentGaussianWeightIndex < trueBlurRadius + 1; currentGaussianWeightIndex++)
+    for (NSUInteger currentGaussianWeightIndex = 0; currentGaussianWeightIndex < blurParams.trueRadius + 1; currentGaussianWeightIndex++)
     {
-        standardGaussianWeights[currentGaussianWeightIndex] = (1.0 / sqrt(2.0 * M_PI * pow(sigma, 2.0))) * exp(-pow(currentGaussianWeightIndex, 2.0) / (2.0 * pow(sigma, 2.0)));
+        standardGaussianWeights[currentGaussianWeightIndex] = (1.0 / sqrt(2.0 * M_PI * pow(blurParams.sigma, 2.0))) * exp(-pow(currentGaussianWeightIndex, 2.0) / (2.0 * pow(blurParams.sigma, 2.0)));
         
         if (currentGaussianWeightIndex == 0)
         {
@@ -258,15 +233,15 @@
     }
     
     // Next, normalize these weights to prevent the clipping of the Gaussian curve at the end of the discrete samples from reducing luminance
-    for (NSUInteger currentGaussianWeightIndex = 0; currentGaussianWeightIndex < trueBlurRadius + 1; currentGaussianWeightIndex++)
+    for (NSUInteger currentGaussianWeightIndex = 0; currentGaussianWeightIndex < blurParams.trueRadius + 1; currentGaussianWeightIndex++)
     {
         standardGaussianWeights[currentGaussianWeightIndex] = standardGaussianWeights[currentGaussianWeightIndex] / sumOfWeights;
     }
     
     // From these weights we calculate the offsets to read interpolated values from
-    GLfloat* optimizedGaussianOffsets = calloc(numberOfOptimizedOffsets, sizeof(GLfloat));
+    GLfloat* optimizedGaussianOffsets = calloc(blurParams.numberOfOptimizedOffsets, sizeof(GLfloat));
     
-    for (NSUInteger currentOptimizedOffset = 0; currentOptimizedOffset < numberOfOptimizedOffsets; currentOptimizedOffset++)
+    for (NSUInteger currentOptimizedOffset = 0; currentOptimizedOffset < blurParams.numberOfOptimizedOffsets; currentOptimizedOffset++)
     {
         GLfloat firstWeight = standardGaussianWeights[currentOptimizedOffset*2 + 1];
         GLfloat secondWeight = standardGaussianWeights[currentOptimizedOffset*2 + 2];
@@ -284,7 +259,7 @@
     
     // Inner offset loop
     [shaderString appendString:@"v_blurCoordinates[0] = cc_TexCoord1.xy;\n"];
-    for (NSUInteger currentOptimizedOffset = 0; currentOptimizedOffset < numberOfOptimizedOffsets; currentOptimizedOffset++)
+    for (NSUInteger currentOptimizedOffset = 0; currentOptimizedOffset < blurParams.numberOfOptimizedOffsets; currentOptimizedOffset++)
     {
         [shaderString appendFormat:@"\
          v_blurCoordinates[%lu] = cc_TexCoord1.xy + singleStepOffset * %f;\n\
@@ -308,15 +283,13 @@
     // pass 1: blurs (vertical) texture[1] and outputs to texture[2]
     // pass 2: blends texture[0] and texture[2] and outputs to texture[3]
 
+    // Why not just use self (or "__weak self" really)? Because at the time these blocks are created,
+    // self is not necesssarily valid.
     __weak CCEffectBloom *weakInterface = interface;
 
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] initWithIndex:0];
     pass0.debugLabel = @"CCEffectBloom pass 0";
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
-
-        // Why not just use self (or "__weak self" really)? Because at the time these blocks are created,
-        // self is not necesssarily valid.
-        CCEffectBloomImpl *impl = (CCEffectBloomImpl *)weakInterface.effectImpl;
 
         passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
@@ -324,8 +297,8 @@
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:passInputs.texCoord1Extents];
 
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_enableGlowMap"]] = [NSNumber numberWithFloat:0.0f];
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_luminanceThreshold"]] = [NSNumber numberWithFloat:impl.luminanceThreshold];
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_intensity"]] = [NSNumber numberWithFloat:impl.intensity];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_luminanceThreshold"]] = weakInterface.conditionedThreshold;
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_intensity"]] = weakInterface.conditionedIntensity;
         
         GLKVector2 dur = GLKVector2Make(1.0 / (passInputs.previousPassTexture.pixelWidth / passInputs.previousPassTexture.contentScale), 0.0);
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithGLKVector2:dur];
@@ -337,17 +310,13 @@
     pass1.debugLabel = @"CCEffectBloom pass 1";
     pass1.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
 
-        // Why not just use self (or "__weak self" really)? Because at the time these blocks are created,
-        // self is not necesssarily valid.
-        CCEffectBloomImpl *impl = (CCEffectBloomImpl *)weakInterface.effectImpl;
-
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:GLKVector2Make(0.5f, 0.5f)];
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:GLKVector2Make(1.0f, 1.0f)];
         
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_enableGlowMap"]] = [NSNumber numberWithFloat:0.0f];
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_luminanceThreshold"]] = [NSNumber numberWithFloat:0.0f];
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_intensity"]] = [NSNumber numberWithFloat:impl.intensity];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_intensity"]] = weakInterface.conditionedIntensity;
         
         GLKVector2 dur = GLKVector2Make(0.0, 1.0 / (passInputs.previousPassTexture.pixelHeight / passInputs.previousPassTexture.contentScale));
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithGLKVector2:dur];
@@ -361,10 +330,6 @@
     pass2.texCoord2Mapping = CCEffectTexCoordMapMainTex;
     pass2.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
 
-        // Why not just use self (or "__weak self" really)? Because at the time these blocks are created,
-        // self is not necesssarily valid.
-        CCEffectBloomImpl *impl = (CCEffectBloomImpl *)weakInterface.effectImpl;
-
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:GLKVector2Make(0.5f, 0.5f)];
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:GLKVector2Make(1.0f, 1.0f)];
@@ -373,7 +338,7 @@
 
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_enableGlowMap"]] = [NSNumber numberWithFloat:1.0f];
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_luminanceThreshold"]] = [NSNumber numberWithFloat:0.0f];
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_intensity"]] = [NSNumber numberWithFloat:impl.intensity];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_intensity"]] = weakInterface.conditionedIntensity;
         
     } copy]];
 
@@ -422,25 +387,18 @@
 -(void)setLuminanceThreshold:(float)luminanceThreshold
 {
     _luminanceThreshold = luminanceThreshold;
-
-    CCEffectBloomImpl *bloomImpl = (CCEffectBloomImpl *)self.effectImpl;
-    [bloomImpl setLuminanceThreshold:luminanceThreshold];
+    _conditionedThreshold = [NSNumber numberWithFloat:clampf(luminanceThreshold, 0.0f, 1.0f)];
 }
 
 -(void)setIntensity:(float)intensity
 {
     _intensity = intensity;
-    
-    CCEffectBloomImpl *bloomImpl = (CCEffectBloomImpl *)self.effectImpl;
-    [bloomImpl setIntensity:intensity];
+    _conditionedIntensity = [NSNumber numberWithFloat:clampf(intensity, 0.0f, 1.0f)];
 }
 
 -(void)setBlurRadius:(NSUInteger)blurRadius
 {
     _blurRadius = blurRadius;
-
-    CCEffectBloomImpl *bloomImpl = (CCEffectBloomImpl *)self.effectImpl;
-    [bloomImpl setBlurRadius:blurRadius];
     
     // The shader is constructed dynamically based on the blur radius
     // so mark it dirty.

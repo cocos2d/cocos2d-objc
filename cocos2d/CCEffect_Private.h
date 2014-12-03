@@ -10,10 +10,6 @@
 #import "CCEffectStackProtocol.h"
 
 
-#ifndef BLUR_OPTIMIZED_RADIUS_MAX
-#define BLUR_OPTIMIZED_RADIUS_MAX 6UL
-#endif
-
 extern NSString * const CCShaderUniformPreviousPassTexture;
 extern NSString * const CCShaderUniformTexCoord1Center;
 extern NSString * const CCShaderUniformTexCoord1Extents;
