@@ -10,13 +10,15 @@
 #import "CCTextureCache.h"
 
 static NSString *TEST_STRINGS[] = {
-	@"ABCDEFGHIJKLM\nNOPQRSTUVWXYZ",
-	@"abcdefghijklm\nnopqrstuvwxyz",
-	@"first line\u2028second line",
-	@",.?!;:'\"",
-	@"()[]{}<>\\|/\n",
-	@"@#$%^&*+-=_",
-	@" ab c de\n fg  hi j k",
+    @"foo\nbar",
+    @"0123456789",
+    @"ABCDEFGHIJKLM\nNOPQRSTUVWXYZ",
+    @"abcdefghijklm\nnopqrstuvwxyz",
+    @"first line\u2028second line",
+    @",.?!;:'\"",
+    @"()[]{}<>\\|/\n",
+    @"@#$%^&*+-=_",
+    @" ab c de\n fg  hi j k",
 };
 static const int TEST_STRING_COUNT = sizeof(TEST_STRINGS)/sizeof(*TEST_STRINGS);
 
@@ -34,7 +36,7 @@ static const int TEST_STRING_COUNT = sizeof(TEST_STRINGS)/sizeof(*TEST_STRINGS);
 		[self.contentNode addChild:label];
 		
 		__block int i = 0;
-		const CCTime delay = 1.0;
+		const CCTime delay = 2.0;
 		[self scheduleBlock:^(CCTimer *timer) {
 			i = (i + 1)%TEST_STRING_COUNT;
 			label.string = TEST_STRINGS[i];
