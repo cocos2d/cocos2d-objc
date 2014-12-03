@@ -13,6 +13,8 @@
 
 - (void)animationWithSpriteFrames:animFrames delay:(float)delay name:(NSString*)name node:(CCNode*)node loop:(BOOL)loop;
 
+/** @name Sprite Frame Animations */
+
 #pragma mark Legacy Animation Support
 /**
  *  Add an animation from a NSDictionary.

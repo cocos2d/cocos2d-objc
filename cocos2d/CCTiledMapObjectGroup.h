@@ -31,7 +31,7 @@
 @class CCTiledMapObjectGroup;
 
 /**
- *  CCTiledMapObjectGroup represents the tile map object group.
+ *  CCTiledMapObjectGroup represents a Tiled Map's Object layer.
  */
 @interface CCTiledMapObjectGroup : NSObject {
 
@@ -46,7 +46,7 @@
 
 
 /// -----------------------------------------------------------------------
-/// @name Accessing the Tile Map Object Group Attributes
+/// @name Tiled Map Object Group Properties
 /// -----------------------------------------------------------------------
 
 /** Name of the object group. */
@@ -55,8 +55,25 @@
 /** Offset position of child objects, */
 @property (nonatomic,readwrite,assign) CGPoint positionOffset;
 
+/// -----------------------------------------------------------------------
+/// @name Accessing Layer Objects
+/// -----------------------------------------------------------------------
+
 /** Array of the objects. */
 @property (nonatomic,readwrite,strong) NSMutableArray *objects;
+
+/**
+ *  Return the dictionary for the first entry of specified object namee.
+ *
+ *  @param objectName Object name to use.
+ *
+ *  @return Object dictionary.
+ */
+-(NSMutableDictionary*) objectNamed:(NSString *)objectName;
+
+/// -----------------------------------------------------------------------
+/// @name Accessing Layer Object Properties
+/// -----------------------------------------------------------------------
 
 /** List of properties stored in the dictionary. */
 @property (nonatomic,readwrite,strong) NSMutableDictionary *properties;
@@ -69,14 +86,5 @@
  *  @return Property name value.
  */
 -(id) propertyNamed:(NSString *)propertyName;
-
-/**
- *  Return the dictionary for the first entry of specified object namee.
- *
- *  @param objectName Object name to use.
- *
- *  @return Object dictionary.
- */
--(NSMutableDictionary*) objectNamed:(NSString *)objectName;
 
 @end

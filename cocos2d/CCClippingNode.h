@@ -27,15 +27,15 @@
 #import "CCNode.h"
 
 /**
- CCClippingNode can be used to clip (crop) your node content using a stencil.
+ CCClippingNode can be used to clip (crop) your node content using a stencil (mask) node. 
  
- ### Notes
+ Where the stencil node draws opaque pixels (respectively pixels with alphaThreshold or higher alpha values) the clipping node
+ will draw its children. Where the stencil node's pixels are below the alphaThreshold the clipping node's children will not be drawn.
  
- - The stencil is an other CCNode that will not be drawn.
- - The clipping is done using the alpha part of the stencil (adjusted with an alphaThreshold).
- - Alpha threshold, content is only drawn where the stencil has pixels with alpha greater than the alpha threshold. (Default 1 disable alpha test)
- - Inverted, when True only draw the content outside of the stencil. (Default False)
+ By default alphaThreshold is 1.0 which means the stencil node's area where it draws fully opaque pixels will draw the clippin node's children.
  
+ The alpha clipping behavior can be inverted.
+ The stencil node itself will not be visible.
  */
 @interface CCClippingNode : CCNode {
     
@@ -49,60 +49,58 @@
     BOOL _inverted;
 }
 
-/// -----------------------------------------------------------------------
-/// @name Accessing Clipping Node Attributes
-/// -----------------------------------------------------------------------
-
-
-/** Stencil Node. */
-@property (nonatomic, strong) CCNode *stencil;
-
-/** The Alpha threshold. */
-@property (nonatomic) GLfloat alphaThreshold;
-
-/** Inverted. */
-@property (nonatomic) BOOL inverted;
-
 
 /// -----------------------------------------------------------------------
-/// @name Creating a CCClippingNode Object
+/// @name Creating a CCClippingNode
 /// -----------------------------------------------------------------------
 
 /**
- *  Creates and returns a clipping node object without a stencil.
+ *  Creates and returns a clipping node without a stencil.
  *
- *  @return The CCClippingNode Object.
+ *  @return The new CCClippingNode instance.
+ *  @see clippingNodeWithStencil:
  */
 +(id) clippingNode;
 
 /**
  *  Creates and returns a clipping node object with the specified stencil node.
  *
- *  @param stencil Node to use as stencil.
+ *  @param stencil Node to use as stencil (mask).
  *
- *  @return The CCClippingNode Object.
+ *  @return The new CCClippingNode instance.
+ *  @see clippingNode
  */
 +(id) clippingNodeWithStencil:(CCNode *)stencil;
 
-
-/// -----------------------------------------------------------------------
-/// @name Initializing a CCClippingNode Object
-/// -----------------------------------------------------------------------
-
-/**
- *  Initializes and returns a clipping node object without a stencil.
- *
- *  @return An initialized CCClippingNode Object.
- */
+// purposefully undocumented: init is inherited from NSObject
 -(id) init;
 
 /**
  *  Initializes and returns a clipping node object with the specified stencil node.
  *
- *  @param stencil Node to use as stencil.
+ *  @param stencil Node to use as stencil (mask).
  *
- *  @return An initialized CCClippingNode Object.
+ *  @return The new CCClippingNode instance.
+ *  @see clippingNodeWithStencil:
  */
 -(id) initWithStencil:(CCNode *)stencil;
+
+/// -----------------------------------------------------------------------
+/// @name Accessing the Stencil (Mask) Node
+/// -----------------------------------------------------------------------
+
+/** The stencil node's content will define which area is clipped (masked). */
+@property (nonatomic, strong) CCNode *stencil;
+
+/// -----------------------------------------------------------------------
+/// @name Modify Clipping Behavior
+/// -----------------------------------------------------------------------
+
+/** The alpha threshold determines the minimum alpha value that is considered as masked. 
+ Defaults to 1.0 (any pixel not fully opaque will clip/mask contents). */
+@property (nonatomic) GLfloat alphaThreshold;
+
+/** If inverted, the alpha-based clipping will be reversed such that pixels with alphaThreshold or higher will clip/mask out content. */
+@property (nonatomic) BOOL inverted;
 
 @end

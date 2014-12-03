@@ -60,15 +60,31 @@ extern "C" {
 
 
 #pragma mark - CCPointArray
-/** 
- *  A simple array that is used to contain the spline control points.
+/**
+ A simple array containing CGPoint values wrapped in NSValue objects so they can be stored in an NSMutableArray.
+ This class is only documented for reference.
+ 
+ CCPointArray is used internally by the following spline movement actions:
+ 
+ - CCActionCardinalSplineTo
+ - CCActionCardinalSplineBy
+ - CCActionCatmullRomTo
+ - CCActionCatmullRomBy
+ 
+ @note The documentation of this class is provided as reference only since the above actions expose it,
+ and require a CCPointArray object as input. Except for those actions you should refrain from using this class.
+ [It may be refactored](https://github.com/cocos2d/cocos2d-swift/issues/1089).
  */
 @interface CCPointArray : NSObject <NSCopying> {
 	NSMutableArray	*_controlPoints;
 }
 
-/** Array that contains the control points. */
+/*+ Array that contains the control points. */
 @property (nonatomic,readwrite,strong) NSMutableArray *controlPoints;
+
+/// -----------------------------------------------------------------------
+/// @name Creating a Point Array
+/// -----------------------------------------------------------------------
 
 /**
  *  Creates and initializes a Points array with capacity.
@@ -76,6 +92,7 @@ extern "C" {
  *  @param capacity Capacity of the array.
  *
  *  @return New point array.
+ *  @see initWithCapacity:
  */
 + (id)arrayWithCapacity:(NSUInteger)capacity;
 
@@ -85,12 +102,13 @@ extern "C" {
  *  @param capacity Capacity of the array.
  *
  *  @return New point array.
+ *  @see arrayWithCapacity:
  */
 - (id)initWithCapacity:(NSUInteger)capacity;
 
 
 /// -----------------------------------------------------------------------
-/// @name Point Array Management
+/// @name Adding and Removing Points
 /// -----------------------------------------------------------------------
 
 /**
@@ -117,6 +135,17 @@ extern "C" {
 - (void)replaceControlPoint:(CGPoint)controlPoint atIndex:(NSUInteger)index;
 
 /**
+ *  Deletes a control point.
+ *
+ *  @param index Index of control point to delete.
+ */
+- (void)removeControlPointAtIndex:(NSUInteger)index;
+
+/// -----------------------------------------------------------------------
+/// @name Accessing Points
+/// -----------------------------------------------------------------------
+
+/**
  *  Retrieves a control point.
  *
  *  @param index Index of control point to retrieve.
@@ -126,18 +155,15 @@ extern "C" {
 - (CGPoint)getControlPointAtIndex:(NSInteger)index;
 
 /**
- *  Deletes a control point.
- *
- *  @param index Index of control point to delete.
- */
-- (void)removeControlPointAtIndex:(NSUInteger)index;
-
-/**
  *  Returns the number of control points in the array.
  *
  *  @return Number of control points.
  */
 - (NSUInteger)count;
+
+/// -----------------------------------------------------------------------
+/// @name Reversing the Order of Points
+/// -----------------------------------------------------------------------
 
 /**
  *  Creates a new copy of the array, in reversed order. 
@@ -160,6 +186,8 @@ extern "C" {
  *
  *  The spline calculates a 2D cardinal spline vector, based on the control points and applied tension.
  *  All cocos2d splines are based on tension. Splines based on tension, are guaranteed to pass through all control points.
+ *
+ * @note CCPointArray stores a series of CGPoint objects encoded as NSValue in a NSMutableArray.
  */
 @interface CCActionCardinalSplineTo : CCActionInterval {
 	CCPointArray	*_points;
@@ -169,8 +197,11 @@ extern "C" {
 	CGPoint			_accumulatedDiff;
 }
 
-/** The array of control points associated with the cardinal spline. */
+// Purposefully undocumented: Code doesn't handle a changing points array after the action was initially created.
+/* The array of control points associated with the cardinal spline. */
 @property (nonatomic,readwrite,strong) CCPointArray *points;
+
+/** @name Creating a Spline Action */
 
 /**
  *  Creates a cardinal spline action, based on control points and tension.
@@ -182,6 +213,7 @@ extern "C" {
  *  @param tension  The tension of the spline curve.
  *
  *  @return New spline action.
+ *  @see CCPointArray
  */
 + (id)actionWithDuration:(CCTime)duration points:(CCPointArray*)points tension:(CGFloat)tension;
 
@@ -195,6 +227,7 @@ extern "C" {
  *  @param tension  The tension of the spline curve.
  *
  *  @return New spline action.
+ *  @see CCPointArray
  */
 - (id)initWithDuration:(CCTime)duration points:(CCPointArray*)points tension:(CGFloat)tension;
 
@@ -206,7 +239,7 @@ extern "C" {
  *  Creates an action, based on a cardinal spline path.
  *
  *  Adds a start position to the spline.
- *  @see CCActionCardinalSplineTo for further information.
+ *  @note See CCActionCardinalSplineTo for further information.
  */
 @interface CCActionCardinalSplineBy : CCActionCardinalSplineTo {
 	CGPoint		_startPosition;
@@ -220,9 +253,11 @@ extern "C" {
  *  Creates an action, based on a catmull-rom spline path.
  *
  *  A Catmull Rom is a Cardinal Spline with a tension of 0.5.
- *  See CCActionCardinalSplineTo for further information.
+ *  @note See CCActionCardinalSplineTo for further information.
  */
 @interface CCActionCatmullRomTo : CCActionCardinalSplineTo
+
+/** @name Creating a Spline Action */
 
 /**
  *  Creates an action, performing a catmull-rom spline.
@@ -232,6 +267,7 @@ extern "C" {
  *  @param points Points to use for spline.
  *
  *  @return New catmull-rom action.
+ *  @see CCPointArray
  */
 + (id)actionWithDuration:(CCTime)dt points:(CCPointArray*)points;
 
@@ -243,6 +279,7 @@ extern "C" {
  *  @param points Points to use for spline.
  *
  *  @return New catmull-rom action.
+ *  @see CCPointArray
  */
 - (id)initWithDuration:(CCTime)dt points:(CCPointArray*)points;
 
@@ -254,9 +291,11 @@ extern "C" {
  *  Creates an action, based on a catmull-rom spline path.
  *
  *  A Catmull Rom is a Cardinal Spline with a tension of 0.5.
- *  See CCActionCardinalSplineTo for further information.
+ *  @note See CCActionCardinalSplineTo for further information.
  */
 @interface CCActionCatmullRomBy : CCActionCardinalSplineBy
+
+/** @name Creating a Spline Action */
 
 /**
  *  Creates an action, performing a catmull-rom spline.
@@ -266,6 +305,7 @@ extern "C" {
  *  @param points Points to use for spline.
  *
  *  @return New catmull-rom action.
+ *  @see CCPointArray
  */
 + (id)actionWithDuration:(CCTime)dt points:(CCPointArray*)points;
 
@@ -277,6 +317,7 @@ extern "C" {
  *  @param points Points to use for spline.
  *
  *  @return New catmull-rom action.
+ *  @see CCPointArray
  */
 - (id)initWithDuration:(CCTime)dt points:(CCPointArray*)points;
 

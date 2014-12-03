@@ -50,50 +50,14 @@ typedef struct CCSpriteTexCoordSet {
 #define CCSpriteIndexNotInitialized 0xffffffff 	/// CCSprite invalid index on the CCSpriteBatchode
 
 /** 
- * CCSprite is a 2D image ( http://en.wikipedia.org/wiki/Sprite_(computer_graphics) )
- *
- * CCSprite can be created with an image, or with a sub-rectangle of an image.
- *
- * The default anchorPoint in CCSprite is (0.5, 0.5).
+ CCSprite draws a CCTexture on the screen. CCSprite can be created with an image, with a sub-rectangle of an (atlas) image.
+ 
+ The default anchorPoint in CCSprite is (0.5, 0.5).
  */
 @interface CCSprite : CCNode <CCTextureProtocol, CCShaderProtocol, CCBlendProtocol, CCEffectProtocol>
 
-/** Returns the texture rect of the CCSprite in points. */
-@property (nonatomic,readonly) CGRect textureRect;
-
-@property (nonatomic, readonly) const CCSpriteVertexes *vertexes;
-
-/** Returns whether or not the texture rectangle is rotated. */
-@property (nonatomic,readonly) BOOL textureRectRotated;
-
-/** The currently displayed spriteFrame. */
-@property (nonatomic,strong) CCSpriteFrame* spriteFrame;
-
-/** Whether or not the sprite is flipped horizontally.
- It only flips the texture of the sprite, and not the texture of the sprite's children.
- Also, flipping the texture doesn't alter the anchorPoint.
- If you want to flip the anchorPoint too, and/or to flip the children too use:
- sprite.scaleX *= -1;
- */
-@property (nonatomic,readwrite) BOOL flipX;
-
-/** Whether or not the sprite is flipped vertically.
- It only flips the texture of the sprite, and not the texture of the sprite's children.
- Also, flipping the texture doesn't alter the anchorPoint.
- If you want to flip the anchorPoint too, and/or to flip the children too use:
- sprite.scaleY *= -1;
- */
-@property (nonatomic,readwrite) BOOL flipY;
-
-/** The offset position in points of the sprite in points. Calculated automatically by sprite sheet editors. */
-@property (nonatomic,readonly) CGPoint	offsetPosition;
-
-/** The current normal map spriteFrame. */
-@property (nonatomic,strong) CCSpriteFrame* normalMapSpriteFrame;
-
-
 /// -----------------------------------------------------------------------
-/// @name Creating a CCSprite Object
+/// @name Creating a Sprite with an Image File or Sprite Frame Name
 /// -----------------------------------------------------------------------
 
 /**
@@ -106,55 +70,6 @@ typedef struct CCSpriteTexCoordSet {
 + (id)spriteWithImageNamed:(NSString*)imageName;
 
 /**
- *  Creates an sprite with a texture.
- *  The rect used will be the size of the texture.
- *  The offset will be (0,0).
- *
- *  @param texture Texture to use.
- *
- *  @return The CCSprite Object.
- */
-+ (id)spriteWithTexture:(CCTexture*)texture;
-
-/**
- *  Creates an sprite with a texture.
- *  The offset will be (0,0).
- *
- *  @param texture Texture to use.
- *  @param rect    Rect to use.
- *
- *  @return The CCSprite Object.
- */
-+ (id)spriteWithTexture:(CCTexture*)texture rect:(CGRect)rect;
-
-/**
- *  Creates an sprite from a sprite frame.
- *
- *  @param spriteFrame Sprite frame to use.
- *
- *  @return The CCSprite Object.
- */
-+ (id)spriteWithSpriteFrame:(CCSpriteFrame*)spriteFrame;
-
-/**
- *  Creates an sprite with a CGImageRef and a key.
- *  The key is used by the CCTextureCache to know if a texture was already created with this CGImage.
- *  For example, a valid key is: @"_spriteframe_01".
- *  If key is nil, then a new texture will be created each time by the CCTextureCache.
- *
- *  @param image Image ref.
- *  @param key   Key description.
- *
- *  @return The CCSprite Object.
- */
-+ (id)spriteWithCGImage: (CGImageRef)image key:(NSString*)key;
-
-
-/// -----------------------------------------------------------------------
-/// @name Initializing a CCSprite Object
-/// -----------------------------------------------------------------------
-
-/**
  *  Initializes a sprite with the name of an image. The name can be either a name in a sprite sheet or the name of a file.
  *
  *  @param imageName name of the image to load.
@@ -163,42 +78,122 @@ typedef struct CCSpriteTexCoordSet {
  */
 - (id)initWithImageNamed:(NSString*)imageName;
 
+/// -----------------------------------------------------------------------
+/// @name Creating a Sprite with a Sprite Frame
+/// -----------------------------------------------------------------------
+
 /**
- *  Initializes an sprite with a texture.
+ *  Creates a sprite with an existing CCSpriteFrame.
+ *
+ *  @param spriteFrame Sprite frame to use.
+ *
+ *  @return The CCSprite Object.
+ *  @see CCSpriteFrame
+ */
++ (id)spriteWithSpriteFrame:(CCSpriteFrame*)spriteFrame;
+
+/**
+ *  Initializes an sprite with an existing CCSpriteFrame.
+ *
+ *  @param spriteFrame Sprite frame to use.
+ *
+ *  @return A newly initialized CCSprite object.
+ *  @see CCSpriteFrame
+ */
+- (id)initWithSpriteFrame:(CCSpriteFrame*)spriteFrame;
+
+/// -----------------------------------------------------------------------
+/// @name Creating a Sprite with a Texture
+/// -----------------------------------------------------------------------
+
+/**
+ *  Creates a sprite with an existing CCTexture.
+ *  The rect used will be the size of the texture.
+ *  The offset will be (0,0).
+ *
+ *  @param texture Texture to use.
+ *
+ *  @return The CCSprite Object.
+ *  @see CCTexture
+ */
++ (id)spriteWithTexture:(CCTexture*)texture;
+
+/**
+ *  Creates a sprite with an existing CCTexture.
+ *  The offset will be (0,0).
+ *
+ *  @param texture Texture to use.
+ *  @param rect    Rect to use.
+ *
+ *  @return The CCSprite Object.
+ *  @see CCTexture
+ */
++ (id)spriteWithTexture:(CCTexture*)texture rect:(CGRect)rect;
+
+/**
+ *  Initializes a sprite with an existing CCTexture.
  *  The rect used will be the size of the texture.
  *  The offset will be (0,0).
  *
  *  @param texture The texture to use.
  *
  *  @return A newly initialized CCSprite object.
+ *  @see CCTexture
  */
 - (id)initWithTexture:(CCTexture*)texture;
 
 /**
- *  Initializes an sprite with a texture and a rect in points (unrotated)
+ *  Initializes a sprite with an existing CCTexture and a rect in points (unrotated).
  *  The offset will be (0,0).
  *
  *  @param texture The texture to use.
  *  @param rect    The rect to use.
  *
  *  @return A newly initialized CCSprite object.
+ *  @see CCTexture
  */
 - (id)initWithTexture:(CCTexture*)texture rect:(CGRect)rect;
 
 /**
- *  Initializes an sprite with an sprite frame.
+ *  Initializes a sprite with an existing CCTexture and a rect in points, optionally rotated.
+ *  The offset will be (0,0).
+ *  @note This is the designated initializer.
  *
- *  @param spriteFrame Sprite frame to use.
+ *  @param texture The texture to use.
+ *  @param rect    The rect to use.
+ *  @param rotated YES if texture is rotated.
  *
  *  @return A newly initialized CCSprite object.
+ *  @see CCTexture
  */
-- (id)initWithSpriteFrame:(CCSpriteFrame*)spriteFrame;
+- (id)initWithTexture:(CCTexture *)texture rect:(CGRect)rect rotated:(BOOL)rotated;
+
+/// -----------------------------------------------------------------------
+/// @name Creating a Sprite with a CGImage
+/// -----------------------------------------------------------------------
+
+/**
+ *  Creates an sprite with a CGImageRef and a key.
+ *  The key is used to determine if a texture was already created with this CGImage, this ensures proper caching.
+ *  For example, a valid key is: @"_spriteframe_01".
+ *  
+ *  @warning If key is nil, then a new texture will be created each time rather than replacing an existing texture using the same key.
+ *  This can waste a lot of memory!
+ *
+ *  @param image Image ref.
+ *  @param key   Key description.
+ *
+ *  @return The CCSprite Object.
+ */
++ (id)spriteWithCGImage: (CGImageRef)image key:(NSString*)key;
 
 /**
  *  Initializes an sprite with a CGImageRef and a key.
- *  The key is used by the CCTextureCache to know if a texture was already created with this CGImage.
+ *  The key is used to determine if a texture was already created with this CGImage, this ensures proper caching.
  *  For example, a valid key is: @"_spriteframe_01".
- *  If key is nil, then a new texture will be created each time by the CCTextureCache.
+ *
+ *  @warning If key is nil, then a new texture will be created each time rather than replacing an existing texture using the same key.
+ *  This can waste a lot of memory!
  *
  *  @param image Image ref.
  *  @param key   Key description.
@@ -207,31 +202,60 @@ typedef struct CCSpriteTexCoordSet {
  */
 - (id)initWithCGImage:(CGImageRef)image key:(NSString*)key;
 
+/// -----------------------------------------------------------------------
+/// @name Creating an empty Sprite
+/// -----------------------------------------------------------------------
+
 /**
- *  Creates a non rendered sprite, the primary use of this type of sprite would be for adding control sprites for more complex animations.
+ *  Creates an "empty" (invisible) sprite. The primary use of this type of sprite would be for adding control sprites
+ *  for more complex animations.
  *
  *  @return A newly initialized CCSprite object.
  */
 + (id)emptySprite;
 
-/**
- *  Designated initializer.
- *  Initializes an sprite with a texture and a rect in points, optionally rotated.
- *  The offset will be (0,0).
- *  IMPORTANT: This is the designated initializer.
- *
- *  @param texture The texture to use.
- *  @param rect    The rect to use.
- *  @param rotated YES if texture is rotated.
- *
- *  @return A newly initialized CCSprite object.
+/// -----------------------------------------------------------------------
+/// @name Flipping a Sprite
+/// -----------------------------------------------------------------------
+
+/** Whether or not the sprite is flipped horizontally.
+ @note Flipping does not flip any of the sprite's child sprites nor does it alter the anchorPoint. 
+ If that is what you want, you should try inversing the CCNode scaleX property: `sprite.scaleX *= -1.0;`.
  */
-- (id)initWithTexture:(CCTexture *)texture rect:(CGRect)rect rotated:(BOOL)rotated;
+@property (nonatomic,readwrite) BOOL flipX;
 
+/** Whether or not the sprite is flipped vertically.
+ @note Flipping does not flip any of the sprite's child sprites nor does it alter the anchorPoint.
+ If that is what you want, you should try inversing the CCNode scaleY property: `sprite.scaleY *= -1.0;`.
+ */
+@property (nonatomic,readwrite) BOOL flipY;
 
 /// -----------------------------------------------------------------------
-/// @name Textures Methods
+/// @name Accessing the Sprite Frames
 /// -----------------------------------------------------------------------
+
+/** The currently displayed spriteFrame.
+ @see CCSpriteFrame */
+@property (nonatomic,strong) CCSpriteFrame* spriteFrame;
+
+/** The current normal map spriteFrame.
+ @see CCSpriteFrame */
+@property (nonatomic,strong) CCSpriteFrame* normalMapSpriteFrame;
+
+/// -----------------------------------------------------------------------
+/// @name Working with the Sprite's Texture
+/// -----------------------------------------------------------------------
+
+@property (nonatomic, readonly) const CCSpriteVertexes *vertexes;
+
+/** The offset position in points of the sprite in points. Calculated automatically by sprite sheet editors. */
+@property (nonatomic,readonly) CGPoint	offsetPosition;
+
+/** Returns the texture rect of the CCSprite in points. */
+@property (nonatomic,readonly) CGRect textureRect;
+
+/** Returns whether or not the texture rectangle is rotated. Sprite sheet editors may rotate sprite frames in a texture to fit more sprites in the same atlas. */
+@property (nonatomic,readonly) BOOL textureRectRotated;
 
 /**
  *  Set the texture rect of the CCSprite in points.
@@ -250,11 +274,6 @@ typedef struct CCSpriteTexCoordSet {
  *  @param size    Untrimmed size.
  */
 - (void)setTextureRect:(CGRect)rect rotated:(BOOL)rotated untrimmedSize:(CGSize)size;
-
-
-/// -----------------------------------------------------------------------
-/// @name Accessing Transformations and Matrices
-/// -----------------------------------------------------------------------
 
 /** Returns the matrix that transforms the sprite's (local) space coordinates into the sprite's texture space coordinates.
  */

@@ -15,24 +15,24 @@
 @interface CCEffectPixellate : CCEffect
 
 /// -----------------------------------------------------------------------
-/// @name Accessing Effect Attributes
+/// @name Creating a Pixelate Effect
 /// -----------------------------------------------------------------------
 
-/** The resulting size of the pixel blocks of the affected node. This value is specified in points
- *  and is in the range [1..inf]. A value of 1 results in no change to the affected pixels
- *  and larger values result in larger output pixel blocks.
+/**
+ *  Creates a CCEffectPixellate object with the supplied parameters.
+ *
+ *  @param blockSize The desired block size.
+ *
+ *  @return The CCEffectPixellate object.
+ *  @since v3.2 and later
  */
-@property (nonatomic, assign) float blockSize;
-
-
-/// -----------------------------------------------------------------------
-/// @name Initializing a CCEffectPixellate object
-/// -----------------------------------------------------------------------
++(id)effectWithBlockSize:(float)blockSize;
 
 /**
  *  Initializes a CCEffectPixellate object with a block size of 1.
  *
  *  @return The CCEffectPixellate object.
+ *  @since v3.2 and later
  */
 -(id)init;
 
@@ -42,21 +42,20 @@
  *  @param blockSize The desired block size.
  *
  *  @return The CCEffectPixellate object.
+ *  @since v3.2 and later
  */
 -(id)initWithBlockSize:(float)blockSize;
 
 
 /// -----------------------------------------------------------------------
-/// @name Initializing a CCEffectPixellate object
+/// @name Adjusting Pixel Size
 /// -----------------------------------------------------------------------
 
-/**
- *  Creates a CCEffectPixellate object with the supplied parameters.
- *
- *  @param blockSize The desired block size.
- *
- *  @return The CCEffectPixellate object.
+/** The resulting size of the pixel blocks of the affected node. This value is specified in points
+ *  and is in the range [1..inf]. A value of 1 results in no change to the affected pixels
+ *  and larger values result in larger output pixel blocks.
+ *  @since v3.2 and later
  */
-+(id)effectWithBlockSize:(float)blockSize;
+@property (nonatomic, assign) float blockSize;
 
 @end
