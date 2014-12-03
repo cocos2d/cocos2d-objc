@@ -27,63 +27,37 @@
 #import <Foundation/Foundation.h>
 #import "CCSprite.h"
 
-/** Progress Node Type. */
+/** Progress Node type used by CCProgressNode. */
 typedef NS_ENUM(NSUInteger, CCProgressNodeType) {
-	/** Radial Counter-Clockwise */
+	/** Reveals radial (like radar blip) in counter-clockwise direction. */
 	CCProgressNodeTypeRadial,
-	/** Bar */
+	/** Reveals in horizontal/vertical direction. */
 	CCProgressNodeTypeBar,
 };
 
 /**
- CCProgressNode displays a sprite with a progressive reveal.
- 
- ### Notes
+ CCProgressNode uses a CCSprite whose texture can be revealed progressively.
  
  - Progress type can currently be Radial, Horizontal or vertical.
  - Midpoint is used to modify the start position:
-    - Radial type the mid point changes the center point.
-    - Bar type the midpoint changes the bar growth, it expands from the center but clamps to the sprites edge:
+    - Radial type: the mid point changes the center point.
+    - Bar type: the midpoint changes the bar growth, it expands from the center but clamps to the sprites edge:
         - Left  -> Right use (0,0)
         - Right -> Left use (1,y)
         - Bottom -> Top use (x,0)
         - Top -> Bottom use (x,1)
  
- - Progress percentage is 0 -> 100.
+ - Progress percentage is in the range 0 -> 100.
  - Bar change rate allows the bar type to move the component at a specific rate.
     - Set the rate to zero to make sure it stays at 100%
-    - Example: If you want a Left -> Right bar and also have the height grow set the rate to (0,1) and modpoint to (0,0.5f)
-  
+    - Example: If you want a Left -> Right bar and also have the height grow set the rate to (0, 1) and modpoint to (0, 0.5)
  */
 
 @interface CCProgressNode : CCNode
 
 
 /// -----------------------------------------------------------------------
-/// @name Accessing the Progress Node Attributes
-/// -----------------------------------------------------------------------
-
-/**	Progress type. */
-@property (nonatomic, readwrite) CCProgressNodeType type;
-
-/**	Reverse progress direction. */
-@property (nonatomic, readwrite) BOOL reverseDirection;
-
-/** Progress start position. */
-@property (nonatomic, readwrite) CGPoint midpoint;
-
-/** Bar change rate. */
-@property (nonatomic, readwrite) CGPoint barChangeRate;
-
-/** Progress percentage. */
-@property (nonatomic, readwrite) float percentage;
-
-/** The Sprite to use. */
-@property (nonatomic, readwrite, strong) CCSprite *sprite;
-
-
-/// -----------------------------------------------------------------------
-/// @name Creating a CCProgressNode Object
+/// @name Creating a Progress Node
 /// -----------------------------------------------------------------------
 
 /**
@@ -92,13 +66,9 @@ typedef NS_ENUM(NSUInteger, CCProgressNodeType) {
  *  @param sprite The CCSprite to use.
  *
  *  @return The CCProgressNode Object.
+ *  @see CCSprite
  */
 +(id)progressWithSprite:(CCSprite*) sprite;
-
-
-/// -----------------------------------------------------------------------
-/// @name Initializing a CCProgressNode Object
-/// -----------------------------------------------------------------------
 
 /**
  *  Initializes and returns a progress node object using the specified sprite value.
@@ -106,7 +76,44 @@ typedef NS_ENUM(NSUInteger, CCProgressNodeType) {
  *  @param sprite The CCSprite to use.
  *
  *  @return An initialized CCProgressNode Object.
+ *  @see CCSprite
  */
 -(id)initWithSprite:(CCSprite*) sprite;
+
+/// -----------------------------------------------------------------------
+/// @name Changing Progress Behavior
+/// -----------------------------------------------------------------------
+
+/**	
+ Determines how the sprite's texture is revealed.
+ @see CCProgressNodeType
+ */
+@property (nonatomic, readwrite) CCProgressNodeType type;
+
+/**	
+ Reverse the direction of the progressive reveal.
+ */
+@property (nonatomic, readwrite) BOOL reverseDirection;
+
+/** Progress start position. */
+@property (nonatomic, readwrite) CGPoint midpoint;
+
+/// -----------------------------------------------------------------------
+/// @name Animating the Progress Node
+/// -----------------------------------------------------------------------
+
+/** Progress percentage. Changing this will effectively animate the progress node. */
+@property (nonatomic, readwrite) float percentage;
+
+/** Rate at which the bar changes. */
+@property (nonatomic, readwrite) CGPoint barChangeRate;
+
+/// -----------------------------------------------------------------------
+/// @name Accessing the Progress Sprite
+/// -----------------------------------------------------------------------
+
+/** The CCSprite used by the progress node.
+ @see CCSprite */
+@property (nonatomic, readwrite, strong) CCSprite *sprite;
 
 @end

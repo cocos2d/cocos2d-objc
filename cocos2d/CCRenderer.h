@@ -46,16 +46,22 @@ CCRenderCheckVisbility(const GLKMatrix4 *transform, GLKVector2 center, GLKVector
 }
 
 
-/// A rendering queue.
-/// All drawing commands in Cocos2D must be sequenced using a CCRenderer.
+/// Implements a rendering queue.
+/// All drawing commands in Cocos2D must be sequenced using a CCRenderer, including native OpenGL and Metal rendering commands.
 @interface CCRenderer : NSObject
 
-/// YES if the renderer contains only threadsafe rendering commands.
+/// @name Thread Safety
+
+/// Whether the renderer contains only threadsafe rendering commands.
 @property(nonatomic, readonly) BOOL threadsafe;
+
+/// @name Invalidating the Render State
 
 /// Mark the renderer's cached GL state as invalid executing custom OpenGL code.
 /// You only need to call this if you change the shader, texture or blending mode states.
 -(void)invalidateState;
+
+/// @name Enqueuing a Clear Buffer Command
 
 /// Enqueue a OpenGL clear operation for the given buffers and the given values.
 /// Enqueued commands are sorted by their globalSortOrder value before rendering. Currently this value is 0 for everything except custom draw methods.
@@ -65,6 +71,8 @@ CCRenderCheckVisbility(const GLKMatrix4 *transform, GLKVector2 center, GLKVector
 /// @param stencil stencil
 /// @param globalSortOrder rendering sort order
 -(void)enqueueClear:(GLbitfield)mask color:(GLKVector4)color4 depth:(GLclampf)depth stencil:(GLint)stencil globalSortOrder:(NSInteger)globalSortOrder;
+
+/// @name Enqueuing Rendering Commands
 
 /// Enqueue a block that performs GL commands. The debugLabel is optional and will show up in in the GLES frame debugger.
 /// Enqueued commands are sorted by their globalSortOrder value before rendering. Currently this value is 0 for everything except custom draw methods.
@@ -80,6 +88,8 @@ CCRenderCheckVisbility(const GLKMatrix4 *transform, GLKVector2 center, GLKVector
 /// @param target the target object receiving the selector message
 -(void)enqueueMethod:(SEL)selector target:(id)target;
 
+/// @name Rendering Groups
+
 /// Begin a rendering group. Must be matched with a call to popGroup:. Can be nested.
 /// Commands in the group are sorted relative to each other.
 -(void)pushGroup;
@@ -94,8 +104,10 @@ CCRenderCheckVisbility(const GLKMatrix4 *transform, GLKVector2 center, GLKVector
 
 @interface CCRenderer(NoARC)
 
+/// @name Enqueuing Triangles
+
 /// Enqueue a drawing command for some triangles.
-/// Returns a CCRendereBuffer that you should fill using CCRenderBufferSetVertex() and CCRenderBufferSetTriangle().
+/// Returns a CCRendereBuffer that you should fill using `CCRenderBufferSetVertex()` and `CCRenderBufferSetTriangle()`.
 /// Enqueued commands are sorted by their globalSortOrder value before rendering. Currently this value is 0 for everything except custom draw methods.
 /// @param triangleCount number of triangles to enqueue
 /// @param vertexCount number of vertexes to enqueue
@@ -103,8 +115,10 @@ CCRenderCheckVisbility(const GLKMatrix4 *transform, GLKVector2 center, GLKVector
 /// @param globalSortOrder rendering sort order
 -(CCRenderBuffer)enqueueTriangles:(NSUInteger)triangleCount andVertexes:(NSUInteger)vertexCount withState:(CCRenderState *)renderState globalSortOrder:(NSInteger)globalSortOrder;
 
+/// @name Enqueuing Primitive Lines
+
 /// Enqueue a drawing command for some lines.
-/// Returns a CCRendereBuffer that you should fill using CCRenderBufferSetVertex() and CCRenderBufferSetLine().
+/// Returns a CCRendereBuffer that you should fill using `CCRenderBufferSetVertex()` and `CCRenderBufferSetLine()`.
 /// Note: These are primitive OpenGL lines that you'll only want to use for debug rendering. They are not batched.
 /// Enqueued commands are sorted by their globalSortOrder value before rendering. Currently this value is 0 for everything except custom draw methods.
 /// @param lineCount number of lines to enqueue
