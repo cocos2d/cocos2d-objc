@@ -103,20 +103,6 @@
 #define CC_NODE_RENDER_SUBPIXEL 1
 #endif
 
-/** @def CC_SPRITE_DEBUG_DRAW
- If enabled, all subclasses of CCSprite will draw a bounding box.
- Useful for debugging purposes only. It is recommended to leave it disabled.
-
- If the CCSprite is being drawn by a CCSpriteBatchNode, the bounding box might be a bit different.
- To enable set it to a value different than 0. Disabled by default:
- 0 -- disabled
- 1 -- draw bounding box
- 2 -- draw texture box
- */
-#ifndef CC_SPRITE_DEBUG_DRAW
-#define CC_SPRITE_DEBUG_DRAW 0
-#endif
-
 /** @def CC_ENABLE_METAL_RENDERING
  Enable rendering using Apple's Metal graphics API on supported platforms and hardware.
  This can reduce the cost of rendering unbatched geometry, but not all Cocos2D features are supported.
