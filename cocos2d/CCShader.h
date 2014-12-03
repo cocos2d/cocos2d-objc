@@ -76,13 +76,15 @@ extern NSString * const CCShaderUniformAlphaTestValue;
 
 /** @name Creating a OpenGL Shader */
 
-/** Creates a OpenGL shader with the given vertex and fragment shader source code as strings.
+/** Creates a shader with the given vertex and fragment shader source code as strings.
+ When the GL renderer is running, GLSL source is expected. When the Metal renderer is running, Metal shading language source is expected.
  @param vertexSource The vertex shader's source code string. Must not be nil.
  @param fragmentSource The fragment shader's source code string. Must not be nil.
  @returns The created CCShader instance, or nil if there was a compile error in either of the two shader programs.
  */
 -(instancetype)initWithVertexShaderSource:(NSString *)vertexSource fragmentShaderSource:(NSString *)fragmentSource;
-/** Creates a OpenGL shader with the given fragment shader source code as string.
+/** Creates a shader with the given fragment shader source code as string.
+ When the GL renderer is running, GLSL source is expected. When the Metal renderer is running, Metal shading language source is expected.
  @param source The fragment shader's source code string. Must not be nil.
  @returns The created CCShader instance, or nil if there was a compile error in the shader programs.
  */
@@ -104,6 +106,8 @@ extern NSString * const CCShaderUniformAlphaTestValue;
 /** @name Getting a Shader by its Name */
 
 /** Returns the shader with the given name. Returns nil if there's no shader for this name.
+ When the GL renderer is running, this searches for a file name "shaderName.fsh" for the fragment shader, and optionally "shaderName.vsh" for the vertex shader.
+ When the Metal renderer is running it searces in CCShaders.metallib for a fragment function named "shaderNameFS" and optionally a vertex function named "shaderNameVS".
  @param shaderName The shader's unique name. */
 +(instancetype)shaderNamed:(NSString *)shaderName;
 
