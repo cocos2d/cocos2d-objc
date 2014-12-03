@@ -10,7 +10,31 @@
 #import "CCUnitTestAssertions.h"
 
 
-@interface CCFileUtilTests : XCTestCase
+@interface CCFileTests : XCTestCase @end
+@implementation CCFileTests
+
+-(void)testBasics
+{
+    NSString *name = @"Resources-shared/configCocos2d.plist";
+    CGFloat scale = 1.5;
+    
+    NSURL *url = [[NSBundle mainBundle] URLForResource:name withExtension:nil];
+    XCTAssertNotNil(url, @"What happened to the config file?");
+    
+    CCFile *file = [[CCFile alloc] initWithName:name url:url contentScale:scale];
+    
+    XCTAssertEqualObjects(name, file.name);
+    XCTAssertEqualObjects(url, file.url);
+    XCTAssertEqualObjects(url.path, file.absoluteFilePath);
+    XCTAssertEqual(scale, file.contentScale);
+    
+    NSInputStream *stream = [file openInputStream];
+    XCTAssertNotNil(stream);
+    [stream close];
+    
+    XCTAssertNotNil([file loadPlist]);
+    XCTAssertNotNil([file loadData]);
+}
 
 @end
 
@@ -18,6 +42,7 @@
 +(void) resetSingleton;
 @end
 
+@interface CCFileUtilTests : XCTestCase @end
 @implementation CCFileUtilTests
 
 - (void)setUp

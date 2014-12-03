@@ -137,6 +137,7 @@
 #import "CCRenderDispatch.h"
 #import "CCTransition.h"
 #import "CCDeviceInfo.h"
+#import "CCFile.h"
 #import "Support/CCFileUtils.h"
 #import "Support/CGPointExtension.h"
 #import "Support/ccUtils.h"

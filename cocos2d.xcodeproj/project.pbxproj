@@ -860,6 +860,12 @@
 		D33803E318032ECE0072D8FE /* CCPhysicsBody.m in Sources */ = {isa = PBXBuildFile; fileRef = D33803E218032ECE0072D8FE /* CCPhysicsBody.m */; };
 		D33803E618032F390072D8FE /* CCPhysicsNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D33803E518032F390072D8FE /* CCPhysicsNode.m */; };
 		D33803EA180331A90072D8FE /* CCPhysicsJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = D33803E9180331A90072D8FE /* CCPhysicsJoint.m */; };
+		D33C9CE51A2FAC33004070CA /* CCFile.h in Headers */ = {isa = PBXBuildFile; fileRef = D33C9CE31A2FAC33004070CA /* CCFile.h */; };
+		D33C9CE61A2FAC33004070CA /* CCFile.h in Headers */ = {isa = PBXBuildFile; fileRef = D33C9CE31A2FAC33004070CA /* CCFile.h */; };
+		D33C9CE71A2FAC33004070CA /* CCFile.h in Headers */ = {isa = PBXBuildFile; fileRef = D33C9CE31A2FAC33004070CA /* CCFile.h */; };
+		D33C9CE81A2FAC33004070CA /* CCFile.m in Sources */ = {isa = PBXBuildFile; fileRef = D33C9CE41A2FAC33004070CA /* CCFile.m */; };
+		D33C9CE91A2FAC33004070CA /* CCFile.m in Sources */ = {isa = PBXBuildFile; fileRef = D33C9CE41A2FAC33004070CA /* CCFile.m */; };
+		D33C9CEA1A2FAC33004070CA /* CCFile.m in Sources */ = {isa = PBXBuildFile; fileRef = D33C9CE41A2FAC33004070CA /* CCFile.m */; };
 		D34CAD6119C3A0B5009BED7A /* NSValue+CCRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = D34CAD5F19C3A0B5009BED7A /* NSValue+CCRenderer.h */; };
 		D34CAD6419C3A0FD009BED7A /* NSValue+CCRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = D34CAD6219C3A0FD009BED7A /* NSValue+CCRenderer.m */; };
 		D34CAD6719C3A7A5009BED7A /* CCRendererBasicTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = D34CAD6519C3A7A5009BED7A /* CCRendererBasicTypes.h */; };
@@ -1386,6 +1392,8 @@
 		D33803E718032F4A0072D8FE /* CCPhysicsNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPhysicsNode.h; sourceTree = "<group>"; };
 		D33803E81803319F0072D8FE /* CCPhysicsJoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPhysicsJoint.h; sourceTree = "<group>"; };
 		D33803E9180331A90072D8FE /* CCPhysicsJoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsJoint.m; sourceTree = "<group>"; };
+		D33C9CE31A2FAC33004070CA /* CCFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFile.h; sourceTree = "<group>"; };
+		D33C9CE41A2FAC33004070CA /* CCFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCFile.m; sourceTree = "<group>"; };
 		D34CAD5F19C3A0B5009BED7A /* NSValue+CCRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSValue+CCRenderer.h"; sourceTree = "<group>"; };
 		D34CAD6219C3A0FD009BED7A /* NSValue+CCRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSValue+CCRenderer.m"; sourceTree = "<group>"; };
 		D34CAD6519C3A7A5009BED7A /* CCRendererBasicTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRendererBasicTypes.h; sourceTree = "<group>"; };
@@ -1628,6 +1636,8 @@
 				E0CC11891353ED6100080D9D /* Math */,
 				501CCFB60E99658900B86F68 /* OpenGLSupport */,
 				E0C54DC911F9CF2700B9E4CB /* ccUtils.h */,
+				D33C9CE31A2FAC33004070CA /* CCFile.h */,
+				D33C9CE41A2FAC33004070CA /* CCFile.m */,
 				50C508C40F7C194400799124 /* CCFileUtils.h */,
 				50C508C50F7C194400799124 /* CCFileUtils.m */,
 				50F29F6E102053370046CA73 /* base64.h */,
@@ -2294,6 +2304,7 @@
 				50C508C60F7C194400799124 /* CCFileUtils.h in Headers */,
 				D3737E341A1F130700782024 /* NSEvent+CC.h in Headers */,
 				D268FE231980791C00ECBCD0 /* CCEffectStack_Private.h in Headers */,
+				D33C9CE51A2FAC33004070CA /* CCFile.h in Headers */,
 				9D9205D21A0173D600FF2D6D /* CCLightCollection.h in Headers */,
 				503798C60F912C2000986724 /* CGPointExtension.h in Headers */,
 				50D413260F9A3FE00040C3C8 /* CCParticleSystem.h in Headers */,
@@ -2481,6 +2492,7 @@
 				7A5946A419E372F100F65F90 /* CCTiledMapLayer.m in Headers */,
 				7A5946A519E372F200F65F90 /* CCTiledMapObjectGroup.h in Headers */,
 				7A5946A619E372F200F65F90 /* CCTiledMapObjectGroup.m in Headers */,
+				D33C9CE71A2FAC33004070CA /* CCFile.h in Headers */,
 				7A5946A719E372F200F65F90 /* CCTMXXMLParser.h in Headers */,
 				7A5946A819E372F200F65F90 /* CCTMXXMLParser.m in Headers */,
 				7A5946A919E372F200F65F90 /* CCTiledMapLayer_Private.h in Headers */,
@@ -2645,6 +2657,7 @@
 				9D1B4A9A1A02E90300B2DD9B /* CCLightGroups.h in Headers */,
 				D2FEB636194F6C9E00FC0574 /* CCActionEase.h in Headers */,
 				D2FEB637194F6C9E00FC0574 /* CCSprite_Private.h in Headers */,
+				D33C9CE61A2FAC33004070CA /* CCFile.h in Headers */,
 				7A59493E19E3803200F65F90 /* CCEffectBlur.h in Headers */,
 				D2FEB638194F6C9E00FC0574 /* ccMacros.h in Headers */,
 				D2FEB639194F6C9E00FC0574 /* CCNode_Private.h in Headers */,
@@ -3080,6 +3093,7 @@
 				E0EAD100121F4B4600B0C81C /* CCDirectorIOS.m in Sources */,
 				D24161011958F6EE003673BD /* CCAnimationManager+FrameAnimation.m in Sources */,
 				D285ECF9192EF5B2009F4E88 /* CCDirectorAndroid.m in Sources */,
+				D33C9CE81A2FAC33004070CA /* CCFile.m in Sources */,
 				D268FE0E198078FF00ECBCD0 /* CCEffectBloom.m in Sources */,
 				E0EAD109121F4B4600B0C81C /* CCGLView.m in Sources */,
 				9D85671E191B018200573093 /* CCEffectBrightness.m in Sources */,
@@ -3267,6 +3281,7 @@
 				7A5948BD19E375BB00F65F90 /* CCBReader.m in Sources */,
 				7A5948BF19E375BB00F65F90 /* CCBsequence.m in Sources */,
 				9D03A5F81A02F8C600C651C8 /* CCEffectLighting.m in Sources */,
+				D33C9CEA1A2FAC33004070CA /* CCFile.m in Sources */,
 				7A5948C119E375BB00F65F90 /* CCBSequenceProperty.m in Sources */,
 				7A5948C719E375BC00F65F90 /* CCControl.m in Sources */,
 				7A5948C919E375BD00F65F90 /* CCButton.m in Sources */,
@@ -3322,6 +3337,7 @@
 				D2FEB6DC194F6C9E00FC0574 /* CCEffectNode.m in Sources */,
 				D2FEB6DD194F6C9E00FC0574 /* CCTiledMapObjectGroup.m in Sources */,
 				D2FEB6DE194F6C9E00FC0574 /* CGPointExtension.m in Sources */,
+				D33C9CE91A2FAC33004070CA /* CCFile.m in Sources */,
 				D2FEB6DF194F6C9E00FC0574 /* CCParticleSystem.m in Sources */,
 				D2FEB6E1194F6C9E00FC0574 /* CCActionManager.m in Sources */,
 				D2FEB6E2194F6C9E00FC0574 /* CCAppDelegate.m in Sources */,
