@@ -73,6 +73,10 @@
 		D32FDE8619B645CA0078CC16 /* CCTextureTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D32FDE8519B645CA0078CC16 /* CCTextureTests.m */; };
 		D3383AB81A099D7200E13478 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3383AB71A099D7200E13478 /* Launch Screen.xib */; };
 		D3395F1A187F83E600F22C74 /* CCMemoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D3395F19187F83E600F22C74 /* CCMemoryTests.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D33C9CF71A2FBF9C004070CA /* CCFileTest.plist.gz in Resources */ = {isa = PBXBuildFile; fileRef = D33C9CF61A2FBF9C004070CA /* CCFileTest.plist.gz */; };
+		D33C9CF81A2FBF9C004070CA /* CCFileTest.plist.gz in Resources */ = {isa = PBXBuildFile; fileRef = D33C9CF61A2FBF9C004070CA /* CCFileTest.plist.gz */; };
+		D33C9CFA1A2FF561004070CA /* CCFileTest.plist in Resources */ = {isa = PBXBuildFile; fileRef = D33C9CF91A2FF561004070CA /* CCFileTest.plist */; };
+		D33C9CFB1A2FF561004070CA /* CCFileTest.plist in Resources */ = {isa = PBXBuildFile; fileRef = D33C9CF91A2FF561004070CA /* CCFileTest.plist */; };
 		D340E10E185660BE006E605C /* CCPhysicsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D340E10C185660BE006E605C /* CCPhysicsTest.m */; };
 		D340E10F185660BE006E605C /* TilemapTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D340E10D185660BE006E605C /* TilemapTest.m */; };
 		D344722D19E73AD1000093A3 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8D81977100000261299 /* A Damn Mess.ttf */; };
@@ -390,6 +394,8 @@
 		D32FDE8519B645CA0078CC16 /* CCTextureTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTextureTests.m; sourceTree = "<group>"; };
 		D3383AB71A099D7200E13478 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
 		D3395F19187F83E600F22C74 /* CCMemoryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMemoryTests.m; sourceTree = "<group>"; };
+		D33C9CF61A2FBF9C004070CA /* CCFileTest.plist.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; name = CCFileTest.plist.gz; path = Resources/CCFileTest.plist.gz; sourceTree = SOURCE_ROOT; };
+		D33C9CF91A2FF561004070CA /* CCFileTest.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = CCFileTest.plist; path = Resources/CCFileTest.plist; sourceTree = SOURCE_ROOT; };
 		D340E10C185660BE006E605C /* CCPhysicsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCPhysicsTest.m; path = "cocos2d-ui-tests/tests/CCPhysicsTest.m"; sourceTree = SOURCE_ROOT; };
 		D340E10D185660BE006E605C /* TilemapTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TilemapTest.m; path = "cocos2d-ui-tests/tests/TilemapTest.m"; sourceTree = SOURCE_ROOT; };
 		D34CD3C118ABEE9C00D8E537 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
@@ -576,6 +582,8 @@
 				758A6C7F184410EE00D1A8D2 /* Particles */,
 				758A6C6A1843E5BE00D1A8D2 /* TileMaps */,
 				758A6C6B1843E5C500D1A8D2 /* Images */,
+				D33C9CF91A2FF561004070CA /* CCFileTest.plist */,
+				D33C9CF61A2FBF9C004070CA /* CCFileTest.plist.gz */,
 			);
 			name = "Test Resources";
 			path = "cocos2d-ui-tests-ios";
@@ -1063,6 +1071,7 @@
 				D4AFE91E1977100000261299 /* bitmapFontTest3.fnt in Resources */,
 				D4AFE9221977100000261299 /* bitmapFontTest5.fnt in Resources */,
 				D4AFE9261977100000261299 /* font-issue1343-hd.fnt in Resources */,
+				D33C9CF71A2FBF9C004070CA /* CCFileTest.plist.gz in Resources */,
 				D4AFE92B1977100000261299 /* fps_images-hd.png in Resources */,
 				D4AFE91A1977100000261299 /* arial16.png in Resources */,
 				D4AFE9431977100000261299 /* RobotoSlab-Bold.ttf in Resources */,
@@ -1077,6 +1086,7 @@
 				D4AFE9391977100000261299 /* konqa32.png in Resources */,
 				D4AFE9341977100000261299 /* helvetica-32.fnt in Resources */,
 				D4AFE9181977100000261299 /* arial-unicode-26.png in Resources */,
+				D33C9CFA1A2FF561004070CA /* CCFileTest.plist in Resources */,
 				B7E2621517E7D34D007067F0 /* Icon-Small@2x.png in Resources */,
 				D4AFE9481977100000261299 /* Scissor Cuts.ttf in Resources */,
 				D3E1842B19E861FC00A08B01 /* MetalShaders in Resources */,
@@ -1113,6 +1123,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D33C9CF81A2FBF9C004070CA /* CCFileTest.plist.gz in Resources */,
 				D344722D19E73AD1000093A3 /* A Damn Mess.ttf in Resources */,
 				D344722E19E73AD1000093A3 /* Abberancy.ttf in Resources */,
 				D344722F19E73AD1000093A3 /* ThisFontIsAbdFont.ttf in Resources */,
@@ -1127,6 +1138,7 @@
 				D3DACC7B19E74BC000629E97 /* MainMenu.xib in Resources */,
 				D344723819E73AD1000093A3 /* bitmapFontTest3.fnt in Resources */,
 				D344723919E73AD1000093A3 /* bitmapFontTest3.png in Resources */,
+				D33C9CFB1A2FF561004070CA /* CCFileTest.plist in Resources */,
 				D344723A19E73AD1000093A3 /* bitmapFontTest4.fnt in Resources */,
 				D344723B19E73AD1000093A3 /* bitmapFontTest4.png in Resources */,
 				D344723C19E73AD1000093A3 /* bitmapFontTest5.fnt in Resources */,

@@ -36,6 +36,45 @@
     XCTAssertNotNil([file loadData]);
 }
 
+-(void)testLoadMethods
+{
+    NSURL *url = [[NSBundle mainBundle] URLForResource:@"CCFileTest.plist" withExtension:nil];
+    XCTAssertNotNil(url, @"What happened to the file?");
+    
+    id plist = @{@"Foo": @"Bar"};
+    
+    CCFile *file = [[CCFile alloc] initWithName:@"Test" url:url contentScale:1.0];
+    XCTAssertEqualObjects(file.loadPlist, plist);
+    
+    // Could probably make a better test... but...
+    XCTAssertTrue(file.loadData.length > 0);
+}
+
+-(void)testLoadMethodsGzipped
+{
+    NSURL *url = [[NSBundle mainBundle] URLForResource:@"CCFileTest.plist.gz" withExtension:nil];
+    XCTAssertNotNil(url, @"What happened to the file?");
+    
+    id plist = @{@"Foo": @"Bar"};
+    
+    CCFile *file = [[CCGZippedFile alloc] initWithName:@"Test" url:url contentScale:1.0];
+    XCTAssertEqualObjects(file.loadPlist, plist);
+    
+    // Could probably make a better test... but...
+    XCTAssertTrue(file.loadData.length > 0);
+}
+
+-(void)testLoadDataMethods
+{
+    NSURL *url = [[NSBundle mainBundle] URLForResource:@"CCFileTest.plist" withExtension:nil];
+    CCFile *file = [[CCFile alloc] initWithName:@"Test" url:url contentScale:1.0];
+    
+    NSURL *gzippedURL = [[NSBundle mainBundle] URLForResource:@"CCFileTest.plist.gz" withExtension:nil];
+    CCFile *gzippedFile = [[CCGZippedFile alloc] initWithName:@"Test" url:gzippedURL contentScale:1.0];
+    
+    XCTAssertEqualObjects(file.loadData, gzippedFile.loadData);
+}
+
 @end
 
 @interface  CCFileUtils()
