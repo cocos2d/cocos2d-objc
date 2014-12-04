@@ -58,6 +58,3 @@
 -(NSInputStream *)openInputStream;
 
 @end
-
-@interface CCGZippedFile : CCFile
-@end

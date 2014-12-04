@@ -36,44 +36,41 @@
     XCTAssertNotNil([file loadData]);
 }
 
--(void)testLoadMethods
+-(void)_testLoadMethods:(NSString *)name
 {
-    NSURL *url = [[NSBundle mainBundle] URLForResource:@"CCFileTest.plist" withExtension:nil];
+    NSURL *url = [[NSBundle mainBundle] URLForResource:name withExtension:nil];
     XCTAssertNotNil(url, @"What happened to the file?");
     
     id plist = @{@"Foo": @"Bar"};
     
-    CCFile *file = [[CCFile alloc] initWithName:@"Test" url:url contentScale:1.0];
+    CCFile *file = [[CCFile alloc] initWithName:name url:url contentScale:1.0];
     XCTAssertEqualObjects(file.loadPlist, plist);
     
     // Could probably make a better test... but...
     XCTAssertTrue(file.loadData.length > 0);
 }
 
--(void)testLoadMethodsGzipped
+-(void)testLoadMethods
 {
-    NSURL *url = [[NSBundle mainBundle] URLForResource:@"CCFileTest.plist.gz" withExtension:nil];
-    XCTAssertNotNil(url, @"What happened to the file?");
-    
-    id plist = @{@"Foo": @"Bar"};
-    
-    CCFile *file = [[CCGZippedFile alloc] initWithName:@"Test" url:url contentScale:1.0];
-    XCTAssertEqualObjects(file.loadPlist, plist);
-    
-    // Could probably make a better test... but...
-    XCTAssertTrue(file.loadData.length > 0);
+    [self _testLoadMethods:@"CCFileTest.plist"];
+    [self _testLoadMethods:@"CCFileTest.plist.gz"];
+    [self _testLoadMethods:@"CCFileTest.plist.ccp"];
+    [self _testLoadMethods:@"CCFileTest.plist.gz.ccp"];
 }
 
 -(void)testLoadDataMethods
 {
-    NSURL *url = [[NSBundle mainBundle] URLForResource:@"CCFileTest.plist" withExtension:nil];
-    CCFile *file = [[CCFile alloc] initWithName:@"Test" url:url contentScale:1.0];
-    
     NSURL *gzippedURL = [[NSBundle mainBundle] URLForResource:@"CCFileTest.plist.gz" withExtension:nil];
-    CCFile *gzippedFile = [[CCGZippedFile alloc] initWithName:@"Test" url:gzippedURL contentScale:1.0];
+    CCFile *gzippedFile = [[CCFile alloc] initWithName:@"Test" url:gzippedURL contentScale:1.0];
     
-    XCTAssertEqualObjects(file.loadData, gzippedFile.loadData);
+    NSURL *encryptedURL = [[NSBundle mainBundle] URLForResource:@"CCFileTest.plist.ccp" withExtension:nil];
+    CCFile *encryptedFile = [[CCFile alloc] initWithName:@"Test" url:encryptedURL contentScale:1.0];
+    
+    XCTAssertEqualObjects(encryptedFile.loadData, gzippedFile.loadData);
 }
+
+#warning TODO
+// Need tests for files larger than 32kb for gzip buffers and 4kb for encryption buffers.
 
 @end
 

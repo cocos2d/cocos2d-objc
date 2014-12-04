@@ -28,106 +28,24 @@
 #import "CCFile.h"
 
 
-//MARK: Basic Files
-
-@implementation CCFile
-
--(instancetype)initWithName:(NSString *)name url:(NSURL *)url contentScale:(CGFloat)contentScale
-{
-    if((self = [super init])){
-        _name = [name copy];
-        _url = [url copy];
-        _contentScale = contentScale;
-    }
-    
-    return self;
-}
-
--(NSString *)absoluteFilePath
-{
-    if(_url.isFileURL){
-        return _url.path;
-    } else {
-        return nil;
-    }
-}
-
-+(Class)inputStreamClass
-{
-    return [NSInputStream class];
-}
-
--(NSInputStream *)openInputStream
-{
-    Class streamClass = [self.class inputStreamClass];
-    NSInputStream *stream = [streamClass inputStreamWithURL:self.url];
-    
-    if(stream == nil){
-        CCLOG(@"Error opening stream for %@", self.name);
-    }
-    
-    [stream open];
-    return stream;
-}
-
--(id)loadPlist
-{
-    NSInputStream *stream = [self openInputStream];
-    NSError *err = nil;
-    id plist = [NSPropertyListSerialization propertyListWithStream:stream options:0 format:NULL error:&err];
-    
-    [stream close];
-    
-    if(err){
-        CCLOG(@"Error reading property list from %@: %@", self.name, err);
-        return nil;
-    } else {
-        return plist;
-    }
-}
-
--(NSData *)loadData
-{
-    NSError *err = nil;
-    NSData *data = [NSData dataWithContentsOfURL:_url options:NSDataReadingMappedIfSafe error:&err];
-    
-    if(err){
-        CCLOG(@"Error reading data from from %@: %@", self.name, err);
-        return nil;
-    } else {
-        return data;
-    }
-}
-
-@end
-
-
-//MARK: GZipped Files
+//MARK: Wrapped Streams
 
 #define BUFFER_SIZE 32*1024
 
-@interface CCGZippedInputStream : NSInputStream
-@end
-
-
-@implementation CCGZippedInputStream {
+@interface CCWrappedInputStream : NSInputStream @end
+@implementation CCWrappedInputStream {
+    @protected
     NSInputStream *_inputStream;
-    z_stream _zStream;
-    BOOL _needsInit;
-    
-    uint8_t _inBuffer[BUFFER_SIZE];
     BOOL _hasBytesAvailable;
 }
 
+// Make the designated initializer warnings go away.
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wall"
-// NSInputStream is an abstract class cluster.
-// You cannot call [super initWithURL] because it doesn't exist yet Xcode gives you warnings for not doing it. -_-
--(instancetype)initWithURL:(NSURL *)url
+-(instancetype)initWithInputStream:(NSInputStream *)inputStream
 {
     if((self = [super init])){
-        _inputStream = [[NSInputStream alloc] initWithURL:url];
-        _needsInit = YES;
+        _inputStream = inputStream;
         _hasBytesAvailable = YES;
     }
     
@@ -135,9 +53,9 @@
 }
 #pragma clang diagnostic pop
 
--(void)dealloc
+-(instancetype)initWithURL:(NSURL *)url
 {
-    inflateEnd(&_zStream);
+    return [self initWithInputStream:[NSInputStream inputStreamWithURL:url]];
 }
 
 // Forward most of the methods on to the regular input stream object.
@@ -151,6 +69,60 @@
 -(BOOL)setProperty:(id)property forKey:(NSString *)key {return [_inputStream setProperty:property forKey:key];}
 -(NSStreamStatus)streamStatus {return _inputStream.streamStatus;}
 -(NSError *)streamError {return _inputStream.streamError;}
+
+-(BOOL)getBuffer:(uint8_t **)buffer length:(NSUInteger *)len
+{
+    return NO;
+}
+
+-(BOOL)hasBytesAvailable
+{
+    return _hasBytesAvailable;
+}
+
+-(NSData *)loadData
+{
+    NSMutableData *data = [NSMutableData dataWithLength:BUFFER_SIZE];
+    NSUInteger totalBytesRead = 0;
+    
+    for(;;){
+        totalBytesRead += [self read:data.mutableBytes + totalBytesRead maxLength:data.length - totalBytesRead];
+        
+        if(self.hasBytesAvailable){
+            [data increaseLengthBy:data.length*0.5];
+        } else {
+            break;
+        }
+    }
+    
+    data.length = totalBytesRead;
+    return data;
+}
+
+@end
+
+
+@interface CCGZippedInputStream : CCWrappedInputStream @end
+@implementation CCGZippedInputStream {
+    z_stream _zStream;
+    BOOL _needsInit;
+    
+    uint8_t _inBuffer[BUFFER_SIZE];
+}
+
+-(instancetype)initWithInputStream:(NSInputStream *)inputStream
+{
+    if((self = [super initWithInputStream:inputStream])){
+        _needsInit = YES;
+    }
+    
+    return self;
+}
+
+-(void)dealloc
+{
+    inflateEnd(&_zStream);
+}
 
 -(NSInteger)read:(uint8_t *)buffer maxLength:(NSUInteger)len
 {
@@ -201,47 +173,217 @@
     return (len - _zStream.avail_out);
 }
 
--(BOOL)getBuffer:(uint8_t **)buffer length:(NSUInteger *)len
-{
-    return NO;
+@end
+
+
+#warning TODO make a setter for this.
+uint32_t CCFILE_DECRYPTION_KEY[4] = {0x44DAACE2, 0x85BB4204, 0xAA31EA6A, 0x4D7E17E7};
+
+// Block size in 4 byte words.
+#define BLOCK_SIZE 1024
+
+@interface CCEncryptedInputStream : CCWrappedInputStream @end
+@implementation CCEncryptedInputStream {
+    // Most recently decompressed block.
+    uint8_t _buffer[BLOCK_SIZE*4];
+    
+    // Pointer to the next available byte in the current block.
+    uint8_t *_readCursor;
+    
+    // How many remaining bytes are available in the current block.
+    NSUInteger _availableBytes;
+    
+    // YES when the stream runs out of compressed blocks to read.
+    BOOL _eof;
 }
 
--(BOOL)hasBytesAvailable
+// Public domain XXTEA algorithm
+// Source http://en.wikipedia.org/wiki/XXTEA
+#define DELTA 0x9e3779b9
+#define MX (((z>>5^y<<2) + (y>>3^z<<4)) ^ ((sum^y) + (key[(p&3)^e] ^ z)))
+static void TEA_decrypt(uint32_t *v, int n, uint32_t const key[4]) {
+    uint32_t y, z, sum;
+    unsigned p, rounds, e;
+	rounds = 6 + 52/n;
+	sum = rounds*DELTA;
+	y = v[0];
+	do {
+		e = (sum >> 2) & 3;
+		for (p=n-1; p>0; p--) {
+			z = v[p-1];
+			y = v[p] -= MX;
+		}
+		z = v[n-1];
+		y = v[0] -= MX;
+		sum -= DELTA;
+	} while (--rounds);
+}
+
+// The first word of each block is the block's length.
+// All blocks except the last should be 4*(BLOCK_SIZE - 1) in length.
+-(void)readBlock
 {
-    return _hasBytesAvailable;
+    NSUInteger bytesPerBlock = BLOCK_SIZE*4;
+    NSUInteger bytesRead = [_inputStream read:_buffer maxLength:bytesPerBlock];
+    
+    if(bytesRead != bytesPerBlock){
+        CCLOG(@"Error reading encrypted file: Truncated stream.");
+        goto fail;
+    }
+    
+    // TODO Should this handle endian swapping?
+    uint32_t *buff = (uint32_t *)_buffer;
+    TEA_decrypt(buff, BLOCK_SIZE, CCFILE_DECRYPTION_KEY);
+    
+    // The size of each block in bytes is stored in the first word.
+    _availableBytes = buff[0];
+    _readCursor = (uint8_t *)(buff + 1);
+    
+    // 0 for a full block, negative for the final block, positive for a corrupt block.
+    NSInteger compare = _availableBytes - (bytesPerBlock - 4);
+    if(compare < 0){
+       _eof = YES; 
+    } else if(compare > 0){
+        CCLOG(@"Error reading encrypted file: Corrupt stream.");
+        goto fail;
+    }
+    
+    return;
+    
+    fail:
+    _availableBytes = 0;
+    _eof = YES;
+}
+
+-(NSInteger)read:(uint8_t *)buffer maxLength:(NSUInteger)len
+{
+    NSUInteger readBytes = 0;
+    
+    while(readBytes < len){
+        if(_availableBytes == 0){
+            if(_eof){
+                // No more compressed data to read.
+                _hasBytesAvailable = NO;
+                goto finish;
+            } else {
+                [self readBlock];
+            }
+        }
+        
+        NSUInteger bytesToRead = MIN(len - readBytes, _availableBytes);
+        memcpy(buffer + readBytes, _readCursor, bytesToRead);
+        
+        readBytes += bytesToRead;
+        _readCursor += bytesToRead;
+        _availableBytes -= bytesToRead;
+    }
+    
+    finish:
+    return readBytes;
 }
 
 @end
 
 
-@implementation CCGZippedFile
+@interface CCEncryptedGZippedInputStream : CCGZippedInputStream @end
+@implementation CCEncryptedGZippedInputStream
 
-+(Class)inputStreamClass
+-(instancetype)initWithURL:(NSURL *)url
 {
-    return [CCGZippedInputStream class];
+    return [self initWithInputStream:[CCEncryptedInputStream inputStreamWithURL:url]];
+}
+
+@end
+
+
+//MARK: CCFile
+
+@implementation CCFile {
+    Class _inputStreamClass;
+    BOOL _loadDataFromStream;
+}
+
+-(instancetype)initWithName:(NSString *)name url:(NSURL *)url contentScale:(CGFloat)contentScale
+{
+    if((self = [super init])){
+        _name = [name copy];
+        _url = [url copy];
+        _contentScale = contentScale;
+        
+        if([url.lastPathComponent hasSuffix:@".gz.ccp"]){
+            _inputStreamClass = [CCEncryptedGZippedInputStream class];
+            _loadDataFromStream = YES;
+        } else if([url.lastPathComponent hasSuffix:@".ccp"]){
+            _inputStreamClass = [CCEncryptedInputStream class];
+            _loadDataFromStream = YES;
+        } else if([url.lastPathComponent hasSuffix:@".gz"]){
+            _inputStreamClass = [CCGZippedInputStream class];
+            _loadDataFromStream = YES;
+        } else {
+            _inputStreamClass = [NSInputStream class];
+            _loadDataFromStream = NO;
+        }
+    }
+    
+    return self;
+}
+
+-(NSString *)absoluteFilePath
+{
+    if(_url.isFileURL){
+        return _url.path;
+    } else {
+        return nil;
+    }
+}
+
+-(NSInputStream *)openInputStream
+{
+    NSInputStream *stream = [_inputStreamClass inputStreamWithURL:self.url];
+    
+    if(stream == nil){
+        CCLOG(@"Error opening stream for %@", self.name);
+    }
+    
+    [stream open];
+    return stream;
+}
+
+-(id)loadPlist
+{
+    NSInputStream *stream = [self openInputStream];
+    NSError *err = nil;
+    id plist = [NSPropertyListSerialization propertyListWithStream:stream options:0 format:NULL error:&err];
+    
+    [stream close];
+    
+    if(err){
+        CCLOG(@"Error reading property list from %@: %@", self.name, err);
+        return nil;
+    } else {
+        return plist;
+    }
 }
 
 -(NSData *)loadData
 {
-    NSInputStream *stream = [self openInputStream];
-    
-    NSMutableData *data = [NSMutableData dataWithLength:BUFFER_SIZE];
-    NSUInteger totalBytesRead = 0;
-    
-    for(;;){
-        totalBytesRead += [stream read:data.mutableBytes + totalBytesRead maxLength:data.length - totalBytesRead];
+    if(_loadDataFromStream){
+       CCWrappedInputStream *stream = [self openInputStream];
+       NSData *data = [stream loadData];
+       [stream close];
+       
+        return data; 
+    } else {
+        NSError *err = nil;
+        NSData *data = [NSData dataWithContentsOfURL:_url options:NSDataReadingMappedIfSafe error:&err];
         
-        if(stream.hasBytesAvailable){
-            [data increaseLengthBy:data.length*0.5];
+        if(err){
+            CCLOG(@"Error reading data from from %@: %@", self.name, err);
+            return nil;
         } else {
-            break;
+            return data;
         }
     }
-    
-    [stream close];
-    
-    data.length = totalBytesRead;
-    return data;
 }
 
 @end
