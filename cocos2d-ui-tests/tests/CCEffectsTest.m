@@ -28,6 +28,31 @@
 	return self;
 }
 
+#pragma mark Outline
+
+-(void)setupOutlineTest
+{
+    self.subTitle = @"Outline Effect Test";
+    
+    CCSprite *environment = [CCSprite spriteWithImageNamed:@"Images/MountainPanorama.jpg"];
+    environment.positionType = CCPositionTypeNormalized;
+    environment.anchorPoint = ccp(0.5, 0.5);
+    environment.position = ccp(0.5f, 0.5f);
+    
+    CCColor* outlineColor = [CCColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:1.0];
+    CCEffectOutline* outline = [CCEffectOutline effectWithOutlineColor:outlineColor outlineWidth:2];
+    
+    // df_sprite.png grossini.png
+    CCSprite *dfSprite = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
+    dfSprite.position = ccp(0.5, 0.5);
+    dfSprite.positionType = CCPositionTypeNormalized;
+    dfSprite.effect = outline;
+    dfSprite.scale = 1.0f;
+
+    [self.contentNode addChild:environment];
+    [self.contentNode addChild:dfSprite];
+}
+
 #pragma mark Distance Fields
 
 #if CC_EFFECTS_EXPERIMENTAL
@@ -98,7 +123,7 @@
     CCColor* fillColor = [CCColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:0.0];
     _outlineEffect = [CCEffectDFOutline effectWithOutlineColor:[CCColor redColor] fillColor:fillColor outlineWidth:1 fieldScale:32 distanceField:texture];
 
-    CCSprite *dfSprite = [CCSprite spriteWithImageNamed:@"Images/df_sprite.png"];
+    CCSprite *dfSprite = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
     dfSprite.position = ccp(0.5, 0.5);
     dfSprite.positionType = CCPositionTypeNormalized;
     dfSprite.effect = _outlineEffect;

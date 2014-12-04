@@ -94,6 +94,7 @@ static NSString *CCVertexShaderHeader =
 
 static NSString *CCFragmentShaderHeader =
 	@"#ifdef GL_ES\n"
+    @"#extension GL_OES_standard_derivatives : enable\n"
 	@"precision " XSTR(CC_SHADER_DEFAULT_FRAGMENT_PRECISION) " float;\n"
 	@"#endif\n\n"
 	@"// End Cocos2D fragment shader header.\n\n";
