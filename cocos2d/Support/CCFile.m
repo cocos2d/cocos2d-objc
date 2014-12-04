@@ -295,6 +295,72 @@ static void TEA_decrypt(uint32_t *v, int n, uint32_t const key[4]) {
 
 @end
 
+//MARK CCFileCGDataProvider
+
+@interface CCFileCGDataProvider : NSObject @end
+@implementation CCFileCGDataProvider{
+    CCFile *_file;
+    NSInputStream *_inputStream;
+}
+
+-(instancetype)initWithFile:(CCFile *)file
+{
+    if((self = [super init])){
+        _file = file;
+    }
+    
+    return self;
+}
+
+-(NSInputStream *)inputStream
+{
+    if(_inputStream == nil){
+        _inputStream = [_file openInputStream];
+    }
+    
+    return _inputStream;
+}
+
+static size_t
+CCFileCGDataProviderGetBytesCallback(void *info, void *buffer, size_t count)
+{
+    CCFileCGDataProvider *provider = (__bridge CCFileCGDataProvider *)info;
+    return [provider.inputStream read:buffer maxLength:count];
+}
+
+static off_t
+CCFileCGDataProviderSkipForwardCallback(void *info, off_t count)
+{
+    CCFileCGDataProvider *provider = (__bridge CCFileCGDataProvider *)info;
+    
+    const NSUInteger bufferSize = 4*1024;
+    uint8_t buffer[bufferSize];
+    
+    NSUInteger skipped = 0;
+    while(skipped < count){
+        NSUInteger skip = MIN(bufferSize, (NSUInteger)count - skipped);
+        [provider.inputStream read:buffer maxLength:skip];
+        skipped += skip;
+    }
+    
+    return skipped;
+}
+
+static void
+CCFileCGDataProviderRewindCallback(void *info)
+{
+    CCFileCGDataProvider *provider = (__bridge CCFileCGDataProvider *)info;
+    [provider->_inputStream close];
+    provider->_inputStream = nil;
+}
+
+static void
+CCFileCGDataProviderReleaseInfoCallback(void *info)
+{
+    CFRelease(info);
+}
+
+@end
 
 //MARK: CCFile
 
@@ -368,7 +434,7 @@ static void TEA_decrypt(uint32_t *v, int n, uint32_t const key[4]) {
 -(NSData *)loadData
 {
     if(_loadDataFromStream){
-       CCWrappedInputStream *stream = [self openInputStream];
+       CCWrappedInputStream *stream = (CCWrappedInputStream *)[self openInputStream];
        NSData *data = [stream loadData];
        [stream close];
        
@@ -383,6 +449,29 @@ static void TEA_decrypt(uint32_t *v, int n, uint32_t const key[4]) {
         } else {
             return data;
         }
+    }
+}
+
+-(CGImageSourceRef)createCGImageSource
+{
+    if(_loadDataFromStream){
+        CGDataProviderSequentialCallbacks callbacks = {
+            .version = 0,
+            .getBytes = CCFileCGDataProviderGetBytesCallback,
+            .skipForward = CCFileCGDataProviderSkipForwardCallback,
+            .rewind = CCFileCGDataProviderRewindCallback,
+            .releaseInfo = CCFileCGDataProviderReleaseInfoCallback,
+        };
+        
+        CCFileCGDataProvider *ccProvider = [[CCFileCGDataProvider alloc] initWithFile:self];
+        CGDataProviderRef provider = CGDataProviderCreateSequential((__bridge_retained void *)ccProvider, &callbacks);
+        
+        CGImageSourceRef source = CGImageSourceCreateWithDataProvider(provider, NULL);
+        CGDataProviderRelease(provider);
+        
+        return source;
+    } else {
+        return CGImageSourceCreateWithURL((__bridge CFURLRef)self.url, NULL);
     }
 }
 

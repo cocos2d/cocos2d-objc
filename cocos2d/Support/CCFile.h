@@ -24,6 +24,7 @@
 
 
 #import "ccTypes.h"
+#import <ImageIO/CGImageSource.h>
 
 
 @interface CCFile : NSObject
@@ -56,5 +57,8 @@
 
 // Open a file handle to the file. Returns nil on error.
 -(NSInputStream *)openInputStream;
+
+#warning experimental
+-(CGImageSourceRef)createCGImageSource;
 
 @end
