@@ -7,7 +7,6 @@
 //
 
 #import "CCTouchIOS.h"
-#import "cocos2d.h"
 #import "CCTouch.h"
 #import "CCDirector.h"
 

@@ -25,21 +25,14 @@
 
 #import "ccMacros.h"
 
-#if __CC_PLATFORM_IOS
-#import <UIKit/UIKit.h>									// Needed for UIAccelerometerDelegate
-#elif __CC_PLATFORM_MAC
-
-#endif
-
-#import "CCProtocols.h"
-#import "CCNode.h"
+#import "CCRenderableNode.h"
 
 #pragma mark - CCNodeColor
 
 /**
  * CCNodeColor is a subclass of CCNode that is used to generate solid colors.
  */
-@interface CCNodeColor : CCNode <CCShaderProtocol, CCBlendProtocol>
+@interface CCNodeColor : CCRenderableNode <CCShaderProtocol, CCBlendProtocol>
 
 /// -----------------------------------------------------------------------
 /// @name Creating a CCNodeColor Object
@@ -54,7 +47,7 @@
  *
  *  @return The CCNodeColor Object.
  */
-+(id) nodeWithColor: (CCColor*)color width:(GLfloat)w height:(GLfloat)h;
++(id) nodeWithColor: (CCColor*)color width:(float)w height:(float)h;
 
 /**
  *  Creates a node with color. Width and height are the window size.
@@ -79,7 +72,7 @@
  *
  *  @return An initialized CCNodeColor Object.
  */
--(id) initWithColor:(CCColor*)color width:(GLfloat)w height:(GLfloat)h;
+-(id) initWithColor:(CCColor*)color width:(float)w height:(float)h;
 
 /**
  *  Initializes a node with color. Width and height are the window size.
@@ -186,11 +179,5 @@
 
 /** The vector along which to fade color. */
 @property (nonatomic, readwrite) CGPoint vector;
-
-/**
- *	Deprecated in 3.1. All colors are correctly displayed across the node's rectangle.
- *  Default: YES.
- */
-@property (nonatomic, readwrite) BOOL compressedInterpolation __attribute__((deprecated));
 
 @end

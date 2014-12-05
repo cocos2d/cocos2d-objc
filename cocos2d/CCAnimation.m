@@ -26,10 +26,13 @@
  */
 
 #import "ccMacros.h"
+
 #import "CCAnimation.h"
+
 #import "CCSpriteFrame.h"
 #import "CCTexture.h"
 #import "CCTextureCache.h"
+#import "ccUtils.h"
 
 #pragma mark - CCAnimationFrame
 @implementation CCAnimationFrame

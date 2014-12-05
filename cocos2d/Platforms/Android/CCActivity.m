@@ -27,12 +27,10 @@
 + (NSValue *)valueWithCGPoint:(CGPoint)point;
 + (NSValue *)valueWithCGSize:(CGSize)size;
 + (NSValue *)valueWithCGRect:(CGRect)rect;
-+ (NSValue *)valueWithCGAffineTransform:(CGAffineTransform)transform;
 
 - (CGPoint)CGPointValue;
 - (CGSize)CGSizeValue;
 - (CGRect)CGRectValue;
-- (CGAffineTransform)CGAffineTransformValue;
 
 @end
 

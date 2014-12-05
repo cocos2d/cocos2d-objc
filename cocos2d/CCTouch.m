@@ -6,9 +6,10 @@
 //
 //
 
-#import "cocos2d.h"
 #import "CCTouch.h"
 #import "CCDirector.h"
+#import "CCNode.h"
+
 #if __CC_PLATFORM_ANDROID
 #import "CCTouchAndroid.h"
 #endif

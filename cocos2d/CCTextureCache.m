@@ -25,31 +25,21 @@
  *
  */
 
+#import <objc/message.h>
+
 #import "ccMacros.h"
-#import "Platforms/CCGL.h"
+
 #import "CCTextureCache.h"
-#import "CCTexture.h"
+
+#import "Platforms/CCGL.h"
+#import "CCTexture_Private.h"
 #import "CCTexturePVR.h"
 #import "CCDeviceInfo.h"
 #import "CCDirector.h"
-#import "ccConfig.h"
-#import "ccTypes.h"
-
-#import "Support/CCFileUtils.h"
-
-#import <objc/message.h>
-
-
-#if __CC_PLATFORM_MAC
-#import "Platforms/Mac/CCDirectorMac.h"
-#endif
-
-#import "CCTexture_Private.h"
-#import "CCRenderer_Private.h"
-
-// needed for CCCallFuncO in Mac-display_link version
-//#import "CCActionManager.h"
-//#import "CCActionInstant.h"
+#import "CCFileUtils.h"
+//#if __CC_PLATFORM_MAC
+//#import "Platforms/Mac/CCDirectorMac.h"
+//#endif
 
 #if __CC_PLATFORM_IOS
 static EAGLContext *_auxGLcontext = nil;

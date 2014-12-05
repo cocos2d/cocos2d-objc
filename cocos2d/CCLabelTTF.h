@@ -25,9 +25,8 @@
  *
  */
 
-#import "CCTexture.h"
 #import "CCSprite.h"
-#import "Platforms/CCNS.h"
+#import "CCProtocols.h"
 
 /**
  CCLabelTTF displays a rendered TTF font texture. The label is created from a platform font.

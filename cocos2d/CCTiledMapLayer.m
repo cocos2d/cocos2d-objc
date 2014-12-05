@@ -29,18 +29,14 @@
  *
  */
 
-#import "CCTiledMapLayer.h"
-#import "CCTiledMap.h"
-#import "CCTMXXMLParser.h"
-#import "CCSprite.h"
+
+#import "ccUtils.h"
+
+#import "CCTiledMapLayer_Private.h"
 #import "CCTextureCache.h"
 #import "CCShader.h"
-#import "Support/CGPointExtension.h"
-#import "CCNode_Private.h"
-#import "CCSprite_Private.h"
-#import "CCTiledMapLayer_Private.h"
-#import "CCTexture_Private.h"
-#import "CCMathTypesAndroid.h"
+#import "CCTexture.h"
+#import "CCRenderer.h"
 
 #pragma mark -
 #pragma mark CCTMXLayer

@@ -24,7 +24,6 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "cocos2d.h"
 #import "CCAnimationManager.h"
 
 //This has been replaced by CCAnimationManager

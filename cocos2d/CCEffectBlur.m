@@ -42,6 +42,8 @@
 #import "CCEffect_Private.h"
 #import "CCEffectBlur.h"
 #import "CCTexture.h"
+#import "CCRendererBasicTypes.h"
+#import "NSValue+CCRenderer.h"
 
 
 @implementation CCEffectBlur {

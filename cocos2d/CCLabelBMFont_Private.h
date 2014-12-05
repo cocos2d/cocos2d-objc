@@ -23,6 +23,7 @@
  */
 
 #import "CCLabelBMFont.h"
+#import "uthash.h"
 
 enum {
 	kCCLabelAutomaticWidth = -1,

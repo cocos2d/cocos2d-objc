@@ -43,25 +43,56 @@
 // 00   03 01 01
 #define COCOS2D_VERSION 0x00030300
 #define COCOS2D_BUILD @"develop"
-//
-// all cocos2d include files
-//
-#import "ccConfig.h"	// should be included first
 
-// Cocos2D
-#import "CCAction.h"
-#import "CCActionCatmullRom.h"
-#import "CCActionEase.h"
-#import "CCActionEase.h"
-#import "CCActionInstant.h"
-#import "CCActionInterval.h"
-#import "CCActionProgressTimer.h"
-#import "CCActionTween.h"
-#import "CCClippingNode.h"
-#import "CCColor.h"
-#import "CCDeviceInfo.h"
+
+#import "ccConfig.h"
+
+#import "ccTypes.h"
+#import "ccMacros.h"
+
+#import "Platforms/CCGL.h"
+
+// Singletons:
 #import "CCDirector.h"
+#import "CCSpriteFrameCache.h"
+
+// Basic Types:
+#import "CCProtocols.h"
+#import "CCColor.h"
+#import "CCTexture.h"
+#import "CCTexturePVR.h"
+#import "CCSpriteFrame.h"
+#import "CCShader.h"
+#import "CCResponder.h"
+#import "CCTouch.h"
+#import "CCTouchEvent.h"
+
+// Basic Node Types:
+#import "CCNode.h"
+#import "CCScene.h"
+#import "CCRenderableNode.h"
+#import "CCNodeColor.h"
+#import "CCSprite.h"
+
+// Misc Nodes:
+#import "CCRenderTexture.h"
+#import "CCSprite9Slice.h"
+#import "CCLabelBMFont.h"
+#import "CCLabelTTF.h"
+#import "CCParticleSystem.h"
 #import "CCDrawNode.h"
+#import "CCClippingNode.h"
+#import "CCMotionStreak.h"
+#import "CCLayout.h"
+#import "CCLayoutBox.h"
+
+// Tilemaps:
+#import "CCTMXXMLParser.h"
+#import "CCTiledMap.h"
+#import "CCTiledMapLayer.h"
+#import "CCTiledMapObjectGroup.h"
+
+// CCEffects:
 #import "CCEffect.h"
 #import "CCEffectBloom.h"
 #import "CCEffectBrightness.h"
@@ -78,28 +109,7 @@
 #import "CCEffectRefraction.h"
 #import "CCEffectSaturation.h"
 #import "CCEffectStack.h"
-#import "CCLabelBMFont.h"
-#import "CCLabelTTF.h"
 #import "CCLightNode.h"
-#import "CCMotionStreak.h"
-#import "CCNode.h"
-#import "CCNodeColor.h"
-#import "CCParticleExamples.h"
-#import "CCParticleSystem.h"
-#import "CCProtocols.h"
-#import "CCRenderTexture.h"
-#import "CCScene.h"
-#import "CCSprite.h"
-#import "CCSprite9Slice.h"
-#import "CCSpriteFrame.h"
-#import "CCSpriteFrameCache.h"
-#import "CCTMXXMLParser.h"
-#import "CCTexture.h"
-#import "CCTexturePVR.h"
-#import "CCTiledMap.h"
-#import "CCTiledMapLayer.h"
-#import "CCTiledMapObjectGroup.h"
-#import "CCTransition.h"
 
 #if CC_EFFECTS_EXPERIMENTAL
 #import "CCEffectDFOutline.h"
@@ -107,12 +117,15 @@
 #import "CCEffectDFInnerGlow.h"
 #endif
 
-// Layouts
-#import "CCLayout.h"
-#import "CCLayoutBox.h"
-
-// Shaders
-#import "CCShader.h"
+// Actions:
+#import "CCAction.h"
+#import "CCActionCatmullRom.h"
+#import "CCActionEase.h"
+#import "CCActionEase.h"
+#import "CCActionInstant.h"
+#import "CCActionInterval.h"
+#import "CCActionProgressTimer.h"
+#import "CCActionTween.h"
 
 // Physics
 #import "CCPhysicsBody.h"
@@ -120,43 +133,36 @@
 #import "CCPhysicsNode.h"
 #import "CCPhysicsShape.h"
 
+// Misc:
+#import "CCRenderDispatch.h"
+#import "CCTransition.h"
+#import "CCDeviceInfo.h"
+#import "Support/CCFileUtils.h"
+#import "Support/CGPointExtension.h"
+#import "Support/ccUtils.h"
+#import "Support/uthash.h"
+#import "Support/utlist.h"
+#import "UITouch+CC.h"
+#import "NSEvent+CC.h"
+
+// UI
+#import "cocos2d-ui.h"
+
 // Sound
 #import "OALSimpleAudio.h"
 
-// Retiring
-//#import "CCAnimation.h"
-//#import "CCAnimationCache.h"
-//#import "CCActionManager.h"
-//#import "ccFPSImages.h"
-//#import "CCAtlasNode.h"
-//#import "CCLabelAtlas.h"
-//#import "CCScheduler.h"
-//#import "CCTextureCache.h"
-//#import "CCTextureAtlas.h"
-
-
-//
-// cocos2d macros
-//
-#import "ccTypes.h"
-#import "ccMacros.h"
-
-// Platform common
-#import "Platforms/CCGL.h"
+// Platform Support:
 #import "Platforms/CCNS.h"
 
 #if __CC_PLATFORM_IOS
 #import "CCAppDelegate.h"
 #import "Platforms/iOS/CCGLView.h"
 #import "Platforms/iOS/CCDirectorIOS.h"
-//#import "Platforms/iOS/PlatformTouch+CC.h"
-
 #elif __CC_PLATFORM_MAC
 #import "Platforms/Mac/CCGLView.h"
 #import "Platforms/Mac/CCDirectorMac.h"
 #import "Platforms/Mac/CCWindow.h"
 #import "Platforms/Mac/NSEvent+CC.h"
-
 #elif __CC_PLATFORM_ANDROID
 #import "Platforms/Android/CCActivity.h"
 #import "Platforms/Android/CCGLView.h"
@@ -165,18 +171,6 @@
 #import <android/native_window.h>
 #import <bridge/runtime.h>
 #endif
-
-//
-// cocos2d helper files
-//
-#import "Support/CCFileUtils.h"
-#import "Support/CGPointExtension.h"
-#import "Support/ccUtils.h"
-#import "Support/CCProfiling.h"
-#import "Support/uthash.h"
-#import "Support/utlist.h"
-
-
 
 #ifdef __cplusplus
 extern "C" {
@@ -187,11 +181,4 @@ NSString * cocos2dVersion(void);
 
 #ifdef __cplusplus
 }
-#endif
-
-	
-#if __CC_PLATFORM_IOS
-#ifndef __IPHONE_4_0
-#error "If you are targeting iPad, you should set BASE SDK = 4.0 (or 4.1, or 4.2), and set the 'iOS deploy target' = 3.2"
-#endif
 #endif

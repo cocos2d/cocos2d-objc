@@ -22,6 +22,7 @@
  * THE SOFTWARE.
  */
 
+
 #import "ccTypes.h"
 
 @interface NSValue(CCRenderer)

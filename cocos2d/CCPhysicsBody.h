@@ -22,9 +22,13 @@
  * THE SOFTWARE.
  */
 
-#import "cocos2d.h"
 
+#import "ccTypes.h"
+
+
+@class CCNode;
 @class CCPhysicsCollisionPair;
+
 
 /** The type of physics body to use. */
 typedef NS_ENUM(NSUInteger, CCPhysicsBodyType){

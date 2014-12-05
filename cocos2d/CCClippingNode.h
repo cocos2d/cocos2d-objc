@@ -58,7 +58,7 @@
 @property (nonatomic, strong) CCNode *stencil;
 
 /** The Alpha threshold. */
-@property (nonatomic) GLfloat alphaThreshold;
+@property (nonatomic) float alphaThreshold;
 
 /** Inverted. */
 @property (nonatomic) BOOL inverted;

@@ -26,8 +26,10 @@
  */
 
 
-#import "CCNode.h"
-#import "CCProtocols.h"
+#import <CoreGraphics/CGImage.h>
+
+#import "CCRenderableNode.h"
+#import "CCRendererSharedTypes.h"
 
 @class CCSpriteBatchNode;
 @class CCSpriteFrame;
@@ -56,7 +58,7 @@ typedef struct CCSpriteTexCoordSet {
  *
  * The default anchorPoint in CCSprite is (0.5, 0.5).
  */
-@interface CCSprite : CCNode <CCTextureProtocol, CCShaderProtocol, CCBlendProtocol, CCEffectProtocol>
+@interface CCSprite : CCRenderableNode <CCTextureProtocol, CCShaderProtocol, CCBlendProtocol, CCEffectProtocol>
 
 /** Returns the texture rect of the CCSprite in points. */
 @property (nonatomic,readonly) CGRect textureRect;

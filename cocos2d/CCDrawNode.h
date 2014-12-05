@@ -27,7 +27,7 @@
  *
  */
 
-#import "CCNode.h"
+#import "CCRenderableNode.h"
 
 /** 
  *  CCDrawNode
@@ -35,7 +35,7 @@
  *  The geometry will be saved, so primitives does not need to be redrawn for each frame
  *  Faster than the "drawing primitives" since they it draws everything in one single batch.
  */
-@interface CCDrawNode : CCNode
+@interface CCDrawNode : CCRenderableNode
 
 
 /// -----------------------------------------------------------------------

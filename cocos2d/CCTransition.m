@@ -31,6 +31,9 @@
 #import "CCDirector_Private.h"
 #import "CCNode_Private.h"
 
+#import "CCRenderTexture.h"
+#import "CCColor.h"
+
 // -----------------------------------------------------------------
 
 const float CCTransitionDownScaleMin = 1.0f;                        // range for transition downscales
@@ -288,18 +291,6 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 }
 
 // -----------------------------------------------------------------
-
-- (void)setRetinaTransition:(BOOL)retinaTransition
-{
-    _retinaTransition = retinaTransition;
-    _incomingDownScale = CCTransitionDownScaleMin;
-    _outgoingDownScale = CCTransitionDownScaleMin;
-    if (!_retinaTransition && (__ccContentScaleFactor > 1.0))
-    {
-        _incomingDownScale = CCTransitionDownScaleRetina;
-        _outgoingDownScale = CCTransitionDownScaleRetina;
-    }
-}
 
 - (void)setIncomingDownScale:(float)incomingDownScale
 {

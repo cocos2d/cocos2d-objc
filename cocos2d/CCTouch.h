@@ -6,10 +6,9 @@
 //
 //
 
-#import "ccMacros.h"
+#import "ccTypes.h"
 
 #if __CC_PLATFORM_IOS
-#import <UIKit/UIKit.h>
 #define PlatformTouch UITouch
 #elif __CC_PLATFORM_ANDROID
 @class CCTouchAndroid;
@@ -20,6 +19,7 @@
 
 @class CCGLView;
 @class CCNode;
+@class UITouch;
 
 typedef NS_ENUM (NSInteger, CCTouchPhase) {
     CCTouchPhaseBegan,
@@ -33,7 +33,7 @@ typedef NS_ENUM (NSInteger, CCTouchPhase) {
 
 @property (nonatomic, readonly) CCTouchPhase phase;
 @property (nonatomic, readonly) NSUInteger tapCount;
-@property (nonatomic, readonly) NSTimeInterval timestamp;
+@property (nonatomic, readonly) CCTime timestamp;
 @property (nonatomic, strong) CCGLView *view;
 
 @property (nonatomic, strong) PlatformTouch* uiTouch;

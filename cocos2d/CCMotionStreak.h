@@ -24,10 +24,7 @@
  *
  */
 
-#import <Foundation/Foundation.h>
-#import "CCTexture.h"
-#import "ccTypes.h"
-#import "CCNode.h"
+#import "CCRenderableNode.h"
 
 /**
  CCMotionStreak creates a motion trail special effect.
@@ -36,7 +33,7 @@
  - Segments controls how smooth the shape of the trail appears.
  - Fast mode enables faster point addition and the cost of lower point precision.
  */
-@interface CCMotionStreak : CCNode <CCTextureProtocol, CCShaderProtocol, CCBlendProtocol>
+@interface CCMotionStreak : CCRenderableNode <CCTextureProtocol, CCShaderProtocol, CCBlendProtocol>
 
 /// -----------------------------------------------------------------------
 /// @name Accessing Motion Streak Attributes

@@ -26,6 +26,7 @@
 #import "CCTexture_Private.h"
 
 #import "CCRenderDispatch.h"
+#import "CCDeviceInfo.h"
 
 
 static const CCGraphicsBufferType CCGraphicsBufferGLTypes[] = {

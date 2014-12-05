@@ -7,7 +7,8 @@
 //
 
 #import "CCColor.h"
-#import <CoreGraphics/CoreGraphics.h>
+
+#import "CCDeprecated.h"
 
 @implementation CCColor {
     GLKVector4 _vec4;
@@ -271,59 +272,14 @@ static NSDictionary *namedColors() {
 
 @implementation CCColor (OpenGL)
 
-+ (CCColor*) colorWithCcColor3b:(ccColor3B)c
-{
-    return [[CCColor alloc] initWithCcColor3b:c];
-}
-
-+ (CCColor*) colorWithCcColor4b:(ccColor4B)c
-{
-    return [[CCColor alloc] initWithCcColor4b:c];
-}
-
-+ (CCColor*) colorWithCcColor4f:(ccColor4F)c
-{
-    return [[CCColor alloc] initWithCcColor4f:c];
-}
-
 + (CCColor*) colorWithGLKVector4:(GLKVector4)c
 {
     return [[CCColor alloc] initWithGLKVector4:c];
 }
 
-- (CCColor*) initWithCcColor3b: (ccColor3B) c
-{
-    return [self initWithRed:c.r/255.0 green:c.g/255.0 blue:c.b/255.0 alpha:1];
-}
-
-- (CCColor*) initWithCcColor4b: (ccColor4B) c
-{
-    return [self initWithRed:c.r/255.0 green:c.g/255.0 blue:c.b/255.0 alpha:c.a/255.0];
-}
-
-- (CCColor*) initWithCcColor4f: (ccColor4F) c
-{
-    return [self initWithRed:c.r green:c.g blue:c.b alpha:c.a];
-}
-
 - (CCColor*) initWithGLKVector4: (GLKVector4) c
 {
     return [self initWithRed:c.r green:c.g blue:c.b alpha:c.a];
-}
-
-- (ccColor3B) ccColor3b
-{
-    return (ccColor3B){(GLubyte)(_vec4.r*255), (GLubyte)(_vec4.g*255), (GLubyte)(_vec4.b*255)};
-}
-
-- (ccColor4B) ccColor4b
-{
-    return (ccColor4B){(GLubyte)(_vec4.r*255), (GLubyte)(_vec4.g*255), (GLubyte)(_vec4.b*255), (GLubyte)(_vec4.a*255)};
-}
-
-- (ccColor4F) ccColor4f
-{
-    return ccc4f(_vec4.r, _vec4.g, _vec4.b, _vec4.a);
 }
 
 -(GLKVector4)glkVector4

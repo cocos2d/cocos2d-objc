@@ -23,7 +23,6 @@
  */
 
 
-#import <Foundation/Foundation.h>
 #import "CCRenderer.h"
 #import "CCCache.h"
 #import "CCRenderDispatch.h"

@@ -25,23 +25,17 @@
  * THE SOFTWARE.
  */
 
-#import "Platforms/CCGL.h"
-#import "ccTypes.h"
-#import "CCProtocols.h"
-#import "ccConfig.h"
 #import "CCResponder.h"
 #import "CCScheduler.h"
-#import "CCRenderer.h"
 
 
 @class CCScene;
-@class CCShader;
-@class CCScheduler;
-@class CCActionManager;
-@class CCAction;
 @class CCPhysicsBody;
-@class CCBAnimationManager;
 @class CCAnimationManager;
+@class CCRenderer;
+@class CCColor;
+@class CCAction;
+
 
 /** CCNode is the base class for all objects displayed by Cocos2d. The nodes are hierachically organized in a tree, normally with a CCScene as its root node. Example of CCNode:s are CCSprite, CCScene and CCButton. The CCNode handles transformations, can have a content size and provides a coordinate system to its children. Any CCNode or subclass can handle user interaction, such as touches and mouse events, see the CCResponder for more information on this.
  
@@ -75,82 +69,6 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 	// DisplayColor and Color are kept separate to allow for cascading color and alpha changes through node children.
 	// Alphas tend to be multiplied together so you can fade groups of objects that are colored differently.
 	GLKVector4	_displayColor, _color;
-
-@private
-	// Rotation angle.
-	float _rotationalSkewX, _rotationalSkewY;
-
-	// Scaling factors.
-	float _scaleX, _scaleY;
-
-	// OpenGL real Z vertex.
-	float _vertexZ;
-
-	// Position of the node.
-	CGPoint _position;
-
-	// Skew angles.
-	float _skewX, _skewY;
-
-	// Anchor point in points.
-	CGPoint _anchorPointInPoints;
-    
-	// Anchor point normalized (NOT in points).
-	CGPoint _anchorPoint;
-
-	// Untransformed size of the node.
-	CGSize	_contentSize;
-
-	// Transform.
-	GLKMatrix4 _transform, _inverse;
-
-	BOOL _isTransformDirty;
-	BOOL _isInverseDirty;
-
-	// Z-order value.
-	NSInteger _zOrder;
-
-	// Array of children.
-	NSMutableArray *_children;
-
-	// Weak ref to parent.
-	__weak CCNode *_parent;
-
-	// A tag any name you want to assign to the node
-    NSString* _name;
-
-	// User data field.
-	id _userObject;
-
-	// True when visible.
-	BOOL _visible;
-
-    // True to ensure reorder.
-	BOOL _isReorderChildDirty;
-	
-	// Opacity/Color propagates into children that conform to if cascadeOpacity/cascadeColor is enabled.
-	BOOL		_cascadeColorEnabled, _cascadeOpacityEnabled;
-	
-	// Physics Body.
-	CCPhysicsBody* _physicsBody;
-	
-	// Scheduler used to schedule timers and updates/
-	CCScheduler		*_scheduler;
-	
-	// ActionManager used to handle all the actions.
-	CCActionManager	*_actionManager;
-	
-    //Animation Manager used to handle CCB animations
-    CCAnimationManager * _animationManager;
-	
-	// YES if the node is added to an active scene.
-	BOOL _isInActiveScene;
-	
-    // True if paused.
-	BOOL _paused;
-	
-	// Number of paused parent or ancestor nodes.
-	int _pausedAncestors;
 }
 
 
@@ -371,7 +289,7 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 -(void) removeAllChildrenWithCleanup:(BOOL)cleanup;
 
 /** A weak reference to the parent. */
-@property(nonatomic,readwrite,weak) CCNode* parent;
+@property(nonatomic, readonly, unsafe_unretained) CCNode* parent;
 
 /** Array of child nodes. */
 @property(nonatomic,readonly) NSArray *children;
@@ -424,7 +342,7 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 @property(nonatomic, readonly) CCScene *scene;
 
 /** Returns YES if the node is added to an active scene and neither it nor any of it's ancestors is paused. */
-@property(nonatomic,readonly,getter=isRunningInActiveScene) BOOL runningInActiveScene;
+@property(nonatomic, readonly) BOOL isRunningInActiveScene;
 
 /// -----------------------------------------------------------------------
 /// @name Physics
@@ -565,7 +483,7 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 /** Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
  The matrix is in Pixels.
  */
-- (GLKMatrix4)nodeToParentTransform;
+- (GLKMatrix4)nodeToParentMatrix;
 
 - (CGPoint) convertPositionToPoints:(CGPoint)position type:(CCPositionType)type;
 - (CGPoint) convertPositionFromPoints:(CGPoint)positionInPoints type:(CCPositionType) type;
@@ -574,13 +492,13 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
 - (CGSize) convertContentSizeFromPoints:(CGSize)pointSize type:(CCSizeType) type;
 
 /** Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates. The matrix is in Pixels. */
-- (GLKMatrix4)parentToNodeTransform;
+- (GLKMatrix4)parentToNodeMatrix;
 
 /** Returns the world affine transform matrix. The matrix is in Pixels. */
-- (GLKMatrix4)nodeToWorldTransform;
+- (GLKMatrix4)nodeToWorldMatrix;
 
 /** Returns the inverse world affine transform matrix. The matrix is in Pixels. */
-- (GLKMatrix4)worldToNodeTransform;
+- (GLKMatrix4)worldToNodeMatrix;
 
 /**
  *  Converts a Point to node (local) space coordinates. The result is in Points.
@@ -643,6 +561,9 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  */
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform;
 
+/** Recursive method that visit its children and draw them. */
+-(void) visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform;
+
 /** Calls visit:parentTransform using the current renderer and projection. */
 -(void) visit;
 
@@ -693,33 +614,4 @@ A common user pattern in building a Cocos2d game is to subclass CCNode, add it t
  */
 - (void)updateDisplayedOpacity:(CGFloat)opacity;
 
-/**
- *  Sets the premultipliedAlphaOpacity property.
- *
- *  If set to NO then opacity will be applied as: glColor(R,G,B,opacity);
- *
- *  If set to YES then opacity will be applied as: glColor(opacity, opacity, opacity, opacity );
- *
- *  Textures with premultiplied alpha will have this property by default on YES. Otherwise the default value is NO.
- *
- *  @param boolean Enables or disables setting of opacity with color.
- */
--(void) setOpacityModifyRGB:(BOOL)boolean __attribute__((deprecated));
-
-/** Returns whether or not the opacity will be applied using glColor(R,G,B,opacity) or glColor(opacity, opacity, opacity, opacity).
- */
--(BOOL) doesOpacityModifyRGB __attribute__((deprecated));
-
 @end
-
-
-@interface CCNode(NoARC)
-
-/** Returns the 4x4 drawing transformation for this node. Really only useful when overriding visit:parentTransform: */
--(GLKMatrix4)transform:(const GLKMatrix4 *)parentTransform;
-
-/** Recursive method that visit its children and draw them. */
--(void) visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform;
-
-@end
-

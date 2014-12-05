@@ -111,10 +111,6 @@ Joints cannot be reactivated once they are invalidated.
 +(CCPhysicsJoint *)connectedRotarySpringJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB restAngle:(CGFloat)restAngle stiffness:(CGFloat)stiffness damping:(CGFloat)damping;
 
 
-/// This method was misspelled. Please change "stifness" to "stiffness".
-+(CCPhysicsJoint *)connectedRotarySpringJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB restAngle:(CGFloat)restAngle stifness:(CGFloat)stiffness damping:(CGFloat)damping __attribute__((deprecated));
-
-
 
 /**
  *  Creates and returns a Motor joint between the two bodies. No anchor points are specified as this joint can be used in conjunction with a pivot joint to make a motor around a pivot point.

@@ -27,9 +27,6 @@
 
 #import "CCNode.h"
 #import "CCAction.h"
-#import "CCProtocols.h"
-
-#include <sys/time.h>
 
 /**
  *  An interval action is an action that takes place within a certain period of time.

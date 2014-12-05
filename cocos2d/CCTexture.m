@@ -177,7 +177,7 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 	CGFloat _contentScale;
 	NSUInteger _width, _height;
 	CCTexturePixelFormat _format;
-	GLfloat _maxS, _maxT;
+	float _maxS, _maxT;
 	BOOL _premultipliedAlpha;
 	BOOL _hasMipmaps;
 	

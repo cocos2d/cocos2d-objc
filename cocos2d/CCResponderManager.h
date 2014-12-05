@@ -30,18 +30,13 @@
 // TODO: Add circular touch detection
 // TODO: Grab mouse and touch by implementing onPressed, onReleased, onClicked
 
-#import <Foundation/Foundation.h>
+#import "ccTypes.h"
 
-#import "CCTouch.h"
-#import "CCTouchEvent.h"
+@class CCTouch;
+@class CCTouchEvent;
+@class NSEvent;
 
 #if (TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR)
-#if !__CC_PLATFORM_ANDROID
-#import <UIKit/UIKit.h>
-#define RESPONDER UIResponder
-#else
-#define RESPONDER NSObject
-#endif
 
 #pragma mark - iOS Running Responder
 
@@ -70,10 +65,6 @@
 #elif __CC_PLATFORM_MAC
 
 #pragma mark - OSX Running Responder
-
-#import <AppKit/AppKit.h>
-
-#define RESPONDER NSResponder
 
 /**
  *  Defines the various mouse buttons.
@@ -128,10 +119,11 @@ enum
     CCResponderManagerBufferSize        = 128,
 };
 
+
 /**
  *  The responder manager handles touches.
  */
-@interface CCResponderManager : RESPONDER
+@interface CCResponderManager : NSObject
 
 /**
  *  Enables the responder manager.
@@ -228,6 +220,25 @@ enum
 - (void)touchesEnded:(NSSet *)touches withEvent:(CCTouchEvent *)event;
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(CCTouchEvent *)event;
+
+#if __CC_PLATFORM_MAC
+- (void)mouseDown:(NSEvent *)theEvent button:(CCMouseButton)button;
+- (void)mouseDragged:(NSEvent *)theEvent button:(CCMouseButton)button;
+- (void)mouseUp:(NSEvent *)theEvent button:(CCMouseButton)button;
+- (void)mouseDown:(NSEvent *)theEvent;
+- (void)mouseDragged:(NSEvent *)theEvent;
+- (void)mouseUp:(NSEvent *)theEvent;
+- (void)rightMouseDown:(NSEvent *)theEvent;
+- (void)rightMouseDragged:(NSEvent *)theEvent;
+- (void)rightMouseUp:(NSEvent *)theEvent;
+- (void)otherMouseDown:(NSEvent *)theEvent;
+- (void)otherMouseDragged:(NSEvent *)theEvent;
+- (void)otherMouseUp:(NSEvent *)theEvent;
+- (void)scrollWheel:(NSEvent *)theEvent;
+- (void)mouseMoved:(NSEvent *)theEvent;
+- (void)mouseEntered:(NSEvent *)theEvent;
+- (void)mouseExited:(NSEvent *)theEvent;
+#endif
 
 @end
 

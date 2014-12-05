@@ -26,6 +26,7 @@
  */
 
 #import "CCSprite.h"
+#import "CCProtocols.h"
 
 @class CCBMFontConfiguration;
 
@@ -50,7 +51,7 @@
  
  */
 
-@interface CCLabelBMFont : CCNode <CCLabelProtocol, CCTextureProtocol>
+@interface CCLabelBMFont : CCNode <CCLabelProtocol>
 
 /// -----------------------------------------------------------------------
 /// @name Accessing the Text Attributes

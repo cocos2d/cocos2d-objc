@@ -24,28 +24,21 @@
  *
  */
 
-#import "CCRenderTexture.h"
-#import "CCDirector.h"
 #import "ccMacros.h"
-#import "CCShader.h"
-#import "CCDeviceInfo.h"
-#import "Support/ccUtils.h"
-#import "Support/CCFileUtils.h"
-#import "Support/CGPointExtension.h"
+#import "ccUtils.h"
 
-#import "CCTexture_Private.h"
-#import "CCDirector_Private.h"
-#import "CCNode_Private.h"
-#import "CCRenderer_Private.h"
 #import "CCRenderTexture_Private.h"
+#import "CCRenderer_Private.h"
+#import "CCDirector_Private.h"
 #import "CCRenderDispatch.h"
-#import "CCMetalSupport_Private.h"
+#import "CCRenderableNode_Private.h"
 
-#if __CC_PLATFORM_MAC
-#import <ApplicationServices/ApplicationServices.h>
-#endif
+#import "CCDeviceInfo.h"
+#import "CCColor.h"
 
-
+//#if __CC_PLATFORM_MAC
+//#import <ApplicationServices/ApplicationServices.h>
+//#endif
 
 
 @implementation CCRenderTextureSprite
@@ -55,7 +48,7 @@
 	if(_renderState == nil){
 		// Allowing the uniforms to be copied speeds up the rendering by making the render state immutable.
 		// Copy the uniforms if custom uniforms are not being used.
-		BOOL copyUniforms = self.hasDefaultShaderUniforms;
+		BOOL copyUniforms = !self.usesCustomShaderUniforms;
 		
 		// Create an uncached renderstate so the texture can be released before the renderstate cache is flushed.
 		_renderState = [CCRenderState renderStateWithBlendMode:_blendMode shader:_shader shaderUniforms:self.shaderUniforms copyUniforms:copyUniforms];
@@ -66,15 +59,19 @@
 
 - (GLKMatrix4)nodeToWorldTransform
 {
-	GLKMatrix4 t = [self nodeToParentTransform];
+	GLKMatrix4 t = [self nodeToParentMatrix];
     
 	for (CCNode *p = _renderTexture; p != nil; p = p.parent)
     {
-		t = GLKMatrix4Multiply([p nodeToParentTransform], t);
+		t = GLKMatrix4Multiply([p nodeToParentMatrix], t);
     }
 	return t;
 }
 
+@end
+
+
+@interface CCRenderTexture()<CCTextureProtocol>
 @end
 
 
@@ -363,7 +360,7 @@ FlipY(GLKMatrix4 projection)
 		
 		[self end];
 		
-		GLKMatrix4 transform = [self transform:parentTransform];
+		GLKMatrix4 transform = GLKMatrix4Multiply(*parentTransform, [self nodeToParentMatrix]);
 		[self draw:renderer transform:&transform];
 	} else {
 		// Render normally, v3.0 and earlier skipped this.
@@ -399,8 +396,8 @@ FlipY(GLKMatrix4 projection)
 	int bytesPerRow = bytesPerPixel * tx;
 	NSInteger myDataLength = bytesPerRow * ty;
 	
-	GLubyte *buffer	= calloc(myDataLength,1);
-	GLubyte *pixels	= calloc(myDataLength,1);
+	uint8_t *buffer	= calloc(myDataLength,1);
+	uint8_t *pixels	= calloc(myDataLength,1);
 	
 	
 	if( ! (buffer && pixels) ) {

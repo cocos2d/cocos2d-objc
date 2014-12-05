@@ -131,8 +131,7 @@
         _contentSizeChanged = NO;
     }
 	
-    GLKMatrix4 transform = [self transform:parentTransform];
-    
+    GLKMatrix4 transform = GLKMatrix4Multiply(*parentTransform, [self nodeToParentMatrix]);
     [self draw:renderer transform:&transform];
 }
 

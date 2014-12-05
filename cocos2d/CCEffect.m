@@ -6,9 +6,12 @@
 //
 //
 
-#import "CCEffect.h"
+
 #import "CCEffect_Private.h"
 #import "CCTexture.h"
+#import "CCColor.h"
+#import "CCRenderer.h"
+
 
 NSString * const CCShaderUniformPreviousPassTexture = @"cc_PreviousPassTexture";
 NSString * const CCShaderUniformTexCoord1Center     = @"cc_FragTexCoord1Center";
