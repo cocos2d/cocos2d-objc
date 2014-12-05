@@ -110,16 +110,17 @@
     pass0.debugLabel = @"CCEffectOutline pass 0";
     pass0.shader = self.shader;
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
-    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture) {
+    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs) {
         
-        pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
-        pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outlineColor"]] = [NSValue valueWithGLKVector4:weakSelf.outlineColor.glkVector4];
+        passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;
+        passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outlineColor"]] = [NSValue valueWithGLKVector4:weakSelf.outlineColor.glkVector4];
         
-        GLKVector2 stepSize = GLKVector2Make(_outlineWidth / previousPassTexture.contentSize.width, _outlineWidth / previousPassTexture.contentSize.height);
+        GLKVector2 stepSize = GLKVector2Make(_outlineWidth / passInputs.previousPassTexture.contentSize.width,
+                                             _outlineWidth / passInputs.previousPassTexture.contentSize.height);
         
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_stepSize"]] = [NSValue valueWithGLKVector2:stepSize];
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_currentPass"]] = [NSNumber numberWithFloat:0.0f];
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_stepSize"]] = [NSValue valueWithGLKVector2:stepSize];
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_currentPass"]] = [NSNumber numberWithFloat:0.0f];
         
     } copy]];
     
@@ -130,25 +131,27 @@
     pass1.debugLabel = @"CCEffectOutline pass 1";
     pass1.shader = self.shader;
     pass1.blendMode = [CCBlendMode premultipliedAlphaMode];
-    pass1.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture) {
+    pass1.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs) {
         
-        pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outlineColor"]] = [NSValue valueWithGLKVector4:weakSelf.outlineColor.glkVector4];
+        passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outlineColor"]] = [NSValue valueWithGLKVector4:weakSelf.outlineColor.glkVector4];
 
-        GLKVector2 stepSize = GLKVector2Make(_outlineWidth / previousPassTexture.contentSize.width, _outlineWidth / previousPassTexture.contentSize.height);
+        GLKVector2 stepSize = GLKVector2Make(_outlineWidth / passInputs.previousPassTexture.contentSize.width,
+                                             _outlineWidth / passInputs.previousPassTexture.contentSize.height);
         
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_stepSize"]] = [NSValue valueWithGLKVector2:stepSize];
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_currentPass"]] = [NSNumber numberWithFloat:1.0f];
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_stepSize"]] = [NSValue valueWithGLKVector2:stepSize];
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_currentPass"]] = [NSNumber numberWithFloat:1.0f];
         
         
-        float aspect = previousPassTexture.contentSize.width / previousPassTexture.contentSize.height;
+        float aspect = passInputs.previousPassTexture.contentSize.width / passInputs.previousPassTexture.contentSize.height;
         float w = _outlineWidth * (4.0 * aspect); // no idea why I need to do this..
         float w2 = w / 2;
         CGRect rect = CGRectMake(w2, w2 * aspect,
-                                 previousPassTexture.contentSize.width-(w),
-                                 previousPassTexture.contentSize.height-(w*aspect));
+                                 passInputs.previousPassTexture.contentSize.width-(w),
+                                 passInputs.previousPassTexture.contentSize.height-(w*aspect));
         
-        CCSpriteTexCoordSet texCoords = [CCSprite textureCoordsForTexture:previousPassTexture withRect:rect rotated:NO xFlipped:NO yFlipped:NO];
+        CCSpriteTexCoordSet texCoords = [CCSprite textureCoordsForTexture:passInputs.previousPassTexture
+                                                                 withRect:rect rotated:NO xFlipped:NO yFlipped:NO];
         CCSpriteVertexes verts = pass.verts;
         verts.bl.texCoord2 = texCoords.bl;
         verts.br.texCoord2 = texCoords.br;
