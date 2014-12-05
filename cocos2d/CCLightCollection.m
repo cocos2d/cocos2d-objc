@@ -100,7 +100,7 @@ static const NSUInteger CCLightCollectionMaxGroupCount = sizeof(NSUInteger) * 8;
     GLKVector4 sum = GLKVector4Make(0.0f, 0.0f, 0.0f, 0.0f);
     for (CCLightNode* light in self.lights)
     {
-        if (light.groupMask & mask)
+        if (light.visible && (light.groupMask & mask))
         {
             sum = GLKVector4Add(sum, GLKVector4MultiplyScalar(light.ambientColor.glkVector4, light.ambientIntensity));
         }
@@ -226,7 +226,7 @@ static const NSUInteger CCLightCollectionMaxGroupCount = sizeof(NSUInteger) * 8;
 + (BOOL)light:(CCLightNode *)light hasEffectOnGroups:(CCLightGroupMask)groupMask atPoint:(CGPoint)point
 {
     BOOL groupsIntersect = ((light.groupMask & groupMask) != 0);
-    return groupsIntersect;
+    return light.visible && groupsIntersect;
 }
 
 @end
