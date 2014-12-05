@@ -319,9 +319,9 @@ static NSString* vertBase =
 
 @end
 
-#pragma mark CCEffect
+#pragma mark CCEffectImpl
 
-@implementation CCEffect
+@implementation CCEffectImpl
 
 + (NSArray *)defaultEffectFragmentUniforms
 {
@@ -412,21 +412,21 @@ static NSString* vertBase =
     
     if (fragmentUniforms)
     {
-        _fragmentUniforms = [[CCEffect defaultEffectFragmentUniforms] arrayByAddingObjectsFromArray:fragmentUniforms];
+        _fragmentUniforms = [[CCEffectImpl defaultEffectFragmentUniforms] arrayByAddingObjectsFromArray:fragmentUniforms];
     }
     else
     {
-        _fragmentUniforms = [[CCEffect defaultEffectFragmentUniforms] copy];
+        _fragmentUniforms = [[CCEffectImpl defaultEffectFragmentUniforms] copy];
     }
     
     if (vertexUniforms)
     {
-        _vertexUniforms = [[CCEffect defaultEffectVertexUniforms] arrayByAddingObjectsFromArray:vertexUniforms];
+        _vertexUniforms = [[CCEffectImpl defaultEffectVertexUniforms] arrayByAddingObjectsFromArray:vertexUniforms];
         
     }
     else
     {
-        _vertexUniforms = [[CCEffect defaultEffectVertexUniforms] copy];
+        _vertexUniforms = [[CCEffectImpl defaultEffectVertexUniforms] copy];
     }
     
     [self setVaryings:varyings];
@@ -572,17 +572,12 @@ static NSString* vertBase =
     self.renderPasses = @[];
 }
 
--(NSUInteger)renderPassesRequired
+-(NSUInteger)renderPassCount
 {
     return _renderPasses.count;
 }
 
 - (BOOL)supportsDirectRendering
-{
-    return YES;
-}
-
-- (BOOL)readyForRendering
 {
     return YES;
 }
@@ -607,5 +602,39 @@ static NSString* vertBase =
 
 @end
 
+#pragma mark CCEffect
+
+@implementation CCEffect
+
+- (id)init
+{
+    return [super init];
+}
+
+- (BOOL)supportsDirectRendering
+{
+    NSAssert(_effectImpl, @"The effect has a nil implementation. Something is terribly wrong.");
+    return _effectImpl.supportsDirectRendering;
+}
+
+- (NSUInteger)renderPassCount
+{
+    NSAssert(_effectImpl, @"The effect has a nil implementation. Something is terribly wrong.");
+    return _effectImpl.renderPasses.count;
+}
+
+- (CCEffectPrepareResult)prepareForRenderingWithSprite:(CCSprite *)sprite;
+{
+    NSAssert(_effectImpl, @"The effect has a nil implementation. Something is terribly wrong.");
+    return [_effectImpl prepareForRenderingWithSprite:sprite];
+}
+
+- (CCEffectRenderPass *)renderPassAtIndex:(NSUInteger)passIndex
+{
+    NSAssert(_effectImpl, @"The effect has a nil implementation. Something is terribly wrong.");
+    return [_effectImpl renderPassAtIndex:passIndex];
+}
+
+@end
 
 

@@ -14,47 +14,44 @@
 #import "CCRenderer.h"
 #import "CCTexture.h"
 
-@implementation CCEffectDFOutline {
+
+@interface CCEffectDFOutlineImpl : CCEffectImpl
+@property (nonatomic, weak) CCEffectDFOutline *interface;
+@end
+
+
+@implementation CCEffectDFOutlineImpl {
     float _outerMin;
     float _outerMax;
-    float _fieldScaleFactor;
 }
 
--(id)init
-{
-    return [self initWithOutlineColor:[CCColor redColor] fillColor:[CCColor blackColor] outlineWidth:3 fieldScale:32 distanceField:[CCTexture none]];
-}
-
--(id)initWithOutlineColor:(CCColor*)outlineColor fillColor:(CCColor*)fillColor outlineWidth:(int)outlineWidth fieldScale:(float)fieldScale distanceField:(CCTexture*)distanceField
+-(id)initWithInterface:(CCEffectDFOutline *)interface
 {
     NSArray *uniforms = @[
                           [CCEffectUniform uniform:@"vec4" name:@"u_fillColor" value:[NSValue valueWithGLKVector4:[CCColor blackColor].glkVector4]],
-                          [CCEffectUniform uniform:@"vec4" name:@"u_outlineColor" value:[NSValue valueWithGLKVector4:outlineColor.glkVector4]],
+                          [CCEffectUniform uniform:@"vec4" name:@"u_outlineColor" value:[NSValue valueWithGLKVector4:[CCColor blackColor].glkVector4]],
                           [CCEffectUniform uniform:@"vec2" name:@"u_outlineOuterWidth" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.5, 1.0)]],
                           [CCEffectUniform uniform:@"vec2" name:@"u_outlineInnerWidth" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.4, 0.42)]]
                           ];
     
     if((self = [super initWithFragmentUniforms:uniforms vertexUniforms:nil varyings:nil]))
     {
-        _fieldScaleFactor = fieldScale; // 32 4096/128 (input distance field size / output df size)
-        self.outlineWidth = outlineWidth;
-        _fillColor = fillColor;
-        _outlineColor = outlineColor;
-        _distanceField = distanceField;
-        
-        self.debugName = @"CCEffectDFOutline";
+        self.interface = interface;
+        self.debugName = @"CCEffectDFOutlineImpl";
     }
     return self;
-}
-
-+(id)effectWithOutlineColor:(CCColor*)outlineColor fillColor:(CCColor*)fillColor outlineWidth:(int)outlineWidth fieldScale:(float)fieldScale distanceField:(CCTexture*)distanceField
-{
-    return [[self alloc] initWithOutlineColor:outlineColor fillColor:fillColor outlineWidth:outlineWidth fieldScale:fieldScale distanceField:distanceField];
 }
 
 -(void)buildFragmentFunctions
 {
     self.fragmentFunctions = [[NSMutableArray alloc] init];
+
+    NSString* effectPrefix =
+        @"#ifdef GL_ES\n"
+        @"#ifdef GL_OES_standard_derivatives\n"
+        @"#extension GL_OES_standard_derivatives : enable\n"
+        @"#endif\n"
+        @"#endif\n";
     
     NSString* effectBody = CC_GLSL(
                                    vec4 outputColor = u_fillColor;
@@ -93,13 +90,13 @@
                                    );
     
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"outlineEffect"
-                                                                           body:effectBody inputs:nil returnType:@"vec4"];
+                                                                           body:[effectPrefix stringByAppendingString:effectBody] inputs:nil returnType:@"vec4"];
     [self.fragmentFunctions addObject:fragmentFunction];
 }
 
 -(void)buildRenderPasses
 {
-    __weak CCEffectDFOutline *weakSelf = self;
+    __weak CCEffectDFOutlineImpl *weakSelf = self;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.debugLabel = @"CCEffectDFOutline pass 0";
@@ -107,12 +104,12 @@
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs) {
         
-        passInputs.shaderUniforms[CCShaderUniformNormalMapTexture] = weakSelf.distanceField;
+        passInputs.shaderUniforms[CCShaderUniformNormalMapTexture] = weakSelf.interface.distanceField;
         passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
         
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fillColor"]] = [NSValue valueWithGLKVector4:weakSelf.fillColor.glkVector4];
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outlineColor"]] = [NSValue valueWithGLKVector4:weakSelf.outlineColor.glkVector4];
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fillColor"]] = [NSValue valueWithGLKVector4:weakSelf.interface.fillColor.glkVector4];
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outlineColor"]] = [NSValue valueWithGLKVector4:weakSelf.interface.outlineColor.glkVector4];
         
         passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outlineOuterWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(_outerMin, _outerMax)];
         
@@ -121,18 +118,57 @@
     self.renderPasses = @[pass0];
 }
 
+-(void)setNormalizedOutlineWidth:(float)normalizedOutlineWidth andEdgeSoftness:(float)edgeSoftness
+{
+    // 0.5 == center(edge),  < 0.5 == outside, > 0.5 == inside
+    _outerMin = (0.5 * (1.0 - normalizedOutlineWidth));
+    _outerMax = _outerMin + _outerMin * edgeSoftness;
+}
+
+
+@end
+
+@implementation CCEffectDFOutline
+{
+    float _fieldScaleFactor;
+}
+
+-(id)init
+{
+    return [self initWithOutlineColor:[CCColor redColor] fillColor:[CCColor blackColor] outlineWidth:3 fieldScale:32 distanceField:[CCTexture none]];
+}
+
+-(id)initWithOutlineColor:(CCColor*)outlineColor fillColor:(CCColor*)fillColor outlineWidth:(int)outlineWidth fieldScale:(float)fieldScale distanceField:(CCTexture*)distanceField
+{
+    if((self = [super init]))
+    {        
+        self.effectImpl = [[CCEffectDFOutlineImpl alloc] initWithInterface:self];
+        self.debugName = @"CCEffectDFOutline";
+
+        _fieldScaleFactor = fieldScale; // 32 4096/128 (input distance field size / output df size)
+        _fillColor = fillColor;
+        _outlineColor = outlineColor;
+        _distanceField = distanceField;
+        
+        self.outlineWidth = outlineWidth;
+    }
+    return self;
+}
+
++(id)effectWithOutlineColor:(CCColor*)outlineColor fillColor:(CCColor*)fillColor outlineWidth:(int)outlineWidth fieldScale:(float)fieldScale distanceField:(CCTexture*)distanceField
+{
+    return [[self alloc] initWithOutlineColor:outlineColor fillColor:fillColor outlineWidth:outlineWidth fieldScale:fieldScale distanceField:distanceField];
+}
+
 -(void)setOutlineWidth:(int)outlineWidth
 {
-    
     _outlineWidth = outlineWidth;//clampf(outlineOuterWidth, 0.0f, 1.0f);
     
     float outlineWidthNormalized = ((float)outlineWidth)/255.0 * _fieldScaleFactor;
     float edgeSoftness = _outlineWidth * 0.1; // randomly chosen number that looks good to me, based on a 200 pixel spread (note: this should adjustable).
-    
-    // 0.5 == center(edge),  < 0.5 == outside, > 0.5 == inside
-    _outerMin = (0.5 * (1.0 - outlineWidthNormalized));
-    _outerMax = _outerMin + _outerMin * edgeSoftness;
 
+    CCEffectDFOutlineImpl *outlineImpl = (CCEffectDFOutlineImpl *)self.effectImpl;
+    [outlineImpl setNormalizedOutlineWidth:outlineWidthNormalized andEdgeSoftness:edgeSoftness];
 }
 
 @end

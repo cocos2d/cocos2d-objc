@@ -44,7 +44,14 @@
 #import "CCTexture.h"
 
 
-@implementation CCEffectDropShadow {
+@interface CCEffectDropShadowImpl : CCEffectImpl
+
+@property (nonatomic, weak) CCEffectDropShadow *interface;
+
+@end
+
+
+@implementation CCEffectDropShadowImpl {
     NSUInteger _numberOfOptimizedOffsets;
     NSUInteger _blurRadius;
     NSUInteger _trueBlurRadius;
@@ -52,15 +59,9 @@
     BOOL _shaderDirty;
 }
 
--(id)init
+-(id)initWithInterface:(CCEffectDropShadow *)interface
 {
-    return [self initWithShadowOffset:GLKVector2Make(5, -5) shadowColor:[CCColor blackColor] blurRadius:2];
-}
-
-
--(id)initWithShadowOffset:(GLKVector2)shadowOffset shadowColor:(CCColor*)shadowColor blurRadius:(NSUInteger)blurRadius
-{
-    [self setBlurRadiusAndDependents:blurRadius];
+    [self setBlurRadiusAndDependents:interface.blurRadius];
     
     CCEffectUniform* u_blurDirection = [CCEffectUniform uniform:@"highp vec2" name:@"u_blurDirection"
                                                           value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]];
@@ -69,10 +70,10 @@
                                                           value:[NSNumber numberWithFloat:0.0f]];
     
     CCEffectUniform* u_shadowOffset = [CCEffectUniform uniform:@"vec2" name:@"u_shadowOffset"
-                                                         value:[NSValue valueWithGLKVector2:shadowOffset]];
+                                                         value:[NSValue valueWithGLKVector2:interface.shadowOffset]];
     
     CCEffectUniform* u_shadowColor = [CCEffectUniform uniform:@"vec4" name:@"u_shadowColor"
-                                                        value:[NSValue valueWithGLKVector4:shadowColor.glkVector4]];
+                                                        value:[NSValue valueWithGLKVector4:interface.shadowColor.glkVector4]];
 
     unsigned long count = (unsigned long)(1 + (_numberOfOptimizedOffsets * 2));
     CCEffectVarying* v_blurCoords = [CCEffectVarying varying:@"vec2" name:@"v_blurCoordinates" count:count];
@@ -81,11 +82,8 @@
                                vertexUniforms:@[u_blurDirection]
                                      varyings:@[v_blurCoords]])
     {
-        
-        _shadowColor = shadowColor;
-        _shadowOffset = shadowOffset;
-        
-        self.debugName = @"CCEffectDropShadow";
+        self.interface = interface;
+        self.debugName = @"CCEffectDropShadowImpl";        
         self.stitchFlags = 0;
         return self;
     }
@@ -93,18 +91,12 @@
     return self;
 }
 
-+(id)effectWithShadowOffset:(GLKVector2)shadowOffset shadowColor:(CCColor*)shadowColor blurRadius:(NSUInteger)blurRadius
-{
-    return [[self alloc] initWithShadowOffset:shadowOffset shadowColor:shadowColor blurRadius:blurRadius];
-}
-
 -(void)setBlurRadius:(NSUInteger)blurRadius
 {
     [self setBlurRadiusAndDependents:blurRadius];
     
     // The shader is constructed dynamically based on the blur radius
-    // so mark it dirty and make sure this propagates up to any containing
-    // effect stacks.
+    // so mark it dirty.
     _shaderDirty = YES;
 }
 
@@ -279,7 +271,7 @@
     // pass 0: blurs (horizontal) texture[0] and outputs blurmap to texture[1]
     // pass 1: blurs (vertical) texture[1] and outputs to texture[2]
 
-    __weak CCEffectDropShadow *weakSelf = self;
+    __weak CCEffectDropShadowImpl *weakSelf = self;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.debugLabel = @"CCEffectDropShadow pass 0";
@@ -321,10 +313,10 @@
         passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithGLKVector2:dur];
         passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_composite"]] = [NSNumber numberWithFloat:1.0f];
         
-        GLKVector2 offset = GLKVector2Make(weakSelf.shadowOffset.x / passInputs.previousPassTexture.contentSize.width, weakSelf.shadowOffset.y / passInputs.previousPassTexture.contentSize.height);
+        GLKVector2 offset = GLKVector2Make(weakSelf.interface.shadowOffset.x / passInputs.previousPassTexture.contentSize.width, weakSelf.interface.shadowOffset.y / passInputs.previousPassTexture.contentSize.height);
         
         passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_shadowOffset"]] = [NSValue valueWithGLKVector2:offset];
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_shadowColor"]] = [NSValue valueWithGLKVector4:weakSelf.shadowColor.glkVector4];
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_shadowColor"]] = [NSValue valueWithGLKVector4:weakSelf.interface.shadowColor.glkVector4];
         
     } copy]];
     
@@ -351,6 +343,43 @@
         result.changes = CCEffectPrepareShaderChanged;
     }
     return result;
+}
+
+@end
+
+
+@implementation CCEffectDropShadow
+
+-(id)init
+{
+    return [self initWithShadowOffset:GLKVector2Make(5, -5) shadowColor:[CCColor blackColor] blurRadius:2];
+}
+
+-(id)initWithShadowOffset:(GLKVector2)shadowOffset shadowColor:(CCColor*)shadowColor blurRadius:(NSUInteger)blurRadius
+{
+    if((self = [super init]))
+    {
+        _shadowColor = shadowColor;
+        _shadowOffset = shadowOffset;
+        self.blurRadius = blurRadius;
+        
+        self.effectImpl = [[CCEffectDropShadowImpl alloc] initWithInterface:self];
+        self.debugName = @"CCEffectDropShadow";
+    }
+    return self;
+}
+
++(id)effectWithShadowOffset:(GLKVector2)shadowOffset shadowColor:(CCColor*)shadowColor blurRadius:(NSUInteger)blurRadius
+{
+    return [[self alloc] initWithShadowOffset:shadowOffset shadowColor:shadowColor blurRadius:blurRadius];
+}
+
+-(void)setBlurRadius:(NSUInteger)blurRadius
+{
+    _blurRadius = blurRadius;
+    
+    CCEffectDropShadowImpl *dropShadowImpl = (CCEffectDropShadowImpl *)self.effectImpl;
+    [dropShadowImpl setBlurRadius:blurRadius];
 }
 
 @end

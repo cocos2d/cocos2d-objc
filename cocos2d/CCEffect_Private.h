@@ -120,7 +120,7 @@ typedef NS_ENUM(NSUInteger, CCEffectTexCoordMapping)
 
 @property (nonatomic, assign) NSInteger renderPassId;
 @property (nonatomic, strong) CCRenderer* renderer;
-@property (nonatomic, strong) CCNode *node;
+@property (nonatomic, strong) CCSprite *sprite;
 @property (nonatomic, assign) CCSpriteVertexes verts;
 @property (nonatomic, strong) CCTexture *previousPassTexture;
 @property (nonatomic, assign) GLKMatrix4 transform;
@@ -141,7 +141,6 @@ typedef void (^CCEffectRenderPassBeginBlock)(CCEffectRenderPass *pass, CCEffectR
 typedef void (^CCEffectRenderPassUpdateBlock)(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs);
 typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs);
 
-// Note to self: I don't like this pattern, refactor it. I think there should be a CCRenderPass that is used by CCEffect instead. NOTE: convert this to a CCRnderPassProtocol
 @interface CCEffectRenderPass : NSObject
 
 @property (nonatomic, readonly) NSUInteger indexInEffect;
@@ -163,22 +162,40 @@ typedef void (^CCEffectRenderPassEndBlock)(CCEffectRenderPass *pass, CCEffectRen
 
 @end
 
+
+@class CCEffectImpl;
+
+
 @interface CCEffect ()
 
-@property (nonatomic, readonly) CCShader* shader; // Note: consider adding multiple shaders (one for reach renderpass, this will help break up logic and avoid branching in a potential uber shader).
-@property (nonatomic, strong) NSMutableDictionary* shaderUniforms;
-@property (nonatomic, readonly) NSUInteger renderPassesRequired;
-@property (nonatomic, readonly) BOOL supportsDirectRendering;
-@property (nonatomic, readonly) BOOL readyForRendering;
+@property (nonatomic, strong) CCEffectImpl *effectImpl;
 
+@property (nonatomic, readonly) BOOL supportsDirectRendering;
+@property (nonatomic, readonly) NSUInteger renderPassCount;
+
+-(CCEffectPrepareResult)prepareForRenderingWithSprite:(CCSprite *)sprite;;
+-(CCEffectRenderPass *)renderPassAtIndex:(NSUInteger)passIndex;
+
+@end
+
+
+@interface CCEffectImpl : NSObject
+
+@property (nonatomic, copy) NSString *debugName;
+
+@property (nonatomic, readonly) BOOL supportsDirectRendering;
+
+@property (nonatomic, readonly) CCShader* shader;
+@property (nonatomic, strong) NSMutableDictionary* shaderUniforms;
+@property (nonatomic, strong) NSMutableDictionary* uniformTranslationTable;
 @property (nonatomic, strong) NSMutableArray* vertexFunctions;
 @property (nonatomic, strong) NSMutableArray* fragmentFunctions;
 @property (nonatomic, strong) NSArray* fragmentUniforms;
 @property (nonatomic, strong) NSArray* vertexUniforms;
 @property (nonatomic, strong) NSArray* varyingVars;
+
 @property (nonatomic, strong) NSArray* renderPasses;
 @property (nonatomic, assign) CCEffectFunctionStitchFlags stitchFlags;
-@property (nonatomic, strong) NSMutableDictionary* uniformTranslationTable;
 
 @property (nonatomic, readonly) BOOL firstInStack;
 

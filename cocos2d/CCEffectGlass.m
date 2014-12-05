@@ -22,8 +22,9 @@ static const float CCEffectGlassDefaultFresnelBias = 0.1f;
 static const float CCEffectGlassDefaultFresnelPower = 2.0f;
 
 
-@interface CCEffectGlass ()
+@interface CCEffectGlassImpl : CCEffectImpl
 
+@property (nonatomic, weak) CCEffectGlass *interface;
 @property (nonatomic, assign) float conditionedRefraction;
 @property (nonatomic, assign) float conditionedShininess;
 @property (nonatomic, assign) float conditionedFresnelBias;
@@ -32,19 +33,9 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
 @end
 
 
-@implementation CCEffectGlass
+@implementation CCEffectGlassImpl
 
--(id)init
-{
-    return [self initWithShininess:1.0f refraction:1.0f refractionEnvironment:nil reflectionEnvironment:nil normalMap:nil];
-}
-
--(id)initWithShininess:(float)shininess refraction:(float)refraction refractionEnvironment:(CCSprite *)refractionEnvironment reflectionEnvironment:(CCSprite *)reflectionEnvironment
-{
-    return [self initWithShininess:shininess refraction:refraction refractionEnvironment:refractionEnvironment reflectionEnvironment:reflectionEnvironment normalMap:nil];
-}
-
--(id)initWithShininess:(float)shininess refraction:(float)refraction refractionEnvironment:(CCSprite *)refractionEnvironment reflectionEnvironment:(CCSprite *)reflectionEnvironment normalMap:(CCSpriteFrame *)normalMap
+-(id)initWithInterface:(CCEffectGlass *)interface
 {
     NSArray *fragUniforms = @[
                               [CCEffectUniform uniform:@"float" name:@"u_refraction" value:[NSNumber numberWithFloat:1.0f]],
@@ -75,35 +66,15 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
     
     if((self = [super initWithFragmentUniforms:fragUniforms vertexUniforms:vertUniforms varyings:varyings]))
     {
-        _refraction = refraction;
-        _conditionedRefraction = CCEffectUtilsConditionRefraction(refraction);
-        
-        _shininess = shininess;
-        _conditionedShininess = CCEffectUtilsConditionShininess(shininess);
-        
-        _fresnelBias = CCEffectGlassDefaultFresnelBias;
+        _conditionedRefraction = CCEffectUtilsConditionRefraction(interface.refraction);
+        _conditionedShininess = CCEffectUtilsConditionShininess(interface.shininess);
         _conditionedFresnelBias = CCEffectUtilsConditionFresnelBias(CCEffectGlassDefaultFresnelBias);
-
-        _fresnelPower = CCEffectGlassDefaultFresnelPower;
         _conditionedFresnelPower = CCEffectUtilsConditionFresnelPower(CCEffectGlassDefaultFresnelPower);
         
-        _refractionEnvironment = refractionEnvironment;
-        _reflectionEnvironment = reflectionEnvironment;
-        _normalMap = normalMap;
-        
+        self.interface = interface;
         self.debugName = @"CCEffectGlass";
     }
     return self;
-}
-
-+(id)effectWithShininess:(float)shininess refraction:(float)refraction refractionEnvironment:(CCSprite *)refractionEnvironment reflectionEnvironment:(CCSprite *)reflectionEnvironment
-{
-    return [[self alloc] initWithShininess:shininess refraction:refraction refractionEnvironment:refractionEnvironment reflectionEnvironment:reflectionEnvironment];
-}
-
-+(id)effectWithShininess:(float)shininess refraction:(float)refraction refractionEnvironment:(CCSprite *)refractionEnvironment reflectionEnvironment:(CCSprite *)reflectionEnvironment normalMap:(CCSpriteFrame *)normalMap
-{
-    return [[self alloc] initWithShininess:shininess refraction:refraction refractionEnvironment:refractionEnvironment reflectionEnvironment:reflectionEnvironment normalMap:normalMap];
 }
 
 -(void)buildFragmentFunctions
@@ -207,7 +178,7 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
 
 -(void)buildRenderPasses
 {
-    __weak CCEffectGlass *weakSelf = self;
+    __weak CCEffectGlassImpl *weakSelf = self;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.debugLabel = @"CCEffectGlass pass 0";
@@ -219,11 +190,11 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:passInputs.texCoord1Center];
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:passInputs.texCoord1Extents];
 
-        if (weakSelf.normalMap)
+        if (weakSelf.interface.normalMap)
         {
-            passInputs.shaderUniforms[CCShaderUniformNormalMapTexture] = weakSelf.normalMap.texture;
+            passInputs.shaderUniforms[CCShaderUniformNormalMapTexture] = weakSelf.interface.normalMap.texture;
             
-            CCSpriteTexCoordSet texCoords = [CCSprite textureCoordsForTexture:weakSelf.normalMap.texture withRect:weakSelf.normalMap.rect rotated:weakSelf.normalMap.rotated xFlipped:NO yFlipped:NO];
+            CCSpriteTexCoordSet texCoords = [CCSprite textureCoordsForTexture:weakSelf.interface.normalMap.texture withRect:weakSelf.interface.normalMap.rect rotated:weakSelf.interface.normalMap.rotated xFlipped:NO yFlipped:NO];
             CCSpriteVertexes verts = passInputs.verts;
             verts.bl.texCoord2 = texCoords.bl;
             verts.br.texCoord2 = texCoords.br;
@@ -238,18 +209,18 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
         passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fresnelBias"]] = [NSNumber numberWithFloat:weakSelf.conditionedFresnelBias];
         passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fresnelPower"]] = [NSNumber numberWithFloat:weakSelf.conditionedFresnelPower];
         
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_refractEnvMap"]] = weakSelf.refractionEnvironment.texture ?: [CCTexture none];
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_reflectEnvMap"]] = weakSelf.reflectionEnvironment.texture ?: [CCTexture none];
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_refractEnvMap"]] = weakSelf.interface.refractionEnvironment.texture ?: [CCTexture none];
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_reflectEnvMap"]] = weakSelf.interface.reflectionEnvironment.texture ?: [CCTexture none];
         
         
         
         // Get the transform from the affected node's local coordinates to the environment node.
-        GLKMatrix4 effectNodeToRefractEnvNode = weakSelf.refractionEnvironment ? CCEffectUtilsTransformFromNodeToNode(passInputs.node, weakSelf.refractionEnvironment, nil) : GLKMatrix4Identity;
+        GLKMatrix4 effectNodeToRefractEnvNode = weakSelf.interface.refractionEnvironment ? CCEffectUtilsTransformFromNodeToNode(passInputs.sprite, weakSelf.interface.refractionEnvironment, nil) : GLKMatrix4Identity;
         
         // Concatenate the node to environment transform with the environment node to environment texture transform.
         // The result takes us from the affected node's coordinates to the environment's texture coordinates. We need
         // this when computing the tangent and normal vectors below.
-        GLKMatrix4 effectNodeToRefractEnvTexture = GLKMatrix4Multiply(CCEffectUtilsMat4FromAffineTransform(weakSelf.refractionEnvironment.nodeToTextureTransform), effectNodeToRefractEnvNode);
+        GLKMatrix4 effectNodeToRefractEnvTexture = GLKMatrix4Multiply(CCEffectUtilsMat4FromAffineTransform(weakSelf.interface.refractionEnvironment.nodeToTextureTransform), effectNodeToRefractEnvNode);
         
         // Concatenate the node to environment texture transform together with the transform from NDC to local node
         // coordinates. (NDC == normalized device coordinates == render target coordinates that are normalized to the
@@ -267,12 +238,12 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
         
         
         // Get the transform from the affected node's local coordinates to the environment node.
-        GLKMatrix4 effectNodeToReflectEnvNode = weakSelf.reflectionEnvironment ? CCEffectUtilsTransformFromNodeToNode(passInputs.node, weakSelf.reflectionEnvironment, nil) : GLKMatrix4Identity;
+        GLKMatrix4 effectNodeToReflectEnvNode = weakSelf.interface.reflectionEnvironment ? CCEffectUtilsTransformFromNodeToNode(passInputs.sprite, weakSelf.interface.reflectionEnvironment, nil) : GLKMatrix4Identity;
         
         // Concatenate the node to environment transform with the environment node to environment texture transform.
         // The result takes us from the affected node's coordinates to the environment's texture coordinates. We need
         // this when computing the tangent and normal vectors below.
-        GLKMatrix4 effectNodeToReflectEnvTexture = GLKMatrix4Multiply(CCEffectUtilsMat4FromAffineTransform(weakSelf.reflectionEnvironment.nodeToTextureTransform), effectNodeToReflectEnvNode);
+        GLKMatrix4 effectNodeToReflectEnvTexture = GLKMatrix4Multiply(CCEffectUtilsMat4FromAffineTransform(weakSelf.interface.reflectionEnvironment.nodeToTextureTransform), effectNodeToReflectEnvNode);
         
         // Concatenate the node to environment texture transform together with the transform from NDC to local node
         // coordinates. (NDC == normalized device coordinates == render target coordinates that are normalized to the
@@ -295,26 +266,98 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
 
 -(void)setRefraction:(float)refraction
 {
-    _refraction = refraction;
     _conditionedRefraction = CCEffectUtilsConditionRefraction(refraction);
 }
 
 -(void)setShininess:(float)shininess
 {
-    _shininess = shininess;
     _conditionedShininess = CCEffectUtilsConditionShininess(shininess);
 }
 
 -(void)setFresnelBias:(float)bias
 {
-    _fresnelBias = bias;
     _conditionedFresnelBias = CCEffectUtilsConditionFresnelBias(bias);
 }
 
 -(void)setFresnelPower:(float)power
 {
-    _fresnelPower = power;
     _conditionedFresnelPower = CCEffectUtilsConditionFresnelPower(power);
+}
+
+@end
+
+
+
+@implementation CCEffectGlass
+
+-(id)init
+{
+    return [self initWithShininess:1.0f refraction:1.0f refractionEnvironment:nil reflectionEnvironment:nil normalMap:nil];
+}
+
+-(id)initWithShininess:(float)shininess refraction:(float)refraction refractionEnvironment:(CCSprite *)refractionEnvironment reflectionEnvironment:(CCSprite *)reflectionEnvironment
+{
+    return [self initWithShininess:shininess refraction:refraction refractionEnvironment:refractionEnvironment reflectionEnvironment:reflectionEnvironment normalMap:nil];
+}
+
+-(id)initWithShininess:(float)shininess refraction:(float)refraction refractionEnvironment:(CCSprite *)refractionEnvironment reflectionEnvironment:(CCSprite *)reflectionEnvironment normalMap:(CCSpriteFrame *)normalMap
+{
+    if((self = [super init]))
+    {
+        _refraction = refraction;
+        _shininess = shininess;
+        _fresnelBias = CCEffectGlassDefaultFresnelBias;
+        _fresnelPower = CCEffectGlassDefaultFresnelPower;
+        _refractionEnvironment = refractionEnvironment;
+        _reflectionEnvironment = reflectionEnvironment;
+        _normalMap = normalMap;
+
+        self.effectImpl = [[CCEffectGlassImpl alloc] initWithInterface:self];
+        self.debugName = @"CCEffectGlass";
+    }
+    return self;
+}
+
++(id)effectWithShininess:(float)shininess refraction:(float)refraction refractionEnvironment:(CCSprite *)refractionEnvironment reflectionEnvironment:(CCSprite *)reflectionEnvironment
+{
+    return [[self alloc] initWithShininess:shininess refraction:refraction refractionEnvironment:refractionEnvironment reflectionEnvironment:reflectionEnvironment];
+}
+
++(id)effectWithShininess:(float)shininess refraction:(float)refraction refractionEnvironment:(CCSprite *)refractionEnvironment reflectionEnvironment:(CCSprite *)reflectionEnvironment normalMap:(CCSpriteFrame *)normalMap
+{
+    return [[self alloc] initWithShininess:shininess refraction:refraction refractionEnvironment:refractionEnvironment reflectionEnvironment:reflectionEnvironment normalMap:normalMap];
+}
+
+-(void)setRefraction:(float)refraction
+{
+    _refraction = refraction;
+    
+    CCEffectGlassImpl *glassImpl = (CCEffectGlassImpl *)self.effectImpl;
+    [glassImpl setRefraction:refraction];
+}
+
+-(void)setShininess:(float)shininess
+{
+    _shininess = shininess;
+    
+    CCEffectGlassImpl *glassImpl = (CCEffectGlassImpl *)self.effectImpl;
+    [glassImpl setShininess:shininess];
+}
+
+-(void)setFresnelBias:(float)bias
+{
+    _fresnelBias = bias;
+    
+    CCEffectGlassImpl *glassImpl = (CCEffectGlassImpl *)self.effectImpl;
+    [glassImpl setFresnelBias:bias];
+}
+
+-(void)setFresnelPower:(float)power
+{
+    _fresnelPower = power;
+    
+    CCEffectGlassImpl *glassImpl = (CCEffectGlassImpl *)self.effectImpl;
+    [glassImpl setFresnelPower:power];
 }
 
 @end
