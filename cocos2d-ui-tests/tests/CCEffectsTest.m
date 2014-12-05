@@ -123,7 +123,7 @@
     CCColor* fillColor = [CCColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:0.0];
     _outlineEffect = [CCEffectDFOutline effectWithOutlineColor:[CCColor redColor] fillColor:fillColor outlineWidth:1 fieldScale:32 distanceField:texture];
 
-    CCSprite *dfSprite = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
+    CCSprite *dfSprite = [CCSprite spriteWithImageNamed:@"Images/df_sprite.png"];
     dfSprite.position = ccp(0.5, 0.5);
     dfSprite.positionType = CCPositionTypeNormalized;
     dfSprite.effect = _outlineEffect;
