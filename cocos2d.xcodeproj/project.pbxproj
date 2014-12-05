@@ -107,6 +107,8 @@
 		577D72D11970AC59005ABDC0 /* CCPlatformTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 571CD01F19649E03003D460C /* CCPlatformTextField.m */; };
 		57BFF2B61991931300A3FE9C /* CCEditText.java in Sources */ = {isa = PBXBuildFile; fileRef = 57BFF2B51991931300A3FE9C /* CCEditText.java */; };
 		57BFF2BA1991937C00A3FE9C /* CCEditText.m in Sources */ = {isa = PBXBuildFile; fileRef = 57BFF2B81991937C00A3FE9C /* CCEditText.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		5BC1DE2A1A2E2099009C2E67 /* NSEvent+CC.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BC1DE281A2E2099009C2E67 /* NSEvent+CC.h */; };
+		5BC1DE2B1A2E2099009C2E67 /* NSEvent+CC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC1DE291A2E2099009C2E67 /* NSEvent+CC.m */; };
 		5BC3CB5919626FA000C4F0D0 /* CCGestureListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BC3CB5719626FA000C4F0D0 /* CCGestureListener.h */; };
 		5BC3CB5A19626FA000C4F0D0 /* CCGestureListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC3CB5819626FA000C4F0D0 /* CCGestureListener.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		5BC3CB5C1962795500C4F0D0 /* CCGestureListener.java in Sources */ = {isa = PBXBuildFile; fileRef = 5BC3CB5219626E4F00C4F0D0 /* CCGestureListener.java */; };
@@ -1245,6 +1247,8 @@
 		57BFF2B51991931300A3FE9C /* CCEditText.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; name = CCEditText.java; path = java/org/cocos2d/CCEditText.java; sourceTree = "<group>"; };
 		57BFF2B71991937C00A3FE9C /* CCEditText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEditText.h; path = java/CCEditText.h; sourceTree = "<group>"; };
 		57BFF2B81991937C00A3FE9C /* CCEditText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCEditText.m; path = java/CCEditText.m; sourceTree = "<group>"; };
+		5BC1DE281A2E2099009C2E67 /* NSEvent+CC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSEvent+CC.h"; sourceTree = "<group>"; };
+		5BC1DE291A2E2099009C2E67 /* NSEvent+CC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSEvent+CC.m"; sourceTree = "<group>"; };
 		5BC3CB5219626E4F00C4F0D0 /* CCGestureListener.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = CCGestureListener.java; sourceTree = "<group>"; };
 		5BC3CB5719626FA000C4F0D0 /* CCGestureListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCGestureListener.h; path = Android/CCGestureListener.h; sourceTree = "<group>"; };
 		5BC3CB5819626FA000C4F0D0 /* CCGestureListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCGestureListener.m; path = Android/CCGestureListener.m; sourceTree = "<group>"; };
@@ -2300,6 +2304,8 @@
 		E0E9749E1237E4EA00E3E64B /* Mac */ = {
 			isa = PBXGroup;
 			children = (
+				5BC1DE281A2E2099009C2E67 /* NSEvent+CC.h */,
+				5BC1DE291A2E2099009C2E67 /* NSEvent+CC.m */,
 				A046E28B14C1DB7D0005BBF2 /* CCDirectorMac.h */,
 				A046E28C14C1DB7D0005BBF2 /* CCDirectorMac.m */,
 				A046E28F14C1DB7D0005BBF2 /* CCGLView.h */,
@@ -2655,6 +2661,7 @@
 				7A5946F819E372FB00F65F90 /* TGAlib.h in Headers */,
 				7A5946F919E372FB00F65F90 /* CGPointExtension.h in Headers */,
 				7A5946FB19E372FC00F65F90 /* CCProfiling.h in Headers */,
+				5BC1DE2A1A2E2099009C2E67 /* NSEvent+CC.h in Headers */,
 				7A5946FE19E372FC00F65F90 /* ccUtils.h in Headers */,
 				7A5946FF19E372FC00F65F90 /* CCFileUtils.h in Headers */,
 				7A59470119E372FD00F65F90 /* base64.h in Headers */,
@@ -3372,6 +3379,7 @@
 				7A59483A19E375A900F65F90 /* CCTexturePVR.m in Sources */,
 				9DC780BC1A11760B00DD5A4B /* CCLightNode.m in Sources */,
 				7A59483C19E375A900F65F90 /* CCTexture.m in Sources */,
+				5BC1DE2B1A2E2099009C2E67 /* NSEvent+CC.m in Sources */,
 				7A59483F19E375AA00F65F90 /* CCTextureCache.m in Sources */,
 				7A59484219E375AA00F65F90 /* TGAlib.m in Sources */,
 				7A59484519E375AB00F65F90 /* CGPointExtension.m in Sources */,
