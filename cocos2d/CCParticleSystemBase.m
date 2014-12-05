@@ -57,24 +57,6 @@
 #import "base64.h"
 #import "ccUtils.h"
 
-//// opengl
-//#import "Platforms/CCGL.h"
-//
-//// cocos2d
-//#import "ccConfig.h"
-//#import "CCParticleSystemBase.h"
-//#import "CCTexture.h"
-//#import "CCTextureCache.h"
-//#import "ccMacros.h"
-//#import "CCNode_Private.h"
-//
-//// support
-//#import "Support/CGPointExtension.h"
-//#import "Support/base64.h"
-//#import "Support/CCFileUtils.h"
-//
-//#import "CCParticleSystemBase_Private.h"
-
 @implementation CCParticleSystemBase
 @synthesize active = _active, duration = _duration;
 @synthesize sourcePosition = _sourcePosition, posVar = _posVar;
