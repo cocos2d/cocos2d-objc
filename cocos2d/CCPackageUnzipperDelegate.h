@@ -2,6 +2,9 @@
 
 @class CCPackageUnzipper;
 
+/** CCPackageUnzipperDelegate protocol describes an interface for feedback of an unpacking operation.
+ 
+ */
 @protocol CCPackageUnzipperDelegate <NSObject>
 
 @optional

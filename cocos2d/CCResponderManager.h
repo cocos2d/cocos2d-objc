@@ -209,6 +209,8 @@ enum
  */
 - (NSArray *)nodesAtPoint:(CGPoint)pos;
 
+
+#if !__CC_PLATFORM_MAC
 /// -----------------------------------------------------------------------
 /// @name CCResponderManager Touch methods
 /// -----------------------------------------------------------------------
@@ -220,6 +222,7 @@ enum
 - (void)touchesEnded:(NSSet *)touches withEvent:(CCTouchEvent *)event;
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(CCTouchEvent *)event;
+#endif
 
 #if __CC_PLATFORM_MAC
 - (void)mouseDown:(NSEvent *)theEvent button:(CCMouseButton)button;
@@ -241,52 +244,3 @@ enum
 #endif
 
 @end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

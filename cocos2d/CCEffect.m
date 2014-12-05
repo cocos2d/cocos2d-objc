@@ -22,7 +22,7 @@ NSString * const CCShaderUniformTexCoord2Extents    = @"cc_FragTexCoord2Extents"
 NSString * const CCEffectDefaultInitialInputSnippet = @"cc_FragColor * texture2D(cc_PreviousPassTexture, cc_FragTexCoord1);\nvec2 compare = cc_FragTexCoord1Extents - abs(cc_FragTexCoord1 - cc_FragTexCoord1Center);\ntmp *= step(0.0, min(compare.x, compare.y))";
 NSString * const CCEffectDefaultInputSnippet = @"texture2D(cc_PreviousPassTexture, cc_FragTexCoord1);\nvec2 compare = cc_FragTexCoord1Extents - abs(cc_FragTexCoord1 - cc_FragTexCoord1Center);\ntmp *= step(0.0, min(compare.x, compare.y))";
 
-
+const CCEffectPrepareResult CCEffectPrepareNoop     = { CCEffectPrepareSuccess, CCEffectPrepareNothingChanged };
 
 static NSString* fragBase =
 @"%@\n\n"   // uniforms
@@ -216,6 +216,19 @@ static NSString* vertBase =
 
 @end
 
+
+#pragma mark CCEffectRenderPassInputs
+
+@implementation CCEffectRenderPassInputs
+
+-(id)init
+{
+    return [super init];
+}
+
+@end
+
+
 #pragma mark CCEffectRenderPass
 
 @implementation CCEffectRenderPass
@@ -234,15 +247,15 @@ static NSString* vertBase =
         _texCoord1Mapping = CCEffectTexCoordMapPreviousPassTex;
         _texCoord2Mapping = CCEffectTexCoordMapCustomTex;
         
-        _beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture){} copy]];
-        _endBlocks = @[[^(CCEffectRenderPass *pass){} copy]];
+        _beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){} copy]];
+        _endBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){} copy]];
 
-        CCEffectRenderPassUpdateBlock updateBlock = ^(CCEffectRenderPass *pass){
-            if (pass.needsClear)
+        CCEffectRenderPassUpdateBlock updateBlock = ^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
+            if (passInputs.needsClear)
             {
-                [pass.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:[CCColor clearColor].glkVector4 depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
+                [passInputs.renderer enqueueClear:GL_COLOR_BUFFER_BIT color:[CCColor clearColor].glkVector4 depth:0.0f stencil:0 globalSortOrder:NSIntegerMin];
             }
-            [pass enqueueTriangles];
+            [pass enqueueTriangles:passInputs];
         };
         _updateBlocks = @[[updateBlock copy]];
         _blendMode = [CCBlendMode premultipliedAlphaMode];
@@ -267,39 +280,41 @@ static NSString* vertBase =
     return newPass;
 }
 
--(void)begin:(CCTexture *)previousPassTexture
+-(void)begin:(CCEffectRenderPassInputs *)passInputs
 {
     for (CCEffectRenderPassBeginBlock block in _beginBlocks)
     {
-        block(self, previousPassTexture);
+        block(self, passInputs);
     }
 }
 
--(void)update
+-(void)update:(CCEffectRenderPassInputs *)passInputs
 {
     for (CCEffectRenderPassUpdateBlock block in _updateBlocks)
     {
-        block(self);
+        block(self, passInputs);
     }
 }
 
--(void)end
+-(void)end:(CCEffectRenderPassInputs *)passInputs
 {
     for (CCEffectRenderPassUpdateBlock block in _endBlocks)
     {
-        block(self);
+        block(self, passInputs);
     }
 }
 
--(void)enqueueTriangles
+-(void)enqueueTriangles:(CCEffectRenderPassInputs *)passInputs
 {
-    CCRenderState *renderState = [CCRenderState renderStateWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms copyUniforms:YES];
+    CCRenderState *renderState = [CCRenderState renderStateWithBlendMode:_blendMode shader:_shader shaderUniforms:passInputs.shaderUniforms copyUniforms:YES];
     
-    CCRenderBuffer buffer = [_renderer enqueueTriangles:2 andVertexes:4 withState:renderState globalSortOrder:0];
-	CCRenderBufferSetVertex(buffer, 0, CCVertexApplyTransform(_verts.bl, &_transform));
-	CCRenderBufferSetVertex(buffer, 1, CCVertexApplyTransform(_verts.br, &_transform));
-	CCRenderBufferSetVertex(buffer, 2, CCVertexApplyTransform(_verts.tr, &_transform));
-	CCRenderBufferSetVertex(buffer, 3, CCVertexApplyTransform(_verts.tl, &_transform));
+    GLKMatrix4 transform = passInputs.transform;
+    CCRenderBuffer buffer = [passInputs.renderer enqueueTriangles:2 andVertexes:4 withState:renderState globalSortOrder:0];
+
+    CCRenderBufferSetVertex(buffer, 0, CCVertexApplyTransform(passInputs.verts.bl, &transform));
+	CCRenderBufferSetVertex(buffer, 1, CCVertexApplyTransform(passInputs.verts.br, &transform));
+	CCRenderBufferSetVertex(buffer, 2, CCVertexApplyTransform(passInputs.verts.tr, &transform));
+	CCRenderBufferSetVertex(buffer, 3, CCVertexApplyTransform(passInputs.verts.tl, &transform));
 	
 	CCRenderBufferSetTriangle(buffer, 0, 0, 1, 2);
 	CCRenderBufferSetTriangle(buffer, 1, 0, 2, 3);
@@ -307,9 +322,9 @@ static NSString* vertBase =
 
 @end
 
-#pragma mark CCEffect
+#pragma mark CCEffectImpl
 
-@implementation CCEffect
+@implementation CCEffectImpl
 
 + (NSArray *)defaultEffectFragmentUniforms
 {
@@ -400,21 +415,21 @@ static NSString* vertBase =
     
     if (fragmentUniforms)
     {
-        _fragmentUniforms = [[CCEffect defaultEffectFragmentUniforms] arrayByAddingObjectsFromArray:fragmentUniforms];
+        _fragmentUniforms = [[CCEffectImpl defaultEffectFragmentUniforms] arrayByAddingObjectsFromArray:fragmentUniforms];
     }
     else
     {
-        _fragmentUniforms = [[CCEffect defaultEffectFragmentUniforms] copy];
+        _fragmentUniforms = [[CCEffectImpl defaultEffectFragmentUniforms] copy];
     }
     
     if (vertexUniforms)
     {
-        _vertexUniforms = [[CCEffect defaultEffectVertexUniforms] arrayByAddingObjectsFromArray:vertexUniforms];
+        _vertexUniforms = [[CCEffectImpl defaultEffectVertexUniforms] arrayByAddingObjectsFromArray:vertexUniforms];
         
     }
     else
     {
-        _vertexUniforms = [[CCEffect defaultEffectVertexUniforms] copy];
+        _vertexUniforms = [[CCEffectImpl defaultEffectVertexUniforms] copy];
     }
     
     [self setVaryings:varyings];
@@ -560,7 +575,7 @@ static NSString* vertBase =
     self.renderPasses = @[];
 }
 
--(NSUInteger)renderPassesRequired
+-(NSUInteger)renderPassCount
 {
     return _renderPasses.count;
 }
@@ -570,14 +585,9 @@ static NSString* vertBase =
     return YES;
 }
 
-- (BOOL)readyForRendering
+- (CCEffectPrepareResult)prepareForRenderingWithSprite:(CCSprite *)sprite
 {
-    return YES;
-}
-
-- (CCEffectPrepareStatus)prepareForRenderingWithSprite:(CCSprite *)sprite
-{
-    return CCEffectPrepareNothingToDo;
+    return CCEffectPrepareNoop;
 }
 
 -(CCEffectRenderPass *)renderPassAtIndex:(NSUInteger)passIndex
@@ -595,5 +605,39 @@ static NSString* vertBase =
 
 @end
 
+#pragma mark CCEffect
+
+@implementation CCEffect
+
+- (id)init
+{
+    return [super init];
+}
+
+- (BOOL)supportsDirectRendering
+{
+    NSAssert(_effectImpl, @"The effect has a nil implementation. Something is terribly wrong.");
+    return _effectImpl.supportsDirectRendering;
+}
+
+- (NSUInteger)renderPassCount
+{
+    NSAssert(_effectImpl, @"The effect has a nil implementation. Something is terribly wrong.");
+    return _effectImpl.renderPasses.count;
+}
+
+- (CCEffectPrepareResult)prepareForRenderingWithSprite:(CCSprite *)sprite;
+{
+    NSAssert(_effectImpl, @"The effect has a nil implementation. Something is terribly wrong.");
+    return [_effectImpl prepareForRenderingWithSprite:sprite];
+}
+
+- (CCEffectRenderPass *)renderPassAtIndex:(NSUInteger)passIndex
+{
+    NSAssert(_effectImpl, @"The effect has a nil implementation. Something is terribly wrong.");
+    return [_effectImpl renderPassAtIndex:passIndex];
+}
+
+@end
 
 

@@ -92,6 +92,8 @@
      @"resources-phonehd", CCFileUtilsSuffixiPhoneHD,
      @"resources-phone", CCFileUtilsSuffixiPhone5,
      @"resources-phonehd", CCFileUtilsSuffixiPhone5HD,
+     @"resources-phone", CCFileUtilsSuffixMac,
+     @"resources-phonehd", CCFileUtilsSuffixMacHD,
      @"", CCFileUtilsSuffixDefault,
      nil];
     
@@ -949,6 +951,15 @@ static inline float readFloat(CCBReader *self)
 		}
 				
 	}
+    else if(type == kCCBPropTypeTokenArray)
+    {
+        NSString *arrayString = [self readCachedString];
+        if(![arrayString isEqualToString:@""])
+        {
+            NSArray *array = [arrayString componentsSeparatedByString:@";"];
+            [node setValue:array forKey:name];
+        }        
+    }
     else
     {
         NSAssert(false, @"[PROPERTY] %@ - Failed to read property type %d, node class name: \"%@\", name: \"%@\", in ccb file: \"%@\"", name, type, [node class], [node name], _currentCCBFile);

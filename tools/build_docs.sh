@@ -1,40 +1,75 @@
+#!/bin/bash
 #appledoc Xcode script
+
 # Start constants
 company="testpath1";
 companyID="testpath2";
-companyURL="http://www.cocos2d-iphone.org";
+companyURL="http://www.cocos2d-swift.org";
 target="iphoneos";
 outputPath="api-docs";
+atomfilename="cocos2d-swift.atom"
+feedurl="${companyURL}/${company}/%DOCSETATOMFILENAME"
+packageurl="${companyURL}/${company}/%DOCSETPACKAGEFILENAME"
+fallbackurl="${companyURL}/${company}"
 # End constants
+
+# -q parameter "quickens" html doc generation by skipping the docsets (maybe 10% faster, not much)
+docsets="--docset-atom-filename ${atomfilename} --docset-feed-url ${feedurl} --docset-package-url ${packageurl} --docset-fallback-url ${fallbackurl} --docset-platform-family ${target} --publish-docset --install-docset"
+
+while getopts ":q" opt; do
+	case $opt in
+	q)
+   		docsets=""
+		;;
+  esac
+done
+
+# Note about ignore list:
+# You can use "--ignore Path" only to ignore files that *end in* Path
+# You can't use "--ignore *Package*" (any wildcard combo) to ignore files that begin with or contain Path
+# Ignore list is case-sensitive!
+
+# --company-id "org" <-- This should be just "org", combined with project-name this creates the .docset filename
+
+####################################
+# Req: Please keep the ignore list sorted alphabetically.
+####################################
+
 tools/appledoc \
---project-name "Cocos2D" \
---project-company "3.2.0" \
---company-id "org.cocos2d" \
---docset-atom-filename "testpath4.atom" \
---docset-feed-url "${companyURL}/${company}/%DOCSETATOMFILENAME" \
---docset-package-url "${companyURL}/${company}/%DOCSETPACKAGEFILENAME" \
---docset-fallback-url "${companyURL}/${company}" \
+--project-name "Cocos2D-Swift v3.3" \
+--project-company "v3.3" \
+--company-id "org" \
+${docsets} \
 --output "${outputPath}" \
---publish-docset \
---install-docset \
---docset-platform-family "${target}" \
 --logformat xcode \
 --no-keep-undocumented-members \
 --no-search-undocumented-doc \
 --keep-intermediate-files \
 --no-repeat-first-par \
 --no-warn-invalid-crossref \
+--merge-categories \
+--no-merge-category-comment \
+--prefix-merged-sections \
+--warn-undocumented-object \
+--warn-undocumented-member \
+--warn-empty-description \
+--warn-unknown-directive \
+--warn-missing-arg \
 --exit-threshold 2 \
+--verbose 2 \
+--index-desc API-Index.md \
+--ignore .m \
+--ignore _Private.h \
+--ignore _frag.h \
+--ignore _vert.h \
 --ignore base64.h \
+--ignore Cache.h \
 --ignore CCActionManager.h \
---ignore CCAnimationCache.h \
---ignore CCAnimation.h \
 --ignore CCAtlasNode.h \
 --ignore CCBAnimationManager.h \
 --ignore CCBKeyFrame.h \
 --ignore CCBLocalizationManager.h \
 --ignore CCBReader.h \
---ignore CCBReader_Private.h \
 --ignore CCBSequence.h \
 --ignore CCBSequenceProperty.h \
 --ignore CCBuilderReader.h \
@@ -43,64 +78,46 @@ tools/appledoc \
 --ignore ccDeprecated.h \
 --ignore CCDirectorIOS.h \
 --ignore CCDirectorMac.h \
---ignore CCDirector_Private.h \
 --ignore CCDrawingPrimitives.h \
+--ignore CCEffectDistanceField.h \
 --ignore CCES2Renderer.h \
 --ignore CCESRenderer.h \
---ignore CCFileUtils.h \
 --ignore ccFPSImages.h \
 --ignore CCGL.h \
 --ignore CCGLProgram.h \
---ignore ccGLStateCache.h \
 --ignore CCGLView.h \
 --ignore CCLabelAtlas.h \
---ignore CCLabelBMFont_Private.h \
 --ignore ccMacros.h \
---ignore CCNode_Private.h \
+--ignore CCMetalView.h \
 --ignore CCNS.h \
+--ignore CCPackageCocos2dEnabler.h \
+--ignore CCPackageDownload.h \
+--ignore CCPackageDownloadDelegate.h \
+--ignore CCPackageDownloadManager.h \
+--ignore CCPackageDownloadManagerDelegate.h \
+--ignore CCPackageInstaller.h \
+--ignore CCPackageTypes.h \
+--ignore CCPackageUnzipper.h \
+--ignore CCPackageUnzipperDelegate.h \
 --ignore CCParticleBatchNode.h \
---ignore CCParticleSystem_Private.h \
---ignore CCParticleSystemQuad_Private.h \
+--ignore CCPhysics+ObjectiveChipmunk.h \
 --ignore CCProfiling.h \
---ignore CCProgressNode_Private.h \
 --ignore CCProtocols.h \
 --ignore CCResponderManager.h \
---ignore CCScheduler.h \
---ignore CCShaderCache.h \
---ignore ccShader_PositionColor_frag.h \
---ignore ccShader_PositionColorLengthTexture_frag.h \
---ignore ccShader_PositionColorLengthTexture_vert.h \
---ignore ccShader_PositionColor_vert.h \
---ignore ccShader_PositionTextureA8Color_frag.h \
---ignore ccShader_PositionTextureA8Color_vert.h \
---ignore ccShader_PositionTextureColorAlphaTest_frag.h \
---ignore ccShader_PositionTextureColor_frag.h \
---ignore ccShader_PositionTextureColor_vert.h \
---ignore ccShader_PositionTexture_frag.h \
---ignore ccShader_PositionTexture_uColor_frag.h \
---ignore ccShader_PositionTexture_uColor_vert.h \
---ignore ccShader_PositionTexture_vert.h \
---ignore ccShader_Position_uColor_frag.h \
---ignore ccShader_Position_uColor_vert.h \
 --ignore ccShaders.h \
---ignore CCSpriteBatchNode_Private.h \
---ignore CCSpriteFrameCache.h \
---ignore CCSprite_Private.h \
+--ignore CCSpriteBatchNode.h \
 --ignore CCTextureAtlas.h \
---ignore CCTextureCache.h \
---ignore CCTexture_Private.h \
 --ignore CCTexturePVR.h \
---ignore CCTiledMapLayer_Private.h \
---ignore ccTypes.h \
+--ignore CCTouchAndroid.h \
 --ignore ccUtils.h \
 --ignore CCVertex.h \
 --ignore CCWindow.h \
 --ignore CGPointExtension.h \
---ignore cocos2d.h \
 --ignore cocos2d-ui.h \
---ignore .m \
+--ignore cocos2d.h \
 --ignore NSAttributedString+CCAdditions.h \
 --ignore NSThread+performBlock.h \
+--ignore NSValue+CCRenderer.h \
 --ignore OpenGL_Internal.h \
 --ignore TGAlib.h \
 --ignore TransformUtils.h \
@@ -108,5 +125,8 @@ tools/appledoc \
 --ignore uthash.h \
 --ignore utlist.h \
 --ignore ZipUtils.h \
---ignore CCPhysics+ObjectiveChipmunk.h \
-cocos2d cocos2d-ui
+cocos2d \
+cocos2d-ui \
+external/ObjectAL/ObjectAL/ObjectAL/OALSimpleAudio.h \
+external/ObjectAL/ObjectAL/ObjectAL/AudioTrack \
+external/ObjectAL/ObjectAL/ObjectAL/Session \

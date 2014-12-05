@@ -30,12 +30,12 @@
 #pragma mark - CCNodeColor
 
 /**
- * CCNodeColor is a subclass of CCNode that is used to generate solid colors.
+ Draws a rectangle filled with a solid color.
  */
 @interface CCNodeColor : CCRenderableNode <CCShaderProtocol, CCBlendProtocol>
 
 /// -----------------------------------------------------------------------
-/// @name Creating a CCNodeColor Object
+/// @name Creating a Color Node
 /// -----------------------------------------------------------------------
 
 /**
@@ -46,6 +46,7 @@
  *  @param h     Height of the node.
  *
  *  @return The CCNodeColor Object.
+ *  @see CCColor
  */
 +(id) nodeWithColor: (CCColor*)color width:(float)w height:(float)h;
 
@@ -55,31 +56,29 @@
  *  @param color Color of the node.
  *
  *  @return The CCNodeColor Object.
+ *  @see CCColor
  */
 +(id) nodeWithColor: (CCColor*)color;
 
-/// -----------------------------------------------------------------------
-/// @name Initializing a CCNodeColor Object
-/// -----------------------------------------------------------------------
-
-
 /**
- *  Initializes a node with color, width and height in Points.
+ *  Creates a node with color, width and height in Points.
  *
  *  @param color Color of the node.
  *  @param w     Width of the node.
  *  @param h     Height of the node.
  *
  *  @return An initialized CCNodeColor Object.
+ *  @see CCColor
  */
 -(id) initWithColor:(CCColor*)color width:(float)w height:(float)h;
 
 /**
- *  Initializes a node with color. Width and height are the window size.
+ *  Creates a node with color. Width and height are the window size.
  *
  *  @param color Color of the node.
  *
  *  @return An initialized CCNodeColor Object.
+ *  @see CCColor
  */
 -(id) initWithColor:(CCColor*)color;
 
@@ -88,20 +87,15 @@
 #pragma mark - CCNodeGradient
 
 /** 
- *  CCNodeGradient is a subclass of CCNodeColor that draws gradients across the background.
- *
- *  All features from CCNodeColor are valid, plus the following new features:
- *  - direction
- *  - final color
- *  - interpolation mode
- *
- *  Color is interpolated between the startColor and endColor along the given vector (starting at the origin, ending at the terminus).  
- *
- *  If no vector is supplied, it defaults to (0, -1) -- a fade from top to bottom.
- *
- *  If 'compressedInterpolation' is disabled, you will not see either the start or end color for non-cardinal vectors; a smooth gradient implying both end points will be still be drawn, however.
- *
- *  If ' compressedInterpolation' is enabled (default mode) you will see both the start and end colors of the gradient.
+ Draws a rectangle filled with a gradient.
+ 
+ The gradient node adds the following properties to the ones already provided by CCNodeColor:
+ 
+ - vector (direction)
+ - startColor and endColor (gradient colors)
+ 
+ If no vector is supplied, it defaults to (0, -1) - fading from top to bottom. 
+ Color is interpolated between the startColor and endColor along the given vector (starting at the origin, ending at the terminus).
  */
 @interface CCNodeGradient : CCNodeColor {
 	GLKVector4 _endColor;
@@ -110,7 +104,7 @@
 
 
 /// -----------------------------------------------------------------------
-/// @name Creating a CCNodeGradient Object
+/// @name Creating a Gradient Node
 /// -----------------------------------------------------------------------
 
 /**
@@ -120,6 +114,7 @@
  *  @param end   End color.
  *
  *  @return The CCNodeGradient Object.
+ *  @see CCColor
  */
 +(id)nodeWithColor:(CCColor*)start fadingTo:(CCColor*)end;
 
@@ -131,21 +126,18 @@
  *  @param v Direction vector for gradient.
  *
  *  @return The CCNodeGradient Object.
+ *  @see CCColor
  */
 +(id)nodeWithColor:(CCColor*)start fadingTo:(CCColor*)end alongVector:(CGPoint)v;
 
-
-/// -----------------------------------------------------------------------
-/// @name Initializing a CCNodeGradient Object
-/// -----------------------------------------------------------------------
-
 /**
- *  Initializes a full-screen CCNode with a gradient between start and end color values.
+ *  Creates a full-screen CCNode with a gradient between start and end color values.
  *
  *  @param start Start color.
  *  @param end   End color.
  *
  *  @return An initialized CCNodeGradient Object.
+ *  @see CCColor
  */
 - (id)initWithColor:(CCColor*)start fadingTo:(CCColor*)end;
 
@@ -157,27 +149,36 @@
  *  @param v Direction vector for gradient.
  *
  *  @return An initialized CCNodeGradient Object.
+ *  @see CCColor
  */
 - (id)initWithColor:(CCColor*)start fadingTo:(CCColor*)end alongVector:(CGPoint)v;
 
 
 /// -----------------------------------------------------------------------
-/// @name Accessing CCNodeGradient Attributes
+/// @name Gradient Color and Opacity
 /// -----------------------------------------------------------------------
 
-/** The starting color. */
+/** The starting color.
+ @see CCColor
+*/
 @property (nonatomic, strong) CCColor* startColor;
 
-/** The ending color. */
+/** The ending color. 
+ @see CCColor
+*/
 @property (nonatomic, strong) CCColor* endColor;
 
-/** The starting opacity. */
+/** The start color's opacity. */
 @property (nonatomic, readwrite) CGFloat startOpacity;
 
-/** The ending color. */
+/** The end color's opacity. */
 @property (nonatomic, readwrite) CGFloat endOpacity;
 
-/** The vector along which to fade color. */
+/// -----------------------------------------------------------------------
+/// @name Gradient Direction
+/// -----------------------------------------------------------------------
+
+/** The vector that determines the gradient's direction. Defaults to {0, -1}. */
 @property (nonatomic, readwrite) CGPoint vector;
 
 @end
