@@ -12,7 +12,6 @@
 
 #import <android/native_window.h>
 #import <bridge/runtime.h>
-#import <bridge/jni.h>
 
 #import "cocos2d.h"
 #import "CCBReader.h"
@@ -83,17 +82,7 @@ static void handler(NSException *e)
     NSLog(@"Unhandled exception %@", e);
 }
 
-static CGFloat
-FindPOTScale(CGFloat size, CGFloat fixedSize)
-{
-	int scale = 1;
-	while(fixedSize*scale < size) scale *= 2;
-
-	return scale;
-}
-
-static CGFloat
-FindLinearScale(CGFloat size, CGFloat fixedSize)
+static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
 {
 	int scale = 1;
 	while(fixedSize*scale < size) scale++;
@@ -248,7 +237,7 @@ FindLinearScale(CGFloat size, CGFloat fixedSize)
 
 - (void)setupView:(JavaObject<AndroidSurfaceHolder> *)holder
 {
-    ANativeWindow* window = ANativeWindow_fromSurface(jni_getEnv(), bridge_getJava(holder.surface, NULL));
+    ANativeWindow* window = holder.surface.window;
     [_glView setupView:window];
 }
 
@@ -462,9 +451,6 @@ FindLinearScale(CGFloat size, CGFloat fixedSize)
 {
 	CGSize sizePoint = [CCDirector sharedDirector].viewSize;
 	CGSize fixed = [CCDirector sharedDirector].designSize;
-
-	CCLOG(@"view size %dx%d", (int)sizePoint.width, (int)sizePoint.height);
-    CCLOG(@"fixed %dx%d", (int)fixed.width, (int)fixed.height);
 
 	// Half of the extra size that will be cut off
 	CGPoint offset = ccpMult(ccp(fixed.width - sizePoint.width, fixed.height - sizePoint.height), 0.5);

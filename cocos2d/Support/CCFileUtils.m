@@ -394,7 +394,7 @@ static CCFileUtils *fileUtils = nil;
 	// XXX XXX Super Slow
 	for( NSString *key in dictionary) {
 		NSString *value = [dictionary objectForKey:key];
-		if( [value isEqualToString:k]) {
+		if( [value isEqualToString:k] ) {
 			
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
 			// XXX Add this in a Dictionary

@@ -20,7 +20,7 @@
 #import "CCTouchAndroid.h"
 #import <CoreGraphics/CGGeometry.h>
 
-//const CGSize FIXED_SIZE = {568, 384};
+static const CGSize FIXED_SIZE = {586, 384};
 
 static NSMutableDictionary *touches = nil;
 static CCTouchEvent *currentEvent = nil;
@@ -535,7 +535,7 @@ static inline void logConfig(EGLDisplay display, EGLConfig conf) {
             if (width > height)
                 size = CGSizeMake(height, width);
             
-            _contentScaleFactor = size.width / 586;
+            _contentScaleFactor = size.width / FIXED_SIZE.width;
             
             width /= _contentScaleFactor;
             height /= _contentScaleFactor;
@@ -549,11 +549,6 @@ static inline void logConfig(EGLDisplay display, EGLConfig conf) {
             
     }
     
-//    ANativeWindow_setBuffersGeometry(window, width, height, format);
-    
-    if(eglGetError() != EGL_SUCCESS) { NSLog(@"EGL ERROR: %i", eglGetError()); };
-    
-//    eglSwapInterval(_eglDisplay, 0.016667);
     
     if(eglGetError() != EGL_SUCCESS) { NSLog(@"EGL ERROR: %i", eglGetError()); };
     
