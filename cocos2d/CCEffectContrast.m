@@ -14,19 +14,14 @@
 static float conditionContrast(float contrast);
 
 
-@interface CCEffectContrast ()
+@interface CCEffectContrastImpl : CCEffectImpl
 
 @property (nonatomic, strong) NSNumber *conditionedContrast;
 
 @end
 
 
-@implementation CCEffectContrast
-
--(id)init
-{
-    return [self initWithContrast:0.0f];
-}
+@implementation CCEffectContrastImpl
 
 -(id)initWithContrast:(float)contrast
 {
@@ -34,17 +29,11 @@ static float conditionContrast(float contrast);
     
     if((self = [super initWithFragmentUniforms:@[uniformContrast] vertexUniforms:nil varyings:nil]))
     {
-        _contrast = contrast;
         _conditionedContrast = [NSNumber numberWithFloat:conditionContrast(contrast)];
 
-        self.debugName = @"CCEffectContrast";
+        self.debugName = @"CCEffectContrastImpl";
     }
     return self;
-}
-
-+(id)effectWithContrast:(float)contrast
-{
-    return [[self alloc] initWithContrast:contrast];
 }
 
 -(void)buildFragmentFunctions
@@ -64,7 +53,7 @@ static float conditionContrast(float contrast);
 
 -(void)buildRenderPasses
 {
-    __weak CCEffectContrast *weakSelf = self;
+    __weak CCEffectContrastImpl *weakSelf = self;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.debugLabel = @"CCEffectContrast pass 0";
@@ -84,11 +73,46 @@ static float conditionContrast(float contrast);
 
 -(void)setContrast:(float)contrast
 {
-    _contrast = contrast;
     _conditionedContrast = [NSNumber numberWithFloat:conditionContrast(contrast)];
 }
 
 @end
+
+
+@implementation CCEffectContrast
+
+-(id)init
+{
+    return [self initWithContrast:0.0f];
+}
+
+-(id)initWithContrast:(float)contrast
+{
+    if((self = [super init]))
+    {
+        _contrast = contrast;
+
+        self.effectImpl = [[CCEffectContrastImpl alloc] initWithContrast:contrast];
+        self.debugName = @"CCEffectContrast";
+    }
+    return self;
+}
+
++(id)effectWithContrast:(float)contrast
+{
+    return [[self alloc] initWithContrast:contrast];
+}
+
+-(void)setContrast:(float)contrast
+{
+    _contrast = contrast;
+    
+    CCEffectContrastImpl *contrastImpl = (CCEffectContrastImpl *)self.effectImpl;
+    [contrastImpl setContrast:contrast];
+}
+
+@end
+
 
 float conditionContrast(float contrast)
 {

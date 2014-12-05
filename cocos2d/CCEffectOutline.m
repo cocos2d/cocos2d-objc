@@ -12,34 +12,27 @@
 #import "CCTexture.h"
 #import "CCSpriteFrame.h"
 
-@implementation CCEffectOutline
 
--(id)init
-{
-    return [self initWithOutlineColor:[CCColor redColor] outlineWidth:2];
-}
+@interface CCEffectOutlineImpl : CCEffectImpl
+@property (nonatomic, weak) CCEffectOutline *interface;
+@end
 
--(id)initWithOutlineColor:(CCColor*)outlineColor outlineWidth:(int)outlineWidth
+@implementation CCEffectOutlineImpl
+
+-(id)initWithInterface:(CCEffectOutline *)interface
 {
     NSArray *uniforms = @[
-                          [CCEffectUniform uniform:@"vec4" name:@"u_outlineColor" value:[NSValue valueWithGLKVector4:outlineColor.glkVector4]],
+                          [CCEffectUniform uniform:@"vec4" name:@"u_outlineColor" value:[NSValue valueWithGLKVector4:interface.outlineColor.glkVector4]],
                           [CCEffectUniform uniform:@"vec2" name:@"u_stepSize" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.01, 0.01)]],
                           [CCEffectUniform uniform:@"float" name:@"u_currentPass" value:[NSNumber numberWithFloat:0.0]]
                           ];
     
     if((self = [super initWithFragmentUniforms:uniforms vertexUniforms:nil varyings:nil]))
     {
-        self.outlineWidth = outlineWidth;
-        _outlineColor = outlineColor;
-        
+        _interface = interface;
         self.debugName = @"CCEffectOutline";
     }
     return self;
-}
-
-+(id)effectWithOutlineColor:(CCColor*)outlineColor outlineWidth:(int)outlineWidth
-{
-    return [[self alloc] initWithOutlineColor:outlineColor outlineWidth:outlineWidth];
 }
 
 -(void)buildFragmentFunctions
@@ -104,7 +97,7 @@
 
 -(void)buildRenderPasses
 {
-    __weak CCEffectOutline *weakSelf = self;
+    __weak CCEffectOutlineImpl *weakSelf = self;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.debugLabel = @"CCEffectOutline pass 0";
@@ -114,10 +107,10 @@
         
         passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outlineColor"]] = [NSValue valueWithGLKVector4:weakSelf.outlineColor.glkVector4];
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outlineColor"]] = [NSValue valueWithGLKVector4:weakSelf.interface.outlineColor.glkVector4];
         
-        GLKVector2 stepSize = GLKVector2Make(_outlineWidth / passInputs.previousPassTexture.contentSize.width,
-                                             _outlineWidth / passInputs.previousPassTexture.contentSize.height);
+        GLKVector2 stepSize = GLKVector2Make(weakSelf.interface.outlineWidth / passInputs.previousPassTexture.contentSize.width,
+                                             weakSelf.interface.outlineWidth / passInputs.previousPassTexture.contentSize.height);
         
         passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_stepSize"]] = [NSValue valueWithGLKVector2:stepSize];
         passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_currentPass"]] = [NSNumber numberWithFloat:0.0f];
@@ -134,7 +127,7 @@
     pass1.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs) {
         
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outlineColor"]] = [NSValue valueWithGLKVector4:weakSelf.outlineColor.glkVector4];
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outlineColor"]] = [NSValue valueWithGLKVector4:weakSelf.interface.outlineColor.glkVector4];
 
         GLKVector2 stepSize = GLKVector2Make(_outlineWidth / passInputs.previousPassTexture.contentSize.width,
                                              _outlineWidth / passInputs.previousPassTexture.contentSize.height);
@@ -163,6 +156,34 @@
 #endif
     
     self.renderPasses = @[pass0];
+}
+
+@end
+
+
+@implementation CCEffectOutline
+
+-(id)init
+{
+    return [self initWithOutlineColor:[CCColor redColor] outlineWidth:2];
+}
+
+-(id)initWithOutlineColor:(CCColor*)outlineColor outlineWidth:(int)outlineWidth
+{
+    if((self = [super init]))
+    {
+        _outlineColor = outlineColor;
+        _outlineWidth = outlineWidth;
+        
+        self.effectImpl = [[CCEffectOutlineImpl alloc] initWithInterface:self];
+        self.debugName = @"CCEffectHue";
+    }
+    return self;
+}
+
++(id)effectWithOutlineColor:(CCColor*)outlineColor outlineWidth:(int)outlineWidth
+{
+    return [[self alloc] initWithOutlineColor:outlineColor outlineWidth:outlineWidth];
 }
 
 @end

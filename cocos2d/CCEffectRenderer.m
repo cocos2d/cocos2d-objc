@@ -196,16 +196,15 @@ static GLKVector2 selectTexCoordPadding(CCEffectTexCoordSource tcSource, GLKVect
 
 -(void)drawSprite:(CCSprite *)sprite withEffect:(CCEffect *)effect uniforms:(NSMutableDictionary *)uniforms renderer:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
-    NSAssert(effect.readyForRendering, @"Effect not ready for rendering. Call prepareForRendering first.");
     [self freeAllRenderTargets];
     
-    if (!effect.renderPassesRequired)
+    if (!effect.renderPassCount)
     {
         [sprite enqueueTriangles:renderer transform:transform];
         return;
     }
     
-    NSUInteger effectPassCount = effect.renderPassesRequired;
+    NSUInteger effectPassCount = effect.renderPassCount;
     NSUInteger extraPassCount = 0;
     if (!effect.supportsDirectRendering)
     {
@@ -214,7 +213,7 @@ static GLKVector2 selectTexCoordPadding(CCEffectTexCoordSource tcSource, GLKVect
     
     CCEffectRenderPassInputs *renderPassInputs = [[CCEffectRenderPassInputs alloc] init];
     renderPassInputs.renderer = renderer;
-    renderPassInputs.node = sprite;
+    renderPassInputs.sprite = sprite;
 
     BOOL padMainTexCoords = YES;
     CCEffectRenderTarget *previousPassRT = nil;

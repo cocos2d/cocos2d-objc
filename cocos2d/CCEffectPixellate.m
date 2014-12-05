@@ -47,19 +47,14 @@
 
 static float conditionBlockSize(float blockSize);
 
-@interface CCEffectPixellate ()
+@interface CCEffectPixellateImpl : CCEffectImpl
 
 @property (nonatomic, assign) float conditionedBlockSize;
 
 @end
 
 
-@implementation CCEffectPixellate
-
--(id)init
-{
-    return [self initWithBlockSize:1.0f];
-}
+@implementation CCEffectPixellateImpl
 
 -(id)initWithBlockSize:(float)blockSize
 {
@@ -68,19 +63,13 @@ static float conditionBlockSize(float blockSize);
     
     if((self = [super initWithFragmentUniforms:@[uniformUStep, uniformVStep] vertexUniforms:nil varyings:nil]))
     {
-        _blockSize = blockSize;
         _conditionedBlockSize = conditionBlockSize(blockSize);
 
-        self.debugName = @"CCEffectPixellate";
+        self.debugName = @"CCEffectPixellateImpl";
         self.stitchFlags = CCEffectFunctionStitchAfter;
     }
     
     return self;
-}
-
-+(id)effectWithBlockSize:(float)blockSize
-{
-    return [[self alloc] initWithBlockSize:blockSize];
 }
 
 -(void)buildFragmentFunctions
@@ -99,7 +88,7 @@ static float conditionBlockSize(float blockSize);
 
 -(void)buildRenderPasses
 {
-    __weak CCEffectPixellate *weakSelf = self;
+    __weak CCEffectPixellateImpl *weakSelf = self;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.debugLabel = @"CCEffectPixellate pass 0";
@@ -123,11 +112,47 @@ static float conditionBlockSize(float blockSize);
 
 -(void)setBlockSize:(float)blockSize
 {
-    _blockSize = blockSize;
     _conditionedBlockSize = conditionBlockSize(blockSize);
 }
 
 @end
+
+
+@implementation CCEffectPixellate
+
+-(id)init
+{
+    return [self initWithBlockSize:1.0f];
+}
+
+-(id)initWithBlockSize:(float)blockSize
+{
+    if((self = [super init]))
+    {
+        _blockSize = blockSize;
+        
+        self.effectImpl = [[CCEffectPixellateImpl alloc] initWithBlockSize:blockSize];
+        self.debugName = @"CCEffectPixellate";
+    }
+    return self;
+}
+
++(id)effectWithBlockSize:(float)blockSize
+{
+    return [[self alloc] initWithBlockSize:blockSize];
+}
+
+-(void)setBlockSize:(float)blockSize
+{
+    _blockSize = blockSize;
+    
+    CCEffectPixellateImpl *pixellateImpl = (CCEffectPixellateImpl *)self.effectImpl;
+    [pixellateImpl setBlockSize:blockSize];
+}
+
+@end
+
+
 
 float conditionBlockSize(float blockSize)
 {

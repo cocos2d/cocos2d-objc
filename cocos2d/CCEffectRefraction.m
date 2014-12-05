@@ -17,26 +17,18 @@
 #import "CCEffect_Private.h"
 #import "CCSprite_Private.h"
 
-@interface CCEffectRefraction ()
 
+@interface CCEffectRefractionImpl : CCEffectImpl
+
+@property (nonatomic, weak) CCEffectRefraction *interface;
 @property (nonatomic, assign) float conditionedRefraction;
 
 @end
 
 
-@implementation CCEffectRefraction
+@implementation CCEffectRefractionImpl
 
--(id)init
-{
-    return [self initWithRefraction:1.0f environment:nil normalMap:nil];
-}
-
--(id)initWithRefraction:(float)refraction environment:(CCSprite *)environment
-{
-    return [self initWithRefraction:refraction environment:environment normalMap:nil];
-}
-
--(id)initWithRefraction:(float)refraction environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap
+-(id)initWithInterface:(CCEffectRefraction *)interface
 {
     NSArray *fragUniforms = @[
                               [CCEffectUniform uniform:@"float" name:@"u_refraction" value:[NSNumber numberWithFloat:1.0f]],
@@ -56,24 +48,12 @@
 
     if((self = [super initWithFragmentUniforms:fragUniforms vertexUniforms:vertUniforms varyings:varyings]))
     {
-        _refraction = refraction;
-        _conditionedRefraction = CCEffectUtilsConditionRefraction(refraction);
-        _environment = environment;
-        _normalMap = normalMap;
+        _conditionedRefraction = CCEffectUtilsConditionRefraction(interface.refraction);
 
-        self.debugName = @"CCEffectRefraction";
+        self.interface = interface;
+        self.debugName = @"CCEffectRefractionImpl";
     }
     return self;
-}
-
-+(id)effectWithRefraction:(float)refraction environment:(CCSprite *)environment
-{
-    return [[self alloc] initWithRefraction:refraction environment:environment];
-}
-
-+(id)effectWithRefraction:(float)refraction environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap
-{
-    return [[self alloc] initWithRefraction:refraction environment:environment normalMap:normalMap];
 }
 
 -(void)buildFragmentFunctions
@@ -133,7 +113,7 @@
 
 -(void)buildRenderPasses
 {
-    __weak CCEffectRefraction *weakSelf = self;
+    __weak CCEffectRefractionImpl *weakSelf = self;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.debugLabel = @"CCEffectRefraction pass 0";
@@ -145,11 +125,11 @@
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:passInputs.texCoord1Center];
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:passInputs.texCoord1Extents];
 
-        if (weakSelf.normalMap)
+        if (weakSelf.interface.normalMap)
         {
-            passInputs.shaderUniforms[CCShaderUniformNormalMapTexture] = weakSelf.normalMap.texture;
+            passInputs.shaderUniforms[CCShaderUniformNormalMapTexture] = weakSelf.interface.normalMap.texture;
 
-            CCSpriteTexCoordSet texCoords = [CCSprite textureCoordsForTexture:weakSelf.normalMap.texture withRect:weakSelf.normalMap.rect rotated:weakSelf.normalMap.rotated xFlipped:NO yFlipped:NO];
+            CCSpriteTexCoordSet texCoords = [CCSprite textureCoordsForTexture:weakSelf.interface.normalMap.texture withRect:weakSelf.interface.normalMap.rect rotated:weakSelf.interface.normalMap.rotated xFlipped:NO yFlipped:NO];
             CCSpriteVertexes verts = passInputs.verts;
             verts.bl.texCoord2 = texCoords.bl;
             verts.br.texCoord2 = texCoords.br;
@@ -159,15 +139,15 @@
         }
         
         passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_refraction"]] = [NSNumber numberWithFloat:weakSelf.conditionedRefraction];
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_envMap"]] = weakSelf.environment.texture ?: [CCTexture none];
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_envMap"]] = weakSelf.interface.environment.texture ?: [CCTexture none];
         
         // Get the transform from the affected node's local coordinates to the environment node.
-        GLKMatrix4 effectNodeToRefractEnvNode = weakSelf.environment ? CCEffectUtilsTransformFromNodeToNode(passInputs.node, weakSelf.environment, nil) : GLKMatrix4Identity;
+        GLKMatrix4 effectNodeToRefractEnvNode = weakSelf.interface.environment ? CCEffectUtilsTransformFromNodeToNode(passInputs.sprite, weakSelf.interface.environment, nil) : GLKMatrix4Identity;
 
         // Concatenate the node to environment transform with the environment node to environment texture transform.
         // The result takes us from the affected node's coordinates to the environment's texture coordinates. We need
         // this when computing the tangent and normal vectors below.
-        GLKMatrix4 effectNodeToRefractEnvTexture = GLKMatrix4Multiply(CCEffectUtilsMat4FromAffineTransform(weakSelf.environment.nodeToTextureTransform), effectNodeToRefractEnvNode);
+        GLKMatrix4 effectNodeToRefractEnvTexture = GLKMatrix4Multiply(CCEffectUtilsMat4FromAffineTransform(weakSelf.interface.environment.nodeToTextureTransform), effectNodeToRefractEnvNode);
 
         // Concatenate the node to environment texture transform together with the transform from NDC to local node
         // coordinates. (NDC == normalized device coordinates == render target coordinates that are normalized to the
@@ -189,8 +169,54 @@
 
 -(void)setRefraction:(float)refraction
 {
-    _refraction = refraction;
     _conditionedRefraction = CCEffectUtilsConditionRefraction(refraction);
 }
+
 @end
 
+
+@implementation CCEffectRefraction
+
+-(id)init
+{
+    return [self initWithRefraction:1.0f environment:nil normalMap:nil];
+}
+
+-(id)initWithRefraction:(float)refraction environment:(CCSprite *)environment
+{
+    return [self initWithRefraction:refraction environment:environment normalMap:nil];
+}
+
+-(id)initWithRefraction:(float)refraction environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap
+{
+    if((self = [super init]))
+    {
+        _refraction = refraction;
+        _environment = environment;
+        _normalMap = normalMap;
+
+        self.effectImpl = [[CCEffectRefractionImpl alloc] initWithInterface:self];
+        self.debugName = @"CCEffectRefraction";
+    }
+    return self;
+}
+
++(id)effectWithRefraction:(float)refraction environment:(CCSprite *)environment
+{
+    return [[self alloc] initWithRefraction:refraction environment:environment];
+}
+
++(id)effectWithRefraction:(float)refraction environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap
+{
+    return [[self alloc] initWithRefraction:refraction environment:environment normalMap:normalMap];
+}
+
+-(void)setRefraction:(float)refraction
+{
+    _refraction = refraction;
+    
+    CCEffectRefraction *refractionImpl = (CCEffectRefraction *)self.effectImpl;
+    [refractionImpl setRefraction:refraction];
+}
+
+@end

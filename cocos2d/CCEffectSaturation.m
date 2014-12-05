@@ -49,19 +49,14 @@
 static float conditionSaturation(float saturation);
 
 
-@interface CCEffectSaturation ()
+@interface CCEffectSaturationImpl : CCEffectImpl
 
 @property (nonatomic, strong) NSNumber *conditionedSaturation;
 
 @end
 
 
-@implementation CCEffectSaturation
-
--(id)init
-{
-    return [self initWithSaturation:0.0f];
-}
+@implementation CCEffectSaturationImpl
 
 -(id)initWithSaturation:(float)saturation
 {
@@ -69,17 +64,11 @@ static float conditionSaturation(float saturation);
     
     if((self = [super initWithFragmentUniforms:@[uniformSaturation] vertexUniforms:nil varyings:nil]))
     {
-        _saturation = saturation;
         _conditionedSaturation = [NSNumber numberWithFloat:conditionSaturation(saturation)];
 
-        self.debugName = @"CCEffectSaturation";
+        self.debugName = @"CCEffectSaturationImpl";
     }
     return self;
-}
-
-+(id)effectWithSaturation:(float)saturation
-{
-    return [[self alloc] initWithSaturation:saturation];
 }
 
 -(void)buildFragmentFunctions
@@ -104,7 +93,7 @@ static float conditionSaturation(float saturation);
 
 -(void)buildRenderPasses
 {
-    __weak CCEffectSaturation *weakSelf = self;
+    __weak CCEffectSaturationImpl *weakSelf = self;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.debugLabel = @"CCEffectSaturation pass 0";
@@ -124,9 +113,43 @@ static float conditionSaturation(float saturation);
 
 -(void)setSaturation:(float)saturation
 {
-    _saturation = saturation;
     _conditionedSaturation = [NSNumber numberWithFloat:conditionSaturation(saturation)];
 }
+@end
+
+
+@implementation CCEffectSaturation
+
+-(id)init
+{
+    return [self initWithSaturation:0.0f];
+}
+
+-(id)initWithSaturation:(float)saturation
+{
+    if((self = [super init]))
+    {
+        _saturation = saturation;
+        
+        self.effectImpl = [[CCEffectSaturationImpl alloc] initWithSaturation:saturation];
+        self.debugName = @"CCEffectSaturation";
+    }
+    return self;
+}
+
++(id)effectWithSaturation:(float)saturation
+{
+    return [[self alloc] initWithSaturation:saturation];
+}
+
+-(void)setSaturation:(float)saturation
+{
+    _saturation = saturation;
+    
+    CCEffectSaturationImpl *saturationImpl = (CCEffectSaturationImpl *)self.effectImpl;
+    [saturationImpl setSaturation:saturation];
+}
+
 @end
 
 
