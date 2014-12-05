@@ -213,7 +213,6 @@ static CCFileUtils *fileUtils = nil;
 - (void) buildSearchResolutionsOrder
 {
 	NSInteger device = [[CCConfiguration sharedConfiguration] runningDevice];
-    
 	[_searchResolutionsOrder removeAllObjects];
 	
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
@@ -395,7 +394,7 @@ static CCFileUtils *fileUtils = nil;
 	// XXX XXX Super Slow
 	for( NSString *key in dictionary) {
 		NSString *value = [dictionary objectForKey:key];
-		if( [value isEqualToString:k] ) {
+		if( [value isEqualToString:k]) {
 			
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
 			// XXX Add this in a Dictionary
@@ -681,7 +680,7 @@ static CCFileUtils *fileUtils = nil;
 	}
 }
 
-#if __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
 
 -(void) setiPadRetinaDisplaySuffix:(NSString *)suffix
 {

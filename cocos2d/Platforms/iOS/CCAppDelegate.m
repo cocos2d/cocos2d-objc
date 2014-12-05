@@ -99,7 +99,10 @@ const CGSize FIXED_SIZE = {568, 384};
 {
 	CGSize sizePoint = [CCDirector sharedDirector].viewSize;
 	CGSize fixed = [CCDirector sharedDirector].designSize;
-	
+
+    CCLOG(@"view size %dx%d", (int)sizePoint.width, (int)sizePoint.height);
+    CCLOG(@"fixed %dx%d", (int)fixed.width, (int)fixed.height);
+
 	// Half of the extra size that will be cut off
 	CGPoint offset = ccpMult(ccp(fixed.width - sizePoint.width, fixed.height - sizePoint.height), 0.5);
 	
@@ -203,42 +206,10 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	[director setView:ccview];
 	
 	if([config[CCSetupScreenMode] isEqual:CCScreenModeFixed]){
-		CGSize size = [CCDirector sharedDirector].viewSizeInPixels;
-		CGSize fixed = FIXED_SIZE;
-		
-		if([config[CCSetupScreenOrientation] isEqualToString:CCScreenOrientationPortrait]){
-			CC_SWAP(fixed.width, fixed.height);
-		}
-		
-		// Find the minimal power-of-two scale that covers both the width and height.
-		CGFloat scaleFactor = MIN(FindPOTScale(size.width, fixed.width), FindPOTScale(size.height, fixed.height));
-		
-		director.contentScaleFactor = scaleFactor;
-		director.UIScaleFactor = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? 1.0 : 0.5);
-		
-		// Let CCFileUtils know that "-ipad" textures should be treated as having a contentScale of 2.0.
-		[[CCFileUtils sharedFileUtils] setiPadContentScaleFactor: 2.0];
-		
-		director.designSize = fixed;
-		[director setProjection:CCDirectorProjectionCustom];
-	} else {
-		// Setup tablet scaling if it was requested.
-		if(
-			UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad &&
-			[config[CCSetupTabletScale2X] boolValue]
-		){
-			// Set the director to use 2 points per pixel.
-			director.contentScaleFactor *= 2.0;
-			
-			// Set the UI scale factor to show things at "native" size.
-			director.UIScaleFactor = 0.5;
-			
-			// Let CCFileUtils know that "-ipad" textures should be treated as having a contentScale of 2.0.
-			[[CCFileUtils sharedFileUtils] setiPadContentScaleFactor:2.0];
-		}
-		
-		[director setProjection:CCDirectorProjection2D];
-	}
+        [self setupFixedScreenMode:config director:director];
+    } else {
+        [self setupFlexibleScreenMode:config director:director];
+    }
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
@@ -259,13 +230,55 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	
 	// set the Navigation Controller as the root view controller
 	[window_ setRootViewController:navController_];
-
-	[[CCPackageManager sharedManager] loadPackages];
-
+	
 	// make main window visible
 	[window_ makeKeyAndVisible];
     
     [self forceOrientation];
+
+	[[CCPackageManager sharedManager] loadPackages];
+}
+
+- (void)setupFlexibleScreenMode:(NSDictionary *)config director:(CCDirectorIOS *)director
+{
+// Setup tablet scaling if it was requested.
+    if(
+			UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad &&
+			[config[CCSetupTabletScale2X] boolValue]
+		){
+			// Set the director to use 2 points per pixel.
+			director.contentScaleFactor *= 2.0;
+
+			// Set the UI scale factor to show things at "native" size.
+			director.UIScaleFactor = 0.5;
+
+			// Let CCFileUtils know that "-ipad" textures should be treated as having a contentScale of 2.0.
+			[[CCFileUtils sharedFileUtils] setiPadContentScaleFactor:2.0];
+		}
+
+    [director setProjection:CCDirectorProjection2D];
+}
+
+- (void)setupFixedScreenMode:(NSDictionary *)config director:(CCDirectorIOS *)director
+{
+    CGSize size = [CCDirector sharedDirector].viewSizeInPixels;
+    CGSize fixed = FIXED_SIZE;
+
+    if([config[CCSetupScreenOrientation] isEqualToString:CCScreenOrientationPortrait]){
+			CC_SWAP(fixed.width, fixed.height);
+		}
+
+    // Find the minimal power-of-two scale that covers both the width and height.
+    CGFloat scaleFactor = MIN(FindPOTScale(size.width, fixed.width), FindPOTScale(size.height, fixed.height));
+
+    director.contentScaleFactor = scaleFactor;
+    director.UIScaleFactor = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? 1.0 : 0.5);
+
+    // Let CCFileUtils know that "-ipad" textures should be treated as having a contentScale of 2.0.
+    [[CCFileUtils sharedFileUtils] setiPadContentScaleFactor: 2.0];
+
+    director.designSize = fixed;
+    [director setProjection:CCDirectorProjectionCustom];
 }
 
 // iOS8 hack around orientation bug
@@ -309,7 +322,6 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	if([CCDirector sharedDirector].animating) {
 		[[CCDirector sharedDirector] stopAnimation];
 	}
-	[[CCPackageManager sharedManager] savePackages];
 }
 
 -(void) applicationWillEnterForeground:(UIApplication*)application
@@ -317,6 +329,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	if([CCDirector sharedDirector].animating == NO) {
 		[[CCDirector sharedDirector] startAnimation];
 	}
+	[[CCPackageManager sharedManager] savePackages];
 }
 
 // application will be killed

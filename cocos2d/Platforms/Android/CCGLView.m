@@ -20,7 +20,7 @@
 #import "CCTouchAndroid.h"
 #import <CoreGraphics/CGGeometry.h>
 
-#define IPHONE3G_WIDTH 320.0f
+//const CGSize FIXED_SIZE = {568, 384};
 
 static NSMutableDictionary *touches = nil;
 static CCTouchEvent *currentEvent = nil;
@@ -517,7 +517,9 @@ static inline void logConfig(EGLDisplay display, EGLConfig conf) {
         NSLog(@"eglQuerySurface() returned error %d", eglGetError());
         return NO;
     }
-    
+
+	CCLOG(@"cocos2d: surface size: %dx%d", (int)width, (int)height);
+
     switch (_screenMode)
     {
         case CCNativeScreenMode:
@@ -533,7 +535,7 @@ static inline void logConfig(EGLDisplay display, EGLConfig conf) {
             if (width > height)
                 size = CGSizeMake(height, width);
             
-            _contentScaleFactor = size.width / IPHONE3G_WIDTH;
+            _contentScaleFactor = size.width / 586;
             
             width /= _contentScaleFactor;
             height /= _contentScaleFactor;
