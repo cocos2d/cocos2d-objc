@@ -14,19 +14,25 @@
 #import "CCRenderer.h"
 #import "CCTexture.h"
 
-@implementation CCEffectDistanceField
 
--(id)init
-{
-    return [self initWithGlowColor:[CCColor blackColor] outlineColor:[CCColor blackColor]];
-}
+@interface CCEffectDistanceFieldImpl : CCEffectImpl
 
--(id)initWithGlowColor:(CCColor*)glowColor outlineColor:(CCColor*)outlineColor
+@property (nonatomic, weak) CCEffectDistanceField *interface;
+@property (nonatomic, assign) float outlineInnerWidth;
+@property (nonatomic, assign) float outlineOuterWidth;
+@property (nonatomic, assign) float glowWidth;
+
+@end
+
+
+@implementation CCEffectDistanceFieldImpl
+
+-(id)initWithInterface:(CCEffectDistanceField *)interface
 {
     NSArray *uniforms = @[
-                          [CCEffectUniform uniform:@"vec4" name:@"u_glowColor" value:[NSValue valueWithGLKVector4:glowColor.glkVector4]],
+                          [CCEffectUniform uniform:@"vec4" name:@"u_glowColor" value:[NSValue valueWithGLKVector4:[CCColor blackColor].glkVector4]],
                           [CCEffectUniform uniform:@"vec4" name:@"u_fillColor" value:[NSValue valueWithGLKVector4:[CCColor blackColor].glkVector4]],
-                          [CCEffectUniform uniform:@"vec4" name:@"u_outlineColor" value:[NSValue valueWithGLKVector4:outlineColor.glkVector4]],
+                          [CCEffectUniform uniform:@"vec4" name:@"u_outlineColor" value:[NSValue valueWithGLKVector4:[CCColor blackColor].glkVector4]],
                           [CCEffectUniform uniform:@"float" name:@"u_outline" value:[NSNumber numberWithFloat:1.0f]],
                           [CCEffectUniform uniform:@"float" name:@"u_glow" value:[NSNumber numberWithFloat:1.0f]],
                           [CCEffectUniform uniform:@"vec2" name:@"u_glowOffset" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0, 0.0)]],
@@ -37,29 +43,26 @@
     
     if((self = [super initWithFragmentUniforms:uniforms vertexUniforms:nil varyings:nil]))
     {
-        _outlineInnerWidth = 0.08;
-        _outlineOuterWidth = 0.08;
-        _glow = YES;
-        _outline = YES;
-        _glowOffset = GLKVector2Make(0.0f, 0.0f);
-        _glowColor = glowColor;
-        _fillColor = [CCColor blackColor];
-        _outlineColor = outlineColor;
-        _glowWidth = 0.4;
+        _outlineInnerWidth = 0.08f;
+        _outlineOuterWidth = 0.08f;
+        _glowWidth = 0.4f;
         
-        self.debugName = @"CCEffectDistanceField";
+        self.interface = interface;
+        self.debugName = @"CCEffectDistanceFieldImpl";
     }
     return self;
-}
-
-+(id)effectWithGlowColor:(CCColor*)glowColor outlineColor:(CCColor*)outlineColor
-{
-    return [[self alloc] initWithGlowColor:glowColor outlineColor:outlineColor];
 }
 
 -(void)buildFragmentFunctions
 {
     self.fragmentFunctions = [[NSMutableArray alloc] init];
+    
+    NSString* effectPrefix =
+        @"#ifdef GL_ES\n"
+        @"#ifdef GL_OES_standard_derivatives\n"
+        @"#extension GL_OES_standard_derivatives : enable\n"
+        @"#endif\n"
+        @"#endif\n";
     
     NSString* effectBody = CC_GLSL(
                                    vec4 outputColor = u_fillColor;
@@ -115,45 +118,45 @@
                                    );
     
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"outerGlowEffect"
-                                                                           body:effectBody inputs:nil returnType:@"vec4"];
+                                                                           body:[effectPrefix stringByAppendingString:effectBody] inputs:nil returnType:@"vec4"];
     [self.fragmentFunctions addObject:fragmentFunction];
 }
 
 -(void)buildRenderPasses
 {
-    __weak CCEffectDistanceField *weakSelf = self;
+    __weak CCEffectDistanceFieldImpl *weakSelf = self;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.debugLabel = @"CCEffectDistanceField pass 0";
     pass0.shader = self.shader;
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
-    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture) {
+    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs) {
         
-        pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
-        pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
+        passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;
+        passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
         
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_glowColor"]] = [NSValue valueWithGLKVector4:weakSelf.glowColor.glkVector4];
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fillColor"]] = [NSValue valueWithGLKVector4:weakSelf.fillColor.glkVector4];
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outlineColor"]] = [NSValue valueWithGLKVector4:weakSelf.outlineColor.glkVector4];
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_glowColor"]] = [NSValue valueWithGLKVector4:weakSelf.interface.glowColor.glkVector4];
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fillColor"]] = [NSValue valueWithGLKVector4:weakSelf.interface.fillColor.glkVector4];
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outlineColor"]] = [NSValue valueWithGLKVector4:weakSelf.interface.outlineColor.glkVector4];
         
         // 0.5 == center(edge),  < 0.5 == outside, > 0.5 == inside
         float innerMin = 0.5;
         float innerMax = (0.5 * _outlineInnerWidth) + innerMin;
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outlineInnerWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(innerMin, innerMax)];
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outlineInnerWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(innerMin, innerMax)];
         
         float outerMin = (0.5 * (1.0 - _outlineOuterWidth));
         float outerMax = 0.5;
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outlineOuterWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(outerMin, outerMax)];
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outlineOuterWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(outerMin, outerMax)];
         
         float glowWidthMin = (0.5 * (1.0 - _glowWidth));
         float glowWidthMax = 0.5;
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_glowWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(glowWidthMin, glowWidthMax)];
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_glowWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(glowWidthMin, glowWidthMax)];
         
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outline"]] = _outline ? [NSNumber numberWithFloat:1.0f] : [NSNumber numberWithFloat:0.0f];
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_glow"]] = _glow ? [NSNumber numberWithFloat:1.0f] : [NSNumber numberWithFloat:0.0f];
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outline"]] = weakSelf.interface.outline ? [NSNumber numberWithFloat:1.0f] : [NSNumber numberWithFloat:0.0f];
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_glow"]] = weakSelf.interface.glow ? [NSNumber numberWithFloat:1.0f] : [NSNumber numberWithFloat:0.0f];
         
-        GLKVector2 offset = GLKVector2Make(weakSelf.glowOffset.x /  previousPassTexture.contentSize.width, weakSelf.glowOffset.y /  previousPassTexture.contentSize.height);
-        pass.shaderUniforms[weakSelf.uniformTranslationTable[@"u_glowOffset"]] = [NSValue valueWithGLKVector2:offset];
+        GLKVector2 offset = GLKVector2Make(weakSelf.interface.glowOffset.x / passInputs.previousPassTexture.contentSize.width, weakSelf.interface.glowOffset.y / passInputs.previousPassTexture.contentSize.height);
+        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_glowOffset"]] = [NSValue valueWithGLKVector2:offset];
         
     } copy]];
     
@@ -173,6 +176,66 @@
 -(void)setGlowWidth:(float)glowWidth
 {
     _glowWidth = clampf(glowWidth, 0.0f, 1.0f);
+}
+
+@end
+
+
+@implementation CCEffectDistanceField
+
+-(id)init
+{
+    return [self initWithGlowColor:[CCColor blackColor] outlineColor:[CCColor blackColor]];
+}
+
+-(id)initWithGlowColor:(CCColor*)glowColor outlineColor:(CCColor*)outlineColor
+{
+    if((self = [super init]))
+    {
+        self.effectImpl = [[CCEffectDistanceFieldImpl alloc] initWithInterface:self];
+        self.debugName = @"CCEffectDistanceField";
+      
+        _glow = YES;
+        _outline = YES;
+        _glowOffset = GLKVector2Make(0.0f, 0.0f);
+        _glowColor = glowColor;
+        _fillColor = [CCColor blackColor];
+        _outlineColor = outlineColor;
+
+        self.outlineInnerWidth = 0.08f;
+        self.outlineOuterWidth = 0.08f;
+        self.glowWidth = 0.4f;
+    }
+    return self;
+}
+
++(id)effectWithGlowColor:(CCColor*)glowColor outlineColor:(CCColor*)outlineColor
+{
+    return [[self alloc] initWithGlowColor:glowColor outlineColor:outlineColor];
+}
+
+-(void)setOutlineInnerWidth:(float)outlineInnerWidth
+{
+    _outlineInnerWidth = outlineInnerWidth;
+    
+    CCEffectDistanceFieldImpl *distanceFieldImpl = (CCEffectDistanceFieldImpl *)self.effectImpl;
+    [distanceFieldImpl setOutlineInnerWidth:outlineInnerWidth];
+}
+
+-(void)setOutlineOuterWidth:(float)outlineOuterWidth
+{
+    _outlineOuterWidth = outlineOuterWidth;
+    
+    CCEffectDistanceFieldImpl *distanceFieldImpl = (CCEffectDistanceFieldImpl *)self.effectImpl;
+    [distanceFieldImpl setOutlineOuterWidth:outlineOuterWidth];
+}
+
+-(void)setGlowWidth:(float)glowWidth
+{
+    _glowWidth = glowWidth;
+    
+    CCEffectDistanceFieldImpl *distanceFieldImpl = (CCEffectDistanceFieldImpl *)self.effectImpl;
+    [distanceFieldImpl setGlowWidth:glowWidth];
 }
 
 @end

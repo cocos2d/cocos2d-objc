@@ -4,13 +4,14 @@
 #import "CCFileUtils.h"
 #import "CCSpriteFrameCache.h"
 #import "CCPackage_private.h"
+#import "CCPackageHelper.h"
 
 
 @implementation CCPackageCocos2dEnabler
 
 - (BOOL)isPackagInSearchPath:(CCPackage *)package
 {
-    NSString *newPackagePath = package.installURL.path;
+    NSString *newPackagePath = package.installRelURL.path;
 
     return [[CCFileUtils sharedFileUtils].searchPath containsObject:newPackagePath];
 }
@@ -40,16 +41,15 @@
 
     for (CCPackage *aPackage in packages)
     {
-        NSAssert(aPackage.installURL != nil, @"aPackage.installURL must not be nil for package %@", aPackage);
+        NSAssert(aPackage.installRelURL != nil, @"aPackage.installRelURL must not be nil for package %@", aPackage);
 
         NSMutableArray *newSearchPath = [[CCFileUtils sharedFileUtils].searchPath mutableCopy];
-        NSString *newPackagePath = aPackage.installURL.path;
 
-        if (![newSearchPath containsObject:newPackagePath])
+        if (![newSearchPath containsObject:aPackage.installFullURL.path])
         {
             aPackage.status = CCPackageStatusInstalledEnabled;
 
-            [newSearchPath insertObject:newPackagePath atIndex:0];
+            [newSearchPath insertObject:aPackage.installFullURL.path atIndex:0];
             [CCFileUtils sharedFileUtils].searchPath = newSearchPath;
             searchPathChanged = YES;
         }
@@ -74,7 +74,7 @@
     for (CCPackage *aPackage in packages)
     {
         NSMutableArray *newSearchPath = [[CCFileUtils sharedFileUtils].searchPath mutableCopy];
-        NSString *packagePathToRemove = aPackage.installURL.path;
+        NSString *packagePathToRemove = aPackage.installFullURL.path;
 
         [aPackage setValue:@(CCPackageStatusInstalledDisabled) forKey:NSStringFromSelector(@selector(status))];
 

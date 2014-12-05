@@ -11,15 +11,18 @@
 #import "CCProtocols.h"
 #import "CCRendererBasicTypes.h"
 
-static float conditionContrast(float contrast);
 
-@implementation CCEffectInvert
+@interface CCEffectInvertImpl : CCEffectImpl
+
+@end
+
+@implementation CCEffectInvertImpl
 
 -(id)init
 {
     if((self = [super initWithFragmentUniforms:nil vertexUniforms:nil varyings:nil]))
     {
-        self.debugName = @"CCEffectInvert";
+        self.debugName = @"CCEffectInvertImpl";
     }
     return self;
 }
@@ -46,13 +49,34 @@ static float conditionContrast(float contrast);
     pass0.debugLabel = @"CCEffectInvert pass 0";
     pass0.shader = self.shader;
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
-    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCTexture *previousPassTexture)
+    pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs)
     {
-        pass.shaderUniforms[CCShaderUniformMainTexture] = previousPassTexture;
-        pass.shaderUniforms[CCShaderUniformPreviousPassTexture] = previousPassTexture;
+        passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;
+        passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
     } copy]];
     
     self.renderPasses = @[pass0];
 }
 
 @end
+
+
+@implementation CCEffectInvert
+
+-(id)init
+{
+    if((self = [super init]))
+    {
+        self.effectImpl = [[CCEffectInvertImpl alloc] init];
+        self.debugName = @"CCEffectInvert";
+    }
+    return self;
+}
+
++(id)effect
+{
+    return [[self alloc] init];
+}
+
+@end
+

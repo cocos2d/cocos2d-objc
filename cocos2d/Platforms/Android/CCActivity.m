@@ -18,6 +18,7 @@
 #import "CCGLView.h"
 #import "CCScene.h"
 #import <android/looper.h>
+#import "CCPackageManager.h"
 
 #define USE_MAIN_THREAD 0 // enable to run on OpenGL/Cocos2D on the android main thread
 
