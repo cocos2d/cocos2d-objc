@@ -12,13 +12,13 @@
 
 #import <android/native_window.h>
 #import <bridge/runtime.h>
+#import <bridge/jni.h>
 
 #import "cocos2d.h"
 #import "CCBReader.h"
 #import "CCGLView.h"
 #import "CCScene.h"
 #import <android/looper.h>
-#import "CCPackageManager.h"
 
 #define USE_MAIN_THREAD 0 // enable to run on OpenGL/Cocos2D on the android main thread
 
@@ -228,7 +228,7 @@ static void handler(NSException *e)
 
 - (void)setupView:(JavaObject<AndroidSurfaceHolder> *)holder
 {
-    ANativeWindow* window = holder.surface.window;
+    ANativeWindow* window = ANativeWindow_fromSurface(jni_getEnv(), bridge_getJava(holder.surface, NULL));
     [_glView setupView:window];
 }
 
