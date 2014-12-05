@@ -964,10 +964,9 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         NSURL* fontURL = [NSURL fileURLWithPath:fontPath];
         CTFontManagerRegisterFontsForURL((__bridge CFURLRef)fontURL, kCTFontManagerScopeProcess, NULL);
         NSString *fontName = nil;
-#if __CC_PLATFORM_IOS
-        BOOL needsCGFontFailback = [[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending;
-#else
-        BOOL needsCGFontFailback = NO;
+        BOOL needsCGFontFailback = YES;
+#if __CC_PLATFORM_ANDROID
+        needsCGFontFailback = NO;
 #endif
         if (!needsCGFontFailback) {
             CFArrayRef descriptors = CTFontManagerCreateFontDescriptorsFromURL((__bridge CFURLRef)fontURL);
