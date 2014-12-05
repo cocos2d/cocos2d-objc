@@ -1,4 +1,3 @@
-#if 0
 //
 //  CCEffectOutline.h
 //  cocos2d
@@ -49,4 +48,3 @@
 +(id)effectWithOutlineColor:(CCColor*)outlineColor outlineWidth:(int)outlineWidth;
 
 @end
-#endif

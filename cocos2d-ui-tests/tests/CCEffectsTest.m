@@ -30,7 +30,6 @@
 
 #pragma mark Outline
 
-#if 0
 -(void)setupOutlineTest
 {
     self.subTitle = @"Outline Effect Test";
@@ -53,7 +52,6 @@
     [self.contentNode addChild:environment];
     [self.contentNode addChild:dfSprite];
 }
-#endif
 
 #pragma mark Distance Fields
 
