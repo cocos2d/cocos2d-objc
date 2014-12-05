@@ -26,13 +26,16 @@
 
 @class CCPhysicsCollisionPair;
 
-/** The type of physics body to use. */
+/** The type of physics body to use, used by CCPhysicsBody.
+ 
+ The type affects a body's influence by gravity, whether it can collide with other bodies,
+ whether it is affected by forces, and whether it can be moved/rotated via move/rotate actions. */
 typedef NS_ENUM(NSUInteger, CCPhysicsBodyType){
     
-	/** A regular rigid body that is affected by gravity, forces and collisions. */
+	/** A regular rigid body that is affected by gravity, forces and collisions.<p/> **WARNING:** Using move or rotate actions on dynamic bodies is **strongly discouraged** as these actions will be in conflict with physics movement/rotation and collision detection/feedback. */
 	CCPhysicsBodyTypeDynamic,
 	
-//	/** A body that is immovable by gravity, forces or collisions, but is moved using code.  */
+	/** A body that is immovable by gravity, forces or collisions. It is supposed to be moved/rotated manually by code or by using move/rotate actions.  */
 	CCPhysicsBodyTypeKinematic,
 	
 	/** A body that is immovable such as a wall or the ground. */
@@ -40,15 +43,31 @@ typedef NS_ENUM(NSUInteger, CCPhysicsBodyType){
 };
 
 /**
-Physics bodies are attached to CCNode objects and contain their physical properties such as mass, shape, friction, etc.
+Physics bodies can be attached to a [CCNode physicsBody] property to have the node participate in the physics simulation.
+ Bodies contain the physical properties such as mass, shape, friction, etc. and alter the node's position and rotation properties
+ whenever the physics simulation causes the body to move or rotate.
 
-There are two main kinds of bodies, static and dynamic. Static bodies cannot be moved by normal forces, collisions or gravity.
-This is the type of body you would use for the ground or wall in a game. Dynamic bodies are just the opposite. They are affected by collisions, friction, gravity, forces, etc.
-You can change the type of a body using the CCPhysicsBody.type property.
+### Body Types
+ 
+There are three main kinds of bodies: static, dynamic and kinematic. You can change the type of a body using the [CCPhysicsBody type] property.
+ 
+ - Static bodies cannot be moved by normal forces, collisions or gravity. This is the type of body you would use for the ground or wall in a game.
+ - Dynamic bodies are just the opposite. They are affected by collisions, friction, gravity, forces, etc.
+ - Kinematic bodies behave like static bodies, except that they don't collide. Kinematic bodies are supposed to be moved by code or via actions running on the node.
 
-There are two basic categories of shapes that physics bodies can have. The simplest category are convex shapes such as circles, pills and polygons (in order of efficiency).
-These are considered to be solid (not hollow) objects by the physics engine.
-Composite bodies, such as those created with the polyline or bodyWithShapes: methods are actually composed of multiple shapes.
+### Shape Types
+
+There are two basic categories of shapes that physics bodies can have. The simplest category are convex shapes (in order of efficiency):
+ 
+ - circles
+ - pills
+ - convex polygons
+ 
+These are considered to be solid (not hollow) objects by the physics engine. The number of vertices in a polygon affects its collision handling efficiency,
+ the fewer vertices the better. Prefer to model objects coarsely, modelling fine collision details is often counterproductive not just in terms of efficiency
+ but also stability, reliability and gameplay (no one likes to get held up or hit by an antenna or a character's hair).
+ 
+Composite bodies, such as those created with the polyline or bodyWithShapes: methods are actually composed of multiple convex shapes.
 Regardless of the type, all shapes can be given a radius value that adds some thickness to them and rounds out their sharp corners.
 
 Many rigid body properties such as the moment of inertia or center of gravity are calculated for you automatically based on the shapes the body is created from.
@@ -57,12 +76,13 @@ What units you use for mass is not important as long as they are consistent.
 
 ### Collision Filtering:
 
-By default physics bodies collide with all other physics bodies. Since 2D games use a lot of faked perspectives and layering CCPhysics provides you with many options to filter out unwanted collisions.
+By default physics bodies collide with all other physics bodies. Since 2D games use a lot of fake perspectives. Grouping physics bodies provides you with many
+ options to filter out unwanted collisions.
 
 - collisionGroup: Bodies can be assigned an object pointer that defines a group. Two bodies in the same group will not collide.
 - collisionCategory, collisionMask: Bodies can be assigned a list of categories and masks (rules) that define which kinds of bodies they will collide with.
-- CCPhysicsJoint.collideBodies: Joints have a flag that allows you to reject a collisions between the bodies they connect.
-- CCPhysicsCollisionDelegate methods: You can set up a delegate that responds to collision events between bodies progmatically.
+- [CCPhysicsJoint collideBodies]: Joints have a flag that allows you to reject a collisions between the bodies they connect.
+- CCPhysicsCollisionDelegate: You can set up a delegate that responds to collision events between bodies progmatically.
 
 ### Tips:
 
@@ -75,7 +95,7 @@ By default physics bodies collide with all other physics bodies. Since 2D games 
 
 
 /// -----------------------------------------------------------------------
-/// @name Creating a CCPhysicsBody Object
+/// @name Creating a Physics Body
 /// -----------------------------------------------------------------------
 
 /**
@@ -129,6 +149,7 @@ By default physics bodies collide with all other physics bodies. Since 2D games 
  *  @param cornerRadius Corner radius.
  *
  *  @return The CCPhysicsBody Object.
+ *  @see bodyWithPolylineFromPoints:count:cornerRadius:looped:
  */
 +(CCPhysicsBody *)bodyWithPolylineFromRect:(CGRect)rect cornerRadius:(CGFloat)cornerRadius;
 
@@ -142,6 +163,7 @@ By default physics bodies collide with all other physics bodies. Since 2D games 
  *  @param looped       Should there be a pill shape that goes from the first to last point or not.
  *
  *  @return The CCPhysicsBody Object.
+ *  @see bodyWithPolylineFromRect:cornerRadius:
  */
 +(CCPhysicsBody *)bodyWithPolylineFromPoints:(CGPoint *)points count:(NSUInteger)count cornerRadius:(CGFloat)cornerRadius looped:(bool)looped;
 
@@ -156,31 +178,32 @@ By default physics bodies collide with all other physics bodies. Since 2D games 
 
 
 /// -----------------------------------------------------------------------
-/// @name Accessing Basic Body Attributes
+/// @name Basic Body Properties
 /// -----------------------------------------------------------------------
 
 /**
  *  Mass of the physics body. The mass of a composite body cannod be changed. 
+ *  @note If a node's scale is changed, mass remains constant by altering the body's density.
  *  Defaults to 1.0.
  */
 @property(nonatomic, assign) CGFloat mass;
 
 /**
  *  Area of the body in points^2.
- *  Please note that this is relative to the CCPhysicsNode, changing the node or a parent can change the area.
+ *  @note Area is relative to the CCPhysicsNode, changing the node or a parent can change the area.
  */
 @property(nonatomic, readonly) CGFloat area;
 
 /**
  *  Density of the body in 1/1000 units of mass per point^2. The co-efficent is used to keep the mass of an object a reasonably small value.
  *  If the body has multiple shapes, you cannot change the density directly.
- *  Note that mass and not density will remain constant if an object is rescaled.
+ *  @note If a node's scale is changed, density will change too in order to keep mass constant.
  */
 @property(nonatomic, assign) CGFloat density;
 
 /**
  *  Surface friction of the physics body, when two objects collide, their friction is multiplied together.
- *  The calculated value can be overridden in a CCCollisionPairDelegate pre-solve method.
+ *  The calculated value can be overridden in a CCPhysicsCollisionDelegate pre-solve method.
  *  Defaults to 0.7
  */
 @property(nonatomic, assign) CGFloat friction;
@@ -188,7 +211,7 @@ By default physics bodies collide with all other physics bodies. Since 2D games 
 /**
  *  Elasticity of the physics body.
  *  When two objects collide, their elasticity is multiplied together.
- *  The calculated value can be ovrriden in a CCCollisionPairDelegate pre-solve method.
+ *  The calculated value can be overriden in a CCPhysicsCollisionDelegate pre-solve method.
  *  Defaults to 0.2.
  */
 @property(nonatomic, assign) CGFloat elasticity;
@@ -196,34 +219,44 @@ By default physics bodies collide with all other physics bodies. Since 2D games 
 /**
  *  Velocity of the surface of a physics body relative to it's normal velocity.  This is useful for modelling conveyor belts or the feet of a player avatar.
  *  The calculated surface velocity of two colliding shapes by default only affects their friction.
- *  The calculated value can be overriden in a CCCollisionPairDelegate pre-solve method.
+ *  The calculated value can be overriden in a CCPhysicsCollisionDelegate pre-solve method.
  *  Defaults to CGPointZero.
  */
 @property(nonatomic, assign) CGPoint surfaceVelocity;
 
 
 /// -----------------------------------------------------------------------
-/// @name Accessing Simulation Attributes
+/// @name Simulation Settings
 /// -----------------------------------------------------------------------
 
 /**
- *  Affected by gravity flag.  Defaults to Yes.
+ *  Affected by gravity flag.  Defaults to Yes. If set to NO, the body will not feel the force of gravity.
  */
 @property(nonatomic, assign) BOOL affectedByGravity;
 
 /**
- *  Allow body rotation flag.  Defaults to Yes.
+ *  Allow body rotation flag.  Defaults to Yes. If set to NO, the body is not allowed to rotate or have rotational force (torque).
  */
 @property(nonatomic, assign) BOOL allowsRotation;
 
 /**
- *  Physics body type.  Defaults to CCPhysicsBodyTypeDynamic
+ *  Physics body type.  Defaults to `CCPhysicsBodyTypeDynamic`.
+ *  @see CCPhysicsBodyType
  */
 @property(nonatomic, assign) CCPhysicsBodyType type;
 
+/**
+ * Sleeping bodies use minimal CPU resources as they are removed from the simulation until something collides with them.
+ * Normally a body will fall asleep on its own, but you can manually force a body to fall a sleep at any time if you desire.
+ *
+ * @note Bodies wake up automatically when receiving forces (colliding). Depending on the situation setting the sleeping flag to YES may see it being reset back to NO almost instantly.
+ * If you need to remove a body from the simulation, you can (temporarily) alter its collisionGroup, collisionCategories or collisionMask, or enable its sensor flag,
+ * or change its type to `CCPhysicsBodyTypeKinematic`, or ultimately setting the node's physicsBody property to nil. Which solution works best depends on the situation and intended behavior.
+ */
+@property(nonatomic, assign) BOOL sleeping;
 
 /// -----------------------------------------------------------------------
-/// @name Accessing Collision and Contact Attributes
+/// @name Collision and Contact Properties
 /// -----------------------------------------------------------------------
 
 /**
@@ -233,27 +266,33 @@ By default physics bodies collide with all other physics bodies. Since 2D games 
 @property(nonatomic, assign) BOOL sensor;
 
 /**
- *  The body's collisionGroup, if two physics bodies share the same group id, they don't collide. Defaults to nil.
- */
-@property(nonatomic, assign) id collisionGroup;
-
-/**
- *  A string that identifies the collision pair delegate method that should be called. Default value is @"default".
+ *  A string that identifies the collision pair delegate method that should be called. Default value is `@"default"`.
+ *  @note This method does not affect whether or how bodies collide, it only changes the signature of the collision delegate method to be called.
  */
 @property(nonatomic, copy) NSString *collisionType;
 
 /**
+ *  The body's collisionGroup, if two physics bodies share the same group id, they don't collide. Defaults to `nil`.
+ *  @see collisionCategories <br/> collisionMask
+ */
+@property(nonatomic, assign) id collisionGroup;
+
+/**
  *  An array of NSString category names of which this physics body is a member. Up to 32 unique categories can be used in a single physics node.
- *  A value of nil means that a body exists in all possible collision categories.
- *  The default is nil.
+ *  The default is `nil`.
+ *  @note A value of `nil` means that a body exists in all possible collision categories. As soon as you assign an array, the body will stop colliding
+ *  with all other bodies except those whose collisionMask matches at least one item in the array.
+ *  @see collisionGroup <br/> collisionMask
  */
 @property(nonatomic, copy) NSArray *collisionCategories;
 
 /**
  *  An array of NSString category names that this physics body wants to collide with.
- *  The categories/masks of both bodies must agree for a collision to occur.
- *  A value of nil means that this body will collide with a body in any category.
+ *  The categories/masks of both bodies must match for a collision to occur.
  *  The default is nil.
+ *  @note A value of `nil` means that this body will collide with all bodies. As soon as you assign an array, the body will stop colliding
+ *  with all other bodies except those whose collisionCategories include at least one of the items in the array.
+ *  @see collisionGroup <br/> collisionCategories
  */
 @property(nonatomic, copy) NSArray *collisionMask;
 
@@ -262,12 +301,13 @@ By default physics bodies collide with all other physics bodies. Since 2D games 
  *  @note The CCPhysicsCollisionPair object is shared so you should not store a reference to it.
  *
  *  @param block Collision block.
+ *  @see CCPhysicsCollisionPair
  */
 -(void)eachCollisionPair:(void (^)(CCPhysicsCollisionPair *pair))block;
 
 
 /// -----------------------------------------------------------------------
-/// @name Accessing Velocity Attributes
+/// @name Velocity
 /// -----------------------------------------------------------------------
 
 /**
@@ -282,7 +322,7 @@ By default physics bodies collide with all other physics bodies. Since 2D games 
 
 
 /// -----------------------------------------------------------------------
-/// @name Accessing Forces and Torques Attributes
+/// @name Force and Torque
 /// -----------------------------------------------------------------------
 
 /**
@@ -297,13 +337,14 @@ By default physics bodies collide with all other physics bodies. Since 2D games 
 
 
 /// -----------------------------------------------------------------------
-/// @name Applying Force and Impulses Methods
+/// @name Applying Forces and Impulses
 /// -----------------------------------------------------------------------
 
 /**
  *  Apply a torque on the physics body.
  *
  *  @param torque Torque.
+ *  @see applyAngularImpulse:
  */
 -(void)applyTorque:(CGFloat)torque;
 
@@ -311,6 +352,7 @@ By default physics bodies collide with all other physics bodies. Since 2D games 
  *  Apply an angular impulse.
  *
  *  @param impulse Angular impulse.
+ *  @see applyTorque:
  */
 -(void)applyAngularImpulse:(CGFloat)impulse;
 
@@ -318,6 +360,7 @@ By default physics bodies collide with all other physics bodies. Since 2D games 
  *  Apply a force to the physics body.
  *
  *  @param force Force vector.
+ *  @see applyImpulse:
  */
 -(void)applyForce:(CGPoint)force;
 
@@ -325,6 +368,7 @@ By default physics bodies collide with all other physics bodies. Since 2D games 
  *  Apply an impulse on the physics body.
  *
  *  @param impulse Impulse vector.
+ *  @see applyForce:
  */
 -(void)applyImpulse:(CGPoint)impulse;
 
@@ -334,6 +378,8 @@ By default physics bodies collide with all other physics bodies. Since 2D games 
  *
  *  @param force Force vector.
  *  @param point Point to apply force.
+ *  @see applyImpulse:atLocalPoint:
+ *  @see applyForce:atWorldPoint:
  */
 -(void)applyForce:(CGPoint)force atLocalPoint:(CGPoint)point;
 
@@ -343,6 +389,8 @@ By default physics bodies collide with all other physics bodies. Since 2D games 
  *
  *  @param impulse Impulse vector.
  *  @param point   Point to apply impulse.
+ *  @see applyForce:atLocalPoint:
+ *  @see applyImpulse:atWorldPoint:
  */
 -(void)applyImpulse:(CGPoint)impulse atLocalPoint:(CGPoint)point;
 
@@ -351,6 +399,8 @@ By default physics bodies collide with all other physics bodies. Since 2D games 
  *
  *  @param force Force vector.
  *  @param point Point to apply force.
+ *  @see applyImpulse:atWorldPoint:
+ *  @see applyForce:atLocalPoint:
  */
 -(void)applyForce:(CGPoint)force atWorldPoint:(CGPoint)point;
 
@@ -359,24 +409,27 @@ By default physics bodies collide with all other physics bodies. Since 2D games 
  *
  *  @param impulse Impulse vector.
  *  @param point   Point to apply impulse.
+ *  @see applyForce:atWorldPoint:
+ *  @see applyImpulse:atLocalPoint:
  */
 -(void)applyImpulse:(CGPoint)impulse atWorldPoint:(CGPoint)point;
 
 
 /// -----------------------------------------------------------------------
-/// @name Accessing Misc Attributes
+/// @name Accessing Connected Joints
 /// -----------------------------------------------------------------------
 
-/** Joints connected to this body. */
+/** All joints connected to this body.
+ */
 @property(nonatomic, readonly) NSArray *joints;
 
-/** 
- * Sleeping bodies use minimal CPU resources as they are removed from the simulation until something collides with them.
- * Normally a body will fall alsleep on it's own, but you can manually force a body to fall a sleep at any time if you desire.
- */
-@property(nonatomic, assign) BOOL sleeping;
+/// -----------------------------------------------------------------------
+/// @name Accessing the body's CCNode
+/// -----------------------------------------------------------------------
 
-/** The CCNode to which this physics body is attached. */
+/** The CCNode to which this physics body is attached. Is nil until the body was assigned to the physicsBody property of a node.
+ @see CCNode
+ */
 @property(nonatomic, readonly, weak) CCNode *node;
 
 @end

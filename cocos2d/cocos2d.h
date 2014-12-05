@@ -41,7 +41,7 @@
 
 // 0x00 HI ME LO
 // 00   03 01 01
-#define COCOS2D_VERSION 0x00030300
+#define COCOS2D_VERSION 0x00030400
 #define COCOS2D_BUILD @"develop"
 //
 // all cocos2d include files
@@ -104,6 +104,8 @@
 #import "CCTiledMapObjectGroup.h"
 #import "CCTransition.h"
 #import "CCEffectOutline.h"
+#import "CCPackageManager.h"
+#import "CCPackage.h"
 
 #if CC_EFFECTS_EXPERIMENTAL
 #import "CCEffectDFOutline.h"

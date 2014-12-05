@@ -8,6 +8,10 @@
 
 #import "CCEffect.h"
 
+/** Creates a color inversion (negative) effect.
+ 
+ Available since v3.3 and later.
+ */
 @interface CCEffectInvert : CCEffect
 
 @end

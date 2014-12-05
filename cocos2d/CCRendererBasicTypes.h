@@ -102,14 +102,22 @@ extern NSString * const CCBlendFuncDstAlpha;
 extern NSString * const CCBlendEquationAlpha;
 
 
-/// Blending mode identifiers used with CCNode.blendMode.
+/// Blending modes used with certain node's `blendMode` property. CCBlendMode treats blend modes by descriptive name rather
+/// than a nondescriptive combination of blend mode identifiers.
 @interface CCBlendMode : NSObject
+
+/// @name Blend Mode Options
 
 /// Blending options for this mode.
 @property(nonatomic, readonly) NSDictionary *options;
 
+/// @name Getting a Blend Mode with Options
+
 /// Return a cached blending mode with the given options.
+/// @param options dictionary with blend mode options
 +(CCBlendMode *)blendModeWithOptions:(NSDictionary *)options;
+
+/// @name Getting a Built-In Blend Mode
 
 /// Disabled blending mode. Use this with fully opaque surfaces for extra performance.
 +(CCBlendMode *)disabledMode;
@@ -129,22 +137,44 @@ extern NSString * const CCBlendEquationAlpha;
 @class CCShader;
 
 
-/// A render state encapsulates how an object will be draw.
-/// What shader it will use, what texture, what blending mode, etc.
+/// A render state encapsulates how an object will be drawn.
+/// For example what shader it will use, the texture, the blending mode, etc.
 @interface CCRenderState : NSObject<NSCopying>
+
+/// @name Creating a Custom Render State
+
+/// Creates a **cached** blending mode for a given blending mode, shader and main texture.
+/// @param blendMode A blend mode.
+/// @param shader The shader to use.
+/// @param mainTexture The mainTexture to use.
+/// @see CCBlendMode
+/// @see CCShader
+/// @see CCTexture
++(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader mainTexture:(CCTexture *)mainTexture;
+
+/// Creates an **uncached** blending mode for a given blending mode, shader and set of uniform values.
+/// Allowing the uniform dictionary to be copied allows the render state to be immutable, which is more efficient.
+/// @param blendMode A blend mode.
+/// @param shader The shader to use.
+/// @param shaderUniforms The shader uniforms.
+/// @param copyUniforms Whether to copy the uniforms. If set to YES the render state is assumed to be immutable which is more efficient.
+/// @see CCBlendMode
+/// @see CCShader
++(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms copyUniforms:(BOOL)copyUniforms;
+
+// Purposefully undocumented: marked as deprecated
+// Initialize an uncached blending mode for a given blending mode, shader and set of uncopied uniform values.
+// @note Use [CCRenderState renderStateWithBlendMode:blendMode shader:shader shaderUniforms:shaderUniforms copyUniforms:NO] instead.
+// @param blendMode A blend mode.
+// @param shader The shader to use.
+// @param shaderUniforms The shader uniforms.
+// @see CCBlendMode
+// @see CCShader
+-(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms __deprecated;
+
+/// @name Obtaining the Debug Render State
 
 /// A simple render state you can use that draws solid colors.
 +(instancetype)debugColor;
-
-/// Create a cached blending mode for a given blending mode, shader and main texture.
-+(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader mainTexture:(CCTexture *)mainTexture;
-
-/// Create an uncached blending mode for a given blending mode, shader and set of uniform values.
-/// Allowing the uniform dictionary to be copied allows the render state to be immutable and used more optimally.
-+(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms copyUniforms:(BOOL)copyUniforms;
-
-/// Initialize an uncached blending mode for a given blending mode, shader and set of uncopied uniform values.
-/// Use [CCRenderState renderStateWithBlendMode:blendMode shader:shader shaderUniforms:shaderUniforms copyUniforms:NO] instead.
--(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms __deprecated;
 
 @end

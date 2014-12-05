@@ -30,34 +30,40 @@
 #import "CCNode.h"
 
 /** 
- *  CCDrawNode
- *  Node that draws dots, segments and polygons.
- *  The geometry will be saved, so primitives does not need to be redrawn for each frame
- *  Faster than the "drawing primitives" since they it draws everything in one single batch.
+ Node that draws dots, segments and polygons. Draws everything in a single batch draw.
+ 
+ The geometry will be saved and batch-drawn, so added primitives do not need to be re-added every frame.
+ 
+ @warning This node is primarily meant for debug drawing (debug overlays). It does not support changing already added primitives
+ without first removing and re-adding all primitives, which makes modifying the draw node's state inefficient. 
+ For complex vector drawing and entire games built on vector graphics it is strongly recommended to write your own
+ vector rendering node by using CCRenderer (OpenGL or Metal).
  */
 @interface CCDrawNode : CCNode
 
 
 /// -----------------------------------------------------------------------
-/// @name Primitive Drawing Methods
+/// @name Adding Primitives
 /// -----------------------------------------------------------------------
 
 /**
- *  Draw a dot at a position, with a given radius and color.
+ *  Adds a dot at a position, with a given radius and color.
  *
  *  @param pos    Dot position.
  *  @param radius Dot radius.
  *  @param color  Dot color.
+ *  @see CCColor
  */
 -(void)drawDot:(CGPoint)pos radius:(CGFloat)radius color:(CCColor *)color;
 
 /**
- *  Draw a segment with a radius and color.
+ *  Adds a segment with a radius and color.
  *
  *  @param a      Segment starting point.
  *  @param b      Segment end point.
  *  @param radius Segment radius.
  *  @param color  Segment color.
+ *  @see CCColor
  */
 -(void)drawSegmentFrom:(CGPoint)a to:(CGPoint)b radius:(CGFloat)radius color:(CCColor *)color;
 
@@ -70,15 +76,20 @@
  *  @param fill  Polygon fill color.
  *  @param width Polygon outline width.
  *  @param line  Polygon outline color.
+ *  @see CCColor
  */
 -(void)drawPolyWithVerts:(const CGPoint *)verts count:(NSUInteger)count fillColor:(CCColor *)fill borderWidth:(CGFloat)width  borderColor:(CCColor *)line;
 
 
 /// -----------------------------------------------------------------------
-/// @name Draw Node Management
+/// @name Removing all Primitives
 /// -----------------------------------------------------------------------
 
-/** Clear the geometry in the node's buffer. */
+/** Removes all buffered primitives from the node's buffer. 
+ After calling this the draw node will not draw anything.
+ 
+ @warning If you need to just change a single primitive, you have to clear the draw node, and re-add all existing primitives that you've
+ stored somewhere, with the changes applied. This is of course inefficient, hence the recommendation to use this node primarily for debug drawing. */
 -(void)clear;
 
 @end

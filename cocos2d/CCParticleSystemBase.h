@@ -42,17 +42,17 @@
 /** The starting radius of the particle is equal to the ending radius.  */
 #define CCParticleSystemStartRadiusEqualToEndRadius -1
 
-/** Particle system mode. */
+/** Particle system mode used by CCParticleSystemBase. */
 typedef NS_ENUM(NSUInteger, CCParticleSystemMode) {
     
-	/** Gravity mode (A mode). */
+	/** Gravity mode (mode A). */
 	CCParticleSystemModeGravity,
 
-	/** Radius mode (B mode). */
+	/** Radius mode (mode B). */
 	CCParticleSystemModeRadius,
 };
 
-/** Particle system position type. */
+/** Particle system position type used by CCParticleSystemBase. */
 typedef NS_ENUM(NSUInteger, CCParticleSystemPositionType) {
     
 	/** Living particles are attached to the world and are unaffected by emitter repositioning. */
@@ -108,9 +108,9 @@ typedef struct _sCCParticle {
 typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
 
 /** 
- Felxbile particle system.
+ Base class for particle emitters. You should not create instances of this class but rather use CCParticleSystem.
  
- ### Attribute overview of a particle system
+ ### Overview of Particle Emitter Properties
  
  - Gravity Mode (Mode A)
     - Gravity
@@ -124,7 +124,7 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
     - End Radius +- variance
     - Rotate +- variance
  
- - Properties common to all modes
+ - Properties common to both modes
     - Life +- variance
     - Start spin +- variance
     - End spin +- variance
@@ -134,22 +134,20 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
     - End color +- variance
     - Life +- variance
     - Blending function
- 
- - Texture
+    - Texture
 
  ### Supported editors
  
- - Particle Designer http://particledesigner.71squared.com/
+ A particle system can be edited visually within SpriteBuilder or compatible 3rd party tools such as
+ [Particle Designer](http://particledesigner.71squared.com/) and several others.
  
- ### Notes
+ @warning It is strongly recommended to use a visual design tool to create particle effects. Creating and tweaking particle
+ emitter properties in code alone with building, deploying and launching the app add a lot of time overhead and make designing
+ particle effects immensely tedious, error-prone, and time-consuming.
  
- cocos2d supports all the variables used by Particle Designer plus a bit more:
- 
- - Spinning particles (supported when using CCParticleSystemQuad)
- - Tangential acceleration (Gravity mode)
- - Radial acceleration (Gravity mode)
- - Radius direction (Radius mode) (Particle Designer supports outwards to inwards direction only)
-
+ By using an interactive, visual design aid designing particle effects is not just several factors faster and leads to better
+ results, it'll simply be more fun to experiment with the large number of properties to come up with interesting effects
+ in the first place.
  */
 @interface CCParticleSystemBase : CCNode <CCTextureProtocol, CCShaderProtocol, CCBlendProtocol>
 {
@@ -302,146 +300,9 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
 }
 
 
-/// -----------------------------------------------------------------------
-/// @name Accessing Particle Attributes
-/// -----------------------------------------------------------------------
-
-/** True if particle system active. */
-@property (nonatomic,readonly) BOOL active;
-
-/** Quantity of particles that are being simulated at the moment. */
-@property (nonatomic,readonly) NSUInteger particleCount;
-
-/** How many seconds the emitter wil run. -1 means 'forever'. */
-@property (nonatomic,readwrite,assign) float duration;
-
-/** The source position of the emitter. */
-@property (nonatomic,readwrite,assign) CGPoint sourcePosition;
-
-/** The Position variance of the emitter. */
-@property (nonatomic,readwrite,assign) CGPoint posVar;
-
-/** Life time of each particle. */
-@property (nonatomic,readwrite,assign) float life;
-
-/** Life variance of each particle. */
-@property (nonatomic,readwrite,assign) float lifeVar;
-
-/** Angle of each particle. */
-@property (nonatomic,readwrite,assign) float angle;
-
-/** Angle variance of each particle. */
-@property (nonatomic,readwrite,assign) float angleVar;
-
-/** Start size in pixels of each particle. */
-@property (nonatomic,readwrite,assign) float startSize;
-
-/** Size variance in pixels of each particle. */
-@property (nonatomic,readwrite,assign) float startSizeVar;
-
-/** End size in pixels of each particle. */
-@property (nonatomic,readwrite,assign) float endSize;
-
-/** End size variance in pixels of each particle. */
-@property (nonatomic,readwrite,assign) float endSizeVar;
-
-/** Start color of each particle. */
-@property (nonatomic,readwrite,strong) CCColor* startColor;
-
-/** Start color variance of each particle. */
-@property (nonatomic,readwrite,strong) CCColor* startColorVar;
-
-/** End color and end color variation of each particle. */
-@property (nonatomic,readwrite,strong) CCColor* endColor;
-
-/** End color variance of each particle. */
-@property (nonatomic,readwrite,strong) CCColor* endColorVar;
-
-/** Start spin of each particle. */
-@property (nonatomic,readwrite,assign) float startSpin;
-
-/** Start spin variance of each particle. */
-@property (nonatomic,readwrite,assign) float startSpinVar;
-
-/** End spin of each particle. */
-@property (nonatomic,readwrite,assign) float endSpin;
-
-/** End spin variance of each particle. */
-@property (nonatomic,readwrite,assign) float endSpinVar;
-
-/** Emission rate of the particles. */
-@property (nonatomic,readwrite,assign) float emissionRate;
-
-/** Maxmium particles of the system. */
-@property (nonatomic,readwrite,assign) NSUInteger totalParticles;
-
-/** True to enable blend additive mode. (GL_SRC_ALPHA, GL_ONE). */
-@property (nonatomic,readwrite) BOOL blendAdditive;
-
-/** Particles movement type: Free or Grouped. */
-@property (nonatomic,readwrite) CCParticleSystemPositionType particlePositionType;
-
-/** True will remove particle system on completition. */
-@property (nonatomic,readwrite) BOOL autoRemoveOnFinish;
-
-/** True particle system will reset upon visibility  toggling to True. */
-@property (nonatomic,readwrite) BOOL resetOnVisibilityToggle;
-
-/** Set emitter mode mechanism. */
-@property (nonatomic,readwrite) CCParticleSystemMode emitterMode;
-
 
 /// -----------------------------------------------------------------------
-/// @name Accessing Gravity Mode Specific Attributes
-/// -----------------------------------------------------------------------
-
-/** Gravity value. Only available in 'Gravity' mode. */
-@property (nonatomic,readwrite,assign) CGPoint gravity;
-
-/** Speed of each particle. Only available in 'Gravity' mode.  */
-@property (nonatomic,readwrite,assign) float speed;
-
-/** Speed variance of each particle. Only available in 'Gravity' mode. */
-@property (nonatomic,readwrite,assign) float speedVar;
-
-/** Tangential acceleration of each particle. Only available in 'Gravity' mode. */
-@property (nonatomic,readwrite,assign) float tangentialAccel;
-
-/** Tangential acceleration variance of each particle. Only available in 'Gravity' mode. */
-@property (nonatomic,readwrite,assign) float tangentialAccelVar;
-
-/** Radial acceleration of each particle. Only available in 'Gravity' mode. */
-@property (nonatomic,readwrite,assign) float radialAccel;
-
-/** Radial acceleration variance of each particle. Only available in 'Gravity' mode. */
-@property (nonatomic,readwrite,assign) float radialAccelVar;
-
-
-/// -----------------------------------------------------------------------
-/// @name Accessing Radius Mode Specific Attributes
-/// -----------------------------------------------------------------------
-
-/** The starting radius of the particles. Only available in 'Radius' mode. */
-@property (nonatomic,readwrite,assign) float startRadius;
-
-/** The starting radius variance of the particles. Only available in 'Radius' mode. */
-@property (nonatomic,readwrite,assign) float startRadiusVar;
-
-/** The ending radius of the particles. Only available in 'Radius' mode. */
-@property (nonatomic,readwrite,assign) float endRadius;
-
-/** The ending radius variance of the particles. Only available in 'Radius' mode. */
-@property (nonatomic,readwrite,assign) float endRadiusVar;
-
-/** Number of degress to rotate a particle around the source pos per second. Only available in 'Radius' mode. */
-@property (nonatomic,readwrite,assign) float rotatePerSecond;
-
-/** Variance in degrees for rotatePerSecond. Only available in 'Radius' mode. */
-@property (nonatomic,readwrite,assign) float rotatePerSecondVar;
-
-
-/// -----------------------------------------------------------------------
-/// @name Creating a CCParticleSystem Object
+/// @name Creating a Particle Emitter
 /// -----------------------------------------------------------------------
 
 /**
@@ -462,15 +323,10 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
  */
 +(id) particleWithTotalParticles:(NSUInteger) numberOfParticles;
 
-
-/// -----------------------------------------------------------------------
-/// @name Initializing a CCParticleSystem Object
-/// -----------------------------------------------------------------------
-
 /**
  *  Initializes and returns a particle system object from the specified plist source file.
  *
- *  @param plistFile Particle configuration file.
+ *  @param plistFile Particle configuration file created by a particle editor.
  *
  *  @return An initialized CCParticleSystem Object.
  */
@@ -506,13 +362,257 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
 
 
 /// -----------------------------------------------------------------------
-/// @name Particle System Management
+/// @name Starting and Stopping the Emitter
 /// -----------------------------------------------------------------------
 
-/** Stop emitting new particles, existing particles will die off. */
+/** Stop emitting new particles, existing particles will die off based on their life properties.
+ @see resetSystem
+ @see active */
 -(void) stopSystem;
 
-/** Destroy all particles. */
+/** Destroys all particles, starts the emitter anew.
+ @see stopSystem
+ @see active */
 -(void) resetSystem;
+
+/** Is YES if the particle emitter is active (emitting particles).
+ @see resetSystem
+ @see stopSystem */
+@property (nonatomic,readonly) BOOL active;
+
+/** If YES, emitter will automatically call resetSystem if its [CCNode visible] property changes from NO to YES. */
+@property (nonatomic,readwrite) BOOL resetOnVisibilityToggle;
+
+/// -----------------------------------------------------------------------
+/// @name Emitter Properties
+/// -----------------------------------------------------------------------
+
+/** If YES, will remove the particle system on completion.
+ @note Has no effect if emitter duration is endless (-1).
+ @see duration */
+@property (nonatomic,readwrite) BOOL autoRemoveOnFinish;
+
+/** Set emitter mode.
+ @see CCParticleSystemMode */
+@property (nonatomic,readwrite) CCParticleSystemMode emitterMode;
+
+/// -----------------------------------------------------------------------
+/// @name Emitting Particles
+/// -----------------------------------------------------------------------
+
+/** Emission rate of the particles, in particles per second.
+ @see totalParticles */
+@property (nonatomic,readwrite,assign) float emissionRate;
+
+/** Maxmium particles the emitter is allowed to generate.
+ If peek particle count is reached, the emitter will pause until particles have ended their life so that
+ particleCount fell below totalParticles once again.
+ @see particleCount
+ @see emissionRate */
+@property (nonatomic,readwrite,assign) NSUInteger totalParticles;
+
+/** Number of particles currently simulated by the emitter.
+ @see totalParticles
+ @see emissionRate */
+@property (nonatomic,readonly) NSUInteger particleCount;
+
+/** How many seconds the emitter wil run. The default value of -1 means the emitter never stops emitting particles (runs forever). */
+@property (nonatomic,readwrite,assign) float duration;
+
+/// -----------------------------------------------------------------------
+/// @name Particle Position
+/// -----------------------------------------------------------------------
+
+/** Particles movement type.
+ @see CCParticleSystemPositionType */
+@property (nonatomic,readwrite) CCParticleSystemPositionType particlePositionType;
+
+/** The source position of the emitter.
+ @see posVar */
+@property (nonatomic,readwrite,assign) CGPoint sourcePosition;
+
+/** The Position variance of the emitted particles relative to sourcePosition.
+ @see sourcePosition */
+@property (nonatomic,readwrite,assign) CGPoint posVar;
+
+/// -----------------------------------------------------------------------
+/// @name Particle Lifetime
+/// -----------------------------------------------------------------------
+
+/** Life time of each particle.
+ @see lifeVar */
+@property (nonatomic,readwrite,assign) float life;
+
+/** Life variance of each particle.
+ @see life */
+@property (nonatomic,readwrite,assign) float lifeVar;
+
+/// -----------------------------------------------------------------------
+/// @name Particle Size
+/// -----------------------------------------------------------------------
+
+/** Start size in pixels of each particle.
+ @see startSizeVar 
+ @see endSize */
+@property (nonatomic,readwrite,assign) float startSize;
+
+/** Size variance in pixels of each particle.
+ @see startSize */
+@property (nonatomic,readwrite,assign) float startSizeVar;
+
+/** End size in pixels of each particle.
+ @see endSizeVar
+ @see startSize */
+@property (nonatomic,readwrite,assign) float endSize;
+
+/** End size variance in pixels of each particle.
+ @see endSize */
+@property (nonatomic,readwrite,assign) float endSizeVar;
+
+/// -----------------------------------------------------------------------
+/// @name Particle Color and Blend Mode
+/// -----------------------------------------------------------------------
+
+/** Start color of each particle.
+ @see CCColor 
+ @see startColorVar
+ @see endColor
+ */
+@property (nonatomic,readwrite,strong) CCColor* startColor;
+
+/** Start color variance of each particle.
+ @see CCColor
+ @see startColor
+*/
+@property (nonatomic,readwrite,strong) CCColor* startColorVar;
+
+/** End color and end color variation of each particle.
+ @see CCColor
+ @see endColorVar
+ @see startColor
+*/
+@property (nonatomic,readwrite,strong) CCColor* endColor;
+
+/** End color variance of each particle.
+ @see CCColor
+ @see endColor
+*/
+@property (nonatomic,readwrite,strong) CCColor* endColorVar;
+
+/** True to enable blend additive mode for particles. (GL_SRC_ALPHA, GL_ONE). */
+@property (nonatomic,readwrite) BOOL blendAdditive;
+
+
+/// -----------------------------------------------------------------------
+/// @name Particle Rotation and Spin
+/// -----------------------------------------------------------------------
+
+/** Angle of each particle, in degrees.
+ @see angleVar
+*/
+@property (nonatomic,readwrite,assign) float angle;
+
+/** Angle variance of each particle, in degrees.
+ @see angle
+*/
+@property (nonatomic,readwrite,assign) float angleVar;
+
+/** Start spin of each particle.
+ @see startSpinVar
+ @see endSpin
+*/
+@property (nonatomic,readwrite,assign) float startSpin;
+
+/** Start spin variance of each particle.
+ @see startSpin
+*/
+@property (nonatomic,readwrite,assign) float startSpinVar;
+
+/** End spin of each particle.
+ @see endSpinVar
+ @see startSpin
+*/
+@property (nonatomic,readwrite,assign) float endSpin;
+
+/** End spin variance of each particle.
+ @see endSpin
+*/
+@property (nonatomic,readwrite,assign) float endSpinVar;
+
+/// -----------------------------------------------------------------------
+/// @name Gravity Mode Properties
+/// -----------------------------------------------------------------------
+
+/** Gravity value. 
+ @note Only available in 'Gravity' mode. */
+@property (nonatomic,readwrite,assign) CGPoint gravity;
+
+/** Speed of each particle. 
+ @note Only available in 'Gravity' mode. 
+ @see speedVar */
+@property (nonatomic,readwrite,assign) float speed;
+
+/** Speed variance of each particle. 
+ @note Only available in 'Gravity' mode.
+ @see speed */
+@property (nonatomic,readwrite,assign) float speedVar;
+
+/** Tangential acceleration of each particle. 
+ @note Only available in 'Gravity' mode.
+ @see tangentialAccelVar */
+@property (nonatomic,readwrite,assign) float tangentialAccel;
+
+/** Tangential acceleration variance of each particle. 
+ @note Only available in 'Gravity' mode.
+ @see tangentialAccel */
+@property (nonatomic,readwrite,assign) float tangentialAccelVar;
+
+/** Radial acceleration of each particle. 
+ @note Only available in 'Gravity' mode.
+ @see radialAccelVar */
+@property (nonatomic,readwrite,assign) float radialAccel;
+
+/** Radial acceleration variance of each particle. 
+ @note Only available in 'Gravity' mode.
+ @see radialAccel */
+@property (nonatomic,readwrite,assign) float radialAccelVar;
+
+
+/// -----------------------------------------------------------------------
+/// @name Radius Mode Properties
+/// -----------------------------------------------------------------------
+
+/** The starting radius of the particles.
+ @note Only available in 'Radius' mode.
+ @see startRadiusVar
+ @see endRadius */
+@property (nonatomic,readwrite,assign) float startRadius;
+
+/** The starting radius variance of the particles. 
+ @note Only available in 'Radius' mode.
+  @see startRadius */
+@property (nonatomic,readwrite,assign) float startRadiusVar;
+
+/** The ending radius of the particles. 
+ @note Only available in 'Radius' mode.
+ @see endRadiusVar
+ @see startRadius */
+@property (nonatomic,readwrite,assign) float endRadius;
+
+/** The ending radius variance of the particles. 
+ @note Only available in 'Radius' mode.
+ @see endRadius */
+@property (nonatomic,readwrite,assign) float endRadiusVar;
+
+/** Number of degress to rotate a particle around the source pos per second.
+ @note Only available in 'Radius' mode.
+ @see rotatePerSecondVar */
+@property (nonatomic,readwrite,assign) float rotatePerSecond;
+
+/** Variance in degrees for rotatePerSecond.
+ @note Only available in 'Radius' mode.
+ @see rotatePerSecond */
+@property (nonatomic,readwrite,assign) float rotatePerSecondVar;
+
 
 @end

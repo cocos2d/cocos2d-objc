@@ -16,27 +16,24 @@
 @interface CCEffectHue : CCEffect
 
 /// -----------------------------------------------------------------------
-/// @name Accessing Effect Attributes
+/// @name Creating a Hue Effect
 /// -----------------------------------------------------------------------
 
-/** The adjustment value that is used to shift the hue of the affected pixel colors. This 
- *  value is in the range [-180..180] and represents the angle of rotation of the color 
- *  values in the HSV color space. In HSV space, the color red is at 0 degrees, green is at
- *  120 degrees, and blue is at 240 degrees. So if you have a red sprite and you apply a
- *  hue adjustment of 120 you will get a green sprite. Instead if you apply a hue adjustment
- *  of -120 you will get a blue sprite.
- */
-@property (nonatomic, assign) float hue;
-
-
-/// -----------------------------------------------------------------------
-/// @name Initializing a CCEffectHue object
-/// -----------------------------------------------------------------------
+/**
+*  Initializes a CCEffectHue object with the supplied parameters.
+*
+*  @param hue The desired hue adjustment.
+*
+*  @return The CCEffectHue object.
+*  @since v3.2 and later
+*/
++(id)effectWithHue:(float)hue;
 
 /**
  *  Initializes a CCEffectHue object with a hue adjustment of 0.
  *
  *  @return The CCEffectHue object.
+ *  @since v3.2 and later
  */
 -(id)init;
 
@@ -46,21 +43,23 @@
  *  @param hue The desired hue adjustment.
  *
  *  @return The CCEffectHue object.
+ *  @since v3.2 and later
  */
 -(id)initWithHue:(float)hue;
 
 
 /// -----------------------------------------------------------------------
-/// @name Creating a CCEffectHue object
+/// @name Hue
 /// -----------------------------------------------------------------------
 
-/**
- *  Initializes a CCEffectHue object with the supplied parameters.
- *
- *  @param hue The desired hue adjustment.
- *
- *  @return The CCEffectHue object.
+/** The adjustment value that is used to shift the hue of the affected pixel colors. This
+ *  value is in the range [-180..180] and represents the angle of rotation of the color
+ *  values in the HSV color space. In HSV space, the color red is at 0 degrees, green is at
+ *  120 degrees, and blue is at 240 degrees. So if you have a red sprite and you apply a
+ *  hue adjustment of 120 you will get a green sprite. Instead if you apply a hue adjustment
+ *  of -120 you will get a blue sprite.
+ *  @since v3.2 and later
  */
-+(id)effectWithHue:(float)hue;
+@property (nonatomic, assign) float hue;
 
 @end

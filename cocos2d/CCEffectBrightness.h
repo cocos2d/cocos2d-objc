@@ -17,26 +17,26 @@
 
 @interface CCEffectBrightness : CCEffect
 
-/// -----------------------------------------------------------------------
-/// @name Accessing Effect Attributes
-/// -----------------------------------------------------------------------
-
-/** The brightness adjustment value that is added to the pixel colors of the
- *  affected node. This is a normalized value in the range of [-1..1]. A value 
- *  of -1 reduces the affected color to 0 (black), 0 results in no change, 1
- *  increases the affected color to 1 (white).
- */
-@property (nonatomic, assign) float brightness;
-
 
 /// -----------------------------------------------------------------------
-/// @name Initializing a CCEffectBrightness object
+/// @name Creating a Brightness Effect
 /// -----------------------------------------------------------------------
+
+/**
+*  Creates a CCEffectBrightness object with the supplied parameters.
+*
+*  @param brightness The desired brightness adjustment.
+*
+*  @return The CCEffectBrightness object.
+*  @since v3.2 and later
+*/
++(id)effectWithBrightness:(float)brightness;
 
 /**
  *  Initializes a CCEffectBrightness object with a brightness adjustment of 0.
  *
  *  @return The CCEffectBrightness object.
+ *  @since v3.2 and later
  */
 -(id)init;
 
@@ -46,21 +46,21 @@
  *  @param brightness The desired brightness adjustment.
  * 
  *  @return The CCEffectBrightness object.
+ *  @since v3.2 and later
  */
 -(id)initWithBrightness:(float)brightness;
 
 
 /// -----------------------------------------------------------------------
-/// @name Creating a CCEffectBrightness object
+/// @name Brightness
 /// -----------------------------------------------------------------------
 
-/**
- *  Creates a CCEffectBrightness object with the supplied parameters.
- *
- *  @param brightness The desired brightness adjustment.
- *
- *  @return The CCEffectBrightness object.
+/** The brightness adjustment value that is added to the pixel colors of the
+ *  affected node. This is a normalized value in the range of [-1..1]. A value
+ *  of -1 reduces the affected color to 0 (black), 0 results in no change, 1
+ *  increases the affected color to 1 (white).
+ *  @since v3.2 and later
  */
-+(id)effectWithBrightness:(float)brightness;
+@property (nonatomic, assign) float brightness;
 
 @end
