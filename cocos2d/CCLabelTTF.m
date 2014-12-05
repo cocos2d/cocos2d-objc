@@ -964,11 +964,12 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         NSURL* fontURL = [NSURL fileURLWithPath:fontPath];
         CTFontManagerRegisterFontsForURL((__bridge CFURLRef)fontURL, kCTFontManagerScopeProcess, NULL);
         NSString *fontName = nil;
-        BOOL needsCGFontFailback = YES;
+
+        BOOL needsCGFontFailback = NO;
 #if __CC_PLATFORM_ANDROID
-        needsCGFontFailback = NO;
+        needsCGFontFailback = YES;
 #endif
-        if (!needsCGFontFailback) {
+        if (needsCGFontFailback) {
             CFArrayRef descriptors = CTFontManagerCreateFontDescriptorsFromURL((__bridge CFURLRef)fontURL);
             if (!descriptors || CFArrayGetCount(descriptors)<1) {
                 return nil;
