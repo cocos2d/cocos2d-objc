@@ -19,6 +19,7 @@
 #import "CCGLView.h"
 #import "CCScene.h"
 #import <android/looper.h>
+#import "CCPackageManager.h"
 
 #define USE_MAIN_THREAD 0 // enable to run on OpenGL/Cocos2D on the android main thread
 
@@ -277,8 +278,14 @@ FindLinearScale(CGFloat size, CGFloat fixedSize)
         {
             [self setupFixedScreenMode];
         }
+        else
+        {
+            [self setupFlexibleScreenMode];
+        }
         
         [[CCPackageManager sharedManager] loadPackages];
+
+
 
         [director runWithScene:[self startScene]];
         [director setAnimationInterval:1.0/60.0];
@@ -287,6 +294,27 @@ FindLinearScale(CGFloat size, CGFloat fixedSize)
         [_gameLoop runUntilDate:[NSDate distantFuture]];
 #endif
     }
+}
+
+- (void)setupFlexibleScreenMode
+{
+    CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector sharedDirector];
+    
+    NSInteger device = [[CCConfiguration sharedConfiguration] runningDevice];
+    BOOL tablet = device == CCDeviceiPad || device == CCDeviceiPadRetinaDisplay;
+
+    if(tablet && [_cocos2dSetupConfig[CCSetupTabletScale2X] boolValue])
+    {    
+        // Set the UI scale factor to show things at "native" size.
+        director.UIScaleFactor = 0.5;
+
+        // Let CCFileUtils know that "-ipad" textures should be treated as having a contentScale of 2.0.
+        [[CCFileUtils sharedFileUtils] setiPadContentScaleFactor:2.0];
+    }
+    
+    director.contentScaleFactor *= 1.83;
+
+    [director setProjection:CCDirectorProjection2D];
 }
 
 - (void)setupFixedScreenMode
