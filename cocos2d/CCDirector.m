@@ -393,6 +393,8 @@ static CCDirector *_sharedDirector = nil;
 		_winSizeInPixels = CGSizeMake(size.width*scale, size.height*scale);
 		_winSizeInPoints = size;
 		__ccContentScaleFactor = scale;
+        CCLOG(@"set scale factor %f", scale);
+
 
 		// it could be nil
 		if( view ) {
@@ -418,7 +420,8 @@ static CCDirector *_sharedDirector = nil;
 	NSAssert(scaleFactor > 0.0, @"scaleFactor must be positive.");
 	
 	if( scaleFactor != __ccContentScaleFactor ) {
-		__ccContentScaleFactor = scaleFactor;
+        CCLOG(@"set scale factor %f", scaleFactor);
+        __ccContentScaleFactor = scaleFactor;
 		_winSizeInPoints = CGSizeMake( _winSizeInPixels.width / scaleFactor, _winSizeInPixels.height / scaleFactor );
 
 		// update projection
@@ -502,9 +505,12 @@ static CCDirector *_sharedDirector = nil;
 {
 	_winSizeInPixels = newViewSize;
 	_winSizeInPoints = CGSizeMake( _winSizeInPixels.width / __ccContentScaleFactor, _winSizeInPixels.height / __ccContentScaleFactor );
-	
+
 	[self setProjection:_projection];
-	
+
+    CCLOG(@"resize to pixels %dx%d", (int)_winSizeInPixels.width, (int)_winSizeInPixels.height);
+    CCLOG(@"resize to points %dx%d", (int)_winSizeInPoints.width, (int)_winSizeInPoints.height);
+
 	[_runningScene viewDidResizeTo: newViewSize];
 }
 
