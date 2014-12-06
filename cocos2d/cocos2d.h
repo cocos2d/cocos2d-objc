@@ -145,6 +145,7 @@
 #import "Support/utlist.h"
 #import "UITouch+CC.h"
 #import "NSEvent+CC.h"
+#import "CCDeprecated.h"
 
 // UI
 #import "cocos2d-ui.h"
