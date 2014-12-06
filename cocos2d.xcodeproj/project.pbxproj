@@ -867,6 +867,9 @@
 		D304BC2C1A1DA8E5005A0260 /* CCRenderableNode_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D304BC2A1A1DA8E5005A0260 /* CCRenderableNode_Private.h */; };
 		D304BC2D1A1DA8E5005A0260 /* CCRenderableNode_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D304BC2A1A1DA8E5005A0260 /* CCRenderableNode_Private.h */; };
 		D309055018AC23110081BF11 /* CCRenderer_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D309054F18AC23110081BF11 /* CCRenderer_Private.h */; };
+		D30DD7861A325CD40029014B /* CCFile_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D30DD7851A325CD40029014B /* CCFile_Private.h */; };
+		D30DD7871A325CD40029014B /* CCFile_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D30DD7851A325CD40029014B /* CCFile_Private.h */; };
+		D30DD7881A325CD40029014B /* CCFile_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D30DD7851A325CD40029014B /* CCFile_Private.h */; };
 		D31C795019994126007921E1 /* CCMetalSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = D31C794F19994126007921E1 /* CCMetalSupport.m */; };
 		D31C795219994197007921E1 /* CCMetalSupport_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D31C795119994197007921E1 /* CCMetalSupport_Private.h */; };
 		D33803E318032ECE0072D8FE /* CCPhysicsBody.m in Sources */ = {isa = PBXBuildFile; fileRef = D33803E218032ECE0072D8FE /* CCPhysicsBody.m */; };
@@ -1399,6 +1402,7 @@
 		D304BC261A1DA3CA005A0260 /* CCRenderableNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCRenderableNode.m; sourceTree = "<group>"; };
 		D304BC2A1A1DA8E5005A0260 /* CCRenderableNode_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderableNode_Private.h; sourceTree = "<group>"; };
 		D309054F18AC23110081BF11 /* CCRenderer_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderer_Private.h; sourceTree = "<group>"; };
+		D30DD7851A325CD40029014B /* CCFile_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFile_Private.h; sourceTree = "<group>"; };
 		D31C794F19994126007921E1 /* CCMetalSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMetalSupport.m; sourceTree = "<group>"; };
 		D31C795119994197007921E1 /* CCMetalSupport_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMetalSupport_Private.h; sourceTree = "<group>"; };
 		D33803DC18032E4F0072D8FE /* CCPhysics+ObjectiveChipmunk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCPhysics+ObjectiveChipmunk.h"; sourceTree = "<group>"; };
@@ -1655,6 +1659,7 @@
 				501CCFB60E99658900B86F68 /* OpenGLSupport */,
 				E0C54DC911F9CF2700B9E4CB /* ccUtils.h */,
 				D33C9CE31A2FAC33004070CA /* CCFile.h */,
+				D30DD7851A325CD40029014B /* CCFile_Private.h */,
 				D33C9CE41A2FAC33004070CA /* CCFile.m */,
 				50C508C40F7C194400799124 /* CCFileUtils.h */,
 				50C508C50F7C194400799124 /* CCFileUtils.m */,
@@ -2399,6 +2404,7 @@
 				D3903B0A1995285B003AA81A /* CCEffectBlur.h in Headers */,
 				E0EAD19D121F4D7300B0C81C /* CCGL.h in Headers */,
 				839CE58619FFB139003369F0 /* CCEffectInvert.h in Headers */,
+				D30DD7861A325CD40029014B /* CCFile_Private.h in Headers */,
 				E0EAD1F1121F522A00B0C81C /* CCDeviceInfo.h in Headers */,
 				9D85671D191B018200573093 /* CCEffectBrightness.h in Headers */,
 				D272032B18FC89A000B100FF /* CCEffectNode.h in Headers */,
@@ -2598,6 +2604,7 @@
 				7A59472E19E3730600F65F90 /* CCDirectorAndroid.h in Headers */,
 				7A59473019E3730700F65F90 /* CCTouchAndroid.h in Headers */,
 				7A59473219E3730800F65F90 /* CCGestureListener.h in Headers */,
+				D30DD7881A325CD40029014B /* CCFile_Private.h in Headers */,
 				7A59473519E3730800F65F90 /* CCMetalView.h in Headers */,
 				7A59473719E3730900F65F90 /* UITouch+CC.h in Headers */,
 				7A59473919E3730900F65F90 /* CCDirectorIOS.h in Headers */,
@@ -2764,6 +2771,7 @@
 				D2FEB685194F6C9E00FC0574 /* CCAnimation.h in Headers */,
 				D2DDB0A419805E8400233D80 /* CCVector2.h in Headers */,
 				BC9F4E9A19DB644B00B25F01 /* CCPackageTypes.h in Headers */,
+				D30DD7871A325CD40029014B /* CCFile_Private.h in Headers */,
 				D2FEB686194F6C9E00FC0574 /* CCBuilderReader.h in Headers */,
 				BC9F4EA119DB64A200B25F01 /* CCPackage_private.h in Headers */,
 				D2FEB687194F6C9E00FC0574 /* CCAppDelegate.h in Headers */,

@@ -10,6 +10,9 @@
 #import "CCUnitTestAssertions.h"
 
 
+#import "CCFile_Private.h"
+
+
 @interface CCFileTests : XCTestCase @end
 @implementation CCFileTests
 

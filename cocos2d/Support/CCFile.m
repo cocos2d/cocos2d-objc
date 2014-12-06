@@ -25,14 +25,13 @@
 
 #import <zlib.h>
 
-#import "CCFile.h"
+#import "CCFile_Private.h"
 
 
 //MARK: Wrapped Streams
 
 #define BUFFER_SIZE 32*1024
 
-@interface CCWrappedInputStream : NSInputStream @end
 @implementation CCWrappedInputStream {
     @protected
     NSInputStream *_inputStream;
@@ -80,9 +79,9 @@
     return _hasBytesAvailable;
 }
 
--(NSData *)loadData
+-(NSData *)loadDataWithSizeHint:(NSUInteger)sizeHint
 {
-    NSMutableData *data = [NSMutableData dataWithLength:BUFFER_SIZE];
+    NSMutableData *data = [NSMutableData dataWithLength:(sizeHint ?: BUFFER_SIZE)];
     NSUInteger totalBytesRead = 0;
     
     for(;;){
@@ -102,7 +101,6 @@
 @end
 
 
-@interface CCGZippedInputStream : CCWrappedInputStream @end
 @implementation CCGZippedInputStream {
     z_stream _zStream;
     BOOL _needsInit;
@@ -127,18 +125,18 @@
 -(NSInteger)read:(uint8_t *)buffer maxLength:(NSUInteger)len
 {
     _zStream.next_out = buffer;
-    _zStream.avail_out = len;
+    _zStream.avail_out = (unsigned int)len;
     
     for(;;){
         // Check if the input buffer needs to be filled.
         if(_zStream.avail_in == 0){
             _zStream.next_in = _inBuffer;
-            _zStream.avail_in = [_inputStream read:_inBuffer maxLength:BUFFER_SIZE];
+            _zStream.avail_in = (unsigned int)[_inputStream read:_inBuffer maxLength:BUFFER_SIZE];
         }
         
         if(_needsInit){
-            // 16 + [0-15] is zlib's magic flag to tell it we are decompressing gzip and not zlib data.
-            if(inflateInit2(&_zStream, 16 + 15) != Z_OK){
+            // 32 + [0-15] is zlib's magic flag to tell it we want to automatically detect gzip/zlib data.
+            if(inflateInit2(&_zStream, 32 + 15) != Z_OK){
                 CCLOG(@"zlib init error");
                 _hasBytesAvailable = NO;
                 goto finish;
@@ -182,7 +180,6 @@ uint32_t CCFILE_DECRYPTION_KEY[4] = {0x44DAACE2, 0x85BB4204, 0xAA31EA6A, 0x4D7E1
 // Block size in 4 byte words.
 #define BLOCK_SIZE 1024
 
-@interface CCEncryptedInputStream : CCWrappedInputStream @end
 @implementation CCEncryptedInputStream {
     // Most recently decompressed block.
     uint8_t _buffer[BLOCK_SIZE*4];
@@ -297,16 +294,15 @@ static void TEA_decrypt(uint32_t *v, int n, uint32_t const key[4]) {
 
 //MARK CCFileCGDataProvider
 
-@interface CCFileCGDataProvider : NSObject @end
-@implementation CCFileCGDataProvider{
-    CCFile *_file;
+@implementation CCStreamedImageSource{
+    CCStreamedImageSourceStreamBlock _streamBlock;
     NSInputStream *_inputStream;
 }
 
--(instancetype)initWithFile:(CCFile *)file
+-(instancetype)initWithStreamBlock:(CCStreamedImageSourceStreamBlock)streamBlock
 {
     if((self = [super init])){
-        _file = file;
+        _streamBlock = streamBlock;
     }
     
     return self;
@@ -315,25 +311,26 @@ static void TEA_decrypt(uint32_t *v, int n, uint32_t const key[4]) {
 -(NSInputStream *)inputStream
 {
     if(_inputStream == nil){
-        _inputStream = [_file openInputStream];
+        _inputStream = _streamBlock();
     }
     
     return _inputStream;
 }
 
 static size_t
-CCFileCGDataProviderGetBytesCallback(void *info, void *buffer, size_t count)
+DataProviderGetBytesCallback(void *info, void *buffer, size_t count)
 {
-    CCFileCGDataProvider *provider = (__bridge CCFileCGDataProvider *)info;
+    CCStreamedImageSource *provider = (__bridge CCStreamedImageSource *)info;
     return [provider.inputStream read:buffer maxLength:count];
 }
 
 static off_t
-CCFileCGDataProviderSkipForwardCallback(void *info, off_t count)
+DataProviderSkipForwardCallback(void *info, off_t count)
 {
-    CCFileCGDataProvider *provider = (__bridge CCFileCGDataProvider *)info;
+    CCStreamedImageSource *provider = (__bridge CCStreamedImageSource *)info;
     
-    const NSUInteger bufferSize = 4*1024;
+    // Skip forward in 32 kb chunks.
+    const NSUInteger bufferSize = 32*1024;
     uint8_t buffer[bufferSize];
     
     NSUInteger skipped = 0;
@@ -347,17 +344,42 @@ CCFileCGDataProviderSkipForwardCallback(void *info, off_t count)
 }
 
 static void
-CCFileCGDataProviderRewindCallback(void *info)
+DataProviderRewindCallback(void *info)
 {
-    CCFileCGDataProvider *provider = (__bridge CCFileCGDataProvider *)info;
+    CCStreamedImageSource *provider = (__bridge CCStreamedImageSource *)info;
     [provider->_inputStream close];
     provider->_inputStream = nil;
 }
 
 static void
-CCFileCGDataProviderReleaseInfoCallback(void *info)
+DataProviderReleaseInfoCallback(void *info)
 {
+    //Close and discard the current input stream.
+    DataProviderRewindCallback(info);
+    
     CFRelease(info);
+}
+
+static const CGDataProviderSequentialCallbacks callbacks = {
+    .version = 0,
+    .getBytes = DataProviderGetBytesCallback,
+    .skipForward = DataProviderSkipForwardCallback,
+    .rewind = DataProviderRewindCallback,
+    .releaseInfo = DataProviderReleaseInfoCallback,
+};
+
+-(CGDataProviderRef)createCGDataProvider
+{
+    return CGDataProviderCreateSequential((__bridge_retained void *)self, &callbacks);
+}
+
+-(CGImageSourceRef)createCGImageSource
+{
+    CGDataProviderRef provider = [self createCGDataProvider];
+    CGImageSourceRef source = CGImageSourceCreateWithDataProvider(provider, NULL);
+    
+    CGDataProviderRelease(provider);
+    return source;
 }
 
 @end
@@ -435,7 +457,7 @@ CCFileCGDataProviderReleaseInfoCallback(void *info)
 {
     if(_loadDataFromStream){
        CCWrappedInputStream *stream = (CCWrappedInputStream *)[self openInputStream];
-       NSData *data = [stream loadData];
+       NSData *data = [stream loadDataWithSizeHint:0];
        [stream close];
        
         return data; 
@@ -455,21 +477,8 @@ CCFileCGDataProviderReleaseInfoCallback(void *info)
 -(CGImageSourceRef)createCGImageSource
 {
     if(_loadDataFromStream){
-        CGDataProviderSequentialCallbacks callbacks = {
-            .version = 0,
-            .getBytes = CCFileCGDataProviderGetBytesCallback,
-            .skipForward = CCFileCGDataProviderSkipForwardCallback,
-            .rewind = CCFileCGDataProviderRewindCallback,
-            .releaseInfo = CCFileCGDataProviderReleaseInfoCallback,
-        };
-        
-        CCFileCGDataProvider *ccProvider = [[CCFileCGDataProvider alloc] initWithFile:self];
-        CGDataProviderRef provider = CGDataProviderCreateSequential((__bridge_retained void *)ccProvider, &callbacks);
-        
-        CGImageSourceRef source = CGImageSourceCreateWithDataProvider(provider, NULL);
-        CGDataProviderRelease(provider);
-        
-        return source;
+        CCStreamedImageSource *source = [[CCStreamedImageSource alloc] initWithStreamBlock:^{return [self openInputStream];}];
+        return [source createCGImageSource];
     } else {
         return CGImageSourceCreateWithURL((__bridge CFURLRef)self.url, NULL);
     }

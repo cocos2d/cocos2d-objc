@@ -23,35 +23,39 @@
  */
 
 
-#import "ccTypes.h"
-#import <ImageIO/CGImageSource.h>
+#import "CCFile.h"
 
 
-@interface CCFile : NSObject
+// Abstract parent class for the compressed/encryted streams.
+@interface CCWrappedInputStream : NSInputStream
+-(instancetype)initWithInputStream:(NSInputStream *)inputStream;
+-(NSData *)loadDataWithSizeHint:(NSUInteger)sizeHint;
+@end
 
-// Normalized version of the originally requested name. (Ex: "Sprites/Hero.png")
-@property(nonatomic, readonly) NSString *name;
 
-// URL of the 
-@property(nonatomic, readonly) NSURL *url;
+// Read data from a gzip compressed stream.
+@interface CCGZippedInputStream : CCWrappedInputStream
+@end
 
-// Returns an absolute path for the file or nil if the file is not local.
-@property(nonatomic, readonly) NSString *absoluteFilePath;
 
-// Content scale this file should be interpreted as.
-@property(nonatomic, readonly) CGFloat contentScale;
+// Read data from an encrypted .ccp file.
+@interface CCEncryptedInputStream : CCWrappedInputStream
+@end
 
-#warning TODO What to do about these since we will be using metadata?
-//@property(nonatomic, readonly) NSString *language;
-//@property(nonatomic, readonly) NSString *deviceFamily;
 
-// Load the file as a plist. Return nil on error.
--(id)loadPlist;
+// Return an opened input stream to read from.
+// May be called more than once if the file is rewound.
+typedef NSInputStream *(^CCStreamedImageSourceStreamBlock)();
 
-// Load the file as binary data. Returns nil on error.
--(NSData *)loadData;
+// Adapter class that creates a CGImage source from an NSInputStream.
+@interface CCStreamedImageSource : NSObject
+-(instancetype)initWithStreamBlock:(CCStreamedImageSourceStreamBlock)streamBlock;
+-(CGDataProviderRef)createCGDataProvider;
+-(CGImageSourceRef)createCGImageSource;
+@end
 
-// Open a file handle to the file. Returns nil on error.
--(NSInputStream *)openInputStream;
 
+@interface CCFile(Private)
+-(instancetype)initWithName:(NSString *)name url:(NSURL *)url contentScale:(CGFloat)contentScale;
+-(CGImageSourceRef)createCGImageSource;
 @end
