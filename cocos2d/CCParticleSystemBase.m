@@ -42,20 +42,19 @@
 // 'Radius Mode' in Particle Designer uses a fixed emit rate of 30 hz. Since that can't be guarateed in cocos2d,
 //  cocos2d uses a another approach, but the results are almost identical.
 
-#import "ccMacros.h"
 
-#if __CC_PLATFORM_MAC
-#import <AppKit/NSBitmapImageRep.h>
-#endif
+#import <ImageIO/ImageIO.h>
+
+#import "ccMacros.h"
 
 #import "CCParticleSystemBase_Private.h"
 #import "CCFileUtils.h"
 #import "CCRendererBasicTypes.h"
 #import "CCTextureCache.h"
 #import "CCColor.h"
-
-#import "base64.h"
 #import "ccUtils.h"
+
+#import "CCFile_Private.h"
 
 @implementation CCParticleSystemBase
 @synthesize active = _active, duration = _duration;
@@ -242,38 +241,27 @@
 			if( tex )
 				[self setTexture:tex];
 			else {
+                // Base64 encoded, gzipped image data.
+                NSString *textureData64 = [dictionary valueForKey:@"textureImageData"];
+                NSAssert(textureData64, @"CCParticleSystem: Couldn't load texture");
 
-				NSString *textureData = [dictionary valueForKey:@"textureImageData"];
-				NSAssert( textureData, @"CCParticleSystem: Couldn't load texture");
+                // Gzipped image data.
+                NSData *textureData = [[NSData alloc] initWithBase64Encoding:textureData64];
+                NSAssert(textureData != NULL, @"CCParticleSystem: error decoding textureImageData");
 
-				// if it fails, try to get it from the base64-gzipped data
-				unsigned char *buffer = NULL;
-				int len = base64Decode((unsigned char*)[textureData UTF8String], (unsigned int)[textureData length], &buffer);
-				NSAssert( buffer != NULL, @"CCParticleSystem: error decoding textureImageData");
-
-				unsigned char *deflated = NULL;
-				#warning TODO
-				NSUInteger deflatedLen = 0;//ccInflateMemory(buffer, len, &deflated);
-				free( buffer );
-
-				NSAssert( deflated != NULL, @"CCParticleSystem: error ungzipping textureImageData");
-				NSData *data = [[NSData alloc] initWithBytes:deflated length:deflatedLen];
-
-#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
-                BOOL png = [[[dictionary valueForKey:@"textureFileName"] lowercaseString] hasSuffix:@".png"];
-                CGDataProviderRef imgDataProvider = CGDataProviderCreateWithCFData((__bridge CFDataRef)data);
-                CGImageRef image = (png) ? CGImageCreateWithPNGDataProvider(imgDataProvider, NULL, true, kCGRenderingIntentDefault) : CGImageCreateWithJPEGDataProvider(imgDataProvider, NULL, true, kCGRenderingIntentDefault) ;
-				
-				[self setTexture:  [ [CCTextureCache sharedTextureCache] addCGImage:image forKey:textureName]];
-
-                CGDataProviderRelease(imgDataProvider);
-                CGImageRelease(image); 
-#elif __CC_PLATFORM_MAC
-				NSBitmapImageRep *image = [[NSBitmapImageRep alloc] initWithData:data];
-				[self setTexture:  [ [CCTextureCache sharedTextureCache] addCGImage:[image CGImage] forKey:textureName]];
-#endif
-
-				free(deflated); deflated = NULL;
+                CCStreamedImageSource *streamedSource = [[CCStreamedImageSource alloc] initWithStreamBlock:^{
+                    NSInputStream *stream = [[CCGZippedInputStream alloc] initWithInputStream:[NSInputStream inputStreamWithData:textureData]];
+                    [stream open];
+                    
+                    return stream;
+                }];
+                
+                CGImageSourceRef source = [streamedSource createCGImageSource];
+                CGImageRef image = CGImageSourceCreateImageAtIndex(source, 0, NULL);
+                CFRelease(source);
+                
+                self.texture = [[CCTextureCache sharedTextureCache] addCGImage:image forKey:textureName];
+                CGImageRelease(image);
 			}
 
 			NSAssert( [self texture] != NULL, @"CCParticleSystem: error loading the texture");

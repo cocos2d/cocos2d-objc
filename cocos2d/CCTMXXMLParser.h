@@ -83,10 +83,7 @@ typedef NS_ENUM(uint32_t, ccTMXTileFlags) {
 /// -----------------------------------------------------------------------
 
 /** Layer tile memory buffer, ie an array of uint representing tile GIDs. */
-@property (nonatomic,readwrite)			unsigned int *tiles;
-
-/** YES if the layer owns the memory of its tiles property. Defaults to YES */
-@property (nonatomic,readwrite)			BOOL ownTiles;
+@property (nonatomic,readonly)			NSData *tileData;
 
 /** Lowest GID used on this layer. */
 @property (nonatomic,readwrite)			unsigned int minGID;
