@@ -187,6 +187,7 @@
 		D3763DD919E735CB006C050D /* libcocos2d-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D3763BBF19E72F85006C050D /* libcocos2d-mac.a */; };
 		D3763DDB19E7364F006C050D /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3763DDA19E7364F006C050D /* OpenGL.framework */; };
 		D3763DDD19E73667006C050D /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3763DDC19E73666006C050D /* AppKit.framework */; };
+		D3867DBF1A32EB38009AFFF3 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3867DBE1A32EB38009AFFF3 /* ImageIO.framework */; };
 		D3870C6018B440150033D885 /* SpritePerformanceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3870C5F18B440150033D885 /* SpritePerformanceTest.m */; };
 		D3B2A7E5187DD60B00406C5A /* CCBMFontTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B2A7E4187DD60B00406C5A /* CCBMFontTest.m */; };
 		D3C9C867188078B900C58900 /* CCSchedulerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3C9C866188078B900C58900 /* CCSchedulerTest.m */; };
@@ -417,6 +418,7 @@
 		D3763D9919E7356C006C050D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D3763DDA19E7364F006C050D /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/OpenGL.framework; sourceTree = DEVELOPER_DIR; };
 		D3763DDC19E73666006C050D /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/AppKit.framework; sourceTree = DEVELOPER_DIR; };
+		D3867DBE1A32EB38009AFFF3 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		D3870C5F18B440150033D885 /* SpritePerformanceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpritePerformanceTest.m; path = "cocos2d-ui-tests/tests/SpritePerformanceTest.m"; sourceTree = SOURCE_ROOT; };
 		D3B2A7E4187DD60B00406C5A /* CCBMFontTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBMFontTest.m; path = "cocos2d-ui-tests/tests/CCBMFontTest.m"; sourceTree = SOURCE_ROOT; };
 		D3C1281C199D43E0005D2119 /* CCShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = CCShaders.metal; path = cocos2d/Platforms/iOS/CCShaders.metal; sourceTree = SOURCE_ROOT; };
@@ -510,6 +512,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3867DBF1A32EB38009AFFF3 /* ImageIO.framework in Frameworks */,
 				D3763BD219E72FB4006C050D /* libcocos2d.a in Frameworks */,
 				D24FAEED198014C80043E27D /* GLKit.framework in Frameworks */,
 				D28A2E1F1954F7E900ADC03D /* OpenGLES.framework in Frameworks */,
@@ -662,6 +665,7 @@
 		B7E2604A17E7D278007067F0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D3867DBE1A32EB38009AFFF3 /* ImageIO.framework */,
 				D3763DDC19E73666006C050D /* AppKit.framework */,
 				D3763DDA19E7364F006C050D /* OpenGL.framework */,
 				D28A2E1E1954F7E900ADC03D /* OpenGLES.framework */,
@@ -1011,7 +1015,7 @@
 		};
 		D3763BBD19E72F85006C050D /* cocos2dJava.jar */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.jar;
+			fileType = compiled.java.jar;
 			path = cocos2dJava.jar;
 			remoteRef = D3763BBC19E72F85006C050D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;

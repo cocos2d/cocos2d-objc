@@ -86,12 +86,9 @@
     
     for(;;){
         totalBytesRead += [self read:data.mutableBytes + totalBytesRead maxLength:data.length - totalBytesRead];
+        if(!self.hasBytesAvailable) break;
         
-        if(self.hasBytesAvailable){
-            [data increaseLengthBy:data.length*0.5];
-        } else {
-            break;
-        }
+        [data increaseLengthBy:data.length*0.5];
     }
     
     data.length = totalBytesRead;
@@ -336,8 +333,8 @@ DataProviderSkipForwardCallback(void *info, off_t count)
     NSUInteger skipped = 0;
     while(skipped < count){
         NSUInteger skip = MIN(bufferSize, (NSUInteger)count - skipped);
-        [provider.inputStream read:buffer maxLength:skip];
-        skipped += skip;
+        skipped += [provider.inputStream read:buffer maxLength:skip];
+        if(!provider.inputStream.hasBytesAvailable) break;
     }
     
     return skipped;
