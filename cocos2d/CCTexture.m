@@ -323,8 +323,20 @@ static CCTexture *CCTextureNone = nil;
 
 -(instancetype)initWithImage:(CCImage *)image options:(NSDictionary *)options
 {
-	NSAssert([CCDeviceInfo sharedDeviceInfo].graphicsAPI != CCGraphicsAPIInvalid, @"Graphics API not configured.");
+    CCDeviceInfo *info = [CCDeviceInfo sharedDeviceInfo];
+	NSAssert(info.graphicsAPI != CCGraphicsAPIInvalid, @"Graphics API not configured.");
 	
+    NSUInteger maxTextureSize = [info maxTextureSize];
+    CGSize sizeInPixels = image.sizeInPixels;
+    
+    if(sizeInPixels.width > maxTextureSize || sizeInPixels.height > maxTextureSize){
+        CCLOGWARN(@"cocos2d: Error: Image (%d x %d) is bigger than the maximum supported texture size %d",
+            (int)sizeInPixels.width, (int)sizeInPixels.height, (int)maxTextureSize
+        );
+        
+        return nil;
+    }
+    
 	if((self = [super init])) {
 #if __CC_METAL_SUPPORTED_AND_ENABLED
         // TODO
@@ -341,14 +353,14 @@ static CCTexture *CCTextureNone = nil;
 			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
 
 			// Specify OpenGL texture image
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)image.pixelSize.width, (GLsizei)image.pixelSize.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image.pixelData.bytes);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)sizeInPixels.width, (GLsizei)sizeInPixels.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image.pixelData.bytes);
 			
 			CCGL_DEBUG_POP_GROUP_MARKER();
 		});
 
 		_sizeInPixels  = CC_SIZE_SCALE(image.contentSize, image.contentScale);
-		_width = image.pixelSize.width;
-		_height = image.pixelSize.height;
+		_width = sizeInPixels.width;
+		_height = sizeInPixels.height;
 		_format = CCTexturePixelFormat_RGBA8888;
 		_maxS = _sizeInPixels.width/(float)_width;
 		_maxT = _sizeInPixels.height/(float)_height;

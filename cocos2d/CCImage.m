@@ -26,6 +26,7 @@
 #import "CCImage.h"
 
 #import "CCDeviceInfo.h"
+#import "CCColor.h"
 #import "ccUtils.h"
 
 #import "CCFile_Private.h"
@@ -43,91 +44,98 @@ NSString * const CCImagePremultiply = @"CCImagePremultiply";
     NSDictionary *_options;
 }
 
--(instancetype)initWithPixelSize:(CGSize)pixelSize contentScale:(CGFloat)contentScale pixelData:(NSData *)pixelData;
+NSDictionary *DEFAULT_OPTIONS = nil;
+
++(void)initialize
+{
+    DEFAULT_OPTIONS = @{
+        CCImageFlipVertical: @(NO),
+        CCImageFlipHorizontal: @(NO),
+        CCImageRescaleFactor: @(1.0),
+        CCImageExpandToPOT: @(NO),
+        CCImagePremultiply: @(YES)
+    };
+}
+
+static NSDictionary *
+NormalizeOptions(NSDictionary *options)
+{
+    if(options == nil || options == DEFAULT_OPTIONS){
+        return DEFAULT_OPTIONS;
+    } else {
+        // Merge the default values with the user values.
+        NSMutableDictionary *opts = [DEFAULT_OPTIONS mutableCopy];
+        [opts addEntriesFromDictionary:options];
+        
+        return opts;
+    }
+}
+
+-(instancetype)initWithPixelSize:(CGSize)pixelSize contentScale:(CGFloat)contentScale pixelData:(NSMutableData *)pixelData options:(NSDictionary *)options;
 {
     if((self = [super init])){
-        _pixelSize = pixelSize;
+        _sizeInPixels.width = floor(pixelSize.width);
+        _sizeInPixels.height = floor(pixelSize.height);
         
         _contentScale = contentScale;
         _contentSize = CC_SIZE_SCALE(pixelSize, 1.0/contentScale);
         
-        // TODO?
-        _options = nil;
+        _options = NormalizeOptions(options);
         
-        _premultipliedAlpha = YES;
-        _flippedVertically = NO;
-        _flippedHorizontally = NO;
-        
-        _pixelData = [pixelData copy];
+        _pixelData = pixelData;
     }
     
     return self;
 }
 
-static CGAffineTransform
-DrawingTransform(CGSize pixelSize, CGSize imageSize, NSDictionary *options)
+-(instancetype)initWithPixelSize:(CGSize)pixelSize contentScale:(CGFloat)contentScale pixelData:(NSMutableData *)pixelData;
 {
-    // TODO handling flipping here.
-    CGAffineTransform transform = CGAffineTransformIdentity;
-    transform = CGAffineTransformTranslate(transform, 0, pixelSize.height - imageSize.height);
-	transform = CGAffineTransformScale(transform, 1.0, -1.0);
-	transform = CGAffineTransformTranslate(transform, 0, -imageSize.height);
+    return [self initWithPixelSize:pixelSize contentScale:contentScale pixelData:pixelData options:DEFAULT_OPTIONS];
+}
+
+-(instancetype)initWithPixelSize:(CGSize)pixelSize contentScale:(CGFloat)contentScale clearColor:(CCColor *)color options:(NSDictionary *)options
+{
+    NSUInteger bytes = pixelSize.width*pixelSize.height*4;
+    NSMutableData *pixelData = [NSMutableData dataWithLength:bytes];
     
-    return transform;
+    // Convert to a RGBA8 color
+    GLKVector4 color4f = color.glkVector4;
+    uint8_t color4b[] = {255*color4f.r, 255*color4f.g, 255*color4f.b, 255*color4f.a};
+    
+    // Set the initial fill color.
+    memset_pattern4(pixelData.mutableBytes, color4b, bytes);
+    
+    return [self initWithPixelSize:pixelSize contentScale:contentScale pixelData:pixelData options:options];
 }
 
 -(instancetype)initWithCGImage:(CGImageRef)image contentScale:(CGFloat)contentScale options:(NSDictionary *)options
 {
-	CCDeviceInfo *conf = [CCDeviceInfo sharedDeviceInfo];
+    // Make the options are filled in and that it's not nil.
+    options = NormalizeOptions(options);
     
     if(![options[CCImagePremultiply] boolValue]){
-        CCLOGWARN(@"CCImagePremultiply: NO not supported for the core graphics loader.");
+        CCLOGWARN(@"CCImagePremultiply: NO ignored by the CoreGraphics loader.");
     }
     
-    // Original size of the image.
-    CGSize imageSize = CGSizeMake(CGImageGetWidth(image), CGImageGetHeight(image));
+    CGFloat rescaleFactor = [options[CCImageRescaleFactor] doubleValue];
+    contentScale *= rescaleFactor;
+    
+    // Original size of the image in pixels after rescaling.
+    CGSize originalSizeInPixels = CC_SIZE_SCALE(CGSizeMake(CGImageGetWidth(image), CGImageGetHeight(image)), rescaleFactor);
     
     // Size of the bitmap in pixels including POT padding.
-    CGSize pixelSize = imageSize;
-	if(![conf supportsNPOT] || [options[CCImageExpandToPOT] boolValue]){
-		pixelSize.width = CCNextPOT(pixelSize.width);
-		pixelSize.height = CCNextPOT(pixelSize.height);
+    CGSize sizeInPixels = originalSizeInPixels;
+	if(![[CCDeviceInfo sharedDeviceInfo] supportsNPOT] || [options[CCImageExpandToPOT] boolValue]){
+		sizeInPixels.width = CCNextPOT(sizeInPixels.width);
+		sizeInPixels.height = CCNextPOT(sizeInPixels.height);
 	}
-
-    NSUInteger maxTextureSize = [conf maxTextureSize];
-    if(pixelSize.width > maxTextureSize || pixelSize.height > maxTextureSize){
-        CCLOGWARN(@"cocos2d: Error: Image (%d x %d) is bigger than the maximum supported texture size %d",
-            (int)pixelSize.width, (int)pixelSize.height, (int)maxTextureSize
-        );
+    
+    if((self = [self initWithPixelSize:sizeInPixels contentScale:contentScale clearColor:[CCColor clearColor] options:options])){
+        _contentSize = CC_SIZE_SCALE(originalSizeInPixels, 1.0/contentScale);
         
-        return nil;
-    }
-    
-    NSUInteger bytes = pixelSize.width*pixelSize.height*4;
-    void *data = malloc(bytes);
-    
-    // Set up the CGContext to render the image to a bitmap.
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGBitmapInfo info = kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big;
-    CGContextRef context = CGBitmapContextCreate(data, pixelSize.width, pixelSize.height, 8, pixelSize.width*4, colorSpace, info);
-    
-    // Render the image into the context.
-	CGContextClearRect(context, (CGRect){CGPointZero, pixelSize});
-    CGContextConcatCTM(context, DrawingTransform(pixelSize, imageSize, options));
-	CGContextDrawImage(context, (CGRect){CGPointZero, imageSize}, image);
-    
-    CGColorSpaceRelease(colorSpace);
-	CGContextRelease(context);
-	
-    // Create a NSData object to wrap the pixel data.
-    NSData *pixelData = [NSData dataWithBytesNoCopy:data length:bytes];
-    
-    if((self = [self initWithPixelSize:pixelSize contentScale:contentScale pixelData:pixelData])){
-        _options = [options copy];
-        
-        _flippedVertically = [options[CCImageFlipVertical] boolValue];
-        _flippedHorizontally = [options[CCImageFlipHorizontal] boolValue];
-        _premultipliedAlpha = YES;
+        CGContextRef context = [self createCGContext];
+        CGContextDrawImage(context, (CGRect){CGPointZero, _contentSize}, image);
+        CGContextRelease(context);
     }
     
     return self;
@@ -143,28 +151,6 @@ DrawingTransform(CGSize pixelSize, CGSize imageSize, NSDictionary *options)
     CGImageRelease(image);
     
     return self;
-}
-
-static NSDictionary *
-NormalizeOptions(NSDictionary *options)
-{
-    NSDictionary *defaults = @{
-        CCImageFlipVertical: @(NO),
-        CCImageFlipHorizontal: @(NO),
-        CCImageRescaleFactor: @(1.0),
-        CCImageExpandToPOT: @(NO),
-        CCImagePremultiply: @(YES)
-    };
-    
-    if(options){
-        // Merge the default values with the user values.
-        NSMutableDictionary *opts = [defaults mutableCopy];
-        [opts addEntriesFromDictionary:options];
-        
-        return opts;
-    } else {
-        return defaults;
-    }
 }
 
 -(instancetype)initWithCCFile:(CCFile *)file options:(NSDictionary *)options;
@@ -186,6 +172,40 @@ NormalizeOptions(NSDictionary *options)
 -(void)encodeWithCoder:(NSCoder *)coder
 {
 
+}
+
+//MARK: CGContext creation.
+
+-(CGAffineTransform)loadingTransform
+{
+    CGAffineTransform transform = CGAffineTransformIdentity;
+    
+    if(![_options[CCImageFlipVertical] boolValue]){
+        transform = CGAffineTransformConcat(transform, CGAffineTransformMake(1.0, 0.0, 0.0, -1.0, 0.0, _sizeInPixels.height));
+    }
+    
+    if([_options[CCImageFlipHorizontal] boolValue]){
+        transform = CGAffineTransformConcat(transform, CGAffineTransformMake(-1.0, 0.0, 0.0, 1.0, _sizeInPixels.width, 0.0));
+    }
+    
+    return CGAffineTransformScale(transform, _contentScale, _contentScale);
+}
+
+// Create a CGContext that is set up to use points for the drawing coordinates.
+-(CGContextRef)createCGContext
+{
+    NSAssert(self.pixelData, @"Cannot render into a CCImage with a nil pixelData.");
+    
+    CGSize size = self.sizeInPixels;
+    
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGBitmapInfo info = kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big;
+    CGContextRef context = CGBitmapContextCreate(self.pixelData.mutableBytes, size.width, size.height, 8, size.width*4, colorSpace, info);
+    
+    CGContextConcatCTM(context, [self loadingTransform]);
+    
+    CGColorSpaceRelease(colorSpace);
+    return context;
 }
 
 @end

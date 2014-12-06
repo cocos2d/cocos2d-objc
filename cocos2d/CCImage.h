@@ -40,11 +40,9 @@ extern NSString * const CCImagePremultiply;
 
 @interface CCImage : NSObject<NSCoding>
 
-// Designated initializer for 32 bit RGBA bitmaps.
 // Should accept a nil ‘pixelData’ argument to support empty bitmaps (or textures).
--(instancetype)initWithPixelSize:(CGSize)pixelSize contentScale:(CGFloat)contentScale pixelData:(NSData *)pixelData;
+-(instancetype)initWithPixelSize:(CGSize)pixelSize contentScale:(CGFloat)contentScale pixelData:(NSMutableData *)pixelData;
 
-// Designated initializer.
 -(instancetype)initWithCGImage:(CGImageRef)image contentScale:(CGFloat)contentScale options:(NSDictionary *)options;
 
 // Load an image based on a CCFileUtils file object.
@@ -57,7 +55,10 @@ extern NSString * const CCImagePremultiply;
 // Will probably add more convenience initializers if they come up. (suggestions?)
 
 // Size of the bitmap in pixels.
-@property(nonatomic, readonly) CGSize pixelSize;
+@property(nonatomic, readonly) CGSize sizeInPixels;
+
+// Bitmap data pointer.
+@property(nonatomic, readonly) NSMutableData *pixelData;
 
 // Content scale of the bitmap.
 @property(nonatomic, readonly) CGFloat contentScale;
@@ -66,17 +67,6 @@ extern NSString * const CCImagePremultiply;
 // Not required to match pixelSize/contentScale if, for example, loading a non-POT sized image into a POT sized one.
 @property(nonatomic, assign) CGSize contentSize;
 
-// Bitmap data pointer.
-@property(nonatomic, readonly) NSData *pixelData;
-
-// Whether the bitmap should be interpreted as being flipped vertically or not.
-@property(nonatomic, assign) BOOL flippedVertically;
-
-// Whether the bitmap should be interpreted as being flipped horizontally or not.
-@property(nonatomic, assign) BOOL flippedHorizontally;
-
-// Whether the bitmap should be interpreted as having premultiplied alpha or not.
-@property(nonatomic, assign) BOOL premultipliedAlpha;
 
 // TODO Other thoughts:
 // * Method to create a CGImage from the CCBitmap?
