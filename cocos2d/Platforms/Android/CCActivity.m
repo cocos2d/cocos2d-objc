@@ -228,7 +228,7 @@ static void handler(NSException *e)
 
 - (void)setupView:(JavaObject<AndroidSurfaceHolder> *)holder
 {
-    ANativeWindow* window = ANativeWindow_fromSurface(bridge_getEnv(), bridge_getJava(holder.surface));
+    ANativeWindow* window = holder.surface.nativeWindow;
     [_glView setupView:window];
 }
 
