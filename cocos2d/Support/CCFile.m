@@ -86,12 +86,9 @@
     
     for(;;){
         totalBytesRead += [self read:data.mutableBytes + totalBytesRead maxLength:data.length - totalBytesRead];
+        if(!self.hasBytesAvailable) break;
         
-        if(self.hasBytesAvailable){
-            [data increaseLengthBy:data.length*0.5];
-        } else {
-            break;
-        }
+        [data increaseLengthBy:data.length*0.5];
     }
     
     data.length = totalBytesRead;
@@ -174,8 +171,7 @@
 @end
 
 
-#warning TODO make a setter for this.
-uint32_t CCFILE_DECRYPTION_KEY[4] = {0x44DAACE2, 0x85BB4204, 0xAA31EA6A, 0x4D7E17E7};
+static uint32_t CCFILE_ENCRYPTION_KEY[4] = {};
 
 // Block size in 4 byte words.
 #define BLOCK_SIZE 1024
@@ -230,7 +226,7 @@ static void TEA_decrypt(uint32_t *v, int n, uint32_t const key[4]) {
     
     // TODO Should this handle endian swapping?
     uint32_t *buff = (uint32_t *)_buffer;
-    TEA_decrypt(buff, BLOCK_SIZE, CCFILE_DECRYPTION_KEY);
+    TEA_decrypt(buff, BLOCK_SIZE, CCFILE_ENCRYPTION_KEY);
     
     // The size of each block in bytes is stored in the first word.
     _availableBytes = buff[0];
@@ -336,8 +332,8 @@ DataProviderSkipForwardCallback(void *info, off_t count)
     NSUInteger skipped = 0;
     while(skipped < count){
         NSUInteger skip = MIN(bufferSize, (NSUInteger)count - skipped);
-        [provider.inputStream read:buffer maxLength:skip];
-        skipped += skip;
+        skipped += [provider.inputStream read:buffer maxLength:skip];
+        if(!provider.inputStream.hasBytesAvailable) break;
     }
     
     return skipped;
@@ -389,6 +385,14 @@ static const CGDataProviderSequentialCallbacks callbacks = {
 @implementation CCFile {
     Class _inputStreamClass;
     BOOL _loadDataFromStream;
+}
+
++(void)setEncryptionKey:(NSString *)key
+{
+    [[NSScanner scannerWithString:[key substringWithRange:NSMakeRange( 0, 8)]] scanHexInt:CCFILE_ENCRYPTION_KEY + 0];
+    [[NSScanner scannerWithString:[key substringWithRange:NSMakeRange( 8, 8)]] scanHexInt:CCFILE_ENCRYPTION_KEY + 1];
+    [[NSScanner scannerWithString:[key substringWithRange:NSMakeRange(16, 8)]] scanHexInt:CCFILE_ENCRYPTION_KEY + 2];
+    [[NSScanner scannerWithString:[key substringWithRange:NSMakeRange(24, 8)]] scanHexInt:CCFILE_ENCRYPTION_KEY + 3];
 }
 
 -(instancetype)initWithName:(NSString *)name url:(NSURL *)url contentScale:(CGFloat)contentScale
