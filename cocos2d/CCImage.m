@@ -32,11 +32,11 @@
 #import "CCFile_Private.h"
 
 
-NSString * const CCImageFlipVertical = @"CCImageFlipVertical";
-NSString * const CCImageFlipHorizontal = @"CCImageFlipHorizontal";
-NSString * const CCImageRescaleFactor = @"CCImageRescaleFactor";
-NSString * const CCImageExpandToPOT = @"CCImageExpandToPOT";
-NSString * const CCImagePremultiply = @"CCImagePremultiply";
+NSString * const CCImageOptionFlipVertical = @"CCImageOptionFlipVertical";
+NSString * const CCImageOptionFlipHorizontal = @"CCImageOptionFlipHorizontal";
+NSString * const CCImageOptionRescaleFactor = @"CCImageOptionRescaleFactor";
+NSString * const CCImageOptionExpandToPOT = @"CCImageOptionExpandToPOT";
+NSString * const CCImageOptionPremultiply = @"CCImageOptionPremultiply";
 
 
 @implementation CCImage {
@@ -49,11 +49,11 @@ NSDictionary *DEFAULT_OPTIONS = nil;
 +(void)initialize
 {
     DEFAULT_OPTIONS = @{
-        CCImageFlipVertical: @(NO),
-        CCImageFlipHorizontal: @(NO),
-        CCImageRescaleFactor: @(1.0),
-        CCImageExpandToPOT: @(NO),
-        CCImagePremultiply: @(YES)
+        CCImageOptionFlipVertical: @(NO),
+        CCImageOptionFlipHorizontal: @(NO),
+        CCImageOptionRescaleFactor: @(1.0),
+        CCImageOptionExpandToPOT: @(NO),
+        CCImageOptionPremultiply: @(YES)
     };
 }
 
@@ -113,11 +113,11 @@ NormalizeOptions(NSDictionary *options)
     // Make the options are filled in and that it's not nil.
     options = NormalizeOptions(options);
     
-    if(![options[CCImagePremultiply] boolValue]){
+    if(![options[CCImageOptionPremultiply] boolValue]){
         CCLOGWARN(@"CCImagePremultiply: NO ignored by the CoreGraphics loader.");
     }
     
-    CGFloat rescaleFactor = [options[CCImageRescaleFactor] doubleValue];
+    CGFloat rescaleFactor = [options[CCImageOptionRescaleFactor] doubleValue];
     contentScale *= rescaleFactor;
     
     // Original size of the image in pixels after rescaling.
@@ -125,7 +125,7 @@ NormalizeOptions(NSDictionary *options)
     
     // Size of the bitmap in pixels including POT padding.
     CGSize sizeInPixels = originalSizeInPixels;
-	if(![[CCDeviceInfo sharedDeviceInfo] supportsNPOT] || [options[CCImageExpandToPOT] boolValue]){
+	if(![[CCDeviceInfo sharedDeviceInfo] supportsNPOT] || [options[CCImageOptionExpandToPOT] boolValue]){
 		sizeInPixels.width = CCNextPOT(sizeInPixels.width);
 		sizeInPixels.height = CCNextPOT(sizeInPixels.height);
 	}
@@ -180,11 +180,11 @@ NormalizeOptions(NSDictionary *options)
 {
     CGAffineTransform transform = CGAffineTransformIdentity;
     
-    if(![_options[CCImageFlipVertical] boolValue]){
+    if(![_options[CCImageOptionFlipVertical] boolValue]){
         transform = CGAffineTransformConcat(transform, CGAffineTransformMake(1.0, 0.0, 0.0, -1.0, 0.0, _sizeInPixels.height));
     }
     
-    if([_options[CCImageFlipHorizontal] boolValue]){
+    if([_options[CCImageOptionFlipHorizontal] boolValue]){
         transform = CGAffineTransformConcat(transform, CGAffineTransformMake(-1.0, 0.0, 0.0, 1.0, _sizeInPixels.width, 0.0));
     }
     

@@ -31,45 +31,135 @@
 @class CCFile;
 
 
-extern NSString * const CCImageFlipVertical;
-extern NSString * const CCImageFlipHorizontal;
-extern NSString * const CCImageRescaleFactor;
-extern NSString * const CCImageExpandToPOT;
-extern NSString * const CCImagePremultiply;
+/**
+ Should the image's bitmap be flipped relative to OpenGL conventions?
+ 
+ The default value is `NO`, meaning the first row of pixels in the image's bitmap will be at the bottom edge of the image.
+
+ @since 4.0
+ */
+extern NSString * const CCImageOptionFlipVertical;
+
+/**
+ Should the image's bitmap be flipped relative to OpenGL conventions?
+ 
+ The default value is `NO`, meaning that the first colum of pixels in the bitmap will be at the right edge of the image.
+
+ @since 4.0
+ */
+extern NSString * const CCImageOptionFlipHorizontal;
+
+/**
+ How much to rescale the image while loading it.
+ 
+ The default value is 1.0.
+ 
+ @warning Some image loaders may only support inverse powers of two (1/2, 1/4, etc)
+
+ @since 4.0
+ */
+extern NSString * const CCImageOptionRescaleFactor;
+
+/**
+ Should the image dimensions be expanded to a power of two while loading?
+ 
+ The default value is `NO`.
+
+ @since 4.0
+ */
+extern NSString * const CCImageOptionExpandToPOT;
+
+/**
+ Should the image alpha be premultiplied while loading?
+ 
+ The default value is YES.
+ 
+ @warning Some image loaders only support pre-multiplied alpha.
+
+ @since 4.0
+ */
+extern NSString * const CCImageOptionPremultiply;
 
 
 @interface CCImage : NSObject<NSCoding>
 
-// Should accept a nil ‘pixelData’ argument to support empty bitmaps (or textures).
+/**
+ Initialize a new image with raw pixel data. All default options are applied to the image.
+ 
+ TODO Should this initializer support an options dictionary?
+ TODO Should `pixelData` be allowed to be `nil`?
+
+ @param pixelSize    Size of the image in pixels.
+ @param contentScale Content scale of the image.
+ @param pixelData    A pointer to raw, tightly packed, RGBA8 pixel data.
+
+ @return An image object that wraps the given pixel data.
+
+ @since 4.0
+ */
 -(instancetype)initWithPixelSize:(CGSize)pixelSize contentScale:(CGFloat)contentScale pixelData:(NSMutableData *)pixelData;
 
+/**
+ Initialize a new image from a CGImageRef.
+
+ @param image        The CGImage to use as the image's content.
+ @param contentScale The content scale the CGImage should be interpreted as.
+ @param options      A dictionary of NSImageOption* key and NSNumbers for values.
+ May be `nil`. Any keys not included will be filled with default values.
+
+ @return An image with the CGImage loaded into it.
+
+ @since 4.0
+ */
 -(instancetype)initWithCGImage:(CGImageRef)image contentScale:(CGFloat)contentScale options:(NSDictionary *)options;
 
-// Load an image based on a CCFileUtils file object.
-// Image format should be automatically detected,
-// content scale calculated by CCFileUtils, etc.
-// 'options' would include flags could include things such as flipping,
-// scaling, expand to POT size, or pre-multiplying the alpha.
+/**
+ Initialize an image based on a CCFileUtils file object.
+
+ @param file    The CCFile to load the image data from.
+ @param options A dictionary of NSImageOption* key and NSNumbers for values.
+ May be `nil`. Any keys not included will be filled with default values.
+
+ @return An image loaded from the file.
+
+ @since 4.0
+ */
 -(instancetype)initWithCCFile:(CCFile *)file options:(NSDictionary *)options;
 
-// Will probably add more convenience initializers if they come up. (suggestions?)
+/**
+ Size of the image's bitmap in pixels.
 
-// Size of the bitmap in pixels.
+ @since 4.0
+ */
 @property(nonatomic, readonly) CGSize sizeInPixels;
 
-// Bitmap data pointer.
+/**
+ Bitmap data pointer. The format will always be RGBA8.
+
+ @since 4.0
+ */
 @property(nonatomic, readonly) NSMutableData *pixelData;
 
-// Content scale of the bitmap.
+/**
+ Content scale of the bitmap
+
+ @since 4.0
+ */
 @property(nonatomic, readonly) CGFloat contentScale;
 
-// Content size of the contents.
-// Not required to match pixelSize/contentScale if, for example, loading a non-POT sized image into a POT sized one.
+/**
+ User assignable content size of the image in points.
+ 
+ This value may not equal pixelSize/contentScale if the image is padded.
+ It defaults to the original size of the image in points.
+
+ @since 4.0
+ */
 @property(nonatomic, assign) CGSize contentSize;
 
 
 // TODO Other thoughts:
-// * Method to create a CGImage from the CCBitmap?
-// * Method to capture the screen as a CCBitmap?
+// * Method to create a CGImage from the CCImage?
+// * Method to capture the screen as a CCImage?
 
 @end
