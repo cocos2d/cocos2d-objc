@@ -16,6 +16,11 @@
 @interface CCFileTests : XCTestCase @end
 @implementation CCFileTests
 
+-(void)setUp
+{
+    [CCFile setEncryptionKey:@"44DAACE285BB4204AA31EA6A4D7E17E7"];
+}
+
 -(void)testBasics
 {
     NSString *name = @"Resources-shared/configCocos2d.plist";

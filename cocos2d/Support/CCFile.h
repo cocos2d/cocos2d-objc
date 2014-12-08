@@ -27,31 +27,93 @@
 #import <ImageIO/CGImageSource.h>
 
 
+/**
+ Abstract file handling class. Files may reference local or remote files, such as files on an HTTP or FTP server.
+ If a file is compressed with gzip (must end in .gz) it will be transparent decompressed.
+ 
+ TODO need to document encryption once that is finalized.
+ 
+ TODO Instances of this class are created using CCFileUtils, but that code hasn't been written yet.
+ 
+ @see CCFileUtils
+
+ @since 4.0
+ */
 @interface CCFile : NSObject
 
-// Normalized version of the originally requested name. (Ex: "Sprites/Hero.png")
+/**
+ Set the key used on encrypted files the app will be loading.
+ It's recommended to set this value only once in your app delegate.
+ 
+ TODO where would a user find or create such a key.
+
+ @param key A 32 digit hexadecimal number as a string.
+
+ @since 4.0
+ */
++(void)setEncryptionKey:(NSString *)key;
+
+/**
+ Name of the original file requested from CCFileUtils. (Ex: "Sprites/Hero.png")
+ This may not exactly match the path of the file CCFileUtils actually finds if the file on disk is aliased or tagged with a resolution.
+
+ @since 4.0
+ */
 @property(nonatomic, readonly) NSString *name;
 
-// URL of the 
+/**
+ URL of the file found by CCFileUtils.
+
+ @since 4.0
+ */
 @property(nonatomic, readonly) NSURL *url;
 
-// Returns an absolute path for the file or nil if the file is not local.
+/**
+ The absolute path of the file if it is a local file. `nil` if the file is a remote file.
+
+ @since 4.0
+ */
 @property(nonatomic, readonly) NSString *absoluteFilePath;
 
-// Content scale this file should be interpreted as.
+/**
+ Content scale the file should be interpreted as.
+ 
+ @see CCFileUtils for more information on about asset content scales. (TODO CCFiles not implemented yet)
+
+ @since 4.0
+ */
 @property(nonatomic, readonly) CGFloat contentScale;
 
-#warning TODO What to do about these since we will be using metadata?
-//@property(nonatomic, readonly) NSString *language;
-//@property(nonatomic, readonly) NSString *deviceFamily;
+/**
+ Assume the file is a plist and read it's contents.
 
-// Load the file as a plist. Return nil on error.
+ @return The plist file's contents, or nil if there is an error.
+
+ @since 4.0
+ */
 -(id)loadPlist;
 
-// Load the file as binary data. Returns nil on error.
+/**
+ Load the file's contents into a data object.
+
+ @return The file's complete contents in a data object.
+
+ @since 4.0
+ */
 -(NSData *)loadData;
 
 // Open a file handle to the file. Returns nil on error.
+/**
+ Open's an input stream to the file so it can be read sequentially.
+
+ @return A data object with the complete contents of the file.
+
+ @since 4.0
+ */
 -(NSInputStream *)openInputStream;
+
+#warning TODO What to do about these since we will be using metadata to store them?
+//@property(nonatomic, readonly) NSString *language;
+//@property(nonatomic, readonly) NSString *deviceFamily;
 
 @end
