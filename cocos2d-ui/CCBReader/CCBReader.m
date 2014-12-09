@@ -23,21 +23,25 @@
  * THE SOFTWARE.
  */
 
-#import "CCBReader.h"
-#import <objc/runtime.h>
 #import <objc/message.h>
-#import "CCBAnimationManager.h"
-#import "CCAnimationManager.h"
-#import "CCBSequence.h"
-#import "CCBSequenceProperty.h"
-#import "CCBKeyframe.h"
-#import "CCBLocalizationManager.h"
+#import "ccUtils.h"
+
 #import "CCBReader_Private.h"
 #import "CCNode_Private.h"
 #import "CCDirector_Private.h"
-#import "CCPhysics+ObjectiveChipmunk.h"
 #import "CCAnimationManager_Private.h"
+
+#import "CCFileUtils.h"
+#import "CGPointExtension.h"
+#import "CCBSequence.h"
+#import "CCBKeyframe.h"
+#import "CCBLocalizationManager.h"
+#import "CCSpriteFrameCache.h"
+#import "CCPhysics+ObjectiveChipmunk.h"
 #import "CCEffectStack.h"
+#import "CCTexture.h"
+#import "CCColor.h"
+#import "CCProtocols.h"
 
 #ifdef CCB_ENABLE_UNZIP
 #import "SSZipArchive.h"
@@ -88,6 +92,8 @@
      @"resources-phonehd", CCFileUtilsSuffixiPhoneHD,
      @"resources-phone", CCFileUtilsSuffixiPhone5,
      @"resources-phonehd", CCFileUtilsSuffixiPhone5HD,
+     @"resources-phone", CCFileUtilsSuffixMac,
+     @"resources-phonehd", CCFileUtilsSuffixMacHD,
      @"", CCFileUtilsSuffixDefault,
      nil];
     
@@ -752,10 +758,10 @@ static inline float readFloat(CCBReader *self)
 
         if (setProp)
         {
-						node.blendMode = [CCBlendMode blendModeWithOptions:@{
+						[(id<CCBlendProtocol>)node setBlendMode:[CCBlendMode blendModeWithOptions:@{
 							CCBlendFuncSrcColor:@(src),
 							CCBlendFuncDstColor:@(dst),
-						}];
+						}]];
         }
     }
     else if (type == kCCBPropTypeFntFile)
@@ -945,6 +951,15 @@ static inline float readFloat(CCBReader *self)
 		}
 				
 	}
+    else if(type == kCCBPropTypeTokenArray)
+    {
+        NSString *arrayString = [self readCachedString];
+        if(![arrayString isEqualToString:@""])
+        {
+            NSArray *array = [arrayString componentsSeparatedByString:@";"];
+            [node setValue:array forKey:name];
+        }        
+    }
     else
     {
         NSAssert(false, @"[PROPERTY] %@ - Failed to read property type %d, node class name: \"%@\", name: \"%@\", in ccb file: \"%@\"", name, type, [node class], [node name], _currentCCBFile);

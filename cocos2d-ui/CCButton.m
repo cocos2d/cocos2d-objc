@@ -22,11 +22,16 @@
  * THE SOFTWARE.
  */
 
+#import <objc/runtime.h>
+
 #import "CCButton.h"
 #import "CCControlSubclass.h"
 
-#import "cocos2d.h"
-#import <objc/runtime.h>
+#import "CCLabelTTF.h"
+#import "CCColor.h"
+#import "CCSprite9Slice.h"
+#import "CCSpriteFrame.h"
+#import "CCActionInterval.h"
 
 #define kCCFatFingerExpansion 70
 

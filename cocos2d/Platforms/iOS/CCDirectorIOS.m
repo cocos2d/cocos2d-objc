@@ -25,15 +25,19 @@
  *
  */
 
-// Only compile this code on iOS. These files should NOT be included on your Mac project.
-// But in case they are included, it won't be compiled.
-#import "../../ccMacros.h"
+#warning We should not be using some monotonic time function instead of gettimeofday()
+#include <sys/time.h>
+
+#import "ccMacros.h"
 #if __CC_PLATFORM_IOS
 
-#import <unistd.h>
+#import "ccUtils.h"
 
-// cocos2d imports
 #import "CCDirectorIOS.h"
+#import "CCDirector_Private.h"
+#import "CCRenderer_Private.h"
+#import "CCRenderDispatch_Private.h"
+
 #import "CCScheduler.h"
 #import "CCActionManager.h"
 #import "CCTextureCache.h"
@@ -42,19 +46,8 @@
 #import "CCShader.h"
 #import "ccFPSImages.h"
 #import "CCDeviceInfo.h"
-#import "CCRenderer_Private.h"
 #import "CCTouch.h"
-#import "CCRenderDispatch_Private.h"
-
-// support imports
-#import "../../Support/CGPointExtension.h"
-#import "../../Support/CCFileUtils.h"
-
-#if CC_ENABLE_PROFILERS
-#import "../../Support/CCProfiling.h"
-#endif
-
-#import "CCDirector_Private.h"
+#import "Support/CCFileUtils.h"
 
 #pragma mark -
 #pragma mark Director

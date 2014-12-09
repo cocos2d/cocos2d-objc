@@ -25,8 +25,7 @@
  */
 
 
-#import <Foundation/Foundation.h>
-#import <CoreGraphics/CoreGraphics.h>
+#import "ccTypes.h"
 
 // keys used for the suffix or directory dictionaries
 extern NSString * const CCFileUtilsSuffixDefault;
@@ -41,13 +40,23 @@ extern NSString * const CCFileUtilsSuffixMacHD;
 
 extern NSString * const kCCFileUtilsDefaultSearchPath;
 
+/** Search mode used by CCFileUtils. */
 typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
+    /** Search using suffixes */
 	CCFileUtilsSearchModeSuffix,
+    /** Search using directories */
 	CCFileUtilsSearchModeDirectory,
 };
 
 
-/** Helper class to handle file operations */
+/** Helper class to resolve files with resolution-specific suffixes (ie `-hd`) to actual file paths, including fallbacks.
+ 
+ @warning **CCFileUtils should no longer be used by developers! CCFileUtils will be deprecated in an upcoming Cocos2D version!** 
+ 
+ Consider CCFileUtils a private API and this documentation only for instructional purposes and "historical" reference. Unfortunately
+ too many such references exist so that it would be a disservice to developers not to document the details of CCFileUtils,
+ no matter how much we all §/%&")$/$%! what CCFileUtils has grown into.
+ */
 @interface CCFileUtils : NSObject
 {
 	NSFileManager		*_fileManager;
@@ -71,11 +80,15 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
 	BOOL				_enableiPhoneResourcesOniPad;
 }
 
+/** @name All the methods you shouldn't be using :) */
+
 /** NSBundle used by CCFileUtils. By default it uses [NSBundle mainBundle].
+ @warning Avoid using this method in new code. See class *Overview*.
  */
 @property (nonatomic, readwrite, strong) NSBundle	*bundle;
 
 /** NSFileManager used by CCFileUtils. By default it uses its own instance.
+ @warning Avoid using this method in new code. See class *Overview*.
  */
 @property (nonatomic, readwrite, strong) NSFileManager	*fileManager;
 
@@ -88,6 +101,7 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  * On Mac      : Mac, Resources without resolution
  
  By default this functionality is on;
+ @warning Avoid using this method in new code. See class *Overview*.
  */
 @property (nonatomic, readwrite, getter = isEnablediPhoneResourcesOniPad) BOOL enableiPhoneResourcesOniPad;
 
@@ -102,6 +116,7 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  - Mac HD: "resources-machd"
  
  If "search in directories" is enabled (disabled by default), it will try to get the resources from the directories according to the order of "searchResolutionsOrder" array.
+ @warning Avoid using this method in new code. See class *Overview*.
  */
 @property (nonatomic, copy) NSMutableDictionary *directoriesDict;
 
@@ -116,6 +131,7 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
 	- Mac HD: "-machd"
 
   If "search with suffixes" is enabled (enabled by default), it will try to get the resources by appending the suffixes according to the order of "searchResolutionsOrder" array.
+ @warning Avoid using this method in new code. See class *Overview*.
  */
 @property (nonatomic, copy) NSMutableDictionary *suffixesDict;
 
@@ -131,7 +147,7 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
    - On Mac: Mac resources, resources not associated with any device
  
  If the property "enableiPhoneResourcesOniPad" is enabled, it will also search for iPhone resources if you are in an iPad.
- 
+ @warning Avoid using this method in new code. See class *Overview*.
  */
 @property (nonatomic, strong) NSMutableArray *searchResolutionsOrder;
 
@@ -140,7 +156,7 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  If you want to use "themes" or search resources in the "cache", you can do it easily by adding new entries in this array.
  
  By default it is an array with only the "" (empty string) element.
- 
+ @warning Avoid using this method in new code. See class *Overview*.
  */
 @property (nonatomic, copy) NSArray *searchPath;
 
@@ -151,6 +167,7 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
 	- kCCFileUtilsSearchDirectory: It will search the resoureces in subdirectories like "resources-hd", "resources-ipad", etc...
  
  Default: kCCFileUtilsSearchSuffix
+ @warning Avoid using this method in new code. See class *Overview*.
  */
 @property (nonatomic, readwrite) CCFileUtilsSearchMode searchMode;
 
@@ -159,36 +176,39 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
 
   *	-(NSString*) fullPathForFilename:(NSString*)key contentScale:(CGFloat *)contentScale;
   *	-(NSString*) fullPathForFilenameIgnoringResolutions:(NSString*)key;
-
+ @warning Avoid using this method in new code. See class *Overview*.
  */
 @property (nonatomic, readwrite, copy) NSMutableDictionary *filenameLookup;
 
 #if __CC_PLATFORM_IOS
 /** 
- *  The iPhone RetinaDisplay suffixes to load resources.
- *  By default it is "-hd" and "" in that order.
- *  Only valid on iOS. Not valid for OS X.
- *
- *  @param iPhoneRetinaDisplaySuffix Suffix to set
+   The iPhone RetinaDisplay suffixes to load resources.
+   By default it is "-hd" and "" in that order.
+   Only valid on iOS. Not valid for OS X.
+ 
+   @param iPhoneRetinaDisplaySuffix Suffix to set
+ @warning Avoid using this method in new code. See class *Overview*.
  */
 -(void) setiPhoneRetinaDisplaySuffix:(NSString*)iPhoneRetinaDisplaySuffix;
 
 /** 
- *  The iPad suffixes to load resources.
- *  By default it is "-ipad", "-hd", "", in that order.
- *  Only valid on iOS. Not valid for OS X.
- *
- *  @param iPadSuffix Suffix to set
+   The iPad suffixes to load resources.
+   By default it is "-ipad", "-hd", "", in that order.
+   Only valid on iOS. Not valid for OS X.
+ 
+   @param iPadSuffix Suffix to set
+ @warning Avoid using this method in new code. See class *Overview*.
  */
 -(void) setiPadSuffix:(NSString*) iPadSuffix;
 
 
 /** 
- *  Sets the iPad Retina Display suffixes to load resources.
- *  By default it is "-ipadhd", "-ipad", "-hd", "", in that order.
- *  Only valid on iOS. Not valid for OS X.
- *
- *  @param iPadRetinaDisplaySuffix Suffix to set
+   Sets the iPad Retina Display suffixes to load resources.
+   By default it is "-ipadhd", "-ipad", "-hd", "", in that order.
+   Only valid on iOS. Not valid for OS X.
+ 
+   @param iPadRetinaDisplaySuffix Suffix to set
+ @warning Avoid using this method in new code. See class *Overview*.
  */
 -(void)setiPadRetinaDisplaySuffix:(NSString*)iPadRetinaDisplaySuffix;
 
@@ -196,7 +216,8 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  Useful for when you manipulate CCDirector.contenScaleFactor.
  Defaults to 1.0.
  Only valid on iOS. Not valid for OS X.
- 
+ @param scale scale factor
+ @warning Avoid using this method in new code. See class *Overview*.
  */
 -(void)setiPhoneContentScaleFactor:(CGFloat)scale;
 
@@ -204,7 +225,8 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  Useful for when you manipulate CCDirector.contenScaleFactor.
  Defaults to 1.0.
  Only valid on iOS. Not valid for OS X.
- 
+ @param scale scale factor
+ @warning Avoid using this method in new code. See class *Overview*.
  */
 -(void)setiPadContentScaleFactor:(CGFloat)scale;
 
@@ -214,24 +236,28 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  Useful for when you manipulate CCDirector.contenScaleFactor.
  Defaults to 1.0.
  Only valid on Mac. Not valid for iOS.
- 
+ @param scale scale factor
+ @warning Avoid using this method in new code. See class *Overview*.
  */
 -(void)setMacContentScaleFactor:(CGFloat)scale;
 
 #endif // __CC_PLATFORM_IOS
 
 
-/** returns the shared file utils instance */
+/** returns the shared file utils instance
+ @warning Avoid using this method in new code. See class *Overview*.
+*/
 +(CCFileUtils*) sharedFileUtils;
 
 
 /** Purge cached entries.
  Will be called automatically by the Director when a memory warning is received
+ @warning Avoid using this method in new code. See class *Overview*.
  */
 -(void) purgeCachedEntries;
 
 /** Calling this method will populate the searchResolutionsOrder property depending on the current device.
- 
+ @warning Avoid using this method in new code. See class *Overview*.
  */
 - (void) buildSearchResolutionsOrder;
 
@@ -250,6 +276,7 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  *  @param relPath relative path
  *
  *  @return Full path
+ *  @warning Avoid using this method in new code. See class *Overview*.
  */
 -(NSString*) fullPathFromRelativePath:(NSString*) relPath;
 
@@ -266,9 +293,10 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  *  - In iPad RetinaDisplay mode: "image.png" -> "/full/path/image-ipadhd.png" (in case the -ipadhd file exists)
  *
  * @param relPath        Relative path to expand.
- * @param resolutionType The resolution to search for.
+ * @param contentScale The resolution to search for.
  *
  * @return Full path
+ *  @warning Avoid using this method in new code. See class *Overview*.
  */
 -(NSString*) fullPathFromRelativePath:(NSString*)relPath contentScale:(CGFloat *)contentScale;
 
@@ -282,6 +310,7 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  *  @param relPath Relative path.
  *
  *  @return Full path.
+ *  @warning Avoid using this method in new code. See class *Overview*.
  */
 -(NSString*) fullPathFromRelativePathIgnoringResolutions:(NSString*)relPath;
 
@@ -292,9 +321,10 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  *
  *  Useful for loading the fileLookup.plist and spriteFrameFileList.plist for packages
  *
- *  @param relPath Relative path.
+ *  @param filename Relative path.
  *
  *  @return Array of full paths.
+ *  @warning Avoid using this method in new code. See class *Overview*.
  */
 - (NSArray *)fullPathsOfFileNameInAllSearchPaths:(NSString *)filename;
 
@@ -317,6 +347,7 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  *  @param filename Filename to get full path for.
  *
  *  @return FUll path.
+ *  @warning Avoid using this method in new code. See class *Overview*.
  */
 -(NSString*) fullPathForFilename:(NSString*)filename;
 
@@ -337,9 +368,10 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  *  - In Android: "image.png" -> "image.png" -> "/full/path/image.png"
  *
  *  @param filename       Filename to get full path for.
- *  @param resolutionType Resolutiontype.
+ *  @param contentScale scale factor
  *
  *  @return Full path.
+ *  @warning Avoid using this method in new code. See class *Overview*.
  */
 -(NSString*) fullPathForFilename:(NSString*)filename contentScale:(CGFloat *)contentScale;
 
@@ -361,6 +393,7 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  *  @param key Key to get full path for.
  *
  *  @return Full path.
+ *  @warning Avoid using this method in new code. See class *Overview*.
  */
 -(NSString*) fullPathForFilenameIgnoringResolutions:(NSString*)key;
 
@@ -368,6 +401,7 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  *  Loads the filenameLookup dictionary from the contents of a filename.
  *
  *  @param filename Filename to query.
+ *  @warning Avoid using this method in new code. See class *Overview*.
  */
 -(void) loadFilenameLookupDictionaryFromFile:(NSString*)filename;
 
@@ -377,6 +411,7 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  *  Used for packages to merge filenameLookups found in different search paths.
  *
  *  @param filename Filename to query.
+ *  @warning Avoid using this method in new code. See class *Overview*.
  */
 - (void)loadFileNameLookupsInAllSearchPathsWithName:(NSString *)filename;
 
@@ -389,6 +424,7 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  *  @param path Path to clean for suffix.
  *
  *  @return Cleaned path.
+ *  @warning Avoid using this method in new code. See class *Overview*.
  */
 -(NSString *)removeSuffixFromFile:(NSString*) path;
 
@@ -399,6 +435,7 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  *  @param path Path to standardize.
  *
  *  @return Standardized path.
+ *  @warning Avoid using this method in new code. See class *Overview*.
  */
 -(NSString*) standarizePath:(NSString*)path;
 
@@ -411,6 +448,7 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  *  @param filename Filename to test.
  *
  *  @return YES if the file exists.
+ *  @warning Avoid using this method in new code. See class *Overview*.
  */
 -(BOOL) iPhoneRetinaDisplayFileExistsAtPath:(NSString*)filename;
 
@@ -421,6 +459,7 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  *  @param filename Filename to test.
  *
  *  @return YES if the file exists.
+ *  @warning Avoid using this method in new code. See class *Overview*.
  */
 -(BOOL) iPadFileExistsAtPath:(NSString*)filename;
 
@@ -431,6 +470,7 @@ typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
  *  @param filename Filename to test.
  *
  *  @return YES if the file exists.
+ *  @warning Avoid using this method in new code. See class *Overview*.
  */
 -(BOOL) iPadRetinaDisplayFileExistsAtPath:(NSString*)filename;
 
@@ -447,6 +487,7 @@ extern "C" {
  *  It is the callers responsibility to release the allocated buffer.
  *
  *  @return The size of the allocated buffer.
+ *  @warning Avoid using this method in new code. See class *Overview*.
  */
 NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out);
 	

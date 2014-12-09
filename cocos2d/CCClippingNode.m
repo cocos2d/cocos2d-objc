@@ -24,15 +24,13 @@
  *
  */
 
+#import "ccMacros.h"
+
 #import "CCClippingNode.h"
 
-#import "CCGL.h"
+#import "CCProtocols.h"
+#import "CCRenderer.h"
 #import "CCShader.h"
-
-#import "CCDirector.h"
-#import "CGPointExtension.h"
-
-#import "CCNode_Private.h"
 #import "CCRenderDispatch.h"
 #import "CCDeviceInfo.h"
 
@@ -40,8 +38,10 @@ static GLint _stencilBits = -1;
 
 static void
 SetProgram(CCNode *n, CCShader *p, NSNumber *alpha) {
-	n.shader = p;
-	n.shaderUniforms[CCShaderUniformAlphaTestValue] = alpha;
+    if([n respondsToSelector:@selector(setShader:)]){
+        [(id<CCShaderProtocol>)n setShader:p];
+        [(id<CCShaderProtocol>)n shaderUniforms][CCShaderUniformAlphaTestValue] = alpha;
+    }
 	
 	if(!n.children) return;
 	for(CCNode* c in n.children) SetProgram(c,p, alpha);
@@ -251,7 +251,7 @@ SetProgram(CCNode *n, CCShader *p, NSNumber *alpha) {
 		
     // draw the stencil node as if it was one of our child
     // (according to the stencil test func/op and alpha (or alpha shader) test)
-    GLKMatrix4 transform = [self transform:parentTransform];
+    GLKMatrix4 transform = GLKMatrix4Multiply(*parentTransform, [self nodeToParentMatrix]);
 		
 		[renderer pushGroup];
     [_stencil visit:renderer parentTransform:&transform];
@@ -297,12 +297,12 @@ SetProgram(CCNode *n, CCShader *p, NSNumber *alpha) {
     layer--;
 }
 
--(GLfloat)alphaThreshold
+-(float)alphaThreshold
 {
 	return _alphaThreshold.floatValue;
 }
 
--(void)setAlphaThreshold:(GLfloat)alphaThreshold
+-(void)setAlphaThreshold:(float)alphaThreshold
 {
 	_alphaThreshold = @(alphaThreshold);
 }

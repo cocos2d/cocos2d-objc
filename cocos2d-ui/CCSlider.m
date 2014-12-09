@@ -6,9 +6,15 @@
 //
 //
 
+#import "ccMacros.h"
+
 #import "CCSlider.h"
 #import "CCControlSubclass.h"
 #import "CCTouch.h"
+#import "CCSprite.h"
+#import "CCSprite9Slice.h"
+#import "CCSpriteFrameCache.h"
+#import "NSEvent+CC.h"
 
 @interface CCSlider (Inputs)
 - (void) inputEnteredWithWorlPos:(CGPoint)worldLocation;

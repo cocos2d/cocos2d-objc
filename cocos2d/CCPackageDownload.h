@@ -3,7 +3,12 @@
 @protocol CCPackageDownloadDelegate;
 @class CCPackage;
 
-
+/** CCPackageDownload is a class to encapsulate the http(s) download of a single package.
+ 
+ Package downloads can be paused if the remote server supports range requests. 
+ 
+ Used by CCPackageDownloadManager.
+ */
 @interface CCPackageDownload : NSObject <NSURLConnectionDataDelegate>
 
 /**

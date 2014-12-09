@@ -28,10 +28,10 @@
 // -----------------------------------------------------------------
 
 #import "CCScene.h"
-#import "Support/CGPointExtension.h"
-#import "CCDirector.h"
+
 #import "CCDirector_Private.h"
 #import "CCLightCollection.h"
+#import "CCColor.h"
 
 // -----------------------------------------------------------------
 
@@ -41,8 +41,10 @@
 
 // -----------------------------------------------------------------
 
-// Private method used by the CCNode.scene property.
--(BOOL)isScene {return YES;}
+-(CCScene *)scene
+{
+    return self;
+}
 
 -( id )init {
 	if((self = [ super init ])){
@@ -52,9 +54,7 @@
 		
 		self.colorRGBA = [CCColor blackColor];
         
-#if CC_EFFECTS_EXPERIMENTAL
         _lights = [[CCLightCollection alloc] init];
-#endif
 	}
 	
 	return( self );

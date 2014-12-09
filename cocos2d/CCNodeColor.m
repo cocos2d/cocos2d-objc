@@ -24,23 +24,12 @@
  */
 
 
-#import <stdarg.h>
-
-#import "Platforms/CCGL.h"
+#import "ccTypes.h"
 
 #import "CCNodeColor.h"
 #import "CCDirector.h"
-#import "ccMacros.h"
-#import "CCShader.h"
-#import "Support/CGPointExtension.h"
-#import "CCNode_Private.h"
-
-
-#if __CC_PLATFORM_IOS
-#import "Platforms/iOS/CCDirectorIOS.h"
-#elif __CC_PLATFORM_MAC
-#import "Platforms/Mac/CCDirectorMac.h"
-#endif
+#import "CCColor.h"
+#import "CCRendererBasicTypes.h"
 
 #pragma mark -
 #pragma mark Layer
@@ -57,7 +46,7 @@
 	GLKVector4	_colors[4];
 }
 
-+ (id) nodeWithColor:(CCColor*)color width:(GLfloat)w  height:(GLfloat) h
++ (id) nodeWithColor:(CCColor*)color width:(float)w  height:(float) h
 {
 	return [[self alloc] initWithColor:color width:w height:h];
 }
@@ -74,7 +63,7 @@
 }
 
 // Designated initializer
-- (id) initWithColor:(CCColor*)color width:(GLfloat)w  height:(GLfloat) h
+- (id) initWithColor:(CCColor*)color width:(float)w  height:(float) h
 {
 	if( (self=[super init]) ) {
 		self.blendMode = [CCBlendMode premultipliedAlphaMode];
@@ -248,9 +237,5 @@
 	_vector = v;
 	[self updateColor];
 }
-
-// Deprecated
--(BOOL) compressedInterpolation {return YES; }
--(void) setCompressedInterpolation:(BOOL)compress {}
 
 @end

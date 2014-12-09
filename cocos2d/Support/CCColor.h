@@ -29,17 +29,22 @@
 
 #if __CC_PLATFORM_IOS
 #import <UIKit/UIColor.h>
+#elif __CC_PLATFORM_MAC
+#import <AppKit/NSColor.h>
 #endif
 
 
 /**
- *  A CCColor object represents color and sometimes opacity (alpha value) for use with Cocos2D objects.
+ A CCColor object represents color and sometimes opacity (alpha value) for use with Cocos2D objects.
+ 
+ It is the Cocos2D equivalent of [UIColor](https://developer.apple.com/library/ios/DOCUMENTATION/UIKit/Reference/UIColor_Class/index.html)
+ respectively [NSColor](https://developer.apple.com/library/Mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSColor_Class/index.html).
  */
 @interface CCColor : NSObject
 
 #pragma mark - Creating a CCColor Object from Component Values
 /// -----------------------------------------------------------------------
-/// @name Creating a CCColor Object from Component Values
+/// @name Creating a Color from RGB(A) Components
 /// -----------------------------------------------------------------------
 
 /**
@@ -76,15 +81,6 @@
 + (CCColor *)colorWithRed:(float)red green:(float)green blue:(float)blue;
 
 /**
- *  Creates and returns a color object using the specified Quartz color reference.
- *
- *  @param cgColor A reference to a Quartz color.
- *
- *  @return The color object.
- */
-+ (CCColor *)colorWithCGColor:(CGColorRef)cgColor;
-
-/**
  *  Creates and returns a color object that has the same color space and component values as the receiver, but has the specified alpha component.
  *
  *  @param alpha The opacity value of the new CCColor object.
@@ -92,23 +88,6 @@
  *  @return The color object.
  */
 - (CCColor *)colorWithAlphaComponent:(float)alpha;
-
-#if __CC_PLATFORM_IOS
-/**
- *  Converts a UIColor object to its CCColor equivalent.
- *
- *  @param color UIColor object.
- *
- *  @return The color object.
- */
-+ (CCColor *)colorWithUIColor:(UIColor*)color;
-#endif
-
-
-#pragma mark - Initializing a CCColor Object
-/// -----------------------------------------------------------------------
-/// @name Initializing a CCColor Object
-/// -----------------------------------------------------------------------
 
 /**
  *  Initializes and returns a color object using the specified opacity and grayscale values.
@@ -143,6 +122,30 @@
  */
 - (CCColor *)initWithRed:(float)red green:(float)green blue:(float)blue;
 
+/// -----------------------------------------------------------------------
+/// @name Creating a Color with CGColor/UIColor
+/// -----------------------------------------------------------------------
+
+/**
+ *  Creates and returns a color object using the specified Quartz color reference.
+ *
+ *  @param cgColor A reference to a Quartz color.
+ *
+ *  @return The color object.
+ */
++ (CCColor *)colorWithCGColor:(CGColorRef)cgColor;
+
+#if __CC_PLATFORM_IOS
+/**
+ *  Converts a UIColor object to its CCColor equivalent.
+ *
+ *  @param color UIColor object.
+ *
+ *  @return The color object.
+ */
++ (CCColor *)colorWithUIColor:(UIColor*)color;
+#endif
+
 /**
  *  Initializes and returns a color object using the specified Quartz color reference.
  *
@@ -166,7 +169,7 @@
 
 #pragma mark - Creating a CCColor with Preset Component Values
 /// -----------------------------------------------------------------------
-/// @name Creating a CCColor with Preset Component Values
+/// @name Getting Preset Colors
 /// -----------------------------------------------------------------------
 
 /**
@@ -275,7 +278,7 @@
 + (CCColor *)clearColor;
 
 /// -----------------------------------------------------------------------
-/// @name Accessing Color Attributes
+/// @name Converting Colors
 /// -----------------------------------------------------------------------
 
 /** The Quartz color reference that corresponds to the CCColor color. */
@@ -294,10 +297,35 @@
 
 #pragma mark - Retrieving Color Information
 /// -----------------------------------------------------------------------
-/// @name Retrieving Color Information
+/// @name Retrieving RGBA Components
 /// -----------------------------------------------------------------------
 
+/** Retrieves the color's RGBA components, storing them in the passed-in parameters.
+ 
+ Usage example, the values will be in the float variables after the method call:
+ 
+    float r, g, b, a;
+    [color getRed:&r green:&g blue:&b alpha:&a];
+ 
+ @param red Red color value.
+ @param green Green color value.
+ @param blue Blue color value.
+ @param alpha Alpha value.
+ @returns YES
+ */
 - (BOOL)getRed:(float *)red green:(float *)green blue:(float *)blue alpha:(float *)alpha;
+
+/** Retrieves the color's brightness and alpha components, storing them in the passed-in parameters.
+ 
+ Usage example, the values will be in the float variables after the method call:
+ 
+    float w, a;
+    [color getWhite:&w alpha:&a];
+ 
+ @param white Approximated brightness value (average of R+B+G).
+ @param alpha Alpha value.
+ @returns YES
+ */
 - (BOOL)getWhite:(float *)white alpha:(float *)alpha;
 
 
@@ -323,19 +351,9 @@
 // Helper category for OpenGL compatible color creating/accessing.
 @interface CCColor (OpenGL)
 
-+ (CCColor*)colorWithCcColor3b: (ccColor3B) c __attribute__((deprecated));
-+ (CCColor*)colorWithCcColor4b: (ccColor4B) c __attribute__((deprecated));
-+ (CCColor*)colorWithCcColor4f: (ccColor4F) c __attribute__((deprecated));
+- (CCColor*)initWithGLKVector4: (GLKVector4) c;
 + (CCColor*)colorWithGLKVector4: (GLKVector4) c;
 
-- (CCColor*)initWithCcColor3b: (ccColor3B) c __attribute__((deprecated));
-- (CCColor*)initWithCcColor4b: (ccColor4B) c __attribute__((deprecated));
-- (CCColor*) initWithCcColor4f: (ccColor4F) c __attribute__((deprecated));
-- (CCColor*)initWithGLKVector4: (GLKVector4) c;
-
-@property (nonatomic, readonly) ccColor3B ccColor3b __attribute__((deprecated));
-@property (nonatomic, readonly) ccColor4B ccColor4b __attribute__((deprecated));
-@property (nonatomic, readonly) ccColor4F ccColor4f __attribute__((deprecated));
 @property (nonatomic, readonly) GLKVector4 glkVector4;
 
 @end
@@ -344,20 +362,28 @@
 #pragma mark - ExtraProperties Category
 // Convenience category for accessing properties.
 
-@interface CCColor (ExtraProperties)
+/** RGBA properties */
+@interface CCColor (RGBA_Properties)
 
+/** @name Accessing RGBA Properties */
+
+/** The color's red value. */
 @property (nonatomic, readonly) float red;
+/** The color's green value. */
 @property (nonatomic, readonly) float green;
+/** The color's blue value. */
 @property (nonatomic, readonly) float blue;
+/** The color's alpha value. */
 @property (nonatomic, readonly) float alpha;
 
+/** @name Comparing Colors */
 
-// Compare specified color value to current color and return match result.
-//
-// @param color Color to compare.
-//
-// @return True if color match.
-//
+/**
+ Compares specified color to current color and returns whether they are identical.
+
+ @param color Color to compare.
+ @return YES if colors are identical.
+*/
 - (BOOL)isEqualToColor:(CCColor*) color;
 
 @end

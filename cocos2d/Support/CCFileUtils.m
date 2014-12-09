@@ -26,10 +26,10 @@
 
 
 #import "CCFileUtils.h"
-#import "../CCDeviceInfo.h"
-#import "../ccMacros.h"
-#import "../ccConfig.h"
-#import "../ccTypes.h"
+#import "CCDeviceInfo.h"
+#import "ccMacros.h"
+#import "ccConfig.h"
+#import "ccTypes.h"
 
 NSString * const CCFileUtilsSuffixDefault = @"default";
 

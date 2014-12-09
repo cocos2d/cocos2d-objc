@@ -30,7 +30,7 @@
 @class CCTiledMapLayer;
 @class CCTiledMapObjectGroup;
 
-/** Possible oritentations of the TMX map. */
+/** Supported orientations of the TMX map. Used by CCTiledMap, CCTiledMapLayer and their various "info" classes. */
 typedef NS_ENUM(NSUInteger, CCTiledMapOrientation)
 {
 	/** Orthogonal orientation. */
@@ -42,40 +42,43 @@ typedef NS_ENUM(NSUInteger, CCTiledMapOrientation)
 
 /** 
  
- CCTiledMap knows how to parse and render a TMX map.
+ CCTiledMap parses and renders a tile map in the TMX format.
 
  ### Features:
  
- - Each tile will be treated as an CCSprite
- - The sprites are created on demand. They will be created only when you call "[layer tileAt:]"
- - Each tile can be rotated / moved / scaled / tinted / "opacitied", since each tile is a CCSprite
- - Tiles can be added/removed in runtime
- - The z-order of the tiles can be modified in runtime
+ - Each tile is treated as a CCSprite if needed, otherwise it's efficiently stored
+ - A tile is converted to CCSprite when you call [layer tileAt:] - doing so on every tile will greatly increase memory consumption!
+ - If a tile became a sprite it can be rotated / moved / scaled / tinted / fade out
+ - Tiles can be added/removed/replaced at runtime
+ - The zOrder of the tiles can be modified at runtime
  - Each tile has an anchorPoint of (0,0)
  - The anchorPoint of the TMXTileMap is (0,0)
- - The Tiled layers will be added as a child
- - The Tiled layers will be aliased by default
- - The tileset image will be loaded using the CCTextureCache
+ - The Tiled map's layers create CCTiledMapLayer instances which are added as a child nodes of CCTiledMap
+ - The Tiled layer's tiles will be aliased by default
  - Each tile will have a unique tag
  - Each tile will have a unique z value. top-left: z=1, bottom-right: z=max z
- - Each object group will be treated as an NSMutableArray
- - Object class which will contain all the properties in a dictionary
+ - Each object group is stored in an NSMutableArray
  - Properties can be assigned to the Map, Layer, Object Group, and Object
 
  ### Limitations:
- - It only supports one tileset per layer.
- - Embedded images are not supported
- - It only supports the XML format (the JSON format is not supported)
+ 
+ - It only supports one tileset image per layer.
+ - Embedded images (image layers) are not supported.
+ - It only supports the XML format. The JSON format is not supported.
+ - Hexagonal tilemaps are not currently supported.
 
  ### Notes:
- - Each layer is created using an CCTileMapLayer
- - You can obtain the layers at runtime by:
- - [map getChildByTag: tag_number];
- - [map layerNamed: name_of_the_layer];
+ 
+ You can obtain the map's layers at runtime by:
+ 
+    [map getChildByTag: tag_number];
+    [map layerNamed: name_of_the_layer];
  
  ### Supported editors
  
- - Tiled http://www.mapeditor.org/
+ - [Tiled Map Editor](http://www.mapeditor.org/)
+ - [iTileMaps](https://itunes.apple.com/app/itilemaps/id432784227)
+ - And others ...
 
  */
 
@@ -100,29 +103,8 @@ typedef NS_ENUM(NSUInteger, CCTiledMapOrientation)
 	NSMutableDictionary	*_tileProperties;
 }
 
-
 /// -----------------------------------------------------------------------
-/// @name Accessing the Tile Map Attributes
-/// -----------------------------------------------------------------------
-
-/** Map size measured in tiles.*/
-@property (nonatomic,readonly) CGSize mapSize;
-
-/** Map Tile size measured in pixels. */
-@property (nonatomic,readonly) CGSize tileSize;
-
-/** Map Orientation method. */
-@property (nonatomic,readonly) CCTiledMapOrientation mapOrientation;
-
-/** Object Groups. */
-@property (nonatomic,readwrite,strong) NSMutableArray *objectGroups;
-
-/** Tile Properties. */
-@property (nonatomic,readwrite,strong) NSMutableDictionary *properties;
-
-
-/// -----------------------------------------------------------------------
-/// @name Creating a CCTiledMap Object
+/// @name Creating a Tiled Map
 /// -----------------------------------------------------------------------
 
 /**
@@ -143,11 +125,6 @@ typedef NS_ENUM(NSUInteger, CCTiledMapOrientation)
  *  @return The CCTiledMap Object.
  */
 +(id) tiledMapWithXML:(NSString*)tmxString resourcePath:(NSString*)resourcePath;
-
-
-/// -----------------------------------------------------------------------
-/// @name Initializing a CCTiledMap Object
-/// -----------------------------------------------------------------------
 
 /**
  *  Initializes and returns a Tile Map object using the specified TMX file.
@@ -170,7 +147,32 @@ typedef NS_ENUM(NSUInteger, CCTiledMapOrientation)
 
 
 /// -----------------------------------------------------------------------
-/// @name Tiled Map Helpers
+/// @name Map Attributes
+/// -----------------------------------------------------------------------
+
+/** Map size measured in tiles.*/
+@property (nonatomic,readonly) CGSize mapSize;
+
+/** Map Tile size measured in pixels. */
+@property (nonatomic,readonly) CGSize tileSize;
+
+/** Map Orientation method.
+ @see CCTiledMapOrientation */
+@property (nonatomic,readonly) CCTiledMapOrientation mapOrientation;
+
+/// -----------------------------------------------------------------------
+/// @name Tilemap Objects and Properties
+/// -----------------------------------------------------------------------
+
+/** Object Groups contain the objects in a tilemap. */
+@property (nonatomic,readwrite,strong) NSMutableArray *objectGroups;
+
+/** Tile Properties. */
+@property (nonatomic,readwrite,strong) NSMutableDictionary *properties;
+
+
+/// -----------------------------------------------------------------------
+/// @name Getting specific Layers, Objects and Properties
 /// -----------------------------------------------------------------------
 
 /**
@@ -179,6 +181,7 @@ typedef NS_ENUM(NSUInteger, CCTiledMapOrientation)
  *  @param layerName Name of layer to lookup.
  *
  *  @return The CCTiledMapLayer object.
+ *  @see CCTiledMapLayer
  */
 -(CCTiledMapLayer*) layerNamed:(NSString *)layerName;
 
@@ -190,6 +193,7 @@ typedef NS_ENUM(NSUInteger, CCTiledMapOrientation)
  *  @param groupName Object group name to lookup.
  *
  *  @return The CCTiledMapObjectGroup object.
+ *  @see CCTiledMapObjectGroup
  */
 -(CCTiledMapObjectGroup*) objectGroupNamed:(NSString *)groupName;
 

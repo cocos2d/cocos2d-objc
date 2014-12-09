@@ -54,9 +54,9 @@ typedef struct CCRenderBuffer {
 	/// Read only pointer to the start of the vertex buffer.
 	CCVertex *vertexes;
 	/// Read only pointer to the start of the element index buffer.
-	GLushort *elements;
+	uint16_t *elements;
 	/// Offset of the first vertex in the buffer.
-	GLushort startIndex;
+	uint16_t startIndex;
 } CCRenderBuffer;
 
 /// Set a vertex in the buffer.
@@ -69,7 +69,7 @@ CCRenderBufferSetVertex(CCRenderBuffer buffer, int index, CCVertex vertex)
 /// Set a triangle in the buffer.
 /// The CCRenderBuffer must have been created using [CCRenderer enqueueTriangles:andVertexes:withState:].
 static inline void
-CCRenderBufferSetTriangle(CCRenderBuffer buffer, int index, GLushort a, GLushort b, GLushort c)
+CCRenderBufferSetTriangle(CCRenderBuffer buffer, int index, uint16_t a, uint16_t b, uint16_t c)
 {
 	uint16_t offset = buffer.startIndex;
 	buffer.elements[3*index + 0] = a + offset;
@@ -80,7 +80,7 @@ CCRenderBufferSetTriangle(CCRenderBuffer buffer, int index, GLushort a, GLushort
 /// Set a line in the buffer.
 /// The CCRenderBuffer must have been created using [CCRenderer enqueueLines:andVertexes:withState:].
 static inline void
-CCRenderBufferSetLine(CCRenderBuffer buffer, int index, GLushort a, GLushort b)
+CCRenderBufferSetLine(CCRenderBuffer buffer, int index, uint16_t a, uint16_t b)
 {
 	uint16_t offset = buffer.startIndex;
 	buffer.elements[2*index + 0] = a + offset;
@@ -102,14 +102,22 @@ extern NSString * const CCBlendFuncDstAlpha;
 extern NSString * const CCBlendEquationAlpha;
 
 
-/// Blending mode identifiers used with CCNode.blendMode.
+/// Blending modes used with certain node's `blendMode` property. CCBlendMode treats blend modes by descriptive name rather
+/// than a nondescriptive combination of blend mode identifiers.
 @interface CCBlendMode : NSObject
+
+/// @name Blend Mode Options
 
 /// Blending options for this mode.
 @property(nonatomic, readonly) NSDictionary *options;
 
+/// @name Getting a Blend Mode with Options
+
 /// Return a cached blending mode with the given options.
+/// @param options dictionary with blend mode options
 +(CCBlendMode *)blendModeWithOptions:(NSDictionary *)options;
+
+/// @name Getting a Built-In Blend Mode
 
 /// Disabled blending mode. Use this with fully opaque surfaces for extra performance.
 +(CCBlendMode *)disabledMode;
@@ -129,22 +137,32 @@ extern NSString * const CCBlendEquationAlpha;
 @class CCShader;
 
 
-/// A render state encapsulates how an object will be draw.
-/// What shader it will use, what texture, what blending mode, etc.
+/// A render state encapsulates how an object will be drawn.
+/// For example what shader it will use, the texture, the blending mode, etc.
 @interface CCRenderState : NSObject<NSCopying>
 
-/// A simple render state you can use that draws solid colors.
-+(instancetype)debugColor;
+/// @name Creating a Custom Render State
 
-/// Create a cached blending mode for a given blending mode, shader and main texture.
+/// Creates a **cached** blending mode for a given blending mode, shader and main texture.
+/// @param blendMode A blend mode.
+/// @param shader The shader to use.
+/// @param mainTexture The mainTexture to use.
+/// @see CCBlendMode
+/// @see CCShader
+/// @see CCTexture
 +(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader mainTexture:(CCTexture *)mainTexture;
 
-/// Create an uncached blending mode for a given blending mode, shader and set of uniform values.
-/// Allowing the uniform dictionary to be copied allows the render state to be immutable and used more optimally.
+/// Creates an **uncached** blending mode for a given blending mode, shader and set of uniform values.
+/// Allowing the uniform dictionary to be copied allows the render state to be immutable, which is more efficient.
+/// @param blendMode A blend mode.
+/// @param shader The shader to use.
+/// @param shaderUniforms The shader uniforms.
+/// @param copyUniforms Whether to copy the uniforms. If set to YES the render state is assumed to be immutable which is more efficient.
+/// @see CCBlendMode
+/// @see CCShader
 +(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms copyUniforms:(BOOL)copyUniforms;
 
-/// Initialize an uncached blending mode for a given blending mode, shader and set of uncopied uniform values.
-/// Use [CCRenderState renderStateWithBlendMode:blendMode shader:shader shaderUniforms:shaderUniforms copyUniforms:NO] instead.
--(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms __deprecated;
+/// A simple render state that draws solid colored opaque geometry.
++(instancetype)debugColor;
 
 @end

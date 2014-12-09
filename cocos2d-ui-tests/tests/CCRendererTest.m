@@ -3,7 +3,7 @@
 #import "CCNodeColor.h"
 //#import "CCNode_Private.h"
 
-@interface CustomSprite : CCNode<CCShaderProtocol, CCTextureProtocol> @end
+@interface CustomSprite : CCRenderableNode<CCShaderProtocol, CCTextureProtocol> @end
 @implementation CustomSprite
 
 -(id)init

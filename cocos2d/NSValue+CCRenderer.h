@@ -22,8 +22,10 @@
  * THE SOFTWARE.
  */
 
+
 #import "ccTypes.h"
 
+/** NSValue CCRenderer category */
 @interface NSValue(CCRenderer)
 
 /// Create an NSValue wrapping a GLKVector2.

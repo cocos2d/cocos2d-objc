@@ -106,6 +106,3 @@
 - (void)startTransition:(CCScene *)scene;
 
 @end
-
-// optimization. Should only be used to read it. Never to write it.
-extern NSUInteger __ccNumberOfDraws;

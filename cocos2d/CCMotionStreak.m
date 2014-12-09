@@ -24,15 +24,14 @@
  *
  */
 
+
+#import "ccUtils.h"
+
 #import "CCMotionStreak.h"
 #import "CCTextureCache.h"
 #import "CCShader.h"
-#import "ccMacros.h"
-#import "CCNode_Private.h"
-#import "CCTexture_Private.h"
-#import "CCRenderer_Private.h"
-
-#import "Support/CGPointExtension.h"
+#import "CCColor.h"
+#import "CCRenderer.h"
 
 
 static BOOL CCVertexLineIntersect(float Ax, float Ay,

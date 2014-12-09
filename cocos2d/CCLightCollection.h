@@ -23,11 +23,8 @@
  */
 
 #import "ccTypes.h"
-
+#import "CCColor.h"
 #import "CCLightGroups.h"
-
-
-#if CC_EFFECTS_EXPERIMENTAL
 
 extern const CCLightGroupMask CCLightCollectionAllGroups;
 
@@ -37,18 +34,22 @@ extern const CCLightGroupMask CCLightCollectionAllGroups;
  * CCLightCollection is a container for light nodes within the scene.  It allows
  * CCEffectLighting to find the most influential N lights given the relative positions
  * of a node and the contained lights.
+ *
+ * @note This class is currently considered experimental. Set the `CC_EFFECTS_EXPERIMENTAL` macro to 1 in ccConfig.h if you want to use this class.
+ *
  */
 
 @interface CCLightCollection : NSObject
 
 /// -----------------------------------------------------------------------
-/// @name Initializing a CCLightCollection object
+/// @name Creating a Light Collection
 /// -----------------------------------------------------------------------
 
 /**
  *  Initializes an empty CCLightCollection object.
  *
  *  @return The CCLightCollection object.
+ *  @since v3.4 and later
  */
 - (id)init;
 
@@ -61,6 +62,8 @@ extern const CCLightGroupMask CCLightCollectionAllGroups;
  *  Adds a light to the collection.
  *
  *  @param light CCLightNode to add.
+ *  @since v3.4 and later
+ *  @see CCLightNode
  */
 - (void)addLight:(CCLightNode *)light;
 
@@ -68,11 +71,14 @@ extern const CCLightGroupMask CCLightCollectionAllGroups;
  *  Removes a light from the collection.
  *
  *  @param light The light node to remove.
+ *  @since v3.4 and later
+ *  @see CCLightNode
  */
 - (void)removeLight:(CCLightNode *)light;
 
 /**
  *  Removes all lights from the collection.
+ *  @since v3.4 and later
  */
 - (void)removeAllLights;
 
@@ -85,26 +91,45 @@ extern const CCLightGroupMask CCLightCollectionAllGroups;
 /**
  *  Finds the closest lights to the supplied point.
  *
+ *  @note CCLightGroupMask is declared as NSUInteger
+ *
  *  @param count The number of lights to return.
  *  @param point The reference point.
+ *  @param mask The light group mask.
+ *  @since v3.4 and later
  */
 - (NSArray*)findClosestKLights:(NSUInteger)count toPoint:(CGPoint)point withMask:(CCLightGroupMask)mask;
 
+/**
+ *  Return the sum of ambient colors for all lights matching the
+ *  supplied mask.
+ *
+ *  @param mask    The light group mask to match.
+ */
+- (CCColor*)findAmbientSumForLightsWithMask:(CCLightGroupMask)mask;
+
 
 /// -----------------------------------------------------------------------
-/// @name Light groups
+/// @name Getting a Light Groups Mask
 /// -----------------------------------------------------------------------
 
 /**
  *  Convert an array of light group identifiers into a group bitmask.
- *  The categories are retained and assigned indexes.
+ *  The groups are retained and assigned indexes.
  *
- *  @param categories Array of categories.
+ *  @note CCLightGroupMask is declared as NSUInteger
+ *
+ *  @param groups Array of groups.
  *
  *  @return Bitmask.
+ *  @since v3.4 and later
  */
 - (CCLightGroupMask)maskForGroups:(NSArray *)groups;
 
-@end
+/**
+ *  Reset the group name to group mask mapping. This invalidates any outstanding
+ *  group masks.
+ */
+- (void)flushGroupNames;
 
-#endif
+@end

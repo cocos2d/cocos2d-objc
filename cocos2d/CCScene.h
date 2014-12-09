@@ -29,25 +29,31 @@
 
 @class CCLightCollection;
 
-/** CCScene is a subclass of CCNode and must be the parent of all your nodes. 
+/** CCScene is a subclass of CCNode. The scene represents the root node of the node hierarchy.
+
+ A scene is created using the default node initializer:
  
- - In previous versions of Cocos2D, CCLayer was used to group nodes placed in a CCScene.
- - In V3, this is changed, so that a simple CCNode is used in stead.
- - Touch handling is now pr. node, so no touch setup is needed. Just set userInteractionEnabled.
- - To reduce the footprint of a scene, when not active, resources can be loaded in onEnter, and released in onExit.
+    id scene = [CCScene node];
  
+ @note In previous versions of Cocos2D, CCLayer was used to group nodes in a CCScene. In v3 but also in v2 before that,
+ you can simply use a CCNode to group other nodes.
  */
 @interface CCScene : CCNode
 
-#if CC_EFFECTS_EXPERIMENTAL
+/** @name Accessing Lights */
+/** 
+ A collection of lights in the scene.
+ @note Only available if `CC_EFFECTS_EXPERIMENTAL` is set to 1.
+ @see CCLightCollection
+ @since v3.4 and later
+ */
 @property (nonatomic, readonly, strong) CCLightCollection *lights;
-#endif
 
 /// -----------------------------------------------------------------------
-/// @name Initializing a CCScene Object
+/// @name Creating a Scene
 /// -----------------------------------------------------------------------
 
-/** Initialize the node. */
+/* Initialize the node. */
 - (id)init;
 
 @end

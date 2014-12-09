@@ -8,6 +8,9 @@
 
 #import "CCAnimationManager+FrameAnimation.h"
 #import "CCAnimationManager_Private.h"
+#import "CCSpriteFrame.h"
+#import "CCSpriteFrameCache.h"
+#import "CCFileUtils.h"
 
 @implementation CCAnimationManager (FrameAnimation)
 

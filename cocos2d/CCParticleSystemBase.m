@@ -41,26 +41,21 @@
 // IMPORTANT: Particle Designer is supported by cocos2d, but
 // 'Radius Mode' in Particle Designer uses a fixed emit rate of 30 hz. Since that can't be guarateed in cocos2d,
 //  cocos2d uses a another approach, but the results are almost identical.
-//
 
-// opengl
-#import "Platforms/CCGL.h"
-
-// cocos2d
-#import "ccConfig.h"
-#import "CCParticleSystemBase.h"
-#import "CCTexture.h"
-#import "CCTextureCache.h"
 #import "ccMacros.h"
-#import "Support/CCProfiling.h"
-#import "CCNode_Private.h"
 
-// support
-#import "Support/CGPointExtension.h"
-#import "Support/base64.h"
-#import "Support/CCFileUtils.h"
+#if __CC_PLATFORM_MAC
+#import <AppKit/NSBitmapImageRep.h>
+#endif
 
 #import "CCParticleSystemBase_Private.h"
+#import "CCFileUtils.h"
+#import "CCRendererBasicTypes.h"
+#import "CCTextureCache.h"
+#import "CCColor.h"
+
+#import "base64.h"
+#import "ccUtils.h"
 
 @implementation CCParticleSystemBase
 @synthesize active = _active, duration = _duration;
@@ -487,8 +482,6 @@
 #pragma mark ParticleSystem - MainLoop
 -(void) update: (CCTime) dt
 {
-	CC_PROFILER_START_CATEGORY(kCCProfilerCategoryParticles , @"CCParticleSystem - update");
-
 	if( _active && _emissionRate ) {
 		float rate = 1.0f / _emissionRate;
 		
@@ -583,8 +576,6 @@
 		
 		_transformSystemDirty = NO;
 	}
-
-	CC_PROFILER_STOP_CATEGORY(kCCProfilerCategoryParticles , @"CCParticleSystem - update");
 }
 
 -(void) updateQuadWithParticle:(_CCParticle*)particle newPosition:(CGPoint)pos;

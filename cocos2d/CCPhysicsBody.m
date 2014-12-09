@@ -24,9 +24,11 @@
 
 // Used to access cpBodyAccumulateMassFromShapes()
 #define CP_ALLOW_PRIVATE_ACCESS 1
+#import "CCPhysics+ObjectiveChipmunk.h"
+
+#import "ccUtils.h"
 
 #import "CCPhysicsBody.h"
-#import "CCPhysics+ObjectiveChipmunk.h"
 #import "CCNode_Private.h"
 
 

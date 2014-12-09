@@ -28,32 +28,27 @@
 /* Idea of decoupling Window from Director taken from OC3D project: http://code.google.com/p/oc3d/
  */
 
-#import <unistd.h>
+#warning We should not be using some monotonic time function instead of gettimeofday()
+#include <sys/time.h>
 
-// cocos2d imports
-#import "CCDirector.h"
+#import "CCDirector_Private.h"
+#import "CCNode_Private.h"
+#import "CCRenderer_Private.h"
+#import "CCRenderDispatch_Private.h"
+
 #import "CCScheduler.h"
 #import "CCActionManager.h"
 #import "CCTextureCache.h"
 #import "CCAnimationCache.h"
 #import "CCLabelBMFont.h"
-#import "ccMacros.h"
 #import "CCScene.h"
+#import "CCColor.h"
 #import "CCSpriteFrameCache.h"
 #import "CCTexture.h"
-#import "CCLabelBMFont.h"
 #import "ccFPSImages.h"
 #import "CCDeviceInfo.h"
 #import "CCTransition.h"
-#import "CCRenderer_Private.h"
-#import "CCRenderDispatch_Private.h"
-
-// support imports
-#import "Platforms/CCGL.h"
 #import "Platforms/CCNS.h"
-
-#import "Support/CGPointExtension.h"
-#import "Support/CCProfiling.h"
 #import "Support/CCFileUtils.h"
 
 #if __CC_PLATFORM_IOS
@@ -67,16 +62,10 @@
 #define CC_DIRECTOR_DEFAULT CCDirectorDisplayLink
 #endif
 
-#import "CCDirector_Private.h"
-#import "CCNode_Private.h"
-
 #pragma mark -
 #pragma mark Director - global variables (optimization)
 
-CGFloat	__ccContentScaleFactor = 1;
-
-// XXX it shoul be a Director ivar. Move it there once support for multiple directors is added
-NSUInteger	__ccNumberOfDraws = 0;
+float __ccContentScaleFactor = 1;
 
 #define kDefaultFPS		60.0	// 60 frames per second
 
@@ -615,7 +604,7 @@ static CCDirector *_sharedDirector = nil;
 	// pop stack until reaching desired level
 	while (c > level) {
 		CCScene *current = [_scenesStack lastObject];
-		if( current.runningInActiveScene ){
+		if( current.isRunningInActiveScene ){
 			[current onExitTransitionDidStart];
 			[current onExit];
 		}
@@ -842,7 +831,7 @@ static CCDirector *_sharedDirector = nil;
 @end
 
 
-@interface CCFPSLabel : CCNode<CCTextureProtocol>
+@interface CCFPSLabel : CCRenderableNode<CCTextureProtocol, CCShaderProtocol>
 @property(nonatomic, strong) NSString *string;
 @end
 
@@ -933,7 +922,7 @@ static const float CCFPSLabelItemHeight = 32;
 			[_FPSLabel setString:fpsstr];
 			
 			// Subtract one for the stat label's own batch. This caused a lot of confusion on the forums...
-			NSString *draws = [[NSString alloc] initWithFormat:@"%4lu", (unsigned long)__ccNumberOfDraws - 1];
+			NSString *draws = [[NSString alloc] initWithFormat:@"%4lu", (unsigned long)0 - 1];
 			[_drawsLabel setString:draws];
 		}
 		
@@ -943,8 +932,6 @@ static const float CCFPSLabelItemHeight = 32;
 		[_FPSLabel visit:renderer parentTransform:&_projectionMatrix];
 		[_SPFLabel visit:renderer parentTransform:&_projectionMatrix];
 	}
-	
-	__ccNumberOfDraws = 0;
 }
 
 -(void) calculateMPF

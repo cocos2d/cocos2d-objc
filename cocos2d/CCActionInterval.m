@@ -26,14 +26,13 @@
  */
 
 
-
+#import "ccTypes.h"
 #import "CCActionInterval.h"
 #import "CCActionInstant.h"
+#import "CCColor.h"
 #import "CCSprite.h"
 #import "CCSpriteFrame.h"
 #import "CCAnimation.h"
-#import "CCNode.h"
-#import "Support/CGPointExtension.h"
 
 //
 // IntervalAction

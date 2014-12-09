@@ -13,8 +13,6 @@
 #import "CCLightNode_Private.h"
 
 
-#if CC_EFFECTS_EXPERIMENTAL
-
 @implementation CCLightNode
 
 -(id)init
@@ -35,7 +33,7 @@
         
         _groups = [groups copy];
         
-        _color = color.ccColor4f;
+        _color = color.glkVector4;
         _intensity = intensity;
         
         _specularColor = specularColor;
@@ -127,5 +125,3 @@
 }
 
 @end
-
-#endif

@@ -22,11 +22,16 @@
  * THE SOFTWARE.
  */
 
+
+#import <objc/runtime.h>
+
 #define CP_ALLOW_PRIVATE_ACCESS 1
+#import "CCPhysics+ObjectiveChipmunk.h"
 
 #import "CCPhysicsNode.h"
-#import "CCPhysics+ObjectiveChipmunk.h"
-#import <objc/runtime.h>
+
+#import "CCDrawNode.h"
+#import "CCColor.h"
 
 
 // Do not change this value unless you redefine the cpBitmask type to have more than 32 bits.

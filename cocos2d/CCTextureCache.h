@@ -25,13 +25,13 @@
  *
  */
 
+#import <Foundation/Foundation.h>
+
 #import "ccMacros.h"
 
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
 #import <CoreGraphics/CGImage.h>
 #endif
-
-#import <Foundation/Foundation.h>
 
 @class CCTexture;
 

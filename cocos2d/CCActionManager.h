@@ -29,7 +29,7 @@
 
 #import "CCAction.h"
 #import "ccMacros.h"
-#import "Support/uthash.h"
+#import "uthash.h"
 #import "CCScheduler.h"
 
 typedef struct _hashElement {

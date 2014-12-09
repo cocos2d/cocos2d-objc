@@ -9,7 +9,7 @@
 @property (nonatomic, copy, readwrite) NSString *os;
 @property (nonatomic, copy, readwrite) NSURL *remoteURL;
 @property (nonatomic, copy, readwrite) NSString *folderName;
-@property (nonatomic, copy, readwrite) NSURL *installURL;
+@property (nonatomic, copy, readwrite) NSURL *installRelURL;
 @property (nonatomic, copy, readwrite) NSURL *localDownloadURL;
 @property (nonatomic, copy, readwrite) NSURL *unzipURL;
 @property (nonatomic, readwrite) BOOL enableOnDownload;

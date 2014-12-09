@@ -7,6 +7,7 @@
 
 #import "CCEffect_Private.h"
 #import "CCEffectStack_Private.h"
+#import "CCLightCollection.h"
 
 @interface CCEffectsTest : TestBase @end
 @implementation CCEffectsTest {
@@ -27,12 +28,37 @@
 	return self;
 }
 
+#pragma mark Outline
+
+-(void)setupOutlineTest
+{
+    self.subTitle = @"Outline Effect Test";
+    
+    CCSprite *environment = [CCSprite spriteWithImageNamed:@"Images/MountainPanorama.jpg"];
+    environment.positionType = CCPositionTypeNormalized;
+    environment.anchorPoint = ccp(0.5, 0.5);
+    environment.position = ccp(0.5f, 0.5f);
+    
+    CCColor* outlineColor = [CCColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:1.0];
+    CCEffectOutline* outline = [CCEffectOutline effectWithOutlineColor:outlineColor outlineWidth:2];
+    
+    // df_sprite.png grossini.png
+    CCSprite *dfSprite = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
+    dfSprite.position = ccp(0.5, 0.5);
+    dfSprite.positionType = CCPositionTypeNormalized;
+    dfSprite.effect = outline;
+    dfSprite.scale = 1.0f;
+
+    [self.contentNode addChild:environment];
+    [self.contentNode addChild:dfSprite];
+}
+
 #pragma mark Distance Fields
 
 #if CC_EFFECTS_EXPERIMENTAL
 
-#define TEMPORARILY_DISABLE_SDF_TESTS 1
-#if !TEMPORARILY_DISABLE_SDF_TESTS
+#define INNER_GLOW_MAX_WIDTH 6
+
 -(void)setupDFInnerGlowTest
 {
     self.subTitle = @"Distance Field Inner Glow Test";
@@ -45,7 +71,7 @@
     CCTexture* texture = [[CCTextureCache sharedTextureCache] addImage:@"Images/output.png"];
     
     CCColor* fillColor = [CCColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:0.5];
-    _innerGlowEffect = [CCEffectDFInnerGlow effectWithGlowColor:[CCColor redColor] fillColor:fillColor glowWidth:2 fieldScale:32 distanceField:texture];
+    _innerGlowEffect = [CCEffectDFInnerGlow effectWithGlowColor:[CCColor redColor] fillColor:fillColor glowWidth:INNER_GLOW_MAX_WIDTH fieldScale:32 distanceField:texture];
     
     CCSprite *dfSprite = [CCSprite spriteWithImageNamed:@"Images/df_sprite.png"];
     dfSprite.position = ccp(0.5, 0.5);
@@ -61,12 +87,13 @@
     [slider setBackgroundSpriteFrame:backgroundHilite forState:CCControlStateHighlighted];
     slider.positionType = CCPositionTypeNormalized;
     slider.position = ccp(0.1f, 0.5f);
-    slider.sliderValue = 0.3;
+    slider.sliderValue = 1.0;
     slider.preferredSizeType = CCSizeTypeMake(CCSizeUnitNormalized, CCSizeUnitUIPoints);
     slider.preferredSize = CGSizeMake(0.5f, 10);
     slider.rotation = 90;
     slider.anchorPoint = ccp(0.5f, 0.5f);
     slider.scale = 0.8;
+    slider.continuous = YES;
     
     [slider setTarget:self selector:@selector(innerGlowWidthChanged:)];
     
@@ -77,11 +104,12 @@
 
 - (void)innerGlowWidthChanged:(id)sender
 {
-    const int innerGloWMax = 6;
+    const int innerGloWMax = INNER_GLOW_MAX_WIDTH;
     CCSlider* slider = sender;
     _innerGlowEffect.glowWidth = slider.sliderValue * innerGloWMax;
 }
 
+#define OUTLINE_MAX_WIDTH 6
 
 -(void)setupDFOutlineEffectTest
 {
@@ -95,7 +123,7 @@
     CCTexture* texture = [[CCTextureCache sharedTextureCache] addImage:@"Images/output.png"];
     
     CCColor* fillColor = [CCColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:0.0];
-    _outlineEffect = [CCEffectDFOutline effectWithOutlineColor:[CCColor redColor] fillColor:fillColor outlineWidth:1 fieldScale:32 distanceField:texture];
+    _outlineEffect = [CCEffectDFOutline effectWithOutlineColor:[CCColor redColor] fillColor:fillColor outlineWidth:OUTLINE_MAX_WIDTH fieldScale:32 distanceField:texture];
 
     CCSprite *dfSprite = [CCSprite spriteWithImageNamed:@"Images/df_sprite.png"];
     dfSprite.position = ccp(0.5, 0.5);
@@ -116,7 +144,8 @@
     slider.rotation = 90;
     slider.anchorPoint = ccp(0.5f, 0.5f);
     slider.scale = 0.8;
-    slider.sliderValue = 0.1;
+    slider.sliderValue = 1.0;
+    slider.continuous = YES;
     
     [slider setTarget:self selector:@selector(outlineWidthChagne:)];
     
@@ -135,7 +164,7 @@
 
 - (void)outlineWidthChagne:(id)sender
 {
-    const int outlineWidthMax = 6;
+    const int outlineWidthMax = OUTLINE_MAX_WIDTH;
     CCSlider* slider = sender;
     _outlineEffect.outlineWidth = slider.sliderValue * outlineWidthMax;
 }
@@ -154,7 +183,10 @@
 
     CCColor *glowColor = [CCColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:1.0];
     _distanceFieldEffect = [CCEffectDistanceField effectWithGlowColor:glowColor outlineColor:[CCColor redColor]];
-
+    _distanceFieldEffect.outlineInnerWidth = 1.0f;
+    _distanceFieldEffect.outlineOuterWidth = 1.0f;
+    _distanceFieldEffect.glowWidth = 1.0f;
+    
     CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"Images/output.png"];
     sampleSprite.position = ccp(0.5, 0.5);
     sampleSprite.positionType = CCPositionTypeNormalized;
@@ -175,6 +207,8 @@
     slider.rotation = 90;
     slider.anchorPoint = ccp(0.5f, 0.5f);
     slider.scale = 0.8;
+    slider.sliderValue = 1.0;
+    slider.continuous = YES;
     
     [slider setTarget:self selector:@selector(outlineInnerWidthChange:)];
     
@@ -188,6 +222,8 @@
     slider2.rotation = 90;
     slider2.anchorPoint = ccp(0.5f, 0.5f);
     slider2.scale = 0.8;
+    slider2.sliderValue = 1.0;
+    slider2.continuous = YES;
     
     [slider2 setTarget:self selector:@selector(outlineOuterWidthChange:)];
     
@@ -201,7 +237,9 @@
     slider3.rotation = 90;
     slider3.anchorPoint = ccp(0.5f, 0.5f);
     slider3.scale = 0.8;
-    
+    slider3.sliderValue = 1.0;
+    slider3.continuous = YES;
+
     [slider3 setTarget:self selector:@selector(glowWidthChange:)];
     
     CCButton* enableGlow = [CCButton buttonWithTitle:@"Outer Glow"];
@@ -257,6 +295,8 @@
 {
     self.subTitle = @"Simple Lighting Test";
     
+    [self.contentNode.scene.lights flushGroupNames];
+    
     NSString *normalMapImage = @"Images/ShinyTorusNormals.png";
     NSString *diffuseImage = @"Images/ShinyTorusColor.png";
     
@@ -277,7 +317,7 @@
         
         CCEffectLighting *lightingEffect = [[CCEffectLighting alloc] init];
         lightingEffect.groups = @[title];
-        lightingEffect.shininess = 10.0f;
+        lightingEffect.shininess = 0.1f;
         
         CCSprite *sprite = [CCSprite spriteWithImageNamed:diffuseImage];
         sprite.positionType = CCPositionTypeNormalized;
@@ -321,6 +361,8 @@
 {
     self.subTitle = @"Varying Light Parameter Test";
     
+    [self.contentNode.scene.lights flushGroupNames];
+
     NSString *normalMapImage = @"Images/ShinyTorusNormals.png";
     NSString *diffuseImage = @"Images/ShinyTorusColor.png";
     
@@ -413,17 +455,17 @@
     const float delta = timeStep / duration;
     
     typedef void (^AmbientLerpBlock)();
-    typedef void (^AmbientLerpBuilderBlock)(ccColor4F deltaC);
+    typedef void (^AmbientLerpBuilderBlock)(GLKVector4 deltaC);
     
     __weak CCLightNode *weakLight = light;
-    AmbientLerpBlock (^ambientLerpBuilder)(ccColor4F deltaC) = ^AmbientLerpBlock(ccColor4F deltaC)
+    AmbientLerpBlock (^ambientLerpBuilder)(GLKVector4 deltaC) = ^AmbientLerpBlock(GLKVector4 deltaC)
     {
         AmbientLerpBlock lerpBlock = ^{
-            ccColor4F c = weakLight.ambientColor.ccColor4f;
+            GLKVector4 c = weakLight.ambientColor.glkVector4;
             c.r += deltaC.r;
             c.g += deltaC.g;
             c.b += deltaC.b;
-            weakLight.ambientColor = [CCColor colorWithCcColor4f:c];
+            weakLight.ambientColor = [CCColor colorWithGLKVector4:c];
         };
         return lerpBlock;
     };
@@ -437,16 +479,16 @@
     CCActionInterval *greenBlueLerpAction;
     CCActionInterval *blueWhiteLerpAction;
     
-    whiteRedLerp = ambientLerpBuilder(ccc4f(0.0f, -delta, -delta, 0.0f));
+    whiteRedLerp = ambientLerpBuilder(GLKVector4Make(0.0f, -delta, -delta, 0.0f));
     whiteRedLerpAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:whiteRedLerp]] times:120];
     
-    redGreenLerp = ambientLerpBuilder(ccc4f(-delta, delta, 0.0f, 0.0f));
+    redGreenLerp = ambientLerpBuilder(GLKVector4Make(-delta, delta, 0.0f, 0.0f));
     redGreenLerpAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:redGreenLerp]] times:120];
     
-    greenBlueLerp = ambientLerpBuilder(ccc4f(0.0f, -delta, delta, 0.0f));
+    greenBlueLerp = ambientLerpBuilder(GLKVector4Make(0.0f, -delta, delta, 0.0f));
     greenBlueLerpAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:greenBlueLerp]] times:120];
     
-    blueWhiteLerp = ambientLerpBuilder(ccc4f(delta, delta, 0.0f, 0.0f));
+    blueWhiteLerp = ambientLerpBuilder(GLKVector4Make(delta, delta, 0.0f, 0.0f));
     blueWhiteLerpAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:blueWhiteLerp]] times:120];
     
     CCAction *ambientLerpAction = [CCActionRepeatForever actionWithAction:[CCActionSequence actions:
@@ -477,31 +519,31 @@
     light.specularIntensity = 1.0f;
     
     typedef void (^SpecularLerpBlock)();
-    typedef void (^SpecularLerpBuilderBlock)(ccColor4F deltaC);
+    typedef void (^SpecularLerpBuilderBlock)(GLKVector4 deltaC);
     
     weakLight = light;
-    SpecularLerpBlock (^specularLerpBuilder)(ccColor4F deltaC) = ^SpecularLerpBlock(ccColor4F deltaC)
+    SpecularLerpBlock (^specularLerpBuilder)(GLKVector4 deltaC) = ^SpecularLerpBlock(GLKVector4 deltaC)
     {
         SpecularLerpBlock lerpBlock = ^{
-            ccColor4F c = weakLight.specularColor.ccColor4f;
+            GLKVector4 c = weakLight.specularColor.glkVector4;
             c.r += deltaC.r;
             c.g += deltaC.g;
             c.b += deltaC.b;
-            weakLight.specularColor = [CCColor colorWithCcColor4f:c];
+            weakLight.specularColor = [CCColor colorWithGLKVector4:c];
         };
         return lerpBlock;
     };
     
-    whiteRedLerp = specularLerpBuilder(ccc4f(0.0f, -delta, -delta, 0.0f));
+    whiteRedLerp = specularLerpBuilder(GLKVector4Make(0.0f, -delta, -delta, 0.0f));
     whiteRedLerpAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:whiteRedLerp]] times:120];
     
-    redGreenLerp = specularLerpBuilder(ccc4f(-delta, delta, 0.0f, 0.0f));
+    redGreenLerp = specularLerpBuilder(GLKVector4Make(-delta, delta, 0.0f, 0.0f));
     redGreenLerpAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:redGreenLerp]] times:120];
     
-    greenBlueLerp = specularLerpBuilder(ccc4f(0.0f, -delta, delta, 0.0f));
+    greenBlueLerp = specularLerpBuilder(GLKVector4Make(0.0f, -delta, delta, 0.0f));
     greenBlueLerpAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:greenBlueLerp]] times:120];
     
-    blueWhiteLerp = specularLerpBuilder(ccc4f(delta, delta, 0.0f, 0.0f));
+    blueWhiteLerp = specularLerpBuilder(GLKVector4Make(delta, delta, 0.0f, 0.0f));
     blueWhiteLerpAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:blueWhiteLerp]] times:120];
     
     CCAction *specularLerpAction = [CCActionRepeatForever actionWithAction:[CCActionSequence actions:
@@ -524,7 +566,7 @@
     light = setupBlock(ccp(0.7f, 0.65f), @"Shininess", nil);
     sprite = (CCSprite *)light.parent;
     lighting = (CCEffectLighting *)sprite.effect;
-    lighting.shininess = 4.0f;
+    lighting.shininess = 0.1f;
     
     typedef void (^ShininessLerpBlock)();
     typedef void (^ShininessLerpBuilderBlock)(float delta);
@@ -536,10 +578,10 @@
         return lerpBlock;
     };
     
-    ShininessLerpBlock shininessRampUp = shininessLerpBuilder(delta * 50.0f);
+    ShininessLerpBlock shininessRampUp = shininessLerpBuilder(delta * 0.5f);
     CCActionInterval *shininessRampUpAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:shininessRampUp]] times:120];
     
-    ShininessLerpBlock shininessRampDown = shininessLerpBuilder(-delta * 50.0f);
+    ShininessLerpBlock shininessRampDown = shininessLerpBuilder(-delta * 0.5f);
     CCActionInterval *shininessRampDownAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:shininessRampDown]] times:120];
     
     [light runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
@@ -567,13 +609,15 @@
     light.depth = 1.0f;
     sprite = (CCSprite *)light.parent;
     lighting = (CCEffectLighting *)sprite.effect;
-    lighting.shininess = 20.0f;
+    lighting.shininess = 0.2f;
     
 }
 
 -(void)setupLightingCollectionTest
 {
     self.subTitle = @"Lighting Collection Test";
+    
+    [self.contentNode.scene.lights flushGroupNames];
     
     NSString *normalMapImage = @"Images/ShinyTorusNormals.png";
     NSString *diffuseImage = @"Images/ShinyTorusColor.png";
@@ -620,7 +664,7 @@
     
     
     CCEffectLighting *lightingEffect = [[CCEffectLighting alloc] init];
-    lightingEffect.shininess = 100.0f;
+    lightingEffect.shininess = 1.0f;
     
     CCSprite *sprite = [CCSprite spriteWithImageNamed:diffuseImage];
     sprite.positionType = CCPositionTypeNormalized;
@@ -636,13 +680,15 @@
 {
     self.subTitle = @"Lighting Performance Test";
     
+    [self.contentNode.scene.lights flushGroupNames];
+    
     NSString *normalMapImage = @"Images/ShinyTorusNormals.png";
     NSString *diffuseImage = @"Images/ShinyTorusColor.png";
     
     CCSprite* (^setupSpriteBlock)(CGPoint position) = ^CCSprite*(CGPoint position)
     {
         CCEffectLighting *lightingEffect = [[CCEffectLighting alloc] init];
-        lightingEffect.shininess = 100.0f;
+        lightingEffect.shininess = 1.0f;
         
         CCSprite *sprite = [CCSprite spriteWithImageNamed:diffuseImage];
         sprite.positionType = CCPositionTypeNormalized;
@@ -717,8 +763,6 @@
         [self.contentNode addChild:setupLightBlock(ccp(x,y), r, t, colors[c])];
     }
 }
-
-#endif
 
 -(void)setupInvertTest
 {
@@ -1565,7 +1609,7 @@
 
 -(void)setupSpriteColorTest
 {
-    self.subTitle = @"Sprite Color + Effects Test\nThe bottom row should look like the top";
+    self.subTitle = @"Sprite Color + Effects Test\nColors in the bottom row should look like the top";
 
     // Make a solid gray background (there's got to be a better way to do this).
     CCEffectNode* background = [[CCEffectNode alloc] init];
@@ -1690,18 +1734,16 @@
     }
     
     
-    // Sprite with 50% transparent red and three stacked effects but stitching disabled
-    // manually after the second effect
+    // Sprite with 50% transparent red and three stacked effects, the third of which
+    // does not support being stitched to the effect before it. This tests that the
+    // sprite color and texture are multiplied together at the begining of the stack
+    // but not also by the input snippet to the third effect.
     {
         CCEffect *saturation = [CCEffectSaturation effectWithSaturation:0.0f];
         CCEffect *brightness = [CCEffectBrightness effectWithBrightness:0.0f];
-        CCEffect *hue = [CCEffectHue effectWithHue:0.0f];
-
-        // Manually manipulate the brightness effect's stitch flags so it is stitched with
-        // saturation but not with hue.
-        brightness.stitchFlags = CCEffectFunctionStitchBefore;
+        CCEffect *pixellate = [CCEffectPixellate effectWithBlockSize:1.0f];
         
-        CCEffectStack *stack = [CCEffectStack effectWithArray:@[saturation, brightness, hue]];
+        CCEffectStack *stack = [CCEffectStack effectWithArray:@[saturation, brightness, pixellate]];
         
         CCSprite *plainSprite = [CCSprite spriteWithImageNamed:@"Images/grossini.png"];
         plainSprite.positionType = CCPositionTypeNormalized;

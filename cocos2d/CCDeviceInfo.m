@@ -24,20 +24,13 @@
  * THE SOFTWARE.
  */
 
-#import "ccMacros.h"
+#import "cocos2d.h"
 
 #if __CC_PLATFORM_IOS
-#import <UIKit/UIKit.h>		// Needed for UIDevice
+#import <UIKit/UIKit.h>
 #elif __CC_PLATFORM_ANDROID
-#import <BridgeKitV3/BridgeKit.h> // Needed for AndroidBuild
+#import <BridgeKitV3/BridgeKit.h>
 #endif
-
-#import "Platforms/CCGL.h"
-#import "CCDeviceInfo.h"
-#import "ccMacros.h"
-#import "ccConfig.h"
-#import "cocos2d.h"
-#import "CCRenderDispatch.h"
 
 Class CCGraphicsBufferClass;
 Class CCGraphicsBufferBindingsClass;
@@ -424,9 +417,10 @@ static char * glExtensions;
 		printf("cocos2d: OpenGL Rendering enabled.");
 		
 		CCRenderDispatch(NO, ^{
-			printf("cocos2d: GL_VENDOR:   %s\n", glGetString(GL_VENDOR) );
-			printf("cocos2d: GL_RENDERER: %s\n", glGetString ( GL_RENDERER   ) );
-			printf("cocos2d: GL_VERSION:  %s\n", glGetString ( GL_VERSION    ) );
+			printf("cocos2d: GL_VENDOR:    %s\n", glGetString(GL_VENDOR) );
+			printf("cocos2d: GL_RENDERER:  %s\n", glGetString ( GL_RENDERER   ) );
+			printf("cocos2d: GL_VERSION:   %s\n", glGetString ( GL_VERSION    ) );
+			printf("cocos2d: GLSL_VERSION: %s\n", glGetString ( GL_SHADING_LANGUAGE_VERSION ) );
 		});
 		
 		printf("cocos2d: GL_MAX_TEXTURE_SIZE: %d\n", _maxTextureSize);

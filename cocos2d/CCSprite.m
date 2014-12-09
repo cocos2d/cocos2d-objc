@@ -25,31 +25,18 @@
  *
  */
 
-#import "ccConfig.h"
-#import "CCSprite.h"
-#import "CCSpriteFrame.h"
-#import "CCSpriteFrameCache.h"
-#import "CCAnimation.h"
-#import "CCAnimationCache.h"
-#import "CCTextureCache.h"
-#import "CCShader.h"
-#import "CCDirector.h"
-#import "Support/CGPointExtension.h"
-#import "Support/CCProfiling.h"
-#import "CCNode_Private.h"
-#import "CCRenderer_Private.h"
+#import "ccUtils.h"
+
 #import "CCSprite_Private.h"
-#import "CCTexture_Private.h"
+
+#import "CCSpriteFrameCache.h"
+#import "CCRenderer.h"
+#import "CCTexture.h"
+#import "CCTextureCache.h"
+
 
 #pragma mark -
 #pragma mark CCSprite
-
-//#if CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
-//#define RENDER_IN_SUBPIXEL
-//#else
-//#define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
-//#endif
-
 
 @implementation CCSprite {
 	// Offset Position, used by sprite sheet editors.
@@ -522,7 +509,7 @@
                           } mutableCopy];
     
     // And then copy the new effect's uniforms into the node's uniforms dictionary.
-    [_shaderUniforms addEntriesFromDictionary:_effect.shaderUniforms];
+    [_shaderUniforms addEntriesFromDictionary:_effect.effectImpl.shaderUniforms];
 }
 
 @end

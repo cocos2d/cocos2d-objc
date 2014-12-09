@@ -1,7 +1,7 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * Copyright (c) 2013-2014 Cocos2D Authors
+ * Copyright (c) 2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,9 +22,26 @@
  * THE SOFTWARE.
  */
 
-#import "CCProgressNode.h"
 
-// OS X
-@interface CCProgressNode ()
+#import "CCNode.h"
+#import "CCProtocols.h"
+
+
+@class CCTexture;
+@class CCBlendMode;
+@class CCShader;
+@class CCRenderState;
+
+@interface CCRenderableNode : CCNode {
+    // TODO Should all of these be in the public header?
+	@protected
+	CCRenderState *_renderState;
+	
+	CCShader *_shader;
+	NSMutableDictionary *_shaderUniforms;
+	
+	CCBlendMode *_blendMode;
+	CCTexture *_texture;
+}
 
 @end

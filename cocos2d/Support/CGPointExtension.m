@@ -27,7 +27,7 @@
 #include "stdio.h"
 #include "math.h"
 
-#import "../ccMacros.h"		// CC_SWAP
+#import "ccUtils.h"
 #include "CGPointExtension.h"
 
 #define kCGPointEpsilon FLT_EPSILON
@@ -177,11 +177,6 @@ float ccpAngle(CGPoint a, CGPoint b)
     return [NSValue value:&size withObjCType:@encode(CGSize)];
 }
 
-+ (NSValue *)valueWithCGAffineTransform:(CGAffineTransform)transform
-{
-    return [NSValue value:&transform withObjCType:@encode(CGAffineTransform)];
-}
-
 - (CGPoint)CGPointValue
 {
 	CGPoint pt = CGPointZero;
@@ -201,13 +196,6 @@ float ccpAngle(CGPoint a, CGPoint b)
 	CGSize sz = CGSizeZero;
     [self getValue:&sz];
     return sz;
-}
-
-- (CGAffineTransform)CGAffineTransformValue
-{
-    CGAffineTransform transform = CGAffineTransformIdentity;
-    [self getValue:&transform];
-    return transform;
 }
 
 @end

@@ -39,6 +39,8 @@
 #import "CCDirector.h"
 #import "CCTexture_Private.h"
 #import <Foundation/Foundation.h>
+#import "CCRenderableNode_Private.h"
+#import "CCColor.h"
 
 #if __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
@@ -350,7 +352,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 	if(_renderState == nil){
 		// Allowing the uniforms to be copied speeds up the rendering by making the render state immutable.
 		// Copy the uniforms if custom uniforms are not being used.
-		BOOL copyUniforms = self.hasDefaultShaderUniforms;
+		BOOL copyUniforms = !self.usesCustomShaderUniforms;
 		
 		// Create an uncached renderstate so the texture can be released before the renderstate cache is flushed.
 		_renderState = [CCRenderState renderStateWithBlendMode:_blendMode shader:_shader shaderUniforms:self.shaderUniforms copyUniforms:copyUniforms];
@@ -964,12 +966,12 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         NSURL* fontURL = [NSURL fileURLWithPath:fontPath];
         CTFontManagerRegisterFontsForURL((__bridge CFURLRef)fontURL, kCTFontManagerScopeProcess, NULL);
         NSString *fontName = nil;
-#if __CC_PLATFORM_IOS
-        BOOL needsCGFontFailback = [[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending;
-#else
+
         BOOL needsCGFontFailback = NO;
+#if __CC_PLATFORM_ANDROID
+        needsCGFontFailback = YES;
 #endif
-        if (!needsCGFontFailback) {
+        if (needsCGFontFailback) {
             CFArrayRef descriptors = CTFontManagerCreateFontDescriptorsFromURL((__bridge CFURLRef)fontURL);
             if (!descriptors || CFArrayGetCount(descriptors)<1) {
                 return nil;

@@ -59,9 +59,9 @@
 #endif
 
 /* texture max S */
-@property(nonatomic,readwrite) GLfloat maxS;
+@property(nonatomic,readwrite) float maxS;
 /* texture max T */
-@property(nonatomic,readwrite) GLfloat maxT;
+@property(nonatomic,readwrite) float maxT;
 
 @property(nonatomic,readwrite) BOOL premultipliedAlpha;
 

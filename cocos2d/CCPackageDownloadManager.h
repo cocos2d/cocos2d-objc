@@ -4,7 +4,15 @@
 @class CCPackage;
 @protocol CCPackageDownloadManagerDelegate;
 
-
+/** CCPackageDownloadManager manages many CCPackageDownload objects.
+ 
+ The manager initiates download as well as pausing, resuming and cancelling.
+ 
+ The delegate of the CCPackageDownloadManager will receive feedback of all downloads in general.
+ 
+ The CCPackageDownloadManager is uesd by the CCPackageManager.
+ 
+ */
 @interface CCPackageDownloadManager : NSObject <CCPackageDownloadDelegate>
 
 /**
