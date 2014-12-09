@@ -32,24 +32,6 @@
 
 
 /**
- Should the image's bitmap be flipped relative to OpenGL conventions?
- 
- The default value is `NO`, meaning the first row of pixels in the image's bitmap will be at the bottom edge of the image.
-
- @since 4.0
- */
-extern NSString * const CCImageOptionFlipVertical;
-
-/**
- Should the image's bitmap be flipped relative to OpenGL conventions?
- 
- The default value is `NO`, meaning that the first colum of pixels in the bitmap will be at the right edge of the image.
-
- @since 4.0
- */
-extern NSString * const CCImageOptionFlipHorizontal;
-
-/**
  How much to rescale the image while loading it.
  
  The default value is 1.0.
@@ -80,7 +62,9 @@ extern NSString * const CCImageOptionExpandToPOT;
  */
 extern NSString * const CCImageOptionPremultiply;
 
-
+/**
+ Low level image handling class for RGBA8 bitmaps.
+ */
 @interface CCImage : NSObject<NSCoding>
 
 /**

@@ -23,7 +23,7 @@
  */
 
 
-#import "CCImage.h"
+#import "CCImage_Private.h"
 
 #import "CCDeviceInfo.h"
 #import "CCColor.h"
