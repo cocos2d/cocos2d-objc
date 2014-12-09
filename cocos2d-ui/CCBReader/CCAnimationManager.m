@@ -217,6 +217,14 @@ static NSInteger ccbAnimationManagerID = 0;
         }
     } else if ([name isEqualToString:@"spriteFrame"]) {
         return [CCActionSpriteFrame actionWithSpriteFrame:kf1.value];
+    } else if ([name isEqualToString:@"intensity"] ||
+               [name isEqualToString:@"specularIntensity"] ||
+               [name isEqualToString:@"ambientIntensity"] ||
+               [name isEqualToString:@"cutoffRadius"] ||
+               [name isEqualToString:@"halfRadius"] ||
+               [name isEqualToString:@"depth"])
+    {
+        return [CCActionTween actionWithDuration:duration key:name from:[kf0.value floatValue] to:[kf1.value floatValue]];
     } else {
         CCLOG(@"CCBReader: Failed to create animation for property: %@", name);
     }
