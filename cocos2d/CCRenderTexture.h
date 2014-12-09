@@ -59,64 +59,50 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
  */
 
 /**
- *  initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format
+ *  initializes a RenderTexture object with width and height in points and depthStencil format
  *
  *  @param w                  Width of render target.
  *  @param h                  Height of render target.
- *  @param format             Pixel format of render target.
  *  @param depthStencilFormat Stencil format of render target.
  *
  *  @return An initialized CCRenderTarget object.
  *  @see CCTexturePixelFormat
  */
-+(id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat) format depthStencilFormat:(GLuint)depthStencilFormat;
++(id)renderTextureWithWidth:(int)w height:(int)h depthStencilFormat:(GLuint)depthStencilFormat;
 
 /**
- *  Creates a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid
+ *  Creates a RenderTexture object with width and height in points.
  *
  *  @param w      Width of render target.
  *  @param h      Height of render target.
- *  @param format Pixel format of render target.
  *
  *  @return An initialized CCRenderTarget object.
  *  @see CCTexturePixelFormat
- */
-+(id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat) format;
-
-/**
- *  Creates a RenderTexture object with width and height in Points, pixel format is RGBA8888
- *
- *  @param w Width of render target.
- *  @param h Height of render target.
- *
- *  @return An initialized CCRenderTarget object.
  */
 +(id)renderTextureWithWidth:(int)w height:(int)h;
 
 /**
- *  Initializes a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid
+ *  Initializes a RenderTexture object with width and height in points.
  *
  *  @param w      Width of render target.
  *  @param h      Height of render target.
- *  @param format Pixel format of render target.
  *
  *  @return An initialized CCRenderTarget object.
  *  @see CCTexturePixelFormat
  */
--(id)initWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat) format;
+-(id)initWithWidth:(int)w height:(int)h;
 
 /**
- *  Initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format
+ *  Initializes a RenderTexture object with width and height in points and depthStencil format
  *
  *  @param w                  Width of render target.
  *  @param h                  Height of render target.
- *  @param format             Pixel format of render target.
  *  @param depthStencilFormat Stencil format of render target.
  *
  *  @return An initialized CCRenderTarget object.
  *  @see CCTexturePixelFormat
  */
-- (id)initWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat)format depthStencilFormat:(GLuint)depthStencilFormat;
+- (id)initWithWidth:(int)w height:(int)h depthStencilFormat:(GLuint)depthStencilFormat;
 
 
 - (id)init;

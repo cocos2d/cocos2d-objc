@@ -180,7 +180,7 @@
 	
 //	CCNode *parent = self.contentNode;
 	
-	CCRenderTexture *parent = [CCRenderTexture renderTextureWithWidth:size.width height:size.height pixelFormat:CCTexturePixelFormat_RGBA8888 depthStencilFormat:GL_DEPTH24_STENCIL8];
+	CCRenderTexture *parent = [CCRenderTexture renderTextureWithWidth:size.width height:size.height depthStencilFormat:GL_DEPTH24_STENCIL8];
 	parent.positionType = CCPositionTypeNormalized;
 	parent.position = ccp(0.5, 0.5);
 	parent.autoDraw = YES;
@@ -221,16 +221,20 @@
 	[node scheduleBlock:^(CCTimer *timer) {
 		CCRenderTexture *rt = [CCRenderTexture renderTextureWithWidth:size.width height:size.height];
 		
-		[rt begin];
-			[[CCDirector sharedDirector].runningScene visit];
+        CCScene *scene = [CCDirector sharedDirector].runningScene;
+        float r, g, b, a; [scene.color getRed:&r green:&g blue:&b alpha:&a];
+		[rt beginWithClear:r g:g b:b a:a];
+			[scene visit];
 		[rt end];
 		
 		// Remove the old sprite
 		[contentNode removeChildByName:@"zoom"];
 		
-		CGImageRef image = [rt newCGImage];
-		CCTexture *texture = [[CCTexture alloc] initWithCGImage:image contentScale:rt.contentScale];
-		CGImageRelease(image);
+		CGImageRef cgImage = [rt newCGImage];
+        CCImage *image = [[CCImage alloc] initWithCGImage:cgImage contentScale:rt.contentScale options:nil];
+		CGImageRelease(cgImage);
+        
+		CCTexture *texture = [[CCTexture alloc] initWithImage:image options:nil];
 		
 		CCSprite *sprite = [CCSprite spriteWithTexture:texture];
 		sprite.scale = 0.9;
@@ -375,7 +379,7 @@
 	
 	[self renderTextureHelper:stage size:size];
 	
-	CCRenderTexture *renderTexture = [CCRenderTexture renderTextureWithWidth:size.width height:size.height pixelFormat:CCTexturePixelFormat_RGBA8888];
+	CCRenderTexture *renderTexture = [CCRenderTexture renderTextureWithWidth:size.width height:size.height];
 	renderTexture.positionType = CCPositionTypeNormalized;
 	renderTexture.position = ccp(0.75, 0.5);
 	renderTexture.clearFlags = GL_COLOR_BUFFER_BIT;

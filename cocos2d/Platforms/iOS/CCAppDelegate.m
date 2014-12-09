@@ -240,11 +240,6 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 		[director setProjection:CCDirectorProjection2D];
 	}
 	
-	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
-	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
-	// You can change this setting at any time.
-	[CCTexture setDefaultAlphaPixelFormat:CCTexturePixelFormat_RGBA8888];
-    
     // Initialise OpenAL
     [OALSimpleAudio sharedInstance];
 	

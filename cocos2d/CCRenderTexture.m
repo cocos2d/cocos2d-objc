@@ -35,6 +35,7 @@
 
 #import "CCDeviceInfo.h"
 #import "CCColor.h"
+#import "CCImage.h"
 
 //#if __CC_PLATFORM_MAC
 //#import <ApplicationServices/ApplicationServices.h>
@@ -77,45 +78,24 @@
 
 @implementation CCRenderTexture
 
-+(id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat) format depthStencilFormat:(GLuint)depthStencilFormat
++(id)renderTextureWithWidth:(int)w height:(int)h depthStencilFormat:(GLuint)depthStencilFormat
 {
-  return [[self alloc] initWithWidth:w height:h pixelFormat:format depthStencilFormat:depthStencilFormat];
-}
-
-// issue #994
-+(id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat)format
-{
-	return [[self alloc] initWithWidth:w height:h pixelFormat:format];
+  return [[self alloc] initWithWidth:w height:h depthStencilFormat:depthStencilFormat];
 }
 
 +(id)renderTextureWithWidth:(int)w height:(int)h
 {
-	return [[self alloc] initWithWidth:w height:h pixelFormat:CCTexturePixelFormat_RGBA8888 depthStencilFormat:0];
+	return [[self alloc] initWithWidth:w height:h depthStencilFormat:0];
 }
 
--(id)initWithWidth:(int)w height:(int)h
+- (id)initWithWidth:(int)w height:(int)h
 {
-	return [self initWithWidth:w height:h pixelFormat:CCTexturePixelFormat_RGBA8888];
+  return [self initWithWidth:w height:h depthStencilFormat:0];
 }
 
-- (id)initWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat)format
-{
-  return [self initWithWidth:w height:h pixelFormat:format depthStencilFormat:0];
-}
-
--(id)initWithWidth:(int)width height:(int)height pixelFormat:(CCTexturePixelFormat) format depthStencilFormat:(GLuint)depthStencilFormat
+-(id)initWithWidth:(int)width height:(int)height depthStencilFormat:(GLuint)depthStencilFormat
 {
 	if((self = [super init])){
-#if __CC_METAL_SUPPORTED_AND_ENABLED
-		if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
-			NSAssert(format == CCTexturePixelFormat_RGBA8888, @"Only RGBA8 pixel formats are supported for Metal render textures. (The internally created texture is actually BRGA8)");
-			format = CCTexturePixelFormat_BGRA8888;
-		} else
-#endif
-		{
-			NSAssert(format != CCTexturePixelFormat_A8, @"only RGB and RGBA formats are valid for a render texture");
-		}
-
 		CCDirector *director = [CCDirector sharedDirector];
 
 		// XXX multithread
@@ -124,7 +104,6 @@
 
 		_contentScale = [CCDirector sharedDirector].contentScaleFactor;
 		[self setContentSize:CGSizeMake(width, height)];
-		_pixelFormat = format;
 		_depthStencilFormat = depthStencilFormat;
 
 		self.projection = GLKMatrix4MakeOrtho(0.0f, width, 0.0f, height, -1024.0f, 1024.0f);
@@ -143,7 +122,7 @@
 
 -(id)init
 {
-    return [self initWithWidth:0 height:0 pixelFormat:CCTexturePixelFormat_RGBA8888];
+    return [self initWithWidth:0 height:0];
 }
 
 -(void)create
@@ -157,27 +136,19 @@
 {
 	CCGL_DEBUG_PUSH_GROUP_MARKER("CCRenderTexture: Create");
 	
-	// textures must be power of two
-	NSUInteger powW;
-	NSUInteger powH;
+    CGSize paddedSize = pixelSize;
 
-	if( [[CCDeviceInfo sharedDeviceInfo] supportsNPOT] ) {
-		powW = pixelSize.width;
-		powH = pixelSize.height;
-	} else {
-		powW = CCNextPOT(pixelSize.width);
-		powH = CCNextPOT(pixelSize.height);
+	if(![[CCDeviceInfo sharedDeviceInfo] supportsNPOT]){
+		paddedSize.width = CCNextPOT(pixelSize.width);
+		paddedSize.height = CCNextPOT(pixelSize.height);
 	}
     
-	void *data = calloc(powW*powH, 4);
-	CCTexture *texture = [[CCTexture alloc] initWithData:data pixelFormat:_pixelFormat pixelsWide:powW pixelsHigh:powH contentSizeInPixels:pixelSize contentScale:_contentScale];
-	self.texture = texture;
-	free(data);
+    CCImage *image = [[CCImage alloc] initWithPixelSize:paddedSize contentScale:_contentScale pixelData:nil];
+    image.contentSize = CC_SIZE_SCALE(pixelSize, 1.0/_contentScale);
+    
+    self.texture = [[CCTexture alloc] initWithImage:image options:nil];
 	
-	// Render textures are nearest filtered for legacy reasons.
-	self.texture.antialiased = NO;
-	
-	_framebuffer = [[CCFrameBufferObjectClass alloc] initWithTexture:texture depthStencilFormat:_depthStencilFormat];
+	_framebuffer = [[CCFrameBufferObjectClass alloc] initWithTexture:_texture depthStencilFormat:_depthStencilFormat];
 	
     // XXX Thayer says: I think this is incorrect for any situations where the content
     // size type isn't (points, points). The call to setTextureRect below eventually arrives
@@ -384,9 +355,7 @@ FlipY(GLKMatrix4 projection)
 	// Workaround - use pixel buffers and a copy encoder?
 	NSAssert([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIGL, @"[CCRenderTexture -newCGImage] is only supported for GL.");
 	
-	NSAssert(_pixelFormat == CCTexturePixelFormat_RGBA8888,@"only RGBA8888 can be saved as image");
-	
-	CGSize s = [self.texture contentSizeInPixels];
+	CGSize s = CC_SIZE_SCALE(self.texture.contentSize, self.texture.contentScale);
 	int tx = s.width;
 	int ty = s.height;
 	

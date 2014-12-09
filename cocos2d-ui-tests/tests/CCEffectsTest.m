@@ -1819,7 +1819,7 @@
 	CCClippingNode *clip = [CCClippingNode clippingNodeWithStencil:stencil];
 	clip.alphaThreshold = 0.5;
     
-    CCEffectNode* parent = [CCEffectNode effectNodeWithWidth:size.width height:size.height pixelFormat:CCTexturePixelFormat_RGBA8888 depthStencilFormat:GL_DEPTH24_STENCIL8];
+    CCEffectNode* parent = [CCEffectNode effectNodeWithWidth:size.width height:size.height depthStencilFormat:GL_DEPTH24_STENCIL8];
 	parent.clearFlags = GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT;
 	parent.clearColor = [CCColor blackColor];
 	parent.clearDepth = 1.0;

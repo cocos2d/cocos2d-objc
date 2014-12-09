@@ -83,36 +83,36 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 static const ccPVRTexturePixelFormatInfo PVRTableFormats[] = {
 
 	// 0: RGBA_8888
-	{GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE, 32, NO, YES, CCTexturePixelFormat_RGBA8888},
+	{GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE, 32, NO, YES},
 	// 1: RGBA_4444
-	{GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, 16, NO, YES, CCTexturePixelFormat_RGBA4444},
+	{GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, 16, NO, YES},
 	// 2: RGBA_5551
-	{GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, 16, NO, YES, CCTexturePixelFormat_RGB5A1},
+	{GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, 16, NO, YES},
 	// 3: RGB_565
-	{GL_RGB, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, 16, NO, NO, CCTexturePixelFormat_RGB565},
+	{GL_RGB, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, 16, NO, NO},
 	// 4: RGB_888
-	{GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, 24, NO, NO, CCTexturePixelFormat_RGB888},
+	{GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, 24, NO, NO},
 	// 5: A_8
-	{GL_ALPHA, GL_ALPHA, GL_UNSIGNED_BYTE, 8, NO, NO, CCTexturePixelFormat_A8},
+	{GL_ALPHA, GL_ALPHA, GL_UNSIGNED_BYTE, 8, NO, NO},
 	// 6: L_8
-	{GL_LUMINANCE, GL_LUMINANCE, GL_UNSIGNED_BYTE, 8, NO, NO, CCTexturePixelFormat_I8},
+	{GL_LUMINANCE, GL_LUMINANCE, GL_UNSIGNED_BYTE, 8, NO, NO},
 	// 7: LA_88
-	{GL_LUMINANCE_ALPHA, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, 16, NO, YES, CCTexturePixelFormat_AI88},
+	{GL_LUMINANCE_ALPHA, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, 16, NO, YES},
 
 	// 8: BGRA_8888
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
-	{GL_RGBA, GL_BGRA, GL_UNSIGNED_BYTE, 32, NO, YES, CCTexturePixelFormat_RGBA8888},
+	{GL_RGBA, GL_BGRA, GL_UNSIGNED_BYTE, 32, NO, YES},
 #endif
 
 #if __CC_PLATFORM_IOS
 	// 9: PVRTC 2BPP RGB
-	{GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG, -1, -1, 2, YES, NO, CCTexturePixelFormat_PVRTC2},
+	{GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG, -1, -1, 2, YES, NO},
 	// 10: PVRTC 2BPP RGBA
-	{GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG, -1, -1, 2, YES, YES, CCTexturePixelFormat_PVRTC2},
+	{GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG, -1, -1, 2, YES, YES},
 	// 11: PVRTC 4BPP RGB
-	{GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG, -1, -1, 4, YES, NO, CCTexturePixelFormat_PVRTC4},
+	{GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG, -1, -1, 4, YES, NO},
 	// 12: PVRTC 4BPP RGBA
-	{GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG, -1, -1, 4, YES, YES, CCTexturePixelFormat_PVRTC4},
+	{GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG, -1, -1, 4, YES, YES},
 #endif // #__CC_PLATFORM_IOS
 };
 
@@ -274,7 +274,6 @@ typedef struct {
 
 // cocos2d integration
 @synthesize retainName = _retainName;
-@synthesize format = _format;
 
 
 - (BOOL)unpackPVRv2Data:(unsigned char*)data PVRLen:(NSUInteger)len
@@ -330,7 +329,6 @@ typedef struct {
 
 			dataLength = CFSwapInt32LittleToHost(header->dataLength);
 			bytes = ((uint8_t *)data) + sizeof(ccPVRv2TexHeader);
-			_format = _pixelFormatInfo->ccPixelFormat;
 			bpp = _pixelFormatInfo->bpp;
 
 			// Calculate the data size for each texture level and respect the minimum number of blocks
@@ -622,58 +620,6 @@ CCRenderDispatch(NO, ^{
 			return nil;
 		}
 		
-#if __CC_PLATFORM_IOS && defined(DEBUG)
-		GLenum pixelFormat = _pixelFormatInfo->ccPixelFormat;
-		CCDeviceInfo *info = [CCDeviceInfo sharedDeviceInfo];
-		
-		if( [info OSVersion] >= CCSystemVersion_iOS_5_0 )
-		{
-			
-			// iOS 5 BUG:
-			// RGB888 textures allocate much more memory than needed on iOS 5
-			// http://www.cocos2d-iphone.org/forum/topic/31092
-			
-			if( pixelFormat == CCTexturePixelFormat_RGB888 ) {
-				printf("\n");
-				NSLog(@"cocos2d: WARNING. Using RGB888 texture. Convert it to RGB565 or RGBA8888 in order to reduce memory");
-				NSLog(@"cocos2d: WARNING: File: %@", [path lastPathComponent] );
-				NSLog(@"cocos2d: WARNING: For further info visit: http://www.cocos2d-iphone.org/forum/topic/31092");
-				printf("\n");
-			}
-
-			
-			else if( _width != CCNextPOT(_width) ) {
-				
-				// XXX: Is this applicable for compressed textures ?
-				// Since they are squared and POT (PVRv2) it is not an issue now. Not sure in the future.
-				
-				// iOS 5 BUG:
-				// If width is not word aligned, then log warning.
-				// http://www.cocos2d-iphone.org/forum/topic/31092
-				
-
-				NSUInteger bpp = [CCTexture bitsPerPixelForFormat:pixelFormat];
-				NSUInteger bytes = _width * bpp / 8;
-
-				// XXX: Should it be 4 or sizeof(int) ??
-				NSUInteger mod = bytes % 4;
-				
-				// Not word aligned ?
-				if( mod != 0 ) {
-
-					NSUInteger neededBytes = (4 - mod ) / (bpp/8);
-					printf("\n");
-					NSLog(@"cocos2d: WARNING. Current texture size=(%d,%d). Convert it to size=(%d,%d) in order to save memory", _width, _height, (unsigned int)(_width + neededBytes), _height );
-					NSLog(@"cocos2d: WARNING: File: %@", [path lastPathComponent] );
-					NSLog(@"cocos2d: WARNING: For further info visit: http://www.cocos2d-iphone.org/forum/topic/31092");
-					printf("\n");
-				}
-			}
-		}
-#endif // iOS
-		
-
-
 		free(pvrdata);
 	}
 

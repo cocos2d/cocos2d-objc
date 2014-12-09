@@ -41,6 +41,7 @@
 #import <Foundation/Foundation.h>
 #import "CCRenderableNode_Private.h"
 #import "CCColor.h"
+#import "CCImage_Private.h"
 
 #if __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
@@ -645,28 +646,13 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     
     CGContextRelease(context);
     
-    CCTexture* texture = NULL;
+#warning TODO
+    CGFloat contentScale = [CCDirector sharedDirector].contentScaleFactor;
+    NSMutableData *pixelData = [NSMutableData dataWithBytesNoCopy:data length:POTSize.width*POTSize.height*4 freeWhenDone:NO];
+    CCImage *image = [[CCImage alloc] initWithPixelSize:POTSize contentScale:contentScale pixelData:pixelData];
+    image.contentSize = CC_SIZE_SCALE(dimensions, 1.0/contentScale);
     
-    // Initialize the texture
-    if (fullColor)
-    {
-        // RGBA8888 format
-        texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_RGBA8888 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSizeInPixels:dimensions contentScale:[CCDirector sharedDirector].contentScaleFactor];
-        [texture setPremultipliedAlpha:YES];
-    }
-    else
-    {
-        NSUInteger textureSize = POTSize.width * POTSize.height;
-        
-        // A8 format (alpha channel only)
-        unsigned char* dst = data;
-        for(int i = 0; i<textureSize; i++)
-            dst[i] = data[i*4+3];
-        
-        texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_A8 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSizeInPixels:dimensions contentScale:[CCDirector sharedDirector].contentScaleFactor];
-        self.shader = [CCShader positionTextureA8ColorShader];
-    }
-    
+    CCTexture* texture = [[CCTexture alloc] initWithImage:image options:nil];
     free(data);
     
 	return texture;
@@ -899,28 +885,13 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 #endif
     CGContextRelease(context);
 
-    CCTexture* texture = NULL;
-
-    // Initialize the texture
-    if (useFullColor)
-    {
-        // RGBA8888 format
-        texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_RGBA8888 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSizeInPixels:dimensions contentScale:[CCDirector sharedDirector].contentScaleFactor];
-        [texture setPremultipliedAlpha:YES];
-    }
-    else
-    {
-        NSUInteger textureSize = POTSize.width * POTSize.height;
-        
-        // A8 format (alpha channel only)
-        unsigned char* dst = data;
-        for(int i = 0; i<textureSize; i++)
-            dst[i] = data[i*4+3];
-        
-        texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_A8 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSizeInPixels:dimensions contentScale:[CCDirector sharedDirector].contentScaleFactor];
-        self.shader = [CCShader positionTextureA8ColorShader];
-    }
-
+#warning TODO
+    CGFloat contentScale = [CCDirector sharedDirector].contentScaleFactor;
+    NSMutableData *pixelData = [NSMutableData dataWithBytesNoCopy:data length:POTSize.width*POTSize.height*4 freeWhenDone:NO];
+    CCImage *image = [[CCImage alloc] initWithPixelSize:POTSize contentScale:contentScale pixelData:pixelData];
+    image.contentSize = CC_SIZE_SCALE(dimensions, 1.0/contentScale);
+    
+    CCTexture* texture = [[CCTexture alloc] initWithImage:image options:nil];
     free(data);
     CFRelease(font);
 

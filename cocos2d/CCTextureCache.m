@@ -329,8 +329,9 @@ static CCTextureCache *sharedTextureCache;
 		if(tex)
 			return((id)tex.proxy);
 	}
-
-	tex = [[CCTexture alloc] initWithCGImage:imageref contentScale:1.0];
+    
+    CCImage *image = [[CCImage alloc] initWithCGImage:imageref contentScale:1.0 options:nil];
+	tex = [[CCTexture alloc] initWithImage:image options:nil];
 
 	if(tex && key){
 		dispatch_sync(_dictQueue, ^{
@@ -449,26 +450,19 @@ static CCTextureCache *sharedTextureCache;
 -(void) dumpCachedTextureInfo
 {
 	__block NSUInteger count = 0;
-	__block NSUInteger totalBytes = 0;
 
 	dispatch_sync(_dictQueue, ^{
 		for (NSString* texKey in _textures) {
 			CCTexture* tex = [_textures objectForKey:texKey];
-			NSUInteger bpp = [tex bitsPerPixelForFormat];
-			// Each texture takes up width * height * bytesPerPixel bytes.
-			NSUInteger bytes = tex.pixelWidth * tex.pixelHeight * bpp / 8;
-			totalBytes += bytes;
 			count++;
-			NSLog( @"cocos2d: \"%@\"\tid=%lu\t%lu x %lu\t@ %ld bpp =>\t%lu KB",
+			NSLog( @"cocos2d: \"%@\"\tid=%lu\t%lu x %lu\t@ %ld",
 				  texKey,
 				  (long)tex.name,
-				  (long)tex.pixelWidth,
-				  (long)tex.pixelHeight,
-				  (long)bpp,
-				  (long)bytes / 1024 );
+				  (long)tex.sizeInPixels.width,
+				  (long)tex.sizeInPixels.height);
 		}
 	});
-	NSLog( @"cocos2d: CCTextureCache dumpDebugInfo:\t%ld textures,\tfor %lu KB (%.2f MB)", (long)count, (long)totalBytes / 1024, totalBytes / (1024.0f*1024.0f));
+	NSLog( @"cocos2d: CCTextureCache dumpDebugInfo:\t%ld textures", (long)count);
 }
 
 @end

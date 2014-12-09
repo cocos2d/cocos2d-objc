@@ -62,7 +62,6 @@ typedef struct _ccPVRTexturePixelFormatInfo {
 	uint32_t bpp;
 	BOOL compressed;
 	BOOL alpha;
-	CCTexturePixelFormat ccPixelFormat;
 } ccPVRTexturePixelFormatInfo;
 
 enum {
@@ -109,9 +108,6 @@ enum {
     // True to retain texture name.
 	BOOL _retainName;
     
-    // Texture pixel format used.
-	CCTexturePixelFormat _format;
-	
 	const ccPVRTexturePixelFormatInfo *_pixelFormatInfo;
 }
 
@@ -189,9 +185,6 @@ enum {
 
 /** True to retain texture name. */
 @property (nonatomic,readwrite) BOOL retainName;
-
-/** Texture pixel format used. */
-@property (nonatomic,readonly) CCTexturePixelFormat format;
 
 @end
 

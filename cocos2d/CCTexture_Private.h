@@ -45,10 +45,6 @@
 
 @interface CCTexture ()
 
-/* These functions are needed to create mutable textures */
-- (void) releaseData:(void*)data;
-- (void*) keepData:(void*)data length:(NSUInteger)length;
-
 /* texture name */
 @property(nonatomic,readonly) GLuint name;
 
@@ -108,31 +104,5 @@
  
  */
 +(void) PVRImagesHavePremultipliedAlpha:(BOOL)haveAlphaPremultiplied;
-
-@end
-
-/*
- Extension to set the Min / Mag filter
- */
-typedef struct _ccTexParams {
-	GLuint	minFilter;
-	GLuint	magFilter;
-	GLuint	wrapS;
-	GLuint	wrapT;
-} ccTexParams;
-
-@interface CCTexture (GLFilter)
-/* sets the min filter, mag filter, wrap s and wrap t texture parameters.
- If the texture size is NPOT (non power of 2), then in can only use GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}.
- 
- @warning Calling this method could allocate additional texture memory.
- 
- */
--(void) setTexParameters: (ccTexParams*) texParams;
-
-/* Generates mipmap images for the texture.
- It only works if the texture size is POT (power of 2).
- */
--(void) generateMipmap;
 
 @end

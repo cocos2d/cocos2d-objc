@@ -283,7 +283,7 @@ GLUniformSetVec2(NSString *name, GLint location)
 		// Fall back on looking up the actual texture size if the name matches a texture.
 		if(value == nil && textureName){
 			CCTexture *texture = shaderUniforms[textureName] ?: globalShaderUniforms[textureName];
-			GLKVector2 sizeInPixels = GLKVector2Make(texture.pixelWidth, texture.pixelHeight);
+			GLKVector2 sizeInPixels = GLKVector2Make(texture.sizeInPixels.width, texture.sizeInPixels.height);
 			
 			GLKVector2 size = GLKVector2MultiplyScalar(sizeInPixels, pixelSize ? 1.0 : 1.0/texture.contentScale);
 			value = [NSValue valueWithGLKVector2:size];

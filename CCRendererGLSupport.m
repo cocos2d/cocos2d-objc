@@ -289,8 +289,8 @@ BindVertexPage(CCGraphicsBufferBindingsGL *self, NSUInteger page)
 			// associate texture with FBO
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.name, 0);
 			
-			GLuint width = (GLuint)texture.pixelWidth;
-			GLuint height = (GLuint)texture.pixelHeight;
+			GLuint width = (GLuint)texture.sizeInPixels.width;
+			GLuint height = (GLuint)texture.sizeInPixels.height;
 
 #if __CC_PLATFORM_ANDROID
 			
