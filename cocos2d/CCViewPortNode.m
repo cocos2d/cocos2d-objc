@@ -9,6 +9,9 @@
 #import "CCDirector.h"
 #import "ccUtils.h"
 
+#define NEAR_Z -1024
+#define FAR_Z 1024
+
 @implementation CCViewportNode {
     GLKMatrix4 _projection;
 }
@@ -29,7 +32,7 @@
         _contentNode = contentNode;
         [_camera addChild:_contentNode];
         
-        _projection = GLKMatrix4MakeOrtho(0, size.width, 0, size.height, -1024, 1024);
+        _projection = GLKMatrix4MakeOrtho(0, size.width, 0, size.height, NEAR_Z, FAR_Z);
     }
     
     return self;
@@ -41,7 +44,7 @@
     viewport.camera.position = ccp(designSize.width/2.0, designSize.height/2.0);
     
     CGSize size = viewport.contentSize;
-    viewport.projection = GLKMatrix4MakeOrtho(-size.width/2.0, size.width/2.0, -size.height/2.0, size.height/2.0, -1024, 1024);
+    viewport.projection = GLKMatrix4MakeOrtho(-size.width/2.0, size.width/2.0, -size.height/2.0, size.height/2.0, NEAR_Z, FAR_Z);
     
     return viewport;
 }
@@ -53,7 +56,7 @@
     
     CGSize size = viewport.contentSize;
     float scale = MIN(designSize.width/size.width, designSize.height/size.height)/2.0;
-    viewport.projection = GLKMatrix4MakeOrtho(-scale*size.width, scale*size.width, -scale*size.height, scale*size.height, -1024, 1024);
+    viewport.projection = GLKMatrix4MakeOrtho(-scale*size.width, scale*size.width, -scale*size.height, scale*size.height, NEAR_Z, FAR_Z);
     
     return viewport;
 }
@@ -65,7 +68,7 @@
     
     CGSize size = viewport.contentSize;
     float scale = MAX(designSize.width/size.width, designSize.height/size.height)/2.0;
-    viewport.projection = GLKMatrix4MakeOrtho(-scale*size.width, scale*size.width, -scale*size.height, scale*size.height, -1024, 1024);
+    viewport.projection = GLKMatrix4MakeOrtho(-scale*size.width, scale*size.width, -scale*size.height, scale*size.height, NEAR_Z, FAR_Z);
     
     return viewport;
 }
@@ -77,7 +80,7 @@
     
     CGSize size = viewport.contentSize;
     float scale = designSize.width/size.width/2.0;
-    viewport.projection = GLKMatrix4MakeOrtho(-scale*size.width, scale*size.width, -scale*size.height, scale*size.height, -1024, 1024);
+    viewport.projection = GLKMatrix4MakeOrtho(-scale*size.width, scale*size.width, -scale*size.height, scale*size.height, NEAR_Z, FAR_Z);
     
     return viewport;
 }
@@ -89,7 +92,7 @@
     
     CGSize size = viewport.contentSize;
     float scale = designSize.height/size.height/2.0;
-    viewport.projection = GLKMatrix4MakeOrtho(-scale*size.width, scale*size.width, -scale*size.height, scale*size.height, -1024, 1024);
+    viewport.projection = GLKMatrix4MakeOrtho(-scale*size.width, scale*size.width, -scale*size.height, scale*size.height, NEAR_Z, FAR_Z);
     
     return viewport;
 }
@@ -126,7 +129,7 @@
     
     if (!self.visible) return;
     
-    // Find the corners of the
+    // Find the corners of the content rect, in viewport coordinates
     CGSize size = self.contentSizeInPoints;
     GLKMatrix4 viewportTransform = GLKMatrix4Multiply(*parentTransform, [super nodeToParentMatrix]);
     GLKVector3 v0 = GLKMatrix4MultiplyAndProjectVector3(viewportTransform, GLKVector3Make(      0.0f,        0.0f, 0.0f));
@@ -144,7 +147,7 @@
     int miny = floorf(hh + hh*MIN(MIN(v0.y, v1.y), MIN(v2.y, v3.y)));
     int maxy = floorf(hh + hh*MAX(MAX(v0.y, v1.y), MAX(v2.y, v3.y)));
     
-    // Set the viewport.
+    // Set the viewport to ensure we're drawing to the correct area.
     [renderer pushGroup];
     [renderer enqueueBlock:^{glViewport(minx, miny, maxx - minx, maxy - miny);} globalSortOrder:NSIntegerMin debugLabel:@"CCViewportNode: Set viewport" threadSafe:YES];
     
