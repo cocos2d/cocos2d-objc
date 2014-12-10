@@ -140,7 +140,7 @@
 		D344726B19E73AD1000093A3 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 758A6C6B1843E5C500D1A8D2 /* Images */; };
 		D344726C19E73AD1000093A3 /* Resources-shared in Resources */ = {isa = PBXBuildFile; fileRef = B7C6237517EA695100928F91 /* Resources-shared */; };
 		D34CD3C518ABF4AA00D8E537 /* CCRendererTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D34CD3C418ABF4AA00D8E537 /* CCRendererTests.m */; };
-		D361055A1A1079A700415E59 /* CCParticleExamples.m in Sources */ = {isa = PBXBuildFile; fileRef = D36105591A1079A700415E59 /* CCParticleExamples.m */; };
+		D35C2D281A1BC83F00FF96B0 /* CCViewPortNodeTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D35C2D261A1BC83F00FF96B0 /* CCViewPortNodeTest.m */; };
 		D3763BD219E72FB4006C050D /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D3763BB919E72F85006C050D /* libcocos2d.a */; };
 		D3763BFD19E73188006C050D /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D34CD3C118ABEE9C00D8E537 /* GLKit.framework */; };
 		D3763C0019E73188006C050D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2604B17E7D278007067F0 /* QuartzCore.framework */; };
@@ -394,8 +394,7 @@
 		D340E10D185660BE006E605C /* TilemapTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TilemapTest.m; path = "cocos2d-ui-tests/tests/TilemapTest.m"; sourceTree = SOURCE_ROOT; };
 		D34CD3C118ABEE9C00D8E537 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		D34CD3C418ABF4AA00D8E537 /* CCRendererTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCRendererTests.m; sourceTree = "<group>"; };
-		D36105581A1079A700415E59 /* CCParticleExamples.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCParticleExamples.h; path = "cocos2d-ui-tests/tests/CCParticleExamples.h"; sourceTree = SOURCE_ROOT; };
-		D36105591A1079A700415E59 /* CCParticleExamples.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCParticleExamples.m; path = "cocos2d-ui-tests/tests/CCParticleExamples.m"; sourceTree = SOURCE_ROOT; };
+		D35C2D261A1BC83F00FF96B0 /* CCViewPortNodeTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCViewPortNodeTest.m; path = "cocos2d-ui-tests/tests/CCViewPortNodeTest.m"; sourceTree = SOURCE_ROOT; };
 		D3763BB019E72F85006C050D /* cocos2d.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = cocos2d.xcodeproj; sourceTree = "<group>"; };
 		D3763C5A19E73188006C050D /* cocos2d-tests-mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cocos2d-tests-mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3763D5419E73513006C050D /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = "cocos2d-ui-tests/osx/AppDelegate.h"; sourceTree = SOURCE_ROOT; };
@@ -611,6 +610,7 @@
 				A6167B92189A7D4D0044D391 /* VertexZTest.m */,
 				A664A4EE18A3D9B8006184B8 /* PositioningTest.m */,
 				839B149E19CC1E440000E5E2 /* CCPackageTest.m */,
+				D35C2D261A1BC83F00FF96B0 /* CCViewPortNodeTest.m */,
 			);
 			name = Tests;
 			path = "cocos2d-ui-tests/tests";
@@ -673,7 +673,6 @@
 		B7E2605F17E7D278007067F0 /* cocos2d-tests */ = {
 			isa = PBXGroup;
 			children = (
-				B7E2621D17E7D38D007067F0 /* AppDelegate */,
 				B7E2621E17E7D398007067F0 /* Testbed */,
 				B71B087F17EA5B500082EBC0 /* Tests */,
 				D3E1842A19E861FC00A08B01 /* MetalShaders */,
@@ -715,13 +714,6 @@
 			name = "Resources-iOS";
 			path = "cocos2d-ui-tests/ios/Resources";
 			sourceTree = SOURCE_ROOT;
-		};
-		B7E2621D17E7D38D007067F0 /* AppDelegate */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = AppDelegate;
-			sourceTree = "<group>";
 		};
 		B7E2621E17E7D398007067F0 /* Testbed */ = {
 			isa = PBXGroup;
@@ -1264,6 +1256,7 @@
 				B70AFC30180F2D7400516435 /* CCTransitionTest.m in Sources */,
 				D361055A1A1079A700415E59 /* CCParticleExamples.m in Sources */,
 				758A6C7B18440D5C00D1A8D2 /* ParticleTest.m in Sources */,
+				D35C2D271A1BC83F00FF96B0 /* CCViewPortNodeTest.m in Sources */,
 				B7C6238C17ECDF6A00928F91 /* CCTableViewTest.m in Sources */,
 				D340E10E185660BE006E605C /* CCPhysicsTest.m in Sources */,
 				D3B2A7E5187DD60B00406C5A /* CCBMFontTest.m in Sources */,
@@ -1281,6 +1274,7 @@
 				D3763D3C19E734C5006C050D /* CCRendererTest.m in Sources */,
 				D3763D5819E7352F006C050D /* main.m in Sources */,
 				D3763D3D19E734C5006C050D /* SpritePerformanceTest.m in Sources */,
+				D35C2D281A1BC83F00FF96B0 /* CCViewPortNodeTest.m in Sources */,
 				D3763D3E19E734C5006C050D /* CCScrollViewTest.m in Sources */,
 				D3763D3F19E734C5006C050D /* CCSchedulerTest.m in Sources */,
 				D3763D4019E734C5006C050D /* CCTableViewTest.m in Sources */,
