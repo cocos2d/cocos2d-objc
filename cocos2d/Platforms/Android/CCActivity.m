@@ -11,7 +11,6 @@
 #if __CC_PLATFORM_ANDROID
 
 #import <android/native_window.h>
-#import <bridge/runtime.h>
 
 #import "cocos2d.h"
 #import "CCBReader.h"
@@ -51,16 +50,6 @@ const CGSize FIXED_SIZE = {568, 384};
 }
 @synthesize layout=_layout;
 
-@bridge (callback) run = run;
-@bridge (callback) onDestroy = onDestroy;
-@bridge (callback) onPause = onPause;
-@bridge (callback) onResume = onResume;
-@bridge (callback) onLowMemory = onLowMemory;
-@bridge (callback) surfaceCreated: = surfaceCreated;
-@bridge (callback) surfaceDestroyed: = surfaceDestroyed;
-@bridge (callback) surfaceChanged:format:width:height: = surfaceChanged;
-@bridge (callback) onKeyDown:keyEvent: = onKeyDown;
-@bridge (callback) onKeyUp:keyEvent: = onKeyUp;
 
 - (void)dealloc
 {

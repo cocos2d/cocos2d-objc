@@ -29,7 +29,7 @@
 #if __CC_PLATFORM_IOS
 #import <UIKit/UIKit.h>		// Needed for UIDevice
 #elif __CC_PLATFORM_ANDROID
-#import <BridgeKitV3/BridgeKit.h> // Needed for AndroidBuild
+
 #endif
 
 #import "Platforms/CCGL.h"

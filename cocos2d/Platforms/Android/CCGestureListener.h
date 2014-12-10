@@ -9,7 +9,7 @@
 #import "CCMacros.h"
 #if __CC_PLATFORM_ANDROID
 
-#import <BridgeKitV3/BridgeKit.h>
+#import <GLActivityKit/GLGestureListener.h>
 
 @protocol CCGestureListenerDelegate <NSObject>
 @optional
@@ -20,8 +20,7 @@
 - (BOOL)onScroll:(AndroidMotionEvent *)start end:(AndroidMotionEvent *)end distanceX:(float)dx distanceY:(float)dy;
 @end
 
-BRIDGE_CLASS("org.cocos2d.CCGestureListener")
-@interface CCGestureListener : JavaObject <AndroidGestureDetectorOnGestureListener>
+@interface CCGestureListener : GLGestureListener <AndroidGestureDetectorOnGestureListener>
 
 @property (nonatomic, assign) id<CCGestureListenerDelegate> delegate;
 
