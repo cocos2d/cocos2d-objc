@@ -106,6 +106,8 @@
 		5BF3268F195F8E0300D9A51A /* CCGLView.java in Sources */ = {isa = PBXBuildFile; fileRef = 5BF3268D195F8E0300D9A51A /* CCGLView.java */; };
 		5BF32698195F947800D9A51A /* CCActivity.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BF32696195F947800D9A51A /* CCActivity.h */; };
 		5BF32699195F947800D9A51A /* CCActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF32697195F947800D9A51A /* CCActivity.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -O0"; }; };
+		75F9BF711A3904D7009185BF /* CCViewPortNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 75F9BF6F1A3904D7009185BF /* CCViewPortNode.h */; };
+		75F9BF721A3904D7009185BF /* CCViewPortNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F9BF701A3904D7009185BF /* CCViewPortNode.m */; };
 		7A4037C019E37108007B6E8F /* libObjectAL (Mac).a in Frameworks */ = {isa = PBXBuildFile; fileRef = D28B2E7E19CBA89A00DC6E08 /* libObjectAL (Mac).a */; };
 		7A4037C219E37117007B6E8F /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A4037C119E37117007B6E8F /* GLKit.framework */; };
 		7A4037C419E3711D007B6E8F /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A4037C319E3711D007B6E8F /* ApplicationServices.framework */; };
@@ -1196,7 +1198,8 @@
 		5BF3268D195F8E0300D9A51A /* CCGLView.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = CCGLView.java; sourceTree = "<group>"; };
 		5BF32696195F947800D9A51A /* CCActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCActivity.h; path = Android/CCActivity.h; sourceTree = "<group>"; };
 		5BF32697195F947800D9A51A /* CCActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCActivity.m; path = Android/CCActivity.m; sourceTree = "<group>"; };
-		75F9BF5A1A38EE52009185BF /* CCViewPortNodeTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = CCViewPortNodeTest.m; path = "cocos2d-ui-tests/tests/CCViewPortNodeTest.m"; sourceTree = "<group>"; };
+		75F9BF6F1A3904D7009185BF /* CCViewPortNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCViewPortNode.h; sourceTree = "<group>"; };
+		75F9BF701A3904D7009185BF /* CCViewPortNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCViewPortNode.m; sourceTree = "<group>"; };
 		7A4037A819E37038007B6E8F /* libcocos2d-mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d-mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A4037C119E37117007B6E8F /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/GLKit.framework; sourceTree = DEVELOPER_DIR; };
 		7A4037C319E3711D007B6E8F /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/ApplicationServices.framework; sourceTree = DEVELOPER_DIR; };
@@ -1536,7 +1539,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				75F9BF5A1A38EE52009185BF /* CCViewPortNodeTest.m */,
 				A07EC9B2141A8D32008C1F12 /* README.md */,
 				DCF7B34D1A1D426000E0EEAF /* API-Index.md */,
 				501A7CAC0EBC97BA005BC158 /* AUTHORS */,
@@ -1828,6 +1830,8 @@
 				9D69E6D519DF604800C2749C /* CCLightNode.m */,
 				9D1B4A941A02D51600B2DD9B /* CCLightNode_Private.h */,
 				9D1B4A971A02E90300B2DD9B /* CCLightGroups.h */,
+				75F9BF6F1A3904D7009185BF /* CCViewPortNode.h */,
+				75F9BF701A3904D7009185BF /* CCViewPortNode.m */,
 			);
 			name = "Misc Nodes";
 			sourceTree = "<group>";
@@ -2290,6 +2294,7 @@
 				5018F2710DFDEAFF00C013A5 /* CCActionInterval.h in Headers */,
 				5018F2730DFDEAFF00C013A5 /* CCLabelTTF.h in Headers */,
 				5018F2750DFDEAFF00C013A5 /* CCNodeColor.h in Headers */,
+				75F9BF711A3904D7009185BF /* CCViewPortNode.h in Headers */,
 				5018F2770DFDEAFF00C013A5 /* CCScene.h in Headers */,
 				D36369D31A1E85DF007EE5FC /* CCDeprecated.h in Headers */,
 				5018F27D0DFDEAFF00C013A5 /* CCTextureCache.h in Headers */,
@@ -3161,6 +3166,7 @@
 				D3737E351A1F130700782024 /* NSEvent+CC.m in Sources */,
 				D33803E318032ECE0072D8FE /* CCPhysicsBody.m in Sources */,
 				D268FE12198078FF00ECBCD0 /* CCEffectHue.m in Sources */,
+				75F9BF721A3904D7009185BF /* CCViewPortNode.m in Sources */,
 				839CE58719FFB139003369F0 /* CCEffectInvert.m in Sources */,
 				E525F0F74C7C69C4371E20EE /* CCPackageHelper.m in Sources */,
 			);
