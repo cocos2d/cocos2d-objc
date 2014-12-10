@@ -192,7 +192,12 @@
     int effectIndex = 0;
     for (NSArray *stitchList in stitchLists)
     {
-        [stitchedEffects addObject:[CCEffectStack stitchEffects:stitchList startIndex:effectIndex]];
+        CCEffectImpl *effectImpl = [CCEffectStack stitchEffects:stitchList startIndex:effectIndex];
+        if (!effectImpl)
+        {
+            return nil;
+        }
+        [stitchedEffects addObject:effectImpl];
         effectIndex += stitchList.count;
     }
     
