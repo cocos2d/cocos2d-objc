@@ -146,50 +146,12 @@
     
     if (!self.effectImpl.renderPasses.count || finalResult.changes)
     {
-        NSMutableArray *stitchedEffects = [[NSMutableArray alloc] init];
-        NSMutableArray *stitchLists = [[NSMutableArray alloc] init];
-        
-        CCEffect *firstEffect = [_flattenedEffects firstObject];
-        NSMutableArray *currentStitchList = [[NSMutableArray alloc] initWithArray:@[firstEffect.effectImpl]];
-        [stitchLists addObject:currentStitchList];
-        
-        // Iterate over the original effects array building sets of effects
-        // that can be stitched together based on their stitch flags.
-        for (CCEffect *effect in [_flattenedEffects subarrayWithRange:NSMakeRange(1, _flattenedEffects.count - 1)])
+        self.effectImpl = [CCEffectStack processEffects:_flattenedEffects withStitching:_stitchingEnabled];
+        if (!self.effectImpl)
         {
-            CCEffectImpl *prevEffectImpl = [currentStitchList lastObject];
-            if (_stitchingEnabled && [prevEffectImpl stitchSupported:CCEffectFunctionStitchAfter] && [effect.effectImpl stitchSupported:CCEffectFunctionStitchBefore])
-            {
-                [currentStitchList addObject:effect.effectImpl];
-            }
-            else
-            {
-                currentStitchList = [[NSMutableArray alloc] initWithArray:@[effect.effectImpl]];
-                [stitchLists addObject:currentStitchList];
-            }
+            self.effectImpl = [CCEffectStack processEffects:_flattenedEffects withStitching:NO];
+            NSAssert(self.effectImpl, @"Effect creation failed with stitching disabled.");
         }
-        
-        int effectIndex = 0;
-        for (NSArray *stitchList in stitchLists)
-        {
-            [stitchedEffects addObject:[CCEffectStack stitchEffects:stitchList startIndex:effectIndex]];
-            effectIndex += stitchList.count;
-        }
-        
-        // Extract passes and uniforms from the stacked and stitched effects and build a flat list of
-        // both.
-        NSMutableArray *passes = [[NSMutableArray alloc] init];
-        NSMutableDictionary *uniforms = [[NSMutableDictionary alloc] init];
-        for (CCEffectImpl *effectImpl in stitchedEffects)
-        {
-            for (CCEffectRenderPass *pass in effectImpl.renderPasses)
-            {
-                [passes addObject:pass];
-            }
-            
-            [uniforms addEntriesFromDictionary:effectImpl.shaderUniforms];
-        }
-        self.effectImpl = [[CCEffectImpl alloc] initWithRenderPasses:passes shaderUniforms:uniforms];
         
         // Stitching and name mangling changes the uniform dictionary so flag it
         // as changed. If we're here then the render passes are already flagged
@@ -201,6 +163,54 @@
 }
 
 #pragma mark - Internal
+
++ (CCEffectImpl *)processEffects:(NSArray *)effects withStitching:(BOOL)stitchingEnabled
+{
+    NSMutableArray *stitchedEffects = [[NSMutableArray alloc] init];
+    NSMutableArray *stitchLists = [[NSMutableArray alloc] init];
+    
+    CCEffect *firstEffect = [effects firstObject];
+    NSMutableArray *currentStitchList = [[NSMutableArray alloc] initWithArray:@[firstEffect.effectImpl]];
+    [stitchLists addObject:currentStitchList];
+    
+    // Iterate over the original effects array building sets of effects
+    // that can be stitched together based on their stitch flags.
+    for (CCEffect *effect in [effects subarrayWithRange:NSMakeRange(1, effects.count - 1)])
+    {
+        CCEffectImpl *prevEffectImpl = [currentStitchList lastObject];
+        if (stitchingEnabled && [prevEffectImpl stitchSupported:CCEffectFunctionStitchAfter] && [effect.effectImpl stitchSupported:CCEffectFunctionStitchBefore])
+        {
+            [currentStitchList addObject:effect.effectImpl];
+        }
+        else
+        {
+            currentStitchList = [[NSMutableArray alloc] initWithArray:@[effect.effectImpl]];
+            [stitchLists addObject:currentStitchList];
+        }
+    }
+    
+    int effectIndex = 0;
+    for (NSArray *stitchList in stitchLists)
+    {
+        [stitchedEffects addObject:[CCEffectStack stitchEffects:stitchList startIndex:effectIndex]];
+        effectIndex += stitchList.count;
+    }
+    
+    // Extract passes and uniforms from the stacked and stitched effects and build a flat list of
+    // both.
+    NSMutableArray *passes = [[NSMutableArray alloc] init];
+    NSMutableDictionary *uniforms = [[NSMutableDictionary alloc] init];
+    for (CCEffectImpl *effectImpl in stitchedEffects)
+    {
+        for (CCEffectRenderPass *pass in effectImpl.renderPasses)
+        {
+            [passes addObject:pass];
+        }
+        
+        [uniforms addEntriesFromDictionary:effectImpl.shaderUniforms];
+    }
+    return [[CCEffectImpl alloc] initWithRenderPasses:passes shaderUniforms:uniforms];
+}
 
 + (CCEffectImpl *)stitchEffects:(NSArray*)stitchList startIndex:(int)startIndex
 {

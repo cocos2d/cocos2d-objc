@@ -404,7 +404,11 @@ static NSString* vertBase =
 //        NSLog(@"\n------------fragBody:\n%@", fragBody);
         
         _shader = [[CCShader alloc] initWithVertexShaderSource:vertBody fragmentShaderSource:fragBody];
-
+        if (!_shader)
+        {
+            return nil;
+        }
+        
         _renderPasses = [renderPasses copy];
         for (CCEffectRenderPass *pass in _renderPasses)
         {
