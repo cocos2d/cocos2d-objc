@@ -1191,11 +1191,12 @@
 		5BC3CB5219626E4F00C4F0D0 /* CCGestureListener.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = CCGestureListener.java; sourceTree = "<group>"; };
 		5BC3CB5719626FA000C4F0D0 /* CCGestureListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCGestureListener.h; path = Android/CCGestureListener.h; sourceTree = "<group>"; };
 		5BC3CB5819626FA000C4F0D0 /* CCGestureListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCGestureListener.m; path = Android/CCGestureListener.m; sourceTree = "<group>"; };
-		5BF3267A195F8D8800D9A51A /* cocos2dJava.jar */ = {isa = PBXFileReference; explicitFileType = compiled.java.jar; includeInIndex = 0; path = cocos2dJava.jar; sourceTree = BUILT_PRODUCTS_DIR; };
+		5BF3267A195F8D8800D9A51A /* cocos2dJava.jar */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = archive.jar; path = cocos2dJava.jar; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BF3268C195F8E0300D9A51A /* CCActivity.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = CCActivity.java; sourceTree = "<group>"; };
 		5BF3268D195F8E0300D9A51A /* CCGLView.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = CCGLView.java; sourceTree = "<group>"; };
 		5BF32696195F947800D9A51A /* CCActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCActivity.h; path = Android/CCActivity.h; sourceTree = "<group>"; };
 		5BF32697195F947800D9A51A /* CCActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCActivity.m; path = Android/CCActivity.m; sourceTree = "<group>"; };
+		75F9BF5A1A38EE52009185BF /* CCViewPortNodeTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = CCViewPortNodeTest.m; path = "cocos2d-ui-tests/tests/CCViewPortNodeTest.m"; sourceTree = "<group>"; };
 		7A4037A819E37038007B6E8F /* libcocos2d-mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d-mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A4037C119E37117007B6E8F /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/GLKit.framework; sourceTree = DEVELOPER_DIR; };
 		7A4037C319E3711D007B6E8F /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/ApplicationServices.framework; sourceTree = DEVELOPER_DIR; };
@@ -1535,6 +1536,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				75F9BF5A1A38EE52009185BF /* CCViewPortNodeTest.m */,
 				A07EC9B2141A8D32008C1F12 /* README.md */,
 				DCF7B34D1A1D426000E0EEAF /* API-Index.md */,
 				501A7CAC0EBC97BA005BC158 /* AUTHORS */,
@@ -2556,7 +2558,6 @@
 				7A5946F519E372FB00F65F90 /* uthash.h in Headers */,
 				7A5946F619E372FB00F65F90 /* utlist.h in Headers */,
 				7A5946F919E372FB00F65F90 /* CGPointExtension.h in Headers */,
-				7A5946FB19E372FC00F65F90 /* CCProfiling.h in Headers */,
 				5BC1DE2A1A2E2099009C2E67 /* NSEvent+CC.h in Headers */,
 				7A5946FE19E372FC00F65F90 /* ccUtils.h in Headers */,
 				7A5946FF19E372FC00F65F90 /* CCFileUtils.h in Headers */,
@@ -2703,7 +2704,6 @@
 				D2FEB64F194F6C9E00FC0574 /* base64.h in Headers */,
 				BC9F4E9819DB644600B25F01 /* CCPackageManager.h in Headers */,
 				BC9F4E9919DB644900B25F01 /* CCPackageManagerDelegate.h in Headers */,
-				D2FEB650194F6C9E00FC0574 /* ZipUtils.h in Headers */,
 				D22907AF1A2F5E440038FF61 /* CCEffectOutline.h in Headers */,
 				D2FEB652194F6C9E00FC0574 /* CCTMXXMLParser.h in Headers */,
 				D2FEB653194F6C9E00FC0574 /* CCRenderTexture.h in Headers */,
@@ -3439,7 +3439,6 @@
 				D2FEB737194F6C9E00FC0574 /* CCButton.m in Sources */,
 				D2FEB738194F6C9E00FC0574 /* CCControl.m in Sources */,
 				D22907B21A2F5E440038FF61 /* CCEffectOutline.m in Sources */,
-				D2FEB739194F6C9E00FC0574 /* CCControlTextureFactory.m in Sources */,
 				D2FEB73A194F6C9E00FC0574 /* CCCache.m in Sources */,
 				D2FEB73C194F6C9E00FC0574 /* CCScrollView.m in Sources */,
 				D2FEB73D194F6C9E00FC0574 /* UITouch+CC.m in Sources */,

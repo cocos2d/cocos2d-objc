@@ -250,11 +250,12 @@
 
 -(void)visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
 {
-	if (!_visible) return;
+    
+	if (!self.visible) return;
     
     // Find the corners of the
     CGSize size = self.contentSizeInPoints;
-    GLKMatrix4 viewportTransform = [super transform:parentTransform];
+    GLKMatrix4 viewportTransform = [super nodeToWorldMatrix];
     GLKVector3 v0 = GLKMatrix4MultiplyAndProjectVector3(viewportTransform, GLKVector3Make(      0.0f,        0.0f, 0.0f));
     GLKVector3 v1 = GLKMatrix4MultiplyAndProjectVector3(viewportTransform, GLKVector3Make(size.width,        0.0f, 0.0f));
     GLKVector3 v2 = GLKMatrix4MultiplyAndProjectVector3(viewportTransform, GLKVector3Make(size.width, size.height, 0.0f));

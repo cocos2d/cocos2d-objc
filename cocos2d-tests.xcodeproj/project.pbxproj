@@ -24,6 +24,7 @@
 		758A6C7B18440D5C00D1A8D2 /* ParticleTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 758A6C7A18440D5C00D1A8D2 /* ParticleTest.m */; };
 		758A6C80184410EE00D1A8D2 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 758A6C7F184410EE00D1A8D2 /* Particles */; };
 		75F76497185A831B00E2FAFE /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 75F76496185A831B00E2FAFE /* Sounds */; };
+		75F9BF5E1A38EE8C009185BF /* CCViewPortNodeTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D35C2D261A1BC83F00FF96B0 /* CCViewPortNodeTest.m */; };
 		839B149F19CC1E440000E5E2 /* CCPackageTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 839B149E19CC1E440000E5E2 /* CCPackageTest.m */; };
 		92324E2A18EB635500D78D3F /* CCReaderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 92324E2918EB635500D78D3F /* CCReaderTest.m */; };
 		9269312A1923D8A700CE6285 /* Resources-shared in Resources */ = {isa = PBXBuildFile; fileRef = B7C6237517EA695100928F91 /* Resources-shared */; };
@@ -583,8 +584,6 @@
 		B71B087F17EA5B500082EBC0 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				D36105581A1079A700415E59 /* CCParticleExamples.h */,
-				D36105591A1079A700415E59 /* CCParticleExamples.m */,
 				0E28FE19197FCE4500F78989 /* CCCacheTest.m */,
 				D2B4894B1917EE6700C3443A /* CCEffectsTest.m */,
 				D3D6CF5E18BD5F0500A51531 /* CCRendererTest.m */,
@@ -1254,12 +1253,11 @@
 				B7E2622117E7D3B2007067F0 /* MainMenu.m in Sources */,
 				D3D6CF5F18BD5F0500A51531 /* CCRendererTest.m in Sources */,
 				B70AFC30180F2D7400516435 /* CCTransitionTest.m in Sources */,
-				D361055A1A1079A700415E59 /* CCParticleExamples.m in Sources */,
 				758A6C7B18440D5C00D1A8D2 /* ParticleTest.m in Sources */,
-				D35C2D271A1BC83F00FF96B0 /* CCViewPortNodeTest.m in Sources */,
 				B7C6238C17ECDF6A00928F91 /* CCTableViewTest.m in Sources */,
 				D340E10E185660BE006E605C /* CCPhysicsTest.m in Sources */,
 				D3B2A7E5187DD60B00406C5A /* CCBMFontTest.m in Sources */,
+				75F9BF5E1A38EE8C009185BF /* CCViewPortNodeTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
