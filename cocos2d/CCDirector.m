@@ -505,7 +505,7 @@ static CCDirector *_sharedDirector = nil;
 	
 	[self setProjection:_projection];
 	
-	[_runningScene viewDidResizeTo: newViewSize];
+	[_runningScene viewDidResizeTo: _winSizeInPoints];
 }
 
 #pragma mark Director Scene Management
