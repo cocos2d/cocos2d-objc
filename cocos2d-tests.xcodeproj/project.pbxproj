@@ -16,6 +16,7 @@
 		75556A181856370A00ED1B0F /* CCPhysicsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 755569E51856361100ED1B0F /* CCPhysicsTests.m */; };
 		75556A191856370A00ED1B0F /* CCSchedulerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 755569E61856361100ED1B0F /* CCSchedulerTests.m */; };
 		75556A1B1856374700ED1B0F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 755569EA1856361100ED1B0F /* InfoPlist.strings */; };
+		756A97B81A3256DF00358CD4 /* CCActionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 756A97B71A3256DF00358CD4 /* CCActionTest.m */; };
 		7587BDB3185A0A6900EEEFDE /* TextureTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7587BDB2185A0A6900EEEFDE /* TextureTest.m */; };
 		7587BDB7185A64AD00EEEFDE /* ColorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7587BDB6185A64AD00EEEFDE /* ColorTest.m */; };
 		758A6C6C1843E5CB00D1A8D2 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 758A6C6A1843E5BE00D1A8D2 /* TileMaps */; };
@@ -325,6 +326,7 @@
 		755569EB1856361100ED1B0F /* UnitTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UnitTests-Prefix.pch"; sourceTree = "<group>"; };
 		75556A02185636F100ED1B0F /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		75556A03185636F100ED1B0F /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		756A97B71A3256DF00358CD4 /* CCActionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionTest.m; sourceTree = "<group>"; };
 		7587BDB2185A0A6900EEEFDE /* TextureTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextureTest.m; path = "cocos2d-ui-tests/tests/TextureTest.m"; sourceTree = SOURCE_ROOT; };
 		7587BDB6185A64AD00EEEFDE /* ColorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ColorTest.m; path = "cocos2d-ui-tests/tests/ColorTest.m"; sourceTree = SOURCE_ROOT; };
 		758A6C6A1843E5BE00D1A8D2 /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TileMaps; path = Resources/TileMaps; sourceTree = SOURCE_ROOT; };
@@ -549,6 +551,7 @@
 		755569ED1856361100ED1B0F /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
+				756A97B71A3256DF00358CD4 /* CCActionTest.m */,
 				92FE241018F5F06F00647961 /* CCAnimationTest.m */,
 				9D96557219D6113500428E79 /* CCEffectTests.m */,
 				755569E31856361100ED1B0F /* CCFileUtilTests.m */,
@@ -1214,12 +1217,9 @@
 				D32FDE8619B645CA0078CC16 /* CCTextureTests.m in Sources */,
 				9D96557319D6113500428E79 /* CCEffectTests.m in Sources */,
 				75556A161856370A00ED1B0F /* CCFileUtilTests.m in Sources */,
+				756A97B81A3256DF00358CD4 /* CCActionTest.m in Sources */,
 				92FE241118F5F06F00647961 /* CCAnimationTest.m in Sources */,
 				75556A171856370A00ED1B0F /* CCNodeTests.m in Sources */,
-				D3395F1A187F83E600F22C74 /* CCMemoryTests.m in Sources */,
-				75556A181856370A00ED1B0F /* CCPhysicsTests.m in Sources */,
-				D34CD3C518ABF4AA00D8E537 /* CCRendererTests.m in Sources */,
-				75556A191856370A00ED1B0F /* CCSchedulerTests.m in Sources */,
 				E525F81797DA5573FC26BEBB /* CCPackageTests.m in Sources */,
 				E525F5DB1E3086DDE0296CEC /* CCPackageDownloadTests.m in Sources */,
 				E525FA44681404CC22A3A8D9 /* CCPackageUnzipperTests.m in Sources */,
@@ -1229,6 +1229,10 @@
 				E525F033EECC363CA8EAF2A6 /* CCPackageDownloadManagerTests.m in Sources */,
 				E525F4D0568A8A4176684936 /* CCPackageHelperTests.m in Sources */,
 				E525FCD390330D4F4EBD76CC /* CCPackagesTestFixturesAndHelpers.m in Sources */,
+				D3395F1A187F83E600F22C74 /* CCMemoryTests.m in Sources */,
+				75556A181856370A00ED1B0F /* CCPhysicsTests.m in Sources */,
+				D34CD3C518ABF4AA00D8E537 /* CCRendererTests.m in Sources */,
+				75556A191856370A00ED1B0F /* CCSchedulerTests.m in Sources */,
 				E525FA366EFEEF054FB0C74A /* CCSpriteFrameCacheTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
