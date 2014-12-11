@@ -8,8 +8,16 @@
 
 #import "CCPlatformTextFieldAndroid.h"
 #import "CCActivity.h"
-#import <BridgeKitV3/BridgeKit.h>
+
 #import <CoreGraphics/CoreGraphics.h>
+
+#import <AndroidKit/AndroidColorDrawable.h>
+#import <AndroidKit/AndroidColor.h>
+#import <AndroidKit/AndroidViewGroupLayoutParams.h>
+#import <AndroidKit/AndroidRelativeLayoutLayoutParams.h>
+#import <AndroidKit/AndroidRelativeLayout.h>
+#import <AndroidKit/AndroidEditorInfo.h>
+
 #import "CCControl.h"
 #import "CCDirector.h"
 #import "CCEditText.h"
@@ -23,8 +31,8 @@
     if (self=[super init]) {
         dispatch_async(dispatch_get_main_queue(), ^{
             _editText = [[CCEditText alloc] initWithContext:[CCActivity currentActivity]];
-            [_editText setBackground:[[AndroidColorDrawable alloc] initWithColor:AndroidColorTRANSPARENT]];
-            [_editText setTextColorByColor:AndroidColorBLACK];
+            [_editText setBackground:[[AndroidColorDrawable alloc] initWithColor:AndroidColorTransparent]];
+            [_editText setTextColorByColor:AndroidColorBlack];
         });
         
     }
@@ -73,7 +81,7 @@
         [params setMargins:frame.origin.x top:frame.origin.y right:0 bottom:0];
         [_editText setPadding:nativePadding top:nativePadding right:nativePadding bottom:nativePadding];
         [_editText setLayoutParams:params];
-        [_editText setImeOptions:AndroidEditorInfoIME_FLAG_NO_EXTRACT_UI];
+        [_editText setImeOptions:AndroidEditorInfoImeFlagNoExtractUi];
         
         
         __weak id weakSelf = self;

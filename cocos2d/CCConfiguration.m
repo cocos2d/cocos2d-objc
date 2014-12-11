@@ -29,7 +29,8 @@
 #if __CC_PLATFORM_IOS
 #import <UIKit/UIKit.h>		// Needed for UIDevice
 #elif __CC_PLATFORM_ANDROID
-
+#import <AndroidKit/AndroidWindowManager.h>
+#import <AndroidKit/AndroidDisplay.h>
 #endif
 
 #import "Platforms/CCGL.h"
@@ -187,7 +188,8 @@ static char * glExtensions;
 #if __CC_PLATFORM_ANDROID
     
     AndroidDisplayMetrics *metrics = [[AndroidDisplayMetrics alloc] init];
-    [[CCActivity currentActivity].windowManager.defaultDisplay getMetrics:metrics];
+    [[CCActivity currentActivity].windowManager.defaultDisplay metricsForDisplayMetrics:metrics];
+
     double yInches= metrics.heightPixels/metrics.ydpi;
     double xInches= metrics.widthPixels/metrics.xdpi;
     double diagonalInches = sqrt(xInches*xInches + yInches*yInches);

@@ -23,7 +23,10 @@
 /* Begin PBXBuildFile section */
 		0529445D11098D6F00E500F3 /* CCProfiling.h in Headers */ = {isa = PBXBuildFile; fileRef = 0529445911098D6F00E500F3 /* CCProfiling.h */; };
 		0529445E11098D6F00E500F3 /* CCProfiling.m in Sources */ = {isa = PBXBuildFile; fileRef = 0529445A11098D6F00E500F3 /* CCProfiling.m */; };
+		1426D9951A38D24A00A579AF /* CCGestureListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BC3CB5719626FA000C4F0D0 /* CCGestureListener.h */; };
 		1435EB831A37BA7000BD04D4 /* GLActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1435EB821A37BA7000BD04D4 /* GLActivityKit.framework */; };
+		14C4C33E1A37E39E00DD3957 /* AndroidKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14C4C33D1A37E39E00DD3957 /* AndroidKit.framework */; };
+		14EF47AA1A37F11C00A45BE4 /* JavaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14EF47A91A37F11C00A45BE4 /* JavaKit.framework */; };
 		2B192835163361B10049A044 /* CCClippingNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B192833163361B10049A044 /* CCClippingNode.h */; };
 		2B192836163361B10049A044 /* CCClippingNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B192834163361B10049A044 /* CCClippingNode.m */; };
 		5015043B113300F900A9CA65 /* CCActionProgressTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 50150435113300F900A9CA65 /* CCActionProgressTimer.h */; };
@@ -106,15 +109,11 @@
 		571CD02B19649E03003D460C /* CCPlatformTextFieldIOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 571CD02219649E03003D460C /* CCPlatformTextFieldIOS.m */; };
 		57202D391970776100238D56 /* CCPlatformTextFieldAndroid.m in Sources */ = {isa = PBXBuildFile; fileRef = 571CD01D19649E03003D460C /* CCPlatformTextFieldAndroid.m */; };
 		577D72D11970AC59005ABDC0 /* CCPlatformTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 571CD01F19649E03003D460C /* CCPlatformTextField.m */; };
-		57BFF2B61991931300A3FE9C /* CCEditText.java in Sources */ = {isa = PBXBuildFile; fileRef = 57BFF2B51991931300A3FE9C /* CCEditText.java */; };
 		57BFF2BA1991937C00A3FE9C /* CCEditText.m in Sources */ = {isa = PBXBuildFile; fileRef = 57BFF2B81991937C00A3FE9C /* CCEditText.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		5BC1DE2A1A2E2099009C2E67 /* NSEvent+CC.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BC1DE281A2E2099009C2E67 /* NSEvent+CC.h */; };
 		5BC1DE2B1A2E2099009C2E67 /* NSEvent+CC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC1DE291A2E2099009C2E67 /* NSEvent+CC.m */; };
 		5BC3CB5919626FA000C4F0D0 /* CCGestureListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BC3CB5719626FA000C4F0D0 /* CCGestureListener.h */; };
 		5BC3CB5A19626FA000C4F0D0 /* CCGestureListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC3CB5819626FA000C4F0D0 /* CCGestureListener.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		5BC3CB5C1962795500C4F0D0 /* CCGestureListener.java in Sources */ = {isa = PBXBuildFile; fileRef = 5BC3CB5219626E4F00C4F0D0 /* CCGestureListener.java */; };
-		5BF3268E195F8E0300D9A51A /* CCActivity.java in Sources */ = {isa = PBXBuildFile; fileRef = 5BF3268C195F8E0300D9A51A /* CCActivity.java */; };
-		5BF3268F195F8E0300D9A51A /* CCGLView.java in Sources */ = {isa = PBXBuildFile; fileRef = 5BF3268D195F8E0300D9A51A /* CCGLView.java */; };
 		5BF32698195F947800D9A51A /* CCActivity.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BF32696195F947800D9A51A /* CCActivity.h */; };
 		5BF32699195F947800D9A51A /* CCActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF32697195F947800D9A51A /* CCActivity.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -O0"; }; };
 		7A4037C019E37108007B6E8F /* libObjectAL (Mac).a in Frameworks */ = {isa = PBXBuildFile; fileRef = D28B2E7E19CBA89A00DC6E08 /* libObjectAL (Mac).a */; };
@@ -678,7 +677,6 @@
 		D285ECF1192EA92A009F4E88 /* CCGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = D285ECEF192EA92A009F4E88 /* CCGLView.m */; };
 		D285ECF8192EF5B2009F4E88 /* CCDirectorAndroid.h in Headers */ = {isa = PBXBuildFile; fileRef = D285ECF6192EF5B2009F4E88 /* CCDirectorAndroid.h */; };
 		D285ECF9192EF5B2009F4E88 /* CCDirectorAndroid.m in Sources */ = {isa = PBXBuildFile; fileRef = D285ECF7192EF5B2009F4E88 /* CCDirectorAndroid.m */; };
-		D289C1C2197440BD00B68E3D /* BridgeKitV3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D289C1C1197440BC00B68E3D /* BridgeKitV3.framework */; };
 		D28A2E161954F66E00ADC03D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D28A2E151954F66E00ADC03D /* UIKit.framework */; };
 		D28A2E1B1954F68D00ADC03D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D28A2E1A1954F68D00ADC03D /* QuartzCore.framework */; };
 		D28A2E1D1954F7E000ADC03D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D28A2E1C1954F7E000ADC03D /* OpenGLES.framework */; };
@@ -1127,31 +1125,12 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		5BF32675195F8D8800D9A51A /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = java;
-			dstSubfolderSpec = 7;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5BF32676195F8D8800D9A51A /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = classPathLibs;
-			dstSubfolderSpec = 7;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		0529445911098D6F00E500F3 /* CCProfiling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProfiling.h; sourceTree = "<group>"; };
 		0529445A11098D6F00E500F3 /* CCProfiling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCProfiling.m; sourceTree = "<group>"; };
 		1435EB821A37BA7000BD04D4 /* GLActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLActivityKit.framework; path = "../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/GLActivityKit.framework"; sourceTree = "<group>"; };
+		14C4C33D1A37E39E00DD3957 /* AndroidKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AndroidKit.framework; path = "../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/AndroidKit.framework"; sourceTree = "<group>"; };
+		14EF47A91A37F11C00A45BE4 /* JavaKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaKit.framework; path = "../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/JavaKit.framework"; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		2B192833163361B10049A044 /* CCClippingNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCClippingNode.h; sourceTree = "<group>"; };
@@ -1254,7 +1233,6 @@
 		5BC3CB5219626E4F00C4F0D0 /* CCGestureListener.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = CCGestureListener.java; sourceTree = "<group>"; };
 		5BC3CB5719626FA000C4F0D0 /* CCGestureListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCGestureListener.h; path = Android/CCGestureListener.h; sourceTree = "<group>"; };
 		5BC3CB5819626FA000C4F0D0 /* CCGestureListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCGestureListener.m; path = Android/CCGestureListener.m; sourceTree = "<group>"; };
-		5BF3267A195F8D8800D9A51A /* cocos2dJava.jar */ = {isa = PBXFileReference; explicitFileType = compiled.java.jar; includeInIndex = 0; path = cocos2dJava.jar; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BF3268C195F8E0300D9A51A /* CCActivity.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = CCActivity.java; sourceTree = "<group>"; };
 		5BF3268D195F8E0300D9A51A /* CCGLView.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = CCGLView.java; sourceTree = "<group>"; };
 		5BF32696195F947800D9A51A /* CCActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCActivity.h; path = Android/CCActivity.h; sourceTree = "<group>"; };
@@ -1551,14 +1529,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5B8935661960F2F8009A1D20 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D289C1C2197440BD00B68E3D /* BridgeKitV3.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		7A4037A519E37038007B6E8F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1577,6 +1547,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14EF47AA1A37F11C00A45BE4 /* JavaKit.framework in Frameworks */,
+				14C4C33E1A37E39E00DD3957 /* AndroidKit.framework in Frameworks */,
 				1435EB831A37BA7000BD04D4 /* GLActivityKit.framework in Frameworks */,
 				7A97912B19E646F9001FFC4D /* libSSZipArchiveAndroid.a in Frameworks */,
 				7A97912A19E646D8001FFC4D /* libObjectiveChipmunk-Android.a in Frameworks */,
@@ -1595,7 +1567,6 @@
 			children = (
 				5018F24D0DFDEAC400C013A5 /* libcocos2d.a */,
 				D2FEB74F194F6C9E00FC0574 /* libcocos2dAndroid.a */,
-				5BF3267A195F8D8800D9A51A /* cocos2dJava.jar */,
 				7A4037A819E37038007B6E8F /* libcocos2d-mac.a */,
 			);
 			name = Products;
@@ -1630,6 +1601,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				14EF47A91A37F11C00A45BE4 /* JavaKit.framework */,
+				14C4C33D1A37E39E00DD3957 /* AndroidKit.framework */,
 				1435EB821A37BA7000BD04D4 /* GLActivityKit.framework */,
 				7A4037C719E3712A007B6E8F /* OpenGL.framework */,
 				7A4037C519E37126007B6E8F /* QuartzCore.framework */,
@@ -2474,6 +2447,7 @@
 				E0C54DCB11F9CF2700B9E4CB /* ccUtils.h in Headers */,
 				D23C5CBC194BC500007CA669 /* CCTouchAndroid.h in Headers */,
 				E01E6D8C121F130E001A484F /* CCLabelBMFont.h in Headers */,
+				1426D9951A38D24A00A579AF /* CCGestureListener.h in Headers */,
 				83E1A86D19C8ACAF000A3BCA /* CCPackageUnzipper.h in Headers */,
 				D2DDB09519805E8400233D80 /* CCMatrix3.h in Headers */,
 				E0EAD0FF121F4B4600B0C81C /* CCDirectorIOS.h in Headers */,
@@ -2934,25 +2908,6 @@
 			productReference = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		5BF32679195F8D8800D9A51A /* cocos2dJava */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5BF3267D195F8D8800D9A51A /* Build configuration list for PBXNativeTarget "cocos2dJava" */;
-			buildPhases = (
-				5BF32675195F8D8800D9A51A /* CopyFiles */,
-				5BF32676195F8D8800D9A51A /* CopyFiles */,
-				5BF32677195F8D8800D9A51A /* Sources */,
-				5BF32678195F8D8800D9A51A /* Resources */,
-				5B8935661960F2F8009A1D20 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = cocos2dJava;
-			productName = cocos2dJava;
-			productReference = 5BF3267A195F8D8800D9A51A /* cocos2dJava.jar */;
-			productType = "com.apportable.java.product-type.library";
-		};
 		7A4037A719E37038007B6E8F /* cocos2d-mac */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7A4037B619E37039007B6E8F /* Build configuration list for PBXNativeTarget "cocos2d-mac" */;
@@ -3039,7 +2994,6 @@
 				5018F24C0DFDEAC400C013A5 /* cocos2d-ios */,
 				B772F6B118120CC9005C069B /* appledoc */,
 				D2FEB60D194F6C9E00FC0574 /* cocos2dAndroid */,
-				5BF32679195F8D8800D9A51A /* cocos2dJava */,
 				7A4037A719E37038007B6E8F /* cocos2d-mac */,
 			);
 		};
@@ -3117,16 +3071,6 @@
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
-
-/* Begin PBXResourcesBuildPhase section */
-		5BF32678195F8D8800D9A51A /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		B772F6B518120CDF005C069B /* ShellScript */ = {
@@ -3287,17 +3231,6 @@
 				D268FE12198078FF00ECBCD0 /* CCEffectHue.m in Sources */,
 				839CE58719FFB139003369F0 /* CCEffectInvert.m in Sources */,
 				E525F0F74C7C69C4371E20EE /* CCPackageHelper.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5BF32677195F8D8800D9A51A /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				57BFF2B61991931300A3FE9C /* CCEditText.java in Sources */,
-				5BC3CB5C1962795500C4F0D0 /* CCGestureListener.java in Sources */,
-				5BF3268E195F8E0300D9A51A /* CCActivity.java in Sources */,
-				5BF3268F195F8E0300D9A51A /* CCGLView.java in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3718,59 +3651,6 @@
 			};
 			name = Release;
 		};
-		5BF3267B195F8D8800D9A51A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = "$(inherited)";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = sbandroid;
-			};
-			name = Debug;
-		};
-		5BF3267C195F8D8800D9A51A /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = "$(inherited)";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = sbandroid;
-			};
-			name = Release;
-		};
 		7A4037B719E37039007B6E8F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3993,7 +3873,11 @@
 					"$(PROJECT_DIR)/external/ogg/android/ogg/build/Debug-android",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-upward-lAndroidKit",
+					"-upward-lJavaKit",
+					"-upward-lGLActivityKit",
+				);
 				PRODUCT_NAME = cocos2dAndroid;
 				SDKROOT = sbandroid;
 				SKIP_INSTALL = YES;
@@ -4039,7 +3923,11 @@
 					"$(SDKROOT)/usr/lib/x86",
 					"$(PROJECT_DIR)/external/ogg/android/ogg/build/Debug-android",
 				);
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-upward-lAndroidKit",
+					"-upward-lJavaKit",
+					"-upward-lGLActivityKit",
+				);
 				PRODUCT_NAME = cocos2dAndroid;
 				SDKROOT = sbandroid;
 				SKIP_INSTALL = YES;
@@ -4055,15 +3943,6 @@
 			buildConfigurations = (
 				5018F24E0DFDEAC500C013A5 /* Debug */,
 				5018F24F0DFDEAC500C013A5 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		5BF3267D195F8D8800D9A51A /* Build configuration list for PBXNativeTarget "cocos2dJava" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5BF3267B195F8D8800D9A51A /* Debug */,
-				5BF3267C195F8D8800D9A51A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

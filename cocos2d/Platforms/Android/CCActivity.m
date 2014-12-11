@@ -12,6 +12,12 @@
 
 #import <android/native_window.h>
 
+#import <AndroidKit/AndroidWindowManager.h>
+#import <AndroidKit/AndroidDisplay.h>
+#import <AndroidKit/AndroidActivityInfo.h>
+#import <AndroidKit/AndroidSurface+NDKExtensions.h>
+
+
 #import "cocos2d.h"
 #import "CCBReader.h"
 #import "CCGLView.h"

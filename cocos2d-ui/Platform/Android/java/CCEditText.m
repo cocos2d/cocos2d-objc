@@ -12,10 +12,7 @@
     CCEditTextCompletionBlock _completionBlock;
 }
 
-@bridge (constructor) initWithContext:;
-@bridge (method, instance) setTextSizeDouble:=setTextSizeDouble;
 
-@bridge (callback) onKeyPreIme:keyEvent: = onKeyPreIme;
 - (BOOL)onKeyPreIme:(int32_t)keyCode keyEvent:(AndroidKeyEvent *)event {
     if (keyCode == AndroidKeyEventKeycodeBack || [event action] == AndroidKeyEventActionUp) {
         if (_completionBlock != nil) {

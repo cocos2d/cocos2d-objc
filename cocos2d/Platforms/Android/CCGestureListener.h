@@ -24,13 +24,6 @@
 
 @property (nonatomic, assign) id<CCGestureListenerDelegate> delegate;
 
-- (id)init;
-- (BOOL)onDoubleTap:(AndroidMotionEvent *)e;
-- (BOOL)onDown:(AndroidMotionEvent *)e;
-- (BOOL)onFling:(AndroidMotionEvent *)start end:(AndroidMotionEvent *)end velocityX:(float)velocityX velocityY:(float)velocityY;
-- (void)onLongPress:(AndroidMotionEvent *)e;
-- (BOOL)onScroll:(AndroidMotionEvent *)start end:(AndroidMotionEvent *)end distanceX:(float)dx distanceY:(float)dy;
-
 @end
 
 #endif

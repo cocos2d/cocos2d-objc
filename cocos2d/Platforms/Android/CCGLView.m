@@ -29,8 +29,6 @@ static CCTouchEvent *currentEvent = nil;
     NSMutableSet *_gestureDetectors;
 }
 
-@bridge (constructor) initWithContext:;
-@bridge (callback) onTouchEvent: = onTouchEvent;
 
 - (id)initWithContext:(AndroidContext *)context screenMode:(enum CCAndroidScreenMode)screenMode  scaleFactor:(float)scaleFactor
 {
