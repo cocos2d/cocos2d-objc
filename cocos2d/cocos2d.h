@@ -130,7 +130,7 @@
 #import "OALSimpleAudio.h"
 
 // Retiring
-//#import "CCAnimation.h"
+#import "CCAnimation.h" // put this back for v3.4 because it's still in use, and would otherwise be unavailable to Swift
 //#import "CCAnimationCache.h"
 //#import "CCActionManager.h"
 //#import "ccFPSImages.h"
