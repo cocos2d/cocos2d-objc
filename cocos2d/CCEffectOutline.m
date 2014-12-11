@@ -5,7 +5,6 @@
 //  Created by Oleg Osin on 12/3/14.
 //
 //
-
 #import "CCEffectOutline.h"
 #import "CCEffect_Private.h"
 #import "CCSprite_Private.h"
@@ -27,7 +26,11 @@
                           [CCEffectUniform uniform:@"float" name:@"u_currentPass" value:[NSNumber numberWithFloat:0.0]]
                           ];
     
-    if((self = [super initWithFragmentUniforms:uniforms vertexUniforms:nil varyings:nil]))
+    NSArray *fragFunctions = [CCEffectOutlineImpl buildFragmentFunctions];
+    NSArray *vertFunctions = [CCEffectOutlineImpl buildVertexFunctions];
+    NSArray *renderPasses = [CCEffectOutlineImpl buildRenderPassesWithInterface:interface];
+    
+    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:uniforms vertexUniforms:nil varyings:nil]))
     {
         _interface = interface;
         self.debugName = @"CCEffectOutline";
@@ -35,10 +38,8 @@
     return self;
 }
 
--(void)buildFragmentFunctions
++ (NSArray *)buildFragmentFunctions
 {
-    self.fragmentFunctions = [[NSMutableArray alloc] init];
-    
     NSString* effectBody = CC_GLSL(
                                    
                                    if(u_currentPass == 1.0)
@@ -76,13 +77,11 @@
     
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"outlineEffect"
                                                                            body:effectBody inputs:nil returnType:@"vec4"];
-    [self.fragmentFunctions addObject:fragmentFunction];
+    return @[fragmentFunction];
 }
 
--(void)buildVertexFunctions
-{
-    self.vertexFunctions = [[NSMutableArray alloc] init];
-    
++ (NSArray *)buildVertexFunctions
+{    
     NSString* effectBody = CC_GLSL(
                                    
                                    
@@ -92,52 +91,50 @@
     
     CCEffectFunction* vertexFunction = [[CCEffectFunction alloc] initWithName:@"outlineEffect"
                                                                            body:effectBody inputs:nil returnType:@"vec4"];
-    [self.vertexFunctions addObject:vertexFunction];
+    return @[vertexFunction];
 }
 
--(void)buildRenderPasses
++ (NSArray *)buildRenderPassesWithInterface:(CCEffectOutline *)interface
 {
-    __weak CCEffectOutlineImpl *weakSelf = self;
+    __weak CCEffectOutline *weakInterface = interface;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.debugLabel = @"CCEffectOutline pass 0";
-    pass0.shader = self.shader;
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs) {
         
         passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outlineColor"]] = [NSValue valueWithGLKVector4:weakSelf.interface.outlineColor.glkVector4];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_outlineColor"]] = [NSValue valueWithGLKVector4:weakInterface.outlineColor.glkVector4];
         
-        GLKVector2 stepSize = GLKVector2Make(weakSelf.interface.outlineWidth / passInputs.previousPassTexture.contentSize.width,
-                                             weakSelf.interface.outlineWidth / passInputs.previousPassTexture.contentSize.height);
+        GLKVector2 stepSize = GLKVector2Make(weakInterface.outlineWidth / passInputs.previousPassTexture.contentSize.width,
+                                             weakInterface.outlineWidth / passInputs.previousPassTexture.contentSize.height);
         
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_stepSize"]] = [NSValue valueWithGLKVector2:stepSize];
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_currentPass"]] = [NSNumber numberWithFloat:0.0f];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_stepSize"]] = [NSValue valueWithGLKVector2:stepSize];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_currentPass"]] = [NSNumber numberWithFloat:0.0f];
         
     } copy]];
     
     
     // Pass 1 is a WIP (trying to scale the outline before applying it. (a bad idea so far..)
-#if 0
+#if 1
     CCEffectRenderPass *pass1 = [[CCEffectRenderPass alloc] init];
     pass1.debugLabel = @"CCEffectOutline pass 1";
-    pass1.shader = self.shader;
     pass1.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass1.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs) {
         
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_outlineColor"]] = [NSValue valueWithGLKVector4:weakSelf.interface.outlineColor.glkVector4];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_outlineColor"]] = [NSValue valueWithGLKVector4:weakInterface.outlineColor.glkVector4];
 
-        GLKVector2 stepSize = GLKVector2Make(_outlineWidth / passInputs.previousPassTexture.contentSize.width,
-                                             _outlineWidth / passInputs.previousPassTexture.contentSize.height);
+        GLKVector2 stepSize = GLKVector2Make(weakInterface.outlineWidth / passInputs.previousPassTexture.contentSize.width,
+                                             weakInterface.outlineWidth / passInputs.previousPassTexture.contentSize.height);
         
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_stepSize"]] = [NSValue valueWithGLKVector2:stepSize];
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_currentPass"]] = [NSNumber numberWithFloat:1.0f];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_stepSize"]] = [NSValue valueWithGLKVector2:stepSize];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_currentPass"]] = [NSNumber numberWithFloat:1.0f];
         
         
         float aspect = passInputs.previousPassTexture.contentSize.width / passInputs.previousPassTexture.contentSize.height;
-        float w = _outlineWidth * (4.0 * aspect); // no idea why I need to do this..
+        float w = weakInterface.outlineWidth * (4.0 * aspect); // no idea why I need to do this..
         float w2 = w / 2;
         CGRect rect = CGRectMake(w2, w2 * aspect,
                                  passInputs.previousPassTexture.contentSize.width-(w),
@@ -145,17 +142,17 @@
         
         CCSpriteTexCoordSet texCoords = [CCSprite textureCoordsForTexture:passInputs.previousPassTexture
                                                                  withRect:rect rotated:NO xFlipped:NO yFlipped:NO];
-        CCSpriteVertexes verts = pass.verts;
+        CCSpriteVertexes verts = passInputs.verts;
         verts.bl.texCoord2 = texCoords.bl;
         verts.br.texCoord2 = texCoords.br;
         verts.tr.texCoord2 = texCoords.tr;
         verts.tl.texCoord2 = texCoords.tl;
-        pass.verts = verts;
+        passInputs.verts = verts;
 
     } copy]];
 #endif
     
-    self.renderPasses = @[pass0];
+    return @[pass0];
 }
 
 @end

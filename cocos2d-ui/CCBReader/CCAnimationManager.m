@@ -39,6 +39,19 @@
 // Unique Manager ID
 static NSInteger ccbAnimationManagerID = 0;
 
+
+@interface CCBActionTweenColor : CCActionInterval <NSCopying> {
+    NSString *_key;
+    CCColor *_to;
+    CCColor *_from;
+}
+
++ (id)actionWithDuration:(CCTime)duration key:(NSString *)aKey from:(CCColor*)fc to:(CCColor*)tc;
+- (id)initWithDuration:(CCTime)duration key:(NSString *)aKey from:(CCColor*)fc to:(CCColor*)tc;
+
+@end
+
+
 @implementation CCAnimationManager
 
 - (id)init {
@@ -217,6 +230,20 @@ static NSInteger ccbAnimationManagerID = 0;
         }
     } else if ([name isEqualToString:@"spriteFrame"]) {
         return [CCActionSpriteFrame actionWithSpriteFrame:kf1.value];
+    } else if ([node isKindOfClass:[CCLightNode class]]) {
+        if ([name isEqualToString:@"intensity"] ||
+            [name isEqualToString:@"specularIntensity"] ||
+            [name isEqualToString:@"ambientIntensity"] ||
+            [name isEqualToString:@"cutoffRadius"] ||
+            [name isEqualToString:@"halfRadius"] ||
+            [name isEqualToString:@"depth"])
+        {
+            return [CCActionTween actionWithDuration:duration key:name from:[kf0.value floatValue] to:[kf1.value floatValue]];
+        } else if ([name isEqualToString:@"specularColor"] ||
+                   [name isEqualToString:@"ambientColor"])
+        {
+            return [CCBActionTweenColor actionWithDuration:duration key:name from:kf0.value to:kf1.value];
+        }
     } else {
         CCLOG(@"CCBReader: Failed to create animation for property: %@", name);
     }
@@ -984,3 +1011,48 @@ static NSInteger ccbAnimationManagerID = 0;
 }
 
 @end
+
+
+@implementation CCBActionTweenColor
++ (id)actionWithDuration:(CCTime)duration key:(NSString *)key from:(CCColor*)fc to:(CCColor*)tc;
+{
+    return [(CCBActionTweenColor*)[ self alloc] initWithDuration:duration key:key from:fc to:tc];
+}
+
+- (id)initWithDuration:(CCTime)duration key:(NSString *)key from:(CCColor*)fc to:(CCColor*)tc;
+{
+    if( (self = [super initWithDuration:duration]) )
+    {
+        _key = [key copy];
+        _from = fc;
+        _to = tc;
+    }
+    return self;
+}
+
+-(id) copyWithZone: (NSZone*) zone
+{
+    CCAction *copy = [(CCBActionTweenColor*)[[self class] allocWithZone: zone] initWithDuration:[self duration] key:_key from:_from to:_to];
+    return copy;
+}
+
+-(void) startWithTarget:(id)aTarget
+{
+    [super startWithTarget:aTarget];
+    
+    id value = [_target valueForKey:_key];
+    NSAssert([value isKindOfClass:[CCColor class]], @"CCActionTweenColor is attached to a none-color property.");
+}
+
+-(void) update: (CCTime) t
+{
+    CCNode* tn = (CCNode*) _target;
+    
+    ccColor4F fc = _from.ccColor4f;
+    ccColor4F tc = _to.ccColor4f;
+    CCColor *lerped = [CCColor colorWithRed:fc.r + (tc.r - fc.r) * t green:fc.g + (tc.g - fc.g) * t blue:fc.b + (tc.b - fc.b) * t alpha:fc.a + (tc.a - fc.a) * t];
+    
+    [_target setValue:lerped forKey:_key];
+}
+@end
+
