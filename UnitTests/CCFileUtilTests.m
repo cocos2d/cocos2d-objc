@@ -40,8 +40,8 @@
     XCTAssertNotNil(stream);
     [stream close];
     
-    XCTAssertNotNil([file loadPlist]);
-    XCTAssertNotNil([file loadData]);
+    XCTAssertNotNil([file loadPlist:nil]);
+    XCTAssertNotNil([file loadData:nil]);
 }
 
 -(void)_testLoadMethods:(NSString *)name
@@ -52,10 +52,10 @@
     id plist = @{@"Foo": @"Bar"};
     
     CCFile *file = [[CCFile alloc] initWithName:name url:url contentScale:1.0];
-    XCTAssertEqualObjects(file.loadPlist, plist);
+    XCTAssertEqualObjects([file loadPlist:nil], plist);
     
     // Could probably make a better test... but...
-    XCTAssertTrue(file.loadData.length > 0);
+    XCTAssertTrue([file loadData:nil].length > 0);
 }
 
 -(void)testLoadMethods
@@ -74,7 +74,7 @@
     NSURL *encryptedURL = [[NSBundle mainBundle] URLForResource:@"CCFileTest.plist.ccp" withExtension:nil];
     CCFile *encryptedFile = [[CCFile alloc] initWithName:@"Test" url:encryptedURL contentScale:1.0];
     
-    XCTAssertEqualObjects(encryptedFile.loadData, gzippedFile.loadData);
+    XCTAssertEqualObjects([encryptedFile loadData:nil], [gzippedFile loadData:nil]);
 }
 
 #warning TODO

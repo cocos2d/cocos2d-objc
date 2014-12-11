@@ -29,9 +29,7 @@
 
 /**
  Abstract file handling class. Files may reference local or remote files, such as files on an HTTP or FTP server.
- If a file is compressed with gzip (must end in .gz) it will be transparent decompressed.
- 
- TODO need to document encryption once that is finalized.
+ If a file is compressed with gzip (must end in .gz) it will be transparently decompressed.
  
  TODO Instances of this class are created using CCFileUtils, but that code hasn't been written yet.
  
@@ -40,18 +38,6 @@
  @since 4.0
  */
 @interface CCFile : NSObject
-
-/**
- Set the key used on encrypted files the app will be loading.
- It's recommended to set this value only once in your app delegate.
- 
- TODO where would a user find or create such a key.
-
- @param key A 32 digit hexadecimal number as a string.
-
- @since 4.0
- */
-+(void)setEncryptionKey:(NSString *)key;
 
 /**
  Name of the original file requested from CCFileUtils. (Ex: "Sprites/Hero.png")
@@ -87,26 +73,29 @@
 /**
  Assume the file is a plist and read it's contents.
 
+ @param error If an error occurs, upon return contains an NSError object that describes the problem.
+
  @return The plist file's contents, or nil if there is an error.
 
  @since 4.0
  */
--(id)loadPlist;
+-(id)loadPlist:(NSError **)error;
 
 /**
  Load the file's contents into a data object.
+ 
+ @param error If an error occurs, upon return contains an NSError object that describes the problem.
 
  @return The file's complete contents in a data object.
 
  @since 4.0
  */
--(NSData *)loadData;
+-(NSData *)loadData:(NSError **)error;
 
-// Open a file handle to the file. Returns nil on error.
 /**
- Open's an input stream to the file so it can be read sequentially.
+ Opens an input stream to the file so it can be read sequentially.
 
- @return A data object with the complete contents of the file.
+ @return An opened stream object.
 
  @since 4.0
  */
