@@ -60,7 +60,7 @@
                                    float blueInBounds = step(0.0, min(blueCompare.x, blueCompare.y));
                                    vec4 blueSample = texture2D(cc_PreviousPassTexture, blueSamplePos) * blueInBounds;
                                    
-                                   return vec4(redSample.r, greenSample.g, blueSample.b, (redSample.r + greenSample.g + blueSample.b) / 3.0);
+                                   return vec4(redSample.r, greenSample.g, blueSample.b, (redSample.a + greenSample.a + blueSample.a) / 3.0);
                                    );
     
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"colorChannelOffsetEffect" body:effectBody inputs:nil returnType:@"vec4"];
@@ -125,6 +125,36 @@
 +(id)effectWithRedOffset:(GLKVector2)redOffset greenOffset:(GLKVector2)greenOffset blueOffset:(GLKVector2)blueOffset;
 {
     return [[self alloc] initWithRedOffset:redOffset greenOffset:greenOffset blueOffset:blueOffset];
+}
+
+- (CGPoint)redOffsetWithPoint
+{
+    return CGPointMake(_redOffset.x, _redOffset.y);
+}
+
+- (void)setRedOffsetWithPoint:(CGPoint)offset
+{
+    _redOffset = GLKVector2Make(offset.x, offset.y);
+}
+
+- (CGPoint)greenOffsetWithPoint
+{
+    return CGPointMake(_greenOffset.x, _greenOffset.y);
+}
+
+- (void)setGreenOffsetWithPoint:(CGPoint)offset
+{
+    _greenOffset = GLKVector2Make(offset.x, offset.y);
+}
+
+- (CGPoint)blueOffsetWithPoint
+{
+    return CGPointMake(_blueOffset.x, _blueOffset.y);
+}
+
+- (void)setBlueOffsetWithPoint:(CGPoint)offset
+{
+    _blueOffset = GLKVector2Make(offset.x, offset.y);
 }
 
 @end
