@@ -137,6 +137,7 @@
 // Misc:
 #import "CCRenderDispatch.h"
 #import "CCTransition.h"
+#import "CCPackage.h"
 #import "CCDeviceInfo.h"
 #import "Support/CCFileUtils.h"
 #import "Support/CGPointExtension.h"
