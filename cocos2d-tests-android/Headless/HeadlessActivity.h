@@ -8,6 +8,7 @@
 
 #import "CCActivity.h"
 
+BRIDGE_CLASS("com.apportable.GLActivity")
 @interface HeadlessActivity : CCActivity
 
 @end

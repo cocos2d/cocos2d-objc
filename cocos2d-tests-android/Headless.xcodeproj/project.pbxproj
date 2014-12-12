@@ -10,6 +10,7 @@
 		141A45D31A38DB1000853DB8 /* CoreJava.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 141A45D21A38DB1000853DB8 /* CoreJava.framework */; };
 		146F55081A391B5C00CCCF26 /* GLActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 146F55071A391B5C00CCCF26 /* GLActivityKit.framework */; };
 		14A8F0341A391A4D00B4E693 /* BridgeKitV3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BCE504E1941161500E057D0 /* BridgeKitV3.framework */; };
+		14D9F5D61A3A81DE00620103 /* configCocos2d.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14D9F5D51A3A81DE00620103 /* configCocos2d.plist */; };
 		14EF47AE1A37F15800A45BE4 /* JavaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14EF47AD1A37F15800A45BE4 /* JavaKit.framework */; };
 		14EF47AF1A37F17300A45BE4 /* AndroidKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14098DAA1A37EA94005F0B26 /* AndroidKit.framework */; };
 		14EF47B01A37F31100A45BE4 /* GLActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14098DAC1A37EA9A005F0B26 /* GLActivityKit.framework */; };
@@ -179,6 +180,7 @@
 		146F55071A391B5C00CCCF26 /* GLActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLActivityKit.framework; path = System/Library/Frameworks/GLActivityKit.framework; sourceTree = SDKROOT; };
 		14A8F0201A39167F00B4E693 /* BridgeKitV3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BridgeKitV3.framework; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/BridgeKitV3.framework"; sourceTree = "<group>"; };
 		14A8F02E1A391A2600B4E693 /* HeadlessJava.jar */ = {isa = PBXFileReference; explicitFileType = compiled.java.jar; includeInIndex = 0; path = HeadlessJava.jar; sourceTree = BUILT_PRODUCTS_DIR; };
+		14D9F5D51A3A81DE00620103 /* configCocos2d.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = configCocos2d.plist; path = "../../cocos2d-ui-tests/Resources-shared/configCocos2d.plist"; sourceTree = "<group>"; };
 		14EF47AD1A37F15800A45BE4 /* JavaKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaKit.framework; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/JavaKit.framework"; sourceTree = "<group>"; };
 		57E144C31975DC340065F142 /* A Damn Mess.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "A Damn Mess.ttf"; sourceTree = "<group>"; };
 		57E144C41975DC340065F142 /* Abberancy.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Abberancy.ttf; sourceTree = "<group>"; };
@@ -352,6 +354,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		14D9F5D31A3A81C100620103 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				14D9F5D41A3A81CA00620103 /* Published-Android */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		14D9F5D41A3A81CA00620103 /* Published-Android */ = {
+			isa = PBXGroup;
+			children = (
+				14D9F5D51A3A81DE00620103 /* configCocos2d.plist */,
+			);
+			name = "Published-Android";
+			sourceTree = "<group>";
+		};
 		57E144C21975DC340065F142 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -507,6 +525,7 @@
 		5B4D6CC61936ACE5004D1A0B /* Headless */ = {
 			isa = PBXGroup;
 			children = (
+				14D9F5D31A3A81C100620103 /* Resources */,
 				D28F46261988175F006A017B /* Music */,
 				5B0ED737196E550000F9868F /* Particles */,
 				5B0ED735196E54BD00F9868F /* Sounds */,
@@ -746,6 +765,7 @@
 				57E1451A1975DC340065F142 /* fps_images.png in Resources */,
 				57E1452E1975DC340065F142 /* RobotoSlab-Bold.ttf in Resources */,
 				57E145321975DC340065F142 /* Schwarzwald Regular.ttf in Resources */,
+				14D9F5D61A3A81DE00620103 /* configCocos2d.plist in Resources */,
 				57E1450C1975DC340065F142 /* bitmapFontTest4.png in Resources */,
 				D23DE9E51958E0BD000483A8 /* Resources-shared in Resources */,
 				D23DE67B1958DBA0000483A8 /* Icon-Small-50.png in Resources */,

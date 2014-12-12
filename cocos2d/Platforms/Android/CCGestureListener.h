@@ -20,6 +20,7 @@
 - (BOOL)onScroll:(AndroidMotionEvent *)start end:(AndroidMotionEvent *)end distanceX:(float)dx distanceY:(float)dy;
 @end
 
+BRIDGE_CLASS("com.apportable.GLGestureListener")
 @interface CCGestureListener : GLGestureListener <AndroidGestureDetectorOnGestureListener>
 
 @property (nonatomic, assign) id<CCGestureListenerDelegate> delegate;

@@ -1231,10 +1231,8 @@
 		57BFF2B81991937C00A3FE9C /* CCEditText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCEditText.m; path = java/CCEditText.m; sourceTree = "<group>"; };
 		5BC1DE281A2E2099009C2E67 /* NSEvent+CC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSEvent+CC.h"; sourceTree = "<group>"; };
 		5BC1DE291A2E2099009C2E67 /* NSEvent+CC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSEvent+CC.m"; sourceTree = "<group>"; };
-		5BC3CB5219626E4F00C4F0D0 /* CCGestureListener.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = CCGestureListener.java; sourceTree = "<group>"; };
 		5BC3CB5719626FA000C4F0D0 /* CCGestureListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCGestureListener.h; path = Android/CCGestureListener.h; sourceTree = "<group>"; };
 		5BC3CB5819626FA000C4F0D0 /* CCGestureListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCGestureListener.m; path = Android/CCGestureListener.m; sourceTree = "<group>"; };
-		5BF3268C195F8E0300D9A51A /* CCActivity.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = CCActivity.java; sourceTree = "<group>"; };
 		5BF3268D195F8E0300D9A51A /* CCGLView.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = CCGLView.java; sourceTree = "<group>"; };
 		5BF32696195F947800D9A51A /* CCActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCActivity.h; path = Android/CCActivity.h; sourceTree = "<group>"; };
 		5BF32697195F947800D9A51A /* CCActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCActivity.m; path = Android/CCActivity.m; sourceTree = "<group>"; };
@@ -1952,9 +1950,7 @@
 		5BF3268B195F8E0300D9A51A /* cocos2d */ = {
 			isa = PBXGroup;
 			children = (
-				5BF3268C195F8E0300D9A51A /* CCActivity.java */,
 				5BF3268D195F8E0300D9A51A /* CCGLView.java */,
-				5BC3CB5219626E4F00C4F0D0 /* CCGestureListener.java */,
 			);
 			path = cocos2d;
 			sourceTree = "<group>";
@@ -3875,11 +3871,7 @@
 					"$(PROJECT_DIR)/external/ogg/android/ogg/build/Debug-android",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = (
-					"-upward-lAndroidKit",
-					"-upward-lJavaKit",
-					"-upward-lGLActivityKit",
-				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = cocos2dAndroid;
 				SDKROOT = sbandroid;
 				SKIP_INSTALL = YES;
@@ -3925,11 +3917,7 @@
 					"$(SDKROOT)/usr/lib/x86",
 					"$(PROJECT_DIR)/external/ogg/android/ogg/build/Debug-android",
 				);
-				OTHER_LDFLAGS = (
-					"-upward-lAndroidKit",
-					"-upward-lJavaKit",
-					"-upward-lGLActivityKit",
-				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = cocos2dAndroid;
 				SDKROOT = sbandroid;
 				SKIP_INSTALL = YES;

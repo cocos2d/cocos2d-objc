@@ -40,6 +40,7 @@ enum CCAndroidScreenMode {
     CCScreenScaledAspectFitEmulationMode
 };
 
+BRIDGE_CLASS("org.cocos2d.CCGLView")
 @interface CCGLView : GLView <CCDirectorView>
 
 

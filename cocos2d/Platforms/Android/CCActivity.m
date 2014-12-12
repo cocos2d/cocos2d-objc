@@ -11,19 +11,20 @@
 #if __CC_PLATFORM_ANDROID
 
 #import <android/native_window.h>
-
-#import <AndroidKit/AndroidWindowManager.h>
-#import <AndroidKit/AndroidDisplay.h>
-#import <AndroidKit/AndroidActivityInfo.h>
-#import <AndroidKit/AndroidSurface+NDKExtensions.h>
-
+#import <bridge/runtime.h>
+#import <GLActivityKit/AndroidLooper.h>
 
 #import "cocos2d.h"
 #import "CCBReader.h"
 #import "CCGLView.h"
 #import "CCScene.h"
-#import <android/looper.h>
+
 #import "CCPackageManager.h"
+
+#import <AndroidKit/AndroidWindowManager.h>
+#import <AndroidKit/AndroidDisplay.h>
+#import <AndroidKit/AndroidActivityInfo.h>
+#import <AndroidKit/AndroidSurface+NDKExtensions.h>
 
 #define USE_MAIN_THREAD 0 // enable to run on OpenGL/Cocos2D on the android main thread
 
@@ -111,6 +112,7 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
     {
         screenMode = CCScreenScaledAspectFitEmulationMode;
     }
+
     
     if([_cocos2dSetupConfig[CCSetupScreenOrientation] isEqual:CCScreenOrientationPortrait])
     {
@@ -130,7 +132,9 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
     [_glView.holder addCallback:self];
     [self.layout addView:_glView];
     [self setContentView:_layout];
-    [[AndroidLooper currentLooper] scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    
+    AndroidLooper *looper = [AndroidLooper currentLooper];
+    [looper scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 }
 
 - (void)onDestroy
