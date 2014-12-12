@@ -283,7 +283,6 @@
 		5B4D6CE31936ACE5004D1A0B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5B4D6CE51936ACE5004D1A0B /* HeadlessTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HeadlessTests.m; sourceTree = "<group>"; };
 		5B89B0211946369D00CD2A5E /* AndroidManifest.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = AndroidManifest.xml; path = src/main/AndroidManifest.xml; sourceTree = "<group>"; };
-		5BA67A52196CA0D60010FFB7 /* HeadlessActivity.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = HeadlessActivity.java; sourceTree = "<group>"; };
 		5BA67A54196CA1220010FFB7 /* HeadlessActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeadlessActivity.h; sourceTree = "<group>"; };
 		5BA67A55196CA1220010FFB7 /* HeadlessActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeadlessActivity.m; sourceTree = "<group>"; };
 		5BAF859E1936C8990085EA39 /* libEGL.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libEGL.so; path = "usr/lib/armv7a-neon/libEGL.so"; sourceTree = SDKROOT; };
@@ -338,7 +337,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				141A45D31A38DB1000853DB8 /* CoreJava.framework in Frameworks */,
-				14EF47B01A37F31100A45BE4 /* GLActivityKit.framework in Frameworks */,
 				14EF47AF1A37F17300A45BE4 /* AndroidKit.framework in Frameworks */,
 				14EF47AE1A37F15800A45BE4 /* JavaKit.framework in Frameworks */,
 				D2A8000319F0F9D500ED29F6 /* libcocos2dAndroid.a in Frameworks */,
@@ -347,6 +345,7 @@
 				D2BBF573195280150005272F /* libEGL.so in Frameworks */,
 				5B4D6CC31936ACE5004D1A0B /* CoreGraphics.framework in Frameworks */,
 				5B4D6CC11936ACE5004D1A0B /* Foundation.framework in Frameworks */,
+				14EF47B01A37F31100A45BE4 /* GLActivityKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -553,38 +552,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		5BA67A4C196CA0B70010FFB7 /* java */ = {
-			isa = PBXGroup;
-			children = (
-				5BA67A4F196CA0D60010FFB7 /* org */,
-			);
-			path = java;
-			sourceTree = "<group>";
-		};
-		5BA67A4F196CA0D60010FFB7 /* org */ = {
-			isa = PBXGroup;
-			children = (
-				5BA67A50196CA0D60010FFB7 /* cocos2d */,
-			);
-			path = org;
-			sourceTree = "<group>";
-		};
-		5BA67A50196CA0D60010FFB7 /* cocos2d */ = {
-			isa = PBXGroup;
-			children = (
-				5BA67A51196CA0D60010FFB7 /* demo */,
-			);
-			path = cocos2d;
-			sourceTree = "<group>";
-		};
-		5BA67A51196CA0D60010FFB7 /* demo */ = {
-			isa = PBXGroup;
-			children = (
-				5BA67A52196CA0D60010FFB7 /* HeadlessActivity.java */,
-			);
-			path = demo;
-			sourceTree = "<group>";
-		};
 		D23DE64E1958DB52000483A8 /* Resources-iOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -607,7 +574,6 @@
 		D242C5071958D76500E7726D /* Testbed */ = {
 			isa = PBXGroup;
 			children = (
-				5BA67A4C196CA0B70010FFB7 /* java */,
 				D242C50A1958D78700E7726D /* MainMenu.h */,
 				D242C50B1958D78700E7726D /* MainMenu.m */,
 				5BA67A54196CA1220010FFB7 /* HeadlessActivity.h */,

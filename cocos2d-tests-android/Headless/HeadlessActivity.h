@@ -8,7 +8,6 @@
 
 #import "CCActivity.h"
 
-BRIDGE_CLASS("org.cocos2d.demo.HeadlessActivity")
 @interface HeadlessActivity : CCActivity
 
 @end

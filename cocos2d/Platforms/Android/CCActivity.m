@@ -95,7 +95,7 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
     _running = YES;
     _layout = [[AndroidRelativeLayout alloc] initWithContext:self];
     AndroidDisplayMetrics *metrics = [[AndroidDisplayMetrics alloc] init];
-    [self.windowManager.defaultDisplay getMetrics:metrics];
+    [self.windowManager.defaultDisplay metricsForDisplayMetrics:metrics];
     
     // Configure Cocos2d with the options set in SpriteBuilder
     NSString* configPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Published-Android"];
