@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		141A45D31A38DB1000853DB8 /* CoreJava.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 141A45D21A38DB1000853DB8 /* CoreJava.framework */; };
+		147456A41A3B9B1A0024B64E /* Published-Android in Resources */ = {isa = PBXBuildFile; fileRef = 147456A31A3B9B1A0024B64E /* Published-Android */; };
 		14D9F5D61A3A81DE00620103 /* configCocos2d.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14D9F5D51A3A81DE00620103 /* configCocos2d.plist */; };
 		14EF47AE1A37F15800A45BE4 /* JavaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14EF47AD1A37F15800A45BE4 /* JavaKit.framework */; };
 		14EF47AF1A37F17300A45BE4 /* AndroidKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14098DAA1A37EA94005F0B26 /* AndroidKit.framework */; };
@@ -162,6 +163,7 @@
 		14098DAC1A37EA9A005F0B26 /* GLActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLActivityKit.framework; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/GLActivityKit.framework"; sourceTree = "<group>"; };
 		141A45D21A38DB1000853DB8 /* CoreJava.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreJava.framework; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/CoreJava.framework"; sourceTree = "<group>"; };
 		146F55071A391B5C00CCCF26 /* GLActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLActivityKit.framework; path = System/Library/Frameworks/GLActivityKit.framework; sourceTree = SDKROOT; };
+		147456A31A3B9B1A0024B64E /* Published-Android */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Published-Android"; sourceTree = "<group>"; };
 		14A8F0201A39167F00B4E693 /* BridgeKitV3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BridgeKitV3.framework; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/BridgeKitV3.framework"; sourceTree = "<group>"; };
 		14D9F5D51A3A81DE00620103 /* configCocos2d.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = configCocos2d.plist; path = "../../cocos2d-ui-tests/Resources-shared/configCocos2d.plist"; sourceTree = "<group>"; };
 		14EF47AD1A37F15800A45BE4 /* JavaKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaKit.framework; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/JavaKit.framework"; sourceTree = "<group>"; };
@@ -498,6 +500,7 @@
 		5B4D6CC61936ACE5004D1A0B /* Headless */ = {
 			isa = PBXGroup;
 			children = (
+				147456A31A3B9B1A0024B64E /* Published-Android */,
 				14D9F5D31A3A81C100620103 /* Resources */,
 				D28F46261988175F006A017B /* Music */,
 				5B0ED737196E550000F9868F /* Particles */,
@@ -750,6 +753,7 @@
 				57E145191975DC340065F142 /* fps_images.plist in Resources */,
 				57E145151975DC340065F142 /* fps_images-hd.plist in Resources */,
 				57E145141975DC340065F142 /* font-issue1343.png in Resources */,
+				147456A41A3B9B1A0024B64E /* Published-Android in Resources */,
 				D23DE67A1958DBA0000483A8 /* Icon-72.png in Resources */,
 				57E145331975DC340065F142 /* Scissor Cuts.ttf in Resources */,
 				5B0ED736196E54BD00F9868F /* Sounds in Resources */,
