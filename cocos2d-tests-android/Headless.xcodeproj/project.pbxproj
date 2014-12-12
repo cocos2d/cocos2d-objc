@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		141A45D31A38DB1000853DB8 /* CoreJava.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 141A45D21A38DB1000853DB8 /* CoreJava.framework */; };
-		146F55081A391B5C00CCCF26 /* GLActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 146F55071A391B5C00CCCF26 /* GLActivityKit.framework */; };
-		14A8F0341A391A4D00B4E693 /* BridgeKitV3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BCE504E1941161500E057D0 /* BridgeKitV3.framework */; };
 		14D9F5D61A3A81DE00620103 /* configCocos2d.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14D9F5D51A3A81DE00620103 /* configCocos2d.plist */; };
 		14EF47AE1A37F15800A45BE4 /* JavaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14EF47AD1A37F15800A45BE4 /* JavaKit.framework */; };
 		14EF47AF1A37F17300A45BE4 /* AndroidKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14098DAA1A37EA94005F0B26 /* AndroidKit.framework */; };
@@ -129,20 +127,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		146F55111A391C1700CCCF26 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D2A8FFEC19F0F9A400ED29F6 /* cocos2d.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D2FEB60D194F6C9E00FC0574;
-			remoteInfo = cocos2dAndroid;
-		};
-		14A8F0351A391A9C00B4E693 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5B4D6CB51936ACE5004D1A0B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 14A8F02D1A391A2600B4E693;
-			remoteInfo = HeadlessJava;
-		};
 		D2A8000119F0F9C300ED29F6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D2A8FFEC19F0F9A400ED29F6 /* cocos2d.xcodeproj */;
@@ -179,7 +163,6 @@
 		141A45D21A38DB1000853DB8 /* CoreJava.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreJava.framework; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/CoreJava.framework"; sourceTree = "<group>"; };
 		146F55071A391B5C00CCCF26 /* GLActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLActivityKit.framework; path = System/Library/Frameworks/GLActivityKit.framework; sourceTree = SDKROOT; };
 		14A8F0201A39167F00B4E693 /* BridgeKitV3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BridgeKitV3.framework; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/BridgeKitV3.framework"; sourceTree = "<group>"; };
-		14A8F02E1A391A2600B4E693 /* HeadlessJava.jar */ = {isa = PBXFileReference; explicitFileType = compiled.java.jar; includeInIndex = 0; path = HeadlessJava.jar; sourceTree = BUILT_PRODUCTS_DIR; };
 		14D9F5D51A3A81DE00620103 /* configCocos2d.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = configCocos2d.plist; path = "../../cocos2d-ui-tests/Resources-shared/configCocos2d.plist"; sourceTree = "<group>"; };
 		14EF47AD1A37F15800A45BE4 /* JavaKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaKit.framework; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/JavaKit.framework"; sourceTree = "<group>"; };
 		57E144C31975DC340065F142 /* A Damn Mess.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "A Damn Mess.ttf"; sourceTree = "<group>"; };
@@ -325,15 +308,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		14A8F0331A391A4300B4E693 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				146F55081A391B5C00CCCF26 /* GLActivityKit.framework in Frameworks */,
-				14A8F0341A391A4D00B4E693 /* BridgeKitV3.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5B4D6CBA1936ACE5004D1A0B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -484,7 +458,6 @@
 			isa = PBXGroup;
 			children = (
 				5B4D6CBD1936ACE5004D1A0B /* Headless.app */,
-				14A8F02E1A391A2600B4E693 /* HeadlessJava.jar */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -626,23 +599,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		14A8F02D1A391A2600B4E693 /* HeadlessJava */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 14A8F02F1A391A2600B4E693 /* Build configuration list for PBXNativeTarget "HeadlessJava" */;
-			buildPhases = (
-				14A8F02C1A391A2600B4E693 /* Sources */,
-				14A8F0331A391A4300B4E693 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				146F55121A391C1700CCCF26 /* PBXTargetDependency */,
-			);
-			name = HeadlessJava;
-			productName = HeadlessJava;
-			productReference = 14A8F02E1A391A2600B4E693 /* HeadlessJava.jar */;
-			productType = "com.apportable.java.product-type.library";
-		};
 		5B4D6CBC1936ACE5004D1A0B /* Headless */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5B4D6CE91936ACE5004D1A0B /* Build configuration list for PBXNativeTarget "Headless" */;
@@ -655,7 +611,6 @@
 			);
 			dependencies = (
 				D2A8000219F0F9C300ED29F6 /* PBXTargetDependency */,
-				14A8F0361A391A9C00B4E693 /* PBXTargetDependency */,
 			);
 			name = Headless;
 			productName = Headless;
@@ -670,11 +625,6 @@
 			attributes = {
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Apportable;
-				TargetAttributes = {
-					14A8F02D1A391A2600B4E693 = {
-						CreatedOnToolsVersion = 6.1.1;
-					};
-				};
 			};
 			buildConfigurationList = 5B4D6CB81936ACE5004D1A0B /* Build configuration list for PBXProject "Headless" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -695,7 +645,6 @@
 			projectRoot = "";
 			targets = (
 				5B4D6CBC1936ACE5004D1A0B /* Headless */,
-				14A8F02D1A391A2600B4E693 /* HeadlessJava */,
 			);
 		};
 /* End PBXProject section */
@@ -813,13 +762,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		14A8F02C1A391A2600B4E693 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5B4D6CB91936ACE5004D1A0B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -859,16 +801,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		146F55121A391C1700CCCF26 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = cocos2dAndroid;
-			targetProxy = 146F55111A391C1700CCCF26 /* PBXContainerItemProxy */;
-		};
-		14A8F0361A391A9C00B4E693 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 14A8F02D1A391A2600B4E693 /* HeadlessJava */;
-			targetProxy = 14A8F0351A391A9C00B4E693 /* PBXContainerItemProxy */;
-		};
 		D2A8000219F0F9C300ED29F6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = cocos2dAndroid;
@@ -896,34 +828,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		14A8F0301A391A2600B4E693 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				MACOSX_DEPLOYMENT_TARGET = "$(inherited)";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = apportablesdk;
-			};
-			name = Debug;
-		};
-		14A8F0311A391A2600B4E693 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				MACOSX_DEPLOYMENT_TARGET = "$(inherited)";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = apportablesdk;
-			};
-			name = Release;
-		};
 		5B4D6CE71936ACE5004D1A0B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1083,15 +987,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		14A8F02F1A391A2600B4E693 /* Build configuration list for PBXNativeTarget "HeadlessJava" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				14A8F0301A391A2600B4E693 /* Debug */,
-				14A8F0311A391A2600B4E693 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		5B4D6CB81936ACE5004D1A0B /* Build configuration list for PBXProject "Headless" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
