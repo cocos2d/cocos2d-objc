@@ -13,33 +13,34 @@
 
 static float conditionBrightness(float brightness);
 
+@interface CCEffectBrightness ()
+@property (nonatomic, strong) NSNumber *conditionedBrightness;
+@end
 
 @interface CCEffectBrightnessImpl : CCEffectImpl
-
-@property (nonatomic, strong) NSNumber *conditionedBrightness;
-
+@property (nonatomic, weak) CCEffectBrightness *interface;
 @end
 
 
 @implementation CCEffectBrightnessImpl
 
--(id)initWithBrightness:(float)brightness
+-(id)initWithInterface:(CCEffectBrightness *)interface
 {
     CCEffectUniform* uniformBrightness = [CCEffectUniform uniform:@"float" name:@"u_brightness" value:[NSNumber numberWithFloat:0.0f]];
     
-    if((self = [super initWithFragmentUniforms:@[uniformBrightness] vertexUniforms:nil varyings:nil]))
+    NSArray *fragFunctions = [CCEffectBrightnessImpl buildFragmentFunctions];
+    NSArray *renderPasses = [CCEffectBrightnessImpl buildRenderPassesWithInterface:interface];
+    
+    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:@[uniformBrightness] vertexUniforms:nil varyings:nil]))
     {
-        _conditionedBrightness = [NSNumber numberWithFloat:conditionBrightness(brightness)];
-        
+        self.interface = interface;
         self.debugName = @"CCEffectBrightnessImpl";
     }
     return self;
 }
 
--(void)buildFragmentFunctions
++ (NSArray *)buildFragmentFunctions
 {
-    self.fragmentFunctions = [[NSMutableArray alloc] init];
-
     CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:CCEffectDefaultInitialInputSnippet snippet:CCEffectDefaultInputSnippet];
 
     NSString* effectBody = CC_GLSL(
@@ -47,16 +48,15 @@ static float conditionBrightness(float brightness);
                                    );
     
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"brightnessEffect" body:effectBody inputs:@[input] returnType:@"vec4"];
-    [self.fragmentFunctions addObject:fragmentFunction];
+    return @[fragmentFunction];
 }
 
--(void)buildRenderPasses
++ (NSArray *)buildRenderPassesWithInterface:(CCEffectBrightness *)interface
 {
-    __weak CCEffectBrightnessImpl *weakSelf = self;
-    
+    __weak CCEffectBrightness *weakInterface = interface;
+
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.debugLabel = @"CCEffectBrightness pass 0";
-    pass0.shader = self.shader;
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
         
         passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;
@@ -64,15 +64,10 @@ static float conditionBrightness(float brightness);
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:passInputs.texCoord1Center];
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:passInputs.texCoord1Extents];
 
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_brightness"]] = weakSelf.conditionedBrightness;
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_brightness"]] = weakInterface.conditionedBrightness;
     } copy]];
     
-    self.renderPasses = @[pass0];
-}
-
--(void)setBrightness:(float)brightness
-{
-    _conditionedBrightness = [NSNumber numberWithFloat:conditionBrightness(brightness)];
+    return @[pass0];
 }
 
 @end
@@ -90,8 +85,9 @@ static float conditionBrightness(float brightness);
     if((self = [super init]))
     {
         _brightness = brightness;
-        
-        self.effectImpl = [[CCEffectBrightnessImpl alloc] initWithBrightness:brightness];
+        _conditionedBrightness = [NSNumber numberWithFloat:conditionBrightness(brightness)];
+
+        self.effectImpl = [[CCEffectBrightnessImpl alloc] initWithInterface:self];
         self.debugName = @"CCEffectBrightness";
     }
     return self;
@@ -105,9 +101,7 @@ static float conditionBrightness(float brightness);
 -(void)setBrightness:(float)brightness
 {
     _brightness = brightness;
-    
-    CCEffectBrightnessImpl *brightnessImpl = (CCEffectBrightnessImpl *)self.effectImpl;
-    [brightnessImpl setBrightness:brightness];
+    _conditionedBrightness = [NSNumber numberWithFloat:conditionBrightness(brightness)];
 }
 
 @end

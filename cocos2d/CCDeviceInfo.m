@@ -226,9 +226,8 @@ static char * glExtensions;
 	}
 	
 #elif __CC_PLATFORM_MAC
-	
-	// XXX: Add here support for Mac Retina Display
-	return CCDeviceMac;
+    CCDirectorMac *dir = (CCDirectorMac *)[CCDirectorMac sharedDirector];
+    return dir.deviceContentScaleFactor == 1.0 ? CCDeviceMac : CCDeviceMacRetinaDisplay;
 	
 #endif // __CC_PLATFORM_MAC
 	
