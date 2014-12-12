@@ -206,6 +206,16 @@
 		}
 }
 
+- (CGFloat)deviceContentScaleFactor {
+    if (self.view) {
+        NSRect backingBounds = [self.view convertRectToBacking:[self.view bounds]];
+        
+        return backingBounds.size.width / self.view.bounds.size.width;
+    }
+    
+    return 1.0;
+}
+
 -(int) resizeMode
 {
 	return _resizeMode;

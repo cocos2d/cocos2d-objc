@@ -9,6 +9,10 @@
 #import "CCEffectUtils.h"
 #import "CCRenderTexture_Private.h"
 
+#ifndef BLUR_OPTIMIZED_RADIUS_MAX
+#define BLUR_OPTIMIZED_RADIUS_MAX 4UL
+#endif
+
 
 static const float CCEffectUtilsMinRefract = -0.25;
 static const float CCEffectUtilsMaxRefract = 0.043;
@@ -195,5 +199,20 @@ void CCEffectUtilsPrintMatrix(NSString *label, GLKMatrix4 matrix)
     NSLog(@"%f %f %f %f", matrix.m30, matrix.m31, matrix.m32, matrix.m33);
 }
 
+CCEffectBlurParams CCEffectUtilsComputeBlurParams(NSUInteger radius)
+{
+    CCEffectBlurParams result;
+    
+    result.trueRadius = radius;
+    result.radius = MIN(radius, BLUR_OPTIMIZED_RADIUS_MAX);
+    result.sigma = result.trueRadius / 2;
+    if(result.sigma == 0.0)
+    {
+        result.sigma = 1.0f;
+    }
+    result.numberOfOptimizedOffsets = MIN(result.radius / 2 + (result.radius % 2), BLUR_OPTIMIZED_RADIUS_MAX);
+
+    return result;
+}
 
 

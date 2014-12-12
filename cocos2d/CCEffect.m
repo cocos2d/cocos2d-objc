@@ -355,146 +355,86 @@ static NSString* vertBase =
     return [[NSSet alloc] initWithArray:@[]];
 }
 
-
--(id)init
-{
-    return [self initWithFragmentFunction:nil vertexFunctions:nil fragmentUniforms:nil vertexUniforms:nil varyings:nil];
-}
-
--(id)initWithFragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings
-{
-    return [self initWithFragmentFunction:nil vertexFunctions:nil fragmentUniforms:fragmentUniforms vertexUniforms:vertexUniforms varyings:varyings];
-}
-
--(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings
-{
-    return [self initWithFragmentFunction:fragmentFunctions vertexFunctions:nil fragmentUniforms:fragmentUniforms vertexUniforms:vertexUniforms varyings:varyings];
-}
-
--(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions vertexFunctions:(NSMutableArray*)vertexFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings
+-(id)initWithRenderPasses:(NSArray *)renderPasses fragmentFunctions:(NSArray*)fragmentFunctions vertexFunctions:(NSArray*)vertexFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings uniformTranslationTable:(NSDictionary*)uniformTranslationTable firstInStack:(BOOL)firstInStack
 {
     if((self = [super init]))
     {
-        [self buildEffectWithFragmentFunction:fragmentFunctions vertexFunctions:vertexFunctions fragmentUniforms:fragmentUniforms vertexUniforms:vertexUniforms varyings:varyings firstInStack:YES];
-    }
-    return self;
-}
-
--(id)initWithFragmentFunction:(NSMutableArray*) fragmentFunctions vertexFunctions:(NSMutableArray*)vertexFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings firstInStack:(BOOL)firstInStack
-{
-    if((self = [super init]))
-    {
-        [self buildEffectWithFragmentFunction:fragmentFunctions vertexFunctions:vertexFunctions fragmentUniforms:fragmentUniforms vertexUniforms:vertexUniforms varyings:varyings firstInStack:firstInStack];
-    }
-    return self;
-}
-
-
-- (void)buildEffectWithFragmentFunction:(NSMutableArray*) fragmentFunctions vertexFunctions:(NSMutableArray*)vertexFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings firstInStack:(BOOL)firstInStack
-{
-    if (fragmentFunctions)
-    {
-        _fragmentFunctions = fragmentFunctions;
-    }
-    else
-    {
-        [self buildFragmentFunctions];
-    }
-    
-    if (vertexFunctions)
-    {
-        _vertexFunctions = vertexFunctions;
-    }
-    else
-    {
-        [self buildVertexFunctions];
-    }
-    
-    if (fragmentUniforms)
-    {
-        _fragmentUniforms = [[CCEffectImpl defaultEffectFragmentUniforms] arrayByAddingObjectsFromArray:fragmentUniforms];
-    }
-    else
-    {
-        _fragmentUniforms = [[CCEffectImpl defaultEffectFragmentUniforms] copy];
-    }
-    
-    if (vertexUniforms)
-    {
-        _vertexUniforms = [[CCEffectImpl defaultEffectVertexUniforms] arrayByAddingObjectsFromArray:vertexUniforms];
+        if (fragmentFunctions)
+        {
+            _fragmentFunctions = [fragmentFunctions copy];
+        }
+        else
+        {
+            _fragmentFunctions = @[[[CCEffectFunction alloc] initWithName:@"defaultEffect" body:@"return cc_FragColor;" inputs:nil returnType:@"vec4"]];
+        }
         
-    }
-    else
-    {
-        _vertexUniforms = [[CCEffectImpl defaultEffectVertexUniforms] copy];
-    }
-    
-    [self setVaryings:varyings];
-    
-    _stitchFlags = CCEffectFunctionStitchBoth;
-    _firstInStack = firstInStack;
-    
-    [self buildShaderUniforms:_fragmentUniforms vertexUniforms:_vertexUniforms];
-    [self buildUniformTranslationTable];
-    
-    [self buildEffectShader];
-    [self buildRenderPasses];
-}
-
--(void)buildShaderUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms
-{
-    _shaderUniforms = [[NSMutableDictionary alloc] init];
-    
-    for(CCEffectUniform* uniform in fragmentUniforms)
-    {
-        [_shaderUniforms setObject:uniform.value forKey:uniform.name];
-    }
-    
-    for(CCEffectUniform* uniform in vertexUniforms)
-    {
-        [_shaderUniforms setObject:uniform.value forKey:uniform.name];
-    }
-}
-
--(void)buildUniformTranslationTable
-{
-    self.uniformTranslationTable = [[NSMutableDictionary alloc] init];
-    for(CCEffectUniform* uniform in _vertexUniforms)
-    {
-        self.uniformTranslationTable[uniform.name] = uniform.name;
-    }
-
-    for(CCEffectUniform* uniform in _fragmentUniforms)
-    {
-        self.uniformTranslationTable[uniform.name] = uniform.name;
-    }
-}
-
--(void)setVaryings:(NSArray*)varyings
-{
-    if (varyings)
-    {
+        if (vertexFunctions)
+        {
+            _vertexFunctions = [vertexFunctions copy];
+        }
+        else
+        {
+            _vertexFunctions = @[[[CCEffectFunction alloc] initWithName:@"defaultEffect" body:@"return cc_Position;" inputs:nil returnType:@"vec4"]];
+        }
+        
+        _fragmentUniforms = [[CCEffectImpl defaultEffectFragmentUniforms] arrayByAddingObjectsFromArray:fragmentUniforms];
+        _vertexUniforms = [[CCEffectImpl defaultEffectVertexUniforms] arrayByAddingObjectsFromArray:vertexUniforms];
         _varyingVars = [varyings copy];
+        
+        _stitchFlags = CCEffectFunctionStitchBoth;
+        _firstInStack = firstInStack;
+        
+        _shaderUniforms = [CCEffectImpl buildShaderUniforms:_fragmentUniforms vertexUniforms:_vertexUniforms];
+        
+        if (uniformTranslationTable)
+        {
+            // If a translation was supplied, make sure it's valid.
+            [CCEffectImpl checkUniformTranslationTable:uniformTranslationTable againstUniforms:_shaderUniforms];
+        }
+        else
+        {
+            // No translation table was supplied, create a default one.
+            uniformTranslationTable = [CCEffectImpl buildUniformTranslationTable:_fragmentUniforms vertexUniforms:_vertexUniforms];
+        }
+        
+        NSString *fragBody = [CCEffectImpl buildShaderSourceFromBase:fragBase functions:_fragmentFunctions uniforms:_fragmentUniforms varyings:_varyingVars firstInStack:_firstInStack];
+        NSString *vertBody = [CCEffectImpl buildShaderSourceFromBase:vertBase functions:_vertexFunctions uniforms:_vertexUniforms varyings:_varyingVars firstInStack:_firstInStack];
+
+//        NSLog(@"\n------------vertBody:\n%@", vertBody);
+//        NSLog(@"\n------------fragBody:\n%@", fragBody);
+        
+        _shader = [[CCShader alloc] initWithVertexShaderSource:vertBody fragmentShaderSource:fragBody];
+        if (!_shader)
+        {
+            return nil;
+        }
+        
+        _renderPasses = [renderPasses copy];
+        for (CCEffectRenderPass *pass in _renderPasses)
+        {
+            pass.shader = _shader;
+            pass.uniformTranslationTable = uniformTranslationTable;
+        }
     }
-    else
-    {
-        _varyingVars = nil;
-    }
+    return self;
 }
 
--(void)buildEffectShader
+-(id)initWithRenderPasses:(NSArray *)renderPasses fragmentFunctions:(NSArray*)fragmentFunctions vertexFunctions:(NSArray*)vertexFunctions fragmentUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms varyings:(NSArray*)varyings
 {
-    NSString *fragBody = [self  buildShaderSourceFromBase:fragBase functions:_fragmentFunctions uniforms:_fragmentUniforms varyings:_varyingVars firstInStack:_firstInStack];
-//    NSLog(@"\n------------fragBody:\n%@", fragBody);
-    
-    NSString *vertBody = [self  buildShaderSourceFromBase:vertBase functions:_vertexFunctions uniforms:_vertexUniforms varyings:_varyingVars firstInStack:_firstInStack];
-//    NSLog(@"\n------------vertBody:\n%@", vertBody);
-    
-    _shader = [[CCShader alloc] initWithVertexShaderSource:vertBody fragmentShaderSource:fragBody];
-
+    return [self initWithRenderPasses:renderPasses fragmentFunctions:fragmentFunctions vertexFunctions:vertexFunctions fragmentUniforms:fragmentUniforms vertexUniforms:vertexUniforms varyings:varyings uniformTranslationTable:nil firstInStack:YES];
 }
 
--(NSString *)buildShaderSourceFromBase:(NSString *)shaderBase functions:(NSArray *)functions uniforms:(NSArray *)uniforms varyings:(NSArray *)varyings firstInStack:(BOOL)firstInStack
+-(id)initWithRenderPasses:(NSArray *)renderPasses shaderUniforms:(NSMutableDictionary *)uniforms
+{
+    if((self = [super init]))
+    {
+        _renderPasses = [renderPasses copy];
+        _shaderUniforms = [uniforms copy];
+    }
+    return self;
+}
+
++ (NSString *)buildShaderSourceFromBase:(NSString *)shaderBase functions:(NSArray *)functions uniforms:(NSArray *)uniforms varyings:(NSArray *)varyings firstInStack:(BOOL)firstInStack
 {
     // Build the varying string
     NSMutableString* varyingString = [[NSMutableString alloc] init];
@@ -555,21 +495,61 @@ static NSString* vertBase =
     return shaderSource;
 }
 
--(void)buildFragmentFunctions
+
++ (NSMutableDictionary *)buildShaderUniforms:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms
 {
-    _fragmentFunctions = [[NSMutableArray alloc] init];
-    [_fragmentFunctions addObject:[[CCEffectFunction alloc] initWithName:@"defaultEffect" body:@"return cc_FragColor;" inputs:nil returnType:@"vec4"]];
+    NSMutableDictionary *allUniforms = [[NSMutableDictionary alloc] init];
+    
+    for(CCEffectUniform* uniform in fragmentUniforms)
+    {
+        [allUniforms setObject:uniform.value forKey:uniform.name];
+    }
+    
+    for(CCEffectUniform* uniform in vertexUniforms)
+    {
+        [allUniforms setObject:uniform.value forKey:uniform.name];
+    }
+    
+    return allUniforms;
 }
 
--(void)buildVertexFunctions
++ (NSMutableDictionary *)buildUniformTranslationTable:(NSArray*)fragmentUniforms vertexUniforms:(NSArray*)vertexUniforms
 {
-    _vertexFunctions = [[NSMutableArray alloc] init];
-    [_vertexFunctions addObject:[[CCEffectFunction alloc] initWithName:@"defaultEffect" body:@"return cc_Position;" inputs:nil returnType:@"vec4"]];
+    NSMutableDictionary *translationTable = [[NSMutableDictionary alloc] init];
+    for(CCEffectUniform* uniform in vertexUniforms)
+    {
+        translationTable[uniform.name] = uniform.name;
+    }
+    
+    for(CCEffectUniform* uniform in fragmentUniforms)
+    {
+        translationTable[uniform.name] = uniform.name;
+    }
+    return translationTable;
 }
 
--(void)buildRenderPasses
++ (BOOL)checkUniformTranslationTable:(NSDictionary *)utt againstUniforms:(NSDictionary *)uniforms
 {
-    self.renderPasses = @[];
+    // If the two tables have different sizes then they can't match.
+    BOOL result = (utt.count == uniforms.count);
+
+    if (result)
+    {
+        // Does every entry in the translation table have a corresponding entry in
+        // the uniforms dictionary?
+
+        NSArray *mangledNames = [utt allValues];
+        for (NSString *mangledName in mangledNames)
+        {
+            if (![uniforms objectForKey:mangledName])
+            {
+                result = NO;
+                break;
+            }
+        }
+    }
+    
+    return result;
 }
 
 -(NSUInteger)renderPassCount

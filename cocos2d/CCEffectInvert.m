@@ -18,34 +18,36 @@
 
 -(id)init
 {
-    if((self = [super initWithFragmentUniforms:nil vertexUniforms:nil varyings:nil]))
+    NSArray *fragFunctions = [CCEffectInvertImpl buildFragmentFunctions];
+    NSArray *renderPasses = [CCEffectInvertImpl buildRenderPasses];
+    
+    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:nil vertexUniforms:nil varyings:nil]))
     {
         self.debugName = @"CCEffectInvertImpl";
     }
     return self;
 }
 
--(void)buildFragmentFunctions
++ (NSArray *)buildFragmentFunctions
 {
     NSString* effectBody = CC_GLSL(
-            vec4 color = cc_FragColor * texture2D(cc_PreviousPassTexture, cc_FragTexCoord1);
-            return vec4((vec3(1.0) - color.rgb) * color.a, color.a);
+            vec4 color = inputValue * texture2D(cc_PreviousPassTexture, cc_FragTexCoord1);
+            return vec4((vec3(color.a) - color.rgb), color.a);
     );
-
+    
+    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:@"cc_FragColor" snippet:@"vec4(1,1,1,1)"];
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"invertEffect"
                                                                            body:effectBody
-                                                                         inputs:nil
+                                                                         inputs:@[input]
                                                                      returnType:@"vec4"];
 
-    self.fragmentFunctions = [[NSMutableArray alloc] init];
-    [self.fragmentFunctions addObject:fragmentFunction];
+    return @[fragmentFunction];
 }
 
--(void)buildRenderPasses
++ (NSArray *)buildRenderPasses
 {
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.debugLabel = @"CCEffectInvert pass 0";
-    pass0.shader = self.shader;
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs)
     {
@@ -53,7 +55,7 @@
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
     } copy]];
     
-    self.renderPasses = @[pass0];
+    return @[pass0];
 }
 
 @end
