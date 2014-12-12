@@ -336,4 +336,45 @@ CGSize DesignSize = {300, 300};
     [viewport.contentNode addChild:draw];
 }
 
+-(void)setupOffsetCameraTest
+{
+    self.subTitle = @"A bird should be in the center of the view.\nCamera and bird have matching coordinates.";
+    
+    CCViewportNode *viewport = [CCViewportNode scaleToFitHeight:DesignSize];
+    [self.contentNode addChild:viewport];
+    viewport.camera.position = ccp(5000, 5000);
+    
+    CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/bird.png"];
+    sprite.position = ccp(5000, 5000);
+    [viewport.contentNode addChild:sprite];
+    
+}
+
+-(void)setupInputThroughViewportTest
+{
+    self.subTitle = @"Clicking on a button swaps the color.\nThe button is inside the viewport.";
+    
+    CCViewportNode *viewport = [CCViewportNode scaleToFitHeight:DesignSize];
+    viewport.name = @"Viewport";
+    [self.contentNode addChild:viewport];
+    viewport.camera.position = ccp(5000, 5000);
+    
+    CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/bird.png"];
+    sprite.name = @"BirdSprite";
+    sprite.position = ccp(5000, 5000);
+    [viewport.contentNode addChild:sprite];
+    
+    __block CCSprite *spriteBlock = sprite;
+    
+    CCButton *button = [CCButton buttonWithTitle:@"ColorChange"];
+    button.name = @"ColorChangeButton";
+    button.block = ^(id sender){
+        spriteBlock.color = ([spriteBlock.color isEqual:[CCColor redColor]] ? [CCColor whiteColor] : [CCColor redColor]);
+    };
+    button.position = ccp(5000, 4980);
+    [viewport.contentNode addChild:button];
+
+    
+}
+
 @end

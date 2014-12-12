@@ -12,6 +12,51 @@
 #define NEAR_Z -1024
 #define FAR_Z 1024
 
+@interface CCCamera : CCNode
+
+@property(nonatomic, weak) CCViewportNode *viewport;
+
+@end
+
+@implementation CCCamera{
+
+}
+
+
+-(GLKMatrix4)cameraTransform
+{
+    CGPoint p = self.position;
+    
+    float radians = -CC_DEGREES_TO_RADIANS(self.rotation);
+    float c = self.scaleX*cosf(radians);
+    float s = self.scaleY*sinf(radians);
+    
+    GLKMatrix4 cameraTransf = GLKMatrix4Make(
+             c,   -s, 0.0f, 0.0f,
+             s,    c, 0.0f, 0.0f,
+             0.0f, 0.0f, 1.0f, 0.0f,
+             -p.x, -p.y, 0.0f, 1.0f
+             );
+    
+    return cameraTransf;
+}
+
+- (GLKMatrix4)nodeToParentMatrix
+{
+    bool isInvertable;
+    
+    GLKMatrix4 invertedCamera = GLKMatrix4Invert([super nodeToParentMatrix], &isInvertable);
+    NSAssert(isInvertable, @"Couldn't invert camera matrix.");
+    
+    GLKMatrix4 mat = GLKMatrix4Multiply(_viewport.projection, self.cameraTransform);
+    
+    return mat;
+}
+
+
+@end
+
+
 @implementation CCViewportNode {
     GLKMatrix4 _projection;
 }
@@ -26,7 +71,8 @@
     if((self = [super init])){
         self.contentSize = size;
         
-        _camera = [CCNode node];
+        CCCamera *c = _camera = [CCCamera node];
+        c.viewport = self;
         [self addChild:_camera];
         
         _contentNode = contentNode;
@@ -108,28 +154,12 @@
     _projection = projection;
 }
 
--(GLKMatrix4)cameraTransform
-{
-    CGPoint p = _camera.position;
-    
-    float radians = -CC_DEGREES_TO_RADIANS(_camera.rotation);
-    float c = _camera.scaleX*cosf(radians);
-    float s = _camera.scaleY*sinf(radians);
-    
-    return GLKMatrix4Make(
-                          c,   -s, 0.0f, 0.0f,
-                          s,    c, 0.0f, 0.0f,
-                          0.0f, 0.0f, 1.0f, 0.0f,
-                          -p.x, -p.y, 0.0f, 1.0f
-                          );
-}
-
 -(void)visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
 {
     
     if (!self.visible) return;
     
-    // Find the corners of the content rect, in viewport coordinates
+    // Find the corners of the content rect, in viewport coordinates.
     CGSize size = self.contentSizeInPoints;
     GLKMatrix4 viewportTransform = GLKMatrix4Multiply(*parentTransform, [super nodeToParentMatrix]);
     GLKVector3 v0 = GLKMatrix4MultiplyAndProjectVector3(viewportTransform, GLKVector3Make(      0.0f,        0.0f, 0.0f));
@@ -152,7 +182,7 @@
     [renderer enqueueBlock:^{glViewport(minx, miny, maxx - minx, maxy - miny);} globalSortOrder:NSIntegerMin debugLabel:@"CCViewportNode: Set viewport" threadSafe:YES];
     
     // TODO Need to do something to fix rotations when using clipping mode.
-    GLKMatrix4 transform = GLKMatrix4Multiply(self.projection, self.cameraTransform);
+    GLKMatrix4 transform = [_camera nodeToParentMatrix];
     
     // Render children.
     [self sortAllChildren];
