@@ -99,6 +99,10 @@
 	
 	return joint;
 }
+-(CCPhysicsJoint *)initWithPivotJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB anchorA:(CGPoint)anchorA
+{
+    return [CCPhysicsJoint connectedPivotJointWithBodyA:bodyA bodyB:bodyB anchorA:anchorA];
+}
 
 +(CCPhysicsJoint *)connectedDistanceJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
 										   anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB
@@ -110,6 +114,11 @@
 	[joint addToPhysicsNode:bodyA.physicsNode];
 	
 	return joint;
+}
+-(CCPhysicsJoint *)initWithDistanceJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
+                                           anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB
+{
+    return [CCPhysicsJoint connectedDistanceJointWithBodyA:bodyA bodyB:bodyB anchorA:anchorA anchorB:anchorB];
 }
 
 +(CCPhysicsJoint *)connectedDistanceJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
@@ -124,6 +133,12 @@
 	
 	return joint;
 }
+-(CCPhysicsJoint *)initWithDistanceJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
+                                          anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB
+                                      minDistance:(CGFloat)min maxDistance:(CGFloat)max
+{
+    return [CCPhysicsJoint connectedDistanceJointWithBodyA:bodyA bodyB:bodyB anchorA:anchorA anchorB:anchorB minDistance:min maxDistance:max];
+}
 
 +(CCPhysicsJoint *)connectedSpringJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
 										 anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB
@@ -137,6 +152,12 @@
 	
 	
 	return joint;
+}
+-(CCPhysicsJoint *)initWithSpringJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
+                                        anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB
+                                     restLength:(CGFloat)restLength stiffness:(CGFloat)stiffness damping:(CGFloat)damping
+{
+    return [CCPhysicsJoint connectedSpringJointWithBodyA:bodyA bodyB:bodyB anchorA:anchorA anchorB:anchorB restLength:restLength stiffness:stiffness damping:damping];
 }
 
 
@@ -161,6 +182,13 @@
     [joint addToPhysicsNode:bodyA.physicsNode];
     return joint;
 }
+-(CCPhysicsJoint *)initWithRotarySpringJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
+                                            restAngle:(CGFloat)restAngle
+                                            stiffness:(CGFloat)stiffness
+                                              damping:(CGFloat)damping
+{
+    return [CCPhysicsJoint connectedRotarySpringJointWithBodyA:bodyA bodyB:bodyB restAngle:restAngle stiffness:stiffness damping:damping];
+}
 
 
 +(CCPhysicsJoint *)connectedMotorJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
@@ -172,6 +200,10 @@
 	[bodyB addJoint:joint];
     [joint addToPhysicsNode:bodyA.physicsNode];
     return joint;
+}
+-(CCPhysicsJoint *)initWithMotorJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB rate:(CGFloat)rate
+{
+    return [CCPhysicsJoint connectedMotorJointWithBodyA:bodyA bodyB:bodyB rate:rate];
 }
 
 
@@ -187,6 +219,10 @@
     [joint addToPhysicsNode:bodyA.physicsNode];
     return joint;
 }
+-(CCPhysicsJoint *)initWithRotaryLimitJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB min:(cpFloat)min max:(cpFloat)max
+{
+    return [CCPhysicsJoint connectedRotaryLimitJointWithBodyA:bodyA bodyB:bodyB min:min max:max];
+}
 
 
 +(CCPhysicsJoint *)connectedRatchetJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
@@ -199,6 +235,12 @@
 	[bodyB addJoint:joint];
     [joint addToPhysicsNode:bodyA.physicsNode];
     return joint;
+}
+-(CCPhysicsJoint *)initWithRatchetJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
+                                           phase:(cpFloat)phase
+                                         ratchet:(cpFloat)ratchet
+{
+    return [CCPhysicsJoint connectedRatchetJointWithBodyA:bodyA bodyB:bodyB phase:phase ratchet:ratchet];
 }
 
 
