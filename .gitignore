@@ -51,3 +51,5 @@ installer/install.tar.gz
 installer/*.app
 
 .idea
+.idea
+**/*/.idea
