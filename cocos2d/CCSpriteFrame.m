@@ -57,8 +57,7 @@
     CCSpriteFrame* frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:imageName];
     if (!frame)
     {
-        CCTexture* texture = [[CCTextureCache sharedTextureCache] addImage:imageName];
-        frame = [texture createSpriteFrame];
+        frame = [CCTexture textureWithFile:imageName].spriteFrame;
     }
     
     return frame;

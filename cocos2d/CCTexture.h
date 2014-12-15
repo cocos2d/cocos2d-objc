@@ -32,51 +32,47 @@
 @class CCImage;
 
 
-@class CCShader;
+typedef NS_ENUM(NSUInteger, CCTextureType){
+    CCTextureType2D,
+//    CCTextureTypeCube,
+};
 
-/**
- Represents a texture, an in-memory representation of an image in a compatible format the graphics processor can process.
- 
- Allows to create OpenGL textures from image files, text (font rendering) and raw data.
 
- @note Be aware that the content of the generated texture will be upside-down! This is an OpenGL oddity.
- */
+typedef NS_ENUM(NSUInteger, CCTextureFilter){
+    CCTextureFilterMipmapNone,
+    CCTextureFilterNearest,
+    CCTextureFilterLinear,
+};
+
+typedef NS_ENUM(NSUInteger, CCTextureAddressMode){
+    CCTextureAddressModeClampToEdge,
+    CCTextureAddressModeRepeat,
+    CCTextureAddressModeRepeatMirrorred,
+};
+
+extern NSString * const CCTextureOptionGenerateMipmaps;
+extern NSString * const CCTextureOptionMinificationFilter;
+extern NSString * const CCTextureOptionMagnificationFilter;
+extern NSString * const CCTextureOptionMipmapFilter;
+extern NSString * const CCTextureOptionAddressModeX;
+extern NSString * const CCTextureOptionAddressModeY;
+
+
 @interface CCTexture : NSObject
-
-/// -----------------------------------------------------------------------
-/// @name Creating a Texture
-/// -----------------------------------------------------------------------
 
 -(instancetype)initWithImage:(CCImage *)image options:(NSDictionary *)options;
 
-/**
- *  Creates and returns a new texture, based on the specified image file path.
- *
- *  If the texture has already been loaded, and resides in the internal cache, the previously created texture is returned from the cache.
- *  While this is fast, it still has an overhead compared to manually caching textures in an ivar or property.
- *
- *  @param file File path to load (should not include any suffixes).
- *
- *  @return The CCTexture object.
- */
 +(instancetype)textureWithFile:(NSString*)file;
 
-/** A placeholder value for a blank sizeless texture.
- @return An empty texture. */
 +(instancetype)none;
 
-/// -------------------------------------------------------
-/// @name Creating a Sprite Frame
-/// -------------------------------------------------------
-
--(CCSpriteFrame*)createSpriteFrame;
+@property(nonatomic, readonly) BOOL isPOT;
+@property(nonatomic, readonly) CCTextureType type;
 
 @property(nonatomic, readonly) CGSize sizeInPixels;
 @property(nonatomic, readwrite) CGFloat contentScale;
 @property(nonatomic, readonly) CGSize contentSize;
 
-/// -------------------------------------------------------
-/// @name Texture Settings
-/// -------------------------------------------------------
+@property(nonatomic, readonly) CCSpriteFrame *spriteFrame;
 
 @end

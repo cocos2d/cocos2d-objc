@@ -27,6 +27,7 @@
 
 #import "CCColor.h"
 #import "CCNode.h"
+#import "CCTexture.h"
 
 
 /** RGB color composed of bytes 3 bytes
@@ -350,5 +351,12 @@ typedef struct __attribute__((deprecated)) _ccV2F_C4F_T2F_Quad
 - (CGAffineTransform)parentToNodeTransform;
 - (CGAffineTransform)nodeToWorldTransform;
 - (CGAffineTransform)worldToNodeTransform;
+
+@end
+
+
+@interface CCTexture(Deprecated)
+
+@property(nonatomic, assign) BOOL antialiased __attribute__((deprecated));
 
 @end

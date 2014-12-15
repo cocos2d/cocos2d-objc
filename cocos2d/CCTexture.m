@@ -48,6 +48,14 @@
 #endif
 
 
+NSString * const CCTextureOptionGenerateMipmaps = @"CCTextureOptionGenerateMipmaps";
+NSString * const CCTextureOptionMinificationFilter = @"CCTextureOptionMinificationFilter";
+NSString * const CCTextureOptionMagnificationFilter = @"CCTextureOptionMagnificationFilter";
+NSString * const CCTextureOptionMipmapFilter = @"CCTextureOptionMipmapFilter";
+NSString * const CCTextureOptionAddressModeX = @"CCTextureOptionAddressModeX";
+NSString * const CCTextureOptionAddressModeY = @"CCTextureOptionAddressModeY";
+
+
 //CLASS IMPLEMENTATIONS:
 
 // This class implements what will hopefully be a temporary replacement
@@ -77,7 +85,7 @@
 -(NSUInteger)pixelWidth {return [_target pixelWidth];}
 -(NSUInteger)pixelHeight {return [_target pixelHeight];}
 -(BOOL)hasPremultipliedAlpha {return [_target hasPremultipliedAlpha];}
--(CCSpriteFrame *)createSpriteFrame {return [_target createSpriteFrame];}
+-(CCSpriteFrame *)spriteFrame {return [_target spriteFrame];}
 
 // Make concrete implementations for CCSpriteFrame methods commonly called at runtime.
 -(CGRect)rect {return [_target rect];}
@@ -111,7 +119,11 @@
 	BOOL _hasMipmaps;
 	
 	CCProxy __weak *_proxy;
+    
+    BOOL _antialiased;
 }
+
+static NSDictionary *DEFAULT_OPTIONS = nil;
 
 static CCTexture *CCTextureNone = nil;
 
@@ -119,6 +131,15 @@ static CCTexture *CCTextureNone = nil;
 {
 	// +initialize may be called due to loading a subclass.
 	if(self != [CCTexture class]) return;
+    
+    DEFAULT_OPTIONS = @{
+        CCTextureOptionGenerateMipmaps: @(NO),
+        CCTextureOptionMinificationFilter: @(CCTextureFilterLinear),
+        CCTextureOptionMagnificationFilter: @(CCTextureFilterLinear),
+        CCTextureOptionMipmapFilter: @(CCTextureFilterMipmapNone),
+        CCTextureOptionAddressModeX: @(CCTextureAddressModeClampToEdge),
+        CCTextureOptionAddressModeY: @(CCTextureAddressModeClampToEdge),
+    };
 	
 	CCTextureNone = [self alloc];
 	CCTextureNone->_name = 0;
@@ -147,8 +168,24 @@ static CCTexture *CCTextureNone = nil;
     return [[CCTextureCache sharedTextureCache] addImage:file];
 }
 
+static NSDictionary *
+NormalizeOptions(NSDictionary *options)
+{
+    if(options == nil || options == DEFAULT_OPTIONS){
+        return DEFAULT_OPTIONS;
+    } else {
+        // Merge the default values with the user values.
+        NSMutableDictionary *opts = [DEFAULT_OPTIONS mutableCopy];
+        [opts addEntriesFromDictionary:options];
+        
+        return opts;
+    }
+}
+
 -(instancetype)initWithImage:(CCImage *)image options:(NSDictionary *)options
 {
+    options = NormalizeOptions(options);
+    
     CCDeviceInfo *info = [CCDeviceInfo sharedDeviceInfo];
 	NSAssert(info.graphicsAPI != CCGraphicsAPIInvalid, @"Graphics API not configured.");
 	
@@ -163,25 +200,68 @@ static CCTexture *CCTextureNone = nil;
         return nil;
     }
     
+    BOOL isPOT = CCSizeIsPOT(sizeInPixels);
+    if(!isPOT && !info.supportsNPOT){
+        CCLOGWARN(@"cocos2d: Error: This device requires power of two sized textures.");
+        
+        return nil;
+    }
+    
 	if((self = [super init])) {
 #if __CC_METAL_SUPPORTED_AND_ENABLED
         // TODO
 #endif
 		CCRenderDispatch(NO, ^{
-			CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Init");
+            CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Init");
+            
+            glGenTextures(1, &_name);
+            glBindTexture(GL_TEXTURE_2D, _name);
+            
+            BOOL genMipmaps = [options[CCTextureOptionGenerateMipmaps] boolValue];
+            
+            // Set up texture filtering mode.
+            CCTextureFilter minFilter = [options[CCTextureOptionMinificationFilter] unsignedIntegerValue];
+            CCTextureFilter magFilter = [options[CCTextureOptionMagnificationFilter] unsignedIntegerValue];
+            CCTextureFilter mipFilter = [options[CCTextureOptionMipmapFilter] unsignedIntegerValue];
+            
+            NSAssert(minFilter != CCTextureFilterMipmapNone, @"CCTextureFilterMipmapNone can only be used with CCTextureOptionMipmapFilter.");
+            NSAssert(magFilter != CCTextureFilterMipmapNone, @"CCTextureFilterMipmapNone can only be used with CCTextureOptionMipmapFilter.");
+            NSAssert(mipFilter == CCTextureFilterMipmapNone || genMipmaps, @"CCTextureOptionMipmapFilter must be CCTextureFilterMipmapNone unless CCTextureOptionGenerateMipmaps is YES");
+            
+            static const GLenum FILTERS[3][3] = {
+                {GL_LINEAR, GL_LINEAR, GL_LINEAR}, // Invalid enum, fall back to linear.
+                {GL_NEAREST, GL_NEAREST_MIPMAP_NEAREST, GL_NEAREST_MIPMAP_LINEAR}, // nearest
+                {GL_LINEAR, GL_LINEAR_MIPMAP_NEAREST, GL_LINEAR_MIPMAP_LINEAR}, // linear
+            };
+            
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, FILTERS[minFilter][mipFilter]);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, FILTERS[magFilter][CCTextureFilterMipmapNone]);
+            
+            // Set up texture addressing mode.
+            CCTextureAddressMode addressX = [options[CCTextureOptionAddressModeX] unsignedIntegerValue];
+            CCTextureAddressMode addressY = [options[CCTextureOptionAddressModeY] unsignedIntegerValue];
+            
+            static const GLenum ADDRESSING[] = {
+                GL_CLAMP_TO_EDGE,
+                GL_REPEAT,
+                GL_MIRRORED_REPEAT,
+            };
+            
+            NSAssert(addressX == CCTextureAddressModeClampToEdge || isPOT, @"Only CCTextureAddressModeClampToEdge can be used with non power of two sized textures.");
+            NSAssert(addressY == CCTextureAddressModeClampToEdge || isPOT, @"Only CCTextureAddressModeClampToEdge can be used with non power of two sized textures.");
+            
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, ADDRESSING[addressX]);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, ADDRESSING[addressY]);
 
-			glGenTextures(1, &_name);
-			glBindTexture(GL_TEXTURE_2D, _name);
-			
-			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
-			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
-
-			// Specify OpenGL texture image
+            // Specify OpenGL texture image
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)sizeInPixels.width, (GLsizei)sizeInPixels.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image.pixelData.bytes);
-			
-			CCGL_DEBUG_POP_GROUP_MARKER();
+            
+            // Generate mipmaps.
+            if(genMipmaps){
+                glGenerateMipmap(GL_TEXTURE_2D);
+            }
+            
+            CCGL_DEBUG_POP_GROUP_MARKER();
 		});
         
         _sizeInPixels = sizeInPixels;
@@ -241,49 +321,54 @@ static CCTexture *CCTextureNone = nil;
         [self class], self, _name, (unsigned long)_sizeInPixels.width, (unsigned long)_sizeInPixels.height];
 }
 
--(CCSpriteFrame*) createSpriteFrame
+-(CCSpriteFrame*)spriteFrame
 {
 	CGRect rectInPixels = {CGPointZero, _sizeInPixels};
 	return [CCSpriteFrame frameWithTexture:(CCTexture *)self.proxy rectInPixels:rectInPixels rotated:NO offset:CGPointZero originalSize:_sizeInPixels];
 }
 
-//- (void) setAntialiased:(BOOL)antialiased
-//{
-//	if(_antialiased != antialiased){
-//		CCRenderDispatch(NO, ^{
-//#if __CC_METAL_SUPPORTED_AND_ENABLED
-//			if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
-//				CCMetalContext *context = [CCMetalContext currentContext];
-//				
-//				MTLSamplerDescriptor *samplerDesc = [MTLSamplerDescriptor new];
-//				samplerDesc.minFilter = samplerDesc.magFilter = (antialiased ? MTLSamplerMinMagFilterLinear : MTLSamplerMinMagFilterNearest);
-//				samplerDesc.mipFilter = (_hasMipmaps ? MTLSamplerMipFilterNearest : MTLSamplerMipFilterNotMipmapped);
-//				samplerDesc.sAddressMode = MTLSamplerAddressModeClampToEdge;
-//				samplerDesc.tAddressMode = MTLSamplerAddressModeClampToEdge;
-//				
-//				_metalSampler = [context.device newSamplerStateWithDescriptor:samplerDesc];
-//			} else
-//#endif
-//			{
-//				CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Set Alias Texture Parameters");
-//				
-//				glBindTexture(GL_TEXTURE_2D, _name);
-//				
-//				if(_hasMipmaps){
-//					glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, antialiased ? GL_NEAREST_MIPMAP_NEAREST : GL_NEAREST_MIPMAP_NEAREST);
-//				} else {
-//					glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, antialiased ? GL_LINEAR : GL_NEAREST);
-//				}
-//				glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, antialiased ? GL_LINEAR : GL_NEAREST);
-//				
-//				CCGL_DEBUG_POP_GROUP_MARKER();
-//				CC_CHECK_GL_ERROR_DEBUG();
-//			}
-//		});
-//		
-//		_antialiased = antialiased;
-//	}
-//}
+@end
+
+
+@implementation CCTexture(Deprecated)
+
+- (void) setAntialiased:(BOOL)antialiased
+{
+	if(_antialiased != antialiased){
+		CCRenderDispatch(NO, ^{
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+			if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+				CCMetalContext *context = [CCMetalContext currentContext];
+				
+				MTLSamplerDescriptor *samplerDesc = [MTLSamplerDescriptor new];
+				samplerDesc.minFilter = samplerDesc.magFilter = (antialiased ? MTLSamplerMinMagFilterLinear : MTLSamplerMinMagFilterNearest);
+				samplerDesc.mipFilter = (_hasMipmaps ? MTLSamplerMipFilterNearest : MTLSamplerMipFilterNotMipmapped);
+				samplerDesc.sAddressMode = MTLSamplerAddressModeClampToEdge;
+				samplerDesc.tAddressMode = MTLSamplerAddressModeClampToEdge;
+				
+				_metalSampler = [context.device newSamplerStateWithDescriptor:samplerDesc];
+			} else
+#endif
+			{
+				CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Set Alias Texture Parameters");
+				
+				glBindTexture(GL_TEXTURE_2D, _name);
+				
+				if(_hasMipmaps){
+					glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, antialiased ? GL_NEAREST_MIPMAP_NEAREST : GL_NEAREST_MIPMAP_NEAREST);
+				} else {
+					glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, antialiased ? GL_LINEAR : GL_NEAREST);
+				}
+				glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, antialiased ? GL_LINEAR : GL_NEAREST);
+				
+				CCGL_DEBUG_POP_GROUP_MARKER();
+				CC_CHECK_GL_ERROR_DEBUG();
+			}
+		});
+		
+		_antialiased = antialiased;
+	}
+}
 
 @end
 

@@ -54,11 +54,6 @@
 @property(nonatomic,readonly) id<MTLSamplerState> metalSampler;
 #endif
 
-/* texture max S */
-@property(nonatomic,readwrite) float maxS;
-/* texture max T */
-@property(nonatomic,readwrite) float maxT;
-
 @property(nonatomic,readwrite) BOOL premultipliedAlpha;
 
 // Check if the texture's weakly retained proxy still exists.

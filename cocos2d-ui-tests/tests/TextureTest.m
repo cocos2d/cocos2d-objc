@@ -10,6 +10,7 @@
 
 #import "CCTextureCache.h"
 #import "CCTexture_Private.h"
+#import "CCFile_Private.h"
 
 @interface TextureTest : TestBase @end
 
@@ -163,55 +164,78 @@
 	[self loadAndDisplayImageNamed: @"test_1021x1024.png" withTitle: @"1021x1024 png. Watch for memory leaks with Instruments. See http://www.cocos2d-iphone.org/forum/topic/31092"];
 }
 
-#warning TODO?
-//-(void) setupTestTextureAntialiasModesTest
-//{
-//	CGSize s = [[CCDirector sharedDirector] viewSize];
-//	
-//	// The purpose of the 4 repetitions of the texture is to make sure the antialias state doesn't leak in the shared texture cache.
-//	
-//	CCSprite *sprite = [self loadAndDisplayImageNamed: @"powered.png" withTitle: @""];
-//	[sprite setPosition:ccp(s.width/5*1, s.height/2)];
-//	[[sprite texture] setAntialiased:NO];
-//	[sprite setScale:2];
-//	[[CCTextureCache sharedTextureCache] removeTextureForKey:@"powered.png"];
-//	
-//	sprite = [self loadAndDisplayImageNamed: @"powered.png" withTitle: @""];
-//	[sprite setPosition:ccp(s.width/5*2, s.height/2)];
-//	[[sprite texture] setAntialiased:YES];
-//	[sprite setScale:2];
-//	[[CCTextureCache sharedTextureCache] removeTextureForKey:@"powered.png"];
-//	
-//	sprite = [self loadAndDisplayImageNamed: @"powered.png" withTitle: @""];
-//	[sprite setPosition:ccp(s.width/5*3, s.height/2)];
-//	[[sprite texture] setAntialiased:NO];	[sprite setScale:2];
-//	[[CCTextureCache sharedTextureCache] removeTextureForKey:@"powered.png"];
-//	
-//	sprite = [self loadAndDisplayImageNamed: @"powered.png" withTitle: @""];
-//	[sprite setPosition:ccp(s.width/5*4, s.height/2)];
-//	[[sprite texture] setAntialiased:YES];	[sprite setScale:2];
-//	[[CCTextureCache sharedTextureCache] removeTextureForKey:@"powered.png"];
-//	
-//	self.subTitle = @"Images should appear: aliased, antialiased, aliased, antialiased\n The purpose of the 4 repetitions of the texture is to make sure the antialias state doesn't leak in the shared texture cache.";
-//
-//}
-//
-//-(void) setupGLRepeatTest
-//{
-//	self.subTitle = @"Texture GL_REPEAT";
-//	
-//	CGSize s = [[CCDirector sharedDirector] viewSize];
-//
-//	// requires a power of two image
-//	CCTexture* texture = [[CCTextureCache sharedTextureCache] addImage:@"test_image.png"];
-//	
-//	CCSprite *img = [CCSprite spriteWithTexture:texture rect:CGRectMake(0, 0, 800, 600)];
-//	img.position = ccp( s.width/2.0f, s.height/2.0f);
-//	ccTexParams params = {GL_LINEAR,GL_LINEAR,GL_REPEAT,GL_REPEAT};
-//	[img.texture setTexParameters:&params];
-//
-//	[self.contentNode addChild:img];
-//}
+-(void) setupGLRepeatTest
+{
+	self.subTitle = @"Texture Repeat with Blocky Filtering";
+	
+	CGSize s = [[CCDirector sharedDirector] viewSize];
+
+	// TODO can make this go away once we have the new CCFileUtils implemented.
+    CGFloat contentScale = 1.0;
+    NSString *path = [[CCFileUtils sharedFileUtils] fullPathForFilename:@"test_image.png" contentScale:&contentScale];
+    CCFile *file = [[CCFile alloc] initWithName:@"Foo" url:[NSURL fileURLWithPath:path] contentScale:contentScale];
+    CCImage *image = [[CCImage alloc] initWithCCFile:file options:nil];
+    
+	CCTexture* texture = [[CCTexture alloc] initWithImage:image options:@{
+        CCTextureOptionMagnificationFilter: @(CCTextureFilterNearest),
+        CCTextureOptionAddressModeX: @(CCTextureAddressModeRepeat),
+        CCTextureOptionAddressModeY: @(CCTextureAddressModeRepeat),
+    }];
+	
+	CCSprite *img = [CCSprite spriteWithTexture:texture rect:CGRectMake(0, 0, 800, 600)];
+	img.position = ccp( s.width/2.0f, s.height/2.0f);
+    img.scale = 2.0;
+
+	[self.contentNode addChild:img];
+}
+
+
+-(void) setupGenerateMipMapTest
+{
+	self.subTitle = @"Mipmap Generation:\nLeft pixels should 'swim', right should not.";
+	
+	// TODO can make this go away once we have the new CCFileUtils implemented.
+    CGFloat contentScale = 1.0;
+    NSString *path = [[CCFileUtils sharedFileUtils] fullPathForFilename:@"test_image.png" contentScale:&contentScale];
+    CCFile *file = [[CCFile alloc] initWithName:@"Foo" url:[NSURL fileURLWithPath:path] contentScale:contentScale];
+    CCImage *image = [[CCImage alloc] initWithCCFile:file options:nil];
+    
+	CCTexture* texture = [[CCTexture alloc] initWithImage:image options:@{
+        CCTextureOptionMinificationFilter: @(CCTextureFilterNearest),
+        CCTextureOptionAddressModeX: @(CCTextureAddressModeRepeat),
+        CCTextureOptionAddressModeY: @(CCTextureAddressModeRepeat),
+    }];
+	
+	CCTexture* textureWithMipmap = [[CCTexture alloc] initWithImage:image options:@{
+        CCTextureOptionGenerateMipmaps: @(YES),
+        CCTextureOptionMipmapFilter: @(CCTextureFilterLinear),
+        CCTextureOptionMinificationFilter: @(CCTextureFilterNearest),
+        CCTextureOptionAddressModeX: @(CCTextureAddressModeRepeat),
+        CCTextureOptionAddressModeY: @(CCTextureAddressModeRepeat),
+    }];
+	
+    CCNode *node = [CCNode node];
+    node.contentSizeInPoints = self.contentNode.contentSizeInPoints;
+    [self.contentNode addChild:node];
+    
+    [node runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+        [CCActionMoveBy actionWithDuration:1.0 position:ccp( 1, 0)],
+        [CCActionMoveBy actionWithDuration:1.0 position:ccp(-1, 0)],
+        nil
+    ]]];
+    
+	CCSprite *sprite1 = [CCSprite spriteWithTexture:texture rect:CGRectMake(0, 0, 1024, 1024)];
+    sprite1.positionType = CCPositionTypeNormalized;
+	sprite1.position = ccp(0.3, 0.5);
+    sprite1.scale = 1.0/16.0;
+	[node addChild:sprite1];
+    
+	CCSprite *sprite2 = [CCSprite spriteWithTexture:textureWithMipmap rect:CGRectMake(0, 0, 1024, 1024)];
+    sprite2.positionType = CCPositionTypeNormalized;
+	sprite2.position = ccp(0.7, 0.5);
+    sprite2.scale = 1.0/16.0;
+	[node addChild:sprite2];
+}
 
 
 @end
