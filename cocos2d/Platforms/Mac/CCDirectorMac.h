@@ -71,6 +71,10 @@ enum  {
 
 @property (nonatomic, readwrite) CGSize originalWinSizeInPoints;
 
+/** returns the real device content scale factor
+ */
+@property (nonatomic, readonly) CGFloat deviceContentScaleFactor;
+
 /* Sets the view in fullscreen or window mode */
 - (void) setFullScreen:(BOOL)fullscreen;
 

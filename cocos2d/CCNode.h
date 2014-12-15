@@ -431,7 +431,7 @@
 -(void) removeAllChildren;
 
 /** A weak reference to the parent. */
-@property(nonatomic, readonly, unsafe_unretained) CCNode* parent;
+@property(nonatomic, unsafe_unretained) CCNode* parent;
 
 /** Array of child nodes. Used to enumerate child nodes, for instance the following allows you to perform a task on all child nodes with a matching name:
  

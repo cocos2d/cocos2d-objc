@@ -38,6 +38,7 @@
 extern ANativeWindow *ANativeWindow_fromSurface(JNIEnv *env, jobject surface);
 
 static CCActivity *currentActivity = nil;
+const CGSize FIXED_SIZE = {568, 384};
 
 @implementation CCActivity {
     CCGLView *_glView;
@@ -77,6 +78,14 @@ static CCActivity *currentActivity = nil;
 static void handler(NSException *e)
 {
     NSLog(@"Unhandled exception %@", e);
+}
+
+static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
+{
+	int scale = 1;
+	while(fixedSize*scale < size) scale++;
+
+	return scale;
 }
 
 - (void)run
@@ -226,7 +235,7 @@ static void handler(NSException *e)
 
 - (void)setupView:(JavaObject<AndroidSurfaceHolder> *)holder
 {
-    ANativeWindow* window = ANativeWindow_fromSurface(bridge_getEnv(), bridge_getJava(holder.surface));
+    ANativeWindow* window = holder.surface.nativeWindow;
     [_glView setupView:window];
 }
 
@@ -249,23 +258,21 @@ static void handler(NSException *e)
         
         CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector sharedDirector];
         director.delegate = self;
-        director.contentScaleFactor = _glView.contentScaleFactor;
         [CCTexture setDefaultAlphaPixelFormat:CCTexturePixelFormat_RGBA8888];
         [director setView:_glView];
-        
+
         if([_cocos2dSetupConfig[CCSetupScreenMode] isEqual:CCScreenModeFixed])
         {
-            CGSize fixed = {568, 384};
-            if([_cocos2dSetupConfig[CCSetupScreenOrientation] isEqualToString:CCScreenOrientationPortrait])
-            {
-                CC_SWAP(fixed.width, fixed.height);
-            }
-            
-            director.designSize = fixed;
-            [director setProjection:CCDirectorProjectionCustom];
+            [self setupFixedScreenMode];
         }
-
+        else
+        {
+            [self setupFlexibleScreenMode];
+        }
+        
         [[CCPackageManager sharedManager] loadPackages];
+
+
 
         [director runWithScene:[self startScene]];
         [director setAnimationInterval:1.0/60.0];
@@ -274,6 +281,52 @@ static void handler(NSException *e)
         [_gameLoop runUntilDate:[NSDate distantFuture]];
 #endif
     }
+}
+
+- (void)setupFlexibleScreenMode
+{
+    CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector sharedDirector];
+    
+    NSInteger device = [[CCConfiguration sharedConfiguration] runningDevice];
+    BOOL tablet = device == CCDeviceiPad || device == CCDeviceiPadRetinaDisplay;
+
+    if(tablet && [_cocos2dSetupConfig[CCSetupTabletScale2X] boolValue])
+    {    
+        // Set the UI scale factor to show things at "native" size.
+        director.UIScaleFactor = 0.5;
+
+        // Let CCFileUtils know that "-ipad" textures should be treated as having a contentScale of 2.0.
+        [[CCFileUtils sharedFileUtils] setiPadContentScaleFactor:2.0];
+    }
+    
+    director.contentScaleFactor *= 1.83;
+
+    [director setProjection:CCDirectorProjection2D];
+}
+
+- (void)setupFixedScreenMode
+{
+    CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector sharedDirector];
+
+    CGSize size = [CCDirector sharedDirector].viewSizeInPixels;
+    
+    NSLog(@"pixel width = %f, pixel height = %f", size.width, size.height);
+    
+    CGSize fixed = FIXED_SIZE;
+    if([_cocos2dSetupConfig[CCSetupScreenOrientation] isEqualToString:CCScreenOrientationPortrait])
+    {
+        CC_SWAP(fixed.width, fixed.height);
+    }
+    
+    CGFloat scaleFactor = MAX(size.width/ fixed.width, size.height/ fixed.height);
+    
+    director.contentScaleFactor = scaleFactor;
+    director.UIScaleFactor = 1;
+
+    [[CCFileUtils sharedFileUtils] setiPadContentScaleFactor:2.0];
+    
+    director.designSize = fixed;
+    [director setProjection:CCDirectorProjectionCustom];
 }
 
 - (CCScene *)startScene
@@ -396,7 +449,7 @@ static void handler(NSException *e)
 {
 	CGSize sizePoint = [CCDirector sharedDirector].viewSize;
 	CGSize fixed = [CCDirector sharedDirector].designSize;
-	
+
 	// Half of the extra size that will be cut off
 	CGPoint offset = ccpMult(ccp(fixed.width - sizePoint.width, fixed.height - sizePoint.height), 0.5);
 	

@@ -29,7 +29,10 @@
                               [CCEffectUniform uniform:@"vec2" name:@"u_blueOffset" value:[NSValue valueWithGLKVector2:GLKVector2Make(0.0f, 0.0f)]]
                               ];
     
-    if((self = [super initWithFragmentUniforms:fragUniforms vertexUniforms:nil varyings:nil]))
+    NSArray *fragFunctions = [CCEffectColorChannelOffsetImpl buildFragmentFunctions];
+    NSArray *renderPasses = [CCEffectColorChannelOffsetImpl buildRenderPassesWithInterface:interface];
+    
+    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:fragUniforms vertexUniforms:nil varyings:nil]))
     {
         self.interface = interface;
         self.debugName = @"CCEffectColorChannelOffsetImpl";
@@ -39,10 +42,8 @@
     return self;
 }
 
--(void)buildFragmentFunctions
++ (NSArray *)buildFragmentFunctions
 {
-    self.fragmentFunctions = [[NSMutableArray alloc] init];
-    
     // Image pixellation shader based on pixellation filter in GPUImage - https://github.com/BradLarson/GPUImage
     NSString* effectBody = CC_GLSL(
                                    vec2 redSamplePos = cc_FragTexCoord1 + u_redOffset;
@@ -64,16 +65,15 @@
                                    );
     
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"colorChannelOffsetEffect" body:effectBody inputs:nil returnType:@"vec4"];
-    [self.fragmentFunctions addObject:fragmentFunction];
+    return @[fragmentFunction];
 }
 
--(void)buildRenderPasses
++ (NSArray *)buildRenderPassesWithInterface:(CCEffectColorChannelOffset *)interface
 {
-    __weak CCEffectColorChannelOffsetImpl *weakSelf = self;
+    __weak CCEffectColorChannelOffset *weakInterface = interface;
     
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.debugLabel = @"CCEffectPixellate pass 0";
-    pass0.shader = self.shader;
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs){
         
@@ -84,17 +84,17 @@
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:passInputs.texCoord1Extents];
         
         GLKVector2 scale = GLKVector2Make(-1.0f / passInputs.previousPassTexture.contentSize.width, -1.0f / passInputs.previousPassTexture.contentSize.height);
-        GLKVector2 redOffsetUV = GLKVector2Multiply(weakSelf.interface.redOffset, scale);
-        GLKVector2 greenOffsetUV = GLKVector2Multiply(weakSelf.interface.greenOffset, scale);
-        GLKVector2 blueOffsetUV = GLKVector2Multiply(weakSelf.interface.blueOffset, scale);
+        GLKVector2 redOffsetUV = GLKVector2Multiply(weakInterface.redOffset, scale);
+        GLKVector2 greenOffsetUV = GLKVector2Multiply(weakInterface.greenOffset, scale);
+        GLKVector2 blueOffsetUV = GLKVector2Multiply(weakInterface.blueOffset, scale);
         
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_redOffset"]] = [NSValue valueWithGLKVector2:redOffsetUV];
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_greenOffset"]] = [NSValue valueWithGLKVector2:greenOffsetUV];
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_blueOffset"]] = [NSValue valueWithGLKVector2:blueOffsetUV];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_redOffset"]] = [NSValue valueWithGLKVector2:redOffsetUV];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_greenOffset"]] = [NSValue valueWithGLKVector2:greenOffsetUV];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_blueOffset"]] = [NSValue valueWithGLKVector2:blueOffsetUV];
         
     } copy]];
     
-    self.renderPasses = @[pass0];
+    return @[pass0];
 }
 
 @end
