@@ -327,6 +327,16 @@ typedef struct __attribute__((deprecated)) _ccV2F_C4F_T2F_Quad
 	ccV2F_C4F_T2F	tr;
 } ccV2F_C4F_T2F_Quad __attribute__((deprecated));
 
+//! Blend Function used for textures
+typedef struct __attribute__((deprecated)) _ccBlendFunc
+{
+	//! source blend function
+	int src;
+	//! destination blend function
+	int dst;
+} ccBlendFunc __attribute__((deprecated));
+
+
 
 @interface CCColor(Deprecated)
 
@@ -347,10 +357,10 @@ typedef struct __attribute__((deprecated)) _ccV2F_C4F_T2F_Quad
 
 @interface CCNode(Deprecated)
 
-- (CGAffineTransform)nodeToParentTransform;
-- (CGAffineTransform)parentToNodeTransform;
-- (CGAffineTransform)nodeToWorldTransform;
-- (CGAffineTransform)worldToNodeTransform;
+- (CGAffineTransform)nodeToParentTransform __attribute__((deprecated));
+- (CGAffineTransform)parentToNodeTransform __attribute__((deprecated));
+- (CGAffineTransform)nodeToWorldTransform __attribute__((deprecated));
+- (CGAffineTransform)worldToNodeTransform __attribute__((deprecated));
 
 @end
 

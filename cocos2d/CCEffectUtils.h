@@ -7,6 +7,16 @@
 //
 
 #import "CCSprite.h"
+#import "CCGL.h"
+
+typedef struct CCEffectBlurParams
+{
+    NSUInteger trueRadius;
+    NSUInteger radius;
+    NSUInteger numberOfOptimizedOffsets;
+    GLfloat sigma;
+
+} CCEffectBlurParams;
 
 CCNode* CCEffectUtilsFindCommonAncestor(CCNode *first, CCNode *second);
 GLKMatrix4 CCEffectUtilsTransformFromNodeToAncestor(CCNode *descendant, CCNode *ancestor);
@@ -20,3 +30,5 @@ float CCEffectUtilsConditionShininess(float shininess);
 float CCEffectUtilsConditionFresnelBias(float bias);
 float CCEffectUtilsConditionFresnelPower(float power);
 void CCEffectUtilsPrintMatrix(NSString *label, GLKMatrix4 matrix);
+
+CCEffectBlurParams CCEffectUtilsComputeBlurParams(NSUInteger radius);

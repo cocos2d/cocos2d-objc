@@ -41,7 +41,7 @@
 
 // 0x00 HI ME LO
 // 00   03 01 01
-#define COCOS2D_VERSION 0x00030400
+#define COCOS2D_VERSION 0x00030401
 #define COCOS2D_BUILD @"develop"
 
 
@@ -138,6 +138,7 @@
 // Misc:
 #import "CCRenderDispatch.h"
 #import "CCTransition.h"
+#import "CCPackage.h"
 #import "CCDeviceInfo.h"
 #import "CCFile.h"
 #import "Support/CCFileUtils.h"
@@ -147,6 +148,7 @@
 #import "Support/utlist.h"
 #import "UITouch+CC.h"
 #import "NSEvent+CC.h"
+#import "CCDeprecated.h"
 
 // UI
 #import "cocos2d-ui.h"

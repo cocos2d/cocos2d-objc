@@ -798,6 +798,12 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	[_children removeObject:child];
 }
 
+-(void)setParent:(CCNode *)parent
+{
+    if(_parent) [self removeFromParentAndCleanup:NO];
+    [parent addChild:self];
+}
+
 - (void) sortAllChildren
 {
 	if (_isReorderChildDirty)
