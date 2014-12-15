@@ -433,7 +433,7 @@ CGSize DesignSize = {300, 300};
         viewport.position = ccp(0.5, 0.5);
         viewport.anchorPoint = ccp(0.5, 0.5);
         viewport.positionType = CCPositionTypeNormalized;
-        
+
         CGSize size = [CCDirector sharedDirector].viewSize;
         viewport.contentSize = CGSizeMake(size.width / 2.0f, size.height / 2.0f);
         float scale = size.height/size.height/2.0;
@@ -450,6 +450,52 @@ CGSize DesignSize = {300, 300};
     [viewport.contentNode addChild:bg];
     
     __block CCButton *lastButton = [CCButton buttonWithTitle:@"There are 10 buttons. Some are offscreen. Tap on buttons."];
+    lastButton.position = ccp(5000, 5080);
+    [viewport.contentNode addChild:lastButton];
+    
+    for(int i = 0; i < 10; i++){
+        
+        __block int block_i = i;
+        CCButton *button = [CCButton buttonWithTitle:[NSString stringWithFormat:@"Button #%d with a really long button name", i]];
+        button.name = button.title;
+        button.block = ^(id sender){
+            lastButton.title = [NSString stringWithFormat:@"Tapped: #%d", block_i];
+        };
+        button.position = ccp(5000 + i * 30, 4980 - i * 30);
+        [viewport.contentNode addChild:button];
+    }
+}
+
+
+-(void)setupInputWithoutCullingTest
+{
+    self.subTitle = @"Tapping invisible buttons outside of viewscreen should work.";
+    
+    CCViewportNode *viewport = [[CCViewportNode alloc] init];
+    {
+        // Setup custom viewport, only covering part of the screen
+        viewport.position = ccp(0.5, 0.5);
+        viewport.anchorPoint = ccp(0.5, 0.5);
+        viewport.positionType = CCPositionTypeNormalized;
+        // Explicitly disable the input clipping.
+        viewport.clipsInput = false;
+        
+        CGSize size = [CCDirector sharedDirector].viewSize;
+        viewport.contentSize = CGSizeMake(size.width / 2.0f, size.height / 2.0f);
+        float scale = size.height/size.height/2.0;
+        
+        viewport.projection = GLKMatrix4MakeOrtho(-scale*size.width, scale*size.width, -scale*size.height, scale*size.height, -1024, 1024);
+    }
+    viewport.name = @"Viewport";
+    [self.contentNode addChild:viewport];
+    viewport.camera.position = ccp(5000, 5000);
+    
+    CCNodeColor *bg = [CCNodeColor nodeWithColor:[CCColor colorWithRed:0.2f green:0.3f blue:0.5f alpha:1.0f] width: 1000 height: 1000];
+    bg.anchorPoint = ccp(0.5, 0.5);
+    bg.position = ccp(5000, 5000);
+    [viewport.contentNode addChild:bg];
+    
+    __block CCButton *lastButton = [CCButton buttonWithTitle:@"There are 10 buttons. Click offscreen buttons. Input clipping disabled."];
     lastButton.position = ccp(5000, 5080);
     [viewport.contentNode addChild:lastButton];
     

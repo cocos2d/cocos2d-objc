@@ -63,17 +63,6 @@
     return GLKMatrix4Multiply(_viewport.projection, cameraTransform);
 }
 
-// Testing
-- (BOOL)hitTestWithWorldPos:(CGPoint)pos
-{
-    CGPoint after = [self convertToNodeSpace:pos];
-    
-    NSLog(@"Camera pos: %f, %f converts to: %f, %f", pos.x, pos.y, after.x, after.y);
-    
-    return true;
-}
-
-
 @end
 
 
@@ -90,6 +79,7 @@
 {
     if((self = [super init])){
         self.contentSize = size;
+        self.clipsInput = true;
         
         _camera = [[CCCamera alloc]initWithViewport:self];
         [self addChild:_camera];
