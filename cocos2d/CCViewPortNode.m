@@ -16,41 +16,61 @@
 
 @property(nonatomic, weak) CCViewportNode *viewport;
 
+- (id) initWithViewport:(CCViewportNode*)viewportNode;
+- (GLKMatrix4)cameraMatrix;
+
 @end
 
-@implementation CCCamera{
+@implementation CCCamera {
 
 }
 
-
--(GLKMatrix4)cameraTransform
+// Designated initializer
+- (instancetype) initWithViewport:(CCViewportNode*)viewportNode
 {
-    CGPoint p = self.position;
-    
-    float radians = -CC_DEGREES_TO_RADIANS(self.rotation);
-    float c = self.scaleX*cosf(radians);
-    float s = self.scaleY*sinf(radians);
-    
-    GLKMatrix4 cameraTransf = GLKMatrix4Make(
-             c,   -s, 0.0f, 0.0f,
-             s,    c, 0.0f, 0.0f,
-             0.0f, 0.0f, 1.0f, 0.0f,
-             -p.x, -p.y, 0.0f, 1.0f
-             );
-    
-    return cameraTransf;
+    if( (self=[super init]) ) {
+        self.viewport = viewportNode;
+        self.userInteractionEnabled = true;
+    }
+    return self;
 }
 
+// Override nodeToParentMatrix so input (like touches) in the viewport can be transformed into the node space of the content of the viewport.
 - (GLKMatrix4)nodeToParentMatrix
+{
+    CGSize cs = _viewport.contentSizeInPoints;
+    float hw = cs.width / 2.0f;
+    float hh = cs.height / 2.0f;
+    
+    // Scale and translate matrix to convert from clip coordiates to viewport internal coordinates
+    GLKMatrix4 toProj = GLKMatrix4Make(
+            hw,   0.0f, 0.0f, 0.0f,
+            0.0f, hh,   0.0f, 0.0f,
+            0.0f, 0.0f, 1.0f, 0.0f,
+            hw,   hh,   0.0f, 1.0f);
+
+    return GLKMatrix4Multiply(toProj, self.cameraMatrix);
+}
+
+// Camera matrix is used for drawing the contents of the viewport, relative to the camera.
+- (GLKMatrix4)cameraMatrix
 {
     bool isInvertable;
     
-    GLKMatrix4 invertedCamera = GLKMatrix4Invert([super nodeToParentMatrix], &isInvertable);
+    GLKMatrix4 cameraTransform = GLKMatrix4Invert([super nodeToParentMatrix], &isInvertable);
     NSAssert(isInvertable, @"Couldn't invert camera matrix.");
     
-    GLKMatrix4 mat = GLKMatrix4Multiply(_viewport.projection, self.cameraTransform);
+    return GLKMatrix4Multiply(_viewport.projection, cameraTransform);
+}
+
+// Testing
+- (BOOL)hitTestWithWorldPos:(CGPoint)pos
+{
+    CGPoint after = [self convertToNodeSpace:pos];
     
-    return mat;
+    NSLog(@"Camera pos: %f, %f converts to: %f, %f", pos.x, pos.y, after.x, after.y);
+    
+    return true;
 }
 
 
@@ -71,8 +91,7 @@
     if((self = [super init])){
         self.contentSize = size;
         
-        CCCamera *c = _camera = [CCCamera node];
-        c.viewport = self;
+        _camera = [[CCCamera alloc]initWithViewport:self];
         [self addChild:_camera];
         
         _contentNode = contentNode;
@@ -182,7 +201,7 @@
     [renderer enqueueBlock:^{glViewport(minx, miny, maxx - minx, maxy - miny);} globalSortOrder:NSIntegerMin debugLabel:@"CCViewportNode: Set viewport" threadSafe:YES];
     
     // TODO Need to do something to fix rotations when using clipping mode.
-    GLKMatrix4 transform = [_camera nodeToParentMatrix];
+    GLKMatrix4 transform = [(CCCamera*)_camera cameraMatrix];
     
     // Render children.
     [self sortAllChildren];

@@ -9,6 +9,7 @@
 #import "ccMacros.h"
 #import "CCNode.h"
 
+@class CCCamera;
 
 @protocol CCProjectionDelegate
 @property(nonatomic, readonly) GLKMatrix4 projection;

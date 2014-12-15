@@ -350,6 +350,7 @@ CGSize DesignSize = {300, 300};
     
 }
 
+
 -(void)setupInputThroughViewportTest
 {
     self.subTitle = @"Clicking on a button swaps the color.\nThe button is inside the viewport.";
@@ -358,6 +359,53 @@ CGSize DesignSize = {300, 300};
     viewport.name = @"Viewport";
     [self.contentNode addChild:viewport];
     viewport.camera.position = ccp(5000, 5000);
+    
+    CCNodeColor *bg = [CCNodeColor nodeWithColor:[CCColor colorWithRed:0.2f green:0.3f blue:0.5f alpha:1.0f] width: DesignSize.width height: DesignSize.height];
+    bg.anchorPoint = ccp(0.5, 0.5);
+    bg.position = ccp(5000, 5000);
+    [viewport.contentNode addChild:bg];
+
+    CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/bird.png"];
+    sprite.name = @"BirdSprite";
+    sprite.position = ccp(5000, 5000);
+    [viewport.contentNode addChild:sprite];
+    
+    __block CCSprite *spriteBlock = sprite;
+    
+    CCButton *button = [CCButton buttonWithTitle:@"ColorChange"];
+    button.name = @"ColorChangeButton";
+    button.block = ^(id sender){
+        spriteBlock.color = ([spriteBlock.color isEqual:[CCColor redColor]] ? [CCColor whiteColor] : [CCColor redColor]);
+    };
+    button.position = ccp(5000, 4980);
+    [viewport.contentNode addChild:button];
+}
+
+-(void)setupPartialViewportInputTest
+{
+    self.subTitle = @"The scene should draw centered, half of the screen.\nBlue should not extend to any screen edge.";
+    
+    CCViewportNode *viewport = [[CCViewportNode alloc] init];
+    {
+        // Setup custom viewport, only covering part of the screen
+        viewport.position = ccp(0.5, 0.5);
+        viewport.anchorPoint = ccp(0.5, 0.5);
+        viewport.positionType = CCPositionTypeNormalized;
+ 
+        CGSize size = [CCDirector sharedDirector].viewSize;
+        viewport.contentSize = CGSizeMake(size.width / 2.0f, size.height / 2.0f);
+        float scale = size.height/size.height/2.0;
+
+        viewport.projection = GLKMatrix4MakeOrtho(-scale*size.width, scale*size.width, -scale*size.height, scale*size.height, -1024, 1024);
+    }
+    viewport.name = @"Viewport";
+    [self.contentNode addChild:viewport];
+    viewport.camera.position = ccp(5000, 5000);
+    
+    CCNodeColor *bg = [CCNodeColor nodeWithColor:[CCColor colorWithRed:0.2f green:0.3f blue:0.5f alpha:1.0f] width: 1000 height: 1000];
+    bg.anchorPoint = ccp(0.5, 0.5);
+    bg.position = ccp(5000, 5000);
+    [viewport.contentNode addChild:bg];
     
     CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/bird.png"];
     sprite.name = @"BirdSprite";
@@ -373,8 +421,49 @@ CGSize DesignSize = {300, 300};
     };
     button.position = ccp(5000, 4980);
     [viewport.contentNode addChild:button];
+}
 
+-(void)setupInputCullingTest
+{
+    self.subTitle = @"Tapping invisible offscreen buttons should not do anything.";
     
+    CCViewportNode *viewport = [[CCViewportNode alloc] init];
+    {
+        // Setup custom viewport, only covering part of the screen
+        viewport.position = ccp(0.5, 0.5);
+        viewport.anchorPoint = ccp(0.5, 0.5);
+        viewport.positionType = CCPositionTypeNormalized;
+        
+        CGSize size = [CCDirector sharedDirector].viewSize;
+        viewport.contentSize = CGSizeMake(size.width / 2.0f, size.height / 2.0f);
+        float scale = size.height/size.height/2.0;
+        
+        viewport.projection = GLKMatrix4MakeOrtho(-scale*size.width, scale*size.width, -scale*size.height, scale*size.height, -1024, 1024);
+    }
+    viewport.name = @"Viewport";
+    [self.contentNode addChild:viewport];
+    viewport.camera.position = ccp(5000, 5000);
+    
+    CCNodeColor *bg = [CCNodeColor nodeWithColor:[CCColor colorWithRed:0.2f green:0.3f blue:0.5f alpha:1.0f] width: 1000 height: 1000];
+    bg.anchorPoint = ccp(0.5, 0.5);
+    bg.position = ccp(5000, 5000);
+    [viewport.contentNode addChild:bg];
+    
+    __block CCButton *lastButton = [CCButton buttonWithTitle:@"There are 10 buttons. Some are offscreen. Tap on buttons."];
+    lastButton.position = ccp(5000, 5080);
+    [viewport.contentNode addChild:lastButton];
+    
+    for(int i = 0; i < 10; i++){
+        
+        __block int block_i = i;
+        CCButton *button = [CCButton buttonWithTitle:[NSString stringWithFormat:@"Button #%d with a really long button name", i]];
+        button.name = button.title;
+        button.block = ^(id sender){
+            lastButton.title = [NSString stringWithFormat:@"Tapped: #%d", block_i];
+        };
+        button.position = ccp(5000 + i * 30, 4980 - i * 30);
+        [viewport.contentNode addChild:button];
+    }
 }
 
 @end
