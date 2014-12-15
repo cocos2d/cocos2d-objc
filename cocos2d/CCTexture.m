@@ -42,6 +42,7 @@
 #import "CCTexture_Private.h"
 #import "CCTextureCache.h"
 #import "CCSpriteFrame.h"
+#import "CCDeprecated.h"
 
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 #import "CCMetalSupport_Private.h"
@@ -332,6 +333,22 @@ NormalizeOptions(NSDictionary *options)
 
 @implementation CCTexture(Deprecated)
 
+-(CCSpriteFrame *)createSpriteFrame {return self.spriteFrame;}
+-(NSUInteger)pixelWidth {return self.sizeInPixels.width;}
+-(NSUInteger)pixelHeight {return self.sizeInPixels.height;}
+-(CGSize)contentSizeInPixels {return CC_SIZE_SCALE(self.contentSize, self.contentScale);}
+
+- (id)initWithCGImage:(CGImageRef)cgImage contentScale:(CGFloat)contentScale;
+{
+    CCImage *image = [[CCImage alloc] initWithCGImage:cgImage contentScale:contentScale options:nil];
+    return [self initWithImage:image options:nil];
+}
+
+-(BOOL)isAntialiased
+{
+    return _antialiased;
+}
+
 - (void) setAntialiased:(BOOL)antialiased
 {
 	if(_antialiased != antialiased){
@@ -370,7 +387,13 @@ NormalizeOptions(NSDictionary *options)
 	}
 }
 
+-(BOOL)hasPremultipliedAlpha
+{
+    return _premultipliedAlpha;
+}
+
 @end
+
 
 //#pragma mark -
 //#pragma mark CCTexture2D - PVRSupport
