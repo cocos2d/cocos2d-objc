@@ -381,21 +381,19 @@ CGSize DesignSize = {300, 300};
     [viewport.contentNode addChild:button];
 }
 
--(void)setupPartialViewportInputTest
+-(CCViewportNode *) CreateSmallViewportTest
 {
-    self.subTitle = @"The scene should draw centered, half of the screen.\nBlue should not extend to any screen edge.";
-    
     CCViewportNode *viewport = [[CCViewportNode alloc] init];
     {
         // Setup custom viewport, only covering part of the screen
         viewport.position = ccp(0.5, 0.5);
         viewport.anchorPoint = ccp(0.5, 0.5);
         viewport.positionType = CCPositionTypeNormalized;
- 
+        
         CGSize size = [CCDirector sharedDirector].viewSize;
         viewport.contentSize = CGSizeMake(size.width / 2.0f, size.height / 2.0f);
         float scale = size.height/size.height/2.0;
-
+        
         viewport.projection = GLKMatrix4MakeOrtho(-scale*size.width, scale*size.width, -scale*size.height, scale*size.height, -1024, 1024);
     }
     viewport.name = @"Viewport";
@@ -406,6 +404,14 @@ CGSize DesignSize = {300, 300};
     bg.anchorPoint = ccp(0.5, 0.5);
     bg.position = ccp(5000, 5000);
     [viewport.contentNode addChild:bg];
+
+    return viewport;
+}
+
+-(void)setupPartialViewportInputTest
+{
+    self.subTitle = @"The scene should draw centered, half of the screen.\nBlue should not extend to any screen edge.";
+    CCViewportNode *viewport = [self CreateSmallViewportTest];
     
     CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/bird.png"];
     sprite.name = @"BirdSprite";
@@ -427,27 +433,7 @@ CGSize DesignSize = {300, 300};
 {
     self.subTitle = @"Tapping invisible offscreen buttons should not do anything.";
     
-    CCViewportNode *viewport = [[CCViewportNode alloc] init];
-    {
-        // Setup custom viewport, only covering part of the screen
-        viewport.position = ccp(0.5, 0.5);
-        viewport.anchorPoint = ccp(0.5, 0.5);
-        viewport.positionType = CCPositionTypeNormalized;
-
-        CGSize size = [CCDirector sharedDirector].viewSize;
-        viewport.contentSize = CGSizeMake(size.width / 2.0f, size.height / 2.0f);
-        float scale = size.height/size.height/2.0;
-        
-        viewport.projection = GLKMatrix4MakeOrtho(-scale*size.width, scale*size.width, -scale*size.height, scale*size.height, -1024, 1024);
-    }
-    viewport.name = @"Viewport";
-    [self.contentNode addChild:viewport];
-    viewport.camera.position = ccp(5000, 5000);
-    
-    CCNodeColor *bg = [CCNodeColor nodeWithColor:[CCColor colorWithRed:0.2f green:0.3f blue:0.5f alpha:1.0f] width: 1000 height: 1000];
-    bg.anchorPoint = ccp(0.5, 0.5);
-    bg.position = ccp(5000, 5000);
-    [viewport.contentNode addChild:bg];
+    CCViewportNode *viewport = [self CreateSmallViewportTest];
     
     __block CCButton *lastButton = [CCButton buttonWithTitle:@"There are 10 buttons. Some are offscreen. Tap on buttons."];
     lastButton.position = ccp(5000, 5080);
@@ -471,24 +457,7 @@ CGSize DesignSize = {300, 300};
 {
     self.subTitle = @"Tapping invisible buttons outside of viewscreen should work.";
     
-    CCViewportNode *viewport = [[CCViewportNode alloc] init];
-    {
-        // Setup custom viewport, only covering part of the screen
-        viewport.position = ccp(0.5, 0.5);
-        viewport.anchorPoint = ccp(0.5, 0.5);
-        viewport.positionType = CCPositionTypeNormalized;
-        // Explicitly disable the input clipping.
-        viewport.clipsInput = false;
-        
-        CGSize size = [CCDirector sharedDirector].viewSize;
-        viewport.contentSize = CGSizeMake(size.width / 2.0f, size.height / 2.0f);
-        float scale = size.height/size.height/2.0;
-        
-        viewport.projection = GLKMatrix4MakeOrtho(-scale*size.width, scale*size.width, -scale*size.height, scale*size.height, -1024, 1024);
-    }
-    viewport.name = @"Viewport";
-    [self.contentNode addChild:viewport];
-    viewport.camera.position = ccp(5000, 5000);
+    CCViewportNode *viewport = [self CreateSmallViewportTest];
     
     CCNodeColor *bg = [CCNodeColor nodeWithColor:[CCColor colorWithRed:0.2f green:0.3f blue:0.5f alpha:1.0f] width: 1000 height: 1000];
     bg.anchorPoint = ccp(0.5, 0.5);
@@ -510,6 +479,104 @@ CGSize DesignSize = {300, 300};
         button.position = ccp(5000 + i * 30, 4980 - i * 30);
         [viewport.contentNode addChild:button];
     }
+}
+
+-(void)setupMovingViewportInputTest
+{
+    self.subTitle = @"The viewport should move left and right via CCAction.\n Input still works on button.";
+    CCViewportNode *viewport = [self CreateSmallViewportTest];
+    
+    CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/bird.png"];
+    sprite.name = @"BirdSprite";
+    sprite.position = ccp(5000, 5000);
+    [viewport.contentNode addChild:sprite];
+    
+    CCSprite *outsideBird = [CCSprite spriteWithImageNamed:@"Sprites/bird.png"];
+    outsideBird.name = @"outsideBird";
+    outsideBird.positionType = CCPositionTypeNormalized;
+    outsideBird.position = ccp(0.5, 0.85);
+    [self.contentNode addChild:outsideBird];
+    
+    
+    __block CCSprite *spriteBlock = sprite;
+    
+    CCButton *button = [CCButton buttonWithTitle:@"ColorChange"];
+    button.name = @"ColorChangeButton";
+    button.block = ^(id sender){
+        spriteBlock.color = ([spriteBlock.color isEqual:[CCColor redColor]] ? [CCColor whiteColor] : [CCColor redColor]);
+    };
+    button.position = ccp(5000, 4980);
+    [viewport.contentNode addChild:button];
+    
+    [viewport runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+                                                              [CCActionMoveTo actionWithDuration:4.0 position:ccp(0.6f, 0.5f)],
+                                                              [CCActionMoveTo actionWithDuration:4.0 position:ccp(0.4f, 0.5f)],
+                                                                 nil]]];
+    
+}
+
+-(void)setupPhysicNodeInsideViewportTest
+{
+    self.subTitle = @"The viewport contains a CCPhysicsNode.\nPhysics objects should interact normally.";
+    CCViewportNode *viewport = [self CreateSmallViewportTest];
+    
+   	
+    CCPhysicsNode *physics = [CCPhysicsNode node];
+    physics.debugDraw = YES;
+    [viewport.contentNode addChild:physics];
+    
+    {
+        CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/shape-0.png"];
+        sprite.position = ccp(5100-250, 5100-250);
+        sprite.rotation = 13;
+        
+        CGRect rect = {CGPointZero, sprite.contentSize};
+        CCPhysicsBody *body = sprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
+        body.velocity = ccp(10, 10);
+        body.angularVelocity = 0.1;
+        
+        [physics addChild:sprite];
+    }{
+        CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/shape-1.png"];
+        sprite.position = ccp(5100-250, 5220-250);
+        sprite.rotation = 13;
+        
+        CGSize size = sprite.contentSize;
+        CGPoint points[] = {
+            ccp(0, 0),
+            ccp(size.width, 0),
+            ccp(size.width/2, size.height),
+        };
+        
+        CCPhysicsBody *body = sprite.physicsBody = [CCPhysicsBody bodyWithPolygonFromPoints:points count:3 cornerRadius:0.0];
+        body.velocity = ccp(10, -10);
+        body.angularVelocity = -0.1;
+        
+        [physics addChild:sprite];
+    }{
+        CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/shape-2.png"];
+        sprite.position = ccp(5380-250, 5220-250);
+        sprite.rotation = 13;
+        
+        CGRect rect = {CGPointZero, sprite.contentSize};
+        CCPhysicsBody *body = sprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
+        body.velocity = ccp(-10, -10);
+        body.angularVelocity = 0.1;
+        
+        [physics addChild:sprite];
+    }{
+        CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/shape-3.png"];
+        sprite.position = ccp(5380-250, 5100-250);
+        sprite.rotation = 13;
+        
+        CGRect rect = {CGPointZero, sprite.contentSize};
+        CCPhysicsBody *body = sprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
+        body.velocity = ccp(-10, 10);
+        body.angularVelocity = -0.1;
+        
+        [physics addChild:sprite];
+    }
+    
 }
 
 @end
