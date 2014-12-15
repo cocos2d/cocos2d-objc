@@ -356,9 +356,9 @@ typedef struct __attribute__((deprecated)) _ccBlendFunc
 
 @interface CCNode(Deprecated)
 
-- (CGAffineTransform)nodeToParentTransform;
-- (CGAffineTransform)parentToNodeTransform;
-- (CGAffineTransform)nodeToWorldTransform;
-- (CGAffineTransform)worldToNodeTransform;
+- (CGAffineTransform)nodeToParentTransform __attribute__((deprecated));
+- (CGAffineTransform)parentToNodeTransform __attribute__((deprecated));
+- (CGAffineTransform)nodeToWorldTransform __attribute__((deprecated));
+- (CGAffineTransform)worldToNodeTransform __attribute__((deprecated));
 
 @end
