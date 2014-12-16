@@ -55,7 +55,8 @@
 {
     [super setPosition:position];
     
-    CCTableView* tableView = (CCTableView*)self.parent;
+    // TODO: Rather fragile for my liking.
+    CCTableView* tableView = (CCTableView*)self.parent.parent;
     [tableView markVisibleRowsDirty];
     [tableView updateVisibleRows];
 }
