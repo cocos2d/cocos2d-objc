@@ -1233,7 +1233,6 @@
 		5BC1DE291A2E2099009C2E67 /* NSEvent+CC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSEvent+CC.m"; sourceTree = "<group>"; };
 		5BC3CB5719626FA000C4F0D0 /* CCGestureListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCGestureListener.h; path = Android/CCGestureListener.h; sourceTree = "<group>"; };
 		5BC3CB5819626FA000C4F0D0 /* CCGestureListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCGestureListener.m; path = Android/CCGestureListener.m; sourceTree = "<group>"; };
-		5BF3268D195F8E0300D9A51A /* CCGLView.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = CCGLView.java; sourceTree = "<group>"; };
 		5BF32696195F947800D9A51A /* CCActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCActivity.h; path = Android/CCActivity.h; sourceTree = "<group>"; };
 		5BF32697195F947800D9A51A /* CCActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCActivity.m; path = Android/CCActivity.m; sourceTree = "<group>"; };
 		7A4037A819E37038007B6E8F /* libcocos2d-mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d-mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1930,31 +1929,6 @@
 			path = Mac;
 			sourceTree = "<group>";
 		};
-		5BF32689195F8E0300D9A51A /* java */ = {
-			isa = PBXGroup;
-			children = (
-				5BF3268A195F8E0300D9A51A /* org */,
-			);
-			name = java;
-			path = Android/java;
-			sourceTree = "<group>";
-		};
-		5BF3268A195F8E0300D9A51A /* org */ = {
-			isa = PBXGroup;
-			children = (
-				5BF3268B195F8E0300D9A51A /* cocos2d */,
-			);
-			path = org;
-			sourceTree = "<group>";
-		};
-		5BF3268B195F8E0300D9A51A /* cocos2d */ = {
-			isa = PBXGroup;
-			children = (
-				5BF3268D195F8E0300D9A51A /* CCGLView.java */,
-			);
-			path = cocos2d;
-			sourceTree = "<group>";
-		};
 		83409E2B19D5B791004B7EB9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -2209,7 +2183,6 @@
 			isa = PBXGroup;
 			children = (
 				D2A3CFA51947B51D003B7D0B /* Math */,
-				5BF32689195F8E0300D9A51A /* java */,
 				5BF32696195F947800D9A51A /* CCActivity.h */,
 				5BF32697195F947800D9A51A /* CCActivity.m */,
 				D285ECEE192EA92A009F4E88 /* CCGLView.h */,
