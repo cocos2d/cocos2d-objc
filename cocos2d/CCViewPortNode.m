@@ -25,6 +25,18 @@
 
 }
 
+- (CGSize)contentSize {
+    return self.parent.contentSize;
+}
+
+- (CCSizeType)contentSizeType {
+    return self.parent.contentSizeType;
+}
+
+- (CGSize)contentSizeInPoints {
+    return self.parent.contentSizeInPoints;
+}
+
 // Designated initializer
 - (instancetype) initWithViewport:(CCViewportNode*)viewportNode
 {
@@ -72,26 +84,28 @@
 
 -(instancetype)init
 {
-    return [self initWithSize:[CCDirector sharedDirector].viewSize contentNode:[CCNode node]];
+    return [self initWithContentNode:[CCNode node]];
 }
 
--(instancetype)initWithSize:(CGSize)size contentNode:(CCNode *)contentNode;
+-(instancetype)initWithContentNode:(CCNode *)contentNode;
 {
     if((self = [super init])){
-        self.contentSize = size;
+        self.contentSize = [CCDirector sharedDirector].viewSize;
         self.clipsInput = true;
         
         _camera = [[CCCamera alloc]initWithViewport:self];
         [self addChild:_camera];
+        [_camera addChild:contentNode];
         
-        _contentNode = contentNode;
-        [_camera addChild:_contentNode];
-        
-        _projection = GLKMatrix4MakeOrtho(0, size.width, 0, size.height, NEAR_Z, FAR_Z);
+        // Reasonable default:
+        CGSize sizeInPoints = self.contentSizeInPoints;
+        _projection = GLKMatrix4MakeOrtho(0, sizeInPoints.width, 0, sizeInPoints.height, NEAR_Z, FAR_Z);
     }
     
     return self;
 }
+
+// TODO: subscribe to transform changes and update projection when that happens.
 
 +(instancetype)centered:(CGSize)designSize;
 {
@@ -159,8 +173,19 @@
 
 -(void)setProjection:(GLKMatrix4)projection
 {
+    NSLog(@"Set projection");
     NSAssert(_projectionDelegate == nil, @"Cannot set the projection explicitly when a projection delegate is set.");
     _projection = projection;
+}
+
+- (void) setContentNode:(CCNode *)contentNode
+{
+    [_camera removeChild:self.contentNode];
+    [_camera addChild: contentNode];
+}
+
+- (CCNode *) contentNode{
+    return _camera.children[0];
 }
 
 -(void)visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform

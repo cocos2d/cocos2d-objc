@@ -41,15 +41,14 @@
 -(instancetype)init;
 
 /**
- *  Create a viewport with the given size and content node. Uses a orthographic projection
+ *  Create a viewport with the given size and content node. Uses a orthographic projection. Initially the viewport is screen-sized.
  *
- *  @param size        The size of the viewport when drawn to the screen. Drawing is clipped to this size.
- *  @param contentNode The content node and its children are drawn into the viewport.
+ *  @param contentNode Provide the content node. Its children are drawn into the viewport.
  *
  *  @return The CCViewportNode
  *  @since v4.0 and later
  */
--(instancetype)initWithSize:(CGSize)size contentNode:(CCNode *)contentNode;
+-(instancetype)initWithContentNode:(CCNode *)contentNode;
 
 // Convenience constructors to create screen sized viewports.
 +(instancetype)centered:(CGSize)designSize;
