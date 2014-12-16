@@ -118,6 +118,7 @@
     
     CCScrollView* scrollView = [[CCScrollView alloc] init];
     scrollView.contentNode = node;
+    scrollView.delegate = self;
     
     [self.contentNode addChild:scrollView];
 }

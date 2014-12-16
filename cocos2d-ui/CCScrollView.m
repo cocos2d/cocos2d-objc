@@ -208,7 +208,6 @@
 // Designated initializer
 - (id) initWithContentNode:(CCNode*)contentNode
 {
-    //self = [super init];
     self = [super initWithContentNode:contentNode];
     self.projectionDelegate = [[CCScrollViewOrthoProjection alloc] initWithTarget:self];
     
@@ -219,11 +218,7 @@
     // Setup content node
     self.contentSize = CGSizeMake(1, 1);
     self.contentSizeType = CCSizeTypeNormalized;
-    
-//    self.positionType = CCPositionTypeNormalized;
-//    self.position = ccp(0.5f, 0.5f);
-//    self.anchorPoint = ccp(0.5f, 0.5f);
-    
+
     // Default properties
     _horizontalScrollEnabled = YES;
     _verticalScrollEnabled = YES;
@@ -377,8 +372,12 @@
 {
     // Check bounds
 	newPos.x = MAX(MIN(newPos.x, self.maxScrollX), self.minScrollX);
-	newPos.y = MAX(MIN(newPos.y, self.maxScrollY), self.minScrollY);
-
+    if(_flipYCoordinates){
+        newPos.y = MIN(MAX(newPos.y, -self.maxScrollY), self.minScrollY);
+    }else{
+        newPos.y = -MAX(MIN(newPos.y, self.maxScrollY), self.minScrollY);
+    }
+    
     [self updateAndroidScrollTranslation:newPos];
     
     BOOL xMoved = (newPos.x != self.scrollPosition.x);
@@ -460,6 +459,10 @@
 
 - (void) panLayerToTarget:(CGPoint) newPos
 {
+    // If we're in flipped Y mode, we flip coordinates, do the bounds checks, then flip back.
+    if(_flipYCoordinates){
+        newPos.y = -newPos.y;
+    }
     if (_bounces)
     {
         // Scroll at half speed outside of bounds
@@ -493,6 +496,9 @@
     }
     [self scrollViewDidScroll];
     
+    if(_flipYCoordinates){
+        newPos.y = -newPos.y;
+    }
     self.camera.position = newPos;
 }
 
@@ -550,6 +556,10 @@
             // Bounce back to edge if layer is too far outside of the scroll area or if it is outside and moving slowly
             BOOL bounceToEdge = NO;
             CGPoint posTarget = self.scrollPosition;
+            if(_flipYCoordinates){
+                posTarget.y = -posTarget.y;
+            }
+            
             
             if (!_animatingX && !_pagingEnabled)
             {
@@ -630,7 +640,9 @@
         // Check if scroll directions has been disabled
         if (!_horizontalScrollEnabled) translation.x = 0;
         if (!_verticalScrollEnabled) translation.y = 0;
-
+        
+//        if (_flipYCoordinates) translation.y = -translation.y;
+        
         // Check bounds
         CGPoint newPos = ccpAdd(_startScrollPos, translation);
         
