@@ -534,6 +534,7 @@
             
             // Adjust for frame rate
             deaccelerationX = powf(deaccelerationX, p);
+            deaccelerationY = powf(deaccelerationY, p);
             
             // Update velocity
             _velocity.x *= deaccelerationX;
