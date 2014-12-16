@@ -293,10 +293,12 @@
 
 - (float) maxScrollX
 {
-    if (!self.camera) return 0;
+    if (!self.contentNode) return 0;
     
-    float maxScroll = self.camera.contentSizeInPoints.width - self.contentSizeInPoints.width;
+    float maxScroll = self.contentNode.contentSizeInPoints.width - self.contentSizeInPoints.width;
     if (maxScroll < 0) maxScroll = 0;
+
+    NSLog(@"Max scroll x: %f", maxScroll);
     
     return maxScroll;
 }
@@ -308,9 +310,9 @@
 
 - (float) maxScrollY
 {
-    if (!self.camera) return 0;
+    if (!self.contentNode) return 0;
     
-    float maxScroll = self.camera.contentSizeInPoints.height - self.contentSizeInPoints.height;
+    float maxScroll = self.contentNode.contentSizeInPoints.height - self.contentSizeInPoints.height;
     if (maxScroll < 0) maxScroll = 0;
     
     return maxScroll;
