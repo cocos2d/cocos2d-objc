@@ -37,6 +37,7 @@
             @"setupScrollViewVerticalTest",
             @"setupScrollViewFlippedYTest",
             @"setupScrollNoBounceTest",
+            @"setupSmallScrollViewTest",
             nil];
 }
 
@@ -136,6 +137,29 @@
     [self.contentNode addChild:scrollView];
 }
 
+- (void)setupSmallScrollViewTest
+{
+    self.subTitle = @"Scroll view doesn't take up the entire screen.";
+    
+    CCNode* node = [self createScrollContent];
+    
+    CCScrollView* scrollView = [[CCScrollView alloc] init];
+    scrollView.contentNode = node;
+    scrollView.flipYCoordinates = NO;
+    scrollView.contentSizeType = CCSizeTypeNormalized;
+    scrollView.contentSize = CGSizeMake(0.5f, 0.5f);
+    scrollView.positionType = CCPositionTypeNormalized;
+    scrollView.position = ccp(0.5f, 0.5f);
+    scrollView.anchorPoint = ccp(0.5f, 0.5f);
+
+    // for clarity, add a blue background, outside the scrollview.
+    CCNodeColor *bg = [CCNodeColor nodeWithColor:[CCColor colorWithRed:0.2f green:0.3f blue:0.5f alpha:1.0f]];
+    bg.contentSizeType = CCSizeTypeNormalized;
+    bg.contentSize = CGSizeMake(1.0f, 1.0f);
+
+    [self.contentNode addChild:bg];
+    [self.contentNode addChild:scrollView];
+}
 
 - (CCNode*) createScrollContent
 {
@@ -162,17 +186,15 @@
             [node addChild:lbl];
             
             // Create checkered patterns
-            if (toggle)
-            {
-                CCNodeColor* layer = [CCNodeColor nodeWithColor:[CCColor grayColor]];
-                layer.contentSizeType = CCSizeTypeNormalized;
-                layer.contentSize = CGSizeMake(1.0f/w, 1.0f/h);
-                //layer.contentSize = CGSizeMake(100, 100);
-                
-                layer.positionType = CCPositionTypeNormalized;
-                layer.position = ccp(x/w, y/h);
-                [node addChild:layer z:-1];
-            }
+            CCNodeColor* layer = [CCNodeColor nodeWithColor:toggle ? [CCColor grayColor] : [CCColor blackColor]];
+            layer.contentSizeType = CCSizeTypeNormalized;
+            layer.contentSize = CGSizeMake(1.0f/w, 1.0f/h);
+            //layer.contentSize = CGSizeMake(100, 100);
+            
+            layer.positionType = CCPositionTypeNormalized;
+            layer.position = ccp(x/w, y/h);
+            [node addChild:layer z:-1];
+            
             toggle = !toggle;
         }
     }
