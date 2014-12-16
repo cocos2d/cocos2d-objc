@@ -1226,7 +1226,6 @@
 		571CD02219649E03003D460C /* CCPlatformTextFieldIOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPlatformTextFieldIOS.m; sourceTree = "<group>"; };
 		571CD02419649E03003D460C /* CCPlatformTextFieldMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlatformTextFieldMac.h; sourceTree = "<group>"; };
 		571CD02519649E03003D460C /* CCPlatformTextFieldMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPlatformTextFieldMac.m; sourceTree = "<group>"; };
-		57BFF2B51991931300A3FE9C /* CCEditText.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; name = CCEditText.java; path = java/org/cocos2d/CCEditText.java; sourceTree = "<group>"; };
 		57BFF2B71991937C00A3FE9C /* CCEditText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEditText.h; path = java/CCEditText.h; sourceTree = "<group>"; };
 		57BFF2B81991937C00A3FE9C /* CCEditText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCEditText.m; path = java/CCEditText.m; sourceTree = "<group>"; };
 		5BC1DE281A2E2099009C2E67 /* NSEvent+CC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSEvent+CC.h"; sourceTree = "<group>"; };
@@ -1904,7 +1903,6 @@
 			children = (
 				571CD01C19649E03003D460C /* CCPlatformTextFieldAndroid.h */,
 				571CD01D19649E03003D460C /* CCPlatformTextFieldAndroid.m */,
-				57BFF2B51991931300A3FE9C /* CCEditText.java */,
 				57BFF2B71991937C00A3FE9C /* CCEditText.h */,
 				57BFF2B81991937C00A3FE9C /* CCEditText.m */,
 			);
