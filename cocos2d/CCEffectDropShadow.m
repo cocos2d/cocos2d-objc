@@ -127,7 +127,7 @@
     {\n\
         highp float shadowOffsetAlpha = texture2D(cc_PreviousPassTexture, cc_FragTexCoord1 - u_shadowOffset).a;\n\
         vec4 shadowColor = u_shadowColor * shadowOffsetAlpha;\n\
-        vec4 outputColor = texture2D(cc_MainTexture, cc_FragTexCoord1);\n\
+        vec4 outputColor = inputValue * texture2D(cc_MainTexture, cc_FragTexCoord1);\n\
         outputColor = outputColor + (1.0 - outputColor.a) * shadowColor;\n\
         return outputColor;\n\
      }\n"];
@@ -170,8 +170,9 @@
      return sum;\n"];
 
     free(standardGaussianWeights);
-
-    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"blurEffect" body:shaderString inputs:nil returnType:@"vec4"];
+    
+    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:@"cc_FragColor" snippet:@"vec4(1,1,1,1)"];
+    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"blurEffect" body:shaderString inputs:@[input] returnType:@"vec4"];
     return @[fragmentFunction];
 }
 

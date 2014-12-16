@@ -31,13 +31,14 @@
 + (NSArray *)buildFragmentFunctions
 {
     NSString* effectBody = CC_GLSL(
-            vec4 color = cc_FragColor * texture2D(cc_PreviousPassTexture, cc_FragTexCoord1);
-            return vec4((vec3(1.0) - color.rgb) * color.a, color.a);
+            vec4 color = inputValue * texture2D(cc_PreviousPassTexture, cc_FragTexCoord1);
+            return vec4((vec3(color.a) - color.rgb), color.a);
     );
-
+    
+    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:@"cc_FragColor" snippet:@"vec4(1,1,1,1)"];
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"invertEffect"
                                                                            body:effectBody
-                                                                         inputs:nil
+                                                                         inputs:@[input]
                                                                      returnType:@"vec4"];
 
     return @[fragmentFunction];
