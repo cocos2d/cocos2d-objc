@@ -297,8 +297,6 @@
     
     float maxScroll = self.contentNode.contentSizeInPoints.width - self.contentSizeInPoints.width;
     if (maxScroll < 0) maxScroll = 0;
-
-    NSLog(@"Max scroll x: %f", maxScroll);
     
     return maxScroll;
 }
@@ -355,17 +353,17 @@
 - (int) numHorizontalPages
 {
     if (!_pagingEnabled) return 0;
-    if (!self.contentSizeInPoints.width || !self.camera.contentSizeInPoints.width) return 0;
+    if (!self.contentSizeInPoints.width || !self.contentNode.contentSizeInPoints.width) return 0;
     
-    return roundf(self.camera.contentSizeInPoints.width / self.contentSizeInPoints.width);
+    return roundf(self.contentNode.contentSizeInPoints.width / self.contentSizeInPoints.width);
 }
 
 - (int) numVerticalPages
 {
     if (!_pagingEnabled) return 0;
-    if (!self.contentSizeInPoints.height || !self.camera.contentSizeInPoints.height) return 0;
+    if (!self.contentSizeInPoints.height || !self.contentNode.contentSizeInPoints.height) return 0;
     
-    return roundf(self.camera.contentSizeInPoints.height / self.contentSizeInPoints.height);
+    return roundf(self.contentNode.contentSizeInPoints.height / self.contentSizeInPoints.height);
 }
 
 #pragma mark Panning and setting position
@@ -526,7 +524,7 @@
         {
             CGPoint delta = ccpMult(_velocity, df);
             
-            self.camera.position = ccpAdd(self.camera.position, delta);
+            self.camera.position = ccpSub(self.camera.position, delta);
             
             [self updateAndroidScrollTranslation:CGPointMake(self.camera.position.x * -1, self.camera.position.y * -1)]; // TODO: not sure on this android api, might not need to be flipped anymore
 
@@ -651,7 +649,8 @@
         velocityRaw = [self convertToNodeSpace:velocityRaw];
         
         _velocity = ccpSub(velocityRaw, ref);
-
+//        if (_flipYCoordinates) _velocity.y = -_velocity.y;
+        
         // Check if scroll directions has been disabled
         if (!_horizontalScrollEnabled) _velocity.x = 0;
         if (!_verticalScrollEnabled) _velocity.y = 0;
@@ -918,7 +917,9 @@
             // Check if scroll directions has been disabled
             if (!_horizontalScrollEnabled) trans.x = 0;
             if (!_verticalScrollEnabled) trans.y = 0;
-
+            
+            if (_flipYCoordinates) trans.y = -trans.y;
+            
             // Check bounds
             CGPoint newPos = ccpAdd(_startScrollPos, trans);
             
@@ -996,7 +997,8 @@
             velocity = [self convertToNodeSpace:velocity];
             
             _velocity = ccpSub(velocity, ref);
-
+            if (_flipYCoordinates) _velocity.y = -_velocity.y;
+            
             // Check if scroll directions has been disabled
             if (!_horizontalScrollEnabled) _velocity.x = 0;
             if (!_verticalScrollEnabled) _velocity.y = 0;
@@ -1099,6 +1101,8 @@
     
     CGPoint delta = ccpSub(deltaRaw, ref);
     
+    // Flip coordinates
+    if (_flipYCoordinates) delta.y = -delta.y;
     delta.x = -delta.x;
 
     // Handle disabled x/y axis
