@@ -151,7 +151,7 @@ static float conditionShininess(float shininess);
     [effectBody appendString:CC_GLSL(
                                      if (composedAlpha == 0.0)
                                      {
-                                         return vec4(0,0,0,0);
+                                         return inputValue;
                                      }
                                      )];
     
