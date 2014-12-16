@@ -70,10 +70,16 @@
 		D28A2E1F1954F7E900ADC03D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D28A2E1E1954F7E900ADC03D /* OpenGLES.framework */; };
 		D2B4894C1917EE6700C3443A /* CCEffectsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D2B4894B1917EE6700C3443A /* CCEffectsTest.m */; };
 		D2D59897198747DE00BDAF25 /* Music in Resources */ = {isa = PBXBuildFile; fileRef = D2D59896198747DE00BDAF25 /* Music */; };
+		D31307BF1A302ABE00A25431 /* CCFileTest.plist.ccp in Resources */ = {isa = PBXBuildFile; fileRef = D31307BE1A302ABE00A25431 /* CCFileTest.plist.ccp */; };
+		D31307C41A302E1100A25431 /* CCFileTest.plist.gz.ccp in Resources */ = {isa = PBXBuildFile; fileRef = D31307C31A302E1100A25431 /* CCFileTest.plist.gz.ccp */; };
 		D3269DEA19CCC11800406282 /* CCRendererSharedTypes.h in Resources */ = {isa = PBXBuildFile; fileRef = D3269DE919CCC11800406282 /* CCRendererSharedTypes.h */; };
 		D32FDE8619B645CA0078CC16 /* CCTextureTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D32FDE8519B645CA0078CC16 /* CCTextureTests.m */; };
 		D3383AB81A099D7200E13478 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3383AB71A099D7200E13478 /* Launch Screen.xib */; };
 		D3395F1A187F83E600F22C74 /* CCMemoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D3395F19187F83E600F22C74 /* CCMemoryTests.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		D33C9CF71A2FBF9C004070CA /* CCFileTest.plist.gz in Resources */ = {isa = PBXBuildFile; fileRef = D33C9CF61A2FBF9C004070CA /* CCFileTest.plist.gz */; };
+		D33C9CF81A2FBF9C004070CA /* CCFileTest.plist.gz in Resources */ = {isa = PBXBuildFile; fileRef = D33C9CF61A2FBF9C004070CA /* CCFileTest.plist.gz */; };
+		D33C9CFA1A2FF561004070CA /* CCFileTest.plist in Resources */ = {isa = PBXBuildFile; fileRef = D33C9CF91A2FF561004070CA /* CCFileTest.plist */; };
+		D33C9CFB1A2FF561004070CA /* CCFileTest.plist in Resources */ = {isa = PBXBuildFile; fileRef = D33C9CF91A2FF561004070CA /* CCFileTest.plist */; };
 		D340E10E185660BE006E605C /* CCPhysicsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D340E10C185660BE006E605C /* CCPhysicsTest.m */; };
 		D340E10F185660BE006E605C /* TilemapTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D340E10D185660BE006E605C /* TilemapTest.m */; };
 		D344722D19E73AD1000093A3 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8D81977100000261299 /* A Damn Mess.ttf */; };
@@ -182,6 +188,7 @@
 		D3763DD919E735CB006C050D /* libcocos2d-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D3763BBF19E72F85006C050D /* libcocos2d-mac.a */; };
 		D3763DDB19E7364F006C050D /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3763DDA19E7364F006C050D /* OpenGL.framework */; };
 		D3763DDD19E73667006C050D /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3763DDC19E73666006C050D /* AppKit.framework */; };
+		D3867DBF1A32EB38009AFFF3 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3867DBE1A32EB38009AFFF3 /* ImageIO.framework */; };
 		D3870C6018B440150033D885 /* SpritePerformanceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3870C5F18B440150033D885 /* SpritePerformanceTest.m */; };
 		D3B2A7E5187DD60B00406C5A /* CCBMFontTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B2A7E4187DD60B00406C5A /* CCBMFontTest.m */; };
 		D3C9C867188078B900C58900 /* CCSchedulerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3C9C866188078B900C58900 /* CCSchedulerTest.m */; };
@@ -388,10 +395,14 @@
 		D2D0E6951950B16300E9103F /* libGLESv3.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLESv3.so; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/ApportableSDK1.0.sdk/usr/lib/armeabi/libGLESv3.so"; sourceTree = "<group>"; };
 		D2D0E6991950B16800E9103F /* libEGL.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libEGL.so; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/ApportableSDK1.0.sdk/usr/lib/armeabi/libEGL.so"; sourceTree = "<group>"; };
 		D2D59896198747DE00BDAF25 /* Music */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Music; path = Resources/Music; sourceTree = SOURCE_ROOT; };
+		D31307BE1A302ABE00A25431 /* CCFileTest.plist.ccp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CCFileTest.plist.ccp; path = Resources/CCFileTest.plist.ccp; sourceTree = SOURCE_ROOT; };
+		D31307C31A302E1100A25431 /* CCFileTest.plist.gz.ccp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CCFileTest.plist.gz.ccp; path = Resources/CCFileTest.plist.gz.ccp; sourceTree = SOURCE_ROOT; };
 		D3269DE919CCC11800406282 /* CCRendererSharedTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CCRendererSharedTypes.h; path = cocos2d/CCRendererSharedTypes.h; sourceTree = "<group>"; };
 		D32FDE8519B645CA0078CC16 /* CCTextureTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTextureTests.m; sourceTree = "<group>"; };
 		D3383AB71A099D7200E13478 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
 		D3395F19187F83E600F22C74 /* CCMemoryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMemoryTests.m; sourceTree = "<group>"; };
+		D33C9CF61A2FBF9C004070CA /* CCFileTest.plist.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; name = CCFileTest.plist.gz; path = Resources/CCFileTest.plist.gz; sourceTree = SOURCE_ROOT; };
+		D33C9CF91A2FF561004070CA /* CCFileTest.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = CCFileTest.plist; path = Resources/CCFileTest.plist; sourceTree = SOURCE_ROOT; };
 		D340E10C185660BE006E605C /* CCPhysicsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCPhysicsTest.m; path = "cocos2d-ui-tests/tests/CCPhysicsTest.m"; sourceTree = SOURCE_ROOT; };
 		D340E10D185660BE006E605C /* TilemapTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TilemapTest.m; path = "cocos2d-ui-tests/tests/TilemapTest.m"; sourceTree = SOURCE_ROOT; };
 		D34CD3C118ABEE9C00D8E537 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
@@ -409,6 +420,7 @@
 		D3763D9919E7356C006C050D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D3763DDA19E7364F006C050D /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/OpenGL.framework; sourceTree = DEVELOPER_DIR; };
 		D3763DDC19E73666006C050D /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/AppKit.framework; sourceTree = DEVELOPER_DIR; };
+		D3867DBE1A32EB38009AFFF3 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		D3870C5F18B440150033D885 /* SpritePerformanceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpritePerformanceTest.m; path = "cocos2d-ui-tests/tests/SpritePerformanceTest.m"; sourceTree = SOURCE_ROOT; };
 		D3B2A7E4187DD60B00406C5A /* CCBMFontTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBMFontTest.m; path = "cocos2d-ui-tests/tests/CCBMFontTest.m"; sourceTree = SOURCE_ROOT; };
 		D3C1281C199D43E0005D2119 /* CCShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; name = CCShaders.metal; path = cocos2d/Platforms/iOS/CCShaders.metal; sourceTree = SOURCE_ROOT; };
@@ -502,6 +514,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3867DBF1A32EB38009AFFF3 /* ImageIO.framework in Frameworks */,
 				D3763BD219E72FB4006C050D /* libcocos2d.a in Frameworks */,
 				D24FAEED198014C80043E27D /* GLKit.framework in Frameworks */,
 				D28A2E1F1954F7E900ADC03D /* OpenGLES.framework in Frameworks */,
@@ -579,6 +592,10 @@
 				758A6C7F184410EE00D1A8D2 /* Particles */,
 				758A6C6A1843E5BE00D1A8D2 /* TileMaps */,
 				758A6C6B1843E5C500D1A8D2 /* Images */,
+				D33C9CF91A2FF561004070CA /* CCFileTest.plist */,
+				D33C9CF61A2FBF9C004070CA /* CCFileTest.plist.gz */,
+				D31307BE1A302ABE00A25431 /* CCFileTest.plist.ccp */,
+				D31307C31A302E1100A25431 /* CCFileTest.plist.gz.ccp */,
 			);
 			name = "Test Resources";
 			path = "cocos2d-ui-tests-ios";
@@ -651,6 +668,7 @@
 		B7E2604A17E7D278007067F0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D3867DBE1A32EB38009AFFF3 /* ImageIO.framework */,
 				D3763DDC19E73666006C050D /* AppKit.framework */,
 				D3763DDA19E7364F006C050D /* OpenGL.framework */,
 				D28A2E1E1954F7E900ADC03D /* OpenGLES.framework */,
@@ -1000,7 +1018,7 @@
 		};
 		D3763BBD19E72F85006C050D /* cocos2dJava.jar */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.jar;
+			fileType = compiled.java.jar;
 			path = cocos2dJava.jar;
 			remoteRef = D3763BBC19E72F85006C050D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -1038,6 +1056,7 @@
 				75F76497185A831B00E2FAFE /* Sounds in Resources */,
 				D4AFE9211977100000261299 /* bitmapFontTest4.png in Resources */,
 				D4AFE9291977100000261299 /* font-issue1343.png in Resources */,
+				D31307BF1A302ABE00A25431 /* CCFileTest.plist.ccp in Resources */,
 				D4AFE9281977100000261299 /* font-issue1343.fnt in Resources */,
 				D4AFE9451977100000261299 /* RobotoSlab-Regular.ttf in Resources */,
 				758A6C80184410EE00D1A8D2 /* Particles in Resources */,
@@ -1066,6 +1085,7 @@
 				D4AFE91E1977100000261299 /* bitmapFontTest3.fnt in Resources */,
 				D4AFE9221977100000261299 /* bitmapFontTest5.fnt in Resources */,
 				D4AFE9261977100000261299 /* font-issue1343-hd.fnt in Resources */,
+				D33C9CF71A2FBF9C004070CA /* CCFileTest.plist.gz in Resources */,
 				D4AFE92B1977100000261299 /* fps_images-hd.png in Resources */,
 				D4AFE91A1977100000261299 /* arial16.png in Resources */,
 				D4AFE9431977100000261299 /* RobotoSlab-Bold.ttf in Resources */,
@@ -1080,6 +1100,7 @@
 				D4AFE9391977100000261299 /* konqa32.png in Resources */,
 				D4AFE9341977100000261299 /* helvetica-32.fnt in Resources */,
 				D4AFE9181977100000261299 /* arial-unicode-26.png in Resources */,
+				D33C9CFA1A2FF561004070CA /* CCFileTest.plist in Resources */,
 				B7E2621517E7D34D007067F0 /* Icon-Small@2x.png in Resources */,
 				D4AFE9481977100000261299 /* Scissor Cuts.ttf in Resources */,
 				D3E1842B19E861FC00A08B01 /* MetalShaders in Resources */,
@@ -1106,6 +1127,7 @@
 				D4AFE9171977100000261299 /* arial-unicode-26.GlyphProject in Resources */,
 				D4AFE9401977100000261299 /* markerFelt.fnt in Resources */,
 				D4AFE9241977100000261299 /* boundsTestFont.fnt in Resources */,
+				D31307C41A302E1100A25431 /* CCFileTest.plist.gz.ccp in Resources */,
 				D4AFE93D1977100000261299 /* larabie-16.png in Resources */,
 				B7E2621917E7D34D007067F0 /* iTunesArtwork in Resources */,
 				D4AFE92F1977100000261299 /* fps_images.png in Resources */,
@@ -1116,6 +1138,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D33C9CF81A2FBF9C004070CA /* CCFileTest.plist.gz in Resources */,
 				D344722D19E73AD1000093A3 /* A Damn Mess.ttf in Resources */,
 				D344722E19E73AD1000093A3 /* Abberancy.ttf in Resources */,
 				D344722F19E73AD1000093A3 /* ThisFontIsAbdFont.ttf in Resources */,
@@ -1130,6 +1153,7 @@
 				D3DACC7B19E74BC000629E97 /* MainMenu.xib in Resources */,
 				D344723819E73AD1000093A3 /* bitmapFontTest3.fnt in Resources */,
 				D344723919E73AD1000093A3 /* bitmapFontTest3.png in Resources */,
+				D33C9CFB1A2FF561004070CA /* CCFileTest.plist in Resources */,
 				D344723A19E73AD1000093A3 /* bitmapFontTest4.fnt in Resources */,
 				D344723B19E73AD1000093A3 /* bitmapFontTest4.png in Resources */,
 				D344723C19E73AD1000093A3 /* bitmapFontTest5.fnt in Resources */,
