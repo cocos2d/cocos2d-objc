@@ -25,6 +25,7 @@
 #import <AndroidKit/AndroidDisplay.h>
 #import <AndroidKit/AndroidActivityInfo.h>
 #import <AndroidKit/AndroidSurface+NDKExtensions.h>
+#import <AndroidKit/AndroidSurfaceHolder.h>
 
 #define USE_MAIN_THREAD 0 // enable to run on OpenGL/Cocos2D on the android main thread
 

@@ -41,6 +41,7 @@
 #import "CCActivity.h"
 #import "CCGestureListener.h"
 #import <AndroidKit/AndroidGestureDetector.h>
+#import <AndroidKit/AndroidMotionEvent.h>
 
 #elif __CC_PLATFORM_MAC
 

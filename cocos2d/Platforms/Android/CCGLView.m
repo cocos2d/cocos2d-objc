@@ -20,6 +20,8 @@
 #import "CCTouchAndroid.h"
 #import <CoreGraphics/CGGeometry.h>
 
+#import <AndroidKit/AndroidMotionEvent.h>
+
 static const CGSize FIXED_SIZE = {586, 384};
 
 static NSMutableDictionary *touches = nil;
