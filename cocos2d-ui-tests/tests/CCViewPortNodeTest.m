@@ -463,6 +463,8 @@ CGSize DesignSize = {300, 300};
     bg.anchorPoint = ccp(0.5, 0.5);
     bg.position = ccp(5000, 5000);
     [viewport.contentNode addChild:bg];
+    // Explicitly disable the input clipping for this test
+    viewport.clipsInput = false;
     
     __block CCButton *lastButton = [CCButton buttonWithTitle:@"There are 10 buttons. Click offscreen buttons. Input clipping disabled."];
     lastButton.position = ccp(5000, 5080);
