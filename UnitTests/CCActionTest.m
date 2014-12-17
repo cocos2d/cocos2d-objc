@@ -10,12 +10,9 @@
 #import "cocos2d.h"
 #import "CCAction.h"
 
-@interface CCActionReuseTest : XCTestCase
+@interface CCActionBaseTest : XCTestCase @end
 
-@end
-
-@implementation CCActionReuseTest
-
+@implementation CCActionBaseTest
 
 const float accuracy = 1e-4;
 
@@ -27,7 +24,7 @@ CCNode *node;
 - (void)setUp
 {
     [super setUp];
-
+    
     scene = [CCScene node];
     
     startPos = ccp(0,0);
@@ -44,10 +41,16 @@ CCNode *node;
     [super tearDown];
 }
 
+@end
+
+@interface CCActionGeneralTest : CCActionBaseTest  @end
+
+@implementation CCActionGeneralTest
+
 
 - (void)testIsFirstStepIgnored
 {
-     CCActionMoveTo * action = [CCActionMoveTo actionWithDuration:1.0f position:ccp(1.0f, 1.0f)];
+    CCActionMoveTo * action = [CCActionMoveTo actionWithDuration:1.0f position:ccp(1.0f, 1.0f)];
     [node runAction:action];
     
     //Step the action by half a second
@@ -55,9 +58,9 @@ CCNode *node;
     
     /*
      
-     Test disabled pending actually fixing this behavior in CCAction.
-    
-    XCTAssertEqualWithAccuracy(action.elapsed, 0.5f, 1e-4, @"Elapsed time incorrect, it's as if the first step never occured!");
+     TODO: Test disabled pending actually fixing this behavior in CCAction.
+     
+     XCTAssertEqualWithAccuracy(action.elapsed, 0.5f, 1e-4, @"Elapsed time incorrect, it's as if the first step never occured!");
      */
     XCTAssertTrue(true);
 }
@@ -66,13 +69,13 @@ CCNode *node;
 {
     // Sanity check.
     XCTAssertTrue(ccpDistance(node.position, startPos) < accuracy, @"Initial position incorrect!");
-
+    
     CCActionMoveTo * action = [CCActionMoveTo actionWithDuration:1.0f position:endPos];
     [node runAction:action];
     
     // Node should not have moved yet.
     XCTAssertTrue(ccpDistance(node.position, startPos) < accuracy, @"Node moved before action stepped!");
-
+    
     // TODO: Bug workaround
     [action step: 0.0f];
     
@@ -81,16 +84,101 @@ CCNode *node;
     XCTAssertEqualWithAccuracy(action.elapsed, 0.5f, accuracy, @"Elapsed time incorrect after stepping.");
     
     XCTAssertTrue( (ccpDistance(node.position, startPos) - ccpDistance(startPos, endPos)) / 2.0f < accuracy, @"Node should have moved half the distance between start and end.");
-
+    
     //Step the action to completion.
     [action step: 0.5f];
     XCTAssertEqualWithAccuracy(action.elapsed, 1.0f, accuracy, @"Elapsed time incorrect after second step.");
-
+    
     XCTAssertTrue( ccpDistance(node.position, endPos) < accuracy, @"Node should have arrived at end point.");
     XCTAssertEqualWithAccuracy(node.position.x, endPos.x, accuracy, @"Node X was incorrect after moving.");
     XCTAssertEqualWithAccuracy(node.position.y, endPos.y, accuracy, @"Node Y was incorrect after moving.");
-
+    
 }
+
+- (void)testCCActionEaseIn
+{
+    float startToEndDistance = ccpDistance(startPos, endPos);
+    float rate = 2.0f;
+    
+    CCActionInterval * action = [CCActionEaseIn actionWithAction:[CCActionMoveTo actionWithDuration:1.0f position:endPos] rate:rate];
+    [node runAction:action];
+
+    XCTAssertTrue(ccpDistance(node.position, startPos) < accuracy, @"Node moved before action stepped!");
+    
+    // TODO: Bug workaround
+    [action step: 0.0f];
+    
+    //Step the action by half a second (half the duration)
+    [action step: 0.5f];
+    XCTAssertEqualWithAccuracy(action.elapsed, 0.5f, accuracy, @"Elapsed time incorrect after stepping.");
+    
+    float traveled = ccpDistance(node.position, startPos);
+    XCTAssertLessThan(traveled, startToEndDistance / 2.0f, @"When easing IN, node should have moved LESS than half the distance at t=0.5.");
+    XCTAssertEqualWithAccuracy(traveled / startToEndDistance, powf(0.5f, rate), accuracy, @"When easing out, our distance traveled at half the time was incorrect.");
+    
+    //Step the action to completion.
+    [action step: 0.5f];
+    XCTAssertEqualWithAccuracy(action.elapsed, 1.0f, accuracy, @"Elapsed time incorrect after second step.");
+    XCTAssertTrue( ccpDistance(node.position, endPos) < accuracy, @"Node should have arrived at end point.");
+}
+
+- (void)testCCActionEaseOut
+{
+    startPos = ccp(0,0);
+    endPos = ccp(1,0);
+    float rate = 2.0f;
+    float startToEndDistance = ccpDistance(startPos, endPos);
+    
+    CCActionInterval * action = [CCActionEaseOut actionWithAction:[CCActionMoveTo actionWithDuration:1.0f position:endPos] rate:rate];
+    
+    [node runAction:action];
+    XCTAssertTrue(ccpDistance(node.position, startPos) < accuracy, @"Node moved before action stepped!");
+    
+    // TODO: Bug workaround
+    [action step: 0.0f];
+    
+    //Step the action by half a second (half the duration)
+    [action step: 0.5f];
+    XCTAssertEqualWithAccuracy(action.elapsed, 0.5f, accuracy, @"Elapsed time incorrect after stepping.");
+    
+    float traveled = ccpDistance(node.position, startPos);
+    XCTAssertGreaterThan(traveled, startToEndDistance / 2.0f, @"When easing OUT, node should have moved MORE than half the distance at t=0.5.");
+    XCTAssertEqualWithAccuracy(traveled / startToEndDistance, powf(0.5f, 1.0f/rate), accuracy, @"When easing out, our distance traveled at half the time was incorrect.");
+    
+    //Step the action to completion.
+    [action step: 0.5f];
+    XCTAssertEqualWithAccuracy(action.elapsed, 1.0f, accuracy, @"Elapsed time incorrect after second step.");
+    XCTAssertTrue( ccpDistance(node.position, endPos) < accuracy, @"Node should have arrived at end point.");
+}
+
+- (void)testCCActionEaseInstantHasStrangeProperties
+{
+    CCActionInterval * action = [CCActionEaseInstant actionWithAction:[CCActionMoveTo actionWithDuration:1.0f position:endPos]];
+    [node runAction:action];
+    XCTAssertTrue(ccpDistance(node.position, startPos) < accuracy, @"Node moved before action stepped!");
+    
+    // TODO: Bug workaround - CCActionEaseInstant is somehow unaffected, although all the other CCActionEase methods are.
+    [action step: 0.0f];
+    XCTAssertTrue( ccpDistance(node.position, endPos) < accuracy, @"With instant ease, the node should complete immediately");
+    
+    //Step the action by half a second (half the duration)
+    [action step: 0.5f];
+    XCTAssertEqualWithAccuracy(action.elapsed, 0.5f, accuracy, @"Elapsed time incorrect after stepping.");
+    
+    XCTAssertTrue( ccpDistance(node.position, endPos) < accuracy, @"With instant ease, the node should complete immediately");
+    
+    //Step the action to completion.
+    [action step: 0.5f];
+    XCTAssertEqualWithAccuracy(action.elapsed, 1.0f, accuracy, @"Elapsed time incorrect after second step.");
+    XCTAssertTrue( ccpDistance(node.position, endPos) < accuracy, @"Node should have arrived at end point.");
+}
+
+@end
+
+
+@interface CCActionReuseTest : CCActionBaseTest @end
+
+@implementation CCActionReuseTest
 
 - (void)testCopyUnaddedAction
 {
@@ -254,5 +342,38 @@ CCNode *node;
     XCTAssertNil(actionCopy.originalTarget, @"originalTarget not reset");
 }
 
+
+@end
+
+@interface CCActionInstantTest : CCActionBaseTest @end
+
+@implementation CCActionInstantTest
+
+- (void)testInstantActionOccursOnFirstStep
+{
+    CCActionPlace * action = [CCActionPlace actionWithPosition:endPos];
+    [node runAction:action];
+    
+    XCTAssertTrue(ccpDistance(node.position, startPos) < accuracy, @"Node moved before action stepped!");
+    
+    //Step the action by half a second
+    [action step: 0.5f];
+
+    XCTAssertTrue( ccpDistance(node.position, endPos) < accuracy, @"Node should have arrived at end point.");
+}
+
+
+- (void)testInstantActionOccursWithStepOfZero
+{
+    CCActionPlace * action = [CCActionPlace actionWithPosition:endPos];
+    [node runAction:action];
+    
+    XCTAssertTrue(ccpDistance(node.position, startPos) < accuracy, @"Node moved before action stepped!");
+    
+    //Step the action by zero!
+    [action step: 0.0f];
+    
+    XCTAssertTrue( ccpDistance(node.position, endPos) < accuracy, @"Node should have arrived at end point.");
+}
 
 @end
