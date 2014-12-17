@@ -107,4 +107,9 @@ CGAffineTransformFromGLKMatrix4(GLKMatrix4 m)
     return CGAffineTransformFromGLKMatrix4(self.worldToNodeMatrix);
 }
 
+-(BOOL)isRunningInActiveScene
+{
+    return self.active;
+}
+
 @end

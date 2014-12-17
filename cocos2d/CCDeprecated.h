@@ -361,4 +361,7 @@ typedef struct __attribute__((deprecated)) _ccBlendFunc
 - (CGAffineTransform)nodeToWorldTransform __attribute__((deprecated));
 - (CGAffineTransform)worldToNodeTransform __attribute__((deprecated));
 
+// Use CCNode.active instead
+@property(nonatomic, readonly) BOOL isRunningInActiveScene __attribute__((deprecated));
+
 @end

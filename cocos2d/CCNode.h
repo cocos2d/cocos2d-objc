@@ -559,7 +559,7 @@
 @property(nonatomic, assign) BOOL paused;
 
 /** Returns YES if the node is added to an active scene and neither it nor any of it's ancestors is paused. */
-@property(nonatomic, readonly) BOOL isRunningInActiveScene;
+@property(nonatomic, readonly) BOOL active;
 
 /**
  Has the node run an action.
