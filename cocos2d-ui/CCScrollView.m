@@ -373,9 +373,9 @@
     // Check bounds
 	newPos.x = MAX(MIN(newPos.x, self.maxScrollX), self.minScrollX);
     if(_flipYCoordinates){
-        newPos.y = MIN(MAX(newPos.y, -self.maxScrollY), self.minScrollY);
-    }else{
         newPos.y = -MAX(MIN(newPos.y, self.maxScrollY), self.minScrollY);
+    }else{
+        newPos.y = MAX(MIN(newPos.y, self.maxScrollY), self.minScrollY);
     }
     
     [self updateAndroidScrollTranslation:newPos];
@@ -559,7 +559,6 @@
             if(_flipYCoordinates){
                 posTarget.y = -posTarget.y;
             }
-            
             
             if (!_animatingX && !_pagingEnabled)
             {
