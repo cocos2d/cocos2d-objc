@@ -368,15 +368,21 @@
     [self setScrollPosition:newPos animated:NO];
 }
 
+- (CGPoint) clampToBounds:(CGPoint)pos
+{
+    pos.x = MAX(MIN(pos.x, self.maxScrollX), self.minScrollX);
+    if(_flipYCoordinates){
+        pos.y = -MAX(MIN(pos.y, self.maxScrollY), self.minScrollY);
+    }else{
+        pos.y = MAX(MIN(pos.y, self.maxScrollY), self.minScrollY);
+    }
+    return pos;
+}
+
 - (void) setScrollPosition:(CGPoint)newPos animated:(BOOL)animated
 {
     // Check bounds
-	newPos.x = MAX(MIN(newPos.x, self.maxScrollX), self.minScrollX);
-    if(_flipYCoordinates){
-        newPos.y = -MAX(MIN(newPos.y, self.maxScrollY), self.minScrollY);
-    }else{
-        newPos.y = MAX(MIN(newPos.y, self.maxScrollY), self.minScrollY);
-    }
+    newPos = [self clampToBounds:newPos];
     
     [self updateAndroidScrollTranslation:newPos];
     
@@ -463,6 +469,7 @@
     if(_flipYCoordinates){
         newPos.y = -newPos.y;
     }
+    
     if (_bounces)
     {
         // Scroll at half speed outside of bounds
@@ -486,20 +493,19 @@
             float diff = self.minScrollY - newPos.y;
             newPos.y = self.minScrollY - diff * kCCScrollViewBoundsSlowDown;
         }
+        if(_flipYCoordinates){
+            newPos.y = -newPos.y;
+        }
     }
-    else
-    {
-        if (newPos.x > self.maxScrollX) newPos.x = self.maxScrollX;
-        if (newPos.x < self.minScrollX) newPos.x = self.minScrollX;
-        if (newPos.y > self.maxScrollY) newPos.y = self.maxScrollY;
-        if (newPos.y < self.minScrollY) newPos.y = self.minScrollY;
-    }
-    [self scrollViewDidScroll];
     
-    if(_flipYCoordinates){
-        newPos.y = -newPos.y;
+    if(!_bounces){
+        newPos = [self clampToBounds:newPos];
     }
+    
+
     self.camera.position = newPos;
+
+    [self scrollViewDidScroll];
 }
 
 - (void) update:(CCTime)df
@@ -551,15 +557,16 @@
             if (fabs(_velocity.y) < kCCScrollViewVelocityLowerCap) _velocity.y = 0;
         }
         
+        CGPoint posTarget = self.scrollPosition;
+        if(_flipYCoordinates){
+            posTarget.y = -posTarget.y;
+        }
+        
         if (_bounces)
         {
+            
             // Bounce back to edge if layer is too far outside of the scroll area or if it is outside and moving slowly
             BOOL bounceToEdge = NO;
-            CGPoint posTarget = self.scrollPosition;
-            if(_flipYCoordinates){
-                posTarget.y = -posTarget.y;
-            }
-            
             if (!_animatingX && !_pagingEnabled)
             {
                 if ((posTarget.x < self.minScrollX && fabs(_velocity.x) < kCCScrollViewMinVelocityBeforeBounceBack) ||
@@ -600,7 +607,7 @@
             if (!_pagingEnabled)
             {
                 // Make sure we are within bounds
-                [self setScrollPosition:self.scrollPosition animated:NO];
+                [self setScrollPosition:posTarget animated:NO];
             }
         }
     }
