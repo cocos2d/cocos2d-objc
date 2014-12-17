@@ -70,6 +70,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "CCRenderDispatch.h"
 #import "CCFile_Private.h"
 
+#define CCZ_HEADER_SIZE 13
+
 #pragma mark -
 #pragma mark CCTexturePVR
 
