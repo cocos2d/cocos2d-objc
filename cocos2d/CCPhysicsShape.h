@@ -54,6 +54,8 @@ Using simple shapes instead of composite ones can make collision handling code s
 *  @return The CCPhysicsShape Object.
 */
 +(CCPhysicsShape *)circleShapeWithRadius:(CGFloat)radius center:(CGPoint)center;
+// needed for Swift
+-(CCPhysicsShape *)initWithCircleShapeWithRadius:(CGFloat)radius center:(CGPoint)center;
 
 /**
  *  Creates and returns a physics box shape with rounded corners.
@@ -64,6 +66,8 @@ Using simple shapes instead of composite ones can make collision handling code s
  *  @return The CCPhysicsShape Object.
  */
 +(CCPhysicsShape *)rectShape:(CGRect)rect cornerRadius:(CGFloat)cornerRadius;
+// needed for Swift
+-(CCPhysicsShape *)initWithRectShape:(CGRect)rect cornerRadius:(CGFloat)cornerRadius;
 
 /**
  *  Creates and returns a pill shaped physics shape with rounded corners that stretches from 'start' to 'end'.
@@ -75,6 +79,8 @@ Using simple shapes instead of composite ones can make collision handling code s
  *  @return The CCPhysicsShape Object.
  */
 +(CCPhysicsShape *)pillShapeFrom:(CGPoint)from to:(CGPoint)to cornerRadius:(CGFloat)cornerRadius;
+// needed for Swift
+-(CCPhysicsShape *)initWithPillShapeFrom:(CGPoint)from to:(CGPoint)to cornerRadius:(CGFloat)cornerRadius;
 
 /**
  *  Creates and returns a convex polygon physics shape with rounded corners. 
@@ -93,6 +99,8 @@ Using simple shapes instead of composite ones can make collision handling code s
  *  @see [Definition: Convex vs Concave](http://en.wikipedia.org/wiki/Convex_and_concave_polygons)
  */
 +(CCPhysicsShape *)polygonShapeWithPoints:(CGPoint *)points count:(NSUInteger)count cornerRadius:(CGFloat)cornerRadius;
+// needed for Swift
+-(CCPhysicsShape *)initWithPolygonShapeWithPoints:(CGPoint *)points count:(NSUInteger)count cornerRadius:(CGFloat)cornerRadius;
 
 
 /// -----------------------------------------------------------------------
