@@ -82,6 +82,8 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
     CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:CCEffectDefaultInitialInputSnippet snippet:CCEffectDefaultInputSnippet];
     
     NSString* effectBody = CC_GLSL(
+                                   const float EPSILON = 0.000001;
+                                   
                                    // Index the normal map and expand the color value from [0..1] to [-1..1]
                                    vec4 normalMap = texture2D(cc_NormalMapTexture, cc_FragTexCoord2);
                                    vec4 tangentSpaceNormal = normalMap * 2.0 - 1.0;
@@ -131,7 +133,7 @@ static const float CCEffectGlassDefaultFresnelPower = 2.0f;
                                    
                                    // Compute Schlick's approximation (http://en.wikipedia.org/wiki/Schlick's_approximation) of the
                                    // fresnel reflectance.
-                                   float fresnel = max(u_fresnelBias + (1.0 - u_fresnelBias) * pow((1.0 - nDotV), u_fresnelPower), 0.0);
+                                   float fresnel = clamp(u_fresnelBias + (1.0 - u_fresnelBias) * pow(max((1.0 - nDotV), EPSILON), u_fresnelPower), 0.0, 1.0);
                                    
                                    // Apply a cutoff to nDotV to reduce the aliasing that occurs in the reflected
                                    // image. As the surface normal approaches a 90 degree angle relative to the viewing
