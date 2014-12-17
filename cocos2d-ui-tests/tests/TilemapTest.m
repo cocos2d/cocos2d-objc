@@ -75,54 +75,54 @@
 
 -(void) setupTilemap1Test
 {
-	[self testForMapNamed:@"TileMaps/orthogonal-test1.tmx"];
+    [self testForMapNamed:@"TileMaps/orthogonal-test1.tmx"];
 }
 
 -(void) setupTilemap2Test
 {
     self.subTitle = @"Testing flipped and rotated tiles.";
-	[self testForMapNamed:@"TileMaps/orthogonal-desert-test-with-flips.tmx"];
+    [self testForMapNamed:@"TileMaps/orthogonal-desert-test-with-flips.tmx"];
 }
 
 -(void) setupTilemap3Test
 {
-	[self testForMapNamed:@"TileMaps/orthogonal-testLarge.tmx"];
+    [self testForMapNamed:@"TileMaps/orthogonal-testLarge.tmx"];
 }
 
 -(void) setupTilemap4Test
 {
     self.subTitle = @"Testing an extremely large tilemap.";
-	[self testForMapNamed:@"TileMaps/orthogonal-desert-obscenely-large.tmx"];
+    [self testForMapNamed:@"TileMaps/orthogonal-desert-obscenely-large.tmx"];
 }
 
 -(void) setupTilemap5Test
 {
-	[self testForMapNamed:@"TileMaps/orthogonal-desert-test-with-flips.tmx"];
-	self.subTitle = @"Spinning tilemap";
-    
-	_map.anchorPoint = ccp(0.5, 0.5);
-	_map.position = _map.anchorPointInPoints;
-	[_map runAction:[CCActionRepeatForever actionWithAction:[CCActionRotateBy actionWithDuration:10.0 angle:90]]];
+    [self testForMapNamed:@"TileMaps/orthogonal-desert-test-with-flips.tmx"];
+    self.subTitle = @"Spinning tilemap";
+
+    _map.anchorPoint = ccp(0.5, 0.5);
+    _map.position = _map.anchorPointInPoints;
+    [_map runAction:[CCActionRepeatForever actionWithAction:[CCActionRotateBy actionWithDuration:10.0 angle:90]]];
 }
 
 -(void) setupTilemap6Test
 {
     self.subTitle = @"Isometric tile map example";
 
-	[self testForMapNamed:@"TileMaps/iso-test-bug787.tmx"];
+    [self testForMapNamed:@"TileMaps/iso-test-bug787.tmx"];
 }
 
 -(void) setupTilemap7Test
 {
-	// These files are in the SB directories.
-	self.subTitle = @"TileMaps/orthogonal_resolution.tmx";
-	
-	CCNode *map = [CCTiledMap tiledMapWithFile:self.subTitle];
-	CCScrollView *scroll = [[CCScrollView alloc] initWithContentNode:map];
-	scroll.flipYCoordinates = NO;
-	
-	[self.contentNode addChild:scroll];
-	scroll.scrollPosition = ccp(map.contentSizeInPoints.width/2 - scroll.contentSizeInPoints.width/2, 0);
+    // These files are in the SB directories.
+    self.subTitle = @"TileMaps/orthogonal_resolution.tmx";
+
+    CCNode *map = [CCTiledMap tiledMapWithFile:self.subTitle];
+    CCScrollView *scroll = [[CCScrollView alloc] initWithContentNode:map];
+    scroll.flipYCoordinates = NO;
+
+    [self.contentNode addChild:scroll];
+    scroll.scrollPosition = ccp(map.contentSizeInPoints.width/2 - scroll.contentSizeInPoints.width/2, 0);
 }
 
 @end

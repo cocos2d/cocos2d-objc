@@ -66,13 +66,13 @@
 
 -(void) setupPVRa8LoadingTest
 {
-	CCSprite * img = [self loadAndDisplayImageNamed: @"test_image_a8.pvr" withTitle: @"8 bit PVR, single channel (greyscale intensity)."];
+    CCSprite * img = [self loadAndDisplayImageNamed: @"test_image_a8.pvr" withTitle: @"8 bit PVR, single channel (greyscale intensity)."];
     [img setShader:[CCShader positionTextureA8ColorShader]];
 }
 
 -(void) setupPVRa8v3LoadingTest
 {
-	CCSprite * img = [self loadAndDisplayImageNamed: @"test_image_a8_v3.pvr" withTitle: @"8 bit PVR v3, single channel (greyscale intensity)."];
+    CCSprite * img = [self loadAndDisplayImageNamed: @"test_image_a8_v3.pvr" withTitle: @"8 bit PVR v3, single channel (greyscale intensity)."];
     [img setShader:[CCShader positionTextureA8ColorShader]];
 }
 
