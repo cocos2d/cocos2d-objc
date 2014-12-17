@@ -69,6 +69,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "Support/CCFileUtils.h"
 #import "CCGL.h"
 #import "CCRenderDispatch.h"
+#import "CCFile_Private.h"
 
 #pragma mark -
 #pragma mark CCTexturePVR
@@ -583,25 +584,31 @@ CCRenderDispatch(NO, ^{
 {
 	if((self = [super init]))
 	{
-		unsigned char *pvrdata = NULL;
+        NSURL *fileURL = [NSURL fileURLWithPath:path];
+        CCFile *file = [[CCFile alloc] initWithName:path url:fileURL contentScale:1.0];
+
+        unsigned char *pvrdata = NULL;
 		NSInteger pvrlen = 0;
-		NSString *lowerCase = [path lowercaseString];
 
-        if ( [lowerCase hasSuffix:@".ccz"])
-			#warning TODO
-			pvrlen = 0;//ccInflateCCZFile( [path UTF8String], &pvrdata );
-
-		else if( [lowerCase hasSuffix:@".gz"] )
-			#warning TODO
-			pvrlen = 0;//ccInflateGZipFile( [path UTF8String], &pvrdata );
-
-		else
-			pvrlen = ccLoadFileIntoMemory( [path UTF8String], &pvrdata );
+        pvrlen = file.loadData.length;
+        pvrdata = (unsigned char *) file.loadData.bytes;
+        
+//        NSString *lowerCase = [path lowercaseString];
+//
+//        if ( [lowerCase hasSuffix:@".ccz"])
+//			#warning TODO
+//			pvrlen = 0;//ccInflateCCZFile( [path UTF8String], &pvrdata );
+//
+//		else if( [lowerCase hasSuffix:@".gz"] )
+//			#warning TODO
+//			pvrlen = 0;//ccInflateGZipFile( [path UTF8String], &pvrdata );
+//
+//		else
+//			pvrlen = ccLoadFileIntoMemory( [path UTF8String], &pvrdata );
 
 		if( pvrlen < 0 ) {
 			return nil;
 		}
-
 
         _numberOfMipmaps = 0;
 
@@ -618,7 +625,6 @@ CCRenderDispatch(NO, ^{
 		if( ! (([self unpackPVRv2Data:pvrdata PVRLen:pvrlen] || [self unpackPVRv3Data:pvrdata PVRLen:pvrlen]) &&
 		   [self createGLTexture] ) )
 		{
-			free(pvrdata);
 			return nil;
 		}
 		
@@ -671,10 +677,6 @@ CCRenderDispatch(NO, ^{
 			}
 		}
 #endif // iOS
-		
-
-
-		free(pvrdata);
 	}
 
 	return self;

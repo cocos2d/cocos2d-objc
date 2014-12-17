@@ -80,6 +80,7 @@
 
 -(void) setupTilemap2Test
 {
+    self.subTitle = @"Testing flipped and rotated tiles.";
 	[self testForMapNamed:@"TileMaps/orthogonal-desert-test-with-flips.tmx"];
 }
 
@@ -90,13 +91,15 @@
 
 -(void) setupTilemap4Test
 {
+    self.subTitle = @"Testing an extremely large tilemap.";
 	[self testForMapNamed:@"TileMaps/orthogonal-desert-obscenely-large.tmx"];
 }
 
 -(void) setupTilemap5Test
 {
 	[self testForMapNamed:@"TileMaps/orthogonal-desert-test-with-flips.tmx"];
-	
+	self.subTitle = @"Spinning tilemap";
+    
 	_map.anchorPoint = ccp(0.5, 0.5);
 	_map.position = _map.anchorPointInPoints;
 	[_map runAction:[CCActionRepeatForever actionWithAction:[CCActionRotateBy actionWithDuration:10.0 angle:90]]];
@@ -104,6 +107,8 @@
 
 -(void) setupTilemap6Test
 {
+    self.subTitle = @"Isometric tile map example";
+
 	[self testForMapNamed:@"TileMaps/iso-test-bug787.tmx"];
 }
 
