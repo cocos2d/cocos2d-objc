@@ -10,7 +10,7 @@
 #import "CCRenderTexture_Private.h"
 
 #ifndef BLUR_OPTIMIZED_RADIUS_MAX
-#define BLUR_OPTIMIZED_RADIUS_MAX 6UL
+#define BLUR_OPTIMIZED_RADIUS_MAX 4UL
 #endif
 
 

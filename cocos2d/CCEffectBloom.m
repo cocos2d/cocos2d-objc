@@ -195,8 +195,8 @@
     [shaderString appendString:@"\
         compare = cc_FragTexCoord2Extents - abs(cc_FragTexCoord2 - cc_FragTexCoord2Center); \
         inBounds = step(0.0, min(compare.x, compare.y)); \
-        dst = texture2D(cc_MainTexture, cc_FragTexCoord2) * inBounds;\
-        src = texture2D(cc_PreviousPassTexture, cc_FragTexCoord1);\
+        dst = inputValue * texture2D(cc_MainTexture, cc_FragTexCoord2) * inBounds;\
+        src = inputValue * texture2D(cc_PreviousPassTexture, cc_FragTexCoord1);\
      }\n"];
     
     
@@ -210,7 +210,8 @@
 
     free(standardGaussianWeights);
     
-    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"bloomEffect" body:shaderString inputs:nil returnType:@"vec4"];
+    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:@"cc_FragColor" snippet:@"vec4(1,1,1,1)"];
+    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"bloomEffect" body:shaderString inputs:@[input] returnType:@"vec4"];
     return @[fragmentFunction];
 }
 
