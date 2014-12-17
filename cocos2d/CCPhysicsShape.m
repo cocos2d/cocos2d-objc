@@ -65,20 +65,36 @@
 {
 	return [[CCPhysicsCircleShape alloc] initWithRadius:radius center:center];
 }
+-(CCPhysicsShape *)initWithCircleShapeWithRadius:(CGFloat)radius center:(CGPoint)center
+{
+    return [[CCPhysicsCircleShape alloc] initWithRadius:radius center:center];
+}
 
 +(CCPhysicsShape *)rectShape:(CGRect)rect cornerRadius:(CGFloat)cornerRadius
 {
 	return [[CCPhysicsPolyShape alloc] initWithRect:rect cornerRadius:cornerRadius];
+}
+-(CCPhysicsShape *)initWithRectShape:(CGRect)rect cornerRadius:(CGFloat)cornerRadius
+{
+    return [[CCPhysicsPolyShape alloc] initWithRect:rect cornerRadius:cornerRadius];
 }
 
 +(CCPhysicsShape *)pillShapeFrom:(CGPoint)from to:(CGPoint)to cornerRadius:(CGFloat)cornerRadius
 {
 	return [[CCPhysicsSegmentShape alloc] initFrom:from to:to cornerRadius:cornerRadius];
 }
+-(CCPhysicsShape *)initWithPillShapeFrom:(CGPoint)from to:(CGPoint)to cornerRadius:(CGFloat)cornerRadius
+{
+    return [[CCPhysicsSegmentShape alloc] initFrom:from to:to cornerRadius:cornerRadius];
+}
 
 +(CCPhysicsShape *)polygonShapeWithPoints:(CGPoint *)points count:(NSUInteger)count cornerRadius:(CGFloat)cornerRadius
 {
 	return [[CCPhysicsPolyShape alloc] initWithPolygonFromPoints:points count:count cornerRadius:cornerRadius];
+}
+-(CCPhysicsShape *)initWithPolygonShapeWithPoints:(CGPoint *)points count:(NSUInteger)count cornerRadius:(CGFloat)cornerRadius
+{
+    return [[CCPhysicsPolyShape alloc] initWithPolygonFromPoints:points count:count cornerRadius:cornerRadius];
 }
 
 -(cpTransform)shapeTransform
