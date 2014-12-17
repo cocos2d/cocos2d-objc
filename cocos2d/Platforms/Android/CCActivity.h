@@ -14,10 +14,10 @@
 #import "CCProtocols.h"
 
 @class CCScene;
-@class AndroidRelativeLayout;
+@class AndroidAbsoluteLayout;
 
 @interface CCActivity : GLActivity <AndroidSurfaceHolderCallback, CCDirectorDelegate>
-@property (readonly, nonatomic) AndroidRelativeLayout *layout;
+@property (readonly, nonatomic) AndroidAbsoluteLayout *layout;
 + (instancetype)currentActivity;
 
 

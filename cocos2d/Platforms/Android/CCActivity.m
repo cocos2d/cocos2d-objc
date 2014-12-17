@@ -95,7 +95,7 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
     NSSetUncaughtExceptionHandler(&handler);
     currentActivity = self;
     _running = YES;
-    _layout = [[AndroidRelativeLayout alloc] initWithContext:self];
+    _layout = [[AndroidAbsoluteLayout alloc] initWithContext:self];
     AndroidDisplayMetrics *metrics = [[AndroidDisplayMetrics alloc] init];
     [self.windowManager.defaultDisplay metricsForDisplayMetrics:metrics];
     
