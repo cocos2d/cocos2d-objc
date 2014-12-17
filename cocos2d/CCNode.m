@@ -1544,14 +1544,39 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
  */
 - (BOOL)hitTestWithWorldPos:(CGPoint)pos
 {
+    // If *any* parent node clips input and we're outside their clipping range, reject the hit.
+    if(_parent != nil && [_parent rejectClippedInput:pos]){
+        return NO;
+    }
+
     pos = [self convertToNodeSpace:pos];
     CGPoint offset = ccp(-self.hitAreaExpansion, -self.hitAreaExpansion);
     CGSize size = CGSizeMake(self.contentSizeInPoints.width - offset.x, self.contentSizeInPoints.height - offset.y);
-    if ((pos.y < offset.y) || (pos.y > size.height) || (pos.x < offset.x) || (pos.x > size.width)) return(NO);
     
-    return(YES);
+    return !(pos.y < offset.y || pos.y > size.height || pos.x < offset.x || pos.x > size.width);
 }
 
+- (BOOL) rejectClippedInput:(CGPoint)pos
+{
+    if(self.clipsInput){
+        // Do the bounds test to clip against this node
+        CGPoint p = [self convertToNodeSpace:pos];
+        CGPoint offset = ccp(-self.hitAreaExpansion, -self.hitAreaExpansion);
+        CGSize size = CGSizeMake(self.contentSizeInPoints.width - offset.x, self.contentSizeInPoints.height - offset.y);
+        
+        if (p.y < offset.y || p.y > size.height || p.x < offset.x || p.x > size.width){
+            // Outside the bounds, reject the hit.
+            return YES;
+        }
+    }
+    
+    if(_parent == nil){
+        // Terminating condition
+        return NO;
+    }
+
+    return [_parent rejectClippedInput:pos];
+}
 // -----------------------------------------------------------------
 
 #pragma mark - CCColor methods

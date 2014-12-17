@@ -55,7 +55,8 @@
 {
     [super setPosition:position];
     
-    CCTableView* tableView = (CCTableView*)self.parent;
+    // TODO: Rather fragile for my liking.
+    CCTableView* tableView = (CCTableView*)self.parent.parent;
     [tableView markVisibleRowsDirty];
     [tableView updateVisibleRows];
 }
@@ -91,7 +92,8 @@
 
 - (void) pressedCell:(id)sender
 {
-    [(CCTableView*)(self.parent.parent) selectedRow:self.index];
+    // CCTableViewCell, CCTableViewContentNode, CCCamera, then finally: CCTableView
+    [(CCTableView*)(self.parent.parent.parent) selectedRow:self.index];
 }
 
 - (void) setIndex:(NSUInteger)index

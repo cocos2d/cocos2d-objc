@@ -86,6 +86,12 @@
  */
 @property (nonatomic, assign) float hitAreaExpansion;
 
+/**
+ *  If this node clipInput, touch events outside the bounds of this node will not be sent to the children of this node.
+ *  Only touches within this node's context rect will be sent to its children.
+ */
+@property (nonatomic, assign) BOOL clipsInput;
+
 // purposefully undocumented: CCResponder should not be instantiated by users
 - (id)init;
 
