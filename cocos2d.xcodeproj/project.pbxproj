@@ -910,6 +910,8 @@
 		D3903B1A19952ABD003AA81A /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3903B1919952ABD003AA81A /* Metal.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D395DB2B183D739E0024997E /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3877010446C6E00150883 /* OpenAL.framework */; };
 		D395DB2C183D73A70024997E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3876E10446C6E00150883 /* AudioToolbox.framework */; };
+		D39D34A11A4243ED00B5A115 /* CCViewPortNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F9BF701A3904D7009185BF /* CCViewPortNode.m */; };
+		D39D34A41A4243EE00B5A115 /* CCViewPortNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F9BF701A3904D7009185BF /* CCViewPortNode.m */; };
 		D39FA9C818C1BC6B00441627 /* CCShader_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D39FA9C718C1BC6B00441627 /* CCShader_Private.h */; };
 		D3A2E7D2181E12750033614C /* CCPhysicsShape.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A2E7D0181E12750033614C /* CCPhysicsShape.h */; };
 		D3A2E7D3181E12750033614C /* CCPhysicsShape.m in Sources */ = {isa = PBXBuildFile; fileRef = D3A2E7D1181E12750033614C /* CCPhysicsShape.m */; };
@@ -3306,6 +3308,7 @@
 				7A5948BB19E375BA00F65F90 /* CCBLocalizationManager.m in Sources */,
 				7A5948BD19E375BB00F65F90 /* CCBReader.m in Sources */,
 				7A5948BF19E375BB00F65F90 /* CCBsequence.m in Sources */,
+				D39D34A41A4243EE00B5A115 /* CCViewPortNode.m in Sources */,
 				9D03A5F81A02F8C600C651C8 /* CCEffectLighting.m in Sources */,
 				7A5948C119E375BB00F65F90 /* CCBSequenceProperty.m in Sources */,
 				7A5948C719E375BC00F65F90 /* CCControl.m in Sources */,
@@ -3438,6 +3441,7 @@
 				D2FEB732194F6C9E00FC0574 /* CCTransition.m in Sources */,
 				D2FEB734194F6C9E00FC0574 /* CCResponderManager.m in Sources */,
 				5BC3CB5A19626FA000C4F0D0 /* CCGestureListener.m in Sources */,
+				D39D34A11A4243ED00B5A115 /* CCViewPortNode.m in Sources */,
 				BC9F4E8F19DB632B00B25F01 /* CCPackageManager.m in Sources */,
 				D2FEB735194F6C9E00FC0574 /* CCTouchIOS.m in Sources */,
 				9D03A5F71A02F8C500C651C8 /* CCEffectLighting.m in Sources */,

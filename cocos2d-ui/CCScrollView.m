@@ -1089,8 +1089,6 @@
     float deltaX = theEvent.deltaX;
     float deltaY = theEvent.deltaY;
 
-	[self scrollViewDidScroll];
-
     switch (theEvent.phase) {
         case NSEventPhaseBegan:
             [self scrollViewWillBeginDragging];
@@ -1171,9 +1169,12 @@
     {
         // Update scroll position
         CGPoint scrollPos = self.scrollPosition;
-        scrollPos = ccpAdd(delta, scrollPos);
+        scrollPos.x += delta.x;
+        scrollPos.y = (_flipYCoordinates ? -scrollPos.y : scrollPos.y) + delta.y;
 		self.scrollPosition = scrollPos;
     }
+    
+	[self scrollViewDidScroll];
 }
 
 #endif
