@@ -107,7 +107,7 @@
 }
 
 - (NSString *)string {
-    NSString *str = [NSString stringWithFormat:@"%@",_editText.text];
+    NSString *str = [_editText.text description];
     return str;
 }
 
