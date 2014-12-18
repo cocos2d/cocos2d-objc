@@ -29,6 +29,7 @@
 		14EF47AA1A37F11C00A45BE4 /* JavaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14EF47A91A37F11C00A45BE4 /* JavaKit.framework */; };
 		2B192835163361B10049A044 /* CCClippingNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B192833163361B10049A044 /* CCClippingNode.h */; };
 		2B192836163361B10049A044 /* CCClippingNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B192834163361B10049A044 /* CCClippingNode.m */; };
+		462D9B7F1A427E130040C5F2 /* JavaFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 462D9B7E1A427E130040C5F2 /* JavaFoundation.framework */; };
 		5015043B113300F900A9CA65 /* CCActionProgressTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 50150435113300F900A9CA65 /* CCActionProgressTimer.h */; };
 		5015043C113300F900A9CA65 /* CCActionProgressTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 50150436113300F900A9CA65 /* CCActionProgressTimer.m */; };
 		5018F2690DFDEAFF00C013A5 /* CCAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2520DFDEAFF00C013A5 /* CCAction.h */; };
@@ -1136,6 +1137,7 @@
 		1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		2B192833163361B10049A044 /* CCClippingNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCClippingNode.h; sourceTree = "<group>"; };
 		2B192834163361B10049A044 /* CCClippingNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCClippingNode.m; sourceTree = "<group>"; };
+		462D9B7E1A427E130040C5F2 /* JavaFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaFoundation.framework; path = "../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/JavaFoundation.framework"; sourceTree = "<group>"; };
 		50150435113300F900A9CA65 /* CCActionProgressTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionProgressTimer.h; sourceTree = "<group>"; };
 		50150436113300F900A9CA65 /* CCActionProgressTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionProgressTimer.m; sourceTree = "<group>"; };
 		5018F24D0DFDEAC400C013A5 /* libcocos2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1544,6 +1546,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				462D9B7F1A427E130040C5F2 /* JavaFoundation.framework in Frameworks */,
 				14EF47AA1A37F11C00A45BE4 /* JavaKit.framework in Frameworks */,
 				14C4C33E1A37E39E00DD3957 /* AndroidKit.framework in Frameworks */,
 				1435EB831A37BA7000BD04D4 /* GLActivityKit.framework in Frameworks */,
@@ -1598,6 +1601,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				462D9B7E1A427E130040C5F2 /* JavaFoundation.framework */,
 				143F32D71A3A2E8A0019FD3C /* CoreJava.framework */,
 				14EF47A91A37F11C00A45BE4 /* JavaKit.framework */,
 				14C4C33D1A37E39E00DD3957 /* AndroidKit.framework */,

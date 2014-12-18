@@ -13,6 +13,7 @@
 		14EF47AE1A37F15800A45BE4 /* JavaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14EF47AD1A37F15800A45BE4 /* JavaKit.framework */; };
 		14EF47AF1A37F17300A45BE4 /* AndroidKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14098DAA1A37EA94005F0B26 /* AndroidKit.framework */; };
 		14EF47B01A37F31100A45BE4 /* GLActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14098DAC1A37EA9A005F0B26 /* GLActivityKit.framework */; };
+		464236B61A428B4D00532547 /* JavaFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464236B51A428B4D00532547 /* JavaFoundation.framework */; };
 		57E144FE1975DC340065F142 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57E144C31975DC340065F142 /* A Damn Mess.ttf */; };
 		57E144FF1975DC340065F142 /* Abberancy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57E144C41975DC340065F142 /* Abberancy.ttf */; };
 		57E145011975DC340065F142 /* arial-unicode-26.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 57E144C61975DC340065F142 /* arial-unicode-26.fnt */; };
@@ -167,6 +168,8 @@
 		14A8F0201A39167F00B4E693 /* BridgeKitV3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BridgeKitV3.framework; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/BridgeKitV3.framework"; sourceTree = "<group>"; };
 		14D9F5D51A3A81DE00620103 /* configCocos2d.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = configCocos2d.plist; path = "../../cocos2d-ui-tests/Resources-shared/configCocos2d.plist"; sourceTree = "<group>"; };
 		14EF47AD1A37F15800A45BE4 /* JavaKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaKit.framework; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/JavaKit.framework"; sourceTree = "<group>"; };
+		464236B31A428B4500532547 /* JavaBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaBridge.framework; path = System/Library/Frameworks/JavaBridge.framework; sourceTree = SDKROOT; };
+		464236B51A428B4D00532547 /* JavaFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaFoundation.framework; path = System/Library/Frameworks/JavaFoundation.framework; sourceTree = SDKROOT; };
 		57E144C31975DC340065F142 /* A Damn Mess.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "A Damn Mess.ttf"; sourceTree = "<group>"; };
 		57E144C41975DC340065F142 /* Abberancy.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Abberancy.ttf; sourceTree = "<group>"; };
 		57E144C61975DC340065F142 /* arial-unicode-26.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "arial-unicode-26.fnt"; sourceTree = "<group>"; };
@@ -314,6 +317,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				464236B61A428B4D00532547 /* JavaFoundation.framework in Frameworks */,
 				141A45D31A38DB1000853DB8 /* CoreJava.framework in Frameworks */,
 				14EF47AF1A37F17300A45BE4 /* AndroidKit.framework in Frameworks */,
 				14EF47AE1A37F15800A45BE4 /* JavaKit.framework in Frameworks */,
@@ -467,6 +471,8 @@
 		5B4D6CBF1936ACE5004D1A0B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				464236B51A428B4D00532547 /* JavaFoundation.framework */,
+				464236B31A428B4500532547 /* JavaBridge.framework */,
 				146F55071A391B5C00CCCF26 /* GLActivityKit.framework */,
 				14A8F0201A39167F00B4E693 /* BridgeKitV3.framework */,
 				141A45D21A38DB1000853DB8 /* CoreJava.framework */,
