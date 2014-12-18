@@ -23,6 +23,7 @@
 		758A6C711844011E00D1A8D2 /* CCLabelTTFTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 758A6C701844011E00D1A8D2 /* CCLabelTTFTest.m */; };
 		758A6C7B18440D5C00D1A8D2 /* ParticleTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 758A6C7A18440D5C00D1A8D2 /* ParticleTest.m */; };
 		758A6C80184410EE00D1A8D2 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 758A6C7F184410EE00D1A8D2 /* Particles */; };
+		75DAC8B11A4240BE003F8244 /* CCImageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 75DAC8B01A4240BE003F8244 /* CCImageTests.m */; };
 		75F76497185A831B00E2FAFE /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 75F76496185A831B00E2FAFE /* Sounds */; };
 		839B149F19CC1E440000E5E2 /* CCPackageTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 839B149E19CC1E440000E5E2 /* CCPackageTest.m */; };
 		92324E2A18EB635500D78D3F /* CCReaderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 92324E2918EB635500D78D3F /* CCReaderTest.m */; };
@@ -341,6 +342,7 @@
 		758A6C701844011E00D1A8D2 /* CCLabelTTFTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCLabelTTFTest.m; path = "cocos2d-ui-tests/tests/CCLabelTTFTest.m"; sourceTree = SOURCE_ROOT; };
 		758A6C7A18440D5C00D1A8D2 /* ParticleTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParticleTest.m; path = "cocos2d-ui-tests/tests/ParticleTest.m"; sourceTree = SOURCE_ROOT; };
 		758A6C7F184410EE00D1A8D2 /* Particles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Particles; path = Resources/Particles; sourceTree = SOURCE_ROOT; };
+		75DAC8B01A4240BE003F8244 /* CCImageTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCImageTests.m; sourceTree = "<group>"; };
 		75F76496185A831B00E2FAFE /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sounds; path = Resources/Sounds; sourceTree = SOURCE_ROOT; };
 		839B149E19CC1E440000E5E2 /* CCPackageTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCPackageTest.m; path = "cocos2d-ui-tests/tests/CCPackageTest.m"; sourceTree = SOURCE_ROOT; };
 		92324E2918EB635500D78D3F /* CCReaderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCReaderTest.m; sourceTree = "<group>"; };
@@ -577,6 +579,7 @@
 				D34CD3C418ABF4AA00D8E537 /* CCRendererTests.m */,
 				92324E2918EB635500D78D3F /* CCReaderTest.m */,
 				D32FDE8519B645CA0078CC16 /* CCTextureTests.m */,
+				75DAC8B01A4240BE003F8244 /* CCImageTests.m */,
 				755569EC1856361100ED1B0F /* Supporting Files */,
 				E525F25081EB1E197CD567E4 /* Packages */,
 				E525F832B569117922DA339E /* CCUnitTestAssertions.h */,
@@ -1240,6 +1243,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				92324E2A18EB635500D78D3F /* CCReaderTest.m in Sources */,
+				75DAC8B11A4240BE003F8244 /* CCImageTests.m in Sources */,
 				D32FDE8619B645CA0078CC16 /* CCTextureTests.m in Sources */,
 				9D96557319D6113500428E79 /* CCEffectTests.m in Sources */,
 				75556A161856370A00ED1B0F /* CCFileUtilTests.m in Sources */,
