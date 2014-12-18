@@ -8,10 +8,12 @@
 
 #import "CCEditText.h"
 
+#import <AndroidKit/AndroidContext.h>
+#import <AndroidKit/AndroidKeyEvent.h>
+
 @implementation CCEditText {
     CCEditTextCompletionBlock _completionBlock;
 }
-
 
 - (BOOL)onKeyPreIme:(int32_t)keyCode keyEvent:(AndroidKeyEvent *)event {
     if (keyCode == AndroidKeyEventKeycodeBack || [event action] == AndroidKeyEventActionUp) {
@@ -24,7 +26,6 @@
     return [self dispatchKeyEvent:event];
 
 }
-
 
 - (void) setCompletionBlock:(CCEditTextCompletionBlock)completionBlock {
     _completionBlock = [completionBlock copy];
