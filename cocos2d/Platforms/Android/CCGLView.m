@@ -21,6 +21,7 @@
 #import <CoreGraphics/CGGeometry.h>
 
 #import <AndroidKit/AndroidMotionEvent.h>
+#import <AndroidKit/AndroidGestureDetector.h>
 
 static const CGSize FIXED_SIZE = {586, 384};
 

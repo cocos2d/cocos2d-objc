@@ -14,10 +14,11 @@
 #import <android/native_window.h>
 #import <bridge/runtime.h>
 #import <GLActivityKit/GLView.h>
-#import <AndroidKit/AndroidGestureDetector.h>
 
 #import "../../Platforms/CCGL.h"
 #import "CCDirectorView.h"
+
+@class AndroidGestureDetector;
 
 enum CCAndroidScreenMode {
     

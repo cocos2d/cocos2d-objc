@@ -12,7 +12,7 @@
 
 #import <android/native_window.h>
 #import <bridge/runtime.h>
-#import <GLActivityKit/AndroidLooper.h>
+#import <AndroidKit/AndroidLooper.h>
 
 #import "cocos2d.h"
 #import "CCBReader.h"
