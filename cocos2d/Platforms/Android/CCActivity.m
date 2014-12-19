@@ -141,7 +141,6 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
 - (void)onDestroy
 {
     [[CCDirector sharedDirector] end];
-    [super onDestroy];
     exit(0);
 }
 
@@ -152,14 +151,11 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
 #else
     if(_thread == nil)
     {
-        [super onResume];
         return;
     }
     
     [self performSelector:@selector(handleResume) onThread:_thread withObject:nil waitUntilDone:YES modes:@[NSDefaultRunLoopMode]];
 #endif
-    
-    [super onResume];
 }
 
 - (void)handleResume
@@ -175,14 +171,11 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
 #else
     if(_thread == nil)
     {
-        [super onPause];
         return;
     }
     
     [self performSelector:@selector(handlePause) onThread:_thread withObject:nil waitUntilDone:YES modes:@[NSDefaultRunLoopMode]];
 #endif
-    
-    [super onPause];
 }
 
 - (void)handlePause
@@ -199,14 +192,11 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
 #else
     if(_thread == nil)
     {
-        [super onLowMemory];
         return;
     }
 
     [self performSelector:@selector(handleLowMemory) onThread:_thread withObject:nil waitUntilDone:YES modes:@[NSDefaultRunLoopMode]];
 #endif
-
-    [super onLowMemory];
 }
 
 - (void)handleLowMemory
