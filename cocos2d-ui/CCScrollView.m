@@ -269,11 +269,17 @@
     {
         self.contentNode.positionType = CCPositionTypeMake(CCPositionUnitPoints, CCPositionUnitPoints, CCPositionReferenceCornerTopLeft);
         self.contentNode.anchorPoint = ccp(0,1);
+        
+        // Note, if this class is modified to change the flipping behavior, consider adjusting the camera positionType like this:
+//        self.camera.positionType = CCPositionTypeMake(CCPositionUnitPoints, CCPositionUnitPoints, CCPositionReferenceCornerTopLeft);
+//        self.camera.anchorPoint = ccp(0,1);
     }
     else
     {
         self.contentNode.positionType = CCPositionTypeMake(CCPositionUnitPoints, CCPositionUnitPoints, CCPositionReferenceCornerBottomLeft);
         self.contentNode.anchorPoint = ccp(0,0);
+//        self.camera.positionType = CCPositionTypeMake(CCPositionUnitPoints, CCPositionUnitPoints, CCPositionReferenceCornerBottomLeft);
+//        self.camera.anchorPoint = ccp(0,0);
     }
     
     _flipYCoordinates = flipYCoordinates;
