@@ -167,7 +167,7 @@
 #import "Platforms/Android/CCActivity.h"
 #import "Platforms/Android/CCGLView.h"
 #import "Platforms/Android/CCDirectorAndroid.h"
-#import <BridgeKitV3/BridgeKit.h>
+
 #import <android/native_window.h>
 #import <bridge/runtime.h>
 #endif

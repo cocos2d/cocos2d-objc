@@ -50,3 +50,6 @@ api-docs
 installer/install.tar.gz
 installer/*.app
 
+.idea
+.idea
+**/*/.idea
