@@ -30,15 +30,19 @@
 #import "CCActionInstant.h"
 #import "CCResponderManager.h"
 #import "CCTouch.h"
+
+
 #if __CC_PLATFORM_IOS
 
-// Includes for iOS
-//#import "PlatformTouch+CC.h"
 #import <UIKit/UIGestureRecognizerSubclass.h>
+
 #elif __CC_PLATFORM_ANDROID
+
 #import "CCActivity.h"
 #import "CCGestureListener.h"
-// Includes for Mac
+#import <AndroidKit/AndroidGestureDetector.h>
+#import <AndroidKit/AndroidMotionEvent.h>
+
 #elif __CC_PLATFORM_MAC
 
 #endif
@@ -62,6 +66,7 @@
 #pragma mark Helper classes
 
 #if __CC_PLATFORM_IOS
+
 @interface CCTapDownGestureRecognizer : UIGestureRecognizer
 @end
 
@@ -213,7 +218,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         _listener = [[CCGestureListener alloc] init];
         _listener.delegate = (id<CCGestureListenerDelegate>)self;
-        _detector = [[AndroidGestureDetector alloc] initWithContext:[CCActivity currentActivity] listener:_listener];
+        _detector = [[AndroidGestureDetector alloc] initWithContext:[CCActivity currentActivity] onGestureListener:_listener];
     });
 #elif __CC_PLATFORM_MAC
     

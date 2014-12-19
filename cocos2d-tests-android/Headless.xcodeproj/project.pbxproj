@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		141A45D31A38DB1000853DB8 /* CoreJava.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 141A45D21A38DB1000853DB8 /* CoreJava.framework */; };
+		147456A41A3B9B1A0024B64E /* Published-Android in Resources */ = {isa = PBXBuildFile; fileRef = 147456A31A3B9B1A0024B64E /* Published-Android */; };
+		14D9F5D61A3A81DE00620103 /* configCocos2d.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14D9F5D51A3A81DE00620103 /* configCocos2d.plist */; };
+		14EF47AE1A37F15800A45BE4 /* JavaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14EF47AD1A37F15800A45BE4 /* JavaKit.framework */; };
+		14EF47AF1A37F17300A45BE4 /* AndroidKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14098DAA1A37EA94005F0B26 /* AndroidKit.framework */; };
+		14EF47B01A37F31100A45BE4 /* GLActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14098DAC1A37EA9A005F0B26 /* GLActivityKit.framework */; };
+		464236B61A428B4D00532547 /* JavaFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464236B51A428B4D00532547 /* JavaFoundation.framework */; };
 		57E144FE1975DC340065F142 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57E144C31975DC340065F142 /* A Damn Mess.ttf */; };
 		57E144FF1975DC340065F142 /* Abberancy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 57E144C41975DC340065F142 /* Abberancy.ttf */; };
 		57E145011975DC340065F142 /* arial-unicode-26.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 57E144C61975DC340065F142 /* arial-unicode-26.fnt */; };
@@ -99,10 +106,7 @@
 		5B4D6CC11936ACE5004D1A0B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B4D6CC01936ACE5004D1A0B /* Foundation.framework */; };
 		5B4D6CC31936ACE5004D1A0B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B4D6CC21936ACE5004D1A0B /* CoreGraphics.framework */; };
 		5B4D6CCB1936ACE5004D1A0B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5B4D6CC91936ACE5004D1A0B /* InfoPlist.strings */; };
-		5BA67A53196CA0D60010FFB7 /* HeadlessActivity.java in Sources */ = {isa = PBXBuildFile; fileRef = 5BA67A52196CA0D60010FFB7 /* HeadlessActivity.java */; };
 		5BA67A56196CA1220010FFB7 /* HeadlessActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BA67A55196CA1220010FFB7 /* HeadlessActivity.m */; settings = {COMPILER_FLAGS = "-O0"; }; };
-		5BE088C9194132E600BEA3FF /* BridgeKitV3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BCE504E1941161500E057D0 /* BridgeKitV3.framework */; };
-		7DC84E44194AB6F000D2C575 /* BridgeKitV3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BCE504E1941161500E057D0 /* BridgeKitV3.framework */; };
 		BC9F4EE119DCB1B200B25F01 /* CCPackageTest.m in Sources */ = {isa = PBXBuildFile; fileRef = BC9F4EE019DCB1B200B25F01 /* CCPackageTest.m */; };
 		D23DE6761958DBA0000483A8 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D23DE66A1958DBA0000483A8 /* Default-568h@2x.png */; };
 		D23DE6771958DBA0000483A8 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = D23DE66B1958DBA0000483A8 /* Default-Landscape~ipad.png */; };
@@ -125,26 +129,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		5B89B01D19462F8200CD2A5E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5B4D6CB51936ACE5004D1A0B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5B89B01419462F5800CD2A5E;
-			remoteInfo = TestJar;
-		};
 		D2A8000119F0F9C300ED29F6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D2A8FFEC19F0F9A400ED29F6 /* cocos2d.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = D2FEB60D194F6C9E00FC0574;
 			remoteInfo = cocos2dAndroid;
-		};
-		D2A8000619F0F9E700ED29F6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D2A8FFEC19F0F9A400ED29F6 /* cocos2d.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 5BF32679195F8D8800D9A51A;
-			remoteInfo = cocos2dJava;
 		};
 		D2A8FFF919F0F9A500ED29F6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -160,13 +150,6 @@
 			remoteGlobalIDString = D2FEB74F194F6C9E00FC0574;
 			remoteInfo = cocos2dAndroid;
 		};
-		D2A8FFFD19F0F9A500ED29F6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D2A8FFEC19F0F9A400ED29F6 /* cocos2d.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5BF3267A195F8D8800D9A51A;
-			remoteInfo = cocos2dJava;
-		};
 		D2A8FFFF19F0F9A500ED29F6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D2A8FFEC19F0F9A400ED29F6 /* cocos2d.xcodeproj */;
@@ -177,6 +160,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		14098DAA1A37EA94005F0B26 /* AndroidKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AndroidKit.framework; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/AndroidKit.framework"; sourceTree = "<group>"; };
+		14098DAC1A37EA9A005F0B26 /* GLActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLActivityKit.framework; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/GLActivityKit.framework"; sourceTree = "<group>"; };
+		141A45D21A38DB1000853DB8 /* CoreJava.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreJava.framework; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/CoreJava.framework"; sourceTree = "<group>"; };
+		146F55071A391B5C00CCCF26 /* GLActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLActivityKit.framework; path = System/Library/Frameworks/GLActivityKit.framework; sourceTree = SDKROOT; };
+		147456A31A3B9B1A0024B64E /* Published-Android */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Published-Android"; sourceTree = "<group>"; };
+		14A8F0201A39167F00B4E693 /* BridgeKitV3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BridgeKitV3.framework; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/BridgeKitV3.framework"; sourceTree = "<group>"; };
+		14D9F5D51A3A81DE00620103 /* configCocos2d.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = configCocos2d.plist; path = "../../cocos2d-ui-tests/Resources-shared/configCocos2d.plist"; sourceTree = "<group>"; };
+		14EF47AD1A37F15800A45BE4 /* JavaKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaKit.framework; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/JavaKit.framework"; sourceTree = "<group>"; };
+		464236B31A428B4500532547 /* JavaBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaBridge.framework; path = System/Library/Frameworks/JavaBridge.framework; sourceTree = SDKROOT; };
+		464236B51A428B4D00532547 /* JavaFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaFoundation.framework; path = System/Library/Frameworks/JavaFoundation.framework; sourceTree = SDKROOT; };
 		57E144C31975DC340065F142 /* A Damn Mess.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "A Damn Mess.ttf"; sourceTree = "<group>"; };
 		57E144C41975DC340065F142 /* Abberancy.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Abberancy.ttf; sourceTree = "<group>"; };
 		57E144C61975DC340065F142 /* arial-unicode-26.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "arial-unicode-26.fnt"; sourceTree = "<group>"; };
@@ -279,9 +272,7 @@
 		5B4D6CE11936ACE5004D1A0B /* HeadlessTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HeadlessTests-Info.plist"; sourceTree = "<group>"; };
 		5B4D6CE31936ACE5004D1A0B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5B4D6CE51936ACE5004D1A0B /* HeadlessTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HeadlessTests.m; sourceTree = "<group>"; };
-		5B89B01519462F5800CD2A5E /* AppJava.jar */ = {isa = PBXFileReference; explicitFileType = compiled.java.jar; includeInIndex = 0; path = AppJava.jar; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B89B0211946369D00CD2A5E /* AndroidManifest.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = AndroidManifest.xml; path = src/main/AndroidManifest.xml; sourceTree = "<group>"; };
-		5BA67A52196CA0D60010FFB7 /* HeadlessActivity.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = HeadlessActivity.java; sourceTree = "<group>"; };
 		5BA67A54196CA1220010FFB7 /* HeadlessActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeadlessActivity.h; sourceTree = "<group>"; };
 		5BA67A55196CA1220010FFB7 /* HeadlessActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeadlessActivity.m; sourceTree = "<group>"; };
 		5BAF859E1936C8990085EA39 /* libEGL.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libEGL.so; path = "usr/lib/armv7a-neon/libEGL.so"; sourceTree = SDKROOT; };
@@ -326,27 +317,39 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				464236B61A428B4D00532547 /* JavaFoundation.framework in Frameworks */,
+				141A45D31A38DB1000853DB8 /* CoreJava.framework in Frameworks */,
+				14EF47AF1A37F17300A45BE4 /* AndroidKit.framework in Frameworks */,
+				14EF47AE1A37F15800A45BE4 /* JavaKit.framework in Frameworks */,
 				D2A8000319F0F9D500ED29F6 /* libcocos2dAndroid.a in Frameworks */,
 				D242C5131958D87900E7726D /* CoreText.framework in Frameworks */,
 				5B063DC919636B8C002B1CDE /* OpenAL.framework in Frameworks */,
 				D2BBF573195280150005272F /* libEGL.so in Frameworks */,
-				5BE088C9194132E600BEA3FF /* BridgeKitV3.framework in Frameworks */,
 				5B4D6CC31936ACE5004D1A0B /* CoreGraphics.framework in Frameworks */,
 				5B4D6CC11936ACE5004D1A0B /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5B89B01F19462FEE00CD2A5E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7DC84E44194AB6F000D2C575 /* BridgeKitV3.framework in Frameworks */,
+				14EF47B01A37F31100A45BE4 /* GLActivityKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		14D9F5D31A3A81C100620103 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				14D9F5D41A3A81CA00620103 /* Published-Android */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		14D9F5D41A3A81CA00620103 /* Published-Android */ = {
+			isa = PBXGroup;
+			children = (
+				14D9F5D51A3A81DE00620103 /* configCocos2d.plist */,
+			);
+			name = "Published-Android";
+			sourceTree = "<group>";
+		};
 		57E144C21975DC340065F142 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -461,7 +464,6 @@
 			isa = PBXGroup;
 			children = (
 				5B4D6CBD1936ACE5004D1A0B /* Headless.app */,
-				5B89B01519462F5800CD2A5E /* AppJava.jar */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -469,6 +471,14 @@
 		5B4D6CBF1936ACE5004D1A0B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				464236B51A428B4D00532547 /* JavaFoundation.framework */,
+				464236B31A428B4500532547 /* JavaBridge.framework */,
+				146F55071A391B5C00CCCF26 /* GLActivityKit.framework */,
+				14A8F0201A39167F00B4E693 /* BridgeKitV3.framework */,
+				141A45D21A38DB1000853DB8 /* CoreJava.framework */,
+				14EF47AD1A37F15800A45BE4 /* JavaKit.framework */,
+				14098DAC1A37EA9A005F0B26 /* GLActivityKit.framework */,
+				14098DAA1A37EA94005F0B26 /* AndroidKit.framework */,
 				D242C5121958D87900E7726D /* CoreText.framework */,
 				D2BBF572195280150005272F /* libEGL.so */,
 				D2BBF5701952800B0005272F /* libGLESv1_CM.so */,
@@ -496,6 +506,8 @@
 		5B4D6CC61936ACE5004D1A0B /* Headless */ = {
 			isa = PBXGroup;
 			children = (
+				147456A31A3B9B1A0024B64E /* Published-Android */,
+				14D9F5D31A3A81C100620103 /* Resources */,
 				D28F46261988175F006A017B /* Music */,
 				5B0ED737196E550000F9868F /* Particles */,
 				5B0ED735196E54BD00F9868F /* Sounds */,
@@ -541,38 +553,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		5BA67A4C196CA0B70010FFB7 /* java */ = {
-			isa = PBXGroup;
-			children = (
-				5BA67A4F196CA0D60010FFB7 /* org */,
-			);
-			path = java;
-			sourceTree = "<group>";
-		};
-		5BA67A4F196CA0D60010FFB7 /* org */ = {
-			isa = PBXGroup;
-			children = (
-				5BA67A50196CA0D60010FFB7 /* cocos2d */,
-			);
-			path = org;
-			sourceTree = "<group>";
-		};
-		5BA67A50196CA0D60010FFB7 /* cocos2d */ = {
-			isa = PBXGroup;
-			children = (
-				5BA67A51196CA0D60010FFB7 /* demo */,
-			);
-			path = cocos2d;
-			sourceTree = "<group>";
-		};
-		5BA67A51196CA0D60010FFB7 /* demo */ = {
-			isa = PBXGroup;
-			children = (
-				5BA67A52196CA0D60010FFB7 /* HeadlessActivity.java */,
-			);
-			path = demo;
-			sourceTree = "<group>";
-		};
 		D23DE64E1958DB52000483A8 /* Resources-iOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -595,7 +575,6 @@
 		D242C5071958D76500E7726D /* Testbed */ = {
 			isa = PBXGroup;
 			children = (
-				5BA67A4C196CA0B70010FFB7 /* java */,
 				D242C50A1958D78700E7726D /* MainMenu.h */,
 				D242C50B1958D78700E7726D /* MainMenu.m */,
 				5BA67A54196CA1220010FFB7 /* HeadlessActivity.h */,
@@ -613,7 +592,6 @@
 			children = (
 				D2A8FFFA19F0F9A500ED29F6 /* libcocos2d.a */,
 				D2A8FFFC19F0F9A500ED29F6 /* libcocos2dAndroid.a */,
-				D2A8FFFE19F0F9A500ED29F6 /* cocos2dJava.jar */,
 				D2A8000019F0F9A500ED29F6 /* libcocos2d-mac.a */,
 			);
 			name = Products;
@@ -642,29 +620,11 @@
 			);
 			dependencies = (
 				D2A8000219F0F9C300ED29F6 /* PBXTargetDependency */,
-				5B89B01E19462F8200CD2A5E /* PBXTargetDependency */,
 			);
 			name = Headless;
 			productName = Headless;
 			productReference = 5B4D6CBD1936ACE5004D1A0B /* Headless.app */;
 			productType = "com.apple.product-type.application";
-		};
-		5B89B01419462F5800CD2A5E /* AppJava */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5B89B01619462F5900CD2A5E /* Build configuration list for PBXNativeTarget "AppJava" */;
-			buildPhases = (
-				5B89B01219462F5800CD2A5E /* Sources */,
-				5B89B01F19462FEE00CD2A5E /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				D2A8000719F0F9E700ED29F6 /* PBXTargetDependency */,
-			);
-			name = AppJava;
-			productName = TestJar;
-			productReference = 5B89B01519462F5800CD2A5E /* AppJava.jar */;
-			productType = "com.apportable.java.product-type.library";
 		};
 /* End PBXNativeTarget section */
 
@@ -694,7 +654,6 @@
 			projectRoot = "";
 			targets = (
 				5B4D6CBC1936ACE5004D1A0B /* Headless */,
-				5B89B01419462F5800CD2A5E /* AppJava */,
 			);
 		};
 /* End PBXProject section */
@@ -719,13 +678,6 @@
 			fileType = archive.ar;
 			path = libcocos2dAndroid.a;
 			remoteRef = D2A8FFFB19F0F9A500ED29F6 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D2A8FFFE19F0F9A500ED29F6 /* cocos2dJava.jar */ = {
-			isa = PBXReferenceProxy;
-			fileType = compiled.java.jar;
-			path = cocos2dJava.jar;
-			remoteRef = D2A8FFFD19F0F9A500ED29F6 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -771,6 +723,7 @@
 				57E1451A1975DC340065F142 /* fps_images.png in Resources */,
 				57E1452E1975DC340065F142 /* RobotoSlab-Bold.ttf in Resources */,
 				57E145321975DC340065F142 /* Schwarzwald Regular.ttf in Resources */,
+				14D9F5D61A3A81DE00620103 /* configCocos2d.plist in Resources */,
 				57E1450C1975DC340065F142 /* bitmapFontTest4.png in Resources */,
 				D23DE9E51958E0BD000483A8 /* Resources-shared in Resources */,
 				D23DE67B1958DBA0000483A8 /* Icon-Small-50.png in Resources */,
@@ -806,6 +759,7 @@
 				57E145191975DC340065F142 /* fps_images.plist in Resources */,
 				57E145151975DC340065F142 /* fps_images-hd.plist in Resources */,
 				57E145141975DC340065F142 /* font-issue1343.png in Resources */,
+				147456A41A3B9B1A0024B64E /* Published-Android in Resources */,
 				D23DE67A1958DBA0000483A8 /* Icon-72.png in Resources */,
 				57E145331975DC340065F142 /* Scissor Cuts.ttf in Resources */,
 				5B0ED736196E54BD00F9868F /* Sounds in Resources */,
@@ -854,31 +808,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5B89B01219462F5800CD2A5E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5BA67A53196CA0D60010FFB7 /* HeadlessActivity.java in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		5B89B01E19462F8200CD2A5E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5B89B01419462F5800CD2A5E /* AppJava */;
-			targetProxy = 5B89B01D19462F8200CD2A5E /* PBXContainerItemProxy */;
-		};
 		D2A8000219F0F9C300ED29F6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = cocos2dAndroid;
 			targetProxy = D2A8000119F0F9C300ED29F6 /* PBXContainerItemProxy */;
-		};
-		D2A8000719F0F9E700ED29F6 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = cocos2dJava;
-			targetProxy = D2A8000619F0F9E700ED29F6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1018,6 +954,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = sbandroid;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1052,31 +989,8 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = sbandroid;
 				WRAPPER_EXTENSION = app;
-			};
-			name = Release;
-		};
-		5B89B01719462F5900CD2A5E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				MACOSX_DEPLOYMENT_TARGET = "$(inherited)";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		5B89B01819462F5900CD2A5E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				MACOSX_DEPLOYMENT_TARGET = "$(inherited)";
-				OTHER_LDFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -1097,15 +1011,6 @@
 			buildConfigurations = (
 				5B4D6CEA1936ACE5004D1A0B /* Debug */,
 				5B4D6CEB1936ACE5004D1A0B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		5B89B01619462F5900CD2A5E /* Build configuration list for PBXNativeTarget "AppJava" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5B89B01719462F5900CD2A5E /* Debug */,
-				5B89B01819462F5900CD2A5E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
