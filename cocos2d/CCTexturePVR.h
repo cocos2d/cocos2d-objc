@@ -92,6 +92,8 @@ enum {
  */
 @interface CCTexturePVR : NSObject
 {
+    NSData *_mipmapData;
+    
     // Pointer to mipmap images.
 	struct CCPVRMipmap	_mipmaps[CC_PVRMIPMAP_MAX];
     

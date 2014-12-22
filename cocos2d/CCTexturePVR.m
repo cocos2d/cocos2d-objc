@@ -264,20 +264,14 @@ typedef struct {
 } __attribute__((packed)) ccPVRv3TexHeader ;
 
 @implementation CCTexturePVR
-@synthesize name = _name;
-@synthesize width = _width;
-@synthesize height = _height;
-@synthesize hasAlpha = _hasAlpha;
-@synthesize hasPremultipliedAlpha = _hasPremultipliedAlpha;
-@synthesize forcePremultipliedAlpha = _forcePremultipliedAlpha;
-@synthesize numberOfMipmaps = _numberOfMipmaps;
 
-// cocos2d integration
-@synthesize retainName = _retainName;
-
-
-- (BOOL)unpackPVRv2Data:(NSData *)data
+- (BOOL)unpackPVRv2Data:(NSInputStream *)stream
 {
+    // Read the header from the stream.
+	ccPVRv2TexHeader _header = {};
+    NSUInteger bytesRead = [stream read:(void *)&_header maxLength:sizeof(_header)];
+    NSAssert(bytesRead == sizeof(_header), @"Error: Could not read PVR file header.");
+    
 	BOOL success = NO;
 	ccPVRv2TexHeader *header = NULL;
 	uint32_t flags, pvrTag;
@@ -287,7 +281,7 @@ typedef struct {
 	uint8_t *bytes = NULL;
 	uint32_t formatFlags;
 
-	header = (ccPVRv2TexHeader *)data.bytes;
+	header = &_header;
 
 	pvrTag = CFSwapInt32LittleToHost(header->pvrTag);
 
@@ -328,7 +322,14 @@ typedef struct {
 				_hasAlpha = NO;
 
 			dataLength = CFSwapInt32LittleToHost(header->dataLength);
-			bytes = ((uint8_t *)data.bytes) + sizeof(ccPVRv2TexHeader);
+            
+            NSMutableData *mipmapData = [NSMutableData dataWithLength:dataLength];
+            _mipmapData = mipmapData;
+            
+            [stream read:mipmapData.mutableBytes maxLength:dataLength];
+            NSAssert(mipmapData.length == dataLength, @"Error: Truncated PVR file.");
+            
+			bytes = (uint8_t *)mipmapData.mutableBytes;
 			bpp = _pixelFormatInfo->bpp;
 
 			// Calculate the data size for each texture level and respect the minimum number of blocks
@@ -390,113 +391,122 @@ typedef struct {
 	return success;
 }
 
-- (BOOL)unpackPVRv3Data:(NSData *)data
+- (BOOL)unpackPVRv3Data:(NSInputStream *)stream
 {
-	if(data.length < sizeof(ccPVRv3TexHeader)) {
-		return NO;
-	}
-	
-	ccPVRv3TexHeader *header = (ccPVRv3TexHeader *)data.bytes;
-	
-	// validate version
-	if(CFSwapInt32BigToHost(header->version) != 0x50565203) {
-		CCLOG(@"cocos2d: WARNING: pvr file version mismatch");
-		return NO;
-	}
-	
-	// parse pixel format
-	uint64_t pixelFormat = header->pixelFormat;
-
-	
-	BOOL infoValid = NO;
-	
-	for(int i = 0; i < PVR3_MAX_TABLE_ELEMENTS; i++) {
-		if( v3_pixel_formathash[i].pixelFormat == pixelFormat ) {
-			_pixelFormatInfo = v3_pixel_formathash[i].pixelFormatInfo;
-			_hasAlpha = _pixelFormatInfo->alpha;
-			infoValid = YES;
-			break;
-		}
-	}
-	
-	// unsupported / bad pixel format
-	if(!infoValid) {
-		CCLOG(@"cocos2d: WARNING: unsupported pvr pixelformat: %llx", pixelFormat );
-		return NO;
-	}
-	
-	// flags
-	uint32_t flags = CFSwapInt32LittleToHost(header->flags);
-	
-	// PVRv3 specifies premultiply alpha in a flag -- should always respect this in PVRv3 files
-	_forcePremultipliedAlpha = YES;
-	if(flags & kPVR3TextureFlagPremultipliedAlpha) {
-		_hasPremultipliedAlpha = YES;
-	}
-	
-	// sizing
-	uint32_t width = CFSwapInt32LittleToHost(header->width);
-	uint32_t height = CFSwapInt32LittleToHost(header->height);
-	_width = width;
-	_height = height;
-	uint32_t dataOffset = 0, dataSize = 0;
-	uint32_t blockSize = 0, widthBlocks = 0, heightBlocks = 0;
-	const uint8_t *bytes = data.bytes;
-	
-	dataOffset = (sizeof(ccPVRv3TexHeader) + header->metadataLength);
-	
-	_numberOfMipmaps = header->numberOfMipmaps;
-	NSAssert( _numberOfMipmaps < CC_PVRMIPMAP_MAX, @"TexturePVR: Maximum number of mimpaps reached. Increate the CC_PVRMIPMAP_MAX value");
-
-	for(int i = 0; i < _numberOfMipmaps; i++) {
-		
-		switch(pixelFormat) {
-			case kPVR3TexturePixelFormat_PVRTC_2BPP_RGB :
-			case kPVR3TexturePixelFormat_PVRTC_2BPP_RGBA :
-				blockSize = 8 * 4; // Pixel by pixel block size for 2bpp
-				widthBlocks = width / 8;
-				heightBlocks = height / 4;
-				break;
-			case kPVR3TexturePixelFormat_PVRTC_4BPP_RGB :
-			case kPVR3TexturePixelFormat_PVRTC_4BPP_RGBA :
-				blockSize = 4 * 4; // Pixel by pixel block size for 4bpp
-				widthBlocks = width / 4;
-				heightBlocks = height / 4;
-				break;
-			case kPVR3TexturePixelFormat_BGRA_8888:
-				if( ! [[CCDeviceInfo sharedDeviceInfo] supportsBGRA8888] ) {
-					CCLOG(@"cocos2d: TexturePVR. BGRA8888 not supported on this device");
-					return NO;
-				}
-			default:
-				blockSize = 1;
-				widthBlocks = width;
-				heightBlocks = height;
-				break;
-		}
-			
-		// Clamp to minimum number of blocks
-		if (widthBlocks < 2)
-			widthBlocks = 2;
-		if (heightBlocks < 2)
-			heightBlocks = 2;
-		
-		dataSize = widthBlocks * heightBlocks * ((blockSize  * _pixelFormatInfo->bpp) / 8);
-		unsigned int packetLength = ((unsigned int)data.length-dataOffset);
-		packetLength = packetLength > dataSize ? dataSize : packetLength;
-		
-		_mipmaps[i].address = bytes+dataOffset;
-		_mipmaps[i].len = packetLength;
-		
-		dataOffset += packetLength;
-		NSAssert( dataOffset <= data.length, @"CCTexurePVR: Invalid length");
-		
-		
-		width = MAX(width >> 1, 1);
-		height = MAX(height >> 1, 1);
-	}
-	
-	return YES;
+    return NO;
+//	ccPVRv3TexHeader _header = {};
+//    NSUInteger bytesRead = [stream read:(void *)&_header maxLength:sizeof(_header)];
+//    NSAssert(bytesRead == sizeof(_header), @"Error: Could not read PVR file header.");
+//	
+//	ccPVRv3TexHeader *header = &_header;
+//    
+//	// validate version
+//	if(CFSwapInt32BigToHost(header->version) != 0x50565203) {
+//		CCLOG(@"cocos2d: WARNING: pvr file version mismatch");
+//		return NO;
+//	}
+//	
+//	// parse pixel format
+//	uint64_t pixelFormat = header->pixelFormat;
+//
+//	
+//	BOOL infoValid = NO;
+//	
+//	for(int i = 0; i < PVR3_MAX_TABLE_ELEMENTS; i++) {
+//		if( v3_pixel_formathash[i].pixelFormat == pixelFormat ) {
+//			_pixelFormatInfo = v3_pixel_formathash[i].pixelFormatInfo;
+//			_hasAlpha = _pixelFormatInfo->alpha;
+//			infoValid = YES;
+//			break;
+//		}
+//	}
+//	
+//	// unsupported / bad pixel format
+//	if(!infoValid) {
+//		CCLOG(@"cocos2d: WARNING: unsupported pvr pixelformat: %llx", pixelFormat );
+//		return NO;
+//	}
+//	
+//	// flags
+//	uint32_t flags = CFSwapInt32LittleToHost(header->flags);
+//	
+//	// PVRv3 specifies premultiply alpha in a flag -- should always respect this in PVRv3 files
+//	_forcePremultipliedAlpha = YES;
+//	if(flags & kPVR3TextureFlagPremultipliedAlpha) {
+//		_hasPremultipliedAlpha = YES;
+//	}
+//	
+//	// sizing
+//	uint32_t width = CFSwapInt32LittleToHost(header->width);
+//	uint32_t height = CFSwapInt32LittleToHost(header->height);
+//	_width = width;
+//	_height = height;
+//	uint32_t dataOffset = 0, dataSize = 0;
+//	uint32_t blockSize = 0, widthBlocks = 0, heightBlocks = 0;
+//
+//    NSMutableData *mipmapData = [NSMutableData dataWithLength:header->];
+//    _mipmapData = mipmapData;
+//
+//    [stream read:mipmapData.mutableBytes maxLength:dataLength];
+//    NSAssert(mipmapData.length == dataLength, @"Error: Truncated PVR file.");
+//
+//    bytes = (uint8_t *)mipmapData.mutableBytes;
+//	const uint8_t *bytes = data.bytes;
+//	
+//	dataOffset = (sizeof(ccPVRv3TexHeader) + header->metadataLength);
+//	
+//	_numberOfMipmaps = header->numberOfMipmaps;
+//	NSAssert( _numberOfMipmaps < CC_PVRMIPMAP_MAX, @"TexturePVR: Maximum number of mimpaps reached. Increate the CC_PVRMIPMAP_MAX value");
+//
+//	for(int i = 0; i < _numberOfMipmaps; i++) {
+//		
+//		switch(pixelFormat) {
+//			case kPVR3TexturePixelFormat_PVRTC_2BPP_RGB :
+//			case kPVR3TexturePixelFormat_PVRTC_2BPP_RGBA :
+//				blockSize = 8 * 4; // Pixel by pixel block size for 2bpp
+//				widthBlocks = width / 8;
+//				heightBlocks = height / 4;
+//				break;
+//			case kPVR3TexturePixelFormat_PVRTC_4BPP_RGB :
+//			case kPVR3TexturePixelFormat_PVRTC_4BPP_RGBA :
+//				blockSize = 4 * 4; // Pixel by pixel block size for 4bpp
+//				widthBlocks = width / 4;
+//				heightBlocks = height / 4;
+//				break;
+//			case kPVR3TexturePixelFormat_BGRA_8888:
+//				if( ! [[CCDeviceInfo sharedDeviceInfo] supportsBGRA8888] ) {
+//					CCLOG(@"cocos2d: TexturePVR. BGRA8888 not supported on this device");
+//					return NO;
+//				}
+//			default:
+//				blockSize = 1;
+//				widthBlocks = width;
+//				heightBlocks = height;
+//				break;
+//		}
+//			
+//		// Clamp to minimum number of blocks
+//		if (widthBlocks < 2)
+//			widthBlocks = 2;
+//		if (heightBlocks < 2)
+//			heightBlocks = 2;
+//		
+//		dataSize = widthBlocks * heightBlocks * ((blockSize  * _pixelFormatInfo->bpp) / 8);
+//		unsigned int packetLength = ((unsigned int)data.length-dataOffset);
+//		packetLength = packetLength > dataSize ? dataSize : packetLength;
+//		
+//		_mipmaps[i].address = bytes+dataOffset;
+//		_mipmaps[i].len = packetLength;
+//		
+//		dataOffset += packetLength;
+//		NSAssert( dataOffset <= data.length, @"CCTexurePVR: Invalid length");
+//		
+//		
+//		width = MAX(width >> 1, 1);
+//		height = MAX(height >> 1, 1);
+//	}
+//	
+//	return YES;
 }
 
 
@@ -583,36 +593,29 @@ CCRenderDispatch(NO, ^{
         NSURL *fileURL = [NSURL fileURLWithPath:path];
         CCFile *file = [[CCFile alloc] initWithName:path url:fileURL contentScale:1.0];
         
-        NSData *pvrdata = nil;
+        NSInputStream *stream = [file openInputStream];
         
         if ( [[path lowercaseString] hasSuffix:@".ccz"]){
-            // read the special .ccz header, supply a size hint and read the rest of the data.
-            NSInputStream *stream = [file openInputStream];
-            
-            struct CCZHeader {
-                uint8_t			sig[4];				// signature. Should be 'CCZ!' 4 bytes
-                uint16_t		compression_type;	// should 0
-                uint16_t		version;			// should be 2 (although version type==1 is also supported)
-                uint32_t		reserved;			// Reserved for users.
-                uint32_t		len;				// size of the uncompressed file
-            };
-            
-            struct CCZHeader header;
-            [stream read:(void*) &header maxLength:sizeof(struct CCZHeader)];
-
-            NSLog(@"Loaded ccz file with size: %d", header.len);
-
-            CCWrappedInputStream *gzStream = [[CCGZippedInputStream alloc]initWithInputStream:stream];
-            pvrdata = [gzStream loadDataWithSizeHint:header.len];
-        }else{
-            pvrdata = [file loadData];
+            NSAssert(NO, @"Abort");
+//            // read the special .ccz header, supply a size hint and read the rest of the data.
+//            NSInputStream *stream = [file openInputStream];
+//            
+//            struct CCZHeader {
+//                uint8_t			sig[4];				// signature. Should be 'CCZ!' 4 bytes
+//                uint16_t		compression_type;	// should 0
+//                uint16_t		version;			// should be 2 (although version type==1 is also supported)
+//                uint32_t		reserved;			// Reserved for users.
+//                uint32_t		len;				// size of the uncompressed file
+//            };
+//            
+//            struct CCZHeader header;
+//            [stream read:(void*) &header maxLength:sizeof(struct CCZHeader)];
+//
+//            NSLog(@"Loaded ccz file with size: %d", header.len);
+//
+//            CCWrappedInputStream *gzStream = [[CCGZippedInputStream alloc]initWithInputStream:stream];
+//            pvrdata = [gzStream loadDataWithSizeHint:header.len];
         }
-        
- 		if(pvrdata.length == 0){
-			return nil;
-		}
-
-        _numberOfMipmaps = 0;
 
 		_name = 0;
 		_width = _height = 0;
@@ -624,7 +627,7 @@ CCRenderDispatch(NO, ^{
 		_retainName = NO; // cocos2d integration
 		
 		
-		if( ! (([self unpackPVRv2Data:pvrdata] || [self unpackPVRv3Data:pvrdata]) &&
+		if( ! (([self unpackPVRv2Data:stream] || [self unpackPVRv3Data:stream]) &&
 		   [self createGLTexture] ) )
 		{
 			return nil;
