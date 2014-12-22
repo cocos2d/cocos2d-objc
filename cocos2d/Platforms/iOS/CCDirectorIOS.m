@@ -144,8 +144,8 @@
 	
 	[self pushScene:scene];
 
-	NSThread *thread = [self runningThread];
-	[self performSelector:@selector(drawScene) onThread:thread withObject:nil waitUntilDone:YES];
+    [self drawScene];
+    [self startAnimation];
 }
 
 -(void) reshapeProjection:(CGSize)newViewSize
@@ -223,7 +223,7 @@
 {
 	[super viewWillAppear:animated];
 
-    // This line was presumably added to deadl with apps entering and leaving the background.
+    // This line was presumably added to deal with apps entering and leaving the background.
     // ViewWillAppear is called many times on application launch (7 times for the unit tests) and it's also called
     // by the OS outside of normal control, so it's very hard to actually call stopAnimation and expect it to work.
 //    [self startAnimationIfPossible];
