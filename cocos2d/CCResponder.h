@@ -108,6 +108,17 @@
  */
 - (BOOL)hitTestWithWorldPos:(CGPoint)pos;
 
+/**
+ *  Check if a touch is inside the node, but recursively move up the parents to see if any parent
+ *  (with a smaller contentSize) clips the input.
+ *
+ *  @param pos Position in scene (world) coordinates.
+ *
+ *  @return Returns true if the position is inside the node.
+ */
+- (BOOL)clippedHitTestWithWorldPos:(CGPoint)pos;
+
+
 #if (TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR)
 
 #pragma mark -

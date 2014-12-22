@@ -1541,14 +1541,10 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 
 /** Returns YES, if touch is inside sprite
  Added hit area expansion / contraction
+ Override for alternative clipping behavior, such as if you want to clip input to a circle.
  */
 - (BOOL)hitTestWithWorldPos:(CGPoint)pos
 {
-    // If *any* parent node clips input and we're outside their clipping range, reject the hit.
-    if(_parent != nil && [_parent rejectClippedInput:pos]){
-        return NO;
-    }
-
     pos = [self convertToNodeSpace:pos];
     CGPoint offset = ccp(-self.hitAreaExpansion, -self.hitAreaExpansion);
     CGSize size = CGSizeMake(self.contentSizeInPoints.width - offset.x, self.contentSizeInPoints.height - offset.y);
@@ -1556,22 +1552,26 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
     return !(pos.y < offset.y || pos.y > size.height || pos.x < offset.x || pos.x > size.width);
 }
 
+- (BOOL)clippedHitTestWithWorldPos:(CGPoint)pos
+{
+    // If *any* parent node clips input and we're outside their clipping range, reject the hit.
+    if(_parent != nil && [_parent rejectClippedInput:pos]){
+        return NO;
+    }
+    
+    return [self hitTestWithWorldPos:pos];
+}
+
 - (BOOL) rejectClippedInput:(CGPoint)pos
 {
-    if(self.clipsInput){
-        // Do the bounds test to clip against this node
-        CGPoint p = [self convertToNodeSpace:pos];
-        CGPoint offset = ccp(-self.hitAreaExpansion, -self.hitAreaExpansion);
-        CGSize size = CGSizeMake(self.contentSizeInPoints.width - offset.x, self.contentSizeInPoints.height - offset.y);
-        
-        if (p.y < offset.y || p.y > size.height || p.x < offset.x || p.x > size.width){
-            // Outside the bounds, reject the hit.
-            return YES;
-        }
+    // If this clips input, do the bounds test to clip against this node
+    if(self.clipsInput && ![self hitTestWithWorldPos:pos]){
+        // outside of this node, reject this!
+        return YES;
     }
     
     if(_parent == nil){
-        // Terminating condition
+        // Terminating condition, the hit was not rejected
         return NO;
     }
 

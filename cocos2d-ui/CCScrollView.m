@@ -800,7 +800,7 @@
     }
     
     // Check that the gesture is in the scroll view
-    return [self hitTestWithWorldPos:[touch locationInWorld]];
+    return [self clippedHitTestWithWorldPos:[touch locationInWorld]];
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
