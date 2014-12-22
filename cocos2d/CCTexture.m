@@ -395,51 +395,46 @@ NormalizeOptions(NSDictionary *options)
 @end
 
 
-//#pragma mark -
-//#pragma mark CCTexture2D - PVRSupport
-//
-//@implementation CCTexture (PVRSupport)
-//
-//// By default PVR images are treated as if they have the alpha channel premultiplied
-//static BOOL _PVRHaveAlphaPremultiplied = YES;
-//
-//-(id) initWithPVRFile: (NSString*) relPath
-//{
-//	CGFloat contentScale;
-//	NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathForFilename:relPath contentScale:&contentScale];
-//
-//	if( (self = [super init]) ) {
-//		CCTexturePVR *pvr = [[CCTexturePVR alloc] initWithContentsOfFile:fullpath];
-//		if( pvr ) {
-//			pvr.retainName = YES;	// don't dealloc texture on release
-//
-//			_name = pvr.name;	// texture id
-//			_maxS = 1;			// only POT texture are supported
-//			_maxT = 1;
-//			_width = pvr.width;
-//			_height = pvr.height;
-//			_sizeInPixels = CGSizeMake(_width, _height);
-//			_premultipliedAlpha = (pvr.forcePremultipliedAlpha) ? pvr.hasPremultipliedAlpha : _PVRHaveAlphaPremultiplied;
-//			_format = pvr.format;
-//
-//			_hasMipmaps = ( pvr.numberOfMipmaps > 1  );
-//
-//		} else {
-//
-//			CCLOG(@"cocos2d: Couldn't load PVR image: %@", relPath);
-//			return nil;
-//		}
-//		_contentScale = contentScale;
-//	}
-//	return self;
-//}
-//
-//+(void) PVRImagesHavePremultipliedAlpha:(BOOL)haveAlphaPremultiplied
-//{
-//	_PVRHaveAlphaPremultiplied = haveAlphaPremultiplied;
-//}
-//@end
-//
+#pragma mark -
+#pragma mark CCTexture2D - PVRSupport
+
+@implementation CCTexture (PVRSupport)
+
+// By default PVR images are treated as if they have the alpha channel premultiplied
+static BOOL _PVRHaveAlphaPremultiplied = YES;
+
+-(id) initWithPVRFile: (NSString*) relPath
+{
+	CGFloat contentScale;
+	NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathForFilename:relPath contentScale:&contentScale];
+
+	if( (self = [super init]) ) {
+		CCTexturePVR *pvr = [[CCTexturePVR alloc] initWithContentsOfFile:fullpath];
+		if( pvr ) {
+			pvr.retainName = YES;	// don't dealloc texture on release
+
+			_name = pvr.name;	// texture id
+            _sizeInPixels = CGSizeMake(pvr.width, pvr.height);
+			_premultipliedAlpha = (pvr.forcePremultipliedAlpha) ? pvr.hasPremultipliedAlpha : _PVRHaveAlphaPremultiplied;
+
+			_hasMipmaps = ( pvr.numberOfMipmaps > 1  );
+
+		} else {
+
+			CCLOG(@"cocos2d: Couldn't load PVR image: %@", relPath);
+			return nil;
+		}
+		_contentScale = contentScale;
+	}
+	return self;
+}
+
++(void) PVRImagesHavePremultipliedAlpha:(BOOL)haveAlphaPremultiplied
+{
+	_PVRHaveAlphaPremultiplied = haveAlphaPremultiplied;
+}
+@end
+
 //#pragma mark -
 //#pragma mark CCTexture2D - Drawing
 //

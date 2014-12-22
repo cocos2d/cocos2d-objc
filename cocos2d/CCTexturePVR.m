@@ -66,9 +66,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "ccMacros.h"
 #import "CCDeviceInfo.h"
 #import "Support/ccUtils.h"
-#import "Support/CCFileUtils.h"
 #import "CCGL.h"
 #import "CCRenderDispatch.h"
+#import "CCFile_Private.h"
 
 #pragma mark -
 #pragma mark CCTexturePVR
@@ -276,7 +276,7 @@ typedef struct {
 @synthesize retainName = _retainName;
 
 
-- (BOOL)unpackPVRv2Data:(unsigned char*)data PVRLen:(NSUInteger)len
+- (BOOL)unpackPVRv2Data:(NSData *)data
 {
 	BOOL success = NO;
 	ccPVRv2TexHeader *header = NULL;
@@ -287,7 +287,7 @@ typedef struct {
 	uint8_t *bytes = NULL;
 	uint32_t formatFlags;
 
-	header = (ccPVRv2TexHeader *)data;
+	header = (ccPVRv2TexHeader *)data.bytes;
 
 	pvrTag = CFSwapInt32LittleToHost(header->pvrTag);
 
@@ -328,7 +328,7 @@ typedef struct {
 				_hasAlpha = NO;
 
 			dataLength = CFSwapInt32LittleToHost(header->dataLength);
-			bytes = ((uint8_t *)data) + sizeof(ccPVRv2TexHeader);
+			bytes = ((uint8_t *)data.bytes) + sizeof(ccPVRv2TexHeader);
 			bpp = _pixelFormatInfo->bpp;
 
 			// Calculate the data size for each texture level and respect the minimum number of blocks
@@ -390,13 +390,13 @@ typedef struct {
 	return success;
 }
 
-- (BOOL)unpackPVRv3Data:(unsigned char*)dataPointer PVRLen:(NSUInteger)dataLength
+- (BOOL)unpackPVRv3Data:(NSData *)data
 {
-	if(dataLength < sizeof(ccPVRv3TexHeader)) {
+	if(data.length < sizeof(ccPVRv3TexHeader)) {
 		return NO;
 	}
 	
-	ccPVRv3TexHeader *header = (ccPVRv3TexHeader *)dataPointer;
+	ccPVRv3TexHeader *header = (ccPVRv3TexHeader *)data.bytes;
 	
 	// validate version
 	if(CFSwapInt32BigToHost(header->version) != 0x50565203) {
@@ -441,10 +441,9 @@ typedef struct {
 	_height = height;
 	uint32_t dataOffset = 0, dataSize = 0;
 	uint32_t blockSize = 0, widthBlocks = 0, heightBlocks = 0;
-	uint8_t *bytes = NULL;
+	const uint8_t *bytes = data.bytes;
 	
 	dataOffset = (sizeof(ccPVRv3TexHeader) + header->metadataLength);
-	bytes = dataPointer;
 	
 	_numberOfMipmaps = header->numberOfMipmaps;
 	NSAssert( _numberOfMipmaps < CC_PVRMIPMAP_MAX, @"TexturePVR: Maximum number of mimpaps reached. Increate the CC_PVRMIPMAP_MAX value");
@@ -483,14 +482,14 @@ typedef struct {
 			heightBlocks = 2;
 		
 		dataSize = widthBlocks * heightBlocks * ((blockSize  * _pixelFormatInfo->bpp) / 8);
-		unsigned int packetLength = ((unsigned int)dataLength-dataOffset);
+		unsigned int packetLength = ((unsigned int)data.length-dataOffset);
 		packetLength = packetLength > dataSize ? dataSize : packetLength;
 		
 		_mipmaps[i].address = bytes+dataOffset;
 		_mipmaps[i].len = packetLength;
 		
 		dataOffset += packetLength;
-		NSAssert( dataOffset <= dataLength, @"CCTexurePVR: Invalid length");
+		NSAssert( dataOffset <= data.length, @"CCTexurePVR: Invalid length");
 		
 		
 		width = MAX(width >> 1, 1);
@@ -548,7 +547,7 @@ CCRenderDispatch(NO, ^{
 			retVal = NO; return;
 		}
 
-		unsigned char *data = _mipmaps[i].address;
+		const unsigned char *data = _mipmaps[i].address;
 		GLsizei datalen = _mipmaps[i].len;
 
 		if( compressed)
@@ -581,25 +580,37 @@ CCRenderDispatch(NO, ^{
 {
 	if((self = [super init]))
 	{
-		unsigned char *pvrdata = NULL;
-		NSInteger pvrlen = 0;
-		NSString *lowerCase = [path lowercaseString];
+        NSURL *fileURL = [NSURL fileURLWithPath:path];
+        CCFile *file = [[CCFile alloc] initWithName:path url:fileURL contentScale:1.0];
+        
+        NSData *pvrdata = nil;
+        
+        if ( [[path lowercaseString] hasSuffix:@".ccz"]){
+            // read the special .ccz header, supply a size hint and read the rest of the data.
+            NSInputStream *stream = [file openInputStream];
+            
+            struct CCZHeader {
+                uint8_t			sig[4];				// signature. Should be 'CCZ!' 4 bytes
+                uint16_t		compression_type;	// should 0
+                uint16_t		version;			// should be 2 (although version type==1 is also supported)
+                uint32_t		reserved;			// Reserved for users.
+                uint32_t		len;				// size of the uncompressed file
+            };
+            
+            struct CCZHeader header;
+            [stream read:(void*) &header maxLength:sizeof(struct CCZHeader)];
 
-        if ( [lowerCase hasSuffix:@".ccz"])
-			#warning TODO
-			pvrlen = 0;//ccInflateCCZFile( [path UTF8String], &pvrdata );
+            NSLog(@"Loaded ccz file with size: %d", header.len);
 
-		else if( [lowerCase hasSuffix:@".gz"] )
-			#warning TODO
-			pvrlen = 0;//ccInflateGZipFile( [path UTF8String], &pvrdata );
-
-		else
-			pvrlen = ccLoadFileIntoMemory( [path UTF8String], &pvrdata );
-
-		if( pvrlen < 0 ) {
+            CCWrappedInputStream *gzStream = [[CCGZippedInputStream alloc]initWithInputStream:stream];
+            pvrdata = [gzStream loadDataWithSizeHint:header.len];
+        }else{
+            pvrdata = [file loadData];
+        }
+        
+ 		if(pvrdata.length == 0){
 			return nil;
 		}
-
 
         _numberOfMipmaps = 0;
 
@@ -613,14 +624,11 @@ CCRenderDispatch(NO, ^{
 		_retainName = NO; // cocos2d integration
 		
 		
-		if( ! (([self unpackPVRv2Data:pvrdata PVRLen:pvrlen] || [self unpackPVRv3Data:pvrdata PVRLen:pvrlen]) &&
+		if( ! (([self unpackPVRv2Data:pvrdata] || [self unpackPVRv3Data:pvrdata]) &&
 		   [self createGLTexture] ) )
 		{
-			free(pvrdata);
 			return nil;
 		}
-		
-		free(pvrdata);
 	}
 
 	return self;

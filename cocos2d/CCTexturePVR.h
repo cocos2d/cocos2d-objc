@@ -51,7 +51,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "CCTexture.h"
 
 struct CCPVRMipmap {
-	unsigned char *address;
+	const unsigned char *address;
 	unsigned int len;
 };
 
