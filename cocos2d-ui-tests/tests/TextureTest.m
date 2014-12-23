@@ -235,22 +235,8 @@
 	[node addChild:sprite2];
 }
 
-
--(void) setupPVRCubemapTest
+-(void)showCubemap:(CCTexture *)cubemap
 {
-	self.subTitle = @"PVR Cubemap";
-    
-    CGFloat contentScale = 1.0;
-    NSString *name = @"Cubemap/Cubemap.pvr.gz";
-    NSString *path = [[CCFileUtils sharedFileUtils] fullPathForFilename:name contentScale:&contentScale];
-    CCFile *file = [[CCFile alloc] initWithName:name url:[NSURL fileURLWithPath:path] contentScale:contentScale];
-    
-    CCTexture *cubemap = [[CCTexture alloc] initPVRWithCCFile:file options:@{
-        CCTextureOptionGenerateMipmaps: @(YES), // ?? What to do with this flag for PVRs that already have mipmaps?
-        CCTextureOptionMipmapFilter: @(CCTextureFilterLinear),
-        CCTextureOptionMinificationFilter: @(CCTextureFilterNearest),
-    }];
-    
 	CCSprite *sprite = [CCSprite spriteWithTexture:cubemap];
     sprite.positionType = CCPositionTypeNormalized;
     sprite.position = ccp(0.5, 0.5);
@@ -278,5 +264,43 @@
         }
     )];
 }
+
+-(void) setupPVRCubemapTest
+{
+	self.subTitle = @"PVR (RGBA8) Cubemap";
+    
+    CGFloat contentScale = 1.0;
+    NSString *name = @"Cubemap/Cubemap.pvr.gz";
+    NSString *path = [[CCFileUtils sharedFileUtils] fullPathForFilename:name contentScale:&contentScale];
+    CCFile *file = [[CCFile alloc] initWithName:name url:[NSURL fileURLWithPath:path] contentScale:contentScale];
+    
+    CCTexture *cubemap = [[CCTexture alloc] initPVRWithCCFile:file options:@{
+        CCTextureOptionGenerateMipmaps: @(YES), // ?? What to do with this flag for PVRs that already have mipmaps?
+        CCTextureOptionMipmapFilter: @(CCTextureFilterLinear),
+        CCTextureOptionMinificationFilter: @(CCTextureFilterNearest),
+    }];
+    
+    [self showCubemap:cubemap];
+}
+
+#if __CC_PLATFORM_IOS
+-(void) setupPVRTCCubemapTest
+{
+	self.subTitle = @"PVR (pvrtc 2bpp) Cubemap";
+    
+    CGFloat contentScale = 1.0;
+    NSString *name = @"Cubemap/Cubemap-pvrtc.pvr.gz";
+    NSString *path = [[CCFileUtils sharedFileUtils] fullPathForFilename:name contentScale:&contentScale];
+    CCFile *file = [[CCFile alloc] initWithName:name url:[NSURL fileURLWithPath:path] contentScale:contentScale];
+    
+    CCTexture *cubemap = [[CCTexture alloc] initPVRWithCCFile:file options:@{
+        CCTextureOptionGenerateMipmaps: @(YES), // ?? What to do with this flag for PVRs that already have mipmaps?
+        CCTextureOptionMipmapFilter: @(CCTextureFilterLinear),
+        CCTextureOptionMinificationFilter: @(CCTextureFilterNearest),
+    }];
+    
+    [self showCubemap:cubemap];
+}
+#endif
 
 @end
