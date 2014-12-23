@@ -182,10 +182,12 @@ static CCTexture *CCTextureNone = nil;
     }
 }
 
--(void)setupTextureWithSizeInPixels:(CGSize)sizeInPixels options:(NSDictionary *)options
+-(void)setupTexture:(CCTextureType)type sizeInPixels:(CGSize)sizeInPixels options:(NSDictionary *)options
 {
+    GLenum target = (type == CCTextureType2D ? GL_TEXTURE_2D : GL_TEXTURE_CUBE_MAP);
+    
     glGenTextures(1, &_name);
-    glBindTexture(GL_TEXTURE_2D, _name);
+    glBindTexture(target, _name);
     
     BOOL genMipmaps = [options[CCTextureOptionGenerateMipmaps] boolValue];
     
@@ -204,8 +206,8 @@ static CCTexture *CCTextureNone = nil;
         {GL_LINEAR, GL_LINEAR_MIPMAP_NEAREST, GL_LINEAR_MIPMAP_LINEAR}, // linear
     };
     
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, FILTERS[minFilter][mipFilter]);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, FILTERS[magFilter][CCTextureFilterMipmapNone]);
+    glTexParameteri(target, GL_TEXTURE_MIN_FILTER, FILTERS[minFilter][mipFilter]);
+    glTexParameteri(target, GL_TEXTURE_MAG_FILTER, FILTERS[magFilter][CCTextureFilterMipmapNone]);
     
     // Set up texture addressing mode.
     CCTextureAddressMode addressX = [options[CCTextureOptionAddressModeX] unsignedIntegerValue];
@@ -221,8 +223,8 @@ static CCTexture *CCTextureNone = nil;
     NSAssert(addressX == CCTextureAddressModeClampToEdge || isPOT, @"Only CCTextureAddressModeClampToEdge can be used with non power of two sized textures.");
     NSAssert(addressY == CCTextureAddressModeClampToEdge || isPOT, @"Only CCTextureAddressModeClampToEdge can be used with non power of two sized textures.");
     
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, ADDRESSING[addressX]);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, ADDRESSING[addressY]);
+    glTexParameteri(target, GL_TEXTURE_WRAP_S, ADDRESSING[addressX]);
+    glTexParameteri(target, GL_TEXTURE_WRAP_T, ADDRESSING[addressY]);
 }
 
 -(instancetype)initWithImage:(CCImage *)image options:(NSDictionary *)options
@@ -256,7 +258,7 @@ static CCTexture *CCTextureNone = nil;
 		CCRenderDispatch(NO, ^{
             CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Init");
     
-            [self setupTextureWithSizeInPixels:sizeInPixels options:options];
+            [self setupTexture:CCTextureType2D sizeInPixels:sizeInPixels options:options];
             
             // Specify OpenGL texture image
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)sizeInPixels.width, (GLsizei)sizeInPixels.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image.pixelData.bytes);

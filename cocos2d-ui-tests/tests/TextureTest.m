@@ -57,14 +57,6 @@
 	[self loadAndDisplayImageNamed: @"test_image.tiff" withTitle: @"TIFF loading example (has alpha)"];
 }
 
-#if __CC_PLATFORM_IOS
-// PVR on iOS only.
-
--(void) setupPVRLoadingTest
-{
-	[self loadAndDisplayImageNamed: @"test_image.pvr" withTitle: @"PVR loading example (no alpha)"];
-}
-
 -(void) setupPVRa8LoadingTest
 {
     CCSprite * img = [self loadAndDisplayImageNamed: @"test_image_a8.pvr" withTitle: @"8 bit PVR, single channel (greyscale intensity)."];
@@ -86,6 +78,13 @@
 -(void) setupPVRa88v3LoadingTest
 {
 	[self loadAndDisplayImageNamed: @"test_image_ai88_v3.pvr" withTitle: @"8+8 bit PVR v3, alpha + greyscale."];
+}
+
+// PVRTC on iOS only.
+#if __CC_PLATFORM_IOS
+-(void) setupPVRLoadingTest
+{
+	[self loadAndDisplayImageNamed: @"test_image.pvr" withTitle: @"PVR loading example (no alpha)"];
 }
 
 -(void) setupPvrtc2bppLoadingTest
@@ -118,6 +117,7 @@
 //{
 //	[self loadAndDisplayImageNamed: @"test_image_pvrtcii4bpp_v3.pvr" withTitle: @"PVRTCII (PVRTC2) 4 bits per pixel"];
 //}
+#endif
 
 -(void) setupPvr_rgb565_LoadingTest
 {
@@ -155,7 +155,6 @@
 {
 	[self loadAndDisplayImageNamed: @"test_image_rgba4444.pvr.ccz" withTitle: @"PVR gzipped.ccz rgba4444"];
 }
-#endif
 
 -(void) setupNonPowerOfTwoTextureTest
 {
@@ -235,5 +234,29 @@
 	[node addChild:sprite2];
 }
 
+
+-(void) setupPVRCubemapTest
+{
+	CCSprite *sprite = [self loadAndDisplayImageNamed: @"Cubemap/Cubemap.pvr.gz" withTitle: @"PVR cubemap"];
+    
+    sprite.shaderUniforms[@"cube"] = sprite.texture;
+    sprite.shader = [[CCShader alloc] initWithFragmentShaderSource:CC_GLSL(
+        uniform samplerCube cube;
+        void main(){
+            float t = cc_Time[0];
+            float s = sin(t);
+            float c = cos(t);
+            
+            mat3 rotate = mat3(
+                  c, 0.0,  -s,
+                0.0, 1.0, 0.0,
+                  s, 0.0,   c
+            );
+            
+            vec3 coord = rotate*vec3(2.0*cc_FragTexCoord1 - 1.0, 1.0);
+            gl_FragColor = cc_FragColor*textureCube(cube, coord);
+        }
+    )];
+}
 
 @end

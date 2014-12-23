@@ -181,13 +181,13 @@ struct _pixel_formathash v3_pixel_formathash[] = {
 
 @implementation CCTexture(PVR)
 
--(const ccPVRTexturePixelFormatInfo *)readPVRv2Header:(NSInputStream *)stream
+-(const ccPVRTexturePixelFormatInfo *)readPVRv2Header:(NSInputStream *)stream mipcount:(NSUInteger *)mipcount
 {
     struct {
         uint32_t headerLength;
         uint32_t height;
         uint32_t width;
-        uint32_t numMipmaps;
+        uint32_t mipcount;
         uint32_t flags;
         uint32_t dataLength;
         uint32_t bpp;
@@ -212,6 +212,7 @@ struct _pixel_formathash v3_pixel_formathash[] = {
 	uint32_t formatFlags = flags & PVR_TEXTURE_FLAG_TYPE_MASK;
 
     _sizeInPixels = CGSizeMake(CFSwapInt32LittleToHost(header.width), CFSwapInt32LittleToHost(header.height));
+    *mipcount = header.mipcount + 1;
     
 	if(![[CCDeviceInfo sharedDeviceInfo] supportsNPOT] && !CCSizeIsPOT(_sizeInPixels)){
 		CCLOGWARN(@"cocos2d: ERROR: Loding an NPOT texture (%dx%d) but is not supported on this device", (int)_sizeInPixels.width, (int)_sizeInPixels.height);
@@ -228,7 +229,7 @@ struct _pixel_formathash v3_pixel_formathash[] = {
 	return nil;
 }
 
-- (const ccPVRTexturePixelFormatInfo *)readPVRv3Header:(NSInputStream *)stream
+- (const ccPVRTexturePixelFormatInfo *)readPVRv3Header:(NSInputStream *)stream mipcount:(NSUInteger *)mipcount
 {
 	struct {
         uint32_t flags;
@@ -247,6 +248,7 @@ struct _pixel_formathash v3_pixel_formathash[] = {
     NSAssert(bytesRead == sizeof(header), @"Error: Could not read PVR file header.");
     
     _sizeInPixels = CGSizeMake(CFSwapInt32LittleToHost(header.width), CFSwapInt32LittleToHost(header.height));
+    *mipcount = header.numberOfMipmaps;
     
     if(header.numberOfFaces == 6){
         _type = CCTextureTypeCube;
@@ -256,6 +258,13 @@ struct _pixel_formathash v3_pixel_formathash[] = {
 		CCLOGWARN(@"cocos2d: ERROR: Loding an NPOT texture (%dx%d) but is not supported on this device", (int)_sizeInPixels.width, (int)_sizeInPixels.height);
 		return nil;
 	}
+    
+    // Skip past the metadata.
+    if(header.metadataLength){
+        void *metadata = malloc(header.metadataLength);
+        [stream read:metadata maxLength:header.metadataLength];
+        free(metadata);
+    }
     
 	uint64_t pixelFormat = header.pixelFormat;
 	for(int i = 0; i < PVR3_MAX_TABLE_ELEMENTS; i++) {
@@ -273,9 +282,11 @@ static NSInputStream *
 OpenPVRStream(CCFile *file)
 {
     if([file.url.lastPathComponent hasSuffix:@".ccz"]){
+        CCLOGWARN(@".ccz files are deprecated. It's recommended to use gzip for compression instead.");
+        
         NSInputStream *stream = [file openInputStream];
         
-        // .ccz files are just deflated data with an extra header that we want to skip.
+        // .ccz files are just deflated data with an underutilized header that we want to skip.
         uint8_t header[16];
         [stream read:header maxLength:sizeof(header)];
         
@@ -286,7 +297,7 @@ OpenPVRStream(CCFile *file)
     }
 }
 
--(NSInputStream *)readPVRHeader:(CCFile *)file format:(const ccPVRTexturePixelFormatInfo **)format
+-(NSInputStream *)readPVRHeader:(CCFile *)file format:(const ccPVRTexturePixelFormatInfo **)format mipcount:(NSUInteger *)mipcount
 {
     NSInputStream *stream = OpenPVRStream(file);
     
@@ -295,7 +306,7 @@ OpenPVRStream(CCFile *file)
     [stream read:(void *)&magicNumber maxLength:4];
     
     if(memcmp(magicNumber, "PVR\x03", 4) == 0){
-        *format = [self readPVRv3Header:stream];
+        *format = [self readPVRv3Header:stream mipcount:mipcount];
     } else {
         CCLOG(@"PVRv2 files are deprecated. You should update to PVRv3 files if possible.");
         
@@ -303,7 +314,7 @@ OpenPVRStream(CCFile *file)
         [stream close];
         stream = OpenPVRStream(file);
         
-        *format = [self readPVRv2Header:stream];
+        *format = [self readPVRv2Header:stream mipcount:mipcount];
     }
     
     // Close the stream if there was an error.
@@ -330,20 +341,7 @@ GetDataLength(const ccPVRTexturePixelFormatInfo *format, NSUInteger w, NSUIntege
     return (w*h*format->bpp)/8;
 }
 
-
-
--(void)loadFaces
-{
-//#define GL_TEXTURE_CUBE_MAP_POSITIVE_X                   0x8515
-//#define GL_TEXTURE_CUBE_MAP_NEGATIVE_X                   0x8516
-//#define GL_TEXTURE_CUBE_MAP_POSITIVE_Y                   0x8517
-//#define GL_TEXTURE_CUBE_MAP_NEGATIVE_Y                   0x8518
-//#define GL_TEXTURE_CUBE_MAP_POSITIVE_Z                   0x8519
-//#define GL_TEXTURE_CUBE_MAP_NEGATIVE_Z                   0x851A
-    
-}
-
--(void)readTextureData:(NSInputStream *)stream format:(const ccPVRTexturePixelFormatInfo *)format block:(CCPVRSurfaceBlock)block
+-(void)readTextureData:(NSInputStream *)stream format:(const ccPVRTexturePixelFormatInfo *)format mipcount:(NSUInteger)mipcount block:(CCPVRSurfaceBlock)block
 {
     CGSize size = self.sizeInPixels;
     NSUInteger width = size.width;
@@ -351,30 +349,32 @@ GetDataLength(const ccPVRTexturePixelFormatInfo *format, NSUInteger w, NSUIntege
     
     NSMutableData *data = [NSMutableData dataWithLength:GetDataLength(format, width, height)];
     
-    int miplevel = 0;
-    for(;;){
+    for(int miplevel = 0; miplevel < mipcount; miplevel++){
         NSUInteger w = MAX(1, width>>miplevel);
         NSUInteger h = MAX(1, height>>miplevel);
         
         NSUInteger dataLength = GetDataLength(format, w, h);
-        NSInteger bytesRead = [stream read:data.mutableBytes maxLength:dataLength];
-        data.length = bytesRead;
-        
-        // Ran out of data.
-        // This seems like it might be an error, but the PVR reference implementation handles it this way. (shrug)
-        if(bytesRead == 0) break;
         
         switch(self.type){
             case CCTextureType2D:
+                data.length = [stream read:data.mutableBytes maxLength:dataLength];
                 block(GL_TEXTURE_2D, miplevel, w, h, data);
                 break;
+            case CCTextureTypeCube:
+                data.length = [stream read:data.mutableBytes maxLength:dataLength];
+                block(GL_TEXTURE_CUBE_MAP_POSITIVE_X, miplevel, w, h, data);
+                data.length = [stream read:data.mutableBytes maxLength:dataLength];
+                block(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, miplevel, w, h, data);
+                data.length = [stream read:data.mutableBytes maxLength:dataLength];
+                block(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, miplevel, w, h, data);
+                data.length = [stream read:data.mutableBytes maxLength:dataLength];
+                block(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, miplevel, w, h, data);
+                data.length = [stream read:data.mutableBytes maxLength:dataLength];
+                block(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, miplevel, w, h, data);
+                data.length = [stream read:data.mutableBytes maxLength:dataLength];
+                block(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, miplevel, w, h, data);
             default: break;
         }
-        
-        // We've hit the smallest mipmap.
-        if(w == 1 && h == 1) break;
-        
-        miplevel++;
     }
 }
 
@@ -404,7 +404,8 @@ GetDataLength(const ccPVRTexturePixelFormatInfo *format, NSUInteger w, NSUIntege
     
 	if((self = [super init])) {
         const ccPVRTexturePixelFormatInfo *format = NULL;
-        NSInputStream *stream = [self readPVRHeader:file format:&format];
+        NSUInteger mipcount = 0;
+        NSInputStream *stream = [self readPVRHeader:file format:&format mipcount:&mipcount];
         
 #if __CC_METAL_SUPPORTED_AND_ENABLED
         // TODO
@@ -412,9 +413,9 @@ GetDataLength(const ccPVRTexturePixelFormatInfo *format, NSUInteger w, NSUIntege
 		CCRenderDispatch(NO, ^{
             CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Init");
             
-            [self setupTextureWithSizeInPixels:self.sizeInPixels options:options];
+            [self setupTexture:self.type sizeInPixels:self.sizeInPixels options:options];
             
-            [self readTextureData:stream format:format block:^(GLenum target, NSUInteger mipmap, NSUInteger width, NSUInteger height, NSData *data){
+            [self readTextureData:stream format:format mipcount:mipcount block:^(GLenum target, NSUInteger mipmap, NSUInteger width, NSUInteger height, NSData *data){
                 if(format->compressed){
                     glCompressedTexImage2D(target, (GLint)mipmap, format->internalFormat, (GLint)width, (GLint)height, 0, (GLsizei)data.length, data.bytes);
                 } else {
@@ -438,4 +439,3 @@ GetDataLength(const ccPVRTexturePixelFormatInfo *format, NSUInteger w, NSUIntege
 }
 
 @end
-

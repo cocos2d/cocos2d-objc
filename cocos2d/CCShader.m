@@ -387,15 +387,17 @@ GLUniformSettersForProgram(GLuint program)
 			case GL_FLOAT_VEC3: uniformSetters[name] = GLUniformSetVec3(name, location); break;
 			case GL_FLOAT_VEC4: uniformSetters[name] = GLUniformSetVec4(name, location); break;
 			case GL_FLOAT_MAT4: uniformSetters[name] = GLUniformSetMat4(name, location); break;
+            
+            // Sampler setters are handled a differently since the real work is binding the texture and not setting the uniform value.
+			case GL_SAMPLER_CUBE:
 			case GL_SAMPLER_2D: {
-				// Sampler setters are handled a differently since the real work is binding the texture and not setting the uniform value.
 				uniformSetters[name] = ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
 					CCTexture *texture = shaderUniforms[name] ?: globalShaderUniforms[name] ?: [CCTexture none];
 					NSCAssert([texture isKindOfClass:[CCTexture class]], @"Shader uniform '%@' value must be a CCTexture object.", name);
 					
 					// Bind the texture to the texture unit for the uniform.
 					glActiveTexture(GL_TEXTURE0 + textureUnit);
-					glBindTexture(GL_TEXTURE_2D, texture.name);
+					glBindTexture(texture.type == CCTextureType2D ? GL_TEXTURE_2D : GL_TEXTURE_CUBE_MAP, texture.name);
 				};
 				
 				// Bind the texture unit at init time.

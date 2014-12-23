@@ -68,6 +68,6 @@
 @property(atomic, readonly, weak) CCProxy *proxy;
 
 // Create the native texture object.
--(void)setupTextureWithSizeInPixels:(CGSize)sizeInPixels options:(NSDictionary *)options;
+-(void)setupTexture:(CCTextureType)type sizeInPixels:(CGSize)sizeInPixels options:(NSDictionary *)options;
 
 @end
