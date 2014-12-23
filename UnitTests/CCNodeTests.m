@@ -89,18 +89,18 @@
 	XCTAssertTrue(first.children.count == 1, @"");
 	XCTAssertTrue(second.parent == first, @"");
 	
-	XCTAssertTrue(first.isRunningInActiveScene, @"");
-	XCTAssertTrue(second.isRunningInActiveScene, @"");
+	XCTAssertTrue(first.active, @"");
+	XCTAssertTrue(second.active, @"");
 	
 	[first removeChild:second];
 	XCTAssertTrue(first.children.count == 0, @"");
 	XCTAssertTrue(second.parent == nil, @"");
 	
-	XCTAssertTrue(first.isRunningInActiveScene, @"");
-	XCTAssertFalse(second.isRunningInActiveScene, @"");
+	XCTAssertTrue(first.active, @"");
+	XCTAssertFalse(second.active, @"");
 	
 	[scene removeChildByName:@"first"];
-	XCTAssertFalse(first.isRunningInActiveScene, @"");
+	XCTAssertFalse(first.active, @"");
 }
 
 

@@ -36,6 +36,8 @@
     @protected
     NSInputStream *_inputStream;
     BOOL _hasBytesAvailable;
+    
+    NSError *_error;
 }
 
 // Make the designated initializer warnings go away.
@@ -66,8 +68,18 @@
 -(void)removeFromRunLoop:(NSRunLoop *)runLoop forMode:(NSString *)mode {[_inputStream removeFromRunLoop:runLoop forMode:mode];}
 -(id)propertyForKey:(NSString *)key {return [_inputStream propertyForKey:key];}
 -(BOOL)setProperty:(id)property forKey:(NSString *)key {return [_inputStream setProperty:property forKey:key];}
--(NSStreamStatus)streamStatus {return _inputStream.streamStatus;}
--(NSError *)streamError {return _inputStream.streamError;}
+
+-(NSStreamStatus)streamStatus {
+    if(_error){
+        return NSStreamStatusError;
+    } else {
+        return _inputStream.streamStatus;
+    }
+}
+
+-(NSError *)streamError {
+    return (_error ?: _inputStream.streamError);
+}
 
 -(BOOL)getBuffer:(uint8_t **)buffer length:(NSUInteger *)len
 {
@@ -79,7 +91,7 @@
     return _hasBytesAvailable;
 }
 
--(NSData *)loadDataWithSizeHint:(NSUInteger)sizeHint
+-(NSData *)loadDataWithSizeHint:(NSUInteger)sizeHint error:(NSError **)error;
 {
     NSMutableData *data = [NSMutableData dataWithLength:(sizeHint ?: BUFFER_SIZE)];
     NSUInteger totalBytesRead = 0;
@@ -89,6 +101,11 @@
         if(!self.hasBytesAvailable) break;
         
         [data increaseLengthBy:data.length*0.5];
+    }
+    
+    if(self.streamStatus == NSStreamStatusError){
+        CCLOG(@"Error loading compressed data: %@", self.streamError);
+        if(error) *error = self.streamError;
     }
     
     data.length = totalBytesRead;
@@ -133,8 +150,13 @@
         
         if(_needsInit){
             // 32 + [0-15] is zlib's magic flag to tell it we want to automatically detect gzip/zlib data.
-            if(inflateInit2(&_zStream, 32 + 15) != Z_OK){
-                CCLOG(@"zlib init error");
+            int result = inflateInit2(&_zStream, 32 + 15);
+            if(result != Z_OK){
+                _error = [[NSError alloc] initWithDomain:@"ZLib Error" code:result userInfo:@{
+                    NSLocalizedDescriptionKey: [NSString stringWithFormat:@"ZLib failed to initialize (%d)", result],
+                }];
+                CCLOG(@"%@", _error);
+                
                 _hasBytesAvailable = NO;
                 goto finish;
             }
@@ -151,7 +173,10 @@
             case Z_STREAM_ERROR:
             case Z_MEM_ERROR:
             case Z_BUF_ERROR:
-                CCLOG(@"zlib read error (%d)", result);
+                _error = [[NSError alloc] initWithDomain:@"ZLib Error" code:result userInfo:@{
+                    NSLocalizedDescriptionKey: [NSString stringWithFormat:@"ZLib decompression error (%d)", result],
+                }];
+                CCLOG(@"%@", _error);
             case Z_STREAM_END:
                 _hasBytesAvailable = NO;
                 goto finish;
@@ -220,7 +245,10 @@ static void TEA_decrypt(uint32_t *v, int n, uint32_t const key[4]) {
     NSUInteger bytesRead = [_inputStream read:_buffer maxLength:bytesPerBlock];
     
     if(bytesRead != bytesPerBlock){
-        CCLOG(@"Error reading encrypted file: Truncated stream.");
+        _error = [[NSError alloc] initWithDomain:@"CCFile Encryption Error" code:0 userInfo:@{
+            NSLocalizedDescriptionKey: @"Error reading encrypted file: Truncated stream.",
+        }];
+        CCLOG(@"%@", _error);
         goto fail;
     }
     
@@ -237,7 +265,10 @@ static void TEA_decrypt(uint32_t *v, int n, uint32_t const key[4]) {
     if(compare < 0){
        _eof = YES; 
     } else if(compare > 0){
-        CCLOG(@"Error reading encrypted file: Corrupt stream.");
+        _error = [[NSError alloc] initWithDomain:@"CCFile Encryption Error" code:0 userInfo:@{
+            NSLocalizedDescriptionKey: @"Error reading encrypted file: Corrupt stream.",
+        }];
+        CCLOG(@"%@", _error);
         goto fail;
     }
     
@@ -441,36 +472,34 @@ static const CGDataProviderSequentialCallbacks callbacks = {
     return stream;
 }
 
--(id)loadPlist
+-(id)loadPlist:(NSError *__autoreleasing *)error
 {
     NSInputStream *stream = [self openInputStream];
-    NSError *err = nil;
-    id plist = [NSPropertyListSerialization propertyListWithStream:stream options:0 format:NULL error:&err];
+    id plist = [NSPropertyListSerialization propertyListWithStream:stream options:0 format:NULL error:error];
     
     [stream close];
     
-    if(err){
-        CCLOG(@"Error reading property list from %@: %@", self.name, err);
+    if(error && *error){
+        CCLOG(@"Error reading property list from %@: %@", self.name, *error);
         return nil;
     } else {
         return plist;
     }
 }
 
--(NSData *)loadData
+-(NSData *)loadData:(NSError *__autoreleasing *)error
 {
     if(_loadDataFromStream){
        CCWrappedInputStream *stream = (CCWrappedInputStream *)[self openInputStream];
-       NSData *data = [stream loadDataWithSizeHint:0];
+       NSData *data = [stream loadDataWithSizeHint:0 error:error];
        [stream close];
        
         return data; 
     } else {
-        NSError *err = nil;
-        NSData *data = [NSData dataWithContentsOfURL:_url options:NSDataReadingMappedIfSafe error:&err];
+        NSData *data = [NSData dataWithContentsOfURL:_url options:NSDataReadingMappedIfSafe error:error];
         
-        if(err){
-            CCLOG(@"Error reading data from from %@: %@", self.name, err);
+        if(error && *error){
+            CCLOG(@"Error reading data from from %@: %@", self.name, *error);
             return nil;
         } else {
             return data;

@@ -58,16 +58,31 @@
 /** The offset, in points, of the red color channel.
  @since v3.2 and later
  */
-@property (nonatomic, assign) GLKVector2 redOffset;
+@property (nonatomic, assign) GLKVector2 redOffset __attribute__((deprecated));
+
+/** The offset, in points, of the red color channel.
+ @since v3.4 and later
+ */
+@property (nonatomic, assign) CGPoint redOffsetWithPoint;
 
 /** The offset, in points, of the green color channel.
  @since v3.2 and later
  */
-@property (nonatomic, assign) GLKVector2 greenOffset;
+@property (nonatomic, assign) GLKVector2 greenOffset __attribute__((deprecated));
+
+/** The offset, in points, of the green color channel.
+ @since v3.4 and later
+ */
+@property (nonatomic, assign) CGPoint greenOffsetWithPoint;
 
 /** The offset, in points, of the blue color channel.
  @since v3.2 and later
  */
-@property (nonatomic, assign) GLKVector2 blueOffset;
+@property (nonatomic, assign) GLKVector2 blueOffset __attribute__((deprecated));
+
+/** The offset, in points, of the blue color channel.
+ @since v3.4 and later
+ */
+@property (nonatomic, assign) CGPoint blueOffsetWithPoint;
 
 @end
