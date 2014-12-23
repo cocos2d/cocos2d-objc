@@ -11,6 +11,7 @@
 #import "CCTextureCache.h"
 #import "CCTexture_Private.h"
 #import "CCFile_Private.h"
+#import "CCTexture+PVR.h"
 
 @interface TextureTest : TestBase @end
 
@@ -237,24 +238,43 @@
 
 -(void) setupPVRCubemapTest
 {
-	CCSprite *sprite = [self loadAndDisplayImageNamed: @"Cubemap/Cubemap.pvr.gz" withTitle: @"PVR cubemap"];
+	self.subTitle = @"PVR Cubemap";
+    
+    CGFloat contentScale = 1.0;
+    NSString *name = @"Cubemap/Cubemap.pvr.gz";
+    NSString *path = [[CCFileUtils sharedFileUtils] fullPathForFilename:name contentScale:&contentScale];
+    CCFile *file = [[CCFile alloc] initWithName:name url:[NSURL fileURLWithPath:path] contentScale:contentScale];
+    
+    CCTexture *cubemap = [[CCTexture alloc] initPVRWithCCFile:file options:@{
+        CCTextureOptionGenerateMipmaps: @(YES), // ?? What to do with this flag for PVRs that already have mipmaps?
+        CCTextureOptionMipmapFilter: @(CCTextureFilterLinear),
+        CCTextureOptionMinificationFilter: @(CCTextureFilterNearest),
+    }];
+    
+	CCSprite *sprite = [CCSprite spriteWithTexture:cubemap];
+    sprite.positionType = CCPositionTypeNormalized;
+    sprite.position = ccp(0.5, 0.5);
+	[self.contentNode addChild:sprite];
     
     sprite.shaderUniforms[@"cube"] = sprite.texture;
     sprite.shader = [[CCShader alloc] initWithFragmentShaderSource:CC_GLSL(
         uniform samplerCube cube;
         void main(){
             float t = cc_Time[0];
-            float s = sin(t);
-            float c = cos(t);
-            
+            vec3 forward = vec3(cos(t), 1.0*cos(0.3*t), sin(t));
+            vec3 up = vec3(cos(0.26*t), 2.0, sin(0.31*t));
+            vec3 right = cross(forward, up);
+
             mat3 rotate = mat3(
-                  c, 0.0,  -s,
-                0.0, 1.0, 0.0,
-                  s, 0.0,   c
+                normalize(right),
+                normalize(cross(right, forward)),
+                normalize(forward)
             );
             
-            vec3 coord = rotate*vec3(2.0*cc_FragTexCoord1 - 1.0, 1.0);
-            gl_FragColor = cc_FragColor*textureCube(cube, coord);
+            float bias = 0.5 + 0.5*sin(4.0*t);
+            
+            vec3 coord = rotate*vec3(2.0*cc_FragTexCoord1 - 1.0, 0.5);
+            gl_FragColor = cc_FragColor*textureCube(cube, coord, 9.0*bias);
         }
     )];
 }
