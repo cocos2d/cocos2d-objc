@@ -34,7 +34,7 @@
 
 typedef NS_ENUM(NSUInteger, CCTextureType){
     CCTextureType2D,
-//    CCTextureTypeCube,
+    CCTextureTypeCube,
 };
 
 
@@ -59,6 +59,12 @@ extern NSString * const CCTextureOptionAddressModeY;
 
 
 @interface CCTexture : NSObject
+{
+    @private
+    CGSize _sizeInPixels;
+    CGSize _contentSize;
+    CCTextureType _type;
+}
 
 -(instancetype)initWithImage:(CCImage *)image options:(NSDictionary *)options;
 

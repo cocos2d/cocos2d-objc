@@ -33,7 +33,7 @@
 
 #import "Platforms/CCGL.h"
 #import "CCTexture_Private.h"
-#import "CCTexturePVR.h"
+#import "CCTexture+PVR.h"
 #import "CCDeviceInfo.h"
 #import "CCDirector.h"
 #import "CCFileUtils.h"
@@ -429,8 +429,13 @@ static CCTextureCache *sharedTextureCache;
 	if(tex) {
 		return((id)tex.proxy);
 	}
-
-	tex = [[CCTexture alloc] initWithPVRFile: path];
+    
+    CGFloat contentScale = 1.0;
+    NSString *fullpath = [fileUtils fullPathForFilename:path contentScale:&contentScale];
+    NSURL *url = [NSURL fileURLWithPath:fullpath];
+    CCFile *file = [[CCFile alloc] initWithName:path url:url contentScale:contentScale];
+    
+	tex = [[CCTexture alloc] initPVRWithCCFile:file options:nil];
 	if( tex ){
 		dispatch_sync(_dictQueue, ^{
 			[_textures setObject: tex forKey:path];

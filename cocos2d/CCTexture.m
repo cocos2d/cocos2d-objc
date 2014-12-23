@@ -30,7 +30,7 @@
 #import "ccConfig.h"
 #import "ccMacros.h"
 #import "CCDeviceInfo.h"
-#import "CCTexturePVR.h"
+#import "CCTexture+PVR.h"
 #import "CCShader.h"
 #import "CCDirector.h"
 #import "CCRenderDispatch.h"
@@ -169,8 +169,7 @@ static CCTexture *CCTextureNone = nil;
     return [[CCTextureCache sharedTextureCache] addImage:file];
 }
 
-static NSDictionary *
-NormalizeOptions(NSDictionary *options)
++(NSDictionary *)normalizeOptions:(NSDictionary *)options
 {
     if(options == nil || options == DEFAULT_OPTIONS){
         return DEFAULT_OPTIONS;
@@ -183,9 +182,52 @@ NormalizeOptions(NSDictionary *options)
     }
 }
 
+-(void)setupTextureWithSizeInPixels:(CGSize)sizeInPixels options:(NSDictionary *)options
+{
+    glGenTextures(1, &_name);
+    glBindTexture(GL_TEXTURE_2D, _name);
+    
+    BOOL genMipmaps = [options[CCTextureOptionGenerateMipmaps] boolValue];
+    
+    // Set up texture filtering mode.
+    CCTextureFilter minFilter = [options[CCTextureOptionMinificationFilter] unsignedIntegerValue];
+    CCTextureFilter magFilter = [options[CCTextureOptionMagnificationFilter] unsignedIntegerValue];
+    CCTextureFilter mipFilter = [options[CCTextureOptionMipmapFilter] unsignedIntegerValue];
+    
+    NSAssert(minFilter != CCTextureFilterMipmapNone, @"CCTextureFilterMipmapNone can only be used with CCTextureOptionMipmapFilter.");
+    NSAssert(magFilter != CCTextureFilterMipmapNone, @"CCTextureFilterMipmapNone can only be used with CCTextureOptionMipmapFilter.");
+    NSAssert(mipFilter == CCTextureFilterMipmapNone || genMipmaps, @"CCTextureOptionMipmapFilter must be CCTextureFilterMipmapNone unless CCTextureOptionGenerateMipmaps is YES");
+    
+    static const GLenum FILTERS[3][3] = {
+        {GL_LINEAR, GL_LINEAR, GL_LINEAR}, // Invalid enum, fall back to linear.
+        {GL_NEAREST, GL_NEAREST_MIPMAP_NEAREST, GL_NEAREST_MIPMAP_LINEAR}, // nearest
+        {GL_LINEAR, GL_LINEAR_MIPMAP_NEAREST, GL_LINEAR_MIPMAP_LINEAR}, // linear
+    };
+    
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, FILTERS[minFilter][mipFilter]);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, FILTERS[magFilter][CCTextureFilterMipmapNone]);
+    
+    // Set up texture addressing mode.
+    CCTextureAddressMode addressX = [options[CCTextureOptionAddressModeX] unsignedIntegerValue];
+    CCTextureAddressMode addressY = [options[CCTextureOptionAddressModeY] unsignedIntegerValue];
+    
+    static const GLenum ADDRESSING[] = {
+        GL_CLAMP_TO_EDGE,
+        GL_REPEAT,
+        GL_MIRRORED_REPEAT,
+    };
+    
+    BOOL isPOT = CCSizeIsPOT(sizeInPixels);
+    NSAssert(addressX == CCTextureAddressModeClampToEdge || isPOT, @"Only CCTextureAddressModeClampToEdge can be used with non power of two sized textures.");
+    NSAssert(addressY == CCTextureAddressModeClampToEdge || isPOT, @"Only CCTextureAddressModeClampToEdge can be used with non power of two sized textures.");
+    
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, ADDRESSING[addressX]);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, ADDRESSING[addressY]);
+}
+
 -(instancetype)initWithImage:(CCImage *)image options:(NSDictionary *)options
 {
-    options = NormalizeOptions(options);
+    options = [CCTexture normalizeOptions:options];
     
     CCDeviceInfo *info = [CCDeviceInfo sharedDeviceInfo];
 	NSAssert(info.graphicsAPI != CCGraphicsAPIInvalid, @"Graphics API not configured.");
@@ -201,8 +243,7 @@ NormalizeOptions(NSDictionary *options)
         return nil;
     }
     
-    BOOL isPOT = CCSizeIsPOT(sizeInPixels);
-    if(!isPOT && !info.supportsNPOT){
+    if(!CCSizeIsPOT(sizeInPixels) && !info.supportsNPOT){
         CCLOGWARN(@"cocos2d: Error: This device requires power of two sized textures.");
         
         return nil;
@@ -214,51 +255,14 @@ NormalizeOptions(NSDictionary *options)
 #endif
 		CCRenderDispatch(NO, ^{
             CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Init");
+    
+            [self setupTextureWithSizeInPixels:sizeInPixels options:options];
             
-            glGenTextures(1, &_name);
-            glBindTexture(GL_TEXTURE_2D, _name);
-            
-            BOOL genMipmaps = [options[CCTextureOptionGenerateMipmaps] boolValue];
-            
-            // Set up texture filtering mode.
-            CCTextureFilter minFilter = [options[CCTextureOptionMinificationFilter] unsignedIntegerValue];
-            CCTextureFilter magFilter = [options[CCTextureOptionMagnificationFilter] unsignedIntegerValue];
-            CCTextureFilter mipFilter = [options[CCTextureOptionMipmapFilter] unsignedIntegerValue];
-            
-            NSAssert(minFilter != CCTextureFilterMipmapNone, @"CCTextureFilterMipmapNone can only be used with CCTextureOptionMipmapFilter.");
-            NSAssert(magFilter != CCTextureFilterMipmapNone, @"CCTextureFilterMipmapNone can only be used with CCTextureOptionMipmapFilter.");
-            NSAssert(mipFilter == CCTextureFilterMipmapNone || genMipmaps, @"CCTextureOptionMipmapFilter must be CCTextureFilterMipmapNone unless CCTextureOptionGenerateMipmaps is YES");
-            
-            static const GLenum FILTERS[3][3] = {
-                {GL_LINEAR, GL_LINEAR, GL_LINEAR}, // Invalid enum, fall back to linear.
-                {GL_NEAREST, GL_NEAREST_MIPMAP_NEAREST, GL_NEAREST_MIPMAP_LINEAR}, // nearest
-                {GL_LINEAR, GL_LINEAR_MIPMAP_NEAREST, GL_LINEAR_MIPMAP_LINEAR}, // linear
-            };
-            
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, FILTERS[minFilter][mipFilter]);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, FILTERS[magFilter][CCTextureFilterMipmapNone]);
-            
-            // Set up texture addressing mode.
-            CCTextureAddressMode addressX = [options[CCTextureOptionAddressModeX] unsignedIntegerValue];
-            CCTextureAddressMode addressY = [options[CCTextureOptionAddressModeY] unsignedIntegerValue];
-            
-            static const GLenum ADDRESSING[] = {
-                GL_CLAMP_TO_EDGE,
-                GL_REPEAT,
-                GL_MIRRORED_REPEAT,
-            };
-            
-            NSAssert(addressX == CCTextureAddressModeClampToEdge || isPOT, @"Only CCTextureAddressModeClampToEdge can be used with non power of two sized textures.");
-            NSAssert(addressY == CCTextureAddressModeClampToEdge || isPOT, @"Only CCTextureAddressModeClampToEdge can be used with non power of two sized textures.");
-            
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, ADDRESSING[addressX]);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, ADDRESSING[addressY]);
-
             // Specify OpenGL texture image
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)sizeInPixels.width, (GLsizei)sizeInPixels.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image.pixelData.bytes);
             
             // Generate mipmaps.
-            if(genMipmaps){
+            if([options[CCTextureOptionGenerateMipmaps] boolValue]){
                 glGenerateMipmap(GL_TEXTURE_2D);
             }
             
@@ -394,46 +398,6 @@ NormalizeOptions(NSDictionary *options)
 
 @end
 
-
-#pragma mark -
-#pragma mark CCTexture2D - PVRSupport
-
-@implementation CCTexture (PVRSupport)
-
-// By default PVR images are treated as if they have the alpha channel premultiplied
-static BOOL _PVRHaveAlphaPremultiplied = YES;
-
--(id) initWithPVRFile: (NSString*) relPath
-{
-	CGFloat contentScale;
-	NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathForFilename:relPath contentScale:&contentScale];
-
-	if( (self = [super init]) ) {
-		CCTexturePVR *pvr = [[CCTexturePVR alloc] initWithContentsOfFile:fullpath];
-		if( pvr ) {
-			pvr.retainName = YES;	// don't dealloc texture on release
-
-			_name = pvr.name;	// texture id
-            _sizeInPixels = CGSizeMake(pvr.width, pvr.height);
-			_premultipliedAlpha = (pvr.forcePremultipliedAlpha) ? pvr.hasPremultipliedAlpha : _PVRHaveAlphaPremultiplied;
-
-			_hasMipmaps = ( pvr.numberOfMipmaps > 1  );
-
-		} else {
-
-			CCLOG(@"cocos2d: Couldn't load PVR image: %@", relPath);
-			return nil;
-		}
-		_contentScale = contentScale;
-	}
-	return self;
-}
-
-+(void) PVRImagesHavePremultipliedAlpha:(BOOL)haveAlphaPremultiplied
-{
-	_PVRHaveAlphaPremultiplied = haveAlphaPremultiplied;
-}
-@end
 
 //#pragma mark -
 //#pragma mark CCTexture2D - Drawing

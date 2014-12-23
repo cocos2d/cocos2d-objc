@@ -45,6 +45,9 @@
 
 @interface CCTexture ()
 
+// Fill in any missing fields of an options dictionary.
++(NSDictionary *)normalizeOptions:(NSDictionary *)options;
+
 /* texture name */
 @property(nonatomic,readonly) GLuint name;
 
@@ -54,6 +57,8 @@
 @property(nonatomic,readonly) id<MTLSamplerState> metalSampler;
 #endif
 
+
+
 @property(nonatomic,readwrite) BOOL premultipliedAlpha;
 
 // Check if the texture's weakly retained proxy still exists.
@@ -62,42 +67,7 @@
 // Retrieve the proxy for this texture.
 @property(atomic, readonly, weak) CCProxy *proxy;
 
-@end
-
-/*
- Extensions to make it easy to create a CCTexture2D object from a PVRTC file
- Note that the generated textures don't have their alpha premultiplied - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
- */
-@interface CCTexture (PVRSupport)
-/* Initializes a texture from a PVR file.
- 
- Supported PVR formats:
- - BGRA 8888
- - RGBA 8888
- - RGBA 4444
- - RGBA 5551
- - RBG 565
- - A 8
- - I 8
- - AI 8
- - PVRTC 2BPP
- - PVRTC 4BPP
- 
- By default PVR images are treated as if they alpha channel is NOT premultiplied. You can override this behavior with this class method:
- - PVRImagesHavePremultipliedAlpha:(BOOL)haveAlphaPremultiplied;
- 
- IMPORTANT: This method is only defined on iOS. It is not supported on the Mac version.
- 
- */
--(id) initWithPVRFile: (NSString*) file;
-
-/* treats (or not) PVR files as if they have alpha premultiplied.
- Since it is impossible to know at runtime if the PVR images have the alpha channel premultiplied, it is
- possible load them as if they have (or not) the alpha channel premultiplied.
- 
- By default it is disabled.
- 
- */
-+(void) PVRImagesHavePremultipliedAlpha:(BOOL)haveAlphaPremultiplied;
+// Create the native texture object.
+-(void)setupTextureWithSizeInPixels:(CGSize)sizeInPixels options:(NSDictionary *)options;
 
 @end
