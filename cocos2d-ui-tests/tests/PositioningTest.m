@@ -40,6 +40,8 @@ extern const NSString *CARD_NAME[];
 - (void)touchMoved:(CCTouch *)touch withEvent:(CCTouchEvent *)event
 {
     CGPoint pos = [self.parent convertToNodeSpace:touch.locationInWorld];
+    // If we want to position them relative to the window, we can't use normalized positions.
+    self.positionType = CCPositionTypePoints;
     self.position = pos;
 }
 
