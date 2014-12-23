@@ -486,7 +486,7 @@
             
             CCWrappedInputStream *stream = [[CCGZippedInputStream alloc] initWithInputStream:[NSInputStream inputStreamWithData:decoded]];
             [stream open];
-            NSData *data = [stream loadDataWithSizeHint:sizeHint];
+            NSData *data = [stream loadDataWithSizeHint:sizeHint error:nil];
             [stream close];
             
 			[layer setTileData:data];
