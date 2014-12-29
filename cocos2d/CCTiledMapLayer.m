@@ -310,7 +310,7 @@ AutomaticVertexZ(int tileX, int tileY, int mapColumns, int mapRows, CCTiledMapOr
 {
 	switch(orientation) {
 		case CCTiledMapOrientationIso: {
-			NSUInteger maxVal = mapColumns + mapRows;
+			int maxVal = mapColumns + mapRows;
 			return -(maxVal - (tileX + tileY));
 		}
 		
