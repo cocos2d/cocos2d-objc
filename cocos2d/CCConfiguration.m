@@ -223,9 +223,12 @@ static char * glExtensions;
 	else if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone )
 	{
 		CGSize preferredSize = [[UIScreen mainScreen] preferredMode].size;
+		// This code makes me sad. Very glad it's going away in v4.
 		
-		if(preferredSize.height == 960){
-			return ([UIScreen mainScreen].scale == 2 ? CCDeviceiPhoneRetinaDisplay : CCDeviceiPhone);
+		if(preferredSize.height == 480){
+			return CCDeviceiPhone;
+		} else if(preferredSize.height == 960){
+			return CCDeviceiPhoneRetinaDisplay;
 		} else if(preferredSize.height == 1136){
 			return CCDeviceiPhone5RetinaDisplay;
 		} else {
