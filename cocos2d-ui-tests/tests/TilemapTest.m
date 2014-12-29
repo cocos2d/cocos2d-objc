@@ -120,4 +120,18 @@
 	scroll.scrollPosition = ccp(map.contentSizeInPoints.width/2 - scroll.contentSizeInPoints.width/2, 0);
 }
 
+
+-(void) setupIsoTilemapAutomaticZTest
+{
+    self.subTitle = @"Isometric-Automatic Vertex Z";
+    [self testForMapNamed:@"TileMaps/iso-automaticZ.tmx"];
+}
+
+
+-(void) setupOrthoTilemapAutomaticZTest
+{
+    self.subTitle = @"Ortho-Automatic Vertex Z";
+    [self testForMapNamed:@"TileMaps/orthogonal-desert-automaticZ.tmx"];
+}
+
 @end
