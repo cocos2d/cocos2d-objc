@@ -191,6 +191,7 @@
 		D3DACC7D19E74BD500629E97 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = D3763D9819E7356C006C050D /* icon.icns */; };
 		D3DACC7E19E74BD800629E97 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D3763D9919E7356C006C050D /* Info.plist */; };
 		D3E1842B19E861FC00A08B01 /* MetalShaders in Resources */ = {isa = PBXBuildFile; fileRef = D3E1842A19E861FC00A08B01 /* MetalShaders */; };
+		D3F52DE31A51FE2C00A18F54 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F52DE21A51FE2C00A18F54 /* Metal.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D4AFE9131977100000261299 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8D81977100000261299 /* A Damn Mess.ttf */; };
 		D4AFE9141977100000261299 /* Abberancy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8D91977100000261299 /* Abberancy.ttf */; };
 		D4AFE9151977100000261299 /* ThisFontIsAbdFont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE8DA1977100000261299 /* ThisFontIsAbdFont.ttf */; };
@@ -414,6 +415,7 @@
 		D3C9C866188078B900C58900 /* CCSchedulerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSchedulerTest.m; path = "cocos2d-ui-tests/tests/CCSchedulerTest.m"; sourceTree = SOURCE_ROOT; };
 		D3D6CF5E18BD5F0500A51531 /* CCRendererTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCRendererTest.m; path = "cocos2d-ui-tests/tests/CCRendererTest.m"; sourceTree = SOURCE_ROOT; };
 		D3E1842A19E861FC00A08B01 /* MetalShaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = MetalShaders; path = "cocos2d-ui-tests/MetalShaders"; sourceTree = SOURCE_ROOT; };
+		D3F52DE21A51FE2C00A18F54 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		D4AFE8D81977100000261299 /* A Damn Mess.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "A Damn Mess.ttf"; sourceTree = "<group>"; };
 		D4AFE8D91977100000261299 /* Abberancy.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Abberancy.ttf; sourceTree = "<group>"; };
 		D4AFE8DA1977100000261299 /* ThisFontIsAbdFont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ThisFontIsAbdFont.ttf; sourceTree = "<group>"; };
@@ -501,6 +503,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3F52DE31A51FE2C00A18F54 /* Metal.framework in Frameworks */,
 				D3763BD219E72FB4006C050D /* libcocos2d.a in Frameworks */,
 				D24FAEED198014C80043E27D /* GLKit.framework in Frameworks */,
 				D28A2E1F1954F7E900ADC03D /* OpenGLES.framework in Frameworks */,
@@ -645,6 +648,7 @@
 		B7E2604A17E7D278007067F0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D3F52DE21A51FE2C00A18F54 /* Metal.framework */,
 				D3763DDC19E73666006C050D /* AppKit.framework */,
 				D3763DDA19E7364F006C050D /* OpenGL.framework */,
 				D28A2E1E1954F7E900ADC03D /* OpenGLES.framework */,
