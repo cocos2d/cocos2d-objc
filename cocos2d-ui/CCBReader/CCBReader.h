@@ -25,12 +25,7 @@
 
 #import <Foundation/Foundation.h>
 
-#if CCB_SPRITEKIT_READER
-#import "CCBSpriteKitCompatibility.h"
-#else
 #import "cocos2d.h"
-#endif
-
 
 /**
  The CCBReader loads node graphs created by SpriteBuilder (or other editors using the same format). If you are using SpriteBuilder it's strongly recommended that you set up the CCFileUtils using the configureCCFileUtils method or use the Xcode project file created by SpriteBuilder.
@@ -162,12 +157,4 @@
  */
 @property (nonatomic,strong) CCAnimationManager* animationManager;
 
-
-// Internal use: override methods for Sprite Kit Reader subclass
-+(void) setSceneSize:(CGSize)sceneSize;
--(CCNode*) nodeFromClassName:(NSString*)nodeClassName;
--(CCScene*) createScene;
--(void) readerDidSetSpriteFrame:(CCSpriteFrame*)spriteFrame node:(CCNode*)node;
-
 @end
-

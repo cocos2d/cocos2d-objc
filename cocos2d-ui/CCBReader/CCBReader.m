@@ -356,11 +356,6 @@ static inline float readFloat(CCBReader *self)
     return [stringCache objectAtIndex:n];
 }
 
--(void) readerDidSetSpriteFrame:(CCSpriteFrame*)spriteFrame node:(CCNode*)node
-{
-	// does nothing, overridden by Sprite Kit reader
-}
-
 - (void) readPropertyForNode:(CCNode*) node parent:(CCNode*)parent isExtraProp:(BOOL)isExtraProp
 {
     // Read type and property name
@@ -628,7 +623,6 @@ static inline float readFloat(CCBReader *self)
         {
             CCSpriteFrame* spriteFrame = [CCSpriteFrame frameWithImageNamed:spriteFile];
             [node setValue:spriteFrame forKey:name];
-			[self readerDidSetSpriteFrame:spriteFrame node:node];
             
 #if DEBUG_READER_PROPERTIES
 			valueString = [NSString stringWithFormat:@"%@ (%@)", valueString, spriteFrame];
@@ -1906,13 +1900,6 @@ SelectorNameForProperty(objc_property_t property)
 
 + (CCBReader*) reader
 {
-	// if available, create an instance of Sprite Kit Reader class instead
-	Class spriteKitReaderClass = NSClassFromString(@"CCBSpriteKitReader");
-	if (spriteKitReaderClass)
-	{
-		return [[spriteKitReaderClass alloc] init];
-	}
-	
     return [[CCBReader alloc] init];
 }
 
@@ -1963,16 +1950,6 @@ SelectorNameForProperty(objc_property_t property)
 {
     NSArray *searchPaths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     return [[searchPaths objectAtIndex:0] stringByAppendingPathComponent:@"ccb"];
-}
-
-+(void) setSceneSize:(CGSize)sceneSize
-{
-	[[CCBReader reader] setSceneSize:sceneSize];
-}
-
--(void) setSceneSize:(CGSize)sceneSize
-{
-	// does nothing, only needed for CCBSpriteKitReader
 }
 
 @end
