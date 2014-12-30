@@ -330,7 +330,7 @@ static float conditionShininess(float shininess);
             }
         }
 
-        CCColor *ambientColor = [passInputs.sprite.scene.lights findAmbientSumForLightsWithMask:weakInterface.groupMask];
+        CCColor *ambientColor = [CCEffectUtilsGetNodeScene(passInputs.sprite).lights findAmbientSumForLightsWithMask:weakInterface.groupMask];
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_globalAmbientColor"]] = [NSValue valueWithGLKVector4:ambientColor.glkVector4];
         
         if (weakInterface.needsSpecular)
@@ -385,7 +385,7 @@ static float conditionShininess(float shininess);
     CGAffineTransform spriteTransform = sprite.nodeToWorldTransform;
     CGPoint spritePosition = CGPointApplyAffineTransform(sprite.anchorPointInPoints, sprite.nodeToWorldTransform);
     
-    CCLightCollection *lightCollection = sprite.scene.lights;
+    CCLightCollection *lightCollection = CCEffectUtilsGetNodeScene(sprite).lights;
     if (self.groupMaskDirty)
     {
         self.groupMask = [lightCollection maskForGroups:self.groups];
