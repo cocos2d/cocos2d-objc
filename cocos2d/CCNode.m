@@ -653,7 +653,8 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( child.parent == nil, @"child already added to another node. It can't be added again");
-
+    NSAssert( [child class] != [CCScene class], @"Scenes may not be added as children of other nodes or scenes. Only one scene can exist in a hierarchy.");
+    
 	if(! _children){
         _children = [[NSMutableArray alloc] init];
     }
