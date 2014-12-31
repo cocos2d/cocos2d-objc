@@ -33,7 +33,6 @@
 
 #import "Platforms/CCGL.h"
 #import "CCTexture_Private.h"
-#import "CCTexture+PVR.h"
 #import "CCDeviceInfo.h"
 #import "CCDirector.h"
 #import "CCFileUtils.h"

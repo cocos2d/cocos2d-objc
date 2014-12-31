@@ -29,6 +29,7 @@
 
 
 @class CCSpriteFrame;
+@class CCFile;
 @class CCImage;
 
 
@@ -80,5 +81,12 @@ extern NSString * const CCTextureOptionAddressModeY;
 @property(nonatomic, readonly) CGSize contentSize;
 
 @property(nonatomic, readonly) CCSpriteFrame *spriteFrame;
+
+@end
+
+
+@interface CCTexture(PVR)
+
+-(id)initPVRWithCCFile:(CCFile *)file options:(NSDictionary *)options;
 
 @end

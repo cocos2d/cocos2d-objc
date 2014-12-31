@@ -30,7 +30,6 @@
 #import "ccConfig.h"
 #import "ccMacros.h"
 #import "CCDeviceInfo.h"
-#import "CCTexture+PVR.h"
 #import "CCShader.h"
 #import "CCDirector.h"
 #import "CCRenderDispatch.h"

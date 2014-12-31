@@ -1,12 +1,13 @@
-#import "CCTexture+PVR.h"
+#import "CCTexture_Private.h"
+
 #import "ccMacros.h"
 #import "CCDeviceInfo.h"
-#import "Support/ccUtils.h"
+#import "ccUtils.h"
 #import "CCGL.h"
 #import "CCRenderDispatch.h"
 
 #import "CCFile_Private.h"
-#import "CCTexture_Private.h"
+
 
 #pragma mark -
 #pragma mark CCTexturePVR

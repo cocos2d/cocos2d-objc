@@ -201,7 +201,6 @@
 		7A5946E819E372F900F65F90 /* CCActionCatmullRom.h in Headers */ = {isa = PBXBuildFile; fileRef = A0A7A53A1514F27D00C8BD16 /* CCActionCatmullRom.h */; };
 		7A5946EA19E372F900F65F90 /* CCActionProgressTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 50150435113300F900A9CA65 /* CCActionProgressTimer.h */; };
 		7A5946EC19E372FA00F65F90 /* CCActionTween.h in Headers */ = {isa = PBXBuildFile; fileRef = 50FBB2D8117613F500150761 /* CCActionTween.h */; };
-		7A5946EE19E372FA00F65F90 /* CCTexture+PVR.h in Headers */ = {isa = PBXBuildFile; fileRef = E0F9246F1224140400EF2362 /* CCTexture+PVR.h */; };
 		7A5946F019E372FA00F65F90 /* CCTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = 50E1357110ADEB1B00C9E7FA /* CCTexture.h */; };
 		7A5946F219E372FA00F65F90 /* CCTexture_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B706B19718209A8300B27A2C /* CCTexture_Private.h */; };
 		7A5946F319E372FB00F65F90 /* CCTextureCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2670DFDEAFF00C013A5 /* CCTextureCache.h */; };
@@ -730,7 +729,6 @@
 		D2FEB67E194F6C9E00FC0574 /* CCDeviceInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EAD1F0121F522A00B0C81C /* CCDeviceInfo.h */; };
 		D2FEB67F194F6C9E00FC0574 /* CCEffectBrightness.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D85671B191B018200573093 /* CCEffectBrightness.h */; };
 		D2FEB680194F6C9E00FC0574 /* CCEffectNode.h in Headers */ = {isa = PBXBuildFile; fileRef = D272031E18FC89A000B100FF /* CCEffectNode.h */; };
-		D2FEB682194F6C9E00FC0574 /* CCTexture+PVR.h in Headers */ = {isa = PBXBuildFile; fileRef = E0F9246F1224140400EF2362 /* CCTexture+PVR.h */; };
 		D2FEB683194F6C9E00FC0574 /* CCNS.h in Headers */ = {isa = PBXBuildFile; fileRef = E0F92AC31224559800EF2362 /* CCNS.h */; };
 		D2FEB684194F6C9E00FC0574 /* CCAnimationCache.h in Headers */ = {isa = PBXBuildFile; fileRef = E02BB6D4126CA93A006E46A2 /* CCAnimationCache.h */; };
 		D2FEB685194F6C9E00FC0574 /* CCAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = E02BB702126CADEA006E46A2 /* CCAnimation.h */; };
@@ -940,7 +938,6 @@
 		E0EAD109121F4B4600B0C81C /* CCGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = E0EAD0F4121F4B4600B0C81C /* CCGLView.m */; };
 		E0EAD19D121F4D7300B0C81C /* CCGL.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EAD19C121F4D7300B0C81C /* CCGL.h */; };
 		E0EAD1F1121F522A00B0C81C /* CCDeviceInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = E0EAD1F0121F522A00B0C81C /* CCDeviceInfo.h */; };
-		E0F924711224140400EF2362 /* CCTexture+PVR.h in Headers */ = {isa = PBXBuildFile; fileRef = E0F9246F1224140400EF2362 /* CCTexture+PVR.h */; };
 		E0F924721224140400EF2362 /* CCTexture+PVR.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F924701224140400EF2362 /* CCTexture+PVR.m */; };
 		E0F92AC41224559800EF2362 /* CCNS.h in Headers */ = {isa = PBXBuildFile; fileRef = E0F92AC31224559800EF2362 /* CCNS.h */; };
 		E525F0F74C7C69C4371E20EE /* CCPackageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F9EA4B5DD37D0418869E /* CCPackageHelper.m */; };
@@ -1466,7 +1463,6 @@
 		E0EAD0F4121F4B4600B0C81C /* CCGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCGLView.m; sourceTree = "<group>"; };
 		E0EAD19C121F4D7300B0C81C /* CCGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
 		E0EAD1F0121F522A00B0C81C /* CCDeviceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDeviceInfo.h; sourceTree = "<group>"; };
-		E0F9246F1224140400EF2362 /* CCTexture+PVR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCTexture+PVR.h"; sourceTree = "<group>"; };
 		E0F924701224140400EF2362 /* CCTexture+PVR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCTexture+PVR.m"; sourceTree = "<group>"; };
 		E0F92AC31224559800EF2362 /* CCNS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNS.h; sourceTree = "<group>"; };
 		E525F94C08B1D716E9173061 /* CCPackageManager_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackageManager_private.h; sourceTree = "<group>"; };
@@ -1815,11 +1811,10 @@
 				D3867D901A329AEA009AFFF3 /* CCImage.h */,
 				D349C3D71A366E9F00D18215 /* CCImage_Private.h */,
 				D3867D981A329B08009AFFF3 /* CCImage.m */,
-				E0F9246F1224140400EF2362 /* CCTexture+PVR.h */,
-				E0F924701224140400EF2362 /* CCTexture+PVR.m */,
 				50E1357110ADEB1B00C9E7FA /* CCTexture.h */,
-				50E1357210ADEB1B00C9E7FA /* CCTexture.m */,
 				B706B19718209A8300B27A2C /* CCTexture_Private.h */,
+				50E1357210ADEB1B00C9E7FA /* CCTexture.m */,
+				E0F924701224140400EF2362 /* CCTexture+PVR.m */,
 				5018F2670DFDEAFF00C013A5 /* CCTextureCache.h */,
 				5018F2680DFDEAFF00C013A5 /* CCTextureCache.m */,
 			);
@@ -2413,7 +2408,6 @@
 				E0EAD1F1121F522A00B0C81C /* CCDeviceInfo.h in Headers */,
 				9D85671D191B018200573093 /* CCEffectBrightness.h in Headers */,
 				D272032B18FC89A000B100FF /* CCEffectNode.h in Headers */,
-				E0F924711224140400EF2362 /* CCTexture+PVR.h in Headers */,
 				83E1A87B19C8ACC1000A3BCA /* CCPackageDownloadManagerDelegate.h in Headers */,
 				E0F92AC41224559800EF2362 /* CCNS.h in Headers */,
 				E02BB6D6126CA93A006E46A2 /* CCAnimationCache.h in Headers */,
@@ -2575,7 +2569,6 @@
 				7A5946EA19E372F900F65F90 /* CCActionProgressTimer.h in Headers */,
 				7A5946EC19E372FA00F65F90 /* CCActionTween.h in Headers */,
 				D349C3DA1A366E9F00D18215 /* CCImage_Private.h in Headers */,
-				7A5946EE19E372FA00F65F90 /* CCTexture+PVR.h in Headers */,
 				7A5946F019E372FA00F65F90 /* CCTexture.h in Headers */,
 				7A5946F219E372FA00F65F90 /* CCTexture_Private.h in Headers */,
 				7A5946F319E372FB00F65F90 /* CCTextureCache.h in Headers */,
@@ -2770,7 +2763,6 @@
 				D2FEB67F194F6C9E00FC0574 /* CCEffectBrightness.h in Headers */,
 				D2FEB680194F6C9E00FC0574 /* CCEffectNode.h in Headers */,
 				D24161121958F72B003673BD /* CCEffectStackProtocol.h in Headers */,
-				D2FEB682194F6C9E00FC0574 /* CCTexture+PVR.h in Headers */,
 				D2FEB683194F6C9E00FC0574 /* CCNS.h in Headers */,
 				D2FEB684194F6C9E00FC0574 /* CCAnimationCache.h in Headers */,
 				D2FEB685194F6C9E00FC0574 /* CCAnimation.h in Headers */,

@@ -11,7 +11,6 @@
 #import "CCTextureCache.h"
 #import "CCTexture_Private.h"
 #import "CCFile_Private.h"
-#import "CCTexture+PVR.h"
 
 @interface TextureTest : TestBase @end
 
