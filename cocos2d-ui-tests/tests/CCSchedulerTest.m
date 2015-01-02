@@ -75,6 +75,45 @@
 @interface CLASS_NAME : TestBase @end
 @implementation CLASS_NAME
 
+
+- (void) setupActionsQueuedAndUnqueuedTest
+{
+    
+    self.subTitle =
+    @"Sprite should rotate.\nActions should work on these special nested nodes..";
+    
+    CGSize size = [CCDirector sharedDirector].designSize;
+    
+    //	CCNode *parent = self.contentNode;
+    
+    CCRenderTexture *parent = [CCRenderTexture renderTextureWithWidth:size.width height:size.height pixelFormat:CCTexturePixelFormat_RGBA8888 depthStencilFormat:GL_DEPTH24_STENCIL8];
+    parent.positionType = CCPositionTypeNormalized;
+    parent.position = ccp(0.5, 0.5);
+    parent.autoDraw = YES;
+    parent.clearColor = [CCColor blackColor];
+    parent.clearDepth = 1.0;
+    parent.clearStencil = 0;
+    parent.clearFlags = GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT;
+    [self.contentNode addChild:parent];
+    
+    CCNodeGradient *grad = [CCNodeGradient nodeWithColor:[CCColor redColor] fadingTo:[CCColor blueColor] alongVector:ccp(1, 1)];
+//    [parent addChild:grad];
+    
+    CCNode *stencil = [CCSprite spriteWithImageNamed:@"Sprites/grossini.png"];
+    stencil.position = ccp(size.width/2, size.height/2);
+    stencil.scale = 5.0;
+    
+    CCClippingNode *clip = [CCClippingNode clippingNodeWithStencil:stencil];
+    clip.alphaThreshold = 0.5;
+    [clip addChild:grad];
+    
+    [parent addChild:clip];
+    
+    [stencil runAction:[CCActionRepeatForever actionWithAction:[CCActionRotateBy actionWithDuration:1.0 angle:90.0]]];
+    
+}
+
+
 -(void)pauseTestWithParent:(CCNode *)parent objectToPause:(CCNode *)objectToPause
 {
 	{
