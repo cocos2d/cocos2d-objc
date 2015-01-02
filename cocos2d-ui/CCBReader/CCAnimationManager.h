@@ -65,7 +65,7 @@
     
     void (^block)(id sender);
     
-    CCScheduler* _scheduler;
+//    CCScheduler* _scheduler;
     NSMutableArray* _currentActions;
     
     BOOL _loop;

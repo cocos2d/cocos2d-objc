@@ -25,21 +25,31 @@
  *
  */
 
-// -----------------------------------------------------------------
+#import "CCScene+Private.h"
 
-#import "CCScene.h"
+#import "CCActionManager.h"
 
 #import "CCDirector_Private.h"
 #import "CCLightCollection.h"
 #import "CCColor.h"
 
-// -----------------------------------------------------------------
-
 @implementation CCScene {
+//    CCActionManager *_actionManager;
+    CCActionManager *_actionManagerFixed;
 
 }
+@synthesize actionManager = _actionManager;
+//-(CCActionManager*) actionManager
+//{
+//    return _actionManager;
+//}
 
-// -----------------------------------------------------------------
+-(CCActionManager*) actionManagerFixed
+{
+    return _actionManagerFixed;
+}
+
+
 
 -(CCScene *)scene
 {
@@ -53,6 +63,18 @@
 		[self setContentSize:s];
 		
 		self.colorRGBA = [CCColor blackColor];
+        
+        _scheduler = [[CCScheduler alloc] init];
+        
+        // action manager
+        _actionManager = [[CCActionManager alloc] init];
+        _actionManagerFixed = [[CCFixedActionManager alloc] init];
+        
+        [_scheduler scheduleTarget:_actionManager];
+        [_scheduler scheduleTarget:_actionManagerFixed];
+        
+        [_scheduler setPaused:NO target:_actionManager];
+        [_scheduler setPaused:NO target:_actionManagerFixed];
         
         _lights = [[CCLightCollection alloc] init];
 	}

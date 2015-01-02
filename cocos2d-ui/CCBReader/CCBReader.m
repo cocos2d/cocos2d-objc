@@ -1401,7 +1401,8 @@ SelectorNameForProperty(objc_property_t property)
     
     if(animationManager.fixedTimestep)
     {
-        node.actionManager = [CCDirector sharedDirector].actionManagerFixed;
+        // TODO: should defer this
+//        node.actionManager = [CCDirector sharedDirector].actionManagerFixed;
     }
     
     // Read animated properties

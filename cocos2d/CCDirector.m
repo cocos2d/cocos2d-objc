@@ -101,9 +101,7 @@ extern NSString * cocos2dVersion(void);
 @synthesize delegate = _delegate;
 @synthesize totalFrames = _totalFrames;
 @synthesize secondsPerFrame = _secondsPerFrame;
-@synthesize scheduler = _scheduler;
-@synthesize actionManager = _actionManager;
-@synthesize actionManagerFixed = _actionManagerFixed;
+
 
 //
 // singleton stuff
@@ -166,20 +164,6 @@ static CCDirector *_sharedDirector = nil;
 
 		// running thread
 		_runningThread = nil;
-
-		// scheduler
-		_scheduler = [[CCScheduler alloc] init];
-
-		// action manager
-		_actionManager = [[CCActionManager alloc] init];
-		_actionManagerFixed = [[CCFixedActionManager alloc] init];
-		
-		[_scheduler scheduleTarget:_actionManager];
-		[_scheduler scheduleTarget:_actionManagerFixed];
-
-		[_scheduler setPaused:NO target:_actionManager];
-		[_scheduler setPaused:NO target:_actionManagerFixed];
-		
 		
 		// touch manager
 		_responderManager = [ CCResponderManager responderManager ];
@@ -221,7 +205,7 @@ static CCDirector *_sharedDirector = nil;
 	[self calculateDeltaTime];
 
 	/* tick before glClear: issue #533 */
-	if( ! _isPaused ) [_scheduler update: _dt];
+	if( ! _isPaused ) [_runningScene.scheduler update: _dt];
 
 	/* to avoid flickr, nextScene MUST be here: after tick and before draw.
 	 XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
@@ -820,12 +804,12 @@ static CCDirector *_sharedDirector = nil;
 
 - (CCTime)fixedUpdateInterval
 {
-	return self.scheduler.fixedUpdateInterval;
+	return _runningScene.scheduler.fixedUpdateInterval;
 }
 
 -(void)setFixedUpdateInterval:(CCTime)fixedUpdateInterval
 {
-	self.scheduler.fixedUpdateInterval = fixedUpdateInterval;
+	_runningScene.scheduler.fixedUpdateInterval = fixedUpdateInterval;
 }
 
 @end
