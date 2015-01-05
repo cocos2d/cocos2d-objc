@@ -74,7 +74,12 @@ static inline
 CCPhysicsBody *
 GetBodyIfRunning(CCNode *node)
 {
-	return (node->_isInActiveScene ? node->_physicsBody : nil);
+	return ([node isInActiveScene] ? node->_physicsBody : nil);
+}
+
+-(BOOL) isInActiveScene
+{
+    return _isInActiveScene;
 }
 
 GLKMatrix4
@@ -663,7 +668,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	child->_pausedAncestors = _pausedAncestors + (_paused ? 1 : 0);
 	RecursivelyIncrementPausedAncestors(child, child->_pausedAncestors);
 	
-	if( _isInActiveScene ) {
+	if( [self isInActiveScene] ) {
 		[child onEnter];
 		[child onEnterTransitionDidFinish];
 	}
@@ -743,7 +748,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		// IMPORTANT:
 		//  -1st do onExit
 		//  -2nd cleanup
-		if (_isInActiveScene)
+		if ([self isInActiveScene])
 		{
 			[c onExitTransitionDidStart];
 			[c onExit];
@@ -770,7 +775,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	// IMPORTANT:
 	//  -1st do onExit
 	//  -2nd cleanup
-	if (_isInActiveScene)
+	if ([self isInActiveScene])
 	{
 		[child onExitTransitionDidStart];
 		[child onExit];
@@ -796,6 +801,12 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 {
     if(_parent) [self removeFromParentAndCleanup:NO];
     [parent addChild:self];
+}
+
+
+-(void)setRawParent:(CCNode *)parent
+{
+    _parent = parent;
 }
 
 - (void) sortAllChildren
@@ -968,7 +979,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 	}
 	
 	if(physicsBody != _physicsBody){
-		if(_isInActiveScene){
+		if([self isInActiveScene]){
 			[self teardownPhysics];
 			[self setupPhysicsBody:physicsBody];
 		}
@@ -991,11 +1002,14 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 
 -(void) onEnter
 {
-	[_children makeObjectsPerformSelector:@selector(onEnter)];
+    #warning Once CCDirector cleanup is done, we'll be able to add this assertion back in. Right now, it's hard to create complete scenes when writing unit tests, since the director is a singleton.
+    //NSAssert(self.scene, @"Missing scene on node. Was it not added to the hierarchy?");
+    
+    [_children makeObjectsPerformSelector:@selector(onEnter)];
 	
 	[self setupPhysicsBody:_physicsBody];
 	[self.scene.scheduler scheduleTarget:self];
-	
+    
 	BOOL wasRunning = self.active;
 	_isInActiveScene = YES;
     CCScene *scene = self.scene;
@@ -1019,9 +1033,10 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
     }
     
     // Add queued actions or scheduled code, if needed:
-    for( void (^block)() in _queuedActions){
+    for( dispatch_block_t block in _queuedActions){
         block();
     }
+    _queuedActions = nil;
 	
 	[self wasRunning:wasRunning];
 }
@@ -1050,7 +1065,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 #pragma mark CCNode Actions
 
 -(void) queueWhenAddedToScene:(void (^)(void))block{
-    if(_isInActiveScene){
+    if([self isInActiveScene]){
         block();
     }else{
         if(!_queuedActions){
@@ -1243,7 +1258,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 
 -(BOOL)active
 {
-	return (_isInActiveScene && !_paused && _pausedAncestors == 0);
+	return ([self isInActiveScene] && !_paused && _pausedAncestors == 0);
 }
 
 -(void)setPaused:(BOOL)paused

@@ -27,6 +27,7 @@
 #import "ccMacros.h"
 
 #import "CCClippingNode.h"
+#import "CCNode_Private.h"
 
 #import "CCProtocols.h"
 #import "CCRenderer.h"
@@ -74,6 +75,8 @@ SetProgram(CCNode *n, CCShader *p, NSNumber *alpha) {
 		
     if (self = [super init]) {
         self.stencil = stencil;
+        [stencil setRawParent: self];
+        
         self.alphaThreshold = 1;
         self.inverted = NO;
         // get (only once) the number of bits of the stencil buffer

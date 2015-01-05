@@ -26,6 +26,7 @@
  */
 
 #import "CCScene+Private.h"
+#import "CCNode_Private.h"
 
 #import "CCActionManager.h"
 
@@ -58,6 +59,7 @@
 
 -( id )init {
 	if((self = [ super init ])){
+        
 		CGSize s = [CCDirector sharedDirector].designSize;
 		self.anchorPoint = ccp(0.0f, 0.0f);
 		[self setContentSize:s];
