@@ -166,12 +166,7 @@
 	self.subTitle = @"Texture Repeat with Blocky Filtering";
 	
 	CGSize s = [[CCDirector sharedDirector] viewSize];
-
-	// TODO can make this go away once we have the new CCFileUtils implemented.
-    CGFloat contentScale = 1.0;
-    NSString *path = [[CCFileUtils sharedFileUtils] fullPathForFilename:@"test_image.png" contentScale:&contentScale];
-    CCFile *file = [[CCFile alloc] initWithName:@"Foo" url:[NSURL fileURLWithPath:path] contentScale:contentScale];
-    CCImage *image = [[CCImage alloc] initWithCCFile:file options:nil];
+    CCImage *image = [[CCImage alloc] initWithCCFile:[CCFileUtils fileNamed:@"test_image.png"] options:nil];
     
 	CCTexture* texture = [[CCTexture alloc] initWithImage:image options:@{
         CCTextureOptionMagnificationFilter: @(CCTextureFilterNearest),
@@ -190,12 +185,7 @@
 -(void) setupGenerateMipMapTest
 {
 	self.subTitle = @"Mipmap Generation:\nLeft pixels should 'swim', right should not.";
-	
-	// TODO can make this go away once we have the new CCFileUtils implemented.
-    CGFloat contentScale = 1.0;
-    NSString *path = [[CCFileUtils sharedFileUtils] fullPathForFilename:@"test_image.png" contentScale:&contentScale];
-    CCFile *file = [[CCFile alloc] initWithName:@"Foo" url:[NSURL fileURLWithPath:path] contentScale:contentScale];
-    CCImage *image = [[CCImage alloc] initWithCCFile:file options:nil];
+    CCImage *image = [[CCImage alloc] initWithCCFile:[CCFileUtils fileNamed:@"test_image.png"] options:nil];
     
 	CCTexture* texture = [[CCTexture alloc] initWithImage:image options:@{
         CCTextureOptionMinificationFilter: @(CCTextureFilterNearest),
@@ -268,12 +258,7 @@
 {
 	self.subTitle = @"PVR (RGBA8) Cubemap";
     
-    CGFloat contentScale = 1.0;
-    NSString *name = @"Cubemap/Cubemap.pvr.gz";
-    NSString *path = [[CCFileUtils sharedFileUtils] fullPathForFilename:name contentScale:&contentScale];
-    CCFile *file = [[CCFile alloc] initWithName:name url:[NSURL fileURLWithPath:path] contentScale:contentScale];
-    
-    CCTexture *cubemap = [[CCTexture alloc] initPVRWithCCFile:file options:@{
+    CCTexture *cubemap = [[CCTexture alloc] initPVRWithCCFile:[CCFileUtils fileNamed:@"Cubemap/Cubemap.pvr.gz"] options:@{
         CCTextureOptionGenerateMipmaps: @(YES), // ?? What to do with this flag for PVRs that already have mipmaps?
         CCTextureOptionMipmapFilter: @(CCTextureFilterLinear),
         CCTextureOptionMinificationFilter: @(CCTextureFilterNearest),
@@ -287,12 +272,7 @@
 {
 	self.subTitle = @"PVR (pvrtc 2bpp) Cubemap";
     
-    CGFloat contentScale = 1.0;
-    NSString *name = @"Cubemap/Cubemap-pvrtc.pvr.gz";
-    NSString *path = [[CCFileUtils sharedFileUtils] fullPathForFilename:name contentScale:&contentScale];
-    CCFile *file = [[CCFile alloc] initWithName:name url:[NSURL fileURLWithPath:path] contentScale:contentScale];
-    
-    CCTexture *cubemap = [[CCTexture alloc] initPVRWithCCFile:file options:@{
+    CCTexture *cubemap = [[CCTexture alloc] initPVRWithCCFile:[CCFileUtils fileNamed:@"Cubemap/Cubemap-pvrtc.pvr.gz"] options:@{
         CCTextureOptionGenerateMipmaps: @(YES), // ?? What to do with this flag for PVRs that already have mipmaps?
         CCTextureOptionMipmapFilter: @(CCTextureFilterLinear),
         CCTextureOptionMinificationFilter: @(CCTextureFilterNearest),

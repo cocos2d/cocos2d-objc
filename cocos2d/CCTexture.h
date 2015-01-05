@@ -35,7 +35,7 @@
 
 typedef NS_ENUM(NSUInteger, CCTextureType){
     CCTextureType2D,
-    CCTextureTypeCube,
+    CCTextureTypeCubemap,
 };
 
 
@@ -87,6 +87,6 @@ extern NSString * const CCTextureOptionAddressModeY;
 
 @interface CCTexture(PVR)
 
--(id)initPVRWithCCFile:(CCFile *)file options:(NSDictionary *)options;
+-(instancetype)initPVRWithCCFile:(CCFile *)file options:(NSDictionary *)options;
 
 @end

@@ -279,23 +279,20 @@ static CCTextureCache *sharedTextureCache;
 	});
 
 	if( ! tex ) {
-
-		CGFloat contentScale;
-		NSString *fullpath = [fileUtils fullPathForFilename:path contentScale:&contentScale];
-		if( ! fullpath ) {
+        CCFile *file = [CCFileUtils fileNamed:path];
+        
+		if( ! file ) {
 			CCLOG(@"cocos2d: Couldn't find file:%@", path);
 			return nil;
 		}
 
-		NSString *lowerCase = [fullpath lowercaseString];
+		NSString *lowerCase = [file.absoluteFilePath lowercaseString];
 
 		// all images are handled by UIKit/AppKit except PVR extension that is handled by cocos2d's handler
 
         if([lowerCase hasSuffix:@".pvr"] || [lowerCase hasSuffix:@".pvr.gz"] || [lowerCase hasSuffix:@".pvr.ccz"]){
             tex = [self addPVRImage:path];
         } else {
-            NSURL *url = [NSURL fileURLWithPath:fullpath];
-            CCFile *file = [[CCFile alloc] initWithName:path url:url contentScale:contentScale];
             CCImage *image = [[CCImage alloc] initWithCCFile:file options:nil];
             tex = [[CCTexture alloc] initWithImage:image options:nil];
 
@@ -429,12 +426,7 @@ static CCTextureCache *sharedTextureCache;
 		return((id)tex.proxy);
 	}
     
-    CGFloat contentScale = 1.0;
-    NSString *fullpath = [fileUtils fullPathForFilename:path contentScale:&contentScale];
-    NSURL *url = [NSURL fileURLWithPath:fullpath];
-    CCFile *file = [[CCFile alloc] initWithName:path url:url contentScale:contentScale];
-    
-	tex = [[CCTexture alloc] initPVRWithCCFile:file options:nil];
+	tex = [[CCTexture alloc] initPVRWithCCFile:[CCFileUtils fileNamed:path] options:nil];
 	if( tex ){
 		dispatch_sync(_dictQueue, ^{
 			[_textures setObject: tex forKey:path];

@@ -30,6 +30,7 @@
 #import "ccMacros.h"
 #import "ccConfig.h"
 #import "ccTypes.h"
+#import "CCFile_Private.h"
 
 NSString * const CCFileUtilsSuffixDefault = @"default";
 
@@ -813,5 +814,18 @@ static CCFileUtils *fileUtils = nil;
 }
 
 #endif // __CC_PLATFORM_IOS
+
+@end
+
+
+@implementation CCFileUtils(TEMPORARY)
+
++(id)fileNamed:(NSString *)name
+{
+    CGFloat contentScale = 1.0;
+    NSString *fullpath = [fileUtils fullPathForFilename:name contentScale:&contentScale];
+    NSURL *url = [NSURL fileURLWithPath:fullpath];
+    return [[CCFile alloc] initWithName:name url:url contentScale:contentScale];
+}
 
 @end

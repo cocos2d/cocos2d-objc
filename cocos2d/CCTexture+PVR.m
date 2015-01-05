@@ -234,7 +234,7 @@ ReadPVRv3Header(NSInputStream *stream, NSError **error)
     info.mipmapCount = header.numberOfMipmaps;
     
     if(header.numberOfFaces == 6){
-        info.type = CCTextureTypeCube;
+        info.type = CCTextureTypeCubemap;
     }
 
     // Skip past the metadata.
@@ -343,7 +343,7 @@ ReadPVRData(NSInputStream *stream, struct PVRInfo info, PVRDataBlock block)
                 data.length = [stream read:data.mutableBytes maxLength:dataLength];
                 block(GL_TEXTURE_2D, miplevel, w, h, data);
                 break;
-            case CCTextureTypeCube:
+            case CCTextureTypeCubemap:
                 data.length = [stream read:data.mutableBytes maxLength:dataLength];
                 block(GL_TEXTURE_CUBE_MAP_POSITIVE_X, miplevel, w, h, data);
                 data.length = [stream read:data.mutableBytes maxLength:dataLength];

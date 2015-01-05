@@ -33,7 +33,7 @@
 #import "CCShader.h"
 #import "CCDirector.h"
 #import "CCRenderDispatch.h"
-#import "CCImage.h"
+#import "CCImage_Private.h"
 
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
@@ -252,7 +252,8 @@ static CCTexture *CCTextureNone = nil;
     
 	if((self = [super init])) {
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-        // TODO
+        #warning
+        abort();
 #endif
 		CCRenderDispatch(NO, ^{
             CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Init");
