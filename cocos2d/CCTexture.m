@@ -337,6 +337,101 @@ static CCTexture *CCTextureNone = nil;
 @end
 
 
+@implementation CCTexture(Cubemap)
+
+-(instancetype)initCubemapFromImagesPosX:(CCImage *)posX negX:(CCImage *)negX
+                                    posY:(CCImage *)posY negY:(CCImage *)negY
+                                    posZ:(CCImage *)posZ negZ:(CCImage *)negZ
+                                    options:(NSDictionary *)options;
+{
+    options = [CCTexture normalizeOptions:options];
+    
+    CCDeviceInfo *info = [CCDeviceInfo sharedDeviceInfo];
+	NSAssert(info.graphicsAPI != CCGraphicsAPIInvalid, @"Graphics API not configured.");
+	
+    NSUInteger maxTextureSize = [info maxTextureSize];
+    CGSize sizeInPixels = posX.sizeInPixels;
+    
+    if(sizeInPixels.width > maxTextureSize || sizeInPixels.height > maxTextureSize){
+        CCLOGWARN(@"cocos2d: Error: Image (%d x %d) is bigger than the maximum supported texture size %d",
+            (int)sizeInPixels.width, (int)sizeInPixels.height, (int)maxTextureSize
+        );
+        
+        return nil;
+    }
+    
+    if(!CCSizeIsPOT(sizeInPixels) && !info.supportsNPOT){
+        CCLOGWARN(@"cocos2d: Error: This device requires power of two sized textures.");
+        
+        return nil;
+    }
+    
+	if((self = [super init])) {
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+        #warning
+        abort();
+#endif
+		CCRenderDispatch(NO, ^{
+            CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Init Cubemap");
+    
+            [self setupTexture:CCTextureTypeCubemap sizeInPixels:sizeInPixels options:options];
+            
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, GL_RGBA, (GLsizei)sizeInPixels.width, (GLsizei)sizeInPixels.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, posX.pixelData.bytes);
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, GL_RGBA, (GLsizei)sizeInPixels.width, (GLsizei)sizeInPixels.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, negX.pixelData.bytes);
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, 0, GL_RGBA, (GLsizei)sizeInPixels.width, (GLsizei)sizeInPixels.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, posY.pixelData.bytes);
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, GL_RGBA, (GLsizei)sizeInPixels.width, (GLsizei)sizeInPixels.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, negY.pixelData.bytes);
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, GL_RGBA, (GLsizei)sizeInPixels.width, (GLsizei)sizeInPixels.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, posZ.pixelData.bytes);
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, GL_RGBA, (GLsizei)sizeInPixels.width, (GLsizei)sizeInPixels.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, negZ.pixelData.bytes);
+            
+            // Generate mipmaps.
+            if([options[CCTextureOptionGenerateMipmaps] boolValue]){
+                glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
+            }
+            
+            CCGL_DEBUG_POP_GROUP_MARKER();
+		});
+        
+        _sizeInPixels = sizeInPixels;
+        _contentScale = posX.contentScale;
+        _contentSize = posX.contentSize;
+    }
+    
+	return self;
+}
+
+-(instancetype)initCubemapFromFilesPosX:(NSString *)posXFilePath negX:(NSString *)negXFilePath
+                                   posY:(NSString *)posYFilePath negY:(NSString *)negYFilePath
+                                   posZ:(NSString *)posZFilePath negZ:(NSString *)negZFilePath
+                                   options:(NSDictionary *)options;
+{
+    NSMutableDictionary *opts = [options mutableCopy];
+    opts[CCImageOptionFlipVertical] = @(YES);
+    
+    return [self initCubemapFromImagesPosX:[[CCImage alloc] initWithCCFile:[CCFileUtils fileNamed:posXFilePath] options:opts]
+        negX:[[CCImage alloc] initWithCCFile:[CCFileUtils fileNamed:negXFilePath] options:opts]
+        posY:[[CCImage alloc] initWithCCFile:[CCFileUtils fileNamed:posYFilePath] options:opts]
+        negY:[[CCImage alloc] initWithCCFile:[CCFileUtils fileNamed:negYFilePath] options:opts]
+        posZ:[[CCImage alloc] initWithCCFile:[CCFileUtils fileNamed:posZFilePath] options:opts]
+        negZ:[[CCImage alloc] initWithCCFile:[CCFileUtils fileNamed:negZFilePath] options:opts]
+        options:opts
+    ];
+}
+
+-(instancetype)initCubemapFromFilePattern:(NSString *)aFilePathPattern options:(NSDictionary *)options;
+{
+	return [self initCubemapFromFilesPosX:[NSString stringWithFormat: aFilePathPattern, @"PosX"]
+        negX:[NSString stringWithFormat:aFilePathPattern, @"NegX"]
+        posY:[NSString stringWithFormat:aFilePathPattern, @"PosY"]
+        negY:[NSString stringWithFormat:aFilePathPattern, @"NegY"]
+        posZ:[NSString stringWithFormat:aFilePathPattern, @"PosZ"]
+        negZ:[NSString stringWithFormat:aFilePathPattern, @"NegZ"]
+        options:options
+    ];
+}
+
+@end
+
+
 @implementation CCTexture(Deprecated)
 
 -(CCSpriteFrame *)createSpriteFrame {return self.spriteFrame;}

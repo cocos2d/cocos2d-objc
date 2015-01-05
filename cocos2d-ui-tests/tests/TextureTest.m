@@ -254,6 +254,19 @@
     )];
 }
 
+-(void) setupPNGCubemapTest
+{
+	self.subTitle = @"PNG Cubemap faces";
+    
+    CCTexture *cubemap = [[CCTexture alloc] initCubemapFromFilePattern:@"Cubemap/Cubemap%@.png" options:@{
+        CCTextureOptionGenerateMipmaps: @(YES), // ?? What to do with this flag for PVRs that already have mipmaps?
+        CCTextureOptionMipmapFilter: @(CCTextureFilterLinear),
+        CCTextureOptionMinificationFilter: @(CCTextureFilterNearest),
+    }];
+    
+    [self showCubemap:cubemap];
+}
+
 -(void) setupPVRCubemapTest
 {
 	self.subTitle = @"PVR (RGBA8) Cubemap";

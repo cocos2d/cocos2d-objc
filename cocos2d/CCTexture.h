@@ -90,3 +90,20 @@ extern NSString * const CCTextureOptionAddressModeY;
 -(instancetype)initPVRWithCCFile:(CCFile *)file options:(NSDictionary *)options;
 
 @end
+
+
+@interface CCTexture(Cubemap)
+
+-(instancetype)initCubemapFromImagesPosX:(CCImage *)posX negX:(CCImage *)negX
+                                    posY:(CCImage *)posY negY:(CCImage *)negY
+                                    posZ:(CCImage *)posZ negZ:(CCImage *)negZ
+                                    options:(NSDictionary *)options;
+
+-(instancetype)initCubemapFromFilesPosX:(NSString *)posXFilePath negX:(NSString *)negXFilePath
+                                   posY:(NSString *)posYFilePath negY:(NSString *)negYFilePath
+                                   posZ:(NSString *)posZFilePath negZ:(NSString *)negZFilePath
+                                   options:(NSDictionary *)options;
+
+-(instancetype)initCubemapFromFilePattern:(NSString *)aFilePathPattern options:(NSDictionary *)options;
+
+@end
