@@ -78,7 +78,7 @@ NSString * const CCTextureOptionAddressModeY = @"CCTextureOptionAddressModeY";
 -(BOOL)isKindOfClass:(Class)aClass {return [_target isKindOfClass:aClass];}
 
 // Make concrete implementations for CCTexture methods commonly called at runtime.
--(GLuint)name {return [(CCTexture *)_target name];}
+-(GLuint)name {return [(CCTextureGL *)_target name];}
 -(CGFloat)contentScale {return [(CCTexture *)_target contentScale];}
 -(CGSize)contentSize {return [_target contentSize];}
 -(NSUInteger)pixelWidth {return [_target pixelWidth];}
@@ -136,7 +136,6 @@ static CCTexture *CCTextureNone = nil;
     };
 	
 	CCTextureNone = [self alloc];
-	CCTextureNone->_name = 0;
 	CCTextureNone->_contentScale = 1.0;
 	
 #if __CC_METAL_SUPPORTED_AND_ENABLED
@@ -144,10 +143,10 @@ static CCTexture *CCTextureNone = nil;
 		CCMetalContext *context = [CCMetalContext currentContext];
 		NSAssert(context, @"Metal context is nil.");
 		
-		CCTextureNone->_metalSampler = [context.device newSamplerStateWithDescriptor:[MTLSamplerDescriptor new]];
+		((CCTextureMetal *)CCTextureNone)->_metalSampler = [context.device newSamplerStateWithDescriptor:[MTLSamplerDescriptor new]];
 		
 		MTLTextureDescriptor *textureDesc = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA8Unorm width:1 height:1 mipmapped:NO];
-		CCTextureNone->_metalTexture = [context.device newTextureWithDescriptor:textureDesc];
+		((CCTextureMetal *)CCTextureNone)->_metalTexture = [context.device newTextureWithDescriptor:textureDesc];
 	}
 #endif
 }
@@ -303,10 +302,11 @@ static void Abstract(){NSCAssert(NO, @"Abstract method. Must be overridden by su
 
 // -------------------------------------------------------------
 
+// TODO should move this to the Metal/GL impls.
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %p | Name = %i | Dimensions = %lux%lu pixels >",
-        [self class], self, _name, (unsigned long)_sizeInPixels.width, (unsigned long)_sizeInPixels.height];
+	return [NSString stringWithFormat:@"<%@ = %p | Dimensions = %lux%lu pixels >",
+        [self class], self, (unsigned long)_sizeInPixels.width, (unsigned long)_sizeInPixels.height];
 }
 
 -(CCSpriteFrame*)spriteFrame

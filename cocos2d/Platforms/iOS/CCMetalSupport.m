@@ -115,7 +115,6 @@ static NSString *CURRENT_CONTEXT_KEY = @"CURRENT_CONTEXT_KEY";
 @end
 
 
-@interface CCTextureMetal : CCTexture @end
 @implementation CCTextureMetal
 
 -(void)_setupTexture:(CCTextureType)type sizeInPixels:(CGSize)sizeInPixels mipmapped:(BOOL)mipmapped
@@ -266,7 +265,7 @@ static NSString *CURRENT_CONTEXT_KEY = @"CURRENT_CONTEXT_KEY";
 	if((self = [super initWithTexture:texture depthStencilFormat:depthStencilFormat])){
 		self.sizeInPixels = texture.sizeInPixels;
 		self.contentScale = texture.contentScale;
-		_frameBufferTexture = texture.metalTexture;
+		_frameBufferTexture = [(CCTextureMetal *)texture metalTexture];
 	}
 	
 	return self;

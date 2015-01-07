@@ -41,31 +41,36 @@
 
 @end
 
-// -------------------------------------------------------------
 
-@interface CCTexture () {
-    @protected
+@interface CCTextureGL : CCTexture {
+    @public
     GLuint _name;
-    
+}
+
+@property(nonatomic, readonly) GLuint name;
+@property(nonatomic, readonly) GLenum glType;
+
+@end
+
+
 #if __CC_METAL_SUPPORTED_AND_ENABLED
+@interface CCTextureMetal : CCTexture {
+    @public
     id<MTLTexture> _metalTexture;
     id<MTLSamplerState> _metalSampler;
-#endif
 }
+
+@property(nonatomic, readonly) id<MTLTexture> metalTexture;
+@property(nonatomic, readonly) id<MTLSamplerState> metalSampler;
+
+@end
+#endif
+
+
+@interface CCTexture ()
 
 // Fill in any missing fields of an options dictionary.
 +(NSDictionary *)normalizeOptions:(NSDictionary *)options;
-
-/* texture name */
-@property(nonatomic,readonly) GLuint name;
-
-// TODO This should really be split into a separate subclass somehow.
-#if __CC_METAL_SUPPORTED_AND_ENABLED
-@property(nonatomic,readonly) id<MTLTexture> metalTexture;
-@property(nonatomic,readonly) id<MTLSamplerState> metalSampler;
-#endif
-
-
 
 @property(nonatomic,readwrite) BOOL premultipliedAlpha;
 

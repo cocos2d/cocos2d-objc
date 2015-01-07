@@ -155,13 +155,13 @@ CGAffineTransformFromGLKMatrix4(GLKMatrix4 m)
 				samplerDesc.sAddressMode = MTLSamplerAddressModeClampToEdge;
 				samplerDesc.tAddressMode = MTLSamplerAddressModeClampToEdge;
 				
-				_metalSampler = [context.device newSamplerStateWithDescriptor:samplerDesc];
+				((CCTextureMetal *)self)->_metalSampler = [context.device newSamplerStateWithDescriptor:samplerDesc];
 			} else
 #endif
 			{
 				CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Set Alias Texture Parameters");
 				
-				glBindTexture(GL_TEXTURE_2D, _name);
+				glBindTexture(GL_TEXTURE_2D, [(CCTextureGL *)self name]);
 				
 				if(_hasMipmaps){
 					glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, antialiased ? GL_NEAREST_MIPMAP_NEAREST : GL_NEAREST_MIPMAP_NEAREST);

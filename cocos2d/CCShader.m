@@ -398,7 +398,7 @@ GLUniformSettersForProgram(GLuint program)
 					
 					// Bind the texture to the texture unit for the uniform.
 					glActiveTexture(GL_TEXTURE0 + textureUnit);
-					glBindTexture(texture.type == CCTextureType2D ? GL_TEXTURE_2D : GL_TEXTURE_CUBE_MAP, texture.name);
+					glBindTexture(texture.type == CCTextureType2D ? GL_TEXTURE_2D : GL_TEXTURE_CUBE_MAP, [(CCTextureGL *)texture name]);
 				};
 				
 				// Bind the texture unit at init time.
@@ -501,7 +501,7 @@ MetalUniformSetSampler(NSString *name, MTLArgument *vertexArg, MTLArgument *frag
 		CCTexture *texture = shaderUniforms[textureName] ?: globalShaderUniforms[textureName] ?: [CCTexture none];
 		NSCAssert([texture isKindOfClass:[CCTexture class]], @"Shader uniform '%@' value must be a CCTexture object.", name);
 		
-		id<MTLSamplerState> sampler = texture.metalSampler;
+		id<MTLSamplerState> sampler = [(CCTextureMetal *)texture metalSampler];
 		
 		id<MTLRenderCommandEncoder> renderEncoder = context->_currentRenderCommandEncoder;
 		if(vertexArg) [renderEncoder setVertexSamplerState:sampler atIndex:vertexIndex];
@@ -521,7 +521,7 @@ MetalUniformSetTexture(NSString *name, MTLArgument *vertexArg, MTLArgument *frag
 		CCTexture *texture = shaderUniforms[name] ?: globalShaderUniforms[name] ?: [CCTexture none];
 		NSCAssert([texture isKindOfClass:[CCTexture class]], @"Shader uniform '%@' value must be a CCTexture object.", name);
 		
-		id<MTLTexture> metalTexture = texture.metalTexture;
+		id<MTLTexture> metalTexture = [(CCTextureMetal *)texture metalTexture];
 		
 		id<MTLRenderCommandEncoder> renderEncoder = context->_currentRenderCommandEncoder;
 		if(vertexArg) [renderEncoder setVertexTexture:metalTexture atIndex:vertexIndex];

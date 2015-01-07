@@ -124,7 +124,7 @@ static GLKVector2 selectTexCoordPadding(CCEffectTexCoordSource tcSource, GLKVect
 	glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
     
 	// Associate texture with FBO
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _texture.name, 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, [(CCTextureGL *)_texture name], 0);
     
 	// Check if it worked (probably worth doing :) )
 	NSAssert( glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, @"Could not attach texture to framebuffer");

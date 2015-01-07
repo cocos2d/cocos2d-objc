@@ -451,9 +451,8 @@ static CCTextureCache *sharedTextureCache;
 		for (NSString* texKey in _textures) {
 			CCTexture* tex = [_textures objectForKey:texKey];
 			count++;
-			NSLog( @"cocos2d: \"%@\"\tid=%lu\t%lu x %lu\t@ %ld",
+			NSLog( @"cocos2d: \"%@\"\t%lu x %lu",
 				  texKey,
-				  (long)tex.name,
 				  (long)tex.sizeInPixels.width,
 				  (long)tex.sizeInPixels.height);
 		}

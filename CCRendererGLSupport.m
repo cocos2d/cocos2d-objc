@@ -29,7 +29,6 @@
 #import "CCDeviceInfo.h"
 
 
-@interface CCTextureGL : CCTexture @end
 @implementation CCTextureGL
 
 - (void) dealloc
@@ -53,6 +52,11 @@ GLTypeForCCTextureType(CCTextureType type)
         case CCTextureType2D: return GL_TEXTURE_2D;
         case CCTextureTypeCubemap: return GL_TEXTURE_CUBE_MAP;
     }
+}
+
+-(GLenum)glType
+{
+    return GLTypeForCCTextureType(self.type);
 }
 
 -(void)_setupTexture:(CCTextureType)type sizeInPixels:(CGSize)sizeInPixels mipmapped:(BOOL)mipmapped
@@ -365,7 +369,7 @@ BindVertexPage(CCGraphicsBufferBindingsGL *self, NSUInteger page)
 			glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
 			
 			// associate texture with FBO
-			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.name, 0);
+			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, [(CCTextureGL *)texture name], 0);
 			
 			GLuint width = (GLuint)texture.sizeInPixels.width;
 			GLuint height = (GLuint)texture.sizeInPixels.height;
