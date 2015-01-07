@@ -364,6 +364,7 @@ static void Abstract(){NSCAssert(NO, @"Abstract method. Must be overridden by su
             }
 		});
         
+        _type = CCTextureTypeCubemap;
         _sizeInPixels = sizeInPixels;
         _contentScale = posX.contentScale;
         _contentSize = posX.contentSize;
