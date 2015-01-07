@@ -379,8 +379,6 @@ static const MTLPrimitiveType MetalDrawModes[] = {
 	
 	[renderEncoder drawIndexedPrimitives:MetalDrawModes[_mode] indexCount:_count indexType:MTLIndexTypeUInt16 indexBuffer:indexBuffer indexBufferOffset:2*_firstIndex];
 	CCMTL_DEBUG_POP_GROUP_MARKER(renderEncoder);
-	
-	CC_INCREMENT_GL_DRAWS(1);
 }
 
 @end

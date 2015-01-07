@@ -232,26 +232,57 @@
 	[self.contentNode addChild:sprite];
     
     sprite.shaderUniforms[@"cube"] = sprite.texture;
-    sprite.shader = [[CCShader alloc] initWithFragmentShaderSource:CC_GLSL(
-        uniform samplerCube cube;
-        void main(){
-            float t = cc_Time[0];
-            vec3 forward = vec3(cos(t), 1.0*cos(0.3*t), sin(t));
-            vec3 up = vec3(cos(0.26*t), 2.0, sin(0.31*t));
-            vec3 right = cross(forward, up);
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+	if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
+		sprite.shader = [[CCShader alloc] initWithFragmentShaderSource:CC_METAL(
+			fragment half4 ShaderMain(
+				const CCFragData in [[stage_in]],
+				const device float4 *cc_Time [[buffer(0)]],
+				texturecube<half> cube [[texture(0)]],
+				sampler cubeSampler [[sampler(0)]]
+			){
+                float t = cc_Time->x;
+                float3 forward = float3(cos(t), 1.0*cos(0.3*t), sin(t));
+                float3 up = float3(cos(0.26*t), 2.0, sin(0.31*t));
+                float3 right = cross(forward, up);
 
-            mat3 rotate = mat3(
-                normalize(right),
-                normalize(cross(right, forward)),
-                normalize(forward)
-            );
-            
-            float bias = 0.5 + 0.5*sin(4.0*t);
-            
-            vec3 coord = rotate*vec3(2.0*cc_FragTexCoord1 - 1.0, 0.5);
-            gl_FragColor = cc_FragColor*textureCube(cube, coord, 9.0*bias);
-        }
-    )];
+                float3x3 rotate = float3x3(
+                    normalize(right),
+                    normalize(cross(right, forward)),
+                    normalize(forward)
+                );
+                
+                float lodBias = 0.5 + 0.5*sin(4.0*t);
+                
+                float3 coord = rotate*float3(2.0*in.texCoord1 - 1.0, 0.5);
+                return half4(in.color)*cube.sample(cubeSampler, coord, bias(9.0*lodBias));
+//				return half4((*u_ColorMatrix)*cc_MainTexture.sample(cc_MainTextureSampler, in.texCoord1));
+			}
+		)];
+	} else
+#endif
+	{
+        sprite.shader = [[CCShader alloc] initWithFragmentShaderSource:CC_GLSL(
+            uniform samplerCube cube;
+            void main(){
+                float t = cc_Time[0];
+                vec3 forward = vec3(cos(t), 1.0*cos(0.3*t), sin(t));
+                vec3 up = vec3(cos(0.26*t), 2.0, sin(0.31*t));
+                vec3 right = cross(forward, up);
+
+                mat3 rotate = mat3(
+                    normalize(right),
+                    normalize(cross(right, forward)),
+                    normalize(forward)
+                );
+                
+                float bias = 0.5 + 0.5*sin(4.0*t);
+                
+                vec3 coord = rotate*vec3(2.0*cc_FragTexCoord1 - 1.0, 0.5);
+                gl_FragColor = cc_FragColor*textureCube(cube, coord, 9.0*bias);
+            }
+        )];
+    }
 }
 
 -(void) setupPNGCubemapTest

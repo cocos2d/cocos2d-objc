@@ -30,6 +30,8 @@
 #import "CCTexture_Private.h"
 #import "CCShader_Private.h"
 
+#import "CCDeviceInfo.h"
+
 @implementation CCMetalContext {
 	id<MTLTexture> _destinationTexture;
 }
@@ -181,7 +183,7 @@ static NSString *CURRENT_CONTEXT_KEY = @"CURRENT_CONTEXT_KEY";
 -(instancetype)initWithTexture:(CCTexture *)texture depthStencilFormat:(GLuint)depthStencilFormat
 {
 	if((self = [super initWithTexture:texture depthStencilFormat:depthStencilFormat])){
-		self.sizeInPixels = texture.contentSizeInPixels;
+		self.sizeInPixels = texture.sizeInPixels;
 		self.contentScale = texture.contentScale;
 		_frameBufferTexture = texture.metalTexture;
 	}

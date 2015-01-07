@@ -287,7 +287,7 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
 {
     CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector sharedDirector];
     
-    NSInteger device = [[CCConfiguration sharedConfiguration] runningDevice];
+    NSInteger device = [[CCDeviceInfo sharedDeviceInfo] runningDevice];
     BOOL tablet = device == CCDeviceiPad || device == CCDeviceiPadRetinaDisplay;
 
     if(tablet && [_cocos2dSetupConfig[CCSetupTabletScale2X] boolValue])

@@ -146,7 +146,7 @@ static CCTexture *CCTextureNone = nil;
 	CCTextureNone->_contentScale = 1.0;
 	
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+	if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
 		CCMetalContext *context = [CCMetalContext currentContext];
 		NSAssert(context, @"Metal context is nil.");
 		
@@ -183,14 +183,8 @@ static CCTexture *CCTextureNone = nil;
 
 -(void)setupTexture:(CCTextureType)type sizeInPixels:(CGSize)sizeInPixels options:(NSDictionary *)options
 {
-    GLenum target = (type == CCTextureType2D ? GL_TEXTURE_2D : GL_TEXTURE_CUBE_MAP);
-    
-    glGenTextures(1, &_name);
-    glBindTexture(target, _name);
-    
     BOOL genMipmaps = [options[CCTextureOptionGenerateMipmaps] boolValue];
     
-    // Set up texture filtering mode.
     CCTextureFilter minFilter = [options[CCTextureOptionMinificationFilter] unsignedIntegerValue];
     CCTextureFilter magFilter = [options[CCTextureOptionMagnificationFilter] unsignedIntegerValue];
     CCTextureFilter mipFilter = [options[CCTextureOptionMipmapFilter] unsignedIntegerValue];
@@ -199,31 +193,85 @@ static CCTexture *CCTextureNone = nil;
     NSAssert(magFilter != CCTextureFilterMipmapNone, @"CCTextureFilterMipmapNone can only be used with CCTextureOptionMipmapFilter.");
     NSAssert(mipFilter == CCTextureFilterMipmapNone || genMipmaps, @"CCTextureOptionMipmapFilter must be CCTextureFilterMipmapNone unless CCTextureOptionGenerateMipmaps is YES");
     
-    static const GLenum FILTERS[3][3] = {
-        {GL_LINEAR, GL_LINEAR, GL_LINEAR}, // Invalid enum, fall back to linear.
-        {GL_NEAREST, GL_NEAREST_MIPMAP_NEAREST, GL_NEAREST_MIPMAP_LINEAR}, // nearest
-        {GL_LINEAR, GL_LINEAR_MIPMAP_NEAREST, GL_LINEAR_MIPMAP_LINEAR}, // linear
-    };
-    
-    glTexParameteri(target, GL_TEXTURE_MIN_FILTER, FILTERS[minFilter][mipFilter]);
-    glTexParameteri(target, GL_TEXTURE_MAG_FILTER, FILTERS[magFilter][CCTextureFilterMipmapNone]);
-    
-    // Set up texture addressing mode.
     CCTextureAddressMode addressX = [options[CCTextureOptionAddressModeX] unsignedIntegerValue];
     CCTextureAddressMode addressY = [options[CCTextureOptionAddressModeY] unsignedIntegerValue];
-    
-    static const GLenum ADDRESSING[] = {
-        GL_CLAMP_TO_EDGE,
-        GL_REPEAT,
-        GL_MIRRORED_REPEAT,
-    };
     
     BOOL isPOT = CCSizeIsPOT(sizeInPixels);
     NSAssert(addressX == CCTextureAddressModeClampToEdge || isPOT, @"Only CCTextureAddressModeClampToEdge can be used with non power of two sized textures.");
     NSAssert(addressY == CCTextureAddressModeClampToEdge || isPOT, @"Only CCTextureAddressModeClampToEdge can be used with non power of two sized textures.");
     
-    glTexParameteri(target, GL_TEXTURE_WRAP_S, ADDRESSING[addressX]);
-    glTexParameteri(target, GL_TEXTURE_WRAP_T, ADDRESSING[addressY]);
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+    if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
+        id<MTLDevice> device = [CCMetalContext currentContext].device;
+        
+        MTLSamplerDescriptor *samplerDesc = [MTLSamplerDescriptor new];
+        
+        static const MTLSamplerMinMagFilter FILTERS[] = {
+            MTLSamplerMinMagFilterLinear, // Invalid, fall back to linear.
+            MTLSamplerMinMagFilterNearest,
+            MTLSamplerMinMagFilterLinear,
+        };
+        
+        static const MTLSamplerMipFilter MIP_FILTERS[] = {
+            MTLSamplerMipFilterNotMipmapped,
+            MTLSamplerMipFilterNearest,
+            MTLSamplerMipFilterLinear,
+        };
+        
+        samplerDesc.minFilter = FILTERS[minFilter];
+        samplerDesc.magFilter = FILTERS[magFilter];
+        samplerDesc.mipFilter = MIP_FILTERS[mipFilter];
+        
+        static const MTLSamplerAddressMode ADDRESSING[] = {
+            MTLSamplerAddressModeClampToEdge,
+            MTLSamplerAddressModeRepeat,
+            MTLSamplerAddressModeMirrorRepeat,
+        };
+        
+        samplerDesc.sAddressMode = ADDRESSING[addressX];
+        samplerDesc.tAddressMode = ADDRESSING[addressY];
+        
+        _metalSampler = [device newSamplerStateWithDescriptor:samplerDesc];
+        
+        NSUInteger w = sizeInPixels.width;
+        NSUInteger h = sizeInPixels.height;
+        MTLTextureDescriptor *textureDesc = nil;
+        
+        switch(type){
+            case CCTextureType2D: textureDesc = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA8Unorm width:w height:h mipmapped:genMipmaps]; break;
+            case CCTextureTypeCubemap: textureDesc = [MTLTextureDescriptor textureCubeDescriptorWithPixelFormat:MTLPixelFormatRGBA8Unorm size:w mipmapped:genMipmaps]; break;
+        }
+        
+        NSAssert(textureDesc, @"Bad texture type?");
+        _metalTexture = [device newTextureWithDescriptor:textureDesc];
+    } else
+#endif
+    {
+        GLenum target = (type == CCTextureType2D ? GL_TEXTURE_2D : GL_TEXTURE_CUBE_MAP);
+        
+        glGenTextures(1, &_name);
+        glBindTexture(target, _name);
+        
+        // Set up texture filtering mode.
+        static const GLenum FILTERS[3][3] = {
+            {GL_LINEAR, GL_LINEAR, GL_LINEAR}, // Invalid enum, fall back to linear.
+            {GL_NEAREST, GL_NEAREST_MIPMAP_NEAREST, GL_NEAREST_MIPMAP_LINEAR}, // nearest
+            {GL_LINEAR, GL_LINEAR_MIPMAP_NEAREST, GL_LINEAR_MIPMAP_LINEAR}, // linear
+        };
+    
+        glTexParameteri(target, GL_TEXTURE_MIN_FILTER, FILTERS[minFilter][mipFilter]);
+        glTexParameteri(target, GL_TEXTURE_MAG_FILTER, FILTERS[magFilter][CCTextureFilterMipmapNone]);
+        
+        // Set up texture wrap mode.
+        static const GLenum ADDRESSING[] = {
+            GL_CLAMP_TO_EDGE,
+            GL_REPEAT,
+            GL_MIRRORED_REPEAT,
+        };
+        
+        glTexParameteri(target, GL_TEXTURE_WRAP_S, ADDRESSING[addressX]);
+        glTexParameteri(target, GL_TEXTURE_WRAP_T, ADDRESSING[addressY]);
+    }
 }
 
 -(instancetype)initWithImage:(CCImage *)image options:(NSDictionary *)options
@@ -251,24 +299,41 @@ static CCTexture *CCTextureNone = nil;
     }
     
 	if((self = [super init])) {
-#if __CC_METAL_SUPPORTED_AND_ENABLED
-        #warning
-        abort();
-#endif
 		CCRenderDispatch(NO, ^{
-            CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Init");
-    
             [self setupTexture:CCTextureType2D sizeInPixels:sizeInPixels options:options];
             
-            // Specify OpenGL texture image
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)sizeInPixels.width, (GLsizei)sizeInPixels.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image.pixelData.bytes);
-            
-            // Generate mipmaps.
-            if([options[CCTextureOptionGenerateMipmaps] boolValue]){
-                glGenerateMipmap(GL_TEXTURE_2D);
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+            if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
+                NSUInteger bytesPerRow = sizeInPixels.width*4;
+                [_metalTexture replaceRegion:MTLRegionMake2D(0, 0, sizeInPixels.width, sizeInPixels.height) mipmapLevel:0 withBytes:image.pixelData.bytes bytesPerRow:bytesPerRow];
+                
+                if([options[CCTextureOptionGenerateMipmaps] boolValue]){
+                    CCMetalContext *context = [CCMetalContext currentContext];
+
+                    // Set up a command buffer for the blit operations.
+                    id<MTLCommandBuffer> blitCommands = [context.commandQueue commandBuffer];
+                    id<MTLBlitCommandEncoder> blitter = [blitCommands blitCommandEncoder];
+
+                    // Generate mipmaps and commit.
+                    [blitter generateMipmapsForTexture:_metalTexture];
+                    [blitter endEncoding];
+                    [blitCommands commit];
+                }
+            } else
+#endif
+            {
+                CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Init");
+                
+                // Specify OpenGL texture image
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)sizeInPixels.width, (GLsizei)sizeInPixels.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image.pixelData.bytes);
+                
+                // Generate mipmaps.
+                if([options[CCTextureOptionGenerateMipmaps] boolValue]){
+                    glGenerateMipmap(GL_TEXTURE_2D);
+                }
+                
+                CCGL_DEBUG_POP_GROUP_MARKER();
             }
-            
-            CCGL_DEBUG_POP_GROUP_MARKER();
 		});
         
         _sizeInPixels = sizeInPixels;
@@ -367,28 +432,52 @@ static CCTexture *CCTextureNone = nil;
     }
     
 	if((self = [super init])) {
-#if __CC_METAL_SUPPORTED_AND_ENABLED
-        #warning
-        abort();
-#endif
 		CCRenderDispatch(NO, ^{
-            CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Init Cubemap");
-    
             [self setupTexture:CCTextureTypeCubemap sizeInPixels:sizeInPixels options:options];
             
-            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, GL_RGBA, (GLsizei)sizeInPixels.width, (GLsizei)sizeInPixels.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, posX.pixelData.bytes);
-            glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, GL_RGBA, (GLsizei)sizeInPixels.width, (GLsizei)sizeInPixels.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, negX.pixelData.bytes);
-            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, 0, GL_RGBA, (GLsizei)sizeInPixels.width, (GLsizei)sizeInPixels.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, posY.pixelData.bytes);
-            glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, GL_RGBA, (GLsizei)sizeInPixels.width, (GLsizei)sizeInPixels.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, negY.pixelData.bytes);
-            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, GL_RGBA, (GLsizei)sizeInPixels.width, (GLsizei)sizeInPixels.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, posZ.pixelData.bytes);
-            glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, GL_RGBA, (GLsizei)sizeInPixels.width, (GLsizei)sizeInPixels.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, negZ.pixelData.bytes);
-            
-            // Generate mipmaps.
-            if([options[CCTextureOptionGenerateMipmaps] boolValue]){
-                glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+            if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
+                NSUInteger bytesPerRow = sizeInPixels.width*4;
+                MTLRegion rect = MTLRegionMake2D(0, 0, sizeInPixels.width, sizeInPixels.height);
+                
+                [_metalTexture replaceRegion:rect mipmapLevel:0 slice:0 withBytes:posX.pixelData.bytes bytesPerRow:bytesPerRow bytesPerImage:0];
+                [_metalTexture replaceRegion:rect mipmapLevel:0 slice:1 withBytes:negX.pixelData.bytes bytesPerRow:bytesPerRow bytesPerImage:0];
+                [_metalTexture replaceRegion:rect mipmapLevel:0 slice:2 withBytes:posY.pixelData.bytes bytesPerRow:bytesPerRow bytesPerImage:0];
+                [_metalTexture replaceRegion:rect mipmapLevel:0 slice:3 withBytes:negY.pixelData.bytes bytesPerRow:bytesPerRow bytesPerImage:0];
+                [_metalTexture replaceRegion:rect mipmapLevel:0 slice:4 withBytes:posZ.pixelData.bytes bytesPerRow:bytesPerRow bytesPerImage:0];
+                [_metalTexture replaceRegion:rect mipmapLevel:0 slice:5 withBytes:negZ.pixelData.bytes bytesPerRow:bytesPerRow bytesPerImage:0];
+                
+                if([options[CCTextureOptionGenerateMipmaps] boolValue]){
+                    CCMetalContext *context = [CCMetalContext currentContext];
+
+                    // Set up a command buffer for the blit operations.
+                    id<MTLCommandBuffer> blitCommands = [context.commandQueue commandBuffer];
+                    id<MTLBlitCommandEncoder> blitter = [blitCommands blitCommandEncoder];
+
+                    // Generate mipmaps and commit.
+                    [blitter generateMipmapsForTexture:_metalTexture];
+                    [blitter endEncoding];
+                    [blitCommands commit];
+                }
+            } else
+#endif
+            {
+                CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Init Cubemap");
+        
+                glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, GL_RGBA, (GLsizei)sizeInPixels.width, (GLsizei)sizeInPixels.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, posX.pixelData.bytes);
+                glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, GL_RGBA, (GLsizei)sizeInPixels.width, (GLsizei)sizeInPixels.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, negX.pixelData.bytes);
+                glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, 0, GL_RGBA, (GLsizei)sizeInPixels.width, (GLsizei)sizeInPixels.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, posY.pixelData.bytes);
+                glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, GL_RGBA, (GLsizei)sizeInPixels.width, (GLsizei)sizeInPixels.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, negY.pixelData.bytes);
+                glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, GL_RGBA, (GLsizei)sizeInPixels.width, (GLsizei)sizeInPixels.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, posZ.pixelData.bytes);
+                glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, GL_RGBA, (GLsizei)sizeInPixels.width, (GLsizei)sizeInPixels.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, negZ.pixelData.bytes);
+                
+                // Generate mipmaps.
+                if([options[CCTextureOptionGenerateMipmaps] boolValue]){
+                    glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
+                }
+                
+                CCGL_DEBUG_POP_GROUP_MARKER();
             }
-            
-            CCGL_DEBUG_POP_GROUP_MARKER();
 		});
         
         _sizeInPixels = sizeInPixels;
@@ -455,7 +544,7 @@ static CCTexture *CCTextureNone = nil;
 	if(_antialiased != antialiased){
 		CCRenderDispatch(NO, ^{
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-			if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+			if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
 				CCMetalContext *context = [CCMetalContext currentContext];
 				
 				MTLSamplerDescriptor *samplerDesc = [MTLSamplerDescriptor new];
@@ -512,7 +601,7 @@ static CCTexture *CCTextureNone = nil;
 //	if(!_hasMipmaps){
 //		CCRenderDispatch(NO, ^{
 //#if __CC_METAL_SUPPORTED_AND_ENABLED
-//			if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+//			if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
 //				CCMetalContext *context = [CCMetalContext currentContext];
 //				
 //				// Create a new blank texture.

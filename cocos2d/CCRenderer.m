@@ -53,7 +53,7 @@
 
 void CCRENDERER_DEBUG_PUSH_GROUP_MARKER(NSString *label){
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+	if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
 		[[CCMetalContext currentContext].currentRenderCommandEncoder pushDebugGroup:label];
 	} else
 #endif
@@ -64,7 +64,7 @@ void CCRENDERER_DEBUG_PUSH_GROUP_MARKER(NSString *label){
 
 void CCRENDERER_DEBUG_POP_GROUP_MARKER(void){
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+	if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
 		[[CCMetalContext currentContext].currentRenderCommandEncoder popDebugGroup];
 	} else
 #endif
@@ -75,7 +75,7 @@ void CCRENDERER_DEBUG_POP_GROUP_MARKER(void){
 
 void CCRENDERER_DEBUG_INSERT_EVENT_MARKER(NSString *label){
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+	if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
 		[[CCMetalContext currentContext].currentRenderCommandEncoder insertDebugSignpost:label];
 	} else
 #endif
@@ -86,7 +86,7 @@ void CCRENDERER_DEBUG_INSERT_EVENT_MARKER(NSString *label){
 
 void CCRENDERER_DEBUG_CHECK_ERRORS(void){
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+	if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
 	} else
 #endif
 	{

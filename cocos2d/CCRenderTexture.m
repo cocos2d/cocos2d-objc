@@ -205,7 +205,7 @@ FlipY(GLKMatrix4 projection)
 -(GLKMatrix4)projection
 {
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+	if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
 		return FlipY(_projection);
 	} else
 #endif
@@ -217,7 +217,7 @@ FlipY(GLKMatrix4 projection)
 -(void)setProjection:(GLKMatrix4)projection
 {
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+	if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
 		_projection = FlipY(projection);
 	} else
 #endif

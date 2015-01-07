@@ -43,7 +43,12 @@
 
 // -------------------------------------------------------------
 
-@interface CCTexture ()
+@interface CCTexture () {
+    @protected
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+    id<MTLTexture> _metalTexture;
+#endif
+}
 
 // Fill in any missing fields of an options dictionary.
 +(NSDictionary *)normalizeOptions:(NSDictionary *)options;

@@ -209,7 +209,7 @@ CompileShaderSources(GLenum type, NSArray *sources)
 	NSString *shaderName = (NSString *)key;
 	
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+	if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
 		id<MTLLibrary> library = [CCMetalContext currentContext].library;
 		
 		NSString *fragmentName = [shaderName stringByAppendingString:@"FS"];
@@ -667,7 +667,7 @@ MetalUniformSettersForFunctions(id<MTLFunction> vertexFunction, id<MTLFunction> 
 -(instancetype)initWithVertexShaderSource:(NSString *)vertexSource fragmentShaderSource:(NSString *)fragmentSource
 {
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+	if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
 		return [self initWithMetalVertexShaderSource:vertexSource fragmentShaderSource:fragmentSource];
 	}
 #endif
@@ -696,7 +696,7 @@ MetalUniformSettersForFunctions(id<MTLFunction> vertexFunction, id<MTLFunction> 
 -(instancetype)initWithRawVertexShaderSource:(NSString *)vertexSource rawFragmentShaderSource:(NSString *)fragmentSource
 {
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-    if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+    if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
         return [self initWithMetalVertexShaderSource:vertexSource fragmentShaderSource:fragmentSource];
     }
 #endif
@@ -720,7 +720,7 @@ MetalUniformSettersForFunctions(id<MTLFunction> vertexFunction, id<MTLFunction> 
 -(instancetype)copyWithZone:(NSZone *)zone
 {
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+	if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
 		return [[CCShader allocWithZone:zone] initWithMetalVertexFunction:_vertexFunction fragmentFunction:_fragmentFunction];
 	} else
 #endif
@@ -744,7 +744,7 @@ static CCShader *CC_SHADER_POS_TEX_COLOR_ALPHA_TEST = nil;
 	CC_SHADER_CACHE = [[CCShaderCache alloc] init];
 	
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+	if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
 		id<MTLLibrary> library = [CCMetalContext currentContext].library;
 		NSAssert(library, @"Metal shader library not found.");
 		

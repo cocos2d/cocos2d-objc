@@ -7,6 +7,7 @@
 #import "CCRenderDispatch.h"
 
 #import "CCFile_Private.h"
+#import "CCMetalSupport_Private.h"
 
 
 #pragma mark -
@@ -389,29 +390,51 @@ ReadPVRData(NSInputStream *stream, struct PVRInfo info, PVRDataBlock block)
     }
     
 	if((self = [super init])) {
-#if __CC_METAL_SUPPORTED_AND_ENABLED
-        // TODO
-#endif
 		CCRenderDispatch(NO, ^{
-            CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Init");
-            
             [self setupTexture:info.type sizeInPixels:self.sizeInPixels options:options];
             
-            const struct PVRTexturePixelFormatInfo *format = info.format;
-            ReadPVRData(stream, info, ^(GLenum target, NSUInteger mipmap, NSUInteger width, NSUInteger height, NSData *data){
-                if(format->compressed){
-                    glCompressedTexImage2D(target, (GLint)mipmap, format->internalFormat, (GLint)width, (GLint)height, 0, (GLsizei)data.length, data.bytes);
-                } else {
-                    glTexImage2D(target, (GLint)mipmap, format->internalFormat, (GLint)width, (GLint)height, 0, format->format, format->type, data.bytes);
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+            if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
+                const struct PVRTexturePixelFormatInfo *format = info.format;
+                NSUInteger bytesPerRow = info.size.width;
+                
+                ReadPVRData(stream, info, ^(GLenum target, NSUInteger mipmap, NSUInteger width, NSUInteger height, NSData *data){
+                    [_metalTexture replaceRegion:MTLRegionMake2D(0, 0, info.size.width, info.size.height) mipmapLevel:0 withBytes:data.bytes bytesPerRow:bytesPerRow];
+                });
+                
+                if([options[CCTextureOptionGenerateMipmaps] boolValue]){
+                    CCMetalContext *context = [CCMetalContext currentContext];
+
+                    // Set up a command buffer for the blit operations.
+                    id<MTLCommandBuffer> blitCommands = [context.commandQueue commandBuffer];
+                    id<MTLBlitCommandEncoder> blitter = [blitCommands blitCommandEncoder];
+
+                    // Generate mipmaps and commit.
+                    [blitter generateMipmapsForTexture:_metalTexture];
+                    [blitter endEncoding];
+                    [blitCommands commit];
                 }
-            });
-            
-            // Generate mipmaps only if the file did not contain any.
-            if([options[CCTextureOptionGenerateMipmaps] boolValue] && info.mipmapCount == 1){
-                glGenerateMipmap(GL_TEXTURE_2D);
+            } else
+#endif
+            {
+                CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Init");
+                
+                const struct PVRTexturePixelFormatInfo *format = info.format;
+                ReadPVRData(stream, info, ^(GLenum target, NSUInteger mipmap, NSUInteger width, NSUInteger height, NSData *data){
+                    if(format->compressed){
+                        glCompressedTexImage2D(target, (GLint)mipmap, format->internalFormat, (GLint)width, (GLint)height, 0, (GLsizei)data.length, data.bytes);
+                    } else {
+                        glTexImage2D(target, (GLint)mipmap, format->internalFormat, (GLint)width, (GLint)height, 0, format->format, format->type, data.bytes);
+                    }
+                });
+                
+                // Generate mipmaps only if the file did not contain any.
+                if([options[CCTextureOptionGenerateMipmaps] boolValue] && info.mipmapCount == 1){
+                    glGenerateMipmap(GL_TEXTURE_2D);
+                }
+                
+                CCGL_DEBUG_POP_GROUP_MARKER();
             }
-            
-            CCGL_DEBUG_POP_GROUP_MARKER();
 		});
         
         _sizeInPixels = info.size;
