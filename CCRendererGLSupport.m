@@ -88,18 +88,19 @@ GLTypeForCCTextureType(CCTextureType type)
     glTexParameteri(target, GL_TEXTURE_WRAP_T, ADDRESSING[addressY]);
 }
 
--(void)_uploadTexture2D:(CGSize)sizeInPixels pixelData:(const void *)pixelData
+-(void)_uploadTexture2D:(CGSize)sizeInPixels miplevel:(NSUInteger)miplevel pixelData:(const void *)pixelData;
 {
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)sizeInPixels.width, (GLsizei)sizeInPixels.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixelData);
+    glTexImage2D(GL_TEXTURE_2D, (GLint)miplevel, GL_RGBA, (GLsizei)sizeInPixels.width, (GLsizei)sizeInPixels.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixelData);
 }
 
--(void)_uploadTextureCubeFace:(NSUInteger)face sizeInPixels:(CGSize)sizeInPixels pixelData:(const void *)pixelData
+-(void)_uploadTextureCubeFace:(NSUInteger)face sizeInPixels:(CGSize)sizeInPixels miplevel:(NSUInteger)miplevel pixelData:(const void *)pixelData
 {
-    glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + (GLenum)face, 0, GL_RGBA, (GLsizei)sizeInPixels.width, (GLsizei)sizeInPixels.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixelData);
+    glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + (GLenum)face, (GLint)miplevel, GL_RGBA, (GLsizei)sizeInPixels.width, (GLsizei)sizeInPixels.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixelData);
 }
 
 -(void)_generateMipmaps:(CCTextureType)type
 {
+    // TODO should this check for full NPOT texture support here?
     glGenerateMipmap(GLTypeForCCTextureType(type));
 }
 

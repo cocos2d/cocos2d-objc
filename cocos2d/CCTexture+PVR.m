@@ -391,34 +391,27 @@ ReadPVRData(NSInputStream *stream, struct PVRInfo info, PVRDataBlock block)
     
 	if((self = [super init])) {
 		CCRenderDispatch(NO, ^{
-            [self setupTexture:info.type sizeInPixels:self.sizeInPixels options:options];
+            [self setupTexture:info.type sizeInPixels:info.size options:options];
             
 #if __CC_METAL_SUPPORTED_AND_ENABLED
             if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
-                const struct PVRTexturePixelFormatInfo *format = info.format;
-                NSUInteger bytesPerRow = info.size.width;
+                // TODO add support for PVRTC
+                NSAssert(info.format == &PVRTableFormats[0], @"Metal only supports RGBA8 PVR files.");
                 
-                ReadPVRData(stream, info, ^(GLenum target, NSUInteger mipmap, NSUInteger width, NSUInteger height, NSData *data){
-                    [_metalTexture replaceRegion:MTLRegionMake2D(0, 0, info.size.width, info.size.height) mipmapLevel:0 withBytes:data.bytes bytesPerRow:bytesPerRow];
+                ReadPVRData(stream, info, ^(GLenum target, NSUInteger miplevel, NSUInteger width, NSUInteger height, NSData *data){
+                    CGSize size = CGSizeMake(width, height);
+                    const void *pixelData = data.bytes;
+                    
+                    if(target == GL_TEXTURE_2D){
+                        [self _uploadTexture2D:size miplevel:miplevel pixelData:pixelData];
+                    } else {
+                        [self _uploadTextureCubeFace:target - GL_TEXTURE_CUBE_MAP_POSITIVE_X sizeInPixels:size miplevel:miplevel pixelData:pixelData];
+                    }
                 });
                 
-                if([options[CCTextureOptionGenerateMipmaps] boolValue]){
-                    CCMetalContext *context = [CCMetalContext currentContext];
-
-                    // Set up a command buffer for the blit operations.
-                    id<MTLCommandBuffer> blitCommands = [context.commandQueue commandBuffer];
-                    id<MTLBlitCommandEncoder> blitter = [blitCommands blitCommandEncoder];
-
-                    // Generate mipmaps and commit.
-                    [blitter generateMipmapsForTexture:_metalTexture];
-                    [blitter endEncoding];
-                    [blitCommands commit];
-                }
             } else
 #endif
             {
-                CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Init");
-                
                 const struct PVRTexturePixelFormatInfo *format = info.format;
                 ReadPVRData(stream, info, ^(GLenum target, NSUInteger mipmap, NSUInteger width, NSUInteger height, NSData *data){
                     if(format->compressed){
@@ -427,13 +420,11 @@ ReadPVRData(NSInputStream *stream, struct PVRInfo info, PVRDataBlock block)
                         glTexImage2D(target, (GLint)mipmap, format->internalFormat, (GLint)width, (GLint)height, 0, format->format, format->type, data.bytes);
                     }
                 });
-                
-                // Generate mipmaps only if the file did not contain any.
-                if([options[CCTextureOptionGenerateMipmaps] boolValue] && info.mipmapCount == 1){
-                    glGenerateMipmap(GL_TEXTURE_2D);
-                }
-                
-                CCGL_DEBUG_POP_GROUP_MARKER();
+            }
+            
+            // Generate mipmaps only if the file did not contain any.
+            if([options[CCTextureOptionGenerateMipmaps] boolValue] && info.mipmapCount == 1){
+                [self _generateMipmaps:info.type];
             }
 		});
         

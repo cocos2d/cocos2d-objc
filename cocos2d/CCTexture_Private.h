@@ -75,7 +75,17 @@
 // Retrieve the proxy for this texture.
 @property(atomic, readonly, weak) CCProxy *proxy;
 
-// Create the native texture object.
+// Create the native texture object and sampler.
 -(void)setupTexture:(CCTextureType)type sizeInPixels:(CGSize)sizeInPixels options:(NSDictionary *)options;
+
+// Upload 2D texture data.
+-(void)_uploadTexture2D:(CGSize)sizeInPixels miplevel:(NSUInteger)miplevel pixelData:(const void *)pixelData;
+
+// Upload Cubemap texture data.
+// Faces are in the same order as GL/Metal (+x, -x, +y, -y, +z, -z)
+-(void)_uploadTextureCubeFace:(NSUInteger)face sizeInPixels:(CGSize)sizeInPixels miplevel:(NSUInteger)miplevel pixelData:(const void *)pixelData;
+
+// Force mipmap generation on a texture.
+-(void)_generateMipmaps:(CCTextureType)type;
 
 @end

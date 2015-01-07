@@ -190,13 +190,13 @@ static void Abstract(){NSCAssert(NO, @"Abstract method. Must be overridden by su
     Abstract();
 }
 
--(void)_uploadTexture2D:(CGSize)sizeInPixels pixelData:(const void *)pixelData
+-(void)_uploadTexture2D:(CGSize)sizeInPixels miplevel:(NSUInteger)miplevel pixelData:(const void *)pixelData
 {
     Abstract();
 }
 
 // Faces are in the same order as GL/Metal (+x, -x, +y, -y, +z, -z)
--(void)_uploadTextureCubeFace:(NSUInteger)face sizeInPixels:(CGSize)sizeInPixels pixelData:(const void *)pixelData
+-(void)_uploadTextureCubeFace:(NSUInteger)face sizeInPixels:(CGSize)sizeInPixels miplevel:(NSUInteger)miplevel pixelData:(const void *)pixelData
 {
     Abstract();
 }
@@ -259,7 +259,7 @@ static void Abstract(){NSCAssert(NO, @"Abstract method. Must be overridden by su
 		CCRenderDispatch(NO, ^{
             [self setupTexture:CCTextureType2D sizeInPixels:sizeInPixels options:options];
             
-            [self _uploadTexture2D:sizeInPixels pixelData:image.pixelData.bytes];
+            [self _uploadTexture2D:sizeInPixels miplevel:0 pixelData:image.pixelData.bytes];
             
             if([options[CCTextureOptionGenerateMipmaps] boolValue]){
                 [self _generateMipmaps:CCTextureType2D];
@@ -351,12 +351,12 @@ static void Abstract(){NSCAssert(NO, @"Abstract method. Must be overridden by su
 		CCRenderDispatch(NO, ^{
             [self setupTexture:CCTextureTypeCubemap sizeInPixels:sizeInPixels options:options];
             
-            [self _uploadTextureCubeFace:0 sizeInPixels:sizeInPixels pixelData:posX.pixelData.bytes];
-            [self _uploadTextureCubeFace:1 sizeInPixels:sizeInPixels pixelData:negX.pixelData.bytes];
-            [self _uploadTextureCubeFace:2 sizeInPixels:sizeInPixels pixelData:posY.pixelData.bytes];
-            [self _uploadTextureCubeFace:3 sizeInPixels:sizeInPixels pixelData:negY.pixelData.bytes];
-            [self _uploadTextureCubeFace:4 sizeInPixels:sizeInPixels pixelData:posZ.pixelData.bytes];
-            [self _uploadTextureCubeFace:5 sizeInPixels:sizeInPixels pixelData:negZ.pixelData.bytes];
+            [self _uploadTextureCubeFace:0 sizeInPixels:sizeInPixels miplevel:0 pixelData:posX.pixelData.bytes];
+            [self _uploadTextureCubeFace:1 sizeInPixels:sizeInPixels miplevel:0 pixelData:negX.pixelData.bytes];
+            [self _uploadTextureCubeFace:2 sizeInPixels:sizeInPixels miplevel:0 pixelData:posY.pixelData.bytes];
+            [self _uploadTextureCubeFace:3 sizeInPixels:sizeInPixels miplevel:0 pixelData:negY.pixelData.bytes];
+            [self _uploadTextureCubeFace:4 sizeInPixels:sizeInPixels miplevel:0 pixelData:posZ.pixelData.bytes];
+            [self _uploadTextureCubeFace:5 sizeInPixels:sizeInPixels miplevel:0 pixelData:negZ.pixelData.bytes];
             
             // Generate mipmaps.
             if([options[CCTextureOptionGenerateMipmaps] boolValue]){

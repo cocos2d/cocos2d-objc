@@ -68,6 +68,16 @@
 	[self loadAndDisplayImageNamed: @"test_image.tiff" withTitle: @"TIFF loading example (has alpha)"];
 }
 
+-(void) setupPVRRGBA8LoadingTest
+{
+    [self loadAndDisplayImageNamed: @"test_image_rgba8888.pvr" withTitle: @"RGBA8 PVR"];
+}
+
+-(void) setupPVRRGBA8v3LoadingTest
+{
+    [self loadAndDisplayImageNamed: @"test_image_rgba8888_v3.pvr" withTitle: @"RGBA8 PVR v3"];
+}
+
 -(void) setupPVRa8LoadingTest
 {
     if([self skipForMetal]) return;
@@ -313,7 +323,6 @@
                 
                 float3 coord = rotate*float3(2.0*in.texCoord1 - 1.0, 0.5);
                 return half4(in.color)*cube.sample(cubeSampler, coord, bias(9.0*lodBias));
-//				return half4((*u_ColorMatrix)*cc_MainTexture.sample(cc_MainTextureSampler, in.texCoord1));
 			}
 		)];
 	} else
@@ -357,8 +366,6 @@
 
 -(void) setupPVRCubemapTest
 {
-    if([self skipForMetal]) return;
-    
 	self.subTitle = @"PVR (RGBA8) Cubemap";
     
     CCTexture *cubemap = [[CCTexture alloc] initPVRWithCCFile:[CCFileUtils fileNamed:@"Cubemap/Cubemap.pvr.gz"] options:@{

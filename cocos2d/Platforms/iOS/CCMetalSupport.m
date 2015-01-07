@@ -168,16 +168,16 @@ static NSString *CURRENT_CONTEXT_KEY = @"CURRENT_CONTEXT_KEY";
     _metalSampler = [[CCMetalContext currentContext].device newSamplerStateWithDescriptor:samplerDesc];
 }
 
--(void)_uploadTexture2D:(CGSize)sizeInPixels pixelData:(const void *)pixelData
+-(void)_uploadTexture2D:(CGSize)sizeInPixels miplevel:(NSUInteger)miplevel pixelData:(const void *)pixelData
 {
     NSUInteger bytesPerRow = sizeInPixels.width*4;
-    [_metalTexture replaceRegion:MTLRegionMake2D(0, 0, sizeInPixels.width, sizeInPixels.height) mipmapLevel:0 withBytes:pixelData bytesPerRow:bytesPerRow];
+    [_metalTexture replaceRegion:MTLRegionMake2D(0, 0, sizeInPixels.width, sizeInPixels.height) mipmapLevel:miplevel withBytes:pixelData bytesPerRow:bytesPerRow];
 }
 
--(void)_uploadTextureCubeFace:(NSUInteger)face sizeInPixels:(CGSize)sizeInPixels pixelData:(const void *)pixelData
+-(void)_uploadTextureCubeFace:(NSUInteger)face sizeInPixels:(CGSize)sizeInPixels miplevel:(NSUInteger)miplevel pixelData:(const void *)pixelData
 {
     NSUInteger bytesPerRow = sizeInPixels.width*4;
-    [_metalTexture replaceRegion:MTLRegionMake2D(0, 0, sizeInPixels.width, sizeInPixels.height) mipmapLevel:0 slice:face withBytes:pixelData bytesPerRow:bytesPerRow bytesPerImage:0];
+    [_metalTexture replaceRegion:MTLRegionMake2D(0, 0, sizeInPixels.width, sizeInPixels.height) mipmapLevel:miplevel slice:face withBytes:pixelData bytesPerRow:bytesPerRow bytesPerImage:0];
 }
 
 -(void)_generateMipmaps:(CCTextureType)type
