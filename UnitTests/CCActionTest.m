@@ -10,9 +10,9 @@
 #import "cocos2d.h"
 #import "CCAction.h"
 
-@interface CCActionBaseTest : XCTestCase @end
+@interface CCActionTestBase : XCTestCase @end
 
-@implementation CCActionBaseTest
+@implementation CCActionTestBase
 
 const float accuracy = 1e-4;
 
@@ -43,7 +43,7 @@ CCNode *node;
 
 @end
 
-@interface CCActionGeneralTest : CCActionBaseTest  @end
+@interface CCActionGeneralTest : CCActionTestBase  @end
 
 @implementation CCActionGeneralTest
 
@@ -176,7 +176,7 @@ CCNode *node;
 @end
 
 
-@interface CCActionReuseTest : CCActionBaseTest @end
+@interface CCActionReuseTest : CCActionTestBase @end
 
 @implementation CCActionReuseTest
 
@@ -345,7 +345,7 @@ CCNode *node;
 
 @end
 
-@interface CCActionInstantTest : CCActionBaseTest @end
+@interface CCActionInstantTest : CCActionTestBase @end
 
 @implementation CCActionInstantTest
 
