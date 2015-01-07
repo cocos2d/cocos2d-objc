@@ -337,6 +337,12 @@
 
 	} else if([elementName isEqualToString:@"image"]) {
 
+        if(_parentElement == TMXPropertyTile){
+            // Images nested inside tile elements mean we're using a tileset that is a "Collection of Images"
+            // This is one image per tile, and not supported by cocos2d.
+            NSAssert(false, @"'Collection of Images' tilesets are not supported in cocos2d. In Tiled, please use tilesets 'Based on Tileset Images'.");
+        }
+        
 		CCTiledMapTilesetInfo *tileset = [_tilesets lastObject];
 
 		// build full path
