@@ -152,12 +152,31 @@ extern NSString * const CCTextureOptionAddressModeY;
  This is the recommended method to load textures for two main reasons. Textures take a long time to load and can use a lot of memory.
  The cache ensures that you don't waste time loading textures multiple times, or waste memory on duplicates.
  The cache is flushed automatically when your app receives a memory warning.
+ 
+ Textures loaded with this method will use the current value of [CCTexture defaultOptions].
 
  @param file The filename to be loaded. File type is detected automatically. (png, pvr, jpeg, etc)
 
  @return A texture with the contents of the file, or nil if there was an error.
  */
 +(instancetype)textureWithFile:(NSString*)file;
+
+/**
+ An options dictionary that will be passed to [CCFileUtils fileNamed:options:], [CCImage initWithfile:options:], and [CCTexture initWithImage:options:].
+ @return The current value of the default options dictionary.
+ */
++(NSDictionary *)defaultOptions;
+
+/**
+ When loading cached textures, several methods take configurable options. [CCFileUtils fileNamed:options:], [CCImage initWithfile:options:], and [CCTexture initWithImage:options:].
+ You can configure Cocos2D's default texture loading by overriding this value.
+ For instance, you may want to force all textures to use nearest filtering in a pixel art game, or always enable mipmapping.
+ 
+ The default value is normally nil unless set by the user. This means that all methods will fall back on their defaults.
+
+ @param options A dictionary with a set of options that you want to override.
+ */
++(void)setDefaultOptions:(NSDictionary *)options;
 
 /**
  A placeholder value used to signal "no texture".

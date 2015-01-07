@@ -117,7 +117,7 @@ NSString * const CCTextureOptionAddressModeY = @"CCTextureOptionAddressModeY";
 	CCProxy __weak *_proxy;
 }
 
-static NSDictionary *DEFAULT_OPTIONS = nil;
+static NSDictionary *NORMALIZED_OPTIONS = nil;
 
 static CCTexture *CCTextureNone = nil;
 
@@ -126,7 +126,7 @@ static CCTexture *CCTextureNone = nil;
 	// +initialize may be called due to loading a subclass.
 	if(self != [CCTexture class]) return;
     
-    DEFAULT_OPTIONS = @{
+    NORMALIZED_OPTIONS = @{
         CCTextureOptionGenerateMipmaps: @(NO),
         CCTextureOptionMinificationFilter: @(CCTextureFilterLinear),
         CCTextureOptionMagnificationFilter: @(CCTextureFilterLinear),
@@ -156,18 +156,31 @@ static CCTexture *CCTextureNone = nil;
 	return CCTextureNone;
 }
 
+static NSDictionary *_DEFAULT_OPTIONS = nil;
+
 + (id) textureWithFile:(NSString*)file
 {
+    #warning TODO
     return [[CCTextureCache sharedTextureCache] addImage:file];
+}
+
++(NSDictionary *)defaultOptions
+{
+    return _DEFAULT_OPTIONS;
+}
+
++(void)setDefaultOptions:(NSDictionary *)options
+{
+    _DEFAULT_OPTIONS = options;
 }
 
 +(NSDictionary *)normalizeOptions:(NSDictionary *)options
 {
-    if(options == nil || options == DEFAULT_OPTIONS){
-        return DEFAULT_OPTIONS;
+    if(options == nil || options == NORMALIZED_OPTIONS){
+        return NORMALIZED_OPTIONS;
     } else {
         // Merge the default values with the user values.
-        NSMutableDictionary *opts = [DEFAULT_OPTIONS mutableCopy];
+        NSMutableDictionary *opts = [NORMALIZED_OPTIONS mutableCopy];
         [opts addEntriesFromDictionary:options];
         
         return opts;
