@@ -11,6 +11,17 @@
 #endif
 
 
+// TODO Need to make CCTexture.m MRC to merge this back in?
+@implementation CCTexture(NoARC)
+
++(instancetype)allocWithZone:(struct _NSZone *)zone
+{
+    return NSAllocateObject(CCTextureClass, 0, zone);
+}
+
+@end
+
+
 @implementation CCSprite(NoARC)
 
 static inline void

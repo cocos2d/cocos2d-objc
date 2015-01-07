@@ -65,6 +65,11 @@ extern NSString * const CCTextureOptionAddressModeY;
     CGSize _sizeInPixels;
     CGSize _contentSize;
     CCTextureType _type;
+    
+    // Deprecated
+	BOOL _premultipliedAlpha;
+	BOOL _hasMipmaps;
+    BOOL _antialiased;
 }
 
 -(instancetype)initWithImage:(CCImage *)image options:(NSDictionary *)options;

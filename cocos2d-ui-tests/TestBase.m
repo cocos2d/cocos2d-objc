@@ -190,6 +190,8 @@
 
 - (void) setupTestWithIndex:(NSInteger)testNum
 {
+    _currentTest = testNum;
+    
     // Remove current test
     [self.contentNode removeAllChildrenWithCleanup:YES];
     
@@ -208,8 +210,6 @@
         typedef void (*Func)(id, SEL);
         ((Func)objc_msgSend)(self, constructor);
     }
-    
-    _currentTest = testNum;
 }
 
 - (void) setSubTitle:(NSString *)subTitle

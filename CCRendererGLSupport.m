@@ -29,6 +29,83 @@
 #import "CCDeviceInfo.h"
 
 
+@interface CCTextureGL : CCTexture @end
+@implementation CCTextureGL
+
+- (void) dealloc
+{
+	CCLOGINFO(@"cocos2d: deallocing %@", self);
+	
+	GLuint name = _name;
+	if(name){
+		CCRenderDispatch(YES, ^{
+			CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Dealloc");
+			glDeleteTextures(1, &name);
+			CCGL_DEBUG_POP_GROUP_MARKER();
+		});
+	}
+}
+
+static GLenum
+GLTypeForCCTextureType(CCTextureType type)
+{
+    switch(type){
+        case CCTextureType2D: return GL_TEXTURE_2D;
+        case CCTextureTypeCubemap: return GL_TEXTURE_CUBE_MAP;
+    }
+}
+
+-(void)_setupTexture:(CCTextureType)type sizeInPixels:(CGSize)sizeInPixels mipmapped:(BOOL)mipmapped
+{
+    glGenTextures(1, &_name);
+}
+
+-(void)_setupSampler:(CCTextureType)type
+    minFilter:(CCTextureFilter)minFilter magFilter:(CCTextureFilter)magFilter mipFilter:(CCTextureFilter)mipFilter
+    addressX:(CCTextureAddressMode)addressX addressY:(CCTextureAddressMode)addressY
+{
+    GLenum target = GLTypeForCCTextureType(type);
+    glBindTexture(target, _name);
+    
+    // Set up texture filtering mode.
+    static const GLenum FILTERS[3][3] = {
+        {GL_LINEAR, GL_LINEAR, GL_LINEAR}, // Invalid enum, fall back to linear.
+        {GL_NEAREST, GL_NEAREST_MIPMAP_NEAREST, GL_NEAREST_MIPMAP_LINEAR}, // nearest
+        {GL_LINEAR, GL_LINEAR_MIPMAP_NEAREST, GL_LINEAR_MIPMAP_LINEAR}, // linear
+    };
+
+    glTexParameteri(target, GL_TEXTURE_MIN_FILTER, FILTERS[minFilter][mipFilter]);
+    glTexParameteri(target, GL_TEXTURE_MAG_FILTER, FILTERS[magFilter][CCTextureFilterMipmapNone]);
+    
+    // Set up texture wrap mode.
+    static const GLenum ADDRESSING[] = {
+        GL_CLAMP_TO_EDGE,
+        GL_REPEAT,
+        GL_MIRRORED_REPEAT,
+    };
+    
+    glTexParameteri(target, GL_TEXTURE_WRAP_S, ADDRESSING[addressX]);
+    glTexParameteri(target, GL_TEXTURE_WRAP_T, ADDRESSING[addressY]);
+}
+
+-(void)_uploadTexture2D:(CGSize)sizeInPixels pixelData:(const void *)pixelData
+{
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)sizeInPixels.width, (GLsizei)sizeInPixels.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixelData);
+}
+
+-(void)_uploadTextureCubeFace:(NSUInteger)face sizeInPixels:(CGSize)sizeInPixels pixelData:(const void *)pixelData
+{
+    glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + (GLenum)face, 0, GL_RGBA, (GLsizei)sizeInPixels.width, (GLsizei)sizeInPixels.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixelData);
+}
+
+-(void)_generateMipmaps:(CCTextureType)type
+{
+    glGenerateMipmap(GLTypeForCCTextureType(type));
+}
+
+@end
+
+
 static const CCGraphicsBufferType CCGraphicsBufferGLTypes[] = {
 	GL_ARRAY_BUFFER,
 	GL_ELEMENT_ARRAY_BUFFER,

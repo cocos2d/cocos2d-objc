@@ -32,6 +32,7 @@
 #import <BridgeKitV3/BridgeKit.h>
 #endif
 
+Class CCTextureClass;
 Class CCGraphicsBufferClass;
 Class CCGraphicsBufferBindingsClass;
 Class CCRenderStateClass;
@@ -134,6 +135,7 @@ static char * glExtensions;
 	if(_graphicsAPI == CCGraphicsAPIInvalid){
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 		if(NSProtocolFromString(@"MTLDevice") && !getenv("CC_FORCE_GL")){
+            CCTextureClass = NSClassFromString(@"CCTextureMetal");
 			CCGraphicsBufferClass = NSClassFromString(@"CCGraphicsBufferMetal");
 			CCGraphicsBufferBindingsClass = NSClassFromString(@"CCGraphicsBufferBindingsMetal");
 			CCRenderStateClass = NSClassFromString(@"CCRenderStateMetal");
@@ -144,6 +146,7 @@ static char * glExtensions;
 		} else
 #endif
 		{
+            CCTextureClass = NSClassFromString(@"CCTextureGL");
 			CCGraphicsBufferClass = NSClassFromString(@"CCGraphicsBufferGLBasic");
 			CCGraphicsBufferBindingsClass = NSClassFromString(@"CCGraphicsBufferBindingsGL");
 			CCRenderStateClass = NSClassFromString(@"CCRenderStateGL");
@@ -153,6 +156,7 @@ static char * glExtensions;
 			_graphicsAPI = CCGraphicsAPIGL;
 		}
 		
+        NSAssert(CCTextureClass, @"CCTextureClass not configured.");
 		NSAssert(CCGraphicsBufferClass, @"CCGraphicsBufferClass not configured.");
 		NSAssert(CCGraphicsBufferBindingsClass, @"CCGraphicsBufferBindingsClass not configured.");
 		NSAssert(CCRenderStateClass, @"CCRenderStateClass not configured.");

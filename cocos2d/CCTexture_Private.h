@@ -45,8 +45,11 @@
 
 @interface CCTexture () {
     @protected
+    GLuint _name;
+    
 #if __CC_METAL_SUPPORTED_AND_ENABLED
     id<MTLTexture> _metalTexture;
+    id<MTLSamplerState> _metalSampler;
 #endif
 }
 

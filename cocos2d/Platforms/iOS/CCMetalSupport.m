@@ -115,6 +115,87 @@ static NSString *CURRENT_CONTEXT_KEY = @"CURRENT_CONTEXT_KEY";
 @end
 
 
+@interface CCTextureMetal : CCTexture @end
+@implementation CCTextureMetal
+
+-(void)_setupTexture:(CCTextureType)type sizeInPixels:(CGSize)sizeInPixels mipmapped:(BOOL)mipmapped
+{
+    NSUInteger w = sizeInPixels.width;
+    NSUInteger h = sizeInPixels.height;
+    MTLTextureDescriptor *textureDesc = nil;
+    
+    switch(type){
+        case CCTextureType2D: textureDesc = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA8Unorm width:w height:h mipmapped:mipmapped]; break;
+        case CCTextureTypeCubemap: textureDesc = [MTLTextureDescriptor textureCubeDescriptorWithPixelFormat:MTLPixelFormatRGBA8Unorm size:w mipmapped:mipmapped]; break;
+    }
+    
+    NSAssert(textureDesc, @"Bad texture type?");
+    _metalTexture = [[CCMetalContext currentContext].device newTextureWithDescriptor:textureDesc];
+
+}
+
+-(void)_setupSampler:(CCTextureType)type
+    minFilter:(CCTextureFilter)minFilter magFilter:(CCTextureFilter)magFilter mipFilter:(CCTextureFilter)mipFilter
+    addressX:(CCTextureAddressMode)addressX addressY:(CCTextureAddressMode)addressY
+{
+    MTLSamplerDescriptor *samplerDesc = [MTLSamplerDescriptor new];
+
+    static const MTLSamplerMinMagFilter FILTERS[] = {
+        MTLSamplerMinMagFilterLinear, // Invalid, fall back to linear.
+        MTLSamplerMinMagFilterNearest,
+        MTLSamplerMinMagFilterLinear,
+    };
+
+    static const MTLSamplerMipFilter MIP_FILTERS[] = {
+        MTLSamplerMipFilterNotMipmapped,
+        MTLSamplerMipFilterNearest,
+        MTLSamplerMipFilterLinear,
+    };
+
+    samplerDesc.minFilter = FILTERS[minFilter];
+    samplerDesc.magFilter = FILTERS[magFilter];
+    samplerDesc.mipFilter = MIP_FILTERS[mipFilter];
+
+    static const MTLSamplerAddressMode ADDRESSING[] = {
+        MTLSamplerAddressModeClampToEdge,
+        MTLSamplerAddressModeRepeat,
+        MTLSamplerAddressModeMirrorRepeat,
+    };
+
+    samplerDesc.sAddressMode = ADDRESSING[addressX];
+    samplerDesc.tAddressMode = ADDRESSING[addressY];
+
+    _metalSampler = [[CCMetalContext currentContext].device newSamplerStateWithDescriptor:samplerDesc];
+}
+
+-(void)_uploadTexture2D:(CGSize)sizeInPixels pixelData:(const void *)pixelData
+{
+    NSUInteger bytesPerRow = sizeInPixels.width*4;
+    [_metalTexture replaceRegion:MTLRegionMake2D(0, 0, sizeInPixels.width, sizeInPixels.height) mipmapLevel:0 withBytes:pixelData bytesPerRow:bytesPerRow];
+}
+
+-(void)_uploadTextureCubeFace:(NSUInteger)face sizeInPixels:(CGSize)sizeInPixels pixelData:(const void *)pixelData
+{
+    NSUInteger bytesPerRow = sizeInPixels.width*4;
+    [_metalTexture replaceRegion:MTLRegionMake2D(0, 0, sizeInPixels.width, sizeInPixels.height) mipmapLevel:0 slice:face withBytes:pixelData bytesPerRow:bytesPerRow bytesPerImage:0];
+}
+
+-(void)_generateMipmaps:(CCTextureType)type
+{
+    CCMetalContext *context = [CCMetalContext currentContext];
+
+    // Set up a command buffer for the blit operations.
+    id<MTLCommandBuffer> blitCommands = [context.commandQueue commandBuffer];
+    id<MTLBlitCommandEncoder> blitter = [blitCommands blitCommandEncoder];
+
+    // Generate mipmaps and commit.
+    [blitter generateMipmapsForTexture:_metalTexture];
+    [blitter endEncoding];
+    [blitCommands commit];
+}
+@end
+
+
 @implementation CCGraphicsBufferMetal
 
 -(instancetype)initWithCapacity:(NSUInteger)capacity elementSize:(size_t)elementSize type:(CCGraphicsBufferType)type;

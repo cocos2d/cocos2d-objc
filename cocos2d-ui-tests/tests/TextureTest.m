@@ -19,6 +19,17 @@
 
 @implementation TextureTest
 
+// Skip certain tests that are not supported by Metal
+-(BOOL)skipForMetal
+{
+    if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
+        [self pressedNext:nil];
+        return YES;
+    }
+    
+    return NO;
+}
+
 - (CCSprite *) loadAndDisplayImageNamed:(NSString*) fileName withTitle:(NSString*) title{
 
 	self.subTitle = title;
@@ -59,24 +70,32 @@
 
 -(void) setupPVRa8LoadingTest
 {
+    if([self skipForMetal]) return;
+    
     CCSprite * img = [self loadAndDisplayImageNamed: @"test_image_a8.pvr" withTitle: @"8 bit PVR, single channel (greyscale intensity)."];
     [img setShader:[CCShader positionTextureA8ColorShader]];
 }
 
 -(void) setupPVRa8v3LoadingTest
 {
+    if([self skipForMetal]) return;
+    
     CCSprite * img = [self loadAndDisplayImageNamed: @"test_image_a8_v3.pvr" withTitle: @"8 bit PVR v3, single channel (greyscale intensity)."];
     [img setShader:[CCShader positionTextureA8ColorShader]];
 }
 
 -(void) setupPVRa88LoadingTest
 {
+    if([self skipForMetal]) return;
+    
 	// I expected an alpha channel..?
 	[self loadAndDisplayImageNamed: @"test_image_ai88.pvr" withTitle: @"8+8 bit PVR, greyscale."];
 
 }
 -(void) setupPVRa88v3LoadingTest
 {
+    if([self skipForMetal]) return;
+    
 	[self loadAndDisplayImageNamed: @"test_image_ai88_v3.pvr" withTitle: @"8+8 bit PVR v3, alpha + greyscale."];
 }
 
@@ -84,26 +103,36 @@
 #if __CC_PLATFORM_IOS
 -(void) setupPVRLoadingTest
 {
+    if([self skipForMetal]) return;
+    
 	[self loadAndDisplayImageNamed: @"test_image.pvr" withTitle: @"PVR loading example (no alpha)"];
 }
 
 -(void) setupPvrtc2bppLoadingTest
 {
+    if([self skipForMetal]) return;
+    
 	[self loadAndDisplayImageNamed: @"test_image_pvrtc2bpp.pvr" withTitle: @"pvrtc 2 bits per pixel"];
 }
 
 -(void) setupPvrtc2bpp_v3LoadingTest
 {
+    if([self skipForMetal]) return;
+    
 	[self loadAndDisplayImageNamed: @"test_image_pvrtc2bpp_v3.pvr" withTitle: @"pvrtc 2 bits per pixel formatVersion 3 (with alpha)"];
 }
 
 -(void) setupPvrtc4bppLoadingTest
 {
+    if([self skipForMetal]) return;
+    
 	[self loadAndDisplayImageNamed: @"test_image_pvrtc4bpp.pvr" withTitle: @"pvrtc 4 bits per pixel"];
 }
 
 -(void) setupPvrtc4bpp_v3LoadingTest
 {
+    if([self skipForMetal]) return;
+    
 	[self loadAndDisplayImageNamed: @"test_image_pvrtc4bpp_v3.pvr" withTitle: @"pvrtc 4 bits per pixel formatVersion 3  (with alpha)"];
 }
 
@@ -121,43 +150,71 @@
 
 -(void) setupPvr_rgb565_LoadingTest
 {
+    if([self skipForMetal]) return;
+    
 	[self loadAndDisplayImageNamed: @"test_image_rgb565.pvr" withTitle: @"PVR uncompressed rgb565"];
 }
+
 -(void) setupPvr_rgb565_v3_LoadingTest
 {
+    if([self skipForMetal]) return;
+    
 	[self loadAndDisplayImageNamed: @"test_image_rgb565_v3.pvr" withTitle: @"PVR uncompressed rgb565 v3"];
 }
+
 -(void) setupPvr_rgb888_LoadingTest
 {
+    if([self skipForMetal]) return;
+    
 	[self loadAndDisplayImageNamed: @"test_image_rgb888.pvr" withTitle: @"PVR uncompressed rgb888"];
 }
+
 -(void) setupPvr_rgb888_v3_LoadingTest
 {
+    if([self skipForMetal]) return;
+    
 	[self loadAndDisplayImageNamed: @"test_image_rgb888_v3.pvr" withTitle: @"PVR uncompressed rgb888 v3"];
 }
+
 -(void) setupPvr_rgba4444_LoadingTest
 {
+    if([self skipForMetal]) return;
+    
 	[self loadAndDisplayImageNamed: @"test_image_rgba4444.pvr" withTitle: @"PVR uncompressed rgba4444"];
 }
+
 -(void) setupPvr_rgba4444_v3_LoadingTest
 {
+    if([self skipForMetal]) return;
+    
 	[self loadAndDisplayImageNamed: @"test_image_rgba4444_v3.pvr" withTitle: @"PVR uncompressed rgba4444 v3"];
 }
+
 -(void) setupPvr_rgba4444_mipmapped_oadingTest
 {
+    if([self skipForMetal]) return;
+    
 	[self loadAndDisplayImageNamed: @"test_image_rgba4444_mipmap.pvr" withTitle: @"PVR uncompressed rgba4444 mipmapped"];
 }
+
 -(void) setupPvr_rgba4444_gzipped_LoadingTest
 {
+    if([self skipForMetal]) return;
+    
 	[self loadAndDisplayImageNamed: @"test_image_rgba4444.pvr.gz" withTitle: @"PVR gzipped rgba4444"];
 }
+
 -(void) setupPvr_rgba4444_ccz_LoadingTest
 {
+    if([self skipForMetal]) return;
+    
 	[self loadAndDisplayImageNamed: @"test_image_rgba4444.pvr.ccz" withTitle: @"PVR gzipped.ccz rgba4444"];
 }
 
 -(void) setupNonPowerOfTwoTextureTest
 {
+    if([self skipForMetal]) return;
+    
 	[self loadAndDisplayImageNamed: @"test_1021x1024.png" withTitle: @"1021x1024 png. Watch for memory leaks with Instruments. See http://www.cocos2d-iphone.org/forum/topic/31092"];
 }
 
@@ -300,6 +357,8 @@
 
 -(void) setupPVRCubemapTest
 {
+    if([self skipForMetal]) return;
+    
 	self.subTitle = @"PVR (RGBA8) Cubemap";
     
     CCTexture *cubemap = [[CCTexture alloc] initPVRWithCCFile:[CCFileUtils fileNamed:@"Cubemap/Cubemap.pvr.gz"] options:@{
@@ -314,6 +373,8 @@
 #if __CC_PLATFORM_IOS
 -(void) setupPVRTCCubemapTest
 {
+    if([self skipForMetal]) return;
+    
 	self.subTitle = @"PVR (pvrtc 2bpp) Cubemap";
     
     CCTexture *cubemap = [[CCTexture alloc] initPVRWithCCFile:[CCFileUtils fileNamed:@"Cubemap/Cubemap-pvrtc.pvr.gz"] options:@{
