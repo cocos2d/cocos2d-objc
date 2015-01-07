@@ -28,8 +28,9 @@
 #import "ccUtils.h"
 #import "CCImage.h"
 #import "CCDeviceInfo.h"
-#import "CCMetalSupport_Private.h"
+#import "CCRenderDispatch.h"
 
+#import "CCMetalSupport_Private.h"
 #import "CCTexture_Private.h"
 
 
