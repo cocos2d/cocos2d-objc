@@ -1825,12 +1825,13 @@
     CCSpriteFrame *normalMapFrame = [CCSpriteFrame frameWithTextureFilename:@"Images/fire.png" rectInPixels:CGRectMake(0.0f, 0.0f, 4.0f, 4.0f) rotated:NO offset:CGPointZero originalSize:CGSizeMake(32.0f, 32.0f)];
     
     GLKVector2 zeroVec = GLKVector2Make(0.0f, 0.0f);
+    CGPoint zeroPoint = CGPointMake(0.0f, 0.0f);
     
     NSArray *effects = @[
                          [CCEffectBloom effectWithBlurRadius:1 intensity:0.0f luminanceThreshold:0.0f],
                          [CCEffectBlur effectWithBlurRadius:1.0],
                          [CCEffectBrightness effectWithBrightness:0.0f],
-                         [CCEffectColorChannelOffset effectWithRedOffset:zeroVec greenOffset:zeroVec blueOffset:zeroVec],
+                         [CCEffectColorChannelOffset effectWithRedOffsetWithPoint:zeroPoint greenOffsetWithPoint:zeroPoint blueOffsetWithPoint:zeroPoint],
                          [CCEffectContrast effectWithContrast:0.0f],
                          [CCEffectDropShadow effectWithShadowOffset:zeroVec shadowColor:[CCColor clearColor] blurRadius:1.0f],
                          [CCEffectGlass effectWithShininess:1.0f refraction:0.75f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment],
