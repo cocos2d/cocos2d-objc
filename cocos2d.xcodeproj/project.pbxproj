@@ -1418,7 +1418,6 @@
 		D285ECEF192EA92A009F4E88 /* CCGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCGLView.m; path = Android/CCGLView.m; sourceTree = "<group>"; };
 		D285ECF6192EF5B2009F4E88 /* CCDirectorAndroid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCDirectorAndroid.h; path = Android/CCDirectorAndroid.h; sourceTree = "<group>"; };
 		D285ECF7192EF5B2009F4E88 /* CCDirectorAndroid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCDirectorAndroid.m; path = Android/CCDirectorAndroid.m; sourceTree = "<group>"; };
-		D289C1C1197440BC00B68E3D /* BridgeKitV3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BridgeKitV3.framework; path = System/Library/Frameworks/BridgeKitV3.framework; sourceTree = SDKROOT; };
 		D28A2E151954F66E00ADC03D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D28A2E1A1954F68D00ADC03D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D28A2E1C1954F7E000ADC03D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -1614,7 +1613,6 @@
 				FC55599F1991A26300E29CCE /* libogg.a */,
 				D3903B1919952ABD003AA81A /* Metal.framework */,
 				D24FAEEB198014B90043E27D /* GLKit.framework */,
-				D289C1C1197440BC00B68E3D /* BridgeKitV3.framework */,
 				D28A2E201954F85700ADC03D /* AVFoundation.framework */,
 				D28A2E1C1954F7E000ADC03D /* OpenGLES.framework */,
 				D28A2E1A1954F68D00ADC03D /* QuartzCore.framework */,

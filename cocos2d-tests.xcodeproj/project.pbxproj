@@ -286,13 +286,6 @@
 			remoteGlobalIDString = D2FEB74F194F6C9E00FC0574;
 			remoteInfo = cocos2dAndroid;
 		};
-		D3763BBC19E72F85006C050D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D3763BB019E72F85006C050D /* cocos2d.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5BF3267A195F8D8800D9A51A;
-			remoteInfo = cocos2dJava;
-		};
 		D3763BBE19E72F85006C050D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D3763BB019E72F85006C050D /* cocos2d.xcodeproj */;
@@ -384,7 +377,6 @@
 		D28A2E171954F68200ADC03D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D28A2E1E1954F7E900ADC03D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		D2B4894B1917EE6700C3443A /* CCEffectsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCEffectsTest.m; path = "cocos2d-ui-tests/tests/CCEffectsTest.m"; sourceTree = SOURCE_ROOT; };
-		D2D0E6911950B15800E9103F /* BridgeKitV3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BridgeKitV3.framework; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/ApportableSDK1.0.sdk/System/Library/Frameworks/BridgeKitV3.framework"; sourceTree = "<group>"; };
 		D2D0E6931950B16300E9103F /* libGLESv1_CM.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLESv1_CM.so; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/ApportableSDK1.0.sdk/usr/lib/armeabi/libGLESv1_CM.so"; sourceTree = "<group>"; };
 		D2D0E6941950B16300E9103F /* libGLESv2.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLESv2.so; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/ApportableSDK1.0.sdk/usr/lib/armeabi/libGLESv2.so"; sourceTree = "<group>"; };
 		D2D0E6951950B16300E9103F /* libGLESv3.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLESv3.so; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/ApportableSDK1.0.sdk/usr/lib/armeabi/libGLESv3.so"; sourceTree = "<group>"; };
@@ -660,7 +652,6 @@
 				D2D0E6931950B16300E9103F /* libGLESv1_CM.so */,
 				D2D0E6941950B16300E9103F /* libGLESv2.so */,
 				D2D0E6951950B16300E9103F /* libGLESv3.so */,
-				D2D0E6911950B15800E9103F /* BridgeKitV3.framework */,
 				D34CD3C118ABEE9C00D8E537 /* GLKit.framework */,
 				B7E2604B17E7D278007067F0 /* QuartzCore.framework */,
 				B7E2604F17E7D278007067F0 /* OpenAL.framework */,
@@ -743,7 +734,6 @@
 			children = (
 				D3763BB919E72F85006C050D /* libcocos2d.a */,
 				D3763BBB19E72F85006C050D /* libcocos2dAndroid.a */,
-				D3763BBD19E72F85006C050D /* cocos2dJava.jar */,
 				D3763BBF19E72F85006C050D /* libcocos2d-mac.a */,
 			);
 			name = Products;
@@ -997,13 +987,6 @@
 			fileType = archive.ar;
 			path = libcocos2dAndroid.a;
 			remoteRef = D3763BBA19E72F85006C050D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D3763BBD19E72F85006C050D /* cocos2dJava.jar */ = {
-			isa = PBXReferenceProxy;
-			fileType = compiled.java.jar;
-			path = cocos2dJava.jar;
-			remoteRef = D3763BBC19E72F85006C050D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		D3763BBF19E72F85006C050D /* libcocos2d-mac.a */ = {
