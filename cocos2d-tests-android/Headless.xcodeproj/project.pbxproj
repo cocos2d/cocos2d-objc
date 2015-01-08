@@ -165,7 +165,6 @@
 		141A45D21A38DB1000853DB8 /* CoreJava.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreJava.framework; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/CoreJava.framework"; sourceTree = "<group>"; };
 		146F55071A391B5C00CCCF26 /* GLActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLActivityKit.framework; path = System/Library/Frameworks/GLActivityKit.framework; sourceTree = SDKROOT; };
 		147456A31A3B9B1A0024B64E /* Published-Android */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Published-Android"; sourceTree = "<group>"; };
-		14A8F0201A39167F00B4E693 /* BridgeKitV3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BridgeKitV3.framework; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/BridgeKitV3.framework"; sourceTree = "<group>"; };
 		14D9F5D51A3A81DE00620103 /* configCocos2d.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = configCocos2d.plist; path = "../../cocos2d-ui-tests/Resources-shared/configCocos2d.plist"; sourceTree = "<group>"; };
 		14EF47AD1A37F15800A45BE4 /* JavaKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaKit.framework; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/JavaKit.framework"; sourceTree = "<group>"; };
 		464236B31A428B4500532547 /* JavaBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaBridge.framework; path = System/Library/Frameworks/JavaBridge.framework; sourceTree = SDKROOT; };
@@ -279,7 +278,6 @@
 		5BAF85A01936C8A90085EA39 /* libGLESv1_CM.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLESv1_CM.so; path = "usr/lib/armv7a-neon/libGLESv1_CM.so"; sourceTree = SDKROOT; };
 		5BAF85A11936C8A90085EA39 /* libGLESv2.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLESv2.so; path = "usr/lib/armv7a-neon/libGLESv2.so"; sourceTree = SDKROOT; };
 		5BAF85A21936C8A90085EA39 /* libGLESv3.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLESv3.so; path = "usr/lib/armv7a-neon/libGLESv3.so"; sourceTree = SDKROOT; };
-		5BCE504E1941161500E057D0 /* BridgeKitV3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BridgeKitV3.framework; path = System/Library/Frameworks/BridgeKitV3.framework; sourceTree = SDKROOT; };
 		5BCE505B1941181E00E057D0 /* libbridge_runtime.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbridge_runtime.so; path = "usr/local/lib/armv7a-neon/libbridge_runtime.so"; sourceTree = SDKROOT; };
 		BC9F4EE019DCB1B200B25F01 /* CCPackageTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCPackageTest.m; path = "../../../cocos2d-ui-tests/tests/CCPackageTest.m"; sourceTree = "<group>"; };
 		D23DE66A1958DBA0000483A8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../../cocos2d-ui-tests/ios/Resources/Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -474,7 +472,6 @@
 				464236B51A428B4D00532547 /* JavaFoundation.framework */,
 				464236B31A428B4500532547 /* JavaBridge.framework */,
 				146F55071A391B5C00CCCF26 /* GLActivityKit.framework */,
-				14A8F0201A39167F00B4E693 /* BridgeKitV3.framework */,
 				141A45D21A38DB1000853DB8 /* CoreJava.framework */,
 				14EF47AD1A37F15800A45BE4 /* JavaKit.framework */,
 				14098DAC1A37EA9A005F0B26 /* GLActivityKit.framework */,
@@ -490,7 +487,6 @@
 				D2BBF54F195264EA0005272F /* libGLESv3.so */,
 				D2952D3C19520B9A007C58A7 /* OpenAL.framework */,
 				5BCE505B1941181E00E057D0 /* libbridge_runtime.so */,
-				5BCE504E1941161500E057D0 /* BridgeKitV3.framework */,
 				5BAF85A01936C8A90085EA39 /* libGLESv1_CM.so */,
 				5BAF85A11936C8A90085EA39 /* libGLESv2.so */,
 				5BAF85A21936C8A90085EA39 /* libGLESv3.so */,
