@@ -814,7 +814,7 @@
         sprite.positionType = CCPositionTypeNormalized;
         sprite.position = ccp(0.75f, 0.65f);
         
-        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffset:GLKVector2Make(5.0f, 0.0f) greenOffset:GLKVector2Make(-4.0f, 4.0f) blueOffset:GLKVector2Make(-4.0f, -4.0f)];
+        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffsetWithPoint:CGPointMake(5.0f, 0.0f) greenOffsetWithPoint:CGPointMake(-4.0f, 4.0f) blueOffsetWithPoint:CGPointMake(-4.0f, -4.0f)];
         sprite.effect = offset;
         
         [self.contentNode addChild:sprite];
@@ -833,7 +833,7 @@
         sprite.positionType = CCPositionTypeNormalized;
         sprite.position = ccp(0.75f, 0.5f);
         
-        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffset:GLKVector2Make(5.0f, 0.0f) greenOffset:GLKVector2Make(-4.0f, 4.0f) blueOffset:GLKVector2Make(-4.0f, -4.0f)];
+        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffsetWithPoint:CGPointMake(5.0f, 0.0f) greenOffsetWithPoint:CGPointMake(-4.0f, 4.0f) blueOffsetWithPoint:CGPointMake(-4.0f, -4.0f)];
         offset.padding = CGSizeMake(5.0f, 5.0f);
         sprite.effect = offset;
         
@@ -853,7 +853,7 @@
         sprite.positionType = CCPositionTypeNormalized;
         sprite.position = ccp(0.75f, 0.35f);
         
-        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffset:GLKVector2Make(5.0f, 0.0f) greenOffset:GLKVector2Make(-4.0f, 4.0f) blueOffset:GLKVector2Make(-4.0f, -4.0f)];
+        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffsetWithPoint:CGPointMake(5.0f, 0.0f) greenOffsetWithPoint:CGPointMake(-4.0f, 4.0f) blueOffsetWithPoint:CGPointMake(-4.0f, -4.0f)];
         offset.padding = CGSizeMake(5.0f, 5.0f);
         CCEffectHue *hue = [CCEffectHue effectWithHue:60.0f];
         sprite.effect = [CCEffectStack effectWithArray:@[offset, hue]];
@@ -874,7 +874,7 @@
         sprite.positionType = CCPositionTypeNormalized;
         sprite.position = ccp(0.75f, 0.2f);
         
-        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffset:GLKVector2Make(5.0f, 0.0f) greenOffset:GLKVector2Make(-4.0f, 4.0f) blueOffset:GLKVector2Make(-4.0f, -4.0f)];
+        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffsetWithPoint:CGPointMake(5.0f, 0.0f) greenOffsetWithPoint:CGPointMake(-4.0f, 4.0f) blueOffsetWithPoint:CGPointMake(-4.0f, -4.0f)];
         offset.padding = CGSizeMake(5.0f, 5.0f);
         CCEffectHue *hue = [CCEffectHue effectWithHue:60.0f];
         sprite.effect = [CCEffectStack effectWithArray:@[hue, offset]];
@@ -895,7 +895,7 @@
 {
     self.subTitle = @"Color Channel Offset Effect Test";
     
-    CCEffectColorChannelOffset *effect = [CCEffectColorChannelOffset effectWithRedOffset:GLKVector2Make(0.0f, 0.0f) greenOffset:GLKVector2Make(0.0f, 0.0f) blueOffset:GLKVector2Make(0.0f, 0.0f)];
+    CCEffectColorChannelOffset *effect = [CCEffectColorChannelOffset effectWithRedOffsetWithPoint:CGPointMake(0.0f, 0.0f) greenOffsetWithPoint:CGPointMake(0.0f, 0.0f) blueOffsetWithPoint:CGPointMake(0.0f, 0.0f)];
     effect.padding = CGSizeMake(5.0f, 5.0f);
     
     CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/particles.png"];
@@ -913,13 +913,13 @@
     void (^updateBlock)() = ^{
         
         float redRadius = 3.0f;
-        effect.redOffset = GLKVector2Make(redRadius * cosf(redTheta), redRadius * sinf(redTheta));
+        effect.redOffsetWithPoint = CGPointMake(redRadius * cosf(redTheta), redRadius * sinf(redTheta));
         
         float greenRadius = 3.0f;
-        effect.greenOffset = GLKVector2Make(greenRadius * cosf(greenTheta), greenRadius * sinf(greenTheta));
+        effect.greenOffsetWithPoint = CGPointMake(greenRadius * cosf(greenTheta), greenRadius * sinf(greenTheta));
         
         float blueRadius = 3.0f;
-        effect.blueOffset = GLKVector2Make(blueRadius * cosf(blueTheta), blueRadius * sinf(blueTheta));
+        effect.blueOffsetWithPoint = CGPointMake(blueRadius * cosf(blueTheta), blueRadius * sinf(blueTheta));
         
         redTheta += thetaStep;
         greenTheta += thetaStep;
