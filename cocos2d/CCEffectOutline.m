@@ -6,6 +6,10 @@
 //
 //
 #import "CCEffectOutline.h"
+
+
+#if CC_EFFECTS_EXPERIMENTAL
+
 #import "CCEffect_Private.h"
 #import "CCSprite_Private.h"
 #import "CCTexture.h"
@@ -186,3 +190,5 @@
 }
 
 @end
+
+#endif

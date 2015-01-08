@@ -103,11 +103,11 @@
 #import "CCTiledMapLayer.h"
 #import "CCTiledMapObjectGroup.h"
 #import "CCTransition.h"
-#import "CCEffectOutline.h"
 #import "CCPackageManager.h"
 #import "CCPackage.h"
 
 #if CC_EFFECTS_EXPERIMENTAL
+#import "CCEffectOutline.h"
 #import "CCEffectDFOutline.h"
 #import "CCEffectDistanceField.h"
 #import "CCEffectDFInnerGlow.h"

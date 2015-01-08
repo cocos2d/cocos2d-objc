@@ -28,6 +28,9 @@
 	return self;
 }
 
+
+#if CC_EFFECTS_EXPERIMENTAL
+
 #pragma mark Outline
 
 -(void)setupOutlineTest
@@ -54,8 +57,6 @@
 }
 
 #pragma mark Distance Fields
-
-#if CC_EFFECTS_EXPERIMENTAL
 
 #define INNER_GLOW_MAX_WIDTH 6
 
@@ -1857,7 +1858,9 @@
                          [CCEffectReflection effectWithShininess:1.0f fresnelBias:0.1f fresnelPower:2.0f environment:reflectEnvironment],
                          [CCEffectRefraction effectWithRefraction:0.75f environment:refractEnvironment],
                          [CCEffectSaturation effectWithSaturation:0.0f],
+#if CC_EFFECTS_EXPERIMENTAL
                          [CCEffectOutline effectWithOutlineColor:[CCColor clearColor] outlineWidth:0.0f]
+#endif
                          ];
     
     NSMutableArray *effects2 = [NSMutableArray arrayWithArray:effects];

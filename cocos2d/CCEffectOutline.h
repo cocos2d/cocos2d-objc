@@ -8,6 +8,8 @@
 
 #import "CCEffect.h"
 
+#if CC_EFFECTS_EXPERIMENTAL
+
 /**
  * CCEffectOutline create an outline around a sprite.
  *
@@ -48,3 +50,5 @@
 +(id)effectWithOutlineColor:(CCColor*)outlineColor outlineWidth:(int)outlineWidth;
 
 @end
+
+#endif
