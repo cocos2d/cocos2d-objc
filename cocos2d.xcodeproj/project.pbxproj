@@ -941,9 +941,13 @@
 		E0F924721224140400EF2362 /* CCTexturePVR.m in Sources */ = {isa = PBXBuildFile; fileRef = E0F924701224140400EF2362 /* CCTexturePVR.m */; };
 		E0F92AC41224559800EF2362 /* CCNS.h in Headers */ = {isa = PBXBuildFile; fileRef = E0F92AC31224559800EF2362 /* CCNS.h */; };
 		E525F0F74C7C69C4371E20EE /* CCPackageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F9EA4B5DD37D0418869E /* CCPackageHelper.m */; };
+		E525F334F88A378A4D1FDA98 /* CCFileLocator.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FBAC765D36D50CA8314D /* CCFileLocator.m */; };
 		E525F3A2BBCBB446B67D8260 /* CCPackage_private.h in Headers */ = {isa = PBXBuildFile; fileRef = E525FE4C98BCF1228ECC9623 /* CCPackage_private.h */; };
+		E525F4E724A86B8DDA11D2F5 /* CCFileLocator.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FBAC765D36D50CA8314D /* CCFileLocator.m */; };
+		E525FC642C08F4EEA9B4A38C /* CCFileLocator.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FBAC765D36D50CA8314D /* CCFileLocator.m */; };
 		E525FCC2CF72D3667DE4D71B /* CCPackageHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = E525FF8C7C018BF691F36044 /* CCPackageHelper.h */; };
 		E525FF1A60724C91275720C5 /* CCPackageManager_private.h in Headers */ = {isa = PBXBuildFile; fileRef = E525F94C08B1D716E9173061 /* CCPackageManager_private.h */; };
+		E525FF444FE093B5F254E7FD /* CCFileLocator.h in Headers */ = {isa = PBXBuildFile; fileRef = E525FB30F3F2C277EE41924A /* CCFileLocator.h */; };
 		FC39962219C3BBCF00C93E5E /* libObjectAL (Android).a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC39961F19C3B92F00C93E5E /* libObjectAL (Android).a */; };
 		FC64014019C79716003E595A /* libObjectAL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC39961B19C3B92F00C93E5E /* libObjectAL.a */; };
 /* End PBXBuildFile section */
@@ -1467,6 +1471,8 @@
 		E0F92AC31224559800EF2362 /* CCNS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNS.h; sourceTree = "<group>"; };
 		E525F94C08B1D716E9173061 /* CCPackageManager_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackageManager_private.h; sourceTree = "<group>"; };
 		E525F9EA4B5DD37D0418869E /* CCPackageHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageHelper.m; sourceTree = "<group>"; };
+		E525FB30F3F2C277EE41924A /* CCFileLocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileLocator.h; sourceTree = "<group>"; };
+		E525FBAC765D36D50CA8314D /* CCFileLocator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCFileLocator.m; sourceTree = "<group>"; };
 		E525FE4C98BCF1228ECC9623 /* CCPackage_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackage_private.h; sourceTree = "<group>"; };
 		E525FF8C7C018BF691F36044 /* CCPackageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackageHelper.h; sourceTree = "<group>"; };
 		FC39961319C3B92F00C93E5E /* ObjectAL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ObjectAL.xcodeproj; path = external/ObjectAL/ObjectAL/ObjectAL.xcodeproj; sourceTree = "<group>"; };
@@ -1671,6 +1677,8 @@
 				B7E776201857A159004221AA /* CCColor.m */,
 				D380581E1889CE7700822437 /* CCCache.h */,
 				D380581F1889CE7700822437 /* CCCache.m */,
+				E525FBAC765D36D50CA8314D /* CCFileLocator.m */,
+				E525FB30F3F2C277EE41924A /* CCFileLocator.h */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -2462,6 +2470,7 @@
 				E525F3A2BBCBB446B67D8260 /* CCPackage_private.h in Headers */,
 				E525FF1A60724C91275720C5 /* CCPackageManager_private.h in Headers */,
 				9D69E6D619DF604800C2749C /* CCLightNode.h in Headers */,
+				E525FF444FE093B5F254E7FD /* CCFileLocator.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2574,7 +2583,7 @@
 				7A5946F519E372FB00F65F90 /* uthash.h in Headers */,
 				7A5946F619E372FB00F65F90 /* utlist.h in Headers */,
 				7A5946F919E372FB00F65F90 /* CGPointExtension.h in Headers */,
-				7A5946FB19E372FC00F65F90 /* CCProfiling.h in Headers */,
+				7A5946FB19E372FC00F65F90,
 				5BC1DE2A1A2E2099009C2E67 /* NSEvent+CC.h in Headers */,
 				7A5946FE19E372FC00F65F90 /* ccUtils.h in Headers */,
 				7A5946FF19E372FC00F65F90 /* CCFileUtils.h in Headers */,
@@ -2723,7 +2732,7 @@
 				D2FEB64F194F6C9E00FC0574 /* base64.h in Headers */,
 				BC9F4E9819DB644600B25F01 /* CCPackageManager.h in Headers */,
 				BC9F4E9919DB644900B25F01 /* CCPackageManagerDelegate.h in Headers */,
-				D2FEB650194F6C9E00FC0574 /* ZipUtils.h in Headers */,
+				D2FEB650194F6C9E00FC0574,
 				D22907AF1A2F5E440038FF61 /* CCEffectOutline.h in Headers */,
 				D2FEB652194F6C9E00FC0574 /* CCTMXXMLParser.h in Headers */,
 				D2FEB653194F6C9E00FC0574 /* CCRenderTexture.h in Headers */,
@@ -3185,6 +3194,7 @@
 				D268FE12198078FF00ECBCD0 /* CCEffectHue.m in Sources */,
 				839CE58719FFB139003369F0 /* CCEffectInvert.m in Sources */,
 				E525F0F74C7C69C4371E20EE /* CCPackageHelper.m in Sources */,
+				E525FC642C08F4EEA9B4A38C /* CCFileLocator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3331,6 +3341,7 @@
 				7A5948CD19E375BD00F65F90 /* CCScrollView.m in Sources */,
 				7A5948D119E375BE00F65F90 /* CCTextField.m in Sources */,
 				7A5948D319E375BE00F65F90 /* CCSlider.m in Sources */,
+				E525F334F88A378A4D1FDA98 /* CCFileLocator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3463,12 +3474,13 @@
 				D2FEB737194F6C9E00FC0574 /* CCButton.m in Sources */,
 				D2FEB738194F6C9E00FC0574 /* CCControl.m in Sources */,
 				D22907B21A2F5E440038FF61 /* CCEffectOutline.m in Sources */,
-				D2FEB739194F6C9E00FC0574 /* CCControlTextureFactory.m in Sources */,
+				D2FEB739194F6C9E00FC0574,
 				D2FEB73A194F6C9E00FC0574 /* CCCache.m in Sources */,
 				D2FEB73C194F6C9E00FC0574 /* CCScrollView.m in Sources */,
 				D2FEB73D194F6C9E00FC0574 /* UITouch+CC.m in Sources */,
 				D2FEB73F194F6C9E00FC0574 /* CCPhysicsBody.m in Sources */,
 				D241610C1958F72B003673BD /* CCEffectRenderer.m in Sources */,
+				E525F4E724A86B8DDA11D2F5 /* CCFileLocator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

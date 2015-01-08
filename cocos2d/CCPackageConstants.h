@@ -27,3 +27,7 @@ extern NSString *const PACKAGE_REL_DOWNLOAD_FOLDER;
 extern NSString *const PACKAGE_REL_UNZIP_FOLDER;
 
 extern NSString *const PACKAGE_STORAGE_USERDEFAULTS_KEY;
+
+
+
+extern NSUInteger const ERROR_FILELOCATOR_NO_SEARCH_PATHS;
