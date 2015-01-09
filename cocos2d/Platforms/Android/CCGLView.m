@@ -463,13 +463,13 @@ static inline void logConfig(EGLDisplay display, EGLConfig conf) {
     
     _eglConfiguration = configs[0];
     
-    logConfig(_eglDisplay, _eglConfiguration);
-
     if(!eglChooseConfig(_eglDisplay, configAttribs, &_eglConfiguration, 1, &numConfigs))
     {
         NSLog(@"eglChooseConfig() returned error %d", eglGetError());
         return NO;
     }
+
+    logConfig(_eglDisplay, _eglConfiguration);
 
     if(eglGetError() != EGL_SUCCESS) { NSLog(@"EGL ERROR: %i", eglGetError()); };
     
