@@ -327,7 +327,7 @@
  *  @see CCActionSequence
  */
 + (id)actionWithArray:(NSArray*)arrayOfActions;
-- (id)actionWithArray:(NSArray*)arrayOfActions;
+- (id)initWithArray:(NSArray*)arrayOfActions;
 
 // purposefully undocumented: no point in having this documented if you can just create a list/array with 2 actions
 + (id)actionOne:(CCActionFiniteTime*)one two:(CCActionFiniteTime*)two;

@@ -86,9 +86,14 @@
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:passInputs.texCoord1Extents];
         
         GLKVector2 scale = GLKVector2Make(-1.0f / passInputs.previousPassTexture.contentSize.width, -1.0f / passInputs.previousPassTexture.contentSize.height);
-        GLKVector2 redOffsetUV = GLKVector2Multiply(weakInterface.redOffset, scale);
-        GLKVector2 greenOffsetUV = GLKVector2Multiply(weakInterface.greenOffset, scale);
-        GLKVector2 blueOffsetUV = GLKVector2Multiply(weakInterface.blueOffset, scale);
+        
+        GLKVector2 redOffset = GLKVector2Make ( weakInterface.redOffsetWithPoint.x, weakInterface.redOffsetWithPoint.y );
+        GLKVector2 greenOffset = GLKVector2Make ( weakInterface.greenOffsetWithPoint.x, weakInterface.greenOffsetWithPoint.y );
+        GLKVector2 blueOffset = GLKVector2Make ( weakInterface.blueOffsetWithPoint.x, weakInterface.blueOffsetWithPoint.y );
+        
+        GLKVector2 redOffsetUV = GLKVector2Multiply(redOffset, scale);
+        GLKVector2 greenOffsetUV = GLKVector2Multiply(greenOffset, scale);
+        GLKVector2 blueOffsetUV = GLKVector2Multiply(blueOffset, scale);
         
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_redOffset"]] = [NSValue valueWithGLKVector2:redOffsetUV];
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_greenOffset"]] = [NSValue valueWithGLKVector2:greenOffsetUV];
