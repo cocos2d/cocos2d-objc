@@ -31,15 +31,15 @@
 
 
 #import <Foundation/Foundation.h>
-#include <zlib.h>
 
 #import "ccMacros.h"
-#import "Support/CGPointExtension.h"
+#import "CGPointExtension.h"
 #import "CCTMXXMLParser.h"
 #import "CCTiledMap.h"
 #import "CCTiledMapObjectGroup.h"
-#import "Support/base64.h"
-#import "Support/CCFileUtils.h"
+#import "CCFileUtils.h"
+
+#import "CCFile_Private.h"
 
 #pragma mark -
 #pragma mark TMXLayerInfo
@@ -47,30 +47,26 @@
 
 @implementation CCTiledMapLayerInfo
 
-@synthesize name = _name, layerSize = _layerSize, tiles = _tiles, visible = _visible, opacity = _opacity, ownTiles = _ownTiles, minGID = _minGID, maxGID = _maxGID, properties = _properties;
-@synthesize offset = _offset;
 -(id) init
 {
 	if( (self=[super init])) {
-		_ownTiles = YES;
 		_minGID = 100000;
 		_maxGID = 0;
 		self.name = nil;
-		_tiles = NULL;
 		_offset = CGPointZero;
 		self.properties = [NSMutableDictionary dictionaryWithCapacity:5];
 	}
 	return self;
 }
-- (void) dealloc
+
+-(unsigned int *)tiles
 {
-	CCLOGINFO(@"cocos2d: deallocing %@",self);
+    return (unsigned int *)_tileData.bytes;
+}
 
-
-	if( _ownTiles && _tiles ) {
-		free( _tiles );
-		_tiles = NULL;
-	}
+-(void)setTileData:(NSData *)data
+{
+    _tileData = data;
 }
 
 @end
@@ -486,35 +482,23 @@
 		_storingCharacters = NO;
 
 		CCTiledMapLayerInfo *layer = [_layers lastObject];
-
-		unsigned char *buffer;
-		len = base64Decode((unsigned char*)[_currentString UTF8String], (unsigned int) [_currentString length], &buffer);
-		if( ! buffer ) {
-			CCLOG(@"cocos2d: TiledMap: decode data error");
-			return;
-		}
+        
+        NSData *decoded = [[NSData alloc] initWithBase64Encoding:_currentString];
+        NSAssert(decoded, @"Could not decode tilemap data.");
 
 		if( _layerAttribs & (TMXLayerAttribGzip | TMXLayerAttribZlib) ) {
-			unsigned char *deflated;
 			CGSize s = [layer layerSize];
 			int sizeHint = s.width * s.height * sizeof(uint32_t);
-			
-			#warning TODO
-			int inflatedLen = 0;//ccInflateMemoryWithHint(buffer, len, &deflated, sizeHint);
-			NSAssert( inflatedLen == sizeHint, @"CCTMXXMLParser: Hint failed!");
-
-			inflatedLen = (int)&inflatedLen; // XXX: to avoid warings in compiler
-
-			free( buffer );
-
-			if( ! deflated ) {
-				CCLOG(@"cocos2d: TiledMap: inflate data error");
-				return;
-			}
-
-			layer.tiles = (unsigned int*) deflated;
-		} else
-			layer.tiles = (unsigned int*) buffer;
+            
+            CCWrappedInputStream *stream = [[CCGZippedInputStream alloc] initWithInputStream:[NSInputStream inputStreamWithData:decoded]];
+            [stream open];
+            NSData *data = [stream loadDataWithSizeHint:sizeHint];
+            [stream close];
+            
+			[layer setTileData:data];
+		} else {
+			[layer setTileData:decoded];
+        }
 
 		[_currentString setString:@""];
 

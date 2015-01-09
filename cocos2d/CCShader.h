@@ -108,7 +108,7 @@ extern NSString * const CCShaderUniformAlphaTestValue;
 
 /** @name Obtaining a Built-In Shader */
 
-/** @returns A solide color shader. */
+/** @returns A solid color shader. */
 +(instancetype)positionColorShader;
 /** @returns A texture shader with vertex colors. */
 +(instancetype)positionTextureColorShader;

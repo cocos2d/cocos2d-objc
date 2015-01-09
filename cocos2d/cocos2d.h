@@ -59,6 +59,7 @@
 // Basic Types:
 #import "CCProtocols.h"
 #import "CCColor.h"
+#import "CCImage.h"
 #import "CCTexture.h"
 #import "CCTexturePVR.h"
 #import "CCSpriteFrame.h"

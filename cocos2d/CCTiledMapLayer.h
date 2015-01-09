@@ -145,7 +145,7 @@
 /// -----------------------------------------------------------------------
 
 /** Tile pointer. */
-@property (nonatomic,readonly) uint32_t *tiles;
+//@property (nonatomic,readonly) uint32_t *tiles;
 
 /** Tileset information for the layer.
  @see CCTiledMapTilesetInfo */
