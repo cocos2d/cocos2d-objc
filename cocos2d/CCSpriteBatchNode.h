@@ -79,7 +79,7 @@ __attribute__((deprecated))
  *  @return An initialized CCSpriteBatchNode Object.
  *  @see CCTexture
  */
--(id)initWithTexture:(CCTexture *)tex capacity:(NSUInteger)capacity;
+-(id)initWithTexture:(CCTexture *)tex capacity:(NSUInteger)capacity NS_DESIGNATED_INITIALIZER;
 
 /**
  *  Creates and returns a batch node with the specified texture and capacity values.
