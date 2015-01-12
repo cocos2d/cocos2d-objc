@@ -194,7 +194,7 @@ static NSString *CURRENT_CONTEXT_KEY = @"CURRENT_CONTEXT_KEY";
 	[[CCMetalContext currentContext] beginRenderPass:_frameBufferTexture clearMask:mask color:color4 depth:depth stencil:stencil];
 }
 
--(void)syncWithView:(CC_VIEW<CCDirectorView> *)view;
+-(void)syncWithView:(CC_VIEW<CCView> *)view;
 {
 	[super syncWithView:view];
 	_frameBufferTexture = [(CCMetalView *)view destinationTexture];

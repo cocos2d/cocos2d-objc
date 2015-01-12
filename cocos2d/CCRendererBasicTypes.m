@@ -440,7 +440,7 @@ static CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 -(void)bindWithClear:(GLbitfield)mask color:(GLKVector4)color4 depth:(GLclampf)depth stencil:(GLint)stencil
 {NSAssert(NO, @"Must be overridden.");}
 
--(void)syncWithView:(CC_VIEW<CCDirectorView> *)view;
+-(void)syncWithView:(CC_VIEW<CCView> *)view;
 {
 	CCDirector *director = [CCDirector sharedDirector];
 	self.sizeInPixels = director.viewSizeInPixels;

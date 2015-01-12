@@ -83,9 +83,13 @@ static CCTextureCache *sharedTextureCache;
 		// Skip the GL context sharegroup code for Metal.
 		if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal) return self;
 		
-#if !__CC_PLATFORM_ANDROID
-		CCGLView *view = (CCGLView*)[[CCDirector sharedDirector] view];
+
+#if __CC_PLATFORM_IOS
+		CCViewiOSGL *view = (CCViewiOSGL*)[[CCDirector sharedDirector] view];
 		NSAssert(view, @"Do not initialize the TextureCache before the Director");
+#elif __CC_PLATFORM_MAC
+        CCViewMacGL *view = (CCViewMacGL*)[[CCDirector sharedDirector] view];
+        NSAssert(view, @"Do not initialize the TextureCache before the Director");
 #endif
 
 #if __CC_PLATFORM_IOS

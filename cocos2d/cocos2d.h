@@ -160,10 +160,10 @@
 
 #if __CC_PLATFORM_IOS
 #import "CCAppDelegate.h"
-#import "Platforms/iOS/CCGLView.h"
+#import "Platforms/iOS/CCViewiOSGL.h"
 #import "Platforms/iOS/CCDirectorIOS.h"
 #elif __CC_PLATFORM_MAC
-#import "Platforms/Mac/CCGLView.h"
+#import "Platforms/Mac/CCViewMacGL.h"
 #import "Platforms/Mac/CCDirectorMac.h"
 #import "Platforms/Mac/CCWindow.h"
 #import "Platforms/Mac/NSEvent+CC.h"

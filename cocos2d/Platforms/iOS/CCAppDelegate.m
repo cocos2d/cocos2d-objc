@@ -164,10 +164,11 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	//  - Possible values: YES, NO
 	// numberOfSamples: Only valid if multisampling is enabled
 	//  - Possible values: 0 to glGetIntegerv(GL_MAX_SAMPLES_APPLE)
-	CC_VIEW<CCDirectorView> *ccview = nil;
+	CC_VIEW<CCView> *ccview = nil;
 	switch([CCDeviceInfo sharedDeviceInfo].graphicsAPI){
 		case CCGraphicsAPIGL:
-			ccview = [CCGLView
+        {
+			ccview = [CCViewiOSGL
 				viewWithFrame:bounds
 				pixelFormat:config[CCSetupPixelFormat] ?: kEAGLColorFormatRGBA8
 				depthFormat:[config[CCSetupDepthFormat] unsignedIntValue]
@@ -176,6 +177,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 				multiSampling:[config[CCSetupMultiSampling] boolValue]
 				numberOfSamples:[config[CCSetupNumberOfSamples] unsignedIntValue]
 			];
+        }
 			break;
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 		case CCGraphicsAPIMetal:
@@ -187,6 +189,8 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	}
 	
 	CCDirectorIOS* director = (CCDirectorIOS*) [CCDirector sharedDirector];
+    
+    ccview.director = director;
 	
 	director.wantsFullScreenLayout = YES;
 	

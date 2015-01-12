@@ -31,7 +31,7 @@
 #import "Platforms/CCGL.h"
 #import "CCResponderManager.h"
 #import "CCRenderer.h"
-#import "CCDirectorView.h"
+#import "CCView.h"
 
 #warning should remove this one we clean up the delegate
 #if __CC_PLATFORM_IOS
@@ -276,9 +276,9 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 
 /** @name Working with View and Projection */
 
-/// View used by the director for rendering. The CC_VIEW macro equals UIView on iOS, NSOpenGLView on OS X and CCGLView on Android.
-/// @see CCDirectorView
-@property(nonatomic, strong) CC_VIEW<CCDirectorView> *view;
+/// View used by the director for rendering. The CC_VIEW macro equals UIView on iOS, NSOpenGLView on OS X and CCView on Android.
+/// @see CCView
+@property(nonatomic, strong) CC_VIEW<CCView> *view;
 /** Sets an OpenGL projection
  @see CCDirectorProjection
  @see projectionMatrix */

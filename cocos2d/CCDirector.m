@@ -180,7 +180,6 @@ static CCDirector *_sharedDirector = nil;
 		[_scheduler setPaused:NO target:_actionManager];
 		[_scheduler setPaused:NO target:_actionManagerFixed];
 		
-		
 		// touch manager
 		_responderManager = [ CCResponderManager responderManager ];
 		
@@ -227,7 +226,7 @@ static CCDirector *_sharedDirector = nil;
 	 XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
 	if( _nextScene ) [self setNextScene];
 	
-	CC_VIEW<CCDirectorView> *ccview = self.view;
+	CC_VIEW<CCView> *ccview = self.view;
 	[ccview beginFrame];
 	
 	if(CCRenderDispatchBeginFrame()){
@@ -360,7 +359,7 @@ static CCDirector *_sharedDirector = nil;
 
 #pragma mark Director Integration with a UIKit view
 
--(void) setView:(CC_VIEW<CCDirectorView> *)view
+-(void) setView:(CC_VIEW<CCView> *)view
 {
 #if __CC_PLATFORM_IOS
 		[super setView:view];

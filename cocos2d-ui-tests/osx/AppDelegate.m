@@ -15,7 +15,8 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
-
+    glView_.director = director;
+    
 	// enable FPS and SPF
 	[director setDisplayStats:YES];
 	

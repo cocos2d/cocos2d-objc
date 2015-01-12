@@ -241,7 +241,7 @@
     // go through all touches
     for (CCTouch *touch in touches)
     {
-        CGPoint worldTouchLocation = [[CCDirector sharedDirector] convertToGL:[touch locationInView:(CCGLView*)[CCDirector sharedDirector].view]];
+        CGPoint worldTouchLocation = [[CCDirector sharedDirector] convertToGL:[touch locationInView:(CC_VIEW<CCView>*)[CCDirector sharedDirector].view]];
         
         // scan backwards through touch responders
         for (int index = _responderListCount - 1; index >= 0; index --)
@@ -318,7 +318,7 @@
             else
             {
                 // as node does not lock touch, check if it was moved outside
-                if (![node hitTestWithWorldPos:[[CCDirector sharedDirector] convertToGL:[touch locationInView:(CCGLView*)[CCDirector sharedDirector].view]]])
+                if (![node hitTestWithWorldPos:[[CCDirector sharedDirector] convertToGL:[touch locationInView:[CCDirector sharedDirector].view]]])
                 {
                     // cancel the touch
                     if ([node respondsToSelector:@selector(touchCancelled:withEvent:)])
@@ -347,7 +347,7 @@
                     CCNode *node = _responderList[index];
                     
                     // if the touch responder does not lock touch, it will receive a touchBegan if a touch is moved inside
-                    if (!node.claimsUserInteraction  && [node hitTestWithWorldPos:[[CCDirector sharedDirector] convertToGL:[touch locationInView:(CCGLView*)[CCDirector sharedDirector].view ]]])
+                    if (!node.claimsUserInteraction  && [node hitTestWithWorldPos:[[CCDirector sharedDirector] convertToGL:[touch locationInView:[CCDirector sharedDirector].view ]]])
                     {
                         // check if node has exclusive touch
                         if (node.isExclusiveTouch)
