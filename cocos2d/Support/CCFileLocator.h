@@ -16,8 +16,10 @@
 
 // Base content scale for untagged, automatically resized assets.
 // Required to be a power of two.
+// Default is 4
 @property (nonatomic, assign) NSUInteger defaultContentScale;
 
+// Default is 4
 @property (nonatomic, assign) NSUInteger deviceContentScale;
 
 // User definable, but default to a reasonable standard value (tablet, phone, desktop, etc)

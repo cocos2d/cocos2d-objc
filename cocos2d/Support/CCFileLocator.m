@@ -5,10 +5,36 @@
 #import "CCEffect_Private.h"
 
 
-@interface CCFileLocator()
+#pragma mark - CCFileLocatorSearchData helper class
+
+@interface CCFileLocatorSearchData : NSObject
+
+@property (nonatomic, copy) NSString *filename;
+@property (nonatomic, copy) NSNumber *contentScale;
+
+- (instancetype)initWithFilename:(NSString *)filename contentScale:(NSNumber *)contentScale;
 
 @end
 
+@implementation CCFileLocatorSearchData
+
+- (instancetype)initWithFilename:(NSString *)filename contentScale:(NSNumber *)contentScale
+{
+    self = [super init];
+
+    if (self)
+    {
+        self.filename = filename;
+        self.contentScale = contentScale;
+    }
+
+    return self;
+}
+
+@end
+
+
+#pragma mark - CCFileLocator
 
 @implementation CCFileLocator
 
@@ -60,10 +86,9 @@
 - (CCFile *)findFilename:(NSString *)filename inPath:(NSString *)path
 {
     NSFileManager *localFileManager = [[NSFileManager alloc] init];
-    NSArray *searchFilenames = [self searchFilenamesWithFilename:filename];
+    NSArray *searchFilenames = [self searchFilenamesWithBasefilename:filename];
 
-
-    for (id searchFilename in searchFilenames)
+    for (CCFileLocatorSearchData *fileLocatorSearchData in searchFilenames)
     {
         NSDirectoryEnumerator *dirEnumerator = [localFileManager enumeratorAtURL:[NSURL fileURLWithPath:path isDirectory:YES]
                                                       includingPropertiesForKeys:@[NSURLNameKey, NSURLIsDirectoryKey]
@@ -80,9 +105,9 @@
 
             // NSLog(@"-> %@ in %@", currentFilename, theURL);
 
-            if ([currentFilename isEqualToString:searchFilename[@"filename"]] && ![isDirectory boolValue])
+            if ([currentFilename isEqualToString:fileLocatorSearchData.filename] && ![isDirectory boolValue])
             {
-                return [[CCFile alloc] initWithName:filename url:theURL contentScale:[searchFilename[@"contentscale"] floatValue]];
+                return [[CCFile alloc] initWithName:filename url:theURL contentScale:[fileLocatorSearchData.contentScale floatValue]];
             }
         }
     }
@@ -90,54 +115,56 @@
     return nil;
 }
 
-- (NSDictionary *)filename:(NSString *)filename contentScale:(NSNumber *)contentScale
+- (CCFileLocatorSearchData *)filenameWithBasefilename:(NSString *)baseFilename contentScale:(NSNumber *)contentScale
 {
-    return @{
-        @"filename" : [[NSString stringWithFormat:@"%@-%dx",
-                                 [filename stringByDeletingPathExtension],
-                                 [contentScale unsignedIntegerValue]] stringByAppendingPathExtension:[filename pathExtension]],
-        @"contentscale" : contentScale
-    };
+    NSString *filename = [[NSString stringWithFormat:@"%@-%dx",
+                           [baseFilename stringByDeletingPathExtension],
+                           [contentScale unsignedIntegerValue]] stringByAppendingPathExtension:[baseFilename pathExtension]];
+
+    return [[CCFileLocatorSearchData alloc] initWithFilename:filename contentScale:contentScale];
 }
 
-- (NSArray *)searchFilenamesWithFilename:(NSString *)filename
+- (NSArray *)searchFilenamesWithBasefilename:(NSString *)baseFilename
 {
     NSMutableArray *result = [NSMutableArray arrayWithCapacity:4];
 
     if (_deviceContentScale == 3 || _deviceContentScale == 4)
     {
-        [result addObject:[self filename:filename contentScale:@4]];
-        [result addObject:[self filename:filename contentScale:@2]];
-        [result addObject:[self filename:filename contentScale:@1]];
+        [result addObject:[self filenameWithBasefilename:baseFilename contentScale:@4]];
+        [result addObject:[self filenameWithBasefilename:baseFilename contentScale:@2]];
+        [result addObject:[self filenameWithBasefilename:baseFilename contentScale:@1]];
     }
 
     if (_deviceContentScale == 2)
     {
-        [result addObject:[self filename:filename contentScale:@2]];
-        [result addObject:[self filename:filename contentScale:@4]];
-        [result addObject:[self filename:filename contentScale:@1]];
+        [result addObject:[self filenameWithBasefilename:baseFilename contentScale:@2]];
+        [result addObject:[self filenameWithBasefilename:baseFilename contentScale:@4]];
+        [result addObject:[self filenameWithBasefilename:baseFilename contentScale:@1]];
     }
 
     if (_deviceContentScale == 1)
     {
-        [result addObject:[self filename:filename contentScale:@1]];
-        [result addObject:[self filename:filename contentScale:@2]];
-        [result addObject:[self filename:filename contentScale:@4]];
+        [result addObject:[self filenameWithBasefilename:baseFilename contentScale:@1]];
+        [result addObject:[self filenameWithBasefilename:baseFilename contentScale:@2]];
+        [result addObject:[self filenameWithBasefilename:baseFilename contentScale:@4]];
     }
 
-    [self insertDefaultScaleWithFilename:filename intoSearchFilenames:result];
+    [self insertDefaultScaleWithBaseFilename:baseFilename intoSearchFilenames:result];
 
     return result;
 }
 
-- (void)insertDefaultScaleWithFilename:(NSString *)filename intoSearchFilenames:(NSMutableArray *)filenames
+- (void)insertDefaultScaleWithBaseFilename:(NSString *)baseFilename intoSearchFilenames:(NSMutableArray *)filenames
 {
     for (NSUInteger i = 0; i < filenames.count - 1; ++i)
     {
-        NSDictionary *filenameData = filenames[i];
-        if ([filenameData[@"contentscale"] unsignedIntegerValue] == _defaultContentScale)
+        CCFileLocatorSearchData *filenameData = filenames[i];
+        if ([filenameData.contentScale unsignedIntegerValue] == _defaultContentScale)
         {
-            [filenames insertObject:@{@"filename" : filename, @"contentscale" : @(_defaultContentScale)} atIndex:i];
+            CCFileLocatorSearchData *filenameDataToInsert = [[CCFileLocatorSearchData alloc] initWithFilename:baseFilename
+                                                                                                 contentScale:@(_defaultContentScale)];
+
+            [filenames insertObject:filenameDataToInsert atIndex:i];
             return;
         };
     }
