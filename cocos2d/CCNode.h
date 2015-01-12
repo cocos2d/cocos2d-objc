@@ -27,7 +27,7 @@
 
 #import "CCResponder.h"
 #import "CCScheduler.h"
-
+#import "CCDirector.h"
 
 @class CCScene;
 @class CCPhysicsBody;
@@ -35,7 +35,6 @@
 @class CCRenderer;
 @class CCColor;
 @class CCAction;
-
 
 /** CCNode is the base class for all objects displayed by Cocos2D. CCNode handles transformations, can have a content size and provides a coordinate system 
  for its child nodes.
@@ -451,6 +450,18 @@
  as a child node to a node that already is in the scene.
  @see CCScene */
 @property(nonatomic, readonly) CCScene *scene;
+
+
+/** The CCView this node is a member of, accessed via the scene and director associated with this node.
+ 
+ @see CCView */
+@property(nonatomic, readonly) CC_VIEW<CCView> *view;
+
+/** The CCDirector this node is a member of, accessed via the node's scene.
+ 
+ @see CCDirector */
+@property(nonatomic, readonly) CCDirector *director;
+
 
 /// -----------------------------------------------------------------------
 /// @name Removing Nodes without stopping Actions/Scheduling (unsafe!)

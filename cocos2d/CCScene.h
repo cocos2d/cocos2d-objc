@@ -28,6 +28,7 @@
 #import "CCNode.h"
 
 @class CCLightCollection;
+@class CCDirector;
 
 /** CCScene is a subclass of CCNode. The scene represents the root node of the node hierarchy.
 
@@ -48,6 +49,7 @@
  @since v3.4 and later
  */
 @property (nonatomic, readonly, strong) CCLightCollection *lights;
+
 
 /// -----------------------------------------------------------------------
 /// @name Creating a Scene

@@ -36,6 +36,7 @@
 #import "CCPhysics+ObjectiveChipmunk.h"
 #import "CCColor.h"
 #import "CCLayout.h"
+#import "CCScene.h"
 
 #pragma mark - Node
 
@@ -993,6 +994,17 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 -(CCScene *)scene
 {
     return _parent.scene;
+}
+
+
+-(CCDirector *) director
+{
+    return self.scene.director;
+}
+
+-(CC_VIEW<CCView> *)view
+{
+    return self.director.view;
 }
 
 -(void) onEnter
