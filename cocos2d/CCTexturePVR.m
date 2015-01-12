@@ -608,10 +608,13 @@ CCRenderDispatch(NO, ^{
 
             pvrlen = header.len;
             CCWrappedInputStream *gzStream = [[CCGZippedInputStream alloc]initWithInputStream:stream];
-            pvrdata = (unsigned char *) [gzStream loadDataWithSizeHint:header.len].bytes;
+            pvrdata = (unsigned char *) [gzStream loadDataWithSizeHint:header.len error:nil].bytes;
         }else{
-            pvrlen = file.loadData.length;
-            pvrdata = (unsigned char *) file.loadData.bytes;
+            // TODO: Could benefit from error handling
+            NSData *loadData = [file loadData:nil];
+            
+            pvrlen = loadData.length;
+            pvrdata = (unsigned char *) loadData.bytes;
         }
         
  		if( pvrlen < 0 ) {
