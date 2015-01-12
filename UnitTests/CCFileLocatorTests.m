@@ -29,30 +29,13 @@
     _fileLocator.searchPaths = @[[self fullPathForFile:@"Resources"]];
 }
 
-- (void)testFileNamedFileDoesNotExist
-{
-    [self createEmptyFiles:@[
-        @"Resources/images/vehicles/spaceship.png",
-        @"Resources/images/vehicles/car.png",
-        @"Resources/images/vehicles/bike.png",
-        @"Resources/images/vehicles/airplane.png",
-    ]];
-
-    NSError *error;
-    CCFile *file = [_fileLocator fileNamed:@"train.png" options:nil error:&error];
-
-    XCTAssertNotNil(error);
-    XCTAssertEqual(error.code, ERROR_FILELOCATOR_NO_FILE_FOUND);
-    XCTAssertNil(file);
-}
-
 - (void)testFileNamedSearchOrderPrecedenceDefaultContentScale
 {
     [self createEmptyFiles:@[
-        @"Resources/images/Hero-4x.png",
-        @"Resources/images/Hero-2x.png",
-        @"Resources/images/Hero-1x.png",
-        @"Resources/images/Hero.png"
+        @"Resources/Hero-4x.png",
+        @"Resources/Hero-2x.png",
+        @"Resources/Hero-1x.png",
+        @"Resources/Hero.png"
     ]];
 
     _fileLocator.deviceContentScale = 3;
@@ -61,29 +44,27 @@
     NSError *error;
     CCFile *file = [_fileLocator fileNamed:@"Hero.png" options:nil error:&error];
 
-    XCTAssertNotNil(file);
+    [self assertSuccessForFile:file filePath:@"Resources/Hero.png" contentScale:4.0 error:error];
+}
+
+- (void)assertSuccessForFile:(CCFile *)file filePath:(NSString *)filePath contentScale:(CGFloat)contentScale error:(NSError *)error
+{
     XCTAssertNil(error);
-    XCTAssertEqualObjects(file.absoluteFilePath, [self fullPathForFile:@"Resources/images/Hero.png"]);
-    XCTAssertEqual(file.contentScale, 4.0);
+    XCTAssertNotNil(file);
+    XCTAssertEqualObjects(file.absoluteFilePath, [self fullPathForFile:filePath]);
+    XCTAssertEqual(file.contentScale, contentScale );
 }
 
 - (void)testFileNamedRecursiveSimpleWithDefaultContentScale
 {
-    NSString *fileRelPath = @"Resources/images/vehicles/spaceship.png";
-
-    [self createEmptyFiles:@[
-        fileRelPath
-    ]];
+    [self createEmptyFiles:@[@"Resources/images/vehicles/spaceship.png"]];
 
     _fileLocator.defaultContentScale = 4;
 
     NSError *error;
     CCFile *file = [_fileLocator fileNamed:@"spaceship.png" options:nil error:&error];
 
-    XCTAssertNotNil(file);
-    XCTAssertNil(error);
-    XCTAssertEqualObjects(file.absoluteFilePath, [self fullPathForFile:fileRelPath]);
-    XCTAssertEqual(file.contentScale, 4.0);
+    [self assertSuccessForFile:file filePath:@"Resources/images/vehicles/spaceship.png" contentScale:4.0 error:error];
 }
 
 - (void)testEmptySearchPaths
@@ -95,6 +76,18 @@
 
     XCTAssertNotNil(error);
     XCTAssertEqual(error.code, ERROR_FILELOCATOR_NO_SEARCH_PATHS);
+    XCTAssertNil(file);
+}
+
+- (void)testShouldNotReturnDirectoryURLWithAssetFilename
+{
+    [self createFolders:@[@"Resources/image.png"]];
+
+    NSError *error;
+    CCFile *file = [_fileLocator fileNamed:@"image.png" options:nil error:&error];
+
+    XCTAssertNotNil(error);
+    XCTAssertEqual(error.code, ERROR_FILELOCATOR_NO_FILE_FOUND);
     XCTAssertNil(file);
 }
 
