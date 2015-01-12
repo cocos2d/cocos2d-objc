@@ -232,22 +232,22 @@
     return self;
 }
 
-+(id)effectWithShininess:(float)shininess environment:(CCSprite *)environment
++(instancetype)effectWithShininess:(float)shininess environment:(CCSprite *)environment
 {
     return [[self alloc] initWithShininess:shininess environment:environment];
 }
 
-+(id)effectWithShininess:(float)shininess environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap
++(instancetype)effectWithShininess:(float)shininess environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap
 {
     return [[self alloc] initWithShininess:shininess environment:environment normalMap:normalMap];
 }
 
-+(id)effectWithShininess:(float)shininess fresnelBias:(float)bias fresnelPower:(float)power environment:(CCSprite *)environment
++(instancetype)effectWithShininess:(float)shininess fresnelBias:(float)bias fresnelPower:(float)power environment:(CCSprite *)environment
 {
     return [[self alloc] initWithShininess:shininess fresnelBias:bias fresnelPower:power environment:environment];
 }
 
-+(id)effectWithShininess:(float)shininess fresnelBias:(float)bias fresnelPower:(float)power environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap
++(instancetype)effectWithShininess:(float)shininess fresnelBias:(float)bias fresnelPower:(float)power environment:(CCSprite *)environment normalMap:(CCSpriteFrame *)normalMap
 {
     return [[self alloc] initWithShininess:shininess fresnelBias:bias fresnelPower:power environment:environment normalMap:normalMap];
 }

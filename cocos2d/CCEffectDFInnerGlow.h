@@ -37,7 +37,7 @@
 *  @see CCColor
 *  @see CCTexture
 */
-+(id)effectWithGlowColor:(CCColor*)glowColor fillColor:(CCColor*)fillColor glowWidth:(int)glowWidth fieldScale:(float)fieldScale distanceField:(CCTexture*)distanceField;
++(instancetype)effectWithGlowColor:(CCColor*)glowColor fillColor:(CCColor*)fillColor glowWidth:(int)glowWidth fieldScale:(float)fieldScale distanceField:(CCTexture*)distanceField;
 
 /**
  *  Initializes a CCEffectDFInnerGlow.

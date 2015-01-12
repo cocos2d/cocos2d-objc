@@ -187,7 +187,7 @@
     return self;
 }
 
-+(id)effectWithGlowColor:(CCColor*)glowColor outlineColor:(CCColor*)outlineColor
++(instancetype)effectWithGlowColor:(CCColor*)glowColor outlineColor:(CCColor*)outlineColor
 {
     return [[self alloc] initWithGlowColor:glowColor outlineColor:outlineColor];
 }

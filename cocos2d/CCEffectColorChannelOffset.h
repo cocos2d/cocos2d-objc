@@ -29,7 +29,7 @@
  *  @since v3.2 and later
  *  @deprecated Use CGPoint version instead.
  */
-+(id)effectWithRedOffset:(GLKVector2)redOffset greenOffset:(GLKVector2)greenOffset blueOffset:(GLKVector2)blueOffset __attribute__((deprecated));
++(instancetype)effectWithRedOffset:(GLKVector2)redOffset greenOffset:(GLKVector2)greenOffset blueOffset:(GLKVector2)blueOffset __attribute__((deprecated));
 
 /**
  *  Creates a CCEffectColorChannelOffset object with the supplied color channel offsets.
@@ -41,7 +41,7 @@
  *  @return The CCEffectColorChannelOffset object.
  *  @since v3.4 and later
  */
-+(id)effectWithRedOffsetWithPoint:(CGPoint)redOffset greenOffsetWithPoint:(CGPoint)greenOffset blueOffsetWithPoint:(CGPoint)blueOffset;
++(instancetype)effectWithRedOffsetWithPoint:(CGPoint)redOffset greenOffsetWithPoint:(CGPoint)greenOffset blueOffsetWithPoint:(CGPoint)blueOffset;
 
 /**
  *  Initializes a CCEffectColorChannelOffset object with zero length color channel offsets.
