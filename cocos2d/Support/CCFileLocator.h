@@ -18,6 +18,8 @@
 // Required to be a power of two.
 @property (nonatomic, assign) NSUInteger defaultContentScale;
 
+@property (nonatomic, assign) NSUInteger deviceContentScale;
+
 // User definable, but default to a reasonable standard value (tablet, phone, desktop, etc)
 @property (nonatomic, copy) NSString *deviceFamily;
 

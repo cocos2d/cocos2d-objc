@@ -32,10 +32,10 @@
 - (void)testFileNamedFileDoesNotExist
 {
     [self createEmptyFiles:@[
-            @"Resources/images/vehicles/spaceship.png",
-            @"Resources/images/vehicles/car.png",
-            @"Resources/images/vehicles/bike.png",
-            @"Resources/images/vehicles/airplane.png",
+        @"Resources/images/vehicles/spaceship.png",
+        @"Resources/images/vehicles/car.png",
+        @"Resources/images/vehicles/bike.png",
+        @"Resources/images/vehicles/airplane.png",
     ]];
 
     NSError *error;
@@ -46,13 +46,36 @@
     XCTAssertNil(file);
 }
 
-- (void)testFileNamedRecursiveSimple
+- (void)testFileNamedSearchOrderPrecedenceDefaultContentScale
+{
+    [self createEmptyFiles:@[
+        @"Resources/images/Hero-4x.png",
+        @"Resources/images/Hero-2x.png",
+        @"Resources/images/Hero-1x.png",
+        @"Resources/images/Hero.png"
+    ]];
+
+    _fileLocator.deviceContentScale = 3;
+    _fileLocator.defaultContentScale = 4;
+
+    NSError *error;
+    CCFile *file = [_fileLocator fileNamed:@"Hero.png" options:nil error:&error];
+
+    XCTAssertNotNil(file);
+    XCTAssertNil(error);
+    XCTAssertEqualObjects(file.absoluteFilePath, [self fullPathForFile:@"Resources/images/Hero.png"]);
+    XCTAssertEqual(file.contentScale, 4.0);
+}
+
+- (void)testFileNamedRecursiveSimpleWithDefaultContentScale
 {
     NSString *fileRelPath = @"Resources/images/vehicles/spaceship.png";
 
     [self createEmptyFiles:@[
-            fileRelPath
+        fileRelPath
     ]];
+
+    _fileLocator.defaultContentScale = 4;
 
     NSError *error;
     CCFile *file = [_fileLocator fileNamed:@"spaceship.png" options:nil error:&error];
@@ -60,6 +83,7 @@
     XCTAssertNotNil(file);
     XCTAssertNil(error);
     XCTAssertEqualObjects(file.absoluteFilePath, [self fullPathForFile:fileRelPath]);
+    XCTAssertEqual(file.contentScale, 4.0);
 }
 
 - (void)testEmptySearchPaths
