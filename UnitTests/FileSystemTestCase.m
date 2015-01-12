@@ -1,6 +1,6 @@
 #import "FileSystemTestCase.h"
 
-NSString *const TEST_PATH = @"com.spritebuilder.tests";
+NSString *const TEST_PATH = @"com.cocos2d.tests";
 
 
 @interface FileSystemTestCase()
