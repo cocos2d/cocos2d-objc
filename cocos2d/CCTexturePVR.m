@@ -610,8 +610,9 @@ CCRenderDispatch(NO, ^{
             CCWrappedInputStream *gzStream = [[CCGZippedInputStream alloc]initWithInputStream:stream];
             pvrdata = (unsigned char *) [gzStream loadDataWithSizeHint:header.len error:nil].bytes;
         }else{
-            // TODO: Could benefit from error handling
-            NSData *loadData = [file loadData:nil];
+            NSError *err;
+            NSData *loadData = [file loadData:&err];
+            if(err) CCLOG(@"Error loading CCTexturePVR from %@", fileURL);
             
             pvrlen = loadData.length;
             pvrdata = (unsigned char *) loadData.bytes;

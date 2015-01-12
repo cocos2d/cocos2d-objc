@@ -492,7 +492,11 @@
             
             CCWrappedInputStream *stream = [[CCGZippedInputStream alloc] initWithInputStream:[NSInputStream inputStreamWithData:decoded]];
             [stream open];
-            NSData *data = [stream loadDataWithSizeHint:sizeHint error:nil];
+            
+            NSError *err;
+            NSData *data = [stream loadDataWithSizeHint:sizeHint error:&err];
+            if(err) CCLOG(@"Error loading tilemap.");
+
             [stream close];
             
 			[layer setTileData:data];
