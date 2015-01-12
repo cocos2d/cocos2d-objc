@@ -75,9 +75,13 @@
                                                    GLKMatrix4MakePerspective(CC_DEGREES_TO_RADIANS(60), (float)sizePoint.width/sizePoint.height, 0.1f, zeye*2),
                                                    GLKMatrix4MakeTranslation(-sizePoint.width/2.0, -sizePoint.height/2, -zeye)
                                                    );
+            break;
+        }
             
+        case CCDirectorProjectionCustom:
+			if( [_delegate respondsToSelector:@selector(updateProjection)] )
+				_projectionMatrix = [_delegate updateProjection];
 			break;
-		}
             
 		default:
 			CCLOG(@"cocos2d: Director: unrecognized projection");
@@ -98,17 +102,6 @@
     
 	NSThread *thread = [self runningThread];
 	[self performSelector:@selector(drawScene) onThread:thread withObject:nil waitUntilDone:YES];
-}
-
-// overriden, don't call super
--(void) reshapeProjection:(CGSize)size
-{
-	_winSizeInPixels = size;
-	_winSizeInPoints = CGSizeMake(size.width/__ccContentScaleFactor, size.height/__ccContentScaleFactor);
-	
-	[self setProjection:_projection];
-    
-    [self.runningScene viewDidResizeTo: _winSizeInPoints];
 }
 
 -(void)end

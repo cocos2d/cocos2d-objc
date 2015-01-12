@@ -37,9 +37,8 @@
 #import "CCDeviceInfo.h"
 #import "CCDirector.h"
 #import "CCFileUtils.h"
-//#if __CC_PLATFORM_MAC
-//#import "Platforms/Mac/CCDirectorMac.h"
-//#endif
+#import "CCFile_Private.h"
+#import "CCImage.h"
 
 #if __CC_PLATFORM_IOS
 static EAGLContext *_auxGLcontext = nil;
@@ -293,61 +292,23 @@ static CCTextureCache *sharedTextureCache;
 
 		// all images are handled by UIKit/AppKit except PVR extension that is handled by cocos2d's handler
 
-		if ( [lowerCase hasSuffix:@".pvr"] || [lowerCase hasSuffix:@".pvr.gz"] || [lowerCase hasSuffix:@".pvr.ccz"] )
-			tex = [self addPVRImage:path];
+        if([lowerCase hasSuffix:@".pvr"] || [lowerCase hasSuffix:@".pvr.gz"] || [lowerCase hasSuffix:@".pvr.ccz"]){
+            tex = [self addPVRImage:path];
+        } else {
+            NSURL *url = [NSURL fileURLWithPath:fullpath];
+            CCFile *file = [[CCFile alloc] initWithName:path url:url contentScale:contentScale];
+            CCImage *image = [[CCImage alloc] initWithCCFile:file options:nil];
+            tex = [[CCTexture alloc] initWithImage:image options:nil];
 
-#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
-
-		else {
-#if __CC_PLATFORM_IOS
-            UIImage *image = [[UIImage alloc] initWithContentsOfFile:fullpath];
-			tex = [[CCTexture alloc] initWithCGImage:image.CGImage contentScale:contentScale];
-#else // Android
-            // TODO: add support for bmp
-            BOOL png = [lowerCase hasSuffix:@".png"];
-            CGDataProviderRef imgDataProvider = CGDataProviderCreateWithCFData((__bridge CFDataRef)[NSData dataWithContentsOfFile:fullpath]);
-            CGImageRef image = (png) ? CGImageCreateWithPNGDataProvider(imgDataProvider, NULL, true, kCGRenderingIntentDefault) : CGImageCreateWithJPEGDataProvider(imgDataProvider, NULL, true, kCGRenderingIntentDefault) ;
-            tex = [[CCTexture alloc] initWithCGImage:image contentScale:contentScale];
-            CGDataProviderRelease(imgDataProvider);
-            CGImageRelease(image);
-#endif
-            
-            
-            
-			CCLOGINFO(@"Texture loaded: %@", path);
-            
-			if( tex ){
-				dispatch_sync(_dictQueue, ^{
-					[_textures setObject: tex forKey:path];
-					CCLOGINFO(@"Texture %@ cached: %p", path, tex);
-				});
-			}else{
-				CCLOG(@"cocos2d: Couldn't create texture for file:%@ in CCTextureCache", path);
-			}
-		}
-
-
-#elif __CC_PLATFORM_MAC
-		else {
-
-			NSData *data = [[NSData alloc] initWithContentsOfFile:fullpath];
-			NSBitmapImageRep *image = [[NSBitmapImageRep alloc] initWithData:data];
-			tex = [ [CCTexture alloc] initWithCGImage:[image CGImage] contentScale:contentScale];
-
-
-			if( tex ){
-				dispatch_sync(_dictQueue, ^{
-					[_textures setObject: tex forKey:path];
-				});
-			}else{
-				CCLOG(@"cocos2d: Couldn't create texture for file:%@ in CCTextureCache", path);
-			}
-
-			// autorelease prevents possible crash in multithreaded environments
-			//[tex autorelease];
-		}
-#endif // __CC_PLATFORM_MAC
-
+            if(tex){
+                dispatch_sync(_dictQueue, ^{
+                    [_textures setObject: tex forKey:path];
+                    CCLOGINFO(@"Texture %@ cached: %p", path, tex);
+                });
+            } else {
+                CCLOG(@"cocos2d: Couldn't create texture for file:%@ in CCTextureCache", path);
+            }
+        }
 	}
 
 	return((id)tex.proxy);

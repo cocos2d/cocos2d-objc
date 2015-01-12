@@ -41,6 +41,7 @@ NSString * const CCFileUtilsSuffixiPhone5 = @"iphone5";
 NSString * const CCFileUtilsSuffixiPhone5HD = @"iphone5hd";
 NSString * const CCFileUtilsSuffixMac = @"mac";
 NSString * const CCFileUtilsSuffixMacHD = @"machd";
+NSString * const CCFileUtilsSuffix2x = @"2x";
 
 NSString * const kCCFileUtilsDefaultSearchPath = @"";
 
@@ -179,6 +180,7 @@ static CCFileUtils *fileUtils = nil;
 		_suffixesDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
 						 @"", CCFileUtilsSuffixMac,
 						 @"-machd", CCFileUtilsSuffixMacHD,
+						 @"@2x", CCFileUtilsSuffix2x,
 						 @"", CCFileUtilsSuffixDefault,
 						 nil];
 		
@@ -213,7 +215,6 @@ static CCFileUtils *fileUtils = nil;
 - (void) buildSearchResolutionsOrder
 {
 	NSInteger device = [[CCDeviceInfo sharedDeviceInfo] runningDevice];
-    
 	[_searchResolutionsOrder removeAllObjects];
 	
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
@@ -272,6 +273,7 @@ static CCFileUtils *fileUtils = nil;
 #elif __CC_PLATFORM_MAC
 	if (device == CCDeviceMacRetinaDisplay)
 	{
+		[_searchResolutionsOrder addObject:CCFileUtilsSuffix2x];
 		[_searchResolutionsOrder addObject:CCFileUtilsSuffixMacHD];
 		[_searchResolutionsOrder addObject:CCFileUtilsSuffixMac];
 	}
@@ -418,8 +420,10 @@ static CCFileUtils *fileUtils = nil;
 				return 1.0*_macContentScaleFactor;
 			if( [key isEqualToString:CCFileUtilsSuffixMacHD] )
 				return 2.0*_macContentScaleFactor;
+			if( [key isEqualToString:CCFileUtilsSuffix2x] )
+				return 2.0*_macContentScaleFactor;
 			if( [key isEqualToString:CCFileUtilsSuffixDefault] )
-				return 1.0;
+				return 1.0*_macContentScaleFactor;
 #endif // __CC_PLATFORM_MAC
 		}
 	}
@@ -681,7 +685,7 @@ static CCFileUtils *fileUtils = nil;
 	}
 }
 
-#if __CC_PLATFORM_IOS
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
 
 -(void) setiPadRetinaDisplaySuffix:(NSString *)suffix
 {

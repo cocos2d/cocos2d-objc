@@ -68,6 +68,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 
 @class CCSpriteFrame;
+@class CCImage;
 
 
 /**
@@ -141,6 +142,8 @@ typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
  *  @see CCTexturePixelFormat
  */
 - (id)initWithData:(const void*)data pixelFormat:(CCTexturePixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSizeInPixels:(CGSize)sizeInPixels contentScale:(CGFloat)contentScale;
+
+-(instancetype)initWithImage:(CCImage *)image options:(NSDictionary *)options;
 
 /**
  *  Creates and returns a new texture, based on the specified image file path.

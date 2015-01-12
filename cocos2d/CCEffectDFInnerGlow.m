@@ -15,6 +15,12 @@
 #import "CCTexture.h"
 
 
+@interface CCEffectDFInnerGlow ()
+@property (nonatomic, assign) float innerMin;
+@property (nonatomic, assign) float innerMax;
+@end
+
+
 @interface CCEffectDFInnerGlowImpl : CCEffectImpl
 @property (nonatomic, weak) CCEffectDFInnerGlow *interface;
 @end
@@ -38,7 +44,10 @@
                                              value:[NSValue valueWithGLKVector2:GLKVector2Make(0.47, 0.5)]]
                           ];
     
-    if((self = [super initWithFragmentUniforms:uniforms vertexUniforms:nil varyings:nil]))
+    NSArray *fragFunctions = [CCEffectDFInnerGlowImpl buildFragmentFunctions];
+    NSArray *renderPasses = [CCEffectDFInnerGlowImpl buildRenderPassesWithInterface:interface];
+    
+    if((self = [super initWithRenderPasses:renderPasses fragmentFunctions:fragFunctions vertexFunctions:nil fragmentUniforms:uniforms vertexUniforms:nil varyings:nil]))
     {
         self.interface = interface;
         self.debugName = @"CCEffectDFInnerGlowImpl";
@@ -46,10 +55,8 @@
     return self;
 }
 
--(void)buildFragmentFunctions
++(NSArray *)buildFragmentFunctions
 {
-    self.fragmentFunctions = [[NSMutableArray alloc] init];
-
     NSString* effectPrefix =
         @"#ifdef GL_ES\n"
         @"#ifdef GL_OES_standard_derivatives\n"
@@ -122,38 +129,30 @@
     
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"outlineEffect"
                                                                            body:[effectPrefix stringByAppendingString:effectBody] inputs:nil returnType:@"vec4"];
-    [self.fragmentFunctions addObject:fragmentFunction];
+    return @[fragmentFunction];
 }
 
--(void)buildRenderPasses
++ (NSArray *)buildRenderPassesWithInterface:(CCEffectDFInnerGlow *)interface
 {
-    __weak CCEffectDFInnerGlowImpl *weakSelf = self;
-    
+    __weak CCEffectDFInnerGlow *weakInterface = interface;
+
     CCEffectRenderPass *pass0 = [[CCEffectRenderPass alloc] init];
     pass0.debugLabel = @"CCEffectDFInnerGlow pass 0";
-    pass0.shader = self.shader;
     pass0.blendMode = [CCBlendMode premultipliedAlphaMode];
     pass0.beginBlocks = @[[^(CCEffectRenderPass *pass, CCEffectRenderPassInputs *passInputs) {
         
-        passInputs.shaderUniforms[CCShaderUniformNormalMapTexture] = weakSelf.interface.distanceField;
+        passInputs.shaderUniforms[CCShaderUniformNormalMapTexture] = weakInterface.distanceField;
         passInputs.shaderUniforms[CCShaderUniformMainTexture] = passInputs.previousPassTexture;
         passInputs.shaderUniforms[CCShaderUniformPreviousPassTexture] = passInputs.previousPassTexture;
         
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_fillColor"]] = [NSValue valueWithGLKVector4:weakSelf.interface.fillColor.glkVector4];
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_glowColor"]] = [NSValue valueWithGLKVector4:weakSelf.interface.glowColor.glkVector4];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_fillColor"]] = [NSValue valueWithGLKVector4:weakInterface.fillColor.glkVector4];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_glowColor"]] = [NSValue valueWithGLKVector4:weakInterface.glowColor.glkVector4];
         
-        passInputs.shaderUniforms[weakSelf.uniformTranslationTable[@"u_glowInnerWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(_innerMin, _innerMax)];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_glowInnerWidth"]] = [NSValue valueWithGLKVector2:GLKVector2Make(weakInterface.innerMin, weakInterface.innerMax)];
         
     } copy]];
     
-    self.renderPasses = @[pass0];
-}
-
--(void)setNormalizedGlowWidth:(float)normalizedGlowWidth
-{
-    // 0.5 == center(edge), < 0.5 == outside, > 0.5 == inside
-    _innerMin = 0.5;
-    _innerMax = _innerMin + normalizedGlowWidth;
+    return @[pass0];
 }
 
 @end
@@ -196,9 +195,11 @@
     _glowWidth = glowWidth;
     float glowWidthNormalized = ((float)glowWidth)/255.0 * _fieldScaleFactor;
 
-    CCEffectDFInnerGlowImpl *innerGlowImpl = (CCEffectDFInnerGlowImpl *)self.effectImpl;
-    [innerGlowImpl setNormalizedGlowWidth:glowWidthNormalized];
+    // 0.5 == center(edge), < 0.5 == outside, > 0.5 == inside
+    _innerMin = 0.5;
+    _innerMax = _innerMin + glowWidthNormalized;
 }
+
 
 @end
 

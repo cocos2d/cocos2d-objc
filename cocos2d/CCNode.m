@@ -637,7 +637,7 @@ static void
 RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 {
 	for(CCNode *child in node->_children){
-		BOOL wasRunning = child.isRunningInActiveScene;
+		BOOL wasRunning = child.active;
 		child->_pausedAncestors += increment;
 		[child wasRunning:wasRunning];
 		
@@ -1002,7 +1002,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 	[self setupPhysicsBody:_physicsBody];
 	[_scheduler scheduleTarget:self];
 	
-	BOOL wasRunning = self.isRunningInActiveScene;
+	BOOL wasRunning = self.active;
 	_isInActiveScene = YES;
 	
 	//If there's a physics node in the hierarchy, all actions should run on a fixed timestep.
@@ -1039,7 +1039,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 {
 	[self teardownPhysics];
 	
-	BOOL wasRunning = self.isRunningInActiveScene;
+	BOOL wasRunning = self.active;
 	_isInActiveScene = NO;
 	[self wasRunning:wasRunning];
 	
@@ -1067,7 +1067,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 {
 	NSAssert( action != nil, @"Argument must be non-nil");
 
-	[_actionManager addAction:action target:self paused:!self.isRunningInActiveScene];
+	[_actionManager addAction:action target:self paused:!self.active];
 	return action;
 }
 
@@ -1226,7 +1226,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 // Used to pause/unpause a node's actions and timers when it's isRunning state changes.
 -(void)wasRunning:(BOOL)wasRunning
 {
-	BOOL isRunning = self.isRunningInActiveScene;
+	BOOL isRunning = self.active;
 	
 	if(isRunning && !wasRunning){
 		[_scheduler setPaused:NO target:self];
@@ -1240,7 +1240,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 }
 
 
--(BOOL)isRunningInActiveScene
+-(BOOL)active
 {
 	return (_isInActiveScene && !_paused && _pausedAncestors == 0);
 }
@@ -1248,7 +1248,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 -(void)setPaused:(BOOL)paused
 {
 	if(_paused != paused){
-		BOOL wasRunning = self.isRunningInActiveScene;
+		BOOL wasRunning = self.active;
 		_paused = paused;
 		[self wasRunning:wasRunning];
 		

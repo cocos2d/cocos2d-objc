@@ -157,8 +157,9 @@ CCCheckShaderError(GLint obj, GLenum status, GetShaderivFunc getiv, GetShaderInf
 	}
 }
 
-static void CCLogShader(NSArray *sources)
+static void CCLogShader(NSString *label, NSArray *sources)
 {
+    NSLog(@"%@", label);
     NSMutableString *allSource = [[NSMutableString alloc] init];
     for (NSString *source in sources)
     {
@@ -193,7 +194,7 @@ CompileShaderSources(GLenum type, NSArray *sources)
     if(CCCheckShaderError(shader, GL_COMPILE_STATUS, glGetShaderiv, glGetShaderInfoLog)){
         return shader;
     } else {
-        CCLogShader(sources);
+        CCLogShader((type == GL_VERTEX_SHADER) ? @"Vertex Shader" : @"Fragment Shader", sources);
         glDeleteShader(shader);
         return 0;
     }
@@ -651,6 +652,8 @@ MetalUniformSettersForFunctions(id<MTLFunction> vertexFunction, id<MTLFunction> 
 		if(CCCheckShaderError(program, GL_LINK_STATUS, glGetProgramiv, glGetProgramInfoLog)){
 			blockself = [blockself initWithGLProgram:program uniformSetters:GLUniformSettersForProgram(program) ownsProgram:YES];
 		} else {
+            CCLogShader(@"Vertex Shader", vertexSources);
+            CCLogShader(@"Fragment Shader", fragmentSources);
 			glDeleteProgram(program);
 			blockself = nil;
 		}

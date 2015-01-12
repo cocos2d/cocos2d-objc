@@ -814,7 +814,7 @@
         sprite.positionType = CCPositionTypeNormalized;
         sprite.position = ccp(0.75f, 0.65f);
         
-        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffset:GLKVector2Make(5.0f, 0.0f) greenOffset:GLKVector2Make(-4.0f, 4.0f) blueOffset:GLKVector2Make(-4.0f, -4.0f)];
+        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffset:ccp(5.0f, 0.0f) greenOffset:ccp(-4.0f, 4.0f) blueOffset:ccp(-4.0f, -4.0f)];
         sprite.effect = offset;
         
         [self.contentNode addChild:sprite];
@@ -833,7 +833,7 @@
         sprite.positionType = CCPositionTypeNormalized;
         sprite.position = ccp(0.75f, 0.5f);
         
-        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffset:GLKVector2Make(5.0f, 0.0f) greenOffset:GLKVector2Make(-4.0f, 4.0f) blueOffset:GLKVector2Make(-4.0f, -4.0f)];
+        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffset:ccp(5.0f, 0.0f) greenOffset:ccp(-4.0f, 4.0f) blueOffset:ccp(-4.0f, -4.0f)];
         offset.padding = CGSizeMake(5.0f, 5.0f);
         sprite.effect = offset;
         
@@ -853,7 +853,7 @@
         sprite.positionType = CCPositionTypeNormalized;
         sprite.position = ccp(0.75f, 0.35f);
         
-        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffset:GLKVector2Make(5.0f, 0.0f) greenOffset:GLKVector2Make(-4.0f, 4.0f) blueOffset:GLKVector2Make(-4.0f, -4.0f)];
+        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffset:ccp(5.0f, 0.0f) greenOffset:ccp(-4.0f, 4.0f) blueOffset:ccp(-4.0f, -4.0f)];
         offset.padding = CGSizeMake(5.0f, 5.0f);
         CCEffectHue *hue = [CCEffectHue effectWithHue:60.0f];
         sprite.effect = [CCEffectStack effectWithArray:@[offset, hue]];
@@ -874,7 +874,7 @@
         sprite.positionType = CCPositionTypeNormalized;
         sprite.position = ccp(0.75f, 0.2f);
         
-        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffset:GLKVector2Make(5.0f, 0.0f) greenOffset:GLKVector2Make(-4.0f, 4.0f) blueOffset:GLKVector2Make(-4.0f, -4.0f)];
+        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffset:ccp(5.0f, 0.0f) greenOffset:ccp(-4.0f, 4.0f) blueOffset:ccp(-4.0f, -4.0f)];
         offset.padding = CGSizeMake(5.0f, 5.0f);
         CCEffectHue *hue = [CCEffectHue effectWithHue:60.0f];
         sprite.effect = [CCEffectStack effectWithArray:@[hue, offset]];
@@ -895,7 +895,7 @@
 {
     self.subTitle = @"Color Channel Offset Effect Test";
     
-    CCEffectColorChannelOffset *effect = [CCEffectColorChannelOffset effectWithRedOffset:GLKVector2Make(0.0f, 0.0f) greenOffset:GLKVector2Make(0.0f, 0.0f) blueOffset:GLKVector2Make(0.0f, 0.0f)];
+    CCEffectColorChannelOffset *effect = [CCEffectColorChannelOffset effectWithRedOffset:ccp(0.0f, 0.0f) greenOffset:ccp(0.0f, 0.0f) blueOffset:ccp(0.0f, 0.0f)];
     effect.padding = CGSizeMake(5.0f, 5.0f);
     
     CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/particles.png"];
@@ -913,13 +913,13 @@
     void (^updateBlock)() = ^{
         
         float redRadius = 3.0f;
-        effect.redOffset = GLKVector2Make(redRadius * cosf(redTheta), redRadius * sinf(redTheta));
+        effect.redOffset = ccp(redRadius * cosf(redTheta), redRadius * sinf(redTheta));
         
         float greenRadius = 3.0f;
-        effect.greenOffset = GLKVector2Make(greenRadius * cosf(greenTheta), greenRadius * sinf(greenTheta));
+        effect.greenOffset = ccp(greenRadius * cosf(greenTheta), greenRadius * sinf(greenTheta));
         
         float blueRadius = 3.0f;
-        effect.blueOffset = GLKVector2Make(blueRadius * cosf(blueTheta), blueRadius * sinf(blueTheta));
+        effect.blueOffset = ccp(blueRadius * cosf(blueTheta), blueRadius * sinf(blueTheta));
         
         redTheta += thetaStep;
         greenTheta += thetaStep;
@@ -1800,6 +1800,146 @@
         [self.contentNode addChild:title];
         
         x += step;
+    }
+}
+
+-(void)setupMoreSpriteColorTest
+{
+    self.subTitle = @"Sprite Color + Effects Test 2\nThe colors of all sprite pairs should look the same.";
+    
+    CCSprite *reflectEnvironment = [CCSprite spriteWithImageNamed:@"Images/MountainPanorama.jpg"];
+    reflectEnvironment.positionType = CCPositionTypeNormalized;
+    reflectEnvironment.position = ccp(0.5f, 0.5f);
+    reflectEnvironment.visible = NO;
+    [self.contentNode addChild:reflectEnvironment];
+    
+    CCSprite *refractEnvironment = [CCSprite spriteWithImageNamed:@"Images/StoneWall.jpg"];
+    refractEnvironment.positionType = CCPositionTypeNormalized;
+    refractEnvironment.position = ccp(0.5f, 0.5f);
+    refractEnvironment.visible = NO;
+    [self.contentNode addChild:refractEnvironment];
+    
+    CCLightNode *lightNode = [CCLightNode lightWithType:CCLightPoint groups:@[] color:[CCColor whiteColor] intensity:1.0f];
+    [self.contentNode addChild:lightNode];
+    
+    CCSpriteFrame *normalMapFrame = [CCSpriteFrame frameWithTextureFilename:@"Images/fire.png" rectInPixels:CGRectMake(0.0f, 0.0f, 4.0f, 4.0f) rotated:NO offset:CGPointZero originalSize:CGSizeMake(32.0f, 32.0f)];
+    
+    GLKVector2 zeroVec = GLKVector2Make(0.0f, 0.0f);
+    
+    NSArray *effects = @[
+                         [CCEffectBloom effectWithBlurRadius:1 intensity:0.0f luminanceThreshold:0.0f],
+                         [CCEffectBlur effectWithBlurRadius:1.0],
+                         [CCEffectBrightness effectWithBrightness:0.0f],
+                         [CCEffectColorChannelOffset effectWithRedOffset:CGPointZero greenOffset:CGPointZero blueOffset:CGPointZero],
+                         [CCEffectContrast effectWithContrast:0.0f],
+                         [CCEffectDropShadow effectWithShadowOffset:zeroVec shadowColor:[CCColor clearColor] blurRadius:1.0f],
+                         [CCEffectGlass effectWithShininess:1.0f refraction:0.75f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment],
+                         [CCEffectHue effectWithHue:0.0f],
+                         [CCEffectStack effectWithArray:@[[[CCEffectInvert alloc] init], [[CCEffectInvert alloc] init]]],
+                         [CCEffectLighting effectWithGroups:@[] specularColor:[CCColor whiteColor] shininess:0.0f],
+                         [CCEffectPixellate effectWithBlockSize:1.0f],
+                         [CCEffectReflection effectWithShininess:1.0f fresnelBias:0.1f fresnelPower:2.0f environment:reflectEnvironment],
+                         [CCEffectRefraction effectWithRefraction:0.75f environment:refractEnvironment],
+                         [CCEffectSaturation effectWithSaturation:0.0f],
+                         [CCEffectOutline effectWithOutlineColor:[CCColor clearColor] outlineWidth:0.0f]
+                         ];
+    
+    NSMutableArray *effects2 = [NSMutableArray arrayWithArray:effects];
+    for (CCEffect *effect in effects)
+    {
+        [effects2 addObject:[CCEffectStack effectWithArray:@[[CCEffectHue effectWithHue:0.0f], effect]]];
+    }
+    
+    // Make a solid gray background (there's got to be a better way to do this).
+    CCEffectNode* background = [[CCEffectNode alloc] init];
+    background.clearFlags = GL_COLOR_BUFFER_BIT;
+    background.clearColor = [CCColor grayColor];
+    background.contentSizeType = CCSizeTypeNormalized;
+    background.contentSize = CGSizeMake(1.0f, 1.0f);
+    background.anchorPoint = ccp(0.5f, 0.5f);
+    background.positionType = CCPositionTypeNormalized;
+    background.position = ccp(0.5f, 0.5f);
+    
+    [self.contentNode addChild:background];
+
+    float bigFontSize = 15.0f;
+    float smallFontSize = 10.0f;
+    
+    CCLabelTTF *title = nil;
+    title = [CCLabelTTF labelWithString:@"Stacked Effects" fontName:@"HelveticaNeue-Light" fontSize:bigFontSize * [CCDirector sharedDirector].UIScaleFactor];
+    title.color = [CCColor blackColor];
+    title.positionType = CCPositionTypeNormalized;
+    title.position = ccp(0.5f, 0.85f);
+    title.horizontalAlignment = CCTextAlignmentCenter;
+    
+    [self.contentNode addChild:title];
+
+    title = [CCLabelTTF labelWithString:@"Solo Effects" fontName:@"HelveticaNeue-Light" fontSize:bigFontSize * [CCDirector sharedDirector].UIScaleFactor];
+    title.color = [CCColor blackColor];
+    title.positionType = CCPositionTypeNormalized;
+    title.position = ccp(0.5f, 0.45f);
+    title.horizontalAlignment = CCTextAlignmentCenter;
+    
+    [self.contentNode addChild:title];
+
+    
+    float xStart = 0.075f;
+    float x = xStart;
+    float xStep1 = 0.05f;
+    float xStep2 = 0.2f;
+
+    float y = 0.15f;
+    float yStep = 0.11f;
+
+    NSString *imageName = @"Images/stars-grayscale.png";
+    
+    // Sprite with solid red
+    int effectCount = 0;
+    for (CCEffect *effect in effects2)
+    {
+        CCSprite *plainSprite = [CCSprite spriteWithImageNamed:imageName];
+        plainSprite.positionType = CCPositionTypeNormalized;
+        plainSprite.position = ccp(x, y);
+        plainSprite.color = [CCColor redColor];
+        [self.contentNode addChild:plainSprite];
+        
+        CCSprite *effectSprite = [CCSprite spriteWithImageNamed:imageName];
+        effectSprite.positionType = CCPositionTypeNormalized;
+        effectSprite.position = ccp(x + xStep1, y);
+        effectSprite.color = [CCColor redColor];
+        effectSprite.effect = effect;
+        effectSprite.normalMapSpriteFrame = normalMapFrame;
+        [self.contentNode addChild:effectSprite];
+
+        NSString *effectName = NSStringFromClass([effect class]);
+        if ([effect isKindOfClass:[CCEffectStack class]])
+        {
+            CCEffectStack *stack = (CCEffectStack *)effect;
+            CCEffect *effect = [stack effectAtIndex:1];
+            effectName = NSStringFromClass([effect class]);
+        }
+        
+        title = [CCLabelTTF labelWithString:effectName fontName:@"HelveticaNeue-Light" fontSize:smallFontSize * [CCDirector sharedDirector].UIScaleFactor];
+        title.color = [CCColor blackColor];
+        title.positionType = CCPositionTypeNormalized;
+        title.position = ccp(x + 0.5f * xStep1, y - 0.35f * yStep);
+        title.horizontalAlignment = CCTextAlignmentCenter;
+        
+        [self.contentNode addChild:title];
+
+        x += xStep2;
+        if (x > 1.0f)
+        {
+            x = xStart;
+            y += yStep;
+        }
+
+        effectCount++;
+        if (effectCount == effects.count)
+        {
+            x = xStart;
+            y = 0.55f;
+        }
     }
 }
 
