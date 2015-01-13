@@ -86,29 +86,16 @@
 - (CCFile *)findFilename:(NSString *)filename inPath:(NSString *)path
 {
     NSFileManager *localFileManager = [[NSFileManager alloc] init];
-    NSArray *searchFilenames = [self searchFilenamesWithBasefilename:filename];
+    NSArray *searchFilenames = [self searchFilenamesWithBaseFilename:filename];
 
     for (CCFileUtilsV2SearchData *fileLocatorSearchData in searchFilenames)
     {
-        NSDirectoryEnumerator *dirEnumerator = [localFileManager enumeratorAtURL:[NSURL fileURLWithPath:path isDirectory:YES]
-                                                      includingPropertiesForKeys:@[NSURLNameKey, NSURLIsDirectoryKey]
-                                                                         options:NSDirectoryEnumerationSkipsHiddenFiles
-                                                                    errorHandler:nil];
+        NSURL *fileURL = [NSURL fileURLWithPath:[path stringByAppendingPathComponent:fileLocatorSearchData.filename]];
 
-        for (NSURL *theURL in dirEnumerator)
+        BOOL isDirectory = NO;
+        if ([localFileManager fileExistsAtPath:fileURL.path isDirectory:&isDirectory] && !isDirectory)
         {
-            NSString *currentFilename;
-            [theURL getResourceValue:&currentFilename forKey:NSURLNameKey error:NULL];
-
-            NSNumber *isDirectory;
-            [theURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:NULL];
-
-            // NSLog(@"-> %@ in %@", currentFilename, theURL);
-
-            if ([currentFilename isEqualToString:fileLocatorSearchData.filename] && ![isDirectory boolValue])
-            {
-                return [[CCFile alloc] initWithName:filename url:theURL contentScale:[fileLocatorSearchData.contentScale floatValue]];
-            }
+            return [[CCFile alloc] initWithName:filename url:fileURL contentScale:[fileLocatorSearchData.contentScale floatValue]];
         }
     }
 
@@ -124,7 +111,7 @@
     return [[CCFileUtilsV2SearchData alloc] initWithFilename:filename contentScale:contentScale];
 }
 
-- (NSArray *)searchFilenamesWithBasefilename:(NSString *)baseFilename
+- (NSArray *)searchFilenamesWithBaseFilename:(NSString *)baseFilename
 {
     NSMutableArray *result = [NSMutableArray arrayWithCapacity:4];
 

@@ -147,7 +147,7 @@
     _fileLocator.untaggedContentScale = 4;
 
     NSError *error;
-    CCFile *file = [_fileLocator fileNamed:@"spaceship.png" options:nil error:&error];
+    CCFile *file = [_fileLocator fileNamed:@"images/vehicles/spaceship.png" options:nil error:&error];
 
     [self assertSuccessForFile:file filePath:@"Resources/images/vehicles/spaceship.png" contentScale:4.0 error:error];
 }

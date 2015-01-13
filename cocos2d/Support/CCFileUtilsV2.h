@@ -28,7 +28,6 @@
 
 + (CCFileUtilsV2 *)sharedFileUtils;
 
-
 - (CCFile *)fileNamed:(NSString *)filename options:(NSDictionary *)options error:(NSError **)error;
 
 // Calls fileNamed:options: on the shared delegate with reasonable default options.
