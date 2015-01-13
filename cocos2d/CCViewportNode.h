@@ -1,5 +1,5 @@
 //
-//  CCViewPortNode.h
+//  CCViewportNode.h
 //  cocos2d-ios
 //
 //  Created by Andy Korth on 12/10/14.

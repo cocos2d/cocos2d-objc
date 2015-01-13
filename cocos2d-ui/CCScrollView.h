@@ -23,14 +23,12 @@
  */
 
 #import "ccMacros.h"
-#import "CCViewPortNode.h"
+#import "CCViewportNode.h"
+#import "CCNode.h"
 
 #if __CC_PLATFORM_IOS
 #import <UIKit/UIGestureRecognizer.h>
 #endif
-
-#import "CCNode.h"
-#import "CCViewPortNode.h"
 
 @class CCTapDownGestureRecognizer;
 @class CCScrollView;

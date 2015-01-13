@@ -1,10 +1,10 @@
 //
-//  CCViewPortNode.m
+//  CCViewportNode.m
 //  cocos2d-ios
 //
 //  Created by Andy Korth on 12/10/14.
 
-#import "CCViewPortNode.h"
+#import "CCViewportNode.h"
 #import "CCNode_Private.h"
 #import "CCDirector.h"
 #import "ccUtils.h"
