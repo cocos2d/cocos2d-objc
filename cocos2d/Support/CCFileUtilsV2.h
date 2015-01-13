@@ -6,13 +6,14 @@
 
 
 @class CCFile;
+@class CCFileUtilsDatabase;
 
 
 @interface CCFileUtilsV2 : NSObject
 
 @property (nonatomic, copy) NSArray *searchPaths;
 
-@property (nonatomic, copy) NSDictionary *filenameAliases;
+@property (nonatomic, strong) CCFileUtilsDatabase *database;
 
 // Base content scale for untagged, automatically resized assets.
 // Required to be a power of two.

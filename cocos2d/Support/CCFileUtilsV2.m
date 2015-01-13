@@ -3,6 +3,7 @@
 #import "CCPackageConstants.h"
 #import "CCFile_Private.h"
 #import "CCEffect_Private.h"
+#import "CCFileUtilsDatabase.h"
 
 
 #pragma mark - CCFileLocatorSearchData helper class
@@ -115,7 +116,7 @@
 {
     NSMutableArray *result = [NSMutableArray arrayWithCapacity:4];
 
-    if (_deviceContentScale == 3 || _deviceContentScale == 4)
+    if (_deviceContentScale >= 3)
     {
         [result addObject:[self filenameWithBasefilename:baseFilename contentScale:@4]];
         [result addObject:[self filenameWithBasefilename:baseFilename contentScale:@2]];
