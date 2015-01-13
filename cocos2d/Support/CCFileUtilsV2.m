@@ -1,4 +1,4 @@
-#import "CCFileLocator.h"
+#import "CCFileUtilsV2.h"
 #import "CCFile.h"
 #import "CCPackageConstants.h"
 #import "CCFile_Private.h"
@@ -7,7 +7,7 @@
 
 #pragma mark - CCFileLocatorSearchData helper class
 
-@interface CCFileLocatorSearchData : NSObject
+@interface CCFileUtilsV2SearchData : NSObject
 
 @property (nonatomic, copy) NSString *filename;
 @property (nonatomic, copy) NSNumber *contentScale;
@@ -16,7 +16,7 @@
 
 @end
 
-@implementation CCFileLocatorSearchData
+@implementation CCFileUtilsV2SearchData
 
 - (instancetype)initWithFilename:(NSString *)filename contentScale:(NSNumber *)contentScale
 {
@@ -36,7 +36,7 @@
 
 #pragma mark - CCFileLocator
 
-@implementation CCFileLocator
+@implementation CCFileUtilsV2
 
 - (id)init
 {
@@ -44,20 +44,20 @@
 
     if (self)
     {
-        self.defaultContentScale = 4;
+        self.untaggedContentScale = 4;
         self.deviceContentScale = 4;
     }
 
     return self;
 }
 
-+ (CCFileLocator *)sharedFileUtils
++ (CCFileUtilsV2 *)sharedFileUtils
 {
-    static CCFileLocator *sharedInstance = nil;
+    static CCFileUtilsV2 *sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^
     {
-        sharedInstance = [[CCFileLocator alloc] init];
+        sharedInstance = [[CCFileUtilsV2 alloc] init];
     });
     return sharedInstance;
 }
@@ -88,7 +88,7 @@
     NSFileManager *localFileManager = [[NSFileManager alloc] init];
     NSArray *searchFilenames = [self searchFilenamesWithBasefilename:filename];
 
-    for (CCFileLocatorSearchData *fileLocatorSearchData in searchFilenames)
+    for (CCFileUtilsV2SearchData *fileLocatorSearchData in searchFilenames)
     {
         NSDirectoryEnumerator *dirEnumerator = [localFileManager enumeratorAtURL:[NSURL fileURLWithPath:path isDirectory:YES]
                                                       includingPropertiesForKeys:@[NSURLNameKey, NSURLIsDirectoryKey]
@@ -115,13 +115,13 @@
     return nil;
 }
 
-- (CCFileLocatorSearchData *)filenameWithBasefilename:(NSString *)baseFilename contentScale:(NSNumber *)contentScale
+- (CCFileUtilsV2SearchData *)filenameWithBasefilename:(NSString *)baseFilename contentScale:(NSNumber *)contentScale
 {
     NSString *filename = [[NSString stringWithFormat:@"%@-%dx",
                            [baseFilename stringByDeletingPathExtension],
                            [contentScale unsignedIntegerValue]] stringByAppendingPathExtension:[baseFilename pathExtension]];
 
-    return [[CCFileLocatorSearchData alloc] initWithFilename:filename contentScale:contentScale];
+    return [[CCFileUtilsV2SearchData alloc] initWithFilename:filename contentScale:contentScale];
 }
 
 - (NSArray *)searchFilenamesWithBasefilename:(NSString *)baseFilename
@@ -158,11 +158,11 @@
 {
     for (NSUInteger i = 0; i < filenames.count - 1; ++i)
     {
-        CCFileLocatorSearchData *filenameData = filenames[i];
-        if ([filenameData.contentScale unsignedIntegerValue] == _defaultContentScale)
+        CCFileUtilsV2SearchData *filenameData = filenames[i];
+        if ([filenameData.contentScale unsignedIntegerValue] == _untaggedContentScale)
         {
-            CCFileLocatorSearchData *filenameDataToInsert = [[CCFileLocatorSearchData alloc] initWithFilename:baseFilename
-                                                                                                 contentScale:@(_defaultContentScale)];
+            CCFileUtilsV2SearchData *filenameDataToInsert = [[CCFileUtilsV2SearchData alloc] initWithFilename:baseFilename
+                                                                                                 contentScale:@(_untaggedContentScale)];
 
             [filenames insertObject:filenameDataToInsert atIndex:i];
             return;

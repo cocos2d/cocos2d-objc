@@ -8,7 +8,7 @@
 @class CCFile;
 
 
-@interface CCFileLocator : NSObject
+@interface CCFileUtilsV2 : NSObject
 
 @property (nonatomic, copy) NSArray *searchPaths;
 
@@ -17,7 +17,7 @@
 // Base content scale for untagged, automatically resized assets.
 // Required to be a power of two.
 // Default is 4
-@property (nonatomic, assign) NSUInteger defaultContentScale;
+@property (nonatomic, assign) NSUInteger untaggedContentScale;
 
 // Default is 4
 @property (nonatomic, assign) NSUInteger deviceContentScale;
@@ -26,7 +26,7 @@
 @property (nonatomic, copy) NSString *deviceFamily;
 
 
-+ (CCFileLocator *)sharedFileUtils;
++ (CCFileUtilsV2 *)sharedFileUtils;
 
 
 - (CCFile *)fileNamed:(NSString *)filename options:(NSDictionary *)options error:(NSError **)error;

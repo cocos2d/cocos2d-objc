@@ -1,5 +1,5 @@
 //
-//  CCFileLocatorTests.m
+//  CCFileUtilsV2Tests.m
 //  cocos2d-tests
 //
 //  Created by Nicky Weber on 08.01.15.
@@ -8,24 +8,24 @@
 
 #import <XCTest/XCTest.h>
 #import "CCFile.h"
-#import "CCFileLocator.h"
+#import "CCFileUtilsV2.h"
 #import "CCPackageConstants.h"
 #import "FileSystemTestCase.h"
 
-@interface CCFileLocatorTests : FileSystemTestCase
+@interface CCFileUtilsV2Tests : FileSystemTestCase
 
-@property (nonatomic, strong) CCFileLocator *fileLocator;
+@property (nonatomic, strong) CCFileUtilsV2 *fileLocator;
 
 @end
 
 
-@implementation CCFileLocatorTests
+@implementation CCFileUtilsV2Tests
 
 - (void)setUp
 {
     [super setUp];
 
-    self.fileLocator = [[CCFileLocator alloc] init];
+    self.fileLocator = [[CCFileUtilsV2 alloc] init];
     _fileLocator.searchPaths = @[[self fullPathForFile:@"Resources"]];
 }
 
@@ -37,7 +37,7 @@
     [self createPNGsInDir:@"Resources" name:@"Hero" scales:@[@"4", @"2", @"1", @"default"]];
 
     _fileLocator.deviceContentScale = 4;
-    _fileLocator.defaultContentScale = 4;
+    _fileLocator.untaggedContentScale = 4;
 
     NSError *error;
     CCFile *file = [_fileLocator fileNamed:@"Hero.png" options:nil error:&error];
@@ -98,7 +98,7 @@
     [self createPNGsInDir:@"Resources" name:@"Hero" scales:@[@"2", @"default"]];
 
     _fileLocator.deviceContentScale = 4;
-    _fileLocator.defaultContentScale = 4;
+    _fileLocator.untaggedContentScale = 4;
 
     NSError *error;
     CCFile *file = [_fileLocator fileNamed:@"Hero.png" options:nil error:&error];
@@ -144,7 +144,7 @@
 {
     [self createEmptyFiles:@[@"Resources/images/vehicles/spaceship.png"]];
 
-    _fileLocator.defaultContentScale = 4;
+    _fileLocator.untaggedContentScale = 4;
 
     NSError *error;
     CCFile *file = [_fileLocator fileNamed:@"spaceship.png" options:nil error:&error];
