@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Apportable. All rights reserved.
 //
 
-#import "CCMacros.h"
+#import "ccMacros.h"
 #if __CC_PLATFORM_ANDROID
 
 #import <GLActivityKit/GLActivity.h>
