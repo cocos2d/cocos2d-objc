@@ -3,7 +3,7 @@
 #import "CCNode_Private.h"
 #import "chipmunk/chipmunk.h"
 #import <objc/message.h>
-#import "CCViewPortNode.h"
+#import "CCViewportNode.h"
 
 @interface CCAbstractProjection : NSObject @end
 @implementation CCAbstractProjection {
