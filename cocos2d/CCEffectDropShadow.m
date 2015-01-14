@@ -348,5 +348,16 @@
     return result;
 }
 
+
+- (CGPoint)shadowOffsetWithPoint
+{
+    return CGPointMake(_shadowOffset.x, _shadowOffset.y);
+}
+
+- (void)setShadowOffsetWithPoint:(CGPoint)shadowOffsetWithPoint
+{
+    _shadowOffset = GLKVector2Make(shadowOffsetWithPoint.x, shadowOffsetWithPoint.y);
+}
+
 @end
 
