@@ -104,7 +104,7 @@ extern "C" {
  *  @return New point array.
  *  @see arrayWithCapacity:
  */
-- (id)initWithCapacity:(NSUInteger)capacity;
+- (id)initWithCapacity:(NSUInteger)capacity NS_DESIGNATED_INITIALIZER;
 
 
 /// -----------------------------------------------------------------------
