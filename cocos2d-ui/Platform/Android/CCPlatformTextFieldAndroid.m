@@ -8,12 +8,17 @@
 
 #import "CCPlatformTextFieldAndroid.h"
 #import "CCActivity.h"
-#import <BridgeKitV3/BridgeKit.h>
 #import <CoreGraphics/CoreGraphics.h>
 #import "CCControl.h"
 #import "CCDirector.h"
 #import "CCEditText.h"
 
+#import <AndroidKit/AndroidColorDrawable.h>
+#import <AndroidKit/AndroidColor.h>
+#import <AndroidKit/AndroidEditorInfo.h>
+
+#import <AndroidKit/AndroidAbsoluteLayout.h>
+#import <AndroidKit/AndroidAbsoluteLayoutLayoutParams.h>
 
 @implementation CCPlatformTextFieldAndroid {
     CCEditText *_editText;
@@ -23,8 +28,8 @@
     if (self=[super init]) {
         dispatch_async(dispatch_get_main_queue(), ^{
             _editText = [[CCEditText alloc] initWithContext:[CCActivity currentActivity]];
-            [_editText setBackground:[[AndroidColorDrawable alloc] initWithColor:AndroidColorTRANSPARENT]];
-            [_editText setTextColorByColor:AndroidColorBLACK];
+            [_editText setBackground:[[AndroidColorDrawable alloc] initWithColor:AndroidColorTransparent]];
+            [_editText setTextColorByColor:AndroidColorBlack];
         });
         
     }
@@ -36,11 +41,11 @@
     _editText = nil;
 }
 
-
 - (void)onEnterTransitionDidFinish {
     [super onEnterTransitionDidFinish];
     [self addEditText];
 }
+
 - (void) onExitTransitionDidStart
 {
     [super onExitTransitionDidStart];
@@ -48,69 +53,51 @@
 }
 
 - (void) positionInControl:(CCControl *)control padding:(float)padding {
-    CGPoint worldPos = [control convertToWorldSpace:CGPointZero];
-    CGPoint viewPos = [[CCDirector sharedDirector] convertToUI:worldPos];
-    
-    
+    CGPoint viewPos = [control convertToWorldSpace:CGPointZero];
+    CGSize screenSize = [[CCDirector sharedDirector] viewSizeInPixels];
     CGFloat scale = [[CCDirector sharedDirector] contentScaleFactor];
-    
+    CGSize size = control.contentSizeInPoints;
+
+    size.width *= scale;
+    size.height *= scale;
+
     viewPos.x *= scale;
     viewPos.y *= scale;
-    
-    CGSize size = control.contentSizeInPoints;
-    size.width *= scale;
-    size.height *= scale ;
-    viewPos.y -=  size.height;
-    
-    
-    CGRect frame = CGRectZero;
-    frame.origin = viewPos;
-    frame.size = size;
+    viewPos.y = screenSize.height - viewPos.y - size.height;
+
     int nativePadding = (int)padding*scale;
     dispatch_async(dispatch_get_main_queue(), ^{
-        AndroidViewGroupLayoutParams *oldParams = [_editText layoutParams];
-        AndroidRelativeLayoutLayoutParams *params = [[AndroidRelativeLayoutLayoutParams alloc] initWithWidth:frame.size.width height:frame.size.height];
-        [params setMargins:frame.origin.x top:frame.origin.y right:0 bottom:0];
+        AndroidAbsoluteLayoutLayoutParams *params = [[AndroidAbsoluteLayoutLayoutParams alloc] initWithWidth:size.width height:size.height x:viewPos.x y:viewPos.y];
         [_editText setPadding:nativePadding top:nativePadding right:nativePadding bottom:nativePadding];
         [_editText setLayoutParams:params];
-        [_editText setImeOptions:AndroidEditorInfoIME_FLAG_NO_EXTRACT_UI];
-        
-        
-        __weak id weakSelf = self;
-        [_editText setCompletionBlock:^{
-            if ([[weakSelf delegate] respondsToSelector:@selector(platformTextFieldDidFinishEditing:)]) {
-                [[weakSelf delegate] platformTextFieldDidFinishEditing:weakSelf];
-            }
-            
-        }];
+        [_editText setImeOptions:AndroidEditorInfoImeFlagNoExtractUi];
     });
 }
 
 -(void)addEditText {
     dispatch_async(dispatch_get_main_queue(), ^{
-        AndroidRelativeLayout *layout = [[CCActivity currentActivity] layout];
+        AndroidAbsoluteLayout *layout = [[CCActivity currentActivity] layout];
         [layout addView:_editText];
+        __weak id weakSelf = self;
+        [_editText setCompletionBlock:^{
+            if ([[weakSelf delegate] respondsToSelector:@selector(platformTextFieldDidFinishEditing:)]) {
+                [[weakSelf delegate] platformTextFieldDidFinishEditing:weakSelf];
+            }
+        }];
     });
 }
 
-
 - (void)removeEditText {
     dispatch_async(dispatch_get_main_queue(), ^{
-        AndroidRelativeLayout *layout = [[CCActivity currentActivity] layout];
+        AndroidAbsoluteLayout *layout = [[CCActivity currentActivity] layout];
         [layout removeView:_editText];
     });
 }
 
 - (void)setFontSize:(float)fontSize {
     dispatch_async(dispatch_get_main_queue(), ^{
-        // AndroidDisplayMetrics *metrics = [[AndroidDisplayMetrics alloc] init];
-        // [[CCActivity currentActivity].windowManager.defaultDisplay getMetrics:metrics];
-        
-        [_editText setTextSizeDouble:fontSize];
-        
+        [_editText setTextSize:fontSize];
     });
-    
-    
 }
 
 - (void)setString:(NSString *)string {
@@ -119,9 +106,9 @@
     });
 }
 
-
 - (NSString *)string {
-    return _editText.text;
+    NSString *str = [_editText.text description];
+    return str;
 }
 
 

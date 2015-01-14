@@ -29,6 +29,8 @@
 #elif __CC_PLATFORM_ANDROID
 #import "CCActivity.h"
 #import "CCGestureListener.h"
+#import <AndroidKit/AndroidGestureDetector.h>
+#import <AndroidKit/AndroidMotionEvent.h>
 #endif
 
 #import "CCScrollView.h"
@@ -59,6 +61,7 @@
 #pragma mark Helper classes
 
 #if __CC_PLATFORM_IOS
+
 @interface CCTapDownGestureRecognizer : UIGestureRecognizer
 @end
 
@@ -210,7 +213,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         _listener = [[CCGestureListener alloc] init];
         _listener.delegate = (id<CCGestureListenerDelegate>)self;
-        _detector = [[AndroidGestureDetector alloc] initWithContext:[CCActivity currentActivity] listener:_listener];
+        _detector = [[AndroidGestureDetector alloc] initWithContext:[CCActivity currentActivity] onGestureListener:_listener];
     });
 #elif __CC_PLATFORM_MAC
     

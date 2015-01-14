@@ -46,17 +46,17 @@ static const int TEST_STRING_COUNT = sizeof(TEST_STRINGS)/sizeof(*TEST_STRINGS);
 }
 
 -(void)setupBMFont01Test {[self testFont:@"din.fnt"];}
--(void)setupBMFont02Test {[self testFont:@"Fonts/arial-unicode-26.fnt"];}
--(void)setupBMFont03Test {[self testFont:@"Fonts/arial16.fnt"];}
--(void)setupBMFont04Test {[self testFont:@"Fonts/bitmapFontTest.fnt"];}
--(void)setupBMFont06Test {[self testFont:@"Fonts/bitmapFontTest3.fnt"];}
--(void)setupBMFont07Test {[self testFont:@"Fonts/bitmapFontTest4.fnt"];}
--(void)setupBMFont08Test {[self testFont:@"Fonts/bitmapFontTest5.fnt"];}
--(void)setupBMFont09Test {[self testFont:@"Fonts/boundsTestFont.fnt"];}
--(void)setupBMFont10Test {[self testFont:@"Fonts/font-issue1343.fnt"];}
--(void)setupBMFont11Test {[self testFont:@"Fonts/futura-48.fnt"];}
--(void)setupBMFont12Test {[self testFont:@"Fonts/konqa32.fnt"];}
--(void)setupBMFont14Test {[self testFont:@"Fonts/markerFelt.fnt"];}
--(void)setupBMFont15Test {[self testFont:@"Fonts/west_england-64.fnt"];}
+-(void)setupBMFont02Test {[self testFont:@"arial-unicode-26.fnt"];}
+-(void)setupBMFont03Test {[self testFont:@"arial16.fnt"];}
+-(void)setupBMFont04Test {[self testFont:@"bitmapFontTest.fnt"];}
+-(void)setupBMFont06Test {[self testFont:@"bitmapFontTest3.fnt"];}
+-(void)setupBMFont07Test {[self testFont:@"bitmapFontTest4.fnt"];}
+-(void)setupBMFont08Test {[self testFont:@"bitmapFontTest5.fnt"];}
+-(void)setupBMFont09Test {[self testFont:@"boundsTestFont.fnt"];}
+-(void)setupBMFont10Test {[self testFont:@"font-issue1343.fnt"];}
+-(void)setupBMFont11Test {[self testFont:@"futura-48.fnt"];}
+-(void)setupBMFont12Test {[self testFont:@"konqa32.fnt"];}
+-(void)setupBMFont14Test {[self testFont:@"markerFelt.fnt"];}
+-(void)setupBMFont15Test {[self testFont:@"west_england-64.fnt"];}
 
 @end

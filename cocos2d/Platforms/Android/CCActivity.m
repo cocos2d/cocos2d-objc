@@ -12,13 +12,20 @@
 
 #import <android/native_window.h>
 #import <bridge/runtime.h>
+#import <AndroidKit/AndroidLooper.h>
 
 #import "cocos2d.h"
 #import "CCBReader.h"
 #import "CCGLView.h"
 #import "CCScene.h"
-#import <android/looper.h>
+
 #import "CCPackageManager.h"
+
+#import <AndroidKit/AndroidWindowManager.h>
+#import <AndroidKit/AndroidDisplay.h>
+#import <AndroidKit/AndroidActivityInfo.h>
+#import <AndroidKit/AndroidSurface+NDKExtensions.h>
+#import <AndroidKit/AndroidSurfaceHolder.h>
 
 #define USE_MAIN_THREAD 0 // enable to run on OpenGL/Cocos2D on the android main thread
 
@@ -49,16 +56,6 @@ const CGSize FIXED_SIZE = {568, 384};
 }
 @synthesize layout=_layout;
 
-@bridge (callback) run = run;
-@bridge (callback) onDestroy = onDestroy;
-@bridge (callback) onPause = onPause;
-@bridge (callback) onResume = onResume;
-@bridge (callback) onLowMemory = onLowMemory;
-@bridge (callback) surfaceCreated: = surfaceCreated;
-@bridge (callback) surfaceDestroyed: = surfaceDestroyed;
-@bridge (callback) surfaceChanged:format:width:height: = surfaceChanged;
-@bridge (callback) onKeyDown:keyEvent: = onKeyDown;
-@bridge (callback) onKeyUp:keyEvent: = onKeyUp;
 
 - (void)dealloc
 {
@@ -96,9 +93,9 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
     NSSetUncaughtExceptionHandler(&handler);
     currentActivity = self;
     _running = YES;
-    _layout = [[AndroidRelativeLayout alloc] initWithContext:self];
+    _layout = [[AndroidAbsoluteLayout alloc] initWithContext:self];
     AndroidDisplayMetrics *metrics = [[AndroidDisplayMetrics alloc] init];
-    [self.windowManager.defaultDisplay getMetrics:metrics];
+    [self.windowManager.defaultDisplay metricsForDisplayMetrics:metrics];
     
     // Configure Cocos2d with the options set in SpriteBuilder
     NSString* configPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Published-Android"];
@@ -114,6 +111,7 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
     {
         screenMode = CCScreenScaledAspectFitEmulationMode;
     }
+
     
     if([_cocos2dSetupConfig[CCSetupScreenOrientation] isEqual:CCScreenOrientationPortrait])
     {
@@ -133,13 +131,14 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
     [_glView.holder addCallback:self];
     [self.layout addView:_glView];
     [self setContentView:_layout];
-    [[AndroidLooper currentLooper] scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    
+    AndroidLooper *looper = [AndroidLooper currentLooper];
+    [looper scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 }
 
 - (void)onDestroy
 {
     [[CCDirector sharedDirector] end];
-    [super onDestroy];
     exit(0);
 }
 
@@ -150,14 +149,11 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
 #else
     if(_thread == nil)
     {
-        [super onResume];
         return;
     }
     
     [self performSelector:@selector(handleResume) onThread:_thread withObject:nil waitUntilDone:YES modes:@[NSDefaultRunLoopMode]];
 #endif
-    
-    [super onResume];
 }
 
 - (void)handleResume
@@ -173,14 +169,11 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
 #else
     if(_thread == nil)
     {
-        [super onPause];
         return;
     }
     
     [self performSelector:@selector(handlePause) onThread:_thread withObject:nil waitUntilDone:YES modes:@[NSDefaultRunLoopMode]];
 #endif
-    
-    [super onPause];
 }
 
 - (void)handlePause
@@ -197,14 +190,11 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
 #else
     if(_thread == nil)
     {
-        [super onLowMemory];
         return;
     }
 
     [self performSelector:@selector(handleLowMemory) onThread:_thread withObject:nil waitUntilDone:YES modes:@[NSDefaultRunLoopMode]];
 #endif
-
-    [super onLowMemory];
 }
 
 - (void)handleLowMemory

@@ -27,6 +27,7 @@
  *
  *  @return The CCEffectColorChannelOffset object.
  *  @since v3.2 and later
+ *  @deprecated Use CGPoint version instead.
  */
 +(id)effectWithRedOffset:(CGPoint)redOffset greenOffset:(CGPoint)greenOffset blueOffset:(CGPoint)blueOffset;
 
@@ -46,7 +47,7 @@
  *  @param blueOffset The blue color channel ofset.
  *
  *  @return The CCEffectColorChannelOffset object.
- *  @since v3.2 and later
+ *  @since v3.4 and later
  */
 -(id)initWithRedOffset:(CGPoint)redOffset greenOffset:(CGPoint)greenOffset blueOffset:(CGPoint)blueOffset;
 
@@ -62,11 +63,13 @@
 
 /** The offset, in points, of the green color channel.
  @since v3.2 and later
+ @deprecated Use CGPoint version instead.
  */
 @property (nonatomic, assign) CGPoint greenOffset;
 
 /** The offset, in points, of the blue color channel.
  @since v3.2 and later
+ @deprecated Use CGPoint version instead.
  */
 @property (nonatomic, assign) CGPoint blueOffset;
 

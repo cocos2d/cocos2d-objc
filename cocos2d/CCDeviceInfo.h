@@ -27,6 +27,12 @@
 #import <Foundation/Foundation.h>
 #import "CCGL.h"
 
+#if __CC_PLATFORM_ANDROID
+
+#import <AndroidKit/AndroidDisplayMetrics.h>
+#endif
+
+
 #define CC_MINIMUM_TABLET_SCREEN_DIAGONAL 6.0
 extern Class CCGraphicsBufferClass;
 extern Class CCGraphicsBufferBindingsClass;
