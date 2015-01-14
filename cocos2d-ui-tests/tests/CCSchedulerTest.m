@@ -7,6 +7,7 @@
 //
 
 #import "TestBase.h"
+#import "CCScheduler_Private.h"
 
 
 @interface SchedulerTestSprite : CCSprite @end

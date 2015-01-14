@@ -8,6 +8,7 @@
 
 #import <XCTest/XCTest.h>
 #import "cocos2d.h"
+#import "CCScheduler_Private.h"
 
 
 // XCTAssertEqual() doesn't like comparing to the preprocessor token for some reason.

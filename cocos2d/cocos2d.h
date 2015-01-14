@@ -148,6 +148,7 @@
 #import "UITouch+CC.h"
 #import "NSEvent+CC.h"
 #import "CCDeprecated.h"
+#import "CCScheduler.h"
 
 // UI
 #import "cocos2d-ui.h"

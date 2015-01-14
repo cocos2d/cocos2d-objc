@@ -28,6 +28,7 @@
 #import "CCAnimationManager_Private.h"
 #import "CCDirector_Private.h"
 #import "CCBReader_Private.h"
+#import "CCScheduler_Private.h"
 
 #import "CCBKeyframe.h"
 #import "CCBSequence.h"

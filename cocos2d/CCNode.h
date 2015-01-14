@@ -35,6 +35,8 @@
 @class CCRenderer;
 @class CCColor;
 @class CCAction;
+@class CCTimer;
+@class CCScheduledTarget;
 
 /** CCNode is the base class for all objects displayed by Cocos2D. CCNode handles transformations, can have a content size and provides a coordinate system 
  for its child nodes.

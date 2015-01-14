@@ -35,6 +35,7 @@
 #import "CCNode_Private.h"
 #import "CCRenderer_Private.h"
 #import "CCRenderDispatch_Private.h"
+#import "CCScheduler_Private.h"
 
 #import "CCScheduler.h"
 #import "CCActionManager.h"
