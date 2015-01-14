@@ -7,18 +7,23 @@
 
 @class CCFile;
 @class CCFileUtilsDatabase;
+@protocol CCFileUtilsDatabaseProtocol;
 
 
 @interface CCFileUtilsV2 : NSObject
 
 @property (nonatomic, copy) NSArray *searchPaths;
 
-@property (nonatomic, strong) CCFileUtilsDatabase *database;
+// A database that can be queried for metadata and filepaths of an asset
+@property (nonatomic, strong) id <CCFileUtilsDatabaseProtocol> database;
 
 // Base content scale for untagged, automatically resized assets.
 // Required to be a power of two.
 // Default is 4
 @property (nonatomic, assign) NSUInteger untaggedContentScale;
+
+// The user's preferred languages as an array of NSString objects, where each string is a language ID.
+@property (nonatomic, copy) NSArray *preferredLanguages;
 
 // Default is 4
 @property (nonatomic, assign) NSUInteger deviceContentScale;

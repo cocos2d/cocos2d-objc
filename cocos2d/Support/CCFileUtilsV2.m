@@ -4,6 +4,7 @@
 #import "CCFile_Private.h"
 #import "CCEffect_Private.h"
 #import "CCFileUtilsDatabase.h"
+#import "CCFileUtilsDatabaseProtocol.h"
 
 
 #pragma mark - CCFileLocatorSearchData helper class

@@ -3,14 +3,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CCFileUtilsDatabaseProtocol.h"
 
-
-@interface CCFileUtilsDatabase : NSObject
+@interface CCFileUtilsDatabase : NSObject <CCFileUtilsDatabaseProtocol>
 
 - (void)addDatabaseWithFilePath:(NSString *)filePath inSearchPath:(NSString *)searchPath;
 
 - (void)removeDatabaseForSearchPath:(NSString *)searchPath;
-
-- (NSDictionary *)metaDataForFileNamed:(NSString *)filename inSearchPath:(NSString *)searchPath;
 
 @end
