@@ -61,7 +61,7 @@ static CGPoint scrollPosition;
     static CCScene *mainMenuScene = nil;
     static dispatch_once_t once = 0L;
     dispatch_once(&once, ^{
-        mainMenuScene = [CCScene node];
+        mainMenuScene = [[CCScene alloc] initWithDirector:[CCDirector sharedDirector]];
         
         // 'layer' is an autorelease object.
         MainMenu *node = [MainMenu node];
@@ -119,7 +119,8 @@ static CGPoint scrollPosition;
 - (void)loadNext
 {
     CCScene* test = [TestBase sceneWithTestName:@"CCLabelTTFTest"];
-    CCTransition* transition = [CCTransition transitionMoveInWithDirection:CCTransitionDirectionLeft duration:0.3];
+    CCTransition* transition = [CCTransition transitionMoveInWithDirection:CCTransitionDirectionLeft
+                                                                  duration:0.3 director:[CCDirector sharedDirector]];
     
     [[CCDirector sharedDirector] replaceScene:test withTransition:transition];
 }
@@ -132,7 +133,8 @@ static CGPoint scrollPosition;
     NSString* className = [[self testClassNames] objectAtIndex:tableView.selectedRow];
     
     CCScene* test = [TestBase sceneWithTestName:className];
-    CCTransition* transition = [CCTransition transitionMoveInWithDirection:CCTransitionDirectionLeft duration:0.3];
+    CCTransition* transition = [CCTransition transitionMoveInWithDirection:CCTransitionDirectionLeft duration:0.3
+                                                                  director:[CCDirector sharedDirector]];
     
     [[CCDirector sharedDirector] replaceScene:test withTransition:transition];
 }

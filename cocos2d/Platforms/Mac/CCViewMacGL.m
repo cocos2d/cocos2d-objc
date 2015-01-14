@@ -103,7 +103,7 @@
     
     NSRect rect = [self convertRectToBacking:self.bounds];
     
-    CCDirector *director = [CCDirector sharedDirector];
+    CCDirector *director = _director;
     [director reshapeProjection: NSSizeToCGSize(rect.size) ];
     
     // avoid flicker
@@ -209,79 +209,79 @@
 - (void)mouseDown:(NSEvent *)theEvent
 {
     // dispatch mouse to responder manager
-    [[CCDirector sharedDirector].responderManager mouseDown:theEvent];
+    [_director.responderManager mouseDown:theEvent];
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {
     // dispatch mouse to responder manager
-    [[CCDirector sharedDirector].responderManager mouseDragged:theEvent];
+    [_director.responderManager mouseDragged:theEvent];
 }
 
 - (void)mouseUp:(NSEvent *)theEvent
 {
     // dispatch mouse to responder manager
-    [[CCDirector sharedDirector].responderManager mouseUp:theEvent];
+    [_director.responderManager mouseUp:theEvent];
 }
 
 - (void)mouseMoved:(NSEvent *)theEvent
 {
     // dispatch mouse to responder manager
-    [[CCDirector sharedDirector].responderManager mouseMoved:theEvent];
+    [_director.responderManager mouseMoved:theEvent];
 }
 
 - (void)mouseEntered:(NSEvent *)theEvent
 {
     // dispatch mouse to responder manager
-    [[CCDirector sharedDirector].responderManager mouseEntered:theEvent];
+    [_director.responderManager mouseEntered:theEvent];
 }
 
 - (void)mouseExited:(NSEvent *)theEvent
 {
     // dispatch mouse to responder manager
-    [[CCDirector sharedDirector].responderManager mouseExited:theEvent];
+    [_director.responderManager mouseExited:theEvent];
 }
 
 - (void)rightMouseDown:(NSEvent *)theEvent
 {
     // dispatch mouse to responder manager
-    [[CCDirector sharedDirector].responderManager rightMouseDown:theEvent];
+    [_director.responderManager rightMouseDown:theEvent];
 }
 
 - (void)rightMouseDragged:(NSEvent *)theEvent
 {
     // dispatch mouse to responder manager
-    [[CCDirector sharedDirector].responderManager rightMouseDragged:theEvent];
+    [_director.responderManager rightMouseDragged:theEvent];
 }
 
 - (void)rightMouseUp:(NSEvent *)theEvent
 {
     // dispatch mouse to responder manager
-    [[CCDirector sharedDirector].responderManager rightMouseUp:theEvent];
+    [_director.responderManager rightMouseUp:theEvent];
 }
 
 - (void)otherMouseDown:(NSEvent *)theEvent
 {
     // dispatch mouse to responder manager
-    [[CCDirector sharedDirector].responderManager otherMouseDown:theEvent];
+    [_director.responderManager otherMouseDown:theEvent];
 }
 
 - (void)otherMouseDragged:(NSEvent *)theEvent
 {
     // dispatch mouse to responder manager
-    [[CCDirector sharedDirector].responderManager otherMouseDragged:theEvent];
+    [_director.responderManager otherMouseDragged:theEvent];
 }
 
 - (void)otherMouseUp:(NSEvent *)theEvent
 {
     // dispatch mouse to responder manager
-    [[CCDirector sharedDirector].responderManager otherMouseUp:theEvent];
+    [_director.responderManager otherMouseUp:theEvent];
 }
 
 - (void)scrollWheel:(NSEvent *)theEvent
 {
     // dispatch mouse to responder manager
-    [[CCDirector sharedDirector].responderManager scrollWheel:theEvent];
+    [_director.responderManager scrollWheel:theEvent];
 }
 
 @end

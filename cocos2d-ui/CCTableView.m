@@ -138,7 +138,7 @@
 
 - (NSRange) visibleRangeForScrollPosition:(CGFloat) scrollPosition
 {
-    CGFloat positionScale = [CCDirector sharedDirector].UIScaleFactor;
+    CGFloat positionScale = self.director.UIScaleFactor;
     
     if ([_dataSource respondsToSelector:@selector(tableView:heightForRowAtIndex:)])
     {
@@ -227,7 +227,7 @@
     
     if (_rowHeightUnit == CCSizeUnitUIPoints)
     {
-        location *= [CCDirector sharedDirector].UIScaleFactor;
+        location *= self.director.UIScaleFactor;
     }
     
     return location;
@@ -343,7 +343,7 @@
 {
     if (_rowHeightUnit == CCSizeUnitPoints) return _rowHeight;
     else if (_rowHeightUnit == CCSizeUnitUIPoints)
-        return _rowHeight * [CCDirector sharedDirector].UIScaleFactor;
+        return _rowHeight * self.director.UIScaleFactor;
     else
     {
         NSAssert(NO, @"Only point and scaled units are supported for row height");

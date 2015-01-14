@@ -118,7 +118,7 @@
 + (CCScene *) sceneWithTestName:(NSString*)testName
 {
 	// 'scene' is an autorelease object.
-	CCScene *scene = [CCScene node];
+    CCScene *scene = [[CCScene alloc] initWithDirector:[CCDirector sharedDirector]];
 	
 	// 'layer' is an autorelease object.
   TestBase *node = [[NSClassFromString(testName) alloc] init];
@@ -163,7 +163,8 @@
 
 - (void) pressedBack:(id)sender
 {
-    CCTransition* transition = [CCTransition transitionMoveInWithDirection:CCTransitionDirectionRight duration:0.3];
+    CCTransition* transition = [CCTransition transitionMoveInWithDirection:CCTransitionDirectionRight
+                                                                  duration:0.3 director:[CCDirector sharedDirector]];
     [[CCDirector sharedDirector] replaceScene:[MainMenu scene] withTransition:transition];
 }
 

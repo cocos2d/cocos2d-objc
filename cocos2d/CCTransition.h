@@ -74,7 +74,7 @@ typedef NS_ENUM(NSInteger, CCTransitionDirection)
  *
  *  @return The CCTransition Object.
  */
-+ (CCTransition *)transitionCrossFadeWithDuration:(NSTimeInterval)duration;
++ (CCTransition *)transitionCrossFadeWithDuration:(NSTimeInterval)duration director:(CCDirector*)director;
 
 /**
  *  Creates a fade transition from outgoing to incoming scene, through color.
@@ -85,7 +85,7 @@ typedef NS_ENUM(NSInteger, CCTransitionDirection)
  *  @return The CCTransition Object.
  *  @see CCColor
  */
-+ (CCTransition *)transitionFadeWithColor:(CCColor*)color duration:(NSTimeInterval)duration;
++ (CCTransition *)transitionFadeWithColor:(CCColor*)color duration:(NSTimeInterval)duration director:(CCDirector*)director;
 
 /**
  *  Creates a fade transition from outgoing to incoming scene, through black.
@@ -94,7 +94,7 @@ typedef NS_ENUM(NSInteger, CCTransitionDirection)
  *
  *  @return The CCTransition Object.
  */
-+ (CCTransition *)transitionFadeWithDuration:(NSTimeInterval)duration;
++ (CCTransition *)transitionFadeWithDuration:(NSTimeInterval)duration director:(CCDirector*)director;
 
 /// -----------------------------------------------------------------------
 /// @name Creating a Directional Scene Transition
@@ -109,7 +109,7 @@ typedef NS_ENUM(NSInteger, CCTransitionDirection)
  *  @return The CCTransition Object.
  *  @see CCTransitionDirection
  */
-+ (CCTransition *)transitionMoveInWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration;
++ (CCTransition *)transitionMoveInWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration director:(CCDirector*)director;
 
 /**
  *  Creates a transition where the incoming scene pushed the outgoing scene out.
@@ -120,7 +120,7 @@ typedef NS_ENUM(NSInteger, CCTransitionDirection)
  *  @return The CCTransition Object.
  *  @see CCTransitionDirection
  */
-+ (CCTransition *)transitionPushWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration;
++ (CCTransition *)transitionPushWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration director:(CCDirector*)director;
 
 /**
  *  Creates a transition where the incoming scene is revealed by sliding the outgoing scene out.
@@ -131,7 +131,7 @@ typedef NS_ENUM(NSInteger, CCTransitionDirection)
  *  @return The CCTransition Object.
  *  @see CCTransitionDirection
  */
-+ (CCTransition *)transitionRevealWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration;
++ (CCTransition *)transitionRevealWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration director:(CCDirector*)director;
 
 /// -----------------------------------------------------------------------
 /// @name Transition Performance Settings

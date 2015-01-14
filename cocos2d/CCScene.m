@@ -52,8 +52,11 @@
     return _director;
 }
 
--( id )init {
-	if((self = [ super init ])){
+-(id)initWithDirector:(CCDirector*)director
+{
+	if((self = [super init]))
+    {
+        _director = director;
 		CGSize s = [CCDirector sharedDirector].designSize;
 		self.anchorPoint = ccp(0.0f, 0.0f);
 		[self setContentSize:s];
@@ -73,7 +76,7 @@
     [super onEnter];
     
     // mark starting scene as dirty, to make sure responder manager is updated
-    [[[CCDirector sharedDirector] responderManager] markAsDirty];
+    [[_director responderManager] markAsDirty];
 }
 
 // -----------------------------------------------------------------
@@ -83,7 +86,7 @@
     [super onEnterTransitionDidFinish];
     
     // mark starting scene as dirty, to make sure responder manager is updated
-    [[[CCDirector sharedDirector] responderManager] markAsDirty];
+    [[_director responderManager] markAsDirty];
 }
 
 // -----------------------------------------------------------------

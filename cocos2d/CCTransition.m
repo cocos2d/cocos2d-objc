@@ -70,34 +70,37 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 
 // -----------------------------------------------------------------
 
-+ (CCTransition *)transitionCrossFadeWithDuration:(NSTimeInterval)duration
++ (CCTransition *)transitionCrossFadeWithDuration:(NSTimeInterval)duration director:(CCDirector*)director
 {
-    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionCrossFade direction:CCTransitionDirectionInvalid color:[CCColor blackColor]]);
+    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionCrossFade direction:CCTransitionDirectionInvalid color:[CCColor blackColor] director:director]);
 }
 
-+ (CCTransition *)transitionFadeWithColor:(CCColor*)color duration:(NSTimeInterval)duration
++ (CCTransition *)transitionFadeWithColor:(CCColor*)color duration:(NSTimeInterval)duration director:(CCDirector*)director
 {
-    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionFadeWithColor direction:CCTransitionDirectionInvalid color:color]);
+    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionFadeWithColor direction:CCTransitionDirectionInvalid color:color director:director]);
 }
 
-+ (CCTransition *)transitionFadeWithDuration:(NSTimeInterval)duration
++ (CCTransition *)transitionFadeWithDuration:(NSTimeInterval)duration director:(CCDirector*)director
 {
-    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionFadeWithColor direction:CCTransitionDirectionInvalid color:[CCColor blackColor]]);
+    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionFadeWithColor direction:CCTransitionDirectionInvalid color:[CCColor blackColor] director:director]);
 }
 
-+ (CCTransition *)transitionMoveInWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration
++ (CCTransition *)transitionMoveInWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration director:(CCDirector*)director
 {
-    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionMoveIn direction:direction color:[CCColor blackColor]]);
+    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionMoveIn
+                                direction:direction color:[CCColor blackColor] director:director]);
 }
 
-+ (CCTransition *)transitionPushWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration
++ (CCTransition *)transitionPushWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration director:(CCDirector*)director
 {
-    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionPush direction:direction color:[CCColor blackColor]]);
+    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionPush
+                                direction:direction color:[CCColor blackColor] director:director]);
 }
 
-+ (CCTransition *)transitionRevealWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration
++ (CCTransition *)transitionRevealWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration director:(CCDirector*)director
 {
-    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionReveal direction:direction color:[CCColor blackColor]]);
+    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionReveal
+                                direction:direction color:[CCColor blackColor] director:director]);
 }
 
 // -----------------------------------------------------------------
@@ -106,8 +109,9 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
          fixedFunction:(CCTransitionFixedFunction)function
              direction:(CCTransitionDirection)direction
                  color:(CCColor *)color
+              director:(CCDirector*)director
 {
-    self = [self initWithDuration:duration];
+    self = [self initWithDuration:duration director:director];
 
     // set up fixed function transition
     _fixedFunction = function;
@@ -117,7 +121,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     _outgoingOverIncoming = NO;
     
     // find out where the outgoing scene will end (if it is a transition with movement)
-    CGSize size = [CCDirector sharedDirector].viewportRect.size;
+    CGSize size = self.director.viewportRect.size;
     switch (direction) {
         case CCTransitionDirectionDown: _outgoingDestination = CGPointMake(0, -size.height); break;
         case CCTransitionDirectionLeft: _outgoingDestination = CGPointMake(-size.width, 0); break;
@@ -145,9 +149,9 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     return(self);
 }
 
-- (id)initWithDuration:(NSTimeInterval)duration
+- (id)initWithDuration:(NSTimeInterval)duration director:(CCDirector*)director
 {
-    self = [super init];
+    self = [super initWithDirector:director];
     NSAssert(self, @"Unable to create class");
     NSAssert(duration > 0,@"Invalid duration");
     
@@ -183,7 +187,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 
 - (void)startTransition:(CCScene *)scene
 {
-    CCDirector *director = [CCDirector sharedDirector];
+    CCDirector *director = self.director;
 		
     _incomingScene = scene;
     [_incomingScene onEnter];
@@ -246,12 +250,12 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     {
         // Exit out scene
         [_outgoingScene onExit];
-        if ([CCDirector sharedDirector].sendCleanupToScene) [_outgoingScene cleanup];
+        if (self.director.sendCleanupToScene) [_outgoingScene cleanup];
         _outgoingScene = nil;
 				
 				
 				// Start incoming scene
-        [[CCDirector sharedDirector] replaceScene:_incomingScene];
+        [self.director replaceScene:_incomingScene];
         [_incomingScene onEnterTransitionDidFinish];
         [_incomingScene setPaused:NO];
         _incomingScene = nil;
