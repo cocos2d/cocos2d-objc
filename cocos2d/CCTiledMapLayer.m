@@ -388,7 +388,9 @@ struct IntRect { int xmin, xmax, ymin, ymax; };
 	if(tileCount == 0) return;
 	
 	GLKVector2 zero2 = GLKVector2Make(0, 0);
-	GLKVector4 color = GLKVector4Make(_displayColor.r, _displayColor.g, _displayColor.b, _displayColor.a);
+	
+	float alpha = _displayColor.a;
+	GLKVector4 color = GLKVector4Make(_displayColor.r*alpha, _displayColor.g*alpha, _displayColor.b*alpha, alpha);
 	
 	CCTexture *tex = self.texture;
 	float scale = tex.contentScale;
