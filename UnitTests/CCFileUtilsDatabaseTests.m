@@ -9,6 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "CCFileUtilsDatabase.h"
 #import "FileSystemTestCase.h"
+#import "CCUnitTestHelperMacros.h"
 
 @interface CCFileUtilsDatabaseTests : FileSystemTestCase
 
@@ -18,19 +19,17 @@
 
 @end
 
-
 @implementation CCFileUtilsDatabaseTests
 
 - (void)setUp
 {
     [super setUp];
 
-    NSString *json = @"{"
-        "\"images/foo.png\" : {"
-            ""
-            "}"
-        ""
-        "}";
+    NSString *json = MULTILINESTRING(
+        {
+            "images/foo.png" : {}
+        }
+    );
 
     self.searchPath = [self fullPathForFile:@"Resources"];
     self.dbPath = @"config/filedb.json";
