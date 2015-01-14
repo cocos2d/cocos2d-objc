@@ -227,9 +227,6 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 
 	/* action manager associated with this director */
 	CCActionManager *_actionManager;
-
-    /* fixed timestep action manager associated with this director */
-    CCActionManager *_actionManagerFixed;
 	
 	NSMutableArray *_rendererPool;
 }

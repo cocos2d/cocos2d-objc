@@ -58,6 +58,8 @@
 	// Only used when vertexZ is used.
 	float _vertexZvalue;
 	BOOL _useAutomaticVertexZ;
+    
+    NSMutableData *_tileData;
 }
 
 #pragma mark CCTMXLayer - init & alloc & dealloc
@@ -83,7 +85,7 @@
 		self.layerName = layerInfo.name;
 		_mapColumns = size.width;
 		_mapRows = size.height;
-		_tiles = layerInfo.tiles;
+		_tileData = [layerInfo.tileData mutableCopy];
 		self.opacity = layerInfo.opacity;
 		self.properties = [NSMutableDictionary dictionaryWithDictionary:layerInfo.properties];
 
@@ -110,12 +112,6 @@
 	return self;
 }
 
-- (void) dealloc
-{
-	free(_tiles);
-	_tiles = NULL;
-}
-
 -(CGSize)layerSize
 {
 	return CGSizeMake(_mapColumns, _mapRows);
@@ -136,6 +132,11 @@
 {
 	_tileWidth = mapTileSize.width;
 	_tileHeight = mapTileSize.height;
+}
+
+-(uint32_t *)tiles
+{
+    return (uint32_t *)_tileData.mutableBytes;
 }
 
 #pragma mark CCTMXLayer - setup Tiles
@@ -188,13 +189,12 @@
 -(uint32_t) tileGIDAt:(CGPoint)pos withFlags:(ccTMXTileFlags*)flags
 {
 	NSAssert( pos.x < _mapColumns && pos.y < _mapRows && pos.x >=0 && pos.y >=0, @"TMXLayer: invalid position");
-	NSAssert( _tiles, @"TMXLayer: the tiles map has been released");
 
 	NSInteger idx = (int)pos.x + (int)pos.y*_mapColumns;
 
 	// Bits on the far end of the 32-bit global tile ID are used for tile flags
 
-	uint32_t tile = _tiles[idx];
+	uint32_t tile = self.tiles[idx];
 	
 	// issue1264, flipped tiles can be changed dynamically
 	if(flags){
@@ -213,7 +213,6 @@
 -(void) setTileGID:(uint32_t)gid at:(CGPoint)pos withFlags:(ccTMXTileFlags)flags
 {
 	NSAssert( pos.x < _mapColumns && pos.y < _mapRows && pos.x >=0 && pos.y >=0, @"TMXLayer: invalid position");
-	NSAssert( _tiles, @"TMXLayer: the tiles map has been released");
 	NSAssert( gid == 0 || gid >= _tileset.firstGid, @"TMXLayer: invalid gid" );
 
 	ccTMXTileFlags currentFlags = 0;
@@ -223,7 +222,7 @@
 		uint32_t gidAndFlags = gid | flags;
 		
 		int idx = (int)pos.x + (int)pos.y*_mapColumns;
-		_tiles[idx] = gidAndFlags;
+		self.tiles[idx] = gidAndFlags;
 	}
 }
 
@@ -235,13 +234,12 @@
 -(void) removeTileAt:(CGPoint)pos
 {
 	NSAssert( pos.x < _mapColumns && pos.y < _mapRows && pos.x >=0 && pos.y >=0, @"TMXLayer: invalid position");
-	NSAssert( _tiles, @"TMXLayer: the tiles map has been released");
 
 	uint32_t gid = [self tileGIDAt:pos];
 
 	if( gid ) {
 		NSUInteger idx = (int)pos.x + (int)pos.y * _mapColumns;
-		_tiles[idx] = 0;
+		self.tiles[idx] = 0;
 	}
 }
 
@@ -364,15 +362,16 @@ struct IntRect { int xmin, xmax, ymin, ymax; };
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
 {
 	GLKMatrix4 tileToNode = [self tileToNodeTransform];
-	struct IntRect tiles = [self tileBoundsForClipTransform:GLKMatrix4Multiply(*transform, tileToNode)];
+	struct IntRect tileRect = [self tileBoundsForClipTransform:GLKMatrix4Multiply(*transform, tileToNode)];
+    uint32_t *tiles = self.tiles;
 	
 	// Count the number of tiles to be drawn.
 	int tileCount = 0;
 	
-	for(int tileY = tiles.ymin; tileY < tiles.ymax; tileY++){
-		for(int tileX = tiles.xmin; tileX < tiles.xmax; tileX++){
+	for(int tileY = tileRect.ymin; tileY < tileRect.ymax; tileY++){
+		for(int tileX = tileRect.xmin; tileX < tileRect.xmax; tileX++){
 			int index = tileX + tileY*_mapColumns;
-			uint32_t gid = _tiles[index];
+			uint32_t gid = tiles[index];
 			
 			// Blank tiles have a GID of 0.
 			if(gid != 0) tileCount++;
@@ -404,10 +403,10 @@ struct IntRect { int xmin, xmax, ymin, ymax; };
 	int vertex_cursor = 0;
 	int triangle_cursor = 0;
 	
-	for(int tileY = tiles.ymin; tileY < tiles.ymax; tileY++){
-		for(int tileX = tiles.xmin; tileX < tiles.xmax; tileX++){
+	for(int tileY = tileRect.ymin; tileY < tileRect.ymax; tileY++){
+		for(int tileX = tileRect.xmin; tileX < tileRect.xmax; tileX++){
 			int index = tileX + tileY*_mapColumns;
-			uint32_t gidWithFlags = _tiles[index];
+			uint32_t gidWithFlags = tiles[index];
 			
 			uint32_t flags = gidWithFlags & kCCFlipedAll;
 			uint32_t gid = gidWithFlags & kCCFlippedMask;

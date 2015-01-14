@@ -70,6 +70,12 @@
     return @[fragmentFunction];
 }
 
+static GLKVector2
+GLKVector2fromCGPoint(CGPoint p)
+{
+    return GLKVector2Make(p.x, p.y);
+}
+
 + (NSArray *)buildRenderPassesWithInterface:(CCEffectColorChannelOffset *)interface
 {
     __weak CCEffectColorChannelOffset *weakInterface = interface;
@@ -86,9 +92,9 @@
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:passInputs.texCoord1Extents];
         
         GLKVector2 scale = GLKVector2Make(-1.0f / passInputs.previousPassTexture.contentSize.width, -1.0f / passInputs.previousPassTexture.contentSize.height);
-        GLKVector2 redOffsetUV = GLKVector2Multiply(weakInterface.redOffset, scale);
-        GLKVector2 greenOffsetUV = GLKVector2Multiply(weakInterface.greenOffset, scale);
-        GLKVector2 blueOffsetUV = GLKVector2Multiply(weakInterface.blueOffset, scale);
+        GLKVector2 redOffsetUV = GLKVector2Multiply(GLKVector2fromCGPoint(weakInterface.redOffset), scale);
+        GLKVector2 greenOffsetUV = GLKVector2Multiply(GLKVector2fromCGPoint(weakInterface.greenOffset), scale);
+        GLKVector2 blueOffsetUV = GLKVector2Multiply(GLKVector2fromCGPoint(weakInterface.blueOffset), scale);
         
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_redOffset"]] = [NSValue valueWithGLKVector2:redOffsetUV];
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_greenOffset"]] = [NSValue valueWithGLKVector2:greenOffsetUV];
@@ -106,10 +112,10 @@
 
 -(id)init
 {
-    return [self initWithRedOffset:GLKVector2Make(0.0f, 0.0f) greenOffset:GLKVector2Make(0.0f, 0.0f) blueOffset:GLKVector2Make(0.0f, 0.0f)];
+    return [self initWithRedOffset:CGPointZero greenOffset:CGPointZero blueOffset:CGPointZero];
 }
 
--(id)initWithRedOffset:(GLKVector2)redOffset greenOffset:(GLKVector2)greenOffset blueOffset:(GLKVector2)blueOffset
+-(id)initWithRedOffset:(CGPoint)redOffset greenOffset:(CGPoint)greenOffset blueOffset:(CGPoint)blueOffset
 {    
     if((self = [super init]))
     {
@@ -124,7 +130,7 @@
     return self;
 }
 
-+(id)effectWithRedOffset:(GLKVector2)redOffset greenOffset:(GLKVector2)greenOffset blueOffset:(GLKVector2)blueOffset;
++(id)effectWithRedOffset:(CGPoint)redOffset greenOffset:(CGPoint)greenOffset blueOffset:(CGPoint)blueOffset;
 {
     return [[self alloc] initWithRedOffset:redOffset greenOffset:greenOffset blueOffset:blueOffset];
 }
@@ -132,31 +138,6 @@
 - (CGPoint)redOffsetWithPoint
 {
     return CGPointMake(_redOffset.x, _redOffset.y);
-}
-
-- (void)setRedOffsetWithPoint:(CGPoint)offset
-{
-    _redOffset = GLKVector2Make(offset.x, offset.y);
-}
-
-- (CGPoint)greenOffsetWithPoint
-{
-    return CGPointMake(_greenOffset.x, _greenOffset.y);
-}
-
-- (void)setGreenOffsetWithPoint:(CGPoint)offset
-{
-    _greenOffset = GLKVector2Make(offset.x, offset.y);
-}
-
-- (CGPoint)blueOffsetWithPoint
-{
-    return CGPointMake(_blueOffset.x, _blueOffset.y);
-}
-
-- (void)setBlueOffsetWithPoint:(CGPoint)offset
-{
-    _blueOffset = GLKVector2Make(offset.x, offset.y);
 }
 
 @end

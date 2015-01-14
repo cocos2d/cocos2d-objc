@@ -28,7 +28,7 @@
  *  @return The CCEffectColorChannelOffset object.
  *  @since v3.2 and later
  */
-+(id)effectWithRedOffset:(GLKVector2)redOffset greenOffset:(GLKVector2)greenOffset blueOffset:(GLKVector2)blueOffset;
++(id)effectWithRedOffset:(CGPoint)redOffset greenOffset:(CGPoint)greenOffset blueOffset:(CGPoint)blueOffset;
 
 /**
  *  Initializes a CCEffectColorChannelOffset object with zero length color channel offsets.
@@ -48,7 +48,7 @@
  *  @return The CCEffectColorChannelOffset object.
  *  @since v3.2 and later
  */
--(id)initWithRedOffset:(GLKVector2)redOffset greenOffset:(GLKVector2)greenOffset blueOffset:(GLKVector2)blueOffset;
+-(id)initWithRedOffset:(CGPoint)redOffset greenOffset:(CGPoint)greenOffset blueOffset:(CGPoint)blueOffset;
 
 
 /// -----------------------------------------------------------------------
@@ -56,33 +56,18 @@
 /// -----------------------------------------------------------------------
 
 /** The offset, in points, of the red color channel.
- @since v3.2 and later
- */
-@property (nonatomic, assign) GLKVector2 redOffset __attribute__((deprecated));
-
-/** The offset, in points, of the red color channel.
  @since v3.4 and later
  */
-@property (nonatomic, assign) CGPoint redOffsetWithPoint;
+@property (nonatomic, assign) CGPoint redOffset;
 
 /** The offset, in points, of the green color channel.
  @since v3.2 and later
  */
-@property (nonatomic, assign) GLKVector2 greenOffset __attribute__((deprecated));
-
-/** The offset, in points, of the green color channel.
- @since v3.4 and later
- */
-@property (nonatomic, assign) CGPoint greenOffsetWithPoint;
+@property (nonatomic, assign) CGPoint greenOffset;
 
 /** The offset, in points, of the blue color channel.
  @since v3.2 and later
  */
-@property (nonatomic, assign) GLKVector2 blueOffset __attribute__((deprecated));
-
-/** The offset, in points, of the blue color channel.
- @since v3.4 and later
- */
-@property (nonatomic, assign) CGPoint blueOffsetWithPoint;
+@property (nonatomic, assign) CGPoint blueOffset;
 
 @end
