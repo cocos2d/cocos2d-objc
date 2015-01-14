@@ -97,12 +97,17 @@
 
 -(void) setupTilemap5Test
 {
-    [self testForMapNamed:@"TileMaps/orthogonal-desert-test-with-flips.tmx"];
-    self.subTitle = @"Spinning tilemap";
-
-    _map.anchorPoint = ccp(0.5, 0.5);
-    _map.position = _map.anchorPointInPoints;
-    [_map runAction:[CCActionRepeatForever actionWithAction:[CCActionRotateBy actionWithDuration:10.0 angle:90]]];
+	[self testForMapNamed:@"TileMaps/orthogonal-desert-test-with-flips.tmx"];
+	self.subTitle = @"Tilemap should rotate and fade.";
+	
+	_map.anchorPoint = ccp(0.5, 0.5);
+	_map.position = _map.anchorPointInPoints;
+	[_map runAction:[CCActionRepeatForever actionWithAction:[CCActionRotateBy actionWithDuration:10.0 angle:90]]];
+	[[_map layerNamed:@"Layer 0"] runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+		[CCActionFadeIn actionWithDuration:1.0],
+		[CCActionFadeOut actionWithDuration:1.0],
+		nil
+	]]];
 }
 
 -(void) setupTilemap6Test

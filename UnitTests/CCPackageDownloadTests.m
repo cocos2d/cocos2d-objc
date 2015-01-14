@@ -13,6 +13,8 @@
 #import "CCPackageDownloadDelegate.h"
 #import "CCDirector.h"
 #import "AppDelegate.h"
+#import "CCPackagesTestFixturesAndHelpers.h"
+
 
 @interface CCPackageDownload()
 - (NSString *)createTempName;
@@ -113,7 +115,7 @@ static BOOL __support_range_request = YES;
 @end
 
 
-@interface CCPackageDownloadTests : XCTestCase <CCPackageDownloadDelegate>
+@interface CCPackageDownloadTests : IGNORE_TEST_CASE <CCPackageDownloadDelegate>
 
 @property (nonatomic, strong) CCPackageDownload *download;
 @property (nonatomic, strong) CCPackage *package;

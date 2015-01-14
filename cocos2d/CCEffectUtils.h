@@ -18,6 +18,9 @@ typedef struct CCEffectBlurParams
 
 } CCEffectBlurParams;
 
+CCNode* CCEffectUtilsGetNodeParent(CCNode *node);
+CCScene* CCEffectUtilsGetNodeScene(CCNode *node);
+
 CCNode* CCEffectUtilsFindCommonAncestor(CCNode *first, CCNode *second);
 GLKMatrix4 CCEffectUtilsTransformFromNodeToAncestor(CCNode *descendant, CCNode *ancestor);
 GLKMatrix4 CCEffectUtilsTransformFromNodeToNode(CCNode *first, CCNode *second, BOOL *isPossible);

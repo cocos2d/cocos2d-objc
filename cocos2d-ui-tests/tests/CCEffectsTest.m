@@ -28,6 +28,9 @@
 	return self;
 }
 
+
+#if CC_EFFECTS_EXPERIMENTAL
+
 #pragma mark Outline
 
 -(void)setupOutlineTest
@@ -54,8 +57,6 @@
 }
 
 #pragma mark Distance Fields
-
-#if CC_EFFECTS_EXPERIMENTAL
 
 #define INNER_GLOW_MAX_WIDTH 6
 
@@ -947,7 +948,7 @@
     [self.contentNode addChild:environment];
     
     CCColor *shadowColor = [CCColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:0.5];
-    CCEffectDropShadow* effect = [CCEffectDropShadow effectWithShadowOffset:GLKVector2Make(2.0, -2.0) shadowColor:shadowColor blurRadius:5];
+    CCEffectDropShadow* effect = [CCEffectDropShadow effectWithShadowOffset:ccp(2.0, -2.0) shadowColor:shadowColor blurRadius:5];
    
     CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"Images/Ohm.png"];
     sampleSprite.position = ccp(0.5, 0.5);
@@ -1304,7 +1305,7 @@
     glowEffectNode.positionType = CCPositionTypeNormalized;
     glowEffectNode.position = ccp(0.1, 0.5);
     [glowEffectNode addChild:sampleSprite];
-    CCEffectBloom* glowEffect = [CCEffectBloom effectWithBlurRadius:8 intensity:1.0f luminanceThreshold:0.0f];
+    CCEffectBloom* glowEffect = [CCEffectBloom effectWithBlurRadius:8 intensity:0.5f luminanceThreshold:0.0f];
     glowEffectNode.effect = glowEffect;
     
     [self.contentNode addChild:glowEffectNode];
@@ -1342,17 +1343,32 @@
     {
         CCSprite *sampleSprite3 = [CCSprite spriteWithImageNamed:@"Images/f1.png"];
         sampleSprite3.anchorPoint = ccp(0.5, 0.5);
-        sampleSprite3.position = ccp(0.1f + i * (0.8f / (steps - 1)), 0.2f);
+        sampleSprite3.position = ccp(0.1f + i * (0.8f / (steps - 1)), 0.4f);
         sampleSprite3.positionType = CCPositionTypeNormalized;
         
         // Blend glow maps test
         CCEffectHue *hueEffect = [CCEffectHue effectWithHue:60.0f];
-        CCEffectBloom* glowEffect3 = [CCEffectBloom effectWithBlurRadius:8 intensity:1.0f luminanceThreshold:1.0f - ((float)i/(float)(steps-1))];
+        CCEffectBloom* glowEffect3 = [CCEffectBloom effectWithBlurRadius:10 intensity:0.5f luminanceThreshold:1.0f - ((float)i/(float)(steps-1))];
         glowEffect3.padding = CGSizeMake(10.0f, 10.0f);
         
         sampleSprite3.effect = [CCEffectStack effectWithArray:@[glowEffect3, hueEffect]];
 
         [self.contentNode addChild:sampleSprite3];
+    }
+    
+    for (int i = 0; i < steps; i++)
+    {
+        CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/f1.png"];
+        sprite.anchorPoint = ccp(0.5, 0.5);
+        sprite.position = ccp(0.1f + i * (0.8f / (steps - 1)), 0.2f);
+        sprite.positionType = CCPositionTypeNormalized;
+        
+        // Blend glow maps test
+        CCEffectBloom* bloomEffect = [CCEffectBloom effectWithBlurRadius:10 intensity:((float)i/(float)(steps-1)) luminanceThreshold:0.0f];
+        bloomEffect.padding = CGSizeMake(10.0f, 10.0f);
+        sprite.effect = bloomEffect;
+        
+        [self.contentNode addChild:sprite];
     }
 }
 
@@ -1823,16 +1839,14 @@
     [self.contentNode addChild:lightNode];
     
     CCSpriteFrame *normalMapFrame = [CCSpriteFrame frameWithTextureFilename:@"Images/fire.png" rectInPixels:CGRectMake(0.0f, 0.0f, 4.0f, 4.0f) rotated:NO offset:CGPointZero originalSize:CGSizeMake(32.0f, 32.0f)];
-    
-    GLKVector2 zeroVec = GLKVector2Make(0.0f, 0.0f);
-    
+        
     NSArray *effects = @[
                          [CCEffectBloom effectWithBlurRadius:1 intensity:0.0f luminanceThreshold:0.0f],
                          [CCEffectBlur effectWithBlurRadius:1.0],
                          [CCEffectBrightness effectWithBrightness:0.0f],
                          [CCEffectColorChannelOffset effectWithRedOffset:CGPointZero greenOffset:CGPointZero blueOffset:CGPointZero],
                          [CCEffectContrast effectWithContrast:0.0f],
-                         [CCEffectDropShadow effectWithShadowOffset:zeroVec shadowColor:[CCColor clearColor] blurRadius:1.0f],
+                         [CCEffectDropShadow effectWithShadowOffset:CGPointZero shadowColor:[CCColor clearColor] blurRadius:1.0f],
                          [CCEffectGlass effectWithShininess:1.0f refraction:0.75f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment],
                          [CCEffectHue effectWithHue:0.0f],
                          [CCEffectStack effectWithArray:@[[[CCEffectInvert alloc] init], [[CCEffectInvert alloc] init]]],
@@ -1841,7 +1855,9 @@
                          [CCEffectReflection effectWithShininess:1.0f fresnelBias:0.1f fresnelPower:2.0f environment:reflectEnvironment],
                          [CCEffectRefraction effectWithRefraction:0.75f environment:refractEnvironment],
                          [CCEffectSaturation effectWithSaturation:0.0f],
+#if CC_EFFECTS_EXPERIMENTAL
                          [CCEffectOutline effectWithOutlineColor:[CCColor clearColor] outlineWidth:0.0f]
+#endif
                          ];
     
     NSMutableArray *effects2 = [NSMutableArray arrayWithArray:effects];

@@ -159,12 +159,4 @@
  */
 @property (nonatomic,strong) CCAnimationManager* animationManager;
 
-
-// Internal use: override methods for Sprite Kit Reader subclass
-+(void) setSceneSize:(CGSize)sceneSize;
--(CCNode*) nodeFromClassName:(NSString*)nodeClassName;
--(CCScene*) createScene;
--(void) readerDidSetSpriteFrame:(CCSpriteFrame*)spriteFrame node:(CCNode*)node;
-
 @end
-

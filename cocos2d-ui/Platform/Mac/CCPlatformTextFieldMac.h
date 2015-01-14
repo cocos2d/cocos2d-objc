@@ -6,7 +6,8 @@
 //
 //
 
-#import "CCMacros.h"
+#import "ccMacros.h"
+
 #if __CC_PLATFORM_MAC
 
 #import <AppKit/AppKit.h>

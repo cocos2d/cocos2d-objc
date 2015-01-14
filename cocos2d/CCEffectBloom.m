@@ -394,7 +394,7 @@
 -(void)setIntensity:(float)intensity
 {
     _intensity = intensity;
-    _conditionedIntensity = [NSNumber numberWithFloat:clampf(intensity, 0.0f, 1.0f)];
+    _conditionedIntensity = [NSNumber numberWithFloat:2.5f * clampf(intensity, 0.0f, 1.0f)];
 }
 
 -(void)setBlurRadius:(NSUInteger)blurRadius

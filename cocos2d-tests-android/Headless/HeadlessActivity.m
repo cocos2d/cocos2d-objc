@@ -40,7 +40,6 @@
 {
     if ([[CCDirector sharedDirector] runningScene] == [self startScene])
     {
-        [self finish];
         return NO;
     }
     
