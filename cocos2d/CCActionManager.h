@@ -51,12 +51,25 @@ typedef struct _hashElement {
  *  Examples:
  *	- When you want to run an action where the target is different from a CCNode.
  *	- When you want to pause / resume the actions.
+ *
+ *  CCActionManager can be run in fixed mode- in this mode, updates occur on a fixed timestep, rather than the normal update loop.
+ *  Fixed timesteps are useful when running actions that applied to nodes with physics bodies attached.
+ *  All animations that possess physics nodes will utilize the fixed action manager.
  */
 @interface CCActionManager : NSObject<CCSchedulerTarget> {
     tHashElement	*targets;
     tHashElement	*currentTarget;
 	BOOL			currentTargetSalvaged;
 }
+
+/**
+ When in fixed mode, actions occur on the fixedUpdate loop instead of the regular update loop.
+ Currently, all actions must occur on one loop or the other. Your actions may be automatically
+ transitioned to fixedMode if you add actions to physics objects.
+ 
+ @since v4.0
+ */
+@property(nonatomic,readwrite) BOOL fixedMode;
 
 /**
  *  Adds an action to a target
@@ -148,14 +161,3 @@ typedef struct _hashElement {
 -(void)resumeTargets:(NSSet *)targetsToResume;
 
 @end
-
-
-/**
- *  CCFixedActionManager: An action manager that updates actions on a fixed timestep.
- *  Fixed timesteps are useful when running actions that applied to nodes with physics bodies attached.
- *  All animations that possess physics nodes will utilize the fixed action manager.
- */
-@interface CCFixedActionManager : CCActionManager
-
-@end
-
