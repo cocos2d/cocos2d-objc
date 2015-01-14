@@ -103,7 +103,6 @@ extern NSString * cocos2dVersion(void);
 @synthesize secondsPerFrame = _secondsPerFrame;
 @synthesize scheduler = _scheduler;
 @synthesize actionManager = _actionManager;
-@synthesize actionManagerFixed = _actionManagerFixed;
 
 //
 // singleton stuff
@@ -172,13 +171,10 @@ static CCDirector *_sharedDirector = nil;
 
 		// action manager
 		_actionManager = [[CCActionManager alloc] init];
-		_actionManagerFixed = [[CCFixedActionManager alloc] init];
 		
 		[_scheduler scheduleTarget:_actionManager];
-		[_scheduler scheduleTarget:_actionManagerFixed];
 
 		[_scheduler setPaused:NO target:_actionManager];
-		[_scheduler setPaused:NO target:_actionManagerFixed];
 		
 		
 		// touch manager

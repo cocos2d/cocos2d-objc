@@ -42,6 +42,7 @@
 #import "CCTexture.h"
 #import "CCColor.h"
 #import "CCProtocols.h"
+#import "CCActionManager.h"
 
 #ifdef CCB_ENABLE_UNZIP
 #import "SSZipArchive.h"
@@ -1399,9 +1400,10 @@ SelectorNameForProperty(objc_property_t property)
     // Set root node
     if (!animationManager.rootNode) animationManager.rootNode = node;
     
+    
     if(animationManager.fixedTimestep)
     {
-        node.actionManager = [CCDirector sharedDirector].actionManagerFixed;
+        node.actionManager.fixedMode = YES;
     }
     
     // Read animated properties
