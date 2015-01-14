@@ -77,7 +77,7 @@
  *  @return An initialized CCNodeColor Object.
  *  @see CCColor
  */
--(id) initWithColor:(CCColor*)color width:(GLfloat)w height:(GLfloat)h NS_DESIGNATED_INITIALIZER;
+-(id) initWithColor:(CCColor*)color width:(GLfloat)w height:(GLfloat)h;
 
 /**
  *  Creates a node with color. Width and height are the window size.

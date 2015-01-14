@@ -166,7 +166,7 @@ typedef struct CCSpriteTexCoordSet {
  *  @return A newly initialized CCSprite object.
  *  @see CCTexture
  */
-- (id)initWithTexture:(CCTexture *)texture rect:(CGRect)rect rotated:(BOOL)rotated NS_DESIGNATED_INITIALIZER;
+- (id)initWithTexture:(CCTexture *)texture rect:(CGRect)rect rotated:(BOOL)rotated;
 
 /// -----------------------------------------------------------------------
 /// @name Creating a Sprite with a CGImage

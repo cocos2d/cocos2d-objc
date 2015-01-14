@@ -100,7 +100,7 @@
  *  @return The CCLabelBMFont Object.
  *  @see CCTextAlignment
  */
-+(id) labelWithString:(NSString*)string fntFile:(NSString*)fntFile width:(float)width alignment:(CCTextAlignment)alignment imageOffset:(CGPoint)offset NS_DESIGNATED_INITIALIZER;
++(id) labelWithString:(NSString*)string fntFile:(NSString*)fntFile width:(float)width alignment:(CCTextAlignment)alignment imageOffset:(CGPoint)offset;
 
 /**
  *  Initializes and returns a label object using the specified text and font file values.
