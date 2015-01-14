@@ -29,7 +29,7 @@
 
 #import <Foundation/Foundation.h>
 #import "CCResponderManager.h"
-#import "CCMacros.h"
+#import "ccMacros.h"
 
 /**
   CCResponder is the base class for all nodes.
