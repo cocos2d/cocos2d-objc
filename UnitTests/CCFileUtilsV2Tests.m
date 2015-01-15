@@ -7,6 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#import <OCMock/OCMock.h>
 #import "CCFile.h"
 #import "CCFileUtilsV2.h"
 #import "CCPackageConstants.h"
@@ -33,6 +34,9 @@
 
 
 #pragma mark - Tests for search order with database
+
+
+
 
 - (void)testFileNamedMultipleDatabasesAndSearchPaths
 {
@@ -104,7 +108,7 @@
                 "filename" : "images/foo.png",
                 "special" : "abc",
                 "localizations" : {
-                    "en" : "images/foo-en.png",
+                    "en" : "images/foo.png",
                 }
             }
         }
@@ -140,9 +144,7 @@
         @"images/fallback_should_not_be_used.png",
     ]];
 
-    _fileUtils.preferredLanguages = @[@"en", @"es", @"ja"];
-
-    NSLog(@"%@", [NSLocale preferredLanguages]);
+    [self mockPreferredLanguages:@[@"en", @"es", @"ja"]];
 
     NSError *error;
     CCFile *file = [_fileUtils fileNamed:@"images/foo.png" options:nil error:&error];
@@ -168,9 +170,7 @@
         @"fallback.png",
     ]];
 
-    _fileUtils.preferredLanguages = @[@"de"];
-
-    NSLog(@"%@", [NSLocale preferredLanguages]);
+    [self mockPreferredLanguages:@[@"de"]];
 
     NSError *error;
     CCFile *file = [_fileUtils fileNamed:@"images/foo.png" options:nil error:&error];
@@ -184,7 +184,7 @@
         {
             "images/foo.png" : {
                 "localizations" : {
-                    "en" : "images/foo-en.png"
+                    "en" : "images/foo-en.png",
                     "de" : "images/foo-de.png"
                 },
                 "filename" : "images/foo-en.png"
@@ -197,12 +197,36 @@
         @"foo-de.png"
     ]];
 
-    _fileUtils.preferredLanguages = @[@"de", @"en"];
+    [self mockPreferredLanguages:@[@"de"]];
 
     NSError *error;
     CCFile *file = [_fileUtils fileNamed:@"images/foo.png" options:nil error:&error];
 
     [self assertSuccessForFile:file filePath:@"Resources/images/foo-de.png" contentScale:4.0 error:error];
+}
+
+- (void)testFileNamedLocalizationAvailableButImageIsMissing
+{
+    NSString *json = MULTILINESTRING(
+        {
+            "images/foo.png" : {
+                "localizations" : {
+                    "en" : "images/missing.png",
+                },
+                "filename" : "images/shouldnotbereturned.png"
+            }
+        }
+    );
+    [self addDatabaseWithJSON:json forSearchPath:[self fullPathForFile:@"Resources"]];
+
+    [self mockPreferredLanguages:@[@"en"]];
+
+    NSError *error;
+    CCFile *file = [_fileUtils fileNamed:@"images/foo.png" options:nil error:&error];
+
+    XCTAssertNotNil(error);
+    XCTAssertEqual(error.code, ERROR_FILELOCATOR_FILE_IN_DATABASE_NOT_IN_FILESYSTEM);
+    XCTAssertNil(file);
 }
 
 - (void)testFileNamedAliasingWithDatabase
@@ -407,6 +431,12 @@
     }
 
     [(CCFileUtilsDatabase *) _fileUtils.database addDatabaseWithFilePath:@"filedb.json" inSearchPath:searchPath];
+}
+
+- (void)mockPreferredLanguages:(NSArray *)preferredLanguages
+{
+    id classMock = OCMClassMock([NSLocale class]);
+     OCMStub([classMock preferredLanguages]).andReturn(preferredLanguages);
 }
 
 @end

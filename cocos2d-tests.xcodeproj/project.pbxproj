@@ -25,6 +25,7 @@
 		758A6C7B18440D5C00D1A8D2 /* ParticleTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 758A6C7A18440D5C00D1A8D2 /* ParticleTest.m */; };
 		758A6C80184410EE00D1A8D2 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 758A6C7F184410EE00D1A8D2 /* Particles */; };
 		75F76497185A831B00E2FAFE /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 75F76496185A831B00E2FAFE /* Sounds */; };
+		835D4E781A68134E0097F5EF /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 835D4E771A68134E0097F5EF /* libOCMock.a */; };
 		839B149F19CC1E440000E5E2 /* CCPackageTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 839B149E19CC1E440000E5E2 /* CCPackageTest.m */; };
 		92324E2A18EB635500D78D3F /* CCReaderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 92324E2918EB635500D78D3F /* CCReaderTest.m */; };
 		9269312A1923D8A700CE6285 /* Resources-shared in Resources */ = {isa = PBXBuildFile; fileRef = B7C6237517EA695100928F91 /* Resources-shared */; };
@@ -344,6 +345,7 @@
 		758A6C7A18440D5C00D1A8D2 /* ParticleTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParticleTest.m; path = "cocos2d-ui-tests/tests/ParticleTest.m"; sourceTree = SOURCE_ROOT; };
 		758A6C7F184410EE00D1A8D2 /* Particles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Particles; path = Resources/Particles; sourceTree = SOURCE_ROOT; };
 		75F76496185A831B00E2FAFE /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sounds; path = Resources/Sounds; sourceTree = SOURCE_ROOT; };
+		835D4E771A68134E0097F5EF /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libOCMock.a; path = external/OCMock/libOCMock.a; sourceTree = "<group>"; };
 		839B149E19CC1E440000E5E2 /* CCPackageTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCPackageTest.m; path = "cocos2d-ui-tests/tests/CCPackageTest.m"; sourceTree = SOURCE_ROOT; };
 		92324E2918EB635500D78D3F /* CCReaderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCReaderTest.m; sourceTree = "<group>"; };
 		92FE241018F5F06F00647961 /* CCAnimationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAnimationTest.m; sourceTree = "<group>"; };
@@ -511,6 +513,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				835D4E781A68134E0097F5EF /* libOCMock.a in Frameworks */,
 				75556A04185636F100ED1B0F /* XCTest.framework in Frameworks */,
 				75556A05185636F100ED1B0F /* Foundation.framework in Frameworks */,
 			);
@@ -676,6 +679,7 @@
 		B7E2604A17E7D278007067F0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				835D4E771A68134E0097F5EF /* libOCMock.a */,
 				D3867DBE1A32EB38009AFFF3 /* ImageIO.framework */,
 				D3763DDC19E73666006C050D /* AppKit.framework */,
 				D3763DDA19E7364F006C050D /* OpenGL.framework */,
@@ -1444,10 +1448,21 @@
 					external/Chipmunk/objectivec/include,
 					"external/ObjectAL/**",
 					"\"$(SRCROOT)/external/SSZipArchive\"/**",
+					"external/OCMock/**",
 				);
 				INFOPLIST_FILE = "UnitTests/UnitTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/external/OCMock",
+				);
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					XCTest,
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -1493,9 +1508,20 @@
 					external/Chipmunk/objectivec/include,
 					"external/ObjectAL/**",
 					"\"$(SRCROOT)/external/SSZipArchive\"/**",
+					"external/OCMock/**",
 				);
 				INFOPLIST_FILE = "UnitTests/UnitTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/external/OCMock",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					XCTest,
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				VALIDATE_PRODUCT = YES;

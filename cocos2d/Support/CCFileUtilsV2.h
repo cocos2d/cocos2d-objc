@@ -22,9 +22,6 @@
 // Default is 4
 @property (nonatomic, assign) NSUInteger untaggedContentScale;
 
-// The user's preferred languages as an array of NSString objects, where each string is a language ID.
-@property (nonatomic, copy) NSArray *preferredLanguages;
-
 // Default is 4
 @property (nonatomic, assign) NSUInteger deviceContentScale;
 

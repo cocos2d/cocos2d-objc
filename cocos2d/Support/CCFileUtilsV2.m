@@ -104,29 +104,57 @@
 
 - (CCFile *)queryDatabaseForFilename:(NSString *)filename andSearchPath:(NSString *)searchPath error:(NSError **)error
 {
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-
     NSDictionary *metaData = [_database metaDataForFileNamed:filename inSearchPath:searchPath];
 
-    NSString *defaultFilename = metaData[@"filename"];
-    NSString *defaultFilePath = [searchPath stringByAppendingPathComponent:defaultFilename];
-
-    if (defaultFilename)
+    NSString *debugInfo;
+    NSString *localizedFileName = [self localizedFilenameWithMetaData:metaData debugInfo:&debugInfo];
+    NSString *resolvedFilename = metaData[@"filename"];
+    if (localizedFileName)
     {
-        if (![fileManager fileExistsAtPath:defaultFilePath])
+        resolvedFilename = localizedFileName;
+    }
+
+    NSString *resolvedFilePath = [searchPath stringByAppendingPathComponent:resolvedFilename];
+
+    if (resolvedFilename)
+    {
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        if (![fileManager fileExistsAtPath:resolvedFilePath])
         {
             [self setErrorPtr:error code:ERROR_FILELOCATOR_FILE_IN_DATABASE_NOT_IN_FILESYSTEM
-                  description:[NSString stringWithFormat:@"Filename referenced in database but does not exist in filesystem at \"%@\"", defaultFilePath]];
+                  description:[NSString stringWithFormat:@"Filename referenced in database but does not exist in filesystem at \"%@\" %@", resolvedFilePath, debugInfo]];
             return nil;
         }
 
         CCFile *file = [[CCFile alloc] initWithName:filename
-                                                url:[NSURL fileURLWithPath:defaultFilePath isDirectory:NO]
+                                                url:[NSURL fileURLWithPath:resolvedFilePath isDirectory:NO]
                                        contentScale:_untaggedContentScale];
 
         file.metaData = [self extracGenericMetaData:metaData];
 
         return file;
+    }
+
+    return nil;
+}
+
+- (NSString *)localizedFilenameWithMetaData:(NSDictionary *)dictionary debugInfo:(NSString **)debugInfo
+{
+    if (dictionary[@"localizations"])
+    {
+        for (NSString *languageID in [NSLocale preferredLanguages])
+        {
+            NSString *filenameForLanguageID = dictionary[@"localizations"][languageID];
+            if (filenameForLanguageID)
+            {
+                if (debugInfo)
+                {
+                    *debugInfo = [NSString stringWithFormat:@"localization found, locale: %@", languageID];
+                }
+
+                return filenameForLanguageID;
+            }
+        }
     }
 
     return nil;
