@@ -35,8 +35,49 @@
 
 #pragma mark - Tests for search order with database
 
+- (void)testFileNamedLocalizationAddedInDLCPackage
+{
+    NSString *jsonResources = MULTILINESTRING(
+        {
+            "images/horse.png" : {
+                "filename" : "images/mule.png"
+            }
+        }
+    );
 
+    NSString *jsonPackage = MULTILINESTRING(
+        {
+            "images/horse.png" : {
+                "localizations" : {
+                    "es" : "images/mule-es.png"
+                },
+                "filename" : "images/mule.png"
+            }
+        }
+    );
 
+    [self createEmptyFiles:@[
+            @"Resources/images/mule.png",
+            @"Packages/localizations.sbpack/images/mule-es.png",
+    ]];
+
+    // This order is significant, otherwise filename of the firs json db is returned as a fallback since no localization
+    // exists in the Resources json
+    _fileUtils.searchPaths = @[[self fullPathForFile:@"Packages/localizations.sbpack"], [self fullPathForFile:@"Resources"]];
+
+    [self addDatabaseWithJSON:jsonResources forSearchPath:[self fullPathForFile:@"Resources"]];
+    [self addDatabaseWithJSON:jsonPackage forSearchPath:[self fullPathForFile:@"Packages/localizations.sbpack"]];
+
+    [self mockPreferredLanguages:@[@"es"]];
+
+    _fileUtils.deviceContentScale = 4;
+    _fileUtils.untaggedContentScale = 4;
+
+    NSError *error;
+    CCFile *file = [_fileUtils fileNamed:@"images/horse.png" options:nil error:&error];
+
+    [self assertSuccessForFile:file filePath:@"Packages/localizations.sbpack/images/mule-es.png" contentScale:4.0 error:error];
+}
 
 - (void)testFileNamedMultipleDatabasesAndSearchPaths
 {
