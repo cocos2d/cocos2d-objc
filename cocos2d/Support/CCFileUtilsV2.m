@@ -153,7 +153,7 @@
             CCFileUtilsV2SearchData *filenameDataToInsert = [[CCFileUtilsV2SearchData alloc] initWithFilename:baseFilename
                                                                                                  contentScale:@(_untaggedContentScale)];
 
-            [filenames insertObject:filenameDataToInsert atIndex:i];
+            [filenames insertObject:filenameDataToInsert atIndex:i+1];
             return;
         };
     }

@@ -140,7 +140,6 @@
     [self assertSuccessForFile:file filePath:@"Resources/images/should_be_returned.png" contentScale:4.0 error:error];
 }
 
-
 - (void)testFileNamedNoLocalizedImageAvailableWithDatabase
 {
     NSString *json = MULTILINESTRING(
@@ -221,7 +220,7 @@
 
 #pragma mark - Tests for search order no database
 
-- (void)testFileNamedSearchOrderPrecedenceDefaultContentScale
+- (void)testFileNamedSearchOrderPrecedenceExplicitContentScaleOverDefault
 {
     [self createPNGsInDir:@"Resources" name:@"Hero" scales:@[@"4", @"2", @"1", @"default"]];
 
@@ -231,7 +230,7 @@
     NSError *error;
     CCFile *file = [_fileUtils fileNamed:@"Hero.png" options:nil error:&error];
 
-    [self assertSuccessForFile:file filePath:@"Resources/Hero.png" contentScale:4.0 error:error];
+    [self assertSuccessForFile:file filePath:@"Resources/Hero-4x.png" contentScale:4.0 error:error];
 }
 
 - (void)testFileNamedSearchOrder3XDeviceScaleNoDefaultImage
