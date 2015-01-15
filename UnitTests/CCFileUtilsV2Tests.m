@@ -52,6 +52,11 @@
         }
     );
 
+    [self createEmptyFiles:@[
+            @"Resources/images/mule.png",
+            @"Packages/Superpackage.sbpack/images/unicycle.png",
+    ]];
+
     _fileUtils.searchPaths = @[[self fullPathForFile:@"Resources"], [self fullPathForFile:@"Packages/Superpackage.sbpack"]];
 
     [self addDatabaseWithJSON:jsonA forSearchPath:[self fullPathForFile:@"Resources"]];
@@ -66,9 +71,9 @@
     NSError *error2;
     CCFile *file2 = [_fileUtils fileNamed:@"images/bicycle.png" options:nil error:&error2];
 
-    [self assertSuccessForFile:file1 filePath:@"Resources/mule.png" contentScale:4.0 error:error1];
-    [self assertSuccessForFile:file2 filePath:@"Resources/unicycle.png" contentScale:4.0 error:error2];
-}
+    [self assertSuccessForFile:file1 filePath:@"Resources/images/mule.png" contentScale:4.0 error:error1];
+    [self assertSuccessForFile:file2 filePath:@"Packages/Superpackage.sbpack/images/unicycle.png" contentScale:4.0 error:error2];
+};
 
 - (void)testFileNamedNonExistingFileWithDatabase
 {
@@ -95,8 +100,12 @@
     NSString *json = MULTILINESTRING(
         {
             "images/foo.png" : {
+                "UIScale" : false,
                 "filename" : "images/foo.png",
-                "special" : "abc"
+                "special" : "abc",
+                "localizations" : {
+                    "en" : "images/foo-en.png",
+                }
             }
         }
     );
@@ -110,6 +119,7 @@
     CCFile *file = [_fileUtils fileNamed:@"images/foo.png" options:nil error:nil];
 
     XCTAssertEqualObjects(file.metaData[@"special"], @"abc");
+    XCTAssertEqual(file.metaData.count, 1);
 }
 
 - (void)testFileNamedLocalizationSearchOrderWithDatabase
@@ -328,7 +338,7 @@
 
 #pragma mark - Tests with errors
 
-- (void)testFileNamedRecursiveSimpleWithDefaultContentScale
+- (void)testFileNamedWithDefaultContentScale
 {
     [self createEmptyFiles:@[@"Resources/images/vehicles/spaceship.png"]];
 

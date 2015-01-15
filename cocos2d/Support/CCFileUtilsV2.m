@@ -72,6 +72,23 @@
         return nil;
     }
 
+    if (_database)
+    {
+        for (NSString *searchPath in _searchPaths)
+        {
+            CCFile *aFile = [self queryDatabaseForFilename:filename andSearchPath:searchPath error:error];
+            if (aFile)
+            {
+                return aFile;
+            }
+
+            if (error && *error)
+            {
+                return nil;
+            }
+        }
+    }
+
     for (NSString *searchPath in _searchPaths)
     {
         CCFile *aFile = [self findFilename:filename inPath:searchPath];
@@ -83,6 +100,55 @@
 
     [self setErrorPtr:error code:ERROR_FILELOCATOR_NO_FILE_FOUND description:@"No file found."];
     return nil;
+}
+
+- (CCFile *)queryDatabaseForFilename:(NSString *)filename andSearchPath:(NSString *)searchPath error:(NSError **)error
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+
+    NSDictionary *metaData = [_database metaDataForFileNamed:filename inSearchPath:searchPath];
+
+    NSString *defaultFilename = metaData[@"filename"];
+    NSString *defaultFilePath = [searchPath stringByAppendingPathComponent:defaultFilename];
+
+    if (defaultFilename)
+    {
+        if (![fileManager fileExistsAtPath:defaultFilePath])
+        {
+            [self setErrorPtr:error code:ERROR_FILELOCATOR_FILE_IN_DATABASE_NOT_IN_FILESYSTEM
+                  description:[NSString stringWithFormat:@"Filename referenced in database but does not exist in filesystem at \"%@\"", defaultFilePath]];
+            return nil;
+        }
+
+        CCFile *file = [[CCFile alloc] initWithName:filename
+                                                url:[NSURL fileURLWithPath:defaultFilePath isDirectory:NO]
+                                       contentScale:_untaggedContentScale];
+
+        file.metaData = [self extracGenericMetaData:metaData];
+
+        return file;
+    }
+
+    return nil;
+}
+
+- (NSDictionary *)extracGenericMetaData:(NSDictionary *)metaDataDictionary
+{
+    NSMutableDictionary *result = [NSMutableDictionary dictionary];
+
+    for (NSString *key in metaDataDictionary)
+    {
+        if ([@[@"filename", @"localizations", @"UIScale"] containsObject:key])
+        {
+            continue;
+        }
+
+        result[key] = metaDataDictionary[key];
+    }
+
+    return result.count > 0
+        ? result
+        : nil;
 }
 
 - (CCFile *)findFilename:(NSString *)filename inPath:(NSString *)path
