@@ -386,7 +386,7 @@ TransformPointAsVector(CGPoint p, GLKMatrix4 t)
 - (CGSize) convertContentSizeToPoints:(CGSize)contentSize type:(CCSizeType)type
 {
     CGSize size = CGSizeZero;
-    CCDirector* director = self.director;
+    CCDirector* director = [CCDirector currentDirector];
     
     CCSizeUnit widthUnit = type.widthUnit;
     CCSizeUnit heightUnit = type.heightUnit;
@@ -442,7 +442,7 @@ TransformPointAsVector(CGPoint p, GLKMatrix4 t)
 {
     CGSize size = CGSizeZero;
     
-    CCDirector* director = self.director;
+    CCDirector* director = [CCDirector currentDirector];
     
     CCSizeUnit widthUnit = type.widthUnit;
     CCSizeUnit heightUnit = type.heightUnit;
@@ -531,7 +531,7 @@ TransformPointAsVector(CGPoint p, GLKMatrix4 t)
 {
     if (_scaleType == CCScaleTypeScaled)
     {
-        return self.scale * self.director.UIScaleFactor;
+        return self.scale * [CCDirector currentDirector].UIScaleFactor;
     }
     return self.scale;
 }
@@ -540,7 +540,7 @@ TransformPointAsVector(CGPoint p, GLKMatrix4 t)
 {
     if (_scaleType == CCScaleTypeScaled)
     {
-        return _scaleX * self.director.UIScaleFactor;
+        return _scaleX * [CCDirector currentDirector].UIScaleFactor;
     }
     return _scaleX;
 }
@@ -549,7 +549,7 @@ TransformPointAsVector(CGPoint p, GLKMatrix4 t)
 {
     if (_scaleType == CCScaleTypeScaled)
     {
-        return _scaleY * self.director.UIScaleFactor;
+        return _scaleY * [CCDirector currentDirector].UIScaleFactor;
     }
     return _scaleY;
 }
@@ -572,7 +572,7 @@ TransformPointAsVector(CGPoint p, GLKMatrix4 t)
 {
     if (visible == _visible) return;
     
-    [[self.director responderManager] markAsDirty];
+    [[[CCDirector currentDirector] responderManager] markAsDirty];
     _visible = visible;
 }
 
@@ -675,7 +675,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		[child onEnterTransitionDidFinish];
 	}
     
-    [[self.director responderManager] markAsDirty];
+    [[[CCDirector currentDirector] responderManager] markAsDirty];
 }
 
 -(void) addChild: (CCNode*) child z:(NSInteger)z
@@ -765,7 +765,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		// set parent nil at the end (issue #476)
 		c->_parent = nil;
         
-        [[self.director responderManager] markAsDirty];
+        [[[CCDirector currentDirector] responderManager] markAsDirty];
 
 	}
 
@@ -794,7 +794,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	// set parent nil at the end (issue #476)
 	child->_parent = nil;
 
-	[[self.director responderManager] markAsDirty];
+	[[[CCDirector currentDirector] responderManager] markAsDirty];
 
 	[_children removeObject:child];
 }
@@ -825,7 +825,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		//don't need to check children recursively, that's done in visit of each child
         
 		_isReorderChildDirty = NO;
-        [[self.director responderManager] markAsDirty];
+        [[[CCDirector currentDirector] responderManager] markAsDirty];
 	}
 }
 
@@ -1017,17 +1017,19 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 	BOOL wasRunning = self.active;
 	_isInActiveScene = YES;
 	
+    CCDirector* director = [CCDirector currentDirector];
+    
 	//If there's a physics node in the hierarchy, all actions should run on a fixed timestep.
 	BOOL hasPhysicsNode = self.physicsNode != nil;
-	if(hasPhysicsNode && _actionManager != self.director.actionManagerFixed)
+	if(hasPhysicsNode && _actionManager != director.actionManagerFixed)
 	{
-		[self.director.actionManagerFixed migrateActions:self from:self.director.actionManager];
-		[self setActionManager:self.director.actionManagerFixed];
+		[director.actionManagerFixed migrateActions:self from:director.actionManager];
+		[self setActionManager:director.actionManagerFixed];
 	}
-	else if(!hasPhysicsNode && _actionManager != self.director.actionManager)
+	else if(!hasPhysicsNode && _actionManager != director.actionManager)
 	{
-		[self.director.actionManager migrateActions:self from:self.director.actionManagerFixed];
-		[self setActionManager:self.director.actionManager];
+		[director.actionManager migrateActions:self from:director.actionManagerFixed];
+		[self setActionManager:director.actionManager];
 	}
 
     if(_animationManager) {
@@ -1272,7 +1274,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 
 - (CGPoint) convertPositionToPoints:(CGPoint)position type:(CCPositionType)type
 {
-    CCDirector* director = self.director;
+    CCDirector* director = [CCDirector currentDirector];
     
     CGPoint positionInPoints;
     float x = 0;
@@ -1320,7 +1322,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 
 - (CGPoint) convertPositionFromPoints:(CGPoint)positionInPoints type:(CCPositionType)type
 {
-    CCDirector* director = self.director;
+    CCDirector* director = [CCDirector currentDirector];
     
     CGPoint position;
     
@@ -1461,7 +1463,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 		BOOL needsSkewMatrix = ( _skewX || _skewY );
         
         float scaleFactor = 1;
-        if (_scaleType == CCScaleTypeScaled) scaleFactor = self.director.UIScaleFactor;
+        if (_scaleType == CCScaleTypeScaled) scaleFactor = [CCDirector currentDirector].UIScaleFactor;
 
 		// optimization:
 		// inline anchor point calculation if skew is not needed
@@ -1544,7 +1546,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 - (CGPoint)convertToWindowSpace:(CGPoint)nodePoint
 {
     CGPoint worldPoint = [self convertToWorldSpace:nodePoint];
-	return [self.director convertToUI:worldPoint];
+	return [[CCDirector currentDirector] convertToUI:worldPoint];
 }
 
 // -----------------------------------------------------------------
