@@ -100,7 +100,7 @@
 {
     // rebuild responder list
     [self removeAllResponders];
-    [self buildResponderList:[CCDirector sharedDirector].runningScene];
+    [self buildResponderList:[CCDirector currentDirector].runningScene];
     _dirty = NO;
 }
 
@@ -232,7 +232,7 @@
 
     // End editing any text fields
 #if __CC_PLATFORM_IOS
-    [[CCDirector sharedDirector].view endEditing:YES];
+    [[CCDirector currentDirector].view endEditing:YES];
 #endif
     BOOL responderCanAcceptTouch;
     
@@ -241,7 +241,7 @@
     // go through all touches
     for (CCTouch *touch in touches)
     {
-        CGPoint worldTouchLocation = [[CCDirector sharedDirector] convertToGL:[touch locationInView:(CC_VIEW<CCView>*)[CCDirector sharedDirector].view]];
+        CGPoint worldTouchLocation = [[CCDirector currentDirector] convertToGL:[touch locationInView:(CC_VIEW<CCView>*)[CCDirector currentDirector].view]];
         
         // scan backwards through touch responders
         for (int index = _responderListCount - 1; index >= 0; index --)
@@ -318,7 +318,7 @@
             else
             {
                 // as node does not lock touch, check if it was moved outside
-                if (![node hitTestWithWorldPos:[[CCDirector sharedDirector] convertToGL:[touch locationInView:[CCDirector sharedDirector].view]]])
+                if (![node hitTestWithWorldPos:[[CCDirector currentDirector] convertToGL:[touch locationInView:[CCDirector currentDirector].view]]])
                 {
                     // cancel the touch
                     if ([node respondsToSelector:@selector(touchCancelled:withEvent:)])
@@ -347,7 +347,7 @@
                     CCNode *node = _responderList[index];
                     
                     // if the touch responder does not lock touch, it will receive a touchBegan if a touch is moved inside
-                    if (!node.claimsUserInteraction  && [node hitTestWithWorldPos:[[CCDirector sharedDirector] convertToGL:[touch locationInView:[CCDirector sharedDirector].view ]]])
+                    if (!node.claimsUserInteraction  && [node hitTestWithWorldPos:[[CCDirector currentDirector] convertToGL:[touch locationInView:[CCDirector currentDirector].view ]]])
                     {
                         // check if node has exclusive touch
                         if (node.isExclusiveTouch)
@@ -488,7 +488,7 @@
         CCNode *node = _responderList[index];
         
         // check for hit test
-        if ([node hitTestWithWorldPos:[[CCDirector sharedDirector] convertEventToGL:theEvent]])
+        if ([node hitTestWithWorldPos:[[CCDirector currentDirector] convertEventToGL:theEvent]])
         {
             // begin the mouse down
             _currentEventProcessed = YES;
@@ -536,7 +536,7 @@
         else
         {
             // as node does not lock mouse, check if it was moved outside
-            if (![node hitTestWithWorldPos:[[CCDirector sharedDirector] convertEventToGL:theEvent]])
+            if (![node hitTestWithWorldPos:[[CCDirector currentDirector] convertEventToGL:theEvent]])
             {
                 [_runningResponderList removeObject:responder];
             }
@@ -560,7 +560,7 @@
             CCNode *node = _responderList[index];
             
             // if the mouse responder does not lock mouse, it will receive a mouseDown if mouse is moved inside
-            if (!node.claimsUserInteraction && [node hitTestWithWorldPos:[[CCDirector sharedDirector] convertEventToGL:theEvent]])
+            if (!node.claimsUserInteraction && [node hitTestWithWorldPos:[[CCDirector currentDirector] convertEventToGL:theEvent]])
             {
                 // begin the mouse down
                 _currentEventProcessed = YES;
@@ -608,7 +608,7 @@
 - (void)mouseDown:(NSEvent *)theEvent
 {
     if (!_enabled) return;
-    [[CCDirector sharedDirector].view.window makeFirstResponder:[CCDirector sharedDirector].view];
+    [[CCDirector currentDirector].view.window makeFirstResponder:[CCDirector currentDirector].view];
     [self mouseDown:theEvent button:CCMouseButtonLeft];
 }
 
@@ -686,7 +686,7 @@
         CCNode *node = _responderList[index];
         
         // check for hit test
-        if ([node hitTestWithWorldPos:[[CCDirector sharedDirector] convertEventToGL:theEvent]])
+        if ([node hitTestWithWorldPos:[[CCDirector currentDirector] convertEventToGL:theEvent]])
         {
             _currentEventProcessed = YES;
             if ([node respondsToSelector:@selector(scrollWheel:)]) [node scrollWheel:theEvent];

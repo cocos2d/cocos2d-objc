@@ -277,7 +277,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 -(void)prepareWithProjection:(const GLKMatrix4 *)projection framebuffer:(CCFrameBufferObject *)framebuffer
 {
 	NSAssert(framebuffer, @"Framebuffer cannot be nil.");
-	CCDirector *director = [CCDirector sharedDirector];
+	CCDirector *director = [CCDirector currentDirector];
 	
 	// Copy in the globals from the director.
 	NSMutableDictionary *globalShaderUniforms = [director.globalShaderUniforms mutableCopy];

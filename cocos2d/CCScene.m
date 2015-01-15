@@ -57,7 +57,7 @@
 	if((self = [super init]))
     {
         _director = director;
-		CGSize s = [CCDirector sharedDirector].designSize;
+		CGSize s = [CCDirector currentDirector].designSize;
 		self.anchorPoint = ccp(0.0f, 0.0f);
 		[self setContentSize:s];
 		

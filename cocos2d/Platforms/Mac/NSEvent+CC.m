@@ -34,14 +34,14 @@
 
 - (CGPoint) locationInNode:(CCNode *)node
 {
-    CCDirector* dir = [CCDirector sharedDirector];
+    CCDirector* dir = [CCDirector currentDirector];
     CGPoint mouseLocation = [dir convertEventToGL:self];
     return [node convertToNodeSpace:mouseLocation];
 }
 
 - (CGPoint) locationInWorld
 {
-    CCDirector* dir = [CCDirector sharedDirector];
+    CCDirector* dir = [CCDirector currentDirector];
     
     return [dir convertEventToGL:self];
 }

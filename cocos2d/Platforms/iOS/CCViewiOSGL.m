@@ -91,6 +91,7 @@ extern EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup
 {
     if((self = [super initWithFrame:frame]))
     {
+        _director = [CCDirector currentDirector];
         _pixelFormat = format;
         _depthFormat = depth;
         _multiSampling = sampling;

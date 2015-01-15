@@ -14,8 +14,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
-    glView_.director = director;
+	CCDirectorMac *director = (CCDirectorMac*) [CCDirector currentDirector];
     
 	// enable FPS and SPF
 	[director setDisplayStats:YES];
@@ -64,14 +63,14 @@
 
 - (void)dealloc
 {
-	[[CCDirector sharedDirector] end];
+	[[CCDirector currentDirector] end];
 }
 
 #pragma mark AppDelegate - IBActions
 
 - (IBAction)toggleFullScreen: (id)sender
 {
-	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+	CCDirectorMac *director = (CCDirectorMac*) [CCDirector currentDirector];
 	[director setFullScreen: ! [director isFullScreen] ];
 }
 

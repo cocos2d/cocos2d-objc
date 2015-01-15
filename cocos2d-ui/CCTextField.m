@@ -192,7 +192,7 @@
 {
     if (self.contentSizeType.heightUnit == CCSizeUnitUIPoints)
     {
-        return _fontSize * [CCDirector sharedDirector].UIScaleFactor;
+        return _fontSize * [CCDirector currentDirector].UIScaleFactor;
     }
     else
     {

@@ -61,7 +61,7 @@
 {
     if (_userInteractionEnabled == userInteractionEnabled) return;
     _userInteractionEnabled = userInteractionEnabled;
-    [[[CCDirector sharedDirector] responderManager] markAsDirty];
+    [[[CCDirector currentDirector] responderManager] markAsDirty];
 }
 
 // -----------------------------------------------------------------
@@ -80,22 +80,22 @@
 
 - (void)touchBegan:(CCTouch *)touch withEvent:(CCTouchEvent *)event
 {    
-    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
+    [[CCDirector currentDirector].responderManager discardCurrentEvent];
 }
 
 - (void)touchMoved:(CCTouch *)touch withEvent:(CCTouchEvent *)event
 {
-    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
+    [[CCDirector currentDirector].responderManager discardCurrentEvent];
 }
 
 - (void)touchEnded:(CCTouch *)touch withEvent:(CCTouchEvent *)event
 {
-    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
+    [[CCDirector currentDirector].responderManager discardCurrentEvent];
 }
 
 - (void)touchCancelled:(CCTouch *)touch withEvent:(CCTouchEvent *)event
 {
-    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
+    [[CCDirector currentDirector].responderManager discardCurrentEvent];
 }
 
 #else
@@ -106,52 +106,52 @@
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
-    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
+    [[CCDirector currentDirector].responderManager discardCurrentEvent];
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {
-    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
+    [[CCDirector currentDirector].responderManager discardCurrentEvent];
 }
 
 - (void)mouseUp:(NSEvent *)theEvent
 {
-    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
+    [[CCDirector currentDirector].responderManager discardCurrentEvent];
 }
 
 - (void)rightMouseDown:(NSEvent *)theEvent
 {
-    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
+    [[CCDirector currentDirector].responderManager discardCurrentEvent];
 }
 
 - (void)rightMouseDragged:(NSEvent *)theEvent
 {
-    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
+    [[CCDirector currentDirector].responderManager discardCurrentEvent];
 }
 
 - (void)rightMouseUp:(NSEvent *)theEvent
 {
-    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
+    [[CCDirector currentDirector].responderManager discardCurrentEvent];
 }
 
 - (void)otherMouseDown:(NSEvent *)theEvent
 {
-    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
+    [[CCDirector currentDirector].responderManager discardCurrentEvent];
 }
 
 - (void)otherMouseDragged:(NSEvent *)theEvent
 {
-    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
+    [[CCDirector currentDirector].responderManager discardCurrentEvent];
 }
 
 - (void)otherMouseUp:(NSEvent *)theEvent
 {
-    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
+    [[CCDirector currentDirector].responderManager discardCurrentEvent];
 }
 
 - (void)scrollWheel:(NSEvent *)theEvent
 {
-    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
+    [[CCDirector currentDirector].responderManager discardCurrentEvent];
 }
 
 #endif

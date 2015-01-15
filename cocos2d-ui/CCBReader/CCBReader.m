@@ -131,7 +131,7 @@
     loadedSpriteSheets = [[NSMutableSet alloc] init];
     
     // Setup resolution scale and default container size
-    animationManager.rootContainerSize = [CCDirector sharedDirector].designSize;
+    animationManager.rootContainerSize = [CCDirector currentDirector].designSize;
     
     nodeMapping = [NSMutableDictionary dictionary];
     postDeserializationUUIDFixup = [NSMutableArray array];
@@ -567,7 +567,7 @@ static inline float readFloat(CCBReader *self)
 
         if (setProp)
         {
-            if (sType == 1) f *= [CCDirector sharedDirector].UIScaleFactor;
+            if (sType == 1) f *= [CCDirector currentDirector].UIScaleFactor;
             [node setValue:[NSNumber numberWithFloat:f] forKey:name];
         }
     }
@@ -1401,7 +1401,7 @@ SelectorNameForProperty(objc_property_t property)
     
     if(animationManager.fixedTimestep)
     {
-        node.actionManager = [CCDirector sharedDirector].actionManagerFixed;
+        node.actionManager = [CCDirector currentDirector].actionManagerFixed;
     }
     
     // Read animated properties
@@ -1850,7 +1850,7 @@ SelectorNameForProperty(objc_property_t property)
     
     owner = o;
     
-    self.animationManager.rootContainerSize = [CCDirector sharedDirector].designSize;
+    self.animationManager.rootContainerSize = [CCDirector currentDirector].designSize;
     self.animationManager.owner = owner;
     
     NSMutableDictionary* animationManagers = [NSMutableDictionary dictionary];
@@ -1892,12 +1892,12 @@ SelectorNameForProperty(objc_property_t property)
 
 - (CCNode*) load:(NSString*) file owner:(id)o
 {
-    return [self nodeGraphFromFile:file owner:o parentSize:[CCDirector sharedDirector].designSize];
+    return [self nodeGraphFromFile:file owner:o parentSize:[CCDirector currentDirector].designSize];
 }
 
 - (CCNode*) load:(NSString*) file
 {
-    return [self nodeGraphFromFile:file owner:NULL parentSize:[CCDirector sharedDirector].designSize];
+    return [self nodeGraphFromFile:file owner:NULL parentSize:[CCDirector currentDirector].designSize];
 }
 
 +(void) setResourcePath:(NSString *)searchPath
@@ -1921,7 +1921,7 @@ SelectorNameForProperty(objc_property_t property)
 
 + (CCNode*) load:(NSString*) file owner:(id)owner
 {
-    return [CCBReader load:file owner:owner parentSize:[CCDirector sharedDirector].designSize];
+    return [CCBReader load:file owner:owner parentSize:[CCDirector currentDirector].designSize];
 }
 
 + (CCNode*) nodeGraphFromData:(NSData*) data owner:(id)owner parentSize:(CGSize)parentSize
@@ -1941,7 +1941,7 @@ SelectorNameForProperty(objc_property_t property)
 
 + (CCScene*) loadAsScene:(NSString *)file owner:(id)owner
 {
-    return [CCBReader sceneWithNodeGraphFromFile:file owner:owner parentSize:[CCDirector sharedDirector].designSize];
+    return [CCBReader sceneWithNodeGraphFromFile:file owner:owner parentSize:[CCDirector currentDirector].designSize];
 }
 
 -(CCScene*) createScene

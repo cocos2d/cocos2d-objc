@@ -50,7 +50,7 @@
 
 @property(nonatomic, readonly) GLuint fbo;
 
-@property(nonatomic, weak) CCDirector* director;
+@property(nonatomic, weak, readonly) CCDirector* director;
 
 @end
 

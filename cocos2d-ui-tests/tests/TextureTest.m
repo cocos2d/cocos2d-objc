@@ -22,7 +22,7 @@
 
 	self.subTitle = title;
 	
-	CGSize s = [[CCDirector sharedDirector] viewSize];
+	CGSize s = [[CCDirector currentDirector] viewSize];
 	
 	CCSprite *img = [CCSprite spriteWithImageNamed:fileName];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
@@ -165,7 +165,7 @@
 
 -(void) setupTestTextureAntialiasModesTest
 {
-	CGSize s = [[CCDirector sharedDirector] viewSize];
+	CGSize s = [[CCDirector currentDirector] viewSize];
 	
 	// The purpose of the 4 repetitions of the texture is to make sure the antialias state doesn't leak in the shared texture cache.
 	
@@ -199,7 +199,7 @@
 {
 	self.subTitle = @"Texture GL_REPEAT";
 	
-	CGSize s = [[CCDirector sharedDirector] viewSize];
+	CGSize s = [[CCDirector currentDirector] viewSize];
 
 	// requires a power of two image
 	CCTexture* texture = [[CCTextureCache sharedTextureCache] addImage:@"test_image.png"];

@@ -242,7 +242,8 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 /** @name Singleton Accessor */
 
 /** @returns The shared director instance. */
-+(CCDirector*)sharedDirector;
++(CCDirector*)sharedDirector __attribute__((deprecated));
++(CCDirector*)currentDirector;
 
 /** @name Accessing OpenGL Thread */
 

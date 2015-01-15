@@ -146,7 +146,7 @@ RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
 		_vertexZ = 0;
 		_visible = YES;
 
-		CCDirector *director = [CCDirector sharedDirector];
+		CCDirector *director = [CCDirector currentDirector];
 		_actionManager = [[director actionManager] retain];
 		_scheduler = [[director scheduler] retain];
         

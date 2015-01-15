@@ -24,7 +24,6 @@
     NSMutableArray *_fences;
 }
 
-
 - (id) initWithFrame:(NSRect)frameRect
 {
     self = [self initWithFrame:frameRect shareContext:nil];
@@ -33,6 +32,7 @@
 
 - (id) initWithFrame:(NSRect)frameRect shareContext:(NSOpenGLContext*)context
 {
+    _director = [CCDirector currentDirector];
     NSOpenGLPixelFormatAttribute attribs[] =
     {
         //		NSOpenGLPFAAccelerated,
@@ -55,10 +55,21 @@
         CCLOG(@"No OpenGL pixel format");
     
     if( (self = [super initWithFrame:frameRect pixelFormat:pixelFormat]) ) {
-        
+        _director = [CCDirector currentDirector];
         if( context )
             [self setOpenGLContext:context];
         
+    }
+    
+    return self;
+}
+
+- (id)initWithCoder:(NSCoder *)coder
+{
+    if((self = [super initWithCoder:coder]))
+    {
+        _director = [CCDirector currentDirector];
+        return self;
     }
     
     return self;

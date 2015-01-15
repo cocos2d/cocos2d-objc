@@ -85,10 +85,10 @@ static CCTextureCache *sharedTextureCache;
 		
 
 #if __CC_PLATFORM_IOS
-		CCViewiOSGL *view = (CCViewiOSGL*)[[CCDirector sharedDirector] view];
+		CCViewiOSGL *view = (CCViewiOSGL*)[[CCDirector currentDirector] view];
 		NSAssert(view, @"Do not initialize the TextureCache before the Director");
 #elif __CC_PLATFORM_MAC
-        CCViewMacGL *view = (CCViewMacGL*)[[CCDirector sharedDirector] view];
+        CCViewMacGL *view = (CCViewMacGL*)[[CCDirector currentDirector] view];
         NSAssert(view, @"Do not initialize the TextureCache before the Director");
 #endif
 
@@ -181,7 +181,7 @@ static CCTextureCache *sharedTextureCache;
 			glFlush();
 
 			// callback should be executed in cocos2d thread
-			[target performSelector:selector onThread:[[CCDirector sharedDirector] runningThread] withObject:texture waitUntilDone:NO];
+			[target performSelector:selector onThread:[[CCDirector currentDirector] runningThread] withObject:texture waitUntilDone:NO];
 
 			[EAGLContext setCurrentContext:nil];
 		} else {
@@ -198,7 +198,7 @@ static CCTextureCache *sharedTextureCache;
 		glFlush();
 
 		// callback should be executed in cocos2d thread
-		[target performSelector:selector onThread:[[CCDirector sharedDirector] runningThread] withObject:texture waitUntilDone:NO];
+		[target performSelector:selector onThread:[[CCDirector currentDirector] runningThread] withObject:texture waitUntilDone:NO];
 
 		[NSOpenGLContext clearCurrentContext];
 
@@ -243,7 +243,7 @@ static CCTextureCache *sharedTextureCache;
 //            [EAGLContext setCurrentContext:nil];
 //
 //			// callback should be executed in cocos2d thread
-//			NSThread *thread = [[CCDirector sharedDirector] runningThread];
+//			NSThread *thread = [[CCDirector currentDirector] runningThread];
 //			[thread performBlock:block withObject:texture waitUntilDone:NO];
 //        
 //		} else {
@@ -262,7 +262,7 @@ static CCTextureCache *sharedTextureCache;
 //        [NSOpenGLContext clearCurrentContext];
 //
 //		// callback should be executed in cocos2d thread
-//		NSThread *thread = [[CCDirector sharedDirector] runningThread];
+//		NSThread *thread = [[CCDirector currentDirector] runningThread];
 //		[thread performBlock:block withObject:texture waitUntilDone:NO];
 //
 //#endif // __CC_PLATFORM_MAC

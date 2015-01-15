@@ -23,7 +23,7 @@
 // @param handler The completion block. The block takes no arguments and has no return value.
 -(void)addFrameCompletionHandler:(dispatch_block_t)handler;
 
-@property(nonatomic, weak) CCDirector* director;
+@property(nonatomic, weak, readonly) CCDirector* director;
 @property(nonatomic, readonly) GLuint fbo;
 
 @end

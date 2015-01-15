@@ -57,13 +57,13 @@
     [self addChild:_headerBg];
     
     // Header label
-    _lblTitle = [CCLabelTTF labelWithString:NSStringFromClass([self class]) fontName:@"HelveticaNeue-Medium" fontSize:17 * [CCDirector sharedDirector].UIScaleFactor];
+    _lblTitle = [CCLabelTTF labelWithString:NSStringFromClass([self class]) fontName:@"HelveticaNeue-Medium" fontSize:17 * [CCDirector currentDirector].UIScaleFactor];
     _lblTitle.positionType = CCPositionTypeNormalized;
     _lblTitle.position = ccp(0.5f,0.5f);
     
     [_headerBg addChild:_lblTitle];
     
-    _lblSubTitle = [CCLabelTTF labelWithString:@"" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector sharedDirector].UIScaleFactor];
+    _lblSubTitle = [CCLabelTTF labelWithString:@"" fontName:@"HelveticaNeue-Light" fontSize:14 * [CCDirector currentDirector].UIScaleFactor];
 		_lblSubTitle.shadowColor = [CCColor blackColor];
 		_lblSubTitle.shadowBlurRadius = 2.5;
     _lblSubTitle.positionType = CCPositionTypeMake(CCPositionUnitNormalized, CCPositionUnitUIPoints, CCPositionReferenceCornerTopLeft);
@@ -118,7 +118,7 @@
 + (CCScene *) sceneWithTestName:(NSString*)testName
 {
 	// 'scene' is an autorelease object.
-    CCScene *scene = [[CCScene alloc] initWithDirector:[CCDirector sharedDirector]];
+    CCScene *scene = [[CCScene alloc] initWithDirector:[CCDirector currentDirector]];
 	
 	// 'layer' is an autorelease object.
   TestBase *node = [[NSClassFromString(testName) alloc] init];
@@ -163,9 +163,8 @@
 
 - (void) pressedBack:(id)sender
 {
-    CCTransition* transition = [CCTransition transitionMoveInWithDirection:CCTransitionDirectionRight
-                                                                  duration:0.3 director:[CCDirector sharedDirector]];
-    [[CCDirector sharedDirector] replaceScene:[MainMenu scene] withTransition:transition];
+    CCTransition* transition = [CCTransition transitionMoveInWithDirection:CCTransitionDirectionRight duration:0.3];
+    [[CCDirector currentDirector] replaceScene:[MainMenu scene] withTransition:transition];
 }
 
 - (void) pressedReset:(id)sender

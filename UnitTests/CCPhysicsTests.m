@@ -31,7 +31,7 @@
     [super setUp];
 
     [(AppController *)[UIApplication sharedApplication].delegate configureCocos2d];
-    [[CCDirector sharedDirector] startAnimation];
+    [[CCDirector currentDirector] startAnimation];
 }
 
 static void
@@ -942,7 +942,7 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
 	// Force entering the scene to set up the physics objects.
 	[physicsNode onEnter];
 	
-	CCScheduler * scheduler =  [CCDirector sharedDirector].scheduler;
+	CCScheduler * scheduler =  [CCDirector currentDirector].scheduler;
     scheduler.fixedUpdateInterval = 0.1f;
 	[scheduler update:0.10f];// first tick
 	const float accuracy = 1e-4;
