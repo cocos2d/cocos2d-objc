@@ -182,6 +182,8 @@
 
 - (NSArray *)searchFilenamesWithBaseFilename:(NSString *)baseFilename
 {
+    // TODO: potential optimization -> if non image extension just return with baseFilename
+
     NSMutableArray *result = [NSMutableArray arrayWithCapacity:4];
 
     if (_deviceContentScale >= 3)

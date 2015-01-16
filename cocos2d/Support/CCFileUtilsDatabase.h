@@ -7,7 +7,7 @@
 
 @interface CCFileUtilsDatabase : NSObject <CCFileUtilsDatabaseProtocol>
 
-- (void)addDatabaseWithFilePath:(NSString *)filePath inSearchPath:(NSString *)searchPath;
+- (BOOL)addDatabaseWithFilePath:(NSString *)filePath forSearchPath:(NSString *)searchPath error:(NSError **)error;
 
 - (void)removeDatabaseForSearchPath:(NSString *)searchPath;
 

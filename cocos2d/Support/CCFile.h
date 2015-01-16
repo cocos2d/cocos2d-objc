@@ -101,6 +101,13 @@
  */
 -(NSInputStream *)openInputStream;
 
+/**
+ Indicate whether an asset should be scaled for UI or not
+
+ @return If the asset should be scaled for UI
+
+ @since 4.0
+ */
 @property (nonatomic, readonly) BOOL useUIScale;
 
 @end

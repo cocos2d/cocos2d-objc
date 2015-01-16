@@ -458,7 +458,7 @@
         _fileUtils.database = [[CCFileUtilsDatabase alloc] init];
     }
 
-    [(CCFileUtilsDatabase *) _fileUtils.database addDatabaseWithFilePath:@"filedb.json" inSearchPath:searchPath];
+    [(CCFileUtilsDatabase *) _fileUtils.database addDatabaseWithFilePath:@"filedb.json" forSearchPath:searchPath error:NULL];
 }
 
 - (void)mockPreferredLanguages:(NSArray *)preferredLanguages

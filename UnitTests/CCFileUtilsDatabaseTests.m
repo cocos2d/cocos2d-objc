@@ -41,7 +41,7 @@
 
 - (void)testAddDatabaseWithFilePathInSearchPath
 {
-    [_fileUtilsDB addDatabaseWithFilePath:_dbPath inSearchPath:_searchPath];
+    XCTAssertTrue([_fileUtilsDB addDatabaseWithFilePath:_dbPath forSearchPath:_searchPath error:NULL]);
 
     NSDictionary *metaData = [_fileUtilsDB metaDataForFileNamed:@"images/foo.png" inSearchPath:_searchPath];
 
@@ -50,13 +50,35 @@
 
 - (void)testRemoveDatabaseWithFilePathInSearchPath
 {
-    [_fileUtilsDB addDatabaseWithFilePath:_dbPath inSearchPath:_searchPath];
+    XCTAssertTrue([_fileUtilsDB addDatabaseWithFilePath:_dbPath forSearchPath:_searchPath error:NULL]);
 
     [_fileUtilsDB removeDatabaseForSearchPath:[self fullPathForFile:@"Resources"]];
 
     NSDictionary *metaData = [_fileUtilsDB metaDataForFileNamed:@"images/foo.png" inSearchPath:[self fullPathForFile:@"Resources"]];
 
     XCTAssertNil(metaData);
+}
+
+- (void)testAddDataBaseWithCorruptJSON
+{
+    NSString *json = MULTILINESTRING(
+        {
+            []  asdasdasd {}
+        };
+    );
+
+    [self createFilesWithContents:@{@"Resources/config/filedb.json" : [json dataUsingEncoding:NSUTF8StringEncoding]}];
+
+    NSError *error;
+    XCTAssertFalse([_fileUtilsDB addDatabaseWithFilePath:_dbPath forSearchPath:_searchPath error:&error]);
+    XCTAssertNotNil(error);
+}
+
+- (void)testAddDataBaseWithNonExistingDatabaseFile
+{
+    NSError *error;
+    XCTAssertFalse([_fileUtilsDB addDatabaseWithFilePath:@"/adasdasd/ddddd.json" forSearchPath:_searchPath error:&error]);
+    XCTAssertNotNil(error);
 }
 
 @end
