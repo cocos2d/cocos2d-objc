@@ -297,7 +297,7 @@
     CCFile *file = [_fileUtils fileNamed:@"images/foo.png" options:nil error:&error];
 
     XCTAssertNotNil(error);
-    XCTAssertEqual(error.code, ERROR_FILELOCATOR_NO_FILE_FOUND);
+    XCTAssertEqual(error.code, ERROR_FILEUTILS_NO_FILE_FOUND);
     XCTAssertNil(file);
 }
 
@@ -340,6 +340,55 @@
 
     [self assertSuccessForFile:file filePath:@"Resources/Hero.png" contentScale:4.0 error:error];
 };
+
+
+#pragma mark - Tests cache
+
+- (void)testFileNamedCache
+{
+    [self createEmptyFiles:@[@"Resources/images/foo.png"]];
+
+    _fileUtils.deviceContentScale = 4;
+    _fileUtils.untaggedContentScale = 4;
+
+    NSError *error;
+    CCFile *file = [_fileUtils fileNamed:@"images/foo.png" options:nil error:&error];
+
+    [self assertSuccessForFile:file filePath:@"Resources/images/foo.png" contentScale:4.0 error:error];
+
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    XCTAssertTrue([fileManager removeItemAtPath:[self fullPathForFile:@"Resources/images/foo.png"] error:nil]);
+
+    NSError *error2;
+    CCFile *file2 = [_fileUtils fileNamed:@"images/foo.png" options:nil error:&error];
+
+    [self assertSuccessForFile:file2 filePath:@"Resources/images/foo.png" contentScale:4.0 error:error2];
+}
+
+- (void)testPurgeCache
+{
+    [self createEmptyFiles:@[@"Resources/images/foo.png"]];
+
+    _fileUtils.deviceContentScale = 4;
+    _fileUtils.untaggedContentScale = 4;
+
+    NSError *error;
+    CCFile *file = [_fileUtils fileNamed:@"images/foo.png" options:nil error:&error];
+
+    [self assertSuccessForFile:file filePath:@"Resources/images/foo.png" contentScale:4.0 error:error];
+
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    XCTAssertTrue([fileManager removeItemAtPath:[self fullPathForFile:@"Resources/images/foo.png"] error:nil]);
+
+    [_fileUtils purgeCache];
+
+    NSError *error2;
+    CCFile *file2 = [_fileUtils fileNamed:@"images/foo.png" options:nil error:&error2];
+
+    XCTAssertNotNil(error2);
+    XCTAssertNil(file2);
+    XCTAssertEqual(error2.code, ERROR_FILEUTILS_NO_FILE_FOUND);
+}
 
 
 #pragma mark - Tests for search order no database
@@ -472,7 +521,7 @@
     CCFile *file = [_fileUtils fileNamed:@"someasset.png" options:nil error:&error];
 
     XCTAssertNotNil(error);
-    XCTAssertEqual(error.code, ERROR_FILELOCATOR_NO_SEARCH_PATHS);
+    XCTAssertEqual(error.code, ERROR_FILEUTILS_NO_SEARCH_PATHS);
     XCTAssertNil(file);
 }
 
@@ -484,7 +533,7 @@
     CCFile *file = [_fileUtils fileNamed:@"image.png" options:nil error:&error];
 
     XCTAssertNotNil(error);
-    XCTAssertEqual(error.code, ERROR_FILELOCATOR_NO_FILE_FOUND);
+    XCTAssertEqual(error.code, ERROR_FILEUTILS_NO_FILE_FOUND);
     XCTAssertNil(file);
 }
 
