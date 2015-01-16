@@ -82,7 +82,7 @@
             resolvedFilename = queryResult[@"filename"];
         }
 
-        CCFile *aFile = [self findFilename:resolvedFilename inPath:searchPath];
+        CCFile *aFile = [self findFilename:resolvedFilename inPath:searchPath options:options];
 
         if (aFile)
         {
@@ -152,10 +152,11 @@
     return nil;
 }
 
-- (CCFile *)findFilename:(NSString *)filename inPath:(NSString *)path
+- (CCFile *)findFilename:(NSString *)filename inPath:(NSString *)path options:(NSDictionary *)options
 {
     NSFileManager *localFileManager = [[NSFileManager alloc] init];
-    NSArray *searchFilenames = [self searchFilenamesWithBaseFilename:filename];
+
+    NSArray *searchFilenames = [self searchFilenamesWithBaseFilename:filename options:options];
 
     for (CCFileUtilsV2SearchData *fileLocatorSearchData in searchFilenames)
     {
@@ -180,11 +181,14 @@
     return [[CCFileUtilsV2SearchData alloc] initWithFilename:filename contentScale:contentScale];
 }
 
-- (NSArray *)searchFilenamesWithBaseFilename:(NSString *)baseFilename
+- (NSArray *)searchFilenamesWithBaseFilename:(NSString *)baseFilename options:(NSDictionary *)options
 {
-    // TODO: potential optimization -> if non image extension just return with baseFilename
-
     NSMutableArray *result = [NSMutableArray arrayWithCapacity:4];
+
+    if (options[CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH])
+    {
+        return @[[[CCFileUtilsV2SearchData alloc] initWithFilename:baseFilename contentScale:@(_untaggedContentScale)]];
+    }
 
     if (_deviceContentScale >= 3)
     {

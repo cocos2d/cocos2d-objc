@@ -326,6 +326,22 @@
 }
 
 
+#pragma mark - Tests options
+
+- (void)testFileNamedWithOptionToSkipResolutionSearch
+{
+    [self createPNGsInDir:@"Resources" name:@"Hero" scales:@[@"4", @"default"]];
+
+    _fileUtils.deviceContentScale = 4;
+    _fileUtils.untaggedContentScale = 4;
+
+    NSError *error;
+    CCFile *file = [_fileUtils fileNamed:@"Hero.png" options:@{CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH:@1} error:&error];
+
+    [self assertSuccessForFile:file filePath:@"Resources/Hero.png" contentScale:4.0 error:error];
+};
+
+
 #pragma mark - Tests for search order no database
 
 - (void)testFileNamedSearchOrderPrecedenceExplicitContentScaleOverDefault
