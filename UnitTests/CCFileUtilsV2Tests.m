@@ -145,12 +145,8 @@
     NSString *json = MULTILINESTRING(
         {
             "images/foo.png" : {
-                "UIScale" : false,
+                "UIScale" : true,
                 "filename" : "images/foo.png",
-                "special" : "abc",
-                "localizations" : {
-                    "en" : "images/foo.png",
-                }
             }
         }
     );
@@ -158,13 +154,10 @@
 
     [self createPNGsInDir:@"Resources/images" name:@"foo" scales:@[@"default"]];
 
-    _fileUtils.deviceContentScale = 4;
-
 
     CCFile *file = [_fileUtils fileNamed:@"images/foo.png" options:nil error:nil];
 
-    XCTAssertEqualObjects(file.metaData[@"special"], @"abc");
-    XCTAssertEqual(file.metaData.count, 1);
+    XCTAssertEqual(file.useUIScale, YES);
 }
 
 - (void)testFileNamedLocalizationSearchOrderWithDatabase

@@ -101,9 +101,7 @@
  */
 -(NSInputStream *)openInputStream;
 
-#warning TODO What to do about these since we will be using metadata to store them?
-//@property(nonatomic, readonly) NSString *language;
-//@property(nonatomic, readonly) NSString *deviceFamily;
-@property (nonatomic, copy) NSDictionary *metaData;
+
+@property (nonatomic) BOOL useUIScale;
 
 @end

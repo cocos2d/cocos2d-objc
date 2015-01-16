@@ -1,3 +1,4 @@
+#import <Foundation/Foundation.h>
 #import "CCFileUtilsV2.h"
 #import "CCFile.h"
 #import "CCPackageConstants.h"
@@ -130,7 +131,7 @@
                                                 url:[NSURL fileURLWithPath:resolvedFilePath isDirectory:NO]
                                        contentScale:_untaggedContentScale];
 
-        file.metaData = [self extracGenericMetaData:metaData];
+        file.useUIScale = [metaData[@"UIScale"] boolValue];
 
         return file;
     }
@@ -158,25 +159,6 @@
     }
 
     return nil;
-}
-
-- (NSDictionary *)extracGenericMetaData:(NSDictionary *)metaDataDictionary
-{
-    NSMutableDictionary *result = [NSMutableDictionary dictionary];
-
-    for (NSString *key in metaDataDictionary)
-    {
-        if ([@[@"filename", @"localizations", @"UIScale"] containsObject:key])
-        {
-            continue;
-        }
-
-        result[key] = metaDataDictionary[key];
-    }
-
-    return result.count > 0
-        ? result
-        : nil;
 }
 
 - (CCFile *)findFilename:(NSString *)filename inPath:(NSString *)path
