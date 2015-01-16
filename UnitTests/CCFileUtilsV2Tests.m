@@ -120,26 +120,6 @@
     [self assertSuccessForFile:file2 filePath:@"Packages/Superpackage.sbpack/images/unicycle.png" contentScale:4.0 error:error2];
 };
 
-- (void)testFileNamedNonExistingFileWithDatabase
-{
-    NSString *jsonA = MULTILINESTRING(
-        {
-            "images/foo.png" : {
-                "filename" : "images/foo.png"
-            }
-        }
-    );
-
-    [self addDatabaseWithJSON:jsonA forSearchPath:[self fullPathForFile:@"Resources"]];
-
-    NSError *error;
-    CCFile *file = [_fileUtils fileNamed:@"images/foo.png" options:nil error:&error];
-
-    XCTAssertNotNil(error);
-    XCTAssertEqual(error.code, ERROR_FILELOCATOR_FILE_IN_DATABASE_NOT_IN_FILESYSTEM);
-    XCTAssertNil(file);
-}
-
 - (void)testFileNamedMetaDataWithDatabase
 {
     NSString *json = MULTILINESTRING(
@@ -160,30 +140,39 @@
     XCTAssertEqual(file.useUIScale, YES);
 }
 
-- (void)testFileNamedLocalizationSearchOrderWithDatabase
+- (void)testFileNamedLocalizationSearchOrderForResolutionsWithDatabase
 {
     NSString *json = MULTILINESTRING(
         {
             "images/foo.png" : {
                 "localizations" : {
-                     "ja" : "images/should_be_returned.png"
+                    "en" : "images/foo-en.png",
+                    "de" : "images/foo-de.png"
                 },
-                "filename" : "images/fallback_should_not_be_used.png"
+                "filename" : "images/foo-en.png"
             }
         }
     );
     [self addDatabaseWithJSON:json forSearchPath:[self fullPathForFile:@"Resources"]];
     [self createEmptyFilesRelativeToDirectory:@"Resources/images" files:@[
-        @"should_be_returned.png",
-        @"images/fallback_should_not_be_used.png",
+            @"foo-en.png",
+            @"foo-en-1x.png",
+            @"foo-en-2x.png",
+            @"foo-en-4x.png",
+            @"foo-de.png",
+            @"foo-de-1x.png",
+            @"foo-de-2x.png",
+            @"foo-de-4x.png",
     ]];
 
-    [self mockPreferredLanguages:@[@"en", @"es", @"ja"]];
+    _fileUtils.deviceContentScale = 2;
+
+    [self mockPreferredLanguages:@[@"de"]];
 
     NSError *error;
     CCFile *file = [_fileUtils fileNamed:@"images/foo.png" options:nil error:&error];
 
-    [self assertSuccessForFile:file filePath:@"Resources/images/should_be_returned.png" contentScale:4.0 error:error];
+    [self assertSuccessForFile:file filePath:@"Resources/images/foo-de-2x.png" contentScale:2.0 error:error];
 }
 
 - (void)testFileNamedNoLocalizedImageAvailableWithDatabase
@@ -227,9 +216,12 @@
     );
     [self addDatabaseWithJSON:json forSearchPath:[self fullPathForFile:@"Resources"]];
     [self createEmptyFilesRelativeToDirectory:@"Resources/images" files:@[
-        @"foo-en.png",
-        @"foo-de.png"
+            @"foo-en.png",
+            @"foo-de.png",
     ]];
+
+    _fileUtils.deviceContentScale = 2;
+    _fileUtils.untaggedContentScale = 4;
 
     [self mockPreferredLanguages:@[@"de"]];
 
@@ -259,7 +251,7 @@
     CCFile *file = [_fileUtils fileNamed:@"images/foo.png" options:nil error:&error];
 
     XCTAssertNotNil(error);
-    XCTAssertEqual(error.code, ERROR_FILELOCATOR_FILE_IN_DATABASE_NOT_IN_FILESYSTEM);
+    XCTAssertEqual(error.code, ERROR_FILELOCATOR_NO_FILE_FOUND);
     XCTAssertNil(file);
 }
 
@@ -268,13 +260,15 @@
     NSString *json = MULTILINESTRING(
         {
             "images/foo.png" : {
-                "filename" : "images/baa.png"
+                "filename" : "images/baa.jpg"
             }
         }
     );
     [self addDatabaseWithJSON:json forSearchPath:[self fullPathForFile:@"Resources"]];
-
-    [self createPNGsInDir:@"Resources/images" name:@"baa" scales:@[@"default"]];
+    [self createEmptyFilesRelativeToDirectory:@"Resources/images" files:@[
+            @"baa-4x.jpg",
+            @"baa.jpg",
+    ]];
 
     _fileUtils.deviceContentScale = 4;
     _fileUtils.untaggedContentScale = 4;
@@ -282,7 +276,7 @@
     NSError *error;
     CCFile *file = [_fileUtils fileNamed:@"images/foo.png" options:nil error:&error];
 
-    [self assertSuccessForFile:file filePath:@"Resources/images/baa.png" contentScale:4.0 error:error];
+    [self assertSuccessForFile:file filePath:@"Resources/images/baa-4x.jpg" contentScale:4.0 error:error];
 }
 
 

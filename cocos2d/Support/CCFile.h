@@ -101,7 +101,6 @@
  */
 -(NSInputStream *)openInputStream;
 
-
-@property (nonatomic) BOOL useUIScale;
+@property (nonatomic, readonly) BOOL useUIScale;
 
 @end
