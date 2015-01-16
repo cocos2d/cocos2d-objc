@@ -105,6 +105,8 @@
 		5BC3CB5A19626FA000C4F0D0 /* CCGestureListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC3CB5819626FA000C4F0D0 /* CCGestureListener.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		5BF32698195F947800D9A51A /* CCActivity.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BF32696195F947800D9A51A /* CCActivity.h */; };
 		5BF32699195F947800D9A51A /* CCActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF32697195F947800D9A51A /* CCActivity.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -O0"; }; };
+		75F9BF711A3904D7009185BF /* CCViewportNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 75F9BF6F1A3904D7009185BF /* CCViewportNode.h */; };
+		75F9BF721A3904D7009185BF /* CCViewportNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F9BF701A3904D7009185BF /* CCViewportNode.m */; };
 		7A4037C019E37108007B6E8F /* libObjectAL (Mac).a in Frameworks */ = {isa = PBXBuildFile; fileRef = D28B2E7E19CBA89A00DC6E08 /* libObjectAL (Mac).a */; };
 		7A4037C219E37117007B6E8F /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A4037C119E37117007B6E8F /* GLKit.framework */; };
 		7A4037C419E3711D007B6E8F /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A4037C319E3711D007B6E8F /* ApplicationServices.framework */; };
@@ -920,6 +922,8 @@
 		D3903B1A19952ABD003AA81A /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3903B1919952ABD003AA81A /* Metal.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D395DB2B183D739E0024997E /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3877010446C6E00150883 /* OpenAL.framework */; };
 		D395DB2C183D73A70024997E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3876E10446C6E00150883 /* AudioToolbox.framework */; };
+		D39D34A11A4243ED00B5A115 /* CCViewportNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F9BF701A3904D7009185BF /* CCViewportNode.m */; };
+		D39D34A41A4243EE00B5A115 /* CCViewportNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F9BF701A3904D7009185BF /* CCViewportNode.m */; };
 		D39FA9C818C1BC6B00441627 /* CCShader_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D39FA9C718C1BC6B00441627 /* CCShader_Private.h */; };
 		D3A2E7D2181E12750033614C /* CCPhysicsShape.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A2E7D0181E12750033614C /* CCPhysicsShape.h */; };
 		D3A2E7D3181E12750033614C /* CCPhysicsShape.m in Sources */ = {isa = PBXBuildFile; fileRef = D3A2E7D1181E12750033614C /* CCPhysicsShape.m */; };
@@ -1185,6 +1189,8 @@
 		5BC3CB5819626FA000C4F0D0 /* CCGestureListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCGestureListener.m; path = Android/CCGestureListener.m; sourceTree = "<group>"; };
 		5BF32696195F947800D9A51A /* CCActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCActivity.h; path = Android/CCActivity.h; sourceTree = "<group>"; };
 		5BF32697195F947800D9A51A /* CCActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCActivity.m; path = Android/CCActivity.m; sourceTree = "<group>"; };
+		75F9BF6F1A3904D7009185BF /* CCViewportNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCViewportNode.h; sourceTree = "<group>"; };
+		75F9BF701A3904D7009185BF /* CCViewportNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCViewportNode.m; sourceTree = "<group>"; };
 		7A4037A819E37038007B6E8F /* libcocos2d-mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d-mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A4037C119E37117007B6E8F /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/GLKit.framework; sourceTree = DEVELOPER_DIR; };
 		7A4037C319E3711D007B6E8F /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/ApplicationServices.framework; sourceTree = DEVELOPER_DIR; };
@@ -1823,6 +1829,8 @@
 				9D69E6D519DF604800C2749C /* CCLightNode.m */,
 				9D1B4A941A02D51600B2DD9B /* CCLightNode_Private.h */,
 				9D1B4A971A02E90300B2DD9B /* CCLightGroups.h */,
+				75F9BF6F1A3904D7009185BF /* CCViewportNode.h */,
+				75F9BF701A3904D7009185BF /* CCViewportNode.m */,
 			);
 			name = "Misc Nodes";
 			sourceTree = "<group>";
@@ -2256,6 +2264,7 @@
 				5018F2710DFDEAFF00C013A5 /* CCActionInterval.h in Headers */,
 				5018F2730DFDEAFF00C013A5 /* CCLabelTTF.h in Headers */,
 				5018F2750DFDEAFF00C013A5 /* CCNodeColor.h in Headers */,
+				75F9BF711A3904D7009185BF /* CCViewportNode.h in Headers */,
 				5018F2770DFDEAFF00C013A5 /* CCScene.h in Headers */,
 				D36369D31A1E85DF007EE5FC /* CCDeprecated.h in Headers */,
 				5018F27D0DFDEAFF00C013A5 /* CCTextureCache.h in Headers */,
@@ -3108,6 +3117,7 @@
 				D33803E318032ECE0072D8FE /* CCPhysicsBody.m in Sources */,
 				D3867D991A329B08009AFFF3 /* CCImage.m in Sources */,
 				D268FE12198078FF00ECBCD0 /* CCEffectHue.m in Sources */,
+				75F9BF721A3904D7009185BF /* CCViewportNode.m in Sources */,
 				839CE58719FFB139003369F0 /* CCEffectInvert.m in Sources */,
 				E525F0F74C7C69C4371E20EE /* CCPackageHelper.m in Sources */,
 			);
@@ -3236,6 +3246,7 @@
 				7A5948BB19E375BA00F65F90 /* CCBLocalizationManager.m in Sources */,
 				7A5948BD19E375BB00F65F90 /* CCBReader.m in Sources */,
 				7A5948BF19E375BB00F65F90 /* CCBsequence.m in Sources */,
+				D39D34A41A4243EE00B5A115 /* CCViewportNode.m in Sources */,
 				9D03A5F81A02F8C600C651C8 /* CCEffectLighting.m in Sources */,
 				D33C9CEA1A2FAC33004070CA /* CCFile.m in Sources */,
 				7A5948C119E375BB00F65F90 /* CCBSequenceProperty.m in Sources */,
@@ -3370,6 +3381,7 @@
 				D3867DA01A329B10009AFFF3 /* CCImage.m in Sources */,
 				D2FEB734194F6C9E00FC0574 /* CCResponderManager.m in Sources */,
 				5BC3CB5A19626FA000C4F0D0 /* CCGestureListener.m in Sources */,
+				D39D34A11A4243ED00B5A115 /* CCViewportNode.m in Sources */,
 				BC9F4E8F19DB632B00B25F01 /* CCPackageManager.m in Sources */,
 				D2FEB735194F6C9E00FC0574 /* CCTouchIOS.m in Sources */,
 				9D03A5F71A02F8C500C651C8 /* CCEffectLighting.m in Sources */,

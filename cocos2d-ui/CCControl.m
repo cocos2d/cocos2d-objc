@@ -91,7 +91,7 @@
 
 - (void) touchMoved:(CCTouch *)touch withEvent:(CCTouchEvent *)event
 {
-    if ([self hitTestWithWorldPos:[touch locationInWorld]])
+    if ([self clippedHitTestWithWorldPos:[touch locationInWorld]])
     {
         if (!_touchInside)
         {
@@ -160,7 +160,7 @@
 
 - (void) mouseDragged:(NSEvent *)event
 {
-    if ([self hitTestWithWorldPos:[event locationInWorld]])
+    if ([self clippedHitTestWithWorldPos:[event locationInWorld]])
     {
         if (!_touchInside)
         {
