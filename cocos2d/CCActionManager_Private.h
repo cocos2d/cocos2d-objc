@@ -24,5 +24,5 @@
 #import "CCActionManager.h"
 
 @interface CCActionManager ()
--(void)migrateActions:(id)target from:(CCActionManager*)oldManager;
+// TODO eliminate file
 @end
