@@ -56,7 +56,7 @@ typedef struct _hashElement {
  *  Fixed timesteps are useful when running actions that applied to nodes with physics bodies attached.
  *  All animations that possess physics nodes will utilize the fixed action manager.
  */
-@interface CCActionManager : NSObject<CCSchedulerTarget> {
+@interface CCActionManager : NSObject<CCSchedulableTarget> {
     tHashElement	*targets;
     tHashElement	*currentTarget;
 	BOOL			currentTargetSalvaged;

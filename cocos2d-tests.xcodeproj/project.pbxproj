@@ -25,6 +25,7 @@
 		758A6C7B18440D5C00D1A8D2 /* ParticleTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 758A6C7A18440D5C00D1A8D2 /* ParticleTest.m */; };
 		758A6C80184410EE00D1A8D2 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 758A6C7F184410EE00D1A8D2 /* Particles */; };
 		75DAC8B11A4240BE003F8244 /* CCImageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 75DAC8B01A4240BE003F8244 /* CCImageTests.m */; };
+		75F4EA251A69847C000E637B /* CCActionsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F4EA241A69847C000E637B /* CCActionsTest.m */; };
 		75F76497185A831B00E2FAFE /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 75F76496185A831B00E2FAFE /* Sounds */; };
 		839B149F19CC1E440000E5E2 /* CCPackageTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 839B149E19CC1E440000E5E2 /* CCPackageTest.m */; };
 		92324E2A18EB635500D78D3F /* CCReaderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 92324E2918EB635500D78D3F /* CCReaderTest.m */; };
@@ -71,7 +72,6 @@
 		D28A2E1F1954F7E900ADC03D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D28A2E1E1954F7E900ADC03D /* OpenGLES.framework */; };
 		D2B4894C1917EE6700C3443A /* CCEffectsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D2B4894B1917EE6700C3443A /* CCEffectsTest.m */; };
 		D2D59897198747DE00BDAF25 /* Music in Resources */ = {isa = PBXBuildFile; fileRef = D2D59896198747DE00BDAF25 /* Music */; };
-		D30DD78A1A326DC80029014B /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D30DD7891A326DC80029014B /* ImageIO.framework */; };
 		D30DD78F1A326DD40029014B /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D30DD78E1A326DD40029014B /* ImageIO.framework */; };
 		D31307BF1A302ABE00A25431 /* CCFileTest.plist.ccp in Resources */ = {isa = PBXBuildFile; fileRef = D31307BE1A302ABE00A25431 /* CCFileTest.plist.ccp */; };
 		D31307C41A302E1100A25431 /* CCFileTest.plist.gz.ccp in Resources */ = {isa = PBXBuildFile; fileRef = D31307C31A302E1100A25431 /* CCFileTest.plist.gz.ccp */; };
@@ -339,6 +339,7 @@
 		758A6C7A18440D5C00D1A8D2 /* ParticleTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParticleTest.m; path = "cocos2d-ui-tests/tests/ParticleTest.m"; sourceTree = SOURCE_ROOT; };
 		758A6C7F184410EE00D1A8D2 /* Particles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Particles; path = Resources/Particles; sourceTree = SOURCE_ROOT; };
 		75DAC8B01A4240BE003F8244 /* CCImageTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCImageTests.m; sourceTree = "<group>"; };
+		75F4EA241A69847C000E637B /* CCActionsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCActionsTest.m; path = "cocos2d-ui-tests/tests/CCActionsTest.m"; sourceTree = SOURCE_ROOT; };
 		75F76496185A831B00E2FAFE /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sounds; path = Resources/Sounds; sourceTree = SOURCE_ROOT; };
 		839B149E19CC1E440000E5E2 /* CCPackageTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCPackageTest.m; path = "cocos2d-ui-tests/tests/CCPackageTest.m"; sourceTree = SOURCE_ROOT; };
 		92324E2918EB635500D78D3F /* CCReaderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCReaderTest.m; sourceTree = "<group>"; };
@@ -392,7 +393,6 @@
 		D2D0E6951950B16300E9103F /* libGLESv3.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLESv3.so; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/ApportableSDK1.0.sdk/usr/lib/armeabi/libGLESv3.so"; sourceTree = "<group>"; };
 		D2D0E6991950B16800E9103F /* libEGL.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libEGL.so; path = "../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/ApportableSDK1.0.sdk/usr/lib/armeabi/libEGL.so"; sourceTree = "<group>"; };
 		D2D59896198747DE00BDAF25 /* Music */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Music; path = Resources/Music; sourceTree = SOURCE_ROOT; };
-		D30DD7891A326DC80029014B /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		D30DD78E1A326DD40029014B /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk/System/Library/Frameworks/ImageIO.framework; sourceTree = DEVELOPER_DIR; };
 		D31307BE1A302ABE00A25431 /* CCFileTest.plist.ccp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CCFileTest.plist.ccp; path = Resources/CCFileTest.plist.ccp; sourceTree = SOURCE_ROOT; };
 		D31307C31A302E1100A25431 /* CCFileTest.plist.gz.ccp */ = {isa = PBXFileReference; lastKnownFileType = file; name = CCFileTest.plist.gz.ccp; path = Resources/CCFileTest.plist.gz.ccp; sourceTree = SOURCE_ROOT; };
@@ -615,6 +615,7 @@
 				D3870C5F18B440150033D885 /* SpritePerformanceTest.m */,
 				B71B088117EA5B6A0082EBC0 /* CCScrollViewTest.m */,
 				D3C9C866188078B900C58900 /* CCSchedulerTest.m */,
+				75F4EA241A69847C000E637B /* CCActionsTest.m */,
 				B7C6238B17ECDF6A00928F91 /* CCTableViewTest.m */,
 				B70AFC2F180F2D7400516435 /* CCTransitionTest.m */,
 				B772F69E1811C8D9005C069B /* CCResponderTest.m */,
@@ -1285,6 +1286,7 @@
 				D340E10F185660BE006E605C /* TilemapTest.m in Sources */,
 				B7E2622117E7D3B2007067F0 /* MainMenu.m in Sources */,
 				D3D6CF5F18BD5F0500A51531 /* CCRendererTest.m in Sources */,
+				75F4EA251A69847C000E637B /* CCActionsTest.m in Sources */,
 				B70AFC30180F2D7400516435 /* CCTransitionTest.m in Sources */,
 				D361055A1A1079A700415E59 /* CCParticleExamples.m in Sources */,
 				758A6C7B18440D5C00D1A8D2 /* ParticleTest.m in Sources */,

@@ -146,7 +146,7 @@
  would only add minimal functionality or just data.
  */
 
-@interface CCNode : CCResponder < CCSchedulerTarget > {
+@interface CCNode : CCResponder < CCSchedulableTarget > {
 	// TODO
 	// DisplayColor and Color are kept separate to allow for cascading color and alpha changes through node children.
 	// Alphas tend to be multiplied together so you can fade groups of objects that are colored differently.

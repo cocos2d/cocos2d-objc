@@ -32,7 +32,7 @@
 
 // Targets are things that can have update: and fixedUpdate: methods called by the scheduler.
 // Scheduled blocks (CCTimers) can be associated with a target to inherit their priority and paused state.
-@protocol CCSchedulerTarget<NSObject>
+@protocol CCSchedulableTarget<NSObject>
 
 // Used to break ties for scheduled blocks, updated: and fixedUpdate: methods.
 // Targets are sorted by priority so lower priorities are called first.

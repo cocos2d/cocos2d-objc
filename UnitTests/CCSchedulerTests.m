@@ -15,7 +15,7 @@
 static CCTime inf = INFINITY;
 
 
-@interface SequenceTester : NSObject<CCSchedulerTarget>
+@interface SequenceTester : NSObject<CCSchedulableTarget>
 @property(nonatomic, strong) NSMutableArray *sequence;
 @property(nonatomic, assign) NSInteger priority;
 @property(nonatomic, copy) NSString *name;
@@ -37,7 +37,7 @@ static CCTime inf = INFINITY;
 @end
 
 
-@interface ScheduledRemoveTester : NSObject<CCSchedulerTarget>
+@interface ScheduledRemoveTester : NSObject<CCSchedulableTarget>
 -(id)initWithScheduler:(CCScheduler *)scheduler removalTime:(int)removalTime;
 @end
 
@@ -74,11 +74,11 @@ static CCTime inf = INFINITY;
 @end
 
 
-@interface NSNumber(CCSchedulerTarget)<CCSchedulerTarget>
+@interface NSNumber(CCSchedulableTarget)<CCSchedulableTarget>
 @end
 
 
-@implementation NSNumber(CCSchedulerTarget)
+@implementation NSNumber(CCSchedulableTarget)
 
 -(NSInteger)priority {return self.integerValue;}
 

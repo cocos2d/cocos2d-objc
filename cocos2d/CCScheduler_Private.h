@@ -40,24 +40,24 @@ Update the scheduler by stepping forward in time. You should NEVER call this met
 */
 -(void) update:(CCTime)dt;
 
--(CCTimer *) scheduleBlock:(CCTimerBlock)block forTarget:(NSObject<CCSchedulerTarget> *)target withDelay:(CCTime)delay;
+-(CCTimer *) scheduleBlock:(CCTimerBlock)block forTarget:(NSObject<CCSchedulableTarget> *)target withDelay:(CCTime)delay;
 
--(void) scheduleTarget:(NSObject<CCSchedulerTarget> *)target;
+-(void) scheduleTarget:(NSObject<CCSchedulableTarget> *)target;
 
 /**
  Unschedules all selectors and blocks for a given target.
  This also includes the "update" selector.
  */
--(void) unscheduleTarget:(NSObject<CCSchedulerTarget> *)target;
+-(void) unscheduleTarget:(NSObject<CCSchedulableTarget> *)target;
 
 // This is used only for testing at the moment.
--(BOOL) isTargetScheduled:(NSObject<CCSchedulerTarget> *)target;
+-(BOOL) isTargetScheduled:(NSObject<CCSchedulableTarget> *)target;
 
--(void) setPaused:(BOOL)paused target:(NSObject<CCSchedulerTarget> *)target;
+-(void) setPaused:(BOOL)paused target:(NSObject<CCSchedulableTarget> *)target;
 
--(BOOL) isTargetPaused:(NSObject<CCSchedulerTarget> *)target;
+-(BOOL) isTargetPaused:(NSObject<CCSchedulableTarget> *)target;
 
--(NSArray *) timersForTarget:(NSObject<CCSchedulerTarget> *)target;
+-(NSArray *) timersForTarget:(NSObject<CCSchedulableTarget> *)target;
 
 @end
 

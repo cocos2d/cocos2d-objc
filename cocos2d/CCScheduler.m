@@ -43,7 +43,7 @@
 
 @interface CCScheduledTarget : NSObject
 
-@property(nonatomic, readonly) NSObject<CCSchedulerTarget> *target;
+@property(nonatomic, readonly) NSObject<CCSchedulableTarget> *target;
 
 @property(nonatomic, strong) CCTimer *timers;
 @property(nonatomic, readonly) BOOL empty;
@@ -71,13 +71,13 @@
 @end
 
 
-@interface CCScheduler (Private) <CCSchedulerTarget>
+@interface CCScheduler (Private) <CCSchedulableTarget>
 -(void)scheduleTimer:(CCTimer *)timer retain:(BOOL)retain;
 @end
 
 
 @implementation CCScheduledTarget {
-	__unsafe_unretained NSObject<CCSchedulerTarget> *_target;
+	__unsafe_unretained NSObject<CCSchedulableTarget> *_target;
 	CCTimer *_timers;
 }
 
@@ -90,7 +90,7 @@ InvokeMethods(NSArray *methods, SEL selector, CCTime dt)
 	}
 }
 
--(id)initWithTarget:(NSObject<CCSchedulerTarget> *)target
+-(id)initWithTarget:(NSObject<CCSchedulableTarget> *)target
 {
 	if((self = [super init])){
 		_target = target;
@@ -137,11 +137,11 @@ RemoveRecursive(CCTimer *timer, CCTimer *skip)
 @end
 
 
-@interface NSNull(CCSchedulerTarget)<CCSchedulerTarget>
+@interface NSNull(CCSchedulableTarget)<CCSchedulableTarget>
 @end
 
 
-@implementation NSNull(CCSchedulerTarget)
+@implementation NSNull(CCSchedulableTarget)
 -(NSInteger)priority {return NSIntegerMax;}
 @end
 
@@ -340,7 +340,7 @@ CompareTimers(const void *a, const void *b, void *context)
 -(CCTime)fixedUpdateInterval {return _fixedUpdateTimer.repeatInterval;}
 -(void)setFixedUpdateInterval:(CCTime)fixedTimeStep {_fixedUpdateTimer.repeatInterval = fixedTimeStep;}
 
--(CCScheduledTarget *)scheduledTargetForTarget:(NSObject<CCSchedulerTarget> *)target insert:(BOOL)insert
+-(CCScheduledTarget *)scheduledTargetForTarget:(NSObject<CCSchedulableTarget> *)target insert:(BOOL)insert
 {
 	// Need to transform nil -> NSNulls.
 	target = (target == nil ? [NSNull null] : target);
@@ -365,7 +365,7 @@ CompareTimers(const void *a, const void *b, void *context)
 	timer.scheduled = YES;
 }
 
--(CCTimer *)scheduleBlock:(CCTimerBlock)block forTarget:(NSObject<CCSchedulerTarget> *)target withDelay:(CCTime)delay
+-(CCTimer *)scheduleBlock:(CCTimerBlock)block forTarget:(NSObject<CCSchedulableTarget> *)target withDelay:(CCTime)delay
 {
 	CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
 	
@@ -440,7 +440,7 @@ PrioritySearch(NSArray *array, NSInteger priority)
 	return array.count;
 }
 
--(void)scheduleTarget:(NSObject<CCSchedulerTarget> *)target
+-(void)scheduleTarget:(NSObject<CCSchedulableTarget> *)target
 {
 	BOOL update = [target respondsToSelector:@selector(update:)];
 	BOOL fixedUpdate = [target respondsToSelector:@selector(fixedUpdate:)];
@@ -460,7 +460,7 @@ PrioritySearch(NSArray *array, NSInteger priority)
 	}
 }
 
--(void)unscheduleTarget:(NSObject<CCSchedulerTarget> *)target
+-(void)unscheduleTarget:(NSObject<CCSchedulableTarget> *)target
 {
 	CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:NO];
 	
@@ -482,24 +482,24 @@ PrioritySearch(NSArray *array, NSInteger priority)
 	}
 }
 
--(BOOL)isTargetScheduled:(NSObject<CCSchedulerTarget> *)target
+-(BOOL)isTargetScheduled:(NSObject<CCSchedulableTarget> *)target
 {
 	return ([self scheduledTargetForTarget:target insert:NO] != nil);
 }
 
--(void)setPaused:(BOOL)paused target:(NSObject<CCSchedulerTarget> *)target
+-(void)setPaused:(BOOL)paused target:(NSObject<CCSchedulableTarget> *)target
 {
 	CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:NO];
 	scheduledTarget.paused = paused;
 }
 
--(BOOL)isTargetPaused:(NSObject<CCSchedulerTarget> *)target
+-(BOOL)isTargetPaused:(NSObject<CCSchedulableTarget> *)target
 {
 	CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:NO];
 	return scheduledTarget.paused;
 }
 
--(NSArray *)timersForTarget:(NSObject<CCSchedulerTarget> *)target
+-(NSArray *)timersForTarget:(NSObject<CCSchedulableTarget> *)target
 {
 	CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:NO];
 	

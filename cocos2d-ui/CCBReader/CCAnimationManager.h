@@ -54,7 +54,7 @@
  
  @note Animation names are case sensitive.
  */
-@interface CCAnimationManager : NSObject <CCSchedulerTarget>
+@interface CCAnimationManager : NSObject <CCSchedulableTarget>
 {
     NSMutableDictionary* _nodeSequences;
     NSMutableDictionary* _baseValues;
