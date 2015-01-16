@@ -36,7 +36,7 @@
 // cocos2d imports
 #import "CCScheduler.h"
 #import <objc/message.h>
-
+#import "CCAction.h"
 
 #define FOREACH_TIMER(__scheduledTarget__, __timerVar__) for(CCTimer *__timerVar__ = __scheduledTarget__->_timers; __timerVar__; __timerVar__ = __timerVar__.next)
 
@@ -49,6 +49,7 @@
 @property(nonatomic, readonly) BOOL empty;
 @property(nonatomic, assign) BOOL paused;
 @property(nonatomic, assign) BOOL enableUpdates;
+@property(nonatomic, strong) NSMutableArray * actions;
 
 @end
 
@@ -79,6 +80,7 @@
 @implementation CCScheduledTarget {
 	__unsafe_unretained NSObject<CCSchedulableTarget> *_target;
 	CCTimer *_timers;
+ 
 }
 
 static void
@@ -88,6 +90,14 @@ InvokeMethods(NSArray *methods, SEL selector, CCTime dt)
 		typedef void (*Func)(id, SEL, CCTime);
 		if(!scheduledTarget->_paused) ((Func)objc_msgSend)(scheduledTarget->_target, selector, dt);
 	}
+}
+
+-(NSMutableArray *) actions
+{
+    if(_actions == nil){
+        _actions = [[NSMutableArray alloc] init];
+    }
+    return _actions;
 }
 
 -(id)initWithTarget:(NSObject<CCSchedulableTarget> *)target
@@ -247,7 +257,8 @@ static CCTimerBlock INVALIDATED_BLOCK = ^(CCTimer *timer){};
 	CFMutableDictionaryRef _scheduledTargets;
 	
 	NSMutableArray *_updates;
-	NSMutableArray *_fixedUpdates;
+    NSMutableArray *_fixedUpdates;
+    NSMutableArray *_scheduledTargetsWithActions;
 	
 	CCTimer *_fixedUpdateTimer;
 }
@@ -306,6 +317,7 @@ CompareTimers(const void *a, const void *b, void *context)
 		
 		_updates = [NSMutableArray array];
 		_fixedUpdates = [NSMutableArray array];
+        _scheduledTargetsWithActions = [NSMutableArray array];
 		
 		// Annoyance to avoid a retain cycle.
         __weak __typeof(self) _self = self;
@@ -317,6 +329,8 @@ CompareTimers(const void *a, const void *b, void *context)
 				InvokeMethods(sceduler->_fixedUpdates, @selector(fixedUpdate:), timer.repeatInterval);
 				sceduler->_lastFixedUpdateTime = timer.invokeTime;
 			}
+        #warning TODO: also invoke fixed update actions:
+            
 		} forTarget:self withDelay:0];
 
 		_fixedUpdateTimer.repeatCount = CCTimerRepeatForever;
@@ -440,11 +454,12 @@ PrioritySearch(NSArray *array, NSInteger priority)
 	return array.count;
 }
 
+
 -(void)scheduleTarget:(NSObject<CCSchedulableTarget> *)target
 {
 	BOOL update = [target respondsToSelector:@selector(update:)];
 	BOOL fixedUpdate = [target respondsToSelector:@selector(fixedUpdate:)];
-	
+    
 	// Don't bother scheduling anything if it doesn't implement any methods.
 	if(update || fixedUpdate){
 		CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
@@ -457,7 +472,8 @@ PrioritySearch(NSArray *array, NSInteger priority)
 			if(update) [_updates insertObject:scheduledTarget atIndex:PrioritySearch(_updates, priority)];
 			if(fixedUpdate) [_fixedUpdates insertObject:scheduledTarget atIndex:PrioritySearch(_fixedUpdates, priority)];
 		}
-	}
+        
+    }
 }
 
 -(void)unscheduleTarget:(NSObject<CCSchedulableTarget> *)target
@@ -517,7 +533,183 @@ PrioritySearch(NSArray *array, NSInteger priority)
 	[self updateTo:_currentTime + clampedDelta];
 	
 	InvokeMethods(_updates, @selector(update:), clampedDelta);
+    
+    #warning TODO: also invoke update actions:
+    [self updateActions:dt];
+    
 	_lastUpdateTime = _currentTime;
 }
+
+//MARK: CCActions
+
+
+/**
+ *  Adds an action to a target
+ *  If the target is already present, then the action will be added to the existing target.
+ *  If the target is not present, a new instance of this target will be created either paused or paused, and the action will be added to the newly created target.
+ *  When the target is paused, the queued actions won't be 'ticked'.
+ *
+ *  @param action The action to add.
+ *  @param target The target to add the action to.
+ *  @param paused Defines if action will start paused.
+ */
+-(void)addAction:(CCAction*)action target:(NSObject<CCSchedulableTarget> *)target paused:(BOOL)paused
+{
+    [action startWithTarget:target];
+    
+    // retrieve or create scheduled target:
+    CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
+    [scheduledTarget.actions addObject:action];
+    [_scheduledTargetsWithActions addObject:scheduledTarget];
+}
+
+/** Removes all actions from all the targets. */
+-(void)removeAllActions
+{
+    for (CCScheduledTarget *st in _scheduledTargetsWithActions) {
+        st.actions = nil;
+    }
+}
+
+/**
+ *  Removes all actions from a certain target.
+ *  All the actions that belongs to the target will be removed.
+ *
+ *  @param target The target to remove action from.
+ */
+-(void)removeAllActionsFromTarget:(NSObject<CCSchedulableTarget> *)target
+{
+    CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
+    scheduledTarget.actions = nil;
+}
+
+/**
+ *  Removes an action given an action reference.
+ *
+ *  @param action Action to remove.
+ */
+-(void)removeAction:(CCAction*) action
+{
+    for (CCScheduledTarget *st in _scheduledTargetsWithActions) {
+        if([st.actions containsObject:action]){
+            [st.actions removeObject:action];
+        }
+    }
+}
+
+/**
+ *  Removes an action given its tag and the target.
+ *
+ *  @param tag    Tag of the action to remove.
+ *  @param target Target top remove action from.
+ */
+-(void)removeActionByTag:(NSInteger)tag target:(NSObject<CCSchedulableTarget> *)target
+{
+    CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
+    NSMutableArray *keep = [NSMutableArray array];
+    for (CCAction *action in scheduledTarget.actions) {
+        if (action.tag != tag){
+            [keep addObject:action];
+        }
+    }
+    scheduledTarget.actions = keep;
+}
+
+/**
+ *  Gets an action given its tag an a target.
+ *
+ *  @param tag    Tag of the action to retrieve
+ *  @param target Target to retrieve action from.
+ *
+ *  @return The Action the with the given tag.
+ */
+-(CCAction*)getActionByTag:(NSInteger) tag target:(NSObject<CCSchedulableTarget> *)target
+{
+    CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
+    for (CCAction *action in scheduledTarget.actions) {
+        if (action.tag == tag) return action;
+    }
+    return nil;
+}
+
+/**
+ *  Returns the numbers of actions that are running in a certain target.
+ *  Composable actions are counted as 1 action.
+ *  Example:
+ *  - If you are running 1 Sequence of 7 actions, it will return 1.
+ *  - If you are running 7 Sequences of 2 actions, it will return 7.
+ *
+ *  @param target Target to return number of running action from.
+ *
+ *  @return Number of running actions.
+ */
+-(NSUInteger) numberOfRunningActionsInTarget:(NSObject<CCSchedulableTarget> *)target
+{
+    CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
+    return [scheduledTarget.actions count];
+}
+/**
+ *  Pauses the target: all running actions and newly added actions will be paused.
+ *
+ *  @param target Target to pause all actions on.
+ */
+-(void)pauseTarget:(NSObject<CCSchedulableTarget> *)target
+{
+    CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
+    scheduledTarget.paused = true;
+}
+
+/**
+ *  Resumes the target. All queued actions will be resumed.
+ *
+ *  @param target Target to resume all action on.
+ */
+-(void)resumeTarget:(NSObject<CCSchedulableTarget> *)target
+{
+    CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
+    scheduledTarget.paused = false;
+}
+
+/**
+ *  Pauses all running actions, returning a list of targets whose actions were paused.
+ *
+ *  @return Set of targets which were paused.
+ */
+-(void)pauseAllRunningActions
+{
+    for (CCScheduledTarget *st in _scheduledTargetsWithActions) {
+        st.paused = true;
+    }
+}
+
+/**
+ *  Resume a set of targets (convenience function to reverse a pauseAllRunningActions call).
+ *
+ *  @param targetsToResume Set of target to resume.
+ */
+-(void)resumeTargets:(NSSet *)targetsToResume
+{
+    for (CCScheduledTarget *st in _scheduledTargetsWithActions) {
+        st.paused = false;
+    }
+
+}
+
+-(void) updateActions: (CCTime)dt
+{
+    for (CCScheduledTarget *st in _scheduledTargetsWithActions) {
+        NSMutableArray * keep = [NSMutableArray array];
+        for (CCAction *action in st.actions) {
+            [action step: dt];
+            if([action isDone]){
+                [action stop];
+            }else{
+                [keep addObject:action];
+            }
+        }
+        st.actions = keep;
+    }
+}
+
 
 @end

@@ -64,7 +64,7 @@
 	CCScheduler *_scheduler;
 	
 	// ActionManager used to handle all the actions.
-	CCActionManager	*_actionManager;
+//	CCActionManager	*_actionManager;
 	
     //Animation Manager used to handle CCB animations
     CCAnimationManager * _animationManager;
@@ -150,7 +150,7 @@ RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
 		_visible = YES;
 
 		CCDirector *director = [CCDirector sharedDirector];
-		_actionManager = [[director actionManager] retain];
+//		_actionManager = [[director actionManager] retain];
 		_scheduler = [[director scheduler] retain];
         
 		// set default touch handling
@@ -191,7 +191,7 @@ RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
     [_children release];
     
     [_scheduler release];
-    [_actionManager release];
+//    [_actionManager release];
     [_animationManager release];
     [_physicsBody release];
     
@@ -1054,54 +1054,56 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 
 #pragma mark CCNode Actions
 
+#warning remove
 -(void) setActionManager:(CCActionManager *)actionManager
 {
-	if( actionManager != _actionManager ) {
-		[self stopAllActions];
-        
-        [_actionManager autorelease];
-		_actionManager = [actionManager retain];
-	}
+//	if( actionManager != _actionManager ) {
+//		[self stopAllActions];
+//        
+//        [_actionManager autorelease];
+//		_actionManager = [actionManager retain];
+//	}
 }
-
+#warning remove
 -(CCActionManager*) actionManager
 {
-	return _actionManager;
+	return nil;
 }
 
 -(CCAction*) runAction:(CCAction*) action
 {
 	NSAssert( action != nil, @"Argument must be non-nil");
 
-	[_actionManager addAction:action target:self paused:!self.active];
+    
+	[_scheduler addAction:action target:self paused:!self.active];
 	return action;
 }
 
 -(void) stopAllActions
 {
-	[_actionManager removeAllActionsFromTarget:self];
+	[_scheduler removeAllActionsFromTarget:self];
 }
 
 -(void) stopAction: (CCAction*) action
 {
-	[_actionManager removeAction:action];
+	[_scheduler removeAction:action];
 }
 
 -(void) stopActionByTag:(NSInteger)aTag
 {
 	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
-	[_actionManager removeActionByTag:aTag target:self];
+	[_scheduler removeActionByTag:aTag target:self];
 }
 
 -(CCAction*) getActionByTag:(NSInteger) aTag
 {
 	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
-	return 	[_actionManager getActionByTag:aTag target:self];
+	return 	[_scheduler getActionByTag:aTag target:self];
 }
 
 -(NSUInteger) numberOfRunningActions
 {
-	return [_actionManager numberOfRunningActionsInTarget:self];
+	return [_scheduler numberOfRunningActionsInTarget:self];
 }
 
 -(CCAnimationManager*)animationManager
@@ -1236,11 +1238,11 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 	
 	if(isRunning && !wasRunning){
 		[_scheduler setPaused:NO target:self];
-		[_actionManager resumeTarget:self];
+//		[_actionManager resumeTarget:self];
         [_animationManager setPaused:NO];
 	} else if(!isRunning && wasRunning){
 		[_scheduler setPaused:YES target:self];
-		[_actionManager pauseTarget:self];
+//		[_actionManager pauseTarget:self];
         [_animationManager setPaused:YES];
 	}
 }

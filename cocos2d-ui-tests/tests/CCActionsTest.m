@@ -1,7 +1,7 @@
 #import "TestBase.h"
 #import "CCScheduler_Private.h"
 
-#define CLASS_NAME CCActionTest
+#define CLASS_NAME CCActionsTest
 
 @interface CLASS_NAME : TestBase @end
 @implementation CLASS_NAME
