@@ -32,6 +32,52 @@
     _fileUtils.searchPaths = @[[self fullPathForFile:@"Resources"]];
 }
 
+#pragma mark - Tests for non image files
+
+- (void)testFileNamedWithTextFile
+{
+    [self createEmptyFilesRelativeToDirectory:@"Resources/dialogs" files:@[
+        @"characters.txt",
+    ]];
+
+    NSError *error;
+    CCFile *file = [_fileUtils fileNamed:@"dialogs/characters.txt" options:nil error:&error];
+
+    XCTAssertNil(error);
+    XCTAssertNotNil(file);
+    XCTAssertEqualObjects(file.absoluteFilePath, [self fullPathForFile:@"Resources/dialogs/characters.txt"]);
+}
+
+- (void)testFileNamedWithLocalizedTextFileInDatabase
+{
+    NSString *jsonResources = MULTILINESTRING(
+        {
+            "dialogs/merchants.txt" : {
+                "localizations" : {
+                    "es" : "dialogs/merchants-es.txt"
+                },
+                "filename" : "dialogs/merchants.txt"
+            }
+        }
+    );
+
+    [self createEmptyFilesRelativeToDirectory:@"Resources/dialogs" files:@[
+            @"merchants.txt",
+            @"merchants-es.txt"
+    ]];
+
+    [self addDatabaseWithJSON:jsonResources forSearchPath:[self fullPathForFile:@"Resources"]];
+
+    [self mockPreferredLanguages:@[@"es"]];
+
+    NSError *error;
+    CCFile *file = [_fileUtils fileNamed:@"dialogs/merchants-es.txt" options:nil error:&error];
+
+    XCTAssertNil(error);
+    XCTAssertNotNil(file);
+    XCTAssertEqualObjects(file.absoluteFilePath, [self fullPathForFile:@"Resources/dialogs/merchants-es.txt"]);
+}
+
 
 #pragma mark - Tests for search order with database
 
