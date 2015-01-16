@@ -30,7 +30,6 @@
 #import "CCNode_Private.h"
 
 #import "CCDirector_Private.h"
-#import "CCActionManager_Private.h"
 #import "CCScheduler_Private.h"
 
 #import "CCAnimationManager.h"
@@ -39,7 +38,7 @@
 #import "CCColor.h"
 #import "CCLayout.h"
 #import "CCScene.h"
-#import "CCActionManager.h"
+#import "CCAction.h"
 
 #pragma mark - Node
 
@@ -62,10 +61,7 @@
 	
 	// Scheduler used to schedule timers and updates/
 	CCScheduler *_scheduler;
-	
-	// ActionManager used to handle all the actions.
-//	CCActionManager	*_actionManager;
-	
+
     //Animation Manager used to handle CCB animations
     CCAnimationManager * _animationManager;
 	
@@ -1022,7 +1018,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 	
 	//If there's a physics node in the hierarchy, all actions should run on a fixed timestep.
 	BOOL hasPhysicsNode = self.physicsNode != nil;
-    [CCDirector sharedDirector].actionManager.fixedMode = hasPhysicsNode;
+#warning [CCDirector sharedDirector].actionManager.fixedMode = hasPhysicsNode;
     
     if(_animationManager) {
         [_animationManager performSelector:@selector(onEnter)];
@@ -1054,27 +1050,9 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 
 #pragma mark CCNode Actions
 
-#warning remove
--(void) setActionManager:(CCActionManager *)actionManager
-{
-//	if( actionManager != _actionManager ) {
-//		[self stopAllActions];
-//        
-//        [_actionManager autorelease];
-//		_actionManager = [actionManager retain];
-//	}
-}
-#warning remove
--(CCActionManager*) actionManager
-{
-	return nil;
-}
-
 -(CCAction*) runAction:(CCAction*) action
 {
 	NSAssert( action != nil, @"Argument must be non-nil");
-
-    
 	[_scheduler addAction:action target:self paused:!self.active];
 	return action;
 }

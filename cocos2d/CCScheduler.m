@@ -698,6 +698,7 @@ PrioritySearch(NSArray *array, NSInteger priority)
 -(void) updateActions: (CCTime)dt
 {
     for (CCScheduledTarget *st in _scheduledTargetsWithActions) {
+        if(st.paused) continue;
         NSMutableArray * keep = [NSMutableArray array];
         for (CCAction *action in st.actions) {
             [action step: dt];

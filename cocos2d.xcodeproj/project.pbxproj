@@ -73,8 +73,6 @@
 		50BAF3990F33CCD8003F654C /* ccMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 50BAF3970F33CCD8003F654C /* ccMacros.h */; };
 		50C508C60F7C194400799124 /* CCFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 50C508C40F7C194400799124 /* CCFileUtils.h */; };
 		50C508C70F7C194400799124 /* CCFileUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C508C50F7C194400799124 /* CCFileUtils.m */; };
-		50CB3B0E100AC43A00B7A750 /* CCActionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CB3B0C100AC43A00B7A750 /* CCActionManager.h */; };
-		50CB3B0F100AC43A00B7A750 /* CCActionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CB3B0D100AC43A00B7A750 /* CCActionManager.m */; };
 		50CFAC391023660000175934 /* CCTMXXMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CFAC371023660000175934 /* CCTMXXMLParser.h */; };
 		50D2AC9510E90DFA0068ECEB /* CCTiledMapLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 50D2AC9110E90DFA0068ECEB /* CCTiledMapLayer.h */; };
 		50D2AC9710E90DFA0068ECEB /* CCTiledMapObjectGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 50D2AC9310E90DFA0068ECEB /* CCTiledMapObjectGroup.h */; };
@@ -194,8 +192,6 @@
 		7A5946D819E372F700F65F90 /* CCPackageInstaller.h in Headers */ = {isa = PBXBuildFile; fileRef = 83E1A88219C8ACDC000A3BCA /* CCPackageInstaller.h */; };
 		7A5946DA19E372F700F65F90 /* CCPackageHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = E525FF8C7C018BF691F36044 /* CCPackageHelper.h */; };
 		7A5946DC19E372F700F65F90 /* CCPackage_private.h in Headers */ = {isa = PBXBuildFile; fileRef = E525FE4C98BCF1228ECC9623 /* CCPackage_private.h */; };
-		7A5946DD19E372F700F65F90 /* CCActionManager_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 92FF6C7318F33A2A005B7139 /* CCActionManager_Private.h */; };
-		7A5946DE19E372F800F65F90 /* CCActionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CB3B0C100AC43A00B7A750 /* CCActionManager.h */; };
 		7A5946E019E372F800F65F90 /* CCAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2520DFDEAFF00C013A5 /* CCAction.h */; };
 		7A5946E219E372F800F65F90 /* CCActionInstant.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F2580DFDEAFF00C013A5 /* CCActionInstant.h */; };
 		7A5946E419E372F800F65F90 /* CCActionInterval.h in Headers */ = {isa = PBXBuildFile; fileRef = 5018F25A0DFDEAFF00C013A5 /* CCActionInterval.h */; };
@@ -338,7 +334,6 @@
 		7A59482219E375A700F65F90 /* CCPackageCocos2dEnabler.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E1A87F19C8ACDC000A3BCA /* CCPackageCocos2dEnabler.m */; };
 		7A59482419E375A700F65F90 /* CCPackageInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E1A88319C8ACDC000A3BCA /* CCPackageInstaller.m */; };
 		7A59482619E375A700F65F90 /* CCPackageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F9EA4B5DD37D0418869E /* CCPackageHelper.m */; };
-		7A59482A19E375A700F65F90 /* CCActionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CB3B0D100AC43A00B7A750 /* CCActionManager.m */; };
 		7A59482C19E375A800F65F90 /* CCAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F2530DFDEAFF00C013A5 /* CCAction.m */; };
 		7A59482E19E375A800F65F90 /* CCActionInstant.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F2590DFDEAFF00C013A5 /* CCActionInstant.m */; };
 		7A59483019E375A800F65F90 /* CCActionInterval.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F25B0DFDEAFF00C013A5 /* CCActionInterval.m */; };
@@ -708,7 +703,6 @@
 		D2FEB64A194F6C9E00FC0574 /* CCTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E260D618171D2000A0E872 /* CCTextField.h */; };
 		D2FEB64B194F6C9E00FC0574 /* CCBReader.h in Headers */ = {isa = PBXBuildFile; fileRef = B7D273061822F4AA0054849B /* CCBReader.h */; };
 		D2FEB64C194F6C9E00FC0574 /* CCEffectPixellate.h in Headers */ = {isa = PBXBuildFile; fileRef = 9DF3761F191C594A00C6D27A /* CCEffectPixellate.h */; };
-		D2FEB64D194F6C9E00FC0574 /* CCActionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CB3B0C100AC43A00B7A750 /* CCActionManager.h */; };
 		D2FEB64E194F6C9E00FC0574 /* CCTiledMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 509D0816101E4FCE007E1749 /* CCTiledMap.h */; };
 		D2FEB652194F6C9E00FC0574 /* CCTMXXMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CFAC371023660000175934 /* CCTMXXMLParser.h */; };
 		D2FEB653194F6C9E00FC0574 /* CCRenderTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = 50316AA410291280003ACFE7 /* CCRenderTexture.h */; };
@@ -801,7 +795,6 @@
 		D2FEB6DD194F6C9E00FC0574 /* CCTiledMapObjectGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 50D2AC9410E90DFA0068ECEB /* CCTiledMapObjectGroup.m */; };
 		D2FEB6DE194F6C9E00FC0574 /* CGPointExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 503798C50F912C2000986724 /* CGPointExtension.m */; };
 		D2FEB6DF194F6C9E00FC0574 /* CCParticleSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 50D413250F9A3FE00040C3C8 /* CCParticleSystem.m */; };
-		D2FEB6E1194F6C9E00FC0574 /* CCActionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CB3B0D100AC43A00B7A750 /* CCActionManager.m */; };
 		D2FEB6E2194F6C9E00FC0574 /* CCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E775CF18527EF0004221AA /* CCAppDelegate.m */; };
 		D2FEB6E3194F6C9E00FC0574 /* CCBReader.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D273071822F4AA0054849B /* CCBReader.m */; };
 		D2FEB6EA194F6C9E00FC0574 /* CCEffectStack.m in Sources */ = {isa = PBXBuildFile; fileRef = D272032118FC89A000B100FF /* CCEffectStack.m */; };
@@ -1150,8 +1143,6 @@
 		50BAF3970F33CCD8003F654C /* ccMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccMacros.h; sourceTree = "<group>"; };
 		50C508C40F7C194400799124 /* CCFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtils.h; sourceTree = "<group>"; };
 		50C508C50F7C194400799124 /* CCFileUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCFileUtils.m; sourceTree = "<group>"; };
-		50CB3B0C100AC43A00B7A750 /* CCActionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionManager.h; sourceTree = "<group>"; };
-		50CB3B0D100AC43A00B7A750 /* CCActionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionManager.m; sourceTree = "<group>"; };
 		50CFAC371023660000175934 /* CCTMXXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXXMLParser.h; sourceTree = "<group>"; };
 		50CFAC381023660000175934 /* CCTMXXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTMXXMLParser.m; sourceTree = "<group>"; };
 		50D2AC9110E90DFA0068ECEB /* CCTiledMapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTiledMapLayer.h; sourceTree = "<group>"; };
@@ -1187,9 +1178,6 @@
 		5BC1DE291A2E2099009C2E67 /* NSEvent+CC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSEvent+CC.m"; sourceTree = "<group>"; };
 		5BC3CB5719626FA000C4F0D0 /* CCGestureListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCGestureListener.h; path = Android/CCGestureListener.h; sourceTree = "<group>"; };
 		5BC3CB5819626FA000C4F0D0 /* CCGestureListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCGestureListener.m; path = Android/CCGestureListener.m; sourceTree = "<group>"; };
-		5BF3267A195F8D8800D9A51A /* cocos2dJava.jar */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = archive.jar; path = cocos2dJava.jar; sourceTree = BUILT_PRODUCTS_DIR; };
-		5BF3268C195F8E0300D9A51A /* CCActivity.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = CCActivity.java; sourceTree = "<group>"; };
-		5BF3268D195F8E0300D9A51A /* CCGLView.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = CCGLView.java; sourceTree = "<group>"; };
 		5BF32696195F947800D9A51A /* CCActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCActivity.h; path = Android/CCActivity.h; sourceTree = "<group>"; };
 		5BF32697195F947800D9A51A /* CCActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCActivity.m; path = Android/CCActivity.m; sourceTree = "<group>"; };
 		75F10CBF1A65E1E7008E737B /* CCScheduler_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScheduler_Private.h; sourceTree = "<group>"; };
@@ -1223,7 +1211,6 @@
 		83E1A88219C8ACDC000A3BCA /* CCPackageInstaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackageInstaller.h; sourceTree = "<group>"; };
 		83E1A88319C8ACDC000A3BCA /* CCPackageInstaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageInstaller.m; sourceTree = "<group>"; };
 		83E1A88D19C8C19D000A3BCA /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		92FF6C7318F33A2A005B7139 /* CCActionManager_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCActionManager_Private.h; sourceTree = "<group>"; };
 		9D1B4A941A02D51600B2DD9B /* CCLightNode_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCLightNode_Private.h; sourceTree = "<group>"; };
 		9D1B4A971A02E90300B2DD9B /* CCLightGroups.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLightGroups.h; sourceTree = "<group>"; };
 		9D69E6D419DF604800C2749C /* CCLightNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLightNode.h; sourceTree = "<group>"; };
@@ -1730,9 +1717,6 @@
 		50A24E770F3780A2007CAEB0 /* Actions */ = {
 			isa = PBXGroup;
 			children = (
-				92FF6C7318F33A2A005B7139 /* CCActionManager_Private.h */,
-				50CB3B0C100AC43A00B7A750 /* CCActionManager.h */,
-				50CB3B0D100AC43A00B7A750 /* CCActionManager.m */,
 				5018F2520DFDEAFF00C013A5 /* CCAction.h */,
 				5018F2530DFDEAFF00C013A5 /* CCAction.m */,
 				5018F2580DFDEAFF00C013A5 /* CCActionInstant.h */,
@@ -2337,7 +2321,6 @@
 				D268FE13198078FF00ECBCD0 /* CCEffectReflection.h in Headers */,
 				B7D273131822F4AA0054849B /* CCBReader.h in Headers */,
 				9DF37621191C594A00C6D27A /* CCEffectPixellate.h in Headers */,
-				50CB3B0E100AC43A00B7A750 /* CCActionManager.h in Headers */,
 				509D0818101E4FCE007E1749 /* CCTiledMap.h in Headers */,
 				D31C795219994197007921E1 /* CCMetalSupport_Private.h in Headers */,
 				D34CAD6719C3A7A5009BED7A /* CCRendererBasicTypes.h in Headers */,
@@ -2539,9 +2522,7 @@
 				7A5946D819E372F700F65F90 /* CCPackageInstaller.h in Headers */,
 				7A5946DA19E372F700F65F90 /* CCPackageHelper.h in Headers */,
 				7A5946DC19E372F700F65F90 /* CCPackage_private.h in Headers */,
-				7A5946DD19E372F700F65F90 /* CCActionManager_Private.h in Headers */,
 				9D1B4A9B1A02E90300B2DD9B /* CCLightGroups.h in Headers */,
-				7A5946DE19E372F800F65F90 /* CCActionManager.h in Headers */,
 				7A5946E019E372F800F65F90 /* CCAction.h in Headers */,
 				7A5946E219E372F800F65F90 /* CCActionInstant.h in Headers */,
 				7A5946E419E372F800F65F90 /* CCActionInterval.h in Headers */,
@@ -2701,7 +2682,6 @@
 				D2FEB64A194F6C9E00FC0574 /* CCTextField.h in Headers */,
 				D2FEB64B194F6C9E00FC0574 /* CCBReader.h in Headers */,
 				D2FEB64C194F6C9E00FC0574 /* CCEffectPixellate.h in Headers */,
-				D2FEB64D194F6C9E00FC0574 /* CCActionManager.h in Headers */,
 				D2FEB64E194F6C9E00FC0574 /* CCTiledMap.h in Headers */,
 				BC9F4E9819DB644600B25F01 /* CCPackageManager.h in Headers */,
 				BC9F4E9919DB644900B25F01 /* CCPackageManagerDelegate.h in Headers */,
@@ -3050,7 +3030,6 @@
 				503798C70F912C2000986724 /* CGPointExtension.m in Sources */,
 				D268FE1B1980791400ECBCD0 /* CCEffectRefraction.m in Sources */,
 				50D413270F9A3FE00040C3C8 /* CCParticleSystem.m in Sources */,
-				50CB3B0F100AC43A00B7A750 /* CCActionManager.m in Sources */,
 				D3903B11199528A0003AA81A /* CCRenderDispatch.m in Sources */,
 				83E1A86319C8ACA0000A3BCA /* CCPackage.m in Sources */,
 				B7E775D118527EF0004221AA /* CCAppDelegate.m in Sources */,
@@ -3210,7 +3189,6 @@
 				7A59482219E375A700F65F90 /* CCPackageCocos2dEnabler.m in Sources */,
 				7A59482419E375A700F65F90 /* CCPackageInstaller.m in Sources */,
 				7A59482619E375A700F65F90 /* CCPackageHelper.m in Sources */,
-				7A59482A19E375A700F65F90 /* CCActionManager.m in Sources */,
 				7A59482C19E375A800F65F90 /* CCAction.m in Sources */,
 				7A59482E19E375A800F65F90 /* CCActionInstant.m in Sources */,
 				7A59483019E375A800F65F90 /* CCActionInterval.m in Sources */,
@@ -3323,7 +3301,6 @@
 				D2FEB6DE194F6C9E00FC0574 /* CGPointExtension.m in Sources */,
 				D33C9CE91A2FAC33004070CA /* CCFile.m in Sources */,
 				D2FEB6DF194F6C9E00FC0574 /* CCParticleSystem.m in Sources */,
-				D2FEB6E1194F6C9E00FC0574 /* CCActionManager.m in Sources */,
 				D2FEB6E2194F6C9E00FC0574 /* CCAppDelegate.m in Sources */,
 				D27451BD19AEC84C006DA0A1 /* CCEffectDistanceField.m in Sources */,
 				D2FEB6E3194F6C9E00FC0574 /* CCBReader.m in Sources */,

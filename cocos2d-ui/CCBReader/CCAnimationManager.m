@@ -36,7 +36,6 @@
 #import "CCBReader.h"
 #import "CCBKeyframe.h"
 #import "OALSimpleAudio.h"
-#import "CCActionManager.h"
 #import "CCActionInterval.h"
 #import "CCActionInstant.h"
 #import "CCActionEase.h"

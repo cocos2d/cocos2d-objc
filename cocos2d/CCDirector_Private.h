@@ -48,11 +48,6 @@
  */
 @property (nonatomic,readwrite,strong) CCScheduler *scheduler;
 
-/* CCActionManager associated with this director
- */
-@property (nonatomic,readwrite,strong) CCActionManager *actionManager;
-
-
 /// Rect of the visible screen area in GL coordinates.
 @property(nonatomic, readonly) CGRect viewportRect;
 

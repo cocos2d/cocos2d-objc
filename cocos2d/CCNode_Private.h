@@ -24,7 +24,6 @@
 
 #import "CCNode.h"
 
-@class CCActionManager;
 @class CCAnimationManager;
 
 CGPoint NodeToPhysicsScale(CCNode * node);
@@ -53,11 +52,6 @@ CGPointApplyGLKMatrix4(CGPoint p, GLKMatrix4 m){
  @warning: Use it at your own risk since it might break the cocos2d parent-children z order
  */
 @property (nonatomic,readwrite) float vertexZ;
-
-/* CCActionManager used by all the actions.
- IMPORTANT: If you set a new CCActionManager, then previously created actions are going to be removed.
- */
-@property (nonatomic, readwrite, strong) CCActionManager *actionManager;
 
 /* Reads and writes the animation manager for this node.*/
 @property (nonatomic, readwrite) CCAnimationManager * animationManager;

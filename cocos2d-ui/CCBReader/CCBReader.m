@@ -42,7 +42,7 @@
 #import "CCTexture.h"
 #import "CCColor.h"
 #import "CCProtocols.h"
-#import "CCActionManager.h"
+#import "CCScheduler.h"
 
 #ifdef CCB_ENABLE_UNZIP
 #import "SSZipArchive.h"
@@ -1397,7 +1397,7 @@ SelectorNameForProperty(objc_property_t property)
     
     if(animationManager.fixedTimestep)
     {
-        node.actionManager.fixedMode = YES;
+#warning        node.actionManager.fixedMode = YES;
     }
     
     // Read animated properties

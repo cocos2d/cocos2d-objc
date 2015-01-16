@@ -123,7 +123,6 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 @class CCFPSLabel;
 @class CCScene;
 @class CCScheduler;
-@class CCActionManager;
 @class CCTransition;
 
 #if __CC_PLATFORM_IOS
@@ -224,9 +223,6 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 
 	/* scheduler associated with this director */
 	CCScheduler *_scheduler;
-
-	/* action manager associated with this director */
-	CCActionManager *_actionManager;
 	
 	NSMutableArray *_rendererPool;
 }

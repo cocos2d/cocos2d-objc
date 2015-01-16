@@ -38,7 +38,6 @@
 #import "CCScheduler_Private.h"
 
 #import "CCScheduler.h"
-#import "CCActionManager.h"
 #import "CCTextureCache.h"
 #import "CCAnimationCache.h"
 #import "CCLabelBMFont.h"
@@ -103,7 +102,6 @@ extern NSString * cocos2dVersion(void);
 @synthesize totalFrames = _totalFrames;
 @synthesize secondsPerFrame = _secondsPerFrame;
 @synthesize scheduler = _scheduler;
-@synthesize actionManager = _actionManager;
 
 //
 // singleton stuff
@@ -169,13 +167,6 @@ static CCDirector *_sharedDirector = nil;
 
 		// scheduler
 		_scheduler = [[CCScheduler alloc] init];
-
-		// action manager
-		_actionManager = [[CCActionManager alloc] init];
-		
-		[_scheduler scheduleTarget:_actionManager];
-
-		[_scheduler setPaused:NO target:_actionManager];
 		
 		// touch manager
 		_responderManager = [ CCResponderManager responderManager ];
