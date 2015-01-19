@@ -29,11 +29,27 @@
 #import "CCFileUtilsConstants.h"
 #import "CCFile_Private.h"
 #import "CCFileUtilsDatabaseProtocol.h"
+#import "CCFileMetaData.h"
 
 static NSString *const CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH";
 
 
+#pragma mark - CCFileResolvedMetaData helper class
+
+@interface CCFileResolvedMetaData : NSObject
+
+@property (nonatomic, copy) NSString *filename;
+@property (nonatomic) BOOL useUIScale;
+
+@end
+
+@implementation CCFileResolvedMetaData
+
+@end
+
+
 #pragma mark - CCFileLocatorSearchData helper class
+
 
 @interface CCFileUtilsV2SearchData : NSObject
 
@@ -147,7 +163,7 @@ static NSString *const CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFILE
         return cachedFile;
     }
 
-    NSDictionary *queryResult = [self queryDatabaseForFilename:filename];
+    CCFileResolvedMetaData *queryResult = [self queryDatabaseForFilename:filename];
 
     for (NSString *searchPath in _searchPaths)
     {
@@ -155,7 +171,7 @@ static NSString *const CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFILE
 
         if (queryResult)
         {
-            resolvedFilename = queryResult[@"filename"];
+            resolvedFilename = queryResult.filename;
         }
 
         CCFile *aFile = [self findFilename:resolvedFilename inPath:searchPath options:options];
@@ -164,7 +180,7 @@ static NSString *const CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFILE
         {
             if (queryResult)
             {
-                aFile.useUIScale = [queryResult[@"useUIScale"] boolValue];
+                aFile.useUIScale = queryResult.useUIScale;
             }
 
             _cache[filename] = aFile;
@@ -177,7 +193,7 @@ static NSString *const CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFILE
     return nil;
 }
 
-- (NSDictionary *)queryDatabaseForFilename:(NSString *)filename
+- (CCFileResolvedMetaData *)queryDatabaseForFilename:(NSString *)filename
 {
     if (!_database)
     {
@@ -186,42 +202,44 @@ static NSString *const CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFILE
 
     for (NSString *searchPath in _searchPaths)
     {
-        NSDictionary *metaData = [_database metaDataForFileNamed:filename inSearchPath:searchPath];
+        CCFileMetaData *metaData = [_database metaDataForFileNamed:filename inSearchPath:searchPath];
 
-        if (!metaData || !metaData[@"filename"])
+        if (!metaData)
         {
             continue;
         }
 
-        NSString *localizedFileName = [self localizedFilenameWithMetaData:metaData];
-        NSString *resolvedFilename = metaData[@"filename"];
-
-        if (localizedFileName)
-        {
-            resolvedFilename = localizedFileName;
-        }
-
-        return @{
-            @"filename" : resolvedFilename,
-            @"useUIScale" : metaData[@"UIScale"]
-                ? metaData[@"UIScale"]
-                : @NO
-        };
+        return [self resolveMetaData:metaData];
     }
 
     return nil;
 }
 
-- (NSString *)localizedFilenameWithMetaData:(NSDictionary *)dictionary
+- (CCFileResolvedMetaData *)resolveMetaData:(CCFileMetaData *)metaData
 {
-    if (!dictionary[@"localizations"])
+    CCFileResolvedMetaData *fileUtilsV2ResolvedMetaData = [[CCFileResolvedMetaData alloc] init];
+
+    NSString *localizedFileName = [self localizedFilenameWithMetaData:metaData];
+
+    fileUtilsV2ResolvedMetaData.filename = localizedFileName
+            ? localizedFileName
+            : metaData.filename;
+
+    fileUtilsV2ResolvedMetaData.useUIScale = metaData.useUIScale;
+
+    return fileUtilsV2ResolvedMetaData;
+}
+
+- (NSString *)localizedFilenameWithMetaData:(CCFileMetaData *)metaData
+{
+    if (!metaData.localizations)
     {
         return nil;
     }
 
     for (NSString *languageID in [NSLocale preferredLanguages])
     {
-        NSString *filenameForLanguageID = dictionary[@"localizations"][languageID];
+        NSString *filenameForLanguageID = metaData.localizations[languageID];
         if (filenameForLanguageID)
         {
             return filenameForLanguageID;

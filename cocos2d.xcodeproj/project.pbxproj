@@ -938,20 +938,25 @@
 		E525F14AA900A39A508ED9F0 /* CCFile.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FD33ACB5E4C0871F3AA9 /* CCFile.m */; };
 		E525F20E7A6C64087689A600 /* CCFileUtilsDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = E525F2572403F4013B2CB1D1 /* CCFileUtilsDatabase.h */; };
 		E525F2D10ACCAB26403D8A23 /* CCFile.h in Headers */ = {isa = PBXBuildFile; fileRef = E525F0F38A5CC562F538F40C /* CCFile.h */; };
+		E525F33AF0E1AA506C28EB18 /* CCFileMetaData.h in Headers */ = {isa = PBXBuildFile; fileRef = E525FDBD47CF5AE9B0D41370 /* CCFileMetaData.h */; };
 		E525F352B250D548DC95FB42 /* CCFile.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FD33ACB5E4C0871F3AA9 /* CCFile.m */; };
 		E525F3A066BDE8475066B6AE /* CCFileUtilsV2.h in Headers */ = {isa = PBXBuildFile; fileRef = E525F14D58B86CF9B7C89568 /* CCFileUtilsV2.h */; };
 		E525F3A2BBCBB446B67D8260 /* CCPackage_private.h in Headers */ = {isa = PBXBuildFile; fileRef = E525FE4C98BCF1228ECC9623 /* CCPackage_private.h */; };
+		E525F3A889B14D110D1FE775 /* CCFileMetaData.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FF0FAEED9DB301FE1000 /* CCFileMetaData.m */; };
+		E525F438C1815DEFBA6D4D1B /* CCFileMetaData.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FF0FAEED9DB301FE1000 /* CCFileMetaData.m */; };
 		E525F43B60DC28D1CCBFB917 /* CCFileUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F964FDF6C05B1E364BF2 /* CCFileUtils.m */; };
 		E525F542BD4A2593B01B08D0 /* CCFile_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = E525F637FF4A7F1A25E2FCC4 /* CCFile_Private.h */; };
 		E525F6004BFBD9ED271C0157 /* CCFileUtilsDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = E525F2572403F4013B2CB1D1 /* CCFileUtilsDatabase.h */; };
 		E525F68F63777B9BC24FE8BA /* CCFileUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F964FDF6C05B1E364BF2 /* CCFileUtils.m */; };
 		E525F6DA8219EB9F002899E7 /* CCFileUtilsV2.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F475A7121047E8E2FFDE /* CCFileUtilsV2.m */; };
+		E525F7A457E633F80E21CDCB /* CCFileMetaData.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FF0FAEED9DB301FE1000 /* CCFileMetaData.m */; };
 		E525F80E977C3BBE006A6902 /* CCFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = E525FFFE14D5D06A3C9C2DF3 /* CCFileUtils.h */; };
 		E525F8FE1F141E04EC2752B0 /* CCFileUtilsDatabaseProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = E525FA936D7079B9B4FF45B4 /* CCFileUtilsDatabaseProtocol.h */; };
 		E525F9045267E4D7585C9923 /* CCFile.h in Headers */ = {isa = PBXBuildFile; fileRef = E525F0F38A5CC562F538F40C /* CCFile.h */; };
 		E525F982D0D46A1F3E378CB6 /* CCFileUtilsDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F0F40C1ABFD69BFBECD9 /* CCFileUtilsDatabase.m */; };
 		E525F9CE961347409717F05F /* CCFileUtilsV2.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F475A7121047E8E2FFDE /* CCFileUtilsV2.m */; };
 		E525FA4D5F23AFBCF4FC6AC2 /* CCFileUtilsDatabaseProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = E525FA936D7079B9B4FF45B4 /* CCFileUtilsDatabaseProtocol.h */; };
+		E525FA755CF93D0FC7557E12 /* CCFileMetaData.h in Headers */ = {isa = PBXBuildFile; fileRef = E525FDBD47CF5AE9B0D41370 /* CCFileMetaData.h */; };
 		E525FAE62D515ED78AFBFA1E /* CCFileUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F964FDF6C05B1E364BF2 /* CCFileUtils.m */; };
 		E525FB58147A0CB8D84908FC /* CCFileUtilsV2.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F475A7121047E8E2FFDE /* CCFileUtilsV2.m */; };
 		E525FC3175FC804CDD67BDB8 /* CCFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = E525FFFE14D5D06A3C9C2DF3 /* CCFileUtils.h */; };
@@ -1490,7 +1495,9 @@
 		E525F9EA4B5DD37D0418869E /* CCPackageHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageHelper.m; sourceTree = "<group>"; };
 		E525FA936D7079B9B4FF45B4 /* CCFileUtilsDatabaseProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCFileUtilsDatabaseProtocol.h; path = Support/CCFileUtilsDatabaseProtocol.h; sourceTree = "<group>"; };
 		E525FD33ACB5E4C0871F3AA9 /* CCFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCFile.m; path = Support/CCFile.m; sourceTree = "<group>"; };
+		E525FDBD47CF5AE9B0D41370 /* CCFileMetaData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileMetaData.h; sourceTree = "<group>"; };
 		E525FE4C98BCF1228ECC9623 /* CCPackage_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackage_private.h; sourceTree = "<group>"; };
+		E525FF0FAEED9DB301FE1000 /* CCFileMetaData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCFileMetaData.m; sourceTree = "<group>"; };
 		E525FF8C7C018BF691F36044 /* CCPackageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackageHelper.h; sourceTree = "<group>"; };
 		E525FFFE14D5D06A3C9C2DF3 /* CCFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCFileUtils.h; path = Support/CCFileUtils.h; sourceTree = "<group>"; };
 		FC39961319C3B92F00C93E5E /* ObjectAL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ObjectAL.xcodeproj; path = external/ObjectAL/ObjectAL/ObjectAL.xcodeproj; sourceTree = "<group>"; };
@@ -2311,6 +2318,8 @@
 				E525FA936D7079B9B4FF45B4 /* CCFileUtilsDatabaseProtocol.h */,
 				83FFA9291A6D0CD2001BFE05 /* CCFileUtilsConstants.h */,
 				83FFA92A1A6D0CD2001BFE05 /* CCFileUtilsConstants.m */,
+				E525FF0FAEED9DB301FE1000 /* CCFileMetaData.m */,
+				E525FDBD47CF5AE9B0D41370 /* CCFileMetaData.h */,
 			);
 			name = "File Handling";
 			sourceTree = "<group>";
@@ -2505,6 +2514,7 @@
 				E525F542BD4A2593B01B08D0 /* CCFile_Private.h in Headers */,
 				E525FD0AE79B61E0BD5EB4E1 /* CCFile.h in Headers */,
 				E525F8FE1F141E04EC2752B0 /* CCFileUtilsDatabaseProtocol.h in Headers */,
+				E525FA755CF93D0FC7557E12 /* CCFileMetaData.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2697,6 +2707,7 @@
 				E525FD8AEC52F93616611BF1 /* CCFile_Private.h in Headers */,
 				E525F9045267E4D7585C9923 /* CCFile.h in Headers */,
 				E525FA4D5F23AFBCF4FC6AC2 /* CCFileUtilsDatabaseProtocol.h in Headers */,
+				E525F33AF0E1AA506C28EB18 /* CCFileMetaData.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3233,6 +3244,7 @@
 				E525FAE62D515ED78AFBFA1E /* CCFileUtils.m in Sources */,
 				E525F6DA8219EB9F002899E7 /* CCFileUtilsV2.m in Sources */,
 				E525F14AA900A39A508ED9F0 /* CCFile.m in Sources */,
+				E525F438C1815DEFBA6D4D1B /* CCFileMetaData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3245,6 +3257,7 @@
 				5BF3268E195F8E0300D9A51A /* CCActivity.java in Sources */,
 				5BF3268F195F8E0300D9A51A /* CCGLView.java in Sources */,
 				E525F982D0D46A1F3E378CB6 /* CCFileUtilsDatabase.m in Sources */,
+				E525F3A889B14D110D1FE775 /* CCFileMetaData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3383,6 +3396,7 @@
 				E525F68F63777B9BC24FE8BA /* CCFileUtils.m in Sources */,
 				E525FB58147A0CB8D84908FC /* CCFileUtilsV2.m in Sources */,
 				E525F352B250D548DC95FB42 /* CCFile.m in Sources */,
+				E525F7A457E633F80E21CDCB /* CCFileMetaData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

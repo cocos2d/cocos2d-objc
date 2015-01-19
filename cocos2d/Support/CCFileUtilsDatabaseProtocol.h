@@ -24,17 +24,18 @@
 
 #import <Foundation/Foundation.h>
 
+@class CCFileMetaData;
+
 /**
-  TODO: format
+ The protocol a file utils database must conform to.
  
  @since 4.0
  */
 @protocol CCFileUtilsDatabaseProtocol <NSObject>
 
 @required
-
 /**
- Returns a dictionary containing the metadata for a given filename and search path.
+ Returns an instance of CCFileMetaData for a given filename and search path.
  
  @param filename   The filename to search for. Note: filenames are the relative path to a search path including the filename, e.g. images/vehicles/car.png
  @param searchPath A search path for the filename.
@@ -43,6 +44,6 @@
  
  @since 4.0
  */
-- (NSDictionary *)metaDataForFileNamed:(NSString *)filename inSearchPath:(NSString *)searchPath;
+- (CCFileMetaData *)metaDataForFileNamed:(NSString *)filename inSearchPath:(NSString *)searchPath;
 
 @end

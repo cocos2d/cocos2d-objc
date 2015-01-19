@@ -54,11 +54,13 @@
 {
     NSString *jsonResources = MULTILINESTRING(
         {
-            "dialogs/merchants.txt" : {
-                "localizations" : {
-                    "es" : "dialogs/merchants-es.txt"
-                },
-                "filename" : "dialogs/merchants.txt"
+            "data" : {
+                "dialogs/merchants.txt" : {
+                    "localizations" : {
+                        "es" : "dialogs/merchants-es.txt"
+                    },
+                    "filename" : "dialogs/merchants.txt"
+                }
             }
         }
     );
@@ -87,19 +89,23 @@
 {
     NSString *jsonResources = MULTILINESTRING(
         {
-            "images/horse.png" : {
-                "filename" : "images/mule.png"
+            "data" : {
+                "images/horse.png" : {
+                    "filename" : "images/mule.png"
+                }
             }
         }
     );
 
     NSString *jsonPackage = MULTILINESTRING(
         {
-            "images/horse.png" : {
-                "localizations" : {
-                    "es" : "images/mule-es.png"
-                },
-                "filename" : "images/mule.png"
+            "data" : {
+                "images/horse.png" : {
+                    "localizations" : {
+                        "es" : "images/mule-es.png"
+                    },
+                    "filename" : "images/mule.png"
+                }
             }
         }
     );
@@ -131,16 +137,20 @@
 {
     NSString *jsonA = MULTILINESTRING(
         {
-            "images/horse.png" : {
-                "filename" : "images/mule.png"
+            "data" : {
+                "images/horse.png" : {
+                    "filename" : "images/mule.png"
+                }
             }
         }
     );
 
     NSString *jsonB = MULTILINESTRING(
         {
-            "images/bicycle.png" : {
-                "filename" : "images/unicycle.png"
+            "data" : {
+                "images/bicycle.png" : {
+                    "filename" : "images/unicycle.png"
+                }
             }
         }
     );
@@ -172,9 +182,11 @@
 {
     NSString *json = MULTILINESTRING(
         {
-            "images/foo.png" : {
-                "UIScale" : true,
-                "filename" : "images/foo.png",
+            "data" : {
+                "images/foo.png" : {
+                    "UIScale" : true,
+                    "filename" : "images/foo.png",
+                }
             }
         }
     );
@@ -192,12 +204,14 @@
 {
     NSString *json = MULTILINESTRING(
         {
-            "images/foo.png" : {
-                "localizations" : {
-                    "en" : "images/foo-en.png",
-                    "de" : "images/foo-de.png"
-                },
-                "filename" : "images/foo-en.png"
+            "data" : {
+                "images/foo.png" : {
+                    "localizations" : {
+                        "en" : "images/foo-en.png",
+                        "de" : "images/foo-de.png"
+                    },
+                    "filename" : "images/foo-en.png"
+                }
             }
         }
     );
@@ -227,11 +241,13 @@
 {
     NSString *json = MULTILINESTRING(
         {
-            "images/foo.png" : {
-                "localizations" : {
-                    "en" : "images/shouldnotbereturned.png"
-                },
-                "filename" : "images/fallback.png"
+            "data" : {
+                "images/foo.png" : {
+                    "localizations" : {
+                        "en" : "images/shouldnotbereturned.png"
+                    },
+                    "filename" : "images/fallback.png"
+                }
             }
         }
     );
@@ -253,12 +269,14 @@
 {
     NSString *json = MULTILINESTRING(
         {
-            "images/foo.png" : {
-                "localizations" : {
-                    "en" : "images/foo-en.png",
-                    "de" : "images/foo-de.png"
-                },
-                "filename" : "images/foo-en.png"
+            "data" : {
+                "images/foo.png" : {
+                    "localizations" : {
+                        "en" : "images/foo-en.png",
+                        "de" : "images/foo-de.png"
+                    },
+                    "filename" : "images/foo-en.png"
+                }
             }
         }
     );
@@ -283,11 +301,13 @@
 {
     NSString *json = MULTILINESTRING(
         {
-            "images/foo.png" : {
-                "localizations" : {
-                    "en" : "images/missing.png",
-                },
-                "filename" : "images/shouldnotbereturned.png"
+            "data" : {
+                "images/foo.png" : {
+                    "localizations" : {
+                        "en" : "images/missing.png",
+                    },
+                    "filename" : "images/shouldnotbereturned.png"
+                }
             }
         }
     );
@@ -305,8 +325,10 @@
 {
     NSString *json = MULTILINESTRING(
         {
-            "images/foo.png" : {
-                "filename" : "images/baa.jpg"
+            "data" : {
+                "images/foo.png" : {
+                    "filename" : "images/baa.jpg"
+                }
             }
         }
     );

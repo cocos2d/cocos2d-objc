@@ -10,6 +10,7 @@
 #import "CCFileUtilsDatabase.h"
 #import "FileSystemTestCase.h"
 #import "CCUnitTestHelperMacros.h"
+#import "CCFileMetaData.h"
 
 @interface CCFileUtilsDatabaseTests : FileSystemTestCase
 
@@ -27,7 +28,16 @@
 
     NSString *json = MULTILINESTRING(
         {
-            "images/foo.png" : {}
+            "version" : 1,
+            "data" : {
+                "images/foo.png" : {
+                    "UIScale" : true,
+                    "filename" : "images/foo.jpg",
+                    "localizations" : {
+                        "en" : "images/foo-en.jpg"
+                    }
+                }
+            }
         }
     );
 
@@ -41,11 +51,15 @@
 
 - (void)testAddDatabaseWithFilePathInSearchPath
 {
-    XCTAssertTrue([_fileUtilsDB addJSONWithFilePath:_dbPath forSearchPath:_searchPath error:NULL]);
+    NSError *error;
+    XCTAssertTrue([_fileUtilsDB addJSONWithFilePath:_dbPath forSearchPath:_searchPath error:&error]);
 
-    NSDictionary *metaData = [_fileUtilsDB metaDataForFileNamed:@"images/foo.png" inSearchPath:_searchPath];
+    CCFileMetaData *metaData = [_fileUtilsDB metaDataForFileNamed:@"images/foo.png" inSearchPath:_searchPath];
 
     XCTAssertNotNil(metaData);
+    XCTAssertNil(error);
+    XCTAssertEqualObjects(metaData.filename, @"images/foo.jpg");
+    XCTAssertEqualObjects(metaData.localizations, @{@"en" : @"images/foo-en.jpg"});
 };
 
 - (void)testRemoveDatabaseWithFilePathInSearchPath
@@ -54,7 +68,7 @@
 
     [_fileUtilsDB removeEntriesForSearchPath:[self fullPathForFile:@"Resources"]];
 
-    NSDictionary *metaData = [_fileUtilsDB metaDataForFileNamed:@"images/foo.png" inSearchPath:[self fullPathForFile:@"Resources"]];
+    CCFileMetaData *metaData = [_fileUtilsDB metaDataForFileNamed:@"images/foo.png" inSearchPath:[self fullPathForFile:@"Resources"]];
 
     XCTAssertNil(metaData);
 }

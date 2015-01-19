@@ -25,6 +25,7 @@
 
 #import <Foundation/Foundation.h>
 #import "CCFileUtilsDatabase.h"
+#import "CCFileMetaData.h"
 
 @interface CCFileUtilsDatabase ()
 
@@ -67,9 +68,9 @@
     [_databases removeObjectForKey:searchPath];
 }
 
-- (NSDictionary *)metaDataForFileNamed:(NSString *)filename inSearchPath:(NSString *)searchPath;
+- (CCFileMetaData *)metaDataForFileNamed:(NSString *)filename inSearchPath:(NSString *)searchPath;
 {
-    return _databases[searchPath][filename];
+    return [self metaDataFromDictionary:_databases[searchPath][filename]];
 }
 
 - (NSMutableDictionary *)loadDatabaseWithFilePath:(NSString *)filePath error:(NSError **)error
@@ -104,7 +105,27 @@
         return nil;
     }
 
-    return json;
+    return json[@"data"];
+}
+
+- (CCFileMetaData *)metaDataFromDictionary:(NSDictionary *)dictionary
+{
+    NSString *filename = dictionary[@"filename"];
+
+    if (!filename)
+    {
+        return nil;
+    }
+
+    CCFileMetaData *metaData = [[CCFileMetaData alloc] initWithFilename:filename];
+    metaData.useUIScale = [dictionary[@"UIScale"] boolValue];
+
+    if ([dictionary[@"localizations"] isKindOfClass:[NSDictionary class]])
+    {
+        metaData.localizations =  dictionary[@"localizations"];
+    }
+
+    return metaData;
 }
 
 @end

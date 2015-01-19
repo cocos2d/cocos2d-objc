@@ -28,7 +28,23 @@
 /**
  A database to store metadata of assets used by CCFileUtils based on json files.
  Metdata is stored for a filename and search path.
- 
+
+ Example for a json file structure to satisfy the requirements by the CCFileUtils:
+    {
+        "images/foo.png" : {
+            "UIScale" : true,
+            "localizations" : {
+                "en" : "images/foo-en.png",
+                "de" : "images/foo-de.png"
+            },
+            "filename" : "images/foo-en.png"
+        }
+    }
+
+ Only filename is mandatory if you have an entry for a given asset.
+ UIScale, if not present will default to NO.
+ The localization dictionary uses languageIDs as keys.
+
  @since 4.0
  */
 @interface CCFileUtilsDatabase : NSObject <CCFileUtilsDatabaseProtocol>
