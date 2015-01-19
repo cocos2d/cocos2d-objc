@@ -8,3 +8,6 @@ url=https://github.com/slembcke/Chipmunk2D.git
 [submodule "external/SSZipArchive"]
 	path = external/SSZipArchive
 	url = https://github.com/spritebuilder/ssziparchive.git
+[submodule "external/OCMock"]
+	path = external/OCMock
+	url = https://github.com/erikdoe/ocmock.git

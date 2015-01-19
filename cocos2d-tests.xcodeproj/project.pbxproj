@@ -25,7 +25,7 @@
 		758A6C7B18440D5C00D1A8D2 /* ParticleTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 758A6C7A18440D5C00D1A8D2 /* ParticleTest.m */; };
 		758A6C80184410EE00D1A8D2 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 758A6C7F184410EE00D1A8D2 /* Particles */; };
 		75F76497185A831B00E2FAFE /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 75F76496185A831B00E2FAFE /* Sounds */; };
-		835D4E781A68134E0097F5EF /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 835D4E771A68134E0097F5EF /* libOCMock.a */; };
+		830F10A81A6D37EE0074F583 /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 830F10A31A6D37D60074F583 /* libOCMock.a */; };
 		839B149F19CC1E440000E5E2 /* CCPackageTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 839B149E19CC1E440000E5E2 /* CCPackageTest.m */; };
 		92324E2A18EB635500D78D3F /* CCReaderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 92324E2918EB635500D78D3F /* CCReaderTest.m */; };
 		9269312A1923D8A700CE6285 /* Resources-shared in Resources */ = {isa = PBXBuildFile; fileRef = B7C6237517EA695100928F91 /* Resources-shared */; };
@@ -280,6 +280,41 @@
 			remoteGlobalIDString = B7E2604717E7D278007067F0;
 			remoteInfo = "cocos2d-ui-tests-ios";
 		};
+		830F109E1A6D37D60074F583 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 830F10971A6D37D50074F583 /* OCMock.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 030EF0A814632FD000B04273;
+			remoteInfo = OCMock;
+		};
+		830F10A01A6D37D60074F583 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 830F10971A6D37D50074F583 /* OCMock.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 03565A3118F0566E003AE91E;
+			remoteInfo = OCMockTests;
+		};
+		830F10A21A6D37D60074F583 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 830F10971A6D37D50074F583 /* OCMock.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 030EF0DC14632FF700B04273;
+			remoteInfo = OCMockLib;
+		};
+		830F10A41A6D37D60074F583 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 830F10971A6D37D50074F583 /* OCMock.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D31108AD1828DB8700737925;
+			remoteInfo = OCMockLibTests;
+		};
+		830F10A91A6D37F50074F583 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 830F10971A6D37D50074F583 /* OCMock.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 030EF0DB14632FF700B04273;
+			remoteInfo = OCMockLib;
+		};
 		D3763BB819E72F85006C050D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D3763BB019E72F85006C050D /* cocos2d.xcodeproj */;
@@ -345,7 +380,7 @@
 		758A6C7A18440D5C00D1A8D2 /* ParticleTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParticleTest.m; path = "cocos2d-ui-tests/tests/ParticleTest.m"; sourceTree = SOURCE_ROOT; };
 		758A6C7F184410EE00D1A8D2 /* Particles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Particles; path = Resources/Particles; sourceTree = SOURCE_ROOT; };
 		75F76496185A831B00E2FAFE /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sounds; path = Resources/Sounds; sourceTree = SOURCE_ROOT; };
-		835D4E771A68134E0097F5EF /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libOCMock.a; path = external/OCMock/libOCMock.a; sourceTree = "<group>"; };
+		830F10971A6D37D50074F583 /* OCMock.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OCMock.xcodeproj; path = external/OCMock/Source/OCMock.xcodeproj; sourceTree = "<group>"; };
 		839B149E19CC1E440000E5E2 /* CCPackageTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCPackageTest.m; path = "cocos2d-ui-tests/tests/CCPackageTest.m"; sourceTree = SOURCE_ROOT; };
 		92324E2918EB635500D78D3F /* CCReaderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCReaderTest.m; sourceTree = "<group>"; };
 		92FE241018F5F06F00647961 /* CCAnimationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAnimationTest.m; sourceTree = "<group>"; };
@@ -513,7 +548,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				835D4E781A68134E0097F5EF /* libOCMock.a in Frameworks */,
+				830F10A81A6D37EE0074F583 /* libOCMock.a in Frameworks */,
 				75556A04185636F100ED1B0F /* XCTest.framework in Frameworks */,
 				75556A05185636F100ED1B0F /* Foundation.framework in Frameworks */,
 			);
@@ -612,6 +647,17 @@
 			path = "cocos2d-ui-tests-ios";
 			sourceTree = "<group>";
 		};
+		830F10981A6D37D50074F583 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				830F109F1A6D37D60074F583 /* OCMock.framework */,
+				830F10A11A6D37D60074F583 /* OCMockTests.xctest */,
+				830F10A31A6D37D60074F583 /* libOCMock.a */,
+				830F10A51A6D37D60074F583 /* OCMockLibTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		B71B087F17EA5B500082EBC0 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -650,6 +696,7 @@
 		B7E2603F17E7D278007067F0 = {
 			isa = PBXGroup;
 			children = (
+				830F10971A6D37D50074F583 /* OCMock.xcodeproj */,
 				D3763BB019E72F85006C050D /* cocos2d.xcodeproj */,
 				D3269DE919CCC11800406282 /* CCRendererSharedTypes.h */,
 				755569ED1856361100ED1B0F /* UnitTests */,
@@ -679,7 +726,6 @@
 		B7E2604A17E7D278007067F0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				835D4E771A68134E0097F5EF /* libOCMock.a */,
 				D3867DBE1A32EB38009AFFF3 /* ImageIO.framework */,
 				D3763DDC19E73666006C050D /* AppKit.framework */,
 				D3763DDA19E7364F006C050D /* OpenGL.framework */,
@@ -932,6 +978,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				830F10AA1A6D37F50074F583 /* PBXTargetDependency */,
 				75556A11185636F100ED1B0F /* PBXTargetDependency */,
 			);
 			name = UnitTests;
@@ -1013,6 +1060,10 @@
 					ProductGroup = D3763BB119E72F85006C050D /* Products */;
 					ProjectRef = D3763BB019E72F85006C050D /* cocos2d.xcodeproj */;
 				},
+				{
+					ProductGroup = 830F10981A6D37D50074F583 /* Products */;
+					ProjectRef = 830F10971A6D37D50074F583 /* OCMock.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -1024,6 +1075,34 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		830F109F1A6D37D60074F583 /* OCMock.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OCMock.framework;
+			remoteRef = 830F109E1A6D37D60074F583 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		830F10A11A6D37D60074F583 /* OCMockTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = OCMockTests.xctest;
+			remoteRef = 830F10A01A6D37D60074F583 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		830F10A31A6D37D60074F583 /* libOCMock.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libOCMock.a;
+			remoteRef = 830F10A21A6D37D60074F583 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		830F10A51A6D37D60074F583 /* OCMockLibTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = OCMockLibTests.xctest;
+			remoteRef = 830F10A41A6D37D60074F583 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		D3763BB919E72F85006C050D /* libcocos2d.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1365,6 +1444,11 @@
 			target = B7E2604717E7D278007067F0 /* cocos2d-tests-ios */;
 			targetProxy = 75556A10185636F100ED1B0F /* PBXContainerItemProxy */;
 		};
+		830F10AA1A6D37F50074F583 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = OCMockLib;
+			targetProxy = 830F10A91A6D37F50074F583 /* PBXContainerItemProxy */;
+		};
 		D3763BD119E72FA8006C050D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "cocos2d-ios";
@@ -1448,7 +1532,7 @@
 					external/Chipmunk/objectivec/include,
 					"external/ObjectAL/**",
 					"\"$(SRCROOT)/external/SSZipArchive\"/**",
-					"external/OCMock/**",
+					"external/OCMock/Source/**",
 				);
 				INFOPLIST_FILE = "UnitTests/UnitTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -1508,7 +1592,7 @@
 					external/Chipmunk/objectivec/include,
 					"external/ObjectAL/**",
 					"\"$(SRCROOT)/external/SSZipArchive\"/**",
-					"external/OCMock/**",
+					"external/OCMock/Source/**",
 				);
 				INFOPLIST_FILE = "UnitTests/UnitTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
