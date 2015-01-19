@@ -426,6 +426,12 @@
 		83E1A88A19C8ACDC000A3BCA /* CCPackageInstaller.h in Headers */ = {isa = PBXBuildFile; fileRef = 83E1A88219C8ACDC000A3BCA /* CCPackageInstaller.h */; };
 		83E1A88B19C8ACDC000A3BCA /* CCPackageInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E1A88319C8ACDC000A3BCA /* CCPackageInstaller.m */; };
 		83E21C001A121EB5000D1695 /* CCPackageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E1A85F19C8ACA0000A3BCA /* CCPackageManager.m */; };
+		83FFA92B1A6D0CD2001BFE05 /* CCFileUtilsConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 83FFA9291A6D0CD2001BFE05 /* CCFileUtilsConstants.h */; };
+		83FFA92C1A6D0CD2001BFE05 /* CCFileUtilsConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FFA92A1A6D0CD2001BFE05 /* CCFileUtilsConstants.m */; };
+		83FFA92D1A6D0CE2001BFE05 /* CCFileUtilsConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 83FFA9291A6D0CD2001BFE05 /* CCFileUtilsConstants.h */; };
+		83FFA92E1A6D0CE3001BFE05 /* CCFileUtilsConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 83FFA9291A6D0CD2001BFE05 /* CCFileUtilsConstants.h */; };
+		83FFA92F1A6D0CF5001BFE05 /* CCFileUtilsConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FFA92A1A6D0CD2001BFE05 /* CCFileUtilsConstants.m */; };
+		83FFA9301A6D0CF6001BFE05 /* CCFileUtilsConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FFA92A1A6D0CD2001BFE05 /* CCFileUtilsConstants.m */; };
 		9D03A5EB1A02F61700C651C8 /* CCLightNode_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D1B4A941A02D51600B2DD9B /* CCLightNode_Private.h */; };
 		9D03A5EC1A02F61A00C651C8 /* CCLightNode_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D1B4A941A02D51600B2DD9B /* CCLightNode_Private.h */; };
 		9D03A5ED1A02F61B00C651C8 /* CCLightNode_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D1B4A941A02D51600B2DD9B /* CCLightNode_Private.h */; };
@@ -1244,6 +1250,8 @@
 		83E1A88219C8ACDC000A3BCA /* CCPackageInstaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackageInstaller.h; sourceTree = "<group>"; };
 		83E1A88319C8ACDC000A3BCA /* CCPackageInstaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageInstaller.m; sourceTree = "<group>"; };
 		83E1A88D19C8C19D000A3BCA /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		83FFA9291A6D0CD2001BFE05 /* CCFileUtilsConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtilsConstants.h; sourceTree = "<group>"; };
+		83FFA92A1A6D0CD2001BFE05 /* CCFileUtilsConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCFileUtilsConstants.m; sourceTree = "<group>"; };
 		92FF6C7318F33A2A005B7139 /* CCActionManager_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCActionManager_Private.h; sourceTree = "<group>"; };
 		9D1B4A941A02D51600B2DD9B /* CCLightNode_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCLightNode_Private.h; sourceTree = "<group>"; };
 		9D1B4A971A02E90300B2DD9B /* CCLightGroups.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLightGroups.h; sourceTree = "<group>"; };
@@ -1626,43 +1634,43 @@
 		5018F2510DFDEAFF00C013A5 /* cocos2d */ = {
 			isa = PBXGroup;
 			children = (
-				D272031618FC897D00B100FF /* Effects */,
+				50A24E770F3780A2007CAEB0 /* Actions */,
 				50A24F010F3788C6007CAEB0 /* Base Nodes */,
-				B7EE69DB1819E73A00B983FE /* Layouts */,
 				A0DA0BC615BCDCAE00E80A92 /* Draw Nodes */,
+				D272031618FC897D00B100FF /* Effects */,
+				E525F5485939CFCD17215714 /* File Handling */,
 				506414C50F9C67C0007A7B24 /* Label Nodes */,
-				506414C40F9C6792007A7B24 /* Sprite & Animation Nodes */,
-				A6A0734717C78E55004343C8 /* Touch & Mouse Handling */,
-				50A24E890F378119007CAEB0 /* Particle Nodes */,
-				50CFAC3B1023661B00175934 /* TileMap and Parallax Nodes */,
 				506414C30F9C6769007A7B24 /* Layers, Scenes, Transitions Nodes */,
-				A0D7D9D415E2E737000CA0C4 /* Physics */,
+				B7EE69DB1819E73A00B983FE /* Layouts */,
 				50EA8DA011354A6000746D2A /* Misc Nodes */,
 				83E1A85619C8AC2A000A3BCA /* Packages */,
-				50A24E770F3780A2007CAEB0 /* Actions */,
-				50E1355310ADEA9400C9E7FA /* Textures */,
-				501CCFA30E99657C00B86F68 /* Support */,
-				D34CAD5E19C3A070009BED7A /* Rendering */,
+				50A24E890F378119007CAEB0 /* Particle Nodes */,
+				A0D7D9D415E2E737000CA0C4 /* Physics */,
 				E0EAD0E8121F4B4600B0C81C /* Platforms */,
-				50305AF30E40E33200F63373 /* cocos2d.h */,
-				50A07B7A0E4CBCD300AAF0BB /* cocos2d.m */,
-				A003AC8B1657071100C7B792 /* ccFPSImages.h */,
-				A003AC8E16572D6000C7B792 /* ccFPSImages.m */,
+				D34CAD5E19C3A070009BED7A /* Rendering */,
+				506414C40F9C6792007A7B24 /* Sprite & Animation Nodes */,
+				501CCFA30E99657C00B86F68 /* Support */,
+				50E1355310ADEA9400C9E7FA /* Textures */,
+				50CFAC3B1023661B00175934 /* TileMap and Parallax Nodes */,
+				A6A0734717C78E55004343C8 /* Touch & Mouse Handling */,
 				505462FB1062768000AB7C52 /* ccConfig.h */,
-				5018F2560DFDEAFF00C013A5 /* CCDirector.h */,
-				5018F2570DFDEAFF00C013A5 /* CCDirector.m */,
-				50BAF3970F33CCD8003F654C /* ccMacros.h */,
-				50F9E8160E1AA34E000E7616 /* ccTypes.h */,
 				D36369D21A1E85DF007EE5FC /* CCDeprecated.h */,
 				D3737E3B1A1F229600782024 /* CCDeprecated.m */,
 				E0EAD1F0121F522A00B0C81C /* CCDeviceInfo.h */,
 				503862D911007181005D2C92 /* CCDeviceInfo.m */,
+				B706B19918209FA000B27A2C /* CCDirector_Private.h */,
+				5018F2560DFDEAFF00C013A5 /* CCDirector.h */,
+				5018F2570DFDEAFF00C013A5 /* CCDirector.m */,
+				A003AC8B1657071100C7B792 /* ccFPSImages.h */,
+				A003AC8E16572D6000C7B792 /* ccFPSImages.m */,
+				50BAF3970F33CCD8003F654C /* ccMacros.h */,
+				D3903B0C1995288D003AA81A /* CCNoARC.m */,
 				50E2A25110A46CC600D894CE /* CCProtocols.h */,
 				5066020F0E38A70D000B500E /* CCScheduler.h */,
 				506602100E38A70D000B500E /* CCScheduler.m */,
-				B706B19918209FA000B27A2C /* CCDirector_Private.h */,
-				D3903B0C1995288D003AA81A /* CCNoARC.m */,
-				E525F5485939CFCD17215714 /* File Handling */,
+				50F9E8160E1AA34E000E7616 /* ccTypes.h */,
+				50305AF30E40E33200F63373 /* cocos2d.h */,
+				50A07B7A0E4CBCD300AAF0BB /* cocos2d.m */,
 			);
 			path = cocos2d;
 			sourceTree = "<group>";
@@ -2291,16 +2299,18 @@
 		E525F5485939CFCD17215714 /* File Handling */ = {
 			isa = PBXGroup;
 			children = (
-				E525F0F40C1ABFD69BFBECD9 /* CCFileUtilsDatabase.m */,
 				E525F2572403F4013B2CB1D1 /* CCFileUtilsDatabase.h */,
+				E525F0F40C1ABFD69BFBECD9 /* CCFileUtilsDatabase.m */,
 				E525F14D58B86CF9B7C89568 /* CCFileUtilsV2.h */,
-				E525F964FDF6C05B1E364BF2 /* CCFileUtils.m */,
 				E525F475A7121047E8E2FFDE /* CCFileUtilsV2.m */,
+				E525F964FDF6C05B1E364BF2 /* CCFileUtils.m */,
 				E525FFFE14D5D06A3C9C2DF3 /* CCFileUtils.h */,
 				E525F637FF4A7F1A25E2FCC4 /* CCFile_Private.h */,
 				E525F0F38A5CC562F538F40C /* CCFile.h */,
 				E525FD33ACB5E4C0871F3AA9 /* CCFile.m */,
 				E525FA936D7079B9B4FF45B4 /* CCFileUtilsDatabaseProtocol.h */,
+				83FFA9291A6D0CD2001BFE05 /* CCFileUtilsConstants.h */,
+				83FFA92A1A6D0CD2001BFE05 /* CCFileUtilsConstants.m */,
 			);
 			name = "File Handling";
 			sourceTree = "<group>";
@@ -2463,6 +2473,7 @@
 				D241610D1958F72B003673BD /* CCEffectSaturation.h in Headers */,
 				A0A7A53C1514F27D00C8BD16 /* CCActionCatmullRom.h in Headers */,
 				D268FE1D1980791400ECBCD0 /* CCEffectUtils.h in Headers */,
+				83FFA92B1A6D0CD2001BFE05 /* CCFileUtilsConstants.h in Headers */,
 				A0DA0BC315BCDCA200E80A92 /* CCDrawNode.h in Headers */,
 				2B192835163361B10049A044 /* CCClippingNode.h in Headers */,
 				83E1A88A19C8ACDC000A3BCA /* CCPackageInstaller.h in Headers */,
@@ -2605,7 +2616,6 @@
 				7A5946F519E372FB00F65F90 /* uthash.h in Headers */,
 				7A5946F619E372FB00F65F90 /* utlist.h in Headers */,
 				7A5946F919E372FB00F65F90 /* CGPointExtension.h in Headers */,
-				7A5946FB19E372FC00F65F90,
 				5BC1DE2A1A2E2099009C2E67 /* NSEvent+CC.h in Headers */,
 				7A5946FE19E372FC00F65F90 /* ccUtils.h in Headers */,
 				7A59470119E372FD00F65F90 /* base64.h in Headers */,
@@ -2641,6 +2651,7 @@
 				7A59473F19E3730B00F65F90 /* CCTouchIOS.h in Headers */,
 				7A59474119E3730B00F65F90 /* CCMetalSupport_Private.h in Headers */,
 				7A59474319E3730C00F65F90 /* CCDirectorMac.h in Headers */,
+				83FFA92E1A6D0CE3001BFE05 /* CCFileUtilsConstants.h in Headers */,
 				7A59474519E3730C00F65F90 /* CCGLView.h in Headers */,
 				7A59474719E3730D00F65F90 /* CCWindow.h in Headers */,
 				7A59474919E3730D00F65F90 /* CCGL.h in Headers */,
@@ -2741,6 +2752,7 @@
 				D2FEB644194F6C9E00FC0574 /* CCLayoutBox.h in Headers */,
 				D2FEB645194F6C9E00FC0574 /* CCTouchIOS.h in Headers */,
 				9D03A5EC1A02F61A00C651C8 /* CCLightNode_Private.h in Headers */,
+				83FFA92D1A6D0CE2001BFE05 /* CCFileUtilsConstants.h in Headers */,
 				D2FEB646194F6C9E00FC0574 /* CCEffect.h in Headers */,
 				D27451C719B111A9006DA0A1 /* CCEffectDFOutline.h in Headers */,
 				D24161141958F738003673BD /* CCAnimationManager.h in Headers */,
@@ -2755,7 +2767,6 @@
 				D2FEB64F194F6C9E00FC0574 /* base64.h in Headers */,
 				BC9F4E9819DB644600B25F01 /* CCPackageManager.h in Headers */,
 				BC9F4E9919DB644900B25F01 /* CCPackageManagerDelegate.h in Headers */,
-				D2FEB650194F6C9E00FC0574,
 				D22907AF1A2F5E440038FF61 /* CCEffectOutline.h in Headers */,
 				D2FEB652194F6C9E00FC0574 /* CCTMXXMLParser.h in Headers */,
 				D2FEB653194F6C9E00FC0574 /* CCRenderTexture.h in Headers */,
@@ -3097,6 +3108,7 @@
 				5018F26E0DFDEAFF00C013A5 /* CCDirector.m in Sources */,
 				5018F2700DFDEAFF00C013A5 /* CCActionInstant.m in Sources */,
 				5018F2720DFDEAFF00C013A5 /* CCActionInterval.m in Sources */,
+				83FFA92C1A6D0CD2001BFE05 /* CCFileUtilsConstants.m in Sources */,
 				D33803EA180331A90072D8FE /* CCPhysicsJoint.m in Sources */,
 				D26A042B194B815500503BEC /* CCTouchEvent.m in Sources */,
 				D268FE10198078FF00ECBCD0 /* CCEffectGlass.m in Sources */,
@@ -3273,6 +3285,7 @@
 				7A5947D019E3759E00F65F90 /* CCSprite9Slice.m in Sources */,
 				7A5947D419E3759E00F65F90 /* CCSpriteFrame.m in Sources */,
 				7A5947D619E3759F00F65F90 /* CCSpriteFrameCache.m in Sources */,
+				83FFA9301A6D0CF6001BFE05 /* CCFileUtilsConstants.m in Sources */,
 				7A5947D919E3759F00F65F90 /* CCResponder.m in Sources */,
 				7A5947DB19E3759F00F65F90 /* CCResponderManager.m in Sources */,
 				7A5947E119E375A000F65F90 /* CCParticleSystemBase.m in Sources */,
@@ -3450,6 +3463,7 @@
 				BC9F4E9119DB633500B25F01 /* CCPackageDownload.m in Sources */,
 				D3903B16199528DB003AA81A /* CCNoARC.m in Sources */,
 				D268FE1C1980791400ECBCD0 /* CCEffectRefraction.m in Sources */,
+				83FFA92F1A6D0CF5001BFE05 /* CCFileUtilsConstants.m in Sources */,
 				BC9F4E9319DB633F00B25F01 /* CCPackageUnzipper.m in Sources */,
 				D2FEB6FC194F6C9E00FC0574 /* CCPhysicsNode.m in Sources */,
 				D2FEB6FD194F6C9E00FC0574 /* CCGLView.m in Sources */,
@@ -3500,7 +3514,6 @@
 				D2FEB737194F6C9E00FC0574 /* CCButton.m in Sources */,
 				D2FEB738194F6C9E00FC0574 /* CCControl.m in Sources */,
 				D22907B21A2F5E440038FF61 /* CCEffectOutline.m in Sources */,
-				D2FEB739194F6C9E00FC0574,
 				D2FEB73A194F6C9E00FC0574 /* CCCache.m in Sources */,
 				D2FEB73C194F6C9E00FC0574 /* CCScrollView.m in Sources */,
 				D2FEB73D194F6C9E00FC0574 /* UITouch+CC.m in Sources */,

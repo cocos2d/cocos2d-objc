@@ -22,27 +22,9 @@
  * THE SOFTWARE.
  */
 
+
 #import <Foundation/Foundation.h>
 
-/**
-  TODO: format
- 
- @since 4.0
- */
-@protocol CCFileUtilsDatabaseProtocol <NSObject>
+NSUInteger const ERROR_FILEUTILS_NO_SEARCH_PATHS = 20000;
 
-@required
-
-/**
- Returns a dictionary containing the metadata for a given filename and search path.
- 
- @param filename   The filename to search for. Note: filenames are the relative path to a search path including the filename, e.g. images/vehicles/car.png
- @param searchPath A search path for the filename.
- 
- @return Metadata of the filename and search path pair.
- 
- @since 4.0
- */
-- (NSDictionary *)metaDataForFileNamed:(NSString *)filename inSearchPath:(NSString *)searchPath;
-
-@end
+NSUInteger const ERROR_FILEUTILS_NO_FILE_FOUND = 20001;

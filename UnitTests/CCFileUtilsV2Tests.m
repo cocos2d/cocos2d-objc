@@ -10,10 +10,10 @@
 #import <OCMock/OCMock.h>
 #import "CCFile.h"
 #import "CCFileUtilsV2.h"
-#import "CCPackageConstants.h"
 #import "FileSystemTestCase.h"
 #import "CCUnitTestHelperMacros.h"
 #import "CCFileUtilsDatabase.h"
+#import "CCFileUtilsConstants.h"
 
 @interface CCFileUtilsV2Tests : FileSystemTestCase
 
@@ -625,7 +625,7 @@
         _fileUtils.database = [[CCFileUtilsDatabase alloc] init];
     }
 
-    [(CCFileUtilsDatabase *) _fileUtils.database addDatabaseWithFilePath:@"filedb.json" forSearchPath:searchPath error:NULL];
+    [(CCFileUtilsDatabase *) _fileUtils.database addJSONWithFilePath:@"filedb.json" forSearchPath:searchPath error:NULL];
 }
 
 - (void)mockPreferredLanguages:(NSArray *)preferredLanguages
