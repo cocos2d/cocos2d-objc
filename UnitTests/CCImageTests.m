@@ -80,11 +80,13 @@
 #if __CC_PLATFORM_IOS
 // PVR on iOS only.
 
--(void) testPVR
-{
-    // Important note. This uses ImageIO to load the pvr texture. In normal cocos2d operation, we have our own pvr loading code.
-    [self testImageNamed: @"test_image.pvr" withTitle: @"PVR loading example (no alpha)"];
-}
+// This wasn't supported on purpose. We only noticed that ImageIO happened to load PVR files.
+// This only works on iOS 8 however, so we should comment the test out for now.
+//-(void) testPVR
+//{
+//    // Important note. This uses ImageIO to load the pvr texture. In normal cocos2d operation, we have our own pvr loading code.
+//    [self testImageNamed: @"test_image.pvr" withTitle: @"PVR loading example (no alpha)"];
+//}
 
 #endif
 

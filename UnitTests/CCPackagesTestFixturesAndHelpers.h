@@ -3,22 +3,7 @@
 
 @class CCPackage;
 
-#define IGNORED_TESTS 1
-
-#if IGNORED_TESTS
-
-#define IGNORE_TEST_CASE NSObject
-@interface NSObject (IgnoredCases)
-- (void)setUp;
-- (void)tearDown;
-@end
-
-#else
-#define IGNORE_TEST_CASE XCTestCase
-#endif
-
 typedef bool(^WaitConditionBlock)(void);
-
 
 
 @interface CCPackagesTestFixturesAndHelpers : NSObject

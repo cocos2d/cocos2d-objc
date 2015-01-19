@@ -23,6 +23,7 @@
 #import "CCPackageHelper.h"
 
 
+
 static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 
 @interface CCPackageManagerTestURLProtocol : NSURLProtocol @end
@@ -75,7 +76,7 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 @end
 
 
-@interface CCPackageManagerTests : IGNORE_TEST_CASE <CCPackageManagerDelegate>
+@interface CCPackageManagerTests : XCTestCase <CCPackageManagerDelegate>
 
 @property (nonatomic, strong) CCPackageManager *packageManager;
 @property (nonatomic) BOOL managerReturnedSuccessfully;
