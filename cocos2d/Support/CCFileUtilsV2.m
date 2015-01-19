@@ -55,9 +55,19 @@
         self.untaggedContentScale = 4;
         self.deviceContentScale = 4;
         self.cache = [NSMutableDictionary dictionary];
+
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(purgeCache)
+                                                     name:NSCurrentLocaleDidChangeNotification
+                                                   object:nil];
     }
 
     return self;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 + (CCFileUtilsV2 *)sharedFileUtils
@@ -71,10 +81,29 @@
     return sharedInstance;
 }
 
+- (void)setSearchPaths:(NSArray *)searchPaths
+{
+    if ([_searchPaths isEqualToArray:searchPaths])
+    {
+        return;
+    }
+
+    _searchPaths = [searchPaths copy];
+
+    [self purgeCache];
+}
+
 - (CCFile *)imageNamed:(NSString *)filename error:(NSError **)error
 {
     return [self fileNamed:filename options:nil error:error];
 }
+
+- (CCFile *)fileNamed:(NSString *)filename error:(NSError **)error
+{
+    NSDictionary *defaultOptions = @{CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH : @YES};
+
+    return [self fileNamed:filename options:defaultOptions error:error];
+};
 
 - (CCFile *)fileNamed:(NSString *)filename options:(NSDictionary *)options error:(NSError **)error
 {
@@ -176,8 +205,6 @@
 
 - (CCFile *)findFilename:(NSString *)filename inPath:(NSString *)path options:(NSDictionary *)options
 {
-    NSFileManager *localFileManager = [[NSFileManager alloc] init];
-
     NSArray *searchFilenames = [self searchFilenamesWithBaseFilename:filename options:options];
 
     for (CCFileUtilsV2SearchData *fileLocatorSearchData in searchFilenames)
@@ -185,7 +212,8 @@
         NSURL *fileURL = [NSURL fileURLWithPath:[path stringByAppendingPathComponent:fileLocatorSearchData.filename]];
 
         BOOL isDirectory = NO;
-        if ([localFileManager fileExistsAtPath:fileURL.path isDirectory:&isDirectory] && !isDirectory)
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        if ([fileManager fileExistsAtPath:fileURL.path isDirectory:&isDirectory] && !isDirectory)
         {
             return [[CCFile alloc] initWithName:filename url:fileURL contentScale:[fileLocatorSearchData.contentScale floatValue]];
         }
@@ -252,13 +280,6 @@
         };
     }
 }
-
-- (CCFile *)fileNamed:(NSString *)filename error:(NSError **)error
-{
-    NSDictionary *defaultOptions = @{CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH : @YES};
-
-    return [self fileNamed:filename options:defaultOptions error:error];
-};
 
 - (void)purgeCache
 {

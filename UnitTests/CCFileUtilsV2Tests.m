@@ -30,6 +30,8 @@
 
     self.fileUtils = [[CCFileUtilsV2 alloc] init];
     _fileUtils.searchPaths = @[[self fullPathForFile:@"Resources"]];
+    _fileUtils.deviceContentScale = 4;
+    _fileUtils.untaggedContentScale = 4;
 }
 
 #pragma mark - Tests for non image files
@@ -516,6 +518,72 @@
     CCFile *file = [_fileUtils imageNamed:@"image.png" error:&error];
 
     [self assertFailureForFile:file errorCode:ERROR_FILEUTILS_NO_FILE_FOUND error:error];
+}
+
+
+#pragma mark - Tests cache
+
+- (void)prepareCacheTestRequestImageNamedAndDeleteAssetAfterwards:(NSString *)imageName
+{
+    _fileUtils.deviceContentScale = 4;
+    _fileUtils.untaggedContentScale = 4;
+
+    NSString *relPath = [_fileUtils.searchPaths[0] stringByAppendingPathComponent:imageName];
+    [self createEmptyFiles:@[relPath]];
+
+    NSError *error;
+    CCFile *file = [_fileUtils imageNamed:imageName error:&error];
+
+    [self assertSuccessForFile:file filePath:relPath contentScale:4.0 error:error];
+
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    XCTAssertTrue([fileManager removeItemAtPath:[self fullPathForFile:relPath] error:nil]);
+}
+
+- (void)testFileNamedCache
+{
+    [self prepareCacheTestRequestImageNamedAndDeleteAssetAfterwards:@"images/foo.png"];
+
+    NSError *error2;
+    CCFile *file2 = [_fileUtils imageNamed:@"images/foo.png" error:&error2];
+
+    [self assertSuccessForFile:file2 filePath:@"Resources/images/foo.png" contentScale:4.0 error:error2];
+}
+
+- (void)testPurgeCache
+{
+    [self prepareCacheTestRequestImageNamedAndDeleteAssetAfterwards:@"images/foo.png"];
+
+    [_fileUtils purgeCache];
+
+    NSError *error2;
+    CCFile *file2 = [_fileUtils imageNamed:@"images/foo.png" error:&error2];
+
+    [self assertFailureForFile:file2 errorCode:ERROR_FILEUTILS_NO_FILE_FOUND error:error2];
+}
+
+- (void)testCachePurgedAfterLocaleChangedNotification
+{
+    [self prepareCacheTestRequestImageNamedAndDeleteAssetAfterwards:@"images/foo.png"];
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:NSCurrentLocaleDidChangeNotification object:nil];
+
+    NSError *error2;
+    CCFile *file2 = [_fileUtils imageNamed:@"images/foo.png" error:&error2];
+
+    [self assertFailureForFile:file2 errorCode:ERROR_FILEUTILS_NO_FILE_FOUND error:error2];
+}
+
+- (void)testCachePurgedAfterSearchPathsChanged
+{
+    [self prepareCacheTestRequestImageNamedAndDeleteAssetAfterwards:@"images/foo.png"];
+
+    _fileUtils.searchPaths = @[[self fullPathForFile:@"Packages/foo.sbpack"]];
+
+    NSError *error2;
+    CCFile *file2 = [_fileUtils imageNamed:@"images/foo.png" error:&error2];
+
+    [self assertFailureForFile:file2 errorCode:ERROR_FILEUTILS_NO_FILE_FOUND error:error2];
 }
 
 
