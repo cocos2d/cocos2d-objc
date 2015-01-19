@@ -4,9 +4,7 @@
 
 #import <Foundation/Foundation.h>
 
-
 @class CCFile;
-@class CCFileUtilsDatabase;
 @protocol CCFileUtilsDatabaseProtocol;
 
 
@@ -25,15 +23,11 @@
 // Default is 4
 @property (nonatomic, assign) NSUInteger deviceContentScale;
 
-// User definable, but default to a reasonable standard value (tablet, phone, desktop, etc)
-@property (nonatomic, copy) NSString *deviceFamily;
-
 
 + (CCFileUtilsV2 *)sharedFileUtils;
 
-- (CCFile *)fileNamed:(NSString *)filename options:(NSDictionary *)options error:(NSError **)error;
+- (CCFile *)imageNamed:(NSString *)filename error:(NSError **)error;
 
-// Calls fileNamed:options: on the shared delegate with reasonable default options.
 - (CCFile *)fileNamed:(NSString *)filename error:(NSError **)error;
 
 - (void)purgeCache;

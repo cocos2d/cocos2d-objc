@@ -63,6 +63,11 @@
     return sharedInstance;
 }
 
+- (CCFile *)imageNamed:(NSString *)filename error:(NSError **)error
+{
+    return [self fileNamed:filename options:nil error:error];
+}
+
 - (CCFile *)fileNamed:(NSString *)filename options:(NSDictionary *)options error:(NSError **)error
 {
     if (!_searchPaths || _searchPaths.count == 0)
@@ -234,7 +239,7 @@
 
 - (CCFile *)fileNamed:(NSString *)filename error:(NSError **)error
 {
-    NSDictionary *defaultOptions = @{};
+    NSDictionary *defaultOptions = @{CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH : @YES};
 
     return [self fileNamed:filename options:defaultOptions error:error];
 };
