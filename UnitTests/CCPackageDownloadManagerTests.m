@@ -12,7 +12,6 @@
 #import "CCPackage.h"
 #import "CCDirector.h"
 #import "AppDelegate.h"
-#import "CCPackagesTestFixturesAndHelpers.h"
 #import "CCUnitTestAssertions.h"
 #import "CCPackage_private.h"
 
@@ -56,7 +55,7 @@
 @end
 
 
-@interface CCPackageDownloadManagerTests : IGNORE_TEST_CASE <CCPackageDownloadManagerDelegate>
+@interface CCPackageDownloadManagerTests : XCTestCase <CCPackageDownloadManagerDelegate>
 
 @property (nonatomic, strong) CCPackageDownloadManager *downloadManager;
 @property (nonatomic) BOOL allDownloadsReturned;
