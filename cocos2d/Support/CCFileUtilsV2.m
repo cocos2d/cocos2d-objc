@@ -213,7 +213,6 @@
     {
         [result addObject:[self filenameWithBasefilename:baseFilename contentScale:@1]];
         [result addObject:[self filenameWithBasefilename:baseFilename contentScale:@2]];
-        [result addObject:[self filenameWithBasefilename:baseFilename contentScale:@4]];
     }
 
     [self insertDefaultScaleWithBaseFilename:baseFilename intoSearchFilenames:result];

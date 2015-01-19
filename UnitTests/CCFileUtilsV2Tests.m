@@ -266,7 +266,7 @@
             @"foo-de.png",
     ]];
 
-    _fileUtils.deviceContentScale = 2;
+    _fileUtils.deviceContentScale = 4;
     _fileUtils.untaggedContentScale = 4;
 
     [self mockPreferredLanguages:@[@"de"]];
@@ -296,9 +296,7 @@
     NSError *error;
     CCFile *file = [_fileUtils imageNamed:@"images/foo.png" error:&error];
 
-    XCTAssertNotNil(error);
-    XCTAssertEqual(error.code, ERROR_FILELOCATOR_NO_FILE_FOUND);
-    XCTAssertNil(file);
+    [self assertFailureForFile:file errorCode:ERROR_FILELOCATOR_NO_FILE_FOUND error:error];
 }
 
 - (void)testImageNamedAliasingWithDatabase
@@ -381,7 +379,7 @@
     [self assertSuccessForFile:file filePath:@"Resources/Hero-2x.png" contentScale:2.0 error:error];
 }
 
-- (void)testImageNamedSearchOrder2XDeviceScaleNoDefaultAndPixelPerfectImage
+- (void)testImageNamedSearchOrderFor2xDeviceScaleWithoutPixelPerfectAvailable
 {
     [self createPNGsInDir:@"Resources" name:@"Hero" scales:@[@"4", @"1"]];
 
@@ -393,7 +391,43 @@
     [self assertSuccessForFile:file filePath:@"Resources/Hero-4x.png" contentScale:4.0 error:error];
 }
 
-- (void)testImageNamedSearchOrder4XDeviceScaleOnlyLowResFallback
+- (void)testImageNamedSearchOrderFor2xDeviceScaleButOnly1xAvailable
+{
+    [self createPNGsInDir:@"Resources" name:@"Hero" scales:@[@"1"]];
+
+    _fileUtils.deviceContentScale = 2;
+
+    NSError *error;
+    CCFile *file = [_fileUtils imageNamed:@"Hero.png" error:&error];
+
+    [self assertSuccessForFile:file filePath:@"Resources/Hero-1x.png" contentScale:1.0 error:error];
+}
+
+- (void)testImageNamedSearchOrderFor1xDeviceScaleWith4xOnlyAvailable
+{
+    [self createPNGsInDir:@"Resources" name:@"Hero" scales:@[@"4"]];
+
+    _fileUtils.deviceContentScale = 1;
+
+    NSError *error;
+    CCFile *file = [_fileUtils imageNamed:@"Hero.png" error:&error];
+
+    [self assertFailureForFile:file errorCode:ERROR_FILELOCATOR_NO_FILE_FOUND error:error];
+}
+
+- (void)testImageNamedSearchOrderFor1xDeviceScaleWith2xOnlyAvailable
+{
+    [self createPNGsInDir:@"Resources" name:@"Hero" scales:@[@"2"]];
+
+    _fileUtils.deviceContentScale = 1;
+
+    NSError *error;
+    CCFile *file = [_fileUtils imageNamed:@"Hero.png" error:&error];
+
+    [self assertSuccessForFile:file filePath:@"Resources/Hero-2x.png" contentScale:2.0 error:error];
+}
+
+- (void)testImageNamedSearchOrder4XDeviceScaleWith1xOnlyAvailable
 {
     [self createPNGsInDir:@"Resources" name:@"Hero" scales:@[@"1"]];
 
@@ -471,9 +505,7 @@
     NSError *error;
     CCFile *file = [_fileUtils imageNamed:@"someasset.png" error:&error];
 
-    XCTAssertNotNil(error);
-    XCTAssertEqual(error.code, ERROR_FILELOCATOR_NO_SEARCH_PATHS);
-    XCTAssertNil(file);
+    [self assertFailureForFile:file errorCode:ERROR_FILELOCATOR_NO_SEARCH_PATHS error:error];
 }
 
 - (void)testShouldNotReturnDirectoryURLWithAssetFilename
@@ -483,9 +515,7 @@
     NSError *error;
     CCFile *file = [_fileUtils imageNamed:@"image.png" error:&error];
 
-    XCTAssertNotNil(error);
-    XCTAssertEqual(error.code, ERROR_FILELOCATOR_NO_FILE_FOUND);
-    XCTAssertNil(file);
+    [self assertFailureForFile:file errorCode:ERROR_FILELOCATOR_NO_FILE_FOUND error:error];
 }
 
 
@@ -511,6 +541,13 @@
     XCTAssertEqual(file.contentScale, contentScale );
 }
 
+- (void)assertFailureForFile:(CCFile *)file errorCode:(NSInteger)errorCode error:(NSError *)error
+{
+    XCTAssertNotNil(error);
+    XCTAssertEqual(error.code, errorCode);
+    XCTAssertNil(file);
+}
+
 - (void)addDatabaseWithJSON:(NSString *)json forSearchPath:(NSString *)searchPath
 {
     [self createFilesWithContents:@{[searchPath stringByAppendingPathComponent:@"filedb.json"] : [json dataUsingEncoding:NSUTF8StringEncoding]}];
@@ -526,7 +563,7 @@
 - (void)mockPreferredLanguages:(NSArray *)preferredLanguages
 {
     id classMock = OCMClassMock([NSLocale class]);
-     OCMStub([classMock preferredLanguages]).andReturn(preferredLanguages);
+    OCMStub([classMock preferredLanguages]).andReturn(preferredLanguages);
 }
 
 @end
