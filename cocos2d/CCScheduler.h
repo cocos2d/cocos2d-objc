@@ -156,20 +156,6 @@
 -(NSUInteger)numberOfRunningActionsInTarget:(id)target;
 
 /**
- *  Pauses the target: all running actions and newly added actions will be paused.
- *
- *  @param target Target to pause all actions on.
- */
--(void)pauseTarget:(id)target;
-
-/**
- *  Resumes the target. All queued actions will be resumed.
- *
- *  @param target Target to resume all action on.
- */
--(void)resumeTarget:(id)target;
-
-/**
  *  Pauses all running actions, returning a list of targets whose actions were paused.
  *
  *  @return Set of targets which were paused.
@@ -182,8 +168,6 @@
  *  @param targetsToResume Set of target to resume.
  */
 -(void)resumeTargets:(NSSet *)targetsToResume;
-
-
 
 @end
 

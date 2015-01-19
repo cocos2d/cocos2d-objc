@@ -40,7 +40,6 @@
 
 #define FOREACH_TIMER(__scheduledTarget__, __timerVar__) for(CCTimer *__timerVar__ = __scheduledTarget__->_timers; __timerVar__; __timerVar__ = __timerVar__.next)
 
-
 @interface CCScheduledTarget : NSObject
 
 @property(nonatomic, readonly) NSObject<CCSchedulableTarget> *target;
@@ -49,6 +48,97 @@
 @property(nonatomic, readonly) BOOL empty;
 @property(nonatomic, assign) BOOL paused;
 @property(nonatomic, assign) BOOL enableUpdates;
+
+@end
+
+@interface CopyOnWriteArray : NSObject<NSFastEnumeration>
+
+@end
+
+@implementation CopyOnWriteArray
+{
+    NSMutableArray * _array;
+    NSMutableArray * _copyArray;
+    BOOL _locked;
+}
+
+-(NSMutableArray *) writeArray
+{
+    if(_array == nil){
+        _array = [NSMutableArray array];
+    }
+    if(_locked){
+        if(_copyArray == nil){
+            _copyArray = [_array mutableCopy];
+        }
+        return _copyArray;
+    }else{
+        return _array;
+    }
+}
+
+-(instancetype)init
+{
+    if((self = [super init])){
+        
+    }
+    return self;
+}
+
+- (void)insertTarget:(CCScheduledTarget*)object withPriority:(NSUInteger)priority;
+{
+    NSMutableArray *array = self.writeArray;
+    for(NSUInteger i=0, count=array.count; i<count; i++){
+        CCScheduledTarget *scheduledTarget = array[i];
+        if(scheduledTarget.target.priority > priority) {
+            [array insertObject:object atIndex:i];
+            return;
+        };
+    }
+    [self addObject:object];
+}
+
+-(void)addObject:(id) obj
+{
+    [self.writeArray addObject:obj];
+}
+
+-(void)removeObject:(id) obj
+{
+    [self.writeArray removeObject:obj];
+}
+
+-(void)removeAllObjects
+{
+    _copyArray = nil;
+    _array = nil;
+}
+
+-(void)lock
+{
+    NSAssert(!_locked, @"Enumerator started when already locked");
+    _locked = YES;
+}
+
+-(void)unlock
+{
+    NSAssert(_locked, @"Already unlocked!");
+    if(_copyArray){
+        _array = _copyArray;
+        _copyArray = nil;
+    }
+    _locked = NO;
+}
+
+- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id __unsafe_unretained [])buffer count:(NSUInteger)len;
+{
+    return [_array countByEnumeratingWithState:state objects:buffer count:len];
+}
+
+-(NSString *)description
+{
+    return [NSString stringWithFormat:@"%@ locked:%d", self.writeArray.description, _locked];
+}
 
 @end
 
@@ -83,12 +173,20 @@
 }
 
 static void
-InvokeMethods(NSArray *methods, SEL selector, CCTime dt)
+InvokeMethods(CopyOnWriteArray *methods, SEL selector, CCTime dt)
 {
-	for(CCScheduledTarget *scheduledTarget in [methods copy]){
+	[methods lock];
+    for(CCScheduledTarget *scheduledTarget in methods){
 		typedef void (*Func)(id, SEL, CCTime);
 		if(!scheduledTarget->_paused) ((Func)objc_msgSend)(scheduledTarget->_target, selector, dt);
 	}
+    [methods unlock];
+}
+
+
+-(NSString *)description
+{
+    return [NSString stringWithFormat:@"<CCScheduledTarget: %@, %@, %@>", _target.description, _timers.description, _actions.description];
 }
 
 /**
@@ -276,9 +374,9 @@ static CCTimerBlock INVALIDATED_BLOCK = ^(CCTimer *timer){};
 	CFBinaryHeapRef _heap;
 	CFMutableDictionaryRef _scheduledTargets;
 	
-	NSMutableArray *_updates;
-    NSMutableArray *_fixedUpdates;
-    NSMutableArray *_scheduledTargetsWithActions;
+	CopyOnWriteArray *_updates;
+    CopyOnWriteArray *_fixedUpdates;
+    CopyOnWriteArray *_scheduledTargetsWithActions;
 	
 	CCTimer *_fixedUpdateTimer;
 }
@@ -335,9 +433,9 @@ CompareTimers(const void *a, const void *b, void *context)
 		CCScheduledTarget *nilTarget = [self scheduledTargetForTarget:[NSNull null] insert:YES];
 		nilTarget.paused = NO;
 		
-		_updates = [NSMutableArray array];
-		_fixedUpdates = [NSMutableArray array];
-        _scheduledTargetsWithActions = [NSMutableArray array];
+		_updates = [[CopyOnWriteArray alloc ] init];
+		_fixedUpdates = [[CopyOnWriteArray alloc ] init];
+        _scheduledTargetsWithActions = [[CopyOnWriteArray alloc ] init];
 		
 		// Annoyance to avoid a retain cycle.
         __weak __typeof(self) _self = self;
@@ -463,17 +561,6 @@ CompareTimers(const void *a, const void *b, void *context)
 	_currentTime = targetTime;
 }
 
-static NSUInteger
-PrioritySearch(NSArray *array, NSInteger priority)
-{
-	for(NSUInteger i=0, count=array.count; i<count; i++){
-		CCScheduledTarget *scheduledTarget = array[i];
-		if(scheduledTarget.target.priority > priority) return i;
-	}
-	
-	return array.count;
-}
-
 
 -(void)scheduleTarget:(NSObject<CCSchedulableTarget> *)target
 {
@@ -489,8 +576,8 @@ PrioritySearch(NSArray *array, NSInteger priority)
 			scheduledTarget.enableUpdates = YES;
 			NSInteger priority = target.priority;
 			
-			if(update) [_updates insertObject:scheduledTarget atIndex:PrioritySearch(_updates, priority)];
-			if(fixedUpdate) [_fixedUpdates insertObject:scheduledTarget atIndex:PrioritySearch(_fixedUpdates, priority)];
+			if(update) [_updates insertTarget:scheduledTarget withPriority:priority];
+			if(fixedUpdate) [_fixedUpdates insertTarget:scheduledTarget withPriority:priority];
 		}
         
     }
@@ -577,6 +664,7 @@ PrioritySearch(NSArray *array, NSInteger priority)
     for (CCScheduledTarget *st in _scheduledTargetsWithActions) {
         st.actions = nil;
     }
+
     [_scheduledTargetsWithActions removeAllObjects];
 }
 
@@ -588,12 +676,15 @@ PrioritySearch(NSArray *array, NSInteger priority)
 
 -(void)removeAction:(CCAction*) action
 {
-    for (CCScheduledTarget *st in [_scheduledTargetsWithActions copy]) {
+    [_scheduledTargetsWithActions lock];
+    for (CCScheduledTarget *st in _scheduledTargetsWithActions ) {
         [st removeAction:action];
         if(![st hasActions]){
             [_scheduledTargetsWithActions removeObject: st];
         }
     }
+    [_scheduledTargetsWithActions unlock];
+
 }
 
 -(void)removeActionByTag:(NSInteger)tag target:(NSObject<CCSchedulableTarget> *)target
@@ -623,18 +714,6 @@ PrioritySearch(NSArray *array, NSInteger priority)
     return [scheduledTarget getActions];
 }
 
--(void)pauseTarget:(NSObject<CCSchedulableTarget> *)target
-{
-    CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
-    scheduledTarget.paused = true;
-}
-
--(void)resumeTarget:(NSObject<CCSchedulableTarget> *)target
-{
-    CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
-    scheduledTarget.paused = false;
-}
-
 -(NSSet *)pauseAllRunningActions
 {
     NSMutableSet *set = [NSMutableSet set];
@@ -658,10 +737,12 @@ PrioritySearch(NSArray *array, NSInteger priority)
 {
     NSMutableArray *removals = [NSMutableArray array];
     
+    [_scheduledTargetsWithActions lock];
     for (CCScheduledTarget *st in _scheduledTargetsWithActions) {
         [removals removeAllObjects];
         
         if(st.paused) continue;
+        
         for (CCAction *action in [st getActions]) {
             [action step: dt];
             if([action isDone]){
@@ -674,6 +755,7 @@ PrioritySearch(NSArray *array, NSInteger priority)
             [st removeAction: action];
         }
     }
+    [_scheduledTargetsWithActions unlock];
 }
 
 
