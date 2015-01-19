@@ -41,6 +41,11 @@
 #define FOREACH_TIMER(__scheduledTarget__, __timerVar__) for(CCTimer *__timerVar__ = __scheduledTarget__->_timers; __timerVar__; __timerVar__ = __timerVar__.next)
 
 @interface CCScheduledTarget : NSObject
+{
+    @public
+    BOOL _paused;
+}
+
 
 @property(nonatomic, readonly) NSObject<CCSchedulableTarget> *target;
 
@@ -739,9 +744,9 @@ CompareTimers(const void *a, const void *b, void *context)
     
     [_scheduledTargetsWithActions lock];
     for (CCScheduledTarget *st in _scheduledTargetsWithActions) {
+        if(st->_paused) continue;
+       
         [removals removeAllObjects];
-        
-        if(st.paused) continue;
         
         for (CCAction *action in [st getActions]) {
             [action step: dt];
@@ -751,8 +756,13 @@ CompareTimers(const void *a, const void *b, void *context)
             }
         }
         
-        for (CCAction *action in removals) {
-            [st removeAction: action];
+        if(removals.count > 0){
+            for (CCAction *action in removals) {
+                [st removeAction: action];
+            }
+            if(![st hasActions]){
+                [_scheduledTargetsWithActions removeObject: st];
+            }
         }
     }
     [_scheduledTargetsWithActions unlock];
