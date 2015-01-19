@@ -296,7 +296,7 @@
     NSError *error;
     CCFile *file = [_fileUtils imageNamed:@"images/foo.png" error:&error];
 
-    [self assertFailureForFile:file errorCode:ERROR_FILELOCATOR_NO_FILE_FOUND error:error];
+    [self assertFailureForFile:file errorCode:ERROR_FILEUTILS_NO_FILE_FOUND error:error];
 }
 
 - (void)testImageNamedAliasingWithDatabase
@@ -412,7 +412,7 @@
     NSError *error;
     CCFile *file = [_fileUtils imageNamed:@"Hero.png" error:&error];
 
-    [self assertFailureForFile:file errorCode:ERROR_FILELOCATOR_NO_FILE_FOUND error:error];
+    [self assertFailureForFile:file errorCode:ERROR_FILEUTILS_NO_FILE_FOUND error:error];
 }
 
 - (void)testImageNamedSearchOrderFor1xDeviceScaleWith2xOnlyAvailable
@@ -505,7 +505,7 @@
     NSError *error;
     CCFile *file = [_fileUtils imageNamed:@"someasset.png" error:&error];
 
-    [self assertFailureForFile:file errorCode:ERROR_FILELOCATOR_NO_SEARCH_PATHS error:error];
+    [self assertFailureForFile:file errorCode:ERROR_FILEUTILS_NO_SEARCH_PATHS error:error];
 }
 
 - (void)testShouldNotReturnDirectoryURLWithAssetFilename
@@ -515,7 +515,7 @@
     NSError *error;
     CCFile *file = [_fileUtils imageNamed:@"image.png" error:&error];
 
-    [self assertFailureForFile:file errorCode:ERROR_FILELOCATOR_NO_FILE_FOUND error:error];
+    [self assertFailureForFile:file errorCode:ERROR_FILEUTILS_NO_FILE_FOUND error:error];
 }
 
 

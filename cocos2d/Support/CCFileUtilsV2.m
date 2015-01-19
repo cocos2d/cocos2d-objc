@@ -37,6 +37,13 @@
 
 #pragma mark - CCFileLocator
 
+@interface CCFileUtilsV2()
+
+@property (nonatomic, strong) NSMutableDictionary *cache;
+
+@end
+
+
 @implementation CCFileUtilsV2
 
 - (id)init
@@ -47,6 +54,7 @@
     {
         self.untaggedContentScale = 4;
         self.deviceContentScale = 4;
+        self.cache = [NSMutableDictionary dictionary];
     }
 
     return self;
@@ -72,8 +80,14 @@
 {
     if (!_searchPaths || _searchPaths.count == 0)
     {
-        [self setErrorPtr:error code:ERROR_FILELOCATOR_NO_SEARCH_PATHS description:@"No search paths set."];
+        [self setErrorPtr:error code:ERROR_FILEUTILS_NO_SEARCH_PATHS description:@"No search paths set."];
         return nil;
+    }
+
+    CCFile *cachedFile = _cache[filename];
+    if (cachedFile)
+    {
+        return cachedFile;
     }
 
     NSDictionary *queryResult = [self queryDatabaseForFilename:filename];
@@ -95,11 +109,14 @@
             {
                 aFile.useUIScale = [queryResult[@"useUIScale"] boolValue];
             }
+
+            _cache[filename] = aFile;
+
             return aFile;
         }
     }
 
-    [self setErrorPtr:error code:ERROR_FILELOCATOR_NO_FILE_FOUND description:@"No file found."];
+    [self setErrorPtr:error code:ERROR_FILEUTILS_NO_FILE_FOUND description:@"No file found."];
     return nil;
 }
 
@@ -245,7 +262,7 @@
 
 - (void)purgeCache
 {
-
+    [_cache removeAllObjects];
 }
 
 - (void)setErrorPtr:(NSError **)errorPtr code:(NSInteger)code description:(NSString *)description
