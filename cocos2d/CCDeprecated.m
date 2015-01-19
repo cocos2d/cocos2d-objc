@@ -112,4 +112,9 @@ CGAffineTransformFromGLKMatrix4(GLKMatrix4 m)
     return self.active;
 }
 
+-(NSUInteger) numberOfRunningActions
+{
+    return self.actions.count;
+}
+
 @end

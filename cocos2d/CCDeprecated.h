@@ -371,4 +371,14 @@ typedef struct __attribute__((deprecated)) _ccBlendFunc
 // Use CCNode.active instead
 @property(nonatomic, readonly) BOOL isRunningInActiveScene __attribute__((deprecated));
 
+/**
+ Use "actions" instead.
+ Returns the numbers of actions that are running plus the ones that are scheduled to run (actions in the internal actionsToAdd array).
+ @note Composable actions are counted as 1 action. Example:
+ - If you are running 2 Sequences each with 7 actions, it will return 2.
+ - If you are running 7 Sequences each with 2 actions, it will return 7.
+ */
+-(NSUInteger) numberOfRunningActions __attribute__((deprecated));
+
+
 @end

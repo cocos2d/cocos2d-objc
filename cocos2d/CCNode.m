@@ -1079,9 +1079,9 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 	return 	[_scheduler getActionByTag:aTag target:self];
 }
 
--(NSUInteger) numberOfRunningActions
+-(NSArray *) actions
 {
-	return [_scheduler numberOfRunningActionsInTarget:self];
+    return [_scheduler actions:self];
 }
 
 -(CCAnimationManager*)animationManager
