@@ -33,6 +33,12 @@
 
 static NSString *const CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH";
 
+#if CCFILEUTILS_TRACE_SEARCH == 1
+	#define TraceLog( s, ... ) NSLog( @"[CCFILEUTILS][TRACE] %@", [NSString stringWithFormat:(s), ##__VA_ARGS__] )
+#else
+	#define TraceLog( s, ... )
+#endif
+
 
 #pragma mark - CCFileResolvedMetaData helper class
 
@@ -50,7 +56,6 @@ static NSString *const CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFILE
 
 #pragma mark - CCFileLocatorSearchData helper class
 
-
 @interface CCFileUtilsV2SearchData : NSObject
 
 @property (nonatomic, copy) NSString *filename;
@@ -59,7 +64,6 @@ static NSString *const CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFILE
 - (instancetype)initWithFilename:(NSString *)filename contentScale:(NSNumber *)contentScale;
 
 @end
-
 
 @implementation CCFileUtilsV2SearchData
 
@@ -74,6 +78,11 @@ static NSString *const CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFILE
     }
 
     return self;
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"%@, scale %@", _filename, _contentScale];
 }
 
 @end
@@ -139,11 +148,13 @@ static NSString *const CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFILE
 
 - (CCFile *)imageNamed:(NSString *)filename error:(NSError **)error
 {
+    TraceLog(@"Start searching for image named \"%@\" including content scale variants...", filename);
     return [self fileNamed:filename options:nil error:error];
 }
 
 - (CCFile *)fileNamed:(NSString *)filename error:(NSError **)error
 {
+    TraceLog(@"Start searching for file named \"%@\"...", filename);
     NSDictionary *defaultOptions = @{CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH : @YES};
 
     return [self fileNamed:filename options:defaultOptions error:error];
@@ -160,8 +171,9 @@ static NSString *const CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFILE
     CCFile *cachedFile = _cache[filename];
     if (cachedFile)
     {
+        TraceLog(@"SUCCESS: Cache hit for \”%@\” -> %@", filename, cachedFile);
         return cachedFile;
-    }
+    };
 
     CCFileResolvedMetaData *queryResult = [self queryDatabaseForFilename:filename];
 
@@ -174,7 +186,7 @@ static NSString *const CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFILE
             resolvedFilename = queryResult.filename;
         }
 
-        CCFile *aFile = [self findFilename:resolvedFilename inPath:searchPath options:options];
+        CCFile *aFile = [self findFilename:resolvedFilename inSearchPath:searchPath options:options];
 
         if (aFile)
         {
@@ -184,7 +196,6 @@ static NSString *const CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFILE
             }
 
             _cache[filename] = aFile;
-
             return aFile;
         }
     }
@@ -209,6 +220,7 @@ static NSString *const CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFILE
             continue;
         }
 
+        TraceLog(@"* Database entry for search path \"%@\": %@", searchPath, metaData);
         return [self resolveMetaData:metaData];
     }
 
@@ -242,6 +254,7 @@ static NSString *const CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFILE
         NSString *filenameForLanguageID = metaData.localizations[languageID];
         if (filenameForLanguageID)
         {
+            TraceLog(@"* Localization for languageID \"%@\" found: \"%@\"", languageID, filenameForLanguageID);
             return filenameForLanguageID;
         }
     }
@@ -249,22 +262,24 @@ static NSString *const CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFILE
     return nil;
 }
 
-- (CCFile *)findFilename:(NSString *)filename inPath:(NSString *)path options:(NSDictionary *)options
+- (CCFile *)findFilename:(NSString *)filename inSearchPath:(NSString *)searchPath options:(NSDictionary *)options
 {
     NSArray *searchFilenames = [self searchFilenamesWithBaseFilename:filename options:options];
 
+    TraceLog(@"* Searching for content scale variants: %@", searchFilenames);
+
     for (CCFileUtilsV2SearchData *fileLocatorSearchData in searchFilenames)
     {
-        NSURL *fileURL = [NSURL fileURLWithPath:[path stringByAppendingPathComponent:fileLocatorSearchData.filename]];
+        NSURL *fileURL = [NSURL fileURLWithPath:[searchPath stringByAppendingPathComponent:fileLocatorSearchData.filename]];
 
         BOOL isDirectory = NO;
         NSFileManager *fileManager = [NSFileManager defaultManager];
         if ([fileManager fileExistsAtPath:fileURL.path isDirectory:&isDirectory] && !isDirectory)
         {
+            TraceLog(@"SUCCESS: File exists! Filename: \"%@\" in search path: \"%@\"", fileLocatorSearchData.filename, searchPath);
             return [[CCFile alloc] initWithName:filename url:fileURL contentScale:[fileLocatorSearchData.contentScale floatValue]];
         }
     }
-
     return nil;
 }
 

@@ -1,5 +1,4 @@
 #import "CCFileMetaData.h"
-#import "ioapi.h"
 
 
 @implementation CCFileMetaData
@@ -13,6 +12,11 @@
     }
 
     return self;
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"filename: %@, UIScale: %d, localizations: %@", _filename, _useUIScale, _localizations];
 }
 
 @end
