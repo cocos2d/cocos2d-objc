@@ -514,10 +514,10 @@ CompareTimers(const void *a, const void *b, void *context)
 	// Need to transform nil -> NSNulls.
 	target = (target == nil ? [NSNull null] : target);
 	
-	CCScheduledTarget *scheduledTarget = CFDictionaryGetValue(_scheduledTargets, (__bridge CFTypeRef)target);
+	CCScheduledTarget *scheduledTarget = CFDictionaryGetValue(_scheduledTargets, target);
 	if(scheduledTarget == nil && insert){
 		scheduledTarget = [[CCScheduledTarget alloc] initWithTarget:target];
-		CFDictionarySetValue(_scheduledTargets, (__bridge CFTypeRef)target, (__bridge CFTypeRef)scheduledTarget);
+		CFDictionarySetValue(_scheduledTargets, target, scheduledTarget);
         [scheduledTarget release];
         
 		// New targets are implicitly paused.
