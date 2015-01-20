@@ -26,20 +26,21 @@
 
 // Only compile this code on Mac. These files should not be included on your iOS project.
 // But in case they are included, it won't be compiled.
-#import "../../ccMacros.h"
+#import "ccMacros.h"
 #if __CC_PLATFORM_MAC
 
+#warning TODO gettimeofday
 #import <sys/time.h>
 
 #import "CCDirectorMac.h"
 #import "CCWindow.h"
 
-#import "../../CCNode.h"
-#import "../../CCScene.h"
-#import "../../CCScheduler.h"
-#import "../../ccMacros.h"
-#import "../../CCShader.h"
-#import "../../ccFPSImages.h"
+#import "CCNode.h"
+#import "CCScene.h"
+#import "CCScheduler.h"
+#import "ccMacros.h"
+#import "CCShader.h"
+#import "ccFPSImages.h"
  
 
 #import "CCDirector_Private.h"
@@ -341,61 +342,6 @@
 	return 1.0;
 }
 
-//- (CGPoint) convertToLogicalCoordinates:(CGPoint)coords
-//{
-//	CGPoint ret;
-//
-//	if( _resizeMode == kCCDirectorResize_NoScale )
-//		ret = coords;
-//
-//	else {
-//
-//		float x_diff = _originalWinSizeInPoints.width / (_winSizeInPixels.width - _winOffset.x * 2);
-//		float y_diff = _originalWinSizeInPoints.height / (_winSizeInPixels.height - _winOffset.y * 2);
-//
-//		float adjust_x = (_winSizeInPixels.width * x_diff - _originalWinSizeInPoints.width ) / 2;
-//		float adjust_y = (_winSizeInPixels.height * y_diff - _originalWinSizeInPoints.height ) / 2;
-//
-//		ret = CGPointMake( (x_diff * coords.x) - adjust_x, ( y_diff * coords.y ) - adjust_y );
-//	}
-//
-//	return ret;
-//}
-//
-//-(CGPoint)convertToGL:(CGPoint)uiPoint
-//{
-//    NSPoint point = [[self view] convertPoint:uiPoint fromView:nil];
-//	CGPoint p = NSPointToCGPoint(point);
-//    
-//	return  [(CCDirectorMac*)self convertToLogicalCoordinates:p];
-//}
-//
-//- (CGPoint) unConvertFromLogicalCoordinates:(CGPoint)coords
-//{
-//	CGPoint ret;
-//	
-//	if( _resizeMode == kCCDirectorResize_NoScale )
-//		ret = coords;
-//	
-//	else {
-//		
-//		float x_diff = _originalWinSizeInPoints.width / (_winSizeInPixels.width - _winOffset.x * 2);
-//		float y_diff = _originalWinSizeInPoints.height / (_winSizeInPixels.height - _winOffset.y * 2);
-//		
-//		float adjust_x = (_winSizeInPixels.width * x_diff - _originalWinSizeInPoints.width ) / 2;
-//		float adjust_y = (_winSizeInPixels.height * y_diff - _originalWinSizeInPoints.height ) / 2;
-//		
-//		ret = CGPointMake(  (coords.x+ adjust_x)/x_diff, (coords.y +adjust_y)/y_diff );
-//	}
-//	
-//	return ret;
-//}
-//
-//- (CGPoint) convertToUI:(CGPoint)glPoint
-//{
-//	return [self unConvertFromLogicalCoordinates:glPoint];
-//}
-
 #pragma mark helper
 
 -(void)getFPSImageData:(unsigned char**)datapointer length:(NSUInteger*)len contentScale:(CGFloat *)scale
@@ -428,19 +374,7 @@
 {
     @autoreleasepool
     {
-#if (CC_DIRECTOR_MAC_THREAD == CC_MAC_USE_DISPLAY_LINK_THREAD)
-        if( ! _runningThread )
-            _runningThread = [NSThread currentThread];
-
-		[self drawScene];
-
-		// Process timers and other events
-		[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:nil];
-
-			
-#else
 		[self performSelector:@selector(drawScene) onThread:_runningThread withObject:nil waitUntilDone:YES];
-#endif
 
         return kCVReturnSuccess;
     }
@@ -461,12 +395,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
         return;
 
 	CCLOG(@"cocos2d: startAnimation");
-#if (CC_DIRECTOR_MAC_THREAD == CC_MAC_USE_OWN_THREAD)
-	_runningThread = [[NSThread alloc] initWithTarget:self selector:@selector(mainLoop) object:nil];
-	[_runningThread start];
-#elif (CC_DIRECTOR_MAC_THREAD == CC_MAC_USE_MAIN_THREAD)
     _runningThread = [NSThread mainThread];
-#endif
 
 	gettimeofday( &_lastUpdate, NULL);
 
@@ -500,13 +429,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 		CVDisplayLinkRelease(displayLink);
 		displayLink = NULL;
 
-#if CC_DIRECTOR_MAC_THREAD == CC_MAC_USE_OWN_THREAD
-		[_runningThread cancel];
-		[_runningThread release];
-		_runningThread = nil;
-#elif (CC_DIRECTOR_MAC_THREAD == CC_MAC_USE_MAIN_THREAD)
         _runningThread = nil;
-#endif
 	}
     
     _animating = NO;

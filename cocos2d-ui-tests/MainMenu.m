@@ -66,7 +66,6 @@ static CGPoint scrollPosition;
         // 'layer' is an autorelease object.
         MainMenu *node = [MainMenu node];
         
-        
         // add layer as a child to scene
         [mainMenuScene addChild: node];
         

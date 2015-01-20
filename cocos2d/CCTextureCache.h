@@ -25,13 +25,13 @@
  *
  */
 
+#import <Foundation/Foundation.h>
+
 #import "ccMacros.h"
 
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
 #import <CoreGraphics/CGImage.h>
 #endif
-
-#import <Foundation/Foundation.h>
 
 @class CCTexture;
 
@@ -92,7 +92,7 @@
  *  @param filename Image file to load.
  *  @param block    Block to execute when image loaded.
  */
--(void) addImageAsync:(NSString*) filename withBlock:(void(^)(CCTexture *tex))block;
+//-(void) addImageAsync:(NSString*) filename withBlock:(void(^)(CCTexture *tex))block;
 
 
 /**

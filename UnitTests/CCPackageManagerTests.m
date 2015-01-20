@@ -23,6 +23,7 @@
 #import "CCPackageHelper.h"
 
 
+
 static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 
 @interface CCPackageManagerTestURLProtocol : NSURLProtocol @end
@@ -75,7 +76,7 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 @end
 
 
-@interface CCPackageManagerTests : IGNORE_TEST_CASE <CCPackageManagerDelegate>
+@interface CCPackageManagerTests : XCTestCase <CCPackageManagerDelegate>
 
 @property (nonatomic, strong) CCPackageManager *packageManager;
 @property (nonatomic) BOOL managerReturnedSuccessfully;
@@ -94,8 +95,9 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
     [super setUp];
 
     [(AppController *)[UIApplication sharedApplication].delegate configureCocos2d];
+    // Stop the normal cocos2d main loop from happening during the tests. We will step it manually.
     [[CCDirector sharedDirector] stopAnimation];
-
+    
     self.packageManager = [[CCPackageManager alloc] init];
     _packageManager.delegate = self;
 

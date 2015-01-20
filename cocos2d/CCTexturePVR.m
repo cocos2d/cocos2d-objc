@@ -64,12 +64,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #import "CCTexturePVR.h"
 #import "ccMacros.h"
-#import "CCConfiguration.h"
+#import "CCDeviceInfo.h"
 #import "Support/ccUtils.h"
-#import "Support/CCFileUtils.h"
-#import "Support/ZipUtils.h"
 #import "CCGL.h"
 #import "CCRenderDispatch.h"
+#import "CCFile_Private.h"
 
 #pragma mark -
 #pragma mark CCTexturePVR
@@ -301,7 +300,7 @@ typedef struct {
 		return NO;
 	}
 
-	CCConfiguration *configuration = [CCConfiguration sharedConfiguration];
+	CCDeviceInfo *configuration = [CCDeviceInfo sharedDeviceInfo];
 
 	flags = CFSwapInt32LittleToHost(header->flags);
 	formatFlags = flags & PVR_TEXTURE_FLAG_TYPE_MASK;
@@ -349,7 +348,7 @@ typedef struct {
 						heightBlocks = height / 4;
 						break;
 					case kPVR2TexturePixelFormat_BGRA_8888:
-						if( ! [[CCConfiguration sharedConfiguration] supportsBGRA8888] ) {
+						if( ! [[CCDeviceInfo sharedDeviceInfo] supportsBGRA8888] ) {
 							CCLOG(@"cocos2d: TexturePVR. BGRA8888 not supported on this device");
 							return NO;
 						}
@@ -468,7 +467,7 @@ typedef struct {
 				heightBlocks = height / 4;
 				break;
 			case kPVR3TexturePixelFormat_BGRA_8888:
-				if( ! [[CCConfiguration sharedConfiguration] supportsBGRA8888] ) {
+				if( ! [[CCDeviceInfo sharedDeviceInfo] supportsBGRA8888] ) {
 					CCLOG(@"cocos2d: TexturePVR. BGRA8888 not supported on this device");
 					return NO;
 				}
@@ -506,7 +505,7 @@ typedef struct {
 
 - (BOOL)createGLTexture
 {
-	NSAssert([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIGL, @"PVR textures are not yet supported by Metal.");
+	NSAssert([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIGL, @"PVR textures are not yet supported by Metal.");
 	__block BOOL retVal = NO;
 	
 CCRenderDispatch(NO, ^{
@@ -546,7 +545,7 @@ CCRenderDispatch(NO, ^{
 	// Generate textures with mipmaps
 	for (GLint i=0; i < _numberOfMipmaps; i++)
 	{
-		if( compressed && ! [[CCConfiguration sharedConfiguration] supportsPVRTC] ) {
+		if( compressed && ! [[CCDeviceInfo sharedDeviceInfo] supportsPVRTC] ) {
 			CCLOGWARN(@"cocos2d: WARNING: PVRTC images are not supported");
 			retVal = NO; return;
 		}
@@ -584,23 +583,44 @@ CCRenderDispatch(NO, ^{
 {
 	if((self = [super init]))
 	{
-		unsigned char *pvrdata = NULL;
-		NSInteger pvrlen = 0;
-		NSString *lowerCase = [path lowercaseString];
+        NSURL *fileURL = [NSURL fileURLWithPath:path];
+        CCFile *file = [[CCFile alloc] initWithName:path url:fileURL contentScale:1.0];
+        
+        unsigned char *pvrdata = NULL;
+        NSInteger pvrlen = 0;
+        
+        if ( [[path lowercaseString] hasSuffix:@".ccz"]){
+            // read the special .ccz header, supply a size hint and read the rest of the data.
+            NSInputStream *stream = [file openInputStream];
+            
+            struct CCZHeader {
+                uint8_t			sig[4];				// signature. Should be 'CCZ!' 4 bytes
+                uint16_t		compression_type;	// should 0
+                uint16_t		version;			// should be 2 (although version type==1 is also supported)
+                uint32_t		reserved;			// Reserved for users.
+                uint32_t		len;				// size of the uncompressed file
+            };
+            
+            struct CCZHeader header;
+            [stream read:(void*) &header maxLength:sizeof(struct CCZHeader)];
 
-        if ( [lowerCase hasSuffix:@".ccz"])
-			pvrlen = ccInflateCCZFile( [path UTF8String], &pvrdata );
+            NSLog(@"Loaded ccz file with size: %d", header.len);
 
-		else if( [lowerCase hasSuffix:@".gz"] )
-			pvrlen = ccInflateGZipFile( [path UTF8String], &pvrdata );
-
-		else
-			pvrlen = ccLoadFileIntoMemory( [path UTF8String], &pvrdata );
-
-		if( pvrlen < 0 ) {
+            pvrlen = header.len;
+            CCWrappedInputStream *gzStream = [[CCGZippedInputStream alloc]initWithInputStream:stream];
+            pvrdata = (unsigned char *) [gzStream loadDataWithSizeHint:header.len error:nil].bytes;
+        }else{
+            NSError *err;
+            NSData *loadData = [file loadData:&err];
+            if(err) CCLOG(@"Error loading CCTexturePVR from %@", fileURL);
+            
+            pvrlen = loadData.length;
+            pvrdata = (unsigned char *) loadData.bytes;
+        }
+        
+ 		if( pvrlen < 0 ) {
 			return nil;
 		}
-
 
         _numberOfMipmaps = 0;
 
@@ -617,15 +637,14 @@ CCRenderDispatch(NO, ^{
 		if( ! (([self unpackPVRv2Data:pvrdata PVRLen:pvrlen] || [self unpackPVRv3Data:pvrdata PVRLen:pvrlen]) &&
 		   [self createGLTexture] ) )
 		{
-			free(pvrdata);
 			return nil;
 		}
 		
 #if __CC_PLATFORM_IOS && defined(DEBUG)
 		GLenum pixelFormat = _pixelFormatInfo->ccPixelFormat;
-		CCConfiguration *conf = [CCConfiguration sharedConfiguration];
+		CCDeviceInfo *info = [CCDeviceInfo sharedDeviceInfo];
 		
-		if( [conf OSVersion] >= CCSystemVersion_iOS_5_0 )
+		if( [info OSVersion] >= CCSystemVersion_iOS_5_0 )
 		{
 			
 			// iOS 5 BUG:
@@ -670,10 +689,6 @@ CCRenderDispatch(NO, ^{
 			}
 		}
 #endif // iOS
-		
-
-
-		free(pvrdata);
 	}
 
 	return self;

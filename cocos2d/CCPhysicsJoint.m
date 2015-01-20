@@ -27,7 +27,7 @@
 #import "CCNode_Private.h"
 
 @interface CCNode(Private)
--(CGAffineTransform)nonRigidTransform;
+-(GLKMatrix4)nonRigidTransform;
 @end
 
 
@@ -161,14 +161,6 @@
 }
 
 
-
-+(CCPhysicsJoint *)connectedRotarySpringJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
-                                       restAngle:(CGFloat)restAngle
-                                        stifness:(CGFloat)stiffness
-                                         damping:(CGFloat)damping
-{
-	return [self connectedRotarySpringJointWithBodyA:bodyA bodyB:bodyB restAngle:restAngle stifness:stiffness damping:damping];
-}
 
 +(CCPhysicsJoint *)connectedRotarySpringJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
                                        restAngle:(CGFloat)restAngle
@@ -322,7 +314,7 @@ BreakConstraint(cpConstraint *constraint, cpSpace *space)
 {
 	
 	CCPhysicsBody *bodyA = self.bodyA;
-	CGPoint anchor = CGPointApplyAffineTransform(_anchor, bodyA.node.nonRigidTransform);
+	CGPoint anchor = CGPointApplyGLKMatrix4(_anchor, bodyA.node.nonRigidTransform);
 	
 	_constraint.anchorA = CCP_TO_CPV(anchor);
 	_constraint.anchorB = [_constraint.bodyB worldToLocal:[_constraint.bodyA localToWorld:CCP_TO_CPV(anchor)]];
@@ -387,8 +379,8 @@ BreakConstraint(cpConstraint *constraint, cpSpace *space)
 -(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
 {
 	CCPhysicsBody *bodyA = self.bodyA, *bodyB = self.bodyB;
-	CGPoint anchorA = CGPointApplyAffineTransform(_anchorA, bodyA.node.nonRigidTransform);
-	CGPoint anchorB = CGPointApplyAffineTransform(_anchorB, bodyB.node.nonRigidTransform);
+	CGPoint anchorA = CGPointApplyGLKMatrix4(_anchorA, bodyA.node.nonRigidTransform);
+	CGPoint anchorB = CGPointApplyGLKMatrix4(_anchorB, bodyB.node.nonRigidTransform);
     _constraint.anchorA = CCP_TO_CPV(anchorA);
     _constraint.anchorB = CCP_TO_CPV(anchorB);
 	
@@ -425,8 +417,8 @@ BreakConstraint(cpConstraint *constraint, cpSpace *space)
 -(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
 {
 	CCPhysicsBody *bodyA = self.bodyA, *bodyB = self.bodyB;
-	_constraint.anchorA = CCP_TO_CPV(CGPointApplyAffineTransform(_anchorA, bodyA.node.nonRigidTransform));
-	_constraint.anchorB = CCP_TO_CPV(CGPointApplyAffineTransform(_anchorB, bodyB.node.nonRigidTransform));
+	_constraint.anchorA = CCP_TO_CPV(CGPointApplyGLKMatrix4(_anchorA, bodyA.node.nonRigidTransform));
+	_constraint.anchorB = CCP_TO_CPV(CGPointApplyGLKMatrix4(_anchorB, bodyB.node.nonRigidTransform));
 }
 
 -(void)setScale:(float)_scale
@@ -469,8 +461,8 @@ BreakConstraint(cpConstraint *constraint, cpSpace *space)
 -(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
 {
 	CCPhysicsBody *bodyA = self.bodyA, *bodyB = self.bodyB;
-	_constraint.anchorA = CCP_TO_CPV(CGPointApplyAffineTransform(_anchorA, bodyA.node.nonRigidTransform));
-	_constraint.anchorB = CCP_TO_CPV(CGPointApplyAffineTransform(_anchorB, bodyB.node.nonRigidTransform));
+	_constraint.anchorA = CCP_TO_CPV(CGPointApplyGLKMatrix4(_anchorA, bodyA.node.nonRigidTransform));
+	_constraint.anchorB = CCP_TO_CPV(CGPointApplyGLKMatrix4(_anchorB, bodyB.node.nonRigidTransform));
 	
 }
 

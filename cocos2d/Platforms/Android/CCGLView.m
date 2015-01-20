@@ -6,7 +6,6 @@
 //
 //
 
-#import "cocos2d.h"
 #import "CCGLView.h"
 
 #if __CC_PLATFORM_ANDROID

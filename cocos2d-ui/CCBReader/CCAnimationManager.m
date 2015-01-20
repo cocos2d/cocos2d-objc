@@ -22,19 +22,27 @@
  * THE SOFTWARE.
  */
 
-#import "CCAnimationManager.h"
+
+#import <objc/runtime.h>
+
 #import "CCAnimationManager_Private.h"
+#import "CCDirector_Private.h"
+#import "CCBReader_Private.h"
+
 #import "CCBKeyframe.h"
 #import "CCBSequence.h"
 #import "CCBSequenceProperty.h"
 #import "CCBReader.h"
 #import "CCBKeyframe.h"
 #import "OALSimpleAudio.h"
-#import <objc/runtime.h>
-
-#import "CCDirector_Private.h"
-#import "CCBReader_Private.h"
 #import "CCActionManager.h"
+#import "CCActionInterval.h"
+#import "CCActionInstant.h"
+#import "CCActionEase.h"
+#import "CCSprite.h"
+#import "CCLightNode.h"
+#import "CCActionTween.h"
+#import "CCColor.h"
 
 // Unique Manager ID
 static NSInteger ccbAnimationManagerID = 0;
@@ -1046,12 +1054,7 @@ static NSInteger ccbAnimationManagerID = 0;
 
 -(void) update: (CCTime) t
 {
-    CCNode* tn = (CCNode*) _target;
-    
-    ccColor4F fc = _from.ccColor4f;
-    ccColor4F tc = _to.ccColor4f;
-    CCColor *lerped = [CCColor colorWithRed:fc.r + (tc.r - fc.r) * t green:fc.g + (tc.g - fc.g) * t blue:fc.b + (tc.b - fc.b) * t alpha:fc.a + (tc.a - fc.a) * t];
-    
+    CCColor *lerped = [_from interpolateTo:_to alpha:t];
     [_target setValue:lerped forKey:_key];
 }
 @end

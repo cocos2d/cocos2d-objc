@@ -25,47 +25,52 @@
  * THE SOFTWARE.
  */
 
-#import "CCNode.h"
-#import "CCNode_Private.h"
-#import "CCDirector.h"
-#import "CCActionManager.h"
-#import "CCAnimationManager.h"
-#import "CCScheduler.h"
-#import "ccConfig.h"
-#import "ccMacros.h"
-#import "Support/CGPointExtension.h"
-#import "ccMacros.h"
-#import "CCShader.h"
-#import "CCPhysics+ObjectiveChipmunk.h"
-#import "CCDirector_Private.h"
-#import "CCRenderer_Private.h"
-#import "CCTexture_Private.h"
-#import "CCActionManager_Private.h"
+#import "ccUtils.h"
 
-#if CC_NODE_RENDER_SUBPIXEL
-#define RENDER_IN_SUBPIXEL
-#else
-#define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
-#endif
+#import "CCNode_Private.h"
+
+#import "CCDirector_Private.h"
+#import "CCActionManager_Private.h"
+#import "CCAnimationManager.h"
+#import "CCRenderer_Private.h"
+#import "CCPhysics+ObjectiveChipmunk.h"
+#import "CCColor.h"
+#import "CCLayout.h"
 
 #pragma mark - Node
 
-@interface CCNode ()
-// lazy allocs
--(void) childrenAlloc;
-// helper that reorder a child
--(void) insertChild:(CCNode*)child z:(NSInteger)z;
-// used internally to alter the zOrder variable. DON'T call this method manually
--(void) _setZOrder:(NSInteger) z;
--(void) detachChild:(CCNode *)child cleanup:(BOOL)doCleanup;
-@end
-
 @implementation CCNode {
-
+	// Rotation angle.
+	float _rotationalSkewX, _rotationalSkewY;
+    
+	// Position of the node.
+	CGPoint _position;
+    
+	// Transform.
+	GLKMatrix4 _transform;
+	BOOL _isTransformDirty;
+    
+	// Array of children.
+	NSMutableArray *_children;
+    
+    // True to ensure reorder.
+	BOOL _isReorderChildDirty;
+	
+	// Scheduler used to schedule timers and updates/
+	CCScheduler *_scheduler;
+	
+	// ActionManager used to handle all the actions.
+	CCActionManager	*_actionManager;
+	
+    //Animation Manager used to handle CCB animations
+    CCAnimationManager * _animationManager;
+	
+	// YES if the node is added to an active scene.
+	BOOL _isInActiveScene;
+	
+	// Number of paused parent or ancestor nodes.
+	int _pausedAncestors;
 }
-
-// Suppress automatic ivar creation.
-@dynamic runningInActiveScene;
 
 static inline
 CCPhysicsBody *
@@ -74,12 +79,12 @@ GetBodyIfRunning(CCNode *node)
 	return (node->_isInActiveScene ? node->_physicsBody : nil);
 }
 
-CGAffineTransform
+GLKMatrix4
 NodeToPhysicsTransform(CCNode *node)
 {
-	CGAffineTransform transform = CGAffineTransformIdentity;
+	GLKMatrix4 transform = GLKMatrix4Identity;
 	for(CCNode *n = node; n && !n.isPhysicsNode; n = n.parent){
-		transform = CGAffineTransformConcat(transform, n.nodeToParentTransform);
+	transform = GLKMatrix4Multiply(n.nodeToParentMatrix, transform);
 	}
 	
 	return transform;
@@ -109,31 +114,11 @@ NodeToPhysicsScale(CCNode * node)
 	
 }
 
-inline CGAffineTransform
+inline GLKMatrix4
 RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
 {
-	return CGAffineTransformConcat(body.absoluteTransform, CGAffineTransformInvert(NodeToPhysicsTransform(node.parent)));
+	return GLKMatrix4Multiply(GLKMatrix4Invert(NodeToPhysicsTransform(node.parent), NULL), body.absoluteTransform);
 }
-
-// XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
-static NSUInteger globalOrderOfArrival = 1;
-
-@synthesize children = _children;
-@synthesize visible = _visible;
-@synthesize parent = _parent;
-@synthesize zOrder = _zOrder;
-@synthesize name = _name;
-@synthesize vertexZ = _vertexZ;
-@synthesize userObject = _userObject;
-@synthesize orderOfArrival = _orderOfArrival;
-@synthesize physicsBody = _physicsBody;
-
-#pragma mark CCNode - Transform related properties
-
-@synthesize scaleX = _scaleX, scaleY = _scaleY;
-@synthesize anchorPoint = _anchorPoint, anchorPointInPoints = _anchorPointInPoints;
-@synthesize contentSize = _contentSize;
-@synthesize skewX = _skewX, skewY = _skewY;
 
 #pragma mark CCNode - Init & cleanup
 
@@ -153,38 +138,21 @@ static NSUInteger globalOrderOfArrival = 1;
         _position = CGPointZero;
         _contentSize = CGSizeZero;
 		_anchorPointInPoints = _anchorPoint = CGPointZero;
-
-		_isTransformDirty = _isInverseDirty = YES;
-
-		_vertexZ = 0;
-
-		_visible = YES;
+        
+		_isTransformDirty = YES;
 
 		_zOrder = 0;
+		_vertexZ = 0;
+		_visible = YES;
 
-		// children (lazy allocs)
-		_children = nil;
-
-		// userObject is always inited as nil
-		_userObject = nil;
-
-		//initialize parent to nil
-		_parent = nil;
-
-		_shader = [CCShader positionColorShader];
-		_blendMode = [CCBlendMode premultipliedAlphaMode];
-
-		_orderOfArrival = 0;
-
-		// set default scheduler and actionManager
 		CCDirector *director = [CCDirector sharedDirector];
-		_actionManager = [director actionManager];
-		_scheduler = [director scheduler];
+		_actionManager = [[director actionManager] retain];
+		_scheduler = [[director scheduler] retain];
         
 		// set default touch handling
 		self.hitAreaExpansion = 0.0f;
     
-		_displayColor = _color = [CCColor whiteColor].ccColor4f;
+		_displayColor = _color = GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f);
 		_cascadeOpacityEnabled = NO;
 		_cascadeColorEnabled = NO;
 	}
@@ -203,8 +171,6 @@ static NSUInteger globalOrderOfArrival = 1;
     
     // CCAnimationManager Cleanup (Set by SpriteBuilder)
     [_animationManager performSelector:@selector(cleanup)];
-    
-    _userObject = nil;
 }
 
 - (NSString*) description
@@ -215,6 +181,17 @@ static NSUInteger globalOrderOfArrival = 1;
 - (void) dealloc
 {
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
+    
+    [_name release];
+    [_userObject release];
+    [_children release];
+    
+    [_scheduler release];
+    [_actionManager release];
+    [_animationManager release];
+    [_physicsBody release];
+    
+    [super dealloc];
 }
 
 #pragma mark Setters
@@ -232,7 +209,7 @@ static NSUInteger globalOrderOfArrival = 1;
 	} else {
 		_rotationalSkewX = newRotation;
 		_rotationalSkewY = newRotation;
-		_isTransformDirty = _isInverseDirty = YES;
+		_isTransformDirty = YES;
 	}
 }
 
@@ -261,7 +238,7 @@ static NSUInteger globalOrderOfArrival = 1;
 	NSAssert(_physicsBody == nil, @"Currently physics nodes don't support skewing.");
 	
 	_rotationalSkewX = newX;
-	_isTransformDirty = _isInverseDirty = YES;
+	_isTransformDirty = YES;
 }
 
 -(float)rotationalSkewY
@@ -279,19 +256,19 @@ static NSUInteger globalOrderOfArrival = 1;
 	NSAssert(_physicsBody == nil, @"Currently physics nodes don't support skewing.");
 	
 	_rotationalSkewY = newY;
-	_isTransformDirty = _isInverseDirty = YES;
+	_isTransformDirty = YES;
 }
 
 -(void) setScaleX: (float)newScaleX
 {
 	_scaleX = newScaleX;
-	_isTransformDirty = _isInverseDirty = YES;
+	_isTransformDirty = YES;
 }
 
 -(void) setScaleY: (float)newScaleY
 {
 	_scaleY = newScaleY;
-	_isTransformDirty = _isInverseDirty = YES;
+	_isTransformDirty = YES;
 }
 
 -(void) setSkewX:(float)newSkewX
@@ -299,7 +276,7 @@ static NSUInteger globalOrderOfArrival = 1;
 	NSAssert(_physicsBody == nil, @"Currently physics nodes don't support skewing.");
 	
 	_skewX = newSkewX;
-	_isTransformDirty = _isInverseDirty = YES;
+	_isTransformDirty = YES;
 }
 
 -(void) setSkewY:(float)newSkewY
@@ -307,13 +284,13 @@ static NSUInteger globalOrderOfArrival = 1;
 	NSAssert(_physicsBody == nil, @"Currently physics nodes don't support skewing.");
 	
 	_skewY = newSkewY;
-	_isTransformDirty = _isInverseDirty = YES;
+	_isTransformDirty = YES;
 }
 
 inline CGPoint
 GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 {
-	return CGPointApplyAffineTransform(node->_anchorPointInPoints, [node nodeToParentTransform]);
+	return CGPointApplyGLKMatrix4(node->_anchorPointInPoints, [node nodeToParentMatrix]);
 }
 
 -(CGPoint)position
@@ -328,9 +305,10 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 
 // Urg. CGPoint types. -_-
 inline CGPoint
-TransformPointAsVector(CGPoint p, CGAffineTransform t)
+TransformPointAsVector(CGPoint p, GLKMatrix4 t)
 {
-  return (CGPoint){t.a*p.x + t.c*p.y, t.b*p.x + t.d*p.y};
+	GLKVector4 v = GLKMatrix4MultiplyVector4(t, GLKVector4Make(p.x, p.y, 0.0f, 0.0f));
+	return CGPointMake(v.x, v.y);
 }
 
 -(void) setPosition: (CGPoint)newPosition
@@ -345,14 +323,14 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
         body.relativePosition = newPositionInPoints;
 	} else {
 		_position = newPosition;
-		_isTransformDirty = _isInverseDirty = YES;
+		_isTransformDirty = YES;
 	}
 }
 
 -(void)setPositionType:(CCPositionType)positionType
 {
 	_positionType = positionType;
-	_isTransformDirty = _isInverseDirty = YES;
+	_isTransformDirty = YES;
 }
 
 -(void) setAnchorPoint:(CGPoint)point
@@ -361,7 +339,7 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
 		_anchorPoint = point;
         CGSize contentSizeInPoints = self.contentSizeInPoints;
 		_anchorPointInPoints = ccp( contentSizeInPoints.width * _anchorPoint.x, contentSizeInPoints.height * _anchorPoint.y );
-		_isTransformDirty = _isInverseDirty = YES;
+		_isTransformDirty = YES;
 	}
 }
 
@@ -385,7 +363,7 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
     // Update children
     CGSize contentSizeInPoints = self.contentSizeInPoints;
     _anchorPointInPoints = ccp( contentSizeInPoints.width * _anchorPoint.x, contentSizeInPoints.height * _anchorPoint.y );
-    _isTransformDirty = _isInverseDirty = YES;
+    _isTransformDirty = YES;
     
     if ([_parent isKindOfClass:[CCLayout class]])
     {
@@ -399,7 +377,7 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
         if (!CCPositionTypeIsBasicPoints(child->_positionType))
         {
             // This is a position type affected by content size
-            child->_isTransformDirty = _isInverseDirty = YES;
+            child->_isTransformDirty = YES;
         }
     }
 }
@@ -578,19 +556,15 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
 - (void) setScaleType:(CCScaleType)scaleType
 {
     _scaleType = scaleType;
-    _isTransformDirty = _isInverseDirty = YES;
+    _isTransformDirty = YES;
 }
 
 - (CGRect) boundingBox
 {
     CGSize contentSize = self.contentSizeInPoints;
     CGRect rect = CGRectMake(0, 0, contentSize.width, contentSize.height);
-    return CGRectApplyAffineTransform(rect, [self nodeToParentTransform]);
-}
-
--(void) setVertexZ:(float)vertexZ
-{
-	_vertexZ = vertexZ;
+    GLKMatrix4 t = [self nodeToParentMatrix];
+    return CGRectApplyAffineTransform(rect, CGAffineTransformMake(t.m[0], t.m[1], t.m[4], t.m[5], t.m[12], t.m[13]));
 }
 
 - (void)setVisible:(BOOL)visible
@@ -610,23 +584,21 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
 -(void) setScale:(float) s
 {
 	_scaleX = _scaleY = s;
-	_isTransformDirty = _isInverseDirty = YES;
+	_isTransformDirty = YES;
 }
 
 - (void) setZOrder:(NSInteger)zOrder
 {
-    if (_parent)
-        [_parent reorderChild:self z:zOrder];
-    else
-    	[self _setZOrder:zOrder]; // issue #598
+    if(_zOrder != zOrder){
+        _zOrder = zOrder;
+        
+        if(_parent){
+            _parent->_isReorderChildDirty = YES;
+        }
+    }
 }
 
 #pragma mark CCNode Composition
-
--(void) childrenAlloc
-{
-	_children = [[NSMutableArray alloc] init];
-}
 
 // Recursively get a child by name, but don't return the root of the search.
 -(CCNode*) getChildByNameRecursive:(NSString *)name root:(CCNode *)root
@@ -665,7 +637,7 @@ static void
 RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 {
 	for(CCNode *child in node->_children){
-		BOOL wasRunning = child.runningInActiveScene;
+		BOOL wasRunning = child.active;
 		child->_pausedAncestors += increment;
 		[child wasRunning:wasRunning];
 		
@@ -682,17 +654,17 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( child.parent == nil, @"child already added to another node. It can't be added again");
 
-	if( ! _children )
-		[self childrenAlloc];
+	if(! _children){
+        _children = [[NSMutableArray alloc] init];
+    }
 
-	[self insertChild:child z:z];
-
+    child->_zOrder = z;
 	child.name = name;
+	child->_parent = self;
 
-	[child setParent: self];
+    [_children addObject:child];
+	_isReorderChildDirty=YES;
 
-	[child setOrderOfArrival: globalOrderOfArrival++];
-	
 	// Update pausing parameters
 	child->_pausedAncestors = _pausedAncestors + (_paused ? 1 : 0);
 	RecursivelyIncrementPausedAncestors(child, child->_pausedAncestors);
@@ -790,7 +762,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 			[c cleanup];
 
 		// set parent nil at the end (issue #476)
-		[c setParent:nil];
+		c->_parent = nil;
         
         [[[CCDirector sharedDirector] responderManager] markAsDirty];
 
@@ -819,77 +791,40 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		[child cleanup];
 
 	// set parent nil at the end (issue #476)
-	[child setParent:nil];
+	child->_parent = nil;
 
 	[[[CCDirector sharedDirector] responderManager] markAsDirty];
 
 	[_children removeObject:child];
 }
 
-// used internally to alter the zOrder variable. DON'T call this method manually
--(void) _setZOrder:(NSInteger) z
+-(void)setParent:(CCNode *)parent
 {
-	_zOrder = z;
-}
-
-// helper used by reorderChild & add
--(void) insertChild:(CCNode*)child z:(NSInteger)z
-{
-	_isReorderChildDirty=YES;
-
-    [_children addObject:child];
-	[child _setZOrder:z];
-}
-
--(void) reorderChild:(CCNode*) child z:(NSInteger)z
-{
-	NSAssert( child != nil, @"Child must be non-nil");
-
-	_isReorderChildDirty = YES;
-
-	[child setOrderOfArrival: globalOrderOfArrival++];
-	[child _setZOrder:z];
-}
-
-- (NSComparisonResult) compareZOrderToNode:(CCNode*)node
-{
-    if (node->_zOrder == _zOrder)
-    {
-        if (node->_orderOfArrival == _orderOfArrival)
-        {
-            return NSOrderedSame;
-        }
-        else if (node->_orderOfArrival < _orderOfArrival)
-        {
-            return NSOrderedDescending;
-        }
-        else
-        {
-            return NSOrderedAscending;
-        }
-    }
-    else if (node->_zOrder < _zOrder)
-    {
-        return NSOrderedDescending;
-    }
-    else
-    {
-        return NSOrderedAscending;
-    }
+    if(_parent) [self removeFromParentAndCleanup:NO];
+    [parent addChild:self];
 }
 
 - (void) sortAllChildren
 {
 	if (_isReorderChildDirty)
 	{
-        [_children sortUsingSelector:@selector(compareZOrderToNode:)];
+        [_children sortWithOptions:NSSortStable usingComparator:^NSComparisonResult(id obj1, id obj2) {
+            NSInteger z1 = [(CCNode *)obj1 zOrder];
+            NSInteger z2 = [(CCNode *)obj2 zOrder];
+            
+            if(z1 < z2){
+                return NSOrderedAscending;
+            } else if(z1 > z2){
+                return NSOrderedDescending;
+            } else {
+                return NSOrderedSame;
+            }
+        }];
 
 		//don't need to check children recursively, that's done in visit of each child
         
 		_isReorderChildDirty = NO;
-        
         [[[CCDirector sharedDirector] responderManager] markAsDirty];
-
 	}
 }
 
@@ -897,8 +832,27 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 -(void)draw:(__unsafe_unretained CCRenderer *)renderer transform:(const GLKMatrix4 *)transform {}
 
-// Defined in CCNoARC.m
-// -(void) visit:(__unsafe_unretained CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
+-(void) visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
+{
+	// quick return if not visible. children won't be drawn.
+	if (!_visible) return;
+	
+	[self sortAllChildren];
+	
+	GLKMatrix4 transform = GLKMatrix4Multiply(*parentTransform, [self nodeToParentMatrix]);
+	BOOL drawn = NO;
+	
+	for(CCNode *child in _children){
+		if(!drawn && child.zOrder >= 0){
+			[self draw:renderer transform:&transform];
+			drawn = YES;
+		}
+		
+		[child visit:renderer parentTransform:&transform];
+	}
+	
+	if(!drawn) [self draw:renderer transform:&transform];
+}
 
 -(void)visit
 {
@@ -916,28 +870,33 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 #pragma mark CCPhysics support.
 
-inline CGAffineTransform
-CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
+inline GLKMatrix4
+GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 {
 	CGPoint rot = ccpForAngle(radians);
-	return CGAffineTransformMake(rot.x, rot.y, -rot.y, rot.x, translate.x, translate.y);
+	return GLKMatrix4Make(
+		 rot.x, rot.y, 0.0f, 0.0f,
+		-rot.y, rot.x, 0.0f, 0.0f,
+		  0.0f,  0.0f, 1.0f, 0.0f,
+		 pos.x, pos.y, 0.0f, 1.0f
+	);
 }
 
 // Private method used to extract the non-rigid part of the node's transform relative to a CCPhysicsNode.
 // This method can only be called in very specific circumstances.
--(CGAffineTransform)nonRigidTransform
+-(GLKMatrix4)nonRigidTransform
 {
-	CGAffineTransform toPhysics = NodeToPhysicsTransform(self);
+	GLKMatrix4 toPhysics = NodeToPhysicsTransform(self);
 	
 	CCPhysicsBody *body = GetBodyIfRunning(self);
 	if(body){
-		return CGAffineTransformConcat(toPhysics, CGAffineTransformInvert(body.absoluteTransform));
+		return GLKMatrix4Multiply(GLKMatrix4Invert(body.absoluteTransform, NULL), toPhysics);
 	} else {
 		// Body is not active yet, so this is more of a mess. :-\
 		// Need to guess the rigid part of the transform.
 		float radians = CC_DEGREES_TO_RADIANS(NodeToPhysicsRotation(self));
-		CGAffineTransform absolute = CGAffineTransformMakeRigid(ccp(toPhysics.tx, toPhysics.ty), radians);
-		return CGAffineTransformConcat(toPhysics, CGAffineTransformInvert(absolute));
+		GLKMatrix4 absolute = GLKMatrix4MakeRigid(ccp(toPhysics.m[12], toPhysics.m[13]), radians);
+		return GLKMatrix4Multiply(GLKMatrix4Invert(absolute, NULL), toPhysics);
 	}
 }
 
@@ -953,7 +912,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 		if(physics == nil)
         {
             CCLOGWARN(@"Failed to find a parent CCPhysicsNode for this CCPhysicsBody. The CCPhysicsBody requires it be the child of a CCPhysicsNode when onEnter is called.");
-            _physicsBody = nil;
+            [_physicsBody release]; _physicsBody = nil;
             return;
         }
 		
@@ -962,14 +921,14 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 		physicsBody.absoluteRadians = CC_DEGREES_TO_RADIANS(NodeToPhysicsRotation(self));
 		
 		// Grab the origin position of the node from it's transform.
-		CGAffineTransform transform = NodeToPhysicsTransform(self);
-		physicsBody.absolutePosition = ccp(transform.tx, transform.ty);
+		GLKMatrix4 transform = NodeToPhysicsTransform(self);
+		physicsBody.absolutePosition = ccp(transform.m[12], transform.m[13]);
         
         physicsBody.relativePosition = self.positionInPoints;
 		physicsBody.relativeRotation = self.rotation;
         
-		CGAffineTransform nonRigid = self.nonRigidTransform;
-		[_physicsBody willAddToPhysicsNode:physics nonRigidTransform:CGAFFINETRANSFORM_TO_CPTRANSFORM(nonRigid)];
+		GLKMatrix4 nonRigid = self.nonRigidTransform;
+		[_physicsBody willAddToPhysicsNode:physics nonRigidTransform:nonRigid];
 		[physics.space smartAdd:physicsBody];
 		[_physicsBody didAddToPhysicsNode:physics];
 		
@@ -1023,16 +982,18 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 		// nil out the old body's node reference.
 		_physicsBody.node = nil;
 		
-		_physicsBody = physicsBody;
+        [_physicsBody autorelease];
+		_physicsBody = [physicsBody retain];
 		_physicsBody.node = self;
 	}
 }
 
 #pragma mark CCNode SceneManagement
 
-// Overriden by CCScene to return YES.
--(BOOL)isScene {return NO;}
--(CCScene *)scene {return (self.isScene ? (CCScene *)self : self.parent.scene);}
+-(CCScene *)scene
+{
+    return _parent.scene;
+}
 
 -(void) onEnter
 {
@@ -1041,7 +1002,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 	[self setupPhysicsBody:_physicsBody];
 	[_scheduler scheduleTarget:self];
 	
-	BOOL wasRunning = self.runningInActiveScene;
+	BOOL wasRunning = self.active;
 	_isInActiveScene = YES;
 	
 	//If there's a physics node in the hierarchy, all actions should run on a fixed timestep.
@@ -1078,7 +1039,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 {
 	[self teardownPhysics];
 	
-	BOOL wasRunning = self.runningInActiveScene;
+	BOOL wasRunning = self.active;
 	_isInActiveScene = NO;
 	[self wasRunning:wasRunning];
 	
@@ -1091,8 +1052,9 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 {
 	if( actionManager != _actionManager ) {
 		[self stopAllActions];
-
-		_actionManager = actionManager;
+        
+        [_actionManager autorelease];
+		_actionManager = [actionManager retain];
 	}
 }
 
@@ -1105,7 +1067,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 {
 	NSAssert( action != nil, @"Argument must be non-nil");
 
-	[_actionManager addAction:action target:self paused:!self.runningInActiveScene];
+	[_actionManager addAction:action target:self paused:!self.active];
 	return action;
 }
 
@@ -1144,13 +1106,8 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
     }
     else
     {
-        return self.parent.animationManager;
+        return _parent.animationManager;
     }
-}
-
--(void)setAnimationManager:(CCAnimationManager *)animationManager
-{
-    _animationManager = animationManager;
 }
 
 #pragma mark CCNode - Scheduler
@@ -1169,8 +1126,9 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 {
 	if( scheduler != _scheduler ) {
 		[_scheduler unscheduleTarget:self];
-
-		_scheduler = scheduler;
+        
+        [_scheduler autorelease];
+		_scheduler = [scheduler retain];
 	}
 }
 
@@ -1268,7 +1226,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 // Used to pause/unpause a node's actions and timers when it's isRunning state changes.
 -(void)wasRunning:(BOOL)wasRunning
 {
-	BOOL isRunning = self.runningInActiveScene;
+	BOOL isRunning = self.active;
 	
 	if(isRunning && !wasRunning){
 		[_scheduler setPaused:NO target:self];
@@ -1282,7 +1240,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 }
 
 
--(BOOL)isRunningInActiveScene
+-(BOOL)active
 {
 	return (_isInActiveScene && !_paused && _pausedAncestors == 0);
 }
@@ -1290,7 +1248,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 -(void)setPaused:(BOOL)paused
 {
 	if(_paused != paused){
-		BOOL wasRunning = self.runningInActiveScene;
+		BOOL wasRunning = self.active;
 		_paused = paused;
 		[self wasRunning:wasRunning];
 		
@@ -1418,30 +1376,30 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 	self.position = [self convertPositionFromPoints:positionInPoints type:self.positionType];
 }
 
-- (CGAffineTransform)nodeToParentTransform
+- (GLKMatrix4)nodeToParentMatrix
 {
 	// The body ivar cannot be changed while this method is running and it's ARC retain/release is 70% of the profile samples for this method.
 	__unsafe_unretained CCPhysicsBody *physicsBody = GetBodyIfRunning(self);
 	if(physicsBody){
         
-		CGAffineTransform rigidTransform;
+		GLKMatrix4 rigidTransform;
 		
 		if(physicsBody.type == CCPhysicsBodyTypeKinematic)
 		{
 			CGPoint anchorPointInPointsScaled = ccpCompMult(_anchorPointInPoints,
 															ccp(_scaleX, _scaleY));
 			CGPoint rot = ccpRotateByAngle(anchorPointInPointsScaled, CGPointZero, -CC_DEGREES_TO_RADIANS(physicsBody.relativeRotation));
-			rigidTransform = CGAffineTransformMakeRigid(ccpSub(physicsBody.relativePosition , rot ), -CC_DEGREES_TO_RADIANS(physicsBody.relativeRotation));
+			rigidTransform = GLKMatrix4MakeRigid(ccpSub(physicsBody.relativePosition , rot ), -CC_DEGREES_TO_RADIANS(physicsBody.relativeRotation));
 		}
 		else
 		{
 			CGPoint scaleToParent = NodeToPhysicsScale(self.parent);
-			CGAffineTransform nodeToPhysics = NodeToPhysicsTransform(self.parent);
-			rigidTransform = CGAffineTransformConcat(physicsBody.absoluteTransform, CGAffineTransformInvert(nodeToPhysics));
-			rigidTransform = CGAffineTransformConcat(CGAffineTransformMakeScale(scaleToParent.x, scaleToParent.y), rigidTransform);
+			GLKMatrix4 nodeToPhysics = NodeToPhysicsTransform(self.parent);
+			rigidTransform = GLKMatrix4Multiply(GLKMatrix4Invert(nodeToPhysics, NULL), physicsBody.absoluteTransform);
+			rigidTransform = GLKMatrix4Multiply(rigidTransform, GLKMatrix4MakeScale(scaleToParent.x, scaleToParent.y, 1.0f));
 		}
-
-		_transform = CGAffineTransformConcat(CGAffineTransformMakeScale(_scaleX , _scaleY), rigidTransform);
+		
+		_transform = GLKMatrix4Multiply(rigidTransform, GLKMatrix4MakeScale(_scaleX, _scaleY, 1.0));
 	} else if ( _isTransformDirty ) {
         
         // Get content size
@@ -1504,21 +1462,23 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 
 		// Build Transform Matrix
 		// Adjusted transfor m calculation for rotational skew
-		_transform = CGAffineTransformMake( cy * _scaleX * scaleFactor, sy * _scaleX * scaleFactor,
-										   -sx * _scaleY * scaleFactor, cx * _scaleY * scaleFactor,
-										   x, y );
+		_transform = GLKMatrix4Make( cy * _scaleX * scaleFactor, sy * _scaleX * scaleFactor, 0.0f, 0.0f,
+										   -sx * _scaleY * scaleFactor, cx * _scaleY * scaleFactor, 0.0f, 0.0f,
+											 0.0f, 0.0f, 1.0f, 0.0f,
+										   x, y, _vertexZ, 1.0f);
 
 		// XXX: Try to inline skew
 		// If skew is needed, apply skew and then anchor point
 		if( needsSkewMatrix ) {
-			CGAffineTransform skewMatrix = CGAffineTransformMake(1.0f, tanf(CC_DEGREES_TO_RADIANS(_skewY)),
-																 tanf(CC_DEGREES_TO_RADIANS(_skewX)), 1.0f,
-																 0.0f, 0.0f );
-			_transform = CGAffineTransformConcat(skewMatrix, _transform);
+			GLKMatrix4 skewMatrix = GLKMatrix4Make(1.0f, tanf(CC_DEGREES_TO_RADIANS(_skewY)), 0.0f, 0.0f,
+																 tanf(CC_DEGREES_TO_RADIANS(_skewX)), 1.0f, 0.0f, 0.0f,
+											 0.0f, 0.0f, 1.0f, 0.0f,
+																 0.0f, 0.0f, 0.0f, 1.0f);
+			_transform = GLKMatrix4Multiply(_transform, skewMatrix);
 
 			// adjust anchor point
 			if( ! CGPointEqualToPoint(_anchorPointInPoints, CGPointZero) )
-				_transform = CGAffineTransformTranslate(_transform, -_anchorPointInPoints.x, -_anchorPointInPoints.y);
+				_transform = GLKMatrix4Translate(_transform, -_anchorPointInPoints.x, -_anchorPointInPoints.y, 0.0f);
 		}
 
 		_isTransformDirty = NO;
@@ -1527,42 +1487,34 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 	return _transform;
 }
 
-- (CGAffineTransform)parentToNodeTransform
+- (GLKMatrix4)parentToNodeMatrix
 {
-	// TODO Need to find a better way to mark physics transforms as dirty
-	if ( _isInverseDirty || GetBodyIfRunning(self) ) {
-		_inverse = CGAffineTransformInvert([self nodeToParentTransform]);
-		_isInverseDirty = NO;
-	}
-
-	return _inverse;
+	return GLKMatrix4Invert([self nodeToParentMatrix], NULL);
 }
 
-- (CGAffineTransform)nodeToWorldTransform
+- (GLKMatrix4)nodeToWorldMatrix
 {
-	CGAffineTransform t = [self nodeToParentTransform];
+	GLKMatrix4 t = [self nodeToParentMatrix];
 
 	for (CCNode *p = _parent; p != nil; p = p.parent)
-		t = CGAffineTransformConcat(t, [p nodeToParentTransform]);
+		t = GLKMatrix4Multiply([p nodeToParentMatrix], t);
 
 	return t;
 }
 
-- (CGAffineTransform)worldToNodeTransform
+- (GLKMatrix4)worldToNodeMatrix
 {
-	return CGAffineTransformInvert([self nodeToWorldTransform]);
+	return GLKMatrix4Invert([self nodeToWorldMatrix], NULL);
 }
 
 - (CGPoint)convertToNodeSpace:(CGPoint)worldPoint
 {
-	CGPoint ret = CGPointApplyAffineTransform(worldPoint, [self worldToNodeTransform]);
-	return ret;
+	return CGPointApplyGLKMatrix4(worldPoint, [self worldToNodeMatrix]);
 }
 
 - (CGPoint)convertToWorldSpace:(CGPoint)nodePoint
 {
-	CGPoint ret = CGPointApplyAffineTransform(nodePoint, [self nodeToWorldTransform]);
-	return ret;
+	return CGPointApplyGLKMatrix4(nodePoint, [self nodeToWorldMatrix]);
 }
 
 - (CGPoint)convertToNodeSpaceAR:(CGPoint)worldPoint
@@ -1589,23 +1541,45 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 
 /** Returns YES, if touch is inside sprite
  Added hit area expansion / contraction
+ Override for alternative clipping behavior, such as if you want to clip input to a circle.
  */
 - (BOOL)hitTestWithWorldPos:(CGPoint)pos
 {
     pos = [self convertToNodeSpace:pos];
     CGPoint offset = ccp(-self.hitAreaExpansion, -self.hitAreaExpansion);
     CGSize size = CGSizeMake(self.contentSizeInPoints.width - offset.x, self.contentSizeInPoints.height - offset.y);
-    if ((pos.y < offset.y) || (pos.y > size.height) || (pos.x < offset.x) || (pos.x > size.width)) return(NO);
     
-    return(YES);
+    return !(pos.y < offset.y || pos.y > size.height || pos.x < offset.x || pos.x > size.width);
 }
 
+- (BOOL)clippedHitTestWithWorldPos:(CGPoint)pos
+{
+    // If *any* parent node clips input and we're outside their clipping range, reject the hit.
+    if(_parent != nil && [_parent rejectClippedInput:pos]){
+        return NO;
+    }
+    
+    return [self hitTestWithWorldPos:pos];
+}
+
+- (BOOL) rejectClippedInput:(CGPoint)pos
+{
+    // If this clips input, do the bounds test to clip against this node
+    if(self.clipsInput && ![self hitTestWithWorldPos:pos]){
+        // outside of this node, reject this!
+        return YES;
+    }
+    
+    if(_parent == nil){
+        // Terminating condition, the hit was not rejected
+        return NO;
+    }
+
+    return [_parent rejectClippedInput:pos];
+}
 // -----------------------------------------------------------------
 
 #pragma mark - CCColor methods
-
-@synthesize cascadeColorEnabled=_cascadeColorEnabled;
-@synthesize cascadeOpacityEnabled=_cascadeOpacityEnabled;
 
 -(CGFloat) opacity
 {
@@ -1625,12 +1599,12 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 
 -(CCColor*) color
 {
-	return [CCColor colorWithCcColor4f:_color];
+	return [CCColor colorWithGLKVector4:_color];
 }
 
 -(CCColor*) displayedColor
 {
-	return [CCColor colorWithCcColor4f:_displayColor];
+	return [CCColor colorWithGLKVector4:_displayColor];
 }
 
 
@@ -1638,7 +1612,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 {
 	// Retain old alpha.
 	float alpha = _color.a;
-	_displayColor = _color = color.ccColor4f;
+	_displayColor = _color = color.glkVector4;
 	_displayColor.a = _color.a = alpha;
 	
 	[self cascadeColorIfNeeded];
@@ -1646,13 +1620,13 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 
 -(CCColor*) colorRGBA
 {
-	return [CCColor colorWithCcColor4f:_color];
+	return [CCColor colorWithGLKVector4:_color];
 }
 
 - (void) setColorRGBA:(CCColor*)color
 {
 	// apply the new alpha too.
-	_displayColor = _color = color.ccColor4f;
+	_displayColor = _color = color.glkVector4;
 	
 	[self cascadeColorIfNeeded];
 	[self cascadeOpacityIfNeeded];
@@ -1665,12 +1639,12 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 		CCColor* parentColor = [CCColor whiteColor];
 		if( _parent.isCascadeColorEnabled )
 			parentColor = [_parent displayedColor];
-		[self updateDisplayedColor:parentColor.ccColor4f];
+		[self updateDisplayedColor:parentColor.glkVector4];
 	}
 }
 
 // Used internally to recurse through children, thus the parameter is not a CCColor*
-- (void)updateDisplayedColor:(ccColor4F) parentColor
+- (void)updateDisplayedColor:(GLKVector4) parentColor
 {
 	_displayColor.r = _color.r * parentColor.r;
 	_displayColor.g = _color.g * parentColor.g;
@@ -1686,7 +1660,7 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 - (void) cascadeOpacityIfNeeded
 {
 	if( _cascadeOpacityEnabled ) {
-		GLfloat parentOpacity = 1.0f;
+		float parentOpacity = 1.0f;
 		if( [_parent isCascadeOpacityEnabled] )
 			parentOpacity = [_parent displayedOpacity];
 		[self updateDisplayedOpacity:parentOpacity];
@@ -1702,136 +1676,6 @@ CGAffineTransformMakeRigid(CGPoint translate, CGFloat radians)
 			[item updateDisplayedOpacity:_displayColor.a];
 		}
 	// }
-}
-
--(void) setOpacityModifyRGB:(BOOL)boolean{
-	// Ignored in CCNode. Implemented in subclasses
-}
-
--(BOOL) doesOpacityModifyRGB{
-	return YES;
-}
-
-#pragma mark - RenderState Methods
-
-// The default dictionary is either nil or only contains the main texture.
-static inline BOOL
-CheckDefaultUniforms(NSDictionary *uniforms, CCTexture *texture)
-{
-	if(uniforms == nil){
-		return YES;
-	} else {
-		// Check that the uniforms has only one key for the main texture.
-		return (uniforms.count == 1 && uniforms[CCShaderUniformMainTexture] == texture);
-	}
-}
-
--(CCRenderState *)renderState
-{
-	if(_renderState == nil){
-		CCTexture *texture = (_texture ?: [CCTexture none]);
-		
-		if(CheckDefaultUniforms(_shaderUniforms, texture)){
-			// Create a cached render state so we can use the fast path.
-			_renderState = [CCRenderState renderStateWithBlendMode:_blendMode shader:_shader mainTexture:texture];
-			
-			// If the uniform dictionary was set, it was the default. Throw it away.
-			_shaderUniforms = nil;
-		} else {
-			// Since the node has unique uniforms, it cannot be batched or use the fast path.
-			_renderState = [CCRenderState renderStateWithBlendMode:_blendMode shader:_shader shaderUniforms:_shaderUniforms copyUniforms:NO];
-		}
-	}
-	
-	return _renderState;
-}
-
--(CCShader *)shader
-{
-	return _shader;
-}
-
--(void)setShader:(CCShader *)shader
-{
-	NSAssert(shader, @"CCNode.shader cannot be nil.");
-	_shader = shader;
-	_renderState = nil;
-}
-
--(CCBlendMode *)blendMode
-{
-	return _blendMode;
-}
-
--(BOOL)hasDefaultShaderUniforms
-{
-	CCTexture *texture = (_texture ?: [CCTexture none]);
-	if(CheckDefaultUniforms(_shaderUniforms, texture)){
-		// If the uniform dictionary was set, it was the default. Throw it away.
-		_shaderUniforms = nil;
-		
-		return YES;
-	} else {
-		return NO;
-	}
-}
-
--(NSMutableDictionary *)shaderUniforms
-{
-	if(_shaderUniforms == nil){
-		_shaderUniforms = [NSMutableDictionary dictionaryWithObject:(_texture ?: [CCTexture none]) forKey:CCShaderUniformMainTexture];
-		
-		_renderState = nil;
-	}
-	
-	return _shaderUniforms;
-}
-
-//-(void)setShaderUniforms:(NSMutableDictionary *)shaderUniforms
-//{
-//	_shaderUniforms = shaderUniforms;
-//	_renderState = nil;
-//}
-
--(void)setBlendMode:(CCBlendMode *)blendMode
-{
-	NSAssert(blendMode, @"CCNode.blendMode cannot be nil.");
-	if(_blendMode != blendMode){
-		_blendMode = blendMode;
-		_renderState = nil;
-	}
-}
-
--(ccBlendFunc)blendFunc
-{
-	return (ccBlendFunc){
-		[_blendMode.options[CCBlendFuncSrcColor] unsignedIntValue],
-		[_blendMode.options[CCBlendFuncDstColor] unsignedIntValue],
-	};
-}
-
--(void)setBlendFunc:(ccBlendFunc)blendFunc
-{
-	self.blendMode = [CCBlendMode blendModeWithOptions:@{
-		CCBlendFuncSrcColor: @(blendFunc.src),
-		CCBlendFuncDstColor: @(blendFunc.dst),
-	}];
-}
-
--(CCTexture*)texture
-{
-	return _texture;
-}
-
--(void)setTexture:(CCTexture *)texture
-{
-	if(_texture != texture){
-		_texture = texture;
-		_renderState = nil;
-		
-		// Set the main texture in the uniforms dictionary (if the dictionary exists).
-		_shaderUniforms[CCShaderUniformMainTexture] = (_texture ?: [CCTexture none]);
-	}
 }
 
 @end

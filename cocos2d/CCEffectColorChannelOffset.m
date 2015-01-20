@@ -70,6 +70,12 @@
     return @[fragmentFunction];
 }
 
+static GLKVector2
+GLKVector2fromCGPoint(CGPoint p)
+{
+    return GLKVector2Make(p.x, p.y);
+}
+
 + (NSArray *)buildRenderPassesWithInterface:(CCEffectColorChannelOffset *)interface
 {
     __weak CCEffectColorChannelOffset *weakInterface = interface;
@@ -86,10 +92,10 @@
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:passInputs.texCoord1Extents];
         
         GLKVector2 scale = GLKVector2Make(-1.0f / passInputs.previousPassTexture.contentSize.width, -1.0f / passInputs.previousPassTexture.contentSize.height);
-        CGPoint redOffsetUV = weakInterface.redOffsetWithPoint;
-        CGPoint greenOffsetUV = weakInterface.greenOffsetWithPoint;
-        CGPoint blueOffsetUV = weakInterface.blueOffsetWithPoint;
-        
+        CGPoint redOffsetUV = weakInterface.redOffset;
+        CGPoint greenOffsetUV = weakInterface.greenOffset;
+        CGPoint blueOffsetUV = weakInterface.blueOffset;
+			
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_redOffset"]] = [NSValue valueWithGLKVector2:GLKVector2Make(redOffsetUV.x * scale.x, redOffsetUV.y * scale.y)];
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_greenOffset"]] = [NSValue valueWithGLKVector2:GLKVector2Make(greenOffsetUV.x * scale.x, greenOffsetUV.y * scale.y)];
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_blueOffset"]] = [NSValue valueWithGLKVector2:GLKVector2Make(blueOffsetUV.x * scale.x, blueOffsetUV.y * scale.y)];
@@ -106,10 +112,10 @@
 
 -(id)init
 {
-    return [self initWithRedOffsetWithPoint:CGPointMake(0.0f, 0.0f) greenOffsetWithPoint:CGPointMake(0.0f, 0.0f) blueOffsetWithPoint:CGPointMake(0.0f, 0.0f)];
+    return [self initWithRedOffset:CGPointZero greenOffset:CGPointZero blueOffset:CGPointZero];
 }
 
--(id)initWithRedOffset:(GLKVector2)redOffset greenOffset:(GLKVector2)greenOffset blueOffset:(GLKVector2)blueOffset
+-(id)initWithRedOffset:(CGPoint)redOffset greenOffset:(CGPoint)greenOffset blueOffset:(CGPoint)blueOffset
 {    
     if((self = [super init]))
     {
@@ -124,59 +130,14 @@
     return self;
 }
 
--(id)initWithRedOffsetWithPoint:(CGPoint)redOffset greenOffsetWithPoint:(CGPoint)greenOffset blueOffsetWithPoint:(CGPoint)blueOffset
-{    
-    if((self = [super init]))
-    {
-        _redOffset = GLKVector2Make(redOffset.x, redOffset.y);
-        _greenOffset = GLKVector2Make(greenOffset.x, greenOffset.y);
-        _blueOffset = GLKVector2Make(blueOffset.x, blueOffset.y);
-        
-        self.effectImpl = [[CCEffectColorChannelOffsetImpl alloc] initWithInterface:self];
-        self.debugName = @"CCEffectColorChannelOffset";
-    }
-    
-    return self;
-}
-
-+(id)effectWithRedOffset:(GLKVector2)redOffset greenOffset:(GLKVector2)greenOffset blueOffset:(GLKVector2)blueOffset;
++(id)effectWithRedOffset:(CGPoint)redOffset greenOffset:(CGPoint)greenOffset blueOffset:(CGPoint)blueOffset
 {
     return [[self alloc] initWithRedOffset:redOffset greenOffset:greenOffset blueOffset:blueOffset];
-}
-
-+(id)effectWithRedOffsetWithPoint:(CGPoint)redOffset greenOffsetWithPoint:(CGPoint)greenOffset blueOffsetWithPoint:(CGPoint)blueOffset
-{
-    return [[self alloc] initWithRedOffsetWithPoint:redOffset greenOffsetWithPoint:greenOffset blueOffsetWithPoint:blueOffset];
 }
 
 - (CGPoint)redOffsetWithPoint
 {
     return CGPointMake(_redOffset.x, _redOffset.y);
-}
-
-- (void)setRedOffsetWithPoint:(CGPoint)offset
-{
-    _redOffset = GLKVector2Make(offset.x, offset.y);
-}
-
-- (CGPoint)greenOffsetWithPoint
-{
-    return CGPointMake(_greenOffset.x, _greenOffset.y);
-}
-
-- (void)setGreenOffsetWithPoint:(CGPoint)offset
-{
-    _greenOffset = GLKVector2Make(offset.x, offset.y);
-}
-
-- (CGPoint)blueOffsetWithPoint
-{
-    return CGPointMake(_blueOffset.x, _blueOffset.y);
-}
-
-- (void)setBlueOffsetWithPoint:(CGPoint)offset
-{
-    _blueOffset = GLKVector2Make(offset.x, offset.y);
 }
 
 @end

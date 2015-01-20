@@ -14,6 +14,9 @@
 #import "CCSprite_Private.h"
 #import "CCTexture.h"
 #import "CCSpriteFrame.h"
+#import "CCColor.h"
+#import "NSValue+CCRenderer.h"
+#import "CCRendererBasicTypes.h"
 
 
 @interface CCEffectOutlineImpl : CCEffectImpl

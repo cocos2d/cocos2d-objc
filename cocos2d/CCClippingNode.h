@@ -98,7 +98,7 @@
 
 /** The alpha threshold determines the minimum alpha value that is considered as masked. 
  Defaults to 1.0 (any pixel not fully opaque will clip/mask contents). */
-@property (nonatomic) GLfloat alphaThreshold;
+@property (nonatomic) float alphaThreshold;
 
 /** If inverted, the alpha-based clipping will be reversed such that pixels with alphaThreshold or higher will clip/mask out content. */
 @property (nonatomic) BOOL inverted;

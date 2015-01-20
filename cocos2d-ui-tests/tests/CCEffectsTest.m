@@ -456,17 +456,17 @@
     const float delta = timeStep / duration;
     
     typedef void (^AmbientLerpBlock)();
-    typedef void (^AmbientLerpBuilderBlock)(ccColor4F deltaC);
+    typedef void (^AmbientLerpBuilderBlock)(GLKVector4 deltaC);
     
     __weak CCLightNode *weakLight = light;
-    AmbientLerpBlock (^ambientLerpBuilder)(ccColor4F deltaC) = ^AmbientLerpBlock(ccColor4F deltaC)
+    AmbientLerpBlock (^ambientLerpBuilder)(GLKVector4 deltaC) = ^AmbientLerpBlock(GLKVector4 deltaC)
     {
         AmbientLerpBlock lerpBlock = ^{
-            ccColor4F c = weakLight.ambientColor.ccColor4f;
+            GLKVector4 c = weakLight.ambientColor.glkVector4;
             c.r += deltaC.r;
             c.g += deltaC.g;
             c.b += deltaC.b;
-            weakLight.ambientColor = [CCColor colorWithCcColor4f:c];
+            weakLight.ambientColor = [CCColor colorWithGLKVector4:c];
         };
         return lerpBlock;
     };
@@ -480,16 +480,16 @@
     CCActionInterval *greenBlueLerpAction;
     CCActionInterval *blueWhiteLerpAction;
     
-    whiteRedLerp = ambientLerpBuilder(ccc4f(0.0f, -delta, -delta, 0.0f));
+    whiteRedLerp = ambientLerpBuilder(GLKVector4Make(0.0f, -delta, -delta, 0.0f));
     whiteRedLerpAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:whiteRedLerp]] times:120];
     
-    redGreenLerp = ambientLerpBuilder(ccc4f(-delta, delta, 0.0f, 0.0f));
+    redGreenLerp = ambientLerpBuilder(GLKVector4Make(-delta, delta, 0.0f, 0.0f));
     redGreenLerpAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:redGreenLerp]] times:120];
     
-    greenBlueLerp = ambientLerpBuilder(ccc4f(0.0f, -delta, delta, 0.0f));
+    greenBlueLerp = ambientLerpBuilder(GLKVector4Make(0.0f, -delta, delta, 0.0f));
     greenBlueLerpAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:greenBlueLerp]] times:120];
     
-    blueWhiteLerp = ambientLerpBuilder(ccc4f(delta, delta, 0.0f, 0.0f));
+    blueWhiteLerp = ambientLerpBuilder(GLKVector4Make(delta, delta, 0.0f, 0.0f));
     blueWhiteLerpAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:blueWhiteLerp]] times:120];
     
     CCAction *ambientLerpAction = [CCActionRepeatForever actionWithAction:[CCActionSequence actions:
@@ -520,31 +520,31 @@
     light.specularIntensity = 1.0f;
     
     typedef void (^SpecularLerpBlock)();
-    typedef void (^SpecularLerpBuilderBlock)(ccColor4F deltaC);
+    typedef void (^SpecularLerpBuilderBlock)(GLKVector4 deltaC);
     
     weakLight = light;
-    SpecularLerpBlock (^specularLerpBuilder)(ccColor4F deltaC) = ^SpecularLerpBlock(ccColor4F deltaC)
+    SpecularLerpBlock (^specularLerpBuilder)(GLKVector4 deltaC) = ^SpecularLerpBlock(GLKVector4 deltaC)
     {
         SpecularLerpBlock lerpBlock = ^{
-            ccColor4F c = weakLight.specularColor.ccColor4f;
+            GLKVector4 c = weakLight.specularColor.glkVector4;
             c.r += deltaC.r;
             c.g += deltaC.g;
             c.b += deltaC.b;
-            weakLight.specularColor = [CCColor colorWithCcColor4f:c];
+            weakLight.specularColor = [CCColor colorWithGLKVector4:c];
         };
         return lerpBlock;
     };
     
-    whiteRedLerp = specularLerpBuilder(ccc4f(0.0f, -delta, -delta, 0.0f));
+    whiteRedLerp = specularLerpBuilder(GLKVector4Make(0.0f, -delta, -delta, 0.0f));
     whiteRedLerpAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:whiteRedLerp]] times:120];
     
-    redGreenLerp = specularLerpBuilder(ccc4f(-delta, delta, 0.0f, 0.0f));
+    redGreenLerp = specularLerpBuilder(GLKVector4Make(-delta, delta, 0.0f, 0.0f));
     redGreenLerpAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:redGreenLerp]] times:120];
     
-    greenBlueLerp = specularLerpBuilder(ccc4f(0.0f, -delta, delta, 0.0f));
+    greenBlueLerp = specularLerpBuilder(GLKVector4Make(0.0f, -delta, delta, 0.0f));
     greenBlueLerpAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:greenBlueLerp]] times:120];
     
-    blueWhiteLerp = specularLerpBuilder(ccc4f(delta, delta, 0.0f, 0.0f));
+    blueWhiteLerp = specularLerpBuilder(GLKVector4Make(delta, delta, 0.0f, 0.0f));
     blueWhiteLerpAction = [CCActionRepeat actionWithAction:[CCActionSequence actionOne:[CCActionDelay actionWithDuration:timeStep] two:[CCActionCallBlock actionWithBlock:blueWhiteLerp]] times:120];
     
     CCAction *specularLerpAction = [CCActionRepeatForever actionWithAction:[CCActionSequence actions:
@@ -815,7 +815,7 @@
         sprite.positionType = CCPositionTypeNormalized;
         sprite.position = ccp(0.75f, 0.65f);
         
-        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffsetWithPoint:CGPointMake(5.0f, 0.0f) greenOffsetWithPoint:CGPointMake(-4.0f, 4.0f) blueOffsetWithPoint:CGPointMake(-4.0f, -4.0f)];
+        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffset:ccp(5.0f, 0.0f) greenOffset:ccp(-4.0f, 4.0f) blueOffset:ccp(-4.0f, -4.0f)];
         sprite.effect = offset;
         
         [self.contentNode addChild:sprite];
@@ -834,7 +834,7 @@
         sprite.positionType = CCPositionTypeNormalized;
         sprite.position = ccp(0.75f, 0.5f);
         
-        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffsetWithPoint:CGPointMake(5.0f, 0.0f) greenOffsetWithPoint:CGPointMake(-4.0f, 4.0f) blueOffsetWithPoint:CGPointMake(-4.0f, -4.0f)];
+        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffset:ccp(5.0f, 0.0f) greenOffset:ccp(-4.0f, 4.0f) blueOffset:ccp(-4.0f, -4.0f)];
         offset.padding = CGSizeMake(5.0f, 5.0f);
         sprite.effect = offset;
         
@@ -854,7 +854,7 @@
         sprite.positionType = CCPositionTypeNormalized;
         sprite.position = ccp(0.75f, 0.35f);
         
-        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffsetWithPoint:CGPointMake(5.0f, 0.0f) greenOffsetWithPoint:CGPointMake(-4.0f, 4.0f) blueOffsetWithPoint:CGPointMake(-4.0f, -4.0f)];
+        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffset:ccp(5.0f, 0.0f) greenOffset:ccp(-4.0f, 4.0f) blueOffset:ccp(-4.0f, -4.0f)];
         offset.padding = CGSizeMake(5.0f, 5.0f);
         CCEffectHue *hue = [CCEffectHue effectWithHue:60.0f];
         sprite.effect = [CCEffectStack effectWithArray:@[offset, hue]];
@@ -875,7 +875,7 @@
         sprite.positionType = CCPositionTypeNormalized;
         sprite.position = ccp(0.75f, 0.2f);
         
-        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffsetWithPoint:CGPointMake(5.0f, 0.0f) greenOffsetWithPoint:CGPointMake(-4.0f, 4.0f) blueOffsetWithPoint:CGPointMake(-4.0f, -4.0f)];
+        CCEffectColorChannelOffset *offset = [CCEffectColorChannelOffset effectWithRedOffset:ccp(5.0f, 0.0f) greenOffset:ccp(-4.0f, 4.0f) blueOffset:ccp(-4.0f, -4.0f)];
         offset.padding = CGSizeMake(5.0f, 5.0f);
         CCEffectHue *hue = [CCEffectHue effectWithHue:60.0f];
         sprite.effect = [CCEffectStack effectWithArray:@[hue, offset]];
@@ -896,7 +896,7 @@
 {
     self.subTitle = @"Color Channel Offset Effect Test";
     
-    CCEffectColorChannelOffset *effect = [CCEffectColorChannelOffset effectWithRedOffsetWithPoint:CGPointMake(0.0f, 0.0f) greenOffsetWithPoint:CGPointMake(0.0f, 0.0f) blueOffsetWithPoint:CGPointMake(0.0f, 0.0f)];
+    CCEffectColorChannelOffset *effect = [CCEffectColorChannelOffset effectWithRedOffset:ccp(0.0f, 0.0f) greenOffset:ccp(0.0f, 0.0f) blueOffset:ccp(0.0f, 0.0f)];
     effect.padding = CGSizeMake(5.0f, 5.0f);
     
     CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Images/particles.png"];
@@ -914,13 +914,13 @@
     void (^updateBlock)() = ^{
         
         float redRadius = 3.0f;
-        effect.redOffsetWithPoint = CGPointMake(redRadius * cosf(redTheta), redRadius * sinf(redTheta));
+        effect.redOffset = ccp(redRadius * cosf(redTheta), redRadius * sinf(redTheta));
         
         float greenRadius = 3.0f;
-        effect.greenOffsetWithPoint = CGPointMake(greenRadius * cosf(greenTheta), greenRadius * sinf(greenTheta));
+        effect.greenOffset = ccp(greenRadius * cosf(greenTheta), greenRadius * sinf(greenTheta));
         
         float blueRadius = 3.0f;
-        effect.blueOffsetWithPoint = CGPointMake(blueRadius * cosf(blueTheta), blueRadius * sinf(blueTheta));
+        effect.blueOffset = ccp(blueRadius * cosf(blueTheta), blueRadius * sinf(blueTheta));
         
         redTheta += thetaStep;
         greenTheta += thetaStep;
@@ -948,7 +948,7 @@
     [self.contentNode addChild:environment];
     
     CCColor *shadowColor = [CCColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:0.5];
-    CCEffectDropShadow* effect = [CCEffectDropShadow effectWithShadowOffset:GLKVector2Make(2.0, -2.0) shadowColor:shadowColor blurRadius:5];
+    CCEffectDropShadow* effect = [CCEffectDropShadow effectWithShadowOffset:ccp(2.0, -2.0) shadowColor:shadowColor blurRadius:5];
    
     CCSprite *sampleSprite = [CCSprite spriteWithImageNamed:@"Images/Ohm.png"];
     sampleSprite.position = ccp(0.5, 0.5);
@@ -1839,17 +1839,14 @@
     [self.contentNode addChild:lightNode];
     
     CCSpriteFrame *normalMapFrame = [CCSpriteFrame frameWithTextureFilename:@"Images/fire.png" rectInPixels:CGRectMake(0.0f, 0.0f, 4.0f, 4.0f) rotated:NO offset:CGPointZero originalSize:CGSizeMake(32.0f, 32.0f)];
-    
-    GLKVector2 zeroVec = GLKVector2Make(0.0f, 0.0f);
-    CGPoint zeroPoint = CGPointMake(0.0f, 0.0f);
-    
+        
     NSArray *effects = @[
                          [CCEffectBloom effectWithBlurRadius:1 intensity:0.0f luminanceThreshold:0.0f],
                          [CCEffectBlur effectWithBlurRadius:1.0],
                          [CCEffectBrightness effectWithBrightness:0.0f],
-                         [CCEffectColorChannelOffset effectWithRedOffsetWithPoint:zeroPoint greenOffsetWithPoint:zeroPoint blueOffsetWithPoint:zeroPoint],
+                         [CCEffectColorChannelOffset effectWithRedOffset:CGPointZero greenOffset:CGPointZero blueOffset:CGPointZero],
                          [CCEffectContrast effectWithContrast:0.0f],
-                         [CCEffectDropShadow effectWithShadowOffset:zeroVec shadowColor:[CCColor clearColor] blurRadius:1.0f],
+                         [CCEffectDropShadow effectWithShadowOffset:CGPointZero shadowColor:[CCColor clearColor] blurRadius:1.0f],
                          [CCEffectGlass effectWithShininess:1.0f refraction:0.75f refractionEnvironment:refractEnvironment reflectionEnvironment:reflectEnvironment],
                          [CCEffectHue effectWithHue:0.0f],
                          [CCEffectStack effectWithArray:@[[[CCEffectInvert alloc] init], [[CCEffectInvert alloc] init]]],

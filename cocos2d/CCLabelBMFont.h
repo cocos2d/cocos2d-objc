@@ -25,8 +25,8 @@
  *
  */
 
-#import "CCSpriteBatchNode.h"
-#import "Support/uthash.h"
+#import "CCSprite.h"
+#import "CCProtocols.h"
 
 @class CCBMFontConfiguration;
 

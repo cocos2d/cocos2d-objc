@@ -26,14 +26,13 @@
  */
 
 
-
+#import "ccTypes.h"
 #import "CCActionInterval.h"
 #import "CCActionInstant.h"
+#import "CCColor.h"
 #import "CCSprite.h"
 #import "CCSpriteFrame.h"
 #import "CCAnimation.h"
-#import "CCNode.h"
-#import "Support/CGPointExtension.h"
 
 //
 // IntervalAction
@@ -1335,8 +1334,8 @@ static inline CGFloat bezierat( float a, float b, float c, float d, CCTime t )
 {
 	CCNode* tn = (CCNode*) _target;
     
-	ccColor4F fc = _from.ccColor4f;
-	ccColor4F tc = _to.ccColor4f;
+	GLKVector4 fc = _from.glkVector4;
+	GLKVector4 tc = _to.glkVector4;
     
 	[tn setColor:[CCColor colorWithRed:fc.r + (tc.r - fc.r) * t green:fc.g + (tc.g - fc.g) * t blue:fc.b + (tc.b - fc.b) * t alpha:1]];
 }

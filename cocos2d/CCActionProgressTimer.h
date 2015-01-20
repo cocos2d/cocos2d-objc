@@ -24,7 +24,6 @@
  *
  */
 
-#import <Foundation/Foundation.h>
 #import "CCProgressNode.h"
 #import "CCActionInterval.h"
 

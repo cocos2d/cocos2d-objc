@@ -22,9 +22,18 @@
  * THE SOFTWARE.
  */
 
-#import "cocos2d.h"
-#import "CCControl.h"
 
+#import "ccMacros.h"
+
+#if __CC_PLATFORM_IOS
+#import <UIKit/UITextField.h>
+#elif __CC_PLATFORM_MAC
+#import <AppKit/AppKit.h>
+#elif __CC_PLATFORM_ANDROID
+#error No idea... Need to look this up.
+#endif
+
+#import "CCControl.h"
 #import "CCPlatformTextField.h"
 
 #if __CC_PLATFORM_ANDROID
@@ -33,6 +42,8 @@
 
 
 @class CCPlatformTextField;
+@class CCSprite9Slice;
+@class CCSpriteFrame;
 
 /**
  A text field is used for editing text. It is implemented by encapsulating the platform's native text field ([NSTextField](https://developer.apple.com/library/mac/Documentation/Cocoa/Reference/ApplicationKit/Classes/NSTextField_Class/index.html#//apple_ref/doc/uid/20000128-SW2)

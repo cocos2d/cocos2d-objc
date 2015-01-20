@@ -25,9 +25,12 @@
  *
  */
 
-#import <Foundation/Foundation.h>
-#import "CCNode.h"
-#import "CCProtocols.h"
+
+#import "ccTypes.h"
+
+
+@class CCTexture;
+
 
 /** 
  A CCSpriteFrame contains the texture and rectangle of the texture to be used by a CCSprite.

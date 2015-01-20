@@ -15,11 +15,6 @@
 #import "CCTexture.h"
 
 
-#if __CC_PLATFORM_IOS
-#import <UIKit/UIKit.h>
-#endif // iPHone
-
-
 /**
  CCEffectNode allows the user to apply effects to the effect node's child nodes.
  

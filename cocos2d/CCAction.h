@@ -25,9 +25,6 @@
  *
  */
 
-#include <sys/time.h>
-#import <Foundation/Foundation.h>
-
 #import "ccTypes.h"
 
 enum {

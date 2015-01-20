@@ -33,7 +33,7 @@
         
         _groups = [groups copy];
         
-        _color = color.ccColor4f;
+        _color = color.glkVector4;
         _intensity = intensity;
         
         _specularColor = specularColor;

@@ -27,13 +27,79 @@
 
 #import "ccConfig.h"
 #import "ccTypes.h"
-#import "ccMacros.h"
 
-#import "CCProtocols.h"
 #import "Platforms/CCGL.h"
 #import "CCResponderManager.h"
 #import "CCRenderer.h"
 #import "CCDirectorView.h"
+
+#warning should remove this one we clean up the delegate
+#if __CC_PLATFORM_IOS
+#import <UIKit/UIKit.h>
+#endif
+
+@class CCDirector;
+
+
+/** CCDirector delegate */
+@protocol CCDirectorDelegate <NSObject>
+
+@optional
+
+/** Ends the execution, releases the running scene.
+ It doesn't remove the OpenGL view from its parent. You have to do it manually.
+ */
+-(void) end;
+
+/** Pauses the running scene.
+ The running scene will be _drawed_ but all scheduled timers will be paused
+ While paused, the draw rate will be 4 FPS to reduce CPU consumption
+ */
+-(void) pause;
+
+/** Resumes the paused scene
+ The scheduled timers will be activated again.
+ The "delta time" will be 0 (as if the game wasn't paused)
+ */
+-(void) resume;
+
+/** Stops the animation. Nothing will be drawn. The main loop won't be triggered anymore.
+ If you want to pause your animation call [pause] instead.
+ */
+-(void) stopAnimation;
+
+/** The main loop is triggered again.
+ Call this function only if [stopAnimation] was called earlier
+ @warning Don't call this function to start the main loop. To run the main loop call runWithScene
+ */
+-(void) startAnimation;
+
+#pragma mark Director - Memory Helper
+
+/** Removes all the cocos2d data that was cached automatically.
+ It will purge the CCTextureCache, CCLabelBMFont cache.
+ IMPORTANT: The CCSpriteFrameCache won't be purged. If you want to purge it, you have to purge it manually.
+ */
+-(void) purgeCachedData;
+
+/** Called by CCDirector when the projection is updated, and "custom" projection is used */
+-(GLKMatrix4) updateProjection;
+
+#if __CC_PLATFORM_IOS
+/** Returns a Boolean value indicating whether the CCDirector supports the specified orientation. Default value is YES (supports all possible orientations) */
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
+
+// Commented. See issue #1453 for further info: http://code.google.com/p/cocos2d-iphone/issues/detail?id=1453
+//- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration;
+
+/** Called when projection is resized (due to layoutSubviews on the view). This is important to respond to in order to setup your scene with the proper dimensions (which only exist after the first call to layoutSubviews) so that you can set your scene as early as possible to avoid startup flicker
+ */
+-(void) directorDidReshapeProjection:(CCDirector*)director;
+
+#endif // __CC_PLATFORM_IOS
+
+@end
+
 
 /**
  Possible OpenGL projections used by CCDirector.
@@ -441,6 +507,3 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 -(void) purgeCachedData;
 
 @end
-
-// optimization. Should only be used to read it. Never to write it.
-extern CGFloat	__ccContentScaleFactor;

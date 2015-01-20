@@ -43,6 +43,8 @@
 #import "CCEffectUtils.h"
 #import "CCEffect_Private.h"
 #import "CCTexture.h"
+#import "CCColor.h"
+#import "CCRenderer.h"
 
 
 @interface CCEffectDropShadowImpl : CCEffectImpl
@@ -65,7 +67,7 @@
                                                           value:[NSNumber numberWithFloat:0.0f]];
     
     CCEffectUniform* u_shadowOffset = [CCEffectUniform uniform:@"vec2" name:@"u_shadowOffset"
-                                                         value:[NSValue valueWithGLKVector2:interface.shadowOffset]];
+                                                         value:[NSValue valueWithCGPoint:interface.shadowOffset]];
     
     CCEffectUniform* u_shadowColor = [CCEffectUniform uniform:@"vec4" name:@"u_shadowColor"
                                                         value:[NSValue valueWithGLKVector4:interface.shadowColor.glkVector4]];
@@ -302,10 +304,10 @@
 
 -(id)init
 {
-    return [self initWithShadowOffset:GLKVector2Make(5, -5) shadowColor:[CCColor blackColor] blurRadius:2];
+    return [self initWithShadowOffset:ccp(5, -5) shadowColor:[CCColor blackColor] blurRadius:2];
 }
 
--(id)initWithShadowOffset:(GLKVector2)shadowOffset shadowColor:(CCColor*)shadowColor blurRadius:(NSUInteger)blurRadius
+-(id)initWithShadowOffset:(CGPoint)shadowOffset shadowColor:(CCColor*)shadowColor blurRadius:(NSUInteger)blurRadius
 {
     if((self = [super init]))
     {
@@ -319,7 +321,7 @@
     return self;
 }
 
-+(id)effectWithShadowOffset:(GLKVector2)shadowOffset shadowColor:(CCColor*)shadowColor blurRadius:(NSUInteger)blurRadius
++(id)effectWithShadowOffset:(CGPoint)shadowOffset shadowColor:(CCColor*)shadowColor blurRadius:(NSUInteger)blurRadius
 {
     return [[self alloc] initWithShadowOffset:shadowOffset shadowColor:shadowColor blurRadius:blurRadius];
 }
@@ -346,17 +348,6 @@
         result.changes = CCEffectPrepareShaderChanged;
     }
     return result;
-}
-
-
-- (CGPoint)shadowOffsetWithPoint
-{
-    return CGPointMake(_shadowOffset.x, _shadowOffset.y);
-}
-
-- (void)setShadowOffsetWithPoint:(CGPoint)shadowOffsetWithPoint
-{
-    _shadowOffset = GLKVector2Make(shadowOffsetWithPoint.x, shadowOffsetWithPoint.y);
 }
 
 @end

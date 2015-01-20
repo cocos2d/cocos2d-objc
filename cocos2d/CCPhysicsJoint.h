@@ -175,10 +175,6 @@ A CCPhysicsJoint connects two CCPhysicsBody objects together, like a joint betwe
                                               damping:(CGFloat)damping;
 
 
-// This method was misspelled. Please change "stifness" to "stiffness".
-+(CCPhysicsJoint *)connectedRotarySpringJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB restAngle:(CGFloat)restAngle stifness:(CGFloat)stiffness damping:(CGFloat)damping __attribute__((deprecated));
-
-
 /// -----------------------------------------------------------------------
 /// @name Creating Motor Joints
 /// -----------------------------------------------------------------------

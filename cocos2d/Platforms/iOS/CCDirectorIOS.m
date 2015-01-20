@@ -25,36 +25,29 @@
  *
  */
 
-// Only compile this code on iOS. These files should NOT be included on your Mac project.
-// But in case they are included, it won't be compiled.
-#import "../../ccMacros.h"
+#warning We should not be using some monotonic time function instead of gettimeofday()
+#include <sys/time.h>
+
+#import "ccMacros.h"
 #if __CC_PLATFORM_IOS
 
-#import <unistd.h>
+#import "ccUtils.h"
 
-// cocos2d imports
 #import "CCDirectorIOS.h"
-#import "../../CCScheduler.h"
-#import "../../CCActionManager.h"
-#import "../../CCTextureCache.h"
-#import "../../ccMacros.h"
-#import "../../CCScene.h"
-#import "../../CCShader.h"
-#import "../../ccFPSImages.h"
-#import "../../CCConfiguration.h"
+#import "CCDirector_Private.h"
 #import "CCRenderer_Private.h"
-#import "CCTouch.h"
 #import "CCRenderDispatch_Private.h"
 
-// support imports
-#import "../../Support/CGPointExtension.h"
-#import "../../Support/CCFileUtils.h"
-
-#if CC_ENABLE_PROFILERS
-#import "../../Support/CCProfiling.h"
-#endif
-
-#import "CCDirector_Private.h"
+#import "CCScheduler.h"
+#import "CCActionManager.h"
+#import "CCTextureCache.h"
+#import "ccMacros.h"
+#import "CCScene.h"
+#import "CCShader.h"
+#import "ccFPSImages.h"
+#import "CCDeviceInfo.h"
+#import "CCTouch.h"
+#import "Support/CCFileUtils.h"
 
 #pragma mark -
 #pragma mark Director
@@ -151,8 +144,8 @@
 	
 	[self pushScene:scene];
 
-	NSThread *thread = [self runningThread];
-	[self performSelector:@selector(drawScene) onThread:thread withObject:nil waitUntilDone:YES];
+    [self drawScene];
+    [self startAnimation];
 }
 
 -(void) reshapeProjection:(CGSize)newViewSize
@@ -230,7 +223,10 @@
 {
 	[super viewWillAppear:animated];
 
-    [self startAnimationIfPossible];
+    // This line was presumably added to deal with apps entering and leaving the background.
+    // ViewWillAppear is called many times on application launch (7 times for the unit tests) and it's also called
+    // by the OS outside of normal control, so it's very hard to actually call stopAnimation and expect it to work.
+//    [self startAnimationIfPossible];
 }
 
 -(void) viewDidAppear:(BOOL)animated
@@ -283,7 +279,7 @@
 
 -(void)getFPSImageData:(unsigned char**)datapointer length:(NSUInteger*)len contentScale:(CGFloat *)scale
 {
-	NSInteger device = [[CCConfiguration sharedConfiguration] runningDevice];
+	NSInteger device = [[CCDeviceInfo sharedDeviceInfo] runningDevice];
 
 	if( device == CCDeviceiPadRetinaDisplay) {
 		*datapointer = cc_fps_images_ipadhd_png;
@@ -313,6 +309,9 @@
 
 -(void) mainLoop:(id)sender
 {
+    if(!_animating)
+        return;
+    
 	[self drawScene];
 }
 
@@ -343,15 +342,8 @@
 	_displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(mainLoop:)];
 	[_displayLink setFrameInterval:frameInterval];
 
-#if CC_DIRECTOR_IOS_USE_BACKGROUND_THREAD
-	//
-	_runningThread = [[NSThread alloc] initWithTarget:self selector:@selector(threadMainLoop) object:nil];
-	[_runningThread start];
-
-#else
 	// setup DisplayLink in main thread
 	[_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-#endif
 
     _animating = YES;
 }
@@ -367,12 +359,6 @@
     }
     
 	CCLOG(@"cocos2d: animation stopped");
-
-#if CC_DIRECTOR_IOS_USE_BACKGROUND_THREAD
-	[_runningThread cancel];
-	[_runningThread release];
-	_runningThread = nil;
-#endif
 
 	[_displayLink invalidate];
 	_displayLink = nil;

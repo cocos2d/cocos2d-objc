@@ -174,7 +174,7 @@
 
 - (void) setupTableViewBasicTest
 {
-    self.subTitle = @"Simple table view. Displays a number for each row within box (no clipping).";
+    self.subTitle = @"Simple table view. Displays a number for each row within box (with clipping).";
     
     // Add a gray background box
     CCNodeColor* colorBg = [CCNodeColor nodeWithColor:[CCColor grayColor]];

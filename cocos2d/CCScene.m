@@ -28,10 +28,10 @@
 // -----------------------------------------------------------------
 
 #import "CCScene.h"
-#import "Support/CGPointExtension.h"
-#import "CCDirector.h"
+
 #import "CCDirector_Private.h"
 #import "CCLightCollection.h"
+#import "CCColor.h"
 
 // -----------------------------------------------------------------
 
@@ -41,13 +41,15 @@
 
 // -----------------------------------------------------------------
 
-// Private method used by the CCNode.scene property.
--(BOOL)isScene {return YES;}
+-(CCScene *)scene
+{
+    return self;
+}
 
 -( id )init {
 	if((self = [ super init ])){
 		CGSize s = [CCDirector sharedDirector].designSize;
-		_anchorPoint = ccp(0.0f, 0.0f);
+		self.anchorPoint = ccp(0.0f, 0.0f);
 		[self setContentSize:s];
 		
 		self.colorRGBA = [CCColor blackColor];

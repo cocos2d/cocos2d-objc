@@ -35,18 +35,16 @@
  *   http://www.angelcode.com/products/bmfont/ (Free, Windows only)
  */
 
-#import "ccConfig.h"
-#import "ccMacros.h"
-#import "CCLabelBMFont.h"
-#import "CCSprite.h"
-#import "CCConfiguration.h"
+
+#import "CCLabelBMFont_Private.h"
+
+#import "CCDeviceInfo.h"
 #import "CCTexture.h"
 #import "CCTextureCache.h"
-#import "Support/CCFileUtils.h"
-#import "Support/CGPointExtension.h"
-#import "Support/uthash.h"
-#import "CCLabelBMFont_Private.h"
-#import "CCSprite_Private.h"
+#import "CCFileUtils.h"
+#import "CCColor.h"
+#import "ccUtils.h"
+
 
 #pragma mark -
 #pragma mark FNTConfig Cache - free functions
@@ -341,11 +339,11 @@ void FNTConfigRemoveCache( void )
     
 	// scaleW. sanity check
 	propertyValue = [nse nextObject];
-	NSAssert( [propertyValue intValue] <= [[CCConfiguration sharedConfiguration] maxTextureSize], @"CCLabelBMFont: page can't be larger than supported");
+	NSAssert( [propertyValue intValue] <= [[CCDeviceInfo sharedDeviceInfo] maxTextureSize], @"CCLabelBMFont: page can't be larger than supported");
     
 	// scaleH. sanity check
 	propertyValue = [nse nextObject];
-	NSAssert( [propertyValue intValue] <= [[CCConfiguration sharedConfiguration] maxTextureSize], @"CCLabelBMFont: page can't be larger than supported");
+	NSAssert( [propertyValue intValue] <= [[CCDeviceInfo sharedDeviceInfo] maxTextureSize], @"CCLabelBMFont: page can't be larger than supported");
     
 	// pages. sanity check
 	propertyValue = [nse nextObject];
@@ -463,6 +461,8 @@ void FNTConfigRemoveCache( void )
 	// Replacement for the old CCNode.tag property which was
 	// used heavily in the original code.
 	NSMutableArray *_childForTag;
+    
+    CCTexture *_texture;
 }
 
 @synthesize alignment = _alignment;
@@ -534,21 +534,21 @@ void FNTConfigRemoveCache( void )
 			_fntFile = [fntFile copy];
 		}
 		
-		self.texture = texture;
+		_texture = texture;
 		_width = width;
 		_alignment = alignment;
 		
-		_displayColor = _color = [CCColor whiteColor].ccColor4f;
-		_cascadeOpacityEnabled = YES;
-		_cascadeColorEnabled = YES;
+		self.color = [CCColor whiteColor];
+		self.cascadeOpacityEnabled = YES;
+		self.cascadeColorEnabled = YES;
 		
-		_contentSize = CGSizeZero;
+		self.contentSize = CGSizeZero;
 		
-		_anchorPoint = ccp(0.5f, 0.5f);
+		self.anchorPoint = ccp(0.5f, 0.5f);
         
 		_imageOffset = offset;
         
-		_reusedChar = [[CCSprite alloc] initWithTexture:self.texture rect:CGRectMake(0, 0, 0, 0) rotated:NO];
+		_reusedChar = [[CCSprite alloc] initWithTexture:_texture rect:CGRectMake(0, 0, 0, 0) rotated:NO];
 		_childForTag = [NSMutableArray array];
 		
 		[self setString:theString updateLabel:YES];
@@ -596,7 +596,7 @@ void FNTConfigRemoveCache( void )
         float startOfLine = -1, startOfWord = -1;
         int skip = 0;
         //Go through each character and insert line breaks as necessary
-        for (int j = 0; j < [_children count]; j++) {
+        for (int j = 0; j < [self.children count]; j++) {
             CCSprite *characterSprite;
             int justSkipped = 0;
             while(!(characterSprite = [self childForTag:j+skip+justSkipped]))
@@ -777,7 +777,7 @@ void FNTConfigRemoveCache( void )
     CGRect rect;
     ccBMFontDef fontDef = (ccBMFontDef){};
 	
-	CGFloat contentScale = 1.0/self.texture.contentScale;
+	CGFloat contentScale = 1.0/_texture.contentScale;
 	
 	for(NSUInteger i = 0; i<stringLen; i++) {
 		unichar c = [_string characterAtIndex:i];
@@ -830,7 +830,7 @@ void FNTConfigRemoveCache( void )
 //				fontChar = _reusedChar;
 //				hasSprite = NO;
 //			} else {
-				fontChar = [[CCSprite alloc] initWithTexture:self.texture rect:rect];
+				fontChar = [[CCSprite alloc] initWithTexture:_texture rect:rect];
 				[self addChild:fontChar z:i];
 				[self setTag:i forChild:fontChar];
 //			}
@@ -847,7 +847,7 @@ void FNTConfigRemoveCache( void )
 		// See issue 1343. cast( signed short + unsigned integer ) == unsigned integer (sign is lost!)
 		NSInteger yOffset = _configuration->_commonHeight - fontDef.yOffset;
 		CGPoint fontPos = ccp( (CGFloat)nextFontPositionX + fontDef.xOffset + fontDef.rect.size.width*0.5f + kerningAmount,
-							  (CGFloat)nextFontPositionY + yOffset - rect.size.height*0.5f * self.texture.contentScale );
+							  (CGFloat)nextFontPositionY + yOffset - rect.size.height*0.5f * _texture.contentScale );
 		fontChar.position = ccpMult(fontPos, contentScale);
 		
 		// update kerning
@@ -896,7 +896,7 @@ void FNTConfigRemoveCache( void )
         _initialString = [newString copy];
     }
     
-    for (CCSprite* child in _children)
+    for (CCSprite* child in self.children)
         child.visible = NO;
 	
 	[self createFontChars];
@@ -908,7 +908,7 @@ void FNTConfigRemoveCache( void )
 #pragma mark LabelBMFont - AnchorPoint
 -(void) setAnchorPoint:(CGPoint)point
 {
-	if( ! CGPointEqualToPoint(point, _anchorPoint) ) {
+	if( ! CGPointEqualToPoint(point, self.anchorPoint) ) {
 		[super setAnchorPoint:point];
 		[self createFontChars];
 	}
@@ -946,7 +946,7 @@ void FNTConfigRemoveCache( void )
         
         _childForTag = [NSMutableArray array];
 
-		self.texture = [CCTexture textureWithFile:_configuration.atlasName];
+		_texture = [CCTexture textureWithFile:_configuration.atlasName];
 		[self createFontChars];
 	}
 }

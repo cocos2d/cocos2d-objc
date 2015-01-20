@@ -25,9 +25,8 @@
  *
  */
 
-#import "CCTexture.h"
 #import "CCSprite.h"
-#import "Platforms/CCNS.h"
+#import "CCProtocols.h"
 
 /**
  CCLabelTTF displays text rendered using a TrueType (TTF, OTF) font.

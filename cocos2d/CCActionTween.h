@@ -24,7 +24,6 @@
  *
  */
 
-#import <Foundation/Foundation.h>
 #import "CCActionInterval.h"
 
 /** CCActionTween lets you modify a node property over time.

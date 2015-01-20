@@ -2,7 +2,7 @@
 
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 
-#import <UIKit/UIKit.h>
+#import <UIKit/UIView.h>
 #import <Metal/Metal.h>
 
 #import "CCDirectorView.h"

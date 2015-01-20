@@ -13,8 +13,6 @@
 #import "CCPackageDownloadDelegate.h"
 #import "CCDirector.h"
 #import "AppDelegate.h"
-#import "CCPackagesTestFixturesAndHelpers.h"
-
 
 @interface CCPackageDownload()
 - (NSString *)createTempName;
@@ -115,7 +113,7 @@ static BOOL __support_range_request = YES;
 @end
 
 
-@interface CCPackageDownloadTests : IGNORE_TEST_CASE <CCPackageDownloadDelegate>
+@interface CCPackageDownloadTests : XCTestCase <CCPackageDownloadDelegate>
 
 @property (nonatomic, strong) CCPackageDownload *download;
 @property (nonatomic, strong) CCPackage *package;
@@ -135,10 +133,9 @@ static BOOL __support_range_request = YES;
     [super setUp];
 
     [(AppController *)[UIApplication sharedApplication].delegate configureCocos2d];
+    // Stop the normal cocos2d main loop from happening during the tests. We will step it manually.
     [[CCDirector sharedDirector] stopAnimation];
-    // Spin the runloop a bit otherwise nondeterministic exceptions are thrown in the CCScheduler.
-    [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeInterval:0.2 sinceDate:[NSDate date]]];
-
+    
     [NSURLProtocol registerClass:[CCPackageDownloadTestURLProtocol class]];
 
     self.downloadPath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"Downloads"];

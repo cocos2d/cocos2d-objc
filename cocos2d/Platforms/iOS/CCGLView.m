@@ -67,15 +67,15 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 // Only compile this code on iOS. These files should NOT be included on your Mac project.
 // But in case they are included, it won't be compiled.
-#import "../../ccMacros.h"
+#import "ccMacros.h"
 #if __CC_PLATFORM_IOS
 
 #import <QuartzCore/QuartzCore.h>
 
 #import "CCGLView.h"
-#import "../../CCDirector.h"
-#import "../../ccMacros.h"
-#import "../../CCConfiguration.h"
+#import "CCDirector.h"
+#import "ccMacros.h"
+#import "CCDeviceInfo.h"
 #import "CCScene.h"
 #import "CCTouch.h"
 #import "CCTouchEvent.h"
@@ -298,7 +298,7 @@ extern EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup
 		CC_CHECK_GL_ERROR_DEBUG();
 	});
 	
-	_discardFramebufferSupported = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
+	_discardFramebufferSupported = [[CCDeviceInfo sharedDeviceInfo] supportsDiscardFramebuffer];
 
 	return YES;
 }

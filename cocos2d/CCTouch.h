@@ -6,10 +6,9 @@
 //
 //
 
-#import "ccMacros.h"
+#import "ccTypes.h"
 
 #if __CC_PLATFORM_IOS
-#import <UIKit/UIKit.h>
 #define PlatformTouch UITouch
 #elif __CC_PLATFORM_ANDROID
 @class CCTouchAndroid;
@@ -20,6 +19,7 @@
 
 @class CCGLView;
 @class CCNode;
+@class UITouch;
 
 /** Touch phases, equivalent to [UITouch phases](https://developer.apple.com/library/ios/documentation/uikit/reference/UITouch_Class/index.html#//apple_ref/c/tdef/UITouchPhase).
  Used by touch events received through CCResponder. */
@@ -54,7 +54,7 @@ typedef NS_ENUM (NSInteger, CCTouchPhase) {
 /** The timestamp of the most recent touch phase change. 
  @since v3.2 and later
 */
-@property (nonatomic, readonly) NSTimeInterval timestamp;
+@property (nonatomic, readonly) CCTime timestamp;
 
 /** @name Associated View and Platform Touch */
 

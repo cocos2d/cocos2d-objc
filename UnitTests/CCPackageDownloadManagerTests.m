@@ -12,7 +12,6 @@
 #import "CCPackage.h"
 #import "CCDirector.h"
 #import "AppDelegate.h"
-#import "CCPackagesTestFixturesAndHelpers.h"
 #import "CCUnitTestAssertions.h"
 #import "CCPackage_private.h"
 
@@ -56,7 +55,7 @@
 @end
 
 
-@interface CCPackageDownloadManagerTests : IGNORE_TEST_CASE <CCPackageDownloadManagerDelegate>
+@interface CCPackageDownloadManagerTests : XCTestCase <CCPackageDownloadManagerDelegate>
 
 @property (nonatomic, strong) CCPackageDownloadManager *downloadManager;
 @property (nonatomic) BOOL allDownloadsReturned;
@@ -71,9 +70,8 @@
     [super setUp];
 
     [(AppController *)[UIApplication sharedApplication].delegate configureCocos2d];
+    // Stop the normal cocos2d main loop from happening during the tests. We will step it manually.
     [[CCDirector sharedDirector] stopAnimation];
-    // Spin the runloop a bit otherwise nondeterministic exceptions are thrown in the CCScheduler.
-    [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeInterval:0.2 sinceDate:[NSDate date]]];
 
     [NSURLProtocol registerClass:[CCPackageDownloadManagerTestURLProtocol class]];
 

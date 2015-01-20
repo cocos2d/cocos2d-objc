@@ -27,9 +27,6 @@
 
 #import "CCNode.h"
 #import "CCAction.h"
-#import "CCProtocols.h"
-
-#include <sys/time.h>
 
 /**
  Abstract base class for interval actions. An interval action is an action that performs its task over a certain period of time.

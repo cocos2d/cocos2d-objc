@@ -24,7 +24,6 @@
  */
 
 #import "ccMacros.h"
-
 #if __CC_PLATFORM_MAC
 
 #import "NSEvent+CC.h"

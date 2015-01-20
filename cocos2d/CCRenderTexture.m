@@ -24,28 +24,21 @@
  *
  */
 
-#import "CCRenderTexture.h"
-#import "CCDirector.h"
 #import "ccMacros.h"
-#import "CCShader.h"
-#import "CCConfiguration.h"
-#import "Support/ccUtils.h"
-#import "Support/CCFileUtils.h"
-#import "Support/CGPointExtension.h"
+#import "ccUtils.h"
 
-#import "CCTexture_Private.h"
-#import "CCDirector_Private.h"
-#import "CCNode_Private.h"
-#import "CCRenderer_Private.h"
 #import "CCRenderTexture_Private.h"
+#import "CCRenderer_Private.h"
+#import "CCDirector_Private.h"
 #import "CCRenderDispatch.h"
-#import "CCMetalSupport_Private.h"
+#import "CCRenderableNode_Private.h"
 
-#if __CC_PLATFORM_MAC
-#import <ApplicationServices/ApplicationServices.h>
-#endif
+#import "CCDeviceInfo.h"
+#import "CCColor.h"
 
-
+//#if __CC_PLATFORM_MAC
+//#import <ApplicationServices/ApplicationServices.h>
+//#endif
 
 
 @implementation CCRenderTextureSprite
@@ -55,7 +48,7 @@
 	if(_renderState == nil){
 		// Allowing the uniforms to be copied speeds up the rendering by making the render state immutable.
 		// Copy the uniforms if custom uniforms are not being used.
-		BOOL copyUniforms = self.hasDefaultShaderUniforms;
+		BOOL copyUniforms = !self.usesCustomShaderUniforms;
 		
 		// Create an uncached renderstate so the texture can be released before the renderstate cache is flushed.
 		_renderState = [CCRenderState renderStateWithBlendMode:_blendMode shader:_shader shaderUniforms:self.shaderUniforms copyUniforms:copyUniforms];
@@ -64,17 +57,21 @@
 	return _renderState;
 }
 
-- (CGAffineTransform)nodeToWorldTransform
+- (GLKMatrix4)nodeToWorldTransform
 {
-	CGAffineTransform t = [self nodeToParentTransform];
+	GLKMatrix4 t = [self nodeToParentMatrix];
     
 	for (CCNode *p = _renderTexture; p != nil; p = p.parent)
     {
-		t = CGAffineTransformConcat(t, [p nodeToParentTransform]);
+		t = GLKMatrix4Multiply([p nodeToParentMatrix], t);
     }
 	return t;
 }
 
+@end
+
+
+@interface CCRenderTexture()<CCTextureProtocol>
 @end
 
 
@@ -151,7 +148,8 @@
 
 -(void)create
 {
-    CGSize pixelSize = CGSizeMake(_contentSize.width * _contentScale, _contentSize.height * _contentScale);
+    CGSize size = self.contentSize;
+    CGSize pixelSize = CGSizeMake(size.width * _contentScale, size.height * _contentScale);
     [self createTextureAndFboWithPixelSize:pixelSize];
 }
 
@@ -163,7 +161,7 @@
 	NSUInteger powW;
 	NSUInteger powH;
 
-	if( [[CCConfiguration sharedConfiguration] supportsNPOT] ) {
+	if( [[CCDeviceInfo sharedDeviceInfo] supportsNPOT] ) {
 		powW = pixelSize.width;
 		powH = pixelSize.height;
 	} else {
@@ -186,7 +184,9 @@
     // at some code that assumes the supplied size is in points so, if the size is not in points,
     // things break.
 	[self assignSpriteTexture];
-	[_sprite setTextureRect:CGRectMake(0, 0, _contentSize.width, _contentSize.height)];
+	
+	CGSize size = self.contentSize;
+	[_sprite setTextureRect:CGRectMake(0, 0, size.width, size.height)];
 }
 
 -(void)assignSpriteTexture
@@ -338,7 +338,7 @@ FlipY(GLKMatrix4 projection)
 {
 	// override visit.
 	// Don't call visit on its children
-	if(!_visible) return;
+	if(!self.visible) return;
 	
 	if(_autoDraw){
 		if(_contentSizeChanged){
@@ -354,20 +354,18 @@ FlipY(GLKMatrix4 projection)
 		//! make sure all children are drawn
 		[self sortAllChildren];
 		
-		for(CCNode *child in _children){
+		for(CCNode *child in self.children){
 			[child visit:rtRenderer parentTransform:&_projection];
 		}
 		
 		[self end];
 		
-		GLKMatrix4 transform = [self transform:parentTransform];
+		GLKMatrix4 transform = GLKMatrix4Multiply(*parentTransform, [self nodeToParentMatrix]);
 		[self draw:renderer transform:&transform];
 	} else {
 		// Render normally, v3.0 and earlier skipped this.
 		[super visit:renderer parentTransform:parentTransform];
 	}
-	
-	_orderOfArrival = 0;
 }
 
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
@@ -384,7 +382,7 @@ FlipY(GLKMatrix4 projection)
 {
 	// TODO need to find out why getting pixels from a Metal texture doesn't seem to work.
 	// Workaround - use pixel buffers and a copy encoder?
-	NSAssert([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIGL, @"[CCRenderTexture -newCGImage] is only supported for GL.");
+	NSAssert([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIGL, @"[CCRenderTexture -newCGImage] is only supported for GL.");
 	
 	NSAssert(_pixelFormat == CCTexturePixelFormat_RGBA8888,@"only RGBA8888 can be saved as image");
 	
@@ -398,8 +396,8 @@ FlipY(GLKMatrix4 projection)
 	int bytesPerRow = bytesPerPixel * tx;
 	NSInteger myDataLength = bytesPerRow * ty;
 	
-	GLubyte *buffer	= calloc(myDataLength,1);
-	GLubyte *pixels	= calloc(myDataLength,1);
+	uint8_t *buffer	= calloc(myDataLength,1);
+	uint8_t *pixels	= calloc(myDataLength,1);
 	
 	
 	if( ! (buffer && pixels) ) {

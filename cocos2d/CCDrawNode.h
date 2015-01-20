@@ -27,7 +27,7 @@
  *
  */
 
-#import "CCNode.h"
+#import "CCRenderableNode.h"
 
 /** 
  Node that draws dots, segments and polygons. Draws everything in a single batch draw.
@@ -39,7 +39,7 @@
  For complex vector drawing and entire games built on vector graphics it is strongly recommended to write your own
  vector rendering node by using CCRenderer (OpenGL or Metal).
  */
-@interface CCDrawNode : CCNode
+@interface CCDrawNode : CCRenderableNode
 
 
 /// -----------------------------------------------------------------------

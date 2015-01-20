@@ -33,7 +33,7 @@
 
 
 @interface CCNode()
--(CGAffineTransform)nonRigidTransform;
+-(GLKMatrix4)nonRigidTransform;
 @end
 
 
@@ -97,31 +97,26 @@
     return [[CCPhysicsPolyShape alloc] initWithPolygonFromPoints:points count:count cornerRadius:cornerRadius];
 }
 
--(cpTransform)shapeTransform
+-(CGFloat)shapeTransformDeterminant
 {
 	// TODO Might be better to use the physics relative transform.
 	// That's not available until the scene is set up though... hrm.
 	CCNode *node = self.node;
 	if(node){
-		return CGAFFINETRANSFORM_TO_CPTRANSFORM([node nonRigidTransform]);
+		GLKMatrix4 t = node.nonRigidTransform;
+		return (t.m[0]*t.m[5] - t.m[4]*t.m[1]);
 	} else {
-		return cpTransformIdentity;
+		return 1.0;
 	}
-}
-
-static cpFloat
-Determinant(cpTransform t)
-{
-	return (t.a*t.d - t.c*t.b);
 }
 
 -(CGFloat)mass {return self.shape.mass;}
 -(void)setMass:(CGFloat)mass {self.shape.mass = mass;}
 
--(CGFloat)density {return 1e3*self.shape.density/Determinant(self.shapeTransform);}
--(void)setDensity:(CGFloat)density {self.shape.density = 1e-3*density*Determinant(self.shapeTransform);}
+-(CGFloat)density {return 1e3*self.shape.density/self.shapeTransformDeterminant;}
+-(void)setDensity:(CGFloat)density {self.shape.density = 1e-3*density*self.shapeTransformDeterminant;}
 
--(CGFloat)area {return self.shape.area*Determinant(self.shapeTransform);}
+-(CGFloat)area {return self.shape.area*self.shapeTransformDeterminant;}
 
 -(CGFloat)friction {return self.shape.friction;}
 -(void)setFriction:(CGFloat)friction {self.shape.friction = friction;}
@@ -216,7 +211,7 @@ Determinant(cpTransform t)
 -(void)rescaleShape:(cpTransform)transform {@throw [NSException exceptionWithName:@"AbstractInvocation" reason:@"This method is abstract." userInfo:nil];}
 -(ChipmunkShape *)shape {@throw [NSException exceptionWithName:@"AbstractInvocation" reason:@"This method is abstract." userInfo:nil];}
 
--(void)willAddToPhysicsNode:(CCPhysicsNode *)physics nonRigidTransform:(cpTransform)transform;
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics nonRigidTransform:(GLKMatrix4)t;
 {
 	// Intern the collision type to ensure it's not a unique object reference.
 	_collisionType = [physics internString:_collisionType];
@@ -233,8 +228,8 @@ Determinant(cpTransform t)
 	_collisionCategories = nil;
 	_collisionMask = nil;
 	
-	[self rescaleShape:transform];
-    
+	
+	[self rescaleShape:cpTransformNew(t.m[0], t.m[1], t.m[4], t.m[5], t.m[12], t.m[13])];
 }
 
 -(void)didRemoveFromPhysicsNode:(CCPhysicsNode *)physics

@@ -26,10 +26,10 @@
 
 
 #import "CCFileUtils.h"
-#import "../CCConfiguration.h"
-#import "../ccMacros.h"
-#import "../ccConfig.h"
-#import "../ccTypes.h"
+#import "CCDeviceInfo.h"
+#import "ccMacros.h"
+#import "ccConfig.h"
+#import "ccTypes.h"
 
 NSString * const CCFileUtilsSuffixDefault = @"default";
 
@@ -214,7 +214,7 @@ static CCFileUtils *fileUtils = nil;
 
 - (void) buildSearchResolutionsOrder
 {
-	NSInteger device = [[CCConfiguration sharedConfiguration] runningDevice];
+	NSInteger device = [[CCDeviceInfo sharedDeviceInfo] runningDevice];
 	[_searchResolutionsOrder removeAllObjects];
 	
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID

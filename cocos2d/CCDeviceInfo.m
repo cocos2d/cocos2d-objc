@@ -24,21 +24,14 @@
  * THE SOFTWARE.
  */
 
-#import "ccMacros.h"
+#import "cocos2d.h"
 
 #if __CC_PLATFORM_IOS
-#import <UIKit/UIKit.h>		// Needed for UIDevice
+#import <UIKit/UIKit.h>
 #elif __CC_PLATFORM_ANDROID
 #import <AndroidKit/AndroidWindowManager.h>
 #import <AndroidKit/AndroidDisplay.h>
 #endif
-
-#import "Platforms/CCGL.h"
-#import "CCConfiguration.h"
-#import "ccMacros.h"
-#import "ccConfig.h"
-#import "cocos2d.h"
-#import "CCRenderDispatch.h"
 
 Class CCGraphicsBufferClass;
 Class CCGraphicsBufferBindingsClass;
@@ -67,11 +60,11 @@ NSString* const CCScreenModeFlexible = @"CCScreenModeFlexible";
 NSString* const CCScreenModeFixed = @"CCScreenModeFixed";
 
 
-@interface CCConfiguration ()
+@interface CCDeviceInfo ()
 -(void) getOpenGLvariables;
 @end
 
-@implementation CCConfiguration
+@implementation CCDeviceInfo
 
 @synthesize maxTextureSize = _maxTextureSize, maxTextureUnits=_maxTextureUnits;
 @synthesize supportsPVRTC = _supportsPVRTC;
@@ -84,11 +77,11 @@ NSString* const CCScreenModeFixed = @"CCScreenModeFixed";
 //
 // singleton stuff
 //
-static CCConfiguration *_sharedConfiguration = nil;
+static CCDeviceInfo *_sharedConfiguration = nil;
 
 static char * glExtensions;
 
-+ (CCConfiguration *)sharedConfiguration
++ (CCDeviceInfo *)sharedDeviceInfo
 {
 	if (!_sharedConfiguration){
 		_sharedConfiguration = [[self alloc] init];

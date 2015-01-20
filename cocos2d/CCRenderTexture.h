@@ -27,13 +27,9 @@
 #import <Foundation/Foundation.h>
 
 #import "ccMacros.h"
-#import "CCNode.h"
+#import "CCRenderableNode.h"
 #import "CCSprite.h"
 #import "CCTexture.h"
-
-#if __CC_PLATFORM_IOS
-#import <UIKit/UIKit.h>
-#endif // iPHone
 
 /**
  *  Image format when saving render textures. Used by CCRenderTexture.
@@ -56,7 +52,7 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
  
  There are also functions for saving the render texture to disk in PNG or JPG format.
  */
-@interface CCRenderTexture : CCNode
+@interface CCRenderTexture : CCRenderableNode
 
 /**
  *  @name Creating a Render Texture

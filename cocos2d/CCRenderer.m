@@ -24,13 +24,16 @@
 
 #import "objc/message.h"
 
-#import "cocos2d.h"
+#import "ccUtils.h"
+
 #import "CCRenderer_Private.h"
-#import "CCCache.h"
 #import "CCTexture_Private.h"
 #import "CCShader_private.h"
 #import "CCDirector_Private.h"
+
+#import "CCCache.h"
 #import "CCRenderDispatch.h"
+#import "CCDeviceInfo.h"
 
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 #import "CCMetalSupport_Private.h"
@@ -351,7 +354,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 		_clearDepth = depth;
 		_clearStencil = stencil;
 	} else {
-		NSAssert([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIGL, @"Clear commands must be the first command in the queue unless using GL.");
+		NSAssert([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIGL, @"Clear commands must be the first command in the queue unless using GL.");
 		
 		[self enqueueBlock:^{
 			if(mask & GL_COLOR_BUFFER_BIT) glClearColor(color4.r, color4.g, color4.b, color4.a);

@@ -7,7 +7,6 @@
 //
 
 #import "CCPlatformTextFieldMac.h"
-
 #if __CC_PLATFORM_MAC
 
 #import "CCDirector.h"

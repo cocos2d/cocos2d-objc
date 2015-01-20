@@ -34,11 +34,13 @@
 #import "ccMacros.h"
 #import "ccUtils.h"
 #import "NSAttributedString+CCAdditions.h"
-#import "CCConfiguration.h"
+#import "CCDeviceInfo.h"
 #import "CCNode_Private.h"
 #import "CCDirector.h"
 #import "CCTexture_Private.h"
 #import <Foundation/Foundation.h>
+#import "CCRenderableNode_Private.h"
+#import "CCColor.h"
 
 #if __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
@@ -114,13 +116,13 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 
 - (id) initWithAttributedString:(NSAttributedString *)attrString;
 {
-    NSAssert([CCConfiguration sharedConfiguration].OSVersion >= CCSystemVersion_iOS_6_0, @"Attributed strings are only supported on iOS 6 or later");
+    NSAssert([CCDeviceInfo sharedDeviceInfo].OSVersion >= CCSystemVersion_iOS_6_0, @"Attributed strings are only supported on iOS 6 or later");
     return [self initWithAttributedString:attrString fontName:@"Helvetica" fontSize:12 dimensions:CGSizeZero];
 }
 
 - (id) initWithAttributedString:(NSAttributedString *)attrString dimensions:(CGSize)dimensions
 {
-    NSAssert([CCConfiguration sharedConfiguration].OSVersion >= CCSystemVersion_iOS_6_0, @"Attributed strings are only supported on iOS 6 or later");
+    NSAssert([CCDeviceInfo sharedDeviceInfo].OSVersion >= CCSystemVersion_iOS_6_0, @"Attributed strings are only supported on iOS 6 or later");
     return [self initWithAttributedString:attrString fontName:@"Helvetica" fontSize:12 dimensions:dimensions];
 }
 
@@ -166,7 +168,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 
 - (void) setAttributedString:(NSAttributedString *)attributedString
 {
-    NSAssert([CCConfiguration sharedConfiguration].OSVersion >= CCSystemVersion_iOS_6_0, @"Attributed strings are only supported on iOS 6 or later");
+    NSAssert([CCDeviceInfo sharedDeviceInfo].OSVersion >= CCSystemVersion_iOS_6_0, @"Attributed strings are only supported on iOS 6 or later");
     [self _setAttributedString:attributedString];
 }
 
@@ -242,7 +244,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 - (CGSize) contentSize
 {
     [self updateTexture];
-    return _contentSize;
+    return super.contentSize;
 }
 
 -(void) setHorizontalAlignment:(CCTextAlignment)alignment
@@ -350,7 +352,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 	if(_renderState == nil){
 		// Allowing the uniforms to be copied speeds up the rendering by making the render state immutable.
 		// Copy the uniforms if custom uniforms are not being used.
-		BOOL copyUniforms = self.hasDefaultShaderUniforms;
+		BOOL copyUniforms = !self.usesCustomShaderUniforms;
 		
 		// Create an uncached renderstate so the texture can be released before the renderstate cache is flushed.
 		_renderState = [CCRenderState renderStateWithBlendMode:_blendMode shader:_shader shaderUniforms:self.shaderUniforms copyUniforms:copyUniforms];
@@ -420,7 +422,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     
 #if __CC_PLATFORM_IOS
     // Handle fonts on iOS 5
-    if ([CCConfiguration sharedConfiguration].OSVersion < CCSystemVersion_iOS_6_0)
+    if ([CCDeviceInfo sharedDeviceInfo].OSVersion < CCSystemVersion_iOS_6_0)
     {
         return [self updateTextureOld];
     }
@@ -857,7 +859,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     // Handle outline
     if (hasOutline)
     {
-        ccColor4F outlineColor = _outlineColor.ccColor4f;
+        GLKVector4 outlineColor = _outlineColor.glkVector4;
         
         CGContextSetTextDrawingMode(context, kCGTextFillStroke);
         CGContextSetRGBStrokeColor(context, outlineColor.r, outlineColor.g, outlineColor.b, outlineColor.a);

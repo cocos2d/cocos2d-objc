@@ -1,7 +1,7 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * Copyright (c) 2013-2014 Cocos2D Authors
+ * Copyright (c) 2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,9 +22,18 @@
  * THE SOFTWARE.
  */
 
-#import "CCProgressNode.h"
 
-// OS X
-@interface CCProgressNode ()
+#import <CoreGraphics/CGAffineTransform.h>
+
+#import "CCImage.h"
+
+
+extern NSString * const CCImageOptionFlipVertical;
+extern NSString * const CCImageOptionFlipHorizontal;
+
+
+@interface CCImage(Private)
+
+@property(nonatomic, readonly) CGAffineTransform loadingTransform;
 
 @end

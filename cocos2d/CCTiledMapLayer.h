@@ -25,10 +25,9 @@
  *
  */
 
-#import "CCSpriteBatchNode.h"
+#import "CCRenderableNode.h"
 #import "CCTMXXMLParser.h"
 #import "CCTiledMap.h"
-#import "CCMathTypesAndroid.h"
 
 @class CCTiledMapInfo;
 @class CCTiledMapLayerInfo;
@@ -41,7 +40,7 @@
  will turn them all into sprites, possibly adding a significant memory overhead.
  */
 
-@interface CCTiledMapLayer : CCNode<CCShaderProtocol, CCTextureProtocol, CCBlendProtocol> 
+@interface CCTiledMapLayer : CCRenderableNode<CCShaderProtocol, CCTextureProtocol, CCBlendProtocol> 
 
 /// -----------------------------------------------------------------------
 /// @name Creating a Tiled Map Layer
@@ -146,7 +145,7 @@
 /// -----------------------------------------------------------------------
 
 /** Tile pointer. */
-@property (nonatomic,readonly) uint32_t *tiles;
+//@property (nonatomic,readonly) uint32_t *tiles;
 
 /** Tileset information for the layer.
  @see CCTiledMapTilesetInfo */

@@ -23,8 +23,10 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "cocos2d.h"
-#import "CCBSequenceProperty.h"
+#import "CCScheduler.h"
+
+@class CCNode;
+
 
 @class CCBSequence;
 

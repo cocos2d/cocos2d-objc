@@ -43,6 +43,8 @@
 #import "CCEffectUtils.h"
 #import "CCEffect_Private.h"
 #import "CCTexture.h"
+#import "CCRendererBasicTypes.h"
+#import "NSValue+CCRenderer.h"
 
 
 @interface CCEffectBlurImpl : CCEffectImpl
