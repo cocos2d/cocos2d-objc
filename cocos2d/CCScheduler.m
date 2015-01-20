@@ -99,13 +99,18 @@
 
 -(NSMutableArray *) writeArray
 {
+    // Lazily init the array.
     if(_array == nil){
         _array = [[NSMutableArray alloc] init];
     }
+    
     if(_locked){
+        // When the array is locked, we have to mutate a copy.
+        // The modified array is commited in the unlock method.
         if(_copyArray == nil){
             _copyArray = [_array mutableCopy];
         }
+        
         return _copyArray;
     }else{
         return _array;
@@ -114,7 +119,9 @@
 
 -(void)dealloc
 {
-    [self removeAllObjects];
+    [_array release]; _array = nil;
+    [_copyArray release]; _copyArray = nil;
+    
     [super dealloc];
 }
 
@@ -129,6 +136,8 @@
             return;
         };
     }
+    
+    // All targets are lower priority, add to the end.
     [self addObject:object];
 }
 
@@ -144,30 +153,27 @@
 
 -(void)removeAllObjects
 {
-    [_array release]; _array = nil;
-    [_copyArray release]; _copyArray = nil;
+    [self.writeArray removeAllObjects];
 }
 
 -(void)lock
 {
-    if(_array == nil){
-        _array = [[NSMutableArray alloc] init];
-    }
-
     NSAssert(!_locked, @"Enumerator started when already locked");
     _locked = YES;
-    [_array retain];
 }
 
 -(void)unlock
 {
-    [_array release];
     NSAssert(_locked, @"Already unlocked!");
+    _locked = NO;
+    
+    // If the array was mutated, _copyArray will be non-nil and contain the changes.
     if(_copyArray){
+        [_array release];
+        
         _array = _copyArray;
         _copyArray = nil;
     }
-    _locked = NO;
 }
 
 // If the enumerator will modify the array, it must be locked before iteration and unlocked aferwards to commit the changes.
