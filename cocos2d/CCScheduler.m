@@ -695,6 +695,7 @@ CompareTimers(const void *a, const void *b, void *context)
 -(void)addAction:(CCAction*)action target:(NSObject<CCSchedulableTarget> *)target paused:(BOOL)paused
 {
     CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
+    scheduledTarget.paused = paused;
     
     if(!scheduledTarget.hasActions){
         [_scheduledTargetsWithActions addObject:scheduledTarget];
