@@ -47,9 +47,10 @@
 }
 
 
-@property(nonatomic, readonly) NSObject<CCSchedulableTarget> *target;
+@property(nonatomic, readonly, unsafe_unretained) NSObject<CCSchedulableTarget> *target;
 
 @property(nonatomic, strong) CCTimer *timers;
+@property(nonatomic, strong) NSMutableArray *actions;
 @property(nonatomic, readonly) BOOL empty;
 @property(nonatomic, assign) BOOL paused;
 @property(nonatomic, assign) BOOL enableUpdates;
@@ -192,10 +193,7 @@
 
 //MARK: Scheduled Targets
 
-@implementation CCScheduledTarget {
-	__unsafe_unretained NSObject<CCSchedulableTarget> *_target;
-    NSMutableArray *_actions;
-}
+@implementation CCScheduledTarget
 
 static void
 InvokeMethods(CopyOnWriteArray *methods, SEL selector, CCTime dt)
@@ -220,8 +218,7 @@ InvokeMethods(CopyOnWriteArray *methods, SEL selector, CCTime dt)
 -(void)dealloc
 {
     self.timers = nil;
-    [_actions release];
-    _actions = nil;
+    self.actions = nil;
     
     [super dealloc];
 }
@@ -231,30 +228,23 @@ InvokeMethods(CopyOnWriteArray *methods, SEL selector, CCTime dt)
     return [NSString stringWithFormat:@"<CCScheduledTarget: %@, %@, %@>", _target.description, _timers.description, _actions.description];
 }
 
-/**
- Get or create a list of CCActions for this scheduled target.
- */
--(NSMutableArray *) getActions
+-(NSMutableArray *)actions
 {
     if(_actions == nil){
         _actions = [[NSMutableArray alloc] init];
     }
+    
     return _actions;
 }
 
-/**
- Set the array of CCActions.
- */
--(void) setActions:(NSMutableArray *)arr;
+-(BOOL)hasActions
 {
-    NSMutableArray * a =[arr retain];
-    [_actions release];
-    _actions = a;
+    return !(_actions == nil || [_actions count] == 0);
 }
 
--(BOOL) hasActions
+-(void)addAction:(CCAction *)action
 {
-    return (_actions != nil && [_actions count] > 0);
+    [self.actions addObject:action];
 }
 
 -(void)removeAction:(CCAction *) action
@@ -710,7 +700,7 @@ CompareTimers(const void *a, const void *b, void *context)
         [_scheduledTargetsWithActions addObject:scheduledTarget];
     }
     
-    [[scheduledTarget getActions] addObject:action];
+    [scheduledTarget addAction:action];
     
     [action startWithTarget:target];
 }
@@ -718,7 +708,10 @@ CompareTimers(const void *a, const void *b, void *context)
 -(void)removeAllActionsFromTarget:(NSObject<CCSchedulableTarget> *)target
 {
     CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
-    scheduledTarget.actions = nil;
+    
+    for(CCAction *action in [scheduledTarget.actions copy]){
+        [scheduledTarget removeAction:action];
+    }
     
     [_scheduledTargetsWithActions removeObject:scheduledTarget];
 }
@@ -726,13 +719,12 @@ CompareTimers(const void *a, const void *b, void *context)
 -(void)removeActionByTag:(NSInteger)tag target:(NSObject<CCSchedulableTarget> *)target
 {
     CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
-    NSMutableArray *keep = [NSMutableArray array];
-    for (CCAction *action in [scheduledTarget getActions]) {
-        if (action.tag != tag){
-            [keep addObject:action];
+    
+    for (CCAction *action in [scheduledTarget.actions copy]) {
+        if (action.tag == tag){
+            [scheduledTarget removeAction:action];
         }
     }
-    scheduledTarget.actions = keep;
     
     if(!scheduledTarget.hasActions){
         [_scheduledTargetsWithActions removeObject:scheduledTarget];
@@ -742,7 +734,7 @@ CompareTimers(const void *a, const void *b, void *context)
 -(CCAction*)getActionByTag:(NSInteger) tag target:(NSObject<CCSchedulableTarget> *)target
 {
     CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
-    for (CCAction *action in [scheduledTarget getActions]) {
+    for (CCAction *action in scheduledTarget.actions) {
         if (action.tag == tag) return action;
     }
     return nil;
@@ -751,38 +743,40 @@ CompareTimers(const void *a, const void *b, void *context)
 -(NSArray *) actionsForTarget:(NSObject<CCSchedulableTarget> *)target
 {
     CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
-    return [scheduledTarget getActions];
+    return scheduledTarget.actions;
 }
 
 -(void) updateActions: (CCTime)dt
 {
-    NSMutableArray *removals = [NSMutableArray array];
+    NSMutableArray *completedActions = [[NSMutableArray alloc] init];
     
     [_scheduledTargetsWithActions lock];
     for (CCScheduledTarget *st in _scheduledTargetsWithActions) {
         if(st->_paused) continue;
-       
-        [removals removeAllObjects];
         
-        for (CCAction *action in [st getActions]) {
+        for (CCAction *action in st.actions) {
             [action step: dt];
             if([action isDone]){
                 [action stop];
-                [removals addObject:action];
+                [completedActions addObject:action];
             }
         }
         
-        if(removals.count > 0){
-            for (CCAction *action in removals) {
+        if(completedActions.count > 0){
+            for (CCAction *action in completedActions) {
                 [st removeAction: action];
             }
+            
             if(![st hasActions]){
                 [_scheduledTargetsWithActions removeObject: st];
             }
+            
+            [completedActions removeAllObjects];
         }
     }
     [_scheduledTargetsWithActions unlock];
+    
+    [completedActions release];
 }
-
 
 @end
