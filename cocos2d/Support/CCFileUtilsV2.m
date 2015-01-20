@@ -30,6 +30,7 @@
 #import "CCFile_Private.h"
 #import "CCFileUtilsDatabaseProtocol.h"
 #import "CCFileMetaData.h"
+#import "ioapi.h"
 
 static NSString *const CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH";
 
@@ -175,36 +176,47 @@ static NSString *const CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFILE
         return cachedFile;
     };
 
-    CCFileResolvedMetaData *queryResult = [self queryDatabaseForFilename:filename];
+    CCFileResolvedMetaData *metaData = [self resolvedMetaDataForFilename:filename];
 
-    for (NSString *searchPath in _searchPaths)
+    CCFile *result = [self findFileInAllSearchPaths:filename metaData:metaData options:options];
+
+    if (result)
     {
-        NSString *resolvedFilename = filename;
-
-        if (queryResult)
-        {
-            resolvedFilename = queryResult.filename;
-        }
-
-        CCFile *aFile = [self findFilename:resolvedFilename inSearchPath:searchPath options:options];
-
-        if (aFile)
-        {
-            if (queryResult)
-            {
-                aFile.useUIScale = queryResult.useUIScale;
-            }
-
-            _cache[filename] = aFile;
-            return aFile;
-        }
+        return result;
     }
 
     [self setErrorPtr:error code:ERROR_FILEUTILS_NO_FILE_FOUND description:@"No file found."];
     return nil;
 }
 
-- (CCFileResolvedMetaData *)queryDatabaseForFilename:(NSString *)filename
+- (CCFile *)findFileInAllSearchPaths:(NSString *)filename metaData:(CCFileResolvedMetaData *)metaData options:(NSDictionary *)options
+{
+    for (NSString *searchPath in _searchPaths)
+    {
+        NSString *resolvedFilename = filename;
+
+        if (metaData)
+        {
+            resolvedFilename = metaData.filename;
+        }
+
+        CCFile *aFile = [self findFilename:resolvedFilename inSearchPath:searchPath options:options];
+
+        if (aFile)
+        {
+            if (metaData)
+            {
+                aFile.useUIScale = metaData.useUIScale;
+            }
+
+            _cache[filename] = aFile;
+            return aFile;
+        }
+    }
+    return nil;
+}
+
+- (CCFileResolvedMetaData *)resolvedMetaDataForFilename:(NSString *)filename
 {
     if (!_database)
     {
@@ -234,8 +246,8 @@ static NSString *const CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFILE
     NSString *localizedFileName = [self localizedFilenameWithMetaData:metaData];
 
     fileUtilsV2ResolvedMetaData.filename = localizedFileName
-            ? localizedFileName
-            : metaData.filename;
+        ? localizedFileName
+        : metaData.filename;
 
     fileUtilsV2ResolvedMetaData.useUIScale = metaData.useUIScale;
 
@@ -264,11 +276,11 @@ static NSString *const CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFILE
 
 - (CCFile *)findFilename:(NSString *)filename inSearchPath:(NSString *)searchPath options:(NSDictionary *)options
 {
-    NSArray *searchFilenames = [self searchFilenamesWithBaseFilename:filename options:options];
+    NSArray *searchVariants = [self contentScaleVariantsWithFilename:filename options:options];
 
-    TraceLog(@"* Searching for content scale variants: %@", searchFilenames);
+    TraceLog(@"* Searching for content scale variants: %@", searchVariants);
 
-    for (CCFileUtilsV2SearchData *fileLocatorSearchData in searchFilenames)
+    for (CCFileUtilsV2SearchData *fileLocatorSearchData in searchVariants)
     {
         NSURL *fileURL = [NSURL fileURLWithPath:[searchPath stringByAppendingPathComponent:fileLocatorSearchData.filename]];
 
@@ -283,7 +295,7 @@ static NSString *const CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFILE
     return nil;
 }
 
-- (CCFileUtilsV2SearchData *)filenameWithBasefilename:(NSString *)baseFilename contentScale:(NSNumber *)contentScale
+- (CCFileUtilsV2SearchData *)contentScaleFilenameWithBasefilename:(NSString *)baseFilename contentScale:(NSNumber *)contentScale
 {
     NSString *filename = [[NSString stringWithFormat:@"%@-%dx",
                            [baseFilename stringByDeletingPathExtension],
@@ -292,48 +304,48 @@ static NSString *const CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFILE
     return [[CCFileUtilsV2SearchData alloc] initWithFilename:filename contentScale:contentScale];
 }
 
-- (NSArray *)searchFilenamesWithBaseFilename:(NSString *)baseFilename options:(NSDictionary *)options
+- (NSArray *)contentScaleVariantsWithFilename:(NSString *)filename options:(NSDictionary *)options
 {
-    NSMutableArray *result = [NSMutableArray arrayWithCapacity:4];
+    NSMutableArray *searchVariantFilenames = [NSMutableArray arrayWithCapacity:4];
 
     if (options[CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH])
     {
-        return @[[[CCFileUtilsV2SearchData alloc] initWithFilename:baseFilename contentScale:@(_untaggedContentScale)]];
+        return @[[[CCFileUtilsV2SearchData alloc] initWithFilename:filename contentScale:@(_untaggedContentScale)]];
     }
 
     if (_deviceContentScale >= 3)
     {
-        [result addObject:[self filenameWithBasefilename:baseFilename contentScale:@4]];
-        [result addObject:[self filenameWithBasefilename:baseFilename contentScale:@2]];
-        [result addObject:[self filenameWithBasefilename:baseFilename contentScale:@1]];
+        [searchVariantFilenames addObject:[self contentScaleFilenameWithBasefilename:filename contentScale:@4]];
+        [searchVariantFilenames addObject:[self contentScaleFilenameWithBasefilename:filename contentScale:@2]];
+        [searchVariantFilenames addObject:[self contentScaleFilenameWithBasefilename:filename contentScale:@1]];
     }
 
     if (_deviceContentScale == 2)
     {
-        [result addObject:[self filenameWithBasefilename:baseFilename contentScale:@2]];
-        [result addObject:[self filenameWithBasefilename:baseFilename contentScale:@4]];
-        [result addObject:[self filenameWithBasefilename:baseFilename contentScale:@1]];
+        [searchVariantFilenames addObject:[self contentScaleFilenameWithBasefilename:filename contentScale:@2]];
+        [searchVariantFilenames addObject:[self contentScaleFilenameWithBasefilename:filename contentScale:@4]];
+        [searchVariantFilenames addObject:[self contentScaleFilenameWithBasefilename:filename contentScale:@1]];
     }
 
     if (_deviceContentScale == 1)
     {
-        [result addObject:[self filenameWithBasefilename:baseFilename contentScale:@1]];
-        [result addObject:[self filenameWithBasefilename:baseFilename contentScale:@2]];
+        [searchVariantFilenames addObject:[self contentScaleFilenameWithBasefilename:filename contentScale:@1]];
+        [searchVariantFilenames addObject:[self contentScaleFilenameWithBasefilename:filename contentScale:@2]];
     }
 
-    [self insertDefaultScaleWithBaseFilename:baseFilename intoSearchFilenames:result];
+    [self insertUntaggedFilename:filename intoSearchVariantFilenames:searchVariantFilenames];
 
-    return result;
+    return searchVariantFilenames;
 }
 
-- (void)insertDefaultScaleWithBaseFilename:(NSString *)baseFilename intoSearchFilenames:(NSMutableArray *)filenames
+- (void)insertUntaggedFilename:(NSString *)filename intoSearchVariantFilenames:(NSMutableArray *)filenames
 {
     for (NSUInteger i = 0; i < filenames.count - 1; ++i)
     {
         CCFileUtilsV2SearchData *filenameData = filenames[i];
         if ([filenameData.contentScale unsignedIntegerValue] == _untaggedContentScale)
         {
-            CCFileUtilsV2SearchData *filenameDataToInsert = [[CCFileUtilsV2SearchData alloc] initWithFilename:baseFilename
+            CCFileUtilsV2SearchData *filenameDataToInsert = [[CCFileUtilsV2SearchData alloc] initWithFilename:filename
                                                                                                  contentScale:@(_untaggedContentScale)];
 
             [filenames insertObject:filenameDataToInsert atIndex:i+1];
