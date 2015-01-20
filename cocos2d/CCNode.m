@@ -162,11 +162,9 @@ RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
 
 - (void)cleanup
 {
-	// actions
-	[self stopAllActions];
+	// Clean up timers and actions.
 	[_scheduler unscheduleTarget:self];
 
-	// timers
 	[_children makeObjectsPerformSelector:@selector(cleanup)];
     
     // CCAnimationManager Cleanup (Set by SpriteBuilder)
@@ -1081,7 +1079,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 
 -(NSArray *) actions
 {
-    return [_scheduler actions:self];
+    return [_scheduler actionsForTarget:self];
 }
 
 -(CCAnimationManager*)animationManager

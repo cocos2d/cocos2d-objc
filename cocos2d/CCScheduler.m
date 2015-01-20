@@ -38,8 +38,10 @@
 
 #define FOREACH_TIMER(__scheduledTarget__, __timerVar__) for(CCTimer *__timerVar__ = __scheduledTarget__->_timers; __timerVar__; __timerVar__ = __timerVar__.next)
 
-@interface CCScheduledTarget : NSObject
-{
+
+//MARK: Private Interfaces
+
+@interface CCScheduledTarget : NSObject {
     @public
     BOOL _paused;
 }
@@ -54,12 +56,42 @@
 
 @end
 
-@interface CopyOnWriteArray : NSObject<NSFastEnumeration>
+
+@interface CCTimer()
+
+@property(nonatomic, readwrite) CCTime deltaTime;
+@property(nonatomic, readonly) CCTimerBlock block;
+@property(nonatomic, readonly) CCScheduledTarget *scheduledTarget;
+
+// May differ from invoke time due to pausing.
+@property(nonatomic, assign) CCTime invokeTimeInternal;
+// Timers form a linked list per target.
+@property(nonatomic, strong) CCTimer *next;
+// Invocation requires an extra delay due to being paused.
+@property(nonatomic, readonly) BOOL requiresDelay;
+// If the timer is currently added to the heap or not.
+@property(nonatomic, assign) BOOL scheduled;
 
 @end
 
-@implementation CopyOnWriteArray
-{
+
+@interface CCScheduler() <CCSchedulableTarget>
+
+@property(nonatomic, strong) CCTimer *timers;
+
+-(void)scheduleTimer:(CCTimer *)timer retain:(BOOL)retain;
+
+@end
+
+
+//MARK: Copy on Write Arrays
+
+// This is an NSMutableArray-like class that implements copy-on-write to allow modifying an array while iterating it.
+// This is for performance reasons so that we don't need to copy large arrays every frame to iterate them safely.
+// Instead, the copy is only performed when the array is actually changed.
+
+@interface CopyOnWriteArray : NSObject<NSFastEnumeration> @end
+@implementation CopyOnWriteArray {
     NSMutableArray * _array;
     NSMutableArray * _copyArray;
     BOOL _locked;
@@ -86,6 +118,7 @@
     [super dealloc];
 }
 
+// Intended to be called only on arrays of scheduled targets!
 - (void)insertTarget:(CCScheduledTarget*)object withPriority:(NSUInteger)priority;
 {
     NSMutableArray *array = self.writeArray;
@@ -137,6 +170,7 @@
     _locked = NO;
 }
 
+// If the enumerator will modify the array, it must be locked before iteration and unlocked aferwards to commit the changes.
 - (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id __unsafe_unretained [])buffer count:(NSUInteger)len;
 {
     return [_array countByEnumeratingWithState:state objects:buffer count:len];
@@ -150,32 +184,7 @@
 @end
 
 
-@interface CCTimer ()
-
-@property(nonatomic, readwrite) CCTime deltaTime;
-@property(nonatomic, readonly) CCTimerBlock block;
-@property(nonatomic, readonly) CCScheduledTarget *scheduledTarget;
-
-// May differ from invoke time due to pausing.
-@property(nonatomic, assign) CCTime invokeTimeInternal;
-// Timers form a linked list per target.
-@property(nonatomic, strong) CCTimer *next;
-// Invocation requires an extra delay due to being paused.
-@property(nonatomic, readonly) BOOL requiresDelay;
-// If the timer is currently added to the heap or not.
-@property(nonatomic, assign) BOOL scheduled;
-
-@end
-
-
-@interface CCScheduler (Private) <CCSchedulableTarget>
-
-@property(nonatomic, strong) CCTimer *timers;
-
--(void)scheduleTimer:(CCTimer *)timer retain:(BOOL)retain;
-
-@end
-
+//MARK: Scheduled Targets
 
 @implementation CCScheduledTarget {
 	__unsafe_unretained NSObject<CCSchedulableTarget> *_target;
@@ -207,6 +216,7 @@ InvokeMethods(CopyOnWriteArray *methods, SEL selector, CCTime dt)
     self.timers = nil;
     [_actions release];
     _actions = nil;
+    
     [super dealloc];
 }
 
@@ -238,7 +248,7 @@ InvokeMethods(CopyOnWriteArray *methods, SEL selector, CCTime dt)
 
 -(BOOL) hasActions
 {
-    return (_actions == nil || [_actions count] == 0);
+    return (_actions != nil && [_actions count] > 0);
 }
 
 -(void)removeAction:(CCAction *) action
@@ -292,6 +302,8 @@ RemoveRecursive(CCTimer *timer, CCTimer *skip)
 -(NSInteger)priority {return NSIntegerMax;}
 @end
 
+
+//MARK: CCTimer
 
 @implementation CCTimer {
 	CCTimerBlock _block;
@@ -389,6 +401,8 @@ static CCTimerBlock INVALIDATED_BLOCK = ^(CCTimer *timer){};
 
 @end
 
+
+//MARK: CCScheduler
 
 @implementation CCScheduler {
 	CFBinaryHeapRef _heap;
@@ -627,6 +641,7 @@ CompareTimers(const void *a, const void *b, void *context)
 				[_fixedUpdates removeObject:scheduledTarget];
 			}
 		}
+        
         if([scheduledTarget hasActions]){
             [_scheduledTargetsWithActions removeObject:scheduledTarget];
         }
@@ -683,40 +698,23 @@ CompareTimers(const void *a, const void *b, void *context)
 
 -(void)addAction:(CCAction*)action target:(NSObject<CCSchedulableTarget> *)target paused:(BOOL)paused
 {
-    [action startWithTarget:target];
-    
-    // retrieve or create scheduled target:
     CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
-    [[scheduledTarget getActions] addObject:action];
-    [_scheduledTargetsWithActions addObject:scheduledTarget];
-}
-
--(void)removeAllActions
-{
-    for (CCScheduledTarget *st in _scheduledTargetsWithActions) {
-        st.actions = nil;
+    
+    if(!scheduledTarget.hasActions){
+        [_scheduledTargetsWithActions addObject:scheduledTarget];
     }
-
-    [_scheduledTargetsWithActions removeAllObjects];
+    
+    [[scheduledTarget getActions] addObject:action];
+    
+    [action startWithTarget:target];
 }
 
 -(void)removeAllActionsFromTarget:(NSObject<CCSchedulableTarget> *)target
 {
     CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
     scheduledTarget.actions = nil;
-}
-
--(void)removeAction:(CCAction*) action
-{
-    [_scheduledTargetsWithActions lock];
-    for (CCScheduledTarget *st in _scheduledTargetsWithActions ) {
-        [st removeAction:action];
-        if(![st hasActions]){
-            [_scheduledTargetsWithActions removeObject: st];
-        }
-    }
-    [_scheduledTargetsWithActions unlock];
-
+    
+    [_scheduledTargetsWithActions removeObject:scheduledTarget];
 }
 
 -(void)removeActionByTag:(NSInteger)tag target:(NSObject<CCSchedulableTarget> *)target
@@ -729,6 +727,10 @@ CompareTimers(const void *a, const void *b, void *context)
         }
     }
     scheduledTarget.actions = keep;
+    
+    if(!scheduledTarget.hasActions){
+        [_scheduledTargetsWithActions removeObject:scheduledTarget];
+    }
 }
 
 -(CCAction*)getActionByTag:(NSInteger) tag target:(NSObject<CCSchedulableTarget> *)target
@@ -744,25 +746,6 @@ CompareTimers(const void *a, const void *b, void *context)
 {
     CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
     return [scheduledTarget getActions];
-}
-
--(NSSet *)pauseAllRunningActions
-{
-    NSMutableSet *set = [NSMutableSet set];
-    for (CCScheduledTarget *st in _scheduledTargetsWithActions) {
-        if(!st.paused){
-            st.paused = true;
-            [set addObject:st];
-        }
-    }
-    return set;
-}
-
--(void)resumeTargets:(NSSet *)targetsToResume
-{
-    for (CCScheduledTarget *st in _scheduledTargetsWithActions) {
-        st.paused = false;
-    }
 }
 
 -(void) updateActions: (CCTime)dt
