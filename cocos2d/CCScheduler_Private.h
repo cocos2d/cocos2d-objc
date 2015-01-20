@@ -26,38 +26,30 @@
 
 @class CCScheduler;
 
-/**
- Private CCScheduler methods. Generally only useful within cocos2d. Instead, interface with the scheduler by scheduling things on CCNodes.
- 
- @since v4.0
- */
+
 @interface CCScheduler()
 
-/**
-Update the scheduler by stepping forward in time. You should NEVER call this method, unless you know what you are doing.
-
-@param dt time delta- step forward by this many sections
-*/
 -(void) update:(CCTime)dt;
 
 -(CCTimer *) scheduleBlock:(CCTimerBlock)block forTarget:(NSObject<CCSchedulableTarget> *)target withDelay:(CCTime)delay;
 
 -(void) scheduleTarget:(NSObject<CCSchedulableTarget> *)target;
-
-/**
- Unschedules all selectors and blocks for a given target.
- This also includes the "update" selector.
- */
 -(void) unscheduleTarget:(NSObject<CCSchedulableTarget> *)target;
-
-// This is used only for testing at the moment.
 -(BOOL) isTargetScheduled:(NSObject<CCSchedulableTarget> *)target;
 
 -(void) setPaused:(BOOL)paused target:(NSObject<CCSchedulableTarget> *)target;
-
 -(BOOL) isTargetPaused:(NSObject<CCSchedulableTarget> *)target;
 
 -(NSArray *) timersForTarget:(NSObject<CCSchedulableTarget> *)target;
+
+
+//MARK Actions
+-(void)addAction:(CCAction *)action target:(NSObject<CCSchedulableTarget> *)target paused:(BOOL)paused;
+-(void)removeActionByTag:(NSInteger)tag target:(NSObject<CCSchedulableTarget> *)target;
+-(void)removeAllActionsFromTarget:(NSObject<CCSchedulableTarget> *)target;
+
+-(CCAction *)getActionByTag:(NSInteger) tag target:(NSObject<CCSchedulableTarget> *)target;
+-(NSArray *)actionsForTarget:(NSObject<CCSchedulableTarget> *)target;
 
 @end
 
