@@ -9,7 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "cocos2d.h"
 #import "CCScheduler_Private.h"
-
+#import "CCDirector_Private.h"
 
 // XCTAssertEqual() doesn't like comparing to the preprocessor token for some reason.
 static CCTime inf = INFINITY;
@@ -738,6 +738,101 @@ static CCTime inf = INFINITY;
 	for(id target in targets){
 		XCTAssertFalse([scheduler isTargetScheduled:target], @"");
 	}
+}
+
+//MARK: managing actions, performance testing
+
+- (void)testLotsOfNodesWithOneActionEach
+{
+    CCScheduler *scheduler = [CCDirector sharedDirector].scheduler; // grab the shared scheduler.
+    scheduler.maxTimeStep = INFINITY;
+    scheduler.fixedUpdateInterval = INFINITY;
+    
+    CCScene *parent = [[CCScene alloc] init];
+    [parent onEnter]; // Activates the scene, so children can be scheduled.
+    CCSprite *sprite;
+    
+    // Create 10,000 nodes with one action each.
+    // Each action repeats each second.
+    for(int i=0; i<10000; i++){
+        
+        sprite = [CCSprite spriteWithImageNamed:@"Sprites/bird.png"];
+        [parent addChild:sprite];
+        [sprite runAction:[CCActionRepeatForever actionWithAction:[CCActionRotateBy actionWithDuration:1 angle:CCRANDOM_MINUS1_1() * 90]]];
+    }
+    
+    NSArray *actionsOnLastSprite = [scheduler actionsForTarget:sprite];
+    XCTAssertEqual(1, actionsOnLastSprite.count);
+
+    // Step all 10k actions for 10 seconds. 64 times per second.
+    // 1/(power of two) just to avoid floating point issues
+    CCTime dt = 1.0/64.0;
+    for(CCTime t=0.0; t<10.0; t += dt){
+        [scheduler update:dt];
+    }
+    
+    // action should still be here.
+    XCTAssertEqual(1, [scheduler actionsForTarget:sprite].count);
+}
+
+- (void)testManyActionsOnEachNode
+{
+    CCScheduler *scheduler = [CCDirector sharedDirector].scheduler; // grab the shared scheduler.
+    scheduler.maxTimeStep = INFINITY;
+    scheduler.fixedUpdateInterval = INFINITY;
+    
+    CCScene *parent = [[CCScene alloc] init];
+    [parent onEnter]; // Activates the scene, so children can be scheduled.
+    CCSprite *sprite;
+    
+    // Create 100 nodes with 100 actions each.
+    // Each action repeats each second.
+    for(int i=0; i<100; i++){
+        sprite = [CCSprite spriteWithImageNamed:@"Sprites/bird.png"];
+        [parent addChild:sprite];
+        for(int i=0; i<100; i++){
+            [sprite runAction:[CCActionRepeatForever actionWithAction:[CCActionRotateBy actionWithDuration:1 angle:CCRANDOM_MINUS1_1() * 90]]];
+        }
+    }
+    
+    NSArray *actionsOnLastSprite = [scheduler actionsForTarget:sprite];
+    XCTAssertEqual(100, actionsOnLastSprite.count);
+    
+    CCTime dt = 1.0/64.0;
+    for(CCTime t=0.0; t<10.0; t += dt){
+        [scheduler update:dt];
+    }
+    
+    // action should still be here.
+    XCTAssertEqual(100, [scheduler actionsForTarget:sprite].count);
+}
+
+- (void)testPerformanceAddingAndRemovingActions
+{
+    CCScheduler *scheduler = [CCDirector sharedDirector].scheduler; // grab the shared scheduler.
+    scheduler.maxTimeStep = INFINITY;
+    scheduler.fixedUpdateInterval = INFINITY;
+    
+    CCScene *parent = [[CCScene alloc] init];
+    [parent onEnter]; // Activates the scene, so children can be scheduled.
+    CCSprite *sprite;
+    
+    // Add 1000 short lived actions
+    for(int i=0; i<1000; i++){
+        sprite = [CCSprite spriteWithImageNamed:@"Sprites/bird.png"];
+        [parent addChild:sprite];
+        CCAction * action =[CCActionRotateBy actionWithDuration:0.1 angle:1];
+        [sprite runAction:action];
+    }
+    
+    XCTAssertEqual(1, [scheduler actionsForTarget:sprite].count);
+    
+    CCTime dt = 1.0/16.0;
+    for(CCTime t=0.0; t<0.2; t += dt){
+        [scheduler update:dt];
+    }
+    
+    XCTAssertEqual(0, [scheduler actionsForTarget:sprite].count);
 }
 
 @end
