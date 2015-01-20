@@ -45,9 +45,9 @@
 
 //MARK Actions
 -(void)addAction:(CCAction *)action target:(NSObject<CCSchedulableTarget> *)target paused:(BOOL)paused;
+-(void)removeAction:(CCAction*) action fromTarget:(NSObject<CCSchedulableTarget> *)target;
 -(void)removeActionByTag:(NSInteger)tag target:(NSObject<CCSchedulableTarget> *)target;
 -(void)removeAllActionsFromTarget:(NSObject<CCSchedulableTarget> *)target;
-
 -(CCAction *)getActionByTag:(NSInteger) tag target:(NSObject<CCSchedulableTarget> *)target;
 -(NSArray *)actionsForTarget:(NSObject<CCSchedulableTarget> *)target;
 

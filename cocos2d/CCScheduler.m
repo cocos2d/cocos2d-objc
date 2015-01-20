@@ -705,6 +705,12 @@ CompareTimers(const void *a, const void *b, void *context)
     [action startWithTarget:target];
 }
 
+-(void)removeAction:(CCAction*) action fromTarget:(NSObject<CCSchedulableTarget> *)target;
+{
+    CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
+    [scheduledTarget.actions removeObject:target];
+}
+
 -(void)removeAllActionsFromTarget:(NSObject<CCSchedulableTarget> *)target
 {
     CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];

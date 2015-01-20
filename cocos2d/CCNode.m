@@ -1062,7 +1062,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 
 -(void) stopAction: (CCAction*) action
 {
-	[_scheduler removeAction:action];
+	[_scheduler removeAction:action fromTarget:self];
 }
 
 -(void) stopActionByTag:(NSInteger)aTag
