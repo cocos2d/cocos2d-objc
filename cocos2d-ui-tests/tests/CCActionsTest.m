@@ -53,5 +53,57 @@
  
 }
 
+- (void) setupNonrepeatingActionTest
+{
+    self.subTitle = @"1000 offscreen birds with nonrepeating actions.\nRun the profiler here.";
+    
+    CGSize size = [CCDirector sharedDirector].designSize;
+    __block NSMutableArray* birds = [NSMutableArray array];
+    
+    for(int i = 0; i < 1000; i++){
+        // Tests pausing actions
+        CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/bird.png"];
+        sprite.position = ccp(CCRANDOM_0_1()*size.width, CCRANDOM_0_1()*size.height);
+        sprite.position = ccp(-10, -10);
+        [birds addObject:sprite];
+        [self.contentNode addChild:sprite];
+    }
+    
+    CCTimer *timer = [self scheduleBlock:^(CCTimer *timer) {
+        for (CCSprite *bird in birds) {
+            [bird runAction:[CCActionRotateBy actionWithDuration:0.1 angle:1]];
+        }
+
+    }delay:0.2f];
+    timer.repeatCount = 100;
+    
+}
+
+- (void) setupNonrepeatingActionVariedDurationTest
+{
+    self.subTitle = @"1000 offscreen birds with nonrepeating actions. Varied Durations.\nRun the profiler here.";
+    
+    CGSize size = [CCDirector sharedDirector].designSize;
+    __block NSMutableArray* birds = [NSMutableArray array];
+    
+    for(int i = 0; i < 1000; i++){
+        // Tests pausing actions
+        CCSprite *sprite = [CCSprite spriteWithImageNamed:@"Sprites/bird.png"];
+        sprite.position = ccp(CCRANDOM_0_1()*size.width, CCRANDOM_0_1()*size.height);
+        sprite.position = ccp(-10, -10);
+        [birds addObject:sprite];
+        [self.contentNode addChild:sprite];
+    }
+    
+    CCTimer *timer = [self scheduleBlock:^(CCTimer *timer) {
+        for (CCSprite *bird in birds) {
+            [bird runAction:[CCActionRotateBy actionWithDuration:CCRANDOM_0_1() * 0.2f angle:1]];
+        }
+        
+    }delay:0.2f];
+    timer.repeatCount = 100;
+    
+}
+
 
 @end

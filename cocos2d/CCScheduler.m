@@ -96,13 +96,23 @@
     NSMutableArray * _array;
     NSMutableArray * _copyArray;
     BOOL _locked;
+    Class backingClass;
 }
 
--(NSMutableArray *) writeArray
+// Provide NSMutableArray or NSMutableSet
+-(instancetype)initWithBackingClass:(Class) c
+{
+    if((self = [super init])){
+        backingClass = c;
+    }
+    return self;
+}
+
+-(id) writeArray
 {
     // Lazily init the array.
     if(_array == nil){
-        _array = [[NSMutableArray alloc] init];
+        _array = [[backingClass alloc] init];
     }
     
     if(_locked){
@@ -185,7 +195,7 @@
 
 -(NSString *)description
 {
-    return [NSString stringWithFormat:@"%@ locked:%d", self.writeArray.description, _locked];
+    return [NSString stringWithFormat:@"%@ locked:%d", [self.writeArray description], _locked];
 }
 
 @end
@@ -462,9 +472,9 @@ CompareTimers(const void *a, const void *b, void *context)
 		CCScheduledTarget *nilTarget = [self scheduledTargetForTarget:[NSNull null] insert:YES];
 		nilTarget.paused = NO;
 		
-		_updates = [[CopyOnWriteArray alloc ] init];
-		_fixedUpdates = [[CopyOnWriteArray alloc ] init];
-        _scheduledTargetsWithActions = [[CopyOnWriteArray alloc ] init];
+		_updates = [[CopyOnWriteArray alloc ] initWithBackingClass:[NSMutableArray class]];
+		_fixedUpdates = [[CopyOnWriteArray alloc ] initWithBackingClass:[NSMutableArray class]];
+        _scheduledTargetsWithActions = [[CopyOnWriteArray alloc ] initWithBackingClass:[NSMutableSet class]];
 		
 		// Annoyance to avoid a retain cycle.
         __block __typeof(self) _self = self;
