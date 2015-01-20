@@ -2310,16 +2310,16 @@
 				E525F0F40C1ABFD69BFBECD9 /* CCFileUtilsDatabase.m */,
 				E525F14D58B86CF9B7C89568 /* CCFileUtilsV2.h */,
 				E525F475A7121047E8E2FFDE /* CCFileUtilsV2.m */,
-				E525F964FDF6C05B1E364BF2 /* CCFileUtils.m */,
 				E525FFFE14D5D06A3C9C2DF3 /* CCFileUtils.h */,
+				E525F964FDF6C05B1E364BF2 /* CCFileUtils.m */,
 				E525F637FF4A7F1A25E2FCC4 /* CCFile_Private.h */,
 				E525F0F38A5CC562F538F40C /* CCFile.h */,
 				E525FD33ACB5E4C0871F3AA9 /* CCFile.m */,
 				E525FA936D7079B9B4FF45B4 /* CCFileUtilsDatabaseProtocol.h */,
 				83FFA9291A6D0CD2001BFE05 /* CCFileUtilsConstants.h */,
 				83FFA92A1A6D0CD2001BFE05 /* CCFileUtilsConstants.m */,
-				E525FF0FAEED9DB301FE1000 /* CCFileMetaData.m */,
 				E525FDBD47CF5AE9B0D41370 /* CCFileMetaData.h */,
+				E525FF0FAEED9DB301FE1000 /* CCFileMetaData.m */,
 			);
 			name = "File Handling";
 			sourceTree = "<group>";

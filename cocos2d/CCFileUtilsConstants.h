@@ -24,7 +24,18 @@
 
 
 // Errors
+
+/**
+ Error indicating that there are no search paths available in CCFileUtils.
+ 
+ @since 4.0
+ */
 extern NSUInteger const ERROR_FILEUTILS_NO_SEARCH_PATHS;
 
+/**
+ Error: No file could be found for a given filename.
+ 
+ @since 4.0
+ */
 extern NSUInteger const ERROR_FILEUTILS_NO_FILE_FOUND;
 

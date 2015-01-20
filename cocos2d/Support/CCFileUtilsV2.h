@@ -33,12 +33,29 @@
  
  General idea is to provide the filename only and depending on the device's settings and capabilities(resolution) an appropriate CCFile instance is returned.
 
- To provide localization and file aliasing(usually only used by Spritebuilder managed projects) a database has to be provided containing the required metadata to lookup files.
- TODO: database format.
- 
+ There are two methods available to access files: imageNamed and fileNamed. ImageNamed is supposed to be used for image lookups if you like to optimize visual quality depending on the device's resolution. See below.
+ FileNamed works for any file.
+
+ To provide localizations and file aliasing(usually only used by Spritebuilder managed projects) a database has to be provided containing the required metadata to look up files.
+ If you like to provide your own custom database it has to adopt the CCFileUtilsDatabaseProtocol. The CCFileUtilsDatabase is a simple example to add the contents of json files to the database per search path.
+ CCFileMetaData instances are returned by a database to provide information on localizations and if UI scaling should happen.
+ Any file can use the localization mechanics, all that's needed is an entry in the database with the corresponding localized file referenced by languageID.
+ For details see CCFileMetaData.h.
+
  Images are searched for depending on the device's content scale and the availability of an image's resolution variants.
- TODO: more details on search order and naming conventions.
- 
+ You can provide three different content scale variants in a bundle: 1x, 2x and 4x. The naming convention is <FILENAME>-<CONTENTSCALE>x.<EXETENSION> for explicitly tagged files.
+ Example Hero.png:
+  * Hero-1x.png
+  * Hero-2x.png
+  * Hero-4x.png
+
+ If the explicit content scale tag is omitted then it's content scale is determined by the property untaggedContentScale.
+
+ The search will try to match the device's content scale first. If there is no matching variant then file utils will look for an image which content scale is at max 2x greater than the device's content scale.
+ If there is none it will look for the next lower POT scale and so on.
+
+ Explicitly tagged files take precedence over untagged images.
+
  @since 4.0
  */
 @interface CCFileUtilsV2 : NSObject
@@ -54,7 +71,8 @@
 @property (nonatomic, copy) NSArray *searchPaths;
 
 /**
- A database that can be queried for metadata and filepaths of an asset
+ A database that can be queried for metadata and filepaths of an asset.
+ Refer to the CCFileUtilsDatabaseProtocol for more details about the interface required.
  
  @since 4.0
  */

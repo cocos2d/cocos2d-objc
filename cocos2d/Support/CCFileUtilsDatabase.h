@@ -27,23 +27,25 @@
 
 /**
  A database to store metadata of assets used by CCFileUtils based on json files.
- Metdata is stored for a filename and search path.
+ Metdata is stored per filename and search path, see CCFileUtilsDatabaseProtocol.
 
- Example for a json file structure to satisfy the requirements by the CCFileUtils:
+ Example for a json file structure to store data for the CCFileMetaData class:
     {
         "images/foo.png" : {
+            "filename" : "images/foo-en.png",
             "UIScale" : true,
             "localizations" : {
                 "en" : "images/foo-en.png",
                 "de" : "images/foo-de.png"
-            },
-            "filename" : "images/foo-en.png"
+            }
         }
     }
 
- Only filename is mandatory if you have an entry for a given asset.
- UIScale, if not present will default to NO.
- The localization dictionary uses languageIDs as keys.
+ * Only filename is mandatory if you have an entry for a given asset.
+ * UIScale, if not present will default to NO.
+ * The localization dictionary uses languageIDs as keys and point to a file.
+
+ If you don't want to alias a file without any localizations and the info to use UI scaling then just omit an entry in the database.
 
  @since 4.0
  */

@@ -102,7 +102,7 @@
 -(NSInputStream *)openInputStream;
 
 /**
- Indicate whether an asset should be scaled for UI or not
+ Indicate whether an asset should be scaled for UI purposes or not
 
  @return If the asset should be scaled for UI
 
