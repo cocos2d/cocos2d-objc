@@ -1069,7 +1069,18 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 -(CCAction*) runAction:(CCAction*) action
 {
 	NSAssert( action != nil, @"Argument must be non-nil");
-	[self.scheduler addAction:action target:self paused:!self.active];
+    
+    __block CCAction *blockAction = action;
+    if(self.scheduler == nil){
+        if(_queuedActions == nil) _queuedActions = [NSMutableArray array];
+        dispatch_block_t block = ^(){
+            [self.scheduler addAction:action target:self paused:!self.active];
+        };
+        [_queuedActions addObject:[block copy]];
+    }else{
+       	[self.scheduler addAction:action target:self paused:!self.active];
+    }
+
 	return action;
 }
 
@@ -1222,6 +1233,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 	BOOL isRunning = self.active;
 	
 	if(isRunning && !wasRunning){
+        // Should also resume actions
 		[self.scheduler setPaused:NO target:self];
 //		[_actionManager resumeTarget:self];
         [_animationManager setPaused:NO];
