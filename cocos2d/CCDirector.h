@@ -132,7 +132,7 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 
 #elif __CC_PLATFORM_MAC
 #define CC_VIEWCONTROLLER NSObject
-#define CC_VIEW NSOpenGLView
+#define CC_VIEW CCViewMacGL
 
 #elif __CC_PLATFORM_ANDROID
 #define CC_VIEWCONTROLLER NSObject
