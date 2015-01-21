@@ -30,10 +30,11 @@
 #import "CCFile_Private.h"
 #import "CCFileUtilsDatabaseProtocol.h"
 #import "CCFileMetaData.h"
-#import "ioapi.h"
 
+// Options are only used internally for now
 static NSString *const CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH";
 
+// Define CCFILEUTILS_TRACE_SEARCH as 1 to get trace logs of a search for debugging purposes
 #if CCFILEUTILS_TRACE_SEARCH == 1
 	#define TraceLog( s, ... ) NSLog( @"[CCFILEUTILS][TRACE] %@", [NSString stringWithFormat:(s), ##__VA_ARGS__] )
 #else
