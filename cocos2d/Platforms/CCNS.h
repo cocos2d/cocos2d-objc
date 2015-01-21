@@ -102,18 +102,6 @@ static inline NSString *CCNSStringFromCGSize(CGSize size)
     return [NSString stringWithFormat:@"{%g, %g}", size.width, size.height];
 }
 
-@interface NSValue (CCValue)
-
-+ (NSValue *)valueWithCGPoint:(CGPoint)point;
-+ (NSValue *)valueWithCGSize:(CGSize)size;
-+ (NSValue *)valueWithCGRect:(CGRect)rect;
-
-- (CGPoint)CGPointValue;
-- (CGSize)CGSizeValue;
-- (CGRect)CGRectValue;
-
-@end
-
 #define CCRectFromString(__r__)		CCCGRectFromString(__r__)
 #define CCPointFromString(__p__)	CCCGPointFromString(__p__)
 #define CCSizeFromString(__s__)		CCCGSizeFromString(__s__)
