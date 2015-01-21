@@ -97,8 +97,8 @@ const CGSize FIXED_SIZE = {568, 384};
 // Projection delegate is only used if the fixed resolution mode is enabled
 -(GLKMatrix4)updateProjection
 {
-	CGSize sizePoint = [CCDirector sharedDirector].viewSize;
-	CGSize fixed = [CCDirector sharedDirector].designSize;
+	CGSize sizePoint = [CCDirector currentDirector].viewSize;
+	CGSize fixed = [CCDirector currentDirector].designSize;
 
 	// Half of the extra size that will be cut off
 	CGPoint offset = ccpMult(ccp(fixed.width - sizePoint.width, fixed.height - sizePoint.height), 0.5);
@@ -148,9 +148,10 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 {
 	// Create the main window
 	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	
 	CGRect bounds = [window_ bounds];
-	
+    
+    CCDirectorIOS* director = (CCDirectorIOS*) [CCDirector currentDirector];
+
 	// CCView creation
 	// viewWithFrame: size of the OpenGL view. For full screen use [_window bounds]
 	//  - Possible values: any CGRect
@@ -187,10 +188,6 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 #endif
 		default: NSAssert(NO, @"Internal error: Graphics API not set up.");
 	}
-	
-	CCDirectorIOS* director = (CCDirectorIOS*) [CCDirector sharedDirector];
-    
-    ccview.director = director;
 	
 	director.wantsFullScreenLayout = YES;
 	
@@ -260,7 +257,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 - (void)setupFixedScreenMode:(NSDictionary *)config director:(CCDirectorIOS *)director
 {
-    CGSize size = [CCDirector sharedDirector].viewSizeInPixels;
+    CGSize size = [CCDirector currentDirector].viewSizeInPixels;
     CGSize fixed = FIXED_SIZE;
 
     if([config[CCSetupScreenOrientation] isEqualToString:CCScreenOrientationPortrait]){
@@ -302,39 +299,39 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {
-	if([CCDirector sharedDirector].paused == NO) {
-		[[CCDirector sharedDirector] pause];
+	if([CCDirector currentDirector].paused == NO) {
+		[[CCDirector currentDirector] pause];
 	}
 }
 
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
-	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
-	if([CCDirector sharedDirector].paused) {
-		[[CCDirector sharedDirector] resume];
+	[[CCDirector currentDirector] setNextDeltaTimeZero:YES];
+	if([CCDirector currentDirector].paused) {
+		[[CCDirector currentDirector] resume];
 	}
 }
 
 -(void) applicationDidEnterBackground:(UIApplication*)application
 {
-	if([CCDirector sharedDirector].animating) {
-		[[CCDirector sharedDirector] stopAnimation];
+	if([CCDirector currentDirector].animating) {
+		[[CCDirector currentDirector] stopAnimation];
 	}
 	[[CCPackageManager sharedManager] savePackages];
 }
 
 -(void) applicationWillEnterForeground:(UIApplication*)application
 {
-	if([CCDirector sharedDirector].animating == NO) {
-		[[CCDirector sharedDirector] startAnimation];
+	if([CCDirector currentDirector].animating == NO) {
+		[[CCDirector currentDirector] startAnimation];
 	}
 }
 
 // application will be killed
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-	[[CCDirector sharedDirector] end];
+	[[CCDirector currentDirector] end];
 
     [[CCPackageManager sharedManager] savePackages];
 }
@@ -342,7 +339,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 // purge memory
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
 {
-	[[CCDirector sharedDirector] purgeCachedData];
+	[[CCDirector currentDirector] purgeCachedData];
 
     [[CCPackageManager sharedManager] savePackages];
 }
@@ -350,7 +347,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 // next delta time will be zero
 -(void) applicationSignificantTimeChange:(UIApplication *)application
 {
-	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
+	[[CCDirector currentDirector] setNextDeltaTimeZero:YES];
 }
 
 @end

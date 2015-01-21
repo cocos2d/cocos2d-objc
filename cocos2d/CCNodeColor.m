@@ -58,7 +58,7 @@
 
 -(id) init
 {
-	CGSize s = [CCDirector sharedDirector].designSize;
+	CGSize s = [CCDirector currentDirector].designSize;
 	return [self initWithColor:[CCColor clearColor] width:s.width height:s.height];
 }
 
@@ -79,7 +79,7 @@
 
 - (id) initWithColor:(CCColor*)color
 {
-	CGSize s = [CCDirector sharedDirector].designSize;
+	CGSize s = [CCDirector currentDirector].designSize;
 	return [self initWithColor:color width:s.width height:s.height];
 }
 

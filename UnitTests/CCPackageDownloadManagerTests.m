@@ -71,7 +71,7 @@
 
     [(AppController *)[UIApplication sharedApplication].delegate configureCocos2d];
     // Stop the normal cocos2d main loop from happening during the tests. We will step it manually.
-    [[CCDirector sharedDirector] stopAnimation];
+    [[CCDirector currentDirector] stopAnimation];
 
     [NSURLProtocol registerClass:[CCPackageDownloadManagerTestURLProtocol class]];
 

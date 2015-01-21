@@ -100,8 +100,8 @@ extern const NSString *CARD_NAME[];
     {
         card = [PositioningSprite spriteWithImageNamed:[self randomCard]];
         card.position = ccp(
-                            (0.1 + CCRANDOM_0_1() * 0.8) * [CCDirector sharedDirector].viewSize.width,
-                            (0.1 + CCRANDOM_0_1() * 0.8) * [CCDirector sharedDirector].viewSize.height);
+                            (0.1 + CCRANDOM_0_1() * 0.8) * [CCDirector currentDirector].viewSize.width,
+                            (0.1 + CCRANDOM_0_1() * 0.8) * [CCDirector currentDirector].viewSize.height);
         card.userInteractionEnabled = YES;
         [self.contentNode addChild:card];
     }

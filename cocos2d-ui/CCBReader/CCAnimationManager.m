@@ -99,7 +99,7 @@ static NSInteger ccbAnimationManagerID = 0;
 
 -(void) onEnter {
     // Setup Scheduler
-    _scheduler = [[CCDirector sharedDirector] scheduler];
+    _scheduler = [[CCDirector currentDirector] scheduler];
     [_scheduler scheduleTarget:self];
     [_scheduler setPaused:NO target:self];
 }

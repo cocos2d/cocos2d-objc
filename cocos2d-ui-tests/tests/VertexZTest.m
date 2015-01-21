@@ -79,7 +79,7 @@ const NSString *CARD_NAME[] =
 
     // add a card node to hold the cards
     _cardNode = [CCNode node];
-    _cardNode.contentSize = [CCDirector sharedDirector].viewSize;
+    _cardNode.contentSize = [CCDirector currentDirector].viewSize;
 		
     [self.contentNode addChild:_cardNode];
     
@@ -108,7 +108,7 @@ const NSString *CARD_NAME[] =
 
     // add a card node to hold the cards
     _cardNode = [CCNode node];
-    _cardNode.contentSize = [CCDirector sharedDirector].viewSize;
+    _cardNode.contentSize = [CCDirector currentDirector].viewSize;
 		
     [self.contentNode addChild:_cardNode];
     

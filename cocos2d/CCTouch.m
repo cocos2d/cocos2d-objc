@@ -21,7 +21,7 @@
     if((self = [super init]))
     {
         _uiTouch = touch;
-        _view = [CCDirector sharedDirector].view;
+        _view = [CCDirector currentDirector].view;
         return self;
     }
     
@@ -50,7 +50,7 @@
 
 - (CGPoint)locationInNode:(CCNode*) node
 {
-    CCDirector* dir = [CCDirector sharedDirector];
+    CCDirector* dir = [CCDirector currentDirector];
     
     CGPoint touchLocation = [self locationInView: [self view]];
 	touchLocation = [dir convertToGL: touchLocation];
@@ -59,7 +59,7 @@
 
 - (CGPoint)locationInWorld
 {
-    CCDirector* dir = [CCDirector sharedDirector];
+    CCDirector* dir = [CCDirector currentDirector];
     
     CGPoint touchLocation = [self locationInView: [self view]];
 	return [dir convertToGL: touchLocation];

@@ -163,7 +163,7 @@
 
 - (CCNode*) createScrollContent
 {
-    CCDirector* dir = [CCDirector sharedDirector];
+    CCDirector* dir = [CCDirector currentDirector];
     
     CCNode* node = [CCNode node];
     

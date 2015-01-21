@@ -32,7 +32,7 @@
 
 - (void) positionInControl:(CCControl *)control padding:(CGFloat)padding {
     CGPoint worldPos = [control convertToWorldSpace:CGPointZero];
-    CGPoint viewPos = [[CCDirector sharedDirector] convertToUI:worldPos];
+    CGPoint viewPos = [[CCDirector currentDirector] convertToUI:worldPos];
     viewPos.x += padding;
     viewPos.y += padding;
     
@@ -77,7 +77,7 @@
 
 - (void) addUITextView
 {
-    [[[CCDirector sharedDirector] view] addSubview:_textField];
+    [[[CCDirector currentDirector] view] addSubview:_textField];
 }
 
 - (void) removeUITextView

@@ -710,7 +710,7 @@
 
 - (void)handlePan:(UIGestureRecognizer *)gestureRecognizer
 {
-    CCDirector* dir = [CCDirector sharedDirector];
+    CCDirector* dir = self.director;
     UIPanGestureRecognizer* pgr = (UIPanGestureRecognizer*)gestureRecognizer;
     
     CGPoint rawTranslation = [pgr translationInView:dir.view];
@@ -775,7 +775,7 @@
     // Check for responders above this scroll view (and not within it). If there are responders above touch should go to them instead.
     CGPoint touchWorldPos = [touch locationInWorld];
     
-    NSArray* responders = [[CCDirector sharedDirector].responderManager nodesAtPoint:touchWorldPos];
+    NSArray* responders = [self.director.responderManager nodesAtPoint:touchWorldPos];
     BOOL foundSelf = NO;
     for (int i = (int)responders.count - 1; i >= 0; i--)
     {
@@ -814,7 +814,7 @@
 - (void) onEnterTransitionDidFinish
 {
     // Add recognizers to view
-    UIView* view = [CCDirector sharedDirector].view;
+    UIView* view = self.director.view;
     
     NSMutableArray* recognizers = [view.gestureRecognizers mutableCopy];
     if (!recognizers) recognizers = [NSMutableArray arrayWithCapacity:2];
@@ -828,7 +828,7 @@
 - (void) onExitTransitionDidStart
 {
     // Remove recognizers from view
-    UIView* view = [CCDirector sharedDirector].view;
+    UIView* view = self.director.view;
     
     NSMutableArray* recognizers = [view.gestureRecognizers mutableCopy];
     [recognizers removeObject:_panRecognizer];
@@ -847,7 +847,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         if(_detector)
         {
-            [[[CCDirector sharedDirector] view] addGestureDetector:_detector];
+            [[self.director view] addGestureDetector:_detector];
         }
     });
     [super onEnterTransitionDidFinish];
@@ -858,7 +858,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         if(_detector)
         {
-            [[[CCDirector sharedDirector] view] removeGestureDetector:_detector];
+            [[self.director view] removeGestureDetector:_detector];
         }
     });
     
@@ -919,7 +919,7 @@
     if(phase == CCTouchPhaseCancelled || phase == CCTouchPhaseEnded)
         _rawScrollTranslation = CGPointMake(0.0f, 0.0f);
     
-    float scaleFactor = [[CCDirector sharedDirector] view].contentScaleFactor;
+    float scaleFactor = [self.director view].contentScaleFactor;
 
     dx /= scaleFactor;
     dy /= scaleFactor;
@@ -927,7 +927,7 @@
     _rawScrollTranslation.x -= dx;
     _rawScrollTranslation.y -= dy;
     
-    CCDirector* dir = [CCDirector sharedDirector];
+    CCDirector* dir = self.director;
     [[CCActivity currentActivity] runOnGameThread:^{
         
         CGPoint translation = [dir convertToGL:_rawScrollTranslation];
@@ -969,7 +969,7 @@
     if(phase == CCTouchPhaseCancelled || phase == CCTouchPhaseEnded)
         rawTranslationFling = CGPointMake(0.0f, 0.0f);
 
-    float scaleFactor = [[CCDirector sharedDirector] view].contentScaleFactor;
+    float scaleFactor = [self.director view].contentScaleFactor;
     float x0 = [start xForPointerIndex:0] / scaleFactor;
     float x1 = [end xForPointerIndex:0] / scaleFactor;
     
@@ -989,7 +989,7 @@
     rawTranslationFling.x -= dx / scaleFactor;
     rawTranslationFling.y -= dy / scaleFactor;
     
-    CCDirector* dir = [CCDirector sharedDirector];
+    CCDirector* dir = self.director;
     [[CCActivity currentActivity] runOnGameThread:^{
 
         CGPoint translation = [dir convertToGL:rawTranslationFling];
@@ -1027,7 +1027,7 @@
 
 - (void)scrollWheel:(NSEvent *)theEvent
 {
-	CCDirector* dir = [CCDirector sharedDirector];
+	CCDirector* dir = self.director;
 
     float deltaX = theEvent.deltaX;
     float deltaY = theEvent.deltaY;

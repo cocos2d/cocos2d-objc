@@ -75,7 +75,6 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
             }
         }
     });
-
 }
 
 + (id) labelWithString:(NSString *)string fontName:(NSString *)name fontSize:(CGFloat)size
@@ -102,7 +101,6 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 {
     return [self initWithString:@"" fontName:@"Helvetica" fontSize:12];
 }
-
 
 - (id) initWithString:(NSString*)str fontName:(NSString*)name fontSize:(CGFloat)size
 {
@@ -479,7 +477,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     
     CGSize originalDimensions = _dimensions;
   
-    CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
+    CGFloat scale = self.director.contentScaleFactor;
     originalDimensions.width *= scale;
     originalDimensions.height *= scale;
     
@@ -651,7 +649,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     if (fullColor)
     {
         // RGBA8888 format
-        texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_RGBA8888 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSizeInPixels:dimensions contentScale:[CCDirector sharedDirector].contentScaleFactor];
+        texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_RGBA8888 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSizeInPixels:dimensions contentScale:self.director.contentScaleFactor];
         [texture setPremultipliedAlpha:YES];
     }
     else
@@ -663,7 +661,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         for(int i = 0; i<textureSize; i++)
             dst[i] = data[i*4+3];
         
-        texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_A8 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSizeInPixels:dimensions contentScale:[CCDirector sharedDirector].contentScaleFactor];
+        texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_A8 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSizeInPixels:dimensions contentScale:self.director.contentScaleFactor];
         self.shader = [CCShader positionTextureA8ColorShader];
     }
     
@@ -705,7 +703,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 - (CCTexture*) createTextureWithString:(NSString*) string useFullColor:(BOOL)useFullColor
 {
     // Scale everything up by content scale
-    CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
+    CGFloat scale = self.director.contentScaleFactor;
     CTFontRef font = CTFontCreateWithName((__bridge CFStringRef)string, _fontSize * scale, NULL);
     CGFloat shadowBlurRadius = _shadowBlurRadius * scale;
     CGPoint shadowOffset = ccpMult(self.shadowOffsetInPoints, scale);
@@ -905,7 +903,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     if (useFullColor)
     {
         // RGBA8888 format
-        texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_RGBA8888 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSizeInPixels:dimensions contentScale:[CCDirector sharedDirector].contentScaleFactor];
+        texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_RGBA8888 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSizeInPixels:dimensions contentScale:self.director.contentScaleFactor];
         [texture setPremultipliedAlpha:YES];
     }
     else
@@ -917,7 +915,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         for(int i = 0; i<textureSize; i++)
             dst[i] = data[i*4+3];
         
-        texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_A8 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSizeInPixels:dimensions contentScale:[CCDirector sharedDirector].contentScaleFactor];
+        texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_A8 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSizeInPixels:dimensions contentScale:self.director.contentScaleFactor];
         self.shader = [CCShader positionTextureA8ColorShader];
     }
 

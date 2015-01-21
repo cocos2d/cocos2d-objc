@@ -103,37 +103,30 @@ extern NSString * cocos2dVersion(void);
 @synthesize secondsPerFrame = _secondsPerFrame;
 @synthesize scheduler = _scheduler;
 
-//
-// singleton stuff
-//
-static CCDirector *_sharedDirector = nil;
-
 + (CCDirector *)sharedDirector
 {
-	if (!_sharedDirector) {
-
-		//
-		// Default Director is DisplayLink
-		//
-		if( [ [CCDirector class] isEqual:[self class]] )
-			_sharedDirector = [[CC_DIRECTOR_DEFAULT alloc] init];
-		else
-			_sharedDirector = [[self alloc] init];
-	}
-
-	return _sharedDirector;
+    return [CCDirector currentDirector];
 }
 
-+(id)alloc
++ (CCDirector *)currentDirector
 {
-	NSAssert(_sharedDirector == nil, @"Attempted to allocate a second instance of a singleton.");
-	return [super alloc];
-}
-
-// Force creation of a new singleton, useful to prevent state leaking during tests.
-+ (void) resetSingleton
-{
-	_sharedDirector = nil;
+    NSThread* currentThread = [NSThread currentThread];
+    NSString* threadKey = [NSString stringWithFormat:@"%p", currentThread];
+    CCDirector* director = [currentThread.threadDictionary objectForKey:threadKey];
+    if(director == nil)
+    {
+        //
+        // Default Director is DisplayLink
+        //
+        if( [ [CCDirector class] isEqual:[self class]] )
+            director = [[CC_DIRECTOR_DEFAULT alloc] init];
+        else
+            director = [[self alloc] init];
+        
+        [currentThread.threadDictionary setObject:director forKey:threadKey];
+    }
+    
+    return director;
 }
 
 - (id) init
@@ -196,10 +189,6 @@ static CCDirector *_sharedDirector = nil;
 - (void) dealloc
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
-
-
-	_sharedDirector = nil;
-
 }
 
 - (void) drawScene
@@ -318,7 +307,7 @@ static CCDirector *_sharedDirector = nil;
     
 	[CCRenderState flushCache];
 	[CCLabelBMFont purgeCachedData];
-	if ([_sharedDirector view])
+	if ([[CCDirector currentDirector] view])
 		[[CCTextureCache sharedTextureCache] removeUnusedTextures];
 	[[CCFileUtils sharedFileUtils] purgeCachedEntries];
 }

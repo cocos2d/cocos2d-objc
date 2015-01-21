@@ -134,7 +134,7 @@ static BOOL __support_range_request = YES;
 
     [(AppController *)[UIApplication sharedApplication].delegate configureCocos2d];
     // Stop the normal cocos2d main loop from happening during the tests. We will step it manually.
-    [[CCDirector sharedDirector] stopAnimation];
+    [[CCDirector currentDirector] stopAnimation];
     
     [NSURLProtocol registerClass:[CCPackageDownloadTestURLProtocol class]];
 
@@ -162,7 +162,7 @@ static BOOL __support_range_request = YES;
 {
     [NSURLProtocol unregisterClass:[CCPackageDownloadTestURLProtocol class]];
 
-    [[CCDirector sharedDirector] startAnimation];
+    [[CCDirector currentDirector] startAnimation];
 
     [super tearDown];
 }

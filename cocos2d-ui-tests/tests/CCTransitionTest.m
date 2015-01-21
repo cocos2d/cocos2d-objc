@@ -56,7 +56,7 @@
     CCScene* testScene = [TestBase sceneWithTestName:self.testName];
     [[[testScene children] objectAtIndex:0] setupTestWithIndex:newTest];
     
-    [[CCDirector sharedDirector] replaceScene:testScene withTransition:_nextTransition];
+    [[CCDirector currentDirector] replaceScene:testScene withTransition:_nextTransition];
 }
 
 @end

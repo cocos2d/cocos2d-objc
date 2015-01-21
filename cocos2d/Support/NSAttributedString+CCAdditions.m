@@ -81,7 +81,7 @@ NSAttributedString* NSAttributedStringCopyAdjustedForContentScaleFactor(NSAttrib
     
     NSRange fullRange = NSMakeRange(0, copy.length);
     
-    CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
+    CGFloat scale = [CCDirector currentDirector].contentScaleFactor;
 	
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
 

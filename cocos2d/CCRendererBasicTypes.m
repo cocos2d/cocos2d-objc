@@ -442,7 +442,7 @@ static CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 
 -(void)syncWithView:(CC_VIEW<CCView> *)view;
 {
-	CCDirector *director = [CCDirector sharedDirector];
+	CCDirector *director = view.director;
 	self.sizeInPixels = director.viewSizeInPixels;
 	self.contentScale = director.contentScaleFactor;
 }

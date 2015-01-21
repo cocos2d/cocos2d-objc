@@ -109,7 +109,7 @@ static GLKVector2 selectTexCoordPadding(CCEffectTexCoordSource tcSource, GLKVect
     
     // Create a new texture object for use as the color attachment of the new
     // FBO.
-	_texture = [[CCTexture alloc] initWithData:nil pixelFormat:kRenderTargetDefaultPixelFormat pixelsWide:powW pixelsHigh:powH contentSizeInPixels:size contentScale:[CCDirector sharedDirector].contentScaleFactor];
+	_texture = [[CCTexture alloc] initWithData:nil pixelFormat:kRenderTargetDefaultPixelFormat pixelsWide:powW pixelsHigh:powH contentSizeInPixels:size contentScale:[CCDirector currentDirector].contentScaleFactor];
 	_texture.antialiased = NO;
 	
     // Save the old FBO binding so it can be restored after we create the new
@@ -186,7 +186,7 @@ static GLKVector2 selectTexCoordPadding(CCEffectTexCoordSource tcSource, GLKVect
         _allRenderTargets = [[NSMutableArray alloc] init];
         _freeRenderTargets = [[NSMutableArray alloc] init];
         _contentSize = CGSizeMake(1.0f, 1.0f);
-        _contentScale = [CCDirector sharedDirector].contentScaleFactor;
+        _contentScale = [CCDirector currentDirector].contentScaleFactor;
     }
     return self;
 }

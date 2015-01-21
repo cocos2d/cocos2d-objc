@@ -116,13 +116,13 @@
 			NSAssert(format != CCTexturePixelFormat_A8, @"only RGB and RGBA formats are valid for a render texture");
 		}
 
-		CCDirector *director = [CCDirector sharedDirector];
+		CCDirector *director = [CCDirector currentDirector];
 
 		// XXX multithread
 		if( [director runningThread] != [NSThread currentThread] )
 			CCLOGWARN(@"cocos2d: WARNING. CCRenderTexture is running on its own thread. Make sure that an OpenGL context is being used on this thread!");
 
-		_contentScale = [CCDirector sharedDirector].contentScaleFactor;
+		_contentScale = director.contentScaleFactor;
 		[self setContentSize:CGSizeMake(width, height)];
 		_pixelFormat = format;
 		_depthStencilFormat = depthStencilFormat;
@@ -263,7 +263,7 @@ FlipY(GLKMatrix4 projection)
 		texture = self.texture;
 	}
 	
-	CCRenderer *renderer = [[CCDirector sharedDirector] rendererFromPool];
+	CCRenderer *renderer = [[CCDirector currentDirector] rendererFromPool];
 	[renderer prepareWithProjection:&_projection framebuffer:_framebuffer];
 	
 	_previousRenderer = [CCRenderer currentRenderer];
@@ -299,7 +299,7 @@ FlipY(GLKMatrix4 projection)
 {
 	CCRenderer *renderer = [CCRenderer currentRenderer];
 	
-	__unsafe_unretained CCDirector *director = [CCDirector sharedDirector];
+	__unsafe_unretained CCDirector *director = [CCDirector currentDirector];
 	CCRenderDispatch(renderer.threadsafe, ^{
 		[director addFrameCompletionHandler:^{
 			// Return the renderer to the pool when the frame completes.
@@ -480,7 +480,7 @@ FlipY(GLKMatrix4 projection)
    	}
 
 #if __CC_PLATFORM_IOS
-   	CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
+   	CGFloat scale = [CCDirector currentDirector].contentScaleFactor;
    	UIImage* image	= [[UIImage alloc] initWithCGImage:imageRef scale:scale orientation:UIImageOrientationUp];
    	NSData *imageData = nil;
 
@@ -538,7 +538,7 @@ FlipY(GLKMatrix4 projection)
 {
 	CGImageRef imageRef = [self newCGImage];
 	
-	CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
+	CGFloat scale = [CCDirector currentDirector].contentScaleFactor;
 	UIImage* image	= [[UIImage alloc] initWithCGImage:imageRef scale:scale orientation:UIImageOrientationUp];
     
 	CGImageRelease( imageRef );
