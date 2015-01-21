@@ -172,7 +172,7 @@
 #pragma mark Director - UIViewController delegate
 
 
--(void) setView:(CC_VIEW<CCDirectorView> *)view
+-(void) setView:(CC_VIEW<CCView> *)view
 {
 		[super setView:view];
 

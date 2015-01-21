@@ -30,7 +30,7 @@
 #if __CC_PLATFORM_MAC
 
 #import <Cocoa/Cocoa.h>
-#import "CCDirectorView.h"
+#import "CCView.h"
 
 //#import "../../ccConfig.h"
 
@@ -38,7 +38,7 @@
 
  Only available for Mac OS X
  */
-@interface CCGLView : NSOpenGLView <CCDirectorView>
+@interface CCGLView : NSOpenGLView <CCView>
 
 /** initializes the CCGLView with a frame rect and an OpenGL context */
 - (id) initWithFrame:(NSRect)frameRect shareContext:(NSOpenGLContext*)context;

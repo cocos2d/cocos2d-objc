@@ -31,11 +31,15 @@
 
 #import "CCDirector_Private.h"
 #import "CCActionManager_Private.h"
+#import "CCScheduler_Private.h"
+
 #import "CCAnimationManager.h"
 #import "CCRenderer_Private.h"
 #import "CCPhysics+ObjectiveChipmunk.h"
 #import "CCColor.h"
 #import "CCLayout.h"
+#import "CCScene.h"
+#import "CCActionManager.h"
 
 #pragma mark - Node
 
@@ -995,6 +999,17 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
     return _parent.scene;
 }
 
+
+-(CCDirector *) director
+{
+    return self.scene.director;
+}
+
+-(CC_VIEW<CCView> *)view
+{
+    return self.director.view;
+}
+
 -(void) onEnter
 {
 	[_children makeObjectsPerformSelector:@selector(onEnter)];
@@ -1007,17 +1022,8 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 	
 	//If there's a physics node in the hierarchy, all actions should run on a fixed timestep.
 	BOOL hasPhysicsNode = self.physicsNode != nil;
-	if(hasPhysicsNode && _actionManager != [CCDirector sharedDirector].actionManagerFixed)
-	{
-		[[CCDirector sharedDirector].actionManagerFixed migrateActions:self from:[CCDirector sharedDirector].actionManager];
-		[self setActionManager:[CCDirector sharedDirector].actionManagerFixed];
-	}
-	else if(!hasPhysicsNode && _actionManager != [CCDirector sharedDirector].actionManager)
-	{
-		[[CCDirector sharedDirector].actionManager migrateActions:self from:[CCDirector sharedDirector].actionManagerFixed];
-		[self setActionManager:[CCDirector sharedDirector].actionManager];
-	}
-
+    [CCDirector sharedDirector].actionManager.fixedMode = hasPhysicsNode;
+    
     if(_animationManager) {
         [_animationManager performSelector:@selector(onEnter)];
     }

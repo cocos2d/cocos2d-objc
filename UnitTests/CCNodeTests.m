@@ -9,6 +9,7 @@
 #import "cocos2d.h"
 #import "CCDirector_Private.h"
 #import "CCNode_Private.h"
+#import "CCScheduler_Private.h"
 
 @interface CCNodeTests : XCTestCase
 

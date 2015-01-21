@@ -87,7 +87,7 @@ SetProgram(CCNode *n, CCShader *p, NSNumber *alpha) {
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
                 CCLOGWARN(@"Stencil buffer is not enabled; enable it by passing GL_DEPTH24_STENCIL8_OES into the depthFormat parrameter when initializing CCGLView. Until then, everything will be drawn without stencil.");
 #elif __CC_PLATFORM_MAC
-                CCLOGWARN(@"Stencil buffer is not enabled; enable it by setting the Stencil attribue to 8 bit in the Attributes inspector of the CCGLView view object in MainMenu.xib, or programmatically by adding NSOpenGLPFAStencilSize and 8 in the NSOpenGLPixelFormatAttribute array of the NSOpenGLPixelFormat used when initializing CCGLView. Until then, everything will be drawn without stencil.");
+                CCLOGWARN(@"Stencil buffer is not enabled; enable it by setting the Stencil attribue to 8 bit in the Attributes inspector of the CCView view object in MainMenu.xib, or programmatically by adding NSOpenGLPFAStencilSize and 8 in the NSOpenGLPixelFormatAttribute array of the NSOpenGLPixelFormat used when initializing CCView. Until then, everything will be drawn without stencil.");
 #endif
             }
         });

@@ -11,6 +11,7 @@
 
 #import "CCPhysics+ObjectiveChipmunk.h"
 #import "CCDirector_Private.h"
+#import "CCScheduler_Private.h"
 #import "AppDelegate.h"
 
 @interface CCScheduler(Test)

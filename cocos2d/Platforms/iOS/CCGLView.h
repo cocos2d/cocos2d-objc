@@ -72,7 +72,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
 
-#import "CCDirectorView.h"
+//#import "CCView.h"
+#import "CCView.h"
 
 
 //CLASSES:
@@ -101,7 +102,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
  - numberOfSamples: Only valid if multisampling is enabled
 	- Possible values: 0 to glGetIntegerv(GL_MAX_SAMPLES_APPLE)
  */
-@interface CCGLView : UIView <CCDirectorView>
+@interface CCGLView : UIView <CCView>
 
 /** creates an initializes an CCGLView with a frame and 0-bit depth buffer, and a RGB565 color buffer. */
 + (id) viewWithFrame:(CGRect)frame;

@@ -21,7 +21,7 @@
     if((self = [super init]))
     {
         _uiTouch = touch;
-        _view = (CCGLView*)[CCDirector sharedDirector].view;
+        _view = [CCDirector sharedDirector].view;
         return self;
     }
     
@@ -65,12 +65,12 @@
 	return [dir convertToGL: touchLocation];
 }
 
-- (CGPoint)locationInView:(CCGLView *)view
+- (CGPoint)locationInView:(CC_VIEW<CCView>*)view
 {
     return (CGPoint){0, 0};
 }
 
-- (CGPoint)previousLocationInView:(CCGLView *)view
+- (CGPoint)previousLocationInView:(CC_VIEW<CCView>*)view
 {
     return (CGPoint){0, 0};
 }

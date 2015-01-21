@@ -118,7 +118,7 @@
     if (_isFullScreen == fullscreen)
 		return;
 
-    CC_VIEW<CCDirectorView> *view = self.view;
+    CC_VIEW<CCView> *view = self.view;
     BOOL viewAcceptsTouchEvents = view.acceptsTouchEvents;
 
     if( fullscreen ) {
@@ -198,7 +198,7 @@
 #endif
 }
 
--(void) setView:(CC_VIEW<CCDirectorView> *)view
+-(void) setView:(CC_VIEW<CCView> *)view
 {
 		[super setView:view];
 
@@ -408,7 +408,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	CVDisplayLinkSetOutputCallback(displayLink, &MyDisplayLinkCallback, (__bridge void *)(self));
 
 	// Set the display link for the current renderer
-	CCGLView *openGLview = (CCGLView*) self.view;
+	CCViewMacGL *openGLview = (CCViewMacGL*) self.view;
 	CGLContextObj cglContext = [[openGLview openGLContext] CGLContextObj];
 	CGLPixelFormatObj cglPixelFormat = [[openGLview pixelFormat] CGLPixelFormatObj];
 	CVDisplayLinkSetCurrentCGDisplayFromOpenGLContext(displayLink, cglContext, cglPixelFormat);
@@ -462,7 +462,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 }
 
 // set the event dispatcher
--(void) setView:(CC_VIEW<CCDirectorView> *)view
+-(void) setView:(CC_VIEW<CCView> *)view
 {
 	// Synchronize buffer swaps with vertical refresh rate
 	[[view openGLContext] makeCurrentContext];

@@ -1,9 +1,7 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * Copyright (c) 2008-2010 Ricardo Quesada
- * Copyright (c) 2011 Zynga Inc.
- * Copyright (c) 2013-2014 Cocos2D Authors
+ * Copyright (c) 2015 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,40 +20,44 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
  */
 
-#import "CCNode.h"
+#import "CCScheduler.h"
 
-@class CCLightCollection;
-@class CCDirector;
+@class CCScheduler;
 
-/** CCScene is a subclass of CCNode. The scene represents the root node of the node hierarchy.
-
- A scene is created using the default node initializer:
+/**
+ Private CCScheduler methods. Generally only useful within cocos2d. Instead, interface with the scheduler by scheduling things on CCNodes.
  
-    id scene = [CCScene node];
- 
- @note In previous versions of Cocos2D, CCLayer was used to group nodes in a CCScene. In v3 but also in v2 before that,
- you can simply use a CCNode to group other nodes.
+ @since v4.0
  */
-@interface CCScene : CCNode
+@interface CCScheduler()
 
-/** @name Accessing Lights */
-/** 
- A collection of lights in the scene.
- @note Only available if `CC_EFFECTS_EXPERIMENTAL` is set to 1.
- @see CCLightCollection
- @since v3.4 and later
+/**
+Update the scheduler by stepping forward in time. You should NEVER call this method, unless you know what you are doing.
+
+@param dt time delta- step forward by this many sections
+*/
+-(void) update:(CCTime)dt;
+
+-(CCTimer *) scheduleBlock:(CCTimerBlock)block forTarget:(NSObject<CCSchedulerTarget> *)target withDelay:(CCTime)delay;
+
+-(void) scheduleTarget:(NSObject<CCSchedulerTarget> *)target;
+
+/**
+ Unschedules all selectors and blocks for a given target.
+ This also includes the "update" selector.
  */
-@property (nonatomic, readonly, strong) CCLightCollection *lights;
+-(void) unscheduleTarget:(NSObject<CCSchedulerTarget> *)target;
 
+// This is used only for testing at the moment.
+-(BOOL) isTargetScheduled:(NSObject<CCSchedulerTarget> *)target;
 
-/// -----------------------------------------------------------------------
-/// @name Creating a Scene
-/// -----------------------------------------------------------------------
+-(void) setPaused:(BOOL)paused target:(NSObject<CCSchedulerTarget> *)target;
 
-/* Initialize the node. */
-- (id)init;
+-(BOOL) isTargetPaused:(NSObject<CCSchedulerTarget> *)target;
+
+-(NSArray *) timersForTarget:(NSObject<CCSchedulerTarget> *)target;
 
 @end
+

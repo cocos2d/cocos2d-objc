@@ -35,6 +35,7 @@
 #import "CCNode_Private.h"
 #import "CCRenderer_Private.h"
 #import "CCRenderDispatch_Private.h"
+#import "CCScheduler_Private.h"
 
 #import "CCScheduler.h"
 #import "CCActionManager.h"
@@ -103,7 +104,6 @@ extern NSString * cocos2dVersion(void);
 @synthesize secondsPerFrame = _secondsPerFrame;
 @synthesize scheduler = _scheduler;
 @synthesize actionManager = _actionManager;
-@synthesize actionManagerFixed = _actionManagerFixed;
 
 //
 // singleton stuff
@@ -172,14 +172,10 @@ static CCDirector *_sharedDirector = nil;
 
 		// action manager
 		_actionManager = [[CCActionManager alloc] init];
-		_actionManagerFixed = [[CCFixedActionManager alloc] init];
 		
 		[_scheduler scheduleTarget:_actionManager];
-		[_scheduler scheduleTarget:_actionManagerFixed];
 
 		[_scheduler setPaused:NO target:_actionManager];
-		[_scheduler setPaused:NO target:_actionManagerFixed];
-		
 		
 		// touch manager
 		_responderManager = [ CCResponderManager responderManager ];
@@ -227,7 +223,7 @@ static CCDirector *_sharedDirector = nil;
 	 XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
 	if( _nextScene ) [self setNextScene];
 	
-	CC_VIEW<CCDirectorView> *ccview = self.view;
+	CC_VIEW<CCView> *ccview = self.view;
 	[ccview beginFrame];
 	
 	if(CCRenderDispatchBeginFrame()){
@@ -360,7 +356,7 @@ static CCDirector *_sharedDirector = nil;
 
 #pragma mark Director Integration with a UIKit view
 
--(void) setView:(CC_VIEW<CCDirectorView> *)view
+-(void) setView:(CC_VIEW<CCView> *)view
 {
 #if __CC_PLATFORM_IOS
 		[super setView:view];

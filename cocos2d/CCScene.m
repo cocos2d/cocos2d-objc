@@ -36,7 +36,7 @@
 // -----------------------------------------------------------------
 
 @implementation CCScene {
-
+    __weak CCDirector *_director;
 }
 
 // -----------------------------------------------------------------
@@ -44,6 +44,12 @@
 -(CCScene *)scene
 {
     return self;
+}
+
+
+-(CCDirector *) director
+{
+    return _director;
 }
 
 -( id )init {

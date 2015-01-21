@@ -7,6 +7,7 @@
 //
 
 #import "TestBase.h"
+#import "CCScheduler_Private.h"
 
 
 @interface SchedulerTestSprite : CCSprite @end
@@ -128,7 +129,7 @@
 - (void) setupPause1Test
 {
 	// Test pausing just the content node.
-	self.subTitle = @"All motion should stop when paused (1)";
+	self.subTitle = @"All motion should stop when paused (1)\nThis test pauses the content node.";
 	[self pauseTestWithParent:self.contentNode objectToPause:self.contentNode];
 }
 
@@ -142,7 +143,7 @@
 - (void) setupPause3Test
 {
 	// Test pausing the content node with extra parent nodes.
-	self.subTitle = @"All motion should stop when paused (3)";
+	self.subTitle = @"All motion should stop when paused (3)\nThis test contains extra parent nodes, and pauses the content node.";
 	
 	CCNode *node1 = [CCNode node];
 	[self.contentNode addChild:node1];

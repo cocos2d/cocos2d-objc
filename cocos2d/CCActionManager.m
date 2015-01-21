@@ -310,6 +310,15 @@
 
 -(void) update: (CCTime) dt
 {
+    if(!self.fixedMode) [self updateActions:dt];
+}
+-(void)fixedUpdate:(CCTime)dt
+{
+    if(self.fixedMode) [self updateActions:dt];
+}
+
+-(void) updateActions: (CCTime)dt
+{
 	for(tHashElement *elt = targets; elt != NULL; ) {
 
 		currentTarget = elt;
@@ -358,49 +367,9 @@
 }
 
 
--(void)migrateActions:(id)target from:(CCActionManager*)oldManager
-{
-	
-	tHashElement *elementOld = NULL;
-    void* t = (__bridge void*) target;
-	HASH_FIND_INT(oldManager->targets, &t, elementOld);
-	if( elementOld )
-	{
-			
-		tHashElement *elementNew = NULL;
-		HASH_FIND_INT(targets, &t, elementNew);
-		if( ! elementNew ) {
-			elementNew = calloc( sizeof( *elementNew ), 1 );
-			elementNew->paused = elementOld->paused;
-			CFBridgingRetain(target);
-			elementNew->target = target;
-			HASH_ADD_INT(targets, target, elementNew);
-			
-		}
-		
-		[self actionAllocWithHashElement:elementNew];
-		[elementNew->actions addObjectsFromArray:elementOld->actions];
-		[elementOld->actions removeAllObjects];
-		[oldManager deleteHashElement:elementOld];
-		
-	}
-
-}
 
 
 @end
 
 
-@implementation CCFixedActionManager
 
--(void)update:(CCTime)delta
-{
-    //return. Do nothing.
-}
-
--(void)fixedUpdate:(CCTime)delta
-{
-    [super update:delta];
-}
-
-@end
