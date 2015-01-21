@@ -50,6 +50,12 @@
     return _director;
 }
 
+-(id)init
+{
+    // NO! use the other one!
+    abort();
+}
+
 -(id)initWithDirector:(CCDirector*)director
 {
 	if((self = [super init]))

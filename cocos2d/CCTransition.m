@@ -147,7 +147,8 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 
 - (id)initWithDuration:(NSTimeInterval)duration
 {
-    self = [super init];
+#warning Quick hack to get the shared director.
+    self = [super initWithDirector:[CCDirector currentDirector]];
     NSAssert(self, @"Unable to create class");
     NSAssert(duration > 0,@"Invalid duration");
     
@@ -183,8 +184,8 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 
 - (void)startTransition:(CCScene *)scene
 {
-    CCDirector *director = [CCDirector sharedDirector];
-		
+    CCDirector *director = self.director;
+    
     _incomingScene = scene;
     [_incomingScene onEnter];
     _incomingPauseState = _incomingScene.paused;
