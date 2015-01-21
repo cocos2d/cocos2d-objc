@@ -19,6 +19,8 @@
 
 @interface CCDirectorAndroid : CCDirector
 
+- (void)onGLInitialization;
+
 @end
 
 /* DisplayLinkDirector is a Director that synchronizes timers with the refresh rate of the display.

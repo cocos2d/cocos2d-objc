@@ -27,7 +27,6 @@
 #if __CC_PLATFORM_IOS
 
 #import <Foundation/Foundation.h>
-
 #import <UIKit/UIKit.h>
 
 #import "CCDirectorIOS.h"
@@ -76,11 +75,10 @@
 // -----------------------------------------------------------------------
 
 /**
- *  Override this method to return the very first scene that Cocos2D should present.
  *
- *  @return The first scene of your app. It will be presented automatically.
+ *  @note The first scene of your app. It will be presented automatically.
  */
-- (CCScene*) startScene;
+@property (nonatomic) CCScene *startScene;
 
 // -----------------------------------------------------------------------
 /** @name Cocos2d Setup */
@@ -112,6 +110,13 @@
  */
 - (void) setupCocos2dWithOptions:(NSDictionary*)config;
 
+- (void)constructNavController:(NSDictionary *)config;
+
+- (void)constructWindow;
+
+- (void)forceOrientation;
+
+- (CC_VIEW <CCDirectorView> *)constructView:(NSDictionary *)config withBounds:(CGRect)bounds;
 @end
 
 #endif

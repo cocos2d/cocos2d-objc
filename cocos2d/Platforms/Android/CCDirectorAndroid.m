@@ -44,17 +44,6 @@
 
 @implementation CCDirectorAndroid
 
-- (id) init
-{
-	if( (self=[super init]) ) {
-		// main thread
-		_runningThread = [NSThread currentThread];
-	}
-    
-	return self;
-}
-
-
 -(void) setViewport
 {
 	CGSize size = _winSizeInPixels;
@@ -64,9 +53,7 @@
 -(void) setProjection:(CCDirectorProjection)projection
 {
 	CGSize sizePoint = _winSizeInPoints;
-    
-	[self setViewport];
-    
+        
 	switch (projection) {
 		case CCDirectorProjection2D:
 			_projectionMatrix = GLKMatrix4MakeOrtho(0, sizePoint.width, 0, sizePoint.height, -1024, 1024 );
@@ -92,7 +79,6 @@
 	}
     
 	_projection = projection;
-	[self createStatsLabel];
 }
 
 
@@ -124,6 +110,17 @@
     [[CCActivity currentActivity] runOnGameThread:block];
 }
 
+// Unlike iOS, GL isn't initialized on Android before the config is read
+// Here we can perform the necessary configuration functions that operate on a GL context
+- (void) onGLInitialization
+{
+    [self setViewport];
+    [self createStatsLabel];
+
+	[[CCConfiguration sharedConfiguration] dumpInfo];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"GL_INITIALIZED" object:nil];
+}
 @end
 
 

@@ -53,6 +53,7 @@ extern NSString* const CCSetupDepthFormat;
 extern NSString* const CCSetupPreserveBackbuffer;
 extern NSString* const CCSetupMultiSampling;
 extern NSString* const CCSetupNumberOfSamples;
+extern NSString* const CCScreenModeFixedDimensions;
 
 // Landscape screen orientation. Used with CCSetupScreenOrientation.
 extern NSString* const CCScreenOrientationLandscape;
@@ -69,6 +70,10 @@ extern NSString* const CCScreenModeFlexible;
 
 // The fixed screen mode will setup the working area to be 568 x 384 points. Depending on the device, the outer edges may be cropped. The safe area, that will be displayed on all sorts of devices, is 480 x 320 points and placed in the center of the working area.
 extern NSString* const CCScreenModeFixed;
+
+// The desired default window size for mac
+extern NSString* const CCMacDefaultWindowSize;
+
 
 typedef NS_ENUM(NSUInteger, CCDevice) {
 	CCDeviceiPhone,
