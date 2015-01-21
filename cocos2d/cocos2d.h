@@ -41,7 +41,7 @@
 
 // 0x00 HI ME LO
 // 00   03 01 01
-#define COCOS2D_VERSION 0x00030401
+#define COCOS2D_VERSION 0x00030403
 #define COCOS2D_BUILD @"develop"
 
 
@@ -59,6 +59,7 @@
 // Basic Types:
 #import "CCProtocols.h"
 #import "CCColor.h"
+#import "CCImage.h"
 #import "CCTexture.h"
 #import "CCTexturePVR.h"
 #import "CCSpriteFrame.h"
@@ -113,6 +114,7 @@
 #import "CCEffectOutline.h"
 
 #if CC_EFFECTS_EXPERIMENTAL
+#import "CCEffectOutline.h"
 #import "CCEffectDFOutline.h"
 #import "CCEffectDistanceField.h"
 #import "CCEffectDFInnerGlow.h"
@@ -171,7 +173,7 @@
 #import "Platforms/Android/CCActivity.h"
 #import "Platforms/Android/CCGLView.h"
 #import "Platforms/Android/CCDirectorAndroid.h"
-#import <BridgeKitV3/BridgeKit.h>
+
 #import <android/native_window.h>
 #import <bridge/runtime.h>
 #endif

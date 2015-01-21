@@ -17,10 +17,35 @@
 static const float CCEffectUtilsMinRefract = -0.25;
 static const float CCEffectUtilsMaxRefract = 0.043;
 
-static CCNode* CCEffectUtilsGetNodeParent(CCNode *node);
 static BOOL CCEffectUtilsNodeIsDescendantOfNode(CCNode *descendant, CCNode *ancestor);
 
 
+
+CCNode* CCEffectUtilsGetNodeParent(CCNode *node)
+{
+    if ([node isKindOfClass:[CCRenderTextureSprite class]])
+    {
+        CCRenderTextureSprite *rtSprite = (CCRenderTextureSprite *)node;
+        return rtSprite.renderTexture;
+    }
+    else
+    {
+        return node.parent;
+    }
+}
+
+CCScene* CCEffectUtilsGetNodeScene(CCNode *node)
+{
+    if ([node isKindOfClass:[CCRenderTextureSprite class]])
+    {
+        CCRenderTextureSprite *rtSprite = (CCRenderTextureSprite *)node;
+        return rtSprite.renderTexture.scene;
+    }
+    else
+    {
+        return node.scene;
+    }
+}
 
 CCNode* CCEffectUtilsFindCommonAncestor(CCNode *first, CCNode *second)
 {
@@ -86,19 +111,6 @@ GLKMatrix4 CCEffectUtilsTransformFromNodeToNode(CCNode *first, CCNode *second, B
     // Concatenate t1 and the inverse of t2 to give us the transform from the first node
     // to the second.
     return GLKMatrix4Multiply(GLKMatrix4Invert(t2, nil), t1);
-}
-
-CCNode* CCEffectUtilsGetNodeParent(CCNode *node)
-{
-    if ([node isKindOfClass:[CCRenderTextureSprite class]])
-    {
-        CCRenderTextureSprite *rtSprite = (CCRenderTextureSprite *)node;
-        return rtSprite.renderTexture;
-    }
-    else
-    {
-        return node.parent;
-    }
 }
 
 BOOL CCEffectUtilsNodeIsDescendantOfNode(CCNode *descendant, CCNode *ancestor)

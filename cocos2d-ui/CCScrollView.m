@@ -29,6 +29,8 @@
 #elif __CC_PLATFORM_ANDROID
 #import "CCActivity.h"
 #import "CCGestureListener.h"
+#import <AndroidKit/AndroidGestureDetector.h>
+#import <AndroidKit/AndroidMotionEvent.h>
 #endif
 
 #import "CCScrollView.h"
@@ -59,6 +61,7 @@
 #pragma mark Helper classes
 
 #if __CC_PLATFORM_IOS
+
 @interface CCTapDownGestureRecognizer : UIGestureRecognizer
 @end
 
@@ -75,6 +78,30 @@
 @end
 
 #endif
+
+@interface CCScrollViewOrthoProjection : NSObject<CCProjectionDelegate>
+-(instancetype)initWithTarget:(CCNode *)target;
+@end
+@implementation CCScrollViewOrthoProjection
+{
+    __weak CCNode *_target;
+}
+
+-(instancetype)initWithTarget:(CCNode *)target
+{
+    if( (self=[super init]) ) {
+        _target = target;
+    }
+    return self;
+}
+
+-(GLKMatrix4)projection
+{
+    CGSize size = _target.contentSizeInPoints;
+    return GLKMatrix4MakeOrtho(0, size.width, 0, size.height, -1024, 1024);
+}
+
+@end
 
 
 @interface CCMoveToX : CCActionInterval
@@ -181,9 +208,12 @@
     return self;
 }
 
+// Designated initializer
 - (id) initWithContentNode:(CCNode*)contentNode
 {
-    self = [super init];
+    self = [super initWithContentNode:contentNode];
+    self.projectionDelegate = [[CCScrollViewOrthoProjection alloc] initWithTarget:self];
+    
     if (!self) return NULL;
     
     _flipYCoordinates = YES;
@@ -191,8 +221,7 @@
     // Setup content node
     self.contentSize = CGSizeMake(1, 1);
     self.contentSizeType = CCSizeTypeNormalized;
-    self.contentNode = contentNode;
-    
+
     // Default properties
     _horizontalScrollEnabled = YES;
     _verticalScrollEnabled = YES;
@@ -210,7 +239,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         _listener = [[CCGestureListener alloc] init];
         _listener.delegate = (id<CCGestureListenerDelegate>)self;
-        _detector = [[AndroidGestureDetector alloc] initWithContext:[CCActivity currentActivity] listener:_listener];
+        _detector = [[AndroidGestureDetector alloc] initWithContext:[CCActivity currentActivity] onGestureListener:_listener];
     });
 #elif __CC_PLATFORM_MAC
     
@@ -226,17 +255,14 @@
 #pragma mark Setting content node
 - (void) setContentNode:(CCNode *)contentNode
 {
-    if (_contentNode == contentNode) return;
-    
-    // Replace content node
-    if (_contentNode) [self removeChild:_contentNode];
-    _contentNode = contentNode;
+    if (self.contentNode == contentNode) return;
+
+    // Call superclass setter.
+    [super setContentNode:contentNode];
     if (contentNode)
     {
-        [self addChild:contentNode];
-        
-        // Update coordinate flipping
-        self.flipYCoordinates = self.flipYCoordinates;
+        // Force specific position types and anchors based on coordinate flipping
+        [self setFlipYCoordinates: _flipYCoordinates];
     }
 }
 
@@ -244,13 +270,19 @@
 {
     if (flipYCoordinates)
     {
-        _contentNode.positionType = CCPositionTypeMake(CCPositionUnitPoints, CCPositionUnitPoints, CCPositionReferenceCornerTopLeft);
-        _contentNode.anchorPoint = ccp(0,1);
+        self.contentNode.positionType = CCPositionTypeMake(CCPositionUnitPoints, CCPositionUnitPoints, CCPositionReferenceCornerTopLeft);
+        self.contentNode.anchorPoint = ccp(0,1);
+        
+        // Note, if this class is modified to change the flipping behavior, consider adjusting the camera positionType like this:
+//        self.camera.positionType = CCPositionTypeMake(CCPositionUnitPoints, CCPositionUnitPoints, CCPositionReferenceCornerTopLeft);
+//        self.camera.anchorPoint = ccp(0,1);
     }
     else
     {
-        _contentNode.positionType = CCPositionTypeMake(CCPositionUnitPoints, CCPositionUnitPoints, CCPositionReferenceCornerBottomLeft);
-        _contentNode.anchorPoint = ccp(0,0);
+        self.contentNode.positionType = CCPositionTypeMake(CCPositionUnitPoints, CCPositionUnitPoints, CCPositionReferenceCornerBottomLeft);
+        self.contentNode.anchorPoint = ccp(0,0);
+//        self.camera.positionType = CCPositionTypeMake(CCPositionUnitPoints, CCPositionUnitPoints, CCPositionReferenceCornerBottomLeft);
+//        self.camera.anchorPoint = ccp(0,0);
     }
     
     _flipYCoordinates = flipYCoordinates;
@@ -265,9 +297,9 @@
 
 - (float) maxScrollX
 {
-    if (!_contentNode) return 0;
+    if (!self.contentNode) return 0;
     
-    float maxScroll = _contentNode.contentSizeInPoints.width - self.contentSizeInPoints.width;
+    float maxScroll = self.contentNode.contentSizeInPoints.width - self.contentSizeInPoints.width;
     if (maxScroll < 0) maxScroll = 0;
     
     return maxScroll;
@@ -280,9 +312,9 @@
 
 - (float) maxScrollY
 {
-    if (!_contentNode) return 0;
+    if (!self.contentNode) return 0;
     
-    float maxScroll = _contentNode.contentSizeInPoints.height - self.contentSizeInPoints.height;
+    float maxScroll = self.contentNode.contentSizeInPoints.height - self.contentSizeInPoints.height;
     if (maxScroll < 0) maxScroll = 0;
     
     return maxScroll;
@@ -325,17 +357,17 @@
 - (int) numHorizontalPages
 {
     if (!_pagingEnabled) return 0;
-    if (!self.contentSizeInPoints.width || !_contentNode.contentSizeInPoints.width) return 0;
+    if (!self.contentSizeInPoints.width || !self.contentNode.contentSizeInPoints.width) return 0;
     
-    return roundf(_contentNode.contentSizeInPoints.width / self.contentSizeInPoints.width);
+    return roundf(self.contentNode.contentSizeInPoints.width / self.contentSizeInPoints.width);
 }
 
 - (int) numVerticalPages
 {
     if (!_pagingEnabled) return 0;
-    if (!self.contentSizeInPoints.height || !_contentNode.contentSizeInPoints.height) return 0;
+    if (!self.contentSizeInPoints.height || !self.contentNode.contentSizeInPoints.height) return 0;
     
-    return roundf(_contentNode.contentSizeInPoints.height / self.contentSizeInPoints.height);
+    return roundf(self.contentNode.contentSizeInPoints.height / self.contentSizeInPoints.height);
 }
 
 #pragma mark Panning and setting position
@@ -345,12 +377,22 @@
     [self setScrollPosition:newPos animated:NO];
 }
 
+- (CGPoint) clampToBounds:(CGPoint)pos
+{
+    pos.x = MAX(MIN(pos.x, self.maxScrollX), self.minScrollX);
+    if(_flipYCoordinates){
+        pos.y = -MAX(MIN(pos.y, self.maxScrollY), self.minScrollY);
+    }else{
+        pos.y = MAX(MIN(pos.y, self.maxScrollY), self.minScrollY);
+    }
+    return pos;
+}
+
 - (void) setScrollPosition:(CGPoint)newPos animated:(BOOL)animated
 {
     // Check bounds
-	newPos.x = MAX(MIN(newPos.x, self.maxScrollX), self.minScrollX);
-	newPos.y = MAX(MIN(newPos.y, self.maxScrollY), self.minScrollY);
-
+    newPos = [self clampToBounds:newPos];
+    
     [self updateAndroidScrollTranslation:newPos];
     
     BOOL xMoved = (newPos.x != self.scrollPosition.x);
@@ -371,13 +413,13 @@
             _animatingX = YES;
             
             // Create animation action
-            CCActionInterval* action = [CCActionEaseOut actionWithAction:[[CCMoveToX alloc] initWithDuration:duration positionX:-newPos.x callback:^{
+            CCActionInterval* action = [CCActionEaseOut actionWithAction:[[CCMoveToX alloc] initWithDuration:duration positionX:newPos.x callback:^{
 				[self scrollViewDidScroll];
 			}] rate:2];
             CCActionCallFunc* callFunc = [CCActionCallFunc actionWithTarget:self selector:@selector(xAnimationDone)];
             action = [CCActionSequence actions:action, callFunc, nil];
             action.tag = kCCScrollViewActionXTag;
-            [_contentNode runAction:action];
+            [self.camera runAction:action];
         }
         if (yMoved)
         {
@@ -387,13 +429,13 @@
             _animatingY = YES;
             
             // Create animation action
-            CCActionInterval* action = [CCActionEaseOut actionWithAction:[[CCMoveToY alloc] initWithDuration:duration positionY:-newPos.y callback:^{
+            CCActionInterval* action = [CCActionEaseOut actionWithAction:[[CCMoveToY alloc] initWithDuration:duration positionY:newPos.y callback:^{
 				[self scrollViewDidScroll];
 			}] rate:2];
             CCActionCallFunc* callFunc = [CCActionCallFunc actionWithTarget:self selector:@selector(yAnimationDone)];
             action = [CCActionSequence actions:action, callFunc, nil];
             action.tag = kCCScrollViewActionYTag;
-            [_contentNode runAction:action];
+            [self.camera runAction:action];
         }
     }
     else
@@ -401,9 +443,9 @@
 #if __CC_PLATFORM_MAC
 		_lastPosition = self.scrollPosition;
 #endif
-        [_contentNode stopActionByTag:kCCScrollViewActionXTag];
-        [_contentNode stopActionByTag:kCCScrollViewActionYTag];
-        _contentNode.position = ccpMult(newPos, -1);
+        [self.camera stopActionByTag:kCCScrollViewActionXTag];
+        [self.camera stopActionByTag:kCCScrollViewActionYTag];
+        self.camera.position = newPos;
     }
 }
 
@@ -427,11 +469,23 @@
 
 - (CGPoint) scrollPosition
 {
-    return ccpMult(_contentNode.position, -1);
+    return self.camera.position;
 }
 
-- (void) panLayerToTarget:(CGPoint) newPos
+- (void) handlePanFrom:(CGPoint) start delta:(CGPoint) delta
 {
+    // Check if scroll directions has been disabled
+    if (!_horizontalScrollEnabled) delta.x = 0;
+    if (!_verticalScrollEnabled) delta.y = 0;
+    
+    // Check bounds
+    CGPoint newPos = ccpAdd(start, delta);
+    
+    // If we're in flipped Y mode, we flip coordinates, do the bounds checks, then flip back.
+    if(_flipYCoordinates){
+        newPos.y = -newPos.y;
+    }
+    
     if (_bounces)
     {
         // Scroll at half speed outside of bounds
@@ -455,17 +509,19 @@
             float diff = self.minScrollY - newPos.y;
             newPos.y = self.minScrollY - diff * kCCScrollViewBoundsSlowDown;
         }
+        if(_flipYCoordinates){
+            newPos.y = -newPos.y;
+        }
     }
-    else
-    {
-        if (newPos.x > self.maxScrollX) newPos.x = self.maxScrollX;
-        if (newPos.x < self.minScrollX) newPos.x = self.minScrollX;
-        if (newPos.y > self.maxScrollY) newPos.y = self.maxScrollY;
-        if (newPos.y < self.minScrollY) newPos.y = self.minScrollY;
-    }
-    [self scrollViewDidScroll];
     
-    _contentNode.position = ccpMult(newPos, -1);
+    if(!_bounces){
+        newPos = [self clampToBounds:newPos];
+    }
+    
+
+    self.camera.position = newPos;
+
+    [self scrollViewDidScroll];
 }
 
 - (void) update:(CCTime)df
@@ -496,9 +552,9 @@
         {
             CGPoint delta = ccpMult(_velocity, df);
             
-            _contentNode.position = ccpAdd(_contentNode.position, delta);
+            self.camera.position = ccpSub(self.camera.position, delta);
             
-            [self updateAndroidScrollTranslation:CGPointMake(_contentNode.position.x * -1, _contentNode.position.y * -1)];
+            [self updateAndroidScrollTranslation:CGPointMake(self.camera.position.x * -1, self.camera.position.y * -1)]; // TODO: not sure on this android api, might not need to be flipped anymore
 
             // Deaccelerate layer
             float deaccelerationX = kCCScrollViewDeacceleration;
@@ -506,6 +562,7 @@
             
             // Adjust for frame rate
             deaccelerationX = powf(deaccelerationX, p);
+            deaccelerationY = powf(deaccelerationY, p);
             
             // Update velocity
             _velocity.x *= deaccelerationX;
@@ -516,12 +573,16 @@
             if (fabs(_velocity.y) < kCCScrollViewVelocityLowerCap) _velocity.y = 0;
         }
         
+        CGPoint posTarget = self.scrollPosition;
+        if(_flipYCoordinates){
+            posTarget.y = -posTarget.y;
+        }
+        
         if (_bounces)
         {
+            
             // Bounce back to edge if layer is too far outside of the scroll area or if it is outside and moving slowly
             BOOL bounceToEdge = NO;
-            CGPoint posTarget = self.scrollPosition;
-            
             if (!_animatingX && !_pagingEnabled)
             {
                 if ((posTarget.x < self.minScrollX && fabs(_velocity.x) < kCCScrollViewMinVelocityBeforeBounceBack) ||
@@ -562,13 +623,88 @@
             if (!_pagingEnabled)
             {
                 // Make sure we are within bounds
-                [self setScrollPosition:self.scrollPosition animated:NO];
+                [self setScrollPosition:posTarget animated:NO];
             }
         }
     }
 }
 
-#pragma mark Gesture recognizer
+- (void) touchBeganAtTranslation:(CGPoint) rawTranslation
+{
+    [self scrollViewWillBeginDragging];
+    _animatingX = NO;
+    _animatingY = NO;
+    _rawTranslationStart = rawTranslation;
+    _startScrollPos = self.scrollPosition;
+    
+    _isPanning = YES;
+    [self.camera stopActionByTag:kCCScrollViewActionXTag];
+    [self.camera stopActionByTag:kCCScrollViewActionYTag];
+
+}
+
+- (void) handleTouchEnded:(CGPoint) rawVelocity
+{
+    CCDirector* dir = [CCDirector sharedDirector];
+
+    rawVelocity = [dir convertToGL:rawVelocity];
+    rawVelocity = [self convertToNodeSpace:rawVelocity];
+    
+    // Calculate the velocity in node space
+    CGPoint ref = [dir convertToGL:CGPointZero];
+    ref = [self convertToNodeSpace:ref];
+    
+    _velocity = ccpSub(rawVelocity, ref);
+    
+    // Check if scroll directions has been disabled
+    if (!_horizontalScrollEnabled) _velocity.x = 0;
+    if (!_verticalScrollEnabled) _velocity.y = 0;
+    [self scrollViewDidEndDraggingAndWillDecelerate:!CGPointEqualToPoint(_velocity, CGPointZero)];
+    
+    // Setup a target if paging is enabled
+    if (_pagingEnabled)
+    {
+        CGPoint posTarget = CGPointZero;
+        
+        // Calculate new horizontal page
+        int pageX = roundf(self.scrollPosition.x/self.contentSizeInPoints.width);
+        
+        if (fabs(_velocity.x) >= kCCScrollViewAutoPageSpeed && _horizontalPage == pageX)
+        {
+            if (_velocity.x < 0) pageX += 1;
+            else pageX -= 1;
+        }
+        
+        pageX = clampf(pageX, 0, self.numHorizontalPages -1);
+        _horizontalPage = pageX;
+        
+        posTarget.x = pageX * self.contentSizeInPoints.width;
+        
+        // Calculate new vertical page
+        int pageY = roundf(self.scrollPosition.y/self.contentSizeInPoints.height);
+        
+        if (fabs(_velocity.y) >= kCCScrollViewAutoPageSpeed && _verticalPage == pageY)
+        {
+            if (_velocity.y < 0) pageY += 1;
+            else pageY -= 1;
+        }
+        
+        pageY = clampf(pageY, 0, self.numVerticalPages -1);
+        _verticalPage = pageY;
+        
+        posTarget.y = pageY * self.contentSizeInPoints.height;
+        
+        [self setScrollPosition:posTarget animated:YES];
+        
+        _velocity = CGPointZero;
+    }
+    [self scrollViewWillBeginDecelerating];
+    
+    _decelerating = YES;
+    _isPanning = NO;
+}
+
+#pragma mark - Gesture recognizer: iOS
 
 #if __CC_PLATFORM_IOS
 
@@ -583,92 +719,19 @@
     
     if (pgr.state == UIGestureRecognizerStateBegan)
     {
-		[self scrollViewWillBeginDragging];
-        _animatingX = NO;
-        _animatingY = NO;
-        _rawTranslationStart = rawTranslation;
-        _startScrollPos = self.scrollPosition;
-        
-        _isPanning = YES;
-        [_contentNode stopActionByTag:kCCScrollViewActionXTag];
-        [_contentNode stopActionByTag:kCCScrollViewActionYTag];
+        [self touchBeganAtTranslation:rawTranslation];
     }
     else if (pgr.state == UIGestureRecognizerStateChanged)
     {
         // Calculate the translation in node space
         CGPoint translation = ccpSub(_rawTranslationStart, rawTranslation);
-        
-        // Check if scroll directions has been disabled
-        if (!_horizontalScrollEnabled) translation.x = 0;
-        if (!_verticalScrollEnabled) translation.y = 0;
-        
-        if (_flipYCoordinates) translation.y = -translation.y;
-        
-        // Check bounds
-        CGPoint newPos = ccpAdd(_startScrollPos, translation);
-        
-        // Update position
-        [self panLayerToTarget:newPos];
+
+        [self handlePanFrom:_startScrollPos delta:translation];
     }
     else if (pgr.state == UIGestureRecognizerStateEnded)
     {
-
-        // Calculate the velocity in node space
-        CGPoint ref = [dir convertToGL:CGPointZero];
-        ref = [self convertToNodeSpace:ref];
-        
         CGPoint velocityRaw = [pgr velocityInView:dir.view];
-        velocityRaw = [dir convertToGL:velocityRaw];
-        velocityRaw = [self convertToNodeSpace:velocityRaw];
-        
-        _velocity = ccpSub(velocityRaw, ref);
-        if (_flipYCoordinates) _velocity.y = -_velocity.y;
-        
-        // Check if scroll directions has been disabled
-        if (!_horizontalScrollEnabled) _velocity.x = 0;
-        if (!_verticalScrollEnabled) _velocity.y = 0;
-		[self scrollViewDidEndDraggingAndWillDecelerate:!CGPointEqualToPoint(_velocity, CGPointZero)];
-        
-        // Setup a target if paging is enabled
-        if (_pagingEnabled)
-        {
-            CGPoint posTarget = CGPointZero;
-            
-            // Calculate new horizontal page
-            int pageX = roundf(self.scrollPosition.x/self.contentSizeInPoints.width);
-            
-            if (fabs(_velocity.x) >= kCCScrollViewAutoPageSpeed && _horizontalPage == pageX)
-            {
-                if (_velocity.x < 0) pageX += 1;
-                else pageX -= 1;
-            }
-            
-            pageX = clampf(pageX, 0, self.numHorizontalPages -1);
-            _horizontalPage = pageX;
-            
-            posTarget.x = pageX * self.contentSizeInPoints.width;
-            
-            // Calculate new vertical page
-            int pageY = roundf(self.scrollPosition.y/self.contentSizeInPoints.height);
-            
-            if (fabs(_velocity.y) >= kCCScrollViewAutoPageSpeed && _verticalPage == pageY)
-            {
-                if (_velocity.y < 0) pageY += 1;
-                else pageY -= 1;
-            }
-            
-            pageY = clampf(pageY, 0, self.numVerticalPages -1);
-            _verticalPage = pageY;
-            
-            posTarget.y = pageY * self.contentSizeInPoints.height;
-            
-            [self setScrollPosition:posTarget animated:YES];
-            
-            _velocity = CGPointZero;
-        }
-        [self scrollViewWillBeginDecelerating];
-		_decelerating = YES;
-        _isPanning = NO;
+        [self handleTouchEnded: velocityRaw];
     }
     else if (pgr.state == UIGestureRecognizerStateCancelled)
     {
@@ -687,10 +750,10 @@
     _velocity = CGPointZero;
     
     // Snap to a whole position
-    CGPoint pos = _contentNode.position;
+    CGPoint pos = self.camera.position;
     pos.x = roundf(pos.x);
     pos.y = roundf(pos.y);
-    _contentNode.position = pos;
+    self.camera.position = pos;
 }
 
 - (BOOL) isAncestor:(CCNode*) ancestor toNode:(CCNode*)node
@@ -705,7 +768,7 @@
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(CCTouch *)touch
 {
-    if (!_contentNode) return NO;
+    if (!self.camera) return NO;
     if (!self.visible) return NO;
     if (!self.userInteractionEnabled) return NO;
     
@@ -740,7 +803,7 @@
     }
     
     // Check that the gesture is in the scroll view
-    return [self hitTestWithWorldPos:[touch locationInWorld]];
+    return [self clippedHitTestWithWorldPos:[touch locationInWorld]];
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
@@ -776,6 +839,7 @@
     [super onExitTransitionDidStart];
 }
 
+#pragma mark Android
 #elif __CC_PLATFORM_ANDROID
 
 - (void) onEnterTransitionDidFinish
@@ -871,33 +935,13 @@
         
         if (phase == CCTouchPhaseBegan)
         {
-            [self scrollViewWillBeginDragging];
-            _animatingX = NO;
-            _animatingY = NO;
-            _rawTranslationStart = translation;
-            _startScrollPos = self.scrollPosition;
-            
-            _isPanning = YES;
-            [_contentNode stopActionByTag:kCCScrollViewActionXTag];
-            [_contentNode stopActionByTag:kCCScrollViewActionYTag];
+            [self touchBeganAtTranslation:translation];
         }
         else if (phase == CCTouchPhaseMoved)
         {
             // Calculate the translation in node space
-            CGPoint trans = ccpSub(_rawTranslationStart, translation);
-            
-            // Check if scroll directions has been disabled
-            if (!_horizontalScrollEnabled) trans.x = 0;
-            if (!_verticalScrollEnabled) trans.y = 0;
-            
-            if (_flipYCoordinates) trans.y = -trans.y;
-            
-            // Check bounds
-            CGPoint newPos = ccpAdd(_startScrollPos, trans);
-            
-            // Update position
-            [self panLayerToTarget:newPos];
-            
+            CGPoint translation = ccpSub(_rawTranslationStart, translation);
+            [self handlePanFrom:_startScrollPos delta:translation];
         }
         else if (phase == CCTouchPhaseEnded)
         {
@@ -961,62 +1005,7 @@
         }
         else if (phase == CCTouchPhaseEnded)
         {
-            // Calculate the velocity in node space
-            CGPoint ref = [dir convertToGL:CGPointZero];
-            ref = [self convertToNodeSpace:ref];
-            
-            CGPoint velocity = [dir convertToGL:velocityRaw];
-            velocity = [self convertToNodeSpace:velocity];
-            
-            _velocity = ccpSub(velocity, ref);
-            if (_flipYCoordinates) _velocity.y = -_velocity.y;
-            
-            // Check if scroll directions has been disabled
-            if (!_horizontalScrollEnabled) _velocity.x = 0;
-            if (!_verticalScrollEnabled) _velocity.y = 0;
-            [self scrollViewDidEndDraggingAndWillDecelerate:!CGPointEqualToPoint(_velocity, CGPointZero)];
-            
-            // Setup a target if paging is enabled
-            if (_pagingEnabled)
-            {
-                CGPoint posTarget = CGPointZero;
-                
-                // Calculate new horizontal page
-                int pageX = roundf(self.scrollPosition.x/self.contentSizeInPoints.width);
-                
-                if (fabs(_velocity.x) >= kCCScrollViewAutoPageSpeed && _horizontalPage == pageX)
-                {
-                    if (_velocity.x < 0) pageX += 1;
-                    else pageX -= 1;
-                }
-                
-                pageX = clampf(pageX, 0, self.numHorizontalPages -1);
-                _horizontalPage = pageX;
-                
-                posTarget.x = pageX * self.contentSizeInPoints.width;
-                
-                // Calculate new vertical page
-                int pageY = roundf(self.scrollPosition.y/self.contentSizeInPoints.height);
-                
-                if (fabs(_velocity.y) >= kCCScrollViewAutoPageSpeed && _verticalPage == pageY)
-                {
-                    if (_velocity.y < 0) pageY += 1;
-                    else pageY -= 1;
-                }
-                
-                pageY = clampf(pageY, 0, self.numVerticalPages -1);
-                _verticalPage = pageY;
-                
-                posTarget.y = pageY * self.contentSizeInPoints.height;
-                
-                [self setScrollPosition:posTarget animated:YES];
-                
-                _velocity = CGPointZero;
-            }
-            [self scrollViewWillBeginDecelerating];
-
-            _decelerating = YES;
-            _isPanning = NO;
+            [self handleTouchEnded:velocityRaw];
         }
         else if (phase == CCTouchPhaseCancelled)
         {
@@ -1031,6 +1020,7 @@
     return YES;
 }
 
+#pragma mark Mac
 #elif __CC_PLATFORM_MAC
 
 #define kCCScrollViewMinPagingDelta 7
@@ -1041,8 +1031,6 @@
 
     float deltaX = theEvent.deltaX;
     float deltaY = theEvent.deltaY;
-
-	[self scrollViewDidScroll];
 
     switch (theEvent.phase) {
         case NSEventPhaseBegan:
@@ -1076,7 +1064,6 @@
     if (_flipYCoordinates) delta.y = -delta.y;
     delta.x = -delta.x;
 
-    
     // Handle disabled x/y axis
     if (!_horizontalScrollEnabled) delta.x = 0;
     if (!_verticalScrollEnabled) delta.y = 0;
@@ -1125,9 +1112,12 @@
     {
         // Update scroll position
         CGPoint scrollPos = self.scrollPosition;
-        scrollPos = ccpAdd(delta, scrollPos);
+        scrollPos.x += delta.x;
+        scrollPos.y = (_flipYCoordinates ? -scrollPos.y : scrollPos.y) + delta.y;
 		self.scrollPosition = scrollPos;
     }
+    
+	[self scrollViewDidScroll];
 }
 
 #endif

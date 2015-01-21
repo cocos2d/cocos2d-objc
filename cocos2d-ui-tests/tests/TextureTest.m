@@ -66,16 +66,18 @@
 
 -(void) setupPVRa8LoadingTest
 {
-	// Doesn't seem to work?
 	CCSprite * img = [self loadAndDisplayImageNamed: @"test_image_a8.pvr" withTitle: @"8 bit PVR, alpha only. (With red color overlay)"];
-	[img setColor:[CCColor redColor]];
+    
+    img.shader = [CCShader positionTextureA8ColorShader];
+	img.color = [CCColor redColor];
 }
 
 -(void) setupPVRa8v3LoadingTest
 {
-	// Doesn't seem to work?
 	CCSprite * img = [self loadAndDisplayImageNamed: @"test_image_a8_v3.pvr" withTitle: @"8 bit PVR v3, alpha only. (With red color overlay)"];
-	[img setColor:[CCColor redColor]];
+    
+    img.shader = [CCShader positionTextureA8ColorShader];
+	img.color = [CCColor redColor];
 }
 
 -(void) setupPVRa88LoadingTest

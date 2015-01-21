@@ -30,7 +30,7 @@
  *  @since v3.3 and later
  *  @see CCColor
  */
-+(id)effectWithShadowOffset:(GLKVector2)shadowOffset shadowColor:(CCColor*)shadowColor blurRadius:(NSUInteger)blurRadius;
++(id)effectWithShadowOffset:(CGPoint)shadowOffset shadowColor:(CCColor*)shadowColor blurRadius:(NSUInteger)blurRadius;
 
 /**
  *  Initializes a CCEffectDropShadow object with a (5, -5) black drop shadow offset .
@@ -51,7 +51,7 @@
  *  @since v3.3 and later
  *  @see CCColor
  */
--(id)initWithShadowOffset:(GLKVector2)shadowOffset shadowColor:(CCColor*)shadowColor blurRadius:(NSUInteger)blurRadius;
+-(id)initWithShadowOffset:(CGPoint)shadowOffset shadowColor:(CCColor*)shadowColor blurRadius:(NSUInteger)blurRadius;
 
 
 /// -----------------------------------------------------------------------
@@ -62,7 +62,7 @@
  *  place the drop shadow at the bottom right.
  *  @since v3.3 and later
  */
-@property (nonatomic) GLKVector2 shadowOffset;
+@property (nonatomic) CGPoint shadowOffset;
 
 /** Color of the shadow. [CCColor blackColor] will result in an opaque black drop shadow.
  *  @since v3.3 and later

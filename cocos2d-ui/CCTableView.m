@@ -28,6 +28,11 @@
 #import "CGPointExtension.h"
 #import <objc/message.h>
 
+@interface CCScrollView()
+- (void)scrollViewDidScroll;
+@end
+
+
 #pragma mark Helper classes
 
 @interface CCTableView (Helper)
@@ -43,23 +48,6 @@
 @end
 
 @implementation CCTableViewCellHolder
-@end
-
-
-@interface CCTableViewContentNode : CCNode
-@end
-
-@implementation CCTableViewContentNode
-
-- (void) setPosition:(CGPoint)position
-{
-    [super setPosition:position];
-    
-    CCTableView* tableView = (CCTableView*)self.parent;
-    [tableView markVisibleRowsDirty];
-    [tableView updateVisibleRows];
-}
-
 @end
 
 
@@ -91,7 +79,8 @@
 
 - (void) pressedCell:(id)sender
 {
-    [(CCTableView*)(self.parent.parent) selectedRow:self.index];
+    // CCTableViewCell, CCTableViewContentNode, CCCamera, then finally: CCTableView
+    [(CCTableView*)(self.parent.parent.parent) selectedRow:self.index];
 }
 
 - (void) setIndex:(NSUInteger)index
@@ -116,8 +105,7 @@
     self = [super init];
     if (!self) return self;
     
-    self.contentNode = [CCTableViewContentNode node];
-    
+    self.contentNode = [CCNode node];
     self.contentNode.contentSizeType = CCSizeTypeMake(CCSizeUnitNormalized, CCSizeUnitPoints);
     
     _rowHeightUnit = CCSizeUnitPoints;
@@ -279,11 +267,17 @@
     _visibleRowsDirty = YES;
 }
 
+- (void)scrollViewDidScroll
+{
+    [self markVisibleRowsDirty];
+    [super scrollViewDidScroll];
+}
+
 - (void) updateVisibleRows
 {
     if (_visibleRowsDirty)
     {
-        [self showRowsForRange:[self visibleRangeForScrollPosition:-self.contentNode.position.y]];
+        [self showRowsForRange:[self visibleRangeForScrollPosition:-self.camera.position.y]];
         _visibleRowsDirty = NO;
     }
 }
