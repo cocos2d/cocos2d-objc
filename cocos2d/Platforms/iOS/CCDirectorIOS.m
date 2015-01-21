@@ -311,7 +311,9 @@
     if(!_animating)
         return;
     
+    [CCDirector bindDirector:self];
 	[self drawScene];
+    [CCDirector bindDirector:nil];
 }
 
 - (void)setAnimationInterval:(NSTimeInterval)interval

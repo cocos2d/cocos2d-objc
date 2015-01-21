@@ -52,6 +52,8 @@ extern EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup
     GLint _backingHeight;
 }
 
+@synthesize director = _director;
+
 + (Class) layerClass
 {
     return [CAEAGLLayer class];
@@ -91,7 +93,6 @@ extern EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup
 {
     if((self = [super initWithFrame:frame]))
     {
-        _director = [CCDirector currentDirector];
         _pixelFormat = format;
         _depthFormat = depth;
         _multiSampling = sampling;
@@ -115,6 +116,9 @@ extern EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup
         self.multipleTouchEnabled = YES;
         
         _touchEvent = [[CCTouchEvent alloc] init];
+        
+        _director = [CCDirector director];
+        _director.view = self;
     }
     
     return self;
@@ -364,30 +368,43 @@ extern EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     _touchEvent.timestamp = event.timestamp;
+    
+    [CCDirector bindDirector:_director];
     [_touchEvent updateTouchesBegan:touches];
     [_director.responderManager touchesBegan:_touchEvent.currentTouches withEvent:_touchEvent];
-    
+    [CCDirector bindDirector:nil];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
     _touchEvent.timestamp = event.timestamp;
+    
+    [CCDirector bindDirector:_director];
     [_touchEvent updateTouchesMoved:touches];
     [_director.responderManager touchesMoved:_touchEvent.currentTouches withEvent:_touchEvent];
+    [CCDirector bindDirector:nil];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     _touchEvent.timestamp = event.timestamp;
+    
+    [CCDirector bindDirector:_director];
     [_touchEvent updateTouchesEnded:touches];
     [_director.responderManager touchesEnded:_touchEvent.currentTouches withEvent:_touchEvent];
+    [CCDirector bindDirector:nil];
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
     _touchEvent.timestamp = event.timestamp;
+    
+    [CCDirector bindDirector:_director];
+    
+    [CCDirector bindDirector:_director];
     [_touchEvent updateTouchesCancelled:touches];
     [_director.responderManager touchesCancelled:_touchEvent.currentTouches withEvent:_touchEvent];
+    [CCDirector bindDirector:nil];
 }
 
 @end

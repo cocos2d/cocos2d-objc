@@ -108,25 +108,25 @@ extern NSString * cocos2dVersion(void);
     return [CCDirector currentDirector];
 }
 
+NSString * const CCDirectorCurrentKey = @"CCDirectorCurrentKey";
+
 + (CCDirector *)currentDirector
 {
-    NSThread* currentThread = [NSThread currentThread];
-    NSString* threadKey = [NSString stringWithFormat:@"%p", currentThread];
-    CCDirector* director = [currentThread.threadDictionary objectForKey:threadKey];
-    if(director == nil)
-    {
-        //
-        // Default Director is DisplayLink
-        //
-        if( [ [CCDirector class] isEqual:[self class]] )
-            director = [[CC_DIRECTOR_DEFAULT alloc] init];
-        else
-            director = [[self alloc] init];
-        
-        [currentThread.threadDictionary setObject:director forKey:threadKey];
-    }
-    
-    return director;
+    return [NSThread currentThread].threadDictionary[CCDirectorCurrentKey];
+}
+
++(void)bindDirector:(CCDirector *)director
+{
+	if(director){
+		[NSThread currentThread].threadDictionary[CCDirectorCurrentKey] = director;
+	} else {
+		[[NSThread currentThread].threadDictionary removeObjectForKey:CCDirectorCurrentKey];
+	}
+}
+
++(CCDirector *)director;
+{
+    return [[CC_DIRECTOR_DEFAULT alloc] init];
 }
 
 - (id) init
