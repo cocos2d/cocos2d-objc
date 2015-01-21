@@ -744,13 +744,15 @@ static CCTime inf = INFINITY;
 
 - (void)testLotsOfNodesWithOneActionEach
 {
-    CCScheduler *scheduler = [CCDirector sharedDirector].scheduler; // grab the shared scheduler.
-    scheduler.maxTimeStep = INFINITY;
-    scheduler.fixedUpdateInterval = INFINITY;
-    
+
     CCScene *parent = [[CCScene alloc] init];
     [parent onEnter]; // Activates the scene, so children can be scheduled.
     CCSprite *sprite;
+    
+    CCScheduler *scheduler = parent.scheduler; // grab the shared scheduler.
+    scheduler.maxTimeStep = INFINITY;
+    scheduler.fixedUpdateInterval = INFINITY;
+    
     
     // Create 10,000 nodes with one action each.
     // Each action repeats each second.
@@ -777,13 +779,13 @@ static CCTime inf = INFINITY;
 
 - (void)testManyActionsOnEachNode
 {
-    CCScheduler *scheduler = [CCDirector sharedDirector].scheduler; // grab the shared scheduler.
-    scheduler.maxTimeStep = INFINITY;
-    scheduler.fixedUpdateInterval = INFINITY;
-    
     CCScene *parent = [[CCScene alloc] init];
     [parent onEnter]; // Activates the scene, so children can be scheduled.
     CCSprite *sprite;
+    
+    CCScheduler *scheduler = parent.scheduler; // grab the shared scheduler.
+    scheduler.maxTimeStep = INFINITY;
+    scheduler.fixedUpdateInterval = INFINITY;
     
     // Create 100 nodes with 100 actions each.
     // Each action repeats each second.
@@ -809,13 +811,13 @@ static CCTime inf = INFINITY;
 
 - (void)testPerformanceAddingAndRemovingActions
 {
-    CCScheduler *scheduler = [CCDirector sharedDirector].scheduler; // grab the shared scheduler.
-    scheduler.maxTimeStep = INFINITY;
-    scheduler.fixedUpdateInterval = INFINITY;
-    
     CCScene *parent = [[CCScene alloc] init];
     [parent onEnter]; // Activates the scene, so children can be scheduled.
     CCSprite *sprite;
+    
+    CCScheduler *scheduler = parent.scheduler; // grab the shared scheduler.
+    scheduler.maxTimeStep = INFINITY;
+    scheduler.fixedUpdateInterval = INFINITY;
     
     // Add 1000 short lived actions
     for(int i=0; i<1000; i++){
