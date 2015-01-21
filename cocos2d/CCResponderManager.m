@@ -100,6 +100,10 @@
 {
     // rebuild responder list
     [self removeAllResponders];
+    
+    NSAssert([CCDirector currentDirector], @"Missing current director. Probably not bound.");
+    NSAssert([CCDirector currentDirector].runningScene, @"Missing current running scene.");
+    
     [self buildResponderList:[CCDirector currentDirector].runningScene];
     _dirty = NO;
 }

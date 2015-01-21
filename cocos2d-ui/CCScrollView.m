@@ -41,6 +41,7 @@
 #import "CCActionInstant.h"
 #import "CCResponderManager.h"
 #import "CCTouch.h"
+#import "CCDirector_Private.h"
 
 #pragma mark Constants
 
@@ -775,7 +776,9 @@
     // Check for responders above this scroll view (and not within it). If there are responders above touch should go to them instead.
     CGPoint touchWorldPos = [touch locationInWorld];
     
+    [CCDirector bindDirector:self.director];
     NSArray* responders = [self.director.responderManager nodesAtPoint:touchWorldPos];
+    // #warning probably should [CCDirector bindDirector:nil];
     BOOL foundSelf = NO;
     for (int i = (int)responders.count - 1; i >= 0; i--)
     {
@@ -792,6 +795,7 @@
             foundSelf = YES;
         }
     }
+    
     
     // Allow touches to children if view is moving slowly
     BOOL slowMove = (fabs(_velocity.x) < kCCScrollViewAllowInteractionBelowVelocity &&
