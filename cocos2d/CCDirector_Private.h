@@ -32,6 +32,13 @@
 	__weak NSThread *_runningThread;
 }
 
+// Create a new director.
+// This returns the correct director type for the current platform.
++(CCDirector *)director;
+
+// Set the current director for this thread.
++(void)bindDirector:(CCDirector *)director;
+
 /* Whether or not the replaced scene will receive the cleanup message.
  If the new scene is pushed, then the old scene won't receive the "cleanup" message.
  If the new scene replaces the old one, the it will receive the "cleanup" message.

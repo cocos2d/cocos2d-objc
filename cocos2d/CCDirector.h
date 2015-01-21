@@ -269,7 +269,7 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 
 /// View used by the director for rendering. The CC_VIEW macro equals UIView on iOS, NSOpenGLView on OS X and CCView on Android.
 /// @see CCView
-@property(nonatomic, strong) CC_VIEW<CCView> *view;
+@property(nonatomic, weak) CC_VIEW<CCView> *view;
 /** Sets an OpenGL projection
  @see CCDirectorProjection
  @see projectionMatrix */

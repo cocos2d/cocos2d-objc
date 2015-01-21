@@ -36,6 +36,8 @@
 #import "OALSimpleAudio.h"
 #import "CCPackageManager.h"
 
+#import "CCDirector_Private.h"
+
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 #import "CCMetalView.h"
 #endif
@@ -150,8 +152,6 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	CGRect bounds = [window_ bounds];
     
-    CCDirectorIOS* director = (CCDirectorIOS*) [CCDirector currentDirector];
-
 	// CCView creation
 	// viewWithFrame: size of the OpenGL view. For full screen use [_window bounds]
 	//  - Possible values: any CGRect
@@ -189,7 +189,11 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 		default: NSAssert(NO, @"Internal error: Graphics API not set up.");
 	}
 	
+    CCDirector *director = ccview.director;
 	director.wantsFullScreenLayout = YES;
+    
+#warning TODO temporary
+    [CCDirector bindDirector:director];
 	
 	// Display FSP and SPF
 	[director setDisplayStats:[config[CCSetupShowDebugStats] boolValue]];
@@ -201,7 +205,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	director.fixedUpdateInterval = [(config[CCSetupFixedUpdateInterval] ?: @(1.0/60.0)) doubleValue];
 	
 	// attach the openglView to the director
-	[director setView:ccview];
+//	[director setView:ccview];
 	
 	if([config[CCSetupScreenMode] isEqual:CCScreenModeFixed]){
         [self setupFixedScreenMode:config director:director];
