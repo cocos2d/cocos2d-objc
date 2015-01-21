@@ -284,6 +284,17 @@
     [[CCDirector sharedDirector].responderManager scrollWheel:theEvent];
 }
 
+- (void) keyDown:(NSEvent *)theEvent {
+    // dispatch keyboard to responder manager
+    [[CCDirector sharedDirector].responderManager keyDown:theEvent];
+}
+
+- (void) keyUp:(NSEvent *)theEvent {
+    // dispatch keyboard to responder manager
+    [[CCDirector sharedDirector].responderManager keyUp:theEvent];
+}
+
+
 @end
 
 #endif // __CC_PLATFORM_MAC

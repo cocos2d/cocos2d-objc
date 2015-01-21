@@ -347,7 +347,6 @@
                     CCNode *node = _responderList[index];
                     
                     // if the touch responder does not lock touch, it will receive a touchBegan if a touch is moved inside
-
                     if (!node.claimsUserInteraction  && [node clippedHitTestWithWorldPos:[[CCDirector sharedDirector] convertToGL:[touch locationInView:[CCDirector sharedDirector].view ]]])
                     {
                         // check if node has exclusive touch
@@ -715,6 +714,41 @@
 {
     
 }
+
+// -----------------------------------------------------------------
+#pragma mark - Mac keyboard handling -
+// -----------------------------------------------------------------
+
+- (void)keyDown:(NSEvent *)theEvent
+{
+  if (!_enabled) return;
+  [[CCDirector sharedDirector].view.window makeFirstResponder:[CCDirector sharedDirector].view];
+  
+  if (_dirty) [self buildResponderList];
+  
+  // scan backwards through mouse responders
+  for (int index = _responderListCount - 1; index >= 0; index --)
+  {
+    CCNode *node = _responderList[index];
+    [node keyDown:theEvent];
+  }
+}
+
+- (void)keyUp:(NSEvent *)theEvent
+{
+  if (!_enabled) return;
+  [[CCDirector sharedDirector].view.window makeFirstResponder:[CCDirector sharedDirector].view];
+  
+  if (_dirty) [self buildResponderList];
+  
+  // scan backwards through mouse responders
+  for (int index = _responderListCount - 1; index >= 0; index --)
+  {
+    CCNode *node = _responderList[index];
+    [node keyUp:theEvent];
+  }
+}
+
 
 // -----------------------------------------------------------------
 #pragma mark - Mac helper functions

@@ -241,6 +241,8 @@ enum
 - (void)mouseMoved:(NSEvent *)theEvent;
 - (void)mouseEntered:(NSEvent *)theEvent;
 - (void)mouseExited:(NSEvent *)theEvent;
+- (void)keyDown:(NSEvent *)theEvent;
+- (void)keyUp:(NSEvent *)theEvent;
 #endif
 
 @end
