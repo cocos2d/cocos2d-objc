@@ -560,11 +560,7 @@
             CCNode *node = _responderList[index];
             
             // if the mouse responder does not lock mouse, it will receive a mouseDown if mouse is moved inside
-<<<<<<< HEAD
-            if (!node.claimsUserInteraction && [node clippedHitTestWithWorldPos:[[CCDirector sharedDirector] convertEventToGL:theEvent]])
-=======
-            if (!node.claimsUserInteraction && [node hitTestWithWorldPos:[[CCDirector currentDirector] convertEventToGL:theEvent]])
->>>>>>> oleg/ccview_refactor_v4
+            if (!node.claimsUserInteraction && [node clippedHitTestWithWorldPos:[[CCDirector currentDirector] convertEventToGL:theEvent]])
             {
                 // begin the mouse down
                 _currentEventProcessed = YES;
