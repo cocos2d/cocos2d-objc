@@ -75,4 +75,22 @@ CGPointApplyGLKMatrix4(CGPoint p, GLKMatrix4 m){
 
 - (void) contentSizeChanged;
 
+
+/**
+ In certain special situations, you may wish to designate a node's parent without adding that node to the list
+ of children. In particular this can be useful when a node references another node in an atypical non-child
+ way, such as how the the CCClipNode tracks the stencil. The stencil is kept outside of the normal heirarchy,
+ but still needs a parent to function in a scene.
+ 
+ @since v4.0
+ */
+-(void)setRawParent:(CCNode *)parent;
+
+/**
+ You probably want "active" instead, but this tells you if the node is in the active scene wihtout regards
+ to its pause state.
+ @since v4.0
+ */
+-(BOOL) isInActiveScene;
+
 @end

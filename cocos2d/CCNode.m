@@ -29,6 +29,7 @@
 
 #import "CCNode_Private.h"
 
+#import "CCScene+Private.h"
 #import "CCDirector_Private.h"
 #import "CCScheduler_Private.h"
 
@@ -58,9 +59,6 @@
     
     // True to ensure reorder.
 	BOOL _isReorderChildDirty;
-	
-	// Scheduler used to schedule timers and updates/
-	CCScheduler *_scheduler;
 
     //Animation Manager used to handle CCB animations
     CCAnimationManager * _animationManager;
@@ -70,13 +68,21 @@
 	
 	// Number of paused parent or ancestor nodes.
 	int _pausedAncestors;
+    
+    // Blocks that are scheduled to run on this node when onEnter is called, contains scheduled stuff and actions.
+    NSMutableArray *_queuedActions;
 }
 
 static inline
 CCPhysicsBody *
 GetBodyIfRunning(CCNode *node)
 {
-	return (node->_isInActiveScene ? node->_physicsBody : nil);
+	return ([node isInActiveScene] ? node->_physicsBody : nil);
+}
+
+-(BOOL) isInActiveScene
+{
+    return _isInActiveScene;
 }
 
 GLKMatrix4
@@ -144,9 +150,6 @@ RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
 		_zOrder = 0;
 		_vertexZ = 0;
 		_visible = YES;
-
-		CCDirector *director = [CCDirector currentDirector];
-		_scheduler = [[director scheduler] retain];
         
 		// set default touch handling
 		self.hitAreaExpansion = 0.0f;
@@ -162,7 +165,8 @@ RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
 - (void)cleanup
 {
 	// Clean up timers and actions.
-	[_scheduler unscheduleTarget:self];
+	[self stopAllActions];
+	[self.scene.scheduler unscheduleTarget:self];
 
 	[_children makeObjectsPerformSelector:@selector(cleanup)];
     
@@ -182,9 +186,7 @@ RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
     [_name release];
     [_userObject release];
     [_children release];
-    
-    [_scheduler release];
-//    [_actionManager release];
+    [_queuedActions release];
     [_animationManager release];
     [_physicsBody release];
     
@@ -650,7 +652,8 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( child.parent == nil, @"child already added to another node. It can't be added again");
-
+    NSAssert( [child class] != [CCScene class], @"Scenes may not be added as children of other nodes or scenes. Only one scene can exist in a hierarchy.");
+    
 	if(! _children){
         _children = [[NSMutableArray alloc] init];
     }
@@ -666,7 +669,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	child->_pausedAncestors = _pausedAncestors + (_paused ? 1 : 0);
 	RecursivelyIncrementPausedAncestors(child, child->_pausedAncestors);
 	
-	if( _isInActiveScene ) {
+	if( [self isInActiveScene] ) {
 		[child onEnter];
 		[child onEnterTransitionDidFinish];
 	}
@@ -728,7 +731,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	CCNode *child = [self getChildByName:name recursively:NO];
 
 	if (child == nil)
-		CCLOG(@"cocos2d: removeChildByName: child not found!");
+		CCLOG(@"cocos2d: removeChildByName: child not found with name %@!", name);
 	else
 		[self removeChild:child cleanup:cleanup];
 }
@@ -746,7 +749,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		// IMPORTANT:
 		//  -1st do onExit
 		//  -2nd cleanup
-		if (_isInActiveScene)
+		if ([self isInActiveScene])
 		{
 			[c onExitTransitionDidStart];
 			[c onExit];
@@ -773,7 +776,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	// IMPORTANT:
 	//  -1st do onExit
 	//  -2nd cleanup
-	if (_isInActiveScene)
+	if ([self isInActiveScene])
 	{
 		[child onExitTransitionDidStart];
 		[child onExit];
@@ -799,6 +802,12 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 {
     if(_parent) [self removeFromParentAndCleanup:NO];
     [parent addChild:self];
+}
+
+
+-(void)setRawParent:(CCNode *)parent
+{
+    _parent = parent;
 }
 
 - (void) sortAllChildren
@@ -971,7 +980,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 	}
 	
 	if(physicsBody != _physicsBody){
-		if(_isInActiveScene){
+		if([self isInActiveScene]){
 			[self teardownPhysics];
 			[self setupPhysicsBody:physicsBody];
 		}
@@ -1005,11 +1014,14 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 
 -(void) onEnter
 {
-	[_children makeObjectsPerformSelector:@selector(onEnter)];
+    #warning Once CCDirector cleanup is done, we'll be able to add this assertion back in. Right now, it's hard to create complete scenes when writing unit tests, since the director is a singleton.
+    //NSAssert(self.scene, @"Missing scene on node. Was it not added to the hierarchy?");
+    
+    [_children makeObjectsPerformSelector:@selector(onEnter)];
 	
 	[self setupPhysicsBody:_physicsBody];
-	[_scheduler scheduleTarget:self];
-	
+	[self.scene.scheduler scheduleTarget:self];
+    
 	BOOL wasRunning = self.active;
 	_isInActiveScene = YES;
 	
@@ -1021,6 +1033,12 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
     if(_animationManager) {
         [_animationManager performSelector:@selector(onEnter)];
     }
+    
+    // Add queued actions or scheduled code, if needed:
+    for( dispatch_block_t block in _queuedActions){
+        block();
+    }
+    _queuedActions = nil;
 	
 	[self wasRunning:wasRunning];
 }
@@ -1051,35 +1069,35 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 -(CCAction*) runAction:(CCAction*) action
 {
 	NSAssert( action != nil, @"Argument must be non-nil");
-	[_scheduler addAction:action target:self paused:!self.active];
+	[self.scheduler addAction:action target:self paused:!self.active];
 	return action;
 }
 
 -(void) stopAllActions
 {
-	[_scheduler removeAllActionsFromTarget:self];
+	[self.scheduler removeAllActionsFromTarget:self];
 }
 
 -(void) stopAction: (CCAction*) action
 {
-	[_scheduler removeAction:action fromTarget:self];
+	[self.scheduler removeAction:action fromTarget:self];
 }
 
 -(void) stopActionByTag:(NSInteger)aTag
 {
 	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
-	[_scheduler removeActionByTag:aTag target:self];
+	[self.scheduler removeActionByTag:aTag target:self];
 }
 
 -(CCAction*) getActionByTag:(NSInteger) aTag
 {
 	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
-	return 	[_scheduler getActionByTag:aTag target:self];
+	return 	[self.scheduler getActionByTag:aTag target:self];
 }
 
 -(NSArray *) actions
 {
-    return [_scheduler actionsForTarget:self];
+    return [self.scheduler actionsForTarget:self];
 }
 
 -(CCAnimationManager*)animationManager
@@ -1103,22 +1121,13 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 
 -(CCTimer *) scheduleBlock:(CCTimerBlock)block delay:(CCTime)delay
 {
-	return [_scheduler scheduleBlock:block forTarget:self withDelay:delay];
+	return [self.scheduler scheduleBlock:block forTarget:self withDelay:delay];
 }
 
--(void) setScheduler:(CCScheduler *)scheduler
-{
-	if( scheduler != _scheduler ) {
-		[_scheduler unscheduleTarget:self];
-        
-        [_scheduler autorelease];
-		_scheduler = [scheduler retain];
-	}
-}
 
 -(CCScheduler*) scheduler
 {
-	return _scheduler;
+	return self.scene.scheduler;
 }
 
 -(CCTimer *) schedule:(SEL)selector interval:(CCTime)interval
@@ -1132,7 +1141,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
     
     CCTimer *currentTimerForSelector = nil;
     
-    for (CCTimer *timer in [_scheduler timersForTarget:self])
+    for (CCTimer *timer in [self.scheduler timersForTarget:self])
     {
         if([selectorName isEqual:timer.userData])
         {
@@ -1156,7 +1165,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 {
 	NSString *selectorName = NSStringFromSelector(selector);
 	
-	for(CCTimer *timer in [_scheduler timersForTarget:self]){
+	for(CCTimer *timer in [self.scheduler timersForTarget:self]){
 		if([selectorName isEqual:timer.userData]){
 			[timer invalidate];
 			return YES;
@@ -1177,7 +1186,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 	}
 	
 	void (*imp)(id, SEL, CCTime) = (__typeof(imp))[self methodForSelector:selector];
-	CCTimer *timer = [_scheduler scheduleBlock:^(CCTimer *t){
+	CCTimer *timer = [self.scheduler scheduleBlock:^(CCTimer *t){
 		imp(self, selector, t.deltaTime);
 	} forTarget:self withDelay:delay];
 	
@@ -1202,7 +1211,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 
 -(void)unscheduleAllSelectors
 {
-	for(CCTimer *timer in [_scheduler timersForTarget:self]){
+	for(CCTimer *timer in [self.scheduler timersForTarget:self]){
 		if([timer.userData isKindOfClass:[NSString class]]) [timer invalidate];
 	}
 }
@@ -1213,11 +1222,11 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 	BOOL isRunning = self.active;
 	
 	if(isRunning && !wasRunning){
-		[_scheduler setPaused:NO target:self];
+		[self.scheduler setPaused:NO target:self];
 //		[_actionManager resumeTarget:self];
         [_animationManager setPaused:NO];
 	} else if(!isRunning && wasRunning){
-		[_scheduler setPaused:YES target:self];
+		[self.scheduler setPaused:YES target:self];
 //		[_actionManager pauseTarget:self];
         [_animationManager setPaused:YES];
 	}
@@ -1226,7 +1235,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 
 -(BOOL)active
 {
-	return (_isInActiveScene && !_paused && _pausedAncestors == 0);
+	return ([self isInActiveScene] && !_paused && _pausedAncestors == 0);
 }
 
 -(void)setPaused:(BOOL)paused

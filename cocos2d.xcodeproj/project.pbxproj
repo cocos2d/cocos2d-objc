@@ -106,6 +106,7 @@
 		75F10CC01A65E1E7008E737B /* CCScheduler_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 75F10CBF1A65E1E7008E737B /* CCScheduler_Private.h */; };
 		75F9BF711A3904D7009185BF /* CCViewportNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 75F9BF6F1A3904D7009185BF /* CCViewportNode.h */; };
 		75F9BF721A3904D7009185BF /* CCViewportNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F9BF701A3904D7009185BF /* CCViewportNode.m */; };
+		750530291A54B21F009AEFA8 /* CCScene+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 750530281A54B21F009AEFA8 /* CCScene+Private.h */; };
 		7A4037C019E37108007B6E8F /* libObjectAL (Mac).a in Frameworks */ = {isa = PBXBuildFile; fileRef = D28B2E7E19CBA89A00DC6E08 /* libObjectAL (Mac).a */; };
 		7A4037C219E37117007B6E8F /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A4037C119E37117007B6E8F /* GLKit.framework */; };
 		7A4037C419E3711D007B6E8F /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A4037C319E3711D007B6E8F /* ApplicationServices.framework */; };
@@ -1182,11 +1183,13 @@
 		5BC1DE291A2E2099009C2E67 /* NSEvent+CC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSEvent+CC.m"; sourceTree = "<group>"; };
 		5BC3CB5719626FA000C4F0D0 /* CCGestureListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCGestureListener.h; path = Android/CCGestureListener.h; sourceTree = "<group>"; };
 		5BC3CB5819626FA000C4F0D0 /* CCGestureListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCGestureListener.m; path = Android/CCGestureListener.m; sourceTree = "<group>"; };
-		5BF32696195F947800D9A51A /* CCActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCActivity.h; path = Android/CCActivity.h; sourceTree = "<group>"; };
-		5BF32697195F947800D9A51A /* CCActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCActivity.m; path = Android/CCActivity.m; sourceTree = "<group>"; };
 		75F10CBF1A65E1E7008E737B /* CCScheduler_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScheduler_Private.h; sourceTree = "<group>"; };
 		75F9BF6F1A3904D7009185BF /* CCViewportNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCViewportNode.h; sourceTree = "<group>"; };
 		75F9BF701A3904D7009185BF /* CCViewportNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCViewportNode.m; sourceTree = "<group>"; };
+		5BF3267A195F8D8800D9A51A /* cocos2dJava.jar */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = archive.jar; path = cocos2dJava.jar; sourceTree = BUILT_PRODUCTS_DIR; };
+		5BF3268C195F8E0300D9A51A /* CCActivity.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = CCActivity.java; sourceTree = "<group>"; };
+		5BF3268D195F8E0300D9A51A /* CCGLView.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = CCGLView.java; sourceTree = "<group>"; };
+		750530281A54B21F009AEFA8 /* CCScene+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCScene+Private.h"; sourceTree = "<group>"; };
 		7A4037A819E37038007B6E8F /* libcocos2d-mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d-mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A4037C119E37117007B6E8F /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/GLKit.framework; sourceTree = DEVELOPER_DIR; };
 		7A4037C319E3711D007B6E8F /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/ApplicationServices.framework; sourceTree = DEVELOPER_DIR; };
@@ -1677,6 +1680,7 @@
 			isa = PBXGroup;
 			children = (
 				5018F2600DFDEAFF00C013A5 /* CCScene.h */,
+				750530281A54B21F009AEFA8 /* CCScene+Private.h */,
 				5018F2610DFDEAFF00C013A5 /* CCScene.m */,
 				A6DC4E0718055DCC00C280A6 /* CCTransition.h */,
 				A6DC4E0818055DCC00C280A6 /* CCTransition.m */,
@@ -2405,6 +2409,7 @@
 				83E1A88A19C8ACDC000A3BCA /* CCPackageInstaller.h in Headers */,
 				B7EE6A1E181AE34600B983FE /* CCSlider.h in Headers */,
 				A003AC8C1657071100C7B792 /* ccFPSImages.h in Headers */,
+				750530291A54B21F009AEFA8 /* CCScene+Private.h in Headers */,
 				B74C2B9B17BDA63A00A829C0 /* CCSprite9Slice.h in Headers */,
 				B77060CF18341AD50043CC67 /* CCBReader_Private.h in Headers */,
 				D24161021958F6EE003673BD /* CCBAnimationManager.h in Headers */,

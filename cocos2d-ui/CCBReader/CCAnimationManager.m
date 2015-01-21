@@ -99,9 +99,10 @@ static NSInteger ccbAnimationManagerID = 0;
 
 -(void) onEnter {
     // Setup Scheduler
-    _scheduler = [[CCDirector currentDirector] scheduler];
-    [_scheduler scheduleTarget:self];
-    [_scheduler setPaused:NO target:self];
+#warning need to set up scheduler for animation manager
+//    _scheduler = [[CCDirector sharedDirector] scheduler];
+//    [_scheduler scheduleTarget:self];
+//    [_scheduler setPaused:NO target:self];
 }
 
 - (void)addNode:(CCNode*)node andSequences:(NSDictionary*)seq
@@ -644,8 +645,8 @@ static NSInteger ccbAnimationManagerID = 0;
 }
 
 - (void)cleanup {
-    [_scheduler setPaused:YES target:self];
-	[_scheduler unscheduleTarget:self];
+//    [_scheduler setPaused:YES target:self];
+//	[_scheduler unscheduleTarget:self];
     [self clearAllActions];
 }
 

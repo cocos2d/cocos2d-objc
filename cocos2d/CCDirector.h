@@ -221,9 +221,6 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 	/* window size in pixels */
 	CGSize	_winSizeInPixels;
 
-	/* scheduler associated with this director */
-	CCScheduler *_scheduler;
-	
 	NSMutableArray *_rendererPool;
 }
 

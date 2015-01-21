@@ -25,27 +25,25 @@
  *
  */
 
-// -----------------------------------------------------------------
+#import "CCScene+Private.h"
+#import "CCNode_Private.h"
 
-#import "CCScene.h"
+#import "CCActionManager.h"
 
 #import "CCDirector_Private.h"
 #import "CCLightCollection.h"
 #import "CCColor.h"
 
-// -----------------------------------------------------------------
-
 @implementation CCScene {
     __weak CCDirector *_director;
 }
+@synthesize actionManager = _actionManager;
 
-// -----------------------------------------------------------------
 
 -(CCScene *)scene
 {
     return self;
 }
-
 
 -(CCDirector *) director
 {
@@ -63,6 +61,7 @@
 		
 		self.colorRGBA = [CCColor blackColor];
         
+        _scheduler = [[CCScheduler alloc] init];
         _lights = [[CCLightCollection alloc] init];
 	}
 	

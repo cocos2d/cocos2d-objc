@@ -138,7 +138,7 @@
 	
 	XCTAssertTrue(!firstActionOccured, @"No action should happen yet!");
 	
-	[[[CCDirector currentDirector] scheduler] update: 1.0];
+	[scene.scheduler update: 1.0];
 
 	XCTAssertTrue(!firstActionOccured, @"Should not occur since this node had cleanup called on it.");
 }
@@ -173,7 +173,7 @@
 	[scene removeChild:first cleanup:NO];
 	[scene removeChild:second cleanup:YES];
 	
-	[[[CCDirector currentDirector] scheduler] update: 1.0];
+	[scene.scheduler update: 1.0];
 	
 	XCTAssertTrue(firstActionOccured);
 	XCTAssertTrue(!secondActionOccured, @"Cleaned up action should have unscheduled itself and should not occur.");

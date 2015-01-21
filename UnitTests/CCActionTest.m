@@ -26,6 +26,7 @@ CCNode *node;
     [super setUp];
     
     scene = [CCScene node];
+    [scene onEnter];
     
     startPos = ccp(0,0);
     endPos = ccp(2.0f,1.0f);
@@ -83,7 +84,7 @@ CCNode *node;
     [action step: 0.5f];
     XCTAssertEqualWithAccuracy(action.elapsed, 0.5f, accuracy, @"Elapsed time incorrect after stepping.");
     
-    XCTAssertTrue( (ccpDistance(node.position, startPos) - ccpDistance(startPos, endPos)) / 2.0f < accuracy, @"Node should have moved half the distance between start and end.");
+    XCTAssertEqualWithAccuracy( ccpDistance(node.position, startPos), ccpDistance(startPos, endPos) / 2.0f, accuracy, @"Node should have moved half the distance between start and end.");
     
     //Step the action to completion.
     [action step: 0.5f];

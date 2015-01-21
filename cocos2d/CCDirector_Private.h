@@ -44,10 +44,6 @@
  */
 @property (nonatomic, readwrite, strong) id	notificationNode;
 
-/* CCScheduler associated with this director
- */
-@property (nonatomic,readwrite,strong) CCScheduler *scheduler;
-
 /// Rect of the visible screen area in GL coordinates.
 @property(nonatomic, readonly) CGRect viewportRect;
 
