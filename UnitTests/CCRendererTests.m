@@ -1,15 +1,9 @@
-//
-//  CCFileUtilTests
-//
-//  Created by Andy Korth on December 6th, 2013.
-//
-//
 
 #import <XCTest/XCTest.h>
 #import "cocos2d.h"
 
 #import "CCRenderer_private.h"
-
+#import "CCDirector_Private.h"
 
 @interface NSValue()
 -(size_t)CCRendererSizeOf;
@@ -20,6 +14,17 @@
 @end
 
 @implementation CCRendererTests
+
+-(void) setUp
+{
+    [CCDirector bindDirector: [CCDirector director]];
+}
+
+-(void)tearDown
+{
+    [CCDirector bindDirector:nil];
+}
+
 
 -(void)testBlendModeCacheInterning
 {

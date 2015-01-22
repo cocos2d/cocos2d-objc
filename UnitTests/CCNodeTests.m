@@ -15,16 +15,17 @@
 
 @end
 
-@interface  CCDirector()
-+(void) resetSingleton;
-@end
 
 @implementation CCNodeTests
 
 -(void) setUp
 {
-	// force creation of a new currentDirector or state will leak between each test.
-	[CCDirector resetSingleton];
+    [CCDirector bindDirector: [CCDirector director]];
+}
+
+-(void)tearDown
+{
+    [CCDirector bindDirector:nil];
 }
 
 -(void)testGetChildByName

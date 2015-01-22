@@ -747,7 +747,7 @@ static CCTime inf = INFINITY;
 
     CCScene *parent = [[CCScene alloc] init];
     [parent onEnter]; // Activates the scene, so children can be scheduled.
-    CCSprite *sprite;
+    CCNode *sprite;
     
     CCScheduler *scheduler = parent.scheduler; // grab the shared scheduler.
     scheduler.maxTimeStep = INFINITY;
@@ -757,8 +757,7 @@ static CCTime inf = INFINITY;
     // Create 10,000 nodes with one action each.
     // Each action repeats each second.
     for(int i=0; i<10000; i++){
-        
-        sprite = [CCSprite spriteWithImageNamed:@"Sprites/bird.png"];
+        sprite = [CCNode node];
         [parent addChild:sprite];
         [sprite runAction:[CCActionRepeatForever actionWithAction:[CCActionRotateBy actionWithDuration:1 angle:CCRANDOM_MINUS1_1() * 90]]];
     }
@@ -781,7 +780,7 @@ static CCTime inf = INFINITY;
 {
     CCScene *parent = [[CCScene alloc] init];
     [parent onEnter]; // Activates the scene, so children can be scheduled.
-    CCSprite *sprite;
+    CCNode *sprite;
     
     CCScheduler *scheduler = parent.scheduler; // grab the shared scheduler.
     scheduler.maxTimeStep = INFINITY;
@@ -790,7 +789,7 @@ static CCTime inf = INFINITY;
     // Create 100 nodes with 100 actions each.
     // Each action repeats each second.
     for(int i=0; i<100; i++){
-        sprite = [CCSprite spriteWithImageNamed:@"Sprites/bird.png"];
+        sprite = [CCNode node];
         [parent addChild:sprite];
         for(int i=0; i<100; i++){
             [sprite runAction:[CCActionRepeatForever actionWithAction:[CCActionRotateBy actionWithDuration:1 angle:CCRANDOM_MINUS1_1() * 90]]];
@@ -813,7 +812,7 @@ static CCTime inf = INFINITY;
 {
     CCScene *parent = [[CCScene alloc] init];
     [parent onEnter]; // Activates the scene, so children can be scheduled.
-    CCSprite *sprite;
+    CCNode *sprite;
     
     CCScheduler *scheduler = parent.scheduler; // grab the shared scheduler.
     scheduler.maxTimeStep = INFINITY;
@@ -821,7 +820,7 @@ static CCTime inf = INFINITY;
     
     // Add 1000 short lived actions
     for(int i=0; i<1000; i++){
-        sprite = [CCSprite spriteWithImageNamed:@"Sprites/bird.png"];
+        sprite = [CCNode node];
         [parent addChild:sprite];
         CCAction * action =[CCActionRotateBy actionWithDuration:0.1 angle:1];
         [sprite runAction:action];

@@ -251,13 +251,6 @@ extern EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup
     
     // Issue #914 #924
     [_director reshapeProjection:CGSizeMake( _backingWidth, _backingHeight)];
-    
-    // Avoid flicker. Issue #350
-    // Only draw if there is something to draw, otherwise it actually creates a flicker of the current glClearColor
-    //	if(director.runningScene){
-    //		NSThread *thread = [director runningThread];
-    //		[director performSelector:@selector(drawScene) onThread:thread withObject:nil waitUntilDone:YES];
-    //	}
 }
 
 // Find or make a fence that is ready to use.

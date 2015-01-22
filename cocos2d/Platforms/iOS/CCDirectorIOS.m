@@ -135,14 +135,6 @@
 	[self createStatsLabel];
 }
 
--(void) reshapeProjection:(CGSize)newViewSize
-{
-	[super reshapeProjection:newViewSize];
-  
-	if( [_delegate respondsToSelector:@selector(directorDidReshapeProjection:)] )
-		[_delegate directorDidReshapeProjection:self];
-}
-
 #pragma mark Director Point Convertion
 
 -(CGPoint)convertTouchToGL:(CCTouch*)touch
