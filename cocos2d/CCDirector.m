@@ -384,7 +384,7 @@ CCDirectorStack()
 
 #if !__CC_PLATFORM_ANDROID
 		// Dump info once OpenGL was initilized
-		[[CCDeviceInfo sharedConfiguration] dumpInfo];
+		[[CCDeviceInfo sharedDeviceInfo] dumpInfo];
 #endif
 }
 
