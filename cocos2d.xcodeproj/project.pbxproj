@@ -101,12 +101,10 @@
 		5BC1DE2B1A2E2099009C2E67 /* NSEvent+CC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC1DE291A2E2099009C2E67 /* NSEvent+CC.m */; };
 		5BC3CB5919626FA000C4F0D0 /* CCGestureListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BC3CB5719626FA000C4F0D0 /* CCGestureListener.h */; };
 		5BC3CB5A19626FA000C4F0D0 /* CCGestureListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC3CB5819626FA000C4F0D0 /* CCGestureListener.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		5BF32698195F947800D9A51A /* CCActivity.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BF32696195F947800D9A51A /* CCActivity.h */; };
-		5BF32699195F947800D9A51A /* CCActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF32697195F947800D9A51A /* CCActivity.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -O0"; }; };
+		750530291A54B21F009AEFA8 /* CCScene+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 750530281A54B21F009AEFA8 /* CCScene+Private.h */; };
 		75F10CC01A65E1E7008E737B /* CCScheduler_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 75F10CBF1A65E1E7008E737B /* CCScheduler_Private.h */; };
 		75F9BF711A3904D7009185BF /* CCViewportNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 75F9BF6F1A3904D7009185BF /* CCViewportNode.h */; };
 		75F9BF721A3904D7009185BF /* CCViewportNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F9BF701A3904D7009185BF /* CCViewportNode.m */; };
-		750530291A54B21F009AEFA8 /* CCScene+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 750530281A54B21F009AEFA8 /* CCScene+Private.h */; };
 		7A4037C019E37108007B6E8F /* libObjectAL (Mac).a in Frameworks */ = {isa = PBXBuildFile; fileRef = D28B2E7E19CBA89A00DC6E08 /* libObjectAL (Mac).a */; };
 		7A4037C219E37117007B6E8F /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A4037C119E37117007B6E8F /* GLKit.framework */; };
 		7A4037C419E3711D007B6E8F /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A4037C319E3711D007B6E8F /* ApplicationServices.framework */; };
@@ -232,7 +230,6 @@
 		7A59472219E3730400F65F90 /* CCVector3.h in Headers */ = {isa = PBXBuildFile; fileRef = D2DDB08E19805E8400233D80 /* CCVector3.h */; };
 		7A59472319E3730400F65F90 /* CCVector4.h in Headers */ = {isa = PBXBuildFile; fileRef = D2DDB08F19805E8400233D80 /* CCVector4.h */; };
 		7A59472419E3730400F65F90 /* CCVector2.h in Headers */ = {isa = PBXBuildFile; fileRef = D2DDB09019805E8400233D80 /* CCVector2.h */; };
-		7A59472A19E3730500F65F90 /* CCActivity.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BF32696195F947800D9A51A /* CCActivity.h */; };
 		7A59472E19E3730600F65F90 /* CCDirectorAndroid.h in Headers */ = {isa = PBXBuildFile; fileRef = D285ECF6192EF5B2009F4E88 /* CCDirectorAndroid.h */; };
 		7A59473019E3730700F65F90 /* CCTouchAndroid.h in Headers */ = {isa = PBXBuildFile; fileRef = D23C5CBA194BC500007CA669 /* CCTouchAndroid.h */; };
 		7A59473219E3730800F65F90 /* CCGestureListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BC3CB5719626FA000C4F0D0 /* CCGestureListener.h */; };
@@ -361,7 +358,6 @@
 		7A59486C19E375AF00F65F90 /* CCMatrix4.m in Sources */ = {isa = PBXBuildFile; fileRef = D2DDB08D19805E8400233D80 /* CCMatrix4.m */; };
 		7A59487019E375B000F65F90 /* CCQuaternion.m in Sources */ = {isa = PBXBuildFile; fileRef = D2DDB09119805E8400233D80 /* CCQuaternion.m */; };
 		7A59487119E375B000F65F90 /* CCMatrix3.m in Sources */ = {isa = PBXBuildFile; fileRef = D2DDB09219805E8400233D80 /* CCMatrix3.m */; };
-		7A59487619E375B000F65F90 /* CCActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF32697195F947800D9A51A /* CCActivity.m */; };
 		7A59487A19E375B100F65F90 /* CCDirectorAndroid.m in Sources */ = {isa = PBXBuildFile; fileRef = D285ECF7192EF5B2009F4E88 /* CCDirectorAndroid.m */; };
 		7A59487E19E375B100F65F90 /* CCGestureListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC3CB5819626FA000C4F0D0 /* CCGestureListener.m */; };
 		7A59488119E375B200F65F90 /* CCMetalView.m in Sources */ = {isa = PBXBuildFile; fileRef = D3903B13199528B6003AA81A /* CCMetalView.m */; };
@@ -375,7 +371,7 @@
 		7A59489919E375B500F65F90 /* ccFPSImages.m in Sources */ = {isa = PBXBuildFile; fileRef = A003AC8E16572D6000C7B792 /* ccFPSImages.m */; };
 		7A59489C19E375B500F65F90 /* CCDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F2570DFDEAFF00C013A5 /* CCDirector.m */; };
 		7A5948A019E375B600F65F90 /* CCDeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 503862D911007181005D2C92 /* CCDeviceInfo.m */; };
-		7A5948A319E375B700F65F90 /* CCScheduler.m in Sources */ = {isa = PBXBuildFile; fileRef = 506602100E38A70D000B500E /* CCScheduler.m */; };
+		7A5948A319E375B700F65F90 /* CCScheduler.m in Sources */ = {isa = PBXBuildFile; fileRef = 506602100E38A70D000B500E /* CCScheduler.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7A5948A519E375B700F65F90 /* CCNoARC.m in Sources */ = {isa = PBXBuildFile; fileRef = D3903B0C1995288D003AA81A /* CCNoARC.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7A5948B019E375B900F65F90 /* CCPlatformTextFieldMac.m in Sources */ = {isa = PBXBuildFile; fileRef = 571CD02519649E03003D460C /* CCPlatformTextFieldMac.m */; };
 		7A5948B319E375B900F65F90 /* CCAnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D24160F81958F6EE003673BD /* CCAnimationManager.m */; };
@@ -782,7 +778,7 @@
 		D2FEB6C7194F6C9E00FC0574 /* CCScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F2610DFDEAFF00C013A5 /* CCScene.m */; };
 		D2FEB6C8194F6C9E00FC0574 /* CCTextureCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F2680DFDEAFF00C013A5 /* CCTextureCache.m */; };
 		D2FEB6CA194F6C9E00FC0574 /* CCParticleSystemBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5038B6B10E196CD8009A621E /* CCParticleSystemBase.m */; };
-		D2FEB6CC194F6C9E00FC0574 /* CCScheduler.m in Sources */ = {isa = PBXBuildFile; fileRef = 506602100E38A70D000B500E /* CCScheduler.m */; };
+		D2FEB6CC194F6C9E00FC0574 /* CCScheduler.m in Sources */ = {isa = PBXBuildFile; fileRef = 506602100E38A70D000B500E /* CCScheduler.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D2FEB6CD194F6C9E00FC0574 /* cocos2d.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A07B7A0E4CBCD300AAF0BB /* cocos2d.m */; };
 		D2FEB6CF194F6C9E00FC0574 /* CCBSequenceProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D2730B1822F4AA0054849B /* CCBSequenceProperty.m */; };
 		D2FEB6D1194F6C9E00FC0574 /* CCTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E260D718171D2000A0E872 /* CCTextField.m */; };
@@ -1183,13 +1179,10 @@
 		5BC1DE291A2E2099009C2E67 /* NSEvent+CC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSEvent+CC.m"; sourceTree = "<group>"; };
 		5BC3CB5719626FA000C4F0D0 /* CCGestureListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCGestureListener.h; path = Android/CCGestureListener.h; sourceTree = "<group>"; };
 		5BC3CB5819626FA000C4F0D0 /* CCGestureListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCGestureListener.m; path = Android/CCGestureListener.m; sourceTree = "<group>"; };
+		750530281A54B21F009AEFA8 /* CCScene+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCScene+Private.h"; sourceTree = "<group>"; };
 		75F10CBF1A65E1E7008E737B /* CCScheduler_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScheduler_Private.h; sourceTree = "<group>"; };
 		75F9BF6F1A3904D7009185BF /* CCViewportNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCViewportNode.h; sourceTree = "<group>"; };
 		75F9BF701A3904D7009185BF /* CCViewportNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCViewportNode.m; sourceTree = "<group>"; };
-		5BF3267A195F8D8800D9A51A /* cocos2dJava.jar */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = archive.jar; path = cocos2dJava.jar; sourceTree = BUILT_PRODUCTS_DIR; };
-		5BF3268C195F8E0300D9A51A /* CCActivity.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = CCActivity.java; sourceTree = "<group>"; };
-		5BF3268D195F8E0300D9A51A /* CCGLView.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; path = CCGLView.java; sourceTree = "<group>"; };
-		750530281A54B21F009AEFA8 /* CCScene+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCScene+Private.h"; sourceTree = "<group>"; };
 		7A4037A819E37038007B6E8F /* libcocos2d-mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d-mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A4037C119E37117007B6E8F /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/GLKit.framework; sourceTree = DEVELOPER_DIR; };
 		7A4037C319E3711D007B6E8F /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/ApplicationServices.framework; sourceTree = DEVELOPER_DIR; };
@@ -2120,8 +2113,6 @@
 			isa = PBXGroup;
 			children = (
 				D2A3CFA51947B51D003B7D0B /* Math */,
-				5BF32696195F947800D9A51A /* CCActivity.h */,
-				5BF32697195F947800D9A51A /* CCActivity.m */,
 				D285ECEE192EA92A009F4E88 /* CCGLView.h */,
 				D285ECEF192EA92A009F4E88 /* CCGLView.m */,
 				D285ECF6192EF5B2009F4E88 /* CCDirectorAndroid.h */,
@@ -2568,7 +2559,6 @@
 				7A59472219E3730400F65F90 /* CCVector3.h in Headers */,
 				7A59472319E3730400F65F90 /* CCVector4.h in Headers */,
 				7A59472419E3730400F65F90 /* CCVector2.h in Headers */,
-				7A59472A19E3730500F65F90 /* CCActivity.h in Headers */,
 				D2AB4B421A63C7400019215E /* CCGLFence.h in Headers */,
 				7A59472E19E3730600F65F90 /* CCDirectorAndroid.h in Headers */,
 				7A59473019E3730700F65F90 /* CCTouchAndroid.h in Headers */,
@@ -2712,7 +2702,6 @@
 				D24161161958F738003673BD /* CCAnimationManager+FrameAnimation.h in Headers */,
 				D27451AB19AD430A006DA0A1 /* CCEffectDropShadow.h in Headers */,
 				D2FEB664194F6C9E00FC0574 /* CCTiledMapObjectGroup.h in Headers */,
-				5BF32698195F947800D9A51A /* CCActivity.h in Headers */,
 				D2FEB665194F6C9E00FC0574 /* CCBSequence.h in Headers */,
 				D2DDB09819805E8400233D80 /* CCMatrix4.h in Headers */,
 				D2FEB667194F6C9E00FC0574 /* CCGLView.h in Headers */,
@@ -3223,7 +3212,6 @@
 				7A59487019E375B000F65F90 /* CCQuaternion.m in Sources */,
 				D22907B31A2F5E440038FF61 /* CCEffectOutline.m in Sources */,
 				7A59487119E375B000F65F90 /* CCMatrix3.m in Sources */,
-				7A59487619E375B000F65F90 /* CCActivity.m in Sources */,
 				D304BC291A1DA3CA005A0260 /* CCRenderableNode.m in Sources */,
 				7A59487A19E375B100F65F90 /* CCDirectorAndroid.m in Sources */,
 				7A59487E19E375B100F65F90 /* CCGestureListener.m in Sources */,
@@ -3359,7 +3347,6 @@
 				D2FEB719194F6C9E00FC0574 /* CCBsequence.m in Sources */,
 				D2FEB71A194F6C9E00FC0574 /* CCEffectPixellate.m in Sources */,
 				D2FEB71B194F6C9E00FC0574 /* CCActionCatmullRom.m in Sources */,
-				5BF32699195F947800D9A51A /* CCActivity.m in Sources */,
 				D2FEB71D194F6C9E00FC0574 /* CCRenderer.m in Sources */,
 				D2DDB09E19805E8400233D80 /* CCMatrix4.m in Sources */,
 				D2FEB720194F6C9E00FC0574 /* CCProgressNode.m in Sources */,
