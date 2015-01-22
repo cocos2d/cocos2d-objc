@@ -132,9 +132,9 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         [[self class] registerFontsFromAppBundle];
         if (!fontName) fontName = @"Helvetica";
         if (!fontSize) fontSize = 12;
-        
-				self.blendMode = [CCBlendMode premultipliedAlphaMode];
-        
+
+        self.blendMode = [CCBlendMode premultipliedAlphaMode];
+
         // other properties
         self.fontName = fontName;
         self.fontSize = fontSize;
@@ -477,7 +477,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     
     CGSize originalDimensions = _dimensions;
   
-    CGFloat scale = self.director.contentScaleFactor;
+    CGFloat scale = __ccContentScaleFactor;
     originalDimensions.width *= scale;
     originalDimensions.height *= scale;
     

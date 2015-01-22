@@ -66,6 +66,7 @@
 #pragma mark -
 #pragma mark Director - global variables (optimization)
 
+// TODO: This global should not also be a property on specific instances of CCDirector. it should be global. probably belongs on a different class.
 float __ccContentScaleFactor = 1;
 
 #define kDefaultFPS		60.0	// 60 frames per second
@@ -472,6 +473,7 @@ NSString * const CCDirectorCurrentKey = @"CCDirectorCurrentKey";
 	NSAssert( scene != nil, @"Argument must be non-nil");
 	NSAssert(_runningScene == nil, @"This command can only be used to start the CCDirector. There is already a scene present.");
 
+    scene.director = self;
 	[self pushScene:scene];
 	[self startAnimation];
 }
@@ -609,6 +611,7 @@ NSString * const CCDirectorCurrentKey = @"CCDirectorCurrentKey";
 {
     // the transition gets to become the running scene
     _sendCleanupToScene = YES;
+    scene.director = self;
     [transition startTransition:scene withDirector:self];
 }
 

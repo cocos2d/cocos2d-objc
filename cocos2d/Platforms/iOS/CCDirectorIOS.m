@@ -138,13 +138,10 @@
 // override default logic
 - (void)runWithScene:(CCScene*) scene
 {
-	NSAssert( scene != nil, @"Argument must be non-nil");
-	NSAssert(_runningScene == nil, @"This command can only be used to start the CCDirector. There is already a scene present.");
-	
-	[self pushScene:scene];
-
+    [super runWithScene:scene];
+    
+#warning Should find a better place for this "special anti-flickr draw call".
     [self drawScene];
-    [self startAnimation];
 }
 
 -(void) reshapeProjection:(CGSize)newViewSize
