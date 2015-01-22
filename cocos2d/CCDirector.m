@@ -468,30 +468,48 @@ NSString * const CCDirectorCurrentKey = @"CCDirectorCurrentKey";
 
 #pragma mark Director Scene Management
 
-- (void)runWithScene:(CCScene*) scene
-{
-	NSAssert( scene != nil, @"Argument must be non-nil");
-	NSAssert(_runningScene == nil, @"This command can only be used to start the CCDirector. There is already a scene present.");
 
-    scene.director = self;
-	[self pushScene:scene];
-	[self startAnimation];
+- (void)antiFlickrDrawCall
+{
+    // Questionable "anti-flickr", extra draw call:
+    // overridden for android.
+    [self drawScene];
 }
 
 - (void)presentScene:(CCScene *)scene
 {
-    if (_runningScene)
-        [self replaceScene:scene];
-    else
+    if (_runningScene) {
+        _sendCleanupToScene = YES;
+        [_scenesStack removeLastObject];
+        [_scenesStack addObject:scene];
+        _nextScene = scene;	// _nextScene is a weak ref
+    } else {
         [self runWithScene:scene];
+    }
 }
 
 - (void)presentScene:(CCScene *)scene withTransition:(CCTransition *)transition
 {
-    if (_runningScene)
-        [self replaceScene:scene withTransition:transition];
-    else
+    if (_runningScene){
+        _sendCleanupToScene = YES;
+        // the transition gets to become the running scene
+        [transition startTransition:scene withDirector:self];
+    } else {
         [self runWithScene:scene];
+    }
+}
+
+- (void)runWithScene:(CCScene*) scene
+{
+    NSAssert( scene != nil, @"Argument must be non-nil");
+    NSAssert(_runningScene == nil, @"This command can only be used to start the CCDirector. There is already a scene present.");
+    
+    scene.director = self;
+    [self pushScene:scene];
+    
+    [self antiFlickrDrawCall];
+    
+    [self startAnimation];
 }
 
 - (void) pushScene: (CCScene*) scene
@@ -587,36 +605,6 @@ NSString * const CCDirectorCurrentKey = @"CCDirectorCurrentKey";
 	_sendCleanupToScene = NO;
 }
 
-// -----------------------------------------------------------------
-
-- (void)replaceScene:(CCScene *)scene
-{
-	NSAssert( scene != nil, @"Argument must be non-nil");
-
-    if (_runningScene)
-    {
-        _sendCleanupToScene = YES;
-        [_scenesStack removeLastObject];
-        [_scenesStack addObject:scene];
-        _nextScene = scene;	// _nextScene is a weak ref
-    }
-    else
-    {
-        [self pushScene:scene];
-        [self startAnimation];
-    }
-}
-
-- (void)replaceScene:(CCScene *)scene withTransition:(CCTransition *)transition
-{
-    // the transition gets to become the running scene
-    _sendCleanupToScene = YES;
-    scene.director = self;
-    [transition startTransition:scene withDirector:self];
-}
-
-// -----------------------------------------------------------------
-
 - (void)startTransition:(CCTransition *)transition
 {
 	NSAssert(transition, @"Argument must be non-nil");
@@ -626,8 +614,6 @@ NSString * const CCDirectorCurrentKey = @"CCDirectorCurrentKey";
     [_scenesStack addObject:transition];
     _nextScene = transition;
 }
-
-// -----------------------------------------------------------------
 
 -(void) end
 {

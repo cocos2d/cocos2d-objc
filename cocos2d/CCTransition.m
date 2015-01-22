@@ -251,7 +251,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
         _outgoingScene = nil;
         
         // Start incoming scene
-        [[CCDirector sharedDirector] replaceScene:_incomingScene];
+        [[CCDirector sharedDirector] presentScene:_incomingScene];
         [_incomingScene onEnterTransitionDidFinish];
         [_incomingScene setPaused:NO];
         _incomingScene = nil;

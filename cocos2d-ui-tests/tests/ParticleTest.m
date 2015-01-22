@@ -283,7 +283,7 @@
 {
   //	Scene *s = [Scene node];
   //	[s addChild: [restartAction() node]];
-  //	[[Director currentDirector] replaceScene: s];
+  //	[[Director currentDirector] presentScene: s];
   
 	[_emitter resetSystem];
   [self.contentNode removeAllChildren ];

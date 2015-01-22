@@ -135,15 +135,6 @@
 	[self createStatsLabel];
 }
 
-// override default logic
-- (void)runWithScene:(CCScene*) scene
-{
-    [super runWithScene:scene];
-    
-#warning Should find a better place for this "special anti-flickr draw call".
-    [self drawScene];
-}
-
 -(void) reshapeProjection:(CGSize)newViewSize
 {
 	[super reshapeProjection:newViewSize];

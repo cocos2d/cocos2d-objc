@@ -119,7 +119,7 @@ static CGPoint scrollPosition;
     CCScene* test = [TestBase sceneWithTestName:@"CCLabelTTFTest"];
     CCTransition* transition = [CCTransition transitionMoveInWithDirection:CCTransitionDirectionLeft duration:0.3];
     
-    [[CCDirector currentDirector] replaceScene:test withTransition:transition];
+    [[CCDirector currentDirector] presentScene:test withTransition:transition];
 }
 
 - (void) selectedRow:(id)sender
@@ -132,7 +132,7 @@ static CGPoint scrollPosition;
     CCScene* test = [TestBase sceneWithTestName:className];
     CCTransition* transition = [CCTransition transitionMoveInWithDirection:CCTransitionDirectionLeft duration:0.3];
     
-    [[CCDirector currentDirector] replaceScene:test withTransition:transition];
+    [[CCDirector currentDirector] presentScene:test withTransition:transition];
 }
 
 - (CCTableViewCell*) tableView:(CCTableView*)tableView nodeForRowAtIndex:(NSUInteger) index

@@ -70,7 +70,7 @@
 
 /** The main loop is triggered again.
  Call this function only if [stopAnimation] was called earlier
- @warning Don't call this function to start the main loop. To run the main loop call runWithScene
+ @warning Don't call this function to start the main loop. To run the main loop call presentScene
  */
 -(void) startAnimation;
 
@@ -358,8 +358,6 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
  */
 - (void)presentScene:(CCScene *)scene withTransition:(CCTransition *)transition;
 
-// purposefully undocumented: is the same as calling presentScene:
-- (void) runWithScene:(CCScene*) scene;
 
 /**
  * Suspends the execution of the running scene, pushing it on the stack of suspended scenes.
@@ -403,12 +401,6 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
  *  @see popToRootScene
  */
 -(void) popToRootSceneWithTransition:(CCTransition *)transition;
-
-// purposefully undocumented: is the same as calling presentScene:
--(void) replaceScene: (CCScene*) scene;
-
-// purposefully undocumented: is the same as calling presentScene:withTransition:
-- (void)replaceScene:(CCScene *)scene withTransition:(CCTransition *)transition;
 
 /**
  *  Pushes the running scene onto the scene stack, and presents the incoming scene, using a transition

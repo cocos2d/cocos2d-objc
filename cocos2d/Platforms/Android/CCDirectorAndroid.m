@@ -91,16 +91,12 @@
 	[self createStatsLabel];
 }
 
+
 // override default logic
-- (void) runWithScene:(CCScene*) scene
+- (void)antiFlickrDrawCall
 {
-	NSAssert( scene != nil, @"Argument must be non-nil");
-	NSAssert(_runningScene == nil, @"This command can only be used to start the CCDirector. There is already a scene present.");
-	
-	[self pushScene:scene];
-    
-	NSThread *thread = [self runningThread];
-	[self performSelector:@selector(drawScene) onThread:thread withObject:nil waitUntilDone:YES];
+    NSThread *thread = [self runningThread];
+    [self performSelector:@selector(drawScene) onThread:thread withObject:nil waitUntilDone:YES];
 }
 
 -(void)end
