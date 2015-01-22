@@ -131,8 +131,6 @@
 		
 		[self setTexture:texture];
 		[self setTextureRect:rect rotated:rotated untrimmedSize:rect.size];
-        
-        _effectRenderer = [[CCEffectRenderer alloc] init];
 	}
 	
 	return self;
@@ -436,14 +434,18 @@
 
 -(void)setEffect:(CCEffect *)effect
 {
-    _effect = effect;
-    if (effect)
-    {
-        [self updateShaderUniformsFromEffect];
-    }
-    else
-    {
-        _shaderUniforms = nil;
+    if(effect != _effect){
+        _effect = effect;
+        
+        if(effect){
+            if(_effectRenderer == nil){
+                _effectRenderer = [[CCEffectRenderer alloc] init];
+            }
+            
+            [self updateShaderUniformsFromEffect];
+        } else {
+            _shaderUniforms = nil;
+        }
     }
 }
 
