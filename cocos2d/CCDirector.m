@@ -504,12 +504,12 @@ NSString * const CCDirectorCurrentKey = @"CCDirectorCurrentKey";
     NSAssert( scene != nil, @"Argument must be non-nil");
     NSAssert(_runningScene == nil, @"This command can only be used to start the CCDirector. There is already a scene present.");
     
-    scene.director = self;
     [self pushScene:scene];
     
+    scene.director = self;
     [self antiFlickrDrawCall];
     
-    [self startAnimation];
+    [self startRunLoop];
 }
 
 - (void) pushScene: (CCScene*) scene
@@ -633,7 +633,7 @@ NSString * const CCDirectorCurrentKey = @"CCDirectorCurrentKey";
 	// runWithScene might be executed after 'end'.
 	[_scenesStack removeAllObjects];
 
-	[self stopAnimation];
+	[self stopRunLoop];
 
 	_FPSLabel = nil, _SPFLabel=nil, _drawsLabel=nil;
 
@@ -758,19 +758,19 @@ NSString * const CCDirectorCurrentKey = @"CCDirectorCurrentKey";
 	_dt = 0;
 }
 
-- (void)startAnimation
+- (void)startRunLoop
 {
-    if([_delegate respondsToSelector:@selector(startAnimation)])
+    if([_delegate respondsToSelector:@selector(startRunLoop)])
     {
-        [_delegate startAnimation];
+        [_delegate startRunLoop];
     }
     
 	_nextDeltaTimeZero = YES;
 }
 
-- (void)stopAnimation
+- (void)stopRunLoop
 {
-	CCLOG(@"cocos2d: Director#stopAnimation. Override me");
+	CCLOG(@"cocos2d: Director#stopRunLoop. Override me");
 }
 
 - (void)setAnimationInterval:(NSTimeInterval)interval

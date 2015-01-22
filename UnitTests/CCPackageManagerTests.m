@@ -96,7 +96,7 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 
     [(AppController *)[UIApplication sharedApplication].delegate configureCocos2d];
     // Stop the normal cocos2d main loop from happening during the tests. We will step it manually.
-    [[CCDirector currentDirector] stopAnimation];
+    [[CCDirector currentDirector] stopRunLoop];
     
     self.packageManager = [[CCPackageManager alloc] init];
     _packageManager.delegate = self;

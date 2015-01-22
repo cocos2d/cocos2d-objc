@@ -323,7 +323,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 -(void) applicationDidEnterBackground:(UIApplication*)application
 {
 	if([CCDirector currentDirector].animating) {
-		[[CCDirector currentDirector] stopAnimation];
+		[[CCDirector currentDirector] stopRunLoop];
 	}
 	[[CCPackageManager sharedManager] savePackages];
 }
@@ -331,7 +331,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 -(void) applicationWillEnterForeground:(UIApplication*)application
 {
 	if([CCDirector currentDirector].animating == NO) {
-		[[CCDirector currentDirector] startAnimation];
+		[[CCDirector currentDirector] startRunLoop];
 	}
 }
 

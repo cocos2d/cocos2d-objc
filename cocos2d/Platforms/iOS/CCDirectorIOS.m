@@ -188,12 +188,12 @@
 //		[_delegate willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 //}
 
--(void) startAnimationIfPossible
+-(void) startRunLoopIfPossible
 {
     UIApplicationState state = UIApplication.sharedApplication.applicationState;
     if (state != UIApplicationStateBackground)
     {
-        [self startAnimation];
+        [self startRunLoop];
     }
     else
     {
@@ -201,7 +201,7 @@
         // that there was a full screen view controller that caused additional stop animation calls
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^
         {
-            [self startAnimationIfPossible];
+            [self startRunLoopIfPossible];
         });
     }
 }
@@ -212,26 +212,26 @@
 
     // This line was presumably added to deal with apps entering and leaving the background.
     // ViewWillAppear is called many times on application launch (7 times for the unit tests) and it's also called
-    // by the OS outside of normal control, so it's very hard to actually call stopAnimation and expect it to work.
-//    [self startAnimationIfPossible];
+    // by the OS outside of normal control, so it's very hard to actually call stopRunLoop and expect it to work.
+//    [self startRunLoopIfPossible];
 }
 
 -(void) viewDidAppear:(BOOL)animated
 {
 	[super viewDidAppear:animated];
-//	[self startAnimation];
+//	[self startRunLoop];
 }
 
 -(void) viewWillDisappear:(BOOL)animated
 {
-//	[self stopAnimation];
+//	[self stopRunLoop];
 
 	[super viewWillDisappear:animated];
 }
 
 -(void) viewDidDisappear:(BOOL)animated
 {
-	[self stopAnimation];
+	[self stopRunLoop];
 
 	[super viewDidDisappear:animated];
 }
@@ -308,14 +308,14 @@
 {
 	_animationInterval = interval;
 	if(_displayLink){
-		[self stopAnimation];
-		[self startAnimation];
+		[self stopRunLoop];
+		[self startRunLoop];
 	}
 }
 
-- (void) startAnimation
+- (void) startRunLoop
 {
-	[super startAnimation];
+	[super startRunLoop];
 
     if(_animating)
         return;
@@ -337,14 +337,14 @@
     _animating = YES;
 }
 
-- (void) stopAnimation
+- (void) stopRunLoop
 {
     if(!_animating)
         return;
 
-    if([_delegate respondsToSelector:@selector(stopAnimation)])
+    if([_delegate respondsToSelector:@selector(stopRunLoop)])
     {
-        [_delegate stopAnimation];
+        [_delegate stopRunLoop];
     }
     
 	CCLOG(@"cocos2d: animation stopped");

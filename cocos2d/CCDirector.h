@@ -66,13 +66,13 @@
 /** Stops the animation. Nothing will be drawn. The main loop won't be triggered anymore.
  If you want to pause your animation call [pause] instead.
  */
--(void) stopAnimation;
+-(void) stopRunLoop;
 
 /** The main loop is triggered again.
- Call this function only if [stopAnimation] was called earlier
+ Call this function only if [stopRunLoop] was called earlier
  @warning Don't call this function to start the main loop. To run the main loop call presentScene
  */
--(void) startAnimation;
+-(void) startRunLoop;
 
 #pragma mark Director - Memory Helper
 
@@ -437,8 +437,8 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 @property (nonatomic, readonly,getter=isPaused) BOOL paused;
 /** Whether or not the Director is active (animating).
  @see paused
- @see startAnimation
- @see stopAnimation */
+ @see startRunLoop
+ @see stopRunLoop */
 @property (nonatomic, readonly,getter=isAnimating) BOOL animating;
 /** How many frames were called since the director started
  @see secondsPerFrame
@@ -472,15 +472,15 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
  When not animating, the director doesn't redraw the view at all. It is best to hide the view when not animating the director.
  If you need to keep showing the director's view use pause instead.
  
- @see startAnimation
+ @see startRunLoop
  */
--(void) stopAnimation;
+-(void) stopRunLoop;
 
 /** Begins drawing the screen. Scheduled timers and actions will run.
  
  @warning Don't call this function to start the main loop. To run the main loop call presentScene:
- @see stopAnimation */
--(void) startAnimation;
+ @see stopRunLoop */
+-(void) startRunLoop;
 
 #pragma mark Director - Memory Helper
 

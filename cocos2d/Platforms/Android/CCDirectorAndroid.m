@@ -142,14 +142,14 @@
 	_animationInterval = interval;
 	if(_displayLink)
     {
-		[self stopAnimation];
-		[self startAnimation];
+		[self stopRunLoop];
+		[self startRunLoop];
 	}
 }
 
-- (void) startAnimation
+- (void) startRunLoop
 {
-	[super startAnimation];
+	[super startRunLoop];
     
     if(_animating)
         return;
@@ -169,14 +169,14 @@
     _animating = YES;
 }
 
-- (void) stopAnimation
+- (void) stopRunLoop
 {
     if(!_animating)
         return;
     
-    if([_delegate respondsToSelector:@selector(stopAnimation)])
+    if([_delegate respondsToSelector:@selector(stopRunLoop)])
     {
-        [_delegate stopAnimation];
+        [_delegate stopRunLoop];
     }
     
 	CCLOG(@"cocos2d: animation stopped");

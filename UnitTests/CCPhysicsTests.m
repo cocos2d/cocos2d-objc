@@ -32,7 +32,7 @@
     [super setUp];
 
     [(AppController *)[UIApplication sharedApplication].delegate configureCocos2d];
-    [[CCDirector currentDirector] startAnimation];
+    [[CCDirector currentDirector] startRunLoop];
 }
 
 static void

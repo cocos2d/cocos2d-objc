@@ -389,14 +389,14 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
     return result;
 }
 
-- (void) startAnimation
+- (void) startRunLoop
 {
-	[super startAnimation];
+	[super startRunLoop];
 	
     if(_animating)
         return;
 
-	CCLOG(@"cocos2d: startAnimation");
+	CCLOG(@"cocos2d: startRunLoop");
     _runningThread = [NSThread mainThread];
 
 	gettimeofday( &_lastUpdate, NULL);
@@ -419,12 +419,12 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
     _animating = YES;
 }
 
-- (void) stopAnimation
+- (void) stopRunLoop
 {
     if(!_animating)
         return;
 
-	CCLOG(@"cocos2d: stopAnimation");
+	CCLOG(@"cocos2d: stopRunLoop");
 
 	if( displayLink ) {
 		CVDisplayLinkStop(displayLink);
