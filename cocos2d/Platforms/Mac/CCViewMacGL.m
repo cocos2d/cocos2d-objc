@@ -18,61 +18,16 @@
 #import "CCGLFence.h"
 #import "CCDirector_Private.h"
 
-
-
 @implementation CCViewMacGL {
     NSMutableArray *_fences;
 }
+@synthesize director = _director;
 
-- (id) initWithFrame:(NSRect)frameRect
-{
-    self = [self initWithFrame:frameRect shareContext:nil];
-    return self;
-}
 
-- (id) initWithFrame:(NSRect)frameRect shareContext:(NSOpenGLContext*)context
+-(void)awakeFromNib
 {
-    _director = [CCDirector currentDirector];
-    NSOpenGLPixelFormatAttribute attribs[] =
-    {
-        //		NSOpenGLPFAAccelerated,
-        //		NSOpenGLPFANoRecovery,
-        NSOpenGLPFADoubleBuffer,
-        NSOpenGLPFADepthSize, 24,
-        
-#if 0
-        // Must specify the 3.2 Core Profile to use OpenGL 3.2
-        NSOpenGLPFAOpenGLProfile,
-        NSOpenGLProfileVersion3_2Core,
-#endif
-        
-        0
-    };
-    
-    NSOpenGLPixelFormat *pixelFormat = [[NSOpenGLPixelFormat alloc] initWithAttributes:attribs];
-    
-    if (!pixelFormat)
-        CCLOG(@"No OpenGL pixel format");
-    
-    if( (self = [super initWithFrame:frameRect pixelFormat:pixelFormat]) ) {
-        _director = [CCDirector currentDirector];
-        if( context )
-            [self setOpenGLContext:context];
-        
-    }
-    
-    return self;
-}
-
-- (id)initWithCoder:(NSCoder *)coder
-{
-    if((self = [super initWithCoder:coder]))
-    {
-        _director = [CCDirector currentDirector];
-        return self;
-    }
-    
-    return self;
+    _director = [CCDirector director];
+    _director.view = self;
 }
 
 - (void) update
@@ -220,89 +175,119 @@
 - (void)mouseDown:(NSEvent *)theEvent
 {
     // dispatch mouse to responder manager
+    [CCDirector bindDirector:_director];
     [_director.responderManager mouseDown:theEvent];
+    [CCDirector bindDirector:nil];
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {
     // dispatch mouse to responder manager
+    [CCDirector bindDirector:_director];
     [_director.responderManager mouseDragged:theEvent];
+    [CCDirector bindDirector:nil];
 }
 
 - (void)mouseUp:(NSEvent *)theEvent
 {
     // dispatch mouse to responder manager
+    [CCDirector bindDirector:_director];
     [_director.responderManager mouseUp:theEvent];
+    [CCDirector bindDirector:nil];
 }
 
 - (void)mouseMoved:(NSEvent *)theEvent
 {
     // dispatch mouse to responder manager
+    [CCDirector bindDirector:_director];
     [_director.responderManager mouseMoved:theEvent];
+    [CCDirector bindDirector:nil];
 }
 
 - (void)mouseEntered:(NSEvent *)theEvent
 {
     // dispatch mouse to responder manager
+    [CCDirector bindDirector:_director];
     [_director.responderManager mouseEntered:theEvent];
+    [CCDirector bindDirector:nil];
 }
 
 - (void)mouseExited:(NSEvent *)theEvent
 {
     // dispatch mouse to responder manager
+    [CCDirector bindDirector:_director];
     [_director.responderManager mouseExited:theEvent];
+    [CCDirector bindDirector:nil];
 }
 
 - (void)rightMouseDown:(NSEvent *)theEvent
 {
     // dispatch mouse to responder manager
+    [CCDirector bindDirector:_director];
     [_director.responderManager rightMouseDown:theEvent];
+    [CCDirector bindDirector:nil];
 }
 
 - (void)rightMouseDragged:(NSEvent *)theEvent
 {
     // dispatch mouse to responder manager
+    [CCDirector bindDirector:_director];
     [_director.responderManager rightMouseDragged:theEvent];
+    [CCDirector bindDirector:nil];
 }
 
 - (void)rightMouseUp:(NSEvent *)theEvent
 {
     // dispatch mouse to responder manager
+    [CCDirector bindDirector:_director];
     [_director.responderManager rightMouseUp:theEvent];
+    [CCDirector bindDirector:nil];
 }
 
 - (void)otherMouseDown:(NSEvent *)theEvent
 {
     // dispatch mouse to responder manager
+    [CCDirector bindDirector:_director];
     [_director.responderManager otherMouseDown:theEvent];
+    [CCDirector bindDirector:nil];
 }
 
 - (void)otherMouseDragged:(NSEvent *)theEvent
 {
     // dispatch mouse to responder manager
+    [CCDirector bindDirector:_director];
     [_director.responderManager otherMouseDragged:theEvent];
+    [CCDirector bindDirector:nil];
 }
 
 - (void)otherMouseUp:(NSEvent *)theEvent
 {
     // dispatch mouse to responder manager
+    [CCDirector bindDirector:_director];
     [_director.responderManager otherMouseUp:theEvent];
+    [CCDirector bindDirector:nil];
 }
 
 - (void)scrollWheel:(NSEvent *)theEvent
 {
     // dispatch mouse to responder manager
+    [CCDirector bindDirector:_director];
     [_director.responderManager scrollWheel:theEvent];
+    [CCDirector bindDirector:nil];
 }
 
 - (void) keyDown:(NSEvent *)theEvent {
     // dispatch keyboard to responder manager
-    [[CCDirector sharedDirector].responderManager keyDown:theEvent];
+    [CCDirector bindDirector:_director];
+    [_director.responderManager keyDown:theEvent];
+    [CCDirector bindDirector:nil];
 }
 
 - (void) keyUp:(NSEvent *)theEvent {
     // dispatch keyboard to responder manager
-    [[CCDirector sharedDirector].responderManager keyUp:theEvent];
+    [CCDirector bindDirector:_director];
+    [_director.responderManager keyUp:theEvent];
+    [CCDirector bindDirector:nil];
 }
 
 
