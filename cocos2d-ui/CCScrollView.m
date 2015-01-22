@@ -34,7 +34,6 @@
 #endif
 
 #import "CCScrollView.h"
-#import "CCDirector.h"
 #import "CGPointExtension.h"
 #import "CCActionInterval.h"
 #import "CCActionEase.h"
@@ -712,6 +711,8 @@
 - (void)handlePan:(UIGestureRecognizer *)gestureRecognizer
 {
     CCDirector* dir = self.director;
+    [CCDirector bindDirector:self.director];
+    
     UIPanGestureRecognizer* pgr = (UIPanGestureRecognizer*)gestureRecognizer;
     
     CGPoint rawTranslation = [pgr translationInView:dir.view];
@@ -743,6 +744,7 @@
         
         [self setScrollPosition:self.scrollPosition animated:NO];
     }
+    [CCDirector bindDirector:nil];
 }
 
 - (void) handleTap:(UIGestureRecognizer *)gestureRecognizer
@@ -776,9 +778,7 @@
     // Check for responders above this scroll view (and not within it). If there are responders above touch should go to them instead.
     CGPoint touchWorldPos = [touch locationInWorld];
     
-    [CCDirector bindDirector:self.director];
     NSArray* responders = [self.director.responderManager nodesAtPoint:touchWorldPos];
-    // #warning probably should [CCDirector bindDirector:nil];
     BOOL foundSelf = NO;
     for (int i = (int)responders.count - 1; i >= 0; i--)
     {
@@ -914,6 +914,8 @@
 
 - (BOOL)onScroll:(AndroidMotionEvent *)start end:(AndroidMotionEvent *)end distanceX:(float)dx distanceY:(float)dy
 {
+    [CCDirector bindDirector:self.director];
+
     _isPanning = YES;
     _velocity = CGPointZero;
     
@@ -961,6 +963,9 @@
             [self setScrollPosition:self.scrollPosition animated:NO];
         }
     } waitUntilDone:YES];
+    
+    [CCDirector bindDirector:nil];
+
     return YES;
 }
 

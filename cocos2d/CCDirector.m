@@ -36,6 +36,7 @@
 #import "CCRenderer_Private.h"
 #import "CCRenderDispatch_Private.h"
 #import "CCScheduler_Private.h"
+#import "CCScene+Private.h"
 
 #import "CCScheduler.h"
 #import "CCTextureCache.h"
@@ -117,7 +118,8 @@ NSString * const CCDirectorCurrentKey = @"CCDirectorCurrentKey";
 +(void)bindDirector:(CCDirector *)director
 {
 	if(director){
-		[NSThread currentThread].threadDictionary[CCDirectorCurrentKey] = director;
+        NSAssert(self.currentDirector == nil, @"Director already bound. Setting it twice is a mistake!");
+        [NSThread currentThread].threadDictionary[CCDirectorCurrentKey] = director;
 	} else {
 		[[NSThread currentThread].threadDictionary removeObjectForKey:CCDirectorCurrentKey];
 	}
@@ -150,16 +152,10 @@ NSString * const CCDirectorCurrentKey = @"CCDirectorCurrentKey";
 		// FPS
 		_displayStats = NO;
 		_totalFrames = _frames = 0;
-
-		// paused ?
 		_isPaused = NO;
-
-		// running thread
 		_runningThread = nil;
 		
-		// touch manager
-		_responderManager = [ CCResponderManager responderManager ];
-		
+		_responderManager = [ [CCResponderManager alloc] initWithDirector:self ];
 		_winSizeInPixels = _winSizeInPoints = CGSizeZero;
 		
 		__ccContentScaleFactor = 1;
@@ -512,7 +508,7 @@ NSString * const CCDirectorCurrentKey = @"CCDirectorCurrentKey";
     
     [_scenesStack addObject:scene];
     _sendCleanupToScene = NO;
-    [transition startTransition:scene];
+    [transition startTransition:scene withDirector:self];
 }
 
 -(void) popScene
@@ -543,7 +539,7 @@ NSString * const CCDirectorCurrentKey = @"CCDirectorCurrentKey";
         [_scenesStack removeLastObject];
         CCScene * incomingScene = [_scenesStack lastObject];
         _sendCleanupToScene = YES;
-        [transition startTransition:incomingScene];
+        [transition startTransition:incomingScene withDirector:self];
     }
 }
 
@@ -555,7 +551,7 @@ NSString * const CCDirectorCurrentKey = @"CCDirectorCurrentKey";
 -(void) popToRootSceneWithTransition:(CCTransition *)transition {
 	[self popToRootScene];
 	_sendCleanupToScene = YES;
-    [transition startTransition:_nextScene];
+    [transition startTransition:_nextScene withDirector:self];
 }
 
 -(void) popToSceneStackLevel:(NSUInteger)level
@@ -613,7 +609,7 @@ NSString * const CCDirectorCurrentKey = @"CCDirectorCurrentKey";
 {
     // the transition gets to become the running scene
     _sendCleanupToScene = YES;
-    [transition startTransition:scene];
+    [transition startTransition:scene withDirector:self];
 }
 
 // -----------------------------------------------------------------
@@ -683,6 +679,7 @@ NSString * const CCDirectorCurrentKey = @"CCDirectorCurrentKey";
     if ([_nextScene isKindOfClass:[CCTransition class]])
     {
         _runningScene = nil;
+        _nextScene.director = self;
         _runningScene = _nextScene;
         _nextScene = nil;
         [_runningScene onEnter];
@@ -697,6 +694,8 @@ NSString * const CCDirectorCurrentKey = @"CCDirectorCurrentKey";
     {
         [_runningScene onExit];
         [_runningScene cleanup];
+        _runningScene.director = nil;
+
         _runningScene = nil;
         _runningScene = _nextScene;
         _nextScene = nil;

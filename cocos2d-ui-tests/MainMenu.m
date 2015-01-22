@@ -61,8 +61,7 @@ static CGPoint scrollPosition;
     static CCScene *mainMenuScene = nil;
     static dispatch_once_t once = 0L;
     dispatch_once(&once, ^{
-        mainMenuScene = [[CCScene alloc] initWithDirector:[CCDirector currentDirector]];
-        
+        mainMenuScene = [[CCScene alloc] init];
         // 'layer' is an autorelease object.
         MainMenu *node = [MainMenu node];
         

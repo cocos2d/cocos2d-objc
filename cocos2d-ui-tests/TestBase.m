@@ -118,15 +118,15 @@
 + (CCScene *) sceneWithTestName:(NSString*)testName
 {
 	// 'scene' is an autorelease object.
-    CCScene *scene = [[CCScene alloc] initWithDirector:[CCDirector currentDirector]];
-	
+    CCScene *scene = [[CCScene alloc] init ];
+    
 	// 'layer' is an autorelease object.
-  TestBase *node = [[NSClassFromString(testName) alloc] init];
-  if(node == nil){
+    TestBase *node = [[NSClassFromString(testName) alloc] init];
+    if(node == nil){
     NSAssert(NO, @"No class found with the name %@", testName);
-  }
-  
-  node.testName = testName;
+    }
+
+    node.testName = testName;
 	
 	// add layer as a child to scene
 	[scene addChild: node];

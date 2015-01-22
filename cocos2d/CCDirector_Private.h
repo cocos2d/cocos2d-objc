@@ -72,7 +72,7 @@
  */
 -(void) drawScene;
 
-- (void)startTransition:(CCTransition *)transition;
+- (void)startTransition:(CCScene *)scene;
 
 /// Get a renderer object to use for rendering.
 /// This method is thread safe.
@@ -97,6 +97,6 @@
 
 @interface CCTransition (Private)
 
-- (void)startTransition:(CCScene *)scene;
+- (void)startTransition:(CCScene *)scene withDirector:(CCDirector *) director;
 
 @end

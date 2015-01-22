@@ -33,6 +33,7 @@
 
 #import "CCRenderTexture.h"
 #import "CCColor.h"
+#import "CCScene+Private.h"
 
 // -----------------------------------------------------------------
 
@@ -147,8 +148,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 
 - (id)initWithDuration:(NSTimeInterval)duration
 {
-#warning Quick hack to get the shared director.
-    self = [super initWithDirector:[CCDirector currentDirector]];
+    self = [super init];
     NSAssert(self, @"Unable to create class");
     NSAssert(duration > 0,@"Invalid duration");
     
@@ -182,9 +182,9 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 
 // -----------------------------------------------------------------
 
-- (void)startTransition:(CCScene *)scene
+- (void)startTransition:(CCScene *)scene withDirector:(CCDirector *) director
 {
-    CCDirector *director = self.director;
+    scene.director = self.director = director;
     
     _incomingScene = scene;
     [_incomingScene onEnter];
@@ -198,11 +198,11 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     // create render textures
     // get viewport size
     CGRect rect = director.viewportRect;
-		CGSize size = rect.size;
-		
-		// Make sure we aren't rounding down.
-		size.width = ceil(rect.size.width);
-		size.height = ceil(rect.size.height);
+    CGSize size = rect.size;
+
+    // Make sure we aren't rounding down.
+    size.width = ceil(rect.size.width);
+    size.height = ceil(rect.size.height);
 
     // create texture for outgoing scene
     _outgoingTexture = [CCRenderTexture renderTextureWithWidth:size.width height:size.height pixelFormat:_transitionPixelFormat depthStencilFormat:_transitionDepthStencilFormat];
@@ -249,14 +249,13 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
         [_outgoingScene onExit];
         if ([CCDirector sharedDirector].sendCleanupToScene) [_outgoingScene cleanup];
         _outgoingScene = nil;
-				
-				
-				// Start incoming scene
+        
+        // Start incoming scene
         [[CCDirector sharedDirector] replaceScene:_incomingScene];
         [_incomingScene onEnterTransitionDidFinish];
         [_incomingScene setPaused:NO];
         _incomingScene = nil;
-        
+
         return;
     }
     

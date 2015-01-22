@@ -116,7 +116,9 @@ const CGSize FIXED_SIZE = {568, 384};
 	if(director.runningScene == nil) {
 		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
 		// and add the scene to the stack. The director will run it when it automatically when the view is displayed.
-		[director runWithScene: [_appDelegate startScene]];
+        [CCDirector bindDirector:director];
+        [director runWithScene: [_appDelegate startScene]];
+        [CCDirector bindDirector:nil];
 	}
 }
 @end
@@ -239,6 +241,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	[window_ makeKeyAndVisible];
     
     [self forceOrientation];
+    [CCDirector bindDirector:nil];
 }
 
 - (void)setupFlexibleScreenMode:(NSDictionary *)config director:(CCDirectorIOS *)director

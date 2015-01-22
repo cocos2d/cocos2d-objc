@@ -35,8 +35,9 @@
 #import "CCColor.h"
 
 @implementation CCScene {
-    __weak CCDirector *_director;
+
 }
+@synthesize director = _director;
 @synthesize actionManager = _actionManager;
 
 
@@ -45,22 +46,10 @@
     return self;
 }
 
--(CCDirector *) director
-{
-    return _director;
-}
-
 -(id)init
-{
-    // NO! use the other one!
-    abort();
-}
-
--(id)initWithDirector:(CCDirector*)director
 {
 	if((self = [super init]))
     {
-        _director = director;
 		CGSize s = [CCDirector currentDirector].designSize;
 		self.anchorPoint = ccp(0.0f, 0.0f);
 		[self setContentSize:s];
@@ -74,8 +63,6 @@
 	return( self );
 }
 
-// -----------------------------------------------------------------
-
 - (void)onEnter
 {
     [super onEnter];
@@ -84,8 +71,6 @@
     [[_director responderManager] markAsDirty];
 }
 
-// -----------------------------------------------------------------
-
 - (void)onEnterTransitionDidFinish
 {
     [super onEnterTransitionDidFinish];
@@ -93,8 +78,6 @@
     // mark starting scene as dirty, to make sure responder manager is updated
     [[_director responderManager] markAsDirty];
 }
-
-// -----------------------------------------------------------------
 
 @end
 

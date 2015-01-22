@@ -109,7 +109,7 @@ typedef NS_ENUM(NSInteger, CCMouseButton)
 #pragma mark - CCResponderManager
 
 @class CCNode;
-
+@class CCDirector;
 /**
  *  Defines the size of the responder buffer.
  *  This is the maximum number of individual responders which can be active at the same time.
@@ -129,20 +129,7 @@ enum
  *  Enables the responder manager.
  *  When the responder manager is disabled, all current touches will be cancelled and no further touch handling registered.
  */
-@property (nonatomic, assign, getter = isEnabled) BOOL enabled;     
-
-
-/// -----------------------------------------------------------------------
-/// @name Creating a CCResponderManager Object
-/// -----------------------------------------------------------------------
-
-/**
- *  CCResponderManager factory method.
- *
- *  @return The CCResponderManager Object.
- */
-+ (CCResponderManager*)responderManager;
-
+@property (nonatomic, assign, getter = isEnabled) BOOL enabled;
 
 /// -----------------------------------------------------------------------
 /// @name Initializing a CCResponderManager Object
@@ -153,7 +140,7 @@ enum
  *
  *  @return An initialized CCResponderManager Object.
  */
-- (id)init;
+- (id)initWithDirector:(CCDirector *)director;
 
 
 /// -----------------------------------------------------------------------

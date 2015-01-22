@@ -400,8 +400,6 @@ extern EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup
     _touchEvent.timestamp = event.timestamp;
     
     [CCDirector bindDirector:_director];
-    
-    [CCDirector bindDirector:_director];
     [_touchEvent updateTouchesCancelled:touches];
     [_director.responderManager touchesCancelled:_touchEvent.currentTouches withEvent:_touchEvent];
     [CCDirector bindDirector:nil];

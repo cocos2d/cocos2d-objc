@@ -62,6 +62,6 @@
 /// -----------------------------------------------------------------------
 
 /* Initialize the node. */
--(id)initWithDirector:(CCDirector*)director;
+-(id)init;
 
 @end
