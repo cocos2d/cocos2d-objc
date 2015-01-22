@@ -1038,6 +1038,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
     for( dispatch_block_t block in _queuedActions){
         block();
     }
+    [_queuedActions release];
     _queuedActions = nil;
 	
 	[self wasRunning:wasRunning];
@@ -1069,16 +1070,17 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 -(CCAction*) runAction:(CCAction*) action
 {
 	NSAssert( action != nil, @"Argument must be non-nil");
+    CCScheduler *scheduler = self.scheduler;
     
     __block CCAction *blockAction = action;
-    if(self.scheduler == nil){
-        if(_queuedActions == nil) _queuedActions = [NSMutableArray array];
+    if(scheduler == nil){
+        if(_queuedActions == nil) _queuedActions = [[NSMutableArray alloc] init];
         dispatch_block_t block = ^(){
             [self.scheduler addAction:action target:self paused:!self.active];
         };
         [_queuedActions addObject:[block copy]];
     }else{
-       	[self.scheduler addAction:action target:self paused:!self.active];
+       	[scheduler addAction:action target:self paused:!self.active];
     }
 
 	return action;
