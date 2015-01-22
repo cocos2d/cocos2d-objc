@@ -11,6 +11,13 @@
 #import "CCAppController.h"
 #import "CCScene.h"
 #import "CCBReader.h"
+#import "CCDeviceInfo.h"
+#import "CCAppDelegate.h"
+#import "CCTexture.h"
+#import "OALSimpleAudio.h"
+#import "CCPackageManager.h"
+#import "CCFileUtils.h"
+#import "ccUtils.h"
 
 #if __CC_PLATFORM_ANDROID
 
