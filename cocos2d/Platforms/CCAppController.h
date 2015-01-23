@@ -31,7 +31,6 @@
 
 @interface CCAppController : NSObject
 
-#if __CC_PLATFORM_MAC
 
 /// -----------------------------------------------------------------------
 /// @name Mac Specific
@@ -47,15 +46,29 @@
  */
 @property (weak) CCGLView *glView;
 
-#endif
+/**
+ *  The application window size to be displayed on mac.
+    Default value (480.0f, 320.0f)
+ *
+ *  @return CGSize
+ */
+- (CGSize)defaultWindowSize;
+
+
+/// -----------------------------------------------------------------------
+/// @name Application Setup
+/// -----------------------------------------------------------------------
+
 
 /**
- *  The name of the first scene to be displayed - by default this is "MainScene.ccb"
+ *  The name of the first scene to be displayed - by default this is "MainScene"
  */
 @property(nonatomic, copy) NSString *firstSceneName;
 
 /**
- *  Setup and configure cocos for the current platform. This method should be invoked from the entry point of the application.
+ *  Setup and configure cocos for the current platform. This method should be invoked from the entry point of
+*  the application.
  */
 - (void)setupApplication;
+
 @end

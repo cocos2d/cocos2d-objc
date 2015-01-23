@@ -25,6 +25,10 @@
 
 #endif
 
+#if __CC_PLATFORM_MAC
+#import "CCDirectorMac.h"
+#endif
+
 static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 {
     int scale = 1;
@@ -36,6 +40,17 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 @implementation CCAppController
 {
     NSDictionary *_cocosConfig;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self)
+    {
+        _firstSceneName = @"MainScene";
+    }
+
+    return self;
 }
 
 - (void)setupApplication
@@ -316,6 +331,14 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 #pragma mark Mac setup
 
+/*
+    Override to change mac window size
+*/
+-(CGSize)defaultWindowSize
+{
+    return CGSizeMake(480.0f, 320.0f);
+}
+
 #if __CC_PLATFORM_MAC
 
 -(void)setupMac
@@ -324,14 +347,6 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     [CCBReader configureCCFileUtils];
     [self applyConfigurationToCocos:_cocosConfig];
     [self runStartSceneMac];
-}
-
-/*
-    Override to change mac window size
-*/
--(CGSize)defaultWindowSize
-{
-    return CGSizeMake(480.0f, 320.0f);
 }
 
 - (NSDictionary*)macConfig
