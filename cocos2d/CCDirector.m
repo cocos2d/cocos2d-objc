@@ -375,7 +375,7 @@ static CCDirector *_sharedDirector = nil;
 #elif __CC_PLATFORM_ANDROID
         CGFloat scale = _view.contentScaleFactor;
 #else
-		//self.view.wantsBestResolutionOpenGLSurface = YES;
+		self.view.wantsBestResolutionOpenGLSurface = YES;
 		CGFloat scale = self.view.window.backingScaleFactor;
 #endif
 		
