@@ -26,10 +26,14 @@
 #import <Foundation/Foundation.h>
 #import "CCFileUtilsV2.h"
 #import "CCFile.h"
-#import "CCFileUtilsConstants.h"
 #import "CCFile_Private.h"
 #import "CCFileUtilsDatabaseProtocol.h"
 #import "CCFileMetaData.h"
+
+NSUInteger const ERROR_FILEUTILS_NO_SEARCH_PATHS = 20000;
+
+NSUInteger const ERROR_FILEUTILS_NO_FILE_FOUND = 20001;
+
 
 // Options are only used internally for now
 static NSString *const CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFILEUTILS_SEARCH_OPTION_SKIPRESOLUTIONSEARCH";

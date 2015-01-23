@@ -9,11 +9,11 @@
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
 #import "CCFile.h"
+#import "CCFile_Private.h"
 #import "CCFileUtilsV2.h"
 #import "FileSystemTestCase.h"
 #import "CCUnitTestHelperMacros.h"
 #import "CCFileUtilsDatabase.h"
-#import "CCFileUtilsConstants.h"
 
 @interface CCFileUtilsV2Tests : FileSystemTestCase
 
