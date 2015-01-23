@@ -482,10 +482,10 @@
 		_storingCharacters = NO;
 
 		CCTiledMapLayerInfo *layer = [_layers lastObject];
-        
-        NSData *decoded = [[NSData alloc] initWithBase64Encoding:_currentString];
-        NSAssert(decoded, @"Could not decode tilemap data.");
-
+		
+		NSData *decoded = [[NSData alloc] initWithBase64Encoding:_currentString];
+		NSAssert(decoded, @"Could not decode tilemap data.");
+		
 		if( _layerAttribs & (TMXLayerAttribGzip | TMXLayerAttribZlib) ) {
 			CGSize s = [layer layerSize];
 			int sizeHint = s.width * s.height * sizeof(uint32_t);

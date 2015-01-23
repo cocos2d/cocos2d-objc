@@ -969,8 +969,8 @@ static const float CCFPSLabelItemHeight = 32;
 	CGDataProviderRef imgDataProvider = CGDataProviderCreateWithCFData( (__bridge CFDataRef) nsdata);
 	CGImageRef imageRef = CGImageCreateWithPNGDataProvider(imgDataProvider, NULL, true, kCGRenderingIntentDefault);
 	CGDataProviderRelease(imgDataProvider);
-    
-    CCImage *image = [[CCImage alloc] initWithCGImage:imageRef contentScale:contentScale options:nil];
+	
+	CCImage *image = [[CCImage alloc] initWithCGImage:imageRef contentScale:contentScale options:nil];
 	CGImageRelease(imageRef);
     
 	CCTexture *texture = [[CCTexture alloc] initWithImage:image options:nil];
