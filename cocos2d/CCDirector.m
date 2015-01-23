@@ -184,8 +184,13 @@ NSString * const CCDirectorCurrentKey = @"CCDirectorCurrentKey";
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
 }
 
-- (void) drawScene
-{	
+- (void) mainLoopBody
+{
+    if(!_animating)
+        return;
+    
+    [CCDirector bindDirector:self];
+    
     /* calculate "global" dt */
 	[self calculateDeltaTime];
 
@@ -232,6 +237,7 @@ NSString * const CCDirectorCurrentKey = @"CCDirectorCurrentKey";
 		
 		if( _displayStats ) [self calculateMPF];
 	}
+    [CCDirector bindDirector:nil];
 }
 
 -(CCRenderer *)rendererFromPool
@@ -473,7 +479,7 @@ NSString * const CCDirectorCurrentKey = @"CCDirectorCurrentKey";
 {
     // Questionable "anti-flickr", extra draw call:
     // overridden for android.
-    [self drawScene];
+    [self mainLoopBody];
 }
 
 - (void)presentScene:(CCScene *)scene

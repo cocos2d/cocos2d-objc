@@ -288,12 +288,7 @@
 
 -(void) mainLoop:(id)sender
 {
-    if(!_animating)
-        return;
-    
-    [CCDirector bindDirector:self];
-	[self drawScene];
-    [CCDirector bindDirector:nil];
+	[self mainLoopBody];
 }
 
 - (void)setAnimationInterval:(NSTimeInterval)interval

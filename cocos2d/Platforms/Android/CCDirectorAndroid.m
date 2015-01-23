@@ -96,7 +96,7 @@
 - (void)antiFlickrDrawCall
 {
     NSThread *thread = [self runningThread];
-    [self performSelector:@selector(drawScene) onThread:thread withObject:nil waitUntilDone:YES];
+    [self performSelector:@selector(mainLoopBody) onThread:thread withObject:nil waitUntilDone:YES];
 }
 
 -(void)end
@@ -132,7 +132,7 @@
 {
     EGLContext *ctx = [[CCActivity currentActivity] pushApplicationContext];
     
-	[self drawScene];
+	[self mainLoopBody];
     
     [[CCActivity currentActivity] popApplicationContext:ctx];
 }

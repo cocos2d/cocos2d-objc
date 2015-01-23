@@ -81,7 +81,7 @@
 {
 	if( (self = [super init]) ) {
 		_isFullScreen = NO;
-		_resizeMode = kCCDirectorResize_AutoScale;
+		_resizeMode = kCCDirectorResize_NoScale;
 
 		_originalWinSizeInPoints = CGSizeZero;
 		_fullScreenWindow = nil;
@@ -266,8 +266,8 @@
 
 -(void) setProjection:(CCDirectorProjection)projection
 {
-	CGSize sizePoint = _winSizeInPoints;
-	if( _resizeMode == kCCDirectorResize_AutoScale && ! CGSizeEqualToSize(_originalWinSizeInPoints, CGSizeZero ) ) {
+	CGSize sizePoint = _winSizeInPixels;
+   	if( _resizeMode == kCCDirectorResize_AutoScale && ! CGSizeEqualToSize(_originalWinSizeInPoints, CGSizeZero ) ) {
 		sizePoint = _originalWinSizeInPoints;
 	}
 
@@ -376,7 +376,7 @@
 {
     @autoreleasepool
     {
-		[self performSelector:@selector(drawScene) onThread:_runningThread withObject:nil waitUntilDone:YES];
+		[self performSelector:@selector(mainLoopBody) onThread:_runningThread withObject:nil waitUntilDone:YES];
 
         return kCVReturnSuccess;
     }

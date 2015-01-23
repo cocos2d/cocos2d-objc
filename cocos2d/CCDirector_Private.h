@@ -67,10 +67,10 @@
  */
 -(void) popToSceneStackLevel:(NSUInteger)level;
 
-/* Draw the scene.
+/* Run the main loop once, handle updates and draw scene
  This method is called every frame. Don't call it manually.
  */
--(void) drawScene;
+-(void) mainLoopBody;
 
 - (void)startTransition:(CCScene *)scene;
 
