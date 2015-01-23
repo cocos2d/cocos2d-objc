@@ -215,19 +215,8 @@ enum
 - (void)mouseDown:(NSEvent *)theEvent button:(CCMouseButton)button;
 - (void)mouseDragged:(NSEvent *)theEvent button:(CCMouseButton)button;
 - (void)mouseUp:(NSEvent *)theEvent button:(CCMouseButton)button;
-- (void)mouseDown:(NSEvent *)theEvent;
-- (void)mouseDragged:(NSEvent *)theEvent;
-- (void)mouseUp:(NSEvent *)theEvent;
-- (void)rightMouseDown:(NSEvent *)theEvent;
-- (void)rightMouseDragged:(NSEvent *)theEvent;
-- (void)rightMouseUp:(NSEvent *)theEvent;
-- (void)otherMouseDown:(NSEvent *)theEvent;
-- (void)otherMouseDragged:(NSEvent *)theEvent;
-- (void)otherMouseUp:(NSEvent *)theEvent;
 - (void)scrollWheel:(NSEvent *)theEvent;
 - (void)mouseMoved:(NSEvent *)theEvent;
-- (void)mouseEntered:(NSEvent *)theEvent;
-- (void)mouseExited:(NSEvent *)theEvent;
 - (void)keyDown:(NSEvent *)theEvent;
 - (void)keyUp:(NSEvent *)theEvent;
 #endif
