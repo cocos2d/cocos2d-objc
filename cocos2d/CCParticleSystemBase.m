@@ -57,7 +57,7 @@
 #import "CCFile_Private.h"
 
 @implementation CCParticleSystemBase
-@synthesize active = _active, duration = _duration;
+@synthesize particlesActive = _particlesActive, duration = _duration;
 @synthesize sourcePosition = _sourcePosition, posVar = _posVar;
 @synthesize particleCount = _particleCount;
 @synthesize life = _life, lifeVar = _lifeVar;
@@ -286,7 +286,7 @@
         _allocatedParticles = numberOfParticles;
 		
 		// default, active
-		_active = YES;
+		_particlesActive = YES;
 
 		// default blend function
 		self.blendMode = [CCBlendMode premultipliedAlphaMode];
@@ -435,14 +435,14 @@
 
 -(void) stopSystem
 {
-	_active = NO;
+	_particlesActive = NO;
 	_elapsed = _duration;
 	_emitCounter = 0;
 }
 
 -(void) resetSystem
 {
-	_active = YES;
+	_particlesActive = YES;
 	_elapsed = 0;
 	for(int i = 0; i < _particleCount; ++i) {
 		_CCParticle *p = &_particles[i];
@@ -470,7 +470,7 @@
 #pragma mark ParticleSystem - MainLoop
 -(void) update: (CCTime) dt
 {
-	if( _active && _emissionRate ) {
+	if( _particlesActive && _emissionRate ) {
 		float rate = 1.0f / _emissionRate;
 		
 		//issue #1201, prevent bursts of particles, due to too high emitCounter

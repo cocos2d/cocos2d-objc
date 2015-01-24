@@ -149,7 +149,7 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
 @interface CCParticleSystemBase : CCRenderableNode <CCTextureProtocol, CCShaderProtocol, CCBlendProtocol>
 {
 	// True if the the particle system is active.
-	BOOL _active;
+	BOOL _particlesActive;
     
 	// Duration in seconds of the system. -1 is infinity.
 	float _duration;
@@ -375,7 +375,7 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
 /** Is YES if the particle emitter is active (emitting particles).
  @see resetSystem
  @see stopSystem */
-@property (nonatomic,readonly) BOOL active;
+@property (nonatomic,readonly) BOOL particlesActive;
 
 /** If YES, emitter will automatically call resetSystem if its [CCNode visible] property changes from NO to YES. */
 @property (nonatomic,readwrite) BOOL resetOnVisibilityToggle;
