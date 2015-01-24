@@ -51,6 +51,7 @@
 #import "CCTransition.h"
 #import "Platforms/CCNS.h"
 #import "Support/CCFileUtils.h"
+#import "ccUtils.h"
 
 #if __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
@@ -465,7 +466,7 @@ NSString * const CCDirectorCurrentKey = @"CCDirectorCurrentKey";
 -(void) reshapeProjection:(CGSize)newViewSize
 {
 	_winSizeInPixels = newViewSize;
-	_winSizeInPoints = CGSizeMake( _winSizeInPixels.width / __ccContentScaleFactor, _winSizeInPixels.height / __ccContentScaleFactor );
+	_winSizeInPoints = CC_SIZE_SCALE(newViewSize, 1.0/self.contentScaleFactor);
 	
 	[self setProjection:_projection];
 	
