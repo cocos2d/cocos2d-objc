@@ -382,15 +382,25 @@ FlipY(GLKMatrix4 projection)
 
 -(CGImageRef) newCGImage
 {
+  CGRect rect = CGRectZero;
+  rect.size = self.texture.contentSizeInPixels;
+  
+  return [self newCGImageWithRect:rect];
+}
+
+-(CGImageRef) newCGImageWithRect:(CGRect) rect
+{
 	// TODO need to find out why getting pixels from a Metal texture doesn't seem to work.
 	// Workaround - use pixel buffers and a copy encoder?
 	NSAssert([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIGL, @"[CCRenderTexture -newCGImage] is only supported for GL.");
 	
 	NSAssert(_pixelFormat == CCTexturePixelFormat_RGBA8888,@"only RGBA8888 can be saved as image");
 	
-	CGSize s = [self.texture contentSizeInPixels];
-	int tx = s.width;
-	int ty = s.height;
+  CGSize s = rect.size;
+  int tx = s.width;
+  int ty = s.height;
+  int x0 = rect.origin.x;
+  int y0 = rect.origin.y;
 	
 	int bitsPerComponent = 8;
 	int bitsPerPixel = 4 * 8;
@@ -411,7 +421,7 @@ FlipY(GLKMatrix4 projection)
 	
     CCRenderer *renderer = [self begin];
     [renderer enqueueBlock:^{
-        glReadPixels(0,0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, buffer);
+      glReadPixels(x0,y0,tx,ty,GL_RGBA,GL_UNSIGNED_BYTE, buffer);
     } globalSortOrder:NSIntegerMax debugLabel:@"CCRenderTexture reading pixels for new image" threadSafe:NO];
     [self end];
 	
@@ -458,11 +468,18 @@ FlipY(GLKMatrix4 projection)
 
 -(BOOL)saveToFile:(NSString*)fileName format:(CCRenderTextureImageFormat)format
 {
-	BOOL success = YES;
-	
-	NSString *fullPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:fileName];
+  CGRect rect = CGRectZero;
+  rect.size = self.texture.contentSizeInPixels;
+  return [self saveToFile:fileName rect:rect format:format];
+}
 
-    return [self saveToFilePath:fullPath format:format];
+-(BOOL)saveToFile:(NSString*)fileName rect:(CGRect)rect format:(CCRenderTextureImageFormat)format
+{
+  BOOL success = YES;
+  
+  NSString *fullPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:fileName];
+  
+  return [self saveToFilePath:fullPath rect:rect format:format];
 }
 
 - (BOOL)saveToFilePath:(NSString *)filePath
@@ -472,9 +489,16 @@ FlipY(GLKMatrix4 projection)
 
 - (BOOL)saveToFilePath:(NSString *)filePath format:(CCRenderTextureImageFormat)format
 {
+  CGRect rect = CGRectZero;
+  rect.size = self.texture.contentSizeInPixels;
+  return [self saveToFilePath:filePath rect:rect format:format];
+}
+
+- (BOOL)saveToFilePath:(NSString *)filePath rect:(CGRect)rect format:(CCRenderTextureImageFormat)format
+{
     BOOL success = NO;
 
-   	CGImageRef imageRef = [self newCGImage];
+  CGImageRef imageRef = [self newCGImageWithRect:rect];
 
    	if( ! imageRef ) {
    		CCLOG(@"cocos2d: Error: Cannot create CGImage ref from texture");
@@ -547,6 +571,19 @@ FlipY(GLKMatrix4 projection)
     
 	return image;
 }
+
+- (UIImage *) getUIImageWithRect:(CGRect)rect
+{
+  CGImageRef imageRef = [self newCGImage];
+  
+  CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
+  UIImage* image	= [[UIImage alloc] initWithCGImage:imageRef scale:scale orientation:UIImageOrientationUp];
+  
+  CGImageRelease( imageRef );
+  
+  return image;
+}
+
 #endif // __CC_PLATFORM_IOS
 
 - (CCColor*) clearColor

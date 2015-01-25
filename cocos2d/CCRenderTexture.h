@@ -260,11 +260,27 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
  */
 -(CGImageRef) newCGImage;
 
+/**
+ *  Creates a new CGImage from with the specified rect from the texture's data.
+ *
+ *  @param rect The rectangle of the image to save.  Units are in pixels.
+ *
+ *   @note Caller is responsible for releasing the CGImageRef by calling `CGImageRelease(imageRef)` on the returned CG image.
+ */
+-(CGImageRef) newCGImageWithRect:(CGRect) rect;
+
 #if __CC_PLATFORM_IOS
 /**
  Returns a UIImage created from the texture.
  */
 -(UIImage *) getUIImage;
+
+/**
+ *  Returns an autoreleased UIImage from the texture
+ *  @param rect The rectangle of the image to save.  Units are in pixels.
+ */
+- (UIImage *) getUIImageWithRect:(CGRect)rect;
+
 #endif // __CC_PLATFORM_IOS
 
 /**
@@ -291,6 +307,18 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
  */
 -(BOOL)saveToFile:(NSString*)name format:(CCRenderTextureImageFormat)format;
 
+/**
+ *  Saves the texture into a file using JPEG format. The file will be saved in the Documents folder.
+ *
+ *  @param name Filename to save image to.
+ *  @param rect The rectangle of the image to save.  Units are in pixels.
+ *  @param format File format, see CCRenderTextureImageFormat.
+ *
+ *  @return YES if the operation is successful.
+ *  @see CCRenderTextureImageFormat
+ */
+-(BOOL)saveToFile:(NSString*)name rect:(CGRect)rect format:(CCRenderTextureImageFormat)format;
+
 #if __CC_PLATFORM_IOS
 /**
  *  Saves the texture into a file using JPEG format.
@@ -313,6 +341,18 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
  *  @see CCRenderTextureImageFormat
  */
 -(BOOL)saveToFilePath:(NSString*)filePath format:(CCRenderTextureImageFormat)format;
+
+/**
+ *  Saves the texture into a file. The format could be JPG or PNG.
+ *
+ *  @param filePath   File path to save image to.
+ *  @param rect The rectangle of the image to save.  Units are in pixels.
+ *  @param format File format, see CCRenderTextureImageFormat.
+ *
+ *  @return YES if the operation was successful.
+ *  @see CCRenderTextureImageFormat
+ */
+- (BOOL)saveToFilePath:(NSString *)filePath rect:(CGRect)rect format:(CCRenderTextureImageFormat)format;
 
 #endif // __CC_PLATFORM_IOS
 
