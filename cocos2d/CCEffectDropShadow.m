@@ -321,7 +321,7 @@
     return self;
 }
 
-+(id)effectWithShadowOffset:(CGPoint)shadowOffset shadowColor:(CCColor*)shadowColor blurRadius:(NSUInteger)blurRadius
++(instancetype)effectWithShadowOffset:(CGPoint)shadowOffset shadowColor:(CCColor*)shadowColor blurRadius:(NSUInteger)blurRadius
 {
     return [[self alloc] initWithShadowOffset:shadowOffset shadowColor:shadowColor blurRadius:blurRadius];
 }

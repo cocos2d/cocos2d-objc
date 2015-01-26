@@ -139,7 +139,7 @@
 #pragma mark CCFlipX
 
 @implementation CCActionFlipX
-+(id) actionWithFlipX:(BOOL)x
++(instancetype) actionWithFlipX:(BOOL)x
 {
 	return [[self alloc] initWithFlipX:x];
 }
@@ -175,7 +175,7 @@
 #pragma mark CCFlipY
 
 @implementation CCActionFlipY
-+(id) actionWithFlipY:(BOOL)y
++(instancetype) actionWithFlipY:(BOOL)y
 {
 	return [[self alloc] initWithFlipY:y];
 }
@@ -212,7 +212,7 @@
 #pragma mark CCPlace
 
 @implementation CCActionPlace
-+(id) actionWithPosition: (CGPoint) pos
++(instancetype) actionWithPosition: (CGPoint) pos
 {
 	return [[self alloc]initWithPosition:pos];
 }
@@ -247,7 +247,7 @@
 
 @synthesize targetCallback = _targetCallback;
 
-+(id) actionWithTarget: (id) t selector:(SEL) s
++(instancetype) actionWithTarget: (id) t selector:(SEL) s
 {
 	return [[self alloc] initWithTarget: t selector: s];
 }
@@ -301,7 +301,7 @@
 
 @implementation CCActionCallBlock
 
-+(id) actionWithBlock:(void(^)())block
++(instancetype) actionWithBlock:(void(^)())block
 {
 	return [[self alloc] initWithBlock:block];
 }

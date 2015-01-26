@@ -48,7 +48,7 @@
  *  @return The CCNodeColor Object.
  *  @see CCColor
  */
-+(id) nodeWithColor: (CCColor*)color width:(float)w height:(float)h;
++(instancetype) nodeWithColor: (CCColor*)color width:(float)w height:(float)h;
 
 /**
  *  Creates a node with color. Width and height are the window size.
@@ -58,7 +58,7 @@
  *  @return The CCNodeColor Object.
  *  @see CCColor
  */
-+(id) nodeWithColor: (CCColor*)color;
++(instancetype) nodeWithColor: (CCColor*)color;
 
 /**
  *  Creates a node with color, width and height in Points.
@@ -116,7 +116,7 @@
  *  @return The CCNodeGradient Object.
  *  @see CCColor
  */
-+(id)nodeWithColor:(CCColor*)start fadingTo:(CCColor*)end;
++(instancetype)nodeWithColor:(CCColor*)start fadingTo:(CCColor*)end;
 
 /**
  *  Creates a full-screen CCNode with a gradient between start and end color values with gradient direction vector.
@@ -128,7 +128,7 @@
  *  @return The CCNodeGradient Object.
  *  @see CCColor
  */
-+(id)nodeWithColor:(CCColor*)start fadingTo:(CCColor*)end alongVector:(CGPoint)v;
++(instancetype)nodeWithColor:(CCColor*)start fadingTo:(CCColor*)end alongVector:(CGPoint)v;
 
 /**
  *  Creates a full-screen CCNode with a gradient between start and end color values.

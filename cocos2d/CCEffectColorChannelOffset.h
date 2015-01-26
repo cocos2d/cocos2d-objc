@@ -29,7 +29,7 @@
  *  @since v3.2 and later
  *  @deprecated Use CGPoint version instead.
  */
-+(id)effectWithRedOffset:(CGPoint)redOffset greenOffset:(CGPoint)greenOffset blueOffset:(CGPoint)blueOffset;
++(instancetype)effectWithRedOffset:(CGPoint)redOffset greenOffset:(CGPoint)greenOffset blueOffset:(CGPoint)blueOffset;
 
 /**
  *  Initializes a CCEffectColorChannelOffset object with zero length color channel offsets.

@@ -31,7 +31,7 @@
  *  @since v3.3 and later
  *  @see CCColor
  */
-+(id)effectWithGlowColor:(CCColor*)glowColor outlineColor:(CCColor*)outlineColor;
++(instancetype)effectWithGlowColor:(CCColor*)glowColor outlineColor:(CCColor*)outlineColor;
 
 /**
  *  Initializes a CCEffectDistanceField object with a (5, -5) black drop shadow offset .

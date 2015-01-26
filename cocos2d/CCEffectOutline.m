@@ -187,7 +187,7 @@
     return self;
 }
 
-+(id)effectWithOutlineColor:(CCColor*)outlineColor outlineWidth:(int)outlineWidth
++(instancetype)effectWithOutlineColor:(CCColor*)outlineColor outlineWidth:(int)outlineWidth
 {
     return [[self alloc] initWithOutlineColor:outlineColor outlineWidth:outlineWidth];
 }

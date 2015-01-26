@@ -75,7 +75,7 @@ static NSString* vertBase =
     return self;
 }
 
-+(id)functionWithName:(NSString*)name body:(NSString*)body inputs:(NSArray*)inputs returnType:(NSString*)returnType
++(instancetype)functionWithName:(NSString*)name body:(NSString*)body inputs:(NSArray*)inputs returnType:(NSString*)returnType
 {
     return [[self alloc] initWithName:name body:body inputs:inputs returnType:returnType];
 }
@@ -125,7 +125,7 @@ static NSString* vertBase =
     return self;
 }
 
-+(id)inputWithType:(NSString*)type name:(NSString*)name initialSnippet:(NSString*)initialSnippet snippet:(NSString*)snippet
++(instancetype)inputWithType:(NSString*)type name:(NSString*)name initialSnippet:(NSString*)initialSnippet snippet:(NSString*)snippet
 {
     return [[self alloc] initWithType:type name:name initialSnippet:initialSnippet snippet:snippet];
 }
@@ -150,7 +150,7 @@ static NSString* vertBase =
     return self;
 }
 
-+(id)uniform:(NSString*)type name:(NSString*)name value:(NSValue*)value
++(instancetype)uniform:(NSString*)type name:(NSString*)name value:(NSValue*)value
 {
     return [[self alloc] initWithType:type name:name value:value];
 }
@@ -177,7 +177,7 @@ static NSString* vertBase =
     return self;
 }
 
-+(id)varying:(NSString*)type name:(NSString*)name
++(instancetype)varying:(NSString*)type name:(NSString*)name
 {
     return [[self alloc] initWithType:type name:name];
 }
@@ -196,7 +196,7 @@ static NSString* vertBase =
     return self;
 }
 
-+(id)varying:(NSString*)type name:(NSString*)name count:(NSInteger)count
++(instancetype)varying:(NSString*)type name:(NSString*)name count:(NSInteger)count
 {
     return [[self alloc] initWithType:type name:name count:count];
 }
