@@ -179,6 +179,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	}
 	
     CCDirector *director = ccview.director;
+    NSAssert(director, @"The CCView failed to create a director.");
 	director.wantsFullScreenLayout = YES;
     
 #warning TODO temporary
@@ -227,7 +228,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
     [CCDirector bindDirector:nil];
 }
 
-- (void)setupFlexibleScreenMode:(NSDictionary *)config director:(CCDirectorIOS *)director
+- (void)setupFlexibleScreenMode:(NSDictionary *)config director:(CCDirector *)director
 {
     // Setup tablet scaling if it was requested.
     if(	UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad &&	[config[CCSetupTabletScale2X] boolValue] )
@@ -245,7 +246,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
     [director setProjection:CCDirectorProjection2D];
 }
 
-- (void)setupFixedScreenMode:(NSDictionary *)config director:(CCDirectorIOS *)director
+- (void)setupFixedScreenMode:(NSDictionary *)config director:(CCDirector *)director
 {
     CGSize size = [CCDirector currentDirector].viewSizeInPixels;
     CGSize fixed = FIXED_SIZE;
