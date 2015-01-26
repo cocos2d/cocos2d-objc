@@ -66,8 +66,6 @@
     CCScheduler* _scheduler;
     NSMutableArray* _currentActions;
     
-    BOOL _loop;
-    
 }
 
 /** @name Altering Animation Playback */
