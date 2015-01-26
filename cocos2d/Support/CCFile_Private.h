@@ -55,6 +55,13 @@ typedef NSInputStream *(^CCStreamedImageSourceStreamBlock)();
 @end
 
 
+@interface CCFile()
+
+@property (nonatomic, assign, readwrite) BOOL useUIScale;
+
+@end
+
+
 @interface CCFile(Private)
 
 /**
@@ -71,4 +78,6 @@ typedef NSInputStream *(^CCStreamedImageSourceStreamBlock)();
 
 -(instancetype)initWithName:(NSString *)name url:(NSURL *)url contentScale:(CGFloat)contentScale;
 -(CGImageSourceRef)createCGImageSource;
+
+
 @end

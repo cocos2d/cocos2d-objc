@@ -1,0 +1,1 @@
+#define MULTILINESTRING(...) [NSString stringWithCString:#__VA_ARGS__ encoding:NSUTF8StringEncoding];

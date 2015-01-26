@@ -7,7 +7,7 @@
 
 #import <XCTest/XCTest.h>
 #import "cocos2d.h"
-#import "CCUnitTestAssertions.h"
+#import "CCUnitTestHelperMacros.h"
 
 
 #import "CCFile_Private.h"
@@ -178,8 +178,8 @@
 
     [[CCFileUtils sharedFileUtils] loadFileNameLookupsInAllSearchPathsWithName:@"fileLookup.plist"];
     NSDictionary *filenameLookup = [CCFileUtils sharedFileUtils].filenameLookup;
-    CCAssertEqualStrings(filenameLookup[@"baa.psd"], @"baa.png");
-    CCAssertEqualStrings(filenameLookup[@"foo.wav"], @"foo.mp4");
+    XCTAssertEqualObjects(filenameLookup[@"baa.psd"], @"baa.png");
+    XCTAssertEqualObjects(filenameLookup[@"foo.wav"], @"foo.mp4");
 }
 
 -(void)testCCFileUtilsSearchModeSuffix

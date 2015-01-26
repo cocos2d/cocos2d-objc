@@ -101,8 +101,13 @@
  */
 -(NSInputStream *)openInputStream;
 
-#warning TODO What to do about these since we will be using metadata to store them?
-//@property(nonatomic, readonly) NSString *language;
-//@property(nonatomic, readonly) NSString *deviceFamily;
+/**
+ Indicate whether an asset should be scaled for UI purposes or not
+
+ @return If the asset should be scaled for UI
+
+ @since 4.0
+ */
+@property (nonatomic, readonly) BOOL useUIScale;
 
 @end

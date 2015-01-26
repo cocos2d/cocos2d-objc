@@ -26,6 +26,7 @@
 		758A6C80184410EE00D1A8D2 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 758A6C7F184410EE00D1A8D2 /* Particles */; };
 		75DAC8B11A4240BE003F8244 /* CCImageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 75DAC8B01A4240BE003F8244 /* CCImageTests.m */; };
 		75F76497185A831B00E2FAFE /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 75F76496185A831B00E2FAFE /* Sounds */; };
+		830F10A81A6D37EE0074F583 /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 830F10A31A6D37D60074F583 /* libOCMock.a */; };
 		75F9BF5E1A38EE8C009185BF /* CCViewportNodeTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D35C2D261A1BC83F00FF96B0 /* CCViewportNodeTest.m */; };
 		839B149F19CC1E440000E5E2 /* CCPackageTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 839B149E19CC1E440000E5E2 /* CCPackageTest.m */; };
 		92324E2A18EB635500D78D3F /* CCReaderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 92324E2918EB635500D78D3F /* CCReaderTest.m */; };
@@ -261,7 +262,10 @@
 		D4AFE94C1977100000261299 /* west_england-64.fnt in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE9111977100000261299 /* west_england-64.fnt */; };
 		D4AFE94D1977100000261299 /* west_england-64.png in Resources */ = {isa = PBXBuildFile; fileRef = D4AFE9121977100000261299 /* west_england-64.png */; };
 		E525F033EECC363CA8EAF2A6 /* CCPackageDownloadManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F2B770C5914D0810E4C2 /* CCPackageDownloadManagerTests.m */; };
+		E525F06B7DE8DBA41D79888B /* CCFileUtilsV2Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F93DE6657D8B7D99485D /* CCFileUtilsV2Tests.m */; };
 		E525F4D0568A8A4176684936 /* CCPackageHelperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F99055258F35DFF00ECD /* CCPackageHelperTests.m */; };
+		E525F4E15019D96D00ADFAFC /* FileSystemTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F53CBA0B423333E6D62A /* FileSystemTestCase.m */; };
+		E525F4FA69CF55A11E3ADF10 /* CCFileUtilsDatabaseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F98589D25C8CCF99E8B6 /* CCFileUtilsDatabaseTests.m */; };
 		E525F5DB1E3086DDE0296CEC /* CCPackageDownloadTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F5FACFF098F0ACBA6419 /* CCPackageDownloadTests.m */; };
 		E525F7C977339D17470FC149 /* CCPackageInstallerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FBF58DFECF27272F5D6F /* CCPackageInstallerTests.m */; };
 		E525F81797DA5573FC26BEBB /* CCPackageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F771C583AAF68EB42E15 /* CCPackageTests.m */; };
@@ -270,7 +274,6 @@
 		E525FCAF2CC6D200B8065E2E /* CCPackageCocos2dEnablerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FB8A3CC89D071A8377B1 /* CCPackageCocos2dEnablerTests.m */; };
 		E525FCD390330D4F4EBD76CC /* CCPackagesTestFixturesAndHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FF94F200689F83438E37 /* CCPackagesTestFixturesAndHelpers.m */; };
 		E525FF2E8351476CDD7DEAC4 /* CCPackageManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F395FE85323D86232416 /* CCPackageManagerTests.m */; };
-		E525FFABB4646A7446269A98 /* CCUnitTestAssertions.h in Resources */ = {isa = PBXBuildFile; fileRef = E525F832B569117922DA339E /* CCUnitTestAssertions.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -280,6 +283,41 @@
 			proxyType = 1;
 			remoteGlobalIDString = B7E2604717E7D278007067F0;
 			remoteInfo = "cocos2d-ui-tests-ios";
+		};
+		830F109E1A6D37D60074F583 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 830F10971A6D37D50074F583 /* OCMock.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 030EF0A814632FD000B04273;
+			remoteInfo = OCMock;
+		};
+		830F10A01A6D37D60074F583 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 830F10971A6D37D50074F583 /* OCMock.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 03565A3118F0566E003AE91E;
+			remoteInfo = OCMockTests;
+		};
+		830F10A21A6D37D60074F583 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 830F10971A6D37D50074F583 /* OCMock.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 030EF0DC14632FF700B04273;
+			remoteInfo = OCMockLib;
+		};
+		830F10A41A6D37D60074F583 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 830F10971A6D37D50074F583 /* OCMock.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D31108AD1828DB8700737925;
+			remoteInfo = OCMockLibTests;
+		};
+		830F10A91A6D37F50074F583 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 830F10971A6D37D50074F583 /* OCMock.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 030EF0DB14632FF700B04273;
+			remoteInfo = OCMockLib;
 		};
 		D3763BB819E72F85006C050D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -340,6 +378,7 @@
 		758A6C7F184410EE00D1A8D2 /* Particles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Particles; path = Resources/Particles; sourceTree = SOURCE_ROOT; };
 		75DAC8B01A4240BE003F8244 /* CCImageTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCImageTests.m; sourceTree = "<group>"; };
 		75F76496185A831B00E2FAFE /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sounds; path = Resources/Sounds; sourceTree = SOURCE_ROOT; };
+		830F10971A6D37D50074F583 /* OCMock.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OCMock.xcodeproj; path = external/OCMock/Source/OCMock.xcodeproj; sourceTree = "<group>"; };
 		839B149E19CC1E440000E5E2 /* CCPackageTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCPackageTest.m; path = "cocos2d-ui-tests/tests/CCPackageTest.m"; sourceTree = SOURCE_ROOT; };
 		92324E2918EB635500D78D3F /* CCReaderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCReaderTest.m; sourceTree = "<group>"; };
 		92FE241018F5F06F00647961 /* CCAnimationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAnimationTest.m; sourceTree = "<group>"; };
@@ -487,11 +526,15 @@
 		E525F2B770C5914D0810E4C2 /* CCPackageDownloadManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageDownloadManagerTests.m; sourceTree = "<group>"; };
 		E525F30DA34A6712527102E5 /* CCPackageUnzipperTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageUnzipperTests.m; sourceTree = "<group>"; };
 		E525F395FE85323D86232416 /* CCPackageManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageManagerTests.m; sourceTree = "<group>"; };
+		E525F53CBA0B423333E6D62A /* FileSystemTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileSystemTestCase.m; sourceTree = "<group>"; };
 		E525F5FACFF098F0ACBA6419 /* CCPackageDownloadTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageDownloadTests.m; sourceTree = "<group>"; };
 		E525F771C583AAF68EB42E15 /* CCPackageTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageTests.m; sourceTree = "<group>"; };
-		E525F832B569117922DA339E /* CCUnitTestAssertions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUnitTestAssertions.h; sourceTree = "<group>"; };
+		E525F93DE6657D8B7D99485D /* CCFileUtilsV2Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCFileUtilsV2Tests.m; sourceTree = "<group>"; };
+		E525F98589D25C8CCF99E8B6 /* CCFileUtilsDatabaseTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCFileUtilsDatabaseTests.m; sourceTree = "<group>"; };
 		E525F99055258F35DFF00ECD /* CCPackageHelperTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageHelperTests.m; sourceTree = "<group>"; };
+		E525FB2B6BB1C2E3BD1457A7 /* CCUnitTestHelperMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUnitTestHelperMacros.h; sourceTree = "<group>"; };
 		E525FB8A3CC89D071A8377B1 /* CCPackageCocos2dEnablerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageCocos2dEnablerTests.m; sourceTree = "<group>"; };
+		E525FBE3FAFA47AD441E6E03 /* FileSystemTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSystemTestCase.h; sourceTree = "<group>"; };
 		E525FBF58DFECF27272F5D6F /* CCPackageInstallerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageInstallerTests.m; sourceTree = "<group>"; };
 		E525FCB52B23A4F29E8D6D64 /* CCPackagesTestFixturesAndHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackagesTestFixturesAndHelpers.h; sourceTree = "<group>"; };
 		E525FE52BE5D10499A27CE7C /* CCSpriteFrameCacheTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteFrameCacheTests.m; sourceTree = "<group>"; };
@@ -503,6 +546,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				830F10A81A6D37EE0074F583 /* libOCMock.a in Frameworks */,
 				75556A04185636F100ED1B0F /* XCTest.framework in Frameworks */,
 				75556A05185636F100ED1B0F /* Foundation.framework in Frameworks */,
 			);
@@ -578,8 +622,10 @@
 				75DAC8B01A4240BE003F8244 /* CCImageTests.m */,
 				755569EC1856361100ED1B0F /* Supporting Files */,
 				E525F25081EB1E197CD567E4 /* Packages */,
-				E525F832B569117922DA339E /* CCUnitTestAssertions.h */,
 				E525FE52BE5D10499A27CE7C /* CCSpriteFrameCacheTests.m */,
+				E525F93DE6657D8B7D99485D /* CCFileUtilsV2Tests.m */,
+				E525F98589D25C8CCF99E8B6 /* CCFileUtilsDatabaseTests.m */,
+				E525F30B491401837AA2B4A1 /* Helpers */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -600,6 +646,17 @@
 			);
 			name = "Test Resources";
 			path = "cocos2d-ui-tests-ios";
+			sourceTree = "<group>";
+		};
+		830F10981A6D37D50074F583 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				830F109F1A6D37D60074F583 /* OCMock.framework */,
+				830F10A11A6D37D60074F583 /* OCMockTests.xctest */,
+				830F10A31A6D37D60074F583 /* libOCMock.a */,
+				830F10A51A6D37D60074F583 /* OCMockLibTests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		B71B087F17EA5B500082EBC0 /* Tests */ = {
@@ -639,6 +696,7 @@
 		B7E2603F17E7D278007067F0 = {
 			isa = PBXGroup;
 			children = (
+				830F10971A6D37D50074F583 /* OCMock.xcodeproj */,
 				D3763BB019E72F85006C050D /* cocos2d.xcodeproj */,
 				D3269DE919CCC11800406282 /* CCRendererSharedTypes.h */,
 				755569ED1856361100ED1B0F /* UnitTests */,
@@ -870,6 +928,16 @@
 			name = Packages;
 			sourceTree = "<group>";
 		};
+		E525F30B491401837AA2B4A1 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				E525FB2B6BB1C2E3BD1457A7 /* CCUnitTestHelperMacros.h */,
+				E525F53CBA0B423333E6D62A /* FileSystemTestCase.m */,
+				E525FBE3FAFA47AD441E6E03 /* FileSystemTestCase.h */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		E525F544D63123C8E948AA05 /* Unzip */ = {
 			isa = PBXGroup;
 			children = (
@@ -901,6 +969,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				830F10AA1A6D37F50074F583 /* PBXTargetDependency */,
 				75556A11185636F100ED1B0F /* PBXTargetDependency */,
 			);
 			name = UnitTests;
@@ -982,6 +1051,10 @@
 					ProductGroup = D3763BB119E72F85006C050D /* Products */;
 					ProjectRef = D3763BB019E72F85006C050D /* cocos2d.xcodeproj */;
 				},
+				{
+					ProductGroup = 830F10981A6D37D50074F583 /* Products */;
+					ProjectRef = 830F10971A6D37D50074F583 /* OCMock.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -993,6 +1066,34 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		830F109F1A6D37D60074F583 /* OCMock.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OCMock.framework;
+			remoteRef = 830F109E1A6D37D60074F583 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		830F10A11A6D37D60074F583 /* OCMockTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = OCMockTests.xctest;
+			remoteRef = 830F10A01A6D37D60074F583 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		830F10A31A6D37D60074F583 /* libOCMock.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libOCMock.a;
+			remoteRef = 830F10A21A6D37D60074F583 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		830F10A51A6D37D60074F583 /* OCMockLibTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = OCMockLibTests.xctest;
+			remoteRef = 830F10A41A6D37D60074F583 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		D3763BB919E72F85006C050D /* libcocos2d.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1024,7 +1125,6 @@
 				9269312A1923D8A700CE6285 /* Resources-shared in Resources */,
 				75556A1B1856374700ED1B0F /* InfoPlist.strings in Resources */,
 				75556A15185636FB00ED1B0F /* powered.png in Resources */,
-				E525FFABB4646A7446269A98 /* CCUnitTestAssertions.h in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1243,6 +1343,9 @@
 				D34CD3C518ABF4AA00D8E537 /* CCRendererTests.m in Sources */,
 				75556A191856370A00ED1B0F /* CCSchedulerTests.m in Sources */,
 				E525FA366EFEEF054FB0C74A /* CCSpriteFrameCacheTests.m in Sources */,
+				E525F06B7DE8DBA41D79888B /* CCFileUtilsV2Tests.m in Sources */,
+				E525F4FA69CF55A11E3ADF10 /* CCFileUtilsDatabaseTests.m in Sources */,
+				E525F4E15019D96D00ADFAFC /* FileSystemTestCase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1327,6 +1430,11 @@
 			target = B7E2604717E7D278007067F0 /* cocos2d-tests-ios */;
 			targetProxy = 75556A10185636F100ED1B0F /* PBXContainerItemProxy */;
 		};
+		830F10AA1A6D37F50074F583 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = OCMockLib;
+			targetProxy = 830F10A91A6D37F50074F583 /* PBXContainerItemProxy */;
+		};
 		D3763BD119E72FA8006C050D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "cocos2d-ios";
@@ -1410,10 +1518,21 @@
 					external/Chipmunk/objectivec/include,
 					"external/ObjectAL/**",
 					"\"$(SRCROOT)/external/SSZipArchive\"/**",
+					"external/OCMock/Source/**",
 				);
 				INFOPLIST_FILE = "UnitTests/UnitTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/external/OCMock",
+				);
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					XCTest,
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -1459,9 +1578,20 @@
 					external/Chipmunk/objectivec/include,
 					"external/ObjectAL/**",
 					"\"$(SRCROOT)/external/SSZipArchive\"/**",
+					"external/OCMock/Source/**",
 				);
 				INFOPLIST_FILE = "UnitTests/UnitTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/external/OCMock",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					XCTest,
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				VALIDATE_PRODUCT = YES;
