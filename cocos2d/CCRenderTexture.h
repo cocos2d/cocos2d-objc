@@ -73,7 +73,7 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
  *  @return An initialized CCRenderTarget object.
  *  @see CCTexturePixelFormat
  */
-+(id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat) format depthStencilFormat:(GLuint)depthStencilFormat;
++(instancetype)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat) format depthStencilFormat:(GLuint)depthStencilFormat;
 
 /**
  *  Creates a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid
@@ -85,7 +85,7 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
  *  @return An initialized CCRenderTarget object.
  *  @see CCTexturePixelFormat
  */
-+(id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat) format;
++(instancetype)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat) format;
 
 /**
  *  Creates a RenderTexture object with width and height in Points, pixel format is RGBA8888
@@ -95,7 +95,7 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
  *
  *  @return An initialized CCRenderTarget object.
  */
-+(id)renderTextureWithWidth:(int)w height:(int)h;
++(instancetype)renderTextureWithWidth:(int)w height:(int)h;
 
 /**
  *  Initializes a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid

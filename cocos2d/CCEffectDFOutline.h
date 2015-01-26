@@ -37,7 +37,7 @@
  *  @see CCColor
  *  @see CCTexture
  */
-+(id)effectWithOutlineColor:(CCColor*)outlineColor fillColor:(CCColor*)fillColor outlineWidth:(int)outlineWidth fieldScale:(float)fieldScale distanceField:(CCTexture*)distanceField;
++(instancetype)effectWithOutlineColor:(CCColor*)outlineColor fillColor:(CCColor*)fillColor outlineWidth:(int)outlineWidth fieldScale:(float)fieldScale distanceField:(CCTexture*)distanceField;
 
 /**
  *  Initializes a CCEffectDFOutline.

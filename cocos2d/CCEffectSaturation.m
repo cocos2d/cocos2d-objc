@@ -136,7 +136,7 @@ static float conditionSaturation(float saturation);
     return self;
 }
 
-+(id)effectWithSaturation:(float)saturation
++(instancetype)effectWithSaturation:(float)saturation
 {
     return [[self alloc] initWithSaturation:saturation];
 }

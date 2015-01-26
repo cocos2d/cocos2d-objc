@@ -60,7 +60,7 @@
 @synthesize midpoint = _midpoint;
 @synthesize barChangeRate = _barChangeRate;
 
-+(id)progressWithSprite:(CCSprite*) sprite
++(instancetype)progressWithSprite:(CCSprite*) sprite
 {
 	return [[self alloc]initWithSprite:sprite];
 }

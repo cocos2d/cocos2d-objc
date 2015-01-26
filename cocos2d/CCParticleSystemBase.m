@@ -81,12 +81,12 @@
 @synthesize emitterMode = _emitterMode;
 @synthesize totalParticles = _totalParticles;
 
-+(id) particleWithFile:(NSString*) plistFile
++(instancetype) particleWithFile:(NSString*) plistFile
 {
 	return [[self alloc] initWithFile:plistFile];
 }
 
-+(id) particleWithTotalParticles:(NSUInteger) numberOfParticles
++(instancetype) particleWithTotalParticles:(NSUInteger) numberOfParticles
 {
 	return [[self alloc] initWithTotalParticles:numberOfParticles];
 }
