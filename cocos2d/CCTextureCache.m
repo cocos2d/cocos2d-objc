@@ -81,15 +81,14 @@ static CCTextureCache *sharedTextureCache;
 		
 		// Skip the GL context sharegroup code for Metal.
 		if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal) return self;
-		
 
+        NSAssert([CCDirector currentDirector], @"Do not initialize the TextureCache before the director is created and set");
 #if __CC_PLATFORM_IOS
 		CCViewiOSGL *view = (CCViewiOSGL*)[[CCDirector currentDirector] view];
-		NSAssert(view, @"Do not initialize the TextureCache before the Director");
 #elif __CC_PLATFORM_MAC
         CCViewMacGL *view = (CCViewMacGL*)[[CCDirector currentDirector] view];
-        NSAssert(view, @"Do not initialize the TextureCache before the Director");
 #endif
+        NSAssert(view, @"Unable to access view from current CCDirector");
 
 #if __CC_PLATFORM_IOS
 		_auxGLcontext = [[EAGLContext alloc]
@@ -205,69 +204,6 @@ static CCTextureCache *sharedTextureCache;
 
 	});
 }
-
-//-(void) addImageAsync:(NSString*)path withBlock:(void(^)(CCTexture *tex))block
-//{
-//	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nil");
-//
-//	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)
-//	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
-//	path = [fileUtils standarizePath:path];
-//
-//	// optimization
-//	__block CCTexture * tex;
-//
-//	dispatch_sync(_dictQueue, ^{
-//		tex = [_textures objectForKey:path];
-//	});
-//
-//	if(tex) {
-//		block(tex);
-//		return;
-//	}
-//
-//	// dispatch it serially
-//	dispatch_async( _loadingQueue, ^{
-//
-//		CCTexture *texture;
-//
-//#if __CC_PLATFORM_IOS
-//		if( [EAGLContext setCurrentContext:_auxGLcontext] ) {
-//
-//			// load / create the texture
-//			texture = [self addImage:path];
-//
-//			glFlush();
-//            
-//            [EAGLContext setCurrentContext:nil];
-//
-//			// callback should be executed in cocos2d thread
-//			NSThread *thread = [[CCDirector currentDirector] runningThread];
-//			[thread performBlock:block withObject:texture waitUntilDone:NO];
-//        
-//		} else {
-//			CCLOG(@"cocos2d: ERROR: TetureCache: Could not set EAGLContext");
-//		}
-//
-//#elif __CC_PLATFORM_MAC
-//
-//		[_auxGLcontext makeCurrentContext];
-//
-//		// load / create the texture
-//		texture = [self addImage:path];
-//
-//		glFlush();
-//        
-//        [NSOpenGLContext clearCurrentContext];
-//
-//		// callback should be executed in cocos2d thread
-//		NSThread *thread = [[CCDirector currentDirector] runningThread];
-//		[thread performBlock:block withObject:texture waitUntilDone:NO];
-//
-//#endif // __CC_PLATFORM_MAC
-//
-//	});
-//}
 
 -(CCTexture*) addImage: (NSString*) path
 {

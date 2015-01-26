@@ -254,7 +254,7 @@ CompileShaderSources(GLenum type, NSArray *sources)
 	BOOL _ownsProgram;
 }
 
-//MARK: GL Uniform Setters:
+#pragma mark GL Uniform Setters:
 
 static CCUniformSetter
 GLUniformSetFloat(NSString *name, GLint location)
@@ -409,7 +409,7 @@ GLUniformSettersForProgram(GLuint program)
 	return uniformSetters;
 }
 
-//MARK: Init Methods:
+#pragma mark Init Methods:
 
 -(instancetype)initWithGLProgram:(GLuint)program uniformSetters:(NSDictionary *)uniformSetters ownsProgram:(BOOL)ownsProgram
 {

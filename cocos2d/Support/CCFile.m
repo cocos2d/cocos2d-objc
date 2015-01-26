@@ -28,7 +28,7 @@
 #import "CCFile_Private.h"
 
 
-//MARK: Wrapped Streams
+#pragma mark Wrapped Streams
 
 #define BUFFER_SIZE 32*1024
 
@@ -411,7 +411,7 @@ static const CGDataProviderSequentialCallbacks callbacks = {
 
 @end
 
-//MARK: CCFile
+#pragma mark CCFile
 
 @implementation CCFile {
     Class _inputStreamClass;

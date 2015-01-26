@@ -29,7 +29,7 @@
 #import "CCCache.h"
 #import "CCDeviceInfo.h"
 
-//MARK: Blend Option Keys.
+#pragma mark Blend Option Keys.
 NSString * const CCRenderStateBlendMode = @"CCRenderStateBlendMode";
 NSString * const CCRenderStateShader = @"CCRenderStateShader";
 NSString * const CCRenderStateShaderUniforms = @"CCRenderStateShaderUniforms";
@@ -42,7 +42,7 @@ NSString * const CCBlendFuncDstAlpha = @"CCBlendFuncDstAlpha";
 NSString * const CCBlendEquationAlpha = @"CCBlendEquationAlpha";
 
 
-//MARK: Blend Modes.
+#pragma mark Blend Modes.
 @interface CCBlendMode()
 
 -(instancetype)initWithOptions:(NSDictionary *)options;
@@ -202,7 +202,7 @@ NSDictionary *CCBLEND_DISABLED_OPTIONS = nil;
 @end
 
 
-//MARK: Render States.
+#pragma mark Render States.
 
 /// A simple key class for tracking render states.
 /// ivars are unretained so that it doesn't force textures to stay in memory.
@@ -393,7 +393,7 @@ static CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 @end
 
 
-//MARK: CCGraphicsBufferBindings
+#pragma mark CCGraphicsBufferBindings
 
 
 @implementation CCGraphicsBufferBindings
@@ -418,7 +418,7 @@ static CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 @end
 
 
-//MARK: Framebuffer bindings.
+#pragma mark Framebuffer bindings.
 
 
 @implementation CCFrameBufferObject

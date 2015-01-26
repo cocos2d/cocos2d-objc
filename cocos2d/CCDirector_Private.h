@@ -57,15 +57,18 @@
 /* Sets the glViewport*/
 -(void) setViewport;
 
-/// XXX: missing description
--(float) getZEye;
-
-/* Pops out all scenes from the queue until it reaches `level`.
- If level is 0, it will end the director.
- If level is 1, it will pop all scenes until it reaches to root scene.
- If level is <= than the current stack level, it won't do anything.
+/**
+ Stops the run loop. Nothing will be drawn or simulated. The main loop won't be triggered anymore.
+ If you want to pause your game call [pause] instead.
  */
--(void) popToSceneStackLevel:(NSUInteger)level;
+-(void) stopRunLoop;
+
+/**
+ Start the main run loop of the game, drawing and updating.
+ Generally, as a user, you will start the main loop by running a scene, using `presentScene`
+ @see stopRunLoop
+ */
+-(void) startRunLoop;
 
 /* Run the main loop once, handle updates and draw scene
  This method is called every frame. Don't call it manually.

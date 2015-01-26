@@ -28,8 +28,6 @@
 #import "CCScene+Private.h"
 #import "CCNode_Private.h"
 
-#import "CCActionManager.h"
-
 #import "CCDirector_Private.h"
 #import "CCLightCollection.h"
 #import "CCColor.h"

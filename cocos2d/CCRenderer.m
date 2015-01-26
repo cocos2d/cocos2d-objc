@@ -47,7 +47,7 @@
 @end
 
 
-//MARK: Graphics Debug Helpers:
+#pragma mark Graphics Debug Helpers:
 
 #if DEBUG
 
@@ -97,7 +97,7 @@ void CCRENDERER_DEBUG_CHECK_ERRORS(void){
 #endif
 
 
-//MARK: Draw Command.
+#pragma mark Draw Command.
 
 
 @implementation CCRenderCommandDraw
@@ -136,7 +136,7 @@ void CCRENDERER_DEBUG_CHECK_ERRORS(void){
 @end
 
 
-//MARK: Custom Block Command.
+#pragma mark Custom Block Command.
 @interface CCRenderCommandCustom : NSObject<CCRenderCommand>
 @end
 
@@ -179,7 +179,7 @@ void CCRENDERER_DEBUG_CHECK_ERRORS(void){
 @end
 
 
-//MARK: Rendering group command.
+#pragma mark Rendering group command.
 
 static void
 SortQueue(NSMutableArray *queue)
@@ -234,7 +234,7 @@ SortQueue(NSMutableArray *queue)
 @end
 
 
-//MARK: Render Queue
+#pragma mark Render Queue
 
 
 @implementation CCRenderer

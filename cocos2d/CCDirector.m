@@ -764,13 +764,9 @@ NSString * const CCDirectorCurrentKey = @"CCDirectorCurrentKey";
 	_dt = 0;
 }
 
+// This method is also overridden by platform specific directors.
 - (void)startRunLoop
 {
-    if([_delegate respondsToSelector:@selector(startRunLoop)])
-    {
-        [_delegate startRunLoop];
-    }
-    
 	_nextDeltaTimeZero = YES;
 }
 

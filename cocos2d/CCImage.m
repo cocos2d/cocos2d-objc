@@ -174,7 +174,7 @@ NormalizeOptions(NSDictionary *options)
 
 }
 
-//MARK: CGContext creation.
+#pragma mark CGContext creation.
 
 -(CGAffineTransform)loadingTransform
 {

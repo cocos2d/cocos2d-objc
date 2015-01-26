@@ -39,7 +39,7 @@
 #define FOREACH_TIMER(__scheduledTarget__, __timerVar__) for(CCTimer *__timerVar__ = __scheduledTarget__->_timers; __timerVar__; __timerVar__ = __timerVar__.next)
 
 
-//MARK: Private Interfaces
+#pragma mark Private Interfaces
 
 @interface CCScheduledTarget : NSObject {
     @public
@@ -85,7 +85,7 @@
 @end
 
 
-//MARK: Copy on Write Arrays
+#pragma mark Copy on Write Arrays
 
 // This is an NSMutableArray-like class that implements copy-on-write to allow modifying an array while iterating it.
 // This is for performance reasons so that we don't need to copy large arrays every frame to iterate them safely.
@@ -201,7 +201,7 @@
 @end
 
 
-//MARK: Scheduled Targets
+#pragma mark Scheduled Targets
 
 @implementation CCScheduledTarget
 
@@ -309,7 +309,7 @@ RemoveRecursive(CCTimer *timer, CCTimer *skip)
 @end
 
 
-//MARK: CCTimer
+#pragma mark CCTimer
 
 @implementation CCTimer {
 	CCTimerBlock _block;
@@ -408,7 +408,7 @@ static CCTimerBlock INVALIDATED_BLOCK = ^(CCTimer *timer){};
 @end
 
 
-//MARK: CCScheduler
+#pragma mark CCScheduler
 
 @implementation CCScheduler {
 	CFBinaryHeapRef _heap;
@@ -694,13 +694,13 @@ CompareTimers(const void *a, const void *b, void *context)
 	
 	InvokeMethods(_updates, @selector(update:), clampedDelta);
     
-    #warning TODO: also invoke update actions:
+    #warning TODO: also invoke fixed update actions, in addition to normal update loop actions
     [self updateActions:dt];
     
 	_lastUpdateTime = _currentTime;
 }
 
-//MARK: Scheduling CCActions
+#pragma mark Scheduling CCActions
 
 -(void)addAction:(CCAction*)action target:(NSObject<CCSchedulableTarget> *)target paused:(BOOL)paused
 {

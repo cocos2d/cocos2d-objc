@@ -64,7 +64,6 @@
     if(director.runningScene){
         [director mainLoopBody];
     }
-    //	[self setNeedsDisplay:YES];
     
     [self unlockOpenGLContext];
 }

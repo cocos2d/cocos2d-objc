@@ -51,9 +51,10 @@
  */
 -(void) end;
 
-/** Pauses the running scene.
- The running scene will be _drawed_ but all scheduled timers will be paused
- While paused, the draw rate will be 4 FPS to reduce CPU consumption
+/** 
+ Pauses the running scene.
+ The running scene will be _drawn_ but all scheduled timers will be paused.
+ While paused, the draw rate reduced to save CPU consumption
  */
 -(void) pause;
 
@@ -62,17 +63,6 @@
  The "delta time" will be 0 (as if the game wasn't paused)
  */
 -(void) resume;
-
-/** Stops the animation. Nothing will be drawn. The main loop won't be triggered anymore.
- If you want to pause your animation call [pause] instead.
- */
--(void) stopRunLoop;
-
-/** The main loop is triggered again.
- Call this function only if [stopRunLoop] was called earlier
- @warning Don't call this function to start the main loop. To run the main loop call presentScene
- */
--(void) startRunLoop;
 
 #pragma mark Director - Memory Helper
 
@@ -88,13 +78,6 @@
 #if __CC_PLATFORM_IOS
 /** Returns a Boolean value indicating whether the CCDirector supports the specified orientation. Default value is YES (supports all possible orientations) */
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
-
-// Commented. See issue #1453 for further info: http://code.google.com/p/cocos2d-iphone/issues/detail?id=1453
-//- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration;
-
-/** Called when projection is resized (due to layoutSubviews on the view). This is important to respond to in order to setup your scene with the proper dimensions (which only exist after the first call to layoutSubviews) so that you can set your scene as early as possible to avoid startup flicker
- */
--(void) directorDidReshapeProjection:(CCDirector*)director;
 
 #endif // __CC_PLATFORM_IOS
 
@@ -138,8 +121,6 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 #define CC_VIEW CCGLView
 
 #endif
-
-
 
 /** The director creates and handles the main Window and the Cocos2D view. It also presents Scenes and initiates scene updates and drawing.
  
@@ -428,22 +409,27 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 /** The fixed animation interval is used to run "fixed updates" at a fixed rate, independently of the framerate. Used primarly by the physics engine.
  @see animationInterval */
 @property (nonatomic, readwrite, assign) CCTime fixedUpdateInterval;
+
 /** whether or not the next delta time will be zero */
 @property (nonatomic,readwrite,assign,getter=isNextDeltaTimeZero) BOOL nextDeltaTimeZero;
+
 /** Whether or not the Director is paused.
  @see animating
  @see pause
  @see resume */
 @property (nonatomic, readonly,getter=isPaused) BOOL paused;
+
 /** Whether or not the Director is active (animating).
  @see paused
  @see startRunLoop
  @see stopRunLoop */
 @property (nonatomic, readonly,getter=isAnimating) BOOL animating;
+
 /** How many frames were called since the director started
  @see secondsPerFrame
  @see displayStats */
 @property (nonatomic, readonly) NSUInteger totalFrames;
+
 /** Time it took to render the most recent frames, in seconds per frame.
  @see totalFrames
  @see displayStats */
@@ -466,21 +452,6 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
  @see nextDeltaTimeZero
  */
 -(void) resume;
-
-/** Stops the animation. All scheduled updates and actions are effectively paused. 
-
- When not animating, the director doesn't redraw the view at all. It is best to hide the view when not animating the director.
- If you need to keep showing the director's view use pause instead.
- 
- @see startRunLoop
- */
--(void) stopRunLoop;
-
-/** Begins drawing the screen. Scheduled timers and actions will run.
- 
- @warning Don't call this function to start the main loop. To run the main loop call presentScene:
- @see stopRunLoop */
--(void) startRunLoop;
 
 #pragma mark Director - Memory Helper
 
