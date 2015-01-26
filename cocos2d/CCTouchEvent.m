@@ -21,7 +21,7 @@
 #endif
 
 #ifndef __CC_TOUCH_MAX
-#define __CC_TOUCH_MAX 10
+#define __CC_TOUCH_MAX 11
 #endif
 
 
@@ -34,7 +34,7 @@
     if((self = [super init]))
     {
         _deadTouches = [[NSMutableSet alloc] init];
-        for(int i = 0; i < 10; i++)
+        for(int i = 0; i < __CC_TOUCH_MAX; i++)
         {
             [_deadTouches addObject:[CCTouch touchWithPlatformTouch:nil]];
         }
