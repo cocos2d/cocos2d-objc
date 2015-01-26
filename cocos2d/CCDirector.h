@@ -41,28 +41,37 @@
 @class CCDirector;
 
 
-/** CCDirector delegate */
+/** CCDirectorDelegate may be subscribed to in order to get notifications about when the
+ CCDirector is starting, pausing, unpausing, etc. */
 @protocol CCDirectorDelegate <NSObject>
 
 @optional
 
-/** Ends the execution, releases the running scene.
- It doesn't remove the OpenGL view from its parent. You have to do it manually.
+/** 
+ Execution of the game has ended.
  */
 -(void) end;
 
 /** 
- Pauses the running scene.
+ The game has been paused.
  The running scene will be _drawn_ but all scheduled timers will be paused.
  While paused, the draw rate reduced to save CPU consumption
  */
 -(void) pause;
 
-/** Resumes the paused scene
+/** The paused game has been resumed.
  The scheduled timers will be activated again.
  The "delta time" will be 0 (as if the game wasn't paused)
  */
 -(void) resume;
+
+/** The main run loop has stopped. Update methods and other scheduled events won't occur.
+ */
+-(void) stopRunLoop;
+
+/** The main loop has been started.
+ */
+-(void) startRunLoop;
 
 #pragma mark Director - Memory Helper
 
