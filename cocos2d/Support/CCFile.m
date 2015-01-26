@@ -507,6 +507,11 @@ static const CGDataProviderSequentialCallbacks callbacks = {
     }
 }
 
+-(NSString *)loadString:(NSError **)error;
+{
+    return [[NSString alloc] initWithData:[self loadData:error] encoding:NSUTF8StringEncoding];
+}
+
 -(CGImageSourceRef)createCGImageSource
 {
     if(_loadDataFromStream){

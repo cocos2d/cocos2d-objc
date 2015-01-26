@@ -93,6 +93,17 @@
 -(NSData *)loadData:(NSError **)error;
 
 /**
+ Load the file's contents as a UTF8 string.
+ 
+ @param error If an error occurs, upon return contains an NSError object that describes the problem.
+
+ @return The file's complete contents as a UTF8 string.
+
+ @since 4.0
+ */
+-(NSString *)loadString:(NSError **)error;
+
+/**
  Opens an input stream to the file so it can be read sequentially.
 
  @return An opened stream object.
