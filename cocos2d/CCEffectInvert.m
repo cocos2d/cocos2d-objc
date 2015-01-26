@@ -75,7 +75,7 @@
     return self;
 }
 
-+(id)effect
++(instancetype)effect
 {
     return [[self alloc] init];
 }

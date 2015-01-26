@@ -122,7 +122,7 @@ RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
 
 #pragma mark CCNode - Init & cleanup
 
-+(id) node
++(instancetype) node
 {
 	return [[self alloc] init];
 }

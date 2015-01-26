@@ -42,7 +42,7 @@ typedef NS_ENUM(NSUInteger, CCLightType)
  *  @see CCLightType
  *  @see CCColor
  */
-+(id)lightWithType:(CCLightType)type groups:(NSArray*)groups color:(CCColor *)color intensity:(float)intensity;
++(instancetype)lightWithType:(CCLightType)type groups:(NSArray*)groups color:(CCColor *)color intensity:(float)intensity;
 
 /**
  *  Creates a CCLightNode object with the specified parameters.
@@ -61,7 +61,7 @@ typedef NS_ENUM(NSUInteger, CCLightType)
  *  @see CCLightType
  *  @see CCColor
  */
-+(id)lightWithType:(CCLightType)type
++(instancetype)lightWithType:(CCLightType)type
             groups:(NSArray*)groups
              color:(CCColor *)color
          intensity:(float)intensity

@@ -55,12 +55,12 @@
 @synthesize objectGroups = _objectGroups;
 @synthesize properties = _properties;
 
-+(id) tiledMapWithFile:(NSString*)tmxFile
++(instancetype) tiledMapWithFile:(NSString*)tmxFile
 {
 	return [[self alloc] initWithFile:tmxFile];
 }
 
-+(id) tiledMapWithXML:(NSString*)tmxString resourcePath:(NSString*)resourcePath
++(instancetype) tiledMapWithXML:(NSString*)tmxString resourcePath:(NSString*)resourcePath
 {
 	return [[self alloc] initWithXML:tmxString resourcePath:resourcePath];
 }

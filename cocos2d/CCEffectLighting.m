@@ -372,7 +372,7 @@ static float conditionShininess(float shininess);
 }
 
 
-+(id)effectWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess
++(instancetype)effectWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess
 {
     return [[self alloc] initWithGroups:groups specularColor:specularColor shininess:shininess];
 }

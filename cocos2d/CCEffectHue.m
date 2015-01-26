@@ -97,7 +97,7 @@ static GLKMatrix4 matrixWithHue(float hue);
     return self;
 }
 
-+(id)effectWithHue:(float)hue
++(instancetype)effectWithHue:(float)hue
 {
     return [[self alloc] initWithHue:hue];
 }

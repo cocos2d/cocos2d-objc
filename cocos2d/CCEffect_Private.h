@@ -66,7 +66,7 @@ typedef NS_ENUM(NSUInteger, CCEffectTexCoordMapping)
 @property (nonatomic, readonly) NSString* function;
 
 -(id)initWithName:(NSString*)name body:(NSString*)body inputs:(NSArray*)inputs returnType:(NSString*)returnType;
-+(id)functionWithName:(NSString*)name body:(NSString*)body inputs:(NSArray*)inputs returnType:(NSString*)returnType;
++(instancetype)functionWithName:(NSString*)name body:(NSString*)body inputs:(NSArray*)inputs returnType:(NSString*)returnType;
 
 -(NSString*)callStringWithInputs:(NSArray*)inputs;
 
@@ -80,7 +80,7 @@ typedef NS_ENUM(NSUInteger, CCEffectTexCoordMapping)
 @property (nonatomic, readonly) NSString* snippet;
 
 -(id)initWithType:(NSString*)type name:(NSString*)name initialSnippet:(NSString*)initialSnippet snippet:(NSString*)snippet;
-+(id)inputWithType:(NSString*)type name:(NSString*)name initialSnippet:(NSString*)initialSnippet snippet:(NSString*)snippet;
++(instancetype)inputWithType:(NSString*)type name:(NSString*)name initialSnippet:(NSString*)initialSnippet snippet:(NSString*)snippet;
 
 @end
 
@@ -92,7 +92,7 @@ typedef NS_ENUM(NSUInteger, CCEffectTexCoordMapping)
 @property (nonatomic, readonly) NSValue* value;
 
 -(id)initWithType:(NSString*)type name:(NSString*)name value:(NSValue*)value;
-+(id)uniform:(NSString*)type name:(NSString*)name value:(NSValue*)value;
++(instancetype)uniform:(NSString*)type name:(NSString*)name value:(NSValue*)value;
 
 @end
 
@@ -105,8 +105,8 @@ typedef NS_ENUM(NSUInteger, CCEffectTexCoordMapping)
 
 -(id)initWithType:(NSString*)type name:(NSString*)name;
 -(id)initWithType:(NSString*)type name:(NSString*)name count:(NSInteger)count;
-+(id)varying:(NSString*)type name:(NSString*)name;
-+(id)varying:(NSString*)type name:(NSString*)name count:(NSInteger)count;
++(instancetype)varying:(NSString*)type name:(NSString*)name;
++(instancetype)varying:(NSString*)type name:(NSString*)name count:(NSInteger)count;
 
 @end
 

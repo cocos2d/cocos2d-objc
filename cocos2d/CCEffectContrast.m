@@ -95,7 +95,7 @@ static float conditionContrast(float contrast);
     return self;
 }
 
-+(id)effectWithContrast:(float)contrast
++(instancetype)effectWithContrast:(float)contrast
 {
     return [[self alloc] initWithContrast:contrast];
 }

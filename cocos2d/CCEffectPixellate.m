@@ -139,7 +139,7 @@ static float conditionBlockSize(float blockSize);
     return self;
 }
 
-+(id)effectWithBlockSize:(float)blockSize
++(instancetype)effectWithBlockSize:(float)blockSize
 {
     return [[self alloc] initWithBlockSize:blockSize];
 }

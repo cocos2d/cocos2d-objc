@@ -93,7 +93,7 @@ static float conditionBrightness(float brightness);
     return self;
 }
 
-+(id)effectWithBrightness:(float)brightness
++(instancetype)effectWithBrightness:(float)brightness
 {
     return [[self alloc] initWithBrightness:brightness];
 }
