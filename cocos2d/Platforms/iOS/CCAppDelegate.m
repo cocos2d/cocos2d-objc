@@ -108,6 +108,24 @@ const CGSize FIXED_SIZE = {568, 384};
 	return GLKMatrix4MakeOrtho(offset.x, sizePoint.width + offset.x, offset.y, sizePoint.height + offset.y, -1024, 1024);
 }
 
+// This is needed for iOS4 and iOS5 in order to ensure
+// that the 1st scene has the correct dimensions
+// This is not needed on iOS6 and could be added to the application:didFinish...
+
+#warning don't believe the lies above! This is the main entry point to your first scene for iOS!
+-(void) directorDidReshapeProjection:(CCDirector*)director
+{
+    if(director.runningScene == nil) {
+        [CCDirector bindDirector:director];
+        CCScene * scene = [_appDelegate startScene];
+        [CCDirector bindDirector:nil];
+        
+        // Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
+        // and add the scene to the stack. The director will run it when it automatically when the view is displayed.
+        [director presentScene: scene];
+    }
+}
+
 @end
 
 
