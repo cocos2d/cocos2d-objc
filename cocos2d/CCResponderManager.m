@@ -588,6 +588,31 @@
     
 }
 
+- (void)mouseMoved:(NSEvent *)theEvent
+{
+    if (!_enabled) return;
+    if (_dirty) [self buildResponderList];
+    
+    [CCDirector bindDirector:_director];
+    
+    // scan through responders, and find first one
+    for (int index = _responderListCount - 1; index >= 0; index --)
+    {
+        CCNode *node = _responderList[index];
+        
+        // check for hit test
+        if ([node clippedHitTestWithWorldPos:[_director convertEventToGL:theEvent]])
+        {
+            _currentEventProcessed = YES;
+            if ([node respondsToSelector:@selector(mouseMoved:)]) [node mouseMoved:theEvent];
+            
+            // if mouse was accepted, break
+            if (_currentEventProcessed) break;
+        }
+    }
+    [CCDirector bindDirector:nil];
+}
+
 #pragma mark - Mac keyboard handling -
 
 - (void)keyDown:(NSEvent *)theEvent

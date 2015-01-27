@@ -228,6 +228,14 @@ typedef NS_ENUM(NSInteger, CCMouseButton)
 - (void)scrollWheel:(NSEvent *)theEvent;
 
 /**
+ Called when the mouse is moved.
+ 
+ @see [NSEvent](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSEvent_Class/)
+ @since v4.0
+ */
+- (void)mouseMoved:(NSEvent *)theEvent;
+
+/**
  *  Called whan a key down.
  *
  *  @param theEvent    Current event information.
