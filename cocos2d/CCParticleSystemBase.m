@@ -42,8 +42,17 @@
 // 'Radius Mode' in Particle Designer uses a fixed emit rate of 30 hz. Since that can't be guarateed in cocos2d,
 //  cocos2d uses a another approach, but the results are almost identical.
 
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
 
 #import <ImageIO/ImageIO.h>
+
+#elseif __CC_PLATFORM_ANDROID
+
+#import <CoreGraphics/CGImageSource.h>
+#import <AndroidKit/AndroidBase64.h>
+
+#endif
+
 
 #import "ccMacros.h"
 
@@ -246,7 +255,7 @@
                 NSAssert(textureData64, @"CCParticleSystem: Couldn't load texture");
 
                 // Gzipped image data.
-                NSData *textureData = [[NSData alloc] initWithBase64Encoding:textureData64];
+                NSData *textureData = [self decodeTextureData:textureData64];
                 NSAssert(textureData != NULL, @"CCParticleSystem: error decoding textureImageData");
 
                 CCStreamedImageSource *streamedSource = [[CCStreamedImageSource alloc] initWithStreamBlock:^{
@@ -322,6 +331,18 @@
 	free( _particles );
 
 
+}
+
+
+- (NSData*)decodeTextureData:(NSString*)base64
+{
+    NSData* result;
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
+    result = [[NSData alloc] initWithBase64Encoding:textureData64];
+#elseif __CC_PLATFORM_ANDROID
+    result = [NSData decodeWithStr:base64 flags:AndroidBase64Default];
+#endif
+    return result;
 }
 
 -(void) initParticle: (_CCParticle*) particle
