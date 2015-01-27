@@ -109,47 +109,17 @@
 #pragma mark - OSX
 // -----------------------------------------------------------------
 
-- (void)mouseDown:(NSEvent *)theEvent
+- (void)mouseDown:(NSEvent *)theEvent button:(CCMouseButton) button
 {
     [[CCDirector currentDirector].responderManager discardCurrentEvent];
 }
 
-- (void)mouseDragged:(NSEvent *)theEvent
+- (void)mouseDragged:(NSEvent *)theEvent button:(CCMouseButton) button
 {
     [[CCDirector currentDirector].responderManager discardCurrentEvent];
 }
 
-- (void)mouseUp:(NSEvent *)theEvent
-{
-    [[CCDirector currentDirector].responderManager discardCurrentEvent];
-}
-
-- (void)rightMouseDown:(NSEvent *)theEvent
-{
-    [[CCDirector currentDirector].responderManager discardCurrentEvent];
-}
-
-- (void)rightMouseDragged:(NSEvent *)theEvent
-{
-    [[CCDirector currentDirector].responderManager discardCurrentEvent];
-}
-
-- (void)rightMouseUp:(NSEvent *)theEvent
-{
-    [[CCDirector currentDirector].responderManager discardCurrentEvent];
-}
-
-- (void)otherMouseDown:(NSEvent *)theEvent
-{
-    [[CCDirector currentDirector].responderManager discardCurrentEvent];
-}
-
-- (void)otherMouseDragged:(NSEvent *)theEvent
-{
-    [[CCDirector currentDirector].responderManager discardCurrentEvent];
-}
-
-- (void)otherMouseUp:(NSEvent *)theEvent
+- (void)mouseUp:(NSEvent *)theEvent button:(CCMouseButton) button
 {
     [[CCDirector currentDirector].responderManager discardCurrentEvent];
 }
