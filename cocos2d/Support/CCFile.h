@@ -93,6 +93,17 @@
 -(NSData *)loadData:(NSError **)error;
 
 /**
+ Load the file's contents as a UTF8 string.
+ 
+ @param error If an error occurs, upon return contains an NSError object that describes the problem.
+
+ @return The file's complete contents as a UTF8 string.
+
+ @since 4.0
+ */
+-(NSString *)loadString:(NSError **)error;
+
+/**
  Opens an input stream to the file so it can be read sequentially.
 
  @return An opened stream object.
@@ -101,8 +112,13 @@
  */
 -(NSInputStream *)openInputStream;
 
-#warning TODO What to do about these since we will be using metadata to store them?
-//@property(nonatomic, readonly) NSString *language;
-//@property(nonatomic, readonly) NSString *deviceFamily;
+/**
+ Indicate whether an asset should be scaled for UI purposes or not
+
+ @return If the asset should be scaled for UI
+
+ @since 4.0
+ */
+@property (nonatomic, readonly) BOOL useUIScale;
 
 @end

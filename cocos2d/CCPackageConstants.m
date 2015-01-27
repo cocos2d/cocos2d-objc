@@ -27,4 +27,3 @@ NSString *const PACKAGE_REL_DOWNLOAD_FOLDER = @"com.cocos2d/Packages/Downloads";
 NSString *const PACKAGE_REL_UNZIP_FOLDER = @"com.cocos2d/Packages/Unzipped";
 
 NSString *const PACKAGE_STORAGE_USERDEFAULTS_KEY = @"cocos2d.packages";
-

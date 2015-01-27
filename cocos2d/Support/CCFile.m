@@ -507,6 +507,11 @@ static const CGDataProviderSequentialCallbacks callbacks = {
     }
 }
 
+-(NSString *)loadString:(NSError **)error;
+{
+    return [[NSString alloc] initWithData:[self loadData:error] encoding:NSUTF8StringEncoding];
+}
+
 -(CGImageSourceRef)createCGImageSource
 {
     if(_loadDataFromStream){
@@ -515,6 +520,11 @@ static const CGDataProviderSequentialCallbacks callbacks = {
     } else {
         return CGImageSourceCreateWithURL((__bridge CFURLRef)self.url, NULL);
     }
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"Absolute path: \"%@\", UIScale: %d, scale %.2f", [self class], (void *) self, self.absoluteFilePath, _useUIScale, _contentScale];
 }
 
 @end

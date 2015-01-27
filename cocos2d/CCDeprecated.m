@@ -84,7 +84,7 @@
 static CGAffineTransform
 CGAffineTransformFromGLKMatrix4(GLKMatrix4 m)
 {
-    return CGAffineTransformMake(m.m[0], m.m[0], m.m[0], m.m[0], m.m[0], m.m[0]);
+    return CGAffineTransformMake(m.m[0], m.m[1], m.m[4], m.m[5], m.m[12], m.m[13]);
 }
 
 - (CGAffineTransform)nodeToParentTransform;

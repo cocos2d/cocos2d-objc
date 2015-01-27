@@ -13,7 +13,7 @@
 #import "CCPackage_private.h"
 #import "CCPackageConstants.h"
 #import "CCPackageManagerDelegate.h"
-#import "CCUnitTestAssertions.h"
+#import "CCUnitTestHelperMacros.h"
 #import "CCDirector.h"
 #import "AppDelegate.h"
 #import "CCPackageCocos2dEnabler.h"
@@ -300,13 +300,13 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
     // Test: set to empty string and nil should not change path
     NSString *installedRelPathCopy = [_packageManager.installRelPath copy];
     _packageManager.installRelPath = @" \t \n  ";
-    CCAssertEqualStrings(installedRelPathCopy, _packageManager.installRelPath);
+    XCTAssertEqualObjects(installedRelPathCopy, _packageManager.installRelPath);
 
     _packageManager.installRelPath = nil;
-    CCAssertEqualStrings(installedRelPathCopy, _packageManager.installRelPath);
+    XCTAssertEqualObjects(installedRelPathCopy, _packageManager.installRelPath);
 
     _packageManager.installRelPath = @"";
-    CCAssertEqualStrings(installedRelPathCopy, _packageManager.installRelPath);
+    XCTAssertEqualObjects(installedRelPathCopy, _packageManager.installRelPath);
 
 
     // Test: set a non existing folder
@@ -320,7 +320,7 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
     _packageManager.installRelPath = relPath;
 
     XCTAssertTrue([fileManager fileExistsAtPath:fullPath]);
-    CCAssertEqualStrings(relPath, _packageManager.installRelPath);
+    XCTAssertEqualObjects(relPath, _packageManager.installRelPath);
 
     // Test2: set an existing path
     NSString *relPath2 = @"Foo2";
@@ -331,7 +331,7 @@ static NSString *const PACKAGE_BASE_URL = @"http://manager.test";
 
     _packageManager.installRelPath = relPath2;
     XCTAssertTrue([fileManager fileExistsAtPath:fullPath2]);
-    CCAssertEqualStrings(relPath2, _packageManager.installRelPath);
+    XCTAssertEqualObjects(relPath2, _packageManager.installRelPath);
 }
 
 - (void)testDownloadOfPackageWithDifferentInstallPath

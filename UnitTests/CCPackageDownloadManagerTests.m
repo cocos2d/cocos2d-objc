@@ -12,7 +12,7 @@
 #import "CCPackage.h"
 #import "CCDirector.h"
 #import "AppDelegate.h"
-#import "CCUnitTestAssertions.h"
+#import "CCUnitTestHelperMacros.h"
 #import "CCPackage_private.h"
 
 @interface CCPackageDownloadManagerTestURLProtocol : NSURLProtocol @end
@@ -111,7 +111,7 @@
 
     XCTAssert([fileManager fileExistsAtPath:newPath isDirectory:&isDir]);
     XCTAssertTrue(isDir);
-    CCAssertEqualStrings(newPath, _downloadManager.downloadPath);
+    XCTAssertEqualObjects(newPath, _downloadManager.downloadPath);
 }
 
 - (void)testTwoDownloads
@@ -208,7 +208,7 @@
     for (CCPackage *aPackage in packages)
     {
         XCTAssertTrue([fileManager fileExistsAtPath:aPackage.localDownloadURL.path]);
-        CCAssertEqualStrings(aPackage.name, [NSString stringWithContentsOfFile:aPackage.localDownloadURL.path encoding:NSUTF8StringEncoding error:nil]);
+        XCTAssertEqualObjects(aPackage.name, [NSString stringWithContentsOfFile:aPackage.localDownloadURL.path encoding:NSUTF8StringEncoding error:nil]);
     }
 }
 

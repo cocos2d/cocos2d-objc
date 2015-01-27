@@ -9,7 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "CCPackage.h"
 #import "CCPackage_private.h"
-#import "CCUnitTestAssertions.h"
+#import "CCUnitTestHelperMacros.h"
 
 @interface CCPackageTests : XCTestCase
 
@@ -25,9 +25,9 @@
                                                       os:@"iOS"
                                                remoteURL:[NSURL URLWithString:@"http://foo.fake"]];
 
-    CCAssertEqualStrings(package.name, @"DLC");
-    CCAssertEqualStrings(package.resolution, @"tablethd");
-    CCAssertEqualStrings(package.os, @"iOS");
+    XCTAssertEqualObjects(package.name, @"DLC");
+    XCTAssertEqualObjects(package.resolution, @"tablethd");
+    XCTAssertEqualObjects(package.os, @"iOS");
     XCTAssertEqualObjects(package.remoteURL, [NSURL URLWithString:@"http://foo.fake"]);
     XCTAssertEqual(package.status, CCPackageStatusInitial);
 }
@@ -42,7 +42,7 @@
                                                       os:@"iOS"
                                                remoteURL:[NSURL URLWithString:@"http://foo.fake"]];
 
-    CCAssertEqualStrings([package standardIdentifier], @"DLC-iOS-tablethd");
+    XCTAssertEqualObjects([package standardIdentifier], @"DLC-iOS-tablethd");
 }
 
 - (void)testInitWithDictionary
@@ -62,15 +62,15 @@
 
     CCPackage *package = [[CCPackage alloc] initWithDictionary:dictionary];
 
-    CCAssertEqualStrings(package.name, @"DLC");
-    CCAssertEqualStrings(package.resolution, @"tablethd");
-    CCAssertEqualStrings(package.os, @"iOS");
+    XCTAssertEqualObjects(package.name, @"DLC");
+    XCTAssertEqualObjects(package.resolution, @"tablethd");
+    XCTAssertEqualObjects(package.os, @"iOS");
     XCTAssertEqualObjects(package.remoteURL, [NSURL URLWithString:@"http://foo.fake"]);
     XCTAssertEqualObjects(package.installRelURL, [NSURL fileURLWithPath:@"Packages"]);
     XCTAssertEqual(package.status, CCPackageStatusInstalledDisabled);
     XCTAssertEqualObjects(package.localDownloadURL, [NSURL fileURLWithPath:@"/downloadfolder/baa.zip"]);
     XCTAssertEqualObjects(package.unzipURL, [NSURL fileURLWithPath:@"/unzupfolder/foo"]);
-    CCAssertEqualStrings(package.folderName, @"somename");
+    XCTAssertEqualObjects(package.folderName, @"somename");
     XCTAssertTrue(package.enableOnDownload);
 }
 
@@ -87,9 +87,9 @@
 
     CCPackage *package = [[CCPackage alloc] initWithDictionary:dictionary];
 
-    CCAssertEqualStrings(package.name, @"DLC");
-    CCAssertEqualStrings(package.resolution, @"tablethd");
-    CCAssertEqualStrings(package.os, @"iOS");
+    XCTAssertEqualObjects(package.name, @"DLC");
+    XCTAssertEqualObjects(package.resolution, @"tablethd");
+    XCTAssertEqualObjects(package.os, @"iOS");
     XCTAssertEqualObjects(package.remoteURL, [NSURL URLWithString:@"http://foo.fake"]);
     XCTAssertNil(package.installRelURL);
     XCTAssertEqual(package.status, CCPackageStatusInitial);
@@ -115,15 +115,15 @@
 
     NSDictionary *dictionary = [package toDictionary];
 
-    CCAssertEqualStrings(dictionary[@"name"], @"DLC");
-    CCAssertEqualStrings(dictionary[@"resolution"], @"tablethd");
-    CCAssertEqualStrings(dictionary[@"os"], @"iOS");
-    CCAssertEqualStrings(dictionary[@"remoteURL"], @"http://foo.fake");
-    CCAssertEqualStrings(dictionary[@"installURL"], @"Packages");
+    XCTAssertEqualObjects(dictionary[@"name"], @"DLC");
+    XCTAssertEqualObjects(dictionary[@"resolution"], @"tablethd");
+    XCTAssertEqualObjects(dictionary[@"os"], @"iOS");
+    XCTAssertEqualObjects(dictionary[@"remoteURL"], @"http://foo.fake");
+    XCTAssertEqualObjects(dictionary[@"installURL"], @"Packages");
     XCTAssertEqual([dictionary[@"status"] integerValue], CCPackageStatusInstalledDisabled);
-    CCAssertEqualStrings(dictionary[@"localDownloadURL"], @"/downloadfolder/baa.zip");
-    CCAssertEqualStrings(dictionary[@"localUnzipURL"], @"/unzupfolder/foo");
-    CCAssertEqualStrings(dictionary[@"folderName"], @"somename");
+    XCTAssertEqualObjects(dictionary[@"localDownloadURL"], @"/downloadfolder/baa.zip");
+    XCTAssertEqualObjects(dictionary[@"localUnzipURL"], @"/unzupfolder/foo");
+    XCTAssertEqualObjects(dictionary[@"folderName"], @"somename");
     XCTAssertFalse([dictionary[@"enableOnDownload"] boolValue]);
 }
 
