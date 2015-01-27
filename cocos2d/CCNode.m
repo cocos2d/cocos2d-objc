@@ -426,26 +426,20 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
     }
     else if (widthUnit == CCSizeUnitNormalized)
     {
-        if (!gotParentSize) {
-            gotParentSize = YES;
-            parentsContentSizeInPoints = _parent.contentSizeInPoints;
-        }
+        gotParentSize = YES;
+        parentsContentSizeInPoints = _parent.contentSizeInPoints;
         size.width = contentSize.width * parentsContentSizeInPoints.width;
     }
     else if (widthUnit == CCSizeUnitInsetPoints)
     {
-        if (!gotParentSize) {
-            gotParentSize = YES;
-            parentsContentSizeInPoints = _parent.contentSizeInPoints;
-        }
+        gotParentSize = YES;
+        parentsContentSizeInPoints = _parent.contentSizeInPoints;
         size.width = parentsContentSizeInPoints.width - contentSize.width;
     }
     else if (widthUnit == CCSizeUnitInsetUIPoints)
     {
-        if (!gotParentSize) {
-            gotParentSize = YES;
-            parentsContentSizeInPoints = _parent.contentSizeInPoints;
-        }
+        gotParentSize = YES;
+        parentsContentSizeInPoints = _parent.contentSizeInPoints;
         size.width = parentsContentSizeInPoints.width - contentSize.width * director.UIScaleFactor;
     }
     
@@ -496,10 +490,8 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
     }
     else if (widthUnit == CCSizeUnitNormalized)
     {
-        if(!gotParentSize) {
-            gotParentSize = YES;
-            parentsContentSizeInPoints = _parent.contentSizeInPoints;
-        }
+        gotParentSize = YES;
+        parentsContentSizeInPoints = _parent.contentSizeInPoints;
         
         float parentWidthInPoints = parentsContentSizeInPoints.width;
         if (parentWidthInPoints > 0)
@@ -513,19 +505,15 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
     }
     else if (widthUnit == CCSizeUnitInsetPoints)
     {
-        if(!gotParentSize) {
-            gotParentSize = YES;
-            parentsContentSizeInPoints = _parent.contentSizeInPoints;
-        }
+        gotParentSize = YES;
+        parentsContentSizeInPoints = _parent.contentSizeInPoints;
         
         size.width = parentsContentSizeInPoints.width - pointSize.width;
     }
     else if (widthUnit == CCSizeUnitInsetUIPoints)
     {
-        if(!gotParentSize) {
-            gotParentSize = YES;
-            parentsContentSizeInPoints = _parent.contentSizeInPoints;
-        }
+        gotParentSize = YES;
+        parentsContentSizeInPoints = _parent.contentSizeInPoints;
         
         size.width = (parentsContentSizeInPoints.width - pointSize.width) / director.UIScaleFactor;
     }
