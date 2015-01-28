@@ -141,8 +141,8 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 
  Since the CCDirector is a singleton, the standard way to use its methods and properties is:
  
- - `[[CCDirector sharedDirector] methodName];`
- - `[CCDirector sharedDirector].aProperty;`
+ - `[[CCDirector currentDirector] methodName];`
+ - `[CCDirector currentDirector].aProperty;`
 
  The CCDirector is responsible for:
  

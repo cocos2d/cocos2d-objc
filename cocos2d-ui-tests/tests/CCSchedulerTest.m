@@ -83,7 +83,7 @@
     self.subTitle =
     @"Sprite should rotate.\nActions should work on these special nested nodes..";
     
-    CGSize size = [CCDirector sharedDirector].designSize;
+    CGSize size = [CCDirector currentDirector].designSize;
     
     //	CCNode *parent = self.contentNode;
     

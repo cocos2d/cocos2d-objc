@@ -118,7 +118,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     _outgoingOverIncoming = NO;
     
     // find out where the outgoing scene will end (if it is a transition with movement)
-    CGSize size = [CCDirector sharedDirector].viewportRect.size;
+    CGSize size = [CCDirector currentDirector].viewportRect.size;
     switch (direction) {
         case CCTransitionDirectionDown: _outgoingDestination = CGPointMake(0, -size.height); break;
         case CCTransitionDirectionLeft: _outgoingDestination = CGPointMake(-size.width, 0); break;
@@ -247,11 +247,11 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     {
         // Exit out scene
         [_outgoingScene onExit];
-        if ([CCDirector sharedDirector].sendCleanupToScene) [_outgoingScene cleanup];
+        if ([CCDirector currentDirector].sendCleanupToScene) [_outgoingScene cleanup];
         _outgoingScene = nil;
         
         // Start incoming scene
-        [[CCDirector sharedDirector] presentScene:_incomingScene];
+        [[CCDirector currentDirector] presentScene:_incomingScene];
         [_incomingScene onEnterTransitionDidFinish];
         [_incomingScene setPaused:NO];
         _incomingScene = nil;
