@@ -28,33 +28,30 @@
 /* Idea of decoupling Window from Director taken from OC3D project: http://code.google.com/p/oc3d/
  */
 
-#import <unistd.h>
+#warning We should not be using some monotonic time function instead of gettimeofday()
+#include <sys/time.h>
 
-// cocos2d imports
-#import "CCDirector.h"
+#import "CCDirector_Private.h"
+#import "CCNode_Private.h"
+#import "CCRenderer_Private.h"
+#import "CCRenderDispatch_Private.h"
+#import "CCScheduler_Private.h"
+#import "CCScene+Private.h"
+
 #import "CCScheduler.h"
-#import "CCActionManager.h"
 #import "CCTextureCache.h"
 #import "CCAnimationCache.h"
 #import "CCLabelBMFont.h"
-#import "ccMacros.h"
 #import "CCScene.h"
+#import "CCColor.h"
 #import "CCSpriteFrameCache.h"
 #import "CCTexture.h"
-#import "CCLabelBMFont.h"
 #import "ccFPSImages.h"
-#import "CCConfiguration.h"
+#import "CCDeviceInfo.h"
 #import "CCTransition.h"
-#import "CCRenderer_Private.h"
-#import "CCRenderDispatch_Private.h"
-
-// support imports
-#import "Platforms/CCGL.h"
 #import "Platforms/CCNS.h"
-
-#import "Support/CGPointExtension.h"
-#import "Support/CCProfiling.h"
 #import "Support/CCFileUtils.h"
+#import "ccUtils.h"
 
 #if __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
@@ -67,16 +64,11 @@
 #define CC_DIRECTOR_DEFAULT CCDirectorDisplayLink
 #endif
 
-#import "CCDirector_Private.h"
-#import "CCNode_Private.h"
-
 #pragma mark -
 #pragma mark Director - global variables (optimization)
 
-CGFloat	__ccContentScaleFactor = 1;
-
-// XXX it shoul be a Director ivar. Move it there once support for multiple directors is added
-NSUInteger	__ccNumberOfDraws = 0;
+// TODO: This global should not also be a property on specific instances of CCDirector. it should be global. probably belongs on a different class.
+float __ccContentScaleFactor = 1;
 
 #define kDefaultFPS		60.0	// 60 frames per second
 
@@ -112,41 +104,63 @@ extern NSString * cocos2dVersion(void);
 @synthesize delegate = _delegate;
 @synthesize totalFrames = _totalFrames;
 @synthesize secondsPerFrame = _secondsPerFrame;
-@synthesize scheduler = _scheduler;
-@synthesize actionManager = _actionManager;
-@synthesize actionManagerFixed = _actionManagerFixed;
-
-//
-// singleton stuff
-//
-static CCDirector *_sharedDirector = nil;
 
 + (CCDirector *)sharedDirector
 {
-	if (!_sharedDirector) {
+    return [CCDirector currentDirector];
+}
 
-		//
-		// Default Director is DisplayLink
-		//
-		if( [ [CCDirector class] isEqual:[self class]] )
-			_sharedDirector = [[CC_DIRECTOR_DEFAULT alloc] init];
-		else
-			_sharedDirector = [[self alloc] init];
+static NSString * const CCDirectorCurrentKey = @"CCDirectorCurrentKey";
+static NSString * const CCDirectorStackKey = @"CCDirectorStackKey";
+
++ (CCDirector *)currentDirector
+{
+    return [NSThread currentThread].threadDictionary[CCDirectorCurrentKey];
+}
+
+static void
+CCDirectorBindCurrent(CCDirector *director)
+{
+	if(director && (id)director != [NSNull null]){
+        [NSThread currentThread].threadDictionary[CCDirectorCurrentKey] = director;
+	} else {
+		[[NSThread currentThread].threadDictionary removeObjectForKey:CCDirectorCurrentKey];
 	}
-
-	return _sharedDirector;
 }
 
-+(id)alloc
+NSMutableArray *
+CCDirectorStack()
 {
-	NSAssert(_sharedDirector == nil, @"Attempted to allocate a second instance of a singleton.");
-	return [super alloc];
+    NSMutableArray *stack = [NSThread currentThread].threadDictionary[CCDirectorStackKey];
+    
+    if(stack == nil){
+        stack = [NSMutableArray array];
+        [NSThread currentThread].threadDictionary[CCDirectorStackKey] = stack;
+    }
+    
+    return stack;
 }
 
-// Force creation of a new singleton, useful to prevent state leaking during tests.
-+ (void) resetSingleton
++(void)pushCurrentDirector:(CCDirector *)director;
 {
-	_sharedDirector = nil;
+    NSMutableArray *stack = CCDirectorStack();
+    [stack addObject:[self currentDirector] ?: [NSNull null]];
+    
+    CCDirectorBindCurrent(director);
+}
+
++(void)popCurrentDirector;
+{
+    NSMutableArray *stack = CCDirectorStack();
+    NSAssert(stack.count > 0, @"CCDirector stack underflow.");
+    
+    CCDirectorBindCurrent(stack.lastObject);
+    [stack removeLastObject];
+}
+
++(CCDirector *)director;
+{
+    return [[CC_DIRECTOR_DEFAULT alloc] init];
 }
 
 - (id) init
@@ -171,30 +185,10 @@ static CCDirector *_sharedDirector = nil;
 		// FPS
 		_displayStats = NO;
 		_totalFrames = _frames = 0;
-
-		// paused ?
 		_isPaused = NO;
-
-		// running thread
 		_runningThread = nil;
-
-		// scheduler
-		_scheduler = [[CCScheduler alloc] init];
-
-		// action manager
-		_actionManager = [[CCActionManager alloc] init];
-		_actionManagerFixed = [[CCFixedActionManager alloc] init];
 		
-		[_scheduler scheduleTarget:_actionManager];
-		[_scheduler scheduleTarget:_actionManagerFixed];
-
-		[_scheduler setPaused:NO target:_actionManager];
-		[_scheduler setPaused:NO target:_actionManagerFixed];
-		
-		
-		// touch manager
-		_responderManager = [ CCResponderManager responderManager ];
-		
+		_responderManager = [ [CCResponderManager alloc] initWithDirector:self ];
 		_winSizeInPixels = _winSizeInPoints = CGSizeZero;
 		
 		__ccContentScaleFactor = 1;
@@ -205,7 +199,7 @@ static CCDirector *_sharedDirector = nil;
 		
 		// Force the graphics API to be selected if it hasn't already done so.
 		// Startup code is annoyingly different for iOS/Mac/Android.
-		[[CCConfiguration sharedConfiguration] graphicsAPI];
+		[[CCDeviceInfo sharedDeviceInfo] graphicsAPI];
 		_framebuffer = [[CCFrameBufferObjectClass alloc] init];
 	}
 
@@ -220,25 +214,26 @@ static CCDirector *_sharedDirector = nil;
 - (void) dealloc
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
-
-
-	_sharedDirector = nil;
-
 }
 
-- (void) drawScene
-{	
+- (void) mainLoopBody
+{
+    if(!_animating)
+        return;
+    
+    [CCDirector pushCurrentDirector:self];
+    
     /* calculate "global" dt */
 	[self calculateDeltaTime];
 
 	/* tick before glClear: issue #533 */
-	if( ! _isPaused ) [_scheduler update: _dt];
+	if( ! _isPaused ) [_runningScene.scheduler update: _dt];
 
 	/* to avoid flickr, nextScene MUST be here: after tick and before draw.
 	 XXX: Which bug is this one. It seems that it can't be reproduced with v0.9 */
 	if( _nextScene ) [self setNextScene];
 	
-	CC_VIEW<CCDirectorView> *ccview = self.view;
+	CC_VIEW<CCView> *ccview = self.view;
 	[ccview beginFrame];
 	
 	if(CCRenderDispatchBeginFrame()){
@@ -274,6 +269,7 @@ static CCDirector *_sharedDirector = nil;
 		
 		if( _displayStats ) [self calculateMPF];
 	}
+    [CCDirector popCurrentDirector];
 }
 
 -(CCRenderer *)rendererFromPool
@@ -342,7 +338,7 @@ static CCDirector *_sharedDirector = nil;
     
 	[CCRenderState flushCache];
 	[CCLabelBMFont purgeCachedData];
-	if ([_sharedDirector view])
+	if ([[CCDirector currentDirector] view])
 		[[CCTextureCache sharedTextureCache] removeUnusedTextures];
 	[[CCFileUtils sharedFileUtils] purgeCachedEntries];
 }
@@ -371,7 +367,7 @@ static CCDirector *_sharedDirector = nil;
 
 #pragma mark Director Integration with a UIKit view
 
--(void) setView:(CC_VIEW<CCDirectorView> *)view
+-(void) setView:(CC_VIEW<CCView> *)view
 {
 #if __CC_PLATFORM_IOS
 		[super setView:view];
@@ -402,7 +398,7 @@ static CCDirector *_sharedDirector = nil;
 		}
 
 		// Dump info once OpenGL was initilized
-		[[CCConfiguration sharedConfiguration] dumpInfo];
+		[[CCDeviceInfo sharedDeviceInfo] dumpInfo];
 }
 
 
@@ -501,38 +497,57 @@ static CCDirector *_sharedDirector = nil;
 -(void) reshapeProjection:(CGSize)newViewSize
 {
 	_winSizeInPixels = newViewSize;
-	_winSizeInPoints = CGSizeMake( _winSizeInPixels.width / __ccContentScaleFactor, _winSizeInPixels.height / __ccContentScaleFactor );
+	_winSizeInPoints = CC_SIZE_SCALE(newViewSize, 1.0/self.contentScaleFactor);
 	
 	[self setProjection:_projection];
 	
-	[_runningScene viewDidResizeTo: newViewSize];
+	[_runningScene viewDidResizeTo: _winSizeInPoints];
 }
 
 #pragma mark Director Scene Management
 
-- (void)runWithScene:(CCScene*) scene
-{
-	NSAssert( scene != nil, @"Argument must be non-nil");
-	NSAssert(_runningScene == nil, @"This command can only be used to start the CCDirector. There is already a scene present.");
 
-	[self pushScene:scene];
-	[self startAnimation];
+- (void)antiFlickrDrawCall
+{
+    // Questionable "anti-flickr", extra draw call:
+    // overridden for android.
+    [self mainLoopBody];
 }
 
 - (void)presentScene:(CCScene *)scene
 {
-    if (_runningScene)
-        [self replaceScene:scene];
-    else
+    if (_runningScene) {
+        _sendCleanupToScene = YES;
+        [_scenesStack removeLastObject];
+        [_scenesStack addObject:scene];
+        _nextScene = scene;	// _nextScene is a weak ref
+    } else {
         [self runWithScene:scene];
+    }
 }
 
 - (void)presentScene:(CCScene *)scene withTransition:(CCTransition *)transition
 {
-    if (_runningScene)
-        [self replaceScene:scene withTransition:transition];
-    else
+    if (_runningScene){
+        _sendCleanupToScene = YES;
+        // the transition gets to become the running scene
+        [transition startTransition:scene withDirector:self];
+    } else {
         [self runWithScene:scene];
+    }
+}
+
+- (void)runWithScene:(CCScene*) scene
+{
+    NSAssert( scene != nil, @"Argument must be non-nil");
+    NSAssert(_runningScene == nil, @"This command can only be used to start the CCDirector. There is already a scene present.");
+    
+    [self pushScene:scene];
+    
+    scene.director = self;
+    [self antiFlickrDrawCall];
+    
+    [self startRunLoop];
 }
 
 - (void) pushScene: (CCScene*) scene
@@ -551,7 +566,7 @@ static CCDirector *_sharedDirector = nil;
     
     [_scenesStack addObject:scene];
     _sendCleanupToScene = NO;
-    [transition startTransition:scene];
+    [transition startTransition:scene withDirector:self];
 }
 
 -(void) popScene
@@ -582,7 +597,7 @@ static CCDirector *_sharedDirector = nil;
         [_scenesStack removeLastObject];
         CCScene * incomingScene = [_scenesStack lastObject];
         _sendCleanupToScene = YES;
-        [transition startTransition:incomingScene];
+        [transition startTransition:incomingScene withDirector:self];
     }
 }
 
@@ -594,7 +609,7 @@ static CCDirector *_sharedDirector = nil;
 -(void) popToRootSceneWithTransition:(CCTransition *)transition {
 	[self popToRootScene];
 	_sendCleanupToScene = YES;
-    [transition startTransition:_nextScene];
+    [transition startTransition:_nextScene withDirector:self];
 }
 
 -(void) popToSceneStackLevel:(NSUInteger)level
@@ -615,7 +630,7 @@ static CCDirector *_sharedDirector = nil;
 	// pop stack until reaching desired level
 	while (c > level) {
 		CCScene *current = [_scenesStack lastObject];
-		if( current.runningInActiveScene ){
+		if( current.active ){
 			[current onExitTransitionDidStart];
 			[current onExit];
 		}
@@ -628,35 +643,6 @@ static CCDirector *_sharedDirector = nil;
 	_sendCleanupToScene = NO;
 }
 
-// -----------------------------------------------------------------
-
-- (void)replaceScene:(CCScene *)scene
-{
-	NSAssert( scene != nil, @"Argument must be non-nil");
-
-    if (_runningScene)
-    {
-        _sendCleanupToScene = YES;
-        [_scenesStack removeLastObject];
-        [_scenesStack addObject:scene];
-        _nextScene = scene;	// _nextScene is a weak ref
-    }
-    else
-    {
-        [self pushScene:scene];
-        [self startAnimation];
-    }
-}
-
-- (void)replaceScene:(CCScene *)scene withTransition:(CCTransition *)transition
-{
-    // the transition gets to become the running scene
-    _sendCleanupToScene = YES;
-    [transition startTransition:scene];
-}
-
-// -----------------------------------------------------------------
-
 - (void)startTransition:(CCTransition *)transition
 {
 	NSAssert(transition, @"Argument must be non-nil");
@@ -666,8 +652,6 @@ static CCDirector *_sharedDirector = nil;
     [_scenesStack addObject:transition];
     _nextScene = transition;
 }
-
-// -----------------------------------------------------------------
 
 -(void) end
 {
@@ -687,7 +671,7 @@ static CCDirector *_sharedDirector = nil;
 	// runWithScene might be executed after 'end'.
 	[_scenesStack removeAllObjects];
 
-	[self stopAnimation];
+	[self stopRunLoop];
 
 	_FPSLabel = nil, _SPFLabel=nil, _drawsLabel=nil;
 
@@ -722,6 +706,7 @@ static CCDirector *_sharedDirector = nil;
     if ([_nextScene isKindOfClass:[CCTransition class]])
     {
         _runningScene = nil;
+        _nextScene.director = self;
         _runningScene = _nextScene;
         _nextScene = nil;
         [_runningScene onEnter];
@@ -736,6 +721,8 @@ static CCDirector *_sharedDirector = nil;
     {
         [_runningScene onExit];
         [_runningScene cleanup];
+        _runningScene.director = nil;
+
         _runningScene = nil;
         _runningScene = _nextScene;
         _nextScene = nil;
@@ -809,19 +796,15 @@ static CCDirector *_sharedDirector = nil;
 	_dt = 0;
 }
 
-- (void)startAnimation
+// This method is also overridden by platform specific directors.
+- (void)startRunLoop
 {
-    if([_delegate respondsToSelector:@selector(startAnimation)])
-    {
-        [_delegate startAnimation];
-    }
-    
 	_nextDeltaTimeZero = YES;
 }
 
-- (void)stopAnimation
+- (void)stopRunLoop
 {
-	CCLOG(@"cocos2d: Director#stopAnimation. Override me");
+	CCLOG(@"cocos2d: Director#stopRunLoop. Override me");
 }
 
 - (void)setAnimationInterval:(NSTimeInterval)interval
@@ -831,18 +814,18 @@ static CCDirector *_sharedDirector = nil;
 
 - (CCTime)fixedUpdateInterval
 {
-	return self.scheduler.fixedUpdateInterval;
+	return _runningScene.scheduler.fixedUpdateInterval;
 }
 
 -(void)setFixedUpdateInterval:(CCTime)fixedUpdateInterval
 {
-	self.scheduler.fixedUpdateInterval = fixedUpdateInterval;
+	_runningScene.scheduler.fixedUpdateInterval = fixedUpdateInterval;
 }
 
 @end
 
 
-@interface CCFPSLabel : CCNode<CCTextureProtocol>
+@interface CCFPSLabel : CCRenderableNode<CCTextureProtocol, CCShaderProtocol>
 @property(nonatomic, strong) NSString *string;
 @end
 
@@ -933,7 +916,7 @@ static const float CCFPSLabelItemHeight = 32;
 			[_FPSLabel setString:fpsstr];
 			
 			// Subtract one for the stat label's own batch. This caused a lot of confusion on the forums...
-			NSString *draws = [[NSString alloc] initWithFormat:@"%4lu", (unsigned long)__ccNumberOfDraws - 1];
+			NSString *draws = [[NSString alloc] initWithFormat:@"%4lu", (unsigned long)0 - 1];
 			[_drawsLabel setString:draws];
 		}
 		
@@ -943,8 +926,6 @@ static const float CCFPSLabelItemHeight = 32;
 		[_FPSLabel visit:renderer parentTransform:&_projectionMatrix];
 		[_SPFLabel visit:renderer parentTransform:&_projectionMatrix];
 	}
-	
-	__ccNumberOfDraws = 0;
 }
 
 -(void) calculateMPF

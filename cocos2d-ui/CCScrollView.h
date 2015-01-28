@@ -22,10 +22,17 @@
  * THE SOFTWARE.
  */
 
+#import "ccMacros.h"
+#import "CCViewportNode.h"
 #import "CCNode.h"
+
+#if __CC_PLATFORM_IOS
+#import <UIKit/UIGestureRecognizer.h>
+#endif
 
 @class CCTapDownGestureRecognizer;
 @class CCScrollView;
+@class UIPanGestureRecognizer;
 
 @protocol CCScrollViewDelegate <NSObject>
 
@@ -41,17 +48,16 @@
 #if __CC_PLATFORM_IOS
 
 // Class definition for iOS
-@interface CCScrollView : CCNode <UIGestureRecognizerDelegate>
+@interface CCScrollView : CCViewportNode <UIGestureRecognizerDelegate>
 
 #elif __CC_PLATFORM_MAC
 
 // Class definition for Mac
-@interface CCScrollView : CCNode
-
+@interface CCScrollView : CCViewportNode
 
 #else
 
-@interface CCScrollView : CCNode
+@interface CCScrollView : CCViewportNode
 
 #endif
 
@@ -70,8 +76,6 @@
 }
 
 @property (nonatomic, weak) id<CCScrollViewDelegate> delegate;
-
-@property (nonatomic,strong) CCNode* contentNode;
 
 @property (nonatomic,assign) BOOL flipYCoordinates;
 
@@ -92,6 +96,8 @@
 @property (nonatomic,readonly) float maxScrollY;
 
 @property (nonatomic,assign) BOOL bounces;
+
+
 
 - (id) initWithContentNode:(CCNode*)contentNode;
 

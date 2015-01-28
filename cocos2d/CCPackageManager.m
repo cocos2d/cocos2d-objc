@@ -794,13 +794,13 @@
 
 - (void)runOnCocosThread:(dispatch_block_t)block
 {
-    if ([[NSThread currentThread] isEqual:[[CCDirector sharedDirector] runningThread]])
+    if ([[NSThread currentThread] isEqual:[[CCDirector currentDirector] runningThread]])
     {
         block();
     }
     else
     {
-        [self performSelector:_cmd onThread:[[CCDirector sharedDirector] runningThread] withObject:block waitUntilDone:YES];
+        [self performSelector:_cmd onThread:[[CCDirector currentDirector] runningThread] withObject:block waitUntilDone:YES];
     }
 }
 

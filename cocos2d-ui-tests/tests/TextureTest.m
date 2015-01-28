@@ -22,7 +22,7 @@
 
 	self.subTitle = title;
 	
-	CGSize s = [[CCDirector sharedDirector] viewSize];
+	CGSize s = [[CCDirector currentDirector] viewSize];
 	
 	CCSprite *img = [CCSprite spriteWithImageNamed:fileName];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
@@ -66,16 +66,18 @@
 
 -(void) setupPVRa8LoadingTest
 {
-	// Doesn't seem to work?
 	CCSprite * img = [self loadAndDisplayImageNamed: @"test_image_a8.pvr" withTitle: @"8 bit PVR, alpha only. (With red color overlay)"];
-	[img setColor:[CCColor redColor]];
+    
+    img.shader = [CCShader positionTextureA8ColorShader];
+	img.color = [CCColor redColor];
 }
 
 -(void) setupPVRa8v3LoadingTest
 {
-	// Doesn't seem to work?
 	CCSprite * img = [self loadAndDisplayImageNamed: @"test_image_a8_v3.pvr" withTitle: @"8 bit PVR v3, alpha only. (With red color overlay)"];
-	[img setColor:[CCColor redColor]];
+    
+    img.shader = [CCShader positionTextureA8ColorShader];
+	img.color = [CCColor redColor];
 }
 
 -(void) setupPVRa88LoadingTest
@@ -165,7 +167,7 @@
 
 -(void) setupTestTextureAntialiasModesTest
 {
-	CGSize s = [[CCDirector sharedDirector] viewSize];
+	CGSize s = [[CCDirector currentDirector] viewSize];
 	
 	// The purpose of the 4 repetitions of the texture is to make sure the antialias state doesn't leak in the shared texture cache.
 	
@@ -199,7 +201,7 @@
 {
 	self.subTitle = @"Texture GL_REPEAT";
 	
-	CGSize s = [[CCDirector sharedDirector] viewSize];
+	CGSize s = [[CCDirector currentDirector] viewSize];
 
 	// requires a power of two image
 	CCTexture* texture = [[CCTextureCache sharedTextureCache] addImage:@"test_image.png"];

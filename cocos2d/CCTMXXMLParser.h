@@ -83,10 +83,7 @@ typedef NS_ENUM(uint32_t, ccTMXTileFlags) {
 /// -----------------------------------------------------------------------
 
 /** Layer tile memory buffer, ie an array of uint representing tile GIDs. */
-@property (nonatomic,readwrite)			unsigned int *tiles;
-
-/** YES if the layer owns the memory of its tiles property. Defaults to YES */
-@property (nonatomic,readwrite)			BOOL ownTiles;
+@property (nonatomic,readonly)			NSData *tileData;
 
 /** Lowest GID used on this layer. */
 @property (nonatomic,readwrite)			unsigned int minGID;
@@ -204,7 +201,7 @@ typedef NS_ENUM(uint32_t, ccTMXTileFlags) {
  *
  *  @return The CCTiledMapInfo Object.
  */
-+(id) formatWithTMXFile:(NSString*)tmxFile;
++(instancetype) formatWithTMXFile:(NSString*)tmxFile;
 
 /**
  *  Creates and returns a CCTiledMapInfo object using the TMX XML and resource file path.
@@ -214,7 +211,7 @@ typedef NS_ENUM(uint32_t, ccTMXTileFlags) {
  *
  *  @return The CCTiledMapInfo Object.
  */
-+(id) formatWithXML:(NSString*)tmxString resourcePath:(NSString*)resourcePath;
++(instancetype) formatWithXML:(NSString*)tmxString resourcePath:(NSString*)resourcePath;
 
 /**
  *  Initializes and returns a CCTiledMapInfo object using the TMX format file specified.

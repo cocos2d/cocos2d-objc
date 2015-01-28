@@ -12,7 +12,7 @@
 #import "CCDirector.h"
 #import "ccMacros.h"
 #import "CCShader.h"
-#import "CCConfiguration.h"
+#import "CCDeviceInfo.h"
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
 #import "Support/CGPointExtension.h"
@@ -66,17 +66,17 @@
 	return self;
 }
 
-+(id)effectNodeWithWidth:(int)w height:(int)h
++(instancetype)effectNodeWithWidth:(int)w height:(int)h
 {
     return [[CCEffectNode alloc] initWithWidth:w height:h];
 }
 
-+(id)effectNodeWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat)format
++(instancetype)effectNodeWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat)format
 {
     return [[CCEffectNode alloc] initWithWidth:w height:h pixelFormat:format];
 }
 
-+(id)effectNodeWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat)format depthStencilFormat:(GLuint)depthStencilFormat
++(instancetype)effectNodeWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat)format depthStencilFormat:(GLuint)depthStencilFormat
 {
     return [[CCEffectNode alloc] initWithWidth:w height:h pixelFormat:format depthStencilFormat:depthStencilFormat];
 }
@@ -121,7 +121,7 @@
 {
 	// override visit.
 	// Don't call visit on its children
-	if(!_visible) return;
+	if(!self.visible) return;
     
     CGSize pointSize = self.contentSizeInPoints;
     if (!CGSizeEqualToSize(pointSize, _allocatedSize))
@@ -131,11 +131,8 @@
         _contentSizeChanged = NO;
     }
 	
-    GLKMatrix4 transform = [self transform:parentTransform];
-    
+    GLKMatrix4 transform = GLKMatrix4Multiply(*parentTransform, [self nodeToParentMatrix]);
     [self draw:renderer transform:&transform];
-	
-	_orderOfArrival = 0;
 }
 
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
@@ -149,7 +146,7 @@
     //! make sure all children are drawn
     [self sortAllChildren];
     
-    for(CCNode *child in _children){
+    for(CCNode *child in self.children){
         if( child != _sprite) [child visit:rtRenderer parentTransform:&_projection];
     }
     [self end];
@@ -159,7 +156,11 @@
     if (_effect)
     {
         _effectRenderer.contentSize = self.contentSizeInPoints;
-        if ([_effect prepareForRenderingWithSprite:_sprite] == CCEffectPrepareSuccess)
+
+        CCEffectPrepareResult prepResult = [_effect prepareForRenderingWithSprite:_sprite];
+        NSAssert(prepResult.status == CCEffectPrepareSuccess, @"Effect preparation failed.");
+
+        if (prepResult.changes & CCEffectPrepareUniformsChanged)
         {
             // Preparing an effect for rendering can modify its uniforms
             // dictionary which means we need to reinitialize our copy of the
@@ -186,7 +187,7 @@
                           } mutableCopy];
     
     // And then copy the new effect's uniforms into the node's uniforms dictionary.
-    [_shaderUniforms addEntriesFromDictionary:_effect.shaderUniforms];
+    [_shaderUniforms addEntriesFromDictionary:_effect.effectImpl.shaderUniforms];
 }
 
 @end

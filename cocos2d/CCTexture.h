@@ -60,15 +60,16 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 */
 
-#import <Foundation/Foundation.h> //	for NSObject
+#import <CoreGraphics/CGImage.h>
 
 #import "ccTypes.h"
-#import "ccMacros.h"
 
-#import "Platforms/CCGL.h" // OpenGL stuff
-#import "Platforms/CCNS.h" // Next-Step stuff
+#import "Platforms/CCGL.h"
+
 
 @class CCSpriteFrame;
+@class CCImage;
+
 
 /**
  *  Possible texture pixel formats. Used by various rendering components, including CCTexture, CCRenderTexture, CCEffectNode.
@@ -141,6 +142,8 @@ typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
  *  @see CCTexturePixelFormat
  */
 - (id)initWithData:(const void*)data pixelFormat:(CCTexturePixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSizeInPixels:(CGSize)sizeInPixels contentScale:(CGFloat)contentScale;
+
+-(instancetype)initWithImage:(CCImage *)image options:(NSDictionary *)options;
 
 /**
  *  Creates and returns a new texture, based on the specified image file path.

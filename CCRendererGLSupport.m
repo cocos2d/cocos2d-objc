@@ -26,6 +26,7 @@
 #import "CCTexture_Private.h"
 
 #import "CCRenderDispatch.h"
+#import "CCDeviceInfo.h"
 
 
 static const CCGraphicsBufferType CCGraphicsBufferGLTypes[] = {
@@ -394,10 +395,10 @@ BindVertexPage(CCGraphicsBufferBindingsGL *self, NSUInteger page)
 	}
 }
 
--(void)syncWithView:(CC_VIEW<CCDirectorView> *)view;
+-(void)syncWithView:(CC_VIEW<CCView> *)view;
 {
 	[super syncWithView:view];
-	_fbo = [(CCGLView *)view fbo];
+	_fbo = [view fbo];
 }
 
 @end

@@ -27,13 +27,9 @@
 #import <Foundation/Foundation.h>
 
 #import "ccMacros.h"
-#import "CCNode.h"
+#import "CCRenderableNode.h"
 #import "CCSprite.h"
 #import "CCTexture.h"
-
-#if __CC_PLATFORM_IOS
-#import <UIKit/UIKit.h>
-#endif // iPHone
 
 /**
  *  Image format when saving render textures. Used by CCRenderTexture.
@@ -56,7 +52,7 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
  
  There are also functions for saving the render texture to disk in PNG or JPG format.
  */
-@interface CCRenderTexture : CCNode
+@interface CCRenderTexture : CCRenderableNode
 
 /**
  *  @name Creating a Render Texture
@@ -73,7 +69,7 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
  *  @return An initialized CCRenderTarget object.
  *  @see CCTexturePixelFormat
  */
-+(id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat) format depthStencilFormat:(GLuint)depthStencilFormat;
++(instancetype)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat) format depthStencilFormat:(GLuint)depthStencilFormat;
 
 /**
  *  Creates a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid
@@ -85,7 +81,7 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
  *  @return An initialized CCRenderTarget object.
  *  @see CCTexturePixelFormat
  */
-+(id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat) format;
++(instancetype)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat) format;
 
 /**
  *  Creates a RenderTexture object with width and height in Points, pixel format is RGBA8888
@@ -95,7 +91,7 @@ typedef NS_ENUM(NSInteger, CCRenderTextureImageFormat)
  *
  *  @return An initialized CCRenderTarget object.
  */
-+(id)renderTextureWithWidth:(int)w height:(int)h;
++(instancetype)renderTextureWithWidth:(int)w height:(int)h;
 
 /**
  *  Initializes a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid

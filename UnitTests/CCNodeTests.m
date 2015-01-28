@@ -9,21 +9,23 @@
 #import "cocos2d.h"
 #import "CCDirector_Private.h"
 #import "CCNode_Private.h"
+#import "CCScheduler_Private.h"
 
 @interface CCNodeTests : XCTestCase
 
 @end
 
-@interface  CCDirector()
-+(void) resetSingleton;
-@end
 
 @implementation CCNodeTests
 
 -(void) setUp
 {
-	// force creation of a new sharedDirector or state will leak between each test.
-	[CCDirector resetSingleton];
+    [CCDirector pushCurrentDirector:[CCDirector director]];
+}
+
+-(void)tearDown
+{
+    [CCDirector popCurrentDirector];
 }
 
 -(void)testGetChildByName
@@ -89,18 +91,18 @@
 	XCTAssertTrue(first.children.count == 1, @"");
 	XCTAssertTrue(second.parent == first, @"");
 	
-	XCTAssertTrue(first.runningInActiveScene, @"");
-	XCTAssertTrue(second.runningInActiveScene, @"");
+	XCTAssertTrue(first.active, @"");
+	XCTAssertTrue(second.active, @"");
 	
 	[first removeChild:second];
 	XCTAssertTrue(first.children.count == 0, @"");
 	XCTAssertTrue(second.parent == nil, @"");
 	
-	XCTAssertTrue(first.runningInActiveScene, @"");
-	XCTAssertFalse(second.runningInActiveScene, @"");
+	XCTAssertTrue(first.active, @"");
+	XCTAssertFalse(second.active, @"");
 	
 	[scene removeChildByName:@"first"];
-	XCTAssertFalse(first.runningInActiveScene, @"");
+	XCTAssertFalse(first.active, @"");
 }
 
 
@@ -137,7 +139,7 @@
 	
 	XCTAssertTrue(!firstActionOccured, @"No action should happen yet!");
 	
-	[[[CCDirector sharedDirector] scheduler] update: 1.0];
+	[scene.scheduler update: 1.0];
 
 	XCTAssertTrue(!firstActionOccured, @"Should not occur since this node had cleanup called on it.");
 }
@@ -172,7 +174,7 @@
 	[scene removeChild:first cleanup:NO];
 	[scene removeChild:second cleanup:YES];
 	
-	[[[CCDirector sharedDirector] scheduler] update: 1.0];
+	[scene.scheduler update: 1.0];
 	
 	XCTAssertTrue(firstActionOccured);
 	XCTAssertTrue(!secondActionOccured, @"Cleaned up action should have unscheduled itself and should not occur.");
@@ -233,7 +235,7 @@
 -(void)testCCNodePositionTypePointsScaled
 {
 	// let's say our scale was set the same way since we launched the app.
-	[CCDirector sharedDirector].UIScaleFactor = 2.0;
+	[CCDirector currentDirector].UIScaleFactor = 2.0;
 	
 	CCScene *scene = [CCScene node];
 	
@@ -260,7 +262,7 @@
 -(void)testCCNodePositionTypeUIPointsScaled
 {
 	// let's say our scale was set the same way since we launched the app.
-	[CCDirector sharedDirector].UIScaleFactor = 2.0;
+	[CCDirector currentDirector].UIScaleFactor = 2.0;
 	
 	CCScene *scene = [CCScene node];
 	
@@ -330,7 +332,7 @@
 	XCTAssertEqual(first.contentSizeInPoints.width, (CGFloat) 1.0, @"");
 	XCTAssertEqual(first.contentSizeInPoints.height, (CGFloat) 2.0, @"");
 	
-	[CCDirector sharedDirector].UIScaleFactor = 2.0;
+	[CCDirector currentDirector].UIScaleFactor = 2.0;
 	// Since our positionInPoints are not UIPoints (we didn't change the position type), changing the UIScaleFactor has no effect.
 	
 	XCTAssertEqual(first.position.x, (CGFloat) 10.0f, @"");
@@ -368,7 +370,7 @@
 	XCTAssertEqual(first.contentSizeInPoints.width, (CGFloat) 1.0, @"");
 	XCTAssertEqual(first.contentSizeInPoints.height, (CGFloat) 2.0, @"");
 	
-	[CCDirector sharedDirector].UIScaleFactor = 2.0;
+	[CCDirector currentDirector].UIScaleFactor = 2.0;
 	
 	XCTAssertEqual(first.positionInPoints.x, (CGFloat) 20.0, @"");
 	XCTAssertEqual(first.positionInPoints.y, (CGFloat) 30.0, @"");
@@ -403,7 +405,7 @@
 	XCTAssertEqual(first.contentSizeInPoints.width, (CGFloat) 1.0, @"");
 	XCTAssertEqual(first.contentSizeInPoints.height, (CGFloat) 2.0, @"");
 	
-	[CCDirector sharedDirector].UIScaleFactor = 2.0;
+	[CCDirector currentDirector].UIScaleFactor = 2.0;
 	
 	XCTAssertEqual(first.positionInPoints.x, (CGFloat) 20.0, @"");
 	XCTAssertEqual(first.positionInPoints.y, (CGFloat) 30.0, @"");
@@ -445,7 +447,7 @@
 	XCTAssertEqual(first.scaleXInPoints, (CGFloat) 1.0, @"");
 	XCTAssertEqual(first.scaleYInPoints, (CGFloat) 1.0, @"");
 	
-	[CCDirector sharedDirector].UIScaleFactor = 2.0;
+	[CCDirector currentDirector].UIScaleFactor = 2.0;
 	
 	XCTAssertEqual(first.positionInPoints.x, (CGFloat) 10.0, @"");
 	XCTAssertEqual(first.positionInPoints.y, (CGFloat) 15.0, @"");
@@ -485,13 +487,13 @@
 	
 	[scene addChild:first z:0];
 	
-	CGAffineTransform nodeToWorld = [first nodeToWorldTransform];
-	XCTAssertEqualWithAccuracy(nodeToWorld.a, 2.0, 0.001, @""); // Node Scale *does* change the transform scale.
-	XCTAssertEqualWithAccuracy(nodeToWorld.b, 0.0, 0.001, @"");
-	XCTAssertEqualWithAccuracy(nodeToWorld.c, 0.0, 0.001, @"");
-	XCTAssertEqualWithAccuracy(nodeToWorld.d, 2.0, 0.001, @"");
-	XCTAssertEqualWithAccuracy(nodeToWorld.tx, 10.0, 0.001, @"");
-	XCTAssertEqualWithAccuracy(nodeToWorld.ty, 15.0, 0.001, @"");
+	GLKMatrix4 nodeToWorld = [first nodeToWorldMatrix];
+	XCTAssertEqualWithAccuracy(nodeToWorld.m[ 0],  2.0, 0.001, @""); // Node Scale *does* change the transform scale.
+	XCTAssertEqualWithAccuracy(nodeToWorld.m[ 1],  0.0, 0.001, @"");
+	XCTAssertEqualWithAccuracy(nodeToWorld.m[ 4],  0.0, 0.001, @"");
+	XCTAssertEqualWithAccuracy(nodeToWorld.m[ 5],  2.0, 0.001, @"");
+	XCTAssertEqualWithAccuracy(nodeToWorld.m[12], 10.0, 0.001, @"");
+	XCTAssertEqualWithAccuracy(nodeToWorld.m[13], 15.0, 0.001, @"");
 	
 	// Changing node transform scale does not change the content size, which is local to the node.
 	XCTAssertEqualWithAccuracy(first.contentSize.width, 1.0, 0.001, @"");

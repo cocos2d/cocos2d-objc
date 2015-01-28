@@ -6,9 +6,10 @@
 //
 //
 
-#import "cocos2d.h"
 #import "CCTouch.h"
 #import "CCDirector.h"
+#import "CCNode.h"
+
 #if __CC_PLATFORM_ANDROID
 #import "CCTouchAndroid.h"
 #endif
@@ -20,7 +21,7 @@
     if((self = [super init]))
     {
         _uiTouch = touch;
-        _view = (CCGLView*)[CCDirector sharedDirector].view;
+        _view = [CCDirector currentDirector].view;
         return self;
     }
     
@@ -49,7 +50,7 @@
 
 - (CGPoint)locationInNode:(CCNode*) node
 {
-    CCDirector* dir = [CCDirector sharedDirector];
+    CCDirector* dir = [CCDirector currentDirector];
     
     CGPoint touchLocation = [self locationInView: [self view]];
 	touchLocation = [dir convertToGL: touchLocation];
@@ -58,18 +59,18 @@
 
 - (CGPoint)locationInWorld
 {
-    CCDirector* dir = [CCDirector sharedDirector];
+    CCDirector* dir = [CCDirector currentDirector];
     
     CGPoint touchLocation = [self locationInView: [self view]];
 	return [dir convertToGL: touchLocation];
 }
 
-- (CGPoint)locationInView:(CCGLView *)view
+- (CGPoint)locationInView:(CC_VIEW<CCView>*)view
 {
     return (CGPoint){0, 0};
 }
 
-- (CGPoint)previousLocationInView:(CCGLView *)view
+- (CGPoint)previousLocationInView:(CC_VIEW<CCView>*)view
 {
     return (CGPoint){0, 0};
 }

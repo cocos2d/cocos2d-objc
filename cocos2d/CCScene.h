@@ -28,6 +28,7 @@
 #import "CCNode.h"
 
 @class CCLightCollection;
+@class CCDirector;
 
 /** CCScene is a subclass of CCNode. The scene represents the root node of the node hierarchy.
 
@@ -40,7 +41,6 @@
  */
 @interface CCScene : CCNode
 
-#if CC_EFFECTS_EXPERIMENTAL
 /** @name Accessing Lights */
 /** 
  A collection of lights in the scene.
@@ -49,13 +49,19 @@
  @since v3.4 and later
  */
 @property (nonatomic, readonly, strong) CCLightCollection *lights;
-#endif
+
+/**
+ The scene's scheduler is responsible of triggering the scheduled callbacks. See CCScheduler for more details.
+ 
+ @since v4.0 and later
+ */
+@property (nonatomic, readonly, strong) CCScheduler *scheduler;
 
 /// -----------------------------------------------------------------------
 /// @name Creating a Scene
 /// -----------------------------------------------------------------------
 
 /* Initialize the node. */
-- (id)init;
+-(id)init;
 
 @end

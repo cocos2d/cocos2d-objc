@@ -26,10 +26,13 @@
  */
 
 #import "ccMacros.h"
+
 #import "CCAnimation.h"
+
 #import "CCSpriteFrame.h"
 #import "CCTexture.h"
 #import "CCTextureCache.h"
+#import "ccUtils.h"
 
 #pragma mark - CCAnimationFrame
 @implementation CCAnimationFrame
@@ -72,22 +75,22 @@
 @implementation CCAnimation
 @synthesize frames = _frames, totalDelayUnits=_totalDelayUnits, delayPerUnit=_delayPerUnit, restoreOriginalFrame=_restoreOriginalFrame, loops=_loops;
 
-+(id) animation
++(instancetype) animation
 {
 	return [[self alloc] init];
 }
 
-+(id) animationWithSpriteFrames:(NSArray*)frames
++(instancetype) animationWithSpriteFrames:(NSArray*)frames
 {
 	return [[self alloc] initWithSpriteFrames:frames];
 }
 
-+(id) animationWithSpriteFrames:(NSArray*)frames delay:(float)delay
++(instancetype) animationWithSpriteFrames:(NSArray*)frames delay:(float)delay
 {
 	return [[self alloc] initWithSpriteFrames:frames delay:delay];
 }
 
-+(id) animationWithAnimationFrames:(NSArray*)arrayOfAnimationFrames delayPerUnit:(float)delayPerUnit loops:(NSUInteger)loops
++(instancetype) animationWithAnimationFrames:(NSArray*)arrayOfAnimationFrames delayPerUnit:(float)delayPerUnit loops:(NSUInteger)loops
 {
 	return [[self alloc] initWithAnimationFrames:arrayOfAnimationFrames delayPerUnit:delayPerUnit loops:loops];
 }

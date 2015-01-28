@@ -7,7 +7,6 @@
 //
 
 #import "CCTouchIOS.h"
-#import "cocos2d.h"
 #import "CCTouch.h"
 #import "CCDirector.h"
 
@@ -15,12 +14,12 @@
 
 @implementation CCTouchIOS
 
-- (CGPoint)locationInView:(CCGLView *)view
+- (CGPoint)locationInView:(CCViewiOSGL *)view
 {
     return [self.uiTouch locationInView:view];
 }
 
-- (CGPoint)previousLocationInView:(CCGLView *)view
+- (CGPoint)previousLocationInView:(CCViewiOSGL *)view
 {
     return [self.uiTouch previousLocationInView:view];
 }

@@ -24,10 +24,7 @@
  *
  */
 
-#import <Foundation/Foundation.h>
-#import "CCTexture.h"
-#import "ccTypes.h"
-#import "CCNode.h"
+#import "CCRenderableNode.h"
 
 /**
  CCMotionStreak creates a motion trail special effect. The trail fades out after a short period of time.
@@ -36,7 +33,7 @@
  - Segments controls how smooth the shape of the trail appears.
  - Fast mode enables faster point addition and the cost of lower point precision.
  */
-@interface CCMotionStreak : CCNode <CCTextureProtocol, CCShaderProtocol, CCBlendProtocol>
+@interface CCMotionStreak : CCRenderableNode <CCTextureProtocol, CCShaderProtocol, CCBlendProtocol>
 
 /// -----------------------------------------------------------------------
 /// @name Creating a Motion Streak
@@ -54,7 +51,7 @@
  *  @return The CCMotionStreak object.
  *  @see CCColor
  */
-+(id)streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(CCColor*)color textureFilename:(NSString*)path;
++(instancetype)streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(CCColor*)color textureFilename:(NSString*)path;
 
 /**
  *  Creates and returns a motion streak object from the specified fade time, segments, stroke, color and texture values.
@@ -69,7 +66,7 @@
  *  @see CCColor
  *  @see CCTexture
  */
-+(id)streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(CCColor*)color texture:(CCTexture*)texture;
++(instancetype)streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(CCColor*)color texture:(CCTexture*)texture;
 
 /**
  *  Initializes and returns a motion streak object from the specified fade time, segments, stroke, color and texture file path values.

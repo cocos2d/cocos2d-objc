@@ -30,18 +30,13 @@
 // TODO: Add circular touch detection
 // TODO: Grab mouse and touch by implementing onPressed, onReleased, onClicked
 
-#import <Foundation/Foundation.h>
+#import "ccTypes.h"
 
-#import "CCTouch.h"
-#import "CCTouchEvent.h"
+@class CCTouch;
+@class CCTouchEvent;
+@class NSEvent;
 
 #if (TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR)
-#if !__CC_PLATFORM_ANDROID
-#import <UIKit/UIKit.h>
-#define RESPONDER UIResponder
-#else
-#define RESPONDER NSObject
-#endif
 
 #pragma mark - iOS Running Responder
 
@@ -70,10 +65,6 @@
 #elif __CC_PLATFORM_MAC
 
 #pragma mark - OSX Running Responder
-
-#import <AppKit/AppKit.h>
-
-#define RESPONDER NSResponder
 
 /**
  *  Defines the various mouse buttons.
@@ -118,7 +109,7 @@ typedef NS_ENUM(NSInteger, CCMouseButton)
 #pragma mark - CCResponderManager
 
 @class CCNode;
-
+@class CCDirector;
 /**
  *  Defines the size of the responder buffer.
  *  This is the maximum number of individual responders which can be active at the same time.
@@ -128,29 +119,17 @@ enum
     CCResponderManagerBufferSize        = 128,
 };
 
+
 /**
  *  The responder manager handles touches.
  */
-@interface CCResponderManager : RESPONDER
+@interface CCResponderManager : NSObject
 
 /**
  *  Enables the responder manager.
  *  When the responder manager is disabled, all current touches will be cancelled and no further touch handling registered.
  */
-@property (nonatomic, assign, getter = isEnabled) BOOL enabled;     
-
-
-/// -----------------------------------------------------------------------
-/// @name Creating a CCResponderManager Object
-/// -----------------------------------------------------------------------
-
-/**
- *  CCResponderManager factory method.
- *
- *  @return The CCResponderManager Object.
- */
-+ (CCResponderManager*)responderManager;
-
+@property (nonatomic, assign, getter = isEnabled) BOOL enabled;
 
 /// -----------------------------------------------------------------------
 /// @name Initializing a CCResponderManager Object
@@ -161,7 +140,7 @@ enum
  *
  *  @return An initialized CCResponderManager Object.
  */
-- (id)init;
+- (id)initWithDirector:(CCDirector *)director;
 
 
 /// -----------------------------------------------------------------------
@@ -230,6 +209,16 @@ enum
 - (void)touchesEnded:(NSSet *)touches withEvent:(CCTouchEvent *)event;
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(CCTouchEvent *)event;
+#endif
+
+#if __CC_PLATFORM_MAC
+- (void)mouseDown:(NSEvent *)theEvent button:(CCMouseButton)button;
+- (void)mouseDragged:(NSEvent *)theEvent button:(CCMouseButton)button;
+- (void)mouseUp:(NSEvent *)theEvent button:(CCMouseButton)button;
+- (void)scrollWheel:(NSEvent *)theEvent;
+- (void)mouseMoved:(NSEvent *)theEvent;
+- (void)keyDown:(NSEvent *)theEvent;
+- (void)keyUp:(NSEvent *)theEvent;
 #endif
 
 @end

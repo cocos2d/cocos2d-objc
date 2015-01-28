@@ -25,9 +25,12 @@
  *
  */
 
-#import <Foundation/Foundation.h>
-#import "CCNode.h"
-#import "CCProtocols.h"
+
+#import "ccTypes.h"
+
+
+@class CCTexture;
+
 
 /** 
  A CCSpriteFrame contains the texture and rectangle of the texture to be used by a CCSprite.
@@ -54,7 +57,7 @@
  *
  *  @return The CCSpriteFrame Object.
  */
-+(id) frameWithImageNamed:(NSString*)imageName;
++(instancetype) frameWithImageNamed:(NSString*)imageName;
 
 /**
  *  Create and return a sprite frame object from the specified texture, texture rectangle, rotation status, offset and originalSize values.
@@ -68,7 +71,7 @@
  *  @return The CCSpriteFrame Object.
  *  @see CCTexture
  */
-+(id) frameWithTexture:(CCTexture*)texture rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize;
++(instancetype) frameWithTexture:(CCTexture*)texture rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize;
 
 /**
  *  Create and return a sprite frame object from the specified texture file name, texture rectangle, rotation status, offset and originalSize values.
@@ -81,7 +84,7 @@
  *
  *  @return The CCSpriteFrame Object.
  */
-+(id) frameWithTextureFilename:(NSString*)filename rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize;
++(instancetype) frameWithTextureFilename:(NSString*)filename rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize;
 
 /**
  *  Initializes and returns a sprite frame object from the specified texture, texture rectangle, rotation status, offset and originalSize values.

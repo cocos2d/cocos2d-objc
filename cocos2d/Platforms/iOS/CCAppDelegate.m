@@ -23,18 +23,20 @@
  *
  */
 
-#import "../../ccMacros.h"
+#import "ccMacros.h"
 #if __CC_PLATFORM_IOS
 
+#import "ccTypes.h"
+#import "ccUtils.h"
+
 #import "CCAppDelegate.h"
+#import "CCDeviceInfo.h"
 #import "CCTexture.h"
 #import "CCFileUtils.h"
-#import "CCDirector_Private.h"
-#import "CCScheduler.h"
-#import "CCGLView.h"
-
 #import "OALSimpleAudio.h"
 #import "CCPackageManager.h"
+
+#import "CCDirector_Private.h"
 
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 #import "CCMetalView.h"
@@ -97,9 +99,9 @@ const CGSize FIXED_SIZE = {568, 384};
 // Projection delegate is only used if the fixed resolution mode is enabled
 -(GLKMatrix4)updateProjection
 {
-	CGSize sizePoint = [CCDirector sharedDirector].viewSize;
-	CGSize fixed = [CCDirector sharedDirector].designSize;
-	
+	CGSize sizePoint = [CCDirector currentDirector].viewSize;
+	CGSize fixed = [CCDirector currentDirector].designSize;
+
 	// Half of the extra size that will be cut off
 	CGPoint offset = ccpMult(ccp(fixed.width - sizePoint.width, fixed.height - sizePoint.height), 0.5);
 	
@@ -109,14 +111,21 @@ const CGSize FIXED_SIZE = {568, 384};
 // This is needed for iOS4 and iOS5 in order to ensure
 // that the 1st scene has the correct dimensions
 // This is not needed on iOS6 and could be added to the application:didFinish...
+
+#warning don't believe the lies above! This is the main entry point to your first scene for iOS!
 -(void) directorDidReshapeProjection:(CCDirector*)director
 {
-	if(director.runningScene == nil) {
-		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
-		// and add the scene to the stack. The director will run it when it automatically when the view is displayed.
-		[director runWithScene: [_appDelegate startScene]];
-	}
+    if(director.runningScene == nil) {
+        [CCDirector pushCurrentDirector:director];
+        CCScene * scene = [_appDelegate startScene];
+        [CCDirector popCurrentDirector];
+        
+        // Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
+        // and add the scene to the stack. The director will run it when it automatically when the view is displayed.
+        [director presentScene: scene];
+    }
 }
+
 @end
 
 
@@ -148,9 +157,8 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 {
 	// Create the main window
 	window_ = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	
 	CGRect bounds = [window_ bounds];
-	
+    
 	// CCView creation
 	// viewWithFrame: size of the OpenGL view. For full screen use [_window bounds]
 	//  - Possible values: any CGRect
@@ -164,10 +172,11 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	//  - Possible values: YES, NO
 	// numberOfSamples: Only valid if multisampling is enabled
 	//  - Possible values: 0 to glGetIntegerv(GL_MAX_SAMPLES_APPLE)
-	CC_VIEW<CCDirectorView> *ccview = nil;
-	switch([CCConfiguration sharedConfiguration].graphicsAPI){
+	CC_VIEW<CCView> *ccview = nil;
+	switch([CCDeviceInfo sharedDeviceInfo].graphicsAPI){
 		case CCGraphicsAPIGL:
-			ccview = [CCGLView
+        {
+			ccview = [CCViewiOSGL
 				viewWithFrame:bounds
 				pixelFormat:config[CCSetupPixelFormat] ?: kEAGLColorFormatRGBA8
 				depthFormat:[config[CCSetupDepthFormat] unsignedIntValue]
@@ -176,6 +185,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 				multiSampling:[config[CCSetupMultiSampling] boolValue]
 				numberOfSamples:[config[CCSetupNumberOfSamples] unsignedIntValue]
 			];
+        }
 			break;
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 		case CCGraphicsAPIMetal:
@@ -186,9 +196,12 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 		default: NSAssert(NO, @"Internal error: Graphics API not set up.");
 	}
 	
-	CCDirectorIOS* director = (CCDirectorIOS*) [CCDirector sharedDirector];
-	
+    CCDirector *director = ccview.director;
+    NSAssert(director, @"The CCView failed to create a director.");
 	director.wantsFullScreenLayout = YES;
+    
+#warning TODO temporary
+    [CCDirector pushCurrentDirector:director];
 	
 	// Display FSP and SPF
 	[director setDisplayStats:[config[CCSetupShowDebugStats] boolValue]];
@@ -199,46 +212,11 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	
 	director.fixedUpdateInterval = [(config[CCSetupFixedUpdateInterval] ?: @(1.0/60.0)) doubleValue];
 	
-	// attach the openglView to the director
-	[director setView:ccview];
-	
 	if([config[CCSetupScreenMode] isEqual:CCScreenModeFixed]){
-		CGSize size = [CCDirector sharedDirector].viewSizeInPixels;
-		CGSize fixed = FIXED_SIZE;
-		
-		if([config[CCSetupScreenOrientation] isEqualToString:CCScreenOrientationPortrait]){
-			CC_SWAP(fixed.width, fixed.height);
-		}
-		
-		// Find the minimal power-of-two scale that covers both the width and height.
-		CGFloat scaleFactor = MIN(FindPOTScale(size.width, fixed.width), FindPOTScale(size.height, fixed.height));
-		
-		director.contentScaleFactor = scaleFactor;
-		director.UIScaleFactor = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? 1.0 : 0.5);
-		
-		// Let CCFileUtils know that "-ipad" textures should be treated as having a contentScale of 2.0.
-		[[CCFileUtils sharedFileUtils] setiPadContentScaleFactor: 2.0];
-		
-		director.designSize = fixed;
-		[director setProjection:CCDirectorProjectionCustom];
-	} else {
-		// Setup tablet scaling if it was requested.
-		if(
-			UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad &&
-			[config[CCSetupTabletScale2X] boolValue]
-		){
-			// Set the director to use 2 points per pixel.
-			director.contentScaleFactor *= 2.0;
-			
-			// Set the UI scale factor to show things at "native" size.
-			director.UIScaleFactor = 0.5;
-			
-			// Let CCFileUtils know that "-ipad" textures should be treated as having a contentScale of 2.0.
-			[[CCFileUtils sharedFileUtils] setiPadContentScaleFactor:2.0];
-		}
-		
-		[director setProjection:CCDirectorProjection2D];
-	}
+        [self setupFixedScreenMode:config director:director];
+    } else {
+        [self setupFlexibleScreenMode:config director:director];
+    }
 	
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
@@ -259,13 +237,53 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	
 	// set the Navigation Controller as the root view controller
 	[window_ setRootViewController:navController_];
-
-	[[CCPackageManager sharedManager] loadPackages];
-
-	// make main window visible
+    
+    [[CCPackageManager sharedManager] loadPackages];
+	
 	[window_ makeKeyAndVisible];
     
     [self forceOrientation];
+    [CCDirector popCurrentDirector];
+}
+
+- (void)setupFlexibleScreenMode:(NSDictionary *)config director:(CCDirector *)director
+{
+    // Setup tablet scaling if it was requested.
+    if(	UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad &&	[config[CCSetupTabletScale2X] boolValue] )
+    {
+        // Set the director to use 2 points per pixel.
+        director.contentScaleFactor *= 2.0;
+
+        // Set the UI scale factor to show things at "native" size.
+        director.UIScaleFactor = 0.5;
+
+        // Let CCFileUtils know that "-ipad" textures should be treated as having a contentScale of 2.0.
+        [[CCFileUtils sharedFileUtils] setiPadContentScaleFactor:2.0];
+    }
+
+    [director setProjection:CCDirectorProjection2D];
+}
+
+- (void)setupFixedScreenMode:(NSDictionary *)config director:(CCDirector *)director
+{
+    CGSize size = [CCDirector currentDirector].viewSizeInPixels;
+    CGSize fixed = FIXED_SIZE;
+
+    if([config[CCSetupScreenOrientation] isEqualToString:CCScreenOrientationPortrait]){
+			CC_SWAP(fixed.width, fixed.height);
+		}
+
+    // Find the minimal power-of-two scale that covers both the width and height.
+    CGFloat scaleFactor = MIN(FindPOTScale(size.width, fixed.width), FindPOTScale(size.height, fixed.height));
+
+    director.contentScaleFactor = scaleFactor;
+    director.UIScaleFactor = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? 1.0 : 0.5);
+
+    // Let CCFileUtils know that "-ipad" textures should be treated as having a contentScale of 2.0.
+    [[CCFileUtils sharedFileUtils] setiPadContentScaleFactor: 2.0];
+
+    director.designSize = fixed;
+    [director setProjection:CCDirectorProjectionCustom];
 }
 
 // iOS8 hack around orientation bug
@@ -290,39 +308,39 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application
 {
-	if([CCDirector sharedDirector].paused == NO) {
-		[[CCDirector sharedDirector] pause];
+	if([CCDirector currentDirector].paused == NO) {
+		[[CCDirector currentDirector] pause];
 	}
 }
 
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
-	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
-	if([CCDirector sharedDirector].paused) {
-		[[CCDirector sharedDirector] resume];
+	[[CCDirector currentDirector] setNextDeltaTimeZero:YES];
+	if([CCDirector currentDirector].paused) {
+		[[CCDirector currentDirector] resume];
 	}
 }
 
 -(void) applicationDidEnterBackground:(UIApplication*)application
 {
-	if([CCDirector sharedDirector].animating) {
-		[[CCDirector sharedDirector] stopAnimation];
+	if([CCDirector currentDirector].animating) {
+		[[CCDirector currentDirector] stopRunLoop];
 	}
 	[[CCPackageManager sharedManager] savePackages];
 }
 
 -(void) applicationWillEnterForeground:(UIApplication*)application
 {
-	if([CCDirector sharedDirector].animating == NO) {
-		[[CCDirector sharedDirector] startAnimation];
+	if([CCDirector currentDirector].animating == NO) {
+		[[CCDirector currentDirector] startRunLoop];
 	}
 }
 
 // application will be killed
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-	[[CCDirector sharedDirector] end];
+	[[CCDirector currentDirector] end];
 
     [[CCPackageManager sharedManager] savePackages];
 }
@@ -330,7 +348,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 // purge memory
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
 {
-	[[CCDirector sharedDirector] purgeCachedData];
+	[[CCDirector currentDirector] purgeCachedData];
 
     [[CCPackageManager sharedManager] savePackages];
 }
@@ -338,7 +356,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 // next delta time will be zero
 -(void) applicationSignificantTimeChange:(UIApplication *)application
 {
-	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
+	[[CCDirector currentDirector] setNextDeltaTimeZero:YES];
 }
 
 @end

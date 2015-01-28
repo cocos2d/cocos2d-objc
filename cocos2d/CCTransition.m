@@ -31,6 +31,10 @@
 #import "CCDirector_Private.h"
 #import "CCNode_Private.h"
 
+#import "CCRenderTexture.h"
+#import "CCColor.h"
+#import "CCScene+Private.h"
+
 // -----------------------------------------------------------------
 
 const float CCTransitionDownScaleMin = 1.0f;                        // range for transition downscales
@@ -59,7 +63,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     //
     CCTransitionFixedFunction _fixedFunction;
     CCTransitionDirection _direction;
-    ccColor4F _color;
+    GLKVector4 _color;
     SEL _drawSelector;
     BOOL _outgoingOverIncoming;
     CGPoint _outgoingDestination;
@@ -69,32 +73,32 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 
 + (CCTransition *)transitionCrossFadeWithDuration:(NSTimeInterval)duration
 {
-    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionCrossFade direction:CCTransitionDirectionInvalid color:ccBLACK]);
+    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionCrossFade direction:CCTransitionDirectionInvalid color:[CCColor blackColor]]);
 }
 
 + (CCTransition *)transitionFadeWithColor:(CCColor*)color duration:(NSTimeInterval)duration
 {
-    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionFadeWithColor direction:CCTransitionDirectionInvalid color:color.ccColor3b]);
+    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionFadeWithColor direction:CCTransitionDirectionInvalid color:color]);
 }
 
 + (CCTransition *)transitionFadeWithDuration:(NSTimeInterval)duration
 {
-    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionFadeWithColor direction:CCTransitionDirectionInvalid color:ccBLACK]);
+    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionFadeWithColor direction:CCTransitionDirectionInvalid color:[CCColor blackColor]]);
 }
 
 + (CCTransition *)transitionMoveInWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration
 {
-    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionMoveIn direction:direction color:ccBLACK]);
+    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionMoveIn direction:direction color:[CCColor blackColor]]);
 }
 
 + (CCTransition *)transitionPushWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration
 {
-    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionPush direction:direction color:ccBLACK]);
+    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionPush direction:direction color:[CCColor blackColor]]);
 }
 
 + (CCTransition *)transitionRevealWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration
 {
-    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionReveal direction:direction color:ccBLACK]);
+    return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionReveal direction:direction color:[CCColor blackColor]]);
 }
 
 // -----------------------------------------------------------------
@@ -102,14 +106,14 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 - (id)initWithDuration:(NSTimeInterval)duration
          fixedFunction:(CCTransitionFixedFunction)function
              direction:(CCTransitionDirection)direction
-                 color:(ccColor3B)color
+                 color:(CCColor *)color
 {
     self = [self initWithDuration:duration];
 
     // set up fixed function transition
     _fixedFunction = function;
     _direction = direction;
-    self.colorRGBA = [CCColor colorWithCcColor4f:(ccColor4F){(float)color.r / 255, (float)color.g / 255, (float)color.b / 255, 1}];
+    self.colorRGBA = [CCColor colorWithRed:color.red green:color.green blue:color.blue];
     _drawSelector = @selector(drawFixedFunction);
     _outgoingOverIncoming = NO;
     
@@ -178,10 +182,10 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 
 // -----------------------------------------------------------------
 
-- (void)startTransition:(CCScene *)scene
+- (void)startTransition:(CCScene *)scene withDirector:(CCDirector *) director
 {
-    CCDirector *director = [CCDirector sharedDirector];
-		
+    scene.director = self.director = director;
+    
     _incomingScene = scene;
     [_incomingScene onEnter];
     _incomingPauseState = _incomingScene.paused;
@@ -194,11 +198,11 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     // create render textures
     // get viewport size
     CGRect rect = director.viewportRect;
-		CGSize size = rect.size;
-		
-		// Make sure we aren't rounding down.
-		size.width = ceil(rect.size.width);
-		size.height = ceil(rect.size.height);
+    CGSize size = rect.size;
+
+    // Make sure we aren't rounding down.
+    size.width = ceil(rect.size.width);
+    size.height = ceil(rect.size.height);
 
     // create texture for outgoing scene
     _outgoingTexture = [CCRenderTexture renderTextureWithWidth:size.width height:size.height pixelFormat:_transitionPixelFormat depthStencilFormat:_transitionDepthStencilFormat];
@@ -245,14 +249,13 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
         [_outgoingScene onExit];
         if ([CCDirector sharedDirector].sendCleanupToScene) [_outgoingScene cleanup];
         _outgoingScene = nil;
-				
-				
-				// Start incoming scene
-        [[CCDirector sharedDirector] replaceScene:_incomingScene];
+        
+        // Start incoming scene
+        [[CCDirector sharedDirector] presentScene:_incomingScene];
         [_incomingScene onEnterTransitionDidFinish];
         [_incomingScene setPaused:NO];
         _incomingScene = nil;
-        
+
         return;
     }
     
@@ -288,18 +291,6 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 }
 
 // -----------------------------------------------------------------
-
-- (void)setRetinaTransition:(BOOL)retinaTransition
-{
-    _retinaTransition = retinaTransition;
-    _incomingDownScale = CCTransitionDownScaleMin;
-    _outgoingDownScale = CCTransitionDownScaleMin;
-    if (!_retinaTransition && (__ccContentScaleFactor > 1.0))
-    {
-        _incomingDownScale = CCTransitionDownScaleRetina;
-        _outgoingDownScale = CCTransitionDownScaleRetina;
-    }
-}
 
 - (void)setIncomingDownScale:(float)incomingDownScale
 {

@@ -25,10 +25,7 @@
  *
  */
 
-#import "CCProtocols.h"
-#import "CCNode.h"
-#import "ccTypes.h"
-#import "ccConfig.h"
+#import "CCRenderableNode.h"
 
 @class CCParticleBatchNode;
 @class CCTexture;
@@ -149,7 +146,7 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
  results, it'll simply be more fun to experiment with the large number of properties to come up with interesting effects
  in the first place.
  */
-@interface CCParticleSystemBase : CCNode <CCTextureProtocol, CCShaderProtocol, CCBlendProtocol>
+@interface CCParticleSystemBase : CCRenderableNode <CCTextureProtocol, CCShaderProtocol, CCBlendProtocol>
 {
 	// True if the the particle system is active.
 	BOOL _active;
@@ -245,16 +242,16 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
 	float _lifeVar;
 
 	// Start color of the particles.
-	ccColor4F _startColor;
+	GLKVector4 _startColor;
     
 	// Start color variance.
-	ccColor4F _startColorVar;
+	GLKVector4 _startColorVar;
     
 	// End color of the particles.
-	ccColor4F _endColor;
+	GLKVector4 _endColor;
     
 	// End color variance.
-	ccColor4F _endColorVar;
+	GLKVector4 _endColorVar;
 
 	// Start angle of the particles.
 	float _startSpin;
@@ -312,7 +309,7 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
  *
  *  @return The CCParticleSystem Object.
  */
-+(id) particleWithFile:(NSString*)plistFile;
++(instancetype) particleWithFile:(NSString*)plistFile;
 
 /**
  *  Creates and returns an empty particle system object with the specified maxmium number of particles.
@@ -321,7 +318,7 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
  *
  *  @return The CCParticleSystem Object.
  */
-+(id) particleWithTotalParticles:(NSUInteger) numberOfParticles;
++(instancetype) particleWithTotalParticles:(NSUInteger) numberOfParticles;
 
 /**
  *  Initializes and returns a particle system object from the specified plist source file.

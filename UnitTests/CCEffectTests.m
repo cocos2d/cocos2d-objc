@@ -9,16 +9,31 @@
 #import <XCTest/XCTest.h>
 #import "cocos2d.h"
 #import "CCEffectUtils.h"
+#import "CCDirector_Private.h"
 
 @interface CCEffectTests : XCTestCase
 @end
 
 @implementation CCEffectTests
 
+
+-(void) setUp
+{
+    CCDirector *director = [CCDirector director];
+    //director.
+    [CCDirector pushCurrentDirector:director];
+}
+
+-(void)tearDown
+{
+    [CCDirector popCurrentDirector];
+}
+
+
 -(void)testNodeAncestry
 {
-    CCSprite *s1 = [CCSprite spriteWithImageNamed:@"f1.png"];
-    CCSprite *s2 = [CCSprite spriteWithImageNamed:@"f1.png"];
+    CCRenderableNode *s1 = [CCRenderableNode node];
+    CCRenderableNode *s2 = [CCRenderableNode node];
     
     BOOL commonAncestor = NO;
     
@@ -31,7 +46,7 @@
 
 -(void)testSameNode
 {
-    CCSprite *s1 = [CCSprite spriteWithImageNamed:@"f1.png"];
+    CCRenderableNode *s1 = [CCRenderableNode node];
     
     BOOL commonAncestor = NO;
     GLKMatrix4 transform;
@@ -62,25 +77,25 @@
 
 -(void)testSiblingTransforms
 {
-    CCSprite *root = [CCSprite spriteWithImageNamed:@"f1.png"];
+    CCRenderableNode *root =  [CCRenderableNode node];
     root.name = @"root";
     root.positionType = CCPositionTypePoints;
     root.position = ccp(0.0f, 0.0f);
     root.anchorPoint = ccp(0.0f, 0.0f);
     
-    CCSprite *s1 = [CCSprite spriteWithImageNamed:@"f1.png"];
+    CCRenderableNode *s1 =  [CCRenderableNode node];
     s1.name = @"s1";
     s1.positionType = CCPositionTypePoints;
     s1.position = ccp(10.0f, 10.0f);
     s1.anchorPoint = ccp(0.0f, 0.0f);
     
-    CCSprite *s2 = [CCSprite spriteWithImageNamed:@"f1.png"];
+    CCRenderableNode *s2 =  [CCRenderableNode node];
     s2.name = @"s2";
     s2.positionType = CCPositionTypePoints;
     s2.position = ccp(100.0f, 100.0f);
     s2.anchorPoint = ccp(0.0f, 0.0f);
     
-    CCSprite *s3 = [CCSprite spriteWithImageNamed:@"f1.png"];
+    CCRenderableNode *s3 =  [CCRenderableNode node];
     s3.name = @"s3";
     s3.positionType = CCPositionTypePoints;
     s3.position = ccp(1000.0f, 1000.0f);
@@ -176,25 +191,25 @@
 
 - (void)testAncestorTransforms
 {
-    CCSprite *root = [CCSprite spriteWithImageNamed:@"f1.png"];
+    CCSprite *root =  [CCRenderableNode node];
     root.name = @"root";
     root.positionType = CCPositionTypePoints;
     root.position = ccp(0.0f, 0.0f);
     root.anchorPoint = ccp(0.0f, 0.0f);
     
-    CCSprite *s1 = [CCSprite spriteWithImageNamed:@"f1.png"];
+    CCSprite *s1 =  [CCRenderableNode node];
     s1.name = @"s1";
     s1.positionType = CCPositionTypePoints;
     s1.position = ccp(10.0f, 10.0f);
     s1.anchorPoint = ccp(0.0f, 0.0f);
     
-    CCSprite *s2 = [CCSprite spriteWithImageNamed:@"f1.png"];
+    CCSprite *s2 =  [CCRenderableNode node];
     s2.name = @"s2";
     s2.positionType = CCPositionTypePoints;
     s2.position = ccp(100.0f, 100.0f);
     s2.anchorPoint = ccp(0.0f, 0.0f);
     
-    CCSprite *s3 = [CCSprite spriteWithImageNamed:@"f1.png"];
+    CCSprite *s3 =  [CCRenderableNode node];
     s3.name = @"s3";
     s3.positionType = CCPositionTypePoints;
     s3.position = ccp(1000.0f, 1000.0f);

@@ -13,7 +13,6 @@
 #import "CCDirector_Private.h"
 
 #import "../../CCScheduler.h"
-#import "../../CCActionManager.h"
 #import "../../CCTextureCache.h"
 #import "../../ccMacros.h"
 #import "../../CCScene.h"
@@ -75,9 +74,13 @@
                                                    GLKMatrix4MakePerspective(CC_DEGREES_TO_RADIANS(60), (float)sizePoint.width/sizePoint.height, 0.1f, zeye*2),
                                                    GLKMatrix4MakeTranslation(-sizePoint.width/2.0, -sizePoint.height/2, -zeye)
                                                    );
+            break;
+        }
             
+        case CCDirectorProjectionCustom:
+			if( [_delegate respondsToSelector:@selector(updateProjection)] )
+				_projectionMatrix = [_delegate updateProjection];
 			break;
-		}
             
 		default:
 			CCLOG(@"cocos2d: Director: unrecognized projection");
@@ -88,27 +91,12 @@
 	[self createStatsLabel];
 }
 
-// override default logic
-- (void) runWithScene:(CCScene*) scene
-{
-	NSAssert( scene != nil, @"Argument must be non-nil");
-	NSAssert(_runningScene == nil, @"This command can only be used to start the CCDirector. There is already a scene present.");
-	
-	[self pushScene:scene];
-    
-	NSThread *thread = [self runningThread];
-	[self performSelector:@selector(drawScene) onThread:thread withObject:nil waitUntilDone:YES];
-}
 
-// overriden, don't call super
--(void) reshapeProjection:(CGSize)size
+// override default logic
+- (void)antiFlickrDrawCall
 {
-	_winSizeInPixels = size;
-	_winSizeInPoints = CGSizeMake(size.width/__ccContentScaleFactor, size.height/__ccContentScaleFactor);
-	
-	[self setProjection:_projection];
-    
-    [self.runningScene viewDidResizeTo: _winSizeInPoints];
+    NSThread *thread = [self runningThread];
+    [self performSelector:@selector(mainLoopBody) onThread:thread withObject:nil waitUntilDone:YES];
 }
 
 -(void)end
@@ -144,7 +132,7 @@
 {
     EGLContext *ctx = [[CCActivity currentActivity] pushApplicationContext];
     
-	[self drawScene];
+	[self mainLoopBody];
     
     [[CCActivity currentActivity] popApplicationContext:ctx];
 }
@@ -154,14 +142,14 @@
 	_animationInterval = interval;
 	if(_displayLink)
     {
-		[self stopAnimation];
-		[self startAnimation];
+		[self stopRunLoop];
+		[self startRunLoop];
 	}
 }
 
-- (void) startAnimation
+- (void) startRunLoop
 {
-	[super startAnimation];
+	[super startRunLoop];
     
     if(_animating)
         return;
@@ -181,14 +169,14 @@
     _animating = YES;
 }
 
-- (void) stopAnimation
+- (void) stopRunLoop
 {
     if(!_animating)
         return;
     
-    if([_delegate respondsToSelector:@selector(stopAnimation)])
+    if([_delegate respondsToSelector:@selector(stopRunLoop)])
     {
-        [_delegate stopAnimation];
+        [_delegate stopRunLoop];
     }
     
 	CCLOG(@"cocos2d: animation stopped");

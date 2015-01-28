@@ -48,13 +48,13 @@
 - (void)testPhysicsBodyRetainCycle1
 {
 	CCNode *node = [[CCNode alloc] init];
-	XCTAssert(node.retainCount == 1, @"");
+	XCTAssertEqual(1, node.retainCount, @"");
 	
 	node.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1 andCenter:CGPointZero];
-	XCTAssert(node.retainCount == 1, @"");
+	XCTAssertEqual(1, node.retainCount, @"");
 	
 	node.physicsBody = nil;
-	XCTAssert(node.retainCount == 1, @"");
+	XCTAssertEqual(1, node.retainCount, @"");
 	
 	[node release];
 }
@@ -65,10 +65,10 @@
 	CCPhysicsNode *physics;
 	@autoreleasepool {
 		node = [[CCMemoryNode alloc] init];
-		XCTAssert(node.retainCount == 1, @"");
+		XCTAssertEqual(1, node.retainCount, @"");
 		
 		node.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1 andCenter:CGPointZero];
-		XCTAssert(node.retainCount == 1, @"");
+		XCTAssertEqual(1, node.retainCount, @"");
 		
 		physics = [CCPhysicsNode node];
 		[physics onEnter];
@@ -77,9 +77,12 @@
 		XCTAssert(node.retainCount > 1, @"");
 		
 		[physics removeChild:node];
+
+#warning Explicitly calling cleanup wasn't necessary in develop. Currently required to unschedule the physics node, which is causing an extra retain.
+        [physics cleanup];
 	}
-	XCTAssert(node.retainCount == 1, @"");
-	XCTAssert(physics.retainCount == 1, @"");
+	XCTAssertEqual(1, node.retainCount, @"");
+	XCTAssertEqual(1, physics.retainCount, @"");
 	
 	[physics release];
 	[node release];

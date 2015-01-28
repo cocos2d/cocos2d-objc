@@ -30,7 +30,7 @@
 #import "ccMacros.h"
 #import "CCAction.h"
 #import "CCActionInterval.h"
-#import "Support/CGPointExtension.h"
+#import "CGPointExtension.h"
 
 //
 // Action Base Class
@@ -41,7 +41,7 @@
 
 @synthesize tag = _tag, target = _target, originalTarget = _originalTarget;
 
-+(id) action
++(instancetype) action
 {
 	return [[self alloc] init];
 }
@@ -121,7 +121,7 @@
 #pragma mark RepeatForever
 @implementation CCActionRepeatForever
 @synthesize innerAction=_innerAction;
-+(id) actionWithAction: (CCActionInterval*) action
++(instancetype) actionWithAction: (CCActionInterval*) action
 {
 	return [[self alloc] initWithAction: action];
 }
@@ -181,7 +181,7 @@
 @synthesize speed=_speed;
 @synthesize innerAction=_innerAction;
 
-+(id) actionWithAction: (CCActionInterval*) action speed:(CGFloat)value
++(instancetype) actionWithAction: (CCActionInterval*) action speed:(CGFloat)value
 {
 	return [[self alloc] initWithAction: action speed:value];
 }
@@ -239,12 +239,12 @@
 
 @synthesize boundarySet = _boundarySet;
 
-+(id) actionWithTarget:(CCNode *) fNode
++(instancetype) actionWithTarget:(CCNode *) fNode
 {
 	return [[self alloc] initWithTarget:fNode];
 }
 
-+(id) actionWithTarget:(CCNode *) fNode worldBoundary:(CGRect)rect
++(instancetype) actionWithTarget:(CCNode *) fNode worldBoundary:(CGRect)rect
 {
 	return [[self alloc] initWithTarget:fNode worldBoundary:rect];
 }
@@ -257,7 +257,7 @@
 		_boundarySet = FALSE;
 		_boundaryFullyCovered = FALSE;
 
-		CGSize s = [[CCDirector sharedDirector] viewSize];
+		CGSize s = [[CCDirector currentDirector] viewSize];
 		_fullScreenSize = CGPointMake(s.width, s.height);
 		_halfScreenSize = ccpMult(_fullScreenSize, .5f);
 	}
@@ -273,7 +273,7 @@
 		_boundarySet = TRUE;
 		_boundaryFullyCovered = FALSE;
 
-		CGSize winSize = [[CCDirector sharedDirector] viewSize];
+		CGSize winSize = [[CCDirector currentDirector] viewSize];
 		_fullScreenSize = CGPointMake(winSize.width, winSize.height);
 		_halfScreenSize = ccpMult(_fullScreenSize, .5f);
 
@@ -327,7 +327,7 @@
 
 -(BOOL) isDone
 {
-	return !_followedNode.runningInActiveScene;
+	return !_followedNode.active;
 }
 
 -(void) stop

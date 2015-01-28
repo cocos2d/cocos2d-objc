@@ -25,13 +25,13 @@
  *
  */
 
+#import <Foundation/Foundation.h>
+
 #import "ccMacros.h"
 
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
 #import <CoreGraphics/CGImage.h>
 #endif
-
-#import <Foundation/Foundation.h>
 
 @class CCTexture;
 
@@ -79,21 +79,6 @@
  *  @param selector Selector to execute when image loaded.
  */
 -(void) addImageAsync:(NSString*) filename target:(id)target selector:(SEL)selector;
-
-/**
- * Asynchronously, load a texture2d from a file.
- *
- * If the file image was previously loaded, it will use it.
- * Otherwise it will load a texture in a new thread, and when the image is loaded, the block will be called.
- * The callback will be called in the cocos2d thread, so it is safe to create any cocos2d object from the callback.
- *
- * Supported image extensions: .png, .bmp, .tiff, .jpeg, .pvr, .gif
- *
- *  @param filename Image file to load.
- *  @param block    Block to execute when image loaded.
- */
--(void) addImageAsync:(NSString*) filename withBlock:(void(^)(CCTexture *tex))block;
-
 
 /**
  * Returns a Texture2D object given an CGImageRef image.

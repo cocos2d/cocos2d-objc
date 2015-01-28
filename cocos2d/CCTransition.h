@@ -25,9 +25,8 @@
  *
  */
 
-#import <Foundation/Foundation.h>
-#import "cocos2d.h"
 #import "CCScene.h"
+#import "CCTexture.h"
 
 /**
  *  Defines the direction that a directional transition will move. Used by CCTransition.

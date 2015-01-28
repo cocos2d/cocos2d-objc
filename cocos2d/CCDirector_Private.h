@@ -32,6 +32,14 @@
 	__weak NSThread *_runningThread;
 }
 
+// Create a new director.
+// This returns the correct director type for the current platform.
++(CCDirector *)director;
+
+// Manage the currently bound CCDirector.
++(void)pushCurrentDirector:(CCDirector *)director;
++(void)popCurrentDirector;
+
 /* Whether or not the replaced scene will receive the cleanup message.
  If the new scene is pushed, then the old scene won't receive the "cleanup" message.
  If the new scene replaces the old one, the it will receive the "cleanup" message.
@@ -44,41 +52,31 @@
  */
 @property (nonatomic, readwrite, strong) id	notificationNode;
 
-/* CCScheduler associated with this director
- */
-@property (nonatomic,readwrite,strong) CCScheduler *scheduler;
-
-/* CCActionManager associated with this director
- */
-@property (nonatomic,readwrite,strong) CCActionManager *actionManager;
-
-/* CCFixedActionManager associated with this director
- */
-@property (nonatomic,readwrite,strong) CCActionManager *actionManagerFixed;
-
-
 /// Rect of the visible screen area in GL coordinates.
 @property(nonatomic, readonly) CGRect viewportRect;
 
 /* Sets the glViewport*/
 -(void) setViewport;
 
-/// XXX: missing description
--(float) getZEye;
-
-/* Pops out all scenes from the queue until it reaches `level`.
- If level is 0, it will end the director.
- If level is 1, it will pop all scenes until it reaches to root scene.
- If level is <= than the current stack level, it won't do anything.
+/**
+ Stops the run loop. Nothing will be drawn or simulated. The main loop won't be triggered anymore.
+ If you want to pause your game call [pause] instead.
  */
--(void) popToSceneStackLevel:(NSUInteger)level;
+-(void) stopRunLoop;
 
-/* Draw the scene.
+/**
+ Start the main run loop of the game, drawing and updating.
+ Generally, as a user, you will start the main loop by running a scene, using `presentScene`
+ @see stopRunLoop
+ */
+-(void) startRunLoop;
+
+/* Run the main loop once, handle updates and draw scene
  This method is called every frame. Don't call it manually.
  */
--(void) drawScene;
+-(void) mainLoopBody;
 
-- (void)startTransition:(CCTransition *)transition;
+- (void)startTransition:(CCScene *)scene;
 
 /// Get a renderer object to use for rendering.
 /// This method is thread safe.
@@ -103,9 +101,6 @@
 
 @interface CCTransition (Private)
 
-- (void)startTransition:(CCScene *)scene;
+- (void)startTransition:(CCScene *)scene withDirector:(CCDirector *) director;
 
 @end
-
-// optimization. Should only be used to read it. Never to write it.
-extern NSUInteger __ccNumberOfDraws;

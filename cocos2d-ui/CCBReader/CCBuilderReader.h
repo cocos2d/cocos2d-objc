@@ -23,11 +23,6 @@
  * THE SOFTWARE.
  */
 
-// Unless this macro is defined in Build Settings CCBReader will assume it is working with cocos2d-iphone
-#ifndef CCB_SPRITEKIT_READER
-#define CCB_SPRITEKIT_READER 0
-#endif
-
 #import "CCBReader.h"
 #import "CCBAnimationManager.h"
 #import "CCAnimationManager.h"

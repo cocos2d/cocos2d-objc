@@ -23,9 +23,12 @@
  */
 
 #import "CCTextField.h"
+
 #import "CCControlSubclass.h"
 #import "CCDirector_Private.h"
 #import "CCPlatformTextField.h"
+#import "CCSprite9Slice.h"
+
 #if __CC_PLATFORM_IOS
 #import "CCPlatformTextFieldIOS.h"
 #elif __CC_PLATFORM_MAC
@@ -189,7 +192,7 @@
 {
     if (self.contentSizeType.heightUnit == CCSizeUnitUIPoints)
     {
-        return _fontSize * [CCDirector sharedDirector].UIScaleFactor;
+        return _fontSize * [CCDirector currentDirector].UIScaleFactor;
     }
     else
     {

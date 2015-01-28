@@ -6,8 +6,9 @@
 //
 //
 
-#import <Foundation/Foundation.h>
-#import <CoreGraphics/CoreGraphics.h>
+
+#import "ccTypes.h"
+
 
 @class CCControl;
 
@@ -25,7 +26,7 @@
 - (void) onExitTransitionDidStart;
 - (void) setFontSize:(float)fontSize;
 @property (nonatomic, weak) id<CCPlatformTextFieldDelegate> delegate;
-@property (nonatomic) NSString * string;
-@property (nonatomic) BOOL hidden;
+@property (nonatomic, copy) NSString * string;
+@property (nonatomic, assign) BOOL hidden;
 @property (nonatomic, readonly) id nativeTextField;
 @end

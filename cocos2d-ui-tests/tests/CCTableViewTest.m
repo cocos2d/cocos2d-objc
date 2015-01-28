@@ -95,7 +95,7 @@
     [cell addChild:bg];
     
     // Create a label with the row number
-    CCLabelTTF* lbl = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%d", (int)index] fontName:@"HelveticaNeue" fontSize:18 * [CCDirector sharedDirector].UIScaleFactor];
+    CCLabelTTF* lbl = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%d", (int)index] fontName:@"HelveticaNeue" fontSize:18 * [CCDirector currentDirector].UIScaleFactor];
     lbl.positionType = CCPositionTypeNormalized;
     lbl.position = ccp(0.5f, 0.5f);
     
@@ -139,7 +139,7 @@
     [cell addChild:bg];
     
     // Create a label with the row number
-    CCLabelTTF* lbl = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%d", (int)index] fontName:@"HelveticaNeue" fontSize:18 * [CCDirector sharedDirector].UIScaleFactor];
+    CCLabelTTF* lbl = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%d", (int)index] fontName:@"HelveticaNeue" fontSize:18 * [CCDirector currentDirector].UIScaleFactor];
     lbl.positionType = CCPositionTypeNormalized;
     lbl.position = ccp(0.5f, 0.5f);
     
@@ -174,7 +174,7 @@
 
 - (void) setupTableViewBasicTest
 {
-    self.subTitle = @"Simple table view. Displays a number for each row within box (no clipping).";
+    self.subTitle = @"Simple table view. Displays a number for each row within box (with clipping).";
     
     // Add a gray background box
     CCNodeColor* colorBg = [CCNodeColor nodeWithColor:[CCColor grayColor]];

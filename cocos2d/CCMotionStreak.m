@@ -24,15 +24,14 @@
  *
  */
 
+
+#import "ccUtils.h"
+
 #import "CCMotionStreak.h"
 #import "CCTextureCache.h"
 #import "CCShader.h"
-#import "ccMacros.h"
-#import "CCNode_Private.h"
-#import "CCTexture_Private.h"
-#import "CCRenderer_Private.h"
-
-#import "Support/CGPointExtension.h"
+#import "CCColor.h"
+#import "CCRenderer.h"
 
 
 static BOOL CCVertexLineIntersect(float Ax, float Ay,
@@ -71,7 +70,7 @@ static BOOL CCVertexLineIntersect(float Ax, float Ay,
     return YES;
 }
 
-static void CCVertexLineToPolygon(CGPoint *points, float stroke, ccVertex2F *vertices, NSUInteger offset, NSUInteger nuPoints)
+static void CCVertexLineToPolygon(CGPoint *points, float stroke, GLKVector2 *vertices, NSUInteger offset, NSUInteger nuPoints)
 {
     nuPoints += offset;
     if(nuPoints<=1) return;
@@ -111,8 +110,8 @@ static void CCVertexLineToPolygon(CGPoint *points, float stroke, ccVertex2F *ver
         }
         perpVector = ccpMult(perpVector, stroke);
 
-        vertices[idx] = (ccVertex2F) {p1.x+perpVector.x, p1.y+perpVector.y};
-        vertices[idx+1] = (ccVertex2F) {p1.x-perpVector.x, p1.y-perpVector.y};
+        vertices[idx] = GLKVector2Make(p1.x+perpVector.x, p1.y+perpVector.y);
+        vertices[idx+1] = GLKVector2Make(p1.x-perpVector.x, p1.y-perpVector.y);
     }
 
     // Validate vertexes
@@ -122,10 +121,10 @@ static void CCVertexLineToPolygon(CGPoint *points, float stroke, ccVertex2F *ver
         idx = i*2;
         const NSUInteger idx1 = idx+2;
 
-        ccVertex2F p1 = vertices[idx];
-        ccVertex2F p2 = vertices[idx+1];
-        ccVertex2F p3 = vertices[idx1];
-        ccVertex2F p4 = vertices[idx1+1];
+        GLKVector2 p1 = vertices[idx];
+        GLKVector2 p2 = vertices[idx+1];
+        GLKVector2 p3 = vertices[idx1];
+        GLKVector2 p4 = vertices[idx1+1];
 
         float s;
         //BOOL fixVertex = !ccpLineIntersect(ccp(p1.x, p1.y), ccp(p4.x, p4.y), ccp(p2.x, p2.y), ccp(p3.x, p3.y), &s, &t);
@@ -169,9 +168,9 @@ static void CCVertexLineToPolygon(CGPoint *points, float stroke, ccVertex2F *ver
     float *_pointState;
 
     // OpenGL.
-    ccVertex2F *_vertices;
-    ccTex2F *_texCoords;
-    unsigned char *_colorPointer;
+    GLKVector2 *_vertices;
+    GLKVector2 *_texCoords;
+    GLKVector4 *_colorPointer;
 
     // Toggle fast mode.
     BOOL	_fastMode;
@@ -222,9 +221,9 @@ static void CCVertexLineToPolygon(CGPoint *points, float stroke, ccVertex2F *ver
         _pointState = malloc(sizeof(float) * _maxPoints);
         _pointVertexes = malloc(sizeof(CGPoint) * _maxPoints);
 
-        _vertices = malloc(sizeof(ccVertex2F) * _maxPoints * 2);
-        _texCoords = malloc(sizeof(ccTex2F) * _maxPoints * 2);
-        _colorPointer =  malloc(sizeof(GLubyte) * _maxPoints * 2 * 4);
+        _vertices = malloc(sizeof(*_vertices) * _maxPoints * 2);
+        _texCoords = malloc(sizeof(*_texCoords) * _maxPoints * 2);
+        _colorPointer =  malloc(sizeof(*_colorPointer) * _maxPoints * 2 * 4);
 
         // Set blend mode
 				self.blendMode = [CCBlendMode alphaMode];
@@ -248,13 +247,13 @@ static void CCVertexLineToPolygon(CGPoint *points, float stroke, ccVertex2F *ver
 
 - (void) setColor:(CCColor*)color
 {
-    ccColor3B color3 = color.ccColor3b;
+    GLKVector4 c = color.glkVector4;
     
     [super setColor:color];
 
     // Fast assignation
     for(int i = 0; i<_nuPoints*2; i++)
-        *((ccColor3B*) (_colorPointer+i*4)) = color3;
+        _colorPointer[i] = c;
 }
 
 - (void) setOpacity:(CGFloat)opacity
@@ -305,21 +304,15 @@ static void CCVertexLineToPolygon(CGPoint *points, float stroke, ccVertex2F *ver
                 _vertices[newIdx2+1] = _vertices[i2+1];
 
                 // Move color
-                i2 *= 4;
-                newIdx2 *= 4;
                 _colorPointer[newIdx2+0] = _colorPointer[i2+0];
                 _colorPointer[newIdx2+1] = _colorPointer[i2+1];
-                _colorPointer[newIdx2+2] = _colorPointer[i2+2];
-                _colorPointer[newIdx2+4] = _colorPointer[i2+4];
-                _colorPointer[newIdx2+5] = _colorPointer[i2+5];
-                _colorPointer[newIdx2+6] = _colorPointer[i2+6];
             } else {
-                newIdx2 = newIdx*8;
+                newIdx2 = newIdx*2;
 						}
 
-            const GLubyte op = _pointState[newIdx] * 255.0f;
-            _colorPointer[newIdx2+3] = op;
-            _colorPointer[newIdx2+7] = op;
+            float op = _pointState[newIdx];
+            _colorPointer[newIdx2+0].a = op;
+            _colorPointer[newIdx2+1].a = op;
         }
     }
     _nuPoints-=mov;
@@ -341,9 +334,9 @@ static void CCVertexLineToPolygon(CGPoint *points, float stroke, ccVertex2F *ver
         _pointState[_nuPoints] = 1.0f;
 
         // Color and opacity assignment
-        const NSUInteger offset = _nuPoints*8;
-        *((ccColor4B*)(_colorPointer + offset)) = ccc4BFromccc4F(_displayColor);
-        *((ccColor4B*)(_colorPointer + offset+4)) = ccc4BFromccc4F(_displayColor);
+        const NSUInteger offset = _nuPoints*2;
+				_colorPointer[offset + 0] = _displayColor;
+				_colorPointer[offset + 1] = _displayColor;
 
         // Generate polygon
         if(_nuPoints > 0 && _fastMode )
@@ -367,8 +360,8 @@ static void CCVertexLineToPolygon(CGPoint *points, float stroke, ccVertex2F *ver
 	if( _nuPoints  && _previousNuPoints != _nuPoints ) {
 		float texDelta = 1.0f / _nuPoints;
 		for( i=0; i < _nuPoints; i++ ) {
-			_texCoords[i*2] = (ccTex2F) {0.0f, 1.0f - texDelta*i};
-			_texCoords[i*2+1] = (ccTex2F) {1.0f, 1.0f - texDelta*i};
+			_texCoords[i*2] = GLKVector2Make(0.0f, 1.0f - texDelta*i);
+			_texCoords[i*2+1] = GLKVector2Make(1.0f, 1.0f - texDelta*i);
 		}
 		
 		_previousNuPoints = _nuPoints;
@@ -382,12 +375,11 @@ static void CCVertexLineToPolygon(CGPoint *points, float stroke, ccVertex2F *ver
 
 // TODO should update the class to store the rendering values in actual output types.
 static inline CCVertex
-MakeVertex(ccVertex2F v, ccTex2F texCoord, unsigned char *color, GLKMatrix4 transform)
+MakeVertex(GLKVector2 v, GLKVector2 texCoord, GLKVector4 color, GLKMatrix4 transform)
 {
 	return (CCVertex){
 		GLKMatrix4MultiplyVector4(transform, GLKVector4Make(v.x, v.y, 0.0f, 1.0f)),
-		GLKVector2Make(texCoord.u, texCoord.v), GLKVector2Make(0.0f, 0.0f),
-		GLKVector4Make(color[0]/255.0, color[1]/255.0, color[2]/255.0, color[3]/255.0)
+		texCoord, GLKVector2Make(0.0f, 0.0f), color
 	};
 }
 
@@ -399,8 +391,8 @@ MakeVertex(ccVertex2F v, ccTex2F texCoord, unsigned char *color, GLKMatrix4 tran
 	
 	// Output vertexes.
 	for(int i=0; i<_nuPoints; i++){
-		CCRenderBufferSetVertex(buffer, 2*i + 0, MakeVertex(_vertices[2*i + 0], _texCoords[2*i + 0], _colorPointer + (2*i + 0)*4, *transform));
-		CCRenderBufferSetVertex(buffer, 2*i + 1, MakeVertex(_vertices[2*i + 1], _texCoords[2*i + 1], _colorPointer + (2*i + 1)*4, *transform));
+		CCRenderBufferSetVertex(buffer, 2*i + 0, MakeVertex(_vertices[2*i + 0], _texCoords[2*i + 0], _colorPointer[2*i + 0], *transform));
+		CCRenderBufferSetVertex(buffer, 2*i + 1, MakeVertex(_vertices[2*i + 1], _texCoords[2*i + 1], _colorPointer[2*i + 1], *transform));
 	}
 	
 	// Output triangles.

@@ -22,6 +22,10 @@
  * THE SOFTWARE.
  */
 
+
+#import "CCDirector.h"
+
+
 @interface CCRenderState(){
 	@public
 	BOOL _immutable;
@@ -127,7 +131,7 @@ CCGraphicsBufferPushElements(CCGraphicsBuffer *buffer, size_t requestedCount)
 
 -(instancetype)initWithTexture:(CCTexture *)texture depthStencilFormat:(GLuint)depthStencilFormat;
 
--(void)syncWithView:(CC_VIEW<CCDirectorView> *)view;
+-(void)syncWithView:(CC_VIEW<CCView> *)view;
 
 // Not ideal to use GL enumerations here.
 // It's out of convenience, and it's a private API.
