@@ -318,7 +318,7 @@
     NSError *error;
     CCFile *file = [_fileLocator fileNamedWithResolutionSearch:@"images/foo.png" error:&error];
 
-    [self assertFailureForFile:file errorCode:ERROR_FILELOCATOR_NO_FILE_FOUND error:error];
+    [self assertFailureForFile:file errorCode:CCFileLocatorErrorNoFileFound error:error];
 }
 
 - (void)testImageNamedAliasingWithDatabase
@@ -436,7 +436,7 @@
     NSError *error;
     CCFile *file = [_fileLocator fileNamedWithResolutionSearch:@"Hero.png" error:&error];
 
-    [self assertFailureForFile:file errorCode:ERROR_FILELOCATOR_NO_FILE_FOUND error:error];
+    [self assertFailureForFile:file errorCode:CCFileLocatorErrorNoFileFound error:error];
 }
 
 - (void)testImageNamedSearchOrderFor1xDeviceScaleWith2xOnlyAvailable
@@ -529,7 +529,7 @@
     NSError *error;
     CCFile *file = [_fileLocator fileNamedWithResolutionSearch:@"someasset.png" error:&error];
 
-    [self assertFailureForFile:file errorCode:ERROR_FILELOCATOR_NO_SEARCH_PATHS error:error];
+    [self assertFailureForFile:file errorCode:CCFileLocatorErrorNoSearchPaths error:error];
 }
 
 - (void)testShouldNotReturnDirectoryURLWithAssetFilename
@@ -539,7 +539,7 @@
     NSError *error;
     CCFile *file = [_fileLocator fileNamedWithResolutionSearch:@"image.png" error:&error];
 
-    [self assertFailureForFile:file errorCode:ERROR_FILELOCATOR_NO_FILE_FOUND error:error];
+    [self assertFailureForFile:file errorCode:CCFileLocatorErrorNoFileFound error:error];
 }
 
 
@@ -581,7 +581,7 @@
     NSError *error2;
     CCFile *file2 = [_fileLocator fileNamedWithResolutionSearch:@"images/foo.png" error:&error2];
 
-    [self assertFailureForFile:file2 errorCode:ERROR_FILELOCATOR_NO_FILE_FOUND error:error2];
+    [self assertFailureForFile:file2 errorCode:CCFileLocatorErrorNoFileFound error:error2];
 }
 
 - (void)testCachePurgedAfterLocaleChangedNotification
@@ -593,7 +593,7 @@
     NSError *error2;
     CCFile *file2 = [_fileLocator fileNamedWithResolutionSearch:@"images/foo.png" error:&error2];
 
-    [self assertFailureForFile:file2 errorCode:ERROR_FILELOCATOR_NO_FILE_FOUND error:error2];
+    [self assertFailureForFile:file2 errorCode:CCFileLocatorErrorNoFileFound error:error2];
 }
 
 - (void)testCachePurgedAfterSearchPathsChanged
@@ -605,7 +605,7 @@
     NSError *error2;
     CCFile *file2 = [_fileLocator fileNamedWithResolutionSearch:@"images/foo.png" error:&error2];
 
-    [self assertFailureForFile:file2 errorCode:ERROR_FILELOCATOR_NO_FILE_FOUND error:error2];
+    [self assertFailureForFile:file2 errorCode:CCFileLocatorErrorNoFileFound error:error2];
 }
 
 

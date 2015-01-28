@@ -28,22 +28,22 @@
 @class CCFile;
 @protocol CCFileLocatorDatabaseProtocol;
 
-// Errors
+// CCFileLocator NSError code values.
+typedef NS_ENUM(NSInteger, CCFileLocatorError){
+    /**
+     Error indicating that there are no search paths available in CCFileUtils.
 
-/**
- Error indicating that there are no search paths available in CCFileUtils.
+     @since 4.0
+     */
+    CCFileLocatorErrorNoSearchPaths = 20000,
+    
+    /**
+     Error: No file could be found for a given filename.
 
- @since 4.0
- */
-extern NSUInteger const ERROR_FILELOCATOR_NO_SEARCH_PATHS;
-
-/**
- Error: No file could be found for a given filename.
-
- @since 4.0
- */
-extern NSUInteger const ERROR_FILELOCATOR_NO_FILE_FOUND;
-
+     @since 4.0
+     */
+    CCFileLocatorErrorNoFileFound = 20001,
+};
 
 /**
  Class to find assets in search paths taking localization and image content scales into account.
