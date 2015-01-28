@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 #import "CCImage_Private.h"
 #import "CCFile_Private.h"
+#import "CCFileLocator.h"
 
 /**
  Automated unit tests for loading many different types of files into CCImages. The goal with these
@@ -25,19 +26,15 @@
 
 @implementation CCImageTests
 
--(void) testImageNamed:(NSString*) fileName withTitle:(NSString*) title{
-    CGFloat contentScale;
+-(void) testImageNamed:(NSString*) fileName withTitle:(NSString*)title
+{
+    CCFileLocator *locator = [[CCFileLocator alloc] init];
+    locator.searchPaths = @[
+        [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Images"],
+    ];
     
-    NSString *fullPath =[[CCFileUtils sharedFileUtils] fullPathForFilename:fileName contentScale:&contentScale];
-    XCTAssertNotNil(fullPath, @"Missing file %@ for test <%@>.", fileName, title);
-    if(!fullPath) return; // don't continue this test if we failed above.
-
-    NSURL *url = [NSURL fileURLWithPath:fullPath];
-    XCTAssertNotNil(url, @"Missing file %@ for test <%@>.", fileName, title);
-    if(!url) return; // don't continue this test if we failed above.
-    
-    CCFile *file = [[CCFile alloc] initWithName:title url:url contentScale:contentScale];
-    XCTAssertNotNil(file, @"File didn't load from URL.");
+    CCFile *file = [locator fileNamedWithResolutionSearch:fileName error:nil];
+    XCTAssertNotNil(file, @"Could find file.");
     
     CCImage *image = [[CCImage alloc]initWithCCFile:file options:nil];
     XCTAssertNotNil(image, @"CCImage didn't load from %@ for test <%@>.", fileName, title);
