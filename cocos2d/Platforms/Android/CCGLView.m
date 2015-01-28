@@ -17,6 +17,8 @@
 #import "CCActivity.h"
 #import "CCResponderManager.h"
 #import "CCTouchAndroid.h"
+#import "CCTexture.h"
+
 #import <CoreGraphics/CGGeometry.h>
 
 #import <AndroidKit/AndroidMotionEvent.h>

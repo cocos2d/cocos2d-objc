@@ -30,7 +30,7 @@
 #elif __CC_PLATFORM_MAC
 #import <AppKit/AppKit.h>
 #elif __CC_PLATFORM_ANDROID
-#error No idea... Need to look this up.
+//#error No idea... Need to look this up.
 #endif
 
 #import "CCControl.h"

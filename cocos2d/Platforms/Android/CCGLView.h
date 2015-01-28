@@ -10,11 +10,10 @@
 
 #if __CC_PLATFORM_ANDROID
 
-
+#import <CoreGraphics/CGGeometry.h>
 #import <android/native_window.h>
 #import <bridge/runtime.h>
 #import <GLActivityKit/GLView.h>
-
 #import "../../Platforms/CCGL.h"
 #import "CCView.h"
 

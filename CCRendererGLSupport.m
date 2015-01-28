@@ -300,7 +300,7 @@ BindVertexPage(CCGraphicsBufferBindingsGL *self, NSUInteger page)
 			{
 					//create and attach depth buffer
 			
-					if(![[CCConfiguration sharedConfiguration] supportsPackedDepthStencil])
+					if(![[CCDeviceInfo sharedDeviceInfo] supportsPackedDepthStencil])
 					{
 							glGenRenderbuffers(1, &_depthRenderBuffer);
 							glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBuffer);

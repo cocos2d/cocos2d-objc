@@ -11,7 +11,7 @@
 
 #import <GLActivityKit/GLActivity.h>
 #import "../../Platforms/CCGL.h"
-#import "CCProtocols.h"
+#import "CCDirector.h"
 
 @class CCScene;
 @class AndroidAbsoluteLayout;

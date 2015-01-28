@@ -255,7 +255,7 @@
                 NSAssert(textureData64, @"CCParticleSystem: Couldn't load texture");
 
                 // Gzipped image data.
-                NSData *textureData = [self decodeTextureData:textureData64];
+                NSData *textureData = CC_DECODE_BASE64(textureData64);
                 NSAssert(textureData != NULL, @"CCParticleSystem: error decoding textureImageData");
 
                 CCStreamedImageSource *streamedSource = [[CCStreamedImageSource alloc] initWithStreamBlock:^{
@@ -331,18 +331,6 @@
 	free( _particles );
 
 
-}
-
-
-- (NSData*)decodeTextureData:(NSString*)base64
-{
-    NSData* result;
-#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
-    result = [[NSData alloc] initWithBase64Encoding:textureData64];
-#elseif __CC_PLATFORM_ANDROID
-    result = [NSData decodeWithStr:base64 flags:AndroidBase64Default];
-#endif
-    return result;
 }
 
 -(void) initParticle: (_CCParticle*) particle

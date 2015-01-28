@@ -31,6 +31,8 @@
 #import <UIKit/UIColor.h>
 #elif __CC_PLATFORM_MAC
 #import <AppKit/NSColor.h>
+#elif __CC_PLATFORM_ANDROID
+#import <CoreGraphics/CoreGraphics.h>
 #endif
 
 

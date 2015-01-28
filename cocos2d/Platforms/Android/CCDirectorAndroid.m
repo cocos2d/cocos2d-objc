@@ -18,9 +18,13 @@
 #import "../../CCScene.h"
 #import "../../CCShader.h"
 #import "../../ccFPSImages.h"
-#import "../../CCConfiguration.h"
+#import "../../CCDeviceInfo.h"
 #import "CCRenderer_Private.h"
 #import "CCTouch.h"
+
+#import "ccUtils.h"
+#import "CCActivity.h"
+
 
 
 #pragma mark -
