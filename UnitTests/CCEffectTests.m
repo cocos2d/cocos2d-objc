@@ -21,12 +21,12 @@
 {
     CCDirector *director = [CCDirector director];
     //director.
-    [CCDirector bindDirector: director];
+    [CCDirector pushCurrentDirector:director];
 }
 
 -(void)tearDown
 {
-    [CCDirector bindDirector:nil];
+    [CCDirector popCurrentDirector];
 }
 
 

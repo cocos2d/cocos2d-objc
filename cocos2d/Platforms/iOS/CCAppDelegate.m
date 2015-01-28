@@ -116,9 +116,9 @@ const CGSize FIXED_SIZE = {568, 384};
 -(void) directorDidReshapeProjection:(CCDirector*)director
 {
     if(director.runningScene == nil) {
-        [CCDirector bindDirector:director];
+        [CCDirector pushCurrentDirector:director];
         CCScene * scene = [_appDelegate startScene];
-        [CCDirector bindDirector:nil];
+        [CCDirector popCurrentDirector];
         
         // Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
         // and add the scene to the stack. The director will run it when it automatically when the view is displayed.
@@ -201,7 +201,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	director.wantsFullScreenLayout = YES;
     
 #warning TODO temporary
-    [CCDirector bindDirector:director];
+    [CCDirector pushCurrentDirector:director];
 	
 	// Display FSP and SPF
 	[director setDisplayStats:[config[CCSetupShowDebugStats] boolValue]];
@@ -243,7 +243,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	[window_ makeKeyAndVisible];
     
     [self forceOrientation];
-    [CCDirector bindDirector:nil];
+    [CCDirector popCurrentDirector];
 }
 
 - (void)setupFlexibleScreenMode:(NSDictionary *)config director:(CCDirector *)director

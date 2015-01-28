@@ -455,7 +455,7 @@
 
     if (_dirty) [self buildResponderList];
     
-    [CCDirector bindDirector:_director];
+    [CCDirector pushCurrentDirector:_director];
     
     // scan backwards through mouse responders
     for (int index = _responderListCount - 1; index >= 0; index --)
@@ -482,7 +482,7 @@
             }
         }
     }
-    [CCDirector bindDirector:nil];
+    [CCDirector popCurrentDirector];
     
 }
 
@@ -499,7 +499,7 @@
     {
         CCNode *node = (CCNode *)responder.target;
         
-        [CCDirector bindDirector:_director];
+        [CCDirector pushCurrentDirector:_director];
         
         // check if it locks mouse
         if (node.claimsUserInteraction)
@@ -530,12 +530,12 @@
                 }
             }
         }
-        [CCDirector bindDirector:nil];
+        [CCDirector popCurrentDirector];
         
     }
     else
     {
-        [CCDirector bindDirector:_director];
+        [CCDirector pushCurrentDirector:_director];
         
         // scan backwards through mouse responders
         for (int index = _responderListCount - 1; index >= 0; index --)
@@ -563,7 +563,7 @@
                 }
             }
         }
-        [CCDirector bindDirector:nil];
+        [CCDirector popCurrentDirector];
         
     }
 }
@@ -577,7 +577,7 @@
     {
         CCNode *node = (CCNode *)responder.target;
         
-        [CCDirector bindDirector:_director];
+        [CCDirector pushCurrentDirector:_director];
         // end the mouse
         switch (button)
         {
@@ -585,7 +585,7 @@
             case CCMouseButtonRight: if ([node respondsToSelector:@selector(rightMouseUp:)]) [node rightMouseUp:theEvent]; break;
             case CCMouseButtonOther: if ([node respondsToSelector:@selector(otherMouseUp:)]) [node otherMouseUp:theEvent]; break;
         }
-        [CCDirector bindDirector:nil];
+        [CCDirector popCurrentDirector];
         // remove
         [_runningResponderList removeObject:responder];
     }
@@ -600,7 +600,7 @@
     // otherwise, scrollWheel goes to the node under the cursor
     CCRunningResponder *responder = [self responderForButton:CCMouseButtonOther];
     
-    [CCDirector bindDirector:_director];
+    [CCDirector pushCurrentDirector:_director];
     
     if (responder)
     {
@@ -629,7 +629,7 @@
             if (_currentEventProcessed) break;
         }
     }
-    [CCDirector bindDirector:nil];
+    [CCDirector popCurrentDirector];
     
 }
 
@@ -641,14 +641,14 @@
     //  [[CCDirector currentDirector].view.window makeFirstResponder:[CCDirector currentDirector].view];
 
     if (_dirty) [self buildResponderList];
-    [CCDirector bindDirector:_director];
+    [CCDirector pushCurrentDirector:_director];
 
     for (int index = _responderListCount - 1; index >= 0; index --)
     {
         CCNode *node = _responderList[index];
         [node keyDown:theEvent];
     }
-    [CCDirector bindDirector:nil];
+    [CCDirector popCurrentDirector];
     
 }
 
@@ -658,7 +658,7 @@
     //  [[CCDirector currentDirector].view.window makeFirstResponder:[CCDirector currentDirector].view];
 
     if (_dirty) [self buildResponderList];
-    [CCDirector bindDirector:_director];
+    [CCDirector pushCurrentDirector:_director];
 
     // scan backwards through mouse responders
     for (int index = _responderListCount - 1; index >= 0; index --)
@@ -666,7 +666,7 @@
         CCNode *node = _responderList[index];
         [node keyUp:theEvent];
     }
-    [CCDirector bindDirector:nil];
+    [CCDirector popCurrentDirector];
     
 }
 
@@ -703,41 +703,3 @@
 #endif
 
 @end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

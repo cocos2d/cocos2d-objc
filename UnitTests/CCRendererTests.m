@@ -17,12 +17,12 @@
 
 -(void) setUp
 {
-    [CCDirector bindDirector: [CCDirector director]];
+    [CCDirector pushCurrentDirector:[CCDirector director]];
 }
 
 -(void)tearDown
 {
-    [CCDirector bindDirector:nil];
+    [CCDirector popCurrentDirector];
 }
 
 

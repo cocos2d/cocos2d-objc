@@ -28,7 +28,7 @@
 	// 'Effects' don't work correctly when autoscale is turned on.
 	// Use kCCDirectorResize_NoScale if you don't want auto-scaling.
 	[director setResizeMode:kCCDirectorResize_NoScale];
-    [CCDirector bindDirector: director];
+    [CCDirector pushCurrentDirector:director];
     
 	// Enable "moving" mouse event. Default no.
 	[window_ setAcceptsMouseMovedEvents:NO];
@@ -59,7 +59,7 @@
     [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"TilesAtlassed.plist"];
 	
 	[director presentScene:[MainMenu scene]];
-    [CCDirector bindDirector: nil];
+    [CCDirector popCurrentDirector];
 }
 
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication

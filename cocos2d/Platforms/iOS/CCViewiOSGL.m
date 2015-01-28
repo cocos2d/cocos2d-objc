@@ -362,40 +362,40 @@ extern EAGLContext *CCRenderDispatchSetupGL(EAGLRenderingAPI api, EAGLSharegroup
 {
     _touchEvent.timestamp = event.timestamp;
     
-    [CCDirector bindDirector:_director];
+    [CCDirector pushCurrentDirector:_director];
     [_touchEvent updateTouchesBegan:touches];
     [_director.responderManager touchesBegan:_touchEvent.currentTouches withEvent:_touchEvent];
-    [CCDirector bindDirector:nil];
+    [CCDirector popCurrentDirector];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
     _touchEvent.timestamp = event.timestamp;
     
-    [CCDirector bindDirector:_director];
+    [CCDirector pushCurrentDirector:_director];
     [_touchEvent updateTouchesMoved:touches];
     [_director.responderManager touchesMoved:_touchEvent.currentTouches withEvent:_touchEvent];
-    [CCDirector bindDirector:nil];
+    [CCDirector popCurrentDirector];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     _touchEvent.timestamp = event.timestamp;
     
-    [CCDirector bindDirector:_director];
+    [CCDirector pushCurrentDirector:_director];
     [_touchEvent updateTouchesEnded:touches];
     [_director.responderManager touchesEnded:_touchEvent.currentTouches withEvent:_touchEvent];
-    [CCDirector bindDirector:nil];
+    [CCDirector popCurrentDirector];
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
     _touchEvent.timestamp = event.timestamp;
     
-    [CCDirector bindDirector:_director];
+    [CCDirector pushCurrentDirector:_director];
     [_touchEvent updateTouchesCancelled:touches];
     [_director.responderManager touchesCancelled:_touchEvent.currentTouches withEvent:_touchEvent];
-    [CCDirector bindDirector:nil];
+    [CCDirector popCurrentDirector];
 }
 
 @end
