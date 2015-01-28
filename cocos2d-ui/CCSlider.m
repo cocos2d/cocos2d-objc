@@ -135,6 +135,10 @@
 
 - (void) mouseDragged:(NSEvent*)event button:(CCMouseButton) button
 {
+    if(button != CCMouseButtonLeft){
+        return;
+    }
+    
     CGPoint dragPos = [event locationInNode:self];
     
     [self inputDraggedWithPos:dragPos];
