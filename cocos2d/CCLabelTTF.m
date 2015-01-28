@@ -642,7 +642,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     
     CGContextRelease(context);
     
-    CCImage *image = [[CCImage alloc] initWithPixelSize:POTSize contentScale:[CCDirector sharedDirector].contentScaleFactor pixelData:pixelData];
+    CCImage *image = [[CCImage alloc] initWithPixelSize:POTSize contentScale:[CCDirector currentDirector].contentScaleFactor pixelData:pixelData];
     image.contentSize = CC_SIZE_SCALE(dimensions, 1.0/image.contentScale);
 	return [[CCTexture alloc] initWithImage:image options:nil];
 }
