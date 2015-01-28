@@ -25,6 +25,14 @@
 
 #import "CCDeprecated.h"
 
+#import "ccUtils.h"
+#import "CCImage.h"
+#import "CCDeviceInfo.h"
+#import "CCRenderDispatch.h"
+
+#import "CCMetalSupport_Private.h"
+#import "CCTexture_Private.h"
+
 
 @implementation CCColor(Deprecated)
 
@@ -115,6 +123,70 @@ CGAffineTransformFromGLKMatrix4(GLKMatrix4 m)
 -(NSUInteger) numberOfRunningActions
 {
     return self.actions.count;
+}
+
+@end
+
+
+@implementation CCTexture(Deprecated)
+
+-(CCSpriteFrame *)createSpriteFrame {return self.spriteFrame;}
+-(NSUInteger)pixelWidth {return self.sizeInPixels.width;}
+-(NSUInteger)pixelHeight {return self.sizeInPixels.height;}
+-(CGSize)contentSizeInPixels {return CC_SIZE_SCALE(self.contentSize, self.contentScale);}
+
+- (id)initWithCGImage:(CGImageRef)cgImage contentScale:(CGFloat)contentScale;
+{
+    CCImage *image = [[CCImage alloc] initWithCGImage:cgImage contentScale:contentScale options:nil];
+    return [self initWithImage:image options:nil];
+}
+
+-(BOOL)isAntialiased
+{
+    return _antialiased;
+}
+
+- (void) setAntialiased:(BOOL)antialiased
+{
+	if(_antialiased != antialiased){
+		CCRenderDispatch(NO, ^{
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+			if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
+				CCMetalContext *context = [CCMetalContext currentContext];
+				
+				MTLSamplerDescriptor *samplerDesc = [MTLSamplerDescriptor new];
+				samplerDesc.minFilter = samplerDesc.magFilter = (antialiased ? MTLSamplerMinMagFilterLinear : MTLSamplerMinMagFilterNearest);
+				samplerDesc.mipFilter = (_hasMipmaps ? MTLSamplerMipFilterNearest : MTLSamplerMipFilterNotMipmapped);
+				samplerDesc.sAddressMode = MTLSamplerAddressModeClampToEdge;
+				samplerDesc.tAddressMode = MTLSamplerAddressModeClampToEdge;
+				
+				((CCTextureMetal *)self)->_metalSampler = [context.device newSamplerStateWithDescriptor:samplerDesc];
+			} else
+#endif
+			{
+				CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Set Alias Texture Parameters");
+				
+				glBindTexture(GL_TEXTURE_2D, [(CCTextureGL *)self name]);
+				
+				if(_hasMipmaps){
+					glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, antialiased ? GL_NEAREST_MIPMAP_NEAREST : GL_NEAREST_MIPMAP_NEAREST);
+				} else {
+					glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, antialiased ? GL_LINEAR : GL_NEAREST);
+				}
+				glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, antialiased ? GL_LINEAR : GL_NEAREST);
+				
+				CCGL_DEBUG_POP_GROUP_MARKER();
+				CC_CHECK_GL_ERROR_DEBUG();
+			}
+		});
+		
+		_antialiased = antialiased;
+	}
+}
+
+-(BOOL)hasPremultipliedAlpha
+{
+    return _premultipliedAlpha;
 }
 
 @end

@@ -33,6 +33,7 @@
 #import <AndroidKit/AndroidDisplay.h>
 #endif
 
+Class CCTextureClass;
 Class CCGraphicsBufferClass;
 Class CCGraphicsBufferBindingsClass;
 Class CCRenderStateClass;
@@ -128,6 +129,7 @@ static char * glExtensions;
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 		// Metal is weakly linked. Check that the function exists AND that it returns non-nil.
 		if(MTLCreateSystemDefaultDevice && MTLCreateSystemDefaultDevice() && !getenv("CC_FORCE_GL")){
+            CCTextureClass = NSClassFromString(@"CCTextureMetal");
 			CCGraphicsBufferClass = NSClassFromString(@"CCGraphicsBufferMetal");
 			CCGraphicsBufferBindingsClass = NSClassFromString(@"CCGraphicsBufferBindingsMetal");
 			CCRenderStateClass = NSClassFromString(@"CCRenderStateMetal");
@@ -138,6 +140,7 @@ static char * glExtensions;
 		} else
 #endif
 		{
+            CCTextureClass = NSClassFromString(@"CCTextureGL");
 			CCGraphicsBufferClass = NSClassFromString(@"CCGraphicsBufferGLBasic");
 			CCGraphicsBufferBindingsClass = NSClassFromString(@"CCGraphicsBufferBindingsGL");
 			CCRenderStateClass = NSClassFromString(@"CCRenderStateGL");
@@ -147,6 +150,7 @@ static char * glExtensions;
 			_graphicsAPI = CCGraphicsAPIGL;
 		}
 		
+        NSAssert(CCTextureClass, @"CCTextureClass not configured.");
 		NSAssert(CCGraphicsBufferClass, @"CCGraphicsBufferClass not configured.");
 		NSAssert(CCGraphicsBufferBindingsClass, @"CCGraphicsBufferBindingsClass not configured.");
 		NSAssert(CCRenderStateClass, @"CCRenderStateClass not configured.");

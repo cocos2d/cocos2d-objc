@@ -50,7 +50,8 @@
 #import "CCDeviceInfo.h"
 #import "CCTransition.h"
 #import "Platforms/CCNS.h"
-#import "Support/CCFileUtils.h"
+#import "CCFileUtils.h"
+#import "CCImage.h"
 #import "ccUtils.h"
 
 #if __CC_PLATFORM_IOS
@@ -953,9 +954,6 @@ static const float CCFPSLabelItemHeight = 32;
 		[[CCFileUtils sharedFileUtils] purgeCachedEntries];
 	}
 
-	CCTexturePixelFormat currentFormat = [CCTexture defaultAlphaPixelFormat];
-	[CCTexture setDefaultAlphaPixelFormat:CCTexturePixelFormat_RGBA4444];
-
 	unsigned char *data;
 	NSUInteger data_len;
 	CGFloat contentScale = 0;
@@ -964,16 +962,17 @@ static const float CCFPSLabelItemHeight = 32;
 	NSData *nsdata = [NSData dataWithBytes:data length:data_len];
 	CGDataProviderRef imgDataProvider = CGDataProviderCreateWithCFData( (__bridge CFDataRef) nsdata);
 	CGImageRef imageRef = CGImageCreateWithPNGDataProvider(imgDataProvider, NULL, true, kCGRenderingIntentDefault);
-	CCTexture *texture = [[CCTexture alloc] initWithCGImage:imageRef contentScale:contentScale];
 	CGDataProviderRelease(imgDataProvider);
+	
+	CCImage *image = [[CCImage alloc] initWithCGImage:imageRef contentScale:contentScale options:nil];
 	CGImageRelease(imageRef);
+    
+	CCTexture *texture = [[CCTexture alloc] initWithImage:image options:nil];
 
 	_FPSLabel = [[CCFPSLabel alloc]  initWithString:@"00.0" texture:texture];
 	_SPFLabel = [[CCFPSLabel alloc]  initWithString:@"0.000" texture:texture];
 	_drawsLabel = [[CCFPSLabel alloc]  initWithString:@"000" texture:texture];
 
-	[CCTexture setDefaultAlphaPixelFormat:currentFormat];
-	
 	CGPoint offset = [self convertToGL:ccp(0, (self.flipY == 1.0) ? 0 : self.view.bounds.size.height)];
 	CGPoint pos = ccpAdd(CC_DIRECTOR_STATS_POSITION, offset);
 	[_drawsLabel setPosition: ccpAdd( ccp(0,34), pos ) ];
