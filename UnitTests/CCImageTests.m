@@ -25,12 +25,6 @@
 
 @implementation CCImageTests
 
-- (void)setUp
-{
-    [super setUp];
-    [(AppController *)[UIApplication sharedApplication].delegate configureCocos2d];
-}
-
 -(void) testImageNamed:(NSString*) fileName withTitle:(NSString*) title{
     CGFloat contentScale;
     

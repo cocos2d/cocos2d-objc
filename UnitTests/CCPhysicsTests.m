@@ -30,9 +30,15 @@
 - (void)setUp
 {
     [super setUp];
+    
+    CCDirector *director = [CCDirector director];
+    [CCDirector pushCurrentDirector:director];
+}
 
-    [(AppController *)[UIApplication sharedApplication].delegate configureCocos2d];
-    [[CCDirector currentDirector] startRunLoop];
+-(void)tearDown
+{
+    [super tearDown];
+    [CCDirector popCurrentDirector];
 }
 
 static void
