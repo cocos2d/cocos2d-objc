@@ -704,10 +704,17 @@ CompareTimers(const void *a, const void *b, void *context)
 
 -(void)addAction:(CCAction*)action target:(NSObject<CCSchedulableTarget> *)target paused:(BOOL)paused
 {
+    NSAssert(action, @"Argument action must be non-nil");
+    NSAssert(target, @"Argument target must be non-nil");
+    
     CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
     scheduledTarget.paused = paused;
     
-    if(!scheduledTarget.hasActions){
+    if(scheduledTarget.hasActions){
+        NSAssert(![scheduledTarget.actions containsObject:action], @"Action already running on this target.");
+    } else {
+        // This is the first action that has been scheduled for this target.
+        // It needs to be added to the list of targets with actions.
         [_scheduledTargetsWithActions addObject:scheduledTarget];
     }
     
