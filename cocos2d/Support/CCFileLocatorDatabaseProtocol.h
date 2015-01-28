@@ -27,11 +27,11 @@
 @class CCFileMetaData;
 
 /**
- The protocol a file utils database must conform to.
+ The protocol a file locator database must conform to.
  
  @since 4.0
  */
-@protocol CCFileUtilsDatabaseProtocol <NSObject>
+@protocol CCFileLocatorDatabaseProtocol <NSObject>
 
 @required
 /**

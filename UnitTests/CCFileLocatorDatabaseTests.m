@@ -1,5 +1,5 @@
 //
-//  CCFileUtilsDatabaseTests.m
+//  CCFileLocatorDatabaseTests.m
 //  cocos2d-tests
 //
 //  Created by Nicky Weber on 13.01.15.
@@ -7,20 +7,20 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "CCFileUtilsDatabase.h"
+#import "CCFileLocatorDatabase.h"
 #import "FileSystemTestCase.h"
 #import "CCUnitTestHelperMacros.h"
 #import "CCFileMetaData.h"
 
-@interface CCFileUtilsDatabaseTests : FileSystemTestCase
+@interface CCFileLocatorDatabaseTests : FileSystemTestCase
 
-@property (nonatomic, strong) CCFileUtilsDatabase *fileUtilsDB;
+@property (nonatomic, strong) CCFileLocatorDatabase *fileLocatorDB;
 @property (nonatomic, copy) NSString *searchPath;
 @property (nonatomic, copy) NSString *dbPath;
 
 @end
 
-@implementation CCFileUtilsDatabaseTests
+@implementation CCFileLocatorDatabaseTests
 
 - (void)setUp
 {
@@ -46,15 +46,15 @@
 
     [self createFilesWithContents:@{@"Resources/config/filedb.json" : [json dataUsingEncoding:NSUTF8StringEncoding]}];
 
-    self.fileUtilsDB = [[CCFileUtilsDatabase alloc] init];
+    self.fileLocatorDB = [[CCFileLocatorDatabase alloc] init];
 }
 
 - (void)testAddDatabaseWithFilePathInSearchPath
 {
     NSError *error;
-    XCTAssertTrue([_fileUtilsDB addJSONWithFilePath:_dbPath forSearchPath:_searchPath error:&error]);
+    XCTAssertTrue([_fileLocatorDB addJSONWithFilePath:_dbPath forSearchPath:_searchPath error:&error]);
 
-    CCFileMetaData *metaData = [_fileUtilsDB metaDataForFileNamed:@"images/foo.png" inSearchPath:_searchPath];
+    CCFileMetaData *metaData = [_fileLocatorDB metaDataForFileNamed:@"images/foo.png" inSearchPath:_searchPath];
 
     XCTAssertNotNil(metaData);
     XCTAssertNil(error);
@@ -64,11 +64,11 @@
 
 - (void)testRemoveDatabaseWithFilePathInSearchPath
 {
-    XCTAssertTrue([_fileUtilsDB addJSONWithFilePath:_dbPath forSearchPath:_searchPath error:NULL]);
+    XCTAssertTrue([_fileLocatorDB addJSONWithFilePath:_dbPath forSearchPath:_searchPath error:NULL]);
 
-    [_fileUtilsDB removeEntriesForSearchPath:[self fullPathForFile:@"Resources"]];
+    [_fileLocatorDB removeEntriesForSearchPath:[self fullPathForFile:@"Resources"]];
 
-    CCFileMetaData *metaData = [_fileUtilsDB metaDataForFileNamed:@"images/foo.png" inSearchPath:[self fullPathForFile:@"Resources"]];
+    CCFileMetaData *metaData = [_fileLocatorDB metaDataForFileNamed:@"images/foo.png" inSearchPath:[self fullPathForFile:@"Resources"]];
 
     XCTAssertNil(metaData);
 }
@@ -84,14 +84,14 @@
     [self createFilesWithContents:@{@"Resources/config/filedb.json" : [json dataUsingEncoding:NSUTF8StringEncoding]}];
 
     NSError *error;
-    XCTAssertFalse([_fileUtilsDB addJSONWithFilePath:_dbPath forSearchPath:_searchPath error:&error]);
+    XCTAssertFalse([_fileLocatorDB addJSONWithFilePath:_dbPath forSearchPath:_searchPath error:&error]);
     XCTAssertNotNil(error);
 }
 
 - (void)testAddDataBaseWithNonExistingDatabaseFile
 {
     NSError *error;
-    XCTAssertFalse([_fileUtilsDB addJSONWithFilePath:@"/adasdasd/ddddd.json" forSearchPath:_searchPath error:&error]);
+    XCTAssertFalse([_fileLocatorDB addJSONWithFilePath:@"/adasdasd/ddddd.json" forSearchPath:_searchPath error:&error]);
     XCTAssertNotNil(error);
 }
 
