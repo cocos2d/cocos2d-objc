@@ -99,8 +99,8 @@
 // override default logic
 - (void)antiFlickrDrawCall
 {
-    NSThread *thread = [self runningThread];
-    [self performSelector:@selector(mainLoopBody) onThread:thread withObject:nil waitUntilDone:YES];
+//    NSThread *thread = [self runningThread];
+//    [self performSelector:@selector(mainLoopBody) onThread:thread withObject:nil waitUntilDone:YES];
 }
 
 -(void)end
