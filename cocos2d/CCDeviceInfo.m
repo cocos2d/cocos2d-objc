@@ -66,14 +66,6 @@ NSString* const CCScreenModeFixed = @"CCScreenModeFixed";
 
 @implementation CCDeviceInfo
 
-@synthesize maxTextureSize = _maxTextureSize, maxTextureUnits=_maxTextureUnits;
-@synthesize supportsPVRTC = _supportsPVRTC;
-@synthesize supportsNPOT = _supportsNPOT;
-@synthesize supportsBGRA8888 = _supportsBGRA8888;
-@synthesize supportsDiscardFramebuffer = _supportsDiscardFramebuffer;
-@synthesize supportsShareableVAO = _supportsShareableVAO;
-@synthesize OSVersion = _OSVersion;
-
 //
 // singleton stuff
 //
@@ -372,19 +364,12 @@ static char * glExtensions;
 	return _supportsDiscardFramebuffer;
 }
 
--(BOOL) supportsShareableVAO
-{
-	[self configure];
-	return _supportsShareableVAO;
-}
-
-
 #pragma mark Helper
 
 -(void) dumpInfo
 {
 #if DEBUG
-	printf("cocos2d: %s\n", [cocos2dVersion() UTF8String] );
+	printf("Cocos2D: %s\n", [cocos2dVersion() UTF8String] );
 
 #if __CC_PLATFORM_IOS
 	NSString *OSVer = [[UIDevice currentDevice] systemVersion];
@@ -394,55 +379,30 @@ static char * glExtensions;
 	NSString *OSVer = [self getMacVersion];
 #endif
 
-#if __CC_PLATFORM_MAC
-	printf("cocos2d: Director's thread: %s\n",
-#if (CC_DIRECTOR_MAC_THREAD == CC_MAC_USE_MAIN_THREAD)
-		  "Main thread"
-#elif (CC_DIRECTOR_MAC_THREAD == CC_MAC_USE_OWN_THREAD)
-		  "Own thread"
-#elif (CC_DIRECTOR_MAC_THREAD == CC_MAC_USE_DISPLAY_LINK_THREAD)
-		  "DisplayLink thread"
-#endif //
-		  );
-#endif // Mac
-	
-	printf("cocos2d: compiled with Profiling Support: %s\n",
-#if CC_ENABLE_PROFILERS
-		  "YES - *** Disable it when you finish profiling ***"
-#else
-		  "NO"
-#endif
-		  );
-
-	printf("cocos2d: OS version: %s (0x%08x)\n", [OSVer UTF8String], _OSVersion);
-	printf("cocos2d: %ld bit runtime\n", 8*sizeof(long));	
-	printf("cocos2d: Multi-threaded rendering: %d\n", CC_RENDER_DISPATCH_ENABLED);
+	printf("Cocos2D: OS version: %s (0x%08x)\n", [OSVer UTF8String], _OSVersion);
+	printf("Cocos2D: %ld bit runtime\n", 8*sizeof(long));
+    
+    static const BOOL multiThreadedRendering = CC_RENDER_DISPATCH_ENABLED;
+	printf("Cocos2D: Multi-threaded rendering: %s\n", multiThreadedRendering ? "YES" : "NO");
 	
 	if(_graphicsAPI == CCGraphicsAPIGL){
-		printf("cocos2d: OpenGL Rendering enabled.");
+		printf("Cocos2D: OpenGL Rendering enabled.");
 		
 		CCRenderDispatch(NO, ^{
-			printf("cocos2d: GL_VENDOR:    %s\n", glGetString(GL_VENDOR) );
-			printf("cocos2d: GL_RENDERER:  %s\n", glGetString ( GL_RENDERER   ) );
-			printf("cocos2d: GL_VERSION:   %s\n", glGetString ( GL_VERSION    ) );
-			printf("cocos2d: GLSL_VERSION: %s\n", glGetString ( GL_SHADING_LANGUAGE_VERSION ) );
+			printf("Cocos2D: GL_VENDOR:    %s\n", glGetString(GL_VENDOR) );
+			printf("Cocos2D: GL_RENDERER:  %s\n", glGetString ( GL_RENDERER   ) );
+			printf("Cocos2D: GL_VERSION:   %s\n", glGetString ( GL_VERSION    ) );
+			printf("Cocos2D: GLSL_VERSION: %s\n", glGetString ( GL_SHADING_LANGUAGE_VERSION ) );
 		});
 		
-		printf("cocos2d: GL_MAX_TEXTURE_SIZE: %d\n", _maxTextureSize);
-		printf("cocos2d: GL_MAX_TEXTURE_UNITS: %d\n", _maxTextureUnits);
-		printf("cocos2d: GL_MAX_SAMPLES: %d\n", _maxSamplesAllowed);
-		printf("cocos2d: GL supports PVRTC: %s\n", (_supportsPVRTC ? "YES" : "NO") );
-		printf("cocos2d: GL supports BGRA8888 textures: %s\n", (_supportsBGRA8888 ? "YES" : "NO") );
-		printf("cocos2d: GL supports NPOT textures: %s\n", (_supportsNPOT ? "YES" : "NO") );
-		printf("cocos2d: GL supports discard_framebuffer: %s\n", (_supportsDiscardFramebuffer ? "YES" : "NO") );
-		printf("cocos2d: GL supports shareable VAO: %s\n", (_supportsShareableVAO ? "YES" : "NO") );
+		printf("Cocos2D: GL_MAX_TEXTURE_SIZE: %d\n", _maxTextureSize);
+		printf("Cocos2D: GL supports PVRTC: %s\n", (_supportsPVRTC ? "YES" : "NO") );
+		printf("Cocos2D: GL supports NPOT textures: %s\n", (_supportsNPOT ? "YES" : "NO") );
 	} else if(_graphicsAPI == CCGraphicsAPIMetal){
-		printf("cocos2d: Metal Rendering enabled.");
+		printf("Cocos2D: Metal Rendering enabled.");
 	}
 	
-	printf("cocos2d: CCGraphicsBufferClass: %s\n", NSStringFromClass(CCGraphicsBufferClass).UTF8String);
-	printf("cocos2d: CCGraphicsBufferBindingsClass: %s\n", NSStringFromClass(CCGraphicsBufferBindingsClass).UTF8String);
-	printf("cocos2d: CCRenderCommandDrawClass: %s\n", NSStringFromClass(CCRenderCommandDrawClass).UTF8String);
+	printf("Cocos2D: CCGraphicsBufferClass: %s\n", NSStringFromClass(CCGraphicsBufferClass).UTF8String);
 #endif // DEBUG
 }
 @end

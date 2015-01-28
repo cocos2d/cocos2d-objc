@@ -171,10 +171,6 @@ typedef NS_ENUM(NSUInteger, CCGraphicsAPI) {
  */
 @property (nonatomic, readonly) BOOL supportsDiscardFramebuffer;
 
-/** Whether or not shareable VAOs are supported.
- */
-@property (nonatomic, readonly) BOOL supportsShareableVAO;
-
 /** returns the OS version.
 	- On iOS devices it returns the firmware version.
 	- On Mac returns the OS version
