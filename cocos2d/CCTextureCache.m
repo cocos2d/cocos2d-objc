@@ -88,6 +88,8 @@ static CCTextureCache *sharedTextureCache;
 		view = (CCViewiOSGL*)[[CCDirector currentDirector] view];
 #elif __CC_PLATFORM_MAC
         view = (CCViewMacGL*)[[CCDirector currentDirector] view];
+#elif __CC_PLATFORM_ANDROID
+        view = (CCGLView*)[[CCDirector currentDirector] view];
 #endif
         NSAssert(view, @"Unable to access view from current CCDirector");
 
