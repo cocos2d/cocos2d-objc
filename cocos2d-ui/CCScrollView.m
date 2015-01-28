@@ -914,8 +914,6 @@
 
 - (BOOL)onScroll:(AndroidMotionEvent *)start end:(AndroidMotionEvent *)end distanceX:(float)dx distanceY:(float)dy
 {
-    [CCDirector bindDirector:self.director];
-
     _isPanning = YES;
     _velocity = CGPointZero;
     
@@ -964,8 +962,6 @@
         }
     } waitUntilDone:YES];
     
-    [CCDirector bindDirector:nil];
-
     return YES;
 }
 
