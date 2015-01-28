@@ -51,6 +51,7 @@
 #import "CCTransition.h"
 #import "Platforms/CCNS.h"
 #import "Support/CCFileUtils.h"
+#import "ccUtils.h"
 
 #if __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
@@ -109,21 +110,52 @@ extern NSString * cocos2dVersion(void);
     return [CCDirector currentDirector];
 }
 
-NSString * const CCDirectorCurrentKey = @"CCDirectorCurrentKey";
+static NSString * const CCDirectorCurrentKey = @"CCDirectorCurrentKey";
+static NSString * const CCDirectorStackKey = @"CCDirectorStackKey";
 
 + (CCDirector *)currentDirector
 {
     return [NSThread currentThread].threadDictionary[CCDirectorCurrentKey];
 }
 
-+(void)bindDirector:(CCDirector *)director
+static void
+CCDirectorBindCurrent(CCDirector *director)
 {
-	if(director){
-        NSAssert(self.currentDirector == nil, @"Director already bound. Setting it twice is a mistake!");
+	if(director && (id)director != [NSNull null]){
         [NSThread currentThread].threadDictionary[CCDirectorCurrentKey] = director;
 	} else {
 		[[NSThread currentThread].threadDictionary removeObjectForKey:CCDirectorCurrentKey];
 	}
+}
+
+NSMutableArray *
+CCDirectorStack()
+{
+    NSMutableArray *stack = [NSThread currentThread].threadDictionary[CCDirectorStackKey];
+    
+    if(stack == nil){
+        stack = [NSMutableArray array];
+        [NSThread currentThread].threadDictionary[CCDirectorStackKey] = stack;
+    }
+    
+    return stack;
+}
+
++(void)pushCurrentDirector:(CCDirector *)director;
+{
+    NSMutableArray *stack = CCDirectorStack();
+    [stack addObject:[self currentDirector] ?: [NSNull null]];
+    
+    CCDirectorBindCurrent(director);
+}
+
++(void)popCurrentDirector;
+{
+    NSMutableArray *stack = CCDirectorStack();
+    NSAssert(stack.count > 0, @"CCDirector stack underflow.");
+    
+    CCDirectorBindCurrent(stack.lastObject);
+    [stack removeLastObject];
 }
 
 +(CCDirector *)director;
@@ -189,7 +221,7 @@ NSString * const CCDirectorCurrentKey = @"CCDirectorCurrentKey";
     if(!_animating)
         return;
     
-    [CCDirector bindDirector:self];
+    [CCDirector pushCurrentDirector:self];
     
     /* calculate "global" dt */
 	[self calculateDeltaTime];
@@ -237,7 +269,7 @@ NSString * const CCDirectorCurrentKey = @"CCDirectorCurrentKey";
 		
 		if( _displayStats ) [self calculateMPF];
 	}
-    [CCDirector bindDirector:nil];
+    [CCDirector popCurrentDirector];
 }
 
 -(CCRenderer *)rendererFromPool
@@ -465,7 +497,7 @@ NSString * const CCDirectorCurrentKey = @"CCDirectorCurrentKey";
 -(void) reshapeProjection:(CGSize)newViewSize
 {
 	_winSizeInPixels = newViewSize;
-	_winSizeInPoints = CGSizeMake( _winSizeInPixels.width / __ccContentScaleFactor, _winSizeInPixels.height / __ccContentScaleFactor );
+	_winSizeInPoints = CC_SIZE_SCALE(newViewSize, 1.0/self.contentScaleFactor);
 	
 	[self setProjection:_projection];
 	

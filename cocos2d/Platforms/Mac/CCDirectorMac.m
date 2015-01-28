@@ -266,7 +266,7 @@
 
 -(void) setProjection:(CCDirectorProjection)projection
 {
-	CGSize sizePoint = _winSizeInPixels;
+	CGSize sizePoint = _winSizeInPoints;
    	if( _resizeMode == kCCDirectorResize_AutoScale && ! CGSizeEqualToSize(_originalWinSizeInPoints, CGSizeZero ) ) {
 		sizePoint = _originalWinSizeInPoints;
 	}

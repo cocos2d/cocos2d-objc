@@ -36,8 +36,9 @@
 // This returns the correct director type for the current platform.
 +(CCDirector *)director;
 
-// Set the current director for this thread.
-+(void)bindDirector:(CCDirector *)director;
+// Manage the currently bound CCDirector.
++(void)pushCurrentDirector:(CCDirector *)director;
++(void)popCurrentDirector;
 
 /* Whether or not the replaced scene will receive the cleanup message.
  If the new scene is pushed, then the old scene won't receive the "cleanup" message.

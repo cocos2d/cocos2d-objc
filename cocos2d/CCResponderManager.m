@@ -475,14 +475,12 @@
         
         // Items that claim user interaction receive events even if they occur outside of the bounds of the object.
         if (node.claimsUserInteraction || [node clippedHitTestWithWorldPos:[_director convertEventToGL:theEvent]]) {
-            [CCDirector bindDirector:_director];
+            [CCDirector pushCurrentDirector:_director];
             if ([node respondsToSelector:@selector(mouseDragged:button:)]) [node mouseDragged:theEvent button:button];
-            [CCDirector bindDirector:nil];
+            [CCDirector popCurrentDirector];
         } else {
             [_runningResponderList removeObject:responder];
-        }
-        
-        
+        }        
     } else {
         [self executeOnEachResponder:^(CCNode *node){
             [node mouseDragged:theEvent button:button];
@@ -502,9 +500,9 @@
     {
         CCNode *node = (CCNode *)responder.target;
         
-        [CCDirector bindDirector:_director];
+        [CCDirector pushCurrentDirector:_director];
         if ([node respondsToSelector:@selector(mouseUp:button:)]) [node mouseUp:theEvent button:button];
-        [CCDirector bindDirector:nil];
+        [CCDirector popCurrentDirector];
         
         [_runningResponderList removeObject:responder];
     }
@@ -519,16 +517,14 @@
     // otherwise, scrollWheel goes to the node under the cursor
     CCRunningResponder *responder = [self responderForButton:CCMouseButtonOther];
     
-    
-    
     if (responder)
     {
         CCNode *node = (CCNode *)responder.target;
         
         _currentEventProcessed = YES;
-        [CCDirector bindDirector:_director];
+        [CCDirector pushCurrentDirector:_director];
         if ([node respondsToSelector:@selector(scrollWheel:)]) [node scrollWheel:theEvent];
-        [CCDirector bindDirector:nil];
+        [CCDirector popCurrentDirector];
         
         // if mouse was accepted, return
         if (_currentEventProcessed) return;
@@ -552,7 +548,7 @@
 
 - (void) executeOnEachResponder:(void(^)(CCNode *))block withEvent:(NSEvent *)theEvent
 {
-    [CCDirector bindDirector:_director];
+    [CCDirector pushCurrentDirector:_director];
     
     // scan through responders, and find first one
     for (int index = _responderListCount - 1; index >= 0; index --)
@@ -569,8 +565,7 @@
             if (_currentEventProcessed) break;
         }
     }
-    [CCDirector bindDirector:nil];
-
+    [CCDirector popCurrentDirector];
 }
 
 #pragma mark - Mac keyboard handling -
@@ -580,14 +575,14 @@
     if (!_enabled) return;
 
     if (_dirty) [self buildResponderList];
-    [CCDirector bindDirector:_director];
+    [CCDirector pushCurrentDirector:_director];
 
     for (int index = _responderListCount - 1; index >= 0; index --)
     {
         CCNode *node = _responderList[index];
         [node keyDown:theEvent];
     }
-    [CCDirector bindDirector:nil];
+    [CCDirector popCurrentDirector];
     
 }
 
@@ -596,14 +591,14 @@
     if (!_enabled) return;
 
     if (_dirty) [self buildResponderList];
-    [CCDirector bindDirector:_director];
+    [CCDirector pushCurrentDirector:_director];
 
     for (int index = _responderListCount - 1; index >= 0; index --)
     {
         CCNode *node = _responderList[index];
         [node keyUp:theEvent];
     }
-    [CCDirector bindDirector:nil];
+    [CCDirector popCurrentDirector];
     
 }
 
@@ -640,41 +635,3 @@
 #endif
 
 @end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

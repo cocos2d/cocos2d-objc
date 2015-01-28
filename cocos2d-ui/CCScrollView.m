@@ -711,7 +711,7 @@
 - (void)handlePan:(UIGestureRecognizer *)gestureRecognizer
 {
     CCDirector* dir = self.director;
-    [CCDirector bindDirector:self.director];
+    [CCDirector pushCurrentDirector:self.director];
     
     UIPanGestureRecognizer* pgr = (UIPanGestureRecognizer*)gestureRecognizer;
     
@@ -744,7 +744,7 @@
         
         [self setScrollPosition:self.scrollPosition animated:NO];
     }
-    [CCDirector bindDirector:nil];
+    [CCDirector popCurrentDirector];
 }
 
 - (void) handleTap:(UIGestureRecognizer *)gestureRecognizer
