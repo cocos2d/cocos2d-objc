@@ -30,10 +30,11 @@
 #import "CCTransition.h"
 #import "CCDirector_Private.h"
 #import "CCNode_Private.h"
+#import "CCScene+Private.h"
 
+#import "CCSprite.h"
 #import "CCRenderTexture.h"
 #import "CCColor.h"
-#import "CCScene+Private.h"
 
 // -----------------------------------------------------------------
 

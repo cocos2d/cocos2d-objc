@@ -69,6 +69,8 @@
 
 @interface CCTexture ()
 
+-(instancetype)initWithImage:(CCImage *)image options:(NSDictionary *)options rendertexture:(BOOL)rendertexture;
+
 // Fill in any missing fields of an options dictionary.
 +(NSDictionary *)normalizeOptions:(NSDictionary *)options;
 
@@ -81,7 +83,8 @@
 @property(atomic, readonly, weak) CCProxy *proxy;
 
 // Create the native texture object and sampler.
--(void)setupTexture:(CCTextureType)type sizeInPixels:(CGSize)sizeInPixels options:(NSDictionary *)options;
+// Rendertextures need a BGRA format in Metal and must be marked specially.
+-(void)setupTexture:(CCTextureType)type rendertexture:(BOOL)rendertexture sizeInPixels:(CGSize)sizeInPixels options:(NSDictionary *)options;
 
 // Upload 2D texture data.
 -(void)_uploadTexture2D:(CGSize)sizeInPixels miplevel:(NSUInteger)miplevel pixelData:(const void *)pixelData;

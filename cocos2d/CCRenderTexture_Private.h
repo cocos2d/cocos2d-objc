@@ -7,10 +7,13 @@
 //
 
 #import "CCRenderTexture.h"
-
 #import "CCNode_Private.h"
 
+#import "CCSprite.h"
+
+
 @class CCFrameBufferObject;
+
 
 @interface CCRenderTexture() {
 

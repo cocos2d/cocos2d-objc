@@ -32,6 +32,7 @@
 #import "CCDirector_Private.h"
 #import "CCRenderDispatch.h"
 #import "CCRenderableNode_Private.h"
+#import "CCTexture_Private.h"
 
 #import "CCDeviceInfo.h"
 #import "CCColor.h"
@@ -146,7 +147,7 @@
     CCImage *image = [[CCImage alloc] initWithPixelSize:paddedSize contentScale:_contentScale pixelData:nil];
     image.contentSize = CC_SIZE_SCALE(pixelSize, 1.0/_contentScale);
     
-    self.texture = [[CCTexture alloc] initWithImage:image options:nil];
+    self.texture = [[CCTexture alloc] initWithImage:image options:nil rendertexture:YES];
 	
 	_framebuffer = [[CCFrameBufferObjectClass alloc] initWithTexture:_texture depthStencilFormat:_depthStencilFormat];
 	

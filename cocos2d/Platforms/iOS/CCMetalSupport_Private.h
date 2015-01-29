@@ -67,6 +67,7 @@
 @property(nonatomic, readonly) id<MTLCommandBuffer> currentCommandBuffer;
 
 @property(nonatomic, readonly) id<MTLRenderCommandEncoder> currentRenderCommandEncoder;
+@property(nonatomic, readonly) id<MTLTexture> destinationTexture;
 
 +(instancetype)currentContext;
 +(void)setCurrentContext:(CCMetalContext *)context;

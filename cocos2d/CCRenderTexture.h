@@ -28,8 +28,10 @@
 
 #import "ccMacros.h"
 #import "CCRenderableNode.h"
-#import "CCSprite.h"
-#import "CCTexture.h"
+
+
+@class CCSprite;
+
 
 /**
  *  Image format when saving render textures. Used by CCRenderTexture.

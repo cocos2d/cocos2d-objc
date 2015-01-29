@@ -391,7 +391,7 @@ ReadPVRData(NSInputStream *stream, struct PVRInfo info, PVRDataBlock block)
     
 	if((self = [super init])) {
 		CCRenderDispatch(NO, ^{
-            [self setupTexture:info.type sizeInPixels:info.size options:options];
+            [self setupTexture:info.type rendertexture:NO sizeInPixels:info.size options:options];
             
 #if __CC_METAL_SUPPORTED_AND_ENABLED
             if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
