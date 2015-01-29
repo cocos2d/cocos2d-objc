@@ -30,11 +30,6 @@
 #import "CCFileLocatorDatabaseProtocol.h"
 #import "CCFileMetaData.h"
 
-NSUInteger const ERROR_FILELOCATOR_NO_SEARCH_PATHS = 20000;
-
-NSUInteger const ERROR_FILELOCATOR_NO_FILE_FOUND = 20001;
-
-
 // Options are only used internally for now
 static NSString *const CCFILELOCATOR_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFILELOCATOR_SEARCH_OPTION_SKIPRESOLUTIONSEARCH";
 
@@ -170,7 +165,7 @@ static NSString *const CCFILELOCATOR_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFI
 {
     if (!_searchPaths || _searchPaths.count == 0)
     {
-        [self setErrorPtr:error code:ERROR_FILELOCATOR_NO_SEARCH_PATHS description:@"No search paths set."];
+        [self setErrorPtr:error code:CCFileLocatorErrorNoSearchPaths description:@"No search paths set."];
         return nil;
     }
 
@@ -190,7 +185,7 @@ static NSString *const CCFILELOCATOR_SEARCH_OPTION_SKIPRESOLUTIONSEARCH = @"CCFI
         return result;
     }
 
-    [self setErrorPtr:error code:ERROR_FILELOCATOR_NO_FILE_FOUND description:@"No file found."];
+    [self setErrorPtr:error code:CCFileLocatorErrorNoFileFound description:@"No file found."];
     return nil;
 }
 

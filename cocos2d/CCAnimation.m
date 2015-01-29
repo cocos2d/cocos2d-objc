@@ -182,7 +182,7 @@
 {
 	CCTexture *texture = [[CCTextureCache sharedTextureCache] addImage:filename];
 	
-	CGSize sizeInPixels = texture.contentSizeInPixels;
+	CGSize sizeInPixels = CC_SIZE_SCALE(texture.contentSize, texture.contentScale);
 	CGRect rectInPixels = {CGPointZero, sizeInPixels};
 	CCSpriteFrame *spriteFrame = [CCSpriteFrame frameWithTexture:texture rectInPixels:rectInPixels rotated:NO offset:CGPointZero originalSize:sizeInPixels];
 

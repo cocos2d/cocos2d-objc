@@ -47,17 +47,12 @@
 
 -(id)initWithWidth:(int)width height:(int)height
 {
-    return [self initWithWidth:width height:height pixelFormat:CCTexturePixelFormat_Default];
+    return [self initWithWidth:width height:height depthStencilFormat:0];
 }
 
--(id)initWithWidth:(int)width height:(int)height pixelFormat:(CCTexturePixelFormat)format
+-(id)initWithWidth:(int)width height:(int)height depthStencilFormat:(GLuint)depthStencilFormat
 {
-    return [self initWithWidth:width height:height pixelFormat:format depthStencilFormat:0];
-}
-
--(id)initWithWidth:(int)width height:(int)height pixelFormat:(CCTexturePixelFormat) format depthStencilFormat:(GLuint)depthStencilFormat
-{
-    if((self = [super initWithWidth:width height:height pixelFormat:CCTexturePixelFormat_Default depthStencilFormat:depthStencilFormat]))
+    if((self = [super initWithWidth:width height:height depthStencilFormat:depthStencilFormat]))
     {
         _effectRenderer = [[CCEffectRenderer alloc] init];
         _allocatedSize = CGSizeMake(0.0f, 0.0f);
@@ -71,14 +66,9 @@
     return [[CCEffectNode alloc] initWithWidth:w height:h];
 }
 
-+(instancetype)effectNodeWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat)format
++(instancetype)effectNodeWithWidth:(int)w height:(int)h depthStencilFormat:(GLuint)depthStencilFormat
 {
-    return [[CCEffectNode alloc] initWithWidth:w height:h pixelFormat:format];
-}
-
-+(instancetype)effectNodeWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat)format depthStencilFormat:(GLuint)depthStencilFormat
-{
-    return [[CCEffectNode alloc] initWithWidth:w height:h pixelFormat:format depthStencilFormat:depthStencilFormat];
+    return [[CCEffectNode alloc] initWithWidth:w height:h depthStencilFormat:depthStencilFormat];
 }
 
 -(CCEffect *)effect

@@ -30,9 +30,15 @@
 - (void)setUp
 {
     [super setUp];
+    
+    CCDirector *director = [CCDirector director];
+    [CCDirector pushCurrentDirector:director];
+}
 
-    [(AppController *)[UIApplication sharedApplication].delegate configureCocos2d];
-    [[CCDirector currentDirector] startRunLoop];
+-(void)tearDown
+{
+    [super tearDown];
+    [CCDirector popCurrentDirector];
 }
 
 static void
@@ -948,7 +954,7 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
 	CCScheduler * scheduler =  physicsNode.scene.scheduler;
     scheduler.fixedUpdateInterval = 0.1f;
 	[scheduler update:0.10f];// first tick
-	const float accuracy = 1e-4;
+	const float accuracy = 1e-3;
     //test actions are fixed.
     for(int i = 0; i < 100; i++)
 	{

@@ -645,7 +645,7 @@
 
 - (void) handleTouchEnded:(CGPoint) rawVelocity
 {
-    CCDirector* dir = [CCDirector sharedDirector];
+    CCDirector* dir = [CCDirector currentDirector];
 
     rawVelocity = [dir convertToGL:rawVelocity];
     rawVelocity = [self convertToNodeSpace:rawVelocity];

@@ -110,6 +110,15 @@ CCNextPOT(unsigned long x)
     return x + 1;
 }
 
+/**
+ Check if a size has power of two dimensions.
+*/
+static inline bool
+CCSizeIsPOT(CGSize size)
+{
+    return (size.width == CCNextPOT(size.width) && size.height == CCNextPOT(size.height));
+}
+
 /** @def CC_SWAP
 simple macro that swaps 2 variables
 */

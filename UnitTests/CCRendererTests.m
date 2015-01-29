@@ -100,7 +100,7 @@
 	@autoreleasepool {
 		CCBlendMode *mode = [CCBlendMode alphaMode];
 		CCShader *shader = [CCShader positionColorShader];
-		CCTexture *texture = [CCTexture textureWithFile:@"Images/grossini_dance_01.png"];
+		CCTexture *texture = [CCTexture none];
 		
 		renderState = [CCRenderState renderStateWithBlendMode:mode shader:shader mainTexture:texture];
 		XCTAssertNotNil(renderState, @"Render state was not created.");

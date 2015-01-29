@@ -90,7 +90,7 @@
 -(instancetype)initWithContentNode:(CCNode *)contentNode;
 {
     if((self = [super init])){
-        self.contentSize = [CCDirector sharedDirector].viewSize;
+        self.contentSize = [CCDirector currentDirector].viewSize;
         self.clipsInput = true;
         
         _camera = [[CCCamera alloc]initWithViewport:self];
@@ -202,7 +202,7 @@
     GLKVector3 v3 = GLKMatrix4MultiplyAndProjectVector3(viewportTransform, GLKVector3Make(      0.0f, size.height, 0.0f));
     
     // Find the viewport rectangle in framebuffer pixels.
-    CGSize framebufferSize = [CCDirector sharedDirector].viewSizeInPixels;
+    CGSize framebufferSize = [CCDirector currentDirector].viewSizeInPixels;
     float hw = framebufferSize.width/2.0;
     float hh = framebufferSize.height/2.0;
     

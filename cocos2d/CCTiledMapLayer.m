@@ -151,7 +151,7 @@
 	//  - easier to render
 	// cons:
 	//  - difficult to scale / rotate / etc.
-	self.texture.antialiased = NO;
+//	self.texture.antialiased = NO;
 
 	// Parse cocos2d properties
 	[self parseInternalProperties];
@@ -388,8 +388,8 @@ struct IntRect { int xmin, xmax, ymin, ymax; };
 	
 	CCTexture *tex = self.texture;
 	float scale = tex.contentScale;
-	float scaleW = scale/self.texture.pixelWidth;
-	float scaleH = scale/self.texture.pixelHeight;
+	float scaleW = scale/self.texture.sizeInPixels.width;
+	float scaleH = scale/self.texture.sizeInPixels.height;
 	
 	// Number of tiles per row in the tile sheet.
 	int tilesetFirstGid = _tileset.firstGid;

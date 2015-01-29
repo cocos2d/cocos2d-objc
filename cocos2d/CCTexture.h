@@ -1,66 +1,27 @@
 /*
+ * cocos2d for iPhone: http://www.cocos2d-iphone.org
+ *
+ * Copyright (c) 2014 Cocos2D Authors
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 
-===== IMPORTANT =====
-
-This is sample code demonstrating API, technology or techniques in development.
-Although this sample code has been reviewed for technical accuracy, it is not
-final. Apple is supplying this information to help you plan for the adoption of
-the technologies and programming interfaces described herein. This information
-is subject to change, and software implemented based on this sample code should
-be tested with final operating system software and final documentation. Newer
-versions of this sample code may be provided with future seeds of the API or
-technology. For information about updates to this and other developer
-documentation, view the New & Updated sidebars in subsequent documentation
-seeds.
-
-=====================
-
-File: Texture2D.h
-Abstract: Creates OpenGL 2D textures from images or text.
-
-Version: 1.6
-
-Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple Inc.
-("Apple") in consideration of your agreement to the following terms, and your
-use, installation, modification or redistribution of this Apple software
-constitutes acceptance of these terms.  If you do not agree with these terms,
-please do not use, install, modify or redistribute this Apple software.
-
-In consideration of your agreement to abide by the following terms, and subject
-to these terms, Apple grants you a personal, non-exclusive license, under
-Apple's copyrights in this original Apple software (the "Apple Software"), to
-use, reproduce, modify and redistribute the Apple Software, with or without
-modifications, in source and/or binary forms; provided that if you redistribute
-the Apple Software in its entirety and without modifications, you must retain
-this notice and the following text and disclaimers in all such redistributions
-of the Apple Software.
-Neither the name, trademarks, service marks or logos of Apple Inc. may be used
-to endorse or promote products derived from the Apple Software without specific
-prior written permission from Apple.  Except as expressly stated in this notice,
-no other rights or licenses, express or implied, are granted by Apple herein,
-including but not limited to any patent rights that may be infringed by your
-derivative works or by other works in which the Apple Software may be
-incorporated.
-
-The Apple Software is provided by Apple on an "AS IS" basis.  APPLE MAKES NO
-WARRANTIES, EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION THE IMPLIED
-WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY AND FITNESS FOR A PARTICULAR
-PURPOSE, REGARDING THE APPLE SOFTWARE OR ITS USE AND OPERATION ALONE OR IN
-COMBINATION WITH YOUR PRODUCTS.
-
-IN NO EVENT SHALL APPLE BE LIABLE FOR ANY SPECIAL, INDIRECT, INCIDENTAL OR
-CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
-GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-ARISING IN ANY WAY OUT OF THE USE, REPRODUCTION, MODIFICATION AND/OR
-DISTRIBUTION OF THE APPLE SOFTWARE, HOWEVER CAUSED AND WHETHER UNDER THEORY OF
-CONTRACT, TORT (INCLUDING NEGLIGENCE), STRICT LIABILITY OR OTHERWISE, EVEN IF
-APPLE HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-Copyright (C) 2008 Apple Inc. All Rights Reserved.
-
-*/
-
-#import <CoreGraphics/CGImage.h>
 
 #import "ccTypes.h"
 
@@ -68,216 +29,270 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 
 @class CCSpriteFrame;
+@class CCFile;
 @class CCImage;
 
 
 /**
- *  Possible texture pixel formats. Used by various rendering components, including CCTexture, CCRenderTexture, CCEffectNode.
+ The type of a texture. (2D or cubemap).
  */
-typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
-    
-	///! 32-bit texture: RGBA8888
-	CCTexturePixelFormat_RGBA8888,
-    
-	///! 32-bit texture without Alpha channel. Don't use it.
-	CCTexturePixelFormat_RGB888,
-    
-	///! 16-bit texture without Alpha channel
-	CCTexturePixelFormat_RGB565,
-    
-	///! 8-bit textures used as masks
-	CCTexturePixelFormat_A8,
-    
-	///! 8-bit intensity texture
-	CCTexturePixelFormat_I8,
-    
-	///! 16-bit textures used as masks
-	CCTexturePixelFormat_AI88,
-    
-	///! 16-bit textures: RGBA4444
-	CCTexturePixelFormat_RGBA4444,
-    
-	///! 16-bit textures: RGB5A1
-	CCTexturePixelFormat_RGB5A1,
-    
-	///! 4-bit PVRTC-compressed texture: PVRTC4
-	CCTexturePixelFormat_PVRTC4,
-    
-	///! 2-bit PVRTC-compressed texture: PVRTC2
-	CCTexturePixelFormat_PVRTC2,
-
-	///! 32-bit texture: BGRA8888
-	CCTexturePixelFormat_BGRA8888,
-    
-	///! Default texture format: RGBA8888
-	CCTexturePixelFormat_Default = CCTexturePixelFormat_RGBA8888,
+typedef NS_ENUM(NSUInteger, CCTextureType){
+/**
+ A regular rectangular texture.
+ */
+CCTextureType2D,
+/**
+ A cubemap texture for use with CCEffects, Cocos3D or custom shaders.
+ */
+CCTextureTypeCubemap,
 };
 
-@class CCShader;
 
 /**
- Represents a texture, an in-memory representation of an image in a compatible format the graphics processor can process.
- 
- Allows to create OpenGL textures from image files, text (font rendering) and raw data.
+ Texture filtering types to use with CCTextureOptionMinificationFilter, CCTextureOptionMagnificationFilter, and CCTextureOptionMipmapFilter.
+ */
+typedef NS_ENUM(NSUInteger, CCTextureFilter){
+    /**
+     Disable mipmapping. Can only be used with CCTextureOptionMipmapFilter
+     */
+    CCTextureFilterMipmapNone,
+    /**
+     "blocky" texture interpolation. Suitable for working with pixel art for instance.
+     */
+    CCTextureFilterNearest,
+    /**
+     Smooth texture interpolation. This is the default value.
+     */
+    CCTextureFilterLinear,
+};
 
- @note Be aware that the content of the generated texture will be upside-down! This is an OpenGL oddity.
+
+/**
+ Addressing modes used with CCTextureOptionAddressModeX and CCTextureOptionAddressModeY.
+ This mostly affects pixels near the edge of the texture or coordinates outside of the texture's bounds.
+ */
+typedef NS_ENUM(NSUInteger, CCTextureAddressMode){
+    /**
+     Clamp colors to the edge pixel values. This will produce a smearing effect when you sample outside of the texture bounds.
+     */
+    CCTextureAddressModeClampToEdge,
+    /**
+     Make a texture repeat, or wrap around at the edges.
+     */
+    CCTextureAddressModeRepeat,
+    /**
+     Make a texture repeat, but mirror every other copy.
+     */
+    CCTextureAddressModeRepeatMirrorred,
+};
+
+
+/**
+ Generate mipmaps for a texture after loading it.
+ This will use more memory, but can have performance and quality benefits for downscaled textures.
+ Defaults to NO.
+ */
+extern NSString * const CCTextureOptionGenerateMipmaps;
+/**
+ What filtering mode to use when scaling a texture down.
+ Defaults to CCTextureFilterLinear.
+ */
+extern NSString * const CCTextureOptionMinificationFilter;
+/**
+ What filtering mode to use when scaling a texture up.
+ Defaults to CCTextureFilterLinear.
+ */
+extern NSString * const CCTextureOptionMagnificationFilter;
+/**
+ What filter mode to apply to blend mipmaps together.
+ Defaults to CCTextureFilterMipmapNone.
+ */
+extern NSString * const CCTextureOptionMipmapFilter;
+/**
+ What addressing mode to use in the horizontal direction.
+ Defaults to CCTextureAddressModeClampToEdge.
+ */
+extern NSString * const CCTextureOptionAddressModeX;
+/**
+ What addressing mode to use in the vertical direction.
+ Defaults to CCTextureAddressModeClampToEdge.
+ */
+extern NSString * const CCTextureOptionAddressModeY;
+
+
+/**
+ Textures are image buffers that the GPU reads from when drawing to the screen.
  */
 @interface CCTexture : NSObject
-
-/// -----------------------------------------------------------------------
-/// @name Creating a Texture
-/// -----------------------------------------------------------------------
+{
+    @private
+    CGSize _sizeInPixels;
+    CGSize _contentSize;
+    CCTextureType _type;
+    
+    // Deprecated
+	BOOL _premultipliedAlpha;
+	BOOL _hasMipmaps;
+    BOOL _antialiased;
+}
 
 /**
- *  Initializes and returns a texture object using the specified data, pixelFormat, width, height, sizeInPixels and contentScale values.
- *
- *  @param data         Pointer to a buffer containing the raw data.
- *  @param pixelFormat  Pixelformat of the data
- *  @param width        Width if the texture
- *  @param height       Height of the texture
- *  @param sizeInPixels Size of resulting texture.
- *  @param contentScale Content scale.
- *
- *  @return An initialized CCTexture Object.
- *  @see CCTexturePixelFormat
- */
-- (id)initWithData:(const void*)data pixelFormat:(CCTexturePixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSizeInPixels:(CGSize)sizeInPixels contentScale:(CGFloat)contentScale;
+ Create a texture from a CCImage.
 
+ @param image   The image to create the texture from.
+ @param options A dictionary using the CCTextureOption* keys to specify how the texture should be set up.
+
+ @return A texture with the contents of the image, or nil if there was an error.
+ */
 -(instancetype)initWithImage:(CCImage *)image options:(NSDictionary *)options;
 
 /**
- *  Creates and returns a new texture, based on the specified image file path.
- *
- *  If the texture has already been loaded, and resides in the internal cache, the previously created texture is returned from the cache.
- *  While this is fast, it still has an overhead compared to manually caching textures in an ivar or property.
- *
- *  @param file File path to load (should not include any suffixes).
- *
- *  @return The CCTexture object.
+ Create a cached texture from an image on disk.
+ 
+ This is the recommended method to load textures for two main reasons. Textures take a long time to load and can use a lot of memory.
+ The cache ensures that you don't waste time loading textures multiple times, or waste memory on duplicates.
+ The cache is flushed automatically when your app receives a memory warning.
+ 
+ Textures loaded with this method will use the current value of [CCTexture defaultOptions].
+
+ @param file The filename to be loaded. File type is detected automatically. (png, pvr, jpeg, etc)
+
+ @return A texture with the contents of the file, or nil if there was an error.
  */
 +(instancetype)textureWithFile:(NSString*)file;
 
-/** A placeholder value for a blank sizeless texture.
- @return An empty texture. */
-+(instancetype)none;
-
-/// -------------------------------------------------------
-/// @name Creating a Sprite Frame
-/// -------------------------------------------------------
+/**
+ An options dictionary that will be passed to [CCFileUtils fileNamed:options:], [CCImage initWithfile:options:], and [CCTexture initWithImage:options:].
+ @return The current value of the default options dictionary.
+ */
++(NSDictionary *)defaultOptions;
 
 /**
- *  Creates a sprite frame from the texture.
- *
- *  @return A new sprite frame.
- *  @see CCSpriteFrame
- */
--(CCSpriteFrame*)createSpriteFrame;
-
-/// -------------------------------------------------------
-/// @name Texture Format and Size
-/// -------------------------------------------------------
-
-/** Pixel format of the texture.
- @see CCTexturePixelFormat */
-@property(nonatomic,readonly) CCTexturePixelFormat pixelFormat;
-
-/** Width in pixels. */
-@property(nonatomic,readonly) NSUInteger pixelWidth;
-
-/** Height in pixels. */
-@property(nonatomic,readonly) NSUInteger pixelHeight;
-
-/** Returns the content size of the texture in points. */
--(CGSize)contentSize;
-
-/** Returns content size of the texture in pixels. */
-@property(nonatomic,readonly, nonatomic) CGSize contentSizeInPixels;
-
-/** Returns the contentScale of the texture.
- In general "HD" textures return a contentScale of 2.0, while non-HD textures return 1.0.
+ When loading cached textures, several methods take configurable options. [CCFileUtils fileNamed:options:], [CCImage initWithfile:options:], and [CCTexture initWithImage:options:].
+ You can configure Cocos2D's default texture loading by overriding this value.
+ For instance, you may want to force all textures to use nearest filtering in a pixel art game, or always enable mipmapping.
  
- Loading behavior is changed by [CCFileUtils set*ContentScaleFactor:]. The value can be changed manually if you want to force a certain content scale.
+ The default value is normally nil unless set by the user. This means that all methods will fall back on their defaults.
+
+ @param options A dictionary with a set of options that you want to override.
+ */
++(void)setDefaultOptions:(NSDictionary *)options;
+
+/**
+ A placeholder value used to signal "no texture".
+ This texture object will have a size of 0, and will show up as black if you attempt to use it.
+
+ @return An empty texture.
+ */
++(instancetype)none;
+
+/**
+ Type of the texture. (2D or Cubemap)
+ */
+@property(nonatomic, readonly) CCTextureType type;
+
+/**
+ Size of the texture in pixels.
+ */
+@property(nonatomic, readonly) CGSize sizeInPixels;
+
+/**
+ Content scale of the texture.
  */
 @property(nonatomic, readwrite) CGFloat contentScale;
 
-/// -------------------------------------------------------
-/// @name Texture Settings
-/// -------------------------------------------------------
-
-/** Whether or not the texture has their Alpha premultiplied. */
-@property(nonatomic,readonly,getter=hasPremultipliedAlpha) BOOL premultipliedAlpha;
-
-/** True if antialised. */
-@property(nonatomic,assign,getter=isAntialiased) BOOL antialiased;
-
-@end
-
-#pragma mark - Image
 /**
- *  Extensions to make it easy to create a CCTexture2D object from an image file.
- *  Note that RGBA type textures will have their alpha premultiplied - use the blending mode (GL_ONE, GL_ONE_MINUS_SRC_ALPHA).
+ Content size of the texture.
+ This may not be sizeInPixels/contentSize. A texture might be padded to a size that is a power of two on some Android hardware.
  */
-@interface CCTexture (CGImage)
+@property(nonatomic, readonly) CGSize contentSize;
 
 /**
- *  Initializes and returns a texture from a CGImage object.
- *
- *  @param cgImage      CGImage to use for texture
- *  @param contentScale Content scale.
- *
- *  @return An initialized CCTexture object.
+ Does the texture have power of two dimensions?
  */
-- (id)initWithCGImage:(CGImageRef)cgImage contentScale:(CGFloat)contentScale;
-
-@end
-
-#pragma mark - PixelFormat
-@interface CCTexture (PixelFormat)
-/** 
- * Sets the default pixel format for CGImages that contains alpha channel.
- *
- * How does it work ?
- * If the image is an RGBA (with Alpha) then the default pixel format will be used (it can be a 8-bit, 16-bit or 32-bit texture).
- * If the image is an RGB (without Alpha) then: If the default pixel format is RGBA8888 then a RGBA8888 (32-bit) will be used. Otherwise a RGB565 (16-bit texture) will be used.
- *
- * This parameter is not valid for PVR / PVR.CCZ images.
- *
- *  @param format Format to use with texture.
- *  @see CCTexturePixelFormat
- */
-+(void)setDefaultAlphaPixelFormat:(CCTexturePixelFormat)format;
+@property(nonatomic, readonly) BOOL isPOT;
 
 /**
- *  Returns the alpha pixel format.
- *
- *  @return The pixel format.
- *  @see CCTexturePixelFormat
+ A sprite frame that covers the whole texture.
  */
-+(CCTexturePixelFormat)defaultAlphaPixelFormat;
-
-/**
- *  Returns the bits-per-pixel of the in-memory OpenGL texture.
- *
- *  @return Number of bits per pixel.
- */
--(NSUInteger)bitsPerPixelForFormat;
-
-/** Returns the pixel format in a NSString. */
--(NSString*)stringForFormat;
-
-/**
- *  Helper functions that returns bits per pixels for a given format.
- *
- *  @param format Format to query for pixelsize.
- *
- *  @return Number of bits for pixelformat.
- *  @see CCTexturePixelFormat
- */
-+(NSUInteger)bitsPerPixelForFormat:(CCTexturePixelFormat)format;
+@property(nonatomic, readonly) CCSpriteFrame *spriteFrame;
 
 @end
 
 
+@interface CCTexture(PVR)
+
+/**
+ Load a texture from a PVR file.
+ 
+ PVR files have some advantages. They load very quickly since they have a very simple format and can be loaded directly into video memory.
+ They can also save disk space and memory since they support hardware specific formats such as 16 bit per pixel modes, and compressed texture modes.
+ They can also load cubemaps from a single file, or contain the full set of mipmaps for a texture without needing to generate them at loading time.
+ 
+ NOTE: Keep in mind that Mac and Android don't support PVR files with a PVRTC format and that Metal currently only supports the RGBA888 format.
+
+ @param file    A PVR file.
+ @param options A dictionary using the CCTextureOption* keys to specify how the texture should be set up. The generate mipmaps option is ignored if the PVR file contains mipmaps.
+
+ @return A texture with the contents of the file, or nil if there was an error.
+ */
+-(instancetype)initPVRWithCCFile:(CCFile *)file options:(NSDictionary *)options;
+
+@end
 
 
+@interface CCTexture(Cubemap)
 
+/**
+ Load a cubemap texture from 6 images for the faces. This is primarily useful for making effect shaders.
+
+ @param posX    An image for the right side of the cube.
+ @param negX    An image for the left side of the cube.
+ @param posY    An image for the top side of the cube.
+ @param negY    An image for the bottom side of the cube.
+ @param posZ    An image for the front side of the cube.
+ @param negZ    An image for the back side of the cube.
+ @param options A dictionary using the CCTextureOption* keys to specify how the texture should be set up. Addressing modes generally do nothing for cubemap textures.
+
+ @return A cubemap texture with the contents of the images, or nil if there was an error.
+ */
+-(instancetype)initCubemapFromImagesPosX:(CCImage *)posX negX:(CCImage *)negX
+                                    posY:(CCImage *)posY negY:(CCImage *)negY
+                                    posZ:(CCImage *)posZ negZ:(CCImage *)negZ
+                                    options:(NSDictionary *)options;
+
+/**
+ Load a cubemap texture from 6 image files for the faces. This is primarily useful for making effect shaders.
+
+ @param posXFilePath An image file for the right side of the cube.
+ @param negXFilePath An image file for the left side of the cube.
+ @param posYFilePath An image file for the top side of the cube.
+ @param negYFilePath An image file for the bottom side of the cube.
+ @param posZFilePath An image file for the front side of the cube.
+ @param negZFilePath An image file for the back side of the cube.
+ @param options A dictionary using the CCTextureOption* keys to specify how the texture should be set up. Addressing modes generally do nothing for cubemap textures.
+
+ @return A cubemap texture with the contents of the image files, or nil if there was an error.
+ */
+-(instancetype)initCubemapFromFilesPosX:(NSString *)posXFilePath negX:(NSString *)negXFilePath
+                                   posY:(NSString *)posYFilePath negY:(NSString *)negYFilePath
+                                   posZ:(NSString *)posZFilePath negZ:(NSString *)negZFilePath
+                                   options:(NSDictionary *)options;
+
+/**
+ Load a cubemap texture from 6 image files for the faces. The filenames are found using a format string.
+ 
+ For instance you would use @"Skybox%@.png" if you had the following files:
+ SkyboxPosX.png
+ SkyboxNegX.png
+ ...
+ SkyboxPosZ.png
+
+ @param aFilePathPattern The format string to use as a pattern. %@ will be replaced with "PosX", "NegZ", etc.
+ @param options A dictionary using the CCTextureOption* keys to specify how the texture should be set up. Addressing modes generally do nothing for cubemap textures.
+
+ @return A cubemap texture with the contents of the image files, or nil if there was an error.
+ */
+-(instancetype)initCubemapFromFilePattern:(NSString *)aFilePathPattern options:(NSDictionary *)options;
+
+@end

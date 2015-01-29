@@ -29,7 +29,6 @@
 #import "ccMacros.h"
 #if __CC_PLATFORM_MAC
 
-#warning TODO gettimeofday
 #import <sys/time.h>
 
 #import "CCDirectorMac.h"

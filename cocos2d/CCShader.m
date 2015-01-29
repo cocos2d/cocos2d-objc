@@ -209,7 +209,7 @@ CompileShaderSources(GLenum type, NSArray *sources)
 	NSString *shaderName = (NSString *)key;
 	
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+	if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
 		id<MTLLibrary> library = [CCMetalContext currentContext].library;
 		
 		NSString *fragmentName = [shaderName stringByAppendingString:@"FS"];
@@ -284,7 +284,7 @@ GLUniformSetVec2(NSString *name, GLint location)
 		// Fall back on looking up the actual texture size if the name matches a texture.
 		if(value == nil && textureName){
 			CCTexture *texture = shaderUniforms[textureName] ?: globalShaderUniforms[textureName];
-			GLKVector2 sizeInPixels = GLKVector2Make(texture.pixelWidth, texture.pixelHeight);
+			GLKVector2 sizeInPixels = GLKVector2Make(texture.sizeInPixels.width, texture.sizeInPixels.height);
 			
 			GLKVector2 size = GLKVector2MultiplyScalar(sizeInPixels, pixelSize ? 1.0 : 1.0/texture.contentScale);
 			value = [NSValue valueWithGLKVector2:size];
@@ -388,15 +388,17 @@ GLUniformSettersForProgram(GLuint program)
 			case GL_FLOAT_VEC3: uniformSetters[name] = GLUniformSetVec3(name, location); break;
 			case GL_FLOAT_VEC4: uniformSetters[name] = GLUniformSetVec4(name, location); break;
 			case GL_FLOAT_MAT4: uniformSetters[name] = GLUniformSetMat4(name, location); break;
+            
+            // Sampler setters are handled a differently since the real work is binding the texture and not setting the uniform value.
+			case GL_SAMPLER_CUBE:
 			case GL_SAMPLER_2D: {
-				// Sampler setters are handled a differently since the real work is binding the texture and not setting the uniform value.
 				uniformSetters[name] = ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
 					CCTexture *texture = shaderUniforms[name] ?: globalShaderUniforms[name] ?: [CCTexture none];
 					NSCAssert([texture isKindOfClass:[CCTexture class]], @"Shader uniform '%@' value must be a CCTexture object.", name);
 					
 					// Bind the texture to the texture unit for the uniform.
 					glActiveTexture(GL_TEXTURE0 + textureUnit);
-					glBindTexture(GL_TEXTURE_2D, texture.name);
+					glBindTexture(texture.type == CCTextureType2D ? GL_TEXTURE_2D : GL_TEXTURE_CUBE_MAP, [(CCTextureGL *)texture name]);
 				};
 				
 				// Bind the texture unit at init time.
@@ -499,7 +501,7 @@ MetalUniformSetSampler(NSString *name, MTLArgument *vertexArg, MTLArgument *frag
 		CCTexture *texture = shaderUniforms[textureName] ?: globalShaderUniforms[textureName] ?: [CCTexture none];
 		NSCAssert([texture isKindOfClass:[CCTexture class]], @"Shader uniform '%@' value must be a CCTexture object.", name);
 		
-		id<MTLSamplerState> sampler = texture.metalSampler;
+		id<MTLSamplerState> sampler = [(CCTextureMetal *)texture metalSampler];
 		
 		id<MTLRenderCommandEncoder> renderEncoder = context->_currentRenderCommandEncoder;
 		if(vertexArg) [renderEncoder setVertexSamplerState:sampler atIndex:vertexIndex];
@@ -519,7 +521,7 @@ MetalUniformSetTexture(NSString *name, MTLArgument *vertexArg, MTLArgument *frag
 		CCTexture *texture = shaderUniforms[name] ?: globalShaderUniforms[name] ?: [CCTexture none];
 		NSCAssert([texture isKindOfClass:[CCTexture class]], @"Shader uniform '%@' value must be a CCTexture object.", name);
 		
-		id<MTLTexture> metalTexture = texture.metalTexture;
+		id<MTLTexture> metalTexture = [(CCTextureMetal *)texture metalTexture];
 		
 		id<MTLRenderCommandEncoder> renderEncoder = context->_currentRenderCommandEncoder;
 		if(vertexArg) [renderEncoder setVertexTexture:metalTexture atIndex:vertexIndex];
@@ -665,7 +667,7 @@ MetalUniformSettersForFunctions(id<MTLFunction> vertexFunction, id<MTLFunction> 
 -(instancetype)initWithVertexShaderSource:(NSString *)vertexSource fragmentShaderSource:(NSString *)fragmentSource
 {
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+	if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
 		return [self initWithMetalVertexShaderSource:vertexSource fragmentShaderSource:fragmentSource];
 	}
 #endif
@@ -694,7 +696,7 @@ MetalUniformSettersForFunctions(id<MTLFunction> vertexFunction, id<MTLFunction> 
 -(instancetype)initWithRawVertexShaderSource:(NSString *)vertexSource rawFragmentShaderSource:(NSString *)fragmentSource
 {
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-    if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+    if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
         return [self initWithMetalVertexShaderSource:vertexSource fragmentShaderSource:fragmentSource];
     }
 #endif
@@ -718,7 +720,7 @@ MetalUniformSettersForFunctions(id<MTLFunction> vertexFunction, id<MTLFunction> 
 -(instancetype)copyWithZone:(NSZone *)zone
 {
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+	if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
 		return [[CCShader allocWithZone:zone] initWithMetalVertexFunction:_vertexFunction fragmentFunction:_fragmentFunction];
 	} else
 #endif
@@ -742,7 +744,7 @@ static CCShader *CC_SHADER_POS_TEX_COLOR_ALPHA_TEST = nil;
 	CC_SHADER_CACHE = [[CCShaderCache alloc] init];
 	
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+	if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
 		id<MTLLibrary> library = [CCMetalContext currentContext].library;
 		NSAssert(library, @"Metal shader library not found.");
 		

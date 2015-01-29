@@ -11,6 +11,17 @@
 #endif
 
 
+// TODO Need to make CCTexture.m MRC to merge this back in?
+@implementation CCTexture(NoARC)
+
++(instancetype)allocWithZone:(struct _NSZone *)zone
+{
+    return NSAllocateObject(CCTextureClass, 0, zone);
+}
+
+@end
+
+
 @implementation CCSprite(NoARC)
 
 static inline void
@@ -379,8 +390,6 @@ static const MTLPrimitiveType MetalDrawModes[] = {
 	
 	[renderEncoder drawIndexedPrimitives:MetalDrawModes[_mode] indexCount:_count indexType:MTLIndexTypeUInt16 indexBuffer:indexBuffer indexBufferOffset:2*_firstIndex];
 	CCMTL_DEBUG_POP_GROUP_MARKER(renderEncoder);
-	
-	CC_INCREMENT_GL_DRAWS(1);
 }
 
 @end

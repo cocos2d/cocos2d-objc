@@ -27,6 +27,8 @@
 
 #import "ccTypes.h"
 
+@class CCFile;
+
 // keys used for the suffix or directory dictionaries
 extern NSString * const CCFileUtilsSuffixDefault;
 extern NSString * const CCFileUtilsSuffixiPad;
@@ -494,3 +496,10 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out);
 #ifdef __cplusplus
 }
 #endif
+
+
+@interface CCFileUtils(TEMPORARY)
+
++(CCFile *)fileNamed:(NSString *)name;
+
+@end

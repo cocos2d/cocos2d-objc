@@ -34,6 +34,7 @@
 
 
 #define CC_MINIMUM_TABLET_SCREEN_DIAGONAL 6.0
+extern Class CCTextureClass;
 extern Class CCGraphicsBufferClass;
 extern Class CCGraphicsBufferBindingsClass;
 extern Class CCRenderStateClass;
@@ -69,32 +70,6 @@ extern NSString* const CCScreenModeFlexible;
 // The fixed screen mode will setup the working area to be 568 x 384 points. Depending on the device, the outer edges may be cropped. The safe area, that will be displayed on all sorts of devices, is 480 x 320 points and placed in the center of the working area.
 extern NSString* const CCScreenModeFixed;
 
-/** OS version definitions. Includes both iOS and Mac OS versions
- */
-typedef NS_ENUM(NSUInteger, CCSystemVersion){
-	CCSystemVersion_iOS_4_0   = 0x04000000,
-	CCSystemVersion_iOS_4_0_1 = 0x04000100,
-	CCSystemVersion_iOS_4_1   = 0x04010000,
-	CCSystemVersion_iOS_4_2   = 0x04020000,
-	CCSystemVersion_iOS_4_2_1 = 0x04020100,
-	CCSystemVersion_iOS_4_3   = 0x04030000,
-	CCSystemVersion_iOS_4_3_1 = 0x04030100,
-	CCSystemVersion_iOS_4_3_2 = 0x04030200,
-	CCSystemVersion_iOS_4_3_3 = 0x04030300,
-	CCSystemVersion_iOS_4_3_4 = 0x04030400,
-	CCSystemVersion_iOS_4_3_5 = 0x04030500,
-	CCSystemVersion_iOS_5_0   = 0x05000000,
-	CCSystemVersion_iOS_5_0_1 = 0x05000100,
-	CCSystemVersion_iOS_5_1_0 = 0x05010000,
-	CCSystemVersion_iOS_6_0  = 0x06000000,
-	CCSystemVersion_iOS_7_0  = 0x06000000,
-	
-	CCSystemVersion_Mac_10_6  = 0x0a060000,
-	CCSystemVersion_Mac_10_7  = 0x0a070000,
-	CCSystemVersion_Mac_10_8  = 0x0a080000,
-	CCSystemVersion_Mac_10_9  = 0x0a080000,
-};
-
 typedef NS_ENUM(NSUInteger, CCDevice) {
 	CCDeviceiPhone,
 	CCDeviceiPhoneRetinaDisplay,
@@ -118,24 +93,13 @@ typedef NS_ENUM(NSUInteger, CCGraphicsAPI) {
 /**
  CCConfiguration contains some openGL variables
   */
-@interface CCDeviceInfo : NSObject {
-	CCGraphicsAPI _graphicsAPI;
-	
-	BOOL	_configured;
-	BOOL			_openGLInitialized;
-	
-	GLint			_maxTextureSize;
-	BOOL			_supportsPVRTC;
-	BOOL			_supportsNPOT;
-	BOOL			_supportsBGRA8888;
-	BOOL			_supportsDiscardFramebuffer;
-	BOOL			_supportsShareableVAO;
-	GLint			_maxSamplesAllowed;
-	GLint			_maxTextureUnits;
-    BOOL            _supportsPackedDepthStencil;
+@interface CCDeviceInfo : NSObject
 
-	unsigned int	_OSVersion;
-}
+/** returns a shared instance of the CCConfiguration */
++(CCDeviceInfo *)sharedDeviceInfo;
+
+///** Which graphics API Cococs2D is using. */
++(CCGraphicsAPI)graphicsAPI;
 
 /** Which graphics API Cococs2D is using. */
 @property (nonatomic, readonly) CCGraphicsAPI graphicsAPI;
@@ -143,18 +107,13 @@ typedef NS_ENUM(NSUInteger, CCGraphicsAPI) {
 /** OpenGL Max texture size. */
 @property (nonatomic, readonly) GLint maxTextureSize;
 
-/** returns the maximum texture units
- */
-@property (nonatomic, readonly) GLint maxTextureUnits;
-
 /** Whether or not the GPU supports NPOT (Non Power Of Two) textures.
- OpenGL ES 2.0 already supports NPOT (iOS).
-
+ All iOS/OSX devices support NPOT textures.
  */
 @property (nonatomic, readonly) BOOL supportsNPOT;
 
 /** Whether or not the GPU supports a combined depthc/stencil buffer.
- All iOS/OSX devices support GL_DEPTH24_STENCIL8_OES
+ All iOS/OSX devices support GL_DEPTH24_STENCIL8_OES.
  */
 @property (nonatomic, readonly) BOOL supportsPackedDepthStencil;
 
@@ -162,38 +121,24 @@ typedef NS_ENUM(NSUInteger, CCGraphicsAPI) {
 @property (nonatomic, readonly) BOOL supportsPVRTC;
 
 /** Whether or not BGRA8888 textures are supported.
-
  */
 @property (nonatomic, readonly) BOOL supportsBGRA8888;
 
 /** Whether or not glDiscardFramebufferEXT is supported
-
  */
 @property (nonatomic, readonly) BOOL supportsDiscardFramebuffer;
-
-/** Whether or not shareable VAOs are supported.
- */
-@property (nonatomic, readonly) BOOL supportsShareableVAO;
-
-/** returns the OS version.
-	- On iOS devices it returns the firmware version.
-	- On Mac returns the OS version
-
- */
-@property (nonatomic, readonly) unsigned int OSVersion;
-
-
-/** returns a shared instance of the CCConfiguration */
-+(CCDeviceInfo *) sharedDeviceInfo;
 
 /** returns whether or not an OpenGL is supported */
 - (BOOL) checkForGLExtension:(NSString *)searchName;
 
-/** returns the current device */
--(NSInteger) runningDevice;
+///** returns the current device */
+//-(NSInteger)runningDevice;
+
+// TODO Temporary
++(NSInteger)runningDevice;
 
 /** dumps in the console the CCConfiguration information.
  */
--(void) dumpInfo;
+-(void)dumpInfo;
 
 @end

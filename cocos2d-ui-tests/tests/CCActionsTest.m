@@ -70,7 +70,7 @@
 {
     self.subTitle = @"1000 offscreen birds with nonrepeating actions.\nRun the profiler here.";
     
-    CGSize size = [CCDirector sharedDirector].designSize;
+    CGSize size = [CCDirector currentDirector].designSize;
     __block NSMutableArray* birds = [NSMutableArray array];
     
     for(int i = 0; i < 1000; i++){
@@ -96,7 +96,7 @@
 {
     self.subTitle = @"1000 offscreen birds with nonrepeating actions. Varied Durations.\nRun the profiler here.";
     
-    CGSize size = [CCDirector sharedDirector].designSize;
+    CGSize size = [CCDirector currentDirector].designSize;
     __block NSMutableArray* birds = [NSMutableArray array];
     
     for(int i = 0; i < 1000; i++){

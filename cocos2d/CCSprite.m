@@ -262,8 +262,9 @@
 	CGFloat scale = texture.contentScale;
 	rect = CC_RECT_SCALE(rect, scale);
 	
-	float atlasWidth = (float)texture.pixelWidth;
-	float atlasHeight = (float)texture.pixelHeight;
+    CGSize sizeInPixels = texture.sizeInPixels;
+	float atlasWidth = sizeInPixels.width;
+	float atlasHeight = sizeInPixels.height;
 
 	if(rotated){
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL

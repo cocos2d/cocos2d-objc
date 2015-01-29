@@ -173,7 +173,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	// numberOfSamples: Only valid if multisampling is enabled
 	//  - Possible values: 0 to glGetIntegerv(GL_MAX_SAMPLES_APPLE)
 	CC_VIEW<CCView> *ccview = nil;
-	switch([CCDeviceInfo sharedDeviceInfo].graphicsAPI){
+	switch([CCDeviceInfo graphicsAPI]){
 		case CCGraphicsAPIGL:
         {
 			ccview = [CCViewiOSGL
@@ -218,11 +218,6 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
         [self setupFlexibleScreenMode:config director:director];
     }
 	
-	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
-	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
-	// You can change this setting at any time.
-	[CCTexture setDefaultAlphaPixelFormat:CCTexturePixelFormat_RGBA8888];
-    
     // Initialise OpenAL
     [OALSimpleAudio sharedInstance];
 	
