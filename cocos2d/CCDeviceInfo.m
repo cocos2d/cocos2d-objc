@@ -286,7 +286,7 @@ static CCGraphicsAPI GRAPHICS_API = CCGraphicsAPIInvalid;
 #elif __CC_PLATFORM_ANDROID
     NSString *OSVer = @"?";//[AndroidBuild DISPLAY];
 #else //__CC_PLATFORM_MAC
-	NSString *OSVer = [self getMacVersion];
+	NSString *OSVer = [[NSProcessInfo processInfo] operatingSystemVersionString];
 #endif
 
 	printf("Cocos2D: platform is %ld bit\n", 8*sizeof(long));

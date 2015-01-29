@@ -181,7 +181,7 @@ CCDirectorStack()
 		
 		// Force the graphics API to be selected if it hasn't already done so.
 		// Startup code is annoyingly different for iOS/Mac/Android.
-		[[CCDeviceInfo sharedDeviceInfo] graphicsAPI];
+		[CCDeviceInfo graphicsAPI];
 		_framebuffer = [[CCFrameBufferObjectClass alloc] init];
 	}
 
