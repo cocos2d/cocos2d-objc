@@ -818,6 +818,7 @@ static CCFileUtils *fileUtils = nil;
 @end
 
 
+#warning Temporary implementation of the not-yet-implemented +fileNamed: method.
 @implementation CCFileUtils(TEMPORARY)
 
 +(id)fileNamed:(NSString *)name

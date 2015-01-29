@@ -33,7 +33,6 @@
 #import "CCRenderer.h"
 #import "CCView.h"
 
-#warning should remove this one we clean up the delegate
 #if __CC_PLATFORM_IOS
 #import <UIKit/UIKit.h>
 #endif

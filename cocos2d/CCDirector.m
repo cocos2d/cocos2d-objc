@@ -28,7 +28,6 @@
 /* Idea of decoupling Window from Director taken from OC3D project: http://code.google.com/p/oc3d/
  */
 
-#warning We should not be using some monotonic time function instead of gettimeofday()
 #include <sys/time.h>
 
 #import "CCDirector_Private.h"
@@ -129,7 +128,7 @@ CCDirectorBindCurrent(CCDirector *director)
 	}
 }
 
-NSMutableArray *
+static NSMutableArray *
 CCDirectorStack()
 {
     NSMutableArray *stack = [NSThread currentThread].threadDictionary[CCDirectorStackKey];

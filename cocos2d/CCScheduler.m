@@ -484,9 +484,11 @@ CompareTimers(const void *a, const void *b, void *context)
 			if(timer.invokeTime > 0.0){
 				CCScheduler *scheduler = _self;
 				InvokeMethods(scheduler->_fixedUpdates, @selector(fixedUpdate:), timer.repeatInterval);
+                
+                //TODO: also invoke fixed update actions:
+                
 				scheduler->_lastFixedUpdateTime = timer.invokeTime;
 			}
-        #warning TODO: also invoke fixed update actions:
             
 		} forTarget:self withDelay:0] retain];
 
@@ -693,8 +695,6 @@ CompareTimers(const void *a, const void *b, void *context)
 	[self updateTo:_currentTime + clampedDelta];
 	
 	InvokeMethods(_updates, @selector(update:), clampedDelta);
-    
-    #warning TODO: also invoke fixed update actions, in addition to normal update loop actions
     [self updateActions:dt];
     
 	_lastUpdateTime = _currentTime;

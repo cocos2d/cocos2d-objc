@@ -77,7 +77,7 @@
 {
     NSError *errorData;
     NSData *data = [NSData dataWithContentsOfFile:filePath
-                                          options:nil
+                                          options:0
                                             error:&errorData];
 
     if (!data)

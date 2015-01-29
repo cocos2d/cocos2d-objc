@@ -25,7 +25,6 @@
  *
  */
 
-#warning We should not be using some monotonic time function instead of gettimeofday()
 #include <sys/time.h>
 
 #import "ccMacros.h"

@@ -165,7 +165,7 @@ NormalizeOptions(NSDictionary *options)
     }
 }
 
-#warning TODO
+// TODO
 -(id)initWithCoder:(NSCoder *)coder
 {
     return nil;

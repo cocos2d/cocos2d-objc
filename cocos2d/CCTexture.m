@@ -160,7 +160,6 @@ static NSDictionary *_DEFAULT_OPTIONS = nil;
 
 + (id) textureWithFile:(NSString*)file
 {
-    #warning TODO
     return [[CCTextureCache sharedTextureCache] addImage:file];
 }
 

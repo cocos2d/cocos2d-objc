@@ -498,7 +498,6 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out);
 #endif
 
 
-#warning Temporary implementation of the not-yet-implemented +fileNamed: method.
 @interface CCFileUtils(TEMPORARY)
 
 +(CCFile *)fileNamed:(NSString *)name;
