@@ -92,24 +92,6 @@ extern NSString * cocos2dVersion(void);
 	CCFrameBufferObject *_framebuffer;
 }
 
-@synthesize animationInterval = _animationInterval;
-@synthesize runningScene = _runningScene;
-@synthesize displayStats = _displayStats;
-@synthesize nextDeltaTimeZero = _nextDeltaTimeZero;
-@synthesize paused = _isPaused;
-@synthesize animating = _animating;
-@synthesize sendCleanupToScene = _sendCleanupToScene;
-@synthesize runningThread = _runningThread;
-@synthesize notificationNode = _notificationNode;
-@synthesize delegate = _delegate;
-@synthesize totalFrames = _totalFrames;
-@synthesize secondsPerFrame = _secondsPerFrame;
-
-+ (CCDirector *)sharedDirector
-{
-    return [CCDirector currentDirector];
-}
-
 static NSString * const CCDirectorCurrentKey = @"CCDirectorCurrentKey";
 static NSString * const CCDirectorStackKey = @"CCDirectorStackKey";
 

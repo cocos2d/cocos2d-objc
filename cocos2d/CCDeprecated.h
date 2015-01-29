@@ -338,6 +338,14 @@ typedef struct __attribute__((deprecated)) _ccBlendFunc
 
 
 
+@interface CCDirector(Deprecated)
+
+// Use `[CCDirector currentDirector]` instead.
++(CCDirector*)sharedDirector __attribute__((deprecated));
+
+@end
+
+
 @interface CCColor(Deprecated)
 
 + (CCColor*)colorWithCcColor3b: (ccColor3B) c __attribute__((deprecated));

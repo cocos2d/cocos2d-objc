@@ -34,6 +34,16 @@
 #import "CCTexture_Private.h"
 
 
+@implementation CCDirector(Deprecated)
+
++(CCDirector *)sharedDirector
+{
+    return [CCDirector currentDirector];
+}
+
+@end
+
+
 @implementation CCColor(Deprecated)
 
 + (CCColor*) colorWithCcColor3b:(ccColor3B)c
