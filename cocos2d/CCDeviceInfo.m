@@ -61,18 +61,11 @@ NSString* const CCScreenModeFlexible = @"CCScreenModeFlexible";
 NSString* const CCScreenModeFixed = @"CCScreenModeFixed";
 
 
-@interface CCDeviceInfo ()
--(void) getOpenGLvariables;
-@end
-
 @implementation CCDeviceInfo
 
-//
-// singleton stuff
-//
 static CCDeviceInfo *_sharedConfiguration = nil;
 
-static char * glExtensions;
+static NSSet *GL_EXTENSIONS_SET = nil;
 
 + (CCDeviceInfo *)sharedDeviceInfo
 {
@@ -89,43 +82,86 @@ static char * glExtensions;
 	return [super alloc];
 }
 
-
-#if __CC_PLATFORM_IOS
-#elif __CC_PLATFORM_MAC
-- (NSString*)getMacVersion
+-(void)getGLInfo
 {
-    return([[NSProcessInfo processInfo] operatingSystemVersionString]);
-}
-#endif // __CC_PLATFORM_MAC
-
--(id) init
-{
-	if( (self=[super init])) {
-
-		// Obtain iOS version
-		_OSVersion = 0;
-#if __CC_PLATFORM_IOS
-		NSString *OSVer = [[UIDevice currentDevice] systemVersion];
-#elif __CC_PLATFORM_MAC
-		NSString *OSVer = [self getMacVersion];
+    CCRenderDispatch(NO, ^{
+        const char *extensions = (const char *)glGetString(GL_EXTENSIONS);
+        NSAssert(extensions, @"OpenGL not initialized!");
+        
+        GL_EXTENSIONS_SET = [NSSet setWithArray:[[NSString stringWithCString:extensions encoding:NSASCIIStringEncoding] componentsSeparatedByString:@" "]];
+        
+        glGetIntegerv(GL_MAX_TEXTURE_SIZE, &_maxTextureSize);
+        
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
+        _supportsNPOT = YES;
+        _supportsPackedDepthStencil = YES;
 #elif __CC_PLATFORM_ANDROID
-        NSString *OSVer = @"?";//[AndroidBuild DISPLAY];
+        // While the GL ES 2 spec requires NPOT support, many Android devices don't support it.
+        // Bummer. The best we can do is to check for full NPOT texture support instead.
+        // source: http://www.khronos.org/registry/gles/
+        _supportsNPOT = [self checkForGLExtension:@"GL_OES_texture_npot"] || [self checkForGLExtension:@"GL_NV_texture_npot_2D_mipmap"];
+        _supportsPackedDepthStencil = [self checkForGLExtension:@"GL_OES_packed_depth_stencil"];
 #endif
-		NSArray *arr = [OSVer componentsSeparatedByString:@"."];
-		int idx = 0x01000000;
-		for( NSString *str in arr ) {
-			int value = [str intValue];
-			_OSVersion += value * idx;
-			idx = idx >> 8;
-		}
-	}
-
-	return self;
+        _supportsPVRTC = [self checkForGLExtension:@"GL_IMG_texture_compression_pvrtc"];
+        
+        // It seems that somewhere between firmware iOS 3.0 and 4.2 Apple renamed
+        // GL_IMG_... to GL_APPLE.... So we should check both names
+#if __CC_PLATFORM_IOS
+        BOOL bgra8a = [self checkForGLExtension:@"GL_IMG_texture_format_BGRA8888"];
+        BOOL bgra8b = [self checkForGLExtension:@"GL_APPLE_texture_format_BGRA8888"];
+        _supportsBGRA8888 = bgra8a | bgra8b;
+#elif __CC_PLATFORM_MAC
+        _supportsBGRA8888 = [self checkForGLExtension:@"GL_EXT_bgra"];
+#endif
+        
+        _supportsDiscardFramebuffer = [self checkForGLExtension:@"GL_EXT_discard_framebuffer"];
+        
+        // Check if unsynchronized buffers are supported.
+        if([self checkForGLExtension:@"GL_OES_mapbuffer"] && [self checkForGLExtension:@"GL_EXT_map_buffer_range"]){
+            CCGraphicsBufferClass = NSClassFromString(@"CCGraphicsBufferGLUnsynchronized");
+        }
+    });
 }
 
--(CCGraphicsAPI)graphicsAPI
+-(void)getMetalInfo
 {
-	if(_graphicsAPI == CCGraphicsAPIInvalid){
+    // Metal's limits are hardcoded in a PDF file supplied by Apple...
+    // This list will be correct for the foreseeable future, but it should really be updated once Apple
+    // fixes their API.
+    _maxTextureSize = 4096;
+    _supportsPVRTC = YES;
+    _supportsNPOT = YES;
+    _supportsBGRA8888 = YES;
+    _supportsDiscardFramebuffer = NO;
+    _supportsPackedDepthStencil = YES;
+}
+
+-(instancetype)init
+{
+    if((self=[super init])){
+        switch(self.graphicsAPI){
+            case CCGraphicsAPIGL: [self getGLInfo]; break;
+            case CCGraphicsAPIMetal: [self getMetalInfo]; break;
+            default: NSAssert(NO, @"Internal Error: Graphics API not set up?");
+        }
+    }
+    
+//#if __CC_PLATFORM_IOS
+//        _OSVersion = [[UIDevice currentDevice] systemVersion];
+//#elif __CC_PLATFORM_MAC
+//        _OSVersion = [self getMacVersion];
+//#elif __CC_PLATFORM_ANDROID
+//        _OSVersion = @"?";//[AndroidBuild DISPLAY];
+//#endif
+    
+    return self;
+}
+
+static CCGraphicsAPI GRAPHICS_API = CCGraphicsAPIInvalid;
+
++(CCGraphicsAPI)graphicsAPI
+{
+	if(GRAPHICS_API == CCGraphicsAPIInvalid){
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 		// Metal is weakly linked. Check that the function exists AND that it returns non-nil.
 		if(MTLCreateSystemDefaultDevice && MTLCreateSystemDefaultDevice() && !getenv("CC_FORCE_GL")){
@@ -136,7 +172,7 @@ static char * glExtensions;
 			CCRenderCommandDrawClass = NSClassFromString(@"CCRenderCommandDrawMetal");
 			CCFrameBufferObjectClass = NSClassFromString(@"CCFrameBufferObjectMetal");
 			
-			_graphicsAPI = CCGraphicsAPIMetal;
+			GRAPHICS_API = CCGraphicsAPIMetal;
 		} else
 #endif
 		{
@@ -147,7 +183,7 @@ static char * glExtensions;
 			CCRenderCommandDrawClass = NSClassFromString(@"CCRenderCommandDrawGL");
 			CCFrameBufferObjectClass = NSClassFromString(@"CCFrameBufferObjectGL");
 			
-			_graphicsAPI = CCGraphicsAPIGL;
+			GRAPHICS_API = CCGraphicsAPIGL;
 		}
 		
         NSAssert(CCTextureClass, @"CCTextureClass not configured.");
@@ -158,20 +194,21 @@ static char * glExtensions;
 		NSAssert(CCFrameBufferObjectClass, @"CCFrameBufferObjectClass not configured.");
 	}
 	
-	return _graphicsAPI;
+	return GRAPHICS_API;
+}
+
+-(CCGraphicsAPI)graphicsAPI
+{
+    return [CCDeviceInfo graphicsAPI];
 }
 
 - (BOOL) checkForGLExtension:(NSString *)searchName
 {
-	// For best results, extensionsNames should be stored in your renderer so that it does not
-	// need to be recreated on each invocation.
-    NSString *extensionsString = [NSString stringWithCString:glExtensions encoding: NSASCIIStringEncoding];
-    NSArray *extensionsNames = [extensionsString componentsSeparatedByString:@" "];
-    return [extensionsNames containsObject: searchName];
+    return [GL_EXTENSIONS_SET containsObject: searchName];
 }
 
 // XXX: Optimization: This should be called only once
--(NSInteger) runningDevice
++(NSInteger) runningDevice
 {
 	// TODO: This method really needs to go very away in v4
 	
@@ -239,137 +276,6 @@ static char * glExtensions;
 
 #pragma mark OpenGL getters
 
--(void) getOpenGLvariables
-{
-	if( ! _openGLInitialized ) {
-		CCRenderDispatch(NO, ^{
-			glExtensions = (char*) glGetString(GL_EXTENSIONS);
-
-			NSAssert( glExtensions, @"OpenGL not initialized!");
-
-#if __CC_PLATFORM_IOS
-			if( _OSVersion >= CCSystemVersion_iOS_4_0 )
-				glGetIntegerv(GL_MAX_SAMPLES_APPLE, &_maxSamplesAllowed);
-			else
-				_maxSamplesAllowed = 0;
-#elif __CC_PLATFORM_MAC
-			glGetIntegerv(GL_MAX_SAMPLES, &_maxSamplesAllowed);
-#endif
-
-			glGetIntegerv(GL_MAX_TEXTURE_SIZE, &_maxTextureSize);
-			glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &_maxTextureUnits );
-
-#if __CC_PLATFORM_IOS
-		_supportsNPOT = YES;
-        _supportsPackedDepthStencil = YES;
-#elif __CC_PLATFORM_MAC
-		_supportsNPOT = [self checkForGLExtension:@"GL_ARB_texture_non_power_of_two"];
-        _supportsPackedDepthStencil = YES;
-#elif __CC_PLATFORM_ANDROID
-        // source: http://www.khronos.org/registry/gles/
-        _supportsNPOT = [self checkForGLExtension:@"GL_OES_texture_npot"] || [self checkForGLExtension:@"GL_NV_texture_npot_2D_mipmap"];
-        _supportsPackedDepthStencil = [self checkForGLExtension:@"GL_OES_packed_depth_stencil"];
-#endif
-		_supportsPVRTC = [self checkForGLExtension:@"GL_IMG_texture_compression_pvrtc"];
-
-		// It seems that somewhere between firmware iOS 3.0 and 4.2 Apple renamed
-		// GL_IMG_... to GL_APPLE.... So we should check both names
-#if __CC_PLATFORM_IOS
-		BOOL bgra8a = [self checkForGLExtension:@"GL_IMG_texture_format_BGRA8888"];
-		BOOL bgra8b = [self checkForGLExtension:@"GL_APPLE_texture_format_BGRA8888"];
-		_supportsBGRA8888 = bgra8a | bgra8b;
-#elif __CC_PLATFORM_MAC
-		_supportsBGRA8888 = [self checkForGLExtension:@"GL_EXT_bgra"];
-#endif
-			_supportsDiscardFramebuffer = [self checkForGLExtension:@"GL_EXT_discard_framebuffer"];
-
-			_supportsShareableVAO = [self checkForGLExtension:@"GL_APPLE_vertex_array_object"];
-			
-			// Check if unsynchronized buffers are supported.
-			if(
-				[self checkForGLExtension:@"GL_OES_mapbuffer"] &&
-				[self checkForGLExtension:@"GL_EXT_map_buffer_range"]
-			){
-				CCGraphicsBufferClass = NSClassFromString(@"CCGraphicsBufferGLUnsynchronized");
-			}
-			
-			_openGLInitialized = YES;
-		});
-	}
-}
-
-/// Cache the current device configuration if it hasn't already been done.
-/// The naming here is admittedly terrible and generic but I couldn't think of something better.
--(void)configure
-{
-	if(!_configured){
-		switch(self.graphicsAPI){
-			case CCGraphicsAPIGL:
-				[self getOpenGLvariables];
-				break;
-			case CCGraphicsAPIMetal:
-				// TODO Hard coding these for now... Does the Metal API even expose any queries for limits?
-				_maxTextureSize = 4096;
-				_supportsPVRTC = YES;
-				_supportsNPOT = YES;
-				_supportsBGRA8888 = YES;
-				_supportsDiscardFramebuffer = NO;
-				_supportsShareableVAO = NO;
-				_maxSamplesAllowed = 4;
-				_maxTextureUnits = 10;
-				_supportsPackedDepthStencil = YES;
-				break;
-			default: NSAssert(NO, @"Internal Error: Graphics API not set up?");
-		}
-		
-		_configured = YES;
-	}
-}
-
--(GLint) maxTextureSize
-{
-	[self configure];
-	return _maxTextureSize;
-}
-
--(GLint) maxTextureUnits
-{
-	[self configure];
-	return _maxTextureUnits;
-}
-
--(BOOL) supportsNPOT
-{
-	[self configure];
-	return _supportsNPOT;
-}
-
--(BOOL) supportsPVRTC
-{
-	[self configure];
-	return _supportsPVRTC;
-}
-
--(BOOL) supportsPackedDepthStencil
-{
-	[self configure];
-	return _supportsPackedDepthStencil;
-}
-
--(BOOL) supportsBGRA8888
-{
-	[self configure];
-	return _supportsBGRA8888;
-}
-
--(BOOL) supportsDiscardFramebuffer
-{
-	[self configure];
-	return _supportsDiscardFramebuffer;
-}
-
-#pragma mark Helper
-
 -(void) dumpInfo
 {
 #if DEBUG
@@ -383,13 +289,12 @@ static char * glExtensions;
 	NSString *OSVer = [self getMacVersion];
 #endif
 
-	printf("Cocos2D: OS version: %s (0x%08x)\n", [OSVer UTF8String], _OSVersion);
-	printf("Cocos2D: %ld bit runtime\n", 8*sizeof(long));
+	printf("Cocos2D: platform is %ld bit\n", 8*sizeof(long));
     
     static const BOOL multiThreadedRendering = CC_RENDER_DISPATCH_ENABLED;
 	printf("Cocos2D: Multi-threaded rendering: %s\n", multiThreadedRendering ? "YES" : "NO");
 	
-	if(_graphicsAPI == CCGraphicsAPIGL){
+	if(GRAPHICS_API == CCGraphicsAPIGL){
 		printf("Cocos2D: OpenGL Rendering enabled.");
 		
 		CCRenderDispatch(NO, ^{
@@ -402,7 +307,7 @@ static char * glExtensions;
 		printf("Cocos2D: GL_MAX_TEXTURE_SIZE: %d\n", _maxTextureSize);
 		printf("Cocos2D: GL supports PVRTC: %s\n", (_supportsPVRTC ? "YES" : "NO") );
 		printf("Cocos2D: GL supports NPOT textures: %s\n", (_supportsNPOT ? "YES" : "NO") );
-	} else if(_graphicsAPI == CCGraphicsAPIMetal){
+	} else if(GRAPHICS_API == CCGraphicsAPIMetal){
 		printf("Cocos2D: Metal Rendering enabled.");
 	}
 	

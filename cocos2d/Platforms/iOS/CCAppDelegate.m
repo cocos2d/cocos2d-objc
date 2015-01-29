@@ -173,7 +173,7 @@ FindPOTScale(CGFloat size, CGFloat fixedSize)
 	// numberOfSamples: Only valid if multisampling is enabled
 	//  - Possible values: 0 to glGetIntegerv(GL_MAX_SAMPLES_APPLE)
 	CC_VIEW<CCView> *ccview = nil;
-	switch([CCDeviceInfo sharedDeviceInfo].graphicsAPI){
+	switch([CCDeviceInfo graphicsAPI]){
 		case CCGraphicsAPIGL:
         {
 			ccview = [CCViewiOSGL

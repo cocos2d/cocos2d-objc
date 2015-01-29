@@ -115,13 +115,11 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 
 - (id) initWithAttributedString:(NSAttributedString *)attrString;
 {
-    NSAssert([CCDeviceInfo sharedDeviceInfo].OSVersion >= CCSystemVersion_iOS_6_0, @"Attributed strings are only supported on iOS 6 or later");
     return [self initWithAttributedString:attrString fontName:@"Helvetica" fontSize:12 dimensions:CGSizeZero];
 }
 
 - (id) initWithAttributedString:(NSAttributedString *)attrString dimensions:(CGSize)dimensions
 {
-    NSAssert([CCDeviceInfo sharedDeviceInfo].OSVersion >= CCSystemVersion_iOS_6_0, @"Attributed strings are only supported on iOS 6 or later");
     return [self initWithAttributedString:attrString fontName:@"Helvetica" fontSize:12 dimensions:dimensions];
 }
 
@@ -167,7 +165,6 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 
 - (void) setAttributedString:(NSAttributedString *)attributedString
 {
-    NSAssert([CCDeviceInfo sharedDeviceInfo].OSVersion >= CCSystemVersion_iOS_6_0, @"Attributed strings are only supported on iOS 6 or later");
     [self _setAttributedString:attributedString];
 }
 

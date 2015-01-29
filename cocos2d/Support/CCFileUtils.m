@@ -215,7 +215,7 @@ static CCFileUtils *fileUtils = nil;
 
 - (void) buildSearchResolutionsOrder
 {
-	NSInteger device = [[CCDeviceInfo sharedDeviceInfo] runningDevice];
+	NSInteger device = [CCDeviceInfo runningDevice];
 	[_searchResolutionsOrder removeAllObjects];
 	
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
