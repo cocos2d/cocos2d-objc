@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0E28FE1A197FCE4500F78989 /* CCCacheTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E28FE19197FCE4500F78989 /* CCCacheTest.m */; };
+		750B0BF01A7A936C00DC7048 /* CCActionsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F4EA241A69847C000E637B /* CCActionsTest.m */; };
 		75556A04185636F100ED1B0F /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75556A03185636F100ED1B0F /* XCTest.framework */; };
 		75556A05185636F100ED1B0F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2605717E7D278007067F0 /* Foundation.framework */; };
 		75556A15185636FB00ED1B0F /* powered.png in Resources */ = {isa = PBXBuildFile; fileRef = 755569E71856361100ED1B0F /* powered.png */; };
@@ -1326,10 +1327,6 @@
 				75556A181856370A00ED1B0F /* CCPhysicsTests.m in Sources */,
 				D34CD3C518ABF4AA00D8E537 /* CCRendererTests.m in Sources */,
 				75556A191856370A00ED1B0F /* CCSchedulerTests.m in Sources */,
-				E525FA366EFEEF054FB0C74A,
-				E525F06B7DE8DBA41D79888B,
-				E525F4FA69CF55A11E3ADF10,
-				E525F4E15019D96D00ADFAFC,
 				E525F0C6F4B0C3F0BCAD1CA1 /* CCFileLocatorTests.m in Sources */,
 				E525FAC4141DA9B33B972BC0 /* CCFileLocatorDatabaseTests.m in Sources */,
 				E525FB731133965ECDFF5BBE /* FileSystemTestCase.m in Sources */,
@@ -1381,14 +1378,15 @@
 				D3763D3819E734C5006C050D /* MainMenu.m in Sources */,
 				D3763D3919E734C5006C050D /* TestBase.m in Sources */,
 				D3763D3A19E734C5006C050D /* CCCacheTest.m in Sources */,
+				750B0BF01A7A936C00DC7048 /* CCActionsTest.m in Sources */,
 				D3763D3B19E734C5006C050D /* CCEffectsTest.m in Sources */,
 				D3763D3C19E734C5006C050D /* CCRendererTest.m in Sources */,
+				D3763D4019E734C5006C050D /* CCTableViewTest.m in Sources */,
 				D3763D5819E7352F006C050D /* main.m in Sources */,
 				D3763D3D19E734C5006C050D /* SpritePerformanceTest.m in Sources */,
 				D35C2D281A1BC83F00FF96B0 /* CCViewportNodeTest.m in Sources */,
 				D3763D3E19E734C5006C050D /* CCScrollViewTest.m in Sources */,
 				D3763D3F19E734C5006C050D /* CCSchedulerTest.m in Sources */,
-				D3763D4019E734C5006C050D /* CCTableViewTest.m in Sources */,
 				D3763D4119E734C5006C050D /* CCTransitionTest.m in Sources */,
 				D3763D4219E734C5006C050D /* CCResponderTest.m in Sources */,
 				D3763D4319E734C5006C050D /* CCSprite9SliceTest.m in Sources */,
