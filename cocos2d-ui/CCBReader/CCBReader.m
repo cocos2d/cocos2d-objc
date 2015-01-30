@@ -736,14 +736,10 @@ static inline float readFloat(CCBReader *self)
 
         if (setProp)
         {
-            [(id <CCBlendProtocol>) node setBlendMode:[CCBlendMode blendModeWithOptions:@{
-                    CCBlendFuncSrcColor : @(readIntWithSign(self, NO)),
-                    CCBlendFuncSrcAlpha : @(readIntWithSign(self, NO)),
-                    CCBlendFuncDstColor : @(readIntWithSign(self, NO)),
-                    CCBlendFuncDstAlpha : @(readIntWithSign(self, NO)),
-                    CCBlendEquationColor : @(readIntWithSign(self, NO)),
-                    CCBlendEquationAlpha : @(readIntWithSign(self, NO))
-            }]];
+            NSString* nameX = [NSString stringWithFormat:@"%@X",name];
+            NSString* nameY = [NSString stringWithFormat:@"%@Y",name];
+            [node setValue:[NSNumber numberWithBool:xFlip] forKey:nameX];
+            [node setValue:[NSNumber numberWithBool:yFlip] forKey:nameY];
         }
     }
     else if (type == kCCBPropTypeBlendmode)
@@ -754,10 +750,14 @@ static inline float readFloat(CCBReader *self)
 
         if (setProp)
         {
-						[(id<CCBlendProtocol>)node setBlendMode:[CCBlendMode blendModeWithOptions:@{
-							CCBlendFuncSrcColor:@(src),
-							CCBlendFuncDstColor:@(dst),
-						}]];
+            [(id <CCBlendProtocol>) node setBlendMode:[CCBlendMode blendModeWithOptions:@{
+                    CCBlendFuncSrcColor : @(readIntWithSign(self, NO)),
+                    CCBlendFuncSrcAlpha : @(readIntWithSign(self, NO)),
+                    CCBlendFuncDstColor : @(readIntWithSign(self, NO)),
+                    CCBlendFuncDstAlpha : @(readIntWithSign(self, NO)),
+                    CCBlendEquationColor : @(readIntWithSign(self, NO)),
+                    CCBlendEquationAlpha : @(readIntWithSign(self, NO))
+            }]];
         }
     }
     else if (type == kCCBPropTypeFntFile)
