@@ -13,7 +13,6 @@
 #import "CCBReader.h"
 #import "CCDeviceInfo.h"
 #import "CCAppDelegate.h"
-#import "CCTexture.h"
 #import "OALSimpleAudio.h"
 #import "CCPackageManager.h"
 #import "CCFileUtils.h"
@@ -108,7 +107,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     CCAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     [appDelegate constructWindow];
 
-    CCDirector *director = [CCDirector sharedDirector];
+    CCDirector *director = [CCDirector currentDirector];
 
     CC_VIEW <CCDirectorView> *ccview = [appDelegate constructView:config withBounds:appDelegate.window.bounds];
     [self configureDirector:director withConfig:config withView:ccview];
@@ -118,11 +117,6 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     } else {
         [self setupFlexibleScreenMode:config director:director];
     }
-
-    // Default texture format for PNG/BMP/TIFF/JPEG/GIF images
-    // It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
-    // You can change this setting at any time.
-    [CCTexture setDefaultAlphaPixelFormat:CCTexturePixelFormat_RGBA8888];
 
     // Initialise OpenAL
     [OALSimpleAudio sharedInstance];
@@ -173,7 +167,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 - (void)setupFixedScreenMode:(NSDictionary *)config director:(CCDirectorIOS *)director
 {
-    CGSize size = [CCDirector sharedDirector].viewSizeInPixels;
+    CGSize size = [CCDirector currentDirector].viewSizeInPixels;
     CGSize fixed = [config[CCScreenModeFixedDimensions] CGSizeValue];
 
     if([config[CCSetupScreenOrientation] isEqualToString:CCScreenOrientationPortrait]){
@@ -252,7 +246,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 - (void)performAndroidGLConfiguration
 {
     CCActivity *activity = [CCActivity currentActivity];
-    [self configureDirector:[CCDirector sharedDirector] withConfig:_cocosConfig withView:activity.glView];
+    [self configureDirector:[CCDirector currentDirector] withConfig:_cocosConfig withView:activity.glView];
 
     [self runStartSceneAndroid];
 }
@@ -276,7 +270,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 - (void)setupFlexibleScreenMode:(NSDictionary*)config
 {
-    CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector sharedDirector];
+    CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector currentDirector];
 
     NSInteger device = [[CCConfiguration sharedConfiguration] runningDevice];
     BOOL tablet = device == CCDeviceiPad || device == CCDeviceiPadRetinaDisplay;
@@ -297,9 +291,9 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 - (void)setupFixedScreenMode:(NSDictionary*)config
 {
-    CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector sharedDirector];
+    CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector currentDirector];
 
-    CGSize size = [CCDirector sharedDirector].viewSizeInPixels;
+    CGSize size = [CCDirector currentDirector].viewSizeInPixels;
     CGSize fixed = [config[CCScreenModeFixedDimensions] CGSizeValue];
 
     if([config[CCSetupScreenOrientation] isEqualToString:CCScreenOrientationPortrait])
@@ -320,7 +314,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 - (void)runStartSceneAndroid
 {
-    CCDirectorAndroid *androidDirector = (CCDirectorAndroid*)[CCDirector sharedDirector];
+    CCDirectorAndroid *androidDirector = (CCDirectorAndroid*)[CCDirector currentDirector];
 
     [androidDirector runWithScene:[self startScene]];
     [androidDirector setAnimationInterval:1.0/60.0];
@@ -360,7 +354,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 - (void)applyConfigurationToCocos:(NSDictionary*)config
 {
-    CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+    CCDirectorMac *director = (CCDirectorMac*) [CCDirector currentDirector];
 
     CGSize defaultWindowSize = [config[CCMacDefaultWindowSize] CGSizeValue];
     [self.window setFrame:CGRectMake(0.0f, 0.0f, defaultWindowSize.width, defaultWindowSize.height) display:true animate:false];
@@ -380,7 +374,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 - (void)runStartSceneMac
 {
-    CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+    CCDirectorMac *director = (CCDirectorMac*) [CCDirector currentDirector];
     [director runWithScene:[self startScene]];
 }
 
