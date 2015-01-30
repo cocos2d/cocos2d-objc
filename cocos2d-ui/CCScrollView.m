@@ -806,8 +806,12 @@
         return NO;
     }
     
+    [CCDirector pushCurrentDirector:self.director];
     // Check that the gesture is in the scroll view
-    return [self clippedHitTestWithWorldPos:[touch locationInWorld]];
+    BOOL hit = [self clippedHitTestWithWorldPos:[touch locationInWorld]];
+    [CCDirector popCurrentDirector];
+    
+    return hit;
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
