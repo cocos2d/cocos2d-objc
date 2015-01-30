@@ -375,7 +375,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 - (void)runStartSceneMac
 {
     CCDirectorMac *director = (CCDirectorMac*) [CCDirector currentDirector];
-    [director runWithScene:[self startScene]];
+    [director presentScene:[self startScene]];
 }
 
 #endif

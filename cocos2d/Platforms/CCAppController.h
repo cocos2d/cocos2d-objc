@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CCDirector.h"
 
 @class NSWindow;
 @class CCGLView;
@@ -44,7 +45,7 @@
 /**
  *  The GLView (set from .xib)
  */
-@property (weak) CCGLView *glView;
+@property (weak) CC_VIEW<CCView> *glView;
 
 /**
  *  The application window size to be displayed on mac.
