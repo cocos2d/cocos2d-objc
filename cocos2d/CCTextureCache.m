@@ -82,17 +82,20 @@ static CCTextureCache *sharedTextureCache;
 		if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal) return self;
 
         NSAssert([CCDirector currentDirector], @"Do not initialize the TextureCache before the director is created and set");
+        CC_VIEW<CCView> *view;
 #if __CC_PLATFORM_IOS
-		CCViewiOSGL *view = (CCViewiOSGL*)[[CCDirector currentDirector] view];
+		view = (CCViewiOSGL*)[[CCDirector currentDirector] view];
 #elif __CC_PLATFORM_MAC
-        CCViewMacGL *view = (CCViewMacGL*)[[CCDirector currentDirector] view];
+        view = (CCViewMacGL*)[[CCDirector currentDirector] view];
+#elif __CC_PLATFORM_ANDROID
+        view = (CCGLView*)[[CCDirector currentDirector] view];
 #endif
         NSAssert(view, @"Unable to access view from current CCDirector");
 
 #if __CC_PLATFORM_IOS
 		_auxGLcontext = [[EAGLContext alloc]
 						 initWithAPI:kEAGLRenderingAPIOpenGLES2
-						 sharegroup:[[view context] sharegroup]];
+						 sharegroup:[[(CCViewiOSGL *)view context] sharegroup]];
 
 #elif __CC_PLATFORM_MAC
 		NSOpenGLPixelFormat *pf = [view pixelFormat];

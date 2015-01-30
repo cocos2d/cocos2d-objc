@@ -25,6 +25,7 @@
  */
 
 #import <Foundation/Foundation.h>
+#import <CoreGraphics/CGImage.h>
 
 #import "ccMacros.h"
 #import "CCRenderableNode.h"

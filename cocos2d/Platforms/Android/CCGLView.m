@@ -17,6 +17,11 @@
 #import "CCActivity.h"
 #import "CCResponderManager.h"
 #import "CCTouchAndroid.h"
+#import "CCTexture.h"
+#import "CCDirectorAndroid.h"
+#import "CCDirector_Private.h"
+
+
 #import <CoreGraphics/CGGeometry.h>
 
 #import <AndroidKit/AndroidMotionEvent.h>
@@ -39,6 +44,8 @@ static CCTouchEvent *currentEvent = nil;
     {
         _contentScaleFactor = scaleFactor;
         _screenMode = screenMode;
+        
+        _director = [[CCDirector director] retain];
     }
     return self;
 }
@@ -46,6 +53,8 @@ static CCTouchEvent *currentEvent = nil;
 - (void)dealloc
 {
     [_gestureDetectors release];
+    [_director release];
+    
     [super dealloc];
 }
 
@@ -152,7 +161,7 @@ static CCTouchEvent *currentEvent = nil;
         }
         
         [[CCActivity currentActivity] runOnGameThread:^{
-            CCResponderManager *mgr = [[CCDirector sharedDirector] responderManager];
+            CCResponderManager *mgr = [[CCDirector currentDirector] responderManager];
             switch (phase) {
                 case CCTouchPhaseBegan:
                     [mgr touchesBegan:eventTouches withEvent:currentEvent];
@@ -292,27 +301,6 @@ static inline void logConfig(EGLDisplay display, EGLConfig conf) {
     BOOL depthBuffer = YES;
     BOOL stencilBuffer = YES;
     static EGLint colorSizes[4] = { 8, 8, 8, 8 };
-    switch ([CCTexture defaultAlphaPixelFormat])
-    {
-        case CCTexturePixelFormat_RGBA8888:
-            colorSizes[0] = 8;
-            colorSizes[1] = 8;
-            colorSizes[2] = 8;
-            colorSizes[3] = 8;
-            break;
-        case CCTexturePixelFormat_RGB565:
-            colorSizes[0] = 5;
-            colorSizes[1] = 6;
-            colorSizes[2] = 5;
-            colorSizes[3] = 0;
-            break;
-        case CCTexturePixelFormat_RGBA4444:
-            colorSizes[0] = 4;
-            colorSizes[1] = 4;
-            colorSizes[2] = 4;
-            colorSizes[3] = 4;
-            break;
-    }
     BOOL isATC = NO;
     
     

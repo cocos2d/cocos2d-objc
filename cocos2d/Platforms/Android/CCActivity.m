@@ -20,6 +20,8 @@
 #import "CCScene.h"
 
 #import "CCPackageManager.h"
+#import "CCDirector.h"
+#import "CCDirector_Private.h"
 
 #import <AndroidKit/AndroidWindowManager.h>
 #import <AndroidKit/AndroidDisplay.h>
@@ -138,7 +140,7 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
 
 - (void)onDestroy
 {
-    [[CCDirector sharedDirector] end];
+    [[CCDirector currentDirector] end];
     exit(0);
 }
 
@@ -158,8 +160,8 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
 
 - (void)handleResume
 {
-    [[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
-    [[CCDirector sharedDirector] resume];
+    [[CCDirector currentDirector] setNextDeltaTimeZero:YES];
+    [[CCDirector currentDirector] resume];
 }
 
 - (void)onPause
@@ -178,7 +180,7 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
 
 - (void)handlePause
 {
-    [[CCDirector sharedDirector] pause];
+    [[CCDirector currentDirector] pause];
     [[CCPackageManager sharedManager] savePackages];
 }
 
@@ -199,13 +201,13 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
 
 - (void)handleLowMemory
 {
-    [[CCDirector sharedDirector] purgeCachedData];
+    [[CCDirector currentDirector] purgeCachedData];
     [[CCPackageManager sharedManager] savePackages];
 }
 
 - (void)reshape:(NSValue *)value
 {
-    CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector sharedDirector];
+    CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector currentDirector];
 	[director reshapeProjection:value.CGSizeValue]; // crashes sometimes..
 }
 
@@ -244,13 +246,18 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
         
         [self setupView:holder];
         
+        CCDirectorAndroid *director = (CCDirectorAndroid*)_glView.director;
+        NSAssert(director, @"The CCView failed to create a director.");
+        
+        //this must only be set after GL has been initialized (i.e. in this method)
+        [director setView:_glView];
+        
+        [CCDirector pushCurrentDirector:director];
+        
         [self setupPaths];
         
-        CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector sharedDirector];
         director.delegate = self;
-        [CCTexture setDefaultAlphaPixelFormat:CCTexturePixelFormat_RGBA8888];
-        [director setView:_glView];
-
+        
         if([_cocos2dSetupConfig[CCSetupScreenMode] isEqual:CCScreenModeFixed])
         {
             [self setupFixedScreenMode];
@@ -264,9 +271,9 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
 
 
 
-        [director runWithScene:[self startScene]];
+        [director presentScene:[self startScene]];
         [director setAnimationInterval:1.0/60.0];
-        [director startAnimation];
+//        [director startAnimation];
 #if !USE_MAIN_THREAD
         [_gameLoop runUntilDate:[NSDate distantFuture]];
 #endif
@@ -275,9 +282,9 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
 
 - (void)setupFlexibleScreenMode
 {
-    CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector sharedDirector];
+    CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector currentDirector];
     
-    NSInteger device = [[CCDeviceInfo sharedDeviceInfo] runningDevice];
+    NSInteger device = [CCDeviceInfo runningDevice];
     BOOL tablet = device == CCDeviceiPad || device == CCDeviceiPadRetinaDisplay;
 
     if(tablet && [_cocos2dSetupConfig[CCSetupTabletScale2X] boolValue])
@@ -296,9 +303,9 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
 
 - (void)setupFixedScreenMode
 {
-    CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector sharedDirector];
+    CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector currentDirector];
 
-    CGSize size = [CCDirector sharedDirector].viewSizeInPixels;
+    CGSize size = [CCDirector currentDirector].viewSizeInPixels;
     
     NSLog(@"pixel width = %f, pixel height = %f", size.width, size.height);
     
@@ -362,7 +369,7 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
     else
     {
         [self performSelector:@selector(setupView:) onThread:_thread withObject:holder waitUntilDone:YES modes:@[NSDefaultRunLoopMode]];
-        CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector sharedDirector];
+        CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector currentDirector];
         [director performSelector:@selector(startAnimation) onThread:_thread withObject:nil waitUntilDone:YES modes:@[NSDefaultRunLoopMode]];
     }
 #endif
@@ -379,7 +386,7 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
 
 - (void)handleDestroy
 {
-    [[CCDirector sharedDirector] stopAnimation];
+    [[CCDirector currentDirector] stopAnimation];
 }
 
 - (BOOL)onKeyDown:(int32_t)keyCode keyEvent:(AndroidKeyEvent *)event
@@ -437,8 +444,8 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
 // Projection delegate is only used if the fixed resolution mode is enabled
 -(GLKMatrix4)updateProjection
 {
-	CGSize sizePoint = [CCDirector sharedDirector].viewSize;
-	CGSize fixed = [CCDirector sharedDirector].designSize;
+	CGSize sizePoint = [CCDirector currentDirector].viewSize;
+	CGSize fixed = [CCDirector currentDirector].designSize;
 
 	// Half of the extra size that will be cut off
 	CGPoint offset = ccpMult(ccp(fixed.width - sizePoint.width, fixed.height - sizePoint.height), 0.5);
