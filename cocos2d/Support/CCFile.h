@@ -24,7 +24,15 @@
 
 
 #import "ccTypes.h"
+#if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
+
 #import <ImageIO/CGImageSource.h>
+
+#elif __CC_PLATFORM_ANDROID
+
+#import <CoreGraphics/CGImageSource.h>
+
+#endif
 
 
 /**

@@ -54,8 +54,8 @@
 
 - (void) positionInControl:(CCControl *)control padding:(float)padding {
     CGPoint viewPos = [control convertToWorldSpace:CGPointZero];
-    CGSize screenSize = [[CCDirector sharedDirector] viewSizeInPixels];
-    CGFloat scale = [[CCDirector sharedDirector] contentScaleFactor];
+    CGSize screenSize = [[CCDirector currentDirector] viewSizeInPixels];
+    CGFloat scale = [[CCDirector currentDirector] contentScaleFactor];
     CGSize size = control.contentSizeInPoints;
 
     size.width *= scale;

@@ -223,7 +223,7 @@ static CCGraphicsAPI GRAPHICS_API = CCGraphicsAPIInvalid;
     if (diagonalInches<=CC_MINIMUM_TABLET_SCREEN_DIAGONAL){
 
         
-        if([CCDirector sharedDirector].contentScaleFactor > 1.0)
+        if([CCDirector currentDirector].contentScaleFactor > 1.0)
         {
             return CCDeviceiPhoneRetinaDisplay;
         }
@@ -232,7 +232,7 @@ static CCGraphicsAPI GRAPHICS_API = CCGraphicsAPIInvalid;
             return CCDeviceiPhone;
         }
     } else {
-        if([CCDirector sharedDirector].contentScaleFactor > 1.0)
+        if([CCDirector currentDirector].contentScaleFactor > 1.0)
         {
             return CCDeviceiPadRetinaDisplay;
         }

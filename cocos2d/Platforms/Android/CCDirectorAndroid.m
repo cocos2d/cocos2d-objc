@@ -18,9 +18,13 @@
 #import "../../CCScene.h"
 #import "../../CCShader.h"
 #import "../../ccFPSImages.h"
-#import "../../CCConfiguration.h"
+#import "../../CCDeviceInfo.h"
 #import "CCRenderer_Private.h"
 #import "CCTouch.h"
+
+#import "ccUtils.h"
+#import "CCActivity.h"
+
 
 
 #pragma mark -
@@ -95,8 +99,8 @@
 // override default logic
 - (void)antiFlickrDrawCall
 {
-    NSThread *thread = [self runningThread];
-    [self performSelector:@selector(mainLoopBody) onThread:thread withObject:nil waitUntilDone:YES];
+//    NSThread *thread = [self runningThread];
+//    [self performSelector:@selector(mainLoopBody) onThread:thread withObject:nil waitUntilDone:YES];
 }
 
 -(void)end
