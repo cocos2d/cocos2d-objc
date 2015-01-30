@@ -20,6 +20,8 @@
 #import "CCScene.h"
 
 #import "CCPackageManager.h"
+#import "CCDirector.h"
+#import "CCDirector_Private.h"
 
 #import <AndroidKit/AndroidWindowManager.h>
 #import <AndroidKit/AndroidDisplay.h>
@@ -246,10 +248,17 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
         
         [self setupPaths];
         
-        CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector sharedDirector];
-        director.delegate = self;
-        [CCTexture setDefaultAlphaPixelFormat:CCTexturePixelFormat_RGBA8888];
+        CCDirectorAndroid *director = (CCDirectorAndroid*)_glView.director;
+        NSAssert(director, @"The CCView failed to create a director.");
+        
+        //this must only be set after GL has been initialized (i.e. in this method)
         [director setView:_glView];
+        
+        [CCDirector pushCurrentDirector:director];
+        
+        director.delegate = self;
+        
+        [CCTexture setDefaultAlphaPixelFormat:CCTexturePixelFormat_RGBA8888];
 
         if([_cocos2dSetupConfig[CCSetupScreenMode] isEqual:CCScreenModeFixed])
         {
@@ -264,9 +273,9 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
 
 
 
-        [director runWithScene:[self startScene]];
+        [director presentScene:[self startScene]];
         [director setAnimationInterval:1.0/60.0];
-        [director startAnimation];
+//        [director startAnimation];
 #if !USE_MAIN_THREAD
         [_gameLoop runUntilDate:[NSDate distantFuture]];
 #endif

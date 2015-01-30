@@ -10,11 +10,10 @@
 
 #if __CC_PLATFORM_ANDROID
 
-
+#import <CoreGraphics/CGGeometry.h>
 #import <android/native_window.h>
 #import <bridge/runtime.h>
 #import <GLActivityKit/GLView.h>
-
 #import "../../Platforms/CCGL.h"
 #import "CCView.h"
 
@@ -56,6 +55,8 @@ BRIDGE_CLASS("org.cocos2d.CCGLView")
 @property (nonatomic, readonly) EGLContext eglContext;
 @property (nonatomic, readonly) EGLConfig eglConfiguration;
 @property (nonatomic, readonly) enum CCAndroidScreenMode screenMode;
+@property(nonatomic, strong, readonly) CCDirector *director;
+
 
 - (void)addGestureDetector:(AndroidGestureDetector *)detector;
 - (void)removeGestureDetector:(AndroidGestureDetector *)detector;

@@ -17,6 +17,11 @@
 #import "CCActivity.h"
 #import "CCResponderManager.h"
 #import "CCTouchAndroid.h"
+#import "CCTexture.h"
+#import "CCDirectorAndroid.h"
+#import "CCDirector_Private.h"
+
+
 #import <CoreGraphics/CGGeometry.h>
 
 #import <AndroidKit/AndroidMotionEvent.h>
@@ -39,6 +44,8 @@ static CCTouchEvent *currentEvent = nil;
     {
         _contentScaleFactor = scaleFactor;
         _screenMode = screenMode;
+        
+        _director = [[CCDirector director] retain];
     }
     return self;
 }
@@ -46,6 +53,8 @@ static CCTouchEvent *currentEvent = nil;
 - (void)dealloc
 {
     [_gestureDetectors release];
+    [_director release];
+    
     [super dealloc];
 }
 
