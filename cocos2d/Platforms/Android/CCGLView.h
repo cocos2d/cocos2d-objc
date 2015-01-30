@@ -16,6 +16,7 @@
 #import <GLActivityKit/GLView.h>
 #import "../../Platforms/CCGL.h"
 #import "CCView.h"
+#import "CCDirectorView.h"
 
 @class AndroidGestureDetector;
 
@@ -40,8 +41,8 @@ enum CCAndroidScreenMode {
     CCScreenScaledAspectFitEmulationMode
 };
 
-BRIDGE_CLASS("org.cocos2d.CCGLView")
-@interface CCGLView : AndroidSurfaceView <CCView>
+BRIDGE_CLASS("com.apportable.GLView")
+@interface CCGLView : GLView <CCDirectorView>
 
 - (id)initWithContext:(AndroidContext *)context screenMode:(enum CCAndroidScreenMode)screenMode scaleFactor:(float)scaleFactor;
 
