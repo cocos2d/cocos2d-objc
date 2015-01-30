@@ -30,7 +30,7 @@
 #import <UIKit/UIKit.h>
 
 #import "CCDirectorIOS.h"
-
+#import "CCDirectorView.h"
 @class CCAppDelegate;
 @class CCScene;
 
