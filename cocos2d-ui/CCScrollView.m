@@ -847,11 +847,23 @@
     return phase;
 }
 
+- (BOOL)isEventInNode:(AndroidMotionEvent *)event
+{
+	float scaleFactor = [[CCDirector sharedDirector] view].contentScaleFactor;
+	CGPoint location = ccp(event.x/scaleFactor, event.y/scaleFactor);
+	location = [[CCDirector sharedDirector] convertToGL:location];
+	location = [self convertToNodeSpace:location];
+	return CGRectContainsPoint(self.boundingBox, location) ? YES : NO;
+}
+
 - (BOOL)onScroll:(AndroidMotionEvent *)start end:(AndroidMotionEvent *)end distanceX:(float)dx distanceY:(float)dy
 {
     _isPanning = YES;
     _velocity = CGPointZero;
-    
+	
+	if (![self isEventInNode:start])
+		return NO;
+	
     // Note about start and end events: We will get a CCTouchPhaseBegan for the start event, followed by CCTouchPhaseMoved in the end event
     CCTouchPhase phase = [self handleGestureEvent:start end:end];
     
@@ -922,7 +934,10 @@
 - (BOOL)onFling:(AndroidMotionEvent *)start end:(AndroidMotionEvent *)end velocityX:(float)vx velocityY:(float)vy
 {
     static CGPoint rawTranslationFling;
-
+	
+	if (![self isEventInNode:start])
+		return NO;
+	
     CCTouchPhase phase = [self handleGestureEvent:start end:end];
     
     if(phase == CCTouchPhaseCancelled || phase == CCTouchPhaseEnded)
