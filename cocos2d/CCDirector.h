@@ -33,7 +33,6 @@
 #import "CCRenderer.h"
 #import "CCView.h"
 
-#warning should remove this one we clean up the delegate
 #if __CC_PLATFORM_IOS
 #import <UIKit/UIKit.h>
 #endif
@@ -141,8 +140,8 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 
  Since the CCDirector is a singleton, the standard way to use its methods and properties is:
  
- - `[[CCDirector sharedDirector] methodName];`
- - `[CCDirector sharedDirector].aProperty;`
+ - `[[CCDirector currentDirector] methodName];`
+ - `[CCDirector currentDirector].aProperty;`
 
  The CCDirector is responsible for:
  
@@ -226,7 +225,6 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 /** @name Singleton Accessor */
 
 /** @returns The shared director instance. */
-+(CCDirector*)sharedDirector __attribute__((deprecated));
 +(CCDirector*)currentDirector;
 
 /** @name Accessing OpenGL Thread */

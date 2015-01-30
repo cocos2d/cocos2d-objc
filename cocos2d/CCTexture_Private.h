@@ -41,27 +41,38 @@
 
 @end
 
-// -------------------------------------------------------------
+
+@interface CCTextureGL : CCTexture {
+    @public
+    GLuint _name;
+}
+
+@property(nonatomic, readonly) GLuint name;
+@property(nonatomic, readonly) GLenum glType;
+
+@end
+
+
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+@interface CCTextureMetal : CCTexture {
+    @public
+    id<MTLTexture> _metalTexture;
+    id<MTLSamplerState> _metalSampler;
+}
+
+@property(nonatomic, readonly) id<MTLTexture> metalTexture;
+@property(nonatomic, readonly) id<MTLSamplerState> metalSampler;
+
+@end
+#endif
+
 
 @interface CCTexture ()
 
-/* These functions are needed to create mutable textures */
-- (void) releaseData:(void*)data;
-- (void*) keepData:(void*)data length:(NSUInteger)length;
+-(instancetype)initWithImage:(CCImage *)image options:(NSDictionary *)options rendertexture:(BOOL)rendertexture;
 
-/* texture name */
-@property(nonatomic,readonly) GLuint name;
-
-// TODO This should really be split into a separate subclass somehow.
-#if __CC_METAL_SUPPORTED_AND_ENABLED
-@property(nonatomic,readonly) id<MTLTexture> metalTexture;
-@property(nonatomic,readonly) id<MTLSamplerState> metalSampler;
-#endif
-
-/* texture max S */
-@property(nonatomic,readwrite) float maxS;
-/* texture max T */
-@property(nonatomic,readwrite) float maxT;
+// Fill in any missing fields of an options dictionary.
++(NSDictionary *)normalizeOptions:(NSDictionary *)options;
 
 @property(nonatomic,readwrite) BOOL premultipliedAlpha;
 
@@ -71,68 +82,18 @@
 // Retrieve the proxy for this texture.
 @property(atomic, readonly, weak) CCProxy *proxy;
 
-@end
+// Create the native texture object and sampler.
+// Rendertextures need a BGRA format in Metal and must be marked specially.
+-(void)setupTexture:(CCTextureType)type rendertexture:(BOOL)rendertexture sizeInPixels:(CGSize)sizeInPixels options:(NSDictionary *)options;
 
-/*
- Extensions to make it easy to create a CCTexture2D object from a PVRTC file
- Note that the generated textures don't have their alpha premultiplied - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
- */
-@interface CCTexture (PVRSupport)
-/* Initializes a texture from a PVR file.
- 
- Supported PVR formats:
- - BGRA 8888
- - RGBA 8888
- - RGBA 4444
- - RGBA 5551
- - RBG 565
- - A 8
- - I 8
- - AI 8
- - PVRTC 2BPP
- - PVRTC 4BPP
- 
- By default PVR images are treated as if they alpha channel is NOT premultiplied. You can override this behavior with this class method:
- - PVRImagesHavePremultipliedAlpha:(BOOL)haveAlphaPremultiplied;
- 
- IMPORTANT: This method is only defined on iOS. It is not supported on the Mac version.
- 
- */
--(id) initWithPVRFile: (NSString*) file;
+// Upload 2D texture data.
+-(void)_uploadTexture2D:(CGSize)sizeInPixels miplevel:(NSUInteger)miplevel pixelData:(const void *)pixelData;
 
-/* treats (or not) PVR files as if they have alpha premultiplied.
- Since it is impossible to know at runtime if the PVR images have the alpha channel premultiplied, it is
- possible load them as if they have (or not) the alpha channel premultiplied.
- 
- By default it is disabled.
- 
- */
-+(void) PVRImagesHavePremultipliedAlpha:(BOOL)haveAlphaPremultiplied;
+// Upload Cubemap texture data.
+// Faces are in the same order as GL/Metal (+x, -x, +y, -y, +z, -z)
+-(void)_uploadTextureCubeFace:(NSUInteger)face sizeInPixels:(CGSize)sizeInPixels miplevel:(NSUInteger)miplevel pixelData:(const void *)pixelData;
 
-@end
-
-/*
- Extension to set the Min / Mag filter
- */
-typedef struct _ccTexParams {
-	GLuint	minFilter;
-	GLuint	magFilter;
-	GLuint	wrapS;
-	GLuint	wrapT;
-} ccTexParams;
-
-@interface CCTexture (GLFilter)
-/* sets the min filter, mag filter, wrap s and wrap t texture parameters.
- If the texture size is NPOT (non power of 2), then in can only use GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}.
- 
- @warning Calling this method could allocate additional texture memory.
- 
- */
--(void) setTexParameters: (ccTexParams*) texParams;
-
-/* Generates mipmap images for the texture.
- It only works if the texture size is POT (power of 2).
- */
--(void) generateMipmap;
+// Force mipmap generation on a texture.
+-(void)_generateMipmaps:(CCTextureType)type;
 
 @end

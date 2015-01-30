@@ -524,7 +524,7 @@ static const CGDataProviderSequentialCallbacks callbacks = {
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"Absolute path: \"%@\", UIScale: %d, scale %.2f", [self class], (void *) self, self.absoluteFilePath, _useUIScale, _contentScale];
+    return [NSString stringWithFormat:@"<%@: %p; Absolute path: '%@', UIScale: %d, scale %.2f>", [self class], (void *) self, self.absoluteFilePath, _useUIScale, _contentScale];
 }
 
 @end

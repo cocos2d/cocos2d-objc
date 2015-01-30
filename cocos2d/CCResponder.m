@@ -161,12 +161,12 @@
 
 -(void)keyDown:(NSEvent *)theEvent
 {
-  [[CCDirector sharedDirector].responderManager discardCurrentEvent];
+  [[CCDirector currentDirector].responderManager discardCurrentEvent];
 }
 
 -(void)keyUp:(NSEvent *)theEvent
 {
-  [[CCDirector sharedDirector].responderManager discardCurrentEvent];
+  [[CCDirector currentDirector].responderManager discardCurrentEvent];
 }
 
 #endif

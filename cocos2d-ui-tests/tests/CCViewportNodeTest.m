@@ -114,7 +114,7 @@
     _viewport.anchorPoint = ccp(0.5, 0.5);
     _viewport.positionType = CCPositionTypeNormalized;
     _viewport.position = ccp(0.5, 0.5);
-    _viewport.contentSize = [CCDirector sharedDirector].viewSize;
+    _viewport.contentSize = [CCDirector currentDirector].viewSize;
     [self.contentNode addChild:_viewport];
     
     _orthoProjectionDelegate = [[CCCentereredOrthoProjection alloc] initWithTarget:_viewport];
@@ -165,7 +165,7 @@ typedef void (^AnimationBlock)(CCTime t);
 {
     self.subTitle = @"Viewport rect controlled by contentSize.";
     
-    CGSize a = [CCDirector sharedDirector].viewSize;
+    CGSize a = [CCDirector currentDirector].viewSize;
     CGSize b = CGSizeMake(0.75*a.width, 0.75*a.height);
     
     [self animationDuration:0.5 block:^(CCTime t) {
@@ -261,7 +261,7 @@ typedef void (^AnimationBlock)(CCTime t);
     self.subTitle = @"Viewport rect controlled by contentSize.";
     
     CGSize a = _viewport.contentSize;
-    CGSize b = [CCDirector sharedDirector].viewSize;
+    CGSize b = [CCDirector currentDirector].viewSize;
     
     [self animateProjectionTo:_orthoProjectionDelegate after:^{
         _viewport.projectionDelegate = _orthoProjectionDelegate;
@@ -390,7 +390,7 @@ CGSize DesignSize = {300, 300};
         viewport.anchorPoint = ccp(0.5, 0.5);
         viewport.positionType = CCPositionTypeNormalized;
         
-        CGSize size = [CCDirector sharedDirector].viewSize;
+        CGSize size = [CCDirector currentDirector].viewSize;
         viewport.contentSize = CGSizeMake(size.width / 2.0f, size.height / 2.0f);
         float scale = size.height/size.height/2.0;
         

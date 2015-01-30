@@ -6,8 +6,11 @@
 
 #import "CCViewportNode.h"
 #import "CCNode_Private.h"
+#import "CCMetalSupport_Private.h"
+
 #import "CCDirector.h"
 #import "ccUtils.h"
+#import "CCDeviceInfo.h"
 
 #define NEAR_Z -1024
 #define FAR_Z 1024
@@ -90,7 +93,7 @@
 -(instancetype)initWithContentNode:(CCNode *)contentNode;
 {
     if((self = [super init])){
-        self.contentSize = [CCDirector sharedDirector].viewSize;
+        self.contentSize = [CCDirector currentDirector].viewSize;
         self.clipsInput = true;
         
         _camera = [[CCCamera alloc]initWithViewport:self];
@@ -188,6 +191,36 @@
     return _camera.children[0];
 }
 
+static void
+SetViewport(int minx, int miny, int maxx, int maxy)
+{
+    switch([CCDeviceInfo graphicsAPI]){
+        case CCGraphicsAPIGL: {
+            glViewport((GLint)minx, (GLint)miny, (GLint)(maxx - minx), (GLint)(maxy - miny));
+            break;
+        } case CCGraphicsAPIMetal: {
+#if __CC_METAL_SUPPORTED_AND_ENABLED
+            // Grab the context and framebuffer info.
+            CCMetalContext *context = [CCMetalContext currentContext];
+            id<MTLTexture> dst = context.destinationTexture;
+            int dstw = (int)dst.width;
+            int dsth = (int)dst.height;
+            
+            // Clamp the viewport.
+            minx = MAX(0, minx); maxx = MIN(maxx, dstw);
+            miny = MAX(0, miny); maxy = MIN(maxy, dsth);
+            
+            // This is so much easier in GL...
+            MTLViewport viewport = {minx, dsth - maxy, maxx - minx, maxy - miny, 0.0, 1.0};
+            [context.currentRenderCommandEncoder setViewport:viewport];
+            break;
+#endif
+        } case CCGraphicsAPIInvalid: {
+            break;
+        }
+    }
+}
+
 -(void)visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
 {
     
@@ -202,7 +235,7 @@
     GLKVector3 v3 = GLKMatrix4MultiplyAndProjectVector3(viewportTransform, GLKVector3Make(      0.0f, size.height, 0.0f));
     
     // Find the viewport rectangle in framebuffer pixels.
-    CGSize framebufferSize = [CCDirector sharedDirector].viewSizeInPixels;
+    CGSize framebufferSize = [CCDirector currentDirector].viewSizeInPixels;
     float hw = framebufferSize.width/2.0;
     float hh = framebufferSize.height/2.0;
     
@@ -213,7 +246,7 @@
     
     // Set the viewport to ensure we're drawing to the correct area.
     [renderer pushGroup];
-    [renderer enqueueBlock:^{glViewport(minx, miny, maxx - minx, maxy - miny);} globalSortOrder:NSIntegerMin debugLabel:@"CCViewportNode: Set viewport" threadSafe:YES];
+    [renderer enqueueBlock:^{SetViewport(minx, miny, maxx, maxy);} globalSortOrder:NSIntegerMin debugLabel:@"CCViewportNode: Set viewport" threadSafe:YES];
     
     // TODO Need to do something to fix rotations when using clipping mode.
     GLKMatrix4 transform = [(CCCamera*)_camera cameraMatrix];
@@ -225,7 +258,7 @@
     }
     
     // Reset the viewport.
-    [renderer enqueueBlock:^{glViewport(0, 0, framebufferSize.width, framebufferSize.height);} globalSortOrder:NSIntegerMax debugLabel:@"CCViewportNode: Reset viewport" threadSafe:YES];
+    [renderer enqueueBlock:^{SetViewport(0, 0, framebufferSize.width, framebufferSize.height);} globalSortOrder:NSIntegerMax debugLabel:@"CCViewportNode: Reset viewport" threadSafe:YES];
     [renderer popGroupWithDebugLabel:@"CCViewportNode" globalSortOrder:0];
 }
 

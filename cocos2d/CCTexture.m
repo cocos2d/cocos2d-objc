@@ -1,86 +1,38 @@
 /*
-
- ===== IMPORTANT =====
-
- This is sample code demonstrating API, technology or techniques in development.
- Although this sample code has been reviewed for technical accuracy, it is not
- final. Apple is supplying this information to help you plan for the adoption of
- the technologies and programming interfaces described herein. This information
- is subject to change, and software implemented based on this sample code should
- be tested with final operating system software and final documentation. Newer
- versions of this sample code may be provided with future seeds of the API or
- technology. For information about updates to this and other developer
- documentation, view the New & Updated sidebars in subsequent documentationd
- seeds.
-
- =====================
-
- File: Texture2D.m
- Abstract: Creates OpenGL 2D textures from images or text.
-
- Version: 1.6
-
- Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple Inc.
- ("Apple") in consideration of your agreement to the following terms, and your
- use, installation, modification or redistribution of this Apple software
- constitutes acceptance of these terms.  If you do not agree with these terms,
- please do not use, install, modify or redistribute this Apple software.
-
- In consideration of your agreement to abide by the following terms, and subject
- to these terms, Apple grants you a personal, non-exclusive license, under
- Apple's copyrights in this original Apple software (the "Apple Software"), to
- use, reproduce, modify and redistribute the Apple Software, with or without
- modifications, in source and/or binary forms; provided that if you redistribute
- the Apple Software in its entirety and without modifications, you must retain
- this notice and the following text and disclaimers in all such redistributions
- of the Apple Software.
- Neither the name, trademarks, service marks or logos of Apple Inc. may be used
- to endorse or promote products derived from the Apple Software without specific
- prior written permission from Apple.  Except as expressly stated in this notice,
- no other rights or licenses, express or implied, are granted by Apple herein,
- including but not limited to any patent rights that may be infringed by your
- derivative works or by other works in which the Apple Software may be
- incorporated.
-
- The Apple Software is provided by Apple on an "AS IS" basis.  APPLE MAKES NO
- WARRANTIES, EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION THE IMPLIED
- WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- PURPOSE, REGARDING THE APPLE SOFTWARE OR ITS USE AND OPERATION ALONE OR IN
- COMBINATION WITH YOUR PRODUCTS.
-
- IN NO EVENT SHALL APPLE BE LIABLE FOR ANY SPECIAL, INDIRECT, INCIDENTAL OR
- CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
- GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- ARISING IN ANY WAY OUT OF THE USE, REPRODUCTION, MODIFICATION AND/OR
- DISTRIBUTION OF THE APPLE SOFTWARE, HOWEVER CAUSED AND WHETHER UNDER THEORY OF
- CONTRACT, TORT (INCLUDING NEGLIGENCE), STRICT LIABILITY OR OTHERWISE, EVEN IF
- APPLE HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
- Copyright (C) 2008 Apple Inc. All Rights Reserved.
-
+ * cocos2d for iPhone: http://www.cocos2d-iphone.org
+ *
+ * Copyright (c) 2014 Cocos2D Authors
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  */
 
-/*
- * Support for RGBA_4_4_4_4 and RGBA_5_5_5_1 was copied from:
- * https://devforums.apple.com/message/37855#37855 by a1studmuffin
- */
 
-/*
- * Added many additions for cocos2d
- */
-
-#import "Platforms/CCGL.h"
 #import "Platforms/CCNS.h"
 
 #import "CCTexture.h"
 #import "ccConfig.h"
 #import "ccMacros.h"
 #import "CCDeviceInfo.h"
-#import "CCTexturePVR.h"
 #import "CCShader.h"
 #import "CCDirector.h"
 #import "CCRenderDispatch.h"
-#import "CCImage.h"
+#import "CCImage_Private.h"
 
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
@@ -88,26 +40,19 @@
 #import "CCTexture_Private.h"
 #import "CCTextureCache.h"
 #import "CCSpriteFrame.h"
+#import "CCDeprecated.h"
 
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-
 #import "CCMetalSupport_Private.h"
-
-static const MTLPixelFormat MetalPixelFormats[] = {
-	MTLPixelFormatRGBA8Unorm,
-	MTLPixelFormatInvalid, //CCTexturePixelFormat_RGB888,
-	MTLPixelFormatInvalid, //CCTexturePixelFormat_RGB565,
-	MTLPixelFormatA8Unorm, //CCTexturePixelFormat_A8,
-	MTLPixelFormatRG8Unorm, //CCTexturePixelFormat_I8,
-	MTLPixelFormatInvalid, //CCTexturePixelFormat_AI88,
-	MTLPixelFormatABGR4Unorm, //CCTexturePixelFormat_RGBA4444,
-	MTLPixelFormatInvalid, //CCTexturePixelFormat_RGB5A1,
-	MTLPixelFormatPVRTC_RGBA_4BPP, //CCTexturePixelFormat_PVRTC4,
-	MTLPixelFormatPVRTC_RGBA_2BPP, //CCTexturePixelFormat_PVRTC2,
-	MTLPixelFormatBGRA8Unorm,
-};
-
 #endif
+
+
+NSString * const CCTextureOptionGenerateMipmaps = @"CCTextureOptionGenerateMipmaps";
+NSString * const CCTextureOptionMinificationFilter = @"CCTextureOptionMinificationFilter";
+NSString * const CCTextureOptionMagnificationFilter = @"CCTextureOptionMagnificationFilter";
+NSString * const CCTextureOptionMipmapFilter = @"CCTextureOptionMipmapFilter";
+NSString * const CCTextureOptionAddressModeX = @"CCTextureOptionAddressModeX";
+NSString * const CCTextureOptionAddressModeY = @"CCTextureOptionAddressModeY";
 
 
 //CLASS IMPLEMENTATIONS:
@@ -133,13 +78,13 @@ static const MTLPixelFormat MetalPixelFormats[] = {
 -(BOOL)isKindOfClass:(Class)aClass {return [_target isKindOfClass:aClass];}
 
 // Make concrete implementations for CCTexture methods commonly called at runtime.
--(GLuint)name {return [(CCTexture *)_target name];}
+-(GLuint)name {return [(CCTextureGL *)_target name];}
 -(CGFloat)contentScale {return [(CCTexture *)_target contentScale];}
 -(CGSize)contentSize {return [_target contentSize];}
 -(NSUInteger)pixelWidth {return [_target pixelWidth];}
 -(NSUInteger)pixelHeight {return [_target pixelHeight];}
 -(BOOL)hasPremultipliedAlpha {return [_target hasPremultipliedAlpha];}
--(CCSpriteFrame *)createSpriteFrame {return [_target createSpriteFrame];}
+-(CCSpriteFrame *)spriteFrame {return [_target spriteFrame];}
 
 // Make concrete implementations for CCSpriteFrame methods commonly called at runtime.
 -(CGRect)rect {return [_target rect];}
@@ -164,33 +109,15 @@ static const MTLPixelFormat MetalPixelFormats[] = {
 @end
 
 
-// If the image has alpha, you can create RGBA8 (32-bit) or RGBA4 (16-bit) or RGB5A1 (16-bit)
-// Default is: RGBA8888 (32-bit textures)
-static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Default;
-
 #pragma mark -
 #pragma mark CCTexture2D - Main
 
 @implementation CCTexture
 {
-	GLuint _name;
-	CGSize _sizeInPixels;
-	CGFloat _contentScale;
-	NSUInteger _width, _height;
-	CCTexturePixelFormat _format;
-	float _maxS, _maxT;
-	BOOL _premultipliedAlpha;
-	BOOL _hasMipmaps;
-	
-	BOOL _antialiased;
-	
 	CCProxy __weak *_proxy;
 }
 
-@synthesize contentSizeInPixels = _sizeInPixels, pixelFormat = _format, pixelWidth = _width, pixelHeight = _height, name = _name, maxS = _maxS, maxT = _maxT;
-@synthesize premultipliedAlpha = _premultipliedAlpha;
-@synthesize contentScale = _contentScale;
-@synthesize antialiased = _antialiased;
+static NSDictionary *NORMALIZED_OPTIONS = nil;
 
 static CCTexture *CCTextureNone = nil;
 
@@ -198,21 +125,28 @@ static CCTexture *CCTextureNone = nil;
 {
 	// +initialize may be called due to loading a subclass.
 	if(self != [CCTexture class]) return;
+    
+    NORMALIZED_OPTIONS = @{
+        CCTextureOptionGenerateMipmaps: @(NO),
+        CCTextureOptionMinificationFilter: @(CCTextureFilterLinear),
+        CCTextureOptionMagnificationFilter: @(CCTextureFilterLinear),
+        CCTextureOptionMipmapFilter: @(CCTextureFilterMipmapNone),
+        CCTextureOptionAddressModeX: @(CCTextureAddressModeClampToEdge),
+        CCTextureOptionAddressModeY: @(CCTextureAddressModeClampToEdge),
+    };
 	
 	CCTextureNone = [self alloc];
-	CCTextureNone->_name = 0;
-	CCTextureNone->_format = CCTexturePixelFormat_RGBA8888;
 	CCTextureNone->_contentScale = 1.0;
 	
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+	if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
 		CCMetalContext *context = [CCMetalContext currentContext];
 		NSAssert(context, @"Metal context is nil.");
 		
-		CCTextureNone->_metalSampler = [context.device newSamplerStateWithDescriptor:[MTLSamplerDescriptor new]];
+		((CCTextureMetal *)CCTextureNone)->_metalSampler = [context.device newSamplerStateWithDescriptor:[MTLSamplerDescriptor new]];
 		
 		MTLTextureDescriptor *textureDesc = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA8Unorm width:1 height:1 mipmapped:NO];
-		CCTextureNone->_metalTexture = [context.device newTextureWithDescriptor:textureDesc];
+		((CCTextureMetal *)CCTextureNone)->_metalTexture = [context.device newTextureWithDescriptor:textureDesc];
 	}
 #endif
 }
@@ -222,107 +156,101 @@ static CCTexture *CCTextureNone = nil;
 	return CCTextureNone;
 }
 
+static NSDictionary *_DEFAULT_OPTIONS = nil;
+
 + (id) textureWithFile:(NSString*)file
 {
     return [[CCTextureCache sharedTextureCache] addImage:file];
 }
 
-- (id) initWithData:(const void*)data pixelFormat:(CCTexturePixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSizeInPixels:(CGSize)sizeInPixels contentScale:(CGFloat)contentScale
++(NSDictionary *)defaultOptions
 {
-	NSAssert([CCDeviceInfo sharedDeviceInfo].graphicsAPI != CCGraphicsAPIInvalid, @"Graphics API not configured.");
-	
-	if((self = [super init])) {
-#if __CC_METAL_SUPPORTED_AND_ENABLED
-		if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
-			id<MTLDevice> device = [CCMetalContext currentContext].device;
-			
-			MTLSamplerDescriptor *samplerDesc = [MTLSamplerDescriptor new];
-			samplerDesc.minFilter = MTLSamplerMinMagFilterLinear;
-			samplerDesc.magFilter = MTLSamplerMinMagFilterLinear;
-			samplerDesc.mipFilter = MTLSamplerMipFilterNotMipmapped;
-			samplerDesc.sAddressMode = MTLSamplerAddressModeClampToEdge;
-			samplerDesc.tAddressMode = MTLSamplerAddressModeClampToEdge;
-			
-			_metalSampler = [device newSamplerStateWithDescriptor:samplerDesc];
-			
-			MTLPixelFormat metalFormat = MetalPixelFormats[pixelFormat];
-			NSAssert(metalFormat != MTLPixelFormatInvalid, @"This texture format is not supported by Apple's Metal API.");
-			
-			MTLTextureDescriptor *textureDesc = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:metalFormat width:width height:height mipmapped:NO];
-			_metalTexture = [device newTextureWithDescriptor:textureDesc];
-			
-			NSUInteger bytesPerRow = width*[CCTexture bitsPerPixelForFormat:pixelFormat]/8;
-			[_metalTexture replaceRegion:MTLRegionMake2D(0, 0, width, height) mipmapLevel:0 withBytes:data bytesPerRow:bytesPerRow];
-		} else
-#endif
-		CCRenderDispatch(NO, ^{
-			CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Init");
-			
-			// XXX: 32 bits or POT textures uses UNPACK of 4 (is this correct ??? )
-			if( pixelFormat == CCTexturePixelFormat_RGBA8888 || ( CCNextPOT(width)==width && CCNextPOT(height)==height) )
-				glPixelStorei(GL_UNPACK_ALIGNMENT,4);
-			else
-				glPixelStorei(GL_UNPACK_ALIGNMENT,1);
-
-			glGenTextures(1, &_name);
-			glBindTexture(GL_TEXTURE_2D, _name);
-			
-			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
-			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
-
-			// Specify OpenGL texture image
-
-			switch(pixelFormat)
-			{
-				case CCTexturePixelFormat_RGBA8888:
-					glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei) width, (GLsizei) height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-					break;
-				case CCTexturePixelFormat_RGBA4444:
-					glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei) width, (GLsizei) height, 0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, data);
-					break;
-				case CCTexturePixelFormat_RGB5A1:
-					glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei) width, (GLsizei) height, 0, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, data);
-					break;
-				case CCTexturePixelFormat_RGB565:
-					glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei) width, (GLsizei) height, 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, data);
-					break;
-				case CCTexturePixelFormat_RGB888:
-					glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei) width, (GLsizei) height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-					break;
-				case CCTexturePixelFormat_AI88:
-					glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, (GLsizei) width, (GLsizei) height, 0, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, data);
-					break;
-				case CCTexturePixelFormat_A8:
-					glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, (GLsizei) width, (GLsizei) height, 0, GL_ALPHA, GL_UNSIGNED_BYTE, data);
-					break;
-				default:
-					[NSException raise:NSInternalInconsistencyException format:@""];
-			}
-			
-			CCGL_DEBUG_POP_GROUP_MARKER();
-		});
-
-		_sizeInPixels  = sizeInPixels;
-		_width = width;
-		_height = height;
-		_format = pixelFormat;
-		_maxS = sizeInPixels.width / (float)width;
-		_maxT = sizeInPixels.height / (float)height;
-
-		_premultipliedAlpha = NO;
-
-		_hasMipmaps = NO;
-		_antialiased = YES;
-		
-		_contentScale = contentScale;
-	}
-	return self;
+    return _DEFAULT_OPTIONS;
 }
 
--(instancetype)initWithImage:(CCImage *)image options:(NSDictionary *)options
++(void)setDefaultOptions:(NSDictionary *)options
 {
+    _DEFAULT_OPTIONS = options;
+}
+
++(NSDictionary *)normalizeOptions:(NSDictionary *)options
+{
+    if(options == nil || options == NORMALIZED_OPTIONS){
+        return NORMALIZED_OPTIONS;
+    } else {
+        // Merge the default values with the user values.
+        NSMutableDictionary *opts = [NORMALIZED_OPTIONS mutableCopy];
+        [opts addEntriesFromDictionary:options];
+        
+        return opts;
+    }
+}
+
+//MARK: Abstract methods.
+static void Abstract(){NSCAssert(NO, @"Abstract method. Must be overridden by subclasses.");}
+
+-(void)_setupTexture:(CCTextureType)type rendertexture:(BOOL)renderTexture sizeInPixels:(CGSize)sizeInPixels mipmapped:(BOOL)mipmapped;
+{
+    Abstract();
+}
+
+-(void)_setupSampler:(CCTextureType)type
+    minFilter:(CCTextureFilter)minFilter magFilter:(CCTextureFilter)magFilter mipFilter:(CCTextureFilter)mipFilter
+    addressX:(CCTextureAddressMode)addressX addressY:(CCTextureAddressMode)addressY
+{
+    Abstract();
+}
+
+-(void)_uploadTexture2D:(CGSize)sizeInPixels miplevel:(NSUInteger)miplevel pixelData:(const void *)pixelData
+{
+    Abstract();
+}
+
+// Faces are in the same order as GL/Metal (+x, -x, +y, -y, +z, -z)
+-(void)_uploadTextureCubeFace:(NSUInteger)face sizeInPixels:(CGSize)sizeInPixels miplevel:(NSUInteger)miplevel pixelData:(const void *)pixelData
+{
+    Abstract();
+}
+
+-(void)_generateMipmaps:(CCTextureType)type
+{
+    Abstract();
+}
+
+//MARK: Setup/Init methods.
+
+-(void)setupTexture:(CCTextureType)type rendertexture:(BOOL)rendertexture sizeInPixels:(CGSize)sizeInPixels options:(NSDictionary *)options;
+{
+    BOOL genMipmaps = [options[CCTextureOptionGenerateMipmaps] boolValue];
+    
+    CCTextureFilter minFilter = [options[CCTextureOptionMinificationFilter] unsignedIntegerValue];
+    CCTextureFilter magFilter = [options[CCTextureOptionMagnificationFilter] unsignedIntegerValue];
+    CCTextureFilter mipFilter = [options[CCTextureOptionMipmapFilter] unsignedIntegerValue];
+    
+    NSAssert(minFilter != CCTextureFilterMipmapNone, @"CCTextureFilterMipmapNone can only be used with CCTextureOptionMipmapFilter.");
+    NSAssert(magFilter != CCTextureFilterMipmapNone, @"CCTextureFilterMipmapNone can only be used with CCTextureOptionMipmapFilter.");
+    NSAssert(mipFilter == CCTextureFilterMipmapNone || genMipmaps, @"CCTextureOptionMipmapFilter must be CCTextureFilterMipmapNone unless CCTextureOptionGenerateMipmaps is YES");
+    
+    CCTextureAddressMode addressX = [options[CCTextureOptionAddressModeX] unsignedIntegerValue];
+    CCTextureAddressMode addressY = [options[CCTextureOptionAddressModeY] unsignedIntegerValue];
+    
+    BOOL isPOT = CCSizeIsPOT(sizeInPixels);
+    NSAssert(addressX == CCTextureAddressModeClampToEdge || isPOT, @"Only CCTextureAddressModeClampToEdge can be used with non power of two sized textures.");
+    NSAssert(addressY == CCTextureAddressModeClampToEdge || isPOT, @"Only CCTextureAddressModeClampToEdge can be used with non power of two sized textures.");
+    
+    [self _setupTexture:type rendertexture:rendertexture sizeInPixels:sizeInPixels mipmapped:genMipmaps];
+    [self _setupSampler:type minFilter:minFilter magFilter:magFilter mipFilter:mipFilter addressX:addressX addressY:addressY];
+}
+
+-(instancetype)initWithImage:(CCImage *)image options:(NSDictionary *)options;
+{
+    return [self initWithImage:image options:options rendertexture:NO];
+}
+
+-(instancetype)initWithImage:(CCImage *)image options:(NSDictionary *)options rendertexture:(BOOL)rendertexture;
+{
+    options = [CCTexture normalizeOptions:options];
+    
     CCDeviceInfo *info = [CCDeviceInfo sharedDeviceInfo];
 	NSAssert(info.graphicsAPI != CCGraphicsAPIInvalid, @"Graphics API not configured.");
 	
@@ -337,41 +265,27 @@ static CCTexture *CCTextureNone = nil;
         return nil;
     }
     
+    if(!CCSizeIsPOT(sizeInPixels) && !info.supportsNPOT){
+        CCLOGWARN(@"cocos2d: Error: This device requires power of two sized textures.");
+        
+        return nil;
+    }
+    
 	if((self = [super init])) {
-#if __CC_METAL_SUPPORTED_AND_ENABLED
-        // TODO
-#endif
 		CCRenderDispatch(NO, ^{
-			CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Init");
-
-			glGenTextures(1, &_name);
-			glBindTexture(GL_TEXTURE_2D, _name);
-			
-			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
-			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
-
-			// Specify OpenGL texture image
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)sizeInPixels.width, (GLsizei)sizeInPixels.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image.pixelData.bytes);
-			
-			CCGL_DEBUG_POP_GROUP_MARKER();
+            [self setupTexture:CCTextureType2D rendertexture:rendertexture sizeInPixels:sizeInPixels options:options];
+            
+            [self _uploadTexture2D:sizeInPixels miplevel:0 pixelData:image.pixelData.bytes];
+            
+            if([options[CCTextureOptionGenerateMipmaps] boolValue]){
+                [self _generateMipmaps:CCTextureType2D];
+            }
 		});
-
-		_sizeInPixels  = CC_SIZE_SCALE(image.contentSize, image.contentScale);
-		_width = sizeInPixels.width;
-		_height = sizeInPixels.height;
-		_format = CCTexturePixelFormat_RGBA8888;
-		_maxS = _sizeInPixels.width/(float)_width;
-		_maxT = _sizeInPixels.height/(float)_height;
-
-		_premultipliedAlpha = NO;
-
-		_hasMipmaps = NO;
-		_antialiased = YES;
-		
-		_contentScale = image.contentScale;
-	}
+        
+        _sizeInPixels = sizeInPixels;
+        _contentScale = image.contentScale;
+        _contentSize = image.contentSize;
+    }
     
 	return self;
 }
@@ -405,336 +319,105 @@ static CCTexture *CCTextureNone = nil;
 
 // -------------------------------------------------------------
 
-- (void) releaseData:(void*)data
-{
-	//Free data
-	free(data);
-}
-
-- (void*) keepData:(void*)data length:(NSUInteger)length
-{
-	//The texture data mustn't be saved becuase it isn't a mutable texture.
-	return data;
-}
-
-- (void) dealloc
-{
-	CCLOGINFO(@"cocos2d: deallocing %@", self);
-	
-	GLuint name = _name;
-	if(name){
-		CCRenderDispatch(YES, ^{
-			CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Dealloc");
-			glDeleteTextures(1, &name);
-			CCGL_DEBUG_POP_GROUP_MARKER();
-		});
-	}
-}
-
+// TODO should move this to the Metal/GL impls.
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %p | Name = %i | Dimensions = %lux%lu | Pixel format = %@ | Coordinates = (%.2f, %.2f)>", [self class], self, _name, (unsigned long)_width, (unsigned long)_height, [self stringForFormat], _maxS, _maxT];
+	return [NSString stringWithFormat:@"<%@ = %p | Dimensions = %lux%lu pixels >",
+        [self class], self, (unsigned long)_sizeInPixels.width, (unsigned long)_sizeInPixels.height];
 }
 
--(CGSize) contentSize
-{
-	CGSize ret;
-	ret.width = _sizeInPixels.width / _contentScale;
-	ret.height = _sizeInPixels.height / _contentScale;
-
-	return ret;
-}
-
--(CCSpriteFrame*) createSpriteFrame
+-(CCSpriteFrame*)spriteFrame
 {
 	CGRect rectInPixels = {CGPointZero, _sizeInPixels};
 	return [CCSpriteFrame frameWithTexture:(CCTexture *)self.proxy rectInPixels:rectInPixels rotated:NO offset:CGPointZero originalSize:_sizeInPixels];
 }
 
-- (void) setAntialiased:(BOOL)antialiased
+@end
+
+
+@implementation CCTexture(Cubemap)
+
+-(instancetype)initCubemapFromImagesPosX:(CCImage *)posX negX:(CCImage *)negX
+                                    posY:(CCImage *)posY negY:(CCImage *)negY
+                                    posZ:(CCImage *)posZ negZ:(CCImage *)negZ
+                                    options:(NSDictionary *)options;
 {
-	if(_antialiased != antialiased){
+    options = [CCTexture normalizeOptions:options];
+    
+    CCDeviceInfo *info = [CCDeviceInfo sharedDeviceInfo];
+	NSAssert(info.graphicsAPI != CCGraphicsAPIInvalid, @"Graphics API not configured.");
+	
+    NSUInteger maxTextureSize = [info maxTextureSize];
+    CGSize sizeInPixels = posX.sizeInPixels;
+    
+    if(sizeInPixels.width > maxTextureSize || sizeInPixels.height > maxTextureSize){
+        CCLOGWARN(@"cocos2d: Error: Image (%d x %d) is bigger than the maximum supported texture size %d",
+            (int)sizeInPixels.width, (int)sizeInPixels.height, (int)maxTextureSize
+        );
+        
+        return nil;
+    }
+    
+    if(!CCSizeIsPOT(sizeInPixels) && !info.supportsNPOT){
+        CCLOGWARN(@"cocos2d: Error: This device requires power of two sized textures.");
+        
+        return nil;
+    }
+    
+	if((self = [super init])) {
 		CCRenderDispatch(NO, ^{
-#if __CC_METAL_SUPPORTED_AND_ENABLED
-			if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
-				CCMetalContext *context = [CCMetalContext currentContext];
-				
-				MTLSamplerDescriptor *samplerDesc = [MTLSamplerDescriptor new];
-				samplerDesc.minFilter = samplerDesc.magFilter = (antialiased ? MTLSamplerMinMagFilterLinear : MTLSamplerMinMagFilterNearest);
-				samplerDesc.mipFilter = (_hasMipmaps ? MTLSamplerMipFilterNearest : MTLSamplerMipFilterNotMipmapped);
-				samplerDesc.sAddressMode = MTLSamplerAddressModeClampToEdge;
-				samplerDesc.tAddressMode = MTLSamplerAddressModeClampToEdge;
-				
-				_metalSampler = [context.device newSamplerStateWithDescriptor:samplerDesc];
-			} else
-#endif
-			{
-				CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Set Alias Texture Parameters");
-				
-				glBindTexture(GL_TEXTURE_2D, _name);
-				
-				if(_hasMipmaps){
-					glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, antialiased ? GL_NEAREST_MIPMAP_NEAREST : GL_NEAREST_MIPMAP_NEAREST);
-				} else {
-					glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, antialiased ? GL_LINEAR : GL_NEAREST);
-				}
-				glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, antialiased ? GL_LINEAR : GL_NEAREST);
-				
-				CCGL_DEBUG_POP_GROUP_MARKER();
-				CC_CHECK_GL_ERROR_DEBUG();
-			}
+            [self setupTexture:CCTextureTypeCubemap rendertexture:NO sizeInPixels:sizeInPixels options:options];
+            
+            [self _uploadTextureCubeFace:0 sizeInPixels:sizeInPixels miplevel:0 pixelData:posX.pixelData.bytes];
+            [self _uploadTextureCubeFace:1 sizeInPixels:sizeInPixels miplevel:0 pixelData:negX.pixelData.bytes];
+            [self _uploadTextureCubeFace:2 sizeInPixels:sizeInPixels miplevel:0 pixelData:posY.pixelData.bytes];
+            [self _uploadTextureCubeFace:3 sizeInPixels:sizeInPixels miplevel:0 pixelData:negY.pixelData.bytes];
+            [self _uploadTextureCubeFace:4 sizeInPixels:sizeInPixels miplevel:0 pixelData:posZ.pixelData.bytes];
+            [self _uploadTextureCubeFace:5 sizeInPixels:sizeInPixels miplevel:0 pixelData:negZ.pixelData.bytes];
+            
+            // Generate mipmaps.
+            if([options[CCTextureOptionGenerateMipmaps] boolValue]){
+                [self _generateMipmaps:CCTextureTypeCubemap];
+            }
 		});
-		
-		_antialiased = antialiased;
-	}
-}
-
-@end
-
-#pragma mark -
-#pragma mark CCTexture2D - Image
-
-@implementation CCTexture (Image)
-
-- (id) initWithCGImage:(CGImageRef)cgImage contentScale:(CGFloat)contentScale
-{
-    CCImage *ccImage = [[CCImage alloc] initWithCGImage:cgImage contentScale:contentScale options:nil];
-    return [self initWithImage:ccImage options:nil];
-}
-
-@end
-
-#pragma mark -
-#pragma mark CCTexture2D - PVRSupport
-
-@implementation CCTexture (PVRSupport)
-
-// By default PVR images are treated as if they have the alpha channel premultiplied
-static BOOL _PVRHaveAlphaPremultiplied = YES;
-
--(id) initWithPVRFile: (NSString*) relPath
-{
-	CGFloat contentScale;
-	NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathForFilename:relPath contentScale:&contentScale];
-
-	if( (self = [super init]) ) {
-		CCTexturePVR *pvr = [[CCTexturePVR alloc] initWithContentsOfFile:fullpath];
-		if( pvr ) {
-			pvr.retainName = YES;	// don't dealloc texture on release
-
-			_name = pvr.name;	// texture id
-			_maxS = 1;			// only POT texture are supported
-			_maxT = 1;
-			_width = pvr.width;
-			_height = pvr.height;
-			_sizeInPixels = CGSizeMake(_width, _height);
-			_premultipliedAlpha = (pvr.forcePremultipliedAlpha) ? pvr.hasPremultipliedAlpha : _PVRHaveAlphaPremultiplied;
-			_format = pvr.format;
-
-			_hasMipmaps = ( pvr.numberOfMipmaps > 1  );
-
-		} else {
-
-			CCLOG(@"cocos2d: Couldn't load PVR image: %@", relPath);
-			return nil;
-		}
-		_contentScale = contentScale;
-	}
+        
+        _type = CCTextureTypeCubemap;
+        _sizeInPixels = sizeInPixels;
+        _contentScale = posX.contentScale;
+        _contentSize = posX.contentSize;
+    }
+    
 	return self;
 }
 
-+(void) PVRImagesHavePremultipliedAlpha:(BOOL)haveAlphaPremultiplied
+-(instancetype)initCubemapFromFilesPosX:(NSString *)posXFilePath negX:(NSString *)negXFilePath
+                                   posY:(NSString *)posYFilePath negY:(NSString *)negYFilePath
+                                   posZ:(NSString *)posZFilePath negZ:(NSString *)negZFilePath
+                                   options:(NSDictionary *)options;
 {
-	_PVRHaveAlphaPremultiplied = haveAlphaPremultiplied;
-}
-@end
-
-#pragma mark -
-#pragma mark CCTexture2D - Drawing
-
-#pragma mark -
-#pragma mark CCTexture2D - GLFilter
-
-//
-// Use to apply MIN/MAG filter
-//
-@implementation CCTexture (GLFilter)
-
--(void) generateMipmap
-{
-	if(!_hasMipmaps){
-		CCRenderDispatch(NO, ^{
-#if __CC_METAL_SUPPORTED_AND_ENABLED
-			if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
-				CCMetalContext *context = [CCMetalContext currentContext];
-				
-				// Create a new blank texture.
-				MTLPixelFormat metalFormat = MetalPixelFormats[_format];
-				MTLTextureDescriptor *textureDesc = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:metalFormat width:_width height:_height mipmapped:YES];
-				id<MTLTexture> newTexture = [context.device newTextureWithDescriptor:textureDesc];
-				
-				// Set up a command buffer for the blit operations.
-				id<MTLCommandBuffer> blitCommands = [context.commandQueue commandBuffer];
-				id<MTLBlitCommandEncoder> blitter = [blitCommands blitCommandEncoder];
-				
-				// Copy in level 0.
-				MTLOrigin origin = MTLOriginMake(0, 0, 0);
-				MTLSize size = MTLSizeMake(_width, _height, 1);
-				[blitter
-					copyFromTexture:_metalTexture sourceSlice:0 sourceLevel:0 sourceOrigin:origin sourceSize:size
-					toTexture:newTexture destinationSlice:0 destinationLevel:0 destinationOrigin:origin
-				];
-				
-				// Generate mipmaps and commit.
-				[blitter generateMipmapsForTexture:newTexture];
-				[blitter endEncoding];
-				[blitCommands commit];
-				
-				// Update sampler and texture.
-				MTLSamplerDescriptor *samplerDesc = [MTLSamplerDescriptor new];
-				samplerDesc.minFilter = samplerDesc.magFilter = (_antialiased ? MTLSamplerMinMagFilterLinear : MTLSamplerMinMagFilterNearest);
-				samplerDesc.mipFilter = MTLSamplerMipFilterNearest; // TODO trillinear?
-				samplerDesc.sAddressMode = MTLSamplerAddressModeClampToEdge;
-				samplerDesc.tAddressMode = MTLSamplerAddressModeClampToEdge;
-				
-				_metalSampler = [context.device newSamplerStateWithDescriptor:samplerDesc];
-				NSLog(@"Generate mipmaps. Replacing %p with %p.", _metalTexture, newTexture);
-				_metalTexture = newTexture;
-			} else
-#endif
-			{
-				CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Generate Mipmap");
-				
-				NSAssert( _width == CCNextPOT(_width) && _height == CCNextPOT(_height), @"Mimpap texture only works in POT textures");
-				glBindTexture(GL_TEXTURE_2D, _name);
-				glGenerateMipmap(GL_TEXTURE_2D);
-				
-				// Update the minification filter.
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _antialiased ? GL_LINEAR_MIPMAP_NEAREST : GL_NEAREST_MIPMAP_NEAREST);
-				
-				CCGL_DEBUG_POP_GROUP_MARKER();
-			}
-		});
-	}
-	
-	_hasMipmaps = YES;
+    NSMutableDictionary *opts = [options mutableCopy];
+    opts[CCImageOptionFlipVertical] = @(YES);
+    
+    return [self initCubemapFromImagesPosX:[[CCImage alloc] initWithCCFile:[CCFileUtils fileNamed:posXFilePath] options:opts]
+        negX:[[CCImage alloc] initWithCCFile:[CCFileUtils fileNamed:negXFilePath] options:opts]
+        posY:[[CCImage alloc] initWithCCFile:[CCFileUtils fileNamed:posYFilePath] options:opts]
+        negY:[[CCImage alloc] initWithCCFile:[CCFileUtils fileNamed:negYFilePath] options:opts]
+        posZ:[[CCImage alloc] initWithCCFile:[CCFileUtils fileNamed:posZFilePath] options:opts]
+        negZ:[[CCImage alloc] initWithCCFile:[CCFileUtils fileNamed:negZFilePath] options:opts]
+        options:opts
+    ];
 }
 
--(void) setTexParameters: (ccTexParams*) texParams
+-(instancetype)initCubemapFromFilePattern:(NSString *)aFilePathPattern options:(NSDictionary *)options;
 {
-	CCRenderDispatch(NO, ^{
-		CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Set Texture Parameters");
-		
-		NSAssert([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIGL, @"Not implemented for Metal.");
-		NSAssert( (_width == CCNextPOT(_width) && _height == CCNextPOT(_height)) ||
-					(texParams->wrapS == GL_CLAMP_TO_EDGE && texParams->wrapT == GL_CLAMP_TO_EDGE),
-				@"GL_CLAMP_TO_EDGE should be used in NPOT dimensions");
-
-		glBindTexture(GL_TEXTURE_2D, _name );
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texParams->minFilter );
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texParams->magFilter );
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, texParams->wrapS );
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, texParams->wrapT );
-		
-		CCGL_DEBUG_POP_GROUP_MARKER();
-		CC_CHECK_GL_ERROR_DEBUG();
-	});
+	return [self initCubemapFromFilesPosX:[NSString stringWithFormat: aFilePathPattern, @"PosX"]
+        negX:[NSString stringWithFormat:aFilePathPattern, @"NegX"]
+        posY:[NSString stringWithFormat:aFilePathPattern, @"PosY"]
+        negY:[NSString stringWithFormat:aFilePathPattern, @"NegY"]
+        posZ:[NSString stringWithFormat:aFilePathPattern, @"PosZ"]
+        negZ:[NSString stringWithFormat:aFilePathPattern, @"NegZ"]
+        options:options
+    ];
 }
 
 @end
-
-
-#pragma mark -
-#pragma mark CCTexture2D - Pixel Format
-
-//
-// Texture options for images that contains alpha
-//
-@implementation CCTexture (PixelFormat)
-+(void) setDefaultAlphaPixelFormat:(CCTexturePixelFormat)format
-{
-	defaultAlphaPixel_format = format;
-}
-
-+(CCTexturePixelFormat) defaultAlphaPixelFormat
-{
-	return defaultAlphaPixel_format;
-}
-
-+(NSUInteger) bitsPerPixelForFormat:(CCTexturePixelFormat)format
-{
-	switch (format) {
-		case CCTexturePixelFormat_RGBA8888:
-		case CCTexturePixelFormat_BGRA8888:
-			// It is 32 and not 24, since its internal representation uses 32 bits.
-		case CCTexturePixelFormat_RGB888:
-			return 32;
-		case CCTexturePixelFormat_RGB565:
-		case CCTexturePixelFormat_RGBA4444:
-		case CCTexturePixelFormat_RGB5A1:
-		case CCTexturePixelFormat_AI88:
-			return 16;
-		case CCTexturePixelFormat_A8:
-		case CCTexturePixelFormat_I8:
-			return 8;
-		case CCTexturePixelFormat_PVRTC4:
-			return 4;
-		case CCTexturePixelFormat_PVRTC2:
-			return 2;
-		default:
-			NSAssert1(NO , @"bitsPerPixelForFormat: %ld, unrecognised pixel format", (long)format);
-			CCLOG(@"bitsPerPixelForFormat: %ld, cannot give useful result", (long)format);
-			return -1;
-	}
-}
-
--(NSUInteger) bitsPerPixelForFormat
-{
-	return [[self class] bitsPerPixelForFormat:_format];
-}
-
--(NSString*) stringForFormat
-{
-	
-	switch (_format) {
-		case CCTexturePixelFormat_RGBA8888:
-			return  @"RGBA8888";
-
-		case CCTexturePixelFormat_RGB888:
-			return  @"RGB888";
-
-		case CCTexturePixelFormat_RGB565:
-			return  @"RGB565";
-
-		case CCTexturePixelFormat_RGBA4444:
-			return  @"RGBA4444";
-
-		case CCTexturePixelFormat_RGB5A1:
-			return  @"RGB5A1";
-
-		case CCTexturePixelFormat_AI88:
-			return  @"AI88";
-
-		case CCTexturePixelFormat_A8:
-			return  @"A8";
-
-		case CCTexturePixelFormat_I8:
-			return  @"I8";
-			
-		case CCTexturePixelFormat_PVRTC4:
-			return  @"PVRTC4";
-			
-		case CCTexturePixelFormat_PVRTC2:
-			return  @"PVRTC2";
-
-		case CCTexturePixelFormat_BGRA8888:
-			return  @"BGRA8888";
-
-		default:
-			NSAssert1(NO , @"stringForFormat: %ld, unrecognised pixel format", (long)_format);
-			CCLOG(@"stringForFormat: %ld, cannot give useful result", (long)_format);
-			return  nil;
-	}
-}
-@end
-

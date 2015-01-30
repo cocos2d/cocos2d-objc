@@ -1397,7 +1397,7 @@ SelectorNameForProperty(objc_property_t property)
     
     if(animationManager.fixedTimestep)
     {
-#warning        node.actionManager.fixedMode = YES;
+//TODO        node.actionManager.fixedMode = YES;
     }
     
     // Read animated properties

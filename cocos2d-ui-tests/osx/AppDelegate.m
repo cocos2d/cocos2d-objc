@@ -41,12 +41,13 @@
     fileUtils.directoriesDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
                                  @"resources-tablet", CCFileUtilsSuffixDefault,
                                  nil];
-    fileUtils.searchPath = [NSArray arrayWithObjects:
-                            [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Images"],
-                            [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Fonts"],
-                            [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Resources-shared"],
-                            [[NSBundle mainBundle] resourcePath],
-                            nil];
+    
+    fileUtils.searchPath = @[
+        [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Images"],
+        [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Fonts"],
+        [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Resources-shared"],
+        [[NSBundle mainBundle] resourcePath],
+    ];
     
     fileUtils.searchMode = CCFileUtilsSearchModeDirectory;
     [fileUtils buildSearchResolutionsOrder];

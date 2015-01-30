@@ -61,7 +61,6 @@
 #import "CCColor.h"
 #import "CCImage.h"
 #import "CCTexture.h"
-#import "CCTexturePVR.h"
 #import "CCSpriteFrame.h"
 #import "CCShader.h"
 #import "CCResponder.h"

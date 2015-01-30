@@ -26,35 +26,35 @@
 #import <Foundation/Foundation.h>
 
 @class CCFile;
-@protocol CCFileUtilsDatabaseProtocol;
+@protocol CCFileLocatorDatabaseProtocol;
 
-// Errors
+// CCFileLocator NSError code values.
+typedef NS_ENUM(NSInteger, CCFileLocatorError){
+    /**
+     Error indicating that there are no search paths available in CCFileUtils.
 
-/**
- Error indicating that there are no search paths available in CCFileUtils.
+     @since 4.0
+     */
+    CCFileLocatorErrorNoSearchPaths = 20000,
+    
+    /**
+     Error: No file could be found for a given filename.
 
- @since 4.0
- */
-extern NSUInteger const ERROR_FILEUTILS_NO_SEARCH_PATHS;
-
-/**
- Error: No file could be found for a given filename.
-
- @since 4.0
- */
-extern NSUInteger const ERROR_FILEUTILS_NO_FILE_FOUND;
-
+     @since 4.0
+     */
+    CCFileLocatorErrorNoFileFound = 20001,
+};
 
 /**
  Class to find assets in search paths taking localization and image content scales into account.
  
  General idea is to provide the filename only and depending on the device's settings and capabilities(resolution) an appropriate CCFile instance is returned.
 
- There are two methods available to access files: imageNamed and fileNamed. ImageNamed is supposed to be used for image lookups if you like to optimize visual quality depending on the device's resolution. See below.
+ There are two methods available to access files: fileNamedWithResolutionSearch and fileNamed. fileNamedWithResolutionSearch is supposed to be used for image lookups as well as other files containing a resolution specific tag if you like to optimize visual quality depending on the device's resolution. See below.
  FileNamed works for any file.
 
  To provide localizations and file aliasing(usually only used by Spritebuilder managed projects) a database has to be provided containing the required metadata to look up files.
- If you like to provide your own custom database it has to adopt the CCFileUtilsDatabaseProtocol. The CCFileUtilsDatabase is a simple example to add the contents of json files to the database per search path.
+ If you like to provide your own custom database it has to adopt the CCFileLocatorDatabaseProtocol. The CCFileLocatorDatabase is a simple example to add the contents of json files to the database per search path.
  CCFileMetaData instances are returned by a database to provide information on localizations and if UI scaling should happen.
  Any file can use the localization mechanics, all that's needed is an entry in the database with the corresponding localized file referenced by languageID.
  For details see CCFileMetaData.h.
@@ -75,7 +75,7 @@ extern NSUInteger const ERROR_FILEUTILS_NO_FILE_FOUND;
 
  @since 4.0
  */
-@interface CCFileUtilsV2 : NSObject
+@interface CCFileLocator : NSObject
 
 
 /**
@@ -89,11 +89,11 @@ extern NSUInteger const ERROR_FILEUTILS_NO_FILE_FOUND;
 
 /**
  A database that can be queried for metadata and filepaths of an asset.
- Refer to the CCFileUtilsDatabaseProtocol for more details about the interface required.
+ Refer to the CCFileLocatorDatabaseProtocol for more details about the interface required.
  
  @since 4.0
  */
-@property (nonatomic, strong) id <CCFileUtilsDatabaseProtocol> database;
+@property (nonatomic, strong) id <CCFileLocatorDatabaseProtocol> database;
 
 /**
  Base content scale for untagged, automatically resized assets.
@@ -117,26 +117,26 @@ extern NSUInteger const ERROR_FILEUTILS_NO_FILE_FOUND;
  
  @since 4.0
  */
-+ (CCFileUtilsV2 *)sharedFileUtils;
++ (CCFileLocator *)sharedFileLocator;
 
 /**
- Returns an instance of CCFile if an image was found.
- This method is meant to be used for images only as it will search for resolutions matching the device's content scale.
+ Returns an instance of CCFile if a file was found.
+ This method is meant to be used for images and other files that have a resolution tag included in their names as it will search for resolutions matching the device's content scale.
  
  See header for details on search order.
  
- @param filename the image's filename to search for. Note: filenames are the relative path to a search path including the filename, e.g. images/vehicles/car.png
+ @param filename the file's filename to search for. Note: filenames are the relative path to a search path including the filename, e.g. images/vehicles/car.png
  @param error    On input, a pointer to an error object. If an error occurs, this pointer is set to an actual error object containing the error information. You may specify nil for this parameter if you do not want the error information.
  
- @return An instance of CCFile pointing to an image found. If an error occured nil is returned and assigns an appropriate error object to the error parameter.
+ @return An instance of CCFile pointing to a file found. If an error occured nil is returned and assigns an appropriate error object to the error parameter.
  
  @since 4.0
  */
-- (CCFile *)imageNamed:(NSString *)filename error:(NSError **)error;
+- (CCFile *)fileNamedWithResolutionSearch:(NSString *)filename error:(NSError **)error;
 
 /**
- Returns an instance of CCFile if an image was found.
- This method is meant to be used for non-images as it will NOT search for resolutions matching the device's content scale like imageNamed does.
+ Returns an instance of CCFile if a file was found.
+ This method is meant to be used for non-images as it will NOT search for resolutions matching the device's content scale like fileNamedWithResolutionSearch does.
  
  @param filename the filename to search for. Note: filenames are the relative path to a search path including the filename, e.g. sounds/vehicles/honk.wav
  @param error    On input, a pointer to an error object. If an error occurs, this pointer is set to an actual error object containing the error information. You may specify nil for this parameter if you do not want the error information.

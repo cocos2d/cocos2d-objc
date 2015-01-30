@@ -41,6 +41,7 @@
 #import <Foundation/Foundation.h>
 #import "CCRenderableNode_Private.h"
 #import "CCColor.h"
+#import "CCImage_Private.h"
 
 #if __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
@@ -114,13 +115,11 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 
 - (id) initWithAttributedString:(NSAttributedString *)attrString;
 {
-    NSAssert([CCDeviceInfo sharedDeviceInfo].OSVersion >= CCSystemVersion_iOS_6_0, @"Attributed strings are only supported on iOS 6 or later");
     return [self initWithAttributedString:attrString fontName:@"Helvetica" fontSize:12 dimensions:CGSizeZero];
 }
 
 - (id) initWithAttributedString:(NSAttributedString *)attrString dimensions:(CGSize)dimensions
 {
-    NSAssert([CCDeviceInfo sharedDeviceInfo].OSVersion >= CCSystemVersion_iOS_6_0, @"Attributed strings are only supported on iOS 6 or later");
     return [self initWithAttributedString:attrString fontName:@"Helvetica" fontSize:12 dimensions:dimensions];
 }
 
@@ -166,7 +165,6 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 
 - (void) setAttributedString:(NSAttributedString *)attributedString
 {
-    NSAssert([CCDeviceInfo sharedDeviceInfo].OSVersion >= CCSystemVersion_iOS_6_0, @"Attributed strings are only supported on iOS 6 or later");
     [self _setAttributedString:attributedString];
 }
 
@@ -418,13 +416,13 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     
     _isTextureDirty = NO;
     
-#if __CC_PLATFORM_IOS
-    // Handle fonts on iOS 5
-    if ([CCDeviceInfo sharedDeviceInfo].OSVersion < CCSystemVersion_iOS_6_0)
-    {
-        return [self updateTextureOld];
-    }
-#endif
+//#if __CC_PLATFORM_IOS
+//    // Handle fonts on iOS 5
+//    if ([CCDeviceInfo sharedDeviceInfo].OSVersion < CCSystemVersion_iOS_6_0)
+//    {
+//        return [self updateTextureOld];
+//    }
+//#endif
     
     NSMutableAttributedString* formattedAttributedString = [_attributedString mutableCopy];
     
@@ -598,16 +596,14 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     
     CGRect drawArea = CGRectMake(xOffset, yOffset, wDrawArea, hDrawArea);
     
-    unsigned char* data = calloc(POTSize.width, POTSize.height * 4);
+    NSMutableData *pixelData = [NSMutableData dataWithLength:POTSize.width*POTSize.height*4];
     
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef context = CGBitmapContextCreate(data, POTSize.width, POTSize.height, 8, POTSize.width * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
+    CGContextRef context = CGBitmapContextCreate(pixelData.mutableBytes, POTSize.width, POTSize.height, 8, POTSize.width * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
     CGColorSpaceRelease(colorSpace);
     
-    if (!context)
-    {
-        free(data);
-        return NULL;
+    if (!context) {
+        return nil;
     }
     
     
@@ -643,289 +639,10 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     
     CGContextRelease(context);
     
-    CCTexture* texture = NULL;
-    
-    // Initialize the texture
-    if (fullColor)
-    {
-        // RGBA8888 format
-        texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_RGBA8888 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSizeInPixels:dimensions contentScale:self.director.contentScaleFactor];
-        [texture setPremultipliedAlpha:YES];
-    }
-    else
-    {
-        NSUInteger textureSize = POTSize.width * POTSize.height;
-        
-        // A8 format (alpha channel only)
-        unsigned char* dst = data;
-        for(int i = 0; i<textureSize; i++)
-            dst[i] = data[i*4+3];
-        
-        texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_A8 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSizeInPixels:dimensions contentScale:self.director.contentScaleFactor];
-        self.shader = [CCShader positionTextureA8ColorShader];
-    }
-    
-    free(data);
-    
-	return texture;
+    CCImage *image = [[CCImage alloc] initWithPixelSize:POTSize contentScale:[CCDirector currentDirector].contentScaleFactor pixelData:pixelData];
+    image.contentSize = CC_SIZE_SCALE(dimensions, 1.0/image.contentScale);
+	return [[CCTexture alloc] initWithImage:image options:nil];
 }
-
-
-#pragma mark -
-#pragma mark Render Font iOS 5
-
-#if __CC_PLATFORM_IOS
-- (BOOL) updateTextureOld
-{
-    NSString* string = [self string];
-    if (!string) return NO;
-    
-    BOOL useFullColor = NO;
-    if (_shadowColor.alpha > 0) useFullColor = YES;
-    if (![_fontColor isEqualToColor:[CCColor whiteColor]]) useFullColor = YES;
-    if (_outlineColor.alpha > 0 && _outlineWidth > 0) useFullColor = YES;
-    
-    CCTexture* tex = [self createTextureWithString:string useFullColor:useFullColor];
-    if (!tex) return NO;
-    
-		self.shader = (useFullColor ? [CCShader positionTextureColorShader] : [CCShader positionTextureA8ColorShader]);
-        
-    // Update texture and content size
-	[self setTexture:tex];
-	
-	CGRect rect = CGRectZero;
-	rect.size = [self.texture contentSize];
-	[self setTextureRect: rect];
-	
-	return YES;
-}
-
-- (CCTexture*) createTextureWithString:(NSString*) string useFullColor:(BOOL)useFullColor
-{
-    // Scale everything up by content scale
-    CGFloat scale = self.director.contentScaleFactor;
-    CTFontRef font = CTFontCreateWithName((__bridge CFStringRef)string, _fontSize * scale, NULL);
-    CGFloat shadowBlurRadius = _shadowBlurRadius * scale;
-    CGPoint shadowOffset = ccpMult(self.shadowOffsetInPoints, scale);
-    CGFloat outlineWidth = _outlineWidth * scale;
-    
-    BOOL hasShadow = (_shadowColor.alpha > 0);
-    BOOL hasOutline = (_outlineColor.alpha > 0 && _outlineWidth > 0);
-    
-    CGFloat xOffset = 0;
-    CGFloat yOffset = 0;
-    CGFloat scaleFactor = 1;
-    
-    CGFloat xPadding = 0;
-    CGFloat yPadding = 0;
-    CGFloat wDrawArea = 0;
-    CGFloat hDrawArea = 0;
-    
-    CGSize originalDimensions = _dimensions;
-    originalDimensions.width *= scale;
-    originalDimensions.height *= scale;
-    
-    // Calculate padding
-    if (hasShadow)
-    {
-        xPadding = (shadowBlurRadius + fabs(shadowOffset.x));
-        yPadding = (shadowBlurRadius + fabs(shadowOffset.y));
-    }
-    if (hasOutline)
-    {
-        xPadding += outlineWidth;
-        yPadding += outlineWidth;
-    }
-    
-    CGSize dimensions = originalDimensions;
-    
-    // Get actual rendered dimensions
-    if (dimensions.height == 0)
-    {
-        // Get dimensions for string without dimensions of string with variable height
-        if (dimensions.width > 0)
-        {
-            dimensions = [self sizeForString:string withFont:font constrainedToWidth:dimensions.width];
-        }
-        else
-        {
-            CGSize firstLineSize = [self sizeForString:string withFont:font];
-            dimensions = [self sizeForString:string withFont:font constrainedToSize:CGSizeMake(firstLineSize.width,1024)];
-        }
-        
-        wDrawArea = dimensions.width;
-        hDrawArea = dimensions.height;
-        
-        dimensions.width += xPadding * 2;
-        dimensions.height += yPadding * 2;
-    }
-    else if (dimensions.width > 0 && dimensions.height > 0)
-    {
-        wDrawArea = dimensions.width - xPadding * 2;
-        hDrawArea = dimensions.height - yPadding * 2;
-        
-        // Handle strings with fixed dimensions
-        if (_adjustsFontSizeToFit)
-        {
-            CGFloat fontSize = CTFontGetSize(font);
-            CGSize wantedSizeFirstLine =  [self sizeForString:string withFont:font];
-            CGSize wantedSize = [self sizeForString:string withFont:font constrainedToSize:CGSizeMake(wantedSizeFirstLine.width,1024)];
-            
-            CGFloat wScaleFactor = 1;
-            CGFloat hScaleFactor = 1;
-            if (wantedSize.width > wDrawArea)
-            {
-                wScaleFactor = wDrawArea/wantedSize.width;
-            }
-            if (wantedSize.height > hDrawArea)
-            {
-                hScaleFactor = hDrawArea/wantedSize.height;
-            }
-            
-            if (wScaleFactor < hScaleFactor) scaleFactor = wScaleFactor;
-            else scaleFactor = hScaleFactor;
-            
-            if (scaleFactor != 1)
-            {
-                CGFloat newFontSize = fontSize * scaleFactor;
-                CGFloat minFontSize = _minimumFontSize * scale;
-                if (minFontSize && newFontSize < minFontSize) newFontSize = minFontSize;
-                CTFontRef newFont = CTFontCreateCopyWithAttributes(font, newFontSize, NULL, NULL);
-                CFRelease(font);
-                font = newFont;
-            }
-        }
-        
-        // Handle vertical alignment
-        CGSize actualSize = [self sizeForString:string withFont:font constrainedToSize:CGSizeMake(wDrawArea, 1024)];
-    
-        if (_verticalAlignment == CCVerticalTextAlignmentBottom)
-        {
-            yOffset = hDrawArea - actualSize.height;
-        }
-        else if (_verticalAlignment == CCVerticalTextAlignmentCenter)
-        {
-            yOffset = (hDrawArea - actualSize.height)/2;
-        }
-    }
-    
-    // Handle baseline adjustments
-    yOffset += _baselineAdjustment * scaleFactor * scale + yPadding;
-    xOffset += xPadding;
-    
-    // Round dimensions to nearest number that is dividable by 2
-    dimensions.width = ceilf(dimensions.width/2)*2;
-    dimensions.height = ceilf(dimensions.height/2)*2;
-
-    // get nearest power of two
-    CGSize POTSize = CGSizeMake(CCNextPOT(dimensions.width), CCNextPOT(dimensions.height));
-
-    // Mac crashes if the width or height is 0
-    if( POTSize.width == 0 )
-    POTSize.width = 2;
-
-    if( POTSize.height == 0)
-    POTSize.height = 2;
-
-    CGRect drawArea = CGRectMake(xOffset, yOffset, wDrawArea, hDrawArea);
-
-    unsigned char* data = calloc(POTSize.width, POTSize.height * 4);
-
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef context = CGBitmapContextCreate(data, POTSize.width, POTSize.height, 8, POTSize.width * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
-    CGColorSpaceRelease(colorSpace);
-
-    if (!context)
-    {
-        if (font != NULL) {
-            CFRelease(font);
-        }
-        free(data);
-        return NULL;
-    }
-
-#if __CC_PLATFORM_IOS
-    UIGraphicsPushContext(context);
-#endif
-    
-    // Handle shadow
-    if (hasShadow)
-    {
-        CGContextSetShadowWithColor(context, CGSizeMake(shadowOffset.x, -shadowOffset.y), shadowBlurRadius, _shadowColor.CGColor);
-    }
-    
-    // Handle outline
-    if (hasOutline)
-    {
-        GLKVector4 outlineColor = _outlineColor.glkVector4;
-        
-        CGContextSetTextDrawingMode(context, kCGTextFillStroke);
-        CGContextSetRGBStrokeColor(context, outlineColor.r, outlineColor.g, outlineColor.b, outlineColor.a);
-        CGContextSetRGBFillColor(context, outlineColor.r, outlineColor.g, outlineColor.b, outlineColor.a);
-        CGContextSetLineWidth(context, outlineWidth * 2);
-        CGContextSetLineJoin(context, kCGLineJoinRound);
-        
-        [self drawString:string withFont:font inContext:context inRect:drawArea];
-        
-        // Don't draw shadow for main font
-        CGContextSetShadowWithColor(context, CGSizeZero, 0, NULL);
-        
-        if (hasShadow)
-        {
-            // Draw again, because shadows overlap
-            [self drawString:string withFont:font inContext:context inRect:drawArea];
-        }
-        
-        CGContextSetTextDrawingMode(context, kCGTextFill);
-    }
-    
-    // Handle font color
-    
-    CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
-    const CGFloat components[] = {_fontColor.red, _fontColor.green, _fontColor.blue, _fontColor.alpha};
-    CGColorRef color = CGColorCreate(colorspace, components);
-    CGColorSpaceRelease(colorspace);
-
-    CGContextSetFillColorWithColor(context, color);
-    CGContextSetStrokeColorWithColor(context, color);
-    CGColorRelease(color);
-
-    [self drawString:string withFont:font inContext:context inRect:drawArea];
-
-#if __CC_PLATFORM_IOS
-    UIGraphicsPopContext();
-#endif
-    CGContextRelease(context);
-
-    CCTexture* texture = NULL;
-
-    // Initialize the texture
-    if (useFullColor)
-    {
-        // RGBA8888 format
-        texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_RGBA8888 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSizeInPixels:dimensions contentScale:self.director.contentScaleFactor];
-        [texture setPremultipliedAlpha:YES];
-    }
-    else
-    {
-        NSUInteger textureSize = POTSize.width * POTSize.height;
-        
-        // A8 format (alpha channel only)
-        unsigned char* dst = data;
-        for(int i = 0; i<textureSize; i++)
-            dst[i] = data[i*4+3];
-        
-        texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_A8 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSizeInPixels:dimensions contentScale:self.director.contentScaleFactor];
-        self.shader = [CCShader positionTextureA8ColorShader];
-    }
-
-    free(data);
-    CFRelease(font);
-
-    return texture;
-}
-
-#endif
 
 #pragma mark -
 #pragma mark Handle HTML

@@ -301,7 +301,7 @@
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_luminanceThreshold"]] = weakInterface.conditionedThreshold;
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_intensity"]] = weakInterface.conditionedIntensity;
         
-        GLKVector2 dur = GLKVector2Make(1.0 / (passInputs.previousPassTexture.pixelWidth / passInputs.previousPassTexture.contentScale), 0.0);
+        GLKVector2 dur = GLKVector2Make(1.0 / (passInputs.previousPassTexture.sizeInPixels.width / passInputs.previousPassTexture.contentScale), 0.0);
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithGLKVector2:dur];
         
     } copy]];
@@ -319,7 +319,7 @@
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_luminanceThreshold"]] = [NSNumber numberWithFloat:0.0f];
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_intensity"]] = weakInterface.conditionedIntensity;
         
-        GLKVector2 dur = GLKVector2Make(0.0, 1.0 / (passInputs.previousPassTexture.pixelHeight / passInputs.previousPassTexture.contentScale));
+        GLKVector2 dur = GLKVector2Make(0.0, 1.0 / (passInputs.previousPassTexture.sizeInPixels.height / passInputs.previousPassTexture.contentScale));
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithGLKVector2:dur];
         
     } copy]];

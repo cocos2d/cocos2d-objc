@@ -484,9 +484,11 @@ CompareTimers(const void *a, const void *b, void *context)
 			if(timer.invokeTime > 0.0){
 				CCScheduler *scheduler = _self;
 				InvokeMethods(scheduler->_fixedUpdates, @selector(fixedUpdate:), timer.repeatInterval);
+                
+                //TODO: also invoke fixed update actions:
+                
 				scheduler->_lastFixedUpdateTime = timer.invokeTime;
 			}
-        #warning TODO: also invoke fixed update actions:
             
 		} forTarget:self withDelay:0] retain];
 
@@ -693,8 +695,6 @@ CompareTimers(const void *a, const void *b, void *context)
 	[self updateTo:_currentTime + clampedDelta];
 	
 	InvokeMethods(_updates, @selector(update:), clampedDelta);
-    
-    #warning TODO: also invoke fixed update actions, in addition to normal update loop actions
     [self updateActions:dt];
     
 	_lastUpdateTime = _currentTime;
@@ -704,10 +704,17 @@ CompareTimers(const void *a, const void *b, void *context)
 
 -(void)addAction:(CCAction*)action target:(NSObject<CCSchedulableTarget> *)target paused:(BOOL)paused
 {
+    NSAssert(action, @"Argument action must be non-nil");
+    NSAssert(target, @"Argument target must be non-nil");
+    
     CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
     scheduledTarget.paused = paused;
     
-    if(!scheduledTarget.hasActions){
+    if(scheduledTarget.hasActions){
+        NSAssert(![scheduledTarget.actions containsObject:action], @"Action already running on this target.");
+    } else {
+        // This is the first action that has been scheduled for this target.
+        // It needs to be added to the list of targets with actions.
         [_scheduledTargetsWithActions addObject:scheduledTarget];
     }
     

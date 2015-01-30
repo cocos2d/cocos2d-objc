@@ -29,6 +29,88 @@
 #import "CCDeviceInfo.h"
 
 
+@implementation CCTextureGL
+
+- (void) dealloc
+{
+	CCLOGINFO(@"cocos2d: deallocing %@", self);
+	
+	GLuint name = _name;
+	if(name){
+		CCRenderDispatch(YES, ^{
+			CCGL_DEBUG_PUSH_GROUP_MARKER("CCTexture: Dealloc");
+			glDeleteTextures(1, &name);
+			CCGL_DEBUG_POP_GROUP_MARKER();
+		});
+	}
+}
+
+static GLenum
+GLTypeForCCTextureType(CCTextureType type)
+{
+    switch(type){
+        case CCTextureType2D: return GL_TEXTURE_2D;
+        case CCTextureTypeCubemap: return GL_TEXTURE_CUBE_MAP;
+    }
+}
+
+-(GLenum)glType
+{
+    return GLTypeForCCTextureType(self.type);
+}
+
+-(void)_setupTexture:(CCTextureType)type rendertexture:(BOOL)rendertexture sizeInPixels:(CGSize)sizeInPixels mipmapped:(BOOL)mipmapped;
+{
+    glGenTextures(1, &_name);
+}
+
+-(void)_setupSampler:(CCTextureType)type
+    minFilter:(CCTextureFilter)minFilter magFilter:(CCTextureFilter)magFilter mipFilter:(CCTextureFilter)mipFilter
+    addressX:(CCTextureAddressMode)addressX addressY:(CCTextureAddressMode)addressY
+{
+    GLenum target = GLTypeForCCTextureType(type);
+    glBindTexture(target, _name);
+    
+    // Set up texture filtering mode.
+    static const GLenum FILTERS[3][3] = {
+        {GL_LINEAR, GL_LINEAR, GL_LINEAR}, // Invalid enum, fall back to linear.
+        {GL_NEAREST, GL_NEAREST_MIPMAP_NEAREST, GL_NEAREST_MIPMAP_LINEAR}, // nearest
+        {GL_LINEAR, GL_LINEAR_MIPMAP_NEAREST, GL_LINEAR_MIPMAP_LINEAR}, // linear
+    };
+
+    glTexParameteri(target, GL_TEXTURE_MIN_FILTER, FILTERS[minFilter][mipFilter]);
+    glTexParameteri(target, GL_TEXTURE_MAG_FILTER, FILTERS[magFilter][CCTextureFilterMipmapNone]);
+    
+    // Set up texture wrap mode.
+    static const GLenum ADDRESSING[] = {
+        GL_CLAMP_TO_EDGE,
+        GL_REPEAT,
+        GL_MIRRORED_REPEAT,
+    };
+    
+    glTexParameteri(target, GL_TEXTURE_WRAP_S, ADDRESSING[addressX]);
+    glTexParameteri(target, GL_TEXTURE_WRAP_T, ADDRESSING[addressY]);
+}
+
+-(void)_uploadTexture2D:(CGSize)sizeInPixels miplevel:(NSUInteger)miplevel pixelData:(const void *)pixelData;
+{
+    glTexImage2D(GL_TEXTURE_2D, (GLint)miplevel, GL_RGBA, (GLsizei)sizeInPixels.width, (GLsizei)sizeInPixels.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixelData);
+}
+
+-(void)_uploadTextureCubeFace:(NSUInteger)face sizeInPixels:(CGSize)sizeInPixels miplevel:(NSUInteger)miplevel pixelData:(const void *)pixelData
+{
+    glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + (GLenum)face, (GLint)miplevel, GL_RGBA, (GLsizei)sizeInPixels.width, (GLsizei)sizeInPixels.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixelData);
+}
+
+-(void)_generateMipmaps:(CCTextureType)type
+{
+    // TODO should this check for full NPOT texture support here?
+    glGenerateMipmap(GLTypeForCCTextureType(type));
+}
+
+@end
+
+
 static const CCGraphicsBufferType CCGraphicsBufferGLTypes[] = {
 	GL_ARRAY_BUFFER,
 	GL_ELEMENT_ARRAY_BUFFER,
@@ -287,10 +369,10 @@ BindVertexPage(CCGraphicsBufferBindingsGL *self, NSUInteger page)
 			glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
 			
 			// associate texture with FBO
-			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.name, 0);
+			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, [(CCTextureGL *)texture name], 0);
 			
-			GLuint width = (GLuint)texture.pixelWidth;
-			GLuint height = (GLuint)texture.pixelHeight;
+			GLuint width = (GLuint)texture.sizeInPixels.width;
+			GLuint height = (GLuint)texture.sizeInPixels.height;
 
 #if __CC_PLATFORM_ANDROID
 			
@@ -300,7 +382,7 @@ BindVertexPage(CCGraphicsBufferBindingsGL *self, NSUInteger page)
 			{
 					//create and attach depth buffer
 			
-					if(![[CCConfiguration sharedConfiguration] supportsPackedDepthStencil])
+					if(![[CCDeviceInfo sharedDeviceInfo] supportsPackedDepthStencil])
 					{
 							glGenRenderbuffers(1, &_depthRenderBuffer);
 							glBindRenderbuffer(GL_RENDERBUFFER, _depthRenderBuffer);

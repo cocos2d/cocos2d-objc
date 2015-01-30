@@ -155,6 +155,8 @@ NormalizeOptions(NSDictionary *options)
 
 -(instancetype)initWithCCFile:(CCFile *)file options:(NSDictionary *)options;
 {
+    NSAssert(file, @"file is nil.");
+    
     if(YES){
         return [self initWithCoreGraphics:file options:options];
     } else {
@@ -163,7 +165,7 @@ NormalizeOptions(NSDictionary *options)
     }
 }
 
-#warning TODO
+// TODO
 -(id)initWithCoder:(NSCoder *)coder
 {
     return nil;

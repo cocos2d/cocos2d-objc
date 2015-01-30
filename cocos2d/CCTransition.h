@@ -159,13 +159,6 @@ typedef NS_ENUM(NSInteger, CCTransitionDirection)
 @property (nonatomic, getter = isRetinaTransition) BOOL retinaTransition;
 
 /**
- Pixel format used for transition.
- Default `CCTexturePixelFormat_RGBA8888`.
- @see CCTexturePixelFormat
- */
-@property (nonatomic, assign) CCTexturePixelFormat transitionPixelFormat;
-
-/**
  *  Depth/stencil format used for transition.
  *  Default `GL_DEPTH24_STENCIL8_OES`.
  */

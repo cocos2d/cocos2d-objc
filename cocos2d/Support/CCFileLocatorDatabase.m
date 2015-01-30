@@ -24,17 +24,17 @@
 
 
 #import <Foundation/Foundation.h>
-#import "CCFileUtilsDatabase.h"
+#import "CCFileLocatorDatabase.h"
 #import "CCFileMetaData.h"
 
-@interface CCFileUtilsDatabase ()
+@interface CCFileLocatorDatabase ()
 
 @property (nonatomic, strong) NSMutableDictionary *databases;
 
 @end
 
 
-@implementation CCFileUtilsDatabase
+@implementation CCFileLocatorDatabase
 
 - (instancetype)init
 {
@@ -77,7 +77,7 @@
 {
     NSError *errorData;
     NSData *data = [NSData dataWithContentsOfFile:filePath
-                                          options:nil
+                                          options:0
                                             error:&errorData];
 
     if (!data)

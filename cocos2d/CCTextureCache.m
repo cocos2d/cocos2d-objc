@@ -33,7 +33,6 @@
 
 #import "Platforms/CCGL.h"
 #import "CCTexture_Private.h"
-#import "CCTexturePVR.h"
 #import "CCDeviceInfo.h"
 #import "CCDirector.h"
 #import "CCFileUtils.h"
@@ -220,23 +219,20 @@ static CCTextureCache *sharedTextureCache;
 	});
 
 	if( ! tex ) {
-
-		CGFloat contentScale;
-		NSString *fullpath = [fileUtils fullPathForFilename:path contentScale:&contentScale];
-		if( ! fullpath ) {
+        CCFile *file = [CCFileUtils fileNamed:path];
+        
+		if( ! file ) {
 			CCLOG(@"cocos2d: Couldn't find file:%@", path);
 			return nil;
 		}
 
-		NSString *lowerCase = [fullpath lowercaseString];
+		NSString *lowerCase = [file.absoluteFilePath lowercaseString];
 
 		// all images are handled by UIKit/AppKit except PVR extension that is handled by cocos2d's handler
 
         if([lowerCase hasSuffix:@".pvr"] || [lowerCase hasSuffix:@".pvr.gz"] || [lowerCase hasSuffix:@".pvr.ccz"]){
             tex = [self addPVRImage:path];
         } else {
-            NSURL *url = [NSURL fileURLWithPath:fullpath];
-            CCFile *file = [[CCFile alloc] initWithName:path url:url contentScale:contentScale];
             CCImage *image = [[CCImage alloc] initWithCCFile:file options:nil];
             tex = [[CCTexture alloc] initWithImage:image options:nil];
 
@@ -269,8 +265,9 @@ static CCTextureCache *sharedTextureCache;
 		if(tex)
 			return((id)tex.proxy);
 	}
-
-	tex = [[CCTexture alloc] initWithCGImage:imageref contentScale:1.0];
+    
+    CCImage *image = [[CCImage alloc] initWithCGImage:imageref contentScale:1.0 options:nil];
+	tex = [[CCTexture alloc] initWithImage:image options:nil];
 
 	if(tex && key){
 		dispatch_sync(_dictQueue, ^{
@@ -368,8 +365,8 @@ static CCTextureCache *sharedTextureCache;
 	if(tex) {
 		return((id)tex.proxy);
 	}
-
-	tex = [[CCTexture alloc] initWithPVRFile: path];
+    
+	tex = [[CCTexture alloc] initPVRWithCCFile:[CCFileUtils fileNamed:path] options:nil];
 	if( tex ){
 		dispatch_sync(_dictQueue, ^{
 			[_textures setObject: tex forKey:path];
@@ -389,26 +386,18 @@ static CCTextureCache *sharedTextureCache;
 -(void) dumpCachedTextureInfo
 {
 	__block NSUInteger count = 0;
-	__block NSUInteger totalBytes = 0;
 
 	dispatch_sync(_dictQueue, ^{
 		for (NSString* texKey in _textures) {
 			CCTexture* tex = [_textures objectForKey:texKey];
-			NSUInteger bpp = [tex bitsPerPixelForFormat];
-			// Each texture takes up width * height * bytesPerPixel bytes.
-			NSUInteger bytes = tex.pixelWidth * tex.pixelHeight * bpp / 8;
-			totalBytes += bytes;
 			count++;
-			NSLog( @"cocos2d: \"%@\"\tid=%lu\t%lu x %lu\t@ %ld bpp =>\t%lu KB",
+			NSLog( @"cocos2d: \"%@\"\t%lu x %lu",
 				  texKey,
-				  (long)tex.name,
-				  (long)tex.pixelWidth,
-				  (long)tex.pixelHeight,
-				  (long)bpp,
-				  (long)bytes / 1024 );
+				  (long)tex.sizeInPixels.width,
+				  (long)tex.sizeInPixels.height);
 		}
 	});
-	NSLog( @"cocos2d: CCTextureCache dumpDebugInfo:\t%ld textures,\tfor %lu KB (%.2f MB)", (long)count, (long)totalBytes / 1024, totalBytes / (1024.0f*1024.0f));
+	NSLog( @"cocos2d: CCTextureCache dumpDebugInfo:\t%ld textures", (long)count);
 }
 
 @end

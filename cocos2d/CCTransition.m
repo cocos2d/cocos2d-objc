@@ -30,10 +30,11 @@
 #import "CCTransition.h"
 #import "CCDirector_Private.h"
 #import "CCNode_Private.h"
+#import "CCScene+Private.h"
 
+#import "CCSprite.h"
 #import "CCRenderTexture.h"
 #import "CCColor.h"
-#import "CCScene+Private.h"
 
 // -----------------------------------------------------------------
 
@@ -118,7 +119,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     _outgoingOverIncoming = NO;
     
     // find out where the outgoing scene will end (if it is a transition with movement)
-    CGSize size = [CCDirector sharedDirector].viewportRect.size;
+    CGSize size = [CCDirector currentDirector].viewportRect.size;
     switch (direction) {
         case CCTransitionDirectionDown: _outgoingDestination = CGPointMake(0, -size.height); break;
         case CCTransitionDirectionLeft: _outgoingDestination = CGPointMake(-size.width, 0); break;
@@ -170,7 +171,6 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     _runTime = 0.0f;
     _progress = 0.0f;
     
-    _transitionPixelFormat = CCTexturePixelFormat_RGBA8888;
     _transitionDepthStencilFormat = GL_DEPTH24_STENCIL8;
     
     // disable touch during transition
@@ -205,14 +205,14 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     size.height = ceil(rect.size.height);
 
     // create texture for outgoing scene
-    _outgoingTexture = [CCRenderTexture renderTextureWithWidth:size.width height:size.height pixelFormat:_transitionPixelFormat depthStencilFormat:_transitionDepthStencilFormat];
+    _outgoingTexture = [CCRenderTexture renderTextureWithWidth:size.width height:size.height depthStencilFormat:_transitionDepthStencilFormat];
     _outgoingTexture.position = CGPointMake(size.width * 0.5f + rect.origin.x, size.height * 0.5f + rect.origin.y);
     _outgoingTexture.contentScale /= _outgoingDownScale;
 		_outgoingTexture.projection = director.projectionMatrix;
     [self addChild:_outgoingTexture z:_outgoingOverIncoming];
     
     // create texture for incoming scene
-    _incomingTexture = [CCRenderTexture renderTextureWithWidth:size.width height:size.height pixelFormat:_transitionPixelFormat depthStencilFormat:_transitionDepthStencilFormat];
+    _incomingTexture = [CCRenderTexture renderTextureWithWidth:size.width height:size.height depthStencilFormat:_transitionDepthStencilFormat];
     _incomingTexture.position = CGPointMake(size.width * 0.5f + rect.origin.x, size.height * 0.5f + rect.origin.y);
     _incomingTexture.contentScale /= _incomingDownScale;
 		_incomingTexture.projection = director.projectionMatrix;
@@ -247,11 +247,11 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     {
         // Exit out scene
         [_outgoingScene onExit];
-        if ([CCDirector sharedDirector].sendCleanupToScene) [_outgoingScene cleanup];
+        if ([CCDirector currentDirector].sendCleanupToScene) [_outgoingScene cleanup];
         _outgoingScene = nil;
         
         // Start incoming scene
-        [[CCDirector sharedDirector] presentScene:_incomingScene];
+        [[CCDirector currentDirector] presentScene:_incomingScene];
         [_incomingScene onEnterTransitionDidFinish];
         [_incomingScene setPaused:NO];
         _incomingScene = nil;

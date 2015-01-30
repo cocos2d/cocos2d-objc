@@ -86,8 +86,8 @@
 							 pointRect.size.width * scale,
 							 pointRect.size.height * scale );
 
-	float wide = [self.texture pixelWidth];
-	float high = [self.texture pixelHeight];
+    float wide = self.texture.sizeInPixels.width;
+	float high = self.texture.sizeInPixels.height;
 
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 	float left = (rect.origin.x*2+1) / (wide*2);

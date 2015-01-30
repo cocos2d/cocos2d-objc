@@ -28,6 +28,7 @@
 
 #import "CCCache.h"
 #import "CCDeviceInfo.h"
+#import "ccUtils.h"
 
 #pragma mark Blend Option Keys.
 NSString * const CCRenderStateBlendMode = @"CCRenderStateBlendMode";
@@ -428,7 +429,7 @@ static CCRenderState *CCRENDERSTATE_DEBUGCOLOR = nil;
 	if((self = [super init])){
 		_texture = texture;
 		
-		_sizeInPixels = texture.contentSizeInPixels;
+		_sizeInPixels = CC_SIZE_SCALE(texture.contentSize, texture.contentScale);
 		_contentScale = texture.contentScale;
 		
 		_depthStencilFormat = depthStencilFormat;

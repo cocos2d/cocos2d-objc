@@ -27,6 +27,7 @@
 
 #import "CCColor.h"
 #import "CCNode.h"
+#import "CCTexture.h"
 
 
 /** RGB color composed of bytes 3 bytes
@@ -337,6 +338,14 @@ typedef struct __attribute__((deprecated)) _ccBlendFunc
 
 
 
+@interface CCDirector(Deprecated)
+
+// Use `[CCDirector currentDirector]` instead.
++(CCDirector*)sharedDirector __attribute__((deprecated));
+
+@end
+
+
 @interface CCColor(Deprecated)
 
 + (CCColor*)colorWithCcColor3b: (ccColor3B) c __attribute__((deprecated));
@@ -380,5 +389,30 @@ typedef struct __attribute__((deprecated)) _ccBlendFunc
  */
 -(NSUInteger) numberOfRunningActions __attribute__((deprecated));
 
+
+@end
+
+
+@interface CCTexture(Deprecated)
+
+// Use CCTexture.spriteFrame instead.
+-(CCSpriteFrame*)createSpriteFrame __attribute__((deprecated));
+
+// Use CCTexture.sizeInPixels instead.
+@property(nonatomic,readonly) NSUInteger pixelWidth __attribute__((deprecated));
+// Use CCTexture.sizeInPixels instead.
+@property(nonatomic,readonly) NSUInteger pixelHeight __attribute__((deprecated));
+
+// Use CCTexture.contentSize and CCTexture.contentScale instead.
+@property(nonatomic,readonly, nonatomic) CGSize contentSizeInPixels __attribute__((deprecated));
+
+// TODO move this back to the regular header?
+@property(nonatomic,readonly) BOOL hasPremultipliedAlpha __attribute__((deprecated));
+
+// Set up nearest/linear filtering options when creating your texture instead.
+@property(nonatomic,assign,getter=isAntialiased) BOOL antialiased __attribute__((deprecated));
+
+// Use [CCTexture -initWithImage:options:] instead.
+- (id)initWithCGImage:(CGImageRef)cgImage contentScale:(CGFloat)contentScale;
 
 @end

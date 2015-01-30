@@ -23,11 +23,11 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "CCFileUtilsDatabaseProtocol.h"
+#import "CCFileLocatorDatabaseProtocol.h"
 
 /**
- A database to store metadata of assets used by CCFileUtils based on json files.
- Metdata is stored per filename and search path, see CCFileUtilsDatabaseProtocol.
+ A database to store metadata of assets used by CCFileLocator based on json files.
+ Metdata is stored per filename and search path, see CCFileLocatorDatabaseProtocol.
 
  Example for a json file structure to store data for the CCFileMetaData class:
     {
@@ -49,7 +49,7 @@
 
  @since 4.0
  */
-@interface CCFileUtilsDatabase : NSObject <CCFileUtilsDatabaseProtocol>
+@interface CCFileLocatorDatabase : NSObject <CCFileLocatorDatabaseProtocol>
 
 /**
  Loads, parses and adds the provided json file to the database for a given search path.
