@@ -1526,7 +1526,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 
 			// adjust anchor point
 			if( ! CGPointEqualToPoint(_anchorPointInPoints, CGPointZero) )
-				_transform = CCMatrix4Translate(_transform, -_anchorPointInPoints.x, -_anchorPointInPoints.y, 0.0f);
+				_transform = GLKMatrix4Translate(_transform, -_anchorPointInPoints.x, -_anchorPointInPoints.y, 0.0f);
 		}
 
 		_isTransformDirty = NO;
