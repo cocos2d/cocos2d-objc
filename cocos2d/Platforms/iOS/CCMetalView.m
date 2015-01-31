@@ -11,7 +11,9 @@
 #import "ccMacros.h"
 #import "CCDeviceInfo.h"
 #import "CCScene.h"
+#import "CCTouchEvent.h"
 
+#import "CCDirectorIOS.h"
 #import "CCDirector_Private.h"
 #import "CCMetalSupport_Private.h"
 
@@ -26,7 +28,11 @@
 	dispatch_semaphore_t _queuedFramesSemaphore;
 	
 	BOOL _layerSizeDidUpdate;
+    
+    CCTouchEvent *_touchEvent;
 }
+
+@synthesize director = _director;
 
 + (Class) layerClass
 {
@@ -37,26 +43,30 @@
 {
 	if((self = [super initWithFrame:frame]))
 	{
-		_context = [[CCMetalContext alloc] init];
-		
-		//TODO Move into CCRenderDispatch to support threaded rendering with Metal?
-		[CCMetalContext setCurrentContext:_context];
-		
-		_queuedFramesSemaphore = dispatch_semaphore_create(CC_METAL_MAX_QUEUED_FRAMES);
-		
-		CAMetalLayer *layer = self.metalLayer;
-		layer.opaque = YES;
-		layer.pixelFormat = MTLPixelFormatBGRA8Unorm;
-		layer.framebufferOnly = YES;
-		
-    layer.device = _context.device;
-    layer.pixelFormat = MTLPixelFormatBGRA8Unorm;
-		
-		self.opaque = YES;
-		self.backgroundColor = nil;
-		self.contentScaleFactor = [UIScreen mainScreen].scale;
-		
-		self.multipleTouchEnabled = YES;
+        _context = [[CCMetalContext alloc] init];
+        _touchEvent = [[CCTouchEvent alloc] init];
+        
+        //TODO Move into CCRenderDispatch to support threaded rendering with Metal?
+        [CCMetalContext setCurrentContext:_context];
+        
+        _queuedFramesSemaphore = dispatch_semaphore_create(CC_METAL_MAX_QUEUED_FRAMES);
+        
+        CAMetalLayer *layer = self.metalLayer;
+        layer.opaque = YES;
+        layer.pixelFormat = MTLPixelFormatBGRA8Unorm;
+        layer.framebufferOnly = YES;
+        
+        layer.device = _context.device;
+        layer.pixelFormat = MTLPixelFormatBGRA8Unorm;
+        
+        self.opaque = YES;
+        self.backgroundColor = nil;
+        self.contentScaleFactor = [UIScreen mainScreen].scale;
+        
+        self.multipleTouchEnabled = YES;
+        
+        _director = [[CCDirectorDisplayLink alloc] init];
+        _director.view = self;
 	}
 
 	return self;
@@ -78,7 +88,7 @@
 	_layerSizeDidUpdate = YES;
 
 	_surfaceSize = CC_SIZE_SCALE(self.bounds.size, self.contentScaleFactor);
-	[[CCDirector sharedDirector] reshapeProjection:_surfaceSize];
+	[_director reshapeProjection:_surfaceSize];
 }
 
 -(void)beginFrame
@@ -142,28 +152,44 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    // dispatch touch to responder manager
-    [[CCDirector sharedDirector].responderManager touchesBegan:touches withEvent:event];
+    _touchEvent.timestamp = event.timestamp;
+    
+    [CCDirector pushCurrentDirector:_director];
+    [_touchEvent updateTouchesBegan:touches];
+    [_director.responderManager touchesBegan:_touchEvent.currentTouches withEvent:_touchEvent];
+    [CCDirector popCurrentDirector];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    // dispatch touch to responder manager
-    [[CCDirector sharedDirector].responderManager touchesMoved:touches withEvent:event];
+    _touchEvent.timestamp = event.timestamp;
+    
+    [CCDirector pushCurrentDirector:_director];
+    [_touchEvent updateTouchesMoved:touches];
+    [_director.responderManager touchesMoved:_touchEvent.currentTouches withEvent:_touchEvent];
+    [CCDirector popCurrentDirector];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    // dispatch touch to responder manager
-    [[CCDirector sharedDirector].responderManager touchesEnded:touches withEvent:event];
+    _touchEvent.timestamp = event.timestamp;
+    
+    [CCDirector pushCurrentDirector:_director];
+    [_touchEvent updateTouchesEnded:touches];
+    [_director.responderManager touchesEnded:_touchEvent.currentTouches withEvent:_touchEvent];
+    [CCDirector popCurrentDirector];
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    // dispatch touch to responder manager
-    [[CCDirector sharedDirector].responderManager touchesCancelled:touches withEvent:event];
+    _touchEvent.timestamp = event.timestamp;
+    
+    [CCDirector pushCurrentDirector:_director];
+    [_touchEvent updateTouchesCancelled:touches];
+    [_director.responderManager touchesCancelled:_touchEvent.currentTouches withEvent:_touchEvent];
+    [CCDirector popCurrentDirector];
 }
- 
+
 @end
 
 

@@ -502,6 +502,68 @@
 	
 }
 
+-(CCNode*) makeChainOfNodes
+{
+    // testing a large number of fairly deeply nested nodes. Nodes use relative positioning.
+    CCScene *scene = [CCScene node];
+    
+    CCNode *prev = scene;
+    const int DEPTH = 8;
+    for(int i = 0; i < DEPTH; i++ ){
+        
+        CCNode *child = [CCNode node];
+        child.positionType = CCPositionTypeNormalized;
+        child.position = ccp(CCRANDOM_0_1(), CCRANDOM_0_1());
+        child.contentSize = CGSizeMake(1.0, 1.0);
+        [prev addChild:child];
+        prev = child;
+    }
+    
+    for(int i = 0; i < 500; i++){
+        CCNode *child = [CCNode node];
+        child.name = [NSString stringWithFormat:@"Child number: %d", i];
+        child.positionType = CCPositionTypeNormalized;
+        child.position = ccp(0.5, 0.5);
+        [prev addChild:child];
+    }
+    return prev;
+}
+
+-(void)testPerformanceInstantiatingNormalizedNodes
+{
+    CCNode *node = [self makeChainOfNodes];
+    XCTAssertEqual(500, node.children.count);
+}
+
+-(void)testPerformanceManipulatingNormalizedNodes
+{
+    CCNode *node = [self makeChainOfNodes];
+    
+    for(int i = 0; i < 100; i++){
+        for (CCNode *child in node.children) {
+            child.position = ccpAdd(child.position, ccp(CCRANDOM_0_1() - 0.5, CCRANDOM_0_1() - 0.5));
+        }
+    }
+    
+    XCTAssertEqual(500, node.children.count);
+}
+
+-(void)testPerformanceCalculateNodeToParentTransform
+{
+    CCNode *node = [self makeChainOfNodes];
+    
+    for(int i = 0; i < 100; i++){
+        for (CCNode *child in node.children) {
+            child.position = ccp(CCRANDOM_0_1(), CCRANDOM_0_1());
+            // Accessing the nodeToParent is a very common operation when drawing, and a good place to check for performance issues.
+            [child nodeToParentTransform];
+        }
+    }
+    
+    XCTAssertEqual(500, node.children.count);
+}
+
+
 // TODO: Write tests that scale a parent anchor node, make sure the child's nodeToWorldTransform moves.
 
 

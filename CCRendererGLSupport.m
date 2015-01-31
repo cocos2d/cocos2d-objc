@@ -59,7 +59,7 @@ GLTypeForCCTextureType(CCTextureType type)
     return GLTypeForCCTextureType(self.type);
 }
 
--(void)_setupTexture:(CCTextureType)type sizeInPixels:(CGSize)sizeInPixels mipmapped:(BOOL)mipmapped
+-(void)_setupTexture:(CCTextureType)type rendertexture:(BOOL)rendertexture sizeInPixels:(CGSize)sizeInPixels mipmapped:(BOOL)mipmapped;
 {
     glGenTextures(1, &_name);
 }

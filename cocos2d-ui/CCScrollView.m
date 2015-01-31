@@ -914,8 +914,6 @@
 
 - (BOOL)onScroll:(AndroidMotionEvent *)start end:(AndroidMotionEvent *)end distanceX:(float)dx distanceY:(float)dy
 {
-    [CCDirector bindDirector:self.director];
-
     _isPanning = YES;
     _velocity = CGPointZero;
     
@@ -925,20 +923,23 @@
     if(phase == CCTouchPhaseCancelled || phase == CCTouchPhaseEnded)
         _rawScrollTranslation = CGPointMake(0.0f, 0.0f);
     
-    float scaleFactor = [self.director view].contentScaleFactor;
-
+    CCDirector *director = self.director;
+    float scaleFactor = [director view].contentScaleFactor;
+    
     dx /= scaleFactor;
     dy /= scaleFactor;
 
     _rawScrollTranslation.x -= dx;
     _rawScrollTranslation.y -= dy;
     
-    CCDirector* dir = self.director;
     [[CCActivity currentActivity] runOnGameThread:^{
+        [CCDirector pushCurrentDirector:director];
         
-        CGPoint translation = [dir convertToGL:_rawScrollTranslation];
+        CGPoint translation = [director convertToGL:_rawScrollTranslation];
         translation = [self convertToNodeSpace:translation];
         
+        // Is it possible for this to be anything other than a moved event?
+        // Somebody with more Android experience should weigh in.
         if (phase == CCTouchPhaseBegan)
         {
             [self touchBeganAtTranslation:translation];
@@ -946,12 +947,12 @@
         else if (phase == CCTouchPhaseMoved)
         {
             // Calculate the translation in node space
-            CGPoint translation = ccpSub(_rawTranslationStart, translation);
+            translation = ccpSub(_rawTranslationStart, translation);
             [self handlePanFrom:_startScrollPos delta:translation];
         }
         else if (phase == CCTouchPhaseEnded)
         {
-            // stub
+            // onScroll does not recieve end events.
         }
         else if (phase == CCTouchPhaseCancelled)
         {
@@ -962,15 +963,16 @@
             
             [self setScrollPosition:self.scrollPosition animated:NO];
         }
+        
+        [CCDirector popCurrentDirector];
     } waitUntilDone:YES];
     
-    [CCDirector bindDirector:nil];
-
     return YES;
 }
 
 - (BOOL)onFling:(AndroidMotionEvent *)start end:(AndroidMotionEvent *)end velocityX:(float)vx velocityY:(float)vy
 {
+    // Static!?! That can't be right.
     static CGPoint rawTranslationFling;
 
     CCTouchPhase phase = [self handleGestureEvent:start end:end];
@@ -978,7 +980,8 @@
     if(phase == CCTouchPhaseCancelled || phase == CCTouchPhaseEnded)
         rawTranslationFling = CGPointMake(0.0f, 0.0f);
 
-    float scaleFactor = [self.director view].contentScaleFactor;
+    CCDirector* director = self.director;
+    float scaleFactor = [director view].contentScaleFactor;
     float x0 = [start xForPointerIndex:0] / scaleFactor;
     float x1 = [end xForPointerIndex:0] / scaleFactor;
     
@@ -998,12 +1001,14 @@
     rawTranslationFling.x -= dx / scaleFactor;
     rawTranslationFling.y -= dy / scaleFactor;
     
-    CCDirector* dir = self.director;
     [[CCActivity currentActivity] runOnGameThread:^{
+        [CCDirector pushCurrentDirector:director];
 
-        CGPoint translation = [dir convertToGL:rawTranslationFling];
+        CGPoint translation = [director convertToGL:rawTranslationFling];
         translation = [self convertToNodeSpace:translation];
         
+        // Do fling events ever send anything other than end events?
+        // Somebody with more Android experience should weigh in.
         if (phase == CCTouchPhaseBegan)
         {
             [self scrollViewWillBeginDragging];
@@ -1025,6 +1030,8 @@
             
             [self setScrollPosition:self.scrollPosition animated:NO];
         }
+        
+        [CCDirector popCurrentDirector];
     } waitUntilDone:YES];
     return YES;
 }

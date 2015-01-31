@@ -189,7 +189,7 @@ static NSDictionary *_DEFAULT_OPTIONS = nil;
 //MARK: Abstract methods.
 static void Abstract(){NSCAssert(NO, @"Abstract method. Must be overridden by subclasses.");}
 
--(void)_setupTexture:(CCTextureType)type sizeInPixels:(CGSize)sizeInPixels mipmapped:(BOOL)mipmapped
+-(void)_setupTexture:(CCTextureType)type rendertexture:(BOOL)renderTexture sizeInPixels:(CGSize)sizeInPixels mipmapped:(BOOL)mipmapped;
 {
     Abstract();
 }
@@ -219,7 +219,7 @@ static void Abstract(){NSCAssert(NO, @"Abstract method. Must be overridden by su
 
 //MARK: Setup/Init methods.
 
--(void)setupTexture:(CCTextureType)type sizeInPixels:(CGSize)sizeInPixels options:(NSDictionary *)options
+-(void)setupTexture:(CCTextureType)type rendertexture:(BOOL)rendertexture sizeInPixels:(CGSize)sizeInPixels options:(NSDictionary *)options;
 {
     BOOL genMipmaps = [options[CCTextureOptionGenerateMipmaps] boolValue];
     
@@ -238,11 +238,16 @@ static void Abstract(){NSCAssert(NO, @"Abstract method. Must be overridden by su
     NSAssert(addressX == CCTextureAddressModeClampToEdge || isPOT, @"Only CCTextureAddressModeClampToEdge can be used with non power of two sized textures.");
     NSAssert(addressY == CCTextureAddressModeClampToEdge || isPOT, @"Only CCTextureAddressModeClampToEdge can be used with non power of two sized textures.");
     
-    [self _setupTexture:type sizeInPixels:sizeInPixels mipmapped:genMipmaps];
+    [self _setupTexture:type rendertexture:rendertexture sizeInPixels:sizeInPixels mipmapped:genMipmaps];
     [self _setupSampler:type minFilter:minFilter magFilter:magFilter mipFilter:mipFilter addressX:addressX addressY:addressY];
 }
 
--(instancetype)initWithImage:(CCImage *)image options:(NSDictionary *)options
+-(instancetype)initWithImage:(CCImage *)image options:(NSDictionary *)options;
+{
+    return [self initWithImage:image options:options rendertexture:NO];
+}
+
+-(instancetype)initWithImage:(CCImage *)image options:(NSDictionary *)options rendertexture:(BOOL)rendertexture;
 {
     options = [CCTexture normalizeOptions:options];
     
@@ -268,7 +273,7 @@ static void Abstract(){NSCAssert(NO, @"Abstract method. Must be overridden by su
     
 	if((self = [super init])) {
 		CCRenderDispatch(NO, ^{
-            [self setupTexture:CCTextureType2D sizeInPixels:sizeInPixels options:options];
+            [self setupTexture:CCTextureType2D rendertexture:rendertexture sizeInPixels:sizeInPixels options:options];
             
             [self _uploadTexture2D:sizeInPixels miplevel:0 pixelData:image.pixelData.bytes];
             
@@ -361,7 +366,7 @@ static void Abstract(){NSCAssert(NO, @"Abstract method. Must be overridden by su
     
 	if((self = [super init])) {
 		CCRenderDispatch(NO, ^{
-            [self setupTexture:CCTextureTypeCubemap sizeInPixels:sizeInPixels options:options];
+            [self setupTexture:CCTextureTypeCubemap rendertexture:NO sizeInPixels:sizeInPixels options:options];
             
             [self _uploadTextureCubeFace:0 sizeInPixels:sizeInPixels miplevel:0 pixelData:posX.pixelData.bytes];
             [self _uploadTextureCubeFace:1 sizeInPixels:sizeInPixels miplevel:0 pixelData:negX.pixelData.bytes];

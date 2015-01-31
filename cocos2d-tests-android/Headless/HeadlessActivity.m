@@ -38,14 +38,14 @@
 
 - (BOOL)onKeyUp:(int32_t)keyCode keyEvent:(AndroidKeyEvent *)event
 {
-    if ([[CCDirector sharedDirector] runningScene] == [self startScene])
+    if ([[CCDirector currentDirector] runningScene] == [self startScene])
     {
         return NO;
     }
     
     [self runOnGameThread:^{
         CCTransition* transition = [CCTransition transitionMoveInWithDirection:CCTransitionDirectionRight duration:0.3];
-        [[CCDirector sharedDirector] replaceScene:[MainMenu scene] withTransition:transition];
+        [[CCDirector currentDirector] presentScene:[MainMenu scene] withTransition:transition];
     }];
     
     return YES;

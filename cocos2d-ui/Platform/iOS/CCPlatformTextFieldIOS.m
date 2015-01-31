@@ -111,22 +111,22 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-
     [self endFocusingOnTextField];
+    if ([[self delegate] respondsToSelector:@selector(platformTextFieldDidFinishEditing:)]) {
+        [[self delegate]platformTextFieldDidFinishEditing:self];
+    }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
-    if ([[self delegate] respondsToSelector:@selector(platformTextFieldDidFinishEditing:)]) {
-        [[self delegate]platformTextFieldDidFinishEditing:self];
-    }
-
-    
     return YES;
 }
 
-
+- (id)nativeTextField
+{
+    return _textField;
+}
 
 
 #pragma mark Keyboard Notifications

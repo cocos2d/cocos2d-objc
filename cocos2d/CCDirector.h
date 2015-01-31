@@ -222,10 +222,10 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 @property (nonatomic, readwrite, weak) id<CCDirectorDelegate> delegate;
 
 
-/** @name Singleton Accessor */
-
-/** @returns The shared director instance. */
+/** @returns The director for the currently active CCView */
 +(CCDirector*)currentDirector;
++(CCDirector*)sharedDirector __attribute__((deprecated));
+
 
 /** @name Accessing OpenGL Thread */
 

@@ -96,7 +96,6 @@
 		5B165F72195CE564002338B1 /* CCTransitionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B165F58195CE564002338B1 /* CCTransitionTest.m */; };
 		5B165F73195CE564002338B1 /* ColorPickerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B165F59195CE564002338B1 /* ColorPickerTest.m */; };
 		5B165F74195CE564002338B1 /* ColorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B165F5A195CE564002338B1 /* ColorTest.m */; };
-		5B165F76195CE564002338B1 /* ParallaxTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B165F5C195CE564002338B1 /* ParallaxTest.m */; };
 		5B165F77195CE564002338B1 /* ParticleTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B165F5D195CE564002338B1 /* ParticleTest.m */; };
 		5B165F78195CE564002338B1 /* PositioningTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B165F5E195CE564002338B1 /* PositioningTest.m */; };
 		5B165F79195CE564002338B1 /* SpritePerformanceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B165F5F195CE564002338B1 /* SpritePerformanceTest.m */; };
@@ -252,7 +251,6 @@
 		5B165F59195CE564002338B1 /* ColorPickerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorPickerTest.m; sourceTree = "<group>"; };
 		5B165F5A195CE564002338B1 /* ColorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorTest.m; sourceTree = "<group>"; };
 		5B165F5B195CE564002338B1 /* ObjectALTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjectALTest.m; sourceTree = "<group>"; };
-		5B165F5C195CE564002338B1 /* ParallaxTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParallaxTest.m; sourceTree = "<group>"; };
 		5B165F5D195CE564002338B1 /* ParticleTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticleTest.m; sourceTree = "<group>"; };
 		5B165F5E195CE564002338B1 /* PositioningTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PositioningTest.m; sourceTree = "<group>"; };
 		5B165F5F195CE564002338B1 /* SpritePerformanceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpritePerformanceTest.m; sourceTree = "<group>"; };
@@ -437,7 +435,6 @@
 				5B165F59195CE564002338B1 /* ColorPickerTest.m */,
 				5B165F5A195CE564002338B1 /* ColorTest.m */,
 				5B165F5B195CE564002338B1 /* ObjectALTest.m */,
-				5B165F5C195CE564002338B1 /* ParallaxTest.m */,
 				5B165F5D195CE564002338B1 /* ParticleTest.m */,
 				5B165F5E195CE564002338B1 /* PositioningTest.m */,
 				5B165F5F195CE564002338B1 /* SpritePerformanceTest.m */,
@@ -790,7 +787,6 @@
 				D242C50E1958D78700E7726D /* MainMenu.m in Sources */,
 				5B165F72195CE564002338B1 /* CCTransitionTest.m in Sources */,
 				5B165F7A195CE564002338B1 /* TextureTest.m in Sources */,
-				5B165F76195CE564002338B1 /* ParallaxTest.m in Sources */,
 				5B165F71195CE564002338B1 /* CCTextureCacheTest.m in Sources */,
 				5B165F70195CE564002338B1 /* CCTextFieldTest.m in Sources */,
 				5B165F6D195CE564002338B1 /* CCSliderTest.m in Sources */,
