@@ -36,12 +36,12 @@ enum {
 };
 
 enum {
-	TMXPropertyNone,
-	TMXPropertyMap,
-	TMXPropertyLayer,
-	TMXPropertyObjectGroup,
-	TMXPropertyObject,
-	TMXPropertyTile,
+    TMXPropertyNone,
+    TMXPropertyMap,
+    TMXPropertyLayer,
+    TMXPropertyObjectGroup,
+    TMXPropertyObject,
+    TMXPropertyTile,
     TMXPropertyTileSet
 };
 
