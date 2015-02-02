@@ -92,6 +92,8 @@ extern NSString * cocos2dVersion(void);
 	CCFrameBufferObject *_framebuffer;
 }
 
+@synthesize paused = _isPaused;
+
 static NSString * const CCDirectorCurrentKey = @"CCDirectorCurrentKey";
 static NSString * const CCDirectorStackKey = @"CCDirectorStackKey";
 
