@@ -657,7 +657,8 @@ void FNTConfigRemoveCache( void )
             //Append to lastWord
             if (characterSprite.position.x + characterSprite.contentSize.width/2 - startOfLine >  _width) {
                 NSString *trimmedString = [lastWord stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-                lastWord = [[trimmedString stringByAppendingString:@"\n"] stringByAppendingFormat:@"%C", character];
+                lastWord = [trimmedString stringByAppendingFormat:@"%C", character];
+                multilineString = [multilineString stringByAppendingString:@"\n"];
                 line++;
                 startOfLine = -1;
                 startOfWord = -1;
