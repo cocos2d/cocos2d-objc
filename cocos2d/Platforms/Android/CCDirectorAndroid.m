@@ -117,7 +117,7 @@
     [self setViewport];
     [self createStatsLabel];
 
-	[[CCConfiguration sharedConfiguration] dumpInfo];
+	[[CCDeviceInfo sharedDeviceInfo] dumpInfo];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"GL_INITIALIZED" object:nil];
 }

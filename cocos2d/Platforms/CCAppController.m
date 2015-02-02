@@ -21,6 +21,7 @@
 #if __CC_PLATFORM_ANDROID
 
 #import "CCActivity.h"
+#import "CCDirectorAndroid.h"
 
 #endif
 
@@ -255,7 +256,6 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 {
     CCDirectorAndroid *androidDirector = (CCDirectorAndroid*)director;
     director.delegate = [CCActivity currentActivity];
-    [CCTexture setDefaultAlphaPixelFormat:CCTexturePixelFormat_RGBA8888];
     [director setView:view];
 
     if([config[CCSetupScreenMode] isEqual:CCScreenModeFixed])
@@ -272,7 +272,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 {
     CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector currentDirector];
 
-    NSInteger device = [[CCConfiguration sharedConfiguration] runningDevice];
+    NSInteger device = [CCDeviceInfo runningDevice];
     BOOL tablet = device == CCDeviceiPad || device == CCDeviceiPadRetinaDisplay;
 
     if(tablet && [config[CCSetupTabletScale2X] boolValue])
@@ -316,9 +316,8 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 {
     CCDirectorAndroid *androidDirector = (CCDirectorAndroid*)[CCDirector currentDirector];
 
-    [androidDirector runWithScene:[self startScene]];
+    [androidDirector presentScene:[self startScene]];
     [androidDirector setAnimationInterval:1.0/60.0];
-    [androidDirector startAnimation];
 }
 
 #endif
