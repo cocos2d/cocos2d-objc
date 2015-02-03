@@ -175,7 +175,7 @@
 #endif
 }
 
-- (CC_VIEW <CCDirectorView> *)constructView:(NSDictionary *)config withBounds:(CGRect)bounds
+- (CC_VIEW <CCView> *)constructView:(NSDictionary *)config withBounds:(CGRect)bounds
 {
     // CCView creation
     // viewWithFrame: size of the OpenGL view. For full screen use [_window bounds]
@@ -190,7 +190,7 @@
     //  - Possible values: YES, NO
     // numberOfSamples: Only valid if multisampling is enabled
     //  - Possible values: 0 to glGetIntegerv(GL_MAX_SAMPLES_APPLE)
-    CC_VIEW<CCDirectorView> *ccview = nil;
+    CC_VIEW<CCView> *ccview = nil;
     switch([CCDeviceInfo graphicsAPI]){
         case CCGraphicsAPIGL:
         {

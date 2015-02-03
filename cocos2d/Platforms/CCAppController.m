@@ -17,6 +17,7 @@
 #import "CCPackageManager.h"
 #import "CCFileUtils.h"
 #import "ccUtils.h"
+#import "CCDirector_Private.h"
 
 #if __CC_PLATFORM_ANDROID
 
@@ -73,7 +74,14 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
  */
 - (CCScene *)startScene
 {
-    return [CCBReader loadAsScene:self.firstSceneName];
+    
+    [CCDirector pushCurrentDirector:_glView.director];
+
+    CCScene *scene = [CCBReader loadAsScene:self.firstSceneName];
+
+    [CCDirector popCurrentDirector];
+
+    return scene;
 }
 
 #pragma mark iOS setup
@@ -107,12 +115,15 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 {
     CCAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     [appDelegate constructWindow];
-
-    CCDirector *director = [CCDirector currentDirector];
-
-    CC_VIEW <CCDirectorView> *ccview = [appDelegate constructView:config withBounds:appDelegate.window.bounds];
-    [self configureDirector:director withConfig:config withView:ccview];
-
+    
+    _glView = [appDelegate constructView:config withBounds:appDelegate.window.bounds];
+    
+    CCDirector *director = _glView.director;
+    NSAssert(director, @"CCView failed to construct a director.");
+    [self configureDirector:director withConfig:config withView:_glView];
+    
+    [CCDirector pushCurrentDirector:director];
+    
     if([config[CCSetupScreenMode] isEqual:CCScreenModeFixed]){
         [self setupFixedScreenMode:config director:director];
     } else {
@@ -128,9 +139,11 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
     [appDelegate.window makeKeyAndVisible];
     [appDelegate forceOrientation];
+    
+    [CCDirector popCurrentDirector];
 }
 
-- (void)configureDirector:(CCDirector *)director withConfig:(NSDictionary *)config withView:(CC_VIEW <CCDirectorView> *)ccview
+- (void)configureDirector:(CCDirector *)director withConfig:(NSDictionary *)config withView:(CC_VIEW <CCView> *)ccview
 {
     CCDirectorIOS*directorIOS = (CCDirectorIOS*) director;
     directorIOS.wantsFullScreenLayout = YES;

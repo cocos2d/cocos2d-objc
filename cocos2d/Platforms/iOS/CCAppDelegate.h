@@ -116,7 +116,7 @@
 
 - (void)forceOrientation;
 
-- (CC_VIEW <CCDirectorView> *)constructView:(NSDictionary *)config withBounds:(CGRect)bounds;
+- (CC_VIEW <CCView> *)constructView:(NSDictionary *)config withBounds:(CGRect)bounds;
 @end
 
 #endif
