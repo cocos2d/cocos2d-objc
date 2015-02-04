@@ -24,34 +24,23 @@
 
 #import "cocos2d.h"
 
-#import "AppDelegate.h"
+#import "AppController.h"
 #import "MainMenu.h"
 #import "TestBase.h"
 #import "CCPackageConstants.h"
 
 @implementation AppController
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-    [self configureCocos2d];
 
-    return YES;
+- (void)setupApplication
+{
+    [super setupApplication];
 }
 
-- (void)configureCocos2d
+- (NSDictionary*)iosConfig
 {
-    // Configure the file utils to work with SpriteBuilder, but use a custom resource path (Resources-shared instead of Published-iOS)
-    [CCBReader configureCCFileUtils];
-
     [self configureFileUtilsSearchPathAndRegisterSpriteSheets];
-
-    [self setupCocos2dWithOptions:@{
-			CCSetupDepthFormat: @GL_DEPTH24_STENCIL8,
-//			CCSetupScreenMode: CCScreenModeFixed,
-//			CCSetupScreenOrientation: CCScreenOrientationPortrait,
-			CCSetupTabletScale2X: @YES,
-			CCSetupShowDebugStats: @(getenv("SHOW_DEBUG_STATS") != nil),
-		}];
+    return [super iosConfig];
 }
 
 - (void)configureFileUtilsSearchPathAndRegisterSpriteSheets
@@ -74,60 +63,68 @@
     [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"TilesAtlassed.plist"];
 }
 
-- (CCScene*) startScene
+- (CCScene*) createFirstScene
 {
-	const char *testName = getenv("Test");
-	
-	if(testName){
-		return [TestBase sceneWithTestName:[NSString stringWithCString:testName encoding:NSUTF8StringEncoding]];
-	} else {
-		return [MainMenu scene];
-	}
+    const char *testName = getenv("Test");
+    
+    if(testName){
+        return [TestBase sceneWithTestName:[NSString stringWithCString:testName encoding:NSUTF8StringEncoding]];
+    } else {
+        return [MainMenu scene];
+    }
 }
 
-//// I'm going to leave this in for testing the fixed size screen mode in the future.
-//- (CCScene*) startScene
-//{
-////    return [MainMenu scene];
-//	CCScene *scene = [CCScene node];
-//	
-////	// Landscape
-////	{
-////		// iPad
-////		CCNode *node = [CCNodeColor nodeWithColor:[CCColor greenColor] width:512 height:384];
-////		node.position = ccp(28, 0);
-////		[scene addChild:node];
-////	}{
-////		// iPhone5
-////		CCNode *node = [CCNodeColor nodeWithColor:[CCColor redColor] width:568 height:320];
-////		node.position = ccp(0, 32);
-////		[scene addChild:node];
-////	}{
-////		// iPhone
-////		CCNode *node = [CCNodeColor nodeWithColor:[CCColor blueColor] width:480 height:320];
-////		node.position = ccp(44, 32);
-////		[scene addChild:node];
-////	}
-//	
-//	// Portrait
-//	{
-//		// iPad
-//		CCNode *node = [CCNodeColor nodeWithColor:[CCColor greenColor] width:384 height:512];
-//		node.position = ccp(0, 28);
-//		[scene addChild:node];
-//	}{
-//		// iPhone5
-//		CCNode *node = [CCNodeColor nodeWithColor:[CCColor redColor] width:320 height:568];
-//		node.position = ccp(32, 0);
-//		[scene addChild:node];
-//	}{
-//		// iPhone
-//		CCNode *node = [CCNodeColor nodeWithColor:[CCColor blueColor] width:320 height:480];
-//		node.position = ccp(32, 44);
-//		[scene addChild:node];
-//	}
-//	
-//	return scene;
-//}
+#pragma mark Android
+
+#if __CC_PLATFORM_ANDROID
+
+/*
+ Add any android specific overrides here
+ */
+
+#endif
+
+
+#pragma mark Mac
+
+#if __CC_PLATFORM_MAC
+
+/*
+ Add any Mac specific overrides here
+ */
+-(CGSize)defaultWindowSize
+{
+    return CGSizeMake(960.0f, 640.0f);
+}
+
+#endif
+
+#pragma mark Singleton Methods
+
+static AppController *__sharedController;
+
+/*
+ These methods are used in the framework to reference this controller.
+ */
++ (AppController*)sharedController
+{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^
+                  {
+                      __sharedController = [[AppController alloc] init];
+                  });
+    
+    return __sharedController;
+}
+
++ (void)setupApplication
+{
+    static dispatch_once_t setupToken;
+    dispatch_once(&setupToken, ^
+                  {
+                      [[AppController sharedController] setupApplication];
+                  });
+}
+
 
 @end

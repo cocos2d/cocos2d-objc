@@ -72,4 +72,14 @@
  */
 - (void)setupApplication;
 
+
+/**
+ Override this to create your first CCScene. By default, this loads the `firstSceneName` as a ccb file.
+ 
+ @since v4.0
+ */
+- (CCScene *)createFirstScene;
+
+- (NSDictionary*)iosConfig;
+
 @end

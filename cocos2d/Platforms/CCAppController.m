@@ -68,6 +68,12 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 }
 
+// Override if you want to create your first scene somehow other than by loading a ccb file.
+- (CCScene *)createFirstScene
+{
+    return [CCBReader loadAsScene:self.firstSceneName];
+}
+
 
 /*
     Instantiate and return the first scene
@@ -77,7 +83,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     NSAssert(_glView.director, @"Require a valid director to decode the CCB file!");
 
     [CCDirector pushCurrentDirector:_glView.director];
-    CCScene *scene = [CCBReader loadAsScene:self.firstSceneName];
+    CCScene *scene = [self createFirstScene];
     [CCDirector popCurrentDirector];
 
     return scene;

@@ -15,7 +15,7 @@
 {
     [super setUp];
 
-    [(AppController *)[UIApplication sharedApplication].delegate configureCocos2d];
+//    [(AppController *)[UIApplication sharedApplication].delegate configureCocos2d];
 }
 
 -(void)testTextureCache
