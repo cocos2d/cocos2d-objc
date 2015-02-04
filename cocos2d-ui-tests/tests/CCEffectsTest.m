@@ -327,6 +327,8 @@
         sprite.effect = lightingEffect;
         sprite.scale = 0.5f;
         
+        [sprite runAction:[CCActionRepeatForever actionWithAction:[CCActionRotateBy actionWithDuration:1.0 angle:90.0]]];
+        
         CCNode *root = [[CCNode alloc] init];
         root.positionType = CCPositionTypeNormalized;
         root.position = position;
