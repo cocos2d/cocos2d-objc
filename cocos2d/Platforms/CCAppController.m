@@ -70,7 +70,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 
 /*
-    The first scene to start the application with, can be overridden in subclass
+    Instantiate and return the first scene
  */
 - (CCScene *)startScene
 {
@@ -366,15 +366,14 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 - (void)applyConfigurationToCocos:(NSDictionary*)config
 {
-    CCDirectorMac *director = (CCDirectorMac*) [CCDirector currentDirector];
-
+    CCDirectorMac *director = (CCDirectorMac*) _glView.director;
     CGSize defaultWindowSize = [config[CCMacDefaultWindowSize] CGSizeValue];
+    
     [self.window setFrame:CGRectMake(0.0f, 0.0f, defaultWindowSize.width, defaultWindowSize.height) display:true animate:false];
     [self.glView setFrame:self.window.frame];
-
-    // connect the OpenGL view with the director
-    [director setView:self.glView];
-
+    
+    [director reshapeProjection:CC_SIZE_SCALE(defaultWindowSize, director.contentScaleFactor)];
+    
     // Enable "moving" mouse event. Default no.
     [self.window setAcceptsMouseMovedEvents:NO];
 
@@ -386,7 +385,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 - (void)runStartSceneMac
 {
-    CCDirectorMac *director = (CCDirectorMac*) [CCDirector currentDirector];
+    CCDirectorMac *director = (CCDirectorMac*) _glView.director;
     [director presentScene:[self startScene]];
 }
 
