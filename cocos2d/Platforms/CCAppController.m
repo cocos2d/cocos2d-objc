@@ -74,11 +74,10 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
  */
 - (CCScene *)startScene
 {
-    
+    NSAssert(_glView.director, @"Require a valid director to decode the CCB file!");
+
     [CCDirector pushCurrentDirector:_glView.director];
-
     CCScene *scene = [CCBReader loadAsScene:self.firstSceneName];
-
     [CCDirector popCurrentDirector];
 
     return scene;
@@ -115,15 +114,15 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 {
     CCAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     [appDelegate constructWindow];
-    
+
     _glView = [appDelegate constructView:config withBounds:appDelegate.window.bounds];
-    
+
     CCDirector *director = _glView.director;
     NSAssert(director, @"CCView failed to construct a director.");
     [self configureDirector:director withConfig:config withView:_glView];
-    
+
     [CCDirector pushCurrentDirector:director];
-    
+
     if([config[CCSetupScreenMode] isEqual:CCScreenModeFixed]){
         [self setupFixedScreenMode:config director:director];
     } else {
@@ -139,7 +138,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
     [appDelegate.window makeKeyAndVisible];
     [appDelegate forceOrientation];
-    
+
     [CCDirector popCurrentDirector];
 }
 
@@ -252,6 +251,8 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     activity.cocos2dSetupConfig = config;
     [activity applyRequestedOrientation:config];
     [activity constructViewWithConfig:config andDensity:metrics.density];
+    
+    _glView = activity.glView;
     [activity scheduleInRunLoop];
 
     [[CCPackageManager sharedManager] loadPackages];
@@ -259,8 +260,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 - (void)performAndroidGLConfiguration
 {
-    CCActivity *activity = [CCActivity currentActivity];
-    [self configureDirector:[CCDirector currentDirector] withConfig:_cocosConfig withView:activity.glView];
+    [self configureDirector:_glView.director withConfig:_cocosConfig withView:_glView];
 
     [self runStartSceneAndroid];
 }
@@ -283,7 +283,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 - (void)setupFlexibleScreenMode:(NSDictionary*)config
 {
-    CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector currentDirector];
+    CCDirectorAndroid *director = (CCDirectorAndroid*)_glView.director;
 
     NSInteger device = [CCDeviceInfo runningDevice];
     BOOL tablet = device == CCDeviceiPad || device == CCDeviceiPadRetinaDisplay;
@@ -304,7 +304,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 - (void)setupFixedScreenMode:(NSDictionary*)config
 {
-    CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector currentDirector];
+    CCDirectorAndroid *director = (CCDirectorAndroid*)_glView.director;
 
     CGSize size = [CCDirector currentDirector].viewSizeInPixels;
     CGSize fixed = [config[CCScreenModeFixedDimensions] CGSizeValue];
@@ -327,7 +327,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 - (void)runStartSceneAndroid
 {
-    CCDirectorAndroid *androidDirector = (CCDirectorAndroid*)[CCDirector currentDirector];
+    CCDirector *androidDirector = _glView.director;
 
     [androidDirector presentScene:[self startScene]];
     [androidDirector setAnimationInterval:1.0/60.0];

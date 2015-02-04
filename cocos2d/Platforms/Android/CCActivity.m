@@ -79,10 +79,10 @@ static void handler(NSException *e)
 
 static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
 {
-	int scale = 1;
-	while(fixedSize*scale < size) scale++;
+    int scale = 1;
+    while(fixedSize*scale < size) scale++;
 
-	return scale;
+    return scale;
 }
 
 - (void)run
@@ -123,7 +123,7 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
     enum CCAndroidScreenMode screenMode = CCNativeScreenMode;
 
     if([config[CCSetupScreenMode] isEqual:CCScreenModeFlexible] ||
-       [config[CCSetupScreenMode] isEqual:CCScreenModeFixed])
+            [config[CCSetupScreenMode] isEqual:CCScreenModeFixed])
     {
         screenMode = CCScreenScaledAspectFitEmulationMode;
     }
@@ -157,7 +157,7 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
     {
         return;
     }
-    
+
     [self performSelector:@selector(handleResume) onThread:_thread withObject:nil waitUntilDone:YES modes:@[NSDefaultRunLoopMode]];
 #endif
 }
@@ -177,7 +177,7 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
     {
         return;
     }
-    
+
     [self performSelector:@selector(handlePause) onThread:_thread withObject:nil waitUntilDone:YES modes:@[NSDefaultRunLoopMode]];
 #endif
 }
@@ -212,16 +212,16 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
 - (void)reshape:(NSValue *)value
 {
     CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector currentDirector];
-	[director reshapeProjection:value.CGSizeValue]; // crashes sometimes..
+    [director reshapeProjection:value.CGSizeValue]; // crashes sometimes..
 }
 
 - (void)surfaceChanged:(JavaObject<AndroidSurfaceHolder> *)holder format:(int)format width:(int)width height:(int)height
 {
     if(_glView == nil)
         return;
-    
+
     _glView.bounds = CGRectMake(0, 0, width/_glView.contentScaleFactor, height/_glView.contentScaleFactor);
-    
+
 #if USE_MAIN_THREAD
     [self reshape:[NSValue valueWithCGSize:CGSizeMake(width, height)]];
 #else
@@ -238,7 +238,7 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
 - (void)startGL:(JavaObject<AndroidSurfaceHolder> *)holder
 {
     @autoreleasepool {
-        CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector sharedDirector];
+        CCDirectorAndroid *director = (CCDirectorAndroid*)_glView.director;
 
         _gameLoop = [NSRunLoop currentRunLoop];
         [_gameLoop addPort:[NSPort port] forMode:NSDefaultRunLoopMode]; // Ensure that _gameLoop always has a source.
@@ -325,22 +325,22 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
     EGLDisplay display;
     EGLSurface surfaceR;
     EGLSurface surfaceD;
-    
+
     EGLContext ctx = eglGetCurrentContext();
-    
+
     EGLContext appContext = _glView.eglContext;
     if (appContext != ctx)
     {
         display = eglGetCurrentDisplay();
         surfaceD = eglGetCurrentSurface(EGL_DRAW);
         surfaceR = eglGetCurrentSurface(EGL_READ);
-        
+
         EGLSurface surface = _glView.eglSurface;
-        
+
         eglMakeCurrent(_glView.eglDisplay, surface, surface, appContext);
         return ctx;
     }
-    
+
     return NULL;
 }
 
@@ -351,11 +351,11 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
         EGLDisplay display;
         EGLSurface surfaceR;
         EGLSurface surfaceD;
-        
+
         display = eglGetCurrentDisplay();
         surfaceD = eglGetCurrentSurface(EGL_DRAW);
         surfaceR = eglGetCurrentSurface(EGL_READ);
-        
+
         eglMakeCurrent(display, surfaceD, surfaceR, ctx);
     }
 }
@@ -365,13 +365,13 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
 // Projection delegate is only used if the fixed resolution mode is enabled
 -(GLKMatrix4)updateProjection
 {
-	CGSize sizePoint = [CCDirector currentDirector].viewSize;
-	CGSize fixed = [CCDirector currentDirector].designSize;
+    CGSize sizePoint = [CCDirector currentDirector].viewSize;
+    CGSize fixed = [CCDirector currentDirector].designSize;
 
-	// Half of the extra size that will be cut off
-	CGPoint offset = ccpMult(ccp(fixed.width - sizePoint.width, fixed.height - sizePoint.height), 0.5);
-	
-	return CCMatrix4MakeOrtho(offset.x, sizePoint.width + offset.x, offset.y, sizePoint.height + offset.y, -1024, 1024);
+    // Half of the extra size that will be cut off
+    CGPoint offset = ccpMult(ccp(fixed.width - sizePoint.width, fixed.height - sizePoint.height), 0.5);
+
+    return CCMatrix4MakeOrtho(offset.x, sizePoint.width + offset.x, offset.y, sizePoint.height + offset.y, -1024, 1024);
 }
 
 @end
