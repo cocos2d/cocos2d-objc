@@ -47,6 +47,16 @@
              };
 }
 
+- (NSDictionary*)macConfig
+{
+    NSMutableDictionary *config = [super macConfig];
+    config[CCSetupDepthFormat] = @GL_DEPTH24_STENCIL8;
+    config[CCSetupTabletScale2X] = @YES;
+    config[CCSetupShowDebugStats] = @(getenv("SHOW_DEBUG_STATS") != nil);
+    
+    return config;
+}
+
 - (void)configureFileUtilsSearchPathAndRegisterSpriteSheets
 {
     [[NSUserDefaults standardUserDefaults] setValue:nil forKey:PACKAGE_STORAGE_USERDEFAULTS_KEY];
