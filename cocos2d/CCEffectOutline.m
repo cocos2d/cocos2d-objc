@@ -6,10 +6,17 @@
 //
 //
 #import "CCEffectOutline.h"
+
+
+#if CC_EFFECTS_EXPERIMENTAL
+
 #import "CCEffect_Private.h"
 #import "CCSprite_Private.h"
 #import "CCTexture.h"
 #import "CCSpriteFrame.h"
+#import "CCColor.h"
+#import "NSValue+CCRenderer.h"
+#import "CCRendererBasicTypes.h"
 
 
 @interface CCEffectOutlineImpl : CCEffectImpl
@@ -34,6 +41,7 @@
     {
         _interface = interface;
         self.debugName = @"CCEffectOutline";
+        self.stitchFlags = CCEffectFunctionStitchAfter;
     }
     return self;
 }
@@ -65,7 +73,7 @@
                                    alpha -= texture2D(cc_MainTexture, cc_FragTexCoord1 + vec2(0.0, -u_stepSize.y)).a;
                                    
                                    // do everthing in 1 pass
-                                   vec4 col = texture2D(cc_MainTexture, cc_FragTexCoord1);
+                                   vec4 col = inputValue * texture2D(cc_MainTexture, cc_FragTexCoord1);
                                    col = mix(col, u_outlineColor, alpha);
                                    
                                    // extract the outline (used for multi pass)
@@ -75,8 +83,9 @@
                                    
                                    );
     
+    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:@"cc_FragColor" snippet:@"vec4(1,1,1,1)"];
     CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"outlineEffect"
-                                                                           body:effectBody inputs:nil returnType:@"vec4"];
+                                                                           body:effectBody inputs:@[input] returnType:@"vec4"];
     return @[fragmentFunction];
 }
 
@@ -178,9 +187,11 @@
     return self;
 }
 
-+(id)effectWithOutlineColor:(CCColor*)outlineColor outlineWidth:(int)outlineWidth
++(instancetype)effectWithOutlineColor:(CCColor*)outlineColor outlineWidth:(int)outlineWidth
 {
     return [[self alloc] initWithOutlineColor:outlineColor outlineWidth:outlineWidth];
 }
 
 @end
+
+#endif

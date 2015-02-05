@@ -29,6 +29,10 @@
 
 #if __CC_PLATFORM_IOS
 #import <UIKit/UIColor.h>
+#elif __CC_PLATFORM_MAC
+#import <AppKit/NSColor.h>
+#elif __CC_PLATFORM_ANDROID
+#import <CoreGraphics/CoreGraphics.h>
 #endif
 
 
@@ -38,13 +42,7 @@
  It is the Cocos2D equivalent of [UIColor](https://developer.apple.com/library/ios/DOCUMENTATION/UIKit/Reference/UIColor_Class/index.html)
  respectively [NSColor](https://developer.apple.com/library/Mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSColor_Class/index.html).
  */
-@interface CCColor : NSObject {
-    GLfloat _r;
-    GLfloat _g;
-    GLfloat _b;
-    GLfloat _a;
-}
-
+@interface CCColor : NSObject
 
 #pragma mark - Creating a CCColor Object from Component Values
 /// -----------------------------------------------------------------------
@@ -355,18 +353,9 @@
 // Helper category for OpenGL compatible color creating/accessing.
 @interface CCColor (OpenGL)
 
-+ (CCColor*)colorWithCcColor3b: (ccColor3B) c;
-+ (CCColor*)colorWithCcColor4b: (ccColor4B) c;
-+ (CCColor*)colorWithCcColor4f: (ccColor4F) c;
+- (CCColor*)initWithGLKVector4: (GLKVector4) c;
 + (CCColor*)colorWithGLKVector4: (GLKVector4) c;
 
-- (CCColor*)initWithCcColor3b: (ccColor3B) c;
-- (CCColor*)initWithCcColor4b: (ccColor4B) c;
-- (CCColor*)initWithGLKVector4: (GLKVector4) c;
-
-@property (nonatomic, readonly) ccColor3B ccColor3b;
-@property (nonatomic, readonly) ccColor4B ccColor4b;
-@property (nonatomic, readonly) ccColor4F ccColor4f;
 @property (nonatomic, readonly) GLKVector4 glkVector4;
 
 @end

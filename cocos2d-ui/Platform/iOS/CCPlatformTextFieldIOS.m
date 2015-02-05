@@ -9,7 +9,7 @@
 #import "CCPlatformTextFieldIOS.h"
 #import "CCDirector.h"
 #import "CCControl.h"
-#import <UIKit/UIKit.h>
+#import <UIKit/UITextField.h>
 
 @implementation CCPlatformTextFieldIOS {
     UITextField *_textField;
@@ -25,7 +25,7 @@
         _textField.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
         
         // UIKit might not be running in the same scale as us.
-        _scaleMultiplier = [CCDirector sharedDirector].contentScaleFactor/[UIScreen mainScreen].scale;
+        _scaleMultiplier = [CCDirector currentDirector].contentScaleFactor/[UIScreen mainScreen].scale;
         
     }
     return self;
@@ -33,7 +33,7 @@
 
 - (void) positionInControl:(CCControl *)control padding:(CGFloat)padding {
     CGPoint worldPos = [control convertToWorldSpace:CGPointZero];
-    CGPoint viewPos = [[CCDirector sharedDirector] convertToUI:worldPos];
+    CGPoint viewPos = [[CCDirector currentDirector] convertToUI:worldPos];
     viewPos.x += padding;
     viewPos.y += padding;
     
@@ -90,7 +90,7 @@
 
 - (void) addUITextView
 {
-    [[[CCDirector sharedDirector] view] addSubview:_textField];
+    [[[CCDirector currentDirector] view] addSubview:_textField];
 }
 
 - (void) removeUITextView
@@ -111,22 +111,22 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-
     [self endFocusingOnTextField];
+    if ([[self delegate] respondsToSelector:@selector(platformTextFieldDidFinishEditing:)]) {
+        [[self delegate]platformTextFieldDidFinishEditing:self];
+    }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
-    if ([[self delegate] respondsToSelector:@selector(platformTextFieldDidFinishEditing:)]) {
-        [[self delegate]platformTextFieldDidFinishEditing:self];
-    }
-
-    
     return YES;
 }
 
-
+- (id)nativeTextField
+{
+    return _textField;
+}
 
 
 #pragma mark Keyboard Notifications
@@ -151,7 +151,7 @@
 {
     _keyboardIsShown = YES;
     
-    UIView* view = [[CCDirector sharedDirector] view];
+    UIView* view = [[CCDirector currentDirector] view];
     
     NSDictionary* info = [notification userInfo];
     NSValue* value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
@@ -188,11 +188,11 @@
 #if __CC_PLATFORM_ANDROID
     // Ensure that all textfields have actually been positioned before checkings textField.frame property,
     // it's possible for the apportable keyboard notification to be fired before the mainloop has had a chance to kick of a scheduler update
-    CCDirector *director = [CCDirector sharedDirector];
+    CCDirector *director = [CCDirector currentDirector];
     [director.scheduler update:0.0];
 #endif
     
-    CGSize windowSize = [[CCDirector sharedDirector] viewSize];
+    CGSize windowSize = [[CCDirector currentDirector] viewSize];
     
     // Find the location of the textField
     float fieldCenterY = _textField.frame.origin.y - (_textField.frame.size.height/2);
@@ -212,13 +212,13 @@
         
 #if __CC_PLATFORM_ANDROID
         // Apportable does not support changing the openglview position, so we will just change the current scenes position instead
-        CCScene *runningScene = [[CCDirector sharedDirector] runningScene];
+        CCScene *runningScene = [[CCDirector currentDirector] runningScene];
         CGPoint newPosition = runningScene.position;
         newPosition.y = (offset * -1);
         runningScene.position = newPosition;
 #else
         // Calcualte target frame
-        UIView* view = [[CCDirector sharedDirector] view];
+        UIView* view = [[CCDirector currentDirector] view];
         CGRect frame = view.frame;
         frame.origin.y = offset;
         
@@ -239,12 +239,12 @@
     
 #if __CC_PLATFORM_ANDROID
     // Apportable does not support changing the openglview position, so we will just change the current scenes position instead
-    CCScene *runningScene = [[CCDirector sharedDirector] runningScene];
+    CCScene *runningScene = [[CCDirector currentDirector] runningScene];
     CGPoint newPosition = CGPointZero;
     newPosition.y = 0.0f;
     runningScene.position = newPosition;
 #else
-    UIView* view = [[CCDirector sharedDirector] view];
+    UIView* view = [[CCDirector currentDirector] view];
     [UIView beginAnimations: @"textFieldAnim" context: nil];
     [UIView setAnimationBeginsFromCurrentState: YES];
     [UIView setAnimationDuration: 0.2f];

@@ -30,7 +30,7 @@
 
 	self.subTitle = title;
 	
-	CGSize s = [[CCDirector sharedDirector] viewSize];
+	CGSize s = [[CCDirector currentDirector] viewSize];
 	
 	CCSprite *img = [CCSprite spriteWithImageNamed:fileName];
 	img.position = ccp( s.width/2.0f, s.height/2.0f);
@@ -74,7 +74,7 @@
 
 -(void) setupDoNotCascadeColorTest
 {
-	CGSize s = [[CCDirector sharedDirector] viewSize];
+	CGSize s = [[CCDirector currentDirector] viewSize];
 	
 	// add parent with two children sprites.
 	CCSprite *parent = [self loadAndDisplayImageNamed: @"powered.png" withTitle: @""];
@@ -97,7 +97,7 @@
 
 -(void) setupCascadeColorTest
 {
-	CGSize s = [[CCDirector sharedDirector] viewSize];
+	CGSize s = [[CCDirector currentDirector] viewSize];
 	
 	// add parent with two children sprites.
 	CCSprite *parent = [self loadAndDisplayImageNamed: @"powered.png" withTitle: @""];
@@ -121,7 +121,7 @@
 
 -(void) setupFadeChildrenTest
 {
-	CGSize s = [[CCDirector sharedDirector] viewSize];
+	CGSize s = [[CCDirector currentDirector] viewSize];
 	
 	// add parent with two children sprites.
 	CCSprite *parent = [self loadAndDisplayImageNamed: @"powered.png" withTitle: @""];
@@ -161,7 +161,7 @@
 
 -(void) setupCCNodeGradientColorTest
 {
-	CGSize s = [[CCDirector sharedDirector] viewSize];
+	CGSize s = [[CCDirector currentDirector] viewSize];
 
 	CCNodeGradient *colorNode = [CCNodeGradient nodeWithColor:[CCColor blueColor]
 													fadingTo:[CCColor redColor]

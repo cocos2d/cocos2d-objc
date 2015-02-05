@@ -13,15 +13,18 @@
 #import "CCDirector_Private.h"
 
 #import "../../CCScheduler.h"
-#import "../../CCActionManager.h"
 #import "../../CCTextureCache.h"
 #import "../../ccMacros.h"
 #import "../../CCScene.h"
 #import "../../CCShader.h"
 #import "../../ccFPSImages.h"
-#import "../../CCConfiguration.h"
+#import "../../CCDeviceInfo.h"
 #import "CCRenderer_Private.h"
 #import "CCTouch.h"
+
+#import "ccUtils.h"
+#import "CCActivity.h"
+
 
 
 #pragma mark -
@@ -92,16 +95,12 @@
 	[self createStatsLabel];
 }
 
+
 // override default logic
-- (void) runWithScene:(CCScene*) scene
+- (void)antiFlickrDrawCall
 {
-	NSAssert( scene != nil, @"Argument must be non-nil");
-	NSAssert(_runningScene == nil, @"This command can only be used to start the CCDirector. There is already a scene present.");
-	
-	[self pushScene:scene];
-    
-	NSThread *thread = [self runningThread];
-	[self performSelector:@selector(drawScene) onThread:thread withObject:nil waitUntilDone:YES];
+//    NSThread *thread = [self runningThread];
+//    [self performSelector:@selector(mainLoopBody) onThread:thread withObject:nil waitUntilDone:YES];
 }
 
 -(void)end
@@ -137,7 +136,7 @@
 {
     EGLContext *ctx = [[CCActivity currentActivity] pushApplicationContext];
     
-	[self drawScene];
+	[self mainLoopBody];
     
     [[CCActivity currentActivity] popApplicationContext:ctx];
 }
@@ -147,14 +146,14 @@
 	_animationInterval = interval;
 	if(_displayLink)
     {
-		[self stopAnimation];
-		[self startAnimation];
+		[self stopRunLoop];
+		[self startRunLoop];
 	}
 }
 
-- (void) startAnimation
+- (void) startRunLoop
 {
-	[super startAnimation];
+	[super startRunLoop];
     
     if(_animating)
         return;
@@ -174,14 +173,14 @@
     _animating = YES;
 }
 
-- (void) stopAnimation
+- (void) stopRunLoop
 {
     if(!_animating)
         return;
     
-    if([_delegate respondsToSelector:@selector(stopAnimation)])
+    if([_delegate respondsToSelector:@selector(stopRunLoop)])
     {
-        [_delegate stopAnimation];
+        [_delegate stopRunLoop];
     }
     
 	CCLOG(@"cocos2d: animation stopped");

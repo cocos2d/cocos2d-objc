@@ -27,11 +27,11 @@
 
 // Only compile this code on Mac. These files should not be included on your iOS project.
 // But in case they are included, it won't be compiled.
-#import "../../ccMacros.h"
+#import "ccMacros.h"
 #if __CC_PLATFORM_MAC
 
 #import <QuartzCore/CVDisplayLink.h>
-#import "../../CCDirector.h"
+#import "CCDirector.h"
 
 enum  {
 	// If the window is resized, it won't be autoscaled
@@ -98,4 +98,3 @@ enum  {
 @end
 
 #endif // __CC_PLATFORM_MAC
-

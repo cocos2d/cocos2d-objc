@@ -6,13 +6,16 @@
 //
 //
 
+#import "ccUtils.h"
+
 #import "CCEffectRenderer.h"
-#import "CCConfiguration.h"
+#import "CCDeviceInfo.h"
 #import "CCDirector.h"
 #import "CCEffect.h"
 #import "CCEffectStack.h"
 #import "CCEffectUtils.h"
 #import "CCTexture.h"
+#import "CCImage.h"
 
 #import "CCEffect_Private.h"
 #import "CCRenderer_Private.h"
@@ -92,7 +95,7 @@ static GLKVector2 selectTexCoordPadding(CCEffectTexCoordSource tcSource, GLKVect
 	NSUInteger powW;
 	NSUInteger powH;
     
-	if( [[CCConfiguration sharedConfiguration] supportsNPOT] )
+	if( [[CCDeviceInfo sharedDeviceInfo] supportsNPOT] )
     {
 		powW = size.width;
 		powH = size.height;
@@ -103,12 +106,13 @@ static GLKVector2 selectTexCoordPadding(CCEffectTexCoordSource tcSource, GLKVect
 		powH = CCNextPOT(size.height);
 	}
     
-    static const CCTexturePixelFormat kRenderTargetDefaultPixelFormat = CCTexturePixelFormat_RGBA8888;
+    CGFloat contentScale = [CCDirector currentDirector].contentScaleFactor;
+    CCImage *image = [[CCImage alloc] initWithPixelSize:CGSizeMake(powW, powH) contentScale:contentScale pixelData:nil];
+    image.contentSize = CC_SIZE_SCALE(size, 1.0/contentScale);
     
     // Create a new texture object for use as the color attachment of the new
     // FBO.
-	_texture = [[CCTexture alloc] initWithData:nil pixelFormat:kRenderTargetDefaultPixelFormat pixelsWide:powW pixelsHigh:powH contentSizeInPixels:size contentScale:[CCDirector sharedDirector].contentScaleFactor];
-	_texture.antialiased = NO;
+    _texture = [[CCTexture alloc] initWithImage:image options:nil];
 	
     // Save the old FBO binding so it can be restored after we create the new
     // one.
@@ -120,7 +124,7 @@ static GLKVector2 selectTexCoordPadding(CCEffectTexCoordSource tcSource, GLKVect
 	glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
     
 	// Associate texture with FBO
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _texture.name, 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, [(CCTextureGL *)_texture name], 0);
     
 	// Check if it worked (probably worth doing :) )
 	NSAssert( glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, @"Could not attach texture to framebuffer");
@@ -184,7 +188,7 @@ static GLKVector2 selectTexCoordPadding(CCEffectTexCoordSource tcSource, GLKVect
         _allRenderTargets = [[NSMutableArray alloc] init];
         _freeRenderTargets = [[NSMutableArray alloc] init];
         _contentSize = CGSizeMake(1.0f, 1.0f);
-        _contentScale = [CCDirector sharedDirector].contentScaleFactor;
+        _contentScale = [CCDirector currentDirector].contentScaleFactor;
     }
     return self;
 }
@@ -326,7 +330,7 @@ static GLKVector2 selectTexCoordPadding(CCEffectTexCoordSource tcSource, GLKVect
 
 - (void)bindRenderTarget:(CCEffectRenderTarget *)rt withRenderer:(CCRenderer *)renderer
 {
-    CGSize pixelSize = rt.texture.contentSizeInPixels;
+    CGSize pixelSize = CC_SIZE_SCALE(rt.texture.contentSize, rt.texture.contentScale);
     GLuint fbo = rt.FBO;
     
     [renderer enqueueBlock:^{

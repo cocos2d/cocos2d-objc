@@ -10,17 +10,42 @@
 #import "CCRenderTexture_Private.h"
 
 #ifndef BLUR_OPTIMIZED_RADIUS_MAX
-#define BLUR_OPTIMIZED_RADIUS_MAX 6UL
+#define BLUR_OPTIMIZED_RADIUS_MAX 4UL
 #endif
 
 
 static const float CCEffectUtilsMinRefract = -0.25;
 static const float CCEffectUtilsMaxRefract = 0.043;
 
-static CCNode* CCEffectUtilsGetNodeParent(CCNode *node);
 static BOOL CCEffectUtilsNodeIsDescendantOfNode(CCNode *descendant, CCNode *ancestor);
 
 
+
+CCNode* CCEffectUtilsGetNodeParent(CCNode *node)
+{
+    if ([node isKindOfClass:[CCRenderTextureSprite class]])
+    {
+        CCRenderTextureSprite *rtSprite = (CCRenderTextureSprite *)node;
+        return rtSprite.renderTexture;
+    }
+    else
+    {
+        return node.parent;
+    }
+}
+
+CCScene* CCEffectUtilsGetNodeScene(CCNode *node)
+{
+    if ([node isKindOfClass:[CCRenderTextureSprite class]])
+    {
+        CCRenderTextureSprite *rtSprite = (CCRenderTextureSprite *)node;
+        return rtSprite.renderTexture.scene;
+    }
+    else
+    {
+        return node.scene;
+    }
+}
 
 CCNode* CCEffectUtilsFindCommonAncestor(CCNode *first, CCNode *second)
 {
@@ -58,12 +83,12 @@ GLKMatrix4 CCEffectUtilsTransformFromNodeToAncestor(CCNode *descendant, CCNode *
     NSCAssert(CCEffectUtilsNodeIsDescendantOfNode(descendant, ancestor), @"The supplied nodes are not related to each other.");
                                                   
     // Compute the transform from this node to the common ancestor
-    CGAffineTransform t = [descendant nodeToParentTransform];
+    GLKMatrix4 t = [descendant nodeToParentMatrix];
     for (CCNode *p = CCEffectUtilsGetNodeParent(descendant); p != CCEffectUtilsGetNodeParent(ancestor); p = CCEffectUtilsGetNodeParent(p))
     {
-        t = CGAffineTransformConcat(t, [p nodeToParentTransform]);
+		    t = GLKMatrix4Multiply([p nodeToParentMatrix], t);
     }
-    return CCEffectUtilsMat4FromAffineTransform(t);
+    return t;
 }
 
 GLKMatrix4 CCEffectUtilsTransformFromNodeToNode(CCNode *first, CCNode *second, BOOL *success)
@@ -88,19 +113,6 @@ GLKMatrix4 CCEffectUtilsTransformFromNodeToNode(CCNode *first, CCNode *second, B
     return GLKMatrix4Multiply(GLKMatrix4Invert(t2, nil), t1);
 }
 
-CCNode* CCEffectUtilsGetNodeParent(CCNode *node)
-{
-    if ([node isKindOfClass:[CCRenderTextureSprite class]])
-    {
-        CCRenderTextureSprite *rtSprite = (CCRenderTextureSprite *)node;
-        return rtSprite.renderTexture;
-    }
-    else
-    {
-        return node.parent;
-    }
-}
-
 BOOL CCEffectUtilsNodeIsDescendantOfNode(CCNode *descendant, CCNode *ancestor)
 {
     NSCAssert(descendant != nil, @"Descendant node is nil.");
@@ -112,14 +124,6 @@ BOOL CCEffectUtilsNodeIsDescendantOfNode(CCNode *descendant, CCNode *ancestor)
     }
     
     return (n == ancestor);
-}
-
-GLKMatrix4 CCEffectUtilsMat4FromAffineTransform(CGAffineTransform at)
-{
-    return GLKMatrix4Make(at.a,  at.b,  0.0f,  0.0f,
-                          at.c,  at.d,  0.0f,  0.0f,
-                          0.0f,  0.0f,  1.0f,  0.0f,
-                          at.tx, at.ty, 0.0f,  1.0f);
 }
 
 GLKMatrix2 CCEffectUtilsMatrix2InvertAndTranspose(GLKMatrix2 matrix, bool *isInvertible)

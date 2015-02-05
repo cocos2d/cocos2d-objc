@@ -351,7 +351,7 @@
  *  @return The sprite frame action object.
  *  @see CCSpriteFrame
  */
-+(id) actionWithSpriteFrame:(CCSpriteFrame*)spriteFrame;
++(instancetype) actionWithSpriteFrame:(CCSpriteFrame*)spriteFrame;
 
 /**
  *  Initializes the action action with the specified sprite frame.
@@ -391,7 +391,7 @@
  @see OALSimpleAudio
  @see [OALSimpleAudio playEffect:volume:pitch:pan:loop:]
  */
-+(id) actionWithSoundFile:(NSString*)file pitch:(float)pitch pan:(float) pan gain:(float)gain;
++(instancetype) actionWithSoundFile:(NSString*)file pitch:(float)pitch pan:(float) pan gain:(float)gain;
 
 /**
  Creates a sound effect action.

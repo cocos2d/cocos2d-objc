@@ -23,6 +23,7 @@
  */
 
 #import "CCLabelBMFont.h"
+#import "uthash.h"
 
 enum {
 	kCCLabelAutomaticWidth = -1,
@@ -134,7 +135,7 @@ typedef struct _KerningHashElement {
 /// -----------------------------------------------------------------------
 
 // Creates and returns a CCBMFontConfiguration object from a specified font file value.
-+(id) configurationWithFNTFile:(NSString*)FNTfile;
++(instancetype) configurationWithFNTFile:(NSString*)FNTfile;
 
 
 /// -----------------------------------------------------------------------

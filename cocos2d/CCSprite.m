@@ -25,32 +25,18 @@
  *
  */
 
-#import "ccConfig.h"
-#import "CCSpriteBatchNode.h"
-#import "CCSprite.h"
-#import "CCSpriteFrame.h"
-#import "CCSpriteFrameCache.h"
-#import "CCAnimation.h"
-#import "CCAnimationCache.h"
-#import "CCTextureCache.h"
-#import "CCShader.h"
-#import "CCDirector.h"
-#import "Support/CGPointExtension.h"
-#import "Support/CCProfiling.h"
-#import "CCNode_Private.h"
-#import "CCRenderer_Private.h"
+#import "ccUtils.h"
+
 #import "CCSprite_Private.h"
-#import "CCTexture_Private.h"
+
+#import "CCSpriteFrameCache.h"
+#import "CCRenderer.h"
+#import "CCTexture.h"
+#import "CCTextureCache.h"
+
 
 #pragma mark -
 #pragma mark CCSprite
-
-//#if CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
-//#define RENDER_IN_SUBPIXEL
-//#else
-//#define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
-//#endif
-
 
 @implementation CCSprite {
 	// Offset Position, used by sprite sheet editors.
@@ -59,37 +45,37 @@
 	BOOL _flipX, _flipY;
 }
 
-+(id)spriteWithImageNamed:(NSString*)imageName
++(instancetype)spriteWithImageNamed:(NSString*)imageName
 {
     return [[self alloc] initWithImageNamed:imageName];
 }
 
-+(id)spriteWithTexture:(CCTexture*)texture
++(instancetype)spriteWithTexture:(CCTexture*)texture
 {
 	return [[self alloc] initWithTexture:texture];
 }
 
-+(id)spriteWithTexture:(CCTexture*)texture rect:(CGRect)rect
++(instancetype)spriteWithTexture:(CCTexture*)texture rect:(CGRect)rect
 {
 	return [[self alloc] initWithTexture:texture rect:rect];
 }
 
-+(id)spriteWithFile:(NSString*)filename
++(instancetype)spriteWithFile:(NSString*)filename
 {
 	return [[self alloc] initWithFile:filename];
 }
 
-+(id)spriteWithFile:(NSString*)filename rect:(CGRect)rect
++(instancetype)spriteWithFile:(NSString*)filename rect:(CGRect)rect
 {
 	return [[self alloc] initWithFile:filename rect:rect];
 }
 
-+(id)spriteWithSpriteFrame:(CCSpriteFrame*)spriteFrame
++(instancetype)spriteWithSpriteFrame:(CCSpriteFrame*)spriteFrame
 {
 	return [[self alloc] initWithSpriteFrame:spriteFrame];
 }
 
-+(id)spriteWithSpriteFrameName:(NSString*)spriteFrameName
++(instancetype)spriteWithSpriteFrameName:(NSString*)spriteFrameName
 {
 	CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:spriteFrameName];
 
@@ -97,12 +83,12 @@
 	return [self spriteWithSpriteFrame:frame];
 }
 
-+(id)spriteWithCGImage:(CGImageRef)image key:(NSString*)key
++(instancetype)spriteWithCGImage:(CGImageRef)image key:(NSString*)key
 {
 	return [[self alloc] initWithCGImage:image key:key];
 }
 
-+(id) emptySprite
++(instancetype) emptySprite
 {
     return [[self alloc] init];
 }
@@ -122,7 +108,7 @@
 		_flipY = _flipX = NO;
 
 		// default transform anchor: center
-		_anchorPoint =  ccp(0.5f, 0.5f);
+		self.anchorPoint =  ccp(0.5f, 0.5f);
 
 		// zwoptex default values
 		_offsetPosition = CGPointZero;
@@ -131,8 +117,6 @@
 		
 		[self setTexture:texture];
 		[self setTextureRect:rect rotated:rotated untrimmedSize:rect.size];
-        
-        _effectRenderer = [[CCEffectRenderer alloc] init];
 	}
 	
 	return self;
@@ -215,7 +199,7 @@
 - (NSString*) description
 {
 	return [NSString stringWithFormat:@"<%@ = %p | Rect = (%.2f,%.2f,%.2f,%.2f) | tag = %@ >",
-		[self class], self, _textureRect.origin.x, _textureRect.origin.y, _textureRect.size.width, _textureRect.size.height, _name
+		[self class], self, _textureRect.origin.x, _textureRect.origin.y, _textureRect.size.width, _textureRect.size.height, self.name
 	];
 }
 
@@ -249,9 +233,10 @@
 	// issue #732
 	if(_flipX) relativeOffset.x = -relativeOffset.x;
 	if(_flipY) relativeOffset.y = -relativeOffset.y;
-
-	_offsetPosition.x = relativeOffset.x + (_contentSize.width - _textureRect.size.width) / 2;
-	_offsetPosition.y = relativeOffset.y + (_contentSize.height - _textureRect.size.height) / 2;
+	
+	CGSize size = self.contentSize;
+	_offsetPosition.x = relativeOffset.x + (size.width - _textureRect.size.width) / 2;
+	_offsetPosition.y = relativeOffset.y + (size.height - _textureRect.size.height) / 2;
 
 	// Atlas: Vertex
 	float x1 = _offsetPosition.x;
@@ -277,8 +262,9 @@
 	CGFloat scale = texture.contentScale;
 	rect = CC_RECT_SCALE(rect, scale);
 	
-	float atlasWidth = (float)texture.pixelWidth;
-	float atlasHeight = (float)texture.pixelHeight;
+    CGSize sizeInPixels = texture.sizeInPixels;
+	float atlasWidth = sizeInPixels.width;
+	float atlasHeight = sizeInPixels.height;
 
 	if(rotated){
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
@@ -330,14 +316,19 @@
 	return &_verts;
 }
 
-- (CGAffineTransform)nodeToTextureTransform
+- (GLKMatrix4)nodeToTextureTransform
 {
     CGFloat sx = (_verts.br.texCoord1.s - _verts.bl.texCoord1.s) / (_verts.br.position.x - _verts.bl.position.x);
     CGFloat sy = (_verts.tl.texCoord1.t - _verts.bl.texCoord1.t) / (_verts.tl.position.y - _verts.bl.position.y);
     CGFloat tx = (_verts.bl.texCoord1.s - _verts.bl.position.x * sx);
     CGFloat ty = (_verts.bl.texCoord1.t - _verts.bl.position.y * sy);
     
-	return CGAffineTransformMake(sx, 0.0f, 0.0f, sy, tx, ty);
+	return GLKMatrix4Make(
+		  sx, 0.0f, 0.0f, 0.0f,
+		0.0f,   sy, 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		  tx,   ty, 0.0f, 1.0f
+	);
 }
 
 #pragma mark CCSprite - draw
@@ -360,7 +351,7 @@
 {
 	if( _flipX != b ) {
 		_flipX = b;
-		[self setTextureRect:_textureRect rotated:_textureRectRotated untrimmedSize:_contentSize];
+		[self setTextureRect:_textureRect rotated:_textureRectRotated untrimmedSize:self.contentSize];
 	}
 }
 -(BOOL) flipX
@@ -372,7 +363,7 @@
 {
 	if( _flipY != b ) {
 		_flipY = b;
-		[self setTextureRect:_textureRect rotated:_textureRectRotated untrimmedSize:_contentSize];
+		[self setTextureRect:_textureRect rotated:_textureRectRotated untrimmedSize:self.contentSize];
 	}
 }
 -(BOOL) flipY
@@ -411,7 +402,7 @@
 	[self updateColor];
 }
 
--(void)updateDisplayedColor:(ccColor4F) parentColor
+-(void)updateDisplayedColor:(GLKVector4) parentColor
 {
 	[super updateDisplayedColor:parentColor];
 	[self updateColor];
@@ -436,14 +427,18 @@
 
 -(void)setEffect:(CCEffect *)effect
 {
-    _effect = effect;
-    if (effect)
-    {
-        [self updateShaderUniformsFromEffect];
-    }
-    else
-    {
-        _shaderUniforms = nil;
+    if(effect != _effect){
+        _effect = effect;
+        
+        if(effect){
+            if(_effectRenderer == nil){
+                _effectRenderer = [[CCEffectRenderer alloc] init];
+            }
+            
+            [self updateShaderUniformsFromEffect];
+        } else {
+            _shaderUniforms = nil;
+        }
     }
 }
 

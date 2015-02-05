@@ -22,8 +22,11 @@
  * THE SOFTWARE.
  */
 
-#import "cocos2d.h"
 
+#import "ccTypes.h"
+
+
+@class CCNode;
 @class CCPhysicsCollisionPair;
 
 /** The type of physics body to use, used by CCPhysicsBody.

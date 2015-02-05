@@ -68,7 +68,7 @@
         CCTouch* ccTouch = [_allTouches objectForKey:[NSValue valueWithNonretainedObject:touch]];
         if(ccTouch)
         {
-            ccTouch.view = (CCGLView*)[CCDirector sharedDirector].view;
+            ccTouch.view = [CCDirector currentDirector].view;
             ccTouch.uiTouch = touch;
             [_currentTouches addObject:ccTouch];
         }
@@ -85,7 +85,7 @@
         CCTouch* ccTouch = [_allTouches objectForKey:[NSValue valueWithNonretainedObject:touch]];
         if(ccTouch)
         {
-            ccTouch.view = (CCGLView*)[CCDirector sharedDirector].view;
+            ccTouch.view = [CCDirector currentDirector].view;
             ccTouch.uiTouch = touch;
             [_currentTouches addObject:ccTouch];
         }
@@ -104,7 +104,7 @@
         CCTouch* ccTouch = [_allTouches objectForKey:[NSValue valueWithNonretainedObject:touch]];
         if(ccTouch)
         {
-            ccTouch.view = (CCGLView*)[CCDirector sharedDirector].view;
+            ccTouch.view = [CCDirector currentDirector].view;
             ccTouch.uiTouch = touch;
             [_currentTouches addObject:ccTouch];
         }
@@ -131,7 +131,7 @@
         CCTouch* ccTouch = [_allTouches objectForKey:[NSValue valueWithNonretainedObject:touch]];
         if(ccTouch)
         {
-            ccTouch.view = (CCGLView*)[CCDirector sharedDirector].view;
+            ccTouch.view = [CCDirector currentDirector].view;
             ccTouch.uiTouch = touch;
             [_currentTouches addObject:ccTouch];
         }

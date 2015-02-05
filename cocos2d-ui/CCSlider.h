@@ -7,7 +7,10 @@
 //
 
 #import "CCControl.h"
-#import "cocos2d.h"
+
+@class CCSprite;
+@class CCSpriteFrame;
+@class CCSprite9Slice;
 
 /**
  A slider is a control where the user drags a handle to set a slider value in the range 0.0 to 1.0.

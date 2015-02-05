@@ -55,12 +55,12 @@
 @synthesize objectGroups = _objectGroups;
 @synthesize properties = _properties;
 
-+(id) tiledMapWithFile:(NSString*)tmxFile
++(instancetype) tiledMapWithFile:(NSString*)tmxFile
 {
 	return [[self alloc] initWithFile:tmxFile];
 }
 
-+(id) tiledMapWithXML:(NSString*)tmxString resourcePath:(NSString*)resourcePath
++(instancetype) tiledMapWithXML:(NSString*)tmxString resourcePath:(NSString*)resourcePath
 {
 	return [[self alloc] initWithXML:tmxString resourcePath:resourcePath];
 }
@@ -134,9 +134,6 @@
 	CCTiledMapTilesetInfo *tileset = [self tilesetForLayer:layerInfo map:mapInfo];
 	CCTiledMapLayer *layer = [CCTiledMapLayer layerWithTilesetInfo:tileset layerInfo:layerInfo mapInfo:mapInfo];
 
-	// tell the layerinfo to release the ownership of the tiles map.
-	layerInfo.ownTiles = NO;
-
 	[layer setupTiles];
 
 	return layer;
@@ -145,14 +142,14 @@
 -(CCTiledMapTilesetInfo*) tilesetForLayer:(CCTiledMapLayerInfo*)layerInfo map:(CCTiledMapInfo*)mapInfo
 {
 	CGSize size = layerInfo.layerSize;
+	const uint32_t *tiles = (const uint32_t *)layerInfo.tileData.bytes;
 
 	id iter = [mapInfo.tilesets reverseObjectEnumerator];
 	for( CCTiledMapTilesetInfo* tileset in iter) {
 		for( unsigned int y = 0; y < size.height; y++ ) {
 			for( unsigned int x = 0; x < size.width; x++ ) {
-
 				unsigned int pos = x + size.width * y;
-				unsigned int gid = layerInfo.tiles[ pos ];
+				unsigned int gid = tiles[ pos ];
 
 				// gid are stored in little endian.
 				// if host is big endian, then swap
@@ -180,7 +177,7 @@
 
 -(CCTiledMapLayer*) layerNamed:(NSString *)layerName
 {
-    for (CCTiledMapLayer *layer in _children) {
+    for (CCTiledMapLayer *layer in self.children) {
 		if([layer isKindOfClass:[CCTiledMapLayer class]])
 			if([layer.layerName isEqual:layerName])
 				return layer;

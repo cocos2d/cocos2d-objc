@@ -24,14 +24,16 @@
 
 // Used to access cpBodyAccumulateMassFromShapes()
 #define CP_ALLOW_PRIVATE_ACCESS 1
+#import "CCPhysics+ObjectiveChipmunk.h"
+
+#import "ccUtils.h"
 
 #import "CCPhysicsBody.h"
-#import "CCPhysics+ObjectiveChipmunk.h"
 #import "CCNode_Private.h"
 
 
 @interface CCNode(Private)
--(CGAffineTransform)nonRigidTransform;
+-(GLKMatrix4)nonRigidTransform;
 @end
 
 //Function Prototype
@@ -56,7 +58,7 @@ CCPhysicsBodyUpdatePosition(cpBody *body, cpFloat dt);
 	BOOL _trackingPerformed;
     BOOL _isKinematicTransformDirty;
     
-    CGAffineTransform _lastTransform;
+    cpTransform _lastTransform;
     
     CGPoint           _relativePosition;
     float             _relativeRotation;
@@ -430,8 +432,14 @@ CCPhysicsBodyUpdatePosition(cpBody *body, cpFloat dt)
 }
 
 
--(CGAffineTransform)absoluteTransform {
-	return CPTRANSFORM_TO_CGAFFINETRANSFORM(_body.transform);
+-(GLKMatrix4)absoluteTransform {
+	cpTransform t = _body.transform;
+	return GLKMatrix4Make(
+		 t.a,  t.b, 0.0f, 0.0f,
+		 t.c,  t.d, 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		t.tx, t.ty, 0.0f, 1.0f
+	);
 }
 
 
@@ -456,7 +464,8 @@ CCPhysicsBodyUpdatePosition(cpBody *body, cpFloat dt)
         
         /////// Update absolute position
         
-		CGAffineTransform phyicsTransform = NodeToPhysicsTransform(self.node.parent);
+		GLKMatrix4 t = NodeToPhysicsTransform(self.node.parent);
+		cpTransform phyicsTransform = cpTransformNew(t.m[0], t.m[1], t.m[4], t.m[5], t.m[12], t.m[13]);
 		
 		CGPoint anchorPointInPointsScaled = ccpCompMult(self.node.anchorPointInPoints,
 												   ccp(self.node.scaleX, self.node.scaleY));
@@ -480,7 +489,8 @@ CCPhysicsBodyUpdatePosition(cpBody *body, cpFloat dt)
         CGPoint velocity = ccpMult(ccpSub(self.absolutePosition, lastPos), 1.0/deltaTime);
 		
         // Change in transform since last frame.
-        cpTransform deltaTransform = cpTransformMult(cpTransformInverse(_lastTransform), self.absoluteTransform);
+        cpTransform currentTransform = _body.transform;
+        cpTransform deltaTransform = cpTransformMult(cpTransformInverse(_lastTransform), currentTransform);
 
         // Change in rotation since the last frame.
         cpFloat deltaRadians = cpfatan2(deltaTransform.b, deltaTransform.a);
@@ -490,7 +500,7 @@ CCPhysicsBodyUpdatePosition(cpBody *body, cpFloat dt)
 		_body.angularVelocity = angularVelocity;
         self.velocity = velocity;
        
-        _lastTransform = self.absoluteTransform;
+        _lastTransform = currentTransform;
        
     }
     
@@ -511,10 +521,11 @@ CCPhysicsBodyUpdatePosition(cpBody *body, cpFloat dt)
 	[_joints removeObject:joint];
 }
 
--(void)willAddToPhysicsNode:(CCPhysicsNode *)physics nonRigidTransform:(cpTransform)transform
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics nonRigidTransform:(GLKMatrix4)transform
 {
-    _lastTransform = NodeToPhysicsTransform(self.node);
-	FOREACH_SHAPE(self, shape) [shape willAddToPhysicsNode:physics nonRigidTransform:transform];
+    GLKMatrix4 t = NodeToPhysicsTransform(self.node.parent);
+    _lastTransform = cpTransformNew(t.m[0], t.m[1], t.m[4], t.m[5], t.m[12], t.m[13]);
+    FOREACH_SHAPE(self, shape) [shape willAddToPhysicsNode:physics nonRigidTransform:transform];
 
     if(self.type == CCPhysicsBodyTypeStatic)
 		[self trackParentTransformations:physics];

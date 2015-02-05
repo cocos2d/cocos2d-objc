@@ -3,7 +3,7 @@
 #import "CCNodeColor.h"
 //#import "CCNode_Private.h"
 
-@interface CustomSprite : CCNode<CCShaderProtocol, CCTextureProtocol> @end
+@interface CustomSprite : CCRenderableNode<CCShaderProtocol, CCTextureProtocol> @end
 @implementation CustomSprite
 
 -(id)init
@@ -176,11 +176,11 @@
 		@"ClippingNode test.\n"
 		@"Should draw a gradient clipped by the shape of a human.";
 	
-	CGSize size = [CCDirector sharedDirector].designSize;
+	CGSize size = [CCDirector currentDirector].designSize;
 	
 //	CCNode *parent = self.contentNode;
 	
-	CCRenderTexture *parent = [CCRenderTexture renderTextureWithWidth:size.width height:size.height pixelFormat:CCTexturePixelFormat_RGBA8888 depthStencilFormat:GL_DEPTH24_STENCIL8];
+	CCRenderTexture *parent = [CCRenderTexture renderTextureWithWidth:size.width height:size.height depthStencilFormat:GL_DEPTH24_STENCIL8];
 	parent.positionType = CCPositionTypeNormalized;
 	parent.position = ccp(0.5, 0.5);
 	parent.autoDraw = YES;
@@ -213,7 +213,7 @@
 		@"Let it run for 10 - 20 seconds to check for memory leaks.";
 	
 	CCNode *contentNode = self.contentNode;
-	CGSize size = [CCDirector sharedDirector].designSize;
+	CGSize size = [CCDirector currentDirector].designSize;
 	
 	CCNode *node = [CCNode node];
 	[self.contentNode addChild:node];
@@ -221,16 +221,20 @@
 	[node scheduleBlock:^(CCTimer *timer) {
 		CCRenderTexture *rt = [CCRenderTexture renderTextureWithWidth:size.width height:size.height];
 		
-		[rt begin];
-			[[CCDirector sharedDirector].runningScene visit];
+        CCScene *scene = [CCDirector currentDirector].runningScene;
+        float r, g, b, a; [scene.color getRed:&r green:&g blue:&b alpha:&a];
+		[rt beginWithClear:r g:g b:b a:a];
+			[scene visit];
 		[rt end];
 		
 		// Remove the old sprite
 		[contentNode removeChildByName:@"zoom"];
 		
-		CGImageRef image = [rt newCGImage];
-		CCTexture *texture = [[CCTexture alloc] initWithCGImage:image contentScale:rt.contentScale];
-		CGImageRelease(image);
+		CGImageRef cgImage = [rt newCGImage];
+        CCImage *image = [[CCImage alloc] initWithCGImage:cgImage contentScale:rt.contentScale options:nil];
+		CGImageRelease(cgImage);
+        
+		CCTexture *texture = [[CCTexture alloc] initWithImage:image options:nil];
 		
 		CCSprite *sprite = [CCSprite spriteWithTexture:texture];
 		sprite.scale = 0.9;
@@ -263,7 +267,7 @@
 	CCShader *shader = nil;
 	
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+	if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
 		shader = [[CCShader alloc] initWithFragmentShaderSource:CC_METAL(
 			fragment half4 ShaderMain(
 				const CCFragData in [[stage_in]],
@@ -316,12 +320,12 @@
 	label2.position = ccp(0.7, 0.3);
 	[self.contentNode addChild:label2];
 	
-	[CCDirector sharedDirector].globalShaderUniforms[@"u_ColorMatrix"] = [NSValue valueWithGLKMatrix4:GLKMatrix4Identity];
+	[CCDirector currentDirector].globalShaderUniforms[@"u_ColorMatrix"] = [NSValue valueWithGLKMatrix4:GLKMatrix4Identity];
 	
 	[self scheduleBlock:^(CCTimer *timer) {
 		// Set up a global uniform matrix to rotate colors counter-clockwise.
 		GLKMatrix4 colorMatrix1 = GLKMatrix4MakeRotation(2.0f*timer.invokeTime, 1.0f, 1.0f, 1.0f);
-		[CCDirector sharedDirector].globalShaderUniforms[@"u_ColorMatrix"] = [NSValue valueWithGLKMatrix4:colorMatrix1];
+		[CCDirector currentDirector].globalShaderUniforms[@"u_ColorMatrix"] = [NSValue valueWithGLKMatrix4:colorMatrix1];
 		
 		// Set just sprite3's matrix to rotate colors clockwise.
 		GLKMatrix4 colorMatrix2 = GLKMatrix4MakeRotation(-4.0f*timer.invokeTime, 1.0f, 1.0f, 1.0f);
@@ -375,7 +379,7 @@
 	
 	[self renderTextureHelper:stage size:size];
 	
-	CCRenderTexture *renderTexture = [CCRenderTexture renderTextureWithWidth:size.width height:size.height pixelFormat:CCTexturePixelFormat_RGBA8888];
+	CCRenderTexture *renderTexture = [CCRenderTexture renderTextureWithWidth:size.width height:size.height];
 	renderTexture.positionType = CCPositionTypeNormalized;
 	renderTexture.position = ccp(0.75, 0.5);
 	renderTexture.clearFlags = GL_COLOR_BUFFER_BIT;

@@ -6,7 +6,7 @@
 //
 //
 
-#import <UIKit/UIKit.h>
+#import <UIKit/UITextField.h>
 #import "CCPlatformTextField.h"
 
 @interface CCPlatformTextFieldIOS : CCPlatformTextField <UITextFieldDelegate>

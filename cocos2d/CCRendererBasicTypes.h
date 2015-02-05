@@ -54,9 +54,9 @@ typedef struct CCRenderBuffer {
 	/// Read only pointer to the start of the vertex buffer.
 	CCVertex *vertexes;
 	/// Read only pointer to the start of the element index buffer.
-	GLushort *elements;
+	uint16_t *elements;
 	/// Offset of the first vertex in the buffer.
-	GLushort startIndex;
+	uint16_t startIndex;
 } CCRenderBuffer;
 
 /// Set a vertex in the buffer.
@@ -69,7 +69,7 @@ CCRenderBufferSetVertex(CCRenderBuffer buffer, int index, CCVertex vertex)
 /// Set a triangle in the buffer.
 /// The CCRenderBuffer must have been created using [CCRenderer enqueueTriangles:andVertexes:withState:].
 static inline void
-CCRenderBufferSetTriangle(CCRenderBuffer buffer, int index, GLushort a, GLushort b, GLushort c)
+CCRenderBufferSetTriangle(CCRenderBuffer buffer, int index, uint16_t a, uint16_t b, uint16_t c)
 {
 	uint16_t offset = buffer.startIndex;
 	buffer.elements[3*index + 0] = a + offset;
@@ -80,7 +80,7 @@ CCRenderBufferSetTriangle(CCRenderBuffer buffer, int index, GLushort a, GLushort
 /// Set a line in the buffer.
 /// The CCRenderBuffer must have been created using [CCRenderer enqueueLines:andVertexes:withState:].
 static inline void
-CCRenderBufferSetLine(CCRenderBuffer buffer, int index, GLushort a, GLushort b)
+CCRenderBufferSetLine(CCRenderBuffer buffer, int index, uint16_t a, uint16_t b)
 {
 	uint16_t offset = buffer.startIndex;
 	buffer.elements[2*index + 0] = a + offset;
@@ -162,19 +162,7 @@ extern NSString * const CCBlendEquationAlpha;
 /// @see CCShader
 +(instancetype)renderStateWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms copyUniforms:(BOOL)copyUniforms;
 
-// Purposefully undocumented: marked as deprecated
-// Initialize an uncached blending mode for a given blending mode, shader and set of uncopied uniform values.
-// @note Use [CCRenderState renderStateWithBlendMode:blendMode shader:shader shaderUniforms:shaderUniforms copyUniforms:NO] instead.
-// @param blendMode A blend mode.
-// @param shader The shader to use.
-// @param shaderUniforms The shader uniforms.
-// @see CCBlendMode
-// @see CCShader
--(instancetype)initWithBlendMode:(CCBlendMode *)blendMode shader:(CCShader *)shader shaderUniforms:(NSDictionary *)shaderUniforms __deprecated;
-
-/// @name Obtaining the Debug Render State
-
-/// A simple render state you can use that draws solid colors.
+/// A simple render state that draws solid colored opaque geometry.
 +(instancetype)debugColor;
 
 @end

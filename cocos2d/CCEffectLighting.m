@@ -20,6 +20,7 @@
 
 #import "CCEffect_Private.h"
 #import "CCSprite_Private.h"
+#import "CCNode_Private.h"
 
 
 typedef struct _CCLightKey
@@ -151,7 +152,7 @@ static float conditionShininess(float shininess);
     [effectBody appendString:CC_GLSL(
                                      if (composedAlpha == 0.0)
                                      {
-                                         return vec4(0,0,0,0);
+                                         return inputValue;
                                      }
                                      )];
     
@@ -239,7 +240,7 @@ static float conditionShininess(float shininess);
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Center] = [NSValue valueWithGLKVector2:passInputs.texCoord1Center];
         passInputs.shaderUniforms[CCShaderUniformTexCoord1Extents] = [NSValue valueWithGLKVector2:passInputs.texCoord1Extents];
 
-        GLKMatrix4 nodeLocalToWorld = CCEffectUtilsMat4FromAffineTransform(passInputs.sprite.nodeToWorldTransform);
+        GLKMatrix4 nodeLocalToWorld = passInputs.sprite.nodeToWorldMatrix;
         GLKMatrix4 ndcToWorld = GLKMatrix4Multiply(nodeLocalToWorld, passInputs.ndcToNodeLocal);
         
 
@@ -260,7 +261,7 @@ static float conditionShininess(float shininess);
             CCLightNode *light = weakInterface.closestLights[lightIndex];
             
             // Get the transform from the light's coordinate space to the effect's coordinate space.
-            GLKMatrix4 lightNodeToWorld = CCEffectUtilsMat4FromAffineTransform(light.nodeToWorldTransform);
+            GLKMatrix4 lightNodeToWorld = light.nodeToWorldMatrix;
             
             // Compute the light's position in the effect node's coordinate system.
             GLKVector4 lightVector = GLKVector4Make(0.0f, 0.0f, 0.0f, 0.0f);
@@ -330,7 +331,7 @@ static float conditionShininess(float shininess);
             }
         }
 
-        CCColor *ambientColor = [passInputs.sprite.scene.lights findAmbientSumForLightsWithMask:weakInterface.groupMask];
+        CCColor *ambientColor = [CCEffectUtilsGetNodeScene(passInputs.sprite).lights findAmbientSumForLightsWithMask:weakInterface.groupMask];
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_globalAmbientColor"]] = [NSValue valueWithGLKVector4:ambientColor.glkVector4];
         
         if (weakInterface.needsSpecular)
@@ -371,7 +372,7 @@ static float conditionShininess(float shininess);
 }
 
 
-+(id)effectWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess
++(instancetype)effectWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess
 {
     return [[self alloc] initWithGroups:groups specularColor:specularColor shininess:shininess];
 }
@@ -382,10 +383,10 @@ static float conditionShininess(float shininess);
 
     _needsNormalMap = (sprite.normalMapSpriteFrame != nil);
     
-    CGAffineTransform spriteTransform = sprite.nodeToWorldTransform;
-    CGPoint spritePosition = CGPointApplyAffineTransform(sprite.anchorPointInPoints, sprite.nodeToWorldTransform);
+    GLKMatrix4 spriteTransform = sprite.nodeToWorldMatrix;
+    CGPoint spritePosition = CGPointApplyGLKMatrix4(sprite.anchorPointInPoints, sprite.nodeToWorldMatrix);
     
-    CCLightCollection *lightCollection = sprite.scene.lights;
+    CCLightCollection *lightCollection = CCEffectUtilsGetNodeScene(sprite).lights;
     if (self.groupMaskDirty)
     {
         self.groupMask = [lightCollection maskForGroups:self.groups];
@@ -413,7 +414,7 @@ static float conditionShininess(float shininess);
 
 - (BOOL)needsSpecular
 {
-    return (!ccc4FEqual(self.specularColor.ccColor4f, ccc4f(0.0f, 0.0f, 0.0f, 0.0f)) && (self.shininess > 0.0f));
+    return (!GLKVector4AllEqualToScalar(self.specularColor.glkVector4, 0.0f) && (self.shininess > 0.0f));
 }
 
 -(void)setGroups:(NSArray *)groups

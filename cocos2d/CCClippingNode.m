@@ -24,24 +24,25 @@
  *
  */
 
+#import "ccMacros.h"
+
 #import "CCClippingNode.h"
-
-#import "CCGL.h"
-#import "CCShader.h"
-
-#import "CCDirector.h"
-#import "CGPointExtension.h"
-
 #import "CCNode_Private.h"
+
+#import "CCProtocols.h"
+#import "CCRenderer.h"
+#import "CCShader.h"
 #import "CCRenderDispatch.h"
-#import "CCConfiguration.h"
+#import "CCDeviceInfo.h"
 
 static GLint _stencilBits = -1;
 
 static void
 SetProgram(CCNode *n, CCShader *p, NSNumber *alpha) {
-	n.shader = p;
-	n.shaderUniforms[CCShaderUniformAlphaTestValue] = alpha;
+    if([n respondsToSelector:@selector(setShader:)]){
+        [(id<CCShaderProtocol>)n setShader:p];
+        [(id<CCShaderProtocol>)n shaderUniforms][CCShaderUniformAlphaTestValue] = alpha;
+    }
 	
 	if(!n.children) return;
 	for(CCNode* c in n.children) SetProgram(c,p, alpha);
@@ -70,10 +71,12 @@ SetProgram(CCNode *n, CCShader *p, NSNumber *alpha) {
 
 - (id)initWithStencil:(CCNode *)stencil
 {
-    NSAssert([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIGL, @"CCClippingNode is not supported by the Metal renderer yet.");
+    NSAssert([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIGL, @"CCClippingNode is not supported by the Metal renderer yet.");
 		
     if (self = [super init]) {
         self.stencil = stencil;
+        [stencil setRawParent: self];
+        
         self.alphaThreshold = 1;
         self.inverted = NO;
         // get (only once) the number of bits of the stencil buffer
@@ -87,7 +90,7 @@ SetProgram(CCNode *n, CCShader *p, NSNumber *alpha) {
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
                 CCLOGWARN(@"Stencil buffer is not enabled; enable it by passing GL_DEPTH24_STENCIL8_OES into the depthFormat parrameter when initializing CCGLView. Until then, everything will be drawn without stencil.");
 #elif __CC_PLATFORM_MAC
-                CCLOGWARN(@"Stencil buffer is not enabled; enable it by setting the Stencil attribue to 8 bit in the Attributes inspector of the CCGLView view object in MainMenu.xib, or programmatically by adding NSOpenGLPFAStencilSize and 8 in the NSOpenGLPixelFormatAttribute array of the NSOpenGLPixelFormat used when initializing CCGLView. Until then, everything will be drawn without stencil.");
+                CCLOGWARN(@"Stencil buffer is not enabled; enable it by setting the Stencil attribue to 8 bit in the Attributes inspector of the CCView view object in MainMenu.xib, or programmatically by adding NSOpenGLPFAStencilSize and 8 in the NSOpenGLPixelFormatAttribute array of the NSOpenGLPixelFormat used when initializing CCView. Until then, everything will be drawn without stencil.");
 #endif
             }
         });
@@ -251,7 +254,7 @@ SetProgram(CCNode *n, CCShader *p, NSNumber *alpha) {
 		
     // draw the stencil node as if it was one of our child
     // (according to the stencil test func/op and alpha (or alpha shader) test)
-    GLKMatrix4 transform = [self transform:parentTransform];
+    GLKMatrix4 transform = GLKMatrix4Multiply(*parentTransform, [self nodeToParentMatrix]);
 		
 		[renderer pushGroup];
     [_stencil visit:renderer parentTransform:&transform];
@@ -297,12 +300,12 @@ SetProgram(CCNode *n, CCShader *p, NSNumber *alpha) {
     layer--;
 }
 
--(GLfloat)alphaThreshold
+-(float)alphaThreshold
 {
 	return _alphaThreshold.floatValue;
 }
 
--(void)setAlphaThreshold:(GLfloat)alphaThreshold
+-(void)setAlphaThreshold:(float)alphaThreshold
 {
 	_alphaThreshold = @(alphaThreshold);
 }

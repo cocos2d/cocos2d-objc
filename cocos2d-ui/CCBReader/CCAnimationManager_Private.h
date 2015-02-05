@@ -22,6 +22,11 @@
  * THE SOFTWARE.
  */
 
+
+#import "CCAnimationManager.h"
+#import "CCBSequenceProperty.h"
+
+
 @interface CCAnimationManager ()
 
 // Sequence Array

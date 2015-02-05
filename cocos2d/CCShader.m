@@ -1,42 +1,40 @@
-//
-// Copyright 2011 Jeff Lamarche
-//
-// Copyright 2012 Goffredo Marocchi
-//
-// Copyright 2012 Ricardo Quesada
-//
-//
-// Redistribution and use in source and binary forms, with or without modification, are permitted provided
-// that the following conditions are met:
-//	1. Redistributions of source code must retain the above copyright notice, this list of conditions and
-//		the following disclaimer.
-//
-//	2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions
-//		and the following disclaimer in the documentation and/or other materials provided with the
-//		distribution.
-//
-//	THIS SOFTWARE IS PROVIDED BY THE FREEBSD PROJECT ``AS IS'' AND ANY EXPRESS OR IMPLIED
-//	WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
-//	FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE FREEBSD PROJECT
-//	OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-//	CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
-//	OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
-//	AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-//	NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-//	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+/*
+ * cocos2d for iPhone: http://www.cocos2d-iphone.org
+ *
+ * Copyright (c) 2014 Cocos2D Authors
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 
+
+#import "ccMacros.h"
 
 #import "CCShader_private.h"
-#import "ccMacros.h"
-#import "Support/CCFileUtils.h"
-#import "Support/uthash.h"
 #import "CCRenderer_Private.h"
 #import "CCTexture_private.h"
-#import "CCDirector.h"
-#import "CCCache.h"
-#import "CCGL.h"
-#import "CCRenderDispatch.h"
 #import "CCMetalSupport_Private.h"
+
+#import "CCFileUtils.h"
+#import "CCCache.h"
+#import "CCRenderDispatch.h"
+#import "CCDeviceInfo.h"
+#import "CCColor.h"
 
 
 NSString * const CCShaderUniformDefaultGlobals = @"cc_GlobalUniforms";
@@ -159,8 +157,9 @@ CCCheckShaderError(GLint obj, GLenum status, GetShaderivFunc getiv, GetShaderInf
 	}
 }
 
-static void CCLogShader(NSArray *sources)
+static void CCLogShader(NSString *label, NSArray *sources)
 {
+    NSLog(@"%@", label);
     NSMutableString *allSource = [[NSMutableString alloc] init];
     for (NSString *source in sources)
     {
@@ -195,7 +194,7 @@ CompileShaderSources(GLenum type, NSArray *sources)
     if(CCCheckShaderError(shader, GL_COMPILE_STATUS, glGetShaderiv, glGetShaderInfoLog)){
         return shader;
     } else {
-        CCLogShader(sources);
+        CCLogShader((type == GL_VERTEX_SHADER) ? @"Vertex Shader" : @"Fragment Shader", sources);
         glDeleteShader(shader);
         return 0;
     }
@@ -210,7 +209,7 @@ CompileShaderSources(GLenum type, NSArray *sources)
 	NSString *shaderName = (NSString *)key;
 	
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+	if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
 		id<MTLLibrary> library = [CCMetalContext currentContext].library;
 		
 		NSString *fragmentName = [shaderName stringByAppendingString:@"FS"];
@@ -255,7 +254,7 @@ CompileShaderSources(GLenum type, NSArray *sources)
 	BOOL _ownsProgram;
 }
 
-//MARK: GL Uniform Setters:
+#pragma mark GL Uniform Setters:
 
 static CCUniformSetter
 GLUniformSetFloat(NSString *name, GLint location)
@@ -285,7 +284,7 @@ GLUniformSetVec2(NSString *name, GLint location)
 		// Fall back on looking up the actual texture size if the name matches a texture.
 		if(value == nil && textureName){
 			CCTexture *texture = shaderUniforms[textureName] ?: globalShaderUniforms[textureName];
-			GLKVector2 sizeInPixels = GLKVector2Make(texture.pixelWidth, texture.pixelHeight);
+			GLKVector2 sizeInPixels = GLKVector2Make(texture.sizeInPixels.width, texture.sizeInPixels.height);
 			
 			GLKVector2 size = GLKVector2MultiplyScalar(sizeInPixels, pixelSize ? 1.0 : 1.0/texture.contentScale);
 			value = [NSValue valueWithGLKVector2:size];
@@ -389,15 +388,17 @@ GLUniformSettersForProgram(GLuint program)
 			case GL_FLOAT_VEC3: uniformSetters[name] = GLUniformSetVec3(name, location); break;
 			case GL_FLOAT_VEC4: uniformSetters[name] = GLUniformSetVec4(name, location); break;
 			case GL_FLOAT_MAT4: uniformSetters[name] = GLUniformSetMat4(name, location); break;
+            
+            // Sampler setters are handled a differently since the real work is binding the texture and not setting the uniform value.
+			case GL_SAMPLER_CUBE:
 			case GL_SAMPLER_2D: {
-				// Sampler setters are handled a differently since the real work is binding the texture and not setting the uniform value.
 				uniformSetters[name] = ^(CCRenderer *renderer, NSDictionary *shaderUniforms, NSDictionary *globalShaderUniforms){
 					CCTexture *texture = shaderUniforms[name] ?: globalShaderUniforms[name] ?: [CCTexture none];
 					NSCAssert([texture isKindOfClass:[CCTexture class]], @"Shader uniform '%@' value must be a CCTexture object.", name);
 					
 					// Bind the texture to the texture unit for the uniform.
 					glActiveTexture(GL_TEXTURE0 + textureUnit);
-					glBindTexture(GL_TEXTURE_2D, texture.name);
+					glBindTexture(texture.type == CCTextureType2D ? GL_TEXTURE_2D : GL_TEXTURE_CUBE_MAP, [(CCTextureGL *)texture name]);
 				};
 				
 				// Bind the texture unit at init time.
@@ -410,11 +411,11 @@ GLUniformSettersForProgram(GLuint program)
 	return uniformSetters;
 }
 
-//MARK: Init Methods:
+#pragma mark Init Methods:
 
 -(instancetype)initWithGLProgram:(GLuint)program uniformSetters:(NSDictionary *)uniformSetters ownsProgram:(BOOL)ownsProgram
 {
-	NSAssert([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIGL, @"GL graphics not configured.");
+	NSAssert([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIGL, @"GL graphics not configured.");
 	
 	if((self = [super init])){
 		_program = program;
@@ -500,7 +501,7 @@ MetalUniformSetSampler(NSString *name, MTLArgument *vertexArg, MTLArgument *frag
 		CCTexture *texture = shaderUniforms[textureName] ?: globalShaderUniforms[textureName] ?: [CCTexture none];
 		NSCAssert([texture isKindOfClass:[CCTexture class]], @"Shader uniform '%@' value must be a CCTexture object.", name);
 		
-		id<MTLSamplerState> sampler = texture.metalSampler;
+		id<MTLSamplerState> sampler = [(CCTextureMetal *)texture metalSampler];
 		
 		id<MTLRenderCommandEncoder> renderEncoder = context->_currentRenderCommandEncoder;
 		if(vertexArg) [renderEncoder setVertexSamplerState:sampler atIndex:vertexIndex];
@@ -520,7 +521,7 @@ MetalUniformSetTexture(NSString *name, MTLArgument *vertexArg, MTLArgument *frag
 		CCTexture *texture = shaderUniforms[name] ?: globalShaderUniforms[name] ?: [CCTexture none];
 		NSCAssert([texture isKindOfClass:[CCTexture class]], @"Shader uniform '%@' value must be a CCTexture object.", name);
 		
-		id<MTLTexture> metalTexture = texture.metalTexture;
+		id<MTLTexture> metalTexture = [(CCTextureMetal *)texture metalTexture];
 		
 		id<MTLRenderCommandEncoder> renderEncoder = context->_currentRenderCommandEncoder;
 		if(vertexArg) [renderEncoder setVertexTexture:metalTexture atIndex:vertexIndex];
@@ -653,6 +654,8 @@ MetalUniformSettersForFunctions(id<MTLFunction> vertexFunction, id<MTLFunction> 
 		if(CCCheckShaderError(program, GL_LINK_STATUS, glGetProgramiv, glGetProgramInfoLog)){
 			blockself = [blockself initWithGLProgram:program uniformSetters:GLUniformSettersForProgram(program) ownsProgram:YES];
 		} else {
+            CCLogShader(@"Vertex Shader", vertexSources);
+            CCLogShader(@"Fragment Shader", fragmentSources);
 			glDeleteProgram(program);
 			blockself = nil;
 		}
@@ -664,7 +667,7 @@ MetalUniformSettersForFunctions(id<MTLFunction> vertexFunction, id<MTLFunction> 
 -(instancetype)initWithVertexShaderSource:(NSString *)vertexSource fragmentShaderSource:(NSString *)fragmentSource
 {
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+	if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
 		return [self initWithMetalVertexShaderSource:vertexSource fragmentShaderSource:fragmentSource];
 	}
 #endif
@@ -693,7 +696,7 @@ MetalUniformSettersForFunctions(id<MTLFunction> vertexFunction, id<MTLFunction> 
 -(instancetype)initWithRawVertexShaderSource:(NSString *)vertexSource rawFragmentShaderSource:(NSString *)fragmentSource
 {
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-    if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+    if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
         return [self initWithMetalVertexShaderSource:vertexSource fragmentShaderSource:fragmentSource];
     }
 #endif
@@ -717,7 +720,7 @@ MetalUniformSettersForFunctions(id<MTLFunction> vertexFunction, id<MTLFunction> 
 -(instancetype)copyWithZone:(NSZone *)zone
 {
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+	if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
 		return [[CCShader allocWithZone:zone] initWithMetalVertexFunction:_vertexFunction fragmentFunction:_fragmentFunction];
 	} else
 #endif
@@ -737,11 +740,11 @@ static CCShader *CC_SHADER_POS_TEX_COLOR_ALPHA_TEST = nil;
 	// +initialize may be called due to loading a subclass.
 	if(self != [CCShader class]) return;
 	
-	NSAssert([CCConfiguration sharedConfiguration].graphicsAPI != CCGraphicsAPIInvalid, @"Graphics API not configured.");
+	NSAssert([CCDeviceInfo sharedDeviceInfo].graphicsAPI != CCGraphicsAPIInvalid, @"Graphics API not configured.");
 	CC_SHADER_CACHE = [[CCShaderCache alloc] init];
 	
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+	if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
 		id<MTLLibrary> library = [CCMetalContext currentContext].library;
 		NSAssert(library, @"Metal shader library not found.");
 		

@@ -195,8 +195,8 @@
     [shaderString appendString:@"\
         compare = cc_FragTexCoord2Extents - abs(cc_FragTexCoord2 - cc_FragTexCoord2Center); \
         inBounds = step(0.0, min(compare.x, compare.y)); \
-        dst = texture2D(cc_MainTexture, cc_FragTexCoord2) * inBounds;\
-        src = texture2D(cc_PreviousPassTexture, cc_FragTexCoord1);\
+        dst = inputValue * texture2D(cc_MainTexture, cc_FragTexCoord2) * inBounds;\
+        src = inputValue * texture2D(cc_PreviousPassTexture, cc_FragTexCoord1);\
      }\n"];
     
     
@@ -210,7 +210,8 @@
 
     free(standardGaussianWeights);
     
-    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"bloomEffect" body:shaderString inputs:nil returnType:@"vec4"];
+    CCEffectFunctionInput *input = [[CCEffectFunctionInput alloc] initWithType:@"vec4" name:@"inputValue" initialSnippet:@"cc_FragColor" snippet:@"vec4(1,1,1,1)"];
+    CCEffectFunction* fragmentFunction = [[CCEffectFunction alloc] initWithName:@"bloomEffect" body:shaderString inputs:@[input] returnType:@"vec4"];
     return @[fragmentFunction];
 }
 
@@ -300,7 +301,7 @@
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_luminanceThreshold"]] = weakInterface.conditionedThreshold;
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_intensity"]] = weakInterface.conditionedIntensity;
         
-        GLKVector2 dur = GLKVector2Make(1.0 / (passInputs.previousPassTexture.pixelWidth / passInputs.previousPassTexture.contentScale), 0.0);
+        GLKVector2 dur = GLKVector2Make(1.0 / (passInputs.previousPassTexture.sizeInPixels.width / passInputs.previousPassTexture.contentScale), 0.0);
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithGLKVector2:dur];
         
     } copy]];
@@ -318,7 +319,7 @@
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_luminanceThreshold"]] = [NSNumber numberWithFloat:0.0f];
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_intensity"]] = weakInterface.conditionedIntensity;
         
-        GLKVector2 dur = GLKVector2Make(0.0, 1.0 / (passInputs.previousPassTexture.pixelHeight / passInputs.previousPassTexture.contentScale));
+        GLKVector2 dur = GLKVector2Make(0.0, 1.0 / (passInputs.previousPassTexture.sizeInPixels.height / passInputs.previousPassTexture.contentScale));
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithGLKVector2:dur];
         
     } copy]];
@@ -379,7 +380,7 @@
     return self;
 }
 
-+(id)effectWithBlurRadius:(NSUInteger)blurRadius intensity:(float)intensity luminanceThreshold:(float)luminanceThreshold
++(instancetype)effectWithBlurRadius:(NSUInteger)blurRadius intensity:(float)intensity luminanceThreshold:(float)luminanceThreshold
 {
     return [[self alloc] initWithPixelBlurRadius:blurRadius intensity:intensity luminanceThreshold:luminanceThreshold];
 }
@@ -393,7 +394,7 @@
 -(void)setIntensity:(float)intensity
 {
     _intensity = intensity;
-    _conditionedIntensity = [NSNumber numberWithFloat:clampf(intensity, 0.0f, 1.0f)];
+    _conditionedIntensity = [NSNumber numberWithFloat:2.5f * clampf(intensity, 0.0f, 1.0f)];
 }
 
 -(void)setBlurRadius:(NSUInteger)blurRadius

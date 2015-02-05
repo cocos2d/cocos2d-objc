@@ -33,7 +33,7 @@
  *  @since v3.4 and later
  *  @see CCColor
  */
-+(id)effectWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess;
++(instancetype)effectWithGroups:(NSArray *)groups specularColor:(CCColor *)specularColor shininess:(float)shininess;
 
 /**
  *  Initializes a CCEffectLighting object.

@@ -40,6 +40,8 @@ extern const NSString *CARD_NAME[];
 - (void)touchMoved:(CCTouch *)touch withEvent:(CCTouchEvent *)event
 {
     CGPoint pos = [self.parent convertToNodeSpace:touch.locationInWorld];
+    // If we want to position them relative to the window, we can't use normalized positions.
+    self.positionType = CCPositionTypePoints;
     self.position = pos;
 }
 
@@ -98,8 +100,8 @@ extern const NSString *CARD_NAME[];
     {
         card = [PositioningSprite spriteWithImageNamed:[self randomCard]];
         card.position = ccp(
-                            (0.1 + CCRANDOM_0_1() * 0.8) * [CCDirector sharedDirector].viewSize.width,
-                            (0.1 + CCRANDOM_0_1() * 0.8) * [CCDirector sharedDirector].viewSize.height);
+                            (0.1 + CCRANDOM_0_1() * 0.8) * [CCDirector currentDirector].viewSize.width,
+                            (0.1 + CCRANDOM_0_1() * 0.8) * [CCDirector currentDirector].viewSize.height);
         card.userInteractionEnabled = YES;
         [self.contentNode addChild:card];
     }

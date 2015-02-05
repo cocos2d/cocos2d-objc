@@ -23,8 +23,10 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "cocos2d.h"
-#import "CCBSequenceProperty.h"
+#import "CCScheduler.h"
+
+@class CCNode;
+
 
 @class CCBSequence;
 
@@ -52,7 +54,7 @@
  
  @note Animation names are case sensitive.
  */
-@interface CCAnimationManager : NSObject <CCSchedulerTarget>
+@interface CCAnimationManager : NSObject <CCSchedulableTarget>
 {
     NSMutableDictionary* _nodeSequences;
     NSMutableDictionary* _baseValues;
@@ -63,10 +65,8 @@
     
     void (^block)(id sender);
     
-    CCScheduler* _scheduler;
+//    CCScheduler* _scheduler;
     NSMutableArray* _currentActions;
-    
-    BOOL _loop;
     
 }
 

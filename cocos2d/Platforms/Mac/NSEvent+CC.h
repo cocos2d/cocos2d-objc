@@ -24,10 +24,9 @@
  */
 
 #import "ccMacros.h"
-
 #if __CC_PLATFORM_MAC
 
-#import <Cocoa/Cocoa.h>
+#import <AppKit/NSEvent.h>
 
 @class CCNode;
 

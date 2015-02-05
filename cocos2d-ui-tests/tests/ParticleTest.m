@@ -131,7 +131,7 @@
 -(void) setupMultipleSystems
 {
 
-  CGSize s = [CCDirector sharedDirector].designSize;
+  CGSize s = [CCDirector currentDirector].designSize;
 
   for (int i = 0; i<5; i++) {
     CCParticleSystem *particleSystem = [CCParticleSystem particleWithFile:@"Particles/Flower.plist"];
@@ -223,7 +223,7 @@
   self.emitter.angleVar = 0;
   
   // emitter position
-  CGSize winSize = [CCDirector sharedDirector].designSize;
+  CGSize winSize = [CCDirector currentDirector].designSize;
   self.emitter.position = ccp(winSize.width/2, winSize.height/2);
   self.emitter.posVar = CGPointZero;
   
@@ -256,7 +256,7 @@
   
   self.userInteractionEnabled = TRUE;
   
-  CGSize s = [CCDirector sharedDirector].designSize;
+  CGSize s = [CCDirector currentDirector].designSize;
   
   background = [CCSprite spriteWithImageNamed:@"Images/gridBackground.png"];
   [self.contentNode addChild:background z:5];
@@ -283,7 +283,7 @@
 {
   //	Scene *s = [Scene node];
   //	[s addChild: [restartAction() node]];
-  //	[[Director sharedDirector] replaceScene: s];
+  //	[[Director currentDirector] presentScene: s];
   
 	[_emitter resetSystem];
   [self.contentNode removeAllChildren ];
@@ -306,7 +306,7 @@
 - (void)touchEnded:(CCTouch*)touch withEvent:(CCTouchEvent *)event
 {
 	CGPoint location = [touch locationInView: [touch view]];
-	CGPoint convertedLocation = [[CCDirector sharedDirector] convertToGL:location];
+	CGPoint convertedLocation = [[CCDirector currentDirector] convertToGL:location];
   
 	_emitter.position = convertedLocation;
 }
@@ -319,7 +319,7 @@
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {
-	CGPoint convertedLocation = [[CCDirector sharedDirector] convertEventToGL:theEvent];
+	CGPoint convertedLocation = [[CCDirector currentDirector] convertEventToGL:theEvent];
   
 	CGPoint pos = CGPointZero;
   

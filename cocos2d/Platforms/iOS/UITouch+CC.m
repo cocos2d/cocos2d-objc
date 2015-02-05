@@ -28,12 +28,14 @@
 #if __CC_PLATFORM_IOS
 
 #import "UITouch+CC.h"
+#import "CCDirector.h"
+#import "CCNode.h"
 
 @implementation PlatformTouch (CC)
 
 - (CGPoint) locationInNode:(CCNode*) node
 {
-    CCDirector* dir = [CCDirector sharedDirector];
+    CCDirector* dir = [CCDirector currentDirector];
     
     CGPoint touchLocation = [self locationInView: [self view]];
 	touchLocation = [dir convertToGL: touchLocation];
@@ -42,7 +44,7 @@
 
 - (CGPoint) locationInWorld
 {
-    CCDirector* dir = [CCDirector sharedDirector];
+    CCDirector* dir = [CCDirector currentDirector];
     
     CGPoint touchLocation = [self locationInView: [self view]];
 	return [dir convertToGL: touchLocation];

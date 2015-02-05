@@ -27,7 +27,7 @@
 *  @return The CCEffectHue object.
 *  @since v3.2 and later
 */
-+(id)effectWithHue:(float)hue;
++(instancetype)effectWithHue:(float)hue;
 
 /**
  *  Initializes a CCEffectHue object with a hue adjustment of 0.

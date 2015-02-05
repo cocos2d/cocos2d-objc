@@ -22,7 +22,11 @@
  * THE SOFTWARE.
  */
 
-#import "cocos2d.h"
+
+#import "ccTypes.h"
+
+@class CCNode;
+
 
 /**
 Every CCPhysicsBody has at least one shape attached to it. Normally the shape is created for you when creating the body.

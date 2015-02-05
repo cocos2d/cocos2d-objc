@@ -61,11 +61,9 @@ static CGPoint scrollPosition;
     static CCScene *mainMenuScene = nil;
     static dispatch_once_t once = 0L;
     dispatch_once(&once, ^{
-        mainMenuScene = [CCScene node];
-        
+        mainMenuScene = [[CCScene alloc] init];
         // 'layer' is an autorelease object.
         MainMenu *node = [MainMenu node];
-        
         
         // add layer as a child to scene
         [mainMenuScene addChild: node];
@@ -95,7 +93,7 @@ static CGPoint scrollPosition;
     [self addChild:headerBg];
     
     // Header label
-    CCLabelTTF* lblTitle = [CCLabelTTF labelWithString:@"Cocos2d Tests" fontName:@"HelveticaNeue-Medium" fontSize:17 * [CCDirector sharedDirector].UIScaleFactor];
+    CCLabelTTF* lblTitle = [CCLabelTTF labelWithString:@"Cocos2d Tests" fontName:@"HelveticaNeue-Medium" fontSize:17 * [CCDirector currentDirector].UIScaleFactor];
     lblTitle.positionType = CCPositionTypeNormalized;
     lblTitle.position = ccp(0.5, 0.5);
     
@@ -121,7 +119,7 @@ static CGPoint scrollPosition;
     CCScene* test = [TestBase sceneWithTestName:@"CCLabelTTFTest"];
     CCTransition* transition = [CCTransition transitionMoveInWithDirection:CCTransitionDirectionLeft duration:0.3];
     
-    [[CCDirector sharedDirector] replaceScene:test withTransition:transition];
+    [[CCDirector currentDirector] presentScene:test withTransition:transition];
 }
 
 - (void) selectedRow:(id)sender
@@ -134,7 +132,7 @@ static CGPoint scrollPosition;
     CCScene* test = [TestBase sceneWithTestName:className];
     CCTransition* transition = [CCTransition transitionMoveInWithDirection:CCTransitionDirectionLeft duration:0.3];
     
-    [[CCDirector sharedDirector] replaceScene:test withTransition:transition];
+    [[CCDirector currentDirector] presentScene:test withTransition:transition];
 }
 
 - (CCTableViewCell*) tableView:(CCTableView*)tableView nodeForRowAtIndex:(NSUInteger) index
@@ -149,7 +147,7 @@ static CGPoint scrollPosition;
     [cell.button setBackgroundSpriteFrame:frameNormal forState:CCControlStateNormal];
     [cell.button setBackgroundSpriteFrame:frameHilite forState:CCControlStateHighlighted];
     
-    CCLabelTTF* label = [CCLabelTTF labelWithString:[[self testClassNames] objectAtIndex:index] fontName:@"HelveticaNeue" fontSize:17 * [CCDirector sharedDirector].UIScaleFactor];
+    CCLabelTTF* label = [CCLabelTTF labelWithString:[[self testClassNames] objectAtIndex:index] fontName:@"HelveticaNeue" fontSize:17 * [CCDirector currentDirector].UIScaleFactor];
     label.positionType = CCPositionTypeMake(CCPositionUnitUIPoints, CCPositionUnitNormalized, CCPositionReferenceCornerBottomLeft);
     label.position = ccp(20, 0.5f);
     label.anchorPoint = ccp(0, 0.5f);

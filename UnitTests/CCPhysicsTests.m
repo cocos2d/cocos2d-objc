@@ -11,6 +11,7 @@
 
 #import "CCPhysics+ObjectiveChipmunk.h"
 #import "CCDirector_Private.h"
+#import "CCScheduler_Private.h"
 #import "AppDelegate.h"
 
 @interface CCScheduler(Test)
@@ -29,9 +30,15 @@
 - (void)setUp
 {
     [super setUp];
+    
+    CCDirector *director = [CCDirector director];
+    [CCDirector pushCurrentDirector:director];
+}
 
-    [(AppController *)[UIApplication sharedApplication].delegate configureCocos2d];
-    [[CCDirector sharedDirector] startAnimation];
+-(void)tearDown
+{
+    [super tearDown];
+    [CCDirector popCurrentDirector];
 }
 
 static void
@@ -911,6 +918,8 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
 //it subsuquently posesses are changed to fixed scheduled.
 -(void)testKineticNodeActionsBasic1
 {
+    CCScene *scene = [CCScene node];
+    
     CCPhysicsNode *physicsNode = [CCPhysicsNode node];
 	physicsNode.collisionDelegate = self;
 	physicsNode.gravity = ccp(0, 0);
@@ -940,18 +949,18 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
 	[node1 runAction:[CCActionMoveBy actionWithDuration:10 position:ccp(100, 0)]];
 	
 	// Force entering the scene to set up the physics objects.
-	[physicsNode onEnter];
+    [scene addChild:physicsNode];
 	
-	CCScheduler * scheduler =  [CCDirector sharedDirector].scheduler;
+	CCScheduler * scheduler =  physicsNode.scene.scheduler;
     scheduler.fixedUpdateInterval = 0.1f;
 	[scheduler update:0.10f];// first tick
-	const float accuracy = 1e-4;
+	const float accuracy = 1e-3;
     //test actions are fixed.
     for(int i = 0; i < 100; i++)
 	{
 		float desired  = (float)i * 0.1f * 100.0f/10.0f + (float)i * 0.1f * 200.0f/10.0f;
 		//NSLog(@"node1.position.x=  %0.2f   desired = %0.2f",body1.absolutePosition.x, desired);
-		XCTAssertEqualWithAccuracy(body1.absolutePosition.x, desired , accuracy, @"Not in the write position");
+		XCTAssertEqualWithAccuracy(body1.absolutePosition.x, desired , accuracy, @"Not in the right position");
 		[scheduler update:0.10f];
 	}
 }

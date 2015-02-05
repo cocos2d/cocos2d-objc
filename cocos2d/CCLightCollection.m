@@ -27,6 +27,7 @@
 #import "CCLightNode.h"
 
 #import "CCLightNode_Private.h"
+#import "CCNode_Private.h"
 
 
 const CCLightGroupMask CCLightCollectionAllGroups = ~((CCLightGroupMask)0);
@@ -216,7 +217,7 @@ static const NSUInteger CCLightCollectionMaxGroupCount = sizeof(NSUInteger) * 8;
 
 + (float)distanceSquaredFromLight:(CCLightNode*)light toPoint:(CGPoint)refPoint
 {
-    CGPoint lightPosition = CGPointApplyAffineTransform(light.anchorPointInPoints, light.nodeToWorldTransform);
+    CGPoint lightPosition = CGPointApplyGLKMatrix4(light.anchorPointInPoints, light.nodeToWorldMatrix);
     CGPoint delta = CGPointMake(lightPosition.x - refPoint.x, lightPosition.y - refPoint.y);
     
     float distSquared = delta.x * delta.x + delta.y * delta.y;

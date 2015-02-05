@@ -24,13 +24,16 @@
 
 #import "objc/message.h"
 
-#import "cocos2d.h"
+#import "ccUtils.h"
+
 #import "CCRenderer_Private.h"
-#import "CCCache.h"
 #import "CCTexture_Private.h"
 #import "CCShader_private.h"
 #import "CCDirector_Private.h"
+
+#import "CCCache.h"
 #import "CCRenderDispatch.h"
+#import "CCDeviceInfo.h"
 
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 #import "CCMetalSupport_Private.h"
@@ -44,13 +47,13 @@
 @end
 
 
-//MARK: Graphics Debug Helpers:
+#pragma mark Graphics Debug Helpers:
 
 #if DEBUG
 
 void CCRENDERER_DEBUG_PUSH_GROUP_MARKER(NSString *label){
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+	if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
 		[[CCMetalContext currentContext].currentRenderCommandEncoder pushDebugGroup:label];
 	} else
 #endif
@@ -61,7 +64,7 @@ void CCRENDERER_DEBUG_PUSH_GROUP_MARKER(NSString *label){
 
 void CCRENDERER_DEBUG_POP_GROUP_MARKER(void){
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+	if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
 		[[CCMetalContext currentContext].currentRenderCommandEncoder popDebugGroup];
 	} else
 #endif
@@ -72,7 +75,7 @@ void CCRENDERER_DEBUG_POP_GROUP_MARKER(void){
 
 void CCRENDERER_DEBUG_INSERT_EVENT_MARKER(NSString *label){
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+	if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
 		[[CCMetalContext currentContext].currentRenderCommandEncoder insertDebugSignpost:label];
 	} else
 #endif
@@ -83,7 +86,7 @@ void CCRENDERER_DEBUG_INSERT_EVENT_MARKER(NSString *label){
 
 void CCRENDERER_DEBUG_CHECK_ERRORS(void){
 #if __CC_METAL_SUPPORTED_AND_ENABLED
-	if([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIMetal){
+	if([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIMetal){
 	} else
 #endif
 	{
@@ -94,7 +97,7 @@ void CCRENDERER_DEBUG_CHECK_ERRORS(void){
 #endif
 
 
-//MARK: Draw Command.
+#pragma mark Draw Command.
 
 
 @implementation CCRenderCommandDraw
@@ -133,7 +136,7 @@ void CCRENDERER_DEBUG_CHECK_ERRORS(void){
 @end
 
 
-//MARK: Custom Block Command.
+#pragma mark Custom Block Command.
 @interface CCRenderCommandCustom : NSObject<CCRenderCommand>
 @end
 
@@ -176,7 +179,7 @@ void CCRENDERER_DEBUG_CHECK_ERRORS(void){
 @end
 
 
-//MARK: Rendering group command.
+#pragma mark Rendering group command.
 
 static void
 SortQueue(NSMutableArray *queue)
@@ -231,7 +234,7 @@ SortQueue(NSMutableArray *queue)
 @end
 
 
-//MARK: Render Queue
+#pragma mark Render Queue
 
 
 @implementation CCRenderer
@@ -274,7 +277,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 -(void)prepareWithProjection:(const GLKMatrix4 *)projection framebuffer:(CCFrameBufferObject *)framebuffer
 {
 	NSAssert(framebuffer, @"Framebuffer cannot be nil.");
-	CCDirector *director = [CCDirector sharedDirector];
+	CCDirector *director = [CCDirector currentDirector];
 	
 	// Copy in the globals from the director.
 	NSMutableDictionary *globalShaderUniforms = [director.globalShaderUniforms mutableCopy];
@@ -296,7 +299,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 	globals.viewSize = GLKVector2Make(coef*pixelSize.width, coef*pixelSize.height);
 	globalShaderUniforms[CCShaderUniformViewSize] = [NSValue valueWithGLKVector2:globals.viewSize];
 	
-	CCTime t = director.scheduler.currentTime;
+	CCTime t = director.runningScene.scheduler.currentTime;
 	globals.time = GLKVector4Make(t, t/2.0f, t/4.0f, t/8.0f);
 	globals.sinTime = GLKVector4Make(sinf(t*2.0f), sinf(t), sinf(t/2.0f), sinf(t/4.0f));
 	globals.cosTime = GLKVector4Make(cosf(t*2.0f), cosf(t), cosf(t/2.0f), cosf(t/4.0f));
@@ -351,7 +354,7 @@ static NSString *CURRENT_RENDERER_KEY = @"CCRendererCurrent";
 		_clearDepth = depth;
 		_clearStencil = stencil;
 	} else {
-		NSAssert([CCConfiguration sharedConfiguration].graphicsAPI == CCGraphicsAPIGL, @"Clear commands must be the first command in the queue unless using GL.");
+		NSAssert([CCDeviceInfo sharedDeviceInfo].graphicsAPI == CCGraphicsAPIGL, @"Clear commands must be the first command in the queue unless using GL.");
 		
 		[self enqueueBlock:^{
 			if(mask & GL_COLOR_BUFFER_BIT) glClearColor(color4.r, color4.g, color4.b, color4.a);

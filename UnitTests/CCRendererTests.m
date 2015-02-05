@@ -1,15 +1,9 @@
-//
-//  CCFileUtilTests
-//
-//  Created by Andy Korth on December 6th, 2013.
-//
-//
 
 #import <XCTest/XCTest.h>
 #import "cocos2d.h"
 
 #import "CCRenderer_private.h"
-
+#import "CCDirector_Private.h"
 
 @interface NSValue()
 -(size_t)CCRendererSizeOf;
@@ -20,6 +14,17 @@
 @end
 
 @implementation CCRendererTests
+
+-(void) setUp
+{
+    [CCDirector pushCurrentDirector:[CCDirector director]];
+}
+
+-(void)tearDown
+{
+    [CCDirector popCurrentDirector];
+}
+
 
 -(void)testBlendModeCacheInterning
 {
@@ -95,7 +100,7 @@
 	@autoreleasepool {
 		CCBlendMode *mode = [CCBlendMode alphaMode];
 		CCShader *shader = [CCShader positionColorShader];
-		CCTexture *texture = [CCTexture textureWithFile:@"Images/grossini_dance_01.png"];
+		CCTexture *texture = [CCTexture none];
 		
 		renderState = [CCRenderState renderStateWithBlendMode:mode shader:shader mainTexture:texture];
 		XCTAssertNotNil(renderState, @"Render state was not created.");

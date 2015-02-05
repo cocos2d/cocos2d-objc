@@ -3,57 +3,20 @@
 #import "CCSprite_Private.h"
 #import "CCRenderer_Private.h"
 #import "CCShader_Private.h"
+#import "CCRenderableNode_Private.h"
+#import "CCDeviceInfo.h"
 
 #if __CC_METAL_SUPPORTED_AND_ENABLED
 #import "CCMetalSupport_Private.h"
 #endif
 
 
-@implementation CCNode(NoARC)
+// TODO Need to make CCTexture.m MRC to merge this back in?
+@implementation CCTexture(NoARC)
 
-static inline GLKMatrix4
-CCNodeTransform(CCNode *node, GLKMatrix4 parentTransform)
++(instancetype)allocWithZone:(struct _NSZone *)zone
 {
-	CGAffineTransform t = [node nodeToParentTransform];
-	float z = node->_vertexZ;
-	
-	// Convert to 4x4 column major GLK matrix.
-	return GLKMatrix4Multiply(parentTransform, GLKMatrix4Make(
-		 t.a,  t.b, 0.0f, 0.0f,
-		 t.c,  t.d, 0.0f, 0.0f,
-		0.0f, 0.0f, 1.0f, 0.0f,
-		t.tx, t.ty,    z, 1.0f
-	));
-}
-
--(GLKMatrix4)transform:(const GLKMatrix4 *)parentTransform
-{
-	return CCNodeTransform(self, *parentTransform);
-}
-
--(void) visit:(CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform
-{
-	// quick return if not visible. children won't be drawn.
-	if (!_visible) return;
-	
-	[self sortAllChildren];
-	
-	GLKMatrix4 transform = CCNodeTransform(self, *parentTransform);
-	BOOL drawn = NO;
-	
-	for(CCNode *child in _children){
-		if(!drawn && child.zOrder >= 0){
-			[self draw:renderer transform:&transform];
-			drawn = YES;
-		}
-		
-		[child visit:renderer parentTransform:&transform];
-	}
-	
-	if(!drawn) [self draw:renderer transform:&transform];
-
-	// reset for next frame
-	_orderOfArrival = 0;
+    return NSAllocateObject(CCTextureClass, 0, zone);
 }
 
 @end
@@ -100,22 +63,6 @@ EnqueueTriangles(CCSprite *self, CCRenderer *renderer, const GLKMatrix4 *transfo
 	{
 		EnqueueTriangles(self, renderer, transform);
 	}
-    
-#if CC_SPRITE_DEBUG_DRAW
-	const GLKVector2 zero = {{0, 0}};
-	const GLKVector4 white = {{1, 1, 1, 1}};
-	
-	CCRenderBuffer debug = [renderer enqueueLines:4 andVertexes:4 withState:[CCRenderState debugColor] globalSortOrder:0];
-	CCRenderBufferSetVertex(debug, 0, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts.bl.position), zero, zero, white});
-	CCRenderBufferSetVertex(debug, 1, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts.br.position), zero, zero, white});
-	CCRenderBufferSetVertex(debug, 2, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts.tr.position), zero, zero, white});
-	CCRenderBufferSetVertex(debug, 3, (CCVertex){GLKMatrix4MultiplyVector4(*transform, _verts.tl.position), zero, zero, white});
-	
-	CCRenderBufferSetLine(debug, 0, 0, 1);
-	CCRenderBufferSetLine(debug, 1, 1, 2);
-	CCRenderBufferSetLine(debug, 2, 2, 3);
-	CCRenderBufferSetLine(debug, 3, 3, 0);
-#endif
 }
 
 -(void)enqueueTriangles:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
@@ -313,8 +260,7 @@ static const CCRenderCommandDrawMode GLDrawModes[] = {
 	renderer->_renderState = _renderState;
 	
 	glDrawElements(GLDrawModes[_mode], (GLsizei)_count, GL_UNSIGNED_SHORT, (GLvoid *)(_firstIndex*sizeof(GLushort)));
-	CC_INCREMENT_GL_DRAWS(1);
-	
+    
 	CCGL_DEBUG_POP_GROUP_MARKER();
 }
 
@@ -444,8 +390,6 @@ static const MTLPrimitiveType MetalDrawModes[] = {
 	
 	[renderEncoder drawIndexedPrimitives:MetalDrawModes[_mode] indexCount:_count indexType:MTLIndexTypeUInt16 indexBuffer:indexBuffer indexBufferOffset:2*_firstIndex];
 	CCMTL_DEBUG_POP_GROUP_MARKER(renderEncoder);
-	
-	CC_INCREMENT_GL_DRAWS(1);
 }
 
 @end

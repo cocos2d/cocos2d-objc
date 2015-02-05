@@ -28,19 +28,18 @@
 // Common layer for OpenGL stuff
 //
 
-#import "../ccMacros.h"
+#import "ccMacros.h"
 
 #if __CC_PLATFORM_IOS
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
 #import <OpenGLES/EAGL.h>
-
+#import "iOS/CCViewiOSGL.h"
 #elif __CC_PLATFORM_MAC
 #import <OpenGL/gl.h>
 #import <OpenGL/glu.h>
-#import <Cocoa/Cocoa.h>	// needed for NSOpenGLView
-#import "Mac/CCGLView.h"
-
+#import <Cocoa/Cocoa.h>
+#import "Mac/CCViewMacGL.h"
 #elif __CC_PLATFORM_ANDROID
 #define GL_GLEXT_PROTOTYPES 1
 #include <EGL/egl.h> // requires ndk r5 or newer
@@ -93,10 +92,6 @@ static inline void __CC_CHECK_GL_ERROR_DEBUG(const char *function, int line)
 #endif
 
 
-__attribute__((deprecated)) static const GLenum CC_BLEND_SRC = GL_ONE;
-__attribute__((deprecated)) static const GLenum CC_BLEND_DST = GL_ONE_MINUS_SRC_ALPHA;
-
-
 // iOS
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_ANDROID
 #define	glClearDepth				glClearDepthf
@@ -118,6 +113,13 @@ __attribute__((deprecated)) static const GLenum CC_BLEND_DST = GL_ONE_MINUS_SRC_
 #define glDeleteVertexArrays		glDeleteVertexArraysAPPLE
 #define glGenVertexArrays			glGenVertexArraysAPPLE
 #define glBindVertexArray			glBindVertexArrayAPPLE
+#define glFenceSyncAPPLE            glFenceSync
+#define glClientWaitSyncAPPLE       glClientWaitSync
+#define glDeleteSyncAPPLE           glDeleteSync
+
+#define GL_SYNC_FLUSH_COMMANDS_BIT_APPLE        GL_SYNC_FLUSH_COMMANDS_BIT
+#define GL_SYNC_GPU_COMMANDS_COMPLETE_APPLE     GL_SYNC_GPU_COMMANDS_COMPLETE
+#define GL_ALREADY_SIGNALED_APPLE               GL_ALREADY_SIGNALED
 
 #else // OpenGL 3.2 Core Profile
 

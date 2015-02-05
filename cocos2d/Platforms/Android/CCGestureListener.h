@@ -6,10 +6,10 @@
 //
 //
 
-#import "CCMacros.h"
+#import "ccMacros.h"
 #if __CC_PLATFORM_ANDROID
 
-#import <BridgeKitV3/BridgeKit.h>
+#import <GLActivityKit/GLGestureListener.h>
 
 @protocol CCGestureListenerDelegate <NSObject>
 @optional
@@ -20,17 +20,10 @@
 - (BOOL)onScroll:(AndroidMotionEvent *)start end:(AndroidMotionEvent *)end distanceX:(float)dx distanceY:(float)dy;
 @end
 
-BRIDGE_CLASS("org.cocos2d.CCGestureListener")
-@interface CCGestureListener : JavaObject <AndroidGestureDetectorOnGestureListener>
+BRIDGE_CLASS("com.apportable.GLGestureListener")
+@interface CCGestureListener : GLGestureListener <AndroidGestureDetectorOnGestureListener>
 
 @property (nonatomic, assign) id<CCGestureListenerDelegate> delegate;
-
-- (id)init;
-- (BOOL)onDoubleTap:(AndroidMotionEvent *)e;
-- (BOOL)onDown:(AndroidMotionEvent *)e;
-- (BOOL)onFling:(AndroidMotionEvent *)start end:(AndroidMotionEvent *)end velocityX:(float)velocityX velocityY:(float)velocityY;
-- (void)onLongPress:(AndroidMotionEvent *)e;
-- (BOOL)onScroll:(AndroidMotionEvent *)start end:(AndroidMotionEvent *)end distanceX:(float)dx distanceY:(float)dy;
 
 @end
 

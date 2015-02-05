@@ -12,7 +12,7 @@
 #import "CCDirector.h"
 #import "ccMacros.h"
 #import "CCShader.h"
-#import "CCConfiguration.h"
+#import "CCDeviceInfo.h"
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
 #import "Support/CGPointExtension.h"
@@ -47,17 +47,12 @@
 
 -(id)initWithWidth:(int)width height:(int)height
 {
-    return [self initWithWidth:width height:height pixelFormat:CCTexturePixelFormat_Default];
+    return [self initWithWidth:width height:height depthStencilFormat:0];
 }
 
--(id)initWithWidth:(int)width height:(int)height pixelFormat:(CCTexturePixelFormat)format
+-(id)initWithWidth:(int)width height:(int)height depthStencilFormat:(GLuint)depthStencilFormat
 {
-    return [self initWithWidth:width height:height pixelFormat:format depthStencilFormat:0];
-}
-
--(id)initWithWidth:(int)width height:(int)height pixelFormat:(CCTexturePixelFormat) format depthStencilFormat:(GLuint)depthStencilFormat
-{
-    if((self = [super initWithWidth:width height:height pixelFormat:CCTexturePixelFormat_Default depthStencilFormat:depthStencilFormat]))
+    if((self = [super initWithWidth:width height:height depthStencilFormat:depthStencilFormat]))
     {
         _effectRenderer = [[CCEffectRenderer alloc] init];
         _allocatedSize = CGSizeMake(0.0f, 0.0f);
@@ -66,19 +61,14 @@
 	return self;
 }
 
-+(id)effectNodeWithWidth:(int)w height:(int)h
++(instancetype)effectNodeWithWidth:(int)w height:(int)h
 {
     return [[CCEffectNode alloc] initWithWidth:w height:h];
 }
 
-+(id)effectNodeWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat)format
++(instancetype)effectNodeWithWidth:(int)w height:(int)h depthStencilFormat:(GLuint)depthStencilFormat
 {
-    return [[CCEffectNode alloc] initWithWidth:w height:h pixelFormat:format];
-}
-
-+(id)effectNodeWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat)format depthStencilFormat:(GLuint)depthStencilFormat
-{
-    return [[CCEffectNode alloc] initWithWidth:w height:h pixelFormat:format depthStencilFormat:depthStencilFormat];
+    return [[CCEffectNode alloc] initWithWidth:w height:h depthStencilFormat:depthStencilFormat];
 }
 
 -(CCEffect *)effect
@@ -121,7 +111,7 @@
 {
 	// override visit.
 	// Don't call visit on its children
-	if(!_visible) return;
+	if(!self.visible) return;
     
     CGSize pointSize = self.contentSizeInPoints;
     if (!CGSizeEqualToSize(pointSize, _allocatedSize))
@@ -131,11 +121,8 @@
         _contentSizeChanged = NO;
     }
 	
-    GLKMatrix4 transform = [self transform:parentTransform];
-    
+    GLKMatrix4 transform = GLKMatrix4Multiply(*parentTransform, [self nodeToParentMatrix]);
     [self draw:renderer transform:&transform];
-	
-	_orderOfArrival = 0;
 }
 
 -(void)draw:(CCRenderer *)renderer transform:(const GLKMatrix4 *)transform
@@ -149,7 +136,7 @@
     //! make sure all children are drawn
     [self sortAllChildren];
     
-    for(CCNode *child in _children){
+    for(CCNode *child in self.children){
         if( child != _sprite) [child visit:rtRenderer parentTransform:&_projection];
     }
     [self end];

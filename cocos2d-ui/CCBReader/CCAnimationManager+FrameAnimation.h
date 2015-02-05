@@ -8,6 +8,7 @@
 
 #import "CCAnimationManager.h"
 
+
 /** CCAnimationManager category for sprite frame animations. */
 @interface CCAnimationManager (FrameAnimation)
 
