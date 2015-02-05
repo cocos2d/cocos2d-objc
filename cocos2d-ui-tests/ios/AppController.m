@@ -34,13 +34,17 @@
 
 - (void)setupApplication
 {
+    [self configureFileUtilsSearchPathAndRegisterSpriteSheets];
     [super setupApplication];
 }
 
 - (NSDictionary*)iosConfig
 {
-    [self configureFileUtilsSearchPathAndRegisterSpriteSheets];
-    return [super iosConfig];
+    return @{
+             CCSetupDepthFormat: @GL_DEPTH24_STENCIL8,
+             CCSetupTabletScale2X: @YES,
+             CCSetupShowDebugStats: @(getenv("SHOW_DEBUG_STATS") != nil),
+             };
 }
 
 - (void)configureFileUtilsSearchPathAndRegisterSpriteSheets
@@ -48,8 +52,11 @@
     [[NSUserDefaults standardUserDefaults] setValue:nil forKey:PACKAGE_STORAGE_USERDEFAULTS_KEY];
     [[NSUserDefaults standardUserDefaults] synchronize];
 
+    // The testbed uses a different directory dictionary than is created by the default CCFileUtils constructor- it uses the file utils one
+    [CCBReader configureCCFileUtils];
     CCFileUtils* sharedFileUtils = [CCFileUtils sharedFileUtils];
 
+    // Testbed needs special directory search paths:
     sharedFileUtils.searchPath = @[
         [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Images"],
         [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Fonts"],
@@ -73,6 +80,7 @@
         return [MainMenu scene];
     }
 }
+
 
 #pragma mark Android
 
