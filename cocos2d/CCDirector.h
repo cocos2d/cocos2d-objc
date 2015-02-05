@@ -220,8 +220,6 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 
 /** @returns The director for the currently active CCView */
 +(CCDirector*)currentDirector;
-+(CCDirector*)sharedDirector __attribute__((deprecated));
-
 
 /** @name Accessing OpenGL Thread */
 
