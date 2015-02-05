@@ -63,9 +63,11 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 #elif __CC_PLATFORM_MAC
     [self setupMac];
 #else
-
+/*
+    Explicitly erroring out here as trying to configure under an unrecognised platform will cause spectacular failures
+*/
+#error "Unrecognised platform - CCAppController only supports application configuration on iOS, Mac or Android!"
 #endif
-
 }
 
 
