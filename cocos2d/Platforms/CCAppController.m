@@ -115,7 +115,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 {
     _cocosConfig = [self iosConfig];
 
-    CCAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    CCAppDelegate *appDelegate = (CCAppDelegate*)[UIApplication sharedApplication].delegate;
     [appDelegate constructWindow];
 
     _glView = [appDelegate constructView:_cocosConfig withBounds:appDelegate.window.bounds];
@@ -188,7 +188,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     [director setProjection:CCDirectorProjection2D];
 }
 
-- (void)setupFixedScreenMode:(NSDictionary *)config director:(CCDirectorIOS *)director
+- (void)setupFixedScreenMode:(NSDictionary *)config director:(CCDirector *)director
 {
     CGSize size = [CCDirector currentDirector].viewSizeInPixels;
     CGSize fixed = [config[CCScreenModeFixedDimensions] CGSizeValue];
