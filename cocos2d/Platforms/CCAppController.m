@@ -70,16 +70,14 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 #endif
 }
 
-// Override if you want to create your first scene somehow other than by loading a ccb file.
+/*
+ Instantiate and return the first scene
+ */
 - (CCScene *)createFirstScene
 {
     return [CCBReader loadAsScene:self.firstSceneName];
 }
 
-
-/*
-    Instantiate and return the first scene
- */
 - (CCScene *)startScene
 {
     NSAssert(_glView.director, @"Require a valid director to decode the CCB file!");
@@ -99,10 +97,15 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     configPath = [configPath stringByAppendingPathComponent:@"configCocos2d.plist"];
 
     NSMutableDictionary *config = [NSMutableDictionary dictionaryWithContentsOfFile:configPath];
-
+    if(config == nil){
+        config = [NSMutableDictionary dictionary];
+    }
+    
     // Fixed size. As wide as iPhone 5 at 2x and as high as the iPad at 2x.
     config[CCScreenModeFixedDimensions] = [NSValue valueWithCGSize:CGSizeMake(586, 384)];
 
+    [CCBReader configureCCFileUtils];
+    
     return config;
 }
 
@@ -111,8 +114,6 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 - (void)setupIOS
 {
     _cocosConfig = [self iosConfig];
-
-    [CCBReader configureCCFileUtils];
 
     [self applyConfigurationToCocos:_cocosConfig];
     [self setFirstScene];
