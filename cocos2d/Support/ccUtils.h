@@ -98,7 +98,7 @@ static inline CGSize CC_SIZE_SCALE(CGSize size, CGFloat scale){
 
     
 static inline NSData* CC_DECODE_BASE64(NSString* base64){
-        NSData* result;
+        NSData* result = nil;
 #if __CC_PLATFORM_IOS || __CC_PLATFORM_MAC
         result = [[NSData alloc] initWithBase64Encoding:base64];
 #elif __CC_PLATFORM_ANDROID
