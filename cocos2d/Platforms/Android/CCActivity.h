@@ -23,7 +23,7 @@
 @interface CCActivity : GLActivity <AndroidSurfaceHolderCallback, CCDirectorDelegate>
 @property (readonly, nonatomic) AndroidAbsoluteLayout *layout;
 @property (nonatomic, strong) NSDictionary *cocos2dSetupConfig;
-@property (nonatomic, strong) CCGLView *glView;
+@property (nonatomic, strong) CCGLView<CCView> *glView;
 @property (nonatomic, strong) NSString *startScene;
 + (instancetype)currentActivity;
 

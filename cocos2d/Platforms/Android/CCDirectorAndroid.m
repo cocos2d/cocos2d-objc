@@ -94,7 +94,7 @@
 	[super end];
 }
 
--(void) setView:(CCGLView *)view
+-(void) setView:(CCGLView<CCView> *)view
 {
 		[super setView:view];
 		if( view ) {

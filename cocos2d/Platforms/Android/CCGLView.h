@@ -42,7 +42,7 @@ enum CCAndroidScreenMode {
 };
 
 BRIDGE_CLASS("com.apportable.GLView")
-@interface CCGLView : GLView <CCDirectorView>
+@interface CCGLView : GLView <CCView>
 
 - (id)initWithContext:(AndroidContext *)context screenMode:(enum CCAndroidScreenMode)screenMode scaleFactor:(float)scaleFactor;
 
