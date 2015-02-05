@@ -271,7 +271,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     [self runStartSceneAndroid];
 }
 
-- (void)configureDirector:(CCDirector*)director withConfig:(NSDictionary *)config withView:(CCGLView*)view
+- (void)configureDirector:(CCDirector*)director withConfig:(NSDictionary *)config withView:(CCGLView<CCView>*)view
 {
     CCDirectorAndroid *androidDirector = (CCDirectorAndroid*)director;
     director.delegate = [CCActivity currentActivity];

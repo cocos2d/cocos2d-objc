@@ -36,7 +36,7 @@
 /**
 *  The view in which the cocos nodes and scene graph are rendered
 */
-@property (weak) CC_VIEW<CCView> *glView;
+@property (nonatomic, weak) CC_VIEW<CCView> *glView;
 
 /// -----------------------------------------------------------------------
 /// @name Mac Specific
@@ -45,7 +45,7 @@
 /**
 *  The application window (set from .xib)
 */
-@property (weak) NSWindow *window;
+@property (nonatomic, weak) NSWindow *window;
 
 /**
 *  Configuration options that are used to setup cocos2d on Mac
