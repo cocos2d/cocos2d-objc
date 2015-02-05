@@ -22,7 +22,6 @@
  * THE SOFTWARE.
  */
 
-#import <UIKit/UIKit.h>
 #import "CCAppController.h"
 
 @interface AppController : CCAppController
