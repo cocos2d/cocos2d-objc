@@ -52,6 +52,7 @@
 #import "CCFileUtils.h"
 #import "CCImage.h"
 #import "ccUtils.h"
+#import "CCDeprecated.h"
 
 #if __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
