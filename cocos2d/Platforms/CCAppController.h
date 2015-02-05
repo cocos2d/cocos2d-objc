@@ -11,6 +11,7 @@
 
 @class NSWindow;
 @class CCGLView;
+@class CCScene;
 
 /**
  *  
@@ -32,6 +33,10 @@
 
 @interface CCAppController : NSObject
 
+/**
+*  The view in which the cocos nodes and scene graph are rendered
+*/
+@property (weak) CC_VIEW<CCView> *glView;
 
 /// -----------------------------------------------------------------------
 /// @name Mac Specific
@@ -43,9 +48,9 @@
 @property (weak) NSWindow *window;
 
 /**
- *  The GLView (set from .xib)
- */
-@property (weak) CC_VIEW<CCView> *glView;
+*  Configuration options that are used to setup cocos2d on Mac
+*/
+- (NSDictionary *)macConfig;
 
 /**
  *  The application window size to be displayed on mac.
@@ -55,6 +60,26 @@
  */
 - (CGSize)defaultWindowSize;
 
+
+/// -----------------------------------------------------------------------
+/// @name iOS Specific
+/// -----------------------------------------------------------------------
+
+/**
+*  Configuration options that are used to setup cocos2d on iOS
+*  By default this reads from "configCocos2d.plist" in the Published-iOS directory
+*/
+- (NSDictionary *)iosConfig;
+
+/// -----------------------------------------------------------------------
+/// @name Android Specific
+/// -----------------------------------------------------------------------
+
+/**
+*  Configuration options that are used to setup cocos2d on Android
+*  By default this reads from "configCocos2d.plist" in the Published-Android directory
+*/
+- (NSDictionary *)androidConfig;
 
 /// -----------------------------------------------------------------------
 /// @name Application Setup
@@ -71,5 +96,12 @@
 *  the application.
  */
 - (void)setupApplication;
+
+/**
+    Instantiate and return the first scene in the application
+    Only override this if you wish to load something other than a `.ccb` file
+    (i.e. a programaticaly created CCScene instance)
+ */
+- (CCScene *)startScene;
 
 @end
