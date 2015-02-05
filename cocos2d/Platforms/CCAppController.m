@@ -63,9 +63,11 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 #elif __CC_PLATFORM_MAC
     [self setupMac];
 #else
-
+/*
+    Explicitly erroring out here as trying to configure under an unrecognised platform will cause spectacular failures
+*/
+#error "Unrecognised platform - CCAppController only supports application configuration on iOS, Mac or Android!"
 #endif
-
 }
 
 // Override if you want to create your first scene somehow other than by loading a ccb file.
@@ -91,18 +93,6 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 #pragma mark iOS setup
 
-#if __CC_PLATFORM_IOS
-
-- (void)setupIOS
-{
-    _cocosConfig = [self iosConfig];
-
-    [CCBReader configureCCFileUtils];
-
-    [self applyConfigurationToCocos:_cocosConfig];
-    [self setFirstScene];
-}
-
 - (NSDictionary*)iosConfig
 {
     NSString *configPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Published-iOS"];
@@ -114,6 +104,18 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     config[CCScreenModeFixedDimensions] = [NSValue valueWithCGSize:CGSizeMake(586, 384)];
 
     return config;
+}
+
+#if __CC_PLATFORM_IOS
+
+- (void)setupIOS
+{
+    _cocosConfig = [self iosConfig];
+
+    [CCBReader configureCCFileUtils];
+
+    [self applyConfigurationToCocos:_cocosConfig];
+    [self setFirstScene];
 }
 
 - (void)applyConfigurationToCocos:(NSDictionary*)config
@@ -216,6 +218,18 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 #pragma mark Android setup
 
+- (NSDictionary*)androidConfig
+{
+    NSString* configPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Published-Android"];
+
+    configPath = [configPath stringByAppendingPathComponent:@"configCocos2d.plist"];
+    NSMutableDictionary *config = [NSMutableDictionary dictionaryWithContentsOfFile:configPath];
+
+    config[CCScreenModeFixedDimensions] = [NSValue valueWithCGSize:CGSizeMake(586, 384)];
+
+    return config;
+}
+
 #if __CC_PLATFORM_ANDROID
 
 - (void)setupAndroid
@@ -237,17 +251,6 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 }
 
-- (NSDictionary*)androidConfig
-{
-    NSString* configPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Published-Android"];
-
-    configPath = [configPath stringByAppendingPathComponent:@"configCocos2d.plist"];
-    NSMutableDictionary *config = [NSMutableDictionary dictionaryWithContentsOfFile:configPath];
-
-    config[CCScreenModeFixedDimensions] = [NSValue valueWithCGSize:CGSizeMake(586, 384)];
-
-    return config;
-}
 
 - (void)performAndroidNonGLConfiguration:(NSDictionary*)config
 {
@@ -351,6 +354,15 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     return CGSizeMake(480.0f, 320.0f);
 }
 
+- (NSDictionary*)macConfig
+{
+    NSMutableDictionary *macConfig = [NSMutableDictionary dictionary];
+
+    macConfig[CCMacDefaultWindowSize] = [NSValue valueWithCGSize:[self defaultWindowSize]];
+
+    return macConfig;
+}
+
 #if __CC_PLATFORM_MAC
 
 -(void)setupMac
@@ -361,14 +373,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     [self runStartSceneMac];
 }
 
-- (NSDictionary*)macConfig
-{
-    NSMutableDictionary *macConfig = [NSMutableDictionary dictionary];
-    
-    macConfig[CCMacDefaultWindowSize] = [NSValue valueWithCGSize:[self defaultWindowSize]];
-    
-    return macConfig;
-}
+
 
 - (void)applyConfigurationToCocos:(NSDictionary*)config
 {
