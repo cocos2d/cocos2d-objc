@@ -133,7 +133,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     [CCDirector pushCurrentDirector:director];
 
     if([config[CCSetupScreenMode] isEqual:CCScreenModeFixed]){
-        [self setupFixedScreenMode:config director:director];
+        [self setupFixedScreenMode:config director:(CCDirectorIOS *) director];
     } else {
         [self setupFlexibleScreenMode:config director:director];
     }
@@ -221,6 +221,8 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 - (NSDictionary*)androidConfig
 {
+    [CCBReader configureCCFileUtils];
+    
     NSString* configPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Published-Android"];
 
     configPath = [configPath stringByAppendingPathComponent:@"configCocos2d.plist"];
@@ -236,7 +238,6 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 - (void)setupAndroid
 {
     _cocosConfig = [self androidConfig];
-    [CCBReader configureCCFileUtils];
 
     [self performAndroidNonGLConfiguration:_cocosConfig];
 
@@ -357,6 +358,8 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 - (NSDictionary*)macConfig
 {
+    [CCBReader configureCCFileUtils];
+    
     NSMutableDictionary *macConfig = [NSMutableDictionary dictionary];
 
     macConfig[CCMacDefaultWindowSize] = [NSValue valueWithCGSize:[self defaultWindowSize]];
@@ -369,7 +372,6 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 -(void)setupMac
 {
     _cocosConfig = [self macConfig];
-    [CCBReader configureCCFileUtils];
     [self applyConfigurationToCocos:_cocosConfig];
     [self runStartSceneMac];
 }
