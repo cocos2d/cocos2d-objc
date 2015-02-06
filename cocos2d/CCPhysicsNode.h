@@ -255,7 +255,7 @@ In those cases, its possible to have have multiple active collisions between two
 
 
 /**
-A CCNode that enables physics simulation in it's children. Sometimes referred to as the "physics world" node.
+A CCNode that enables physics simulation in its children. Sometimes referred to as the "physics world" node.
  
  ### Creating a Physics Node
  
