@@ -36,8 +36,6 @@
 
 }
 @synthesize director = _director;
-@synthesize actionManager = _actionManager;
-
 
 -(CCScene *)scene
 {
