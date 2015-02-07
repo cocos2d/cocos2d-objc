@@ -177,7 +177,7 @@
 
 - (void)mouseMoved:(NSEvent *)theEvent
 {
-    [_director.responderManager mouseMoved:theEvent];
+   // [_director.responderManager mouseMoved:theEvent];
 }
 
 - (void)rightMouseDown:(NSEvent *)theEvent

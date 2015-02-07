@@ -1560,7 +1560,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, CCTime t )
 	NSArray *frames = [_animation frames];
 	NSUInteger numberOfFrames = [frames count];
 	CCSpriteFrame *frameToDisplay = nil;
-
+    
 	for( NSUInteger i=_nextFrame; i < numberOfFrames; i++ ) {
 		NSNumber *splitTime = [_splitTimes objectAtIndex:i];
 
