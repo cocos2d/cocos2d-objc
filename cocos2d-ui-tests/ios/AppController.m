@@ -49,7 +49,8 @@
 
 - (NSDictionary*)macConfig
 {
-    NSMutableDictionary *config = [super macConfig];
+    NSMutableDictionary *config = [NSMutableDictionary dictionary];
+    config[CCMacDefaultWindowSize] = [NSValue valueWithCGSize:[self defaultWindowSize]];
     config[CCSetupDepthFormat] = @GL_DEPTH24_STENCIL8;
     config[CCSetupTabletScale2X] = @YES;
     config[CCSetupShowDebugStats] = @(getenv("SHOW_DEBUG_STATS") != nil);
