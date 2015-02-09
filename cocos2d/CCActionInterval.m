@@ -27,6 +27,8 @@
 
 
 #import "ccTypes.h"
+#import "CCAction_Private.h"
+
 #import "CCActionInterval.h"
 #import "CCActionInstant.h"
 #import "CCColor.h"

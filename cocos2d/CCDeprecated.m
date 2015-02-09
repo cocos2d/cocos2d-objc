@@ -32,6 +32,8 @@
 
 #import "CCMetalSupport_Private.h"
 #import "CCTexture_Private.h"
+#import "CCNode_Private.h"
+#import "CCScheduler_Private.h"
 
 
 @implementation CCDirector(Deprecated)
@@ -133,6 +135,18 @@ CGAffineTransformFromGLKMatrix4(GLKMatrix4 m)
 -(NSUInteger) numberOfRunningActions
 {
     return self.actions.count;
+}
+
+-(void)stopActionByTag:(NSInteger)tag
+{
+	NSAssert(tag != kCCActionTagInvalid, @"Invalid tag");
+	[self.scheduler removeActionByName:[NSString stringWithFormat:@"%d", tag] target:self];
+}
+
+-(CCAction *)getActionByTag:(NSInteger)tag
+{
+	NSAssert(tag != kCCActionTagInvalid, @"Invalid tag");
+	return 	[self.scheduler getActionByName:[NSString stringWithFormat:@"%d", tag] target:self];
 }
 
 @end

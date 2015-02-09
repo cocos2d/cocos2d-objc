@@ -601,20 +601,20 @@
  *  Removes an action from the running action list given its tag. If there are multiple actions with the same tag it will
  *  only remove the first action found that has this tag.
  *
- *  @param tag Tag of action to remove.
+ *  @param name Name of the action to remove.
  */
--(void) stopActionByTag:(NSInteger) tag;
+-(void) stopActionByName:(NSString *)name;
 
 /**
  *  Gets an action running on the node given its tag.
  *  If there are multiple actions with the same tag it will get the first action found that has this tag.
  *
- *  @param tag Tag of an action.
+ *  @param name Name of the action.
  *
- *  @return The first action with the given tag, or nil if there's no running action with this tag.
+ *  @return The first action with the given name, or nil if there's no running action with this name.
  *  @see CCAction
  */
--(CCAction*) getActionByTag:(NSInteger) tag;
+-(CCAction*) getActionByName:(NSString *)name;
 
 /**
  Return a list of all actions associated with this node.
