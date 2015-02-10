@@ -129,32 +129,35 @@
 	return  ret;
 }
 
-+(instancetype) actions: (CCActionFiniteTime*) action1 vaList:(va_list)args
++(instancetype)actions:(CCActionFiniteTime*)action1 vaList:(va_list)args
 {
-	CCActionFiniteTime *now;
-	CCActionFiniteTime *prev = action1;
-	
-	while( action1 ) {
-		now = va_arg(args,CCActionFiniteTime*);
-		if ( now )
-			prev = [self actionOne: prev two: now];
-		else
-			break;
-	}
+    CCActionFiniteTime *now = nil;
+    CCActionFiniteTime *prev = action1;
 
-	return prev;
+    while(action1){
+        now = va_arg(args, CCActionFiniteTime *);
+        if(now){
+            prev = [self actionOne:prev two:now];
+        } else {
+            break;
+        }
+    }
+
+    return (CCActionSequence *)prev;
 }
 
 
-+(instancetype) actionWithArray: (NSArray*) actions
++(instancetype)actionWithArray:(NSArray *)actions
 {
-	CCActionFiniteTime *prev = [actions objectAtIndex:0];
-	
-	for (NSUInteger i = 1; i < [actions count]; i++)
-		prev = [self actionOne:prev two:[actions objectAtIndex:i]];
-	
-	return prev;
+    CCActionFiniteTime *prev = actions[0];
+
+    for(NSUInteger i = 1; i < actions.count; i++){
+        prev = [self actionOne:prev two:actions[i]];
+    }
+
+    return (CCActionSequence *)prev;
 }
+
 -(id) initWithArray:(NSArray *)actions
 {
     // this is backwards because it's "safer" as a quick Swift fix for v3.4
@@ -386,6 +389,7 @@
 #pragma mark - CCSpawn
 
 @implementation CCActionSpawn
+
 +(instancetype) actions: (CCActionFiniteTime*) action1, ...
 {
 	va_list args;
@@ -399,30 +403,32 @@
 
 +(instancetype) actions: (CCActionFiniteTime*) action1 vaList:(va_list)args
 {
-	CCActionFiniteTime *now;
-	CCActionFiniteTime *prev = action1;
-	
-	while( action1 ) {
-		now = va_arg(args,CCActionFiniteTime*);
-		if ( now )
-			prev = [self actionOne: prev two: now];
-		else
-			break;
-	}
+    CCActionFiniteTime *now = nil;
+    CCActionFiniteTime *prev = action1;
 
-	return prev;
+    while(action1){
+        now = va_arg(args,CCActionFiniteTime*);
+        if(now){
+            prev = [self actionOne: prev two: now];
+        } else {
+            break;
+        }
+    }
+
+    return (CCActionSpawn *)prev;
 }
-
 
 +(instancetype) actionWithArray: (NSArray*) actions
 {
-	CCActionFiniteTime *prev = [actions objectAtIndex:0];
+    CCActionFiniteTime *prev = actions[0];
 
-	for (NSUInteger i = 1; i < [actions count]; i++)
-		prev = [self actionOne:prev two:[actions objectAtIndex:i]];
+    for (NSUInteger i = 1; i < [actions count]; i++){
+        prev = [self actionOne:prev two:actions[i]];
+    }
 
-	return prev;
+    return (CCActionSpawn *)prev;
 }
+
 -(id) initWithArray: (NSArray*) actions
 {
     // this is backwards because it's "safer" as a quick Swift fix for v3.4
