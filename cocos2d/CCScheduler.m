@@ -32,7 +32,7 @@
 
 
 // cocos2d imports
-#import "CCScheduler.h"
+#import "CCScheduler_Private.h"
 #import <objc/message.h>
 #import "CCAction.h"
 
@@ -484,9 +484,9 @@ CompareTimers(const void *a, const void *b, void *context)
 			if(timer.invokeTime > 0.0){
 				CCScheduler *scheduler = _self;
 				InvokeMethods(scheduler->_fixedUpdates, @selector(fixedUpdate:), timer.repeatInterval);
-                
-                //TODO: also invoke fixed update actions:
-                
+                if(_self.actionsRunInFixedMode){
+                    [_self updateActions:timer.repeatInterval];
+                }
 				scheduler->_lastFixedUpdateTime = timer.invokeTime;
 			}
             
@@ -695,7 +695,9 @@ CompareTimers(const void *a, const void *b, void *context)
 	[self updateTo:_currentTime + clampedDelta];
 	
 	InvokeMethods(_updates, @selector(update:), clampedDelta);
-    [self updateActions:dt];
+    if(!self.actionsRunInFixedMode) {
+       [self updateActions:dt];
+    }
     
 	_lastUpdateTime = _currentTime;
 }

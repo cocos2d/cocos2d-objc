@@ -97,10 +97,10 @@ static NSInteger ccbAnimationManagerID = 0;
 }
 
 -(void) onEnter {
-    // Setup Scheduler
-    NSAssert(false, @"Doesn't seem to be called anywhere");
-//    [self.scene.scheduler scheduleTarget:self];
-//    [self.scene.scheduler setPaused:NO target:self];
+    // Register this animation manager with the current CCScheduler
+    CCScheduler *scheduler = [CCDirector currentDirector].runningScene.scheduler;
+    [scheduler scheduleTarget:self];
+    [scheduler setPaused:NO target:self];
 }
 
 - (void)addNode:(CCNode*)node andSequences:(NSDictionary*)seq

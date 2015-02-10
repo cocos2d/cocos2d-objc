@@ -128,6 +128,12 @@
  */
 -(void) setCompletedAnimationCallbackBlock:(void(^)(id sender))b;
 
+/**
+ Although not a node, onEnter is called specifically on CCAnimationManager
+ to register this animation manager with the current CCScheduler. 
+ */
+-(void) onEnter;
+
 /// The animation manager delegate receives updates about the animation playback state.
 /// @see CCBAnimationManagerDelegate
 @property (nonatomic,weak) NSObject<CCBAnimationManagerDelegate>* delegate;
