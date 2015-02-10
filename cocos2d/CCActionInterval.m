@@ -390,6 +390,7 @@
 #pragma mark - CCSpawn
 
 @implementation CCActionSpawn
+
 +(instancetype) actions: (CCActionFiniteTime*) action1, ...
 {
 	va_list args;
