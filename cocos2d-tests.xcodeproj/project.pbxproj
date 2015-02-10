@@ -1020,7 +1020,7 @@
 						TestTargetID = B7E2604717E7D278007067F0;
 					};
 					B7E2604717E7D278007067F0 = {
-						DevelopmentTeam = 96LKF67VJA;
+						DevelopmentTeam = 4563WH9VE2;
 						SystemCapabilities = {
 							com.apple.GameCenter = {
 								enabled = 0;
@@ -1326,10 +1326,6 @@
 				75556A181856370A00ED1B0F /* CCPhysicsTests.m in Sources */,
 				D34CD3C518ABF4AA00D8E537 /* CCRendererTests.m in Sources */,
 				75556A191856370A00ED1B0F /* CCSchedulerTests.m in Sources */,
-				E525FA366EFEEF054FB0C74A,
-				E525F06B7DE8DBA41D79888B,
-				E525F4FA69CF55A11E3ADF10,
-				E525F4E15019D96D00ADFAFC,
 				E525F0C6F4B0C3F0BCAD1CA1 /* CCFileLocatorTests.m in Sources */,
 				E525FAC4141DA9B33B972BC0 /* CCFileLocatorDatabaseTests.m in Sources */,
 				E525FB731133965ECDFF5BBE /* FileSystemTestCase.m in Sources */,
