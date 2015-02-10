@@ -115,40 +115,41 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 {
     _cocosConfig = [self iosConfig];
 
-    [self applyConfigurationToCocos:_cocosConfig];
-    [self setFirstScene];
-}
-
-- (void)applyConfigurationToCocos:(NSDictionary*)config
-{
     CCAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     [appDelegate constructWindow];
 
-    _glView = [appDelegate constructView:config withBounds:appDelegate.window.bounds];
-
+    _glView = [appDelegate constructView:_cocosConfig withBounds:appDelegate.window.bounds];
+    
     CCDirector *director = _glView.director;
     NSAssert(director, @"CCView failed to construct a director.");
-    [self configureDirector:director withConfig:config withView:_glView];
-
+    [self configureDirector:director withConfig:_cocosConfig withView:_glView];
+    
     [CCDirector pushCurrentDirector:director];
-
-    if([config[CCSetupScreenMode] isEqual:CCScreenModeFixed]){
-        [self setupFixedScreenMode:config director:(CCDirectorIOS *) director];
+    
+    if([_cocosConfig[CCSetupScreenMode] isEqual:CCScreenModeFixed]){
+        [self setupFixedScreenMode:_cocosConfig director:(CCDirectorIOS *) director];
     } else {
-        [self setupFlexibleScreenMode:config director:director];
+        [self setupFlexibleScreenMode:_cocosConfig director:director];
     }
-
+    
     // Initialise OpenAL
     [OALSimpleAudio sharedInstance];
 
-    [appDelegate constructNavController:config];
-
+    [appDelegate constructNavController:_cocosConfig];
     [[CCPackageManager sharedManager] loadPackages];
-
+    
     [appDelegate.window makeKeyAndVisible];
     [appDelegate forceOrientation];
 
     [CCDirector popCurrentDirector];
+    
+    [self runStartSceneiOS];
+}
+
+- (void)runStartSceneiOS
+{
+    CCDirector *director = _glView.director;
+    [director presentScene:[self startScene]];
 }
 
 - (void)configureDirector:(CCDirector *)director withConfig:(NSDictionary *)config withView:(CC_VIEW <CCView> *)ccview
@@ -207,12 +208,6 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
     director.designSize = fixed;
     [director setProjection:CCDirectorProjectionCustom];
-}
-
-- (void)setFirstScene
-{
-    CCAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    appDelegate.startScene = [self startScene];
 }
 
 #endif
