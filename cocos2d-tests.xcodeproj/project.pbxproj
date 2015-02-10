@@ -940,7 +940,7 @@
 						TestTargetID = B7E2604717E7D278007067F0;
 					};
 					B7E2604717E7D278007067F0 = {
-						DevelopmentTeam = 96LKF67VJA;
+						DevelopmentTeam = 4563WH9VE2;
 						SystemCapabilities = {
 							com.apple.GameCenter = {
 								enabled = 0;

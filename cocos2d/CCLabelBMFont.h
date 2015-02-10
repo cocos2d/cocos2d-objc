@@ -159,6 +159,23 @@
  @see CCColor */
 @property (nonatomic,strong) CCColor* color;
 
+/**
+ * Enable debug drawing.  When enabled a frame is drawn around the label to indicate
+ * the extent of its content area.
+ *
+ * @param enable If true, debug drawing is enabled.  The default is false.
+ */
+@property (nonatomic, readwrite, assign) BOOL enableDebugDrawing;
+
+/**
+ * Returns an array of the CCSprite objects that correspond to the given range indexed into
+ * the string property of this label.  This can be used for example for changing the color
+ * or other rendering properties of the sprites.  The array must not be stored as the sprite
+ * pointers are owned by this label and may change at any time.
+ *
+ * @param range The range indexing into this label's string to return.
+ */
+- (NSArray *)characterSpritesForRange:(NSRange)range;
 
 /// -----------------------------------------------------------------------
 /// @name Size and Alignment
