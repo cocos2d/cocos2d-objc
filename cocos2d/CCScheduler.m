@@ -453,50 +453,50 @@ CompareTimers(const void *a, const void *b, void *context)
 
 -(id)init
 {
-	if((self = [super init])){
-		_timeScale = 1.0;
-		_maxTimeStep = 1.0/10.0;
-		
-		CFBinaryHeapCallBacks callbacks = {
-			.version = 0,
-			.retain = NULL,
-			.release = NULL,
-			.copyDescription = NULL,
-			.compare = CompareTimers,
-		};
-		
-		_heap = CFBinaryHeapCreate(NULL, 0, &callbacks, NULL);
-		_scheduledTargets = CFDictionaryCreateMutable(NULL, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
-		
-		// All targets except nil should be implicitly paused initially.
-		CCScheduledTarget *nilTarget = [self scheduledTargetForTarget:[NSNull null] insert:YES];
-		nilTarget.paused = NO;
-		
-		_updates = [[CopyOnWriteArray alloc ] initWithBackingClass:[NSMutableArray class]];
-		_fixedUpdates = [[CopyOnWriteArray alloc ] initWithBackingClass:[NSMutableArray class]];
+    if((self = [super init])){
+        _timeScale = 1.0;
+        _maxTimeStep = 1.0/10.0;
+        
+        CFBinaryHeapCallBacks callbacks = {
+            .version = 0,
+            .retain = NULL,
+            .release = NULL,
+            .copyDescription = NULL,
+            .compare = CompareTimers,
+        };
+        
+        _heap = CFBinaryHeapCreate(NULL, 0, &callbacks, NULL);
+        _scheduledTargets = CFDictionaryCreateMutable(NULL, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
+        
+        // All targets except nil should be implicitly paused initially.
+        CCScheduledTarget *nilTarget = [self scheduledTargetForTarget:[NSNull null] insert:YES];
+        nilTarget.paused = NO;
+        
+        _updates = [[CopyOnWriteArray alloc ] initWithBackingClass:[NSMutableArray class]];
+        _fixedUpdates = [[CopyOnWriteArray alloc ] initWithBackingClass:[NSMutableArray class]];
         _scheduledTargetsWithActions = [[CopyOnWriteArray alloc ] initWithBackingClass:[NSMutableSet class]];
-		
-		// Annoyance to avoid a retain cycle.
+        
+        // Annoyance to avoid a retain cycle.
         __block __typeof(self) _self = self;
-		
-		// Schedule a timer to run the fixedUpdate: methods.
-		_fixedUpdateTimer = [[self scheduleBlock:^(CCTimer *timer){
-			if(timer.invokeTime > 0.0){
-				CCScheduler *scheduler = _self;
-				InvokeMethods(scheduler->_fixedUpdates, @selector(fixedUpdate:), timer.repeatInterval);
+        
+        // Schedule a timer to run the fixedUpdate: methods.
+        _fixedUpdateTimer = [[self scheduleBlock:^(CCTimer *timer){
+            if(timer.invokeTime > 0.0){
+                CCScheduler *scheduler = _self;
+                InvokeMethods(scheduler->_fixedUpdates, @selector(fixedUpdate:), timer.repeatInterval);
                 if(_self.actionsRunInFixedMode){
                     [_self updateActions:timer.repeatInterval];
                 }
-				scheduler->_lastFixedUpdateTime = timer.invokeTime;
-			}
+                scheduler->_lastFixedUpdateTime = timer.invokeTime;
+            }
             
-		} forTarget:self withDelay:0] retain];
-
-		_fixedUpdateTimer.repeatCount = CCTimerRepeatForever;
-		_fixedUpdateTimer.repeatInterval = 1.0/60.0;
-	}
-	
-	return self;
+        } forTarget:self withDelay:0] retain];
+        
+        _fixedUpdateTimer.repeatCount = CCTimerRepeatForever;
+        _fixedUpdateTimer.repeatInterval = 1.0/60.0;
+    }
+    
+    return self;
 }
 
 -(void)dealloc
@@ -691,15 +691,15 @@ CompareTimers(const void *a, const void *b, void *context)
 
 -(void)update:(CCTime)dt
 {
-	CCTime clampedDelta = MIN(dt*_timeScale, _maxTimeStep);
-	[self updateTo:_currentTime + clampedDelta];
-	
-	InvokeMethods(_updates, @selector(update:), clampedDelta);
+    CCTime clampedDelta = MIN(dt*_timeScale, _maxTimeStep);
+    [self updateTo:_currentTime + clampedDelta];
+    
+    InvokeMethods(_updates, @selector(update:), clampedDelta);
     if(!self.actionsRunInFixedMode) {
-       [self updateActions:dt];
+        [self updateActions:dt];
     }
     
-	_lastUpdateTime = _currentTime;
+    _lastUpdateTime = _currentTime;
 }
 
 #pragma mark Scheduling CCActions
