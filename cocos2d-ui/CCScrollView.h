@@ -106,6 +106,17 @@
 
 /** @name Creating a Scroll View */
 
+
+/** Creates a new scroll view with a content node.
+ 
+ This also sets the scroll view's contentSize as normalized to (same size as) the contentNode's size:
+ 
+ self.contentSize = CGSizeMake(1, 1);
+ self.contentSizeType = CCSizeTypeNormalized;
+ 
+ @param contentNode The node the scroll view will display. Must not be nil. */
++ (id) scrollViewWithContentNode:(CCNode*)contentNode;
+
 /** Initializes a new scroll view with a content node.
  
  This also sets the scroll view's contentSize as normalized to (same size as) the contentNode's size:

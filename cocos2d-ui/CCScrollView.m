@@ -182,6 +182,11 @@
 
 #pragma mark Initializers
 
++ (id) scrollViewWithContentNode:(CCNode*)contentNode
+{
+    return [[CCScrollView alloc] initWithContentNode:contentNode];
+}
+
 - (id) init
 {
     self = [self initWithContentNode:[CCNode node]];
