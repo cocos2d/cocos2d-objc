@@ -22,11 +22,11 @@
  - CCEffectBloom
  - CCEffectBlur, CCEffectPixellate
  - CCEffectBrightness, CCEffectContrast, CCEffectHue, CCEffectSaturation, CCEffectInvert, CCEffectColorChannelOffset
- - CCEffectDFInnerGlow, CCEffectDFOutline
  - CCEffectDropShadow
  - CCEffectGlass, CCEffectReflection, CCEffectRefraction
  - CCEffectLighting
  - CCEffectStack
+ - Experimental as of v3.4: CCEffectDistanceField, CCEffectDFInnerGlow, CCEffectDFOutline
  */
 @interface CCEffect : NSObject
 

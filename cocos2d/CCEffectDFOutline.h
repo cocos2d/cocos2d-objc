@@ -11,8 +11,8 @@
 #if CC_EFFECTS_EXPERIMENTAL
 
 /**
- * CCEffectDFOutline create an outline around a sprite (combined with a distance field).
- *
+ CCEffectDFOutline create an outline around a sprite (combined with a distance field).
+ @note This class is currently considered experimental. Set the `CC_EFFECTS_EXPERIMENTAL` macro to 1 in ccConfig.h if you want to use this class.
  */
 @interface CCEffectDFOutline : CCEffect
 

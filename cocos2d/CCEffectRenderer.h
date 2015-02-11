@@ -14,6 +14,7 @@
 @class CCSprite;
 @class CCTexture;
 
+// not documented, considered a private class
 @interface CCEffectRenderer : NSObject
 
 @property (nonatomic, assign) CGSize contentSize;
