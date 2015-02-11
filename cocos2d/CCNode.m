@@ -41,7 +41,14 @@
 #import "CCScene.h"
 #import "CCAction.h"
 
-#pragma mark - Node
+
+@interface CCAnimationManager()
+
+- (void) addToScheduler;
+- (void) removeFromScheduler;
+
+@end
+
 
 @implementation CCNode {
 	// Rotation angle.
@@ -171,7 +178,7 @@ RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
 	[_children makeObjectsPerformSelector:@selector(cleanup)];
     
     // CCAnimationManager Cleanup (Set by SpriteBuilder)
-    [_animationManager cleanup];
+    [_animationManager removeFromScheduler];
 }
 
 - (NSString*) description
@@ -1050,7 +1057,7 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
     }
 
     if(_animationManager) {
-        [_animationManager onEnter];
+        [_animationManager addToScheduler];
     }
     
     // Add queued actions or scheduled code, if needed:
