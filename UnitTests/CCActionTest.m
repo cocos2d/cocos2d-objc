@@ -323,7 +323,6 @@ CCNode *node;
     XCTAssertEqualWithAccuracy(actionCopy.elapsed, 0.0f, accuracy, @"Elapsed time was not reset.");
     XCTAssertEqualWithAccuracy(actionCopy.duration, 1.0f, accuracy, @"Duration should have been copied.");
     XCTAssertNil(actionCopy.target, @"Target not reset");
-    XCTAssertNil(actionCopy.originalTarget, @"originalTarget not reset");
 }
 
 - (void)testCopyActionClearsStateForCompletedActions
@@ -340,7 +339,6 @@ CCNode *node;
     XCTAssertEqualWithAccuracy(actionCopy.elapsed, 0.0f, accuracy, @"Elapsed time was not reset.");
     XCTAssertEqualWithAccuracy(actionCopy.duration, 1.0f, accuracy, @"Duration should have been copied.");
     XCTAssertNil(actionCopy.target, @"Target not reset");
-    XCTAssertNil(actionCopy.originalTarget, @"originalTarget not reset");
 }
 
 

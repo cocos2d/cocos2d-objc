@@ -36,12 +36,13 @@ enum {
 };
 
 enum {
-	TMXPropertyNone,
-	TMXPropertyMap,
-	TMXPropertyLayer,
-	TMXPropertyObjectGroup,
-	TMXPropertyObject,
-	TMXPropertyTile
+    TMXPropertyNone,
+    TMXPropertyMap,
+    TMXPropertyLayer,
+    TMXPropertyObjectGroup,
+    TMXPropertyObject,
+    TMXPropertyTile,
+    TMXPropertyTileSet
 };
 
 /** Bits on the far end of the 32-bit global tile ID (GID's) are used for tile flags. Used by CCTiledMapLayer. */

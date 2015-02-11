@@ -27,6 +27,8 @@
 
 
 #import "ccTypes.h"
+#import "CCAction_Private.h"
+
 #import "CCActionInterval.h"
 #import "CCActionInstant.h"
 #import "CCColor.h"
@@ -388,6 +390,7 @@
 #pragma mark - CCSpawn
 
 @implementation CCActionSpawn
+
 +(instancetype) actions: (CCActionFiniteTime*) action1, ...
 {
 	va_list args;

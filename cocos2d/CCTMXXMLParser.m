@@ -275,6 +275,7 @@
 
 			[_tilesets addObject:tileset];
 		}
+        _parentElement = TMXPropertyTileSet;
 
 	}
 	else if([elementName isEqualToString:@"tileoffset"]) {

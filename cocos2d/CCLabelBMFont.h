@@ -51,7 +51,7 @@
  - Visual quality suffers when scaling (aliasing, blurring).
  - Limited to characters in bitmap font atlas. Foreign language support means potentially having lots of additional Unicode characters, thus increasing the font texture size.
 
- See the [Developer Guide](https://www.makegameswith.us/docs/) (Concepts: Nodes) for more details.
+ See the [Developer Guide](https://www.makeschool.com/docs/) (Concepts: Nodes) for more details.
 
  ### Usage Notes
  

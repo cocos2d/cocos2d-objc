@@ -25,7 +25,10 @@
  */
 
 
+#import "CCAction_Private.h"
+
 #import "CCActionProgressTimer.h"
+
 
 @implementation CCActionProgressTo
 +(instancetype) actionWithDuration: (CCTime) t percent: (float) v

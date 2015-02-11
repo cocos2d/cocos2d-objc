@@ -25,6 +25,7 @@
  *
  */
 
+#import "CCAction_Private.h"
 
 #import "CCActionInstant.h"
 #import "CCNode.h"
@@ -266,10 +267,10 @@
 
 -(NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %p | Tag = %ld | selector = %@>",
+	return [NSString stringWithFormat:@"<%@ = %p | Name = %@ | selector = %@>",
 			[self class],
 			self,
-			(long)_tag,
+			self.name,
 			NSStringFromSelector(_selector)
 			];
 }
