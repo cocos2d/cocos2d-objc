@@ -147,6 +147,73 @@ typedef struct _KerningHashElement {
 
 @end
 
+typedef enum : NSUInteger {
+    
+    // Normal character
+    NoControlFollows = 0x01,
+    
+    // A space follows this character
+    WordBreakFollows = 0x02,
+    
+    // The original string specified a "\n" at this position
+    HardLineBreakFollows = 0x04,
+    
+    // A break was inserted when this sequence was fitted into a width
+    SoftLineBreakFollows = 0x08,
+    
+    LineBreakFollows = HardLineBreakFollows | SoftLineBreakFollows,
+} CCBMCharacterControls;
+
+@interface CCBMFontCharacter : CCSprite
+
+@property (nonatomic, strong) CCBMFontCharacter *nextCharacter;
+@property (nonatomic, assign) unichar characterValue;
+@property (nonatomic, assign) CCBMCharacterControls controlFollowing;
+
+@end
+
+@interface CCBMFontCharacterSequence : NSObject
+
+@property (nonatomic, assign) float commonHeight;
+@property (nonatomic, strong, readonly) CCBMFontCharacter *firstCharacter;
+@property (nonatomic, assign) CCTextAlignment alignment;
+
+// Calculate the size of a bounding rect that encloses all characters.  This
+// ignores any whitespace characters at the end of lines.
+@property (nonatomic, readonly) CGSize boundSize;
+
+// Remove all characters from this sequence.  In fact the characters are
+// lazily "removed" and are made invisible.  They may be re-used by
+// a future call to createNewCharacterForSequence.
+- (void)removeAllCharacters;
+
+// Returns a new character added to the end of this sequence.  This may be a re-used
+// character that was previously lazily "removed" from the sequence.
+- (CCBMFontCharacter *)createNewCharacterForSequenceWithParent:(CCNode*)parent;
+
+// Move this character and all characters that follow it on this line down, and to the
+// beginning of the next line in the sequence.  Characters on subsequent lines are
+// just moved down (existing line breaks are honoured).  If the commonHeight is 0
+// this method does nothing.
+- (void)insertLineBreakAtCharacter:(CCBMFontCharacter *)character;
+
+// Insert line breaks so that the sequence of characters fits inside the given width.
+// The line breaks are inserted at word boundaries if possible, otherwise at the
+// point where a character on a line would overflows the given width.
+- (void)fitToWidth:(float)width;
+
+
+// Returns an array of the CCSprite objects that correspond to the given range indexed into
+// the string represented by this sequence.  This can be used for example for changing the color
+// or other rendering properties of the sprites.  The array must not be stored as the sprite
+// pointers are owned by this label and may change at any time.
+- (NSArray *)characterSpritesForRange:(NSRange)range;
+
+// The string represented by this sequence.
+- (NSString *)stringForSequence;
+
+@end
+
 
 /// -----------------------------------------------------------------------
 /// @name Free Functions
