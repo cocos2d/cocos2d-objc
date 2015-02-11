@@ -133,13 +133,17 @@
     [self inputUpOutside];
 }
 
-- (void) mouseDragged:(NSEvent*)event
+- (void) mouseDragged:(NSEvent*)event button:(CCMouseButton) button
 {
+    if(button != CCMouseButtonLeft){
+        return;
+    }
+    
     CGPoint dragPos = [event locationInNode:self];
     
     [self inputDraggedWithPos:dragPos];
     
-    [super mouseDragged:event];
+    [super mouseDragged:event button: button];
 }
 
 #endif

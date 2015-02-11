@@ -181,76 +181,43 @@
 /// -----------------------------------------------------------------------
 
 /**
- *  Called when left mouse button is pressed inside a node with userInteractionEnabled set to YES.
- *
- *  @param theEvent The event created.
- *  @see [NSEvent](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSEvent_Class/)
+ *  Defines the various mouse buttons.
  */
-- (void)mouseDown:(NSEvent *)theEvent;
+typedef NS_ENUM(NSInteger, CCMouseButton)
+{
+    /** Defines left mouse button, in mouse events on OSX. */
+    CCMouseButtonLeft,
+    
+    /** Defines right mouse button, in mouse events on OSX. */
+    CCMouseButtonRight,
+    
+    /** Defines other (middle) mouse button, in mouse events on OSX. */
+    CCMouseButtonOther,
+};
 
 /**
- *  Called when left mouse button is held and mouse dragged for a node with userInteractionEnabled set to YES.
+ *  Called when any mouse button is pressed inside a node with userInteractionEnabled set to YES.
  *
  *  @param theEvent The event created.
  *  @see [NSEvent](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSEvent_Class/)
  */
-- (void)mouseDragged:(NSEvent *)theEvent;
+- (void)mouseDown:(NSEvent *)theEvent button:(CCMouseButton) button;
 
 /**
- *  Called when left mouse button is released for a node with userInteractionEnabled set to YES.
+ *  Called when any mouse button is held and mouse dragged for a node with userInteractionEnabled set to YES.
  *
  *  @param theEvent The event created.
  *  @see [NSEvent](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSEvent_Class/)
  */
-- (void)mouseUp:(NSEvent *)theEvent;
+- (void)mouseDragged:(NSEvent *)theEvent button:(CCMouseButton) button;
 
 /**
- *  Called when right mouse button is pressed inside a node with userInteractionEnabled set to YES.
+ *  Called when any mouse button is released for a node with userInteractionEnabled set to YES.
  *
  *  @param theEvent The event created.
  *  @see [NSEvent](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSEvent_Class/)
  */
-- (void)rightMouseDown:(NSEvent *)theEvent;
-
-/**
- *  Called when right mouse button is held and mouse dragged for a node with userInteractionEnabled set to YES.
- *
- *  @param theEvent The event created.
- *  @see [NSEvent](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSEvent_Class/)
- */
-- (void)rightMouseDragged:(NSEvent *)theEvent;
-
-/**
- *  Called when right mouse button is released for a node with userInteractionEnabled set to YES.
- *
- *  @param theEvent The event created.
- *  @see [NSEvent](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSEvent_Class/)
- */
-- (void)rightMouseUp:(NSEvent *)theEvent;
-
-/**
- *  Called when middle mouse button is pressed inside a node with userInteractionEnabled set to YES.
- *
- *  @param theEvent The event created.
- *  @see [NSEvent](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSEvent_Class/)
- */
-- (void)otherMouseDown:(NSEvent *)theEvent;
-
-/**
- *  Called when middle mouse button is held and mouse dragged for a node with userInteractionEnabled set to YES.
- *
- *  @param theEvent The event created.
- *  @see [NSEvent](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSEvent_Class/)
- */
-- (void)otherMouseDragged:(NSEvent *)theEvent;
-
-/**
- *  Called when middle mouse button is released for a node with userInteractionEnabled set to YES.
- *
- *  @param theEvent The event created.
- *  @see [NSEvent](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSEvent_Class/)
- */
-- (void)otherMouseUp:(NSEvent *)theEvent;
+- (void)mouseUp:(NSEvent *)theEvent button:(CCMouseButton) button;
 
 /**
  *  Called when scroll wheel moved while mouse cursor is inside a node with userInteractionEnabled set to YES.
@@ -259,6 +226,14 @@
  *  @see [NSEvent](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSEvent_Class/)
  */
 - (void)scrollWheel:(NSEvent *)theEvent;
+
+/**
+ Called when the mouse is moved.
+ 
+ @see [NSEvent](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ApplicationKit/Classes/NSEvent_Class/)
+ @since v4.0
+ */
+- (void)mouseMoved:(NSEvent *)theEvent;
 
 /**
  *  Called whan a key down.

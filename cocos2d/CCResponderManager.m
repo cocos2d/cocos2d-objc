@@ -451,120 +451,43 @@
 - (void)mouseDown:(NSEvent *)theEvent button:(CCMouseButton)button
 {
     if (!_enabled) return;
-    [_director.view.window makeFirstResponder:_director.view];
-
     if (_dirty) [self buildResponderList];
     
-    [CCDirector pushCurrentDirector:_director];
-    
-    // scan backwards through mouse responders
-    for (int index = _responderListCount - 1; index >= 0; index --)
-    {
-        CCNode *node = _responderList[index];
-        
-        // check for hit test
-        if ([node clippedHitTestWithWorldPos:[_director convertEventToGL:theEvent]])
-        {
-            // begin the mouse down
-            _currentEventProcessed = YES;
-            switch (button)
-            {
-                case CCMouseButtonLeft: if ([node respondsToSelector:@selector(mouseDown:)]) [node mouseDown:theEvent]; break;
-                case CCMouseButtonRight: if ([node respondsToSelector:@selector(rightMouseDown:)]) [node rightMouseDown:theEvent]; break;
-                case CCMouseButtonOther: if ([node respondsToSelector:@selector(otherMouseDown:)]) [node otherMouseDown:theEvent]; break;
-            }
-            
-            // if mouse was processed, remember it and break
-            if (_currentEventProcessed)
-            {
-                [self addResponder:node withButton:button];
-                break;
-            }
+    [self executeOnEachResponder:^(CCNode *node){
+        [node mouseDown:theEvent button:button];
+        if (_currentEventProcessed) {
+            [self addResponder:node withButton:button];
         }
-    }
-    [CCDirector popCurrentDirector];
+    } withEvent:theEvent];
     
 }
 
-// TODO: Should all mouse buttons call mouseDragged?
-// As it is now, only mouseDragged gets called if several buttons are pressed
-
 - (void)mouseDragged:(NSEvent *)theEvent button:(CCMouseButton)button
 {
+    if (!_enabled) return;
     if (_dirty) [self buildResponderList];
     
     CCRunningResponder *responder = [self responderForButton:button];
     
-    if (responder)
-    {
+    if (responder) {
+        // This drag event is already associated with a specific target.
         CCNode *node = (CCNode *)responder.target;
         
-        [CCDirector pushCurrentDirector:_director];
-        
-        // check if it locks mouse
-        if (node.claimsUserInteraction)
-        {
-            // move the mouse
-            switch (button)
-            {
-                case CCMouseButtonLeft: if ([node respondsToSelector:@selector(mouseDragged:)]) [node mouseDragged:theEvent]; break;
-                case CCMouseButtonRight: if ([node respondsToSelector:@selector(rightMouseDragged:)]) [node rightMouseDragged:theEvent]; break;
-                case CCMouseButtonOther: if ([node respondsToSelector:@selector(otherMouseDragged:)]) [node otherMouseDragged:theEvent]; break;
+        // Items that claim user interaction receive events even if they occur outside of the bounds of the object.
+        if (node.claimsUserInteraction || [node clippedHitTestWithWorldPos:[_director convertEventToGL:theEvent]]) {
+            [CCDirector pushCurrentDirector:_director];
+            if ([node respondsToSelector:@selector(mouseDragged:button:)]) [node mouseDragged:theEvent button:button];
+            [CCDirector popCurrentDirector];
+        } else {
+            [_runningResponderList removeObject:responder];
+        }        
+    } else {
+        [self executeOnEachResponder:^(CCNode *node){
+            [node mouseDragged:theEvent button:button];
+            if (_currentEventProcessed) {
+                [self addResponder:node withButton:button];
             }
-        }
-        else
-        {
-            // as node does not lock mouse, check if it was moved outside
-            if (![node clippedHitTestWithWorldPos:[_director convertEventToGL:theEvent]])
-            {
-                [_runningResponderList removeObject:responder];
-            }
-            else
-            {
-                // move the mouse
-                switch (button)
-                {
-                    case CCMouseButtonLeft: if ([node respondsToSelector:@selector(mouseDragged:)]) [node mouseDragged:theEvent]; break;
-                    case CCMouseButtonRight: if ([node respondsToSelector:@selector(rightMouseDragged:)]) [node rightMouseDragged:theEvent]; break;
-                    case CCMouseButtonOther: if ([node respondsToSelector:@selector(otherMouseDragged:)]) [node otherMouseDragged:theEvent]; break;
-                }
-            }
-        }
-        [CCDirector popCurrentDirector];
-        
-    }
-    else
-    {
-        [CCDirector pushCurrentDirector:_director];
-        
-        // scan backwards through mouse responders
-        for (int index = _responderListCount - 1; index >= 0; index --)
-        {
-            CCNode *node = _responderList[index];
-            
-            // if the mouse responder does not lock mouse, it will receive a mouseDown if mouse is moved inside
-            if (!node.claimsUserInteraction && [node clippedHitTestWithWorldPos:[_director convertEventToGL:theEvent]])
-            {
-                // begin the mouse down
-                _currentEventProcessed = YES;
-                
-                switch (button)
-                {
-                    case CCMouseButtonLeft: if ([node respondsToSelector:@selector(mouseDown:)]) [node mouseDown:theEvent]; break;
-                    case CCMouseButtonRight: if ([node respondsToSelector:@selector(rightMouseDown:)]) [node rightMouseDown:theEvent]; break;
-                    case CCMouseButtonOther: if ([node respondsToSelector:@selector(otherMouseDown:)]) [node otherMouseDown:theEvent]; break;
-                }
-                
-                // if mouse was accepted, add it and break
-                if (_currentEventProcessed)
-                {
-                    [self addResponder:node withButton:button];
-                    break;
-                }
-            }
-        }
-        [CCDirector popCurrentDirector];
-        
+        } withEvent:theEvent];
     }
 }
 
@@ -578,15 +501,9 @@
         CCNode *node = (CCNode *)responder.target;
         
         [CCDirector pushCurrentDirector:_director];
-        // end the mouse
-        switch (button)
-        {
-            case CCMouseButtonLeft: if ([node respondsToSelector:@selector(mouseUp:)]) [node mouseUp:theEvent]; break;
-            case CCMouseButtonRight: if ([node respondsToSelector:@selector(rightMouseUp:)]) [node rightMouseUp:theEvent]; break;
-            case CCMouseButtonOther: if ([node respondsToSelector:@selector(otherMouseUp:)]) [node otherMouseUp:theEvent]; break;
-        }
+        if ([node respondsToSelector:@selector(mouseUp:button:)]) [node mouseUp:theEvent button:button];
         [CCDirector popCurrentDirector];
-        // remove
+        
         [_runningResponderList removeObject:responder];
     }
 }
@@ -600,19 +517,38 @@
     // otherwise, scrollWheel goes to the node under the cursor
     CCRunningResponder *responder = [self responderForButton:CCMouseButtonOther];
     
-    [CCDirector pushCurrentDirector:_director];
-    
     if (responder)
     {
         CCNode *node = (CCNode *)responder.target;
         
         _currentEventProcessed = YES;
+        [CCDirector pushCurrentDirector:_director];
         if ([node respondsToSelector:@selector(scrollWheel:)]) [node scrollWheel:theEvent];
-    
+        [CCDirector popCurrentDirector];
+        
         // if mouse was accepted, return
         if (_currentEventProcessed) return;
     }
     
+    [self executeOnEachResponder:^(CCNode *node){
+        [node scrollWheel:theEvent];
+    } withEvent:theEvent];
+    
+}
+
+- (void)mouseMoved:(NSEvent *)theEvent
+{
+    if (!_enabled) return;
+    if (_dirty) [self buildResponderList];
+    
+    [self executeOnEachResponder:^(CCNode *node){
+        [node mouseMoved:theEvent];
+    } withEvent:theEvent];
+}
+
+- (void) executeOnEachResponder:(void(^)(CCNode *))block withEvent:(NSEvent *)theEvent
+{
+    [CCDirector pushCurrentDirector:_director];
     
     // scan through responders, and find first one
     for (int index = _responderListCount - 1; index >= 0; index --)
@@ -623,14 +559,13 @@
         if ([node clippedHitTestWithWorldPos:[_director convertEventToGL:theEvent]])
         {
             _currentEventProcessed = YES;
-            if ([node respondsToSelector:@selector(scrollWheel:)]) [node scrollWheel:theEvent];
-        
+            block(node);
+            
             // if mouse was accepted, break
             if (_currentEventProcessed) break;
         }
     }
     [CCDirector popCurrentDirector];
-    
 }
 
 #pragma mark - Mac keyboard handling -
@@ -638,7 +573,6 @@
 - (void)keyDown:(NSEvent *)theEvent
 {
     if (!_enabled) return;
-    //  [[CCDirector currentDirector].view.window makeFirstResponder:[CCDirector currentDirector].view];
 
     if (_dirty) [self buildResponderList];
     [CCDirector pushCurrentDirector:_director];
@@ -655,12 +589,10 @@
 - (void)keyUp:(NSEvent *)theEvent
 {
     if (!_enabled) return;
-    //  [[CCDirector currentDirector].view.window makeFirstResponder:[CCDirector currentDirector].view];
 
     if (_dirty) [self buildResponderList];
     [CCDirector pushCurrentDirector:_director];
 
-    // scan backwards through mouse responders
     for (int index = _responderListCount - 1; index >= 0; index --)
     {
         CCNode *node = _responderList[index];
