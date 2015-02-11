@@ -362,8 +362,8 @@
                                                                   nil
                                                                   ]]];
     };
-    setupBlock(ccp(0.25f, 0.5f), CCLightPoint, 50.0f, @"Point Light\nPosition matters, orientation does not.");
-    setupBlock(ccp(0.75f, 0.5f), CCLightDirectional, 0.5f, @"Directional Light\nPosition does not matter, orientation does.");
+    setupBlock(ccp(0.25f, 0.5f), CCLightPoint, 50.0f, @"Point Light\nPosition matters, light orientation does not.");
+    setupBlock(ccp(0.75f, 0.5f), CCLightDirectional, 0.5f, @"Directional Light\nPosition does not matter, light orientation does.");
 }
 
 -(void)setupLightingRenderTextureTest
@@ -482,7 +482,7 @@
     rt3.sprite.anchorPoint = ccp(0.0f, 0.0f);
     [self.contentNode addChild:rt3];
     
-    subgraph = setupBlock(ccp(0.5f, 0.5f), CCLightPoint, 50.0f, @"Render Texture\nSprite in Scene\nLit Correctly");
+    subgraph = setupBlock(ccp(0.5f, 0.5f), CCLightPoint, 50.0f, @"Render Texture\nSprite Child of RT\nManual Draw\nLit Correctly");
     subgraph.positionType = CCPositionTypePoints;
     subgraph.position = ccp(128.0f, 128.0f);
     [rt3 addChild:subgraph];
