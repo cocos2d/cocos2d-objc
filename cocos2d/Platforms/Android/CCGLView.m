@@ -161,6 +161,8 @@ static CCTouchEvent *currentEvent = nil;
         }
         
         [[CCActivity currentActivity] runOnGameThread:^{
+            [CCDirector pushCurrentDirector:_director];
+
             CCResponderManager *mgr = [[CCDirector currentDirector] responderManager];
             switch (phase) {
                 case CCTouchPhaseBegan:
@@ -178,6 +180,9 @@ static CCTouchEvent *currentEvent = nil;
                 default:
                     break;
             }
+
+            [CCDirector popCurrentDirector];
+
             
         } waitUntilDone:YES];
     }

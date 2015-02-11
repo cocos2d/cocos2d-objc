@@ -1,7 +1,7 @@
 /*
- * cocos2d for iPhone: http://www.cocos2d-iphone.org
+ * SpriteBuilder: http://www.spritebuilder.org
  *
- * Copyright (c) 2013 Apportable Inc.
+ * Copyright (c) 2014 Apportable Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,15 +22,10 @@
  * THE SOFTWARE.
  */
 
-#import <UIKit/UIKit.h>
-#import "cocos2d.h"
 
-@interface AppController : CCAppDelegate
-{
-}
+#import "CCActivity.h"
 
-- (void)configureCocos2d;
-
-- (void)configureFileUtilsSearchPathAndRegisterSpriteSheets;
+BRIDGE_CLASS("com.apportable.GLActivity")
+@interface PROJECTIDENTIFIERActivity : CCActivity
 
 @end
