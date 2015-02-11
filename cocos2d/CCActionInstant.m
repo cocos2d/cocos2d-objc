@@ -48,12 +48,6 @@
 	return self;
 }
 
--(id) copyWithZone: (NSZone*) zone
-{
-	CCActionInstant *copy = [[[self class] allocWithZone: zone] init];
-	return copy;
-}
-
 - (BOOL) isDone
 {
 	return YES;
@@ -139,7 +133,10 @@
 //
 #pragma mark CCFlipX
 
-@implementation CCActionFlipX
+@implementation CCActionFlipX {
+    BOOL _flipX;
+}
+
 +(instancetype) actionWithFlipX:(BOOL)x
 {
 	return [[self alloc] initWithFlipX:x];
@@ -175,7 +172,10 @@
 //
 #pragma mark CCFlipY
 
-@implementation CCActionFlipY
+@implementation CCActionFlipY {
+    BOOL _flipY;
+}
+
 +(instancetype) actionWithFlipY:(BOOL)y
 {
 	return [[self alloc] initWithFlipY:y];
@@ -212,7 +212,10 @@
 //
 #pragma mark CCPlace
 
-@implementation CCActionPlace
+@implementation CCActionPlace {
+    CGPoint _position;
+}
+
 +(instancetype) actionWithPosition: (CGPoint) pos
 {
 	return [[self alloc]initWithPosition:pos];
@@ -244,7 +247,10 @@
 //
 #pragma mark CCCallFunc
 
-@implementation CCActionCallFunc
+@implementation CCActionCallFunc {
+    __weak id _targetCallback;
+    SEL _selector;
+}
 
 @synthesize targetCallback = _targetCallback;
 
@@ -300,7 +306,9 @@
 
 #pragma mark CCCallBlock
 
-@implementation CCActionCallBlock
+@implementation CCActionCallBlock {
+    void (^_block)();
+}
 
 +(instancetype) actionWithBlock:(void(^)())block
 {
@@ -335,7 +343,9 @@
 
 
 #pragma mark CCActionSpriteFrame
-@implementation CCActionSpriteFrame
+@implementation CCActionSpriteFrame {
+    CCSpriteFrame* _spriteFrame;
+}
 
 + (id)actionWithSpriteFrame:(CCSpriteFrame*)spriteFrame;
 {
@@ -364,7 +374,12 @@
 @end
 
 
-@implementation CCActionSoundEffect
+@implementation CCActionSoundEffect {
+    NSString *_soundFile;
+    float _pitch;
+    float _pan;
+    float _gain;
+}
 
 + (id)actionWithSoundFile:(NSString*)f pitch:(float)pi pan:(float) pa gain:(float)ga
 {

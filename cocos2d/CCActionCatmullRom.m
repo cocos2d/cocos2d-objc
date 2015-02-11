@@ -41,7 +41,9 @@
 
 #pragma mark - CCPointArray
 
-@implementation CCPointArray
+@implementation CCPointArray {
+    NSMutableArray	*_controlPoints;
+}
 
 @synthesize controlPoints = _controlPoints;
 
@@ -184,7 +186,14 @@ inline CGPoint CCCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p
 -(void) updatePosition:(CGPoint)newPosition;
 @end
 
-@implementation CCActionCardinalSplineTo
+@implementation CCActionCardinalSplineTo {
+    @protected
+    CCPointArray *_points;
+    CGFloat _deltaT;
+    CGFloat _tension;
+    CGPoint _previousPosition;
+    CGPoint _accumulatedDiff;
+}
 
 @synthesize points=_points;
 

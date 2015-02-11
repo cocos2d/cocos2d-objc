@@ -41,7 +41,7 @@
  - CCActionSoundEffect (plays a sound effect via OALSimpleAudio)
  - CCActionSpriteFrame (sets the spriteFrame property of a CCSprite)
 */
-@interface CCActionInstant : CCActionFiniteTime <NSCopying>
+@interface CCActionInstant : CCActionFiniteTime
 
 @end
 
@@ -98,10 +98,7 @@
 
  @note Target must be a CCSprite node or inherit from CCSprite.
  */
-@interface CCActionFlipX : CCActionInstant {
-	BOOL	_flipX;
-}
-
+@interface CCActionFlipX : CCActionInstant
 
 /// -----------------------------------------------------------------------
 /// @name Creating a Flip Action
@@ -133,10 +130,7 @@
  
  @note Target must be a CCSprite node or inherit from CCSprite.
  */
-@interface CCActionFlipY : CCActionInstant {
-	BOOL	_flipY;
-}
-
+@interface CCActionFlipY : CCActionInstant
 
 /// -----------------------------------------------------------------------
 /// @name Creating a Flip Action
@@ -166,10 +160,7 @@
 /** 
  *  This action will set the target's `position` property.
  */
-@interface CCActionPlace : CCActionInstant <NSCopying> {
-	CGPoint _position;
-}
-
+@interface CCActionPlace : CCActionInstant
 
 /// -----------------------------------------------------------------------
 /// @name Creating a Place Action
@@ -220,10 +211,7 @@
  
     [self myCallFuncMethod];
  */
-@interface CCActionCallFunc : CCActionInstant <NSCopying> {
-	__weak id _targetCallback;
-	SEL _selector;
-}
+@interface CCActionCallFunc : CCActionInstant
 
 // purposefully undocumented: there's little to no need to change the action's target
 /* Target for the selector that will be called. */
@@ -294,10 +282,7 @@
  
  @see [Blocks Programming Guide](https://developer.apple.com/library/ios/documentation/cocoa/Conceptual/Blocks/Articles/00_Introduction.html)
  */
-@interface CCActionCallBlock : CCActionInstant<NSCopying> {
-	void (^_block)();
-}
-
+@interface CCActionCallBlock : CCActionInstant
 
 /// -----------------------------------------------------------------------
 /// @name Creating a Run Block Action
@@ -334,10 +319,7 @@
  
  @note The target node must be a CCSprite or subclass of CCSprite or have a `CCSpriteFrame* spriteFrame` property.
  */
-@interface CCActionSpriteFrame : CCActionInstant <NSCopying>
-{
-	CCSpriteFrame* _spriteFrame;
-}
+@interface CCActionSpriteFrame : CCActionInstant
 
 /// -----------------------------------------------------------------------
 /// @name Creating a Sprite Frame Action
@@ -371,12 +353,6 @@
  
  @note The action ends immediately, it does not wait for the sound to stop playing. */
 @interface CCActionSoundEffect : CCActionInstant
-{
-    NSString* _soundFile;
-    float _pitch;
-    float _pan;
-    float _gain;
-}
 
 /** @name Creating a Sound Effect Action */
 

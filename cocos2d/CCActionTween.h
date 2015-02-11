@@ -38,11 +38,7 @@
  It is therefore recommended to avoid using many tween actions at the same time as the NSNumber overhead can
  add up and adversely affect performance.
  */
-@interface CCActionTween : CCActionInterval {
-	NSString		*_key;
-	float			_from, _to;
-	float			_delta;
-}
+@interface CCActionTween : CCActionInterval 
 
 /** @name Creating a Tween Action */
 
