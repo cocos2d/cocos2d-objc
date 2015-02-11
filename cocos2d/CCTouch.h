@@ -61,7 +61,7 @@ typedef NS_ENUM (NSInteger, CCTouchPhase) {
 /** The associated Cocos2D view.
  @since v3.2 and later
 */
-@property (nonatomic, strong) CC_VIEW<CCView> *view;
+@property (nonatomic, weak) CC_VIEW<CCView> *view;
 /** The associated platform-specific touch event (ie UITouch).
  PlatformTouch is equivalent to UITouch on iOS, CCTouchAndroid on Android and NSObject on OS X.
  @note The CCTouchAndroid class is not documented, it is just a subset of CCTouch.

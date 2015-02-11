@@ -97,12 +97,17 @@ static NSInteger ccbAnimationManagerID = 0;
     }
 }
 
--(void) onEnter {
-    // Setup Scheduler
-#warning need to set up scheduler for animation manager
-//    _scheduler = [[CCDirector sharedDirector] scheduler];
-//    [_scheduler scheduleTarget:self];
-//    [_scheduler setPaused:NO target:self];
+-(void) addToScheduler {
+    // Register this animation manager with the current CCScheduler
+    CCScheduler *scheduler = [CCDirector currentDirector].runningScene.scheduler;
+    [scheduler scheduleTarget:self];
+    [scheduler setPaused:NO target:self];
+}
+
+- (void)removeFromScheduler {
+    CCScheduler *scheduler = [CCDirector currentDirector].runningScene.scheduler;
+    [scheduler unscheduleTarget:self];
+    [self clearAllActions];
 }
 
 - (void)addNode:(CCNode*)node andSequences:(NSDictionary*)seq
@@ -632,12 +637,6 @@ static NSInteger ccbAnimationManagerID = 0;
 
 - (void)setCompletedAnimationCallbackBlock:(void(^)(id sender))b {
     block = [b copy];
-}
-
-- (void)cleanup {
-//    [_scheduler setPaused:YES target:self];
-//	[_scheduler unscheduleTarget:self];
-    [self clearAllActions];
 }
 
 - (void)dealloc {

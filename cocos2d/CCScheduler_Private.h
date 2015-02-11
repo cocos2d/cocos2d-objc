@@ -24,10 +24,9 @@
 
 #import "CCScheduler.h"
 
-@class CCScheduler;
-
-
 @interface CCScheduler()
+
+@property (nonatomic) BOOL actionsRunInFixedMode;
 
 -(void) update:(CCTime)dt;
 

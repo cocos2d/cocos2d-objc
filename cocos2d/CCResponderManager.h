@@ -31,6 +31,7 @@
 // TODO: Grab mouse and touch by implementing onPressed, onReleased, onClicked
 
 #import "ccTypes.h"
+#import "CCResponder.h"
 
 @class CCTouch;
 @class CCTouchEvent;
@@ -63,23 +64,6 @@
 @end
 
 #elif __CC_PLATFORM_MAC
-
-#pragma mark - OSX Running Responder
-
-/**
- *  Defines the various mouse buttons.
- */
-typedef NS_ENUM(NSInteger, CCMouseButton)
-{
-    /** Defines left mouse button, in mouse events on OSX. */
-    CCMouseButtonLeft,
-    
-    /** Defines right mouse button, in mouse events on OSX. */
-    CCMouseButtonRight,
-    
-    /** Defines other (middle) mouse button, in mouse events on OSX. */
-    CCMouseButtonOther,
-};
 
 #pragma mark - CCRunningResponder
 

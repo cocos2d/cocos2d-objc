@@ -25,13 +25,9 @@
 
 #import "CCScene.h"
 
-@class CCActionManager;
-@class CCFixedActionManager;
 
 @interface CCScene()
 
-@property (nonatomic, readonly, strong) CCActionManager *actionManager;
-@property (nonatomic, readonly, strong) CCFixedActionManager *actionManagerFixed;
 @property (nonatomic, readwrite, weak) CCDirector *director;
 
 
