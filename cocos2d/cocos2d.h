@@ -129,6 +129,10 @@
 #import "CCActionProgressTimer.h"
 #import "CCActionTween.h"
 
+// Animations:
+#import "CCAnimation.h"
+#import "CCAnimationCache.h"
+
 // Physics
 #import "CCPhysicsBody.h"
 #import "CCPhysicsJoint.h"

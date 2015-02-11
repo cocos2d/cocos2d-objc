@@ -34,7 +34,7 @@
 // cocos2d imports
 #import "CCScheduler_Private.h"
 #import <objc/message.h>
-#import "CCAction.h"
+#import "CCAction_Private.h"
 
 #define FOREACH_TIMER(__scheduledTarget__, __timerVar__) for(CCTimer *__timerVar__ = __scheduledTarget__->_timers; __timerVar__; __timerVar__ = __timerVar__.next)
 
@@ -742,12 +742,12 @@ CompareTimers(const void *a, const void *b, void *context)
     [_scheduledTargetsWithActions removeObject:scheduledTarget];
 }
 
--(void)removeActionByTag:(NSInteger)tag target:(NSObject<CCSchedulableTarget> *)target
+-(void)removeActionByName:(NSString *)name target:(NSObject<CCSchedulableTarget> *)target
 {
     CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
     
     for (CCAction *action in [scheduledTarget.actions copy]) {
-        if (action.tag == tag){
+        if ([action.name isEqualToString:name]){
             [scheduledTarget removeAction:action];
         }
     }
@@ -757,11 +757,11 @@ CompareTimers(const void *a, const void *b, void *context)
     }
 }
 
--(CCAction*)getActionByTag:(NSInteger) tag target:(NSObject<CCSchedulableTarget> *)target
+-(CCAction*)getActionByName:(NSString *)name target:(NSObject<CCSchedulableTarget> *)target
 {
     CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
     for (CCAction *action in scheduledTarget.actions) {
-        if (action.tag == tag) return action;
+        if ([action.name isEqualToString:name]) return action;
     }
     return nil;
 }

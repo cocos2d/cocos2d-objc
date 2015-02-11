@@ -35,6 +35,7 @@
 
 #import "ccMacros.h"
 #import "CCNS.h"
+#import "CCAction_Private.h"
 
 #import "CCActionCatmullRom.h"
 

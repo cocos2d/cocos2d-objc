@@ -102,17 +102,6 @@
 	
 	return GLKMatrix4MakeOrtho(offset.x, sizePoint.width + offset.x, offset.y, sizePoint.height + offset.y, -1024, 1024);
 }
-    
--(void) directorDidReshapeProjection:(CCDirector*)director
-{
-    if(director.runningScene == nil) {
-        CCScene * scene = [_appDelegate startScene];
-
-        // Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
-        // and add the scene to the stack. The director will run it when it automatically when the view is displayed.
-        [director presentScene: scene];
-    }
-}
 
 @end
 

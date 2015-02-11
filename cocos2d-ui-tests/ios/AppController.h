@@ -1,8 +1,7 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * Copyright 2009 lhunath (Maarten Billemont)
- * Copyright (c) 2013-2014 Cocos2D Authors
+ * Copyright (c) 2013 Apportable Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,54 +20,13 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
  */
 
-#import "CCActionTween.h"
-#import "CCAction_Private.h"
+#import "CCAppController.h"
 
+@interface AppController : CCAppController
 
-@implementation CCActionTween
-
-+ (id)actionWithDuration:(CCTime)aDuration key:(NSString *)aKey from:(float)aFrom to:(float)aTo {
-
-	return [[[self class] alloc] initWithDuration:aDuration key:aKey from:aFrom to:aTo];
-}
-
-- (id)initWithDuration:(CCTime)aDuration key:(NSString *)key from:(float)from to:(float)to {
-
-	if ((self = [super initWithDuration:aDuration])) {
-
-		_key	= [key copy];
-		_to		= to;
-		_from	= from;
-
-	}
-
-	return self;
-}
-
--(id) copyWithZone: (NSZone*) zone
-{
-    CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration: [self duration] key:_key from:_from to:_to];
-    return copy;
-}
-
-- (void)startWithTarget:aTarget
-{
-	[super startWithTarget:aTarget];
-	_delta = _to - _from;
-}
-
-- (void) update:(CCTime) dt
-{
-	[_target setValue:[NSNumber numberWithFloat:_to  - _delta * (1 - dt)] forKey:_key];
-}
-
-- (CCActionInterval *) reverse
-{
-	return [[self class] actionWithDuration:_duration key:_key from:_to to:_from];
-}
-
++ (AppController*)sharedController;
++ (void)setupApplication;
 
 @end

@@ -1115,16 +1115,16 @@ GLKMatrix4MakeRigid(CGPoint pos, CGFloat radians)
 	[self.scheduler removeAction:action fromTarget:self];
 }
 
--(void) stopActionByTag:(NSInteger)aTag
+-(void) stopActionByName:(NSString *)name
 {
-	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
-	[self.scheduler removeActionByTag:aTag target:self];
+	NSAssert(name, @"Name is nil.");
+	[self.scheduler removeActionByName:name target:self];
 }
 
--(CCAction*) getActionByTag:(NSInteger) aTag
+-(CCAction*) getActionByName:(NSString *)name
 {
-	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
-	return 	[self.scheduler getActionByTag:aTag target:self];
+	NSAssert(name, @"Name is nil.");
+	return 	[self.scheduler getActionByName:name target:self];
 }
 
 -(NSArray *) actions

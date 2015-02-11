@@ -63,21 +63,27 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 #elif __CC_PLATFORM_MAC
     [self setupMac];
 #else
-
+/*
+    Explicitly erroring out here as trying to configure under an unrecognised platform will cause spectacular failures
+*/
+#error "Unrecognised platform - CCAppController only supports application configuration on iOS, Mac or Android!"
 #endif
-
 }
 
-
 /*
-    Instantiate and return the first scene
+ Instantiate and return the first scene
  */
+- (CCScene *)createFirstScene
+{
+    return [CCBReader loadAsScene:self.firstSceneName];
+}
+
 - (CCScene *)startScene
 {
     NSAssert(_glView.director, @"Require a valid director to decode the CCB file!");
 
     [CCDirector pushCurrentDirector:_glView.director];
-    CCScene *scene = [CCBReader loadAsScene:self.firstSceneName];
+    CCScene *scene = [self createFirstScene];
     [CCDirector popCurrentDirector];
 
     return scene;
@@ -85,61 +91,65 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 #pragma mark iOS setup
 
-#if __CC_PLATFORM_IOS
-
-- (void)setupIOS
-{
-    _cocosConfig = [self iosConfig];
-
-    [CCBReader configureCCFileUtils];
-
-    [self applyConfigurationToCocos:_cocosConfig];
-    [self setFirstScene];
-}
-
 - (NSDictionary*)iosConfig
 {
     NSString *configPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Published-iOS"];
     configPath = [configPath stringByAppendingPathComponent:@"configCocos2d.plist"];
 
     NSMutableDictionary *config = [NSMutableDictionary dictionaryWithContentsOfFile:configPath];
-
+    if(config == nil){
+        config = [NSMutableDictionary dictionary];
+    }
+    
     // Fixed size. As wide as iPhone 5 at 2x and as high as the iPad at 2x.
     config[CCScreenModeFixedDimensions] = [NSValue valueWithCGSize:CGSizeMake(586, 384)];
 
+    [CCBReader configureCCFileUtils];
+    
     return config;
 }
 
-- (void)applyConfigurationToCocos:(NSDictionary*)config
+#if __CC_PLATFORM_IOS
+
+- (void)setupIOS
 {
+    _cocosConfig = [self iosConfig];
+
     CCAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     [appDelegate constructWindow];
 
-    _glView = [appDelegate constructView:config withBounds:appDelegate.window.bounds];
-
+    _glView = [appDelegate constructView:_cocosConfig withBounds:appDelegate.window.bounds];
+    
     CCDirector *director = _glView.director;
     NSAssert(director, @"CCView failed to construct a director.");
-    [self configureDirector:director withConfig:config withView:_glView];
-
+    [self configureDirector:director withConfig:_cocosConfig withView:_glView];
+    
     [CCDirector pushCurrentDirector:director];
-
-    if([config[CCSetupScreenMode] isEqual:CCScreenModeFixed]){
-        [self setupFixedScreenMode:config director:director];
+    
+    if([_cocosConfig[CCSetupScreenMode] isEqual:CCScreenModeFixed]){
+        [self setupFixedScreenMode:_cocosConfig director:(CCDirectorIOS *) director];
     } else {
-        [self setupFlexibleScreenMode:config director:director];
+        [self setupFlexibleScreenMode:_cocosConfig director:director];
     }
-
+    
     // Initialise OpenAL
     [OALSimpleAudio sharedInstance];
 
-    [appDelegate constructNavController:config];
-
+    [appDelegate constructNavController:_cocosConfig];
     [[CCPackageManager sharedManager] loadPackages];
-
+    
     [appDelegate.window makeKeyAndVisible];
     [appDelegate forceOrientation];
 
     [CCDirector popCurrentDirector];
+    
+    [self runStartSceneiOS];
+}
+
+- (void)runStartSceneiOS
+{
+    CCDirector *director = _glView.director;
+    [director presentScene:[self startScene]];
 }
 
 - (void)configureDirector:(CCDirector *)director withConfig:(NSDictionary *)config withView:(CC_VIEW <CCView> *)ccview
@@ -200,22 +210,29 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     [director setProjection:CCDirectorProjectionCustom];
 }
 
-- (void)setFirstScene
-{
-    CCAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    appDelegate.startScene = [self startScene];
-}
-
 #endif
 
 #pragma mark Android setup
+
+- (NSDictionary*)androidConfig
+{
+    [CCBReader configureCCFileUtils];
+    
+    NSString* configPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Published-Android"];
+
+    configPath = [configPath stringByAppendingPathComponent:@"configCocos2d.plist"];
+    NSMutableDictionary *config = [NSMutableDictionary dictionaryWithContentsOfFile:configPath];
+
+    config[CCScreenModeFixedDimensions] = [NSValue valueWithCGSize:CGSizeMake(586, 384)];
+
+    return config;
+}
 
 #if __CC_PLATFORM_ANDROID
 
 - (void)setupAndroid
 {
     _cocosConfig = [self androidConfig];
-    [CCBReader configureCCFileUtils];
 
     [self performAndroidNonGLConfiguration:_cocosConfig];
 
@@ -231,17 +248,6 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 }
 
-- (NSDictionary*)androidConfig
-{
-    NSString* configPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Published-Android"];
-
-    configPath = [configPath stringByAppendingPathComponent:@"configCocos2d.plist"];
-    NSMutableDictionary *config = [NSMutableDictionary dictionaryWithContentsOfFile:configPath];
-
-    config[CCScreenModeFixedDimensions] = [NSValue valueWithCGSize:CGSizeMake(586, 384)];
-
-    return config;
-}
 
 - (void)performAndroidNonGLConfiguration:(NSDictionary*)config
 {
@@ -345,24 +351,27 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
     return CGSizeMake(480.0f, 320.0f);
 }
 
+- (NSDictionary*)macConfig
+{
+    [CCBReader configureCCFileUtils];
+    
+    NSMutableDictionary *macConfig = [NSMutableDictionary dictionary];
+
+    macConfig[CCMacDefaultWindowSize] = [NSValue valueWithCGSize:[self defaultWindowSize]];
+
+    return macConfig;
+}
+
 #if __CC_PLATFORM_MAC
 
 -(void)setupMac
 {
     _cocosConfig = [self macConfig];
-    [CCBReader configureCCFileUtils];
     [self applyConfigurationToCocos:_cocosConfig];
     [self runStartSceneMac];
 }
 
-- (NSDictionary*)macConfig
-{
-    NSMutableDictionary *macConfig = [NSMutableDictionary dictionary];
-    
-    macConfig[CCMacDefaultWindowSize] = [NSValue valueWithCGSize:[self defaultWindowSize]];
-    
-    return macConfig;
-}
+
 
 - (void)applyConfigurationToCocos:(NSDictionary*)config
 {

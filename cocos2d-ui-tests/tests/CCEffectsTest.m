@@ -298,8 +298,8 @@
     
     [self.contentNode.scene.lights flushGroupNames];
     
-    NSString *normalMapImage = @"Images/ShinyTorusNormals.png";
-    NSString *diffuseImage = @"Images/ShinyTorusColor.png";
+    NSString *normalMapImage = @"Images/powered_normals.png";
+    NSString *diffuseImage = @"Images/powered.png";
     
     void (^setupBlock)(CGPoint position, CCLightType type, float lightDepth, NSString *title) = ^void(CGPoint position, CCLightType type, float lightDepth, NSString *title)
     {
@@ -327,6 +327,13 @@
         sprite.effect = lightingEffect;
         sprite.scale = 0.5f;
         
+        [sprite runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
+                                                                  [CCActionDelay actionWithDuration:1.0],
+                                                                  [CCActionRotateBy actionWithDuration:4.0 angle:360.0],
+                                                                  [CCActionDelay actionWithDuration:8.0],
+                                                                  nil
+                                                                  ]]];
+        
         CCNode *root = [[CCNode alloc] init];
         root.positionType = CCPositionTypeNormalized;
         root.position = position;
@@ -348,14 +355,15 @@
 
         [light runAction:[CCActionRepeatForever actionWithAction:[CCActionSequence actions:
                                                                   [CCActionMoveTo actionWithDuration:1.0 position:ccp(1.0f, 1.0f)],
+                                                                  [CCActionDelay actionWithDuration:4.0],
                                                                   [CCActionMoveTo actionWithDuration:2.0 position:ccp(0.0f, 0.0f)],
                                                                   [CCActionRotateBy actionWithDuration:5.0 angle:360.0],
                                                                   [CCActionMoveTo actionWithDuration:1.0 position:ccp(0.5f, 0.5f)],
                                                                   nil
                                                                   ]]];
     };
-    setupBlock(ccp(0.25f, 0.5f), CCLightPoint, 250.0f, @"Point Light\nPosition matters, orientation does not.");
-    setupBlock(ccp(0.75f, 0.5f), CCLightDirectional, 1.0f, @"Directional Light\nPosition does not matter, orientation does.");
+    setupBlock(ccp(0.25f, 0.5f), CCLightPoint, 50.0f, @"Point Light\nPosition matters, orientation does not.");
+    setupBlock(ccp(0.75f, 0.5f), CCLightDirectional, 0.5f, @"Directional Light\nPosition does not matter, orientation does.");
 }
 
 -(void)setupLightingParameterTest

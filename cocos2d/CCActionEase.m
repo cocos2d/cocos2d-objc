@@ -70,7 +70,7 @@
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	[_inner startWithTarget:_target];
+	[_inner startWithTarget:self.target];
 }
 
 -(void) stop
