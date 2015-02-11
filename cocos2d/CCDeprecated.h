@@ -28,6 +28,7 @@
 #import "CCColor.h"
 #import "CCNode.h"
 #import "CCTexture.h"
+#import "CCAction.h"
 
 
 /** RGB color composed of bytes 3 bytes
@@ -365,6 +366,12 @@ typedef struct __attribute__((deprecated)) _ccBlendFunc
 
 @interface CCNode(Deprecated)
 
+// Use [CCnode stopActionByName:] instead.
+-(void)stopActionByTag:(NSInteger) tag;
+
+// Use [CCNode getActionByName:] instead.
+-(CCAction*)getActionByTag:(NSInteger) tag;
+
 // Use CCNode.nodeToParentMatrix instead.
 - (CGAffineTransform)nodeToParentTransform __attribute__((deprecated));
 
@@ -414,5 +421,18 @@ typedef struct __attribute__((deprecated)) _ccBlendFunc
 
 // Use [CCTexture -initWithImage:options:] instead.
 - (id)initWithCGImage:(CGImageRef)cgImage contentScale:(CGFloat)contentScale;
+
+@end
+
+
+enum {
+	//! Default tag
+	kCCActionTagInvalid = -1,
+};
+
+
+@interface CCAction(Deprecated)
+
+@property (nonatomic, readwrite, assign) NSInteger tag;
 
 @end

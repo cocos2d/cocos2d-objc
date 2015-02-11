@@ -56,6 +56,8 @@ CGPointApplyGLKMatrix4(CGPoint p, GLKMatrix4 m){
 /* Reads and writes the animation manager for this node.*/
 @property (nonatomic, readwrite) CCAnimationManager * animationManager;
 
+-(CCScheduler *)scheduler;
+
 /* performance improvement, Sort the children array once before drawing, instead of every time when a child is added or reordered
  don't call this manually unless a child added needs to be removed in the same frame */
 - (void) sortAllChildren;

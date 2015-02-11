@@ -59,6 +59,10 @@ NSString* const CCScreenOrientationAll = @"CCScreenOrientationAll";
 
 NSString* const CCScreenModeFlexible = @"CCScreenModeFlexible";
 NSString* const CCScreenModeFixed = @"CCScreenModeFixed";
+NSString* const CCScreenModeFixedDimensions = @"CCScreenModeFixedDimensions";
+
+NSString* const CCMacDefaultWindowSize = @"CCMacDefaultWindowSize";
+
 
 
 @implementation CCDeviceInfo

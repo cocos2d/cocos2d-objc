@@ -28,7 +28,9 @@
 
 #import "CCDirector.h"
 #import "ccMacros.h"
-#import "CCAction.h"
+
+#import "CCAction_Private.h"
+
 #import "CCActionInterval.h"
 #import "CGPointExtension.h"
 
@@ -39,42 +41,27 @@
 #pragma mark Action
 @implementation CCAction
 
-@synthesize tag = _tag, target = _target, originalTarget = _originalTarget;
-
 +(instancetype) action
 {
 	return [[self alloc] init];
 }
 
--(id) init
-{
-	if( (self=[super init]) ) {
-		_originalTarget = _target = nil;
-		_tag = kCCActionTagInvalid;
-	}
-	return self;
-}
-
--(void) dealloc
-{
-	CCLOGINFO(@"cocos2d: deallocing %@", self);
-}
-
 -(NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %p | Tag = %ld>", [self class], self, (long)_tag];
+	return [NSString stringWithFormat:@"<%@ = %p | Name = %@>", [self class], self, _name];
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
 	CCAction *copy = [[[self class] allocWithZone: zone] init];
-	copy.tag = _tag;
+	copy.name = _name;
+    
 	return copy;
 }
 
 -(void) startWithTarget:(id)aTarget
 {
-	_originalTarget = _target = aTarget;
+	_target = aTarget;
 }
 
 -(void) stop
@@ -89,12 +76,12 @@
 
 -(void) step: (CCTime) dt
 {
-	CCLOG(@"[Action step]. override me");
+	NSAssert(NO, @"[CCAction step] override me");
 }
 
 -(void) update: (CCTime) time
 {
-	CCLOG(@"[Action update]. override me");
+	NSAssert(NO, @"[CCAction update] override me");
 }
 @end
 
@@ -108,7 +95,7 @@
 
 - (CCActionFiniteTime*) reverse
 {
-	CCLOG(@"cocos2d: FiniteTimeAction#reverse: Implement me");
+	NSAssert(NO, @"[CCFiniteTimeAction reverse:] override me");
 	return nil;
 }
 @end
@@ -300,13 +287,6 @@
 	}
 
 	return self;
-}
-
--(id) copyWithZone: (NSZone*) zone
-{
-	CCAction *copy = [[[self class] allocWithZone: zone] init];
-	copy.tag = _tag;
-	return copy;
 }
 
 -(void) step:(CCTime) dt

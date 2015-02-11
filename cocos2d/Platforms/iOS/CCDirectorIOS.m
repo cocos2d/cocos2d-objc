@@ -149,14 +149,6 @@
 
 #pragma mark Director - UIViewController delegate
 
--(void) reshapeProjection:(CGSize)newViewSize
-{
-    [super reshapeProjection:newViewSize];
-    
-    if( [_delegate respondsToSelector:@selector(directorDidReshapeProjection:)] )
-        [_delegate directorDidReshapeProjection:self];
-}
-
 -(void) setView:(CC_VIEW<CCView> *)view
 {
 		[super setView:view];

@@ -1,7 +1,8 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * Copyright 2009 lhunath (Maarten Billemont)
+ * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  * Copyright (c) 2013-2014 Cocos2D Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,51 +25,52 @@
  *
  */
 
-#import "CCActionTween.h"
-#import "CCAction_Private.h"
+#import "CCAction.h"
+
+enum {
+	//! Default tag
+	kCCActionTagInvalid = -1,
+};
 
 
-@implementation CCActionTween
-
-+ (id)actionWithDuration:(CCTime)aDuration key:(NSString *)aKey from:(float)aFrom to:(float)aTo {
-
-	return [[[self class] alloc] initWithDuration:aDuration key:aKey from:aFrom to:aTo];
+@interface CCAction() {
+    @protected
+    __unsafe_unretained id _target;
 }
-
-- (id)initWithDuration:(CCTime)aDuration key:(NSString *)key from:(float)from to:(float)to {
-
-	if ((self = [super initWithDuration:aDuration])) {
-
-		_key	= [key copy];
-		_to		= to;
-		_from	= from;
-
-	}
-
-	return self;
-}
-
--(id) copyWithZone: (NSZone*) zone
-{
-    CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration: [self duration] key:_key from:_from to:_to];
-    return copy;
-}
-
-- (void)startWithTarget:aTarget
-{
-	[super startWithTarget:aTarget];
-	_delta = _to - _from;
-}
-
-- (void) update:(CCTime) dt
-{
-	[_target setValue:[NSNumber numberWithFloat:_to  - _delta * (1 - dt)] forKey:_key];
-}
-
-- (CCActionInterval *) reverse
-{
-	return [[self class] actionWithDuration:_duration key:_key from:_to to:_from];
-}
-
 
 @end
+
+
+@interface CCActionFiniteTime() {
+    @protected
+    CCTime _duration;
+}
+
+@end
+
+
+// TODO what to do with CCAction follow?
+@interface CCActionFollow() {
+    
+	// Node to follow.
+	CCNode *_followedNode;
+
+	// Whether camera should be limited to certain area.
+	BOOL _boundarySet;
+
+	// If screen-size is bigger than the boundary - update not needed.
+	BOOL _boundaryFullyCovered;
+
+	// Fast access to the screen dimensions.
+	CGPoint _halfScreenSize;
+	CGPoint _fullScreenSize;
+
+	// World boundaries.
+	float _leftBoundary;
+	float _rightBoundary;
+	float _topBoundary;
+	float _bottomBoundary;
+}
+
+@end
+

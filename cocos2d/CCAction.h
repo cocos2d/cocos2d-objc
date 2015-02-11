@@ -27,10 +27,6 @@
 
 #import "ccTypes.h"
 
-enum {
-	//! Default tag
-	kCCActionTagInvalid = -1,
-};
 
 /**
  CCAction is an abstract base class for all actions. Actions animate nodes by manipulating node properties over time
@@ -53,11 +49,7 @@ enum {
     - CCActionInterval
  
  */
-@interface CCAction : NSObject <NSCopying> {
-	id			__unsafe_unretained _originalTarget;
-	id			__unsafe_unretained _target;
-	NSInteger	_tag;
-}
+@interface CCAction : NSObject <NSCopying>
 
 
 
@@ -75,13 +67,6 @@ enum {
  */
 + (id)action;
 
-/**
- *  Initializes and returns an action object.
- *
- *  @return An initialized CCAction Object.
- */
-- (id)init;
-
 
 /// -----------------------------------------------------------------------
 /// @name Action Targets
@@ -91,24 +76,15 @@ enum {
  The "target" is typically the node instance that received the [CCNode runAction:] message.
  The action will modify the target properties. The target will be set with the 'startWithTarget' method.
  When the 'stop' method is called, target will be set to nil. 
- 
- @warning The target is 'assigned' (unsafe unretained), it is not 'retained' nor managed by ARC.
  */
-@property (nonatomic,readonly,unsafe_unretained) id target;
-
-/** The original target, since target can be nil. */
-@property (nonatomic,readonly,unsafe_unretained) id originalTarget;
+@property (nonatomic, readonly, unsafe_unretained) id target;
 
 /// -----------------------------------------------------------------------
 /// @name Identifying an Action
 /// -----------------------------------------------------------------------
 
-/** The action tag. An identifier of the action. */
-@property (nonatomic,readwrite,assign) NSInteger tag;
-
-// NSCopying support.
-- (id)copyWithZone:(NSZone*) zone;
-
+/** The action's name. An identifier of the action. */
+@property (nonatomic, readwrite, copy) NSString *name;
 
 /// -----------------------------------------------------------------------
 /// @name Action Methods Implemented by Subclasses
@@ -122,15 +98,14 @@ enum {
 - (BOOL)isDone;
 
 /**
- *  Assigns a target to the action
- *  Called before the action is started.
+ *  Overridden by subclasses to set up an action before it runs.
  *
- *  @param target Target to assign to action (weak reference).
+ *  @param target Target the action will run on.
  */
 - (void)startWithTarget:(id)target;
 
 /**
- *  Stops the action
+ *  Overriden by subclasses to clean up an action.
  *  Called after the action has finished. Will assign the internal target reference to nil.
  *  Note:
  *  You should never call this method directly. 
@@ -139,11 +114,11 @@ enum {
 - (void)stop;
 
 /**
- *  Steps the action.
- *  Called for every frame with step interval.
+ *  Overridden by subclasses to update the target.
+ *  Called every frame with the time delta.
  *
  *  Note:
- *  Do not override unless you know what you are doing.
+ *  Do not call this method directly. Actions are automatically stepped when used with [CCNode runAction:].
  *
  *  @param dt Ellapsed interval since last step.
  */
@@ -177,15 +152,12 @@ enum {
  - CCActionInterval
 
 */
-@interface CCActionFiniteTime : CCAction <NSCopying> {
-	// Duration in seconds.
-	CCTime _duration;
-}
+@interface CCActionFiniteTime : CCAction
 
 /** @name Duration */
 
 /** Duration of the action in seconds. */
-@property (nonatomic,readwrite) CCTime duration;
+@property (nonatomic, readwrite) CCTime duration;
 
 /** @name Reversing an Action */
 
@@ -211,9 +183,7 @@ enum {
  *  @note This action can not be used within a CCActionSequence because it is not an CCActionInterval action.
  *  However you can use CCActionRepeatForever to repeat a CCActionSequence.
  */
-@interface CCActionRepeatForever : CCAction <NSCopying> {
-	CCActionInterval *_innerAction;
-}
+@interface CCActionRepeatForever : CCAction
 
 // purposefully undocumented: user does not need to access inner action
 /* Inner action. */
@@ -283,10 +253,7 @@ enum {
  @note CCActionSpeed can not be added to a CCActionSequence because it does not inherit from CCActionFiniteTime.
  It can however be used to control the speed of an entire CCActionSequence.
  */
-@interface CCActionSpeed : CCAction <NSCopying> {
-	CCActionInterval	*_innerAction;
-	CGFloat _speed;
-}
+@interface CCActionSpeed : CCAction
 
 /// -----------------------------------------------------------------------
 /// @name Creating a Speed Action
@@ -356,27 +323,7 @@ enum {
  Whenever `playerNode` changes its position, the position of `gameLayerNode` will be updated (moved in the opposite direction)
  to keep `playerNode` centered.
  */
-@interface CCActionFollow : CCAction <NSCopying> {
-    
-	// Node to follow.
-	CCNode	*_followedNode;
-
-	// Whether camera should be limited to certain area.
-	BOOL _boundarySet;
-
-	// If screen-size is bigger than the boundary - update not needed.
-	BOOL _boundaryFullyCovered;
-
-	// Fast access to the screen dimensions.
-	CGPoint _halfScreenSize;
-	CGPoint _fullScreenSize;
-
-	// World boundaries.
-	float _leftBoundary;
-	float _rightBoundary;
-	float _topBoundary;
-	float _bottomBoundary;
-}
+@interface CCActionFollow : CCAction
 
 /// -----------------------------------------------------------------------
 /// @name Creating a Follow Action

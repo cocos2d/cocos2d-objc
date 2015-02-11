@@ -23,6 +23,7 @@
  */
 
 #import "ccMacros.h"
+#import "CCAction_Private.h"
 
 #if __CC_PLATFORM_IOS
 #import <UIKit/UIGestureRecognizerSubclass.h>
@@ -54,8 +55,8 @@
 #define kCCScrollViewMaxOuterDistBeforeBounceBack 50.0
 #define kCCScrollViewMinVelocityBeforeBounceBack 100.0
 
-#define kCCScrollViewActionXTag 8080
-#define kCCScrollViewActionYTag 8081
+#define CCScrollViewActionXTag @"CCScrollViewActionXTag"
+#define CCScrollViewActionYTag @"CCScrollViewActionYTag"
 
 #pragma mark -
 #pragma mark Helper classes
@@ -418,7 +419,7 @@
 			}] rate:2];
             CCActionCallFunc* callFunc = [CCActionCallFunc actionWithTarget:self selector:@selector(xAnimationDone)];
             action = [CCActionSequence actions:action, callFunc, nil];
-            action.tag = kCCScrollViewActionXTag;
+            action.name = CCScrollViewActionXTag;
             [self.camera runAction:action];
         }
         if (yMoved)
@@ -434,7 +435,7 @@
 			}] rate:2];
             CCActionCallFunc* callFunc = [CCActionCallFunc actionWithTarget:self selector:@selector(yAnimationDone)];
             action = [CCActionSequence actions:action, callFunc, nil];
-            action.tag = kCCScrollViewActionYTag;
+            action.name = CCScrollViewActionYTag;
             [self.camera runAction:action];
         }
     }
@@ -443,8 +444,8 @@
 #if __CC_PLATFORM_MAC
 		_lastPosition = self.scrollPosition;
 #endif
-        [self.camera stopActionByTag:kCCScrollViewActionXTag];
-        [self.camera stopActionByTag:kCCScrollViewActionYTag];
+        [self.camera stopActionByName:CCScrollViewActionXTag];
+        [self.camera stopActionByName:CCScrollViewActionYTag];
         self.camera.position = newPos;
     }
 }
@@ -638,8 +639,8 @@
     _startScrollPos = self.scrollPosition;
     
     _isPanning = YES;
-    [self.camera stopActionByTag:kCCScrollViewActionXTag];
-    [self.camera stopActionByTag:kCCScrollViewActionYTag];
+    [self.camera stopActionByName:CCScrollViewActionXTag];
+    [self.camera stopActionByName:CCScrollViewActionYTag];
 
 }
 
@@ -806,8 +807,12 @@
         return NO;
     }
     
+    [CCDirector pushCurrentDirector:self.director];
     // Check that the gesture is in the scroll view
-    return [self clippedHitTestWithWorldPos:[touch locationInWorld]];
+    BOOL hit = [self clippedHitTestWithWorldPos:[touch locationInWorld]];
+    [CCDirector popCurrentDirector];
+    
+    return hit;
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer

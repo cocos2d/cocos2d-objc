@@ -92,6 +92,8 @@ extern NSString * cocos2dVersion(void);
 	CCFrameBufferObject *_framebuffer;
 }
 
+@synthesize paused = _isPaused;
+
 static NSString * const CCDirectorCurrentKey = @"CCDirectorCurrentKey";
 static NSString * const CCDirectorStackKey = @"CCDirectorStackKey";
 
@@ -204,7 +206,7 @@ CCDirectorStack()
         return;
     
     [CCDirector pushCurrentDirector:self];
-    
+
     /* calculate "global" dt */
 	[self calculateDeltaTime];
 
@@ -374,13 +376,16 @@ CCDirectorStack()
 
 		// it could be nil
 		if( view ) {
-            
+#if !__CC_PLATFORM_ANDROID
 			[self createStatsLabel];
+#endif
 			[self setProjection: _projection];
 		}
 
+#if !__CC_PLATFORM_ANDROID
 		// Dump info once OpenGL was initilized
 		[[CCDeviceInfo sharedDeviceInfo] dumpInfo];
+#endif
 }
 
 
@@ -403,7 +408,6 @@ CCDirectorStack()
 		[self setProjection:_projection];
 		
 		[[CCFileUtils sharedFileUtils] buildSearchResolutionsOrder];
-		[self createStatsLabel];
 	}
 }
 
@@ -890,9 +894,6 @@ static const float CCFPSLabelItemHeight = 32;
 			_frameRate = _frames/_accumDt;
 			_frames = 0;
 			_accumDt = 0;
-
-//			sprintf(format,"%.1f",frameRate);
-//			[FPSLabel setCString:format];
 
 			NSString *fpsstr = [[NSString alloc] initWithFormat:@"%.1f", _frameRate];
 			[_FPSLabel setString:fpsstr];
