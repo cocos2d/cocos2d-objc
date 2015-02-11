@@ -35,7 +35,6 @@
  *   http://www.angelcode.com/products/bmfont/ (Free, Windows only)
  */
 
-
 #import "CCLabelBMFont_Private.h"
 
 #import "CCDeviceInfo.h"
@@ -44,7 +43,354 @@
 #import "CCFileUtils.h"
 #import "CCColor.h"
 #import "ccUtils.h"
+#import "CCDrawNode.h"
+#import "CCNS.h"
 
+#pragma mark -
+#pragma mark CCBMFontCharacter 
+
+@implementation CCBMFontCharacter
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self setCharacterValue:-1];
+        [self setControlFollowing:NoControlFollows];
+    }
+    return self;
+}
+
+- (NSString *)description
+{
+    NSString *controlChar = @"";
+    if (_controlFollowing & WordBreakFollows)
+    {
+        controlChar = [NSString stringWithFormat:@"%@ wb", controlChar];
+    }
+    if (_controlFollowing & HardLineBreakFollows)
+    {
+        controlChar = [NSString stringWithFormat:@"%@ lf", controlChar];
+    }
+    if (_controlFollowing & SoftLineBreakFollows)
+    {
+        controlChar = [NSString stringWithFormat:@"%@ cr", controlChar];
+    }
+    controlChar = [controlChar stringByPaddingToLength:9 withString:@" " startingAtIndex:0];
+    return [NSString stringWithFormat:@"\'%C\' %@ - %@", _characterValue, controlChar, CCNSStringFromCGPoint([self position])];
+}
+
+@end
+
+@implementation CCBMFontCharacterSequence
+{
+    CCBMFontCharacter *_firstRemovedCharacter;
+    CCBMFontCharacter *_lastCharacter;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _commonHeight = 0.0f;
+        _firstCharacter = nil;
+        _lastCharacter = nil;
+    }
+    return self;
+}
+
+- (NSString *)description
+{
+    NSMutableArray *lines = [NSMutableArray array];
+    [lines addObject:[NSString stringWithFormat:@"CCBMFontCharacterSequence - commonHeight: %0.2f", _commonHeight]];
+    for (CCBMFontCharacter *fc = [self firstCharacter]; fc; fc = [fc nextCharacter])
+    {
+        [lines addObject:[NSString stringWithFormat:@"> %@", fc]];
+    }
+    return [lines componentsJoinedByString:@"\n"];
+}
+
+- (NSArray *)characterSpritesForRange:(NSRange)range
+{
+    NSMutableArray *results = [NSMutableArray array];
+    NSUInteger stopIndex = range.location + range.length;
+    NSUInteger index = 0;
+    for (CCBMFontCharacter *fc = _firstCharacter; fc; fc = [fc nextCharacter])
+    {
+        if (index >= range.location)
+        {
+            [results addObject:fc];
+        }
+        if ([fc controlFollowing] & HardLineBreakFollows)
+        {
+            // White spaces ARE included as actual character sprites.
+            // Soft line breaks should NOT be included as they were not
+            // in the original string.
+            // There is no actual character sprite in the sequence for the
+            // "\n" hard line break - so account for it here
+            ++index;
+        }
+        if (++index >= stopIndex) break;
+    }
+    return [results copy];
+}
+
+- (NSString *)stringForSequence
+{
+    NSMutableString *stringResult = [NSMutableString string];
+    for (CCBMFontCharacter *fc = _firstCharacter; fc; fc = [fc nextCharacter])
+    {
+        [stringResult appendFormat:@"%C", [fc characterValue]];
+        if ([fc controlFollowing] == HardLineBreakFollows)
+        {
+            [stringResult appendString:@"\n"];
+        }
+    }
+    return [stringResult copy];
+}
+
+- (void)removeAllCharacters
+{
+    // Hide all characters
+    for (CCBMFontCharacter *fc = _firstCharacter; fc; fc = [fc nextCharacter])
+    {
+        [fc setVisible:NO];
+    }
+
+    // walk to the end of the (possibly empty) list of removed characters and add the current
+    // characters to the list of removed characters
+    CCBMFontCharacter *lastRemoved = _firstRemovedCharacter;
+    for ( ; lastRemoved; lastRemoved = [lastRemoved nextCharacter]) { }
+    if (lastRemoved == nil)
+    {
+        _firstRemovedCharacter = _firstCharacter;
+    }
+    else
+    {
+        [lastRemoved setNextCharacter:_firstCharacter];
+    }
+    
+    // make the list of characters empty
+    _firstCharacter = nil;
+    _lastCharacter = nil;
+}
+
+- (CCBMFontCharacter *)createNewCharacterForSequenceWithParent:(CCNode *)parent
+{
+    CCBMFontCharacter *newChar = nil;
+    if (_firstRemovedCharacter == nil)
+    {
+        newChar = [[CCBMFontCharacter alloc] init];
+        [parent addChild:newChar];
+    }
+    else
+    {
+        newChar = _firstRemovedCharacter;
+        _firstRemovedCharacter = [_firstRemovedCharacter nextCharacter];
+        [newChar setNextCharacter:nil];
+        [newChar setCharacterValue:0];
+        [newChar setControlFollowing:NoControlFollows];
+        [newChar setVisible:YES];
+        if ([newChar parent] != parent) // highly irregular but lets handle it
+        {
+            [newChar removeFromParent];
+            [parent addChild:newChar];
+        }
+    }
+    if (_firstCharacter == nil)
+    {
+        _firstCharacter = newChar;
+    }
+    else
+    {
+        [_lastCharacter setNextCharacter:newChar];
+    }
+    _lastCharacter = newChar;
+    return newChar;
+}
+
+- (void)setAlignment:(CCTextAlignment)alignment
+{
+    [self align:alignment];
+}
+
+- (void)align:(CCTextAlignment)alignment
+{
+    // TODO: debug - remove me
+    CCLabelBMFont *lbl = (CCLabelBMFont *)[_firstCharacter parent];
+    NSString *alignStr = @"left";
+    switch (alignment) {
+        case CCTextAlignmentCenter:
+            alignStr = @"center";
+            break;
+        case CCTextAlignmentRight:
+            alignStr = @"right";
+            break;
+        default:
+            break;
+    }
+    NSCharacterSet *ws = [NSCharacterSet whitespaceCharacterSet];
+    CCBMFontCharacter *lineStart = _firstCharacter;
+    CGSize sz = [lbl contentSize];
+    BOOL isLineStart = YES;
+    while (lineStart != nil)
+    {
+        // when aligning ignore whitespace characters at the start of the line
+        // walk to the first non-whitespace character on the line
+        while ([ws characterIsMember:[lineStart characterValue]])
+        {
+            lineStart = [lineStart nextCharacter];
+            if (lineStart == nil) break;
+        }
+        CCBMFontCharacter *fontChar = _lastCharacter;
+        float lineLHS = [lineStart position].x - [lineStart contentSize].width / 2.0f;
+        for (CCBMFontCharacter *fc = lineStart; fc; fc = [fc nextCharacter])
+        {
+            if ([fc controlFollowing] & LineBreakFollows)
+            {
+                fontChar = fc;
+                break;
+            }
+        }
+        float lineRHS = [fontChar position].x + [fontChar contentSize].width/2;
+        float lineWidth = lineRHS - lineLHS;
+        
+        //Figure out how much to shift each character in this line horizontally
+        float shift = 0;
+        switch (alignment) {
+            case CCTextAlignmentCenter:
+                shift = sz.width/2.0f - lineWidth/2.0f;
+                break;
+            case CCTextAlignmentRight:
+                shift = sz.width - lineWidth;
+            default:
+                break;
+        }
+        shift -= lineLHS;
+        
+        if (shift != 0)
+        {
+            for (CCBMFontCharacter *fc = lineStart; fc; fc = [fc nextCharacter])
+            {
+                CGPoint fcPos = [fc position];
+                fcPos.x += shift;
+                [fc setPosition:fcPos];
+                if (fc == fontChar) break;
+            }
+        }
+        lineStart = [fontChar nextCharacter];
+    }
+}
+
+- (void)fitToWidth:(float)width
+{
+    NSCharacterSet *ws = [NSCharacterSet whitespaceCharacterSet];
+    BOOL expectingWordBoundary = NO;
+    BOOL isNewLine = YES;
+    float lineLHS = 0.0f;
+    CCBMFontCharacter *wordBoundary = nil;
+    CCBMFontCharacter *wordEnd = nil;
+    CCBMFontCharacter *prevCharacter = _firstCharacter;
+    for (CCBMFontCharacter *fc = _firstCharacter; fc; fc = [fc nextCharacter])
+    {
+        if ([ws characterIsMember:[fc characterValue]]) continue;
+        float charLHS = [fc position].x - [fc contentSize].width / 2.0f;
+        if (isNewLine)
+        {
+            lineLHS = charLHS;
+            isNewLine = NO;
+        }
+        if ([fc controlFollowing] & WordBreakFollows)
+        {
+            expectingWordBoundary = YES;
+        }
+        else if (expectingWordBoundary)
+        {
+            wordBoundary = fc;
+            expectingWordBoundary = NO;
+        }
+        float charRHS = [fc position].x + [fc contentSize].width / 2.0f;
+        if (charRHS - lineLHS > width)
+        {
+            if (wordBoundary != nil)
+            {
+                [self insertLineBreakAtCharacter:wordBoundary];
+                wordBoundary = nil;
+                [wordEnd setControlFollowing:(WordBreakFollows | SoftLineBreakFollows)];
+            }
+            else
+            {
+                [self insertLineBreakAtCharacter:fc];
+                [prevCharacter setControlFollowing:SoftLineBreakFollows];
+            }
+            expectingWordBoundary = NO;
+            lineLHS = 0.0f;
+        }
+        if ([fc controlFollowing] & WordBreakFollows)
+        {
+            wordEnd = fc;
+        }
+        else if ([fc controlFollowing] & HardLineBreakFollows)
+        {
+            isNewLine = YES;
+        }
+        prevCharacter = fc;
+    }
+}
+
+- (void)insertLineBreakAtCharacter:(CCBMFontCharacter *)character
+{
+    if (_commonHeight == 0.0f) return;
+    
+    float leftShift = [character position].x - [character contentSize].width/2.0f;
+    for (CCBMFontCharacter *fc = character; fc; fc = [fc nextCharacter])
+    {
+        CGPoint newPos = [fc position];
+        newPos.x = newPos.x - leftShift;
+        newPos.y = newPos.y - _commonHeight;
+        [fc setPosition:newPos];
+        if ([fc controlFollowing] == LineBreakFollows)
+        {
+            leftShift = 0.0f;
+        }
+    }
+}
+
+- (CGSize)boundSize
+{
+    NSCharacterSet *ws = [NSCharacterSet whitespaceCharacterSet];
+    CGSize result = CGSizeZero;
+    float top = 0.0f, bottom = 0.0f, lhs = 0.0f, rhs = 0.0f;
+    for (CCBMFontCharacter *fc = _firstCharacter; fc; fc = [fc nextCharacter])
+    {
+        if ([ws characterIsMember:[fc characterValue]]) continue;
+        CGPoint charPos = [fc position];
+        CGSize charSz = [fc contentSize];
+        float charRHS = charPos.x + charSz.width / 2.0f;
+        float charLHS = charPos.x - charSz.width / 2.0f;
+        float charTop = charPos.y + charSz.height / 2.0f;
+        float charBottom = charPos.y - charSz.height / 2.0f;
+        if (fc == _firstCharacter)
+        {
+            top = charTop;
+            bottom = charBottom;
+            lhs = charLHS;
+            rhs = charRHS;
+        }
+        else
+        {
+            top =    MAX(charTop, top);
+            bottom = MIN(charBottom, bottom);
+            lhs =    MIN(charLHS, lhs);
+            rhs =    MAX(charRHS, rhs);
+        }
+    }
+    result.width = rhs - lhs;
+    result.height = top - bottom;
+    return result;
+}
+
+@end
 
 #pragma mark -
 #pragma mark FNTConfig Cache - free functions
@@ -425,7 +771,6 @@ void FNTConfigRemoveCache( void )
 
 -(int) kerningAmountForFirst:(unichar)first second:(unichar)second;
 -(void) updateLabel;
--(void) setString:(NSString*) newString updateLabel:(BOOL)update;
 
 @end
 
@@ -439,10 +784,7 @@ void FNTConfigRemoveCache( void )
     
 	// The font file of the text.
 	NSString *_fntFile;
-	
-	// The original text excluding line breaks.
-	NSString *_initialString;
-	
+
 	// The maximum width allowed before a line break will be inserted.
 	float _width;
 	
@@ -455,14 +797,9 @@ void FNTConfigRemoveCache( void )
 	// Offset of the texture atlas.
 	CGPoint _imageOffset;
 	
-	// Reused char.
-	CCSprite *_reusedChar;
-	
-	// Replacement for the old CCNode.tag property which was
-	// used heavily in the original code.
-	NSMutableArray *_childForTag;
-    
     CCTexture *_texture;
+    
+    CCBMFontCharacterSequence *_characterSprites;
 }
 
 @synthesize alignment = _alignment;
@@ -537,6 +874,7 @@ void FNTConfigRemoveCache( void )
 		_texture = texture;
 		_width = width;
 		_alignment = alignment;
+        _characterSprites = [[CCBMFontCharacterSequence alloc] init];
 		
 		self.color = [CCColor whiteColor];
 		self.cascadeOpacityEnabled = YES;
@@ -548,183 +886,69 @@ void FNTConfigRemoveCache( void )
         
 		_imageOffset = offset;
         
-		_reusedChar = [[CCSprite alloc] initWithTexture:_texture rect:CGRectMake(0, 0, 0, 0) rotated:NO];
-		_childForTag = [NSMutableArray array];
-		
-		[self setString:theString updateLabel:YES];
+		[self setString:theString];
 	}
     
 	return self;
 }
 
--(CCSprite *)childForTag:(NSUInteger)tag
+- (void)setEnableDebugDrawing:(BOOL)enableDebugDrawing
 {
-	if(tag < _childForTag.count){
-		id child = _childForTag[tag];
-		return (child == [NSNull null] ? nil : child);
-	} else {
-		return nil;
-	}
-}
-
--(void)setTag:(NSUInteger)tag forChild:(CCSprite *)child
-{
-	if(tag < _childForTag.count){
-		// Replace the value normally.
-		[_childForTag replaceObjectAtIndex:tag withObject:child];
-	} else {
-		// The array is expanding.
-		// Insert NSNull to fill holes if necessary since NSArray cannot be sparse.
-		while(_childForTag.count < tag) [_childForTag addObject:[NSNull null]];
-		[_childForTag addObject:child];
-	}
+    _enableDebugDrawing = enableDebugDrawing;
+    if (enableDebugDrawing)
+    {
+        [self debugDraw];
+    }
+    else
+    {
+        CCDrawNode *drawNode = (CCDrawNode *)[self getChildByName:@"debugDraw" recursively:NO];
+        if (drawNode != nil)
+        {
+            [drawNode removeFromParent];
+        }
+    }
 }
 
 
 #pragma mark LabelBMFont - Alignment
 
 - (void)updateLabel
-{	
-    [self setString:_initialString updateLabel:NO];
-	
-    if (_width > 0){
-        //Step 1: Make multiline
-		
-        NSString *multilineString = @"", *lastWord = @"";
-        int line = 1, i = 0;
-        NSUInteger stringLength = [self.string length];
-        float startOfLine = -1, startOfWord = -1;
-        int skip = 0;
-        //Go through each character and insert line breaks as necessary
-        for (int j = 0; j < [self.children count]; j++) {
-            CCSprite *characterSprite;
-            int justSkipped = 0;
-            while(!(characterSprite = [self childForTag:j+skip+justSkipped]))
-                justSkipped++;
-            skip += justSkipped;
-			
-            if (!characterSprite.visible)
-				continue;
-			
-            if (i >= stringLength || i < 0)
-                break;
-			
-            unichar character = [self.string characterAtIndex:i];
-			
-            if (startOfWord == -1)
-                startOfWord = characterSprite.position.x - characterSprite.contentSize.width/2;
-            if (startOfLine == -1)
-                startOfLine = startOfWord;
-			
-            //Character is a line break
-            //Put lastWord on the current line and start a new line
-            //Reset lastWord
-            if ([[NSCharacterSet newlineCharacterSet] characterIsMember:character]) {
-                lastWord = [lastWord stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-                lastWord = [lastWord stringByPaddingToLength:[lastWord length] + justSkipped withString:[NSString stringWithFormat:@"%C", character] startingAtIndex:0];
-                multilineString = [multilineString stringByAppendingString:lastWord];
-                lastWord = @"";
-                startOfWord = -1;
-                line++;
-                startOfLine = -1;
-                i+=justSkipped;
-				
-                //CCLabelBMFont do not have a character for new lines, so do NOT "continue;" in the for loop. Process the next character
-                if (i >= stringLength || i < 0)
-                    break;
-                character = [self.string characterAtIndex:i];
-				
-                if (startOfWord == -1)
-                    startOfWord = characterSprite.position.x - characterSprite.contentSize.width/2;
-                if (startOfLine == -1)
-                    startOfLine = startOfWord;
-            }
-			
-            //Character is a whitespace
-            //Put lastWord on current line and continue on current line
-            //Reset lastWord
-            if ([[NSCharacterSet whitespaceCharacterSet] characterIsMember:character]) {
-                lastWord = [lastWord stringByAppendingFormat:@"%C", character];
-                multilineString = [multilineString stringByAppendingString:lastWord];
-                lastWord = @"";
-                startOfWord = -1;
-                i++;
-                continue;
-            }
-			
-            //Character is out of bounds
-            //Do not put lastWord on current line. Add "\n" to current line to start a new line
-            //Append to lastWord
-            if (characterSprite.position.x + characterSprite.contentSize.width/2 - startOfLine >  _width) {
-                NSString *trimmedString = [lastWord stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-                lastWord = [[trimmedString stringByAppendingString:@"\n"] stringByAppendingFormat:@"%C", character];
-                line++;
-                startOfLine = -1;
-                startOfWord = -1;
-                i++;
-                continue;
-            } else {
-                //Character is normal
-                //Append to lastWord
-                lastWord = [lastWord stringByAppendingFormat:@"%C", character];
-                i++;
-                continue;
-            }
-        }
-		
-        multilineString = [multilineString stringByAppendingFormat:@"%@", lastWord];
-		
-        [self setString:multilineString updateLabel:NO];
+{
+    if (_width > 0)
+    {
+        [_characterSprites fitToWidth:_width];
     }
-	
-    //Step 2: Make alignment
-	
-    if (self.alignment != CCTextAlignmentLeft) {
-		
-        int i = 0;
-        //Number of spaces skipped
-        int lineNumber = 0;
-        //Go through line by line
-        for (NSString *lineString in [_string componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]]) {
-            int lineWidth = 0;
-			
-            //Find index of last character in this line
-            NSInteger index = i + [lineString length] - 1 + lineNumber;
-            if (index < 0)
-                continue;
-			
-            //Find position of last character on the line
-            CCSprite *lastChar = [self childForTag:index];
-			
-            lineWidth = lastChar.position.x + lastChar.contentSize.width/2;
-			
-            //Figure out how much to shift each character in this line horizontally
-            float shift = 0;
-            switch (self.alignment) {
-                case CCTextAlignmentCenter:
-                    shift = self.contentSize.width/2 - lineWidth/2;
-                    break;
-                case CCTextAlignmentRight:
-                    shift = self.contentSize.width - lineWidth;
-                default:
-                    break;
-            }
-			
-            if (shift != 0) {
-                int j = 0;
-                //For each character, shift it so that the line is center aligned
-                for (j = 0; j < [lineString length]; j++) {
-                    index = i + j + lineNumber;
-                    if (index < 0)
-                        continue;
-                    CCSprite *characterSprite = [self childForTag:index];
-                    characterSprite.position = ccpAdd(characterSprite.position, ccp(shift, 0));
-                }
-            }
-            i += [lineString length];
-            lineNumber++;
+    [self setContentSize:[_characterSprites boundSize]];
+    
+    [_characterSprites setAlignment:[self alignment]];
+    [self setContentSize:[_characterSprites boundSize]];
+    
+    float top = 0.0f;
+    for (CCBMFontCharacter *fc = [_characterSprites firstCharacter]; fc; fc = [fc nextCharacter])
+    {
+        float charTop = [fc position].y + [fc contentSize].height / 2.0f;
+        top = MAX(charTop, top);
+    }
+    float yShift = [self contentSize].height - top;
+    if (yShift != 0.0f)
+    {
+        for (CCBMFontCharacter *fc = [_characterSprites firstCharacter] ; fc; fc = [fc nextCharacter])
+        {
+            CGPoint pos = [fc position];
+            pos.y += yShift;
+            [fc setPosition:pos];
         }
     }
+
+    if ([self enableDebugDrawing])
+    {
+        [self debugDraw];
+    }
+}
+
+- (NSArray *)characterSpritesForRange:(NSRange)range
+{
+    return [_characterSprites characterSpritesForRange:range];
 }
 
 #pragma mark LabelBMFont - Atlas generation
@@ -750,16 +974,10 @@ void FNTConfigRemoveCache( void )
 	NSInteger nextFontPositionY = 0;
 	unichar prev = -1;
 	NSInteger kerningAmount = 0;
-    
-	CGSize tmpSize = CGSizeZero;
-    
-	NSInteger longestLine = 0;
-	NSUInteger totalHeight = 0;
-    
 	NSUInteger quantityOfLines = 1;
-  
 	NSCharacterSet *charSet	= _configuration.characterSet;
-    
+    NSCharacterSet *ws = [NSCharacterSet whitespaceCharacterSet];
+    NSCharacterSet *nl = [NSCharacterSet newlineCharacterSet];
 	NSUInteger stringLen = [_string length];
 	if( ! stringLen )
 		return;
@@ -772,19 +990,22 @@ void FNTConfigRemoveCache( void )
 			quantityOfLines++;
 	}
     
-	totalHeight = _configuration->_commonHeight * quantityOfLines;
 	nextFontPositionY = -(_configuration->_commonHeight - _configuration->_commonHeight*quantityOfLines);
     CGRect rect;
     ccBMFontDef fontDef = (ccBMFontDef){};
 	
 	CGFloat contentScale = 1.0/_texture.contentScale;
-	
-	for(NSUInteger i = 0; i<stringLen; i++) {
+    [_characterSprites setCommonHeight:_configuration->_commonHeight];
+
+    CCBMFontCharacter *previousChar = nil;
+	for(NSUInteger i = 0; i<stringLen; i++)
+    {
 		unichar c = [_string characterAtIndex:i];
         
         if ([[NSCharacterSet newlineCharacterSet] characterIsMember:c]) {
 			nextFontPositionX = 0;
 			nextFontPositionY -= _configuration->_commonHeight;
+            [previousChar setControlFollowing:HardLineBreakFollows];
 			continue;
 		}
     
@@ -812,37 +1033,16 @@ void FNTConfigRemoveCache( void )
 		rect.origin.x += _imageOffset.x;
 		rect.origin.y += _imageOffset.y;
         
-		BOOL hasSprite = YES;
-		CCSprite *fontChar = [self childForTag:i];
-		if( fontChar )
-		{
-			// Reusing previous Sprite
-			fontChar.visible = YES;
-		}
-		else
-		{
-			// New Sprite ? Set correct color, opacity, etc...
-//			if( 0 ) {
-//				/* WIP: Doesn't support many features yet.
-//				 But this code is super fast. It doesn't create any sprite.
-//				 Ideal for big labels.
-//				 */
-//				fontChar = _reusedChar;
-//				hasSprite = NO;
-//			} else {
-				fontChar = [[CCSprite alloc] initWithTexture:_texture rect:rect];
-				[self addChild:fontChar z:i];
-				[self setTag:i forChild:fontChar];
-//			}
-			
-			// Color MUST be set before opacity due to premultiplied alpha.
-			[fontChar updateDisplayedColor:_displayColor];
-			[fontChar updateDisplayedOpacity:_displayColor.a];
-		}
-
-		// updating previous sprite
-		[fontChar setTextureRect:rect rotated:NO untrimmedSize:rect.size];
-	
+        CCBMFontCharacter *fontChar = [_characterSprites createNewCharacterForSequenceWithParent:self];
+        [fontChar setTexture:_texture];
+        [fontChar setTextureRect:rect];
+        [fontChar updateDisplayedColor:_displayColor];
+        [fontChar updateDisplayedOpacity:_displayColor.a];
+        [fontChar setCharacterValue:c];
+        if ([ws characterIsMember:c])
+        {
+            [previousChar setControlFollowing:WordBreakFollows];
+        }
         
 		// See issue 1343. cast( signed short + unsigned integer ) == unsigned integer (sign is lost!)
 		NSInteger yOffset = _configuration->_commonHeight - fontDef.yOffset;
@@ -854,22 +1054,15 @@ void FNTConfigRemoveCache( void )
 		nextFontPositionX += fontDef.xAdvance + kerningAmount;
 		prev = c;
         
-
-		if (longestLine < nextFontPositionX)
-			longestLine = nextFontPositionX;
+        previousChar = fontChar;
 	}
     
-    // If the last character processed has an xAdvance which is less that the width of the characters image, then we need
-    // to adjust the width of the string to take this into account, or the character will overlap the end of the bounding
-    // box
-    if (fontDef.xAdvance < fontDef.rect.size.width) {
-        tmpSize.width = longestLine + fontDef.rect.size.width - fontDef.xAdvance;
-    } else {
-        tmpSize.width = longestLine;
-    }
-    tmpSize.height = totalHeight;
+	[self setContentSize:CC_SIZE_SCALE([_characterSprites boundSize], contentScale)];
     
-	[self setContentSize:CC_SIZE_SCALE(tmpSize, contentScale)];
+    if ([self enableDebugDrawing])
+    {
+        [self debugDraw];
+    }
 }
 
 #pragma mark LabelBMFont - CCLabelProtocol protocol
@@ -885,30 +1078,22 @@ void FNTConfigRemoveCache( void )
 
 - (void) setString:(NSString*)newString
 {
-	[self setString:newString updateLabel:YES];
-}
-
-- (void) setString:(NSString*) newString updateLabel:(BOOL)update
-{
-    if( !update ) {
+    if (![_string isEqualToString:newString])
+    {
         _string = [newString copy];
-    } else {
-        _initialString = [newString copy];
-    }
-    
-    for (CCSprite* child in self.children)
-        child.visible = NO;
-	
-	[self createFontChars];
-	
-    if (update)
+        
+        [_characterSprites removeAllCharacters];
+        
+        [self createFontChars];
         [self updateLabel];
+    }
 }
 
 #pragma mark LabelBMFont - AnchorPoint
 -(void) setAnchorPoint:(CGPoint)point
 {
-	if( ! CGPointEqualToPoint(point, self.anchorPoint) ) {
+	if( ! CGPointEqualToPoint(point, self.anchorPoint) )
+    {
 		[super setAnchorPoint:point];
 		[self createFontChars];
 	}
@@ -943,8 +1128,6 @@ void FNTConfigRemoveCache( void )
 		_fntFile = fntFile;
 
 		_configuration = newConf;
-        
-        _childForTag = [NSMutableArray array];
 
 		_texture = [CCTexture textureWithFile:_configuration.atlasName];
 		[self createFontChars];
@@ -957,17 +1140,45 @@ void FNTConfigRemoveCache( void )
 }
 
 #pragma mark LabelBMFont - Debug draw
-#if CC_LABELBMFONT_DEBUG_DRAW
--(void) draw
+-(void)debugDraw
 {
-	[super draw];
+    [[self getChildByName:@"debugDraw" recursively:NO] removeFromParent];
+    CCDrawNode *drawNode = [[CCDrawNode alloc] init];
+    [self addChild:drawNode];
+    [drawNode setName:@"debugDraw"];
+    CGSize s = [self contentSize];
+    CGPoint vertices[4]={
+        ccp(0,0),ccp(s.width,0),
+        ccp(s.width,s.height),ccp(0,s.height),
+    };
+    CCColor *fill = [CCColor colorWithGLKVector4:GLKVector4Make(0.0f, 0.9f, 0.2f, 0.1f)];
+    CCColor *border = [CCColor colorWithGLKVector4:GLKVector4Make(0.0f, 0.9f, 0.2f, 1.0f)];
+    [drawNode drawPolyWithVerts:vertices count:4 fillColor:fill borderWidth:1.0f borderColor:border];
     
-	CGSize s = [self contentSize];
-	CGPoint vertices[4]={
-		ccp(0,0),ccp(s.width,0),
-		ccp(s.width,s.height),ccp(0,s.height),
-	};
-	ccDrawPoly(vertices, 4, YES);
+    if (_width > 0)
+    {
+        CGPoint vertWraps[4]={
+            ccp(1,1),ccp(_width,1),
+            ccp(_width,s.height-1),ccp(1,s.height-1),
+        };
+        CCColor *wrapFill = [CCColor colorWithGLKVector4:GLKVector4Make(0.9f, 0.2f, 0.0f, 0.1f)];
+        CCColor *wrapBorder = [CCColor colorWithGLKVector4:GLKVector4Make(0.9f, 0.2f, 0.0f, 1.0f)];
+        [drawNode drawPolyWithVerts:vertWraps count:4 fillColor:wrapFill borderWidth:1.0f borderColor:wrapBorder];
+    }
+    
+    for (CCBMFontCharacter *fc = [_characterSprites firstCharacter]; fc; fc = [fc nextCharacter])
+    {
+        CGSize sz = [fc contentSize];
+        CGPoint pos = [fc position];
+        float ht = sz.height / 2.0f;
+        float wd = sz.width / 2.0f;
+        CGPoint vertFC[4]={
+            ccp(pos.x - wd, pos.y - ht),ccp(pos.x + wd, pos.y - ht),
+            ccp(pos.x + wd,pos.y + ht),ccp(pos.x - wd, pos.y + ht),
+        };
+        CCColor *wrapFill = [CCColor colorWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 0.1f)];
+        CCColor *wrapBorder = [CCColor colorWithGLKVector4:GLKVector4Make(1.0f, 1.0f, 1.0f, 0.9f)];
+        [drawNode drawPolyWithVerts:vertFC count:4 fillColor:wrapFill borderWidth:0.5f borderColor:wrapBorder];
+    }
 }
-#endif // CC_LABELBMFONT_DEBUG_DRAW
 @end
