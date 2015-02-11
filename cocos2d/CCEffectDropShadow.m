@@ -65,7 +65,7 @@
                                                           value:[NSNumber numberWithFloat:0.0f]];
     
     CCEffectUniform* u_shadowOffset = [CCEffectUniform uniform:@"vec2" name:@"u_shadowOffset"
-                                                         value:[NSValue valueWithGLKVector2:interface.shadowOffset]];
+                                                         value:[NSValue valueWithCGPoint:interface.shadowOffsetWithPoint]];
     
     CCEffectUniform* u_shadowColor = [CCEffectUniform uniform:@"vec4" name:@"u_shadowColor"
                                                         value:[NSValue valueWithGLKVector4:interface.shadowColor.glkVector4]];
@@ -282,9 +282,11 @@
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_blurDirection"]] = [NSValue valueWithGLKVector2:dur];
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_composite"]] = [NSNumber numberWithFloat:1.0f];
         
-        GLKVector2 offset = GLKVector2Make(weakInterface.shadowOffset.x / passInputs.previousPassTexture.contentSize.width, weakInterface.shadowOffset.y / passInputs.previousPassTexture.contentSize.height);
+        CGPoint offset = weakInterface.shadowOffsetWithPoint;
+        offset.x /= passInputs.previousPassTexture.contentSize.width;
+        offset.y /= passInputs.previousPassTexture.contentSize.height;
         
-        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_shadowOffset"]] = [NSValue valueWithGLKVector2:offset];
+        passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_shadowOffset"]] = [NSValue valueWithCGPoint:offset];
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_shadowColor"]] = [NSValue valueWithGLKVector4:weakInterface.shadowColor.glkVector4];
         
     } copy]];

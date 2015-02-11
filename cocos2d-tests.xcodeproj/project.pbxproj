@@ -933,7 +933,7 @@
 		B7E2604017E7D278007067F0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = Cocos2d;
 				TargetAttributes = {
 					75556A01185636F100ED1B0F = {
