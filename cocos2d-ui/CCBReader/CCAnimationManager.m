@@ -29,6 +29,7 @@
 #import "CCDirector_Private.h"
 #import "CCBReader_Private.h"
 #import "CCScheduler_Private.h"
+#import "CCAction_Private.h"
 
 #import "CCBKeyframe.h"
 #import "CCBSequence.h"
@@ -66,7 +67,7 @@ static NSInteger ccbAnimationManagerID = 0;
     self = [super init];
     if (!self) return NULL;
     
-    _animationManagerId = ccbAnimationManagerID;
+    _animationManagerId = [NSString stringWithFormat:@"%ld", (long)ccbAnimationManagerID];
     ccbAnimationManagerID++;
     
     _sequences = [[NSMutableArray alloc] init];
@@ -237,7 +238,9 @@ static NSInteger ccbAnimationManagerID = 0;
             return [CCActionHide action];
         }
     } else if ([name isEqualToString:@"spriteFrame"]) {
-        return [CCActionSpriteFrame actionWithSpriteFrame:kf1.value];
+        // TODO is this a mild bug?
+        // What happens if an easing curve is applied to this?
+        return (CCActionInterval *)[CCActionSpriteFrame actionWithSpriteFrame:kf1.value];
     } else if ([node isKindOfClass:[CCLightNode class]]) {
         if ([name isEqualToString:@"intensity"] ||
             [name isEqualToString:@"specularIntensity"] ||
@@ -268,7 +271,7 @@ static NSInteger ccbAnimationManagerID = 0;
         kf1.easingType = kCCBKeyframeEasingLinear;
         
         CCActionInterval* tweenAction = [self actionFromKeyframe0:NULL andKeyframe1:kf1 propertyName:name node:node];
-        tweenAction.tag = (int)_animationManagerId;
+        tweenAction.name = _animationManagerId;
         [tweenAction startWithTarget:node];
         [_currentActions addObject:tweenAction];
     } else {
@@ -428,7 +431,7 @@ static NSInteger ccbAnimationManagerID = 0;
     [actions addObject:nextKeyFrameBlock];
         
     CCActionSequence* seq = [CCActionSequence actionWithArray:actions];
-    seq.tag = _animationManagerId;
+    seq.name = _animationManagerId;
     [seq startWithTarget:node];
     if(kf0.time > 0) { // Ensure Sync
         [seq step:0];
@@ -569,7 +572,7 @@ static NSInteger ccbAnimationManagerID = 0;
     CCActionSequence* completeAction = [CCActionSequence
                                         actionOne:[CCActionDelay actionWithDuration:seq.duration+tweenDuration-time]
                                         two:[CCActionCallFunc actionWithTarget:self selector:@selector(sequenceCompleted)]];
-    completeAction.tag = (int)_animationManagerId;
+    completeAction.name = _animationManagerId;
     [completeAction startWithTarget:self.rootNode];
     [_currentActions addObject:completeAction];
     
@@ -578,7 +581,7 @@ static NSInteger ccbAnimationManagerID = 0;
         // Build sound actions for channel
         CCAction* action = [self actionForCallbackChannel:seq.callbackChannel];
         if (action) {
-            action.tag = (int)_animationManagerId;
+            action.name = _animationManagerId;;
             [action startWithTarget:self.rootNode];
             [_currentActions addObject:action];
         }
@@ -588,7 +591,7 @@ static NSInteger ccbAnimationManagerID = 0;
         // Build sound actions for channel
         CCAction* action = [self actionForSoundChannel:seq.soundChannel];
         if (action) {
-            action.tag = (int)_animationManagerId;
+            action.name = _animationManagerId;;
             [action startWithTarget:self.rootNode];
             [_currentActions addObject:action];
         }
@@ -807,7 +810,7 @@ static NSInteger ccbAnimationManagerID = 0;
             CCActionSequence* animSequence = [CCActionSequence actions:action, nextKeyFrameBlock,nil];
     
             // Fast forward to time point
-            [animSequence setTag:_animationManagerId];
+            animSequence.name = _animationManagerId;
             [animSequence startWithTarget:node];
             [animSequence step:0]; // First Tick
             [animSequence step:timeFoward];
@@ -881,7 +884,7 @@ static NSInteger ccbAnimationManagerID = 0;
         [actions addObject:action];
         
         seq = [CCActionSequence actionWithArray:actions];
-        seq.tag = _animationManagerId;
+        seq.name = _animationManagerId;
     }
     
     

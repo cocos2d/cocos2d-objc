@@ -243,10 +243,9 @@ static float conditionShininess(float shininess);
         GLKMatrix4 nodeLocalToWorld = passInputs.sprite.nodeToWorldMatrix;
         GLKMatrix4 ndcToWorld = GLKMatrix4Multiply(nodeLocalToWorld, passInputs.ndcToNodeLocal);
         
-
-        GLKMatrix2 tangentMatrix = CCEffectUtilsMatrix2InvertAndTranspose(GLKMatrix4GetMatrix2(nodeLocalToWorld), nil);
-        GLKVector2 reflectTangent = GLKVector2Normalize(CCEffectUtilsMatrix2MultiplyVector2(tangentMatrix, GLKVector2Make(1.0f, 0.0f)));
-        GLKVector2 reflectBinormal = GLKVector2Make(-reflectTangent.y, reflectTangent.x);
+        // Tangent and binormal vectors are the x/y basis vectors from the nodeLocalToWorldMatrix
+        GLKVector2 reflectTangent = GLKVector2Normalize(GLKVector2Make(nodeLocalToWorld.m[0], nodeLocalToWorld.m[1]));
+        GLKVector2 reflectBinormal = GLKVector2Normalize(GLKVector2Make(nodeLocalToWorld.m[4], nodeLocalToWorld.m[5]));
 
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_worldSpaceTangent"]] = [NSValue valueWithGLKVector2:reflectTangent];
         passInputs.shaderUniforms[pass.uniformTranslationTable[@"u_worldSpaceBinormal"]] = [NSValue valueWithGLKVector2:reflectBinormal];
