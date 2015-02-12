@@ -10,13 +10,13 @@
 #import <Foundation/Foundation.h>
 
 @interface NSThread (sendBlockToBackground)
-/** performs a block on the thread. It won't wait until it is done. */
+/* performs a block on the thread. It won't wait until it is done. */
 - (void) performBlock:(void (^)(void))block;
 
-/** performs a block on the thread. */
+/* performs a block on the thread. */
 - (void) performBlock:(void (^)(void))block waitUntilDone:(BOOL)wait;
 
-/** performs a block on the thread. */
+/* performs a block on the thread. */
 - (void) performBlock:(void (^)(id param))block withObject:(id)object waitUntilDone:(BOOL)wait;
 
 @end

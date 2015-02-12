@@ -20,8 +20,6 @@ typedef NS_ENUM(NSUInteger, CCLightType)
 
 /**
  CCLightNode allows the user to define lights used by CCEffectLighting.
- 
- @note This class is currently considered experimental. Set the `CC_EFFECTS_EXPERIMENTAL` macro to 1 in ccConfig.h if you want to use this class.
  */
 @interface CCLightNode : CCNode
 
