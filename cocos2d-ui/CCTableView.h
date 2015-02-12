@@ -82,6 +82,59 @@
  
  You **must assign a dataSource**, which is any object implementing the CCTableViewDataSource protocol. The data source returns CCTableViewCell instances when requested. The cells make up the table view's content.
  
+ A minimal table view with touch input looks like this:
+ 
+ **Objective-C:**
+ 
+    CCTableView* tableView = [CCTableView node];
+    tableView.dataSource = self;
+    tableView.block = ^(CCTableView* tableView) {
+        NSLog(@"Selected cell at index: %i", (int)tableView.selectedRow);
+    };
+    [self addChild:tableView];
+
+ **Swift:**
+ 
+    let tableView = CCTableView()
+    tableView.dataSource = self
+    tableView.block = { (tableView) in
+        NSLog("Selected cell at index: %i", Int(tableView.selectedRow))
+    }
+    addChild(tableView)
+ 
+ Of course `self` here needs to implement the CCTableViewDataSource protocol. A simple example implementation of the proctocol with 8 rows and all rows the same height looks like this:
+ 
+ **Objective-C:**
+ 
+    -(CCTableViewCell*) tableView:(CCTableView*)tableView nodeForRowAtIndex:(NSUInteger)index {
+        // use the same seed so that the random colors don't change when scrolling
+        srandom(index);
+ 
+        CCSprite* icon = [CCSprite spriteWithImageNamed:@"Settings.png"];
+        icon.color = [CCColor colorWithRed:CCRANDOM_0_1() green:CCRANDOM_0_1() blue:CCRANDOM_0_1()];
+        icon.anchorPoint = CGPointZero;
+ 
+        CCTableViewCell* cell = [CCTableViewCell node];
+        cell.contentSize = icon.contentSize;
+        [cell addChild:icon];
+ 
+        _rowHeight = cell.contentSize.height;
+        return cell;
+    }
+ 
+    -(NSUInteger) tableViewNumberOfRows:(CCTableView*) tableView {
+        return 8;
+    }
+ 
+    -(float) tableView:(CCTableView*)tableView heightForRowAtIndex:(NSUInteger)index {
+        return _rowHeight;
+    }
+ 
+ **Swift:**
+ 
+ 
+ The `_rowHeight` is an ivar of type CGFloat.
+ 
  Refer to the [CCTableViewTest](https://github.com/cocos2d/cocos2d-swift/blob/develop/cocos2d-ui-tests/tests/CCTableViewTest.m) for a code sample.
  
  @warning Do not add nodes directly to the CCTableView. You must create rows via the CCTableViewDataSource.

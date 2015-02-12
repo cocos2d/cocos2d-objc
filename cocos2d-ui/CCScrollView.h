@@ -61,8 +61,34 @@
  
  In pagination mode, the contentNode must have a contentSize that's a multiple of the number of pages you want to display. Ie in a horizontal paging scroll view with width 350 points and 7 pages the content node's width must
  be 2450 points. If there's a mismatch you'll notice that as you flick through pages they won't be aligned perfectly with the rectangle defined by the scroll view's position and contentSize.
+
+ A simple code example for a scroll view positioned at the center, extending 200 points to the right and up:
  
- Refer to the [CCScrollViewTest](https://github.com/cocos2d/cocos2d-swift/blob/develop/cocos2d-ui-tests/tests/CCScrollViewTest.m) for a code sample.
+ **Objective-C:**
+ 
+    CCSprite* contentNode = [CCSprite spriteWithImageNamed:@"Default.png"];
+ 
+    CCScrollView* scrollView = [CCScrollView scrollViewWithContentNode:contentNode];
+    scrollView.contentSizeType = CCSizeTypePoints;
+    scrollView.contentSize = CGSizeMake(200, 200);
+    CGSize viewSize = [CCDirector sharedDirector].viewSize;
+    scrollView.position = CGPointMake(viewSize.width / 2.0, viewSize.height / 2.0);
+    [self addChild:scrollView];
+ 
+ **Swift:**
+ 
+    let contentNode = CCSprite(imageNamed: "Default.png")
+ 
+    let scrollView = CCScrollView(contentNode: contentNode)
+    scrollView.contentSizeType = CCSizeType(widthUnit: .Points, heightUnit: .Points)
+    scrollView.contentSize = CGSizeMake(200, 200)
+    let viewSize = CCDirector.sharedDirector().viewSize()
+    scrollView.position = CGPoint(x: viewSize.width / 2.0, y: viewSize.height / 2.0)
+    addChild(scrollView)
+ 
+ Notice that you have to change the contentSizeType if you want to feed point coordinates into the contentSize because the type defaults to CCSizeTypeNormalized.
+ 
+ Refer to the [CCScrollViewTest](https://github.com/cocos2d/cocos2d-swift/blob/develop/cocos2d-ui-tests/tests/CCScrollViewTest.m) for more code examples.
  
  @note CCScrollView internally uses UIGestureRecognizer instances to control the scrolling. You may run into issues when using your own gesture recognizers while a CCScrollView is active.
  
