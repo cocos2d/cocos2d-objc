@@ -333,9 +333,9 @@ extern "C" {
         float32x2_t v = vmul_f32(*(float32x2_t *)&vector,
                                  *(float32x2_t *)&vector);
         v = vpadd_f32(v, v);
-        return sqrt(vget_lane_f32(v, 0));
+        return (float)sqrt(vget_lane_f32(v, 0));
 #else
-        return sqrt(vector.v[0] * vector.v[0] + vector.v[1] * vector.v[1]);
+        return (float)sqrt(vector.v[0] * vector.v[0] + vector.v[1] * vector.v[1]);
 #endif
     }
     

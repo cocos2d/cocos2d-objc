@@ -195,7 +195,7 @@ static NSInteger ccbAnimationManagerID = 0;
     return NULL;
 }
 
-- (CCActionInterval*)actionFromKeyframe0:(CCBKeyframe*)kf0 andKeyframe1:(CCBKeyframe*)kf1 propertyName:(NSString*)name node:(CCNode*)node {
+- (CCAction*)actionFromKeyframe0:(CCBKeyframe*)kf0 andKeyframe1:(CCBKeyframe*)kf1 propertyName:(NSString*)name node:(CCNode*)node {
     float duration = kf1.time - kf0.time;
     
     if(kf0 && kf0.easingType==kCCBKeyframeEasingInstant) {
@@ -275,7 +275,7 @@ static NSInteger ccbAnimationManagerID = 0;
         kf1.time = tweenDuration;
         kf1.easingType = kCCBKeyframeEasingLinear;
         
-        CCActionInterval* tweenAction = [self actionFromKeyframe0:NULL andKeyframe1:kf1 propertyName:name node:node];
+        CCAction* tweenAction = [self actionFromKeyframe0:NULL andKeyframe1:kf1 propertyName:name node:node];
         tweenAction.name = _animationManagerId;
         [tweenAction startWithTarget:node];
         [_currentActions addObject:tweenAction];
@@ -326,9 +326,16 @@ static NSInteger ccbAnimationManagerID = 0;
     }
 }
 
-- (CCActionInterval*)easeAction:(CCActionInterval*) action easingType:(int)easingType easingOpt:(float) easingOpt
+- (CCAction*)easeAction:(CCAction*) action easingType:(int)easingType easingOpt:(float) easingOpt
 {
     if ([action isKindOfClass:[CCActionSequence class]]) return action;
+    
+    CCActionInterval*intervalAction = (CCActionInterval*)action;
+    if(!intervalAction)
+    {
+        NSLog(@"CCBReader: Incorrect action type %@ for easing - must be a CCActionInterval subclass", action);
+        return nil;
+    }
     
     if (easingType == kCCBKeyframeEasingLinear)
     {
@@ -336,55 +343,55 @@ static NSInteger ccbAnimationManagerID = 0;
     }
     else if (easingType == kCCBKeyframeEasingInstant)
     {
-        return [CCActionEaseInstant actionWithAction:action];
+        return [CCActionEaseInstant actionWithAction:intervalAction];
     }
     else if (easingType == kCCBKeyframeEasingCubicIn)
     {
-        return [CCActionEaseIn actionWithAction:action rate:easingOpt];
+        return [CCActionEaseIn actionWithAction:intervalAction rate:easingOpt];
     }
     else if (easingType == kCCBKeyframeEasingCubicOut)
     {
-        return [CCActionEaseOut actionWithAction:action rate:easingOpt];
+        return [CCActionEaseOut actionWithAction:intervalAction rate:easingOpt];
     }
     else if (easingType == kCCBKeyframeEasingCubicInOut)
     {
-        return [CCActionEaseInOut actionWithAction:action rate:easingOpt];
+        return [CCActionEaseInOut actionWithAction:intervalAction rate:easingOpt];
     }
     else if (easingType == kCCBKeyframeEasingBackIn)
     {
-        return [CCActionEaseBackIn actionWithAction:action];
+        return [CCActionEaseBackIn actionWithAction:intervalAction];
     }
     else if (easingType == kCCBKeyframeEasingBackOut)
     {
-        return [CCActionEaseBackOut actionWithAction:action];
+        return [CCActionEaseBackOut actionWithAction:intervalAction];
     }
     else if (easingType == kCCBKeyframeEasingBackInOut)
     {
-        return [CCActionEaseBackInOut actionWithAction:action];
+        return [CCActionEaseBackInOut actionWithAction:intervalAction];
     }
     else if (easingType == kCCBKeyframeEasingBounceIn)
     {
-        return [CCActionEaseBounceIn actionWithAction:action];
+        return [CCActionEaseBounceIn actionWithAction:intervalAction];
     }
     else if (easingType == kCCBKeyframeEasingBounceOut)
     {
-        return [CCActionEaseBounceOut actionWithAction:action];
+        return [CCActionEaseBounceOut actionWithAction:intervalAction];
     }
     else if (easingType == kCCBKeyframeEasingBounceInOut)
     {
-        return [CCActionEaseBounceInOut actionWithAction:action];
+        return [CCActionEaseBounceInOut actionWithAction:intervalAction];
     }
     else if (easingType == kCCBKeyframeEasingElasticIn)
     {
-        return [CCActionEaseElasticIn actionWithAction:action period:easingOpt];
+        return [CCActionEaseElasticIn actionWithAction:intervalAction period:easingOpt];
     }
     else if (easingType == kCCBKeyframeEasingElasticOut)
     {
-        return [CCActionEaseElasticOut actionWithAction:action period:easingOpt];
+        return [CCActionEaseElasticOut actionWithAction:intervalAction period:easingOpt];
     }
     else if (easingType == kCCBKeyframeEasingElasticInOut)
     {
-        return [CCActionEaseElasticInOut actionWithAction:action period:easingOpt];
+        return [CCActionEaseElasticInOut actionWithAction:intervalAction period:easingOpt];
     }
     else
     {
@@ -869,7 +876,7 @@ static NSInteger ccbAnimationManagerID = 0;
     // Build Animation Actions
     NSMutableArray* actions = [[NSMutableArray alloc] init];
     
-    CCActionInterval* action = [self actionFromKeyframe0:startKF andKeyframe1:endKF propertyName:seqProp.name node:node];
+    CCAction* action = [self actionFromKeyframe0:startKF andKeyframe1:endKF propertyName:seqProp.name node:node];
     
     if (action) {
         

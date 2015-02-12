@@ -13,6 +13,7 @@
 #import <android/native_window.h>
 #import <bridge/runtime.h>
 #import <AndroidKit/AndroidLooper.h>
+#import <AndroidKit/AndroidAbsoluteLayout.h>
 
 #import "cocos2d.h"
 #import "CCBReader.h"
@@ -291,7 +292,7 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
     {
         [self performSelector:@selector(setupView:) onThread:_thread withObject:holder waitUntilDone:YES modes:@[NSDefaultRunLoopMode]];
         CCDirectorAndroid *director = (CCDirectorAndroid*)[CCDirector currentDirector];
-        [director performSelector:@selector(startAnimation) onThread:_thread withObject:nil waitUntilDone:YES modes:@[NSDefaultRunLoopMode]];
+        [director performSelector:@selector(startRunLoop) onThread:_thread withObject:nil waitUntilDone:YES modes:@[NSDefaultRunLoopMode]];
     }
 #endif
 }
@@ -307,7 +308,7 @@ static CGFloat FindLinearScale(CGFloat size, CGFloat fixedSize)
 
 - (void)handleDestroy
 {
-    [[CCDirector currentDirector] stopAnimation];
+    [[CCDirector currentDirector] stopRunLoop];
 }
 
 - (BOOL)onKeyDown:(int32_t)keyCode keyEvent:(AndroidKeyEvent *)event

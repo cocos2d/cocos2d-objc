@@ -220,8 +220,6 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 
 /** @returns The director for the currently active CCView */
 +(CCDirector*)currentDirector;
-+(CCDirector*)sharedDirector __attribute__((deprecated));
-
 
 /** @name Accessing OpenGL Thread */
 
@@ -257,7 +255,7 @@ typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 
 /// View used by the director for rendering. The CC_VIEW macro equals UIView on iOS, NSOpenGLView on OS X and CCView on Android.
 /// @see CCView
-@property(nonatomic, weak) CC_VIEW<CCView> *view;
+@property(nonatomic, retain) CC_VIEW<CCView> *view;
 /** Sets an OpenGL projection
  @see CCDirectorProjection
  @see projectionMatrix */
