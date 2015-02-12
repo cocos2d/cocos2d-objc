@@ -9,6 +9,8 @@
 #import "CCSprite.h"
 #import "CCGL.h"
 
+// not documented, effect "utils" are considered private
+
 typedef struct CCEffectBlurParams
 {
     NSUInteger trueRadius;
