@@ -439,3 +439,17 @@ enum {
 @property (nonatomic, readwrite, assign) NSInteger tag;
 
 @end
+
+
+@protocol CCSBReaderDidLoadDeprecated <NSObject>
+@optional
+/**
+ Use didLoadFromSB instead.
+ */
+- (void) didLoadFromCCB __attribute__((deprecated));
+
+@end
+
+@interface CCNode(CCSBReaderDeprecated) <CCSBReaderDidLoadDeprecated>
+
+@end

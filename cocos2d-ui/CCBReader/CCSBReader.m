@@ -43,7 +43,7 @@
 #import "CCTexture.h"
 #import "CCColor.h"
 #import "CCProtocols.h"
-
+#import "CCDeprecated.h"
 
 #ifdef CCB_ENABLE_UNZIP
 #import "SSZipArchive.h"
@@ -1145,7 +1145,7 @@ static inline float readFloat(CCSBReader *self)
     return  keyframe;
 }
 
-- (void) didLoadFromCCB
+- (void) didLoadFromSB
 {
 }
 
@@ -1825,15 +1825,20 @@ SelectorNameForProperty(objc_property_t property)
     return node;
 }
 
-+ (void) callDidLoadFromCCBForNodeGraph:(CCNode*)nodeGraph
++ (void) calldidLoadFromSBForNodeGraph:(CCNode*)nodeGraph
 {
     for (CCNode* child in nodeGraph.children)
     {
-        [CCSBReader callDidLoadFromCCBForNodeGraph:child];
+        [CCSBReader calldidLoadFromSBForNodeGraph:child];
     }
     
-    if ([nodeGraph respondsToSelector:@selector(didLoadFromCCB)])
+    if ([nodeGraph respondsToSelector:@selector(didLoadFromSB)])
     {
+        [nodeGraph performSelector:@selector(didLoadFromSB)];
+    }
+    else if([nodeGraph respondsToSelector:@selector(didLoadFromCCB)])
+    {
+        CCLOGWARN(@"Deprecation: didLoadFromCCB has been deprecated, use didLoadFromSB instead.");
         [nodeGraph performSelector:@selector(didLoadFromCCB)];
     }
 }
@@ -1869,8 +1874,8 @@ SelectorNameForProperty(objc_property_t property)
         node.userObject = manager;//Backwards Compatible.
     }
     
-    // Call didLoadFromCCB
-    [CCSBReader callDidLoadFromCCBForNodeGraph:nodeGraph];
+    // Call didLoadFromSB
+    [CCSBReader calldidLoadFromSBForNodeGraph:nodeGraph];
 
     return nodeGraph;
 }
