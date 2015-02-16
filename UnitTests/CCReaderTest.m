@@ -56,7 +56,7 @@ double machGetClockDiffS()
 -(void)testReaderPerformance
 {
     /*
-    NSString *filePath =[[NSBundle mainBundle] pathsForResourcesOfType:@"ccbi" inDirectory:@"Resources-shared/Tests"][0];
+    NSString *filePath =[[NSBundle mainBundle] pathsForResourcesOfType:@"sbi" inDirectory:@"Resources-shared/Tests"][0];
     XCTAssertNotNil(filePath);
     
     NSData * fileData = [[NSData alloc] initWithContentsOfFile:filePath];

@@ -1956,7 +1956,7 @@ SelectorNameForProperty(objc_property_t property)
 + (NSString*) ccbDirectoryPath
 {
     NSArray *searchPaths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    return [[searchPaths objectAtIndex:0] stringByAppendingPathComponent:@"ccb"];
+    return [[searchPaths objectAtIndex:0] stringByAppendingPathComponent:@"sb"];
 }
 
 @end
