@@ -27,14 +27,14 @@
 
 #import "CCAnimationManager_Private.h"
 #import "CCDirector_Private.h"
-#import "CCBReader_Private.h"
+#import "CCSBReader_Private.h"
 #import "CCScheduler_Private.h"
 #import "CCAction_Private.h"
 
 #import "CCBKeyframe.h"
 #import "CCBSequence.h"
 #import "CCBSequenceProperty.h"
-#import "CCBReader.h"
+#import "CCSBReader.h"
 #import "CCBKeyframe.h"
 #import "OALSimpleAudio.h"
 #import "CCActionInterval.h"
@@ -261,7 +261,7 @@ static NSInteger ccbAnimationManagerID = 0;
             return [CCBActionTweenColor actionWithDuration:duration key:name from:kf0.value to:kf1.value];
         }
     } else {
-        CCLOG(@"CCBReader: Failed to create animation for property: %@", name);
+        CCLOG(@"CCSBReader: Failed to create animation for property: %@", name);
     }
               
     return NULL;
@@ -333,7 +333,7 @@ static NSInteger ccbAnimationManagerID = 0;
     CCActionInterval*intervalAction = (CCActionInterval*)action;
     if(!intervalAction)
     {
-        NSLog(@"CCBReader: Incorrect action type %@ for easing - must be a CCActionInterval subclass", action);
+        NSLog(@"CCSBReader: Incorrect action type %@ for easing - must be a CCActionInterval subclass", action);
         return nil;
     }
     
@@ -395,7 +395,7 @@ static NSInteger ccbAnimationManagerID = 0;
     }
     else
     {
-        NSLog(@"CCBReader: Unkown easing type %d", easingType);
+        NSLog(@"CCSBReader: Unkown easing type %d", easingType);
         return action;
     }
 }

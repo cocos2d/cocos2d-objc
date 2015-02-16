@@ -44,7 +44,6 @@
 #define COCOS2D_VERSION 0x00030403
 #define COCOS2D_BUILD @"develop"
 
-
 #import "ccConfig.h"
 
 #import "ccTypes.h"
@@ -154,6 +153,7 @@
 #import "NSEvent+CC.h"
 #import "CCDeprecated.h"
 #import "CCScheduler.h"
+#import "CCSBReader.h"
 
 // UI
 #import "cocos2d-ui.h"

@@ -31,6 +31,7 @@
 		75C72C091A82AD7900814F60 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 75C72C031A82AD6600814F60 /* main.m */; };
 		75C72C0A1A82AD7B00814F60 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 75C72C021A82AD6600814F60 /* AppDelegate.m */; };
 		75DAC8B11A4240BE003F8244 /* CCImageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 75DAC8B01A4240BE003F8244 /* CCImageTests.m */; };
+		75DCC9DA1A9285C7003F0592 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 758A6C6B1843E5C500D1A8D2 /* Images */; };
 		75F4EA251A69847C000E637B /* CCActionsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F4EA241A69847C000E637B /* CCActionsTest.m */; };
 		75F76497185A831B00E2FAFE /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 75F76496185A831B00E2FAFE /* Sounds */; };
 		75F9BF5E1A38EE8C009185BF /* CCViewportNodeTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D35C2D261A1BC83F00FF96B0 /* CCViewportNodeTest.m */; };
@@ -383,7 +384,7 @@
 		75F76496185A831B00E2FAFE /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sounds; path = Resources/Sounds; sourceTree = SOURCE_ROOT; };
 		830F10971A6D37D50074F583 /* OCMock.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OCMock.xcodeproj; path = external/OCMock/Source/OCMock.xcodeproj; sourceTree = "<group>"; };
 		839B149E19CC1E440000E5E2 /* CCPackageTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCPackageTest.m; path = "cocos2d-ui-tests/tests/CCPackageTest.m"; sourceTree = SOURCE_ROOT; };
-		92324E2918EB635500D78D3F /* CCReaderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCReaderTest.m; sourceTree = "<group>"; };
+		92324E2918EB635500D78D3F /* CCReaderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCReaderTest.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		92FE241018F5F06F00647961 /* CCAnimationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAnimationTest.m; sourceTree = "<group>"; };
 		9D96557219D6113500428E79 /* CCEffectTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCEffectTests.m; sourceTree = "<group>"; };
 		A6167B92189A7D4D0044D391 /* VertexZTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VertexZTest.m; path = "cocos2d-ui-tests/tests/VertexZTest.m"; sourceTree = SOURCE_ROOT; };
@@ -532,7 +533,7 @@
 		E525F98589D25C8CCF99E8B6 /* CCFileLocatorDatabaseTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCFileLocatorDatabaseTests.m; sourceTree = "<group>"; };
 		E525F99055258F35DFF00ECD /* CCPackageHelperTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageHelperTests.m; sourceTree = "<group>"; };
 		E525FB2B6BB1C2E3BD1457A7 /* CCUnitTestHelperMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCUnitTestHelperMacros.h; sourceTree = "<group>"; };
-		E525FB8A3CC89D071A8377B1 /* CCPackageCocos2dEnablerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageCocos2dEnablerTests.m; sourceTree = "<group>"; };
+		E525FB8A3CC89D071A8377B1 /* CCPackageCocos2dEnablerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCPackageCocos2dEnablerTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		E525FBE3FAFA47AD441E6E03 /* FileSystemTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSystemTestCase.h; sourceTree = "<group>"; };
 		E525FBF58DFECF27272F5D6F /* CCPackageInstallerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPackageInstallerTests.m; sourceTree = "<group>"; };
 		E525FCB52B23A4F29E8D6D64 /* CCPackagesTestFixturesAndHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPackagesTestFixturesAndHelpers.h; sourceTree = "<group>"; };
@@ -1142,6 +1143,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75DCC9DA1A9285C7003F0592 /* Images in Resources */,
 				9269312A1923D8A700CE6285 /* Resources-shared in Resources */,
 				75556A1B1856374700ED1B0F /* InfoPlist.strings in Resources */,
 				75556A15185636FB00ED1B0F /* powered.png in Resources */,

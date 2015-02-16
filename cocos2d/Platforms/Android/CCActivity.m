@@ -16,7 +16,7 @@
 #import <AndroidKit/AndroidAbsoluteLayout.h>
 
 #import "cocos2d.h"
-#import "CCBReader.h"
+#import "CCSBReader.h"
 #import "CCGLView.h"
 #import "CCScene.h"
 

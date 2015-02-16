@@ -26,7 +26,7 @@
 #import <objc/message.h>
 #import "ccUtils.h"
 
-#import "CCBReader_Private.h"
+#import "CCSBReader_Private.h"
 #import "CCNode_Private.h"
 #import "CCDirector_Private.h"
 #import "CCAnimationManager_Private.h"
@@ -64,7 +64,7 @@
 @end
 
 
-@interface CCBReader()
+@interface CCSBReader()
 {
 
 }
@@ -75,7 +75,7 @@
 @end
 
 
-@implementation CCBReader
+@implementation CCSBReader
 
 @synthesize animationManager;
 
@@ -145,19 +145,19 @@
     bytes = NULL;
 }
 
-static inline unsigned char readByte(CCBReader *self)
+static inline unsigned char readByte(CCSBReader *self)
 {
     unsigned char byte = self->bytes[self->currentByte];
     self->currentByte++;
     return byte;
 }
 
-static inline BOOL readBool(CCBReader *self)
+static inline BOOL readBool(CCSBReader *self)
 {
     return (BOOL)readByte(self);
 }
 
-static inline NSString *readUTF8(CCBReader *self)
+static inline NSString *readUTF8(CCSBReader *self)
 {
     int b0 = readByte(self);
     int b1 = readByte(self);
@@ -171,7 +171,7 @@ static inline NSString *readUTF8(CCBReader *self)
     return str;
 }
 
-static inline void alignBits(CCBReader *self)
+static inline void alignBits(CCSBReader *self)
 {
     if (self->currentBit)
     {
@@ -198,7 +198,7 @@ done:
 }
 
 
-static inline int readIntWithSign(CCBReader *self, BOOL pSigned)
+static inline int readIntWithSign(CCSBReader *self, BOOL pSigned)
 {
     unsigned int value = 0;
     self->currentByte += readVariableLengthIntFromArray(self->bytes + self->currentByte, &value);
@@ -226,7 +226,7 @@ static inline int readIntWithSign(CCBReader *self, BOOL pSigned)
 //DEPRICATED
 //DEPRICATED
 //DEPRICATED
-static inline int readIntWithSignOLD(CCBReader *self, BOOL sign)
+static inline int readIntWithSignOLD(CCSBReader *self, BOOL sign)
 {
     // Good luck groking this!
     // The basic idea is to do as little bit reading as possible and use everything in a byte contexts and avoid loops; espc ones that iterate 8 * bytes-read
@@ -332,7 +332,7 @@ static inline int readIntWithSignOLD(CCBReader *self, BOOL sign)
 
 
 
-static inline float readFloat(CCBReader *self)
+static inline float readFloat(CCSBReader *self)
 {
     unsigned char type = readByte(self);
     
@@ -849,7 +849,7 @@ static inline float readFloat(CCBReader *self)
                     }
                     else
                     {
-                        NSLog(@"CCBReader: Failed to set selector/target block for \"%@\" for target %@",selectorName,target);
+                        NSLog(@"CCSBReader: Failed to set selector/target block for \"%@\" for target %@",selectorName,target);
                     }
 
 #if DEBUG_READER_PROPERTIES
@@ -858,7 +858,7 @@ static inline float readFloat(CCBReader *self)
                 }
                 else
                 {
-                    NSLog(@"CCBReader: Failed to find target for block");
+                    NSLog(@"CCSBReader: Failed to find target for block");
                 }
             }
         }
@@ -891,7 +891,7 @@ static inline float readFloat(CCBReader *self)
         NSAssert(d,@"[PROPERTY] %@ - kCCBPropTypeCCBFile - Failed to find ccb file: \"%@\", node class name: \"%@\", name: \"%@\", in ccb file: \"%@\"",
                  name, ccbFileName, [node class], [node name], _currentCCBFile);
 
-        CCBReader* reader = [[CCBReader alloc] init];
+        CCSBReader* reader = [[CCSBReader alloc] init];
         reader.animationManager.rootContainerSize = parent.contentSize;
         
         // Setup byte array & owner
@@ -984,7 +984,7 @@ static inline float readFloat(CCBReader *self)
 		Class nodeClass = NSClassFromString(className);
 		if (nodeClass == nil)
 		{
-			NSAssert(nil, @"CCBReader: Could not create class named: %@", className);
+			NSAssert(nil, @"CCSBReader: Could not create class named: %@", className);
 			return nil;
 		}
 		
@@ -1161,7 +1161,7 @@ static inline float readFloat(CCBReader *self)
 			return;
 		
 		CCNode * mappedNode = nodeMapping[@(uuid)];
-		NSAssert(mappedNode != nil, @"CCBReader: Failed to find node UUID:%i", uuid);
+		NSAssert(mappedNode != nil, @"CCSBReader: Failed to find node UUID:%i", uuid);
 		[node setValue:mappedNode forKey:name];
 		
 	}
@@ -1328,7 +1328,7 @@ static inline float readFloat(CCBReader *self)
     Class nodeClass = NSClassFromString(nodeClassName);
     if (nodeClass == nil)
     {
-		NSAssert(nil, @"CCBReader: Could not create class named: %@", nodeClassName);
+		NSAssert(nil, @"CCSBReader: Could not create class named: %@", nodeClassName);
         return nil;
     }
 	
@@ -1516,7 +1516,7 @@ SelectorNameForProperty(objc_property_t property)
                 }
                 else
                 {
-                    NSLog(@"CCBReader: Couldn't find member variable: %@", memberVarAssignmentName);
+                    NSLog(@"CCSBReader: Couldn't find member variable: %@", memberVarAssignmentName);
                 }
             }
         }
@@ -1786,7 +1786,7 @@ SelectorNameForProperty(objc_property_t property)
     int version = readIntWithSignOLD(self, NO);
     if (version != kCCBVersion)
     {
-		[NSException raise:NSInternalInconsistencyException format:@"CCBReader: Incompatible ccbi file version (file: %d reader: %d)",version,kCCBVersion];
+		[NSException raise:NSInternalInconsistencyException format:@"CCSBReader: Incompatible ccbi file version (file: %d reader: %d)",version,kCCBVersion];
         return NO;
     }
     
@@ -1829,7 +1829,7 @@ SelectorNameForProperty(objc_property_t property)
 {
     for (CCNode* child in nodeGraph.children)
     {
-        [CCBReader callDidLoadFromCCBForNodeGraph:child];
+        [CCSBReader callDidLoadFromCCBForNodeGraph:child];
     }
     
     if ([nodeGraph respondsToSelector:@selector(didLoadFromCCB)])
@@ -1870,7 +1870,7 @@ SelectorNameForProperty(objc_property_t property)
     }
     
     // Call didLoadFromCCB
-    [CCBReader callDidLoadFromCCBForNodeGraph:nodeGraph];
+    [CCSBReader callDidLoadFromCCBForNodeGraph:nodeGraph];
 
     return nodeGraph;
 }
@@ -1905,34 +1905,34 @@ SelectorNameForProperty(objc_property_t property)
 	[[CCFileUtils sharedFileUtils] setSearchPath:array];
 }
 
-+ (CCBReader*) reader
++ (CCSBReader*) reader
 {
-    return [[CCBReader alloc] init];
+    return [[CCSBReader alloc] init];
 }
 
 + (CCNode*) load:(NSString*) file owner:(id)owner
 {
-    return [CCBReader load:file owner:owner parentSize:[CCDirector currentDirector].designSize];
+    return [CCSBReader load:file owner:owner parentSize:[CCDirector currentDirector].designSize];
 }
 
 + (CCNode*) nodeGraphFromData:(NSData*) data owner:(id)owner parentSize:(CGSize)parentSize
 {
-    return [[CCBReader reader] loadWithData:data owner:owner];
+    return [[CCSBReader reader] loadWithData:data owner:owner];
 }
 
 + (CCNode*) load:(NSString*) file owner:(id)owner parentSize:(CGSize)parentSize
 {
-    return [[CCBReader reader] nodeGraphFromFile:file owner:owner parentSize:parentSize];
+    return [[CCSBReader reader] nodeGraphFromFile:file owner:owner parentSize:parentSize];
 }
 
 + (CCNode*) load:(NSString*) file
 {
-    return [CCBReader load:file owner:NULL];
+    return [CCSBReader load:file owner:NULL];
 }
 
 + (CCScene*) loadAsScene:(NSString *)file owner:(id)owner
 {
-    return [CCBReader sceneWithNodeGraphFromFile:file owner:owner parentSize:[CCDirector currentDirector].designSize];
+    return [CCSBReader sceneWithNodeGraphFromFile:file owner:owner parentSize:[CCDirector currentDirector].designSize];
 }
 
 -(CCScene*) createScene
@@ -1942,7 +1942,7 @@ SelectorNameForProperty(objc_property_t property)
 
 + (CCScene*) sceneWithNodeGraphFromFile:(NSString *)file owner:(id)owner parentSize:(CGSize)parentSize
 {
-    CCNode* node = [CCBReader load:file owner:owner parentSize:parentSize];
+    CCNode* node = [CCSBReader load:file owner:owner parentSize:parentSize];
     CCScene* scene = [CCScene node];
     [scene addChild:node];
     return scene;
@@ -1950,7 +1950,7 @@ SelectorNameForProperty(objc_property_t property)
 
 + (CCScene*) loadAsScene:(NSString*) file
 {
-    return [CCBReader loadAsScene:file owner:NULL]; 
+    return [CCSBReader loadAsScene:file owner:NULL]; 
 }
 
 + (NSString*) ccbDirectoryPath

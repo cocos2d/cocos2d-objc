@@ -23,7 +23,7 @@
  * THE SOFTWARE.
  */
 
-#import "CCBReader.h"
+#import "CCSBReader.h"
 #import "CCBAnimationManager.h"
 #import "CCAnimationManager.h"
 #import "CCBLocalizationManager.h"

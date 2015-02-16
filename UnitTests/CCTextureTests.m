@@ -2,7 +2,7 @@
 #import "cocos2d.h"
 
 #import "CCTextureCache.h"
-#import "CCBReader.h"
+#import "CCSBReader.h"
 #import "AppDelegate.h"
 
 @interface CCTextureTests : XCTestCase

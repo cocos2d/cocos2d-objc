@@ -8,7 +8,7 @@
 
 #import <XCTest/XCTest.h>
 #import "cocos2d.h"
-#import "CCBReader.h"
+#import "CCSBReader.h"
 #include <mach/mach.h>
 #include <mach/mach_time.h>
 
@@ -61,12 +61,12 @@ double machGetClockDiffS()
     
     NSData * fileData = [[NSData alloc] initWithContentsOfFile:filePath];
     
-    CCBReader  * ccbReader = [[CCBReader alloc] init];
+    CCSBReader  * CCSBReader = [[CCSBReader alloc] init];
     
     machGetClockDiffS();
     for (int i = 0; i < 100; i++)
     {
-            [ccbReader loadWithData:fileData owner:self];
+            [CCSBReader loadWithData:fileData owner:self];
     }
 
     NSLog(@"TimeToRun: %0.8f", machGetClockDiffS());

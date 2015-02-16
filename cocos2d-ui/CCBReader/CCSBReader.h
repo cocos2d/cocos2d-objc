@@ -30,20 +30,20 @@
 #import "CCAnimationManager.h"
 
 /**
- The CCBReader loads SpriteBuilder (CCB) documents.
+ The CCSBReader loads SpriteBuilder (SB) documents.
  
  For the most part you'll just use one of these two methods:
  
     // load a CCB document as a CCNode instance
-    CCNode* myNode = [CCBReader load:@"MyNode"];
+    CCNode* myNode = [CCSBReader load:@"MyNode"];
 
     // load a CCB document of type "Sprite" as a CCSprite instance
-    CCSprite* mySprite = (CCSprite*)[CCBReader load:@"MySprite"];
+    CCSprite* mySprite = (CCSprite*)[CCSBReader load:@"MySprite"];
 
     // load a CCB document wrapped in a CCScene instance
-    CCScene* scene = [CCBReader loadAsScene:@"MyNode"];
+    CCScene* scene = [CCSBReader loadAsScene:@"MyNode"];
  
- You can optionally pass an owner object to the CCBReader load methods. This owner object then gets assigned all of the SpriteBuilder document's member variables that are marked to be set to the "Owner".
+ You can optionally pass an owner object to the CCSBReader load methods. This owner object then gets assigned all of the SpriteBuilder document's member variables that are marked to be set to the "Owner".
  In all other cases owner is nil and assigning variables to Owner discards their assignment.
  
  When a SpriteBuilder document was loaded, all nodes created from the document will receive the didLoadFromCCB message, if implemented as follows:
@@ -62,7 +62,7 @@
  
  Nodes created from a SpriteBuilder document will also have a valid CCAnimationManager instance assigned to their [CCNode animationManager] property.
  */
-@interface CCBReader : NSObject
+@interface CCSBReader : NSObject
 {
     NSData* data;
     unsigned char* bytes;
@@ -95,11 +95,11 @@
 /// -----------------------------------------------------------------------
 
 /**
- *  Creates a new CCBReader. You don't normally need to do this because you can directly use most methods, ie `[CCBReader load:@"MyNode"];`.
+ *  Creates a new CCSBReader. You don't normally need to do this because you can directly use most methods, ie `[CCSBReader load:@"MyNode"];`.
  *
- *  @return A new CCBReader.
+ *  @return A new CCSBReader.
  */
-+ (CCBReader*) reader;
++ (CCSBReader*) reader;
 
 /// -----------------------------------------------------------------------
 /// @name Loading SpriteBuilder documents
@@ -186,3 +186,4 @@
 @property (nonatomic,strong) CCAnimationManager* animationManager;
 
 @end
+

@@ -1,12 +1,12 @@
 //
-//  CCBReader_Private.h
+//  CCSBReader_Private.h
 //  cocos2d-ios
 //
 //  Created by Viktor on 11/13/13.
 //
 //
 
-#import "CCBReader.h"
+#import "CCSBReader.h"
 
 #define kCCBVersion 11
 
