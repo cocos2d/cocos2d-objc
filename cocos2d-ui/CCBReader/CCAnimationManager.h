@@ -36,7 +36,7 @@
  The animation manager delegate receives callbacks when animation sequences finishes playing.
  Used by CCAnimationManager.
  */
-@protocol CCBAnimationManagerDelegate <NSObject>
+@protocol CCAnimationManagerDelegate <NSObject>
 
 /**
  * Called when an animation sequence has finished playing.
@@ -130,6 +130,6 @@
 
 /// The animation manager delegate receives updates about the animation playback state.
 /// @see CCBAnimationManagerDelegate
-@property (nonatomic,weak) NSObject<CCBAnimationManagerDelegate>* delegate;
+@property (nonatomic,weak) NSObject<CCAnimationManagerDelegate>* delegate;
 
 @end

@@ -49,7 +49,7 @@
 static NSInteger ccbAnimationManagerID = 0;
 
 
-@interface CCBActionTweenColor : CCActionInterval <NSCopying> {
+@interface CCActionTweenColor : CCActionInterval <NSCopying> {
     NSString *_key;
     CCColor *_to;
     CCColor *_from;
@@ -258,7 +258,7 @@ static NSInteger ccbAnimationManagerID = 0;
         } else if ([name isEqualToString:@"specularColor"] ||
                    [name isEqualToString:@"ambientColor"])
         {
-            return [CCBActionTweenColor actionWithDuration:duration key:name from:kf0.value to:kf1.value];
+            return [CCActionTweenColor actionWithDuration:duration key:name from:kf0.value to:kf1.value];
         }
     } else {
         CCLOG(@"CCSBReader: Failed to create animation for property: %@", name);
@@ -953,7 +953,7 @@ static NSInteger ccbAnimationManagerID = 0;
 
 #pragma mark Simple Sequence Builder
 
-- (void)addKeyFramesForSequenceNamed:(NSString*)name propertyType:(CCBSequencePropertyType)propertyType frameArray:(NSArray*)frameArray node:(CCNode *)node loop:(BOOL)loop {
+- (void)addKeyFramesForSequenceNamed:(NSString*)name propertyType:(CCSequencePropertyType)propertyType frameArray:(NSArray*)frameArray node:(CCNode *)node loop:(BOOL)loop {
     
     int seqId = (int)[self.sequences count];
     
@@ -1011,10 +1011,10 @@ static NSInteger ccbAnimationManagerID = 0;
 @end
 
 
-@implementation CCBActionTweenColor
+@implementation CCActionTweenColor
 + (id)actionWithDuration:(CCTime)duration key:(NSString *)key from:(CCColor*)fc to:(CCColor*)tc;
 {
-    return [(CCBActionTweenColor*)[ self alloc] initWithDuration:duration key:key from:fc to:tc];
+    return [(CCActionTweenColor*)[ self alloc] initWithDuration:duration key:key from:fc to:tc];
 }
 
 - (id)initWithDuration:(CCTime)duration key:(NSString *)key from:(CCColor*)fc to:(CCColor*)tc;
@@ -1030,7 +1030,7 @@ static NSInteger ccbAnimationManagerID = 0;
 
 -(id) copyWithZone: (NSZone*) zone
 {
-    CCAction *copy = [(CCBActionTweenColor*)[[self class] allocWithZone: zone] initWithDuration:[self duration] key:_key from:_from to:_to];
+    CCAction *copy = [(CCActionTweenColor*)[[self class] allocWithZone: zone] initWithDuration:[self duration] key:_key from:_from to:_to];
     return copy;
 }
 

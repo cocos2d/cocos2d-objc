@@ -80,7 +80,7 @@ static CGFloat FindPOTScale(CGFloat size, CGFloat fixedSize)
 
 - (CCScene *)startScene
 {
-    NSAssert(_glView.director, @"Require a valid director to decode the CCB file!");
+    NSAssert(_glView.director, @"Require a valid director to decode the SB file!");
 
     [CCDirector pushCurrentDirector:_glView.director];
     CCScene *scene = [self createFirstScene];

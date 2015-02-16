@@ -26,8 +26,8 @@
 #import <Foundation/Foundation.h>
 #import "CCSBReader_Private.h"
 
-typedef NS_ENUM(NSInteger, CCBSequencePropertyType) {
-    CCBSequencePropertyTypeSpriteFrame = kCCPropTypeSpriteFrame
+typedef NS_ENUM(NSInteger, CCSequencePropertyType) {
+    CCSequencePropertyTypeSpriteFrame = kCCPropTypeSpriteFrame
 };
 
 @interface CCSequenceProperty : NSObject
@@ -36,5 +36,5 @@ typedef NS_ENUM(NSInteger, CCBSequencePropertyType) {
 @property (nonatomic,assign)   int type;
 @property (nonatomic,readonly) NSMutableArray* keyframes;
 
-+ (NSString *)getPropertyNameFromTypeId:(CCBSequencePropertyType)propertyType;
++ (NSString *)getPropertyNameFromTypeId:(CCSequencePropertyType)propertyType;
 @end

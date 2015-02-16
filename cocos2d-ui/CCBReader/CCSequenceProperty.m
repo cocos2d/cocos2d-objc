@@ -45,10 +45,10 @@
     return description;
 }
 
-+ (NSString *)getPropertyNameFromTypeId:(CCBSequencePropertyType)propertyType {
++ (NSString *)getPropertyNameFromTypeId:(CCSequencePropertyType)propertyType {
     
     switch(propertyType) {
-        case CCBSequencePropertyTypeSpriteFrame:
+        case CCSequencePropertyTypeSpriteFrame:
             return @"spriteFrame";
             break;
     }
