@@ -1044,12 +1044,12 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
     [scheduler update:0.10f]; // first tick is always ignored, the action is not run.
     [scheduler update:0.10f]; // second tick runs the action at time zero, regardless of the delta time.
     
-    const float accuracy = 1e-3;
+//    const float accuracy = 1e-3;
     //test actions are fixed.
     for(int i = 0; i < 10; i++)
 	{
-		float desired  = (float)i * 0.1f * 100.0f/10.0f + (float)i * 0.1f * 200.0f/10.0f;
-		NSLog(@"node1.position.x=  %0.2f   desired = %0.2f",body1.absolutePosition.x, desired);
+//		float desired  = (float)i * 0.1f * 100.0f/10.0f + (float)i * 0.1f * 200.0f/10.0f;
+//		NSLog(@"node1.position.x=  %0.2f   desired = %0.2f",body1.absolutePosition.x, desired);
 //		XCTAssertEqualWithAccuracy(body1.absolutePosition.x, desired, accuracy, @"Not in the right position");
 		[scheduler update:0.10f];
 	}

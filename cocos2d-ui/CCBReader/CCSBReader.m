@@ -867,10 +867,10 @@ static inline float readFloat(CCSBReader *self)
     {
         NSString* ccbFileName = [self readCachedString];
         
-        // Change path extension to .ccbi
-        if ([ccbFileName hasSuffix:@".ccb"]) ccbFileName = [ccbFileName stringByDeletingPathExtension];
+        // Change path extension to .sbi
+        if ([ccbFileName hasSuffix:@".sb"]) ccbFileName = [ccbFileName stringByDeletingPathExtension];
         
-        ccbFileName = [NSString stringWithFormat:@"%@.ccbi", ccbFileName];
+        ccbFileName = [NSString stringWithFormat:@"%@.sbi", ccbFileName];
 
 #if DEBUG_READER_PROPERTIES
 		valueString = [NSString stringWithFormat:@"%@", ccbFileName];
@@ -882,7 +882,7 @@ static inline float readFloat(CCSBReader *self)
 
 #if DEBUG
         // Special case: scroll view missing content node
-        if (!d && [ccbFileName isEqualToString:@".ccbi"] && [NSStringFromClass([node class]) isEqualToString:@"CCScrollView"])
+        if (!d && [ccbFileName isEqualToString:@".sbi"] && [NSStringFromClass([node class]) isEqualToString:@"CCScrollView"])
         {
             NSLog(@"*** [PROPERTY] ERROR HINT: Did you forget to set the content node for your CCScrollView?");
         }
@@ -1786,7 +1786,7 @@ SelectorNameForProperty(objc_property_t property)
     int version = readIntWithSignOLD(self, NO);
     if (version != kCCVersion)
     {
-		[NSException raise:NSInternalInconsistencyException format:@"CCSBReader: Incompatible ccbi file version (file: %d reader: %d)",version,kCCVersion];
+		[NSException raise:NSInternalInconsistencyException format:@"CCSBReader: Incompatible sbi file version (file: %d reader: %d)",version,kCCVersion];
         return NO;
     }
     
@@ -1882,8 +1882,8 @@ SelectorNameForProperty(objc_property_t property)
 
 - (CCNode*) nodeGraphFromFile:(NSString*) file owner:(id)o parentSize:(CGSize)parentSize
 {
-    // Add ccbi suffix
-    if (![file hasSuffix:@".ccbi"]) file = [file stringByAppendingString:@".ccbi"];
+    // Add sbi suffix
+    if (![file hasSuffix:@".sbi"]) file = [file stringByAppendingString:@".sbi"];
     
     NSString* path = [[CCFileUtils sharedFileUtils] fullPathForFilename:file];
     NSData* d = [NSData dataWithContentsOfFile:path];
