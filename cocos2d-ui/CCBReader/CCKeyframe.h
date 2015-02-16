@@ -25,20 +25,13 @@
 
 #import <Foundation/Foundation.h>
 
-@class CCBSequenceProperty;
+@class CCActionSequence;
 
-@interface CCBSequence : NSObject
+@interface CCKeyframe : NSObject <NSCopying>
 
-@property (nonatomic,assign) float duration;
+@property (nonatomic,strong) id value;
 @property (nonatomic,assign) float time;
-@property (nonatomic,copy)   NSString* name;
-@property (nonatomic,assign) int sequenceId;
-@property (nonatomic,assign) int chainedSequenceId;
-@property (nonatomic,assign) int loops; // @todo
-@property (nonatomic,assign) float tween;
-
-// Channels
-@property (nonatomic,strong) CCBSequenceProperty* callbackChannel;
-@property (nonatomic,strong) CCBSequenceProperty* soundChannel;
+@property (nonatomic,assign) int easingType;
+@property (nonatomic,assign) float easingOpt;
 
 @end

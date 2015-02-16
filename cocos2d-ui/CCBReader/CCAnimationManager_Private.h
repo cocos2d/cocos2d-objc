@@ -24,7 +24,7 @@
 
 
 #import "CCAnimationManager.h"
-#import "CCBSequenceProperty.h"
+#import "CCSequenceProperty.h"
 
 
 @interface CCAnimationManager ()

@@ -34,9 +34,9 @@
 
 #import "CCFileUtils.h"
 #import "CGPointExtension.h"
-#import "CCBSequence.h"
-#import "CCBKeyframe.h"
-#import "CCBLocalizationManager.h"
+#import "CCSequence.h"
+#import "CCKeyframe.h"
+#import "CCLocalizationManager.h"
 #import "CCSpriteFrameCache.h"
 #import "CCPhysics+ObjectiveChipmunk.h"
 #import "CCEffectStack.h"
@@ -1076,9 +1076,9 @@ static inline float readFloat(CCSBReader *self)
     return result;
 }
 
-- (CCBKeyframe*) readKeyframeOfType:(int)type
+- (CCKeyframe*) readKeyframeOfType:(int)type
 {
-    CCBKeyframe* keyframe = [[CCBKeyframe alloc] init];
+    CCKeyframe* keyframe = [[CCKeyframe alloc] init];
     
     keyframe.time = readFloat(self);
     
@@ -1416,7 +1416,7 @@ SelectorNameForProperty(objc_property_t property)
         
         for (int j = 0; j < numProps; j++)
         {
-            CCBSequenceProperty* seqProp = [[CCBSequenceProperty alloc] init];
+            CCSequenceProperty* seqProp = [[CCSequenceProperty alloc] init];
             
             seqProp.name = [self readCachedString];
             seqProp.type = readIntWithSign(self, NO);
@@ -1426,11 +1426,11 @@ SelectorNameForProperty(objc_property_t property)
             
             for (int k = 0; k < numKeyframes; k++)
             {
-                CCBKeyframe* keyframe = [self readKeyframeOfType:seqProp.type];
+                CCKeyframe* keyframe = [self readKeyframeOfType:seqProp.type];
                 
 				if(k==0 && keyframe.time > 0.0f)
 				{
-					CCBKeyframe * copyKeyframe = [keyframe copy];
+					CCKeyframe * copyKeyframe = [keyframe copy];
 					copyKeyframe.time = 0.0f;
 					[seqProp.keyframes addObject:copyKeyframe];
 				}
@@ -1663,13 +1663,13 @@ SelectorNameForProperty(objc_property_t property)
     return node;
 }
 
-- (BOOL) readCallbackKeyframesForSeq:(CCBSequence*)seq
+- (BOOL) readCallbackKeyframesForSeq:(CCSequence*)seq
 {
     int numKeyframes = readIntWithSign(self, NO);
     
     if (!numKeyframes) return YES;
     
-    CCBSequenceProperty* channel = [[CCBSequenceProperty alloc] init];
+    CCSequenceProperty* channel = [[CCSequenceProperty alloc] init];
     
     for (int i = 0; i < numKeyframes; i++)
     {
@@ -1682,7 +1682,7 @@ SelectorNameForProperty(objc_property_t property)
                                  [NSNumber numberWithInt:callbackType],
                                  nil];
         
-        CCBKeyframe* keyframe = [[CCBKeyframe alloc] init];
+        CCKeyframe* keyframe = [[CCKeyframe alloc] init];
         keyframe.time = time;
         keyframe.value = value;
         
@@ -1695,13 +1695,13 @@ SelectorNameForProperty(objc_property_t property)
     return YES;
 }
 
-- (BOOL) readSoundKeyframesForSeq:(CCBSequence*)seq
+- (BOOL) readSoundKeyframesForSeq:(CCSequence*)seq
 {
     int numKeyframes = readIntWithSign(self, NO);
     
     if (!numKeyframes) return YES;
     
-    CCBSequenceProperty* channel = [[CCBSequenceProperty alloc] init];
+    CCSequenceProperty* channel = [[CCSequenceProperty alloc] init];
     
     for (int i = 0; i < numKeyframes; i++)
     {
@@ -1717,7 +1717,7 @@ SelectorNameForProperty(objc_property_t property)
                                  [NSNumber numberWithFloat:pan],
                                  [NSNumber numberWithFloat:gain],
                                  nil];
-        CCBKeyframe* keyframe = [[CCBKeyframe alloc] init];
+        CCKeyframe* keyframe = [[CCKeyframe alloc] init];
         keyframe.time = time;
         keyframe.value = value;
         
@@ -1740,7 +1740,7 @@ SelectorNameForProperty(objc_property_t property)
     
     for (int i = 0; i < numSeqs; i++)
     {
-        CCBSequence* seq = [[CCBSequence alloc] init];
+        CCSequence* seq = [[CCSequence alloc] init];
         seq.duration = readFloat(self);
         seq.name = [self readCachedString];
         seq.sequenceId = readIntWithSign(self, NO);

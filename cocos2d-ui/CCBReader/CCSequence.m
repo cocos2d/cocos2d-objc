@@ -23,9 +23,9 @@
  * THE SOFTWARE.
  */
 
-#import "CCBSequence.h"
+#import "CCSequence.h"
 
-@implementation CCBSequence
+@implementation CCSequence
 
 - (id)init
 {

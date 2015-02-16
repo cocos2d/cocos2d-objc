@@ -23,9 +23,9 @@
  * THE SOFTWARE.
  */
 
-#import "CCBKeyframe.h"
+#import "CCKeyframe.h"
 
-@implementation CCBKeyframe
+@implementation CCKeyframe
 
 - (id)init
 {
@@ -50,7 +50,7 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	CCBKeyframe * copyKeyframe = [[self class] allocWithZone:zone];
+	CCKeyframe * copyKeyframe = [[self class] allocWithZone:zone];
 	copyKeyframe->_value = self->_value;
 	copyKeyframe->_time = self->_time;
 	copyKeyframe->_easingType = self->_easingType;

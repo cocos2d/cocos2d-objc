@@ -1,7 +1,6 @@
 /*
  * SpriteBuilder: http://www.spritebuilder.org
  *
- * Copyright (c) 2012 Zynga Inc.
  * Copyright (c) 2013 Apportable Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,13 +24,18 @@
 
 #import <Foundation/Foundation.h>
 
-@class CCActionSequence;
+#define CCBLocalize(key) \
+[[CCLocalizationManager sharedManager] localizedStringForKey:(key)]
 
-@interface CCBKeyframe : NSObject <NSCopying>
+@interface CCLocalizationManager : NSObject
+{
+    NSMutableDictionary* _translations;
+}
 
-@property (nonatomic,strong) id value;
-@property (nonatomic,assign) float time;
-@property (nonatomic,assign) int easingType;
-@property (nonatomic,assign) float easingOpt;
+@property (nonatomic,readonly) NSDictionary* translations;
+
++ (id)sharedManager;
+
+- (NSString*) localizedStringForKey:(NSString*)key;
 
 @end

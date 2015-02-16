@@ -22,18 +22,18 @@
  * THE SOFTWARE.
  */
 
-#import "CCBLocalizationManager.h"
+#import "CCLocalizationManager.h"
 #import "CCSBReader.h"
 #import "CCFileUtils.h"
 
-@implementation CCBLocalizationManager
+@implementation CCLocalizationManager
 
 @synthesize translations = _translations;
 
 + (id)sharedManager
 {
 	static dispatch_once_t pred;
-	static CCBLocalizationManager *loc = nil;
+	static CCLocalizationManager *loc = nil;
 	dispatch_once(&pred, ^{
 		loc = [[self alloc] init];
 	});

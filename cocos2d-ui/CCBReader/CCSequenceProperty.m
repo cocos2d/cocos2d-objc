@@ -23,18 +23,37 @@
  * THE SOFTWARE.
  */
 
-#import <Foundation/Foundation.h>
-#import "CCSBReader_Private.h"
+#import "CCSequenceProperty.h"
 
-typedef NS_ENUM(NSInteger, CCBSequencePropertyType) {
-    CCBSequencePropertyTypeSpriteFrame = kCCBPropTypeSpriteFrame
-};
+@implementation CCSequenceProperty
 
-@interface CCBSequenceProperty : NSObject
+- (id) init
+{
+    self = [super init];
+    if (!self) return NULL;
+    
+    _name      = @"";
+    _type      = 0;
+    _keyframes = [[NSMutableArray alloc] init];
+    
+    return self;
+}
 
-@property (nonatomic,strong)   NSString* name;
-@property (nonatomic,assign)   int type;
-@property (nonatomic,readonly) NSMutableArray* keyframes;
+- (NSString *)description {
+        NSString *description = [NSString localizedStringWithFormat:@"[CCAnimationSequenceProperty] Name: %@, Type: %d, Keyframes: %@", self.name, self.type, self.keyframes];
+    
+    return description;
+}
 
-+ (NSString *)getPropertyNameFromTypeId:(CCBSequencePropertyType)propertyType;
++ (NSString *)getPropertyNameFromTypeId:(CCBSequencePropertyType)propertyType {
+    
+    switch(propertyType) {
+        case CCBSequencePropertyTypeSpriteFrame:
+            return @"spriteFrame";
+            break;
+    }
+    
+    return nil;
+}
+
 @end

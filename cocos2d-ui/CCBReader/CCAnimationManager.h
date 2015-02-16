@@ -28,7 +28,7 @@
 @class CCNode;
 
 
-@class CCBSequence;
+@class CCSequence;
 
 #pragma mark Animation Manager Delegate
 
@@ -60,8 +60,8 @@
     NSMutableDictionary* _baseValues;
     
     NSString *_animationManagerId;
-    CCBSequence* _runningSequence;
-    CCBSequence* _lastSequence;
+    CCSequence* _runningSequence;
+    CCSequence* _lastSequence;
     
     void (^block)(id sender);
     
