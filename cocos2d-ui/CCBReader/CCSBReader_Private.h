@@ -8,84 +8,84 @@
 
 #import "CCSBReader.h"
 
-#define kCCBVersion 11
+#define kCCVersion 11
 
 enum {
-    kCCBPropTypePosition = 0,
-    kCCBPropTypeSize,
-    kCCBPropTypePoint,
-    kCCBPropTypePointLock,
-    kCCBPropTypeScaleLock,
-    kCCBPropTypeDegrees,
-    kCCBPropTypeInteger,
-    kCCBPropTypeFloat,
-    kCCBPropTypeFloatVar,
-    kCCBPropTypeCheck,
-    kCCBPropTypeSpriteFrame,
-    kCCBPropTypeTexture,
-    kCCBPropTypeByte,
-    kCCBPropTypeColor3,
-    kCCBPropTypeColor4FVar,
-    kCCBPropTypeFlip,
-    kCCBPropTypeBlendmode,
-    kCCBPropTypeFntFile,
-    kCCBPropTypeText,
-    kCCBPropTypeFontTTF,
-    kCCBPropTypeIntegerLabeled,
-    kCCBPropTypeBlock,
-	kCCBPropTypeAnimation,
-    kCCBPropTypeCCBFile,
-    kCCBPropTypeString,
-    kCCBPropTypeBlockCCControl,
-    kCCBPropTypeFloatScale,
-    kCCBPropTypeFloatXY,
-    kCCBPropTypeColor4,
-    kCCBPropTypeNodeReference,
-    kCCBPropTypeFloatCheck,
-    kCCBPropTypeEffects,
-    kCCBPropTypeTokenArray
+    kCCPropTypePosition = 0,
+    kCCPropTypeSize,
+    kCCPropTypePoint,
+    kCCPropTypePointLock,
+    kCCPropTypeScaleLock,
+    kCCPropTypeDegrees,
+    kCCPropTypeInteger,
+    kCCPropTypeFloat,
+    kCCPropTypeFloatVar,
+    kCCPropTypeCheck,
+    kCCPropTypeSpriteFrame,
+    kCCPropTypeTexture,
+    kCCPropTypeByte,
+    kCCPropTypeColor3,
+    kCCPropTypeColor4FVar,
+    kCCPropTypeFlip,
+    kCCPropTypeBlendmode,
+    kCCPropTypeFntFile,
+    kCCPropTypeText,
+    kCCPropTypeFontTTF,
+    kCCPropTypeIntegerLabeled,
+    kCCPropTypeBlock,
+	kCCPropTypeAnimation,
+    kCCPropTypeCCBFile,
+    kCCPropTypeString,
+    kCCPropTypeBlockCCControl,
+    kCCPropTypeFloatScale,
+    kCCPropTypeFloatXY,
+    kCCPropTypeColor4,
+    kCCPropTypeNodeReference,
+    kCCPropTypeFloatCheck,
+    kCCPropTypeEffects,
+    kCCPropTypeTokenArray
 };
 
 enum {
-    kCCBFloat0 = 0,
-    kCCBFloat1,
-    kCCBFloatMinus1,
-    kCCBFloat05,
-    kCCBFloatInteger,
-    kCCBFloatFull
+    kCCFloat0 = 0,
+    kCCFloat1,
+    kCCFloatMinus1,
+    kCCFloat05,
+    kCCFloatInteger,
+    kCCFloatFull
 };
 
 enum {
-    kCCBPlatformAll = 0,
-    kCCBPlatformIOS,
-    kCCBPlatformMac
+    kCCPlatformAll = 0,
+    kCCPlatformIOS,
+    kCCPlatformMac
 };
 
 enum {
-    kCCBTargetTypeNone = 0,
-    kCCBTargetTypeDocumentRoot = 1,
-    kCCBTargetTypeOwner = 2,
+    kCCTargetTypeNone = 0,
+    kCCTargetTypeDocumentRoot = 1,
+    kCCTargetTypeOwner = 2,
 };
 
 enum
 {
-    kCCBKeyframeEasingInstant,
+    kCCKeyframeEasingInstant,
     
-    kCCBKeyframeEasingLinear,
+    kCCKeyframeEasingLinear,
     
-    kCCBKeyframeEasingCubicIn,
-    kCCBKeyframeEasingCubicOut,
-    kCCBKeyframeEasingCubicInOut,
+    kCCKeyframeEasingCubicIn,
+    kCCKeyframeEasingCubicOut,
+    kCCKeyframeEasingCubicInOut,
     
-    kCCBKeyframeEasingElasticIn,
-    kCCBKeyframeEasingElasticOut,
-    kCCBKeyframeEasingElasticInOut,
+    kCCKeyframeEasingElasticIn,
+    kCCKeyframeEasingElasticOut,
+    kCCKeyframeEasingElasticInOut,
     
-    kCCBKeyframeEasingBounceIn,
-    kCCBKeyframeEasingBounceOut,
-    kCCBKeyframeEasingBounceInOut,
+    kCCKeyframeEasingBounceIn,
+    kCCKeyframeEasingBounceOut,
+    kCCKeyframeEasingBounceInOut,
     
-    kCCBKeyframeEasingBackIn,
-    kCCBKeyframeEasingBackOut,
-    kCCBKeyframeEasingBackInOut,
+    kCCKeyframeEasingBackIn,
+    kCCKeyframeEasingBackOut,
+    kCCKeyframeEasingBackInOut,
 };

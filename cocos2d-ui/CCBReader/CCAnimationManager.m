@@ -198,7 +198,7 @@ static NSInteger ccbAnimationManagerID = 0;
 - (CCAction*)actionFromKeyframe0:(CCKeyframe*)kf0 andKeyframe1:(CCKeyframe*)kf1 propertyName:(NSString*)name node:(CCNode*)node {
     float duration = kf1.time - kf0.time;
     
-    if(kf0 && kf0.easingType==kCCBKeyframeEasingInstant) {
+    if(kf0 && kf0.easingType==kCCKeyframeEasingInstant) {
         duration = 0;
     }
     
@@ -273,7 +273,7 @@ static NSInteger ccbAnimationManagerID = 0;
         CCKeyframe* kf1 = [[CCKeyframe alloc] init];
         kf1.value = value;
         kf1.time = tweenDuration;
-        kf1.easingType = kCCBKeyframeEasingLinear;
+        kf1.easingType = kCCKeyframeEasingLinear;
         
         CCAction* tweenAction = [self actionFromKeyframe0:NULL andKeyframe1:kf1 propertyName:name node:node];
         tweenAction.name = _animationManagerId;
@@ -337,59 +337,59 @@ static NSInteger ccbAnimationManagerID = 0;
         return nil;
     }
     
-    if (easingType == kCCBKeyframeEasingLinear)
+    if (easingType == kCCKeyframeEasingLinear)
     {
         return action;
     }
-    else if (easingType == kCCBKeyframeEasingInstant)
+    else if (easingType == kCCKeyframeEasingInstant)
     {
         return [CCActionEaseInstant actionWithAction:intervalAction];
     }
-    else if (easingType == kCCBKeyframeEasingCubicIn)
+    else if (easingType == kCCKeyframeEasingCubicIn)
     {
         return [CCActionEaseIn actionWithAction:intervalAction rate:easingOpt];
     }
-    else if (easingType == kCCBKeyframeEasingCubicOut)
+    else if (easingType == kCCKeyframeEasingCubicOut)
     {
         return [CCActionEaseOut actionWithAction:intervalAction rate:easingOpt];
     }
-    else if (easingType == kCCBKeyframeEasingCubicInOut)
+    else if (easingType == kCCKeyframeEasingCubicInOut)
     {
         return [CCActionEaseInOut actionWithAction:intervalAction rate:easingOpt];
     }
-    else if (easingType == kCCBKeyframeEasingBackIn)
+    else if (easingType == kCCKeyframeEasingBackIn)
     {
         return [CCActionEaseBackIn actionWithAction:intervalAction];
     }
-    else if (easingType == kCCBKeyframeEasingBackOut)
+    else if (easingType == kCCKeyframeEasingBackOut)
     {
         return [CCActionEaseBackOut actionWithAction:intervalAction];
     }
-    else if (easingType == kCCBKeyframeEasingBackInOut)
+    else if (easingType == kCCKeyframeEasingBackInOut)
     {
         return [CCActionEaseBackInOut actionWithAction:intervalAction];
     }
-    else if (easingType == kCCBKeyframeEasingBounceIn)
+    else if (easingType == kCCKeyframeEasingBounceIn)
     {
         return [CCActionEaseBounceIn actionWithAction:intervalAction];
     }
-    else if (easingType == kCCBKeyframeEasingBounceOut)
+    else if (easingType == kCCKeyframeEasingBounceOut)
     {
         return [CCActionEaseBounceOut actionWithAction:intervalAction];
     }
-    else if (easingType == kCCBKeyframeEasingBounceInOut)
+    else if (easingType == kCCKeyframeEasingBounceInOut)
     {
         return [CCActionEaseBounceInOut actionWithAction:intervalAction];
     }
-    else if (easingType == kCCBKeyframeEasingElasticIn)
+    else if (easingType == kCCKeyframeEasingElasticIn)
     {
         return [CCActionEaseElasticIn actionWithAction:intervalAction period:easingOpt];
     }
-    else if (easingType == kCCBKeyframeEasingElasticOut)
+    else if (easingType == kCCKeyframeEasingElasticOut)
     {
         return [CCActionEaseElasticOut actionWithAction:intervalAction period:easingOpt];
     }
-    else if (easingType == kCCBKeyframeEasingElasticInOut)
+    else if (easingType == kCCKeyframeEasingElasticInOut)
     {
         return [CCActionEaseElasticInOut actionWithAction:intervalAction period:easingOpt];
     }
@@ -470,8 +470,8 @@ static NSInteger ccbAnimationManagerID = 0;
         
         // Callback through obj-c
         id target = NULL;
-        if (selectorTarget == kCCBTargetTypeDocumentRoot) target = self.rootNode;
-        else if (selectorTarget == kCCBTargetTypeOwner) target = _owner;
+        if (selectorTarget == kCCTargetTypeDocumentRoot) target = self.rootNode;
+        else if (selectorTarget == kCCTargetTypeOwner) target = _owner;
         
         SEL selector = NSSelectorFromString(selectorName);
         
@@ -881,7 +881,7 @@ static NSInteger ccbAnimationManagerID = 0;
     if (action) {
         
         // Instant
-        if(startKF.easingType==kCCBKeyframeEasingInstant) {
+        if(startKF.easingType==kCCKeyframeEasingInstant) {
             [actions addObject:[CCActionDelay actionWithDuration:endKF.time-startKF.time]];
         }
         

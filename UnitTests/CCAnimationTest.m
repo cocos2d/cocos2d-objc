@@ -87,7 +87,7 @@ _XCTRegisterFailure(_XCTFailureDescription(_XCTAssertion_NotEqualWithAccuracy, 0
 		CCKeyframe* keyframe = [[CCKeyframe alloc] init];
 		keyframe.time = (float)k * seq.duration / (float)(numKeyframes - 1);
 		
-		keyframe.easingType = kCCBKeyframeEasingLinear;
+		keyframe.easingType = kCCKeyframeEasingLinear;
 		keyframe.easingOpt = 0;
 		keyframe.value = points[k];
 		
@@ -156,7 +156,7 @@ NSDictionary * createPositionSequencePropery(struct PositionKeyframes * keyframe
 		CCKeyframe* keyframe = [[CCKeyframe alloc] init];
 		keyframe.time = keyframes[k].time;
 		
-		keyframe.easingType = kCCBKeyframeEasingLinear;
+		keyframe.easingType = kCCKeyframeEasingLinear;
 		keyframe.easingOpt = 0;
 		keyframe.value = @[@(keyframes[k].position.x),@(keyframes[k].position.y)];
 		

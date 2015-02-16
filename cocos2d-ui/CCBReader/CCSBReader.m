@@ -336,11 +336,11 @@ static inline float readFloat(CCSBReader *self)
 {
     unsigned char type = readByte(self);
     
-    if (type == kCCBFloat0) return 0;
-    else if (type == kCCBFloat1) return 1;
-    else if (type == kCCBFloatMinus1) return -1;
-    else if (type == kCCBFloat05) return 0.5f;
-    else if (type == kCCBFloatInteger)
+    if (type == kCCFloat0) return 0;
+    else if (type == kCCFloat1) return 1;
+    else if (type == kCCFloatMinus1) return -1;
+    else if (type == kCCFloat05) return 0.5f;
+    else if (type == kCCFloatInteger)
     {
         return readIntWithSign(self, YES);
     }
@@ -409,7 +409,7 @@ static inline float readFloat(CCSBReader *self)
 	NSString* valueString = nil;
 #endif
 	
-    if (type == kCCBPropTypePosition)
+    if (type == kCCPropTypePosition)
     {
         float x = readFloat(self);
         float y = readFloat(self);
@@ -445,8 +445,8 @@ static inline float readFloat(CCSBReader *self)
             }
         }
     }
-    else if(type == kCCBPropTypePoint
-            || type == kCCBPropTypePointLock)
+    else if(type == kCCPropTypePoint
+            || type == kCCPropTypePointLock)
     {
         float x = readFloat(self);
         float y = readFloat(self);
@@ -465,7 +465,7 @@ static inline float readFloat(CCSBReader *self)
 #endif
         }
     }
-    else if (type == kCCBPropTypeSize)
+    else if (type == kCCPropTypeSize)
     {
         float w = readFloat(self);
         float h = readFloat(self);
@@ -489,7 +489,7 @@ static inline float readFloat(CCSBReader *self)
             [node setValue:[NSValue valueWithBytes:&sizeType objCType:@encode(CCSizeType)] forKey:[name stringByAppendingString:@"Type"]];
         }
     }
-    else if (type == kCCBPropTypeScaleLock)
+    else if (type == kCCPropTypeScaleLock)
     {
         float x = readFloat(self);
         float y = readFloat(self);
@@ -516,7 +516,7 @@ static inline float readFloat(CCSBReader *self)
             }
         }
     }
-    else if (type == kCCBPropTypeFloatXY)
+    else if (type == kCCPropTypeFloatXY)
     {
         float xFloat = readFloat(self);
         float yFloat = readFloat(self);
@@ -533,8 +533,8 @@ static inline float readFloat(CCSBReader *self)
             [node setValue:[NSNumber numberWithFloat:yFloat] forKey:nameY];
         }
     }
-    else if (type == kCCBPropTypeDegrees
-             || type == kCCBPropTypeFloat)
+    else if (type == kCCPropTypeDegrees
+             || type == kCCPropTypeFloat)
     {
         float f = readFloat(self);
         
@@ -553,7 +553,7 @@ static inline float readFloat(CCSBReader *self)
             }
         }
     }
-    else if (type == kCCBPropTypeFloatScale)
+    else if (type == kCCPropTypeFloatScale)
     {
         float f = readFloat(self);
         int sType = readIntWithSign(self, NO);
@@ -568,8 +568,8 @@ static inline float readFloat(CCSBReader *self)
             [node setValue:[NSNumber numberWithFloat:f] forKey:name];
         }
     }
-    else if (type == kCCBPropTypeInteger
-             || type == kCCBPropTypeIntegerLabeled)
+    else if (type == kCCPropTypeInteger
+             || type == kCCPropTypeIntegerLabeled)
     {
         int d = readIntWithSign(self, YES);
         
@@ -582,7 +582,7 @@ static inline float readFloat(CCSBReader *self)
             [node setValue:[NSNumber numberWithInt:d] forKey:name];
         }
     }
-    else if (type == kCCBPropTypeFloatVar)
+    else if (type == kCCPropTypeFloatVar)
     {
         float f = readFloat(self);
         float fVar = readFloat(self);
@@ -598,7 +598,7 @@ static inline float readFloat(CCSBReader *self)
             [node setValue:[NSNumber numberWithFloat:fVar] forKey:nameVar];
         }
     }
-    else if (type == kCCBPropTypeCheck)
+    else if (type == kCCPropTypeCheck)
     {
         BOOL b = readBool(self);
         
@@ -617,7 +617,7 @@ static inline float readFloat(CCSBReader *self)
             }
         }
     }
-    else if (type == kCCBPropTypeSpriteFrame)
+    else if (type == kCCPropTypeSpriteFrame)
     {
         NSString* spriteFile = [self readCachedString];
         
@@ -640,7 +640,7 @@ static inline float readFloat(CCSBReader *self)
             }
         }
     }
-    else if (type == kCCBPropTypeTexture)
+    else if (type == kCCPropTypeTexture)
     {
         NSString* spriteFile = [self readCachedString];
         
@@ -658,7 +658,7 @@ static inline float readFloat(CCSBReader *self)
 #endif
         }
     }
-    else if (type == kCCBPropTypeByte)
+    else if (type == kCCPropTypeByte)
     {
         int byte = readByte(self);
         
@@ -677,8 +677,8 @@ static inline float readFloat(CCSBReader *self)
             }
         }
     }
-    else if (type == kCCBPropTypeColor4 ||
-             type == kCCBPropTypeColor3)
+    else if (type == kCCPropTypeColor4 ||
+             type == kCCPropTypeColor3)
     {
         CGFloat r = readFloat(self);
         CGFloat g = readFloat(self);
@@ -701,7 +701,7 @@ static inline float readFloat(CCSBReader *self)
             }
         }
     }
-    else if (type == kCCBPropTypeColor4FVar)
+    else if (type == kCCPropTypeColor4FVar)
     {
         float r = readFloat(self);
         float g = readFloat(self);
@@ -725,7 +725,7 @@ static inline float readFloat(CCSBReader *self)
             [node setValue:cVarVal forKey:nameVar];
         }
     }
-    else if (type == kCCBPropTypeFlip)
+    else if (type == kCCPropTypeFlip)
     {
         BOOL xFlip = readBool(self);
         BOOL yFlip = readBool(self);
@@ -743,7 +743,7 @@ static inline float readFloat(CCSBReader *self)
             [node setValue:[NSNumber numberWithBool:yFlip] forKey:nameY];
         }
     }
-    else if (type == kCCBPropTypeBlendmode)
+    else if (type == kCCPropTypeBlendmode)
     {
 #if DEBUG_READER_PROPERTIES
 		valueString = [NSString stringWithFormat:@"{%i, %i}", src, dst];
@@ -761,7 +761,7 @@ static inline float readFloat(CCSBReader *self)
             }]];
         }
     }
-    else if (type == kCCBPropTypeFntFile)
+    else if (type == kCCPropTypeFntFile)
     {
         NSString* fntFile = [self readCachedString];
         [node setValue:fntFile forKey:name];
@@ -770,8 +770,8 @@ static inline float readFloat(CCSBReader *self)
 		valueString = [NSString stringWithFormat:@"%@", fntFile];
 #endif
     }
-    else if (type == kCCBPropTypeText
-             || type == kCCBPropTypeString)
+    else if (type == kCCPropTypeText
+             || type == kCCPropTypeString)
     {
         NSString* txt = [self readCachedString];
         BOOL localized = readBool(self);
@@ -793,7 +793,7 @@ static inline float readFloat(CCSBReader *self)
             [node setValue:txt forKey:name];
         }
     }
-    else if (type == kCCBPropTypeFontTTF)
+    else if (type == kCCPropTypeFontTTF)
     {
         NSString* fnt = [self readCachedString];
         
@@ -810,7 +810,7 @@ static inline float readFloat(CCSBReader *self)
             [node setValue:fnt forKey:name];
         }
     }
-    else if (type == kCCBPropTypeBlock)
+    else if (type == kCCPropTypeBlock)
     {
         NSString* selectorName = [self readCachedString];
         int selectorTarget = readIntWithSign(self, NO);
@@ -825,8 +825,8 @@ static inline float readFloat(CCSBReader *self)
             if (selectorTarget)
             {
                 id target = NULL;
-                if (selectorTarget == kCCBTargetTypeDocumentRoot) target = animationManager.rootNode;
-                else if (selectorTarget == kCCBTargetTypeOwner) target = owner;
+                if (selectorTarget == kCCTargetTypeDocumentRoot) target = animationManager.rootNode;
+                else if (selectorTarget == kCCTargetTypeOwner) target = owner;
                 
                 if (target)
                 {
@@ -863,7 +863,7 @@ static inline float readFloat(CCSBReader *self)
             }
         }
     }
-    else if (type == kCCBPropTypeCCBFile)
+    else if (type == kCCPropTypeCCBFile)
     {
         NSString* ccbFileName = [self readCachedString];
         
@@ -888,7 +888,7 @@ static inline float readFloat(CCSBReader *self)
         }
 #endif
 
-        NSAssert(d,@"[PROPERTY] %@ - kCCBPropTypeCCBFile - Failed to find ccb file: \"%@\", node class name: \"%@\", name: \"%@\", in ccb file: \"%@\"",
+        NSAssert(d,@"[PROPERTY] %@ - kCCPropTypeCCBFile - Failed to find ccb file: \"%@\", node class name: \"%@\", name: \"%@\", in ccb file: \"%@\"",
                  name, ccbFileName, [node class], [node name], _currentCCBFile);
 
         CCSBReader* reader = [[CCSBReader alloc] init];
@@ -917,7 +917,7 @@ static inline float readFloat(CCSBReader *self)
             [node setValue:ccbFile forKey:name];
         }
     }
-    else if(type == kCCBPropTypeNodeReference)
+    else if(type == kCCPropTypeNodeReference)
     {
         int uuid = readIntWithSign(self, NO);
 		
@@ -926,7 +926,7 @@ static inline float readFloat(CCSBReader *self)
 		[postDeserializationUUIDFixup addObject:queuedFixupTask];
 		
 	}
-    else if(type == kCCBPropTypeFloatCheck)
+    else if(type == kCCPropTypeFloatCheck)
     {
         float f = readFloat(self);
         bool enabled = readBool(self);
@@ -937,7 +937,7 @@ static inline float readFloat(CCSBReader *self)
             [node setValue:@(f) forKey:name];
         }
     }
-	else if(type == kCCBPropTypeEffects)
+	else if(type == kCCPropTypeEffects)
 	{
 		CCEffect * effect  = [self readEffects];
 		
@@ -948,7 +948,7 @@ static inline float readFloat(CCSBReader *self)
 		}
 				
 	}
-    else if(type == kCCBPropTypeTokenArray)
+    else if(type == kCCPropTypeTokenArray)
     {
         NSString *arrayString = [self readCachedString];
         if(![arrayString isEqualToString:@""])
@@ -1086,27 +1086,27 @@ static inline float readFloat(CCSBReader *self)
     float easingOpt = 0;
     id value = NULL;
     
-    if (easingType == kCCBKeyframeEasingCubicIn
-        || easingType == kCCBKeyframeEasingCubicOut
-        || easingType == kCCBKeyframeEasingCubicInOut
-        || easingType == kCCBKeyframeEasingElasticIn
-        || easingType == kCCBKeyframeEasingElasticOut
-        || easingType == kCCBKeyframeEasingElasticInOut)
+    if (easingType == kCCKeyframeEasingCubicIn
+        || easingType == kCCKeyframeEasingCubicOut
+        || easingType == kCCKeyframeEasingCubicInOut
+        || easingType == kCCKeyframeEasingElasticIn
+        || easingType == kCCKeyframeEasingElasticOut
+        || easingType == kCCKeyframeEasingElasticInOut)
     {
         easingOpt = readFloat(self);
     }
     keyframe.easingType = easingType;
     keyframe.easingOpt = easingOpt;
     
-    if (type == kCCBPropTypeCheck)
+    if (type == kCCPropTypeCheck)
     {
         value = [NSNumber numberWithBool:readBool(self)];
     }
-    else if (type == kCCBPropTypeByte)
+    else if (type == kCCPropTypeByte)
     {
         value = [NSNumber numberWithInt:readBool(self)];
     }
-    else if (type == kCCBPropTypeColor3)
+    else if (type == kCCPropTypeColor3)
     {
         CGFloat r = readFloat(self);
         CGFloat g = readFloat(self);
@@ -1115,13 +1115,13 @@ static inline float readFloat(CCSBReader *self)
         
         value = [CCColor colorWithRed:r green:g blue:b alpha:a];
     }
-    else if (type == kCCBPropTypeDegrees || type == kCCBPropTypeFloat)
+    else if (type == kCCPropTypeDegrees || type == kCCPropTypeFloat)
     {
         value = [NSNumber numberWithFloat:readFloat(self)];
     }
-    else if (type == kCCBPropTypeScaleLock
-             || type == kCCBPropTypePosition
-             || type == kCCBPropTypeFloatXY)
+    else if (type == kCCPropTypeScaleLock
+             || type == kCCPropTypePosition
+             || type == kCCPropTypeFloatXY)
     {
         float a = readFloat(self);
         float b = readFloat(self);
@@ -1131,7 +1131,7 @@ static inline float readFloat(CCSBReader *self)
                  [NSNumber numberWithFloat:b],
                  nil];
     }
-    else if (type == kCCBPropTypeSpriteFrame)
+    else if (type == kCCPropTypeSpriteFrame)
     {
         NSString* spriteFile = [self readCachedString];
         
@@ -1493,8 +1493,8 @@ SelectorNameForProperty(objc_property_t property)
     if (memberVarAssignmentType)
     {
         id target = NULL;
-        if (memberVarAssignmentType == kCCBTargetTypeDocumentRoot) target = animationManager.rootNode;
-        else if (memberVarAssignmentType == kCCBTargetTypeOwner) target = owner;
+        if (memberVarAssignmentType == kCCTargetTypeDocumentRoot) target = animationManager.rootNode;
+        else if (memberVarAssignmentType == kCCTargetTypeOwner) target = owner;
         
         const char *varName = [memberVarAssignmentName UTF8String];
         if (target)
@@ -1784,9 +1784,9 @@ SelectorNameForProperty(objc_property_t property)
     
     // Read version
     int version = readIntWithSignOLD(self, NO);
-    if (version != kCCBVersion)
+    if (version != kCCVersion)
     {
-		[NSException raise:NSInternalInconsistencyException format:@"CCSBReader: Incompatible ccbi file version (file: %d reader: %d)",version,kCCBVersion];
+		[NSException raise:NSInternalInconsistencyException format:@"CCSBReader: Incompatible ccbi file version (file: %d reader: %d)",version,kCCVersion];
         return NO;
     }
     
